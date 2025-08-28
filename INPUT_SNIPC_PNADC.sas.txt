@@ -1,0 +1,23 @@
+/* PROGRAMA DE LEITURA EM SAS DO ARQUIVO DE MICRODADOS DA PNAD CONTÍNUA A SEREM UTILIZADOS PARA OS SUBITENS EMPREGADO DOMÉSTICO E MÃO DE OBRA PARA REPAROS DOMÉSTICOS */
+
+/* Obs.1: Ajuste os endereços dos arquivos \ED_SNIPCXXXXXX_PNADCYYYYYY.txt e \MORD_SNIPCXXXXXX_PNADCYYYYYY.txt no comando INFILE */
+
+/* Pessoas ocupadas na semana de referência como empregado doméstico no trabalho principal */
+data ED_SNIPCXXXXXX_PNADCYYYYYY;
+infile "...\ED_SNIPCXXXXXX_PNADCYYYYYY.txt" lrecl=31 missover;
+input
+@0001 VD4016_MesAA    8.    /* Rendim. nominal habitual trab. princ. - Mês AA*/
+@0009 VD4016_MesBB    8.    /* Rendim. nominal habitual trab. princ. - Mês BB*/
+@0017 Peso_SNIPC     15.    /* Peso SNIPC */
+;
+run;
+
+/* Pessoas ocupadas na semana de referência como mão de obra para reparos domésticos no trabalho principal */
+data MORD_SNIPCXXXXXX_PNADCYYYYYY;
+infile "...\MORD_SNIPCXXXXXX_PNADCYYYYYY.txt" lrecl=31 missover;
+input
+@0001 VD4016_MesAA    8.    /* Rendim. nominal habitual trab. princ. - Mês AA*/
+@0009 VD4016_MesBB    8.    /* Rendim. nominal habitual trab. princ. - Mês BB*/
+@0017 Peso_SNIPC     15.    /* Peso SNIPC */
+;
+run;

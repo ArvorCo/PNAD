@@ -1,0 +1,13 @@
+# Outputs and caches
+out/
+*.log
+*.tmp
+__pycache__/
+.pytest_cache/
+
+# OS artifacts
+.DS_Store
+
+# Large data patterns (keep raw PNADC files intentionally tracked)
+samples/*.csv
+samples/*.parquet
