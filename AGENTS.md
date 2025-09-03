@@ -41,3 +41,13 @@
 - Prefer lightweight samples in `samples/` for testing; avoid large uploads.
 - Normalize line endings to LF; document encodings if not UTF‑8.
 - If adding large binaries, consider Git LFS and update `README.md` accordingly.
+
+## Lessons Learned (from code)
+- Safe filtering: Use AST transformation to compile restricted row expressions (only literals, comparisons, boolean/arithmetic ops, and safe builtins like `int/float/str/len`). Evaluates with a constrained environment to avoid code injection (`pnadc_cli.RowExpr`).
+- Stream-first design: Read files with `csv` iterators and `utf-8-sig` handling; avoid loading entire datasets in memory. Use reservoir sampling for quick previews.
+- Robust delimiter/header detection: `parse_pnadc.sniff_delimiter` combines `csv.Sniffer` with fallback heuristics; treat semicolons/commas/tabs/pipes and detect probable headers.
+- SAS layout parsing: `layout_sas.parse_layout` understands `@pos NAME $/NUM.` patterns, extracts labels from `/* ... */`, normalizes to ASCII slugs, and keeps stable field ordering. Works for fixed-width extraction and schema emission.
+- Derived columns in FWF: `fwf-extract` can synthesize `data_nascimento` from day/month/year and builds `dom_id` from `Ano+Trimestre+UPA+V1008` for household aggregation.
+- Code tables workflow: `dict-extract` (pandas/xlrd) heuristically infers code/label columns from the dictionary Excel; `emit-codes` provides curated mappings; `join-codes` appends `*_label` columns (handles zero-padded and non-padded codes).
+- Household aggregation: `household-agg` streams CSV, sums selected income columns per `dom_id`, and carries the first non-empty values for grouping columns; outputs `household_persons` and `household_income`.
+- Tests as guidance: Unit tests cover delimiter sniffing/sampling, safe filter expressions, and SAS layout parsing. Run with `pytest -q`.
