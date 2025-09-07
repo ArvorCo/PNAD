@@ -51,3 +51,24 @@
 - Code tables workflow: `dict-extract` (pandas/xlrd) heuristically infers code/label columns from the dictionary Excel; `emit-codes` provides curated mappings; `join-codes` appends `*_label` columns (handles zero-padded and non-padded codes).
 - Household aggregation: `household-agg` streams CSV, sums selected income columns per `dom_id`, and carries the first non-empty values for grouping columns; outputs `household_persons` and `household_income`.
 - Tests as guidance: Unit tests cover delimiter sniffing/sampling, safe filter expressions, and SAS layout parsing. Run with `pytest -q`.
+
+## Income Analysis Methodology
+- Income bands: Standard categorization at 0-2, 2-5, 5-10, 10+ minimum wages (MW = R$ 1,518).
+- Household vs Individual: Always distinguish between individual income (`VD4020`) and household aggregated income.
+- Per capita income: Calculate by dividing household total by `VD2003__nmero_de_componentes_do_domic`.
+- NPV adjustment: Apply IPCA deflators to bring all values to current month prices (default: Jul/2025).
+- Statistical tests: Use non-parametric tests (Mann-Whitney, Kruskal-Wallis) due to skewed income distributions.
+
+## Visualization Best Practices
+- Color schemes: Use RdYlGn for income (red=low, green=high) or sequential blues for single metrics.
+- Interactive maps: Fetch Brazil GeoJSON from IBGE API for choropleth maps by state.
+- Income histograms: Cap at reasonable limits (20 MW individual, 30 MW household) for clarity.
+- Always include: Median lines, quartile ranges, and sample sizes in visualizations.
+- Portuguese labels: Use proper Portuguese terms for publication-ready graphics.
+
+## Predictive Modeling Guidelines
+- Feature engineering: Encode categorical variables (UF, education) with LabelEncoder or one-hot.
+- Model selection: Random Forest and Gradient Boosting typically achieve R² ~0.40-0.45.
+- Key predictors: Education level, age, state, and urban/rural status are strongest predictors.
+- Validation: Always use train-test split (80-20) and report MAE, RMSE, and R² scores.
+- Feature importance: Display and interpret to understand income determinants.
