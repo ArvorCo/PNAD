@@ -850,6 +850,47 @@ def _sex_bucket(value: str) -> str:
     return "O"
 
 
+def _shorten_text(value: str, max_len: int) -> str:
+    s = re.sub(r"\s+", " ", str(value).strip())
+    if len(s) <= max_len:
+        return s
+    if max_len <= 3:
+        return s[:max_len]
+    return s[: max_len - 3].rstrip() + "..."
+
+
+def _compact_dim_label(dim: str, label: str, *, max_len: int = 34) -> str:
+    s = re.sub(r"\s+", " ", str(label).strip())
+    if _is_missing_label(s):
+        return "Sem informacao"
+
+    if dim == "education":
+        replacements = [
+            (r"^Regular do ensino medio", "Ensino medio (regular)"),
+            (r"^Regular do ensino fundamental", "Ensino fundamental (regular)"),
+            (r"^Superior\s*-\s*", "Superior "),
+            (r"^Especializacao de nivel superior", "Especializacao"),
+            (r"^Mestrado", "Mestrado"),
+            (r"^Doutorado", "Doutorado"),
+            (r"^Antigo primario", "Primario (antigo)"),
+            (r"^EJA ou supletivo do 2º grau", "EJA/supletivo 2o grau"),
+            (r"^EJA ou supletivo do 1º grau", "EJA/supletivo 1o grau"),
+            (r"\s+ou equivalente", ""),
+        ]
+        for pat, rep in replacements:
+            s = re.sub(pat, rep, s, flags=re.IGNORECASE)
+    elif dim == "occupation_status":
+        replacements = [
+            (r"Empregado no setor privado", "Empregado setor privado"),
+            (r"Trabalhador domestico", "Trab. domestico"),
+            (r"Militar e servidor estatutario", "Militar/servidor"),
+        ]
+        for pat, rep in replacements:
+            s = re.sub(pat, rep, s, flags=re.IGNORECASE)
+
+    return _shorten_text(s, max_len)
+
+
 def _counter_to_sorted_rows(counter: Dict[str, float], total: float) -> List[Dict[str, object]]:
     rows = []
     for k, v in counter.items():
@@ -1654,13 +1695,27 @@ def _print_dashboard_mode(
         cross = mode_data.get("cross", {})
         dim_labels = payload.get("dimension_labels", {})
         chosen_dims = ["sex", "race", "education", "age", "capital", "macro_region"]
+        max_label_len_by_dim = {
+            "education": 28,
+            "occupation_status": 28,
+        }
         for dim in chosen_dims:
             key = f"{dim}_by_band"
             rows = cross.get(key, [])
             if not rows:
                 continue
             print(_colorize(f"  {dim_labels.get(dim, dim)}", "1;38;5;117", use_color))
-            for row in rows[:3]:
+            if dim == "age":
+                rows_iter = sorted(
+                    [r for r in rows if isinstance(r, dict)],
+                    key=lambda r: _age_label_sort_key(str(r.get("label", ""))),
+                )
+            elif dim == "education":
+                rows_iter = [r for r in rows if isinstance(r, dict)][:8]
+            else:
+                rows_iter = [r for r in rows if isinstance(r, dict)][:4]
+
+            for row in rows_iter:
                 parts = []
                 for b in payload["ranges"]:
                     pct = float(row["bands"][b]["pct_within_label"])
@@ -1668,7 +1723,8 @@ def _print_dashboard_mode(
                     parts.append(
                         f"{b}:{pct:4.1f}% {_gradient_bar(pct, width=3, palette=gradients[bi], use_color=use_color)}"
                     )
-                print(f"   - {str(row['label'])[:18]:<18} {' | '.join(parts)}")
+                lbl = _compact_dim_label(dim, str(row.get("label", "")), max_len=max_label_len_by_dim.get(dim, 24))
+                print(f"   - {lbl:<24} {' | '.join(parts)}")
             print("")
 
     if show("insights"):
