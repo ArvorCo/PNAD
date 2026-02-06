@@ -1498,6 +1498,7 @@ def _print_dashboard_mode(
     payload: Dict[str, object], mode: str, *, no_color: bool = False, section: str = "all"
 ) -> None:
     use_color = _supports_color(no_color=no_color)
+    term_cols = shutil.get_terminal_size((120, 24)).columns
     colors = _brazil_band_colors(len(payload.get("ranges", []) or []))
     gradients = _brazil_band_gradients(len(payload.get("ranges", []) or []))
     mode_data = payload["modes"][mode]
@@ -1661,6 +1662,8 @@ def _print_dashboard_mode(
         demo = mode_data.get("demographics", {})
         dim_labels = payload.get("dimension_labels", {})
         dim_order = mode_data.get("dimensions", [])
+        demog_bar_width = 16
+        demog_label_cap = max(28, min(64, term_cols - 18 - demog_bar_width))
         for dim in dim_order:
             rows = demo.get(dim, [])
             if not rows:
@@ -1710,24 +1713,33 @@ def _print_dashboard_mode(
                 if missing_pct > 0:
                     show_rows.append({"label": "Sem informacao", "pct": missing_pct})
 
-            for row in show_rows:
+            labels_out = [
+                _compact_dim_label(dim, str(row.get("label", "")), max_len=demog_label_cap)
+                for row in show_rows
+            ]
+            demog_label_width = min(
+                demog_label_cap,
+                max(20, max((len(x) for x in labels_out), default=20)),
+            )
+
+            for row, lbl in zip(show_rows, labels_out):
                 pct = float(row.get("pct", 0.0) or 0.0)
                 bar = _gradient_bar(
                     pct,
-                    width=16,
+                    width=demog_bar_width,
                     palette=[22, 28, 34, 40, 46],
                     use_color=use_color,
                 )
-                print(f"   - {str(row.get('label', ''))[:30]:<30} {pct:5.1f}% {bar}")
+                print(f"   - {lbl:<{demog_label_width}} {pct:5.1f}% {bar}")
 
             if hidden_pct > 0.05:
                 other_bar = _gradient_bar(
                     hidden_pct,
-                    width=16,
+                    width=demog_bar_width,
                     palette=[239, 242, 245, 248, 251],
                     use_color=use_color,
                 )
-                print(f"   - {'Outros':<30} {hidden_pct:5.1f}% {other_bar}")
+                print(f"   - {'Outros':<{demog_label_width}} {hidden_pct:5.1f}% {other_bar}")
             print("")
         print("")
 
