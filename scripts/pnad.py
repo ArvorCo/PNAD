@@ -416,10 +416,12 @@ def _supports_color(no_color: bool = False) -> bool:
     return os.environ.get("TERM", "").lower() not in ("", "dumb")
 
 
-def _colorize(text: str, code: int, enabled: bool) -> str:
+def _colorize(text: str, code: object, enabled: bool) -> str:
     if not enabled:
         return text
-    return f"\033[{code}m{text}\033[0m"
+    if isinstance(code, int):
+        return f"\033[{code}m{text}\033[0m"
+    return f"\033[{str(code)}m{text}\033[0m"
 
 
 def _bar(pct: float, width: int = 28, char: str = "█") -> str:
@@ -434,7 +436,7 @@ def _spark(value: float, width: int = 16) -> str:
     return blocks[idx] * width
 
 
-def _panel(title: str, lines: Sequence[str], *, color: int, use_color: bool, width: int = 92) -> None:
+def _panel(title: str, lines: Sequence[str], *, color: object, use_color: bool, width: int = 92) -> None:
     t = f" {title} "
     print(_colorize("┏" + t + "━" * max(0, width - len(t) - 2) + "┓", color, use_color))
     for ln in lines:
@@ -447,7 +449,7 @@ def _fmt_num(value: float) -> str:
     return f"{value:,.0f}".replace(",", ".")
 
 
-def _mini_pie(bands: Sequence[Dict[str, object]], colors: Sequence[int], use_color: bool, slices: int = 24) -> str:
+def _mini_pie(bands: Sequence[Dict[str, object]], colors: Sequence[object], use_color: bool, slices: int = 24) -> str:
     if not bands:
         return ""
     pcts = [max(0.0, float(b.get("households_pct", 0.0) or 0.0)) for b in bands]
@@ -467,10 +469,15 @@ def _mini_pie(bands: Sequence[Dict[str, object]], colors: Sequence[int], use_col
     return "".join(parts)
 
 
-def _brazil_band_colors(n: int) -> List[int]:
+def _brazil_band_colors(n: int) -> List[object]:
     # Brasil-inspired socioeconomic palette from poorer to richer:
     # green -> yellow -> blue -> white.
-    base = [32, 33, 34, 37]
+    base = [
+        "1;38;5;46",  # vivid green
+        "1;38;5;226",  # vivid yellow
+        "1;38;5;21",  # vivid blue
+        "1;38;5;15",  # bright white
+    ]
     if n <= len(base):
         return base[:n]
     out = []
@@ -1054,8 +1061,9 @@ def _print_dashboard_mode(
 
 def _print_dashboard_pretty(payload: Dict[str, object], *, no_color: bool = False) -> None:
     use_color = _supports_color(no_color=no_color)
+    title_style = "1;38;5;46"
     header = [
-        "PNAD DASHBOARD ECONOMICO",
+        _colorize("PNAD DASHBOARD ECONOMICO", title_style, use_color),
         f"Entrada: {payload.get('input')}",
         f"Target: {payload.get('target')} | SM alvo: {payload.get('sm_target_value')} (mes {payload.get('sm_target_month')})",
         f"Peso: {payload.get('weighting_mode')} ({payload.get('weight_col') or 'N/A'}) | Renda: {payload.get('income_col')}",
@@ -1065,7 +1073,7 @@ def _print_dashboard_pretty(payload: Dict[str, object], *, no_color: bool = Fals
         header.append(
             f"Cobertura: {md.get('states_covered')} UFs | {md.get('households')} domicilios | linhas lidas={md.get('rows_read')}"
         )
-    _panel("Panorama Geral", header, color=32, use_color=use_color)
+    _panel("Panorama Geral", header, color="1;38;5;46", use_color=use_color)
     print("")
 
     for mode in payload.get("modes", {}).keys():
