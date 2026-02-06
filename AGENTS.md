@@ -115,3 +115,7 @@
   - socioeconomic "thermometer" insights (richest/poorest UF and concentration in lowest/highest faixa).
 - Pretty outputs now map faixa de SM to BRL ranges (`R$`) for direct interpretation.
 - Dashboard now includes an age pyramid (sexo x idade) and age recuts ordered by age buckets.
+- For restricted-universe variables, dashboard labels non-response explicitly:
+  - `Nao se aplica (fora da ocupacao)` for occupation-only variables,
+  - `Fora de RM/RIDE` for metro-region variable,
+  avoiding false inflation of `Sem informacao`.

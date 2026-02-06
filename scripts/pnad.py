@@ -866,15 +866,15 @@ def _compact_dim_label(dim: str, label: str, *, max_len: int = 34) -> str:
 
     if dim == "education":
         replacements = [
-            (r"^Regular do ensino medio", "Ensino medio (regular)"),
+            (r"^Regular do ensino m[ée]dio", "Ensino medio (regular)"),
             (r"^Regular do ensino fundamental", "Ensino fundamental (regular)"),
             (r"^Superior\s*-\s*", "Superior "),
-            (r"^Especializacao de nivel superior", "Especializacao"),
+            (r"^Especializa[çc][aã]o de n[íi]vel superior", "Especializacao"),
             (r"^Mestrado", "Mestrado"),
             (r"^Doutorado", "Doutorado"),
-            (r"^Antigo primario", "Primario (antigo)"),
-            (r"^EJA ou supletivo do 2º grau", "EJA/supletivo 2o grau"),
-            (r"^EJA ou supletivo do 1º grau", "EJA/supletivo 1o grau"),
+            (r"^Antigo prim[áa]rio", "Primario (antigo)"),
+            (r"^EJA ou supletivo do 2[ºo] grau", "EJA/supletivo 2o grau"),
+            (r"^EJA ou supletivo do 1[ºo] grau", "EJA/supletivo 1o grau"),
             (r"\s+ou equivalente", ""),
         ]
         for pat, rep in replacements:
@@ -882,13 +882,83 @@ def _compact_dim_label(dim: str, label: str, *, max_len: int = 34) -> str:
     elif dim == "occupation_status":
         replacements = [
             (r"Empregado no setor privado", "Empregado setor privado"),
-            (r"Trabalhador domestico", "Trab. domestico"),
-            (r"Militar e servidor estatutario", "Militar/servidor"),
+            (r"Trabalhador dom[ée]stico", "Trab. domestico"),
+            (r"Militar e servidor estatut[áa]rio", "Militar/servidor"),
         ]
         for pat, rep in replacements:
             s = re.sub(pat, rep, s, flags=re.IGNORECASE)
+    elif dim == "occupation_position":
+        replacements = [
+            (r"^Grande grupo ", "GG "),
+            (r"^Nao se aplica \(fora da ocupacao\)$", "Nao se aplica (fora ocupacao)"),
+        ]
+        for pat, rep in replacements:
+            s = re.sub(pat, rep, s, flags=re.IGNORECASE)
+    elif dim == "metro_region":
+        s = s.replace("Região Metropolitana", "RM")
+        s = s.replace("Regiao Metropolitana", "RM")
+        s = s.replace("Região Integrada de Desenvolvimento", "RIDE")
+        s = s.replace("Regiao Integrada de Desenvolvimento", "RIDE")
 
     return _shorten_text(s, max_len)
+
+
+def _labor_type_bucket(raw_value: str, label_value: str) -> str:
+    raw = raw_value.strip()
+    label = label_value.strip()
+    if label:
+        if "desalent" in _norm_text(label):
+            return "Desalentado(a)"
+        return label
+    if raw in ("1", "01"):
+        return "Desalentado(a)"
+    return "Nao desalentado/ou nao se aplica"
+
+
+def _occupation_status_bucket(raw_value: str, label_value: str) -> str:
+    label = label_value.strip()
+    raw = raw_value.strip()
+    if label:
+        return label
+    if raw:
+        return f"VD4009 codigo {raw}"
+    return "Nao se aplica (fora da ocupacao)"
+
+
+def _occupation_position_bucket(raw_value: str, label_value: str) -> str:
+    label = label_value.strip()
+    raw = raw_value.strip()
+    if label:
+        return label
+    if raw:
+        digits = re.sub(r"\D", "", raw)
+        if digits:
+            group = digits[0]
+            groups = {
+                "0": "Grande grupo 0: Forcas armadas",
+                "1": "Grande grupo 1: Dirigentes e gerentes",
+                "2": "Grande grupo 2: Profissionais das ciencias/intelectuais",
+                "3": "Grande grupo 3: Tecnicos de nivel medio",
+                "4": "Grande grupo 4: Apoio administrativo",
+                "5": "Grande grupo 5: Servicos e vendedores",
+                "6": "Grande grupo 6: Agropecuaria/florestal/pesca",
+                "7": "Grande grupo 7: Industria/construcao/artesaos",
+                "8": "Grande grupo 8: Operadores de maquinas",
+                "9": "Grande grupo 9: Ocupacoes elementares",
+            }
+            return groups.get(group, f"Grande grupo {group}")
+        return f"CBO {raw}"
+    return "Nao se aplica (fora da ocupacao)"
+
+
+def _metro_region_bucket(raw_value: str, label_value: str) -> str:
+    label = label_value.strip()
+    raw = raw_value.strip()
+    if label:
+        return label
+    if raw:
+        return f"RM/RIDE codigo {raw}"
+    return "Fora de RM/RIDE"
 
 
 def _counter_to_sorted_rows(counter: Dict[str, float], total: float) -> List[Dict[str, object]]:
@@ -954,12 +1024,14 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
         edu_col = "V3009A_label" if "V3009A_label" in headers else _find_col(headers, "V3009A__", "V3009A")
         age_col = _find_col(headers, "V2009__", "V2009")
 
-        relationship_col = "V2005_label" if "V2005_label" in headers else _find_col(headers, "V2005__", "V2005")
-        occupation_status_col = (
-            "VD4009_label" if "VD4009_label" in headers else _find_col(headers, "VD4009__", "VD4009")
-        )
-        labor_type_col = "VD4005_label" if "VD4005_label" in headers else _find_col(headers, "VD4005__", "VD4005")
-        position_col = "V4010_label" if "V4010_label" in headers else _find_col(headers, "V4010__", "V4010")
+        relationship_label_col = "V2005_label" if "V2005_label" in headers else None
+        relationship_raw_col = _find_col(headers, "V2005__", "V2005")
+        occupation_status_label_col = "VD4009_label" if "VD4009_label" in headers else None
+        occupation_status_raw_col = _find_col(headers, "VD4009__", "VD4009")
+        labor_type_label_col = "VD4005_label" if "VD4005_label" in headers else None
+        labor_type_raw_col = _find_col(headers, "VD4005__", "VD4005")
+        position_label_col = "V4010_label" if "V4010_label" in headers else None
+        position_raw_col = _find_col(headers, "V4010__", "V4010")
         rm_label_col = "RM_RIDE_label" if "RM_RIDE_label" in headers else None
         rm_col = _find_col(headers, "RM_RIDE__", "RM_RIDE")
 
@@ -984,18 +1056,18 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
             "capital": "Capital x Interior",
             "macro_region": "Macro-regiao",
         }
-        if relationship_col:
+        if relationship_label_col or relationship_raw_col:
             dim_keys.append("relationship")
             dimension_labels["relationship"] = "Relacao no domicilio"
-        if occupation_status_col:
+        if occupation_status_label_col or occupation_status_raw_col:
             dim_keys.append("occupation_status")
             dimension_labels["occupation_status"] = "Condicao ocupacional"
-        if labor_type_col:
+        if labor_type_label_col or labor_type_raw_col:
             dim_keys.append("labor_type")
-            dimension_labels["labor_type"] = "Tipo de trabalho"
-        if position_col:
+            dimension_labels["labor_type"] = "Desalento (VD4005)"
+        if position_label_col or position_raw_col:
             dim_keys.append("occupation_position")
-            dimension_labels["occupation_position"] = "Posicao ocupacao"
+            dimension_labels["occupation_position"] = "Grande grupo ocupacional"
         if rm_label_col or rm_col:
             dim_keys.append("metro_region")
             dimension_labels["metro_region"] = "RM/RIDE"
@@ -1057,16 +1129,29 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
             cap_code_raw = str(row.get(cap_col, "")).strip() if cap_col else ""
             cap = _capital_bucket(cap_label_raw, cap_code_raw)
 
-            relationship = str(row.get(relationship_col, "")).strip() if relationship_col else ""
-            occupation_status = str(row.get(occupation_status_col, "")).strip() if occupation_status_col else ""
-            labor_type = str(row.get(labor_type_col, "")).strip() if labor_type_col else ""
-            occupation_position = str(row.get(position_col, "")).strip() if position_col else ""
-            if rm_label_col:
-                metro_region = str(row.get(rm_label_col, "")).strip()
-            elif rm_col:
-                metro_region = str(row.get(rm_col, "")).strip()
-            else:
-                metro_region = ""
+            relationship_label = str(row.get(relationship_label_col, "")).strip() if relationship_label_col else ""
+            relationship_raw = str(row.get(relationship_raw_col, "")).strip() if relationship_raw_col else ""
+            relationship = relationship_label or relationship_raw or "Sem informacao"
+
+            occupation_status_label = (
+                str(row.get(occupation_status_label_col, "")).strip() if occupation_status_label_col else ""
+            )
+            occupation_status_raw = (
+                str(row.get(occupation_status_raw_col, "")).strip() if occupation_status_raw_col else ""
+            )
+            occupation_status = _occupation_status_bucket(occupation_status_raw, occupation_status_label)
+
+            labor_type_label = str(row.get(labor_type_label_col, "")).strip() if labor_type_label_col else ""
+            labor_type_raw = str(row.get(labor_type_raw_col, "")).strip() if labor_type_raw_col else ""
+            labor_type = _labor_type_bucket(labor_type_raw, labor_type_label)
+
+            occupation_position_label = str(row.get(position_label_col, "")).strip() if position_label_col else ""
+            occupation_position_raw = str(row.get(position_raw_col, "")).strip() if position_raw_col else ""
+            occupation_position = _occupation_position_bucket(occupation_position_raw, occupation_position_label)
+
+            metro_region_label = str(row.get(rm_label_col, "")).strip() if rm_label_col else ""
+            metro_region_raw = str(row.get(rm_col, "")).strip() if rm_col else ""
+            metro_region = _metro_region_bucket(metro_region_raw, metro_region_label)
             macro_region = _macro_region_from_uf(uf_code)
 
             st = households.get(dom)
@@ -1106,15 +1191,15 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
                 "macro_region": macro_region,
             }
             if "relationship" in dim_keys:
-                row_dims["relationship"] = relationship or "sem_info"
+                row_dims["relationship"] = relationship
             if "occupation_status" in dim_keys:
-                row_dims["occupation_status"] = occupation_status or "sem_info"
+                row_dims["occupation_status"] = occupation_status
             if "labor_type" in dim_keys:
-                row_dims["labor_type"] = labor_type or "sem_info"
+                row_dims["labor_type"] = labor_type
             if "occupation_position" in dim_keys:
-                row_dims["occupation_position"] = occupation_position or "sem_info"
+                row_dims["occupation_position"] = occupation_position
             if "metro_region" in dim_keys:
-                row_dims["metro_region"] = metro_region or "sem_info"
+                row_dims["metro_region"] = metro_region
 
             dim_counts = st["dim_counts"]
             for dim, value in row_dims.items():
@@ -1723,8 +1808,8 @@ def _print_dashboard_mode(
                     parts.append(
                         f"{b}:{pct:4.1f}% {_gradient_bar(pct, width=3, palette=gradients[bi], use_color=use_color)}"
                     )
-                lbl = _compact_dim_label(dim, str(row.get("label", "")), max_len=max_label_len_by_dim.get(dim, 24))
-                print(f"   - {lbl:<24} {' | '.join(parts)}")
+                lbl = _compact_dim_label(dim, str(row.get("label", "")), max_len=max_label_len_by_dim.get(dim, 28))
+                print(f"   - {lbl:<28} {' | '.join(parts)}")
             print("")
 
     if show("insights"):

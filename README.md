@@ -167,6 +167,7 @@ O dashboard agora inclui:
 - Legenda de faixas em `R$` (ex.: `0-2 SM = R$ 0,00 a R$ ...`) usando SM de referencia do modo.
 - Piramide etaria (sexo x idade) em painel dedicado, com idades ordenadas de forma crescente.
 - Recortes adicionais quando disponiveis no CSV (ex.: relacao no domicilio, condicao ocupacional, tipo/posicao de trabalho, RM/RIDE).
+- Para variaveis de universo restrito (ocupacao e RM/RIDE), o dashboard diferencia `Nao se aplica`/`Fora de RM/RIDE` de `Sem informacao`.
 
 ## Rebuild de SQLite
 
