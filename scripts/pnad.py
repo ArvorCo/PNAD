@@ -403,6 +403,29 @@ def _norm_text(value: str) -> str:
     return value.strip().lower()
 
 
+def _is_missing_label(value: str) -> bool:
+    t = _norm_text(value)
+    return t in ("", "sem_info", "n/a", "na", "nan", "none", "null")
+
+
+def _capital_bucket(cap_label: str, cap_code: str) -> str:
+    # Prefer coded value when available.
+    c = cap_code.strip()
+    if c in ("1", "01"):
+        return "Capital"
+    if c in ("2", "02"):
+        return "Nao capital/Interior"
+
+    t = _norm_text(cap_label)
+    if _is_missing_label(cap_label):
+        return "Nao capital/Interior"
+    if "nao capital" in t or "não capital" in t or "interior" in t:
+        return "Nao capital/Interior"
+    if "capital" in t or "municipio de" in t or "município de" in t:
+        return "Capital"
+    return "Capital"
+
+
 def _uf_code_norm(uf_value: str) -> str:
     s = uf_value.strip()
     if s.isdigit():
@@ -963,10 +986,9 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
             edu = str(row.get(edu_col, "")).strip() if edu_col else ""
             age_band = _age_band(str(row.get(age_col, ""))) if age_col else "sem_idade"
 
-            cap = str(row.get(cap_label_col, "")).strip() if cap_label_col else ""
-            if not cap and cap_col:
-                raw_cap = str(row.get(cap_col, "")).strip()
-                cap = "Capital" if raw_cap in ("1", "01") else ("Nao capital" if raw_cap in ("2", "02") else raw_cap)
+            cap_label_raw = str(row.get(cap_label_col, "")).strip() if cap_label_col else ""
+            cap_code_raw = str(row.get(cap_col, "")).strip() if cap_col else ""
+            cap = _capital_bucket(cap_label_raw, cap_code_raw)
 
             relationship = str(row.get(relationship_col, "")).strip() if relationship_col else ""
             occupation_status = str(row.get(occupation_status_col, "")).strip() if occupation_status_col else ""
@@ -1427,7 +1449,7 @@ def _print_dashboard_mode(
         print()
 
     if show("demography"):
-        print(_colorize(" Demografia compacta (multiplos recortes)", 33, use_color))
+        print(_colorize(" Demografia detalhada (recortes com barras)", 33, use_color))
         demo = mode_data.get("demographics", {})
         dim_labels = payload.get("dimension_labels", {})
         dim_order = mode_data.get("dimensions", [])
@@ -1435,10 +1457,55 @@ def _print_dashboard_mode(
             rows = demo.get(dim, [])
             if not rows:
                 continue
-            top = rows[:4]
-            parts = [f"{str(x['label'])[:18]} {float(x['pct']):4.1f}%" for x in top]
             label = dim_labels.get(dim, dim)
-            print(f"  {label:<22} " + " | ".join(parts))
+            print(_colorize(f"  {label}", "1;38;5;117", use_color))
+
+            if dim == "macro_region":
+                by_label = {str(x.get("label", "")): float(x.get("pct", 0.0) or 0.0) for x in rows if isinstance(x, dict)}
+                show_rows = [{"label": rg, "pct": by_label.get(rg, 0.0)} for rg in MACRO_REGION_ORDER if rg != "Desconhecida"]
+                unknown_pct = 0.0
+                known_labels = {x["label"] for x in show_rows}
+                for k, v in by_label.items():
+                    if k not in known_labels:
+                        unknown_pct += float(v)
+                if unknown_pct > 0:
+                    show_rows.append({"label": "Desconhecida", "pct": unknown_pct})
+                hidden_pct = 0.0
+            else:
+                known_rows = []
+                missing_pct = 0.0
+                for x in rows:
+                    lbl = str(x.get("label", ""))
+                    pct = float(x.get("pct", 0.0) or 0.0)
+                    if _is_missing_label(lbl):
+                        missing_pct += pct
+                    else:
+                        known_rows.append({"label": lbl, "pct": pct})
+                show_rows = known_rows[:6]
+                shown_known_pct = sum(float(x["pct"]) for x in show_rows)
+                hidden_pct = max(0.0, 100.0 - shown_known_pct - missing_pct)
+                if missing_pct > 0:
+                    show_rows.append({"label": "Sem informacao", "pct": missing_pct})
+
+            for row in show_rows:
+                pct = float(row.get("pct", 0.0) or 0.0)
+                bar = _gradient_bar(
+                    pct,
+                    width=16,
+                    palette=[22, 28, 34, 40, 46],
+                    use_color=use_color,
+                )
+                print(f"   - {str(row.get('label', ''))[:30]:<30} {pct:5.1f}% {bar}")
+
+            if hidden_pct > 0.05:
+                other_bar = _gradient_bar(
+                    hidden_pct,
+                    width=16,
+                    palette=[239, 242, 245, 248, 251],
+                    use_color=use_color,
+                )
+                print(f"   - {'Outros':<30} {hidden_pct:5.1f}% {other_bar}")
+            print("")
         print("")
 
     if show("cross"):
