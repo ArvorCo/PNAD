@@ -113,3 +113,4 @@
   - top 10 UFs by income and by population,
   - macro-region panel,
   - socioeconomic "thermometer" insights (richest/poorest UF and concentration in lowest/highest faixa).
+- Pretty outputs now map faixa de SM to BRL ranges (`R$`) for direct interpretation.

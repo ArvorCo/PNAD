@@ -490,6 +490,44 @@ def _fmt_num(value: float) -> str:
     return f"{value:,.0f}".replace(",", ".")
 
 
+def _fmt_brl(value: float) -> str:
+    s = f"{float(value):,.2f}"
+    s = s.replace(",", "X").replace(".", ",").replace("X", ".")
+    return f"R$ {s}"
+
+
+def _ranges_money_from_specs(
+    range_specs: Sequence[Dict[str, object]],
+    sm_value: float,
+) -> List[Dict[str, object]]:
+    out: List[Dict[str, object]] = []
+    for spec in range_specs:
+        label = str(spec.get("label", ""))
+        lo_sm = float(spec.get("min", 0.0) or 0.0)
+        hi_raw = spec.get("max")
+        lo_brl = lo_sm * float(sm_value)
+        hi_brl: Optional[float]
+        money_label: str
+        if hi_raw is None:
+            hi_brl = None
+            money_label = f">= {_fmt_brl(lo_brl)}"
+        else:
+            hi_sm = float(hi_raw)
+            hi_brl = hi_sm * float(sm_value)
+            money_label = f"{_fmt_brl(lo_brl)} a {_fmt_brl(hi_brl)}"
+        out.append(
+            {
+                "range": label,
+                "min_sm": lo_sm,
+                "max_sm": None if hi_raw is None else float(hi_raw),
+                "min_brl": round(lo_brl, 2),
+                "max_brl": None if hi_brl is None else round(hi_brl, 2),
+                "money_label": money_label,
+            }
+        )
+    return out
+
+
 def _mini_pie(bands: Sequence[Dict[str, object]], colors: Sequence[object], use_color: bool, slices: int = 24) -> str:
     if not bands:
         return ""
@@ -643,6 +681,18 @@ def _print_renda_pretty(payload: Dict[str, object], *, no_color: bool = False) -
     print(f"Entrada: {payload.get('input')}")
     print(f"Renda: {payload.get('income_col')} | Peso: {payload.get('weight_col') or 'N/A'}")
     print(f"Faixas: {'; '.join(payload.get('ranges', []))}")
+    sm_ref = payload.get("sm_reference_value")
+    if sm_ref is not None:
+        print(f"SM referencia: {_fmt_brl(float(sm_ref))}")
+    ranges_money = payload.get("ranges_money")
+    if isinstance(ranges_money, list) and ranges_money:
+        money_legend = []
+        for item in ranges_money:
+            if not isinstance(item, dict):
+                continue
+            money_legend.append(f"{item.get('range')}={item.get('money_label')}")
+        if money_legend:
+            print("Faixas em R$: " + " | ".join(money_legend))
     print()
 
     groups = payload.get("groups", [])
@@ -995,6 +1045,10 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
         demo = {k: defaultdict(float) for k in dim_keys}
         cross = {k: defaultdict(lambda: defaultdict(float)) for k in dim_keys}
         ratio_pairs: List[Tuple[float, float]] = []
+        sm_ref_weighted_sum = 0.0
+        sm_ref_weight_total = 0.0
+        sm_ref_min: Optional[float] = None
+        sm_ref_max: Optional[float] = None
 
         def ensure_group(container: Dict[str, Dict[str, object]], key: str, label: str) -> Dict[str, object]:
             g = container.get(key)
@@ -1024,6 +1078,12 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
             uf_code = str(h["uf_code"])
             uf_label = str(h["uf_label"])
             macro = str(h.get("macro_region", "Desconhecida") or "Desconhecida")
+            sm_ref_value = float(sm_target_nominal) if mode == "alvo" else float(h.get("sm_period") or 0.0)
+            if sm_ref_value > 0:
+                sm_ref_weighted_sum += sm_ref_value * hh_w
+                sm_ref_weight_total += hh_w
+                sm_ref_min = sm_ref_value if sm_ref_min is None else min(sm_ref_min, sm_ref_value)
+                sm_ref_max = sm_ref_value if sm_ref_max is None else max(sm_ref_max, sm_ref_value)
 
             national["households_total"] += hh_w
             national["persons_total"] += pp_w
@@ -1142,9 +1202,16 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
             return rows
 
         cross_out = {f"{k}_by_band": cross_rows(v) for k, v in cross.items()}
+        sm_reference_value = _safe_div(sm_ref_weighted_sum, sm_ref_weight_total)
+        if sm_reference_value <= 0:
+            sm_reference_value = float(sm_target_nominal)
+        ranges_money = _ranges_money_from_specs(ranges, sm_reference_value)
+        range_money_map = {str(x.get("range", "")): str(x.get("money_label", "")) for x in ranges_money}
         insights = {
             "national_low_income_band": low_label,
             "national_high_income_band": high_label,
+            "national_low_income_money": range_money_map.get(low_label, ""),
+            "national_high_income_money": range_money_map.get(high_label, ""),
             "national_low_income_pct": round(_band_pct(national_out, low_label), 4) if low_label else 0.0,
             "national_high_income_pct": round(_band_pct(national_out, high_label), 4) if high_label else 0.0,
             "richest_uf_by_avg_sm": top10_income[0]["label"] if top10_income else "",
@@ -1164,6 +1231,11 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
             "top10_uf_population": top10_population,
             "top10_uf_low_income": top10_low_income,
             "top10_uf_high_income": top10_high_income,
+            "sm_reference_value": round(float(sm_reference_value), 2),
+            "sm_reference_month": sm_target_month if mode == "alvo" else "periodo_medio",
+            "sm_reference_min": None if sm_ref_min is None else round(float(sm_ref_min), 2),
+            "sm_reference_max": None if sm_ref_max is None else round(float(sm_ref_max), 2),
+            "ranges_money": ranges_money,
             "insights": insights,
             "demographics": demographics_out,
             "dimensions": dim_keys,
@@ -1178,6 +1250,14 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
         "sm_mode": args.sm_mode,
         "uf_order": args.uf_order,
         "ranges": [str(x["label"]) for x in ranges],
+        "range_specs": [
+            {
+                "label": str(x["label"]),
+                "min": float(x["min"]),
+                "max": None if x["max"] is None else float(x["max"]),
+            }
+            for x in ranges
+        ],
         "income_col": selected_income_col,
         "weight_col": None if args.unweighted else selected_weight_col,
         "weighting_mode": "unweighted" if args.unweighted else "weighted",
@@ -1211,6 +1291,16 @@ def _print_dashboard_mode(
     show = lambda key: section in ("all", key)
 
     if show("overview"):
+        sm_ref = float(mode_data.get("sm_reference_value", payload.get("sm_target_value") or 0.0) or 0.0)
+        sm_ref_month = str(mode_data.get("sm_reference_month", "") or "")
+        sm_ref_min = mode_data.get("sm_reference_min")
+        sm_ref_max = mode_data.get("sm_reference_max")
+        if sm_ref_min is not None and sm_ref_max is not None and float(sm_ref_min) != float(sm_ref_max):
+            sm_ref_txt = (
+                f"{_fmt_brl(sm_ref)} (ref media, intervalo: {_fmt_brl(float(sm_ref_min))}..{_fmt_brl(float(sm_ref_max))})"
+            )
+        else:
+            sm_ref_txt = _fmt_brl(sm_ref)
         overview_lines = [
             f"Modo de comparacao: {mode.upper()}",
             f"Domicilios: {_fmt_num(float(nat['households_total']))} | Pessoas: {_fmt_num(float(nat['persons_total']))}",
@@ -1218,6 +1308,7 @@ def _print_dashboard_mode(
                 f"Media SM: {float(nat['avg_household_sm']):.3f} | "
                 f"Mediana SM: {float(nat['median_household_sm']):.3f} | Gini(SM): {float(nat['gini_household_sm']):.3f}"
             ),
+            f"SM referencia ({sm_ref_month}): {sm_ref_txt}",
         ]
         _panel("Visao Brasil", overview_lines, color="1;38;5;45", use_color=use_color)
         print(_colorize(" Distribuicao nacional por faixa", 1, use_color))
@@ -1246,9 +1337,20 @@ def _print_dashboard_mode(
         if payload.get("ranges"):
             legend = []
             socio = ["mais pobre", "media baixa", "media alta", "mais rica"]
+            ranges_money = mode_data.get("ranges_money", [])
+            money_map: Dict[str, str] = {}
+            if isinstance(ranges_money, list):
+                for item in ranges_money:
+                    if not isinstance(item, dict):
+                        continue
+                    money_map[str(item.get("range", ""))] = str(item.get("money_label", ""))
             for i, rng in enumerate(payload["ranges"]):
                 label = socio[i] if i < len(socio) else f"faixa {i + 1}"
-                legend.append(_colorize(f"{rng}={label}", colors[i % len(colors)], use_color))
+                cash = money_map.get(str(rng), "")
+                if cash:
+                    legend.append(_colorize(f"{rng}={label} ({cash})", colors[i % len(colors)], use_color))
+                else:
+                    legend.append(_colorize(f"{rng}={label}", colors[i % len(colors)], use_color))
             print("  Legenda BR: " + " | ".join(legend))
         print()
 
@@ -1350,6 +1452,8 @@ def _print_dashboard_mode(
             print(_colorize(" Termometro socioeconomico", "1;38;5;229", use_color))
             low_label = str(ins.get("national_low_income_band", "") or "")
             high_label = str(ins.get("national_high_income_band", "") or "")
+            low_money = str(ins.get("national_low_income_money", "") or "")
+            high_money = str(ins.get("national_high_income_money", "") or "")
             low_pct = float(ins.get("national_low_income_pct", 0.0) or 0.0)
             high_pct = float(ins.get("national_high_income_pct", 0.0) or 0.0)
             print(
@@ -1360,6 +1464,8 @@ def _print_dashboard_mode(
                 + _badge(f"{high_label or 'alta':<8}", fg=16, bg=15, use_color=use_color)
                 + f" {high_pct:6.2f}% das pessoas"
             )
+            if low_money or high_money:
+                print(f"  Equivalencia em R$: baixa={low_money or 'N/A'} | alta={high_money or 'N/A'}")
             print(
                 f"  Renda media mais alta: {ins.get('richest_uf_by_avg_sm', 'N/A')} | "
                 f"mais baixa: {ins.get('poorest_uf_by_avg_sm', 'N/A')}"
@@ -1989,15 +2095,44 @@ def cmd_renda_por_faixa_sm(args: argparse.Namespace) -> int:
             }
         )
 
+    sm_ref_weighted_sum = 0.0
+    sm_ref_weight_total = 0.0
+    sm_ref_min: Optional[float] = None
+    sm_ref_max: Optional[float] = None
+    for h in households.values():
+        sm_target = float(h.get("sm_target") or 0.0)
+        if sm_target <= 0:
+            continue
+        hh_w = 1.0 if args.unweighted else float(h.get("household_weight") or 1.0)
+        sm_ref_weighted_sum += sm_target * hh_w
+        sm_ref_weight_total += hh_w
+        sm_ref_min = sm_target if sm_ref_min is None else min(sm_ref_min, sm_target)
+        sm_ref_max = sm_target if sm_ref_max is None else max(sm_ref_max, sm_target)
+    sm_reference_value = _safe_div(sm_ref_weighted_sum, sm_ref_weight_total)
+    ranges_money = _ranges_money_from_specs(ranges, sm_reference_value if sm_reference_value > 0 else 0.0)
+
     payload = {
         "input": str(input_path),
         "income_col": selected_income_col or (args.income_col or "auto(VD4020->VD4019)"),
         "weight_col": selected_weight_col if not args.unweighted else None,
         "weighting_mode": "unweighted" if args.unweighted else "weighted",
         "target": target,
+        "sm_reference_value": round(float(sm_reference_value), 2),
+        "sm_reference_mode": "periodo_deflacionado",
+        "sm_reference_min": None if sm_ref_min is None else round(float(sm_ref_min), 2),
+        "sm_reference_max": None if sm_ref_max is None else round(float(sm_ref_max), 2),
         "group_by": group_mode,
         "uf_order": args.uf_order if group_mode == "uf" else None,
         "ranges": [str(x["label"]) for x in ranges],
+        "range_specs": [
+            {
+                "label": str(x["label"]),
+                "min": float(x["min"]),
+                "max": None if x["max"] is None else float(x["max"]),
+            }
+            for x in ranges
+        ],
+        "ranges_money": ranges_money,
         "groups": groups_out,
         "metadata": {
             "rows_read": sampled_rows,

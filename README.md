@@ -129,6 +129,7 @@ Observacoes:
 - `--unweighted` existe apenas para diagnostico de amostra.
 - O formato padrao (`--format pretty`) imprime tabela, barras e mini pizza no terminal.
 - Paleta BR no terminal: verde (mais pobre), amarelo (media baixa), azul (media alta), branco (mais rica).
+- O terminal mostra as faixas tambem em valores nominais (`R$`) para leitura direta pelo publico brasileiro.
 - Em `--group-by uf`, a ordem padrao e `--uf-order renda_desc` (estado mais rico para o mais pobre, por media domiciliar em SM).
 
 ### Dashboard economico no terminal
@@ -163,6 +164,7 @@ O dashboard agora inclui:
 - Painel por macro-regiao (Norte/Nordeste/Sudeste/Sul/Centro-Oeste) com mix por faixa.
 - Termometro socioeconomico com destaques automáticos (UF mais rica/pobre e concentracao nas faixas extrema baixa/extrema alta).
 - Faixa de cores BR em alto contraste no cabecalho e nas barras (verde, amarelo, azul e branco).
+- Legenda de faixas em `R$` (ex.: `0-2 SM = R$ 0,00 a R$ ...`) usando SM de referencia do modo.
 - Recortes adicionais quando disponiveis no CSV (ex.: relacao no domicilio, condicao ocupacional, tipo/posicao de trabalho, RM/RIDE).
 
 ## Rebuild de SQLite

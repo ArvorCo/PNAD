@@ -91,6 +91,9 @@ def test_renda_por_faixa_sm_country(capsys, tmp_path: Path):
     payload = json.loads(out)
 
     assert payload["group_by"] == "pais"
+    assert payload["sm_reference_value"] > 0
+    assert "ranges_money" in payload
+    assert "R$" in payload["ranges_money"][0]["money_label"]
     assert len(payload["groups"]) == 1
     g = payload["groups"][0]
     assert abs(g["households_total"] - 160.0) < 1e-9
