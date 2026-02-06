@@ -467,8 +467,20 @@ def _mini_pie(bands: Sequence[Dict[str, object]], colors: Sequence[int], use_col
     return "".join(parts)
 
 
+def _brazil_band_colors(n: int) -> List[int]:
+    # Brasil-inspired socioeconomic palette from poorer to richer:
+    # green -> yellow -> blue -> white.
+    base = [32, 33, 34, 37]
+    if n <= len(base):
+        return base[:n]
+    out = []
+    for i in range(n):
+        out.append(base[i % len(base)])
+    return out
+
+
 def _print_renda_pretty(payload: Dict[str, object], *, no_color: bool = False) -> None:
-    colors = [32, 36, 33, 35, 34, 31]
+    colors = _brazil_band_colors(len(payload.get("ranges", []) or []))
     use_color = _supports_color(no_color=no_color)
 
     title = (
@@ -958,7 +970,7 @@ def _print_dashboard_mode(
     payload: Dict[str, object], mode: str, *, no_color: bool = False, section: str = "all"
 ) -> None:
     use_color = _supports_color(no_color=no_color)
-    colors = [32, 36, 33, 35, 34, 31]
+    colors = _brazil_band_colors(len(payload.get("ranges", []) or []))
     mode_data = payload["modes"][mode]
     nat = mode_data["national"]
     show = lambda key: section in ("all", key)
@@ -987,6 +999,13 @@ def _print_dashboard_mode(
         pie = _mini_pie(nat["bands"], colors=colors, use_color=use_color, slices=30)
         if pie:
             print(f"  Pizza domicílios: {pie}")
+        if payload.get("ranges"):
+            legend = []
+            socio = ["mais pobre", "media baixa", "media alta", "mais rica"]
+            for i, rng in enumerate(payload["ranges"]):
+                label = socio[i] if i < len(socio) else f"faixa {i + 1}"
+                legend.append(_colorize(f"{rng}={label}", colors[i % len(colors)], use_color))
+            print("  Legenda BR: " + " | ".join(legend))
         print()
 
     if show("ranking"):

@@ -128,6 +128,7 @@ Observacoes:
 - Se o CSV nao tiver peso, reexecute o pipeline para gerar `base_labeled.csv` com `V1028`.
 - `--unweighted` existe apenas para diagnostico de amostra.
 - O formato padrao (`--format pretty`) imprime tabela, barras e mini pizza no terminal.
+- Paleta BR no terminal: verde (mais pobre), amarelo (media baixa), azul (media alta), branco (mais rica).
 - Em `--group-by uf`, a ordem padrao e `--uf-order renda_desc` (estado mais rico para o mais pobre, por media domiciliar em SM).
 
 ### Dashboard economico no terminal
