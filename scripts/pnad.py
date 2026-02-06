@@ -486,8 +486,38 @@ def _brazil_band_colors(n: int) -> List[object]:
     return out
 
 
+def _brazil_band_gradients(n: int) -> List[List[int]]:
+    base = [
+        [22, 28, 34, 40, 46],  # green ramp
+        [178, 184, 190, 220, 226],  # yellow ramp
+        [17, 19, 21, 27, 33],  # blue ramp
+        [248, 250, 252, 254, 15],  # white ramp
+    ]
+    return [base[i % len(base)] for i in range(n)]
+
+
+def _gradient_bar(pct: float, *, width: int, palette: Sequence[int], use_color: bool) -> str:
+    p = max(0.0, min(100.0, pct))
+    n = max(0, min(width, int(round(width * p / 100.0))))
+    if n <= 0:
+        return _colorize("░" * width, "38;5;238", use_color)
+    parts: List[str] = []
+    for i in range(n):
+        level = int((i * len(palette)) / max(1, n))
+        level = min(level, len(palette) - 1)
+        parts.append(_colorize("█", f"1;38;5;{palette[level]}", use_color))
+    if n < width:
+        parts.append(_colorize("░" * (width - n), "38;5;238", use_color))
+    return "".join(parts)
+
+
+def _badge(text: str, *, fg: int, bg: int, use_color: bool) -> str:
+    return _colorize(f" {text} ", f"1;38;5;{fg};48;5;{bg}", use_color)
+
+
 def _print_renda_pretty(payload: Dict[str, object], *, no_color: bool = False) -> None:
     colors = _brazil_band_colors(len(payload.get("ranges", []) or []))
+    gradients = _brazil_band_gradients(len(payload.get("ranges", []) or []))
     use_color = _supports_color(no_color=no_color)
 
     title = (
@@ -529,16 +559,16 @@ def _print_renda_pretty(payload: Dict[str, object], *, no_color: bool = False) -
             rng = str(b.get("range", ""))
             hp = float(b.get("households_pct", 0.0) or 0.0)
             pp = float(b.get("persons_pct", 0.0) or 0.0)
-            hbar = _bar(hp)
-            pbar = _bar(pp)
+            hbar = _gradient_bar(hp, width=28, palette=gradients[i % len(gradients)], use_color=use_color)
+            pbar = _gradient_bar(pp, width=28, palette=gradients[i % len(gradients)], use_color=use_color)
             c = colors[i % len(colors)]
             print(
                 "  "
-                + _colorize(f"{rng:<8}", c, use_color)
+                + _badge(f"{rng:<8}", fg=16, bg=gradients[i % len(gradients)][-1], use_color=use_color)
                 + f" {hp:6.2f}%  "
-                + _colorize(hbar, c, use_color)
+                + hbar
                 + f"  {pp:6.2f}%  "
-                + _colorize(pbar, c, use_color)
+                + pbar
             )
         pie = _mini_pie([b for b in bands if isinstance(b, dict)], colors, use_color)
         if pie:
@@ -978,6 +1008,7 @@ def _print_dashboard_mode(
 ) -> None:
     use_color = _supports_color(no_color=no_color)
     colors = _brazil_band_colors(len(payload.get("ranges", []) or []))
+    gradients = _brazil_band_gradients(len(payload.get("ranges", []) or []))
     mode_data = payload["modes"][mode]
     nat = mode_data["national"]
     show = lambda key: section in ("all", key)
@@ -991,17 +1022,18 @@ def _print_dashboard_mode(
                 f"Mediana SM: {float(nat['median_household_sm']):.3f} | Gini(SM): {float(nat['gini_household_sm']):.3f}"
             ),
         ]
-        _panel("Visao Brasil", overview_lines, color=36, use_color=use_color)
+        _panel("Visao Brasil", overview_lines, color="1;38;5;45", use_color=use_color)
         print(_colorize(" Distribuicao nacional por faixa", 1, use_color))
         for b in nat["bands"]:
             hp = float(b["households_pct"])
             pp = float(b["persons_pct"])
             c = colors[payload["ranges"].index(b["range"]) % len(colors)]
+            gi = payload["ranges"].index(b["range"]) % len(gradients)
             print(
                 "  "
-                + _colorize(f"{b['range']:<8}", c, use_color)
-                + f" dom={hp:6.2f}% {_colorize(_bar(hp, width=24), c, use_color)}"
-                + f"  pes={pp:6.2f}% {_colorize(_spark(pp, width=8), c, use_color)}"
+                + _badge(f"{b['range']:<8}", fg=16, bg=gradients[gi][-1], use_color=use_color)
+                + f" dom={hp:6.2f}% {_gradient_bar(hp, width=24, palette=gradients[gi], use_color=use_color)}"
+                + f"  pes={pp:6.2f}% {_gradient_bar(pp, width=10, palette=gradients[gi], use_color=use_color)}"
             )
         pie = _mini_pie(nat["bands"], colors=colors, use_color=use_color, slices=30)
         if pie:
@@ -1016,17 +1048,19 @@ def _print_dashboard_mode(
         print()
 
     if show("ranking"):
-        print(_colorize(" Ranking das UFs por renda domiciliar média (SM)", 1, use_color))
+        print(_colorize(" Ranking das UFs por renda domiciliar média (SM)", "1;38;5;51", use_color))
         medals = ["#1", "#2", "#3", "4.", "5."]
-        print(_colorize("  Top 5 UFs", 36, use_color))
+        print(_colorize("  Top 5 UFs", "1;38;5;46", use_color))
         for i, u in enumerate(mode_data["top5_uf"], start=1):
             tag = medals[i - 1] if i <= len(medals) else f"{i}."
             val = float(u["avg_household_sm"])
-            print(f"   {tag:>2} {u['label']:<18} media={val:6.3f} SM  {_colorize(_spark(min(val * 20, 100), 8), 36, use_color)}")
-        print(_colorize("  Bottom 5 UFs", 35, use_color))
+            heat = _gradient_bar(min(val * 20, 100), width=10, palette=[22, 28, 34, 40, 46], use_color=use_color)
+            print(f"   {tag:>2} {u['label']:<18} media={val:6.3f} SM  {heat}")
+        print(_colorize("  Bottom 5 UFs", "1;38;5;196", use_color))
         for i, u in enumerate(mode_data["bottom5_uf"], start=1):
             val = float(u["avg_household_sm"])
-            print(f"   {i:>2}. {u['label']:<18} media={val:6.3f} SM  {_colorize(_spark(min(val * 20, 100), 8), 35, use_color)}")
+            heat = _gradient_bar(min(val * 20, 100), width=10, palette=[52, 88, 124, 160, 196], use_color=use_color)
+            print(f"   {i:>2}. {u['label']:<18} media={val:6.3f} SM  {heat}")
         print()
 
     if show("demography"):
@@ -1035,7 +1069,7 @@ def _print_dashboard_mode(
             rows = mode_data["demographics"][dim][:8]
             for r in rows:
                 pct = float(r["pct"])
-                print(f"   - {r['label']:<28} {pct:6.2f}% {_bar(pct, width=20)}")
+                print(f"   - {r['label']:<28} {pct:6.2f}% {_gradient_bar(pct, width=20, palette=[240, 245, 250, 254, 15], use_color=use_color)}")
             print()
 
     if show("cross_sex"):
@@ -1044,7 +1078,8 @@ def _print_dashboard_mode(
             parts = []
             for b in payload["ranges"]:
                 pct = float(row["bands"][b]["pct_within_label"])
-                parts.append(f"{b}:{pct:5.1f}% {_spark(pct, 4)}")
+                bi = payload["ranges"].index(b) % len(gradients)
+                parts.append(f"{b}:{pct:5.1f}% {_gradient_bar(pct, width=4, palette=gradients[bi], use_color=use_color)}")
             print(f"   - {row['label']:<20} {' | '.join(parts)}")
         print()
 
@@ -1054,7 +1089,8 @@ def _print_dashboard_mode(
             parts = []
             for b in payload["ranges"]:
                 pct = float(row["bands"][b]["pct_within_label"])
-                parts.append(f"{b}:{pct:5.1f}% {_spark(pct, 4)}")
+                bi = payload["ranges"].index(b) % len(gradients)
+                parts.append(f"{b}:{pct:5.1f}% {_gradient_bar(pct, width=4, palette=gradients[bi], use_color=use_color)}")
             print(f"   - {row['label']:<20} {' | '.join(parts)}")
         print()
 
