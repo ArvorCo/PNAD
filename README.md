@@ -134,18 +134,20 @@ Observacoes:
 ### Dashboard economico no terminal
 
 ```bash
-# painel completo com comparacao em SM do periodo e SM do alvo
+# painel completo (default: --sm-mode alvo)
 pnad dashboard \
-  --input data/outputs/base_labeled.csv \
-  --sm-mode both
+  --input data/outputs/base_labeled.csv
 
 # modo interativo (navega por secoes e modos)
 pnad dashboard \
   --input data/outputs/base_labeled.csv \
-  --sm-mode both \
   --interactive
 
 # visual forte no terminal (cards, barras, sparklines e pizza textual)
+pnad dashboard \
+  --input data/outputs/base_labeled.csv
+
+# comparacao completa entre SM do periodo e SM alvo
 pnad dashboard \
   --input data/outputs/base_labeled.csv \
   --sm-mode both
@@ -153,7 +155,6 @@ pnad dashboard \
 # exportar snapshot estruturado
 pnad dashboard \
   --input data/outputs/base_labeled.csv \
-  --sm-mode both \
   --format json > data/outputs/dashboard.json
 ```
 

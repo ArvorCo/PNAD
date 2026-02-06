@@ -2136,8 +2136,8 @@ Legacy commands still work directly:
     pdash.add_argument(
         "--sm-mode",
         choices=["both", "periodo", "alvo"],
-        default="both",
-        help="Compare ratios using period SM, target SM, or both",
+        default="alvo",
+        help="Compare ratios using period SM, target SM, or both (default: alvo)",
     )
     pdash.add_argument(
         "--ranges",
