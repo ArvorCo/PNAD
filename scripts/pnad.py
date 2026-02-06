@@ -1377,6 +1377,23 @@ def _print_dashboard_mode(
     mode_data = payload["modes"][mode]
     nat = mode_data["national"]
     show = lambda key: section in ("all", key)
+    uf_name_width = 18
+    max_uf_label_len = 0
+    for key in (
+        "top10_uf_income",
+        "bottom10_uf_income",
+        "top10_uf_population",
+        "top10_uf_low_income",
+        "top10_uf_high_income",
+    ):
+        rows = mode_data.get(key, [])
+        if not isinstance(rows, list):
+            continue
+        for row in rows:
+            if isinstance(row, dict):
+                max_uf_label_len = max(max_uf_label_len, len(str(row.get("label", "")).strip()))
+    if max_uf_label_len > 0:
+        uf_name_width = max(18, min(26, max_uf_label_len + 1))
 
     if show("overview"):
         sm_ref = float(mode_data.get("sm_reference_value", payload.get("sm_target_value") or 0.0) or 0.0)
@@ -1450,19 +1467,19 @@ def _print_dashboard_mode(
         for i, u in enumerate(mode_data.get("top10_uf_income", []), start=1):
             val = float(u["avg_household_sm"])
             heat = _gradient_bar(min(val * 16, 100), width=8, palette=[22, 28, 34, 40, 46], use_color=use_color)
-            left.append(f"  {i:>2}. {u['label']:<18} {val:6.3f} SM {heat}")
+            left.append(f"  {i:>2}. {u['label']:<{uf_name_width}} {val:6.3f} SM {heat}")
         for i, u in enumerate(mode_data.get("top10_uf_population", []), start=1):
             ppl = float(u["persons_total"])
             share = 100.0 * _safe_div(ppl, pop_total)
             heat = _gradient_bar(min(share * 4, 100), width=8, palette=[17, 19, 21, 27, 33], use_color=use_color)
-            right.append(f"  {i:>2}. {u['label']:<18} {share:5.2f}% {heat}")
+            right.append(f"  {i:>2}. {u['label']:<{uf_name_width}} {share:5.2f}% {heat}")
         _print_two_columns(left, right, width=58, gap=3)
         print("")
         print(_colorize("  Bottom 10 UFs por renda (SM)", "1;38;5;196", use_color))
         for i, u in enumerate(mode_data.get("bottom10_uf_income", []), start=1):
             val = float(u["avg_household_sm"])
             heat = _gradient_bar(min(val * 16, 100), width=10, palette=[52, 88, 124, 160, 196], use_color=use_color)
-            print(f"   {i:>2}. {u['label']:<18} {val:6.3f} SM {heat}")
+            print(f"   {i:>2}. {u['label']:<{uf_name_width}} {val:6.3f} SM {heat}")
         print()
 
     if show("macro"):
@@ -1510,7 +1527,7 @@ def _print_dashboard_mode(
                 colors=colors,
                 use_color=use_color,
             )
-            print(f"  {i:>2}. {u['label']:<18} pop={share:5.2f}%  mix={mix}")
+            print(f"  {i:>2}. {u['label']:<{uf_name_width}} pop={share:5.2f}%  mix={mix}")
         print()
 
     if show("demography"):
@@ -1687,11 +1704,11 @@ def _print_dashboard_mode(
             for i, u in enumerate(mode_data.get("top10_uf_low_income", []), start=1):
                 pct = _band_pct(u, low_label)
                 bar = _gradient_bar(pct, width=8, palette=[22, 28, 34, 40, 46], use_color=use_color)
-                left.append(f"  {i:>2}. {u['label']:<18} {pct:5.2f}% {bar}")
+                left.append(f"  {i:>2}. {u['label']:<{uf_name_width}} {pct:5.2f}% {bar}")
             for i, u in enumerate(mode_data.get("top10_uf_high_income", []), start=1):
                 pct = _band_pct(u, high_label)
                 bar = _gradient_bar(pct, width=8, palette=[248, 250, 252, 254, 15], use_color=use_color)
-                right.append(f"  {i:>2}. {u['label']:<18} {pct:5.2f}% {bar}")
+                right.append(f"  {i:>2}. {u['label']:<{uf_name_width}} {pct:5.2f}% {bar}")
             _print_two_columns(left, right, width=58, gap=3)
             print("")
 
