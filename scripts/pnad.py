@@ -49,6 +49,36 @@ BCB_SALARIO_MINIMO_SERIE = 1619
 BCB_SALARIO_MINIMO_URL = (
     f"https://api.bcb.gov.br/dados/serie/bcdata.sgs.{BCB_SALARIO_MINIMO_SERIE}/dados?formato=json&dataInicial=01/01/1994"
 )
+UF_TO_MACRO = {
+    "11": "Norte",
+    "12": "Norte",
+    "13": "Norte",
+    "14": "Norte",
+    "15": "Norte",
+    "16": "Norte",
+    "17": "Norte",
+    "21": "Nordeste",
+    "22": "Nordeste",
+    "23": "Nordeste",
+    "24": "Nordeste",
+    "25": "Nordeste",
+    "26": "Nordeste",
+    "27": "Nordeste",
+    "28": "Nordeste",
+    "29": "Nordeste",
+    "31": "Sudeste",
+    "32": "Sudeste",
+    "33": "Sudeste",
+    "35": "Sudeste",
+    "41": "Sul",
+    "42": "Sul",
+    "43": "Sul",
+    "50": "Centro-Oeste",
+    "51": "Centro-Oeste",
+    "52": "Centro-Oeste",
+    "53": "Centro-Oeste",
+}
+MACRO_REGION_ORDER = ["Norte", "Nordeste", "Sudeste", "Sul", "Centro-Oeste", "Desconhecida"]
 
 
 def _print(msg: str, quiet: bool = False) -> None:
@@ -373,6 +403,17 @@ def _norm_text(value: str) -> str:
     return value.strip().lower()
 
 
+def _uf_code_norm(uf_value: str) -> str:
+    s = uf_value.strip()
+    if s.isdigit():
+        return s.zfill(2)
+    return s
+
+
+def _macro_region_from_uf(uf_value: str) -> str:
+    return UF_TO_MACRO.get(_uf_code_norm(uf_value), "Desconhecida")
+
+
 def _series_value_at_or_before(series: Dict[str, float], target: str) -> Tuple[str, float]:
     if target in series:
         return target, float(series[target])
@@ -467,6 +508,80 @@ def _mini_pie(bands: Sequence[Dict[str, object]], colors: Sequence[object], use_
         seg = "●" * n
         parts.append(_colorize(seg, colors[i % len(colors)], use_color))
     return "".join(parts)
+
+
+def _stacked_mix_bar(
+    bands: Sequence[Dict[str, object]],
+    *,
+    pct_key: str,
+    width: int,
+    colors: Sequence[object],
+    use_color: bool,
+) -> str:
+    if not bands or width <= 0:
+        return ""
+    pcts = [max(0.0, float((b or {}).get(pct_key, 0.0) or 0.0)) for b in bands]
+    raw = [p * width / 100.0 for p in pcts]
+    alloc = [int(x) for x in raw]
+    remaining = max(0, width - sum(alloc))
+    frac_idx = sorted(range(len(raw)), key=lambda i: raw[i] - alloc[i], reverse=True)
+    for i in frac_idx[:remaining]:
+        alloc[i] += 1
+
+    parts: List[str] = []
+    for i, n in enumerate(alloc):
+        if n <= 0:
+            continue
+        seg = "█" * n
+        parts.append(_colorize(seg, colors[i % len(colors)], use_color))
+    used = sum(alloc)
+    if used < width:
+        parts.append(_colorize("░" * (width - used), "38;5;238", use_color))
+    return "".join(parts)
+
+
+def _band_pct(row: Dict[str, object], range_label: str, *, pct_key: str = "persons_pct") -> float:
+    bands = row.get("bands", [])
+    if not isinstance(bands, list):
+        return 0.0
+    for band in bands:
+        if not isinstance(band, dict):
+            continue
+        if str(band.get("range", "")) == str(range_label):
+            return float(band.get(pct_key, 0.0) or 0.0)
+    return 0.0
+
+
+def _brazil_flag_strip(use_color: bool, width: int = 64) -> str:
+    width = max(24, int(width))
+    if not use_color:
+        return "[BR] " + "=" * (width - 5)
+
+    # Patriotic high-contrast strip with dominant green and accents:
+    # green (base) -> yellow -> blue -> white.
+    sizes = [int(width * 0.56), int(width * 0.21), int(width * 0.13)]
+    sizes.append(max(0, width - sum(sizes)))
+    palette = ["1;38;5;46", "1;38;5;226", "1;38;5;21", "1;38;5;15"]
+    out: List[str] = []
+    for i, n in enumerate(sizes):
+        if n > 0:
+            out.append(_colorize("█" * n, palette[i], use_color))
+    return "".join(out)
+
+
+def _print_two_columns(
+    left: Sequence[str],
+    right: Sequence[str],
+    *,
+    width: int = 58,
+    gap: int = 3,
+) -> None:
+    n = max(len(left), len(right))
+    spacer = " " * gap
+    for i in range(n):
+        l = left[i] if i < len(left) else ""
+        r = right[i] if i < len(right) else ""
+        print(f"{l:<{width}}{spacer}{r}")
 
 
 def _brazil_band_colors(n: int) -> List[object]:
@@ -676,6 +791,8 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
     selected_income_col = ""
     selected_weight_col: Optional[str] = None
     households: Dict[str, Dict[str, object]] = {}
+    dimension_labels: Dict[str, str] = {}
+    dim_keys: List[str] = []
 
     with input_path.open("r", encoding="utf-8-sig", errors="replace", newline="") as fh:
         r = csv.DictReader(fh)
@@ -690,10 +807,21 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
         uf_label_col = _find_col(headers, "UF_label", "UF_label")
         cap_col = _find_col(headers, "Capital__", "Capital")
         cap_label_col = _find_col(headers, "Capital_label", "Capital_label")
+
         sex_col = "V2007_label" if "V2007_label" in headers else _find_col(headers, "V2007__", "V2007")
         race_col = "V2010_label" if "V2010_label" in headers else _find_col(headers, "V2010__", "V2010")
         edu_col = "V3009A_label" if "V3009A_label" in headers else _find_col(headers, "V3009A__", "V3009A")
         age_col = _find_col(headers, "V2009__", "V2009")
+
+        relationship_col = "V2005_label" if "V2005_label" in headers else _find_col(headers, "V2005__", "V2005")
+        occupation_status_col = (
+            "VD4009_label" if "VD4009_label" in headers else _find_col(headers, "VD4009__", "VD4009")
+        )
+        labor_type_col = "VD4005_label" if "VD4005_label" in headers else _find_col(headers, "VD4005__", "VD4005")
+        position_col = "V4010_label" if "V4010_label" in headers else _find_col(headers, "V4010__", "V4010")
+        rm_label_col = "RM_RIDE_label" if "RM_RIDE_label" in headers else None
+        rm_col = _find_col(headers, "RM_RIDE__", "RM_RIDE")
+
         income_col = _detect_income_col(headers, args.income_col)
         selected_income_col = income_col
         selected_weight_col = None if args.unweighted else _detect_weight_col(headers, args.weight_col)
@@ -705,6 +833,31 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
                 "weight column not found. Re-run pipeline including V1028 "
                 "or pass --weight-col / use --unweighted for diagnostics."
             )
+
+        dim_keys = ["sex", "race", "education", "age", "capital", "macro_region"]
+        dimension_labels = {
+            "sex": "Sexo",
+            "race": "Raca/Cor",
+            "education": "Escolaridade",
+            "age": "Faixa etaria",
+            "capital": "Capital x Interior",
+            "macro_region": "Macro-regiao",
+        }
+        if relationship_col:
+            dim_keys.append("relationship")
+            dimension_labels["relationship"] = "Relacao no domicilio"
+        if occupation_status_col:
+            dim_keys.append("occupation_status")
+            dimension_labels["occupation_status"] = "Condicao ocupacional"
+        if labor_type_col:
+            dim_keys.append("labor_type")
+            dimension_labels["labor_type"] = "Tipo de trabalho"
+        if position_col:
+            dim_keys.append("occupation_position")
+            dimension_labels["occupation_position"] = "Posicao ocupacao"
+        if rm_label_col or rm_col:
+            dim_keys.append("metro_region")
+            dimension_labels["metro_region"] = "RM/RIDE"
 
         for row in r:
             sampled_rows += 1
@@ -732,7 +885,8 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
                 skipped_missing_sm += 1
                 continue
 
-            uf_code = str(row.get(uf_col, "")).strip()
+            uf_code_raw = str(row.get(uf_col, "")).strip()
+            uf_code = _uf_code_norm(uf_code_raw)
             uf_label = str(row.get(uf_label_col, "")).strip() if uf_label_col else ""
             if uf_filter and _norm_text(uf_code) not in uf_filter and _norm_text(uf_label) not in uf_filter:
                 continue
@@ -757,10 +911,23 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
             race = str(row.get(race_col, "")).strip() if race_col else ""
             edu = str(row.get(edu_col, "")).strip() if edu_col else ""
             age_band = _age_band(str(row.get(age_col, ""))) if age_col else "sem_idade"
+
             cap = str(row.get(cap_label_col, "")).strip() if cap_label_col else ""
             if not cap and cap_col:
                 raw_cap = str(row.get(cap_col, "")).strip()
                 cap = "Capital" if raw_cap in ("1", "01") else ("Nao capital" if raw_cap in ("2", "02") else raw_cap)
+
+            relationship = str(row.get(relationship_col, "")).strip() if relationship_col else ""
+            occupation_status = str(row.get(occupation_status_col, "")).strip() if occupation_status_col else ""
+            labor_type = str(row.get(labor_type_col, "")).strip() if labor_type_col else ""
+            occupation_position = str(row.get(position_col, "")).strip() if position_col else ""
+            if rm_label_col:
+                metro_region = str(row.get(rm_label_col, "")).strip()
+            elif rm_col:
+                metro_region = str(row.get(rm_col, "")).strip()
+            else:
+                metro_region = ""
+            macro_region = _macro_region_from_uf(uf_code)
 
             st = households.get(dom)
             if st is None:
@@ -768,7 +935,7 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
                     "dom_id": dom,
                     "uf_code": uf_code,
                     "uf_label": uf_label or uf_code,
-                    "capital": cap or "N/A",
+                    "macro_region": macro_region,
                     "persons_n": 0,
                     "persons_weight": 0.0,
                     "household_weight": row_weight,
@@ -776,11 +943,7 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
                     "income_target": 0.0,
                     "sm_period": float(sm_nominal),
                     "ym": ym,
-                    "sex_counts": defaultdict(float),
-                    "race_counts": defaultdict(float),
-                    "edu_counts": defaultdict(float),
-                    "age_counts": defaultdict(float),
-                    "capital_counts": defaultdict(float),
+                    "dim_counts": {k: defaultdict(float) for k in dim_keys},
                 }
                 households[dom] = st
 
@@ -793,11 +956,28 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
                 inconsistent_household_weight += 1
 
             sw = row_weight if not args.unweighted else 1.0
-            st["sex_counts"][sex or "sem_info"] += sw
-            st["race_counts"][race or "sem_info"] += sw
-            st["edu_counts"][edu or "sem_info"] += sw
-            st["age_counts"][age_band] += sw
-            st["capital_counts"][cap or "N/A"] += sw
+            row_dims = {
+                "sex": sex or "sem_info",
+                "race": race or "sem_info",
+                "education": edu or "sem_info",
+                "age": age_band or "sem_info",
+                "capital": cap or "N/A",
+                "macro_region": macro_region,
+            }
+            if "relationship" in dim_keys:
+                row_dims["relationship"] = relationship or "sem_info"
+            if "occupation_status" in dim_keys:
+                row_dims["occupation_status"] = occupation_status or "sem_info"
+            if "labor_type" in dim_keys:
+                row_dims["labor_type"] = labor_type or "sem_info"
+            if "occupation_position" in dim_keys:
+                row_dims["occupation_position"] = occupation_position or "sem_info"
+            if "metro_region" in dim_keys:
+                row_dims["metro_region"] = metro_region or "sem_info"
+
+            dim_counts = st["dim_counts"]
+            for dim, value in row_dims.items():
+                dim_counts[dim][str(value)] += sw
 
     modes = ["periodo", "alvo"] if args.sm_mode == "both" else [args.sm_mode]
     modes_out: Dict[str, object] = {}
@@ -811,33 +991,39 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
             "bands": {str(item["label"]): {"households": 0.0, "persons": 0.0} for item in ranges},
         }
         uf_stats: Dict[str, Dict[str, object]] = {}
-        demo = {
-            "sex": defaultdict(float),
-            "race": defaultdict(float),
-            "education": defaultdict(float),
-            "age": defaultdict(float),
-            "capital": defaultdict(float),
-        }
-        cross = {
-            "sex_by_band": defaultdict(lambda: defaultdict(float)),
-            "race_by_band": defaultdict(lambda: defaultdict(float)),
-        }
+        macro_stats: Dict[str, Dict[str, object]] = {}
+        demo = {k: defaultdict(float) for k in dim_keys}
+        cross = {k: defaultdict(lambda: defaultdict(float)) for k in dim_keys}
         ratio_pairs: List[Tuple[float, float]] = []
+
+        def ensure_group(container: Dict[str, Dict[str, object]], key: str, label: str) -> Dict[str, object]:
+            g = container.get(key)
+            if g is None:
+                g = {
+                    "group": key,
+                    "label": label,
+                    "households_total": 0.0,
+                    "persons_total": 0.0,
+                    "households_sample": 0,
+                    "persons_sample": 0,
+                    "sum_ratio": 0.0,
+                    "bands": {str(item["label"]): {"households": 0.0, "persons": 0.0} for item in ranges},
+                }
+                container[key] = g
+            return g
 
         for h in households.values():
             if mode == "periodo":
                 ratio = _safe_div(float(h["income_nominal"]), float(h["sm_period"]))
             else:
                 ratio = _safe_div(float(h["income_target"]), float(sm_target_nominal))
-            if ratio <= 0:
-                band = _classify_range(0.0, ranges)
-            else:
-                band = _classify_range(ratio, ranges)
+            band = _classify_range(ratio if ratio > 0 else 0.0, ranges)
 
             hh_w = 1.0 if args.unweighted else float(h["household_weight"])
             pp_w = float(h["persons_n"]) if args.unweighted else float(h["persons_weight"])
             uf_code = str(h["uf_code"])
             uf_label = str(h["uf_label"])
+            macro = str(h.get("macro_region", "Desconhecida") or "Desconhecida")
 
             national["households_total"] += hh_w
             national["persons_total"] += pp_w
@@ -848,19 +1034,7 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
             national["bands"][band]["persons"] += pp_w
             ratio_pairs.append((ratio, hh_w))
 
-            u = uf_stats.get(uf_code)
-            if u is None:
-                u = {
-                    "group": uf_code,
-                    "label": uf_label,
-                    "households_total": 0.0,
-                    "persons_total": 0.0,
-                    "households_sample": 0,
-                    "persons_sample": 0,
-                    "sum_ratio": 0.0,
-                    "bands": {str(item["label"]): {"households": 0.0, "persons": 0.0} for item in ranges},
-                }
-                uf_stats[uf_code] = u
+            u = ensure_group(uf_stats, uf_code, uf_label)
             u["households_total"] += hh_w
             u["persons_total"] += pp_w
             u["households_sample"] += 1
@@ -869,22 +1043,21 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
             u["bands"][band]["households"] += hh_w
             u["bands"][band]["persons"] += pp_w
 
-            demo_src_map = {
-                "sex": "sex_counts",
-                "race": "race_counts",
-                "education": "edu_counts",
-                "age": "age_counts",
-                "capital": "capital_counts",
-            }
-            for k, c in demo.items():
-                src = h[demo_src_map[k]]
-                for lbl, val in src.items():
-                    c[str(lbl)] += float(val)
+            m = ensure_group(macro_stats, macro, macro)
+            m["households_total"] += hh_w
+            m["persons_total"] += pp_w
+            m["households_sample"] += 1
+            m["persons_sample"] += int(h["persons_n"])
+            m["sum_ratio"] += ratio * hh_w
+            m["bands"][band]["households"] += hh_w
+            m["bands"][band]["persons"] += pp_w
 
-            for sex_lbl, val in h["sex_counts"].items():
-                cross["sex_by_band"][str(sex_lbl)][band] += float(val)
-            for race_lbl, val in h["race_counts"].items():
-                cross["race_by_band"][str(race_lbl)][band] += float(val)
+            dim_counts = h.get("dim_counts", {})
+            for dim in dim_keys:
+                src = dim_counts.get(dim, {})
+                for lbl, val in src.items():
+                    demo[dim][str(lbl)] += float(val)
+                    cross[dim][str(lbl)][band] += float(val)
 
         def finalize_group(g: Dict[str, object]) -> Dict[str, object]:
             hh_total = float(g["households_total"])
@@ -916,13 +1089,7 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
                 "bands": bands_rows,
             }
 
-        national_out = finalize_group(
-            {
-                "group": "BR",
-                "label": "Brasil",
-                **national,
-            }
-        )
+        national_out = finalize_group({"group": "BR", "label": "Brasil", **national})
         national_out["median_household_sm"] = round(_weighted_median(ratio_pairs), 6)
         national_out["gini_household_sm"] = round(_weighted_gini(ratio_pairs), 6)
 
@@ -936,16 +1103,27 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
         else:
             uf_rows.sort(key=lambda r: float(r["avg_household_sm"]), reverse=True)
 
-        top5 = uf_rows[:5]
-        bottom5 = sorted(uf_rows, key=lambda r: float(r["avg_household_sm"]))[:5]
+        top10_income = uf_rows[:10]
+        bottom10_income = sorted(uf_rows, key=lambda r: float(r["avg_household_sm"]))[:10]
+        top10_population = sorted(uf_rows, key=lambda r: float(r["persons_total"]), reverse=True)[:10]
+        low_label = str(ranges[0]["label"]) if ranges else ""
+        high_label = str(ranges[-1]["label"]) if ranges else ""
+        top10_low_income = (
+            sorted(uf_rows, key=lambda r: _band_pct(r, low_label), reverse=True)[:10] if low_label else []
+        )
+        top10_high_income = (
+            sorted(uf_rows, key=lambda r: _band_pct(r, high_label), reverse=True)[:10] if high_label else []
+        )
+
+        macro_rows = [finalize_group(v) for v in macro_stats.values()]
+        macro_rows.sort(
+            key=lambda r: MACRO_REGION_ORDER.index(str(r["group"]))
+            if str(r["group"]) in MACRO_REGION_ORDER
+            else 999
+        )
+
         persons_total = float(national_out["persons_total"])
-        demographics_out = {
-            "sex": _counter_to_sorted_rows(demo["sex"], persons_total),
-            "race": _counter_to_sorted_rows(demo["race"], persons_total),
-            "education": _counter_to_sorted_rows(demo["education"], persons_total),
-            "age": _counter_to_sorted_rows(demo["age"], persons_total),
-            "capital": _counter_to_sorted_rows(demo["capital"], persons_total),
-        }
+        demographics_out = {k: _counter_to_sorted_rows(v, persons_total) for k, v in demo.items()}
 
         def cross_rows(src: Dict[str, Dict[str, float]]) -> List[Dict[str, object]]:
             rows = []
@@ -963,16 +1141,33 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
             rows.sort(key=lambda r: float(r["total"]), reverse=True)
             return rows
 
+        cross_out = {f"{k}_by_band": cross_rows(v) for k, v in cross.items()}
+        insights = {
+            "national_low_income_band": low_label,
+            "national_high_income_band": high_label,
+            "national_low_income_pct": round(_band_pct(national_out, low_label), 4) if low_label else 0.0,
+            "national_high_income_pct": round(_band_pct(national_out, high_label), 4) if high_label else 0.0,
+            "richest_uf_by_avg_sm": top10_income[0]["label"] if top10_income else "",
+            "poorest_uf_by_avg_sm": bottom10_income[0]["label"] if bottom10_income else "",
+            "highest_low_income_uf": top10_low_income[0]["label"] if top10_low_income else "",
+            "highest_high_income_uf": top10_high_income[0]["label"] if top10_high_income else "",
+        }
+
         modes_out[mode] = {
             "national": national_out,
             "uf": uf_rows,
-            "top5_uf": top5,
-            "bottom5_uf": bottom5,
+            "macro_regions": macro_rows,
+            "top5_uf": top10_income[:5],
+            "bottom5_uf": bottom10_income[:5],
+            "top10_uf_income": top10_income,
+            "bottom10_uf_income": bottom10_income,
+            "top10_uf_population": top10_population,
+            "top10_uf_low_income": top10_low_income,
+            "top10_uf_high_income": top10_high_income,
+            "insights": insights,
             "demographics": demographics_out,
-            "cross": {
-                "sex_by_band": cross_rows(cross["sex_by_band"]),
-                "race_by_band": cross_rows(cross["race_by_band"]),
-            },
+            "dimensions": dim_keys,
+            "cross": cross_out,
         }
 
     return {
@@ -986,11 +1181,13 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
         "income_col": selected_income_col,
         "weight_col": None if args.unweighted else selected_weight_col,
         "weighting_mode": "unweighted" if args.unweighted else "weighted",
+        "dimension_labels": dimension_labels,
         "modes": modes_out,
         "metadata": {
             "rows_read": sampled_rows,
             "households": len(households),
             "states_covered": len({str(h["uf_code"]) for h in households.values()}),
+            "dimensions": dim_keys,
             "skipped_missing_period": skipped_missing_period,
             "skipped_missing_factor": skipped_missing_factor,
             "skipped_missing_sm": skipped_missing_sm,
@@ -1027,7 +1224,6 @@ def _print_dashboard_mode(
         for b in nat["bands"]:
             hp = float(b["households_pct"])
             pp = float(b["persons_pct"])
-            c = colors[payload["ranges"].index(b["range"]) % len(colors)]
             gi = payload["ranges"].index(b["range"]) % len(gradients)
             print(
                 "  "
@@ -1038,6 +1234,15 @@ def _print_dashboard_mode(
         pie = _mini_pie(nat["bands"], colors=colors, use_color=use_color, slices=30)
         if pie:
             print(f"  Pizza domicílios: {pie}")
+        mix = _stacked_mix_bar(
+            nat["bands"],
+            pct_key="persons_pct",
+            width=40,
+            colors=colors,
+            use_color=use_color,
+        )
+        if mix:
+            print(f"  Mix pessoas: {mix}")
         if payload.get("ranges"):
             legend = []
             socio = ["mais pobre", "media baixa", "media alta", "mais rica"]
@@ -1048,56 +1253,154 @@ def _print_dashboard_mode(
         print()
 
     if show("ranking"):
-        print(_colorize(" Ranking das UFs por renda domiciliar média (SM)", "1;38;5;51", use_color))
-        medals = ["#1", "#2", "#3", "4.", "5."]
-        print(_colorize("  Top 5 UFs", "1;38;5;46", use_color))
-        for i, u in enumerate(mode_data["top5_uf"], start=1):
-            tag = medals[i - 1] if i <= len(medals) else f"{i}."
+        print(_colorize(" Ranking horizontal de UFs", "1;38;5;51", use_color))
+        left = [_colorize("  Top 10 UFs por renda (SM domiciliar)", "1;38;5;46", use_color)]
+        right = [_colorize("  Top 10 UFs por populacao estimada", "1;38;5;33", use_color)]
+        pop_total = float(nat["persons_total"]) or 1.0
+        for i, u in enumerate(mode_data.get("top10_uf_income", []), start=1):
             val = float(u["avg_household_sm"])
-            heat = _gradient_bar(min(val * 20, 100), width=10, palette=[22, 28, 34, 40, 46], use_color=use_color)
-            print(f"   {tag:>2} {u['label']:<18} media={val:6.3f} SM  {heat}")
-        print(_colorize("  Bottom 5 UFs", "1;38;5;196", use_color))
-        for i, u in enumerate(mode_data["bottom5_uf"], start=1):
+            heat = _gradient_bar(min(val * 16, 100), width=8, palette=[22, 28, 34, 40, 46], use_color=use_color)
+            left.append(f"  {i:>2}. {u['label']:<18} {val:6.3f} SM {heat}")
+        for i, u in enumerate(mode_data.get("top10_uf_population", []), start=1):
+            ppl = float(u["persons_total"])
+            share = 100.0 * _safe_div(ppl, pop_total)
+            heat = _gradient_bar(min(share * 4, 100), width=8, palette=[17, 19, 21, 27, 33], use_color=use_color)
+            right.append(f"  {i:>2}. {u['label']:<18} {share:5.2f}% {heat}")
+        _print_two_columns(left, right, width=58, gap=3)
+        print("")
+        print(_colorize("  Bottom 10 UFs por renda (SM)", "1;38;5;196", use_color))
+        for i, u in enumerate(mode_data.get("bottom10_uf_income", []), start=1):
             val = float(u["avg_household_sm"])
-            heat = _gradient_bar(min(val * 20, 100), width=10, palette=[52, 88, 124, 160, 196], use_color=use_color)
-            print(f"   {i:>2}. {u['label']:<18} media={val:6.3f} SM  {heat}")
+            heat = _gradient_bar(min(val * 16, 100), width=10, palette=[52, 88, 124, 160, 196], use_color=use_color)
+            print(f"   {i:>2}. {u['label']:<18} {val:6.3f} SM {heat}")
+        print()
+
+    if show("macro"):
+        print(_colorize(" Macro-regioes do Brasil", "1;38;5;39", use_color))
+        for mr in mode_data.get("macro_regions", []):
+            ppl = float(mr["persons_total"])
+            share = 100.0 * _safe_div(ppl, float(nat["persons_total"]) or 1.0)
+            avg = float(mr["avg_household_sm"])
+            mix = _stacked_mix_bar(
+                mr["bands"],
+                pct_key="persons_pct",
+                width=20,
+                colors=colors,
+                use_color=use_color,
+            )
+            pbar = _gradient_bar(share, width=12, palette=[17, 19, 21, 27, 33], use_color=use_color)
+            print(f"  {mr['label']:<12} pop={share:5.2f}% {pbar}  media={avg:5.2f} SM  mix={mix}")
+        print("")
+
+    if show("population"):
+        print(_colorize(" Top 10 UFs por populacao com mix de faixas", "1;38;5;33", use_color))
+        for i, u in enumerate(mode_data.get("top10_uf_population", []), start=1):
+            ppl = float(u["persons_total"])
+            share = 100.0 * _safe_div(ppl, float(nat["persons_total"]) or 1.0)
+            mix = _stacked_mix_bar(
+                u["bands"],
+                pct_key="persons_pct",
+                width=24,
+                colors=colors,
+                use_color=use_color,
+            )
+            print(f"  {i:>2}. {u['label']:<18} pop={share:5.2f}%  mix={mix}")
         print()
 
     if show("demography"):
-        for dim in ("sex", "race", "age", "education"):
-            print(_colorize(f"  Demografia: {dim}", 33, use_color))
-            rows = mode_data["demographics"][dim][:8]
-            for r in rows:
-                pct = float(r["pct"])
-                print(f"   - {r['label']:<28} {pct:6.2f}% {_gradient_bar(pct, width=20, palette=[240, 245, 250, 254, 15], use_color=use_color)}")
-            print()
+        print(_colorize(" Demografia compacta (multiplos recortes)", 33, use_color))
+        demo = mode_data.get("demographics", {})
+        dim_labels = payload.get("dimension_labels", {})
+        dim_order = mode_data.get("dimensions", [])
+        for dim in dim_order:
+            rows = demo.get(dim, [])
+            if not rows:
+                continue
+            top = rows[:4]
+            parts = [f"{str(x['label'])[:18]} {float(x['pct']):4.1f}%" for x in top]
+            label = dim_labels.get(dim, dim)
+            print(f"  {label:<22} " + " | ".join(parts))
+        print("")
 
-    if show("cross_sex"):
-        print(_colorize(" Cruzamento sexo x faixa (top 6)", 34, use_color))
-        for row in mode_data["cross"]["sex_by_band"][:6]:
-            parts = []
-            for b in payload["ranges"]:
-                pct = float(row["bands"][b]["pct_within_label"])
-                bi = payload["ranges"].index(b) % len(gradients)
-                parts.append(f"{b}:{pct:5.1f}% {_gradient_bar(pct, width=4, palette=gradients[bi], use_color=use_color)}")
-            print(f"   - {row['label']:<20} {' | '.join(parts)}")
-        print()
+    if show("cross"):
+        print(_colorize(" Cruzamentos principais x faixas de SM", 34, use_color))
+        cross = mode_data.get("cross", {})
+        dim_labels = payload.get("dimension_labels", {})
+        chosen_dims = ["sex", "race", "education", "age", "capital", "macro_region"]
+        for dim in chosen_dims:
+            key = f"{dim}_by_band"
+            rows = cross.get(key, [])
+            if not rows:
+                continue
+            print(_colorize(f"  {dim_labels.get(dim, dim)}", "1;38;5;117", use_color))
+            for row in rows[:3]:
+                parts = []
+                for b in payload["ranges"]:
+                    pct = float(row["bands"][b]["pct_within_label"])
+                    bi = payload["ranges"].index(b) % len(gradients)
+                    parts.append(
+                        f"{b}:{pct:4.1f}% {_gradient_bar(pct, width=3, palette=gradients[bi], use_color=use_color)}"
+                    )
+                print(f"   - {str(row['label'])[:18]:<18} {' | '.join(parts)}")
+            print("")
 
-    if show("cross_race"):
-        print(_colorize(" Cruzamento raca x faixa (top 6)", 34, use_color))
-        for row in mode_data["cross"]["race_by_band"][:6]:
-            parts = []
-            for b in payload["ranges"]:
-                pct = float(row["bands"][b]["pct_within_label"])
-                bi = payload["ranges"].index(b) % len(gradients)
-                parts.append(f"{b}:{pct:5.1f}% {_gradient_bar(pct, width=4, palette=gradients[bi], use_color=use_color)}")
-            print(f"   - {row['label']:<20} {' | '.join(parts)}")
+    if show("insights"):
+        ins = mode_data.get("insights", {})
+        if isinstance(ins, dict):
+            print(_colorize(" Termometro socioeconomico", "1;38;5;229", use_color))
+            low_label = str(ins.get("national_low_income_band", "") or "")
+            high_label = str(ins.get("national_high_income_band", "") or "")
+            low_pct = float(ins.get("national_low_income_pct", 0.0) or 0.0)
+            high_pct = float(ins.get("national_high_income_pct", 0.0) or 0.0)
+            print(
+                "  "
+                + _badge(f"{low_label or 'baixa':<8}", fg=16, bg=46, use_color=use_color)
+                + f" {low_pct:6.2f}% das pessoas"
+                + "  |  "
+                + _badge(f"{high_label or 'alta':<8}", fg=16, bg=15, use_color=use_color)
+                + f" {high_pct:6.2f}% das pessoas"
+            )
+            print(
+                f"  Renda media mais alta: {ins.get('richest_uf_by_avg_sm', 'N/A')} | "
+                f"mais baixa: {ins.get('poorest_uf_by_avg_sm', 'N/A')}"
+            )
+            print(
+                f"  Maior concentracao na faixa {low_label}: {ins.get('highest_low_income_uf', 'N/A')} | "
+                f"na faixa {high_label}: {ins.get('highest_high_income_uf', 'N/A')}"
+            )
+            left = [_colorize(f"  Top 10 UFs na faixa {low_label}", "1;38;5;46", use_color)]
+            right = [_colorize(f"  Top 10 UFs na faixa {high_label}", "1;38;5;15", use_color)]
+            for i, u in enumerate(mode_data.get("top10_uf_low_income", []), start=1):
+                pct = _band_pct(u, low_label)
+                bar = _gradient_bar(pct, width=8, palette=[22, 28, 34, 40, 46], use_color=use_color)
+                left.append(f"  {i:>2}. {u['label']:<18} {pct:5.2f}% {bar}")
+            for i, u in enumerate(mode_data.get("top10_uf_high_income", []), start=1):
+                pct = _band_pct(u, high_label)
+                bar = _gradient_bar(pct, width=8, palette=[248, 250, 252, 254, 15], use_color=use_color)
+                right.append(f"  {i:>2}. {u['label']:<18} {pct:5.2f}% {bar}")
+            _print_two_columns(left, right, width=58, gap=3)
+            print("")
+
+    if show("meta"):
+        md = payload.get("metadata", {})
+        if isinstance(md, dict):
+            print(_colorize(" Metadados de cobertura e qualidade", "1;38;5;250", use_color))
+            print(
+                f"  rows={md.get('rows_read')} | households={md.get('households')} | "
+                f"ufs={md.get('states_covered')} | dims={len(md.get('dimensions', []))}"
+            )
+            print(
+                f"  skips(period={md.get('skipped_missing_period')}, factor={md.get('skipped_missing_factor')}, "
+                f"sm={md.get('skipped_missing_sm')}, w_missing={md.get('skipped_missing_weight')}, "
+                f"w_invalid={md.get('skipped_invalid_weight')})"
+            )
         print()
 
 
 def _print_dashboard_pretty(payload: Dict[str, object], *, no_color: bool = False) -> None:
     use_color = _supports_color(no_color=no_color)
     title_style = "1;38;5;46"
+    print(_brazil_flag_strip(use_color))
     header = [
         _colorize("PNAD DASHBOARD ECONOMICO", title_style, use_color),
         f"Entrada: {payload.get('input')}",
@@ -1109,6 +1412,9 @@ def _print_dashboard_pretty(payload: Dict[str, object], *, no_color: bool = Fals
         header.append(
             f"Cobertura: {md.get('states_covered')} UFs | {md.get('households')} domicilios | linhas lidas={md.get('rows_read')}"
         )
+        dims = md.get("dimensions", [])
+        if isinstance(dims, list):
+            header.append(f"Recortes ativos: {', '.join(str(x) for x in dims)}")
     _panel("Panorama Geral", header, color="1;38;5;46", use_color=use_color)
     print("")
 
@@ -1128,7 +1434,7 @@ def _run_dashboard_interactive(payload: Dict[str, object], *, no_color: bool = F
         _print_dashboard_mode(payload, mode, no_color=no_color, section=section)
         print(
             "[n] proximo modo | [p] modo anterior | [1] overview | [2] ranking | "
-            "[3] demography | [4] cross_sex | [5] cross_race | [a] all | [q] sair"
+            "[3] macro | [4] population | [5] demography | [6] cross | [7] meta | [8] insights | [a] all | [q] sair"
         )
         try:
             ans = input("> ").strip().lower()
@@ -1152,13 +1458,22 @@ def _run_dashboard_interactive(payload: Dict[str, object], *, no_color: bool = F
             section = "ranking"
             continue
         if ans == "3":
-            section = "demography"
+            section = "macro"
             continue
         if ans == "4":
-            section = "cross_sex"
+            section = "population"
             continue
         if ans == "5":
-            section = "cross_race"
+            section = "demography"
+            continue
+        if ans == "6":
+            section = "cross"
+            continue
+        if ans == "7":
+            section = "meta"
+            continue
+        if ans == "8":
+            section = "insights"
             continue
 
 

@@ -19,8 +19,8 @@
   - `data/` scaffold only (`.gitkeep`).
 
 ## Core Commands
-- Inspect raw file: `head -n 20 data/PNADC_022025.txt`
-- Validate size: `wc -l data/PNADC_022025.txt`
+- Inspect raw file: `head -n 20 data/raw/PNADC_032025.txt`
+- Validate size: `wc -l data/raw/PNADC_032025.txt`
 - Run tests: `pytest -q`
 - Main CLI help: `python scripts/pnad.py --help`
 - Legacy command help: `python scripts/pnad.py help-legacy`
@@ -32,7 +32,7 @@
   - `pnad ibge-sync`
   - `pnad pipeline-run --raw latest`
   - `pnad renda-por-faixa-sm --input data/outputs/base_labeled.csv --group-by pais`
-  - `pnad dashboard --input data/outputs/base_labeled.csv --sm-mode both --interactive`
+  - `pnad dashboard --input data/outputs/base_labeled.csv --interactive`
 
 ## Pipeline Defaults
 - Pipeline command: `pnad pipeline-run`
@@ -103,4 +103,13 @@
 - `household-agg` streams rows and aggregates by `dom_id`.
 - `npv_deflators.py` applies deflators and minimum-wage conversion in streaming mode.
 - `pnad ibge-sync` refreshes monthly minimum wage from BCB SGS series `1619`.
-- `pnad dashboard` now supports rich terminal panels, rankings and interactive section navigation.
+- `pnad pipeline-run --raw latest` auto-resolves `target` (latest IPCA month) and `min_wage` from `salario_minimo.csv`.
+- `pnad renda-por-faixa-sm` and `pnad dashboard` default to weighted population estimates (`V1028`, fallback `V1027`).
+- `pnad dashboard` default `--sm-mode` is `alvo`; use `--sm-mode both` for period-vs-target comparison.
+- Terminal output now has high-contrast Brazilian palette by faixa:
+  - green (mais pobre), yellow (media baixa), blue (media alta), white (mais rica).
+- `--group-by uf` default ordering is `renda_desc` (richer to poorer by average household SM).
+- Dashboard sections now include:
+  - top 10 UFs by income and by population,
+  - macro-region panel,
+  - socioeconomic "thermometer" insights (richest/poorest UF and concentration in lowest/highest faixa).

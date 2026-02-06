@@ -158,6 +158,13 @@ pnad dashboard \
   --format json > data/outputs/dashboard.json
 ```
 
+O dashboard agora inclui:
+- Top 10 UFs por renda domiciliar em SM e Top 10 UFs por populacao estimada.
+- Painel por macro-regiao (Norte/Nordeste/Sudeste/Sul/Centro-Oeste) com mix por faixa.
+- Termometro socioeconomico com destaques automáticos (UF mais rica/pobre e concentracao nas faixas extrema baixa/extrema alta).
+- Faixa de cores BR em alto contraste no cabecalho e nas barras (verde, amarelo, azul e branco).
+- Recortes adicionais quando disponiveis no CSV (ex.: relacao no domicilio, condicao ocupacional, tipo/posicao de trabalho, RM/RIDE).
+
 ## Rebuild de SQLite
 
 ```bash
