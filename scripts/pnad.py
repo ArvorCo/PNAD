@@ -11,6 +11,7 @@ import shutil
 import sqlite3
 import subprocess
 import sys
+import xml.etree.ElementTree as ET
 import zipfile
 from collections import defaultdict
 from pathlib import Path
@@ -18,7 +19,6 @@ from typing import Dict, Iterable, List, Optional, Sequence, Tuple
 from urllib.error import HTTPError
 from urllib.parse import urlparse
 from urllib.request import Request, urlopen
-import xml.etree.ElementTree as ET
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = SCRIPT_DIR.parent
@@ -737,7 +737,7 @@ def _print_renda_pretty(payload: Dict[str, object], *, no_color: bool = False) -
             )
         pie = _mini_pie([b for b in bands if isinstance(b, dict)], colors, use_color)
         if pie:
-            print(f"  Pizza domicílios: {pie}")
+            print(f"  Distribuição domicílios: {pie}")
         print()
 
 
@@ -811,7 +811,8 @@ def _counter_to_sorted_rows(counter: Dict[str, float], total: float) -> List[Dic
 
 def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
     try:
-        from npv_deflators import build_deflators, read_ipca_csv  # type: ignore
+        from npv_deflators import build_deflators  # type: ignore
+        from npv_deflators import read_ipca_csv
     except Exception as exc:
         raise ValueError(f"could not import deflator helpers: {exc}") from exc
 
@@ -1379,7 +1380,23 @@ def _print_dashboard_mode(
 
     if show("macro"):
         print(_colorize(" Macro-regioes do Brasil", "1;38;5;39", use_color))
-        for mr in mode_data.get("macro_regions", []):
+        macro_list = mode_data.get("macro_regions", [])
+        macro_map: Dict[str, Dict[str, object]] = {}
+        if isinstance(macro_list, list):
+            for mr in macro_list:
+                if isinstance(mr, dict):
+                    macro_map[str(mr.get("group", ""))] = mr
+
+        for macro_name in [m for m in MACRO_REGION_ORDER if m != "Desconhecida"]:
+            mr = macro_map.get(macro_name)
+            if not isinstance(mr, dict):
+                mr = {
+                    "group": macro_name,
+                    "label": macro_name,
+                    "persons_total": 0.0,
+                    "avg_household_sm": 0.0,
+                    "bands": [],
+                }
             ppl = float(mr["persons_total"])
             share = 100.0 * _safe_div(ppl, float(nat["persons_total"]) or 1.0)
             avg = float(mr["avg_household_sm"])
@@ -1828,7 +1845,8 @@ def cmd_renda_por_faixa_sm(args: argparse.Namespace) -> int:
         return 2
 
     try:
-        from npv_deflators import build_deflators, read_ipca_csv  # type: ignore
+        from npv_deflators import build_deflators  # type: ignore
+        from npv_deflators import read_ipca_csv
     except Exception as exc:
         print(f"ERROR: could not import deflator helpers: {exc}", file=sys.stderr)
         return 2
