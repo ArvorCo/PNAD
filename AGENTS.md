@@ -1,74 +1,106 @@
 # Repository Guidelines
 
+## Single Source of Truth
+- Agent instructions live in `AGENTS.md`.
+- `CLAUDE.md` and `GEMINI.md` should be symlinks to this file.
+
 ## Project Structure & Module Organization
-- Root contains PNAD/PNADC data and documentation:
-  - `PNADC_*.txt`: raw data extracts (e.g., `PNADC_012025.txt`).
-  - `INPUT_SNIPC*.txt` and `INPUT_SNIPC_PNADC.sas.txt`: input layouts/mappings.
-  - `Corresp_var_SNIPC_PNADC.doc`, `Definicao_variaveis_derivadas.pdf`, `Variaveis_PNADC_Trimestral.xls`: reference docs.
-  - `README.md`: repository overview. Add any new notes here.
-- If adding code, use:
-  - `scripts/` for Python/R/CLI utilities.
+- Runtime data layout (local, heavy files ignored):
+  - `data/raw/`: PNADC `.zip` / `.txt`.
+  - `data/originals/`: IBGE docs/layouts + `salario_minimo.csv`.
+  - `data/outputs/`: `base*.csv`, `ipca.csv`, `pnad.sqlite`.
+- Root docs/metadata:
+  - `README.md`: usage and operational docs.
+  - `AGENTS.md`: repository guidance.
+- Code and analysis:
+  - `scripts/` for Python CLI/utilities.
   - `notebooks/` for exploratory analyses.
-  - `tests/` for automated tests.
+  - `tests/` for `pytest` automated tests.
+  - `data/` scaffold only (`.gitkeep`).
 
-## Build, Test, and Development Commands
-- Inspect files: `head -n 20 PNADC_012025.txt` — quick preview of raw data.
-- Search fields: `rg "^" -n PNADC_012025.txt` — sample line numbers to gauge size.
-- Validate row count: `wc -l PNADC_012025.txt` — basic completeness check.
-- Run a script (example): `python scripts/parse_pnadc.py PNADC_012025.txt -o out/`.
+## Core Commands
+- Inspect raw file: `head -n 20 data/PNADC_022025.txt`
+- Validate size: `wc -l data/PNADC_022025.txt`
+- Run tests: `pytest -q`
+- Main CLI help: `python scripts/pnad.py --help`
+- Legacy command help: `python scripts/pnad.py help-legacy`
 
-## Coding Style & Naming Conventions
-- Languages: prefer Python (PEP 8; 4‑space indent) or R (tidyverse style). Keep scripts self‑contained and documented.
-- Filenames: use `kebab-case` for scripts (e.g., `scripts/build-dictionary.py`).
-- Data files: follow `PNADC_MMYYYY.txt` pattern for monthly snapshots.
-- Optional tools if adding Python code: format with `black`, lint with `ruff`.
+## Installable CLI (`pnad`)
+- Install locally: `pip install -e .`
+- Then use directly:
+  - `pnad --help`
+  - `pnad ibge-sync`
+  - `pnad pipeline-run --raw latest`
+  - `pnad renda-por-faixa-sm --input data/outputs/base_labeled.csv --group-by pais`
+  - `pnad dashboard --input data/outputs/base_labeled.csv --sm-mode both --interactive`
+
+## Pipeline Defaults
+- Pipeline command: `pnad pipeline-run`
+- Steps executed:
+  - emit code tables (`emit-codes`)
+  - fixed-width extraction (`fwf-extract`)
+  - code label join (`join-codes`)
+  - IPCA refresh (`fetch_ipca.py`)
+  - NPV adjustment (`npv_deflators.py apply`)
+  - SQLite build (optional, on by default in pipeline)
+- Outputs in `data/outputs/`:
+  - `base.csv`, `base_labeled.csv`, `base_labeled_npv.csv`
+  - `ipca.csv`
+  - `pnad.sqlite` (table `base_labeled_npv`)
+- Automatic defaults in `pipeline-run`:
+  - If `--target` is omitted, use latest month from `--ipca-csv`.
+  - If `--min-wage` is omitted, resolve from `--salario-minimo-csv` at or before target.
+  - Manifest includes `target`, `min_wage`, `min_wage_source_month`.
+
+## Key Data Variables
+- Income:
+  - `VD4019__rendim_habitual_qq_trabalho`
+  - `VD4020__rendim_efetivo_qq_trabalho`
+  - NPV-adjusted suffix: `_<YYYYMM>`
+  - Minimum-wage suffix: `_mw`
+- Geography:
+  - `UF__unidade_da_federao`, `Capital__municpio_da_capital`, `RM_RIDE__reg_metr_e_reg_adm_int_des`
+- Household:
+  - `dom_id` composed from `Ano`, `Trimestre`, `UPA`, `V1008`
+
+## Income Methodology
+- Bands: `0-2`, `2-5`, `5-10`, `10+` minimum wages.
+- Minimum wage source: `data/originals/salario_minimo.csv` (updated by `pnad ibge-sync`).
+- Deflator: IPCA monthly index to target month (default = latest month in series).
+- Per-capita income: household total divided by `VD2003__nmero_de_componentes_do_domic`.
+- Weighted estimation default:
+  - Use `V1028` (fallback `V1027`) for population distribution.
+  - `--unweighted` is diagnostic only (not official estimate).
+
+## Coding Style & Naming
+- Prefer Python (PEP 8, 4 spaces).
+- Script naming: `kebab-case` (new files), keep existing names for compatibility.
+- Keep scripts stream-first for large data; avoid loading full files in memory when not needed.
 
 ## Testing Guidelines
-- Place tests in `tests/` using `pytest` with names like `test_*.py`.
-- Aim to cover parsing, type conversion, and schema validation.
-- Run tests: `pytest -q`.
+- Tests in `tests/`, names `test_*.py`.
+- Cover parsing, type conversion, schema checks, and CLI behavior.
+- Run `pytest -q` before merging.
 
-## Commit & Pull Request Guidelines
-- Commits: imperative mood, concise scope, e.g., `add parser for PNADC_022025 layout`.
-- PRs should include:
-  - Purpose and summary of changes.
-  - Sample commands/data used for validation.
-  - Notes on data schema changes and backward compatibility.
-  - Screenshots or snippets when relevant (e.g., sample rows).
+## Commit & PR Guidelines
+- Commit style: imperative + scoped (example: `add pnad pipeline-run sqlite refresh`).
+- PR should include:
+  - purpose and change summary
+  - commands used for validation
+  - backward-compat notes (schema/column changes)
 
 ## Security & Data Handling
-- Do not commit sensitive or proprietary data beyond approved samples.
-- Prefer lightweight samples in `samples/` for testing; avoid large uploads.
-- Normalize line endings to LF; document encodings if not UTF‑8.
-- If adding large binaries, consider Git LFS and update `README.md` accordingly.
+- Avoid committing sensitive or proprietary data.
+- Prefer lightweight samples in `samples/` for tests.
+- Normalize line endings to LF.
+- Use Git LFS for large binaries when needed.
 
-## Lessons Learned (from code)
-- Safe filtering: Use AST transformation to compile restricted row expressions (only literals, comparisons, boolean/arithmetic ops, and safe builtins like `int/float/str/len`). Evaluates with a constrained environment to avoid code injection (`pnadc_cli.RowExpr`).
-- Stream-first design: Read files with `csv` iterators and `utf-8-sig` handling; avoid loading entire datasets in memory. Use reservoir sampling for quick previews.
-- Robust delimiter/header detection: `parse_pnadc.sniff_delimiter` combines `csv.Sniffer` with fallback heuristics; treat semicolons/commas/tabs/pipes and detect probable headers.
-- SAS layout parsing: `layout_sas.parse_layout` understands `@pos NAME $/NUM.` patterns, extracts labels from `/* ... */`, normalizes to ASCII slugs, and keeps stable field ordering. Works for fixed-width extraction and schema emission.
-- Derived columns in FWF: `fwf-extract` can synthesize `data_nascimento` from day/month/year and builds `dom_id` from `Ano+Trimestre+UPA+V1008` for household aggregation.
-- Code tables workflow: `dict-extract` (pandas/xlrd) heuristically infers code/label columns from the dictionary Excel; `emit-codes` provides curated mappings; `join-codes` appends `*_label` columns (handles zero-padded and non-padded codes).
-- Household aggregation: `household-agg` streams CSV, sums selected income columns per `dom_id`, and carries the first non-empty values for grouping columns; outputs `household_persons` and `household_income`.
-- Tests as guidance: Unit tests cover delimiter sniffing/sampling, safe filter expressions, and SAS layout parsing. Run with `pytest -q`.
-
-## Income Analysis Methodology
-- Income bands: Standard categorization at 0-2, 2-5, 5-10, 10+ minimum wages (MW = R$ 1,518).
-- Household vs Individual: Always distinguish between individual income (`VD4020`) and household aggregated income.
-- Per capita income: Calculate by dividing household total by `VD2003__nmero_de_componentes_do_domic`.
-- NPV adjustment: Apply IPCA deflators to bring all values to current month prices (default: Jul/2025).
-- Statistical tests: Use non-parametric tests (Mann-Whitney, Kruskal-Wallis) due to skewed income distributions.
-
-## Visualization Best Practices
-- Color schemes: Use RdYlGn for income (red=low, green=high) or sequential blues for single metrics.
-- Interactive maps: Fetch Brazil GeoJSON from IBGE API for choropleth maps by state.
-- Income histograms: Cap at reasonable limits (20 MW individual, 30 MW household) for clarity.
-- Always include: Median lines, quartile ranges, and sample sizes in visualizations.
-- Portuguese labels: Use proper Portuguese terms for publication-ready graphics.
-
-## Predictive Modeling Guidelines
-- Feature engineering: Encode categorical variables (UF, education) with LabelEncoder or one-hot.
-- Model selection: Random Forest and Gradient Boosting typically achieve R² ~0.40-0.45.
-- Key predictors: Education level, age, state, and urban/rural status are strongest predictors.
-- Validation: Always use train-test split (80-20) and report MAE, RMSE, and R² scores.
-- Feature importance: Display and interpret to understand income determinants.
+## Lessons Learned
+- Safe filtering uses restricted AST compilation (`pnadc_cli.RowExpr`).
+- Delimiter/header detection uses `parse_pnadc.sniff_delimiter` with fallbacks.
+- SAS layout parser (`layout_sas.parse_layout`) supports labels/slugs and stable ordering.
+- `fwf-extract` can derive `data_nascimento` and `dom_id`.
+- `household-agg` streams rows and aggregates by `dom_id`.
+- `npv_deflators.py` applies deflators and minimum-wage conversion in streaming mode.
+- `pnad ibge-sync` refreshes monthly minimum wage from BCB SGS series `1619`.
+- `pnad dashboard` now supports rich terminal panels, rankings and interactive section navigation.

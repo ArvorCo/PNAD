@@ -73,6 +73,15 @@ All notable changes to this project are documented here.
 - Added fallback options for geographic data fetching
 
 ## Unreleased
+- Add installable `pnad` CLI entrypoint via `pyproject.toml`:
+  - New `scripts/pnad.py` command with:
+    - `pipeline-run` to orchestrate extract/label/NPV refresh and SQLite rebuild.
+    - `download-pnadc` for raw file acquisition from explicit URLs.
+    - `download-news` for RSS ingestion filtered by keyword.
+    - `sqlite-build` for CSV -> SQLite table loading with type inference and optional indexes.
+  - Legacy `pnadc_cli` subcommands remain available directly through `pnad` pass-through.
+- Consolidate agent guidance into `AGENTS.md` and replace `CLAUDE.md`/`GEMINI.md` with symlinks.
+- Rewrite `README.md` with operational quickstart focused on `pnad --help` and automation flows.
 - Add streaming CLI `scripts/pnadc_cli.py` with subcommands:
   - `inspect`, `head`, `select`, `filter`, `sample`, `agg` for CSV-like PNADC files.
   - `layout`, `fwf-extract`, `fwf-schema` to parse SAS layouts and extract fixed-width fields.

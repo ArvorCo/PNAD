@@ -405,7 +405,7 @@ def cmd_agg(args: argparse.Namespace) -> int:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    p = argparse.ArgumentParser(prog="pnadc", description="Stream PNADC files and query them via CLI")
+    p = argparse.ArgumentParser(prog="pnad", description="Stream PNADC files and query them via CLI")
     sub = p.add_subparsers(dest="cmd", required=True)
 
     pi = sub.add_parser("inspect", help="Detect delimiter, header and preview columns")
@@ -535,7 +535,7 @@ def _cmd_layout(args: argparse.Namespace) -> int:
 
 
 DEFAULT_KEEP = (
-    "Ano,Trimestre,UF,Capital,RM_RIDE,UPA,V1008,V1014,"
+    "Ano,Trimestre,UF,Capital,RM_RIDE,UPA,V1008,V1014,V1027,V1028,"
     "V2007,V2005,V2009,V2010,V3001,V3003A,V3009A,"
     "V2008,V20081,V20082,VD2003,"
     "VD4011,VD4014,VD4015,VD4016,VD4017,VD4018,VD4019,VD4020,"
@@ -587,7 +587,7 @@ def cmd_fwf_extract(args: argparse.Namespace) -> int:
     # Compose selection honoring priority order, then ascending names for the rest
     selected_all = [idx[k] for k in keep if k in idx]
     priority = [
-        "Ano","Trimestre","UF","Capital","RM_RIDE","UPA","V1008","V1014",
+        "Ano","Trimestre","UF","Capital","RM_RIDE","UPA","V1008","V1014","V1027","V1028",
         "V2007","V2005","V2009","V2010","V3001","V3003A","V3009A",
         "V2008","V20081","V20082","VD2003",
     ]

@@ -5,12 +5,34 @@ out/
 __pycache__/
 .pytest_cache/
 .venv/
-data/
+build/
+*.egg-info/
+
+# Data scaffold (keep folders, ignore heavy content)
+data/*
+!data/.gitkeep
+!data/raw/
+!data/originals/
+!data/outputs/
+data/raw/*
+!data/raw/.gitkeep
+data/originals/*
+!data/originals/.gitkeep
+data/outputs/*
+!data/outputs/.gitkeep
 
 # OS artifacts
 .DS_Store
 
-# Large data patterns (keep raw PNADC files intentionally tracked)
+# Sample/generated data
 samples/*.csv
 samples/*.parquet
 .env
+
+# Legacy root artifacts (keep these under data/raw or data/originals)
+/PNADC_*.txt
+/input_PNADC_trimestral.sas
+/input_PNADC_trimestral.txt
+/dicionario_PNADC_microdados_trimestral.xls
+/Variaveis_PNADC_Trimestral.xls
+/Definicao_variaveis.pdf

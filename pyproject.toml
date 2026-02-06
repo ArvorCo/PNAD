@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pnad-cli"
+version = "0.3.0"
+description = "CLI for PNADC data download, processing, and SQLite refresh"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.scripts]
+pnad = "scripts.pnad:main"
+
+[tool.setuptools.packages.find]
+include = ["scripts", "scripts.*"]
