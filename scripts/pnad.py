@@ -824,6 +824,32 @@ def _age_band(age_value: str) -> str:
     return "60+"
 
 
+def _age_label_sort_key(label: str) -> Tuple[int, str]:
+    s = str(label).strip()
+    if s == "sem_idade":
+        return (9999, s)
+    m = re.match(r"^(\d+)\s*-\s*(\d+)$", s)
+    if m:
+        return (int(m.group(1)), s)
+    m = re.match(r"^(\d+)\s*\+$", s)
+    if m:
+        return (int(m.group(1)), s)
+    return (9000, s.lower())
+
+
+def _sex_bucket(value: str) -> str:
+    t = _norm_text(value)
+    if t in ("1", "homem", "masculino"):
+        return "M"
+    if t in ("2", "mulher", "feminino"):
+        return "F"
+    if "homem" in t or "masc" in t:
+        return "M"
+    if "mulher" in t or "fem" in t:
+        return "F"
+    return "O"
+
+
 def _counter_to_sorted_rows(counter: Dict[str, float], total: float) -> List[Dict[str, object]]:
     rows = []
     for k, v in counter.items():
@@ -1017,6 +1043,7 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
                     "sm_period": float(sm_nominal),
                     "ym": ym,
                     "dim_counts": {k: defaultdict(float) for k in dim_keys},
+                    "age_sex_counts": defaultdict(lambda: defaultdict(float)),
                 }
                 households[dom] = st
 
@@ -1051,6 +1078,8 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
             dim_counts = st["dim_counts"]
             for dim, value in row_dims.items():
                 dim_counts[dim][str(value)] += sw
+            age_sex_counts = st["age_sex_counts"]
+            age_sex_counts[str(age_band or "sem_idade")][_sex_bucket(sex)] += sw
 
     modes = ["periodo", "alvo"] if args.sm_mode == "both" else [args.sm_mode]
     modes_out: Dict[str, object] = {}
@@ -1067,6 +1096,7 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
         macro_stats: Dict[str, Dict[str, object]] = {}
         demo = {k: defaultdict(float) for k in dim_keys}
         cross = {k: defaultdict(lambda: defaultdict(float)) for k in dim_keys}
+        age_sex = defaultdict(lambda: defaultdict(float))
         ratio_pairs: List[Tuple[float, float]] = []
         sm_ref_weighted_sum = 0.0
         sm_ref_weight_total = 0.0
@@ -1141,6 +1171,13 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
                 for lbl, val in src.items():
                     demo[dim][str(lbl)] += float(val)
                     cross[dim][str(lbl)][band] += float(val)
+            age_sex_counts = h.get("age_sex_counts", {})
+            if isinstance(age_sex_counts, dict):
+                for age_lbl, sx_map in age_sex_counts.items():
+                    if not isinstance(sx_map, dict):
+                        continue
+                    for sx, val in sx_map.items():
+                        age_sex[str(age_lbl)][str(sx)] += float(val)
 
         def finalize_group(g: Dict[str, object]) -> Dict[str, object]:
             hh_total = float(g["households_total"])
@@ -1206,7 +1243,12 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
         )
 
         persons_total = float(national_out["persons_total"])
-        demographics_out = {k: _counter_to_sorted_rows(v, persons_total) for k, v in demo.items()}
+        demographics_out: Dict[str, List[Dict[str, object]]] = {}
+        for k, v in demo.items():
+            rows = _counter_to_sorted_rows(v, persons_total)
+            if k == "age":
+                rows.sort(key=lambda r: _age_label_sort_key(str(r.get("label", ""))))
+            demographics_out[k] = rows
 
         def cross_rows(src: Dict[str, Dict[str, float]]) -> List[Dict[str, object]]:
             rows = []
@@ -1225,6 +1267,28 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
             return rows
 
         cross_out = {f"{k}_by_band": cross_rows(v) for k, v in cross.items()}
+        age_pyramid_rows: List[Dict[str, object]] = []
+        for age_lbl in sorted(age_sex.keys(), key=_age_label_sort_key):
+            sx_map = age_sex[age_lbl]
+            female = float(sx_map.get("F", 0.0))
+            male = float(sx_map.get("M", 0.0))
+            other = float(sx_map.get("O", 0.0))
+            total_age = female + male + other
+            age_pyramid_rows.append(
+                {
+                    "age": age_lbl,
+                    "female": female,
+                    "male": male,
+                    "other": other,
+                    "total": total_age,
+                    "female_pct": round(100.0 * _safe_div(female, persons_total), 4),
+                    "male_pct": round(100.0 * _safe_div(male, persons_total), 4),
+                    "other_pct": round(100.0 * _safe_div(other, persons_total), 4),
+                    "female_within_age_pct": round(100.0 * _safe_div(female, total_age), 4),
+                    "male_within_age_pct": round(100.0 * _safe_div(male, total_age), 4),
+                    "other_within_age_pct": round(100.0 * _safe_div(other, total_age), 4),
+                }
+            )
         sm_reference_value = _safe_div(sm_ref_weighted_sum, sm_ref_weight_total)
         if sm_reference_value <= 0:
             sm_reference_value = float(sm_target_nominal)
@@ -1261,6 +1325,7 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
             "ranges_money": ranges_money,
             "insights": insights,
             "demographics": demographics_out,
+            "age_pyramid": age_pyramid_rows,
             "dimensions": dim_keys,
             "cross": cross_out,
         }
@@ -1471,6 +1536,21 @@ def _print_dashboard_mode(
                 if unknown_pct > 0:
                     show_rows.append({"label": "Desconhecida", "pct": unknown_pct})
                 hidden_pct = 0.0
+            elif dim == "age":
+                known_rows = []
+                missing_pct = 0.0
+                for x in rows:
+                    lbl = str(x.get("label", ""))
+                    pct = float(x.get("pct", 0.0) or 0.0)
+                    if _is_missing_label(lbl):
+                        missing_pct += pct
+                    else:
+                        known_rows.append({"label": lbl, "pct": pct})
+                known_rows.sort(key=lambda r: _age_label_sort_key(str(r.get("label", ""))))
+                show_rows = known_rows
+                hidden_pct = 0.0
+                if missing_pct > 0:
+                    show_rows.append({"label": "Sem idade", "pct": missing_pct})
             else:
                 known_rows = []
                 missing_pct = 0.0
@@ -1507,6 +1587,50 @@ def _print_dashboard_mode(
                 print(f"   - {'Outros':<30} {hidden_pct:5.1f}% {other_bar}")
             print("")
         print("")
+
+    if show("pyramid"):
+        print(_colorize(" Piramide etaria (sexo x idade)", "1;38;5;45", use_color))
+        pyramid = mode_data.get("age_pyramid", [])
+        if not isinstance(pyramid, list) or not pyramid:
+            print("  Sem dados suficientes para piramide etaria.\n")
+        else:
+            max_pct = 0.0
+            for row in pyramid:
+                if not isinstance(row, dict):
+                    continue
+                max_pct = max(max_pct, float(row.get("female_pct", 0.0) or 0.0), float(row.get("male_pct", 0.0) or 0.0))
+            max_pct = max(max_pct, 1.0)
+            width = 16
+            print(
+                "  "
+                + _colorize("Mulher".rjust(width), "1;38;5;226", use_color)
+                + " "
+                + "Idade".center(8)
+                + " "
+                + _colorize("Homem".ljust(width), "1;38;5;21", use_color)
+                + "   %F/%M"
+            )
+            print("  " + "─" * (width * 2 + 19))
+            other_total_pct = 0.0
+            for row in pyramid:
+                if not isinstance(row, dict):
+                    continue
+                age_lbl = str(row.get("age", ""))
+                female_pct = float(row.get("female_pct", 0.0) or 0.0)
+                male_pct = float(row.get("male_pct", 0.0) or 0.0)
+                other_total_pct += float(row.get("other_pct", 0.0) or 0.0)
+
+                f_len = int(round(width * female_pct / max_pct))
+                m_len = int(round(width * male_pct / max_pct))
+                f_len = max(0, min(width, f_len))
+                m_len = max(0, min(width, m_len))
+
+                left = " " * (width - f_len) + _colorize("█" * f_len, "1;38;5;226", use_color)
+                right = _colorize("█" * m_len, "1;38;5;21", use_color) + " " * (width - m_len)
+                print(f"  {left} {age_lbl:^8} {right}  {female_pct:4.1f}%/{male_pct:4.1f}%")
+            if other_total_pct > 0.01:
+                print(f"  Outros/sem info de sexo: {other_total_pct:.2f}%")
+            print("")
 
     if show("cross"):
         print(_colorize(" Cruzamentos principais x faixas de SM", 34, use_color))
@@ -1624,7 +1748,7 @@ def _run_dashboard_interactive(payload: Dict[str, object], *, no_color: bool = F
         _print_dashboard_mode(payload, mode, no_color=no_color, section=section)
         print(
             "[n] proximo modo | [p] modo anterior | [1] overview | [2] ranking | "
-            "[3] macro | [4] population | [5] demography | [6] cross | [7] meta | [8] insights | [a] all | [q] sair"
+            "[3] macro | [4] population | [5] demography | [6] pyramid | [7] cross | [8] meta | [9] insights | [a] all | [q] sair"
         )
         try:
             ans = input("> ").strip().lower()
@@ -1657,12 +1781,15 @@ def _run_dashboard_interactive(payload: Dict[str, object], *, no_color: bool = F
             section = "demography"
             continue
         if ans == "6":
-            section = "cross"
+            section = "pyramid"
             continue
         if ans == "7":
-            section = "meta"
+            section = "cross"
             continue
         if ans == "8":
+            section = "meta"
+            continue
+        if ans == "9":
             section = "insights"
             continue
 

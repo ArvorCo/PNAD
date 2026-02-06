@@ -91,9 +91,12 @@ def test_dashboard_json_sm_modes(capsys, tmp_path: Path):
     assert "ranges_money" in payload["modes"]["periodo"]
     assert payload["modes"]["periodo"]["sm_reference_value"] > 0
     assert "R$" in payload["modes"]["periodo"]["ranges_money"][0]["money_label"]
+    assert "age_pyramid" in payload["modes"]["periodo"]
+    assert payload["modes"]["periodo"]["age_pyramid"][0]["age"] == "25-39"
     assert "insights" in payload["modes"]["periodo"]
     assert payload["modes"]["periodo"]["insights"]["richest_uf_by_avg_sm"] == "Sao Paulo"
     assert "R$" in payload["modes"]["periodo"]["insights"]["national_low_income_money"]
     assert "dimension_labels" in payload
     assert payload["dimension_labels"]["macro_region"] == "Macro-regiao"
+    assert payload["modes"]["periodo"]["demographics"]["age"][0]["label"] == "25-39"
     assert "education_by_band" in payload["modes"]["periodo"]["cross"]

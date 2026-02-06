@@ -165,6 +165,7 @@ O dashboard agora inclui:
 - Termometro socioeconomico com destaques automáticos (UF mais rica/pobre e concentracao nas faixas extrema baixa/extrema alta).
 - Faixa de cores BR em alto contraste no cabecalho e nas barras (verde, amarelo, azul e branco).
 - Legenda de faixas em `R$` (ex.: `0-2 SM = R$ 0,00 a R$ ...`) usando SM de referencia do modo.
+- Piramide etaria (sexo x idade) em painel dedicado, com idades ordenadas de forma crescente.
 - Recortes adicionais quando disponiveis no CSV (ex.: relacao no domicilio, condicao ocupacional, tipo/posicao de trabalho, RM/RIDE).
 
 ## Rebuild de SQLite
