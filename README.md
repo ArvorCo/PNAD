@@ -52,6 +52,7 @@ pnad --help
 pnad ibge-sync --help
 pnad pipeline-run --help
 pnad sqlite-build --help
+pnad query --help
 pnad renda-por-faixa-sm --help
 pnad dashboard --help
 ```
@@ -177,6 +178,39 @@ pnad sqlite-build \
   --db data/outputs/pnad.sqlite \
   --table base_labeled_npv
 ```
+
+## Query SQL para LLMs (`pnad query`)
+
+`pnad query` roda SQL direto no SQLite e retorna JSON por padrão (ideal para uso por LLMs e automações).
+
+```bash
+# listar tabelas
+pnad query \
+  --db data/outputs/pnad.sqlite \
+  --sql "SELECT name FROM sqlite_master WHERE type='table' ORDER BY name"
+
+# schema de uma tabela
+pnad query \
+  --db data/outputs/pnad.sqlite \
+  --sql "PRAGMA table_info(base_labeled_npv)"
+
+# top UFs por renda média (exemplo)
+pnad query \
+  --db data/outputs/pnad.sqlite \
+  --sql "SELECT UF__unidade_da_federao AS uf, AVG(VD4020__rendim_efetivo_qq_trabalho) AS renda_media FROM base_labeled_npv GROUP BY 1 ORDER BY 2 DESC LIMIT 10"
+
+# modo tabela para leitura humana
+pnad query \
+  --db data/outputs/pnad.sqlite \
+  --sql "SELECT UF__unidade_da_federao, COUNT(*) AS n FROM base_labeled_npv GROUP BY 1 ORDER BY 2 DESC LIMIT 10" \
+  --format table
+```
+
+Observacoes:
+- Formato padrao: `json`.
+- Segurança por padrão: apenas SQL de leitura (`SELECT/WITH/PRAGMA/EXPLAIN`).
+- Limite padrão de retorno: `--max-rows 200` (com flag de truncamento no payload).
+- Também aceita SQL por arquivo (`--sql-file`) ou `stdin` (pipe).
 
 ## Comandos legados
 

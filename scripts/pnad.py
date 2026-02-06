@@ -11,6 +11,7 @@ import shutil
 import sqlite3
 import subprocess
 import sys
+import time
 import xml.etree.ElementTree as ET
 import zipfile
 from collections import defaultdict
@@ -2687,6 +2688,189 @@ def cmd_sqlite_build(args: argparse.Namespace) -> int:
     return 0
 
 
+def _strip_sql_comments(sql: str) -> str:
+    no_block = re.sub(r"/\*.*?\*/", " ", sql, flags=re.DOTALL)
+    lines = []
+    for ln in no_block.splitlines():
+        if "--" in ln:
+            ln = ln.split("--", 1)[0]
+        lines.append(ln)
+    return "\n".join(lines)
+
+
+def _is_read_only_sql(sql: str) -> bool:
+    cleaned = _strip_sql_comments(sql).strip()
+    if not cleaned:
+        return False
+
+    forbidden = re.compile(
+        r"\b(?:INSERT|UPDATE|DELETE|REPLACE|DROP|ALTER|CREATE|ATTACH|DETACH|VACUUM|REINDEX|ANALYZE|"
+        r"BEGIN|COMMIT|ROLLBACK|SAVEPOINT|RELEASE)\b",
+        flags=re.IGNORECASE,
+    )
+    if forbidden.search(cleaned):
+        return False
+
+    statements = [s.strip() for s in cleaned.split(";") if s.strip()]
+    if not statements:
+        return False
+    for stmt in statements:
+        m = re.match(r"^([A-Za-z_]+)", stmt)
+        if not m:
+            return False
+        head = m.group(1).upper()
+        if head not in {"SELECT", "WITH", "PRAGMA", "EXPLAIN"}:
+            return False
+    return True
+
+
+def _read_query_sql(args: argparse.Namespace) -> str:
+    sql_cli = str(args.sql or "").strip()
+    sql_file = str(args.sql_file or "").strip()
+    if sql_cli and sql_file:
+        raise ValueError("use either --sql or --sql-file, not both")
+    if sql_file:
+        path = Path(sql_file)
+        if not path.exists():
+            raise ValueError(f"sql file not found: {path}")
+        return path.read_text(encoding="utf-8")
+    if sql_cli:
+        return sql_cli
+    if not sys.stdin.isatty():
+        return sys.stdin.read()
+    raise ValueError("missing SQL. Use --sql, --sql-file, or pipe SQL via stdin")
+
+
+def _cell_text(value: object) -> str:
+    if value is None:
+        return "null"
+    if isinstance(value, float):
+        return f"{value:.10g}"
+    return str(value)
+
+
+def _truncate_cell(value: str, width: int) -> str:
+    if width <= 1:
+        return value[:width]
+    if len(value) <= width:
+        return value
+    return value[: width - 1] + "…"
+
+
+def _format_table(rows: Sequence[Dict[str, object]], columns: Sequence[str], *, max_col_width: int = 48) -> str:
+    cols = [str(c) for c in columns]
+    if not cols:
+        return "(sem colunas)"
+
+    widths = [len(c) for c in cols]
+    matrix: List[List[str]] = []
+    for row in rows:
+        row_cells: List[str] = []
+        for i, c in enumerate(cols):
+            txt = _cell_text(row.get(c))
+            row_cells.append(txt)
+            widths[i] = min(max(widths[i], len(txt)), max_col_width)
+        matrix.append(row_cells)
+
+    widths = [max(1, min(w, max_col_width)) for w in widths]
+    sep = "+-" + "-+-".join("-" * w for w in widths) + "-+"
+    header = "| " + " | ".join(cols[i].ljust(widths[i]) for i in range(len(cols))) + " |"
+    out = [sep, header, sep]
+    for row_cells in matrix:
+        out.append(
+            "| "
+            + " | ".join(_truncate_cell(row_cells[i], widths[i]).ljust(widths[i]) for i in range(len(cols)))
+            + " |"
+        )
+    out.append(sep)
+    return "\n".join(out)
+
+
+def cmd_query(args: argparse.Namespace) -> int:
+    try:
+        sql = _read_query_sql(args)
+    except Exception as exc:
+        print(f"ERROR: {exc}", file=sys.stderr)
+        return 2
+
+    db_path = Path(args.db)
+    if not db_path.exists():
+        print(f"ERROR: sqlite db not found: {db_path}", file=sys.stderr)
+        return 2
+
+    if not args.allow_write and not _is_read_only_sql(sql):
+        print(
+            "ERROR: only read-only SQL is allowed by default. "
+            "Use SELECT/WITH/PRAGMA/EXPLAIN or pass --allow-write explicitly.",
+            file=sys.stderr,
+        )
+        return 2
+
+    started = time.perf_counter()
+    conn: Optional[sqlite3.Connection] = None
+    try:
+        if args.allow_write:
+            conn = sqlite3.connect(db_path, timeout=float(args.timeout))
+        else:
+            conn = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True, timeout=float(args.timeout))
+        conn.row_factory = sqlite3.Row
+        with conn:
+            cur = conn.cursor()
+            cur.execute(sql)
+            columns = [str(d[0]) for d in (cur.description or [])]
+            rows: List[Dict[str, object]] = []
+            truncated = False
+            if columns:
+                limit = max(1, int(args.max_rows))
+                fetched = cur.fetchmany(limit + 1)
+                if len(fetched) > limit:
+                    truncated = True
+                    fetched = fetched[:limit]
+                rows = [{k: row[k] for k in columns} for row in fetched]
+            else:
+                if args.allow_write:
+                    conn.commit()
+    except Exception as exc:
+        print(f"ERROR: query failed: {exc}", file=sys.stderr)
+        return 2
+    finally:
+        try:
+            if conn is not None:
+                conn.close()
+        except Exception:
+            pass
+
+    elapsed_ms = round((time.perf_counter() - started) * 1000.0, 3)
+    payload = {
+        "db": str(db_path),
+        "sql": sql.strip(),
+        "columns": columns,
+        "rows": rows,
+        "row_count": len(rows),
+        "truncated": truncated,
+        "max_rows": int(args.max_rows),
+        "elapsed_ms": elapsed_ms,
+        "read_only": (not args.allow_write),
+    }
+
+    if args.format == "json":
+        print(json.dumps(payload, ensure_ascii=False, indent=2))
+        return 0
+
+    # Pretty table for humans in terminal.
+    print(_colorize("PNAD QUERY", "1;38;5;45", _supports_color(no_color=args.no_color)))
+    print(f"DB: {db_path}")
+    print(f"Rows: {payload['row_count']} | Cols: {len(columns)} | Elapsed: {elapsed_ms} ms")
+    if columns:
+        table = _format_table(rows, columns, max_col_width=int(args.max_col_width))
+        print(table)
+    else:
+        print("(Query executada sem retorno tabular)")
+    if truncated:
+        print(f"[truncated] showing first {args.max_rows} rows")
+    return 0
+
+
 def _run_capture_stdout(cmd: Sequence[str], out_file: Path, quiet: bool = False) -> None:
     out_file.parent.mkdir(parents=True, exist_ok=True)
     _print("$ " + " ".join(cmd), quiet=quiet)
@@ -2857,7 +3041,7 @@ def cmd_help_legacy(args: argparse.Namespace) -> int:
 def build_parser() -> argparse.ArgumentParser:
     description = (
         "PNAD automation CLI. Use this tool to download inputs, refresh IPCA, rerun the pipeline, "
-        "and rebuild SQLite outputs."
+        "rebuild SQLite outputs, and run SQL analytics queries."
     )
     epilog = """Examples:
   pnad --help
@@ -2869,6 +3053,7 @@ def build_parser() -> argparse.ArgumentParser:
   pnad renda-por-faixa-sm --input data/outputs/base_labeled.csv --group-by uf --ranges "0-2;2-5;5-10;10+"
   pnad dashboard --input data/outputs/base_labeled.csv --sm-mode both
   pnad renda-por-faixa-sm --input data/outputs/base_labeled.csv --format json
+  pnad query --db data/outputs/pnad.sqlite --sql "SELECT UF__unidade_da_federao, AVG(VD4020__rendim_efetivo_qq_trabalho) AS renda_media FROM base_labeled_npv GROUP BY 1 ORDER BY 2 DESC LIMIT 10"
   pnad pipeline-run --raw latest --layout data/originals/input_PNADC_trimestral.sas --sqlite data/outputs/pnad.sqlite
   pnad sqlite-build --input data/outputs/base_labeled_npv.csv --db data/outputs/pnad.sqlite --table base_labeled_npv
 
@@ -3030,6 +3215,30 @@ Legacy commands still work directly:
         help="Comma-separated columns to index when present",
     )
     psq.set_defaults(func=cmd_sqlite_build)
+
+    pq = sub.add_parser(
+        "query",
+        help="Run SQL against PNAD SQLite (JSON default, table format optional)",
+    )
+    pq.add_argument("--db", default="data/outputs/pnad.sqlite", help="SQLite DB path")
+    pq.add_argument("--sql", default="", help="SQL string (read-only by default)")
+    pq.add_argument("--sql-file", default="", help="Path to a .sql file")
+    pq.add_argument(
+        "--format",
+        choices=["json", "table"],
+        default="json",
+        help="Output format (default: json, ideal for LLMs)",
+    )
+    pq.add_argument("--max-rows", type=int, default=200, help="Maximum returned rows before truncation")
+    pq.add_argument("--max-col-width", type=int, default=48, help="Max column width in table mode")
+    pq.add_argument("--timeout", type=float, default=30.0, help="SQLite timeout in seconds")
+    pq.add_argument(
+        "--allow-write",
+        action="store_true",
+        help="Allow write statements (off by default for safe LLM workflows)",
+    )
+    pq.add_argument("--no-color", action="store_true", help="Disable ANSI colors in table mode")
+    pq.set_defaults(func=cmd_query)
 
     pr = sub.add_parser("pipeline-run", help="Run the full PNADC refresh pipeline")
     pr.add_argument("--raw", default="latest", help="Local raw PNADC file path or 'latest'")

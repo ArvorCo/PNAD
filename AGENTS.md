@@ -16,6 +16,7 @@
   - `scripts/` for Python CLI/utilities.
   - `notebooks/` for exploratory analyses.
   - `tests/` for `pytest` automated tests.
+  - `skills/` for project-local agent skills (e.g., `skills/pnad-query/SKILL.md`).
   - `data/` scaffold only (`.gitkeep`).
 
 ## Core Commands
@@ -31,6 +32,7 @@
   - `pnad --help`
   - `pnad ibge-sync`
   - `pnad pipeline-run --raw latest`
+  - `pnad query --db data/outputs/pnad.sqlite --sql "SELECT name FROM sqlite_master WHERE type='table'"`
   - `pnad renda-por-faixa-sm --input data/outputs/base_labeled.csv --group-by pais`
   - `pnad dashboard --input data/outputs/base_labeled.csv --interactive`
 
@@ -119,3 +121,8 @@
   - `Nao se aplica (fora da ocupacao)` for occupation-only variables,
   - `Fora de RM/RIDE` for metro-region variable,
   avoiding false inflation of `Sem informacao`.
+- `pnad query` is optimized for LLM workflows:
+  - default output is JSON,
+  - read-only SQL is enforced by default,
+  - supports SQL via `--sql`, `--sql-file`, or stdin pipe,
+  - table rendering is available via `--format table`.
