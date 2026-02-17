@@ -6,7 +6,7 @@ import csv
 import sys
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, Iterable, Optional, Tuple
+from typing import Dict, Iterable, List, Optional, Tuple
 
 
 def _to_float(x: str) -> Optional[float]:
@@ -160,11 +160,36 @@ def apply_deflator_to_csv(
             w.writerow(row)
 
 
-def _auto_income_columns(headers: Iterable[str]) -> Tuple[Optional[str], Optional[str]]:
-    # Try find VD4019 and VD4020 variants (with or without label suffix)
-    vd4019 = next((h for h in headers if h.startswith("VD4019")), None)
-    vd4020 = next((h for h in headers if h.startswith("VD4020")), None)
-    return vd4019, vd4020
+def _auto_income_columns(headers: Iterable[str]) -> List[str]:
+    # Trimestral (renda do trabalho)
+    quarterly_prefixes = ["VD4019", "VD4020"]
+    # Anual visita 5 (fontes de renda e agregados domiciliares monetários)
+    annual_prefixes = [
+        "V5001A2",
+        "V5002A2",
+        "V5003A2",
+        "V5004A2",
+        "V5005A2",
+        "V5006A2",
+        "V5007A2",
+        "V5008A2",
+        "VD5001",
+        "VD5002",
+        "VD5004",
+        "VD5005",
+        "VD5007",
+        "VD5008",
+        "VD5010",
+        "VD5011",
+    ]
+
+    detected: List[str] = []
+    headers_list = list(headers)
+    for prefix in quarterly_prefixes + annual_prefixes:
+        match = next((h for h in headers_list if h.startswith(prefix)), None)
+        if match:
+            detected.append(match)
+    return detected
 
 
 def main(argv: Optional[list[str]] = None) -> int:
@@ -210,10 +235,13 @@ def main(argv: Optional[list[str]] = None) -> int:
             with args.inp.open("r", encoding="utf-8-sig", errors="replace") as fh:
                 r = csv.reader(fh)
                 headers = next(r)
-            c1, c2 = _auto_income_columns(headers)
-            cols = [c for c in (c1, c2) if c]
+            cols = _auto_income_columns(headers)
             if not cols:
-                print("ERROR: could not auto-detect income columns (VD4019/VD4020); use --columns", file=sys.stderr)
+                print(
+                    "ERROR: could not auto-detect income columns "
+                    "(expected VD4019/VD4020 or annual V500xA2/VD500x); use --columns",
+                    file=sys.stderr,
+                )
                 return 2
         apply_deflator_to_csv(
             args.inp,
@@ -233,4 +261,3 @@ def main(argv: Optional[list[str]] = None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

@@ -8,7 +8,7 @@ SCRIPTS = ROOT / "scripts"
 if str(SCRIPTS) not in sys.path:
     sys.path.insert(0, str(SCRIPTS))
 
-from npv_deflators import read_ipca_csv, build_deflators, apply_deflator_to_csv  # type: ignore
+from npv_deflators import read_ipca_csv, build_deflators, apply_deflator_to_csv, _auto_income_columns  # type: ignore
 
 
 def test_build_deflators_from_sample():
@@ -71,3 +71,21 @@ def test_apply_deflator_streams_and_emits_columns(tmp_path: Path):
     r2 = out_rows[1]
     assert r2["VD4019__rendim_habitual_qq_trabalho_jul2025"] == ""
     assert r2["VD4019__rendim_habitual_qq_trabalho_mw"] == ""
+
+
+def test_auto_income_columns_detects_anual_income_columns():
+    headers = [
+        "Ano__ano_de_referencia",
+        "Trimestre__trimestre_de_referencia",
+        "V5001A2__rend_recebido_de_bpc_loas",
+        "V5008A2__rend_recebido_de_outros_rendimentos",
+        "VD5001__rend_efetivo_domiciliar",
+        "VD5003__faixa_de_rend_efetivo_domiciliar_per_capita",
+        "VD5011__rend_habitual_domiciliar_per_capita",
+    ]
+    detected = _auto_income_columns(headers)
+    assert "V5001A2__rend_recebido_de_bpc_loas" in detected
+    assert "V5008A2__rend_recebido_de_outros_rendimentos" in detected
+    assert "VD5001__rend_efetivo_domiciliar" in detected
+    assert "VD5011__rend_habitual_domiciliar_per_capita" in detected
+    assert "VD5003__faixa_de_rend_efetivo_domiciliar_per_capita" not in detected

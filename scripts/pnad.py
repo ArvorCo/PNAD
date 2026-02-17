@@ -5,9 +5,11 @@ import argparse
 import csv
 import datetime
 import json
+import math
 import os
 import re
 import shutil
+import ssl
 import sqlite3
 import subprocess
 import sys
@@ -16,9 +18,10 @@ import xml.etree.ElementTree as ET
 import zipfile
 from collections import defaultdict
 from pathlib import Path
+from statistics import NormalDist
 from typing import Dict, Iterable, List, Optional, Sequence, Tuple
-from urllib.error import HTTPError
-from urllib.parse import urlparse
+from urllib.error import HTTPError, URLError
+from urllib.parse import quote_plus, urlparse
 from urllib.request import Request, urlopen
 
 SCRIPT_DIR = Path(__file__).resolve().parent
@@ -43,7 +46,18 @@ IBGE_MICRODADOS_BASE = (
     "https://ftp.ibge.gov.br/Trabalho_e_Rendimento/"
     "Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Trimestral/Microdados/"
 )
+IBGE_ANUAL_VISITA5_BASE = (
+    "https://ftp.ibge.gov.br/Trabalho_e_Rendimento/"
+    "Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Visita/Visita_5/"
+)
+IBGE_CENSO_2022_BASE = "https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/"
+IBGE_CENSO_RENDA_RESP_FOLDER = "Agregados_por_Setores_Censitarios_Rendimento_do_Responsavel/"
+TSE_CKAN_BASE = "https://dadosabertos.tse.jus.br"
+TSE_DEFAULT_QUERY = "perfil eleitorado"
+TOOL_USER_AGENT = "brasil-cli/1.0"
 PNADC_ZIP_RE = re.compile(r"^PNADC_(0[1-4])(\d{4})(?:_(\d{8}))?\.zip$", re.IGNORECASE)
+PNADC_ANUAL_VISITA5_ZIP_RE = re.compile(r"^PNADC_(\d{4})_visita5(?:_(\d{8}))?\.zip$", re.IGNORECASE)
+PNADC_ANUAL_VISITA5_TXT_RE = re.compile(r"^PNADC_(\d{4})_visita5(?:_(\d{8}))?\.txt$", re.IGNORECASE)
 RANGE_RE = re.compile(r"^\s*([0-9]+(?:[.,][0-9]+)?)\s*-\s*([0-9]+(?:[.,][0-9]+)?)\s*$")
 PLUS_RE = re.compile(r"^\s*([0-9]+(?:[.,][0-9]+)?)\s*\+\s*$")
 BCB_SALARIO_MINIMO_SERIE = 1619
@@ -80,11 +94,24 @@ UF_TO_MACRO = {
     "53": "Centro-Oeste",
 }
 MACRO_REGION_ORDER = ["Norte", "Nordeste", "Sudeste", "Sul", "Centro-Oeste", "Desconhecida"]
+REPLICATE_WEIGHT_BASE_RE = re.compile(r"^V1028(\d{3})$")
 
 
 def _print(msg: str, quiet: bool = False) -> None:
     if not quiet:
         print(msg)
+
+
+def _urlopen_retry_ssl(req: Request, *, timeout: int = 120):
+    """Fallback to unverified SSL context when local trust store is broken."""
+    try:
+        return urlopen(req, timeout=timeout)
+    except URLError as exc:
+        reason = getattr(exc, "reason", None)
+        if isinstance(reason, ssl.SSLCertVerificationError):
+            ctx = ssl._create_unverified_context()
+            return urlopen(req, timeout=timeout, context=ctx)
+        raise
 
 
 def _download(url: str, destination: Path, *, force: bool = False, quiet: bool = False) -> Path:
@@ -94,8 +121,8 @@ def _download(url: str, destination: Path, *, force: bool = False, quiet: bool =
         raise FileExistsError(f"Destination already exists: {destination}")
 
     _print(f"Downloading {url} -> {destination}", quiet=quiet)
-    req = Request(url, headers={"User-Agent": "pnad-cli/1.0"})
-    with urlopen(req, timeout=120) as resp, destination.open("wb") as fh:
+    req = Request(url, headers={"User-Agent": TOOL_USER_AGENT})
+    with _urlopen_retry_ssl(req, timeout=120) as resp, destination.open("wb") as fh:
         while True:
             chunk = resp.read(1024 * 1024)
             if not chunk:
@@ -123,14 +150,14 @@ def _json_dump(path: Path, payload: object) -> None:
 
 
 def _fetch_text(url: str, *, timeout: int = 120) -> str:
-    req = Request(url, headers={"User-Agent": "pnad-cli/1.0"})
-    with urlopen(req, timeout=timeout) as resp:
+    req = Request(url, headers={"User-Agent": TOOL_USER_AGENT})
+    with _urlopen_retry_ssl(req, timeout=timeout) as resp:
         return resp.read().decode("utf-8", errors="replace")
 
 
 def _fetch_json(url: str, *, timeout: int = 120) -> object:
-    req = Request(url, headers={"User-Agent": "pnad-cli/1.0"})
-    with urlopen(req, timeout=timeout) as resp:
+    req = Request(url, headers={"User-Agent": TOOL_USER_AGENT})
+    with _urlopen_retry_ssl(req, timeout=timeout) as resp:
         return json.loads(resp.read().decode("utf-8", errors="replace"))
 
 
@@ -176,6 +203,56 @@ def _group_latest_by_quarter(file_names: Sequence[str]) -> Dict[int, Dict[str, o
     return latest
 
 
+def _parse_pnadc_anual_visita5_zip_name(name: str) -> Optional[Dict[str, object]]:
+    m = PNADC_ANUAL_VISITA5_ZIP_RE.match(name)
+    if not m:
+        return None
+    year = int(m.group(1))
+    revision = m.group(2) or ""
+    return {"name": name, "year": year, "revision": revision}
+
+
+def _parse_pnadc_anual_visita5_txt_name(name: str) -> Optional[Dict[str, object]]:
+    m = PNADC_ANUAL_VISITA5_TXT_RE.match(name)
+    if not m:
+        return None
+    year = int(m.group(1))
+    revision = m.group(2) or ""
+    return {"name": name, "year": year, "revision": revision}
+
+
+def _group_latest_anual_by_year(file_names: Sequence[str]) -> Dict[int, Dict[str, object]]:
+    latest: Dict[int, Dict[str, object]] = {}
+    for name in file_names:
+        parsed = _parse_pnadc_anual_visita5_zip_name(name)
+        if parsed is None:
+            continue
+        y = int(parsed["year"])
+        prev = latest.get(y)
+        if prev is None:
+            latest[y] = parsed
+            continue
+        if str(parsed["revision"]) > str(prev["revision"]):
+            latest[y] = parsed
+    return latest
+
+
+def _extract_zip_all(zip_path: Path, out_dir: Path, *, quiet: bool = False) -> List[Path]:
+    out_dir.mkdir(parents=True, exist_ok=True)
+    extracted: List[Path] = []
+    with zipfile.ZipFile(zip_path) as zf:
+        members = [m for m in zf.namelist() if not m.endswith("/")]
+        for member in members:
+            target = out_dir / Path(member).name
+            tmp = target.with_name(target.name + ".tmp")
+            _print(f"Extracting {zip_path.name}:{member} -> {target}", quiet=quiet)
+            with zf.open(member, "r") as src, tmp.open("wb") as dst:
+                shutil.copyfileobj(src, dst, length=1024 * 1024)
+            tmp.replace(target)
+            extracted.append(target)
+    return extracted
+
+
 def _latest_local_raw(raw_dir: Path) -> Optional[Path]:
     best_key: tuple[int, int] | None = None
     best_path: Optional[Path] = None
@@ -192,9 +269,25 @@ def _latest_local_raw(raw_dir: Path) -> Optional[Path]:
     return best_path
 
 
+def _latest_local_raw_anual(raw_dir: Path) -> Optional[Path]:
+    best_key: tuple[int, str] | None = None
+    best_path: Optional[Path] = None
+    if not raw_dir.exists():
+        return None
+    for path in raw_dir.glob("*.txt"):
+        parsed = _parse_pnadc_anual_visita5_txt_name(path.name)
+        if parsed is None:
+            continue
+        key = (int(parsed["year"]), str(parsed["revision"]))
+        if best_key is None or key > best_key:
+            best_key = key
+            best_path = path
+    return best_path
+
+
 def _head_meta(url: str, *, timeout: int = 120) -> Dict[str, str]:
-    req = Request(url, method="HEAD", headers={"User-Agent": "pnad-cli/1.0"})
-    with urlopen(req, timeout=timeout) as resp:
+    req = Request(url, method="HEAD", headers={"User-Agent": TOOL_USER_AGENT})
+    with _urlopen_retry_ssl(req, timeout=timeout) as resp:
         return {
             "etag": (resp.headers.get("ETag") or "").strip(),
             "last_modified": (resp.headers.get("Last-Modified") or "").strip(),
@@ -232,7 +325,7 @@ def _download_if_changed(
     ):
         return {"status": "not_modified", "path": str(destination), "meta": remote_meta}
 
-    headers = {"User-Agent": "pnad-cli/1.0"}
+    headers = {"User-Agent": TOOL_USER_AGENT}
     if not force and known_etag:
         headers["If-None-Match"] = known_etag
     elif not force and known_last_modified:
@@ -242,7 +335,7 @@ def _download_if_changed(
     tmp = destination.with_name(destination.name + ".tmp")
     try:
         _print(f"Downloading {url} -> {destination}", quiet=quiet)
-        with urlopen(req, timeout=120) as resp, tmp.open("wb") as fh:
+        with _urlopen_retry_ssl(req, timeout=120) as resp, tmp.open("wb") as fh:
             while True:
                 chunk = resp.read(1024 * 1024)
                 if not chunk:
@@ -279,6 +372,123 @@ def _extract_single_txt(zip_path: Path, output_dir: Path, *, quiet: bool = False
             shutil.copyfileobj(src, dst, length=1024 * 1024)
         tmp.replace(target)
         return target
+
+
+def _extract_year_tokens(text: str) -> List[int]:
+    years = []
+    for y in re.findall(r"(?<!\d)(20\d{2})(?!\d)", text):
+        try:
+            years.append(int(y))
+        except Exception:
+            continue
+    return years
+
+
+def _fetch_tse_resources(api_base: str, query: str, *, rows: int = 50) -> List[Dict[str, object]]:
+    base = api_base.rstrip("/")
+    url = f"{base}/api/3/action/package_search?q={quote_plus(query)}&rows={int(rows)}"
+    payload = _fetch_json(url)
+    if not isinstance(payload, dict) or not payload.get("success"):
+        return []
+    result = payload.get("result")
+    if not isinstance(result, dict):
+        return []
+    packages = result.get("results")
+    if not isinstance(packages, list):
+        return []
+
+    out: List[Dict[str, object]] = []
+    seen_urls: set[str] = set()
+    for pkg in packages:
+        if not isinstance(pkg, dict):
+            continue
+        pkg_name = str(pkg.get("name", "") or "")
+        pkg_title = str(pkg.get("title", "") or "")
+        resources = pkg.get("resources")
+        if not isinstance(resources, list):
+            continue
+        for res in resources:
+            if not isinstance(res, dict):
+                continue
+            res_url = str(res.get("url", "") or "").strip()
+            if not res_url or res_url in seen_urls:
+                continue
+            res_url_l = res_url.lower()
+            if not res_url_l.endswith(".zip"):
+                continue
+
+            # Focus on elector profile datasets useful for election calibration.
+            if "perfil_eleitor" not in res_url_l and "perfil_rae" not in res_url_l:
+                continue
+            if "secao" in res_url_l:
+                continue
+
+            res_name = str(res.get("name", "") or "")
+            text_blob = f"{res_name} {res_url} {pkg_name} {pkg_title}"
+            years = _extract_year_tokens(text_blob)
+            year = max(years) if years else None
+
+            kind = "other"
+            if "perfil_eleitorado" in res_url_l:
+                kind = "perfil_eleitorado"
+            elif "perfil_rae" in res_url_l:
+                kind = "perfil_rae"
+            elif "perfil_eleitor" in res_url_l:
+                kind = "perfil_eleitor"
+
+            item = {
+                "package_name": pkg_name,
+                "package_title": pkg_title,
+                "resource_id": str(res.get("id", "") or ""),
+                "resource_name": res_name,
+                "url": res_url,
+                "format": str(res.get("format", "") or ""),
+                "year": year,
+                "kind": kind,
+            }
+            out.append(item)
+            seen_urls.add(res_url)
+
+    out.sort(key=lambda x: (str(x.get("kind", "")), int(x.get("year") or 0), str(x.get("resource_name", ""))))
+    return out
+
+
+def _select_tse_resources(
+    resources: Sequence[Dict[str, object]], *, year: Optional[int], all_years: bool
+) -> List[Dict[str, object]]:
+    filtered = [dict(r) for r in resources]
+    if year is not None:
+        filtered = [r for r in filtered if int(r.get("year") or -1) == int(year)]
+    if not filtered:
+        return []
+
+    # Keep latest by kind/year unless caller asks for all years.
+    latest_by_key: Dict[Tuple[str, int], Dict[str, object]] = {}
+    for r in filtered:
+        kind = str(r.get("kind", "other"))
+        y = int(r.get("year") or 0)
+        key = (kind, y)
+        prev = latest_by_key.get(key)
+        if prev is None:
+            latest_by_key[key] = r
+            continue
+        # tie-breaker by lexical resource name/url (usually carries revision tokens)
+        prev_key = f"{prev.get('resource_name','')}|{prev.get('url','')}"
+        cur_key = f"{r.get('resource_name','')}|{r.get('url','')}"
+        if cur_key > prev_key:
+            latest_by_key[key] = r
+
+    by_key = sorted(latest_by_key.values(), key=lambda r: (str(r.get("kind", "")), int(r.get("year") or 0)))
+    if all_years or year is not None:
+        return by_key
+
+    latest_by_kind: Dict[str, Dict[str, object]] = {}
+    for r in by_key:
+        kind = str(r.get("kind", "other"))
+        prev = latest_by_kind.get(kind)
+        if prev is None or int(r.get("year") or 0) > int(prev.get("year") or 0):
+            latest_by_kind[kind] = r
+    return sorted(latest_by_kind.values(), key=lambda r: str(r.get("kind", "")))
 
 
 def _quarter_to_month(q: int) -> int:
@@ -351,6 +561,11 @@ def _detect_income_col(headers: Sequence[str], requested: Optional[str]) -> str:
         if requested not in headers:
             raise ValueError(f"income column not found: {requested}")
         return requested
+    # Anual: renda domiciliar total (VD5001)
+    c = next((h for h in headers if h.startswith("VD5001")), None)
+    if c:
+        return c
+    # Trimestral: renda do trabalho (VD4020 ou VD4019)
     c = next((h for h in headers if h.startswith("VD4020")), None)
     if c:
         return c
@@ -358,6 +573,132 @@ def _detect_income_col(headers: Sequence[str], requested: Optional[str]) -> str:
     if c:
         return c
     raise ValueError("could not auto-detect income column; use --income-col")
+
+
+INCOME_SOURCE_COLS = {
+    "bpc_loas": "V5001A2",
+    "bolsa_familia": "V5002A2",
+    "outros_sociais": "V5003A2",
+    "aposentadoria_pensao": "V5004A2",
+    "seguro_desemprego": "V5005A2",
+    "pensao_doacao": "V5006A2",
+    "aluguel": "V5007A2",
+    "outros_capital": "V5008A2",
+}
+
+INCOME_SOURCE_LABELS = {
+    "bpc_loas": "BPC-LOAS",
+    "bolsa_familia": "Bolsa Familia",
+    "outros_sociais": "Outros programas sociais",
+    "aposentadoria_pensao": "Aposentadoria/pensao",
+    "seguro_desemprego": "Seguro-desemprego",
+    "pensao_doacao": "Pensao/doacoes",
+    "aluguel": "Aluguel/arrendamento",
+    "outros_capital": "Outros de capital",
+    "trabalho": "Renda do trabalho",
+}
+
+INCOME_CATEGORIES = {
+    "trabalho": [],
+    "beneficios_sociais": ["bpc_loas", "bolsa_familia", "outros_sociais"],
+    "previdencia": ["aposentadoria_pensao"],
+    "seguro": ["seguro_desemprego"],
+    "transferencias_privadas": ["pensao_doacao"],
+    "capital": ["aluguel", "outros_capital"],
+}
+
+INCOME_CATEGORY_LABELS = {
+    "trabalho": "Trabalho",
+    "beneficios_sociais": "Beneficios sociais",
+    "previdencia": "Previdencia",
+    "seguro": "Seguro",
+    "transferencias_privadas": "Transferencias privadas",
+    "capital": "Capital",
+}
+
+INCOME_CATEGORY_ORDER = [
+    "trabalho",
+    "beneficios_sociais",
+    "previdencia",
+    "seguro",
+    "transferencias_privadas",
+    "capital",
+]
+
+
+def _detect_income_source_cols(headers: Sequence[str]) -> Dict[str, str]:
+    found: Dict[str, str] = {}
+    for key, prefix in INCOME_SOURCE_COLS.items():
+        col = next((h for h in headers if h.startswith(prefix)), None)
+        if col:
+            found[key] = col
+    return found
+
+
+def _detect_pnad_mode(headers: Sequence[str]) -> str:
+    if any(h.startswith("VD5001") for h in headers):
+        return "anual"
+    if any(h.startswith("VD4020") or h.startswith("VD4019") for h in headers):
+        return "trimestral"
+    raise ValueError("could not auto-detect mode: expected VD5001 or VD4019/VD4020 columns")
+
+
+def _calculate_income_composition(
+    row: Dict[str, str],
+    total_income_col: str,
+    source_cols: Dict[str, str],
+) -> Dict[str, float]:
+    total = _parse_float(row.get(total_income_col, "")) or 0.0
+    if total <= 0:
+        return {}
+
+    sources: Dict[str, float] = {}
+    non_work_total = 0.0
+    for key, col in source_cols.items():
+        val = _parse_float(row.get(col, "")) or 0.0
+        if val < 0:
+            val = 0.0
+        sources[key] = float(val)
+        non_work_total += float(val)
+    sources["trabalho"] = max(0.0, float(total) - non_work_total)
+
+    return {k: _safe_div(float(v), float(total)) for k, v in sources.items()}
+
+
+def _calculate_household_income_sources(
+    row: Dict[str, str],
+    total_income_col: str,
+    source_cols: Dict[str, str],
+) -> Dict[str, float]:
+    total = _parse_float(row.get(total_income_col, "")) or 0.0
+    if total < 0:
+        total = 0.0
+
+    out: Dict[str, float] = {"total": float(total)}
+    non_work_total = 0.0
+    for key, col in source_cols.items():
+        val = _parse_float(row.get(col, "")) or 0.0
+        if val < 0:
+            val = 0.0
+        out[key] = float(val)
+        non_work_total += float(val)
+    out["trabalho"] = max(0.0, float(total) - non_work_total)
+    return out
+
+
+def _aggregate_income_by_category(sources: Dict[str, float]) -> Dict[str, float]:
+    categories: Dict[str, float] = {k: 0.0 for k in INCOME_CATEGORY_ORDER}
+    categories["trabalho"] = float(sources.get("trabalho", 0.0) or 0.0)
+    for cat in INCOME_CATEGORY_ORDER:
+        if cat == "trabalho":
+            continue
+        categories[cat] = sum(float(sources.get(k, 0.0) or 0.0) for k in INCOME_CATEGORIES.get(cat, []))
+    return categories
+
+
+def _calculate_dependency_score(benefits_pct: float, previdencia_pct: float, work_pct: float) -> float:
+    _ = work_pct
+    return float(benefits_pct) + float(previdencia_pct)
 
 
 def _detect_weight_col(headers: Sequence[str], requested: Optional[str]) -> Optional[str]:
@@ -375,6 +716,57 @@ def _detect_weight_col(headers: Sequence[str], requested: Optional[str]) -> Opti
             if base(h) == target:
                 return h
     return None
+
+
+def _detect_replicate_weight_cols(headers: Sequence[str], *, base_prefix: str = "V1028") -> List[str]:
+    pairs: List[Tuple[int, str]] = []
+    for h in headers:
+        base = h.split("__", 1)[0]
+        m = re.fullmatch(rf"{re.escape(base_prefix)}(\d{{3}})", base)
+        if not m:
+            continue
+        pairs.append((int(m.group(1)), h))
+    pairs.sort(key=lambda t: t[0])
+    return [h for _, h in pairs]
+
+
+def _normalize_ci_level(raw: float) -> float:
+    level = float(raw)
+    if level <= 0.0 or level >= 1.0:
+        raise ValueError("ci level must be between 0 and 1 (exclusive)")
+    return level
+
+
+def _ci_from_replicates(
+    theta: float,
+    replicate_thetas: Sequence[float],
+    *,
+    ci_level: float,
+    clamp: Optional[Tuple[float, float]] = None,
+) -> Optional[Dict[str, float]]:
+    vals = [float(x) for x in replicate_thetas if math.isfinite(float(x))]
+    r = len(vals)
+    if r < 2:
+        return None
+    var = sum((x - theta) ** 2 for x in vals) / float(r - 1)
+    if var < 0:
+        var = 0.0
+    se = math.sqrt(var)
+    z = NormalDist().inv_cdf(0.5 + ci_level / 2.0)
+    moe = z * se
+    low = theta - moe
+    high = theta + moe
+    if clamp is not None:
+        lo, hi = clamp
+        low = max(lo, low)
+        high = min(hi, high)
+    return {
+        "replicates": int(r),
+        "se": float(se),
+        "moe": float(moe),
+        "ci_low": float(low),
+        "ci_high": float(high),
+    }
 
 
 def _read_salario_minimo_csv(path: Path) -> Dict[str, float]:
@@ -705,6 +1097,12 @@ def _print_renda_pretty(payload: Dict[str, object], *, no_color: bool = False) -
     print(f"Entrada: {payload.get('input')}")
     print(f"Renda: {payload.get('income_col')} | Peso: {payload.get('weight_col') or 'N/A'}")
     print(f"Faixas: {'; '.join(payload.get('ranges', []))}")
+    sampling = payload.get("sampling", {})
+    if isinstance(sampling, dict):
+        print(
+            f"Amostral: ci={sampling.get('ci_enabled')} "
+            f"(nivel={sampling.get('ci_level')}, reps={sampling.get('replicate_weight_columns_detected')})"
+        )
     sm_ref = payload.get("sm_reference_value")
     if sm_ref is not None:
         print(f"SM referencia: {_fmt_brl(float(sm_ref))}")
@@ -736,7 +1134,18 @@ def _print_renda_pretty(payload: Dict[str, object], *, no_color: bool = False) -
             f"Pessoas: {_fmt_num(pp_total)} (amostra={pp_sample})"
         )
         avg_sm = float(g.get("avg_household_sm", 0.0) or 0.0)
-        print(f"  Media renda domiciliar (SM): {avg_sm:.3f}")
+        avg_moe = g.get("avg_household_sm_moe")
+        avg_ci_low = g.get("avg_household_sm_ci_low")
+        avg_ci_high = g.get("avg_household_sm_ci_high")
+        if avg_moe is not None and avg_ci_low is not None and avg_ci_high is not None:
+            print(
+                "  Media renda domiciliar (SM): "
+                f"{avg_sm:.3f} ± {float(avg_moe):.3f} "
+                f"(IC {float(payload.get('sampling', {}).get('ci_level', 0.95) or 0.95):.0%}: "
+                f"{float(avg_ci_low):.3f}..{float(avg_ci_high):.3f})"
+            )
+        else:
+            print(f"  Media renda domiciliar (SM): {avg_sm:.3f}")
         print("  Faixa      Dom%     Dom(barra)                    Pes%     Pes(barra)")
 
         bands = g.get("bands", [])
@@ -748,15 +1157,23 @@ def _print_renda_pretty(payload: Dict[str, object], *, no_color: bool = False) -
             rng = str(b.get("range", ""))
             hp = float(b.get("households_pct", 0.0) or 0.0)
             pp = float(b.get("persons_pct", 0.0) or 0.0)
+            hp_moe = b.get("households_pct_moe")
+            pp_moe = b.get("persons_pct_moe")
             hbar = _gradient_bar(hp, width=28, palette=gradients[i % len(gradients)], use_color=use_color)
             pbar = _gradient_bar(pp, width=28, palette=gradients[i % len(gradients)], use_color=use_color)
             c = colors[i % len(colors)]
+            hp_txt = f"{hp:6.2f}%"
+            pp_txt = f"{pp:6.2f}%"
+            if hp_moe is not None:
+                hp_txt = f"{hp:6.2f}%±{float(hp_moe):4.2f}"
+            if pp_moe is not None:
+                pp_txt = f"{pp:6.2f}%±{float(pp_moe):4.2f}"
             print(
                 "  "
                 + _badge(f"{rng:<8}", fg=16, bg=gradients[i % len(gradients)][-1], use_color=use_color)
-                + f" {hp:6.2f}%  "
+                + f" {hp_txt:<14} "
                 + hbar
-                + f"  {pp:6.2f}%  "
+                + f"  {pp_txt:<14} "
                 + pbar
             )
         pie = _mini_pie([b for b in bands if isinstance(b, dict)], colors, use_color)
@@ -1002,9 +1419,22 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
     inconsistent_household_weight = 0
     selected_income_col = ""
     selected_weight_col: Optional[str] = None
+    ci_level = _normalize_ci_level(args.ci_level)
+    use_ci = (not args.unweighted) and (not args.no_ci)
+    replicate_weight_cols: List[str] = []
+    replicate_count = 0
     households: Dict[str, Dict[str, object]] = {}
     dimension_labels: Dict[str, str] = {}
     dim_keys: List[str] = []
+    
+    # Dashboard v2.0: Initialize variables that need to persist outside with block
+    pnad_mode = "trimestral"
+    income_source_cols: Dict[str, str] = {}
+    is_anual_mode = False
+    do_breakdown = False
+    do_source_detail = False
+    do_dependency_ranking = False
+    do_composition_by_band = False
 
     with input_path.open("r", encoding="utf-8-sig", errors="replace", newline="") as fh:
         r = csv.DictReader(fh)
@@ -1039,6 +1469,33 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
         income_col = _detect_income_col(headers, args.income_col)
         selected_income_col = income_col
         selected_weight_col = None if args.unweighted else _detect_weight_col(headers, args.weight_col)
+        if use_ci:
+            replicate_weight_cols = _detect_replicate_weight_cols(headers, base_prefix="V1028")
+            replicate_count = len(replicate_weight_cols)
+
+        # Dashboard v2.0: Detect PNAD mode and set up income composition analysis
+        pnad_mode_arg = str(getattr(args, "mode", "auto") or "auto").strip().lower()
+        if pnad_mode_arg in ("", "auto", "comparativo"):
+            pnad_mode = _detect_pnad_mode(headers)
+        else:
+            pnad_mode = pnad_mode_arg
+
+        has_anual_cols = any(h.startswith("VD5001") for h in headers)
+        has_tri_cols = any(h.startswith("VD4020") or h.startswith("VD4019") for h in headers)
+        if pnad_mode == "anual" and not has_anual_cols:
+            raise ValueError("modo anual solicitado, mas coluna VD5001 nao foi encontrada")
+        if pnad_mode == "trimestral" and not has_tri_cols:
+            raise ValueError("modo trimestral solicitado, mas colunas VD4019/VD4020 nao foram encontradas")
+
+        is_anual_mode = pnad_mode == "anual"
+        if is_anual_mode:
+            income_source_cols = _detect_income_source_cols(headers)
+        
+        # Set breakdown flags based on args and mode
+        do_breakdown = getattr(args, "breakdown", False) and is_anual_mode
+        do_source_detail = getattr(args, "source_detail", False) and is_anual_mode
+        do_dependency_ranking = getattr(args, "dependency_ranking", False) and is_anual_mode
+        do_composition_by_band = getattr(args, "composition_by_band", False) and is_anual_mode
 
         if not dom_col or not year_col or not qtr_col or not uf_col:
             raise ValueError("input must contain dom_id, Ano, Trimestre and UF")
@@ -1047,6 +1504,8 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
                 "weight column not found. Re-run pipeline including V1028 "
                 "or pass --weight-col / use --unweighted for diagnostics."
             )
+        if use_ci and replicate_count < 2:
+            use_ci = False
 
         dim_keys = ["sex", "race", "education", "age", "capital", "macro_region"]
         dimension_labels = {
@@ -1157,6 +1616,20 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
 
             st = households.get(dom)
             if st is None:
+                rep_household_weights: List[float] = []
+                if use_ci:
+                    for rep_col in replicate_weight_cols:
+                        rep_raw = row.get(rep_col, "")
+                        rep_val = _parse_float(rep_raw)
+                        rep_household_weights.append(float(rep_val) if rep_val is not None and rep_val > 0 else 0.0)
+
+                income_sources_nominal_init: Dict[str, float] = {}
+                income_sources_target_init: Dict[str, float] = {}
+                if is_anual_mode:
+                    src_keys = list(income_source_cols.keys()) + ["trabalho", "total"]
+                    income_sources_nominal_init = {k: 0.0 for k in src_keys}
+                    income_sources_target_init = {k: 0.0 for k in src_keys}
+
                 st = {
                     "dom_id": dom,
                     "uf_code": uf_code,
@@ -1171,16 +1644,35 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
                     "ym": ym,
                     "dim_counts": {k: defaultdict(float) for k in dim_keys},
                     "age_sex_counts": defaultdict(lambda: defaultdict(float)),
+                    "rep_household_weights": rep_household_weights,
+                    "income_sources_nominal": income_sources_nominal_init,
+                    "income_sources_target": income_sources_target_init,
                 }
                 households[dom] = st
 
             st["persons_n"] = int(st["persons_n"]) + 1
             st["persons_weight"] = float(st["persons_weight"]) + row_weight
-            st["income_nominal"] = float(st["income_nominal"]) + float(income_nominal)
-            st["income_target"] = float(st["income_target"]) + float(income_nominal) * float(factor)
             hw = float(st.get("household_weight") or row_weight)
             if abs(hw - row_weight) > 1e-6:
                 inconsistent_household_weight += 1
+
+            if is_anual_mode:
+                row_sources = _calculate_household_income_sources(row, income_col, income_source_cols)
+                row_sources_target = {k: float(v) * float(factor) for k, v in row_sources.items()}
+                st["income_nominal"] = max(float(st["income_nominal"]), float(row_sources.get("total", 0.0) or 0.0))
+                st["income_target"] = max(float(st["income_target"]), float(row_sources_target.get("total", 0.0) or 0.0))
+                src_nominal = st.get("income_sources_nominal", {})
+                src_target = st.get("income_sources_target", {})
+                if isinstance(src_nominal, dict) and isinstance(src_target, dict):
+                    for src_key, src_val in row_sources.items():
+                        src_nominal[src_key] = max(float(src_nominal.get(src_key, 0.0) or 0.0), float(src_val))
+                        src_target[src_key] = max(
+                            float(src_target.get(src_key, 0.0) or 0.0),
+                            float(row_sources_target.get(src_key, 0.0) or 0.0),
+                        )
+            else:
+                st["income_nominal"] = float(st["income_nominal"]) + float(income_nominal)
+                st["income_target"] = float(st["income_target"]) + float(income_nominal) * float(factor)
 
             sw = row_weight if not args.unweighted else 1.0
             row_dims = {
@@ -1218,6 +1710,20 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
             "persons_sample": 0,
             "sum_ratio": 0.0,
             "bands": {str(item["label"]): {"households": 0.0, "persons": 0.0} for item in ranges},
+            "rep_households_total": [0.0] * replicate_count if use_ci else [],
+            "rep_persons_total": [0.0] * replicate_count if use_ci else [],
+            "rep_sum_ratio": [0.0] * replicate_count if use_ci else [],
+            "rep_bands": (
+                {
+                    str(item["label"]): {
+                        "households": [0.0] * replicate_count,
+                        "persons": [0.0] * replicate_count,
+                    }
+                    for item in ranges
+                }
+                if use_ci
+                else {}
+            ),
         }
         uf_stats: Dict[str, Dict[str, object]] = {}
         macro_stats: Dict[str, Dict[str, object]] = {}
@@ -1233,6 +1739,20 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
         def ensure_group(container: Dict[str, Dict[str, object]], key: str, label: str) -> Dict[str, object]:
             g = container.get(key)
             if g is None:
+                rep_households_total = [0.0] * replicate_count if use_ci else []
+                rep_persons_total = [0.0] * replicate_count if use_ci else []
+                rep_sum_ratio = [0.0] * replicate_count if use_ci else []
+                rep_bands = (
+                    {
+                        str(item["label"]): {
+                            "households": [0.0] * replicate_count,
+                            "persons": [0.0] * replicate_count,
+                        }
+                        for item in ranges
+                    }
+                    if use_ci
+                    else {}
+                )
                 g = {
                     "group": key,
                     "label": label,
@@ -1242,9 +1762,40 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
                     "persons_sample": 0,
                     "sum_ratio": 0.0,
                     "bands": {str(item["label"]): {"households": 0.0, "persons": 0.0} for item in ranges},
+                    "rep_households_total": rep_households_total,
+                    "rep_persons_total": rep_persons_total,
+                    "rep_sum_ratio": rep_sum_ratio,
+                    "rep_bands": rep_bands,
                 }
                 container[key] = g
             return g
+
+        def add_replicate_stats(
+            g_obj: Dict[str, object],
+            *,
+            ratio_value: float,
+            band_label: str,
+            persons_n: int,
+            rep_weights: Sequence[float],
+        ) -> None:
+            if not use_ci or len(rep_weights) != replicate_count:
+                return
+            rep_households_total = g_obj["rep_households_total"]
+            rep_persons_total = g_obj["rep_persons_total"]
+            rep_sum_ratio = g_obj["rep_sum_ratio"]
+            rep_band = g_obj["rep_bands"][band_label]
+            rep_band_households = rep_band["households"]
+            rep_band_persons = rep_band["persons"]
+            for j, rep_hh_w in enumerate(rep_weights):
+                wj = float(rep_hh_w)
+                if wj <= 0:
+                    continue
+                rep_pp_w = float(persons_n) * wj
+                rep_households_total[j] += wj
+                rep_persons_total[j] += rep_pp_w
+                rep_sum_ratio[j] += ratio_value * wj
+                rep_band_households[j] += wj
+                rep_band_persons[j] += rep_pp_w
 
         for h in households.values():
             if mode == "periodo":
@@ -1291,6 +1842,29 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
             m["sum_ratio"] += ratio * hh_w
             m["bands"][band]["households"] += hh_w
             m["bands"][band]["persons"] += pp_w
+            rep_weights = h.get("rep_household_weights", [])
+            if isinstance(rep_weights, list):
+                add_replicate_stats(
+                    national,
+                    ratio_value=ratio,
+                    band_label=band,
+                    persons_n=int(h["persons_n"]),
+                    rep_weights=rep_weights,
+                )
+                add_replicate_stats(
+                    u,
+                    ratio_value=ratio,
+                    band_label=band,
+                    persons_n=int(h["persons_n"]),
+                    rep_weights=rep_weights,
+                )
+                add_replicate_stats(
+                    m,
+                    ratio_value=ratio,
+                    band_label=band,
+                    persons_n=int(h["persons_n"]),
+                    rep_weights=rep_weights,
+                )
 
             dim_counts = h.get("dim_counts", {})
             for dim in dim_keys:
@@ -1309,23 +1883,84 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
         def finalize_group(g: Dict[str, object]) -> Dict[str, object]:
             hh_total = float(g["households_total"])
             pp_total = float(g["persons_total"])
+            avg_sm = _safe_div(float(g["sum_ratio"]), hh_total)
+            rep_households_total = g.get("rep_households_total", [])
+            rep_persons_total = g.get("rep_persons_total", [])
+            rep_sum_ratio = g.get("rep_sum_ratio", [])
+            avg_sm_ci: Optional[Dict[str, float]] = None
+            if use_ci and isinstance(rep_households_total, list) and isinstance(rep_sum_ratio, list):
+                avg_reps = [
+                    _safe_div(float(rep_sum_ratio[j]), float(rep_households_total[j]))
+                    if float(rep_households_total[j]) > 0
+                    else 0.0
+                    for j in range(replicate_count)
+                ]
+                avg_sm_ci = _ci_from_replicates(float(avg_sm), avg_reps, ci_level=ci_level)
+
             bands_rows = []
             for item in ranges:
                 lbl = str(item["label"])
                 b = g["bands"][lbl]
                 bh = float(b["households"])
                 bp = float(b["persons"])
-                bands_rows.append(
-                    {
-                        "range": lbl,
-                        "households": bh,
-                        "households_pct": round(100.0 * _safe_div(bh, hh_total), 4),
-                        "persons": bp,
-                        "persons_pct": round(100.0 * _safe_div(bp, pp_total), 4),
-                    }
-                )
-            avg_sm = _safe_div(float(g["sum_ratio"]), hh_total)
-            return {
+                hp = round(100.0 * _safe_div(bh, hh_total), 4)
+                pp = round(100.0 * _safe_div(bp, pp_total), 4)
+                row_out: Dict[str, object] = {
+                    "range": lbl,
+                    "households": bh,
+                    "households_pct": hp,
+                    "persons": bp,
+                    "persons_pct": pp,
+                }
+                if use_ci:
+                    rep_band = g.get("rep_bands", {}).get(lbl, {})
+                    rep_bh = rep_band.get("households", []) if isinstance(rep_band, dict) else []
+                    rep_bp = rep_band.get("persons", []) if isinstance(rep_band, dict) else []
+                    if (
+                        isinstance(rep_households_total, list)
+                        and isinstance(rep_persons_total, list)
+                        and isinstance(rep_bh, list)
+                        and isinstance(rep_bp, list)
+                        and len(rep_households_total) == replicate_count
+                        and len(rep_persons_total) == replicate_count
+                        and len(rep_bh) == replicate_count
+                        and len(rep_bp) == replicate_count
+                    ):
+                        hh_rep = [
+                            100.0 * _safe_div(float(rep_bh[j]), float(rep_households_total[j]))
+                            if float(rep_households_total[j]) > 0
+                            else 0.0
+                            for j in range(replicate_count)
+                        ]
+                        pp_rep = [
+                            100.0 * _safe_div(float(rep_bp[j]), float(rep_persons_total[j]))
+                            if float(rep_persons_total[j]) > 0
+                            else 0.0
+                            for j in range(replicate_count)
+                        ]
+                        hh_ci = _ci_from_replicates(float(hp), hh_rep, ci_level=ci_level, clamp=(0.0, 100.0))
+                        pp_ci = _ci_from_replicates(float(pp), pp_rep, ci_level=ci_level, clamp=(0.0, 100.0))
+                        if hh_ci:
+                            row_out.update(
+                                {
+                                    "households_pct_se": round(float(hh_ci["se"]), 6),
+                                    "households_pct_moe": round(float(hh_ci["moe"]), 6),
+                                    "households_pct_ci_low": round(float(hh_ci["ci_low"]), 6),
+                                    "households_pct_ci_high": round(float(hh_ci["ci_high"]), 6),
+                                }
+                            )
+                        if pp_ci:
+                            row_out.update(
+                                {
+                                    "persons_pct_se": round(float(pp_ci["se"]), 6),
+                                    "persons_pct_moe": round(float(pp_ci["moe"]), 6),
+                                    "persons_pct_ci_low": round(float(pp_ci["ci_low"]), 6),
+                                    "persons_pct_ci_high": round(float(pp_ci["ci_high"]), 6),
+                                }
+                            )
+                bands_rows.append(row_out)
+
+            out_row: Dict[str, object] = {
                 "group": g["group"],
                 "label": g["label"],
                 "households_total": hh_total,
@@ -1335,6 +1970,16 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
                 "avg_household_sm": round(avg_sm, 6),
                 "bands": bands_rows,
             }
+            if avg_sm_ci:
+                out_row.update(
+                    {
+                        "avg_household_sm_se": round(float(avg_sm_ci["se"]), 6),
+                        "avg_household_sm_moe": round(float(avg_sm_ci["moe"]), 6),
+                        "avg_household_sm_ci_low": round(float(avg_sm_ci["ci_low"]), 6),
+                        "avg_household_sm_ci_high": round(float(avg_sm_ci["ci_high"]), 6),
+                    }
+                )
+            return out_row
 
         national_out = finalize_group({"group": "BR", "label": "Brasil", **national})
         national_out["median_household_sm"] = round(_weighted_median(ratio_pairs), 6)
@@ -1455,8 +2100,206 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
             "age_pyramid": age_pyramid_rows,
             "dimensions": dim_keys,
             "cross": cross_out,
+            "sampling": {
+                "ci_enabled": bool(use_ci),
+                "ci_level": ci_level,
+                "variance_method": "bootstrap_replicates_mse",
+                "variance_formula": "var=(1/(R-1))*sum((theta_r-theta)^2)",
+                "replicate_weight_base": "V1028",
+                "replicate_weight_count": int(replicate_count),
+                "replicate_weight_columns_detected": int(len(replicate_weight_cols)),
+                "person_weight_assumption": "persons_weight_rep=persons_in_dom*household_rep_weight",
+            },
         }
 
+    income_composition_payload: Dict[str, object] = {
+        "income_composition_national": {},
+        "income_sources_detail": {},
+        "uf_dependency_ranking": [],
+        "composition_by_band": {},
+    }
+    total_income_mean = 0.0
+    total_income_median = 0.0
+
+    if is_anual_mode:
+        summary_mode = "alvo" if "alvo" in modes_out else (next(iter(modes_out.keys())) if modes_out else "alvo")
+        use_target_values = summary_mode == "alvo"
+        active_income_key = "income_target" if use_target_values else "income_nominal"
+        active_sources_key = "income_sources_target" if use_target_values else "income_sources_nominal"
+
+        annual_source_keys = list(INCOME_SOURCE_COLS.keys()) + ["trabalho"]
+        source_totals = {k: 0.0 for k in annual_source_keys}
+        source_recipients = {k: 0.0 for k in INCOME_SOURCE_COLS.keys()}
+        national_total_income = 0.0
+        national_total_weight = 0.0
+        income_pairs: List[Tuple[float, float]] = []
+
+        uf_income_composition: Dict[str, Dict[str, object]] = {}
+        band_income_composition: Dict[str, Dict[str, object]] = {
+            str(item["label"]): {
+                "households": 0.0,
+                "total_income": 0.0,
+                "sources": {k: 0.0 for k in annual_source_keys},
+            }
+            for item in ranges
+        }
+
+        for h in households.values():
+            hh_w = 1.0 if args.unweighted else float(h.get("household_weight", 1.0) or 1.0)
+            if hh_w <= 0:
+                continue
+            hh_income = float(h.get(active_income_key, 0.0) or 0.0)
+            if hh_income < 0:
+                hh_income = 0.0
+            uf_code = str(h.get("uf_code", "") or "")
+            uf_label = str(h.get("uf_label", "") or uf_code)
+            raw_sources = h.get(active_sources_key, {})
+            if not isinstance(raw_sources, dict):
+                raw_sources = {}
+
+            source_amounts: Dict[str, float] = {}
+            non_work_total = 0.0
+            for src_key in INCOME_SOURCE_COLS.keys():
+                val = float(raw_sources.get(src_key, 0.0) or 0.0)
+                if val < 0:
+                    val = 0.0
+                source_amounts[src_key] = val
+                non_work_total += val
+            trabalho_val = float(raw_sources.get("trabalho", max(0.0, hh_income - non_work_total)) or 0.0)
+            if trabalho_val < 0:
+                trabalho_val = 0.0
+            source_amounts["trabalho"] = trabalho_val
+
+            national_total_income += hh_income * hh_w
+            national_total_weight += hh_w
+            income_pairs.append((hh_income, hh_w))
+            for src_key in annual_source_keys:
+                source_totals[src_key] += float(source_amounts.get(src_key, 0.0) or 0.0) * hh_w
+            for src_key in INCOME_SOURCE_COLS.keys():
+                if float(source_amounts.get(src_key, 0.0) or 0.0) > 0:
+                    source_recipients[src_key] += hh_w
+
+            if uf_code:
+                if uf_code not in uf_income_composition:
+                    uf_income_composition[uf_code] = {
+                        "uf_code": uf_code,
+                        "uf_label": uf_label,
+                        "households": 0.0,
+                        "total_income": 0.0,
+                        "sources": {k: 0.0 for k in annual_source_keys},
+                    }
+                uf_data = uf_income_composition[uf_code]
+                uf_data["households"] = float(uf_data["households"]) + hh_w
+                uf_data["total_income"] = float(uf_data["total_income"]) + hh_income * hh_w
+                uf_sources = uf_data.get("sources", {})
+                if isinstance(uf_sources, dict):
+                    for src_key in annual_source_keys:
+                        uf_sources[src_key] = float(uf_sources.get(src_key, 0.0) or 0.0) + float(
+                            source_amounts.get(src_key, 0.0) or 0.0
+                        ) * hh_w
+
+            sm_ref = float(sm_target_nominal) if use_target_values else float(h.get("sm_period", 0.0) or 0.0)
+            if sm_ref > 0:
+                ratio = _safe_div(hh_income, sm_ref)
+                band = _classify_range(max(0.0, ratio), ranges)
+                band_data = band_income_composition.get(band)
+                if isinstance(band_data, dict):
+                    band_data["households"] = float(band_data.get("households", 0.0) or 0.0) + hh_w
+                    band_data["total_income"] = float(band_data.get("total_income", 0.0) or 0.0) + hh_income * hh_w
+                    band_sources = band_data.get("sources", {})
+                    if isinstance(band_sources, dict):
+                        for src_key in annual_source_keys:
+                            band_sources[src_key] = float(band_sources.get(src_key, 0.0) or 0.0) + float(
+                                source_amounts.get(src_key, 0.0) or 0.0
+                            ) * hh_w
+
+        total_income_mean = _safe_div(national_total_income, national_total_weight)
+        total_income_median = _weighted_median(income_pairs)
+        income_composition_national: Dict[str, object] = {}
+        income_sources_detail: Dict[str, object] = {}
+
+        if national_total_income > 0 and national_total_weight > 0:
+            for src_key in INCOME_SOURCE_COLS.keys():
+                src_total = float(source_totals.get(src_key, 0.0) or 0.0)
+                income_sources_detail[src_key] = {
+                    "label": INCOME_SOURCE_LABELS.get(src_key, src_key),
+                    "mean": round(_safe_div(src_total, national_total_weight), 2),
+                    "pct": round(100.0 * _safe_div(src_total, national_total_income), 2),
+                    "recipients_pct": round(100.0 * _safe_div(source_recipients.get(src_key, 0.0), national_total_weight), 2),
+                }
+
+            for cat in INCOME_CATEGORY_ORDER:
+                if cat == "trabalho":
+                    cat_total = float(source_totals.get("trabalho", 0.0) or 0.0)
+                else:
+                    cat_total = sum(float(source_totals.get(src, 0.0) or 0.0) for src in INCOME_CATEGORIES.get(cat, []))
+                income_composition_national[cat] = {
+                    "label": INCOME_CATEGORY_LABELS.get(cat, cat),
+                    "mean": round(_safe_div(cat_total, national_total_weight), 2),
+                    "pct": round(100.0 * _safe_div(cat_total, national_total_income), 2),
+                }
+
+        uf_dependency_ranking: List[Dict[str, object]] = []
+        for uf_code, uf_data in uf_income_composition.items():
+            total_inc = float(uf_data.get("total_income", 0.0) or 0.0)
+            hh_count = float(uf_data.get("households", 0.0) or 0.0)
+            uf_sources = uf_data.get("sources", {})
+            if total_inc <= 0 or hh_count <= 0 or not isinstance(uf_sources, dict):
+                continue
+            work_total = float(uf_sources.get("trabalho", 0.0) or 0.0)
+            benefits_total = sum(float(uf_sources.get(k, 0.0) or 0.0) for k in INCOME_CATEGORIES["beneficios_sociais"])
+            previdencia_total = float(uf_sources.get("aposentadoria_pensao", 0.0) or 0.0)
+            work_pct = 100.0 * _safe_div(work_total, total_inc)
+            benefits_pct = 100.0 * _safe_div(benefits_total, total_inc)
+            previdencia_pct = 100.0 * _safe_div(previdencia_total, total_inc)
+            dependency_score = _calculate_dependency_score(benefits_pct, previdencia_pct, work_pct)
+            uf_dependency_ranking.append(
+                {
+                    "uf_code": uf_code,
+                    "uf_label": str(uf_data.get("uf_label", uf_code) or uf_code),
+                    "income_mean": round(_safe_div(total_inc, hh_count), 2),
+                    "work_pct": round(work_pct, 2),
+                    "benefits_pct": round(benefits_pct, 2),
+                    "previdencia_pct": round(previdencia_pct, 2),
+                    "dependency_score": round(dependency_score, 2),
+                }
+            )
+        uf_dependency_ranking.sort(key=lambda x: float(x.get("dependency_score", 0.0)), reverse=True)
+
+        composition_by_band: Dict[str, object] = {}
+        total_households_in_bands = sum(float(x.get("households", 0.0) or 0.0) for x in band_income_composition.values())
+        for item in ranges:
+            band_label = str(item["label"])
+            band_data = band_income_composition.get(band_label, {})
+            band_hh = float(band_data.get("households", 0.0) or 0.0) if isinstance(band_data, dict) else 0.0
+            band_income = float(band_data.get("total_income", 0.0) or 0.0) if isinstance(band_data, dict) else 0.0
+            band_sources = band_data.get("sources", {}) if isinstance(band_data, dict) else {}
+            composition: Dict[str, float] = {}
+            for cat in INCOME_CATEGORY_ORDER:
+                if cat == "trabalho":
+                    cat_total = float(band_sources.get("trabalho", 0.0) or 0.0) if isinstance(band_sources, dict) else 0.0
+                else:
+                    cat_total = (
+                        sum(float(band_sources.get(src, 0.0) or 0.0) for src in INCOME_CATEGORIES.get(cat, []))
+                        if isinstance(band_sources, dict)
+                        else 0.0
+                    )
+                composition[cat] = round(100.0 * _safe_div(cat_total, band_income), 2) if band_income > 0 else 0.0
+            composition_by_band[band_label] = {
+                "households_pct": round(100.0 * _safe_div(band_hh, total_households_in_bands), 2)
+                if total_households_in_bands > 0
+                else 0.0,
+                "income_mean": round(_safe_div(band_income, band_hh), 2) if band_hh > 0 else 0.0,
+                "composition": composition,
+            }
+
+        income_composition_payload = {
+            "income_composition_national": income_composition_national,
+            "income_sources_detail": income_sources_detail,
+            "uf_dependency_ranking": uf_dependency_ranking,
+            "composition_by_band": composition_by_band,
+        }
+    
     return {
         "input": str(input_path),
         "target": target,
@@ -1464,6 +2307,15 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
         "sm_target_value": sm_target_nominal,
         "sm_mode": args.sm_mode,
         "uf_order": args.uf_order,
+        "mode": pnad_mode,
+        "dashboard_mode": pnad_mode,
+        "pnad_mode": pnad_mode,
+        "options": {
+            "breakdown": bool(getattr(args, "breakdown", False)),
+            "source_detail": bool(getattr(args, "source_detail", False)),
+            "dependency_ranking": bool(getattr(args, "dependency_ranking", False)),
+            "composition_by_band": bool(getattr(args, "composition_by_band", False)),
+        },
         "ranges": [str(x["label"]) for x in ranges],
         "range_specs": [
             {
@@ -1476,8 +2328,23 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
         "income_col": selected_income_col,
         "weight_col": None if args.unweighted else selected_weight_col,
         "weighting_mode": "unweighted" if args.unweighted else "weighted",
+        "sampling": {
+            "ci_requested": bool((not args.unweighted) and (not args.no_ci)),
+            "ci_effective": bool(use_ci),
+            "ci_level": ci_level,
+            "variance_method": "bootstrap_replicates_mse",
+            "variance_formula": "var=(1/(R-1))*sum((theta_r-theta)^2)",
+            "replicate_weight_base": "V1028",
+            "replicate_weight_count": int(replicate_count),
+            "replicate_weight_columns_detected": int(len(replicate_weight_cols)),
+            "person_weight_assumption": "persons_weight_rep=persons_in_dom*household_rep_weight",
+        },
         "dimension_labels": dimension_labels,
         "modes": modes_out,
+        "total_households": int(len(households)),
+        "total_income_mean": round(float(total_income_mean), 2) if is_anual_mode else None,
+        "total_income_median": round(float(total_income_median), 2) if is_anual_mode else None,
+        **income_composition_payload,
         "metadata": {
             "rows_read": sampled_rows,
             "households": len(households),
@@ -1491,6 +2358,12 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
             "inconsistent_household_weight_rows": inconsistent_household_weight,
             "ipca_csv": str(ipca_csv),
             "salario_minimo_csv": str(sm_csv),
+            "ci_requested": bool((not args.unweighted) and (not args.no_ci)),
+            "ci_effective": bool(use_ci),
+            "ci_level": ci_level,
+            "replicate_weights_found": int(len(replicate_weight_cols)),
+            "pnad_mode": pnad_mode,
+            "income_source_cols_detected": list(income_source_cols.keys()) if income_source_cols else [],
         },
     }
 
@@ -1504,6 +2377,12 @@ def _print_dashboard_mode(
     gradients = _brazil_band_gradients(len(payload.get("ranges", []) or []))
     mode_data = payload["modes"][mode]
     nat = mode_data["national"]
+    dashboard_mode = str(payload.get("dashboard_mode", payload.get("pnad_mode", "trimestral")) or "trimestral")
+    is_anual_mode = dashboard_mode == "anual"
+    income_composition_national = payload.get("income_composition_national", {})
+    income_sources_detail = payload.get("income_sources_detail", {})
+    uf_dependency_ranking = payload.get("uf_dependency_ranking", [])
+    composition_by_band = payload.get("composition_by_band", {})
     show = lambda key: section in ("all", key)
     uf_name_width = 18
     max_uf_label_len = 0
@@ -1528,6 +2407,13 @@ def _print_dashboard_mode(
         sm_ref_month = str(mode_data.get("sm_reference_month", "") or "")
         sm_ref_min = mode_data.get("sm_reference_min")
         sm_ref_max = mode_data.get("sm_reference_max")
+        ci_level = float(mode_data.get("sampling", {}).get("ci_level", payload.get("sampling", {}).get("ci_level", 0.95)))
+        avg_sm = float(nat.get("avg_household_sm", 0.0) or 0.0)
+        avg_sm_moe = nat.get("avg_household_sm_moe")
+        if avg_sm_moe is not None:
+            avg_sm_txt = f"{avg_sm:.3f} ± {float(avg_sm_moe):.3f} (IC {ci_level:.0%})"
+        else:
+            avg_sm_txt = f"{avg_sm:.3f}"
         if sm_ref_min is not None and sm_ref_max is not None and float(sm_ref_min) != float(sm_ref_max):
             sm_ref_txt = (
                 f"{_fmt_brl(sm_ref)} (ref media, intervalo: {_fmt_brl(float(sm_ref_min))}..{_fmt_brl(float(sm_ref_max))})"
@@ -1538,7 +2424,7 @@ def _print_dashboard_mode(
             f"Modo de comparacao: {mode.upper()}",
             f"Domicilios: {_fmt_num(float(nat['households_total']))} | Pessoas: {_fmt_num(float(nat['persons_total']))}",
             (
-                f"Media SM: {float(nat['avg_household_sm']):.3f} | "
+                f"Media SM: {avg_sm_txt} | "
                 f"Mediana SM: {float(nat['median_household_sm']):.3f} | Gini(SM): {float(nat['gini_household_sm']):.3f}"
             ),
             f"SM referencia ({sm_ref_month}): {sm_ref_txt}",
@@ -1548,12 +2434,20 @@ def _print_dashboard_mode(
         for b in nat["bands"]:
             hp = float(b["households_pct"])
             pp = float(b["persons_pct"])
+            hp_moe = b.get("households_pct_moe")
+            pp_moe = b.get("persons_pct_moe")
+            hp_txt = f"{hp:6.2f}%"
+            pp_txt = f"{pp:6.2f}%"
+            if hp_moe is not None:
+                hp_txt = f"{hp:6.2f}%±{float(hp_moe):4.2f}"
+            if pp_moe is not None:
+                pp_txt = f"{pp:6.2f}%±{float(pp_moe):4.2f}"
             gi = payload["ranges"].index(b["range"]) % len(gradients)
             print(
                 "  "
                 + _badge(f"{b['range']:<8}", fg=16, bg=gradients[gi][-1], use_color=use_color)
-                + f" dom={hp:6.2f}% {_gradient_bar(hp, width=24, palette=gradients[gi], use_color=use_color)}"
-                + f"  pes={pp:6.2f}% {_gradient_bar(pp, width=10, palette=gradients[gi], use_color=use_color)}"
+                + f" dom={hp_txt:<14} {_gradient_bar(hp, width=20, palette=gradients[gi], use_color=use_color)}"
+                + f"  pes={pp_txt:<14} {_gradient_bar(pp, width=8, palette=gradients[gi], use_color=use_color)}"
             )
         pie = _mini_pie(nat["bands"], colors=colors, use_color=use_color, slices=30)
         if pie:
@@ -1585,6 +2479,28 @@ def _print_dashboard_mode(
                 else:
                     legend.append(_colorize(f"{rng}={label}", colors[i % len(colors)], use_color))
             print("  Legenda BR: " + " | ".join(legend))
+        if is_anual_mode and isinstance(income_composition_national, dict) and income_composition_national:
+            print(_colorize(" Composicao nacional de renda (PNAD anual)", "1;38;5;214", use_color))
+            for cat in INCOME_CATEGORY_ORDER:
+                data = income_composition_national.get(cat, {})
+                if not isinstance(data, dict):
+                    continue
+                pct = float(data.get("pct", 0.0) or 0.0)
+                mean = float(data.get("mean", 0.0) or 0.0)
+                label = str(data.get("label", INCOME_CATEGORY_LABELS.get(cat, cat)))
+                bar = _gradient_bar(pct, width=22, palette=[22, 28, 34, 40, 46], use_color=use_color)
+                print(f"  - {label:<24} {_fmt_brl(mean):>12}  {pct:6.2f}% {bar}")
+            if isinstance(income_sources_detail, dict) and income_sources_detail:
+                print(_colorize("  Fontes detalhadas (V500xA2)", "1;38;5;221", use_color))
+                for src_key in INCOME_SOURCE_COLS.keys():
+                    item = income_sources_detail.get(src_key, {})
+                    if not isinstance(item, dict):
+                        continue
+                    src_mean = float(item.get("mean", 0.0) or 0.0)
+                    src_pct = float(item.get("pct", 0.0) or 0.0)
+                    rec_pct = float(item.get("recipients_pct", 0.0) or 0.0)
+                    src_label = str(item.get("label", INCOME_SOURCE_LABELS.get(src_key, src_key)))
+                    print(f"    · {src_label:<28} {_fmt_brl(src_mean):>12}  {src_pct:6.2f}%  recip={rec_pct:6.2f}%")
         print()
 
     if show("ranking"):
@@ -1594,8 +2510,12 @@ def _print_dashboard_mode(
         pop_total = float(nat["persons_total"]) or 1.0
         for i, u in enumerate(mode_data.get("top10_uf_income", []), start=1):
             val = float(u["avg_household_sm"])
+            moe = u.get("avg_household_sm_moe")
             heat = _gradient_bar(min(val * 16, 100), width=8, palette=[22, 28, 34, 40, 46], use_color=use_color)
-            left.append(f"  {i:>2}. {u['label']:<{uf_name_width}} {val:6.3f} SM {heat}")
+            val_txt = f"{val:6.3f} SM"
+            if moe is not None:
+                val_txt = f"{val:6.3f}±{float(moe):4.3f} SM"
+            left.append(f"  {i:>2}. {u['label']:<{uf_name_width}} {val_txt:<17} {heat}")
         for i, u in enumerate(mode_data.get("top10_uf_population", []), start=1):
             ppl = float(u["persons_total"])
             share = 100.0 * _safe_div(ppl, pop_total)
@@ -1606,8 +2526,32 @@ def _print_dashboard_mode(
         print(_colorize("  Bottom 10 UFs por renda (SM)", "1;38;5;196", use_color))
         for i, u in enumerate(mode_data.get("bottom10_uf_income", []), start=1):
             val = float(u["avg_household_sm"])
+            moe = u.get("avg_household_sm_moe")
             heat = _gradient_bar(min(val * 16, 100), width=10, palette=[52, 88, 124, 160, 196], use_color=use_color)
-            print(f"   {i:>2}. {u['label']:<{uf_name_width}} {val:6.3f} SM {heat}")
+            val_txt = f"{val:6.3f} SM"
+            if moe is not None:
+                val_txt = f"{val:6.3f}±{float(moe):4.3f} SM"
+            print(f"   {i:>2}. {u['label']:<{uf_name_width}} {val_txt:<17} {heat}")
+        if is_anual_mode and isinstance(uf_dependency_ranking, list) and uf_dependency_ranking:
+            print("")
+            print(_colorize("  Ranking de dependencia por UF (beneficios + previdencia)", "1;38;5;220", use_color))
+            print(
+                "   # "
+                + f"{'UF':<{uf_name_width}} {'dep%':>7} {'trab%':>7} {'benef%':>8} {'prev%':>7} {'media':>12}"
+            )
+            for i, row in enumerate(uf_dependency_ranking[:10], start=1):
+                if not isinstance(row, dict):
+                    continue
+                dep = float(row.get("dependency_score", 0.0) or 0.0)
+                work = float(row.get("work_pct", 0.0) or 0.0)
+                ben = float(row.get("benefits_pct", 0.0) or 0.0)
+                prev = float(row.get("previdencia_pct", 0.0) or 0.0)
+                inc = float(row.get("income_mean", 0.0) or 0.0)
+                dep_bar = _gradient_bar(dep, width=8, palette=[52, 88, 124, 160, 196], use_color=use_color)
+                print(
+                    f"  {i:>2}. {str(row.get('uf_label', '')):<{uf_name_width}} "
+                    f"{dep:6.2f}% {work:6.2f}% {ben:7.2f}% {prev:6.2f}% {_fmt_brl(inc):>12} {dep_bar}"
+                )
         print()
 
     if show("macro"):
@@ -1808,6 +2752,32 @@ def _print_dashboard_mode(
                     [r for r in rows if isinstance(r, dict)],
                     key=lambda r: _age_label_sort_key(str(r.get("label", ""))),
                 )
+            elif dim == "macro_region":
+                row_list = [r for r in rows if isinstance(r, dict)]
+                by_label = {str(r.get("label", "")): r for r in row_list}
+
+                def _zero_cross_row(label: str) -> Dict[str, object]:
+                    return {
+                        "label": label,
+                        "total": 0.0,
+                        "bands": {
+                            str(b): {"value": 0.0, "pct_within_label": 0.0}
+                            for b in payload["ranges"]
+                        },
+                    }
+
+                rows_iter = []
+                used_labels = set()
+                for rg in [x for x in MACRO_REGION_ORDER if x != "Desconhecida"]:
+                    row = by_label.get(rg) or _zero_cross_row(rg)
+                    rows_iter.append(row)
+                    used_labels.add(rg)
+
+                for r in row_list:
+                    lbl = str(r.get("label", ""))
+                    if lbl in used_labels:
+                        continue
+                    rows_iter.append(r)
             elif dim == "education":
                 rows_iter = [r for r in rows if isinstance(r, dict)][:8]
             else:
@@ -1879,15 +2849,156 @@ def _print_dashboard_mode(
                 f"sm={md.get('skipped_missing_sm')}, w_missing={md.get('skipped_missing_weight')}, "
                 f"w_invalid={md.get('skipped_invalid_weight')})"
             )
+            samp = payload.get("sampling", {})
+            if isinstance(samp, dict):
+                print(
+                    f"  amostral(ci_effective={samp.get('ci_effective')}, "
+                    f"ci_level={samp.get('ci_level')}, reps={samp.get('replicate_weight_columns_detected')})"
+                )
         print()
+
+
+def _print_income_composition_pretty(payload: Dict[str, object], *, no_color: bool = False) -> None:
+    """Print income composition analysis for anual mode (Dashboard v2.0)"""
+    use_color = _supports_color(no_color=no_color)
+    
+    # National income composition
+    national_comp = payload.get("income_composition_national", {})
+    if national_comp:
+        print(_colorize("\n╔══════════════════════════════════════════════════════════════════════════════╗", "1;38;5;214", use_color))
+        print(_colorize("║                    COMPOSIÇÃO DE RENDA NACIONAL (PNAD ANUAL)                 ║", "1;38;5;214", use_color))
+        print(_colorize("╚══════════════════════════════════════════════════════════════════════════════╝", "1;38;5;214", use_color))
+        print("")
+        
+        # Colors for income categories
+        cat_colors = {
+            "trabalho": "1;38;5;46",  # Green for work
+            "beneficios_sociais": "1;38;5;196",  # Red for social benefits
+            "previdencia": "1;38;5;208",  # Orange for pensions
+            "seguro": "1;38;5;226",  # Yellow for insurance
+            "transferencias_privadas": "1;38;5;39",  # Blue for private transfers
+            "capital": "1;38;5;15",  # White for capital
+        }
+        
+        for cat in ["trabalho", "beneficios_sociais", "previdencia", "seguro", "transferencias_privadas", "capital"]:
+            data = national_comp.get(cat, {})
+            if not data:
+                continue
+            label = str(data.get("label", cat))
+            mean = float(data.get("mean", 0.0) or 0.0)
+            pct = float(data.get("pct", 0.0) or 0.0)
+            bar_width = 40
+            bar_fill = int(round(bar_width * pct / 100.0))
+            bar_fill = max(0, min(bar_width, bar_fill))
+            bar = "█" * bar_fill + "░" * (bar_width - bar_fill)
+            color = cat_colors.get(cat, "1;38;5;250")
+            print(f"  {_colorize(label.ljust(22), color, use_color)} {_colorize(bar, color, use_color)} {pct:5.1f}% (R$ {mean:,.2f})")
+        print("")
+    
+    # Income sources detail
+    sources_detail = payload.get("income_sources_detail", {})
+    if sources_detail:
+        print(_colorize(" Detalhamento por Fonte de Renda:", "1;38;5;117", use_color))
+        for src_key in ["trabalho", "bpc_loas", "bolsa_familia", "outros_sociais", "aposentadoria_pensao", 
+                        "seguro_desemprego", "pensao_doacao", "aluguel", "outros_capital"]:
+            data = sources_detail.get(src_key, {})
+            if not data:
+                continue
+            label = str(data.get("label", src_key))
+            mean = float(data.get("mean", 0.0) or 0.0)
+            pct = float(data.get("pct", 0.0) or 0.0)
+            recipients_pct = data.get("recipients_pct")
+            recipients_txt = f" ({recipients_pct:.1f}% recebem)" if recipients_pct is not None else ""
+            bar_width = 30
+            bar_fill = int(round(bar_width * pct / 100.0))
+            bar_fill = max(0, min(bar_width, bar_fill))
+            bar = "▓" * bar_fill + "░" * (bar_width - bar_fill)
+            print(f"    {label.ljust(24)} {bar} {pct:5.2f}% R$ {mean:,.2f}{recipients_txt}")
+        print("")
+    
+    # UF dependency ranking
+    uf_ranking = payload.get("uf_dependency_ranking", [])
+    if uf_ranking:
+        print(_colorize("\n╔══════════════════════════════════════════════════════════════════════════════╗", "1;38;5;196", use_color))
+        print(_colorize("║             RANKING DE DEPENDÊNCIA POR UF (% não-trabalho)                   ║", "1;38;5;196", use_color))
+        print(_colorize("╚══════════════════════════════════════════════════════════════════════════════╝", "1;38;5;196", use_color))
+        print("")
+        print(_colorize("  UF                  Renda Média   %Trabalho  %Benefícios  %Previd.  Score Dep.", "1;38;5;250", use_color))
+        print("  " + "─" * 76)
+        
+        for i, uf in enumerate(uf_ranking[:15]):  # Show top 15
+            uf_label = str(uf.get("uf_label", "")).ljust(18)
+            income_mean = float(uf.get("income_mean", 0.0) or 0.0)
+            work_pct = float(uf.get("work_pct", 0.0) or 0.0)
+            benefits_pct = float(uf.get("benefits_pct", 0.0) or 0.0)
+            previdencia_pct = float(uf.get("previdencia_pct", 0.0) or 0.0)
+            dep_score = float(uf.get("dependency_score", 0.0) or 0.0)
+            
+            # Color based on dependency score (higher = more red)
+            if dep_score > 50:
+                row_color = "1;38;5;196"  # Red
+            elif dep_score > 40:
+                row_color = "1;38;5;208"  # Orange
+            elif dep_score > 30:
+                row_color = "1;38;5;226"  # Yellow
+            else:
+                row_color = "1;38;5;46"  # Green
+            
+            rank = f"{i+1:2}."
+            print(f"  {_colorize(rank, row_color, use_color)} {uf_label} R$ {income_mean:>8,.2f}    {work_pct:5.1f}%      {benefits_pct:5.1f}%     {previdencia_pct:5.1f}%   {_colorize(f'{dep_score:5.1f}', row_color, use_color)}")
+        
+        if len(uf_ranking) > 15:
+            print(f"  ... e mais {len(uf_ranking) - 15} UFs")
+        print("")
+    
+    # Composition by income band
+    band_comp = payload.get("composition_by_band", {})
+    if band_comp:
+        print(_colorize("\n╔══════════════════════════════════════════════════════════════════════════════╗", "1;38;5;33", use_color))
+        print(_colorize("║              COMPOSIÇÃO DE RENDA POR FAIXA DE SALÁRIO MÍNIMO                 ║", "1;38;5;33", use_color))
+        print(_colorize("╚══════════════════════════════════════════════════════════════════════════════╝", "1;38;5;33", use_color))
+        print("")
+        print(_colorize("  Faixa SM     %Dom.    Renda Média   %Trab.  %Benef.  %Prev.  %Seg.  %Transf. %Cap.", "1;38;5;250", use_color))
+        print("  " + "─" * 80)
+        
+        for band_label, data in band_comp.items():
+            if not isinstance(data, dict):
+                continue
+            hh_pct = float(data.get("households_pct", 0.0) or 0.0)
+            income_mean = float(data.get("income_mean", 0.0) or 0.0)
+            comp = data.get("composition", {})
+            
+            work = float(comp.get("trabalho", 0.0) or 0.0)
+            benefits = float(comp.get("beneficios_sociais", 0.0) or 0.0)
+            prev = float(comp.get("previdencia", 0.0) or 0.0)
+            seg = float(comp.get("seguro", 0.0) or 0.0)
+            transf = float(comp.get("transferencias_privadas", 0.0) or 0.0)
+            cap = float(comp.get("capital", 0.0) or 0.0)
+            
+            # Highlight low work percentage (poverty trap indicator)
+            if work < 50:
+                work_color = "1;38;5;196"
+            elif work < 70:
+                work_color = "1;38;5;226"
+            else:
+                work_color = "1;38;5;46"
+            
+            print(f"  {band_label.ljust(10)} {hh_pct:6.1f}%  R$ {income_mean:>9,.2f}   {_colorize(f'{work:5.1f}%', work_color, use_color)}  {benefits:5.1f}%  {prev:5.1f}%  {seg:4.1f}%   {transf:5.1f}%  {cap:4.1f}%")
+        
+        print("")
+        print(_colorize("  💡 Hipótese validada: nas faixas mais baixas, maior % vem de benefícios/previdência", "1;38;5;226", use_color))
+        print("")
 
 
 def _print_dashboard_pretty(payload: Dict[str, object], *, no_color: bool = False) -> None:
     use_color = _supports_color(no_color=no_color)
     title_style = "1;38;5;46"
+    pnad_mode = payload.get("pnad_mode", "trimestral")
+    mode_label = "ANUAL (Visita 5)" if pnad_mode == "anual" else "TRIMESTRAL"
+    
     print(_brazil_flag_strip(use_color))
     header = [
-        _colorize("PNAD DASHBOARD ECONOMICO", title_style, use_color),
+        _colorize(f"PNAD DASHBOARD ECONOMICO - {mode_label}", title_style, use_color),
         f"Entrada: {payload.get('input')}",
         f"Target: {payload.get('target')} | SM alvo: {payload.get('sm_target_value')} (mes {payload.get('sm_target_month')})",
         f"Peso: {payload.get('weighting_mode')} ({payload.get('weight_col') or 'N/A'}) | Renda: {payload.get('income_col')}",
@@ -1900,6 +3011,10 @@ def _print_dashboard_pretty(payload: Dict[str, object], *, no_color: bool = Fals
         dims = md.get("dimensions", [])
         if isinstance(dims, list):
             header.append(f"Recortes ativos: {', '.join(str(x) for x in dims)}")
+        # Show income source columns detected for anual mode
+        src_cols = md.get("income_source_cols_detected", [])
+        if src_cols:
+            header.append(f"Fontes de renda detectadas: {len(src_cols)} colunas V50xxA2")
     _panel("Panorama Geral", header, color="1;38;5;46", use_color=use_color)
     print("")
 
@@ -1988,13 +3103,21 @@ def cmd_ibge_sync(args: argparse.Namespace) -> int:
     raw_dir = Path(args.raw_dir)
     docs_dir = Path(args.docs_dir)
     manifest_path = Path(args.manifest)
+
     manifest = _read_json(manifest_path)
     if not isinstance(manifest, dict):
         manifest = {}
     files_meta = manifest.get("files", {})
     if not isinstance(files_meta, dict):
         files_meta = {}
+
     sync_events: List[Dict[str, object]] = []
+    scope_errors: List[Dict[str, str]] = []
+
+    def record_scope_error(scope: str, exc: Exception) -> None:
+        msg = str(exc)
+        scope_errors.append({"scope": scope, "error": msg})
+        print(f"WARN: {scope} sync failed: {msg}", file=sys.stderr)
 
     def sync_one(url: str, destination: Path) -> Dict[str, object]:
         prev = files_meta.get(url, {}) if isinstance(files_meta.get(url, {}), dict) else {}
@@ -2017,119 +3140,269 @@ def cmd_ibge_sync(args: argparse.Namespace) -> int:
     selected_raw_files: List[str] = []
     extracted_txt: List[str] = []
 
-    try:
-        root_hrefs = _list_hrefs(base_url)
-    except Exception as exc:
-        print(f"ERROR: could not list IBGE base URL: {exc}", file=sys.stderr)
-        return 2
+    with_anual = bool(args.with_anual or args.full)
+    with_censo = bool(args.with_censo or args.full)
+    with_tse = bool(args.with_tse or args.full)
+
+    # ---------------- Trimestral PNADC (existing behavior) ----------------
+    root_hrefs: List[str] = []
+    needs_trimestral_index = (not args.no_docs) or (not args.no_raw)
+    if needs_trimestral_index:
+        try:
+            root_hrefs = _list_hrefs(base_url)
+        except Exception as exc:
+            print(f"ERROR: could not list IBGE base URL: {exc}", file=sys.stderr)
+            return 2
 
     if not args.no_docs:
-        top_docs = [
-            h
-            for h in root_hrefs
-            if h != "Documentacao/" and not h.endswith("/") and not h.lower().endswith(".zip")
-        ]
-        for name in sorted(top_docs):
-            sync_one(base_url + name, docs_dir / name)
+        try:
+            top_docs = [
+                h
+                for h in root_hrefs
+                if h != "Documentacao/" and not h.endswith("/") and not h.lower().endswith(".zip")
+            ]
+            for name in sorted(top_docs):
+                sync_one(base_url + name, docs_dir / name)
 
-        doc_hrefs = _list_hrefs(base_url + "Documentacao/")
-        doc_files = [h for h in doc_hrefs if not h.endswith("/")]
-        for name in sorted(doc_files):
-            sync_one(base_url + "Documentacao/" + name, docs_dir / name)
+            doc_hrefs = _list_hrefs(base_url + "Documentacao/")
+            doc_files = [h for h in doc_hrefs if not h.endswith("/")]
+            for name in sorted(doc_files):
+                sync_one(base_url + "Documentacao/" + name, docs_dir / name)
 
-        if not args.no_extract and (docs_dir / "Dicionario_e_input_20221031.zip").exists():
-            with zipfile.ZipFile(docs_dir / "Dicionario_e_input_20221031.zip") as zf:
-                for member in zf.namelist():
-                    if member.endswith("/"):
+            if not args.no_extract and (docs_dir / "Dicionario_e_input_20221031.zip").exists():
+                _extract_zip_all(docs_dir / "Dicionario_e_input_20221031.zip", docs_dir, quiet=args.quiet)
+
+            # Refresh monthly nominal minimum wage series (BCB SGS 1619).
+            mw_rows = _fetch_json(BCB_SALARIO_MINIMO_URL)
+            if not isinstance(mw_rows, list):
+                raise ValueError("unexpected response while fetching salario minimo series")
+            mw_out = docs_dir / "salario_minimo.csv"
+            with mw_out.open("w", encoding="utf-8", newline="") as fh:
+                w = csv.writer(fh)
+                w.writerow(["date", "value"])
+                for row in mw_rows:
+                    if not isinstance(row, dict):
                         continue
-                    target = docs_dir / Path(member).name
-                    tmp = target.with_name(target.name + ".tmp")
-                    with zf.open(member, "r") as src, tmp.open("wb") as dst:
-                        shutil.copyfileobj(src, dst, length=1024 * 1024)
-                    tmp.replace(target)
-
-        # Refresh monthly nominal minimum wage series (BCB SGS 1619).
-        # This feeds income-by-minimum-wage analytics in `renda-por-faixa-sm`.
-        mw_rows = _fetch_json(BCB_SALARIO_MINIMO_URL)
-        if not isinstance(mw_rows, list):
-            raise ValueError("unexpected response while fetching salario minimo series")
-        mw_out = docs_dir / "salario_minimo.csv"
-        with mw_out.open("w", encoding="utf-8", newline="") as fh:
-            w = csv.writer(fh)
-            w.writerow(["date", "value"])
-            for row in mw_rows:
-                if not isinstance(row, dict):
-                    continue
-                d = str(row.get("data", "")).strip()
-                v = str(row.get("valor", "")).strip()
-                if not d or not v:
-                    continue
-                try:
-                    dd, mm, yyyy = d.split("/")
-                except ValueError:
-                    continue
-                ym = f"{yyyy}-{mm}"
-                fv = _parse_float(v)
-                if fv is None:
-                    continue
-                w.writerow([ym, f"{float(fv):.2f}"])
-        sync_events.append(
-            {
-                "url": BCB_SALARIO_MINIMO_URL,
-                "path": str(mw_out),
-                "status": "downloaded",
-            }
-        )
+                    d = str(row.get("data", "")).strip()
+                    v = str(row.get("valor", "")).strip()
+                    if not d or not v:
+                        continue
+                    try:
+                        _dd, mm, yyyy = d.split("/")
+                    except ValueError:
+                        continue
+                    ym = f"{yyyy}-{mm}"
+                    fv = _parse_float(v)
+                    if fv is None:
+                        continue
+                    w.writerow([ym, f"{float(fv):.2f}"])
+            sync_events.append(
+                {
+                    "url": BCB_SALARIO_MINIMO_URL,
+                    "path": str(mw_out),
+                    "status": "downloaded",
+                }
+            )
+        except Exception as exc:
+            record_scope_error("trimestral_docs", exc)
 
     if not args.no_raw:
-        years = sorted(
-            int(h.rstrip("/")) for h in root_hrefs if re.match(r"^\d{4}/$", h) and h.rstrip("/").isdigit()
-        )
-        if not years:
-            print("ERROR: no year folders found in IBGE Microdados index", file=sys.stderr)
-            return 2
-        selected_year = int(args.year) if args.year else years[-1]
-        if selected_year not in years:
-            print(f"ERROR: year {selected_year} not available on IBGE index", file=sys.stderr)
-            return 2
+        try:
+            years = sorted(
+                int(h.rstrip("/")) for h in root_hrefs if re.match(r"^\d{4}/$", h) and h.rstrip("/").isdigit()
+            )
+            if not years:
+                raise ValueError("no year folders found in IBGE Microdados index")
+            selected_year = int(args.year) if args.year else years[-1]
+            if selected_year not in years:
+                raise ValueError(f"year {selected_year} not available on IBGE index")
 
-        year_url = f"{base_url}{selected_year}/?C=N;O=D"
-        year_hrefs = _list_hrefs(year_url)
-        zip_names = sorted({h for h in year_hrefs if PNADC_ZIP_RE.match(h)})
-        latest_by_quarter = _group_latest_by_quarter(zip_names)
-        if not latest_by_quarter:
-            print(f"ERROR: no PNADC zip files found for year {selected_year}", file=sys.stderr)
-            return 2
+            year_url = f"{base_url}{selected_year}/?C=N;O=D"
+            year_hrefs = _list_hrefs(year_url)
+            zip_names = sorted({h for h in year_hrefs if PNADC_ZIP_RE.match(h)})
+            latest_by_quarter = _group_latest_by_quarter(zip_names)
+            if not latest_by_quarter:
+                raise ValueError(f"no PNADC zip files found for year {selected_year}")
 
-        if args.quarter:
-            q = int(args.quarter)
-            pick = latest_by_quarter.get(q)
-            if not pick:
-                print(f"ERROR: no file for quarter {q} in year {selected_year}", file=sys.stderr)
-                return 2
-            to_download = [str(pick["name"])]
-        elif args.all_in_year:
-            to_download = [str(latest_by_quarter[q]["name"]) for q in sorted(latest_by_quarter)]
-        else:
-            latest_q = max(latest_by_quarter)
-            to_download = [str(latest_by_quarter[latest_q]["name"])]
+            if args.quarter:
+                q = int(args.quarter)
+                pick = latest_by_quarter.get(q)
+                if not pick:
+                    raise ValueError(f"no file for quarter {q} in year {selected_year}")
+                to_download = [str(pick["name"])]
+            elif args.all_in_year:
+                to_download = [str(latest_by_quarter[q]["name"]) for q in sorted(latest_by_quarter)]
+            else:
+                latest_q = max(latest_by_quarter)
+                to_download = [str(latest_by_quarter[latest_q]["name"])]
 
-        for file_name in to_download:
-            selected_raw_files.append(file_name)
-            zip_url = f"{base_url}{selected_year}/{file_name}"
-            zip_dest = raw_dir / file_name
-            sync_event = sync_one(zip_url, zip_dest)
-            if not args.no_extract and zip_dest.exists():
-                txt_path = _extract_single_txt(zip_dest, raw_dir, quiet=args.quiet)
-                if txt_path:
-                    extracted_txt.append(str(txt_path))
+            for file_name in to_download:
+                selected_raw_files.append(file_name)
+                zip_url = f"{base_url}{selected_year}/{file_name}"
+                zip_dest = raw_dir / file_name
+                sync_event = sync_one(zip_url, zip_dest)
+                if not args.no_extract and zip_dest.exists():
+                    txt_path = _extract_single_txt(zip_dest, raw_dir, quiet=args.quiet)
+                    if txt_path:
+                        extracted_txt.append(str(txt_path))
+                        sync_events.append(
+                            {
+                                "url": zip_url,
+                                "path": str(txt_path),
+                                "status": "extracted" if sync_event["status"] == "downloaded" else "present",
+                            }
+                        )
+        except Exception as exc:
+            record_scope_error("trimestral_raw", exc)
+
+    # ---------------- PNADC Anual (Visita 5) ----------------
+    anual_payload: Dict[str, object] = {
+        "enabled": with_anual,
+        "base_url": args.anual_base_url,
+        "raw_dir": args.anual_raw_dir,
+        "docs_dir": args.anual_docs_dir,
+        "year": None,
+        "raw_files": [],
+        "raw_txt": [],
+        "docs_files": [],
+    }
+
+    if with_anual:
+        anual_base = args.anual_base_url.rstrip("/") + "/"
+        anual_raw_dir = Path(args.anual_raw_dir)
+        anual_docs_dir = Path(args.anual_docs_dir)
+        anual_selected_year: Optional[int] = None
+
+        try:
+            if not args.no_anual_docs:
+                doc_hrefs = _list_hrefs(anual_base + "Documentacao/")
+                doc_files = sorted([h for h in doc_hrefs if not h.endswith("/")])
+                for name in doc_files:
+                    sync_one(anual_base + "Documentacao/" + name, anual_docs_dir / name)
+                anual_payload["docs_files"] = doc_files
+
+            if not args.no_anual_raw:
+                data_hrefs = _list_hrefs(anual_base + "Dados/")
+                zip_names = sorted([h for h in data_hrefs if PNADC_ANUAL_VISITA5_ZIP_RE.match(h)])
+                latest_by_year = _group_latest_anual_by_year(zip_names)
+                years = sorted(latest_by_year.keys())
+                if not years:
+                    raise ValueError("no PNADC Anual Visita 5 zip files found")
+
+                if args.anual_year:
+                    y = int(args.anual_year)
+                    if y not in latest_by_year:
+                        raise ValueError(f"no PNADC Anual Visita 5 file for year {y}")
+                    selected_years = [y]
+                elif args.anual_all_years:
+                    selected_years = years
+                else:
+                    selected_years = [years[-1]]
+
+                anual_selected_year = selected_years[-1]
+                anual_files: List[str] = []
+                anual_txt: List[str] = []
+                for y in selected_years:
+                    file_name = str(latest_by_year[y]["name"])
+                    anual_files.append(file_name)
+                    zip_url = f"{anual_base}Dados/{file_name}"
+                    zip_dest = anual_raw_dir / file_name
+                    ev = sync_one(zip_url, zip_dest)
+                    if not args.no_extract and zip_dest.exists():
+                        txt_path = _extract_single_txt(zip_dest, anual_raw_dir, quiet=args.quiet)
+                        if txt_path:
+                            anual_txt.append(str(txt_path))
+                            sync_events.append(
+                                {
+                                    "url": zip_url,
+                                    "path": str(txt_path),
+                                    "status": "extracted" if ev["status"] == "downloaded" else "present",
+                                }
+                            )
+
+                anual_payload["year"] = anual_selected_year
+                anual_payload["raw_files"] = anual_files
+                anual_payload["raw_txt"] = anual_txt
+        except Exception as exc:
+            record_scope_error("anual_visita5", exc)
+
+    # ---------------- Censo 2022 agregados de renda do responsavel ----------------
+    censo_payload: Dict[str, object] = {
+        "enabled": with_censo,
+        "base_url": args.censo_base_url,
+        "folder": args.censo_folder,
+        "dir": args.censo_dir,
+        "files": [],
+        "extracted": [],
+    }
+
+    if with_censo:
+        censo_base = args.censo_base_url.rstrip("/") + "/"
+        censo_folder = args.censo_folder.strip("/") + "/"
+        censo_dir = Path(args.censo_dir)
+        try:
+            hrefs = _list_hrefs(censo_base + censo_folder)
+            files = sorted([h for h in hrefs if not h.endswith("/")])
+            extracted_files: List[str] = []
+            for name in files:
+                url = censo_base + censo_folder + name
+                dest = censo_dir / name
+                ev = sync_one(url, dest)
+                if not args.no_extract and str(name).lower().endswith(".zip") and dest.exists():
+                    out = _extract_zip_all(dest, censo_dir, quiet=args.quiet)
+                    extracted_files.extend(str(x) for x in out)
                     sync_events.append(
                         {
-                            "url": zip_url,
-                            "path": str(txt_path),
-                            "status": "extracted" if sync_event["status"] == "downloaded" else "present",
+                            "url": url,
+                            "path": str(dest),
+                            "status": "extracted" if ev["status"] == "downloaded" else "present",
                         }
                     )
+            censo_payload["files"] = files
+            censo_payload["extracted"] = extracted_files
+        except Exception as exc:
+            record_scope_error("censo_renda_responsavel", exc)
+
+    # ---------------- TSE dados abertos (perfil do eleitorado) ----------------
+    tse_payload: Dict[str, object] = {
+        "enabled": with_tse,
+        "api_base": args.tse_api_base,
+        "query": args.tse_query,
+        "dir": args.tse_dir,
+        "resources_found": 0,
+        "resources_selected": [],
+        "extracted": [],
+    }
+
+    if with_tse:
+        tse_dir = Path(args.tse_dir)
+        try:
+            resources = _fetch_tse_resources(args.tse_api_base, args.tse_query, rows=int(args.tse_rows))
+            selected = _select_tse_resources(resources, year=args.tse_year, all_years=bool(args.tse_all_years))
+            tse_payload["resources_found"] = len(resources)
+            tse_payload["resources_selected"] = selected
+
+            extracted_files: List[str] = []
+            for item in selected:
+                url = str(item.get("url", "") or "")
+                if not url:
+                    continue
+                name = Path(urlparse(url).path).name or f"tse_{item.get('kind','dataset')}_{item.get('year','')}.zip"
+                dest = tse_dir / name
+                ev = sync_one(url, dest)
+                if not args.no_extract and dest.exists() and name.lower().endswith(".zip"):
+                    out = _extract_zip_all(dest, tse_dir, quiet=args.quiet)
+                    extracted_files.extend(str(x) for x in out)
+                    sync_events.append(
+                        {
+                            "url": url,
+                            "path": str(dest),
+                            "status": "extracted" if ev["status"] == "downloaded" else "present",
+                        }
+                    )
+            tse_payload["extracted"] = extracted_files
+        except Exception as exc:
+            record_scope_error("tse_eleitorado", exc)
 
     manifest = {
         "updated_at_utc": datetime.datetime.utcnow().replace(microsecond=0).isoformat() + "Z",
@@ -2147,6 +3420,17 @@ def cmd_ibge_sync(args: argparse.Namespace) -> int:
         "raw_dir": str(raw_dir),
         "manifest": str(manifest_path),
         "events": sync_events,
+        "scopes": {
+            "trimestral": {
+                "enabled": (not args.no_docs) or (not args.no_raw),
+                "docs_enabled": not args.no_docs,
+                "raw_enabled": not args.no_raw,
+            },
+            "anual_visita5": anual_payload,
+            "censo_renda_responsavel": censo_payload,
+            "tse_eleitorado": tse_payload,
+        },
+        "errors": scope_errors,
     }
     print(json.dumps(payload, ensure_ascii=False, indent=2))
     return 0
@@ -2176,8 +3460,8 @@ def cmd_download_pnadc(args: argparse.Namespace) -> int:
 
 
 def cmd_download_news(args: argparse.Namespace) -> int:
-    req = Request(args.url, headers={"User-Agent": "pnad-cli/1.0"})
-    with urlopen(req, timeout=120) as resp:
+    req = Request(args.url, headers={"User-Agent": TOOL_USER_AGENT})
+    with _urlopen_retry_ssl(req, timeout=120) as resp:
         xml_text = resp.read().decode("utf-8", errors="replace")
 
     root = ET.fromstring(xml_text)
@@ -2255,6 +3539,14 @@ def cmd_renda_por_faixa_sm(args: argparse.Namespace) -> int:
     households: Dict[str, Dict[str, object]] = {}
     selected_income_col = ""
     selected_weight_col: Optional[str] = None
+    try:
+        ci_level = _normalize_ci_level(args.ci_level)
+    except Exception as exc:
+        print(f"ERROR: invalid --ci-level: {exc}", file=sys.stderr)
+        return 2
+    use_ci = (not args.unweighted) and (not args.no_ci)
+    replicate_weight_cols: List[str] = []
+    replicate_count = 0
 
     try:
         with input_path.open("r", encoding="utf-8-sig", errors="replace", newline="") as fh:
@@ -2271,6 +3563,9 @@ def cmd_renda_por_faixa_sm(args: argparse.Namespace) -> int:
             income_col = _detect_income_col(headers, args.income_col)
             selected_income_col = income_col
             selected_weight_col = None if args.unweighted else _detect_weight_col(headers, args.weight_col)
+            if use_ci:
+                replicate_weight_cols = _detect_replicate_weight_cols(headers, base_prefix="V1028")
+                replicate_count = len(replicate_weight_cols)
 
             if not dom_col:
                 raise ValueError("input must contain dom_id (run fwf-extract with dom_id)")
@@ -2283,6 +3578,8 @@ def cmd_renda_por_faixa_sm(args: argparse.Namespace) -> int:
                     "weight column not found. Re-run pipeline including V1028 "
                     "or pass --weight-col / use --unweighted for diagnostics."
                 )
+            if use_ci and replicate_count < 2:
+                use_ci = False
 
             for row in r:
                 sampled_rows += 1
@@ -2338,6 +3635,12 @@ def cmd_renda_por_faixa_sm(args: argparse.Namespace) -> int:
 
                 st = households.get(dom)
                 if st is None:
+                    rep_household_weights: List[float] = []
+                    if use_ci:
+                        for rep_col in replicate_weight_cols:
+                            rep_raw = row.get(rep_col, "")
+                            rep_val = _parse_float(rep_raw)
+                            rep_household_weights.append(float(rep_val) if rep_val is not None and rep_val > 0 else 0.0)
                     st = {
                         "dom_id": dom,
                         "uf_code": uf_code,
@@ -2348,6 +3651,7 @@ def cmd_renda_por_faixa_sm(args: argparse.Namespace) -> int:
                         "household_weight": row_weight,
                         "persons_weight": 0.0,
                         "ym": ym,
+                        "rep_household_weights": rep_household_weights,
                     }
                     households[dom] = st
 
@@ -2377,6 +3681,20 @@ def cmd_renda_por_faixa_sm(args: argparse.Namespace) -> int:
 
         g = by_group.get(gkey)
         if g is None:
+            rep_households_total = [0.0] * replicate_count if use_ci else []
+            rep_persons_total = [0.0] * replicate_count if use_ci else []
+            rep_sum_ratio = [0.0] * replicate_count if use_ci else []
+            rep_bands = (
+                {
+                    str(item["label"]): {
+                        "households": [0.0] * replicate_count,
+                        "persons": [0.0] * replicate_count,
+                    }
+                    for item in ranges
+                }
+                if use_ci
+                else {}
+            )
             g = {
                 "group": gkey,
                 "label": gname,
@@ -2386,6 +3704,10 @@ def cmd_renda_por_faixa_sm(args: argparse.Namespace) -> int:
                 "persons_sample": 0,
                 "sum_ratio_household_weighted": 0.0,
                 "bands": {str(item["label"]): {"households": 0, "persons": 0} for item in ranges},
+                "rep_households_total": rep_households_total,
+                "rep_persons_total": rep_persons_total,
+                "rep_sum_ratio_household_weighted": rep_sum_ratio,
+                "rep_bands": rep_bands,
             }
             by_group[gkey] = g
 
@@ -2415,6 +3737,26 @@ def cmd_renda_por_faixa_sm(args: argparse.Namespace) -> int:
         gband = g["bands"][band]
         gband["households"] = float(gband["households"]) + hh_inc
         gband["persons"] = float(gband["persons"]) + pp_inc
+
+        if use_ci:
+            rep_weights = h.get("rep_household_weights")
+            if isinstance(rep_weights, list) and len(rep_weights) == replicate_count:
+                rep_households_total = g["rep_households_total"]
+                rep_persons_total = g["rep_persons_total"]
+                rep_sum_ratio = g["rep_sum_ratio_household_weighted"]
+                rep_band = g["rep_bands"][band]
+                rep_band_households = rep_band["households"]
+                rep_band_persons = rep_band["persons"]
+                for j, rep_hh_w in enumerate(rep_weights):
+                    wj = float(rep_hh_w)
+                    if wj <= 0:
+                        continue
+                    rep_pp_w = float(persons) * wj
+                    rep_households_total[j] += wj
+                    rep_persons_total[j] += rep_pp_w
+                    rep_sum_ratio[j] += ratio_sm * wj
+                    rep_band_households[j] += wj
+                    rep_band_persons[j] += rep_pp_w
 
     if group_mode == "uf":
         order = args.uf_order
@@ -2447,36 +3789,105 @@ def cmd_renda_por_faixa_sm(args: argparse.Namespace) -> int:
         g = by_group[gkey]
         htot = float(g["households_total"]) or 0.0
         ptot = float(g["persons_total"]) or 0.0
-        avg_household_sm = (
-            float(g["sum_ratio_household_weighted"]) / htot if htot else 0.0
-        )
+        avg_household_sm = float(g["sum_ratio_household_weighted"]) / htot if htot else 0.0
+
+        rep_households_total = g.get("rep_households_total", [])
+        rep_persons_total = g.get("rep_persons_total", [])
+        rep_sum_ratio = g.get("rep_sum_ratio_household_weighted", [])
+
+        avg_sm_ci: Optional[Dict[str, float]] = None
+        if use_ci and isinstance(rep_households_total, list) and isinstance(rep_sum_ratio, list):
+            avg_reps = [
+                _safe_div(float(rep_sum_ratio[j]), float(rep_households_total[j]))
+                if float(rep_households_total[j]) > 0
+                else 0.0
+                for j in range(replicate_count)
+            ]
+            avg_sm_ci = _ci_from_replicates(avg_household_sm, avg_reps, ci_level=ci_level)
+
         bands_out = []
         for item in ranges:
             label = str(item["label"])
             b = g["bands"][label]
             bh = float(b["households"])
             bp = float(b["persons"])
-            bands_out.append(
+            hp = round((100.0 * bh / htot), 4) if htot else 0.0
+            pp = round((100.0 * bp / ptot), 4) if ptot else 0.0
+            row_out: Dict[str, object] = {
+                "range": label,
+                "households": bh,
+                "households_pct": hp,
+                "persons": bp,
+                "persons_pct": pp,
+            }
+            if use_ci:
+                rep_band = g.get("rep_bands", {}).get(label, {})
+                rep_bh = rep_band.get("households", []) if isinstance(rep_band, dict) else []
+                rep_bp = rep_band.get("persons", []) if isinstance(rep_band, dict) else []
+                if (
+                    isinstance(rep_households_total, list)
+                    and isinstance(rep_persons_total, list)
+                    and isinstance(rep_bh, list)
+                    and isinstance(rep_bp, list)
+                    and len(rep_households_total) == replicate_count
+                    and len(rep_persons_total) == replicate_count
+                    and len(rep_bh) == replicate_count
+                    and len(rep_bp) == replicate_count
+                ):
+                    hh_rep = [
+                        100.0 * _safe_div(float(rep_bh[j]), float(rep_households_total[j]))
+                        if float(rep_households_total[j]) > 0
+                        else 0.0
+                        for j in range(replicate_count)
+                    ]
+                    pp_rep = [
+                        100.0 * _safe_div(float(rep_bp[j]), float(rep_persons_total[j]))
+                        if float(rep_persons_total[j]) > 0
+                        else 0.0
+                        for j in range(replicate_count)
+                    ]
+                    hh_ci = _ci_from_replicates(float(hp), hh_rep, ci_level=ci_level, clamp=(0.0, 100.0))
+                    pp_ci = _ci_from_replicates(float(pp), pp_rep, ci_level=ci_level, clamp=(0.0, 100.0))
+                    if hh_ci:
+                        row_out.update(
+                            {
+                                "households_pct_se": round(float(hh_ci["se"]), 6),
+                                "households_pct_moe": round(float(hh_ci["moe"]), 6),
+                                "households_pct_ci_low": round(float(hh_ci["ci_low"]), 6),
+                                "households_pct_ci_high": round(float(hh_ci["ci_high"]), 6),
+                            }
+                        )
+                    if pp_ci:
+                        row_out.update(
+                            {
+                                "persons_pct_se": round(float(pp_ci["se"]), 6),
+                                "persons_pct_moe": round(float(pp_ci["moe"]), 6),
+                                "persons_pct_ci_low": round(float(pp_ci["ci_low"]), 6),
+                                "persons_pct_ci_high": round(float(pp_ci["ci_high"]), 6),
+                            }
+                        )
+            bands_out.append(row_out)
+
+        group_out: Dict[str, object] = {
+            "group": g["group"],
+            "label": g["label"],
+            "households_total": htot,
+            "persons_total": ptot,
+            "households_sample": int(g["households_sample"]),
+            "persons_sample": int(g["persons_sample"]),
+            "avg_household_sm": round(avg_household_sm, 6),
+            "bands": bands_out,
+        }
+        if avg_sm_ci:
+            group_out.update(
                 {
-                    "range": label,
-                    "households": bh,
-                    "households_pct": round((100.0 * bh / htot), 4) if htot else 0.0,
-                    "persons": bp,
-                    "persons_pct": round((100.0 * bp / ptot), 4) if ptot else 0.0,
+                    "avg_household_sm_se": round(float(avg_sm_ci["se"]), 6),
+                    "avg_household_sm_moe": round(float(avg_sm_ci["moe"]), 6),
+                    "avg_household_sm_ci_low": round(float(avg_sm_ci["ci_low"]), 6),
+                    "avg_household_sm_ci_high": round(float(avg_sm_ci["ci_high"]), 6),
                 }
             )
-        groups_out.append(
-            {
-                "group": g["group"],
-                "label": g["label"],
-                "households_total": htot,
-                "persons_total": ptot,
-                "households_sample": int(g["households_sample"]),
-                "persons_sample": int(g["persons_sample"]),
-                "avg_household_sm": round(avg_household_sm, 6),
-                "bands": bands_out,
-            }
-        )
+        groups_out.append(group_out)
 
     sm_ref_weighted_sum = 0.0
     sm_ref_weight_total = 0.0
@@ -2517,6 +3928,16 @@ def cmd_renda_por_faixa_sm(args: argparse.Namespace) -> int:
         ],
         "ranges_money": ranges_money,
         "groups": groups_out,
+        "sampling": {
+            "ci_enabled": bool(use_ci),
+            "ci_level": ci_level,
+            "variance_method": "bootstrap_replicates_mse",
+            "variance_formula": "var=(1/(R-1))*sum((theta_r-theta)^2)",
+            "replicate_weight_base": "V1028",
+            "replicate_weight_count": int(replicate_count),
+            "replicate_weight_columns_detected": int(len(replicate_weight_cols)),
+            "person_weight_assumption": "persons_weight_rep=persons_in_dom*household_rep_weight",
+        },
         "metadata": {
             "rows_read": sampled_rows,
             "households": len(households),
@@ -2531,6 +3952,10 @@ def cmd_renda_por_faixa_sm(args: argparse.Namespace) -> int:
             "method_income": "sum of individual income by dom_id",
             "method_ratio": "household_income_deflated / salario_minimo_deflated",
             "weights": "weighted by V1028/V1027 unless --unweighted",
+            "ci_requested": bool((not args.unweighted) and (not args.no_ci)),
+            "ci_effective": bool(use_ci),
+            "ci_level": ci_level,
+            "replicate_weights_found": int(len(replicate_weight_cols)),
         },
     }
 
@@ -2808,6 +4233,7 @@ def cmd_query(args: argparse.Namespace) -> int:
 
     started = time.perf_counter()
     conn: Optional[sqlite3.Connection] = None
+    replicate_cols_detected = 0
     try:
         if args.allow_write:
             conn = sqlite3.connect(db_path, timeout=float(args.timeout))
@@ -2830,6 +4256,20 @@ def cmd_query(args: argparse.Namespace) -> int:
             else:
                 if args.allow_write:
                     conn.commit()
+            try:
+                meta = conn.cursor()
+                exists = meta.execute(
+                    "SELECT 1 FROM sqlite_master WHERE type='table' AND name='base_labeled_npv'"
+                ).fetchone()
+                if exists:
+                    info = meta.execute("PRAGMA table_info(base_labeled_npv)").fetchall()
+                    for col in info:
+                        name = str(col[1])
+                        base = name.split("__", 1)[0]
+                        if REPLICATE_WEIGHT_BASE_RE.match(base):
+                            replicate_cols_detected += 1
+            except Exception:
+                pass
     except Exception as exc:
         print(f"ERROR: query failed: {exc}", file=sys.stderr)
         return 2
@@ -2851,6 +4291,16 @@ def cmd_query(args: argparse.Namespace) -> int:
         "max_rows": int(args.max_rows),
         "elapsed_ms": elapsed_ms,
         "read_only": (not args.allow_write),
+        "sampling": {
+            "variance_method": "bootstrap_replicates_mse",
+            "variance_formula": "var=(1/(R-1))*sum((theta_r-theta)^2)",
+            "replicate_weight_base": "V1028",
+            "replicate_weight_columns_detected": int(replicate_cols_detected),
+            "note": (
+                "brasil query does not infer CI automatically for arbitrary SQL. "
+                "Use replicate estimates in SQL or dedicated commands (renda-por-faixa-sm/dashboard)."
+            ),
+        },
     }
 
     if args.format == "json":
@@ -2858,7 +4308,7 @@ def cmd_query(args: argparse.Namespace) -> int:
         return 0
 
     # Pretty table for humans in terminal.
-    print(_colorize("PNAD QUERY", "1;38;5;45", _supports_color(no_color=args.no_color)))
+    print(_colorize("BRASIL QUERY", "1;38;5;45", _supports_color(no_color=args.no_color)))
     print(f"DB: {db_path}")
     print(f"Rows: {payload['row_count']} | Cols: {len(columns)} | Elapsed: {elapsed_ms} ms")
     if columns:
@@ -2883,10 +4333,12 @@ def _run_cmd(cmd: Sequence[str], quiet: bool = False) -> None:
     subprocess.run(cmd, check=True)
 
 
-def cmd_pipeline_run(args: argparse.Namespace) -> int:
-    out_dir = Path(args.out_dir)
-    out_dir.mkdir(parents=True, exist_ok=True)
-
+def _resolve_pipeline_raw_path(
+    args: argparse.Namespace,
+    out_dir: Path,
+    *,
+    latest_resolver=_latest_local_raw,
+) -> Tuple[Optional[Path], Optional[int]]:
     if args.download_url:
         fallback_name = "PNADC_download.txt"
         if str(args.raw).strip().lower() != "latest":
@@ -2894,40 +4346,62 @@ def cmd_pipeline_run(args: argparse.Namespace) -> int:
         filename = args.filename or Path(urlparse(args.download_url).path).name or fallback_name
         raw_path: Optional[Path] = out_dir / filename
     elif str(args.raw).strip().lower() == "latest":
-        latest = _latest_local_raw(Path(args.raw_dir))
+        latest = latest_resolver(Path(args.raw_dir))
         if latest is None:
             print(
                 f"ERROR: no local raw PNADC file found under {args.raw_dir}. "
-                "Run `pnad ibge-sync` first or pass --raw PATH.",
+                "Run `brasil ibge-sync` first (or `brasil ibge-sync --full`) or pass --raw PATH.",
                 file=sys.stderr,
             )
-            return 2
+            return None, 2
         raw_path = latest
     else:
         raw_path = Path(args.raw)
 
     if args.download_url:
         assert raw_path is not None
-        raw_path = out_dir / filename
         try:
             _download(args.download_url, raw_path, force=args.force_download, quiet=args.quiet)
         except Exception as exc:
             print(f"ERROR: download failed: {exc}", file=sys.stderr)
-            return 2
+            return None, 2
 
     if raw_path is None or not raw_path.exists():
         print(f"ERROR: raw file not found: {raw_path}", file=sys.stderr)
-        return 2
+        return None, 2
+    return raw_path, None
+
+
+def _run_pipeline_core(
+    args: argparse.Namespace,
+    *,
+    base_name: str,
+    default_keep: Optional[str] = None,
+    latest_resolver=_latest_local_raw,
+) -> int:
+    out_dir = Path(args.out_dir)
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    if args.sync_full:
+        sync_cmd = [sys.executable, str(SCRIPT_DIR / "pnad.py"), "ibge-sync", "--full"]
+        if args.quiet:
+            sync_cmd.append("--quiet")
+        _run_cmd(sync_cmd, quiet=args.quiet)
+
+    raw_path, raw_error = _resolve_pipeline_raw_path(args, out_dir, latest_resolver=latest_resolver)
+    if raw_error is not None:
+        return raw_error
 
     try:
         rc = pnadc_cli.cmd_emit_codes(argparse.Namespace(out=out_dir))
         if rc != 0:
             return rc
 
-        base_csv = out_dir / "base.csv"
-        labeled_csv = out_dir / "base_labeled.csv"
-        npv_csv = out_dir / "base_labeled_npv.csv"
+        base_csv = out_dir / f"{base_name}.csv"
+        labeled_csv = out_dir / f"{base_name}_labeled.csv"
+        npv_csv = out_dir / f"{base_name}_labeled_npv.csv"
         ipca_csv = Path(args.ipca_csv)
+        keep_value = args.keep if args.keep else default_keep
 
         fwf_cmd = [
             sys.executable,
@@ -2939,8 +4413,8 @@ def cmd_pipeline_run(args: argparse.Namespace) -> int:
             "--name-style",
             args.name_style,
         ]
-        if args.keep:
-            fwf_cmd.extend(["--keep", args.keep])
+        if keep_value:
+            fwf_cmd.extend(["--keep", keep_value])
         _run_capture_stdout(fwf_cmd, base_csv, quiet=args.quiet)
 
         join_cmd = [
@@ -3032,38 +4506,51 @@ def cmd_pipeline_run(args: argparse.Namespace) -> int:
         return 2
 
 
+def cmd_pipeline_run(args: argparse.Namespace) -> int:
+    return _run_pipeline_core(args, base_name="base", latest_resolver=_latest_local_raw)
+
+
+def cmd_pipeline_run_anual(args: argparse.Namespace) -> int:
+    return _run_pipeline_core(
+        args,
+        base_name="base_anual",
+        default_keep=pnadc_cli.DEFAULT_KEEP_ANUAL,
+        latest_resolver=_latest_local_raw_anual,
+    )
+
+
 def cmd_help_legacy(args: argparse.Namespace) -> int:
     parser = pnadc_cli.build_parser()
     parser.print_help()
     return 0
 
 
-def build_parser() -> argparse.ArgumentParser:
+def build_parser(prog_name: str = "brasil") -> argparse.ArgumentParser:
     description = (
-        "PNAD automation CLI. Use this tool to download inputs, refresh IPCA, rerun the pipeline, "
-        "rebuild SQLite outputs, and run SQL analytics queries."
+        "Brasil data CLI. Download official datasets (PNADC/Censo/TSE), refresh IPCA, run pipelines, "
+        "and query analytics outputs."
     )
     epilog = """Examples:
-  pnad --help
-  pnad help-legacy
-  pnad ibge-sync
-  pnad ibge-sync --year 2025 --quarter 3
-  pnad download-pnadc --url https://host/PNADC_022025.txt --dest-dir data/raw
-  pnad download-news --query PNAD --out data/news_pnad.json
-  pnad renda-por-faixa-sm --input data/outputs/base_labeled.csv --group-by uf --ranges "0-2;2-5;5-10;10+"
-  pnad dashboard --input data/outputs/base_labeled.csv --sm-mode both
-  pnad renda-por-faixa-sm --input data/outputs/base_labeled.csv --format json
-  pnad query --db data/outputs/pnad.sqlite --sql "SELECT UF__unidade_da_federao, AVG(VD4020__rendim_efetivo_qq_trabalho) AS renda_media FROM base_labeled_npv GROUP BY 1 ORDER BY 2 DESC LIMIT 10"
-  pnad pipeline-run --raw latest --layout data/originals/input_PNADC_trimestral.sas --sqlite data/outputs/pnad.sqlite
-  pnad sqlite-build --input data/outputs/base_labeled_npv.csv --db data/outputs/pnad.sqlite --table base_labeled_npv
+  brasil --help
+  brasil help-legacy
+  brasil ibge-sync
+  brasil ibge-sync --full
+  brasil ibge-sync --year 2025 --quarter 3
+  brasil download-pnadc --url https://host/PNADC_022025.txt --dest-dir data/raw
+  brasil download-news --query PNAD --out data/news_pnad.json
+  brasil renda-por-faixa-sm --input data/outputs/base_labeled.csv --group-by uf --ranges "0-2;2-5;5-10;10+"
+  brasil dashboard --input data/outputs/base_labeled.csv --sm-mode both
+  brasil query --db data/outputs/brasil.sqlite --sql "SELECT UF__unidade_da_federacao, AVG(VD4020__rendim_efetivo_qq_trabalho) AS renda_media FROM base_labeled_npv GROUP BY 1 ORDER BY 2 DESC LIMIT 10"
+  brasil pipeline-run --sync-full --raw latest --layout data/originals/input_PNADC_trimestral.sas --sqlite data/outputs/brasil.sqlite
+  brasil pipeline-run-anual --raw data/raw/pnadc_anual_visita5/PNADC_2024_visita5.txt
 
 Legacy commands still work directly:
-  pnad inspect data/outputs/base_labeled.csv
-  pnad fwf-extract data/originals/input_PNADC_trimestral.sas data/raw/PNADC_032025.txt --header > data/outputs/base.csv
+  brasil inspect data/outputs/base_labeled.csv
+  brasil fwf-extract data/originals/input_PNADC_trimestral.sas data/raw/PNADC_032025.txt --header > data/outputs/base.csv
 """
 
     p = argparse.ArgumentParser(
-        prog="pnad",
+        prog=prog_name,
         description=description,
         epilog=epilog,
         formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -3122,7 +4609,7 @@ Legacy commands still work directly:
     prf.add_argument(
         "--income-col",
         default=None,
-        help="Income column name. Default auto: VD4020 then VD4019",
+        help="Income column name. Default auto: VD5001, then VD4020, then VD4019",
     )
     prf.add_argument(
         "--weight-col",
@@ -3133,6 +4620,17 @@ Legacy commands still work directly:
         "--unweighted",
         action="store_true",
         help="Diagnostic mode without sample weights (not for official estimates)",
+    )
+    prf.add_argument(
+        "--no-ci",
+        action="store_true",
+        help="Disable confidence intervals/margin of error from replicate weights",
+    )
+    prf.add_argument(
+        "--ci-level",
+        type=float,
+        default=0.95,
+        help="Confidence level for interval estimation (default: 0.95)",
     )
     prf.add_argument("--format", choices=["pretty", "json"], default="pretty", help="Output format")
     prf.add_argument("--no-color", action="store_true", help="Disable ANSI colors in pretty output")
@@ -3171,7 +4669,7 @@ Legacy commands still work directly:
     pdash.add_argument(
         "--income-col",
         default=None,
-        help="Income column name. Default auto: VD4020 then VD4019",
+        help="Income column name. Default auto: VD5001, then VD4020, then VD4019",
     )
     pdash.add_argument(
         "--weight-col",
@@ -3183,9 +4681,47 @@ Legacy commands still work directly:
         action="store_true",
         help="Diagnostic mode without sample weights (not for official estimates)",
     )
+    pdash.add_argument(
+        "--no-ci",
+        action="store_true",
+        help="Disable confidence intervals/margin of error from replicate weights",
+    )
+    pdash.add_argument(
+        "--ci-level",
+        type=float,
+        default=0.95,
+        help="Confidence level for interval estimation (default: 0.95)",
+    )
     pdash.add_argument("--interactive", action="store_true", help="Interactive navigation in terminal")
     pdash.add_argument("--format", choices=["pretty", "json"], default="pretty", help="Output format")
     pdash.add_argument("--no-color", action="store_true", help="Disable ANSI colors in pretty output")
+    # Dashboard v2.0: Annual income composition arguments
+    pdash.add_argument(
+        "--mode",
+        choices=["trimestral", "anual", "comparativo", "auto"],
+        default="auto",
+        help="Analysis mode. 'auto' detects based on columns (VD5001=anual, VD4019/VD4020=trimestral)",
+    )
+    pdash.add_argument(
+        "--breakdown",
+        action="store_true",
+        help="Show income composition by source (anual mode only)",
+    )
+    pdash.add_argument(
+        "--source-detail",
+        action="store_true",
+        help="Show each income source V50xxA2 separately (not aggregated by category)",
+    )
+    pdash.add_argument(
+        "--dependency-ranking",
+        action="store_true",
+        help="Rank UFs by %% of income from benefits vs work (shows dependency score)",
+    )
+    pdash.add_argument(
+        "--composition-by-band",
+        action="store_true",
+        help="Show income composition within each salary band",
+    )
     pdash.set_defaults(func=cmd_dashboard)
 
     psync = sub.add_parser("ibge-sync", help="Sync PNADC microdados and documentation from IBGE")
@@ -3201,6 +4737,30 @@ Legacy commands still work directly:
     psync.add_argument("--no-extract", action="store_true", help="Do not extract zip files after download")
     psync.add_argument("--force", action="store_true", help="Force re-download even when remote is unchanged")
     psync.add_argument("--quiet", action="store_true", help="Reduce command output")
+
+    psync.add_argument("--full", action="store_true", help="Enable all election scopes (PNADC anual + Censo renda + TSE)")
+
+    psync.add_argument("--with-anual", action="store_true", help="Sync PNADC Anual (Visita 5)")
+    psync.add_argument("--anual-base-url", default=IBGE_ANUAL_VISITA5_BASE, help="PNADC Anual Visita 5 base URL")
+    psync.add_argument("--anual-raw-dir", default="data/raw/pnadc_anual_visita5", help="Directory for PNADC anual zip/txt files")
+    psync.add_argument("--anual-docs-dir", default="data/originals/pnadc_anual_visita5", help="Directory for PNADC anual docs")
+    psync.add_argument("--anual-year", type=int, help="Specific year for PNADC anual")
+    psync.add_argument("--anual-all-years", action="store_true", help="Download latest revision for all annual years")
+    psync.add_argument("--no-anual-raw", action="store_true", help="Skip PNADC anual microdados sync")
+    psync.add_argument("--no-anual-docs", action="store_true", help="Skip PNADC anual documentation sync")
+
+    psync.add_argument("--with-censo", action="store_true", help="Sync Censo 2022 renda do responsavel aggregates")
+    psync.add_argument("--censo-base-url", default=IBGE_CENSO_2022_BASE, help="Censo 2022 base URL")
+    psync.add_argument("--censo-folder", default=IBGE_CENSO_RENDA_RESP_FOLDER, help="Folder under Censo base with files to sync")
+    psync.add_argument("--censo-dir", default="data/originals/censo_2022_renda_responsavel", help="Directory for Censo aggregated files")
+
+    psync.add_argument("--with-tse", action="store_true", help="Sync TSE eleitorado resources from dados abertos")
+    psync.add_argument("--tse-api-base", default=TSE_CKAN_BASE, help="TSE CKAN API base URL")
+    psync.add_argument("--tse-query", default=TSE_DEFAULT_QUERY, help="Search query for TSE datasets")
+    psync.add_argument("--tse-rows", type=int, default=50, help="Max packages to scan in TSE CKAN search")
+    psync.add_argument("--tse-year", type=int, help="Filter TSE resources by year")
+    psync.add_argument("--tse-all-years", action="store_true", help="Keep one resource per year/kind instead of only latest")
+    psync.add_argument("--tse-dir", default="data/raw/tse_eleitorado", help="Directory for TSE downloaded resources")
     psync.set_defaults(func=cmd_ibge_sync)
 
     psq = sub.add_parser("sqlite-build", help="Build or refresh a SQLite table from a CSV file")
@@ -3211,16 +4771,21 @@ Legacy commands still work directly:
     psq.add_argument("--chunk-size", type=int, default=5000, help="Insert batch size")
     psq.add_argument(
         "--indexes",
-        default="dom_id,UF__unidade_da_federao,Ano__ano_de_referncia,Trimestre__trimestre_de_referncia",
+        default=(
+            "dom_id,"
+            "UF__unidade_da_federacao,UF__unidade_da_federao,"
+            "Ano__ano_de_referencia,Ano__ano_de_referncia,"
+            "Trimestre__trimestre_de_referencia,Trimestre__trimestre_de_referncia"
+        ),
         help="Comma-separated columns to index when present",
     )
     psq.set_defaults(func=cmd_sqlite_build)
 
     pq = sub.add_parser(
         "query",
-        help="Run SQL against PNAD SQLite (JSON default, table format optional)",
+        help="Run SQL against Brasil SQLite (JSON default, table format optional)",
     )
-    pq.add_argument("--db", default="data/outputs/pnad.sqlite", help="SQLite DB path")
+    pq.add_argument("--db", default="data/outputs/brasil.sqlite", help="SQLite DB path")
     pq.add_argument("--sql", default="", help="SQL string (read-only by default)")
     pq.add_argument("--sql-file", default="", help="Path to a .sql file")
     pq.add_argument(
@@ -3240,41 +4805,74 @@ Legacy commands still work directly:
     pq.add_argument("--no-color", action="store_true", help="Disable ANSI colors in table mode")
     pq.set_defaults(func=cmd_query)
 
-    pr = sub.add_parser("pipeline-run", help="Run the full PNADC refresh pipeline")
-    pr.add_argument("--raw", default="latest", help="Local raw PNADC file path or 'latest'")
-    pr.add_argument("--raw-dir", default="data/raw", help="Directory used when --raw latest")
-    pr.add_argument("--download-url", help="If set, download raw file before processing")
-    pr.add_argument("--filename", help="Filename to use when --download-url is set")
-    pr.add_argument("--force-download", action="store_true", help="Overwrite downloaded raw file")
-    pr.add_argument("--layout", default="data/originals/input_PNADC_trimestral.sas", help="SAS layout file")
-    pr.add_argument("--out-dir", default="data/outputs", help="Output directory")
-    pr.add_argument("--ipca-csv", default="data/outputs/ipca.csv", help="IPCA CSV file path")
-    pr.add_argument(
-        "--salario-minimo-csv",
-        default="data/originals/salario_minimo.csv",
-        help="Monthly nominal minimum wage CSV (date,value) for automatic --min-wage",
+    def _add_pipeline_args(
+        parser: argparse.ArgumentParser,
+        *,
+        default_raw_dir: str,
+        default_layout: str,
+        default_table: str,
+    ) -> None:
+        parser.add_argument("--raw", default="latest", help="Local raw PNADC file path or 'latest'")
+        parser.add_argument(
+            "--sync-full",
+            action="store_true",
+            help="Run `ibge-sync --full` before pipeline execution (PNADC trimestral/anual + Censo + TSE)",
+        )
+        parser.add_argument("--raw-dir", default=default_raw_dir, help="Directory used when --raw latest")
+        parser.add_argument("--download-url", help="If set, download raw file before processing")
+        parser.add_argument("--filename", help="Filename to use when --download-url is set")
+        parser.add_argument("--force-download", action="store_true", help="Overwrite downloaded raw file")
+        parser.add_argument("--layout", default=default_layout, help="SAS/TXT layout file")
+        parser.add_argument("--out-dir", default="data/outputs", help="Output directory")
+        parser.add_argument("--ipca-csv", default="data/outputs/ipca.csv", help="IPCA CSV file path")
+        parser.add_argument(
+            "--salario-minimo-csv",
+            default="data/originals/salario_minimo.csv",
+            help="Monthly nominal minimum wage CSV (date,value) for automatic --min-wage",
+        )
+        parser.add_argument("--skip-ipca-fetch", action="store_true", help="Reuse existing --ipca-csv if present")
+        parser.add_argument("--target", default="", help="NPV target month YYYY-MM (default: latest in IPCA series)")
+        parser.add_argument(
+            "--min-wage",
+            type=float,
+            default=None,
+            help="Minimum wage for *_mw columns (default: auto from --salario-minimo-csv at target month)",
+        )
+        parser.add_argument("--name-style", choices=["name", "label", "both"], default="both")
+        parser.add_argument("--keep", help="Optional comma-separated keep list for fwf-extract")
+        parser.add_argument("--sqlite", default="data/outputs/brasil.sqlite", help="SQLite output file (empty to disable)")
+        parser.add_argument("--table", default=default_table, help="SQLite table name")
+        parser.add_argument("--if-exists", choices=["replace", "append", "fail"], default="replace")
+        parser.add_argument("--chunk-size", type=int, default=5000, help="SQLite insert batch size")
+        parser.add_argument(
+            "--indexes",
+            default=(
+                "dom_id,"
+                "UF__unidade_da_federacao,UF__unidade_da_federao,"
+                "Ano__ano_de_referencia,Ano__ano_de_referncia,"
+                "Trimestre__trimestre_de_referencia,Trimestre__trimestre_de_referncia"
+            ),
+            help="Comma-separated columns to index when present",
+        )
+        parser.add_argument("--quiet", action="store_true", help="Reduce command output")
+
+    pr = sub.add_parser("pipeline-run", help="Run the full PNADC trimestral refresh pipeline")
+    _add_pipeline_args(
+        pr,
+        default_raw_dir="data/raw",
+        default_layout="data/originals/input_PNADC_trimestral.sas",
+        default_table="base_labeled_npv",
     )
-    pr.add_argument("--skip-ipca-fetch", action="store_true", help="Reuse existing --ipca-csv if present")
-    pr.add_argument("--target", default="", help="NPV target month YYYY-MM (default: latest in IPCA series)")
-    pr.add_argument(
-        "--min-wage",
-        type=float,
-        default=None,
-        help="Minimum wage for *_mw columns (default: auto from --salario-minimo-csv at target month)",
-    )
-    pr.add_argument("--name-style", choices=["name", "label", "both"], default="both")
-    pr.add_argument("--keep", help="Optional comma-separated keep list for fwf-extract")
-    pr.add_argument("--sqlite", default="data/outputs/pnad.sqlite", help="SQLite output file (empty to disable)")
-    pr.add_argument("--table", default="base_labeled_npv", help="SQLite table name")
-    pr.add_argument("--if-exists", choices=["replace", "append", "fail"], default="replace")
-    pr.add_argument("--chunk-size", type=int, default=5000, help="SQLite insert batch size")
-    pr.add_argument(
-        "--indexes",
-        default="dom_id,UF__unidade_da_federao,Ano__ano_de_referncia,Trimestre__trimestre_de_referncia",
-        help="Comma-separated columns to index when present",
-    )
-    pr.add_argument("--quiet", action="store_true", help="Reduce command output")
     pr.set_defaults(func=cmd_pipeline_run)
+
+    pra = sub.add_parser("pipeline-run-anual", help="Run the full PNADC anual visita 5 refresh pipeline")
+    _add_pipeline_args(
+        pra,
+        default_raw_dir="data/raw/pnadc_anual_visita5",
+        default_layout="data/originals/pnadc_anual_visita5/input_PNADC_2024_visita5.txt",
+        default_table="base_anual_labeled_npv",
+    )
+    pra.set_defaults(func=cmd_pipeline_run_anual)
 
     return p
 
@@ -3282,11 +4880,18 @@ Legacy commands still work directly:
 def main(argv: Optional[List[str]] = None) -> int:
     argv = list(argv) if argv is not None else sys.argv[1:]
 
+    invoked_name = Path(sys.argv[0]).stem.lower()
+    prog_name = invoked_name if invoked_name in {"pnad", "brasil"} else "brasil"
+
+    # Accept accidental explicit prefix: `python scripts/pnad.py brasil ...`
+    if argv and argv[0] in {"pnad", "brasil"}:
+        argv = argv[1:]
+
     # Keep existing workflow intact: legacy subcommands can be invoked directly.
     if argv and argv[0] in LEGACY_COMMANDS:
         return int(pnadc_cli.main(argv) or 0)
 
-    parser = build_parser()
+    parser = build_parser(prog_name=prog_name)
     args = parser.parse_args(argv)
 
     if not args.cmd:

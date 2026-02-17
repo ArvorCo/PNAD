@@ -34,3 +34,17 @@ def test_positions_for_ano_trimestre_uf_capital(tmp_path: Path):
     # Labels and slugs
     assert idx["Ano"].label and idx["Ano"].slug
     assert idx["UF"].slug == "unidade_da_federacao"
+
+
+def test_parse_layout_iso_8859_1_labels(tmp_path: Path):
+    sas = tmp_path / "input_latin1.sas"
+    content = (
+        "@0006 UF   $2.   /* Unidade da Federação */\n"
+        "@0008 Capital   $2.   /* Município da Capital */\n"
+    )
+    sas.write_bytes(content.encode("iso-8859-1"))
+
+    fields = parse_layout(sas)
+    idx = fields_index(fields)
+    assert idx["UF"].slug == "unidade_da_federacao"
+    assert idx["Capital"].slug == "municipio_da_capital"

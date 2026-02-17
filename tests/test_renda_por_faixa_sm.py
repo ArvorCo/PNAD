@@ -297,3 +297,68 @@ def test_renda_por_faixa_sm_uf_ordering(capsys, tmp_path: Path):
     payload = json.loads(capsys.readouterr().out)
     # Alphabetical by label: Rio... before Sao...
     assert payload["groups"][0]["group"] == "33"
+
+
+def test_renda_por_faixa_sm_with_replicate_ci(capsys, tmp_path: Path):
+    inp = tmp_path / "base_labeled.csv"
+    ipca = tmp_path / "ipca.csv"
+    sm = tmp_path / "salario_minimo.csv"
+
+    _write_csv(
+        inp,
+        [
+            {
+                "Ano__ano_de_referencia": "2025",
+                "Trimestre__trimestre_de_referencia": "2",
+                "UF__unidade_da_federacao": "35",
+                "UF_label": "Sao Paulo",
+                "dom_id": "d1",
+                "V1028": "100",
+                "V1028001": "90",
+                "V1028002": "110",
+                "VD4020__rendim_efetivo_qq_trabalho": "1000",
+            },
+            {
+                "Ano__ano_de_referencia": "2025",
+                "Trimestre__trimestre_de_referencia": "2",
+                "UF__unidade_da_federacao": "35",
+                "UF_label": "Sao Paulo",
+                "dom_id": "d2",
+                "V1028": "100",
+                "V1028001": "110",
+                "V1028002": "90",
+                "VD4020__rendim_efetivo_qq_trabalho": "10000",
+            },
+        ],
+    )
+    _write_csv(ipca, [{"date": "2025-06", "index": "100"}, {"date": "2025-07", "index": "100"}])
+    _write_csv(sm, [{"date": "2025-06", "value": "1000.00"}])
+
+    rc = main(
+        [
+            "renda-por-faixa-sm",
+            "--input",
+            str(inp),
+            "--ipca-csv",
+            str(ipca),
+            "--salario-minimo-csv",
+            str(sm),
+            "--target",
+            "2025-07",
+            "--ranges",
+            "0-2;2-5;5-10;10+",
+            "--format",
+            "json",
+        ]
+    )
+    assert rc == 0
+    payload = json.loads(capsys.readouterr().out)
+    assert payload["sampling"]["ci_enabled"] is True
+    assert payload["sampling"]["replicate_weight_columns_detected"] == 2
+    g = payload["groups"][0]
+    by_band = {x["range"]: x for x in g["bands"]}
+    low = by_band["0-2"]
+    assert abs(low["households_pct"] - 50.0) < 1e-6
+    # With two replicates: rep estimates 45% and 55% -> SE=sqrt(50)=7.0711, MOE~13.8593 at 95%.
+    assert abs(low["households_pct_moe"] - 13.8593) < 1e-2
+    assert low["households_pct_ci_low"] < low["households_pct"] < low["households_pct_ci_high"]

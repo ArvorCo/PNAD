@@ -183,3 +183,155 @@ def test_dashboard_non_applicable_buckets(capsys, tmp_path: Path):
     assert "Nao desalentado/ou nao se aplica" in labor_labels
     assert "Grande grupo 5: Servicos e vendedores" in pos_labels
     assert "Fora de RM/RIDE" in metro_labels
+
+
+def test_dashboard_includes_sampling_ci(capsys, tmp_path: Path):
+    inp = tmp_path / "base_labeled.csv"
+    ipca = tmp_path / "ipca.csv"
+    sm = tmp_path / "salario_minimo.csv"
+
+    _write_csv(
+        inp,
+        [
+            {
+                "Ano__ano_de_referencia": "2025",
+                "Trimestre__trimestre_de_referencia": "2",
+                "UF__unidade_da_federacao": "35",
+                "UF_label": "Sao Paulo",
+                "Capital_label": "Capital",
+                "dom_id": "d1",
+                "V1028": "100",
+                "V1028001": "90",
+                "V1028002": "110",
+                "V2007_label": "Homem",
+                "V2010_label": "Branca",
+                "V3009A_label": "Superior completo",
+                "V2009__idade_na_data_de_referencia": "40",
+                "VD4020__rendim_efetivo_qq_trabalho": "1000",
+            },
+            {
+                "Ano__ano_de_referencia": "2025",
+                "Trimestre__trimestre_de_referencia": "2",
+                "UF__unidade_da_federacao": "33",
+                "UF_label": "Rio de Janeiro",
+                "Capital_label": "Nao capital",
+                "dom_id": "d2",
+                "V1028": "100",
+                "V1028001": "110",
+                "V1028002": "90",
+                "V2007_label": "Mulher",
+                "V2010_label": "Parda",
+                "V3009A_label": "Medio completo",
+                "V2009__idade_na_data_de_referencia": "28",
+                "VD4020__rendim_efetivo_qq_trabalho": "10000",
+            },
+        ],
+    )
+    _write_csv(ipca, [{"date": "2025-06", "index": "100"}, {"date": "2025-07", "index": "100"}])
+    _write_csv(sm, [{"date": "2025-06", "value": "1000.00"}, {"date": "2025-07", "value": "1000.00"}])
+
+    rc = main(
+        [
+            "dashboard",
+            "--input",
+            str(inp),
+            "--ipca-csv",
+            str(ipca),
+            "--salario-minimo-csv",
+            str(sm),
+            "--format",
+            "json",
+        ]
+    )
+    assert rc == 0
+    payload = json.loads(capsys.readouterr().out)
+    assert payload["sampling"]["ci_effective"] is True
+    assert payload["sampling"]["replicate_weight_columns_detected"] == 2
+    nat = payload["modes"]["alvo"]["national"]
+    low = [x for x in nat["bands"] if x["range"] == "0-2"][0]
+    assert "households_pct_moe" in low
+    assert low["households_pct_ci_low"] < low["households_pct"] < low["households_pct_ci_high"]
+
+
+def test_dashboard_pretty_cross_macro_region_shows_centro_oeste(capsys, tmp_path: Path):
+    inp = tmp_path / "base_labeled.csv"
+    ipca = tmp_path / "ipca.csv"
+    sm = tmp_path / "salario_minimo.csv"
+
+    _write_csv(
+        inp,
+        [
+            {
+                "Ano__ano_de_referencia": "2025",
+                "Trimestre__trimestre_de_referencia": "2",
+                "UF__unidade_da_federacao": "11",
+                "UF_label": "Rondonia",
+                "Capital_label": "Nao capital",
+                "dom_id": "d1",
+                "V1028": "100",
+                "VD4020__rendim_efetivo_qq_trabalho": "1200",
+            },
+            {
+                "Ano__ano_de_referencia": "2025",
+                "Trimestre__trimestre_de_referencia": "2",
+                "UF__unidade_da_federacao": "21",
+                "UF_label": "Maranhao",
+                "Capital_label": "Nao capital",
+                "dom_id": "d2",
+                "V1028": "100",
+                "VD4020__rendim_efetivo_qq_trabalho": "900",
+            },
+            {
+                "Ano__ano_de_referencia": "2025",
+                "Trimestre__trimestre_de_referencia": "2",
+                "UF__unidade_da_federacao": "35",
+                "UF_label": "Sao Paulo",
+                "Capital_label": "Capital",
+                "dom_id": "d3",
+                "V1028": "100",
+                "VD4020__rendim_efetivo_qq_trabalho": "3500",
+            },
+            {
+                "Ano__ano_de_referencia": "2025",
+                "Trimestre__trimestre_de_referencia": "2",
+                "UF__unidade_da_federacao": "41",
+                "UF_label": "Parana",
+                "Capital_label": "Capital",
+                "dom_id": "d4",
+                "V1028": "100",
+                "VD4020__rendim_efetivo_qq_trabalho": "3000",
+            },
+            {
+                "Ano__ano_de_referencia": "2025",
+                "Trimestre__trimestre_de_referencia": "2",
+                "UF__unidade_da_federacao": "53",
+                "UF_label": "Distrito Federal",
+                "Capital_label": "Capital",
+                "dom_id": "d5",
+                "V1028": "100",
+                "VD4020__rendim_efetivo_qq_trabalho": "5000",
+            },
+        ],
+    )
+    _write_csv(ipca, [{"date": "2025-06", "index": "100"}, {"date": "2025-07", "index": "100"}])
+    _write_csv(sm, [{"date": "2025-06", "value": "1000.00"}, {"date": "2025-07", "value": "1000.00"}])
+
+    rc = main(
+        [
+            "dashboard",
+            "--input",
+            str(inp),
+            "--ipca-csv",
+            str(ipca),
+            "--salario-minimo-csv",
+            str(sm),
+            "--format",
+            "pretty",
+            "--no-color",
+        ]
+    )
+    assert rc == 0
+    out = capsys.readouterr().out
+    assert "Cruzamentos principais x faixas de SM" in out
+    assert "  Macro-regiao" in out
+    assert "   - Centro-Oeste" in out

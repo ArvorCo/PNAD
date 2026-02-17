@@ -45,6 +45,8 @@ def test_query_json_default(capsys, tmp_path: Path):
     assert payload["columns"] == ["uf", "renda_media"]
     assert payload["rows"][0]["uf"] == "SP"
     assert payload["read_only"] is True
+    assert "sampling" in payload
+    assert payload["sampling"]["replicate_weight_base"] == "V1028"
 
 
 def test_query_table_output_and_truncate(capsys, tmp_path: Path):
@@ -67,7 +69,7 @@ def test_query_table_output_and_truncate(capsys, tmp_path: Path):
     )
     assert rc == 0
     out = capsys.readouterr().out
-    assert "PNAD QUERY" in out
+    assert "BRASIL QUERY" in out
     assert "| uf" in out
     assert "[truncated]" in out
 

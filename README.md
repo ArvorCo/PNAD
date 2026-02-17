@@ -1,6 +1,6 @@
-# PNAD/PNADC Pipeline
+# Brasil CLI (PNADC + Censo + TSE)
 
-CLI para baixar insumos oficiais da PNAD Contínua (IBGE), processar microdados e gerar uma base final em CSV + SQLite.
+CLI para baixar insumos oficiais (PNADC trimestral/anual, Censo 2022 e TSE), processar microdados e gerar bases analíticas em CSV + SQLite.
 
 ## Quickstart
 
@@ -24,18 +24,27 @@ pip install -e .
 mkdir -p data/raw data/originals data/outputs
 
 # baixa documentação oficial + último trimestre disponível
-pnad ibge-sync
+brasil ibge-sync
 
 # executa extração + labels + NPV + SQLite usando o último raw local
-pnad pipeline-run --raw latest
+brasil pipeline-run --raw latest
+
+# pipeline PNADC anual visita 5 (todas as fontes de renda)
+brasil pipeline-run-anual --raw data/raw/pnadc_anual_visita5/PNADC_2024_visita5.txt
 ```
 
 Saídas principais:
 - `data/outputs/base.csv`
 - `data/outputs/base_labeled.csv`
 - `data/outputs/base_labeled_npv.csv`
+- `data/outputs/base_anual.csv`
+- `data/outputs/base_anual_labeled.csv`
+- `data/outputs/base_anual_labeled_npv.csv`
 - `data/outputs/ipca.csv`
-- `data/outputs/pnad.sqlite` (tabela `base_labeled_npv`)
+- `data/outputs/brasil.sqlite` (tabelas `base_labeled_npv` e `base_anual_labeled_npv`)
+
+Compatibilidade:
+- O comando legado `pnad` continua funcionando como alias do `brasil`.
 
 ## Estrutura Local
 
@@ -48,74 +57,102 @@ Arquivos grandes e artefatos de execução continuam ignorados no Git:
 ## Comandos Principais
 
 ```bash
-pnad --help
-pnad ibge-sync --help
-pnad pipeline-run --help
-pnad sqlite-build --help
-pnad query --help
-pnad renda-por-faixa-sm --help
-pnad dashboard --help
+brasil --help
+brasil ibge-sync --help
+brasil pipeline-run --help
+brasil pipeline-run-anual --help
+brasil sqlite-build --help
+brasil query --help
+brasil renda-por-faixa-sm --help
+brasil dashboard --help
 ```
 
 ### Atualizar para novos arquivos do IBGE
 
 ```bash
 # sincroniza docs + último trimestre do último ano disponível
-pnad ibge-sync
+brasil ibge-sync
 
 # baixa trimestre específico
-pnad ibge-sync --year 2025 --quarter 3
+brasil ibge-sync --year 2025 --quarter 3
 
 # baixa todos os trimestres de um ano (última revisão de cada trimestre)
-pnad ibge-sync --year 2025 --all-in-year
+brasil ibge-sync --year 2025 --all-in-year
 ```
+
+### Sync eleitoral completo (PNADC anual + Censo + TSE)
+
+```bash
+# baixa tudo para monitoramento eleitoral (trimestral + anual visita 5 + censo renda + tse)
+brasil ibge-sync --full
+
+# escopos individuais
+brasil ibge-sync --with-anual --anual-year 2024
+brasil ibge-sync --with-censo
+brasil ibge-sync --with-tse --tse-year 2025
+```
+
+Diretorios adicionais usados no modo completo:
+- `data/raw/pnadc_anual_visita5/`
+- `data/originals/pnadc_anual_visita5/`
+- `data/originals/censo_2022_renda_responsavel/`
+- `data/raw/tse_eleitorado/`
 
 ### Rodar pipeline com caminhos explícitos
 
 ```bash
-pnad pipeline-run \
+brasil pipeline-run \
+  --sync-full \
   --raw data/raw/PNADC_032025.txt \
   --layout data/originals/input_PNADC_trimestral.sas \
   --out-dir data/outputs \
   --ipca-csv data/outputs/ipca.csv \
-  --sqlite data/outputs/pnad.sqlite
+  --sqlite data/outputs/brasil.sqlite
+
+brasil pipeline-run-anual \
+  --raw data/raw/pnadc_anual_visita5/PNADC_2024_visita5.txt \
+  --layout data/originals/pnadc_anual_visita5/input_PNADC_2024_visita5.txt \
+  --out-dir data/outputs \
+  --sqlite data/outputs/brasil.sqlite
 ```
 
 Observacoes do pipeline:
 - Se `--target` nao for informado, usa automaticamente o ultimo mes disponivel no IPCA.
 - Se `--min-wage` nao for informado, usa automaticamente o salario minimo de `data/originals/salario_minimo.csv` no mes-alvo.
+- O `DEFAULT_KEEP` do `fwf-extract` foi ampliado para incluir mais variaveis de desenho amostral, escolaridade e mercado de trabalho (ex.: `Estrato`, `V1022`, `V1023`, `V3002`, `VD3006`, `VD4001`, `VD4002`, `VD4010`, `V4012`, `V4013`, `V4029`, `V4039`).
+- O `DEFAULT_KEEP` inclui tambem os pesos replicados `V1028001..V1028200`, usados para margem de erro/IC.
 
 ### Estatistica de renda por faixa de salario minimo
 
 ```bash
 # Brasil (domicilios e pessoas por faixa de SM)
-pnad renda-por-faixa-sm \
+brasil renda-por-faixa-sm \
   --input data/outputs/base_labeled.csv \
   --group-by pais \
   --ranges "0-2;2-5;5-10;10+"
 
 # Quebra por UF
-pnad renda-por-faixa-sm \
+brasil renda-por-faixa-sm \
   --input data/outputs/base_labeled.csv \
   --group-by uf \
   --ranges "0-2;2-5;5-10;10+"
 
 # Quebra por UF em ordem alfabetica
-pnad renda-por-faixa-sm \
+brasil renda-por-faixa-sm \
   --input data/outputs/base_labeled.csv \
   --group-by uf \
   --uf-order alfabetica \
   --ranges "0-2;2-5;5-10;10+"
 
 # UF especifica
-pnad renda-por-faixa-sm \
+brasil renda-por-faixa-sm \
   --input data/outputs/base_labeled.csv \
   --group-by uf \
   --state 35 \
   --ranges "0-2;2-5;5-10;10+"
 
 # JSON para automacao
-pnad renda-por-faixa-sm \
+brasil renda-por-faixa-sm \
   --input data/outputs/base_labeled.csv \
   --group-by pais \
   --format json
@@ -124,10 +161,13 @@ pnad renda-por-faixa-sm \
 Observacoes:
 - O comando agrega renda familiar por `dom_id` somando a renda individual (padrao: `VD4020*`).
 - Deflaciona a renda do periodo e o salario minimo nominal para o mes alvo (`--target`, ou ultimo mes no IPCA).
-- `pnad ibge-sync` atualiza automaticamente `data/originals/salario_minimo.csv`.
+- `brasil ibge-sync` atualiza automaticamente `data/originals/salario_minimo.csv`.
 - O padrao e ponderado (usa `V1028`, fallback `V1027`) para estimativa populacional.
 - Se o CSV nao tiver peso, reexecute o pipeline para gerar `base_labeled.csv` com `V1028`.
 - `--unweighted` existe apenas para diagnostico de amostra.
+- Intervalos de confianca e margem de erro (IC 95%) sao calculados por padrao com pesos replicados (`V1028001..V1028200`), quando presentes no CSV.
+- Se estiver usando CSV legado sem pesos replicados, o CLI sinaliza e segue sem CI ate o pipeline ser rerodado.
+- Para desativar IC: `--no-ci`. Para outro nivel: `--ci-level 0.90` (por exemplo).
 - O formato padrao (`--format pretty`) imprime tabela, barras e mini pizza no terminal.
 - Paleta BR no terminal: verde (mais pobre), amarelo (media baixa), azul (media alta), branco (mais rica).
 - O terminal mostra as faixas tambem em valores nominais (`R$`) para leitura direta pelo publico brasileiro.
@@ -137,25 +177,25 @@ Observacoes:
 
 ```bash
 # painel completo (default: --sm-mode alvo)
-pnad dashboard \
+brasil dashboard \
   --input data/outputs/base_labeled.csv
 
 # modo interativo (navega por secoes e modos)
-pnad dashboard \
+brasil dashboard \
   --input data/outputs/base_labeled.csv \
   --interactive
 
 # visual forte no terminal (cards, barras, sparklines e pizza textual)
-pnad dashboard \
+brasil dashboard \
   --input data/outputs/base_labeled.csv
 
 # comparacao completa entre SM do periodo e SM alvo
-pnad dashboard \
+brasil dashboard \
   --input data/outputs/base_labeled.csv \
   --sm-mode both
 
 # exportar snapshot estruturado
-pnad dashboard \
+brasil dashboard \
   --input data/outputs/base_labeled.csv \
   --format json > data/outputs/dashboard.json
 ```
@@ -169,40 +209,42 @@ O dashboard agora inclui:
 - Piramide etaria (sexo x idade) em painel dedicado, com idades ordenadas de forma crescente.
 - Recortes adicionais quando disponiveis no CSV (ex.: relacao no domicilio, condicao ocupacional, tipo/posicao de trabalho, RM/RIDE).
 - Para variaveis de universo restrito (ocupacao e RM/RIDE), o dashboard diferencia `Nao se aplica`/`Fora de RM/RIDE` de `Sem informacao`.
+- IC/margem de erro por faixa e por renda media (bootstrap por pesos replicados) por padrao.
+- Controles amostrais: `--no-ci` e `--ci-level`.
 
 ## Rebuild de SQLite
 
 ```bash
-pnad sqlite-build \
+brasil sqlite-build \
   --input data/outputs/base_labeled_npv.csv \
-  --db data/outputs/pnad.sqlite \
+  --db data/outputs/brasil.sqlite \
   --table base_labeled_npv
 ```
 
-## Query SQL para LLMs (`pnad query`)
+## Query SQL para LLMs (`brasil query`)
 
-`pnad query` roda SQL direto no SQLite e retorna JSON por padrão (ideal para uso por LLMs e automações).
+`brasil query` roda SQL direto no SQLite e retorna JSON por padrão (ideal para uso por LLMs e automações).
 
 ```bash
 # listar tabelas
-pnad query \
-  --db data/outputs/pnad.sqlite \
+brasil query \
+  --db data/outputs/brasil.sqlite \
   --sql "SELECT name FROM sqlite_master WHERE type='table' ORDER BY name"
 
 # schema de uma tabela
-pnad query \
-  --db data/outputs/pnad.sqlite \
+brasil query \
+  --db data/outputs/brasil.sqlite \
   --sql "PRAGMA table_info(base_labeled_npv)"
 
 # top UFs por renda média (exemplo)
-pnad query \
-  --db data/outputs/pnad.sqlite \
-  --sql "SELECT UF__unidade_da_federao AS uf, AVG(VD4020__rendim_efetivo_qq_trabalho) AS renda_media FROM base_labeled_npv GROUP BY 1 ORDER BY 2 DESC LIMIT 10"
+brasil query \
+  --db data/outputs/brasil.sqlite \
+  --sql "SELECT UF__unidade_da_federacao AS uf, AVG(VD4020__rendim_efetivo_qq_trabalho) AS renda_media FROM base_labeled_npv GROUP BY 1 ORDER BY 2 DESC LIMIT 10"
 
 # modo tabela para leitura humana
-pnad query \
-  --db data/outputs/pnad.sqlite \
-  --sql "SELECT UF__unidade_da_federao, COUNT(*) AS n FROM base_labeled_npv GROUP BY 1 ORDER BY 2 DESC LIMIT 10" \
+brasil query \
+  --db data/outputs/brasil.sqlite \
+  --sql "SELECT UF__unidade_da_federacao, COUNT(*) AS n FROM base_labeled_npv GROUP BY 1 ORDER BY 2 DESC LIMIT 10" \
   --format table
 ```
 
@@ -211,15 +253,17 @@ Observacoes:
 - Segurança por padrão: apenas SQL de leitura (`SELECT/WITH/PRAGMA/EXPLAIN`).
 - Limite padrão de retorno: `--max-rows 200` (com flag de truncamento no payload).
 - Também aceita SQL por arquivo (`--sql-file`) ou `stdin` (pipe).
+- O payload JSON de `brasil query` inclui metadados amostrais (`sampling`) para orientar LLMs.
+- `brasil query` nao infere IC automaticamente para SQL arbitrario; para IC pronto por padrao use `brasil renda-por-faixa-sm` ou `brasil dashboard`.
 
 ## Comandos legados
 
-Subcomandos antigos continuam disponíveis via `pnad`:
+Subcomandos antigos continuam disponíveis via `brasil`:
 
 ```bash
-pnad inspect data/outputs/base_labeled.csv
-pnad fwf-extract data/originals/input_PNADC_trimestral.sas data/raw/PNADC_032025.txt --header > data/outputs/base.csv
-pnad join-codes data/outputs/base.csv --codes-dir data/outputs > data/outputs/base_labeled.csv
+brasil inspect data/outputs/base_labeled.csv
+brasil fwf-extract data/originals/input_PNADC_trimestral.sas data/raw/PNADC_032025.txt --header > data/outputs/base.csv
+brasil join-codes data/outputs/base.csv --codes-dir data/outputs > data/outputs/base_labeled.csv
 ```
 
 ## Testes
@@ -231,6 +275,6 @@ pytest -q
 ## Observações
 
 - O repositório não versiona microdados brutos nem binários grandes de referência.
-- Para atualizar insumos locais, execute `pnad ibge-sync` novamente.
+- Para atualizar insumos locais, execute `brasil ibge-sync` novamente.
 - O comando de sync usa metadados (`ETag`/`Last-Modified`) para evitar re-download quando não houve mudança.
 - Cada trimestre PNADC pode ocupar alguns GB após extração; garanta espaço em disco em `data/raw/`.

@@ -80,9 +80,19 @@ def _parse_layout_line(line: str) -> Optional[Field]:
 
 def parse_layout(path: Path) -> List[Field]:
     fields: List[Field] = []
-    text = Path(path).read_text(encoding="utf-8", errors="replace")
-    for raw in text.splitlines():
-        f = _parse_layout_line(raw)
+    raw_bytes = Path(path).read_bytes()
+    text: Optional[str] = None
+    for enc in ("utf-8-sig", "utf-8", "iso-8859-1"):
+        try:
+            text = raw_bytes.decode(enc)
+            break
+        except UnicodeDecodeError:
+            continue
+    if text is None:
+        # Last-resort fallback to keep parser resilient with odd source files.
+        text = raw_bytes.decode("iso-8859-1", errors="replace")
+    for line in text.splitlines():
+        f = _parse_layout_line(line)
         if f:
             fields.append(f)
     fields.sort(key=lambda f: f.start)

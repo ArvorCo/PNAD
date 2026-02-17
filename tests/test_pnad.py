@@ -8,7 +8,7 @@ SCRIPTS = ROOT / "scripts"
 if str(SCRIPTS) not in sys.path:
     sys.path.insert(0, str(SCRIPTS))
 
-from pnad import build_sqlite_from_csv, main, _resolve_pipeline_target_and_min_wage  # type: ignore
+from pnad import build_parser, build_sqlite_from_csv, main, _latest_local_raw_anual, _resolve_pipeline_target_and_min_wage  # type: ignore
 
 
 def test_build_sqlite_from_csv(tmp_path: Path):
@@ -83,3 +83,23 @@ def test_resolve_pipeline_target_and_min_wage_override(tmp_path: Path):
     assert target == "2025-12"
     assert mw == 2000.0
     assert month_used == "2025-12"
+
+
+def test_pipeline_run_anual_parser_defaults():
+    parser = build_parser(prog_name="brasil")
+    args = parser.parse_args(["pipeline-run-anual"])
+    assert args.raw == "latest"
+    assert args.raw_dir == "data/raw/pnadc_anual_visita5"
+    assert args.layout == "data/originals/pnadc_anual_visita5/input_PNADC_2024_visita5.txt"
+    assert args.table == "base_anual_labeled_npv"
+
+
+def test_latest_local_raw_anual_prefers_latest_year_and_revision(tmp_path: Path):
+    (tmp_path / "PNADC_2023_visita5_20240101.txt").write_text("", encoding="utf-8")
+    (tmp_path / "PNADC_2023_visita5_20250822.txt").write_text("", encoding="utf-8")
+    (tmp_path / "PNADC_2024_visita5.txt").write_text("", encoding="utf-8")
+    (tmp_path / "other_file.txt").write_text("", encoding="utf-8")
+
+    latest = _latest_local_raw_anual(tmp_path)
+    assert latest is not None
+    assert latest.name == "PNADC_2024_visita5.txt"
