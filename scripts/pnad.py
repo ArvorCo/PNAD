@@ -710,8 +710,8 @@ def _detect_weight_col(headers: Sequence[str], requested: Optional[str]) -> Opti
     def base(name: str) -> str:
         return name.split("__", 1)[0]
 
-    # Prefer calibrated weight (V1028), fallback to non-calibrated (V1027).
-    for target in ("V1028", "V1027"):
+    # Prefer calibrated weights first (trimestral V1028, anual V1032).
+    for target in ("V1028", "V1027", "V1032", "V1031"):
         for h in headers:
             if base(h) == target:
                 return h
@@ -1431,10 +1431,6 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
     pnad_mode = "trimestral"
     income_source_cols: Dict[str, str] = {}
     is_anual_mode = False
-    do_breakdown = False
-    do_source_detail = False
-    do_dependency_ranking = False
-    do_composition_by_band = False
 
     with input_path.open("r", encoding="utf-8-sig", errors="replace", newline="") as fh:
         r = csv.DictReader(fh)
@@ -1490,18 +1486,12 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
         is_anual_mode = pnad_mode == "anual"
         if is_anual_mode:
             income_source_cols = _detect_income_source_cols(headers)
-        
-        # Set breakdown flags based on args and mode
-        do_breakdown = getattr(args, "breakdown", False) and is_anual_mode
-        do_source_detail = getattr(args, "source_detail", False) and is_anual_mode
-        do_dependency_ranking = getattr(args, "dependency_ranking", False) and is_anual_mode
-        do_composition_by_band = getattr(args, "composition_by_band", False) and is_anual_mode
 
         if not dom_col or not year_col or not qtr_col or not uf_col:
             raise ValueError("input must contain dom_id, Ano, Trimestre and UF")
         if not args.unweighted and not selected_weight_col:
             raise ValueError(
-                "weight column not found. Re-run pipeline including V1028 "
+                "weight column not found. Re-run pipeline including V1028/V1032 "
                 "or pass --weight-col / use --unweighted for diagnostics."
             )
         if use_ci and replicate_count < 2:
@@ -2834,6 +2824,37 @@ def _print_dashboard_mode(
                 bar = _gradient_bar(pct, width=8, palette=[248, 250, 252, 254, 15], use_color=use_color)
                 right.append(f"  {i:>2}. {u['label']:<{uf_name_width}} {pct:5.2f}% {bar}")
             _print_two_columns(left, right, width=58, gap=3)
+            if is_anual_mode and isinstance(composition_by_band, dict) and composition_by_band:
+                print("")
+                print(_colorize("  Composicao de renda por faixa de SM", "1;38;5;117", use_color))
+                for band_label in payload.get("ranges", []):
+                    data = composition_by_band.get(str(band_label), {})
+                    if not isinstance(data, dict):
+                        continue
+                    hh_pct = float(data.get("households_pct", 0.0) or 0.0)
+                    comp = data.get("composition", {})
+                    if not isinstance(comp, dict):
+                        comp = {}
+                    trab = float(comp.get("trabalho", 0.0) or 0.0)
+                    ben = float(comp.get("beneficios_sociais", 0.0) or 0.0)
+                    prev = float(comp.get("previdencia", 0.0) or 0.0)
+                    cap = float(comp.get("capital", 0.0) or 0.0)
+                    mix_bar = _stacked_mix_bar(
+                        [
+                            {"persons_pct": trab},
+                            {"persons_pct": ben},
+                            {"persons_pct": prev},
+                            {"persons_pct": max(0.0, 100.0 - trab - ben - prev)},
+                        ],
+                        pct_key="persons_pct",
+                        width=18,
+                        colors=[46, 220, 208, 250],
+                        use_color=use_color,
+                    )
+                    print(
+                        f"   - {str(band_label):<8} dom={hh_pct:5.1f}% "
+                        f"trab={trab:5.1f}% ben={ben:5.1f}% prev={prev:5.1f}% cap={cap:5.1f}% {mix_bar}"
+                    )
             print("")
 
     if show("meta"):
@@ -4614,7 +4635,7 @@ Legacy commands still work directly:
     prf.add_argument(
         "--weight-col",
         default=None,
-        help="Weight column name. Default auto: V1028 then V1027",
+        help="Weight column name. Default auto: V1028/V1027, then V1032/V1031",
     )
     prf.add_argument(
         "--unweighted",
@@ -4674,7 +4695,7 @@ Legacy commands still work directly:
     pdash.add_argument(
         "--weight-col",
         default=None,
-        help="Weight column name. Default auto: V1028 then V1027",
+        help="Weight column name. Default auto: V1028/V1027, then V1032/V1031",
     )
     pdash.add_argument(
         "--unweighted",
