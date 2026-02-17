@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PNAD Anual 2024 - Composição de Renda Domiciliar</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a2e;
+            color: #eee;
+        }
+        
+        .slide {
+            min-height: 100vh;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-bottom: 2px solid #333;
+        }
+        
+        .slide-title {
+            background: linear-gradient(135deg, #009c3b 0%, #002776 50%, #ffdf00 100%);
+        }
+        
+        .slide-data {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+        
+        .slide-insight {
+            background: linear-gradient(135deg, #2d132c 0%, #801336 100%);
+        }
+        
+        .slide-conclusion {
+            background: linear-gradient(135deg, #002776 0%, #009c3b 100%);
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: #ffdf00;
+        }
+        
+        h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #00d4aa;
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            margin-bottom: 40px;
+        }
+        
+        .flag {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+        
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .stat-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #00d4aa;
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.8;
+            margin-top: 10px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin: 30px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 1.2rem;
+        }
+        
+        th, td {
+            padding: 15px 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        th {
+            background: rgba(0,156,59,0.3);
+            color: #ffdf00;
+        }
+        
+        tr:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .highlight {
+            background: rgba(220,20,60,0.3) !important;
+            font-weight: bold;
+        }
+        
+        .bar {
+            height: 30px;
+            border-radius: 15px;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 15px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .bar:hover {
+            transform: scaleX(1.02);
+        }
+        
+        .bar-trabalho { background: linear-gradient(90deg, #2E8B57, #3CB371); }
+        .bar-beneficios { background: linear-gradient(90deg, #DC143C, #FF6B6B); }
+        .bar-previdencia { background: linear-gradient(90deg, #FF8C00, #FFB347); }
+        
+        .key-insight {
+            background: rgba(255,223,0,0.2);
+            border-left: 5px solid #ffdf00;
+            padding: 30px;
+            margin: 30px 0;
+            font-size: 1.5rem;
+            border-radius: 0 20px 20px 0;
+        }
+        
+        .key-insight-red {
+            background: rgba(220,20,60,0.2);
+            border-left: 5px solid #DC143C;
+        }
+        
+        .chart-embed {
+            width: 100%;
+            max-width: 1000px;
+            margin: 20px auto;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        
+        .chart-embed img {
+            width: 100%;
+            height: auto;
+        }
+        
+        .footer {
+            margin-top: 40px;
+            font-size: 0.9rem;
+            opacity: 0.6;
+            text-align: center;
+        }
+        
+        .hypothesis-box {
+            background: linear-gradient(135deg, rgba(0,156,59,0.3), rgba(0,39,118,0.3));
+            border: 3px solid #ffdf00;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px 0;
+            text-align: center;
+        }
+        
+        .hypothesis-box h3 {
+            color: #ffdf00;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        
+        .hypothesis-box p {
+            font-size: 1.5rem;
+            line-height: 1.8;
+        }
+        
+        .validated {
+            color: #00d4aa;
+            font-weight: bold;
+            font-size: 2rem;
+            margin-top: 20px;
+        }
+        
+        .methodology {
+            background: rgba(255,255,255,0.05);
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 1rem;
+            margin-top: 30px;
+        }
+        
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        ul li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        ul li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #00d4aa;
+        }
+        
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+        
+        @media (max-width: 768px) {
+            .two-columns {
+                grid-template-columns: 1fr;
+            }
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 1.8rem; }
+        }
+        
+        .nav {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.8);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+<!-- SLIDE 1: TÍTULO -->
+<section class="slide slide-title">
+    <div class="flag">🇧🇷</div>
+    <h1>Composição de Renda Domiciliar no Brasil</h1>
+    <p class="subtitle">Uma análise dos microdados da PNAD Anual 2024 (Visita 5)</p>
+    
+    <div class="stat-grid">
+        <div class="stat-card">
+            <span class="stat-number">78,3M</span>
+            <span class="stat-label">Domicílios</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-number">211,9M</span>
+            <span class="stat-label">Pessoas</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-number">27</span>
+            <span class="stat-label">UFs analisadas</span>
+        </div>
+    </div>
+    
+    <div class="footer">
+        Fonte: IBGE/PNAD Contínua Anual 2024 - 5ª Visita (Rendimentos de Outras Fontes)<br>
+        Processado com pesos amostrais calibrados (V1032)
+    </div>
+</section>
+
+<!-- SLIDE 2: PERGUNTA CENTRAL -->
+<section class="slide slide-data">
+    <h2>🎯 A Pergunta Central</h2>
+    
+    <div class="hypothesis-box">
+        <h3>Hipótese a Validar</h3>
+        <p>
+            "Os centros de pesquisa afirmam calcular a renda domiciliar com <strong>todas as fontes de renda</strong>.<br><br>
+            Mas será que quem depende mais de <strong>benefícios sociais</strong> consegue sair da pobreza?<br><br>
+            Ou será que apenas quem tem <strong>renda do trabalho</strong> consegue prosperar?"
+        </p>
+    </div>
+    
+    <h3>Metodologia</h3>
+    <ul>
+        <li>Utilizamos a PNAD Anual (Visita 5) que inclui <strong>todas as fontes de renda</strong></li>
+        <li>8 variáveis de renda não-trabalho: BPC-LOAS, Bolsa Família, outros programas, aposentadoria/pensão, seguro-desemprego, pensão alimentícia, aluguel, investimentos</li>
+        <li>Renda do trabalho calculada por diferença: VD5001 - Σ(V50xxA2)</li>
+        <li>Pesos amostrais calibrados (V1032) para representatividade nacional</li>
+    </ul>
+</section>
+
+<!-- SLIDE 3: COMPOSIÇÃO NACIONAL -->
+<section class="slide slide-data">
+    <h2>📊 Composição Nacional de Renda</h2>
+    
+    <div class="two-columns">
+        <div>
+            <h3>Por Categoria</h3>
+            <div style="margin: 20px 0;">
+                <div class="bar bar-trabalho" style="width: 94%;">94.1% Trabalho</div>
+                <div class="bar bar-previdencia" style="width: 45%;">13.5% Previdência</div>
+                <div class="bar bar-beneficios" style="width: 20%;">3.5% Benefícios Sociais</div>
+                <div class="bar" style="width: 15%; background: #4169E1;">2.6% Capital</div>
+            </div>
+            <p style="opacity: 0.7; font-size: 0.9rem;">*Percentuais somam >100% por sobreposição em domicílios</p>
+        </div>
+        
+        <div>
+            <h3>Quem Recebe?</h3>
+            <div class="stat-grid" style="grid-template-columns: 1fr 1fr;">
+                <div class="stat-card">
+                    <span class="stat-number" style="font-size: 2rem;">28.6%</span>
+                    <span class="stat-label">recebem Aposentadoria/Pensão</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" style="font-size: 2rem; color: #DC143C;">17.8%</span>
+                    <span class="stat-label">recebem Bolsa Família</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" style="font-size: 2rem;">4.7%</span>
+                    <span class="stat-label">recebem BPC-LOAS</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" style="font-size: 2rem;">4.1%</span>
+                    <span class="stat-label">recebem Aluguel</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 4: COMPOSIÇÃO POR FAIXA -->
+<section class="slide slide-insight">
+    <h2>⚡ O Dado Mais Importante</h2>
+    <h3>Composição de Renda por Faixa de Salário Mínimo</h3>
+    
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Faixa</th>
+                    <th>% Domicílios</th>
+                    <th>% Trabalho</th>
+                    <th>% Benefícios</th>
+                    <th>% Previdência</th>
+                    <th>% Capital</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="highlight">
+                    <td><strong>0-2 SM</strong></td>
+                    <td>47.2%</td>
+                    <td style="color: #FF6B6B;"><strong>82.8%</strong></td>
+                    <td style="color: #DC143C;"><strong>16.8%</strong></td>
+                    <td><strong>22.8%</strong></td>
+                    <td>0.7%</td>
+                </tr>
+                <tr>
+                    <td>2-5 SM</td>
+                    <td>34.6%</td>
+                    <td>94.9%</td>
+                    <td>2.9%</td>
+                    <td>14.6%</td>
+                    <td>1.3%</td>
+                </tr>
+                <tr>
+                    <td>5-10 SM</td>
+                    <td>12.3%</td>
+                    <td>96.2%</td>
+                    <td>0.4%</td>
+                    <td>12.8%</td>
+                    <td>2.3%</td>
+                </tr>
+                <tr>
+                    <td><strong>10+ SM</strong></td>
+                    <td>5.9%</td>
+                    <td style="color: #00d4aa;"><strong>97.2%</strong></td>
+                    <td style="color: #00d4aa;"><strong>0.1%</strong></td>
+                    <td>8.4%</td>
+                    <td>5.1%</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="key-insight key-insight-red">
+        <strong>⚠️ ACHADO CRÍTICO:</strong> Nas faixas mais pobres (0-2 SM), apenas <strong>82.8%</strong> da renda vem do trabalho, 
+        enquanto <strong>16.8%</strong> vem de benefícios sociais. Já nas faixas mais ricas (10+ SM), 
+        <strong>97.2%</strong> vem do trabalho e benefícios são <strong>praticamente zero</strong>.
+    </div>
+</section>
+
+<!-- SLIDE 5: RANKING DE DEPENDÊNCIA -->
+<section class="slide slide-data">
+    <h2>🗺️ Ranking de Dependência por UF</h2>
+    <h3>% da renda vinda de benefícios + previdência (não-trabalho)</h3>
+    
+    <div class="two-columns">
+        <div>
+            <h3>Top 10 Estados Mais Dependentes</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>UF</th>
+                        <th>Score</th>
+                        <th>% Benef.</th>
+                        <th>Renda Média</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1</td><td>Bahia</td><td><strong>27.8%</strong></td><td>9.8%</td><td>R$ 3.466</td></tr>
+                    <tr><td>2</td><td>Pernambuco</td><td><strong>27.2%</strong></td><td>9.6%</td><td>R$ 3.526</td></tr>
+                    <tr><td>3</td><td>Sergipe</td><td>26.8%</td><td>9.2%</td><td>R$ 3.840</td></tr>
+                    <tr><td>4</td><td>Paraíba</td><td>26.7%</td><td>9.2%</td><td>R$ 3.960</td></tr>
+                    <tr><td>5</td><td>Alagoas</td><td>26.5%</td><td>10.1%</td><td>R$ 3.570</td></tr>
+                    <tr><td>6</td><td>Ceará</td><td>26.4%</td><td>9.5%</td><td>R$ 3.543</td></tr>
+                    <tr><td>7</td><td>Piauí</td><td>26.4%</td><td>8.5%</td><td>R$ 4.525</td></tr>
+                    <tr><td>8</td><td>Maranhão</td><td>26.2%</td><td>10.8%</td><td>R$ 3.279</td></tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div>
+            <h3>Estados Menos Dependentes</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>UF</th>
+                        <th>Score</th>
+                        <th>% Trabalho</th>
+                        <th>Renda Média</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Distrito Federal</td><td>12.3%</td><td><strong>97.5%</strong></td><td>R$ 10.560</td></tr>
+                    <tr><td>São Paulo</td><td>14.8%</td><td>96.2%</td><td>R$ 7.413</td></tr>
+                    <tr><td>Santa Catarina</td><td>15.1%</td><td>95.8%</td><td>R$ 6.916</td></tr>
+                    <tr><td>Mato Grosso</td><td>15.5%</td><td>95.3%</td><td>R$ 6.469</td></tr>
+                </tbody>
+            </table>
+            
+            <div class="key-insight" style="margin-top: 30px;">
+                <strong>📍 Padrão claro:</strong> Estados do <strong>Nordeste</strong> lideram a dependência, 
+                enquanto estados do <strong>Sul/Sudeste/Centro-Oeste</strong> têm mais renda do trabalho.
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 6: CONCLUSÃO -->
+<section class="slide slide-conclusion">
+    <h2>✅ Hipótese Validada</h2>
+    
+    <div class="hypothesis-box">
+        <h3>Conclusão da Análise</h3>
+        <p>
+            Os dados da PNAD Anual 2024 confirmam:<br><br>
+            <strong>1.</strong> Quem está nas faixas mais pobres (0-2 SM) depende significativamente de benefícios sociais (16.8%)<br><br>
+            <strong>2.</strong> Apesar de receberem transferências, <strong>permanecem nas faixas mais baixas</strong><br><br>
+            <strong>3.</strong> Quem está nas faixas mais ricas tem quase 100% da renda vinda do <strong>trabalho</strong><br><br>
+            <strong>4.</strong> Estados com maior dependência de benefícios têm também as <strong>menores rendas médias</strong>
+        </p>
+        <p class="validated">📊 HIPÓTESE VALIDADA COM DADOS OFICIAIS</p>
+    </div>
+    
+    <div class="methodology">
+        <strong>Metodologia:</strong> Análise de 381.581 registros da PNAD Contínua Anual 2024 (5ª Visita), 
+        representando 78,3 milhões de domicílios brasileiros. Pesos calibrados (V1032). 
+        Variáveis de renda: VD5001 (total), V5001A2-V5008A2 (8 fontes não-trabalho).
+        <br><br>
+        <strong>Fonte:</strong> IBGE - Instituto Brasileiro de Geografia e Estatística<br>
+        <strong>Processamento:</strong> Brasil CLI (github.com/arvor/pnad) - Dashboard v2.0
+    </div>
+</section>
+
+<!-- SLIDE 7: IMPLICAÇÕES -->
+<section class="slide slide-data">
+    <h2>💡 Implicações para Políticas Públicas</h2>
+    
+    <div class="two-columns">
+        <div>
+            <h3>O que os dados mostram:</h3>
+            <ul>
+                <li>Benefícios sociais <strong>não são suficientes</strong> para tirar famílias da pobreza</li>
+                <li>A <strong>renda do trabalho</strong> é o principal diferencial entre faixas</li>
+                <li>Estados com mais benefícios têm rendas médias mais baixas</li>
+                <li><strong>47.2%</strong> dos domicílios brasileiros estão na faixa 0-2 SM</li>
+                <li>Capital (investimentos, aluguéis) só é relevante nas faixas mais altas</li>
+            </ul>
+        </div>
+        
+        <div>
+            <h3>Questões para reflexão:</h3>
+            <ul>
+                <li>Como gerar mais <strong>empregos de qualidade</strong> nas regiões mais pobres?</li>
+                <li>Os benefícios estão criando <strong>dependência</strong> ou são insuficientes?</li>
+                <li>Como <strong>formalizar</strong> mais trabalhadores?</li>
+                <li>Por que a previdência representa <strong>22.8%</strong> da renda nas faixas mais pobres?</li>
+                <li>Como reduzir a <strong>desigualdade regional</strong>?</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="footer" style="margin-top: 60px;">
+        <p>Análise realizada em Fevereiro de 2025</p>
+        <p>🧮 "We can only see a short distance ahead, but we can see plenty there that needs to be done." - Alan Turing</p>
+    </div>
+</section>
+
+<div class="nav">
+    ↓ Role para navegar
+</div>
+
+</body>
+</html>

@@ -2879,138 +2879,6 @@ def _print_dashboard_mode(
         print()
 
 
-def _print_income_composition_pretty(payload: Dict[str, object], *, no_color: bool = False) -> None:
-    """Print income composition analysis for anual mode (Dashboard v2.0)"""
-    use_color = _supports_color(no_color=no_color)
-    
-    # National income composition
-    national_comp = payload.get("income_composition_national", {})
-    if national_comp:
-        print(_colorize("\n╔══════════════════════════════════════════════════════════════════════════════╗", "1;38;5;214", use_color))
-        print(_colorize("║                    COMPOSIÇÃO DE RENDA NACIONAL (PNAD ANUAL)                 ║", "1;38;5;214", use_color))
-        print(_colorize("╚══════════════════════════════════════════════════════════════════════════════╝", "1;38;5;214", use_color))
-        print("")
-        
-        # Colors for income categories
-        cat_colors = {
-            "trabalho": "1;38;5;46",  # Green for work
-            "beneficios_sociais": "1;38;5;196",  # Red for social benefits
-            "previdencia": "1;38;5;208",  # Orange for pensions
-            "seguro": "1;38;5;226",  # Yellow for insurance
-            "transferencias_privadas": "1;38;5;39",  # Blue for private transfers
-            "capital": "1;38;5;15",  # White for capital
-        }
-        
-        for cat in ["trabalho", "beneficios_sociais", "previdencia", "seguro", "transferencias_privadas", "capital"]:
-            data = national_comp.get(cat, {})
-            if not data:
-                continue
-            label = str(data.get("label", cat))
-            mean = float(data.get("mean", 0.0) or 0.0)
-            pct = float(data.get("pct", 0.0) or 0.0)
-            bar_width = 40
-            bar_fill = int(round(bar_width * pct / 100.0))
-            bar_fill = max(0, min(bar_width, bar_fill))
-            bar = "█" * bar_fill + "░" * (bar_width - bar_fill)
-            color = cat_colors.get(cat, "1;38;5;250")
-            print(f"  {_colorize(label.ljust(22), color, use_color)} {_colorize(bar, color, use_color)} {pct:5.1f}% (R$ {mean:,.2f})")
-        print("")
-    
-    # Income sources detail
-    sources_detail = payload.get("income_sources_detail", {})
-    if sources_detail:
-        print(_colorize(" Detalhamento por Fonte de Renda:", "1;38;5;117", use_color))
-        for src_key in ["trabalho", "bpc_loas", "bolsa_familia", "outros_sociais", "aposentadoria_pensao", 
-                        "seguro_desemprego", "pensao_doacao", "aluguel", "outros_capital"]:
-            data = sources_detail.get(src_key, {})
-            if not data:
-                continue
-            label = str(data.get("label", src_key))
-            mean = float(data.get("mean", 0.0) or 0.0)
-            pct = float(data.get("pct", 0.0) or 0.0)
-            recipients_pct = data.get("recipients_pct")
-            recipients_txt = f" ({recipients_pct:.1f}% recebem)" if recipients_pct is not None else ""
-            bar_width = 30
-            bar_fill = int(round(bar_width * pct / 100.0))
-            bar_fill = max(0, min(bar_width, bar_fill))
-            bar = "▓" * bar_fill + "░" * (bar_width - bar_fill)
-            print(f"    {label.ljust(24)} {bar} {pct:5.2f}% R$ {mean:,.2f}{recipients_txt}")
-        print("")
-    
-    # UF dependency ranking
-    uf_ranking = payload.get("uf_dependency_ranking", [])
-    if uf_ranking:
-        print(_colorize("\n╔══════════════════════════════════════════════════════════════════════════════╗", "1;38;5;196", use_color))
-        print(_colorize("║             RANKING DE DEPENDÊNCIA POR UF (% não-trabalho)                   ║", "1;38;5;196", use_color))
-        print(_colorize("╚══════════════════════════════════════════════════════════════════════════════╝", "1;38;5;196", use_color))
-        print("")
-        print(_colorize("  UF                  Renda Média   %Trabalho  %Benefícios  %Previd.  Score Dep.", "1;38;5;250", use_color))
-        print("  " + "─" * 76)
-        
-        for i, uf in enumerate(uf_ranking[:15]):  # Show top 15
-            uf_label = str(uf.get("uf_label", "")).ljust(18)
-            income_mean = float(uf.get("income_mean", 0.0) or 0.0)
-            work_pct = float(uf.get("work_pct", 0.0) or 0.0)
-            benefits_pct = float(uf.get("benefits_pct", 0.0) or 0.0)
-            previdencia_pct = float(uf.get("previdencia_pct", 0.0) or 0.0)
-            dep_score = float(uf.get("dependency_score", 0.0) or 0.0)
-            
-            # Color based on dependency score (higher = more red)
-            if dep_score > 50:
-                row_color = "1;38;5;196"  # Red
-            elif dep_score > 40:
-                row_color = "1;38;5;208"  # Orange
-            elif dep_score > 30:
-                row_color = "1;38;5;226"  # Yellow
-            else:
-                row_color = "1;38;5;46"  # Green
-            
-            rank = f"{i+1:2}."
-            print(f"  {_colorize(rank, row_color, use_color)} {uf_label} R$ {income_mean:>8,.2f}    {work_pct:5.1f}%      {benefits_pct:5.1f}%     {previdencia_pct:5.1f}%   {_colorize(f'{dep_score:5.1f}', row_color, use_color)}")
-        
-        if len(uf_ranking) > 15:
-            print(f"  ... e mais {len(uf_ranking) - 15} UFs")
-        print("")
-    
-    # Composition by income band
-    band_comp = payload.get("composition_by_band", {})
-    if band_comp:
-        print(_colorize("\n╔══════════════════════════════════════════════════════════════════════════════╗", "1;38;5;33", use_color))
-        print(_colorize("║              COMPOSIÇÃO DE RENDA POR FAIXA DE SALÁRIO MÍNIMO                 ║", "1;38;5;33", use_color))
-        print(_colorize("╚══════════════════════════════════════════════════════════════════════════════╝", "1;38;5;33", use_color))
-        print("")
-        print(_colorize("  Faixa SM     %Dom.    Renda Média   %Trab.  %Benef.  %Prev.  %Seg.  %Transf. %Cap.", "1;38;5;250", use_color))
-        print("  " + "─" * 80)
-        
-        for band_label, data in band_comp.items():
-            if not isinstance(data, dict):
-                continue
-            hh_pct = float(data.get("households_pct", 0.0) or 0.0)
-            income_mean = float(data.get("income_mean", 0.0) or 0.0)
-            comp = data.get("composition", {})
-            
-            work = float(comp.get("trabalho", 0.0) or 0.0)
-            benefits = float(comp.get("beneficios_sociais", 0.0) or 0.0)
-            prev = float(comp.get("previdencia", 0.0) or 0.0)
-            seg = float(comp.get("seguro", 0.0) or 0.0)
-            transf = float(comp.get("transferencias_privadas", 0.0) or 0.0)
-            cap = float(comp.get("capital", 0.0) or 0.0)
-            
-            # Highlight low work percentage (poverty trap indicator)
-            if work < 50:
-                work_color = "1;38;5;196"
-            elif work < 70:
-                work_color = "1;38;5;226"
-            else:
-                work_color = "1;38;5;46"
-            
-            print(f"  {band_label.ljust(10)} {hh_pct:6.1f}%  R$ {income_mean:>9,.2f}   {_colorize(f'{work:5.1f}%', work_color, use_color)}  {benefits:5.1f}%  {prev:5.1f}%  {seg:4.1f}%   {transf:5.1f}%  {cap:4.1f}%")
-        
-        print("")
-        print(_colorize("  💡 Hipótese validada: nas faixas mais baixas, maior % vem de benefícios/previdência", "1;38;5;226", use_color))
-        print("")
-
-
 def _print_dashboard_pretty(payload: Dict[str, object], *, no_color: bool = False) -> None:
     use_color = _supports_color(no_color=no_color)
     title_style = "1;38;5;46"
@@ -3109,13 +2977,19 @@ def cmd_dashboard(args: argparse.Namespace) -> int:
         return 2
 
     if args.format == "json":
-        print(json.dumps(payload, ensure_ascii=False, indent=2))
+        try:
+            print(json.dumps(payload, ensure_ascii=False, indent=2))
+        except BrokenPipeError:
+            return 0
         return 0
 
-    if args.interactive:
-        _run_dashboard_interactive(payload, no_color=args.no_color)
-    else:
-        _print_dashboard_pretty(payload, no_color=args.no_color)
+    try:
+        if args.interactive:
+            _run_dashboard_interactive(payload, no_color=args.no_color)
+        else:
+            _print_dashboard_pretty(payload, no_color=args.no_color)
+    except BrokenPipeError:
+        return 0
     return 0
 
 
