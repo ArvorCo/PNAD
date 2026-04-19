@@ -1,0 +1,153 @@
+o comando pnad dashboard hoje traz resultados com um design muito específico que pode melhorar muito. quero que você crie um design fantástico para terminal para o comando pnad dashboard, com textos explicativos, análises detalhadas, diagnósticos precisos sobre cada coisa e tudo o mais. e quero que valide se todos os números exibidos estão estatisticamente corretos de acordo com o que precisa ser para quem quer descobrir a verdade do país.
+
+---
+
+gostei da sua ideia, mas e o design? Tem como melhorar para ficar mais bonito e impressionante para o terminal?
+
+---
+
+tudo isso, mas quero ainda mais...
+
+---
+
+faça tudo de uma vez, non stop. prossiga
+
+---
+
+━━━━━━━━━━━━━━━━━  ❖ ⑨  VALIDAÇÃO ESTATÍSTICA — auditoria dos números  ❖  ━━━━━━━━━━━━━━━━━━
+  │ Aqui checamos se a verdade que você viu é confiável. Todos os números são ponderados
+  │ pelos pesos de calibração do IBGE (V1028). Intervalos de confiança (IC 95%) vêm de
+  │ bootstrap com 200 réplicas amostrais — o método oficial recomendado pelo IBGE. O
+  │ coeficiente de variação (CV) indica a qualidade de cada estimativa: CV<5% (excelente),
+  │ 5-15% (boa), 15-30% (atenção), >30% (não publicar).
+
+  ✗ Pesos de calibração IBGE (V1028)             V1032__peso_com_calibracao
+  ✓ Modo ponderado (não diagnóstico)             weighted
+  ✗ Bootstrap de IC ativo (≥2 réplicas)          0 réplicas
+  ✗ Réplicas completas (200 V1028xxx)            0/200
+  ✓ Renda deflacionada (IPCA)                    alvo 2026-01
+  ✓ SM nominal por mês (BCB 1619)                R$ 1621.0
+  ✓ Gini ponderado (Lorenz)                      0.520
+  ✓ Mediana ponderada por peso populacional      2.156 SM
+  ✓ Mais de 1000 domicílios amostrados           142603 dom.
+  ✓ Pulos de período/fator/peso                  period=0, fac=0, w=0
+
+
+Antes de lançarmos qualquer coisa para a comunidade avaliar, é preciso que tudo esteja devidamente corrigido e avaliado. Vi aqui no comando pnad dashboard alguns problemas na análise anual. Que tal corrigirmos esses pontos para ficar 100%?
+
+---
+
+então agora vamos preparar esse repo para ser fantástico, incluindo um lindo docs/index.html que vai ter uma página muito grande, muito completa, com dashboards lindos, interativos, que vai contar a história do Brasil atual. Essa página precisa estar em inglÊs e em português. As análises precisam ser escritas usando o pulitzer-writer para ter o vies correto. E o README.md também precisa ser escrito com o pulitzer-writer, adotando as melhores práticas de REPOs Open Source, atuando para ter a melhor explicação possível no README.md sobre como instalar, com um lindo quickstart e belos gráficos que podemos gerar sobre o Brasil. O nosso viés é pensar como um cara como Olavo de Carvalho enxergaria esses números do Brasil e fazer um sério diagnóstico, com um viés mais à direita, sobre os dados do Brasil de forma detalhada. ISso tem que ser feito tanto no README.md de forma mais resumida, como no infográfico completíssimo do index.html que deve conter as mesmas informaçÕes que o comando pnad dashboard, mais análise textual, mais uma crítica séria ao estado do país, pontuando a dependência estatal, a falta de profissionais para trabalhar no país, o estado causando dificuldades, o socialismo de vários estados mantendo pobreza enquanto o sul e sudeste geram riqueza, que vai parar no DF, uma ilha de riqueza no país que é algo injusto e infeliz que esteja acontecendo num distrito onde a maioria é funcionário público, formando uma verdadeira elite deep state mostrando isso nos números. Finalmente, vamos produzir um docs/artigo.md usando o pulitzer writer. Esse artigo deverá ter reportagens linkadas, matérias relacionadas, pesquisas bem feitas sobre o tema, dados de matérias adicionais que mostrem claramente o diagnóstico do Brasil. Esse artigo precisa ser escrito com o pulitzer writer e deve ter em torno de 10 mil palavras, ser denso, e deve usar headers H1 para as partes e H2 para os subtítulos. O artigo não deve usar title case nos títulos. São duas versões:artigo_en.md e artigo_pt.md escritos para os dois públicos. E a página index.html também deve ter um toggle de inglês e português. Veja, são mutias coisas, vamos planejar tudo isso e executar. Tire suas dúvidas comigo antes da execução.
+
+---
+
+o HTML tem vários problemas. Texto quebrado, menu do lado esquerdo ficando em cima, gráficos em branco etc... vc precisa fazer um e2e teste no HTML completo para avaliar o resultado corretamente e enxergar o que está fazendo para corrigir
+
+---
+
+Base directory for this skill: /Users/leonardodias/.claude/skills/frontend-design
+
+This skill guides creation of distinctive, production-grade frontend interfaces that avoid generic "AI slop" aesthetics. Implement real working code with exceptional attention to aesthetic details and creative choices.
+
+The user provides frontend requirements: a component, page, application, or interface to build. They may include context about the purpose, audience, or technical constraints.
+
+## Design Thinking
+
+Before coding, understand the context and commit to a BOLD aesthetic direction:
+- **Purpose**: What problem does this interface solve? Who uses it?
+- **Tone**: Pick an extreme: brutally minimal, maximalist chaos, retro-futuristic, organic/natural, luxury/refined, playful/toy-like, editorial/magazine, brutalist/raw, art deco/geometric, soft/pastel, industrial/utilitarian, etc. There are so many flavors to choose from. Use these for inspiration but design one that is true to the aesthetic direction.
+- **Constraints**: Technical requirements (framework, performance, accessibility).
+- **Differentiation**: What makes this UNFORGETTABLE? What's the one thing someone will remember?
+
+**CRITICAL**: Choose a clear conceptual direction and execute it with precision. Bold maximalism and refined minimalism both work - the key is intentionality, not intensity.
+
+Then implement working code (HTML/CSS/JS, React, Vue, etc.) that is:
+- Production-grade and functional
+- Visually striking and memorable
+- Cohesive with a clear aesthetic point-of-view
+- Meticulously refined in every detail
+
+## Frontend Aesthetics Guidelines
+
+Focus on:
+- **Typography**: Choose fonts that are beautiful, unique, and interesting. Avoid generic fonts like Arial and Inter; opt instead for distinctive choices that elevate the frontend's aesthetics; unexpected, characterful font choices. Pair a distinctive display font with a refined body font.
+- **Color & Theme**: Commit to a cohesive aesthetic. Use CSS variables for consistency. Dominant colors with sharp accents outperform timid, evenly-distributed palettes.
+- **Motion**: Use animations for effects and micro-interactions. Prioritize CSS-only solutions for HTML. Use Motion library for React when available. Focus on high-impact moments: one well-orchestrated page load with staggered reveals (animation-delay) creates more delight than scattered micro-interactions. Use scroll-triggering and hover states that surprise.
+- **Spatial Composition**: Unexpected layouts. Asymmetry. Overlap. Diagonal flow. Grid-breaking elements. Generous negative space OR controlled density.
+- **Backgrounds & Visual Details**: Create atmosphere and depth rather than defaulting to solid colors. Add contextual effects and textures that match the overall aesthetic. Apply creative forms like gradient meshes, noise textures, geometric patterns, layered transparencies, dramatic shadows, decorative borders, custom cursors, and grain overlays.
+
+NEVER use generic AI-generated aesthetics like overused font families (Inter, Roboto, Arial, system fonts), cliched color schemes (particularly purple gradients on white backgrounds), predictable layouts and component patterns, and cookie-cutter design that lacks context-specific character.
+
+Interpret creatively and make unexpected choices that feel genuinely designed for the context. No design should be the same. Vary between light and dark themes, different fonts, different aesthetics. NEVER converge on common choices (Space Grotesk, for example) across generations.
+
+**IMPORTANT**: Match implementation complexity to the aesthetic vision. Maximalist designs need elaborate code with extensive animations and effects. Minimalist or refined designs need restraint, precision, and careful attention to spacing, typography, and subtle details. Elegance comes from executing the vision well.
+
+Remember: Claude is capable of extraordinary creative work. Don't hold back, show what can truly be created when thinking outside the box and committing fully to a distinctive vision.
+
+
+ARGUMENTS: editorial data-essay homepage for a Brazilian PNADC (IBGE household survey) analysis. Design a premium, distinctive masthead and hero area that does NOT feel like AI-slop or generic dashboard. The page is bilingual (PT/EN) with 15 sections of interactive Plotly charts. Style should resemble The Economist data features, Financial Times / Bloomberg Graphics, or NYT Opinion essays — editorial gravitas, NOT landing-page SaaS. Currently it has a "dateline: ENSAIO DE DADOS · PNADC / IBGE · VISITA ANUAL 5" + oversized serif title "o brasil que os números revelam" + subtle green bullet · AUDITÁVEL · REPRODUZÍVEL · ABERTO. The user called this "AI slop". Need: less obvious, more editorial, more confident. Give me CONCRETE tokens (fonts, sizes, whitespace, color), a revised hero structure (what to show and what to REMOVE), and a TOC sidebar alternative that doesn't look like a table-of-contents widget.
+
+---
+
+ok, then do it
+
+---
+
+agora vamos planejar para deixar esse repo o mais preparado possível para um projeto open source top e criar uma skill que usa o pnad e pode serr usado junto com IA e preparar tudo para publicação
+
+---
+
+1. 2 básicas
+2. brasil-cli
+3. v.0.4.0
+
+---
+
+vamos remover isso daqui e falar que tudo isso já foi dito de múltiplas maneiras, mas tem poucas pessoas prestando atenção e vendo se tem algo de fato mudando. Esse projeto tem a intenção de mostrar a mudança com relatórios novos a cada novo PNAD, bem como servir de referÊncia para dados que a mídia não quer que você saiba, e que o IBGE, já enviesado, esconde e reserva apenas a especialistas. Agora você pode saber mais com as nossas ferramentas. 
+
+Para remover esse trecho aqui do texto do HTML e também do artigo se ficou isso:  "Nada disso é novo. Tudo isso já foi dito por Roberto Campos, Gustavo Franco, Rodrigo Constantino, Olavo de Carvalho, Paulo Guedes.". Não quero citar ninguém aqui.
+
+---
+
+deixa o @ArvorCo no dependabot.yml
+
+---
+
+sobre o environment pypi no github, é só criar? precisa fazer mais algo por lá além disso? Já está tudo criado
+
+---
+
+já fiz no pypi e j;á fiz no git colocando a regra do v*... o que precisa fazer agora? Não faça ainda, só preciso saber os próximos passos
+
+---
+
+acho que é o momento, vamos prosseguir
+
+---
+
+deu vários desses erros no actions: Node.js 20 actions are deprecated. The following actions are running on Node.js 20 and may not work as expected: actions/checkout@v4. Actions will be forced to run with Node.js 24 by default starting June 2nd, 2026. Node.js 20 will be removed from the runner on September 16th, 2026. Please check if updated versions of these actions are available that support Node.js 24. To opt into Node.js 24 now, set the FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true environment variable on the runner or in your workflow file. Once Node.js 24 becomes the default, you can temporarily opt out by setting ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+
+Run black --check scripts/ docs/
+Warning: Python 3.12 cannot parse code formatted for Python 3.14. To fix this: run Black with Python 3.14, set --target-version to py312, or use --fast to skip the safety check. Black's safety check verifies equivalence by parsing the AST, which fails when the running Python is older than the target version.
+would reformat /home/runner/work/PNAD/PNAD/docs/build_index.py
+would reformat /home/runner/work/PNAD/PNAD/scripts/fetch_ipca.py
+would reformat /home/runner/work/PNAD/PNAD/docs/build_hero.py
+would reformat /home/runner/work/PNAD/PNAD/scripts/patch_notebook_npv.py
+would reformat /home/runner/work/PNAD/PNAD/scripts/parse_pnadc.py
+would reformat /home/runner/work/PNAD/PNAD/scripts/pnadc_cli.py
+
+Oh no! 💥 💔 💥
+6 files would be reformatted, 6 files would be left unchanged.
+
+
+Run black --check scripts/ docs/
+Warning: Python 3.12 cannot parse code formatted for Python 3.14. To fix this: run Black with Python 3.14, set --target-version to py312, or use --fast to skip the safety check. Black's safety check verifies equivalence by parsing the AST, which fails when the running Python is older than the target version.
+would reformat /home/runner/work/PNAD/PNAD/docs/build_index.py
+would reformat /home/runner/work/PNAD/PNAD/scripts/fetch_ipca.py
+would reformat /home/runner/work/PNAD/PNAD/docs/build_hero.py
+would reformat /home/runner/work/PNAD/PNAD/scripts/patch_notebook_npv.py
+would reformat /home/runner/work/PNAD/PNAD/scripts/parse_pnadc.py
+would reformat /home/runner/work/PNAD/PNAD/scripts/pnadc_cli.py
+
+Oh no! 💥 💔 💥
+6 files would be reformatted, 6 files would be left unchanged.
