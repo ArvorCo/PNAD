@@ -8,7 +8,6 @@ from pathlib import Path
 from typing import Iterable, Optional
 from urllib.request import urlopen, Request
 
-
 BCB_SERIES_INDEX = 433  # IPCA (variação mensal, %) – mensal
 
 

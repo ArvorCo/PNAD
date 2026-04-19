@@ -10,6 +10,7 @@ Functions:
 CLI:
   python scripts/parse_pnadc.py <input> -o out/ --sample-rows 100
 """
+
 from __future__ import annotations
 
 import argparse
@@ -17,7 +18,6 @@ import csv
 import json
 from pathlib import Path
 from typing import Optional, Tuple
-
 
 COMMON_DELIMS = [",", ";", "\t", "|"]
 

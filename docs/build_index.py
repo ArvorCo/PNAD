@@ -12,6 +12,7 @@ Usage:
 The resulting docs/index.html is a self-contained static page suitable for
 GitHub Pages (main:/docs).
 """
+
 from __future__ import annotations
 
 import argparse

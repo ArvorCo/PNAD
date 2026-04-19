@@ -4,6 +4,7 @@
 Uses matplotlib + the br-uf.geojson shipped in docs/geo.
 Output: docs/assets/hero.png (1600×900 @ 2x dpi).
 """
+
 from __future__ import annotations
 
 import json

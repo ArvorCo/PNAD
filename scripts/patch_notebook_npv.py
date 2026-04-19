@@ -33,17 +33,14 @@ def main(argv=None) -> int:
     nb = json.loads(nb_path.read_text(encoding="utf-8"))
     cells: List[Dict] = nb.get("cells", [])
 
-    md = make_markdown_cell(
-        """# NPV Setup (IPCA BCB) — deflate VD4020 to present value
+    md = make_markdown_cell("""# NPV Setup (IPCA BCB) — deflate VD4020 to present value
 
 This section fetches monthly IPCA from BCB, builds deflators to the latest available month, and computes:
 - `VD4020__rendim_efetivo_qq_trabalho_YYYYMM` (BRL at present prices)
 - `VD4020__rendim_efetivo_qq_trabalho_mw` (in minimum wages, parameterized)
-"""
-    )
+""")
 
-    code_fetch = make_code_cell(
-        """
+    code_fetch = make_code_cell("""
 import pandas as pd
 from urllib.request import urlopen, Request
 import json
@@ -87,11 +84,9 @@ TARGET_IDX = float(ipca_idx.loc[ipca_idx["ym"] == TARGET_YM, "index"].iloc[0])
 ipca_idx["rebased_to_target"] = ipca_idx["index"] / TARGET_IDX
 ipca_idx["factor_to_target"] = 1.0 / ipca_idx["rebased_to_target"]
 print({"target_month": TARGET_YM, "sample_factor_prev_month": float(ipca_idx["factor_to_target"].iloc[-2])})
-"""
-    )
+""")
 
-    code_apply = make_code_cell(
-        """
+    code_apply = make_code_cell("""
 # Load base (prefer parquet) with robust path resolution
 import os
 from pathlib import Path
@@ -161,8 +156,7 @@ try:
 except Exception:
     pass
 print({"saved_parquet": str(npv_parquet), "saved_csv": str(npv_csv)})
-"""
-    )
+""")
 
     new_cells = [md, code_fetch, code_apply]
     nb["cells"] = new_cells + cells

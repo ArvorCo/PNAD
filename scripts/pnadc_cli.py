@@ -21,7 +21,6 @@ if str(SCRIPT_DIR) not in sys.path:
 from parse_pnadc import sniff_delimiter  # type: ignore  # noqa: E402
 from layout_sas import parse_layout, fields_index, extract_line  # type: ignore  # noqa: E402
 
-
 # ---------- Safe filter expression (row-aware) ----------
 
 
