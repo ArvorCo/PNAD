@@ -31,6 +31,8 @@ data/outputs/*
 # Sample/generated data
 samples/*.csv
 samples/*.parquet
+!samples/ipca_sample.csv
+!samples/sample_pnadc.txt
 .env
 
 # Legacy root artifacts (keep these under data/raw or data/originals)
