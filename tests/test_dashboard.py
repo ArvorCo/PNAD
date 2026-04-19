@@ -91,6 +91,8 @@ def test_dashboard_json_sm_modes(capsys, tmp_path: Path):
     assert "ranges_money" in payload["modes"]["periodo"]
     assert payload["modes"]["periodo"]["sm_reference_value"] > 0
     assert "R$" in payload["modes"]["periodo"]["ranges_money"][0]["money_label"]
+    assert payload["modes"]["periodo"]["national"]["avg_household_income_brl"] == 2500.0
+    assert payload["modes"]["periodo"]["national"]["median_household_income_brl"] == 1000.0
     assert "age_pyramid" in payload["modes"]["periodo"]
     assert payload["modes"]["periodo"]["age_pyramid"][0]["age"] == "25-39"
     assert "insights" in payload["modes"]["periodo"]
@@ -100,6 +102,64 @@ def test_dashboard_json_sm_modes(capsys, tmp_path: Path):
     assert payload["dimension_labels"]["macro_region"] == "Macro-regiao"
     assert payload["modes"]["periodo"]["demographics"]["age"][0]["label"] == "25-39"
     assert "education_by_band" in payload["modes"]["periodo"]["cross"]
+
+
+def test_dashboard_auto_discovers_trimestral_and_anual_bundle(capsys, tmp_path: Path, monkeypatch):
+    out_dir = tmp_path / "data" / "outputs"
+    orig_dir = tmp_path / "data" / "originals"
+    tri = out_dir / "base_labeled.csv"
+    annual = out_dir / "base_anual_labeled.csv"
+    ipca = out_dir / "ipca.csv"
+    sm = orig_dir / "salario_minimo.csv"
+
+    _write_csv(
+        tri,
+        [
+            {
+                "Ano": "2025",
+                "Trimestre": "2",
+                "UF": "35",
+                "UF_label": "Sao Paulo",
+                "Capital_label": "Capital",
+                "dom_id": "t1",
+                "V1028": "1",
+                "V2007_label": "Homem",
+                "V2010_label": "Branca",
+                "V3009A_label": "Superior completo",
+                "V2009": "40",
+                "VD4020": "4000",
+            }
+        ],
+    )
+    _write_csv(
+        annual,
+        [
+            {
+                "Ano": "2025",
+                "Trimestre": "1",
+                "UF": "22",
+                "UF_label": "Piaui",
+                "dom_id": "a1",
+                "V1028": "1",
+                "VD5001": "1000",
+                "V5001A2": "100",
+                "V5002A2": "100",
+                "V5004A2": "200",
+            }
+        ],
+    )
+    _write_csv(ipca, [{"date": "2025-03", "index": "100"}, {"date": "2025-06", "index": "100"}])
+    _write_csv(sm, [{"date": "2025-03", "value": "1000"}, {"date": "2025-06", "value": "1000"}])
+
+    monkeypatch.chdir(tmp_path)
+    rc = main(["dashboard", "--format", "json"])
+    assert rc == 0
+    payload = json.loads(capsys.readouterr().out)
+    assert payload["bundle"] is True
+    assert set(payload["dashboards"].keys()) == {"trimestral", "anual"}
+    assert payload["dashboards"]["trimestral"]["mode"] == "trimestral"
+    assert payload["dashboards"]["anual"]["mode"] == "anual"
+    assert payload["summary"]["by_mode"]["anual"]["annual_lenses"]["somente_trabalho"]["mean"] == 600.0
 
 
 def test_dashboard_non_applicable_buckets(capsys, tmp_path: Path):
@@ -332,6 +392,6 @@ def test_dashboard_pretty_cross_macro_region_shows_centro_oeste(capsys, tmp_path
     )
     assert rc == 0
     out = capsys.readouterr().out
-    assert "Cruzamentos principais x faixas de SM" in out
-    assert "  Macro-regiao" in out
+    assert ("Cruzamentos principais x faixas de SM" in out) or ("Cruzamentos principais × faixas de SM" in out)
+    assert ("  Macro-regiao" in out) or ("  Macro-região" in out)
     assert "   - Centro-Oeste" in out

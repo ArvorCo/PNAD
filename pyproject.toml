@@ -4,15 +4,74 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "brasil-cli"
-version = "0.3.0"
-description = "CLI for PNADC data download, processing, and SQLite refresh"
+version = "0.4.0"
+description = "Research-grade CLI for Brazilian public microdata, dashboards, and LLM-safe analytics"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = []
+license = { text = "MIT" }
+authors = [
+  { name = "Leonardo Dias", email = "ld@arvor.co" },
+  { name = "Arvor" },
+]
+maintainers = [
+  { name = "Leonardo Dias", email = "ld@arvor.co" },
+]
+keywords = [
+  "brazil",
+  "pnadc",
+  "ibge",
+  "censo",
+  "tse",
+  "sqlite",
+  "cli",
+  "data-analysis",
+  "llm-tools",
+  "socioeconomics",
+  "inequality",
+  "gini",
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Science/Research",
+  "Intended Audience :: End Users/Desktop",
+  "License :: OSI Approved :: MIT License",
+  "Natural Language :: Portuguese (Brazilian)",
+  "Natural Language :: English",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Scientific/Engineering :: Information Analysis",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "Topic :: Sociology",
+  "Environment :: Console",
+]
 
 [project.scripts]
 brasil = "scripts.pnad:main"
 pnad = "scripts.pnad:main"
+
+[project.urls]
+Homepage      = "https://brasil.arvor.co"
+Documentation = "https://brasil.arvor.co"
+Repository    = "https://github.com/ArvorCo/PNAD"
+Issues        = "https://github.com/ArvorCo/PNAD/issues"
+Changelog     = "https://github.com/ArvorCo/PNAD/blob/main/CHANGELOG.md"
+Article-PT    = "https://github.com/ArvorCo/PNAD/blob/main/docs/artigo_pt.md"
+Article-EN    = "https://github.com/ArvorCo/PNAD/blob/main/docs/artigo_en.md"
+
+[project.optional-dependencies]
+dev = [
+  "pytest",
+  "pytest-recording>=0.13.4",
+  "vcrpy>=8.1.1",
+  "ruff",
+  "black",
+]
 
 [tool.setuptools.packages.find]
 include = ["scripts", "scripts.*"]

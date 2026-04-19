@@ -33,9 +33,9 @@ def parse_cells_fallback(path: Path):
             code_cells.append((nb_idx, current_lines[:]))
         current_lines = []
 
-    with path.open('r', encoding='utf-8') as f:
+    with path.open("r", encoding="utf-8") as f:
         for raw in f:
-            line = raw.rstrip('\n')
+            line = raw.rstrip("\n")
             if '"cell_type"' in line and '"cell_type":' in line:
                 nb_index += 1
                 in_code_cell = '"code"' in line
@@ -46,21 +46,21 @@ def parse_cells_fallback(path: Path):
             if not in_code_cell:
                 continue
 
-            if '"source"' in line and '[]' in line:
+            if '"source"' in line and "[]" in line:
                 # empty source
                 code_cells.append((nb_index, []))
                 in_source = False
                 current_lines = []
                 continue
 
-            if '"source"' in line and '[' in line:
+            if '"source"' in line and "[" in line:
                 in_source = True
                 current_lines = []
                 continue
 
             if in_source:
                 stripped = line.strip()
-                if stripped.startswith(']'):
+                if stripped.startswith("]"):
                     in_source = False
                     code_cells.append((nb_index, current_lines[:]))
                     current_lines = []
@@ -69,7 +69,7 @@ def parse_cells_fallback(path: Path):
                 try:
                     # remove trailing comma if present
                     s = stripped
-                    if s.endswith(','):
+                    if s.endswith(","):
                         s = s[:-1]
                     # only attempt if it begins and ends with quotes
                     if s.startswith('"') and s.endswith('"'):
@@ -98,7 +98,7 @@ def signature(lines, mode: str):
         lines = normalize_lines(lines)
     else:
         # raw: use as-is
-        lines = [l.rstrip("\n") for l in lines]
+        lines = [ln.rstrip("\n") for ln in lines]
 
     joined = "\n".join(lines)
     sha = hashlib.sha256(joined.encode("utf-8")).hexdigest()
@@ -111,10 +111,12 @@ def analyze(path: Path, mode: str, min_lines: int):
         try:
             nb = json.loads(txt)
         except json.JSONDecodeError:
+
             class LooseJSONDecoder(json.JSONDecoder):
                 def __init__(self, *args, **kwargs):
                     kwargs["strict"] = False
                     super().__init__(*args, **kwargs)
+
             nb = json.loads(txt, cls=LooseJSONDecoder)
         code_cells = []
         for idx, cell in enumerate(nb.get("cells", [])):
@@ -130,11 +132,13 @@ def analyze(path: Path, mode: str, min_lines: int):
     for code_idx, (nb_idx, src) in enumerate(code_cells):
         sha, norm_lines = signature(src, mode)
         # enforce min_lines threshold on the normalized/selected lines
-        effective_lines = [l for l in norm_lines if l.strip()]
+        effective_lines = [ln for ln in norm_lines if ln.strip()]
         if len(effective_lines) < min_lines:
             continue
         entry = sig_map.setdefault(sha, {"cells": [], "snippet": effective_lines[:3]})
-        entry["cells"].append({"nb_index": nb_idx, "code_index": code_idx, "lines": len(effective_lines)})
+        entry["cells"].append(
+            {"nb_index": nb_idx, "code_index": code_idx, "lines": len(effective_lines)}
+        )
 
     # Only keep signatures with duplicates
     duplicates = {k: v for k, v in sig_map.items() if len(v["cells"]) > 1}
@@ -160,12 +164,17 @@ def main():
         return
 
     print(f"Duplicate groups: {len(duplicates)}\n")
-    for i, (sha, info) in enumerate(sorted(duplicates.items(), key=lambda kv: (-len(kv[1]["cells"]), kv[0])) , start=1):
+    for i, (sha, info) in enumerate(
+        sorted(duplicates.items(), key=lambda kv: (-len(kv[1]["cells"]), kv[0])),
+        start=1,
+    ):
         cells = info["cells"]
         snippet = info["snippet"]
         print(f"Group {i}: occurrences={len(cells)} sha256={sha[:12]}")
         for c in cells:
-            print(f"  - nb_index={c['nb_index']} code_index={c['code_index']} lines={c['lines']}")
+            print(
+                f"  - nb_index={c['nb_index']} code_index={c['code_index']} lines={c['lines']}"
+            )
         if snippet:
             print("  Snippet:")
             for ln in snippet:

@@ -1,0 +1,39 @@
+cff-version: 1.2.0
+title: "Brasil CLI — Research-grade tooling for Brazilian public microdata"
+message: "If you use this software in academic or journalistic work, please cite it."
+type: software
+authors:
+  - given-names: Leonardo
+    family-names: Dias
+    email: ld@arvor.co
+    affiliation: Arvor
+  - name: "Arvor"
+repository-code: "https://github.com/ArvorCo/PNAD"
+url: "https://brasil.arvor.co"
+license: MIT
+version: "0.4.0"
+date-released: "2026-04-19"
+keywords:
+  - PNADC
+  - IBGE
+  - Brazil
+  - household-income
+  - inequality
+  - Gini
+  - open-data
+  - socioeconomics
+  - LLM
+abstract: >
+  Brasil CLI is a reproducible, auditable command-line interface and analysis
+  toolkit for Brazilian public microdata (PNADC trimestral and anual visita 5,
+  Censo 2022, TSE, IPCA, minimum-wage series). It produces labeled CSVs,
+  SQLite databases, terminal dashboards with 95% bootstrap confidence
+  intervals, and a bilingual interactive HTML data essay suitable for
+  GitHub Pages. Designed for analysts, journalists, researchers, and
+  LLM-driven agent workflows.
+references:
+  - type: data
+    title: "Pesquisa Nacional por Amostra de Domicílios Contínua"
+    authors:
+      - name: "Instituto Brasileiro de Geografia e Estatística (IBGE)"
+    url: "https://www.ibge.gov.br/estatisticas/sociais/trabalho/9171-pesquisa-nacional-por-amostra-de-domicilios-continua-mensal.html"

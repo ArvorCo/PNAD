@@ -3,6 +3,9 @@ numpy
 matplotlib
 seaborn
 pytest
+# Keep the recording stack compatible with urllib3 v2; old vcrpy breaks pytest bootstrap.
+pytest-recording>=0.13.4
+vcrpy>=8.1.1
 black
 ruff
 jupyter

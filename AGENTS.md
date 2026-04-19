@@ -20,7 +20,7 @@
   - `scripts/` for Python CLI/utilities.
   - `notebooks/` for exploratory analyses.
   - `tests/` for `pytest` automated tests.
-  - `skills/` for project-local agent skills (e.g., `skills/pnad-query/SKILL.md`).
+- `skills/` for project-local agent skills (e.g., `skills/brasil-cli-analyst/SKILL.md`).
   - `data/` scaffold only (`.gitkeep`).
 
 ## Core Commands

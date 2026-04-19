@@ -2,28 +2,27 @@
 from __future__ import annotations
 
 import argparse
+import ast
 import csv
 import json
 import math
+import re
 import sys
-from collections import defaultdict
+import unicodedata
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, Iterable, Iterator, List, Optional, Sequence, Tuple
+from typing import Dict, Iterable, List, Optional, Sequence, Tuple
 
 # Reuse delimiter/header detection from existing helper
 SCRIPT_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = SCRIPT_DIR.parent
 if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
-from parse_pnadc import sniff_delimiter  # type: ignore
-from layout_sas import parse_layout, fields_index, extract_line  # type: ignore
-import unicodedata
-import re
+from parse_pnadc import sniff_delimiter  # type: ignore  # noqa: E402
+from layout_sas import parse_layout, fields_index, extract_line  # type: ignore  # noqa: E402
 
 
 # ---------- Safe filter expression (row-aware) ----------
-import ast
 
 
 class RowExpr(ast.NodeTransformer):
@@ -106,7 +105,9 @@ class RowExpr(ast.NodeTransformer):
             return node
         # Replace other names with row.get('name')
         return ast.Call(
-            func=ast.Attribute(value=ast.Name(id="row", ctx=ast.Load()), attr="get", ctx=ast.Load()),
+            func=ast.Attribute(
+                value=ast.Name(id="row", ctx=ast.Load()), attr="get", ctx=ast.Load()
+            ),
             args=[ast.Constant(node.id)],
             keywords=[],
         )
@@ -134,7 +135,10 @@ class RowExpr(ast.NodeTransformer):
 
     def visit_Call(self, node: ast.Call):
         # Allow calls to a small set of safe builtins only
-        if not isinstance(node.func, ast.Name) or node.func.id not in self.allowed_func_names:
+        if (
+            not isinstance(node.func, ast.Name)
+            or node.func.id not in self.allowed_func_names
+        ):
             raise ValueError("Only int/float/str/len calls are allowed")
         return self.generic_visit(node)
 
@@ -150,14 +154,19 @@ def compile_row_expr(expr: str, columns: Sequence[str]):
 
 def eval_row_expr(code, row: Dict[str, str]) -> bool:
     # Only expose row and builtins needed for casting
-    env = {"row": row, "__builtins__": {"int": int, "float": float, "len": len, "str": str}}
+    env = {
+        "row": row,
+        "__builtins__": {"int": int, "float": float, "len": len, "str": str},
+    }
     return bool(eval(code, env, {}))
 
 
 # ---------- CSV streaming helpers ----------
 
 
-def open_reader(path: Path, delimiter: Optional[str] = None, has_header: Optional[bool] = None):
+def open_reader(
+    path: Path, delimiter: Optional[str] = None, has_header: Optional[bool] = None
+):
     path = Path(path)
     with path.open("r", encoding="utf-8-sig", errors="replace") as fh:
         head = fh.read(8192)
@@ -208,13 +217,17 @@ def cmd_inspect(args: argparse.Namespace) -> int:
     return 0
 
 
-def iter_rows(path: Path, delimiter=None, has_header=None) -> Tuple[Iterable[Dict[str, str]], List[str]]:
+def iter_rows(
+    path: Path, delimiter=None, has_header=None
+) -> Tuple[Iterable[Dict[str, str]], List[str]]:
     fh, reader, cols = open_reader(path, delimiter, has_header)
+
     def gen():
         nonlocal fh
         with fh:
             for row in reader:
                 yield row
+
     return gen(), cols
 
 
@@ -248,7 +261,9 @@ def cmd_select(args: argparse.Namespace) -> int:
 def cmd_filter(args: argparse.Namespace) -> int:
     rows, cols = iter_rows(Path(args.input))
     code = compile_row_expr(args.where, cols)
-    out_cols = cols if args.columns is None else [c.strip() for c in args.columns.split(",")]
+    out_cols = (
+        cols if args.columns is None else [c.strip() for c in args.columns.split(",")]
+    )
     if args.columns is not None:
         missing = [c for c in out_cols if c not in cols]
         if missing:
@@ -263,7 +278,7 @@ def cmd_filter(args: argparse.Namespace) -> int:
             if eval_row_expr(code, r):
                 w.writerow([r.get(c, "") for c in out_cols])
                 cnt += 1
-        except Exception as e:
+        except Exception:
             if args.strict:
                 raise
             # Skip rows that error during evaluation (e.g., bad types)
@@ -405,12 +420,16 @@ def cmd_agg(args: argparse.Namespace) -> int:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    p = argparse.ArgumentParser(prog="pnad", description="Stream PNADC files and query them via CLI")
+    p = argparse.ArgumentParser(
+        prog="pnad", description="Stream PNADC files and query them via CLI"
+    )
     sub = p.add_subparsers(dest="cmd", required=True)
 
     pi = sub.add_parser("inspect", help="Detect delimiter, header and preview columns")
     pi.add_argument("input", type=Path)
-    pi.add_argument("--limit", type=int, default=10000, help="Max rows to scan for preview count")
+    pi.add_argument(
+        "--limit", type=int, default=10000, help="Max rows to scan for preview count"
+    )
     pi.set_defaults(func=cmd_inspect)
 
     ph = sub.add_parser("head", help="Print first N rows to CSV")
@@ -425,12 +444,18 @@ def build_parser() -> argparse.ArgumentParser:
     ps.add_argument("--header", action="store_true")
     ps.set_defaults(func=cmd_select)
 
-    pf = sub.add_parser("filter", help="Filter rows by expression (e.g., renda>1000 and sexo=='M')")
+    pf = sub.add_parser(
+        "filter", help="Filter rows by expression (e.g., renda>1000 and sexo=='M')"
+    )
     pf.add_argument("input", type=Path)
     pf.add_argument("--where", required=True)
-    pf.add_argument("--columns", help="Comma-separated columns to output (default: all)")
+    pf.add_argument(
+        "--columns", help="Comma-separated columns to output (default: all)"
+    )
     pf.add_argument("--header", action="store_true")
-    pf.add_argument("--strict", action="store_true", help="Error on bad rows (default: skip)")
+    pf.add_argument(
+        "--strict", action="store_true", help="Error on bad rows (default: skip)"
+    )
     pf.set_defaults(func=cmd_filter)
 
     psm = sub.add_parser("sample", help="Reservoir sample N rows")
@@ -442,7 +467,12 @@ def build_parser() -> argparse.ArgumentParser:
     pagg = sub.add_parser("agg", help="Group and aggregate")
     pagg.add_argument("input", type=Path)
     pagg.add_argument("--by", required=True, help="Comma-separated group keys")
-    pagg.add_argument("--agg", required=True, nargs="+", help="Aggregations, e.g., count() sum(renda) mean(idade)")
+    pagg.add_argument(
+        "--agg",
+        required=True,
+        nargs="+",
+        help="Aggregations, e.g., count() sum(renda) mean(idade)",
+    )
     pagg.add_argument("--header", action="store_true")
     pagg.set_defaults(func=cmd_agg)
 
@@ -471,7 +501,9 @@ def build_parser() -> argparse.ArgumentParser:
     )
     pfx.set_defaults(func=cmd_fwf_extract)
 
-    pschema = sub.add_parser("fwf-schema", help="Emit schema CSV: name,label,slug,start,width,kind")
+    pschema = sub.add_parser(
+        "fwf-schema", help="Emit schema CSV: name,label,slug,start,width,kind"
+    )
     pschema.add_argument("layout", type=Path)
     pschema.set_defaults(func=cmd_fwf_schema)
 
@@ -481,24 +513,45 @@ def build_parser() -> argparse.ArgumentParser:
     )
     pdict.add_argument("excel", type=Path, help="Path to dicionario .xls")
     pdict.add_argument("--out", type=Path, default=Path("data"))
-    pdict.add_argument("--vars", default="UF,Capital,RM_RIDE", help="Comma-separated variable names to extract")
+    pdict.add_argument(
+        "--vars",
+        default="UF,Capital,RM_RIDE",
+        help="Comma-separated variable names to extract",
+    )
     pdict.set_defaults(func=cmd_dict_extract)
 
-    pcodes = sub.add_parser("emit-codes", help="Emit static code tables (V2005,V2010,V3001,V3003A,V3009A)")
+    pcodes = sub.add_parser(
+        "emit-codes", help="Emit static code tables (V2005,V2010,V3001,V3003A,V3009A)"
+    )
     pcodes.add_argument("--out", type=Path, default=Path("data"))
     pcodes.set_defaults(func=cmd_emit_codes)
 
-    pjoin = sub.add_parser("join-codes", help="Join code tables to extracted CSV to add *_label columns")
+    pjoin = sub.add_parser(
+        "join-codes", help="Join code tables to extracted CSV to add *_label columns"
+    )
     pjoin.add_argument("input", type=Path, help="CSV produced by fwf-extract")
-    pjoin.add_argument("--codes-dir", type=Path, default=Path("data"), help="Directory with *_codes.csv from dict-extract/emit-codes")
-    pjoin.add_argument("--header", action="store_true", help="Ensure header is written (if input has none)")
+    pjoin.add_argument(
+        "--codes-dir",
+        type=Path,
+        default=Path("data"),
+        help="Directory with *_codes.csv from dict-extract/emit-codes",
+    )
+    pjoin.add_argument(
+        "--header",
+        action="store_true",
+        help="Ensure header is written (if input has none)",
+    )
     pjoin.set_defaults(func=cmd_join_codes)
 
     phh = sub.add_parser(
         "household-agg",
         help="Aggregate persons to household level using dom_id and sum of income columns",
     )
-    phh.add_argument("input", type=Path, help="CSV from fwf-extract containing dom_id and income cols")
+    phh.add_argument(
+        "input",
+        type=Path,
+        help="CSV from fwf-extract containing dom_id and income cols",
+    )
     phh.add_argument(
         "--income-cols",
         default="V405012,V405022,V405112,V405122",
@@ -525,7 +578,8 @@ def main(argv: Optional[List[str]] = None) -> int:
 
 def _cmd_layout(args: argparse.Namespace) -> int:
     fields = parse_layout(args.layout)
-    import csv, sys
+    import csv
+    import sys
 
     w = csv.writer(sys.stdout)
     w.writerow(["name", "start", "width", "kind"])
@@ -535,6 +589,7 @@ def _cmd_layout(args: argparse.Namespace) -> int:
 
 
 REPLICATE_WEIGHT_KEEP = ",".join(f"V1028{i:03d}" for i in range(1, 201))
+REPLICATE_WEIGHT_KEEP_ANUAL = ",".join(f"V1032{i:03d}" for i in range(1, 201))
 
 
 DEFAULT_KEEP = (
@@ -573,7 +628,8 @@ DEFAULT_KEEP_ANUAL = (
     "VD4001,VD4002,VD4009,VD4008,VD4007,VD4005,VD4004A,VD4003,"
     "V5001A,V5001A2,V5002A,V5002A2,V5003A,V5003A2,V5004A,V5004A2,"
     "V5005A,V5005A2,V5006A,V5006A2,V5007A,V5007A2,V5008A,V5008A2,"
-    "VD5001,VD5002,VD5003,VD5004,VD5005,VD5006,VD5007,VD5008,VD5009,VD5010,VD5011,VD5012"
+    "VD5001,VD5002,VD5003,VD5004,VD5005,VD5006,VD5007,VD5008,VD5009,VD5010,VD5011,VD5012,"
+    f"{REPLICATE_WEIGHT_KEEP_ANUAL}"
 )
 
 
@@ -609,11 +665,43 @@ def cmd_fwf_extract(args: argparse.Namespace) -> int:
     # Compose selection honoring priority order, then ascending names for the rest
     selected_all = [idx[k] for k in keep if k in idx]
     priority = [
-        "Ano","Trimestre","UF","Capital","RM_RIDE","UPA","Estrato","V1008","V1014","V1016","V1022","V1023","V1027","V1028",
-        "V1029","V1033","posest","posest_sxi",
-        "V2001","V2003","V2007","V2005","V2009","V2010",
-        "V3001","V3002","V3008","V3012","V3013","V3014","V3003A","V3009A","VD3006",
-        "V2008","V20081","V20082","VD2003",
+        "Ano",
+        "Trimestre",
+        "UF",
+        "Capital",
+        "RM_RIDE",
+        "UPA",
+        "Estrato",
+        "V1008",
+        "V1014",
+        "V1016",
+        "V1022",
+        "V1023",
+        "V1027",
+        "V1028",
+        "V1029",
+        "V1033",
+        "posest",
+        "posest_sxi",
+        "V2001",
+        "V2003",
+        "V2007",
+        "V2005",
+        "V2009",
+        "V2010",
+        "V3001",
+        "V3002",
+        "V3008",
+        "V3012",
+        "V3013",
+        "V3014",
+        "V3003A",
+        "V3009A",
+        "VD3006",
+        "V2008",
+        "V20081",
+        "V20082",
+        "VD2003",
     ]
     priority_set = set(priority)
     pri = [f for f in selected_all if f.name in priority]
@@ -1101,6 +1189,7 @@ def cmd_join_codes(args: argparse.Namespace) -> int:
     import csv
 
     codes_dir = args.codes_dir
+
     # Load mapping CSVs if present
     def load_map(name):
         path = codes_dir / f"{name}_codes.csv"
@@ -1189,7 +1278,9 @@ def cmd_household_agg(args: argparse.Namespace) -> int:
     with inp.open("r", encoding="utf-8", errors="replace", newline="") as rf:
         r = csv.DictReader(rf)
         if "dom_id" not in (r.fieldnames or []):
-            print("ERROR: input must contain 'dom_id' (use fwf-extract)", file=sys.stderr)
+            print(
+                "ERROR: input must contain 'dom_id' (use fwf-extract)", file=sys.stderr
+            )
             return 2
         for row in r:
             dom = row.get("dom_id", "")
@@ -1230,6 +1321,7 @@ def _slugify(text: str) -> str:
 
 def cmd_dict_extract(args: argparse.Namespace) -> int:
     import pandas as pd
+
     xl_path = Path(args.excel).expanduser()
     out_dir = args.out
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -1250,7 +1342,16 @@ def cmd_dict_extract(args: argparse.Namespace) -> int:
 
     # Helpers to pick code/label columns heuristically
     code_candidates = {"codigo", "cod", "valor", "categoria", "code", "id"}
-    label_candidates = {"descricao", "descrição", "label", "nome", "description", "titulo", "titulo_categoria", "desc"}
+    label_candidates = {
+        "descricao",
+        "descrição",
+        "label",
+        "nome",
+        "description",
+        "titulo",
+        "titulo_categoria",
+        "desc",
+    }
 
     def pick_cols(df):
         cols = list(df.columns)
@@ -1278,18 +1379,34 @@ def cmd_dict_extract(args: argparse.Namespace) -> int:
                     chosen_name = name
                     break
         if not chosen_name:
-            print(f"ERROR: could not find sheet for '{var}'. Available sheets: {sheet_names}", file=sys.stderr)
+            print(
+                f"ERROR: could not find sheet for '{var}'. Available sheets: {sheet_names}",
+                file=sys.stderr,
+            )
             continue
         df = sheets[chosen_name]
         code_col, label_col = pick_cols(df)
         if code_col is None or label_col is None:
-            print(f"ERROR: could not infer code/label columns for '{var}' from sheet '{chosen_name}'", file=sys.stderr)
+            print(
+                f"ERROR: could not infer code/label columns for '{var}' from sheet '{chosen_name}'",
+                file=sys.stderr,
+            )
             continue
         out = df[[code_col, label_col]].dropna().drop_duplicates()
         out.columns = ["code", "label"]
         out_path = out_dir / (f"{var_slug}_codes.csv")
         out.to_csv(out_path, index=False)
-        print(json.dumps({"var": var, "sheet": chosen_name, "rows": int(len(out)), "out": str(out_path)}, ensure_ascii=False))
+        print(
+            json.dumps(
+                {
+                    "var": var,
+                    "sheet": chosen_name,
+                    "rows": int(len(out)),
+                    "out": str(out_path),
+                },
+                ensure_ascii=False,
+            )
+        )
     return 0
 
 

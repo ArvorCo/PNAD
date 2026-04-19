@@ -4,8 +4,6 @@ from __future__ import annotations
 import argparse
 import csv
 import json
-import math
-import sys
 from pathlib import Path
 from typing import Iterable, Optional
 
@@ -104,7 +102,11 @@ def cmd_vd4020_vs_principal(args: argparse.Namespace) -> int:
         "rows_comparable": comparable,
         "vd4020_ge_principal_rate": (geq / comparable) if comparable else None,
         "rows_without_secondary_money": cnt_when_no_secondary,
-        "equal_when_no_secondary_rate": (equal_when_no_secondary / cnt_when_no_secondary) if cnt_when_no_secondary else None,
+        "equal_when_no_secondary_rate": (
+            (equal_when_no_secondary / cnt_when_no_secondary)
+            if cnt_when_no_secondary
+            else None
+        ),
         "tol": tol,
     }
     print(json.dumps(out, indent=2, ensure_ascii=False))
@@ -112,22 +114,49 @@ def cmd_vd4020_vs_principal(args: argparse.Namespace) -> int:
 
 
 def main(argv: Optional[list[str]] = None) -> int:
-    p = argparse.ArgumentParser(description="Validate PNADC income consistency (e.g., VD4020 vs components)")
+    p = argparse.ArgumentParser(
+        description="Validate PNADC income consistency (e.g., VD4020 vs components)"
+    )
     sub = p.add_subparsers(dest="cmd", required=True)
 
-    p1 = sub.add_parser("vd4020-components", help="Check VD4020 approx equals sum of component columns")
-    p1.add_argument("--in", dest="inp", required=True, type=Path, help="Input CSV (e.g., base_labeled.csv)")
-    p1.add_argument("--target", required=True, help="Target column (e.g., VD4020__rendim_efetivo_qq_trabalho)")
-    p1.add_argument("--components", required=True, help="Comma-separated component columns to sum")
+    p1 = sub.add_parser(
+        "vd4020-components", help="Check VD4020 approx equals sum of component columns"
+    )
+    p1.add_argument(
+        "--in",
+        dest="inp",
+        required=True,
+        type=Path,
+        help="Input CSV (e.g., base_labeled.csv)",
+    )
+    p1.add_argument(
+        "--target",
+        required=True,
+        help="Target column (e.g., VD4020__rendim_efetivo_qq_trabalho)",
+    )
+    p1.add_argument(
+        "--components", required=True, help="Comma-separated component columns to sum"
+    )
     p1.add_argument("--tol", default=1.0, help="Absolute tolerance for equality (BRL)")
     p1.add_argument("--limit", type=int, default=0, help="Optional row limit for speed")
     p1.set_defaults(func=cmd_vd4020_components)
 
-    p2 = sub.add_parser("vd4020-vs-principal", help="Check VD4020 >= VD4017 and equality when no secondary income")
+    p2 = sub.add_parser(
+        "vd4020-vs-principal",
+        help="Check VD4020 >= VD4017 and equality when no secondary income",
+    )
     p2.add_argument("--in", dest="inp", required=True, type=Path)
     p2.add_argument("--target", required=True)
-    p2.add_argument("--principal", required=True, help="Principal job effective income column (e.g., VD4017__...)")
-    p2.add_argument("--secondary-money", default=None, help="Secondary job effective money column (e.g., V405912__...)")
+    p2.add_argument(
+        "--principal",
+        required=True,
+        help="Principal job effective income column (e.g., VD4017__...)",
+    )
+    p2.add_argument(
+        "--secondary-money",
+        default=None,
+        help="Secondary job effective money column (e.g., V405912__...)",
+    )
     p2.add_argument("--tol", default=1.0, help="Absolute tolerance (BRL)")
     p2.add_argument("--limit", type=int, default=0)
     p2.set_defaults(func=cmd_vd4020_vs_principal)
@@ -138,4 +167,3 @@ def main(argv: Optional[list[str]] = None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

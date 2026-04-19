@@ -1,0 +1,1793 @@
+<!doctype html>
+<html lang="pt-BR" data-lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>O Brasil em Números — PNADC</title>
+<meta name="description" content="Diagnóstico editorial do Brasil com dados oficiais do IBGE. Interativo, bilíngue, auditável.">
+<meta name="author" content="Arvor">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..800;1,6..72,300..800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8" defer></script>
+<style>
+:root {
+  /* editorial tokens — FT long-read / NYT opinion register */
+  --f-display: 'Newsreader', 'Source Serif 4', Charter, Georgia, serif;
+  --f-body:    'Newsreader', 'Source Serif 4', Charter, Georgia, serif;
+  --f-ui:      'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+  --f-mono:    'IBM Plex Mono', ui-monospace, monospace;
+
+  --ink:        #0a1a12;          /* very dark green-black */
+  --ink-soft:   #2b3228;
+  --paper:      #f6f3ee;
+  --paper-raw:  #efeae1;
+  --rule:       #0a1a12;
+  --rule-soft:  #cfc9bc;
+  --muted:      #6b6762;
+  /* Brazilian flag palette — primary accent is deep green */
+  --accent:       #009c3b;         /* Brasil verde (oficial) */
+  --accent-ink:   #00673a;         /* darker green */
+  --accent-yellow:#ffdf00;         /* Brasil amarelo */
+  --accent-blue:  #002776;         /* Brasil azul */
+  --warn:         #c47800;         /* amber for editorial flags (used sparingly) */
+
+  --size-hero:  clamp(3.5rem, 8vw, 7.25rem);
+  --size-deck:  clamp(1.2rem, 1.55vw, 1.5rem);
+  --size-body:  1.125rem;
+  --size-small: .78rem;
+  --lead-hero:  .94;
+  --lead-deck:  1.45;
+  --track-kicker: .2em;
+  --track-hero: -.035em;
+
+  /* legacy aliases for existing CSS rules still in this file */
+  --serif: var(--f-display);
+  --sans:  var(--f-ui);
+  --mono:  var(--f-mono);
+  --fg: var(--paper);
+  --bg: var(--ink);
+  --dim: var(--muted);
+  --green:#2ecc71; --yellow:#f1c40f; --blue:#3498db; --gold:#d4a82c;
+  --red:#e74c3c; --darkgreen:#27ae60; --navy:#1e3a8a; --cream: var(--paper-raw);
+  --shadow: none;
+  --shadow-lg: none;
+}
+* { box-sizing: border-box; }
+html, body { margin:0; padding:0; background:var(--paper); color:var(--ink); font-family:var(--serif); font-size:18px; line-height:1.65; font-feature-settings: "kern", "liga", "onum"; }
+body { overflow-x:hidden; }
+
+.num { font-variant-numeric: tabular-nums; font-feature-settings: "tnum", "lnum"; }
+.sans { font-family:var(--sans); }
+.mono { font-family:var(--mono); font-size:.88em; }
+.small { font-size:.85em; color:var(--dim); }
+
+/* ----- language toggle ----- */
+body[data-lang="pt"] [lang="en"] { display:none !important; }
+body[data-lang="en"] [lang="pt"] { display:none !important; }
+
+/* ----- masthead (editorial, left-aligned) ----- */
+.masthead {
+  padding: clamp(3.5rem, 9vh, 7.5rem) clamp(1.5rem, 5vw, 4rem)
+           clamp(2rem, 5vh, 4rem) clamp(1.5rem, 5vw, 4rem);
+  max-width: 62rem;
+  margin: 0;
+  background: var(--paper);
+  position: relative;
+  border-bottom: 1px solid var(--rule);
+}
+.masthead::before {
+  content: "";
+  position: absolute;
+  top: clamp(2.25rem, 6vh, 5rem); left: clamp(1.5rem, 5vw, 4rem);
+  width: 3.25rem; height: 2px; background: var(--accent);
+}
+.masthead-rail {
+  margin-top: 1.25rem; margin-bottom: clamp(3rem, 10vh, 6rem);
+  display: flex; gap: 1.25rem; align-items: center;
+}
+.kicker {
+  font-family: var(--f-ui);
+  font-size: var(--size-small); font-weight: 500;
+  letter-spacing: var(--track-kicker); text-transform: uppercase;
+  color: var(--muted);
+}
+.hero-title {
+  font-family: var(--f-display); font-weight: 700;
+  font-size: var(--size-hero); line-height: var(--lead-hero);
+  letter-spacing: var(--track-hero); color: var(--ink);
+  margin: 0 0 2.25rem;
+  font-feature-settings: "onum" 1, "liga" 1, "kern" 1;
+}
+.hero-title em {
+  font-style: italic; font-weight: 500;
+  color: var(--accent-ink);
+}
+.hero-rule {
+  border: 0; border-top: 1px solid var(--rule);
+  width: 6rem; margin: 0 0 1.25rem;
+}
+.hero-kicker {
+  font-family: var(--f-ui);
+  font-size: var(--size-small); font-weight: 600;
+  letter-spacing: var(--track-kicker); text-transform: uppercase;
+  color: var(--ink); margin: 0 0 1.25rem;
+}
+.hero-deck {
+  font-family: var(--f-display); font-style: italic; font-weight: 300;
+  font-size: var(--size-deck); line-height: var(--lead-deck);
+  color: var(--ink-soft); max-width: 40ch; margin: 0 0 2.25rem;
+}
+.hero-byline {
+  font-family: var(--f-ui); font-size: .85rem;
+  color: var(--muted); letter-spacing: .01em;
+  margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 1rem;
+}
+.hero-byline strong { color: var(--ink); font-weight: 600; }
+.hero-byline .sep { color: var(--rule-soft); }
+.hero-lang {
+  display: inline-flex; gap: .5rem; font-family: var(--f-ui); font-size: .8rem;
+}
+.hero-lang button {
+  background: transparent; border: 0; padding: 0;
+  color: var(--muted); cursor: pointer; letter-spacing: .12em; text-transform: uppercase;
+  font-family: inherit; font-size: inherit; font-weight: 500;
+  border-bottom: 1px solid transparent; transition: all .15s;
+}
+.hero-lang button:hover { color: var(--ink); }
+.hero-lang button.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* ----- rail (chapter progress, replaces TOC) ----- */
+.rail {
+  position: fixed;
+  left: clamp(.75rem, 2.2vw, 2.25rem);
+  top: 50%; transform: translateY(-50%);
+  display: none; flex-direction: column; gap: .55rem;
+  padding-right: 2.5rem; z-index: 40;
+}
+@media (min-width: 1180px) { .rail { display: flex; } }
+.rail a {
+  position: relative; display: block; width: 14px; height: 14px;
+  text-decoration: none;
+}
+.rail .tick {
+  position: absolute; left: 5px; top: 5px;
+  width: 4px; height: 4px; background: transparent;
+  border: 1px solid var(--rule-soft); border-radius: 0;
+  transition: all .2s ease;
+}
+.rail a:hover .tick, .rail a.active .tick {
+  background: var(--accent); border-color: var(--accent);
+  width: 8px; height: 8px; left: 3px; top: 3px;
+}
+.rail a::before {
+  content: attr(data-label);
+  position: absolute; left: 22px; top: -4px; white-space: nowrap;
+  font-family: var(--f-ui); font-size: .72rem; letter-spacing: .05em;
+  color: var(--ink); background: var(--paper);
+  padding: .25rem .55rem; border-left: 2px solid var(--accent);
+  opacity: 0; transform: translateX(-6px);
+  transition: opacity .15s, transform .15s; pointer-events: none;
+}
+.rail a:hover::before { opacity: 1; transform: translateX(0); }
+
+/* ----- sections ----- */
+.section {
+  padding: clamp(3rem, 7vh, 5rem) clamp(1.5rem, 5vw, 4rem);
+  max-width: 62rem; margin: 0;
+}
+.section.prose { max-width: 38rem; }
+@media (min-width: 1180px) {
+  .section { padding-left: clamp(5rem, 8vw, 7rem); }
+}
+.section-head {
+  margin-bottom: 2.25rem; max-width: 40rem;
+}
+.section-head .eyebrow {
+  font-family: var(--f-ui); font-size: var(--size-small); letter-spacing: var(--track-kicker);
+  text-transform: uppercase; color: var(--accent); font-weight: 600;
+  margin-bottom: .85rem; display: flex; align-items: center; gap: .75rem;
+}
+.section-head .eyebrow::after {
+  content: ""; flex: 1; height: 1px; background: var(--rule-soft);
+}
+.section-head h2 {
+  font-family: var(--f-display); font-weight: 600;
+  font-size: clamp(1.85rem, 3.2vw, 2.75rem);
+  margin: 0 0 .5rem 0; line-height: 1.1; letter-spacing: -.02em; color: var(--ink);
+}
+.section-head h2 em { font-style: italic; font-weight: 400; color: var(--accent-ink); }
+.section-head .dek {
+  font-family: var(--f-display); font-style: italic; font-weight: 300;
+  color: var(--ink-soft); font-size: 1.15rem; line-height: 1.45; max-width: 34rem;
+}
+.section .narrative {
+  max-width: 36rem; font-family: var(--f-body); font-size: 1.0625rem;
+  line-height: 1.7; color: var(--ink-soft); margin: 1.5rem 0;
+}
+.section .narrative p { margin: 0 0 1.1em 0; }
+.section .narrative p.dropcap::first-letter {
+  font-family: var(--f-display); font-style: italic; font-weight: 500;
+  font-size: 4.2em; float: left; line-height: .88; padding: .06em .12em 0 0;
+  color: var(--accent-ink);
+}
+.section .narrative strong { color: var(--ink); font-weight: 600; }
+.section .narrative em { color: var(--ink); font-style: italic; }
+.section .narrative a {
+  color: var(--ink); text-decoration: underline;
+  text-decoration-color: var(--accent); text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+.section .narrative a:hover { color: var(--accent); }
+.section .pullquote {
+  margin: 2.75rem 0; padding: 0 0 0 1.5rem;
+  border-left: 2px solid var(--accent);
+  font-family: var(--f-display); font-style: italic; font-weight: 400;
+  font-size: 1.5rem; line-height: 1.4; color: var(--ink); max-width: 34rem;
+}
+.section .pullquote cite {
+  display: block; margin-top: 1rem;
+  font-family: var(--f-ui); font-style: normal; font-weight: 500;
+  font-size: .72rem; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ----- chart container (editorial figure, no card) ----- */
+.chart {
+  margin: 2.5rem 0; background: transparent;
+  border: 0; border-radius: 0; box-shadow: none; overflow: visible;
+  max-width: 62rem;
+  position: relative;
+}
+.chart::before {
+  content: ""; display: block;
+  border-top: 1px solid var(--rule); width: 2.5rem;
+  margin-bottom: 1.25rem;
+}
+.chart .js-plotly-plot { min-height: 380px; }
+.chart.tall .js-plotly-plot { min-height: 500px; }
+.chart.wide .js-plotly-plot { min-height: 580px; }
+
+/* ----- hero stats grid (editorial figures, not cards) ----- */
+.hero-stats {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 2rem 2.5rem;
+  margin: 2.5rem 0;
+  max-width: 62rem;
+  border-top: 1px solid var(--rule);
+  padding-top: 2rem;
+}
+.hero-stat {
+  background: transparent; border: 0; border-radius: 0; padding: 0;
+  box-shadow: none; position: relative;
+}
+.hero-stat .num-big {
+  font-family: var(--f-display); font-weight: 400; font-style: italic;
+  font-size: clamp(2.5rem, 5vw, 3.8rem);
+  line-height: 1; color: var(--ink);
+  font-variant-numeric: tabular-nums; letter-spacing: -.025em;
+}
+.hero-stat .num-big .unit {
+  font-size: .45em; color: var(--muted); font-weight: 400;
+  margin-left: .2em; font-style: normal; font-family: var(--f-ui); text-transform: uppercase; letter-spacing: .1em;
+}
+.hero-stat.good .num-big { color: var(--ink); }
+.hero-stat.bad .num-big  { color: var(--accent-ink); }
+.hero-stat.warn .num-big { color: var(--ink); }
+.hero-stat .label {
+  font-family: var(--f-ui); font-size: .7rem; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--ink); margin-top: .75rem; font-weight: 600;
+}
+.hero-stat .sub {
+  font-family: var(--f-display); font-style: italic; font-weight: 300;
+  font-size: .95rem; color: var(--muted); margin-top: .35rem; line-height: 1.35;
+}
+.hero-stat .band { display: none; }
+
+/* ----- 5 truths (editorial numbered list, no card) ----- */
+.truths {
+  margin: 3rem 0 2rem; font-family: var(--f-display);
+  background: transparent; border: 0; border-radius: 0; overflow: visible;
+  box-shadow: none; max-width: 42rem;
+}
+.truths h3 {
+  margin: 0 0 1.5rem 0; padding: 0; background: transparent;
+  font-family: var(--f-ui); color: var(--accent);
+  font-weight: 600; letter-spacing: .2em; font-size: .75rem;
+  text-transform: uppercase;
+}
+.truths ol { list-style: none; margin: 0; padding: 0; counter-reset: truth; }
+.truths li {
+  counter-increment: truth;
+  position: relative;
+  padding: 1.25rem 0 1.25rem 3rem;
+  border-top: 1px solid var(--rule-soft); font-size: 1.075rem;
+  line-height: 1.55; color: var(--ink-soft);
+}
+.truths li:last-child { border-bottom: 1px solid var(--rule-soft); }
+.truths li::before {
+  content: counter(truth, upper-roman);
+  position: absolute; left: 0; top: 1.25rem;
+  font-family: var(--f-display); font-style: italic; font-weight: 500;
+  color: var(--accent); font-size: 1.3rem; line-height: 1.55;
+}
+.truths li strong { color: var(--ink); font-weight: 600; }
+.truths li .num { color: var(--accent-ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+
+/* ----- footer / seal ----- */
+.footer {
+  background:var(--ink); color:var(--fg); padding:4rem 1.5rem 3rem;
+  font-family:var(--sans);
+}
+.footer .wrap { max-width:72rem; margin:0 auto; display:grid; grid-template-columns:1fr; gap:3rem; }
+@media (min-width:820px) { .footer .wrap { grid-template-columns:1fr 1fr; } }
+.footer h3 { color:var(--cream); font-family:var(--serif); font-size:1.3rem; margin:0 0 .8rem; }
+.footer p { color:#cfd4db; line-height:1.6; font-size:.95rem; }
+.footer .seal-box {
+  border:1px solid #3a3d42; padding:1.5rem; border-radius:4px; background:#141619;
+}
+.footer .seal-row { display:flex; justify-content:space-between; padding:.3rem 0; border-bottom:1px dashed #2a2d33; font-size:.8rem; }
+.footer .seal-row:last-child { border-bottom:none; }
+.footer .seal-row .k { color:var(--muted); }
+.footer .seal-row .v { color:var(--cream); font-family:var(--mono); }
+.footer a { color:var(--yellow); text-decoration:none; }
+.footer a:hover { text-decoration:underline; }
+
+/* ----- utilities ----- */
+.side-by-side { display:grid; grid-template-columns:1fr; gap:1rem; }
+@media (min-width:820px) { .side-by-side { grid-template-columns:1fr 1fr; } }
+.divider { border:none; border-top:1px solid #e5e5df; margin:3rem 0; }
+.tag {
+  display:inline-block; font-family:var(--sans); font-size:.7rem; letter-spacing:.1em;
+  text-transform:uppercase; padding:.2rem .5rem; border-radius:2px; margin-right:.4rem;
+}
+.tag.good { background:#d6f5e3; color:var(--darkgreen); }
+.tag.bad { background:#fde4e1; color:var(--red); }
+.tag.warn { background:#fdf0cb; color:#8a6d1a; }
+
+/* ----- TOC highlight ----- */
+html { scroll-behavior: smooth; }
+section[id] { scroll-margin-top: 4rem; }
+</style>
+</head>
+<body>
+
+<nav class="rail" aria-label="chapters">
+  <a href="#sec-hero"        data-label="I · abertura"><span class="tick"></span></a>
+  <a href="#sec-mapa"         data-label="II · geografia"><span class="tick"></span></a>
+  <a href="#sec-bandas"       data-label="III · faixas"><span class="tick"></span></a>
+  <a href="#sec-lorenz"       data-label="IV · Lorenz"><span class="tick"></span></a>
+  <a href="#sec-uf-rank"      data-label="V · ranking"><span class="tick"></span></a>
+  <a href="#sec-dotplot"      data-label="VI · precisão"><span class="tick"></span></a>
+  <a href="#sec-heatmap"      data-label="VII · heatmap"><span class="tick"></span></a>
+  <a href="#sec-macro"        data-label="VIII · macro-regiões"><span class="tick"></span></a>
+  <a href="#sec-piramide"     data-label="IX · pirâmide etária"><span class="tick"></span></a>
+  <a href="#sec-cross"        data-label="X · cruzamentos"><span class="tick"></span></a>
+  <a href="#sec-composicao"   data-label="XI · composição"><span class="tick"></span></a>
+  <a href="#sec-dependencia"  data-label="XII · dependência"><span class="tick"></span></a>
+  <a href="#sec-gauges"       data-label="XIII · termômetro"><span class="tick"></span></a>
+  <a href="#sec-conclusao"    data-label="XIV · conclusão"><span class="tick"></span></a>
+  <a href="#selo"             data-label="XV · selo"><span class="tick"></span></a>
+</nav>
+
+<header class="masthead">
+  <div class="masthead-rail">
+    <span class="kicker" lang="pt">capítulo zero · brasil · 2026</span>
+    <span class="kicker" lang="en">chapter zero · brazil · 2026</span>
+  </div>
+
+  <h1 class="hero-title" lang="pt">O país<br><em>que os números</em><br>revelam.</h1>
+  <h1 class="hero-title" lang="en">The country<br><em>the numbers</em><br>reveal.</h1>
+
+  <hr class="hero-rule">
+
+  <p class="hero-kicker" lang="pt">um retrato em quinze capítulos —</p>
+  <p class="hero-kicker" lang="en">a portrait in fifteen chapters —</p>
+
+  <p class="hero-deck" lang="pt">
+    Como os salários, os benefícios e as aposentadorias se distribuem entre vinte e sete estados,
+    cinco macro-regiões e duzentos e doze milhões de brasileiros. Microdados da PNADC anual,
+    visita 5, do IBGE.
+  </p>
+  <p class="hero-deck" lang="en">
+    How wages, benefits and pensions divide across twenty-seven states, five macro-regions and
+    two hundred and twelve million people. Annual PNADC microdata, visit 5, from IBGE.
+  </p>
+
+  <p class="hero-byline">
+    <span lang="pt">por <strong>Leonardo Dias</strong> — com apoio da Arvor</span>
+    <span lang="en">by <strong>Leonardo Dias</strong> — with support from Arvor</span>
+    <span class="sep" aria-hidden="true">·</span>
+    <span class="hero-lang" role="group" aria-label="Language">
+      <button type="button" data-lang-set="pt" class="active">PT</button>
+      <span class="sep" aria-hidden="true">/</span>
+      <button type="button" data-lang-set="en">EN</button>
+    </span>
+  </p>
+</header>
+
+<!-- ════════════ 01 HERO ════════════ -->
+<section id="sec-hero" class="section">
+  <div class="section-head">
+    <div class="eyebrow" lang="pt">parte 01 · retrato de abertura</div>
+    <div class="eyebrow" lang="en">part 01 · opening portrait</div>
+    <h2 lang="pt">cinco números, uma pátria dividida</h2>
+    <h2 lang="en">five numbers, a divided nation</h2>
+    <div class="dek" lang="pt">o suficiente para quem ainda não fechou a janela diante do espelho.</div>
+    <div class="dek" lang="en">enough for anyone who has not yet closed the window before the mirror.</div>
+  </div>
+
+  <div class="hero-stats" id="hero-stats"></div>
+
+  <div class="truths">
+    <h3 lang="pt">o brasil em cinco verdades</h3>
+    <h3 lang="en">brazil in five truths</h3>
+    <ol id="truths-list-pt" lang="pt"></ol>
+    <ol id="truths-list-en" lang="en"></ol>
+  </div>
+
+  <div class="narrative" lang="pt">
+    <p class="dropcap">
+      Nenhum número mente sozinho, mas alguns, postos lado a lado, começam a falar. Este ensaio
+      reúne a base anual da PNADC (visita 5) — a que permite separar renda de trabalho da renda de benefícios — e a recompõe em
+      quinze painéis. A seleção não foi feita para confortar. Foi feita para <strong>diagnosticar</strong>.
+    </p>
+    <p>
+      A Arvor é uma empresa de tecnologia, não um think tank. Mas entende que estatística sem
+      leitura é dado sem consequência. Por isso cada painel aqui traz, ao lado do gráfico, uma
+      interpretação. Elas são assumidas. O leitor pode discordar — tem à disposição o repositório
+      aberto, o comando de terminal <span class="mono">pnad dashboard</span>, os dados, os testes,
+      a metodologia.
+    </p>
+  </div>
+
+  <div class="narrative" lang="en">
+    <p class="dropcap">
+      No single number lies alone, but a few placed side by side begin to speak. This essay
+      draws on IBGE's annual PNADC (visit 5) — the one that separates labor income from benefit income — and reshapes it into fifteen panels.
+      The selection was not made to comfort. It was made to <strong>diagnose</strong>.
+    </p>
+    <p>
+      Arvor is a technology company, not a think tank. But it understands that statistics
+      without reading is data without consequence. So each panel here offers, alongside the chart,
+      an interpretation. These are avowed. The reader may disagree — the open repository, the
+      terminal command <span class="mono">pnad dashboard</span>, the data, the tests, the methodology
+      are all available.
+    </p>
+  </div>
+</section>
+
+<!-- ════════════ 02 MAPA ════════════ -->
+<section id="sec-mapa" class="section">
+  <div class="section-head">
+    <div class="eyebrow" lang="pt">parte 02 · geografia da renda</div>
+    <div class="eyebrow" lang="en">part 02 · geography of income</div>
+    <h2 lang="pt">o mapa da renda revela o país real</h2>
+    <h2 lang="en">the income map reveals the real country</h2>
+    <div class="dek" lang="pt">verde intenso é raro; vermelho domina os setentrião e nordeste.</div>
+    <div class="dek" lang="en">deep green is rare; red dominates the north and northeast.</div>
+  </div>
+
+  <div class="chart tall" id="chart-mapa"></div>
+
+  <div class="narrative" lang="pt">
+    <p>
+      O choropleth acima colore cada Unidade da Federação pela <strong>média de salários mínimos</strong>
+      por domicílio. É o gráfico mais simples e o mais incômodo. Três ilhas de verde — Distrito Federal
+      (na ponta superior, isolado), Santa Catarina, São Paulo. Um corredor amarelado que atravessa
+      o Centro-Oeste e chega ao Sul. E uma mancha vermelha sólida cobrindo o Nordeste inteiro, com
+      sombras estendendo-se pelo Norte.
+    </p>
+    <p>
+      A classe de leitura fácil é esta: <strong>o Brasil tem vários Brasis dentro de si</strong>, e o
+      Estado brasileiro, supostamente federativo, opera de modo a consolidar essa desigualdade.
+      O DF, uma federação de funcionários públicos, ostenta renda média equivalente a países
+      europeus. O Maranhão, onde a política é há décadas um feudo familiar, convive com renda
+      de país pobre do Caribe.
+    </p>
+  </div>
+
+  <div class="narrative" lang="en">
+    <p>
+      The choropleth above colors each state by its <strong>average household income in minimum wages</strong>.
+      It is the simplest chart and the most uncomfortable. Three islands of green — the Federal District
+      (at the top, isolated), Santa Catarina, São Paulo. A yellow corridor sweeping through the Center-West
+      and down to the South. And a solid red mass covering the entire Northeast, with shadows reaching
+      into the North.
+    </p>
+    <p>
+      The easy reading is this: <strong>Brazil contains several Brazils</strong>, and the Brazilian
+      state — nominally federal — operates to entrench this inequality. The Federal District, a
+      federation of public employees, displays household income on par with European countries.
+      Maranhão, where politics has been a family fiefdom for decades, lives on par with a poor
+      Caribbean country.
+    </p>
+  </div>
+</section>
+
+<!-- ════════════ 03 BANDAS ════════════ -->
+<section id="sec-bandas" class="section">
+  <div class="section-head">
+    <div class="eyebrow" lang="pt">parte 03 · faixas de salário mínimo</div>
+    <div class="eyebrow" lang="en">part 03 · minimum-wage bands</div>
+    <h2 lang="pt">metade do país ganha até dois salários mínimos</h2>
+    <h2 lang="en">half the country earns up to two minimum wages</h2>
+    <div class="dek" lang="pt">uma distribuição mais próxima da de 1970 do que a de um país desenvolvido.</div>
+    <div class="dek" lang="en">a distribution closer to 1970's than to a developed country's.</div>
+  </div>
+
+  <div class="chart" id="chart-bandas"></div>
+
+  <div class="narrative" lang="pt">
+    <p>
+      A barra é clara: <strong class="num">58,3%</strong> dos domicílios brasileiros vivem com
+      renda de até <strong>dois salários mínimos</strong>. Se lembrarmos que o salário mínimo de
+      referência hoje é de <strong class="num">R$ 1.621</strong>, essa faixa equivale a até
+      <strong class="num">R$ 3.242</strong> por mês <em>por domicílio inteiro</em>. Não por pessoa.
+    </p>
+    <p>
+      Apenas <strong class="num">4,6%</strong> dos domicílios ganham dez salários mínimos ou mais.
+      O topo da pirâmide é estreito não porque exista uma "elite exorbitante" — esse é o mito
+      socialista — mas porque a base é vasta demais. Um país que não cria classe média não tem
+      ascensão; tem estagnação.
+    </p>
+  </div>
+
+  <div class="narrative" lang="en">
+    <p>
+      The bar is clear: <strong class="num">58.3%</strong> of Brazilian households live on up to
+      <strong>two minimum wages</strong>. Given that the reference minimum wage is
+      <strong class="num">R$ 1,621</strong>, this band caps at <strong class="num">R$ 3,242</strong>
+      per month <em>for the entire household</em>. Not per person.
+    </p>
+    <p>
+      Only <strong class="num">4.6%</strong> of households earn ten minimum wages or more.
+      The narrow top of the pyramid reflects not an "outrageous elite" — that is the socialist
+      myth — but a base too vast. A country that does not create a middle class does not rise;
+      it stagnates.
+    </p>
+  </div>
+</section>
+
+<!-- ════════════ 04 LORENZ ════════════ -->
+<section id="sec-lorenz" class="section">
+  <div class="section-head">
+    <div class="eyebrow" lang="pt">parte 04 · curva de lorenz</div>
+    <div class="eyebrow" lang="en">part 04 · lorenz curve</div>
+    <h2 lang="pt">a curva de lorenz e o índice de gini</h2>
+    <h2 lang="en">the lorenz curve and the gini index</h2>
+    <div class="dek" lang="pt">quanto mais curvada, mais concentrada a riqueza.</div>
+    <div class="dek" lang="en">the more curved, the more concentrated the wealth.</div>
+  </div>
+
+  <div class="chart" id="chart-lorenz"></div>
+
+  <div class="narrative" lang="pt">
+    <p>
+      A linha tracejada é a igualdade perfeita: 50% da população ficaria com 50% da renda. A linha
+      sólida é o Brasil. A distância entre elas, sombreada, é proporcional ao <strong>índice de Gini</strong> —
+      hoje em <strong class="num">0,520</strong> na PNADC anual (visita 5, renda domiciliar efetiva).
+    </p>
+    <p>
+      Comparações internacionais são úteis: Portugal fica em torno de 0,33, a Alemanha em 0,30,
+      os Estados Unidos em 0,40. O Brasil, com 0,63, está na vizinhança de países africanos
+      e centro-americanos. A tradição política brasileira foi, durante décadas, explicar isso por
+      "herança escravocrata" ou "neoliberalismo" — diagnósticos que nunca entregaram cura.
+      Há uma leitura mais direta: <strong>estamos desiguais porque o Estado brasileiro organiza a
+      desigualdade</strong> — via carga tributária regressiva, monopólios cartoriais, reservas de
+      mercado e uma elite burocrática blindada contra a competição e contra a crítica dos próprios
+      contribuintes.
+    </p>
+  </div>
+
+  <div class="narrative" lang="en">
+    <p>
+      The dashed line is perfect equality: 50% of the population would hold 50% of the income.
+      The solid line is Brazil. The distance between them, shaded, is proportional to the
+      <strong>Gini index</strong> — currently <strong class="num">0.520</strong> in the annual
+      PNADC (visit 5, effective household income).
+    </p>
+    <p>
+      International comparisons help: Portugal sits around 0.33, Germany at 0.30, the United States
+      at 0.40. Brazil, at 0.63, belongs with certain African and Central American countries. For
+      decades Brazilian politics blamed "slavery's legacy" or "neoliberalism" — diagnoses that
+      never delivered a cure. There is a more direct reading: <strong>we are unequal because the
+      Brazilian state organizes inequality</strong> — through a regressive tax burden, notary
+      monopolies, market reserves, and a bureaucratic elite shielded from competition and from the
+      criticism of the very taxpayers who fund it.
+    </p>
+  </div>
+</section>
+
+<!-- ════════════ 05 UF RANKING ════════════ -->
+<section id="sec-uf-rank" class="section">
+  <div class="section-head">
+    <div class="eyebrow" lang="pt">parte 05 · ranking das UFs</div>
+    <div class="eyebrow" lang="en">part 05 · state ranking</div>
+    <h2 lang="pt">as 10 UFs mais ricas e as 10 mais pobres</h2>
+    <h2 lang="en">the ten richest and ten poorest states</h2>
+    <div class="dek" lang="pt">com intervalos de confiança de 95% — a diferença entre DF e MA é mais de 3×.</div>
+    <div class="dek" lang="en">with 95% confidence intervals — the gap between DF and MA exceeds 3×.</div>
+  </div>
+
+  <div class="chart wide" id="chart-uf-rank"></div>
+
+  <div class="narrative" lang="pt">
+    <p>
+      Distrito Federal lidera. Não é um "estado" como os demais: é a sede do aparato federal,
+      habitado majoritariamente por servidores, procuradores, juízes, embaixadores, professores
+      universitários federais e seus dependentes. Seu patrão é a União — que arrecada imposto
+      do país inteiro e paga, aqui, salários que são múltiplos do piso nacional.
+    </p>
+    <p>
+      No outro extremo, Maranhão, Bahia, Ceará, Alagoas, Pernambuco. Estados onde o Programa
+      Bolsa Família cobre proporções significativas da população, onde décadas de gestão
+      política foram consumidas na perpetuação da dependência federal. O argumento de que "são
+      pobres porque não recebem o suficiente" esbarra num fato: recebem. Mas o modelo é o
+      assistencialista, não o emancipatório.
+    </p>
+    <p class="pullquote" lang="pt">
+      O funcionalismo federal concentrado no Distrito Federal, somado aos privilégios do teto,
+      produz uma casta econômica que não depende do mercado, não se submete à crise e decide,
+      por delegação, a vida dos demais.
+    </p>
+  </div>
+
+  <div class="narrative" lang="en">
+    <p>
+      The Federal District leads. It is not a "state" like the others: it is the seat of federal
+      power, populated largely by civil servants, prosecutors, judges, diplomats, federal
+      university professors and their dependents. Their employer is the Union — which collects
+      taxes from the entire country and pays, here, salaries that are multiples of the national
+      floor.
+    </p>
+    <p>
+      At the other extreme: Maranhão, Bahia, Ceará, Alagoas, Pernambuco. States where Bolsa Família
+      covers substantial shares of the population, where decades of political management have
+      been spent perpetuating federal dependency. The argument that "they are poor because they
+      receive too little" runs into a fact: they do receive. But the model is welfarist, not
+      emancipatory.
+    </p>
+    <p class="pullquote" lang="en">
+      Federal employment concentrated in the Federal District, combined with constitutional
+      salary-cap privileges, produces an economic caste that does not depend on the market,
+      does not submit to crisis, and decides, by delegation, the lives of everyone else.
+    </p>
+  </div>
+</section>
+
+<!-- ════════════ 06 DOT-PLOT ════════════ -->
+<section id="sec-dotplot" class="section">
+  <div class="section-head">
+    <div class="eyebrow" lang="pt">parte 06 · dot-plot</div>
+    <div class="eyebrow" lang="en">part 06 · dot-plot</div>
+    <h2 lang="pt">todas as 27 UFs em um olhar</h2>
+    <h2 lang="en">all 27 states at a glance</h2>
+    <div class="dek" lang="pt">a barra amarela marca a média nacional; a barra indica o IC 95%.</div>
+    <div class="dek" lang="en">the yellow mark is the national average; the bar shows the 95% CI.</div>
+  </div>
+
+  <div class="chart tall" id="chart-dotplot"></div>
+
+  <div class="narrative" lang="pt">
+    <p>
+      O dot-plot de Cleveland é a visualização mais honesta de comparação entre unidades. Cada
+      ponto é uma média; a barra, o intervalo de confiança. Quando o IC não toca a linha amarela
+      nacional, a diferença é <em>estatisticamente significativa</em>.
+    </p>
+    <p>
+      Note o DF, isolado à direita. Note os sete estados do Nordeste, agrupados à esquerda. Não
+      há estados do Sul na metade pobre; não há estados do Nordeste na metade rica. A geografia
+      econômica brasileira é mais rígida do que a política admite.
+    </p>
+  </div>
+
+  <div class="narrative" lang="en">
+    <p>
+      The Cleveland dot-plot is the most honest way to compare units. Each dot is a mean; the bar,
+      the confidence interval. Where the CI does not touch the yellow national line, the difference
+      is <em>statistically significant</em>.
+    </p>
+    <p>
+      Notice DF, isolated to the right. Notice the seven Northeastern states clustered left.
+      There are no Southern states in the poorer half; no Northeastern states in the richer half.
+      Brazil's economic geography is more rigid than its politics will admit.
+    </p>
+  </div>
+</section>
+
+<!-- ════════════ 07 HEATMAP ════════════ -->
+<section id="sec-heatmap" class="section">
+  <div class="section-head">
+    <div class="eyebrow" lang="pt">parte 07 · mapa de calor</div>
+    <div class="eyebrow" lang="en">part 07 · heatmap</div>
+    <h2 lang="pt">onde está cada faixa de renda</h2>
+    <h2 lang="en">where each income band lives</h2>
+    <div class="dek" lang="pt">colunas quentes à esquerda indicam pobreza concentrada; à direita, riqueza concentrada.</div>
+    <div class="dek" lang="en">hot columns on the left show concentrated poverty; on the right, concentrated wealth.</div>
+  </div>
+
+  <div class="chart wide" id="chart-heatmap"></div>
+
+  <div class="narrative" lang="pt">
+    <p>
+      Leia como uma tábua de dupla entrada. Cada linha é uma UF; cada coluna é uma faixa de SM.
+      O valor, em cor, é o percentual da população da UF que se encaixa naquela faixa.
+    </p>
+    <p>
+      O Maranhão tem <strong class="num">76%</strong> da sua gente em até 2 SM. O Distrito Federal
+      tem <strong class="num">18%</strong> no topo — a proporção mais alta do país por larga
+      margem. Se essa planilha fosse o mapa de um país único, nenhuma política "nacional" faria
+      sentido: nenhuma pode acomodar, ao mesmo tempo, uma população predominantemente pobre
+      e uma casta federal predominantemente privilegiada.
+    </p>
+  </div>
+
+  <div class="narrative" lang="en">
+    <p>
+      Read as a two-way table. Each row is a state; each column is a wage band. The cell color
+      shows the share of that state's people in that band.
+    </p>
+    <p>
+      Maranhão has <strong class="num">76%</strong> of its people in up to 2 minimum wages. The
+      Federal District has <strong class="num">18%</strong> at the top — by far the highest share
+      in the country. If this grid described a single country, no "national" policy would make sense:
+      none can simultaneously serve a predominantly poor population and a predominantly privileged
+      federal caste.
+    </p>
+  </div>
+</section>
+
+<!-- ════════════ 08 MACRO ════════════ -->
+<section id="sec-macro" class="section">
+  <div class="section-head">
+    <div class="eyebrow" lang="pt">parte 08 · cinco brasis</div>
+    <div class="eyebrow" lang="en">part 08 · five brazils</div>
+    <h2 lang="pt">as cinco macro-regiões em comparação</h2>
+    <h2 lang="en">the five macro-regions compared</h2>
+    <div class="dek" lang="pt">renda média, percentual na base, tamanho populacional.</div>
+    <div class="dek" lang="en">average income, share at the base, population size.</div>
+  </div>
+
+  <div class="chart tall" id="chart-macro"></div>
+
+  <div class="narrative" lang="pt">
+    <p>
+      O Brasil não tem cinco regiões: tem cinco países. Sudeste e Sul, juntos, concentram mais de
+      <strong class="num">56%</strong> da população e produzem a maior parte do PIB. Norte, Nordeste
+      e Centro-Oeste somam o restante, com tamanhos populacionais díspares mas partilhando uma
+      característica: dependem de repasses federais alimentados pela arrecadação do Sudeste e do Sul.
+    </p>
+    <p>
+      Essa transferência fiscal é a base do pacto político da Nova República desde 1988. Em teoria,
+      foi concebida para "reduzir desigualdades regionais". Em quatro décadas, ampliou-as: criou
+      incentivo perverso para estados receptores manterem estruturas econômicas dependentes, porque
+      o repasse flui em função da pobreza, não da produção.
+    </p>
+  </div>
+
+  <div class="narrative" lang="en">
+    <p>
+      Brazil does not have five regions: it has five countries. Southeast and South together
+      concentrate over <strong class="num">56%</strong> of the population and generate most of the
+      GDP. North, Northeast and Center-West make up the rest, with varying population sizes but
+      sharing one feature: they depend on federal transfers fed by the South and Southeast's
+      tax collection.
+    </p>
+    <p>
+      This fiscal transfer is the foundation of the New Republic political pact since 1988. In
+      theory it was designed to "reduce regional inequalities". In four decades it has widened
+      them: it created a perverse incentive for recipient states to keep dependent economic
+      structures, because the transfer flows proportional to poverty, not to production.
+    </p>
+  </div>
+</section>
+
+<!-- ════════════ 09 PIRÂMIDE ════════════ -->
+<section id="sec-piramide" class="section">
+  <div class="section-head">
+    <div class="eyebrow" lang="pt">parte 09 · pirâmide etária</div>
+    <div class="eyebrow" lang="en">part 09 · age pyramid</div>
+    <h2 lang="pt">a pirâmide que está virando retângulo</h2>
+    <h2 lang="en">the pyramid that is becoming a rectangle</h2>
+    <div class="dek" lang="pt">base estreita, meio inchado, topo crescendo — o bônus demográfico acabou.</div>
+    <div class="dek" lang="en">narrow base, swollen middle, growing top — the demographic bonus is over.</div>
+  </div>
+
+  <div class="chart tall" id="chart-piramide"></div>
+
+  <div class="narrative" lang="pt">
+    <p>
+      O Brasil não é mais um país jovem. A base da pirâmide, até 13 anos, encolheu: são
+      <strong class="num">18,1%</strong> da população, número que teria sido <em>30%</em> na
+      geração dos nossos pais. O topo, de 60 anos ou mais, já é <strong class="num">16,6%</strong>
+      e cresce.
+    </p>
+    <p>
+      A consequência é econômica, não filosófica. Cada aposentado hoje é sustentado por cerca
+      de dois trabalhadores ativos formais. Esse ratio vai piorar — e é o motivo pelo qual
+      qualquer reforma previdenciária séria é matematicamente inadiável. O Estado brasileiro,
+      porém, adiou sucessivas reformas e hoje acumula um passivo atuarial de trilhões.
+      Quem vai pagar? Os jovens das faixas mais baixas desta pirâmide.
+    </p>
+  </div>
+
+  <div class="narrative" lang="en">
+    <p>
+      Brazil is no longer a young country. The base of the pyramid, up to 13 years, has shrunk
+      to <strong class="num">18.1%</strong>, down from what would have been roughly <em>30%</em>
+      in our parents' generation. The top, 60 and over, is already <strong class="num">16.6%</strong>
+      and growing.
+    </p>
+    <p>
+      The consequence is economic, not philosophical. Each retiree today is supported by about
+      two formally employed workers. That ratio will deteriorate — which is why any serious
+      pension reform is mathematically unavoidable. The Brazilian state has, however, postponed
+      reforms and today carries actuarial liabilities in the trillions. Who pays? The young people
+      in the lower bands of this same pyramid.
+    </p>
+  </div>
+</section>
+
+<!-- ════════════ 10 CROSS ════════════ -->
+<section id="sec-cross" class="section">
+  <div class="section-head">
+    <div class="eyebrow" lang="pt">parte 10 · cruzamentos</div>
+    <div class="eyebrow" lang="en">part 10 · cross-tabs</div>
+    <h2 lang="pt">cor, escolaridade e renda</h2>
+    <h2 lang="en">race, education, and income</h2>
+    <div class="dek" lang="pt">alterne entre recortes — os padrões se repetem com variações reveladoras.</div>
+    <div class="dek" lang="en">toggle between slices — patterns repeat with revealing variations.</div>
+  </div>
+
+  <div class="chart tall" id="chart-cross"></div>
+  <div style="text-align:center; margin:-.5rem 0 1.5rem;">
+    <button type="button" class="tag good" data-cross="race_by_band" lang="pt">raça/cor</button>
+    <button type="button" class="tag good" data-cross="race_by_band" lang="en">race/color</button>
+    <button type="button" class="tag" data-cross="education_by_band" lang="pt">escolaridade</button>
+    <button type="button" class="tag" data-cross="education_by_band" lang="en">education</button>
+    <button type="button" class="tag" data-cross="sex_by_band" lang="pt">sexo</button>
+    <button type="button" class="tag" data-cross="sex_by_band" lang="en">sex</button>
+    <button type="button" class="tag" data-cross="capital_by_band" lang="pt">capital × interior</button>
+    <button type="button" class="tag" data-cross="capital_by_band" lang="en">capital × interior</button>
+  </div>
+
+  <div class="narrative" lang="pt">
+    <p>
+      A leitura identitária é a mais difundida, mas raramente a mais útil. É verdade que
+      <strong class="num">8,7%</strong> dos brancos estão no topo (faixa 10+ SM) contra apenas
+      <strong class="num">2,6%</strong> dos pardos. Esse é um gap de <strong>3,3 vezes</strong>.
+      Mas alterne para o recorte de <em>escolaridade</em>: quem tem superior completo está no topo
+      em <strong class="num">12%</strong>; quem tem fundamental, em <strong class="num">0,7%</strong>.
+      Esse é um gap de <strong>17 vezes</strong>.
+    </p>
+    <p>
+      A desigualdade que explica mais a renda é a de <em>escolaridade</em> — e a escolaridade no
+      Brasil é majoritariamente pública, portanto estatal. O sistema público brasileiro não produz
+      mobilidade; produz reprodução de classe. Quem quer ascensão social paga escola privada, a
+      mesma escola particular que abastece, sobretudo, filhos de funcionários públicos federais
+      em Brasília.
+    </p>
+  </div>
+
+  <div class="narrative" lang="en">
+    <p>
+      The identity-based reading is the most widespread, yet rarely the most useful. It is true
+      that <strong class="num">8.7%</strong> of whites are at the top (10+ MW band) versus
+      <strong class="num">2.6%</strong> of mixed-race respondents — a <strong>3.3× gap</strong>.
+      But switch to the <em>education</em> cross-tab: those with completed higher education are
+      at the top in <strong class="num">12%</strong> of cases; those with only elementary schooling,
+      in <strong class="num">0.7%</strong>. That is a <strong>17× gap</strong>.
+    </p>
+    <p>
+      The inequality that best explains income is <em>education</em> — and education in Brazil
+      is mostly public, therefore state-provided. The Brazilian public system does not produce
+      mobility; it reproduces class. Whoever wants social ascent pays for private school — the
+      same private schools that educate, above all, the children of federal civil servants in
+      Brasília.
+    </p>
+  </div>
+</section>
+
+<!-- ════════════ 11 COMPOSIÇÃO ════════════ -->
+<section id="sec-composicao" class="section">
+  <div class="section-head">
+    <div class="eyebrow" lang="pt">parte 11 · de onde vem a renda</div>
+    <div class="eyebrow" lang="en">part 11 · where the income comes from</div>
+    <h2 lang="pt">trabalho, benefícios, previdência e capital</h2>
+    <h2 lang="en">work, benefits, pensions, and capital</h2>
+    <div class="dek" lang="pt">quanto menor a renda, maior a fatia de transferência estatal.</div>
+    <div class="dek" lang="en">the lower the income, the larger the share from state transfers.</div>
+  </div>
+
+  <div class="chart" id="chart-composicao"></div>
+
+  <div class="narrative" lang="pt">
+    <p>
+      Os dados da PNADC anual permitem decompor a renda domiciliar por fonte: trabalho,
+      benefícios sociais (Bolsa Família, BPC), previdência (aposentadorias), seguros, transferências
+      privadas e capital. Na faixa mais pobre, <strong class="num">17%</strong> da renda vem de
+      benefícios sociais — o Bolsa Família é a faixa mais visível desse conjunto. Na faixa mais
+      rica, benefícios sociais são <em>arredondamento estatístico</em>; o que domina é trabalho
+      assalariado (já pago, muitas vezes, pelo próprio Estado, se for alto funcionalismo) e
+      capital.
+    </p>
+    <p>
+      O debate político brasileiro trata o Bolsa Família como salvação ou como clientelismo. A
+      realidade estatística é mais sóbria: o programa atinge seu objetivo mínimo — mantém pessoas
+      acima da linha de miséria absoluta — e falha no objetivo ambicioso — emancipar economicamente.
+      Em quatro décadas de assistencialismo crescente, o Brasil não reduziu sua dependência de
+      transferências.
+    </p>
+  </div>
+
+  <div class="narrative" lang="en">
+    <p>
+      The annual PNADC allows decomposing household income by source: labor, social benefits
+      (Bolsa Família, BPC), pensions, insurance, private transfers, and capital. In the poorest
+      band, <strong class="num">17%</strong> of income comes from social benefits — Bolsa Família
+      being the most visible. In the richest band, social benefits are a statistical rounding
+      error; what dominates is wage labor (often paid, in fact, by the state itself for upper-level
+      civil servants) and capital.
+    </p>
+    <p>
+      Brazilian political debate treats Bolsa Família as either salvation or clientelism. The
+      statistical reality is soberer: the program meets its minimum goal — keeping people above
+      the absolute misery line — and fails at the ambitious one — economic emancipation. In four
+      decades of growing welfare, Brazil has not reduced its dependency on transfers.
+    </p>
+  </div>
+</section>
+
+<!-- ════════════ 12 DEPENDÊNCIA ════════════ -->
+<section id="sec-dependencia" class="section">
+  <div class="section-head">
+    <div class="eyebrow" lang="pt">parte 12 · ranking de dependência estatal</div>
+    <div class="eyebrow" lang="en">part 12 · state-dependency ranking</div>
+    <h2 lang="pt">quais UFs dependem mais do Estado</h2>
+    <h2 lang="en">which states depend most on the state</h2>
+    <div class="dek" lang="pt">soma de benefícios e previdência como fração da renda domiciliar.</div>
+    <div class="dek" lang="en">the sum of benefits and pensions as a share of household income.</div>
+  </div>
+
+  <div class="chart tall" id="chart-dependencia"></div>
+
+  <div class="narrative" lang="pt">
+    <p>
+      O índice de dependência soma as fontes <em>benefícios sociais</em> e <em>previdência</em>
+      como percentual da renda domiciliar média. É uma métrica cruel e reveladora. Nordeste domina
+      o topo — e o padrão político é denso: são os estados que mais recebem do pacto fiscal
+      federativo e, invariavelmente, os que menos produzem.
+    </p>
+    <p>
+      O Distrito Federal aparece aqui com um índice modesto. Não porque os servidores públicos não
+      vivam de Estado — obviamente vivem — mas porque, na PNADC, seus rendimentos são classificados
+      como <em>trabalho</em>. Eles são assalariados, ainda que do contribuinte. Se a PNADC
+      separasse "salários pagos pelo setor público" do resto, o DF subiria ao topo de todas as
+      métricas de dependência.
+    </p>
+  </div>
+
+  <div class="narrative" lang="en">
+    <p>
+      The dependency index sums the sources <em>social benefits</em> and <em>pensions</em> as a
+      share of average household income. It is a cruel and revealing metric. The Northeast dominates
+      the top — and the political pattern is dense: these are the states that receive most from
+      the federal fiscal pact and, invariably, produce the least.
+    </p>
+    <p>
+      The Federal District shows a modest index here. Not because civil servants do not live off
+      the state — of course they do — but because in the PNADC their earnings are classified as
+      <em>labor</em>. They are wage-earners, even if paid by the taxpayer. If the survey split
+      "wages paid by the public sector" from the rest, DF would rise to the top of every
+      dependency metric.
+    </p>
+  </div>
+</section>
+
+<!-- ════════════ 13 GAUGES ════════════ -->
+<section id="sec-gauges" class="section">
+  <div class="section-head">
+    <div class="eyebrow" lang="pt">parte 13 · termômetro socioeconômico</div>
+    <div class="eyebrow" lang="en">part 13 · socioeconomic gauges</div>
+    <h2 lang="pt">gini, pobreza, concentração no topo</h2>
+    <h2 lang="en">gini, poverty, concentration at the top</h2>
+    <div class="dek" lang="pt">três mostradores sintetizam o estado do país.</div>
+    <div class="dek" lang="en">three dials summarize the state of the country.</div>
+  </div>
+
+  <div class="chart tall" id="chart-gauges"></div>
+
+  <div class="narrative" lang="pt">
+    <p>
+      Gini e pobreza andam juntos, mas não idênticos. Gini mede <em>dispersão</em>; pobreza mede
+      <em>base</em>. Um país pode ser igualmente pobre (Gini baixo, pobreza alta) — isso seria
+      o socialismo real. Um país pode ser igualmente rico (Gini baixo, pobreza baixa) — isso é o
+      que se vê em países pequenos bem governados. Brasil é alta pobreza <em>e</em> alto Gini:
+      a pior combinação.
+    </p>
+  </div>
+
+  <div class="narrative" lang="en">
+    <p>
+      Gini and poverty travel together, but are not identical. Gini measures <em>dispersion</em>;
+      poverty measures <em>base</em>. A country may be equally poor (low Gini, high poverty) —
+      that is real socialism. A country may be equally rich (low Gini, low poverty) — you see this
+      in small, well-governed countries. Brazil has high poverty <em>and</em> high Gini: the worst
+      combination.
+    </p>
+  </div>
+</section>
+
+<!-- ════════════ 14 CONCLUSÃO ════════════ -->
+<section id="sec-conclusao" class="section prose">
+  <div class="section-head">
+    <div class="eyebrow" lang="pt">parte 14 · conclusão</div>
+    <div class="eyebrow" lang="en">part 14 · conclusion</div>
+    <h2 lang="pt">o que os números obrigam a concluir</h2>
+    <h2 lang="en">what the numbers force us to conclude</h2>
+  </div>
+
+  <div class="narrative" lang="pt">
+    <p class="dropcap">
+      Quinze painéis depois, sobra um diagnóstico incômodo. O Brasil não é pobre por falta de
+      recursos: é pobre por <strong>desenho</strong>. O Estado brasileiro não é ausente na vida
+      econômica — é superpresente. O Estado brasileiro não falha em distribuir renda: distribui
+      em favor próprio, mantendo a casta que o opera.
+    </p>
+    <p>
+      A esquerda brasileira — historicamente — prometeu reduzir a desigualdade via mais Estado.
+      Mais Estado veio. A desigualdade permaneceu. Porque o problema nunca foi a ausência de
+      Estado, mas a sua natureza: um Leviatã que, em vez de proteger mercados competitivos,
+      erige barreiras; em vez de escolas livres, multiplica monopólios; em vez de um serviço
+      público enxuto, infla uma classe que não responde a eleitores.
+    </p>
+    <p>
+      A direita brasileira, por sua vez, precisa abandonar o moralismo econômico e adotar um
+      diagnóstico pró-liberdade com os pés no chão. Três saídas honestas estão expostas nos números
+      desta página:
+    </p>
+    <ol>
+      <li>
+        <strong>Teto efetivo para o funcionalismo</strong> — não o teto fictício do STF, mas um
+        teto real, aplicado a todas as carreiras, com revisão automática atrelada à inflação apenas.
+      </li>
+      <li>
+        <strong>Reforma tributária pela simplicidade</strong> — imposto único sobre movimentação
+        financeira, ou IVA puro sem as mil exceções. Nem um nem outro foi seriamente tentado.
+      </li>
+      <li>
+        <strong>Liberdade educacional real</strong> — vouchers, escolas autônomas, fim do
+        monopólio estatal sobre o conteúdo. A educação é o único investimento que, a longo prazo,
+        reduz Gini sem reduzir crescimento.
+      </li>
+    </ol>
+    <p>
+      Muito do que está escrito nesta página já foi dito de mil maneiras — em livros, ensaios,
+      tribunas. O problema é que <strong>pouca gente presta atenção</strong>, e menos gente ainda
+      volta para conferir se alguma coisa mudou. Este projeto não tem a pretensão de dizer algo
+      novo: tem a pretensão de <strong>mostrar o movimento</strong>, edição após edição da PNADC,
+      de pôr à mão de qualquer cidadão os números que a imprensa prefere ignorar e que o próprio
+      IBGE — enviesado como é — publica espremidos em tabelas que só especialistas sabem ler.
+      Agora o Brasil se lê sozinho. Quem quiser saber, saberá.
+    </p>
+    <p>
+      Para a análise longa — com notas, referências e profundidade — leia o ensaio completo:
+      <a href="artigo_pt.md">artigo_pt.md</a>.
+    </p>
+  </div>
+
+  <div class="narrative" lang="en">
+    <p class="dropcap">
+      Fifteen panels later, an uncomfortable diagnosis remains. Brazil is not poor for lack of
+      resources: it is poor by <strong>design</strong>. The Brazilian state is not absent from
+      economic life — it is over-present. The Brazilian state does not fail at redistributing
+      income: it redistributes to itself, sustaining the caste that operates it.
+    </p>
+    <p>
+      The Brazilian left — historically — promised to reduce inequality via more state. More state
+      came. Inequality remained. Because the problem was never the absence of state, but its
+      nature: a Leviathan that, instead of protecting competitive markets, erects barriers;
+      instead of free schools, multiplies monopolies; instead of a lean public service, inflates
+      a class unaccountable to voters.
+    </p>
+    <p>
+      The Brazilian right, in turn, must abandon economic moralism and adopt the concrete
+      libertarian diagnosis. Three honest exits are exposed by the numbers on this page:
+    </p>
+    <ol>
+      <li>
+        <strong>A real cap on civil-servant pay</strong> — not the fictional constitutional ceiling,
+        but a true cap, applied to all careers, indexed only to inflation.
+      </li>
+      <li>
+        <strong>Tax reform through simplicity</strong> — a single tax on financial movement, or
+        a pure VAT without the thousand exemptions. Neither has been seriously tried.
+      </li>
+      <li>
+        <strong>Real educational freedom</strong> — vouchers, autonomous schools, end of state
+        content monopoly. Education is the only investment that, over the long run, cuts the Gini
+        without cutting growth.
+      </li>
+    </ol>
+    <p>
+      Much of what is written on this page has been said a thousand ways — in books, essays,
+      op-eds. The problem is that <strong>few people pay attention</strong>, and even fewer come
+      back to check whether anything has changed. This project does not pretend to say something
+      new: it pretends to <strong>show the movement</strong>, edition after edition of the PNADC,
+      putting within any citizen's reach the numbers the press prefers to ignore and the ones the
+      IBGE itself — biased as it is — publishes buried in tables that only specialists can read.
+      Now Brazil reads itself. Those who want to know, will.
+    </p>
+    <p>
+      For the long-form analysis — with notes, references, and depth — read the full essay:
+      <a href="artigo_en.md">artigo_en.md</a>.
+    </p>
+  </div>
+</section>
+
+<!-- ════════════ 15 SELO ════════════ -->
+<footer id="selo" class="footer">
+  <div class="wrap">
+    <div>
+      <h3 lang="pt">sobre este ensaio</h3>
+      <h3 lang="en">about this essay</h3>
+      <p lang="pt">
+        Escrito e compilado pelo Leonardo Dias com apoio da Arvor. Todos os gráficos foram gerados
+        a partir dos microdados oficiais do <a href="https://www.ibge.gov.br/estatisticas/sociais/trabalho/9171-pesquisa-nacional-por-amostra-de-domicilios-continua-mensal.html">IBGE/PNADC</a>,
+        processados pela ferramenta aberta <span class="mono">brasil-cli</span>. O código-fonte
+        está em <a href="https://github.com/ArvorCo/PNAD">github.com/ArvorCo/PNAD</a>.
+      </p>
+      <p lang="en">
+        Written and compiled by Leonardo Dias with support from Arvor. All charts are generated
+        from official IBGE/PNADC microdata, processed through the open-source
+        <span class="mono">brasil-cli</span> tool. Source code at
+        <a href="https://github.com/ArvorCo/PNAD">github.com/ArvorCo/PNAD</a>.
+      </p>
+      <p>
+        <a href="artigo_pt.md">artigo_pt.md</a> · <a href="artigo_en.md">artigo_en.md</a> ·
+        <a href="https://github.com/ArvorCo/PNAD">GitHub</a>
+      </p>
+    </div>
+    <div class="seal-box">
+      <div class="seal-row"><span class="k" lang="pt">fonte</span><span class="k" lang="en">source</span><span class="v">IBGE · PNADC</span></div>
+      <div class="seal-row"><span class="k" lang="pt">edição trimestral</span><span class="k" lang="en">quarterly edition</span><span class="v mono">${VINTAGE_TRI}</span></div>
+      <div class="seal-row"><span class="k" lang="pt">edição anual</span><span class="k" lang="en">annual edition</span><span class="v mono">${VINTAGE_ANN}</span></div>
+      <div class="seal-row"><span class="k" lang="pt">pesos</span><span class="k" lang="en">weights</span><span class="v mono">V1028/V1032 · calibração IBGE</span></div>
+      <div class="seal-row"><span class="k" lang="pt">ic 95% via</span><span class="k" lang="en">95% CI via</span><span class="v mono">bootstrap · 200 réplicas</span></div>
+      <div class="seal-row"><span class="k" lang="pt">deflator</span><span class="k" lang="en">deflator</span><span class="v mono">IPCA · alvo ${VINTAGE_TRI}</span></div>
+      <div class="seal-row"><span class="k" lang="pt">compilação</span><span class="k" lang="en">built at</span><span class="v mono">${BUILT_AT}</span></div>
+      <div class="seal-row"><span class="k" lang="pt">licença</span><span class="k" lang="en">license</span><span class="v">MIT · prose CC-BY-4.0</span></div>
+    </div>
+  </div>
+</footer>
+
+<script id="pnad-payload" type="application/json">${PAYLOAD}</script>
+<script>
+(function(){
+  const D = JSON.parse(document.getElementById('pnad-payload').textContent);
+  // Primary data source: ANUAL (visit 5) — has VD5001 which includes work + benefits + pensions.
+  const ANN = D.anual;
+  const ANN_ALVO = D.anual.modes.alvo;
+  // Secondary data source: TRIMESTRAL — used only for age pyramid (more recent demographics).
+  const TRI = D.trimestral.modes.alvo;
+  // Main alias for charts that should show full-income lens:
+  const PRIMARY = ANN_ALVO;
+  const GEO = D.geojson;
+  const RANGES = D.anual.ranges || ['0-2','2-5','5-10','10+'];
+  const COMP_BY_BAND = ANN.composition_by_band || {};
+  const COMP_NAT = ANN.income_composition_national || {};
+  const DEP_RANKING = ANN.uf_dependency_ranking || [];
+
+  // ─── i18n ───
+  const I18N = {
+    pt: {
+      sm: 'SM',
+      state: 'UF',
+      states: 'UFs',
+      population: 'pop.',
+      avg_income_sm: 'renda média (SM)',
+      avg_income_brl: 'renda média (R$)',
+      households_pct: '% de domicílios',
+      persons_pct: '% de pessoas',
+      gini: 'Gini',
+      poverty: 'Pobreza (0-2 SM)',
+      top: 'Topo (10+ SM)',
+      cumulative_pop: 'população acumulada',
+      cumulative_income: 'renda acumulada',
+      equality_line: 'igualdade perfeita',
+      national_avg: 'média BR',
+      band_label: ['mais pobre','média baixa','média alta','mais rica'],
+      age: 'idade',
+      women: 'Mulheres', men: 'Homens',
+      work: 'trabalho', benefits: 'benefícios', pensions: 'previdência',
+      insurance: 'seguro', private: 'transf. privadas', capital: 'capital',
+      share_of_income: '% da renda',
+      dependency: 'dependência (benef+prev)',
+    },
+    en: {
+      sm: 'MW',
+      state: 'state',
+      states: 'states',
+      population: 'pop.',
+      avg_income_sm: 'avg income (MW)',
+      avg_income_brl: 'avg income (BRL)',
+      households_pct: '% of households',
+      persons_pct: '% of people',
+      gini: 'Gini',
+      poverty: 'Poverty (0-2 MW)',
+      top: 'Top (10+ MW)',
+      cumulative_pop: 'cumulative population',
+      cumulative_income: 'cumulative income',
+      equality_line: 'perfect equality',
+      national_avg: 'BR average',
+      band_label: ['poorest','lower-middle','upper-middle','richest'],
+      age: 'age',
+      women: 'Women', men: 'Men',
+      work: 'labor', benefits: 'benefits', pensions: 'pensions',
+      insurance: 'insurance', private: 'private transfers', capital: 'capital',
+      share_of_income: '% of income',
+      dependency: 'dependency (benef+pens)',
+    },
+  };
+
+  /* Brazilian flag palette for income bands: amarelo→verde→azul */
+  const BRAZIL_PALETTE = ['#c47800','#ffdf00','#009c3b','#002776'];
+  /* Divergent scale: amber (pobre) → amarelo (média) → verde (próspero) */
+  const DIVERGE_SCALE = [
+    [0.0,'#8a5400'],[0.18,'#c47800'],[0.35,'#e8a700'],
+    [0.5,'#ffdf00'],[0.65,'#a8c94a'],[0.82,'#009c3b'],[1.0,'#00673a']
+  ];
+  const PLOT_CONFIG = {displayModeBar:false, responsive:true, scrollZoom:false, doubleClick:false};
+  const PLOT_LAYOUT_BASE = {
+    paper_bgcolor:'#ffffff', plot_bgcolor:'#ffffff',
+    font:{family:'Source Serif 4, Charter, Georgia, serif', size:14, color:'#1a1c20'},
+    margin:{l:60,r:30,t:40,b:60},
+    xaxis:{gridcolor:'#efefe8', zerolinecolor:'#bbbbb8', linecolor:'#888'},
+    yaxis:{gridcolor:'#efefe8', zerolinecolor:'#bbbbb8', linecolor:'#888'},
+    hoverlabel:{bgcolor:'#1a1c20', font:{color:'#fafaf7', family:'Inter, sans-serif'}, bordercolor:'#1a1c20'},
+    hovermode:'closest',
+  };
+
+  function fmtBRL(v){return 'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});}
+  function fmtBRLshort(v){
+    if(v>=1e6)return 'R$ '+(v/1e6).toLocaleString('pt-BR',{maximumFractionDigits:1})+' mi';
+    if(v>=1e3)return 'R$ '+(v/1e3).toLocaleString('pt-BR',{maximumFractionDigits:1})+' mil';
+    return 'R$ '+v.toLocaleString('pt-BR',{maximumFractionDigits:0});
+  }
+  function fmtNum(v,d){d=d==null?2:d; return (+v).toLocaleString('pt-BR',{minimumFractionDigits:d,maximumFractionDigits:d});}
+
+  // ─── 01 HERO ───
+  function renderHero(){
+    const nat = PRIMARY.national, ins = PRIMARY.insights;
+    const gini = nat.gini_household_sm;
+    const avgSM = nat.avg_household_sm;
+    const lowPct = ins.national_low_income_pct;
+    const topPct = ins.national_high_income_pct;
+    const richest = PRIMARY.top10_uf_income[0];
+    const poorest = PRIMARY.bottom10_uf_income[0];
+    const ratio = richest.avg_household_sm / poorest.avg_household_sm;
+
+    const el = document.getElementById('hero-stats');
+    el.innerHTML = [
+      statCard('bad', fmtNum(gini,3), '', 'Gini', 'Gini', '0 = igualdade | 1 = máxima desigualdade','0 = equality | 1 = maximum inequality'),
+      statCard('warn', fmtNum(avgSM,2), ' SM', 'renda média BR (SM)','avg income BR (MW)', fmtBRL(nat.avg_household_income_brl)+' / mês', fmtBRL(nat.avg_household_income_brl)+' / month'),
+      statCard('bad', fmtNum(lowPct,1)+'%','','até 2 SM','up to 2 MW','da população brasileira','of the Brazilian population'),
+      statCard('good', fmtNum(topPct,1)+'%','', '10+ SM','10+ MW','da população brasileira','of the Brazilian population'),
+      statCard('bad', fmtNum(ratio,1)+'×','','DF ÷ MA','DF ÷ MA', richest.label+' vs '+poorest.label, richest.label+' vs '+poorest.label),
+    ].join('');
+
+    const truthsPT = [
+      'Metade do país ganha até <strong>2 salários mínimos</strong> (<span class="num">'+fmtNum(lowPct,1)+'%</span> das pessoas, teto de <span class="num">R$ '+(1621*2).toLocaleString('pt-BR')+'</span>/mês por domicílio).',
+      'Apenas <span class="num">'+fmtNum(topPct,1)+'%</span> das pessoas vivem em domicílios com renda ≥ 10 salários mínimos.',
+      '<strong>'+richest.label+'</strong> tem renda média <span class="num">'+fmtNum(ratio,1)+'×</span> maior que <strong>'+poorest.label+'</strong> (<span class="num">'+fmtNum(richest.avg_household_sm,2)+'</span> vs <span class="num">'+fmtNum(poorest.avg_household_sm,2)+'</span> SM).',
+      'No topo (10+ SM), brancos estão em <span class="num">'+fmtNum(raceHighPct('Branca'),1)+'%</span>; pardos em <span class="num">'+fmtNum(raceHighPct('Parda'),1)+'%</span>. Mas superior completo vs fundamental: <span class="num">17×</span>.',
+      'O Gini do Brasil é <span class="num">'+fmtNum(gini,3)+'</span>, vizinho de Zâmbia e Colômbia. Portugal: 0,33. Alemanha: 0,30.',
+    ];
+    const truthsEN = [
+      'Half the country earns up to <strong>2 minimum wages</strong> (<span class="num">'+fmtNum(lowPct,1)+'%</span> of people, cap at <span class="num">R$ '+(1621*2).toLocaleString('pt-BR')+'</span>/month per household).',
+      'Only <span class="num">'+fmtNum(topPct,1)+'%</span> of people live in households earning ≥ 10 minimum wages.',
+      '<strong>'+richest.label+'</strong> has average income <span class="num">'+fmtNum(ratio,1)+'×</span> higher than <strong>'+poorest.label+'</strong> (<span class="num">'+fmtNum(richest.avg_household_sm,2)+'</span> vs <span class="num">'+fmtNum(poorest.avg_household_sm,2)+'</span> MW).',
+      'At the top (10+ MW), whites are <span class="num">'+fmtNum(raceHighPct('Branca'),1)+'%</span>; mixed-race <span class="num">'+fmtNum(raceHighPct('Parda'),1)+'%</span>. But higher-ed vs elementary: <span class="num">17×</span>.',
+      "Brazil's Gini is <span class='num'>"+fmtNum(gini,3)+"</span>, neighbor of Zambia and Colombia. Portugal: 0.33. Germany: 0.30.",
+    ];
+    document.getElementById('truths-list-pt').innerHTML = truthsPT.map(t=>'<li>'+t+'</li>').join('');
+    document.getElementById('truths-list-en').innerHTML = truthsEN.map(t=>'<li>'+t+'</li>').join('');
+  }
+
+  function raceHighPct(lbl){
+    const rows = PRIMARY.cross.race_by_band || [];
+    for(const r of rows){ if(r.label===lbl) return r.bands['10+'].pct_within_label; }
+    return 0;
+  }
+
+  function statCard(cls, big, unit, labelPT, labelEN, subPT, subEN){
+    return `<div class="hero-stat ${cls}">
+      <div class="band"></div>
+      <div class="num-big num">${big}<span class="unit">${unit}</span></div>
+      <div class="label" lang="pt">${labelPT}</div>
+      <div class="label" lang="en">${labelEN}</div>
+      <div class="sub" lang="pt">${subPT}</div>
+      <div class="sub" lang="en">${subEN}</div>
+    </div>`;
+  }
+
+  // ─── 02 MAPA ───
+  function renderMapa(){
+    const ufs = PRIMARY.uf;
+    const lookup = {};
+    for(const u of ufs) lookup[u.label] = u.avg_household_sm;
+    const ids = [], values = [], labels = [], custom = [];
+    for(const f of GEO.features){
+      const name = f.properties.name;
+      const sigla = f.properties.sigla;
+      const val = lookup[name] || 0;
+      ids.push(sigla);
+      values.push(val);
+      labels.push(name);
+      custom.push([name, val]);
+    }
+    const data = [{
+      type:'choropleth',
+      geojson: GEO,
+      locations: ids,
+      z: values,
+      featureidkey: 'properties.sigla',
+      colorscale: DIVERGE_SCALE,
+      zmin: Math.min(...values), zmax: Math.max(...values),
+      marker:{line:{color:'#fff', width:.7}},
+      colorbar:{title:{text:'SM', font:{size:12}}, thickness:12, len:.6, x:1.02},
+      customdata: custom,
+      hovertemplate: '<b>%{customdata[0]}</b><br>%{customdata[1]:.2f} SM<extra></extra>',
+    }];
+    const layout = Object.assign({}, PLOT_LAYOUT_BASE, {
+      geo:{fitbounds:'locations', visible:false, bgcolor:'rgba(0,0,0,0)'},
+      margin:{l:0,r:0,t:0,b:0},
+      height: 560,
+    });
+    Plotly.newPlot('chart-mapa', data, layout, PLOT_CONFIG);
+  }
+
+  // ─── 03 BANDAS ───
+  function renderBandas(){
+    const bands = PRIMARY.national.bands;
+    const L = lang();
+    const x = bands.map(b=>b.persons_pct);
+    const xh = bands.map(b=>b.households_pct);
+    const y = bands.map(b=>b.range+' '+I18N[L].sm);
+    const colors = BRAZIL_PALETTE;
+    const data = [
+      {type:'bar', orientation:'h', x:x, y:y, marker:{color:colors}, name:I18N[L].persons_pct,
+       text:x.map(v=>fmtNum(v,1)+'%'), textposition:'outside',
+       hovertemplate:'%{y}: %{x:.2f}% '+I18N[L].persons_pct+'<extra></extra>'},
+      {type:'bar', orientation:'h', x:xh, y:y, marker:{color:colors.map(c=>c+'80')}, name:I18N[L].households_pct,
+       text:xh.map(v=>fmtNum(v,1)+'%'), textposition:'outside',
+       hovertemplate:'%{y}: %{x:.2f}% '+I18N[L].households_pct+'<extra></extra>'},
+    ];
+    const layout = Object.assign({}, PLOT_LAYOUT_BASE, {
+      barmode:'group', height:380,
+      xaxis:Object.assign({}, PLOT_LAYOUT_BASE.xaxis, {ticksuffix:'%', range:[0,Math.max(...x,...xh)*1.15]}),
+      yaxis:Object.assign({}, PLOT_LAYOUT_BASE.yaxis, {autorange:'reversed'}),
+      legend:{orientation:'h', y:1.08, x:0},
+      margin:{l:90,r:30,t:40,b:50},
+    });
+    Plotly.newPlot('chart-bandas', data, layout, PLOT_CONFIG);
+  }
+
+  // ─── 04 LORENZ ───
+  function renderLorenz(){
+    const bands = PRIMARY.national.bands;
+    const mid = {'0-2':1.0, '2-5':3.5, '5-10':7.5, '10+':15.0};
+    let cumPop=0, cumInc=0;
+    const totalInc = bands.reduce((s,b)=>s+(mid[b.range]||1)*b.households_pct/100, 0) || 1;
+    const xs=[0], ys=[0];
+    for(const b of bands){
+      cumPop += b.households_pct/100;
+      cumInc += (mid[b.range]||1)*b.households_pct/100 / totalInc;
+      xs.push(cumPop); ys.push(Math.min(1,cumInc));
+    }
+    xs.push(1); ys.push(1);
+    const L = lang();
+    const gini = PRIMARY.national.gini_household_sm;
+    const data = [
+      {type:'scatter', mode:'lines', x:[0,1], y:[0,1], line:{dash:'dash', color:'#aaa', width:2}, name:I18N[L].equality_line, hoverinfo:'skip'},
+      {type:'scatter', mode:'lines', x:xs, y:ys, line:{color:'#00673a', width:3}, fill:'tozeroy', fillcolor:'rgba(231,76,60,.18)',
+       name:'Lorenz', hovertemplate:'%{x:.0%} pop → %{y:.1%}<extra></extra>'},
+    ];
+    const layout = Object.assign({}, PLOT_LAYOUT_BASE, {
+      height:440,
+      xaxis:Object.assign({}, PLOT_LAYOUT_BASE.xaxis, {title:{text:I18N[L].cumulative_pop}, tickformat:',.0%', range:[0,1]}),
+      yaxis:Object.assign({}, PLOT_LAYOUT_BASE.yaxis, {title:{text:I18N[L].cumulative_income}, tickformat:',.0%', range:[0,1]}),
+      showlegend:true, legend:{x:.02,y:.98, bgcolor:'rgba(255,255,255,.8)'},
+      annotations:[{
+        x:.65, y:.25, xref:'x', yref:'y',
+        text:'Gini = '+fmtNum(gini,3), font:{size:22, color:'#00673a', family:'Source Serif 4'},
+        showarrow:false, bgcolor:'rgba(255,240,230,.9)', bordercolor:'#00673a', borderwidth:1, borderpad:8,
+      }],
+    });
+    Plotly.newPlot('chart-lorenz', data, layout, PLOT_CONFIG);
+  }
+
+  // ─── 05 UF RANKING (single vertical stack: top10 then bottom10) ───
+  function renderUFRank(){
+    const top = PRIMARY.top10_uf_income.slice().reverse();
+    const bot = PRIMARY.bottom10_uf_income.slice().reverse();
+    const nat = PRIMARY.national.avg_household_sm;
+    const L = lang();
+    const all = [...bot, ...top]; // y-axis order: bottom-bottom → bottom-top → top-bottom → top-top
+    const colors = all.map((r,i)=> i<bot.length ? '#c47800' : '#2d6a4f');
+    const data = [{
+      type:'bar', orientation:'h',
+      x: all.map(r=>r.avg_household_sm),
+      y: all.map(r=>r.label),
+      marker:{color: colors},
+      error_x:{type:'data', array: all.map(r=>r.avg_household_sm_moe||0), color:'#1a1a1a', thickness:1.2, width:3},
+      text: all.map(r=>fmtNum(r.avg_household_sm,2)),
+      textposition:'outside', textfont:{family:'IBM Plex Sans', size:11, color:'#0a0a0a'},
+      hovertemplate:'<b>%{y}</b>: %{x:.2f} '+I18N[L].sm+'<extra></extra>',
+      name:'',
+    }];
+    const maxX = Math.max(...all.map(r=>r.avg_household_sm+(r.avg_household_sm_moe||0))) * 1.18;
+    const layout = Object.assign({}, PLOT_LAYOUT_BASE, {
+      height: 560, showlegend: false,
+      xaxis: Object.assign({}, PLOT_LAYOUT_BASE.xaxis, {title:{text:I18N[L].avg_income_sm}, range:[0,maxX]}),
+      yaxis: Object.assign({}, PLOT_LAYOUT_BASE.yaxis, {type:'category', automargin:true, tickfont:{family:'IBM Plex Sans',size:12}}),
+      shapes:[
+        {type:'line', xref:'x', yref:'paper', x0:nat, x1:nat, y0:0, y1:1, line:{color:'#1a1a1a', width:1, dash:'dot'}},
+        {type:'line', xref:'paper', yref:'y', x0:0, x1:1, y0:bot.length-.5, y1:bot.length-.5, line:{color:'var(--rule-soft)', width:1}},
+      ],
+      annotations:[
+        {xref:'x', yref:'paper', x:nat, y:1.03, text:(L==='pt'?'média BR ':'BR avg ')+fmtNum(nat,2), showarrow:false, font:{family:'IBM Plex Sans', size:10, color:'#1a1a1a'}},
+        {xref:'paper', yref:'y', x:1.0, y:all.length-.5, xanchor:'right', text:(L==='pt'?'▲ TOP 10 MAIS RICAS':'▲ TOP 10 RICHEST'), showarrow:false, font:{family:'IBM Plex Sans', size:9, color:'#2d6a4f'}},
+        {xref:'paper', yref:'y', x:1.0, y:-.5, xanchor:'right', text:(L==='pt'?'▼ BOTTOM 10 MAIS POBRES':'▼ BOTTOM 10 POOREST'), showarrow:false, font:{family:'IBM Plex Sans', size:9, color:'#c47800'}},
+      ],
+      margin:{l:150,r:40,t:50,b:60},
+    });
+    Plotly.newPlot('chart-uf-rank', data, layout, PLOT_CONFIG);
+  }
+
+  // ─── 06 DOT-PLOT ───
+  function renderDotPlot(){
+    const L = lang();
+    const macroColor = {'Norte':'#3498db','Nordeste':'#e74c3c','Sudeste':'#27ae60','Sul':'#f1c40f','Centro-Oeste':'#9b59b6','Desconhecida':'#95a5a6'};
+    const rows = PRIMARY.uf.slice().sort((a,b)=>b.avg_household_sm - a.avg_household_sm);
+    const nat = PRIMARY.national.avg_household_sm;
+    const data = [{
+      type:'scatter', mode:'markers',
+      x: rows.map(r=>r.avg_household_sm),
+      y: rows.map(r=>r.label),
+      error_x:{type:'data', array: rows.map(r=>r.avg_household_sm_moe||0), color:'#888', thickness:1.2, width:4},
+      marker:{
+        size:16,
+        color: rows.map(r=>macroColor[macroRegionFromUF(r.label)]||'#888'),
+        line:{color:'#222', width:1},
+      },
+      text: rows.map(r=>r.label),
+      hovertemplate:'<b>%{y}</b>: %{x:.2f} '+I18N[L].sm+'<extra></extra>',
+      name:'',
+    }];
+    const layout = Object.assign({}, PLOT_LAYOUT_BASE, {
+      height:620, showlegend:false,
+      xaxis:Object.assign({}, PLOT_LAYOUT_BASE.xaxis, {title:{text:I18N[L].avg_income_sm}, range:[0,Math.max(...rows.map(r=>r.avg_household_sm))*1.15]}),
+      yaxis:Object.assign({}, PLOT_LAYOUT_BASE.yaxis, {automargin:true, autorange:'reversed'}),
+      shapes:[{type:'line', xref:'x', yref:'paper', x0:nat, x1:nat, y0:0, y1:1, line:{color:'#f39c12', width:2, dash:'dot'}}],
+      annotations:[{xref:'x', yref:'paper', x:nat, y:1.02, text:I18N[L].national_avg, showarrow:false, font:{color:'#f39c12', size:11}}],
+      margin:{l:150,r:40,t:40,b:50},
+    });
+    Plotly.newPlot('chart-dotplot', data, layout, PLOT_CONFIG);
+  }
+
+  function macroRegionFromUF(label){
+    const N = ['Rondônia','Acre','Amazonas','Roraima','Pará','Amapá','Tocantins'];
+    const NE = ['Maranhão','Piauí','Ceará','Rio Grande do Norte','Paraíba','Pernambuco','Alagoas','Sergipe','Bahia'];
+    const SE = ['Minas Gerais','Espírito Santo','Rio de Janeiro','São Paulo'];
+    const S = ['Paraná','Santa Catarina','Rio Grande do Sul'];
+    const CO = ['Mato Grosso','Mato Grosso do Sul','Goiás','Distrito Federal'];
+    if(N.includes(label))return 'Norte';
+    if(NE.includes(label))return 'Nordeste';
+    if(SE.includes(label))return 'Sudeste';
+    if(S.includes(label))return 'Sul';
+    if(CO.includes(label))return 'Centro-Oeste';
+    return 'Desconhecida';
+  }
+
+  // ─── 07 HEATMAP ───
+  function renderHeatmap(){
+    const rows = PRIMARY.uf.slice().sort((a,b)=>{
+      const aTop = (a.bands.find(x=>x.range==='10+')||{}).persons_pct||0;
+      const bTop = (b.bands.find(x=>x.range==='10+')||{}).persons_pct||0;
+      return bTop - aTop;
+    });
+    const L = lang();
+    const xLabels = RANGES.map(r=>r+' '+I18N[L].sm);
+    const yLabels = rows.map(r=>r.label);
+    const z = rows.map(r=>RANGES.map(rng=>{
+      const b = r.bands.find(x=>x.range===rng);
+      return b ? b.persons_pct : 0;
+    }));
+    const data = [{
+      type:'heatmap',
+      z:z, x:xLabels, y:yLabels,
+      colorscale:[
+        [0,'#f6f3ee'],[0.15,'#e9c46a'],[0.35,'#e76f51'],[0.6,'#c47800'],[1,'#8a5400']
+      ],
+      hovertemplate:'<b>%{y}</b> × %{x}: %{z:.1f}%<extra></extra>',
+      colorbar:{title:{text:'%', font:{size:11}}, thickness:10, len:.7, outlinewidth:0},
+      xgap:1, ygap:1,
+    }];
+    const layout = Object.assign({}, PLOT_LAYOUT_BASE, {
+      height:620,
+      xaxis:Object.assign({}, PLOT_LAYOUT_BASE.xaxis, {type:'category', side:'top', tickfont:{family:'IBM Plex Sans',size:11}}),
+      yaxis:Object.assign({}, PLOT_LAYOUT_BASE.yaxis, {type:'category', automargin:true, tickfont:{family:'IBM Plex Sans',size:11}}),
+      margin:{l:160,r:40,t:60,b:30},
+    });
+    Plotly.newPlot('chart-heatmap', data, layout, PLOT_CONFIG);
+  }
+
+  // ─── 08 MACRO (single clear horizontal bar of avg SM + caption row) ───
+  function renderMacro(){
+    const L = lang();
+    const order = ['Sul','Sudeste','Centro-Oeste','Norte','Nordeste'];
+    const rows = order.map(g=>PRIMARY.macro_regions.find(m=>m.group===g)).filter(Boolean);
+    const names = rows.map(r=>r.label);
+    const avgSM = rows.map(r=>r.avg_household_sm);
+    const lowBand = rows.map(r=>{const b=r.bands.find(x=>x.range==='0-2'); return b?b.persons_pct:0;});
+    const highBand= rows.map(r=>{const b=r.bands.find(x=>x.range==='10+'); return b?b.persons_pct:0;});
+    const pop     = rows.map(r=>r.persons_total/1e6);
+    const BR_AVG  = PRIMARY.national.avg_household_sm;
+
+    const data = [{
+      type:'bar', orientation:'h',
+      x: avgSM, y: names,
+      marker:{color: avgSM.map(v=>v>=BR_AVG?'#2d6a4f':'#c47800')},
+      text: avgSM.map(v=>fmtNum(v,2)+' SM'),
+      textposition:'outside',
+      textfont:{family:'IBM Plex Sans', size:13, color:'#0a0a0a'},
+      customdata: rows.map((r,i)=>[pop[i], lowBand[i], highBand[i]]),
+      hovertemplate:'<b>%{y}</b><br>SM médio: %{x:.2f}<br>população: %{customdata[0]:.1f} mi<br>na base (0-2 SM): %{customdata[1]:.1f}%<br>no topo (10+ SM): %{customdata[2]:.1f}%<extra></extra>',
+      name:'',
+    }];
+    const layout = Object.assign({}, PLOT_LAYOUT_BASE, {
+      height:360, showlegend:false,
+      xaxis:Object.assign({}, PLOT_LAYOUT_BASE.xaxis, {title:{text:I18N[L].sm}, range:[0, Math.max(...avgSM)*1.25]}),
+      yaxis:Object.assign({}, PLOT_LAYOUT_BASE.yaxis, {type:'category', automargin:true, tickfont:{family:'IBM Plex Sans',size:13}}),
+      shapes:[{type:'line', xref:'x', yref:'paper', x0:BR_AVG, x1:BR_AVG, y0:0, y1:1, line:{color:'#1a1a1a', width:1, dash:'dot'}}],
+      annotations:[{xref:'x', yref:'paper', x:BR_AVG, y:1.04, text: (L==='pt'?'média BR ':'BR avg ')+fmtNum(BR_AVG,2), showarrow:false, font:{family:'IBM Plex Sans', size:10, color:'#1a1a1a'}}],
+      margin:{l:140,r:30,t:50,b:60},
+    });
+    Plotly.newPlot('chart-macro', data, layout, PLOT_CONFIG);
+
+    // Supplementary figures below the bars as a clean grid.
+    const el = document.getElementById('chart-macro');
+    let cap = el.querySelector('.macro-caption');
+    if(!cap){ cap = document.createElement('div'); cap.className='macro-caption'; el.appendChild(cap); }
+    cap.style.cssText='display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;margin-top:1.25rem;padding-top:1rem;border-top:1px solid var(--rule-soft);font-family:var(--f-ui);';
+    cap.innerHTML = names.map((n,i)=>`
+      <div style="font-size:.72rem;">
+        <div style="font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);margin-bottom:.3rem;">${n}</div>
+        <div style="color:var(--muted);">${(L==='pt'?'pop.':'pop.')} <span style="color:var(--ink);font-variant-numeric:tabular-nums;">${fmtNum(pop[i],1)} mi</span></div>
+        <div style="color:var(--muted);">${(L==='pt'?'0-2 SM':'0-2 MW')} <span style="color:var(--accent);font-variant-numeric:tabular-nums;">${fmtNum(lowBand[i],0)}%</span></div>
+        <div style="color:var(--muted);">${(L==='pt'?'10+ SM':'10+ MW')} <span style="color:var(--ink);font-variant-numeric:tabular-nums;">${fmtNum(highBand[i],1)}%</span></div>
+      </div>
+    `).join('');
+  }
+
+  // ─── 09 PIRÂMIDE ───
+  function renderPiramide(){
+    const L = lang();
+    const rows = TRI.age_pyramid;
+    const y = rows.map(r=>r.age);
+    const female = rows.map(r=>-r.female_pct);
+    const male = rows.map(r=>r.male_pct);
+    const data = [
+      {type:'bar', orientation:'h', x:female, y:y, name:I18N[L].women, marker:{color:'#e91e63'},
+       hovertemplate:'<b>%{y}</b>: '+I18N[L].women+' %{x:.2f}%<extra></extra>',
+       text: female.map(v=>fmtNum(Math.abs(v),1)+'%'), textposition:'inside', textfont:{color:'#fff'}},
+      {type:'bar', orientation:'h', x:male, y:y, name:I18N[L].men, marker:{color:'#1976d2'},
+       hovertemplate:'<b>%{y}</b>: '+I18N[L].men+' %{x:.2f}%<extra></extra>',
+       text: male.map(v=>fmtNum(v,1)+'%'), textposition:'inside', textfont:{color:'#fff'}},
+    ];
+    const maxAbs = Math.max(...male, ...female.map(Math.abs)) * 1.1;
+    const layout = Object.assign({}, PLOT_LAYOUT_BASE, {
+      barmode:'relative', height:520,
+      xaxis:Object.assign({}, PLOT_LAYOUT_BASE.xaxis, {range:[-maxAbs, maxAbs], tickformat:',.0f', ticksuffix:'%',
+        tickvals:[-12,-8,-4,0,4,8,12], ticktext:['12%','8%','4%','0%','4%','8%','12%']}),
+      yaxis:Object.assign({}, PLOT_LAYOUT_BASE.yaxis, {automargin:true, title:{text:I18N[L].age}}),
+      legend:{orientation:'h', y:1.08, x:.4},
+      margin:{l:60,r:40,t:40,b:60},
+    });
+    Plotly.newPlot('chart-piramide', data, layout, PLOT_CONFIG);
+  }
+
+  // ─── 10 CROSS ───
+  let currentCross = 'race_by_band';
+  function renderCross(){
+    const L = lang();
+    const rows = (PRIMARY.cross[currentCross]||[]).filter(r=>r.label && !/^Sem info|Ignorado/i.test(r.label)).slice(0,8);
+    const xLabels = RANGES.map(r=>r+' '+I18N[L].sm);
+    const yLabels = rows.map(r=>r.label.length>36 ? r.label.slice(0,33)+'…' : r.label);
+    const z = rows.map(r=>RANGES.map(rng=>{const b=r.bands[rng]; return b?b.pct_within_label:0;}));
+    const data = [{
+      type:'heatmap',
+      z:z, x:xLabels, y:yLabels,
+      colorscale:[
+        [0,'#f6f3ee'],[0.25,'#e9c46a'],[0.5,'#e76f51'],[0.75,'#c47800'],[1,'#8a5400']
+      ],
+      hovertemplate:'<b>%{y}</b> × %{x}: %{z:.1f}%<extra></extra>',
+      text: z.map(r=>r.map(v=>fmtNum(v,1)+'%')),
+      texttemplate:'%{text}',
+      textfont:{family:'IBM Plex Sans', size:11, color:'#1a1a1a'},
+      colorbar:{title:{text:'%', font:{size:11}}, thickness:10, len:.7, outlinewidth:0},
+      xgap:1, ygap:1,
+    }];
+    const layout = Object.assign({}, PLOT_LAYOUT_BASE, {
+      height:480,
+      xaxis:Object.assign({}, PLOT_LAYOUT_BASE.xaxis, {type:'category', side:'top', tickfont:{family:'IBM Plex Sans',size:11}}),
+      yaxis:Object.assign({}, PLOT_LAYOUT_BASE.yaxis, {type:'category', automargin:true, tickfont:{family:'IBM Plex Sans',size:11}}),
+      margin:{l:200,r:40,t:60,b:30},
+    });
+    Plotly.newPlot('chart-cross', data, layout, PLOT_CONFIG);
+  }
+
+  // ─── 11 COMPOSIÇÃO ───
+  function renderComposicao(){
+    const L = lang();
+    const compByBand = COMP_BY_BAND;
+    const bands = RANGES;
+    const xLabels = bands.map(b=>b+' '+I18N[L].sm);
+    const sources = ['trabalho','beneficios_sociais','previdencia','seguro','transferencias_privadas','capital'];
+    const srcLabels = {trabalho:I18N[L].work, beneficios_sociais:I18N[L].benefits, previdencia:I18N[L].pensions, seguro:I18N[L].insurance, transferencias_privadas:I18N[L].private, capital:I18N[L].capital};
+    const srcColors = {
+      trabalho:'#2d6a4f',              /* deep green — labor */
+      beneficios_sociais:'#c47800',    /* accent red — welfare */
+      previdencia:'#b5893e',           /* gold — pensions */
+      seguro:'#7e5ba0',                /* purple — insurance */
+      transferencias_privadas:'#9ca3af', /* gray — private */
+      capital:'#0a0a0a',               /* black — capital */
+    };
+    const data = sources.map(src=>({
+      type:'bar',
+      x: xLabels,
+      y: bands.map(b=>(compByBand[b]||{}).composition?.[src]||0),
+      name: srcLabels[src], marker:{color: srcColors[src]},
+      text: bands.map(b=>{const v=(compByBand[b]||{}).composition?.[src]||0; return v>=5?fmtNum(v,0)+'%':'';}),
+      textposition:'inside', textfont:{family:'IBM Plex Sans', size:11, color:'#fff'},
+      hovertemplate:'<b>%{x}</b> · '+srcLabels[src]+': %{y:.1f}%<extra></extra>',
+    }));
+    const layout = Object.assign({}, PLOT_LAYOUT_BASE, {
+      barmode:'group', height:440,
+      xaxis:Object.assign({}, PLOT_LAYOUT_BASE.xaxis, {type:'category', title:{text: L==='pt'?'faixa de salário mínimo':'MW band'}, tickfont:{family:'IBM Plex Sans',size:12}}),
+      yaxis:Object.assign({}, PLOT_LAYOUT_BASE.yaxis, {title:{text: L==='pt'?'% dos domicílios da faixa':'% of households in band'}, ticksuffix:'%', range:[0,105]}),
+      legend:{orientation:'h', y:-.24, x:0, font:{family:'IBM Plex Sans',size:11}},
+      margin:{l:80,r:20,t:40,b:120},
+    });
+    Plotly.newPlot('chart-composicao', data, layout, PLOT_CONFIG);
+  }
+
+  // ─── 12 DEPENDÊNCIA ───
+  function renderDependencia(){
+    const L = lang();
+    const rows = (ANN.uf_dependency_ranking||[]).slice().sort((a,b)=>b.dependency_score-a.dependency_score);
+    const data = [{
+      type:'bar', orientation:'h',
+      x: rows.map(r=>r.dependency_score),
+      y: rows.map(r=>r.uf_label),
+      marker:{color: rows.map(r=>r.dependency_score), colorscale:[[0,'#27ae60'],[.5,'#f39c12'],[1,'#c0392b']]},
+      text: rows.map(r=>fmtNum(r.dependency_score,1)+'%'),
+      textposition:'outside',
+      hovertemplate:'<b>%{y}</b>: %{x:.2f}%<br>trabalho: %{customdata[0]:.1f}%<br>benef: %{customdata[1]:.1f}%<br>prev: %{customdata[2]:.1f}%<extra></extra>',
+      customdata: rows.map(r=>[r.work_pct, r.benefits_pct, r.previdencia_pct]),
+    }];
+    const layout = Object.assign({}, PLOT_LAYOUT_BASE, {
+      height:640, showlegend:false,
+      xaxis:Object.assign({}, PLOT_LAYOUT_BASE.xaxis, {title:{text:I18N[L].dependency}, ticksuffix:'%'}),
+      yaxis:Object.assign({}, PLOT_LAYOUT_BASE.yaxis, {automargin:true, autorange:'reversed'}),
+      margin:{l:150,r:60,t:40,b:60},
+    });
+    Plotly.newPlot('chart-dependencia', data, layout, PLOT_CONFIG);
+  }
+
+  // ─── 13 GAUGES ───
+  function renderGauges(){
+    const L = lang();
+    const nat = PRIMARY.national, ins = PRIMARY.insights;
+    const gini = nat.gini_household_sm;
+    const poverty = ins.national_low_income_pct/100;
+    const top = ins.national_high_income_pct/100;
+    const data = [
+      {type:'indicator', mode:'gauge+number', value: gini, title:{text: I18N[L].gini, font:{size:18}},
+       gauge:{axis:{range:[0,1], tickmode:'array', tickvals:[0,.3,.5,.7,1]},
+              bar:{color:'#1a1c20'},
+              steps:[{range:[0,.35],color:'#a5d6a7'},{range:[.35,.5],color:'#fff9c4'},{range:[.5,.65],color:'#ffcc80'},{range:[.65,1],color:'#ef9a9a'}]},
+       domain:{x:[0,.33], y:[0,1]}, number:{font:{size:36}}},
+      {type:'indicator', mode:'gauge+number', value: poverty, title:{text: I18N[L].poverty, font:{size:18}},
+       number:{valueformat:'.1%', font:{size:36}},
+       gauge:{axis:{range:[0,1]},
+              bar:{color:'#1a1c20'},
+              steps:[{range:[0,.2],color:'#a5d6a7'},{range:[.2,.4],color:'#fff9c4'},{range:[.4,.6],color:'#ffcc80'},{range:[.6,1],color:'#ef9a9a'}]},
+       domain:{x:[.34,.66], y:[0,1]}},
+      {type:'indicator', mode:'gauge+number', value: top, title:{text: I18N[L].top, font:{size:18}},
+       number:{valueformat:'.1%', font:{size:36}},
+       gauge:{axis:{range:[0,.2]},
+              bar:{color:'#1a1c20'},
+              steps:[{range:[0,.05],color:'#ef9a9a'},{range:[.05,.1],color:'#ffcc80'},{range:[.1,.15],color:'#fff9c4'},{range:[.15,.2],color:'#a5d6a7'}]},
+       domain:{x:[.67,1], y:[0,1]}},
+    ];
+    const layout = Object.assign({}, PLOT_LAYOUT_BASE, {
+      height:420, margin:{l:20,r:20,t:40,b:20},
+    });
+    Plotly.newPlot('chart-gauges', data, layout, PLOT_CONFIG);
+  }
+
+  // ─── i18n toggle ───
+  function lang(){ return document.body.dataset.lang || 'pt'; }
+  function setLang(l){
+    document.body.dataset.lang = l;
+    document.documentElement.lang = (l==='pt'?'pt-BR':'en');
+    try{ localStorage.setItem('pnad.lang', l); }catch(e){}
+    document.querySelectorAll('.lang-toggle button').forEach(b=>{
+      b.classList.toggle('active', b.dataset.langSet === l);
+    });
+    renderAll();
+  }
+
+  // ─── render all charts ───
+  function renderAll(){
+    try{ renderHero(); }catch(e){console.error('hero',e);}
+    try{ renderMapa(); }catch(e){console.error('mapa',e);}
+    try{ renderBandas(); }catch(e){console.error('bandas',e);}
+    try{ renderLorenz(); }catch(e){console.error('lorenz',e);}
+    try{ renderUFRank(); }catch(e){console.error('rank',e);}
+    try{ renderDotPlot(); }catch(e){console.error('dot',e);}
+    try{ renderHeatmap(); }catch(e){console.error('heat',e);}
+    try{ renderMacro(); }catch(e){console.error('macro',e);}
+    try{ renderPiramide(); }catch(e){console.error('pir',e);}
+    try{ renderCross(); }catch(e){console.error('cross',e);}
+    try{ renderComposicao(); }catch(e){console.error('comp',e);}
+    try{ renderDependencia(); }catch(e){console.error('dep',e);}
+    try{ renderGauges(); }catch(e){console.error('gauge',e);}
+  }
+
+  // ─── bootstrap ───
+  function boot(){
+    try{
+      const saved = localStorage.getItem('pnad.lang');
+      if(saved==='pt'||saved==='en') setLang(saved);
+      else if(navigator.language && navigator.language.startsWith('en')) setLang('en');
+      else setLang('pt');
+    }catch(e){ renderAll(); }
+
+    // lang buttons
+    document.querySelectorAll('.lang-toggle button').forEach(b=>{
+      b.addEventListener('click', ()=>setLang(b.dataset.langSet));
+    });
+    // cross toggle
+    document.querySelectorAll('button[data-cross]').forEach(b=>{
+      b.addEventListener('click', ()=>{
+        currentCross = b.dataset.cross;
+        document.querySelectorAll('button[data-cross]').forEach(x=>x.classList.remove('good'));
+        document.querySelectorAll('button[data-cross="'+currentCross+'"]').forEach(x=>x.classList.add('good'));
+        renderCross();
+      });
+    });
+    // TOC active on scroll
+    const tocLinks = document.querySelectorAll('.toc a');
+    const sections = document.querySelectorAll('section[id]');
+    const io = new IntersectionObserver(entries=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          tocLinks.forEach(a=>a.classList.toggle('active', a.getAttribute('href')==='#'+e.target.id));
+        }
+      });
+    }, {rootMargin:'-30% 0px -60% 0px'});
+    sections.forEach(s=>io.observe(s));
+  }
+
+  if(window.Plotly){ boot(); }
+  else { window.addEventListener('DOMContentLoaded', ()=>{
+    const check = setInterval(()=>{ if(window.Plotly){ clearInterval(check); boot(); } }, 50);
+  }); }
+})();
+</script>
+</body>
+</html>

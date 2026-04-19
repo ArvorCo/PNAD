@@ -1,0 +1,18 @@
+# Every change requires review by the core maintainer.
+# More specific rules below override the global owner.
+
+*                       @leonardodias
+
+# Skills are co-maintained with data/LLM stewards.
+/skills/                @leonardodias
+
+# Docs & editorial content get extra scrutiny before being published.
+/docs/                  @leonardodias
+/README.md              @leonardodias
+/CHANGELOG.md           @leonardodias
+/LICENSE                @leonardodias
+/CITATION.cff           @leonardodias
+
+# CI / release automation is sensitive.
+/.github/               @leonardodias
+/pyproject.toml         @leonardodias

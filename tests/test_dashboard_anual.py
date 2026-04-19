@@ -175,9 +175,15 @@ def test_dashboard_breakdown_output(capsys, tmp_path: Path):
     assert comp["beneficios_sociais"]["pct"] == pytest.approx(10.0, abs=0.01)
     assert comp["previdencia"]["pct"] == pytest.approx(20.0, abs=0.01)
     assert comp["capital"]["pct"] == pytest.approx(5.0, abs=0.01)
+    lenses = payload["income_lenses_national"]
+    assert lenses["renda_total"]["mean"] == pytest.approx(1500.0, abs=0.01)
+    assert lenses["sem_beneficios_sociais"]["mean"] == pytest.approx(1350.0, abs=0.01)
+    assert lenses["sem_transferencias_publicas"]["mean"] == pytest.approx(1025.0, abs=0.01)
+    assert lenses["somente_trabalho"]["mean"] == pytest.approx(900.0, abs=0.01)
     assert payload["income_sources_detail"]["bpc_loas"]["recipients_pct"] == pytest.approx(50.0, abs=0.01)
     assert "0-2" in payload["composition_by_band"]
     assert "2-5" in payload["composition_by_band"]
+    assert payload["income_lenses_by_band"]["0-2"]["somente_trabalho"]["mean"] == pytest.approx(550.0, abs=0.01)
 
 
 def test_dependency_ranking_ordering(capsys, tmp_path: Path):

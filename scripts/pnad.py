@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import csv
 import datetime
+import hashlib
 import json
 import math
 import os
@@ -19,7 +20,7 @@ import zipfile
 from collections import defaultdict
 from pathlib import Path
 from statistics import NormalDist
-from typing import Dict, Iterable, List, Optional, Sequence, Tuple
+from typing import Dict, List, Optional, Sequence, Tuple
 from urllib.error import HTTPError, URLError
 from urllib.parse import quote_plus, urlparse
 from urllib.request import Request, urlopen
@@ -29,12 +30,14 @@ PROJECT_ROOT = SCRIPT_DIR.parent
 if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
 
-import pnadc_cli  # type: ignore
+import pnadc_cli  # type: ignore  # noqa: E402
 
 
 def _legacy_commands() -> set[str]:
     parser = pnadc_cli.build_parser()
-    sub_actions = [a for a in parser._actions if isinstance(a, argparse._SubParsersAction)]
+    sub_actions = [
+        a for a in parser._actions if isinstance(a, argparse._SubParsersAction)
+    ]
     if not sub_actions:
         return set()
     return set(sub_actions[0].choices.keys())
@@ -51,19 +54,23 @@ IBGE_ANUAL_VISITA5_BASE = (
     "Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Visita/Visita_5/"
 )
 IBGE_CENSO_2022_BASE = "https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/"
-IBGE_CENSO_RENDA_RESP_FOLDER = "Agregados_por_Setores_Censitarios_Rendimento_do_Responsavel/"
+IBGE_CENSO_RENDA_RESP_FOLDER = (
+    "Agregados_por_Setores_Censitarios_Rendimento_do_Responsavel/"
+)
 TSE_CKAN_BASE = "https://dadosabertos.tse.jus.br"
 TSE_DEFAULT_QUERY = "perfil eleitorado"
 TOOL_USER_AGENT = "brasil-cli/1.0"
 PNADC_ZIP_RE = re.compile(r"^PNADC_(0[1-4])(\d{4})(?:_(\d{8}))?\.zip$", re.IGNORECASE)
-PNADC_ANUAL_VISITA5_ZIP_RE = re.compile(r"^PNADC_(\d{4})_visita5(?:_(\d{8}))?\.zip$", re.IGNORECASE)
-PNADC_ANUAL_VISITA5_TXT_RE = re.compile(r"^PNADC_(\d{4})_visita5(?:_(\d{8}))?\.txt$", re.IGNORECASE)
+PNADC_ANUAL_VISITA5_ZIP_RE = re.compile(
+    r"^PNADC_(\d{4})_visita5(?:_(\d{8}))?\.zip$", re.IGNORECASE
+)
+PNADC_ANUAL_VISITA5_TXT_RE = re.compile(
+    r"^PNADC_(\d{4})_visita5(?:_(\d{8}))?\.txt$", re.IGNORECASE
+)
 RANGE_RE = re.compile(r"^\s*([0-9]+(?:[.,][0-9]+)?)\s*-\s*([0-9]+(?:[.,][0-9]+)?)\s*$")
 PLUS_RE = re.compile(r"^\s*([0-9]+(?:[.,][0-9]+)?)\s*\+\s*$")
 BCB_SALARIO_MINIMO_SERIE = 1619
-BCB_SALARIO_MINIMO_URL = (
-    f"https://api.bcb.gov.br/dados/serie/bcdata.sgs.{BCB_SALARIO_MINIMO_SERIE}/dados?formato=json&dataInicial=01/01/1994"
-)
+BCB_SALARIO_MINIMO_URL = f"https://api.bcb.gov.br/dados/serie/bcdata.sgs.{BCB_SALARIO_MINIMO_SERIE}/dados?formato=json&dataInicial=01/01/1994"
 UF_TO_MACRO = {
     "11": "Norte",
     "12": "Norte",
@@ -93,8 +100,38 @@ UF_TO_MACRO = {
     "52": "Centro-Oeste",
     "53": "Centro-Oeste",
 }
-MACRO_REGION_ORDER = ["Norte", "Nordeste", "Sudeste", "Sul", "Centro-Oeste", "Desconhecida"]
-REPLICATE_WEIGHT_BASE_RE = re.compile(r"^V1028(\d{3})$")
+MACRO_REGION_ORDER = [
+    "Norte",
+    "Nordeste",
+    "Sudeste",
+    "Sul",
+    "Centro-Oeste",
+    "Desconhecida",
+]
+REPLICATE_WEIGHT_BASE_RE = re.compile(r"^V(1028|1032)(\d{3})$")
+
+
+def _replicate_prefix_for_weight(weight_col: Optional[str]) -> str:
+    # PNADC trimestral replicates are V1028001..V1028200;
+    # PNADC anual replicates are V1032001..V1032200.
+    if not weight_col:
+        return "V1028"
+    base = weight_col.split("__", 1)[0]
+    if base.startswith("V1032") or base.startswith("V1031"):
+        return "V1032"
+    return "V1028"
+
+
+DEFAULT_DASHBOARD_INPUT_CANDIDATES = {
+    "trimestral": [
+        Path("data/outputs/base_labeled_npv.csv"),
+        Path("data/outputs/base_labeled.csv"),
+    ],
+    "anual": [
+        Path("data/outputs/base_anual_labeled_npv.csv"),
+        Path("data/outputs/base_anual_labeled.csv"),
+    ],
+}
 
 
 def _print(msg: str, quiet: bool = False) -> None:
@@ -114,7 +151,9 @@ def _urlopen_retry_ssl(req: Request, *, timeout: int = 120):
         raise
 
 
-def _download(url: str, destination: Path, *, force: bool = False, quiet: bool = False) -> Path:
+def _download(
+    url: str, destination: Path, *, force: bool = False, quiet: bool = False
+) -> Path:
     destination = Path(destination)
     destination.parent.mkdir(parents=True, exist_ok=True)
     if destination.exists() and not force:
@@ -181,8 +220,8 @@ def _parse_pnadc_zip_name(name: str) -> Optional[Dict[str, object]]:
     m = PNADC_ZIP_RE.match(name)
     if not m:
         return None
-    quarter = int(m.group(1))
-    year = int(m.group(2))
+    quarter = int(str(m.group(1) or "0"))
+    year = int(str(m.group(2) or "0"))
     revision = m.group(3) or ""
     return {"name": name, "quarter": quarter, "year": year, "revision": revision}
 
@@ -193,7 +232,7 @@ def _group_latest_by_quarter(file_names: Sequence[str]) -> Dict[int, Dict[str, o
         parsed = _parse_pnadc_zip_name(name)
         if parsed is None:
             continue
-        q = int(parsed["quarter"])
+        q = int(str(parsed["quarter"]))
         prev = latest.get(q)
         if prev is None:
             latest[q] = parsed
@@ -207,7 +246,7 @@ def _parse_pnadc_anual_visita5_zip_name(name: str) -> Optional[Dict[str, object]
     m = PNADC_ANUAL_VISITA5_ZIP_RE.match(name)
     if not m:
         return None
-    year = int(m.group(1))
+    year = int(str(m.group(1) or "0"))
     revision = m.group(2) or ""
     return {"name": name, "year": year, "revision": revision}
 
@@ -216,18 +255,20 @@ def _parse_pnadc_anual_visita5_txt_name(name: str) -> Optional[Dict[str, object]
     m = PNADC_ANUAL_VISITA5_TXT_RE.match(name)
     if not m:
         return None
-    year = int(m.group(1))
+    year = int(str(m.group(1) or "0"))
     revision = m.group(2) or ""
     return {"name": name, "year": year, "revision": revision}
 
 
-def _group_latest_anual_by_year(file_names: Sequence[str]) -> Dict[int, Dict[str, object]]:
+def _group_latest_anual_by_year(
+    file_names: Sequence[str],
+) -> Dict[int, Dict[str, object]]:
     latest: Dict[int, Dict[str, object]] = {}
     for name in file_names:
         parsed = _parse_pnadc_anual_visita5_zip_name(name)
         if parsed is None:
             continue
-        y = int(parsed["year"])
+        y = int(str(parsed["year"]))
         prev = latest.get(y)
         if prev is None:
             latest[y] = parsed
@@ -237,7 +278,9 @@ def _group_latest_anual_by_year(file_names: Sequence[str]) -> Dict[int, Dict[str
     return latest
 
 
-def _extract_zip_all(zip_path: Path, out_dir: Path, *, quiet: bool = False) -> List[Path]:
+def _extract_zip_all(
+    zip_path: Path, out_dir: Path, *, quiet: bool = False
+) -> List[Path]:
     out_dir.mkdir(parents=True, exist_ok=True)
     extracted: List[Path] = []
     with zipfile.ZipFile(zip_path) as zf:
@@ -278,7 +321,7 @@ def _latest_local_raw_anual(raw_dir: Path) -> Optional[Path]:
         parsed = _parse_pnadc_anual_visita5_txt_name(path.name)
         if parsed is None:
             continue
-        key = (int(parsed["year"]), str(parsed["revision"]))
+        key = (int(str(parsed["year"])), str(parsed["revision"]))
         if best_key is None or key > best_key:
             best_key = key
             best_path = path
@@ -348,7 +391,11 @@ def _download_if_changed(
         if exc.code == 304:
             if tmp.exists():
                 tmp.unlink()
-            return {"status": "not_modified", "path": str(destination), "meta": remote_meta}
+            return {
+                "status": "not_modified",
+                "path": str(destination),
+                "meta": remote_meta,
+            }
         if tmp.exists():
             tmp.unlink()
         raise
@@ -358,7 +405,9 @@ def _download_if_changed(
         raise
 
 
-def _extract_single_txt(zip_path: Path, output_dir: Path, *, quiet: bool = False) -> Optional[Path]:
+def _extract_single_txt(
+    zip_path: Path, output_dir: Path, *, quiet: bool = False
+) -> Optional[Path]:
     with zipfile.ZipFile(zip_path) as zf:
         members = [n for n in zf.namelist() if n.lower().endswith(".txt")]
         if not members:
@@ -384,7 +433,9 @@ def _extract_year_tokens(text: str) -> List[int]:
     return years
 
 
-def _fetch_tse_resources(api_base: str, query: str, *, rows: int = 50) -> List[Dict[str, object]]:
+def _fetch_tse_resources(
+    api_base: str, query: str, *, rows: int = 50
+) -> List[Dict[str, object]]:
     base = api_base.rstrip("/")
     url = f"{base}/api/3/action/package_search?q={quote_plus(query)}&rows={int(rows)}"
     payload = _fetch_json(url)
@@ -449,7 +500,13 @@ def _fetch_tse_resources(api_base: str, query: str, *, rows: int = 50) -> List[D
             out.append(item)
             seen_urls.add(res_url)
 
-    out.sort(key=lambda x: (str(x.get("kind", "")), int(x.get("year") or 0), str(x.get("resource_name", ""))))
+    out.sort(
+        key=lambda x: (
+            str(x.get("kind", "")),
+            int(str(x.get("year") or 0)),
+            str(x.get("resource_name", "")),
+        )
+    )
     return out
 
 
@@ -458,7 +515,7 @@ def _select_tse_resources(
 ) -> List[Dict[str, object]]:
     filtered = [dict(r) for r in resources]
     if year is not None:
-        filtered = [r for r in filtered if int(r.get("year") or -1) == int(year)]
+        filtered = [r for r in filtered if int(str(r.get("year") or -1)) == int(year)]
     if not filtered:
         return []
 
@@ -466,7 +523,7 @@ def _select_tse_resources(
     latest_by_key: Dict[Tuple[str, int], Dict[str, object]] = {}
     for r in filtered:
         kind = str(r.get("kind", "other"))
-        y = int(r.get("year") or 0)
+        y = int(str(r.get("year") or 0))
         key = (kind, y)
         prev = latest_by_key.get(key)
         if prev is None:
@@ -478,7 +535,10 @@ def _select_tse_resources(
         if cur_key > prev_key:
             latest_by_key[key] = r
 
-    by_key = sorted(latest_by_key.values(), key=lambda r: (str(r.get("kind", "")), int(r.get("year") or 0)))
+    by_key = sorted(
+        latest_by_key.values(),
+        key=lambda r: (str(r.get("kind", "")), int(str(r.get("year") or 0))),
+    )
     if all_years or year is not None:
         return by_key
 
@@ -486,7 +546,9 @@ def _select_tse_resources(
     for r in by_key:
         kind = str(r.get("kind", "other"))
         prev = latest_by_kind.get(kind)
-        if prev is None or int(r.get("year") or 0) > int(prev.get("year") or 0):
+        if prev is None or int(str(r.get("year") or 0)) > int(
+            str(prev.get("year") or 0)
+        ):
             latest_by_kind[kind] = r
     return sorted(latest_by_kind.values(), key=lambda r: str(r.get("kind", "")))
 
@@ -521,7 +583,9 @@ def _parse_ranges(spec: str) -> List[Dict[str, object]]:
         lo = float(m_rng.group(1).replace(",", "."))
         hi = float(m_rng.group(2).replace(",", "."))
         if hi <= lo:
-            raise ValueError(f"range upper bound must be greater than lower bound: {token}")
+            raise ValueError(
+                f"range upper bound must be greater than lower bound: {token}"
+            )
         out.append({"label": token, "min": lo, "max": hi})
     if not out:
         raise ValueError("empty range specification")
@@ -625,6 +689,20 @@ INCOME_CATEGORY_ORDER = [
     "capital",
 ]
 
+ANNUAL_INCOME_LENS_ORDER = [
+    "renda_total",
+    "sem_beneficios_sociais",
+    "sem_transferencias_publicas",
+    "somente_trabalho",
+]
+
+ANNUAL_INCOME_LENS_LABELS = {
+    "renda_total": "Renda total",
+    "sem_beneficios_sociais": "Sem beneficios sociais",
+    "sem_transferencias_publicas": "Sem transferencias publicas",
+    "somente_trabalho": "Somente trabalho",
+}
+
 
 def _detect_income_source_cols(headers: Sequence[str]) -> Dict[str, str]:
     found: Dict[str, str] = {}
@@ -640,7 +718,18 @@ def _detect_pnad_mode(headers: Sequence[str]) -> str:
         return "anual"
     if any(h.startswith("VD4020") or h.startswith("VD4019") for h in headers):
         return "trimestral"
-    raise ValueError("could not auto-detect mode: expected VD5001 or VD4019/VD4020 columns")
+    raise ValueError(
+        "could not auto-detect mode: expected VD5001 or VD4019/VD4020 columns"
+    )
+
+
+def _detect_pnad_mode_from_file(path: Path) -> str:
+    with Path(path).open("r", encoding="utf-8-sig", errors="replace", newline="") as fh:
+        r = csv.reader(fh)
+        headers = next(r, None) or []
+    if not headers:
+        raise ValueError(f"input has no header: {path}")
+    return _detect_pnad_mode(headers)
 
 
 def _calculate_income_composition(
@@ -692,16 +781,167 @@ def _aggregate_income_by_category(sources: Dict[str, float]) -> Dict[str, float]
     for cat in INCOME_CATEGORY_ORDER:
         if cat == "trabalho":
             continue
-        categories[cat] = sum(float(sources.get(k, 0.0) or 0.0) for k in INCOME_CATEGORIES.get(cat, []))
+        categories[cat] = sum(
+            float(sources.get(k, 0.0) or 0.0) for k in INCOME_CATEGORIES.get(cat, [])
+        )
     return categories
 
 
-def _calculate_dependency_score(benefits_pct: float, previdencia_pct: float, work_pct: float) -> float:
+def _calculate_income_lenses(sources: Dict[str, float]) -> Dict[str, float]:
+    total = max(0.0, float(sources.get("total", 0.0) or 0.0))
+    social = sum(
+        float(sources.get(k, 0.0) or 0.0)
+        for k in INCOME_CATEGORIES["beneficios_sociais"]
+    )
+    previdencia = float(sources.get("aposentadoria_pensao", 0.0) or 0.0)
+    seguro = float(sources.get("seguro_desemprego", 0.0) or 0.0)
+    trabalho = max(0.0, float(sources.get("trabalho", 0.0) or 0.0))
+    return {
+        "renda_total": total,
+        "sem_beneficios_sociais": max(0.0, total - social),
+        "sem_transferencias_publicas": max(0.0, total - social - previdencia - seguro),
+        "somente_trabalho": trabalho,
+    }
+
+
+def _calculate_dependency_score(
+    benefits_pct: float, previdencia_pct: float, work_pct: float
+) -> float:
     _ = work_pct
     return float(benefits_pct) + float(previdencia_pct)
 
 
-def _detect_weight_col(headers: Sequence[str], requested: Optional[str]) -> Optional[str]:
+def _clone_args(args: argparse.Namespace, **updates: object) -> argparse.Namespace:
+    data = vars(args).copy()
+    data.update(updates)
+    return argparse.Namespace(**data)
+
+
+def _pick_dashboard_input(mode: str) -> Optional[Path]:
+    for candidate in DEFAULT_DASHBOARD_INPUT_CANDIDATES.get(mode, []):
+        if candidate.exists():
+            return candidate
+    return None
+
+
+def _resolve_dashboard_jobs(
+    args: argparse.Namespace,
+) -> List[Tuple[str, Path, argparse.Namespace]]:
+    requested_mode = str(getattr(args, "mode", "auto") or "auto").strip().lower()
+    primary_input = str(getattr(args, "input", "") or "").strip()
+    annual_input = str(getattr(args, "input_anual", "") or "").strip()
+
+    jobs_by_mode: Dict[str, Tuple[Path, argparse.Namespace]] = {}
+
+    def add_job(mode: str, path_value: object) -> None:
+        path = Path(str(path_value)).expanduser()
+        jobs_by_mode[mode] = (path, _clone_args(args, input=str(path), mode=mode))
+
+    if primary_input:
+        primary_path = Path(primary_input).expanduser()
+        primary_mode = _detect_pnad_mode_from_file(primary_path)
+        add_job(primary_mode, primary_path)
+        if annual_input:
+            add_job("anual", annual_input)
+        elif requested_mode == "comparativo":
+            counterpart = "anual" if primary_mode == "trimestral" else "trimestral"
+            counterpart_input = _pick_dashboard_input(counterpart)
+            if counterpart_input is not None and counterpart_input != primary_path:
+                add_job(counterpart, counterpart_input)
+    else:
+        if annual_input:
+            add_job("anual", annual_input)
+        if requested_mode == "trimestral":
+            tri_input = _pick_dashboard_input("trimestral")
+            if tri_input is None:
+                raise ValueError("could not auto-discover trimestral dashboard input")
+            add_job("trimestral", tri_input)
+        elif requested_mode == "anual":
+            anual_input = jobs_by_mode.get("anual", (None, None))[
+                0
+            ] or _pick_dashboard_input("anual")
+            if anual_input is None:
+                raise ValueError("could not auto-discover annual dashboard input")
+            add_job("anual", anual_input)
+        else:
+            tri_input = _pick_dashboard_input("trimestral")
+            anual_input = jobs_by_mode.get("anual", (None, None))[
+                0
+            ] or _pick_dashboard_input("anual")
+            if tri_input is not None:
+                add_job("trimestral", tri_input)
+            if anual_input is not None:
+                add_job("anual", anual_input)
+            if not jobs_by_mode:
+                raise ValueError(
+                    "could not auto-discover dashboard input. Use --input and/or --input-anual."
+                )
+
+    ordered_jobs: List[Tuple[str, Path, argparse.Namespace]] = []
+    for mode in ("trimestral", "anual"):
+        job = jobs_by_mode.get(mode)
+        if job is None:
+            continue
+        ordered_jobs.append((mode, job[0], job[1]))
+    return ordered_jobs
+
+
+def _build_dashboard_bundle_summary(
+    dashboards: Dict[str, Dict[str, object]],
+) -> Dict[str, object]:
+    by_mode: Dict[str, object] = {}
+    for mode, payload in dashboards.items():
+        modes_map = payload.get("modes", {})
+        mode_data = modes_map.get("alvo") if isinstance(modes_map, dict) else None
+        if not isinstance(mode_data, dict) and isinstance(modes_map, dict):
+            first_key = next(iter(modes_map.keys()), "")
+            mode_data = modes_map.get(first_key, {})
+        nat = mode_data.get("national", {}) if isinstance(mode_data, dict) else {}
+        by_mode[mode] = {
+            "input": payload.get("input"),
+            "target": payload.get("target"),
+            "avg_household_sm": nat.get("avg_household_sm"),
+            "avg_household_income_brl": nat.get("avg_household_income_brl"),
+            "median_household_income_brl": nat.get("median_household_income_brl"),
+            "households": payload.get("total_households"),
+            "states_covered": (
+                payload.get("metadata", {}).get("states_covered")
+                if isinstance(payload.get("metadata"), dict)
+                else None
+            ),
+            "annual_lenses": (
+                payload.get("income_lenses_national", {}) if mode == "anual" else {}
+            ),
+        }
+    return {
+        "available_dashboards": list(dashboards.keys()),
+        "by_mode": by_mode,
+    }
+
+
+def _build_dashboard_artifact(args: argparse.Namespace) -> Dict[str, object]:
+    jobs = _resolve_dashboard_jobs(args)
+    dashboards: Dict[str, Dict[str, object]] = {}
+    for mode, _, job_args in jobs:
+        dashboards[mode] = _build_dashboard_payload(job_args)
+    if len(dashboards) == 1:
+        return next(iter(dashboards.values()))
+    return {
+        "bundle": True,
+        "requested_mode": str(getattr(args, "mode", "auto") or "auto"),
+        "inputs": {mode: str(path) for mode, path, _ in jobs},
+        "dashboards": dashboards,
+        "summary": _build_dashboard_bundle_summary(dashboards),
+    }
+
+
+def _is_dashboard_bundle(payload: Dict[str, object]) -> bool:
+    return bool(payload.get("bundle")) and isinstance(payload.get("dashboards"), dict)
+
+
+def _detect_weight_col(
+    headers: Sequence[str], requested: Optional[str]
+) -> Optional[str]:
     if requested:
         if requested not in headers:
             raise ValueError(f"weight column not found: {requested}")
@@ -718,7 +958,9 @@ def _detect_weight_col(headers: Sequence[str], requested: Optional[str]) -> Opti
     return None
 
 
-def _detect_replicate_weight_cols(headers: Sequence[str], *, base_prefix: str = "V1028") -> List[str]:
+def _detect_replicate_weight_cols(
+    headers: Sequence[str], *, base_prefix: str = "V1028"
+) -> List[str]:
     pairs: List[Tuple[int, str]] = []
     for h in headers:
         base = h.split("__", 1)[0]
@@ -830,7 +1072,9 @@ def _macro_region_from_uf(uf_value: str) -> str:
     return UF_TO_MACRO.get(_uf_code_norm(uf_value), "Desconhecida")
 
 
-def _series_value_at_or_before(series: Dict[str, float], target: str) -> Tuple[str, float]:
+def _series_value_at_or_before(
+    series: Dict[str, float], target: str
+) -> Tuple[str, float]:
     if target in series:
         return target, float(series[target])
     candidates = [k for k in series.keys() if k <= target]
@@ -893,12 +1137,18 @@ def _spark(value: float, width: int = 16) -> str:
     return blocks[idx] * width
 
 
-def _panel(title: str, lines: Sequence[str], *, color: object, use_color: bool, width: int = 92) -> None:
+def _panel(
+    title: str, lines: Sequence[str], *, color: object, use_color: bool, width: int = 92
+) -> None:
     t = f" {title} "
     print(_colorize("┏" + t + "━" * max(0, width - len(t) - 2) + "┓", color, use_color))
     for ln in lines:
         txt = (ln[: width - 4] + "..") if len(ln) > width - 2 else ln
-        print(_colorize("┃", color, use_color) + txt.ljust(width - 2) + _colorize("┃", color, use_color))
+        print(
+            _colorize("┃", color, use_color)
+            + txt.ljust(width - 2)
+            + _colorize("┃", color, use_color)
+        )
     print(_colorize("┗" + "━" * (width - 2) + "┛", color, use_color))
 
 
@@ -944,7 +1194,12 @@ def _ranges_money_from_specs(
     return out
 
 
-def _mini_pie(bands: Sequence[Dict[str, object]], colors: Sequence[object], use_color: bool, slices: int = 24) -> str:
+def _mini_pie(
+    bands: Sequence[Dict[str, object]],
+    colors: Sequence[object],
+    use_color: bool,
+    slices: int = 24,
+) -> str:
     if not bands:
         return ""
     pcts = [max(0.0, float(b.get("households_pct", 0.0) or 0.0)) for b in bands]
@@ -994,7 +1249,9 @@ def _stacked_mix_bar(
     return "".join(parts)
 
 
-def _band_pct(row: Dict[str, object], range_label: str, *, pct_key: str = "persons_pct") -> float:
+def _band_pct(
+    row: Dict[str, object], range_label: str, *, pct_key: str = "persons_pct"
+) -> float:
     bands = row.get("bands", [])
     if not isinstance(bands, list):
         return 0.0
@@ -1033,9 +1290,9 @@ def _print_two_columns(
     n = max(len(left), len(right))
     spacer = " " * gap
     for i in range(n):
-        l = left[i] if i < len(left) else ""
-        r = right[i] if i < len(right) else ""
-        print(f"{l:<{width}}{spacer}{r}")
+        left_cell = left[i] if i < len(left) else ""
+        right_cell = right[i] if i < len(right) else ""
+        print(f"{left_cell:<{width}}{spacer}{right_cell}")
 
 
 def _brazil_band_colors(n: int) -> List[object]:
@@ -1065,7 +1322,9 @@ def _brazil_band_gradients(n: int) -> List[List[int]]:
     return [base[i % len(base)] for i in range(n)]
 
 
-def _gradient_bar(pct: float, *, width: int, palette: Sequence[int], use_color: bool) -> str:
+def _gradient_bar(
+    pct: float, *, width: int, palette: Sequence[int], use_color: bool
+) -> str:
     p = max(0.0, min(100.0, pct))
     n = max(0, min(width, int(round(width * p / 100.0))))
     if n <= 0:
@@ -1095,7 +1354,9 @@ def _print_renda_pretty(payload: Dict[str, object], *, no_color: bool = False) -
     )
     print(_colorize(title, 1, use_color))
     print(f"Entrada: {payload.get('input')}")
-    print(f"Renda: {payload.get('income_col')} | Peso: {payload.get('weight_col') or 'N/A'}")
+    print(
+        f"Renda: {payload.get('income_col')} | Peso: {payload.get('weight_col') or 'N/A'}"
+    )
     print(f"Faixas: {'; '.join(payload.get('ranges', []))}")
     sampling = payload.get("sampling", {})
     if isinstance(sampling, dict):
@@ -1159,9 +1420,12 @@ def _print_renda_pretty(payload: Dict[str, object], *, no_color: bool = False) -
             pp = float(b.get("persons_pct", 0.0) or 0.0)
             hp_moe = b.get("households_pct_moe")
             pp_moe = b.get("persons_pct_moe")
-            hbar = _gradient_bar(hp, width=28, palette=gradients[i % len(gradients)], use_color=use_color)
-            pbar = _gradient_bar(pp, width=28, palette=gradients[i % len(gradients)], use_color=use_color)
-            c = colors[i % len(colors)]
+            hbar = _gradient_bar(
+                hp, width=28, palette=gradients[i % len(gradients)], use_color=use_color
+            )
+            pbar = _gradient_bar(
+                pp, width=28, palette=gradients[i % len(gradients)], use_color=use_color
+            )
             hp_txt = f"{hp:6.2f}%"
             pp_txt = f"{pp:6.2f}%"
             if hp_moe is not None:
@@ -1170,7 +1434,12 @@ def _print_renda_pretty(payload: Dict[str, object], *, no_color: bool = False) -
                 pp_txt = f"{pp:6.2f}%±{float(pp_moe):4.2f}"
             print(
                 "  "
-                + _badge(f"{rng:<8}", fg=16, bg=gradients[i % len(gradients)][-1], use_color=use_color)
+                + _badge(
+                    f"{rng:<8}",
+                    fg=16,
+                    bg=gradients[i % len(gradients)][-1],
+                    use_color=use_color,
+                )
                 + f" {hp_txt:<14} "
                 + hbar
                 + f"  {pp_txt:<14} "
@@ -1379,10 +1648,18 @@ def _metro_region_bucket(raw_value: str, label_value: str) -> str:
     return "Fora de RM/RIDE"
 
 
-def _counter_to_sorted_rows(counter: Dict[str, float], total: float) -> List[Dict[str, object]]:
+def _counter_to_sorted_rows(
+    counter: Dict[str, float], total: float
+) -> List[Dict[str, object]]:
     rows = []
     for k, v in counter.items():
-        rows.append({"label": k, "value": float(v), "pct": round(100.0 * _safe_div(v, total), 4)})
+        rows.append(
+            {
+                "label": k,
+                "value": float(v),
+                "pct": round(100.0 * _safe_div(v, total), 4),
+            }
+        )
     rows.sort(key=lambda r: r["value"], reverse=True)
     return rows
 
@@ -1426,7 +1703,7 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
     households: Dict[str, Dict[str, object]] = {}
     dimension_labels: Dict[str, str] = {}
     dim_keys: List[str] = []
-    
+
     # Dashboard v2.0: Initialize variables that need to persist outside with block
     pnad_mode = "trimestral"
     income_source_cols: Dict[str, str] = {}
@@ -1446,14 +1723,28 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
         cap_col = _find_col(headers, "Capital__", "Capital")
         cap_label_col = _find_col(headers, "Capital_label", "Capital_label")
 
-        sex_col = "V2007_label" if "V2007_label" in headers else _find_col(headers, "V2007__", "V2007")
-        race_col = "V2010_label" if "V2010_label" in headers else _find_col(headers, "V2010__", "V2010")
-        edu_col = "V3009A_label" if "V3009A_label" in headers else _find_col(headers, "V3009A__", "V3009A")
+        sex_col = (
+            "V2007_label"
+            if "V2007_label" in headers
+            else _find_col(headers, "V2007__", "V2007")
+        )
+        race_col = (
+            "V2010_label"
+            if "V2010_label" in headers
+            else _find_col(headers, "V2010__", "V2010")
+        )
+        edu_col = (
+            "V3009A_label"
+            if "V3009A_label" in headers
+            else _find_col(headers, "V3009A__", "V3009A")
+        )
         age_col = _find_col(headers, "V2009__", "V2009")
 
         relationship_label_col = "V2005_label" if "V2005_label" in headers else None
         relationship_raw_col = _find_col(headers, "V2005__", "V2005")
-        occupation_status_label_col = "VD4009_label" if "VD4009_label" in headers else None
+        occupation_status_label_col = (
+            "VD4009_label" if "VD4009_label" in headers else None
+        )
         occupation_status_raw_col = _find_col(headers, "VD4009__", "VD4009")
         labor_type_label_col = "VD4005_label" if "VD4005_label" in headers else None
         labor_type_raw_col = _find_col(headers, "VD4005__", "VD4005")
@@ -1464,9 +1755,14 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
 
         income_col = _detect_income_col(headers, args.income_col)
         selected_income_col = income_col
-        selected_weight_col = None if args.unweighted else _detect_weight_col(headers, args.weight_col)
+        selected_weight_col = (
+            None if args.unweighted else _detect_weight_col(headers, args.weight_col)
+        )
+        replicate_base_prefix = _replicate_prefix_for_weight(selected_weight_col)
         if use_ci:
-            replicate_weight_cols = _detect_replicate_weight_cols(headers, base_prefix="V1028")
+            replicate_weight_cols = _detect_replicate_weight_cols(
+                headers, base_prefix=replicate_base_prefix
+            )
             replicate_count = len(replicate_weight_cols)
 
         # Dashboard v2.0: Detect PNAD mode and set up income composition analysis
@@ -1477,11 +1773,17 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
             pnad_mode = pnad_mode_arg
 
         has_anual_cols = any(h.startswith("VD5001") for h in headers)
-        has_tri_cols = any(h.startswith("VD4020") or h.startswith("VD4019") for h in headers)
+        has_tri_cols = any(
+            h.startswith("VD4020") or h.startswith("VD4019") for h in headers
+        )
         if pnad_mode == "anual" and not has_anual_cols:
-            raise ValueError("modo anual solicitado, mas coluna VD5001 nao foi encontrada")
+            raise ValueError(
+                "modo anual solicitado, mas coluna VD5001 nao foi encontrada"
+            )
         if pnad_mode == "trimestral" and not has_tri_cols:
-            raise ValueError("modo trimestral solicitado, mas colunas VD4019/VD4020 nao foram encontradas")
+            raise ValueError(
+                "modo trimestral solicitado, mas colunas VD4019/VD4020 nao foram encontradas"
+            )
 
         is_anual_mode = pnad_mode == "anual"
         if is_anual_mode:
@@ -1551,7 +1853,11 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
             uf_code_raw = str(row.get(uf_col, "")).strip()
             uf_code = _uf_code_norm(uf_code_raw)
             uf_label = str(row.get(uf_label_col, "")).strip() if uf_label_col else ""
-            if uf_filter and _norm_text(uf_code) not in uf_filter and _norm_text(uf_label) not in uf_filter:
+            if (
+                uf_filter
+                and _norm_text(uf_code) not in uf_filter
+                and _norm_text(uf_label) not in uf_filter
+            ):
                 continue
 
             row_weight = 1.0
@@ -1575,31 +1881,65 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
             edu = str(row.get(edu_col, "")).strip() if edu_col else ""
             age_band = _age_band(str(row.get(age_col, ""))) if age_col else "sem_idade"
 
-            cap_label_raw = str(row.get(cap_label_col, "")).strip() if cap_label_col else ""
+            cap_label_raw = (
+                str(row.get(cap_label_col, "")).strip() if cap_label_col else ""
+            )
             cap_code_raw = str(row.get(cap_col, "")).strip() if cap_col else ""
             cap = _capital_bucket(cap_label_raw, cap_code_raw)
 
-            relationship_label = str(row.get(relationship_label_col, "")).strip() if relationship_label_col else ""
-            relationship_raw = str(row.get(relationship_raw_col, "")).strip() if relationship_raw_col else ""
+            relationship_label = (
+                str(row.get(relationship_label_col, "")).strip()
+                if relationship_label_col
+                else ""
+            )
+            relationship_raw = (
+                str(row.get(relationship_raw_col, "")).strip()
+                if relationship_raw_col
+                else ""
+            )
             relationship = relationship_label or relationship_raw or "Sem informacao"
 
             occupation_status_label = (
-                str(row.get(occupation_status_label_col, "")).strip() if occupation_status_label_col else ""
+                str(row.get(occupation_status_label_col, "")).strip()
+                if occupation_status_label_col
+                else ""
             )
             occupation_status_raw = (
-                str(row.get(occupation_status_raw_col, "")).strip() if occupation_status_raw_col else ""
+                str(row.get(occupation_status_raw_col, "")).strip()
+                if occupation_status_raw_col
+                else ""
             )
-            occupation_status = _occupation_status_bucket(occupation_status_raw, occupation_status_label)
+            occupation_status = _occupation_status_bucket(
+                occupation_status_raw, occupation_status_label
+            )
 
-            labor_type_label = str(row.get(labor_type_label_col, "")).strip() if labor_type_label_col else ""
-            labor_type_raw = str(row.get(labor_type_raw_col, "")).strip() if labor_type_raw_col else ""
+            labor_type_label = (
+                str(row.get(labor_type_label_col, "")).strip()
+                if labor_type_label_col
+                else ""
+            )
+            labor_type_raw = (
+                str(row.get(labor_type_raw_col, "")).strip()
+                if labor_type_raw_col
+                else ""
+            )
             labor_type = _labor_type_bucket(labor_type_raw, labor_type_label)
 
-            occupation_position_label = str(row.get(position_label_col, "")).strip() if position_label_col else ""
-            occupation_position_raw = str(row.get(position_raw_col, "")).strip() if position_raw_col else ""
-            occupation_position = _occupation_position_bucket(occupation_position_raw, occupation_position_label)
+            occupation_position_label = (
+                str(row.get(position_label_col, "")).strip()
+                if position_label_col
+                else ""
+            )
+            occupation_position_raw = (
+                str(row.get(position_raw_col, "")).strip() if position_raw_col else ""
+            )
+            occupation_position = _occupation_position_bucket(
+                occupation_position_raw, occupation_position_label
+            )
 
-            metro_region_label = str(row.get(rm_label_col, "")).strip() if rm_label_col else ""
+            metro_region_label = (
+                str(row.get(rm_label_col, "")).strip() if rm_label_col else ""
+            )
             metro_region_raw = str(row.get(rm_col, "")).strip() if rm_col else ""
             metro_region = _metro_region_bucket(metro_region_raw, metro_region_label)
             macro_region = _macro_region_from_uf(uf_code)
@@ -1611,7 +1951,11 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
                     for rep_col in replicate_weight_cols:
                         rep_raw = row.get(rep_col, "")
                         rep_val = _parse_float(rep_raw)
-                        rep_household_weights.append(float(rep_val) if rep_val is not None and rep_val > 0 else 0.0)
+                        rep_household_weights.append(
+                            float(rep_val)
+                            if rep_val is not None and rep_val > 0
+                            else 0.0
+                        )
 
                 income_sources_nominal_init: Dict[str, float] = {}
                 income_sources_target_init: Dict[str, float] = {}
@@ -1647,22 +1991,38 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
                 inconsistent_household_weight += 1
 
             if is_anual_mode:
-                row_sources = _calculate_household_income_sources(row, income_col, income_source_cols)
-                row_sources_target = {k: float(v) * float(factor) for k, v in row_sources.items()}
-                st["income_nominal"] = max(float(st["income_nominal"]), float(row_sources.get("total", 0.0) or 0.0))
-                st["income_target"] = max(float(st["income_target"]), float(row_sources_target.get("total", 0.0) or 0.0))
+                row_sources = _calculate_household_income_sources(
+                    row, income_col, income_source_cols
+                )
+                row_sources_target = {
+                    k: float(v) * float(factor) for k, v in row_sources.items()
+                }
+                st["income_nominal"] = max(
+                    float(st["income_nominal"]),
+                    float(row_sources.get("total", 0.0) or 0.0),
+                )
+                st["income_target"] = max(
+                    float(st["income_target"]),
+                    float(row_sources_target.get("total", 0.0) or 0.0),
+                )
                 src_nominal = st.get("income_sources_nominal", {})
                 src_target = st.get("income_sources_target", {})
                 if isinstance(src_nominal, dict) and isinstance(src_target, dict):
                     for src_key, src_val in row_sources.items():
-                        src_nominal[src_key] = max(float(src_nominal.get(src_key, 0.0) or 0.0), float(src_val))
+                        src_nominal[src_key] = max(
+                            float(src_nominal.get(src_key, 0.0) or 0.0), float(src_val)
+                        )
                         src_target[src_key] = max(
                             float(src_target.get(src_key, 0.0) or 0.0),
                             float(row_sources_target.get(src_key, 0.0) or 0.0),
                         )
             else:
-                st["income_nominal"] = float(st["income_nominal"]) + float(income_nominal)
-                st["income_target"] = float(st["income_target"]) + float(income_nominal) * float(factor)
+                st["income_nominal"] = float(st["income_nominal"]) + float(
+                    income_nominal
+                )
+                st["income_target"] = float(st["income_target"]) + float(
+                    income_nominal
+                ) * float(factor)
 
             sw = row_weight if not args.unweighted else 1.0
             row_dims = {
@@ -1699,7 +2059,11 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
             "households_sample": 0,
             "persons_sample": 0,
             "sum_ratio": 0.0,
-            "bands": {str(item["label"]): {"households": 0.0, "persons": 0.0} for item in ranges},
+            "sum_income": 0.0,
+            "bands": {
+                str(item["label"]): {"households": 0.0, "persons": 0.0}
+                for item in ranges
+            },
             "rep_households_total": [0.0] * replicate_count if use_ci else [],
             "rep_persons_total": [0.0] * replicate_count if use_ci else [],
             "rep_sum_ratio": [0.0] * replicate_count if use_ci else [],
@@ -1721,12 +2085,15 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
         cross = {k: defaultdict(lambda: defaultdict(float)) for k in dim_keys}
         age_sex = defaultdict(lambda: defaultdict(float))
         ratio_pairs: List[Tuple[float, float]] = []
+        income_pairs: List[Tuple[float, float]] = []
         sm_ref_weighted_sum = 0.0
         sm_ref_weight_total = 0.0
         sm_ref_min: Optional[float] = None
         sm_ref_max: Optional[float] = None
 
-        def ensure_group(container: Dict[str, Dict[str, object]], key: str, label: str) -> Dict[str, object]:
+        def ensure_group(
+            container: Dict[str, Dict[str, object]], key: str, label: str
+        ) -> Dict[str, object]:
             g = container.get(key)
             if g is None:
                 rep_households_total = [0.0] * replicate_count if use_ci else []
@@ -1751,7 +2118,11 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
                     "households_sample": 0,
                     "persons_sample": 0,
                     "sum_ratio": 0.0,
-                    "bands": {str(item["label"]): {"households": 0.0, "persons": 0.0} for item in ranges},
+                    "sum_income": 0.0,
+                    "bands": {
+                        str(item["label"]): {"households": 0.0, "persons": 0.0}
+                        for item in ranges
+                    },
                     "rep_households_total": rep_households_total,
                     "rep_persons_total": rep_persons_total,
                     "rep_sum_ratio": rep_sum_ratio,
@@ -1788,6 +2159,11 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
                 rep_band_persons[j] += rep_pp_w
 
         for h in households.values():
+            active_income = (
+                float(h["income_nominal"])
+                if mode == "periodo"
+                else float(h["income_target"])
+            )
             if mode == "periodo":
                 ratio = _safe_div(float(h["income_nominal"]), float(h["sm_period"]))
             else:
@@ -1795,25 +2171,41 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
             band = _classify_range(ratio if ratio > 0 else 0.0, ranges)
 
             hh_w = 1.0 if args.unweighted else float(h["household_weight"])
-            pp_w = float(h["persons_n"]) if args.unweighted else float(h["persons_weight"])
+            pp_w = (
+                float(h["persons_n"]) if args.unweighted else float(h["persons_weight"])
+            )
             uf_code = str(h["uf_code"])
             uf_label = str(h["uf_label"])
             macro = str(h.get("macro_region", "Desconhecida") or "Desconhecida")
-            sm_ref_value = float(sm_target_nominal) if mode == "alvo" else float(h.get("sm_period") or 0.0)
+            sm_ref_value = (
+                float(sm_target_nominal)
+                if mode == "alvo"
+                else float(h.get("sm_period") or 0.0)
+            )
             if sm_ref_value > 0:
                 sm_ref_weighted_sum += sm_ref_value * hh_w
                 sm_ref_weight_total += hh_w
-                sm_ref_min = sm_ref_value if sm_ref_min is None else min(sm_ref_min, sm_ref_value)
-                sm_ref_max = sm_ref_value if sm_ref_max is None else max(sm_ref_max, sm_ref_value)
+                sm_ref_min = (
+                    sm_ref_value
+                    if sm_ref_min is None
+                    else min(sm_ref_min, sm_ref_value)
+                )
+                sm_ref_max = (
+                    sm_ref_value
+                    if sm_ref_max is None
+                    else max(sm_ref_max, sm_ref_value)
+                )
 
             national["households_total"] += hh_w
             national["persons_total"] += pp_w
             national["households_sample"] += 1
             national["persons_sample"] += int(h["persons_n"])
             national["sum_ratio"] += ratio * hh_w
+            national["sum_income"] += active_income * hh_w
             national["bands"][band]["households"] += hh_w
             national["bands"][band]["persons"] += pp_w
             ratio_pairs.append((ratio, hh_w))
+            income_pairs.append((active_income, hh_w))
 
             u = ensure_group(uf_stats, uf_code, uf_label)
             u["households_total"] += hh_w
@@ -1821,6 +2213,7 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
             u["households_sample"] += 1
             u["persons_sample"] += int(h["persons_n"])
             u["sum_ratio"] += ratio * hh_w
+            u["sum_income"] += active_income * hh_w
             u["bands"][band]["households"] += hh_w
             u["bands"][band]["persons"] += pp_w
 
@@ -1830,6 +2223,7 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
             m["households_sample"] += 1
             m["persons_sample"] += int(h["persons_n"])
             m["sum_ratio"] += ratio * hh_w
+            m["sum_income"] += active_income * hh_w
             m["bands"][band]["households"] += hh_w
             m["bands"][band]["persons"] += pp_w
             rep_weights = h.get("rep_household_weights", [])
@@ -1874,18 +2268,29 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
             hh_total = float(g["households_total"])
             pp_total = float(g["persons_total"])
             avg_sm = _safe_div(float(g["sum_ratio"]), hh_total)
+            avg_income = _safe_div(float(g.get("sum_income", 0.0) or 0.0), hh_total)
             rep_households_total = g.get("rep_households_total", [])
             rep_persons_total = g.get("rep_persons_total", [])
             rep_sum_ratio = g.get("rep_sum_ratio", [])
             avg_sm_ci: Optional[Dict[str, float]] = None
-            if use_ci and isinstance(rep_households_total, list) and isinstance(rep_sum_ratio, list):
+            if (
+                use_ci
+                and isinstance(rep_households_total, list)
+                and isinstance(rep_sum_ratio, list)
+            ):
                 avg_reps = [
-                    _safe_div(float(rep_sum_ratio[j]), float(rep_households_total[j]))
-                    if float(rep_households_total[j]) > 0
-                    else 0.0
+                    (
+                        _safe_div(
+                            float(rep_sum_ratio[j]), float(rep_households_total[j])
+                        )
+                        if float(rep_households_total[j]) > 0
+                        else 0.0
+                    )
                     for j in range(replicate_count)
                 ]
-                avg_sm_ci = _ci_from_replicates(float(avg_sm), avg_reps, ci_level=ci_level)
+                avg_sm_ci = _ci_from_replicates(
+                    float(avg_sm), avg_reps, ci_level=ci_level
+                )
 
             bands_rows = []
             for item in ranges:
@@ -1904,8 +2309,16 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
                 }
                 if use_ci:
                     rep_band = g.get("rep_bands", {}).get(lbl, {})
-                    rep_bh = rep_band.get("households", []) if isinstance(rep_band, dict) else []
-                    rep_bp = rep_band.get("persons", []) if isinstance(rep_band, dict) else []
+                    rep_bh = (
+                        rep_band.get("households", [])
+                        if isinstance(rep_band, dict)
+                        else []
+                    )
+                    rep_bp = (
+                        rep_band.get("persons", [])
+                        if isinstance(rep_band, dict)
+                        else []
+                    )
                     if (
                         isinstance(rep_households_total, list)
                         and isinstance(rep_persons_total, list)
@@ -1917,26 +2330,44 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
                         and len(rep_bp) == replicate_count
                     ):
                         hh_rep = [
-                            100.0 * _safe_div(float(rep_bh[j]), float(rep_households_total[j]))
-                            if float(rep_households_total[j]) > 0
-                            else 0.0
+                            (
+                                100.0
+                                * _safe_div(
+                                    float(rep_bh[j]), float(rep_households_total[j])
+                                )
+                                if float(rep_households_total[j]) > 0
+                                else 0.0
+                            )
                             for j in range(replicate_count)
                         ]
                         pp_rep = [
-                            100.0 * _safe_div(float(rep_bp[j]), float(rep_persons_total[j]))
-                            if float(rep_persons_total[j]) > 0
-                            else 0.0
+                            (
+                                100.0
+                                * _safe_div(
+                                    float(rep_bp[j]), float(rep_persons_total[j])
+                                )
+                                if float(rep_persons_total[j]) > 0
+                                else 0.0
+                            )
                             for j in range(replicate_count)
                         ]
-                        hh_ci = _ci_from_replicates(float(hp), hh_rep, ci_level=ci_level, clamp=(0.0, 100.0))
-                        pp_ci = _ci_from_replicates(float(pp), pp_rep, ci_level=ci_level, clamp=(0.0, 100.0))
+                        hh_ci = _ci_from_replicates(
+                            float(hp), hh_rep, ci_level=ci_level, clamp=(0.0, 100.0)
+                        )
+                        pp_ci = _ci_from_replicates(
+                            float(pp), pp_rep, ci_level=ci_level, clamp=(0.0, 100.0)
+                        )
                         if hh_ci:
                             row_out.update(
                                 {
                                     "households_pct_se": round(float(hh_ci["se"]), 6),
                                     "households_pct_moe": round(float(hh_ci["moe"]), 6),
-                                    "households_pct_ci_low": round(float(hh_ci["ci_low"]), 6),
-                                    "households_pct_ci_high": round(float(hh_ci["ci_high"]), 6),
+                                    "households_pct_ci_low": round(
+                                        float(hh_ci["ci_low"]), 6
+                                    ),
+                                    "households_pct_ci_high": round(
+                                        float(hh_ci["ci_high"]), 6
+                                    ),
                                 }
                             )
                         if pp_ci:
@@ -1944,8 +2375,12 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
                                 {
                                     "persons_pct_se": round(float(pp_ci["se"]), 6),
                                     "persons_pct_moe": round(float(pp_ci["moe"]), 6),
-                                    "persons_pct_ci_low": round(float(pp_ci["ci_low"]), 6),
-                                    "persons_pct_ci_high": round(float(pp_ci["ci_high"]), 6),
+                                    "persons_pct_ci_low": round(
+                                        float(pp_ci["ci_low"]), 6
+                                    ),
+                                    "persons_pct_ci_high": round(
+                                        float(pp_ci["ci_high"]), 6
+                                    ),
                                 }
                             )
                 bands_rows.append(row_out)
@@ -1957,6 +2392,7 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
                 "persons_total": pp_total,
                 "households_sample": int(g["households_sample"]),
                 "persons_sample": int(g["persons_sample"]),
+                "avg_household_income_brl": round(avg_income, 6),
                 "avg_household_sm": round(avg_sm, 6),
                 "bands": bands_rows,
             }
@@ -1966,12 +2402,17 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
                         "avg_household_sm_se": round(float(avg_sm_ci["se"]), 6),
                         "avg_household_sm_moe": round(float(avg_sm_ci["moe"]), 6),
                         "avg_household_sm_ci_low": round(float(avg_sm_ci["ci_low"]), 6),
-                        "avg_household_sm_ci_high": round(float(avg_sm_ci["ci_high"]), 6),
+                        "avg_household_sm_ci_high": round(
+                            float(avg_sm_ci["ci_high"]), 6
+                        ),
                     }
                 )
             return out_row
 
         national_out = finalize_group({"group": "BR", "label": "Brasil", **national})
+        national_out["median_household_income_brl"] = round(
+            _weighted_median(income_pairs), 6
+        )
         national_out["median_household_sm"] = round(_weighted_median(ratio_pairs), 6)
         national_out["gini_household_sm"] = round(_weighted_gini(ratio_pairs), 6)
 
@@ -1986,22 +2427,32 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
             uf_rows.sort(key=lambda r: float(r["avg_household_sm"]), reverse=True)
 
         top10_income = uf_rows[:10]
-        bottom10_income = sorted(uf_rows, key=lambda r: float(r["avg_household_sm"]))[:10]
-        top10_population = sorted(uf_rows, key=lambda r: float(r["persons_total"]), reverse=True)[:10]
+        bottom10_income = sorted(uf_rows, key=lambda r: float(r["avg_household_sm"]))[
+            :10
+        ]
+        top10_population = sorted(
+            uf_rows, key=lambda r: float(r["persons_total"]), reverse=True
+        )[:10]
         low_label = str(ranges[0]["label"]) if ranges else ""
         high_label = str(ranges[-1]["label"]) if ranges else ""
         top10_low_income = (
-            sorted(uf_rows, key=lambda r: _band_pct(r, low_label), reverse=True)[:10] if low_label else []
+            sorted(uf_rows, key=lambda r: _band_pct(r, low_label), reverse=True)[:10]
+            if low_label
+            else []
         )
         top10_high_income = (
-            sorted(uf_rows, key=lambda r: _band_pct(r, high_label), reverse=True)[:10] if high_label else []
+            sorted(uf_rows, key=lambda r: _band_pct(r, high_label), reverse=True)[:10]
+            if high_label
+            else []
         )
 
         macro_rows = [finalize_group(v) for v in macro_stats.values()]
         macro_rows.sort(
-            key=lambda r: MACRO_REGION_ORDER.index(str(r["group"]))
-            if str(r["group"]) in MACRO_REGION_ORDER
-            else 999
+            key=lambda r: (
+                MACRO_REGION_ORDER.index(str(r["group"]))
+                if str(r["group"]) in MACRO_REGION_ORDER
+                else 999
+            )
         )
 
         persons_total = float(national_out["persons_total"])
@@ -2046,27 +2497,43 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
                     "female_pct": round(100.0 * _safe_div(female, persons_total), 4),
                     "male_pct": round(100.0 * _safe_div(male, persons_total), 4),
                     "other_pct": round(100.0 * _safe_div(other, persons_total), 4),
-                    "female_within_age_pct": round(100.0 * _safe_div(female, total_age), 4),
+                    "female_within_age_pct": round(
+                        100.0 * _safe_div(female, total_age), 4
+                    ),
                     "male_within_age_pct": round(100.0 * _safe_div(male, total_age), 4),
-                    "other_within_age_pct": round(100.0 * _safe_div(other, total_age), 4),
+                    "other_within_age_pct": round(
+                        100.0 * _safe_div(other, total_age), 4
+                    ),
                 }
             )
         sm_reference_value = _safe_div(sm_ref_weighted_sum, sm_ref_weight_total)
         if sm_reference_value <= 0:
             sm_reference_value = float(sm_target_nominal)
         ranges_money = _ranges_money_from_specs(ranges, sm_reference_value)
-        range_money_map = {str(x.get("range", "")): str(x.get("money_label", "")) for x in ranges_money}
+        range_money_map = {
+            str(x.get("range", "")): str(x.get("money_label", "")) for x in ranges_money
+        }
         insights = {
             "national_low_income_band": low_label,
             "national_high_income_band": high_label,
             "national_low_income_money": range_money_map.get(low_label, ""),
             "national_high_income_money": range_money_map.get(high_label, ""),
-            "national_low_income_pct": round(_band_pct(national_out, low_label), 4) if low_label else 0.0,
-            "national_high_income_pct": round(_band_pct(national_out, high_label), 4) if high_label else 0.0,
+            "national_low_income_pct": (
+                round(_band_pct(national_out, low_label), 4) if low_label else 0.0
+            ),
+            "national_high_income_pct": (
+                round(_band_pct(national_out, high_label), 4) if high_label else 0.0
+            ),
             "richest_uf_by_avg_sm": top10_income[0]["label"] if top10_income else "",
-            "poorest_uf_by_avg_sm": bottom10_income[0]["label"] if bottom10_income else "",
-            "highest_low_income_uf": top10_low_income[0]["label"] if top10_low_income else "",
-            "highest_high_income_uf": top10_high_income[0]["label"] if top10_high_income else "",
+            "poorest_uf_by_avg_sm": (
+                bottom10_income[0]["label"] if bottom10_income else ""
+            ),
+            "highest_low_income_uf": (
+                top10_low_income[0]["label"] if top10_low_income else ""
+            ),
+            "highest_high_income_uf": (
+                top10_high_income[0]["label"] if top10_high_income else ""
+            ),
         }
 
         modes_out[mode] = {
@@ -2081,9 +2548,15 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
             "top10_uf_low_income": top10_low_income,
             "top10_uf_high_income": top10_high_income,
             "sm_reference_value": round(float(sm_reference_value), 2),
-            "sm_reference_month": sm_target_month if mode == "alvo" else "periodo_medio",
-            "sm_reference_min": None if sm_ref_min is None else round(float(sm_ref_min), 2),
-            "sm_reference_max": None if sm_ref_max is None else round(float(sm_ref_max), 2),
+            "sm_reference_month": (
+                sm_target_month if mode == "alvo" else "periodo_medio"
+            ),
+            "sm_reference_min": (
+                None if sm_ref_min is None else round(float(sm_ref_min), 2)
+            ),
+            "sm_reference_max": (
+                None if sm_ref_max is None else round(float(sm_ref_max), 2)
+            ),
             "ranges_money": ranges_money,
             "insights": insights,
             "demographics": demographics_out,
@@ -2095,7 +2568,7 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
                 "ci_level": ci_level,
                 "variance_method": "bootstrap_replicates_mse",
                 "variance_formula": "var=(1/(R-1))*sum((theta_r-theta)^2)",
-                "replicate_weight_base": "V1028",
+                "replicate_weight_base": replicate_base_prefix,
                 "replicate_weight_count": int(replicate_count),
                 "replicate_weight_columns_detected": int(len(replicate_weight_cols)),
                 "person_weight_assumption": "persons_weight_rep=persons_in_dom*household_rep_weight",
@@ -2105,6 +2578,8 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
     income_composition_payload: Dict[str, object] = {
         "income_composition_national": {},
         "income_sources_detail": {},
+        "income_lenses_national": {},
+        "income_lenses_by_band": {},
         "uf_dependency_ranking": [],
         "composition_by_band": {},
     }
@@ -2112,14 +2587,21 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
     total_income_median = 0.0
 
     if is_anual_mode:
-        summary_mode = "alvo" if "alvo" in modes_out else (next(iter(modes_out.keys())) if modes_out else "alvo")
+        summary_mode = (
+            "alvo"
+            if "alvo" in modes_out
+            else (next(iter(modes_out.keys())) if modes_out else "alvo")
+        )
         use_target_values = summary_mode == "alvo"
         active_income_key = "income_target" if use_target_values else "income_nominal"
-        active_sources_key = "income_sources_target" if use_target_values else "income_sources_nominal"
+        active_sources_key = (
+            "income_sources_target" if use_target_values else "income_sources_nominal"
+        )
 
         annual_source_keys = list(INCOME_SOURCE_COLS.keys()) + ["trabalho"]
         source_totals = {k: 0.0 for k in annual_source_keys}
         source_recipients = {k: 0.0 for k in INCOME_SOURCE_COLS.keys()}
+        lens_totals = {k: 0.0 for k in ANNUAL_INCOME_LENS_ORDER}
         national_total_income = 0.0
         national_total_weight = 0.0
         income_pairs: List[Tuple[float, float]] = []
@@ -2130,12 +2612,15 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
                 "households": 0.0,
                 "total_income": 0.0,
                 "sources": {k: 0.0 for k in annual_source_keys},
+                "lenses": {k: 0.0 for k in ANNUAL_INCOME_LENS_ORDER},
             }
             for item in ranges
         }
 
         for h in households.values():
-            hh_w = 1.0 if args.unweighted else float(h.get("household_weight", 1.0) or 1.0)
+            hh_w = (
+                1.0 if args.unweighted else float(h.get("household_weight", 1.0) or 1.0)
+            )
             if hh_w <= 0:
                 continue
             hh_income = float(h.get(active_income_key, 0.0) or 0.0)
@@ -2155,16 +2640,26 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
                     val = 0.0
                 source_amounts[src_key] = val
                 non_work_total += val
-            trabalho_val = float(raw_sources.get("trabalho", max(0.0, hh_income - non_work_total)) or 0.0)
+            trabalho_val = float(
+                raw_sources.get("trabalho", max(0.0, hh_income - non_work_total)) or 0.0
+            )
             if trabalho_val < 0:
                 trabalho_val = 0.0
             source_amounts["trabalho"] = trabalho_val
+            source_amounts["total"] = hh_income
+            lens_amounts = _calculate_income_lenses(source_amounts)
 
             national_total_income += hh_income * hh_w
             national_total_weight += hh_w
             income_pairs.append((hh_income, hh_w))
             for src_key in annual_source_keys:
-                source_totals[src_key] += float(source_amounts.get(src_key, 0.0) or 0.0) * hh_w
+                source_totals[src_key] += (
+                    float(source_amounts.get(src_key, 0.0) or 0.0) * hh_w
+                )
+            for lens_key in ANNUAL_INCOME_LENS_ORDER:
+                lens_totals[lens_key] += (
+                    float(lens_amounts.get(lens_key, 0.0) or 0.0) * hh_w
+                )
             for src_key in INCOME_SOURCE_COLS.keys():
                 if float(source_amounts.get(src_key, 0.0) or 0.0) > 0:
                     source_recipients[src_key] += hh_w
@@ -2180,33 +2675,54 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
                     }
                 uf_data = uf_income_composition[uf_code]
                 uf_data["households"] = float(uf_data["households"]) + hh_w
-                uf_data["total_income"] = float(uf_data["total_income"]) + hh_income * hh_w
+                uf_data["total_income"] = (
+                    float(uf_data["total_income"]) + hh_income * hh_w
+                )
                 uf_sources = uf_data.get("sources", {})
                 if isinstance(uf_sources, dict):
                     for src_key in annual_source_keys:
-                        uf_sources[src_key] = float(uf_sources.get(src_key, 0.0) or 0.0) + float(
-                            source_amounts.get(src_key, 0.0) or 0.0
-                        ) * hh_w
+                        uf_sources[src_key] = (
+                            float(uf_sources.get(src_key, 0.0) or 0.0)
+                            + float(source_amounts.get(src_key, 0.0) or 0.0) * hh_w
+                        )
 
-            sm_ref = float(sm_target_nominal) if use_target_values else float(h.get("sm_period", 0.0) or 0.0)
+            sm_ref = (
+                float(sm_target_nominal)
+                if use_target_values
+                else float(h.get("sm_period", 0.0) or 0.0)
+            )
             if sm_ref > 0:
                 ratio = _safe_div(hh_income, sm_ref)
                 band = _classify_range(max(0.0, ratio), ranges)
                 band_data = band_income_composition.get(band)
                 if isinstance(band_data, dict):
-                    band_data["households"] = float(band_data.get("households", 0.0) or 0.0) + hh_w
-                    band_data["total_income"] = float(band_data.get("total_income", 0.0) or 0.0) + hh_income * hh_w
+                    band_data["households"] = (
+                        float(band_data.get("households", 0.0) or 0.0) + hh_w
+                    )
+                    band_data["total_income"] = (
+                        float(band_data.get("total_income", 0.0) or 0.0)
+                        + hh_income * hh_w
+                    )
                     band_sources = band_data.get("sources", {})
                     if isinstance(band_sources, dict):
                         for src_key in annual_source_keys:
-                            band_sources[src_key] = float(band_sources.get(src_key, 0.0) or 0.0) + float(
-                                source_amounts.get(src_key, 0.0) or 0.0
-                            ) * hh_w
+                            band_sources[src_key] = (
+                                float(band_sources.get(src_key, 0.0) or 0.0)
+                                + float(source_amounts.get(src_key, 0.0) or 0.0) * hh_w
+                            )
+                    band_lenses = band_data.get("lenses", {})
+                    if isinstance(band_lenses, dict):
+                        for lens_key in ANNUAL_INCOME_LENS_ORDER:
+                            band_lenses[lens_key] = (
+                                float(band_lenses.get(lens_key, 0.0) or 0.0)
+                                + float(lens_amounts.get(lens_key, 0.0) or 0.0) * hh_w
+                            )
 
         total_income_mean = _safe_div(national_total_income, national_total_weight)
         total_income_median = _weighted_median(income_pairs)
         income_composition_national: Dict[str, object] = {}
         income_sources_detail: Dict[str, object] = {}
+        income_lenses_national: Dict[str, object] = {}
 
         if national_total_income > 0 and national_total_weight > 0:
             for src_key in INCOME_SOURCE_COLS.keys():
@@ -2214,19 +2730,42 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
                 income_sources_detail[src_key] = {
                     "label": INCOME_SOURCE_LABELS.get(src_key, src_key),
                     "mean": round(_safe_div(src_total, national_total_weight), 2),
-                    "pct": round(100.0 * _safe_div(src_total, national_total_income), 2),
-                    "recipients_pct": round(100.0 * _safe_div(source_recipients.get(src_key, 0.0), national_total_weight), 2),
+                    "pct": round(
+                        100.0 * _safe_div(src_total, national_total_income), 2
+                    ),
+                    "recipients_pct": round(
+                        100.0
+                        * _safe_div(
+                            source_recipients.get(src_key, 0.0), national_total_weight
+                        ),
+                        2,
+                    ),
                 }
 
             for cat in INCOME_CATEGORY_ORDER:
                 if cat == "trabalho":
                     cat_total = float(source_totals.get("trabalho", 0.0) or 0.0)
                 else:
-                    cat_total = sum(float(source_totals.get(src, 0.0) or 0.0) for src in INCOME_CATEGORIES.get(cat, []))
+                    cat_total = sum(
+                        float(source_totals.get(src, 0.0) or 0.0)
+                        for src in INCOME_CATEGORIES.get(cat, [])
+                    )
                 income_composition_national[cat] = {
                     "label": INCOME_CATEGORY_LABELS.get(cat, cat),
                     "mean": round(_safe_div(cat_total, national_total_weight), 2),
-                    "pct": round(100.0 * _safe_div(cat_total, national_total_income), 2),
+                    "pct": round(
+                        100.0 * _safe_div(cat_total, national_total_income), 2
+                    ),
+                }
+
+            for lens_key in ANNUAL_INCOME_LENS_ORDER:
+                lens_total = float(lens_totals.get(lens_key, 0.0) or 0.0)
+                income_lenses_national[lens_key] = {
+                    "label": ANNUAL_INCOME_LENS_LABELS.get(lens_key, lens_key),
+                    "mean": round(_safe_div(lens_total, national_total_weight), 2),
+                    "pct_of_total": round(
+                        100.0 * _safe_div(lens_total, national_total_income), 2
+                    ),
                 }
 
         uf_dependency_ranking: List[Dict[str, object]] = []
@@ -2237,12 +2776,19 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
             if total_inc <= 0 or hh_count <= 0 or not isinstance(uf_sources, dict):
                 continue
             work_total = float(uf_sources.get("trabalho", 0.0) or 0.0)
-            benefits_total = sum(float(uf_sources.get(k, 0.0) or 0.0) for k in INCOME_CATEGORIES["beneficios_sociais"])
-            previdencia_total = float(uf_sources.get("aposentadoria_pensao", 0.0) or 0.0)
+            benefits_total = sum(
+                float(uf_sources.get(k, 0.0) or 0.0)
+                for k in INCOME_CATEGORIES["beneficios_sociais"]
+            )
+            previdencia_total = float(
+                uf_sources.get("aposentadoria_pensao", 0.0) or 0.0
+            )
             work_pct = 100.0 * _safe_div(work_total, total_inc)
             benefits_pct = 100.0 * _safe_div(benefits_total, total_inc)
             previdencia_pct = 100.0 * _safe_div(previdencia_total, total_inc)
-            dependency_score = _calculate_dependency_score(benefits_pct, previdencia_pct, work_pct)
+            dependency_score = _calculate_dependency_score(
+                benefits_pct, previdencia_pct, work_pct
+            )
             uf_dependency_ranking.append(
                 {
                     "uf_code": uf_code,
@@ -2254,42 +2800,106 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
                     "dependency_score": round(dependency_score, 2),
                 }
             )
-        uf_dependency_ranking.sort(key=lambda x: float(x.get("dependency_score", 0.0)), reverse=True)
+        uf_dependency_ranking.sort(
+            key=lambda x: float(x.get("dependency_score", 0.0)), reverse=True
+        )
 
         composition_by_band: Dict[str, object] = {}
-        total_households_in_bands = sum(float(x.get("households", 0.0) or 0.0) for x in band_income_composition.values())
+        income_lenses_by_band: Dict[str, object] = {}
+        total_households_in_bands = sum(
+            float(x.get("households", 0.0) or 0.0)
+            for x in band_income_composition.values()
+        )
         for item in ranges:
             band_label = str(item["label"])
             band_data = band_income_composition.get(band_label, {})
-            band_hh = float(band_data.get("households", 0.0) or 0.0) if isinstance(band_data, dict) else 0.0
-            band_income = float(band_data.get("total_income", 0.0) or 0.0) if isinstance(band_data, dict) else 0.0
-            band_sources = band_data.get("sources", {}) if isinstance(band_data, dict) else {}
+            band_hh = (
+                float(band_data.get("households", 0.0) or 0.0)
+                if isinstance(band_data, dict)
+                else 0.0
+            )
+            band_income = (
+                float(band_data.get("total_income", 0.0) or 0.0)
+                if isinstance(band_data, dict)
+                else 0.0
+            )
+            band_sources = (
+                band_data.get("sources", {}) if isinstance(band_data, dict) else {}
+            )
+            band_lenses = (
+                band_data.get("lenses", {}) if isinstance(band_data, dict) else {}
+            )
             composition: Dict[str, float] = {}
             for cat in INCOME_CATEGORY_ORDER:
                 if cat == "trabalho":
-                    cat_total = float(band_sources.get("trabalho", 0.0) or 0.0) if isinstance(band_sources, dict) else 0.0
-                else:
                     cat_total = (
-                        sum(float(band_sources.get(src, 0.0) or 0.0) for src in INCOME_CATEGORIES.get(cat, []))
+                        float(band_sources.get("trabalho", 0.0) or 0.0)
                         if isinstance(band_sources, dict)
                         else 0.0
                     )
-                composition[cat] = round(100.0 * _safe_div(cat_total, band_income), 2) if band_income > 0 else 0.0
+                else:
+                    cat_total = (
+                        sum(
+                            float(band_sources.get(src, 0.0) or 0.0)
+                            for src in INCOME_CATEGORIES.get(cat, [])
+                        )
+                        if isinstance(band_sources, dict)
+                        else 0.0
+                    )
+                composition[cat] = (
+                    round(100.0 * _safe_div(cat_total, band_income), 2)
+                    if band_income > 0
+                    else 0.0
+                )
             composition_by_band[band_label] = {
-                "households_pct": round(100.0 * _safe_div(band_hh, total_households_in_bands), 2)
-                if total_households_in_bands > 0
-                else 0.0,
-                "income_mean": round(_safe_div(band_income, band_hh), 2) if band_hh > 0 else 0.0,
+                "households_pct": (
+                    round(100.0 * _safe_div(band_hh, total_households_in_bands), 2)
+                    if total_households_in_bands > 0
+                    else 0.0
+                ),
+                "income_mean": (
+                    round(_safe_div(band_income, band_hh), 2) if band_hh > 0 else 0.0
+                ),
                 "composition": composition,
+            }
+            income_lenses_by_band[band_label] = {
+                lens_key: {
+                    "label": ANNUAL_INCOME_LENS_LABELS.get(lens_key, lens_key),
+                    "mean": (
+                        round(
+                            _safe_div(
+                                float(band_lenses.get(lens_key, 0.0) or 0.0), band_hh
+                            ),
+                            2,
+                        )
+                        if band_hh > 0
+                        else 0.0
+                    ),
+                    "pct_of_total": (
+                        round(
+                            100.0
+                            * _safe_div(
+                                float(band_lenses.get(lens_key, 0.0) or 0.0),
+                                band_income,
+                            ),
+                            2,
+                        )
+                        if band_income > 0
+                        else 0.0
+                    ),
+                }
+                for lens_key in ANNUAL_INCOME_LENS_ORDER
             }
 
         income_composition_payload = {
             "income_composition_national": income_composition_national,
             "income_sources_detail": income_sources_detail,
+            "income_lenses_national": income_lenses_national,
+            "income_lenses_by_band": income_lenses_by_band,
             "uf_dependency_ranking": uf_dependency_ranking,
             "composition_by_band": composition_by_band,
         }
-    
+
     return {
         "input": str(input_path),
         "target": target,
@@ -2324,7 +2934,7 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
             "ci_level": ci_level,
             "variance_method": "bootstrap_replicates_mse",
             "variance_formula": "var=(1/(R-1))*sum((theta_r-theta)^2)",
-            "replicate_weight_base": "V1028",
+            "replicate_weight_base": replicate_base_prefix,
             "replicate_weight_count": int(replicate_count),
             "replicate_weight_columns_detected": int(len(replicate_weight_cols)),
             "person_weight_assumption": "persons_weight_rep=persons_in_dom*household_rep_weight",
@@ -2332,8 +2942,12 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
         "dimension_labels": dimension_labels,
         "modes": modes_out,
         "total_households": int(len(households)),
-        "total_income_mean": round(float(total_income_mean), 2) if is_anual_mode else None,
-        "total_income_median": round(float(total_income_median), 2) if is_anual_mode else None,
+        "total_income_mean": (
+            round(float(total_income_mean), 2) if is_anual_mode else None
+        ),
+        "total_income_median": (
+            round(float(total_income_median), 2) if is_anual_mode else None
+        ),
         **income_composition_payload,
         "metadata": {
             "rows_read": sampled_rows,
@@ -2353,13 +2967,1022 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
             "ci_level": ci_level,
             "replicate_weights_found": int(len(replicate_weight_cols)),
             "pnad_mode": pnad_mode,
-            "income_source_cols_detected": list(income_source_cols.keys()) if income_source_cols else [],
+            "income_source_cols_detected": (
+                list(income_source_cols.keys()) if income_source_cols else []
+            ),
         },
     }
 
 
+# ==========================================================================
+# DASHBOARD v3 — FANTASY TERMINAL DESIGN
+# Hero cards, sparklines, Lorenz curves, choropleth, braille plots, gauges,
+# Sankey flows, dot plots, bullet charts, and an auditable statistical seal.
+# All rendered in pure UTF-8 + ANSI 256 colors. No external deps.
+# ==========================================================================
+
+_SPARK_CHARS = "▁▂▃▄▅▆▇█"
+_UF_ORDER_RICHER_TO_POORER = [
+    "Distrito Federal",
+    "Santa Catarina",
+    "São Paulo",
+    "Paraná",
+    "Rio Grande do Sul",
+    "Rio de Janeiro",
+    "Mato Grosso",
+    "Mato Grosso do Sul",
+    "Goiás",
+    "Espírito Santo",
+    "Minas Gerais",
+    "Roraima",
+    "Tocantins",
+    "Rondônia",
+    "Amapá",
+    "Amazonas",
+    "Acre",
+    "Pará",
+    "Sergipe",
+    "Rio Grande do Norte",
+    "Paraíba",
+    "Piauí",
+    "Pernambuco",
+    "Bahia",
+    "Ceará",
+    "Alagoas",
+    "Maranhão",
+]
+
+
+def _cv_from_moe(value: float, moe: float, ci_level: float = 0.95) -> Optional[float]:
+    if value is None or moe is None or value == 0:
+        return None
+    try:
+        z = NormalDist().inv_cdf(0.5 + ci_level / 2.0)
+    except Exception:
+        z = 1.96
+    if z <= 0:
+        return None
+    se = float(moe) / z
+    return abs(se / float(value))
+
+
+def _quality_badge(cv: Optional[float], use_color: bool) -> str:
+    if cv is None:
+        return _colorize("·", "38;5;244", use_color)
+    if cv < 0.05:
+        return _colorize("✓", "1;38;5;46", use_color)
+    if cv < 0.15:
+        return _colorize("✓", "1;38;5;190", use_color)
+    if cv < 0.30:
+        return _colorize("⚠", "1;38;5;214", use_color)
+    return _colorize("✗", "1;38;5;196", use_color)
+
+
+def _sparkline(
+    values: Sequence[float], use_color: bool = False, color: object = "1;38;5;46"
+) -> str:
+    vals = [float(v) for v in values]
+    if not vals:
+        return ""
+    vmin = min(vals)
+    vmax = max(vals)
+    rng = vmax - vmin
+    chars: List[str] = []
+    for v in vals:
+        if rng <= 0:
+            idx = len(_SPARK_CHARS) // 2
+        else:
+            idx = int(round((v - vmin) / rng * (len(_SPARK_CHARS) - 1)))
+        chars.append(_SPARK_CHARS[max(0, min(len(_SPARK_CHARS) - 1, idx))])
+    text = "".join(chars)
+    return _colorize(text, color, use_color) if use_color else text
+
+
+def _delta_arrow(value: float, reference: float, use_color: bool) -> str:
+    if reference == 0:
+        return ""
+    pct = 100.0 * (value - reference) / abs(reference)
+    if abs(pct) < 0.5:
+        return _colorize(f"≈ {pct:+.1f}%", "38;5;244", use_color)
+    if pct > 0:
+        return _colorize(f"▲ {pct:+5.1f}%", "1;38;5;46", use_color)
+    return _colorize(f"▼ {pct:+5.1f}%", "1;38;5;196", use_color)
+
+
+def _ornamental_divider(
+    index: str, title: str, *, use_color: bool, width: int = 90
+) -> str:
+    # Produces: ━━━━━━━━━ ❖ ① TITULO ❖ ━━━━━━━━━━
+    core = f"  ❖ {index}  {title}  ❖  "
+    fill = max(0, (width - len(core)) // 2)
+    left = "━" * fill
+    right = "━" * (width - fill - len(core))
+    line = (
+        _colorize(left, "38;5;240", use_color)
+        + _colorize(core, "1;38;5;226", use_color)
+        + _colorize(right, "38;5;240", use_color)
+    )
+    return line
+
+
+def _section_headline(text: str, *, use_color: bool) -> str:
+    return _colorize(f" ▎ {text}", "1;38;5;231", use_color)
+
+
+def _narrative(text: str, *, use_color: bool, width: int = 90) -> List[str]:
+    # Soft italic-like narrative panel with left rule.
+    words = text.split()
+    lines: List[str] = []
+    current = ""
+    inner_width = max(20, width - 6)
+    for w in words:
+        trial = (current + " " + w).strip()
+        if len(trial) > inner_width:
+            lines.append(current)
+            current = w
+        else:
+            current = trial
+    if current:
+        lines.append(current)
+    out = []
+    for ln in lines:
+        out.append(
+            _colorize("  │ ", "38;5;244", use_color)
+            + _colorize(ln, "3;38;5;252", use_color)
+        )
+    return out
+
+
+def _hero_card(
+    *,
+    title: str,
+    subtitle: str,
+    metrics: Sequence[Tuple[str, str, str, Optional[float]]],
+    use_color: bool,
+    width: int = 92,
+) -> List[str]:
+    # metrics: list of (big_value, unit_suffix, label, cv_or_none)
+    inner = width - 4  # content width between "║ " and " ║"
+    top_bar = "╔" + "═" * (width - 2) + "╗"
+    mid_sep = "╠" + "═" * (width - 2) + "╣"
+    bot_bar = "╚" + "═" * (width - 2) + "╝"
+
+    def _wrap(text: str) -> List[str]:
+        words = text.split()
+        lines: List[str] = []
+        cur = ""
+        for w in words:
+            trial = (cur + " " + w).strip()
+            if len(trial) > inner:
+                lines.append(cur)
+                cur = w
+            else:
+                cur = trial
+        if cur:
+            lines.append(cur)
+        return lines or [""]
+
+    cols = len(metrics)
+    col_w = (width - 2) // max(1, cols)
+
+    out: List[str] = []
+    out.append(_colorize(top_bar, "1;38;5;226", use_color))
+    for line in _wrap(title):
+        out.append(_colorize("║ " + line.ljust(inner) + " ║", "1;38;5;226", use_color))
+    for line in _wrap(subtitle):
+        out.append(_colorize("║ " + line.ljust(inner) + " ║", "38;5;252", use_color))
+    out.append(_colorize(mid_sep, "1;38;5;226", use_color))
+
+    # Value line (big)
+    val_cells = []
+    for big, unit, _lbl, _cv in metrics:
+        text = f"{big}{unit}"
+        val_cells.append(text.center(col_w))
+    value_body = "".join(val_cells).ljust(width - 2)[: width - 2]
+    out.append(_colorize("║" + value_body + "║", "1;38;5;231", use_color))
+
+    rule_row = (
+        "║"
+        + "".join(("▔" * max(4, col_w - 4)).center(col_w) for _ in metrics).ljust(
+            width - 2
+        )[: width - 2]
+        + "║"
+    )
+    out.append(_colorize(rule_row, "1;38;5;46", use_color))
+
+    # label row (truncate per cell to col_w - 2)
+    lbl_cells = []
+    for _, _, lbl, _ in metrics:
+        safe = lbl if len(lbl) <= col_w - 2 else (lbl[: col_w - 3] + "…")
+        lbl_cells.append(safe.center(col_w))
+    lbl_body = "".join(lbl_cells).ljust(width - 2)[: width - 2]
+    out.append(_colorize("║" + lbl_body + "║", "38;5;252", use_color))
+
+    # quality row (colored) — build with visible-len aware padding
+    colored_parts: List[str] = []
+    for big, _, _, cv in metrics:
+        badge = _quality_badge(cv, use_color=use_color)
+        if cv is None:
+            cell = f"{badge} {_colorize('referência', '38;5;244', use_color)}"
+        else:
+            cell = f"{badge} {_colorize(f'CV {cv * 100:4.1f}%', '38;5;244', use_color)}"
+        visible = _visible_len(cell)
+        pad_total = max(0, col_w - visible)
+        lp = pad_total // 2
+        rp = pad_total - lp
+        colored_parts.append(" " * lp + cell + " " * rp)
+    joined = "".join(colored_parts)
+    # final trim/pad by visible length
+    vis = _visible_len(joined)
+    if vis < width - 2:
+        joined += " " * (width - 2 - vis)
+    qual_row = (
+        _colorize("║", "1;38;5;226", use_color)
+        + joined
+        + _colorize("║", "1;38;5;226", use_color)
+    )
+    out.append(qual_row)
+    out.append(_colorize(bot_bar, "1;38;5;226", use_color))
+    return out
+
+
+_ANSI_RE = re.compile(r"\x1b\[[0-9;]*m")
+
+
+def _visible_len(s: str) -> int:
+    return len(_ANSI_RE.sub("", s))
+
+
+def _mini_lorenz(
+    bands: Sequence[Dict[str, object]],
+    gini: float,
+    *,
+    use_color: bool,
+    width: int = 54,
+    height: int = 10,
+) -> List[str]:
+    # Approximate Lorenz curve from population-weighted bands.
+    # Use income midpoint per band (with 10+ capped at 15 SM) to compute cumulative income share.
+    midpoints = {"0-2": 1.0, "2-5": 3.5, "5-10": 7.5, "10+": 15.0}
+    rows = []
+    for b in bands:
+        rng = str(b.get("range", ""))
+        hp = float(b.get("households_pct", 0.0) or 0.0) / 100.0
+        mp = midpoints.get(rng, 1.0)
+        rows.append((rng, hp, mp))
+    total_income = sum(hp * mp for _, hp, mp in rows) or 1.0
+    cum_pop = 0.0
+    cum_inc = 0.0
+    points: List[Tuple[float, float]] = [(0.0, 0.0)]
+    for _, hp, mp in rows:
+        cum_pop += hp
+        cum_inc += hp * mp / total_income
+        points.append((min(1.0, cum_pop), min(1.0, cum_inc)))
+    if points[-1] != (1.0, 1.0):
+        points.append((1.0, 1.0))
+
+    grid = [[" "] * width for _ in range(height)]
+    # axes
+    for y in range(height):
+        grid[y][0] = "│"
+    for x in range(width):
+        grid[height - 1][x] = "─"
+    grid[height - 1][0] = "└"
+
+    # equality line (diagonal) using light dots
+    for i in range(1, width):
+        t = i / (width - 1)
+        y = int(round((1.0 - t) * (height - 2)))
+        if 0 <= y <= height - 2:
+            grid[y][i] = "·"
+
+    # Lorenz curve plotted by interpolation
+    def _interp(x: float) -> float:
+        for i in range(1, len(points)):
+            x0, y0 = points[i - 1]
+            x1, y1 = points[i]
+            if x0 <= x <= x1 and x1 > x0:
+                return y0 + (y1 - y0) * (x - x0) / (x1 - x0)
+        return points[-1][1]
+
+    prev_y = None
+    for i in range(1, width):
+        t = i / (width - 1)
+        yv = _interp(t)
+        yr = int(round((1.0 - yv) * (height - 2)))
+        yr = max(0, min(height - 2, yr))
+        grid[yr][i] = "●"
+        if prev_y is not None and abs(prev_y - yr) > 1:
+            step = 1 if yr > prev_y else -1
+            for yy in range(prev_y + step, yr, step):
+                grid[yy][i] = "│"
+        prev_y = yr
+
+    # shade the Gini area (between diagonal and curve)
+    for i in range(1, width):
+        t = i / (width - 1)
+        eq_y = int(round((1.0 - t) * (height - 2)))
+        curve_y = int(round((1.0 - _interp(t)) * (height - 2)))
+        lo, hi = sorted((eq_y, curve_y))
+        for yy in range(lo + 1, hi):
+            if 0 <= yy <= height - 2 and grid[yy][i] == " ":
+                grid[yy][i] = "░"
+
+    out = []
+    head = _colorize(f" Curva de Lorenz · Gini = {gini:.3f}", "1;38;5;214", use_color)
+    out.append(head)
+    for y, row in enumerate(grid):
+        line = "".join(row)
+        if use_color:
+            line = line.replace("●", _colorize("●", "1;38;5;196", use_color))
+            line = line.replace("░", _colorize("░", "38;5;208", use_color))
+            line = line.replace("·", _colorize("·", "38;5;244", use_color))
+        out.append("  " + line)
+    legend = "  0%              50%             100%  população acumulada"
+    out.append(_colorize(legend, "38;5;244", use_color))
+    top20_share = 1.0 - _interp(0.8)
+    bot50_share = _interp(0.5)
+    out.append(
+        _colorize(
+            f"  Leitura: 50% mais pobres ficam com {bot50_share * 100:4.1f}% da renda; "
+            f"20% mais ricos concentram {top20_share * 100:4.1f}%.",
+            "3;38;5;252",
+            use_color,
+        )
+    )
+    return out
+
+
+def _uf_band_heatmap(
+    rows: Sequence[Dict[str, object]],
+    ranges: Sequence[str],
+    *,
+    use_color: bool,
+    cell_width: int = 6,
+) -> List[str]:
+    if not rows:
+        return []
+
+    # Sort by share of 10+ band descending, fallback to income rank
+    def _pct_of(row: Dict[str, object], band: str) -> float:
+        for b in row.get("bands", []) or []:
+            if isinstance(b, dict) and str(b.get("range", "")) == band:
+                return float(b.get("persons_pct", b.get("households_pct", 0.0)) or 0.0)
+        return 0.0
+
+    sorted_rows = sorted(
+        [r for r in rows if isinstance(r, dict)],
+        key=lambda r: -_pct_of(r, ranges[-1]) if ranges else 0.0,
+    )
+    lbl_w = max((len(str(r.get("label", ""))) for r in sorted_rows), default=18)
+    lbl_w = min(22, max(16, lbl_w))
+    header = " " * (lbl_w + 2) + "".join(f"{rng:^{cell_width}}" for rng in ranges)
+    out = [
+        _colorize(" Mapa de calor UF × faixa (% pessoas)", "1;38;5;39", use_color),
+        _colorize(header, "1;38;5;244", use_color),
+    ]
+
+    def _cell_for(pct: float, range_idx: int) -> str:
+        ramps = [
+            [22, 28, 34, 40, 46],  # green
+            [178, 184, 190, 220, 226],  # yellow
+            [17, 19, 21, 27, 33],  # blue
+            [248, 250, 252, 254, 15],  # white
+        ]
+        ramp = ramps[range_idx % len(ramps)]
+        level = int(round(min(1.0, max(0.0, pct / 100.0)) * (len(ramp) - 1)))
+        color = f"1;38;5;16;48;5;{ramp[level]}"
+        txt = f"{pct:4.1f}%".center(cell_width)
+        return _colorize(txt, color, use_color)
+
+    for r in sorted_rows:
+        label = str(r.get("label", ""))[:lbl_w]
+        line = f"  {label:<{lbl_w}}"
+        for rng_i, rng in enumerate(ranges):
+            line += _cell_for(_pct_of(r, rng), rng_i)
+        out.append(line)
+    return out
+
+
+def _bullet_chart_rows(
+    rows: Sequence[Dict[str, object]],
+    *,
+    value_key: str,
+    moe_key: Optional[str],
+    benchmark: float,
+    max_value: float,
+    label_width: int,
+    use_color: bool,
+    width: int = 24,
+) -> List[str]:
+    out: List[str] = []
+    if max_value <= 0:
+        max_value = 1.0
+    for i, row in enumerate(rows, start=1):
+        val = float(row.get(value_key, 0.0) or 0.0)
+        moe = (
+            float(row.get(moe_key, 0.0) or 0.0)
+            if moe_key and row.get(moe_key) is not None
+            else 0.0
+        )
+        label = str(row.get("label", ""))
+        n_fill = int(round(width * min(1.0, val / max_value)))
+        bench_pos = int(round(width * min(1.0, benchmark / max_value)))
+        track = [" "] * width
+        for j in range(n_fill):
+            track[j] = "▰"
+        for j in range(n_fill, width):
+            track[j] = "▱"
+        if 0 <= bench_pos < width:
+            track[bench_pos] = "┃"
+        colored = []
+        for ch in track:
+            if ch == "▰":
+                colored.append(_colorize(ch, "1;38;5;46", use_color))
+            elif ch == "┃":
+                colored.append(_colorize(ch, "1;38;5;226", use_color))
+            else:
+                colored.append(_colorize(ch, "38;5;238", use_color))
+        delta = _delta_arrow(val, benchmark, use_color)
+        cv = _cv_from_moe(val, moe) if moe else None
+        badge = _quality_badge(cv, use_color)
+        if moe:
+            val_txt = f"{val:5.2f}±{moe:4.2f}"
+        else:
+            val_txt = f"{val:5.2f}"
+        out.append(
+            f"  {i:>2}. {label:<{label_width}} {''.join(colored)} {val_txt:<14} {delta}  {badge}"
+        )
+    return out
+
+
+def _ascii_brazil_map(
+    uf_rows: Sequence[Dict[str, object]],
+    *,
+    use_color: bool,
+) -> List[str]:
+    # Coarse geographic layout of Brazilian states. Each UF is a 2-char cell.
+    # Value source: avg_household_sm if present; fallback to 10+ band pct.
+    value_by_uf: Dict[str, float] = {}
+    for r in uf_rows:
+        if not isinstance(r, dict):
+            continue
+        label = str(r.get("label", ""))
+        val = r.get("avg_household_sm")
+        if val is None:
+            # derive from bands if possible
+            for b in r.get("bands", []) or []:
+                if isinstance(b, dict) and str(b.get("range", "")) == "10+":
+                    val = (
+                        float(b.get("persons_pct", 0.0) or 0.0) / 10.0
+                    )  # normalize-ish
+        try:
+            value_by_uf[label] = float(val) if val is not None else 0.0
+        except Exception:
+            value_by_uf[label] = 0.0
+    if not value_by_uf:
+        return []
+    vmin = min(value_by_uf.values()) or 0.0
+    vmax = max(value_by_uf.values()) or 1.0
+    rng = max(1e-9, vmax - vmin)
+    ramp = [52, 88, 130, 172, 214, 220, 190, 46, 40, 34]  # red → green
+
+    def _code(name: str) -> str:
+        # Two-letter UF code from label
+        m = {
+            "Rondônia": "RO",
+            "Acre": "AC",
+            "Amazonas": "AM",
+            "Roraima": "RR",
+            "Pará": "PA",
+            "Amapá": "AP",
+            "Tocantins": "TO",
+            "Maranhão": "MA",
+            "Piauí": "PI",
+            "Ceará": "CE",
+            "Rio Grande do Norte": "RN",
+            "Paraíba": "PB",
+            "Pernambuco": "PE",
+            "Alagoas": "AL",
+            "Sergipe": "SE",
+            "Bahia": "BA",
+            "Minas Gerais": "MG",
+            "Espírito Santo": "ES",
+            "Rio de Janeiro": "RJ",
+            "São Paulo": "SP",
+            "Paraná": "PR",
+            "Santa Catarina": "SC",
+            "Rio Grande do Sul": "RS",
+            "Mato Grosso do Sul": "MS",
+            "Mato Grosso": "MT",
+            "Goiás": "GO",
+            "Distrito Federal": "DF",
+        }
+        return m.get(name, name[:2].upper())
+
+    code_to_val: Dict[str, float] = {_code(k): v for k, v in value_by_uf.items()}
+
+    # Rough geographic grid (8 rows × 12 cols). Use '  ' for empty.
+    grid = [["  "] * 12 for _ in range(8)]
+    # place UFs approximately
+    layout = {
+        (0, 4): "RR",
+        (0, 6): "AP",
+        (1, 2): "AM",
+        (1, 5): "PA",
+        (1, 7): "MA",
+        (1, 9): "CE",
+        (1, 10): "RN",
+        (2, 1): "AC",
+        (2, 3): "AM",
+        (2, 6): "TO",
+        (2, 8): "PI",
+        (2, 10): "PB",
+        (3, 2): "RO",
+        (3, 4): "MT",
+        (3, 8): "BA",
+        (3, 10): "PE",
+        (4, 4): "MS",
+        (4, 6): "GO",
+        (4, 7): "DF",
+        (4, 8): "MG",
+        (4, 10): "AL",
+        (5, 6): "SP",
+        (5, 8): "ES",
+        (5, 10): "SE",
+        (6, 5): "PR",
+        (6, 7): "RJ",
+        (7, 5): "SC",
+        (7, 4): "RS",
+    }
+    for (r, c), code in layout.items():
+        grid[r][c] = code
+
+    def _color_cell(code: str) -> str:
+        if code == "  " or not code.strip():
+            return "  "
+        val = code_to_val.get(code)
+        if val is None:
+            return _colorize(code, "48;5;236;38;5;244", use_color)
+        t = (val - vmin) / rng
+        idx = int(round(t * (len(ramp) - 1)))
+        idx = max(0, min(len(ramp) - 1, idx))
+        color = f"1;38;5;16;48;5;{ramp[idx]}"
+        return _colorize(code, color, use_color)
+
+    out = [
+        _colorize(
+            " Mapa do Brasil · renda domiciliar em SM (quanto mais verde, maior)",
+            "1;38;5;46",
+            use_color,
+        )
+    ]
+    for row in grid:
+        out.append("   " + " ".join(_color_cell(c) for c in row))
+    # legend
+    steps = [
+        (ramp[i], f"{vmin + rng * i / (len(ramp) - 1):.2f}") for i in range(len(ramp))
+    ]
+    legend_cells = []
+    for color, val in steps:
+        legend_cells.append(_colorize(f" {val} ", f"1;38;5;16;48;5;{color}", use_color))
+    out.append(
+        "   " + _colorize("SM:", "38;5;244", use_color) + " " + "".join(legend_cells)
+    )
+    return out
+
+
+def _sankey_composition(
+    composition: Dict[str, float],
+    band_breakdown: Dict[str, Dict[str, float]],
+    *,
+    use_color: bool,
+    ranges: Sequence[str],
+) -> List[str]:
+    # composition: {"trabalho": pct, "beneficios_sociais": pct, "previdencia": pct, "capital": pct}
+    src_order = [
+        ("trabalho", "Trabalho", "1;38;5;46"),
+        ("beneficios_sociais", "Benefícios", "1;38;5;226"),
+        ("previdencia", "Previdência", "1;38;5;214"),
+        ("capital", "Capital", "1;38;5;21"),
+    ]
+    total = sum(composition.get(k, 0.0) for k, _, _ in src_order) or 100.0
+    out = [
+        _colorize(" Sankey · fontes de renda → faixas de SM", "1;38;5;214", use_color)
+    ]
+    for key, label, color in src_order:
+        pct = float(composition.get(key, 0.0) or 0.0)
+        if pct <= 0:
+            continue
+        bar_len = max(1, int(round(pct / total * 36)))
+        bar = _colorize("━" * bar_len, color, use_color)
+        out.append(f"  {label:<12} {pct:5.1f}% {bar}╮")
+    out.append(
+        "                                " + _colorize("╰──→", "38;5;244", use_color)
+    )
+    for rng in ranges:
+        hh_pct = float(band_breakdown.get(rng, {}).get("households_pct", 0.0) or 0.0)
+        out.append(
+            f"     {rng:<6} "
+            + _colorize("◀━━", "38;5;244", use_color)
+            + f"  {hh_pct:5.1f}% dos domicílios"
+        )
+    return out
+
+
+def _gauge(
+    label: str,
+    value: float,
+    *,
+    vmin: float,
+    vmax: float,
+    thresholds: Sequence[Tuple[float, str, str]],
+    use_color: bool,
+) -> List[str]:
+    # thresholds: sorted list of (upper_bound, color, severity_label)
+    pct = max(0.0, min(1.0, (value - vmin) / max(1e-9, vmax - vmin)))
+    severity_color = "1;38;5;46"
+    severity_label = "OK"
+    for ub, color, lbl in thresholds:
+        if value <= ub:
+            severity_color = color
+            severity_label = lbl
+            break
+    else:
+        if thresholds:
+            severity_color = thresholds[-1][1]
+            severity_label = thresholds[-1][2]
+
+    # Render half-circle gauge in 3 rows (arc: ╱─╲)
+    width = 13
+    needle_pos = int(round(pct * (width - 1)))
+    row1_list = [" "] * width
+    row1_list[0] = "╱"
+    row1_list[-1] = "╲"
+    for i in range(1, width - 1):
+        row1_list[i] = "─"
+    # Bottom row with needle
+    row2_list = [" "] * width
+    for i in range(width):
+        if i == needle_pos:
+            row2_list[i] = "●"
+        elif i < needle_pos:
+            row2_list[i] = "·"
+    row1 = _colorize("".join(row1_list), "38;5;244", use_color)
+    needle = []
+    for ch in row2_list:
+        if ch == "●":
+            needle.append(_colorize(ch, severity_color, use_color))
+        elif ch == "·":
+            needle.append(_colorize(ch, "38;5;244", use_color))
+        else:
+            needle.append(" ")
+    row2 = "".join(needle)
+    # lbl/value
+    return [
+        f"  {row1}",
+        f"  {row2}  {label}",
+        f"  {_colorize(f'{value:.3f}', severity_color, use_color)}  {_colorize(severity_label, severity_color, use_color)}",
+    ]
+
+
+def _braille_scatter(
+    points: Sequence[Tuple[float, float]],
+    *,
+    width: int = 40,
+    height: int = 8,
+    use_color: bool,
+    color: object = "1;38;5;46",
+) -> List[str]:
+    # Each cell is 2 wide × 4 tall sub-pixels via Braille (U+2800..U+28FF).
+    if not points:
+        return []
+    xs = [p[0] for p in points]
+    ys = [p[1] for p in points]
+    xmin, xmax = min(xs), max(xs)
+    ymin, ymax = min(ys), max(ys)
+    xrng = max(1e-9, xmax - xmin)
+    yrng = max(1e-9, ymax - ymin)
+    cells = [[0] * width for _ in range(height)]
+    for px, py in points:
+        cx = int((px - xmin) / xrng * (width * 2 - 1))
+        cy = int((1.0 - (py - ymin) / yrng) * (height * 4 - 1))
+        col = cx // 2
+        row = cy // 4
+        bx = cx % 2
+        by = cy % 4
+        # braille dot offset:
+        offsets = {
+            (0, 0): 0x01,
+            (0, 1): 0x02,
+            (0, 2): 0x04,
+            (0, 3): 0x40,
+            (1, 0): 0x08,
+            (1, 1): 0x10,
+            (1, 2): 0x20,
+            (1, 3): 0x80,
+        }
+        if 0 <= row < height and 0 <= col < width:
+            cells[row][col] |= offsets[(bx, by)]
+    out = []
+    for row_vals in cells:
+        line = "".join(chr(0x2800 + v) if v else " " for v in row_vals)
+        out.append("  " + _colorize(line, color, use_color))
+    return out
+
+
+def _dot_plot_whiskers(
+    rows: Sequence[Dict[str, object]],
+    *,
+    value_key: str,
+    moe_key: Optional[str],
+    label_width: int,
+    benchmark: float,
+    max_value: float,
+    width: int = 32,
+    use_color: bool,
+) -> List[str]:
+    out: List[str] = []
+    if max_value <= 0:
+        max_value = 1.0
+    for row in rows:
+        val = float(row.get(value_key, 0.0) or 0.0)
+        moe = (
+            float(row.get(moe_key, 0.0) or 0.0)
+            if moe_key and row.get(moe_key) is not None
+            else 0.0
+        )
+        label = str(row.get("label", ""))[:label_width]
+        pos = int(round(width * min(1.0, val / max_value)))
+        low_pos = int(round(width * max(0.0, (val - moe) / max_value)))
+        high_pos = int(round(width * min(1.0, (val + moe) / max_value)))
+        bench_pos = int(round(width * min(1.0, benchmark / max_value)))
+        track = [" "] * (width + 1)
+        for j in range(low_pos, high_pos + 1):
+            if 0 <= j <= width:
+                track[j] = "─"
+        if 0 <= bench_pos <= width:
+            track[bench_pos] = "┊"
+        if 0 <= pos <= width:
+            track[pos] = "●"
+        colored = []
+        for ch in track:
+            if ch == "●":
+                colored.append(_colorize(ch, "1;38;5;46", use_color))
+            elif ch == "─":
+                colored.append(_colorize(ch, "38;5;244", use_color))
+            elif ch == "┊":
+                colored.append(_colorize(ch, "1;38;5;226", use_color))
+            else:
+                colored.append(" ")
+        cv = _cv_from_moe(val, moe) if moe else None
+        badge = _quality_badge(cv, use_color)
+        moe_txt = f" ± {moe:.2f}" if moe else ""
+        out.append(
+            f"  {label:<{label_width}} {''.join(colored)}  {val:5.2f}{moe_txt}  {badge}"
+        )
+    return out
+
+
+def _country_comparison(
+    sm_mean: float,
+    sm_median: float,
+    top_uf_sm: float,
+    bottom_uf_sm: float,
+    sm_reference_brl: float,
+) -> List[Tuple[str, str, str]]:
+    # Rough GDP-per-capita proxy via income in SM. Returns (label, peer_country, flag).
+    # Multipliers are schematic, for narrative purposes only.
+    def _peer(sm: float) -> Tuple[str, str]:
+        if sm >= 5.0:
+            return ("Portugal", "🇵🇹")
+        if sm >= 3.5:
+            return ("Chile", "🇨🇱")
+        if sm >= 2.8:
+            return ("Argentina", "🇦🇷")
+        if sm >= 2.2:
+            return ("Equador", "🇪🇨")
+        if sm >= 1.7:
+            return ("Bolívia", "🇧🇴")
+        return ("Honduras", "🇭🇳")
+
+    items = [
+        ("UF mais rica", *_peer(top_uf_sm)),
+        ("Brasil (média)", *_peer(sm_mean)),
+        ("Brasil (mediana)", *_peer(sm_median)),
+        ("UF mais pobre", *_peer(bottom_uf_sm)),
+    ]
+    return items
+
+
+def _official_seal(payload: Dict[str, object], *, use_color: bool) -> List[str]:
+    md = (
+        payload.get("metadata", {}) if isinstance(payload.get("metadata"), dict) else {}
+    )
+    samp = (
+        payload.get("sampling", {}) if isinstance(payload.get("sampling"), dict) else {}
+    )
+    # Small hash from key fields for audit trail
+    key_str = f"{payload.get('input')}|{payload.get('target')}|{md.get('rows_read')}|{md.get('households')}"
+    digest = hashlib.sha256(key_str.encode("utf-8")).hexdigest()[:8]
+    ref_month = payload.get("sm_target_month", "")
+    ref_value = payload.get("sm_target_value", "")
+    weight_col = str(payload.get("weight_col") or "")
+    weight_base = weight_col.split("__", 1)[0] if weight_col else "V1028"
+    rep_base = str(samp.get("replicate_weight_base") or weight_base)
+    reps_count = int(samp.get("replicate_weight_columns_detected", 0) or 0)
+    mode_badge = (
+        "PNADC·Anual"
+        if str(payload.get("pnad_mode", "trimestral")) == "anual"
+        else "PNADC·Tri"
+    )
+
+    lines = [
+        _colorize("  ╭────────────╮  ", "1;38;5;46", use_color)
+        + _colorize(f"✓ Pesos:      {weight_base} (calibração)", "38;5;252", use_color),
+        _colorize("  │  ⚖  IBGE    │  ", "1;38;5;46", use_color)
+        + _colorize(
+            f"✓ IC:         bootstrap {reps_count} réplicas ({rep_base}xxx)",
+            "38;5;252",
+            use_color,
+        ),
+        _colorize(f"  │  {mode_badge:<10} │  ", "1;38;5;226", use_color)
+        + _colorize(
+            f"✓ Deflator:   IPCA até {payload.get('target', '')}", "38;5;252", use_color
+        ),
+        _colorize("  │   ∿∿∿∿∿∿    │  ", "1;38;5;21", use_color)
+        + _colorize(
+            f"✓ SM real:    R$ {ref_value} ({ref_month})", "38;5;252", use_color
+        ),
+        _colorize(f"  │  #{digest}    │  ", "38;5;244", use_color)
+        + _colorize(
+            f"✓ Gini:       Lorenz ponderado ({weight_base})",
+            "38;5;252",
+            use_color,
+        ),
+        _colorize("  ╰────────────╯  ", "1;38;5;15", use_color)
+        + _colorize(
+            f"✓ Cobertura:  {md.get('states_covered', '?')} UFs, {md.get('households', '?')} domicílios",
+            "38;5;252",
+            use_color,
+        ),
+    ]
+    return lines
+
+
+def _executive_briefing(
+    payload: Dict[str, object],
+    mode_data: Dict[str, object],
+    *,
+    use_color: bool,
+    width: int = 92,
+) -> List[str]:
+    nat = mode_data.get("national", {})
+    ranges = payload.get("ranges", [])
+    insights = (
+        mode_data.get("insights", {})
+        if isinstance(mode_data.get("insights"), dict)
+        else {}
+    )
+    cross = (
+        mode_data.get("cross", {}) if isinstance(mode_data.get("cross"), dict) else {}
+    )
+    low_band = ranges[0] if ranges else "0-2"
+    high_band = ranges[-1] if ranges else "10+"
+    ranges_money = (
+        mode_data.get("ranges_money", [])
+        if isinstance(mode_data.get("ranges_money"), list)
+        else []
+    )
+    low_money = ""
+    for rm in ranges_money:
+        if isinstance(rm, dict) and str(rm.get("range", "")) == low_band:
+            low_money = str(rm.get("money_label", ""))
+            break
+
+    low_pct = 0.0
+    high_pct = 0.0
+    for b in nat.get("bands", []) or []:
+        if isinstance(b, dict):
+            if str(b.get("range", "")) == low_band:
+                low_pct = float(b.get("persons_pct", 0.0) or 0.0)
+            if str(b.get("range", "")) == high_band:
+                high_pct = float(b.get("persons_pct", 0.0) or 0.0)
+
+    richest_uf = str(insights.get("richest_uf_by_avg_sm", "N/A") or "N/A")
+    poorest_uf = str(insights.get("poorest_uf_by_avg_sm", "N/A") or "N/A")
+    richest_sm = 0.0
+    poorest_sm = 0.0
+    for r in mode_data.get("top10_uf_income", []) or []:
+        if isinstance(r, dict) and str(r.get("label", "")) == richest_uf:
+            richest_sm = float(r.get("avg_household_sm", 0.0) or 0.0)
+    for r in mode_data.get("bottom10_uf_income", []) or []:
+        if isinstance(r, dict) and str(r.get("label", "")) == poorest_uf:
+            poorest_sm = float(r.get("avg_household_sm", 0.0) or 0.0)
+    ratio_rich_poor = richest_sm / poorest_sm if poorest_sm > 0 else 0.0
+
+    # Racial gap: branca vs parda in high_band
+    race_rows = (
+        cross.get("race_by_band", [])
+        if isinstance(cross.get("race_by_band"), list)
+        else []
+    )
+    race_high: Dict[str, float] = {}
+    race_low: Dict[str, float] = {}
+    for r in race_rows:
+        if not isinstance(r, dict):
+            continue
+        lbl = str(r.get("label", ""))
+        bands_dict = r.get("bands", {}) or {}
+        if isinstance(bands_dict, dict):
+            race_high[lbl] = float(
+                bands_dict.get(high_band, {}).get("pct_within_label", 0.0) or 0.0
+            )
+            race_low[lbl] = float(
+                bands_dict.get(low_band, {}).get("pct_within_label", 0.0) or 0.0
+            )
+    gap_rich = 0.0
+    if race_high.get("Branca", 0.0) > 0 and race_high.get("Parda", 0.0) > 0:
+        gap_rich = race_high["Branca"] / race_high["Parda"]
+
+    # Region pobreza share
+    macro = mode_data.get("macro_regions", []) or []
+    ne_share_pop = 0.0
+    ne_share_poor = 0.0
+    total_low = low_pct
+    for mr in macro:
+        if isinstance(mr, dict) and str(mr.get("group", "")) == "Nordeste":
+            persons = float(mr.get("persons_total", 0.0) or 0.0)
+            total_pop = float(nat.get("persons_total", 1.0) or 1.0)
+            ne_share_pop = 100.0 * persons / total_pop if total_pop else 0.0
+            bands_mr = mr.get("bands", []) or []
+            for b in bands_mr:
+                if isinstance(b, dict) and str(b.get("range", "")) == low_band:
+                    # approximate share of nation's low band that is in NE
+                    ne_share_poor = (
+                        100.0
+                        * float(b.get("persons_pct", 0.0) or 0.0)
+                        * persons
+                        / (total_pop * max(1e-9, total_low))
+                        if total_low > 0
+                        else 0.0
+                    )
+
+    median_brl = float(nat.get("median_household_income_brl", 0.0) or 0.0)
+    avg_brl = float(nat.get("avg_household_income_brl", 0.0) or 0.0)
+    avg_median_gap = (avg_brl / median_brl) if median_brl > 0 else 0.0
+
+    top_bar = "┏" + "━" * (width - 2) + "┓"
+    mid_bar = "┣" + "━" * (width - 2) + "┫"
+    bot_bar = "┗" + "━" * (width - 2) + "┛"
+
+    def _row(txt: str) -> str:
+        body = txt.ljust(width - 4)
+        if _visible_len(body) > width - 4:
+            body = body[: width - 4]
+        return (
+            _colorize("┃ ", "1;38;5;226", use_color)
+            + body
+            + _colorize(" ┃", "1;38;5;226", use_color)
+        )
+
+    lines = []
+    lines.append(_colorize(top_bar, "1;38;5;226", use_color))
+    lines.append(
+        _row(
+            _colorize(
+                f"O BRASIL EM 5 VERDADES · PNADC {payload.get('target', '')} · IBGE",
+                "1;38;5;231",
+                use_color,
+            )
+        )
+    )
+    lines.append(_colorize(mid_bar, "1;38;5;226", use_color))
+    truths = [
+        f"① METADE do país vive com até {low_band} SM ({low_money or 'até R$ 3.242'}) — {low_pct:5.1f}% das pessoas",
+        f"② Apenas {high_pct:4.1f}% das pessoas vivem em domicílios com renda ≥ {high_band} SM",
+        f"③ {richest_uf} ganha {ratio_rich_poor:.1f}× mais que {poorest_uf} em média ({richest_sm:.2f} vs {poorest_sm:.2f} SM)",
+        f"④ Brancos ocupam o topo {gap_rich:.1f}× mais que pardos ({race_high.get('Branca', 0):.1f}% vs {race_high.get('Parda', 0):.1f}% na faixa {high_band})",
+        f"⑤ Nordeste = {ne_share_pop:.0f}% da população, mas concentra aprox. {ne_share_poor:.0f}% dos mais pobres",
+    ]
+    for t in truths:
+        lines.append(_row(_colorize(t, "38;5;252", use_color)))
+    footer_txt = (
+        f"Assimetria renda: média/mediana = {avg_median_gap:.2f} (>1 indica concentração no topo). "
+        f"Gini: {float(nat.get('gini_household_sm', 0.0) or 0.0):.3f}."
+    )
+    lines.append(_colorize(mid_bar, "1;38;5;226", use_color))
+    lines.append(_row(_colorize(footer_txt, "3;38;5;244", use_color)))
+    lines.append(_colorize(bot_bar, "1;38;5;226", use_color))
+    return lines
+
+
 def _print_dashboard_mode(
-    payload: Dict[str, object], mode: str, *, no_color: bool = False, section: str = "all"
+    payload: Dict[str, object],
+    mode: str,
+    *,
+    no_color: bool = False,
+    section: str = "all",
 ) -> None:
     use_color = _supports_color(no_color=no_color)
     term_cols = shutil.get_terminal_size((120, 24)).columns
@@ -2367,13 +3990,20 @@ def _print_dashboard_mode(
     gradients = _brazil_band_gradients(len(payload.get("ranges", []) or []))
     mode_data = payload["modes"][mode]
     nat = mode_data["national"]
-    dashboard_mode = str(payload.get("dashboard_mode", payload.get("pnad_mode", "trimestral")) or "trimestral")
+    dashboard_mode = str(
+        payload.get("dashboard_mode", payload.get("pnad_mode", "trimestral"))
+        or "trimestral"
+    )
     is_anual_mode = dashboard_mode == "anual"
     income_composition_national = payload.get("income_composition_national", {})
     income_sources_detail = payload.get("income_sources_detail", {})
+    income_lenses_national = payload.get("income_lenses_national", {})
     uf_dependency_ranking = payload.get("uf_dependency_ranking", [])
     composition_by_band = payload.get("composition_by_band", {})
-    show = lambda key: section in ("all", key)
+
+    def show(key: str) -> bool:
+        return section in ("all", key)
+
     uf_name_width = 18
     max_uf_label_len = 0
     for key in (
@@ -2388,39 +4018,72 @@ def _print_dashboard_mode(
             continue
         for row in rows:
             if isinstance(row, dict):
-                max_uf_label_len = max(max_uf_label_len, len(str(row.get("label", "")).strip()))
+                max_uf_label_len = max(
+                    max_uf_label_len, len(str(row.get("label", "")).strip())
+                )
     if max_uf_label_len > 0:
         uf_name_width = max(18, min(26, max_uf_label_len + 1))
 
     if show("overview"):
-        sm_ref = float(mode_data.get("sm_reference_value", payload.get("sm_target_value") or 0.0) or 0.0)
+        sm_ref = float(
+            mode_data.get("sm_reference_value", payload.get("sm_target_value") or 0.0)
+            or 0.0
+        )
         sm_ref_month = str(mode_data.get("sm_reference_month", "") or "")
         sm_ref_min = mode_data.get("sm_reference_min")
         sm_ref_max = mode_data.get("sm_reference_max")
-        ci_level = float(mode_data.get("sampling", {}).get("ci_level", payload.get("sampling", {}).get("ci_level", 0.95)))
+        ci_level = float(
+            mode_data.get("sampling", {}).get(
+                "ci_level", payload.get("sampling", {}).get("ci_level", 0.95)
+            )
+        )
         avg_sm = float(nat.get("avg_household_sm", 0.0) or 0.0)
+        avg_income_brl = float(nat.get("avg_household_income_brl", 0.0) or 0.0)
+        median_income_brl = float(nat.get("median_household_income_brl", 0.0) or 0.0)
         avg_sm_moe = nat.get("avg_household_sm_moe")
         if avg_sm_moe is not None:
             avg_sm_txt = f"{avg_sm:.3f} ± {float(avg_sm_moe):.3f} (IC {ci_level:.0%})"
         else:
             avg_sm_txt = f"{avg_sm:.3f}"
-        if sm_ref_min is not None and sm_ref_max is not None and float(sm_ref_min) != float(sm_ref_max):
-            sm_ref_txt = (
-                f"{_fmt_brl(sm_ref)} (ref media, intervalo: {_fmt_brl(float(sm_ref_min))}..{_fmt_brl(float(sm_ref_max))})"
-            )
+        if (
+            sm_ref_min is not None
+            and sm_ref_max is not None
+            and float(sm_ref_min) != float(sm_ref_max)
+        ):
+            sm_ref_txt = f"{_fmt_brl(sm_ref)} (ref media, intervalo: {_fmt_brl(float(sm_ref_min))}..{_fmt_brl(float(sm_ref_max))})"
         else:
             sm_ref_txt = _fmt_brl(sm_ref)
         overview_lines = [
             f"Modo de comparacao: {mode.upper()}",
             f"Domicilios: {_fmt_num(float(nat['households_total']))} | Pessoas: {_fmt_num(float(nat['persons_total']))}",
+            f"Renda media domiciliar: {_fmt_brl(avg_income_brl)} | Mediana domiciliar: {_fmt_brl(median_income_brl)}",
             (
                 f"Media SM: {avg_sm_txt} | "
                 f"Mediana SM: {float(nat['median_household_sm']):.3f} | Gini(SM): {float(nat['gini_household_sm']):.3f}"
             ),
             f"SM referencia ({sm_ref_month}): {sm_ref_txt}",
         ]
-        _panel("Visao Brasil", overview_lines, color="1;38;5;45", use_color=use_color)
-        print(_colorize(" Distribuicao nacional por faixa", 1, use_color))
+        print(
+            _ornamental_divider(
+                "①", "RETRATO DO BRASIL — visão nacional", use_color=use_color, width=92
+            )
+        )
+        for ln in _narrative(
+            "Este painel resume quem somos: quantos domicílios existem, quanto ganham em média e "
+            "quanto dessa renda é absorvida por quem está no topo. A distância entre média e mediana "
+            "é um primeiro sinal de concentração — se a média está muito acima da mediana, metade do país "
+            "ganha bem menos do que a média sugere.",
+            use_color=use_color,
+            width=92,
+        ):
+            print(ln)
+        print()
+        _panel("Visão Brasil", overview_lines, color="1;38;5;45", use_color=use_color)
+        print(
+            _section_headline(
+                "Distribuição nacional por faixa de salário-mínimo", use_color=use_color
+            )
+        )
         for b in nat["bands"]:
             hp = float(b["households_pct"])
             pp = float(b["persons_pct"])
@@ -2435,7 +4098,9 @@ def _print_dashboard_mode(
             gi = payload["ranges"].index(b["range"]) % len(gradients)
             print(
                 "  "
-                + _badge(f"{b['range']:<8}", fg=16, bg=gradients[gi][-1], use_color=use_color)
+                + _badge(
+                    f"{b['range']:<8}", fg=16, bg=gradients[gi][-1], use_color=use_color
+                )
                 + f" dom={hp_txt:<14} {_gradient_bar(hp, width=20, palette=gradients[gi], use_color=use_color)}"
                 + f"  pes={pp_txt:<14} {_gradient_bar(pp, width=8, palette=gradients[gi], use_color=use_color)}"
             )
@@ -2460,17 +4125,58 @@ def _print_dashboard_mode(
                 for item in ranges_money:
                     if not isinstance(item, dict):
                         continue
-                    money_map[str(item.get("range", ""))] = str(item.get("money_label", ""))
+                    money_map[str(item.get("range", ""))] = str(
+                        item.get("money_label", "")
+                    )
             for i, rng in enumerate(payload["ranges"]):
                 label = socio[i] if i < len(socio) else f"faixa {i + 1}"
                 cash = money_map.get(str(rng), "")
                 if cash:
-                    legend.append(_colorize(f"{rng}={label} ({cash})", colors[i % len(colors)], use_color))
+                    legend.append(
+                        _colorize(
+                            f"{rng}={label} ({cash})",
+                            colors[i % len(colors)],
+                            use_color,
+                        )
+                    )
                 else:
-                    legend.append(_colorize(f"{rng}={label}", colors[i % len(colors)], use_color))
+                    legend.append(
+                        _colorize(f"{rng}={label}", colors[i % len(colors)], use_color)
+                    )
             print("  Legenda BR: " + " | ".join(legend))
-        if is_anual_mode and isinstance(income_composition_national, dict) and income_composition_national:
-            print(_colorize(" Composicao nacional de renda (PNAD anual)", "1;38;5;214", use_color))
+
+        # Sparkline de domicílios e de pessoas
+        hh_vals = [float(b.get("households_pct", 0.0) or 0.0) for b in nat["bands"]]
+        pp_vals = [float(b.get("persons_pct", 0.0) or 0.0) for b in nat["bands"]]
+        print(
+            f"  Sparkline dom.: {_sparkline(hh_vals, use_color=use_color, color='1;38;5;46')}   "
+            f"pessoas: {_sparkline(pp_vals, use_color=use_color, color='1;38;5;226')}"
+        )
+        print()
+
+        # Lorenz curve
+        try:
+            gini_nat = float(nat.get("gini_household_sm", 0.0) or 0.0)
+            for ln in _mini_lorenz(
+                nat["bands"], gini_nat, use_color=use_color, width=54, height=10
+            ):
+                print(ln)
+            print()
+        except Exception:
+            pass
+
+        if (
+            is_anual_mode
+            and isinstance(income_composition_national, dict)
+            and income_composition_national
+        ):
+            print(
+                _colorize(
+                    " Composicao nacional de renda (PNAD anual)",
+                    "1;38;5;214",
+                    use_color,
+                )
+            )
             for cat in INCOME_CATEGORY_ORDER:
                 data = income_composition_national.get(cat, {})
                 if not isinstance(data, dict):
@@ -2478,10 +4184,14 @@ def _print_dashboard_mode(
                 pct = float(data.get("pct", 0.0) or 0.0)
                 mean = float(data.get("mean", 0.0) or 0.0)
                 label = str(data.get("label", INCOME_CATEGORY_LABELS.get(cat, cat)))
-                bar = _gradient_bar(pct, width=22, palette=[22, 28, 34, 40, 46], use_color=use_color)
+                bar = _gradient_bar(
+                    pct, width=22, palette=[22, 28, 34, 40, 46], use_color=use_color
+                )
                 print(f"  - {label:<24} {_fmt_brl(mean):>12}  {pct:6.2f}% {bar}")
             if isinstance(income_sources_detail, dict) and income_sources_detail:
-                print(_colorize("  Fontes detalhadas (V500xA2)", "1;38;5;221", use_color))
+                print(
+                    _colorize("  Fontes detalhadas (V500xA2)", "1;38;5;221", use_color)
+                )
                 for src_key in INCOME_SOURCE_COLS.keys():
                     item = income_sources_detail.get(src_key, {})
                     if not isinstance(item, dict):
@@ -2489,19 +4199,67 @@ def _print_dashboard_mode(
                     src_mean = float(item.get("mean", 0.0) or 0.0)
                     src_pct = float(item.get("pct", 0.0) or 0.0)
                     rec_pct = float(item.get("recipients_pct", 0.0) or 0.0)
-                    src_label = str(item.get("label", INCOME_SOURCE_LABELS.get(src_key, src_key)))
-                    print(f"    · {src_label:<28} {_fmt_brl(src_mean):>12}  {src_pct:6.2f}%  recip={rec_pct:6.2f}%")
+                    src_label = str(
+                        item.get("label", INCOME_SOURCE_LABELS.get(src_key, src_key))
+                    )
+                    print(
+                        f"    · {src_label:<28} {_fmt_brl(src_mean):>12}  {src_pct:6.2f}%  recip={rec_pct:6.2f}%"
+                    )
+            if isinstance(income_lenses_national, dict) and income_lenses_national:
+                print(
+                    _colorize("  Lentes de renda domiciliar", "1;38;5;159", use_color)
+                )
+                for lens_key in ANNUAL_INCOME_LENS_ORDER:
+                    item = income_lenses_national.get(lens_key, {})
+                    if not isinstance(item, dict):
+                        continue
+                    lens_mean = float(item.get("mean", 0.0) or 0.0)
+                    lens_pct = float(item.get("pct_of_total", 0.0) or 0.0)
+                    lens_label = str(
+                        item.get(
+                            "label", ANNUAL_INCOME_LENS_LABELS.get(lens_key, lens_key)
+                        )
+                    )
+                    print(
+                        f"    · {lens_label:<28} {_fmt_brl(lens_mean):>12}  {lens_pct:6.2f}% do total"
+                    )
         print()
 
     if show("ranking"):
+        print(
+            _ornamental_divider(
+                "②",
+                "OS 27 BRASIS — ranking e desigualdade regional",
+                use_color=use_color,
+                width=92,
+            )
+        )
+        for ln in _narrative(
+            "Comparar UFs pelo salário-mínimo médio revela um país de múltiplas velocidades: "
+            "a distância entre o topo e a base é comparável à distância entre países distintos. "
+            "A barra amarela em cada linha marca a média nacional — tudo à esquerda é mais pobre, tudo à direita é mais rico.",
+            use_color=use_color,
+            width=92,
+        ):
+            print(ln)
+        print()
         print(_colorize(" Ranking horizontal de UFs", "1;38;5;51", use_color))
-        left = [_colorize("  Top 10 UFs por renda (SM domiciliar)", "1;38;5;46", use_color)]
-        right = [_colorize("  Top 10 UFs por populacao estimada", "1;38;5;33", use_color)]
+        left = [
+            _colorize("  Top 10 UFs por renda (SM domiciliar)", "1;38;5;46", use_color)
+        ]
+        right = [
+            _colorize("  Top 10 UFs por populacao estimada", "1;38;5;33", use_color)
+        ]
         pop_total = float(nat["persons_total"]) or 1.0
         for i, u in enumerate(mode_data.get("top10_uf_income", []), start=1):
             val = float(u["avg_household_sm"])
             moe = u.get("avg_household_sm_moe")
-            heat = _gradient_bar(min(val * 16, 100), width=8, palette=[22, 28, 34, 40, 46], use_color=use_color)
+            heat = _gradient_bar(
+                min(val * 16, 100),
+                width=8,
+                palette=[22, 28, 34, 40, 46],
+                use_color=use_color,
+            )
             val_txt = f"{val:6.3f} SM"
             if moe is not None:
                 val_txt = f"{val:6.3f}±{float(moe):4.3f} SM"
@@ -2509,22 +4267,44 @@ def _print_dashboard_mode(
         for i, u in enumerate(mode_data.get("top10_uf_population", []), start=1):
             ppl = float(u["persons_total"])
             share = 100.0 * _safe_div(ppl, pop_total)
-            heat = _gradient_bar(min(share * 4, 100), width=8, palette=[17, 19, 21, 27, 33], use_color=use_color)
-            right.append(f"  {i:>2}. {u['label']:<{uf_name_width}} {share:5.2f}% {heat}")
+            heat = _gradient_bar(
+                min(share * 4, 100),
+                width=8,
+                palette=[17, 19, 21, 27, 33],
+                use_color=use_color,
+            )
+            right.append(
+                f"  {i:>2}. {u['label']:<{uf_name_width}} {share:5.2f}% {heat}"
+            )
         _print_two_columns(left, right, width=58, gap=3)
         print("")
         print(_colorize("  Bottom 10 UFs por renda (SM)", "1;38;5;196", use_color))
         for i, u in enumerate(mode_data.get("bottom10_uf_income", []), start=1):
             val = float(u["avg_household_sm"])
             moe = u.get("avg_household_sm_moe")
-            heat = _gradient_bar(min(val * 16, 100), width=10, palette=[52, 88, 124, 160, 196], use_color=use_color)
+            heat = _gradient_bar(
+                min(val * 16, 100),
+                width=10,
+                palette=[52, 88, 124, 160, 196],
+                use_color=use_color,
+            )
             val_txt = f"{val:6.3f} SM"
             if moe is not None:
                 val_txt = f"{val:6.3f}±{float(moe):4.3f} SM"
             print(f"   {i:>2}. {u['label']:<{uf_name_width}} {val_txt:<17} {heat}")
-        if is_anual_mode and isinstance(uf_dependency_ranking, list) and uf_dependency_ranking:
+        if (
+            is_anual_mode
+            and isinstance(uf_dependency_ranking, list)
+            and uf_dependency_ranking
+        ):
             print("")
-            print(_colorize("  Ranking de dependencia por UF (beneficios + previdencia)", "1;38;5;220", use_color))
+            print(
+                _colorize(
+                    "  Ranking de dependencia por UF (beneficios + previdencia)",
+                    "1;38;5;220",
+                    use_color,
+                )
+            )
             print(
                 "   # "
                 + f"{'UF':<{uf_name_width}} {'dep%':>7} {'trab%':>7} {'benef%':>8} {'prev%':>7} {'media':>12}"
@@ -2537,15 +4317,122 @@ def _print_dashboard_mode(
                 ben = float(row.get("benefits_pct", 0.0) or 0.0)
                 prev = float(row.get("previdencia_pct", 0.0) or 0.0)
                 inc = float(row.get("income_mean", 0.0) or 0.0)
-                dep_bar = _gradient_bar(dep, width=8, palette=[52, 88, 124, 160, 196], use_color=use_color)
+                dep_bar = _gradient_bar(
+                    dep, width=8, palette=[52, 88, 124, 160, 196], use_color=use_color
+                )
                 print(
                     f"  {i:>2}. {str(row.get('uf_label', '')):<{uf_name_width}} "
                     f"{dep:6.2f}% {work:6.2f}% {ben:7.2f}% {prev:6.2f}% {_fmt_brl(inc):>12} {dep_bar}"
                 )
         print()
 
+        # Cleveland dot-plot com whiskers de IC (topo e base)
+        bench_avg = float(nat.get("avg_household_sm", 0.0) or 0.0)
+        top_rows = list(mode_data.get("top10_uf_income", []) or [])[:5]
+        bottom_rows = list(mode_data.get("bottom10_uf_income", []) or [])[:5]
+        combined = top_rows + bottom_rows
+        if combined:
+            print(
+                _section_headline(
+                    "Dot-plot com intervalos de confiança (Cleveland)",
+                    use_color=use_color,
+                )
+            )
+            for ln in _narrative(
+                "Cada ponto é a média da UF; o traço horizontal é o intervalo de confiança 95% (bootstrap 200 réplicas). "
+                "A linha tracejada amarela marca a média nacional. Se o IC toca a linha, a diferença não é estatisticamente distinguível.",
+                use_color=use_color,
+                width=92,
+            ):
+                print(ln)
+            max_val = (
+                max(
+                    (float(r.get("avg_household_sm", 0.0) or 0.0) for r in combined),
+                    default=6.0,
+                )
+                * 1.1
+            )
+            rows_for_plot = [
+                {
+                    "label": str(r.get("label", "")),
+                    "avg_household_sm": r.get("avg_household_sm", 0.0),
+                    "avg_household_sm_moe": r.get("avg_household_sm_moe"),
+                }
+                for r in combined
+            ]
+            for ln in _dot_plot_whiskers(
+                rows_for_plot,
+                value_key="avg_household_sm",
+                moe_key="avg_household_sm_moe",
+                label_width=max(18, min(22, uf_name_width)),
+                benchmark=bench_avg,
+                max_value=max_val,
+                width=32,
+                use_color=use_color,
+            ):
+                print(ln)
+            print()
+
+        # UF × band heatmap
+        all_ufs = list(mode_data.get("top10_uf_income", []) or []) + list(
+            mode_data.get("bottom10_uf_income", []) or []
+        )
+        seen_labels = set()
+        heatmap_rows = []
+        for r in all_ufs:
+            if not isinstance(r, dict):
+                continue
+            lbl = str(r.get("label", ""))
+            if lbl in seen_labels:
+                continue
+            seen_labels.add(lbl)
+            heatmap_rows.append(r)
+        if heatmap_rows:
+            for ln in _uf_band_heatmap(
+                heatmap_rows,
+                payload.get("ranges", []),
+                use_color=use_color,
+                cell_width=8,
+            ):
+                print(ln)
+            for ln in _narrative(
+                "Leitura: cada célula mostra o percentual de pessoas da UF naquela faixa. "
+                "Colunas da esquerda indicam pobreza concentrada; da direita, riqueza concentrada.",
+                use_color=use_color,
+                width=92,
+            ):
+                print(ln)
+            print()
+
+        # Brazil ASCII choropleth
+        geo_rows = (
+            list(mode_data.get("top10_uf_income", []) or [])
+            + list(mode_data.get("bottom10_uf_income", []) or [])
+            + list(mode_data.get("top10_uf_population", []) or [])
+        )
+        for ln in _ascii_brazil_map(geo_rows, use_color=use_color):
+            print(ln)
+        print()
+
     if show("macro"):
-        print(_colorize(" Macro-regioes do Brasil", "1;38;5;39", use_color))
+        print(
+            _ornamental_divider(
+                "③",
+                "AS 5 MACRO-REGIÕES — Brasil por Brasil",
+                use_color=use_color,
+                width=92,
+            )
+        )
+        for ln in _narrative(
+            "O Brasil tem ao menos cinco países dentro de si. Cada macro-região carrega história, demografia e estrutura "
+            "produtiva próprias — e a média esconde essas identidades. As barras mostram tamanho populacional e a média em SM; "
+            "o gauge à direita sinaliza quão pobre (verm.) ou rica (verde) a região é comparada ao Brasil.",
+            use_color=use_color,
+            width=92,
+        ):
+            print(ln)
+        print()
+        print(_colorize(" Macro-regiões do Brasil", "1;38;5;39", use_color))
         macro_list = mode_data.get("macro_regions", [])
         macro_map: Dict[str, Dict[str, object]] = {}
         if isinstance(macro_list, list):
@@ -2573,12 +4460,36 @@ def _print_dashboard_mode(
                 colors=colors,
                 use_color=use_color,
             )
-            pbar = _gradient_bar(share, width=12, palette=[17, 19, 21, 27, 33], use_color=use_color)
-            print(f"  {mr['label']:<12} pop={share:5.2f}% {pbar}  media={avg:5.2f} SM  mix={mix}")
+            pbar = _gradient_bar(
+                share, width=12, palette=[17, 19, 21, 27, 33], use_color=use_color
+            )
+            print(
+                f"  {mr['label']:<12} pop={share:5.2f}% {pbar}  media={avg:5.2f} SM  mix={mix}"
+            )
         print("")
 
     if show("population"):
-        print(_colorize(" Top 10 UFs por populacao com mix de faixas", "1;38;5;33", use_color))
+        print(
+            _ornamental_divider(
+                "④",
+                "ONDE VIVEM OS BRASILEIROS — densidade e composição",
+                use_color=use_color,
+                width=92,
+            )
+        )
+        for ln in _narrative(
+            "Onde estão as pessoas não é onde está a renda. As 10 UFs mais populosas somam mais de 70% do país — "
+            "mas a maioria tem perfil de renda distinto do DF e dos estados ricos do Sul/Sudeste.",
+            use_color=use_color,
+            width=92,
+        ):
+            print(ln)
+        print()
+        print(
+            _colorize(
+                " Top 10 UFs por população com mix de faixas", "1;38;5;33", use_color
+            )
+        )
         for i, u in enumerate(mode_data.get("top10_uf_population", []), start=1):
             ppl = float(u["persons_total"])
             share = 100.0 * _safe_div(ppl, float(nat["persons_total"]) or 1.0)
@@ -2589,10 +4500,28 @@ def _print_dashboard_mode(
                 colors=colors,
                 use_color=use_color,
             )
-            print(f"  {i:>2}. {u['label']:<{uf_name_width}} pop={share:5.2f}%  mix={mix}")
+            print(
+                f"  {i:>2}. {u['label']:<{uf_name_width}} pop={share:5.2f}%  mix={mix}"
+            )
         print()
 
     if show("demography"):
+        print(
+            _ornamental_divider(
+                "⑤",
+                "QUEM É O BRASIL — sexo, cor, escolaridade, idade",
+                use_color=use_color,
+                width=92,
+            )
+        )
+        for ln in _narrative(
+            "Cada recorte é uma lente para enxergar quem está onde. Atente-se aos 'Sem informação' — "
+            "quando passam de 10%, o dado puro pode mentir. A pirâmide etária adiante mostra se somos um país jovem ou envelhecido.",
+            use_color=use_color,
+            width=92,
+        ):
+            print(ln)
+        print()
         print(_colorize(" Demografia detalhada (recortes com barras)", 33, use_color))
         demo = mode_data.get("demographics", {})
         dim_labels = payload.get("dimension_labels", {})
@@ -2607,8 +4536,16 @@ def _print_dashboard_mode(
             print(_colorize(f"  {label}", "1;38;5;117", use_color))
 
             if dim == "macro_region":
-                by_label = {str(x.get("label", "")): float(x.get("pct", 0.0) or 0.0) for x in rows if isinstance(x, dict)}
-                show_rows = [{"label": rg, "pct": by_label.get(rg, 0.0)} for rg in MACRO_REGION_ORDER if rg != "Desconhecida"]
+                by_label = {
+                    str(x.get("label", "")): float(x.get("pct", 0.0) or 0.0)
+                    for x in rows
+                    if isinstance(x, dict)
+                }
+                show_rows = [
+                    {"label": rg, "pct": by_label.get(rg, 0.0)}
+                    for rg in MACRO_REGION_ORDER
+                    if rg != "Desconhecida"
+                ]
                 unknown_pct = 0.0
                 known_labels = {x["label"] for x in show_rows}
                 for k, v in by_label.items():
@@ -2627,7 +4564,9 @@ def _print_dashboard_mode(
                         missing_pct += pct
                     else:
                         known_rows.append({"label": lbl, "pct": pct})
-                known_rows.sort(key=lambda r: _age_label_sort_key(str(r.get("label", ""))))
+                known_rows.sort(
+                    key=lambda r: _age_label_sort_key(str(r.get("label", "")))
+                )
                 show_rows = known_rows
                 hidden_pct = 0.0
                 if missing_pct > 0:
@@ -2649,7 +4588,9 @@ def _print_dashboard_mode(
                     show_rows.append({"label": "Sem informacao", "pct": missing_pct})
 
             labels_out = [
-                _compact_dim_label(dim, str(row.get("label", "")), max_len=demog_label_cap)
+                _compact_dim_label(
+                    dim, str(row.get("label", "")), max_len=demog_label_cap
+                )
                 for row in show_rows
             ]
             demog_label_width = min(
@@ -2674,12 +4615,30 @@ def _print_dashboard_mode(
                     palette=[239, 242, 245, 248, 251],
                     use_color=use_color,
                 )
-                print(f"   - {'Outros':<{demog_label_width}} {hidden_pct:5.1f}% {other_bar}")
+                print(
+                    f"   - {'Outros':<{demog_label_width}} {hidden_pct:5.1f}% {other_bar}"
+                )
             print("")
         print("")
 
     if show("pyramid"):
-        print(_colorize(" Piramide etaria (sexo x idade)", "1;38;5;45", use_color))
+        print(
+            _ornamental_divider(
+                "⑥",
+                "PIRÂMIDE ETÁRIA — a população por sexo e idade",
+                use_color=use_color,
+                width=92,
+            )
+        )
+        for ln in _narrative(
+            "A pirâmide conta como nascemos e envelhecemos. Um topo mais largo na faixa 60+ indica envelhecimento; "
+            "uma base estreita em 00-13 indica queda na fecundidade. Veja também o desequilíbrio M vs F em idades avançadas.",
+            use_color=use_color,
+            width=92,
+        ):
+            print(ln)
+        print()
+        print(_colorize(" Pirâmide etária (sexo × idade)", "1;38;5;45", use_color))
         pyramid = mode_data.get("age_pyramid", [])
         if not isinstance(pyramid, list) or not pyramid:
             print("  Sem dados suficientes para piramide etaria.\n")
@@ -2688,7 +4647,11 @@ def _print_dashboard_mode(
             for row in pyramid:
                 if not isinstance(row, dict):
                     continue
-                max_pct = max(max_pct, float(row.get("female_pct", 0.0) or 0.0), float(row.get("male_pct", 0.0) or 0.0))
+                max_pct = max(
+                    max_pct,
+                    float(row.get("female_pct", 0.0) or 0.0),
+                    float(row.get("male_pct", 0.0) or 0.0),
+                )
             max_pct = max(max_pct, 1.0)
             width = 16
             print(
@@ -2715,15 +4678,38 @@ def _print_dashboard_mode(
                 f_len = max(0, min(width, f_len))
                 m_len = max(0, min(width, m_len))
 
-                left = " " * (width - f_len) + _colorize("█" * f_len, "1;38;5;226", use_color)
-                right = _colorize("█" * m_len, "1;38;5;21", use_color) + " " * (width - m_len)
-                print(f"  {left} {age_lbl:^8} {right}  {female_pct:4.1f}%/{male_pct:4.1f}%")
+                left = " " * (width - f_len) + _colorize(
+                    "█" * f_len, "1;38;5;226", use_color
+                )
+                right = _colorize("█" * m_len, "1;38;5;21", use_color) + " " * (
+                    width - m_len
+                )
+                print(
+                    f"  {left} {age_lbl:^8} {right}  {female_pct:4.1f}%/{male_pct:4.1f}%"
+                )
             if other_total_pct > 0.01:
                 print(f"  Outros/sem info de sexo: {other_total_pct:.2f}%")
             print("")
 
     if show("cross"):
-        print(_colorize(" Cruzamentos principais x faixas de SM", 34, use_color))
+        print(
+            _ornamental_divider(
+                "⑦",
+                "CRUZAMENTOS — sexo, raça, escolaridade × renda",
+                use_color=use_color,
+                width=92,
+            )
+        )
+        for ln in _narrative(
+            "Aqui é onde aparecem as desigualdades estruturais. Compare pretos/pardos vs brancos, "
+            "ensino fundamental vs superior, e a gritante diferença de capital vs interior na faixa mais rica. "
+            "Cada linha mostra como a população de um grupo se reparte entre as faixas de SM.",
+            use_color=use_color,
+            width=92,
+        ):
+            print(ln)
+        print()
+        print(_colorize(" Cruzamentos principais × faixas de SM", 34, use_color))
         cross = mode_data.get("cross", {})
         dim_labels = payload.get("dimension_labels", {})
         chosen_dims = ["sex", "race", "education", "age", "capital", "macro_region"]
@@ -2781,14 +4767,134 @@ def _print_dashboard_mode(
                     parts.append(
                         f"{b}:{pct:4.1f}% {_gradient_bar(pct, width=3, palette=gradients[bi], use_color=use_color)}"
                     )
-                lbl = _compact_dim_label(dim, str(row.get("label", "")), max_len=max_label_len_by_dim.get(dim, 28))
+                lbl = _compact_dim_label(
+                    dim,
+                    str(row.get("label", "")),
+                    max_len=max_label_len_by_dim.get(dim, 28),
+                )
                 print(f"   - {lbl:<28} {' | '.join(parts)}")
             print("")
 
     if show("insights"):
         ins = mode_data.get("insights", {})
         if isinstance(ins, dict):
-            print(_colorize(" Termometro socioeconomico", "1;38;5;229", use_color))
+            print(
+                _ornamental_divider(
+                    "⑧",
+                    "TERMÔMETRO SOCIOECONÔMICO — gauges e país-equivalente",
+                    use_color=use_color,
+                    width=92,
+                )
+            )
+            for ln in _narrative(
+                "Três medidores sintetizam o estado do país: Gini (0 = igualdade, 1 = desigualdade máxima), "
+                "taxa de pobreza (% na faixa mais baixa) e mobilidade (% na faixa mais alta). "
+                "Abaixo, comparamos UFs a países com PIB per capita semelhante — uma leitura cultural, não oficial.",
+                use_color=use_color,
+                width=92,
+            ):
+                print(ln)
+            print()
+
+            gini_val = float(nat.get("gini_household_sm", 0.0) or 0.0)
+            low_pct_val = float(ins.get("national_low_income_pct", 0.0) or 0.0) / 100.0
+            high_pct_val = (
+                float(ins.get("national_high_income_pct", 0.0) or 0.0) / 100.0
+            )
+            g_lines = _gauge(
+                "Gini",
+                gini_val,
+                vmin=0.0,
+                vmax=1.0,
+                thresholds=[
+                    (0.35, "1;38;5;46", "baixo"),
+                    (0.50, "1;38;5;226", "médio"),
+                    (0.65, "1;38;5;214", "alto"),
+                    (1.00, "1;38;5;196", "extremo"),
+                ],
+                use_color=use_color,
+            )
+            p_lines = _gauge(
+                "Pobreza (0-2 SM)",
+                low_pct_val,
+                vmin=0.0,
+                vmax=1.0,
+                thresholds=[
+                    (0.20, "1;38;5;46", "baixa"),
+                    (0.40, "1;38;5;226", "média"),
+                    (0.60, "1;38;5;214", "alta"),
+                    (1.00, "1;38;5;196", "crítica"),
+                ],
+                use_color=use_color,
+            )
+            m_lines = _gauge(
+                "Topo (10+ SM)",
+                high_pct_val,
+                vmin=0.0,
+                vmax=0.30,
+                thresholds=[
+                    (0.05, "1;38;5;196", "concentrado"),
+                    (0.10, "1;38;5;214", "concentrado"),
+                    (0.20, "1;38;5;226", "médio"),
+                    (1.00, "1;38;5;46", "distribuído"),
+                ],
+                use_color=use_color,
+            )
+            # Render three gauges side-by-side (visible-length aware)
+            gauge_cell_w = 30
+
+            def _pad_cell(s: str, width: int) -> str:
+                vis = _visible_len(s)
+                if vis >= width:
+                    return s
+                return s + " " * (width - vis)
+
+            max_h = max(len(g_lines), len(p_lines), len(m_lines))
+            for i in range(max_h):
+                a = g_lines[i] if i < len(g_lines) else ""
+                b = p_lines[i] if i < len(p_lines) else ""
+                c = m_lines[i] if i < len(m_lines) else ""
+                print(
+                    _pad_cell(a, gauge_cell_w)
+                    + _pad_cell(b, gauge_cell_w)
+                    + _pad_cell(c, gauge_cell_w)
+                )
+            print()
+
+            # País-equivalente
+            top_sm = 0.0
+            bot_sm = 0.0
+            for r in mode_data.get("top10_uf_income", []) or []:
+                if isinstance(r, dict):
+                    top_sm = max(top_sm, float(r.get("avg_household_sm", 0.0) or 0.0))
+            for r in mode_data.get("bottom10_uf_income", []) or []:
+                if isinstance(r, dict):
+                    val = float(r.get("avg_household_sm", 0.0) or 0.0)
+                    bot_sm = val if bot_sm == 0.0 else min(bot_sm, val)
+            comps = _country_comparison(
+                sm_mean=float(nat.get("avg_household_sm", 0.0) or 0.0),
+                sm_median=float(nat.get("median_household_sm", 0.0) or 0.0),
+                top_uf_sm=top_sm,
+                bottom_uf_sm=bot_sm,
+                sm_reference_brl=float(payload.get("sm_target_value", 0.0) or 0.0),
+            )
+            print(
+                _section_headline(
+                    "Se fossem países (PIB per capita equivalente, ilustrativo)",
+                    use_color=use_color,
+                )
+            )
+            for lbl, country, flag in comps:
+                print(
+                    f"   {lbl:<22} ≈  {flag}  {_colorize(country, '1;38;5;226', use_color)}"
+                )
+            print()
+
+            print(
+                _colorize(
+                    " Termômetro socioeconômico — detalhe", "1;38;5;229", use_color
+                )
+            )
             low_label = str(ins.get("national_low_income_band", "") or "")
             high_label = str(ins.get("national_high_income_band", "") or "")
             low_money = str(ins.get("national_low_income_money", "") or "")
@@ -2797,14 +4903,20 @@ def _print_dashboard_mode(
             high_pct = float(ins.get("national_high_income_pct", 0.0) or 0.0)
             print(
                 "  "
-                + _badge(f"{low_label or 'baixa':<8}", fg=16, bg=46, use_color=use_color)
+                + _badge(
+                    f"{low_label or 'baixa':<8}", fg=16, bg=46, use_color=use_color
+                )
                 + f" {low_pct:6.2f}% das pessoas"
                 + "  |  "
-                + _badge(f"{high_label or 'alta':<8}", fg=16, bg=15, use_color=use_color)
+                + _badge(
+                    f"{high_label or 'alta':<8}", fg=16, bg=15, use_color=use_color
+                )
                 + f" {high_pct:6.2f}% das pessoas"
             )
             if low_money or high_money:
-                print(f"  Equivalencia em R$: baixa={low_money or 'N/A'} | alta={high_money or 'N/A'}")
+                print(
+                    f"  Equivalencia em R$: baixa={low_money or 'N/A'} | alta={high_money or 'N/A'}"
+                )
             print(
                 f"  Renda media mais alta: {ins.get('richest_uf_by_avg_sm', 'N/A')} | "
                 f"mais baixa: {ins.get('poorest_uf_by_avg_sm', 'N/A')}"
@@ -2813,20 +4925,40 @@ def _print_dashboard_mode(
                 f"  Maior concentracao na faixa {low_label}: {ins.get('highest_low_income_uf', 'N/A')} | "
                 f"na faixa {high_label}: {ins.get('highest_high_income_uf', 'N/A')}"
             )
-            left = [_colorize(f"  Top 10 UFs na faixa {low_label}", "1;38;5;46", use_color)]
-            right = [_colorize(f"  Top 10 UFs na faixa {high_label}", "1;38;5;15", use_color)]
+            left = [
+                _colorize(f"  Top 10 UFs na faixa {low_label}", "1;38;5;46", use_color)
+            ]
+            right = [
+                _colorize(f"  Top 10 UFs na faixa {high_label}", "1;38;5;15", use_color)
+            ]
             for i, u in enumerate(mode_data.get("top10_uf_low_income", []), start=1):
                 pct = _band_pct(u, low_label)
-                bar = _gradient_bar(pct, width=8, palette=[22, 28, 34, 40, 46], use_color=use_color)
-                left.append(f"  {i:>2}. {u['label']:<{uf_name_width}} {pct:5.2f}% {bar}")
+                bar = _gradient_bar(
+                    pct, width=8, palette=[22, 28, 34, 40, 46], use_color=use_color
+                )
+                left.append(
+                    f"  {i:>2}. {u['label']:<{uf_name_width}} {pct:5.2f}% {bar}"
+                )
             for i, u in enumerate(mode_data.get("top10_uf_high_income", []), start=1):
                 pct = _band_pct(u, high_label)
-                bar = _gradient_bar(pct, width=8, palette=[248, 250, 252, 254, 15], use_color=use_color)
-                right.append(f"  {i:>2}. {u['label']:<{uf_name_width}} {pct:5.2f}% {bar}")
+                bar = _gradient_bar(
+                    pct, width=8, palette=[248, 250, 252, 254, 15], use_color=use_color
+                )
+                right.append(
+                    f"  {i:>2}. {u['label']:<{uf_name_width}} {pct:5.2f}% {bar}"
+                )
             _print_two_columns(left, right, width=58, gap=3)
-            if is_anual_mode and isinstance(composition_by_band, dict) and composition_by_band:
+            if (
+                is_anual_mode
+                and isinstance(composition_by_band, dict)
+                and composition_by_band
+            ):
                 print("")
-                print(_colorize("  Composicao de renda por faixa de SM", "1;38;5;117", use_color))
+                print(
+                    _colorize(
+                        "  Composicao de renda por faixa de SM", "1;38;5;117", use_color
+                    )
+                )
                 for band_label in payload.get("ranges", []):
                     data = composition_by_band.get(str(band_label), {})
                     if not isinstance(data, dict):
@@ -2860,7 +4992,160 @@ def _print_dashboard_mode(
     if show("meta"):
         md = payload.get("metadata", {})
         if isinstance(md, dict):
-            print(_colorize(" Metadados de cobertura e qualidade", "1;38;5;250", use_color))
+            print(
+                _ornamental_divider(
+                    "⑨",
+                    "VALIDAÇÃO ESTATÍSTICA — auditoria dos números",
+                    use_color=use_color,
+                    width=92,
+                )
+            )
+            for ln in _narrative(
+                "Aqui checamos se a verdade que você viu é confiável. Todos os números são ponderados pelos pesos de "
+                "calibração do IBGE (V1028 no trimestral, V1032 no anual). Intervalos de confiança (IC 95%) vêm de "
+                "bootstrap com 200 réplicas amostrais — o método oficial recomendado pelo IBGE. O coeficiente de "
+                "variação (CV) indica a qualidade de cada estimativa: CV<5% (excelente), 5-15% (boa), 15-30% "
+                "(atenção), >30% (não publicar).",
+                use_color=use_color,
+                width=92,
+            ):
+                print(ln)
+            print()
+
+            # Validation checklist
+            samp = (
+                payload.get("sampling", {})
+                if isinstance(payload.get("sampling"), dict)
+                else {}
+            )
+            reps = int(samp.get("replicate_weight_columns_detected", 0) or 0)
+            ci_effective = bool(samp.get("ci_effective", False))
+            weight_col = str(payload.get("weight_col") or "")
+            weighting_mode = str(payload.get("weighting_mode") or "")
+            rep_base = str(samp.get("replicate_weight_base") or "V1028")
+            pnad_mode_pretty = (
+                "anual"
+                if str(payload.get("pnad_mode", "trimestral")) == "anual"
+                else "trimestral"
+            )
+            expected_main = (
+                ("V1032", "V1031")
+                if pnad_mode_pretty == "anual"
+                else ("V1028", "V1027")
+            )
+            expected_label = " ou ".join(expected_main)
+
+            checks = [
+                (
+                    f"Pesos de calibração IBGE ({expected_label})",
+                    weight_col.startswith(expected_main),
+                    weight_col or "ausente",
+                ),
+                (
+                    "Modo ponderado (não diagnóstico)",
+                    weighting_mode == "weighted",
+                    weighting_mode or "?",
+                ),
+                (
+                    "Bootstrap de IC ativo (≥2 réplicas)",
+                    ci_effective,
+                    f"{reps} réplicas" + (f" (base {rep_base})" if reps > 0 else ""),
+                ),
+                (
+                    f"Réplicas completas (200 {rep_base}xxx)",
+                    reps == 200,
+                    f"{reps}/200",
+                ),
+                (
+                    "Renda deflacionada (IPCA)",
+                    True,
+                    f"alvo {payload.get('target', '')}",
+                ),
+                (
+                    "SM nominal por mês (BCB 1619)",
+                    bool(payload.get("sm_target_value")),
+                    f"R$ {payload.get('sm_target_value', '')}",
+                ),
+                (
+                    "Gini ponderado (Lorenz)",
+                    True,
+                    f"{float(nat.get('gini_household_sm', 0.0) or 0.0):.3f}",
+                ),
+                (
+                    "Mediana ponderada por peso populacional",
+                    True,
+                    f"{float(nat.get('median_household_sm', 0.0) or 0.0):.3f} SM",
+                ),
+                (
+                    "Mais de 1000 domicílios amostrados",
+                    int(md.get("households", 0) or 0) > 1000,
+                    f"{md.get('households', 0)} dom.",
+                ),
+                (
+                    "Pulos de período/fator/peso",
+                    (
+                        int(md.get("skipped_missing_period", 0) or 0)
+                        + int(md.get("skipped_missing_factor", 0) or 0)
+                        + int(md.get("skipped_missing_weight", 0) or 0)
+                        + int(md.get("skipped_invalid_weight", 0) or 0)
+                    )
+                    == 0,
+                    f"period={md.get('skipped_missing_period', 0)}, fac={md.get('skipped_missing_factor', 0)}, w={md.get('skipped_missing_weight', 0)}",
+                ),
+            ]
+            for label, ok, detail in checks:
+                mark = (
+                    _colorize("✓", "1;38;5;46", use_color)
+                    if ok
+                    else _colorize("✗", "1;38;5;196", use_color)
+                )
+                print(
+                    f"  {mark} {label:<44} {_colorize(str(detail), '38;5;252', use_color)}"
+                )
+            print()
+
+            # CV per main national estimate
+            print(
+                _section_headline(
+                    "Qualidade estatística por estimativa (CV %)", use_color=use_color
+                )
+            )
+            avg_sm_v = float(nat.get("avg_household_sm", 0.0) or 0.0)
+            avg_sm_moe_v = nat.get("avg_household_sm_moe")
+            cv_avg_sm = (
+                _cv_from_moe(avg_sm_v, float(avg_sm_moe_v), 0.95)
+                if avg_sm_moe_v is not None
+                else None
+            )
+            if cv_avg_sm is not None:
+                badge = _quality_badge(cv_avg_sm, use_color)
+                print(
+                    f"   {badge} Média SM nacional ........ CV = {cv_avg_sm * 100:5.2f}%"
+                )
+            for b in nat.get("bands", []) or []:
+                if not isinstance(b, dict):
+                    continue
+                hp_v = float(b.get("households_pct", 0.0) or 0.0)
+                hp_moe_v = b.get("households_pct_moe")
+                if hp_moe_v is None:
+                    continue
+                cv_b = _cv_from_moe(hp_v, float(hp_moe_v), 0.95)
+                badge = _quality_badge(cv_b, use_color)
+                print(
+                    f"   {badge} Domicílios faixa {str(b.get('range', '')):<8} CV = {(cv_b or 0) * 100:5.2f}%"
+                )
+            print()
+
+            # Official seal
+            for ln in _official_seal(payload, use_color=use_color):
+                print(ln)
+            print()
+
+            print(
+                _colorize(
+                    " Metadados de cobertura e qualidade", "1;38;5;250", use_color
+                )
+            )
             print(
                 f"  rows={md.get('rows_read')} | households={md.get('households')} | "
                 f"ufs={md.get('states_covered')} | dims={len(md.get('dimensions', []))}"
@@ -2879,39 +5164,231 @@ def _print_dashboard_mode(
         print()
 
 
-def _print_dashboard_pretty(payload: Dict[str, object], *, no_color: bool = False) -> None:
+def _print_dashboard_bundle_pretty(
+    payload: Dict[str, object], *, no_color: bool = False
+) -> None:
+    dashboards = payload.get("dashboards", {})
+    if not isinstance(dashboards, dict) or not dashboards:
+        return
     use_color = _supports_color(no_color=no_color)
-    title_style = "1;38;5;46"
+    print(_brazil_flag_strip(use_color))
+    summary = payload.get("summary", {})
+    by_mode = summary.get("by_mode", {}) if isinstance(summary, dict) else {}
+    lines = [
+        _colorize("PNAD DASHBOARD ECONOMICO - VISAO COMPLETA", "1;38;5;46", use_color),
+        (
+            f"Dashboards ativos: {', '.join(str(x) for x in summary.get('available_dashboards', []))}"
+            if isinstance(summary, dict)
+            else ""
+        ),
+    ]
+    if isinstance(by_mode, dict):
+        tri = by_mode.get("trimestral", {})
+        anual = by_mode.get("anual", {})
+        if isinstance(tri, dict):
+            lines.append(
+                "Trimestral: "
+                f"renda media={_fmt_brl(float(tri.get('avg_household_income_brl', 0.0) or 0.0))} | "
+                f"media SM={float(tri.get('avg_household_sm', 0.0) or 0.0):.3f} | "
+                f"entrada={tri.get('input')}"
+            )
+        if isinstance(anual, dict):
+            lines.append(
+                "Anual: "
+                f"renda media={_fmt_brl(float(anual.get('avg_household_income_brl', 0.0) or 0.0))} | "
+                f"media SM={float(anual.get('avg_household_sm', 0.0) or 0.0):.3f} | "
+                f"entrada={anual.get('input')}"
+            )
+    _panel(
+        "Painel Completo",
+        [x for x in lines if x],
+        color="1;38;5;46",
+        use_color=use_color,
+    )
+    print("")
+    for mode in ("trimestral", "anual"):
+        item = dashboards.get(mode)
+        if not isinstance(item, dict):
+            continue
+        print(_colorize(f"### Bloco {mode.upper()}", "1;38;5;117", use_color))
+        _print_dashboard_pretty(item, no_color=no_color)
+        print("")
+
+
+def _run_dashboard_bundle_interactive(
+    payload: Dict[str, object], *, no_color: bool = False
+) -> None:
+    dashboards = payload.get("dashboards", {})
+    if not isinstance(dashboards, dict) or not dashboards:
+        return
+    dataset_names = [
+        name
+        for name in ("trimestral", "anual")
+        if isinstance(dashboards.get(name), dict)
+    ]
+    if not dataset_names:
+        return
+
+    dataset_idx = 0
+    mode_idx = 0
+    section = "all"
+    while True:
+        dataset_name = dataset_names[dataset_idx]
+        dataset_payload = dashboards.get(dataset_name, {})
+        if not isinstance(dataset_payload, dict):
+            return
+        modes = list(dataset_payload.get("modes", {}).keys())
+        if not modes:
+            return
+        mode = modes[mode_idx % len(modes)]
+        print("\n" + "=" * 90)
+        print(f"[dataset={dataset_name}]")
+        _print_dashboard_mode(dataset_payload, mode, no_color=no_color, section=section)
+        print(
+            "[d] prox dataset | [s] dataset anterior | [n] proximo modo | [p] modo anterior | "
+            "[1] overview | [2] ranking | [3] macro | [4] population | [5] demography | "
+            "[6] pyramid | [7] cross | [8] meta | [9] insights | [a] all | [q] sair"
+        )
+        try:
+            ans = input("> ").strip().lower()
+        except EOFError:
+            return
+        if ans in ("q", "quit", "exit"):
+            return
+        if ans in ("d", "dataset", "next-dataset"):
+            dataset_idx = (dataset_idx + 1) % len(dataset_names)
+            mode_idx = 0
+            continue
+        if ans in ("s", "prev-dataset", "dataset-anterior"):
+            dataset_idx = (dataset_idx - 1) % len(dataset_names)
+            mode_idx = 0
+            continue
+        if ans in ("n", "next"):
+            mode_idx = (mode_idx + 1) % len(modes)
+            continue
+        if ans in ("p", "prev", "anterior"):
+            mode_idx = (mode_idx - 1) % len(modes)
+            continue
+        if ans in ("a", "all", "dashboard"):
+            section = "all"
+            continue
+        if ans == "1":
+            section = "overview"
+            continue
+        if ans == "2":
+            section = "ranking"
+            continue
+        if ans == "3":
+            section = "macro"
+            continue
+        if ans == "4":
+            section = "population"
+            continue
+        if ans == "5":
+            section = "demography"
+            continue
+        if ans == "6":
+            section = "pyramid"
+            continue
+        if ans == "7":
+            section = "cross"
+            continue
+        if ans == "8":
+            section = "meta"
+            continue
+        if ans == "9":
+            section = "insights"
+            continue
+
+
+def _print_dashboard_pretty(
+    payload: Dict[str, object], *, no_color: bool = False
+) -> None:
+    use_color = _supports_color(no_color=no_color)
     pnad_mode = payload.get("pnad_mode", "trimestral")
     mode_label = "ANUAL (Visita 5)" if pnad_mode == "anual" else "TRIMESTRAL"
-    
-    print(_brazil_flag_strip(use_color))
-    header = [
-        _colorize(f"PNAD DASHBOARD ECONOMICO - {mode_label}", title_style, use_color),
-        f"Entrada: {payload.get('input')}",
-        f"Target: {payload.get('target')} | SM alvo: {payload.get('sm_target_value')} (mes {payload.get('sm_target_month')})",
-        f"Peso: {payload.get('weighting_mode')} ({payload.get('weight_col') or 'N/A'}) | Renda: {payload.get('income_col')}",
-    ]
-    md = payload.get("metadata", {})
-    if isinstance(md, dict):
-        header.append(
-            f"Cobertura: {md.get('states_covered')} UFs | {md.get('households')} domicilios | linhas lidas={md.get('rows_read')}"
+
+    print(_brazil_flag_strip(use_color, width=92))
+    print()
+    # Editorial-style header
+    masthead = (
+        _colorize("░▒▓█ ", "1;38;5;46", use_color)
+        + _colorize("PNAD · DASHBOARD ECONÔMICO DO BRASIL", "1;38;5;231", use_color)
+        + _colorize(" █▓▒░", "1;38;5;46", use_color)
+    )
+    sub = _colorize(
+        f"edição {payload.get('target', '')} · modo {mode_label.lower()} · {datetime.date.today().isoformat()}",
+        "3;38;5;244",
+        use_color,
+    )
+    print(" " * 22 + masthead)
+    print(" " * 22 + sub)
+    print()
+
+    # Executive briefing and hero card go with the first mode (usually only one)
+    modes = list(payload.get("modes", {}).keys())
+    first_mode = modes[0] if modes else None
+
+    if first_mode is not None:
+        mode_data = payload["modes"][first_mode]
+        nat = mode_data.get("national", {})
+        # Executive briefing — The Brazil in 5 Truths
+        for ln in _executive_briefing(
+            payload, mode_data, use_color=use_color, width=92
+        ):
+            print(ln)
+        print()
+
+        # Hero card with big numbers
+        avg_brl = float(nat.get("avg_household_income_brl", 0.0) or 0.0)
+        median_brl = float(nat.get("median_household_income_brl", 0.0) or 0.0)
+        avg_sm = float(nat.get("avg_household_sm", 0.0) or 0.0)
+        gini = float(nat.get("gini_household_sm", 0.0) or 0.0)
+        avg_sm_moe = nat.get("avg_household_sm_moe")
+        ci_level = (
+            float(payload.get("sampling", {}).get("ci_level", 0.95))
+            if isinstance(payload.get("sampling"), dict)
+            else 0.95
         )
-        dims = md.get("dimensions", [])
-        if isinstance(dims, list):
-            header.append(f"Recortes ativos: {', '.join(str(x) for x in dims)}")
-        # Show income source columns detected for anual mode
-        src_cols = md.get("income_source_cols_detected", [])
-        if src_cols:
-            header.append(f"Fontes de renda detectadas: {len(src_cols)} colunas V50xxA2")
-    _panel("Panorama Geral", header, color="1;38;5;46", use_color=use_color)
-    print("")
+        cv_avg = (
+            _cv_from_moe(avg_sm, float(avg_sm_moe), ci_level)
+            if avg_sm_moe is not None
+            else None
+        )
+        hero_metrics = [
+            (_fmt_brl(avg_brl).replace("R$ ", "R$"), "", "renda média (dom.)", None),
+            (f"{avg_sm:.2f}", " SM", "salários-mínimos", cv_avg),
+            (_fmt_brl(median_brl).replace("R$ ", "R$"), "", "mediana (R$)", None),
+            (f"{gini:.3f}", "", "Gini", None),
+        ]
+        md_info = (
+            payload.get("metadata", {})
+            if isinstance(payload.get("metadata"), dict)
+            else {}
+        )
+        hero_sub = (
+            f"Cobertura: {md_info.get('states_covered', '?')} UFs · "
+            f"{md_info.get('households', '?')} domicílios · "
+            f"peso: {payload.get('weighting_mode')} · renda real até {payload.get('target')}"
+        )
+        hero_title = f"BRASIL · alvo {payload.get('target', '')} · SM ref R$ {payload.get('sm_target_value', '')}"
+        for ln in _hero_card(
+            title=hero_title,
+            subtitle=hero_sub,
+            metrics=hero_metrics,
+            use_color=use_color,
+            width=92,
+        ):
+            print(ln)
+        print()
 
     for mode in payload.get("modes", {}).keys():
         _print_dashboard_mode(payload, mode, no_color=no_color)
 
 
-def _run_dashboard_interactive(payload: Dict[str, object], *, no_color: bool = False) -> None:
+def _run_dashboard_interactive(
+    payload: Dict[str, object], *, no_color: bool = False
+) -> None:
     modes = list(payload.get("modes", {}).keys())
     if not modes:
         return
@@ -2971,7 +5448,7 @@ def _run_dashboard_interactive(payload: Dict[str, object], *, no_color: bool = F
 
 def cmd_dashboard(args: argparse.Namespace) -> int:
     try:
-        payload = _build_dashboard_payload(args)
+        payload = _build_dashboard_artifact(args)
     except Exception as exc:
         print(f"ERROR: {exc}", file=sys.stderr)
         return 2
@@ -2984,7 +5461,12 @@ def cmd_dashboard(args: argparse.Namespace) -> int:
         return 0
 
     try:
-        if args.interactive:
+        if _is_dashboard_bundle(payload):
+            if args.interactive:
+                _run_dashboard_bundle_interactive(payload, no_color=args.no_color)
+            else:
+                _print_dashboard_bundle_pretty(payload, no_color=args.no_color)
+        elif args.interactive:
             _run_dashboard_interactive(payload, no_color=args.no_color)
         else:
             _print_dashboard_pretty(payload, no_color=args.no_color)
@@ -3015,8 +5497,12 @@ def cmd_ibge_sync(args: argparse.Namespace) -> int:
         print(f"WARN: {scope} sync failed: {msg}", file=sys.stderr)
 
     def sync_one(url: str, destination: Path) -> Dict[str, object]:
-        prev = files_meta.get(url, {}) if isinstance(files_meta.get(url, {}), dict) else {}
-        result = _download_if_changed(url, destination, previous_meta=prev, force=args.force, quiet=args.quiet)
+        prev = (
+            files_meta.get(url, {}) if isinstance(files_meta.get(url, {}), dict) else {}
+        )
+        result = _download_if_changed(
+            url, destination, previous_meta=prev, force=args.force, quiet=args.quiet
+        )
         files_meta[url] = {
             "path": str(destination),
             "etag": str(result.get("meta", {}).get("etag", "")),
@@ -3054,7 +5540,9 @@ def cmd_ibge_sync(args: argparse.Namespace) -> int:
             top_docs = [
                 h
                 for h in root_hrefs
-                if h != "Documentacao/" and not h.endswith("/") and not h.lower().endswith(".zip")
+                if h != "Documentacao/"
+                and not h.endswith("/")
+                and not h.lower().endswith(".zip")
             ]
             for name in sorted(top_docs):
                 sync_one(base_url + name, docs_dir / name)
@@ -3064,13 +5552,22 @@ def cmd_ibge_sync(args: argparse.Namespace) -> int:
             for name in sorted(doc_files):
                 sync_one(base_url + "Documentacao/" + name, docs_dir / name)
 
-            if not args.no_extract and (docs_dir / "Dicionario_e_input_20221031.zip").exists():
-                _extract_zip_all(docs_dir / "Dicionario_e_input_20221031.zip", docs_dir, quiet=args.quiet)
+            if (
+                not args.no_extract
+                and (docs_dir / "Dicionario_e_input_20221031.zip").exists()
+            ):
+                _extract_zip_all(
+                    docs_dir / "Dicionario_e_input_20221031.zip",
+                    docs_dir,
+                    quiet=args.quiet,
+                )
 
             # Refresh monthly nominal minimum wage series (BCB SGS 1619).
             mw_rows = _fetch_json(BCB_SALARIO_MINIMO_URL)
             if not isinstance(mw_rows, list):
-                raise ValueError("unexpected response while fetching salario minimo series")
+                raise ValueError(
+                    "unexpected response while fetching salario minimo series"
+                )
             mw_out = docs_dir / "salario_minimo.csv"
             with mw_out.open("w", encoding="utf-8", newline="") as fh:
                 w = csv.writer(fh)
@@ -3104,7 +5601,9 @@ def cmd_ibge_sync(args: argparse.Namespace) -> int:
     if not args.no_raw:
         try:
             years = sorted(
-                int(h.rstrip("/")) for h in root_hrefs if re.match(r"^\d{4}/$", h) and h.rstrip("/").isdigit()
+                int(h.rstrip("/"))
+                for h in root_hrefs
+                if re.match(r"^\d{4}/$", h) and h.rstrip("/").isdigit()
             )
             if not years:
                 raise ValueError("no year folders found in IBGE Microdados index")
@@ -3126,7 +5625,9 @@ def cmd_ibge_sync(args: argparse.Namespace) -> int:
                     raise ValueError(f"no file for quarter {q} in year {selected_year}")
                 to_download = [str(pick["name"])]
             elif args.all_in_year:
-                to_download = [str(latest_by_quarter[q]["name"]) for q in sorted(latest_by_quarter)]
+                to_download = [
+                    str(latest_by_quarter[q]["name"]) for q in sorted(latest_by_quarter)
+                ]
             else:
                 latest_q = max(latest_by_quarter)
                 to_download = [str(latest_by_quarter[latest_q]["name"])]
@@ -3144,7 +5645,11 @@ def cmd_ibge_sync(args: argparse.Namespace) -> int:
                             {
                                 "url": zip_url,
                                 "path": str(txt_path),
-                                "status": "extracted" if sync_event["status"] == "downloaded" else "present",
+                                "status": (
+                                    "extracted"
+                                    if sync_event["status"] == "downloaded"
+                                    else "present"
+                                ),
                             }
                         )
         except Exception as exc:
@@ -3178,7 +5683,9 @@ def cmd_ibge_sync(args: argparse.Namespace) -> int:
 
             if not args.no_anual_raw:
                 data_hrefs = _list_hrefs(anual_base + "Dados/")
-                zip_names = sorted([h for h in data_hrefs if PNADC_ANUAL_VISITA5_ZIP_RE.match(h)])
+                zip_names = sorted(
+                    [h for h in data_hrefs if PNADC_ANUAL_VISITA5_ZIP_RE.match(h)]
+                )
                 latest_by_year = _group_latest_anual_by_year(zip_names)
                 years = sorted(latest_by_year.keys())
                 if not years:
@@ -3204,14 +5711,20 @@ def cmd_ibge_sync(args: argparse.Namespace) -> int:
                     zip_dest = anual_raw_dir / file_name
                     ev = sync_one(zip_url, zip_dest)
                     if not args.no_extract and zip_dest.exists():
-                        txt_path = _extract_single_txt(zip_dest, anual_raw_dir, quiet=args.quiet)
+                        txt_path = _extract_single_txt(
+                            zip_dest, anual_raw_dir, quiet=args.quiet
+                        )
                         if txt_path:
                             anual_txt.append(str(txt_path))
                             sync_events.append(
                                 {
                                     "url": zip_url,
                                     "path": str(txt_path),
-                                    "status": "extracted" if ev["status"] == "downloaded" else "present",
+                                    "status": (
+                                        "extracted"
+                                        if ev["status"] == "downloaded"
+                                        else "present"
+                                    ),
                                 }
                             )
 
@@ -3243,14 +5756,22 @@ def cmd_ibge_sync(args: argparse.Namespace) -> int:
                 url = censo_base + censo_folder + name
                 dest = censo_dir / name
                 ev = sync_one(url, dest)
-                if not args.no_extract and str(name).lower().endswith(".zip") and dest.exists():
+                if (
+                    not args.no_extract
+                    and str(name).lower().endswith(".zip")
+                    and dest.exists()
+                ):
                     out = _extract_zip_all(dest, censo_dir, quiet=args.quiet)
                     extracted_files.extend(str(x) for x in out)
                     sync_events.append(
                         {
                             "url": url,
                             "path": str(dest),
-                            "status": "extracted" if ev["status"] == "downloaded" else "present",
+                            "status": (
+                                "extracted"
+                                if ev["status"] == "downloaded"
+                                else "present"
+                            ),
                         }
                     )
             censo_payload["files"] = files
@@ -3272,8 +5793,12 @@ def cmd_ibge_sync(args: argparse.Namespace) -> int:
     if with_tse:
         tse_dir = Path(args.tse_dir)
         try:
-            resources = _fetch_tse_resources(args.tse_api_base, args.tse_query, rows=int(args.tse_rows))
-            selected = _select_tse_resources(resources, year=args.tse_year, all_years=bool(args.tse_all_years))
+            resources = _fetch_tse_resources(
+                args.tse_api_base, args.tse_query, rows=int(args.tse_rows)
+            )
+            selected = _select_tse_resources(
+                resources, year=args.tse_year, all_years=bool(args.tse_all_years)
+            )
             tse_payload["resources_found"] = len(resources)
             tse_payload["resources_selected"] = selected
 
@@ -3282,17 +5807,28 @@ def cmd_ibge_sync(args: argparse.Namespace) -> int:
                 url = str(item.get("url", "") or "")
                 if not url:
                     continue
-                name = Path(urlparse(url).path).name or f"tse_{item.get('kind','dataset')}_{item.get('year','')}.zip"
+                name = (
+                    Path(urlparse(url).path).name
+                    or f"tse_{item.get('kind','dataset')}_{item.get('year','')}.zip"
+                )
                 dest = tse_dir / name
                 ev = sync_one(url, dest)
-                if not args.no_extract and dest.exists() and name.lower().endswith(".zip"):
+                if (
+                    not args.no_extract
+                    and dest.exists()
+                    and name.lower().endswith(".zip")
+                ):
                     out = _extract_zip_all(dest, tse_dir, quiet=args.quiet)
                     extracted_files.extend(str(x) for x in out)
                     sync_events.append(
                         {
                             "url": url,
                             "path": str(dest),
-                            "status": "extracted" if ev["status"] == "downloaded" else "present",
+                            "status": (
+                                "extracted"
+                                if ev["status"] == "downloaded"
+                                else "present"
+                            ),
                         }
                     )
             tse_payload["extracted"] = extracted_files
@@ -3300,7 +5836,8 @@ def cmd_ibge_sync(args: argparse.Namespace) -> int:
             record_scope_error("tse_eleitorado", exc)
 
     manifest = {
-        "updated_at_utc": datetime.datetime.utcnow().replace(microsecond=0).isoformat() + "Z",
+        "updated_at_utc": datetime.datetime.utcnow().replace(microsecond=0).isoformat()
+        + "Z",
         "base_url": base_url,
         "files": files_meta,
     }
@@ -3341,7 +5878,10 @@ def cmd_download_pnadc(args: argparse.Namespace) -> int:
         parsed = urlparse(args.url)
         filename = Path(parsed.path).name
         if not filename:
-            print("ERROR: could not infer filename from URL; use --filename", file=sys.stderr)
+            print(
+                "ERROR: could not infer filename from URL; use --filename",
+                file=sys.stderr,
+            )
             return 2
 
     dest = Path(args.dest_dir) / filename
@@ -3377,7 +5917,11 @@ def cmd_download_news(args: argparse.Namespace) -> int:
 
     out_path = Path(args.out)
     _json_dump(out_path, {"source": args.url, "query": args.query, "items": items})
-    print(json.dumps({"news_file": str(out_path), "items": len(items)}, ensure_ascii=False))
+    print(
+        json.dumps(
+            {"news_file": str(out_path), "items": len(items)}, ensure_ascii=False
+        )
+    )
     return 0
 
 
@@ -3444,7 +5988,9 @@ def cmd_renda_por_faixa_sm(args: argparse.Namespace) -> int:
     replicate_count = 0
 
     try:
-        with input_path.open("r", encoding="utf-8-sig", errors="replace", newline="") as fh:
+        with input_path.open(
+            "r", encoding="utf-8-sig", errors="replace", newline=""
+        ) as fh:
             r = csv.DictReader(fh)
             headers = r.fieldnames or []
             if not headers:
@@ -3457,13 +6003,22 @@ def cmd_renda_por_faixa_sm(args: argparse.Namespace) -> int:
             uf_label_col = _find_col(headers, "UF_label", "UF_label")
             income_col = _detect_income_col(headers, args.income_col)
             selected_income_col = income_col
-            selected_weight_col = None if args.unweighted else _detect_weight_col(headers, args.weight_col)
+            selected_weight_col = (
+                None
+                if args.unweighted
+                else _detect_weight_col(headers, args.weight_col)
+            )
+            replicate_base_prefix = _replicate_prefix_for_weight(selected_weight_col)
             if use_ci:
-                replicate_weight_cols = _detect_replicate_weight_cols(headers, base_prefix="V1028")
+                replicate_weight_cols = _detect_replicate_weight_cols(
+                    headers, base_prefix=replicate_base_prefix
+                )
                 replicate_count = len(replicate_weight_cols)
 
             if not dom_col:
-                raise ValueError("input must contain dom_id (run fwf-extract with dom_id)")
+                raise ValueError(
+                    "input must contain dom_id (run fwf-extract with dom_id)"
+                )
             if not year_col or not qtr_col:
                 raise ValueError("input must contain Ano and Trimestre columns")
             if not uf_col:
@@ -3504,9 +6059,14 @@ def cmd_renda_por_faixa_sm(args: argparse.Namespace) -> int:
                     continue
 
                 uf_code = str(row.get(uf_col, "")).strip()
-                uf_label = str(row.get(uf_label_col, "")).strip() if uf_label_col else ""
+                uf_label = (
+                    str(row.get(uf_label_col, "")).strip() if uf_label_col else ""
+                )
                 if uf_filter:
-                    if _norm_text(uf_code) not in uf_filter and _norm_text(uf_label) not in uf_filter:
+                    if (
+                        _norm_text(uf_code) not in uf_filter
+                        and _norm_text(uf_label) not in uf_filter
+                    ):
                         continue
 
                 row_weight = 1.0
@@ -3535,7 +6095,11 @@ def cmd_renda_por_faixa_sm(args: argparse.Namespace) -> int:
                         for rep_col in replicate_weight_cols:
                             rep_raw = row.get(rep_col, "")
                             rep_val = _parse_float(rep_raw)
-                            rep_household_weights.append(float(rep_val) if rep_val is not None and rep_val > 0 else 0.0)
+                            rep_household_weights.append(
+                                float(rep_val)
+                                if rep_val is not None and rep_val > 0
+                                else 0.0
+                            )
                     st = {
                         "dom_id": dom,
                         "uf_code": uf_code,
@@ -3551,7 +6115,9 @@ def cmd_renda_por_faixa_sm(args: argparse.Namespace) -> int:
                     households[dom] = st
 
                 st["persons"] = int(st["persons"]) + 1
-                st["income_target"] = float(st["income_target"]) + float(income_nominal) * float(factor)
+                st["income_target"] = float(st["income_target"]) + float(
+                    income_nominal
+                ) * float(factor)
                 st["persons_weight"] = float(st["persons_weight"]) + row_weight
                 hw = float(st.get("household_weight") or row_weight)
                 if abs(hw - row_weight) > 1e-6:
@@ -3598,7 +6164,10 @@ def cmd_renda_por_faixa_sm(args: argparse.Namespace) -> int:
                 "households_sample": 0,
                 "persons_sample": 0,
                 "sum_ratio_household_weighted": 0.0,
-                "bands": {str(item["label"]): {"households": 0, "persons": 0} for item in ranges},
+                "bands": {
+                    str(item["label"]): {"households": 0, "persons": 0}
+                    for item in ranges
+                },
                 "rep_households_total": rep_households_total,
                 "rep_persons_total": rep_persons_total,
                 "rep_sum_ratio_household_weighted": rep_sum_ratio,
@@ -3628,7 +6197,9 @@ def cmd_renda_por_faixa_sm(args: argparse.Namespace) -> int:
 
         g["households_total"] = float(g["households_total"]) + hh_inc
         g["persons_total"] = float(g["persons_total"]) + pp_inc
-        g["sum_ratio_household_weighted"] = float(g["sum_ratio_household_weighted"]) + (ratio_sm * hh_inc)
+        g["sum_ratio_household_weighted"] = float(g["sum_ratio_household_weighted"]) + (
+            ratio_sm * hh_inc
+        )
         gband = g["bands"][band]
         gband["households"] = float(gband["households"]) + hh_inc
         gband["persons"] = float(gband["persons"]) + pp_inc
@@ -3656,7 +6227,9 @@ def cmd_renda_por_faixa_sm(args: argparse.Namespace) -> int:
     if group_mode == "uf":
         order = args.uf_order
         if order == "alfabetica":
-            group_keys = sorted(by_group.keys(), key=lambda k: str(by_group[k].get("label", "")).lower())
+            group_keys = sorted(
+                by_group.keys(), key=lambda k: str(by_group[k].get("label", "")).lower()
+            )
         elif order == "codigo":
             group_keys = sorted(by_group.keys())
         elif order == "renda_asc":
@@ -3684,21 +6257,31 @@ def cmd_renda_por_faixa_sm(args: argparse.Namespace) -> int:
         g = by_group[gkey]
         htot = float(g["households_total"]) or 0.0
         ptot = float(g["persons_total"]) or 0.0
-        avg_household_sm = float(g["sum_ratio_household_weighted"]) / htot if htot else 0.0
+        avg_household_sm = (
+            float(g["sum_ratio_household_weighted"]) / htot if htot else 0.0
+        )
 
         rep_households_total = g.get("rep_households_total", [])
         rep_persons_total = g.get("rep_persons_total", [])
         rep_sum_ratio = g.get("rep_sum_ratio_household_weighted", [])
 
         avg_sm_ci: Optional[Dict[str, float]] = None
-        if use_ci and isinstance(rep_households_total, list) and isinstance(rep_sum_ratio, list):
+        if (
+            use_ci
+            and isinstance(rep_households_total, list)
+            and isinstance(rep_sum_ratio, list)
+        ):
             avg_reps = [
-                _safe_div(float(rep_sum_ratio[j]), float(rep_households_total[j]))
-                if float(rep_households_total[j]) > 0
-                else 0.0
+                (
+                    _safe_div(float(rep_sum_ratio[j]), float(rep_households_total[j]))
+                    if float(rep_households_total[j]) > 0
+                    else 0.0
+                )
                 for j in range(replicate_count)
             ]
-            avg_sm_ci = _ci_from_replicates(avg_household_sm, avg_reps, ci_level=ci_level)
+            avg_sm_ci = _ci_from_replicates(
+                avg_household_sm, avg_reps, ci_level=ci_level
+            )
 
         bands_out = []
         for item in ranges:
@@ -3717,8 +6300,12 @@ def cmd_renda_por_faixa_sm(args: argparse.Namespace) -> int:
             }
             if use_ci:
                 rep_band = g.get("rep_bands", {}).get(label, {})
-                rep_bh = rep_band.get("households", []) if isinstance(rep_band, dict) else []
-                rep_bp = rep_band.get("persons", []) if isinstance(rep_band, dict) else []
+                rep_bh = (
+                    rep_band.get("households", []) if isinstance(rep_band, dict) else []
+                )
+                rep_bp = (
+                    rep_band.get("persons", []) if isinstance(rep_band, dict) else []
+                )
                 if (
                     isinstance(rep_households_total, list)
                     and isinstance(rep_persons_total, list)
@@ -3730,26 +6317,42 @@ def cmd_renda_por_faixa_sm(args: argparse.Namespace) -> int:
                     and len(rep_bp) == replicate_count
                 ):
                     hh_rep = [
-                        100.0 * _safe_div(float(rep_bh[j]), float(rep_households_total[j]))
-                        if float(rep_households_total[j]) > 0
-                        else 0.0
+                        (
+                            100.0
+                            * _safe_div(
+                                float(rep_bh[j]), float(rep_households_total[j])
+                            )
+                            if float(rep_households_total[j]) > 0
+                            else 0.0
+                        )
                         for j in range(replicate_count)
                     ]
                     pp_rep = [
-                        100.0 * _safe_div(float(rep_bp[j]), float(rep_persons_total[j]))
-                        if float(rep_persons_total[j]) > 0
-                        else 0.0
+                        (
+                            100.0
+                            * _safe_div(float(rep_bp[j]), float(rep_persons_total[j]))
+                            if float(rep_persons_total[j]) > 0
+                            else 0.0
+                        )
                         for j in range(replicate_count)
                     ]
-                    hh_ci = _ci_from_replicates(float(hp), hh_rep, ci_level=ci_level, clamp=(0.0, 100.0))
-                    pp_ci = _ci_from_replicates(float(pp), pp_rep, ci_level=ci_level, clamp=(0.0, 100.0))
+                    hh_ci = _ci_from_replicates(
+                        float(hp), hh_rep, ci_level=ci_level, clamp=(0.0, 100.0)
+                    )
+                    pp_ci = _ci_from_replicates(
+                        float(pp), pp_rep, ci_level=ci_level, clamp=(0.0, 100.0)
+                    )
                     if hh_ci:
                         row_out.update(
                             {
                                 "households_pct_se": round(float(hh_ci["se"]), 6),
                                 "households_pct_moe": round(float(hh_ci["moe"]), 6),
-                                "households_pct_ci_low": round(float(hh_ci["ci_low"]), 6),
-                                "households_pct_ci_high": round(float(hh_ci["ci_high"]), 6),
+                                "households_pct_ci_low": round(
+                                    float(hh_ci["ci_low"]), 6
+                                ),
+                                "households_pct_ci_high": round(
+                                    float(hh_ci["ci_high"]), 6
+                                ),
                             }
                         )
                     if pp_ci:
@@ -3758,7 +6361,9 @@ def cmd_renda_por_faixa_sm(args: argparse.Namespace) -> int:
                                 "persons_pct_se": round(float(pp_ci["se"]), 6),
                                 "persons_pct_moe": round(float(pp_ci["moe"]), 6),
                                 "persons_pct_ci_low": round(float(pp_ci["ci_low"]), 6),
-                                "persons_pct_ci_high": round(float(pp_ci["ci_high"]), 6),
+                                "persons_pct_ci_high": round(
+                                    float(pp_ci["ci_high"]), 6
+                                ),
                             }
                         )
             bands_out.append(row_out)
@@ -3798,11 +6403,14 @@ def cmd_renda_por_faixa_sm(args: argparse.Namespace) -> int:
         sm_ref_min = sm_target if sm_ref_min is None else min(sm_ref_min, sm_target)
         sm_ref_max = sm_target if sm_ref_max is None else max(sm_ref_max, sm_target)
     sm_reference_value = _safe_div(sm_ref_weighted_sum, sm_ref_weight_total)
-    ranges_money = _ranges_money_from_specs(ranges, sm_reference_value if sm_reference_value > 0 else 0.0)
+    ranges_money = _ranges_money_from_specs(
+        ranges, sm_reference_value if sm_reference_value > 0 else 0.0
+    )
 
     payload = {
         "input": str(input_path),
-        "income_col": selected_income_col or (args.income_col or "auto(VD4020->VD4019)"),
+        "income_col": selected_income_col
+        or (args.income_col or "auto(VD4020->VD4019)"),
         "weight_col": selected_weight_col if not args.unweighted else None,
         "weighting_mode": "unweighted" if args.unweighted else "weighted",
         "target": target,
@@ -3828,7 +6436,7 @@ def cmd_renda_por_faixa_sm(args: argparse.Namespace) -> int:
             "ci_level": ci_level,
             "variance_method": "bootstrap_replicates_mse",
             "variance_formula": "var=(1/(R-1))*sum((theta_r-theta)^2)",
-            "replicate_weight_base": "V1028",
+            "replicate_weight_base": replicate_base_prefix,
             "replicate_weight_count": int(replicate_count),
             "replicate_weight_columns_detected": int(len(replicate_weight_cols)),
             "person_weight_assumption": "persons_weight_rep=persons_in_dom*household_rep_weight",
@@ -3958,7 +6566,9 @@ def build_sqlite_from_csv(
 
         conn.execute(f"CREATE TABLE IF NOT EXISTS {qtable} ({col_defs})")
 
-        with csv_path.open("r", encoding="utf-8-sig", errors="replace", newline="") as fh:
+        with csv_path.open(
+            "r", encoding="utf-8-sig", errors="replace", newline=""
+        ) as fh:
             reader = csv.DictReader(fh)
             batch: List[tuple] = []
             total = 0
@@ -4077,7 +6687,12 @@ def _truncate_cell(value: str, width: int) -> str:
     return value[: width - 1] + "…"
 
 
-def _format_table(rows: Sequence[Dict[str, object]], columns: Sequence[str], *, max_col_width: int = 48) -> str:
+def _format_table(
+    rows: Sequence[Dict[str, object]],
+    columns: Sequence[str],
+    *,
+    max_col_width: int = 48,
+) -> str:
     cols = [str(c) for c in columns]
     if not cols:
         return "(sem colunas)"
@@ -4094,12 +6709,17 @@ def _format_table(rows: Sequence[Dict[str, object]], columns: Sequence[str], *, 
 
     widths = [max(1, min(w, max_col_width)) for w in widths]
     sep = "+-" + "-+-".join("-" * w for w in widths) + "-+"
-    header = "| " + " | ".join(cols[i].ljust(widths[i]) for i in range(len(cols))) + " |"
+    header = (
+        "| " + " | ".join(cols[i].ljust(widths[i]) for i in range(len(cols))) + " |"
+    )
     out = [sep, header, sep]
     for row_cells in matrix:
         out.append(
             "| "
-            + " | ".join(_truncate_cell(row_cells[i], widths[i]).ljust(widths[i]) for i in range(len(cols)))
+            + " | ".join(
+                _truncate_cell(row_cells[i], widths[i]).ljust(widths[i])
+                for i in range(len(cols))
+            )
             + " |"
         )
     out.append(sep)
@@ -4129,11 +6749,14 @@ def cmd_query(args: argparse.Namespace) -> int:
     started = time.perf_counter()
     conn: Optional[sqlite3.Connection] = None
     replicate_cols_detected = 0
+    replicate_base_detected = ""
     try:
         if args.allow_write:
             conn = sqlite3.connect(db_path, timeout=float(args.timeout))
         else:
-            conn = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True, timeout=float(args.timeout))
+            conn = sqlite3.connect(
+                f"file:{db_path}?mode=ro", uri=True, timeout=float(args.timeout)
+            )
         conn.row_factory = sqlite3.Row
         with conn:
             cur = conn.cursor()
@@ -4157,12 +6780,17 @@ def cmd_query(args: argparse.Namespace) -> int:
                     "SELECT 1 FROM sqlite_master WHERE type='table' AND name='base_labeled_npv'"
                 ).fetchone()
                 if exists:
-                    info = meta.execute("PRAGMA table_info(base_labeled_npv)").fetchall()
+                    info = meta.execute(
+                        "PRAGMA table_info(base_labeled_npv)"
+                    ).fetchall()
                     for col in info:
                         name = str(col[1])
                         base = name.split("__", 1)[0]
-                        if REPLICATE_WEIGHT_BASE_RE.match(base):
+                        m = REPLICATE_WEIGHT_BASE_RE.match(base)
+                        if m:
                             replicate_cols_detected += 1
+                            if not replicate_base_detected:
+                                replicate_base_detected = f"V{m.group(1)}"
             except Exception:
                 pass
     except Exception as exc:
@@ -4189,7 +6817,7 @@ def cmd_query(args: argparse.Namespace) -> int:
         "sampling": {
             "variance_method": "bootstrap_replicates_mse",
             "variance_formula": "var=(1/(R-1))*sum((theta_r-theta)^2)",
-            "replicate_weight_base": "V1028",
+            "replicate_weight_base": replicate_base_detected or "V1028",
             "replicate_weight_columns_detected": int(replicate_cols_detected),
             "note": (
                 "brasil query does not infer CI automatically for arbitrary SQL. "
@@ -4203,9 +6831,13 @@ def cmd_query(args: argparse.Namespace) -> int:
         return 0
 
     # Pretty table for humans in terminal.
-    print(_colorize("BRASIL QUERY", "1;38;5;45", _supports_color(no_color=args.no_color)))
+    print(
+        _colorize("BRASIL QUERY", "1;38;5;45", _supports_color(no_color=args.no_color))
+    )
     print(f"DB: {db_path}")
-    print(f"Rows: {payload['row_count']} | Cols: {len(columns)} | Elapsed: {elapsed_ms} ms")
+    print(
+        f"Rows: {payload['row_count']} | Cols: {len(columns)} | Elapsed: {elapsed_ms} ms"
+    )
     if columns:
         table = _format_table(rows, columns, max_col_width=int(args.max_col_width))
         print(table)
@@ -4216,7 +6848,9 @@ def cmd_query(args: argparse.Namespace) -> int:
     return 0
 
 
-def _run_capture_stdout(cmd: Sequence[str], out_file: Path, quiet: bool = False) -> None:
+def _run_capture_stdout(
+    cmd: Sequence[str], out_file: Path, quiet: bool = False
+) -> None:
     out_file.parent.mkdir(parents=True, exist_ok=True)
     _print("$ " + " ".join(cmd), quiet=quiet)
     with out_file.open("w", encoding="utf-8", newline="") as fh:
@@ -4238,7 +6872,11 @@ def _resolve_pipeline_raw_path(
         fallback_name = "PNADC_download.txt"
         if str(args.raw).strip().lower() != "latest":
             fallback_name = Path(args.raw).name
-        filename = args.filename or Path(urlparse(args.download_url).path).name or fallback_name
+        filename = (
+            args.filename
+            or Path(urlparse(args.download_url).path).name
+            or fallback_name
+        )
         raw_path: Optional[Path] = out_dir / filename
     elif str(args.raw).strip().lower() == "latest":
         latest = latest_resolver(Path(args.raw_dir))
@@ -4256,7 +6894,9 @@ def _resolve_pipeline_raw_path(
     if args.download_url:
         assert raw_path is not None
         try:
-            _download(args.download_url, raw_path, force=args.force_download, quiet=args.quiet)
+            _download(
+                args.download_url, raw_path, force=args.force_download, quiet=args.quiet
+            )
         except Exception as exc:
             print(f"ERROR: download failed: {exc}", file=sys.stderr)
             return None, 2
@@ -4283,7 +6923,9 @@ def _run_pipeline_core(
             sync_cmd.append("--quiet")
         _run_cmd(sync_cmd, quiet=args.quiet)
 
-    raw_path, raw_error = _resolve_pipeline_raw_path(args, out_dir, latest_resolver=latest_resolver)
+    raw_path, raw_error = _resolve_pipeline_raw_path(
+        args, out_dir, latest_resolver=latest_resolver
+    )
     if raw_error is not None:
         return raw_error
 
@@ -4334,14 +6976,18 @@ def _run_pipeline_core(
             )
 
         try:
-            target_for_npv, min_wage_for_npv, min_wage_month_used = _resolve_pipeline_target_and_min_wage(
-                target_arg=args.target,
-                min_wage_arg=args.min_wage,
-                ipca_csv=ipca_csv,
-                salario_minimo_csv=Path(args.salario_minimo_csv),
+            target_for_npv, min_wage_for_npv, min_wage_month_used = (
+                _resolve_pipeline_target_and_min_wage(
+                    target_arg=args.target,
+                    min_wage_arg=args.min_wage,
+                    ipca_csv=ipca_csv,
+                    salario_minimo_csv=Path(args.salario_minimo_csv),
+                )
             )
         except Exception as exc:
-            print(f"ERROR: failed to resolve target/minimum wage: {exc}", file=sys.stderr)
+            print(
+                f"ERROR: failed to resolve target/minimum wage: {exc}", file=sys.stderr
+            )
             return 2
         _print(
             f"Using NPV target={target_for_npv} and min_wage={min_wage_for_npv:.2f} "
@@ -4394,7 +7040,10 @@ def _run_pipeline_core(
         print(json.dumps(manifest, ensure_ascii=False, indent=2))
         return 0
     except subprocess.CalledProcessError as exc:
-        print(f"ERROR: pipeline command failed with exit code {exc.returncode}", file=sys.stderr)
+        print(
+            f"ERROR: pipeline command failed with exit code {exc.returncode}",
+            file=sys.stderr,
+        )
         return int(exc.returncode or 1)
     except Exception as exc:
         print(f"ERROR: pipeline failed: {exc}", file=sys.stderr)
@@ -4453,21 +7102,41 @@ Legacy commands still work directly:
 
     sub = p.add_subparsers(dest="cmd")
 
-    ph = sub.add_parser("help-legacy", help="Show --help for legacy data-processing commands")
+    ph = sub.add_parser(
+        "help-legacy", help="Show --help for legacy data-processing commands"
+    )
     ph.set_defaults(func=cmd_help_legacy)
 
-    pdl = sub.add_parser("download-pnadc", help="Download a PNADC raw file to a local directory")
+    pdl = sub.add_parser(
+        "download-pnadc", help="Download a PNADC raw file to a local directory"
+    )
     pdl.add_argument("--url", help="Source URL for the PNADC file")
-    pdl.add_argument("--filename", help="Optional target filename (default from URL path)")
-    pdl.add_argument("--dest-dir", default="data/raw", help="Target directory (default: data/raw)")
-    pdl.add_argument("--force", action="store_true", help="Overwrite destination if it already exists")
+    pdl.add_argument(
+        "--filename", help="Optional target filename (default from URL path)"
+    )
+    pdl.add_argument(
+        "--dest-dir", default="data/raw", help="Target directory (default: data/raw)"
+    )
+    pdl.add_argument(
+        "--force",
+        action="store_true",
+        help="Overwrite destination if it already exists",
+    )
     pdl.add_argument("--quiet", action="store_true", help="Reduce command output")
     pdl.set_defaults(func=cmd_download_pnadc)
 
-    pnews = sub.add_parser("download-news", help="Download and filter RSS news entries into JSON")
-    pnews.add_argument("--url", default="https://www.ibge.gov.br/rss.xml", help="RSS feed URL")
-    pnews.add_argument("--query", default="PNAD", help="Case-insensitive keyword filter")
-    pnews.add_argument("--limit", type=int, default=30, help="Maximum number of entries")
+    pnews = sub.add_parser(
+        "download-news", help="Download and filter RSS news entries into JSON"
+    )
+    pnews.add_argument(
+        "--url", default="https://www.ibge.gov.br/rss.xml", help="RSS feed URL"
+    )
+    pnews.add_argument(
+        "--query", default="PNAD", help="Case-insensitive keyword filter"
+    )
+    pnews.add_argument(
+        "--limit", type=int, default=30, help="Maximum number of entries"
+    )
     pnews.add_argument("--out", default="data/news_pnad.json", help="Output JSON file")
     pnews.set_defaults(func=cmd_download_news)
 
@@ -4475,14 +7144,24 @@ Legacy commands still work directly:
         "renda-por-faixa-sm",
         help="Estimate household income distribution by minimum-wage ranges (Brazil or UF)",
     )
-    prf.add_argument("--input", default="data/outputs/base_labeled.csv", help="Input labeled CSV with dom_id")
-    prf.add_argument("--ipca-csv", default="data/outputs/ipca.csv", help="IPCA CSV file path")
+    prf.add_argument(
+        "--input",
+        default="data/outputs/base_labeled.csv",
+        help="Input labeled CSV with dom_id",
+    )
+    prf.add_argument(
+        "--ipca-csv", default="data/outputs/ipca.csv", help="IPCA CSV file path"
+    )
     prf.add_argument(
         "--salario-minimo-csv",
         default="data/originals/salario_minimo.csv",
         help="Monthly nominal minimum wage CSV (date,value)",
     )
-    prf.add_argument("--target", default="", help="Target month YYYY-MM (default: latest in IPCA series)")
+    prf.add_argument(
+        "--target",
+        default="",
+        help="Target month YYYY-MM (default: latest in IPCA series)",
+    )
     prf.add_argument(
         "--ranges",
         default="0-2;2-5;5-10;10+",
@@ -4500,7 +7179,11 @@ Legacy commands still work directly:
         default="renda_desc",
         help="Order for UF output: richest->poorest (default), poorest->richest, alphabetic, or UF code",
     )
-    prf.add_argument("--state", default="", help="Optional UF filter (code or label), comma-separated")
+    prf.add_argument(
+        "--state",
+        default="",
+        help="Optional UF filter (code or label), comma-separated",
+    )
     prf.add_argument(
         "--income-col",
         default=None,
@@ -4527,22 +7210,41 @@ Legacy commands still work directly:
         default=0.95,
         help="Confidence level for interval estimation (default: 0.95)",
     )
-    prf.add_argument("--format", choices=["pretty", "json"], default="pretty", help="Output format")
-    prf.add_argument("--no-color", action="store_true", help="Disable ANSI colors in pretty output")
+    prf.add_argument(
+        "--format", choices=["pretty", "json"], default="pretty", help="Output format"
+    )
+    prf.add_argument(
+        "--no-color", action="store_true", help="Disable ANSI colors in pretty output"
+    )
     prf.set_defaults(func=cmd_renda_por_faixa_sm)
 
     pdash = sub.add_parser(
         "dashboard",
         help="Terminal dashboard with national/state economic stats, distributions and cross-tabs",
     )
-    pdash.add_argument("--input", default="data/outputs/base_labeled.csv", help="Input labeled CSV with dom_id")
-    pdash.add_argument("--ipca-csv", default="data/outputs/ipca.csv", help="IPCA CSV file path")
+    pdash.add_argument(
+        "--input",
+        default="",
+        help="Primary input labeled CSV with dom_id (auto-discovers trimestral/anual outputs when omitted)",
+    )
+    pdash.add_argument(
+        "--input-anual",
+        default="",
+        help="Optional annual PNAD input for combined dashboard execution",
+    )
+    pdash.add_argument(
+        "--ipca-csv", default="data/outputs/ipca.csv", help="IPCA CSV file path"
+    )
     pdash.add_argument(
         "--salario-minimo-csv",
         default="data/originals/salario_minimo.csv",
         help="Monthly nominal minimum wage CSV (date,value)",
     )
-    pdash.add_argument("--target", default="", help="Target month YYYY-MM (default: latest in IPCA series)")
+    pdash.add_argument(
+        "--target",
+        default="",
+        help="Target month YYYY-MM (default: latest in IPCA series)",
+    )
     pdash.add_argument(
         "--sm-mode",
         choices=["both", "periodo", "alvo"],
@@ -4560,7 +7262,11 @@ Legacy commands still work directly:
         default="renda_desc",
         help="Order for UF rankings",
     )
-    pdash.add_argument("--state", default="", help="Optional UF filter (code or label), comma-separated")
+    pdash.add_argument(
+        "--state",
+        default="",
+        help="Optional UF filter (code or label), comma-separated",
+    )
     pdash.add_argument(
         "--income-col",
         default=None,
@@ -4587,15 +7293,21 @@ Legacy commands still work directly:
         default=0.95,
         help="Confidence level for interval estimation (default: 0.95)",
     )
-    pdash.add_argument("--interactive", action="store_true", help="Interactive navigation in terminal")
-    pdash.add_argument("--format", choices=["pretty", "json"], default="pretty", help="Output format")
-    pdash.add_argument("--no-color", action="store_true", help="Disable ANSI colors in pretty output")
+    pdash.add_argument(
+        "--interactive", action="store_true", help="Interactive navigation in terminal"
+    )
+    pdash.add_argument(
+        "--format", choices=["pretty", "json"], default="pretty", help="Output format"
+    )
+    pdash.add_argument(
+        "--no-color", action="store_true", help="Disable ANSI colors in pretty output"
+    )
     # Dashboard v2.0: Annual income composition arguments
     pdash.add_argument(
         "--mode",
         choices=["trimestral", "anual", "comparativo", "auto"],
         default="auto",
-        help="Analysis mode. 'auto' detects based on columns (VD5001=anual, VD4019/VD4020=trimestral)",
+        help="Analysis mode. 'auto' detects the file mode; with auto-discovery it loads trimestral+anual when available. 'comparativo' forces combined execution when both bases exist.",
     )
     pdash.add_argument(
         "--breakdown",
@@ -4619,50 +7331,154 @@ Legacy commands still work directly:
     )
     pdash.set_defaults(func=cmd_dashboard)
 
-    psync = sub.add_parser("ibge-sync", help="Sync PNADC microdados and documentation from IBGE")
-    psync.add_argument("--base-url", default=IBGE_MICRODADOS_BASE, help="IBGE microdados base URL")
-    psync.add_argument("--raw-dir", default="data/raw", help="Where to store downloaded PNADC zip/txt files")
-    psync.add_argument("--docs-dir", default="data/originals", help="Where to store IBGE documentation files")
-    psync.add_argument("--manifest", default="data/originals/ibge_sync_manifest.json", help="Sync metadata file")
-    psync.add_argument("--year", type=int, help="Optional year folder (default: latest year available)")
-    psync.add_argument("--quarter", type=int, choices=[1, 2, 3, 4], help="Quarter (1-4) inside selected year")
-    psync.add_argument("--all-in-year", action="store_true", help="Download latest revision for all quarters in year")
+    psync = sub.add_parser(
+        "ibge-sync", help="Sync PNADC microdados and documentation from IBGE"
+    )
+    psync.add_argument(
+        "--base-url", default=IBGE_MICRODADOS_BASE, help="IBGE microdados base URL"
+    )
+    psync.add_argument(
+        "--raw-dir",
+        default="data/raw",
+        help="Where to store downloaded PNADC zip/txt files",
+    )
+    psync.add_argument(
+        "--docs-dir",
+        default="data/originals",
+        help="Where to store IBGE documentation files",
+    )
+    psync.add_argument(
+        "--manifest",
+        default="data/originals/ibge_sync_manifest.json",
+        help="Sync metadata file",
+    )
+    psync.add_argument(
+        "--year", type=int, help="Optional year folder (default: latest year available)"
+    )
+    psync.add_argument(
+        "--quarter",
+        type=int,
+        choices=[1, 2, 3, 4],
+        help="Quarter (1-4) inside selected year",
+    )
+    psync.add_argument(
+        "--all-in-year",
+        action="store_true",
+        help="Download latest revision for all quarters in year",
+    )
     psync.add_argument("--no-docs", action="store_true", help="Skip documentation sync")
-    psync.add_argument("--no-raw", action="store_true", help="Skip PNADC microdados sync")
-    psync.add_argument("--no-extract", action="store_true", help="Do not extract zip files after download")
-    psync.add_argument("--force", action="store_true", help="Force re-download even when remote is unchanged")
+    psync.add_argument(
+        "--no-raw", action="store_true", help="Skip PNADC microdados sync"
+    )
+    psync.add_argument(
+        "--no-extract",
+        action="store_true",
+        help="Do not extract zip files after download",
+    )
+    psync.add_argument(
+        "--force",
+        action="store_true",
+        help="Force re-download even when remote is unchanged",
+    )
     psync.add_argument("--quiet", action="store_true", help="Reduce command output")
 
-    psync.add_argument("--full", action="store_true", help="Enable all election scopes (PNADC anual + Censo renda + TSE)")
+    psync.add_argument(
+        "--full",
+        action="store_true",
+        help="Enable all election scopes (PNADC anual + Censo renda + TSE)",
+    )
 
-    psync.add_argument("--with-anual", action="store_true", help="Sync PNADC Anual (Visita 5)")
-    psync.add_argument("--anual-base-url", default=IBGE_ANUAL_VISITA5_BASE, help="PNADC Anual Visita 5 base URL")
-    psync.add_argument("--anual-raw-dir", default="data/raw/pnadc_anual_visita5", help="Directory for PNADC anual zip/txt files")
-    psync.add_argument("--anual-docs-dir", default="data/originals/pnadc_anual_visita5", help="Directory for PNADC anual docs")
+    psync.add_argument(
+        "--with-anual", action="store_true", help="Sync PNADC Anual (Visita 5)"
+    )
+    psync.add_argument(
+        "--anual-base-url",
+        default=IBGE_ANUAL_VISITA5_BASE,
+        help="PNADC Anual Visita 5 base URL",
+    )
+    psync.add_argument(
+        "--anual-raw-dir",
+        default="data/raw/pnadc_anual_visita5",
+        help="Directory for PNADC anual zip/txt files",
+    )
+    psync.add_argument(
+        "--anual-docs-dir",
+        default="data/originals/pnadc_anual_visita5",
+        help="Directory for PNADC anual docs",
+    )
     psync.add_argument("--anual-year", type=int, help="Specific year for PNADC anual")
-    psync.add_argument("--anual-all-years", action="store_true", help="Download latest revision for all annual years")
-    psync.add_argument("--no-anual-raw", action="store_true", help="Skip PNADC anual microdados sync")
-    psync.add_argument("--no-anual-docs", action="store_true", help="Skip PNADC anual documentation sync")
+    psync.add_argument(
+        "--anual-all-years",
+        action="store_true",
+        help="Download latest revision for all annual years",
+    )
+    psync.add_argument(
+        "--no-anual-raw", action="store_true", help="Skip PNADC anual microdados sync"
+    )
+    psync.add_argument(
+        "--no-anual-docs",
+        action="store_true",
+        help="Skip PNADC anual documentation sync",
+    )
 
-    psync.add_argument("--with-censo", action="store_true", help="Sync Censo 2022 renda do responsavel aggregates")
-    psync.add_argument("--censo-base-url", default=IBGE_CENSO_2022_BASE, help="Censo 2022 base URL")
-    psync.add_argument("--censo-folder", default=IBGE_CENSO_RENDA_RESP_FOLDER, help="Folder under Censo base with files to sync")
-    psync.add_argument("--censo-dir", default="data/originals/censo_2022_renda_responsavel", help="Directory for Censo aggregated files")
+    psync.add_argument(
+        "--with-censo",
+        action="store_true",
+        help="Sync Censo 2022 renda do responsavel aggregates",
+    )
+    psync.add_argument(
+        "--censo-base-url", default=IBGE_CENSO_2022_BASE, help="Censo 2022 base URL"
+    )
+    psync.add_argument(
+        "--censo-folder",
+        default=IBGE_CENSO_RENDA_RESP_FOLDER,
+        help="Folder under Censo base with files to sync",
+    )
+    psync.add_argument(
+        "--censo-dir",
+        default="data/originals/censo_2022_renda_responsavel",
+        help="Directory for Censo aggregated files",
+    )
 
-    psync.add_argument("--with-tse", action="store_true", help="Sync TSE eleitorado resources from dados abertos")
-    psync.add_argument("--tse-api-base", default=TSE_CKAN_BASE, help="TSE CKAN API base URL")
-    psync.add_argument("--tse-query", default=TSE_DEFAULT_QUERY, help="Search query for TSE datasets")
-    psync.add_argument("--tse-rows", type=int, default=50, help="Max packages to scan in TSE CKAN search")
+    psync.add_argument(
+        "--with-tse",
+        action="store_true",
+        help="Sync TSE eleitorado resources from dados abertos",
+    )
+    psync.add_argument(
+        "--tse-api-base", default=TSE_CKAN_BASE, help="TSE CKAN API base URL"
+    )
+    psync.add_argument(
+        "--tse-query", default=TSE_DEFAULT_QUERY, help="Search query for TSE datasets"
+    )
+    psync.add_argument(
+        "--tse-rows",
+        type=int,
+        default=50,
+        help="Max packages to scan in TSE CKAN search",
+    )
     psync.add_argument("--tse-year", type=int, help="Filter TSE resources by year")
-    psync.add_argument("--tse-all-years", action="store_true", help="Keep one resource per year/kind instead of only latest")
-    psync.add_argument("--tse-dir", default="data/raw/tse_eleitorado", help="Directory for TSE downloaded resources")
+    psync.add_argument(
+        "--tse-all-years",
+        action="store_true",
+        help="Keep one resource per year/kind instead of only latest",
+    )
+    psync.add_argument(
+        "--tse-dir",
+        default="data/raw/tse_eleitorado",
+        help="Directory for TSE downloaded resources",
+    )
     psync.set_defaults(func=cmd_ibge_sync)
 
-    psq = sub.add_parser("sqlite-build", help="Build or refresh a SQLite table from a CSV file")
+    psq = sub.add_parser(
+        "sqlite-build", help="Build or refresh a SQLite table from a CSV file"
+    )
     psq.add_argument("--input", required=True, help="Input CSV path")
     psq.add_argument("--db", required=True, help="SQLite DB path")
     psq.add_argument("--table", default="base_labeled_npv", help="Target table name")
-    psq.add_argument("--if-exists", choices=["replace", "append", "fail"], default="replace")
+    psq.add_argument(
+        "--if-exists", choices=["replace", "append", "fail"], default="replace"
+    )
     psq.add_argument("--chunk-size", type=int, default=5000, help="Insert batch size")
     psq.add_argument(
         "--indexes",
@@ -4689,15 +7505,26 @@ Legacy commands still work directly:
         default="json",
         help="Output format (default: json, ideal for LLMs)",
     )
-    pq.add_argument("--max-rows", type=int, default=200, help="Maximum returned rows before truncation")
-    pq.add_argument("--max-col-width", type=int, default=48, help="Max column width in table mode")
-    pq.add_argument("--timeout", type=float, default=30.0, help="SQLite timeout in seconds")
+    pq.add_argument(
+        "--max-rows",
+        type=int,
+        default=200,
+        help="Maximum returned rows before truncation",
+    )
+    pq.add_argument(
+        "--max-col-width", type=int, default=48, help="Max column width in table mode"
+    )
+    pq.add_argument(
+        "--timeout", type=float, default=30.0, help="SQLite timeout in seconds"
+    )
     pq.add_argument(
         "--allow-write",
         action="store_true",
         help="Allow write statements (off by default for safe LLM workflows)",
     )
-    pq.add_argument("--no-color", action="store_true", help="Disable ANSI colors in table mode")
+    pq.add_argument(
+        "--no-color", action="store_true", help="Disable ANSI colors in table mode"
+    )
     pq.set_defaults(func=cmd_query)
 
     def _add_pipeline_args(
@@ -4707,38 +7534,78 @@ Legacy commands still work directly:
         default_layout: str,
         default_table: str,
     ) -> None:
-        parser.add_argument("--raw", default="latest", help="Local raw PNADC file path or 'latest'")
+        parser.add_argument(
+            "--raw", default="latest", help="Local raw PNADC file path or 'latest'"
+        )
         parser.add_argument(
             "--sync-full",
             action="store_true",
             help="Run `ibge-sync --full` before pipeline execution (PNADC trimestral/anual + Censo + TSE)",
         )
-        parser.add_argument("--raw-dir", default=default_raw_dir, help="Directory used when --raw latest")
-        parser.add_argument("--download-url", help="If set, download raw file before processing")
-        parser.add_argument("--filename", help="Filename to use when --download-url is set")
-        parser.add_argument("--force-download", action="store_true", help="Overwrite downloaded raw file")
-        parser.add_argument("--layout", default=default_layout, help="SAS/TXT layout file")
-        parser.add_argument("--out-dir", default="data/outputs", help="Output directory")
-        parser.add_argument("--ipca-csv", default="data/outputs/ipca.csv", help="IPCA CSV file path")
+        parser.add_argument(
+            "--raw-dir",
+            default=default_raw_dir,
+            help="Directory used when --raw latest",
+        )
+        parser.add_argument(
+            "--download-url", help="If set, download raw file before processing"
+        )
+        parser.add_argument(
+            "--filename", help="Filename to use when --download-url is set"
+        )
+        parser.add_argument(
+            "--force-download",
+            action="store_true",
+            help="Overwrite downloaded raw file",
+        )
+        parser.add_argument(
+            "--layout", default=default_layout, help="SAS/TXT layout file"
+        )
+        parser.add_argument(
+            "--out-dir", default="data/outputs", help="Output directory"
+        )
+        parser.add_argument(
+            "--ipca-csv", default="data/outputs/ipca.csv", help="IPCA CSV file path"
+        )
         parser.add_argument(
             "--salario-minimo-csv",
             default="data/originals/salario_minimo.csv",
             help="Monthly nominal minimum wage CSV (date,value) for automatic --min-wage",
         )
-        parser.add_argument("--skip-ipca-fetch", action="store_true", help="Reuse existing --ipca-csv if present")
-        parser.add_argument("--target", default="", help="NPV target month YYYY-MM (default: latest in IPCA series)")
+        parser.add_argument(
+            "--skip-ipca-fetch",
+            action="store_true",
+            help="Reuse existing --ipca-csv if present",
+        )
+        parser.add_argument(
+            "--target",
+            default="",
+            help="NPV target month YYYY-MM (default: latest in IPCA series)",
+        )
         parser.add_argument(
             "--min-wage",
             type=float,
             default=None,
             help="Minimum wage for *_mw columns (default: auto from --salario-minimo-csv at target month)",
         )
-        parser.add_argument("--name-style", choices=["name", "label", "both"], default="both")
-        parser.add_argument("--keep", help="Optional comma-separated keep list for fwf-extract")
-        parser.add_argument("--sqlite", default="data/outputs/brasil.sqlite", help="SQLite output file (empty to disable)")
+        parser.add_argument(
+            "--name-style", choices=["name", "label", "both"], default="both"
+        )
+        parser.add_argument(
+            "--keep", help="Optional comma-separated keep list for fwf-extract"
+        )
+        parser.add_argument(
+            "--sqlite",
+            default="data/outputs/brasil.sqlite",
+            help="SQLite output file (empty to disable)",
+        )
         parser.add_argument("--table", default=default_table, help="SQLite table name")
-        parser.add_argument("--if-exists", choices=["replace", "append", "fail"], default="replace")
-        parser.add_argument("--chunk-size", type=int, default=5000, help="SQLite insert batch size")
+        parser.add_argument(
+            "--if-exists", choices=["replace", "append", "fail"], default="replace"
+        )
+        parser.add_argument(
+            "--chunk-size", type=int, default=5000, help="SQLite insert batch size"
+        )
         parser.add_argument(
             "--indexes",
             default=(
@@ -4749,9 +7616,13 @@ Legacy commands still work directly:
             ),
             help="Comma-separated columns to index when present",
         )
-        parser.add_argument("--quiet", action="store_true", help="Reduce command output")
+        parser.add_argument(
+            "--quiet", action="store_true", help="Reduce command output"
+        )
 
-    pr = sub.add_parser("pipeline-run", help="Run the full PNADC trimestral refresh pipeline")
+    pr = sub.add_parser(
+        "pipeline-run", help="Run the full PNADC trimestral refresh pipeline"
+    )
     _add_pipeline_args(
         pr,
         default_raw_dir="data/raw",
@@ -4760,7 +7631,9 @@ Legacy commands still work directly:
     )
     pr.set_defaults(func=cmd_pipeline_run)
 
-    pra = sub.add_parser("pipeline-run-anual", help="Run the full PNADC anual visita 5 refresh pipeline")
+    pra = sub.add_parser(
+        "pipeline-run-anual", help="Run the full PNADC anual visita 5 refresh pipeline"
+    )
     _add_pipeline_args(
         pra,
         default_raw_dir="data/raw/pnadc_anual_visita5",

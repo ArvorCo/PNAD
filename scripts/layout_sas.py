@@ -4,7 +4,7 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Iterable, List, Optional
+from typing import List, Optional
 import unicodedata
 
 
@@ -15,7 +15,7 @@ class Field:
     width: int
     kind: str  # 'char' or 'num'
     label: Optional[str] = None  # comment text if present
-    slug: Optional[str] = None   # normalized label (lowercase, ascii, underscores)
+    slug: Optional[str] = None  # normalized label (lowercase, ascii, underscores)
 
 
 POS_RE = re.compile(r"^@\s*(\d+)")

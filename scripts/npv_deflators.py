@@ -4,7 +4,6 @@ from __future__ import annotations
 import argparse
 import csv
 import sys
-from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, Iterable, List, Optional, Tuple
 
@@ -34,10 +33,12 @@ def read_ipca_csv(path: Path) -> Dict[str, float]:
     with path.open("r", encoding="utf-8") as fh:
         r = csv.DictReader(fh)
         cols = [c.strip().lower() for c in (r.fieldnames or [])]
-        date_based = ("date" in cols and "index" in cols)
+        date_based = "date" in cols and "index" in cols
         ymb_based = all(c in cols for c in ("year", "month", "index"))
         if not (date_based or ymb_based):
-            raise ValueError("ipca csv must have columns (date,index) or (year,month,index)")
+            raise ValueError(
+                "ipca csv must have columns (date,index) or (year,month,index)"
+            )
         out: Dict[str, float] = {}
         for row in r:
             if date_based:
@@ -69,7 +70,9 @@ def build_deflators(index: Dict[str, float], target: str) -> Dict[str, float]:
     return out
 
 
-def _detect_year_quarter_columns(headers: Iterable[str]) -> Tuple[Optional[str], Optional[str]]:
+def _detect_year_quarter_columns(
+    headers: Iterable[str],
+) -> Tuple[Optional[str], Optional[str]]:
     # Prefer canonical names with labels attached
     year_col = next((c for c in headers if c.startswith("Ano__")), None)
     quarter_col = next((c for c in headers if c.startswith("Trimestre__")), None)
@@ -106,8 +109,10 @@ def apply_deflator_to_csv(
     """
     in_path = Path(in_path)
     out_path = Path(out_path)
-    with in_path.open("r", encoding="utf-8-sig", errors="replace", newline="") as fh_in, \
-         out_path.open("w", encoding="utf-8", newline="") as fh_out:
+    with (
+        in_path.open("r", encoding="utf-8-sig", errors="replace", newline="") as fh_in,
+        out_path.open("w", encoding="utf-8", newline="") as fh_out,
+    ):
         r = csv.DictReader(fh_in)
         headers = r.fieldnames or []
 
@@ -119,7 +124,9 @@ def apply_deflator_to_csv(
                 quarter_col = quarter_col or qcol
         # Validate
         if date_col is None and (not year_col or not quarter_col):
-            raise ValueError("Could not determine date column nor (year,quarter) columns")
+            raise ValueError(
+                "Could not determine date column nor (year,quarter) columns"
+            )
 
         cols = list(columns)
         missing = [c for c in cols if c not in headers]
@@ -193,24 +200,71 @@ def _auto_income_columns(headers: Iterable[str]) -> List[str]:
 
 
 def main(argv: Optional[list[str]] = None) -> int:
-    p = argparse.ArgumentParser(description="NPV helpers for PNADC: build deflators and apply to income columns")
+    p = argparse.ArgumentParser(
+        description="NPV helpers for PNADC: build deflators and apply to income columns"
+    )
     sub = p.add_subparsers(dest="cmd", required=True)
 
-    p_defl = sub.add_parser("emit-factors", help="Emit monthly deflator factors to a target month")
-    p_defl.add_argument("--ipca-csv", required=True, type=Path, help="CSV with monthly IPCA index levels")
-    p_defl.add_argument("--target", default="2025-07", help="Target month YYYY-MM (default: 2025-07)")
-    p_defl.add_argument("--out", required=True, type=Path, help="Output CSV path for deflators")
+    p_defl = sub.add_parser(
+        "emit-factors", help="Emit monthly deflator factors to a target month"
+    )
+    p_defl.add_argument(
+        "--ipca-csv",
+        required=True,
+        type=Path,
+        help="CSV with monthly IPCA index levels",
+    )
+    p_defl.add_argument(
+        "--target", default="2025-07", help="Target month YYYY-MM (default: 2025-07)"
+    )
+    p_defl.add_argument(
+        "--out", required=True, type=Path, help="Output CSV path for deflators"
+    )
 
-    p_apply = sub.add_parser("apply", help="Apply deflators to income columns, add *_jul2025 and *_mw columns")
-    p_apply.add_argument("--in", dest="inp", required=True, type=Path, help="Input CSV path")
-    p_apply.add_argument("--out", dest="out", required=True, type=Path, help="Output CSV path")
-    p_apply.add_argument("--ipca-csv", required=True, type=Path, help="CSV with monthly IPCA index levels")
-    p_apply.add_argument("--target", default="2025-07", help="Target month YYYY-MM (default: 2025-07)")
-    p_apply.add_argument("--min-wage", dest="min_wage", default=1518.0, type=float, help="Current minimum wage in BRL")
-    p_apply.add_argument("--columns", default=None, help="Comma-separated columns to deflate; default auto-detect VD4019/VD4020")
-    p_apply.add_argument("--date-col", default=None, help="Column with YYYY-MM; else derive from Ano/Trimestre")
-    p_apply.add_argument("--year-col", default=None, help="Year column name (auto-detect if omitted)")
-    p_apply.add_argument("--quarter-col", default=None, help="Quarter column name (auto-detect if omitted)")
+    p_apply = sub.add_parser(
+        "apply",
+        help="Apply deflators to income columns, add *_jul2025 and *_mw columns",
+    )
+    p_apply.add_argument(
+        "--in", dest="inp", required=True, type=Path, help="Input CSV path"
+    )
+    p_apply.add_argument(
+        "--out", dest="out", required=True, type=Path, help="Output CSV path"
+    )
+    p_apply.add_argument(
+        "--ipca-csv",
+        required=True,
+        type=Path,
+        help="CSV with monthly IPCA index levels",
+    )
+    p_apply.add_argument(
+        "--target", default="2025-07", help="Target month YYYY-MM (default: 2025-07)"
+    )
+    p_apply.add_argument(
+        "--min-wage",
+        dest="min_wage",
+        default=1518.0,
+        type=float,
+        help="Current minimum wage in BRL",
+    )
+    p_apply.add_argument(
+        "--columns",
+        default=None,
+        help="Comma-separated columns to deflate; default auto-detect VD4019/VD4020",
+    )
+    p_apply.add_argument(
+        "--date-col",
+        default=None,
+        help="Column with YYYY-MM; else derive from Ano/Trimestre",
+    )
+    p_apply.add_argument(
+        "--year-col", default=None, help="Year column name (auto-detect if omitted)"
+    )
+    p_apply.add_argument(
+        "--quarter-col",
+        default=None,
+        help="Quarter column name (auto-detect if omitted)",
+    )
 
     args = p.parse_args(argv)
 

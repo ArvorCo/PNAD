@@ -51,17 +51,21 @@ def sniff_delimiter(sample_text: str, candidates: list[str] = None) -> Tuple[str
 
     # Heuristic header detection: any non-numeric tokens suggests header
     tokens = [t.strip() for t in first.split(delimiter)]
+
     def is_num(x: str) -> bool:
         try:
             float(x.replace(",", "."))
             return True
         except Exception:
             return False
+
     non_numeric = any((t and not is_num(t)) for t in tokens)
     return delimiter, bool(non_numeric)
 
 
-def summarize_file(path: Path, delimiter: Optional[str] = None, has_header: Optional[bool] = None) -> dict:
+def summarize_file(
+    path: Path, delimiter: Optional[str] = None, has_header: Optional[bool] = None
+) -> dict:
     """Stream through file to collect a minimal summary.
 
     Returns dict with: path, delimiter, has_header, rows, columns, size_bytes.
@@ -98,7 +102,13 @@ def summarize_file(path: Path, delimiter: Optional[str] = None, has_header: Opti
     }
 
 
-def write_sample_csv(path: Path, out_dir: Path, delimiter: Optional[str] = None, has_header: Optional[bool] = None, sample_rows: int = 100) -> Path:
+def write_sample_csv(
+    path: Path,
+    out_dir: Path,
+    delimiter: Optional[str] = None,
+    has_header: Optional[bool] = None,
+    sample_rows: int = 100,
+) -> Path:
     """Write a small CSV sample to out_dir/sample.csv and return its path."""
     out_dir.mkdir(parents=True, exist_ok=True)
     out_path = out_dir / "sample.csv"
@@ -114,7 +124,10 @@ def write_sample_csv(path: Path, out_dir: Path, delimiter: Optional[str] = None,
     # Stream and write sample
     written = 0
     header_written = False
-    with Path(path).open("r", encoding="utf-8-sig", errors="replace", newline="") as rf, out_path.open("w", encoding="utf-8", newline="") as wf:
+    with (
+        Path(path).open("r", encoding="utf-8-sig", errors="replace", newline="") as rf,
+        out_path.open("w", encoding="utf-8", newline="") as wf,
+    ):
         r = csv.reader(rf, delimiter=delimiter)
         w = csv.writer(wf)
         for i, rec in enumerate(r):
@@ -134,15 +147,30 @@ def write_sample_csv(path: Path, out_dir: Path, delimiter: Optional[str] = None,
 
 
 def main(argv: Optional[list[str]] = None) -> int:
-    p = argparse.ArgumentParser(description="PNADC helper: summarize and sample data files")
+    p = argparse.ArgumentParser(
+        description="PNADC helper: summarize and sample data files"
+    )
     p.add_argument("input", type=Path, help="Path to PNADC data file (txt/csv)")
-    p.add_argument("-o", "--out", type=Path, default=Path("out"), help="Output directory (default: out/)")
-    p.add_argument("--sample-rows", type=int, default=100, help="Number of rows to include in sample.csv")
+    p.add_argument(
+        "-o",
+        "--out",
+        type=Path,
+        default=Path("out"),
+        help="Output directory (default: out/)",
+    )
+    p.add_argument(
+        "--sample-rows",
+        type=int,
+        default=100,
+        help="Number of rows to include in sample.csv",
+    )
     args = p.parse_args(argv)
 
     summary = summarize_file(args.input)
     args.out.mkdir(parents=True, exist_ok=True)
-    (args.out / "summary.json").write_text(json.dumps(summary, indent=2, ensure_ascii=False), encoding="utf-8")
+    (args.out / "summary.json").write_text(
+        json.dumps(summary, indent=2, ensure_ascii=False), encoding="utf-8"
+    )
     write_sample_csv(args.input, args.out, sample_rows=args.sample_rows)
     print(json.dumps({"ok": True, "out": str(args.out)}, ensure_ascii=False))
     return 0
@@ -150,4 +178,3 @@ def main(argv: Optional[list[str]] = None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

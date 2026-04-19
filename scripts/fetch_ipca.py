@@ -4,8 +4,6 @@ from __future__ import annotations
 import argparse
 import csv
 import json
-import sys
-from datetime import datetime
 from pathlib import Path
 from typing import Iterable, Optional
 from urllib.request import urlopen, Request
@@ -61,7 +59,7 @@ def emit_csv(items: Iterable[dict], out: Path) -> Path:
     last_vals = [v for _, v in parsed[-120:]] or [v for _, v in parsed]
     is_percent = False
     if last_vals:
-        mid = sorted(last_vals)[len(last_vals)//2]
+        mid = sorted(last_vals)[len(last_vals) // 2]
         is_percent = abs(mid) < 20.0
 
     out.parent.mkdir(parents=True, exist_ok=True)
@@ -71,7 +69,7 @@ def emit_csv(items: Iterable[dict], out: Path) -> Path:
         if is_percent:
             idx = 100.0
             for d, v in parsed:
-                idx *= (1.0 + (v / 100.0))
+                idx *= 1.0 + (v / 100.0)
                 w.writerow([d, f"{idx:.6f}"])
         else:
             for d, v in parsed:
@@ -80,10 +78,21 @@ def emit_csv(items: Iterable[dict], out: Path) -> Path:
 
 
 def main(argv: Optional[list[str]] = None) -> int:
-    p = argparse.ArgumentParser(description="Fetch monthly IPCA index and write CSV (date,index)")
-    p.add_argument("--out", required=True, type=Path, help="Output CSV path, e.g., data/ipca.csv")
-    p.add_argument("--source", default="bcb", choices=["bcb"], help="Data source (default: bcb)")
-    p.add_argument("--last", type=int, default=None, help="Fetch only last N observations (optional)")
+    p = argparse.ArgumentParser(
+        description="Fetch monthly IPCA index and write CSV (date,index)"
+    )
+    p.add_argument(
+        "--out", required=True, type=Path, help="Output CSV path, e.g., data/ipca.csv"
+    )
+    p.add_argument(
+        "--source", default="bcb", choices=["bcb"], help="Data source (default: bcb)"
+    )
+    p.add_argument(
+        "--last",
+        type=int,
+        default=None,
+        help="Fetch only last N observations (optional)",
+    )
     args = p.parse_args(argv)
 
     if args.source == "bcb":
