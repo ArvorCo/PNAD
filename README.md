@@ -4,10 +4,12 @@
 
 **A research-grade CLI for Brazilian public microdata.**
 
+[![PyPI version](https://img.shields.io/pypi/v/brasil-cli.svg?color=009c3b&label=pypi)](https://pypi.org/project/brasil-cli/)
+[![PyPI downloads](https://img.shields.io/pypi/dm/brasil-cli.svg?color=ffdf00&label=downloads)](https://pypi.org/project/brasil-cli/)
 [![CI](https://github.com/ArvorCo/PNAD/actions/workflows/ci.yml/badge.svg)](https://github.com/ArvorCo/PNAD/actions/workflows/ci.yml)
-[![License: MIT](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
-[![Python](https://img.shields.io/badge/python-3.10%2B-3776AB.svg)](pyproject.toml)
-[![Data: IBGE PNADC](https://img.shields.io/badge/data-IBGE%20PNADC-f1c40f.svg)](https://www.ibge.gov.br/estatisticas/sociais/trabalho/9171-pesquisa-nacional-por-amostra-de-domicilios-continua-mensal.html)
+[![License: MIT](https://img.shields.io/badge/license-MIT-002776.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/python-3.10%E2%80%933.13-3776AB.svg)](pyproject.toml)
+[![Data: IBGE PNADC](https://img.shields.io/badge/data-IBGE%20PNADC-009c3b.svg)](https://www.ibge.gov.br/estatisticas/sociais/trabalho/9171-pesquisa-nacional-por-amostra-de-domicilios-continua-mensal.html)
 
 ![Brasil — renda domiciliar por UF](docs/assets/hero.png)
 
@@ -84,6 +86,21 @@ and a specific UF row in the PNADC, it does not belong in public debate.
 
 ## Install
 
+The fastest way — install directly from PyPI:
+
+```bash
+pip install brasil-cli
+```
+
+You get both executables:
+
+```bash
+brasil --help
+pnad --help        # legacy alias
+```
+
+### From source (for contributors)
+
 ```bash
 git clone https://github.com/ArvorCo/PNAD
 cd PNAD
@@ -92,14 +109,7 @@ python -m venv .venv
 source .venv/bin/activate
 
 pip install -r requirements.txt
-pip install -e .
-```
-
-You get both executables:
-
-```bash
-brasil --help
-pnad --help
+pip install -e ".[dev]"
 ```
 
 ---
