@@ -1,0 +1,806 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Datafolha BR-00290/2026 — Auditoria PNAD, questionário e framing</title>
+<meta name="description" content="Relatório Arvor sobre a pesquisa Datafolha BR-00290/2026, cruzando registro TSE, PDFs de campo, PNAD e análise de framing editorial.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..800;1,6..72,300..800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f5f0e7;
+  --paper-2:#ebe2d4;
+  --ink:#11150f;
+  --muted:#665f55;
+  --rule:#cfc3b0;
+  --green:#007f3f;
+  --yellow:#d6a900;
+  --blue:#1f5fa8;
+  --red:#bd3b2f;
+  --violet:#6f4aa8;
+  --sand:#d7c1a3;
+  --sans:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;
+  --serif:"Newsreader",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:
+    linear-gradient(90deg,rgba(17,21,15,.045) 1px,transparent 1px) 0 0/72px 72px,
+    linear-gradient(180deg,var(--paper),#faf8f3 42%,var(--paper));
+  color:var(--ink);
+  font-family:var(--serif);
+  font-size:18px;
+  line-height:1.62;
+}
+a{color:var(--blue);text-decoration-thickness:1px;text-underline-offset:3px}
+.wrap{width:min(1180px,calc(100% - 38px));margin:auto}
+.hero{
+  min-height:92vh;
+  display:grid;
+  grid-template-columns:minmax(0,1.05fr) minmax(300px,.95fr);
+  align-items:end;
+  gap:48px;
+  padding:58px 0 42px;
+  border-bottom:1px solid var(--ink);
+}
+.kicker{
+  font-family:var(--sans);
+  font-size:.76rem;
+  font-weight:700;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--green);
+}
+h1,h2,h3{font-family:var(--serif);line-height:.98;margin:0;color:var(--ink)}
+h1{font-size:clamp(4rem,9vw,8.8rem);letter-spacing:-.035em;margin:22px 0}
+h1 span{font-style:italic;color:var(--green);font-weight:500}
+.deck{
+  font-size:clamp(1.25rem,2.1vw,1.72rem);
+  line-height:1.32;
+  color:#2e332c;
+  max-width:780px;
+  margin:0;
+}
+.meta{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:28px;
+  font-family:var(--sans);
+  font-size:.84rem;
+  color:var(--muted);
+}
+.pill{
+  border:1px solid var(--rule);
+  background:rgba(255,255,255,.36);
+  padding:6px 10px;
+  border-radius:999px;
+}
+.hero-panel{
+  align-self:stretch;
+  display:grid;
+  align-content:end;
+  gap:14px;
+  padding:22px;
+  border-left:1px solid var(--ink);
+  background:linear-gradient(180deg,rgba(255,255,255,.35),rgba(245,240,231,.12));
+}
+.score-card{
+  border-top:1px solid var(--ink);
+  padding:16px 0 6px;
+}
+.score-card .label{
+  font-family:var(--sans);
+  font-weight:700;
+  font-size:.8rem;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  color:var(--muted);
+}
+.score-card .value{
+  font-family:var(--sans);
+  font-size:clamp(2.2rem,5vw,5.4rem);
+  line-height:1;
+  font-weight:700;
+  letter-spacing:-.06em;
+}
+.score-card p{margin:8px 0 0;color:var(--muted);font-size:.98rem}
+nav.toc{
+  position:sticky;
+  top:0;
+  z-index:10;
+  background:rgba(245,240,231,.92);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--rule);
+}
+.toc .wrap{
+  display:flex;
+  gap:18px;
+  overflow:auto;
+  padding:10px 0;
+  font-family:var(--sans);
+  font-size:.8rem;
+  white-space:nowrap;
+}
+.toc a{color:var(--muted);text-decoration:none}
+.toc a:hover{color:var(--ink)}
+section{padding:72px 0;border-bottom:1px solid var(--rule)}
+.section-head{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:14px;
+  margin-bottom:36px;
+  max-width:960px;
+}
+h2{font-size:clamp(2.4rem,4.6vw,5.1rem);letter-spacing:-.035em;text-wrap:balance}
+.section-head p{
+  margin:0;
+  font-size:1.25rem;
+  line-height:1.45;
+  color:#343932;
+}
+.grid{display:grid;gap:18px}
+.grid.cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.grid.cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.card{
+  border:1px solid var(--rule);
+  background:rgba(255,255,255,.45);
+  padding:20px;
+  border-radius:6px;
+}
+.card h3{
+  font-size:1.35rem;
+  line-height:1.15;
+  margin-bottom:10px;
+  letter-spacing:-.015em;
+}
+.card p{margin:0;color:#3f433b}
+.verdict{
+  font-family:var(--sans);
+  font-size:.73rem;
+  font-weight:700;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  display:inline-flex;
+  margin-bottom:10px;
+}
+.ok{color:var(--green)}
+.warn{color:var(--yellow)}
+.bad{color:var(--red)}
+.neutral{color:var(--blue)}
+table{
+  width:100%;
+  border-collapse:collapse;
+  font-family:var(--sans);
+  font-size:.92rem;
+  background:rgba(255,255,255,.35);
+}
+th,td{padding:11px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{
+  text-align:left;
+  font-size:.72rem;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+  color:var(--muted);
+}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+.note{
+  margin-top:14px;
+  color:var(--muted);
+  font-family:var(--sans);
+  font-size:.82rem;
+}
+.chart{
+  display:grid;
+  gap:12px;
+  margin-top:14px;
+}
+.barrow{
+  display:grid;
+  grid-template-columns:175px 1fr 64px;
+  gap:12px;
+  align-items:center;
+  font-family:var(--sans);
+  font-size:.9rem;
+}
+.track{
+  height:15px;
+  background:rgba(17,21,15,.08);
+  border:1px solid rgba(17,21,15,.09);
+}
+.fill{height:100%;background:var(--green)}
+.fill.blue{background:var(--blue)}
+.fill.yellow{background:var(--yellow)}
+.fill.red{background:var(--red)}
+.fill.violet{background:var(--violet)}
+.pct{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--mono);font-size:.82rem}
+.compare{
+  display:grid;
+  gap:8px;
+}
+.compare-row{
+  display:grid;
+  grid-template-columns:145px 1fr 1fr 76px;
+  gap:12px;
+  align-items:center;
+  font-family:var(--sans);
+  font-size:.86rem;
+}
+.mini-label{color:var(--muted);font-family:var(--mono);font-size:.74rem;text-transform:uppercase}
+.delta{
+  text-align:right;
+  font-family:var(--mono);
+  font-size:.78rem;
+}
+.timeline{
+  position:relative;
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:12px;
+}
+.timeline:before{
+  content:"";
+  position:absolute;
+  top:21px;
+  left:0;
+  right:0;
+  border-top:1px solid var(--ink);
+}
+.step{position:relative;padding-top:44px}
+.dot{
+  position:absolute;
+  top:12px;
+  width:18px;
+  height:18px;
+  border:2px solid var(--ink);
+  background:var(--paper);
+  border-radius:50%;
+}
+.step strong{
+  display:block;
+  font-family:var(--sans);
+  font-size:.86rem;
+  line-height:1.18;
+}
+.step span{
+  display:block;
+  color:var(--muted);
+  font-family:var(--sans);
+  font-size:.78rem;
+  line-height:1.28;
+  margin-top:5px;
+}
+.quote{
+  border-left:4px solid var(--green);
+  padding-left:18px;
+  font-size:1.35rem;
+  line-height:1.38;
+  color:#272c25;
+  margin:28px 0;
+}
+.mono{font-family:var(--mono)}
+.source-list{
+  columns:2;
+  column-gap:38px;
+  font-family:var(--sans);
+  font-size:.88rem;
+}
+.source-list li{break-inside:avoid;margin:0 0 8px}
+@media (max-width:860px){
+  body{font-size:16px}
+  .hero{grid-template-columns:1fr;min-height:auto}
+  .hero-panel{border-left:0;border-top:1px solid var(--ink);padding-left:0}
+  .grid.cols-2,.grid.cols-3{grid-template-columns:1fr}
+  .timeline{grid-template-columns:1fr}
+  .timeline:before{display:none}
+  .compare-row{grid-template-columns:1fr}
+  .barrow{grid-template-columns:120px 1fr 54px}
+  .source-list{columns:1}
+}
+</style>
+</head>
+<body>
+<header class="wrap hero">
+  <div>
+    <div class="kicker">Arvor Intelligence / Pesquisa eleitoral</div>
+    <h1>Datafolha <span>090526</span></h1>
+    <p class="deck">Auditoria da pesquisa BR-00290/2026 sob três lentes: aderência aos recortes da PNAD, consistência metodológica do registro e risco de framing anti-Bolsonaro no questionário e na reportagem.</p>
+    <div class="meta">
+      <span class="pill">Registro TSE: 09/05/2026</span>
+      <span class="pill">Divulgação TSE: 15/05/2026</span>
+      <span class="pill">Folha: 16/05/2026</span>
+      <span class="pill">n = 2.004</span>
+      <span class="pill">139 municípios</span>
+    </div>
+  </div>
+  <aside class="hero-panel">
+    <div class="score-card">
+      <div class="label">Resultado central</div>
+      <div class="value">45 x 45</div>
+      <p>Lula e Flávio Bolsonaro empatam no segundo turno. Não há vantagem estatística de nenhum dos dois nesse confronto.</p>
+    </div>
+    <div class="score-card">
+      <div class="label">Amostra demográfica</div>
+      <div class="value">boa</div>
+      <p>Sexo, idade, escolaridade e região batem muito bem com PNAD/TSE. A renda é o ponto estranho.</p>
+    </div>
+    <div class="score-card">
+      <div class="label">Framing editorial</div>
+      <div class="value">alto</div>
+      <p>A reportagem ancora a leitura no caso Dark Horse antes de entregar toda a anatomia estatística.</p>
+    </div>
+  </aside>
+</header>
+
+<nav class="toc">
+  <div class="wrap">
+    <a href="#sumario">Sumário</a>
+    <a href="#numeros">Números</a>
+    <a href="#amostra">Amostra x PNAD</a>
+    <a href="#bairros">Bairros</a>
+    <a href="#metodo">Método</a>
+    <a href="#questionario">Questionário</a>
+    <a href="#reportagem">Reportagem</a>
+    <a href="#disputa">Disputa</a>
+    <a href="#veredito">Veredito</a>
+    <a href="#fontes">Fontes</a>
+  </div>
+</nav>
+
+<main>
+<section id="sumario">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Sumário brutalmente honesto</h2>
+      <p>O dado de voto é competitivo e plausível. A amostra, nos cortes clássicos, não parece uma gambiarra. Mas há uma divergência relevante em renda, uma inconsistência de datas no material público e um enquadramento jornalístico claramente desfavorável a Flávio Bolsonaro.</p>
+    </div>
+    <div class="grid cols-3">
+      <article class="card">
+        <span class="verdict ok">Amostra</span>
+        <h3>Demografia quase cravada</h3>
+        <p>Sexo, escolaridade e região estão colados à PNAD/TSE. Idade também faz sentido quando lembramos que o universo é eleitorado, não toda a população 16+.</p>
+      </article>
+      <article class="card">
+        <span class="verdict bad">Renda</span>
+        <h3>O ponto mais fraco</h3>
+        <p>O Datafolha usa referência de 48% até 2 salários mínimos. Na PNAD anual 2024, usando renda domiciliar habitual total, esse grupo dá 38,6% entre pessoas 16+.</p>
+      </article>
+      <article class="card">
+        <span class="verdict warn">Datas</span>
+        <h3>Campo mal explicado</h3>
+        <p>Registro informado: 12 a 14/05. Texto da Folha: 12 e 13/05. PDF de bairros: 13 e 14/05. Para uma notícia ancorada em “antes do Dark Horse”, isso importa pra caralho.</p>
+      </article>
+      <article class="card">
+        <span class="verdict ok">Questionário</span>
+        <h3>Top-line protegido</h3>
+        <p>As perguntas de voto vêm antes da bateria pesada sobre atributos, governo, STF, emprego e ideologia. Isso reduz o risco de viés direto nos números principais.</p>
+      </article>
+      <article class="card">
+        <span class="verdict warn">Subgrupos</span>
+        <h3>Recortes finos são frágeis</h3>
+        <p>Empresários, renda acima de 10 SM e grupos religiosos específicos têm n pequeno. Sem microdados, pesos e tamanho de célula, porcentagens chamativas devem ser lidas como sinal, não como fato sólido.</p>
+      </article>
+      <article class="card">
+        <span class="verdict bad">Reportagem</span>
+        <h3>House effect editorial plausível</h3>
+        <p>A Folha escolhe uma manchete que junta empate com caso negativo de Flávio. Isso não altera a pesquisa, mas altera a percepção pública da pesquisa.</p>
+      </article>
+      <article class="card">
+        <span class="verdict bad">Transparência</span>
+        <h3>Não há relatório completo</h3>
+        <p>O material público abre perfil da amostra e alguns recortes jornalísticos, mas não entrega tabela completa por renda, sexo, idade, região, religião, escolaridade e voto. Isso impede auditoria real.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="numeros">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>O que a pesquisa diz</h2>
+      <p>A leitura estatística correta é simples: Lula e Flávio estão empatados no confronto direto; Lula abre vantagem contra Zema e Caiado; no primeiro turno, Lula fica numericamente à frente de Flávio, mas a diferença de 3 pontos ainda é pequena para virar certeza.</p>
+    </div>
+    <div class="grid cols-2">
+      <article class="card">
+        <h3>Segundo turno</h3>
+        <div class="chart">
+          <div class="barrow"><span>Lula x Flávio / Lula</span><div class="track"><div class="fill" style="width:45%"></div></div><span class="pct">45%</span></div>
+          <div class="barrow"><span>Lula x Flávio / Flávio</span><div class="track"><div class="fill blue" style="width:45%"></div></div><span class="pct">45%</span></div>
+          <div class="barrow"><span>Lula x Zema / Lula</span><div class="track"><div class="fill" style="width:46%"></div></div><span class="pct">46%</span></div>
+          <div class="barrow"><span>Lula x Zema / Zema</span><div class="track"><div class="fill blue" style="width:40%"></div></div><span class="pct">40%</span></div>
+          <div class="barrow"><span>Lula x Caiado / Lula</span><div class="track"><div class="fill" style="width:46%"></div></div><span class="pct">46%</span></div>
+          <div class="barrow"><span>Lula x Caiado / Caiado</span><div class="track"><div class="fill blue" style="width:39%"></div></div><span class="pct">39%</span></div>
+        </div>
+        <p class="note">Sob aproximação AAS, a diferença Lula-Flávio é 0 p.p.; Lula-Zema é +6 p.p.; Lula-Caiado é +7 p.p. O desenho real é mais complexo que AAS.</p>
+      </article>
+      <article class="card">
+        <h3>Primeiro turno e rejeição</h3>
+        <div class="chart">
+          <div class="barrow"><span>Lula, 1º turno</span><div class="track"><div class="fill" style="width:38%"></div></div><span class="pct">38%</span></div>
+          <div class="barrow"><span>Flávio, 1º turno</span><div class="track"><div class="fill blue" style="width:35%"></div></div><span class="pct">35%</span></div>
+          <div class="barrow"><span>Lula espontânea</span><div class="track"><div class="fill" style="width:27%"></div></div><span class="pct">27%</span></div>
+          <div class="barrow"><span>Flávio espontânea</span><div class="track"><div class="fill blue" style="width:18%"></div></div><span class="pct">18%</span></div>
+          <div class="barrow"><span>Rejeição Lula</span><div class="track"><div class="fill red" style="width:47%"></div></div><span class="pct">47%</span></div>
+          <div class="barrow"><span>Rejeição Flávio</span><div class="track"><div class="fill red" style="width:43%"></div></div><span class="pct">43%</span></div>
+        </div>
+        <p class="note">A espontânea mostra Lula mais consolidado; a estimulada mostra polarização dura e transferência bolsonarista já muito avançada para Flávio.</p>
+      </article>
+    </div>
+    <table style="margin-top:24px">
+      <thead><tr><th>Cenário</th><th class="num">Lula</th><th class="num">Adversário</th><th class="num">Dif.</th><th>Leitura</th></tr></thead>
+      <tbody>
+        <tr><td>2º turno contra Flávio Bolsonaro</td><td class="num">45%</td><td class="num">45%</td><td class="num">0 p.p.</td><td>Empate real, sem vantagem numérica.</td></tr>
+        <tr><td>2º turno contra Romeu Zema</td><td class="num">46%</td><td class="num">40%</td><td class="num">+6 p.p.</td><td>Vantagem relevante sob AAS; depende do efeito de desenho.</td></tr>
+        <tr><td>2º turno contra Ronaldo Caiado</td><td class="num">46%</td><td class="num">39%</td><td class="num">+7 p.p.</td><td>Vantagem mais clara que contra Zema.</td></tr>
+        <tr><td>1º turno sem Ciro Gomes</td><td class="num">38%</td><td class="num">35%</td><td class="num">+3 p.p.</td><td>Lula à frente numericamente; disputa ainda embolada.</td></tr>
+        <tr><td>1º turno com Ciro Gomes</td><td class="num">37%</td><td class="num">34%</td><td class="num">+3 p.p.</td><td>Ciro retira pouco do eixo Lula-Flávio.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="amostra">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Amostra x PNAD</h2>
+      <p>Usei a PNADC trimestral 2025Q3 para sexo, idade, escolaridade e região, ponderada por <span class="mono">V1028</span>. Para renda, usei a PNADC anual visita 5 de 2024, ponderada por <span class="mono">V1032</span>, porque ela contém renda domiciliar total.</p>
+    </div>
+    <div class="grid cols-2">
+      <article class="card">
+        <h3>Sexo, idade e escolaridade: sem cheiro ruim</h3>
+        <div class="compare">
+          <div class="compare-row"><span class="mini-label">Corte</span><span class="mini-label">Datafolha</span><span class="mini-label">PNAD 16+</span><span class="mini-label">Delta</span></div>
+          <div class="compare-row"><span>Homens</span><span>47,5%</span><span>48,1%</span><span class="delta ok">-0,7</span></div>
+          <div class="compare-row"><span>Mulheres</span><span>52,5%</span><span>51,9%</span><span class="delta ok">+0,7</span></div>
+          <div class="compare-row"><span>25-34</span><span>19,7%</span><span>19,3%</span><span class="delta ok">+0,5</span></div>
+          <div class="compare-row"><span>35-44</span><span>20,2%</span><span>19,5%</span><span class="delta ok">+0,7</span></div>
+          <div class="compare-row"><span>45-59</span><span>25,0%</span><span>24,1%</span><span class="delta ok">+0,9</span></div>
+          <div class="compare-row"><span>Superior</span><span>25,1%</span><span>24,4%</span><span class="delta ok">+0,7</span></div>
+        </div>
+        <p class="note">A faixa 16-24 aparece menor no Datafolha (13,5%) que na PNAD 16+ (16,1%), mas o registro TSE também usa 13%. Isso faz sentido para eleitorado: 16 e 17 anos não têm alistamento universal.</p>
+      </article>
+      <article class="card">
+        <h3>Região: desenho coerente</h3>
+        <div class="chart">
+          <div class="barrow"><span>Sudeste</span><div class="track"><div class="fill" style="width:41.9%"></div></div><span class="pct">41,9%</span></div>
+          <div class="barrow"><span>PNAD Sudeste</span><div class="track"><div class="fill blue" style="width:42.6%"></div></div><span class="pct">42,6%</span></div>
+          <div class="barrow"><span>Nordeste</span><div class="track"><div class="fill" style="width:27.5%"></div></div><span class="pct">27,5%</span></div>
+          <div class="barrow"><span>PNAD Nordeste</span><div class="track"><div class="fill blue" style="width:26.4%"></div></div><span class="pct">26,4%</span></div>
+          <div class="barrow"><span>Sul</span><div class="track"><div class="fill" style="width:14.4%"></div></div><span class="pct">14,4%</span></div>
+          <div class="barrow"><span>PNAD Sul</span><div class="track"><div class="fill blue" style="width:14.9%"></div></div><span class="pct">14,9%</span></div>
+        </div>
+        <p class="note">A distribuição regional bruta do anexo fecha com o perfil: 840 entrevistas no Sudeste, 552 no Nordeste, 288 no Sul, 168 no Norte e 156 no Centro-Oeste.</p>
+      </article>
+    </div>
+    <article class="card" style="margin-top:18px">
+      <h3>Renda: a divergência que merece auditoria</h3>
+      <div class="grid cols-2">
+        <div>
+          <div class="chart">
+            <div class="barrow"><span>Datafolha até 2 SM</span><div class="track"><div class="fill red" style="width:50.3%"></div></div><span class="pct">50,3%</span></div>
+            <div class="barrow"><span>PNAD até 2 SM</span><div class="track"><div class="fill blue" style="width:38.6%"></div></div><span class="pct">38,6%</span></div>
+            <div class="barrow"><span>Datafolha &gt;2 SM</span><div class="track"><div class="fill red" style="width:45.3%"></div></div><span class="pct">45,3%</span></div>
+            <div class="barrow"><span>PNAD &gt;2 SM</span><div class="track"><div class="fill blue" style="width:61.4%"></div></div><span class="pct">61,4%</span></div>
+          </div>
+        </div>
+        <div>
+          <p>O plano registrado diz que a referência econômica é 48% até 2 SM, 48% acima de 2 SM e 4% não sabe/recusa. O perfil de campo ficou perto disso: 50,3%, 45,3% e 4,4%.</p>
+          <p style="margin-top:12px">Só que a PNAD anual, usando renda domiciliar habitual total em salários mínimos, aponta 38,6% até 2 SM e 61,4% acima de 2 SM. A diferença é grande demais para ser ignorada.</p>
+        </div>
+      </div>
+      <p class="note">Interpretação justa: Datafolha mede renda familiar declarada em pesquisa de rua, que sofre subdeclaração e não resposta; PNAD mede renda domiciliar com questionário longo. Mesmo assim, se o instituto diz usar PNADC como uma das bases, a ponte entre as duas escalas deveria ser mais transparente.</p>
+      <table style="margin-top:18px">
+        <thead><tr><th>Faixa</th><th class="num">Datafolha campo</th><th class="num">PNAD anual 2024</th><th class="num">Diferença</th><th>Direção provável</th></tr></thead>
+        <tbody>
+          <tr><td>Até 2 SM</td><td class="num">50,3%</td><td class="num">38,6%</td><td class="num">+11,7 p.p.</td><td>Infla o grupo em que Lula foi melhor: 52% no 2º turno contra Flávio.</td></tr>
+          <tr><td>Mais de 2 a 5 SM</td><td class="num">32,2%</td><td class="num">40,2%</td><td class="num">-8,0 p.p.</td><td>Sub-representa o miolo econômico que costuma decidir eleição apertada.</td></tr>
+          <tr><td>Mais de 5 SM</td><td class="num">13,0%</td><td class="num">21,2%</td><td class="num">-8,1 p.p.</td><td>Sub-representa renda alta, onde Flávio teve desempenho forte; a reportagem cita 58% acima de 10 SM.</td></tr>
+          <tr><td>NS/Recusa</td><td class="num">4,4%</td><td class="num">n.a.</td><td class="num">n.a.</td><td>Não é comparável diretamente; na PNAD a renda é apurada por instrumento próprio.</td></tr>
+        </tbody>
+      </table>
+      <div class="grid cols-2" style="margin-top:18px">
+        <article class="card">
+          <span class="verdict bad">Transparência insuficiente</span>
+          <h3>Dá para reponderar oficialmente?</h3>
+          <p>Não. Temos o perfil de renda da amostra: 1.008 entrevistas até 2 SM, 646 entre mais de 2 e 5 SM, 261 acima de 5 SM e 89 não sabe/recusa. Temos também recortes soltos publicados pela Folha: Lula faz 52% até 2 SM; Flávio faz 58% acima de 10 SM.</p>
+          <p style="margin-top:12px">Mas falta a tabela completa voto x renda: Lula, Flávio, branco/nulo e não sabe em cada faixa; falta n ponderado por célula; falta peso individual; falta microdado; falta efeito de desenho. Então qualquer “reponderação” pública é simulação, não recálculo oficial.</p>
+        </article>
+        <article class="card">
+          <span class="verdict bad">Sinal direcional</span>
+          <h3>O viés provável é pró-Lula</h3>
+          <p>A distorção não é pequena: o grupo até 2 SM aparece 11,7 p.p. acima da PNAD, justamente onde Lula vai melhor. A renda alta aparece 8,1 p.p. abaixo da PNAD, justamente onde Flávio parece ir melhor.</p>
+          <p style="margin-top:12px">O fato político bruto é duro para Lula: mesmo com uma composição de renda potencialmente favorável a ele, o confronto principal deu 45 x 45. Se a renda real do eleitorado estiver mais perto da PNAD, Flávio pode estar subestimado. Não dá para cravar quanto sem os recortes completos.</p>
+        </article>
+      </div>
+      <table style="margin-top:18px">
+        <thead><tr><th>Simulação de sensibilidade</th><th>Hipótese usada</th><th>Resultado aproximado</th><th>Leitura</th></tr></thead>
+        <tbody>
+          <tr><td>Corrigir só o peso até 2 SM</td><td>Lula mantém 52% nesse grupo; o restante é inferido para preservar o total 45%</td><td>Lula iria de 45,0% para 43,4%</td><td>Queda de 1,6 p.p. só com a correção mais conservadora.</td></tr>
+          <tr><td>Baixa renda pró-Lula e restante pró-Flávio</td><td>Flávio entre 38% e 40% até 2 SM; restante inferido pelo total</td><td>Flávio iria para algo como 46,2% a 46,6%</td><td>O empate poderia virar vantagem Flávio na casa de 2,8 a 3,3 p.p.</td></tr>
+          <tr><td>Renda alta subponderada</td><td>Mais de 5 SM tratado como proxy imperfeito do sinal publicado de mais de 10 SM, onde Flávio tem 58%</td><td>Flávio ganharia cerca de 1,2 p.p.</td><td>Não é estimativa oficial; mostra que renda alta importa e está subcontada.</td></tr>
+        </tbody>
+      </table>
+      <p class="note">Conclusão técnica: não existe reponderação auditável sem microdados. Conclusão política: a amostra de renda é compatível com viés pró-Lula e torna o empate mais desconfortável para o governo do que a manchete sugere.</p>
+    </article>
+  </div>
+</section>
+
+<section id="bairros">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Bairros e pontos de entrevista</h2>
+      <p>O anexo de bairros é útil para enxergar risco de cobertura, não para inferir voto por bairro. Cada ponto tem só 6 entrevistas. A pergunta correta é: os pontos de fluxo passam por Brasil real ou puxam demais para algum tipo de eleitor?</p>
+    </div>
+    <div class="grid cols-2">
+      <article class="card">
+        <h3>Principais capitais no anexo</h3>
+        <table>
+          <thead><tr><th>Capital</th><th class="num">Pontos</th><th class="num">Entrevistas</th><th>Leitura socioespacial</th></tr></thead>
+          <tbody>
+            <tr><td>São Paulo</td><td class="num">22</td><td class="num">132</td><td>Bem espalhada: Pinheiros/Perdizes/Santana convivem com Grajaú, Cidade Ademar, Jardim Helena, Brasilândia, Curuçá e Jardim São Luís.</td></tr>
+            <tr><td>Rio de Janeiro</td><td class="num">12</td><td class="num">72</td><td>Combina Barra, Botafogo, Tijuca e Méier com Bangu, Irajá, Madureira, Pavuna, Realengo, Campo Grande e Jacarepaguá.</td></tr>
+            <tr><td>Brasília</td><td class="num">6</td><td class="num">36</td><td>Asa Sul/Park Way entram, mas Ceilândia, Recanto das Emas, Taguatinga e Guará pesam mais no conjunto.</td></tr>
+            <tr><td>Belo Horizonte</td><td class="num">6</td><td class="num">36</td><td>Norte, Nordeste, Pampulha, Centro-Sul e Leste aparecem; mistura razoável de renda e urbanidade.</td></tr>
+            <tr><td>Salvador</td><td class="num">6</td><td class="num">36</td><td>Cabula, Centro, Itapuã, Liberdade, Mussurunga e Pernambués: capital bem popular no desenho.</td></tr>
+            <tr><td>Fortaleza</td><td class="num">6</td><td class="num">36</td><td>Aldeota é ponto de renda alta, mas Álvaro Weyne, Bonsucesso, Centro, Monte Castelo e Parangaba equilibram.</td></tr>
+            <tr><td>Curitiba</td><td class="num">4</td><td class="num">24</td><td>Água Verde/Portão, Cajuru, Centro/Matriz e Hauer: amostra urbana mista, sem periferia extrema forte.</td></tr>
+            <tr><td>Porto Alegre</td><td class="num">4</td><td class="num">24</td><td>Bom Jesus, Centro, Partenon e São Sebastião/Noroeste: menos elitizada do que uma amostra só de Moinhos/Petrópolis seria.</td></tr>
+          </tbody>
+        </table>
+      </article>
+      <article class="card">
+        <h3>Diagnóstico dos pontos</h3>
+        <p>Nas capitais grandes, não há evidência visual de uma seleção só de bairros nobres. Pelo contrário: São Paulo, Salvador, Rio e Brasília têm bastante ponto popular ou periférico. Isso enfraquece uma crítica simplista de “só ouviram elite urbana”.</p>
+        <p style="margin-top:12px">Mas há outro viés mais sutil: ponto de fluxo não é domicílio. Ele tende a capturar gente circulando em áreas comerciais, e não necessariamente pessoas em casa, trabalhadores em horários incompatíveis, idosos com menor mobilidade, moradores de condomínios fechados ou eleitores de periferias sem centralidade comercial equivalente.</p>
+        <p style="margin-top:12px">A renda baixa acima da PNAD pode vir de três fontes combinadas: declaração conservadora de renda, escolha de pontos populares e ponderação por referência econômica que já nasce mais pobre. O efeito líquido, pelo próprio recorte publicado, tende a favorecer Lula e reduzir a força de Flávio nas camadas de maior renda.</p>
+      </article>
+    </div>
+    <div class="grid cols-3" style="margin-top:18px">
+      <article class="card">
+        <span class="verdict ok">Sem viés óbvio</span>
+        <h3>São Paulo e Rio são plurais</h3>
+        <p>As duas maiores capitais têm centro, bairros de classe média, zonas populares e periferia. Se há viés, ele não é simplesmente “bairro rico”.</p>
+      </article>
+      <article class="card">
+        <span class="verdict warn">Viés possível</span>
+        <h3>Fluxo urbano popular</h3>
+        <p>O desenho pode supercapturar eleitor de rua/ponto comercial e subcapturar domicílios menos acessíveis, tanto ricos isolados quanto pobres com baixa circulação.</p>
+      </article>
+      <article class="card">
+        <span class="verdict bad">Ponto crítico</span>
+        <h3>Sem voto por ponto</h3>
+        <p>Sem microdados por setor, não dá para saber se a mistura interna dos pontos foi corrigida pelos pesos ou se reforçou a distorção de renda.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="metodo">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Metodologia: o bom, o frágil e o mal explicado</h2>
+      <p>O desenho declarado é estratificado por região e natureza do município, com municípios sorteados por probabilidade proporcional ao tamanho, pontos de abordagem e cotas de gênero e idade. É um desenho usual em pesquisa eleitoral presencial, mas não é uma amostra aleatória simples.</p>
+    </div>
+    <div class="grid cols-3">
+      <article class="card">
+        <span class="verdict ok">Bom</span>
+        <h3>Estratificação nacional</h3>
+        <p>As cinco grandes regiões entram, capitais/RMs/interior entram e o anexo de bairros mostra espalhamento geográfico real.</p>
+      </article>
+      <article class="card">
+        <span class="verdict warn">Frágil</span>
+        <h3>Ponto de fluxo</h3>
+        <p>O próprio anexo declara que o Datafolha não usa abordagem domiciliar. Ponto de fluxo é operacionalmente forte, mas depende de cotas e pode subcapturar perfis de menor circulação.</p>
+      </article>
+      <article class="card">
+        <span class="verdict warn">Frágil</span>
+        <h3>Margem AAS</h3>
+        <p>A margem de 2 p.p. é baseada em amostra aleatória simples. Com estratos, conglomerados, pontos e cotas, faltou divulgar efeito de desenho.</p>
+      </article>
+      <article class="card">
+        <span class="verdict ok">Bom</span>
+        <h3>Controle de campo</h3>
+        <p>O registro declara checagem mínima de 20% dos questionários por pesquisador, tablet, consistência interna e tratamento LGPD.</p>
+      </article>
+      <article class="card">
+        <span class="verdict bad">Ruim</span>
+        <h3>Datas inconsistentes</h3>
+        <p>TSE informado pelo usuário: 12-14/05. Folha: 12-13/05. PDF de bairros: 13-14/05. Para medir exposição ao Dark Horse, isso é uma falha de documentação.</p>
+      </article>
+      <article class="card">
+        <span class="verdict warn">Limitado</span>
+        <h3>Sem microdados</h3>
+        <p>Sem base individual, não dá para recalcular pesos, testar ordem de entrevista, separar antes/depois da notícia ou estimar house effect com precisão.</p>
+      </article>
+      <article class="card">
+        <span class="verdict bad">Insuficiente</span>
+        <h3>Sem crosstabs completos</h3>
+        <p>O instituto e a reportagem não abrem a matriz completa voto x renda x região x sexo x idade. Isso é o ponto central: há divulgação, mas não há transparência estatística suficiente para reponderação independente.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="questionario">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Questionário: onde pode haver viés</h2>
+      <p>A acusação forte de “questionário anti-Bolsonaro” não se sustenta para os números principais de voto: eles aparecem antes das baterias mais carregadas. O risco maior está no uso editorial dos blocos posteriores.</p>
+    </div>
+    <div class="timeline">
+      <div class="step"><span class="dot"></span><strong>Entrada e cotas</strong><span>Consentimento, cidade onde vota, gênero e idade.</span></div>
+      <div class="step"><span class="dot"></span><strong>Voto</strong><span>Espontânea, estimulada, conhecimento, rejeição e 2º turno.</span></div>
+      <div class="step"><span class="dot"></span><strong>Governo Lula</strong><span>Avaliação, aprovação, expectativas, vitórias/derrotas.</span></div>
+      <div class="step"><span class="dot"></span><strong>Identidade política</strong><span>Voto 2022, arrependimento, escala bolsonarista-petista, esquerda-direita.</span></div>
+      <div class="step"><span class="dot"></span><strong>Atributos</strong><span>Democrático, corrupto, radical, autoritário, preparado etc.</span></div>
+      <div class="step"><span class="dot"></span><strong>Contexto e perfil</strong><span>Congresso, STF, Messias, dívidas, trabalho, religião, escolaridade, renda, raça.</span></div>
+    </div>
+    <table style="margin-top:34px">
+      <thead><tr><th>Bloco</th><th>Risco</th><th>Análise</th></tr></thead>
+      <tbody>
+        <tr><td>Voto espontâneo/estimulado/2º turno</td><td><span class="verdict ok">baixo</span></td><td>Vem cedo. Não é contaminado por avaliação de Lula, STF, atributos negativos ou escândalo no próprio instrumento.</td></tr>
+        <tr><td>Rejeição</td><td><span class="verdict neutral">normal</span></td><td>Pergunta padrão em pesquisa eleitoral. A lista é ampla e inclui Lula, Flávio, Ciro, Zema, Caiado e candidatos menores.</td></tr>
+        <tr><td>Avaliação do governo Lula</td><td><span class="verdict warn">médio</span></td><td>Não afeta top-line, mas antes da bateria de atributos pode ativar julgamento pró/anti-governo.</td></tr>
+        <tr><td>Escala bolsonarista-petista</td><td><span class="verdict warn">médio</span></td><td>Útil analiticamente, mas força autoclassificação polarizada antes de atributos pessoais.</td></tr>
+        <tr><td>Atributos dos candidatos</td><td><span class="verdict bad">alto</span></td><td>Termos como “corrupto”, “autoritário” e “radical” são carregados. Há rodízio, mas a bateria em si produz material perfeito para manchetes enviesadas.</td></tr>
+        <tr><td>STF, Messias, Desenrola e emprego</td><td><span class="verdict neutral">baixo para voto</span></td><td>Como vêm depois das intenções de voto, servem mais a diagnóstico político do que a indução do voto medido.</td></tr>
+      </tbody>
+    </table>
+    <p class="quote">Veredito do questionário: não vejo uma máquina direta anti-Bolsonaro no bloco de voto. Vejo um instrumento que, depois de medir voto, coleta munição narrativa suficiente para qualquer redação escolher o enquadramento que quiser.</p>
+  </div>
+</section>
+
+<section id="reportagem">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Reportagem: o framing está na cara</h2>
+      <p>A Folha reporta os números principais corretamente, mas empacota a leitura em torno do caso Dark Horse. Isso é editorialmente relevante: o leitor encontra o escândalo antes de processar a estrutura completa dos dados.</p>
+    </div>
+    <div class="grid cols-2">
+      <article class="card">
+        <span class="verdict bad">Enquadramento</span>
+        <h3>Empate apresentado como pré-escândalo</h3>
+        <p>O título combina “Lula empata com Flávio” e “antes do caso Dark Horse”. Essa escolha sugere que o empate pode ser teto de Flávio antes de uma pancada reputacional.</p>
+      </article>
+      <article class="card">
+        <span class="verdict warn">Assimetria</span>
+        <h3>Contexto negativo mais vívido para Flávio</h3>
+        <p>O texto também menciona reveses de Lula, mas o caso Dark Horse vira o eixo de interpretação. A memória do leitor fica mais presa no evento contra Flávio.</p>
+      </article>
+      <article class="card">
+        <span class="verdict ok">Dado preservado</span>
+        <h3>Top-line não é escondido</h3>
+        <p>Os números de empate, primeiro turno, espontânea e rejeição aparecem. A reportagem não falsifica o dado; ela escolhe o ângulo.</p>
+      </article>
+      <article class="card">
+        <span class="verdict bad">Problema</span>
+        <h3>“Maioria antes” sem distribuição</h3>
+        <p>Se parte do campo ocorreu depois da revelação, precisamos saber quanto, onde e em que horário. Sem isso, a frase é mais narrativa que evidência.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="disputa">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Mapa de disputa pública</h2>
+      <p>Esta parte é análise estratégica agregada, não plano de persuasão segmentada. A utilidade está em entender quais flancos a pesquisa abriu, quais narrativas cada lado tende a explorar e onde a leitura dos dados deve ser defendida ou contestada.</p>
+    </div>
+    <div class="grid cols-2">
+      <article class="card">
+        <h3>Onde o campo anti-Lula tem munição</h3>
+        <table>
+          <thead><tr><th>Frente</th><th>Por que importa</th><th>Força</th></tr></thead>
+          <tbody>
+            <tr><td>Renda</td><td>Datafolha ficou 11,7 p.p. acima da PNAD no grupo até 2 SM e 8,1 p.p. abaixo em mais de 5 SM. Como Lula vai melhor em baixa renda e Flávio em renda alta, isso pode deslocar o placar.</td><td><span class="verdict bad">alta</span></td></tr>
+            <tr><td>Datas do campo</td><td>Há divergência entre registro informado, Folha e anexo de bairros. Para uma matéria centrada no “antes do Dark Horse”, a distribuição horária/data das entrevistas é decisiva.</td><td><span class="verdict bad">alta</span></td></tr>
+            <tr><td>Margem AAS</td><td>A margem divulgada é baseada em amostra aleatória simples, mas o desenho tem estratos, municípios, pontos de fluxo e cotas. Falta efeito de desenho.</td><td><span class="verdict warn">média</span></td></tr>
+            <tr><td>Framing da Folha</td><td>O dado bruto é empate; o pacote editorial gruda o empate a um evento negativo de Flávio.</td><td><span class="verdict bad">alta</span></td></tr>
+            <tr><td>Espontânea x estimulada</td><td>Lula lidera na espontânea, mas Flávio já chega a 45% no confronto direto. Isso mostra transferência bolsonarista forte apesar de menor lembrança espontânea.</td><td><span class="verdict warn">média</span></td></tr>
+          </tbody>
+        </table>
+      </article>
+      <article class="card">
+        <h3>Onde o campo pró-Lula tem munição</h3>
+        <table>
+          <thead><tr><th>Frente</th><th>Por que importa</th><th>Força</th></tr></thead>
+          <tbody>
+            <tr><td>Rejeição</td><td>Lula rejeitado por 47% e Flávio por 43%; ambos são altos, mas Flávio ainda carrega o sobrenome Bolsonaro e pode subir sob escândalo.</td><td><span class="verdict warn">média</span></td></tr>
+            <tr><td>Baixa renda</td><td>Lula marca 52% entre quem ganha até 2 SM no confronto com Flávio. É a âncora social mais clara do petista.</td><td><span class="verdict bad">alta</span></td></tr>
+            <tr><td>Nordeste</td><td>A reportagem cita Lula com 60% no Nordeste. Isso é uma muralha regional relevante, se confirmada por outras pesquisas.</td><td><span class="verdict bad">alta</span></td></tr>
+            <tr><td>Mulheres e 60+</td><td>Lula aparece melhor entre mulheres (48%) e 60+ (52%). São grupos grandes e eleitoralmente estáveis.</td><td><span class="verdict warn">média</span></td></tr>
+            <tr><td>Elite econômica pró-Flávio</td><td>Flávio vai a 58% acima de 10 SM e 71% entre empresários. Isso permite à esquerda enquadrá-lo como candidato de renda alta/empresariado.</td><td><span class="verdict warn">média</span></td></tr>
+          </tbody>
+        </table>
+      </article>
+    </div>
+    <div class="grid cols-3" style="margin-top:18px">
+      <article class="card">
+        <h3>Prioridade analítica da direita</h3>
+        <p>A linha mais sólida não é reclamar do resultado; é exigir transparência de renda, efeito de desenho, datas/horários do campo e distribuição antes/depois do caso Dark Horse. O argumento forte é técnico: se renda move voto e renda está desalinhada, o empate pode estar enviesado.</p>
+      </article>
+      <article class="card">
+        <h3>Prioridade analítica da esquerda</h3>
+        <p>A linha mais sólida é mostrar que, mesmo com Flávio forte em renda alta, homens, Sul, evangélicos e empresários, Lula ainda empata ou vence em cenários contra Zema/Caiado. A narrativa é resiliência social e regional.</p>
+      </article>
+      <article class="card">
+        <h3>Zona cinzenta decisiva</h3>
+        <p>O eleitor “3” na escala bolsonarista-petista aparece dividido: 38% Flávio, 32% Lula e 27% branco/nulo. Esse grupo não deve ser lido por estereótipo demográfico; ele é uma mistura de fadiga, rejeição cruzada e pragmatismo.</p>
+      </article>
+    </div>
+    <table style="margin-top:24px">
+      <thead><tr><th>Segmento publicado</th><th>Quem aparece melhor</th><th>Como ler sem exagerar</th></tr></thead>
+      <tbody>
+        <tr><td>Homens</td><td>Flávio, 50%</td><td>Sinal de força masculina, mas não basta sem mulheres. O gap de gênero é um dos eixos centrais do empate.</td></tr>
+        <tr><td>Mulheres</td><td>Lula, 48%</td><td>Base importante para Lula; qualquer deterioração aqui muda a eleição.</td></tr>
+        <tr><td>25 a 34 anos</td><td>Flávio, 50%</td><td>Mostra competitividade em adulto jovem, mas precisa ser cruzado com renda, religião e região.</td></tr>
+        <tr><td>60 anos ou mais</td><td>Lula, 52%</td><td>Segmento grande, mais estável e menos dependente de campanha digital.</td></tr>
+        <tr><td>Até 2 SM</td><td>Lula, 52%</td><td>É também a faixa super-representada contra a PNAD; por isso é o coração da auditoria.</td></tr>
+        <tr><td>Mais de 10 SM</td><td>Flávio, 58%</td><td>Alta renda favorece Flávio; se renda alta está subponderada, o empate pode estar comprimido contra ele.</td></tr>
+        <tr><td>Nordeste</td><td>Lula, 60%</td><td>Vantagem regional robusta, coerente com histórico petista.</td></tr>
+        <tr><td>Sul</td><td>Flávio, 59%</td><td>Vantagem regional robusta, coerente com histórico bolsonarista.</td></tr>
+        <tr><td>Evangélicos</td><td>Flávio, 61%</td><td>Força relevante, mas sem composição amostral e tamanho de célula precisa ser lida com cautela.</td></tr>
+        <tr><td>Católicos</td><td>Lula, 54%</td><td>Contrapeso religioso amplo; também precisa de n e cruzamentos para leitura fina.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="veredito">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Veredito</h2>
+      <p>O relatório não encontra uma fraude amostral óbvia. Encontra uma pesquisa competitiva, metodologicamente convencional, com boa aderência demográfica, renda discutível, datas públicas confusas e uma camada editorial com viés de enquadramento contra Flávio/Bolsonaro.</p>
+    </div>
+    <div class="grid cols-2">
+      <article class="card">
+        <h3>O que dá para afirmar</h3>
+        <p>Lula e Flávio estão empatados no principal confronto. Lula tem vantagem contra Zema e Caiado. O recorte demográfico principal do Datafolha faz sentido diante da PNAD/TSE. A renda, porém, parece mais pobre que a PNAD domiciliar indicaria.</p>
+      </article>
+      <article class="card">
+        <h3>O que não dá para afirmar</h3>
+        <p>Não dá para provar manipulação sem microdados. Não dá para medir house effect com uma pesquisa isolada. Não dá para separar impacto pré e pós-Dark Horse sem timestamps e distribuição das entrevistas por data.</p>
+      </article>
+    </div>
+    <table style="margin-top:24px">
+      <thead><tr><th>Dimensão</th><th class="num">Nota</th><th>Leitura final</th></tr></thead>
+      <tbody>
+        <tr><td>Aderência sexo/idade/escolaridade/região</td><td class="num">9/10</td><td>Muito boa. Aqui não tem fumaça.</td></tr>
+        <tr><td>Aderência de renda à PNAD</td><td class="num">4/10</td><td>Divergência material; precisa ponte metodológica melhor.</td></tr>
+        <tr><td>Transparência de desenho amostral</td><td class="num">6/10</td><td>Desenho descrito, mas sem efeito de desenho e sem microdados.</td></tr>
+        <tr><td>Questionário para top-line eleitoral</td><td class="num">8/10</td><td>Ordem protege o voto principal.</td></tr>
+        <tr><td>Questionário para narrativas posteriores</td><td class="num">5/10</td><td>Atributos carregados podem virar munição editorial.</td></tr>
+        <tr><td>Framing da reportagem</td><td class="num">3/10</td><td>O ângulo Dark Horse pesa contra Flávio mesmo com empate técnico.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="fontes">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Fontes e cálculo</h2>
+      <p>Relatório produzido em 16/05/2026 com arquivos locais fornecidos pelo usuário, bases PNAD já presentes no repositório e conferência de notícia pública.</p>
+    </div>
+    <ul class="source-list">
+      <li>Registro informado: Pesquisa Eleitoral BR-00290/2026, Datafolha, Presidente, Brasil, registro em 09/05/2026.</li>
+      <li>PDF local: <span class="mono">questionariodatafolha.pdf</span>.</li>
+      <li>PDF local: <span class="mono">entrevistasbairrosdatafolha.pdf</span>.</li>
+      <li>PDF local: reportagem Folha “Lula empata com Flávio antes de caso Dark Horse”.</li>
+      <li>Folha, 16/05/2026: <a href="https://www1.folha.uol.com.br/amp/poder/2026/05/datafolha-lula-empata-com-flavio-antes-de-caso-dark-horse-e-abre-vantagem-sobre-zema-e-caiado.shtml">matéria AMP consultada</a>.</li>
+      <li>CNN Brasil, 16/05/2026: <a href="https://www.cnnbrasil.com.br/eleicoes/datafolha-em-2o-turno-lula-e-flavio-empatam-com-45-antes-de-audio-vazado/">conferência de top-line e metodologia</a>.</li>
+      <li>PNADC trimestral 2025Q3: <span class="mono">data/outputs/pnad.sqlite</span>, tabela <span class="mono">base_labeled_npv</span>, peso <span class="mono">V1028</span>.</li>
+      <li>PNADC anual visita 5 2024: <span class="mono">data/outputs/brasil.sqlite</span>, tabela <span class="mono">base_anual_labeled_npv</span>, peso <span class="mono">V1032</span>.</li>
+    </ul>
+    <p class="note">A reportagem e o questionário foram resumidos e auditados; o texto integral dos PDFs não foi reproduzido por respeito a direitos autorais e para manter o relatório legível.</p>
+  </div>
+</section>
+</main>
+</body>
+</html>
