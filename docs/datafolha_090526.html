@@ -368,7 +368,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
       <article class="card">
         <span class="verdict bad">Renda</span>
         <h3>O ponto mais fraco</h3>
-        <p>O Datafolha usa referência de 48% até 2 salários mínimos. Na PNAD anual 2024, usando renda domiciliar habitual total, esse grupo dá 38,6% entre pessoas 16+.</p>
+        <p>A explicação oficial fala em “nível econômico do entrevistado”, medido por renda familiar declarada. Por entrevistas/pessoas, até 2 SM fica em 50,3% no Datafolha contra 38,7% na PNAD; por domicílios, fica mais defensável.</p>
       </article>
       <article class="card">
         <span class="verdict warn">Datas</span>
@@ -448,7 +448,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
   <div class="wrap">
     <div class="section-head">
       <h2>Amostra x PNAD</h2>
-      <p>Usei a PNADC trimestral 2025Q3 para sexo, idade, escolaridade e região, ponderada por <span class="mono">V1028</span>. Para renda, usei a PNADC anual visita 5 de 2024, ponderada por <span class="mono">V1032</span>, porque ela contém renda domiciliar total.</p>
+      <p>Usei a PNADC trimestral 2025Q3 para sexo, idade, escolaridade e região, ponderada por <span class="mono">V1028</span>. Para renda, usei a PNADC anual visita 5 de 2024, porque ela permite somar renda domiciliar total: trabalho, aposentadorias, pensões, benefícios, programas sociais e demais rendimentos.</p>
     </div>
     <div class="grid cols-2">
       <article class="card">
@@ -483,23 +483,33 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
         <div>
           <div class="chart">
             <div class="barrow"><span>Datafolha até 2 SM</span><div class="track"><div class="fill red" style="width:50.3%"></div></div><span class="pct">50,3%</span></div>
-            <div class="barrow"><span>PNAD até 2 SM</span><div class="track"><div class="fill blue" style="width:38.6%"></div></div><span class="pct">38,6%</span></div>
+            <div class="barrow"><span>PNAD pessoas até 2 SM</span><div class="track"><div class="fill blue" style="width:38.7%"></div></div><span class="pct">38,7%</span></div>
+            <div class="barrow"><span>PNAD domicílios até 2 SM</span><div class="track"><div class="fill yellow" style="width:54.2%"></div></div><span class="pct">54,2%</span></div>
             <div class="barrow"><span>Datafolha &gt;2 SM</span><div class="track"><div class="fill red" style="width:45.3%"></div></div><span class="pct">45,3%</span></div>
-            <div class="barrow"><span>PNAD &gt;2 SM</span><div class="track"><div class="fill blue" style="width:61.4%"></div></div><span class="pct">61,4%</span></div>
+            <div class="barrow"><span>PNAD pessoas &gt;2 SM</span><div class="track"><div class="fill blue" style="width:61.3%"></div></div><span class="pct">61,3%</span></div>
+            <div class="barrow"><span>PNAD domicílios &gt;2 SM</span><div class="track"><div class="fill yellow" style="width:45.8%"></div></div><span class="pct">45,8%</span></div>
           </div>
         </div>
         <div>
-          <p>O plano registrado diz que a referência econômica é 48% até 2 SM, 48% acima de 2 SM e 4% não sabe/recusa. O perfil de campo ficou perto disso: 50,3%, 45,3% e 4,4%.</p>
-          <p style="margin-top:12px">Só que a PNAD anual, usando renda domiciliar habitual total em salários mínimos, aponta 38,6% até 2 SM e 61,4% acima de 2 SM. A diferença é grande demais para ser ignorada.</p>
+          <p>A última página do anexo de bairros abre o perfil da amostra: 1.008 entrevistas até 2 SM, 646 entre mais de 2 e 5 SM, 261 acima de 5 SM e 89 não sabe/recusa. Isso fecha 50,3%, 32,2%, 13,0% e 4,4%.</p>
+          <p style="margin-top:12px">A explicação oficial diz que, para “nível econômico do entrevistado”, a referência foi 48% até 2 SM, 48% acima de 2 SM e 4% não sabe/recusa. Como a unidade é o entrevistado/respondente, a comparação principal com PNAD deve ser pessoas 16+ classificadas pela renda domiciliar da casa.</p>
+          <p style="margin-top:12px">Também mostro a leitura por domicílios porque a pergunta é sobre renda da casa. Essa leitura é uma defesa possível do Datafolha, mas ela exigiria explicitar que o alvo 48%/48%/4% foi construído por domicílios, não por entrevistados.</p>
         </div>
       </div>
-      <p class="note">Interpretação justa: Datafolha mede renda familiar declarada em pesquisa de rua, que sofre subdeclaração e não resposta; PNAD mede renda domiciliar com questionário longo. Mesmo assim, se o instituto diz usar PNADC como uma das bases, a ponte entre as duas escalas deveria ser mais transparente.</p>
+      <p class="note">Interpretação justa: Datafolha mede renda familiar declarada em pesquisa de rua, que sofre subdeclaração e não resposta; PNAD mede renda domiciliar total com questionário longo e decomposição por fontes. Aqui não estamos usando renda do trabalho trimestral; estamos usando a anual visita 5, justamente para somar benefícios e demais rendimentos.</p>
+      <article class="card" style="margin-top:18px">
+        <span class="verdict neutral">Questionário</span>
+        <h3>Como o Datafolha pergunta renda</h3>
+        <p>No questionário, a variável aparece como <span class="mono">RENDAF_RENDA_FAMILIAR_ESTIMULADA</span>. O entrevistador mostra um cartão no tablet e pergunta, em essência: somando a renda do entrevistado com a renda das pessoas que moram com ele, qual é aproximadamente a renda familiar mensal da casa.</p>
+        <p style="margin-top:12px">As faixas são monetárias, mas equivalem a salários mínimos de R$ 1.621: até 1 SM, de 1 a 2 SM, de 2 a 3 SM, de 3 a 5 SM, de 5 a 10 SM, de 10 a 20 SM, de 20 a 50 SM e acima de 50 SM. Também há “não tem renda”, “não sabe” e “recusa”.</p>
+        <p style="margin-top:12px">Isso confirma que a comparação correta não é com renda individual nem só renda do trabalho. O melhor espelho disponível na PNAD é renda domiciliar total da anual visita 5. A ressalva é que o Datafolha não pergunta fonte por fonte; a PNAD sim. Portanto, a pergunta do Datafolha tende a ser mais aproximada e vulnerável a subdeclaração.</p>
+      </article>
       <table style="margin-top:18px">
-        <thead><tr><th>Faixa</th><th class="num">Datafolha campo</th><th class="num">PNAD anual 2024</th><th class="num">Diferença</th><th>Direção provável</th></tr></thead>
+        <thead><tr><th>Faixa</th><th class="num">Datafolha entrevistas</th><th class="num">PNAD pessoas 16+</th><th class="num">PNAD domicílios</th><th>Leitura</th></tr></thead>
         <tbody>
-          <tr><td>Até 2 SM</td><td class="num">50,3%</td><td class="num">38,6%</td><td class="num">+11,7 p.p.</td><td>Infla o grupo em que Lula foi melhor: 52% no 2º turno contra Flávio.</td></tr>
-          <tr><td>Mais de 2 a 5 SM</td><td class="num">32,2%</td><td class="num">40,2%</td><td class="num">-8,0 p.p.</td><td>Sub-representa o miolo econômico que costuma decidir eleição apertada.</td></tr>
-          <tr><td>Mais de 5 SM</td><td class="num">13,0%</td><td class="num">21,2%</td><td class="num">-8,1 p.p.</td><td>Sub-representa renda alta, onde Flávio teve desempenho forte; a reportagem cita 58% acima de 10 SM.</td></tr>
+          <tr><td>Até 2 SM</td><td class="num">50,3%</td><td class="num">38,7%</td><td class="num">54,2%</td><td>Acima da PNAD por pessoas, abaixo/colado na PNAD por domicílios.</td></tr>
+          <tr><td>Mais de 2 a 5 SM</td><td class="num">32,2%</td><td class="num">39,2%</td><td class="num">30,5%</td><td>Abaixo da PNAD por pessoas, perto da PNAD por domicílios.</td></tr>
+          <tr><td>Mais de 5 SM</td><td class="num">13,0%</td><td class="num">22,1%</td><td class="num">15,3%</td><td>Bem abaixo da PNAD por pessoas, levemente abaixo da PNAD por domicílios.</td></tr>
           <tr><td>NS/Recusa</td><td class="num">4,4%</td><td class="num">n.a.</td><td class="num">n.a.</td><td>Não é comparável diretamente; na PNAD a renda é apurada por instrumento próprio.</td></tr>
         </tbody>
       </table>
@@ -513,19 +523,25 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
         <article class="card">
           <span class="verdict bad">Sinal direcional</span>
           <h3>O viés provável é pró-Lula</h3>
-          <p>A distorção não é pequena: o grupo até 2 SM aparece 11,7 p.p. acima da PNAD, justamente onde Lula vai melhor. A renda alta aparece 8,1 p.p. abaixo da PNAD, justamente onde Flávio parece ir melhor.</p>
-          <p style="margin-top:12px">O fato político bruto é duro para Lula: mesmo com uma composição de renda potencialmente favorável a ele, o confronto principal deu 45 x 45. Se a renda real do eleitorado estiver mais perto da PNAD, Flávio pode estar subestimado. Não dá para cravar quanto sem os recortes completos.</p>
+          <p>Pela própria formulação oficial, a referência econômica é do entrevistado/respondente. Nesse denominador, o Datafolha parece pró-Lula: baixa renda fica acima da PNAD por pessoas e renda alta fica abaixo.</p>
+          <p style="margin-top:12px">A leitura por domicílios é um contra-argumento útil, porque a renda perguntada é da casa. Mas ela não combina tão bem com a frase “nível econômico do entrevistado”. A cobrança correta é a fonte e o cálculo do alvo 48%/48%/4%.</p>
         </article>
       </div>
+      <article class="card" style="margin-top:18px">
+        <span class="verdict warn">Conceito importa</span>
+        <h3>Por pessoa ou por domicílio?</h3>
+        <p>A pergunta do Datafolha é feita ao entrevistado, mas o conteúdo perguntado é renda da casa. O perfil publicado é “número de entrevistas”, não número de domicílios, e a descrição do TSE/Folha fala em nível econômico do entrevistado.</p>
+        <p style="margin-top:12px">Portanto, pessoas 16+ por renda domiciliar é o benchmark principal. Domicílios por renda domiciliar deve aparecer como teste de robustez, porque mostra como a defesa do Datafolha poderia ser construída, mas não substitui a comparação por respondentes.</p>
+      </article>
       <table style="margin-top:18px">
         <thead><tr><th>Simulação de sensibilidade</th><th>Hipótese usada</th><th>Resultado aproximado</th><th>Leitura</th></tr></thead>
         <tbody>
-          <tr><td>Corrigir só o peso até 2 SM</td><td>Lula mantém 52% nesse grupo; o restante é inferido para preservar o total 45%</td><td>Lula iria de 45,0% para 43,4%</td><td>Queda de 1,6 p.p. só com a correção mais conservadora.</td></tr>
-          <tr><td>Baixa renda pró-Lula e restante pró-Flávio</td><td>Flávio entre 38% e 40% até 2 SM; restante inferido pelo total</td><td>Flávio iria para algo como 46,2% a 46,6%</td><td>O empate poderia virar vantagem Flávio na casa de 2,8 a 3,3 p.p.</td></tr>
+          <tr><td>Corrigir só o peso até 2 SM</td><td>Cenário por pessoas 16+: Lula mantém 52% nesse grupo; o restante é inferido para preservar o total 45%</td><td>Lula iria de 45,0% para 43,4%</td><td>Queda de 1,6 p.p. só com a correção mais conservadora.</td></tr>
+          <tr><td>Baixa renda pró-Lula e restante pró-Flávio</td><td>Cenário por pessoas 16+: Flávio entre 38% e 40% até 2 SM; restante inferido pelo total</td><td>Flávio iria para algo como 46,2% a 46,6%</td><td>O empate poderia virar vantagem Flávio na casa de 2,8 a 3,3 p.p.</td></tr>
           <tr><td>Renda alta subponderada</td><td>Mais de 5 SM tratado como proxy imperfeito do sinal publicado de mais de 10 SM, onde Flávio tem 58%</td><td>Flávio ganharia cerca de 1,2 p.p.</td><td>Não é estimativa oficial; mostra que renda alta importa e está subcontada.</td></tr>
         </tbody>
       </table>
-      <p class="note">Conclusão técnica: não existe reponderação auditável sem microdados. Conclusão política: a amostra de renda é compatível com viés pró-Lula e torna o empate mais desconfortável para o governo do que a manchete sugere.</p>
+      <p class="note">Conclusão técnica: não existe reponderação auditável sem microdados. Conclusão política: como a própria explicação fala em nível econômico do entrevistado, a comparação por pessoas é a principal; nela há sinal pró-Lula. A comparação por domicílios atenua o problema, mas não explica de onde saiu a referência 48%/48%/4%.</p>
     </article>
   </div>
 </section>
@@ -698,7 +714,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
         <table>
           <thead><tr><th>Frente</th><th>Por que importa</th><th>Força</th></tr></thead>
           <tbody>
-            <tr><td>Renda</td><td>Datafolha ficou 11,7 p.p. acima da PNAD no grupo até 2 SM e 8,1 p.p. abaixo em mais de 5 SM. Como Lula vai melhor em baixa renda e Flávio em renda alta, isso pode deslocar o placar.</td><td><span class="verdict bad">alta</span></td></tr>
+            <tr><td>Renda</td><td>A própria explicação fala em nível econômico do entrevistado. Portanto, a linha forte é exigir a fonte e o cálculo do alvo 48% até 2 SM, 48% acima de 2 SM e 4% NS/recusa.</td><td><span class="verdict bad">alta</span></td></tr>
             <tr><td>Datas do campo</td><td>Há divergência entre registro informado, Folha e anexo de bairros. Para uma matéria centrada no “antes do Dark Horse”, a distribuição horária/data das entrevistas é decisiva.</td><td><span class="verdict bad">alta</span></td></tr>
             <tr><td>Margem AAS</td><td>A margem divulgada é baseada em amostra aleatória simples, mas o desenho tem estratos, municípios, pontos de fluxo e cotas. Falta efeito de desenho.</td><td><span class="verdict warn">média</span></td></tr>
             <tr><td>Framing da Folha</td><td>O dado bruto é empate; o pacote editorial gruda o empate a um evento negativo de Flávio.</td><td><span class="verdict bad">alta</span></td></tr>
@@ -723,7 +739,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
     <div class="grid cols-3" style="margin-top:18px">
       <article class="card">
         <h3>Prioridade analítica da direita</h3>
-        <p>A linha mais sólida não é reclamar do resultado; é exigir transparência de renda, efeito de desenho, datas/horários do campo e distribuição antes/depois do caso Dark Horse. O argumento forte é técnico: se renda move voto e renda está desalinhada, o empate pode estar enviesado.</p>
+        <p>A linha mais sólida não é reclamar do resultado; é exigir fonte/cálculo da referência econômica 48%/48%/4%, efeito de desenho, datas/horários do campo e distribuição antes/depois do caso Dark Horse. O argumento forte é técnico: sem crosstabs e pesos, não há auditoria real.</p>
       </article>
       <article class="card">
         <h3>Prioridade analítica da esquerda</h3>
