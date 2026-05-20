@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dossiê AtlasIntel/Bloomberg 18/05/2026 - questionário, TSE, PNAD e módulo Vorcaro</title>
+<meta name="description" content="Dossiê Arvor sobre a pesquisa AtlasIntel/Bloomberg BR-06939/2026, com auditoria do questionário nacional, lacunas do relatório, comparação TSE/PNAD e módulo Flávio Bolsonaro-Daniel Vorcaro.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;600;700;800&family=Spline+Sans+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f7f7f2;
+  --ink:#10141b;
+  --muted:#657079;
+  --line:#d8ddd9;
+  --blue:#1f86ff;
+  --pink:#ed145b;
+  --gold:#f7b81e;
+  --green:#0aa36d;
+  --dark:#232831;
+  --serif:"Libre Baskerville",Georgia,serif;
+  --sans:"Source Sans 3",ui-sans-serif,system-ui,sans-serif;
+  --display:"Archivo Black",Impact,sans-serif;
+  --mono:"Spline Sans Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  color:var(--ink);
+  background:
+    linear-gradient(90deg,rgba(16,20,27,.04) 1px,transparent 1px) 0 0/64px 64px,
+    linear-gradient(180deg,#fbfbf8,var(--paper) 48%,#eef4ef);
+  font-family:var(--serif);
+  font-size:18px;
+  line-height:1.64;
+}
+a{color:#095dbd;text-decoration-thickness:1px;text-underline-offset:3px}
+.wrap{width:min(1180px,calc(100% - 38px));margin:auto}
+.hero{
+  min-height:92vh;
+  display:grid;
+  grid-template-columns:minmax(0,1.02fr) minmax(340px,.98fr);
+  gap:42px;
+  align-items:end;
+  padding:54px 0 36px;
+  border-bottom:2px solid var(--ink);
+}
+.kicker,.verdict{
+  font-family:var(--sans);
+  font-weight:800;
+  text-transform:uppercase;
+  font-size:.78rem;
+  letter-spacing:0;
+}
+.kicker{color:var(--green)}
+h1,h2,h3{margin:0;color:var(--ink)}
+h1{font-family:var(--display);font-size:6.1rem;line-height:.91;letter-spacing:0;margin:20px 0;max-width:900px}
+h1 span{display:block;color:var(--blue)}
+h2{font-family:var(--display);font-size:3.85rem;line-height:1;letter-spacing:0}
+h3{font-family:var(--sans);font-size:1.35rem;line-height:1.12}
+.deck{max-width:850px;margin:0;color:#2e353b;font-size:1.38rem;line-height:1.36}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px;font-family:var(--sans);font-size:.86rem}
+.pill{border:1px solid var(--line);background:rgba(255,255,255,.66);padding:5px 10px;border-radius:999px}
+.hero-media{align-self:stretch;display:grid;align-content:end;gap:14px}
+.figure{margin:0}
+.hero-media img,.figure img{display:block;width:100%;height:auto;border:1px solid var(--ink);border-radius:6px;background:#fff}
+.caption{font-family:var(--sans);font-size:.82rem;color:var(--muted);line-height:1.35;margin-top:8px}
+.score-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.score{border-top:2px solid var(--ink);padding-top:10px;font-family:var(--sans)}
+.score b{display:block;font-size:2.2rem;line-height:1;color:var(--pink)}
+.score span{display:block;color:var(--muted);font-size:.8rem;line-height:1.25;margin-top:6px}
+nav{position:sticky;top:0;z-index:5;background:rgba(247,247,242,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;gap:16px;overflow:auto;padding:10px 0;font-family:var(--sans);font-size:.83rem;white-space:nowrap}
+nav a{color:var(--muted);text-decoration:none}
+section{padding:68px 0;border-bottom:1px solid var(--line)}
+section.band{background:rgba(35,40,49,.045)}
+.section-head{max-width:990px;margin-bottom:30px}
+.section-head p{margin:14px 0 0;font-size:1.18rem;line-height:1.45;color:#333b42}
+.grid{display:grid;gap:16px}
+.cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.tile{border:1px solid var(--line);background:rgba(255,255,255,.70);border-radius:6px;padding:18px;min-width:0}
+.tile p{margin:10px 0 0;color:#394047}
+.ok{color:var(--green)} .warn{color:#a66b00} .bad{color:var(--pink)} .neutral{color:var(--blue)}
+.lead{font-size:1.28rem;line-height:1.45;color:#30373d;margin:0}
+.callout{border-left:5px solid var(--pink);padding-left:18px;margin:24px 0;font-size:1.24rem;line-height:1.45;color:#252b30}
+.chart{display:grid;gap:10px;margin-top:12px}
+.barrow{display:grid;grid-template-columns:185px 1fr 64px;gap:10px;align-items:center;font-family:var(--sans);font-size:.9rem}
+.track{height:14px;background:#e9ece9;border:1px solid #dde1dc}
+.fill{height:100%;background:var(--blue)}
+.pinkfill{background:var(--pink)} .goldfill{background:var(--gold)} .greenfill{background:var(--green)} .darkfill{background:var(--dark)}
+.pct{font-family:var(--mono);text-align:right;font-size:.82rem}
+.note{font-family:var(--sans);font-size:.84rem;color:var(--muted);line-height:1.4;margin-top:12px}
+table{width:100%;max-width:100%;border-collapse:collapse;background:rgba(255,255,255,.66);font-family:var(--sans);font-size:.91rem}
+th,td{padding:10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{text-align:left;text-transform:uppercase;color:var(--muted);font-size:.72rem;font-weight:800}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+.mono{font-family:var(--mono);overflow-wrap:anywhere}
+.delta-good{color:var(--green);font-weight:800}
+.delta-warn{color:#a66b00;font-weight:800}
+.delta-bad{color:var(--pink);font-weight:800}
+.proof-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:20px}
+.proof-grid .figure img{border-color:var(--line)}
+.timeline{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-top:22px}
+.step{border-top:2px solid var(--ink);padding-top:12px;font-family:var(--sans)}
+.step b{display:block;font-size:1rem}
+.step span{display:block;color:var(--muted);font-size:.84rem;line-height:1.32;margin-top:5px}
+.source-list{columns:2;column-gap:38px;font-family:var(--sans);font-size:.88rem}
+.source-list li{break-inside:avoid;margin:0 0 8px}
+@media (max-width:940px){
+  body{font-size:16px}
+  h1{font-size:4.05rem}
+  h2{font-size:2.38rem;overflow-wrap:anywhere}
+  .hero,.cols-2,.cols-3,.timeline,.proof-grid{grid-template-columns:1fr}
+  .score-grid{grid-template-columns:1fr}
+  .barrow{grid-template-columns:112px minmax(0,1fr) 54px}
+  table{display:block;overflow-x:auto}
+  th,td{min-width:108px}
+  .source-list{columns:1;overflow-wrap:anywhere}
+}
+</style>
+</head>
+<body>
+<header class="wrap hero">
+  <div>
+    <div class="kicker">Arvor Intelligence / dossiê eleitoral</div>
+    <h1>Dossiê AtlasIntel <span>180526</span></h1>
+    <p class="deck">Auditoria integral da pesquisa Atlas/Bloomberg: o instrumento mede voto antes do escândalo, mas depois mistura Banco Master, julgamento moral, imagem, rejeição, economia, demografia e vídeo/áudio. Esse desenho compromete bastante a qualidade interpretativa do relatório.</p>
+    <div class="meta">
+      <span class="pill">Coleta: 13/05/2026 a 18/05/2026</span>
+      <span class="pill">Divulgação: 19/05/2026</span>
+      <span class="pill">n = 5.032</span>
+      <span class="pill">RDR online</span>
+      <span class="pill">Registro TSE: BR-06939/2026</span>
+    </div>
+  </div>
+  <aside class="hero-media">
+    <img src="img/atlas_intel_180526_questionario_12_video_audio.png" alt="Página do questionário correto com peça audiovisual do áudio de Flávio Bolsonaro para Daniel Vorcaro">
+    <div class="score-grid">
+      <div class="score"><b>48</b><span>itens no questionário correto</span></div>
+      <div class="score"><b>18</b><span>itens publicados como resultado central</span></div>
+      <div class="score"><b>20+</b><span>itens sem top-line no relatório</span></div>
+    </div>
+  </aside>
+</header>
+
+<nav>
+  <div class="wrap">
+    <a href="#sumario">Sumário</a>
+    <a href="#fluxo">Fluxo</a>
+    <a href="#absurdos">Absurdos</a>
+    <a href="#omitidas">Omissões</a>
+    <a href="#numeros">Números</a>
+    <a href="#pnad">TSE/PNAD</a>
+    <a href="#vorcaro">Vídeo/áudio</a>
+    <a href="#atlas">Atlas hoje</a>
+    <a href="#veredito">Veredito</a>
+    <a href="#fontes">Fontes</a>
+  </div>
+</nav>
+
+<main>
+<section id="sumario">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Sumário brutal</h2>
+      <p>O questionário nacional revela uma separação decisiva: a intenção de voto aparece antes do estímulo audiovisual, então o top-line eleitoral não é contaminado pelo vídeo final. Mas o relatório vende também rejeição, medo, imagem política e leituras do caso Banco Master sem abrir todas as perguntas aplicadas. Aí a qualidade cai bastante.</p>
+    </div>
+    <div class="grid cols-3">
+      <article class="tile">
+        <span class="verdict ok">Top-line de voto</span>
+        <h3>Mais protegido do que parecia</h3>
+        <p>Aprovação, 2022, primeiro turno, segundo turno e confiança por áreas vêm antes do bloco explícito Banco Master e antes do vídeo/áudio.</p>
+      </article>
+      <article class="tile">
+        <span class="verdict bad">Questionário</span>
+        <h3>Longo, carregado e assimétrico</h3>
+        <p>Depois do voto, entra uma bateria pesada sobre fraude, vazamento, envolvimento direto, candidatura de Flávio, problemas do Brasil, decisões de Lula, direitos sociais e economia.</p>
+      </article>
+      <article class="tile">
+        <span class="verdict bad">Relatório</span>
+        <h3>Publica o que convém</h3>
+        <p>O relatório traz os blocos eleitorais e Banco Master, mas não entrega resultados de várias perguntas aplicadas: problemas do Brasil, medidas de Lula, imagem de líderes, pautas sociais, partido, ideologia e economia.</p>
+      </article>
+      <article class="tile">
+        <span class="verdict bad">Margem</span>
+        <h3>±1 p.p. continua fraco</h3>
+        <p>Com n=5.032, a margem AAS a 95% no pior caso é ±1,38 p.p. Para ±1 p.p. seriam necessários cerca de 9.604 casos efetivos.</p>
+      </article>
+      <article class="tile">
+        <span class="verdict warn">TSE/PNAD</span>
+        <h3>Demografia bate; escolaridade pesa</h3>
+        <p>Sexo, idade e região ficam próximos do eleitorado TSE. A renda é defensável nas faixas da Q42, mas escolaridade superior segue inflada contra a PNAD.</p>
+      </article>
+      <article class="tile">
+        <span class="verdict bad">Ética</span>
+        <h3>Vídeo/áudio no fim é bomba</h3>
+        <p>Mesmo após o questionário principal, expor respondentes a peça audiovisual política transforma a pesquisa em experimento de reação. Sem protocolo completo, fica feio.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="fluxo" class="band">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Fluxo do questionário correto</h2>
+      <p>O instrumento nacional tem 48 itens. A ordem importa pra caralho: intenção de voto vem antes do bloco Banco Master, mas muitos indicadores publicados depois ficam sob sombra de contexto político pesado.</p>
+    </div>
+    <div class="timeline">
+      <div class="step"><b>Q1-Q2</b><span>Aprovação e avaliação de Lula, governador e prefeito.</span></div>
+      <div class="step"><b>Q3-Q8</b><span>2022, quatro cenários de 1º turno e sete cenários de 2º turno.</span></div>
+      <div class="step"><b>Q9-Q10</b><span>Confiança por áreas e medo/preocupação: Lula vs Flávio.</span></div>
+      <div class="step"><b>Q11-Q19</b><span>Banco Master, áudio, vazamento, efeito em Flávio e decisão da base de Jair.</span></div>
+      <div class="step"><b>Q20-Q47</b><span>Problemas, medidas de Lula, imagem, direitos sociais, partido, ideologia, economia, demografia e voto passado.</span></div>
+      <div class="step"><b>Q48</b><span>Peça audiovisual do áudio de Flávio para Vorcaro, com avaliação contínua.</span></div>
+    </div>
+    <div class="proof-grid">
+      <figure class="figure">
+        <img src="img/atlas_intel_180526_questionario_01_inicio.png" alt="Início do questionário correto com aprovação e cenários eleitorais">
+        <figcaption class="caption">Página 1 do questionário correto: aprovação e início dos cenários presidenciais.</figcaption>
+      </figure>
+      <figure class="figure">
+        <img src="img/atlas_intel_180526_questionario_03_areas_medos_master.png" alt="Questionário com confiança por áreas, medo eleitoral e início do bloco Banco Master">
+        <figcaption class="caption">Página 3: confiança por áreas, medo eleitoral e primeira pergunta sobre Banco Master.</figcaption>
+      </figure>
+      <figure class="figure">
+        <img src="img/atlas_intel_180526_questionario_04_master_reacao.png" alt="Questionário com perguntas sobre áudio, vazamento e efeito em Flávio Bolsonaro">
+        <figcaption class="caption">Página 4: bloco duro sobre áudio, vazamento, envolvimento direto e disposição de voto em Flávio.</figcaption>
+      </figure>
+      <figure class="figure">
+        <img src="img/atlas_intel_180526_questionario_11_demografia_renda.png" alt="Questionário com demografia, renda, religião, Bolsa Família e voto em 2022">
+        <figcaption class="caption">Página 11: renda familiar sem opção explícita de não resposta, religião, Bolsa Família e voto passado.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section id="absurdos">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Os absurdos metodológicos</h2>
+      <p>Não é só “tem pergunta demais”. O problema é a sequência, a carga semântica, a omissão de resultados e o uso de um vídeo político como peça final de avaliação.</p>
+    </div>
+    <div class="grid cols-2">
+      <article class="tile">
+        <span class="verdict bad">1. Banco Master antes de rejeição</span>
+        <h3>Rejeição de líderes vem depois do escândalo</h3>
+        <p>A rejeição é Q25. Antes dela, o respondente já passou por Q11-Q19, uma bateria inteira sobre fraude financeira, áudio, envolvimento direto de Flávio e impacto na candidatura. Então rejeição de Flávio, Michelle, Jair e até Lula não é um número “limpo” de rejeição basal.</p>
+      </article>
+      <article class="tile">
+        <span class="verdict bad">2. Formulações com carga acusatória</span>
+        <h3>“Evidências de envolvimento direto” é forte</h3>
+        <p>Q15 oferece a alternativa “Evidências de envolvimento direto de Flávio Bolsonaro com o escândalo do Banco Master”. Isso é pesado. Pode ser uma categoria legítima, mas deveria vir com estímulo/documento padronizado e protocolo claro.</p>
+      </article>
+      <article class="tile">
+        <span class="verdict bad">3. Vídeo/áudio no final</span>
+        <h3>Pesquisa vira experimento de persuasão</h3>
+        <p>Q48 pede avaliação contínua de uma peça audiovisual: “gravação de áudio enviado por Flávio Bolsonaro a Daniel Vorcaro, com imagens ilustrando os interlocutores e legenda”. Isso não é uma pergunta neutra; é exposição política.</p>
+      </article>
+      <article class="tile">
+        <span class="verdict bad">4. Renda sem não resposta</span>
+        <h3>Faixa familiar forçada</h3>
+        <p>Q42 pergunta renda mensal da família em cinco faixas, mas no PDF não aparece “não sei”, “prefiro não responder” ou “sem renda”. Para renda, isso é ruim. Forçar resposta pode distorcer justamente a variável usada para pós-estratificação.</p>
+      </article>
+      <article class="tile">
+        <span class="verdict warn">5. Cor/raça e orientação sexual sem relatório</span>
+        <h3>Coleta sensível, publicação seletiva</h3>
+        <p>Q40 pergunta cor/raça e Q44 orientação sexual. O relatório nacional analisado não mostra top-lines desses dados nem usa esses cortes de forma transparente nas páginas principais. Coletar variável sensível e não explicar uso é uma prática fraca.</p>
+      </article>
+      <article class="tile">
+        <span class="verdict bad">6. Muitas perguntas aplicadas, poucas publicadas</span>
+        <h3>O relatório é recorte editorial</h3>
+        <p>Q20-Q24 e Q26-Q34 são blocos inteiros sobre problemas, decisões de Lula, imagem, direitos sociais, partido, ideologia e economia. Eles não aparecem como resultados no relatório principal. Isso impede avaliar o contexto mental criado antes das perguntas finais.</p>
+      </article>
+    </div>
+    <div class="callout">A conclusão técnica é dura: os números de voto antes do Banco Master são aproveitáveis; os números de rejeição, imagem, identidade e reações posteriores precisam ser lidos como produto de um questionário carregado. A pesquisa mede opinião, mas também produz contexto. Isso compromete e muito a qualidade interpretativa.</div>
+  </div>
+</section>
+
+<section id="omitidas" class="band">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Perguntas sem dados no relatório</h2>
+      <p>Isso é central. O relatório de 60 páginas parece completo, mas não é: ele publica intensamente voto e Banco Master, enquanto deixa fora blocos inteiros que foram aplicados aos respondentes.</p>
+    </div>
+    <table>
+      <thead><tr><th>Itens</th><th>Conteúdo do questionário</th><th>Status no relatório Atlas/Bloomberg</th><th>Por que importa</th></tr></thead>
+      <tbody>
+        <tr><td>Q1-Q2</td><td>Aprovação e avaliação de Lula, governador e prefeito.</td><td>Publicado parcialmente: Lula sim; governador/prefeito não aparecem no relatório nacional.</td><td>Mostra que o questionário mede ambiente político local, mas o relatório entrega só parte.</td></tr>
+        <tr><td>Q3-Q8</td><td>2022, 1º turno e 2º turno presidencial.</td><td>Publicado.</td><td>É o bloco mais limpo, pois vem antes do Banco Master.</td></tr>
+        <tr><td>Q9-Q10</td><td>Confiança por áreas e medo Lula vs Flávio.</td><td>Publicado.</td><td>Já começa a enquadrar disputa Lula-Flávio em termos emocionais e de competência.</td></tr>
+        <tr><td>Q11-Q19</td><td>Banco Master, áudio, vazamento, efeito em voto e candidatura.</td><td>Publicado em grande parte.</td><td>Bloco central do relatório; muito carregado politicamente.</td></tr>
+        <tr><td>Q20</td><td>Maiores problemas do Brasil, até 3 opções.</td><td>Não publicado no relatório analisado.</td><td>Seria essencial para saber se corrupção, saúde, economia ou segurança estavam dominando o frame do respondente.</td></tr>
+        <tr><td>Q21</td><td>Decisões de Lula/governo: arcabouço fiscal, Gás do Povo, reforma tributária, IR até R$5 mil, Pix, Maduro etc.</td><td>Não publicado.</td><td>É uma bateria enorme de aprovação programática. Omitir isso tira a leitura de avaliação substantiva do governo.</td></tr>
+        <tr><td>Q22</td><td>Imagem positiva/negativa de Alcolumbre, Leite, Haddad, Flávio, Alckmin, Motta, Jair, Janja, Lula, Michelle, Nikolas, Ratinho Jr., Zema, Caiado, Tarcísio.</td><td>Não publicado como bloco de imagem.</td><td>Absurdo editorial: imagem de líderes foi medida, mas o relatório destaca rejeição e cenários, não imagem completa.</td></tr>
+        <tr><td>Q23</td><td>Aborto, maconha, cotas raciais, cotas trans, escola pública, autodeclaração de gênero.</td><td>Não publicado.</td><td>São variáveis de guerra cultural que poderiam explicar voto e rejeição. Sumiram do relatório.</td></tr>
+        <tr><td>Q24</td><td>Partido de preferência.</td><td>Não publicado.</td><td>Sem isso, não dá para auditar partidarização da amostra.</td></tr>
+        <tr><td>Q25</td><td>Rejeição de políticos.</td><td>Publicado.</td><td>Mas vem depois do bloco Banco Master, então especialmente Flávio está sob efeito de contexto.</td></tr>
+        <tr><td>Q26-Q27</td><td>Ideologia e identidade política.</td><td>Não publicados como top-line no relatório analisado.</td><td>São variáveis-chave para validar composição política da amostra.</td></tr>
+        <tr><td>Q28-Q30</td><td>Situação econômica, emprego, família, expectativas e compras de bens duráveis.</td><td>Não publicado.</td><td>O relatório fala de eleição, mas omite termômetro econômico detalhado.</td></tr>
+        <tr><td>Q31-Q34</td><td>Inflação percebida e esperada em 6 e 12 meses.</td><td>Não publicado.</td><td>Para uma parceria com Bloomberg, omitir inflação subjetiva é especialmente estranho.</td></tr>
+        <tr><td>Q35-Q37</td><td>Estado, município e bairro.</td><td>Não publicado como distribuição granular.</td><td>Sem geografia fina, não há auditoria de cobertura digital.</td></tr>
+        <tr><td>Q38-Q43</td><td>Gênero, idade, raça, educação, renda, religião.</td><td>Publicado parcialmente no perfil/crosstabs; raça não aparece no perfil principal.</td><td>Demografia usada para controle precisa de top-line e targets claros.</td></tr>
+        <tr><td>Q44</td><td>Orientação sexual.</td><td>Não publicado.</td><td>Variável sensível sem transparência de finalidade e distribuição.</td></tr>
+        <tr><td>Q45</td><td>Bolsa Família.</td><td>Aparece como corte em gráficos, mas sem top-line nacional claro no relatório.</td><td>É variável social relevante e deveria ser auditável contra PNAD/CadÚnico.</td></tr>
+        <tr><td>Q46-Q47</td><td>Voto no 1º e 2º turno de 2022.</td><td>Aparece como corte, mas sem distribuição completa de recall no relatório principal.</td><td>Como comportamento eleitoral anterior é target de pós-estratificação, omitir distribuição e pesos é grave.</td></tr>
+        <tr><td>Q48</td><td>Peça audiovisual do áudio Flávio-Vorcaro com avaliação contínua.</td><td>Resultado divulgado em imagem pública no X; metodologia completa não aparece no relatório PDF.</td><td>É o ponto de maior risco ético e deveria ter protocolo próprio.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="numeros">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>O que o relatório diz</h2>
+      <p>O retrato político segue relevante: Lula lidera contra Flávio, Flávio é competitivo, e o caso Banco Master pesa negativamente. Mas agora precisamos separar melhor: voto antes do escândalo é uma coisa; rejeição e reação depois do escândalo são outra.</p>
+    </div>
+    <div class="grid cols-2">
+      <article class="tile">
+        <h3>Voto e governo</h3>
+        <div class="chart">
+          <div class="barrow"><span>Desaprova Lula</span><div class="track"><div class="fill pinkfill" style="width:51.3%"></div></div><span class="pct">51,3%</span></div>
+          <div class="barrow"><span>Aprova Lula</span><div class="track"><div class="fill" style="width:47.4%"></div></div><span class="pct">47,4%</span></div>
+          <div class="barrow"><span>Lula 1º turno</span><div class="track"><div class="fill" style="width:47%"></div></div><span class="pct">47,0%</span></div>
+          <div class="barrow"><span>Flávio 1º turno</span><div class="track"><div class="fill goldfill" style="width:34.3%"></div></div><span class="pct">34,3%</span></div>
+          <div class="barrow"><span>Lula x Flávio</span><div class="track"><div class="fill pinkfill" style="width:48.9%"></div></div><span class="pct">48,9%</span></div>
+          <div class="barrow"><span>Flávio x Lula</span><div class="track"><div class="fill goldfill" style="width:41.8%"></div></div><span class="pct">41,8%</span></div>
+        </div>
+      </article>
+      <article class="tile">
+        <h3>Banco Master e efeito Flávio</h3>
+        <div class="chart">
+          <div class="barrow"><span>Aliados Bolsonaro</span><div class="track"><div class="fill goldfill" style="width:43.3%"></div></div><span class="pct">43,3%</span></div>
+          <div class="barrow"><span>Aliados Lula</span><div class="track"><div class="fill pinkfill" style="width:32.8%"></div></div><span class="pct">32,8%</span></div>
+          <div class="barrow"><span>Investigação legítima</span><div class="track"><div class="fill" style="width:54.9%"></div></div><span class="pct">54,9%</span></div>
+          <div class="barrow"><span>Prejudicar Flávio</span><div class="track"><div class="fill pinkfill" style="width:33%"></div></div><span class="pct">33,0%</span></div>
+          <div class="barrow"><span>Enfraqueceu muito</span><div class="track"><div class="fill pinkfill" style="width:45.1%"></div></div><span class="pct">45,1%</span></div>
+          <div class="barrow"><span>Fortaleceu</span><div class="track"><div class="fill" style="width:13.4%"></div></div><span class="pct">13,4%</span></div>
+        </div>
+      </article>
+    </div>
+    <div class="proof-grid">
+      <figure class="figure">
+        <img src="img/atlas_intel_180526_18_primeiro_turno_flavio.png" alt="Print do relatório Atlas/Bloomberg com cenário de primeiro turno com Lula e Flávio Bolsonaro">
+        <figcaption class="caption">Relatório, página 18: primeiro turno com Lula e Flávio Bolsonaro.</figcaption>
+      </figure>
+      <figure class="figure">
+        <img src="img/atlas_intel_180526_29_segundo_turno.png" alt="Print do relatório Atlas/Bloomberg com cenários de segundo turno">
+        <figcaption class="caption">Relatório, página 29: cenários de segundo turno.</figcaption>
+      </figure>
+      <figure class="figure">
+        <img src="img/atlas_intel_180526_34_rejeicao.png" alt="Print do relatório Atlas/Bloomberg com rejeição dos líderes políticos">
+        <figcaption class="caption">Relatório, página 34: rejeição. Atenção: vem depois do bloco Banco Master no questionário.</figcaption>
+      </figure>
+      <figure class="figure">
+        <img src="img/atlas_intel_180526_54_efeito_flavio.png" alt="Print do relatório Atlas/Bloomberg sobre efeito da divulgação das conversas na candidatura de Flávio Bolsonaro">
+        <figcaption class="caption">Relatório, página 54: efeito percebido na candidatura de Flávio.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section id="pnad" class="band">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>TSE + PNAD: perfil social</h2>
+      <p>Para sexo, idade e região, a referência correta é o eleitorado mensal do TSE, porque a pesquisa é eleitoral. Para renda e escolaridade, a PNAD continua sendo melhor: renda não existe no cadastro eleitoral e escolaridade do TSE depende de atualização cadastral voluntária, então fica velha e enviesada.</p>
+    </div>
+    <div class="grid cols-2">
+      <article class="tile">
+        <h3>Sexo, idade e região contra TSE</h3>
+        <table>
+          <thead><tr><th>Corte</th><th class="num">Atlas</th><th class="num">TSE 05/2026</th><th class="num">Delta</th></tr></thead>
+          <tbody>
+            <tr><td>Mulher</td><td class="num">53,2%</td><td class="num">52,8%</td><td class="num delta-good">+0,4</td></tr>
+            <tr><td>Homem</td><td class="num">46,8%</td><td class="num">47,2%</td><td class="num delta-good">-0,4</td></tr>
+            <tr><td>16-24</td><td class="num">10,9%</td><td class="num">12,3%</td><td class="num delta-warn">-1,4</td></tr>
+            <tr><td>25-34</td><td class="num">19,4%</td><td class="num">19,1%</td><td class="num delta-good">+0,3</td></tr>
+            <tr><td>35-44</td><td class="num">20,4%</td><td class="num">19,9%</td><td class="num delta-good">+0,5</td></tr>
+            <tr><td>45-59</td><td class="num">25,9%</td><td class="num">25,5%</td><td class="num delta-good">+0,4</td></tr>
+            <tr><td>60-100</td><td class="num">23,3%</td><td class="num">23,3%</td><td class="num delta-good">0,0</td></tr>
+            <tr><td>Sudeste</td><td class="num">41,8%</td><td class="num">42,1%</td><td class="num delta-good">-0,3</td></tr>
+            <tr><td>Nordeste</td><td class="num">29,0%</td><td class="num">27,6%</td><td class="num delta-warn">+1,4</td></tr>
+            <tr><td>Sul</td><td class="num">13,8%</td><td class="num">14,5%</td><td class="num delta-good">-0,7</td></tr>
+            <tr><td>Norte</td><td class="num">8,1%</td><td class="num">8,3%</td><td class="num delta-good">-0,2</td></tr>
+            <tr><td>Centro-Oeste</td><td class="num">7,3%</td><td class="num">7,6%</td><td class="num delta-good">-0,3</td></tr>
+          </tbody>
+        </table>
+        <p class="note">Base TSE: Eleitorado Atual, geração 01/05/2026 às 06:48:31, Brasil sem exterior. Idade usa apenas eleitorado 16+; sexo é normalizado em Homem/Mulher porque o perfil Atlas não publica “não informado”.</p>
+      </article>
+      <article class="tile">
+        <h3>Escolaridade contra PNAD</h3>
+        <table>
+          <thead><tr><th>Corte</th><th class="num">Atlas</th><th class="num">PNAD 16+</th><th class="num">Delta</th></tr></thead>
+          <tbody>
+            <tr><td>Ensino Fundamental</td><td class="num">33,6%</td><td class="num">44,6%</td><td class="num delta-bad">-11,0</td></tr>
+            <tr><td>Ensino Médio</td><td class="num">40,7%</td><td class="num">36,5%</td><td class="num delta-warn">+4,2</td></tr>
+            <tr><td>Ensino Superior</td><td class="num">25,7%</td><td class="num">18,9%</td><td class="num delta-bad">+6,8</td></tr>
+          </tbody>
+        </table>
+        <p class="note">Aqui a Atlas mostra viés claro para escolaridade alta. O TSE tem escolaridade no cadastro, mas ela é ruim como alvo principal: muita gente conclui etapas de ensino e não atualiza o título.</p>
+      </article>
+    </div>
+    <article class="tile" style="margin-top:16px">
+      <h3>Renda nas mesmas faixas da Q42</h3>
+      <p>Com o questionário correto, a pergunta é “Qual é a renda mensal da sua família?”. Portanto a comparação certa é com renda domiciliar total mensal da PNAD anual visita 5, não renda individual, não per capita e não só trabalho.</p>
+        <table>
+          <thead><tr><th>Faixa mensal familiar</th><th class="num">Atlas</th><th class="num">PNAD adultos</th><th class="num">PNAD responsáveis</th></tr></thead>
+          <tbody>
+            <tr><td>R$0-R$2.000</td><td class="num">22,8%</td><td class="num">19,9%</td><td class="num">26,2%</td></tr>
+            <tr><td>R$2.000-R$3.000</td><td class="num">17,7%</td><td class="num">11,7%</td><td class="num">12,7%</td></tr>
+            <tr><td>R$3.000-R$5.000</td><td class="num">22,4%</td><td class="num">26,7%</td><td class="num">25,7%</td></tr>
+            <tr><td>R$5.000-R$10.000</td><td class="num">24,0%</td><td class="num">25,7%</td><td class="num">21,8%</td></tr>
+            <tr><td>Acima de R$10.000</td><td class="num">13,1%</td><td class="num">16,0%</td><td class="num">13,5%</td></tr>
+          </tbody>
+        </table>
+      <p class="note">A renda é menos absurda do que a escolaridade. O problema é Q42 não mostrar opção de não resposta, o que pode forçar chute em uma variável sensível. Raça também foi preservada na base TSE de referência, mas o arquivo atual tem 81,1% de “não informado”, então não serve como calibração racial pública forte; além disso, a Atlas não publica o top-line racial da amostra.</p>
+    </article>
+  </div>
+</section>
+
+<section id="vorcaro">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>O vídeo/áudio</h2>
+      <p>Q48 confirma o que era suspeito: houve uma peça audiovisual no fim, com gravação de áudio, imagens ilustrando interlocutores e legenda. Isso pode ser útil como experimento de reação, mas precisa ser tratado como experimento, não como apêndice casual de uma pesquisa eleitoral.</p>
+    </div>
+    <div class="grid cols-2">
+      <figure class="figure">
+        <img src="img/atlas_intel_180526_questionario_12_video_audio.png" alt="Peça audiovisual no questionário correto">
+        <figcaption class="caption">Questionário correto, página 12: peça audiovisual da gravação de áudio enviada por Flávio Bolsonaro a Daniel Vorcaro.</figcaption>
+      </figure>
+      <article class="tile">
+        <h3>Leitura técnica</h3>
+        <p>Se o vídeo veio após submissão das perguntas principais, ele não contamina diretamente os números de intenção de voto publicados antes. Mas ele cria um módulo experimental que exige transparência: quem foi redirecionado, quantos completaram, taxa de abandono, duração assistida, pesos, curva média e diferenças por subgrupo.</p>
+        <p>Sem isso, a Atlas fica numa zona ruim: mede a reação, divulga achados politicamente úteis, mas não entrega o protocolo completo. Para uma pesquisa eleitoral, isso é um baita problema.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="atlas" class="band">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Atlas hoje e DRE 2025</h2>
+      <p>A DRE da AtlasIntel Tecnologia de Dados LTDA em 31/12/2025 mostra uma empresa lucrativa, enxuta e com receita relevante. Isso não prova viés, mas ajuda a entender que a Atlas é uma operação comercial madura, não um laboratório acadêmico publicando tudo por transparência científica.</p>
+    </div>
+    <div class="grid cols-2">
+      <article class="tile">
+        <h3>DRE em 31/12/2025</h3>
+        <table>
+          <tbody>
+            <tr><td>Receita bruta de serviços</td><td class="num">R$ 15.811.871,84</td></tr>
+            <tr><td>Serviços no mercado externo</td><td class="num">R$ 1.314.070,50</td></tr>
+            <tr><td>Deduções de impostos sobre vendas</td><td class="num">R$ 913.728,32</td></tr>
+            <tr><td>Receita líquida aproximada</td><td class="num">R$ 14.898.143,52</td></tr>
+            <tr><td>Serviços tomados de PJ e infra</td><td class="num">R$ 6.148.603,64</td></tr>
+            <tr><td>IRPJ + CSLL</td><td class="num">R$ 1.696.331,67</td></tr>
+            <tr><td>Lucro líquido</td><td class="num">R$ 6.743.485,25</td></tr>
+          </tbody>
+        </table>
+      </article>
+      <figure class="figure">
+        <img src="img/atlas_intel_180526_dre.png" alt="Demonstração do resultado do exercício da AtlasIntel Tecnologia de Dados LTDA em 31/12/2025">
+        <figcaption class="caption">DRE assinada digitalmente, CNPJ 19.259.002/0001-28.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section id="veredito">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Veredito</h2>
+      <p>A pesquisa ainda informa algo relevante sobre a corrida presidencial, mas o relatório não merece confiança plena como documento analítico completo.</p>
+    </div>
+    <div class="grid cols-3">
+      <article class="tile">
+        <span class="verdict ok">Aproveitável</span>
+        <h3>Voto antes do escândalo</h3>
+        <p>Q3-Q8 vêm cedo. Esses números são os mais defensáveis: Lula lidera, Flávio é competitivo, direita sem Bolsonaro fragmenta.</p>
+      </article>
+      <article class="tile">
+        <span class="verdict warn">Com ressalva</span>
+        <h3>Medo e confiança</h3>
+        <p>Q9-Q10 vêm antes do Banco Master, mas já são formuladas como Lula vs Flávio. Medem comparação política, não diagnóstico neutro.</p>
+      </article>
+      <article class="tile">
+        <span class="verdict bad">Comprometido</span>
+        <h3>Rejeição, imagem e reações</h3>
+        <p>Qualquer coisa depois de Q11 precisa ser lida como pós-enquadramento Banco Master. O relatório não deixa isso suficientemente explícito.</p>
+      </article>
+    </div>
+    <p class="lead" style="margin-top:22px">A Atlas pode ter acertado tendências, mas o desenho editorial é frouxo: aplica 48 itens, publica só uma parte, omite blocos explicativos enormes e coloca uma peça audiovisual política no final. Isso não é “só detalhe”. Compromete bastante a leitura pública da pesquisa. O mínimo decente seria publicar matriz completa pergunta-a-pergunta, n por célula, pesos, targets de pós-estratificação, efeito de desenho e protocolo separado do vídeo/áudio.</p>
+  </div>
+</section>
+
+<section id="fontes" class="band">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Fontes</h2>
+      <p>Este dossiê foi preparado como publicação externa. As fontes abaixo identificam o que foi usado, sem depender de caminhos privados de máquina.</p>
+    </div>
+    <ul class="source-list">
+      <li>Relatório completo Atlas/Bloomberg Maio 2026, registro TSE <span class="mono">BR-06939/2026</span>, obtido no PesqEle/TSE.</li>
+      <li>Questionário nacional correto da pesquisa Atlas/Bloomberg <span class="mono">BR-06939/2026</span>, obtido no PesqEle/TSE.</li>
+      <li>Demonstração do Resultado do Exercício 2025 da AtlasIntel Tecnologia de Dados LTDA, documento do registro no PesqEle/TSE.</li>
+      <li><a href="https://pesqele-divulgacao.tse.jus.br/app/pesquisa/listarEstatisticos.xhtml">PesqEle/TSE - Sistema de Registro de Pesquisas Eleitorais</a>.</li>
+      <li><a href="https://www.tse.jus.br/eleicoes/estatisticas/estatisticas-de-eleitorado">TSE - Estatísticas do eleitorado</a>: dados mensais extraídos do Cadastro Nacional de Eleitores.</li>
+      <li><a href="https://dadosabertos.tse.jus.br/dataset/eleitorado-atual">TSE Dados Abertos - Eleitorado Atual</a>, recurso “Perfil do eleitorado por seção eleitoral”, geração 01/05/2026 às 06:48:31.</li>
+      <li>Base TSE consolidada para este dossiê: Brasil sem exterior, 156.781.716 eleitores, com resumo nacional por sexo, idade, UF/região, raça e escolaridade para referência futura.</li>
+      <li><a href="https://www.ibge.gov.br/estatisticas/sociais/trabalho/17270-pnad-continua.html">IBGE - PNAD Contínua</a>, microdados anuais visita 5 de 2024, ponderados por <span class="mono">V1032</span>.</li>
+      <li>PNAD usada para renda familiar: adultos 16+, renda domiciliar total mensal efetiva, deflacionada para 03/2026; responsáveis pelo domicílio usados como teste de sensibilidade.</li>
+      <li><a href="https://atlasintel.org/team">AtlasIntel - equipe e produtos oficiais</a>.</li>
+      <li><a href="https://atlasintel.org/polls/general-release-polls">AtlasIntel - polls de divulgação geral</a>.</li>
+      <li><a href="https://ropercenter.cornell.edu/polling-and-public-opinion/polling-fundamentals">Roper Center - fundamentos de margem de erro em surveys</a>.</li>
+      <li><a href="https://www.moneytimes.com.br/politica/flavio-bolsonaro-solicita-ao-tse-que-barre-divulgacao-de-pesquisa-atlasintel-bloomberg-entenda-vbrd/">Money Times - tentativa de barrar divulgação da pesquisa Atlas/Bloomberg no TSE</a>.</li>
+      <li><a href="https://apnews.com/article/236f7e6448e10836d1af0ceecc26ddc8">Associated Press - contexto internacional sobre Flávio Bolsonaro e áudio atribuído a Vorcaro</a>.</li>
+    </ul>
+  </div>
+</section>
+</main>
+</body>
+</html>
