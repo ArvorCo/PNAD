@@ -1,0 +1,535 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Quaest/Genial 10/06/2026 - auditoria TSE, PNAD, questionario e comparativo</title>
+<meta name="description" content="Megarelatorio Arvor sobre a pesquisa Quaest/Genial BR-07661/2026, com auditoria de amostra, TSE, PNAD, questionario, modulo Dark Horse e comparativo Datafolha/AtlasIntel.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Public+Sans:wght@400;600;700;800&family=Roboto+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f4f1e9;
+  --paper-2:#e8e2d5;
+  --ink:#12151c;
+  --muted:#626774;
+  --line:#c9c2b3;
+  --blue:#1446a0;
+  --cyan:#13a7c5;
+  --red:#9e3d42;
+  --green:#087f5b;
+  --gold:#bd8b13;
+  --black:#16191f;
+  --serif:"Instrument Serif",Georgia,serif;
+  --sans:"Public Sans",ui-sans-serif,system-ui,sans-serif;
+  --mono:"Roboto Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  color:var(--ink);
+  background:
+    linear-gradient(90deg,rgba(18,21,28,.045) 1px,transparent 1px) 0 0/58px 58px,
+    linear-gradient(180deg,#fbfaf6 0,var(--paper) 42%,#edf5f3 100%);
+  font-family:var(--serif);
+  font-size:18px;
+  line-height:1.58;
+}
+a{color:var(--blue);text-underline-offset:3px;text-decoration-thickness:1px}
+.wrap{width:min(1180px,calc(100% - 40px));margin:auto}
+.hero{
+  min-height:92vh;
+  display:grid;
+  grid-template-columns:minmax(0,1.1fr) minmax(330px,.9fr);
+  gap:44px;
+  align-items:end;
+  padding:56px 0 36px;
+  border-bottom:2px solid var(--ink);
+}
+.kicker,.tag,.verdict{
+  font-family:var(--sans);
+  font-size:.76rem;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.06em;
+}
+.kicker{color:var(--blue)}
+h1,h2,h3{margin:0;color:var(--ink)}
+h1{font-family:var(--serif);font-size:clamp(4.5rem,10vw,9.8rem);line-height:.88;letter-spacing:0;margin:20px 0}
+h1 span{display:block;color:var(--red);font-style:italic;font-weight:400}
+h2{font-family:var(--serif);font-size:clamp(2.8rem,5.5vw,5.5rem);line-height:.94}
+h3{font-family:var(--sans);font-size:1.24rem;line-height:1.13}
+.deck{max-width:860px;margin:0;color:#303541;font-size:clamp(1.25rem,2vw,1.58rem);line-height:1.34}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:25px;font-family:var(--sans);font-size:.86rem}
+.pill{border:1px solid var(--line);background:rgba(255,255,255,.68);padding:6px 10px;border-radius:999px}
+.hero-panel{display:grid;gap:14px;align-content:end;align-self:stretch}
+.scoreboard{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.score{
+  border-top:2px solid var(--ink);
+  padding-top:11px;
+  font-family:var(--sans);
+}
+.score b{display:block;font-size:2.25rem;line-height:1;color:var(--blue);letter-spacing:-.04em}
+.score span{display:block;color:var(--muted);font-size:.82rem;line-height:1.25;margin-top:6px}
+.hero-panel img,.figure img{
+  width:100%;
+  height:auto;
+  display:block;
+  border:1px solid var(--ink);
+  border-radius:6px;
+  background:#fff;
+}
+.caption{font-family:var(--sans);font-size:.82rem;color:var(--muted);line-height:1.35;margin-top:8px}
+nav{position:sticky;top:0;z-index:10;background:rgba(244,241,233,.93);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;gap:18px;overflow:auto;padding:10px 0;font-family:var(--sans);font-size:.82rem;white-space:nowrap}
+nav a{color:var(--muted);text-decoration:none}
+nav a:hover{color:var(--ink)}
+section{padding:70px 0;border-bottom:1px solid var(--line)}
+section.band{background:rgba(20,70,160,.045)}
+.section-head{max-width:1020px;margin-bottom:30px}
+.section-head p{margin:13px 0 0;font-size:1.2rem;line-height:1.42;color:#353a45}
+.grid{display:grid;gap:16px}
+.cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.tile{
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.62);
+  border-radius:6px;
+  padding:18px;
+  min-width:0;
+}
+.tile p{margin:10px 0 0;color:#3a404b}
+.lead{font-size:1.28rem;line-height:1.42;color:#303641;margin:0}
+.callout{
+  margin:24px 0;
+  border-left:6px solid var(--red);
+  padding-left:18px;
+  font-size:1.25rem;
+  line-height:1.42;
+  color:#252a32;
+}
+.ok{color:var(--green)} .warn{color:var(--gold)} .bad{color:var(--red)} .neutral{color:var(--blue)}
+.chart{display:grid;gap:10px;margin-top:12px}
+.barrow{display:grid;grid-template-columns:190px minmax(0,1fr) 68px;gap:10px;align-items:center;font-family:var(--sans);font-size:.9rem}
+.track{height:14px;background:#e5e1d8;border:1px solid #d7d0c0}
+.fill{height:100%;background:var(--blue)}
+.redfill{background:var(--red)} .greenfill{background:var(--green)} .goldfill{background:var(--gold)} .cyanfill{background:var(--cyan)} .blackfill{background:var(--black)}
+.pct{font-family:var(--mono);font-size:.82rem;text-align:right}
+table{width:100%;border-collapse:collapse;background:rgba(255,255,255,.66);font-family:var(--sans);font-size:.9rem}
+th,td{padding:10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{text-align:left;text-transform:uppercase;color:var(--muted);font-size:.72rem;font-weight:800}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+.mono{font-family:var(--mono);overflow-wrap:anywhere}
+.delta-good{color:var(--green);font-weight:800}
+.delta-warn{color:#9a6b00;font-weight:800}
+.delta-bad{color:var(--red);font-weight:800}
+.note{font-family:var(--sans);font-size:.84rem;color:var(--muted);line-height:1.38;margin-top:12px}
+.timeline{display:grid;grid-template-columns:repeat(8,1fr);gap:12px;margin-top:20px}
+.step{border-top:2px solid var(--ink);padding-top:10px;font-family:var(--sans)}
+.step b{display:block;font-size:.94rem}
+.step span{display:block;color:var(--muted);font-size:.8rem;line-height:1.28;margin-top:4px}
+.proof-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:20px}
+.source-list{columns:2;column-gap:38px;font-family:var(--sans);font-size:.88rem}
+.source-list li{break-inside:avoid;margin:0 0 8px}
+@media (max-width:940px){
+  body{font-size:16px}
+  .hero,.cols-2,.cols-3,.cols-4,.timeline,.proof-grid{grid-template-columns:1fr}
+  .scoreboard{grid-template-columns:1fr}
+  .barrow{grid-template-columns:118px minmax(0,1fr) 56px}
+  table{display:block;overflow-x:auto}
+  th,td{min-width:112px}
+  .source-list{columns:1}
+}
+</style>
+</head>
+<body>
+<header class="wrap hero">
+  <div>
+    <div class="kicker">Arvor Intelligence / auditoria eleitoral</div>
+    <h1>Quaest <span>100626</span></h1>
+    <p class="deck">A Quaest/Genial entrega a melhor arquitetura de campo entre os três dossiês recentes: domiciliar, setores censitários e cotas claras. Mas o questionário é um omnibus político enorme, o PDF público reordena a narrativa e omite perguntas importantes sobre troca de Flávio e imagem EUA/Trump.</p>
+    <div class="meta">
+      <span class="pill">Registro TSE: BR-07661/2026</span>
+      <span class="pill">Coleta: 05/06/2026 a 08/06/2026</span>
+      <span class="pill">Divulgação: 10/06/2026</span>
+      <span class="pill">n = 2.004</span>
+      <span class="pill">Domiciliar presencial</span>
+      <span class="pill">Contratante: Banco Genial</span>
+    </div>
+  </div>
+  <aside class="hero-panel">
+    <img src="img/quaest_100626_primeiro_turno.png" alt="Pagina da pesquisa Quaest com intencao de voto de primeiro turno">
+    <div class="scoreboard">
+      <div class="score"><b>+10</b><span>Lula sobre Flávio no 1º turno estimulado</span></div>
+      <div class="score"><b>+6</b><span>Lula sobre Flávio no 2º turno</span></div>
+      <div class="score"><b>31/42/27</b><span>alvo de renda declarado ao TSE</span></div>
+      <div class="score"><b>6+</b><span>itens relevantes perguntados e não publicados</span></div>
+    </div>
+  </aside>
+</header>
+
+<nav>
+  <div class="wrap">
+    <a href="#sumario">Sumário</a>
+    <a href="#comparativo">Datafolha/Atlas</a>
+    <a href="#numeros">Números</a>
+    <a href="#amostra">TSE/PNAD</a>
+    <a href="#reponderacao">Reponderação</a>
+    <a href="#questionario">Questionário</a>
+    <a href="#master">Master</a>
+    <a href="#veredito">Veredito</a>
+    <a href="#fontes">Fontes</a>
+  </div>
+</nav>
+
+<main>
+<section id="sumario">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Sumário sem anestesia</h2>
+      <p>Não há sinal grosseiro de fraude amostral. Há um desenho de campo melhor que Datafolha e Atlas, um perfil demográfico muito defensável e uma pergunta de renda bem formulada. O problema é outro: transparência incompleta, margem AAS para desenho complexo e um questionário tão longo que mistura voto, governo, programas, Master, Trump, tarifas, facções, economia, bets e ideologia.</p>
+    </div>
+    <div class="grid cols-4">
+      <article class="tile">
+        <span class="verdict ok">Amostragem</span>
+        <h3>Melhor desenho do trio</h3>
+        <p>Domiciliar presencial, 120 municípios, sorteio PPT de municípios e setores censitários, cotas e checagem por georreferenciamento e áudio.</p>
+      </article>
+      <article class="tile">
+        <span class="verdict warn">Renda</span>
+        <h3>Boa pergunta, alvo rico</h3>
+        <p>A pergunta inclui todos os rendimentos do domicílio. Mas o alvo 31/42/27 é mais rico que o benchmark PNAD local de adultos 16+.</p>
+      </article>
+      <article class="tile">
+        <span class="verdict ok">Voto</span>
+        <h3>Top-line protegido</h3>
+        <p>Espontânea, conhecimento, 1º turno e 2º turno vêm antes de Banco Master, Trump, tarifas e economia final.</p>
+      </article>
+      <article class="tile">
+        <span class="verdict bad">Transparência</span>
+        <h3>Publicação seletiva</h3>
+        <p>As perguntas sobre substituir Flávio e imagem EUA/Trump aparecem no questionário, mas não no PDF público extraído.</p>
+      </article>
+    </div>
+    <div class="callout">Tese central: a Quaest é mais sólida no desenho amostral do que Datafolha e Atlas, mas o relatório público não é o espelho integral do questionário. Para voto principal, está ok. Para narrativa sobre Flávio, Master e Trump, precisa ler com cuidado.</div>
+  </div>
+</section>
+
+<section id="comparativo" class="band">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Contra Datafolha e Atlas</h2>
+      <p>Os três estudos medem a mesma disputa, mas com modos radicalmente diferentes. Isso importa pra caralho: presencial de fluxo, online RDR e domiciliar por setor censitário não são intercambiáveis.</p>
+    </div>
+    <table>
+      <thead><tr><th>Instituto</th><th>Campo e modo</th><th class="num">n</th><th>1º turno Lula x Flávio</th><th>2º turno Lula x Flávio</th><th>Amostra / transparência</th></tr></thead>
+      <tbody>
+        <tr><td>Datafolha 09/05</td><td>Presencial em pontos de fluxo; datas públicas inconsistentes no dossiê anterior.</td><td class="num">2.004</td><td>38 x 35, vantagem Lula de 3 p.p.</td><td>45 x 45, empate.</td><td>Demografia boa; renda mais pobre que PNAD por pessoas; sem microdados/pesos.</td></tr>
+        <tr><td>AtlasIntel 18/05</td><td>RDR online, questionário longo e módulo audiovisual no fim.</td><td class="num">5.032</td><td>47,0 x 34,3, vantagem Lula de 12,7 p.p.</td><td>48,9 x 41,8, vantagem Lula de 7,1 p.p.</td><td>Sexo/idade/região bons; escolaridade superior inflada; rejeição vem depois do bloco Master.</td></tr>
+        <tr><td>Quaest 10/06</td><td>Domiciliar presencial, 120 municípios, setores censitários, cotas e rake/MrP.</td><td class="num">2.004</td><td>39 x 29, vantagem Lula de 10 p.p.</td><td>44 x 38, vantagem Lula de 6 p.p.</td><td>Melhor desenho; renda-alvo mais rica que benchmark local; omissões pontuais relevantes.</td></tr>
+      </tbody>
+    </table>
+    <div class="grid cols-3" style="margin-top:16px">
+      <article class="tile">
+        <h3>O que melhorou</h3>
+        <p>A Quaest declara sorteio probabilístico de municípios e setores, coleta domiciliar, checagem de áudio de 30% e georreferenciamento. Isso é materialmente superior ao ponto de fluxo do Datafolha e ao online da Atlas para cobertura territorial.</p>
+      </article>
+      <article class="tile">
+        <h3>O que ficou parecido</h3>
+        <p>Como Datafolha e Atlas, a Quaest divulga margem sob aproximação de amostra aleatória simples, embora o desenho real tenha conglomerados, cotas e pós-estratificação. Falta efeito de desenho.</p>
+      </article>
+      <article class="tile">
+        <h3>O que piorou</h3>
+        <p>A Quaest perguntou substituição de Flávio e imagem internacional, mas não publicou esses resultados no PDF. Em módulo politicamente sensível, isso é ruim.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="numeros">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>O retrato eleitoral</h2>
+      <p>Lula lidera com folga no 1º turno e abre 6 pontos contra Flávio no 2º. Ao mesmo tempo, aprovação do governo fica quase empatada e economia segue negativa. A foto é: Lula eleitoralmente forte, governo socialmente vulnerável.</p>
+    </div>
+    <div class="grid cols-2">
+      <article class="tile">
+        <h3>Governo Lula</h3>
+        <div class="chart">
+          <div class="barrow"><span>Aprova</span><div class="track"><div class="fill greenfill" style="width:47%"></div></div><span class="pct">47%</span></div>
+          <div class="barrow"><span>Desaprova</span><div class="track"><div class="fill redfill" style="width:48%"></div></div><span class="pct">48%</span></div>
+          <div class="barrow"><span>Positivo</span><div class="track"><div class="fill greenfill" style="width:34%"></div></div><span class="pct">34%</span></div>
+          <div class="barrow"><span>Regular</span><div class="track"><div class="fill goldfill" style="width:26%"></div></div><span class="pct">26%</span></div>
+          <div class="barrow"><span>Negativo</span><div class="track"><div class="fill redfill" style="width:38%"></div></div><span class="pct">38%</span></div>
+        </div>
+        <p class="note">Aprovação: 47 aprova, 48 desaprova, 5 NS/NR. Avaliação: 34 positiva, 26 regular, 38 negativa, 2 NS/NR.</p>
+      </article>
+      <article class="tile">
+        <h3>Voto presidencial</h3>
+        <div class="chart">
+          <div class="barrow"><span>Espontânea Lula</span><div class="track"><div class="fill" style="width:23%"></div></div><span class="pct">23%</span></div>
+          <div class="barrow"><span>Espontânea Flávio</span><div class="track"><div class="fill cyanfill" style="width:17%"></div></div><span class="pct">17%</span></div>
+          <div class="barrow"><span>1º turno Lula</span><div class="track"><div class="fill" style="width:39%"></div></div><span class="pct">39%</span></div>
+          <div class="barrow"><span>1º turno Flávio</span><div class="track"><div class="fill cyanfill" style="width:29%"></div></div><span class="pct">29%</span></div>
+          <div class="barrow"><span>2º turno Lula</span><div class="track"><div class="fill" style="width:44%"></div></div><span class="pct">44%</span></div>
+          <div class="barrow"><span>2º turno Flávio</span><div class="track"><div class="fill cyanfill" style="width:38%"></div></div><span class="pct">38%</span></div>
+        </div>
+        <p class="note">Espontânea ainda tem 56% de indecisos. No estimulado, indecisos são 10% e branco/nulo/não vai votar são 9%.</p>
+      </article>
+    </div>
+    <table style="margin-top:20px">
+      <thead><tr><th>Cenário</th><th class="num">Lula</th><th class="num">Adversário</th><th class="num">Dif.</th><th>Leitura</th></tr></thead>
+      <tbody>
+        <tr><td>2º turno contra Flávio Bolsonaro</td><td class="num">44%</td><td class="num">38%</td><td class="num">+6</td><td>Vantagem relevante, menor que a vantagem de 1º turno porque parte do antipetismo volta para Flávio.</td></tr>
+        <tr><td>2º turno contra Romeu Zema</td><td class="num">45%</td><td class="num">35%</td><td class="num">+10</td><td>Zema continua menos competitivo nacionalmente que Flávio.</td></tr>
+        <tr><td>2º turno contra Ronaldo Caiado</td><td class="num">45%</td><td class="num">35%</td><td class="num">+10</td><td>Caiado fica estável, mas distante.</td></tr>
+        <tr><td>2º turno contra Renan Santos</td><td class="num">45%</td><td class="num">31%</td><td class="num">+14</td><td>Renan cresce, mas ainda depende de conhecimento e transferência.</td></tr>
+      </tbody>
+    </table>
+    <div class="proof-grid">
+      <figure class="figure">
+        <img src="img/quaest_100626_segundo_turno_flavio.png" alt="Segundo turno Quaest entre Lula e Flavio Bolsonaro">
+        <figcaption class="caption">Segundo turno contra Flávio: Lula 44, Flávio 38, branco/nulo 14, indecisos 4.</figcaption>
+      </figure>
+      <figure class="figure">
+        <img src="img/quaest_100626_potencial_rejeicao.png" alt="Potencial de voto e rejeicao de liderancas na Quaest">
+        <figcaption class="caption">Potencial/rejeição: Lula 45/53; Flávio 39/56. Flávio tem rejeição maior e potencial menor.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section id="amostra" class="band">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Amostra contra TSE e PNAD</h2>
+      <p>Para sexo, idade e região, o alvo certo é o eleitorado TSE. Para escolaridade e renda, a PNAD é melhor: renda não existe no cadastro eleitoral e escolaridade do título envelhece quando a pessoa não atualiza o registro.</p>
+    </div>
+    <table>
+      <thead><tr><th>Dimensão</th><th>Corte</th><th class="num">Quaest</th><th class="num">Referência</th><th class="num">Delta</th><th>Fonte</th></tr></thead>
+      <tbody>
+        <tr><td>Sexo</td><td>Mulher</td><td class="num">53,0%</td><td class="num">52,8%</td><td class="num delta-good">+0,2</td><td>TSE 05/2026, Brasil sem exterior.</td></tr>
+        <tr><td>Sexo</td><td>Homem</td><td class="num">47,0%</td><td class="num">47,2%</td><td class="num delta-good">-0,2</td><td>TSE 05/2026, binário.</td></tr>
+        <tr><td>Idade</td><td>16-34</td><td class="num">31,0%</td><td class="num">31,4%</td><td class="num delta-good">-0,4</td><td>TSE 05/2026.</td></tr>
+        <tr><td>Idade</td><td>35-59</td><td class="num">46,0%</td><td class="num">45,3%</td><td class="num delta-good">+0,7</td><td>TSE 05/2026.</td></tr>
+        <tr><td>Idade</td><td>60+</td><td class="num">23,0%</td><td class="num">23,3%</td><td class="num delta-good">-0,3</td><td>TSE 05/2026.</td></tr>
+        <tr><td>Região</td><td>Sudeste</td><td class="num">41,0%</td><td class="num">42,1%</td><td class="num delta-warn">-1,1</td><td>TSE 05/2026.</td></tr>
+        <tr><td>Região</td><td>Nordeste</td><td class="num">27,0%</td><td class="num">27,6%</td><td class="num delta-good">-0,6</td><td>TSE 05/2026.</td></tr>
+        <tr><td>Região</td><td>Sul</td><td class="num">15,0%</td><td class="num">14,5%</td><td class="num delta-good">+0,5</td><td>TSE 05/2026.</td></tr>
+        <tr><td>Região</td><td>Norte</td><td class="num">9,0%</td><td class="num">8,3%</td><td class="num delta-good">+0,7</td><td>TSE 05/2026.</td></tr>
+        <tr><td>Região</td><td>Centro-Oeste</td><td class="num">8,0%</td><td class="num">7,6%</td><td class="num delta-good">+0,4</td><td>TSE 05/2026.</td></tr>
+        <tr><td>Escolaridade</td><td>Fundamental / médio incompleto</td><td class="num">41,0%</td><td class="num">41,9%</td><td class="num delta-good">-0,9</td><td>PNADC trimestral local, 16+, V1028.</td></tr>
+        <tr><td>Escolaridade</td><td>Médio / superior incompleto</td><td class="num">40,0%</td><td class="num">40,9%</td><td class="num delta-good">-0,9</td><td>PNADC trimestral local, 16+, V1028.</td></tr>
+        <tr><td>Escolaridade</td><td>Superior completo+</td><td class="num">19,0%</td><td class="num">17,3%</td><td class="num delta-warn">+1,7</td><td>PNADC trimestral local, 16+, V1028.</td></tr>
+        <tr><td>Renda</td><td>Até 2 SM</td><td class="num">31,0%</td><td class="num">38,7%</td><td class="num delta-bad">-7,7</td><td>PNADC anual local, adultos 16+, renda domiciliar total, V1032.</td></tr>
+        <tr><td>Renda</td><td>Mais de 2 a 5 SM</td><td class="num">42,0%</td><td class="num">39,2%</td><td class="num delta-warn">+2,8</td><td>PNADC anual local, adultos 16+.</td></tr>
+        <tr><td>Renda</td><td>Mais de 5 SM</td><td class="num">27,0%</td><td class="num">22,0%</td><td class="num delta-bad">+5,0</td><td>PNADC anual local, adultos 16+.</td></tr>
+      </tbody>
+    </table>
+    <p class="note">Ressalva honesta: a Quaest declara PNADc Anual 2025, 1ª visita, e PNADc trimestral 1-2026. O repositório local usado aqui tem PNADC trimestral 2025Q3 e anual visita 5 de 2024 deflacionada. Portanto, a tabela é auditoria de sensibilidade com a mesma régua dos dossiês anteriores, não substitui o alvo interno da Quaest.</p>
+    <div class="proof-grid">
+      <figure class="figure">
+        <img src="img/quaest_100626_perfil_renda.png" alt="Perfil de renda publicado pela Quaest">
+        <figcaption class="caption">Perfil de renda publicado: 31% até 2 SM, 42% de 2 a 5 SM, 27% acima de 5 SM.</figcaption>
+      </figure>
+      <figure class="figure">
+        <img src="img/quaest_100626_questionario_renda.png" alt="Pergunta de renda no questionario Quaest">
+        <figcaption class="caption">Questionário: renda total do domicílio, incluindo bicos, benefícios, pensões, aposentadorias e aluguel.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section id="reponderacao">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Reponderação possível</h2>
+      <p>Aqui dá para ir além de xingar planilha. Como a Quaest publica 1º turno por renda e também publica os pesos-alvo de renda, podemos refazer uma sensibilidade simples. Não é microdado, não ajusta cruzamentos, não calcula efeito de desenho. Mas é matemática auditável.</p>
+    </div>
+    <table>
+      <thead><tr><th>Alvo de renda usado</th><th class="num">Até 2 SM</th><th class="num">2-5 SM</th><th class="num">5+ SM</th><th class="num">Lula</th><th class="num">Flávio</th><th>Leitura</th></tr></thead>
+      <tbody>
+        <tr><td>Quaest/TSE declarado</td><td class="num">31,0%</td><td class="num">42,0%</td><td class="num">27,0%</td><td class="num">39,4%</td><td class="num">28,9%</td><td>Reproduz praticamente o 39 x 29 publicado.</td></tr>
+        <tr><td>PNAD adultos 16+ local</td><td class="num">38,7%</td><td class="num">39,2%</td><td class="num">22,0%</td><td class="num">40,8%</td><td class="num">28,1%</td><td>Lula sobe 1,4 p.p.; Flávio cai 0,8 p.p.</td></tr>
+        <tr><td>PNAD responsáveis local</td><td class="num">46,3%</td><td class="num">35,2%</td><td class="num">18,5%</td><td class="num">42,1%</td><td class="num">27,4%</td><td>Teste mais pobre: vantagem de Lula aumenta ainda mais.</td></tr>
+      </tbody>
+    </table>
+    <div class="grid cols-2" style="margin-top:16px">
+      <article class="tile">
+        <h3>Conclusão técnica</h3>
+        <p>Se o benchmark local estiver mais perto do universo real que o alvo declarado pela Quaest, o viés de renda da Quaest favorece Flávio no 1º turno, não Lula. Baixa renda dá Lula 50 x 23; renda acima de 5 SM dá Flávio 37 x 28.</p>
+      </article>
+      <article class="tile">
+        <h3>Limite do cálculo</h3>
+        <p>Sem microdados, não dá para reponderar sexo x idade x região x renda x escolaridade ao mesmo tempo. Esta conta só troca a distribuição marginal de renda mantendo constantes os votos dentro de cada faixa.</p>
+      </article>
+    </div>
+    <figure class="figure" style="margin-top:20px">
+      <img src="img/quaest_100626_primeiro_turno_renda.png" alt="Primeiro turno por renda familiar na pesquisa Quaest">
+      <figcaption class="caption">Renda explica direção do efeito: Lula 50 x 23 até 2 SM; Flávio 37 x 28 acima de 5 SM.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="questionario" class="band">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Fluxo do questionário</h2>
+      <p>O PDF público parece organizado por tema; o campo real tem uma sequência. Para auditoria, a ordem real importa mais que a ordem da apresentação. O voto principal vem cedo; as narrativas vêm depois.</p>
+    </div>
+    <div class="timeline">
+      <div class="step"><b>Q1-Q7</b><span>Crivo, perfil, renda, aceite de gravação.</span></div>
+      <div class="step"><b>Q8</b><span>Voto espontâneo.</span></div>
+      <div class="step"><b>Q9-Q23</b><span>Conhecimento, rejeição, 1º turno e firmeza.</span></div>
+      <div class="step"><b>Q24-Q30</b><span>2ª opção, 2º turno e motivação anti/adversário.</span></div>
+      <div class="step"><b>Q31-Q39</b><span>Medo, moderação, aprovação, avaliação e notícias do governo.</span></div>
+      <div class="step"><b>Q40-Q53</b><span>Programas, IRPF, dívidas e Desenrola 2.0.</span></div>
+      <div class="step"><b>Q54-Q62</b><span>Banco Master, Dark Horse e substituição de Flávio.</span></div>
+      <div class="step"><b>Q63-Q106</b><span>EUA/Trump, facções, tarifas, economia, bets, ideologia e dados finais.</span></div>
+    </div>
+    <div class="grid cols-3" style="margin-top:22px">
+      <article class="tile">
+        <span class="verdict ok">Protegido</span>
+        <h3>Voto principal</h3>
+        <p>Espontânea, conhecimento/rejeição inicial, 1º turno e 2º turno aparecem antes de Master, Trump, tarifas e economia final. Acusação de contaminação direta do top-line não se sustenta.</p>
+      </article>
+      <article class="tile">
+        <span class="verdict warn">Com contexto</span>
+        <h3>Avaliação e programas</h3>
+        <p>Antes do Master, o respondente passa por direção do país, notícias do governo, programas de Lula, IRPF e Desenrola. Isso pode ativar julgamento governista antes dos módulos sensíveis.</p>
+      </article>
+      <article class="tile">
+        <span class="verdict bad">Problemático</span>
+        <h3>Omissões</h3>
+        <p>Q61-Q62 sobre trocar Flávio e seu substituto, Q63-Q65 sobre EUA/Trump e Q67 sobre eventual apoio de Trump a Flávio não aparecem no PDF público extraído.</p>
+      </article>
+    </div>
+    <table style="margin-top:20px">
+      <thead><tr><th>Bloco perguntado</th><th>Status no relatório público</th><th>Por que importa</th></tr></thead>
+      <tbody>
+        <tr><td>Q54-Q60: Master/Dark Horse e efeito em voto</td><td>Publicado com vários recortes.</td><td>Mostra dano reputacional de Flávio, mas depois de blocos governistas e de dívida/programas.</td></tr>
+        <tr><td>Q61-Q62: Bolsonaro deveria trocar Flávio? Quem substituiria?</td><td>Não localizado no PDF público.</td><td>É a consequência política direta do escândalo. Omitir isso deixa a narrativa pela metade.</td></tr>
+        <tr><td>Q63-Q65: alinhamento EUA, opinião sobre EUA e imagem de Trump</td><td>Não localizado no PDF público.</td><td>Sem baseline de opinião sobre Trump/EUA, o módulo de encontro Flávio-Trump perde contexto.</td></tr>
+        <tr><td>Q66-Q83: encontro, facções, sanções, tarifas e patriotismo</td><td>Publicado em parte ampla.</td><td>Bloco muito carregado em disputa Lula x Flávio; bom que foi publicado, ruim se usado sem lembrar a ordem.</td></tr>
+      </tbody>
+    </table>
+    <div class="proof-grid">
+      <figure class="figure">
+        <img src="img/quaest_100626_questionario_master_intro.png" alt="Questionario Quaest com introducao do bloco Banco Master">
+        <figcaption class="caption">Questionário, página 16: introdução do bloco Master/Dark Horse antes das perguntas sobre Flávio.</figcaption>
+      </figure>
+      <figure class="figure">
+        <img src="img/quaest_100626_questionario_omissoes_flavio_eua.png" alt="Questionario Quaest com perguntas sobre substituicao de Flavio e imagem EUA">
+        <figcaption class="caption">Questionário, página 18: perguntas sobre troca de Flávio e relação com EUA; não aparecem no PDF público extraído.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section id="master">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Master, Dark Horse e Trump</h2>
+      <p>A Quaest mede um desgaste real de Flávio. O que precisa ser separado: esses números não contaminam o voto principal, mas contaminam a leitura pública se forem tratados como rejeição basal e não como módulo contextual pós-estímulo.</p>
+    </div>
+    <div class="grid cols-2">
+      <article class="tile">
+        <h3>Banco Master / Dark Horse</h3>
+        <div class="chart">
+          <div class="barrow"><span>Sabia das conversas</span><div class="track"><div class="fill" style="width:55%"></div></div><span class="pct">55%</span></div>
+          <div class="barrow"><span>Flávio errou</span><div class="track"><div class="fill redfill" style="width:65%"></div></div><span class="pct">65%</span></div>
+          <div class="barrow"><span>Levantou suspeitas</span><div class="track"><div class="fill redfill" style="width:60%"></div></div><span class="pct">60%</span></div>
+          <div class="barrow"><span>Pode esconder envolvimento</span><div class="track"><div class="fill redfill" style="width:58%"></div></div><span class="pct">58%</span></div>
+          <div class="barrow"><span>Flávio sabia</span><div class="track"><div class="fill redfill" style="width:62%"></div></div><span class="pct">62%</span></div>
+          <div class="barrow"><span>Diminui voto nele</span><div class="track"><div class="fill redfill" style="width:12%"></div></div><span class="pct">12%</span></div>
+        </div>
+        <p class="note">A pergunta de efeito em voto tem 50% dizendo que continua igual porque já não votaria nele; isso não é perda marginal, é rejeição já existente.</p>
+      </article>
+      <article class="tile">
+        <h3>Trump, facções e tarifas</h3>
+        <p>Depois de Master, o questionário entra em encontro de Flávio com Trump, classificação de PCC/CV como terroristas, punições financeiras, tarifas americanas, Pix, patriotismo e efeito do tarifaço sobre voto. É um módulo de confronto Lula x Flávio, não um bloco neutro de política externa.</p>
+        <table style="margin-top:12px">
+          <thead><tr><th>Item publicado</th><th class="num">Resultado</th></tr></thead>
+          <tbody>
+            <tr><td>Sabia do encontro Flávio-Trump</td><td class="num">50% sim / 50% não</td></tr>
+            <tr><td>Sabia que EUA classificou PCC/CV como terroristas</td><td class="num">63% sim</td></tr>
+            <tr><td>Brasil deve classificar facções como terroristas</td><td class="num">60% sim</td></tr>
+            <tr><td>Flávio influenciou Trump sobre PCC/CV</td><td class="num">47% sim</td></tr>
+            <tr><td>Punições dos EUA prejudicarão bancos/empresas brasileiras</td><td class="num">53% sim</td></tr>
+          </tbody>
+        </table>
+      </article>
+    </div>
+    <div class="proof-grid">
+      <figure class="figure">
+        <img src="img/quaest_100626_master_errou.png" alt="Resultado Quaest sobre Flavio ter errado ao pedir financiamento para Vorcaro">
+        <figcaption class="caption">65% dizem que Flávio errou ao pedir financiamento para Vorcaro.</figcaption>
+      </figure>
+      <figure class="figure">
+        <img src="img/quaest_100626_master_voto.png" alt="Resultado Quaest sobre noticias Flavio e Vorcaro afetarem voto em Flavio">
+        <figcaption class="caption">Efeito declarado no voto: 6 aumenta, 12 diminui, 26 segue votando, 50 já não votaria.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section id="veredito" class="band">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Veredito</h2>
+      <p>A Quaest não parece uma gambiarra estatística. Parece uma pesquisa operacionalmente forte com publicação seletiva e questionário gigantesco. Isso é bem diferente de dizer que o resultado é falso.</p>
+    </div>
+    <div class="grid cols-2">
+      <article class="tile">
+        <h3>O que dá para afirmar</h3>
+        <p>O desenho amostral declarado é o mais sério dos três relatórios analisados. Sexo, idade, região e escolaridade são defensáveis. Renda merece cobrança, mas a sensibilidade por renda não prejudica Lula; aumenta sua vantagem no 1º turno.</p>
+      </article>
+      <article class="tile">
+        <h3>O que não dá para afirmar</h3>
+        <p>Não dá para provar manipulação, calcular efeito de desenho, auditar rake/MrP, reponderar cruzamentos ou medir house effect sem microdados, pesos, targets finais e matriz completa por subgrupo.</p>
+      </article>
+    </div>
+    <table style="margin-top:22px">
+      <thead><tr><th>Dimensão</th><th class="num">Nota</th><th>Leitura final</th></tr></thead>
+      <tbody>
+        <tr><td>Aderência sexo/idade/região</td><td class="num">9/10</td><td>Muito boa contra TSE. Aqui não tem cheiro ruim.</td></tr>
+        <tr><td>Escolaridade</td><td class="num">8/10</td><td>Plausível contra PNAD local; melhor que Atlas.</td></tr>
+        <tr><td>Renda</td><td class="num">6/10</td><td>Pergunta boa, mas alvo mais rico que benchmark local. A direção favorece Flávio.</td></tr>
+        <tr><td>Desenho amostral</td><td class="num">8/10</td><td>Domiciliar por setores é forte; falta efeito de desenho e pesos.</td></tr>
+        <tr><td>Questionário para voto principal</td><td class="num">8/10</td><td>Vem cedo e protegido dos módulos mais carregados.</td></tr>
+        <tr><td>Questionário para narrativa pós-voto</td><td class="num">5/10</td><td>Longo, reordenado no relatório e com omissões materiais.</td></tr>
+        <tr><td>Transparência pública</td><td class="num">6/10</td><td>Relatório amplo, mas não integral. Sem microdados, sem pesos, sem targets finais, sem efeito de desenho.</td></tr>
+      </tbody>
+    </table>
+    <p class="lead" style="margin-top:22px">Resumo brutal: entre Datafolha, Atlas e Quaest, a Quaest é a mais forte em desenho de amostra. No resultado eleitoral, reforça a leitura Atlas de vantagem de Lula sobre Flávio, contra o empate Datafolha. Na crítica metodológica, o alvo de renda não salva Flávio; pelo contrário, se corrigido pelo benchmark local, Lula abre mais. A cobrança mais séria não é “a amostra foi roubada”; é “publiquem tudo que perguntaram, os pesos, os targets finais e o efeito de desenho”.</p>
+  </div>
+</section>
+
+<section id="fontes">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Fontes e cálculo</h2>
+      <p>Relatório preparado em 10/06/2026 com PDFs locais fornecidos pelo usuário, bases TSE/PNAD já presentes no repositório e comparação com os dossiês Datafolha e AtlasIntel existentes em <span class="mono">docs/</span>.</p>
+    </div>
+    <ul class="source-list">
+      <li>Relatório local: <span class="mono">PESQUISA_GENIAL_QUAEST_JUN26.pdf</span>, Pesquisa Genial/Quaest Nacional, junho/2026.</li>
+      <li>Questionário local: <span class="mono">questionarioquaest.pdf</span>, OP093/25, Pesquisa Genial Nacional - Junho/2026.</li>
+      <li>Registro TSE local: <span class="mono">quaest_tse_metadata.pdf</span>, pesquisa BR-07661/2026, registrada em 04/06/2026.</li>
+      <li>Recibo local: <span class="mono">recibo.pdf</span>, PesqEle/TSE, estatística Margarida Maria de Mendonça, CONRE 6731.</li>
+      <li>Nota fiscal local: <span class="mono">notaquaest.pdf</span>, NFS-e nº 353, Banco Genial, R$ 433.255,92.</li>
+      <li>Dossiê local comparativo: <span class="mono">docs/datafolha_090526.html</span>.</li>
+      <li>Dossiê local comparativo: <span class="mono">docs/atlas_intel_180526.html</span>.</li>
+      <li>TSE Eleitorado Atual consolidado no repo: <span class="mono">data/outputs/tse_eleitorado_perfil.sqlite</span>, geração 01/05/2026 às 06:48:31, Brasil sem exterior.</li>
+      <li>PNADC trimestral local: <span class="mono">data/outputs/pnad.sqlite</span>, tabela <span class="mono">base_labeled_npv</span>, peso <span class="mono">V1028</span>.</li>
+      <li>PNADC anual local: <span class="mono">data/outputs/brasil.sqlite</span>, tabela <span class="mono">base_anual_labeled_npv</span>, peso <span class="mono">V1032</span>.</li>
+      <li>Reponderação de renda: votos por faixa lidos da página 27 do relatório Quaest; alvos alternativos calculados com renda domiciliar total mensal em salários mínimos.</li>
+    </ul>
+    <p class="note">Os PDFs foram resumidos e auditados; o texto integral não foi reproduzido. Imagens são recortes locais de páginas necessárias para comprovação visual da análise.</p>
+  </div>
+</section>
+</main>
+</body>
+</html>
