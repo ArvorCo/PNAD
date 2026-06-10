@@ -11,6 +11,8 @@ from pnad import (  # type: ignore
     _group_latest_anual_by_year,
     _group_latest_by_quarter,
     _latest_local_raw,
+    _latest_local_raw_anual_visit,
+    _parse_pnadc_anual_zip_name,
     _parse_pnadc_anual_visita5_zip_name,
     _parse_pnadc_zip_name,
     _select_tse_resources,
@@ -69,7 +71,16 @@ def test_parse_pnadc_anual_visita5_zip_name_accepts_revision_suffix():
     parsed = _parse_pnadc_anual_visita5_zip_name("PNADC_2024_visita5_20250822.zip")
     assert parsed is not None
     assert parsed["year"] == 2024
+    assert parsed["visit"] == 5
     assert parsed["revision"] == "20250822"
+
+
+def test_parse_pnadc_anual_zip_name_accepts_visita1_revision_suffix():
+    parsed = _parse_pnadc_anual_zip_name("PNADC_2025_visita1_20260508.zip")
+    assert parsed is not None
+    assert parsed["year"] == 2025
+    assert parsed["visit"] == 1
+    assert parsed["revision"] == "20260508"
 
 
 def test_group_latest_anual_by_year_prefers_latest_revision():
@@ -81,6 +92,24 @@ def test_group_latest_anual_by_year_prefers_latest_revision():
     grouped = _group_latest_anual_by_year(files)
     assert grouped[2023]["name"] == "PNADC_2023_visita5_20250822.zip"
     assert grouped[2024]["name"] == "PNADC_2024_visita5.zip"
+
+
+def test_group_latest_anual_by_year_filters_selected_visit():
+    files = [
+        "PNADC_2025_visita1_20260508.zip",
+        "PNADC_2025_visita5_20250822.zip",
+    ]
+    grouped = _group_latest_anual_by_year(files, visit=1)
+    assert grouped[2025]["name"] == "PNADC_2025_visita1_20260508.zip"
+
+
+def test_latest_local_raw_anual_visit_filters_selected_visit(tmp_path: Path):
+    (tmp_path / "PNADC_2024_visita5_20250822.txt").write_text("", encoding="utf-8")
+    (tmp_path / "PNADC_2025_visita1_20260508.txt").write_text("", encoding="utf-8")
+
+    latest = _latest_local_raw_anual_visit(tmp_path, visit=1)
+    assert latest is not None
+    assert latest.name == "PNADC_2025_visita1_20260508.txt"
 
 
 def test_select_tse_resources_latest_by_kind_when_no_year():

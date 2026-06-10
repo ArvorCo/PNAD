@@ -7,9 +7,11 @@
 ## Project Structure & Module Organization
 - Runtime data layout (local, heavy files ignored):
   - `data/raw/`: PNADC trimestral `.zip` / `.txt`.
+  - `data/raw/pnadc_anual_visita1/`: PNADC anual visita 1.
   - `data/raw/pnadc_anual_visita5/`: PNADC anual visita 5.
   - `data/raw/tse_eleitorado/`: pacotes de perfil do eleitorado (TSE), incluindo `perfil_eleitorado_ATUAL.zip`.
   - `data/originals/`: IBGE docs/layouts + `salario_minimo.csv`.
+  - `data/originals/pnadc_anual_visita1/`: documentacao anual visita 1.
   - `data/originals/pnadc_anual_visita5/`: documentacao anual visita 5.
   - `data/originals/censo_2022_renda_responsavel/`: agregados do Censo 2022 (renda do responsavel).
   - `data/outputs/`: `base*.csv`, `ipca.csv`, `brasil.sqlite`, `tse_eleitorado_perfil.sqlite`, `tse_eleitorado_perfil_summary.csv`.

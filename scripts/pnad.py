@@ -53,6 +53,10 @@ IBGE_ANUAL_VISITA5_BASE = (
     "https://ftp.ibge.gov.br/Trabalho_e_Rendimento/"
     "Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Visita/Visita_5/"
 )
+IBGE_ANUAL_VISITA_BASE = (
+    "https://ftp.ibge.gov.br/Trabalho_e_Rendimento/"
+    "Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Visita/"
+)
 IBGE_CENSO_2022_BASE = "https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/"
 IBGE_CENSO_RENDA_RESP_FOLDER = (
     "Agregados_por_Setores_Censitarios_Rendimento_do_Responsavel/"
@@ -61,6 +65,15 @@ TSE_CKAN_BASE = "https://dadosabertos.tse.jus.br"
 TSE_DEFAULT_QUERY = "perfil eleitorado"
 TOOL_USER_AGENT = "brasil-cli/1.0"
 PNADC_ZIP_RE = re.compile(r"^PNADC_(0[1-4])(\d{4})(?:_(\d{8}))?\.zip$", re.IGNORECASE)
+PNADC_ANUAL_VISITA_ZIP_RE = re.compile(
+    r"^PNADC_(\d{4})_visita([1-5])(?:_(\d{8}))?\.zip$", re.IGNORECASE
+)
+PNADC_ANUAL_VISITA_TXT_RE = re.compile(
+    r"^PNADC_(\d{4})_visita([1-5])(?:_(\d{8}))?\.txt$", re.IGNORECASE
+)
+PNADC_ANUAL_VISITA_LAYOUT_RE = re.compile(
+    r"^input_PNADC_(\d{4})_visita([1-5])(?:_(\d{8}))?\.txt$", re.IGNORECASE
+)
 PNADC_ANUAL_VISITA5_ZIP_RE = re.compile(
     r"^PNADC_(\d{4})_visita5(?:_(\d{8}))?\.zip$", re.IGNORECASE
 )
@@ -128,6 +141,8 @@ DEFAULT_DASHBOARD_INPUT_CANDIDATES = {
         Path("data/outputs/base_labeled.csv"),
     ],
     "anual": [
+        Path("data/outputs/base_anual_visita1_labeled_npv.csv"),
+        Path("data/outputs/base_anual_visita1_labeled.csv"),
         Path("data/outputs/base_anual_labeled_npv.csv"),
         Path("data/outputs/base_anual_labeled.csv"),
     ],
@@ -242,31 +257,91 @@ def _group_latest_by_quarter(file_names: Sequence[str]) -> Dict[int, Dict[str, o
     return latest
 
 
-def _parse_pnadc_anual_visita5_zip_name(name: str) -> Optional[Dict[str, object]]:
-    m = PNADC_ANUAL_VISITA5_ZIP_RE.match(name)
+def _normalise_anual_visit(visit: object = 5) -> int:
+    try:
+        visit_int = int(str(visit))
+    except Exception as exc:
+        raise ValueError(f"invalid PNADC anual visit: {visit}") from exc
+    if visit_int < 1 or visit_int > 5:
+        raise ValueError(f"PNADC anual visit must be 1..5, got {visit_int}")
+    return visit_int
+
+
+def _anual_visit_base_url(visit: object = 5) -> str:
+    return f"{IBGE_ANUAL_VISITA_BASE}Visita_{_normalise_anual_visit(visit)}/"
+
+
+def _anual_raw_dir_default(visit: object = 5) -> str:
+    return f"data/raw/pnadc_anual_visita{_normalise_anual_visit(visit)}"
+
+
+def _anual_docs_dir_default(visit: object = 5) -> str:
+    return f"data/originals/pnadc_anual_visita{_normalise_anual_visit(visit)}"
+
+
+def _anual_base_name_default(visit: object = 5) -> str:
+    visit_int = _normalise_anual_visit(visit)
+    return "base_anual" if visit_int == 5 else f"base_anual_visita{visit_int}"
+
+
+def _anual_table_default(visit: object = 5) -> str:
+    return f"{_anual_base_name_default(visit)}_labeled_npv"
+
+
+def _parse_pnadc_anual_zip_name(name: str) -> Optional[Dict[str, object]]:
+    m = PNADC_ANUAL_VISITA_ZIP_RE.match(name)
     if not m:
         return None
     year = int(str(m.group(1) or "0"))
-    revision = m.group(2) or ""
-    return {"name": name, "year": year, "revision": revision}
+    visit = int(str(m.group(2) or "0"))
+    revision = m.group(3) or ""
+    return {"name": name, "year": year, "visit": visit, "revision": revision}
+
+
+def _parse_pnadc_anual_txt_name(name: str) -> Optional[Dict[str, object]]:
+    m = PNADC_ANUAL_VISITA_TXT_RE.match(name)
+    if not m:
+        return None
+    year = int(str(m.group(1) or "0"))
+    visit = int(str(m.group(2) or "0"))
+    revision = m.group(3) or ""
+    return {"name": name, "year": year, "visit": visit, "revision": revision}
+
+
+def _parse_pnadc_anual_layout_name(name: str) -> Optional[Dict[str, object]]:
+    m = PNADC_ANUAL_VISITA_LAYOUT_RE.match(name)
+    if not m:
+        return None
+    year = int(str(m.group(1) or "0"))
+    visit = int(str(m.group(2) or "0"))
+    revision = m.group(3) or ""
+    return {"name": name, "year": year, "visit": visit, "revision": revision}
+
+
+def _parse_pnadc_anual_visita5_zip_name(name: str) -> Optional[Dict[str, object]]:
+    parsed = _parse_pnadc_anual_zip_name(name)
+    if parsed is None or int(str(parsed["visit"])) != 5:
+        return None
+    return parsed
 
 
 def _parse_pnadc_anual_visita5_txt_name(name: str) -> Optional[Dict[str, object]]:
-    m = PNADC_ANUAL_VISITA5_TXT_RE.match(name)
-    if not m:
+    parsed = _parse_pnadc_anual_txt_name(name)
+    if parsed is None or int(str(parsed["visit"])) != 5:
         return None
-    year = int(str(m.group(1) or "0"))
-    revision = m.group(2) or ""
-    return {"name": name, "year": year, "revision": revision}
+    return parsed
 
 
 def _group_latest_anual_by_year(
     file_names: Sequence[str],
+    *,
+    visit: object = 5,
 ) -> Dict[int, Dict[str, object]]:
+    visit_int = _normalise_anual_visit(visit)
     latest: Dict[int, Dict[str, object]] = {}
     for name in file_names:
-        parsed = _parse_pnadc_anual_visita5_zip_name(name)
-        if parsed is None:
+        parsed = _parse_pnadc_anual_zip_name(name)
+        if parsed is None or int(str(parsed["visit"])) != visit_int:
             continue
         y = int(str(parsed["year"]))
         prev = latest.get(y)
@@ -313,13 +388,35 @@ def _latest_local_raw(raw_dir: Path) -> Optional[Path]:
 
 
 def _latest_local_raw_anual(raw_dir: Path) -> Optional[Path]:
+    return _latest_local_raw_anual_visit(raw_dir, visit=5)
+
+
+def _latest_local_raw_anual_visit(raw_dir: Path, *, visit: object = 5) -> Optional[Path]:
+    visit_int = _normalise_anual_visit(visit)
     best_key: tuple[int, str] | None = None
     best_path: Optional[Path] = None
     if not raw_dir.exists():
         return None
     for path in raw_dir.glob("*.txt"):
-        parsed = _parse_pnadc_anual_visita5_txt_name(path.name)
-        if parsed is None:
+        parsed = _parse_pnadc_anual_txt_name(path.name)
+        if parsed is None or int(str(parsed["visit"])) != visit_int:
+            continue
+        key = (int(str(parsed["year"])), str(parsed["revision"]))
+        if best_key is None or key > best_key:
+            best_key = key
+            best_path = path
+    return best_path
+
+
+def _latest_local_layout_anual(docs_dir: Path, *, visit: object = 5) -> Optional[Path]:
+    visit_int = _normalise_anual_visit(visit)
+    best_key: tuple[int, str] | None = None
+    best_path: Optional[Path] = None
+    if not docs_dir.exists():
+        return None
+    for path in docs_dir.glob("input_PNADC_*_visita*.txt"):
+        parsed = _parse_pnadc_anual_layout_name(path.name)
+        if parsed is None or int(str(parsed["visit"])) != visit_int:
             continue
         key = (int(str(parsed["year"])), str(parsed["revision"]))
         if best_key is None or key > best_key:
@@ -5306,7 +5403,7 @@ def _print_dashboard_pretty(
 ) -> None:
     use_color = _supports_color(no_color=no_color)
     pnad_mode = payload.get("pnad_mode", "trimestral")
-    mode_label = "ANUAL (Visita 5)" if pnad_mode == "anual" else "TRIMESTRAL"
+    mode_label = "ANUAL" if pnad_mode == "anual" else "TRIMESTRAL"
 
     print(_brazil_flag_strip(use_color, width=92))
     print()
@@ -5655,12 +5752,34 @@ def cmd_ibge_sync(args: argparse.Namespace) -> int:
         except Exception as exc:
             record_scope_error("trimestral_raw", exc)
 
-    # ---------------- PNADC Anual (Visita 5) ----------------
+    # ---------------- PNADC Anual (Visita 1..5) ----------------
+    anual_visit = _normalise_anual_visit(getattr(args, "anual_visit", 5))
+    anual_base_url_arg = str(getattr(args, "anual_base_url", "") or "")
+    if (
+        anual_visit != 5
+        and anual_base_url_arg.rstrip("/") == IBGE_ANUAL_VISITA5_BASE.rstrip("/")
+    ):
+        anual_base_url_arg = ""
+    anual_base_url = (
+        anual_base_url_arg.rstrip("/") + "/"
+        if anual_base_url_arg
+        else _anual_visit_base_url(anual_visit)
+    )
+    anual_raw_dir_arg = str(getattr(args, "anual_raw_dir", "") or "")
+    anual_docs_dir_arg = str(getattr(args, "anual_docs_dir", "") or "")
+    if anual_visit != 5 and anual_raw_dir_arg == _anual_raw_dir_default(5):
+        anual_raw_dir_arg = ""
+    if anual_visit != 5 and anual_docs_dir_arg == _anual_docs_dir_default(5):
+        anual_docs_dir_arg = ""
+    anual_raw_dir_resolved = anual_raw_dir_arg or _anual_raw_dir_default(anual_visit)
+    anual_docs_dir_resolved = anual_docs_dir_arg or _anual_docs_dir_default(anual_visit)
+
     anual_payload: Dict[str, object] = {
         "enabled": with_anual,
-        "base_url": args.anual_base_url,
-        "raw_dir": args.anual_raw_dir,
-        "docs_dir": args.anual_docs_dir,
+        "visit": anual_visit,
+        "base_url": anual_base_url,
+        "raw_dir": anual_raw_dir_resolved,
+        "docs_dir": anual_docs_dir_resolved,
         "year": None,
         "raw_files": [],
         "raw_txt": [],
@@ -5668,9 +5787,9 @@ def cmd_ibge_sync(args: argparse.Namespace) -> int:
     }
 
     if with_anual:
-        anual_base = args.anual_base_url.rstrip("/") + "/"
-        anual_raw_dir = Path(args.anual_raw_dir)
-        anual_docs_dir = Path(args.anual_docs_dir)
+        anual_base = anual_base_url
+        anual_raw_dir = Path(anual_raw_dir_resolved)
+        anual_docs_dir = Path(anual_docs_dir_resolved)
         anual_selected_year: Optional[int] = None
 
         try:
@@ -5684,17 +5803,28 @@ def cmd_ibge_sync(args: argparse.Namespace) -> int:
             if not args.no_anual_raw:
                 data_hrefs = _list_hrefs(anual_base + "Dados/")
                 zip_names = sorted(
-                    [h for h in data_hrefs if PNADC_ANUAL_VISITA5_ZIP_RE.match(h)]
+                    [
+                        h
+                        for h in data_hrefs
+                        if (parsed := _parse_pnadc_anual_zip_name(h)) is not None
+                        and int(str(parsed["visit"])) == anual_visit
+                    ]
                 )
-                latest_by_year = _group_latest_anual_by_year(zip_names)
+                latest_by_year = _group_latest_anual_by_year(
+                    zip_names, visit=anual_visit
+                )
                 years = sorted(latest_by_year.keys())
                 if not years:
-                    raise ValueError("no PNADC Anual Visita 5 zip files found")
+                    raise ValueError(
+                        f"no PNADC Anual Visita {anual_visit} zip files found"
+                    )
 
                 if args.anual_year:
                     y = int(args.anual_year)
                     if y not in latest_by_year:
-                        raise ValueError(f"no PNADC Anual Visita 5 file for year {y}")
+                        raise ValueError(
+                            f"no PNADC Anual Visita {anual_visit} file for year {y}"
+                        )
                     selected_years = [y]
                 elif args.anual_all_years:
                     selected_years = years
@@ -5732,7 +5862,7 @@ def cmd_ibge_sync(args: argparse.Namespace) -> int:
                 anual_payload["raw_files"] = anual_files
                 anual_payload["raw_txt"] = anual_txt
         except Exception as exc:
-            record_scope_error("anual_visita5", exc)
+            record_scope_error(f"anual_visita{anual_visit}", exc)
 
     # ---------------- Censo 2022 agregados de renda do responsavel ----------------
     censo_payload: Dict[str, object] = {
@@ -5858,7 +5988,7 @@ def cmd_ibge_sync(args: argparse.Namespace) -> int:
                 "docs_enabled": not args.no_docs,
                 "raw_enabled": not args.no_raw,
             },
-            "anual_visita5": anual_payload,
+            f"anual_visita{anual_visit}": anual_payload,
             "censo_renda_responsavel": censo_payload,
             "tse_eleitorado": tse_payload,
         },
@@ -6913,12 +7043,15 @@ def _run_pipeline_core(
     base_name: str,
     default_keep: Optional[str] = None,
     latest_resolver=_latest_local_raw,
+    sync_args_extra: Optional[Sequence[str]] = None,
 ) -> int:
     out_dir = Path(args.out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
 
     if args.sync_full:
         sync_cmd = [sys.executable, str(SCRIPT_DIR / "pnad.py"), "ibge-sync", "--full"]
+        if sync_args_extra:
+            sync_cmd.extend(sync_args_extra)
         if args.quiet:
             sync_cmd.append("--quiet")
         _run_cmd(sync_cmd, quiet=args.quiet)
@@ -7055,11 +7188,43 @@ def cmd_pipeline_run(args: argparse.Namespace) -> int:
 
 
 def cmd_pipeline_run_anual(args: argparse.Namespace) -> int:
+    visit = _normalise_anual_visit(getattr(args, "visit", 5))
+    if visit != 5 and str(args.raw_dir) == _anual_raw_dir_default(5):
+        args.raw_dir = _anual_raw_dir_default(visit)
+
+    default_visita5_layout = "data/originals/pnadc_anual_visita5/input_PNADC_2024_visita5.txt"
+    if visit != 5 and str(args.layout) == default_visita5_layout:
+        docs_dir = Path(_anual_docs_dir_default(visit))
+        latest_layout = _latest_local_layout_anual(docs_dir, visit=visit)
+        if latest_layout is None:
+            print(
+                "ERROR: no local PNADC anual layout found under "
+                f"{docs_dir}. Run `brasil ibge-sync --with-anual "
+                f"--anual-visit {visit} --no-anual-raw` first or pass --layout PATH.",
+                file=sys.stderr,
+            )
+            return 2
+        args.layout = str(latest_layout)
+
+    if visit != 5 and str(args.table) == _anual_table_default(5):
+        args.table = _anual_table_default(visit)
+
+    base_name = str(getattr(args, "base_name", "") or "").strip()
+    if not base_name:
+        base_name = _anual_base_name_default(visit)
+
+    sync_args_extra: List[str] = []
+    if visit != 5:
+        sync_args_extra.extend(["--anual-visit", str(visit)])
+
     return _run_pipeline_core(
         args,
-        base_name="base_anual",
+        base_name=base_name,
         default_keep=pnadc_cli.DEFAULT_KEEP_ANUAL,
-        latest_resolver=_latest_local_raw_anual,
+        latest_resolver=lambda raw_dir: _latest_local_raw_anual_visit(
+            raw_dir, visit=visit
+        ),
+        sync_args_extra=sync_args_extra,
     )
 
 
@@ -7389,12 +7554,21 @@ Legacy commands still work directly:
     )
 
     psync.add_argument(
-        "--with-anual", action="store_true", help="Sync PNADC Anual (Visita 5)"
+        "--with-anual",
+        action="store_true",
+        help="Sync PNADC Anual (default: Visita 5; use --anual-visit for another visit)",
+    )
+    psync.add_argument(
+        "--anual-visit",
+        type=int,
+        choices=[1, 2, 3, 4, 5],
+        default=5,
+        help="PNADC Anual visit number to sync (1..5)",
     )
     psync.add_argument(
         "--anual-base-url",
         default=IBGE_ANUAL_VISITA5_BASE,
-        help="PNADC Anual Visita 5 base URL",
+        help="PNADC Anual base URL override",
     )
     psync.add_argument(
         "--anual-raw-dir",
@@ -7632,13 +7806,25 @@ Legacy commands still work directly:
     pr.set_defaults(func=cmd_pipeline_run)
 
     pra = sub.add_parser(
-        "pipeline-run-anual", help="Run the full PNADC anual visita 5 refresh pipeline"
+        "pipeline-run-anual", help="Run the full PNADC anual refresh pipeline"
     )
     _add_pipeline_args(
         pra,
         default_raw_dir="data/raw/pnadc_anual_visita5",
         default_layout="data/originals/pnadc_anual_visita5/input_PNADC_2024_visita5.txt",
         default_table="base_anual_labeled_npv",
+    )
+    pra.add_argument(
+        "--visit",
+        type=int,
+        choices=[1, 2, 3, 4, 5],
+        default=5,
+        help="PNADC Anual visit number to process (1..5)",
+    )
+    pra.add_argument(
+        "--base-name",
+        default="",
+        help="Output CSV base name (default: base_anual or base_anual_visitaN)",
     )
     pra.set_defaults(func=cmd_pipeline_run_anual)
 

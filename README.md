@@ -123,11 +123,15 @@ brasil ibge-sync
 # 2) build trimestral analytic outputs
 brasil pipeline-run --raw latest
 
-# 3) sync full scope (annual + census + TSE)
+# 3) sync full scope (annual visita 5 + census + TSE)
 brasil ibge-sync --full
 
 # 4) build annual visita 5 outputs
 brasil pipeline-run-anual --raw latest
+
+# Optional: sync/build annual visita 1 (used for newer renda calibration)
+brasil ibge-sync --with-anual --anual-visit 1 --anual-year 2025
+brasil pipeline-run-anual --visit 1 --raw latest
 
 # 5) inspect with the terminal dashboard
 brasil dashboard
@@ -146,7 +150,8 @@ Main generated outputs:
 
 - `data/outputs/base_labeled_npv.csv` — trimestral, labeled, IPCA-adjusted
 - `data/outputs/base_anual_labeled_npv.csv` — annual visita 5, labeled, IPCA-adjusted
-- `data/outputs/brasil.sqlite` — SQLite with `base_labeled_npv` and `base_anual_labeled_npv` tables
+- `data/outputs/base_anual_visita1_labeled_npv.csv` — annual visita 1, labeled, IPCA-adjusted, when built
+- `data/outputs/brasil.sqlite` — SQLite with `base_labeled_npv`, `base_anual_labeled_npv`, and optional `base_anual_visita1_labeled_npv` tables
 - `docs/index.html` — static interactive essay (bilingual)
 - `data/outputs/ipca.csv` — IPCA series
 
@@ -161,6 +166,7 @@ brasil ibge-sync                          # latest quarterly scope
 brasil ibge-sync --year 2025 --quarter 3  # a specific quarter
 brasil ibge-sync --year 2025 --all-in-year
 brasil ibge-sync --full                   # trimestral + annual + census + TSE
+brasil ibge-sync --with-anual --anual-visit 1 --anual-year 2025
 ```
 
 ### 2. Build trimestral PNADC outputs
@@ -172,13 +178,17 @@ brasil pipeline-run \
   --sqlite data/outputs/brasil.sqlite
 ```
 
-### 3. Build annual visita 5 outputs
+### 3. Build annual PNADC outputs
 
 ```bash
+# Historical default: visita 5
 brasil pipeline-run-anual \
   --raw data/raw/pnadc_anual_visita5/PNADC_2024_visita5.txt \
   --layout data/originals/pnadc_anual_visita5/input_PNADC_2024_visita5.txt \
   --sqlite data/outputs/brasil.sqlite
+
+# Newer annual income calibration: visita 1
+brasil pipeline-run-anual --visit 1 --raw latest
 ```
 
 ### 4. Compute income bands
@@ -248,7 +258,7 @@ terminal dashboard. It is suitable for GitHub Pages (`main:/docs`).
 |---|---|---|
 | `ibge-sync` | Sync official files and docs | keeping local raw data fresh |
 | `pipeline-run` | Build trimestral outputs | labor-income workflows |
-| `pipeline-run-anual` | Build annual visita 5 outputs | full household-income composition |
+| `pipeline-run-anual` | Build annual visita N outputs (`--visit 1..5`) | full household-income composition |
 | `query` | Run read-only SQL on SQLite | LLMs, analysts, automation |
 | `renda-por-faixa-sm` | Compute income-band distributions with CI | reporting by Brazil / UF |
 | `dashboard` | Rich terminal + JSON dashboard | exploratory analysis, briefing, storytelling |

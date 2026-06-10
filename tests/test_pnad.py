@@ -92,6 +92,13 @@ def test_pipeline_run_anual_parser_defaults():
     assert args.raw_dir == "data/raw/pnadc_anual_visita5"
     assert args.layout == "data/originals/pnadc_anual_visita5/input_PNADC_2024_visita5.txt"
     assert args.table == "base_anual_labeled_npv"
+    assert args.visit == 5
+
+
+def test_pipeline_run_anual_parser_accepts_visita1():
+    parser = build_parser(prog_name="brasil")
+    args = parser.parse_args(["pipeline-run-anual", "--visit", "1"])
+    assert args.visit == 1
 
 
 def test_latest_local_raw_anual_prefers_latest_year_and_revision(tmp_path: Path):
