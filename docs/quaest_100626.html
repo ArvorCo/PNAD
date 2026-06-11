@@ -176,6 +176,7 @@ th{text-align:left;text-transform:uppercase;color:var(--muted);font-size:.72rem;
     <a href="#sumario">Sumário</a>
     <a href="#comparativo">Datafolha/Atlas</a>
     <a href="#numeros">Números</a>
+    <a href="#transferencia">Transferência</a>
     <a href="#amostra">TSE/PNAD</a>
     <a href="#reponderacao">Reponderação</a>
     <a href="#questionario">Questionário</a>
@@ -190,7 +191,7 @@ th{text-align:left;text-transform:uppercase;color:var(--muted);font-size:.72rem;
   <div class="wrap">
     <div class="section-head">
       <h2>Sumário sem anestesia</h2>
-      <p>Não há sinal grosseiro de fraude amostral. Há um desenho de campo melhor que Datafolha e Atlas, um perfil demográfico muito defensável e uma pergunta de renda bem formulada. O problema é outro: transparência incompleta, margem AAS para desenho complexo e um questionário tão longo que mistura voto, governo, programas, Master, Trump, tarifas, facções, economia, bets e ideologia.</p>
+      <p>Não há sinal grosseiro de fraude amostral. Há um desenho de campo melhor que Datafolha e Atlas, um perfil demográfico/educacional muito alinhado e uma pergunta de renda bem formulada. Com a PNADC correta, renda deixa de ser ponto vermelho e vira ressalva amarela: alvo um pouco mais rico, mas não absurdo. O problema maior é outro: transparência incompleta, margem AAS para desenho complexo e um questionário tão longo que mistura voto, governo, programas, Master, Trump, tarifas, facções, economia, bets e ideologia.</p>
     </div>
     <div class="grid cols-4">
       <article class="tile">
@@ -201,7 +202,7 @@ th{text-align:left;text-transform:uppercase;color:var(--muted);font-size:.72rem;
       <article class="tile">
         <span class="verdict warn">Renda</span>
         <h3>Boa pergunta, alvo um pouco rico</h3>
-        <p>A pergunta inclui todos os rendimentos do domicílio. Com PNADC anual 2025 visita 1, o alvo 31/42/27 ainda é mais rico que adultos 16+, mas o desvio é bem menor.</p>
+        <p>A pergunta inclui todos os rendimentos do domicílio. Com PNADC anual 2025 visita 1, o alvo 31/42/27 ainda é mais rico que adultos 16+, mas o desvio cai bastante.</p>
       </article>
       <article class="tile">
         <span class="verdict ok">Voto</span>
@@ -302,6 +303,103 @@ th{text-align:left;text-transform:uppercase;color:var(--muted);font-size:.72rem;
   </div>
 </section>
 
+<section id="transferencia" class="band">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Transferência 1º → 2º turno</h2>
+      <p>A pergunta que importa para a direita não é só “Flávio chega ao 2º turno?”. É quanto do voto anti-Lula ele consegue puxar antes do 2º turno e quanto escapa para Lula, branco/nulo ou indecisão. A Quaest não publica matriz individual de transição, então a análise correta mistura restrição matemática com hipótese política explícita.</p>
+    </div>
+    <div class="callout">Conta dura: no 1º turno Lula e Flávio somam 68%. No 2º turno Lula x Flávio somam 82%. Portanto, 14 p.p. saem do bloco “outros + indecisos + branco/nulo”. Flávio captura 9 p.p.; Lula captura 5 p.p.; e ainda sobram 18 p.p. fora da escolha.</div>
+    <table>
+      <thead><tr><th>Bloco</th><th class="num">1º turno</th><th class="num">2º Lula x Flávio</th><th class="num">Variação</th><th>Leitura</th></tr></thead>
+      <tbody>
+        <tr><td>Lula</td><td class="num">39%</td><td class="num">44%</td><td class="num delta-good">+5</td><td>Ganha pouco, mas ganha. Parte do eleitorado que não vota Lula no 1º turno aceita Lula contra Flávio.</td></tr>
+        <tr><td>Flávio Bolsonaro</td><td class="num">29%</td><td class="num">38%</td><td class="num delta-good">+9</td><td>Maior captura líquida. É o principal imã anti-Lula, mas não captura nem perto de 100% do pool externo.</td></tr>
+        <tr><td>Demais candidatos</td><td class="num">13%</td><td class="num">0%</td><td class="num delta-warn">-13</td><td>Fonte natural de transferência, mas não necessariamente toda para Flávio.</td></tr>
+        <tr><td>Indecisos</td><td class="num">10%</td><td class="num">4%</td><td class="num delta-good">-6</td><td>A polarização força decisão, mas parte pode migrar para branco/nulo.</td></tr>
+        <tr><td>Branco/nulo/não vai votar</td><td class="num">9%</td><td class="num">14%</td><td class="num delta-bad">+5</td><td>O 2º turno também produz rejeição ao binário. Esse é o vazamento central para Flávio.</td></tr>
+        <tr><td>Fora de Lula/Flávio</td><td class="num">32%</td><td class="num">18%</td><td class="num delta-good">-14</td><td>Do pool externo, 44% vira voto de candidato e 56% continua fora da escolha.</td></tr>
+      </tbody>
+    </table>
+    <div class="proof-grid">
+      <figure class="figure">
+        <img src="img/quaest_100626_transferencia_pool.png" alt="Grafico proprio da Arvor com transferencia agregada do primeiro para o segundo turno Lula x Flavio">
+        <figcaption class="caption">Balanço de massa: Flávio precisa de +9 p.p.; Lula precisa de +5 p.p.; 18 p.p. continuam em branco/nulo/indecisão.</figcaption>
+      </figure>
+      <figure class="figure">
+        <img src="img/quaest_100626_segundo_turno_cenarios.png" alt="Grafico proprio da Arvor comparando todos os cenarios de segundo turno da Quaest">
+        <figcaption class="caption">Todos os 2º turnos ajudam a inferir o vazamento: Lula fica em 44/45; quem muda é o destino do bloco não-Lula.</figcaption>
+      </figure>
+    </div>
+    <table style="margin-top:20px">
+      <thead><tr><th>Cenário de 2º turno</th><th class="num">Lula</th><th class="num">Adversário</th><th class="num">Branco/nulo</th><th class="num">Indecisos</th><th class="num">Fora da escolha</th><th>Inferência</th></tr></thead>
+      <tbody>
+        <tr><td>Lula x Flávio</td><td class="num">44%</td><td class="num">38%</td><td class="num">14%</td><td class="num">4%</td><td class="num">18%</td><td>Flávio é o candidato que mais consolida o anti-Lula e minimiza a fuga para fora da escolha.</td></tr>
+        <tr><td>Lula x Zema</td><td class="num">45%</td><td class="num">35%</td><td class="num">17%</td><td class="num">3%</td><td class="num">20%</td><td>Zema recebe muita transferência de direita, mas retém menos que Flávio no agregado.</td></tr>
+        <tr><td>Lula x Caiado</td><td class="num">45%</td><td class="num">35%</td><td class="num">16%</td><td class="num">4%</td><td class="num">20%</td><td>Caiado se parece com Zema: forte entre direita, mas sem o mesmo bônus bolsonarista nacional.</td></tr>
+        <tr><td>Lula x Renan</td><td class="num">45%</td><td class="num">31%</td><td class="num">20%</td><td class="num">4%</td><td class="num">24%</td><td>Renan perde mais voto para branco/nulo. O voto de protesto não vira automaticamente voto governável.</td></tr>
+      </tbody>
+    </table>
+    <table style="margin-top:20px">
+      <thead><tr><th>Subcampo no 1º turno</th><th>Quem tende a representar</th><th>Por que não transfere 100% para Flávio</th><th>Como Flávio tenta puxar voto útil</th></tr></thead>
+      <tbody>
+        <tr><td>Caiado / centrão raiz</td><td>Centro anti-Bolsonaro, governismo local, agronegócio, segurança pública, eleitor de ordem e gestão estadual.</td><td>Quer previsibilidade, pacto federativo, máquina política e menor custo institucional. Pode ver Flávio como risco de conflagração.</td><td>Endosso de governadores, prefeitos e segurança pública; mensagem de governabilidade e coalizão, não só guerra cultural.</td></tr>
+        <tr><td>Zema / Novo</td><td>Anti-PT liberal, lavajatista, antibolsonarista, renda mais alta, mercado, gestão e antipatrimonialismo.</td><td>Parte desse eleitor é anti-Lula, mas também anti-Bolsonaro. Sem âncora econômica e institucional, prefere nulo ou adversário menos tóxico.</td><td>Equipe econômica crível, regra fiscal, privatização, compromisso institucional e sinal de que não é só continuidade familiar.</td></tr>
+        <tr><td>Renan / MBL</td><td>Anti-PT ideológico com identidade própria, neocentro, liberalismo de guerra cultural e comunidade de alta adesão.</td><td>O ativo eleitoral dele é justamente não ser bolsonarista tradicional. Transferir 100% para Flávio destruiria a marca de independência.</td><td>Voto útil anti-Lula sem humilhar a tribo: pauta anticorrupção, STF, segurança, liberdade econômica e espaço simbólico para o MBL.</td></tr>
+        <tr><td>Aécio / centro velho</td><td>Anti-PT histórico, PSDB residual, liberal-conservador moderado, eleitor de normalidade institucional.</td><td>Carrega memória anti-PT, mas não necessariamente tolera bolsonarismo. Pode ir para Flávio, nulo ou Lula por rejeição ao caos.</td><td>Normalização por elites políticas, empresariais e jurídicas; menos ataque pessoal e mais alternância responsável.</td></tr>
+      </tbody>
+    </table>
+    <div class="grid cols-3" style="margin-top:16px">
+      <article class="tile">
+        <h3>O que está identificado</h3>
+        <p>Flávio cresce 9 p.p. do 1º para o 2º turno. Esse é o tamanho mínimo do voto útil que a direita gostaria de antecipar no 1º turno. Se antecipasse tudo, Flávio sairia de 29 para algo perto de 38.</p>
+      </article>
+      <article class="tile">
+        <h3>O que não está identificado</h3>
+        <p>Sem cross-tab 1º turno x 2º turno, não dá para cravar se esses 9 p.p. vêm de Zema, Caiado, Renan, Aécio, indecisos ou branco/nulo. Qualquer matriz individual é modelo, não observação.</p>
+      </article>
+      <article class="tile">
+        <h3>O que os cenários sugerem</h3>
+        <p>O bloco não-Lula é grande e estável, 55/56%, mas nem todo ele vira adversário. Flávio é o melhor consolidador, porém ainda deixa 18% fora da escolha contra Lula.</p>
+      </article>
+    </div>
+    <table style="margin-top:20px">
+      <thead><tr><th>Fonte no 1º turno</th><th class="num">Tamanho</th><th class="num">Para Lula</th><th class="num">Para Flávio</th><th class="num">Para branco/nulo/NS</th><th>Hipótese política</th></tr></thead>
+      <tbody>
+        <tr><td>Demais candidatos</td><td class="num">13%</td><td class="num">3%</td><td class="num">7%</td><td class="num">3%</td><td>Caiado puxa centro/centrão raiz; Zema e Renan puxam anti-PT liberal/lavajatista anti-Bolsonaro. A maior parte tende a Flávio, mas a identidade anti-Bolsonaro gera vazamento.</td></tr>
+        <tr><td>Indecisos</td><td class="num">10%</td><td class="num">2%</td><td class="num">2%</td><td class="num">6%</td><td>Indeciso tardio é menos ideológico; parte decide contra Flávio, parte rejeita a escolha binária.</td></tr>
+        <tr><td>Branco/nulo/não vai votar</td><td class="num">9%</td><td class="num">0%</td><td class="num">0%</td><td class="num">9%</td><td>Conservadoramente, tratamos esse grupo como quase estrutural no 2º turno.</td></tr>
+        <tr><td><b>Total do modelo</b></td><td class="num"><b>32%</b></td><td class="num"><b>5%</b></td><td class="num"><b>9%</b></td><td class="num"><b>18%</b></td><td>Fecha exatamente o 44 x 38 x 14 x 4 publicado. É plausível, não é microdado.</td></tr>
+      </tbody>
+    </table>
+    <p class="note">Este quadro é um cenário de trabalho consistente com os marginais da Quaest e com os demais 2º turnos. A transferência real pode trocar alguns pontos entre “demais candidatos” e “indecisos”, mas não escapa da restrição agregada: Flávio precisa ganhar 9 p.p. e o bloco fora da escolha termina em 18 p.p.</p>
+    <div class="proof-grid">
+      <figure class="figure">
+        <img src="img/quaest_100626_segundo_turno_posicionamento.png" alt="Grafico proprio da Arvor com segundo turno Lula x Flavio por posicionamento politico">
+        <figcaption class="caption">O vazamento para branco/nulo/indecisão está concentrado no independente: 39% ficam fora da escolha em Lula x Flávio.</figcaption>
+      </figure>
+      <article class="tile">
+        <h3>Perguntas estratégicas para a direita</h3>
+        <p>O eleitor de Caiado quer centrão raiz, ordem e máquina? O de Zema/Novo quer liberalismo anti-PT sem Bolsonaro? O de Renan/MBL quer identidade neocentro e anticorrupção sem se render ao clã? O independente que anula rejeita ambos ou só não acredita que Flávio governe? Cada resposta pede uma estratégia diferente.</p>
+      </article>
+    </div>
+    <div class="grid cols-3" style="margin-top:16px">
+      <article class="tile">
+        <h3>Voto útil direto</h3>
+        <p>O argumento mais forte para Flávio é simples: ele faz 38 contra Lula, acima de Zema/Caiado em 35 e Renan em 31. A direita teria que antecipar esse voto útil no 1º turno, sem tratar Zema, Caiado e Renan como se fossem o mesmo eleitor.</p>
+      </article>
+      <article class="tile">
+        <h3>Pacotes por tribo</h3>
+        <p>Para Caiado: governabilidade e segurança. Para Zema/Novo: economia, gestão e regra fiscal. Para Renan/MBL: anticorrupção, liberdade econômica e anti-PT sem submissão simbólica. Um discurso único desperdiça voto.</p>
+      </article>
+      <article class="tile">
+        <h3>Atacar o nulo</h3>
+        <p>Branco/nulo sobe de 9 para 14 no Lula x Flávio. A direita precisa tratar esse eleitor como alvo principal, não como resíduo: sem ele, a transferência fica capenga e Lula preserva vantagem.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
 <section id="amostra" class="band">
   <div class="wrap">
     <div class="section-head">
@@ -330,6 +428,20 @@ th{text-align:left;text-transform:uppercase;color:var(--muted);font-size:.72rem;
       </tbody>
     </table>
     <p class="note">Atualização feita: a régua PNAD local agora usa exatamente as duas vintages citadas pela Quaest, PNADC trimestral 2026T1 para instrução e PNADC anual 2025, 1ª visita, para renda. Ainda assim, a comparação é marginal: sem microdados e pesos finais da Quaest, não substitui auditoria de rake/MrP.</p>
+    <div class="grid cols-3" style="margin-top:16px">
+      <article class="tile">
+        <h3>O que alinhou melhor</h3>
+        <p>Escolaridade agora fica quase cravada: 41/40/19 na Quaest contra 41,1/39,6/19,3 na PNADC 2026T1. A crítica anterior a superior completo praticamente desaparece.</p>
+      </article>
+      <article class="tile">
+        <h3>O que ainda sobra</h3>
+        <p>Renda segue um pouco mais rica no alvo Quaest: até 2 SM é 31,0% no target contra 35,4% na PNADC; 5+ SM é 27,0% contra 25,3%. É ressalva moderada, não evidência forte de amostra torta.</p>
+      </article>
+      <article class="tile">
+        <h3>Teste de robustez</h3>
+        <p>Usando renda habitual domiciliar em vez de efetiva, adultos 16+ ficam em 35,1/40,4/24,5. A conclusão não depende da variável de renda escolhida.</p>
+      </article>
+    </div>
     <div class="proof-grid">
       <figure class="figure">
         <img src="img/quaest_100626_perfil_renda.png" alt="Perfil de renda publicado pela Quaest">
@@ -346,8 +458,8 @@ th{text-align:left;text-transform:uppercase;color:var(--muted);font-size:.72rem;
 <section id="reponderacao">
   <div class="wrap">
     <div class="section-head">
-      <h2>Reponderação possível</h2>
-      <p>Aqui dá para ir além de xingar planilha. Como a Quaest publica 1º turno por renda e também publica os pesos-alvo de renda, podemos refazer uma sensibilidade simples. Não é microdado, não ajusta cruzamentos, não calcula efeito de desenho. Mas é matemática auditável.</p>
+      <h2>Reponderações possíveis</h2>
+      <p>Aqui dá para ir além de xingar planilha. Como a Quaest publica 1º turno por renda e por região, podemos refazer sensibilidades simples com a régua correta: TSE para região, PNAD para renda. Não é microdado, não ajusta cruzamentos, não calcula efeito de desenho. Mas é matemática auditável.</p>
     </div>
     <table>
       <thead><tr><th>Alvo de renda usado</th><th class="num">Até 2 SM</th><th class="num">2-5 SM</th><th class="num">5+ SM</th><th class="num">Lula</th><th class="num">Flávio</th><th>Leitura</th></tr></thead>
@@ -356,21 +468,39 @@ th{text-align:left;text-transform:uppercase;color:var(--muted);font-size:.72rem;
         <tr><td>PNAD 2025 visita 1, adultos 16+</td><td class="num">35,4%</td><td class="num">39,2%</td><td class="num">25,3%</td><td class="num">40,1%</td><td class="num">28,5%</td><td>Lula sobe 0,7 p.p.; Flávio cai 0,4 p.p.</td></tr>
         <tr><td>PNAD 2025 visita 1, responsáveis</td><td class="num">42,9%</td><td class="num">35,7%</td><td class="num">21,4%</td><td class="num">41,4%</td><td class="num">27,8%</td><td>Teste por chefes de domicílio segue mais pobre e amplia Lula.</td></tr>
       </tbody>
+	    </table>
+    <table style="margin-top:20px">
+      <thead><tr><th>Alvo regional usado</th><th class="num">NE</th><th class="num">SE</th><th class="num">Sul</th><th class="num">CO+N</th><th class="num">Lula</th><th class="num">Flávio</th><th class="num">Dif.</th><th>Leitura</th></tr></thead>
+      <tbody>
+        <tr><td>Quaest publicado</td><td class="num">27,0%</td><td class="num">41,0%</td><td class="num">15,0%</td><td class="num">17,0%</td><td class="num">39,2%</td><td class="num">29,0%</td><td class="num">+10,2</td><td>Reproduz o 39 x 29 publicado.</td></tr>
+        <tr><td>TSE 05/2026</td><td class="num">27,6%</td><td class="num">42,1%</td><td class="num">14,5%</td><td class="num">15,9%</td><td class="num">39,5%</td><td class="num">29,0%</td><td class="num">+10,5</td><td>Lula sobe 0,2/0,3 p.p.; Flávio fica praticamente igual.</td></tr>
+      </tbody>
     </table>
-    <div class="grid cols-2" style="margin-top:16px">
+    <p class="note">Região usa TSE, não PNAD: Eleitorado Atual gerado em 01/05/2026, Brasil sem exterior. A página regional da Quaest agrega Centro-Oeste e Norte; por isso o alvo TSE usado aqui soma Norte (8,3%) e Centro-Oeste (7,6%). O Sudeste isoladamente está 1,1 p.p. abaixo do TSE, mas o Nordeste também está subponderado e é muito pró-Lula; Sul e CO+N estão sobreponderados e são relativamente melhores para Flávio.</p>
+	    <div class="grid cols-3" style="margin-top:16px">
+	      <article class="tile">
+	        <h3>Renda</h3>
+	        <p>Com a PNADC correta, o desvio de renda fica pequeno/moderado, mas a direção permanece: se o benchmark local estiver mais perto do universo real que o alvo declarado pela Quaest, a renda favorece Flávio no 1º turno, não Lula. Baixa renda dá Lula 50 x 23; renda acima de 5 SM dá Flávio 37 x 28.</p>
+	      </article>
       <article class="tile">
-        <h3>Conclusão técnica</h3>
-        <p>Com a PNADC correta, o viés de renda fica menor, mas a direção permanece: se o benchmark local estiver mais perto do universo real que o alvo declarado pela Quaest, a renda favorece Flávio no 1º turno, não Lula. Baixa renda dá Lula 50 x 23; renda acima de 5 SM dá Flávio 37 x 28.</p>
+        <h3>Região</h3>
+        <p>O 1,1 p.p. a menos no Sudeste merece pergunta sobre pesos finais, mas não derruba o topline. Na própria Quaest, Sudeste dá Lula 37 e Flávio 28; o Sul, não o Sudeste, é a região mais pró-Flávio.</p>
       </article>
-      <article class="tile">
-        <h3>Limite do cálculo</h3>
-        <p>Sem microdados, não dá para reponderar sexo x idade x região x renda x escolaridade ao mesmo tempo. Esta conta só troca a distribuição marginal de renda mantendo constantes os votos dentro de cada faixa.</p>
-      </article>
+	      <article class="tile">
+	        <h3>Limite do cálculo</h3>
+	        <p>Sem microdados, não dá para reponderar sexo x idade x região x renda x escolaridade ao mesmo tempo. Estas contas só trocam distribuições marginais, mantendo constantes os votos dentro de cada faixa publicada.</p>
+	      </article>
+	    </div>
+    <div class="proof-grid" style="margin-top:20px">
+      <figure class="figure">
+        <img src="img/quaest_100626_primeiro_turno_renda.png" alt="Primeiro turno por renda familiar na pesquisa Quaest">
+        <figcaption class="caption">Renda explica direção do efeito: Lula 50 x 23 até 2 SM; Flávio 37 x 28 acima de 5 SM.</figcaption>
+      </figure>
+      <figure class="figure">
+        <img src="img/quaest_100626_primeiro_turno_regiao.png" alt="Primeiro turno por regiao na pesquisa Quaest">
+        <figcaption class="caption">Região: Lula 54 x 25 no Nordeste; Flávio lidera só no Sul, 38 x 27.</figcaption>
+      </figure>
     </div>
-    <figure class="figure" style="margin-top:20px">
-      <img src="img/quaest_100626_primeiro_turno_renda.png" alt="Primeiro turno por renda familiar na pesquisa Quaest">
-      <figcaption class="caption">Renda explica direção do efeito: Lula 50 x 23 até 2 SM; Flávio 37 x 28 acima de 5 SM.</figcaption>
-    </figure>
   </div>
 </section>
 
@@ -485,7 +615,7 @@ th{text-align:left;text-transform:uppercase;color:var(--muted);font-size:.72rem;
     <div class="grid cols-2">
       <article class="tile">
         <h3>O que dá para afirmar</h3>
-        <p>O desenho amostral declarado é o mais sério dos três relatórios analisados. Sexo, idade, região e escolaridade são defensáveis, com escolaridade praticamente colada na PNADC 2026T1. Renda merece cobrança moderada, mas a sensibilidade não prejudica Lula; aumenta sua vantagem no 1º turno.</p>
+        <p>O desenho amostral declarado é o mais sério dos três relatórios analisados. Sexo, idade, região e escolaridade são defensáveis, com escolaridade praticamente colada na PNADC 2026T1. A diferença de Sudeste merece nota de rodapé, mas a reponderação regional quase não mexe no resultado. Em transferência, Flávio é o melhor consolidador do bloco anti-Lula, mas ainda deixa 18% fora da escolha.</p>
       </article>
       <article class="tile">
         <h3>O que não dá para afirmar</h3>
@@ -495,16 +625,17 @@ th{text-align:left;text-transform:uppercase;color:var(--muted);font-size:.72rem;
     <table style="margin-top:22px">
       <thead><tr><th>Dimensão</th><th class="num">Nota</th><th>Leitura final</th></tr></thead>
       <tbody>
-        <tr><td>Aderência sexo/idade/região</td><td class="num">9/10</td><td>Muito boa contra TSE. Aqui não tem cheiro ruim.</td></tr>
+        <tr><td>Aderência sexo/idade/região</td><td class="num">9/10</td><td>Muito boa contra TSE. Sudeste fica 1,1 p.p. abaixo, mas reponderar região muda quase nada no 1º turno.</td></tr>
         <tr><td>Escolaridade</td><td class="num">9/10</td><td>Muito boa contra PNADC 2026T1; melhor que Atlas.</td></tr>
-        <tr><td>Renda</td><td class="num">7/10</td><td>Pergunta boa, mas alvo um pouco mais rico que PNADC anual 2025 visita 1. A direção favorece Flávio.</td></tr>
+        <tr><td>Renda</td><td class="num">8/10</td><td>Pergunta boa e alinhamento razoável contra PNADC anual 2025 visita 1; o alvo ainda pende um pouco para renda alta. A direção favorece Flávio.</td></tr>
         <tr><td>Desenho amostral</td><td class="num">8/10</td><td>Domiciliar por setores é forte; falta efeito de desenho e pesos.</td></tr>
+        <tr><td>Transferência de votos</td><td class="num">7/10</td><td>Os marginais permitem balanço robusto: Flávio ganha 9 p.p., Lula 5 p.p. e 18 p.p. ficam fora da escolha. Falta matriz individual 1º→2º turno.</td></tr>
         <tr><td>Questionário para voto principal</td><td class="num">8/10</td><td>Vem cedo e protegido dos módulos mais carregados.</td></tr>
         <tr><td>Questionário para narrativa pós-voto</td><td class="num">5/10</td><td>Longo, reordenado no relatório e com omissões materiais.</td></tr>
         <tr><td>Transparência pública</td><td class="num">6/10</td><td>Relatório amplo, mas não integral. Sem microdados, sem pesos, sem targets finais, sem efeito de desenho.</td></tr>
       </tbody>
     </table>
-    <p class="lead" style="margin-top:22px">Resumo brutal: entre Datafolha, Atlas e Quaest, a Quaest é a mais forte em desenho de amostra. No resultado eleitoral, reforça a leitura Atlas de vantagem de Lula sobre Flávio, contra o empate Datafolha. Na crítica metodológica, o alvo de renda não salva Flávio; pelo contrário, se corrigido pelo benchmark PNADC atualizado, Lula abre um pouco mais. A cobrança mais séria não é “a amostra foi roubada”; é “publiquem tudo que perguntaram, os pesos, os targets finais e o efeito de desenho”.</p>
+    <p class="lead" style="margin-top:22px">Resumo brutal: entre Datafolha, Atlas e Quaest, a Quaest é a mais forte em desenho de amostra e agora também fica bem melhor na auditoria TSE/PNAD. No resultado eleitoral, reforça a leitura Atlas de vantagem de Lula sobre Flávio, contra o empate Datafolha. A transferência mostra o problema estratégico da direita: Flávio é o melhor segundo-turnista anti-Lula, mas precisa antecipar 9 p.p. de voto útil e reduzir o vazamento de centro, Novo/MBL e independentes para branco/nulo. A cobrança metodológica central continua: publiquem tudo que perguntaram, os pesos, os targets finais, o efeito de desenho e a matriz 1º→2º turno.</p>
   </div>
 </section>
 
@@ -526,6 +657,8 @@ th{text-align:left;text-transform:uppercase;color:var(--muted);font-size:.72rem;
       <li>PNADC trimestral local: <span class="mono">data/outputs/brasil.sqlite</span>, tabela <span class="mono">base_labeled_npv</span>, base <span class="mono">PNADC_012026.txt</span>, peso <span class="mono">V1028</span>.</li>
       <li>PNADC anual local: <span class="mono">data/outputs/brasil.sqlite</span>, tabela <span class="mono">base_anual_visita1_labeled_npv</span>, base <span class="mono">PNADC_2025_visita1.txt</span>, peso <span class="mono">V1032</span>.</li>
       <li>Reponderação de renda: votos por faixa lidos da página 27 do relatório Quaest; alvos alternativos calculados com renda domiciliar total mensal em salários mínimos.</li>
+      <li>Reponderação regional: votos por região lidos da página 23 do relatório Quaest; alvo regional calculado com TSE Eleitorado Atual (<span class="mono">data/outputs/tse_eleitorado_perfil.sqlite</span>), Brasil sem exterior; Centro-Oeste/Norte tratado como bloco agregado porque é assim que o cruzamento foi publicado.</li>
+      <li>Transferência 1º→2º turno: marginais de 1º turno, cenários de 2º turno e recortes por posicionamento lidos das páginas 22, 34, 35, 36, 38 e 40 do relatório Quaest; a matriz por origem é hipótese política consistente com os marginais, não microdado observado.</li>
     </ul>
     <p class="note">Os PDFs foram resumidos e auditados; o texto integral não foi reproduzido. Imagens são recortes locais de páginas necessárias para comprovação visual da análise.</p>
   </div>
