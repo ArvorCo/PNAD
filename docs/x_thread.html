@@ -1,0 +1,861 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Thread X - Quaest 10/06/2026 - Arvor Intelligence</title>
+<meta name="description" content="Thread viral para o X (formato longo, X Premium) sobre a auditoria da pesquisa Quaest/Genial 10/06/2026. Cards 16:9 prontos para screenshot e texto copiável por post.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Public+Sans:wght@400;600;700;800&family=Roboto+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f4f1e9; --ink:#12151c; --muted:#626774; --line:#c9c2b3;
+  --blue:#1446a0; --cyan:#13a7c5; --red:#9e3d42; --green:#087f5b; --gold:#bd8b13; --black:#16191f;
+  --serif:"Instrument Serif",Georgia,serif;
+  --sans:"Public Sans",ui-sans-serif,system-ui,sans-serif;
+  --mono:"Roboto Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:#1a1d24;color:#e8e2d5;font-family:var(--sans);font-size:16px;line-height:1.5}
+.wrap{width:min(1280px,calc(100% - 40px));margin:auto;padding:40px 0 90px}
+header.top{padding:48px 0 8px}
+header.top h1{font-family:var(--serif);font-size:clamp(2.6rem,6vw,4.6rem);line-height:.95;margin:0;color:#f4f1e9}
+header.top h1 span{color:#13a7c5;font-style:italic;font-weight:400}
+header.top p{max-width:880px;color:#b8b2a3;font-size:1.05rem}
+.howto{border:1px solid #3a3f4b;border-radius:8px;padding:14px 18px;font-size:.9rem;color:#b8b2a3;margin:18px 0 36px}
+.howto b{color:#f4f1e9}
+.post{margin:46px 0}
+.post-label{font-family:var(--mono);font-size:.8rem;color:#8a8fa0;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+.card{
+  aspect-ratio:16/9; width:100%; max-width:1200px;
+  background:
+    linear-gradient(90deg,rgba(18,21,28,.045) 1px,transparent 1px) 0 0/58px 58px,
+    linear-gradient(180deg,#fbfaf6 0,#f4f1e9 50%,#edf5f3 100%);
+  color:var(--ink); border-radius:10px; overflow:hidden;
+  display:grid; grid-template-rows:auto 1fr auto;
+  border:1px solid #3a3f4b;
+}
+.card-head{display:flex;justify-content:space-between;align-items:center;padding:22px 34px 0;font-family:var(--sans)}
+.brand{display:flex;align-items:center;gap:12px}
+.brand .dot{width:34px;height:34px;border-radius:50%;background:var(--ink);color:#f4f1e9;display:grid;place-items:center;font-family:var(--serif);font-size:1.2rem}
+.brand b{font-size:.92rem;letter-spacing:.02em}
+.brand span{display:block;color:var(--muted);font-size:.78rem}
+.pno{font-family:var(--mono);font-size:.95rem;color:var(--muted)}
+.card-body{padding:14px 34px;display:grid;grid-template-columns:minmax(0,.96fr) minmax(0,1.04fr);gap:26px;align-items:center;min-height:0}
+.card-body.single{grid-template-columns:1fr}
+.card h2{font-family:var(--serif);font-size:clamp(1.5rem,2.6vw,2.5rem);line-height:1.04;margin:0 0 12px}
+.card h2 em{color:var(--red);font-style:italic}
+.card .t{font-size:clamp(.95rem,1.45vw,1.22rem);line-height:1.42;color:#2b3039;margin:0}
+.card .t b{color:var(--ink)}
+.bignum{font-family:var(--serif);font-size:clamp(3rem,7vw,6rem);line-height:.9;color:var(--blue)}
+.bignum.red{color:var(--red)} .bignum.cyan{color:var(--cyan)}
+.card-foot{display:flex;justify-content:space-between;padding:0 34px 18px;font-family:var(--mono);font-size:.74rem;color:var(--muted)}
+.viz{min-width:0}
+.viz svg{width:100%;height:auto;display:block}
+.minibars{display:grid;gap:9px;font-family:var(--sans);font-size:.82rem}
+.mb{display:grid;grid-template-columns:170px minmax(0,1fr) 52px;gap:9px;align-items:center}
+.mb .tr{height:15px;background:#e5e1d8;border:1px solid #d7d0c0}
+.mb .fl{height:100%;background:var(--blue)}
+.mb .fl.cy{background:var(--cyan)} .mb .fl.rd{background:var(--red)} .mb .fl.gd{background:var(--gold)} .mb .fl.gr{background:var(--green)} .mb .fl.bk{background:var(--black)}
+.mb .v{font-family:var(--mono);font-size:.8rem;text-align:right}
+.copy{
+  margin-top:14px;background:#11141a;border:1px solid #3a3f4b;border-radius:8px;
+  padding:16px 18px;font-family:var(--mono);font-size:.92rem;line-height:1.5;color:#d9d4c6;
+  white-space:pre-wrap;word-wrap:break-word;position:relative
+}
+.copy .cc{position:absolute;top:10px;right:14px;font-size:.72rem;color:#6b7080}
+.copy-btn{margin-top:8px;background:#13a7c5;border:0;color:#0b1c22;font-family:var(--sans);font-weight:800;font-size:.8rem;padding:8px 14px;border-radius:6px;cursor:pointer}
+.copy-btn:active{transform:translateY(1px)}
+.kchips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.kchip{border:1px solid var(--line);background:rgba(255,255,255,.7);border-radius:999px;padding:5px 12px;font-family:var(--sans);font-size:.74rem;font-weight:700;color:#3a404b}
+.glist{font-family:var(--sans);font-size:clamp(.85rem,1.3vw,1.05rem);line-height:1.5;margin:0;padding:0;list-style:none}
+.glist li{padding:9px 0;border-bottom:1px solid var(--line);display:flex;gap:10px}
+.glist .q{font-family:var(--mono);font-weight:600;color:var(--red);min-width:74px}
+@media (max-width:860px){
+  .card{aspect-ratio:auto}
+  .card-body{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <div class="post-label">Arvor Intelligence · thread X · 11/06/2026</div>
+  <h1>Quaest 100626 <span>a pesquisa que o banco comprou</span></h1>
+  <p>18 posts, cada um com card 16:9 pronto para screenshot e texto longo (formato X Premium, 1.000-2.000 caracteres) pronto para colar. Sequência calculada: credibilidade (2-3) → demolição técnica (4-8) → ironia (9-10) → virada estratégica pró-Flávio (11-13) → guerra de campanha: famosos, mapa regional, acordos e indecisos (14-17) → cobrança institucional (18). Sem hashtags: o X premia conteúdo, não tag.</p>
+  <div class="howto"><b>Como publicar:</b> dê screenshot em cada card (eles têm proporção exata 16:9), clique em "Copiar texto" para o corpo do post, e publique na ordem. Dossiê-mãe: <span style="font-family:var(--mono)">docs/quaest_100626.html</span> · Registro TSE BR-07661/2026.</div>
+</header>
+
+<!-- POST 1 -->
+<section class="post">
+  <div class="post-label">Post 1/18 · capa</div>
+  <div class="card">
+    <div class="card-head">
+      <div class="brand"><div class="dot">A</div><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div>
+      <div class="pno">1/18</div>
+    </div>
+    <div class="card-body">
+      <div>
+        <h2>A pesquisa que o <em>banco comprou</em></h2>
+        <p class="t">106 perguntas dentro da casa de 2.004 brasileiros. As perguntas sobre <b>trocar Flávio</b> e sobre <b>Trump</b>? Feitas — e escondidas do PDF público.</p>
+        <div class="kchips">
+          <span class="kchip">Quaest/Genial · BR-07661/2026</span>
+          <span class="kchip">n = 2.004 · domiciliar</span>
+          <span class="kchip">campo 05-08/06/2026</span>
+        </div>
+      </div>
+      <div style="text-align:center">
+        <div class="bignum red">R$ 433.255,92</div>
+        <p class="t" style="margin-top:10px">NFS-e nº 353 · contratante: <b>Banco Genial</b></p>
+      </div>
+    </div>
+    <div class="card-foot"><span>arvor intelligence · auditoria quaest 100626</span><span>fontes: TSE PesqEle · IBGE PNADC</span></div>
+  </div>
+  <div class="copy"><span class="cc">1245 chars</span>Entre os dias 5 e 8 de junho, entrevistadores bateram em 2.004 portas de 120 municípios brasileiros. Fizeram 106 perguntas dentro de cada casa. Sobre voto, sobre o governo, sobre imposto de renda, sobre o Banco Master, sobre Trump, sobre facções, sobre Pix, sobre bets.
+
+Quem pagou a conta foi um banco. R$ 433.255,92, nota fiscal número 353, contratante Banco Genial. Dá R$ 216 por porta batida.
+
+No dia 10, o país recebeu a manchete: Lula 39, Flávio 29. Ponto final, eleição encerrada, podem ir para casa.
+
+Eu não fui para casa. Fui ler o registro no TSE, a pesquisa BR-07661/2026, assinada pela estatística Margarida Maria de Mendonça, CONRE 6731. Fui ler o questionário inteiro, as 106 perguntas, uma por uma. Cruzei a amostra com o TSE e com a PNAD, refiz a margem de erro com o desenho amostral real, reponderei a renda, montei o balanço de transferência do segundo turno.
+
+E descobri duas coisas. Primeira: a Quaest fez o melhor trabalho de campo do ciclo, e vou dizer isso com todas as letras. Segunda: as perguntas mais explosivas do questionário, se Bolsonaro deveria trocar Flávio e o que acontece se Trump o apoiar, foram feitas, registradas, pagas. E nunca publicadas.
+
+Alguém sabe essas respostas. Você não. Auditei tudo. Thread. 🧵</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 2 -->
+<section class="post">
+  <div class="post-label">Post 2/18 · crédito onde é devido</div>
+  <div class="card">
+    <div class="card-head">
+      <div class="brand"><div class="dot">A</div><div><b>Arvor Intelligence</b><span>@leonardodias</span></div></div>
+      <div class="pno">2/18</div>
+    </div>
+    <div class="card-body">
+      <div>
+        <h2>Primeiro, o elogio</h2>
+        <p class="t">Auditoria sem honestidade é militância. O campo da Quaest é o <b>melhor do ciclo</b>: domiciliar, 120 municípios, setores censitários sorteados, áudio conferido. Demografia colada no TSE e na PNAD.</p>
+      </div>
+      <div class="viz">
+        <div class="minibars">
+          <div class="mb"><span>Mulheres — Quaest 53,0 / TSE 52,8</span><div class="tr"><div class="fl gr" style="width:96%"></div></div><span class="v">+0,2</span></div>
+          <div class="mb"><span>16-34 — Quaest 31,0 / TSE 31,4</span><div class="tr"><div class="fl gr" style="width:94%"></div></div><span class="v">-0,4</span></div>
+          <div class="mb"><span>60+ — Quaest 23,0 / TSE 23,3</span><div class="tr"><div class="fl gr" style="width:95%"></div></div><span class="v">-0,3</span></div>
+          <div class="mb"><span>Superior — Quaest 19 / PNAD 19,3</span><div class="tr"><div class="fl gr" style="width:97%"></div></div><span class="v">-0,3</span></div>
+          <div class="mb"><span>Sudeste — Quaest 41,0 / TSE 42,1</span><div class="tr"><div class="fl gd" style="width:82%"></div></div><span class="v">-1,1</span></div>
+        </div>
+        <p class="t" style="font-size:.8rem;color:var(--muted);margin-top:10px">Deltas Quaest vs TSE 05/2026 e PNADC 2026T1 — quase tudo verde.</p>
+      </div>
+    </div>
+    <div class="card-foot"><span>amostra vs TSE/PNAD</span><span>quaest 100626 · arvor</span></div>
+  </div>
+  <div class="copy"><span class="cc">1244 chars</span>Primeiro, o elogio. E ele é sincero, porque auditoria que só desce o porrete não é auditoria, é militância com planilha.
+
+O campo da Quaest é o melhor que eu vi neste ciclo, e olha que já dissequei Datafolha e AtlasIntel. Datafolha aborda gente em ponto de fluxo, na rua, na pressa. Atlas recruta pela internet. A Quaest fez o que manual manda e quase ninguém paga para fazer: sorteou municípios por probabilidade proporcional ao tamanho, sorteou setores censitários dentro deles, bateu na porta do domicílio, gravou áudio, conferiu 30% das entrevistas por gravação e checou georreferenciamento. É a diferença entre fotografar a rua, fotografar a internet e entrar na casa do eleitor.
+
+E o resultado aparece. Cruzei a amostra com o cadastro do TSE de maio de 2026, eleitorado real, excluído o exterior: mulheres 53,0 na Quaest contra 52,8 no TSE. Jovens de 16 a 34: 31,0 contra 31,4. Idosos: 23,0 contra 23,3. Escolaridade contra a PNADC trimestral: 41/40/19 contra 41,1/39,6/19,3. Quase ao decimal, em todas as linhas.
+
+Isso não acontece por sorte. Acontece quando alguém faz o trabalho.
+
+E é exatamente por isso que o que vem a seguir nesta thread é grave. Quem acerta o decimal na demografia não erra por descuido no resto. Erra por escolha.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 3 -->
+<section class="post">
+  <div class="post-label">Post 3/18 · os números</div>
+  <div class="card">
+    <div class="card-head">
+      <div class="brand"><div class="dot">A</div><div><b>Arvor Intelligence</b><span>@leonardodias</span></div></div>
+      <div class="pno">3/18</div>
+    </div>
+    <div class="card-body">
+      <div>
+        <h2>O que ela mediu</h2>
+        <p class="t">Na espontânea — quando o entrevistador cala a boca — <b>56% não sabem em quem votar</b>. Mais da metade do país não decidiu a eleição que a manchete já deu por decidida.</p>
+      </div>
+      <div class="viz">
+        <div class="minibars">
+          <div class="mb"><span>Espontânea · Lula</span><div class="tr"><div class="fl" style="width:23%"></div></div><span class="v">23</span></div>
+          <div class="mb"><span>Espontânea · Flávio</span><div class="tr"><div class="fl cy" style="width:17%"></div></div><span class="v">17</span></div>
+          <div class="mb"><span>Espontânea · indecisos</span><div class="tr"><div class="fl bk" style="width:56%"></div></div><span class="v">56</span></div>
+          <div class="mb"><span>1º turno · Lula</span><div class="tr"><div class="fl" style="width:39%"></div></div><span class="v">39</span></div>
+          <div class="mb"><span>1º turno · Flávio</span><div class="tr"><div class="fl cy" style="width:29%"></div></div><span class="v">29</span></div>
+          <div class="mb"><span>2º turno · Lula</span><div class="tr"><div class="fl" style="width:44%"></div></div><span class="v">44</span></div>
+          <div class="mb"><span>2º turno · Flávio</span><div class="tr"><div class="fl cy" style="width:38%"></div></div><span class="v">38</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="card-foot"><span>espontânea x estimulada x 2º turno (%)</span><span>quaest 100626 · arvor</span></div>
+  </div>
+  <div class="copy"><span class="cc">1166 chars</span>O que a pesquisa mediu, antes de qualquer interpretação minha.
+
+Primeiro turno estimulado, com a lista de nomes na mão do entrevistador: Lula 39, Flávio Bolsonaro 29. Segundo turno simulado: Lula 44, Flávio 38. Até aqui, a manchete que você leu.
+
+Agora o número que a manchete pulou. Na pergunta espontânea, a Q8 do questionário, quando o entrevistador cala a boca e o eleitor responde sem ver lista nenhuma, Lula tem 23, Flávio tem 17. E 56% não sabem em quem votar.
+
+Cinquenta e seis por cento. Mais da metade do país ainda não decidiu a eleição que o noticiário já deu por decidida quatro meses antes do primeiro turno.
+
+E tem mais fundo nesse retrato. O mesmo levantamento mostra o governo com 47 de aprovação contra 48 de desaprovação, e avaliação negativa de 38 superando a positiva de 34. Ou seja: um presidente eleitoralmente forte sentado sobre um governo socialmente reprovado. Historicamente, essa combinação não envelhece bem.
+
+A fotografia é legítima, o campo foi bem feito, os números são esses. Minha briga não é com a foto. É com a moldura, com a legenda e, principalmente, com as partes da foto que cortaram antes de mostrar para você. Vamos a elas.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 4 -->
+<section class="post">
+  <div class="post-label">Post 4/18 · a margem de fantasia</div>
+  <div class="card">
+    <div class="card-head">
+      <div class="brand"><div class="dot">A</div><div><b>Arvor Intelligence</b><span>@leonardodias</span></div></div>
+      <div class="pno">4/18</div>
+    </div>
+    <div class="card-body single">
+      <div class="viz">
+<svg viewBox="0 0 1000 380" xmlns="http://www.w3.org/2000/svg">
+  <text x="20" y="34" font-family="'Instrument Serif',Georgia,serif" font-size="28" fill="#12151c">A margem de fantasia: ±2 só existe no papel</text>
+  <text x="20" y="58" font-family="'Public Sans',sans-serif" font-size="14" fill="#626774">Intervalo da diferença Lula − Flávio no 2º turno (+6) sob três hipóteses de desenho</text>
+  <g stroke="#d7d0c0" stroke-width="1">
+    <line x1="224" y1="90" x2="224" y2="320"/><line x1="380" y1="90" x2="380" y2="320"/><line x1="536" y1="90" x2="536" y2="320"/><line x1="692" y1="90" x2="692" y2="320"/><line x1="848" y1="90" x2="848" y2="320"/>
+  </g>
+  <g font-family="'Roboto Mono',monospace" font-size="13" fill="#626774" text-anchor="middle">
+    <text x="224" y="342">0</text><text x="380" y="342">+3</text><text x="536" y="342">+6</text><text x="692" y="342">+9</text><text x="848" y="342">+12</text>
+  </g>
+  <line x1="224" y1="84" x2="224" y2="322" stroke="#9e3d42" stroke-width="2" stroke-dasharray="5 4"/>
+  <text x="224" y="78" text-anchor="middle" font-family="'Public Sans',sans-serif" font-size="13" font-weight="800" fill="#9e3d42">EMPATE</text>
+  <rect x="307" y="118" width="458" height="12" rx="6" fill="#087f5b" opacity=".75"/><circle cx="536" cy="124" r="8" fill="#087f5b"/>
+  <text x="20" y="121" font-family="'Public Sans',sans-serif" font-size="15" font-weight="800" fill="#12151c">Divulgada (AAS)</text>
+  <text x="20" y="139" font-family="'Roboto Mono',monospace" font-size="13" fill="#626774">±2,2</text>
+  <rect x="255" y="198" width="562" height="12" rx="6" fill="#bd8b13" opacity=".8"/><circle cx="536" cy="204" r="8" fill="#bd8b13"/>
+  <text x="20" y="201" font-family="'Public Sans',sans-serif" font-size="15" font-weight="800" fill="#12151c">Com deff 1,5</text>
+  <text x="20" y="219" font-family="'Roboto Mono',monospace" font-size="13" fill="#626774">±2,7</text>
+  <rect x="214" y="278" width="644" height="12" rx="6" fill="#9e3d42" opacity=".8"/><circle cx="536" cy="284" r="8" fill="#9e3d42"/>
+  <text x="20" y="281" font-family="'Public Sans',sans-serif" font-size="15" font-weight="800" fill="#12151c">Com deff 2,0</text>
+  <text x="20" y="299" font-family="'Roboto Mono',monospace" font-size="13" fill="#626774">±3,1</text>
+  <text x="206" y="270" text-anchor="end" font-family="'Roboto Mono',monospace" font-size="14" font-weight="600" fill="#9e3d42">−0,2</text>
+  <text x="536" y="104" text-anchor="middle" font-family="'Public Sans',sans-serif" font-size="13" font-weight="800" fill="#12151c">vantagem central: +6</text>
+  <text x="20" y="368" font-family="'Public Sans',sans-serif" font-size="13" fill="#9e3d42" font-weight="800">com deff 2,0 o limite inferior cruza o empate</text>
+</svg>
+      </div>
+    </div>
+    <div class="card-foot"><span>margem divulgada vs margem com efeito de desenho</span><span>quaest 100626 · arvor</span></div>
+  </div>
+  <div class="copy"><span class="cc">1204 chars</span>A Quaest divulga margem de erro de 2 pontos percentuais. Aqui começa a parte técnica do esquema, e eu peço trinta segundos da sua atenção, porque é simples.
+
+Margem de ±2,2 para 2.004 entrevistas vale para um desenho específico: amostragem aleatória simples, aquele sorteio de loteria em que cada um dos 156 milhões de eleitores tem chance igual de cair na amostra. Ninguém faz pesquisa assim desde que o telefone fixo morreu, porque custaria uma fortuna visitar um eleitor em Tabatinga e outro em Chuí.
+
+O que a Quaest realmente fez, e declarou ao TSE: sorteou 120 municípios, depois sorteou setores censitários dentro deles, aplicou cotas de sexo, idade e escolaridade, e pós-estratificou no final. Cada uma dessas etapas cobra um pedágio de variância. O nome técnico é efeito de desenho, deff, e amostras por conglomerados como essa operam tipicamente entre 1,3 e 2,0.
+
+Com deff 1,5, a margem real vai a ±2,7. Com deff 2,0, vai a ±3,1 por candidato.
+
+A Quaest sabe disso melhor do que eu. Quem domina sorteio de setor censitário sabe calcular deff de olhos fechados. Escolheu não publicar. E divulgar ±2 sabendo que o desenho não sustenta ±2 não é estatística. É marketing com aparência de matemática.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 5 -->
+<section class="post">
+  <div class="post-label">Post 5/18 · o que isso muda</div>
+  <div class="card">
+    <div class="card-head">
+      <div class="brand"><div class="dot">A</div><div><b>Arvor Intelligence</b><span>@leonardodias</span></div></div>
+      <div class="pno">5/18</div>
+    </div>
+    <div class="card-body">
+      <div>
+        <h2>Jogo aberto vendido como <em>jogo definido</em></h2>
+        <p class="t">Com ±3,5, o "Lula 44 x 38" é uma diferença de 6 pontos com incerteza de até 7 na diferença. A Quaest domina amostragem por setor censitário. <b>Quem sabe sortear setor sabe calcular deff.</b> Escolheu não publicar.</p>
+      </div>
+      <div style="text-align:center">
+        <div class="bignum">44 x 38</div>
+        <p class="t" style="margin-top:8px">com deff 2,0 o intervalo da diferença vai de</p>
+        <div class="bignum red" style="font-size:clamp(2rem,4.5vw,3.6rem)">−0,2 a +12,2</div>
+      </div>
+    </div>
+    <div class="card-foot"><span>intervalo da diferença no 2º turno</span><span>quaest 100626 · arvor</span></div>
+  </div>
+  <div class="copy"><span class="cc">1269 chars</span>E o que muda na prática, você pergunta. Muda a manchete inteira.
+
+Fiz a conta do intervalo da diferença entre Lula e Flávio no segundo turno, o tal 44 x 38, vantagem de 6 pontos. A margem da diferença é aproximadamente o dobro da margem individual, regra conservadora de qualquer curso de amostragem.
+
+Com a margem divulgada, de fantasia, o intervalo da vantagem de Lula vai de +1,6 a +10,4. Confortável. Com deff 1,5, vai de +0,6 a +11,4. Já aperta. Com deff 2,0, vai de −0,2 a +12,2.
+
+Leia de novo o limite inferior: menos zero vírgula dois. O intervalo cruza o empate. No cenário conservador, a liderança de Lula no segundo turno é provável, mas não é o fato consumado que o número seco sugere. É hipótese, não veredito.
+
+Junte as peças: 56% de indecisos na espontânea, governo com desaprovação maior que aprovação, e uma vantagem de 6 pontos cuja incerteza real chega a 7 na diferença. Isso tem nome em estatística e em português: jogo aberto.
+
+Jogo aberto vendido como jogo definido. E o detalhe que não me sai da cabeça: os três grandes institutos fazem a mesma coisa, todos divulgam margem de sorteio simples para desenhos que não são simples. É o cartel da margem mágica. Todos sabem que está errado. Todos repetem. Porque ±2 vende manchete e ±3,5 vende dúvida.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 6 -->
+<section class="post">
+  <div class="post-label">Post 6/18 · o ônibus de 106 perguntas</div>
+  <div class="card">
+    <div class="card-head">
+      <div class="brand"><div class="dot">A</div><div><b>Arvor Intelligence</b><span>@leonardodias</span></div></div>
+      <div class="pno">6/18</div>
+    </div>
+    <div class="card-body">
+      <div>
+        <h2>106 perguntas. <em>Na casa do eleitor.</em></h2>
+        <p class="t">Voto, governo, IRPF, Desenrola, Banco Master, Trump, tarifas, facções, Pix, bets, ideologia. Isso não é pesquisa eleitoral — é <b>censo de opinião com voto de entrada</b>. Fadiga do respondente tem nome na literatura.</p>
+      </div>
+      <div class="viz">
+<svg viewBox="0 0 560 330" xmlns="http://www.w3.org/2000/svg">
+  <text x="10" y="24" font-family="'Public Sans',sans-serif" font-size="13" font-weight="800" fill="#626774">O TRAJETO DO RESPONDENTE</text>
+  <g font-family="'Public Sans',sans-serif" font-size="14" fill="#12151c">
+    <rect x="10" y="40" width="540" height="30" fill="#087f5b" opacity=".25"/><text x="20" y="60">Q1-Q30 · perfil, voto, 1º e 2º turno</text>
+    <rect x="10" y="76" width="540" height="30" fill="#bd8b13" opacity=".25"/><text x="20" y="96">Q31-Q53 · governo, programas, IRPF, dívidas</text>
+    <rect x="10" y="112" width="540" height="30" fill="#9e3d42" opacity=".3"/><text x="20" y="132">Q54-Q62 · Banco Master, Dark Horse, trocar Flávio</text>
+    <rect x="10" y="148" width="540" height="30" fill="#9e3d42" opacity=".22"/><text x="20" y="168">Q63-Q83 · Trump, EUA, facções, sanções, tarifas</text>
+    <rect x="10" y="184" width="540" height="30" fill="#626774" opacity=".22"/><text x="20" y="204">Q84-Q106 · economia, Pix, bets, ideologia, dados</text>
+  </g>
+  <text x="10" y="250" font-family="'Instrument Serif',Georgia,serif" font-size="40" fill="#9e3d42">"moço, eu tenho</text>
+  <text x="10" y="292" font-family="'Instrument Serif',Georgia,serif" font-size="40" fill="#9e3d42">que fazer o almoço"</text>
+  <text x="10" y="318" font-family="'Public Sans',sans-serif" font-size="13" fill="#626774">— o nome popular da fadiga do respondente</text>
+</svg>
+      </div>
+    </div>
+    <div class="card-foot"><span>fluxo do questionário OP093/25</span><span>quaest 100626 · arvor</span></div>
+  </div>
+  <div class="copy"><span class="cc">1250 chars</span>Agora abra o questionário comigo, porque eu li as 106 perguntas e você merece saber o que tem lá dentro.
+
+Cento e seis. Na casa do eleitor, com o almoço no fogo. O roteiro: crivo e perfil (Q1 a Q7), voto espontâneo (Q8), conhecimento, rejeição e primeiro turno (Q9 a Q23), segunda opção e segundo turno (Q24 a Q30). Aí começa o ônibus: medo e moderação, aprovação do governo, notícias do governo, programas sociais, imposto de renda, dívidas, Desenrola 2.0 (Q31 a Q53). Banco Master e Dark Horse (Q54 a Q62). E de Q63 a Q106: Estados Unidos, Trump, facções, sanções, tarifas, Pix, bets, patriotismo, ideologia.
+
+Isso não é pesquisa eleitoral. É um censo de opinião com voto de entrada. A literatura chama de fadiga do respondente; o entrevistado chama de "moço, eu tenho que fazer o almoço".
+
+Honestidade obriga: o voto vem cedo. Espontânea na Q8, tudo de voto fechado até a Q30, antes de Master, Trump e tarifas. O resultado principal está protegido de contaminação, e quem disser o contrário está errado. Eu verifiquei.
+
+Mas tudo o que vem depois da Q30 é respondido por alguém na pergunta 70 de uma conversa que não acaba, e merece o desconto correspondente. E há um problema que nenhum cansaço explica: o que foi perguntado e sumiu. Próximo post.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 7 -->
+<section class="post">
+  <div class="post-label">Post 7/18 · as perguntas fantasma</div>
+  <div class="card">
+    <div class="card-head">
+      <div class="brand"><div class="dot">A</div><div><b>Arvor Intelligence</b><span>@leonardodias</span></div></div>
+      <div class="pno">7/18</div>
+    </div>
+    <div class="card-body">
+      <div>
+        <h2>As perguntas <em>fantasma</em></h2>
+        <p class="t">O pior não é o que publicaram. É o que esconderam. Tudo foi aplicado a 2.004 eleitores, registrado no TSE — e <b>nada apareceu no PDF público</b>. Alguém sabe a resposta. E decidiu que você não saberia.</p>
+      </div>
+      <div class="viz">
+        <ul class="glist">
+          <li><span class="q">Q61</span><span>Bolsonaro deveria trocar Flávio de candidato?</span></li>
+          <li><span class="q">Q62</span><span>Quem deveria substituí-lo?</span></li>
+          <li><span class="q">Q63-65</span><span>O que o sr(a). acha dos EUA e de Trump?</span></li>
+          <li><span class="q">Q67</span><span>E se Trump apoiar Flávio?</span></li>
+          <li style="border-bottom:0"><span class="q" style="color:var(--black)">STATUS</span><b>Perguntadas. Pagas. Registradas. Não publicadas.</b></li>
+        </ul>
+      </div>
+    </div>
+    <div class="card-foot"><span>questionário p.18 vs PDF público</span><span>quaest 100626 · arvor</span></div>
+  </div>
+  <div class="copy"><span class="cc">1275 chars</span>Esta é a parte que me fez parar a auditoria e reler três vezes.
+
+No questionário registrado no TSE, página 18, estão lá: Q61, Bolsonaro deveria trocar Flávio como candidato? Q62, quem deveria substituí-lo? Q63 a Q65, o que o senhor acha dos Estados Unidos e qual a sua imagem de Trump? Q67, e se Trump declarar apoio a Flávio, isso muda seu voto?
+
+Essas perguntas foram aplicadas. A 2.004 eleitores, dentro de casa, com gravação de áudio. Foram pagas pelo Banco Genial. Foram registradas no Tribunal Superior Eleitoral.
+
+E não aparecem em lugar nenhum do PDF público.
+
+Eu procurei. Pergunta por pergunta, página por página. O bloco Master está publicado com vários recortes. O encontro Flávio-Trump está publicado. Facções, sanções, tarifas, tudo publicado. As respostas sobre trocar o candidato e sobre o apoio de Trump, justamente as de maior consequência política direta, evaporaram entre o campo e o relatório.
+
+Eu não sei se essas respostas eram boas ou ruins para Flávio. E esse é exatamente o ponto: alguém sabe. Alguém leu, avaliou e decidiu que você não leria.
+
+Em jornalismo, isso se chama matar a pauta. Em pesquisa eleitoral registrada, deveria se chamar pelo nome: curadoria política do que o público pode saber. Perguntar e esconder é pior do que não perguntar.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 8 -->
+<section class="post">
+  <div class="post-label">Post 8/18 · quem pagou a conta</div>
+  <div class="card">
+    <div class="card-head">
+      <div class="brand"><div class="dot">A</div><div><b>Arvor Intelligence</b><span>@leonardodias</span></div></div>
+      <div class="pno">8/18</div>
+    </div>
+    <div class="card-body">
+      <div>
+        <h2>Quem pagou a conta</h2>
+        <p class="t">Um banco com mesa de operações, clientes que <b>precificam risco político</b> — e fundos citados em <b>operação da PF sobre dinheiro do PCC</b>. O questionário que ele pagou pergunta ao eleitor se o PCC é terrorista. <b>O eleitor respondeu. O banco ainda deve resposta.</b></p>
+        <div class="kchips">
+          <span class="kchip">R$ 433 mil pagos como dinheiro de corote</span>
+          <span class="kchip">60% do país: PCC = terrorista</span>
+          <span class="kchip">106 compradas · ~100 publicadas</span>
+        </div>
+      </div>
+      <div style="text-align:center">
+        <p class="t" style="font-family:var(--mono);font-size:.85rem;color:var(--muted)">NFS-e nº 353 · Banco Genial</p>
+        <div class="bignum red">R$ 433.255,92</div>
+        <p class="t" style="margin-top:10px">o mesmo banco cujos fundos a PF rastreou atrás de <b>dinheiro de facção</b></p>
+      </div>
+    </div>
+    <div class="card-foot"><span>nota fiscal da pesquisa · operação PF / fundos</span><span>quaest 100626 · arvor</span></div>
+  </div>
+  <div class="copy"><span class="cc">1788 chars</span>Sigamos o dinheiro, que é o que um auditor faz quando as perguntas somem.
+
+Contratante: Banco Genial. Nota fiscal de serviço eletrônica número 353, valor de R$ 433.255,92. Dividido por 2.004 entrevistas, R$ 216 por porta batida. Pago como quem compra corote: sem pestanejar, sem licitação interna, sem dó.
+
+E aqui o enredo engrossa. O mesmo Banco Genial aparece na operação da Polícia Federal que rastreou dinheiro do PCC circulando por fundos de investimento ligados ao banco. Agora pense na cena, porque ela é cinematográfica: o questionário que esse banco pagou pergunta ao eleitor se o PCC deve ser classificado como organização terrorista. 60% dizem que sim. Enquanto isso, a PF pergunta ao banco por que dinheiro da facção passeava pelos seus fundos. O eleitor já respondeu. O banco ainda deve resposta.
+
+Um banco não encomenda 106 perguntas por curiosidade cívica. Tem mesa de operações, clientes institucionais, gente paga para precificar risco político antes do mercado. Saber hoje se o eleitorado aceitaria a troca de Flávio, ou como reagiria a um apoio explícito de Trump, vale dinheiro. Vale posição. O Genial pagou R$ 433 mil, recebeu as respostas das 106 perguntas. O público recebeu as que passaram na peneira. No mercado, informação que uns têm e outros não tem nome técnico, e a CVM costuma se interessar.
+
+Que fique claro: não afirmo que o banco operou em cima do que escondeu, nem sentencio a história dos fundos — investigação se acompanha, não se julga em thread. Mas o conjunto da obra é este: um banco com fundos na mira da PF por dinheiro de facção, gastando R$ 433 mil como dinheiro de corote numa pesquisa que pergunta sobre facções e esconde as perguntas mais quentes sobre o principal adversário do governo. Se isso não merece auditoria, nada no Brasil merece.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 9 -->
+<section class="post">
+  <div class="post-label">Post 9/18 · o alvo rico demais</div>
+  <div class="card">
+    <div class="card-head">
+      <div class="brand"><div class="dot">A</div><div><b>Arvor Intelligence</b><span>@leonardodias</span></div></div>
+      <div class="pno">9/18</div>
+    </div>
+    <div class="card-body">
+      <div>
+        <h2>O alvo rico demais</h2>
+        <p class="t">O alvo de renda da Quaest tem <b>menos pobres que o Brasil da PNAD</b>. E baixa renda vota Lula 50 x 23. Reponderando para o Brasil real, Lula <b>sobe</b> 0,7 ponto. O único viés do alvo joga contra o líder. Anote a ironia.</p>
+      </div>
+      <div class="viz">
+        <div class="minibars">
+          <div class="mb"><span>Até 2 SM · alvo Quaest</span><div class="tr"><div class="fl gd" style="width:62%"></div></div><span class="v">31,0</span></div>
+          <div class="mb"><span>Até 2 SM · PNAD real</span><div class="tr"><div class="fl gr" style="width:70.8%"></div></div><span class="v">35,4</span></div>
+          <div class="mb"><span>2-5 SM · alvo Quaest</span><div class="tr"><div class="fl gd" style="width:84%"></div></div><span class="v">42,0</span></div>
+          <div class="mb"><span>2-5 SM · PNAD real</span><div class="tr"><div class="fl gr" style="width:78.4%"></div></div><span class="v">39,2</span></div>
+          <div class="mb"><span>5+ SM · alvo Quaest</span><div class="tr"><div class="fl gd" style="width:54%"></div></div><span class="v">27,0</span></div>
+          <div class="mb"><span>5+ SM · PNAD real</span><div class="tr"><div class="fl gr" style="width:50.6%"></div></div><span class="v">25,3</span></div>
+        </div>
+        <p class="t" style="font-size:.8rem;color:var(--red);font-weight:700;margin-top:10px">faltam 4,4 p.p. de eleitores até 2 SM no alvo — a faixa onde Lula faz 50 x 23</p>
+      </div>
+    </div>
+    <div class="card-foot"><span>alvo TSE vs PNADC anual 2025 v1, adultos 16+</span><span>quaest 100626 · arvor</span></div>
+  </div>
+  <div class="copy"><span class="cc">1340 chars</span>Agora um detalhe fino que quase ninguém pegou, e que eu só achei porque cruzei o alvo de cotas da Quaest com a PNAD contínua, microdado por microdado.
+
+O alvo de renda declarado ao TSE é 31% de eleitores com até 2 salários mínimos, 42% de 2 a 5, 27% acima de 5. O Brasil real de 16 anos ou mais, na PNADC anual 2025, é 35,4 / 39,2 / 25,3.
+
+Tradução: faltam 4,4 pontos de eleitor pobre no alvo da Quaest. A amostra dela é mais rica que o país.
+
+Por que importa? Porque a própria pesquisa mostra que renda é o eixo do voto: na faixa até 2 salários, Lula faz 50 a 23. Na faixa acima de 5, Flávio vira: 37 a 28. Subamostrar pobre é, mecanicamente, subamostrar eleitor de Lula.
+
+Então eu refiz a conta. Reponderando o primeiro turno publicado com a distribuição de renda do Brasil real da PNAD, Lula sobe 0,7 ponto e Flávio cai 0,4. Testei com renda habitual em vez de efetiva: mesma direção. Testei com responsáveis de domicílio: Lula sobe ainda mais.
+
+Ou seja: o único desvio sistemático do alvo da Quaest joga contra o líder da pesquisa, não a favor. Quem quiser acusar o instituto de inflar Lula vai ter que explicar por que ele montou um alvo que o desinfla.
+
+Anote a ironia: corrigido o viés, o candidato que melhora é o adversário do contratante banqueiro. Auditoria séria registra o que encontra, inclusive quando atrapalha a tese fácil.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 10 -->
+<section class="post">
+  <div class="post-label">Post 10/18 · Master: o dano real</div>
+  <div class="card">
+    <div class="card-head">
+      <div class="brand"><div class="dot">A</div><div><b>Arvor Intelligence</b><span>@leonardodias</span></div></div>
+      <div class="pno">10/18</div>
+    </div>
+    <div class="card-body">
+      <div>
+        <h2>Master: o dano real é <em>12%</em></h2>
+        <p class="t">65% dizem que Flávio errou — manchete pronta. A pergunta seguinte desmonta: <b>50% já não votariam nele de qualquer forma</b>. Dois terços do "estrago" é rejeição velha reembalada como notícia.</p>
+      </div>
+      <div class="viz">
+        <div class="minibars">
+          <div class="mb"><span>Aumenta o voto</span><div class="tr"><div class="fl gr" style="width:12%"></div></div><span class="v">6</span></div>
+          <div class="mb"><span>Diminui o voto</span><div class="tr"><div class="fl rd" style="width:24%"></div></div><span class="v">12</span></div>
+          <div class="mb"><span>Segue votando nele</span><div class="tr"><div class="fl cy" style="width:52%"></div></div><span class="v">26</span></div>
+          <div class="mb"><span>Já não votaria nele</span><div class="tr"><div class="fl bk" style="width:100%"></div></div><span class="v">50</span></div>
+        </div>
+        <p class="t" style="font-size:.82rem;color:var(--muted);margin-top:10px">"As notícias sobre Flávio e Vorcaro mudam seu voto?" — efeito declarado (%)</p>
+      </div>
+    </div>
+    <div class="card-foot"><span>bloco Banco Master / Dark Horse</span><span>quaest 100626 · arvor</span></div>
+  </div>
+  <div class="copy"><span class="cc">1272 chars</span>O bloco do Banco Master é onde a manchete e o dado pedem divórcio, e eu vou mostrar a certidão.
+
+A manchete que circulou: 65% dizem que Flávio errou ao buscar financiamento com Vorcaro. Número feio, real, está lá. O bloco inteiro é duro: 60% dizem que o caso levanta suspeitas, 62% acham que Flávio sabia, 58% acham que ele pode estar escondendo envolvimento.
+
+Só que a Quaest fez a pergunta seguinte, a que importa para a eleição: e isso muda o seu voto?
+
+Resposta: 6% dizem que aumenta a chance de votar nele. 26% seguem votando normalmente. 12% dizem que diminui. E 50%, metade da amostra, respondem que não muda nada porque já não votariam nele de qualquer forma.
+
+Faça a conta comigo. Dos 65% do "errou", a maioria esmagadora é gente que já era contra Flávio antes de o caso existir. Isso não é dano novo. É rejeição velha reembalada como notícia. O dano marginal real, eleitor que Flávio tinha e o caso tirou, é de 12%. E parte desses 12% ainda é resposta de momento, dada a um entrevistador, logo depois de um bloco inteiro descrevendo o escândalo em detalhe.
+
+O Master machuca a imagem de Flávio? Machuca. Machuca o voto? Bem menos do que o noticiário precisa que machuque. A diferença entre 65 e 12 é a diferença entre o que vende manchete e o que decide eleição.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 11 -->
+<section class="post">
+  <div class="post-label">Post 11/18 · o dado que a direita precisa ver</div>
+  <div class="card">
+    <div class="card-head">
+      <div class="brand"><div class="dot">A</div><div><b>Arvor Intelligence</b><span>@leonardodias</span></div></div>
+      <div class="pno">11/18</div>
+    </div>
+    <div class="card-body">
+      <div>
+        <h2>O melhor <em>segundo-turnista</em> da direita</h2>
+        <p class="t">Do 1º para o 2º turno, Flávio ganha <b>+9 pontos</b> — o maior salto de qualquer candidato. Pela régua da própria Quaest, paga por um banco sem simpatia pelo sobrenome.</p>
+      </div>
+      <div class="viz">
+        <div class="minibars">
+          <div class="mb"><span>Flávio vs Lula 44</span><div class="tr"><div class="fl cy" style="width:84.4%"></div></div><span class="v">38</span></div>
+          <div class="mb"><span>Zema vs Lula 45</span><div class="tr"><div class="fl gd" style="width:77.8%"></div></div><span class="v">35</span></div>
+          <div class="mb"><span>Caiado vs Lula 45</span><div class="tr"><div class="fl gd" style="width:77.8%"></div></div><span class="v">35</span></div>
+          <div class="mb"><span>Renan vs Lula 45</span><div class="tr"><div class="fl gd" style="width:68.9%"></div></div><span class="v">31</span></div>
+        </div>
+        <p class="t" style="font-size:.82rem;color:var(--muted);margin-top:10px">Voto do adversário em cada 2º turno (Lula estacionado em 44/45 em todos)</p>
+      </div>
+    </div>
+    <div class="card-foot"><span>cenários de 2º turno</span><span>quaest 100626 · arvor</span></div>
+  </div>
+  <div class="copy"><span class="cc">1311 chars</span>Até aqui, demolição. Agora a leitura estratégica, porque dentro dessa mesma pesquisa, paga por um banco sem nenhuma simpatia evidente pelo sobrenome Bolsonaro, está escondido o dado mais inconveniente para a tese da terceira via.
+
+Do primeiro para o segundo turno, Flávio salta de 29 para 38. Nove pontos de ganho líquido, o maior de qualquer candidato em qualquer cenário testado. Lula, no mesmo movimento, ganha cinco: vai de 39 para 44.
+
+E o teste decisivo: contra Lula, Flávio faz 38. Zema faz 35. Caiado faz 35. Renan Santos faz 31. Enquanto isso, Lula fica estacionado em 44 ou 45 contra qualquer um deles, não importa o adversário.
+
+Esses 9 pontos têm nome: voto útil reprimido. É o eleitor que hoje marca Zema, Caiado, Renan ou indeciso, mas que, posto diante de Lula, aperta o botão Flávio sem pestanejar. Esse voto já existe. Só não sabe ainda que é dele.
+
+Se a direita antecipasse esse movimento para o primeiro turno, Flávio sairia de 29 para a vizinhança de 38 antes de outubro, e a eleição mudaria de natureza meses antes da urna.
+
+Pela régua da própria Quaest, com campo domiciliar e sorteio de setor censitário, Flávio Bolsonaro é o melhor segundo-turnista da direita brasileira. O dado é péssimo para os concorrentes internos. Por isso mesmo é precioso: ninguém pode acusar a fonte de simpatia.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 12 -->
+<section class="post">
+  <div class="post-label">Post 12/18 · os 18% órfãos</div>
+  <div class="card">
+    <div class="card-head">
+      <div class="brand"><div class="dot">A</div><div><b>Arvor Intelligence</b><span>@leonardodias</span></div></div>
+      <div class="pno">12/18</div>
+    </div>
+    <div class="card-body">
+      <div>
+        <h2><em>18%</em> escolhem ninguém</h2>
+        <p class="t">Postos diante de Lula x Flávio, branco/nulo sobe de 9 para 14 e os indecisos somam 4. Entre independentes, <b>39% ficam fora da escolha</b>. Lula está no teto: 44/45 contra qualquer um, 53 de rejeição. <b>Quem disputa o limbo disputa o Planalto.</b></p>
+      </div>
+      <div class="viz">
+<svg viewBox="0 0 460 420" xmlns="http://www.w3.org/2000/svg">
+  <defs><rect id="wq2" width="38" height="32" rx="3"/></defs>
+  <g fill="#1446a0">
+    <use href="#wq2" x="10" y="10"/><use href="#wq2" x="54" y="10"/><use href="#wq2" x="98" y="10"/><use href="#wq2" x="142" y="10"/><use href="#wq2" x="186" y="10"/><use href="#wq2" x="230" y="10"/><use href="#wq2" x="274" y="10"/><use href="#wq2" x="318" y="10"/><use href="#wq2" x="362" y="10"/><use href="#wq2" x="406" y="10"/>
+    <use href="#wq2" x="10" y="48"/><use href="#wq2" x="54" y="48"/><use href="#wq2" x="98" y="48"/><use href="#wq2" x="142" y="48"/><use href="#wq2" x="186" y="48"/><use href="#wq2" x="230" y="48"/><use href="#wq2" x="274" y="48"/><use href="#wq2" x="318" y="48"/><use href="#wq2" x="362" y="48"/><use href="#wq2" x="406" y="48"/>
+    <use href="#wq2" x="10" y="86"/><use href="#wq2" x="54" y="86"/><use href="#wq2" x="98" y="86"/><use href="#wq2" x="142" y="86"/><use href="#wq2" x="186" y="86"/><use href="#wq2" x="230" y="86"/><use href="#wq2" x="274" y="86"/><use href="#wq2" x="318" y="86"/><use href="#wq2" x="362" y="86"/><use href="#wq2" x="406" y="86"/>
+    <use href="#wq2" x="10" y="124"/><use href="#wq2" x="54" y="124"/><use href="#wq2" x="98" y="124"/><use href="#wq2" x="142" y="124"/><use href="#wq2" x="186" y="124"/><use href="#wq2" x="230" y="124"/><use href="#wq2" x="274" y="124"/><use href="#wq2" x="318" y="124"/><use href="#wq2" x="362" y="124"/><use href="#wq2" x="406" y="124"/>
+    <use href="#wq2" x="10" y="162"/><use href="#wq2" x="54" y="162"/><use href="#wq2" x="98" y="162"/><use href="#wq2" x="142" y="162"/>
+  </g>
+  <g fill="#13a7c5">
+    <use href="#wq2" x="186" y="162"/><use href="#wq2" x="230" y="162"/><use href="#wq2" x="274" y="162"/><use href="#wq2" x="318" y="162"/><use href="#wq2" x="362" y="162"/><use href="#wq2" x="406" y="162"/>
+    <use href="#wq2" x="10" y="200"/><use href="#wq2" x="54" y="200"/><use href="#wq2" x="98" y="200"/><use href="#wq2" x="142" y="200"/><use href="#wq2" x="186" y="200"/><use href="#wq2" x="230" y="200"/><use href="#wq2" x="274" y="200"/><use href="#wq2" x="318" y="200"/><use href="#wq2" x="362" y="200"/><use href="#wq2" x="406" y="200"/>
+    <use href="#wq2" x="10" y="238"/><use href="#wq2" x="54" y="238"/><use href="#wq2" x="98" y="238"/><use href="#wq2" x="142" y="238"/><use href="#wq2" x="186" y="238"/><use href="#wq2" x="230" y="238"/><use href="#wq2" x="274" y="238"/><use href="#wq2" x="318" y="238"/><use href="#wq2" x="362" y="238"/><use href="#wq2" x="406" y="238"/>
+    <use href="#wq2" x="10" y="276"/><use href="#wq2" x="54" y="276"/><use href="#wq2" x="98" y="276"/><use href="#wq2" x="142" y="276"/><use href="#wq2" x="186" y="276"/><use href="#wq2" x="230" y="276"/><use href="#wq2" x="274" y="276"/><use href="#wq2" x="318" y="276"/><use href="#wq2" x="362" y="276"/><use href="#wq2" x="406" y="276"/>
+    <use href="#wq2" x="10" y="314"/><use href="#wq2" x="54" y="314"/>
+  </g>
+  <g fill="#16191f">
+    <use href="#wq2" x="98" y="314"/><use href="#wq2" x="142" y="314"/><use href="#wq2" x="186" y="314"/><use href="#wq2" x="230" y="314"/><use href="#wq2" x="274" y="314"/><use href="#wq2" x="318" y="314"/><use href="#wq2" x="362" y="314"/><use href="#wq2" x="406" y="314"/>
+    <use href="#wq2" x="10" y="352"/><use href="#wq2" x="54" y="352"/><use href="#wq2" x="98" y="352"/><use href="#wq2" x="142" y="352"/><use href="#wq2" x="186" y="352"/><use href="#wq2" x="230" y="352"/>
+  </g>
+  <g fill="#c9c2b3">
+    <use href="#wq2" x="274" y="352"/><use href="#wq2" x="318" y="352"/><use href="#wq2" x="362" y="352"/><use href="#wq2" x="406" y="352"/>
+  </g>
+  <path d="M94,310 H448 V388 H6 V348 H94 Z" fill="none" stroke="#9e3d42" stroke-width="2.5" stroke-dasharray="6 4"/>
+  <text x="10" y="412" font-family="'Public Sans',sans-serif" font-size="14" fill="#12151c">Lula <tspan font-weight="800" fill="#1446a0">44</tspan> · Flávio <tspan font-weight="800" fill="#13a7c5">38</tspan> · <tspan font-weight="800" fill="#9e3d42">órfãos 18</tspan> (14 branco/nulo + 4 NS)</text>
+</svg>
+      </div>
+    </div>
+    <div class="card-foot"><span>100 eleitores no 2º turno · cada quadrado = 1%</span><span>quaest 100626 · arvor</span></div>
+  </div>
+  <div class="copy"><span class="cc">1153 chars</span>E agora o número que, na minha leitura, decide 2026. Não é o 44 nem o 38.
+
+É o 18.
+
+Postos diante de Lula contra Flávio, 18% dos eleitores escolhem ninguém: 14 votariam branco ou nulo, 4 não sabem. O branco/nulo sobe de 9 no primeiro turno para 14 no segundo. A polarização, em vez de forçar escolha, produz fuga. Entre os que se declaram independentes, o buraco é maior ainda: 39% ficam fora da escolha.
+
+Pare e pese: a vantagem de Lula é de 6 pontos. O bloco que recusa os dois é três vezes maior que essa vantagem. O maior partido do segundo turno brasileiro não é o PT nem o bolsonarismo. É o partido de quem olha para a cédula e a devolve.
+
+E a assimetria entre os dois candidatos diante desse limbo é brutal. Lula tem potencial de voto de 45 e está em 44. Está operando a 98% do próprio teto, com 53% de rejeição e um governo desaprovado por 48%. Não tem para onde crescer. Flávio tem rejeição maior, 56%, é verdade, e potencial de 39. Mas tem 18 pontos de limbo para disputar e 9 de voto útil para antecipar.
+
+Um está cheio. O outro tem espaço. Quem conquistar metade desse limbo conquista o Planalto, e só um dos dois ainda tem o que conquistar.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 13 -->
+<section class="post">
+  <div class="post-label">Post 13/18 · a equação</div>
+  <div class="card">
+    <div class="card-head">
+      <div class="brand"><div class="dot">A</div><div><b>Arvor Intelligence</b><span>@leonardodias</span></div></div>
+      <div class="pno">13/18</div>
+    </div>
+    <div class="card-body">
+      <div>
+        <h2>Estoque <em>vs</em> fluxo</h2>
+        <p class="t">Lula administra estoque: 44 de um potencial de 45, sem espaço para crescer. A direita disputa fluxo: <b>9 pontos de voto útil</b> a antecipar + <b>18 pontos de órfãos</b> a conquistar. Campanhas se ganham no fluxo. A Quaest entregou o mapa.</p>
+      </div>
+      <div style="text-align:center">
+        <div style="display:flex;justify-content:center;gap:30px;align-items:baseline">
+          <div><div class="bignum cyan" style="font-size:clamp(3rem,6vw,5rem)">9</div><p class="t">voto útil<br>reprimido</p></div>
+          <div style="font-family:var(--serif);font-size:2.4rem;color:var(--muted)">+</div>
+          <div><div class="bignum red" style="font-size:clamp(3rem,6vw,5rem)">18</div><p class="t">órfãos<br>do binário</p></div>
+          <div style="font-family:var(--serif);font-size:2.4rem;color:var(--muted)">≫</div>
+          <div><div class="bignum" style="font-size:clamp(3rem,6vw,5rem)">6</div><p class="t">vantagem<br>de Lula</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="card-foot"><span>a aritmética da eleição de 2026</span><span>quaest 100626 · arvor</span></div>
+  </div>
+  <div class="copy"><span class="cc">1333 chars</span>A eleição inteira cabe em uma frase: Lula administra estoque, a direita disputa fluxo.
+
+Lula está em 44 de um potencial de 45. Estoque cheio, prateleira sem espaço, rejeição de 53 travando a porta. A campanha dele será defensiva por definição: não perder o que tem.
+
+Flávio tem dois fluxos abertos: 9 pontos de voto útil a antecipar do segundo para o primeiro turno, e 18 pontos de órfãos a conquistar. Campanhas se ganham no fluxo.
+
+E eu fiz a física da vitória. Do bolo de 32% que está fora do binário no primeiro turno, Flávio captura hoje na razão de 1,8 para 1 contra Lula: pega 9 enquanto Lula pega 5. Mantida essa razão sobre os 18 pontos restantes, Flávio perde por um fio, 50,4 a 49,6. Elevada a razão para 2,5 por 1, ele vence por 49 a 43. A campanha inteira se resume a melhorar uma única razão de captura, e o multiplicador dessa razão é um só: rejeição. Com 56%, o órfão prefere anular a votar nele. Rejeição de 56 para 49 é a métrica-mãe.
+
+O mapa também está na pesquisa: a vantagem de Lula nasce quase toda no Nordeste, 54 a 25, que pesa 27,6% do eleitorado e sozinho rende uns 8 pontos da dianteira nacional. Flávio só lidera no Sul, 38 a 27, região que pesa 14,5%. Não precisa vencer o Nordeste. Precisa sangrá-lo.
+
+A Quaest, sem querer, entregou o mapa do tesouro. Pena que entregou junto com as páginas arrancadas.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 14 -->
+<section class="post">
+  <div class="post-label">Post 14/18 · os intergalácticos</div>
+  <div class="card">
+    <div class="card-head">
+      <div class="brand"><div class="dot">A</div><div><b>Arvor Intelligence</b><span>@leonardodias</span></div></div>
+      <div class="pno">14/18</div>
+    </div>
+    <div class="card-body">
+      <div>
+        <h2>Os <em>intergalácticos</em>: a direita limpinha</h2>
+        <p class="t">Querem os votos do Bolsonaro <b>sem o Bolsonaro</b>. Sabotam por dentro e, no 2º turno, descobrem "princípios" e pedem nulo do alto do chá de alfazema. Detalhe aritmético: <b>nulo de eleitor antipetista aumenta o peso do voto Lula nos válidos</b>. Nulo de direita é meio voto no L.</p>
+        <div class="kchips">
+          <span class="kchip">Zemula · Zemanco · Caiadula</span>
+          <span class="kchip">Kassab de garçom da transferência</span>
+          <span class="kchip">separar o eleitor do dono</span>
+        </div>
+      </div>
+      <div style="text-align:center">
+        <div class="bignum red">9 → 14</div>
+        <p class="t" style="margin-top:10px">branco/nulo sobe 5 p.p. do 1º para o 2º turno — <b>esse delta tem digitais</b>: é o eleitor de Zema, Caiado e Renan sendo empurrado para fora da urna</p>
+      </div>
+    </div>
+    <div class="card-foot"><span>branco/nulo: 1º turno 9% → 2º turno 14% · quaest</span><span>quaest 100626 · arvor</span></div>
+  </div>
+  <div class="copy"><span class="cc">1634 chars</span>Agora o capítulo que ninguém da direita gosta de ler em voz alta: os intergalácticos.
+
+Intergaláctico é a direita limpinha. Aquela que quer os votos do Bolsonaro sem precisar do Bolsonaro. Que morre de inveja do capital eleitoral do clã, passa o ciclo inteiro sabotando por dentro, de mãos dadas com a esquerda, e, quando chega o segundo turno, descobre uma "questão de princípios" e pede voto nulo do alto do seu chá de alfazema.
+
+E aqui entra a aritmética que esse pessoal finge não entender. Voto nulo não é neutro. Quando um eleitor antipetista anula, ele sai da conta dos válidos, e o voto Lula, cravado em 44, passa a pesar mais na divisão. Nulo de eleitor de direita é, na prática, meio voto no L. Sempre. E alguns nem vão se dar ao trabalho do disfarce: parte do centrão vai direto para o palanque do Lula. Kassab costurar isso para o lado do Caiado não é hipótese maluca, é roteiro com precedente. O voto Cassabaiadula está logo ali, a uma dose de chá de alfazema.
+
+Os números da Quaest mostram o tamanho do estrago possível: Zema, Caiado e Renan somam 13% no primeiro turno. No segundo, branco/nulo sobe de 9 para 14. Esse delta de 5 pontos tem digitais.
+
+A resposta de Flávio não é xingar o eleitor dessas tribos. É separar o eleitor do dono. O eleitor do Novo quer planilha, não quer eleger o Lula. O do Caiado quer ordem. O do MBL quer não se ajoelhar. Pacote para cada um, ponte para todos, e uma mensagem repetida até cansar: quem pede nulo contra o Lula está pedindo voto para o Lula com vergonha de dizer.
+
+O intergaláctico vive de sequestrar voto de direita. A campanha vive de devolver esse voto ao dono: o eleitor.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 15 -->
+<section class="post">
+  <div class="post-label">Post 15/18 · o mapa de guerra regional</div>
+  <div class="card">
+    <div class="card-head">
+      <div class="brand"><div class="dot">A</div><div><b>Arvor Intelligence</b><span>@leonardodias</span></div></div>
+      <div class="pno">15/18</div>
+    </div>
+    <div class="card-body">
+      <div>
+        <h2>O mapa de guerra: <em>sangrar o NE</em>, virar SP e MG</h2>
+        <p class="t">A vantagem de Lula nasce no Nordeste (54x25, peso 27,6%) e nas capitais do Sudeste. Não precisa vencer o NE — precisa <b>sangrar em foco</b>: CE pela segurança, PE pela máquina, BA pelo agro. Em MG, <b>Nikolas e Cleitinho contra o Zemula</b>; em GO, vigiar o Caiadula. E fabricar margem barata no AM.</p>
+      </div>
+      <div class="viz">
+        <div class="minibars">
+          <div class="mb"><span>SP · 21,6% do eleitorado</span><div class="tr"><div class="fl cy" style="width:100%"></div></div><span class="v">+5</span></div>
+          <div class="mb"><span>MG · 10,4% — anti-Zemula</span><div class="tr"><div class="fl cy" style="width:48%"></div></div><span class="v">+5</span></div>
+          <div class="mb"><span>BA · 7,2% — oeste agro</span><div class="tr"><div class="fl gd" style="width:33%"></div></div><span class="v">foco</span></div>
+          <div class="mb"><span>PE · 4,6% — máquina</span><div class="tr"><div class="fl gd" style="width:21%"></div></div><span class="v">foco</span></div>
+          <div class="mb"><span>CE · 4,4% — segurança</span><div class="tr"><div class="fl gd" style="width:20%"></div></div><span class="v">foco</span></div>
+          <div class="mb"><span>GO · 3,2% — anti-Caiadula</span><div class="tr"><div class="fl gr" style="width:15%"></div></div><span class="v">+14</span></div>
+          <div class="mb"><span>AM · 1,8% — Zona Franca</span><div class="tr"><div class="fl gr" style="width:8%"></div></div><span class="v">+10</span></div>
+        </div>
+        <p class="t" style="font-size:.8rem;color:var(--muted);margin-top:10px">Barras = peso no eleitorado TSE · metas de margem por frente · NE: cada ponto regional vale 0,28 nacional</p>
+      </div>
+    </div>
+    <div class="card-foot"><span>placar consolidado das frentes: +8,5 → ~51x49</span><span>quaest 100626 · arvor</span></div>
+  </div>
+  <div class="copy"><span class="cc">1879 chars</span>O mapa de guerra, estado por estado, com os pesos do TSE na mesa.
+
+A vantagem de Lula nasce em dois lugares: no Nordeste (54 a 25, peso 27,6%, uns 8 pontos da dianteira nacional) e nas capitais do Sudeste. No NE a instrução não é vencer. É sangrar em foco: cada ponto recuperado vale 0,28 nacional; meta de -29 para -16, +3,6 pontos sem ganhar uma capital.
+
+CEARÁ (4,4%): segurança. Fortaleza convive com facção dominando bairro; 60% do país apoia classificar PCC e CV como terroristas e 47% creditam a Flávio a pressão sobre Trump. Cunha: jovem da periferia + Lei Antiterror.
+
+PERNAMBUCO (4,6%): máquina. O prefeito do centrão não precisa subir no palanque, precisa não trabalhar para Lula. 250 prefeituras neutras valem 2 a 3 pontos regionais.
+
+BAHIA (7,2%): duas Bahias. Salvador é difícil; o oeste é MATOPIBA, agro ressentido com Brasília. Vencer com folga nos polos do agro.
+
+SÃO PAULO (21,6%): o cofre. A capital não pode ser terra arrasada: periferia evangélica da Grande SP, Tarcísio fiador, agro do interior com comparecimento máximo. Meta: virar para +5.
+
+MINAS (10,4%): a fronteira. O Sudeste pende para o L por causa de MG e das capitais, e aqui mora o voto Zemula: Zema no 1º turno, Lula no 2º. E as variantes Zemulo e Zemanco (Zema + nulo/branco), que dão no mesmo: válido a menos contra o L. Nikolas Ferreira precisa entrar de cabeça, com Cleitinho e a bancada mineira, sem atacar o chá de alfazema: o trabalho é tornar o Zemula socialmente impossível, em BH e no interior. Quem ganha Minas ganha o Brasil desde 1989.
+
+GOIÁS (3,2%): o Caiadula, com Kassab de garçom da transferência. Base natural não se abandona por parecer ganha.
+
+AMAZONAS (1,8%): Zona Franca defendida em voz alta + Manaus evangélica. No Norte, margem se fabrica barato.
+
+Placar das frentes: ~+8,5 pontos, de 44 x 38 para ~51 x 49. Regra transversal: nenhum voto de direita pode morrer em nulo.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 16 -->
+<section class="post">
+  <div class="post-label">Post 16/18 · acordos de 2º turno e voto útil no 1º</div>
+  <div class="card">
+    <div class="card-head">
+      <div class="brand"><div class="dot">A</div><div><b>Arvor Intelligence</b><span>@leonardodias</span></div></div>
+      <div class="pno">16/18</div>
+    </div>
+    <div class="card-body">
+      <div>
+        <h2>Acordo de 2º turno <em>se assina em agosto</em></h2>
+        <p class="t">Contra Lula só um nome chega perto: Flávio 38, Zema 35, Caiado 35, Renan 31. <b>Dividir é eleger.</b> A missão: transferir os 9 p.p. de voto útil já no 1º turno (29 → 35+) e deixar as adesões pré-assinadas para anunciar em 72h.</p>
+      </div>
+      <div class="viz">
+        <ul class="glist">
+          <li><span class="q">JUN-JUL</span><span><b>Ímã</b> — zero ataque à direita; elogio seletivo. Atacar agora só os consolida.</span></li>
+          <li><span class="q">AGO</span><span><b>Pinça</b> — vice, ministérios, palanques casados; agregadores semanais provam "só Flávio chega".</span></li>
+          <li><span class="q">SET</span><span><b>Voto útil explícito</b> — o ataque é à inutilidade do voto, nunca ao candidato.</span></li>
+          <li style="border-bottom:0"><span class="q">OUT</span><span><b>Pânico controlado</b> — "cada voto fora é um voto a menos contra Lula em novembro".</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="card-foot"><span>sequenciamento do voto útil · 4 fases</span><span>quaest 100626 · arvor</span></div>
+  </div>
+  <div class="copy"><span class="cc">1631 chars</span>O erro clássico da direita é tratar acordo de segundo turno como assunto de segundo turno. Os números desta Quaest mandam fazer o contrário: antecipar tudo.
+
+Flávio faz 38 contra Lula. Zema e Caiado fazem 35. Renan faz 31. E Lula está sempre em 44/45. A matemática é impiedosa: contra Lula, só um nome chega perto. Dividir é eleger.
+
+Os 9 pontos que Flávio ganha do primeiro para o segundo turno já são dele. Só ainda não sabem disso. A missão é transferir o máximo já no primeiro turno: de 29 para 35 ou mais, matando a tese da terceira via antes de setembro. Em quatro fases:
+
+JUNHO-JULHO, fase ímã: zero ataque a Zema, Caiado e Renan. Elogio seletivo ("Zema é um grande gestor", "Caiado entende de segurança"). Atacar agora só os consolida.
+
+AGOSTO, fase pinça: negociação de bastidor. Vice, ministérios, palanques estaduais casados. Tarcísio é a primeira opção de chapa; Zema, a segunda, com a Fazenda chancelada por ele na mesa. E agregadores de pesquisa divulgados toda semana: a narrativa "só Flávio chega" se prova sozinha.
+
+SETEMBRO, voto útil explícito: o ataque nunca é ao candidato, é à inutilidade do voto. "Voto em Zema é voto que não chega ao segundo turno." Pressão de baixo para cima: empresário, pastor e prefeito cobrando publicamente a união da direita.
+
+ÚLTIMA SEMANA, pânico controlado: "faltam X pontos. Cada voto fora é um voto a menos contra Lula em novembro. Decida agora o que vai decidir depois."
+
+E o detalhe que separa amador de profissional: as adesões do segundo turno se assinam em agosto, para serem anunciadas em 72 horas depois da urna. Quem espera o resultado para negociar, negocia de joelhos.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 17 -->
+<section class="post">
+  <div class="post-label">Post 17/18 · onde mora o indeciso</div>
+  <div class="card">
+    <div class="card-head">
+      <div class="brand"><div class="dot">A</div><div><b>Arvor Intelligence</b><span>@leonardodias</span></div></div>
+      <div class="pno">17/18</div>
+    </div>
+    <div class="card-body">
+      <div>
+        <h2>Onde mora o <em>indeciso</em></h2>
+        <p class="t">Ele não está no agro nem no condomínio. Está no ônibus lotado do Recife, na fila do posto em Contagem, na mãe solo de Itaquera. E não decide por ideologia: decide por <b>custo de vida, segurança e capacidade de governar</b>.</p>
+      </div>
+      <div class="viz">
+        <div class="minibars">
+          <div class="mb"><span>Espontânea · não sabe</span><div class="tr"><div class="fl bk" style="width:100%"></div></div><span class="v">56</span></div>
+          <div class="mb"><span>1º turno · indecisos</span><div class="tr"><div class="fl gd" style="width:18%"></div></div><span class="v">10</span></div>
+          <div class="mb"><span>1º turno · branco/nulo</span><div class="tr"><div class="fl gd" style="width:16%"></div></div><span class="v">9</span></div>
+          <div class="mb"><span>2º turno · limbo total</span><div class="tr"><div class="fl rd" style="width:32%"></div></div><span class="v">18</span></div>
+          <div class="mb"><span>Independentes fora da escolha</span><div class="tr"><div class="fl rd" style="width:70%"></div></div><span class="v">39</span></div>
+        </div>
+        <p class="t" style="font-size:.8rem;color:var(--red);font-weight:700;margin-top:10px">a Quaest não publica o mapa completo dos indecisos por região × renda × sexo — mais uma omissão a cobrar</p>
+      </div>
+    </div>
+    <div class="card-foot"><span>o funil da indecisão (%)</span><span>quaest 100626 · arvor</span></div>
+  </div>
+  <div class="copy"><span class="cc">1849 chars</span>Última peça do quebra-cabeça: onde mora o eleitor que ainda não decidiu? Porque é nele que esta eleição será ganha ou perdida.
+
+O estoque é gigante. Na espontânea, 56% não sabem em quem votar. No primeiro turno estimulado, 10% seguem indecisos e 9% declaram branco ou nulo. No segundo turno, o limbo soma 18%. E entre independentes, 39% recusam a escolha binária.
+
+Onde eles estão? Aqui entra mais uma cobrança à Quaest: o relatório público não traz o mapa completo dos indecisos por região, renda e sexo. Só recortes esparsos. Mas dá para triangular com o que foi publicado e com a régua histórica: o indeciso tardio brasileiro é desproporcionalmente mulher, de baixa renda, de menor escolaridade e das periferias urbanas. Exatamente os segmentos onde Flávio está mais distante hoje: na baixa renda, perde de 50 a 23; entre mulheres, carrega seu maior déficit.
+
+Tradução estratégica: o indeciso não está no agro nem no condomínio. Está no ônibus lotado do Recife, na fila do posto de saúde em Contagem, na mãe solo de Itaquera. E ele não decide por ideologia. Decide por custo de vida, segurança e por quem parece capaz de governar.
+
+O plano tem três camadas. Primeira: 12 grupos focais só com indecisos e anuladores (SP, BH, Recife, Porto Alegre) para responder a única pergunta que importa: o veto a Flávio é moral ou de capacidade? Se for moral, a resposta é blindagem Master e mudança de tom. Se for de capacidade, é equipe econômica anunciada antes do voto, Tarcísio e Zema como fiadores, agenda social com Michelle. Segunda: presença física nos territórios do indeciso, não nos redutos. Terceira: mensagem de custo, sem culpar o eleitor: "anular é deixar os outros decidirem sua vida".
+
+E uma exigência de auditoria que vira arma de campanha: Quaest, publique o cruzamento completo dos indecisos. Quem mapeia o limbo primeiro, chega primeiro.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 18 -->
+<section class="post">
+  <div class="post-label">Post 18/18 · fechamento + CTA</div>
+  <div class="card">
+    <div class="card-head">
+      <div class="brand"><div class="dot">A</div><div><b>Arvor Intelligence</b><span>@leonardodias</span></div></div>
+      <div class="pno">18/18</div>
+    </div>
+    <div class="card-body">
+      <div>
+        <h2>Mediu bem. Publicou <em>pela metade.</em></h2>
+        <p class="t">Pesquisa registrada no TSE é <b>bem público com nota fiscal privada</b>. Dossiê completo, com todos os cálculos auditáveis, no link do post.</p>
+      </div>
+      <div class="viz">
+        <ul class="glist">
+          <li><span class="q">1</span><span>Questionário integral com <b>todos</b> os resultados</span></li>
+          <li><span class="q">2</span><span>Pesos finais e targets de calibração</span></li>
+          <li><span class="q">3</span><span>Efeito de desenho (deff) e margem honesta</span></li>
+          <li><span class="q">4</span><span>Matriz de transição 1º → 2º turno</span></li>
+          <li style="border-bottom:0"><span class="q">5</span><span>Microdados anonimizados para auditoria independente</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="card-foot"><span>as 5 cobranças da Arvor à Quaest/Genial</span><span>quaest 100626 · arvor</span></div>
+  </div>
+  <div class="copy"><span class="cc">1237 chars</span>Fecho como abri: a Quaest mediu bem. E publicou pela metade. As duas coisas são verdadeiras ao mesmo tempo, e a segunda é mais grave justamente por causa da primeira. Quem acerta a demografia ao decimal não omite deff por ignorância nem perde perguntas por desorganização. Cada omissão aqui é uma escolha de gente competente.
+
+Então a cobrança é pública e específica. Quaest e Banco Genial, eis a lista:
+
+1. O questionário integral com TODOS os resultados, incluindo Q61, Q62, Q63 a Q65 e Q67. Foram aplicados, registrados e pagos; pertencem ao debate público.
+2. Os pesos finais e os alvos de calibração usados no rake.
+3. O efeito de desenho (deff) e a margem de erro honesta que decorre dele.
+4. A matriz de transição entre primeiro e segundo turno.
+5. Microdados anonimizados, como qualquer survey sério no mundo civilizado disponibiliza.
+
+Pesquisa registrada no TSE não é produto privado de banco. É bem público com nota fiscal privada. O contratante paga pela coleta; o resultado pertence ao eleitor.
+
+O dossiê completo, com todos os números, todas as fontes e todos os cálculos refeitos passo a passo para quem quiser conferir, auditar ou derrubar, está aqui:
+
+brasil.arvor.co/quaest_100626.html
+
+Auditem os auditores. Eu comecei.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+</div>
+<script>
+function cp(btn){
+  const pre = btn.previousElementSibling;
+  const txt = pre.childNodes.length ? Array.from(pre.childNodes).filter(n=>!(n.classList&&n.classList.contains('cc'))).map(n=>n.textContent).join('') : pre.textContent;
+  navigator.clipboard.writeText(txt.trim()).then(()=>{
+    const o = btn.textContent; btn.textContent = 'Copiado ✓';
+    setTimeout(()=>btn.textContent = o, 1400);
+  });
+}
+</script>
+</body>
+</html>
