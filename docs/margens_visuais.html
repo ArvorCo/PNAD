@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Margens de erro visuais - Quaest 10/06/2026 - Arvor Intelligence</title>
+<meta name="description" content="Visualização dos intervalos de margem de erro da pesquisa Quaest 10/06/2026: onde as margens se tocam sob a margem divulgada e sob o efeito de desenho.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Public+Sans:wght@400;600;700;800&family=Roboto+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f4f1e9; --ink:#12151c; --muted:#626774; --line:#c9c2b3;
+  --blue:#1446a0; --cyan:#13a7c5; --red:#9e3d42; --green:#087f5b; --gold:#bd8b13;
+  --serif:"Instrument Serif",Georgia,serif;
+  --sans:"Public Sans",ui-sans-serif,system-ui,sans-serif;
+  --mono:"Roboto Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:#1a1d24;color:#e8e2d5;font-family:var(--sans);font-size:16px;line-height:1.5}
+.wrap{width:min(1280px,calc(100% - 40px));margin:auto;padding:40px 0 90px}
+header.top{padding:42px 0 6px}
+header.top h1{font-family:var(--serif);font-size:clamp(2.4rem,5.5vw,4.2rem);line-height:.95;margin:0;color:#f4f1e9}
+header.top h1 span{color:#13a7c5;font-style:italic;font-weight:400}
+header.top p{max-width:900px;color:#b8b2a3;font-size:1.02rem}
+.card{
+  width:100%;max-width:1240px;margin:42px 0 8px;
+  background:
+    linear-gradient(90deg,rgba(18,21,28,.045) 1px,transparent 1px) 0 0/58px 58px,
+    linear-gradient(180deg,#fbfaf6 0,#f4f1e9 52%,#edf5f3 100%);
+  color:var(--ink);border-radius:10px;border:1px solid #3a3f4b;overflow:hidden;padding:8px 10px 4px;
+}
+.card svg{width:100%;height:auto;display:block}
+.note{font-size:.85rem;color:#8a8fa0;max-width:1000px;margin:6px 0 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <h1>Onde as margens <span>se tocam</span></h1>
+  <p>Os números da Quaest 10/06/2026 (BR-07661/2026, n=2.004) com a incerteza desenhada em cima de cada estimativa. Linha = intervalo de confiança; ponto = estimativa central. Três réguas: a margem divulgada (±2,2, amostra aleatória simples) e as margens com efeito de desenho (deff 1,5 → ±2,7; deff 2,0 → ±3,1), apropriadas para o desenho real por conglomerados. Cards prontos para print.</p>
+</header>
+
+<!-- CARD 1: 2º turno Lula x Flávio sob 3 réguas -->
+<div class="card">
+<svg viewBox="0 0 1240 700" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Segundo turno Lula contra Flávio sob três hipóteses de margem de erro">
+  <text x="44" y="56" font-family="'Instrument Serif',Georgia,serif" font-size="34" fill="#12151c">2º turno, Lula 44 × Flávio 38: a mesma foto com três lentes</text>
+  <text x="44" y="84" font-family="'Public Sans',sans-serif" font-size="15" fill="#626774">Intervalos de confiança de cada candidato sob a margem divulgada e sob o efeito de desenho · Quaest 10/06</text>
+
+  <!-- legenda -->
+  <circle cx="900" cy="78" r="7" fill="#1446a0"/><text x="912" y="83" font-family="'Public Sans',sans-serif" font-size="14" fill="#12151c">Lula</text>
+  <circle cx="980" cy="78" r="7" fill="#13a7c5"/><text x="992" y="83" font-family="'Public Sans',sans-serif" font-size="14" fill="#12151c">Flávio Bolsonaro</text>
+
+  <!-- grid x: 30..50 -> 160..1140 (49 px/pt) -->
+  <g stroke="#ddd6c6" stroke-width="1">
+    <line x1="160" y1="120" x2="160" y2="560"/><line x1="405" y1="120" x2="405" y2="560"/>
+    <line x1="650" y1="120" x2="650" y2="560"/><line x1="895" y1="120" x2="895" y2="560"/>
+    <line x1="1140" y1="120" x2="1140" y2="560"/>
+  </g>
+  <g font-family="'Roboto Mono',monospace" font-size="14" fill="#626774" text-anchor="middle">
+    <text x="160" y="586">30</text><text x="405" y="586">35</text><text x="650" y="586">40</text>
+    <text x="895" y="586">45</text><text x="1140" y="586">50</text>
+  </g>
+  <text x="650" y="614" text-anchor="middle" font-family="'Public Sans',sans-serif" font-size="14" font-weight="700" fill="#12151c">intenção de voto (%)</text>
+
+  <!-- ROW 1: margem divulgada ±2,2 -->
+  <text x="44" y="170" font-family="'Public Sans',sans-serif" font-size="16" font-weight="800" fill="#12151c">Margem divulgada</text>
+  <text x="44" y="190" font-family="'Roboto Mono',monospace" font-size="13" fill="#626774">AAS · ±2,2</text>
+  <!-- Flávio 38: [35,8 ; 40,2] -->
+  <line x1="444" y1="180" x2="660" y2="180" stroke="#13a7c5" stroke-width="6" stroke-linecap="round" opacity=".85"/>
+  <circle cx="552" cy="180" r="9" fill="#13a7c5"/>
+  <text x="552" y="156" text-anchor="middle" font-family="'Roboto Mono',monospace" font-size="15" font-weight="600" fill="#13a7c5">38</text>
+  <!-- Lula 44: [41,8 ; 46,2] -->
+  <line x1="738" y1="180" x2="954" y2="180" stroke="#1446a0" stroke-width="6" stroke-linecap="round" opacity=".85"/>
+  <circle cx="846" cy="180" r="9" fill="#1446a0"/>
+  <text x="846" y="156" text-anchor="middle" font-family="'Roboto Mono',monospace" font-size="15" font-weight="600" fill="#1446a0">44</text>
+  <!-- gap -->
+  <line x1="660" y1="180" x2="738" y2="180" stroke="#087f5b" stroke-width="1.5" stroke-dasharray="3 3"/>
+  <text x="699" y="208" text-anchor="middle" font-family="'Public Sans',sans-serif" font-size="13" font-weight="700" fill="#087f5b">folga de 1,6 p.p.</text>
+
+  <!-- ROW 2: deff 1,5 ±2,7 -->
+  <text x="44" y="310" font-family="'Public Sans',sans-serif" font-size="16" font-weight="800" fill="#12151c">Com deff 1,5</text>
+  <text x="44" y="330" font-family="'Roboto Mono',monospace" font-size="13" fill="#626774">±2,7</text>
+  <!-- Flávio: [35,3 ; 40,7] -->
+  <line x1="419.7" y1="320" x2="684.3" y2="320" stroke="#13a7c5" stroke-width="6" stroke-linecap="round" opacity=".85"/>
+  <circle cx="552" cy="320" r="9" fill="#13a7c5"/>
+  <text x="552" y="296" text-anchor="middle" font-family="'Roboto Mono',monospace" font-size="15" font-weight="600" fill="#13a7c5">38</text>
+  <!-- Lula: [41,3 ; 46,7] -->
+  <line x1="713.7" y1="320" x2="978.3" y2="320" stroke="#1446a0" stroke-width="6" stroke-linecap="round" opacity=".85"/>
+  <circle cx="846" cy="320" r="9" fill="#1446a0"/>
+  <text x="846" y="296" text-anchor="middle" font-family="'Roboto Mono',monospace" font-size="15" font-weight="600" fill="#1446a0">44</text>
+  <line x1="684.3" y1="320" x2="713.7" y2="320" stroke="#bd8b13" stroke-width="1.5" stroke-dasharray="3 3"/>
+  <text x="699" y="348" text-anchor="middle" font-family="'Public Sans',sans-serif" font-size="13" font-weight="700" fill="#9a6b00">folga de 0,6 p.p.</text>
+
+  <!-- ROW 3: deff 2,0 ±3,1 -->
+  <text x="44" y="450" font-family="'Public Sans',sans-serif" font-size="16" font-weight="800" fill="#12151c">Com deff 2,0</text>
+  <text x="44" y="470" font-family="'Roboto Mono',monospace" font-size="13" fill="#626774">±3,1</text>
+  <!-- zona de sobreposição [40,9 ; 41,1] -->
+  <rect x="694.1" y="430" width="9.8" height="60" fill="#9e3d42" opacity=".28"/>
+  <!-- Flávio: [34,9 ; 41,1] -->
+  <line x1="400.1" y1="460" x2="703.9" y2="460" stroke="#13a7c5" stroke-width="6" stroke-linecap="round" opacity=".85"/>
+  <circle cx="552" cy="460" r="9" fill="#13a7c5"/>
+  <text x="552" y="436" text-anchor="middle" font-family="'Roboto Mono',monospace" font-size="15" font-weight="600" fill="#13a7c5">38</text>
+  <!-- Lula: [40,9 ; 47,1] -->
+  <line x1="694.1" y1="460" x2="997.9" y2="460" stroke="#1446a0" stroke-width="6" stroke-linecap="round" opacity=".85"/>
+  <circle cx="846" cy="460" r="9" fill="#1446a0"/>
+  <text x="846" y="436" text-anchor="middle" font-family="'Roboto Mono',monospace" font-size="15" font-weight="600" fill="#1446a0">44</text>
+  <!-- anotação overlap -->
+  <line x1="699" y1="430" x2="699" y2="386" stroke="#9e3d42" stroke-width="1.5"/>
+  <text x="699" y="376" text-anchor="middle" font-family="'Public Sans',sans-serif" font-size="15" font-weight="800" fill="#9e3d42">as margens se tocam: empate técnico</text>
+  <text x="699" y="512" text-anchor="middle" font-family="'Public Sans',sans-serif" font-size="13" fill="#626774">intervalos: Flávio [34,9–41,1] · Lula [40,9–47,1]</text>
+
+  <text x="44" y="660" font-family="'Public Sans',sans-serif" font-size="14" fill="#626774">Leitura: com a margem divulgada, a vantagem de Lula parece confortável. Com o efeito de desenho do sorteio real por municípios e setores (deff 2,0), os intervalos se encostam — a manchete "Lula 6 à frente" vira hipótese, não veredito.</text>
+  <text x="44" y="684" font-family="'Roboto Mono',monospace" font-size="12" fill="#8a8fa0">arvor intelligence · quaest 100626 · n=2.004 · margem da estimativa individual; deff típico de amostras por conglomerados: 1,3–2,0</text>
+</svg>
+</div>
+<p class="note">Card 1 — o argumento central: o empate técnico no 2º turno só aparece quando a margem é calculada para o desenho amostral que a pesquisa de fato usou.</p>
+
+<!-- CARD 2: 1º turno sob 3 réguas (sem sobreposição) -->
+<div class="card">
+<svg viewBox="0 0 1240 700" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Primeiro turno Lula contra Flávio sob três hipóteses de margem de erro">
+  <text x="44" y="56" font-family="'Instrument Serif',Georgia,serif" font-size="34" fill="#12151c">1º turno, Lula 39 × Flávio 29: aqui nem a margem honesta encosta</text>
+  <text x="44" y="84" font-family="'Public Sans',sans-serif" font-size="15" fill="#626774">Os mesmos três cenários de margem aplicados ao 1º turno estimulado · auditoria honesta mostra o que muda e o que não muda</text>
+
+  <circle cx="900" cy="78" r="7" fill="#1446a0"/><text x="912" y="83" font-family="'Public Sans',sans-serif" font-size="14" fill="#12151c">Lula</text>
+  <circle cx="980" cy="78" r="7" fill="#13a7c5"/><text x="992" y="83" font-family="'Public Sans',sans-serif" font-size="14" fill="#12151c">Flávio Bolsonaro</text>
+
+  <!-- grid x: 20..45 -> 160..1140 (39,2 px/pt) -->
+  <g stroke="#ddd6c6" stroke-width="1">
+    <line x1="160" y1="120" x2="160" y2="560"/><line x1="356" y1="120" x2="356" y2="560"/>
+    <line x1="552" y1="120" x2="552" y2="560"/><line x1="748" y1="120" x2="748" y2="560"/>
+    <line x1="944" y1="120" x2="944" y2="560"/><line x1="1140" y1="120" x2="1140" y2="560"/>
+  </g>
+  <g font-family="'Roboto Mono',monospace" font-size="14" fill="#626774" text-anchor="middle">
+    <text x="160" y="586">20</text><text x="356" y="586">25</text><text x="552" y="586">30</text>
+    <text x="748" y="586">35</text><text x="944" y="586">40</text><text x="1140" y="586">45</text>
+  </g>
+  <text x="650" y="614" text-anchor="middle" font-family="'Public Sans',sans-serif" font-size="14" font-weight="700" fill="#12151c">intenção de voto (%)</text>
+
+  <!-- ROW 1: ±2,2  F[26,8;31,2] L[36,8;41,2] -->
+  <text x="44" y="170" font-family="'Public Sans',sans-serif" font-size="16" font-weight="800" fill="#12151c">Margem divulgada</text>
+  <text x="44" y="190" font-family="'Roboto Mono',monospace" font-size="13" fill="#626774">AAS · ±2,2</text>
+  <line x1="426.6" y1="180" x2="599" y2="180" stroke="#13a7c5" stroke-width="6" stroke-linecap="round" opacity=".85"/>
+  <circle cx="512.8" cy="180" r="9" fill="#13a7c5"/>
+  <text x="512.8" y="156" text-anchor="middle" font-family="'Roboto Mono',monospace" font-size="15" font-weight="600" fill="#13a7c5">29</text>
+  <line x1="818.6" y1="180" x2="991" y2="180" stroke="#1446a0" stroke-width="6" stroke-linecap="round" opacity=".85"/>
+  <circle cx="904.8" cy="180" r="9" fill="#1446a0"/>
+  <text x="904.8" y="156" text-anchor="middle" font-family="'Roboto Mono',monospace" font-size="15" font-weight="600" fill="#1446a0">39</text>
+  <line x1="599" y1="180" x2="818.6" y2="180" stroke="#087f5b" stroke-width="1.5" stroke-dasharray="3 3"/>
+  <text x="708" y="208" text-anchor="middle" font-family="'Public Sans',sans-serif" font-size="13" font-weight="700" fill="#087f5b">folga de 5,6 p.p.</text>
+
+  <!-- ROW 2: ±2,7  F[26,3;31,7] L[36,3;41,7] -->
+  <text x="44" y="310" font-family="'Public Sans',sans-serif" font-size="16" font-weight="800" fill="#12151c">Com deff 1,5</text>
+  <text x="44" y="330" font-family="'Roboto Mono',monospace" font-size="13" fill="#626774">±2,7</text>
+  <line x1="407" y1="320" x2="618.6" y2="320" stroke="#13a7c5" stroke-width="6" stroke-linecap="round" opacity=".85"/>
+  <circle cx="512.8" cy="320" r="9" fill="#13a7c5"/>
+  <text x="512.8" y="296" text-anchor="middle" font-family="'Roboto Mono',monospace" font-size="15" font-weight="600" fill="#13a7c5">29</text>
+  <line x1="799" y1="320" x2="1010.6" y2="320" stroke="#1446a0" stroke-width="6" stroke-linecap="round" opacity=".85"/>
+  <circle cx="904.8" cy="320" r="9" fill="#1446a0"/>
+  <text x="904.8" y="296" text-anchor="middle" font-family="'Roboto Mono',monospace" font-size="15" font-weight="600" fill="#1446a0">39</text>
+  <line x1="618.6" y1="320" x2="799" y2="320" stroke="#087f5b" stroke-width="1.5" stroke-dasharray="3 3"/>
+  <text x="708" y="348" text-anchor="middle" font-family="'Public Sans',sans-serif" font-size="13" font-weight="700" fill="#087f5b">folga de 4,6 p.p.</text>
+
+  <!-- ROW 3: ±3,1  F[25,9;32,1] L[35,9;42,1] -->
+  <text x="44" y="450" font-family="'Public Sans',sans-serif" font-size="16" font-weight="800" fill="#12151c">Com deff 2,0</text>
+  <text x="44" y="470" font-family="'Roboto Mono',monospace" font-size="13" fill="#626774">±3,1</text>
+  <line x1="391.3" y1="460" x2="634.3" y2="460" stroke="#13a7c5" stroke-width="6" stroke-linecap="round" opacity=".85"/>
+  <circle cx="512.8" cy="460" r="9" fill="#13a7c5"/>
+  <text x="512.8" y="436" text-anchor="middle" font-family="'Roboto Mono',monospace" font-size="15" font-weight="600" fill="#13a7c5">29</text>
+  <line x1="783.3" y1="460" x2="1026.3" y2="460" stroke="#1446a0" stroke-width="6" stroke-linecap="round" opacity=".85"/>
+  <circle cx="904.8" cy="460" r="9" fill="#1446a0"/>
+  <text x="904.8" y="436" text-anchor="middle" font-family="'Roboto Mono',monospace" font-size="15" font-weight="600" fill="#1446a0">39</text>
+  <line x1="634.3" y1="460" x2="783.3" y2="460" stroke="#087f5b" stroke-width="1.5" stroke-dasharray="3 3"/>
+  <text x="708" y="488" text-anchor="middle" font-family="'Public Sans',sans-serif" font-size="14" font-weight="800" fill="#087f5b">mesmo na margem honesta, não se tocam: folga de 3,8 p.p.</text>
+
+  <text x="44" y="660" font-family="'Public Sans',sans-serif" font-size="14" fill="#626774">Leitura: auditoria séria registra os dois lados. No 1º turno, a liderança de Lula sobre Flávio resiste a qualquer hipótese razoável de margem — a diferença de 10 pontos é real. O jogo aberto está no 2º turno, não aqui.</text>
+  <text x="44" y="684" font-family="'Roboto Mono',monospace" font-size="12" fill="#8a8fa0">arvor intelligence · quaest 100626 · n=2.004 · 1º turno estimulado</text>
+</svg>
+</div>
+<p class="note">Card 2 — a honestidade que blinda a crítica: no 1º turno os intervalos não se tocam nem com deff 2,0. Quem mostra isso ganha o direito de ser levado a sério no card 1.</p>
+
+<!-- CARD 3: todos os cenários de 2º turno na margem honesta -->
+<div class="card">
+<svg viewBox="0 0 1240 760" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Todos os cenários de segundo turno sob a margem com efeito de desenho 2,0">
+  <text x="44" y="56" font-family="'Instrument Serif',Georgia,serif" font-size="34" fill="#12151c">Na margem honesta, só um adversário encosta em Lula</text>
+  <text x="44" y="84" font-family="'Public Sans',sans-serif" font-size="15" fill="#626774">Todos os cenários de 2º turno da Quaest sob a mesma régua: deff 2,0 → ±3,1 por estimativa</text>
+
+  <circle cx="900" cy="78" r="7" fill="#1446a0"/><text x="912" y="83" font-family="'Public Sans',sans-serif" font-size="14" fill="#12151c">Lula</text>
+  <circle cx="980" cy="78" r="7" fill="#13a7c5"/><text x="992" y="83" font-family="'Public Sans',sans-serif" font-size="14" fill="#12151c">Adversário</text>
+
+  <!-- grid x: 27..50 -> 160..1140 (42,6 px/pt) -->
+  <g stroke="#ddd6c6" stroke-width="1">
+    <line x1="160" y1="120" x2="160" y2="620"/><line x1="287.9" y1="120" x2="287.9" y2="620"/>
+    <line x1="500.9" y1="120" x2="500.9" y2="620"/><line x1="713.9" y1="120" x2="713.9" y2="620"/>
+    <line x1="926.9" y1="120" x2="926.9" y2="620"/><line x1="1139.9" y1="120" x2="1139.9" y2="620"/>
+  </g>
+  <g font-family="'Roboto Mono',monospace" font-size="14" fill="#626774" text-anchor="middle">
+    <text x="287.9" y="646">30</text><text x="500.9" y="646">35</text><text x="713.9" y="646">40</text>
+    <text x="926.9" y="646">45</text><text x="1139.9" y="646">50</text>
+  </g>
+  <text x="650" y="674" text-anchor="middle" font-family="'Public Sans',sans-serif" font-size="14" font-weight="700" fill="#12151c">intenção de voto (%) · todas as barras com ±3,1</text>
+
+  <!-- ROW Flávio: F 38 [34,9;41,1] dot 628,6 [496,5;760,7] · L 44 [40,9;47,1] dot 884,4 [752,3;1016,4] -->
+  <rect x="752.3" y="150" width="8.4" height="60" fill="#9e3d42" opacity=".30"/>
+  <text x="44" y="174" font-family="'Public Sans',sans-serif" font-size="17" font-weight="800" fill="#12151c">Flávio Bolsonaro</text>
+  <text x="44" y="194" font-family="'Roboto Mono',monospace" font-size="13" fill="#626774">Lula 44 × 38</text>
+  <line x1="496.5" y1="180" x2="760.7" y2="180" stroke="#13a7c5" stroke-width="6" stroke-linecap="round" opacity=".85"/>
+  <circle cx="628.6" cy="180" r="9" fill="#13a7c5"/>
+  <line x1="752.3" y1="180" x2="1016.4" y2="180" stroke="#1446a0" stroke-width="6" stroke-linecap="round" opacity=".85"/>
+  <circle cx="884.4" cy="180" r="9" fill="#1446a0"/>
+  <text x="756.5" y="142" text-anchor="middle" font-family="'Public Sans',sans-serif" font-size="14" font-weight="800" fill="#9e3d42">se tocam → empate técnico</text>
+
+  <!-- ROW Zema: Z 35 [31,9;38,1] dot 500,7 [368,6;632,8] · L 45 [41,9;48,1] dot 926,9 [794,9;1059] -->
+  <text x="44" y="304" font-family="'Public Sans',sans-serif" font-size="17" font-weight="800" fill="#12151c">Romeu Zema</text>
+  <text x="44" y="324" font-family="'Roboto Mono',monospace" font-size="13" fill="#626774">Lula 45 × 35</text>
+  <line x1="368.6" y1="310" x2="632.8" y2="310" stroke="#13a7c5" stroke-width="6" stroke-linecap="round" opacity=".85"/>
+  <circle cx="500.7" cy="310" r="9" fill="#13a7c5"/>
+  <line x1="794.9" y1="310" x2="1059" y2="310" stroke="#1446a0" stroke-width="6" stroke-linecap="round" opacity=".85"/>
+  <circle cx="926.9" cy="310" r="9" fill="#1446a0"/>
+  <line x1="632.8" y1="310" x2="794.9" y2="310" stroke="#626774" stroke-width="1.5" stroke-dasharray="3 3"/>
+  <text x="713.9" y="338" text-anchor="middle" font-family="'Public Sans',sans-serif" font-size="13" font-weight="700" fill="#626774">folga de 3,8 p.p.</text>
+
+  <!-- ROW Caiado: igual a Zema -->
+  <text x="44" y="434" font-family="'Public Sans',sans-serif" font-size="17" font-weight="800" fill="#12151c">Ronaldo Caiado</text>
+  <text x="44" y="454" font-family="'Roboto Mono',monospace" font-size="13" fill="#626774">Lula 45 × 35</text>
+  <line x1="368.6" y1="440" x2="632.8" y2="440" stroke="#13a7c5" stroke-width="6" stroke-linecap="round" opacity=".85"/>
+  <circle cx="500.7" cy="440" r="9" fill="#13a7c5"/>
+  <line x1="794.9" y1="440" x2="1059" y2="440" stroke="#1446a0" stroke-width="6" stroke-linecap="round" opacity=".85"/>
+  <circle cx="926.9" cy="440" r="9" fill="#1446a0"/>
+  <line x1="632.8" y1="440" x2="794.9" y2="440" stroke="#626774" stroke-width="1.5" stroke-dasharray="3 3"/>
+  <text x="713.9" y="468" text-anchor="middle" font-family="'Public Sans',sans-serif" font-size="13" font-weight="700" fill="#626774">folga de 3,8 p.p.</text>
+
+  <!-- ROW Renan: R 31 [27,9;34,1] dot 330,3 [198,3;462,4] · L 45 -->
+  <text x="44" y="564" font-family="'Public Sans',sans-serif" font-size="17" font-weight="800" fill="#12151c">Renan Santos</text>
+  <text x="44" y="584" font-family="'Roboto Mono',monospace" font-size="13" fill="#626774">Lula 45 × 31</text>
+  <line x1="198.3" y1="570" x2="462.4" y2="570" stroke="#13a7c5" stroke-width="6" stroke-linecap="round" opacity=".85"/>
+  <circle cx="330.3" cy="570" r="9" fill="#13a7c5"/>
+  <line x1="794.9" y1="570" x2="1059" y2="570" stroke="#1446a0" stroke-width="6" stroke-linecap="round" opacity=".85"/>
+  <circle cx="926.9" cy="570" r="9" fill="#1446a0"/>
+  <line x1="462.4" y1="570" x2="794.9" y2="570" stroke="#626774" stroke-width="1.5" stroke-dasharray="3 3"/>
+  <text x="628.6" y="598" text-anchor="middle" font-family="'Public Sans',sans-serif" font-size="13" font-weight="700" fill="#626774">folga de 7,8 p.p.</text>
+
+  <text x="44" y="722" font-family="'Public Sans',sans-serif" font-size="14" fill="#626774">Leitura: sob a mesma régua honesta, Flávio é o único adversário cujo intervalo encosta no de Lula. Zema e Caiado ficam a 3,8 pontos da zona de empate; Renan, a 7,8. O melhor segundo-turnista da direita é também o único que transforma a eleição em jogo aberto.</text>
+  <text x="44" y="746" font-family="'Roboto Mono',monospace" font-size="12" fill="#8a8fa0">arvor intelligence · quaest 100626 · n=2.004 · deff 2,0 (±3,1) em todas as estimativas</text>
+</svg>
+</div>
+<p class="note">Card 3 — o fecho estratégico: a mesma régua aplicada a todos os adversários mostra que só Flávio entra em zona de empate técnico com Lula.</p>
+
+</div>
+</body>
+</html>
