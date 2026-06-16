@@ -1,0 +1,733 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BTG/Nexus 15/06/2026 - auditoria de questionário, série, deff e vieses</title>
+<meta name="description" content="Dossiê Arvor sobre a 4ª rodada BTG/Nexus: evolução das quatro pesquisas, questionário, tarifaço, perguntas omitidas, amostra, margens reais, deff e contexto BTG.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;600;700;800&family=Spline+Sans+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f5f0e7;
+  --paper-2:#ebe2d3;
+  --ink:#10131a;
+  --muted:#68665f;
+  --line:#cfc4b2;
+  --navy:#08275f;
+  --blue:#1557b0;
+  --red:#b32934;
+  --green:#087c5a;
+  --gold:#bc8618;
+  --orange:#e87522;
+  --white:#fffaf0;
+  --serif:"Libre Baskerville",Georgia,serif;
+  --sans:"Source Sans 3",ui-sans-serif,system-ui,sans-serif;
+  --display:"Archivo Black",Impact,sans-serif;
+  --mono:"Spline Sans Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  color:var(--ink);
+  background:
+    linear-gradient(90deg,rgba(16,19,26,.045) 1px,transparent 1px) 0 0/58px 58px,
+    linear-gradient(180deg,#fbf7ef 0,var(--paper) 42%,#eaf1ec 100%);
+  font-family:var(--serif);
+  font-size:18px;
+  line-height:1.6;
+}
+a{color:#074c9a;text-underline-offset:3px;text-decoration-thickness:1px}
+.wrap{width:min(1220px,calc(100% - 40px));margin:auto}
+.hero{
+  min-height:92vh;
+  display:grid;
+  grid-template-columns:minmax(0,1.03fr) minmax(350px,.97fr);
+  gap:40px;
+  align-items:end;
+  padding:54px 0 34px;
+  border-bottom:2px solid var(--ink);
+}
+.kicker,.tag,.verdict{
+  font-family:var(--sans);
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+  font-size:.76rem;
+}
+.kicker{color:var(--green)}
+h1,h2,h3{margin:0;color:var(--ink)}
+h1{font-family:var(--display);font-size:clamp(4rem,8.6vw,8.7rem);line-height:.88;letter-spacing:0;margin:18px 0}
+h1 span{display:block;color:var(--red)}
+h2{font-family:var(--display);font-size:clamp(2.4rem,5.3vw,4.9rem);line-height:.97;letter-spacing:0}
+h3{font-family:var(--sans);font-size:1.22rem;line-height:1.14}
+.deck{max-width:900px;margin:0;color:#2e3338;font-size:clamp(1.18rem,2vw,1.48rem);line-height:1.36}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px;font-family:var(--sans);font-size:.84rem}
+.pill{border:1px solid var(--line);background:rgba(255,255,255,.62);padding:6px 10px;border-radius:999px}
+.hero-panel{align-self:stretch;display:grid;align-content:end;gap:14px}
+.hero>*,.chart-card>*{min-width:0}
+.hero-panel img,.figure img{display:block;width:100%;height:auto;border:1px solid var(--ink);border-radius:6px;background:#fff}
+.scoreboard{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.score{border-top:2px solid var(--ink);padding-top:10px;font-family:var(--sans)}
+.score b{display:block;font-size:2.25rem;line-height:1;color:var(--blue);letter-spacing:-.03em}
+.score span{display:block;color:var(--muted);font-size:.82rem;line-height:1.25;margin-top:6px}
+nav{position:sticky;top:0;z-index:10;background:rgba(245,240,231,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;gap:16px;overflow:auto;padding:10px 0;font-family:var(--sans);font-size:.82rem;white-space:nowrap}
+nav a{color:var(--muted);text-decoration:none}
+nav a:hover{color:var(--ink)}
+section{padding:68px 0;border-bottom:1px solid var(--line)}
+section.band{background:rgba(8,39,95,.045)}
+.section-head{max-width:1050px;margin-bottom:30px}
+.section-head p{margin:12px 0 0;font-size:1.16rem;line-height:1.44;color:#343941}
+.grid{display:grid;gap:16px}
+.cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.tile,.chart-card{
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.68);
+  border-radius:7px;
+  padding:18px;
+  min-width:0;
+}
+.tile p,.chart-card p{margin:10px 0 0;color:#3b4148}
+.ok{color:var(--green)} .warn{color:var(--gold)} .bad{color:var(--red)} .neutral{color:var(--blue)}
+.lead{font-size:1.26rem;line-height:1.42;color:#30353b;margin:0}
+.callout{margin:24px 0;border-left:6px solid var(--red);padding-left:18px;font-size:1.22rem;line-height:1.42;color:#252a30}
+.caption,.note{font-family:var(--sans);font-size:.82rem;color:var(--muted);line-height:1.35;margin-top:9px}
+.chart-title{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px}
+.chart-title h3{font-size:1.08rem}
+.chart-title span{font-family:var(--mono);font-size:.72rem;color:var(--muted);white-space:nowrap}
+.chart{width:100%;min-height:260px}
+.chart.tall{min-height:390px}
+.chart.small{min-height:210px}
+svg{display:block;width:100%;height:auto}
+.axis,.grid-line{stroke:#d9d0c2;stroke-width:1}
+.tick-label{font-family:var(--sans);font-size:14px;fill:#55534d}
+.series-label,.bar-label,.heat-label{font-family:var(--sans);font-size:15px;fill:#1a1e24;font-weight:700;paint-order:stroke;stroke:#fffaf0;stroke-width:3.4px;stroke-linejoin:round}
+.value-label{font-family:var(--mono);font-size:14px;fill:#1a1e24;font-weight:600;paint-order:stroke;stroke:#fffaf0;stroke-width:3.4px;stroke-linejoin:round}
+.legend{display:flex;flex-wrap:wrap;gap:12px;margin-top:10px;font-family:var(--sans);font-size:.92rem;color:#45433d}
+.dot{width:10px;height:10px;border-radius:999px;display:inline-block;margin-right:5px}
+.proof-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:20px}
+table{width:100%;border-collapse:collapse;background:rgba(255,255,255,.62);font-family:var(--sans);font-size:.9rem}
+th,td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{text-align:left;text-transform:uppercase;font-size:.72rem;color:var(--muted);font-weight:800}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+.mono{font-family:var(--mono);overflow-wrap:anywhere}
+.timeline{display:grid;grid-template-columns:repeat(7,1fr);gap:10px}
+.step{border-top:2px solid var(--ink);padding-top:10px;font-family:var(--sans)}
+.step b{display:block;font-size:.95rem}
+.step span{display:block;color:var(--muted);font-size:.8rem;line-height:1.28;margin-top:4px}
+.source-list{columns:2;column-gap:38px;font-family:var(--sans);font-size:.88rem}
+.source-list li{break-inside:avoid;margin:0 0 8px}
+.mini-bars{display:grid;gap:8px;margin-top:12px}
+.mini-row{display:grid;grid-template-columns:160px 1fr 44px;gap:9px;align-items:center;font-family:var(--sans);font-size:.86rem}
+.track{height:12px;background:#e5ded2;border:1px solid #d7cdbd}
+.fill{height:100%;background:var(--blue)}
+.redfill{background:var(--red)} .greenfill{background:var(--green)} .goldfill{background:var(--gold)}
+.feature{border:1px solid var(--ink);background:rgba(255,255,255,.74);border-radius:8px;padding:22px;margin-top:4px;box-shadow:0 1px 0 rgba(16,19,26,.06)}
+.feature .chart-title h3{font-size:1.32rem}
+.figure-svg{border:1px solid var(--ink);border-radius:8px;background:#fffaf0;overflow:hidden}
+.figure-svg svg{display:block;width:100%;height:auto}
+.brand-foot{display:flex;align-items:center;gap:10px;margin-top:14px;font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.brand-foot .diamond{width:9px;height:9px;background:var(--navy);transform:rotate(45deg);display:inline-block}
+.brand-foot b{color:var(--navy);font-weight:600}
+.takeaways{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:18px}
+.takeaway{border-top:3px solid var(--navy);padding-top:10px;font-family:var(--sans)}
+.takeaway b{display:block;font-size:1.7rem;line-height:1;letter-spacing:-.02em}
+.takeaway span{display:block;color:var(--muted);font-size:.82rem;line-height:1.3;margin-top:6px}
+.t-red b{color:var(--red)} .t-blue b{color:var(--blue)} .t-gold b{color:var(--gold)} .t-navy b{color:var(--navy)}
+footer.site{padding:46px 0 60px;border-top:2px solid var(--ink);font-family:var(--sans)}
+footer.site .mark{display:flex;align-items:center;gap:12px;font-family:var(--display);font-size:1.4rem;color:var(--navy)}
+footer.site .mark .footlogo{width:42px;height:42px;object-fit:contain}
+footer.site p{color:var(--muted);font-size:.95rem;max-width:820px;margin:12px 0 0;line-height:1.5}
+footer.site .foot-links{font-family:var(--mono);font-size:.82rem;letter-spacing:.02em}
+.brand-lockup{display:flex;align-items:center;gap:11px;margin-bottom:6px}
+.brand-lockup img{width:40px;height:40px;object-fit:contain}
+.brand-lockup span{font-family:var(--sans);font-weight:700;font-size:.92rem;letter-spacing:.12em;color:var(--navy);text-transform:uppercase}
+.brand-lockup b{font-weight:800}
+.caption,.note{font-size:.86rem}
+.plain{margin:16px 0;background:rgba(8,39,95,.06);border-left:4px solid var(--navy);border-radius:0 6px 6px 0;padding:12px 16px;font-family:var(--sans);font-size:1.02rem;line-height:1.5;color:#2b3038}
+.plain b{color:var(--navy);text-transform:uppercase;letter-spacing:.04em;font-size:.82rem}
+.expert{margin:16px 0;background:rgba(124,99,0,.07);border-left:4px solid var(--gold);border-radius:0 6px 6px 0;padding:12px 16px;font-family:var(--sans);font-size:.98rem;line-height:1.5;color:#3a3531}
+.expert b{color:#7c6300;text-transform:uppercase;letter-spacing:.04em;font-size:.82rem}
+@media (max-width:960px){
+  body{font-size:16px}
+  .hero,.cols-2,.cols-3,.cols-4,.proof-grid,.timeline{grid-template-columns:1fr}
+  .scoreboard{grid-template-columns:1fr}
+  .chart{min-height:220px}
+  table{display:block;overflow-x:auto}
+  th,td{min-width:110px}
+  .source-list{columns:1;overflow-wrap:anywhere}
+  .mini-row{grid-template-columns:110px 1fr 42px}
+}
+@media (max-width:560px){
+  .wrap{width:min(1220px,calc(100% - 28px))}
+  .hero{min-height:auto;gap:28px;padding:34px 0 28px}
+  h1{font-size:3.1rem;line-height:.92;overflow-wrap:anywhere}
+  h2{font-size:2.05rem;line-height:1.02}
+  .deck{font-size:1.08rem;line-height:1.38}
+  .meta{font-size:.78rem;gap:6px}
+  .pill{max-width:100%;overflow-wrap:anywhere}
+  section{padding:46px 0}
+  .tile,.chart-card{padding:14px}
+  .chart-title{display:block}
+  .chart-title span{display:block;margin-top:4px;white-space:normal}
+  .mini-row{grid-template-columns:1fr;gap:4px}
+}
+</style>
+</head>
+<body>
+<header class="wrap hero">
+  <div>
+    <div class="brand-lockup"><img src="img/arvor_logo.png" alt="Logotipo Arvor"><span><b>ARVOR</b> INTELLIGENCE</span></div>
+    <div class="kicker">Auditoria eleitoral · dados abertos</div>
+    <h1>BTG/Nexus <span>150626</span></h1>
+    <p class="deck">A pesquisa do banco fez o que a Quaest não fez: perguntou o voto antes do roteiro pesado e abriu boa parte do questionário. Mas fez também algo mais fino e mais perigoso. Vendeu movimento estatístico sem informar o efeito de desenho, montou uma série em que os cartões mudavam de uma rodada para a outra, trancou a saída neutra na pergunta do tarifaço e deixou o mercado financeiro sentado dentro da sala, por escrito, no próprio aviso legal do relatório.</p>
+    <div class="meta">
+      <span class="pill">Registro TSE: BR-06645/2026</span>
+      <span class="pill">Campo: 12/06 a 14/06/2026</span>
+      <span class="pill">Divulgação: 15/06/2026</span>
+      <span class="pill">n = 2.017</span>
+      <span class="pill">CATI / RDD telefônico</span>
+      <span class="pill">Contratante: Banco BTG Pactual</span>
+      <span class="pill">Custo: R$ 164.888,89</span>
+      <span class="pill">Relatório: 116 páginas</span>
+    </div>
+  </div>
+  <aside class="hero-panel">
+    <img src="img/nexus_btg_150626_primeiro_turno.png" alt="Página da pesquisa BTG/Nexus com intenção de voto estimulada de primeiro turno">
+    <div class="scoreboard">
+      <div class="score"><b>+9</b><span>Lula sobre Flávio no 1º turno estimulado de junho</span></div>
+      <div class="score"><b>+6</b><span>Lula sobre Flávio no 2º turno, dentro de margem de diferença com deff alto</span></div>
+      <div class="score"><b>±5,9</b><span>margem plausível da diferença 49-43 com deff 2,0</span></div>
+      <div class="score"><b>0</b><span>microdados, pesos finais, deff e n efetivo publicados</span></div>
+    </div>
+  </aside>
+</header>
+
+<nav>
+  <div class="wrap">
+    <a href="#sumario">Sumário</a>
+    <a href="#series">Séries</a>
+    <a href="#recortes">Recortes</a>
+    <a href="#margem">Margem/deff</a>
+    <a href="#amostra">Amostra</a>
+    <a href="#questionario">Questionário</a>
+    <a href="#tarifaco">Tarifaço</a>
+    <a href="#btg">BTG</a>
+    <a href="#provas">Provas</a>
+    <a href="#fontes">Fontes</a>
+  </div>
+</nav>
+
+<main>
+<section id="sumario">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Sumário sem perfume</h2>
+      <p>Não há sinal honesto para gritar fraude. Há sinal forte para dizer outra coisa: pesquisa útil, paga por um agente com dinheiro no jogo, com fotografia plausível do eleitorado e transparência estatística insuficiente. O número principal de voto, o que abre a manchete, é mais limpo que o da Quaest. É a narrativa construída depois dele que precisa apanhar.</p>
+    </div>
+    <div class="grid cols-4">
+      <article class="tile"><span class="verdict ok">Número principal</span><h3>Voto vem antes do roteiro</h3><p>Intenção de voto, 2º turno, potencial e rejeição são perguntados antes de governo, economia, facções, tarifaço e dívida. A ordem certa.</p></article>
+      <article class="tile"><span class="verdict bad">Margem</span><h3>±2 é vitrine</h3><p>Telefone por sorteio aleatório, cotas e ponderação inflam a incerteza. Sem o efeito de desenho publicado, a margem nacional plausível sobe para ±2,7 a ±3,1. Recorte pequeno vira ±6 a ±8.</p></article>
+      <article class="tile"><span class="verdict warn">Série</span><h3>Cartão mudou</h3><p>Aldo sai, Joaquim entra, Aécio entra. A curva informa, mas não é uma régua de laboratório medindo sempre a mesma coisa.</p></article>
+      <article class="tile"><span class="verdict bad">Tarifaço</span><h3>Neutro escondido</h3><p>A alternativa “não é culpa de nenhum dos dois” aparece como NÃO LER. O resultado 42 x 39 é culpa forçada, não opinião espontânea.</p></article>
+    </div>
+    <p class="callout">A crítica certa não é a fácil. A Nexus/BTG não contaminou a intenção de voto com o tarifaço: mediu o voto limpo, no começo. O problema vem depois, quando ela usa cruzamentos feitos já no fim do questionário, com o entrevistado aquecido pelos temas quentes, para sugerir uma relação de causa e efeito que o desenho da pesquisa não autoriza ninguém a afirmar.</p>
+  </div>
+</section>
+
+<section id="series" class="band">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Quatro rodadas na mesa</h2>
+      <p>O dossiê coloca lado a lado as quatro pesquisas BTG/Nexus dos últimos meses. Os gráficos abaixo fazem o trabalho que a manchete não faz: separam o que é movimento de verdade do que é apenas ruído de instrumento, de amostra e de arredondamento.</p>
+    </div>
+    <div class="grid cols-2">
+      <article class="chart-card"><div class="chart-title"><h3>Segundo turno: Lula x Flávio</h3><span>mar-jun</span></div><div id="chart-2t" class="chart"></div><p>Junho é a maior vantagem de Lula em toda a série. Mas a diferença de 6 pontos tem de ser lida com a margem da própria diferença, que é maior, e não com o ±2 de cada candidato.</p></article>
+      <article class="chart-card"><div class="chart-title"><h3>Primeiro turno estimulado, cenário 1</h3><span>abr-jun</span></div><div id="chart-1t" class="chart"></div><p>O cenário principal só é comparável desde abril. Junho inclui Aécio, e maio trocou Aldo por Joaquim.</p></article>
+      <article class="chart-card"><div class="chart-title"><h3>Governo Lula: avaliação</h3><span>mar-jun</span></div><div id="chart-gov-eval" class="chart"></div><p>O ótimo/bom encolhe e o regular engorda. Lula segura a aprovação, mas a qualidade desse apoio se deteriora por baixo.</p></article>
+      <article class="chart-card"><div class="chart-title"><h3>Aprovação do governo</h3><span>mar-jun</span></div><div id="chart-gov-approval" class="chart"></div><p>Aprovação e desaprovação estão tecnicamente grudadas. A eleição ainda não virou plebiscito fechado contra o governo.</p></article>
+      <article class="chart-card"><div class="chart-title"><h3>Rejeição comparada</h3><span>Lula x Flávio</span></div><div id="chart-rejection" class="chart"></div><p>Flávio piora para 52% de “não votaria de jeito nenhum”. Lula volta a 47%, ainda alto.</p></article>
+      <article class="chart-card"><div class="chart-title"><h3>Certeza do voto no 1º turno</h3><span>candidatos</span></div><div id="chart-certainty" class="chart"></div><p>O voto de Lula e Flávio é duro. O voto de Zema, Caiado e Renan é fluxo negociável.</p></article>
+      <article class="chart-card"><div class="chart-title"><h3>Bolsa Família no 2º turno</h3><span>recorte longitudinal</span></div><div id="chart-bolsa" class="chart"></div><p>Entre beneficiários, Lula continua perto de dois terços. Entre não beneficiários, a disputa fica muito mais estreita.</p></article>
+      <article class="chart-card"><div class="chart-title"><h3>Interesse e comparecimento declarado</h3><span>mobilização</span></div><div id="chart-mobilization" class="chart"></div><p>Interesse alto e comparecimento declarado acima de 90% quase sempre superestimam o que acontece na urna, porque gente que não vai votar costuma dizer que vai. Ainda assim, mostram a campanha começando a entrar no radar do eleitor.</p></article>
+    </div>
+  </div>
+</section>
+
+<section id="recortes">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Onde Lula vence, onde Flávio respira</h2>
+      <p>Os recortes da simulação Lula x Flávio em junho. A cor mostra a diferença entre os dois em cada grupo: vermelho quando Lula vai melhor, azul quando Flávio vai melhor. São médias por segmento, não os dados individuais de cada entrevistado; cada grupo tem menos gente, então a margem de erro aqui é bem maior do que a nacional.</p>
+    </div>
+    <article class="feature">
+      <div class="chart-title"><h3>De quem vem e para quem vai cada voto, candidato a candidato</h3><span>modelo Arvor · jun/26</span></div>
+      <div id="chart-sankey" class="figure-svg"></div>
+      <p class="caption">Cada candidato de 1º turno vira um nó próprio. A largura de cada fluxo é o voto dele que, no 2º turno Lula × Flávio, vai para Lula (vermelho), Flávio (azul) ou branco/nulo (cinza). O <b>split por candidato é estimado</b> multiplicando o voto de 1º turno pelos percentuais de transferência que a própria Nexus mede no cruzamento de 2º turno (Zema 25/64/11, Caiado 22/61/16, Daciolo 9/61/30, Cury 20/46/34 etc.) e é cruzado com os quatro cenários de 2º turno publicados (Lula × Flávio/Zema/Caiado/Renan). Não é matriz individual de microdados: é reconstrução de consistência, com arredondamento que fecha o agregado em 49 / 43 / 8.</p>
+      <div class="takeaways">
+        <div class="takeaway t-blue"><b>~8,0</b><span>dos 16 p.p. dos demais candidatos migram para Flávio, puxados por Caiado (2,5), Renan (2,1) e Daciolo (0,6)</span></div>
+        <div class="takeaway t-red"><b>~3,4</b><span>escorrem para Lula: Caiado (0,9) e Joaquim (0,6) lideram, mas a direita drena pouco para a esquerda</span></div>
+        <div class="takeaway t-gold"><b>~4,6</b><span>evaporam em branco e nulo: Renan (1,3) e Joaquim (1,1) são quem mais desperdiça voto antipetista</span></div>
+      </div>
+    </article>
+    <p class="plain"><b>Em miúdos</b> — pense em cada candidato eliminado no 1º turno como um balde de água. No 2º turno, essa água tem de ir para algum lugar: um pouco escorre para Lula, um pouco para Flávio, um pouco evapora em voto branco e nulo. O gráfico só rastreia para onde foi cada gota. Some tudo no fim e tem de fechar exatamente o placar publicado, 49 a 43 com 8 perdidos. Nenhuma gota some no caminho.</p>
+    <p class="expert"><b>Para o estatístico</b> — é uma reconstrução por balanço de massa: o voto de 1º turno de cada nome é redistribuído pelas taxas de transferência que a própria Nexus afere no cruzamento de 2º turno e reconciliado contra os quatro cenários publicados. O agregado é forçado a fechar em 49 / 43 / 8, então cada coeficiente carrega a incerteza dos cruzamentos de origem (n por candidato pequeno) somada ao arredondamento. É consistência interna verificável, não matriz de transição estimada de microdados individuais.</p>
+    <div class="callout" style="margin-top:24px">A direita não perde por falta de candidato competitivo. Flávio é o melhor nome de 2º turno que a oposição tinha para oferecer nesta rodada. Ele perde porque um terço de todo o voto antipetista disponível simplesmente não vira voto em ninguém. O adversário invisível de Flávio não é Lula. É o branco e o nulo.</div>
+    <div class="grid cols-2" style="margin-top:8px">
+      <article class="chart-card"><div class="chart-title"><h3>Mapa de vantagem por perfil</h3><span>Lula − Flávio · jun/26</span></div><div id="chart-profile-heat" class="chart tall"></div><p>Vermelho é vantagem Lula, azul é vantagem Flávio. Sudeste e interior são o tabuleiro real do 2º turno.</p></article>
+      <article class="chart-card"><div class="chart-title"><h3>Destino do voto de cada nanocandidato</h3><span>1T → 2T Lula x Flávio</span></div><div id="chart-transfer" class="chart tall"></div><p>Cada barra é 100% do eleitor de 1º turno daquele nome. Daciolo (+52, evangélico), Zema (+39) e Caiado (+39) são as pontes mais fortes para Flávio; só Joaquim Barbosa, mais ao centro, escorre para Lula. Número à direita é o líquido Flávio − Lula.</p></article>
+    </div>
+    <article class="feature" style="margin-top:18px">
+      <div class="chart-title"><h3>O quadrante onde a eleição se decide</h3><span>potencial × rejeição · jun/26</span></div>
+      <div id="chart-quadrant" class="figure-svg"></div>
+      <p class="caption">Potencial de voto (eixo x: voto exclusivo + poderia votar) contra rejeição (eixo y: não votaria de jeito nenhum). Bolhas dimensionadas pelo voto de 2º turno contra Lula. Lula é o único acima de 50 de potencial; Flávio carrega a maior rejeição (52). Zema e Caiado têm rejeição menor, mas potencial preso abaixo de um terço — terceira via barata de rejeitar, cara de eleger.</p>
+    </article>
+    <div class="grid cols-3" style="margin-top:16px">
+      <article class="tile"><span class="verdict ok">Flávio performa melhor</span><h3>Evangélicos, homens, alta renda, Sul/N-CO</h3><p>Flávio lidera entre evangélicos por 59 a 34, homens por 49 a 42, mais de 5 SM por 51 a 41, Sul por 51 a 38 e Norte/Centro-Oeste por 52 a 40.</p></article>
+      <article class="tile"><span class="verdict ok">Lula domina</span><h3>Nordeste, fundamental, 60+, baixa renda</h3><p>Lula faz 66 a 28 no Nordeste, 62 a 34 no fundamental, 56 a 39 em 60+, 59 a 34 até 1 SM e 57 a 37 de 1 a 2 SM.</p></article>
+      <article class="tile"><span class="verdict warn">Zona cinza</span><h3>Sudeste e interior empatam a vida real</h3><p>Sudeste dá 45 a 45. Interior fica 47 a 45. É aqui que margem, turnout, campanha e nulo decidem.</p></article>
+    </div>
+  </div>
+</section>
+
+<section id="margem" class="band">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>A margem que o PDF não mostra</h2>
+      <p>A margem de ±2 p.p. estampada no relatório supõe um mundo mais limpo do que aquele em que a pesquisa foi feita: telefonema por número sorteado, com cotas e pesos. Como a Nexus não publica nem o efeito de desenho nem o tamanho efetivo da amostra, a auditoria é obrigada a refazer a conta sob hipóteses plausíveis.</p>
+    </div>
+    <article class="feature">
+      <div class="chart-title"><h3>A vantagem de 6 pontos sobrevive — por um fio</h3><span>Lula − Flávio no 2º turno · intervalo da diferença</span></div>
+      <div id="chart-diff" class="figure-svg"></div>
+      <p class="caption">A diferença medida é de +6 p.p. (Lula 49 contra Flávio 43). A barra mostra o intervalo de confiança da <b>diferença entre os dois</b>, e não da nota de cada um separadamente, sob três hipóteses de efeito de desenho. Na hipótese mais generosa o piso é +1,8; com efeito de desenho 1,5 cai para +0,9; com efeito 2,0 o piso desce a +0,1, quase encostando no zero. Há vantagem, sim. Mas chamar isso de "abriu e acabou" é estatística de vitrine.</p>
+    </article>
+    <p class="plain"><b>Em miúdos</b> — quando duas pesquisas dizem 49 e 43, a tentação é subtrair e cravar "6 de frente". Acontece que cada número desses já vem com sua própria incerteza, e quando você compara um com o outro as duas incertezas se somam. A margem da diferença é sempre maior que a margem de cada candidato. Por isso uma vantagem que parece folgada pode, no pior cenário, encolher quase até o empate.</p>
+    <p class="expert"><b>Para o estatístico</b> — o erro-padrão de uma diferença de proporções não é o erro de cada uma: para opções mutuamente exclusivas, var(p₁−p₂) = var(p₁) + var(p₂) + 2·cov(p₁,p₂), e a covariância é negativa, o que infla o resultado. Some a isso o efeito de desenho (deff) de uma amostra com cotas, ponderação e raking, que multiplica a variância e reduz o n efetivo (n_eff = n/deff). Com deff 2,0 o n efetivo cai à metade e o piso do intervalo da diferença vai a +0,1 p.p. Reportar ±2 sem deff nem n efetivo é divulgar precisão que o desenho não sustenta.</p>
+    <div class="grid cols-2" style="margin-top:18px">
+      <article class="chart-card"><div class="chart-title"><h3>Margem nacional por deff</h3><span>pior caso</span></div><div id="chart-deff" class="chart"></div><p>Com deff 2,0, o pior caso nacional vai para ±3,09 p.p. Em recorte de 300 pessoas, passa de ±7 p.p.</p></article>
+      <article class="chart-card"><div class="chart-title"><h3>Margem dos recortes</h3><span>AAS x deff 2</span></div><div id="chart-subgroups" class="chart"></div><p>Todo cruzamento deveria vir com o tamanho efetivo da subamostra ao lado. Sem isso, a tabela de renda ou de religião vira munição de discurso, com casas decimais que a amostra não comporta.</p></article>
+    </div>
+    <table style="margin-top:16px">
+      <thead><tr><th>Estimativa</th><th class="num">AAS</th><th class="num">deff 1,5</th><th class="num">deff 2,0</th><th>Leitura</th></tr></thead>
+      <tbody>
+        <tr><td>Top-line nacional p=50%, n=2.017</td><td class="num">±2,18</td><td class="num">±2,67</td><td class="num">±3,09</td><td>O ±2 divulgado é otimista.</td></tr>
+        <tr><td>Vantagem Lula-Flávio no 2º turno, 49-43</td><td class="num">±4,18</td><td class="num">±5,12</td><td class="num">±5,91</td><td>Diferença de 6 pontos é forte, mas não blindada.</td></tr>
+        <tr><td>Vantagem Lula-Flávio no 1º turno, 42-33</td><td class="num">±3,76</td><td class="num">±4,60</td><td class="num">±5,32</td><td>Primeiro turno é mais confortável.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="amostra">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Amostra: quase certa, mas com a idade entortada</h2>
+      <p>Sexo e região batem razoavelmente com o que o TSE registra. A idade não bate. A Nexus usa como referência a PNADC 2024 visita 1, que é a foto da população em geral. Só que eleição não se decide na população: se decide no eleitorado. E o eleitorado tem cara, sexo, idade e estado de origem que o TSE conhece nome por nome.</p>
+    </div>
+    <div class="grid cols-2">
+      <article class="chart-card"><div class="chart-title"><h3>Nexus menos TSE/PNAD</h3><span>p.p.</span></div><div id="chart-sample-delta" class="chart"></div><p>Os jovens aparecem em número maior do que o TSE registra; os de 60 anos para cima, em número menor. Isso não vira automaticamente vantagem para um lado, mas a inconsistência de método é real e merece explicação.</p></article>
+      <article class="figure"><img src="img/nexus_btg_150626_perfil_amostra.png" alt="Perfil da amostra BTG/Nexus"><figcaption class="caption">Perfil publicado pela Nexus/BTG. Falta abrir o peso final aplicado a cada entrevistado, o tipo de telefone, a taxa de resposta e o tamanho efetivo da amostra.</figcaption></article>
+    </div>
+    <p class="plain"><b>Em miúdos</b> — CATI/RDD quer dizer entrevista por telefone com o número discado por sorteio. O problema é simples: só entra na conta quem tem telefone e atende. Quem não atende, quem desliga, quem só usa o celular do trabalho, tudo isso fica de fora por um filtro que ninguém vê. Para corrigir, o instituto "pesa" as respostas, dando mais importância a uns grupos e menos a outros até a amostra parecer com o Brasil. O detalhe é que esse esticar e encolher tem um preço, e a Nexus não mostra o recibo.</p>
+    <p class="expert"><b>Para o estatístico</b> — duas falhas se somam. Primeira, a referência: ponderar idade, sexo e UF pela PNADC (população residente) em vez do cadastro do TSE (universo do eleitor) desalinha a calibração justamente na variável mais torta, a idade. Segunda, a opacidade: pós-estratificação e raking elevam a variância dos pesos, e CV²(w) entra direto no efeito de desenho. Sem publicar a distribuição dos pesos, a taxa de resposta e o n efetivo, é impossível auditar quanto a amostra foi esticada para fechar as cotas, nem recalcular a margem real por recorte.</p>
+    <div class="grid cols-3" style="margin-top:16px">
+      <article class="tile"><span class="verdict ok">Renda</span><h3>Não é a bomba da Quaest</h3><p>Nexus: 40% até 2 SM e 20% acima de 5 SM. PNADC local: ~42,9% dos domicílios até 2 SM e ~21,4% acima de 5 SM.</p></article>
+      <article class="tile"><span class="verdict bad">Telefone</span><h3>Universo com filtro invisível</h3><p>O sorteio cobre fixo e celular, mas o relatório não diz quantas tentativas foram feitas, quantos recusaram, quantos retornos houve, qual a proporção de fixo e celular, nem quem ficou de fora por simplesmente não atender.</p></article>
+      <article class="tile"><span class="verdict bad">Peso</span><h3>Sem peso, sem auditoria</h3><p>O registro menciona ponderação por renda e força de trabalho. Sem os pesos finais na mesa, não há como saber quanto a amostra foi esticada para encaixar nas cotas.</p></article>
+    </div>
+  </div>
+</section>
+
+<section id="questionario" class="band">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Questionário: voto limpo, roteiro carregado</h2>
+      <p>O ponto justo aqui é separar duas coisas: como a pergunta foi feita e como o resultado foi montado. No campo, o voto vem antes dos temas quentes, e isso é correto. Na hora de editar o PDF, porém, o bloco de notícias ruins é posto antes da avaliação de governo, o que ajuda a sugerir uma causa onde há só vizinhança de página.</p>
+    </div>
+    <div class="timeline">
+      <div class="step"><b>Perfil</b><span>sexo, idade, escolaridade, trabalho, UF/cidade</span></div>
+      <div class="step"><b>Voto</b><span>espontâneo, 1º turno, certeza, 2º turno</span></div>
+      <div class="step"><b>Potencial</b><span>rejeição, preferência, motivo anti</span></div>
+      <div class="step"><b>Governo</b><span>avaliação e aprovação Lula</span></div>
+      <div class="step"><b>Economia</b><span>atual, vs. governo anterior, 6 meses</span></div>
+      <div class="step"><b>Notícias</b><span>facções, tarifaço, culpa</span></div>
+      <div class="step"><b>Fecho</b><span>dívida, Desenrola, 2022/2018, renda, religião, raça</span></div>
+    </div>
+    <div class="grid cols-2" style="margin-top:22px">
+      <article class="figure"><img src="img/nexus_btg_150626_questionario_tarifaco.png" alt="Página do questionário Nexus com bloco facções e tarifaço"><figcaption class="caption">A página 8 do questionário mostra a alternativa neutra do tarifaço como NÃO LER.</figcaption></article>
+      <article class="tile">
+        <span class="verdict warn">Perguntas fantasmas</span>
+        <h3>Menos grave que Quaest, ainda incompleto</h3>
+        <table>
+          <thead><tr><th>Pergunta</th><th>Problema</th></tr></thead>
+          <tbody>
+            <tr><td>Terceira via: “Qual?”</td><td>O relatório mostra 24%, mas não publica os nomes anotados.</td></tr>
+            <tr><td>Renda individual</td><td>Perguntada; perfil público usa renda familiar.</td></tr>
+            <tr><td>Cor/raça</td><td>Perguntada no encerramento; não aparece no perfil.</td></tr>
+            <tr><td>Trabalho, vínculo, CNPJ</td><td>Virou PEA formal/informal sem abrir engenharia.</td></tr>
+            <tr><td>Comparecimento 2018/2022</td><td>Usado em cruzamento; sem topline autônomo suficiente.</td></tr>
+          </tbody>
+        </table>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="tarifaco">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Tarifaço: pergunta com saída trancada</h2>
+      <p>A pergunta 18 oferece "culpa de Lula" ou "culpa de Flávio" como as duas alternativas que o entrevistador lê em voz alta. A saída neutra, a de que o tarifaço é decisão geopolítica que não é culpa de nenhum dos dois, existe no formulário, mas o entrevistador é instruído a não lê-la. Quem não conhece a opção de cor não a escolhe. O desenho empurra o eleitor para apontar um culpado partidário.</p>
+    </div>
+    <p class="plain"><b>Em miúdos</b> — é a velha pergunta "você já parou de bater na sua mãe?". A resposta honesta, "nunca bati", nem está no cardápio. Aqui o cardápio é "culpa do Lula" ou "culpa do Flávio", e a resposta sensata, "isso é briga de tarifa entre governos, não é culpa de nenhum dos dois", existe escondida no fim do formulário com a etiqueta NÃO LER. Quem responde no telefone nunca fica sabendo que ela existe. O resultado parece opinião espontânea, mas é escolha forçada dentro de um menu trancado.</p>
+    <div class="grid cols-2">
+      <article class="chart-card"><div class="chart-title"><h3>Culpa pelo tarifaço</h3><span>jun/26</span></div><div id="chart-tariff" class="chart"></div><p>O 42 x 39 tem cara de equilíbrio nacional. Mas é o equilíbrio que sobra depois de esconder a terceira saída de quem responde.</p></article>
+      <article class="chart-card"><div class="chart-title"><h3>Culpa por eleitor de 2º turno</h3><span>polarização perfeita</span></div><div id="chart-tariff-voter" class="chart"></div><p>Eleitor de Lula culpa Flávio; eleitor de Flávio culpa Lula. O bloco mede identidade política mais do que informação factual.</p></article>
+    </div>
+    <div class="proof-grid">
+      <figure class="figure"><img src="img/nexus_btg_150626_tarifaco_resultado.png" alt="Resultado da pergunta de culpa sobre tarifaço"><figcaption class="caption">Resultado publicado: 39% Lula, 42% Flávio, 11% nenhum dos dois.</figcaption></figure>
+      <figure class="figure"><img src="img/nexus_btg_150626_questionario_tarifaco.png" alt="Questionário mostrando alternativa neutra não lida"><figcaption class="caption">Instrumento: alternativa neutra marcada como NÃO LER.</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section id="btg" class="band">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>O banco não é rodapé</h2>
+      <p>Quem pagou a conta faz parte da história. Isso não invalida a pesquisa. O que invalida é fingir que ela caiu do céu, neutra, sem ninguém com interesse no resultado. O próprio relatório admite, por escrito, que uma pesquisa eleitoral pode mexer na cotação de ativos e que quem tem acesso antecipado a ela pode obter vantagem indevida. Não fomos nós que dissemos. Foi o banco.</p>
+    </div>
+    <div class="grid cols-3">
+      <article class="tile"><span class="verdict neutral">Contrato</span><h3>R$ 164.888,89</h3><p>NFS-e 290 da Nexus para Banco BTG Pactual. Registro TSE BR-06645/2026 repete o valor e o contratante.</p></article>
+      <article class="tile"><span class="verdict bad">Disclaimer</span><h3>Mercado dentro do PDF</h3><p>O texto alerta para impacto em preços de ativos e vantagem indevida de quem acessa antes da ampla divulgação.</p></article>
+      <article class="tile"><span class="verdict warn">Hipótese política</span><h3>Tarcísio era o ativo; Lula vira hedge</h3><p>Fora Tarcísio do tabuleiro, parte do mercado pode preferir a previsibilidade de um governo conhecido ao risco de uma aposta dinástica. É hipótese de leitura, registrada como tal, não acusação.</p></article>
+    </div>
+    <div class="proof-grid">
+      <figure class="figure"><img src="img/nexus_btg_150626_nota_fiscal.png" alt="Nota fiscal Nexus para Banco BTG Pactual"><figcaption class="caption">Nota fiscal local: Nexus → Banco BTG Pactual, R$ 164.888,89.</figcaption></figure>
+      <figure class="figure"><img src="img/nexus_btg_150626_disclaimer.png" alt="Disclaimer do relatório BTG/Nexus"><figcaption class="caption">Disclaimer: a pesquisa pode influenciar valores mobiliários e acesso antecipado pode gerar vantagem.</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section id="provas">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Galeria de provas</h2>
+      <p>As imagens abaixo são páginas renderizadas dos PDFs locais. Elas dão lastro visual aos achados sem depender de print solto em rede social.</p>
+    </div>
+    <div class="proof-grid">
+      <figure class="figure"><img src="img/nexus_btg_150626_metodologia.png" alt="Metodologia BTG/Nexus"><figcaption class="caption">Metodologia: CATI/RDD, 2.017 entrevistas, cotas e ±2 p.p.</figcaption></figure>
+      <figure class="figure"><img src="img/nexus_btg_150626_segundo_turno.png" alt="Segundo turno BTG/Nexus"><figcaption class="caption">Segundo turno: Lula 49 x 43 Flávio, 8 N/B/N.</figcaption></figure>
+      <figure class="figure"><img src="img/nexus_btg_150626_potencial_rejeicao.png" alt="Potencial e rejeição BTG/Nexus"><figcaption class="caption">Potencial/rejeição: Flávio 52% de rejeição; Lula 47%.</figcaption></figure>
+      <figure class="figure"><img src="img/nexus_btg_150626_questionario_renda.png" alt="Questionário de renda Nexus"><figcaption class="caption">Questionário: renda individual e familiar perguntadas com ganhos de qualquer natureza.</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section id="veredito" class="band">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Veredito</h2>
+      <p>A Nexus/BTG entregou uma pesquisa útil, porém não auditável no padrão que uma eleição presidencial exige. O voto principal está mais bem protegido do que se imaginava à primeira vista. Já a história contada em cima dele é bem menos inocente do que aparenta. Pesquisa boa, bula incompleta.</p>
+    </div>
+    <div class="grid cols-3">
+      <article class="tile"><span class="verdict ok">Aceitar</span><h3>Fotografia geral</h3><p>Lula lidera; Flávio é o melhor adversário oposicionista; Zema/Caiado não melhoram o 2º turno; governo está no fio.</p></article>
+      <article class="tile"><span class="verdict warn">Descontar</span><h3>Movimento de série</h3><p>Junho tem sinal pró-Lula. Mas variação entre rodadas independentes, com o cartão de candidatos trocando e sem o efeito de desenho na mesa, é indício, não veredito estatístico.</p></article>
+      <article class="tile"><span class="verdict bad">Rejeitar</span><h3>Precisão performática</h3><p>Sem dados individuais, sem pesos, sem efeito de desenho, sem tamanho efetivo e sem margem por recorte, o que se tem é o relatório de quem encomendou, não uma auditoria pública.</p></article>
+    </div>
+  </div>
+</section>
+
+<section id="fontes">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Fontes e reprodutibilidade</h2>
+      <p>O código, a metodologia e este próprio dossiê são abertos. Os PDFs das pesquisas e as bases pesadas ficam locais (não versionadas) por serem material proprietário de terceiros e arquivos grandes, conforme a política de dados do projeto.</p>
+    </div>
+    <p class="callout" style="border-color:var(--navy)"><b>Repositório público:</b> <a href="https://github.com/ArvorCo/PNAD">github.com/ArvorCo/PNAD</a> — pipeline PNADC/TSE, scripts de auditoria e o código-fonte deste relatório.</p>
+    <ol class="source-list">
+      <li>Este dossiê (código-fonte): <a href="https://github.com/ArvorCo/PNAD/blob/main/docs/nexus_btg_150626.html">docs/nexus_btg_150626.html</a>.</li>
+      <li>Metodologia e comandos do projeto: <a href="https://github.com/ArvorCo/PNAD/blob/main/AGENTS.md">AGENTS.md</a> e <a href="https://github.com/ArvorCo/PNAD/blob/main/README.md">README.md</a>.</li>
+      <li>Acervo local das pesquisas (não versionado): <span class="mono">data/pesquisas/nexus_btg/</span> — relatório, questionário, registro TSE e nota fiscal da rodada 4, mais as rodadas 1 a 3.</li>
+      <li>TSE local: <span class="mono">data/outputs/tse_eleitorado_perfil.sqlite</span>, perfil gerado em 01/05/2026, sem exterior.</li>
+      <li>PNADC local: <span class="mono">data/outputs/base_anual_visita1_labeled_npv.csv</span>.</li>
+      <li><a href="https://static.poder360.com.br/uploads/2026/06/BTG-Nexus-nacional-15jun2026.pdf">PDF público BTG/Nexus via Poder360</a>.</li>
+      <li><a href="https://www.cnnbrasil.com.br/eleicoes/nexus-btg-no-2o-turno-lula-vai-a-49-flavio-mantem-43/">CNN Brasil sobre a pesquisa BTG/Nexus</a>.</li>
+      <li><a href="https://www.gov.br/sri/pt-br/noticias/2024/governo-cria-grupo-que-vai-discutir-a-reducao-de-custo-do-credito-no-brasil">SRI/Gov.br sobre grupo de crédito no Conselhão</a>.</li>
+      <li><a href="https://www1.folha.uol.com.br/colunas/monicabergamo/2025/12/banqueiro-andre-esteves-se-reuniu-com-governo-trump-e-pediu-fim-de-tarifas-e-sancoes.shtml">Folha: André Esteves, governo Trump, tarifas e sanções</a>.</li>
+      <li><a href="https://platobr.com.br/andre-esteves-a-campanha-por-tarcisio-e-o-brasil-uninvestable-com-lula">PlatôBR: Esteves, Tarcísio e Lula</a>.</li>
+      <li><a href="https://api.mziq.com/mzfilemanager/v2/d/0afe1b62-e299-4dec-a938-763ebc4e2c11/6a5494d6-693c-d637-cfc8-2b2a38d56bec?origin=2">BTG RI: apresentação de resultados 4T25/FY2025</a>.</li>
+    </ol>
+  </div>
+</section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="mark"><img src="img/arvor_logo.png" alt="Logotipo Arvor" class="footlogo"><span>ARVOR INTELLIGENCE</span></div>
+    <p>Auditoria eleitoral independente da <b>Arvor</b> (<a href="https://arvor.co">arvor.co</a>). Gráficos próprios construídos sobre os números públicos da rodada 4 BTG/Nexus (registro TSE BR-06645/2026) e bases locais TSE/PNADC. Modelos de transferência e margem são reconstruções de consistência, não microdados oficiais. Diferença, deff e n efetivo são estimados quando o relatório não os publica.</p>
+    <p class="foot-links"><a href="https://github.com/ArvorCo/PNAD">github.com/ArvorCo/PNAD</a> · <a href="https://arvor.co">arvor.co</a> · Dossiê produzido em 15/06/2026</p>
+  </div>
+</footer>
+
+<script>
+const COLORS={lula:"#b32934",flavio:"#1557b0",nbn:"#bc8618",ns:"#77736b",green:"#087c5a",gold:"#bc8618",blue:"#1557b0",red:"#b32934",orange:"#e87522",purple:"#6f4db3",navy:"#08275f",fora:"#3a3f47"};
+const DATA={
+  rounds:["30 mar.","27 abr.","25 mai.","15 jun."],
+  rounds3:["27 abr.","25 mai.","15 jun."],
+  vote2t:{labels:["30 mar.","27 abr.","25 mai.","15 jun."],series:[
+    {name:"Lula",color:COLORS.lula,values:[46,46,47,49]},
+    {name:"Flávio",color:COLORS.flavio,values:[45,46,46,43]},
+    {name:"N/B/N",color:COLORS.nbn,values:[8,7,9,8]},
+    {name:"NS/NR",color:COLORS.ns,values:[1,0,0,1]}
+  ]},
+  vote1t:{labels:["27 abr.","25 mai.","15 jun."],series:[
+    {name:"Lula",color:COLORS.lula,values:[41,40,42]},
+    {name:"Flávio",color:COLORS.flavio,values:[36,35,33]},
+    {name:"Renan",color:COLORS.green,values:[3,3,4]},
+    {name:"Caiado",color:COLORS.gold,values:[3,5,4]},
+    {name:"Zema",color:COLORS.orange,values:[4,4,2]},
+    {name:"N/B/N",color:COLORS.nbn,values:[6,7,5]},
+    {name:"NS/NR",color:COLORS.ns,values:[2,2,3]}
+  ]},
+  govEval:{labels:["30 mar.","27 abr.","25 mai.","15 jun."],series:[
+    {name:"Ótimo/Bom",color:COLORS.green,values:[43,44,40,38]},
+    {name:"Regular",color:COLORS.gold,values:[33,35,37,41]},
+    {name:"Ruim/Péssimo",color:COLORS.red,values:[23,21,21,21]}
+  ]},
+  govApproval:{labels:["30 mar.","27 abr.","25 mai.","15 jun."],series:[
+    {name:"Aprova",color:COLORS.green,values:[49,51,48,48]},
+    {name:"Desaprova",color:COLORS.red,values:[45,46,47,47]},
+    {name:"NS/NR",color:COLORS.ns,values:[6,5,4,4]}
+  ]},
+  rejection:{labels:["30 mar.","27 abr.","25 mai.","15 jun."],series:[
+    {name:"Rejeição Lula",color:COLORS.lula,values:[48,47,49,47]},
+    {name:"Rejeição Flávio",color:COLORS.flavio,values:[50,48,50,52]},
+    {name:"Potencial Lula",color:"#d66b74",values:[50,47,53,52]},
+    {name:"Potencial Flávio",color:"#5c91d9",values:[48,47,47,45]}
+  ]},
+  certainty:{labels:["30 mar.","27 abr.","25 mai.","15 jun."],series:[
+    {name:"Lula",color:COLORS.lula,values:[74,74,81,81]},
+    {name:"Flávio",color:COLORS.flavio,values:[74,74,71,77]},
+    {name:"Renan",color:COLORS.green,values:[36,51,54,59]},
+    {name:"Caiado",color:COLORS.gold,values:[28,54,39,44]},
+    {name:"Zema",color:COLORS.orange,values:[30,33,39,40]}
+  ]},
+  bolsa:{labels:["30 mar.","27 abr.","25 mai.","15 jun."],series:[
+    {name:"Lula / beneficiário",color:COLORS.lula,values:[65,66,67,64]},
+    {name:"Flávio / beneficiário",color:COLORS.flavio,values:[29,27,29,27]},
+    {name:"Lula / não benef.",color:"#d97980",values:[46,47,50,49]},
+    {name:"Flávio / não benef.",color:"#6f9dde",values:[45,42,44,42]}
+  ]},
+  mobilization:{labels:["30 mar.","27 abr.","25 mai.","15 jun."],series:[
+    {name:"Interesse muito/razoável",color:COLORS.blue,values:[73,75,74,77]},
+    {name:"Comparece/provável",color:COLORS.green,values:[95,93,95,94]},
+    {name:"Pouco/nada interessado",color:COLORS.gold,values:[26,23,23,20]}
+  ]},
+  profile:[
+    ["Feminino",18],["Masculino",-7],["16-24",8],["25-40",-4],["41-59",7],["60+",17],
+    ["Fundamental",28],["Médio",-8],["Superior",-3],["Católicos",13],["Evangélicos",-25],
+    ["Sem religião",34],["Até 1 SM",25],["1-2 SM",20],["2-5 SM",-3],["5+ SM",-10],
+    ["PEA formal",-11],["PEA informal",9],["Não PEA",24],["N/CO",-12],["Nordeste",38],
+    ["Sudeste",0],["Sul",-13],["Capital",10],["RM",14],["Interior",2]
+  ],
+  transfer:[
+    ["Augusto Cury",20,46,34],["Aécio Neves",33,37,30],["Joaquim Barbosa",31,17,48],
+    ["Romeu Zema",25,64,11],["Ronaldo Caiado",22,61,16],["Cabo Daciolo",9,61,30],["Renan Santos",14,52,33]
+  ],
+  deff:[
+    ["1,0",2.18,4.18],["1,3",2.49,4.76],["1,5",2.67,5.12],["2,0",3.09,5.91],["2,5",3.45,6.61]
+  ],
+  subgroups:[
+    ["N/CO",5.5,7.7],["Nordeste",4.3,6.1],["Sul",5.6,8.0],["Até 1 SM",4.7,6.6],["1-2 SM",5.1,7.3],["5+ SM",4.9,6.9],["Evangélicos",4.1,5.7]
+  ],
+  sampleDelta:[
+    ["Mulher",-0.8],["Homem",0.8],["N/CO",0.1],["Nordeste",-1.6],["Sudeste",0.9],["Sul",0.5],["16-24",4.7],["60+",-3.3],["Até 2 SM",-2.9],["5+ SM",-1.4]
+  ],
+  tariff:[["Culpa Lula",39,COLORS.red],["Nenhum dos dois",11,COLORS.gold],["Culpa Flávio",42,COLORS.blue],["NS/NR",8,COLORS.ns]],
+  tariffVoter:[["Eleitor Flávio",78,9,7,6],["Eleitor Lula",7,9,76,8]]
+};
+function el(id){return document.getElementById(id)}
+function makeSvg(w,h){return `<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="gráfico Arvor Intelligence"></svg>`}
+function stampSvg(svg,w,h){const x=w-14,y=h-13;svg.insertAdjacentHTML("beforeend",`<path d="M${x-152} ${y-4} l4 4 l-4 4 l-4 -4 z" fill="#08275f" opacity=".75"/><text x="${x}" y="${y+3}" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing="1.6" fill="#8f897c">ARVOR INTELLIGENCE</text>`)}
+function brandFoot(node){node.insertAdjacentHTML("beforeend",`<div class="brand-foot"><span class="diamond"></span><b>Arvor Intelligence</b> · gráfico próprio sobre dados públicos BTG/Nexus</div>`)}
+function lineChart(node,cfg,opt={}){
+  const n=opt.n||2017, deff=opt.deff||1.5, z=1.96;
+  const moe=v=>{const p=Math.min(Math.max(v/100,0),1);return z*Math.sqrt(deff*p*(1-p)/n)*100;};
+  const allv=cfg.series.flatMap(s=>s.values);
+  const maxBand=Math.max(...allv.map(moe));
+  let max=(opt.max!=null)?opt.max:Math.ceil(Math.max(...allv)+maxBand+2);
+  let min=(opt.min!=null)?opt.min:Math.max(0,Math.floor(Math.min(...allv)-maxBand-2));
+  const w=760,h=350,m={l:46,r:64,t:24,b:48};
+  node.innerHTML=makeSvg(w,h); const svg=node.querySelector("svg"), pw=w-m.l-m.r, ph=h-m.t-m.b;
+  const X=i=>m.l+(cfg.labels.length===1?0:i*pw/(cfg.labels.length-1));
+  const Y=v=>m.t+ph-(v-min)*ph/(max-min);
+  for(let i=0;i<=4;i++){const v=min+(max-min)*i/4, y=Y(v); svg.insertAdjacentHTML("beforeend",`<line class="grid-line" x1="${m.l}" y1="${y}" x2="${w-m.r}" y2="${y}"/><text class="tick-label" x="${m.l-10}" y="${y+4}" text-anchor="end">${Math.round(v)}%</text>`)}
+  cfg.labels.forEach((lab,i)=>svg.insertAdjacentHTML("beforeend",`<text class="tick-label" x="${X(i)}" y="${h-15}" text-anchor="middle">${lab}</text>`));
+  cfg.series.forEach(s=>{
+    const ups=s.values.map((v,i)=>[X(i),Y(Math.min(max,v+moe(v)))]);
+    const los=s.values.map((v,i)=>[X(i),Y(Math.max(min,v-moe(v)))]).reverse();
+    const d="M"+ups.map(p=>p[0].toFixed(1)+","+p[1].toFixed(1)).join(" L")+" L"+los.map(p=>p[0].toFixed(1)+","+p[1].toFixed(1)).join(" L")+" Z";
+    svg.insertAdjacentHTML("beforeend",`<path d="${d}" fill="${s.color}" opacity="${opt.bandOpacity||0.12}" stroke="none"/>`);
+  });
+  const li=cfg.labels.length-1, showMid=(opt.showValues!=null)?opt.showValues:cfg.series.length<=4;
+  cfg.series.forEach(s=>{
+    const pts=s.values.map((v,i)=>[X(i),Y(v)]);
+    const d=pts.map((p,i)=>(i?"L":"M")+p[0].toFixed(1)+","+p[1].toFixed(1)).join(" ");
+    svg.insertAdjacentHTML("beforeend",`<path d="${d}" fill="none" stroke="${s.color}" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>`);
+    pts.forEach((p,i)=>{svg.insertAdjacentHTML("beforeend",`<circle cx="${p[0]}" cy="${p[1]}" r="3.6" fill="${s.color}"/>`); if(showMid&&i<li)svg.insertAdjacentHTML("beforeend",`<text class="value-label" x="${p[0]}" y="${p[1]-9}" text-anchor="middle">${s.values[i]}</text>`)});
+  });
+  const ends=cfg.series.map(s=>({y:Y(s.values[li]),val:s.values[li],color:s.color})).sort((a,b)=>a.y-b.y);
+  const eg=17;for(let i=1;i<ends.length;i++){if(ends[i].y-ends[i-1].y<eg)ends[i].y=ends[i-1].y+eg;}
+  const ov=ends.length?ends[ends.length-1].y-(m.t+ph):0;if(ov>0)ends.forEach(l=>l.y-=ov);
+  ends.forEach(l=>svg.insertAdjacentHTML("beforeend",`<text class="value-label" x="${X(li)+9}" y="${l.y+4}" style="fill:${l.color}" font-weight="800">${l.val}</text>`));
+  legend(node,cfg.series);
+  node.insertAdjacentHTML("beforeend",`<div class="note">Faixa sombreada: margem de erro efetiva (deff ${String(deff).replace(".",",")}, n≈${(n/1000).toFixed(1).replace(".",",")} mil, 95%). A linha é o ponto central; onde as faixas se sobrepõem, a diferença não é estatisticamente conclusiva.</div>`);
+  brandFoot(node);
+}
+function legend(node,series){const div=document.createElement("div");div.className="legend";div.innerHTML=series.map(s=>`<span><i class="dot" style="background:${s.color}"></i>${s.name}</span>`).join("");node.appendChild(div)}
+function groupedBars(node,items,opt={}){
+  const w=760,h=Math.max(250,items.length*34+60),m={l:150,r:40,t:24,b:20}, max=opt.max||Math.max(...items.flatMap(x=>x.slice(1).filter(Number.isFinite)));
+  node.innerHTML=makeSvg(w,h); const svg=node.querySelector("svg"), pw=w-m.l-m.r, barH=12;
+  items.forEach((row,i)=>{const y=m.t+i*34; svg.insertAdjacentHTML("beforeend",`<text class="bar-label" x="${m.l-10}" y="${y+12}" text-anchor="end">${row[0]}</text>`); row.slice(1).forEach((v,j)=>{if(!Number.isFinite(v))return; const bw=v*pw/max, yy=y+j*(barH+2); const c=(opt.colors&&opt.colors[j])||[COLORS.lula,COLORS.flavio,COLORS.gold][j]||COLORS.blue; svg.insertAdjacentHTML("beforeend",`<rect x="${m.l}" y="${yy}" width="${bw}" height="${barH}" fill="${c}"/><text class="value-label" x="${m.l+bw+5}" y="${yy+10}">${v}%</text>`)});});
+  brandFoot(node);
+}
+function heat(node,rows){
+  const w=760,h=Math.max(360,rows.length*25+52),m={l:140,r:38,t:24,b:22}, pw=w-m.l-m.r;
+  node.innerHTML=makeSvg(w,h); const svg=node.querySelector("svg"), mid=m.l+pw/2, scale=p=>Math.abs(p)*pw/80;
+  svg.insertAdjacentHTML("beforeend",`<line x1="${mid}" y1="${m.t-8}" x2="${mid}" y2="${h-m.b}" stroke="#918a7d" stroke-width="1.5"/><text class="tick-label" x="${m.l}" y="${h-4}">Flávio</text><text class="tick-label" x="${w-m.r}" y="${h-4}" text-anchor="end">Lula</text>`);
+  rows.forEach((r,i)=>{const y=m.t+i*25, v=r[1], bw=scale(v), x=v>=0?mid:mid-bw, c=v>=0?COLORS.lula:COLORS.flavio; svg.insertAdjacentHTML("beforeend",`<text class="heat-label" x="${m.l-10}" y="${y+12}" text-anchor="end">${r[0]}</text><rect x="${x}" y="${y}" width="${bw}" height="15" rx="2" fill="${c}" opacity=".9"/><text class="value-label" x="${v>=0?x+bw+5:x-5}" y="${y+12}" text-anchor="${v>=0?"start":"end"}">${v>0?"+":""}${v}</text>`)});
+  stampSvg(svg,w,h);
+}
+function deltaBars(node,rows){
+  const w=760,h=330,m={l:132,r:38,t:25,b:25}, pw=w-m.l-m.r, mid=m.l+pw/2, max=6;
+  node.innerHTML=makeSvg(w,h); const svg=node.querySelector("svg"); svg.insertAdjacentHTML("beforeend",`<line x1="${mid}" y1="${m.t-10}" x2="${mid}" y2="${h-m.b}" stroke="#918a7d"/><text class="tick-label" x="${mid}" y="${h-6}" text-anchor="middle">0 p.p.</text>`);
+  rows.forEach((r,i)=>{const y=m.t+i*27, v=r[1], bw=Math.abs(v)*pw/(max*2), x=v>=0?mid:mid-bw, c=v>=0?COLORS.blue:COLORS.red; svg.insertAdjacentHTML("beforeend",`<text class="bar-label" x="${m.l-10}" y="${y+12}" text-anchor="end">${r[0]}</text><rect x="${x}" y="${y}" width="${bw}" height="15" fill="${c}"/><text class="value-label" x="${v>=0?x+bw+5:x-5}" y="${y+12}" text-anchor="${v>=0?"start":"end"}">${v>0?"+":""}${v.toFixed(1)}</text>`)});
+  stampSvg(svg,w,h);
+}
+function tariffVoter(node,rows){
+  const w=760,h=250,m={l:118,r:28,t:30,b:20}, pw=w-m.l-m.r, colors=[COLORS.red,COLORS.gold,COLORS.blue,COLORS.ns], labs=["Culpa Lula","Nenhum","Culpa Flávio","NS"];
+  node.innerHTML=makeSvg(w,h); const svg=node.querySelector("svg");
+  rows.forEach((r,i)=>{let x=m.l,y=m.t+i*70; svg.insertAdjacentHTML("beforeend",`<text class="bar-label" x="${m.l-10}" y="${y+22}" text-anchor="end">${r[0]}</text>`); r.slice(1).forEach((v,j)=>{let bw=v*pw/100; svg.insertAdjacentHTML("beforeend",`<rect x="${x}" y="${y}" width="${bw}" height="30" fill="${colors[j]}"/><text class="value-label" x="${x+bw/2}" y="${y+20}" text-anchor="middle" fill="#fff">${v}</text>`); x+=bw})});
+  const div=document.createElement("div");div.className="legend";div.innerHTML=labs.map((l,i)=>`<span><i class="dot" style="background:${colors[i]}"></i>${l}</span>`).join("");node.appendChild(div); brandFoot(node)
+}
+function sankey(node){
+  const W=1000,H=790,s=3.4,leftX=180,barW=15,rightX=812,rbarW=18,top=128;
+  node.innerHTML=makeSvg(W,H);const svg=node.querySelector("svg");
+  const fmt=v=>v.toFixed(1).replace(".",",");
+  svg.insertAdjacentHTML("beforeend",`<rect width="${W}" height="${H}" fill="#fffaf0"/>`);
+  svg.insertAdjacentHTML("beforeend",`<text x="40" y="46" font-family="'Archivo Black',Impact,sans-serif" font-size="25" fill="#10131a">De quem vem e para quem vai cada voto</text>`);
+  svg.insertAdjacentHTML("beforeend",`<text x="40" y="72" font-family="'Source Sans 3',sans-serif" font-size="14" fill="#68665f">Transferência estimada 1º → 2º turno (Lula × Flávio), candidato a candidato — em pontos percentuais do eleitorado</text>`);
+  svg.insertAdjacentHTML("beforeend",`<text x="${leftX}" y="104" font-family="'Source Sans 3',sans-serif" font-size="13" font-weight="800" letter-spacing="2" fill="#68665f">1º TURNO</text><text x="${rightX+rbarW}" y="104" text-anchor="end" font-family="'Source Sans 3',sans-serif" font-size="13" font-weight="800" letter-spacing="2" fill="#68665f">2º TURNO · LULA × FLÁVIO</text>`);
+  const cD={lula:COLORS.lula,flavio:COLORS.flavio,fora:COLORS.fora};
+  const nodes=[
+    {k:"lula",lab:"Lula",col:COLORS.lula,v:42,big:true,split:{lula:42}},
+    {k:"flavio",lab:"Flávio",col:COLORS.flavio,v:33,big:true,split:{flavio:33}},
+    {k:"caiado",lab:"Caiado",col:COLORS.gold,v:4,split:{lula:0.9,flavio:2.5,fora:0.6}},
+    {k:"renan",lab:"Renan",col:COLORS.gold,v:4,split:{lula:0.6,flavio:2.1,fora:1.3}},
+    {k:"zema",lab:"Zema",col:COLORS.gold,v:2,split:{lula:0.5,flavio:1.3,fora:0.2}},
+    {k:"joaquim",lab:"Joaquim",col:COLORS.gold,v:2,split:{lula:0.6,flavio:0.3,fora:1.1}},
+    {k:"cury",lab:"Cury",col:COLORS.gold,v:2,split:{lula:0.4,flavio:0.9,fora:0.7}},
+    {k:"aecio",lab:"Aécio",col:COLORS.gold,v:1,split:{lula:0.3,flavio:0.4,fora:0.3}},
+    {k:"daciolo",lab:"Daciolo",col:COLORS.gold,v:1,split:{lula:0.1,flavio:0.6,fora:0.3}},
+    {k:"branco",lab:"Branco/nulo/indeciso",col:COLORS.fora,v:9,split:{lula:3.6,flavio:2.0,fora:3.4}}
+  ];
+  let y=top;
+  nodes.forEach((n,i)=>{n.bh=n.v*s;const minP=n.big?n.bh:30;n.slot=Math.max(n.bh,minP);n.y0=y+(n.slot-n.bh)/2;n.y1=n.y0+n.bh;const nx=nodes[i+1];const gapAfter=n.big?16:(nx&&!nx.big?5:18);y+=n.slot+gapAfter});
+  const leftBottom=y;
+  const rTot={lula:0,flavio:0,fora:0};nodes.forEach(n=>Object.entries(n.split).forEach(([d,v])=>rTot[d]+=v));
+  const rOrder=[["lula","Lula",49],["flavio","Flávio",43],["fora","Fora da escolha",8]];
+  const rH=k=>rTot[k]*s,rGap=18,rStackH=rH("lula")+rH("flavio")+rH("fora")+2*rGap;
+  let ry=(top+leftBottom)/2-rStackH/2;const R={};
+  rOrder.forEach(([k])=>{R[k]={y0:ry,y1:ry+rH(k)};ry+=rH(k)+rGap});
+  const tc={lula:R.lula.y0,flavio:R.flavio.y0,fora:R.fora.y0},sx=leftX+barW,tx=rightX;
+  nodes.forEach(n=>{let scur=n.y0;["lula","flavio","fora"].forEach(d=>{const v=n.split[d];if(!v)return;const hh=v*s,sy0=scur,sy1=scur+hh,ty0=tc[d],ty1=ty0+hh;scur=sy1;tc[d]=ty1;const c1=sx+(tx-sx)*0.42,c2=sx+(tx-sx)*0.58,op=n.big?0.85:0.52;svg.insertAdjacentHTML("beforeend",`<path d="M${sx},${sy0} C${c1},${sy0} ${c2},${ty0} ${tx},${ty0} L${tx},${ty1} C${c2},${ty1} ${c1},${sy1} ${sx},${sy1} Z" fill="${cD[d]}" opacity="${op}"/>`)})});
+  nodes.forEach(n=>{const cy=(n.y0+n.y1)/2;svg.insertAdjacentHTML("beforeend",`<rect x="${leftX}" y="${n.y0}" width="${barW}" height="${Math.max(n.bh,2)}" fill="${n.col}"/>`);
+    if(n.big){svg.insertAdjacentHTML("beforeend",`<text x="${leftX-10}" y="${cy-1}" text-anchor="end" font-family="'Source Sans 3',sans-serif" font-size="14" font-weight="700" fill="#10131a">${n.lab}</text><text x="${leftX-10}" y="${cy+15}" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="13" fill="#68665f">${n.v}</text>`);}
+    else{const sp=n.split;svg.insertAdjacentHTML("beforeend",`<text x="${leftX-10}" y="${cy-3}" text-anchor="end" font-family="'Source Sans 3',sans-serif" font-size="12.5" font-weight="700" fill="#10131a">${n.lab} <tspan fill="#68665f" font-family="'Spline Sans Mono',monospace" font-size="11">${n.v}</tspan></text><text x="${leftX-10}" y="${cy+12}" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="10.5"><tspan fill="${COLORS.lula}">L ${fmt(sp.lula||0)}</tspan><tspan fill="#68665f"> · </tspan><tspan fill="${COLORS.flavio}">F ${fmt(sp.flavio||0)}</tspan><tspan fill="#68665f"> · </tspan><tspan fill="${COLORS.fora}">N ${fmt(sp.fora||0)}</tspan></text>`);}
+  });
+  rOrder.forEach(([k,lab,pub])=>{const n=R[k],cy=(n.y0+n.y1)/2;svg.insertAdjacentHTML("beforeend",`<rect x="${rightX}" y="${n.y0}" width="${rbarW}" height="${n.y1-n.y0}" fill="${cD[k]}"/><text x="${rightX+rbarW+10}" y="${cy-1}" font-family="'Source Sans 3',sans-serif" font-size="15" font-weight="700" fill="#10131a">${lab}</text><text x="${rightX+rbarW+10}" y="${cy+16}" font-family="'Spline Sans Mono',monospace" font-size="13" fill="${cD[k]}">${pub}</text>`)});
+  svg.insertAdjacentHTML("beforeend",`<text x="40" y="${H-44}" font-family="'Source Sans 3',sans-serif" font-size="12.5" fill="#68665f">Cor do fluxo = destino: <tspan fill="${COLORS.lula}" font-weight="800">■ Lula</tspan>  <tspan fill="${COLORS.flavio}" font-weight="800">■ Flávio</tspan>  <tspan fill="${COLORS.fora}" font-weight="800">■ branco/nulo</tspan>. Split por candidato = % do 2º turno medido × voto de 1º turno.</text>`);
+  svg.insertAdjacentHTML("beforeend",`<text x="40" y="${H-24}" font-family="'Source Sans 3',sans-serif" font-size="12.5" fill="#68665f">Dos 16 p.p. dos demais: <tspan font-weight="800" fill="${COLORS.flavio}">~8,0 a Flávio</tspan>, <tspan font-weight="800" fill="${COLORS.lula}">~3,4 a Lula</tspan>, <tspan font-weight="800" fill="${COLORS.fora}">~4,6 ao branco/nulo</tspan>. Estimativa cruzada com os 4 cenários de 2º turno medidos.</text>`);
+  stampSvg(svg,W,H);
+}
+function quadrant(node){
+  const W=1000,H=560;node.innerHTML=makeSvg(W,H);const svg=node.querySelector("svg");
+  const pts=[{n:"Lula",pot:52,rej:47,b:49,c:COLORS.lula,fill:"#1446a0"},{n:"Flávio",pot:45,rej:52,b:43,c:COLORS.flavio,fill:"#13708c"},{n:"Zema",pot:31,rej:39,b:39,c:COLORS.gold,fill:COLORS.gold},{n:"Caiado",pot:30,rej:37,b:39,c:COLORS.gold,fill:COLORS.gold}];
+  const x0=150,x1=905,y0=110,y1=470,px0=25,px1=55,py0=35,py1=55;
+  const xp=p=>x0+(p-px0)/(px1-px0)*(x1-x0),yp=r=>y0+(py1-r)/(py1-py0)*(y1-y0);
+  svg.insertAdjacentHTML("beforeend",`<rect width="${W}" height="${H}" fill="#fffaf0"/>`);
+  svg.insertAdjacentHTML("beforeend",`<text x="40" y="46" font-family="'Archivo Black',Impact,sans-serif" font-size="25" fill="#10131a">O quadrante onde a eleição se decide</text>`);
+  svg.insertAdjacentHTML("beforeend",`<text x="40" y="72" font-family="'Source Sans 3',sans-serif" font-size="14" fill="#68665f">Potencial de voto (x) × rejeição (y), em % · área das bolhas proporcional ao voto de 2º turno contra Lula</text>`);
+  for(let p=25;p<=55;p+=5)svg.insertAdjacentHTML("beforeend",`<line x1="${xp(p)}" y1="${y0}" x2="${xp(p)}" y2="${y1}" stroke="#e7decd"/><text x="${xp(p)}" y="${y1+22}" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="13" fill="#68665f">${p}</text>`);
+  for(let r=35;r<=55;r+=5)svg.insertAdjacentHTML("beforeend",`<line x1="${x0}" y1="${yp(r)}" x2="${x1}" y2="${yp(r)}" stroke="#e7decd"/><text x="${x0-12}" y="${yp(r)+4}" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="13" fill="#68665f">${r}</text>`);
+  svg.insertAdjacentHTML("beforeend",`<line x1="${xp(40)}" y1="${y0}" x2="${xp(40)}" y2="${y1}" stroke="#10131a" stroke-width="1" stroke-dasharray="4 4"/><line x1="${x0}" y1="${yp(50)}" x2="${x1}" y2="${yp(50)}" stroke="#10131a" stroke-width="1" stroke-dasharray="4 4"/>`);
+  svg.insertAdjacentHTML("beforeend",`<text x="${x1-6}" y="${y0+22}" text-anchor="end" font-family="'Source Sans 3',sans-serif" font-size="12.5" font-weight="800" letter-spacing=".05em" fill="#9e3038">MUITO POTENCIAL, MUITA REJEIÇÃO</text><text x="${x0+6}" y="${y1-10}" font-family="'Source Sans 3',sans-serif" font-size="12.5" font-weight="800" letter-spacing=".05em" fill="#087c5a">TERCEIRA VIA: REJEIÇÃO BAIXA…</text><text x="${x1-6}" y="${y1-10}" text-anchor="end" font-family="'Source Sans 3',sans-serif" font-size="12.5" font-weight="800" letter-spacing=".05em" fill="#9a948a">ZONA IDEAL (VAZIA)</text>`);
+  svg.insertAdjacentHTML("beforeend",`<text x="${(x0+x1)/2}" y="${y1+48}" text-anchor="middle" font-family="'Source Sans 3',sans-serif" font-size="14" font-weight="700" fill="#10131a">Potencial de voto (%) →</text><text x="58" y="${(y0+y1)/2}" text-anchor="middle" font-family="'Source Sans 3',sans-serif" font-size="14" font-weight="700" fill="#10131a" transform="rotate(-90 58 ${(y0+y1)/2})">Rejeição (%) →</text>`);
+  pts.forEach(p=>{const cx=xp(p.pot),cy=yp(p.rej),r=Math.sqrt(p.b)*3.4;svg.insertAdjacentHTML("beforeend",`<circle cx="${cx}" cy="${cy}" r="${r}" fill="${p.fill}" opacity=".82" stroke="${p.c}" stroke-width="1.5"/><text x="${cx}" y="${cy+1}" text-anchor="middle" font-family="'Source Sans 3',sans-serif" font-size="14" font-weight="800" fill="#fffaf0">${p.n}</text><text x="${cx}" y="${cy+r+16}" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="12.5" fill="#68665f">${p.pot} · ${p.rej}</text>`)});
+  svg.insertAdjacentHTML("beforeend",`<text x="40" y="540" font-family="'Source Sans 3',sans-serif" font-size="13" fill="#68665f">Pares <tspan font-family="'Spline Sans Mono',monospace" fill="#10131a">potencial · rejeição</tspan>. Bolha = voto no 2º turno contra Lula. Zema/Caiado: rejeição baixa, potencial preso abaixo de 1/3.</text>`);
+  stampSvg(svg,W,H);
+}
+function diffInterval(node){
+  const W=1000,H=340,m={l:60,r:60,t:96,b:64},pw=W-m.l-m.r,xmin=-2,xmax=12,diff=6;
+  node.innerHTML=makeSvg(W,H);const svg=node.querySelector("svg");
+  const xp=v=>m.l+(v-xmin)/(xmax-xmin)*pw;
+  svg.insertAdjacentHTML("beforeend",`<rect width="${W}" height="${H}" fill="#fffaf0"/>`);
+  svg.insertAdjacentHTML("beforeend",`<text x="40" y="44" font-family="'Archivo Black',Impact,sans-serif" font-size="25" fill="#10131a">A vantagem de 6 pontos sobrevive — por um fio</text>`);
+  svg.insertAdjacentHTML("beforeend",`<text x="40" y="70" font-family="'Source Sans 3',sans-serif" font-size="14" fill="#68665f">Intervalo de confiança 95% da diferença Lula − Flávio no 2º turno (49 − 43 = +6 p.p.)</text>`);
+  for(let v=xmin;v<=xmax;v+=2)svg.insertAdjacentHTML("beforeend",`<line x1="${xp(v)}" y1="${m.t-12}" x2="${xp(v)}" y2="${H-m.b+8}" stroke="#ece3d2"/><text x="${xp(v)}" y="${H-m.b+28}" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="12.5" fill="#68665f">${v>0?"+":""}${v}</text>`);
+  svg.insertAdjacentHTML("beforeend",`<line x1="${xp(0)}" y1="${m.t-12}" x2="${xp(0)}" y2="${H-m.b+8}" stroke="#10131a" stroke-width="1.5" stroke-dasharray="5 4"/><text x="${xp(0)}" y="${H-m.b+46}" text-anchor="middle" font-family="'Source Sans 3',sans-serif" font-size="11" font-weight="800" letter-spacing=".1em" fill="#10131a">EMPATE</text>`);
+  const rows=[["Aleatória simples (AAS)",4.18],["Efeito de desenho 1,5",5.12],["Efeito de desenho 2,0",5.91]];
+  rows.forEach((r,i)=>{const y=m.t+i*52+10,lo=diff-r[1],hi=diff+r[1],bh=18;const near=lo<1;const col=near?"#c2542b":COLORS.lula;
+    svg.insertAdjacentHTML("beforeend",`<text x="${m.l}" y="${y-8}" font-family="'Source Sans 3',sans-serif" font-size="13" font-weight="700" fill="#10131a">${r[0]}</text>`);
+    svg.insertAdjacentHTML("beforeend",`<rect x="${xp(lo)}" y="${y}" width="${xp(hi)-xp(lo)}" height="${bh}" rx="3" fill="${col}" opacity=".22"/>`);
+    svg.insertAdjacentHTML("beforeend",`<line x1="${xp(lo)}" y1="${y-3}" x2="${xp(lo)}" y2="${y+bh+3}" stroke="${col}" stroke-width="2"/><line x1="${xp(hi)}" y1="${y-3}" x2="${xp(hi)}" y2="${y+bh+3}" stroke="${col}" stroke-width="2"/><line x1="${xp(lo)}" y1="${y+bh/2}" x2="${xp(hi)}" y2="${y+bh/2}" stroke="${col}" stroke-width="2"/>`);
+    svg.insertAdjacentHTML("beforeend",`<circle cx="${xp(diff)}" cy="${y+bh/2}" r="5" fill="${col}"/>`);
+    svg.insertAdjacentHTML("beforeend",`<text x="${xp(lo)-8}" y="${y+bh/2+4}" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="12.5" font-weight="700" fill="${col}">piso +${lo.toFixed(1)}</text>`);
+    svg.insertAdjacentHTML("beforeend",`<text x="${xp(hi)+8}" y="${y+bh/2+4}" font-family="'Spline Sans Mono',monospace" font-size="12" fill="#68665f">±${r[1].toFixed(2)}</text>`);
+  });
+  stampSvg(svg,W,H);
+}
+function transferStack(node,data){
+  const rows=data.slice().sort((a,b)=>b[2]-a[2]);
+  const w=760,h=rows.length*42+70,m={l:148,r:76,t:38},pw=w-m.l-m.r;
+  node.innerHTML=makeSvg(w,h);const svg=node.querySelector("svg");
+  svg.insertAdjacentHTML("beforeend",`<text x="${m.l}" y="20" font-family="'Source Sans 3',sans-serif" font-size="12" fill="#68665f"><tspan fill="${COLORS.lula}" font-weight="800">■</tspan> p/ Lula  <tspan fill="${COLORS.flavio}" font-weight="800">■</tspan> p/ Flávio  <tspan fill="${COLORS.fora}" font-weight="800">■</tspan> branco/nulo</text>`);
+  svg.insertAdjacentHTML("beforeend",`<text x="${w-m.r+10}" y="20" font-family="'Source Sans 3',sans-serif" font-size="11" fill="#68665f">líq. F−L</text>`);
+  rows.forEach((r,i)=>{const y=m.t+i*42,bh=22,segs=[[r[1],COLORS.lula],[r[2],COLORS.flavio],[r[3],COLORS.fora]];let x=m.l;
+    svg.insertAdjacentHTML("beforeend",`<text x="${m.l-10}" y="${y+15}" text-anchor="end" font-family="'Source Sans 3',sans-serif" font-size="13.5" font-weight="700" fill="#10131a">${r[0]}</text>`);
+    segs.forEach(([v,c])=>{const bw=v*pw/100;if(bw>0){svg.insertAdjacentHTML("beforeend",`<rect x="${x}" y="${y}" width="${bw}" height="${bh}" fill="${c}"/>`);if(bw>22)svg.insertAdjacentHTML("beforeend",`<text x="${x+bw/2}" y="${y+15}" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="11.5" fill="#fff">${v}</text>`);x+=bw}});
+    const net=r[2]-r[1],nc=net>=0?COLORS.flavio:COLORS.lula;
+    svg.insertAdjacentHTML("beforeend",`<text x="${w-m.r+10}" y="${y+15}" font-family="'Spline Sans Mono',monospace" font-size="13" font-weight="700" fill="${nc}">${net>0?"+":""}${net}</text>`);
+  });
+  stampSvg(svg,w,h);
+}
+function init(){
+  lineChart(el("chart-2t"),DATA.vote2t,{bandOpacity:0.11});
+  lineChart(el("chart-1t"),DATA.vote1t,{bandOpacity:0.09});
+  lineChart(el("chart-gov-eval"),DATA.govEval);
+  lineChart(el("chart-gov-approval"),DATA.govApproval);
+  lineChart(el("chart-rejection"),DATA.rejection,{bandOpacity:0.10});
+  lineChart(el("chart-certainty"),DATA.certainty,{bandOpacity:0.09});
+  lineChart(el("chart-bolsa"),DATA.bolsa,{bandOpacity:0.10});
+  lineChart(el("chart-mobilization"),DATA.mobilization,{bandOpacity:0.10});
+  sankey(el("chart-sankey"));
+  heat(el("chart-profile-heat"),DATA.profile);
+  transferStack(el("chart-transfer"),DATA.transfer);
+  quadrant(el("chart-quadrant"));
+  diffInterval(el("chart-diff"));
+  groupedBars(el("chart-deff"),DATA.deff,{max:7,colors:[COLORS.blue,COLORS.red]});
+  groupedBars(el("chart-subgroups"),DATA.subgroups,{max:9,colors:[COLORS.blue,COLORS.red]});
+  deltaBars(el("chart-sample-delta"),DATA.sampleDelta);
+  groupedBars(el("chart-tariff"),DATA.tariff.map(x=>[x[0],x[1]]),{max:50,colors:[COLORS.blue]});
+  tariffVoter(el("chart-tariff-voter"),DATA.tariffVoter);
+}
+document.addEventListener("DOMContentLoaded",init);
+</script>
+</body>
+</html>

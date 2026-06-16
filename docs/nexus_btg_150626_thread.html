@@ -1,0 +1,777 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Thread X - BTG/Nexus 15/06/2026 - Arvor Intelligence</title>
+<meta name="description" content="Thread para o X (formato longo) sobre a auditoria da pesquisa BTG/Nexus 15/06/2026: a Nexus e a FSB, o triangulo governo-PR-banco, deff, transferencia de votos e o BTG de Andre Esteves. Cards 16:9 prontos para screenshot e texto copiavel por post.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;600;700;800&family=Spline+Sans+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f5f0e7; --ink:#10131a; --muted:#62605a; --line:#cabfaf;
+  --navy:#08275f; --blue:#1557b0; --red:#b32934; --green:#087c5a; --gold:#bc8618; --orange:#e87522; --fora:#3a3f47;
+  --serif:"Libre Baskerville",Georgia,serif;
+  --sans:"Source Sans 3",ui-sans-serif,system-ui,sans-serif;
+  --display:"Archivo Black",Impact,sans-serif;
+  --mono:"Spline Sans Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:#15181f;color:#e9e3d6;font-family:var(--sans);font-size:16px;line-height:1.5}
+.wrap{width:min(1280px,calc(100% - 40px));margin:auto;padding:40px 0 90px}
+header.top{padding:46px 0 8px}
+.brand-lockup{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.brand-lockup img{width:46px;height:46px;object-fit:contain}
+.brand-lockup span{font-family:var(--sans);font-weight:700;font-size:.95rem;letter-spacing:.14em;color:#9fb6dd;text-transform:uppercase}
+.brand-lockup b{color:#e9e3d6;font-weight:800}
+header.top h1{font-family:var(--display);font-size:clamp(2.5rem,6vw,4.7rem);line-height:.94;margin:0;color:#f5f0e7}
+header.top h1 span{display:block;color:var(--orange)}
+header.top p{max-width:900px;color:#b9b2a3;font-size:1.06rem}
+.howto{border:1px solid #353a45;border-radius:8px;padding:14px 18px;font-size:.9rem;color:#b9b2a3;margin:18px 0 16px}
+.howto b{color:#f5f0e7}
+.sources{border:1px solid #353a45;border-radius:8px;padding:14px 18px;font-size:.82rem;color:#9a948a;margin:0 0 34px}
+.sources b{color:#cdc6b8} .sources a{color:#7fa8e0;word-break:break-word}
+.post{margin:46px 0}
+.post-label{font-family:var(--mono);font-size:.8rem;color:#868b9a;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+.card{
+  aspect-ratio:16/9; width:100%; max-width:1200px;
+  background:
+    linear-gradient(90deg,rgba(16,19,26,.045) 1px,transparent 1px) 0 0/58px 58px,
+    linear-gradient(180deg,#fbf7ef 0,#f5f0e7 50%,#eaf1ec 100%);
+  color:var(--ink); border-radius:10px; overflow:hidden;
+  display:grid; grid-template-rows:auto 1fr auto;
+  border:1px solid #353a45;
+}
+.card-head{display:flex;justify-content:space-between;align-items:center;padding:20px 34px 0;font-family:var(--sans)}
+.brand{display:flex;align-items:center;gap:11px}
+.brand img{width:38px;height:38px;object-fit:contain}
+.brand b{font-size:.94rem;letter-spacing:.02em;color:var(--navy)}
+.brand span{display:block;color:var(--muted);font-size:.78rem}
+.pno{font-family:var(--mono);font-size:.95rem;color:var(--muted)}
+.card-body{padding:12px 34px;display:grid;grid-template-columns:minmax(0,.98fr) minmax(0,1.02fr);gap:26px;align-items:center;min-height:0}
+.card-body.single{grid-template-columns:1fr}
+.card h2{font-family:var(--display);font-size:clamp(1.5rem,2.7vw,2.5rem);line-height:1.02;margin:0 0 12px}
+.card h2 em{color:var(--red);font-style:normal}
+.card h2 .b{color:var(--blue)}
+.card .t{font-size:clamp(.96rem,1.45vw,1.2rem);line-height:1.42;color:#2b3039;margin:0}
+.card .t b{color:var(--ink)} .card .t .hl{background:rgba(232,117,34,.22);padding:0 3px;border-radius:3px;font-weight:700}
+.bignum{font-family:var(--display);font-size:clamp(2.7rem,6.4vw,5.4rem);line-height:.88;color:var(--blue);letter-spacing:-.02em}
+.bignum.red{color:var(--red)} .bignum.navy{color:var(--navy)} .bignum.gold{color:var(--gold)} .bignum.orange{color:var(--orange)}
+.sub{font-family:var(--mono);font-size:.82rem;color:var(--muted);margin-top:8px}
+.card-foot{display:flex;justify-content:space-between;padding:0 34px 16px;font-family:var(--mono);font-size:.72rem;color:var(--muted)}
+.viz{min-width:0}
+.minibars{display:grid;gap:8px;font-family:var(--sans);font-size:.82rem}
+.mb{display:grid;grid-template-columns:120px minmax(0,1fr) 44px;gap:9px;align-items:center}
+.mb .nm{font-weight:700;color:#2b3039}
+.mb .tr{height:15px;background:#e7e0d4;border:1px solid #d7cdbd;display:flex;overflow:hidden;border-radius:2px}
+.mb .seg{height:100%}
+.mb .v{font-family:var(--mono);font-size:.82rem;text-align:right;font-weight:700}
+.kchips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.kchip{border:1px solid var(--line);background:rgba(255,255,255,.7);border-radius:999px;padding:5px 12px;font-family:var(--sans);font-size:.74rem;font-weight:700;color:#3a3f47}
+.glist{font-family:var(--sans);font-size:clamp(.84rem,1.25vw,1.02rem);line-height:1.45;margin:0;padding:0;list-style:none}
+.glist li{padding:8px 0;border-bottom:1px solid var(--line);display:flex;gap:10px}
+.glist .q{font-family:var(--mono);font-weight:600;color:var(--red);min-width:30px}
+.triangle{font-family:var(--sans);display:grid;gap:8px;text-align:center}
+.tri-row{display:flex;justify-content:center;gap:14px;align-items:center}
+.tnode{border:2px solid var(--navy);border-radius:8px;padding:8px 12px;background:rgba(255,255,255,.7);min-width:120px}
+.tnode b{display:block;font-size:.95rem;color:var(--navy)} .tnode span{font-size:.72rem;color:var(--muted)}
+.tedge{font-family:var(--mono);font-size:.7rem;color:var(--muted)}
+.copy{
+  margin-top:14px;background:#0f1218;border:1px solid #353a45;border-radius:8px;
+  padding:16px 18px;font-family:var(--mono);font-size:.92rem;line-height:1.55;color:#dad5c7;
+  white-space:pre-wrap;word-wrap:break-word;position:relative
+}
+.copy .cc{position:absolute;top:10px;right:14px;font-size:.72rem;color:#6b7080}
+.copy-btn{margin-top:8px;background:var(--orange);border:0;color:#1a1004;font-family:var(--sans);font-weight:800;font-size:.8rem;padding:8px 14px;border-radius:6px;cursor:pointer}
+.copy-btn:active{transform:translateY(1px)}
+@media (max-width:860px){
+  .card{aspect-ratio:auto}
+  .card-body{grid-template-columns:1fr}
+  .mb{grid-template-columns:96px minmax(0,1fr) 40px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <div class="brand-lockup"><img src="img/arvor_logo.png" alt="Logotipo Arvor"><span><b>ARVOR</b> INTELLIGENCE · THREAD X · 16/06/2026</span></div>
+  <h1>BTG/Nexus 150626<span>a pesquisa que tem dois donos</span></h1>
+  <p>18 posts, cada um com card 16:9 pronto para screenshot e texto longo (formato X Premium) pronto para colar. Arco: o achado da nota fiscal (1) → crédito onde é devido (2) → demolição técnica: margem, série, tarifaço, transferência, amostra (3-7) → a bomba FSB e o triângulo governo-PR-banco (8-10) → quem é o Dedé e o BTG (11-16) → cobrança e veredito (17-18). Sem hashtags: o X premia conteúdo, não tag.</p>
+  <div class="howto"><b>Como publicar:</b> dê screenshot em cada card (proporção exata 16:9), clique em "Copiar texto" para o corpo do post e publique na ordem. Dossiê-mãe: <span style="font-family:var(--mono)">brasil.arvor.co/nexus_btg_150626.html</span> · Registro TSE BR-06645/2026.</div>
+  <div class="sources"><b>Fontes públicas usadas nesta thread:</b> Nota fiscal NFS-e 290 (Nexus → BTG, juridico@fsb.com.br, CNPJ 11.077.560/0001-60); ABRACOM, <a href="https://abracom.org.br/2024/10/10/fsb-holding-lanca-nexus-empresa-de-pesquisa-e-inteligencia-de-dados/">FSB Holding lança Nexus</a>; <a href="https://www.nexus.fsb.com.br/quem-somos/">nexus.fsb.com.br</a>; O Antagonista, <a href="https://oantagonista.com.br/brasil/as-vesperas-das-eleicoes-lula-renova-r-562-mi-em-contratos-de-propaganda/">Lula renova R$562 mi em propaganda</a>; <a href="https://www.gazetadopovo.com.br/republica/gasto-publicidade-governo-dispara-876-milhoes/">Gazeta do Povo, gasto com publicidade</a>; <a href="https://www.poder360.com.br/poder-economia/lula-aconselhou-vorcaro-a-nao-vender-master-ao-btg/">Poder360, Lula e Vorcaro/Master</a>; <a href="https://www.cnnbrasil.com.br/economia/macroeconomia/esteves-sobre-magnitsky-sancao-nao-e-novidade-e-bancos-estao-preparados/">CNN, Esteves sobre Magnitsky</a>; <a href="https://exame.com/revista-exame/de-volta-ao-jogo-mas-o-jogo-mudou/">Exame, "de volta ao jogo"</a>; <a href="https://www.cnnbrasil.com.br/eleicoes/nexus-btg-no-2o-turno-lula-vai-a-49-flavio-mantem-43/">CNN, a pesquisa BTG/Nexus</a>.</div>
+</header>
+
+<!-- POST 1 -->
+<section class="post">
+  <div class="post-label">Post 1/18 · capa</div>
+  <div class="card">
+    <div class="card-head">
+      <div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div>
+      <div class="pno">1/18</div>
+    </div>
+    <div class="card-body">
+      <div>
+        <h2>A pesquisa que tem <em>dois donos</em></h2>
+        <p class="t">Paga pelo <b>BTG</b>. Feita pela <b>Nexus</b>. E a Nexus, segundo a própria nota fiscal, é a <span class="hl">FSB</span> — o grupo de comunicação que fatura do governo Lula.</p>
+        <div class="kchips">
+          <span class="kchip">BTG/Nexus · BR-06645/2026</span>
+          <span class="kchip">n = 2.017 · CATI/RDD</span>
+          <span class="kchip">campo 12-14/06/2026</span>
+        </div>
+      </div>
+      <div style="text-align:center">
+        <div class="bignum navy">juridico<br>@fsb.com.br</div>
+        <p class="sub">o e-mail do instituto na NFS-e 290</p>
+      </div>
+    </div>
+    <div class="card-foot"><span>arvor intelligence · auditoria btg/nexus 150626</span><span>fonte: NFS-e 290 · TSE BR-06645/2026</span></div>
+  </div>
+  <div class="copy"><span class="cc">~1430 chars</span>Toda pesquisa eleitoral tem um contratante. Esta tem dois donos.
+
+Em 15 de junho, a manchete chegou pronta: BTG/Nexus, Lula 49 x 43 sobre Flávio no 2º turno. Pesquisa paga pelo Banco BTG Pactual, R$ 164.888,89, nota fiscal 290, registro TSE BR-06645/2026.
+
+Fui ler a nota fiscal inteira. E no campo de e-mail do instituto que assinou a pesquisa estava escrito o que muda a leitura de tudo: juridico@fsb.com.br.
+
+A Nexus não é um instituto solto e independente. É o braço de pesquisa da FSB Holding — a mesma FSB de comunicação que mantém contrato de publicidade com o governo federal. O CNPJ dela, 11.077.560/0001-60, está registrado também como "Instituto FSB Pesquisa". O site é nexus.fsb.com.br. Não é dedução: está no documento.
+
+Ou seja: o número que diz que Lula ganha foi produzido por uma empresa do grupo que vende propaganda para o governo Lula, e foi pago por um banco que tem a sua própria conta a acertar com o Planalto.
+
+Isso não significa que a pesquisa é fraude. Significa que ela não caiu do céu, neutra, sem ninguém com interesse no resultado.
+
+Auditei as 116 páginas, refiz a margem com o efeito de desenho real, reconstruí a transferência de votos candidato a candidato e fui atrás de quem é quem nesse triângulo: governo, agência e banco.
+
+Thread. 🧵</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 2 -->
+<section class="post">
+  <div class="post-label">Post 2/18 · crédito onde é devido</div>
+  <div class="card">
+    <div class="card-head">
+      <div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div>
+      <div class="pno">2/18</div>
+    </div>
+    <div class="card-body">
+      <div>
+        <h2>Antes de bater, o <b>elogio</b></h2>
+        <p class="t">A Nexus fez o que a Quaest não fez: <b>perguntou o voto no começo</b>, antes do roteiro pesado de facções e tarifaço. E publicou 116 páginas.</p>
+        <div class="kchips">
+          <span class="kchip">voto antes do framing</span>
+          <span class="kchip">116 páginas divulgadas</span>
+          <span class="kchip">renda familiar plausível</span>
+        </div>
+      </div>
+      <div>
+        <ul class="glist">
+          <li><span class="q">✓</span><span>Voto, 2º turno, potencial e rejeição perguntados primeiro</span></li>
+          <li><span class="q">✓</span><span>Dois cenários de 1º turno e quatro de 2º turno</span></li>
+          <li><span class="q">✓</span><span>Renda familiar bate com a PNADC local</span></li>
+          <li style="border-bottom:0"><span class="q">✗</span><span>Mas: sem deff, sem pesos, sem n efetivo, sem microdados</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="card-foot"><span>o top-line é mais limpo que o da Quaest</span><span>btg/nexus 150626 · arvor</span></div>
+  </div>
+  <div class="copy"><span class="cc">~1320 chars</span>Vou começar pelo elogio, porque ele é verdadeiro e porque torna a crítica mais grave depois.
+
+A Nexus fez o melhor desenho de questionário do ciclo até agora. A intenção de voto foi perguntada cedo: perfil, interesse, voto espontâneo, 1º turno, certeza, 2º turno, potencial e rejeição. Só depois vêm governo, economia, facções, tarifaço e dívida.
+
+Isso importa. Significa que a foto principal — Lula 42 x 33 no 1º turno, 49 x 43 no 2º — foi tirada antes de o entrevistado ser aquecido pelos temas quentes. A crítica honesta aqui NÃO é "contaminaram o voto". Não contaminaram.
+
+Segundo: publicaram 116 páginas. Acima da média brasileira, que costuma soltar duas laudas de manchete e esconder o resto.
+
+Terceiro: a renda familiar declarada (40% até 2 SM, 20% acima de 5 SM) está surpreendentemente perto da PNADC anual local. Para padrão de pesquisa eleitoral, é bom.
+
+Guardem esse elogio. Porque tudo que vem a seguir — a margem de vitrine, a série com cartões trocados, a pergunta enviesada do tarifaço e, principalmente, quem é o dono do instituto — é mais sério justamente porque foi feito por gente competente. Incompetente erra. Competente escolhe.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 3 -->
+<section class="post">
+  <div class="post-label">Post 3/18 · margem</div>
+  <div class="card">
+    <div class="card-head">
+      <div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div>
+      <div class="pno">3/18</div>
+    </div>
+    <div class="card-body">
+      <div>
+        <h2>O <em>±2</em> é vitrine</h2>
+        <p class="t">A diferença Lula−Flávio é +6. Mas a margem da <b>diferença</b> é maior que a de cada um. Com efeito de desenho 2,0, o piso desce a <span class="hl">+0,1</span> — quase empate.</p>
+        <div class="kchips">
+          <span class="kchip">±2,0 vira ±2,7 a ±3,1</span>
+          <span class="kchip">recorte pequeno: ±6 a ±8</span>
+        </div>
+      </div>
+      <div style="text-align:center">
+        <div class="bignum red">+0,1</div>
+        <p class="sub">piso do intervalo da diferença (49−43) com deff 2,0</p>
+      </div>
+    </div>
+    <div class="card-foot"><span>há vantagem, mas não é "abriu e acabou"</span><span>btg/nexus 150626 · arvor</span></div>
+  </div>
+  <div class="copy"><span class="cc">~1380 chars</span>A pesquisa estampa margem de ±2 ponto percentual. Esse número supõe um mundo mais limpo do que aquele em que a pesquisa foi feita: telefonema por número sorteado (RDD), com cotas e ponderação.
+
+Quando você sorteia, cotaliza e pondera, a variância sobe. O nome técnico disso é efeito de desenho (deff). A Nexus não publica o deff nem o tamanho efetivo da amostra, então a auditoria precisa refazer a conta.
+
+Em amostra aleatória simples, n=2.017 dá ±2,18, não ±2,00. Com deff entre 1,5 e 2,0, a margem nacional vai para algo entre ±2,7 e ±3,1.
+
+E tem um detalhe que quase ninguém conta. Quando você compara dois candidatos, as duas incertezas se somam: a margem da DIFERENÇA é sempre maior que a de cada um. A vantagem observada é +6 (Lula 49, Flávio 43). O intervalo dessa diferença, com deff 2,0, tem piso em +0,1 ponto. Quase encostando no zero.
+
+Tradução: a liderança existe e é a maior da série. Mas chamar de "abriu 6 e acabou" é estatística de vitrine.
+
+E nos recortes piora: religião, renda e região têm subamostras pequenas, com margem real de ±6 a ±8. Toda tabela cruzada deveria vir com o n efetivo ao lado. Nenhuma vem.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 4 -->
+<section class="post">
+  <div class="post-label">Post 4/18 · série</div>
+  <div class="card">
+    <div class="card-head">
+      <div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div>
+      <div class="pno">4/18</div>
+    </div>
+    <div class="card-body">
+      <div>
+        <h2>A série não é <em>régua de laboratório</em></h2>
+        <p class="t">A Nexus vende movimento entre quatro rodadas. Só que o <b>cartão de candidatos mudou</b>: Aldo sai, Joaquim entra, Aécio entra. Não é a mesma régua medindo a mesma coisa.</p>
+      </div>
+      <div>
+        <div class="minibars">
+          <div class="mb"><span class="nm">Mar</span><div class="tr"><div class="seg" style="width:46%;background:var(--red)"></div><div class="seg" style="width:45%;background:var(--blue)"></div></div><span class="v">+1</span></div>
+          <div class="mb"><span class="nm">Abr</span><div class="tr"><div class="seg" style="width:46%;background:var(--red)"></div><div class="seg" style="width:46%;background:var(--blue)"></div></div><span class="v">0</span></div>
+          <div class="mb"><span class="nm">Mai</span><div class="tr"><div class="seg" style="width:47%;background:var(--red)"></div><div class="seg" style="width:46%;background:var(--blue)"></div></div><span class="v">+1</span></div>
+          <div class="mb"><span class="nm">Jun</span><div class="tr"><div class="seg" style="width:49%;background:var(--red)"></div><div class="seg" style="width:43%;background:var(--blue)"></div></div><span class="v">+6</span></div>
+        </div>
+        <p class="sub" style="margin-top:12px">2º turno Lula (vermelho) × Flávio (azul). A vantagem pula de +1 para +6 em junho.</p>
+      </div>
+    </div>
+    <div class="card-foot"><span>movimento real ou ruído de instrumento?</span><span>btg/nexus 150626 · arvor</span></div>
+  </div>
+  <div class="copy"><span class="cc">~1280 chars</span>A Nexus mostra uma curva bonita: no 2º turno, Lula sai de +1 em março para +6 em junho. No 1º turno, abre de +5 para +9. A história que se conta sozinha é "Lula deslanchou".
+
+Antes de comprar a história, leia a letra miúda da própria Nexus. O cartão de candidatos mudou entre as rodadas. Em abril havia Aldo Rebelo. Em maio, Joaquim Barbosa entrou no lugar dele. Em junho, Aécio Neves foi incluído no cenário principal. Tudo bem mudar o cenário — errado é tratar a curva como se o instrumento fosse idêntico de uma rodada para a outra.
+
+E tem a estatística. A mudança de vantagem de maio (+1) para junho (+6) é de 5 pontos. A margem da variação de vantagem entre duas amostras independentes, mesmo no caso mais generoso, é da ordem de ±6. Com efeito de desenho, passa disso.
+
+Então a frase correta não é "Lula deslanchou e acabou". É: há sinal de melhora de Lula e piora de Flávio em junho, mas a evidência estatística ainda não fecha o caixão. Quatro pesquisas independentes, com cartões diferentes e sem deff publicado, formam uma tendência — não uma sentença.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 5 -->
+<section class="post">
+  <div class="post-label">Post 5/18 · tarifaço</div>
+  <div class="card">
+    <div class="card-head">
+      <div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div>
+      <div class="pno">5/18</div>
+    </div>
+    <div class="card-body">
+      <div>
+        <h2>A pergunta com a <em>saída trancada</em></h2>
+        <p class="t">A pergunta 18 lê em voz alta "culpa de Lula" ou "culpa de Flávio". A saída neutra — não é culpa de nenhum dos dois — existe no formulário com a etiqueta <span class="hl">NÃO LER</span>.</p>
+      </div>
+      <div style="text-align:center">
+        <div class="bignum gold">42 × 39</div>
+        <p class="sub">culpa pelo tarifaço (Flávio × Lula) — equilíbrio depois de esconder a 3ª opção</p>
+      </div>
+    </div>
+    <div class="card-foot"><span>atribuição forçada, não opinião espontânea</span><span>btg/nexus 150626 · arvor</span></div>
+  </div>
+  <div class="copy"><span class="cc">~1300 chars</span>Se há uma pergunta feia no questionário, é a 18, sobre o tarifaço de Trump.
+
+O entrevistador é instruído a ler duas frases: a culpa é de Lula, ou a culpa é de Flávio Bolsonaro. Existe uma terceira alternativa no formulário — a de que o tarifaço é decisão geopolítica dos EUA e não é culpa de nenhum dos dois. Só que essa vem marcada como NÃO LER.
+
+É a velha pergunta "você já parou de bater na sua mãe?". A resposta sensata não está no cardápio. Quem responde no telefone nunca fica sabendo que a saída neutra existe.
+
+O resultado publicado — 42% culpam Flávio, 39% culpam Lula, 11% nenhum dos dois — tem cara de equilíbrio nacional espontâneo. Não é. É o equilíbrio que sobra depois de esconder a opção de saída de boa parte de quem respondeu.
+
+E quando você abre por eleitor de 2º turno, o resultado é quase perfeito: eleitor de Lula culpa Flávio, eleitor de Flávio culpa Lula. Esse bloco não mede informação sobre tarifa. Mede identidade política.
+
+De novo: não é fraude. É desenho. E desenho que empurra a resposta é exatamente o tipo de coisa que microdados e script completo deixariam o público auditar — se fossem publicados.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 6 -->
+<section class="post">
+  <div class="post-label">Post 6/18 · transferência</div>
+  <div class="card">
+    <div class="card-head">
+      <div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div>
+      <div class="pno">6/18</div>
+    </div>
+    <div class="card-body">
+      <div>
+        <h2>O adversário invisível de Flávio é o <em>nulo</em></h2>
+        <p class="t">Reconstruí o destino do voto de cada nanocandidato no 2º turno. A direita não perde por falta de nome. Perde porque <b>1/3 do voto antipetista some no branco/nulo</b>.</p>
+      </div>
+      <div>
+        <div class="minibars">
+          <div class="mb"><span class="nm">Daciolo</span><div class="tr"><div class="seg" style="width:9%;background:var(--red)"></div><div class="seg" style="width:61%;background:var(--blue)"></div><div class="seg" style="width:30%;background:var(--fora)"></div></div><span class="v" style="color:var(--blue)">+52</span></div>
+          <div class="mb"><span class="nm">Zema</span><div class="tr"><div class="seg" style="width:25%;background:var(--red)"></div><div class="seg" style="width:64%;background:var(--blue)"></div><div class="seg" style="width:11%;background:var(--fora)"></div></div><span class="v" style="color:var(--blue)">+39</span></div>
+          <div class="mb"><span class="nm">Caiado</span><div class="tr"><div class="seg" style="width:22%;background:var(--red)"></div><div class="seg" style="width:61%;background:var(--blue)"></div><div class="seg" style="width:16%;background:var(--fora)"></div></div><span class="v" style="color:var(--blue)">+39</span></div>
+          <div class="mb"><span class="nm">Cury</span><div class="tr"><div class="seg" style="width:20%;background:var(--red)"></div><div class="seg" style="width:46%;background:var(--blue)"></div><div class="seg" style="width:34%;background:var(--fora)"></div></div><span class="v" style="color:var(--blue)">+26</span></div>
+          <div class="mb"><span class="nm">Joaquim</span><div class="tr"><div class="seg" style="width:31%;background:var(--red)"></div><div class="seg" style="width:17%;background:var(--blue)"></div><div class="seg" style="width:48%;background:var(--fora)"></div></div><span class="v" style="color:var(--red)">−14</span></div>
+        </div>
+        <p class="sub" style="margin-top:10px">p/ Lula (vermelho) · p/ Flávio (azul) · branco-nulo (cinza) · líq. F−L à direita</p>
+      </div>
+    </div>
+    <div class="card-foot"><span>modelo de balanço de massa, fecha em 49/43/8</span><span>btg/nexus 150626 · arvor</span></div>
+  </div>
+  <div class="copy"><span class="cc">~1420 chars</span>A pergunta errada é "Flávio chega ao 2º turno?". A pergunta certa é aritmética: do 1º para o 2º turno, para onde vai o voto de cada eliminado?
+
+A Nexus não publica matriz individual de transição. Então fiz o que a contabilidade chama de balanço de massa: peguei o voto de 1º turno de cada nome e o redistribuí pelas taxas de transferência que a própria pesquisa afere no cruzamento de 2º turno, reconciliando tudo com os quatro cenários publicados. Some no fim, e tem de fechar exatamente no placar, 49 a 43 com 8 fora.
+
+O resultado é político, não aleatório. Cabo Daciolo, ultraevangélico, entrega +52 líquido para Flávio. Zema e Caiado, +39 cada. Augusto Cury, de perfil mais à direita, +26. O único que escorre para Lula é Joaquim Barbosa, mais ao centro: −14.
+
+(Corrigi aqui um erro do meu próprio rascunho anterior, que mandava metade do voto de Cury e parte do de Daciolo para Lula. Não fazia sentido político, e auditoria que se preze também audita a si mesma.)
+
+A lição é dura para a direita: ela não perde por falta de candidato competitivo contra Lula. Flávio é o melhor 2º-turnista que a oposição tem nesta rodada. Ela perde porque um terço de todo o voto antipetista disponível simplesmente não vira voto em ninguém. O adversário invisível de Flávio não é Lula. É o branco e o nulo.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 7 -->
+<section class="post">
+  <div class="post-label">Post 7/18 · amostra</div>
+  <div class="card">
+    <div class="card-head">
+      <div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div>
+      <div class="pno">7/18</div>
+    </div>
+    <div class="card-body">
+      <div>
+        <h2>Amostra quase certa, com a <em>idade entortada</em></h2>
+        <p class="t">Sexo e região batem com o TSE. A idade não: jovens sobram, 60+ faltam. A Nexus calibra pela PNADC (população), quando eleição se decide no <b>eleitorado</b>.</p>
+        <div class="kchips">
+          <span class="kchip">16-24: 17% × 12,3% TSE</span>
+          <span class="kchip">60+: 20% × 23,3% TSE</span>
+        </div>
+      </div>
+      <div>
+        <ul class="glist">
+          <li><span class="q">?</span><span>Tipo de telefone (fixo/celular): não publicado</span></li>
+          <li><span class="q">?</span><span>Tentativas, recusas, callbacks: não publicados</span></li>
+          <li><span class="q">?</span><span>Peso mínimo, máximo, distribuição: não publicados</span></li>
+          <li style="border-bottom:0"><span class="q">?</span><span>n efetivo e deff por estimativa: não publicados</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="card-foot"><span>RDD tem filtro invisível: só entra quem atende</span><span>btg/nexus 150626 · arvor</span></div>
+  </div>
+  <div class="copy"><span class="cc">~1330 chars</span>A amostra é boa em sexo e região, e bate razoavelmente com o que o TSE registra. A idade é que não bate: os jovens de 16 a 24 aparecem acima do eleitorado real (17% contra 12,3%), e os de 60+ aparecem abaixo (20% contra 23,3%).
+
+Isso não vira automaticamente vantagem para um lado. Mas aponta uma inconsistência de método. A Nexus calibra pela PNADC 2024, que é a foto da população em geral. Só que eleição não se decide na população — se decide no eleitorado, e o eleitorado o TSE conhece nome por nome, com sexo, idade e estado.
+
+E tem o filtro que ninguém vê. CATI/RDD é entrevista por telefone com número sorteado. Só entra na conta quem tem telefone e atende. Quem não atende, quem desliga, quem só usa o celular do trabalho — tudo isso fica de fora. Para corrigir, o instituto "pesa" as respostas até a amostra parecer com o Brasil. Esse esticar e encolher tem um preço — e a Nexus não mostra o recibo.
+
+O que falta, em uma linha: distribuição por tipo de telefone, tentativas, recusas, callbacks, peso mínimo e máximo, n efetivo e deff. Sem isso, é impossível saber quanto a amostra foi puxada para fechar as cotas. Confiar vira ato de fé, não de auditoria.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 8 -->
+<section class="post">
+  <div class="post-label">Post 8/18 · A BOMBA</div>
+  <div class="card">
+    <div class="card-head">
+      <div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div>
+      <div class="pno">8/18</div>
+    </div>
+    <div class="card-body single">
+      <div style="text-align:center">
+        <h2>O instituto é a <span class="b">FSB</span></h2>
+        <p class="t" style="max-width:740px;margin:0 auto 14px">A Nexus que assina a pesquisa é o braço de dados da <b>FSB Holding</b>. Não é dedução — está na nota fiscal, no registro e no domínio do site.</p>
+        <div style="display:flex;gap:22px;justify-content:center;flex-wrap:wrap;font-family:var(--mono);font-size:.92rem;color:#2b3039;margin-top:6px">
+          <span>📧 juridico@<b style="color:var(--navy)">fsb.com.br</b></span>
+          <span>🏢 CNPJ 11.077.560/0001-60 = "Instituto <b style="color:var(--navy)">FSB</b> Pesquisa"</span>
+          <span>🌐 nexus.<b style="color:var(--navy)">fsb.com.br</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="card-foot"><span>FSB Holding lançou a Nexus em out/2024 (ABRACOM)</span><span>fonte: NFS-e 290 · Receita · ABRACOM</span></div>
+  </div>
+  <div class="copy"><span class="cc">~1400 chars</span>Aqui a thread vira. Quem é a Nexus?
+
+A manchete diz "pesquisa BTG/Nexus", como se Nexus fosse um instituto técnico, neutro, isolado. Não é. Três documentos públicos dizem a mesma coisa:
+
+1. A nota fiscal 290, emitida pela própria Nexus, traz no campo de contato o e-mail juridico@fsb.com.br. O departamento jurídico da Nexus é o da FSB.
+
+2. O CNPJ que assina essa nota, 11.077.560/0001-60, está registrado na Receita também sob o nome "Instituto FSB Pesquisa". É a mesma pessoa jurídica.
+
+3. O site da Nexus é, literalmente, nexus.fsb.com.br. Um subdomínio da FSB.
+
+E não é segredo: em outubro de 2024, a própria entidade do setor (ABRACOM) noticiou que a "FSB Holding lança Nexus, empresa de pesquisa e inteligência de dados". A Nexus é a FSB fazendo pesquisa.
+
+Por que isso importa numa pesquisa eleitoral? Porque a FSB não é só uma agência qualquer. A FSB é uma das maiores empresas de comunicação e relações públicas do país. E ela tem cliente fixo de um lado muito específico do tabuleiro. Esse é o próximo post.
+
+Guarde o nome: FSB. Vai aparecer de novo, em outro contrato, com outro pagador — o governo federal.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 9 -->
+<section class="post">
+  <div class="post-label">Post 9/18 · FSB × governo</div>
+  <div class="card">
+    <div class="card-head">
+      <div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div>
+      <div class="pno">9/18</div>
+    </div>
+    <div class="card-body">
+      <div>
+        <h2>O mesmo grupo faz a <em>propaganda do governo</em></h2>
+        <p class="t">A FSB Comunicação é uma das <b>quatro agências</b> com contrato de publicidade do Secom. Valor: <span class="hl">R$ 562 milhões/ano</span>. O grupo que mede Lula ganhando também vende a imagem de Lula.</p>
+      </div>
+      <div style="text-align:center">
+        <div class="bignum orange">R$ 562 mi</div>
+        <p class="sub">verba anual de publicidade do Secom, dividida por 4 agências — FSB entre elas</p>
+      </div>
+    </div>
+    <div class="card-foot"><span>contratos de 2022, mantidos e ampliados por Lula</span><span>fontes: O Antagonista · Gazeta do Povo · Secom</span></div>
+  </div>
+  <div class="copy"><span class="cc">~1450 chars</span>Agora junte as duas pontas.
+
+A FSB Holding é dona da Nexus, o instituto que fez a pesquisa. E a FSB Comunicação — empresa do mesmo grupo — é uma das quatro agências que prestam serviço de publicidade para a Secretaria de Comunicação Social da Presidência. As outras três são Nova SB, Propeg e Agência Nacional de Propaganda.
+
+Esses contratos nasceram em R$ 450 milhões e, com o aditivo de 25% que a lei permite, chegaram a R$ 562 milhões por ano. Foram assinados no fim de 2022, na largada da reeleição de Bolsonaro, e o governo Lula não só manteve como ampliou o gasto com comunicação a partir de 2023. Quem reportou: O Antagonista e a Gazeta do Povo, com base em dados da própria Secom.
+
+Sejamos precisos, porque precisão é o que dá força ao argumento. O CNPJ da pesquisa (Nexus) e o CNPJ da publicidade (FSB Comunicação) NÃO são o mesmo número — são empresas-irmãs sob a mesma holding, a FSB. Mas é exatamente isso que importa: o grupo que ajuda a construir a imagem pública do governo Lula é o mesmo grupo cuja pesquisa, paga por um banco, mostra Lula ganhando a eleição.
+
+Isso não prova manipulação do número. Prova um conflito de interesse que deveria estar declarado em letras garrafais em toda pesquisa eleitoral da casa. E não está.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 10 -->
+<section class="post">
+  <div class="post-label">Post 10/18 · o triângulo</div>
+  <div class="card">
+    <div class="card-head">
+      <div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div>
+      <div class="pno">10/18</div>
+    </div>
+    <div class="card-body single">
+      <div class="triangle" style="max-width:760px;margin:0 auto">
+        <div class="tri-row"><div class="tnode" style="border-color:var(--red)"><b>GOVERNO LULA</b><span>cliente de publicidade da FSB · R$562mi/ano</span></div></div>
+        <div class="tedge">▲ propaganda &nbsp;&nbsp;&nbsp;&nbsp; resultado favorável ▲</div>
+        <div class="tri-row">
+          <div class="tnode" style="border-color:var(--navy)"><b>FSB / NEXUS</b><span>faz a propaganda E a pesquisa</span></div>
+          <div class="tnode" style="border-color:var(--blue)"><b>BTG PACTUAL</b><span>paga a pesquisa · R$164.888,89</span></div>
+        </div>
+        <p class="t" style="text-align:center;margin-top:14px;max-width:680px;margin-left:auto;margin-right:auto">Três vértices, três interesses. Ninguém aqui é neutro. <b>A única parte sem assento na mesa é o eleitor</b> — que recebe só a manchete.</p>
+      </div>
+    </div>
+    <div class="card-foot"><span>quem ganha o quê com cada número?</span><span>btg/nexus 150626 · arvor</span></div>
+  </div>
+  <div class="copy"><span class="cc">~1380 chars</span>Desenhe o triângulo na cabeça.
+
+Vértice 1, o governo Lula: é cliente de publicidade da FSB, R$ 562 milhões por ano. Tem interesse óbvio em pesquisa que mostre o presidente competitivo.
+
+Vértice 2, a FSB/Nexus: vende propaganda ao governo com uma mão e, com a outra, produz a pesquisa eleitoral. Tem interesse em agradar dois pagadores ao mesmo tempo.
+
+Vértice 3, o BTG: paga a pesquisa, R$ 164.888,89. Tem a própria leitura de mercado sobre quem é melhor para os negócios em 2026.
+
+Nenhum dos três é neutro. E a única parte que não tem assento nessa mesa é justamente quem mais deveria: o eleitor, que recebe só o título "Lula 49 x 43".
+
+Repito o que venho dizendo desde o começo: nada disso prova que o número foi fabricado. O top-line de voto até é mais limpo que o da Quaest. O problema é estrutural e silencioso. Uma pesquisa registrada no TSE é bem público com nota fiscal privada. Quando o instituto que a produz é do mesmo grupo que faz a comunicação de um dos lados, e o pagador é um banco com agenda própria, o mínimo exigível é transparência total: microdados, pesos, deff — e a declaração explícita desses vínculos. É o que não temos.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 11 -->
+<section class="post">
+  <div class="post-label">Post 11/18 · o Dedé</div>
+  <div class="card">
+    <div class="card-head">
+      <div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div>
+      <div class="pno">11/18</div>
+    </div>
+    <div class="card-body">
+      <div>
+        <h2>Quem paga: o <em>Dedé</em></h2>
+        <p class="t">André Esteves, o "Dedé". Fundou o BTG em 2008 — sigla que o mercado leu como <b>"Back to the Game"</b>. Preso em 2015, absolvido em 2018, hoje 2º mais rico do Brasil.</p>
+        <div class="kchips">
+          <span class="kchip">US$ 19,4 bi · Forbes 03/2026</span>
+          <span class="kchip">Bangu 8 · 28 dias · 2015</span>
+        </div>
+      </div>
+      <div style="text-align:center">
+        <div class="bignum navy">BTG</div>
+        <p class="sub">"Back to the Game" — de volta ao jogo, a leitura de mercado da sigla</p>
+      </div>
+    </div>
+    <div class="card-foot"><span>o banqueiro que sempre volta ao jogo</span><span>fontes: Exame · Forbes · Gazeta do Povo</span></div>
+  </div>
+  <div class="copy"><span class="cc">~1380 chars</span>Para entender por que um banco encomenda pesquisa eleitoral, você precisa entender o banco. E o banco é, em grande medida, um homem só: André Esteves, o Dedé.
+
+Esteves saiu da classe média carioca, virou trader, comprou o velho Pactual, vendeu ao UBS e, em 2008, fundou o BTG. O mercado leu a sigla como "Back to the Game" — de volta ao jogo. Era uma declaração de intenção.
+
+O jogo quase acabou em novembro de 2015, quando ele foi preso e mandado para Bangu 8, acusado na Lava Jato de tentar atrapalhar a delação de um ex-diretor da Petrobras. Ficou 28 dias. Em 2018 foi absolvido; Gilmar Mendes classificou o episódio como "o maior erro judiciário da história do Brasil". Esteves voltou ao controle do banco e seguiu em frente.
+
+Hoje é o segundo brasileiro mais rico, US$ 19,4 bilhões segundo a Forbes de março de 2026, à frente de um conglomerado que está em quase todo setor relevante da economia.
+
+A característica que define o Dedé não é o dinheiro. É a capacidade de transitar entre todos os grupos de poder, em qualquer governo, sem cerimônia. Foi próximo de Lula nos primeiros mandatos, entrou nas obras de infraestrutura da Dilma e, quando o PT saiu, se adaptou sem ruído. Guarde isso para o próximo post.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 12 -->
+<section class="post">
+  <div class="post-label">Post 12/18 · Lula palatável</div>
+  <div class="card">
+    <div class="card-head">
+      <div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div>
+      <div class="pno">12/18</div>
+    </div>
+    <div class="card-body">
+      <div>
+        <h2>O banqueiro que <em>cresceu nos anos Lula</em></h2>
+        <p class="t">O BTG nasceu e explodiu no ciclo PT. Para a Faria Lima, Lula sempre foi mais palatável do que o discurso de campanha sugere: <b>rentismo suave, juro alto, crédito girando</b>.</p>
+      </div>
+      <div>
+        <ul class="glist">
+          <li><span class="q">›</span><span>2008-2015: BTG cresce no boom de crédito e commodities do ciclo PT</span></li>
+          <li><span class="q">›</span><span>Esteves participa do "Conselhão" e dos GTs de custo do crédito</span></li>
+          <li style="border-bottom:0"><span class="q">›</span><span>2026: agora diz que reeleição de Lula é "dificílima" e que "Lula dilmou"</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="card-foot"><span>palatável em 2022, "dificílima" em 2026</span><span>fontes: BPMoney · Revista Oeste · gov.br/SRI</span></div>
+  </div>
+  <div class="copy"><span class="cc">~1430 chars</span>Tem um detalhe que a esquerda finge esquecer e a direita não gosta de ouvir: a Faria Lima conviveu muito bem com o lulismo.
+
+O BTG nasceu em 2008 e cresceu no ciclo do PT — boom de crédito, commodities, consumo, obras. Banco grande adora previsibilidade, juro real gordo e Estado pagando suas contas. O rentismo suave do primeiro lulismo foi excelente para quem vive de spread. Esteves participou do Conselhão, sentou nas mesas de infraestrutura da Dilma, integrou grupos de trabalho sobre custo do crédito ao lado da Febraban.
+
+Em 2022, para boa parte do mercado, Lula era a opção palatável: previsível, conhecido, sem aventura. Tarcísio ainda não era o ativo que viria a ser.
+
+Em 2026 o tom mudou. Esteves passou a dizer publicamente que a reeleição de Lula é "dificílima", que o país "vai para a direita" e que este é um Lula mais ideológico — "Lula dilmou", na expressão atribuída a ele. O BTG negou parte das falas e diz ser apolítico.
+
+Pode ser. Mas a lição histórica permanece: o Dedé não é lulista nem bolsonarista. É Esteves. O interesse dele é estabilidade, crédito, juro, acesso e opcionalidade. Por isso a pergunta que importa não é "ele torce por quem". É "qual cenário é melhor para o balanço do BTG em 2026". E uma pesquisa, para um banco, é um ativo informacional como qualquer outro.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 13 -->
+<section class="post">
+  <div class="post-label">Post 13/18 · a briga real</div>
+  <div class="card">
+    <div class="card-head">
+      <div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div>
+      <div class="pno">13/18</div>
+    </div>
+    <div class="card-body">
+      <div>
+        <h2>Mas BTG e Planalto <em>estão brigados</em></h2>
+        <p class="t">Lula tirou Esteves de uma reunião de banqueiros. E aconselhou Vorcaro a <b>não vender o Master ao BTG</b>. Então por que a pesquisa do BTG dá Lula ganhando?</p>
+        <div class="kchips">
+          <span class="kchip">Esteves vetado em reunião no Planalto</span>
+          <span class="kchip">"não venda o Master ao BTG"</span>
+        </div>
+      </div>
+      <div style="text-align:center">
+        <div class="bignum red">?</div>
+        <p class="sub">tensão real entre as partes — o que torna o número, se honesto, ainda mais interessante</p>
+      </div>
+    </div>
+    <div class="card-foot"><span>interesse não é o mesmo que torcida</span><span>fontes: Poder360 · O Tempo</span></div>
+  </div>
+  <div class="copy"><span class="cc">~1380 chars</span>Aqui a história fica menos óbvia — e mais interessante.
+
+Se a tese fosse "BTG é lulista e fez pesquisa para ajudar o Lula", ela quebra na primeira checagem. A relação entre Esteves e o atual governo está longe de cordial. Lula excluiu Esteves de uma reunião de banqueiros no Planalto (o governo alegou que a pauta era crédito consignado, em que o BTG não atuaria). E, no episódio do Banco Master, Lula pessoalmente aconselhou Daniel Vorcaro a NÃO vender o banco por valor simbólico ao BTG.
+
+Ou seja: há atrito real entre o banco e o Planalto. O que torna a pesquisa, se honesta, ainda mais curiosa — não é encomenda de aliado.
+
+A leitura adulta é outra. Um banco não compra pesquisa para "torcer". Compra para se posicionar. O número que diz "Lula favorito" é, para o BTG, informação acionável: ajuda a precificar risco político, a calibrar carteira, a decidir conversa com Brasília e com Washington. O resultado pode contrariar a simpatia pessoal do dono e ainda assim ser exatamente o que o banco precisa saber.
+
+Interesse não é torcida. E é justamente por isso que microdados, pesos, deff e logs de divulgação deveriam ser obrigatórios: para o leitor distinguir as duas coisas sozinho.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 14 -->
+<section class="post">
+  <div class="post-label">Post 14/18 · Vorcaro, o imitador</div>
+  <div class="card">
+    <div class="card-head">
+      <div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div>
+      <div class="pno">14/18</div>
+    </div>
+    <div class="card-body">
+      <div>
+        <h2>Vorcaro quis ser o Dedé — e <em>ostentou demais</em></h2>
+        <p class="t">Daniel Vorcaro tentou o mesmo roteiro: banqueiro improvável que vira poder. Mas exagerou. O Master quebrou, e o BTG <b>comprou os cacos</b>.</p>
+      </div>
+      <div style="text-align:center">
+        <div class="bignum navy">R$ 1,5 bi</div>
+        <p class="sub">em ativos do Master comprados pelo BTG (mai/2026), após R$1,1bi em carteiras</p>
+      </div>
+    </div>
+    <div class="card-foot"><span>o jogo do Dedé não perdoa amador</span><span>fontes: Metrópoles · Times Brasil · Poder360</span></div>
+  </div>
+  <div class="copy"><span class="cc">~1430 chars</span>Para entender o Dedé, olhe para quem tentou copiá-lo e caiu.
+
+Daniel Vorcaro seguiu o mesmo roteiro: o banqueiro improvável, fora do clube tradicional, que ergue um banco do nada e tenta comprar lugar na mesa dos grandes. O Banco Master cresceu rápido, com captação cara e jogada agressiva. A diferença é que Vorcaro ostentou demais e rápido demais — e poder construído na base do brilho, sem reserva, vira alvo.
+
+O desfecho conhecemos. O Master ruiu. O acordo com o BRB foi vetado pelo Banco Central em setembro de 2025. E o BTG estava lá, do outro lado, comprando os pedaços: mais de R$ 1,1 bilhão em carteiras de crédito originadas pelo Master e, em maio, mais R$ 1,5 bilhão em ativos. Vorcaro chegou a sugerir, em mensagens, que o BTG queria barrar seu acordo com o BRB.
+
+A moral da Faria Lima é fria: o jogo do Dedé não perdoa amador. Esteves também é beligerante e também depende de governo — mas ele aprendeu a regra que Vorcaro ignorou. O sucesso individual de um banqueiro brasileiro se constrói com uma mão no mercado e a outra no Estado, que garante a reserva de mercado, o socorro e a regra. Quem esquece o segundo pilar e só ostenta o primeiro, quebra. Vorcaro quebrou. O Dedé comprou.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 15 -->
+<section class="post">
+  <div class="post-label">Post 15/18 · Washington</div>
+  <div class="card">
+    <div class="card-head">
+      <div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div>
+      <div class="pno">15/18</div>
+    </div>
+    <div class="card-body">
+      <div>
+        <h2>Beligerante lá fora, <em>dependente</em> aqui</h2>
+        <p class="t">Esteves tratou tarifas e sanções com o Tesouro dos EUA. Sobre a Magnitsky, foi direto: <span class="hl">"sanção não é novidade, os bancos estão preparados"</span>.</p>
+        <div class="kchips">
+          <span class="kchip">tarifaço de 50% · jul/2025</span>
+          <span class="kchip">Magnitsky em ministro do STF</span>
+        </div>
+      </div>
+      <div style="text-align:center">
+        <div class="bignum gold">Magnitsky</div>
+        <p class="sub">o banco que se diz "preparado" — e que também precisa do governo para existir</p>
+      </div>
+    </div>
+    <div class="card-foot"><span>postura de quem joga nos dois tabuleiros</span><span>fontes: CNN Brasil · Folha · Instagram/reportagens</span></div>
+  </div>
+  <div class="copy"><span class="cc">~1460 chars</span>O alcance do Dedé não para na fronteira. Quando Trump impôs o tarifaço de 50% ao Brasil em julho de 2025, embalado na retórica de "caça às bruxas" contra Bolsonaro, e os EUA miraram um ministro do STF com a Lei Magnitsky, Esteves não ficou assistindo.
+
+Reportagens mostraram o banqueiro tratando de tarifas e sanções em Washington, em diálogo com o ambiente do Tesouro americano e seu secretário, e depois reportando o teor a interlocutores em Brasília. Sobre as sanções, foi público e seco: "sanção não é novidade e os bancos estão preparados".
+
+É o retrato de um agente que joga nos dois tabuleiros ao mesmo tempo. Beligerante, ativo, circulando entre o Tesouro dos EUA e o Planalto, influenciando dos dois lados.
+
+E aqui está o paradoxo que define o personagem: toda essa beligerância repousa sobre dependência. O banco campeão nacional precisa do Estado brasileiro — da regra, do socorro sistêmico, da reserva de mercado, do juro alto — para sustentar o próprio sucesso. Por isso ele nunca rompe de vez com governo nenhum. Briga, pressiona, se posiciona — mas mantém todas as portas abertas.
+
+Registro o óbvio para não restar dúvida: não há, em nenhuma fonte séria que eu tenha encontrado, prova de ilícito ligando Esteves ou o BTG a organização criminosa. Rumor de mercado não é fato, e nesta thread eu separo os dois. O que está documentado já basta: conflito de interesse, não crime.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 16 -->
+<section class="post">
+  <div class="post-label">Post 16/18 · o hedge</div>
+  <div class="card">
+    <div class="card-head">
+      <div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div>
+      <div class="pno">16/18</div>
+    </div>
+    <div class="card-body">
+      <div>
+        <h2>Sem Tarcísio, Lula vira <em>hedge</em></h2>
+        <p class="t">Hipótese, registrada como tal: fora Tarcísio do tabuleiro, parte do mercado pode preferir a <b>previsibilidade de um governo conhecido</b> ao risco de uma aposta dinástica.</p>
+      </div>
+      <div style="text-align:center">
+        <div class="bignum blue" style="color:var(--blue)">hedge</div>
+        <p class="sub">não é acusação — é leitura de portfólio. Uma pesquisa é parte do hedge.</p>
+      </div>
+    </div>
+    <div class="card-foot"><span>o mercado não vota: precifica</span><span>btg/nexus 150626 · arvor</span></div>
+  </div>
+  <div class="copy"><span class="cc">~1300 chars</span>Junte tudo e surge uma hipótese — que eu apresento como hipótese, não como fato.
+
+O ativo político preferido do mercado em 2025/2026 era Tarcísio: gestão, previsibilidade, sem o passivo tóxico do sobrenome. Tirado Tarcísio do tabuleiro, sobra uma escolha entre dois riscos. De um lado, Flávio: a aposta dinástica, com a turbulência institucional e externa que o nome carrega. De outro, Lula: velho conhecido, ideológico, mas previsível no comportamento macro — juro alto, rolagem da dívida, rentismo funcionando.
+
+Para um banco que vive de estabilidade e de spread, "o diabo conhecido" pode ser, friamente, o melhor hedge. Não por simpatia — Esteves está longe de ser lulista hoje — mas por gestão de risco de portfólio.
+
+Se essa leitura tem algum fundamento, uma pesquisa que mostra Lula competitivo não é só informação: é parte da própria construção do cenário. Mercado também é narrativa.
+
+De novo, e sem meio-termo: isso é hipótese de leitura política. Não estou afirmando que a Nexus mexeu no número a mando de ninguém. Estou dizendo que, quando o instituto é do grupo de PR do governo e o pagador é um banco com posição a defender, o ônus de provar isenção é de quem publica — com microdados. Não do leitor.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 17 -->
+<section class="post">
+  <div class="post-label">Post 17/18 · cobrança</div>
+  <div class="card">
+    <div class="card-head">
+      <div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div>
+      <div class="pno">17/18</div>
+    </div>
+    <div class="card-body">
+      <div>
+        <h2>As <em>6 cobranças</em> da Arvor à Nexus/BTG</h2>
+        <p class="t">Pesquisa registrada no TSE é bem público com nota fiscal privada. O contratante paga a coleta; o resultado pertence ao eleitor.</p>
+      </div>
+      <div>
+        <ul class="glist">
+          <li><span class="q">1</span><span>Microdados anonimizados e pesos finais por entrevista</span></li>
+          <li><span class="q">2</span><span>Deff geral, por estimativa, e n efetivo por recorte</span></li>
+          <li><span class="q">3</span><span>Distribuição por tipo de telefone, tentativas e recusas</span></li>
+          <li><span class="q">4</span><span>Topline de toda pergunta aplicada (inclusive o "Qual?")</span></li>
+          <li><span class="q">5</span><span>Logs de divulgação: quem recebeu o relatório antes do público</span></li>
+          <li style="border-bottom:0"><span class="q">6</span><span>Declaração do vínculo FSB↔governo em toda pesquisa da casa</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="card-foot"><span>transparência não é favor, é dever de quem registra no TSE</span><span>btg/nexus 150626 · arvor</span></div>
+  </div>
+  <div class="copy"><span class="cc">~1280 chars</span>Fecho a parte técnica com a conta a pagar. A Nexus/BTG entregou uma pesquisa substantiva e mais auditável por relatório do que a média. Mas a parte que de fato permite confiar continua trancada. Eis a lista, pública e específica:
+
+1. Microdados anonimizados e os pesos finais aplicados a cada entrevista.
+2. Efeito de desenho (deff) geral e por estimativa, e o n efetivo de cada recorte — não só a margem nacional.
+3. A distribuição real por tipo de telefone, com tentativas, recusas e callbacks.
+4. O topline de toda pergunta aplicada, inclusive os nomes anotados na terceira via ("Qual?").
+5. Os logs de divulgação: a que horas o relatório chegou ao contratante, à imprensa e ao público, e quem teve acesso antecipado. O próprio PDF admite que pesquisa eleitoral move preço de ativo.
+6. E a sexta, específica desta casa: a declaração explícita, em toda pesquisa eleitoral da Nexus, do vínculo do grupo FSB com contratos de comunicação do governo.
+
+Nada disso é favor. Pesquisa registrada no TSE não é produto privado de banco. É bem público com nota fiscal privada. O contratante paga a coleta. O resultado pertence ao eleitor.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 18 -->
+<section class="post">
+  <div class="post-label">Post 18/18 · veredito + leia o resto</div>
+  <div class="card">
+    <div class="card-head">
+      <div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div>
+      <div class="pno">18/18</div>
+    </div>
+    <div class="card-body">
+      <div>
+        <h2>Não é fraude. É <em>conflito não declarado</em></h2>
+        <p class="t">O voto foi medido limpo. O problema é o triângulo: governo-cliente, agência-instituto e banco-pagador. O dossiê completo, passo a passo, está no ar.</p>
+        <div class="kchips">
+          <span class="kchip">brasil.arvor.co/nexus_btg_150626.html</span>
+        </div>
+      </div>
+      <div style="text-align:center">
+        <img src="img/arvor_logo.png" alt="Arvor" style="width:84px;height:84px;object-fit:contain">
+        <p class="sub" style="margin-top:10px">auditem os auditores. eu comecei.</p>
+      </div>
+    </div>
+    <div class="card-foot"><span>arvor intelligence · dados abertos</span><span>github.com/ArvorCo/PNAD</span></div>
+  </div>
+  <div class="copy"><span class="cc">~1340 chars</span>Fecho como abri. Não dá para gritar fraude. O voto principal da BTG/Nexus foi medido antes do roteiro pesado, e o top-line é mais limpo que o da Quaest.
+
+Mas também não dá para engolir o PDF como ciência neutra. A pesquisa vive dentro de um triângulo onde ninguém é parede: o governo é cliente de R$ 562 milhões em publicidade da FSB; a FSB, pela Nexus, faz a pesquisa; e o BTG, com agenda própria, paga a conta. O instituto que mede a eleição é do mesmo grupo que vende a imagem de um dos lados. Isso devia estar escrito em cada release. Não está.
+
+O nome certo disso não é fraude. É conflito de interesse não declarado. E a cura é uma só: transparência — microdados, pesos, deff e a declaração dos vínculos.
+
+O dossiê completo, com a margem refeita, a transferência de votos reconstruída candidato a candidato, a amostra cruzada com TSE e PNAD, e todas as fontes para você auditar, conferir ou derrubar, está aqui:
+
+brasil.arvor.co/nexus_btg_150626.html
+
+E se você quer ver como o mesmo bisturi cortou a pesquisa Quaest/Genial — a que escondeu as perguntas sobre trocar Flávio e sobre Trump — o dossiê está aqui:
+
+brasil.arvor.co/quaest_100626.html
+
+Toda semana, uma pesquisa na mesa de operação. Auditem os auditores. Eu comecei. 🌳</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+</div>
+<script>
+function cp(btn){
+  const pre = btn.previousElementSibling;
+  const txt = Array.from(pre.childNodes).filter(n=>!(n.classList&&n.classList.contains('cc'))).map(n=>n.textContent).join('');
+  navigator.clipboard.writeText(txt.trim()).then(()=>{
+    const o = btn.textContent; btn.textContent = 'Copiado ✓';
+    setTimeout(()=>btn.textContent = o, 1400);
+  });
+}
+</script>
+</body>
+</html>
