@@ -1,0 +1,1156 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Datafolha 06/2026 — Auditoria: empate técnico, transferência de voto, reponderação por renda</title>
+  <meta name="description" content="Dossiê Arvor sobre a pesquisa Datafolha BR-09956/2026 (junho 2026): empate técnico no 2º turno, efeito de desenho (deff) simulado, transferência de voto do 1º para o 2º turno, reponderação por renda PNAD, bairros, perguntas não publicadas e estratégia para a campanha de Flávio.">
+  <meta property="og:title" content="Datafolha junho 2026 — o '47 x 43' é empate técnico">
+  <meta property="og:description" content="Auditoria Arvor: a margem sobre a diferença é ±4pp, a reponderação por renda PNAD zera a vantagem de Lula e o anti-Lula transfere 2:1 para Flávio.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Inter:wght@400;500;600;700;800;900&family=Spline+Sans+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #14171d;
+      --ink2: #2b3240;
+      --muted: #5e6675;
+      --faint: #8b93a3;
+      --line: #dde2ec;
+      --line2: #eef1f6;
+      --paper: #faf8f3;
+      --panel: #ffffff;
+      --lula: #c0392b;
+      --lula-d: #8f241b;
+      --flavio: #1f5fa8;
+      --flavio-d: #143f70;
+      --gold: #b07d10;
+      --green: #1c7d54;
+      --violet: #6b4ea8;
+      --gray: #7b8494;
+      --soft-lula: #fbe9e7;
+      --soft-flavio: #e8f0fb;
+      --soft-gold: #f8f0d8;
+      --soft-green: #e4f3eb;
+      --shadow: 0 18px 50px rgba(18, 24, 33, .09);
+      --shadow-sm: 0 6px 18px rgba(18, 24, 33, .06);
+      --serif: "Fraunces", Georgia, "Times New Roman", serif;
+      --sans: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --mono: "Spline Sans Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-family: var(--sans);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; color: var(--ink); background: var(--paper); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { color: var(--flavio); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .wrap { width: min(1180px, calc(100% - 34px)); margin: 0 auto; }
+
+    /* ---------- HEADER ---------- */
+    header.hero { position: relative; overflow: hidden; padding: 60px 0 34px; border-bottom: 1px solid var(--line);
+      background: radial-gradient(1200px 520px at 78% -8%, rgba(31,95,168,.10), transparent 60%),
+                  radial-gradient(900px 460px at 6% 4%, rgba(192,57,43,.08), transparent 58%),
+                  linear-gradient(180deg, #fff 0%, var(--paper) 100%); }
+    .brandbar { display: flex; align-items: center; gap: 12px; margin-bottom: 22px; }
+    .brandbar img { width: 38px; height: 38px; object-fit: contain; }
+    .brandbar span { font-weight: 800; letter-spacing: .16em; font-size: 12px; color: var(--muted); text-transform: uppercase; }
+    .brandbar b { color: var(--ink); }
+    .eyebrow { color: var(--lula); text-transform: uppercase; font-weight: 900; letter-spacing: .12em; font-size: 12.5px; }
+    h1 { font-family: var(--serif); font-weight: 900; font-size: clamp(40px, 7.4vw, 86px); line-height: .96; letter-spacing: -.015em; margin: 12px 0 18px; max-width: 16ch; }
+    h1 .u { background: linear-gradient(180deg, transparent 64%, rgba(192,57,43,.26) 64%); padding: 0 .04em; }
+    .deck { font-size: clamp(18px, 2vw, 23px); max-width: 70ch; color: var(--ink2); margin: 0 0 26px; line-height: 1.5; }
+    .chips { display: flex; flex-wrap: wrap; gap: 9px; }
+    .chip { border: 1px solid var(--line); border-radius: 999px; padding: 7px 13px; background: #fff; color: #303744; font-size: 12.5px; font-weight: 700; box-shadow: var(--shadow-sm); }
+    .chip.k { background: #14171d; color: #fff; border-color: #14171d; }
+
+    /* hero metric strip */
+    .heromx { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-top: 34px; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: #fff; box-shadow: var(--shadow); }
+    .heromx > div { padding: 18px 20px; border-right: 1px solid var(--line2); }
+    .heromx > div:last-child { border-right: 0; }
+    .heromx .kpi { font-family: var(--serif); font-weight: 900; font-size: clamp(28px, 4vw, 42px); line-height: 1; letter-spacing: -.01em; }
+    .heromx .lab { color: var(--muted); font-size: 12.5px; font-weight: 700; margin-top: 7px; text-transform: uppercase; letter-spacing: .03em; }
+    .heromx .sub { color: var(--faint); font-size: 12px; margin-top: 3px; }
+    .c-lula { color: var(--lula); } .c-flavio { color: var(--flavio); } .c-gold { color: var(--gold); } .c-green { color: var(--green); } .c-gray { color: var(--gray); }
+
+    /* ---------- NAV ---------- */
+    nav { position: sticky; top: 0; z-index: 20; background: rgba(250,248,243,.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+    nav .wrap { display: flex; gap: 6px; overflow-x: auto; padding: 9px 0; scrollbar-width: none; }
+    nav .wrap::-webkit-scrollbar { display: none; }
+    nav a { white-space: nowrap; color: #3a4250; border: 1px solid transparent; border-radius: 999px; padding: 7px 12px; font-size: 13px; font-weight: 800; }
+    nav a:hover { background: #fff; border-color: var(--line); text-decoration: none; }
+    nav a.active { background: var(--ink); color: #fff; }
+
+    /* ---------- SECTIONS ---------- */
+    section { padding: 52px 0; border-bottom: 1px solid var(--line); }
+    .kicker { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--flavio); margin-bottom: 8px; }
+    .kicker::before { content: ""; width: 26px; height: 2px; background: var(--flavio); display: inline-block; }
+    h2 { font-family: var(--serif); font-weight: 900; font-size: clamp(28px, 4.4vw, 50px); line-height: 1.02; letter-spacing: -.012em; margin: 0 0 14px; }
+    h3 { font-size: 17px; margin: 0 0 10px; font-weight: 800; letter-spacing: -.01em; }
+    p { margin: 0 0 14px; }
+    .lead { font-size: clamp(17px, 1.6vw, 20px); color: var(--ink2); max-width: 74ch; }
+    .muted { color: var(--muted); }
+    .note { color: var(--muted); font-size: 13px; }
+    .mono { font-family: var(--mono); font-size: .92em; overflow-wrap: anywhere; }
+
+    .grid { display: grid; gap: 16px; }
+    .grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .card { min-width: 0; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 20px; box-shadow: var(--shadow-sm); }
+    .card.pad-lg { padding: 24px 26px; }
+    .card h3 .q { font-family: var(--mono); color: var(--lula); font-weight: 600; }
+
+    .callout { border: 1px solid var(--line); border-left: 5px solid var(--lula); background: #fff; padding: 18px 22px; border-radius: 12px; box-shadow: var(--shadow-sm); }
+    .callout.good { border-left-color: var(--green); }
+    .callout.warn { border-left-color: var(--gold); }
+    .callout.flavio { border-left-color: var(--flavio); }
+    .callout h3 { margin-bottom: 6px; }
+
+    .tag { display: inline-flex; align-items: center; gap: 5px; border-radius: 999px; padding: 4px 10px; font-size: 11.5px; font-weight: 900; text-transform: uppercase; letter-spacing: .04em; }
+    .tag.lula { background: var(--soft-lula); color: var(--lula); }
+    .tag.flavio { background: var(--soft-flavio); color: var(--flavio); }
+    .tag.gold { background: var(--soft-gold); color: #8b630f; }
+    .tag.green { background: var(--soft-green); color: var(--green); }
+    .tag.gray { background: #eef1f6; color: #545c6b; }
+
+    .metric { display: flex; align-items: baseline; gap: 9px; margin: 10px 0 6px; }
+    .metric b { font-family: var(--serif); font-size: 38px; line-height: 1; font-weight: 900; letter-spacing: -.01em; }
+    .metric span { color: var(--muted); font-weight: 700; font-size: 13px; }
+
+    /* tables */
+    table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; box-shadow: var(--shadow-sm); }
+    th, td { padding: 11px 12px; border-bottom: 1px solid var(--line2); text-align: left; vertical-align: top; font-size: 14px; overflow-wrap: anywhere; }
+    th { background: #f3f5f9; color: #303744; font-size: 11.5px; text-transform: uppercase; letter-spacing: .06em; font-weight: 800; }
+    tr:last-child td { border-bottom: 0; }
+    tbody tr:hover { background: #fbfcfe; }
+    .num { text-align: right; font-variant-numeric: tabular-nums; font-family: var(--mono); }
+    .gd { color: var(--green); font-weight: 800; } .bd { color: var(--lula); font-weight: 800; } .wn { color: var(--gold); font-weight: 800; }
+
+    /* bars */
+    .bars { display: grid; gap: 11px; }
+    .barrow { display: grid; grid-template-columns: 150px 1fr 46px; align-items: center; gap: 11px; font-size: 13.5px; }
+    .barrow .nm { font-weight: 700; color: var(--ink2); }
+    .track { height: 14px; border-radius: 999px; background: #edf0f5; overflow: hidden; }
+    .fill { height: 100%; border-radius: 999px; transition: width .6s ease; }
+    .fill.lula { background: linear-gradient(90deg, var(--lula), var(--lula-d)); }
+    .fill.flavio { background: linear-gradient(90deg, var(--flavio), var(--flavio-d)); }
+    .fill.gold { background: linear-gradient(90deg, #cf991f, var(--gold)); }
+    .fill.gray { background: var(--gray); }
+    .barrow b { text-align: right; font-family: var(--mono); font-weight: 700; }
+
+    /* diverging bars (income gradient / rejection) */
+    .diverge { display: grid; gap: 10px; }
+    .dvrow { display: grid; grid-template-columns: 120px 1fr 1fr; align-items: center; gap: 4px; font-size: 13px; }
+    .dvrow .lab { font-weight: 700; color: var(--ink2); grid-column: 1; }
+    .dvleft { display: flex; justify-content: flex-end; align-items: center; gap: 7px; }
+    .dvright { display: flex; justify-content: flex-start; align-items: center; gap: 7px; }
+    .dvbar { height: 18px; border-radius: 5px; }
+    .dvleft .dvbar { background: linear-gradient(270deg, var(--lula), var(--lula-d)); }
+    .dvright .dvbar { background: linear-gradient(90deg, var(--flavio), var(--flavio-d)); }
+    .dvval { font-family: var(--mono); font-weight: 700; font-size: 12.5px; min-width: 22px; }
+    .axis-mid { text-align: center; font-family: var(--mono); font-size: 11px; color: var(--faint); }
+
+    /* legend */
+    .legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 12.5px; color: var(--muted); font-weight: 600; margin: 4px 0 14px; }
+    .legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+    .dot-lula { background: var(--lula); } .dot-flavio { background: var(--flavio); } .dot-gold { background: var(--gold); } .dot-gray { background: var(--gray); }
+
+    figure { margin: 20px 0 0; }
+    figure img { width: 100%; border: 1px solid var(--line); border-radius: 12px; background: #fff; box-shadow: var(--shadow-sm); display: block; }
+    figcaption { color: var(--muted); font-size: 13px; margin-top: 9px; }
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
+
+    .compact-list { margin: 0; padding-left: 18px; }
+    .compact-list li { margin: 7px 0; }
+    .checklist { list-style: none; margin: 0; padding: 0; }
+    .checklist li { display: grid; grid-template-columns: 26px 1fr; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--line2); font-size: 14px; }
+    .checklist li:last-child { border-bottom: 0; }
+    .checklist .ic { font-weight: 900; }
+    .ic.pub { color: var(--green); } .ic.hid { color: var(--lula); }
+
+    .svgwrap { width: 100%; }
+    .svgwrap svg { width: 100%; height: auto; display: block; }
+    .cap { color: var(--muted); font-size: 12.5px; margin-top: 10px; }
+    .src { font-family: var(--mono); font-size: 11.5px; color: var(--faint); }
+
+    .pillrow { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+    .pill { border: 1px solid var(--line); border-radius: 999px; padding: 5px 11px; font-size: 12px; font-weight: 700; background: #fff; }
+
+    .verdict-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 22px; }
+
+    footer { padding: 40px 0 70px; color: var(--muted); }
+    footer .wrap { display: flex; flex-wrap: wrap; gap: 14px; justify-content: space-between; align-items: center; }
+
+    @media (max-width: 900px) {
+      .grid.two, .grid.three, .grid.four, .split, .verdict-grid { grid-template-columns: 1fr; }
+      .heromx { grid-template-columns: repeat(2, 1fr); }
+      .heromx > div:nth-child(2) { border-right: 0; }
+      .heromx > div:nth-child(1), .heromx > div:nth-child(2) { border-bottom: 1px solid var(--line2); }
+      .barrow { grid-template-columns: 110px 1fr 40px; }
+      .dvrow { grid-template-columns: 86px 1fr 1fr; }
+      table { display: block; max-width: 100%; overflow-x: auto; }
+      th, td { font-size: 13px; padding: 9px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="brandbar"><img src="img/arvor_logo.png" alt="Arvor"><span><b>ARVOR</b> INTELLIGENCE · AUDITORIA ELEITORAL · 24/06/2026</span></div>
+    <div class="eyebrow">Dossiê · Datafolha junho 2026 · TSE BR-09956/2026</div>
+    <h1>O <span class="u">“47 x 43”</span> é empate técnico</h1>
+    <p class="deck">A pesquisa Datafolha de junho não mostra virada contra Flávio: o 2º turno repete maio. Mas a manchete “Lula na frente” não sobrevive à estatística. A diferença de 4 pontos é menor que a margem de erro <em>da diferença</em> (~±4 pp), e some por completo quando a renda da amostra é recalibrada à PNAD. Auditamos placar, desenho amostral, transferência de voto, reponderação e as perguntas que foram aplicadas e não publicadas — inclusive perguntas sobre o próprio Flávio.</p>
+    <div class="chips">
+      <span class="chip k">2.004 entrevistas · 139 municípios</span>
+      <span class="chip">Campo 17–18/06/2026</span>
+      <span class="chip">Pontos de fluxo (não-domiciliar)</span>
+      <span class="chip">Contratante: Folha de S.Paulo</span>
+      <span class="chip">Registro TSE BR-09956/2026</span>
+    </div>
+
+    <div class="heromx">
+      <div>
+        <div class="kpi"><span class="c-lula">47</span> <span style="color:var(--faint)">x</span> <span class="c-flavio">43</span></div>
+        <div class="lab">2º turno Lula × Flávio</div>
+        <div class="sub">idêntico a maio · gap de 4 pp</div>
+      </div>
+      <div>
+        <div class="kpi c-gold">±4,1</div>
+        <div class="lab">Margem sobre a diferença</div>
+        <div class="sub">empate técnico já no AAS</div>
+      </div>
+      <div>
+        <div class="kpi c-flavio">45,6&ndash;45,9</div>
+        <div class="lab">2º turno reponderado à PNAD</div>
+        <div class="sub">renda por pessoa zera a vantagem</div>
+      </div>
+      <div>
+        <div class="kpi c-gray">77%</div>
+        <div class="lab">Setores repetidos de maio</div>
+        <div class="sub">255 de 331 · SP 20 de 22</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <div class="wrap">
+    <a href="#veredito">Veredito</a>
+    <a href="#empate">Empate técnico</a>
+    <a href="#deff">Deff simulado</a>
+    <a href="#transferencia">Transferência de voto</a>
+    <a href="#evolucao">Maio × Junho</a>
+    <a href="#bairros">Bairros & SP</a>
+    <a href="#renda">Reponderação por renda</a>
+    <a href="#perfil">Bruto × ponderado</a>
+    <a href="#questionario">Perguntas-fantasma</a>
+    <a href="#narrativa">A narrativa</a>
+    <a href="#estrategia">Estratégia Flávio</a>
+    <a href="#melhorias">Como melhorar</a>
+    <a href="#fontes">Fontes</a>
+  </div>
+</nav>
+
+<!-- ============ VEREDITO ============ -->
+<section id="veredito">
+  <div class="wrap">
+    <div class="kicker">Sumário executivo</div>
+    <h2>Veredito em uma página</h2>
+    <p class="lead">Não há evidência de fraude nos documentos. Há evidência forte de duas coisas: <b>excesso de certeza na manchete</b> e <b>insuficiência de transparência no método</b>. A foto eleitoral é desfavorável a Flávio entre mulheres, baixa renda, Nordeste, católicos e pretos — mas o número que virou notícia, “Lula 47 x 43”, é estatisticamente indistinguível de um empate, e desaparece quando a renda da amostra é alinhada à população.</p>
+
+    <div class="verdict-grid">
+      <div class="card">
+        <span class="tag gold">Placar</span>
+        <div class="metric"><b>47 x 43</b></div>
+        <p class="muted" style="margin:0">2º turno idêntico a maio. Mas a margem de erro da <i>diferença</i> entre dois candidatos é ~±4 pp — maior que os 4 pontos que separam os dois. <b>Empate técnico.</b></p>
+      </div>
+      <div class="card">
+        <span class="tag lula">Renda</span>
+        <div class="metric"><b>45,6 / 45,9</b></div>
+        <p class="muted" style="margin:0">Reponderando a renda à PNAD por pessoas 16+, Lula cai a 45,6 e Flávio sobe a 45,9. A vantagem nasce de uma amostra mais pobre que o país.</p>
+      </div>
+      <div class="card">
+        <span class="tag flavio">Transferência</span>
+        <div class="metric"><b>2 : 1</b></div>
+        <p class="muted" style="margin:0">Na consolidação do 1º para o 2º turno, o voto de terceiros e indecisos vai para Flávio na proporção de ~2 para 1 sobre Lula. O anti-Lula é real.</p>
+      </div>
+    </div>
+
+    <div class="grid two" style="margin-top:16px">
+      <div class="callout good">
+        <h3>O que o Datafolha fez bem</h3>
+        <p class="muted" style="margin:0">Perguntou o voto <b>antes</b> dos módulos de Trump, facções, economia e ideologia, protegendo o top-line de priming. Acertou sexo, região e escolaridade contra TSE/PNAD. Publicou anexo de bairros — algo que a maioria dos institutos não faz.</p>
+      </div>
+      <div class="callout warn">
+        <h3>O que falta para ser incontestável</h3>
+        <p class="muted" style="margin:0">Microdados, pesos finais por entrevistado, efeito de desenho real (não AAS), protocolo de ponto/horário/recusa, distribuição do voto lembrado de 2022 e o resultado de <b>todas</b> as perguntas registradas — inclusive as que avaliam o próprio Flávio.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EMPATE TÉCNICO ============ -->
+<section id="empate">
+  <div class="wrap">
+    <div class="kicker">Achado nº 1 · estatística</div>
+    <h2>Por que “47 x 43” é empate técnico</h2>
+    <p class="lead">A margem de erro de ±2 pp que o Datafolha divulga vale para <b>cada estimativa isolada</b> (o 47 de Lula, o 43 de Flávio). Ela <b>não</b> é a margem sobre a <b>distância</b> entre os dois. Quando se quer saber se um candidato está realmente à frente do outro, a conta certa é o erro da diferença — e ele é quase o dobro.</p>
+
+    <div class="grid two" style="margin-top:8px">
+      <div class="card pad-lg">
+        <h3>A margem da diferença, na fórmula</h3>
+        <p class="muted">Para dois candidatos da mesma amostra, o erro da diferença é
+        <span class="mono">EP(L−F) = √[(p<sub>L</sub>+p<sub>F</sub>−(p<sub>L</sub>−p<sub>F</sub>)²)/n]</span>.
+        Com p<sub>L</sub>=0,47, p<sub>F</sub>=0,43 e n=2.004:</p>
+        <ul class="compact-list muted">
+          <li>EP da diferença ≈ <b>2,12 pp</b> → margem 95% ≈ <b class="bd">±4,15 pp</b>.</li>
+          <li>Diferença observada = <b>4,0 pp</b> &lt; 4,15 pp → <b>cruza o zero</b>.</li>
+          <li>Conclusão: ao nível de 95%, <b>não dá para afirmar que Lula está à frente</b> — mesmo usando a margem otimista de amostra aleatória simples.</li>
+        </ul>
+        <p class="note">E isso é antes do efeito de desenho. Com o deff real (próxima seção), a margem da diferença sobe para ~±5 pp, e o empate fica ainda mais nítido.</p>
+      </div>
+      <div class="card pad-lg">
+        <h3>Visual: o intervalo dos dois se sobrepõe</h3>
+        <div class="svgwrap" aria-label="Gráfico de intervalos de confiança de Lula e Flávio com sobreposição">
+          <svg viewBox="0 0 520 250" role="img">
+            <!-- axis -->
+            <line x1="40" y1="200" x2="500" y2="200" stroke="#cfd6e2" stroke-width="1.5"/>
+            <g font-family="Spline Sans Mono, monospace" font-size="11" fill="#8b93a3" text-anchor="middle">
+              <line x1="40" y1="196" x2="40" y2="204" stroke="#cfd6e2"/><text x="40" y="220">38</text>
+              <line x1="155" y1="196" x2="155" y2="204" stroke="#cfd6e2"/><text x="155" y="220">41</text>
+              <line x1="270" y1="196" x2="270" y2="204" stroke="#cfd6e2"/><text x="270" y="220">44</text>
+              <line x1="385" y1="196" x2="385" y2="204" stroke="#cfd6e2"/><text x="385" y="220">47</text>
+              <line x1="500" y1="196" x2="500" y2="204" stroke="#cfd6e2"/><text x="500" y="220">50</text>
+              <text x="270" y="240" fill="#5e6675">intenção de voto (%) — barras = IC 95% com deff realista (±2,6)</text>
+            </g>
+            <!-- Flavio 43 ± 2.6 : center x = 40 + (43-38)/12*460 = 40+191.7=231.7 ; scale 460px/12 = 38.33 px per pt -->
+            <!-- Flavio band -->
+            <rect x="131.7" y="64" width="199.3" height="34" rx="6" fill="#1f5fa8" opacity=".14"/>
+            <line x1="131.7" y1="64" x2="131.7" y2="98" stroke="#1f5fa8" stroke-width="1.5"/>
+            <line x1="331" y1="64" x2="331" y2="98" stroke="#1f5fa8" stroke-width="1.5"/>
+            <circle cx="231.7" cy="81" r="7" fill="#1f5fa8"/>
+            <text x="231.7" y="52" text-anchor="middle" font-family="Inter" font-weight="800" font-size="14" fill="#143f70">Flávio 43</text>
+            <!-- Lula 47 ± 2.6 : center x = 40 + (47-38)/12*460 = 40+345=385 -->
+            <rect x="285" y="118" width="199.3" height="34" rx="6" fill="#c0392b" opacity=".14"/>
+            <line x1="285" y1="118" x2="285" y2="152" stroke="#c0392b" stroke-width="1.5"/>
+            <line x1="484.3" y1="118" x2="484.3" y2="152" stroke="#c0392b" stroke-width="1.5"/>
+            <circle cx="385" cy="135" r="7" fill="#c0392b"/>
+            <text x="385" y="172" text-anchor="middle" font-family="Inter" font-weight="800" font-size="14" fill="#8f241b">Lula 47</text>
+            <!-- overlap zone -->
+            <rect x="285" y="58" width="46" height="100" fill="#b07d10" opacity=".16"/>
+            <text x="308" y="20" text-anchor="middle" font-family="Spline Sans Mono, monospace" font-size="10.5" fill="#8b630f">zona de</text>
+            <text x="308" y="33" text-anchor="middle" font-family="Spline Sans Mono, monospace" font-size="10.5" fill="#8b630f">sobreposição</text>
+          </svg>
+        </div>
+        <p class="cap">Os intervalos de 95% de Lula e Flávio se cruzam (faixa dourada). Quando isso acontece, a liderança não é estatisticamente significativa.</p>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top:16px">
+      <h3>Tradução honesta da manchete</h3>
+      <p style="margin:0" class="muted">“Lula 47 x 43” deveria ser noticiado como <b>“Lula e Flávio empatados tecnicamente, com leve vantagem nominal de Lula”</b>. A diferença de 4 pontos é exatamente o tipo de gap que vira manchete de “liderança” quando, em rigor, é indistinguível de zero. Não é erro de cálculo do Datafolha — é leitura excessiva do número pela cobertura.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DEFF ============ -->
+<section id="deff">
+  <div class="wrap">
+    <div class="kicker">Achado nº 2 · desenho amostral</div>
+    <h2>O deff simulado: a margem real é maior que ±2</h2>
+    <p class="lead">A própria declaração de responsabilidade técnica diz, com todas as letras: <span class="mono">“O Datafolha não usa abordagem domiciliar e, sim, abordagem em pontos de fluxo populacional.”</span> Isso tem duas consequências que a margem de ±2 pp esconde: (1) ponto de fluxo é seleção por interceptação, não probabilística — a rigor, não existe margem clássica; (2) há <b>conglomeração</b>: ~6 entrevistas por setor censitário, em 331 setores. Conglomeração + ponderação inflam a variância pelo <b>efeito de desenho (deff)</b>.</p>
+
+    <div class="grid two">
+      <div class="card pad-lg">
+        <h3>Como o deff corrói o n</h3>
+        <p class="muted">deff de conglomeração ≈ <span class="mono">1 + (b̄−1)·ρ</span>, com b̄≈6 entrevistas/setor e ρ = correlação intraclasse do voto no setor. A ponderação adiciona <span class="mono">1 + CV²(pesos)</span>. O n efetivo é <span class="mono">n / deff</span>. A margem real cresce com a raiz do deff.</p>
+        <div class="legend"><span><i class="dot-flavio"></i>margem por estimativa</span><span><i class="dot-lula"></i>margem da diferença (L−F)</span></div>
+        <table>
+          <thead><tr><th>Cenário</th><th class="num">deff</th><th class="num">n efetivo</th><th class="num">±/estim.</th><th class="num">±/dif.</th></tr></thead>
+          <tbody>
+            <tr><td>AAS declarado <span class="note">(ρ=0)</span></td><td class="num">1,00</td><td class="num">2.004</td><td class="num">2,2</td><td class="num">4,1</td></tr>
+            <tr><td>Otimista <span class="note">(ρ=0,02)</span></td><td class="num">1,17</td><td class="num">1.714</td><td class="num">2,4</td><td class="num">4,5</td></tr>
+            <tr><td>Realista <span class="note">(ρ=0,06)</span></td><td class="num">1,46</td><td class="num">1.376</td><td class="num gd">2,6</td><td class="num bd">5,0</td></tr>
+            <tr><td>Conservador <span class="note">(ρ=0,10)</span></td><td class="num">1,80</td><td class="num">1.113</td><td class="num">2,9</td><td class="num">5,6</td></tr>
+          </tbody>
+        </table>
+        <p class="note">b̄ = 2.004/331 ≈ 6,05. CV(pesos) suposto 0,25–0,45 (compatível com o ajuste de escolaridade ×1,23 / ×0,86). Sem os microdados, é simulação — mas é a faixa plausível, e toda ela amplia a margem divulgada.</p>
+      </div>
+      <div class="card pad-lg">
+        <h3>A margem cresce, a diferença não</h3>
+        <div class="svgwrap" aria-label="Gráfico mostrando a margem da diferença crescendo acima dos 4 pontos observados">
+          <svg viewBox="0 0 520 300" role="img">
+            <g font-family="Spline Sans Mono, monospace" font-size="11" fill="#8b93a3">
+              <text x="20" y="22" fill="#5e6675" font-family="Inter" font-weight="700">margem da diferença (±pp) vs. gap observado (4,0)</text>
+            </g>
+            <!-- baseline gap 4.0 reference line -->
+            <!-- y scale: 0 at y=250, 6 at y=50 → 200px/6 = 33.33 px/pt -->
+            <line x1="70" y1="250" x2="500" y2="250" stroke="#cfd6e2"/>
+            <line x1="70" y1="116.7" x2="500" y2="116.7" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="5 4"/>
+            <text x="500" y="112" text-anchor="end" font-family="Inter" font-size="11" font-weight="700" fill="#8f241b">gap = 4,0 pp</text>
+            <!-- bars: AAS 4.1, otim 4.5, real 5.0, cons 5.6 -->
+            <g font-family="Spline Sans Mono, monospace" font-size="11" fill="#5e6675" text-anchor="middle">
+              <!-- AAS -->
+              <rect x="92" y="113" width="58" height="137" rx="4" fill="#9fb0c8"/>
+              <text x="121" y="103" font-family="Inter" font-weight="800" font-size="13" fill="#143f70">4,1</text>
+              <text x="121" y="268">AAS</text>
+              <!-- otimista -->
+              <rect x="192" y="100" width="58" height="150" rx="4" fill="#5d83b4"/>
+              <text x="221" y="90" font-family="Inter" font-weight="800" font-size="13" fill="#143f70">4,5</text>
+              <text x="221" y="268">otimista</text>
+              <!-- realista -->
+              <rect x="292" y="83.3" width="58" height="166.7" rx="4" fill="#1f5fa8"/>
+              <text x="321" y="73" font-family="Inter" font-weight="800" font-size="13" fill="#143f70">5,0</text>
+              <text x="321" y="268">realista</text>
+              <!-- conservador -->
+              <rect x="392" y="63.3" width="58" height="186.7" rx="4" fill="#143f70"/>
+              <text x="421" y="53" font-family="Inter" font-weight="800" font-size="13" fill="#143f70">5,6</text>
+              <text x="421" y="268">conserv.</text>
+            </g>
+            <text x="285" y="290" text-anchor="middle" font-family="Inter" font-size="11.5" fill="#5e6675">Em todos os cenários, a margem (barra) supera o gap (linha). Empate em qualquer hipótese.</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="callout warn" style="margin-top:16px">
+      <h3>O ponto técnico, sem rodeio</h3>
+      <p style="margin:0" class="muted">A margem de ±2 pp é a margem de uma amostra aleatória simples — que <b>não é</b> o desenho do Datafolha. Em amostra por pontos de fluxo, conglomerada e ponderada, a margem realista por estimativa fica em torno de <b>±2,6 pp</b> e a margem sobre a diferença em <b>~±5 pp</b>. O “Lula à frente” não passa em nenhum dos cenários. <span class="note">Para superar a ambiguidade, o Datafolha precisaria publicar o deff e o n efetivo — coisa que não faz.</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TRANSFERÊNCIA ============ -->
+<section id="transferencia">
+  <div class="wrap">
+    <div class="kicker">Achado nº 3 · transferência de voto</div>
+    <h2>Quem herda os votos do 1º para o 2º turno</h2>
+    <p class="lead">No 1º turno, Lula tem 41 e Flávio 31. Sobram <b>28 pontos</b> que não são de nenhum dos dois: 17 de candidatos do “terceiro caminho”, 7 de branco/nulo e 4 de indecisos. No 2º turno, Lula sobe a 47 (+6) e Flávio a 43 (+12). Ou seja: na consolidação, <b>o voto disponível corre para Flávio na proporção de ~2 para 1</b> sobre Lula. É a melhor notícia do levantamento para a direita — e mostra que o anti-Lula existe e tem para onde ir.</p>
+
+    <div class="card pad-lg">
+      <h3>Saldo de consolidação 1º → 2º turno (Situação A: Lula × Flávio)</h3>
+      <div class="legend">
+        <span><i class="dot-lula"></i>Lula</span>
+        <span><i class="dot-flavio"></i>Flávio</span>
+        <span><i class="dot-gray"></i>terceiros + branco/nulo + indecisos (28 pts) · ficam fora</span>
+      </div>
+      <div class="svgwrap" aria-label="Diagrama de fluxo (Sankey) da transferência de voto do primeiro para o segundo turno">
+        <svg viewBox="0 0 720 400" role="img">
+          <!-- ribbons -->
+          <!-- Lula base -->
+          <path d="M166,25 C320,25 400,27 554,27 L554,162.3 C400,162.3 320,160.3 166,160.3 Z" fill="#c0392b" opacity=".5"/>
+          <!-- Pool->Lula -->
+          <path d="M166,170.3 C320,170.3 400,162.3 554,162.3 L554,182.1 C400,182.1 320,190.1 166,190.1 Z" fill="#c0392b" opacity=".26"/>
+          <!-- Pool->Flavio -->
+          <path d="M166,190.1 C320,190.1 400,192.1 554,192.1 L554,231.7 C400,231.7 320,229.7 166,229.7 Z" fill="#1f5fa8" opacity=".3"/>
+          <!-- Pool->Fora -->
+          <path d="M166,229.7 C320,229.7 400,344 554,344 L554,373.7 C400,373.7 320,259.4 166,259.4 Z" fill="#7b8494" opacity=".26"/>
+          <!-- Flavio base -->
+          <path d="M166,272.7 C320,272.7 400,231.7 554,231.7 L554,334 C400,334 320,375 166,375 Z" fill="#1f5fa8" opacity=".5"/>
+          <!-- left nodes -->
+          <rect x="150" y="25" width="16" height="135.3" rx="3" fill="#c0392b"/>
+          <rect x="150" y="170.3" width="16" height="92.4" rx="3" fill="#7b8494"/>
+          <rect x="150" y="272.7" width="16" height="102.3" rx="3" fill="#1f5fa8"/>
+          <!-- right nodes -->
+          <rect x="554" y="27" width="16" height="155.1" rx="3" fill="#c0392b"/>
+          <rect x="554" y="192.1" width="16" height="141.9" rx="3" fill="#1f5fa8"/>
+          <rect x="554" y="344" width="16" height="29.7" rx="3" fill="#7b8494"/>
+          <!-- left labels -->
+          <g font-family="Inter" text-anchor="end" fill="#2b3240">
+            <text x="144" y="89" font-weight="800" font-size="14">Lula <tspan fill="#8f241b">41</tspan></text>
+            <text x="144" y="212" font-weight="800" font-size="13">Disponíveis <tspan fill="#545c6b">28</tspan></text>
+            <text x="144" y="227" font-size="10.5" fill="#8b93a3">terceiros 17 · b/n 7 · NS 4</text>
+            <text x="144" y="328" font-weight="800" font-size="14">Flávio <tspan fill="#143f70">31</tspan></text>
+            <text x="144" y="14" font-size="11" fill="#8b93a3">1º TURNO</text>
+          </g>
+          <!-- right labels -->
+          <g font-family="Inter" text-anchor="start" fill="#2b3240">
+            <text x="578" y="100" font-weight="900" font-size="16">Lula <tspan fill="#8f241b">47</tspan></text>
+            <text x="578" y="115" font-size="11" fill="#1c7d54">+6</text>
+            <text x="578" y="265" font-weight="900" font-size="16">Flávio <tspan fill="#143f70">43</tspan></text>
+            <text x="578" y="280" font-size="11" fill="#1c7d54">+12</text>
+            <text x="578" y="360" font-weight="700" font-size="12" fill="#545c6b">Fora ≈9</text>
+            <text x="578" y="14" font-size="11" fill="#8b93a3">2º TURNO</text>
+          </g>
+          <!-- flow callouts -->
+          <text x="360" y="176" text-anchor="middle" font-family="Spline Sans Mono, monospace" font-size="10.5" fill="#8f241b">+6 → Lula</text>
+          <text x="360" y="214" text-anchor="middle" font-family="Spline Sans Mono, monospace" font-size="10.5" fill="#143f70">+12 → Flávio</text>
+        </svg>
+      </div>
+      <p class="cap">Leitura de fluxo agregado (corte transversal), não painel individual: mostra o saldo líquido de cada bloco entre o 1º e o 2º turno, não o trajeto de cada eleitor. Soma do 2º turno = 99 por arredondamento. <span class="src">Fonte: relatório Datafolha jun/2026, pp. 23 e 25.</span></p>
+    </div>
+
+    <div class="grid two" style="margin-top:18px">
+      <div class="card pad-lg">
+        <h3>A batalha dos três cenários: o teto de Lula está travado</h3>
+        <p class="muted">O Datafolha testou Lula contra três nomes da direita. Em todos, Lula fica entre <b>47 e 48</b> — seu teto não se move. Quem muda é o adversário. E o adversário mais competitivo é justamente <b>Flávio (43)</b>, à frente de Caiado (41) e Zema (39).</p>
+        <div class="svgwrap" aria-label="Comparação dos três cenários de segundo turno">
+          <svg viewBox="0 0 520 250" role="img">
+            <!-- ceiling line for Lula ~47.5 : x scale 0..60 over 150..500 => 5.833px/pt; 47.5 => 150+277=427 ; 48=> 430 -->
+            <line x1="424" y1="20" x2="424" y2="210" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="5 4" opacity=".6"/>
+            <text x="424" y="232" text-anchor="middle" font-family="Inter" font-size="10.5" font-weight="700" fill="#8f241b">teto Lula 47–48</text>
+            <g font-family="Inter" font-size="12.5">
+              <!-- row1 Flavio -->
+              <text x="20" y="46" font-weight="700" fill="#2b3240">vs Flávio</text>
+              <rect x="150" y="34" width="274.2" height="15" rx="3" fill="#c0392b"/><text x="430" y="46" font-family="Spline Sans Mono, monospace" font-size="11" fill="#8f241b">47</text>
+              <rect x="150" y="52" width="250.8" height="15" rx="3" fill="#1f5fa8"/><text x="407" y="64" font-family="Spline Sans Mono, monospace" font-size="11" font-weight="700" fill="#143f70">43</text>
+              <!-- row2 Caiado -->
+              <text x="20" y="116" font-weight="700" fill="#2b3240">vs Caiado</text>
+              <rect x="150" y="104" width="274.2" height="15" rx="3" fill="#c0392b"/><text x="430" y="116" font-family="Spline Sans Mono, monospace" font-size="11" fill="#8f241b">47</text>
+              <rect x="150" y="122" width="239.1" height="15" rx="3" fill="#5d83b4"/><text x="396" y="134" font-family="Spline Sans Mono, monospace" font-size="11" fill="#143f70">41</text>
+              <!-- row3 Zema -->
+              <text x="20" y="186" font-weight="700" fill="#2b3240">vs Zema</text>
+              <rect x="150" y="174" width="280" height="15" rx="3" fill="#c0392b"/><text x="436" y="186" font-family="Spline Sans Mono, monospace" font-size="11" fill="#8f241b">48</text>
+              <rect x="150" y="192" width="227.5" height="15" rx="3" fill="#8fa9cc"/><text x="384" y="204" font-family="Spline Sans Mono, monospace" font-size="11" fill="#143f70">39</text>
+            </g>
+          </svg>
+        </div>
+        <p class="cap">Flávio é o adversário que mais aproveita o anti-Lula. O paradoxo da campanha: ele tem a maior rejeição e, ao mesmo tempo, a melhor transferência. <span class="src">Fonte: relatório jun/2026, p. 25, Situações A/B/C.</span></p>
+      </div>
+      <div class="card pad-lg">
+        <h3>Por que isso importa para a estratégia</h3>
+        <ul class="compact-list muted">
+          <li><b>A eleição não é sobre Lula crescer.</b> Ele está colado no teto de 47–48 contra qualquer um. É sobre a oposição consolidar os 28 pontos disponíveis.</li>
+          <li><b>Flávio já transfere melhor que os rivais.</b> Trocar de candidato (Caiado/Zema) não melhora o 2º turno da direita — piora. O ativo é a polarização, não a moderação do nome.</li>
+          <li><b>O gargalo é a rejeição, não a transferência.</b> Flávio converte indecisos, mas tem 48% que “não votariam de jeito nenhum”. Reduzir esse teto vale mais que qualquer marketing de 1º turno.</li>
+          <li><b>O voto de Flávio é elástico.</b> Ele tira 31 no 1º turno com só 10% de identificação com o PL (perfil ponderado). Vive de não-partidários — recrutáveis, mas instáveis.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EVOLUÇÃO ============ -->
+<section id="evolucao">
+  <div class="wrap">
+    <div class="kicker">Série · maio → junho</div>
+    <h2>Maio × Junho: não houve virada</h2>
+    <p class="lead">O movimento nacional é mínimo. Maio foi a pesquisa do bloco “Banco Master”. Junho troca a narrativa para Trump, facções, economia, ideologia e IA — mas o voto principal é perguntado <b>antes</b> desses módulos. No 2º turno, o placar é idêntico. Quem afirmou que Flávio “desabou” não está lendo o próprio Datafolha.</p>
+
+    <div class="split">
+      <div class="card">
+        <h3>1º turno estimulado</h3>
+        <div class="legend"><span><i class="dot-lula"></i>Lula</span><span><i class="dot-flavio"></i>Flávio</span><span><i class="dot-gray"></i>branco/nulo</span></div>
+        <div class="bars">
+          <div class="barrow"><span class="nm">Lula maio</span><div class="track"><div class="fill lula" style="width:80%"></div></div><b>40</b></div>
+          <div class="barrow"><span class="nm">Lula junho</span><div class="track"><div class="fill lula" style="width:82%"></div></div><b>41</b></div>
+          <div class="barrow"><span class="nm">Flávio maio</span><div class="track"><div class="fill flavio" style="width:62%"></div></div><b>31</b></div>
+          <div class="barrow"><span class="nm">Flávio junho</span><div class="track"><div class="fill flavio" style="width:62%"></div></div><b>31</b></div>
+          <div class="barrow"><span class="nm">Branco/nulo mai</span><div class="track"><div class="fill gray" style="width:18%"></div></div><b>9</b></div>
+          <div class="barrow"><span class="nm">Branco/nulo jun</span><div class="track"><div class="fill gray" style="width:14%"></div></div><b>7</b></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>2º turno Lula × Flávio + rejeição</h3>
+        <div class="bars">
+          <div class="barrow"><span class="nm">Lula maio</span><div class="track"><div class="fill lula" style="width:94%"></div></div><b>47</b></div>
+          <div class="barrow"><span class="nm">Lula junho</span><div class="track"><div class="fill lula" style="width:94%"></div></div><b>47</b></div>
+          <div class="barrow"><span class="nm">Flávio maio</span><div class="track"><div class="fill flavio" style="width:86%"></div></div><b>43</b></div>
+          <div class="barrow"><span class="nm">Flávio junho</span><div class="track"><div class="fill flavio" style="width:86%"></div></div><b>43</b></div>
+          <div class="barrow"><span class="nm">Rejeição Flávio</span><div class="track"><div class="fill gold" style="width:96%"></div></div><b>48</b></div>
+          <div class="barrow"><span class="nm">Rejeição Lula</span><div class="track"><div class="fill gold" style="width:92%"></div></div><b>46</b></div>
+        </div>
+      </div>
+    </div>
+
+    <table style="margin-top:18px">
+      <thead><tr><th>Indicador</th><th class="num">Maio</th><th class="num">Junho</th><th class="num">Δ</th><th>Leitura</th></tr></thead>
+      <tbody>
+        <tr><td>1º turno Lula</td><td class="num">40</td><td class="num">41</td><td class="num gd">+1</td><td>Oscilação normal, dentro da margem.</td></tr>
+        <tr><td>1º turno Flávio</td><td class="num">31</td><td class="num">31</td><td class="num">0</td><td>Não recupera o tombo pós-Master, mas também não cai.</td></tr>
+        <tr><td>2º turno Lula × Flávio</td><td class="num">47×43</td><td class="num">47×43</td><td class="num">0</td><td>Centro da história: estabilidade — e empate técnico.</td></tr>
+        <tr><td>Rejeição Flávio</td><td class="num">46</td><td class="num">48</td><td class="num bd">+2</td><td>Continua o teto estratégico do candidato.</td></tr>
+        <tr><td>Rejeição Lula</td><td class="num">45</td><td class="num">46</td><td class="num bd">+1</td><td>Lula também é muito rejeitado: o anti-Lula é real.</td></tr>
+        <tr><td>Campo declarado</td><td class="num">relatório: 20–21/05</td><td class="num">relatório: 17–18/06</td><td class="num wn">±1d</td><td>O registro PesqEle marca término em 22/05 e 19/06. Inconsistência documental, não substantiva.</td></tr>
+      </tbody>
+    </table>
+    <div class="split">
+      <figure>
+        <img src="img/datafolha_062026_relatorio_p23_primeiro_turno.jpg" alt="Primeiro turno Datafolha junho por gênero, idade, escolaridade e renda" loading="lazy">
+        <figcaption>1º turno de junho: Lula 41, Flávio 31, brancos/nulos 7, não sabe 4. Caiado, Renan e Zema lideram o “terceiro caminho”.</figcaption>
+      </figure>
+      <figure>
+        <img src="img/datafolha_062026_relatorio_p25_segundo_turno.jpg" alt="Segundo turno Datafolha junho, três situações" loading="lazy">
+        <figcaption>2º turno: três situações. Lula 47×43 (Flávio), 47×41 (Caiado), 48×39 (Zema). O teto de Lula não se move.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BAIRROS ============ -->
+<section id="bairros">
+  <div class="wrap">
+    <div class="kicker">Achado nº 4 · bairros & pontos</div>
+    <h2>Bairros: 77% dos setores se repetem</h2>
+    <p class="lead">O anexo de bairros é a novidade útil — mostra onde as entrevistas ocorreram. Mas não revela horário, fluxo, reposição de ponto, taxa de recusa nem probabilidade de seleção. E expõe uma tensão: se o desenho “sorteia” pontos de fluxo, por que <b>255 dos 331 setores</b> (77%) repetem de maio para junho, e <b>20 de 22</b> em São Paulo? Isso é mais painel de locais do que sorteio novo — e reforça a necessidade de calcular o deff sobre desenho conglomerado.</p>
+
+    <div class="grid three">
+      <div class="card"><span class="tag gray">Brasil</span><div class="metric"><b>331</b><span>setores únicos · jun</span></div><p class="muted" style="margin:0">2.004 entrevistas, ~6 por setor.</p></div>
+      <div class="card"><span class="tag gold">Repetição</span><div class="metric"><b>77,0%</b><span>setores repetidos</span></div><p class="muted" style="margin:0">255 dos 331 já estavam em maio; 76 entraram, 76 saíram.</p></div>
+      <div class="card"><span class="tag green">SP capital</span><div class="metric"><b>20/22</b><span>setores idênticos</span></div><p class="muted" style="margin:0">A rotação real em SP entre maio e junho é mínima.</p></div>
+    </div>
+
+    <div class="callout flavio" style="margin-top:18px">
+      <h3>O achado de SP desmente a tese fácil</h3>
+      <p class="muted" style="margin:0">Cruzando os 22 pontos paulistanos com o 2º turno de prefeito de 2024 por bairro eleitoral, <b>18 caem em áreas onde Ricardo Nunes venceu Boulos</b> e 4 onde Boulos venceu. Média simples dos pontos: <b>Nunes 58,35%</b>, colada no resultado oficial da cidade (Nunes 59,34%). Ou seja: em SP capital a crítica honesta <b>não</b> é “escolheram bairro de esquerda”. É “por que quase tudo se repetiu, e qual é o protocolo de sorteio/rotação?”.</p>
+    </div>
+
+    <table style="margin-top:18px">
+      <thead><tr><th>Ponto Datafolha jun</th><th>Proxy eleitoral 2024</th><th class="num">Nunes</th><th class="num">Boulos</th><th>Leitura</th></tr></thead>
+      <tbody>
+        <tr><td>Americanópolis / Cid. Ademar</td><td>Americanópolis</td><td class="num">58,3</td><td class="num">41,7</td><td>Nunes, periferia sul competitiva.</td></tr>
+        <tr><td>Belém</td><td>Belenzinho</td><td class="num">62,4</td><td class="num">37,6</td><td>Proxy mais robusto que o bairro “Belém” (n irrelevante).</td></tr>
+        <tr><td>Brás / Bela Vista</td><td>Bela Vista</td><td class="num">45,1</td><td class="num">54,9</td><td>Boulos, centro expandido.</td></tr>
+        <tr><td>Grajaú</td><td>Grajaú</td><td class="num">51,8</td><td class="num">48,2</td><td>Nunes por margem pequena.</td></tr>
+        <tr><td>Santa Cecília</td><td>Santa Cecília</td><td class="num">44,1</td><td class="num">55,9</td><td>Boulos, centro-esquerda clássico.</td></tr>
+        <tr><td>Vila Pompeia / Perdizes</td><td>Vila Pompeia</td><td class="num">55,0</td><td class="num">45,0</td><td>Nunes, zona oeste média-alta.</td></tr>
+        <tr><td>Demais 16 pontos</td><td>Limão, Penha, Santana, Socorro, Ipiranga, Jabaquara, Brasilândia etc.</td><td class="num">maioria Nunes</td><td class="num">—</td><td>Sem sinal de desenho pró-Boulos.</td></tr>
+      </tbody>
+    </table>
+    <figure>
+      <img src="img/datafolha_062026_bairros_p05_sp.jpg" alt="Anexo de bairros Datafolha, pontos de São Paulo junho" loading="lazy">
+      <figcaption>Anexo de bairros de junho (p.5): permite comparar setor a setor contra maio e contra o mapa eleitoral de 2024. O cruzamento usa bairro do local de votação do TSE — proxy, não geocodificação exata do setor.</figcaption>
+    </figure>
+    <p class="note">Arquivos: <span class="mono">datafolha_bairros_compare.csv</span> (331 setores, 255 repetidos), <span class="mono">datafolha_sp_bairros_2024_match.csv</span> e <span class="mono">sp_2024_prefeito_2t_bairros.csv</span> (5,7 mi de votos válidos processados).</p>
+  </div>
+</section>
+
+<!-- ============ REPONDERAÇÃO POR RENDA ============ -->
+<section id="renda">
+  <div class="wrap">
+    <div class="kicker">Achado nº 5 · a peça-chave</div>
+    <h2>A vantagem de Lula mora na renda da amostra</h2>
+    <p class="lead">Sexo, idade, região e escolaridade estão bem calibrados. A renda, não. A amostra do Datafolha é <b>mais pobre que o país</b>: 50,4% declaram renda familiar de até 2 salários mínimos, contra 42,9% na PNAD por domicílios e 35,4% na PNAD por pessoas 16+. Como a baixa renda dá Lula 53 × 38 e a renda acima de 2 SM dá Flávio, esse excesso de pobres <b>tem direção conhecida</b>: infla Lula. Recalibrando só esse marginal, a vantagem some.</p>
+
+    <div class="grid two">
+      <div class="card pad-lg">
+        <h3>Reponderação marginal: a vantagem evapora</h3>
+        <p class="muted">Mantemos o voto publicado <b>dentro</b> de cada faixa de renda e trocamos apenas o <b>peso</b> de cada faixa pelo benchmark PNAD. É uma sensibilidade auditável (ignora correlações, não usa microdado), mas mostra para onde o resultado escorrega.</p>
+        <div class="svgwrap" aria-label="Gráfico de convergência: Lula e Flávio convergem ao reponderar por renda">
+          <svg viewBox="0 0 560 320" role="img">
+            <!-- gridlines -->
+            <g stroke="#eef1f6" stroke-width="1">
+              <line x1="70" y1="70" x2="510" y2="70"/>
+              <line x1="70" y1="130" x2="510" y2="130"/>
+              <line x1="70" y1="190" x2="510" y2="190"/>
+              <line x1="70" y1="250" x2="510" y2="250"/>
+            </g>
+            <g font-family="Spline Sans Mono, monospace" font-size="10" fill="#b3bac6" text-anchor="end">
+              <text x="62" y="74">48</text><text x="62" y="134">46</text><text x="62" y="194">44</text><text x="62" y="254">42</text>
+            </g>
+            <!-- gap shaded area between Lula and Flavio -->
+            <path d="M110,70 L300,103.3 L490,130 L490,120 L300,153.3 L110,196.7 Z" fill="#b07d10" opacity=".10"/>
+            <!-- Lula line -->
+            <polyline points="110,70 300,103.3 490,130" fill="none" stroke="#c0392b" stroke-width="3"/>
+            <!-- Flavio line -->
+            <polyline points="110,196.7 300,153.3 490,120" fill="none" stroke="#1f5fa8" stroke-width="3"/>
+            <!-- dots + labels Lula -->
+            <g font-family="Inter" font-weight="800" font-size="12.5" fill="#8f241b" text-anchor="middle">
+              <circle cx="110" cy="70" r="5.5" fill="#c0392b"/><text x="110" y="58">47,4</text>
+              <circle cx="300" cy="103.3" r="5.5" fill="#c0392b"/><text x="300" y="92">46,4</text>
+              <circle cx="490" cy="130" r="5.5" fill="#c0392b"/><text x="486" y="119" text-anchor="end">45,6</text>
+            </g>
+            <!-- dots + labels Flavio -->
+            <g font-family="Inter" font-weight="800" font-size="12.5" fill="#143f70" text-anchor="middle">
+              <circle cx="110" cy="196.7" r="5.5" fill="#1f5fa8"/><text x="110" y="214">43,6</text>
+              <circle cx="300" cy="153.3" r="5.5" fill="#1f5fa8"/><text x="300" y="171">44,9</text>
+              <circle cx="490" cy="120" r="5.5" fill="#1f5fa8"/><text x="486" y="109" text-anchor="end">45,9</text>
+            </g>
+            <!-- x labels -->
+            <g font-family="Inter" font-size="11" fill="#5e6675" text-anchor="middle">
+              <text x="110" y="285">Datafolha</text><text x="110" y="300" font-size="10" fill="#8b93a3">renda publicada</text>
+              <text x="300" y="285">PNAD domicílios</text><text x="300" y="300" font-size="10" fill="#8b93a3">2025 v1</text>
+              <text x="490" y="285">PNAD pessoas</text><text x="490" y="300" font-size="10" fill="#8b93a3">16+ · 2025 v1</text>
+            </g>
+            <!-- crossover annotation -->
+            <text x="490" y="148" font-family="Inter" font-size="10.5" font-weight="700" fill="#1c7d54" text-anchor="end">empate / Flávio +0,3</text>
+          </svg>
+        </div>
+        <p class="cap">Lula cai de 47,4 para 45,6; Flávio sobe de 43,6 para 45,9. As linhas se cruzam: na PNAD por pessoas, é empate com leve vantagem de Flávio. <span class="src">Fonte: datafolha_reweight_sensitivity.json.</span></p>
+      </div>
+      <div class="card pad-lg">
+        <h3>Por que a amostra está “pobre demais”</h3>
+        <p class="muted">Compare a fatia de renda familiar até 2 SM:</p>
+        <div class="bars">
+          <div class="barrow"><span class="nm">Datafolha jun</span><div class="track"><div class="fill lula" style="width:84%"></div></div><b>50,4</b></div>
+          <div class="barrow"><span class="nm">PNAD domicílios</span><div class="track"><div class="fill gold" style="width:72%"></div></div><b>42,9</b></div>
+          <div class="barrow"><span class="nm">PNAD pessoas 16+</span><div class="track"><div class="fill flavio" style="width:59%"></div></div><b>35,4</b></div>
+        </div>
+        <p class="note" style="margin-top:6px">% na faixa até 2 salários mínimos. Quanto mais pobre a amostra, maior a vantagem de Lula.</p>
+        <h3 style="margin-top:18px">Voto no 2º turno por renda — o gradiente</h3>
+        <div class="legend"><span><i class="dot-lula"></i>Lula</span><span><i class="dot-flavio"></i>Flávio</span></div>
+        <div class="diverge">
+          <div class="dvrow"><span class="lab">Até 2 SM</span>
+            <div class="dvleft"><span class="dvval">53</span><span class="dvbar" style="width:74%"></span></div>
+            <div class="dvright"><span class="dvbar" style="width:53%"></span><span class="dvval">38</span></div></div>
+          <div class="dvrow"><span class="lab">2–5 SM</span>
+            <div class="dvleft"><span class="dvval">41</span><span class="dvbar" style="width:57%"></span></div>
+            <div class="dvright"><span class="dvbar" style="width:68%"></span><span class="dvval">49</span></div></div>
+          <div class="dvrow"><span class="lab">5–10 SM</span>
+            <div class="dvleft"><span class="dvval">42</span><span class="dvbar" style="width:58%"></span></div>
+            <div class="dvright"><span class="dvbar" style="width:71%"></span><span class="dvval">51</span></div></div>
+          <div class="dvrow"><span class="lab">+10 SM</span>
+            <div class="dvleft"><span class="dvval">43</span><span class="dvbar" style="width:60%"></span></div>
+            <div class="dvright"><span class="dvbar" style="width:75%"></span><span class="dvval">54</span></div></div>
+        </div>
+        <p class="note" style="margin-top:6px">A virada de chave acontece exatamente em 2 SM: abaixo, Lula domina; acima, Flávio domina.</p>
+      </div>
+    </div>
+
+    <table style="margin-top:18px">
+      <thead><tr><th>Cenário de reponderação (2º turno)</th><th class="num">Lula</th><th class="num">Flávio</th><th class="num">Diferença</th><th>Leitura</th></tr></thead>
+      <tbody>
+        <tr><td>Datafolha ponderado (renda publicada)</td><td class="num">47,4</td><td class="num">43,6</td><td class="num gd">Lula +3,8</td><td>Reproduz o 47×43 oficial.</td></tr>
+        <tr><td>Troca região → TSE 05/2026</td><td class="num">47,1</td><td class="num">43,4</td><td class="num gd">Lula +3,7</td><td>Região não explica nada relevante.</td></tr>
+        <tr><td>Troca renda → PNAD domicílios 2025 v1</td><td class="num">46,4</td><td class="num">44,9</td><td class="num wn">Lula +1,5</td><td>A defesa mais justa do Datafolha já estreita muito.</td></tr>
+        <tr><td>Troca renda → PNAD pessoas 16+ 2025 v1</td><td class="num">45,6</td><td class="num">45,9</td><td class="num bd">Flávio +0,3</td><td>Se a unidade correta for o respondente, a vantagem some.</td></tr>
+      </tbody>
+    </table>
+    <div class="callout warn" style="margin-top:16px">
+      <h3>Conclusão técnica, sem exagero</h3>
+      <p class="muted" style="margin:0">A reponderação <b>não prova</b> que Flávio está à frente. Prova que o “Lula +4” depende de uma amostra economicamente mais pobre que a PNAD — por domicílios e, ainda mais, por pessoas. Some isso ao empate técnico da seção 1, e a leitura honesta do 2º turno é: <b>disputa aberta, dentro da margem</b>, não liderança consolidada de Lula.</p>
+    </div>
+    <figure>
+      <img src="img/datafolha_062026_relatorio_p17_perfil.jpg" alt="Perfil ponderado da amostra Datafolha junho" loading="lazy">
+      <figcaption>Perfil ponderado do relatório (p.17): a base dos pesos marginais usados na sensibilidade. Renda familiar até 2 SM ponderada = 1.010 de 2.004 (50,4%).</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ BRUTO x PONDERADO ============ -->
+<section id="perfil">
+  <div class="wrap">
+    <div class="kicker">Achado nº 6 · onde o peso atuou</div>
+    <h2>Bruto × ponderado: a digital da ponderação</h2>
+    <p class="lead">O anexo de bairros publica a contagem <b>bruta</b> da amostra; o relatório publica o perfil <b>ponderado</b>. Cruzar os dois é raro e revelador — mostra exatamente onde a ponderação mexeu. A resposta tranquiliza em renda e região, mas acende um alerta em escolaridade: havia <b>superior demais</b> na coleta de rua, corrigido para baixo, e <b>fundamental de menos</b>, puxado para cima com fator 1,23.</p>
+
+    <div class="grid two">
+      <div class="card pad-lg">
+        <h3>Escolaridade: o maior ajuste</h3>
+        <div class="legend"><span><i class="dot-lula"></i>Fundamental ↑</span><span><i class="dot-gray"></i>Médio →</span><span><i class="dot-flavio"></i>Superior ↓</span></div>
+        <div class="svgwrap" aria-label="Slope chart bruto versus ponderado por escolaridade">
+          <svg viewBox="0 0 460 290" role="img">
+            <line x1="140" y1="40" x2="140" y2="258" stroke="#dde2ec"/>
+            <line x1="320" y1="40" x2="320" y2="258" stroke="#dde2ec"/>
+            <g font-family="Inter" font-size="11.5" font-weight="700" fill="#5e6675" text-anchor="middle">
+              <text x="140" y="278">BRUTO</text><text x="320" y="278">PONDERADO</text>
+            </g>
+            <!-- Medio -->
+            <line x1="140" y1="66.4" x2="320" y2="80.7" stroke="#7b8494" stroke-width="2.5"/>
+            <circle cx="140" cy="66.4" r="5" fill="#7b8494"/><circle cx="320" cy="80.7" r="5" fill="#7b8494"/>
+            <text x="128" y="62" text-anchor="end" font-family="Inter" font-weight="800" font-size="12.5" fill="#545c6b">Médio 45,7</text>
+            <text x="332" y="84" font-family="Inter" font-weight="800" font-size="12.5" fill="#545c6b">43,7</text>
+            <!-- Superior -->
+            <line x1="140" y1="190" x2="320" y2="218.6" stroke="#1f5fa8" stroke-width="2.5"/>
+            <circle cx="140" cy="190" r="5" fill="#1f5fa8"/><circle cx="320" cy="218.6" r="5" fill="#1f5fa8"/>
+            <text x="128" y="186" text-anchor="end" font-family="Inter" font-weight="800" font-size="12.5" fill="#143f70">Superior 28,4</text>
+            <text x="332" y="222" font-family="Inter" font-weight="800" font-size="12.5" fill="#143f70">24,4 (×0,86)</text>
+            <!-- Fundamental -->
+            <line x1="140" y1="207.9" x2="320" y2="164.3" stroke="#c0392b" stroke-width="2.5"/>
+            <circle cx="140" cy="207.9" r="5" fill="#c0392b"/><circle cx="320" cy="164.3" r="5" fill="#c0392b"/>
+            <text x="128" y="211" text-anchor="end" font-family="Inter" font-weight="800" font-size="12.5" fill="#8f241b">Fund. 25,9</text>
+            <text x="332" y="160" font-family="Inter" font-weight="800" font-size="12.5" fill="#8f241b">32,0 (×1,23)</text>
+          </svg>
+        </div>
+        <p class="cap">Fundamental sobe 6,1 pontos no peso; superior cai 4. É um ajuste grande para um marginal que se correlaciona com voto. O Datafolha deveria publicar a distribuição dos pesos finais.</p>
+      </div>
+      <div class="card pad-lg">
+        <h3>Onde o peso quase não mexeu</h3>
+        <table>
+          <thead><tr><th>Corte</th><th class="num">Bruto</th><th class="num">Pond.</th><th class="num">Fator</th></tr></thead>
+          <tbody>
+            <tr><td>Sexo masculino</td><td class="num">47,3</td><td class="num">48,0</td><td class="num">1,01×</td></tr>
+            <tr><td>60 anos ou +</td><td class="num">22,9</td><td class="num">24,3</td><td class="num">1,06×</td></tr>
+            <tr><td>Renda até 2 SM</td><td class="num">49,3</td><td class="num">50,4</td><td class="num wn">1,02×</td></tr>
+            <tr><td>Renda +5 SM</td><td class="num">12,9</td><td class="num">11,4</td><td class="num">0,89×</td></tr>
+            <tr><td>Nordeste</td><td class="num">27,5</td><td class="num">28,0</td><td class="num">1,02×</td></tr>
+            <tr><td class="bd">Fundamental</td><td class="num">25,9</td><td class="num">32,0</td><td class="num bd">1,23×</td></tr>
+            <tr><td class="bd">Superior</td><td class="num">28,4</td><td class="num">24,4</td><td class="num bd">0,86×</td></tr>
+          </tbody>
+        </table>
+        <p class="note" style="margin-top:8px">Detalhe contraintuitivo: a ponderação deixou a amostra <b>ainda mais pobre</b> (até 2 SM subiu de 49,3 para 50,4%). O viés de renda não é “corrigido” pelo peso — é levemente reforçado.</p>
+      </div>
+    </div>
+    <figure>
+      <img src="img/datafolha_062026_bairros_p06_perfil.jpg" alt="Perfil bruto da amostra no anexo de bairros" loading="lazy">
+      <figcaption>Perfil bruto (anexo de bairros, p.6): contagens não ponderadas. A declaração de responsabilidade técnica confirma a abordagem em pontos de fluxo e o uso do CNEFE/IBGE.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ QUESTIONÁRIO ============ -->
+<section id="questionario">
+  <div class="wrap">
+    <div class="kicker">Achado nº 7 · transparência do questionário</div>
+    <h2>As perguntas-fantasma — inclusive sobre o próprio Flávio</h2>
+    <p class="lead">O lado bom: o voto presidencial vem <b>antes</b> dos módulos de Trump, facções, economia e ideologia, blindando o top-line de priming direto. O lado ruim: o relatório publica uma fração mínima do que foi perguntado. E entre o que <b>ficou de fora</b> há perguntas que avaliam diretamente Flávio Bolsonaro — aplicadas a todos os entrevistados e nunca divulgadas.</p>
+
+    <div class="grid two">
+      <div class="card pad-lg">
+        <h3 style="color:var(--green)">✓ Publicado no relatório</h3>
+        <ul class="checklist">
+          <li><span class="ic pub">✓</span><span>Voto espontâneo, estimulado, rejeição e os três cenários de 2º turno.</span></li>
+          <li><span class="ic pub">✓</span><span>Avaliação e aprovação do governo Lula.</span></li>
+          <li><span class="ic pub">✓</span><span>Efeito do apoio de Trump (aumenta 17 / diminui 15 / indiferente 65).</span></li>
+          <li><span class="ic pub">✓</span><span>Arrependimento do voto de 2022 (8% sim) — <b>mas</b> sobre base de 1.546, sem revelar em quem votaram.</span></li>
+        </ul>
+      </div>
+      <div class="card pad-lg">
+        <h3 style="color:var(--lula)">✕ Aplicado e não publicado</h3>
+        <ul class="checklist">
+          <li><span class="ic hid">✕</span><span><b>P.14/P.15 — Flávio influenciou os EUA</b> a classificar PCC/CV como terroristas? Isso foi <b>positivo ou negativo</b>? Pergunta sobre o próprio candidato, retida.</span></li>
+          <li><span class="ic hid">✕</span><span>P.10 — percepção econômica (país e pessoal).</span></li>
+          <li><span class="ic hid">✕</span><span>P.11–P.13 — facções como organizações terroristas; EUA com “direito” de atacar facções no Brasil sem avisar.</span></li>
+          <li><span class="ic hid">✕</span><span>P.16–P.18 — bateria ideológica (armas, drogas, pena de morte, homossexualidade, Deus, sindicatos) e maioridade penal.</span></li>
+          <li><span class="ic hid">✕</span><span>P.19–P.20 — Inteligência Artificial.</span></li>
+          <li><span class="ic hid">✕</span><span><b>Distribuição do voto lembrado de 2022</b> — a auditoria política básica da amostra.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="grid two" style="margin-top:16px">
+      <div class="callout">
+        <h3>A tabela que deveria estar publicada</h3>
+        <p class="muted" style="margin:0">O questionário pergunta em quem o eleitor votou no 2º turno de 2022. A lembrança ponderada deveria orbitar Lula 50,9 × Bolsonaro 49,1 (votos válidos), com desconto por memória e desejabilidade. <b>Sem essa tabela, não há como testar se a amostra está politicamente enviesada.</b> Publicar arrependimento (8%) sem publicar a base lembrada é divulgar o efeito escondendo a causa.</p>
+      </div>
+      <div class="callout warn">
+        <h3>Por que isso é grave</h3>
+        <p class="muted" style="margin:0">Reter perguntas sobre economia e ideologia é discutível; reter <b>uma pergunta que avalia se a ação de Flávio nos EUA foi positiva ou negativa</b> é editorialmente sensível. O instituto coletou um dado de altíssimo valor reputacional sobre um dos dois finalistas — e não o mostrou. Transparência exige publicar o resultado de <b>todas</b> as perguntas registradas, ou justificar cada omissão.</p>
+      </div>
+    </div>
+
+    <div class="split">
+      <figure>
+        <img src="img/datafolha_062026_questionario_p04_faccoes.jpg" alt="Questionário Datafolha: facções, PCC, CV e influência de Flávio nos EUA" loading="lazy">
+        <figcaption>P.14/P.15: aplicaram perguntas sobre a influência de Flávio na decisão dos EUA — e se ela foi positiva ou negativa. Não aparecem no relatório.</figcaption>
+      </figure>
+      <figure>
+        <img src="img/datafolha_062026_questionario_p05_valores.jpg" alt="Questionário Datafolha: bateria de valores ideológicos" loading="lazy">
+        <figcaption>Bateria ideológica extensa (armas, pobreza, drogas, pena de morte, homossexualidade, Deus, sindicatos, impostos) — um instrumento de message-testing inteiro, não publicado.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NARRATIVA ============ -->
+<section id="narrativa">
+  <div class="wrap">
+    <div class="kicker">Achado nº 8 · a construção da narrativa</div>
+    <h2>A fábrica de narrativa: como o número vira pauta</h2>
+    <p class="lead">Uma pesquisa é um insumo. A notícia é um <b>produto editorial</b> construído por cima dele. E a Folha de S.Paulo não é só veículo: é a <b>contratante</b> do Datafolha. Ou seja, decide as perguntas que entram, decide o que publicar e decide o enquadramento da manchete. Comparamos como a imprensa cobriu este levantamento — e o padrão é nítido: o dado dizia “empate técnico”, a manchete dominante disse “Lula lidera”.</p>
+
+    <div class="callout flavio" style="margin-top:8px">
+      <h3>O duplo padrão do “empate técnico”</h3>
+      <p class="muted" style="margin:0">O mesmo veículo que chama a <b>rejeição</b> de Flávio (48) e Lula (46) de “empate técnico dentro da margem” se recusa a aplicar a mesma régua ao <b>voto</b> de 2º turno (47 × 43). Mas a diferença de 4 pontos tem margem de ~±4 a ±5 pp (seção “Empate técnico”) — é tão empate quanto a rejeição, ou mais. A escolha de chamar um de “empate” e o outro de “liderança” não é estatística. É editorial.</p>
+    </div>
+
+    <h3 style="margin-top:26px">O mural de manchetes — o mesmo dado, frames diferentes</h3>
+    <p class="muted" style="max-width:74ch">Manchetes reais publicadas entre 17 e 24/06/2026 sobre <b>esta</b> pesquisa. A cor indica o enquadramento. Repare como o frame “Lula lidera” e o frame “Flávio ferido pelo escândalo” dominam, enquanto o frame estatisticamente correto (“empate/estabilidade”) é minoria.</p>
+    <div class="legend" style="margin:12px 0 14px">
+      <span><i class="dot-lula"></i>frame “Lula lidera / vantagem”</span>
+      <span><i style="background:#b07d10"></i>frame “Flávio ferido / Dark Horse”</span>
+      <span><i style="background:#1c7d54"></i>frame “empate / estabilidade” (correto)</span>
+      <span><i class="dot-gray"></i>neutro / recorte</span>
+    </div>
+    <div class="grid three">
+      <a class="card" style="border-left:4px solid var(--lula);text-decoration:none;color:inherit" href="https://www.cnnbrasil.com.br/eleicoes/no-2o-turno-lula-tem-47-contra-43-de-flavio-bolsonaro-diz-datafolha/"><span class="tag lula">Lula lidera</span><p style="margin:8px 0 4px;font-weight:700">“No 2º turno, Lula tem 47% <i>contra</i> 43% de Flávio Bolsonaro”</p><span class="note">CNN Brasil · Lula citado primeiro, ‘contra’ adversariza</span></a>
+      <a class="card" style="border-left:4px solid var(--lula);text-decoration:none;color:inherit" href="https://exame.com/brasil/datafolha-lula-mantem-47-e-flavio-bolsonaro-tem-43-no-2o-turno/"><span class="tag lula">Lula lidera</span><p style="margin:8px 0 4px;font-weight:700">“Datafolha: Lula <i>mantém</i> 47% e Flávio Bolsonaro tem 43%”</p><span class="note">Exame · ‘mantém’ projeta liderança durável</span></a>
+      <a class="card" style="border-left:4px solid var(--lula);text-decoration:none;color:inherit" href="https://srzd.com/blog/brasil/politica/datafolha-lula-frente-turno/"><span class="tag lula">Lula lidera</span><p style="margin:8px 0 4px;font-weight:700">“Lula tem <i>10 pontos</i> na frente do 2º colocado no 1º turno”</p><span class="note">SRZD · usa o gap maior (1º turno) em vez do 2º</span></a>
+      <a class="card" style="border-left:4px solid var(--gold);text-decoration:none;color:inherit" href="https://www.correiobraziliense.com.br/politica/2026/06/7445255-datafolha-lula-mantem-lideranca-e-flavio-estabiliza-apos-dark-horse.html"><span class="tag gold">Flávio ferido</span><p style="margin:8px 0 4px;font-weight:700">“Lula mantém liderança e Flávio <i>estabiliza após ‘Dark Horse’</i>”</p><span class="note">Correio Braziliense · reancora ao escândalo</span></a>
+      <a class="card" style="border-left:4px solid var(--gold);text-decoration:none;color:inherit" href="https://www.infomoney.com.br/politica/datafolha-flavio-estanca-perdas-e-mantem-43-contra-47-de-lula-no-segundo-turno/"><span class="tag gold">Flávio ferido</span><p style="margin:8px 0 4px;font-weight:700">“Flávio <i>estanca perdas</i> e mantém 43% contra 47% de Lula”</p><span class="note">InfoMoney · ‘estanca perdas’ = candidato em queda</span></a>
+      <a class="card" style="border-left:4px solid var(--gold);text-decoration:none;color:inherit" href="https://www.brasil247.com/brasil/caso-dark-horse-trava-flavio-bolsonaro-e-impede-reacao-contra-lula-no-datafolha"><span class="tag gold">Flávio ferido</span><p style="margin:8px 0 4px;font-weight:700">“Caso Dark Horse <i>trava</i> Flávio e impede reação contra Lula”</p><span class="note">Brasil247 · pesquisa como prova do escândalo</span></a>
+      <a class="card" style="border-left:4px solid var(--green);text-decoration:none;color:inherit" href="https://infosaj.com.br/datafolha-aponta-lula-a-frente-de-flavio-bolsonaro-para-2026-mas-disputa-segue-em-empate-tecnico-no-limite-da-margem-de-erro/"><span class="tag green">Empate (correto)</span><p style="margin:8px 0 4px;font-weight:700">“Lula à frente, <i>mas cenário indica empate técnico</i> no limite da margem”</p><span class="note">InfoSAJ · o frame que casa com a estatística — minoria</span></a>
+      <a class="card" style="border-left:4px solid var(--green);text-decoration:none;color:inherit" href="https://bmcnews.com.br/politica/eleicoes-2026/datafolha-mostra-estabilidade-em-cenario-de-segundo-turno-entre-lula-e-flavio-bolsonaro/"><span class="tag green">Estabilidade</span><p style="margin:8px 0 4px;font-weight:700">“Datafolha mostra <i>estabilidade</i> no 2º turno entre Lula e Flávio”</p><span class="note">BM&amp;C News · descreve, não projeta vencedor</span></a>
+      <a class="card" style="border-left:4px solid var(--gray);text-decoration:none;color:inherit" href="https://www.brasil247.com/regionais/nordeste/nordeste-mulheres-e-estudantes-sustentam-vantagem-de-lula-no-datafolha"><span class="tag gray">Recorte pró-Lula</span><p style="margin:8px 0 4px;font-weight:700">“Nordeste, mulheres e estudantes <i>sustentam</i> vantagem de Lula”</p><span class="note">Brasil247 · destaca só os segmentos fortes de Lula</span></a>
+    </div>
+    <p class="note" style="margin-top:10px">Levantamento de manchetes públicas (links clicáveis). A Folha/UOL bloqueia indexação automática; o enquadramento da Folha está representado pelo Correio Braziliense e demais veículos que reproduziram a leitura da contratante. Houve, sim, cobertura neutra (Gazeta do Povo: “veja os números”) e honesta (InfoSAJ, BM&amp;C) — mas foi minoria diante do frame “Lula lidera”.</p>
+
+    <h3 style="margin-top:26px">Os prints — a evidência, não a paráfrase</h3>
+    <p class="muted" style="max-width:74ch">Capturas reais das páginas, feitas em 24/06/2026. O mesmo levantamento Datafolha, enquadrado de quatro maneiras diferentes — e o frame estatisticamente correto (empate) aparecendo só num veículo pequeno do interior baiano.</p>
+    <div class="grid three" style="margin-top:6px">
+      <figure>
+        <img src="img/datafolha_062026_print_cnn.jpg" alt="Print CNN Brasil: Lula tem 47% contra 43% de Flávio" loading="lazy">
+        <figcaption><span class="tag lula">Lula lidera</span> <b>CNN Brasil.</b> O card de vídeo transforma o número em manchete: “Datafolha: Lula tem 47% no 2º turno; Flávio, 43%”. Sem menção a empate técnico.</figcaption>
+      </figure>
+      <figure>
+        <img src="img/datafolha_062026_print_correio.jpg" alt="Print Correio Braziliense: Lula mantém liderança e Flávio estabiliza após Dark Horse" loading="lazy">
+        <figcaption><span class="tag gold">Flávio ferido</span> <b>Correio Braziliense.</b> O escândalo entra no título: “estabiliza após ‘Dark Horse’”. A linha-fina já cita “financiamento de filme sobre Jair Bolsonaro”.</figcaption>
+      </figure>
+      <figure>
+        <img src="img/datafolha_062026_print_infomoney.jpg" alt="Print InfoMoney: Flávio estanca perdas e mantém 43% contra 47% de Lula" loading="lazy">
+        <figcaption><span class="tag gold">Flávio ferido</span> <b>InfoMoney.</b> “Flávio estanca perdas” — e o próprio card de vídeo admite o que a manchete esconde: “Lula e Flávio mantêm estabilidade”.</figcaption>
+      </figure>
+      <figure>
+        <img src="img/datafolha_062026_print_infosaj.jpg" alt="Print InfoSAJ: Lula à frente, mas cenário indica empate técnico" loading="lazy">
+        <figcaption><span class="tag green">Empate (correto)</span> <b>InfoSAJ.</b> O único da amostra a colocar a verdade no título: “mas cenário indica empate técnico no limite da margem de erro”.</figcaption>
+      </figure>
+      <figure>
+        <img src="img/datafolha_062026_print_brasil247.jpg" alt="Print Brasil247: Nordeste, mulheres e estudantes sustentam vantagem de Lula" loading="lazy">
+        <figcaption><span class="tag gray">Recorte</span> <b>Brasil247.</b> Destaca só os segmentos fortes de Lula (“61% no Nordeste”). A metade simétrica — homens, Sul, renda alta, evangélicos com Flávio — não vira manchete.</figcaption>
+      </figure>
+      <figure style="display:flex;flex-direction:column;justify-content:center;background:#14171d;border:1px solid var(--line);border-radius:12px;padding:18px;box-shadow:var(--shadow-sm)">
+        <div style="color:#e9e3d6">
+          <div style="font-family:var(--serif);font-weight:900;font-size:22px;line-height:1.1;margin-bottom:8px">Mesma pesquisa.<br>Quatro narrativas.</div>
+          <p style="color:#b9b2a3;font-size:13px;margin:0">Lula lidera · Flávio ferido · empate técnico · recorte pró-Lula. O dado é um só. A diferença está na redação — e em quem encomendou.</p>
+        </div>
+      </figure>
+    </div>
+
+    <div class="grid two" style="margin-top:22px">
+      <div class="card pad-lg">
+        <h3>O contratante controla os dois lados</h3>
+        <p class="muted">A Folha não “recebe” a pesquisa pronta. Ela <b>encomenda</b>. Isso significa poder sobre o instrumento <i>e</i> sobre a narrativa — um ciclo fechado:</p>
+        <div class="svgwrap" aria-label="Ciclo: contratante define perguntas, recebe dados e publica narrativa">
+          <svg viewBox="0 0 460 240" role="img">
+            <defs><marker id="ar" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#5e6675"/></marker></defs>
+            <g font-family="Inter" font-size="12.5" font-weight="700" text-anchor="middle">
+              <rect x="150" y="14" width="160" height="44" rx="9" fill="#e8f0fb" stroke="#1f5fa8"/><text x="230" y="34" fill="#143f70">1 · DEFINE as perguntas</text><text x="230" y="49" font-size="10.5" font-weight="500" fill="#5e6675">Trump, facções, influência de Flávio</text>
+              <rect x="300" y="98" width="150" height="44" rx="9" fill="#f3f5f9" stroke="#7b8494"/><text x="375" y="118" fill="#2b3240">2 · RECEBE os dados</text><text x="375" y="133" font-size="10.5" font-weight="500" fill="#5e6675">topline + recortes</text>
+              <rect x="150" y="182" width="160" height="44" rx="9" fill="#fbe9e7" stroke="#c0392b"/><text x="230" y="202" fill="#8f241b">3 · ESCOLHE a manchete</text><text x="230" y="217" font-size="10.5" font-weight="500" fill="#5e6675">e o que NÃO publicar</text>
+              <rect x="10" y="98" width="150" height="44" rx="9" fill="#f8f0d8" stroke="#b07d10"/><text x="85" y="113" fill="#8b630f">4 · DEFINE a pauta</text><text x="85" y="128" font-size="10.5" font-weight="500" fill="#5e6675">do dia seguinte</text>
+            </g>
+            <path d="M285,58 C330,72 350,82 360,96" fill="none" stroke="#5e6675" stroke-width="1.5" marker-end="url(#ar)"/>
+            <path d="M340,142 C320,162 300,172 285,180" fill="none" stroke="#5e6675" stroke-width="1.5" marker-end="url(#ar)"/>
+            <path d="M150,196 C110,182 95,160 88,144" fill="none" stroke="#5e6675" stroke-width="1.5" marker-end="url(#ar)"/>
+            <path d="M120,98 C135,80 150,70 168,60" fill="none" stroke="#5e6675" stroke-width="1.5" marker-end="url(#ar)"/>
+          </svg>
+        </div>
+        <p class="cap">Encomendou a pergunta do efeito Trump e a da influência de Flávio nos EUA. Publicou o Trump (“não resolve os problemas dele”), reteve a de Flávio. Mesmo instituto, mesmo grupo, controle dos dois lados.</p>
+      </div>
+      <div class="card pad-lg">
+        <h3>O pré-enquadramento “Dark Horse”</h3>
+        <p class="muted">Desde maio, quase toda matéria reancora a pesquisa ao escândalo do filme “Dark Horse / Azarão”: Flávio teria negociado R$ 134 mi com Daniel Vorcaro (Banco Master) para financiar um filme sobre Jair (revelação do Intercept, áudio). O resultado: a pesquisa deixa de ser “foto do voto” e vira <b>capítulo semanal do escândalo</b>.</p>
+        <div class="timeline" style="display:grid;gap:8px;margin-top:6px">
+          <div style="border-left:3px solid var(--lula);padding:6px 12px;background:#fff;border-radius:0 8px 8px 0"><b style="color:var(--lula)">13/05</b> · Intercept divulga áudio Flávio–Vorcaro (R$ 134 mi)</div>
+          <div style="border-left:3px solid var(--gold);padding:6px 12px;background:#fff;border-radius:0 8px 8px 0"><b style="color:var(--gold)">22/05</b> · Datafolha de maio: “1º após o vazamento”, gap vai a 9 pts</div>
+          <div style="border-left:3px solid var(--flavio);padding:6px 12px;background:#fff;border-radius:0 8px 8px 0"><b style="color:var(--flavio)">17–18/06</b> · Campo de junho; números idênticos a maio</div>
+          <div style="border-left:3px solid var(--ink);padding:6px 12px;background:#fff;border-radius:0 8px 8px 0"><b>20/06</b> · Manchete: “Flávio <i>estabiliza após Dark Horse</i>” — escândalo no título</div>
+        </div>
+        <p class="note" style="margin-top:8px">Enquadrar estabilidade como “estabiliza após o escândalo” mantém o eleitor com a moldura da crise mesmo quando o número não se move. É agenda-setting clássico: a imprensa não diz só o que pensar, diz <b>sobre o que</b> pensar.</p>
+      </div>
+    </div>
+
+    <figure style="margin-top:18px">
+      <img src="img/datafolha_062026_print_intercept.jpg" alt="Print Intercept Brasil: áudio de Flávio Bolsonaro negociando R$ 134 milhões com Daniel Vorcaro" loading="lazy">
+      <figcaption><span class="tag lula">A origem do frame</span> <b>Intercept Brasil (13/05/2026).</b> O áudio que abriu o caso “Dark Horse”: Flávio Bolsonaro negociando R$ 134 milhões com Daniel Vorcaro, do Banco Master, para financiar um filme sobre Jair (“estou e estarei contigo sempre”). É o gancho que a cobertura de pesquisa reutiliza toda semana — e que reconecta a história ao mesmo Master/Vorcaro dos dossiês anteriores.</figcaption>
+    </figure>
+
+    <div class="card pad-lg" style="margin-top:18px">
+      <h3>Decodificador: como ler uma manchete de pesquisa</h3>
+      <div class="grid two">
+        <ul class="checklist">
+          <li><span class="ic hid">!</span><span><b>“X lidera / mantém / amplia”</b> com gap dentro de ~2× a margem → leia como <b>empate técnico</b>. Verbo de liderança não é dado, é escolha.</span></li>
+          <li><span class="ic hid">!</span><span><b>Número escolhido.</b> “10 pontos à frente” (1º turno) soa mais que “47×43” (2º). Pergunte qual cenário a manchete preferiu e por quê.</span></li>
+          <li><span class="ic hid">!</span><span><b>Recorte seletivo.</b> “Mulheres e Nordeste sustentam Lula” é verdade — e a metade que falta (“homens e Sul sustentam Flávio”) também.</span></li>
+        </ul>
+        <ul class="checklist">
+          <li><span class="ic pub">?</span><span><b>Quem pagou?</b> Contratante define perguntas e pauta. Pesquisa Datafolha é encomenda da Folha. Isso é legítimo — mas deve estar no holofote, não no rodapé.</span></li>
+          <li><span class="ic pub">?</span><span><b>O que não foi publicado?</b> A pergunta retida costuma valer mais que a divulgada (aqui: a influência de Flávio nos EUA).</span></li>
+          <li><span class="ic pub">?</span><span><b>Margem da diferença, não da estimativa.</b> ±2 vale para cada número; a distância entre dois candidatos tem ~±4. Quase nenhuma manchete diz isso.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout warn" style="margin-top:16px">
+      <h3>O ponto, sem teoria da conspiração</h3>
+      <p class="muted" style="margin:0">Nada disso é fraude nem censura. É <b>enquadramento</b> — e enquadramento é poder. Uma empresa jornalística que encomenda a pesquisa, escolhe as perguntas, decide o que publicar e ainda redige a manchete tem quatro alavancas para moldar a percepção pública a partir do mesmo conjunto de números. A defesa do leitor é uma só: separar o <b>dado</b> (47×43, empate técnico, estável) da <b>narrativa</b> (“Lula lidera”, “Flávio ferido”) — e cobrar que as duas coisas venham marcadas como o que são.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ESTRATÉGIA ============ -->
+<section id="estrategia">
+  <div class="wrap">
+    <div class="kicker">Inteligência de campanha</div>
+    <h2>O mapa de batalha de Flávio</h2>
+    <p class="lead">O diagnóstico é cirúrgico. Flávio já consolida homens e renda acima de 2 SM. O buraco está em <b>mulheres, baixa renda e baixa escolaridade</b> — onde Lula abre 15 a 17 pontos. A boa notícia: o anti-Lula existe (rejeição de Lula em 46%), Flávio transfere votos 2:1 e a disputa cabe na margem. A campanha não precisa gritar mais para a base; precisa <b>reduzir medo e custo reputacional</b> em três células decisivas.</p>
+
+    <h3 style="margin-top:8px">Onde a eleição se decide — recortes verificados do 2º turno</h3>
+    <div class="legend"><span><i class="dot-lula"></i>Lula lidera</span><span><i class="dot-flavio"></i>Flávio lidera</span><span style="color:var(--faint)">borda = quem vence o segmento</span></div>
+    <div class="grid three" style="margin-top:6px">
+      <div class="card" style="border-top:4px solid var(--lula)"><span class="tag lula">Lula +15</span><div style="font-weight:800;margin:8px 0 2px">Mulheres</div><div class="metric" style="margin:2px 0"><b style="font-size:24px;color:var(--lula)">52</b><span>×</span><b style="font-size:24px;color:var(--flavio)">37</b></div><p class="note" style="margin:0">O maior déficit nacional. Prioridade absoluta.</p></div>
+      <div class="card" style="border-top:4px solid var(--lula)"><span class="tag lula">Lula +15</span><div style="font-weight:800;margin:8px 0 2px">Até 2 SM</div><div class="metric" style="margin:2px 0"><b style="font-size:24px;color:var(--lula)">53</b><span>×</span><b style="font-size:24px;color:var(--flavio)">38</b></div><p class="note" style="margin:0">Base lulista sólida. Conter, não converter.</p></div>
+      <div class="card" style="border-top:4px solid var(--lula)"><span class="tag lula">Lula +17</span><div style="font-weight:800;margin:8px 0 2px">Fundamental</div><div class="metric" style="margin:2px 0"><b style="font-size:24px;color:var(--lula)">54</b><span>×</span><b style="font-size:24px;color:var(--flavio)">37</b></div><p class="note" style="margin:0">Escolaridade baixa = território de Lula.</p></div>
+      <div class="card" style="border-top:4px solid var(--flavio)"><span class="tag flavio">Flávio +9</span><div style="font-weight:800;margin:8px 0 2px">Homens</div><div class="metric" style="margin:2px 0"><b style="font-size:24px;color:var(--lula)">41</b><span>×</span><b style="font-size:24px;color:var(--flavio)">50</b></div><p class="note" style="margin:0">Fortaleza. Manter sem sangrar mulheres.</p></div>
+      <div class="card" style="border-top:4px solid var(--flavio)"><span class="tag flavio">Flávio +8/+9</span><div style="font-weight:800;margin:8px 0 2px">Renda 2–10 SM</div><div class="metric" style="margin:2px 0"><b style="font-size:24px;color:var(--lula)">41</b><span>×</span><b style="font-size:24px;color:var(--flavio)">49–51</b></div><p class="note" style="margin:0">Classe média com medo econômico. Expansível.</p></div>
+      <div class="card" style="border-top:4px solid var(--gold)"><span class="tag gold">Empate</span><div style="font-weight:800;margin:8px 0 2px">Superior · 16–24</div><div class="metric" style="margin:2px 0"><b style="font-size:24px;color:var(--lula)">46</b><span>×</span><b style="font-size:24px;color:var(--flavio)">45</b></div><p class="note" style="margin:0">Jovens e diploma: a real terra de ninguém.</p></div>
+    </div>
+
+    <div class="grid two" style="margin-top:18px">
+      <div class="card pad-lg">
+        <h3>Espelho da rejeição: o problema de cada um tem sexo</h3>
+        <p class="muted">Os dois são muito rejeitados (Flávio 48, Lula 46). A diferença é <b>onde</b>: a rejeição de Flávio explode entre mulheres; a de Lula, entre homens. Isso desenha a tesoura da campanha.</p>
+        <div class="svgwrap" aria-label="Rejeição por gênero, Flávio e Lula">
+          <svg viewBox="0 0 520 220" role="img">
+            <text x="260" y="20" text-anchor="middle" font-family="Inter" font-size="12" font-weight="700" fill="#5e6675">% que “não votaria de jeito nenhum”</text>
+            <!-- scale 0..60 over x 150..500 => 5.833px/pt -->
+            <g font-family="Inter" font-size="12.5">
+              <text x="20" y="62" font-weight="700" fill="#2b3240">Flávio · ♀</text>
+              <rect x="150" y="50" width="309.2" height="16" rx="3" fill="#c0392b"/><text x="467" y="63" font-family="Spline Sans Mono, monospace" font-size="11" font-weight="700" fill="#8f241b">53</text>
+              <text x="20" y="92" font-weight="700" fill="#2b3240">Flávio · ♂</text>
+              <rect x="150" y="80" width="250.8" height="16" rx="3" fill="#d98b84"/><text x="409" y="93" font-family="Spline Sans Mono, monospace" font-size="11" fill="#8f241b">43</text>
+              <text x="20" y="142" font-weight="700" fill="#2b3240">Lula · ♂</text>
+              <rect x="150" y="130" width="303.3" height="16" rx="3" fill="#1f5fa8"/><text x="461" y="143" font-family="Spline Sans Mono, monospace" font-size="11" font-weight="700" fill="#143f70">52</text>
+              <text x="20" y="172" font-weight="700" fill="#2b3240">Lula · ♀</text>
+              <rect x="150" y="160" width="233.3" height="16" rx="3" fill="#8fa9cc"/><text x="391" y="173" font-family="Spline Sans Mono, monospace" font-size="11" fill="#143f70">40</text>
+            </g>
+          </svg>
+        </div>
+        <p class="cap">Reduzir a rejeição de Flávio entre mulheres (53%) vale mais que qualquer ganho marginal na base. É o gargalo nº 1 da candidatura.</p>
+      </div>
+      <div class="card pad-lg">
+        <h3>O playbook em 5 movimentos</h3>
+        <ul class="checklist">
+          <li><span class="ic" style="color:var(--lula)">1</span><span><b>Mulheres (−15).</b> Segurança, saúde, custo da comida e da energia, escola e proteção social — sem pose agressiva. É a célula que decide o 2º turno.</span></li>
+          <li><span class="ic" style="color:var(--flavio)">2</span><span><b>Renda 2–10 SM (+8/+9, expansível).</b> Virar fiador econômico: estabilidade, imposto menor, crédito para o pequeno negócio. Medo de retrocesso joga a favor.</span></li>
+          <li><span class="ic" style="color:var(--gold)">3</span><span><b>Rejeição de Lula como permissão (46%).</b> “Você não precisa amar Flávio para trocar o rumo econômico e de segurança.” Converter anti-Lula em voto útil.</span></li>
+          <li><span class="ic" style="color:var(--green)">4</span><span><b>Anticorpo reputacional pós-Master.</b> A rejeição de 48% é tanto ética quanto ideológica. Sem blindagem de integridade, o moderado anula ou fica com Lula.</span></li>
+          <li><span class="ic" style="color:var(--violet)">5</span><span><b>Trump, com cirurgia.</b> Saldo nacional é só +2 líquido (17 a favor, 15 contra). Munição segmentada na base PL; no nacional, enquadrar soberania e segurança, não subordinação.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout flavio" style="margin-top:16px">
+      <h3>A síntese estratégica</h3>
+      <p class="muted" style="margin:0">A eleição não está perdida nem ganha — está <b>na margem</b>. Lula está travado em 47–48 contra qualquer adversário; o jogo é a oposição consolidar os 28 pontos disponíveis, e Flávio já é quem melhor faz isso. O caminho da vitória não passa por radicalizar a base, e sim por <b>desarmar o medo</b> entre mulheres e classe média e <b>baixar o teto de rejeição</b>. Cada ponto de rejeição derrubado vale mais que dez de marketing.</p>
+    </div>
+
+    <div class="split">
+      <figure>
+        <img src="img/datafolha_062026_relatorio_p26_rejeicao.jpg" alt="Rejeição por segmento, relatório Datafolha" loading="lazy">
+        <figcaption>Rejeição: Flávio 48 (53 entre mulheres), Lula 46 (52 entre homens). O teto de Flávio é o ativo mais decisivo a trabalhar.</figcaption>
+      </figure>
+      <figure>
+        <img src="img/datafolha_062026_relatorio_p27_trump_arrepend.jpg" alt="Efeito Trump e arrependimento 2022" loading="lazy">
+        <figcaption>Trump: 17% mais propensos, 15% menos, 65% indiferentes (saldo +2). Arrependimento de 2022: 8%, mas sobre base de 1.546 e sem o voto lembrado.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MELHORIAS ============ -->
+<section id="melhorias">
+  <div class="wrap">
+    <div class="kicker">A régua que falta</div>
+    <h2>Como a pesquisa ficaria incontestável</h2>
+    <p class="lead">O Datafolha tem marca, campo nacional e documentação acima da média do mercado. Justamente por isso precisa subir a régua: pesquisa eleitoral registrada é produto privado com efeito público. Nada aqui exige “provar inocência” — exige abrir o suficiente para que qualquer um refaça a conta.</p>
+    <div class="grid four">
+      <div class="card">
+        <h3>Transparência mínima</h3>
+        <ul class="compact-list muted">
+          <li>Microdados anonimizados pós-divulgação.</li>
+          <li>Pesos finais por entrevistado (ou ao menos a distribuição).</li>
+          <li>Targets de ponderação, não referências genéricas.</li>
+          <li>Efeito de desenho (deff) e n efetivo.</li>
+          <li>Taxa de recusa, substituição e checagem por UF.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Bairros & pontos</h3>
+        <ul class="compact-list muted">
+          <li>Dizer se o ponto é sorteado, rotacionado ou painel.</li>
+          <li>Protocolo de horário, dias, fluxo e reposição.</li>
+          <li>Coordenadas aproximadas do setor/ponto.</li>
+          <li>Separar bairro, distrito, RA e setor sem PDF quebrado.</li>
+          <li>Entregar CSV oficial, não só PDF.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Questionário</h3>
+        <ul class="compact-list muted">
+          <li>Resultado de <b>todas</b> as perguntas registradas.</li>
+          <li>Distribuição do voto lembrado em 2022.</li>
+          <li>Marcar o que é eleitoral, conjuntural e experimental.</li>
+          <li>Informar split de cartões, rotação e randomização.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Amostragem</h3>
+        <ul class="compact-list muted">
+          <li>Abandonar a margem AAS como manchete única.</li>
+          <li>Erro por subgrupo com n efetivo (não n ponderado).</li>
+          <li>Perfil final × TSE (eleitorado) e × PNAD (renda/escolaridade).</li>
+          <li>Cotas de campo × pós-estratificação final.</li>
+        </ul>
+      </div>
+    </div>
+    <figure>
+      <img src="img/datafolha_062026_relatorio_p02_metodo.jpg" alt="Metodologia do relatório Datafolha junho" loading="lazy">
+      <figcaption>Metodologia publicada: boa para contexto, insuficiente para auditoria de desenho, pesos e pontos de fluxo. A checagem cobre “no mínimo 20%” do material — 80% das entrevistas ficam sem verificação declarada.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ FONTES ============ -->
+<section id="fontes">
+  <div class="wrap">
+    <div class="kicker">Trilha auditável</div>
+    <h2>Fontes e reprodutibilidade</h2>
+    <p class="lead">Relatório preparado com os PDFs oficiais movidos para o repositório, texto extraído via PDF.js, imagens renderizadas com Poppler e cruzamentos TSE/PNAD locais. Cada número desta página tem um arquivo de origem.</p>
+    <table>
+      <thead><tr><th>Artefato</th><th>Caminho</th><th>Uso</th></tr></thead>
+      <tbody>
+        <tr><td>Relatório Datafolha jun</td><td class="mono">data/originals/datafolha_062026/DataFolhaRelatorio062026.pdf</td><td>Toplines, perfil ponderado, cruzamentos.</td></tr>
+        <tr><td>Questionário jun</td><td class="mono">.../QuestionarioDatafolha062026.pdf</td><td>Ordem e perguntas não publicadas.</td></tr>
+        <tr><td>Bairros jun</td><td class="mono">.../bairrosdatafolha062026.pdf</td><td>Setores, pontos e perfil bruto.</td></tr>
+        <tr><td>Auditoria (resumo)</td><td class="mono">data/outputs/datafolha_audit_summary.json</td><td>Repetição de setores, SP × 2024.</td></tr>
+        <tr><td>Sensibilidade de renda</td><td class="mono">data/outputs/datafolha_reweight_sensitivity.json</td><td>Reponderação marginal 2º turno.</td></tr>
+        <tr><td>Comparação de bairros</td><td class="mono">data/outputs/datafolha_bairros_compare.csv</td><td>331 setores, 255 repetidos.</td></tr>
+        <tr><td>Match SP × 2024</td><td class="mono">data/outputs/datafolha_sp_bairros_2024_match.csv</td><td>Proxy dos pontos contra prefeito 2024.</td></tr>
+        <tr><td>PNAD local</td><td class="mono">data/outputs/brasil.sqlite</td><td>Escolaridade (2026T1) e renda (anual 2025 v1).</td></tr>
+        <tr><td>TSE eleitorado</td><td class="mono">data/outputs/tse_eleitorado_perfil.sqlite</td><td>Sexo, idade e região (sem exterior).</td></tr>
+      </tbody>
+    </table>
+    <ul class="compact-list" style="margin-top:16px">
+      <li><a href="https://pesqele-divulgacao.tse.jus.br/app/pesquisa/listar.xhtml">PesqEle/TSE — registro de pesquisas eleitorais</a> (BR-09956/2026).</li>
+      <li><a href="https://dadosabertos.tse.jus.br/dataset/eleitorado-atual">TSE Dados Abertos — Eleitorado Atual</a> (geração 01/05/2026, 156,8 mi de eleitores residentes).</li>
+      <li><a href="https://dadosabertos.tse.jus.br/dataset/resultados-2024">TSE Dados Abertos — resultados 2024</a> (votação por seção, SP).</li>
+      <li><a href="https://www.ibge.gov.br/estatisticas/sociais/trabalho/17270-pnad-continua.html">IBGE — PNAD Contínua</a> (microdados consolidados no projeto).</li>
+    </ul>
+    <h3 style="margin-top:22px">Imprensa analisada na seção “A narrativa”</h3>
+    <ul class="compact-list">
+      <li><a href="https://www.cnnbrasil.com.br/eleicoes/no-2o-turno-lula-tem-47-contra-43-de-flavio-bolsonaro-diz-datafolha/">CNN Brasil</a>, <a href="https://exame.com/brasil/datafolha-lula-mantem-47-e-flavio-bolsonaro-tem-43-no-2o-turno/">Exame</a>, <a href="https://www.poder360.com.br/poder-eleicoes/lula-tem-47-contra-43-de-flavio-no-2o-turno-diz-datafolha/">Poder360</a> — frame “Lula lidera/mantém”.</li>
+      <li><a href="https://www.correiobraziliense.com.br/politica/2026/06/7445255-datafolha-lula-mantem-lideranca-e-flavio-estabiliza-apos-dark-horse.html">Correio Braziliense</a>, <a href="https://www.infomoney.com.br/politica/datafolha-flavio-estanca-perdas-e-mantem-43-contra-47-de-lula-no-segundo-turno/">InfoMoney</a> — frame “Flávio ferido / Dark Horse”.</li>
+      <li><a href="https://infosaj.com.br/datafolha-aponta-lula-a-frente-de-flavio-bolsonaro-para-2026-mas-disputa-segue-em-empate-tecnico-no-limite-da-margem-de-erro/">InfoSAJ</a>, <a href="https://bmcnews.com.br/politica/eleicoes-2026/datafolha-mostra-estabilidade-em-cenario-de-segundo-turno-entre-lula-e-flavio-bolsonaro/">BM&amp;C News</a> — frame “empate técnico / estabilidade” (estatisticamente correto).</li>
+      <li><a href="https://www.brasil247.com/regionais/nordeste/nordeste-mulheres-e-estudantes-sustentam-vantagem-de-lula-no-datafolha">Brasil247 (recortes)</a>, <a href="https://www.gazetadopovo.com.br/eleicoes/2026/pesquisa-eleitoral-2026/datafolha-presidente-junho-2026/">Gazeta do Povo (neutro)</a>.</li>
+      <li>Contexto “Dark Horse”: <a href="https://www.intercept.com.br/2026/05/13/audio-flavio-negociou-vorcaro-milhoes/">Intercept Brasil (áudio)</a>, <a href="https://apublica.org/2026/05/flavio-bolsonaro-vorcaro-master-escandalo-filme-dark-horse-azarao/">Agência Pública</a>.</li>
+    </ul>
+    <div class="callout" style="margin-top:18px">
+      <h3>Nota de método e isenção</h3>
+      <p class="muted" style="margin:0">Esta auditoria <b>não acusa fraude</b>. O efeito de desenho e a reponderação são <b>simulações declaradas</b>, baseadas nos números publicados pelo próprio Datafolha — não em microdados, que não foram disponibilizados. As conclusões são de incerteza estatística e de transparência, não de má-fé. Todos os insumos estão no repositório aberto para conferência, contestação ou refutação.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <div class="brandbar" style="margin-bottom:6px"><img src="img/arvor_logo.png" alt="Arvor"><span><b>ARVOR</b> INTELLIGENCE</span></div>
+      <p class="note" style="margin:0">Auditem os auditores. Nós começamos. · <span class="mono">brasil.arvor.co</span></p>
+    </div>
+    <div class="note" style="text-align:right">
+      Dossiê Datafolha 06/2026 · TSE BR-09956/2026<br>Dados abertos: <span class="mono">github.com/ArvorCo/PNAD</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // scrollspy nav highlight
+  (function () {
+    var links = Array.prototype.slice.call(document.querySelectorAll('nav a'));
+    var map = {};
+    links.forEach(function (a) { var id = a.getAttribute('href').slice(1); map[id] = a; });
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          links.forEach(function (l) { l.classList.remove('active'); });
+          var a = map[e.target.id];
+          if (a) a.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+    document.querySelectorAll('section[id]').forEach(function (s) { obs.observe(s); });
+  })();
+</script>
+</body>
+</html>

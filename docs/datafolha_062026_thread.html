@@ -1,0 +1,1123 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Thread X — Datafolha 06/2026 · Arvor Intelligence</title>
+<meta name="description" content="Thread para o X sobre a auditoria da pesquisa Datafolha 06/2026 (BR-09956/2026): o 47 x 43 é empate técnico, o deff real, a reponderação por renda, a transferência de voto 2:1 para Flávio, as perguntas-fantasma sobre o próprio Flávio e a estratégia de campanha. Cards 16:9 prontos para screenshot e texto copiável por post.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Fraunces:opsz,wght@9..144,600;9..144,900&family=Source+Sans+3:wght@400;600;700;800;900&family=Spline+Sans+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f6f1e8; --ink:#13161c; --muted:#5f5d57; --line:#cdc3b3;
+  --lula:#c0392b; --lula-d:#8f241b; --flavio:#1f5fa8; --flavio-d:#143f70;
+  --navy:#0d2b54; --gold:#b07d10; --green:#1c7d54; --gray:#7b8494; --violet:#6b4ea8;
+  --serif:"Fraunces",Georgia,serif;
+  --sans:"Source Sans 3",ui-sans-serif,system-ui,sans-serif;
+  --display:"Archivo Black",Impact,sans-serif;
+  --mono:"Spline Sans Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:#14171d;color:#e9e3d6;font-family:var(--sans);font-size:16px;line-height:1.5}
+.wrap{width:min(1280px,calc(100% - 40px));margin:auto;padding:40px 0 90px}
+header.top{padding:46px 0 8px}
+.brand-lockup{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.brand-lockup img{width:46px;height:46px;object-fit:contain}
+.brand-lockup span{font-weight:700;font-size:.95rem;letter-spacing:.14em;color:#9fb6dd;text-transform:uppercase}
+.brand-lockup b{color:#e9e3d6;font-weight:800}
+header.top h1{font-family:var(--display);font-size:clamp(2.5rem,6vw,4.7rem);line-height:.94;margin:0;color:#f6f1e8}
+header.top h1 span{display:block;color:var(--lula)}
+header.top p{max-width:920px;color:#b9b2a3;font-size:1.06rem}
+.howto{border:1px solid #353a45;border-radius:8px;padding:14px 18px;font-size:.9rem;color:#b9b2a3;margin:18px 0 16px}
+.howto b{color:#f6f1e8}
+.sources{border:1px solid #353a45;border-radius:8px;padding:14px 18px;font-size:.82rem;color:#9a948a;margin:0 0 34px}
+.sources b{color:#cdc6b8} .sources a{color:#7fa8e0;word-break:break-word}
+.post{margin:46px 0}
+.post-label{font-family:var(--mono);font-size:.8rem;color:#868b9a;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+.card{
+  aspect-ratio:16/9; width:100%; max-width:1200px;
+  background:
+    linear-gradient(90deg,rgba(16,19,26,.04) 1px,transparent 1px) 0 0/58px 58px,
+    linear-gradient(180deg,#fbf7ef 0,#f6f1e8 52%,#eef2ec 100%);
+  color:var(--ink); border-radius:10px; overflow:hidden;
+  display:grid; grid-template-rows:auto 1fr auto;
+  border:1px solid #353a45;
+}
+.card-head{display:flex;justify-content:space-between;align-items:center;padding:20px 34px 0}
+.brand{display:flex;align-items:center;gap:11px}
+.brand img{width:36px;height:36px;object-fit:contain}
+.brand b{font-size:.92rem;letter-spacing:.02em;color:var(--navy)}
+.brand span{display:block;color:var(--muted);font-size:.76rem}
+.pno{font-family:var(--mono);font-size:.95rem;color:var(--muted)}
+.card-body{padding:10px 34px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:26px;align-items:center;min-height:0}
+.card-body.single{grid-template-columns:1fr}
+.card h2{font-family:var(--serif);font-weight:900;font-size:clamp(1.5rem,2.7vw,2.5rem);line-height:1.04;margin:0 0 12px;letter-spacing:-.01em}
+.card h2 em{color:var(--lula);font-style:normal}
+.card h2 .b{color:var(--flavio)}
+.card .t{font-size:clamp(.96rem,1.4vw,1.18rem);line-height:1.4;color:#2b3039;margin:0}
+.card .t b{color:var(--ink)} .card .t .hl{background:rgba(176,125,16,.22);padding:0 3px;border-radius:3px;font-weight:700}
+.bignum{font-family:var(--display);font-size:clamp(2.6rem,6vw,5rem);line-height:.86;color:var(--flavio);letter-spacing:-.02em}
+.bignum.lula{color:var(--lula)} .bignum.navy{color:var(--navy)} .bignum.gold{color:var(--gold)} .bignum.green{color:var(--green)} .bignum.gray{color:var(--gray)}
+.bignum.sm{font-size:clamp(2rem,4.4vw,3.4rem)}
+.sub{font-family:var(--mono);font-size:.82rem;color:var(--muted);margin-top:10px;line-height:1.45}
+.card-foot{display:flex;justify-content:space-between;padding:0 34px 16px;font-family:var(--mono);font-size:.7rem;color:var(--muted)}
+.viz{min-width:0}
+.minibars{display:grid;gap:9px;font-size:.82rem}
+.mb{display:grid;grid-template-columns:118px minmax(0,1fr) 42px;gap:9px;align-items:center}
+.mb .nm{font-weight:700;color:#2b3039}
+.mb .tr{height:15px;background:#e7e0d4;border:1px solid #d7cdbd;display:flex;overflow:hidden;border-radius:3px}
+.mb .seg{height:100%}
+.mb .seg.lula{background:linear-gradient(90deg,var(--lula),var(--lula-d))}
+.mb .seg.flavio{background:linear-gradient(90deg,var(--flavio),var(--flavio-d))}
+.mb .seg.gold{background:linear-gradient(90deg,#cf991f,var(--gold))}
+.mb .seg.gray{background:var(--gray)}
+.mb .v{font-family:var(--mono);font-size:.82rem;text-align:right;font-weight:700}
+.kchips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.kchip{border:1px solid var(--line);background:rgba(255,255,255,.7);border-radius:999px;padding:5px 12px;font-size:.74rem;font-weight:700;color:#3a3f47}
+.glist{font-size:clamp(.82rem,1.2vw,1rem);line-height:1.4;margin:0;padding:0;list-style:none}
+.glist li{padding:7px 0;border-bottom:1px solid var(--line);display:flex;gap:10px}
+.glist li:last-child{border-bottom:0}
+.glist .q{font-family:var(--mono);font-weight:600;min-width:26px}
+.glist .q.hid{color:var(--lula)} .glist .q.pub{color:var(--green)}
+.lead-tag{display:inline-block;font-family:var(--mono);font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--lula);margin-bottom:8px}
+.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:.74rem;color:var(--muted);font-weight:700;margin-top:10px}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.dot-lula{background:var(--lula)}.dot-flavio{background:var(--flavio)}.dot-gray{background:var(--gray)}
+.copy{
+  margin-top:14px;background:#0f1218;border:1px solid #353a45;border-radius:8px;
+  padding:16px 18px;font-family:var(--mono);font-size:.92rem;line-height:1.55;color:#dad5c7;
+  white-space:pre-wrap;word-wrap:break-word;position:relative
+}
+.copy .cc{position:absolute;top:10px;right:14px;font-size:.72rem;color:#6b7080}
+.copy-btn{margin-top:8px;background:var(--lula);border:0;color:#fff;font-weight:800;font-size:.8rem;padding:8px 14px;border-radius:6px;cursor:pointer}
+.copy-btn:active{transform:translateY(1px)}
+svg{display:block;width:100%;height:auto}
+@media (max-width:860px){
+  .card{aspect-ratio:auto}
+  .card-body{grid-template-columns:1fr}
+  .mb{grid-template-columns:96px minmax(0,1fr) 38px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <div class="brand-lockup"><img src="img/arvor_logo.png" alt="Logotipo Arvor"><span><b>ARVOR</b> INTELLIGENCE · THREAD X · 24/06/2026</span></div>
+  <h1>Datafolha 06/2026<span>o “47 x 43” é empate técnico</span></h1>
+  <p>28 posts, cada um com card 16:9 pronto para screenshot e texto longo (formato X) pronto para colar. Arco: o achado da margem (1–3) → o desenho e a renda (4–8) → transferência e cenários (9–10) → bairros e pesos (11–13) → as perguntas escondidas, inclusive sobre o próprio Flávio (14–17) → estratégia de campanha (18–22) → como a imprensa construiu a narrativa em cima do número (23–26) → cobrança e veredito (27–28). Sem hashtags: o X premia conteúdo, não tag.</p>
+  <div class="howto"><b>Como publicar:</b> dê screenshot em cada card (proporção exata 16:9), clique em “Copiar texto” para o corpo do post e publique na ordem. Dossiê-mãe: <span style="font-family:var(--mono)">brasil.arvor.co/datafolha_062026.html</span> · Registro TSE BR-09956/2026.</div>
+  <div class="sources"><b>Fontes públicas:</b> Relatório, questionário e anexo de bairros Datafolha 06/2026 (PesqEle/TSE BR-09956/2026, contratante Folha de S.Paulo); <a href="https://pesqele-divulgacao.tse.jus.br/app/pesquisa/listar.xhtml">PesqEle/TSE</a>; <a href="https://dadosabertos.tse.jus.br/dataset/eleitorado-atual">TSE Eleitorado Atual</a>; <a href="https://dadosabertos.tse.jus.br/dataset/resultados-2024">TSE Resultados 2024</a>; <a href="https://www.ibge.gov.br/estatisticas/sociais/trabalho/17270-pnad-continua.html">IBGE PNAD Contínua</a>. Cruzamentos abertos em <a href="https://github.com/ArvorCo/PNAD">github.com/ArvorCo/PNAD</a>.</div>
+</header>
+
+<!-- POST 1 -->
+<section class="post">
+  <div class="post-label">Post 1/28 · capa</div>
+  <div class="card">
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">1/28</div></div>
+    <div class="card-body">
+      <div>
+        <span class="lead-tag">Datafolha · junho 2026</span>
+        <h2>“Lula 47 x 43” <em>não</em> é liderança. É <span class="b">empate técnico.</span></h2>
+        <p class="t">A pesquisa não mostrou virada contra Flávio — repetiu maio. Mas a manchete superou o que o número aguenta. Auditei tudo.</p>
+        <div class="kchips"><span class="kchip">2.004 entrevistas · 139 municípios</span><span class="kchip">campo 17–18/06</span><span class="kchip">TSE BR-09956/2026</span></div>
+      </div>
+      <div style="text-align:center">
+        <div class="bignum lula">47</div>
+        <div class="bignum" style="margin-top:6px">43</div>
+        <p class="sub">4 pontos de gap · margem da diferença ±4,1<br>cabe um empate inteiro aí dentro</p>
+      </div>
+    </div>
+    <div class="card-foot"><span>arvor intelligence · auditoria datafolha 062026</span><span>fonte: relatório Datafolha · TSE BR-09956/2026</span></div>
+  </div>
+  <div class="copy"><span class="cc">~980 chars</span>Toda semana, uma pesquisa na mesa de operação. Hoje, o Datafolha de junho.
+
+A manchete que circulou foi “Lula 47 x 43 sobre Flávio no 2º turno”. Lido como liderança. Mas tem um problema técnico que muda tudo: a margem de erro de ±2 que o Datafolha divulga vale para CADA número isolado — não para a distância entre os dois.
+
+A conta certa, o erro da DIFERENÇA entre dois candidatos, é quase o dobro: ±4,1 pontos. O gap observado é 4. Ou seja: ao nível de 95%, não dá para afirmar que Lula está na frente. É empate técnico.
+
+E isso é só o começo. Quando a renda da amostra é recalibrada à PNAD, a vantagem de Lula some por completo.
+
+Auditei o relatório, o questionário e o anexo de bairros. Refiz a margem com o efeito de desenho real, reconstruí a transferência de votos e achei perguntas aplicadas que nunca foram publicadas — inclusive sobre o próprio Flávio.
+
+Thread. 🧵</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 2 -->
+<section class="post">
+  <div class="post-label">Post 2/28 · crédito onde é devido</div>
+  <div class="card">
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">2/28</div></div>
+    <div class="card-body">
+      <div>
+        <h2>Antes de bater, o <span class="b">elogio</span></h2>
+        <p class="t">O Datafolha fez o que muito instituto não faz: perguntou o voto <b>no começo</b>, antes do roteiro pesado de Trump, facções e ideologia. E publicou o anexo de bairros.</p>
+      </div>
+      <div class="viz">
+        <ul class="glist">
+          <li><span class="q pub">✓</span><span>Voto medido <b>antes</b> do priming dos módulos.</span></li>
+          <li><span class="q pub">✓</span><span>Sexo, região e escolaridade batem com TSE/PNAD.</span></li>
+          <li><span class="q pub">✓</span><span>Anexo de bairros publicado — raro no mercado.</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="card-foot"><span>arvor intelligence · auditoria datafolha 062026</span><span>fonte: relatório e questionário Datafolha 06/2026</span></div>
+  </div>
+  <div class="copy"><span class="cc">~900 chars</span>Auditoria séria começa pelo que está certo. E o Datafolha acertou coisas importantes.
+
+Primeiro: a ordem do questionário. O voto presidencial (espontâneo, estimulado, rejeição e 2º turno) é perguntado LOGO NO INÍCIO, antes da bateria sobre Trump, facções, economia e ideologia. Isso protege o top-line de voto do priming direto desses temas. A Quaest, por exemplo, não fez isso tão bem.
+
+Segundo: a calibragem demográfica. Sexo, região e escolaridade da amostra batem com o TSE (eleitorado) e a PNAD (IBGE). Não é amostra torta de qualquer jeito.
+
+Terceiro: o anexo de bairros. O Datafolha publicou onde as entrevistas aconteceram, setor a setor. A maioria dos institutos não abre isso.
+
+Então não é o caso de gritar “fraude”. O problema é outro: excesso de certeza na manchete e falta de transparência no método. Vamos ao bisturi.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 3 -->
+<section class="post">
+  <div class="post-label">Post 3/28 · o empate técnico</div>
+  <div class="card">
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">3/28</div></div>
+    <div class="card-body">
+      <div>
+        <span class="lead-tag">Achado nº 1 · estatística</span>
+        <h2>A margem que ninguém noticia: a da <em>diferença</em></h2>
+        <p class="t">±2 vale para o 47 e para o 43 isolados. A distância entre os dois tem margem de <b>±4,1</b>. O gap é 4. Cruza o zero.</p>
+        <p class="sub" style="margin-top:14px">EP(L−F)=√[(p<sub>L</sub>+p<sub>F</sub>−(p<sub>L</sub>−p<sub>F</sub>)²)/n] ≈ 2,12 → IC95% ±4,15</p>
+      </div>
+      <div style="text-align:center">
+        <div class="bignum gold">±4,1</div>
+        <p class="sub">margem sobre a diferença Lula−Flávio<br><b style="color:var(--ink)">&gt; 4,0 do gap</b> → empate técnico</p>
+      </div>
+    </div>
+    <div class="card-foot"><span>arvor intelligence · auditoria datafolha 062026</span><span>cálculo: erro da diferença de proporções, n=2.004</span></div>
+  </div>
+  <div class="copy"><span class="cc">~1010 chars</span>Aqui está o erro de leitura que vira manchete enganosa.
+
+A margem de erro de ±2 pontos que o Datafolha divulga vale para cada estimativa SOZINHA: o 47 de Lula, o 43 de Flávio. Ela NÃO mede a distância entre os dois.
+
+Quando você quer saber se um candidato está REALMENTE à frente do outro, a conta certa é o erro da diferença. E para dois candidatos da mesma amostra ele é quase o dobro:
+
+EP(L−F) = raiz de [(0,47+0,43−(0,04)²)/2004] ≈ 2,12 pontos.
+Margem de 95% sobre a diferença ≈ ±4,15 pontos.
+
+O gap observado é 4,0. Menor que a margem da diferença. Ou seja: o intervalo de confiança de Lula e o de Flávio se SOBREPÕEM. Estatisticamente, não dá para afirmar que um está na frente do outro.
+
+“Lula 47 x 43” deveria ser noticiado como “Lula e Flávio empatados tecnicamente, com leve vantagem nominal de Lula”. E isso é antes de corrigir o desenho da amostra — o que só piora para o lado da incerteza. Próximo post.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 4 -->
+<section class="post">
+  <div class="post-label">Post 4/28 · o deff real</div>
+  <div class="card">
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">4/28</div></div>
+    <div class="card-body">
+      <div>
+        <span class="lead-tag">Achado nº 2 · desenho amostral</span>
+        <h2>±2 é a margem de uma amostra que o Datafolha <em>não</em> usa</h2>
+        <p class="t">±2 é a conta de amostra aleatória simples. O desenho real é por pontos de fluxo, conglomerado (~6 por setor) e ponderado. Com o efeito de desenho, a margem da diferença vai a <b>~±5</b>.</p>
+      </div>
+      <div class="viz">
+        <div class="legend"><span><i class="dot-flavio"></i>margem da diferença</span><span>linha = gap 4,0</span></div>
+        <div class="minibars">
+          <div class="mb"><span class="nm">AAS (±2)</span><div class="tr"><div class="seg flavio" style="width:68%"></div></div><span class="v">4,1</span></div>
+          <div class="mb"><span class="nm">otimista</span><div class="tr"><div class="seg flavio" style="width:75%"></div></div><span class="v">4,5</span></div>
+          <div class="mb"><span class="nm">realista</span><div class="tr"><div class="seg flavio" style="width:83%"></div></div><span class="v">5,0</span></div>
+          <div class="mb"><span class="nm">conservador</span><div class="tr"><div class="seg flavio" style="width:93%"></div></div><span class="v">5,6</span></div>
+        </div>
+        <p class="sub">o gap (4,0) é menor que a margem em TODOS os cenários</p>
+      </div>
+    </div>
+    <div class="card-foot"><span>arvor intelligence · auditoria datafolha 062026</span><span>deff=1+(b̄−1)ρ · b̄≈6 · simulação declarada</span></div>
+  </div>
+  <div class="copy"><span class="cc">~1040 chars</span>A própria declaração técnica do Datafolha diz, com todas as letras: “não usa abordagem domiciliar e, sim, abordagem em pontos de fluxo populacional”.
+
+Isso tem duas consequências que o ±2 esconde:
+
+1) Ponto de fluxo é seleção por interceptação, não probabilística. A rigor, margem clássica nem se aplica.
+2) Há conglomeração: ~6 entrevistas por setor censitário, em 331 setores. Isso infla a variância pelo efeito de desenho (deff).
+
+Simulei o deff = 1 + (b̄−1)·ρ, com b̄≈6 e ρ (correlação do voto dentro do setor) variando. Some a isso a ponderação. O resultado:
+
+• Cenário realista: deff ≈ 1,46 → n efetivo cai de 2.004 para ~1.376 → margem por estimativa ~±2,6 (não ±2) e margem da diferença ~±5,0.
+
+Conclusão: em NENHUM cenário plausível o gap de 4 pontos supera a margem. O “Lula à frente” não passa no teste. Para acabar com a dúvida, bastava o Datafolha publicar o deff e o n efetivo. Não publica.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 5 -->
+<section class="post">
+  <div class="post-label">Post 5/28 · pontos de fluxo</div>
+  <div class="card">
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">5/28</div></div>
+    <div class="card-body single">
+      <div style="text-align:center;max-width:880px;margin:auto">
+        <span class="lead-tag">a frase que está no documento</span>
+        <h2 style="font-size:clamp(1.4rem,2.4vw,2.1rem)">“O Datafolha <em>não</em> usa abordagem domiciliar e, sim, abordagem em <span class="b">pontos de fluxo populacional</span>.”</h2>
+        <p class="t" style="margin-top:14px">Declaração de responsabilidade profissional de estatística, anexo de bairros, 19/06/2026. É exatamente por isso que a margem de amostra aleatória simples não descreve esta pesquisa.</p>
+        <div class="kchips" style="justify-content:center"><span class="kchip">interceptação, não domicílio</span><span class="kchip">checagem cobre “no mínimo 20%”</span><span class="kchip">CNEFE/IBGE para bairros</span></div>
+      </div>
+    </div>
+    <div class="card-foot"><span>arvor intelligence · auditoria datafolha 062026</span><span>fonte: declaração técnica, anexo de bairros p.6</span></div>
+  </div>
+  <div class="copy"><span class="cc">~940 chars</span>Está escrito no próprio documento, na declaração de responsabilidade profissional da estatística que assina a pesquisa:
+
+“O Datafolha não usa, em sua metodologia, abordagem domiciliar e, sim, abordagem em pontos de fluxo populacional.”
+
+Ponto de fluxo é abordar quem passa: rua, comércio, terminal. É legítimo e barato, mas tem duas implicações que a manchete ignora:
+
+→ Não é amostra probabilística. Quem passa num ponto às 14h de uma terça não é um sorteio da população. Por isso, a “margem de erro” clássica é uma aproximação ilustrativa, não uma garantia.
+
+→ As entrevistas se concentram em poucos setores (~6 cada), o que infla a incerteza real.
+
+E tem mais: a própria metodologia diz que a checagem cobriu “no mínimo 20% do material”. Ou seja, 80% das entrevistas não têm verificação declarada.
+
+Nada disso é fraude. É o tamanho real da incerteza — que a manchete de “liderança” apaga.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 6 -->
+<section class="post">
+  <div class="post-label">Post 6/28 · a amostra pobre demais</div>
+  <div class="card">
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">6/28</div></div>
+    <div class="card-body">
+      <div>
+        <span class="lead-tag">Achado nº 3 · renda</span>
+        <h2>A amostra é <em>mais pobre</em> que o país</h2>
+        <p class="t">Metade da amostra (50,4%) declara renda familiar de até 2 salários. Na PNAD do IBGE, isso é 42,9% (domicílios) ou 35,4% (pessoas). E baixa renda dá Lula 53 x 38.</p>
+      </div>
+      <div class="viz">
+        <div class="sub" style="margin:0 0 6px">% na faixa até 2 salários mínimos</div>
+        <div class="minibars">
+          <div class="mb"><span class="nm">Datafolha jun</span><div class="tr"><div class="seg lula" style="width:84%"></div></div><span class="v">50,4</span></div>
+          <div class="mb"><span class="nm">PNAD domicílios</span><div class="tr"><div class="seg gold" style="width:72%"></div></div><span class="v">42,9</span></div>
+          <div class="mb"><span class="nm">PNAD pessoas</span><div class="tr"><div class="seg flavio" style="width:59%"></div></div><span class="v">35,4</span></div>
+        </div>
+        <p class="sub">quanto mais pobre a amostra, maior a vantagem de Lula</p>
+      </div>
+    </div>
+    <div class="card-foot"><span>arvor intelligence · auditoria datafolha 062026</span><span>fonte: perfil ponderado p.17 × PNADC anual 2025 v1</span></div>
+  </div>
+  <div class="copy"><span class="cc">~990 chars</span>Aqui está a engrenagem que produz a vantagem de Lula.
+
+No perfil ponderado do Datafolha, 50,4% dos entrevistados declaram renda familiar de até 2 salários mínimos. Metade da amostra.
+
+Quanto diz a PNAD Contínua do IBGE? Depende da unidade:
+• Por domicílios: 42,9% na faixa até 2 SM.
+• Por pessoas de 16+ anos: 35,4%.
+
+Nos dois casos, a amostra do Datafolha é MAIS POBRE que a população. E isso não é detalhe, porque a renda é o corte que mais separa os candidatos no 2º turno:
+
+• Até 2 SM: Lula 53 x Flávio 38.
+• Acima de 2 SM: Flávio vence em todas as faixas (49, 51, 54).
+
+Ou seja: a chave vira exatamente em 2 salários. Uma amostra com pobres demais empurra o resultado para Lula por construção. Não é manipulação — pode ser só viés natural de abordagem de rua. Mas tem direção conhecida. E dá para medir o efeito. É o próximo post.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 7 -->
+<section class="post">
+  <div class="post-label">Post 7/28 · a reponderação</div>
+  <div class="card">
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">7/28</div></div>
+    <div class="card-body">
+      <div>
+        <span class="lead-tag">Achado nº 3 · a peça-chave</span>
+        <h2>Corrija a renda e a vantagem <em>evapora</em></h2>
+        <p class="t">Mantendo o voto dentro de cada faixa e trocando só o peso da renda pela PNAD, Lula cai e Flávio sobe. As linhas se cruzam.</p>
+      </div>
+      <div class="viz">
+        <svg viewBox="0 0 360 210" role="img" aria-label="Convergência Lula e Flávio ao reponderar por renda">
+          <g stroke="#e7e0d4"><line x1="40" y1="40" x2="340" y2="40"/><line x1="40" y1="100" x2="340" y2="100"/><line x1="40" y1="160" x2="340" y2="160"/></g>
+          <path d="M60,40 L200,76 L320,104 L320,92 L200,128 L60,164 Z" fill="#b07d10" opacity=".12"/>
+          <polyline points="60,40 200,76 320,104" fill="none" stroke="#c0392b" stroke-width="3"/>
+          <polyline points="60,164 200,128 320,92" fill="none" stroke="#1f5fa8" stroke-width="3"/>
+          <g font-family="Source Sans 3" font-weight="800" font-size="12" fill="#8f241b" text-anchor="middle">
+            <circle cx="60" cy="40" r="5" fill="#c0392b"/><text x="60" y="30">47,4</text>
+            <circle cx="320" cy="104" r="5" fill="#c0392b"/><text x="320" y="120">45,6</text>
+          </g>
+          <g font-family="Source Sans 3" font-weight="800" font-size="12" fill="#143f70" text-anchor="middle">
+            <circle cx="60" cy="164" r="5" fill="#1f5fa8"/><text x="60" y="182">43,6</text>
+            <circle cx="320" cy="92" r="5" fill="#1f5fa8"/><text x="320" y="80">45,9</text>
+          </g>
+          <g font-family="Spline Sans Mono, monospace" font-size="9.5" fill="#5f5d57" text-anchor="middle">
+            <text x="60" y="202">Datafolha</text><text x="200" y="202">PNAD domic.</text><text x="320" y="202">PNAD pessoas</text>
+          </g>
+        </svg>
+        <p class="sub">Lula 47,4→45,6 · Flávio 43,6→45,9 · empate</p>
+      </div>
+    </div>
+    <div class="card-foot"><span>arvor intelligence · auditoria datafolha 062026</span><span>reponderação marginal declarada (sem microdado)</span></div>
+  </div>
+  <div class="copy"><span class="cc">~1020 chars</span>Sem microdados, não dá para fazer a reponderação oficial. Mas dá para fazer uma sensibilidade auditável: manter o voto publicado DENTRO de cada faixa de renda e trocar só o PESO de cada faixa pelo benchmark da PNAD.
+
+É conservador (ignora correlações), mas mostra para onde o resultado escorrega. Resultado no 2º turno Lula x Flávio:
+
+• Datafolha como está: Lula 47,4 x 43,6 → Lula +3,8 (reproduz o oficial).
+• Reponderando renda pela PNAD por domicílios: 46,4 x 44,9 → Lula +1,5.
+• Reponderando pela PNAD por pessoas 16+: 45,6 x 45,9 → Flávio +0,3.
+
+As duas linhas se cruzam. Na unidade “por pessoa”, que é a mais defensável quando o respondente é o eleitor, a vantagem de Lula não só some — inverte de leve.
+
+Isso NÃO prova que Flávio está na frente. Prova que o “Lula +4” depende de uma amostra mais pobre que o país. Junte com o empate técnico do post 3 e a leitura honesta do 2º turno é uma só: disputa aberta, dentro da margem. Não liderança consolidada.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 8 -->
+<section class="post">
+  <div class="post-label">Post 8/28 · o gradiente de renda</div>
+  <div class="card">
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">8/28</div></div>
+    <div class="card-body">
+      <div>
+        <h2>A chave vira em <em>2 salários</em></h2>
+        <p class="t">Abaixo de 2 SM, Lula domina. Acima, Flávio vence em todas as faixas. Por isso o peso da renda decide o placar.</p>
+      </div>
+      <div class="viz">
+        <div class="legend"><span><i class="dot-lula"></i>Lula</span><span><i class="dot-flavio"></i>Flávio</span></div>
+        <div class="minibars">
+          <div class="mb"><span class="nm">Até 2 SM</span><div class="tr"><div class="seg lula" style="width:58%"></div><div class="seg flavio" style="width:42%"></div></div><span class="v">53/38</span></div>
+          <div class="mb"><span class="nm">2–5 SM</span><div class="tr"><div class="seg lula" style="width:46%"></div><div class="seg flavio" style="width:54%"></div></div><span class="v">41/49</span></div>
+          <div class="mb"><span class="nm">5–10 SM</span><div class="tr"><div class="seg lula" style="width:45%"></div><div class="seg flavio" style="width:55%"></div></div><span class="v">42/51</span></div>
+          <div class="mb"><span class="nm">+10 SM</span><div class="tr"><div class="seg lula" style="width:44%"></div><div class="seg flavio" style="width:56%"></div></div><span class="v">43/54</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="card-foot"><span>arvor intelligence · auditoria datafolha 062026</span><span>fonte: relatório 2º turno por renda, p.25</span></div>
+  </div>
+  <div class="copy"><span class="cc">~880 chars</span>Para entender por que a renda da amostra decide o resultado, olhe o gradiente do 2º turno:
+
+• Até 2 SM: Lula 53 x Flávio 38 (Lula +15)
+• 2 a 5 SM: Lula 41 x Flávio 49 (Flávio +8)
+• 5 a 10 SM: Lula 42 x Flávio 51 (Flávio +9)
+• Mais de 10 SM: Lula 43 x Flávio 54 (Flávio +11)
+
+A virada de chave é cirúrgica: acontece exatamente na fronteira de 2 salários mínimos. Abaixo, território de Lula. Acima, território de Flávio, em TODAS as faixas.
+
+Agora junte com o post anterior: a amostra do Datafolha tem 50,4% na faixa até 2 SM, contra 35–43% na PNAD. Ela carrega justamente o lado do gradiente onde Lula é forte.
+
+Não é preciso supor má-fé. Basta a física da amostragem de rua, que costuma capturar mais gente de baixa renda circulando. Mas o efeito no placar é real e mensurável — e empurra para Lula.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 9 -->
+<section class="post">
+  <div class="post-label">Post 9/28 · transferência de voto</div>
+  <div class="card">
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">9/28</div></div>
+    <div class="card-body">
+      <div>
+        <span class="lead-tag">Achado nº 4 · transferência</span>
+        <h2>O voto disponível corre <span class="b">2:1 para Flávio</span></h2>
+        <p class="t">No 1º turno sobram 28 pontos que não são de nenhum dos dois. No 2º, Flávio capta +12, Lula só +6. O anti-Lula é real e tem para onde ir.</p>
+      </div>
+      <div class="viz">
+        <div class="sub" style="margin:0 0 6px">consolidação do 1º → 2º turno (saldo líquido)</div>
+        <div class="minibars">
+          <div class="mb"><span class="nm">→ Flávio</span><div class="tr"><div class="seg flavio" style="width:100%"></div></div><span class="v">+12</span></div>
+          <div class="mb"><span class="nm">→ Lula</span><div class="tr"><div class="seg lula" style="width:50%"></div></div><span class="v">+6</span></div>
+          <div class="mb"><span class="nm">ficam fora</span><div class="tr"><div class="seg gray" style="width:83%"></div></div><span class="v">≈10</span></div>
+        </div>
+        <p class="sub">28 pts disponíveis = terceiros 17 + branco/nulo 7 + indecisos 4</p>
+      </div>
+    </div>
+    <div class="card-foot"><span>arvor intelligence · auditoria datafolha 062026</span><span>fluxo agregado · relatório pp.23 e 25</span></div>
+  </div>
+  <div class="copy"><span class="cc">~950 chars</span>Tem uma boa notícia para a direita escondida nesta pesquisa. E é grande.
+
+No 1º turno: Lula 41, Flávio 31. Sobram 28 pontos que não são de nenhum dos dois — 17 de candidatos do “terceiro caminho” (Caiado, Renan, Zema e cia.), 7 de branco/nulo e 4 de indecisos.
+
+No 2º turno, esse bloco se redistribui. E o saldo é claro:
+• Lula sobe de 41 para 47 → ganha +6.
+• Flávio sobe de 31 para 43 → ganha +12.
+
+Ou seja: na hora de consolidar, o voto disponível corre para Flávio na proporção de DOIS PARA UM sobre Lula. O eleitor anti-Lula existe, é numeroso e migra para o adversário.
+
+Isso é leitura de fluxo agregado (não painel individual), mas o sinal é inequívoco: Flávio é mais eficiente na transferência do que o número do 1º turno sugere. O gargalo dele não é atrair indeciso — é o teto de rejeição. Guardem isso para os posts de estratégia.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 10 -->
+<section class="post">
+  <div class="post-label">Post 10/28 · o teto de Lula</div>
+  <div class="card">
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">10/28</div></div>
+    <div class="card-body">
+      <div>
+        <h2>O teto de Lula está <em>travado em 47–48</em></h2>
+        <p class="t">O Datafolha testou Lula contra três nomes. Em todos, ele fica em 47–48. Quem muda é o adversário — e o mais competitivo é <b>Flávio</b>.</p>
+      </div>
+      <div class="viz">
+        <div class="legend"><span><i class="dot-lula"></i>Lula</span><span><i class="dot-flavio"></i>oposição</span></div>
+        <div class="minibars">
+          <div class="mb"><span class="nm">vs Flávio</span><div class="tr"><div class="seg lula" style="width:55%"></div><div class="seg flavio" style="width:45%"></div></div><span class="v">47/43</span></div>
+          <div class="mb"><span class="nm">vs Caiado</span><div class="tr"><div class="seg lula" style="width:53%"></div><div class="seg flavio" style="width:47%"></div></div><span class="v">47/41</span></div>
+          <div class="mb"><span class="nm">vs Zema</span><div class="tr"><div class="seg lula" style="width:55%"></div><div class="seg flavio" style="width:45%"></div></div><span class="v">48/39</span></div>
+        </div>
+        <p class="sub">trocar o nome da direita não melhora — piora</p>
+      </div>
+    </div>
+    <div class="card-foot"><span>arvor intelligence · auditoria datafolha 062026</span><span>fonte: relatório p.25, Situações A/B/C</span></div>
+  </div>
+  <div class="copy"><span class="cc">~930 chars</span>Um detalhe que quase ninguém comentou: o Datafolha testou Lula em TRÊS cenários de 2º turno.
+
+• Lula 47 x Flávio 43
+• Lula 47 x Caiado 41
+• Lula 48 x Zema 39
+
+Repare no número de Lula: 47, 47, 48. Não se move. O teto dele está travado, independentemente do adversário. Isso sugere que Lula está perto do seu máximo — a eleição não é sobre ele crescer.
+
+E o adversário mais competitivo? Flávio (43), à frente de Caiado (41) e Zema (39). O paradoxo da candidatura Bolsonaro: ele tem a MAIOR rejeição e, ao mesmo tempo, a MELHOR transferência de voto. Polariza melhor.
+
+Tradução estratégica: trocar Flávio por um nome “mais palatável” da direita não melhora o 2º turno — piora. O ativo competitivo aqui é a polarização, não a moderação do nome. O jogo real é a oposição consolidar os 28 pontos disponíveis e baixar o teto de rejeição. Voltaremos a isso.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 11 -->
+<section class="post">
+  <div class="post-label">Post 11/28 · bairros</div>
+  <div class="card">
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">11/28</div></div>
+    <div class="card-body">
+      <div>
+        <span class="lead-tag">Achado nº 5 · bairros</span>
+        <h2>77% dos setores se <em>repetem</em> de maio</h2>
+        <p class="t">Se o desenho “sorteia” pontos de fluxo, por que 255 dos 331 setores são os mesmos de maio? E 20 de 22 em São Paulo?</p>
+      </div>
+      <div style="text-align:center">
+        <div class="bignum gray">77<span style="font-size:.5em">%</span></div>
+        <p class="sub">255 de 331 setores repetidos · SP: 20 de 22<br>mais painel de locais do que sorteio novo</p>
+      </div>
+    </div>
+    <div class="card-foot"><span>arvor intelligence · auditoria datafolha 062026</span><span>fonte: anexo de bairros mai × jun (compare.csv)</span></div>
+  </div>
+  <div class="copy"><span class="cc">~900 chars</span>O anexo de bairros é a parte mais útil da pesquisa — e a que levanta a pergunta mais incômoda.
+
+Cruzei os setores censitários de maio com os de junho. Resultado: 255 dos 331 setores de junho (77%) JÁ estavam em maio. Em São Paulo capital, 20 dos 22 pontos são exatamente os mesmos.
+
+Aqui está a tensão: a metodologia fala em abordagem por pontos de fluxo, o que sugere seleção a cada onda. Mas, na prática, os locais se repetem de um mês para o outro. Isso é mais um PAINEL de locais do que um sorteio novo.
+
+Por que isso importa? Porque painel de locais com ~6 entrevistas cada é, tecnicamente, amostragem conglomerada — exatamente o que infla o efeito de desenho e a margem real (post 4).
+
+Não é fraude. Mas é uma escolha que precisa estar explicada: os pontos são sorteados de novo, rotacionados ou mantidos? Qual o protocolo? O Datafolha não diz.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 12 -->
+<section class="post">
+  <div class="post-label">Post 12/28 · SP × 2024</div>
+  <div class="card">
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">12/28</div></div>
+    <div class="card-body">
+      <div>
+        <h2>SP <em>desmente</em> a tese fácil</h2>
+        <p class="t">Cruzei os 22 pontos de SP com o 2º turno de 2024. A média deles dá Nunes 58,35% — colada no resultado oficial da cidade (59,34%). Não é desenho “de esquerda”.</p>
+      </div>
+      <div class="viz">
+        <div class="minibars">
+          <div class="mb"><span class="nm">pontos Datafolha</span><div class="tr"><div class="seg gold" style="width:97%"></div></div><span class="v">58,4</span></div>
+          <div class="mb"><span class="nm">SP oficial 2024</span><div class="tr"><div class="seg gray" style="width:99%"></div></div><span class="v">59,3</span></div>
+        </div>
+        <p class="sub">% Nunes (2º turno prefeito) · 18 de 22 pontos em área Nunes<br>5,7 milhões de votos válidos processados</p>
+      </div>
+    </div>
+    <div class="card-foot"><span>arvor intelligence · auditoria datafolha 062026</span><span>TSE votação por seção SP 2024 · proxy por bairro</span></div>
+  </div>
+  <div class="copy"><span class="cc">~960 chars</span>Sempre que aparece anexo de bairros, vem a acusação fácil: “escolheram bairro de esquerda para favorecer o Lula”. Fui testar isso em São Paulo, com dado oficial.
+
+Cruzei os 22 pontos paulistanos do Datafolha com o resultado do 2º turno de prefeito de 2024, bairro a bairro (Nunes x Boulos), processando 5,7 milhões de votos válidos.
+
+Resultado:
+• 18 dos 22 pontos caem em áreas onde NUNES (direita) venceu.
+• A média simples dos pontos dá Nunes 58,35%.
+• O resultado oficial da cidade foi Nunes 59,34%.
+
+Praticamente idêntico. Em SP, a distribuição geográfica dos pontos NÃO é enviesada para a esquerda — se algo, está colada no eleitorado real da capital.
+
+Então, sendo honesto: em São Paulo a crítica não é “escolheram bairro de esquerda”. A crítica é a do post anterior — por que quase tudo se repetiu de maio, e qual é o protocolo de sorteio? Auditoria séria credita o que está certo e cobra o que falta.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 13 -->
+<section class="post">
+  <div class="post-label">Post 13/28 · bruto × ponderado</div>
+  <div class="card">
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">13/28</div></div>
+    <div class="card-body">
+      <div>
+        <span class="lead-tag">Achado nº 6 · a digital do peso</span>
+        <h2>Onde a ponderação <em>mexeu</em></h2>
+        <p class="t">Cruzando a contagem bruta (bairros) com o perfil ponderado (relatório), o maior ajuste foi escolaridade: fundamental ×1,23, superior ×0,86.</p>
+      </div>
+      <div class="viz">
+        <div class="sub" style="margin:0 0 6px">bruto → ponderado</div>
+        <div class="minibars">
+          <div class="mb"><span class="nm">Fundamental</span><div class="tr"><div class="seg lula" style="width:80%"></div></div><span class="v">↑1,23×</span></div>
+          <div class="mb"><span class="nm">Médio</span><div class="tr"><div class="seg gray" style="width:60%"></div></div><span class="v">0,96×</span></div>
+          <div class="mb"><span class="nm">Superior</span><div class="tr"><div class="seg flavio" style="width:55%"></div></div><span class="v">↓0,86×</span></div>
+        </div>
+        <p class="sub">25,9→32,0 · 45,7→43,7 · 28,4→24,4</p>
+      </div>
+    </div>
+    <div class="card-foot"><span>arvor intelligence · auditoria datafolha 062026</span><span>contagem bruta (bairros p.6) × perfil ponderado (p.17)</span></div>
+  </div>
+  <div class="copy"><span class="cc">~940 chars</span>Fiz um cruzamento raro: a contagem BRUTA da amostra (que está no anexo de bairros) contra o perfil PONDERADO (que está no relatório). Isso mostra exatamente onde o peso atuou.
+
+A boa notícia: em sexo, região e renda, o peso quase não mexeu. Está honesto.
+
+O alerta: escolaridade. Na coleta de rua havia gente com ensino superior demais (28,4%) e fundamental de menos (25,9%). A ponderação corrigiu isso com fatores fortes:
+• Fundamental: ×1,23 (subiu para 32,0%)
+• Superior: ×0,86 (caiu para 24,4%)
+
+É um ajuste grande para um marginal que se correlaciona com voto. E tem um detalhe contraintuitivo: a ponderação deixou a amostra AINDA mais pobre (até 2 SM subiu de 49,3 para 50,4%). O viés de renda não é corrigido pelo peso — é levemente reforçado.
+
+Nada disso é ilegal. Mas é exatamente por isso que o Datafolha deveria publicar a distribuição dos pesos finais. Não publica.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 14 -->
+<section class="post">
+  <div class="post-label">Post 14/28 · perguntas-fantasma</div>
+  <div class="card">
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">14/28</div></div>
+    <div class="card-body">
+      <div>
+        <span class="lead-tag">Achado nº 7 · transparência</span>
+        <h2>As perguntas que foram feitas e <em>não publicadas</em></h2>
+        <p class="t">O relatório publica uma fração do questionário. O resto foi aplicado a todos e ficou na gaveta.</p>
+      </div>
+      <div class="viz">
+        <ul class="glist">
+          <li><span class="q hid">✕</span><span>Percepção econômica (país e pessoal)</span></li>
+          <li><span class="q hid">✕</span><span>Facções = organização terrorista; EUA atacarem facções no Brasil</span></li>
+          <li><span class="q hid">✕</span><span>Bateria ideológica: armas, drogas, pena de morte, Deus, sindicatos</span></li>
+          <li><span class="q hid">✕</span><span>Maioridade penal · Inteligência Artificial</span></li>
+          <li><span class="q hid">✕</span><span>Distribuição do voto lembrado em 2022</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="card-foot"><span>arvor intelligence · auditoria datafolha 062026</span><span>fonte: questionário 06/2026, P.10–P.20</span></div>
+  </div>
+  <div class="copy"><span class="cc">~900 chars</span>O relatório do Datafolha publica o voto, a rejeição, o efeito Trump e o arrependimento de 2022. Parece bastante. Mas é uma fração do que foi perguntado.
+
+Li o questionário inteiro. Foram aplicadas a TODOS os entrevistados, e não publicadas:
+
+• P.10 — percepção da economia (país e pessoal).
+• P.11 a P.13 — facções como organização terrorista; se os EUA têm “direito” de atacar facções dentro do Brasil sem avisar o governo.
+• P.16 a P.18 — uma bateria ideológica enorme: armas, drogas, pena de morte, homossexualidade, Deus, sindicatos, impostos, maioridade penal.
+• P.19 e P.20 — Inteligência Artificial.
+• E a distribuição do voto lembrado de 2022 — a auditoria política básica da amostra.
+
+Isso é um instrumento de message-testing inteiro, coletado e guardado. Reter resultado de pergunta registrada é o oposto de transparência. E tem uma pergunta na lista que é ainda mais sensível. Próximo post.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 15 -->
+<section class="post">
+  <div class="post-label">Post 15/28 · A BOMBA</div>
+  <div class="card">
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">15/28</div></div>
+    <div class="card-body single">
+      <div style="text-align:center;max-width:900px;margin:auto">
+        <span class="lead-tag">a pergunta retida sobre o próprio candidato</span>
+        <h2>Perguntaram se Flávio influenciou os EUA — e se isso foi <em>positivo ou negativo</em>. <span class="b">Não publicaram.</span></h2>
+        <p class="t" style="margin-top:12px">P.14 e P.15 do questionário: a influência de Flávio na decisão dos EUA de classificar PCC/CV como terroristas, e se ela ajudou ou atrapalhou o Brasil. Aplicadas a todos. Ausentes do relatório.</p>
+        <div class="kchips" style="justify-content:center"><span class="kchip">P.14 · teve influência?</span><span class="kchip">P.15 · positiva ou negativa?</span><span class="kchip">resultado não divulgado</span></div>
+      </div>
+    </div>
+    <div class="card-foot"><span>arvor intelligence · auditoria datafolha 062026</span><span>fonte: questionário 06/2026, P.14 e P.15</span></div>
+  </div>
+  <div class="copy"><span class="cc">~980 chars</span>Esta é a omissão mais sensível da pesquisa.
+
+Entre as perguntas aplicadas e não publicadas, duas são sobre o PRÓPRIO Flávio Bolsonaro:
+
+P.14 — “O senador Flávio Bolsonaro teve ou não teve influência na decisão do governo dos EUA de classificar o PCC e o Comando Vermelho como organizações terroristas?”
+
+P.15 — “Essa influência foi positiva ou negativa para o Brasil?”
+
+Pare e pense. O instituto coletou de 2.004 eleitores uma avaliação direta sobre uma ação de um dos dois finalistas — se ele atuou junto a Washington e se isso ajudou ou prejudicou o país. É um dado de altíssimo valor reputacional, no meio de uma campanha presidencial.
+
+E não está no relatório.
+
+Reter perguntas sobre economia é discutível. Reter uma pergunta que avalia se a ação internacional de um candidato foi boa ou ruim para o Brasil é editorialmente grave. Transparência exige publicar o resultado de TODAS as perguntas registradas — ou justificar, uma a uma, cada omissão.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 16 -->
+<section class="post">
+  <div class="post-label">Post 16/28 · voto lembrado 2022</div>
+  <div class="card">
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">16/28</div></div>
+    <div class="card-body">
+      <div>
+        <h2>Publicaram o efeito, <em>esconderam a causa</em></h2>
+        <p class="t">8% dizem se arrepender do voto de 2022. Mas sobre uma base de 1.546, e sem revelar em quem essas pessoas votaram. Sem isso, não dá para auditar o viés político da amostra.</p>
+      </div>
+      <div style="text-align:center">
+        <div class="bignum gold sm">8%</div>
+        <p class="sub">arrependimento · base 1.546 (não 2.004)<br>voto lembrado de 2022 = <b style="color:var(--ink)">não publicado</b></p>
+      </div>
+    </div>
+    <div class="card-foot"><span>arvor intelligence · auditoria datafolha 062026</span><span>fonte: relatório p.27 · 2º turno 2022: Lula 50,9 x 49,1</span></div>
+  </div>
+  <div class="copy"><span class="cc">~930 chars</span>O relatório publica que 8% dos eleitores se arrependeram do voto para presidente em 2022. Parece transparente. Mas falta o essencial.
+
+Primeiro: essa pergunta foi feita sobre uma base de 1.546 pessoas, não 2.004. Os outros 458 (não votaram, não lembram ou recusaram) ficam de fora — e isso não é explicado.
+
+Segundo, e mais importante: o questionário PERGUNTA em quem o eleitor votou no 2º turno de 2022. Mas o relatório NÃO publica essa distribuição.
+
+Por que isso importa? Porque o 2º turno de 2022 foi Lula 50,9 x Bolsonaro 49,1. A lembrança ponderada da amostra deveria orbitar esse número, com descontos esperados por memória e desejabilidade. É a auditoria política básica: serve para testar se a amostra está enviesada para um lado.
+
+Publicar o arrependimento (8%) sem publicar a base lembrada é divulgar o efeito escondendo a causa. 8% de qual composição? Sem essa tabela, não dá para saber.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 17 -->
+<section class="post">
+  <div class="post-label">Post 17/28 · efeito Trump</div>
+  <div class="card">
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">17/28</div></div>
+    <div class="card-body">
+      <div>
+        <h2>Trump: saldo nacional é só <em>+2</em></h2>
+        <p class="t">17% dizem que o apoio de Trump aumentaria a vontade de votar, 15% diminuiria, 65% indiferente. No agregado, quase nulo. A munição é segmentada, não nacional.</p>
+      </div>
+      <div class="viz">
+        <div class="minibars">
+          <div class="mb"><span class="nm">aumentaria</span><div class="tr"><div class="seg flavio" style="width:26%"></div></div><span class="v">17</span></div>
+          <div class="mb"><span class="nm">diminuiria</span><div class="tr"><div class="seg lula" style="width:23%"></div></div><span class="v">15</span></div>
+          <div class="mb"><span class="nm">indiferente</span><div class="tr"><div class="seg gray" style="width:98%"></div></div><span class="v">65</span></div>
+        </div>
+        <p class="sub">saldo líquido +2 · efeito real é local, não geral</p>
+      </div>
+    </div>
+    <div class="card-foot"><span>arvor intelligence · auditoria datafolha 062026</span><span>fonte: relatório p.27, efeito do apoio de Trump</span></div>
+  </div>
+  <div class="copy"><span class="cc">~880 chars</span>O apoio de Trump a um candidato brasileiro virou tema. O que o Datafolha mediu?
+
+• 17% dizem que aumentaria a vontade de votar no candidato apoiado.
+• 15% dizem que diminuiria.
+• 65% dizem que não faria diferença.
+
+Saldo líquido nacional: +2 pontos. Praticamente nulo.
+
+A leitura estratégica é importante. No agregado, Trump não é trunfo nem veneno — é quase ruído. Mas a média esconde polarização: provavelmente soma muito na base bolsonarista e subtrai entre desalinhados e antiamericanos.
+
+Tradução para campanha: Trump é munição SEGMENTADA, não bandeira nacional. Faz sentido ativar entre apoiadores já convictos; faz pouco sentido como mensagem de massa, porque o ganho na base é anulado pela perda no centro.
+
+No palco nacional, o enquadramento que funciona não é “subordinação a Washington”, e sim soberania e segurança. Detalhe que separa estrategista de torcedor.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 18 -->
+<section class="post">
+  <div class="post-label">Post 18/28 · o mapa de batalha</div>
+  <div class="card">
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">18/28</div></div>
+    <div class="card-body">
+      <div>
+        <span class="lead-tag">Inteligência de campanha</span>
+        <h2>O mapa de Flávio: 3 buracos <em>decisivos</em></h2>
+        <p class="t">Flávio ganha homens e renda alta. Perde feio em mulheres, baixa renda e baixa escolaridade — onde Lula abre 15 a 17 pontos.</p>
+      </div>
+      <div class="viz">
+        <div class="legend"><span><i class="dot-lula"></i>Lula</span><span><i class="dot-flavio"></i>Flávio</span></div>
+        <div class="minibars">
+          <div class="mb"><span class="nm">Mulheres</span><div class="tr"><div class="seg lula" style="width:58%"></div><div class="seg flavio" style="width:42%"></div></div><span class="v">52/37</span></div>
+          <div class="mb"><span class="nm">Até 2 SM</span><div class="tr"><div class="seg lula" style="width:58%"></div><div class="seg flavio" style="width:42%"></div></div><span class="v">53/38</span></div>
+          <div class="mb"><span class="nm">Fundamental</span><div class="tr"><div class="seg lula" style="width:59%"></div><div class="seg flavio" style="width:41%"></div></div><span class="v">54/37</span></div>
+          <div class="mb"><span class="nm">Homens</span><div class="tr"><div class="seg lula" style="width:45%"></div><div class="seg flavio" style="width:55%"></div></div><span class="v">41/50</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="card-foot"><span>arvor intelligence · auditoria datafolha 062026</span><span>fonte: relatório 2º turno por segmento, p.25</span></div>
+  </div>
+  <div class="copy"><span class="cc">~900 chars</span>Saindo da auditoria, entrando na estratégia. O mapa do 2º turno de Flávio é cirúrgico.
+
+Onde ele já vence:
+• Homens: 50 x 41.
+• Renda acima de 2 SM: 49 a 54.
+
+Onde ele apanha — e é aqui que a eleição se decide:
+• Mulheres: Lula 52 x 37 (déficit de 15).
+• Até 2 SM: Lula 53 x 38 (déficit de 15).
+• Escolaridade fundamental: Lula 54 x 37 (déficit de 17).
+
+São três células: mulheres, baixa renda e baixa escolaridade. Note que elas se sobrepõem muito — é largamente o mesmo eleitorado.
+
+A leitura: a campanha não precisa gritar mais para a base masculina e de renda média-alta, que já está consolidada. Precisa REDUZIR MEDO e custo de votar nesses três grupos. Não é virar de lado ideológico; é mudar o tom e a pauta — segurança, custo de vida, saúde e proteção social, sem pose agressiva. Os próximos posts detalham como.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 19 -->
+<section class="post">
+  <div class="post-label">Post 19/28 · a tesoura da rejeição</div>
+  <div class="card">
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">19/28</div></div>
+    <div class="card-body">
+      <div>
+        <h2>O problema de cada um <em>tem sexo</em></h2>
+        <p class="t">Os dois são muito rejeitados (Flávio 48, Lula 46). A diferença é onde: a rejeição de Flávio explode entre mulheres; a de Lula, entre homens.</p>
+      </div>
+      <div class="viz">
+        <div class="sub" style="margin:0 0 6px">% que “não votaria de jeito nenhum”</div>
+        <div class="minibars">
+          <div class="mb"><span class="nm">Flávio · ♀</span><div class="tr"><div class="seg lula" style="width:88%"></div></div><span class="v">53</span></div>
+          <div class="mb"><span class="nm">Flávio · ♂</span><div class="tr"><div class="seg lula" style="width:72%"></div></div><span class="v">43</span></div>
+          <div class="mb"><span class="nm">Lula · ♂</span><div class="tr"><div class="seg flavio" style="width:87%"></div></div><span class="v">52</span></div>
+          <div class="mb"><span class="nm">Lula · ♀</span><div class="tr"><div class="seg flavio" style="width:67%"></div></div><span class="v">40</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="card-foot"><span>arvor intelligence · auditoria datafolha 062026</span><span>fonte: rejeição por gênero, relatório p.26</span></div>
+  </div>
+  <div class="copy"><span class="cc">~860 chars</span>A rejeição é o teto de cada candidato. E ela desenha a tesoura da campanha.
+
+• Flávio: rejeição de 48% no total, mas 53% entre MULHERES e 43% entre homens.
+• Lula: rejeição de 46% no total, mas 52% entre HOMENS e 40% entre mulheres.
+
+Leia de novo. O ponto mais alto de rejeição de Flávio são as mulheres. O ponto mais alto de Lula são os homens. É espelhado.
+
+Para Flávio, isso define a prioridade número 1: baixar a rejeição feminina de 53%. Cada ponto derrubado aí vale mais do que qualquer ganho marginal na base masculina, que já está com ele.
+
+E o risco não é só ideológico — é reputacional. O caso Master pesa como narrativa de privilégio e família, e isso machuca especialmente entre o eleitorado feminino e moderado. Sem anticorpo ético, esse eleitor anula ou fica com Lula. Reduzir teto de rejeição é a maior alavanca da candidatura. De longe.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 20 -->
+<section class="post">
+  <div class="post-label">Post 20/28 · o playbook</div>
+  <div class="card">
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">20/28</div></div>
+    <div class="card-body">
+      <div>
+        <h2>O playbook em <em>5 movimentos</em></h2>
+        <p class="t">A eleição está na margem. Lula travado em 47–48; o jogo é consolidar oposição e desarmar medo.</p>
+      </div>
+      <div class="viz">
+        <ul class="glist">
+          <li><span class="q" style="color:var(--lula)">1</span><span><b>Mulheres (−15):</b> segurança, saúde, custo de vida, sem pose agressiva.</span></li>
+          <li><span class="q" style="color:var(--flavio)">2</span><span><b>Classe média 2–10 SM:</b> fiador econômico, imposto menor, crédito.</span></li>
+          <li><span class="q" style="color:var(--gold)">3</span><span><b>Rejeição de Lula (46%):</b> virar permissão de voto útil.</span></li>
+          <li><span class="q" style="color:var(--green)">4</span><span><b>Anticorpo pós-Master:</b> blindagem ética e integridade.</span></li>
+          <li><span class="q" style="color:var(--violet)">5</span><span><b>Trump cirúrgico:</b> base PL sim, nacional não.</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="card-foot"><span>arvor intelligence · auditoria datafolha 062026</span><span>síntese estratégica sobre dados do relatório</span></div>
+  </div>
+  <div class="copy"><span class="cc">~960 chars</span>Juntando tudo, o playbook da direita em 5 movimentos:
+
+1. MULHERES (déficit de 15). A célula que decide o 2º turno. Pauta: segurança, saúde, inflação de comida e energia, escola, proteção social — sem pose agressiva. Tom importa mais que ideologia aqui.
+
+2. CLASSE MÉDIA 2–10 SM (já lidera, expansível). Virar fiador econômico: estabilidade, imposto menor, crédito para o pequeno negócio. O medo de retrocesso joga a favor.
+
+3. REJEIÇÃO DE LULA (46%) COMO PERMISSÃO. “Você não precisa amar Flávio para trocar o rumo.” Converter anti-Lula em voto útil.
+
+4. ANTICORPO REPUTACIONAL. A rejeição de 48% é tanto ética quanto ideológica. Sem blindagem de integridade pós-Master, o moderado escapa.
+
+5. TRUMP COM CIRURGIA. Saldo nacional é só +2. Ativar na base PL; no nacional, enquadrar soberania, não subordinação.
+
+Resumo: não radicalizar a base. Desarmar o medo e baixar o teto de rejeição. Cada ponto de rejeição derrubado vale dez de marketing.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 21 -->
+<section class="post">
+  <div class="post-label">Post 21/28 · o voto elástico</div>
+  <div class="card">
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">21/28</div></div>
+    <div class="card-body">
+      <div>
+        <h2>O voto de Flávio é <em>elástico</em></h2>
+        <p class="t">Ele tira 31 no 1º turno com só 10% de identificação partidária com o PL. Vive de não-partidários — recrutáveis, mas instáveis. Lula tem chão mais firme (22% PT).</p>
+      </div>
+      <div class="viz">
+        <div class="sub" style="margin:0 0 6px">identificação partidária × voto 1º turno</div>
+        <div class="minibars">
+          <div class="mb"><span class="nm">PT → Lula</span><div class="tr"><div class="seg lula" style="width:44%"></div></div><span class="v">22→41</span></div>
+          <div class="mb"><span class="nm">PL → Flávio</span><div class="tr"><div class="seg flavio" style="width:20%"></div></div><span class="v">10→31</span></div>
+          <div class="mb"><span class="nm">“nenhum partido”</span><div class="tr"><div class="seg gray" style="width:100%"></div></div><span class="v">52</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="card-foot"><span>arvor intelligence · auditoria datafolha 062026</span><span>fonte: partido de preferência, perfil ponderado p.17</span></div>
+  </div>
+  <div class="copy"><span class="cc">~900 chars</span>Um dado pouco notado do perfil ponderado, com leitura estratégica forte.
+
+Identificação partidária da amostra:
+• PT: 22%
+• PL: 10%
+• “Nenhum/não tem partido”: 52%
+
+Agora compare com o voto de 1º turno: Lula 41, Flávio 31.
+
+Lula tira 41 a partir de uma base de 22% petistas — converte o dobro do seu chão. Flávio tira 31 a partir de só 10% de pelistas — TRIPLICA a base partidária dele.
+
+Isso quer dizer duas coisas ao mesmo tempo:
+→ Força: o voto de Flávio tem alcance muito além do PL. Ele recruta no oceano dos 52% sem partido.
+→ Fragilidade: esse voto é elástico, pouco ancorado em lealdade. Sobe e desce com conjuntura e humor — é menos fiel que o voto petista.
+
+Para a campanha, é mandato e alerta: há teto para crescer entre não-partidários, mas o piso é menos garantido. Trabalhar consistência de mensagem para fixar o que hoje é volátil.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 22 -->
+<section class="post">
+  <div class="post-label">Post 22/28 · a régua que falta</div>
+  <div class="card">
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">22/28</div></div>
+    <div class="card-body">
+      <div>
+        <h2>Como ficaria <em>incontestável</em></h2>
+        <p class="t">Nada disso exige “provar inocência”. Exige abrir o suficiente para qualquer um refazer a conta.</p>
+      </div>
+      <div class="viz">
+        <ul class="glist">
+          <li><span class="q pub">→</span><span>Microdados anonimizados e <b>pesos finais</b></span></li>
+          <li><span class="q pub">→</span><span>Efeito de desenho (deff) e <b>n efetivo</b></span></li>
+          <li><span class="q pub">→</span><span>Taxa de recusa, substituição e checagem por UF</span></li>
+          <li><span class="q pub">→</span><span>Protocolo de ponto, horário e rotação</span></li>
+          <li><span class="q pub">→</span><span>Resultado de <b>todas</b> as perguntas registradas</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="card-foot"><span>arvor intelligence · auditoria datafolha 062026</span><span>pesquisa registrada é produto privado de efeito público</span></div>
+  </div>
+  <div class="copy"><span class="cc">~880 chars</span>O Datafolha tem marca, campo nacional e documentação acima da média do mercado. Justamente por isso, a régua dele tem que ser mais alta. Pesquisa eleitoral registrada é produto privado com efeito público.
+
+Para virar incontestável, bastava abrir:
+
+• Microdados anonimizados após a divulgação.
+• Pesos finais por entrevistado (ou ao menos a distribuição).
+• Efeito de desenho (deff) e n efetivo — em vez do ±2 de amostra aleatória simples.
+• Taxa de recusa, substituição e checagem por UF.
+• Protocolo dos pontos: sorteio, rotação ou painel; horário e fluxo.
+• Resultado de TODAS as perguntas registradas, inclusive o voto lembrado de 2022 e as perguntas sobre a atuação de Flávio.
+
+Nada aqui é exigência de “provar inocência”. É só permitir que qualquer um refaça a conta. Enquanto isso não vier, a pesquisa continua boa para manchete e insuficiente para auditoria. Dá para fazer melhor.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 23 -->
+<section class="post">
+  <div class="post-label">Post 23/28 · a fábrica de narrativa</div>
+  <div class="card">
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">23/28</div></div>
+    <div class="card-body">
+      <div>
+        <span class="lead-tag">Achado nº 8 · a narrativa</span>
+        <h2>Mesmo dado, <em>manchetes opostas</em></h2>
+        <p class="t">A pesquisa é um insumo. A manchete é um produto editorial construído por cima. E a Folha não é só veículo — é a <b>contratante</b> do Datafolha.</p>
+      </div>
+      <div class="viz">
+        <img src="img/datafolha_062026_print_montage.jpg" alt="Montagem de quatro manchetes reais sobre o mesmo Datafolha, enquadradas de forma oposta" style="width:100%;border-radius:6px;border:1px solid var(--line)">
+        <p class="sub">4 prints reais · mesmo dado, frames opostos</p>
+      </div>
+    </div>
+    <div class="card-foot"><span>arvor intelligence · auditoria datafolha 062026</span><span>manchetes públicas 17–24/06/2026</span></div>
+  </div>
+  <div class="copy"><span class="cc">~1010 chars</span>Agora a parte que quase ninguém audita: a narrativa construída em cima da pesquisa.
+
+Coletei como a imprensa noticiou ESTE Datafolha entre 17 e 24 de junho. Mesmo número (Lula 47 x 43), manchetes em direções opostas:
+
+• “Lula MANTÉM 47% e Flávio tem 43%” (Exame) — frame de liderança durável.
+• “Lula tem 10 PONTOS à frente no 1º turno” (SRZD) — usa o gap maior, de outro cenário.
+• “Flávio ESTANCA PERDAS” (InfoMoney) — candidato em queda que freou.
+• “Flávio ESTABILIZA após Dark Horse” (Correio) — escândalo no título.
+• “…EMPATE TÉCNICO no limite da margem” (InfoSAJ) — o frame estatisticamente correto. Minoria.
+
+Repare: o dado era estabilidade e empate técnico. A manchete dominante foi “Lula lidera” e “Flávio ferido”. Verbo de liderança (“mantém”, “à frente”) não é dado — é escolha editorial.
+
+E tem um detalhe que fecha o raciocínio: quem encomendou a pesquisa foi a própria Folha. Ou seja, o mesmo grupo define as perguntas, recebe os dados, escolhe o que publicar e redige a manchete. Quatro alavancas. Próximos posts.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 24 -->
+<section class="post">
+  <div class="post-label">Post 24/28 · o duplo padrão</div>
+  <div class="card">
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">24/28</div></div>
+    <div class="card-body">
+      <div>
+        <h2>O duplo padrão do <em>“empate técnico”</em></h2>
+        <p class="t">O mesmo veículo chama a rejeição (48×46) de “empate técnico” — mas o voto (47×43) de “Lula lidera”. A diferença não é estatística. É editorial.</p>
+      </div>
+      <div class="viz">
+        <div class="minibars">
+          <div class="mb"><span class="nm">Rejeição 48×46</span><div class="tr"><div class="seg gray" style="width:96%"></div></div><span class="v">✓ tie</span></div>
+          <div class="mb"><span class="nm">Voto 47×43</span><div class="tr"><div class="seg lula" style="width:88%"></div></div><span class="v">✗ lidera</span></div>
+        </div>
+        <p class="sub">gap de 2 pts = “empate” · gap de 4 pts = “liderança”?<br>os dois cabem na margem da diferença (~±4–5)</p>
+      </div>
+    </div>
+    <div class="card-foot"><span>arvor intelligence · auditoria datafolha 062026</span><span>margem da diferença &gt; gap nos dois casos</span></div>
+  </div>
+  <div class="copy"><span class="cc">~960 chars</span>Esta é a incoerência mais reveladora da cobertura.
+
+Quando o assunto é REJEIÇÃO, os veículos escrevem que Flávio (48%) e Lula (46%) estão em “empate técnico dentro da margem de erro”. Está certíssimo: 2 pontos não distinguem ninguém.
+
+Mas quando o assunto é o VOTO de 2º turno — Lula 47 x Flávio 43 — os mesmos veículos abandonam a régua e escrevem “Lula lidera”, “Lula mantém vantagem”.
+
+Por que um gap de 2 pontos é empate e um gap de 4 pontos é liderança? Não é, e a estatística prova: a margem de erro sobre a DIFERENÇA entre dois candidatos é ~±4 pontos (e ~±5 com o efeito de desenho real). Ou seja, o 47x43 é tão empate técnico quanto a rejeição — ou mais.
+
+A escolha de chamar um de “empate” e o outro de “liderança” não vem dos dados. Vem da redação. É a mesma pesquisa, a mesma margem, e dois rótulos diferentes conforme convém à narrativa. Quando a régua muda no meio do texto, não é estatística: é enquadramento.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 25 -->
+<section class="post">
+  <div class="post-label">Post 25/28 · o contratante</div>
+  <div class="card">
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">25/28</div></div>
+    <div class="card-body">
+      <div>
+        <h2>O contratante controla os <em>dois lados</em></h2>
+        <p class="t">A Folha não recebe a pesquisa pronta. Ela encomenda. Isso é poder sobre o instrumento E sobre a narrativa — um ciclo fechado.</p>
+      </div>
+      <div class="viz">
+        <ul class="glist">
+          <li><span class="q" style="color:var(--flavio)">1</span><span><b>DEFINE</b> as perguntas (Trump, facções, influência de Flávio nos EUA)</span></li>
+          <li><span class="q" style="color:var(--gray)">2</span><span><b>RECEBE</b> os dados (topline + recortes)</span></li>
+          <li><span class="q" style="color:var(--lula)">3</span><span><b>ESCOLHE</b> a manchete — e o que NÃO publicar</span></li>
+          <li><span class="q" style="color:var(--gold)">4</span><span><b>DEFINE</b> a pauta do dia seguinte</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="card-foot"><span>arvor intelligence · auditoria datafolha 062026</span><span>Datafolha é encomenda da Folha de S.Paulo</span></div>
+  </div>
+  <div class="copy"><span class="cc">~990 chars</span>Tem uma palavra que muda tudo e some no rodapé dos releases: CONTRATANTE.
+
+O Datafolha não é um oráculo neutro que entrega números do céu. A pesquisa é ENCOMENDADA pela Folha de S.Paulo. E quem encomenda controla o ciclo inteiro:
+
+1. DEFINE as perguntas. Foi a Folha que escolheu testar o “efeito Trump”, as facções como terrorismo e a influência de Flávio na decisão dos EUA. A pauta nasce na escolha das perguntas.
+
+2. RECEBE os dados antes de todo mundo, com todos os recortes.
+
+3. ESCOLHE o que publicar — e o que reter. Publicou o efeito Trump (“não resolve os problemas dele”) e o arrependimento de 2022. Reteve a pergunta sobre a influência de Flávio nos EUA (post 15).
+
+4. ESCREVE a manchete e define a pauta do dia seguinte.
+
+São quatro alavancas sobre a percepção pública, a partir do mesmo conjunto de números. Nada disso é ilegal. Mas devia estar no holofote, não na nota de rodapé. Quando o dono da pesquisa é o dono da manchete, o leitor precisa saber.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 26 -->
+<section class="post">
+  <div class="post-label">Post 26/28 · o pré-enquadramento</div>
+  <div class="card">
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">26/28</div></div>
+    <div class="card-body">
+      <div>
+        <h2>O pré-enquadramento <em>“Dark Horse”</em></h2>
+        <p class="t">Quase toda matéria reancora a pesquisa ao escândalo do filme “Dark Horse”. A foto do voto vira capítulo semanal da crise.</p>
+      </div>
+      <div class="viz">
+        <img src="img/datafolha_062026_print_intercept.jpg" alt="Print do Intercept: áudio de Flávio negociando R$ 134 mi com Vorcaro" style="width:100%;border-radius:6px;border:1px solid var(--line)">
+        <p class="sub">Intercept, 13/05 · o gancho “Dark Horse”</p>
+      </div>
+    </div>
+    <div class="card-foot"><span>arvor intelligence · auditoria datafolha 062026</span><span>fontes: Intercept, Agência Pública, Brasil de Fato</span></div>
+  </div>
+  <div class="copy"><span class="cc">~1010 chars</span>Por que a pesquisa de junho, que repetiu maio, virou notícia de escândalo? Por causa do pré-enquadramento.
+
+O caso “Dark Horse”: em maio, o Intercept revelou áudios em que Flávio Bolsonaro teria negociado R$ 134 milhões com Daniel Vorcaro, do Banco Master, para financiar um filme sobre Jair Bolsonaro. Flávio negou (“de onde você tirou isso? é mentira”).
+
+Desde então, quase toda matéria de pesquisa reancora o número ao escândalo. A linha do tempo é clara:
+
+• 13/05 — Intercept divulga o áudio.
+• 22/05 — Datafolha “o 1º após o vazamento”; gap vai a 9 pontos.
+• 17–18/06 — campo de junho; números IDÊNTICOS a maio.
+• 20/06 — manchete: “Flávio estabiliza após Dark Horse”.
+
+Mesmo quando o número não se move, o título mantém a moldura da crise. Isso é agenda-setting de manual: a imprensa não diz só o que pensar — diz SOBRE O QUE pensar. A pesquisa deixa de ser foto do voto e vira o capítulo semanal de um escândalo que envolve, de novo, o Banco Master e Vorcaro — os mesmos nomes dos dossiês anteriores.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 27 -->
+<section class="post">
+  <div class="post-label">Post 27/28 · veredito</div>
+  <div class="card">
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">27/28</div></div>
+    <div class="card-body single">
+      <div style="text-align:center;max-width:900px;margin:auto">
+        <span class="lead-tag">veredito</span>
+        <h2>Não é fraude. É <em>excesso de certeza</em> na manchete e <span class="b">falta de transparência</span> no método.</h2>
+        <p class="t" style="margin-top:12px">O 2º turno é empate técnico, a vantagem de Lula depende de uma amostra mais pobre que o país, e o anti-Lula transfere 2:1 para Flávio. A disputa está aberta — na margem.</p>
+        <div class="kchips" style="justify-content:center"><span class="kchip">empate técnico ±4</span><span class="kchip">renda infla Lula</span><span class="kchip">transferência 2:1</span><span class="kchip">perguntas retidas</span></div>
+      </div>
+    </div>
+    <div class="card-foot"><span>arvor intelligence · auditoria datafolha 062026</span><span>brasil.arvor.co/datafolha_062026.html</span></div>
+  </div>
+  <div class="copy"><span class="cc">~980 chars</span>Fecho como abri. Não dá para gritar fraude. O Datafolha mediu o voto antes do roteiro pesado, acertou a demografia e publicou os bairros. Crédito dado.
+
+Mas também não dá para engolir a manchete como ciência fechada. Três coisas ficaram demonstradas:
+
+1. EMPATE TÉCNICO. O gap de 4 pontos é menor que a margem da diferença (±4 no melhor caso, ~±5 com o desenho real). “Lula à frente” não passa no teste de 95%.
+
+2. A RENDA INFLA LULA. A amostra tem 50,4% de pobres (até 2 SM), contra 35–43% na PNAD. Corrigindo isso, Lula 47→45,6 e Flávio 43→45,9. Empata.
+
+3. O ANTI-LULA EXISTE E MIGRA. No 2º turno, o voto disponível corre 2:1 para Flávio, que é o adversário mais competitivo. O teto de Lula está travado em 47–48.
+
+E ficou a pergunta retida sobre a atuação do próprio Flávio nos EUA, aplicada e não publicada.
+
+O nome disso não é fraude. É incerteza estatística + transparência insuficiente. A cura é uma só: abrir os dados.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST 28 -->
+<section class="post">
+  <div class="post-label">Post 28/28 · leia o dossiê</div>
+  <div class="card">
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">28/28</div></div>
+    <div class="card-body">
+      <div>
+        <h2>Auditem os auditores. <span class="b">Eu comecei.</span></h2>
+        <p class="t">O dossiê completo — margem refeita, deff simulado, reponderação, transferência de voto e todas as fontes para você conferir ou derrubar — está aberto.</p>
+        <div class="kchips"><span class="kchip">brasil.arvor.co/datafolha_062026.html</span><span class="kchip">github.com/ArvorCo/PNAD</span></div>
+      </div>
+      <div style="text-align:center">
+        <img src="img/arvor_logo.png" alt="Arvor" style="width:88px;height:88px;object-fit:contain">
+        <p class="sub" style="margin-top:10px">toda semana, uma pesquisa<br>na mesa de operação</p>
+      </div>
+    </div>
+    <div class="card-foot"><span>arvor intelligence · dados abertos</span><span>TSE BR-09956/2026 · github.com/ArvorCo/PNAD</span></div>
+  </div>
+  <div class="copy"><span class="cc">~980 chars</span>Se você leu até aqui, o resumo é este: a pesquisa Datafolha de junho não mostrou virada contra Flávio, mas também não mostrou a liderança que a manchete vendeu. O 2º turno é empate técnico, a vantagem de Lula mora na renda da amostra, e o voto disponível corre para Flávio.
+
+Tudo o que afirmei aqui está aberto para conferência, contestação ou refutação. O dossiê completo tem:
+
+• A margem refeita com o erro da diferença e o efeito de desenho simulado.
+• A reponderação por renda contra a PNAD, número a número.
+• A transferência de voto reconstruída do 1º para o 2º turno.
+• O cruzamento dos bairros com a eleição de SP 2024.
+• A lista das perguntas aplicadas e não publicadas.
+• A análise das manchetes: como o dado “empate” virou “Lula lidera”.
+
+Dossiê: brasil.arvor.co/datafolha_062026.html
+Dados e scripts: github.com/ArvorCo/PNAD
+
+E se quiser ver o mesmo bisturi na Quaest e na BTG/Nexus, os dossiês anteriores estão no mesmo lugar.
+
+Toda semana, uma pesquisa na mesa de operação. Auditem os auditores. Eu comecei. 🌳</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+</div>
+<script>
+function cp(btn){
+  const pre = btn.previousElementSibling;
+  const txt = Array.from(pre.childNodes).filter(n=>!(n.classList&&n.classList.contains('cc'))).map(n=>n.textContent).join('');
+  navigator.clipboard.writeText(txt.trim()).then(()=>{
+    const o = btn.textContent; btn.textContent = 'Copiado ✓';
+    setTimeout(()=>btn.textContent = o, 1400);
+  });
+}
+</script>
+</body>
+</html>
