@@ -44,3 +44,7 @@ no slide 16 existe uma afirmação de que 64% mal conheciam o caso, mas deo nde 
 
 sim, precisa corrigir tudo, laudo, slides, thread etc
 
+### Prompt 11
+
+outrac oisa: quando clico em copiar, está copiando também o número de caracteres, o copiar precisa copiar só o texto do post
+
