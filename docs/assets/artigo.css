@@ -1,0 +1,668 @@
+/* ==========================================================================
+   Arvor · folha de estilo dos artigos (long-read)
+   Gerada pelos HTMLs de docs/build_articles.py.
+
+   Herda a linguagem da "sala de evidências" (assets/nexus_btg_0726.css):
+   papel quente, tinta escura, Fraunces display, Newsreader corpo,
+   IBM Plex Mono para dados, grão sutil em CSS puro.
+   Otimizada, porém, para leitura longa: medida curta, entrelinha generosa,
+   hierarquia calma e sumário lateral persistente.
+   ========================================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,400;1,9..144,600;1,9..144,900&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap");
+
+:root {
+  --paper: #f6f1e6;
+  --paper-2: #ede5d4;
+  --paper-3: #e2d8c2;
+  --paper-white: #fffaf0;
+  --ink: #101014;
+  --ink-2: #17181f;
+  --edge: #cfc4ac;
+  --edge-soft: rgba(16, 16, 20, .12);
+  --muted: #5a5649;
+  --muted-ink: #a49f92;
+  --red: #b5202a;
+  --red-deep: #7a1319;
+  --orange: #ef7622;
+  --navy: #08275c;
+  --green: #06775a;
+  --gold: #a06d00;
+
+  --serif: "Newsreader", Georgia, "Times New Roman", serif;
+  --display: "Fraunces", Georgia, serif;
+  --sans: "Archivo", system-ui, -apple-system, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --measure: 68ch;
+  --toc-w: 15rem;
+  --gap: clamp(2rem, 4.2vw, 4.75rem);
+  --grain: radial-gradient(rgba(16, 16, 20, .045) .5px, transparent .6px);
+  --grain-dark: radial-gradient(rgba(255, 255, 255, .05) .5px, transparent .6px);
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+  -webkit-text-size-adjust: 100%;
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  background-image: var(--grain);
+  background-size: 3px 3px;
+  color: var(--ink);
+  font-family: var(--serif);
+  font-optical-sizing: auto;
+  font-size: 1.1875rem;      /* 19px */
+  line-height: 1.7;
+  font-synthesis-weight: none;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+img { max-width: 100%; }
+::selection { background: rgba(181, 32, 42, .18); }
+
+/* ---------- acessibilidade ---------- */
+.skip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  padding: 12px 18px;
+  background: var(--ink);
+  color: var(--paper-white);
+  font: 700 .8rem/1 var(--sans);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.skip:focus { left: 8px; top: 8px; }
+
+:where(a, summary, button, [tabindex]):focus-visible {
+  outline: 3px solid var(--red);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ---------- barra de progresso ---------- */
+.progress {
+  position: fixed;
+  inset: 0 auto auto 0;
+  height: 3px;
+  width: 0;
+  background: linear-gradient(90deg, var(--red), var(--orange));
+  z-index: 60;
+  transition: width .1s linear;
+}
+@media (prefers-reduced-motion: reduce) { .progress { transition: none; } }
+
+/* ---------- masthead ---------- */
+.masthead {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(16, 16, 20, .94);
+  backdrop-filter: blur(12px) saturate(1.2);
+  border-bottom: 1px solid rgba(255, 255, 255, .12);
+}
+.mast-inner {
+  width: min(76rem, calc(100% - 2.5rem));
+  margin-inline: auto;
+  min-height: 3.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: .5rem 0;
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  text-decoration: none;
+  flex: none;
+}
+.brand img { width: 26px; height: 26px; object-fit: contain; }
+.brand span {
+  font: 800 .68rem/1 var(--sans);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: #ff9d5c;
+  transition: color .18s;
+}
+.brand:hover span { color: #ffd9a8; }
+
+.mast-nav {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: .45rem;
+  min-width: 0;
+}
+.mast-link {
+  font: 700 .66rem/1 var(--sans);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #b7b3a8;
+  text-decoration: none;
+  padding: .5rem .6rem;
+  border-radius: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  transition: color .18s, background-color .18s;
+}
+.mast-link:hover { color: #fff; background: rgba(255, 255, 255, .09); }
+
+/* toggle PT/EN */
+.lang {
+  display: inline-flex;
+  border: 1px solid rgba(255, 255, 255, .3);
+  border-radius: 3px;
+  overflow: hidden;
+  flex: none;
+}
+.lang a,
+.lang span {
+  font: 800 .66rem/1 var(--sans);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: .5rem .6rem;
+  text-decoration: none;
+  transition: background-color .18s, color .18s;
+}
+.lang .is-current { background: #ff9d5c; color: var(--ink); }
+.lang a:not(.is-current) { color: #b7b3a8; }
+.lang a:not(.is-current):hover { background: rgba(255, 255, 255, .12); color: #fff; }
+
+/* ---------- layout ---------- */
+.shell {
+  width: min(76rem, calc(100% - 2.5rem));
+  margin-inline: auto;
+  display: grid;
+  column-gap: var(--gap);
+  grid-template-columns: minmax(0, var(--toc-w)) minmax(0, var(--measure));
+  grid-template-areas:
+    ".   head"
+    "toc prose";
+  justify-content: center;
+  padding-bottom: clamp(3rem, 7vw, 5.5rem);
+}
+.article-head { grid-area: head; }
+.toc { grid-area: toc; }
+.prose { grid-area: prose; min-width: 0; }
+
+@media (max-width: 1023px) {
+  .shell {
+    grid-template-columns: minmax(0, var(--measure));
+    grid-template-areas: "head" "toc" "prose";
+    justify-content: center;
+  }
+}
+
+/* ---------- cabeçalho editorial ---------- */
+.article-head {
+  padding: clamp(2.75rem, 6vw, 4.75rem) 0 clamp(1.75rem, 3vw, 2.5rem);
+}
+.eyebrow {
+  margin: 0 0 1.1rem;
+  font: 700 .72rem/1.4 var(--sans);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--red);
+  display: flex;
+  align-items: center;
+  gap: .6em;
+}
+.eyebrow::before {
+  content: "";
+  width: 26px;
+  height: 2px;
+  background: currentColor;
+  flex: none;
+}
+.article-head h1 {
+  margin: 0;
+  font-family: var(--display);
+  font-optical-sizing: auto;
+  font-weight: 900;
+  font-size: clamp(2.35rem, 4.8vw, 3.6rem);
+  line-height: 1;
+  letter-spacing: -.028em;
+  text-wrap: balance;
+}
+.article-head h1 em { font-style: italic; font-weight: 600; color: var(--red); }
+.deck {
+  margin: 1.35rem 0 0;
+  font-size: clamp(1.15rem, 1.7vw, 1.4rem);
+  line-height: 1.48;
+  color: #35342d;
+  font-weight: 400;
+  text-wrap: pretty;
+}
+.byline {
+  margin-top: 1.75rem;
+  padding-top: 1rem;
+  border-top: 2px solid var(--ink);
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem 1.6rem;
+  font: 500 .78rem/1.5 var(--sans);
+  color: var(--muted);
+}
+.byline b {
+  font-family: var(--mono);
+  font-weight: 600;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- sumário ---------- */
+.toc { align-self: start; }
+@media (min-width: 1024px) {
+  .toc {
+    position: sticky;
+    top: 4.25rem;
+    max-height: calc(100vh - 6rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    padding: 2.5rem 0 1rem;
+  }
+}
+.toc details { border: 0; margin: 0; }
+.toc summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem;
+  padding: .8rem .1rem;
+  font: 700 .7rem/1 var(--sans);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-top: 1px solid var(--edge);
+  border-bottom: 1px solid var(--edge);
+}
+.toc summary::-webkit-details-marker { display: none; }
+.toc summary::after {
+  content: "";
+  width: .5rem;
+  height: .5rem;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg) translate(-2px, -2px);
+  transition: transform .2s;
+  flex: none;
+}
+.toc details[open] summary::after { transform: rotate(-135deg) translate(-2px, -2px); }
+
+.toc ol {
+  list-style: none;
+  margin: .35rem 0 0;
+  padding: 0;
+  counter-reset: toc;
+}
+.toc li { margin: 0; }
+.toc a {
+  display: grid;
+  grid-template-columns: 2.1rem minmax(0, 1fr);
+  gap: .5rem;
+  align-items: baseline;
+  padding: .42rem .45rem .42rem .1rem;
+  border-left: 2px solid transparent;
+  color: var(--muted);
+  text-decoration: none;
+  font: 500 .875rem/1.35 var(--sans);
+  transition: color .16s, border-color .16s, background-color .16s;
+}
+.toc a .n {
+  font: 600 .7rem/1.5 var(--mono);
+  letter-spacing: .04em;
+  color: var(--edge);
+  font-variant-numeric: tabular-nums;
+  transition: color .16s;
+}
+.toc a:hover { color: var(--ink); background: rgba(16, 16, 20, .04); }
+.toc a:hover .n { color: var(--red); }
+.toc a.is-active {
+  color: var(--ink);
+  font-weight: 700;
+  border-left-color: var(--red);
+  background: rgba(181, 32, 42, .06);
+}
+.toc a.is-active .n { color: var(--red); }
+.toc .no-num a { grid-template-columns: minmax(0, 1fr); }
+
+@media (min-width: 1024px) {
+  .toc summary { border-top: 0; padding-top: 0; }
+  .toc summary::after { display: none; }
+}
+@media (max-width: 1023px) {
+  .toc { margin-bottom: 1.5rem; }
+  .toc a { padding-block: .55rem; }
+}
+
+/* ---------- corpo do texto ---------- */
+.prose { padding-top: clamp(.5rem, 2vw, 2.5rem); }
+.prose > :first-child { margin-top: 0; }
+/* As listas de fontes trazem URLs cruas de 100+ caracteres. Sem isto elas não
+   quebram e empurram a página inteira na horizontal no mobile. */
+.prose { overflow-wrap: break-word; }
+.prose a { overflow-wrap: anywhere; }
+
+.prose p {
+  margin: 0 0 1.35em;
+  text-wrap: pretty;
+  hyphens: auto;
+  hanging-punctuation: first last;
+}
+.prose > p:last-child { margin-bottom: 0; }
+
+/* abertura editorial: capitular + primeira linha em versalete */
+.prose p.lede {
+  font-size: 1.06em;
+  margin-bottom: 1.5em;
+}
+.prose p.lede::first-line {
+  font-variant-caps: small-caps;
+  letter-spacing: .015em;
+  font-weight: 500;
+}
+.prose p.lede::first-letter {
+  float: left;
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: 4.1em;
+  line-height: .8;
+  margin: .04em .1em -.02em 0;
+  color: var(--red);
+  font-variant-caps: normal;
+  text-transform: uppercase;
+}
+
+.prose h2 {
+  margin: 2.6em 0 1em;
+  font-family: var(--display);
+  font-optical-sizing: auto;
+  font-weight: 900;
+  font-size: clamp(1.75rem, 3.1vw, 2.5rem);
+  line-height: 1.02;
+  letter-spacing: -.022em;
+  text-wrap: balance;
+  scroll-margin-top: 5rem;
+}
+.prose h2 .part-no {
+  display: block;
+  margin-bottom: .7rem;
+  font: 600 .72rem/1 var(--mono);
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--red);
+}
+.prose h2 .part-title { display: block; }
+
+.prose h3 {
+  margin: 2.1em 0 .75em;
+  font-family: var(--display);
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-size: 1.32rem;
+  line-height: 1.28;
+  letter-spacing: -.008em;
+  color: var(--ink);
+  scroll-margin-top: 5rem;
+  text-wrap: balance;
+}
+/* Filete curto acima: marca o crosshead sem virar hífen solto na frente da
+   palavra e sobrevive a títulos de duas ou três linhas. */
+.prose h3::before {
+  content: "";
+  display: block;
+  width: 2rem;
+  height: 2px;
+  margin-bottom: .7rem;
+  background: var(--red);
+}
+.prose h4 {
+  margin: 1.9em 0 .6em;
+  font: 700 .82rem/1.4 var(--sans);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  scroll-margin-top: 5rem;
+}
+
+.prose h2 + h3, .prose h2 + p, .prose h3 + p { margin-top: 0; }
+.prose h2 + h3 { margin-top: -.2em; }
+
+/* ---------- links ---------- */
+.prose a {
+  color: var(--navy);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: rgba(8, 39, 92, .32);
+  text-underline-offset: .18em;
+  transition: color .16s, text-decoration-color .16s, background-color .16s;
+}
+.prose a:hover {
+  color: var(--red);
+  text-decoration-color: var(--red);
+  background: rgba(181, 32, 42, .07);
+}
+
+/* ---------- destaque estatístico ----------
+   O contraste é de textura, não de cor: mono + tabular já separa o número da
+   prosa serifada. Tingir de vermelho funcionava no ensaio (poucos números por
+   parágrafo) e virava marca-texto nas auditorias, onde quase toda frase carrega
+   uma margem de erro. */
+.stat {
+  font-family: var(--mono);
+  font-weight: 500;
+  font-size: .88em;
+  letter-spacing: -.015em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: #2c2b24;
+}
+.prose a .stat { color: inherit; }
+.prose strong { font-weight: 600; color: var(--ink); }
+.prose em { font-style: italic; }
+code, .prose code {
+  font-family: var(--mono);
+  font-size: .84em;
+  padding: .12em .35em;
+  background: var(--paper-2);
+  border: 1px solid var(--edge);
+  border-radius: 2px;
+  overflow-wrap: anywhere;
+}
+
+/* ---------- ficha técnica (nota metodológica) ---------- */
+.prose blockquote {
+  margin: 0 0 2.25em;
+  padding: 1.4rem 1.5rem;
+  background: var(--paper-white);
+  border: 1px solid var(--edge);
+  border-left: 5px solid var(--red);
+  box-shadow: 4px 4px 0 rgba(16, 16, 20, .06);
+}
+.prose blockquote p {
+  margin: 0 0 .8em;
+  font-size: .96rem;
+  line-height: 1.6;
+  color: #33322c;
+}
+.prose blockquote p:last-child { margin-bottom: 0; }
+.prose blockquote .ficha-label {
+  display: block;
+  margin: 0 0 .7rem;
+  font: 800 .64rem/1 var(--sans);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--red);
+}
+.prose blockquote .ficha-label::after {
+  content: "";
+  display: block;
+  margin-top: .7rem;
+  height: 1px;
+  background: var(--edge);
+}
+
+/* ---------- listas ---------- */
+.prose ul, .prose ol { margin: 0 0 1.5em; padding-left: 1.5rem; }
+.prose li { margin: 0 0 .55em; padding-left: .3rem; }
+.prose li::marker { color: var(--red); font-weight: 600; }
+.prose ol { list-style: decimal; }
+.prose ol li::marker { font-family: var(--mono); font-size: .85em; }
+.prose ul li::marker { content: "—  "; }
+.prose li > ul, .prose li > ol { margin-top: .55em; }
+
+/* ---------- separador ornamental ---------- */
+.prose hr {
+  border: 0;
+  height: 5px;
+  width: 88px;
+  margin: clamp(3rem, 6vw, 4.5rem) auto;
+  background: radial-gradient(circle, var(--red) 2.2px, transparent 2.6px) 0 50% / 30px 5px repeat-x;
+  opacity: .75;
+}
+.prose hr + h2 { margin-top: 0; }
+
+/* ---------- tabelas ---------- */
+.table-wrap {
+  margin: 0 0 1.75em;
+  overflow-x: auto;
+  background: var(--paper-white);
+  border: 1px solid var(--edge);
+  box-shadow: 3px 3px 0 rgba(16, 16, 20, .06);
+  scrollbar-width: thin;
+}
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--sans);
+  font-size: .85rem;
+  line-height: 1.45;
+}
+.prose th, .prose td {
+  padding: .65rem .75rem;
+  border-bottom: 1px solid var(--edge);
+  text-align: left;
+  vertical-align: top;
+}
+.prose th {
+  font-weight: 700;
+  font-size: .64rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: rgba(16, 16, 20, .035);
+  white-space: nowrap;
+}
+.prose td[align="right"], .prose th[align="right"] {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.prose tbody tr:last-child td { border-bottom: 0; }
+.prose tbody tr:hover td { background: rgba(181, 32, 42, .045); }
+.prose table .stat { font-size: .95em; color: inherit; }
+
+/* ---------- rodapé ---------- */
+.site-foot {
+  background: var(--ink);
+  background-image: var(--grain-dark);
+  background-size: 3px 3px;
+  color: #b7b3a8;
+  padding: clamp(2.75rem, 6vw, 4rem) 0 clamp(3rem, 7vw, 4.5rem);
+}
+.foot-inner { width: min(76rem, calc(100% - 2.5rem)); margin-inline: auto; }
+.foot-brand {
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+  margin-bottom: 1rem;
+  font: 800 .74rem/1 var(--sans);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: #ff9d5c;
+  text-decoration: none;
+}
+.foot-brand img { width: 32px; height: 32px; object-fit: contain; }
+.site-foot p {
+  max-width: 66ch;
+  margin: 0 0 .9em;
+  font: 400 .88rem/1.6 var(--sans);
+}
+.site-foot a { color: #ffc178; text-decoration-color: rgba(255, 193, 120, .45); }
+.site-foot a:hover { color: #ffd9a8; }
+.foot-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem 1.4rem;
+  margin-top: 1.4rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid rgba(255, 255, 255, .16);
+  font: 500 .8rem/1 var(--sans);
+}
+
+/* ---------- responsivo ---------- */
+@media (max-width: 640px) {
+  body { font-size: 1.0625rem; line-height: 1.66; }
+  .mast-inner, .shell, .foot-inner { width: calc(100% - 1.75rem); }
+  .mast-inner { gap: .4rem; }
+  .brand span { font-size: .58rem; letter-spacing: .1em; }
+  .mast-nav { gap: .25rem; }
+  /* O logotipo já leva para a home; o link textual só rouba largura da barra. */
+  .mast-link.home { display: none; }
+  .mast-link { padding: .5rem .3rem; font-size: .6rem; letter-spacing: .04em; }
+  .lang a, .lang span { padding: .45rem .45rem; font-size: .6rem; }
+  .lang { flex: none; }
+  .article-head h1 { font-size: clamp(2.05rem, 8.6vw, 2.75rem); }
+  .prose p.lede::first-letter { font-size: 3.5em; }
+  .prose h2 { font-size: clamp(1.6rem, 6.4vw, 2rem); }
+  .prose h3 { font-size: 1.18rem; }
+  .byline { gap: .3rem 1rem; font-size: .72rem; }
+}
+
+/* ---------- impressão ---------- */
+@media print {
+  .masthead, .progress, .toc, .site-foot .foot-links { display: none !important; }
+  body {
+    background: #fff;
+    color: #000;
+    font-size: 11pt;
+    line-height: 1.5;
+  }
+  .shell {
+    width: 100%;
+    display: block;
+    padding: 0;
+  }
+  .prose, .article-head { max-width: none; }
+  .article-head { padding-top: 0; }
+  .prose h2, .prose h3 { break-after: avoid; page-break-after: avoid; }
+  .prose p, .prose blockquote, .table-wrap { break-inside: avoid; }
+  .prose a { color: #000; text-decoration: underline; }
+  .prose a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font: 400 7pt var(--mono);
+    word-break: break-all;
+    color: #444;
+  }
+  .prose blockquote { box-shadow: none; background: #fff; }
+  .stat { color: #000; }
+  .site-foot { background: #fff; color: #000; padding: 12pt 0 0; border-top: 1px solid #000; }
+  .site-foot a { color: #000; }
+  .foot-brand { color: #000; }
+}

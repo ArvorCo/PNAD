@@ -13,7 +13,7 @@
 
 ![Brasil — renda domiciliar por UF](docs/assets/hero.png)
 
-### 📊 [**Interactive data essay →**](https://brasil.arvor.co) &nbsp; · &nbsp; 🇧🇷 [Artigo PT](docs/artigo_pt.md) &nbsp; · &nbsp; 🇬🇧 [Article EN](docs/artigo_en.md)
+### 📚 [**All reports →**](https://brasil.arvor.co) &nbsp; · &nbsp; 📊 [Interactive data essay](https://brasil.arvor.co/pnad.html) &nbsp; · &nbsp; 🇧🇷 [Artigo PT](https://brasil.arvor.co/artigo_pt.html) &nbsp; · &nbsp; 🇬🇧 [Article EN](https://brasil.arvor.co/artigo_en.html)
 
 </div>
 
@@ -33,7 +33,7 @@ country hides from itself.
 This repository is an attempt to close that gap. It compresses the painful
 path from official microdata into a single, auditable command-line tool
 (`brasil`) whose output — CSVs, SQLite tables, JSON payloads, a rich terminal
-dashboard, and the [interactive data essay](docs/index.html) in this folder —
+dashboard, and the [interactive data essay](docs/pnad.html) in this folder —
 any Brazilian (or anyone interested in the country) can read, reproduce, and
 challenge. Numbers are not neutral, but auditability is. If a claim about
 Brazilian inequality cannot be traced back to a bootstrap weight, a deflator,
@@ -59,7 +59,7 @@ and a specific UF row in the PNADC, it does not belong in public debate.
 - extracted CSVs · labeled CSVs · IPCA-deflated CSVs
 - SQLite databases
 - terminal dashboards (pretty + JSON)
-- interactive HTML essay (`docs/index.html`)
+- interactive HTML essay (`docs/pnad.html`)
 
 ### Core interfaces
 
@@ -80,7 +80,7 @@ and a specific UF row in the PNADC, it does not belong in public debate.
   - income excluding social benefits
   - income excluding public transfers
   - work-only income
-- Visual layer (`docs/index.html`) renders the same data as 15 interactive Plotly charts with a PT/EN toggle, suitable for GitHub Pages.
+- Visual layer (`docs/pnad.html`) renders the same data as 15 interactive Plotly charts with a PT/EN toggle, suitable for GitHub Pages.
 
 ---
 
@@ -138,7 +138,7 @@ brasil dashboard
 
 # 6) render the interactive HTML essay
 python docs/build_index.py
-open docs/index.html
+open docs/pnad.html
 
 # 7) query the SQLite database (read-only by default)
 brasil query \
@@ -152,7 +152,8 @@ Main generated outputs:
 - `data/outputs/base_anual_labeled_npv.csv` — annual visita 5, labeled, IPCA-adjusted
 - `data/outputs/base_anual_visita1_labeled_npv.csv` — annual visita 1, labeled, IPCA-adjusted, when built
 - `data/outputs/brasil.sqlite` — SQLite with `base_labeled_npv`, `base_anual_labeled_npv`, and optional `base_anual_visita1_labeled_npv` tables
-- `docs/index.html` — static interactive essay (bilingual)
+- `docs/index.html` — library hub linking every published report (hand-written)
+- `docs/pnad.html` — static interactive essay (bilingual)
 - `data/outputs/ipca.csv` — IPCA series
 - `data/outputs/tse_eleitorado_perfil.sqlite` — compact TSE electorate benchmarks
 - `data/outputs/tse_eleitorado_perfil_benchmark.json` — exact gender and age totals for polling audits
@@ -243,12 +244,12 @@ brasil query \
 ### 7. Build the interactive HTML essay
 
 ```bash
-python docs/build_index.py                  # rebuilds docs/index.html
+python docs/build_index.py                  # rebuilds docs/pnad.html
 python docs/build_hero.py                   # regenerates docs/assets/hero.png
 python -m http.server 8000 -d docs          # preview locally
 ```
 
-The generated `docs/index.html` is a self-contained bilingual essay (PT/EN
+The generated `docs/pnad.html` is a self-contained bilingual essay (PT/EN
 toggle) with 15 interactive Plotly charts reading the same PNADC data as the
 terminal dashboard. It is suitable for GitHub Pages (`main:/docs`).
 
@@ -379,7 +380,7 @@ Good contributions include:
 - new survey integrations (PNADS, Censo Demográfico microdata, POF)
 - more robust statistical validation
 - better annual-income decomposition workflows
-- dashboard refinements and new visualizations in `docs/index.html`
+- dashboard refinements and new visualizations in `docs/pnad.html`
 - documentation and examples
 - performance improvements for large raw files
 - decomposition of the single-file CLI into cleaner modules
@@ -406,8 +407,8 @@ Production-useful for:
 
 It is **not** an official IBGE or TSE tool. Users should still understand the
 underlying survey design before publishing strong claims. Start with the
-bundled [interactive essay](docs/index.html) and the
-[full article (PT)](docs/artigo_pt.md) / [(EN)](docs/artigo_en.md) for a
+bundled [interactive essay](docs/pnad.html) and the
+[full article (PT)](docs/artigo_pt.html) / [(EN)](docs/artigo_en.html) for a
 guided, auditable reading of what the data says.
 
 ---

@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Social cards — Arvor Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Source+Sans+3:wght@400;600;700;800;900&family=Spline+Sans+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0c12; --bg2:#0e1119;
+  --ink:#f4efe3; --ink2:#e7e1d3; --muted:#9199ad; --faint:#666e82;
+  --lula:#e5473f; --lula-l:#f2857f;
+  --flavio:#3f84f2; --flavio-l:#8fb6f7;
+  --gold:#e3a92c;
+  --green:#33c08a;
+  --line:rgba(244,239,227,.14); --line2:rgba(244,239,227,.30);
+  --serif:"Fraunces",Georgia,serif;
+  --sans:"Source Sans 3",ui-sans-serif,system-ui,sans-serif;
+  --mono:"Spline Sans Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#15181f;font-family:var(--sans);padding:28px;display:flex;flex-direction:column;gap:28px;align-items:flex-start}
+.hint{color:#9199ad;font-family:var(--mono);font-size:13px}
+
+/* card 1200x630 exatos — renderizar com viewport 1200,630 e ?card=N */
+.card{
+  width:1200px;height:630px;position:relative;overflow:hidden;
+  background:
+    radial-gradient(1100px 620px at 78% 12%, rgba(63,132,242,.16), transparent 62%),
+    radial-gradient(760px 520px at 6% 96%, rgba(229,71,63,.14), transparent 62%),
+    linear-gradient(160deg,var(--bg2) 0%, var(--bg) 58%, #070910 100%);
+  color:var(--ink);
+}
+/* grão sutil, CSS puro */
+.card::after{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.55;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(255,255,255,.014) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.010) 0 1px, transparent 1px 3px);
+}
+.ring{position:absolute;border:1px solid rgba(244,239,227,.07);border-radius:50%}
+.pad{position:absolute;inset:0;padding:54px 62px;display:flex;flex-direction:column;z-index:3}
+.eyebrow{font-family:var(--mono);font-weight:700;font-size:19px;letter-spacing:.22em;text-transform:uppercase;color:var(--flavio-l)}
+.eyebrow.g{color:var(--gold)}
+.foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:20px;
+  border-top:1px solid var(--line);padding-top:18px;font-family:var(--mono);font-size:18px;color:var(--faint)}
+.foot b{color:var(--ink2);letter-spacing:.04em}
+.brandline{display:flex;align-items:center;gap:12px}
+.brandline img{width:34px;height:34px;object-fit:contain}
+
+/* ---------- card do dossiê Nexus ---------- */
+.title{font-family:var(--serif);font-weight:900;line-height:1.0;letter-spacing:-.02em;color:var(--ink)}
+.score{display:flex;align-items:baseline;gap:6px;font-family:var(--sans);font-weight:900;letter-spacing:-.04em;line-height:.86}
+.score .a{font-size:150px;color:var(--lula-l)}
+.score .x{font-size:78px;color:var(--faint);padding:0 6px}
+.score .b{font-size:150px;color:var(--flavio-l)}
+.scorelab{font-family:var(--mono);font-size:21px;color:var(--muted);margin-top:8px}
+.stamp{display:inline-block;font-family:var(--mono);font-weight:700;font-size:19px;letter-spacing:.05em;
+  color:var(--lula-l);border:2.5px solid var(--lula);border-radius:7px;padding:9px 16px;transform:rotate(-3deg);
+  text-transform:uppercase;background:rgba(229,71,63,.07)}
+.kicker{font-size:26px;line-height:1.4;color:var(--ink2);max-width:600px}
+.kicker b{color:#fff}
+
+/* ---------- card do hub ---------- */
+.hub-title{font-family:var(--serif);font-weight:900;font-size:74px;line-height:.98;letter-spacing:-.025em}
+.hub-title span{color:var(--gold)}
+.hub-sub{font-size:25px;line-height:1.4;color:var(--ink2);max-width:640px;margin-top:18px}
+.stats{display:flex;gap:14px;margin-top:26px;flex-wrap:wrap}
+.stat{border:1px solid var(--line2);border-radius:12px;padding:14px 22px;background:rgba(244,239,227,.03)}
+.stat b{display:block;font-family:var(--sans);font-weight:900;font-size:44px;line-height:1;letter-spacing:-.03em;color:var(--gold)}
+.stat span{display:block;margin-top:6px;font-family:var(--mono);font-size:15px;color:var(--muted);letter-spacing:.04em}
+.rulers{margin-top:20px;font-family:var(--mono);font-size:18px;color:var(--muted)}
+.rulers b{color:var(--green)}
+
+body.solo{padding:0;background:transparent;gap:0}
+body.solo .hint{display:none}
+body.solo .card{display:none}
+body.solo .card.on{display:block}
+</style>
+</head>
+<body>
+<p class="hint">Cards 1200×630. Isolar para render: <b>?card=hub</b> ou <b>?card=nexus</b> (viewport 1200×630).</p>
+
+<!-- ============ CARD · HUB / brasil.arvor.co ============ -->
+<section class="card" id="card-hub">
+  <div class="ring" style="width:820px;height:820px;right:-230px;top:-190px"></div>
+  <div class="ring" style="width:520px;height:520px;right:-80px;top:60px"></div>
+  <div class="pad">
+    <div class="eyebrow g">Arvor Intelligence · Acervo público</div>
+    <div style="margin-top:22px">
+      <div class="hub-title">Auditoria de<br>pesquisas <span>eleitorais</span></div>
+      <p class="hub-sub">Todo dossiê aberto: questionário, amostra, margens e calibração contra as fontes oficiais. Com os cálculos que qualquer um refaz.</p>
+      <div class="stats">
+        <div class="stat"><b>7</b><span>AUDITORIAS</span></div>
+        <div class="stat"><b>4</b><span>INSTITUTOS</span></div>
+        <div class="stat"><b>1</b><span>RELATÓRIO PNAD</span></div>
+      </div>
+      <p class="rulers">réguas oficiais: <b>TSE</b> (eleitorado) · <b>IBGE/PNAD</b> (renda e escolaridade)</p>
+    </div>
+    <div class="foot">
+      <span class="brandline"><img src="img/arvor_logo.png" alt=""><b>ARVOR INTELLIGENCE</b></span>
+      <span>brasil.arvor.co</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CARD · DOSSIÊ BTG/NEXUS 6ª RODADA ============ -->
+<section class="card" id="card-nexus">
+  <div class="ring" style="width:900px;height:900px;right:-280px;top:-150px"></div>
+  <div class="pad">
+    <div class="eyebrow">Auditoria · BTG/Nexus · 6ª rodada · BR-07981/2026</div>
+    <div style="display:grid;grid-template-columns:1fr auto;gap:44px;align-items:center;flex:1;margin-top:6px">
+      <div>
+        <div class="title" style="font-size:66px">O empate que<br>não dá para <span style="color:var(--gold)">auditar</span></div>
+        <p class="kicker" style="margin-top:24px">O placar é plausível. O que não se pode ver é o problema: <b>12 respostas</b> coletadas e nunca devolvidas, e a <b>planilha de pesos</b> que decide tudo.</p>
+      </div>
+      <div style="text-align:center">
+        <div class="score"><span class="a">47</span><span class="x">×</span><span class="b">44</span></div>
+        <div class="scorelab">2º turno · Lula vs Flávio</div>
+        <div style="margin-top:22px"><span class="stamp">Empate técnico</span></div>
+      </div>
+    </div>
+    <div class="foot">
+      <span class="brandline"><img src="img/arvor_logo.png" alt=""><b>ARVOR INTELLIGENCE</b></span>
+      <span>brasil.arvor.co/nexus_btg_0726.html · n=2.003 · fontes TSE/IBGE</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CARD · PROPOSTA (PL + Resolução) ============ -->
+<section class="card" id="card-proposta">
+  <div class="ring" style="width:760px;height:760px;right:-200px;bottom:-260px"></div>
+  <div class="pad">
+    <div class="eyebrow g">Proposta Arvor · minutas prontas</div>
+    <div style="margin-top:20px">
+      <div class="hub-title" style="font-size:66px">Que o número saia<br><span>com a prova</span></div>
+      <p class="hub-sub" style="margin-top:16px;max-width:700px">Duas minutas prontas para uso: uma Resolução que o TSE já pode editar hoje e um Projeto de Lei. Texto livre, sem pedido de crédito.</p>
+      <div class="stats" style="margin-top:20px">
+        <div class="stat" style="padding:11px 18px"><b style="font-size:38px">2 dias</b><span>RELATÓRIO COMPLETO</span></div>
+        <div class="stat" style="padding:11px 18px"><b style="font-size:38px">junto</b><span>ONDE FOI COLETADO</span></div>
+        <div class="stat" style="padding:11px 18px"><b style="font-size:38px">já</b><span>VIGÊNCIA IMEDIATA</span></div>
+      </div>
+      <p class="rulers" style="margin-top:16px">altera a <b>Res. TSE 23.600/2019</b> · e os arts. 33 e 34 da <b>Lei 9.504/1997</b></p>
+    </div>
+    <div class="foot">
+      <span class="brandline"><img src="img/arvor_logo.png" alt=""><b>ARVOR INTELLIGENCE</b></span>
+      <span>brasil.arvor.co/proposta.html</span>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  var c = new URLSearchParams(location.search).get('card');
+  if(!c) return;
+  document.body.classList.add('solo');
+  var el = document.getElementById('card-' + c);
+  if(el) el.classList.add('on');
+})();
+</script>
+</body>
+</html>
