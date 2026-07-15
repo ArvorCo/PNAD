@@ -36,3 +36,11 @@ e também a ironia do cara que está pagando ser o cara que mais gostaria que o 
 
 pode fazer o commit completo, por favor
 
+### Prompt 9
+
+no slide 16 existe uma afirmação de que 64% mal conheciam o caso, mas deo nde vem esse número? por que os 64% do gráfico que aparece no slide seriam das pessoas que conhecem dem uito a pouco, não?
+
+### Prompt 10
+
+sim, precisa corrigir tudo, laudo, slides, thread etc
+
