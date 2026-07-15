@@ -20,7 +20,6 @@ from statistics import NormalDist
 import numpy as np
 from pypdf import PdfReader
 
-
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_SOURCE = ROOT / "data/pesquisas/nexus_btg/rodada6"
 DEFAULT_OUTPUT = ROOT / "docs/assets/nexus_btg_0726_data.json"
@@ -37,22 +36,71 @@ CITY_PDFS = [
 
 # IBGE 2-digit UF prefix (first two digits of the 7-digit municipality code).
 UF_BY_CODE_PREFIX = {
-    11: "RO", 12: "AC", 13: "AM", 14: "RR", 15: "PA", 16: "AP", 17: "TO",
-    21: "MA", 22: "PI", 23: "CE", 24: "RN", 25: "PB", 26: "PE", 27: "AL", 28: "SE", 29: "BA",
-    31: "MG", 32: "ES", 33: "RJ", 35: "SP",
-    41: "PR", 42: "SC", 43: "RS",
-    50: "MS", 51: "MT", 52: "GO", 53: "DF",
+    11: "RO",
+    12: "AC",
+    13: "AM",
+    14: "RR",
+    15: "PA",
+    16: "AP",
+    17: "TO",
+    21: "MA",
+    22: "PI",
+    23: "CE",
+    24: "RN",
+    25: "PB",
+    26: "PE",
+    27: "AL",
+    28: "SE",
+    29: "BA",
+    31: "MG",
+    32: "ES",
+    33: "RJ",
+    35: "SP",
+    41: "PR",
+    42: "SC",
+    43: "RS",
+    50: "MS",
+    51: "MT",
+    52: "GO",
+    53: "DF",
 }
 REGION_BY_UF = {
-    "RO": "Norte", "AC": "Norte", "AM": "Norte", "RR": "Norte", "PA": "Norte", "AP": "Norte", "TO": "Norte",
-    "MA": "Nordeste", "PI": "Nordeste", "CE": "Nordeste", "RN": "Nordeste", "PB": "Nordeste",
-    "PE": "Nordeste", "AL": "Nordeste", "SE": "Nordeste", "BA": "Nordeste",
-    "MG": "Sudeste", "ES": "Sudeste", "RJ": "Sudeste", "SP": "Sudeste",
-    "PR": "Sul", "SC": "Sul", "RS": "Sul",
-    "MS": "Centro-Oeste", "MT": "Centro-Oeste", "GO": "Centro-Oeste", "DF": "Centro-Oeste",
+    "RO": "Norte",
+    "AC": "Norte",
+    "AM": "Norte",
+    "RR": "Norte",
+    "PA": "Norte",
+    "AP": "Norte",
+    "TO": "Norte",
+    "MA": "Nordeste",
+    "PI": "Nordeste",
+    "CE": "Nordeste",
+    "RN": "Nordeste",
+    "PB": "Nordeste",
+    "PE": "Nordeste",
+    "AL": "Nordeste",
+    "SE": "Nordeste",
+    "BA": "Nordeste",
+    "MG": "Sudeste",
+    "ES": "Sudeste",
+    "RJ": "Sudeste",
+    "SP": "Sudeste",
+    "PR": "Sul",
+    "SC": "Sul",
+    "RS": "Sul",
+    "MS": "Centro-Oeste",
+    "MT": "Centro-Oeste",
+    "GO": "Centro-Oeste",
+    "DF": "Centro-Oeste",
 }
 # Regional macro-strata declared as the project weighting target (relatório p.4/p.109).
-REGION_DESIGN_TARGET = {"Norte": 8, "Centro-Oeste": 8, "Nordeste": 27, "Sudeste": 43, "Sul": 15}
+REGION_DESIGN_TARGET = {
+    "Norte": 8,
+    "Centro-Oeste": 8,
+    "Nordeste": 27,
+    "Sudeste": 43,
+    "Sul": 15,
+}
 REGION_ORDER = ["Norte", "Centro-Oeste", "Nordeste", "Sudeste", "Sul"]
 
 SERIES = {
@@ -78,7 +126,13 @@ SERIES = {
 NEXUS_TARGETS = {
     "sex": {"Mulher": 52.0, "Homem": 48.0},
     "age": {"16-24": 17.0, "25-34": 20.0, "35-44": 20.0, "45-59": 24.0, "60+": 20.0},
-    "region": {"Norte": 8.0, "Centro-Oeste": 8.0, "Nordeste": 27.0, "Sudeste": 43.0, "Sul": 15.0},
+    "region": {
+        "Norte": 8.0,
+        "Centro-Oeste": 8.0,
+        "Nordeste": 27.0,
+        "Sudeste": 43.0,
+        "Sul": 15.0,
+    },
     "education": {"Fundamental": 36.0, "Médio": 41.0, "Superior": 23.0},
     "income_july": {"Até 1 SM": 20.0, "1-2 SM": 20.0, "2-5 SM": 40.0, "5+ SM": 20.0},
 }
@@ -233,8 +287,12 @@ def city_audit(source: Path) -> tuple[list[dict], list[dict]]:
                 "municipalities": len(cities),
                 "interviews": sample,
                 "singleton_municipalities": sum(count == 1 for count in counts),
-                "singleton_city_pct": round(100 * sum(count == 1 for count in counts) / len(cities), 1),
-                "singleton_interview_pct": round(100 * sum(count == 1 for count in counts) / sample, 1),
+                "singleton_city_pct": round(
+                    100 * sum(count == 1 for count in counts) / len(cities), 1
+                ),
+                "singleton_interview_pct": round(
+                    100 * sum(count == 1 for count in counts) / sample, 1
+                ),
                 "top10_interviews": sum(item[1][1] for item in top),
                 "top10_pct": round(100 * sum(item[1][1] for item in top) / sample, 1),
                 "largest_city_count": top[0][1][1],
@@ -252,7 +310,9 @@ def city_audit(source: Path) -> tuple[list[dict], list[dict]]:
                 "to": waves[index]["date"],
                 "intersection": len(intersection),
                 "jaccard": round(len(intersection) / len(union), 3),
-                "current_retained_pct": round(100 * len(intersection) / len(current), 1),
+                "current_retained_pct": round(
+                    100 * len(intersection) / len(current), 1
+                ),
                 "entered": len(current - previous),
                 "left": len(previous - current),
             }
@@ -260,7 +320,9 @@ def city_audit(source: Path) -> tuple[list[dict], list[dict]]:
     return waves, overlaps
 
 
-def uf_distribution(source: Path, filename: str = "NexusBTG_Bairros_072026.pdf", wave: str = "13 jul.") -> dict:
+def uf_distribution(
+    source: Path, filename: str = "NexusBTG_Bairros_072026.pdf", wave: str = "13 jul."
+) -> dict:
     """Aggregate the current wave's municipality file by UF and compare it with the
     TSE electorate share per UF, exposing the intra-region distortion that regional
     weighting (5 macro-strata) cannot correct."""
@@ -309,7 +371,9 @@ def uf_distribution(source: Path, filename: str = "NexusBTG_Bairros_072026.pdf",
             "sample_pct": round(100 * by_region.get(region, 0) / total, 2),
             "electorate_pct": round(tse_region.get(region, 0.0), 2),
             "design_pct": REGION_DESIGN_TARGET[region],
-            "delta": round(100 * by_region.get(region, 0) / total - tse_region.get(region, 0.0), 2),
+            "delta": round(
+                100 * by_region.get(region, 0) / total - tse_region.get(region, 0.0), 2
+            ),
         }
         for region in REGION_ORDER
     ]
@@ -349,7 +413,10 @@ def tse_benchmarks() -> dict:
         "45-59": age_raw["45-59"],
         "60+": age_raw["60-100"],
     }
-    region = {key: region_raw[key] for key in ("Norte", "Centro-Oeste", "Nordeste", "Sudeste", "Sul")}
+    region = {
+        key: region_raw[key]
+        for key in ("Norte", "Centro-Oeste", "Nordeste", "Sudeste", "Sul")
+    }
 
     def compare(targets: dict[str, float], official: dict[str, float]) -> list[dict]:
         return [
@@ -392,7 +459,9 @@ def replicate_ci(theta: float, values: list[float], level: float = 0.95) -> dict
 def pnad_income() -> dict:
     table = "base_anual_visita1_labeled_npv"
     base_weight = "V1032__peso_com_calibracao"
-    replicate_weights = [f"V1032{index:03d}__peso_replicado_{index}" for index in range(1, 201)]
+    replicate_weights = [
+        f"V1032{index:03d}__peso_replicado_{index}" for index in range(1, 201)
+    ]
     columns = ",".join([base_weight, *replicate_weights])
     query = f"""
         SELECT VD5001__rend_efetivo_domiciliar_mw, {columns}
@@ -431,7 +500,9 @@ def pnad_income() -> dict:
         ]
         item = replicate_ci(estimate, replicate_estimates)
         nexus = NEXUS_TARGETS["income_july"][label]
-        item.update({"category": label, "nexus": nexus, "delta": round(nexus - estimate, 3)})
+        item.update(
+            {"category": label, "nexus": nexus, "delta": round(nexus - estimate, 3)}
+        )
         results.append(item)
 
     return {
@@ -485,7 +556,9 @@ def financials() -> dict:
         "values": [{"year": year, "profit": value} for year, value in values.items()],
         "bolsonaro_selected_cagr_2019_2022": round(cagr(2019, 2022), 1),
         "lula_cagr_2022_2025": round(cagr(2022, 2025), 1),
-        "lula_total_2023_2025": round(sum(values[year] for year in (2023, 2024, 2025)), 1),
+        "lula_total_2023_2025": round(
+            sum(values[year] for year in (2023, 2024, 2025)), 1
+        ),
         "q1_2026": {"profit": 4.8, "growth_yoy_pct": 42.3},
     }
 
@@ -525,7 +598,9 @@ def _margin_topline(cells: np.ndarray, weights: np.ndarray) -> np.ndarray:
     return (weights[:, None] * rows).sum(axis=0) * 100.0
 
 
-def _single_reweight_delta(dimension: str, cells: np.ndarray, ruler: dict) -> np.ndarray:
+def _single_reweight_delta(
+    dimension: str, cells: np.ndarray, ruler: dict
+) -> np.ndarray:
     """Reweight effect = topline(official ruler) − topline(published profile).
 
     Anchoring on the same cells cancels the per-margin rounding offset, so the
@@ -584,7 +659,9 @@ def _combined_reweight_delta(
                 joint[tuple(selector)] = block * scale
     cell_mass = joint.sum(axis=-1)
     conditional = joint / np.where(cell_mass > 0, cell_mass, 1.0)[..., None]
-    top_nexus = (seed[..., None] * conditional).sum(axis=tuple(other_axes) + (len(REWEIGHT_DIMS) - 1,))
+    top_nexus = (seed[..., None] * conditional).sum(
+        axis=tuple(other_axes) + (len(REWEIGHT_DIMS) - 1,)
+    )
     off_seed = official[REWEIGHT_DIMS[0]]
     for dimension in REWEIGHT_DIMS[1:]:
         off_seed = np.multiply.outer(off_seed, official[dimension])
@@ -607,11 +684,23 @@ def _tse_reweight_rulers() -> dict:
         return sum(raw_age[key] for key in keys)
 
     b1624 = band("16 anos", "17 anos", "18 anos", "19 anos", "20 anos", "21 a 24 anos")
-    b2540 = band("25 a 29 anos", "30 a 34 anos", "35 a 39 anos") + 0.2 * raw_age["40 a 44 anos"]
-    b4159 = 0.8 * raw_age["40 a 44 anos"] + band("45 a 49 anos", "50 a 54 anos", "55 a 59 anos")
+    b2540 = (
+        band("25 a 29 anos", "30 a 34 anos", "35 a 39 anos")
+        + 0.2 * raw_age["40 a 44 anos"]
+    )
+    b4159 = 0.8 * raw_age["40 a 44 anos"] + band(
+        "45 a 49 anos", "50 a 54 anos", "55 a 59 anos"
+    )
     b60 = band(
-        "60 a 64 anos", "65 a 69 anos", "70 a 74 anos", "75 a 79 anos", "80 a 84 anos",
-        "85 a 89 anos", "90 a 94 anos", "95 a 99 anos", "100 anos ou mais",
+        "60 a 64 anos",
+        "65 a 69 anos",
+        "70 a 74 anos",
+        "75 a 79 anos",
+        "80 a 84 anos",
+        "85 a 89 anos",
+        "90 a 94 anos",
+        "95 a 99 anos",
+        "100 anos ou mais",
     )
     total = b1624 + b2540 + b4159 + b60
     age = {
@@ -698,9 +787,7 @@ def reweight_scenarios(
     # Step 1 — validation: profile-weighted reproduction of the 47×44 topline.
     validation = []
     for dim in REWEIGHT_DIMS:
-        profile = np.array(
-            list(RUNOFF_CROSSTABS[dim]["profile"].values()), dtype=float
-        )
+        profile = np.array(list(RUNOFF_CROSSTABS[dim]["profile"].values()), dtype=float)
         topline = _margin_topline(matrices[dim], profile)
         validation.append(
             {
@@ -711,7 +798,8 @@ def reweight_scenarios(
                 "delta_lula": round(topline[0] - base[0], 2),
                 "delta_flavio": round(topline[1] - base[1], 2),
                 "within_0_5": bool(
-                    abs(topline[0] - base[0]) <= 0.5 and abs(topline[1] - base[1]) <= 0.5
+                    abs(topline[0] - base[0]) <= 0.5
+                    and abs(topline[1] - base[1]) <= 0.5
                 ),
             }
         )
@@ -770,9 +858,7 @@ def reweight_scenarios(
                 "id": key,
                 "label": label,
                 "ruler": (
-                    None
-                    if dim in (None, "__combined__")
-                    else rulers[dim]["source"]
+                    None if dim in (None, "__combined__") else rulers[dim]["source"]
                 ),
                 "lula": round(lula, 2),
                 "flavio": round(flavio, 2),
@@ -946,7 +1032,9 @@ def main() -> None:
     args = parser.parse_args()
     payload = build_payload(args.source.resolve())
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    args.output.write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
     print(f"wrote {args.output} ({len(payload['files'])} source files)")
 
 

@@ -106,7 +106,9 @@ def extract_section(html: str, section_id: str) -> str:
     parser.feed(html)
     parser.close()
     if parser.start is None:
-        sys.exit(f'ERRO: <section id="{section_id}"> não foi localizado em {SOURCE.name}.')
+        sys.exit(
+            f'ERRO: <section id="{section_id}"> não foi localizado em {SOURCE.name}.'
+        )
     if parser.end is None:
         sys.exit(
             f'ERRO: <section id="{section_id}"> está aberta e sem </section> correspondente '
@@ -131,6 +133,7 @@ def slugify(text: str) -> str:
 
 def strip_laudo_chrome(fragment: str) -> str:
     """Remove do trecho o que só faz sentido dentro do laudo."""
+
     # Classes de animação (`reveal` e seu estado `in`), preservando as demais.
     def _clean_class(match: re.Match[str]) -> str:
         kept = [c for c in match.group(1).split() if c not in {"reveal", "in"}]
@@ -402,7 +405,9 @@ def build(output: Path) -> int:
             )
         title_match = re.search(r"<h2[^>]*>(.*?)</h2>", fragment, flags=re.S)
         if not title_match:
-            sys.exit(f'ERRO: seção "{section_id}" sem <h2> — não dá para montar o sumário.')
+            sys.exit(
+                f'ERRO: seção "{section_id}" sem <h2> — não dá para montar o sumário.'
+            )
         title = re.sub(r"<[^>]+>", "", title_match.group(1)).strip()
         rendered[section_id] = fragment
         groups.append((section_id, title, items))
@@ -421,7 +426,9 @@ def build(output: Path) -> int:
         print(f"  · {section_id:<12} extraído {raw_len:>6} B → injetado {out_len:>6} B")
     print(f"  · sumário       {sum(len(i) for _, _, i in groups)} artigos")
     if rewritten:
-        print(f"  · âncoras reescritas para o laudo: {', '.join(sorted(set(rewritten)))}")
+        print(
+            f"  · âncoras reescritas para o laudo: {', '.join(sorted(set(rewritten)))}"
+        )
     else:
         print("  · âncoras internas: nenhuma pendente de reescrita")
     print(f"  · total         {len(page.encode('utf-8'))} B")

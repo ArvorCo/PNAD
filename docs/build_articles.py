@@ -306,7 +306,9 @@ TAG_SPLIT_RE = re.compile(r"(<[^>]+>)")
 H2_RE = re.compile(r'(<h2 id="[^"]*">)(.*?)(</h2>)', re.DOTALL)
 BLOCKQUOTE_RE = re.compile(r"<blockquote>(.*?)</blockquote>", re.DOTALL)
 TABLE_RE = re.compile(r"<table>.*?</table>", re.DOTALL)
-PART_RE = re.compile(r"^\s*((?:parte|part)\s+\d+)\s*[—–-]\s*(.+)$", re.IGNORECASE | re.DOTALL)
+PART_RE = re.compile(
+    r"^\s*((?:parte|part)\s+\d+)\s*[—–-]\s*(.+)$", re.IGNORECASE | re.DOTALL
+)
 SKIP_TAGS = ("h1", "h2", "h3", "h4", "h5", "h6")
 
 
@@ -339,7 +341,9 @@ def mark_stats(body: str, lang: str) -> str:
                 skip_depth = max(skip_depth, 0)
             out.append(token)
         elif token and skip_depth == 0:
-            out.append(pattern.sub(lambda m: f'<span class="stat">{m.group(0)}</span>', token))
+            out.append(
+                pattern.sub(lambda m: f'<span class="stat">{m.group(0)}</span>', token)
+            )
         else:
             out.append(token)
     return "".join(out)
@@ -413,7 +417,9 @@ def build_toc(tokens: list[dict], lang: str) -> str:
         anchor = token["id"]
         part = PART_RE.match(name)
         if part:
-            number = re.sub(r"^\s*(?:parte|part)\s+", "", part.group(1), flags=re.IGNORECASE)
+            number = re.sub(
+                r"^\s*(?:parte|part)\s+", "", part.group(1), flags=re.IGNORECASE
+            )
             label = part.group(2).strip()
             items.append(
                 f'          <li><a href="#{anchor}">'
@@ -609,7 +615,9 @@ PAGE = """<!doctype html>
 
 def indent(fragment: str, spaces: int) -> str:
     pad = " " * spaces
-    return "\n".join(pad + line if line.strip() else line for line in fragment.splitlines())
+    return "\n".join(
+        pad + line if line.strip() else line for line in fragment.splitlines()
+    )
 
 
 def render(article: Article, by_slug: dict[str, Article]) -> str:
@@ -621,8 +629,15 @@ def render(article: Article, by_slug: dict[str, Article]) -> str:
     converter = markdown.Markdown(
         extensions=["extra", "smarty", "sane_lists", "toc"],
         extension_configs={
-            "toc": {"slugify": lambda value, sep: slugify(value, sep), "toc_depth": "2-3"},
-            "smarty": {"smart_dashes": True, "smart_quotes": True, "smart_ellipses": True},
+            "toc": {
+                "slugify": lambda value, sep: slugify(value, sep),
+                "toc_depth": "2-3",
+            },
+            "smarty": {
+                "smart_dashes": True,
+                "smart_quotes": True,
+                "smart_ellipses": True,
+            },
         },
         output_format="html",
     )
@@ -691,7 +706,7 @@ def render(article: Article, by_slug: dict[str, Article]) -> str:
         deck_html=deck_html,
         minutes=minutes,
         reading=html.escape(strings["reading"]),
-        words=f"{words:,}".replace(",", "."if article.lang == "pt-BR" else ","),
+        words=f"{words:,}".replace(",", "." if article.lang == "pt-BR" else ","),
         words_label=html.escape(strings["words"]),
         toc=build_toc(toc_tokens, article.lang),
         body=indent(body, 8),
@@ -747,7 +762,9 @@ def main(argv: list[str] | None = None) -> int:
         target = args.output / article.filename
         current = target.read_text(encoding="utf-8") if target.is_file() else None
         if current == page:
-            print(f"  unchanged  {target.relative_to(Path.cwd()) if target.is_relative_to(Path.cwd()) else target}")
+            print(
+                f"  unchanged  {target.relative_to(Path.cwd()) if target.is_relative_to(Path.cwd()) else target}"
+            )
             continue
         stale += 1
         if args.check:
@@ -758,7 +775,10 @@ def main(argv: list[str] | None = None) -> int:
         print(f"  wrote      {target.name}  ({words:,} words on page)")
 
     if args.check and stale:
-        print(f"\n{stale} file(s) out of date; run without --check to regenerate.", file=sys.stderr)
+        print(
+            f"\n{stale} file(s) out of date; run without --check to regenerate.",
+            file=sys.stderr,
+        )
         return 1
     return 0
 

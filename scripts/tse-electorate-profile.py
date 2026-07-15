@@ -20,7 +20,6 @@ import zipfile
 from collections import Counter
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_INPUT = ROOT / "data/raw/tse_eleitorado/perfil_eleitorado_ATUAL.zip"
 DEFAULT_DB = ROOT / "data/outputs/tse_eleitorado_perfil.sqlite"
@@ -113,7 +112,9 @@ def aggregate(path: Path) -> tuple[dict[str, str], dict[str, Counter[str]]]:
     first: dict[str, str] | None = None
 
     with zipfile.ZipFile(path) as archive:
-        csv_names = [name for name in archive.namelist() if name.lower().endswith(".csv")]
+        csv_names = [
+            name for name in archive.namelist() if name.lower().endswith(".csv")
+        ]
         if len(csv_names) != 1:
             raise ValueError(f"expected one CSV in {path}, found {len(csv_names)}")
         with archive.open(csv_names[0]) as binary:
@@ -185,7 +186,9 @@ def rows_for_summary(counters: dict[str, Counter[str]]) -> list[tuple]:
     for dimension, values in counters.items():
         denominator = sum(values.values())
         if dimension == "genero_atlas_binario_all":
-            universe = "Todos os países/UF, inclusive exterior; exclui gênero não informado"
+            universe = (
+                "Todos os países/UF, inclusive exterior; exclui gênero não informado"
+            )
         elif dimension == "idade_atlas_all":
             universe = "Todos os países/UF, inclusive exterior; eleitorado 16+"
         elif dimension.endswith("_all"):
@@ -197,18 +200,21 @@ def rows_for_summary(counters: dict[str, Counter[str]]) -> list[tuple]:
         else:
             universe = "Brasil sem exterior"
         for category, count in values.most_common():
-            rows.append((dimension, category, count, 100 * count / denominator, universe))
+            rows.append(
+                (dimension, category, count, 100 * count / denominator, universe)
+            )
     return rows
 
 
-def write_database(path: Path, metadata: dict[str, str], summary_rows: list[tuple]) -> None:
+def write_database(
+    path: Path, metadata: dict[str, str], summary_rows: list[tuple]
+) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     handle, temporary = tempfile.mkstemp(prefix=f".{path.name}.", dir=path.parent)
     os.close(handle)
     try:
         with sqlite3.connect(temporary) as connection:
-            connection.executescript(
-                """
+            connection.executescript("""
                 CREATE TABLE metadata (key TEXT PRIMARY KEY, value TEXT NOT NULL);
                 CREATE TABLE summary (
                     dimension TEXT NOT NULL,
@@ -226,10 +232,13 @@ def write_database(path: Path, metadata: dict[str, str], summary_rows: list[tupl
                     delta_pct REAL,
                     note TEXT NOT NULL
                 );
-                """
+                """)
+            connection.executemany(
+                "INSERT INTO metadata VALUES (?, ?)", metadata.items()
             )
-            connection.executemany("INSERT INTO metadata VALUES (?, ?)", metadata.items())
-            connection.executemany("INSERT INTO summary VALUES (?, ?, ?, ?, ?)", summary_rows)
+            connection.executemany(
+                "INSERT INTO summary VALUES (?, ?, ?, ?, ?)", summary_rows
+            )
             official = {(d, c): pct for d, c, _, pct, _ in summary_rows}
             comparisons = []
             for dimension, targets in ATLAS_TARGETS.items():
@@ -245,7 +254,9 @@ def write_database(path: Path, metadata: dict[str, str], summary_rows: list[tupl
                             f"Atlas perfil amostral vs TSE Eleitorado Atual {metadata['dt_geracao']}",
                         )
                     )
-            connection.executemany("INSERT INTO atlas_comparison VALUES (?, ?, ?, ?, ?, ?)", comparisons)
+            connection.executemany(
+                "INSERT INTO atlas_comparison VALUES (?, ?, ?, ?, ?, ?)", comparisons
+            )
         os.replace(temporary, path)
         os.chmod(path, 0o644)
     finally:
@@ -257,7 +268,9 @@ def write_csv(path: Path, rows: list[tuple]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8", newline="") as handle:
         writer = csv.writer(handle)
-        writer.writerow(["dimension", "category", "qt_eleitores", "pct_total", "universe"])
+        writer.writerow(
+            ["dimension", "category", "qt_eleitores", "pct_total", "universe"]
+        )
         writer.writerows(rows)
 
 
@@ -291,7 +304,9 @@ def write_json(path: Path, metadata: dict[str, str], rows: list[tuple]) -> None:
         "region": summary_lookup(rows, "regiao"),
     }
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    path.write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
 
 
 def main() -> int:
@@ -311,7 +326,9 @@ def main() -> int:
         json.dumps(
             {
                 "generated": f"{metadata['dt_geracao']} {metadata['hh_geracao']}",
-                "resident_electors": int(metadata["total_eleitores_brasil_sem_exterior"]),
+                "resident_electors": int(
+                    metadata["total_eleitores_brasil_sem_exterior"]
+                ),
                 "rows_processed": int(metadata["rows_processed"]),
                 "db": str(args.db),
                 "csv": str(args.csv),

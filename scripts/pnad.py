@@ -391,7 +391,9 @@ def _latest_local_raw_anual(raw_dir: Path) -> Optional[Path]:
     return _latest_local_raw_anual_visit(raw_dir, visit=5)
 
 
-def _latest_local_raw_anual_visit(raw_dir: Path, *, visit: object = 5) -> Optional[Path]:
+def _latest_local_raw_anual_visit(
+    raw_dir: Path, *, visit: object = 5
+) -> Optional[Path]:
     visit_int = _normalise_anual_visit(visit)
     best_key: tuple[int, str] | None = None
     best_path: Optional[Path] = None
@@ -5755,10 +5757,9 @@ def cmd_ibge_sync(args: argparse.Namespace) -> int:
     # ---------------- PNADC Anual (Visita 1..5) ----------------
     anual_visit = _normalise_anual_visit(getattr(args, "anual_visit", 5))
     anual_base_url_arg = str(getattr(args, "anual_base_url", "") or "")
-    if (
-        anual_visit != 5
-        and anual_base_url_arg.rstrip("/") == IBGE_ANUAL_VISITA5_BASE.rstrip("/")
-    ):
+    if anual_visit != 5 and anual_base_url_arg.rstrip(
+        "/"
+    ) == IBGE_ANUAL_VISITA5_BASE.rstrip("/"):
         anual_base_url_arg = ""
     anual_base_url = (
         anual_base_url_arg.rstrip("/") + "/"
@@ -7192,7 +7193,9 @@ def cmd_pipeline_run_anual(args: argparse.Namespace) -> int:
     if visit != 5 and str(args.raw_dir) == _anual_raw_dir_default(5):
         args.raw_dir = _anual_raw_dir_default(visit)
 
-    default_visita5_layout = "data/originals/pnadc_anual_visita5/input_PNADC_2024_visita5.txt"
+    default_visita5_layout = (
+        "data/originals/pnadc_anual_visita5/input_PNADC_2024_visita5.txt"
+    )
     if visit != 5 and str(args.layout) == default_visita5_layout:
         docs_dir = Path(_anual_docs_dir_default(visit))
         latest_layout = _latest_local_layout_anual(docs_dir, visit=visit)
