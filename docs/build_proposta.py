@@ -348,8 +348,9 @@ TEMPLATE = """<!doctype html>
           <li><a href="nexus_btg_0726.html">O laudo que originou a proposta &#8212; auditoria BTG/Nexus, 6ª rodada</a></li>
           <li><a href="https://github.com/ArvorCo/PNAD">Repositório público: dados, scripts e reprodução</a></li>
           <li><a href="index.html">Acervo completo de auditorias</a></li>
-          <li><a href="mailto:ld@arvor.co">Correções e contestações: ld@arvor.co</a></li>
+          <li><a href="https://x.com/leonardodias" rel="noopener">Correções e contestações: @leonardodias</a></li>
         </ul>
+        <p class="nota-agentes">Esta proposta, e o laudo que a originou, foram construídos com <strong>agentes de IA da Arvor</strong>: leitura dos autos, extração dos PDFs, cálculo sobre os microdados do IBGE e do TSE, redação e diagramação. A <a href="https://arvor.co" rel="noopener">Arvor</a> desenvolve agentes personalizados para empresas e pessoas físicas.</p>
       </section>
     </main>
   </div>

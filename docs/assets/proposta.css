@@ -266,6 +266,11 @@ table.compare { width: 100%; min-width: 640px; border-collapse: collapse; }
 }
 .links a::after { content: " →"; color: var(--red); }
 .links a:hover { color: var(--red); }
+.nota-agentes {
+  margin: 22px 0 0; padding: 14px 16px;
+  border-left: 5px solid var(--gold); background: var(--paper-3);
+  font-family: var(--sans); font-size: .84rem; line-height: 1.55;
+}
 
 /* ---------- rodapé ---------- */
 footer {
