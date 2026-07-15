@@ -1,0 +1,1052 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Slides — BTG/Nexus 6ª rodada · Arvor Intelligence</title>
+<meta name="description" content="Deck de slides 1600×900 da auditoria BTG/Nexus 6ª rodada (BR-07981/2026): o empate que não dá para auditar.">
+<link rel="canonical" href="https://brasil.arvor.co/nexus_btg_0726_slides.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Source+Sans+3:wght@400;600;700;800;900&family=Spline+Sans+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --s:1;
+  --bg:#0a0c12; --bg2:#0e1119; --panel:#12151f;
+  --ink:#f4efe3; --ink2:#e7e1d3; --muted:#9199ad; --faint:#666e82;
+  --lula:#e5473f; --lula-d:#a3241f; --lula-l:#f2857f;
+  --flavio:#3f84f2; --flavio-d:#173f8f; --navy:#0d2b54; --flavio-l:#8fb6f7;
+  --gold:#e3a92c; --gold-d:#9a6f12;
+  --green:#33c08a; --green-d:#188a5f;
+  --line:rgba(244,239,227,.14); --line2:rgba(244,239,227,.30);
+  --serif:"Fraunces",Georgia,serif;
+  --sans:"Source Sans 3",ui-sans-serif,system-ui,sans-serif;
+  --display:"Archivo Black",Impact,sans-serif;
+  --mono:"Spline Sans Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+
+/* ---------- deck (browse) vs solo ---------- */
+.deckbar{font-family:var(--mono);color:var(--muted);font-size:14px;padding:16px 22px;border-bottom:1px solid var(--line);letter-spacing:.05em}
+.deckbar b{color:var(--ink)}
+.frame{width:calc(1600px*var(--s));height:calc(900px*var(--s));margin:26px auto;overflow:hidden;border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,.5);position:relative}
+.slide{width:1600px;height:900px;transform:scale(var(--s));transform-origin:top left;position:relative;overflow:hidden}
+body.solo{background:var(--bg)}
+body.solo .deckbar{display:none}
+body.solo .frame{position:fixed;inset:0;margin:auto;border-radius:0;box-shadow:none}
+body.og #s01{height:840px}
+body.og .frame{height:calc(840px*var(--s))}
+/* OG capa (1200x630): tighten composition and swap the chip grid for one compact line */
+.ogmeta{display:none}
+body.og .slide{padding-top:78px;padding-bottom:82px}
+body.og #s01 .htitle{font-size:90px}
+body.og #s01 .chips{display:none}
+body.og #s01 .ogmeta{display:block;margin-top:30px;font-family:var(--mono);font-size:27px;color:var(--muted);letter-spacing:.02em}
+body.og #s01 .ogmeta b{color:#fff}
+
+/* ---------- slide chrome ---------- */
+.slide{
+  background:
+    radial-gradient(120% 90% at 82% 8%, rgba(63,132,242,.18), transparent 55%),
+    radial-gradient(110% 100% at 6% 100%, rgba(229,71,63,.16), transparent 52%),
+    linear-gradient(160deg,#0d1019 0%,#0a0c12 46%,#0b0e17 100%);
+  padding:116px 76px 88px;
+  isolation:isolate;
+}
+.slide::after{ /* grain */
+  content:"";position:absolute;inset:0;z-index:6;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.blob{position:absolute;border-radius:50%;filter:blur(6px);z-index:0;opacity:.5;pointer-events:none}
+.ring{position:absolute;border-radius:50%;border:2px solid var(--line);z-index:0;pointer-events:none}
+.eyebrow{position:absolute;top:58px;left:76px;z-index:5;font-family:var(--mono);font-weight:700;font-size:27px;letter-spacing:.2em;text-transform:uppercase;color:var(--flavio-l)}
+.eyebrow.r{color:var(--lula-l)} .eyebrow.g{color:var(--gold)} .eyebrow.gr{color:var(--green)}
+.snum{position:absolute;top:58px;right:76px;z-index:5;font-family:var(--mono);font-size:27px;color:var(--faint);letter-spacing:.06em}
+.snum b{color:var(--ink)}
+.foot{position:absolute;left:0;right:0;bottom:0;z-index:5;height:62px;display:flex;align-items:center;justify-content:space-between;padding:0 76px;font-family:var(--mono);font-size:24px;color:var(--faint);border-top:1px solid var(--line);background:rgba(8,10,16,.4)}
+.foot .brand{color:var(--ink2)} .foot .brand b{color:#fff;letter-spacing:.02em}
+.foot .src{color:var(--muted)}
+.content{position:relative;z-index:4;height:100%;display:flex;flex-direction:column;justify-content:center}
+
+/* ---------- type ---------- */
+.htitle{font-family:var(--serif);font-weight:900;line-height:1.0;letter-spacing:-.015em;margin:0;color:var(--ink)}
+.lead{font-size:39px;line-height:1.36;color:var(--ink2);margin:0;font-weight:400}
+.lead b{color:#fff;font-weight:700}
+.lead .r{color:var(--lula-l);font-weight:700} .lead .b{color:var(--flavio-l);font-weight:700}
+.monster{font-family:var(--display);line-height:.82;letter-spacing:-.03em}
+.tag{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-weight:700;font-size:24px;letter-spacing:.06em;text-transform:uppercase;padding:9px 20px;border-radius:999px;border:1.5px solid}
+.tag.fato{color:var(--green);border-color:rgba(51,192,138,.5);background:rgba(51,192,138,.08)}
+.tag.infer{color:var(--gold);border-color:rgba(227,169,44,.5);background:rgba(227,169,44,.08)}
+.tag.hip{color:var(--lula-l);border-color:rgba(229,71,63,.5);background:rgba(229,71,63,.08)}
+.tag.novo{color:#fff;border-color:var(--line2);background:linear-gradient(90deg,var(--lula-d),var(--flavio-d))}
+.kv{font-family:var(--mono);font-size:26px;color:var(--muted)}
+.kv b{color:var(--ink)}
+
+/* two-column layout */
+.cols{display:grid;gap:64px;align-items:center;height:100%}
+.cols.c-58{grid-template-columns:1.35fr 1fr}
+.cols.c-46{grid-template-columns:1fr 1.25fr}
+.cols.c-11{grid-template-columns:1fr 1fr}
+
+/* bars */
+.bars{display:flex;flex-direction:column;gap:20px}
+.bar{display:grid;grid-template-columns:270px 1fr 92px;align-items:center;gap:20px}
+.bar .nm{font-size:32px;font-weight:700;color:var(--ink2)}
+.bar .track{height:34px;background:rgba(244,239,227,.07);border-radius:6px;overflow:hidden;border:1px solid var(--line)}
+.bar .fill{height:100%;border-radius:5px}
+.bar .val{font-family:var(--mono);font-size:34px;font-weight:700;text-align:right}
+.fill.lula{background:linear-gradient(90deg,var(--lula-d),var(--lula))}
+.fill.flavio{background:linear-gradient(90deg,var(--flavio-d),var(--flavio))}
+.fill.gold{background:linear-gradient(90deg,var(--gold-d),var(--gold))}
+.fill.green{background:linear-gradient(90deg,var(--green-d),var(--green))}
+.fill.muted{background:linear-gradient(90deg,#4a5266,#6b7488)}
+.val.lula{color:var(--lula-l)} .val.flavio{color:var(--flavio-l)} .val.gold{color:var(--gold)} .val.green{color:var(--green)} .val.muted{color:var(--muted)}
+
+/* exhibit frame */
+.exhibit{position:relative;background:#fbfaf6;padding:16px;border-radius:6px;box-shadow:0 40px 70px rgba(0,0,0,.55),0 6px 16px rgba(0,0,0,.45);transform:rotate(-1deg)}
+.exhibit.flat{transform:none}
+.exhibit img{display:block;width:100%;border-radius:2px}
+.exhibit .tape{position:absolute;top:-18px;left:50%;transform:translateX(-50%) rotate(-2.5deg);width:190px;height:38px;background:rgba(227,169,44,.32);border:1px dashed rgba(227,169,44,.55)}
+.exhibit .plabel{position:absolute;bottom:-16px;right:22px;background:var(--bg);color:var(--ink);font-family:var(--mono);font-weight:700;font-size:23px;padding:7px 18px;border-radius:999px;border:1.5px solid var(--line2)}
+
+/* pill list */
+.plist{display:flex;flex-direction:column;gap:16px;margin:0;padding:0;list-style:none}
+.plist li{display:flex;gap:18px;align-items:flex-start;font-size:33px;line-height:1.3;color:var(--ink2)}
+.plist .mk{flex:0 0 auto;width:40px;height:40px;border-radius:9px;display:grid;place-items:center;font-family:var(--mono);font-weight:700;font-size:26px;margin-top:2px}
+.mk.gh{background:rgba(229,71,63,.16);color:var(--lula-l);border:1px solid rgba(229,71,63,.4)}
+.mk.ok{background:rgba(51,192,138,.16);color:var(--green);border:1px solid rgba(51,192,138,.4)}
+.mk.n{background:rgba(63,132,242,.16);color:var(--flavio-l);border:1px solid rgba(63,132,242,.4)}
+.plist b{color:#fff}
+
+/* chip row */
+.chips{display:flex;flex-wrap:wrap;gap:14px}
+.chip{font-family:var(--mono);font-size:25px;font-weight:500;color:var(--ink2);border:1px solid var(--line2);border-radius:999px;padding:9px 20px;background:rgba(244,239,227,.03)}
+.chip b{color:#fff}
+
+/* stamp */
+.stamp{display:inline-block;font-family:var(--mono);font-weight:700;font-size:28px;letter-spacing:.04em;color:var(--lula-l);border:3px solid var(--lula);border-radius:8px;padding:12px 22px;transform:rotate(-4deg);text-transform:uppercase;background:rgba(229,71,63,.06);box-shadow:0 0 0 6px rgba(229,71,63,.05)}
+
+svg{display:block;overflow:visible}
+.mono{font-family:var(--mono)}
+.dim{color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="deckbar">DECK · <b>BTG/Nexus 6ª rodada</b> · 22 slides 1600×900 · abra um slide isolado com <b>?slide=N</b> ou <b>#sNN</b> · capa OG com <b>?og=1</b></div>
+
+<!-- ============ S01 · CAPA ============ -->
+<div class="frame" data-n="1"><section class="slide" id="s01">
+  <div class="blob" style="width:620px;height:620px;right:-140px;top:-160px;background:radial-gradient(circle,rgba(63,132,242,.5),transparent 66%)"></div>
+  <div class="blob" style="width:560px;height:560px;left:-160px;bottom:-200px;background:radial-gradient(circle,rgba(229,71,63,.5),transparent 66%)"></div>
+  <div class="ring" style="width:900px;height:900px;right:-260px;top:-40px"></div>
+  <div class="eyebrow">Auditoria · BTG/Nexus · 6ª rodada · BR-07981/2026</div>
+  <div class="snum"><b>01</b> / 22</div>
+  <div class="content">
+    <div class="cols c-58">
+      <div>
+        <div class="htitle" style="font-size:98px">O empate<br>que não dá<br>para <span style="color:var(--gold)">auditar</span></div>
+        <p class="lead" style="margin-top:34px;max-width:760px">O placar é plausível. O que não se pode ver é o problema: <b>12 respostas</b> coletadas do eleitor e nunca devolvidas, e a <b>planilha de pesos</b> que decide tudo, invisível.</p>
+        <div class="chips" style="margin-top:26px;gap:10px;max-width:800px">
+          <span class="chip" style="font-size:21px;padding:7px 16px">n=<b>2.003</b></span>
+          <span class="chip" style="font-size:21px;padding:7px 16px">campo <b>10–12/07/2026</b></span>
+          <span class="chip" style="font-size:21px;padding:7px 16px"><b>CATI/RDD</b> + cotas</span>
+          <span class="chip" style="font-size:21px;padding:7px 16px">contratante <b>BTG Pactual</b></span>
+          <span class="chip" style="font-size:21px;padding:7px 16px">custo <b>R$ 164.888,89</b></span>
+        </div>
+        <div class="ogmeta">n=<b>2.003</b> · campo <b>10–12/07/2026</b> · contratante <b>BTG Pactual</b></div>
+      </div>
+      <div style="text-align:center">
+        <div class="monster" style="font-size:210px">
+          <span style="color:var(--lula-l)">47</span><span style="color:var(--faint);font-size:150px">×</span><span style="color:var(--flavio-l)">44</span>
+        </div>
+        <div class="kv" style="margin-top:16px;font-size:30px">2º turno · Lula <span style="color:var(--lula-l)">vs</span> Flávio</div>
+        <div style="margin-top:44px"><span class="stamp">Empate técnico<br><span style="font-size:20px;color:var(--muted)">palavra do próprio instituto</span></span></div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span class="brand"><b>ARVOR INTELLIGENCE</b> · brasil.arvor.co/nexus_btg_0726.html · fontes TSE/IBGE/Nexus</span><span class="src">01 / 22</span></div>
+</section></div>
+
+<!-- ============ S02 · PLACAR + ADVERSÁRIO ============ -->
+<div class="frame" data-n="2"><section class="slide" id="s02">
+  <div class="blob" style="width:520px;height:520px;left:-180px;top:-160px;background:radial-gradient(circle,rgba(63,132,242,.4),transparent 66%)"></div>
+  <div class="eyebrow">O placar</div>
+  <div class="snum"><b>02</b> / 22</div>
+  <div class="content">
+    <div class="htitle" style="font-size:74px;max-width:1180px">A suposta inviabilidade<br>fracassa no placar</div>
+    <div class="cols c-11" style="height:auto;margin-top:40px">
+      <div>
+        <div class="tag fato" style="margin-bottom:22px">Fato · 2º turno</div>
+        <div class="monster" style="font-size:150px"><span style="color:var(--lula-l)">47</span> <span style="color:var(--faint);font-size:96px">a</span> <span style="color:var(--flavio-l)">44</span></div>
+        <p class="lead" style="margin-top:24px;max-width:620px">Três pontos. A própria Nexus chama de <b>empate técnico</b>. Contra Lula, Flávio é hoje o oposicionista <b>mais competitivo</b>.</p>
+      </div>
+      <div>
+        <div class="kv" style="margin-bottom:20px;font-size:28px">Melhor colocado contra Lula no 2º turno (%)</div>
+        <div class="bars">
+          <div class="bar"><span class="nm" style="color:var(--flavio-l)">Flávio</span><div class="track"><div class="fill flavio" style="width:100%"></div></div><span class="val flavio">44</span></div>
+          <div class="bar"><span class="nm">Zema</span><div class="track"><div class="fill muted" style="width:91%"></div></div><span class="val muted">40</span></div>
+          <div class="bar"><span class="nm">Caiado</span><div class="track"><div class="fill muted" style="width:86%"></div></div><span class="val muted">38</span></div>
+          <div class="bar"><span class="nm">Renan</span><div class="track"><div class="fill muted" style="width:80%"></div></div><span class="val muted">35</span></div>
+        </div>
+        <p class="lead" style="margin-top:26px;font-size:31px">O nome que a manchete trata como fim de linha é o mais forte da lista.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span class="brand"><b>ARVOR INTELLIGENCE</b> · brasil.arvor.co/nexus_btg_0726.html · fontes TSE/IBGE/Nexus</span><span class="src">02 / 22</span></div>
+</section></div>
+
+<!-- ============ S03 · COALIZÕES ============ -->
+<div class="frame" data-n="3"><section class="slide" id="s03">
+  <div class="blob" style="width:520px;height:520px;left:calc(50% - 260px);top:-260px;background:radial-gradient(circle,rgba(147,110,158,.28),transparent 66%)"></div>
+  <div class="eyebrow">As coalizões</div>
+  <div class="snum"><b>03</b> / 22</div>
+  <div class="content">
+    <div class="htitle" style="font-size:74px">Dois brasis, e um deles<br>não é minoria</div>
+    <div class="cols c-11" style="height:auto;margin-top:44px;gap:56px">
+      <div style="border-left:5px solid var(--flavio);padding-left:32px">
+        <div class="tag fato" style="border-color:rgba(63,132,242,.5);color:var(--flavio-l);background:rgba(63,132,242,.08);margin-bottom:24px">Onde Flávio lidera</div>
+        <div class="bars">
+          <div class="bar"><span class="nm">Sul</span><div class="track"><div class="fill flavio" style="width:100%"></div></div><span class="val flavio">58</span></div>
+          <div class="bar"><span class="nm">Evangélicos</span><div class="track"><div class="fill flavio" style="width:95%"></div></div><span class="val flavio">55</span></div>
+          <div class="bar"><span class="nm">Homens</span><div class="track"><div class="fill flavio" style="width:88%"></div></div><span class="val flavio">51</span></div>
+          <div class="bar"><span class="nm">Norte/C.-Oeste</span><div class="track"><div class="fill flavio" style="width:86%"></div></div><span class="val flavio">50</span></div>
+          <div class="bar"><span class="nm">Renda 2–5 SM</span><div class="track"><div class="fill flavio" style="width:84%"></div></div><span class="val flavio">49</span></div>
+        </div>
+      </div>
+      <div style="border-left:5px solid var(--lula);padding-left:32px">
+        <div class="tag fato" style="border-color:rgba(229,71,63,.5);color:var(--lula-l);background:rgba(229,71,63,.08);margin-bottom:24px">Onde Lula domina</div>
+        <ul class="plist" style="gap:22px">
+          <li><span class="mk" style="background:rgba(229,71,63,.16);color:var(--lula-l);border:1px solid rgba(229,71,63,.4)">♀</span><span><b>Mulheres</b></span></li>
+          <li><span class="mk" style="background:rgba(229,71,63,.16);color:var(--lula-l);border:1px solid rgba(229,71,63,.4)">N</span><span><b>Nordeste</b></span></li>
+          <li><span class="mk" style="background:rgba(229,71,63,.16);color:var(--lula-l);border:1px solid rgba(229,71,63,.4)">E</span><span><b>Ensino fundamental</b></span></li>
+          <li><span class="mk" style="background:rgba(229,71,63,.16);color:var(--lula-l);border:1px solid rgba(229,71,63,.4)">$</span><span><b>Renda até 1 SM</b></span></li>
+        </ul>
+        <p class="lead" style="margin-top:30px;font-size:32px">Não é um país contra um bolsão. É metade contra metade.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span class="brand"><b>ARVOR INTELLIGENCE</b> · brasil.arvor.co/nexus_btg_0726.html · fontes TSE/IBGE/Nexus</span><span class="src">03 / 22</span></div>
+</section></div>
+
+<!-- ============ S04 · SÉRIE OSCILA ============ -->
+<div class="frame" data-n="4"><section class="slide" id="s04">
+  <div class="blob" style="width:560px;height:560px;right:-200px;bottom:-220px;background:radial-gradient(circle,rgba(63,132,242,.34),transparent 66%)"></div>
+  <div class="eyebrow">A série oscila</div>
+  <div class="snum"><b>04</b> / 22</div>
+  <div class="content">
+    <div class="cols c-46" style="height:auto">
+      <div>
+        <div class="htitle" style="font-size:70px">Oscilação,<br>não tendência</div>
+        <p class="lead" style="margin-top:30px;max-width:520px">A vantagem de Lula no 2º turno chegou a <b>6 pontos</b> em 15/06 e recuou para <b>3</b>. Isso sobe e desce, não aponta sempre para o mesmo lado.</p>
+        <div class="monster" style="font-size:120px;margin-top:34px;color:var(--gold)">6<span style="color:var(--faint);font-size:80px">→</span>3</div>
+        <div class="kv" style="margin-top:8px">pontos de diferença · pico e recuo</div>
+      </div>
+      <div>
+        <svg viewBox="0 0 760 470" width="760" height="470" role="img" aria-label="Série do 2º turno em seis ondas">
+          <!-- grid -->
+          <g stroke="rgba(244,239,227,.10)" stroke-width="1">
+            <line x1="70" y1="60" x2="740" y2="60"/><line x1="70" y1="150" x2="740" y2="150"/><line x1="70" y1="240" x2="740" y2="240"/><line x1="70" y1="330" x2="740" y2="330"/>
+          </g>
+          <g font-family="Spline Sans Mono, monospace" font-size="20" fill="#666e82" text-anchor="end">
+            <text x="56" y="66">50</text><text x="56" y="156">47</text><text x="56" y="246">44</text><text x="56" y="336">41</text>
+          </g>
+          <!-- x labels -->
+          <g font-family="Spline Sans Mono, monospace" font-size="20" fill="#9199ad" text-anchor="middle">
+            <text x="80" y="400">30/03</text><text x="212" y="400">27/04</text><text x="344" y="400">25/05</text><text x="476" y="400">15/06</text><text x="608" y="400">29/06</text><text x="720" y="400">13/07</text>
+          </g>
+          <!-- Lula: 46,46,47,49,47,47 -> y = 60 + (50-v)*30 -->
+          <polyline fill="none" stroke="#e5473f" stroke-width="5" points="80,180 212,180 344,150 476,90 608,150 720,150"/>
+          <!-- Flavio: 46,45,43,43,44,44 -->
+          <polyline fill="none" stroke="#3f84f2" stroke-width="5" points="80,180 212,210 344,270 476,270 608,240 720,240"/>
+          <g>
+            <circle cx="476" cy="90" r="8" fill="#e5473f"/><circle cx="476" cy="270" r="8" fill="#3f84f2"/>
+            <circle cx="720" cy="150" r="8" fill="#e5473f"/><circle cx="720" cy="240" r="8" fill="#3f84f2"/>
+          </g>
+          <!-- gap annotation at 15/06 -->
+          <line x1="476" y1="98" x2="476" y2="262" stroke="#e3a92c" stroke-width="2.5" stroke-dasharray="6 6"/>
+          <text x="500" y="185" font-family="Spline Sans Mono, monospace" font-size="26" font-weight="700" fill="#e3a92c">+6</text>
+          <line x1="720" y1="158" x2="720" y2="232" stroke="#e3a92c" stroke-width="2.5" stroke-dasharray="6 6"/>
+          <text x="686" y="205" font-family="Spline Sans Mono, monospace" font-size="26" font-weight="700" fill="#e3a92c" text-anchor="end">+3</text>
+          <g font-family="Source Sans 3" font-weight="800" font-size="24">
+            <text x="720" y="128" fill="#f2857f" text-anchor="end">Lula 47</text>
+            <text x="720" y="278" fill="#8fb6f7" text-anchor="end">Flávio 44</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span class="brand"><b>ARVOR INTELLIGENCE</b> · brasil.arvor.co/nexus_btg_0726.html · fontes TSE/IBGE/Nexus</span><span class="src">04 / 22</span></div>
+</section></div>
+
+<!-- ============ S05 · MARGEM ±4,18 ============ -->
+<div class="frame" data-n="5"><section class="slide" id="s05">
+  <div class="blob" style="width:600px;height:600px;left:calc(50% - 300px);top:-280px;background:radial-gradient(circle,rgba(227,169,44,.20),transparent 64%)"></div>
+  <div class="eyebrow g">A margem</div>
+  <div class="snum"><b>05</b> / 22</div>
+  <div class="content">
+    <div class="htitle" style="font-size:56px">O “±2” do release não vale<br>para o 47 a 44</div>
+    <div class="cols c-46" style="height:auto;margin-top:36px;align-items:center">
+      <div>
+        <p class="lead" style="max-width:540px;font-size:35px">O ±2 serve para uma porcentagem sozinha. Mas a pergunta é a <b>diferença</b> entre dois candidatos, e diferença tem margem própria.</p>
+        <div style="margin-top:26px" class="monster"><span style="font-size:148px;color:var(--gold)">±4,18</span></div>
+        <div class="kv" style="margin-top:6px">margem de 95% do gap · n=2.003 · AAS</div>
+        <p class="lead" style="margin-top:20px;font-size:28px">Sem o efeito de desenho publicado, a margem real só o instituto conhece.</p>
+      </div>
+      <div>
+        <div class="kv" style="margin-bottom:12px;text-align:center">a banda ±4,18 engole o gap de 3</div>
+        <svg viewBox="0 0 720 300" width="680" height="284" role="img" aria-label="Intervalo do gap atravessando o zero">
+          <!-- axis -->
+          <line x1="40" y1="150" x2="700" y2="150" stroke="rgba(244,239,227,.25)" stroke-width="2"/>
+          <!-- zero line -->
+          <line x1="240" y1="70" x2="240" y2="230" stroke="#e5473f" stroke-width="3"/>
+          <text x="240" y="255" font-family="Spline Sans Mono, monospace" font-size="24" fill="#f2857f" text-anchor="middle" font-weight="700">0 · empate</text>
+          <!-- band from -1,18 to +7,18 ; scale: 1 pt = 44px, center gap=3 at x=372 -->
+          <rect x="188" y="110" width="368" height="80" rx="8" fill="rgba(227,169,44,.18)" stroke="rgba(227,169,44,.55)" stroke-width="2"/>
+          <text x="188" y="100" font-family="Spline Sans Mono, monospace" font-size="21" fill="#e3a92c" text-anchor="middle">-1,18</text>
+          <text x="556" y="100" font-family="Spline Sans Mono, monospace" font-size="21" fill="#e3a92c" text-anchor="middle">+7,18</text>
+          <!-- gap point at +3 -->
+          <circle cx="372" cy="150" r="12" fill="#3f84f2"/>
+          <text x="372" y="223" font-family="Source Sans 3" font-weight="800" font-size="26" fill="#8fb6f7" text-anchor="middle">gap 3</text>
+          <!-- ticks -->
+          <g font-family="Spline Sans Mono, monospace" font-size="18" fill="#666e82" text-anchor="middle">
+            <text x="328" y="176">+2</text><text x="416" y="176">+4</text><text x="504" y="176">+6</text>
+          </g>
+        </svg>
+        <div style="margin-top:22px;display:grid;grid-template-columns:auto auto auto;gap:4px 40px;font-family:var(--mono);font-size:26px;justify-content:center">
+          <div class="dim" style="font-size:21px">efeito desenho</div><div class="dim" style="font-size:21px">margem do gap</div><div class="dim" style="font-size:21px">n efetivo</div>
+          <div style="color:var(--ink);text-align:center">1,0</div><div style="color:var(--gold);font-weight:700;text-align:center">±4,18</div><div class="dim" style="text-align:center">2.003</div>
+          <div style="color:var(--ink);text-align:center">1,5</div><div style="color:var(--gold);font-weight:700;text-align:center">±5,11</div><div class="dim" style="text-align:center">1.335</div>
+          <div style="color:var(--ink);text-align:center">2,0</div><div style="color:var(--gold);font-weight:700;text-align:center">±5,91</div><div class="dim" style="text-align:center">1.002</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span class="brand"><b>ARVOR INTELLIGENCE</b> · brasil.arvor.co/nexus_btg_0726.html · fontes TSE/IBGE/Nexus</span><span class="src">05 / 22</span></div>
+</section></div>
+
+<!-- ============ S06 · ERRO PUBLICADO ============ -->
+<div class="frame" data-n="6"><section class="slide" id="s06">
+  <div class="eyebrow r">O erro publicado</div>
+  <div class="snum"><b>06</b> / 22</div>
+  <div class="content">
+    <div class="cols c-46" style="height:auto">
+      <div>
+        <div class="htitle" style="font-size:60px">O instituto errou<br>a própria série</div>
+        <p class="lead" style="margin-top:28px;max-width:560px">No texto de 29/06, a Nexus descreve a rodada anterior de forma que não bate com o próprio relatório de 15/06.</p>
+        <div style="margin-top:34px;display:flex;flex-direction:column;gap:18px">
+          <div style="border:1.5px solid rgba(229,71,63,.5);border-radius:12px;padding:22px 26px;background:rgba(229,71,63,.06)">
+            <div class="kv" style="color:var(--lula-l);font-weight:700;margin-bottom:8px">Texto Nexus · 29/06</div>
+            <div style="font-size:34px;color:var(--ink)"><b class="mono" style="color:#fff">48–43</b> · queda de <b class="mono" style="color:#fff">5 para 3</b></div>
+          </div>
+          <div style="border:1.5px solid rgba(51,192,138,.5);border-radius:12px;padding:22px 26px;background:rgba(51,192,138,.06)">
+            <div class="kv" style="color:var(--green);font-weight:700;margin-bottom:8px">Série oficial · 15/06</div>
+            <div style="font-size:34px;color:var(--ink)"><b class="mono" style="color:#fff">49–43</b> · queda de <b class="mono" style="color:#fff">6 para 3</b></div>
+          </div>
+        </div>
+        <p class="lead" style="margin-top:26px;font-size:31px">Errar o próprio histórico não inspira confiança.</p>
+      </div>
+      <div class="exhibit">
+        <div class="tape"></div>
+        <img src="img/nexus_btg_0726_segundo_turno.png" alt="Gráfico Nexus do 2º turno, série histórica, página 37">
+        <div class="plabel">Prova · p. 37</div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span class="brand"><b>ARVOR INTELLIGENCE</b> · brasil.arvor.co/nexus_btg_0726.html · fontes TSE/IBGE/Nexus</span><span class="src">06 / 22</span></div>
+</section></div>
+
+<!-- ============ S07 · BAIRROS + ROTATIVIDADE ============ -->
+<div class="frame" data-n="7"><section class="slide" id="s07">
+  <div class="blob" style="width:520px;height:520px;right:-180px;top:-160px;background:radial-gradient(circle,rgba(227,169,44,.16),transparent 66%)"></div>
+  <div class="eyebrow">O arquivo “Bairros”</div>
+  <div class="snum"><b>07</b> / 22</div>
+  <div class="content">
+    <div class="cols c-46" style="height:auto">
+      <div>
+        <div class="htitle" style="font-size:56px">O arquivo “Bairros”<br>não contém bairros</div>
+        <p class="lead" style="margin-top:26px;max-width:520px">Cinco anexos chamados “Bairros”. Dentro: só município, código do IBGE e nº de entrevistas. O questionário nunca pergunta o bairro.</p>
+        <div class="monster" style="font-size:150px;margin-top:32px;color:var(--gold)">457</div>
+        <div class="kv" style="margin-top:6px;max-width:500px;font-size:28px">municípios ouvidos por uma <b>única pessoa</b> cada</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:26px">
+        <div class="exhibit flat" style="max-width:560px;margin-left:auto">
+          <div class="tape"></div>
+          <img src="img/nexus_btg_0726_bairros_tabela.png" alt="Última página do anexo Bairros: Tabela 02, distribuição das entrevistas já ponderada">
+          <div class="plabel">Prova · anexo “Bairros”</div>
+        </div>
+        <div style="border:1px solid var(--line2);border-radius:14px;padding:20px 26px;background:rgba(244,239,227,.03)">
+          <div class="kv" style="margin-bottom:12px;color:var(--muted)">Rotatividade das cidades · 29/06 → 13/07</div>
+          <div style="display:flex;gap:30px;align-items:baseline">
+            <div><div class="mono" style="font-size:38px;color:#fff;font-weight:700">331</div><div class="kv" style="font-size:20px">repetem</div></div>
+            <div><div class="mono" style="font-size:38px;color:var(--flavio-l);font-weight:700">400</div><div class="kv" style="font-size:20px">entram</div></div>
+            <div><div class="mono" style="font-size:38px;color:var(--lula-l);font-weight:700">417</div><div class="kv" style="font-size:20px">saem</div></div>
+            <div style="margin-left:auto;text-align:right"><div class="mono" style="font-size:38px;color:var(--gold);font-weight:700">0,288</div><div class="kv" style="font-size:20px">Jaccard</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span class="brand"><b>ARVOR INTELLIGENCE</b> · brasil.arvor.co/nexus_btg_0726.html · fontes TSE/IBGE/Nexus</span><span class="src">07 / 22</span></div>
+</section></div>
+
+<!-- ============ S08 · SÃO PAULO 1 EM 4 ============ -->
+<div class="frame" data-n="8"><section class="slide" id="s08">
+  <div class="blob" style="width:560px;height:560px;left:-200px;bottom:-200px;background:radial-gradient(circle,rgba(229,71,63,.24),transparent 66%)"></div>
+  <div class="eyebrow g">Geografia · alocação por UF</div>
+  <div class="snum"><b>08</b> / 22</div>
+  <div class="content">
+    <div class="cols c-46" style="height:auto">
+      <div>
+        <div class="tag novo" style="margin-bottom:24px">Achado novo</div>
+        <div class="htitle" style="font-size:56px">São Paulo entra com<br>1 em cada 4</div>
+        <p class="lead" style="margin-top:26px;max-width:560px"><b>533</b> das 2.003 entrevistas são de SP: <b>26,6%</b> da amostra contra <b>21,6%</b> do eleitorado. Cem a mais que o proporcional.</p>
+        <p class="lead" style="margin-top:22px;max-width:560px;font-size:31px">E a ponderação corrige só <b>5 macrorregiões</b>, nunca os 27 estados. O peso de SP fica inflado sem correção.</p>
+      </div>
+      <div>
+        <div class="kv" style="margin-bottom:14px">Amostra vs eleitorado TSE, por UF (p.p.)</div>
+        <svg viewBox="0 0 640 470" width="620" height="455" role="img" aria-label="Desvio da amostra por UF frente ao eleitorado">
+          <line x1="300" y1="20" x2="300" y2="430" stroke="rgba(244,239,227,.25)" stroke-width="2"/>
+          <text x="300" y="458" font-family="Spline Sans Mono, monospace" font-size="19" fill="#666e82" text-anchor="middle">0 = proporcional ao eleitorado</text>
+          <!-- scale: 1 p.p = 40px -->
+          <g font-family="Source Sans 3" font-weight="800" font-size="24" fill="#e7e1d3">
+            <!-- SP +5.0 -->
+            <text x="288" y="58" text-anchor="end">SP</text><rect x="300" y="40" width="200" height="30" fill="#3f84f2"/><text x="512" y="63" fill="#8fb6f7" font-family="Spline Sans Mono, monospace">+5,0</text>
+            <!-- PR +2.43 -->
+            <text x="288" y="108" text-anchor="end">PR</text><rect x="300" y="90" width="97" height="30" fill="#3f84f2"/><text x="409" y="113" fill="#8fb6f7" font-family="Spline Sans Mono, monospace">+2,4</text>
+            <!-- BA +0.82 -->
+            <text x="288" y="158" text-anchor="end">BA</text><rect x="300" y="140" width="33" height="30" fill="#3f84f2" opacity=".6"/><text x="345" y="163" fill="#9199ad" font-family="Spline Sans Mono, monospace">+0,8</text>
+            <!-- PE -1.13 -->
+            <text x="312" y="208" text-anchor="start">PE</text><rect x="255" y="190" width="45" height="30" fill="#e5473f" opacity=".7"/><text x="243" y="213" fill="#f2857f" font-family="Spline Sans Mono, monospace" text-anchor="end">−1,1</text>
+            <!-- CE -1.24 -->
+            <text x="312" y="258" text-anchor="start">CE</text><rect x="250" y="240" width="50" height="30" fill="#e5473f" opacity=".7"/><text x="238" y="263" fill="#f2857f" font-family="Spline Sans Mono, monospace" text-anchor="end">−1,2</text>
+            <!-- MG -1.64 -->
+            <text x="312" y="308" text-anchor="start">MG</text><rect x="234" y="290" width="66" height="30" fill="#e5473f"/><text x="222" y="313" fill="#f2857f" font-family="Spline Sans Mono, monospace" text-anchor="end">−1,6</text>
+            <!-- PA -1.77 -->
+            <text x="312" y="358" text-anchor="start">PA</text><rect x="229" y="340" width="71" height="30" fill="#e5473f"/><text x="217" y="363" fill="#f2857f" font-family="Spline Sans Mono, monospace" text-anchor="end">−1,8</text>
+            <!-- RS -2.01 -->
+            <text x="312" y="408" text-anchor="start">RS</text><rect x="220" y="390" width="80" height="30" fill="#e5473f"/><text x="208" y="413" fill="#f2857f" font-family="Spline Sans Mono, monospace" text-anchor="end">−2,0</text>
+          </g>
+        </svg>
+        <div class="chips" style="margin-top:14px">
+          <span class="chip">χ² = <b>214,3</b> · gl <b>26</b></span>
+          <span class="chip">crítico ≈ <b>54</b></span>
+          <span class="chip">NE bruto <b>−3,3 p.p.</b></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span class="brand"><b>ARVOR INTELLIGENCE</b> · brasil.arvor.co/nexus_btg_0726.html · fontes TSE/IBGE/Nexus</span><span class="src">08 / 22</span></div>
+</section></div>
+
+<!-- ============ S09 · RDD / COTA ============ -->
+<div class="frame" data-n="9"><section class="slide" id="s09">
+  <div class="eyebrow">RDD na entrada, cota na porta</div>
+  <div class="snum"><b>09</b> / 22</div>
+  <div class="content">
+    <div class="cols c-46" style="height:auto">
+      <div>
+        <div class="htitle" style="font-size:56px">RDD na entrada,<br>cota na porta</div>
+        <p class="lead" style="margin-top:24px;max-width:560px;font-size:35px">Sortear o telefone dá chance conhecida ao <b>número</b>. Mas o questionário manda encerrar assim que “a cota daquele perfil” enche.</p>
+        <!-- door / funnel -->
+        <svg viewBox="0 0 560 200" width="540" height="193" style="margin-top:24px" role="img" aria-label="Do número sorteado à porta da cota">
+          <g font-family="Spline Sans Mono, monospace" font-size="20" fill="#9199ad" text-anchor="middle">
+            <circle cx="70" cy="70" r="52" fill="none" stroke="#3f84f2" stroke-width="3"/><text x="70" y="64" fill="#8fb6f7" font-size="22">nº</text><text x="70" y="90" fill="#8fb6f7" font-size="22">sorteado</text>
+            <text x="70" y="150">chance conhecida</text>
+            <path d="M138 70 H236" stroke="#666e82" stroke-width="3" marker-end="url(#ar)"/>
+            <!-- door -->
+            <rect x="252" y="20" width="96" height="100" rx="6" fill="rgba(227,169,44,.10)" stroke="#e3a92c" stroke-width="3"/>
+            <line x1="330" y1="70" x2="330" y2="70" stroke="#e3a92c"/>
+            <circle cx="336" cy="72" r="4" fill="#e3a92c"/>
+            <text x="300" y="150" fill="#e3a92c">porta da cota</text>
+            <path d="M364 70 H452" stroke="#666e82" stroke-width="3" stroke-dasharray="6 6" marker-end="url(#ar)"/>
+            <text x="500" y="64" fill="#e7e1d3" font-size="22">entra?</text><text x="500" y="90" fill="#e7e1d3" font-size="22">regra</text><text x="500" y="150" fill="#f2857f">não publicada</text>
+          </g>
+          <defs><marker id="ar" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6" fill="#666e82"/></marker></defs>
+        </svg>
+        <p class="lead" style="margin-top:18px;font-size:31px">E o <b>sexo</b>? PF1 manda “anote sem perguntar”, pela voz — variável de cota e peso.</p>
+      </div>
+      <div class="exhibit flat" style="max-width:520px;margin-left:auto">
+        <div class="tape"></div>
+        <img src="img/nexus_btg_0726_cota_top.png" alt="Questionário página 1: entrevista de cerca de 10 minutos, instrução de cota e PF1 anote sem perguntar">
+        <div class="plabel">Prova · questionário p. 1</div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span class="brand"><b>ARVOR INTELLIGENCE</b> · brasil.arvor.co/nexus_btg_0726.html · fontes TSE/IBGE/Nexus</span><span class="src">09 / 22</span></div>
+</section></div>
+
+<!-- ============ S10 · RÉGUA TSE + FIGURINO ============ -->
+<div class="frame" data-n="10"><section class="slide" id="s10">
+  <div class="blob" style="width:520px;height:520px;right:-190px;bottom:-190px;background:radial-gradient(circle,rgba(63,132,242,.24),transparent 66%)"></div>
+  <div class="eyebrow">A régua é pública</div>
+  <div class="snum"><b>10</b> / 22</div>
+  <div class="content">
+    <div class="htitle" style="font-size:64px">A régua é pública.<br>A amostra não encosta nela.</div>
+    <div class="cols c-11" style="height:auto;margin-top:40px;gap:56px">
+      <div>
+        <div class="kv" style="margin-bottom:20px">Meta da Nexus vs eleitorado TSE (jun/2026)</div>
+        <div class="bars">
+          <div class="bar" style="grid-template-columns:200px 1fr 1fr"><span class="nm">16–24 anos</span>
+            <div><div class="track" style="margin-bottom:6px"><div class="fill flavio" style="width:74%"></div></div><div class="track"><div class="fill muted" style="width:54%"></div></div></div>
+            <span class="val" style="color:var(--flavio-l)">+4,48</span></div>
+          <div style="font-family:var(--mono);font-size:23px;color:var(--muted);margin:-8px 0 10px 200px">meta 17% · TSE 12,52%</div>
+          <div class="bar" style="grid-template-columns:200px 1fr 1fr"><span class="nm">60+ anos</span>
+            <div><div class="track" style="margin-bottom:6px"><div class="fill flavio" style="width:60%"></div></div><div class="track"><div class="fill muted" style="width:70%"></div></div></div>
+            <span class="val" style="color:var(--lula-l)">−3,27</span></div>
+          <div style="font-family:var(--mono);font-size:23px;color:var(--muted);margin:-8px 0 0 200px">meta 20% · TSE 23,27%</div>
+        </div>
+        <p class="lead" style="margin-top:26px;font-size:32px">Jovem demais, idoso de menos. E jovem e idoso votam diferente.</p>
+      </div>
+      <div>
+        <div class="tag infer" style="margin-bottom:22px">Inferência · a troca de figurino</div>
+        <div class="kv" style="margin-bottom:12px;color:var(--muted)">Faixas etárias no registro</div>
+        <div style="display:flex;gap:10px;margin-bottom:22px">
+          <span class="chip" style="border-color:rgba(51,192,138,.4)"><b>16–24</b></span><span class="chip" style="border-color:rgba(51,192,138,.4)"><b>25–34</b></span><span class="chip" style="border-color:rgba(51,192,138,.4)"><b>35–44</b></span><span class="chip" style="border-color:rgba(51,192,138,.4)"><b>45–59</b></span><span class="chip" style="border-color:rgba(51,192,138,.4)"><b>60+</b></span>
+        </div>
+        <div class="kv" style="margin-bottom:12px;color:var(--muted)">Faixas no relatório final</div>
+        <div style="display:flex;gap:10px">
+          <span class="chip" style="border-color:rgba(229,71,63,.45)"><b>16–24</b></span><span class="chip" style="border-color:rgba(229,71,63,.45)"><b>25–40</b></span><span class="chip" style="border-color:rgba(229,71,63,.45)"><b>41–59</b></span><span class="chip" style="border-color:rgba(229,71,63,.45)"><b>60+</b></span>
+        </div>
+        <p class="lead" style="margin-top:28px;font-size:32px">Muda-se o corte o suficiente para <b>ninguém cruzar</b> a meta declarada com o resultado publicado.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span class="brand"><b>ARVOR INTELLIGENCE</b> · brasil.arvor.co/nexus_btg_0726.html · fontes TSE/IBGE/Nexus</span><span class="src">10 / 22</span></div>
+</section></div>
+
+<!-- ============ S11 · RENDA + GAVETA 40% ============ -->
+<div class="frame" data-n="11"><section class="slide" id="s11">
+  <div class="eyebrow g">A renda e a gaveta do 40%</div>
+  <div class="snum"><b>11</b> / 22</div>
+  <div class="content">
+    <div class="cols c-11" style="height:auto;gap:56px">
+      <div>
+        <div class="htitle" style="font-size:54px">A renda destoa<br>do país</div>
+        <div class="kv" style="margin:24px 0 16px">Renda domiciliar · Nexus vs PNAD 16+ (%)</div>
+        <div class="bars">
+          <div class="bar"><span class="nm">Até 1 SM</span><div class="track"><div class="fill gold" style="width:57%"></div></div><span class="val gold">20</span></div>
+          <div style="font-family:var(--mono);font-size:22px;color:var(--muted);margin:-10px 0 6px 270px">PNAD 13,5% · <b style="color:var(--flavio-l)">+6,5</b></div>
+          <div class="bar"><span class="nm">1–2 SM</span><div class="track"><div class="fill muted" style="width:57%"></div></div><span class="val muted">20</span></div>
+          <div class="bar"><span class="nm">2–5 SM</span><div class="track"><div class="fill flavio" style="width:100%"></div></div><span class="val flavio">40</span></div>
+          <div class="bar"><span class="nm">5+ SM</span><div class="track"><div class="fill gold" style="width:57%"></div></div><span class="val gold">20</span></div>
+          <div style="font-family:var(--mono);font-size:22px;color:var(--muted);margin:-10px 0 0 270px">PNAD 25,3% · <b style="color:var(--lula-l)">−5,3</b></div>
+        </div>
+      </div>
+      <div>
+        <div class="tag infer" style="margin-bottom:18px">A gaveta do 40%</div>
+        <p class="lead" style="font-size:33px;max-width:560px">A faixa 2–5 SM aparece em <b>40%</b> nas cinco ondas. Sempre. Mas o questionário mediu <b>duas</b> divisórias por dentro, somadas antes de publicar.</p>
+        <!-- drawer -->
+        <svg viewBox="0 0 560 220" width="560" height="220" style="margin-top:26px" role="img" aria-label="Gaveta do 40 por cento com duas divisórias ocultas">
+          <rect x="20" y="30" width="520" height="150" rx="10" fill="rgba(63,132,242,.08)" stroke="#3f84f2" stroke-width="3"/>
+          <line x1="193" y1="30" x2="193" y2="180" stroke="rgba(244,239,227,.35)" stroke-width="2" stroke-dasharray="7 7"/>
+          <line x1="366" y1="30" x2="366" y2="180" stroke="rgba(244,239,227,.35)" stroke-width="2" stroke-dasharray="7 7"/>
+          <g font-family="Spline Sans Mono, monospace" fill="#9199ad">
+            <text x="106" y="100" font-size="24" text-anchor="middle" fill="#e7e1d3" font-weight="700">2–3 SM</text>
+            <text x="106" y="132" font-size="20" text-anchor="middle">medido</text>
+            <text x="106" y="156" font-size="20" text-anchor="middle" fill="#f2857f">oculto</text>
+            <text x="279" y="100" font-size="24" text-anchor="middle" fill="#e7e1d3" font-weight="700">3–5 SM</text>
+            <text x="279" y="132" font-size="20" text-anchor="middle">medido</text>
+            <text x="279" y="156" font-size="20" text-anchor="middle" fill="#f2857f">oculto</text>
+          </g>
+          <text x="453" y="98" font-family="Archivo Black, sans-serif" font-size="58" fill="#3f84f2" text-anchor="middle">40%</text>
+          <text x="453" y="140" font-family="Spline Sans Mono, monospace" font-size="20" fill="#9199ad" text-anchor="middle">gaveta</text>
+          <text x="453" y="162" font-family="Spline Sans Mono, monospace" font-size="20" fill="#9199ad" text-anchor="middle">publicada</text>
+        </svg>
+        <p class="lead" style="margin-top:16px;font-size:29px">O dado que “nunca mexe” está fechado por fora.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span class="brand"><b>ARVOR INTELLIGENCE</b> · brasil.arvor.co/nexus_btg_0726.html · fontes TSE/IBGE/Nexus</span><span class="src">11 / 22</span></div>
+</section></div>
+
+<!-- ============ S12 · QUATRO PLACARES (reponderacao) ============ -->
+<div class="frame" data-n="12"><section class="slide" id="s12">
+  <div class="blob" style="width:560px;height:560px;right:-200px;top:-190px;background:radial-gradient(circle,rgba(227,169,44,.16),transparent 66%)"></div>
+  <div class="eyebrow g">Achado novo · reponderação</div>
+  <div class="snum"><b>12</b> / 22</div>
+  <div class="content">
+    <div class="cols c-46" style="height:auto">
+      <div>
+        <div class="tag novo" style="margin-bottom:22px">A régua oficial</div>
+        <div class="htitle" style="font-size:58px">A mesma pesquisa,<br>quatro placares</div>
+        <p class="lead" style="margin-top:24px;max-width:560px">Pegamos as células que a própria Nexus publicou e trocamos a régua dela pela oficial — TSE e IBGE/PNAD. A vantagem de Lula <b>muda conforme a régua</b>.</p>
+        <div class="monster" style="font-size:104px;margin-top:26px"><span style="color:var(--flavio-l)">+1,4</span> <span style="color:var(--faint);font-size:64px">a</span> <span style="color:var(--lula-l)">+4,0</span></div>
+        <div class="kv" style="margin-top:6px">vantagem de Lula (pontos) · conforme a régua escolhida</div>
+        <p class="lead" style="margin-top:22px;font-size:31px">Quem escolhe a régua escolhe a manchete. E a Nexus <b>não publica a régua</b>.</p>
+      </div>
+      <div>
+        <div class="kv" style="margin-bottom:6px">Lula × Flávio reponderado, por régua (%)</div>
+        <svg viewBox="0 0 760 560" width="740" height="546" role="img" aria-label="Dumbbell dos sete cenários de reponderação sobre a banda de mais ou menos 4,18">
+          <!-- legend -->
+          <g font-family="Source Sans 3" font-weight="800" font-size="20">
+            <circle cx="470" cy="20" r="8" fill="#3f84f2"/><text x="484" y="27" fill="#8fb6f7">Flávio</text>
+            <circle cx="586" cy="20" r="8" fill="#e5473f"/><text x="600" y="27" fill="#f2857f">Lula</text>
+          </g>
+          <!-- vote gridlines 44..47 -->
+          <g stroke="rgba(244,239,227,.10)" stroke-width="1">
+            <line x1="276" y1="44" x2="276" y2="392"/><line x1="372" y1="44" x2="372" y2="392"/><line x1="468" y1="44" x2="468" y2="392"/><line x1="564" y1="44" x2="564" y2="392"/>
+          </g>
+          <g font-family="Spline Sans Mono, monospace" font-size="18" fill="#666e82" text-anchor="middle">
+            <text x="276" y="40">44</text><text x="372" y="40">45</text><text x="468" y="40">46</text><text x="564" y="40">47</text>
+          </g>
+          <!-- highlight rows: renda (d) and combinado (g) -->
+          <rect x="16" y="180" width="730" height="40" rx="8" fill="rgba(227,169,44,.09)" stroke="rgba(227,169,44,.35)" stroke-width="1"/>
+          <rect x="16" y="324" width="730" height="40" rx="8" fill="rgba(227,169,44,.09)" stroke="rgba(227,169,44,.35)" stroke-width="1"/>
+          <!-- rows: label | dumbbell | gap -->
+          <g font-family="Spline Sans Mono, monospace" font-size="20">
+            <!-- a publicado y56 -->
+            <text x="150" y="63" text-anchor="end" fill="#9199ad">publicado</text>
+            <line x1="276" y1="56" x2="564" y2="56" stroke="#5a6480" stroke-width="3"/><circle cx="276" cy="56" r="8" fill="#3f84f2"/><circle cx="564" cy="56" r="8" fill="#e5473f"/>
+            <text x="736" y="63" text-anchor="end" fill="#e7e1d3">+3,0</text>
+            <!-- b sexo y104 -->
+            <text x="150" y="111" text-anchor="end" fill="#9199ad">sexo · TSE</text>
+            <line x1="265" y1="104" x2="575" y2="104" stroke="#5a6480" stroke-width="3"/><circle cx="265" cy="104" r="8" fill="#3f84f2"/><circle cx="575" cy="104" r="8" fill="#e5473f"/>
+            <text x="736" y="111" text-anchor="end" fill="#9199ad">+3,2</text>
+            <!-- c idade y152 -->
+            <text x="150" y="159" text-anchor="end" fill="#9199ad">idade · TSE</text>
+            <line x1="239" y1="152" x2="618" y2="152" stroke="#5a6480" stroke-width="3"/><circle cx="239" cy="152" r="8" fill="#3f84f2"/><circle cx="618" cy="152" r="8" fill="#e5473f"/>
+            <text x="736" y="159" text-anchor="end" fill="#f2857f" font-weight="700">+4,0</text>
+            <!-- d renda y200 HL -->
+            <text x="150" y="207" text-anchor="end" fill="#e3a92c" font-weight="700">renda · PNAD</text>
+            <line x1="342" y1="200" x2="476" y2="200" stroke="#8a7327" stroke-width="3"/><circle cx="342" cy="200" r="9" fill="#3f84f2"/><circle cx="476" cy="200" r="9" fill="#e5473f"/>
+            <text x="736" y="208" text-anchor="end" fill="#e3a92c" font-weight="700" font-size="23">+1,4</text>
+            <!-- e escolaridade y248 -->
+            <text x="150" y="255" text-anchor="end" fill="#9199ad">escol. · PNAD</text>
+            <line x1="290" y1="248" x2="538" y2="248" stroke="#5a6480" stroke-width="3"/><circle cx="290" cy="248" r="8" fill="#3f84f2"/><circle cx="538" cy="248" r="8" fill="#e5473f"/>
+            <text x="736" y="255" text-anchor="end" fill="#9199ad">+2,6</text>
+            <!-- f regiao y296 -->
+            <text x="150" y="303" text-anchor="end" fill="#9199ad">região · TSE</text>
+            <line x1="257" y1="296" x2="591" y2="296" stroke="#5a6480" stroke-width="3"/><circle cx="257" cy="296" r="8" fill="#3f84f2"/><circle cx="591" cy="296" r="8" fill="#e5473f"/>
+            <text x="736" y="303" text-anchor="end" fill="#9199ad">+3,5</text>
+            <!-- g combinado y344 HL -->
+            <text x="150" y="351" text-anchor="end" fill="#e3a92c" font-weight="700">combinado</text>
+            <line x1="291" y1="344" x2="543" y2="344" stroke="#8a7327" stroke-width="3"/><circle cx="291" cy="344" r="9" fill="#3f84f2"/><circle cx="543" cy="344" r="9" fill="#e5473f"/>
+            <text x="736" y="352" text-anchor="end" fill="#e3a92c" font-weight="700" font-size="23">+2,6</text>
+          </g>
+          <!-- gap band strip -->
+          <text x="390" y="440" font-family="Spline Sans Mono, monospace" font-size="19" fill="#9199ad" text-anchor="middle">o gap tem margem própria de ±4,18 — todos cabem, nenhum cruza o empate</text>
+          <rect x="122" y="470" width="536" height="44" rx="8" fill="rgba(227,169,44,.14)" stroke="rgba(227,169,44,.5)" stroke-width="1.5"/>
+          <line x1="198" y1="462" x2="198" y2="522" stroke="#e5473f" stroke-width="3"/>
+          <text x="198" y="544" font-family="Spline Sans Mono, monospace" font-size="18" fill="#f2857f" text-anchor="middle" font-weight="700">0 · empate</text>
+          <line x1="390" y1="470" x2="390" y2="514" stroke="rgba(244,239,227,.25)" stroke-width="1" stroke-dasharray="4 4"/>
+          <g>
+            <circle cx="390" cy="492" r="5" fill="#e7e1d3"/>
+            <circle cx="404" cy="492" r="5" fill="#9199ad"/>
+            <circle cx="420" cy="492" r="5" fill="#9199ad"/>
+            <circle cx="356" cy="492" r="5" fill="#9199ad"/>
+            <circle cx="364" cy="492" r="5" fill="#e3a92c"/>
+            <circle cx="287" cy="492" r="7" fill="#3f84f2" stroke="#fff" stroke-width="1.5"/>
+            <circle cx="451" cy="492" r="7" fill="#e5473f" stroke="#fff" stroke-width="1.5"/>
+          </g>
+          <text x="287" y="463" font-family="Spline Sans Mono, monospace" font-size="17" fill="#8fb6f7" text-anchor="middle">renda +1,4</text>
+          <text x="451" y="463" font-family="Spline Sans Mono, monospace" font-size="17" fill="#f2857f" text-anchor="middle">idade +4,0</text>
+          <text x="650" y="500" font-family="Spline Sans Mono, monospace" font-size="17" fill="#e3a92c" text-anchor="end">+7,18</text>
+        </svg>
+        <div class="kv" style="margin-top:6px;font-size:22px;color:var(--faint)">réguas: TSE jun/2026 · PNAD 2024 · reponderação de estimativas publicadas</div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span class="brand"><b>ARVOR INTELLIGENCE</b> · brasil.arvor.co/nexus_btg_0726.html · fontes TSE/IBGE/Nexus</span><span class="src">12 / 22</span></div>
+</section></div>
+
+<!-- ============ S13 · REPONDERAR EM 3 PASSOS ============ -->
+<div class="frame" data-n="13"><section class="slide" id="s13">
+  <div class="blob" style="width:520px;height:520px;left:-180px;bottom:-190px;background:radial-gradient(circle,rgba(63,132,242,.20),transparent 66%)"></div>
+  <div class="eyebrow g">Reponderação · o método</div>
+  <div class="snum"><b>13</b> / 22</div>
+  <div class="content">
+    <div class="htitle" style="font-size:58px">Como se repondera, em três passos</div>
+    <div style="display:grid;grid-template-columns:1fr 64px 1fr 64px 1fr;align-items:stretch;gap:0;margin-top:44px">
+      <!-- step 1 -->
+      <div style="border:1.5px solid var(--line2);border-radius:16px;padding:26px 28px;background:rgba(244,239,227,.03)">
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:18px"><span style="width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-family:var(--mono);font-weight:700;font-size:26px;background:rgba(63,132,242,.16);color:var(--flavio-l);border:1px solid rgba(63,132,242,.4)">1</span><span style="font-family:var(--serif);font-weight:900;font-size:34px;color:#fff">As células</span></div>
+        <svg viewBox="0 0 220 120" width="100%" height="118" role="img" aria-label="Grade de células publicadas">
+          <g stroke="#3f84f2" stroke-width="2" fill="rgba(63,132,242,.08)">
+            <rect x="10" y="14" width="60" height="30" rx="3"/><rect x="80" y="14" width="60" height="30" rx="3"/><rect x="150" y="14" width="60" height="30" rx="3"/>
+            <rect x="10" y="50" width="60" height="30" rx="3"/><rect x="80" y="50" width="60" height="30" rx="3"/><rect x="150" y="50" width="60" height="30" rx="3"/>
+            <rect x="10" y="86" width="60" height="30" rx="3"/><rect x="80" y="86" width="60" height="30" rx="3"/><rect x="150" y="86" width="60" height="30" rx="3"/>
+          </g>
+          <g font-family="Spline Sans Mono, monospace" font-size="15" fill="#8fb6f7" text-anchor="middle">
+            <text x="40" y="34">53</text><text x="110" y="34">37</text><text x="180" y="34">…</text>
+            <text x="40" y="70">40</text><text x="110" y="70">51</text><text x="180" y="70">…</text>
+            <text x="40" y="106">55</text><text x="110" y="106">37</text><text x="180" y="106">…</text>
+          </g>
+        </svg>
+        <p style="margin:18px 0 0;font-size:24px;line-height:1.32;color:var(--ink2)">Os cruzamentos que a Nexus divulgou (p.49–50), <b>já ponderados</b> por ela.</p>
+      </div>
+      <div style="display:grid;place-items:center"><span style="font-family:var(--mono);font-size:40px;color:var(--faint)">→</span></div>
+      <!-- step 2 -->
+      <div style="border:1.5px solid var(--line2);border-radius:16px;padding:26px 28px;background:rgba(244,239,227,.03)">
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:18px"><span style="width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-family:var(--mono);font-weight:700;font-size:26px;background:rgba(227,169,44,.16);color:var(--gold);border:1px solid rgba(227,169,44,.4)">2</span><span style="font-family:var(--serif);font-weight:900;font-size:34px;color:#fff">A régua</span></div>
+        <svg viewBox="0 0 220 120" width="100%" height="118" role="img" aria-label="Régua oficial com marcações">
+          <rect x="10" y="46" width="200" height="34" rx="4" fill="rgba(227,169,44,.10)" stroke="#e3a92c" stroke-width="2"/>
+          <g stroke="#e3a92c" stroke-width="2">
+            <line x1="34" y1="46" x2="34" y2="64"/><line x1="58" y1="46" x2="58" y2="72"/><line x1="82" y1="46" x2="82" y2="64"/><line x1="106" y1="46" x2="106" y2="72"/><line x1="130" y1="46" x2="130" y2="64"/><line x1="154" y1="46" x2="154" y2="72"/><line x1="178" y1="46" x2="178" y2="64"/>
+          </g>
+          <text x="110" y="34" font-family="Spline Sans Mono, monospace" font-size="15" fill="#e3a92c" text-anchor="middle">TSE · IBGE/PNAD</text>
+          <text x="110" y="104" font-family="Spline Sans Mono, monospace" font-size="14" fill="#9199ad" text-anchor="middle">tamanho real de cada grupo</text>
+        </svg>
+        <p style="margin:18px 0 0;font-size:24px;line-height:1.32;color:var(--ink2)">Troca-se o peso pelo <b>tamanho oficial</b>: TSE (sexo, idade, região), PNAD (renda, escolaridade).</p>
+      </div>
+      <div style="display:grid;place-items:center"><span style="font-family:var(--mono);font-size:40px;color:var(--faint)">→</span></div>
+      <!-- step 3 -->
+      <div style="border:1.5px solid rgba(51,192,138,.4);border-radius:16px;padding:26px 28px;background:rgba(51,192,138,.05)">
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:18px"><span style="width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-family:var(--mono);font-weight:700;font-size:26px;background:rgba(51,192,138,.16);color:var(--green);border:1px solid rgba(51,192,138,.4)">3</span><span style="font-family:var(--serif);font-weight:900;font-size:34px;color:#fff">A soma</span></div>
+        <svg viewBox="0 0 220 120" width="100%" height="118" role="img" aria-label="Placar reponderado combinado">
+          <text x="110" y="52" font-family="Archivo Black, sans-serif" font-size="40" text-anchor="middle"><tspan fill="#f2857f">46,8</tspan><tspan fill="#666e82" font-size="26"> × </tspan><tspan fill="#8fb6f7">44,2</tspan></text>
+          <text x="110" y="88" font-family="Spline Sans Mono, monospace" font-size="15" fill="#33c08a" text-anchor="middle">Lula à frente por 2,6</text>
+          <text x="110" y="110" font-family="Spline Sans Mono, monospace" font-size="14" fill="#9199ad" text-anchor="middle">combinado (raking)</text>
+        </svg>
+        <p style="margin:18px 0 0;font-size:24px;line-height:1.32;color:var(--ink2)">Re-somam-se as <b>mesmas células</b> com o peso oficial. Sai o placar reponderado.</p>
+      </div>
+    </div>
+    <!-- warning + control -->
+    <div style="display:grid;grid-template-columns:1.15fr 1fr;gap:28px;margin-top:34px">
+      <div style="border:1.5px solid rgba(227,169,44,.5);border-radius:14px;padding:20px 26px;background:rgba(227,169,44,.07);display:flex;align-items:center;gap:20px">
+        <span class="tag infer">Aviso</span>
+        <span style="font-size:29px;color:var(--ink2)">É <b>análise de sensibilidade</b>, não “o número correto”. As células já vêm ponderadas; reponderamos estimativas, não microdados.</span>
+      </div>
+      <div style="border:1.5px solid rgba(51,192,138,.4);border-radius:14px;padding:20px 26px;background:rgba(51,192,138,.05);display:flex;align-items:center;gap:20px">
+        <span class="tag fato">Controle</span>
+        <span style="font-size:29px;color:var(--ink2)">Com os <b>pesos da própria Nexus</b>, as células reconstroem o 47×44 em toda margem (±0,5).</span>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span class="brand"><b>ARVOR INTELLIGENCE</b> · brasil.arvor.co/nexus_btg_0726.html · fontes TSE/IBGE/Nexus</span><span class="src">13 / 22</span></div>
+</section></div>
+
+<!-- ============ S12 · FANTASMAS ============ -->
+<div class="frame" data-n="14"><section class="slide" id="s14">
+  <div class="blob" style="width:540px;height:540px;left:calc(50% - 270px);top:-260px;background:radial-gradient(circle,rgba(229,71,63,.18),transparent 64%)"></div>
+  <div class="eyebrow r">As respostas fantasma</div>
+  <div class="snum"><b>14</b> / 22</div>
+  <div class="content">
+    <div class="htitle" style="font-size:64px">Doze respostas entram.<br>Sete blocos não saem.</div>
+    <div class="cols c-46" style="height:auto;margin-top:40px;align-items:center">
+      <div>
+        <!-- funnel -->
+        <svg viewBox="0 0 520 300" width="520" height="300" role="img" aria-label="Funil: doze itens coletados, sete blocos sem topline">
+          <polygon points="20,20 500,20 360,170 160,170" fill="rgba(63,132,242,.12)" stroke="#3f84f2" stroke-width="2.5"/>
+          <text x="260" y="86" font-family="Archivo Black, sans-serif" font-size="60" fill="#8fb6f7" text-anchor="middle">12</text>
+          <text x="260" y="130" font-family="Source Sans 3" font-weight="700" font-size="24" fill="#e7e1d3" text-anchor="middle">itens perguntados</text>
+          <polygon points="160,190 360,190 300,280 220,280" fill="rgba(229,71,63,.12)" stroke="#e5473f" stroke-width="2.5"/>
+          <text x="260" y="242" font-family="Archivo Black, sans-serif" font-size="40" fill="#f2857f" text-anchor="middle">7</text>
+          <text x="260" y="272" font-family="Source Sans 3" font-weight="700" font-size="20" fill="#f2857f" text-anchor="middle">blocos sem topline</text>
+        </svg>
+      </div>
+      <div>
+        <p class="lead" style="max-width:560px;font-size:35px">“Questionário completo no registro” não basta se o resultado de cada pergunta pode sumir. Somem por inteiro:</p>
+        <ul class="plist" style="margin-top:24px">
+          <li><span class="mk gh">∅</span><span><b class="mono" style="color:var(--lula-l)">PF13</b> · <b>Renda individual</b>, perguntada ao eleitor, sem topline.</span></li>
+          <li><span class="mk gh">∅</span><span><b class="mono" style="color:var(--lula-l)">PF16</b> · <b>Cor/raça autodeclarada</b>, coletada, nunca publicada.</span></li>
+        </ul>
+        <p class="lead" style="margin-top:24px;font-size:31px">O eleitor respondeu. O contratante recebe inteligência. O público, uma <b>seleção editorial</b>.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span class="brand"><b>ARVOR INTELLIGENCE</b> · brasil.arvor.co/nexus_btg_0726.html · fontes TSE/IBGE/Nexus</span><span class="src">14 / 22</span></div>
+</section></div>
+
+<!-- ============ S13 · ANTI-FAMÍLIA ============ -->
+<div class="frame" data-n="15"><section class="slide" id="s15">
+  <div class="eyebrow">Uma pessoa contra uma dinastia</div>
+  <div class="snum"><b>15</b> / 22</div>
+  <div class="content">
+    <div class="cols c-46" style="height:auto">
+      <div>
+        <div class="htitle" style="font-size:54px">Uma pessoa<br>contra uma dinastia</div>
+        <p class="lead" style="margin-top:22px;max-width:560px;font-size:34px">A Q22 equipara dois polos que não medem a mesma coisa:</p>
+        <div style="margin-top:22px;display:flex;flex-direction:column;gap:14px">
+          <div style="border:1.5px solid rgba(229,71,63,.5);border-radius:12px;padding:16px 22px;background:rgba(229,71,63,.06);font-size:32px"><b class="mono" style="color:var(--lula-l)">Sou Anti-Lula</b><div class="kv" style="font-size:23px;margin-top:4px">rejeição a <b>um homem</b></div></div>
+          <div style="border:1.5px solid rgba(63,132,242,.5);border-radius:12px;padding:16px 22px;background:rgba(63,132,242,.06);font-size:32px"><b class="mono" style="color:var(--flavio-l)">Sou Anti-Bolsonaro (e sua família)</b><div class="kv" style="font-size:23px;margin-top:4px">Jair, Flávio, Michelle e <b>qualquer parente</b></div></div>
+        </div>
+        <p class="lead" style="margin-top:22px;font-size:30px">Uma pessoa contra um <b>sobrenome inteiro</b>: a diferença de médias não fecha.</p>
+      </div>
+      <div class="exhibit">
+        <div class="tape"></div>
+        <img src="img/nexus_btg_0726_anti_familia.png" alt="Polarização política: distribuições Anti-Lula e Anti-Bolsonaro, ambas bimodais, página 8">
+        <div class="plabel">Prova · p. 8</div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span class="brand"><b>ARVOR INTELLIGENCE</b> · brasil.arvor.co/nexus_btg_0726.html · fontes TSE/IBGE/Nexus</span><span class="src">15 / 22</span></div>
+</section></div>
+
+<!-- ============ S14 · MICHELLE ============ -->
+<div class="frame" data-n="16"><section class="slide" id="s16">
+  <div class="blob" style="width:520px;height:520px;left:-180px;top:-170px;background:radial-gradient(circle,rgba(229,71,63,.2),transparent 66%)"></div>
+  <div class="eyebrow r">A pergunta Michelle</div>
+  <div class="snum"><b>16</b> / 22</div>
+  <div class="content">
+    <div class="cols c-46" style="height:auto">
+      <div>
+        <div class="htitle" style="font-size:52px">Um editorial<br>lido ao telefone</div>
+        <p class="lead" style="margin-top:18px;max-width:560px;font-size:33px">Antes de pedir a opinião, o enunciado narra quatro fatos: a crítica pública, o “tratamento ríspido”, a saída do PL Mulher e — como <b>fato consumado</b> — o afastamento da campanha.</p>
+        <div class="monster" style="font-size:108px;margin-top:18px;color:var(--lula-l)">62%</div>
+        <div class="kv" style="margin-top:6px;max-width:560px">sabiam pouco ou nada do caso — e responderam assim mesmo. Só <b>20%</b> acompanhavam.</div>
+        <p class="lead" style="margin-top:16px;font-size:30px">Isso não mede opinião. <b>Fabrica reação.</b></p>
+        <p class="dim" style="margin-top:12px;font-size:20px;line-height:1.3;max-width:560px">O “64%” da chave é do próprio instituto: soma “conhece bem” (20%) com “sabe <i>pouco</i>” (27%).</p>
+      </div>
+      <div class="exhibit">
+        <div class="tape"></div>
+        <img src="img/nexus_btg_0726_michelle.png" alt="Conhecimento sobre as críticas de Michelle, página 79: 20% conhece bem, 17% sabe do que se trata, 27% sabe pouco, 35% não ouviu falar">
+        <div class="plabel">Prova · p. 79</div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span class="brand"><b>ARVOR INTELLIGENCE</b> · brasil.arvor.co/nexus_btg_0726.html · fontes TSE/IBGE/Nexus</span><span class="src">16 / 22</span></div>
+</section></div>
+
+<!-- ============ S15 · METADADOS ============ -->
+<div class="frame" data-n="17"><section class="slide" id="s17">
+  <div class="blob" style="width:540px;height:540px;right:-200px;top:-200px;background:radial-gradient(circle,rgba(227,169,44,.16),transparent 66%)"></div>
+  <div class="eyebrow g">Achado novo · metadados</div>
+  <div class="snum"><b>17</b> / 22</div>
+  <div class="content">
+    <div class="htitle" style="font-size:58px">A peça mais vista<br>é a única sem dono</div>
+    <div class="cols c-11" style="height:auto;margin-top:38px;gap:56px">
+      <div>
+        <div class="kv" style="margin-bottom:18px;color:var(--muted)">Proveniência dos arquivos</div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div style="border-left:5px solid var(--green);padding:14px 22px;background:rgba(51,192,138,.05);border-radius:0 10px 10px 0">
+            <div style="font-size:30px;color:var(--ink)">Questionário · Declaração · 5× “Bairros”</div>
+            <div class="kv" style="font-size:23px;margin-top:6px;color:var(--green)">autor “Nexus” · assinatura digital ICP-Brasil · CONRE 8656-A</div>
+          </div>
+          <div style="border-left:5px solid var(--lula);padding:14px 22px;background:rgba(229,71,63,.06);border-radius:0 10px 10px 0">
+            <div style="font-size:30px;color:#fff">Relatório de 111 páginas <span class="kv" style="font-size:22px">(o mais visto)</span></div>
+            <div class="kv" style="font-size:23px;margin-top:6px;color:var(--lula-l)">PowerPoint 2021 · autor “Microsoft Office User” · criado <b>13/07 06:25:09</b> · sem assinatura</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="tag novo" style="margin-bottom:18px">Inconsistências no registro</div>
+        <ul class="plist" style="gap:18px">
+          <li><span class="mk n">n</span><span>Registro e declaração: <b>2.000</b>. Relatório e imprensa: <b>2.003</b>. O ±2 foi calculado sobre 2.000.</span></li>
+          <li><span class="mk n">§</span><span>Declaração cita a <b>Resolução 23.747/2026</b>; o registro, a <b>23.600/2019</b>.</span></li>
+          <li><span class="mk n">✎</span><span>Campo “<b>Pagante do trabalho</b>” em branco nos dois documentos.</span></li>
+        </ul>
+        <p class="lead" style="margin-top:24px;font-size:29px">Ruído que uma pesquisa “auditável” não deveria acumular.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span class="brand"><b>ARVOR INTELLIGENCE</b> · brasil.arvor.co/nexus_btg_0726.html · fontes TSE/IBGE/Nexus</span><span class="src">17 / 22</span></div>
+</section></div>
+
+<!-- ============ S16 · TEIA + PREÇO ============ -->
+<div class="frame" data-n="18"><section class="slide" id="s18">
+  <div class="eyebrow">A teia · o dado que move preço</div>
+  <div class="snum"><b>18</b> / 22</div>
+  <div class="content">
+    <div class="cols c-46" style="height:auto">
+      <div>
+        <div class="htitle" style="font-size:52px">A teia existe.<br>A acusação precisa<br>de prova.</div>
+        <!-- network -->
+        <svg viewBox="0 0 560 250" width="560" height="250" style="margin-top:24px" role="img" aria-label="Teia BTG, Nexus e FSB Holding">
+          <line x1="120" y1="70" x2="440" y2="70" stroke="#666e82" stroke-width="2.5"/>
+          <line x1="120" y1="70" x2="280" y2="200" stroke="#666e82" stroke-width="2.5"/>
+          <line x1="440" y1="70" x2="280" y2="200" stroke="#666e82" stroke-width="2.5" stroke-dasharray="6 6"/>
+          <g font-family="Source Sans 3" font-weight="800" font-size="24" text-anchor="middle">
+            <circle cx="120" cy="70" r="54" fill="rgba(63,132,242,.12)" stroke="#3f84f2" stroke-width="2.5"/><text x="120" y="66" fill="#fff">BTG</text><text x="120" y="92" fill="#9199ad" font-size="18" font-weight="600">contrata</text>
+            <circle cx="440" cy="70" r="54" fill="rgba(227,169,44,.10)" stroke="#e3a92c" stroke-width="2.5"/><text x="440" y="66" fill="#fff">Nexus</text><text x="440" y="92" fill="#9199ad" font-size="18" font-weight="600">executa</text>
+            <circle cx="280" cy="200" r="54" fill="rgba(229,71,63,.10)" stroke="#e5473f" stroke-width="2.5"/><text x="280" y="196" fill="#fff">FSB</text><text x="280" y="222" fill="#9199ad" font-size="18" font-weight="600">holding</text>
+          </g>
+          <text x="300" y="150" font-family="Spline Sans Mono, monospace" font-size="19" fill="#9199ad" text-anchor="middle">imprensa BTG atende por @fsb.com.br</text>
+        </svg>
+        <p class="lead" style="margin-top:12px;font-size:29px">No registro, “<b>Pagante do trabalho</b>” fica em branco, contra o art. 2º, VII.</p>
+      </div>
+      <div>
+        <div class="tag hip" style="margin-bottom:16px">O dado que move preço</div>
+        <p class="lead" style="font-size:33px;max-width:560px">O próprio relatório avisa: pesquisa eleitoral pode <b>influenciar preços</b> e dar vantagem a quem recebe a informação antes da divulgação ampla.</p>
+        <div class="exhibit flat" style="margin-top:26px;max-width:560px">
+          <img src="img/nexus_btg_0726_disclaimer.png" alt="Disclaimer do relatório: risco de influência sobre cotação de valores mobiliários">
+          <div class="plabel">Prova · disclaimer p. 110</div>
+        </div>
+        <p class="lead" style="margin-top:26px;font-size:29px">Quem viu o número primeiro, e a que horas, vira dado de <b>interesse público</b>.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span class="brand"><b>ARVOR INTELLIGENCE</b> · brasil.arvor.co/nexus_btg_0726.html · fontes TSE/IBGE/Nexus</span><span class="src">18 / 22</span></div>
+</section></div>
+
+<!-- ============ S17 · LUCRO ============ -->
+<div class="frame" data-n="19"><section class="slide" id="s19">
+  <div class="blob" style="width:560px;height:560px;right:-200px;bottom:-220px;background:radial-gradient(circle,rgba(51,192,138,.2),transparent 66%)"></div>
+  <div class="eyebrow gr">Lucro e política</div>
+  <div class="snum"><b>19</b> / 22</div>
+  <div class="content">
+    <div class="cols c-46" style="height:auto">
+      <div>
+        <div class="htitle" style="font-size:52px">O banco lucrou muito<br>com Bolsonaro, e ainda<br>mais com Lula</div>
+        <p class="lead" style="margin-top:26px;max-width:560px">A tese de que o BTG “precisa” derrotar Lula não bate com o balanço do próprio banco.</p>
+        <div class="monster" style="font-size:100px;margin-top:26px"><span style="color:var(--muted)">R$ 3,8</span> <span style="color:var(--faint);font-size:66px">→</span> <span style="color:var(--green)">16,7 bi</span></div>
+        <div class="kv" style="margin-top:6px">lucro líquido ajustado · 2019 → 2025</div>
+        <p class="lead" style="margin-top:24px;font-size:31px">Recorde atrás de recorde. Quem lucra assim <b>não pede socorro na urna</b>.</p>
+      </div>
+      <div>
+        <div class="kv" style="margin-bottom:18px;text-align:right">Lucro líquido ajustado (R$ bi nominais)</div>
+        <svg viewBox="0 0 620 470" width="620" height="470" role="img" aria-label="Lucro do BTG de 2019 a 2025">
+          <line x1="60" y1="410" x2="600" y2="410" stroke="rgba(244,239,227,.25)" stroke-width="2"/>
+          <!-- scale: max 16.7 -> 340px tall; y=410 - v*20 -->
+          <g font-family="Source Sans 3" font-weight="800" font-size="26">
+            <rect x="80" y="333" width="70" height="77" fill="#4a5266"/><text x="115" y="322" fill="#9199ad" text-anchor="middle" font-family="Spline Sans Mono, monospace" font-size="24">3,8</text><text x="115" y="440" fill="#9199ad" text-anchor="middle" font-size="22">2019</text>
+            <rect x="180" y="244" width="70" height="166" fill="#5a6480"/><text x="215" y="233" fill="#9199ad" text-anchor="middle" font-family="Spline Sans Mono, monospace" font-size="24">8,3</text><text x="215" y="440" fill="#9199ad" text-anchor="middle" font-size="22">2022</text>
+            <rect x="280" y="202" width="70" height="208" fill="#1f8f63"/><text x="315" y="191" fill="#33c08a" text-anchor="middle" font-family="Spline Sans Mono, monospace" font-size="24">10,4</text><text x="315" y="440" fill="#9199ad" text-anchor="middle" font-size="22">2023</text>
+            <rect x="380" y="164" width="70" height="246" fill="#28a877"/><text x="415" y="153" fill="#33c08a" text-anchor="middle" font-family="Spline Sans Mono, monospace" font-size="24">12,3</text><text x="415" y="440" fill="#9199ad" text-anchor="middle" font-size="22">2024</text>
+            <rect x="480" y="76" width="70" height="334" fill="#33c08a"/><text x="515" y="65" fill="#33c08a" text-anchor="middle" font-family="Spline Sans Mono, monospace" font-size="24">16,7</text><text x="515" y="440" fill="#9199ad" text-anchor="middle" font-size="22">2025</text>
+          </g>
+          <text x="215" y="30" font-family="Spline Sans Mono, monospace" font-size="20" fill="#9199ad" text-anchor="middle">Bolsonaro</text>
+          <text x="415" y="30" font-family="Spline Sans Mono, monospace" font-size="20" fill="#33c08a" text-anchor="middle">Lula</text>
+          <line x1="365" y1="20" x2="365" y2="410" stroke="rgba(244,239,227,.18)" stroke-width="1.5" stroke-dasharray="5 5"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span class="brand"><b>ARVOR INTELLIGENCE</b> · brasil.arvor.co/nexus_btg_0726.html · fontes TSE/IBGE/Nexus</span><span class="src">19 / 22</span></div>
+</section></div>
+
+<!-- ============ S20 · CRONOLOGIA DO PAGANTE ============ -->
+<div class="frame" data-n="20"><section class="slide" id="s20">
+  <div class="blob" style="width:540px;height:540px;left:-190px;top:-180px;background:radial-gradient(circle,rgba(63,132,242,.18),transparent 66%)"></div>
+  <div class="eyebrow">A ironia do pagante</div>
+  <div class="snum"><b>20</b> / 22</div>
+  <div class="content">
+    <div class="cols c-46" style="height:auto">
+      <div>
+        <div class="htitle" style="font-size:54px">O cliente que torce<br>contra o próprio placar</div>
+        <p class="lead" style="margin-top:26px;max-width:560px">O BTG preferia publicamente outro candidato, viu-o sair da corrida e, mesmo assim, paga a pesquisa que devolve Flávio como o único competitivo.</p>
+        <div style="margin-top:30px;display:flex;gap:12px;flex-wrap:wrap">
+          <span class="tag fato" style="font-size:21px;padding:7px 16px">Fato</span>
+          <span class="tag infer" style="font-size:21px;padding:7px 16px;color:var(--flavio-l);border-color:rgba(63,132,242,.5);background:rgba(63,132,242,.08)">Relato jornalístico</span>
+        </div>
+        <p class="lead" style="margin-top:26px;font-size:29px">Nada disso prova ordem editorial. Prova que <b>o pagante tem preferências</b> — e a pesquisa não as confirma.</p>
+      </div>
+      <div>
+        <div style="position:relative;padding-left:44px">
+          <div style="position:absolute;left:15px;top:8px;bottom:8px;width:2px;background:linear-gradient(180deg,var(--flavio),var(--lula))"></div>
+          <!-- item -->
+          <div style="position:relative;margin-bottom:20px">
+            <span style="position:absolute;left:-37px;top:4px;width:16px;height:16px;border-radius:50%;background:var(--flavio);border:3px solid var(--bg)"></span>
+            <div class="kv" style="font-size:22px;color:var(--flavio-l);font-weight:700">ago/2025 · relato</div>
+            <div style="font-size:27px;color:var(--ink);line-height:1.28;margin-top:2px">Esteves (BTG) prefere <b>Tarcísio</b> e teme um Brasil “uninvestable” com Lula. <span class="dim" style="font-size:22px">O banco depois negou o termo.</span></div>
+          </div>
+          <div style="position:relative;margin-bottom:20px">
+            <span style="position:absolute;left:-37px;top:4px;width:16px;height:16px;border-radius:50%;background:var(--green);border:3px solid var(--bg)"></span>
+            <div class="kv" style="font-size:22px;color:var(--green);font-weight:700">set/2025 · fato</div>
+            <div style="font-size:27px;color:var(--ink);line-height:1.28;margin-top:2px">Tarcísio <b>descarta a Presidência</b> e vai à reeleição em SP.</div>
+          </div>
+          <div style="position:relative;margin-bottom:20px">
+            <span style="position:absolute;left:-37px;top:4px;width:16px;height:16px;border-radius:50%;background:var(--flavio);border:3px solid var(--bg)"></span>
+            <div class="kv" style="font-size:22px;color:var(--flavio-l);font-weight:700">nov/2025 · relato</div>
+            <div style="font-size:27px;color:var(--ink);line-height:1.28;margin-top:2px">A Faria Lima abre o <b>“trade Tarcísio”</b> e torce para que ele seja o candidato.</div>
+          </div>
+          <div style="position:relative;margin-bottom:20px">
+            <span style="position:absolute;left:-37px;top:4px;width:16px;height:16px;border-radius:50%;background:var(--lula);border:3px solid var(--bg)"></span>
+            <div class="kv" style="font-size:22px;color:var(--lula-l);font-weight:700">dez/2025 · fato</div>
+            <div style="font-size:27px;color:var(--ink);line-height:1.28;margin-top:2px">Com a pré-candidatura de Flávio, o <b>Ibovespa cai 4,25%</b>. Dias depois, Esteves o <b>recebe em casa</b>.</div>
+          </div>
+          <div style="position:relative">
+            <span style="position:absolute;left:-37px;top:4px;width:16px;height:16px;border-radius:50%;background:var(--gold);border:3px solid var(--bg)"></span>
+            <div class="kv" style="font-size:22px;color:var(--gold);font-weight:700">2026 · fato</div>
+            <div style="font-size:27px;color:var(--ink);line-height:1.28;margin-top:2px">O banco paga <b>6 rodadas</b>. Todas devolvem Flávio <b>empatado</b> com Lula — o único competitivo.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span class="brand"><b>ARVOR INTELLIGENCE</b> · brasil.arvor.co/nexus_btg_0726.html · fontes TSE/IBGE/Nexus</span><span class="src">20 / 22</span></div>
+</section></div>
+
+<!-- ============ S21 · PANO DE FUNDO ============ -->
+<div class="frame" data-n="21"><section class="slide" id="s21">
+  <div class="blob" style="width:560px;height:560px;right:-200px;bottom:-210px;background:radial-gradient(circle,rgba(51,192,138,.18),transparent 66%)"></div>
+  <div class="eyebrow gr">O pano de fundo</div>
+  <div class="snum"><b>21</b> / 22</div>
+  <div class="content">
+    <div class="htitle" style="font-size:56px">O sistema em que o banco “antissistema” prospera</div>
+    <p class="lead" style="margin-top:22px;max-width:1180px">A pesquisa vem embalada como oposição ao establishment. O balanço de quem a paga conta outra história: juro alto, imposto novo e lucro recorde no mesmo ciclo.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:28px;margin-top:40px">
+      <div style="border:1.5px solid rgba(227,169,44,.4);border-radius:16px;padding:28px 30px;background:rgba(227,169,44,.05)">
+        <div class="kv" style="color:var(--gold);margin-bottom:10px">Juro</div>
+        <div class="monster" style="font-size:70px;color:var(--gold)">14,25%</div>
+        <div class="kv" style="margin-top:12px;font-size:24px;line-height:1.3">Selic hoje (Copom 17/06/2026), após o <b style="color:#fff">pico de 15%</b> em jun/2025 — o maior em cerca de 20 anos.</div>
+      </div>
+      <div style="border:1.5px solid rgba(63,132,242,.4);border-radius:16px;padding:28px 30px;background:rgba(63,132,242,.05)">
+        <div class="kv" style="color:var(--flavio-l);margin-bottom:10px">Impostos novos</div>
+        <div class="monster" style="font-size:70px;color:var(--flavio-l)">+4</div>
+        <div class="kv" style="margin-top:12px;font-size:24px;line-height:1.3">frentes em 2025–26: <b style="color:#fff">IOF</b>, <b style="color:#fff">IR de 5%</b> em LCI/LCA, <b style="color:#fff">JCP 15→20%</b> e apostas <b style="color:#fff">12→18%</b>.</div>
+      </div>
+      <div style="border:1.5px solid rgba(51,192,138,.4);border-radius:16px;padding:28px 30px;background:rgba(51,192,138,.05)">
+        <div class="kv" style="color:var(--green);margin-bottom:10px">Lucro do BTG</div>
+        <div class="monster" style="font-size:70px;color:var(--green)">R$ 16,7 bi</div>
+        <div class="kv" style="margin-top:12px;font-size:24px;line-height:1.3">recorde em 2025 (<b style="color:#fff">+35%</b>), “num ano marcado por <b style="color:#fff">juros elevados</b>”.</div>
+      </div>
+    </div>
+    <div style="margin-top:34px;border-top:1px solid var(--line);padding-top:22px">
+      <p class="lead" style="font-size:31px;max-width:1220px">A pesquisa que o banco paga entrega Flávio empatado e a “terceira via” do MBL em 35%. O incentivo do pagante é visível; a confirmação editorial, não. <b>É por isso que os pesos invisíveis importam.</b></p>
+    </div>
+  </div>
+  <div class="foot"><span class="brand"><b>ARVOR INTELLIGENCE</b> · brasil.arvor.co/nexus_btg_0726.html · fontes TSE/IBGE/Nexus</span><span class="src">21 / 22</span></div>
+</section></div>
+
+<!-- ============ S18 · VEREDITO + O QUE TESTAMOS ============ -->
+<div class="frame" data-n="22"><section class="slide" id="s22">
+  <div class="blob" style="width:640px;height:640px;left:calc(50% - 320px);top:-320px;background:radial-gradient(circle,rgba(63,132,242,.16),transparent 62%)"></div>
+  <div class="blob" style="width:520px;height:520px;left:-180px;bottom:-200px;background:radial-gradient(circle,rgba(229,71,63,.14),transparent 66%)"></div>
+  <div class="eyebrow gr">O veredito</div>
+  <div class="snum"><b>22</b> / 22</div>
+  <div class="content">
+    <div class="cols c-46" style="height:auto">
+      <div>
+        <div class="tag fato" style="margin-bottom:20px">O que testamos e não achamos</div>
+        <ul class="plist" style="gap:18px">
+          <li><span class="mk ok">✓</span><span>Recortes por sexo, renda, região e escolaridade <b>reconstroem</b> o placar Lula 40 / Flávio 34 dentro de meio ponto.</span></li>
+          <li><span class="mk ok">✓</span><span>Todas as distribuições <b>somam 100</b>.</span></li>
+          <li><span class="mk ok">✓</span><span>Sem sinal de <b>células editadas à mão</b>.</span></li>
+        </ul>
+        <p class="lead" style="margin-top:24px;font-size:30px">O problema é de método e transparência, não de fraude aritmética.</p>
+      </div>
+      <div>
+        <div class="htitle" style="font-size:66px;line-height:1.02">Não é prova<br>de fraude.<br><span style="color:var(--gold)">É prova de<br>opacidade.</span></div>
+        <p class="lead" style="margin-top:28px;font-size:31px;max-width:540px">O placar é plausível. A documentação não deixa ninguém refazer os pesos, o desenho e a probabilidade final por eleitor.</p>
+        <div class="mono" style="margin-top:28px;font-size:30px;color:#fff;border-top:1px solid var(--line);padding-top:20px">brasil.arvor.co/nexus_btg_0726.html</div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span class="brand"><b>ARVOR INTELLIGENCE</b> · brasil.arvor.co/nexus_btg_0726.html · fontes TSE/IBGE/Nexus</span><span class="src">22 / 22</span></div>
+</section></div>
+
+<script>
+(function(){
+  var q = new URLSearchParams(location.search);
+  var og = q.get('og') === '1';
+  var solo = q.get('slide');
+  var m = location.hash.match(/^#s(\d+)/);
+  if(!solo && m){ solo = m[1]; }
+  if(og){ solo = '1'; }
+  var root = document.documentElement;
+  function pad(n){ return 's' + String(n).padStart(2,'0'); }
+  if(solo){
+    var n = parseInt(solo,10);
+    document.body.classList.add('solo');
+    if(og){ document.body.classList.add('og'); }
+    var frames = document.querySelectorAll('.frame');
+    frames.forEach(function(f){ if(f.getAttribute('data-n') !== String(n)){ f.remove(); } });
+    var sh = og ? 840 : 900;
+    function fit(){
+      var s = Math.min(window.innerWidth/1600, window.innerHeight/sh);
+      root.style.setProperty('--s', s);
+    }
+    fit(); window.addEventListener('resize', fit);
+  } else {
+    function fitDeck(){
+      var w = Math.min(window.innerWidth*0.94, 1500);
+      root.style.setProperty('--s', w/1600);
+    }
+    fitDeck(); window.addEventListener('resize', fitDeck);
+  }
+})();
+</script>
+</body>
+</html>

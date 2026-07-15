@@ -154,6 +154,8 @@ Main generated outputs:
 - `data/outputs/brasil.sqlite` — SQLite with `base_labeled_npv`, `base_anual_labeled_npv`, and optional `base_anual_visita1_labeled_npv` tables
 - `docs/index.html` — static interactive essay (bilingual)
 - `data/outputs/ipca.csv` — IPCA series
+- `data/outputs/tse_eleitorado_perfil.sqlite` — compact TSE electorate benchmarks
+- `data/outputs/tse_eleitorado_perfil_benchmark.json` — exact gender and age totals for polling audits
 
 ---
 

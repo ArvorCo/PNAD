@@ -1,0 +1,914 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>O empate que não dá para auditar — auditoria BTG/Nexus, 6ª rodada · Arvor</title>
+  <meta name="description" content="Auditoria Arvor da 6ª rodada BTG/Nexus: série eleitoral, margem da diferença, RDD e cotas, perguntas fantasma, Bolsonaro e família, calibração PNAD/TSE, conflitos de papel, lucro do BTG e minutas regulatórias. Prova de opacidade, não de fraude.">
+  <link rel="canonical" href="https://brasil.arvor.co/nexus_btg_0726.html">
+  <link rel="icon" href="img/arvor_logo.png">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Arvor Intelligence">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:title" content="O empate que não dá para auditar — BTG/Nexus, 6ª rodada">
+  <meta property="og:description" content="Lula 47, Flávio 44. O placar é plausível. O que não dá para auditar é tudo o mais: pesos invisíveis, margem da diferença de ±4,18, um arquivo “Bairros” sem bairros e ao menos 12 respostas coletadas e nunca devolvidas.">
+  <meta property="og:url" content="https://brasil.arvor.co/nexus_btg_0726.html">
+  <meta property="og:image" content="https://brasil.arvor.co/img/nexus_btg_0726_og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Auditoria Arvor da pesquisa BTG/Nexus: prova de opacidade, não de fraude.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="O empate que não dá para auditar — BTG/Nexus, 6ª rodada">
+  <meta name="twitter:description" content="Uma pesquisa que a gente não consegue refazer não é ciência. É palavra de honra com gráfico. Auditoria metodológica da 6ª rodada BTG/Nexus.">
+  <meta name="twitter:image" content="https://brasil.arvor.co/img/nexus_btg_0726_og.png">
+  <link rel="stylesheet" href="assets/nexus_btg_0726.css">
+  <script>
+    document.documentElement.classList.add("js");
+    // Safety net: if the main script fails to load/run, never leave content hidden.
+    addEventListener("load", function () {
+      setTimeout(function () {
+        if (!window.__revealReady) {
+          document.querySelectorAll(".reveal").forEach(function (el) { el.classList.add("in"); });
+        }
+      }, 1200);
+    });
+  </script>
+</head>
+<body>
+  <div class="progress" aria-hidden="true"></div>
+
+  <header class="hero">
+    <div class="hero-halftone" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <div class="brand"><img src="img/arvor_logo.png" alt="Logotipo Arvor"><span>Arvor Intelligence · Auditoria Eleitoral</span></div>
+          <div class="eyebrow">6ª rodada · BR-07981/2026 · laudo de 15/07/2026</div>
+          <h1>O empate que <em>não dá para auditar</em></h1>
+          <p class="deck">A BTG/Nexus põe Lula em 47% e Flávio Bolsonaro em 44%. Empate técnico, palavra do próprio instituto. O placar é plausível, e não é aí que mora o problema. O problema é o que não se pode ver: a planilha de pesos que estica e encolhe cada entrevista, o efeito de desenho que ninguém publicou, um arquivo chamado “Bairros” que não tem um único bairro, uma escala que mede “Lula” de um lado e “Bolsonaro e sua família” do outro, e ao menos doze respostas que foram coletadas do eleitor e nunca voltaram ao público. Uma pesquisa que a gente não consegue refazer não é ciência. É palavra de honra com gráfico.</p>
+          <div class="hero-meta">
+            <span>Campo: <b>10–12/07/2026</b></span><span>n = <b>2.003</b></span><span>Modo: <b>CATI/RDD + cotas</b></span>
+            <span>Contratante: <b>Banco BTG Pactual</b></span><span>Valor: <b>R$ 164.888,89</b></span><span>Relatório: <b>111 páginas</b></span>
+          </div>
+        </div>
+        <aside class="hero-side">
+          <div class="score-grid">
+            <div class="score"><strong>47×44</strong><span>o próprio instituto chama de empate técnico</span></div>
+            <div class="score"><strong>±4,18</strong><span>a margem da diferença, não o ±2 do release</span></div>
+            <div class="score"><strong>457</strong><span>municípios ouvidos por uma só pessoa</span></div>
+            <div class="score"><strong>12</strong><span>itens/respostas sem topline identificável</span></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+    <div class="scroll-cue" aria-hidden="true">role a prova</div>
+  </header>
+
+  <nav class="toc" aria-label="Sumário">
+    <div class="wrap">
+      <span class="toc-brand">Dossiê</span>
+      <div class="toc-links">
+        <a href="#sumario">01 Veredito</a><a href="#anatomia">02 Anatomia</a><a href="#placar">03 Placar</a>
+        <a href="#margem">04 Margem</a><a href="#territorio">05 “Bairros”</a><a href="#calibracao">06 PNAD/TSE</a>
+        <a href="#reponderacao">07 Reponderação</a><a href="#amostra">08 RDD/cotas</a><a href="#fantasmas">09 Fantasmas</a>
+        <a href="#familia">10 Família</a><a href="#teia">11 BTG/FSB</a><a href="#metadados">12 Sem dono</a>
+        <a href="#lucro">13 Lucro</a><a href="#ironia">14 O cliente</a><a href="#padroes">15 Padrões</a>
+        <a href="#resolucao">16 TSE</a><a href="#projeto-lei">17 Projeto de lei</a><a href="#fontes">18 Fontes</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- ============ 01 VEREDITO ============ -->
+    <section id="sumario" class="chapter paper">
+      <div class="wrap">
+        <div class="chapter-head"><span class="chapter-no">CAP. 01</span><div class="eyebrow">Veredito executivo</div></div>
+        <div class="section-head reveal">
+          <h2>Não é prova de fraude.<br>É prova de <em>opacidade</em>.</h2>
+          <p class="deck">Um auditor sério não inventa manipulação onde os arquivos não deixam demonstrá-la. E também não engole “confie na gente” como se fosse método. Esta rodada pode estar perto da realidade. A documentação publicada, essa, não permite a ninguém de fora reconstruir os pesos, o efeito de desenho, os clusters nem a probabilidade final de uma pessoa ser sorteada e ouvida. O que se pede não é fé. É o arquivo.</p>
+        </div>
+        <div class="grid four mt reveal">
+          <article class="card"><span class="stamp fato">Fato</span><div class="metric">47×44</div><h3>Flávio não está inviável</h3><p>A diferença de 3 pontos inclui zero até no cenário mais otimista de amostra aleatória simples. A própria <a href="https://www.nexus.fsb.com.br/estudos-divulgados/pesquisa-btg-nexus-de-intencao-de-votos-para-presidente-do-brasil-13-de-julho-de-2026/">Nexus diz “empate técnico”</a>.</p></article>
+          <article class="card"><span class="stamp fato">Fato</span><div class="metric">D</div><h3>Transparência reprovada</h3><p>Não há microdados, pesos finais, distribuição bruta, deff, n efetivo, taxa de resposta, bases não ponderadas por recorte nem algoritmo replicável dos clusters.</p></article>
+          <article class="card"><span class="stamp inferencia">Inferência</span><div class="metric">RDD≠pessoa</div><h3>Probabilidade incompleta</h3><p>Sortear números dá chance conhecida ao telefone. Não dá chance igual a cada eleitor quando a cota fecha portas, o domicílio tem vários aparelhos, a não resposta some e a escolha de quem atende não é aberta.</p></article>
+          <article class="card"><span class="stamp hipotese">Hipótese não provada</span><div class="metric">0</div><h3>Evidência de fabricação</h3><p>Nenhum arquivo demonstra que respostas foram inventadas ou que o placar foi encomendado. O laudo aponta risco de viés, conflito de papel e impossibilidade de auditoria, coisas sérias por si só.</p></article>
+        </div>
+        <div class="verdict-box reveal"><strong>Conclusão em uma frase</strong><p>A narrativa de inviabilidade de Flávio falha nos próprios números da Nexus; já a narrativa de rigor científico falha porque o instituto não publica o necessário para que terceiros verifiquem o que fez.</p></div>
+        <p class="caption reveal">Este laudo complementa, sem apagar, a <a href="nexus_btg_150626.html">auditoria da rodada de 15/06/2026</a>. “Fato” significa observação documental ou cálculo reproduzível; “inferência” é a explicação mais compatível com os fatos; “hipótese” exige evidência adicional.</p>
+
+        <div class="credbox reveal">
+          <span class="stamp credito">Contraprova</span>
+          <h3>O que testamos e não achamos</h3>
+          <p>Auditoria não é militância. Antes de apontar o que falta, rodamos os testes que poderiam flagrar fraude aritmética no dado bruto. Todos passaram. É isso que separa uma crítica de método de uma teoria da conspiração.</p>
+          <div class="cred-list">
+            <div class="cred-item"><b>N1 · Coerência interna</b><span>Reconstruindo o topline Lula 40 / Flávio 34 a partir de cada recorte (sexo, escolaridade, renda, região, PEA) com os pesos do perfil publicado, todos batem dentro de ±0,5 pp. Um único esquema de ponderação coerente; sem sinal de células editadas à mão.</span></div>
+            <div class="cred-item"><b>N2 · Distribuições somam 100</b><span>Todas as distribuições verificadas somam 100 ± 1 (interesse, comparecimento, espontâneo, cenários, 2º turno, Michelle, avaliação). Nenhuma distribuição impossível.</span></div>
+            <div class="cred-item"><b>N3 · Dígito terminal</b><span>O teste do último dígito não é diagnóstico aqui: predominam células de 1–3% e os rótulos de eixo (0, 10, 20…) inflam o dígito “0”. Nenhum sinal de manipulação extraível dele.</span></div>
+            <div class="cred-item"><b>N4 · Ordem protege o horserace</b><span>Rotação declarada nas listas (Q3/Q5/Q6) e baterias; os itens indutores (Michelle, Lula-vs-Flávio, Q7) vêm <em>depois</em> das perguntas de voto. Boa prática, não contaminam a intenção.</span></div>
+            <div class="cred-item"><b>N5 · Célula impossível</b><span>Todas as células são estimativas ponderadas; a ponderação torna atingível qualquer percentual, então a regra “múltiplo de 1/n” não vale como diagnóstico. Não aplicável.</span></div>
+            <div class="cred-item" style="border-style:dashed"><b>Portanto</b><span>O problema é de <em>método e transparência</em> (granularidade da ponderação, faixas escolhidas, dados coletados e não mostrados), não de fraude aritmética.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 02 COMO NASCE UM NÚMERO ============ -->
+    <section id="anatomia" class="chapter ink">
+      <div class="wrap">
+        <div class="chapter-head"><span class="chapter-no">CAP. 02</span><div class="eyebrow">Anatomia de um dado</div></div>
+        <div class="section-head reveal">
+          <h2>Como nasce um número de pesquisa</h2>
+          <p class="deck">Sete passos do telefone que toca à manchete que sai. Em cada um, uma porta onde a luz deixa de entrar.</p>
+        </div>
+
+        <div class="anatomy">
+          <div class="station reveal">
+            <div class="station-icon"><span class="station-no">1</span>
+              <svg viewBox="0 0 48 48" fill="none" stroke="#ffb98a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="16" y="5" width="17" height="38" rx="3"/><line x1="21" y1="39" x2="28" y2="39"/><circle cx="9" cy="12" r="1.4"/><circle cx="40" cy="17" r="1.4"/><circle cx="8" cy="26" r="1.4"/><circle cx="41" cy="31" r="1.4"/></svg>
+            </div>
+            <div class="station-body">
+              <h3>O sorteio (RDD)</h3>
+              <p>Um computador gera sequências de telefone ao acaso, fixo e celular, dentro dos códigos de área do país. Em tese, cada número tem chance conhecida de ser chamado.</p>
+              <div class="door"><strong>Porta onde a transparência falha</strong><p>Ninguém publica quantos números foram gerados, quantos eram válidos, quantos chegaram a tocar. O ponto de partida já nasce invisível.</p></div>
+            </div>
+          </div>
+
+          <div class="station reveal">
+            <div class="station-icon"><span class="station-no">2</span>
+              <svg viewBox="0 0 48 48" fill="none" stroke="#ffb98a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 10 H39 L28 25 V39 L20 35 V25 Z"/><circle cx="24" cy="45" r="1.4"/></svg>
+            </div>
+            <div class="station-body">
+              <h3>A discagem</h3>
+              <p>O aplicador liga. A maioria não atende, desliga no primeiro “boa noite” ou é número que não existe mais.</p>
+              <div class="door"><strong>Porta onde a transparência falha</strong><p>Contatos, recusas, abandonos e a taxa de resposta pelo padrão AAPOR nunca aparecem. O funil que transforma dezenas de milhares de chamadas em 2.003 entrevistas fica no escuro.</p></div>
+            </div>
+          </div>
+
+          <div class="station reveal">
+            <div class="station-icon"><span class="station-no">3</span>
+              <svg viewBox="0 0 48 48" fill="none" stroke="#ffb98a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="12" width="34" height="24" rx="2"/><circle cx="17" cy="22" r="3.6"/><line x1="26" y1="20" x2="36" y2="20"/><line x1="26" y1="26" x2="34" y2="26"/><polyline points="12 32 15 35 21 29"/></svg>
+            </div>
+            <div class="station-body">
+              <h3>O filtro do eleitor</h3>
+              <p>Quem atende ouve a primeira pergunta: “Você tem título de eleitor?” Se não tem, agradece e encerra.</p>
+              <div class="door"><strong>Porta onde a transparência falha</strong><p>Num domicílio com vários moradores e vários aparelhos, quem, exatamente, vira “o eleitor” daquela casa? A regra que escolhe o respondente dentro do telefone não é aberta.</p></div>
+            </div>
+          </div>
+
+          <div class="station reveal">
+            <div class="station-icon"><span class="station-no">4</span>
+              <svg viewBox="0 0 48 48" fill="none" stroke="#ffb98a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="10" y="7" width="22" height="34" rx="1.5"/><path d="M32 7 L20 11 V41 L32 37"/><circle cx="23" cy="25" r="1.3" fill="#ffb98a" stroke="none"/><path d="M36 16 l4 4 -4 4" opacity=".7"/></svg>
+            </div>
+            <div class="station-body">
+              <h3>A porta da cota</h3>
+              <p>O sistema confere o perfil de quem atendeu, sexo, idade, região. Se a cota daquele perfil já encheu, a instrução impressa é seca: explique que a vaga fechou, agradeça e encerre.</p>
+              <div class="door"><strong>Porta onde a transparência falha</strong><p>Um eleitor legítimo, sorteado, é dispensado porque “o tipo dele já bateu a meta”. A partir daqui, a probabilidade final não é mais a do número; é a do fluxo de campo daquele dia, que não se documenta.</p></div>
+            </div>
+          </div>
+
+          <div class="station reveal">
+            <div class="station-icon"><span class="station-no">5</span>
+              <svg viewBox="0 0 48 48" fill="none" stroke="#ffb98a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 27 v-3 a12 12 0 0 1 24 0 v3"/><rect x="8" y="26" width="6" height="11" rx="2"/><rect x="34" y="26" width="6" height="11" rx="2"/><path d="M34 37 v2 a4 4 0 0 1 -4 4 h-6"/></svg>
+            </div>
+            <div class="station-body">
+              <h3>A entrevista</h3>
+              <p>Cerca de dez minutos ao telefone. O sexo, o entrevistador anota sem perguntar, pela voz. Passam voto, rejeição, escalas de 0 a 10, Bolsa Família, renda, cor.</p>
+              <div class="door"><strong>Porta onde a transparência falha</strong><p>Nem toda resposta coletada reaparece no relatório. Doze itens entram; sete blocos não saem. A renda individual e a cor/raça somem por inteiro.</p></div>
+            </div>
+          </div>
+
+          <div class="station reveal">
+            <div class="station-icon"><span class="station-no">6</span>
+              <svg viewBox="0 0 48 48" fill="none" stroke="#ffb98a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="24" y1="8" x2="24" y2="35"/><line x1="11" y1="14" x2="37" y2="14"/><circle cx="24" cy="9" r="1.6"/><path d="M11 14 l-4 9 h8 z"/><path d="M37 14 l-4 9 h8 z"/><line x1="18" y1="39" x2="30" y2="39"/></svg>
+            </div>
+            <div class="station-body">
+              <h3>A planilha de pesos</h3>
+              <p>Encerrada a coleta, uma matriz invisível estica umas entrevistas e encolhe outras, até a amostra “parecer” o Brasil da régua oficial.</p>
+              <div class="door"><strong>Porta onde a transparência falha</strong><p>As metas exatas, as distribuições brutas, o algoritmo, o corte dos pesos extremos, o efeito de desenho, nada disso vem a público. O peso final de cada respondente é segredo comercial.</p></div>
+            </div>
+          </div>
+
+          <div class="station reveal">
+            <div class="station-icon"><span class="station-no">7</span>
+              <svg viewBox="0 0 48 48" fill="none" stroke="#ffb98a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="10" width="34" height="28" rx="1.5"/><line x1="12" y1="17" x2="36" y2="17"/><line x1="12" y1="23" x2="24" y2="23"/><rect x="27" y="22" width="9" height="9"/><line x1="12" y1="28" x2="24" y2="28"/><line x1="12" y1="33" x2="24" y2="33"/></svg>
+            </div>
+            <div class="station-body">
+              <h3>O relatório e a manchete</h3>
+              <p>Cento e onze páginas se condensam num número. O número vira manchete.</p>
+              <div class="door"><strong>Porta onde a transparência falha</strong><p>A manchete diz “47 a 44, vantagem de Lula”. Não diz que a margem da diferença é ±4,18, que o zero cabe dentro do intervalo, que a série sobe e desce sem rumo fixo. A última porta é a do leitor, que recebe a certeza e nunca recebe a dúvida.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout reveal">Em nenhuma dessas sete portas há prova de fraude. Em todas elas há uma luz que se apaga. É essa a soma que o laudo mede: <strong>não uma mentira, mas o direito de conferir, retirado passo a passo, do telefone até a primeira página.</strong></div>
+
+        <div class="cast reveal" aria-label="Personagens desta pesquisa">
+          <div class="cast-item"><svg viewBox="0 0 32 36" fill="#cfcabb" aria-hidden="true"><circle cx="16" cy="10" r="6"/><path d="M3 35 c0-8 6-13 13-13 s13 5 13 13 z"/><path d="M9 10 a7 7 0 0 1 14 0" fill="none" stroke="#cfcabb" stroke-width="2"/><rect x="21" y="14" width="3" height="6" rx="1.5"/></svg>O operador de telemarketing</div>
+          <div class="cast-item"><svg viewBox="0 0 32 36" fill="#cfcabb" aria-hidden="true"><circle cx="16" cy="10" r="6"/><path d="M3 35 c0-8 6-13 13-13 s13 5 13 13 z"/></svg>A eleitora que atende</div>
+          <div class="cast-item"><svg viewBox="0 0 32 36" fill="#cfcabb" aria-hidden="true"><circle cx="16" cy="10" r="6"/><path d="M3 35 c0-8 6-13 13-13 s13 5 13 13 z"/><rect x="10" y="8" width="5" height="4" rx="1" fill="none" stroke="#cfcabb" stroke-width="1.4"/><rect x="17" y="8" width="5" height="4" rx="1" fill="none" stroke="#cfcabb" stroke-width="1.4"/></svg>O estatístico</div>
+          <div class="cast-item"><svg viewBox="0 0 32 36" fill="#cfcabb" aria-hidden="true"><path d="M4 14 L16 5 L28 14 Z"/><rect x="6" y="16" width="3" height="13"/><rect x="14.5" y="16" width="3" height="13"/><rect x="23" y="16" width="3" height="13"/><rect x="3" y="30" width="26" height="4"/></svg>O banco</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 03 PLACAR ============ -->
+    <section id="placar" class="chapter paper">
+      <div class="wrap">
+        <div class="chapter-head"><span class="chapter-no">CAP. 03</span><div class="eyebrow">Série de seis rodadas</div></div>
+        <div class="section-head reveal">
+          <h2>A suposta inviabilidade fracassa no placar</h2>
+          <p class="deck">No segundo turno, Lula contra Flávio foi 46 a 46, 46 a 45, 47 a 43, 49 a 43, 47 a 44 e de novo 47 a 44. A vantagem chegou a seis pontos em 15 de junho e recuou para três. Isso sobe e desce; não é uma seta apontando sempre para o mesmo lado. No primeiro turno, a distância caiu do pico de nove para seis pontos. Quem lê “Lula abre vantagem” está lendo uma fotografia tremida como se fosse filme.</p>
+        </div>
+
+        <div class="evidence-grid mt reveal">
+          <figure class="exhibit">
+            <div class="exhibit-frame"><img src="img/nexus_btg_0726_segundo_turno.png" alt="Página 37 do relatório Nexus com a série Lula versus Flávio Bolsonaro no segundo turno"><span class="exhibit-tag">Prova 01 · p. 37</span></div>
+            <figcaption>Prova primária: relatório BTG/Nexus, p. 37. A série que a imprensa transforma em manchete.</figcaption>
+          </figure>
+          <article class="chart-card">
+            <div class="chart-head"><h3>2º turno · Lula × Flávio</h3><span>mar. → jul. 2026</span></div>
+            <div id="chart-runoff" class="chart"></div>
+            <div class="chart-legend"><span><i class="legend-dot" style="background:#b5202a"></i>Lula</span><span><i class="legend-dot" style="background:#1f5fbf"></i>Flávio Bolsonaro</span></div>
+          </article>
+        </div>
+
+        <div class="chart-grid mt reveal">
+          <article class="chart-card"><div class="chart-head"><h3>1º turno estimulado</h3><span>cenário principal</span></div><div id="chart-first" class="chart"></div><p class="caption">Comparações exigem cautela: cartões e candidaturas testadas mudaram ao longo da série, problema detalhado no laudo anterior.</p></article>
+          <article class="chart-card"><div class="chart-head"><h3>Voto espontâneo</h3><span>indecisão voltou a subir em julho</span></div><div id="chart-spontaneous" class="chart"></div><p class="caption">Em julho, Lula caiu de 38% para 35%, Flávio de 27% para 24% e NS/NR subiu de 20% para 22%. A rodada enfraqueceu os dois nomes na lembrança espontânea.</p></article>
+        </div>
+
+        <div class="callout reveal">A formulação correta não é “Flávio disparou” nem “Flávio morreu”. É: <strong>Flávio é, nesta pesquisa, o oposicionista mais competitivo contra Lula e está em empate técnico, mas a série ainda não prova direção estável.</strong></div>
+
+        <p class="deck reveal" style="max-width:70ch">Guarde o gesto: uma linha que sobe e desce dentro do erro amostral não é uma tendência, é ruído bem desenhado. O resto do laudo mostra por que até esse ruído é impossível de conferir por fora.</p>
+
+        <div class="grid three mt reveal">
+          <article class="card"><span class="stamp fato">Fato</span><h3>O melhor adversário</h3><p>Contra Lula, Flávio marca 44%; Zema, 40%; Caiado, 38%; Renan Santos, 35%. Isso é o oposto de inviabilidade comparativa.</p></article>
+          <article class="card"><span class="stamp fato">Fato</span><h3>Coalizões nítidas</h3><p>Flávio lidera entre homens (51%), evangélicos (55%), Sul (58%), N/CO (50%) e renda de 2 a 5 SM (49%). Lula domina mulheres, Nordeste, fundamental e renda até 1 SM.</p></article>
+          <article class="card"><span class="stamp erro">Erro publicado</span><h3>A própria série foi descrita errado</h3><p>A página de 29/06 diz que a rodada anterior foi 48–43 e a diferença caiu de 5 para 3. O relatório de 15/06 e a série atual dizem 49–43: a queda correta foi de 6 para 3. <a href="https://www.nexus.fsb.com.br/estudos-divulgados/pesquisa-btg-nexus-de-intencao-de-votos-para-presidente-do-brasil-29-de-junho-de-2026/">Veja o texto errado</a> e <a href="https://www.nexus.fsb.com.br/estudos-divulgados/pesquisa-btg-nexus-de-intencao-de-votos-para-presidente-do-brasil-15-de-junho-de-2026/">a rodada anterior</a>.</p></article>
+        </div>
+        <div class="verdict-box reveal"><strong>B3 · Desenho, não erro</strong><p>O único candidato do campo bolsonarista testado no 1º turno, no 2º turno e na bateria de doze “capacidades” (Q15) é Flávio. A pesquisa estrutura toda a disputa como “Lula vs Flávio”, sem Tarcísio, Michelle ou Eduardo. É escolha de desenho, não erro, mas molda a narrativa antes de qualquer resposta. <span class="stamp fato" style="margin-left:6px">Fato</span></p></div>
+      </div>
+    </section>
+
+    <!-- ============ 04 MARGEM ============ -->
+    <section id="margem" class="chapter ink">
+      <div class="wrap">
+        <div class="chapter-head"><span class="chapter-no">CAP. 04</span><div class="eyebrow">Incerteza</div></div>
+        <div class="section-head reveal">
+          <h2>O “±2 pontos” do release não vale para o 47 a 44</h2>
+          <p class="deck">O “±2 pontos” que aparece no release serve, mais ou menos, para uma porcentagem sozinha. Só que a pergunta que interessa não é essa. A pergunta é sobre a <em>diferença</em> entre dois candidatos, e diferença tem margem própria, sempre maior. Com n=2.003 e amostragem aleatória simples, a margem de 95% dessa diferença é ±4,18 pontos. Traduzindo: uma vantagem de três pontos tem o zero dentro do intervalo. Empate de verdade, não empate de figura de linguagem.</p>
+        </div>
+
+        <div style="display:flex;align-items:baseline;gap:20px;flex-wrap:wrap;margin:34px 0 6px" class="reveal">
+          <span class="monster" style="font-size:clamp(4rem,12vw,9rem)" data-count-to="4.18" data-count-dec="2" data-count-pre="±">±4,18</span>
+          <span class="deck" style="max-width:34ch">pontos: a margem real da diferença. O release publica ±2, que vale para uma proporção isolada, não para o placar.</span>
+        </div>
+
+        <article class="chart-card wide reveal">
+          <div class="chart-head"><h3>A vantagem de Lula e a banda de ±4,18</h3><span>gap do 2º turno, mar. → jul.</span></div>
+          <div id="chart-gap-band" class="chart"></div>
+          <p class="caption">A faixa sombreada é a margem de 95% da diferença (±4,18 pp) em torno da vantagem observada. Onde a banda toca a linha do zero, o empate é estatístico, não retórico. Só em 15 de junho (gap de 6) a banda não encosta no zero.</p>
+        </article>
+
+        <div class="chart-grid mt reveal">
+          <article class="chart-card"><div class="chart-head"><h3>Intervalo da diferença por cenário de deff</h3><span>sensibilidade</span></div><div id="chart-margin" class="chart"></div><p class="caption">Cenários de sensibilidade; não estimativas do deff real, que a Nexus não publicou.</p></article>
+          <article class="chart-card">
+            <h3>O que cada número quer dizer</h3>
+            <div class="table-wrap" style="box-shadow:none;margin-top:12px"><table><thead><tr><th>Cenário</th><th class="num">Margem da diferença</th><th class="num">IC 95% do gap</th><th class="num">n efetivo</th></tr></thead><tbody>
+              <tr><td>SRS, deff 1,0</td><td class="num">±4,18 pp</td><td class="num">−1,18 a +7,18</td><td class="num">2.003</td></tr>
+              <tr><td>deff 1,5</td><td class="num">±5,11 pp</td><td class="num">−2,11 a +8,11</td><td class="num">1.335</td></tr>
+              <tr><td>deff 2,0</td><td class="num">±5,91 pp</td><td class="num">−2,91 a +8,91</td><td class="num">1.002</td></tr>
+            </tbody></table></div>
+            <p style="margin-top:12px">A margem SRS individual no pior caso é ±2,19 pp; “2” é arredondamento. Pesos podem ampliar a variância. Sem peso por respondente, deff de Kish e estrutura do desenho, ninguém externo calcula o valor real.</p>
+          </article>
+        </div>
+
+        <div class="grid three mt reveal">
+          <article class="card flat"><h3>Recortes são mais frágeis</h3><p>As tabelas por sexo, idade, religião, renda e região não trazem base não ponderada. Logo, não exibem margem própria nem permitem identificar células pequenas.</p></article>
+          <article class="card flat"><h3>Movimento entre ondas</h3><p>Duas pesquisas diferentes carregam, cada uma, o seu erro; somados, viram um erro maior ainda. Tratar variação de um a três pontos entre ondas como fato político é confundir maré com onda.</p></article>
+          <article class="card flat"><h3>O gráfico deveria confessar</h3><p>Cada ponto precisa de IC, base, deff e aviso de que a pesquisa é fotografia transitória. Sem isso, desenho de linha vira falsa precisão.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 05 TERRITÓRIO / BAIRROS ============ -->
+    <section id="territorio" class="chapter paper">
+      <div class="wrap">
+        <div class="chapter-head"><span class="chapter-no">CAP. 05</span><div class="eyebrow">Auditoria territorial</div></div>
+        <div class="section-head reveal">
+          <h2>O arquivo “Bairros” não contém bairros</h2>
+          <p class="deck">Abra os cinco anexos chamados “Bairros”. Você encontra município, código do IBGE e número de entrevistas. Bairro, nenhum. O questionário pergunta o estado e a cidade, nunca o bairro. A justificativa do próprio instituto admite que, em RDD, não há setor censitário, e a Resolução TSE 23.600/2019, no art. 2º, §7º-F, passou a aceitar unidade territorial compatível mediante justificativa. Ou seja: juridicamente, pode ser defensável. Chamar o arquivo de “Bairros” continua sendo, no material, enganoso. O rótulo promete uma granularidade que o dado não tem.</p>
+        </div>
+
+        <div class="table-wrap mt reveal"><table><thead><tr><th>Onda</th><th>Registro</th><th class="num">n</th><th class="num">Municípios</th><th class="num">Cidades com n=1</th><th class="num">Top 10 do n</th></tr></thead><tbody id="city-table-body"></tbody></table></div>
+
+        <div class="chart-grid mt reveal">
+          <article class="chart-card"><h3>Rotatividade municipal</h3><div class="table-wrap" style="box-shadow:none;margin-top:12px"><table><thead><tr><th>Transição</th><th class="num">Comuns</th><th class="num">Jaccard</th><th class="num">Retidos</th><th class="num">Entram/saem</th></tr></thead><tbody id="overlap-table-body"></tbody></table></div><p style="margin-top:12px">De 29/06 para 13/07, só 331 municípios se repetem; 400 entram e 417 saem. O Jaccard de 0,288 significa baixa sobreposição territorial.</p></article>
+          <figure class="exhibit"><div class="exhibit-frame"><img src="img/nexus_btg_0726_bairros_perfil.png" alt="Última página do arquivo Bairros, apenas com perfil nacional ponderado"><span class="exhibit-tag">Prova 02 · anexo “Bairros”</span></div><figcaption>A última página do anexo entrega um perfil nacional já ponderado e para por aí. Nenhum peso por cidade, nenhuma distribuição bruta. O arquivo termina exatamente onde a auditoria começaria.</figcaption></figure>
+        </div>
+
+        <div class="callout reveal">Municípios com uma entrevista não tornam uma pesquisa nacional inválida. Eles tornam qualquer leitura local impossível e tornam indispensável abrir estratos, controles e pesos. A rotatividade é compatível com RDD; sem documentação, porém, não dá para separar aleatoriedade saudável de instabilidade de cobertura.</div>
+
+        <!-- A1: São Paulo -->
+        <div class="subhead reveal">
+          <div class="eyebrow">Achado A1 · alocação por UF</div>
+          <h2>São Paulo entra com 1 em cada 4 entrevistas</h2>
+          <p class="deck">O arquivo de municípios que a Nexus enviou ao TSE mostra que São Paulo respondeu por 533 das 2.003 entrevistas, contra 21,6% do eleitorado. Cem entrevistas a mais do que uma amostra proporcional teria. O problema não é o excesso em si, típico de sorteio por telefone, mas o fato de a ponderação corrigir apenas cinco macrorregiões, e nunca os 27 estados.</p>
+        </div>
+
+        <div class="factbar reveal" style="color:var(--red)">
+          <div class="fb"><b data-count-to="26.61" data-count-dec="1" data-count-suf="%">26,6%</b>da amostra é SP (21,6% do eleitorado)</div>
+          <div class="fb"><b data-count-to="214.3" data-count-dec="1">214,3</b>qui-quadrado (gl=26); crítico ≈ 54</div>
+          <div class="fb"><b>−3,3 pp</b>Nordeste sub-representado na amostra bruta</div>
+          <div class="fb"><b>5 / 27</b>estratos corrigidos pela ponderação declarada</div>
+        </div>
+
+        <article class="chart-card wide mt reveal">
+          <div class="chart-head"><h3>Amostra bruta − eleitorado, por UF</h3><span>onda de 13/07 · pontos percentuais e n</span></div>
+          <div id="chart-uf" class="chart"></div>
+          <div class="chart-legend"><span><i class="legend-dot" style="background:#b5202a"></i>sobre-representado na amostra</span><span><i class="legend-dot" style="background:#1f5fbf"></i>sub-representado na amostra</span></div>
+        </article>
+
+        <div class="evidence-grid mt reveal">
+          <article>
+            <h3>A ponderação corrige 5 macrorregiões, não 27 UFs</h3>
+            <p style="margin-top:10px">O registro TSE e o relatório dizem ponderar por região (5 macrorregiões), sexo, idade, escolaridade e telefonia, nunca por UF. Logo, as distorções intra-região não são corrigidas: o “bloco Sudeste”, 43% do total, fica dominado pelo eleitor paulista, e o peso de São Paulo dentro dele fica inflado sem qualquer correção. Mesmo depois de ponderar, o perfil publicado (p.109) traz Nordeste em 26%, abaixo da meta de projeto (27%) e do eleitorado (27,6%).</p>
+            <p style="margin-top:10px"><span class="stamp fato">Fato</span> <span class="stamp inferencia" style="margin-left:6px">Inferência</span> Um teste de qui-quadrado de Pearson entre entrevistas por UF e eleitorado dá 214,3 com 26 graus de liberdade, muito acima do crítico (≈54 a 0,1%): a alocação geográfica bruta não é proporcional ao eleitorado.</p>
+            <p class="caption" style="margin-top:14px">Reproduz: agregação por UF do <span class="mono">NexusBTG_Bairros_072026.pdf</span> (2 primeiros dígitos do código IBGE) contra <span class="mono">tse_eleitorado_perfil.sqlite</span>, dimensão <span class="mono">uf</span>. Ver <span class="mono">uf_distribution</span> no JSON.</p>
+          </article>
+          <div>
+            <h3 style="margin-bottom:12px">Por macrorregião: bruto × eleitorado × meta</h3>
+            <div class="table-wrap"><table><thead><tr><th>Região</th><th class="num">n</th><th class="num">Amostra</th><th class="num">Eleitorado</th><th class="num">Meta</th><th class="num">Δ el.</th></tr></thead><tbody id="region-table-body"></tbody></table></div>
+            <p class="caption" style="margin-top:12px">“Meta” é o alvo de projeto registrado (Norte 8, CO 8, NE 27, SE 43, Sul 15). O Nordeste, região mais lulista, é a maior baixa: 24,31% de entrevistas brutas contra 27,58% do eleitorado.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 06 CALIBRAÇÃO PNAD/TSE ============ -->
+    <section id="calibracao" class="chapter ink">
+      <div class="wrap">
+        <div class="chapter-head"><span class="chapter-no">CAP. 06</span><div class="eyebrow">Fontes oficiais como régua</div></div>
+        <div class="section-head reveal">
+          <h2>A régua é pública. A amostra não encosta nela.</h2>
+          <p class="deck">Para uma eleição nacional existe uma régua oficial. O TSE diz quantos eleitores há por sexo, idade e território. A PNAD diz como o Brasil se reparte em renda, escolaridade e trabalho. Quem faz pesquisa deve encostar a amostra nessa régua e mostrar o alvo exato que usou. A Nexus não mostra os alvos, e nos pontos em que dá para conferir, a amostra fica longe da régua. Números bonitos, sim. Auditáveis, não.</p>
+        </div>
+
+        <div class="chart-grid mt reveal">
+          <article class="chart-card"><div class="chart-head"><h3>Idade · meta Nexus → eleitorado TSE</h3><span>slope, pontos percentuais</span></div><div id="chart-age" class="chart"></div><p class="caption">TSE Eleitorado Atual, geração de 01/07/2026 (competência jun./2026): 157.846.602 eleitores residentes no Brasil, excluído o exterior. A meta Nexus reproduz a PNAD anual 2024, não o eleitorado: força o jovem para cima e o idoso para baixo.</p></article>
+          <article class="chart-card"><div class="chart-head"><h3>Renda domiciliar · PNAD × Nexus</h3><span>waffle, 1 célula = 1%</span></div><div id="chart-income" class="chart"></div><p class="caption">Cada quadro tem 100 células. À esquerda, a PNAD (IBGE); à direita, a meta da Nexus. Sobra pobre (até 1 SM: 20 células contra 13) e falta rico (5+ SM: 20 contra 25).</p></article>
+        </div>
+
+        <div class="evidence-grid mt reveal">
+          <article class="card">
+            <h3>O desvio escondido pela troca de faixa</h3>
+            <p>Repare no truque de contabilidade. A meta registrada era 17% de jovens de 16 a 24 e 20% de idosos de 60+. No TSE de junho, são 12,52% e 23,27%: a amostra tem <strong>+4,48 pontos de jovens a mais e −3,27 pontos de idosos a menos</strong>. E, quando chega ao relatório final, as faixas mudam de figurino, 25–40 e 41–59 no lugar das antigas 25–34/35–44/45–59, justo o suficiente para ninguém conseguir cruzar meta com resultado.</p>
+            <p>Sexo fica próximo: 52% mulheres contra 52,82% no TSE. Região também é próxima, mas o registro prevê Nordeste 27% e o perfil final publica 26%, uma discrepância interna que pede distribuição bruta e ponderada.</p>
+          </article>
+          <article class="card">
+            <h3>A “cara” da amostra é a meta, não o eleitorado</h3>
+            <p><span class="stamp fato">Fato M1</span></p>
+            <p>O “perfil da amostra” (p.109) reproduz ao ponto percentual as metas que a Nexus registrou: escolaridade 36/41/23, sexo 52/48, 16–24 = 17%, 60+ = 20%. Só que essas metas vêm da população pesquisada pelo IBGE (PNADc 16+, 1ª visita 2024), não do eleitorado do TSE. A amostra tem a cara que a Nexus escolheu como meta, mais jovem e menos idosa que o eleitorado real, e as faixas etárias são reagrupadas de um jeito que impede conferir a promessa feita ao TSE.</p>
+          </article>
+        </div>
+
+        <div class="grid three mt reveal">
+          <article class="card flat"><span class="stamp fato">Fato</span><h3>20/20/40/20 não é PNAD</h3><p>Entre pessoas de 16+, a PNAD produz 13,50/21,94/39,23/25,33. A Nexus fica +6,50 pp em até 1 SM e −5,33 pp em 5+ SM, muito além do erro amostral da PNAD.</p></article>
+          <article class="card flat"><span class="stamp inferencia">Possibilidades</span><h3>Universo ou calibração?</h3><p>Pode haver diferença entre renda “familiar” declarada ao telefone e renda domiciliar PNAD, não resposta, imputação ou alvo próprio. Exatamente por isso o instituto deve publicar a regra.</p></article>
+          <article class="card flat"><span class="stamp fato">Benchmark reproduzível</span><h3>200 réplicas</h3><p>PNAD Contínua anual, 1ª visita, 2024; 323.023 pessoas de 16+ (168,3 milhões ponderadas), peso V1032; renda efetiva domiciliar deflacionada para abr./2026 e dividida pelo SM de R$ 1.621; variância por 200 pesos replicados.</p></article>
+        </div>
+
+        <div class="table-wrap mt reveal"><table><thead><tr><th>Faixa</th><th class="num">PNAD</th><th class="num">IC 95%</th><th class="num">Nexus</th><th class="num">Δ</th></tr></thead><tbody id="income-table-body"></tbody></table></div>
+
+        <!-- A2: gaveta 40% -->
+        <div class="subhead reveal">
+          <div class="eyebrow">Achado A2 · a faixa que nunca mexe</div>
+          <h2>O número que “nunca se mexe” é uma gaveta fechada por fora</h2>
+          <p class="deck">A faixa de renda “2 a 5 salários mínimos” aparece congelada em exatos 40% nas cinco ondas. O questionário, porém, revela que essa faixa foi medida em duas partes, “2 a 3 SM” (R$ 3.242,01 a 4.863) e “3 a 5 SM” (R$ 4.863,01 a 8.105), que a Nexus coletou e somou antes de publicar. O dado que mais chama atenção por não variar é a fusão de duas medições que o instituto tem em mãos mas não mostra.</p>
+        </div>
+        <div class="evidence-grid reveal">
+          <article class="chart-card"><div class="chart-head"><h3>Faixas de renda ao longo das ondas</h3><span>27 abr. → 13 jul.</span></div><div id="chart-income-frozen" class="chart"></div></article>
+          <article>
+            <h3>Uma gaveta com duas divisórias por dentro</h3>
+            <p style="margin-top:10px"><span class="stamp fato">Fato</span> <span class="stamp inferencia" style="margin-left:6px">Inferência</span></p>
+            <p style="margin-top:10px">O questionário coleta renda familiar (PF14) em cinco faixas: até 1 SM; 1–2; 2–3; 3–5; 5+. O relatório publica em quatro: até 1; 1–2; 2–5; 5+. A banda “2–5 SM”, a única imóvel em exatamente 40% nas cinco ondas, é o agregado de 2–3 e 3–5 SM. Um 40% fixo no agregado pode esconder movimento compensatório entre as duas metades. Eles anotaram as duas divisórias, mas só mostram a gaveta fechada. Se 40% é alvo fixo, que se declare. Se é resultado, uma estabilidade tão perfeita, onda após onda, pede explicação.</p>
+            <p class="caption" style="margin-top:12px">Reproduz: 5 faixas em <span class="mono">quest_layout.txt</span> (PF13/PF14) contra o perfil de 4 faixas na p.109; série congelada em <span class="mono">income_series</span> no JSON.</p>
+          </article>
+        </div>
+
+        <div class="verdict-box reveal"><strong>Escolaridade</strong><p>No benchmark PNAD trimestral 16+ disponível no projeto, Fundamental/Médio/Superior são 33,23/41,58/25,19; a Nexus publica 36/41/23. A discrepância é menor que na idade e renda, mas confirma a necessidade de abrir definição, universo e alvo de cada categoria.</p></div>
+      </div>
+    </section>
+
+    <!-- ============ 07 REPONDERAÇÃO / QUATRO PLACARES ============ -->
+    <section id="reponderacao" class="chapter paper">
+      <div class="wrap">
+        <div class="chapter-head"><span class="chapter-no">CAP. 07</span><div class="eyebrow">Reponderação · análise de sensibilidade</div></div>
+        <div class="section-head reveal">
+          <h2>A mesma pesquisa, <em>quatro placares</em></h2>
+          <p class="deck">Pegamos os cruzamentos que a própria Nexus publicou — o 2º turno Lula × Flávio por sexo, idade, escolaridade, renda e região (p. 49–50) — e recalculamos o placar como se a amostra tivesse a cara exata do universo oficial: o eleitorado do TSE para sexo, idade e região, a população da PNAD/IBGE para renda e escolaridade. Cada grupo passa a falar com o volume do seu tamanho real. A pergunta é seca: se a régua fosse a oficial, o 47 × 44 mudaria?</p>
+        </div>
+
+        <div class="callout reveal">Pense numa <strong>balança de vozes</strong>. Numa pesquisa, cada grupo deveria falar no volume do seu tamanho real na população: se os idosos são 23% do eleitorado, a voz dos idosos pesa 23%. Reponderar é afinar esse equalizador — subir o volume dos grupos que o eleitorado real tem mais (idosos, Nordeste), baixar o dos que tem menos (jovens, mais pobres) — e ouvir como fica a música.</div>
+
+        <!-- (2) infográfico: como se repondera em 3 passos -->
+        <div class="reweight-steps reveal" aria-label="Como se repondera em três passos">
+          <div class="rw-step">
+            <div class="rw-icon"><span class="rw-no">1</span>
+              <svg viewBox="0 0 48 48" fill="none" stroke="#08275c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="9" width="36" height="30" rx="2"/><line x1="6" y1="19" x2="42" y2="19"/><line x1="18" y1="19" x2="18" y2="39"/><line x1="30" y1="19" x2="30" y2="39"/><line x1="6" y1="29" x2="42" y2="29"/></svg>
+            </div>
+            <h3>As células publicadas</h3>
+            <p>Partimos das tabelas que a Nexus imprimiu: para cada faixa (idade, renda, região…), quanto cada candidato faz. Nada é inventado; são os números do relatório.</p>
+          </div>
+          <div class="rw-step">
+            <div class="rw-icon"><span class="rw-no">2</span>
+              <svg viewBox="0 0 48 48" fill="none" stroke="#08275c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="14" y1="7" x2="14" y2="41"/><line x1="24" y1="7" x2="24" y2="41"/><line x1="34" y1="7" x2="34" y2="41"/><rect x="10" y="14" width="8" height="7" rx="1.5" fill="#08275c" stroke="none"/><rect x="20" y="24" width="8" height="7" rx="1.5" fill="#08275c" stroke="none"/><rect x="30" y="11" width="8" height="7" rx="1.5" fill="#08275c" stroke="none"/></svg>
+            </div>
+            <h3>A troca da régua</h3>
+            <p>Trocamos o tamanho de cada grupo: sai a “meta” da Nexus, entra a régua oficial do TSE e da PNAD. O grupo dos idosos engorda, o dos jovens emagrece, até a amostra parecer o Brasil real.</p>
+          </div>
+          <div class="rw-step">
+            <div class="rw-icon"><span class="rw-no">3</span>
+              <svg viewBox="0 0 48 48" fill="none" stroke="#08275c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M24 7 V13"/><path d="M11 13 h26"/><path d="M11 13 l-5 11 h10 z"/><path d="M37 13 l-5 11 h10 z"/><line x1="18" y1="40" x2="30" y2="40"/><line x1="24" y1="13" x2="24" y2="40"/></svg>
+            </div>
+            <h3>Soma de novo</h3>
+            <p>Com os novos pesos, somamos as mesmas células e lemos o placar. É a mesma pesquisa, só que com cada voz no volume do seu tamanho oficial.</p>
+          </div>
+        </div>
+
+        <!-- (3) gráfico central: dumbbell dos cenários sobre a banda ±4,18 -->
+        <article class="chart-card wide mt reveal">
+          <div class="chart-head"><h3>Sete réguas, um só placar dentro da margem</h3><span>gap Lula − Flávio · banda ±4,18</span></div>
+          <div id="chart-reweight" class="chart"></div>
+          <div class="chart-legend"><span><i class="legend-dot" style="background:#b5202a"></i>a régua abre a vantagem de Lula</span><span><i class="legend-dot" style="background:#1f5fbf"></i>a régua encurta a vantagem</span><span><i class="legend-dot" style="background:#8a857a"></i>placar publicado (+3,0)</span></div>
+          <p class="caption">A faixa cinza é a margem de 95% da diferença (±4,18 pp) em torno do placar publicado: de −1,18 a +7,18. Cada haltere sai do +3,0 publicado e chega ao gap reponderado por aquela régua. Todos os sete cenários caem <em>dentro</em> da banda; renda (+1,4) é o que mais se aproxima do zero, mas não o cruza. <span class="stamp inferencia" style="margin-left:6px">Inferência</span></p>
+        </article>
+
+        <!-- (4) tabela dos cenários -->
+        <div class="table-wrap mt reveal"><table><thead><tr><th>Cenário</th><th>Régua oficial</th><th class="num">Lula</th><th class="num">Flávio</th><th class="num">Gap</th><th class="num">IC 95% do gap (técnica)</th></tr></thead><tbody id="reweight-table-body"></tbody></table></div>
+        <p class="caption reveal">O intervalo é a incerteza <em>da técnica</em> (arredondamento das células ao inteiro, propagado por Monte Carlo com 10.000 réplicas perturbando cada célula em ±0,5). Ele é estreito porque o deslocamento depende da <em>diferença</em> de pesos aplicada às <em>mesmas</em> células — o ruído quase se cancela. Reproduz: bloco <span class="mono">reweight</span> no JSON; função <span class="mono">reweight_scenarios()</span> em <span class="mono">scripts/nexus-btg-audit.py</span>.</p>
+
+        <!-- (5) box de validação -->
+        <div class="credbox reveal">
+          <span class="stamp fato">Fato · controle de qualidade</span>
+          <h3>Antes de mexer: as células reconstroem o 47 × 44</h3>
+          <p>Teste obrigatório antes de reponderar qualquer coisa: com os pesos da <em>própria</em> Nexus (perfil da p. 109), as células publicadas reconstroem o topline em todas as cinco margens, dentro de ±0,5 ponto. É o mesmo raciocínio do <a href="#sumario">box N1 do Veredito</a>: a ponderação da Nexus é um esquema único e coerente, sem números batidos à mão. Só por isso a reponderação faz sentido — estamos mexendo numa base íntegra.</p>
+          <div class="table-wrap" style="box-shadow:none;margin-top:8px"><table><thead><tr><th>Margem</th><th class="num">Lula reconstruído</th><th class="num">Flávio reconstruído</th><th class="num">dentro de ±0,5?</th></tr></thead><tbody id="reweight-validation-body"></tbody></table></div>
+        </div>
+
+        <!-- (6) as três ressalvas + dupla conclusão honesta -->
+        <div class="subhead reveal"><div class="eyebrow">Rigor · o que esta conta não é</div><h2>Três ressalvas antes de qualquer manchete</h2></div>
+        <div class="grid three reveal">
+          <article class="card flat"><span class="stamp inferencia">Ressalva 1</span><h3>É sensibilidade, não recontagem</h3><p>As células já vêm ponderadas pela Nexus. Estamos reponderando um número que já foi ponderado, não os entrevistados. O correto é ler como “se a amostra tivesse a cara da régua oficial, o placar seria compatível com Lula ~46,8 × Flávio ~44,2” — não “o número verdadeiro”.</p></article>
+          <article class="card flat"><span class="stamp inferencia">Ressalva 2</span><h3>As células são arredondadas</h3><p>Cada percentual pode estar ±0,5 do valor real. Propagamos esse ruído (Monte Carlo, 10.000 réplicas). O efeito da reponderação é robusto ao arredondamento: os intervalos da técnica são estreitos.</p></article>
+          <article class="card flat"><span class="stamp inferencia">Ressalva 3</span><h3>Quem manda é a margem da pesquisa</h3><p>A margem amostral do levantamento (±2 pp, e mais na diferença) engloba <em>todos</em> os cenários acima. Reponderar para a régua oficial não vira o placar — e nem poderia; tudo cabe dentro do erro original.</p></article>
+        </div>
+
+        <div class="grid two mt reveal">
+          <div class="verdict-box" style="margin:0"><strong>A contraprova honesta</strong><p>Reponderar com a régua oficial <em>não vira o placar</em>. Os dois maiores empurrões apontam para lados opostos — a renda puxa para Flávio, a idade puxa para Lula — e se cancelam. O 47 × 44 não é artefato de amostra torta: se fosse a régua do TSE e do IBGE, a Nexus teria publicado praticamente o mesmo número.</p></div>
+          <div class="verdict-box" style="margin:0;border-color:var(--red)"><strong style="color:var(--red)">E, ainda assim</strong><p>A mesma pesquisa rende quatro placares — de <strong>+1,4 a +4,0</strong> conforme a régua que se escolhe. Quem escolhe a régua escolhe a manchete. E a Nexus não publica a régua: os alvos exatos de ponderação, que decidem qual desses placares vira notícia, ficam do lado de dentro da caixa-preta.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 08 RDD / COTAS ============ -->
+    <section id="amostra" class="chapter paper">
+      <div class="wrap">
+        <div class="chapter-head"><span class="chapter-no">CAP. 08</span><div class="eyebrow">Desenho amostral</div></div>
+        <div class="section-head reveal">
+          <h2>RDD na entrada, cota na porta</h2>
+          <p class="deck">O anexo garante que cada número elegível tem probabilidade conhecida de ser sorteado. Verdade, no primeiro passo. Só que o próprio questionário manda o entrevistador encerrar a conversa assim que “a cota daquele perfil” estiver cheia. São duas coisas diferentes: sortear um telefone e escolher, no fim, qual eleitor conta. Entre uma e outra, há uma porta que se abre ou se fecha, e ninguém publica a regra dessa porta.</p>
+        </div>
+        <div class="evidence-grid mt reveal">
+          <figure class="exhibit"><div class="exhibit-frame"><img src="img/nexus_btg_0726_cota.png" alt="Primeira página do questionário com instrução de encerramento por cota"><span class="exhibit-tag">Prova 03 · p. 1</span></div><figcaption>Questionário, p. 1: filtro de eleitor e encerramento quando a cota do perfil está completa. Declara também a entrevista de “cerca de dez minutos”.</figcaption></figure>
+          <article>
+            <ol class="audit-list">
+              <li><strong>Frame não publicado.</strong><p>Não há quantidade de números gerados, válidos, fixos/celulares, duplicados, chamados nem cobertura por DDD.</p></li>
+              <li><strong>Seleção dentro do telefone não explicada.</strong><p>Não se sabe como múltiplos usuários, múltiplos aparelhos ou domicílios com mais linhas afetam a chance de cada eleitor.</p></li>
+              <li><strong>Não resposta invisível.</strong><p>Faltam contatos, elegíveis, recusas, abandonos, desconhecidos, taxa AAPOR e duração real média.</p></li>
+              <li><strong>Cota muda a inclusão.</strong><p>Um eleitor sorteado pode ser dispensado na porta porque o perfil dele “já encheu”. A partir daí, a chance de ele entrar na conta não é mais a do número sorteado; é a do fluxo de campo daquele dia, que não se publica.</p></li>
+              <li><strong>Sexo por observação.</strong><p>PF1 manda o entrevistador marcar feminino/masculino sem perguntar; isso introduz classificação por voz e exclui autodeclaração.</p></li>
+            </ol>
+          </article>
+        </div>
+        <div class="callout reveal">Definição rigorosa: trata-se de uma amostra telefônica RDD com controles por cotas e ponderação posterior. Chamá-la simplesmente de “probabilística” sem a probabilidade final do respondente é publicidade metodológica, não demonstração.</div>
+
+        <div class="verdict-box reveal"><strong>M4 · A lista de cotas muda conforme o documento</strong><p>O relatório (p.4) diz controlar por sexo, idade, escolaridade, telefonia e DDD. O registro no TSE controla por região, telefonia, sexo, idade e escolaridade. O relatório troca “região” por “DDD”; o registro não menciona DDD. A própria lista do que foi controlado não fecha entre as peças, de novo opacidade sobre o método. <span class="stamp fato" style="margin-left:6px">Fato</span></p></div>
+      </div>
+    </section>
+
+    <!-- ============ 08 FANTASMAS ============ -->
+    <section id="fantasmas" class="chapter ink">
+      <div class="wrap">
+        <div class="chapter-head"><span class="chapter-no">CAP. 09</span><div class="eyebrow">Questionário versus relatório</div></div>
+        <div class="section-head reveal">
+          <h2>Doze respostas entram. Sete blocos não saem.</h2>
+          <p class="deck">“Questionário completo no PesqEle” não resolve nada se o resultado de cada pergunta puder sumir do relatório. O eleitor respondeu; o público não vê. Cruzamento escolhido a dedo não substitui a frequência total. Abaixo, a reconciliação item a item dos blocos que foram perguntados e não voltaram como resultado.</p>
+        </div>
+        <div class="table-wrap mt reveal"><table><thead><tr><th>Itens coletados</th><th>O que foi perguntado</th><th>O que aparece</th><th>O que falta</th><th>Situação</th></tr></thead><tbody>
+          <tr><td class="mono">PF4–PF9 · 6 itens</td><td>Trabalho remunerado, posição, vínculo, CNPJ, inatividade e busca por emprego</td><td>Somente agregado “PEA formal/informal/desocupados/não PEA”</td><td>Frequências brutas e algoritmo de derivação</td><td class="bad-cell">FANTASMA PARCIAL</td></tr>
+          <tr><td class="mono">Q7 · “Qual?”</td><td>Nome do candidato de terceira via indicado espontaneamente</td><td>Categoria total “outro candidato”</td><td>Nomes citados e critério de codificação</td><td class="bad-cell">FANTASMA</td></tr>
+          <tr><td class="mono">Q19</td><td>Comparecimento, justificativa ou ausência em 2022</td><td>Categoria combinada com 2018 em cruzamentos de voto</td><td>Distribuição autônoma de 2022</td><td class="bad-cell">FANTASMA PARCIAL</td></tr>
+          <tr><td class="mono">Q20</td><td>Comparecimento, justificativa ou ausência em 2018</td><td>Categoria combinada com 2022</td><td>Distribuição autônoma de 2018</td><td class="bad-cell">FANTASMA PARCIAL</td></tr>
+          <tr><td class="mono">PF12</td><td>Bolsa Família no domicílio e quem recebe</td><td>Cruzamentos “beneficiário/não beneficiário”</td><td>Incidência total e quatro respostas originais</td><td class="bad-cell">FANTASMA PARCIAL</td></tr>
+          <tr><td class="mono">PF13</td><td>Renda mensal individual</td><td>Nada identificável</td><td>Todas as frequências, NS/recusa e uso no peso</td><td class="bad-cell">FANTASMA</td></tr>
+          <tr><td class="mono">PF16</td><td>Cor/raça autodeclarada</td><td>Nada identificável</td><td>Todas as frequências e eventual uso analítico</td><td class="bad-cell">FANTASMA</td></tr>
+        </tbody></table></div>
+        <p class="deck reveal" style="max-width:74ch;margin-top:22px">Duas perguntas somem por inteiro: a renda individual (PF13) e a cor/raça autodeclarada (PF16). Foram feitas ao eleitor, não aparecem em lugar nenhum. O que se coletou do cidadão virou ativo privado.</p>
+        <div class="evidence-grid mt reveal">
+          <figure class="exhibit"><div class="exhibit-frame"><img src="img/nexus_btg_0726_questionario_ghost.png" alt="Página 11 do questionário com Q22, Bolsa Família e renda individual"><span class="exhibit-tag">Prova 04 · p. 11</span></div><figcaption>Questionário, p. 11: PF12 e PF13 foram efetivamente coletadas; a renda individual não aparece no perfil final.</figcaption></figure>
+          <article>
+            <h3>Por que isso é grave</h3>
+            <p>Uma pergunta eleitoral pode ser usada para produzir notícia, segmentar eleitores, testar mensagens ou alimentar modelos internos mesmo quando seu resultado não vai ao público. O pagante recebe inteligência; o eleitor recebe uma seleção editorial.</p>
+            <p>A regra correta é simples: <strong>se foi perguntado em pesquisa eleitoral divulgada, deve haver resultado completo publicado</strong>, inclusive “não sabe”, recusas, filtros, base não ponderada e ponderada. Exceções só para identificadores protegidos e controles operacionais sem conteúdo substantivo.</p>
+            <div class="verdict-box"><strong>Observação justa</strong><p>A Nexus publica muito mais cruzamentos que vários concorrentes e colocou os itens substantivos principais no relatório. Isso melhora o diagnóstico, mas não apaga as omissões restantes.</p></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 09 FAMÍLIA / MICHELLE ============ -->
+    <section id="familia" class="chapter paper">
+      <div class="wrap">
+        <div class="chapter-head"><span class="chapter-no">CAP. 10</span><div class="eyebrow">Validade de construto e efeito de pergunta</div></div>
+        <div class="section-head reveal">
+          <h2>Uma pessoa contra uma dinastia</h2>
+          <p class="deck">A Q22 põe na mesma balança “Sou Anti-Lula” e “Sou Anti-Bolsonaro (e sua família)”. De um lado, a rejeição a um homem. Do outro, a rejeição a Jair, Flávio, Michelle e a qualquer parente que o entrevistado imaginar na hora. As duas réguas não medem a mesma coisa, então a diferença entre as médias não pode ser lida como Lula contra Jair, nem Lula contra Flávio. É comparar uma pessoa com um sobrenome inteiro.</p>
+        </div>
+        <div class="evidence-grid mt reveal">
+          <figure class="exhibit"><div class="exhibit-frame"><img src="img/nexus_btg_0726_anti_familia.png" alt="Página 8 com distribuição Anti-Lula e Anti-Bolsonaro e sua família"><span class="exhibit-tag">Prova 05 · p. 8</span></div><figcaption>As duas distribuições são bimodais; resumir por médias 5,3 e 5,1 esconde os extremos. A barra de 0/10 vale mais que a média. Duas montanhas nas pontas e um vale no meio: a média de 5 é o lugar onde quase ninguém está.</figcaption></figure>
+          <article>
+            <ol class="audit-list">
+              <li><strong>Construtos assimétricos.</strong><p>Rejeição pessoal de Lula versus rejeição de uma marca familiar elástica.</p></li>
+              <li><strong>Clusters não replicáveis.</strong><p>A Nexus descreve seis rótulos, mas não publica os cortes numéricos que definem “identifica”, “rejeita” e “indiferente”.</p></li>
+              <li><strong>Rótulo excede a medida.</strong><p>“Lulista convicto” é inferido de duas escalas negativas; não há pergunta positiva “sou lulista”. O mesmo vale para “bolsonarista convicto”.</p></li>
+              <li><strong>O erro se propaga.</strong><p>Os clusters proprietários atravessam dezenas de cruzamentos, dando aparência científica a uma classificação impossível de auditar.</p></li>
+            </ol>
+          </article>
+        </div>
+
+        <div class="verdict-box reveal"><strong>B4 · A mesma assimetria na Q7</strong><p>A pergunta “quem deveria ser eleito” (Q7) usa moldura assimétrica: “O Presidente Lula” de um lado, “Flávio ou algum outro indicado por Jair Bolsonaro ou outro membro de sua família” do outro. Foi coletada e ficou sem topline, na lista das doze respostas que entram e não saem. O mesmo padrão: um nome contra uma família inteira. <span class="stamp fato" style="margin-left:6px">Fato</span></p></div>
+
+        <div class="subhead reveal"><div class="eyebrow">Q16/Q17</div><h2>A pergunta Michelle é um editorial lido ao telefone</h2><p class="deck">Antes de perguntar a opinião, o enunciado narra quatro coisas de uma vez: a crítica pública, o “tratamento ríspido”, a saída do PL Mulher e o afastamento da campanha. Só depois vem a pergunta: isso pesa a favor ou contra? O entrevistado não responde ao que pensava; responde ao roteiro que acabou de ouvir. Isso não mede opinião. Fabrica reação.</p></div>
+        <div class="evidence-grid reveal">
+          <figure class="exhibit"><div class="exhibit-frame"><img src="img/nexus_btg_0726_michelle.png" alt="Página 79 com pergunta sobre Michelle e Flávio Bolsonaro"><span class="exhibit-tag">Prova 06 · p. 79</span></div><figcaption>Repare na chave azul do próprio instituto: o “64%” soma quem “conhece bem” (20%) com quem “sabe pouco” (27%). Só 20% acompanhavam o caso. Mesmo assim Q17 foi aplicada sem filtro de conhecimento.</figcaption></figure>
+          <article>
+            <div class="grid two">
+              <div class="card"><div class="metric">62%</div><h3>Baixa informação</h3><p>62% sabiam pouco ou nada do caso: 27% ouviram falar e sabem pouco, 35% nunca ouviram falar. Só <strong>20%</strong> conheciam bem e acompanhavam; outros 17% sabiam do que se trata. A pesquisa perguntou a opinião de todos assim mesmo.</p></div>
+              <div class="card"><div class="metric">46%</div><h3>Impacto negativo induzido</h3><p>19% “pouco” + 27% “muito”; 40% dizem nenhum impacto.</p></div>
+            </div>
+            <p style="margin-top:14px"><span class="stamp fato">O “64%” é um agrupamento, não um fato de conhecimento</span><br>O gráfico da p. 79 destaca uma chave azul com 64%, somando “conhece bem e está acompanhando” (20%), “ouviu falar e sabe do que se trata” (17%) e “ouviu falar e sabe <em>pouco</em> do que se trata” (27%). A maior fatia desse 64% é justamente a de quem sabe pouco. Contar “sabe pouco” como conhecimento produz a impressão de um episódio amplamente conhecido e ampara a decisão de aplicar Q17 a toda a amostra. Pela leitura simétrica, 62% sabiam pouco ou nada.</p>
+            <p><span class="stamp fato">M5 · Pressuposição como fato</span><br>O enunciado afirma que Michelle “deixou o cargo e se afastará da campanha de Flávio”, um afastamento apresentado como consumado antes de o entrevistado opinar. Perguntar “o que você acha desse afastamento” já entrega que o afastamento aconteceu: a resposta nasce inclinada.</p>
+            <p><span class="stamp credito">Crédito metodológico</span><br>As perguntas de voto vêm antes desse bloco. Logo, o estímulo não causou o 47–44 publicado. Ele pode, porém, produzir manchete e enquadramento negativo em Q17.</p>
+            <p><span class="stamp inferencia">O que seria correto</span><br>Separar os fatos, medir conhecimento antes de narrá-los, filtrar impacto para quem conhecia o episódio, randomizar uma versão neutra e publicar um experimento de wording.</p>
+            <p class="caption">A existência do atrito foi noticiada por <a href="https://www.cnnbrasil.com.br/eleicoes/entenda-o-atrito-envolvendo-michelle-e-flavio-bolsonaro/">CNN Brasil</a> e a saída por <a href="https://noticias.uol.com.br/politica/ultimas-noticias/2026/06/30/michelle-deixa-presidencia-do-pl-mulher-apos-crise-com-flavio.ghtm">UOL</a>. Veracidade geral do episódio não corrige o enunciado composto.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 10 TEIA BTG/FSB ============ -->
+    <section id="teia" class="chapter ink">
+      <div class="wrap">
+        <div class="chapter-head"><span class="chapter-no">CAP. 11</span><div class="eyebrow">Patrocínio e conflito de papéis</div></div>
+        <div class="section-head reveal">
+          <h2>A teia existe. A acusação precisa de prova.</h2>
+          <p class="deck">O BTG contrata a pesquisa. A Nexus é empresa da FSB Holding. E o próprio BTG atende a imprensa por um endereço que termina em <span class="mono">@fsb.com.br</span>. Isso desenha uma relação operacional dentro de um mesmo ecossistema de reputação. Não prova, sozinho, que alguém ditou um resultado. Mostrar a teia é obrigação do auditor; inventar a mão que a tece seria repetir a opacidade que estamos denunciando.</p>
+        </div>
+        <div class="network reveal" aria-label="Relações entre BTG, Nexus e FSB">
+          <div class="network-node"><b>Banco BTG Pactual</b><span>Patrocina a rodada por R$ 164.888,89, distribui resultados e reconhece no disclaimer que pesquisas podem mover valores mobiliários.</span></div>
+          <div class="network-node"><b>Nexus</b><span>CNPJ 11.077.560/0001-60; executa a pesquisa. Diz produzir as pesquisas eleitorais divulgadas pelo BTG desde 2018.</span></div>
+          <div class="network-node"><b>FSB Holding</b><span>Controla o ecossistema de reputação do qual a Nexus nasceu; o contato oficial de imprensa do BTG usa o domínio FSB.</span></div>
+        </div>
+        <div class="callout reveal"><strong>Anomalia objetiva no PesqEle salvo:</strong> o registro marca “recursos próprios? Não”, identifica o BTG como contratante e deixa “Pagante(s) do trabalho” vazio. A declaração assinada também extrai esse campo sem nome. Pode haver falha de preenchimento ou exibição, mas a informação exigida pelo art. 2º, VII, não está materialmente disponível no arquivo entregue.</div>
+        <div class="grid three reveal">
+          <article class="card"><span class="stamp fato">Fato corporativo</span><h3>Pesquisa + reputação</h3><p>A <a href="https://www.nexus.fsb.com.br/quem-somos/">Nexus afirma</a> ter nascido da fusão do instituto de pesquisa com a área de inteligência da FSB e trabalhar para “construir, gerir e manter reputação”.</p></article>
+          <article class="card"><span class="stamp inferencia">Risco de governança</span><h3>Feedback reputacional</h3><p>O mesmo ecossistema pode medir opinião, transformar dados em conteúdo e participar da comunicação do patrocinador. Isso pede parede institucional, declaração de conflitos e auditoria independente.</p></article>
+          <article class="card"><span class="stamp hipotese">Não demonstrado</span><h3>Comando de resultado</h3><p>Não há contrato, e-mail, microdado ou discrepância matemática que prove BTG ditando porcentagens. Chamar isso de fato seria repetir a opacidade que estamos criticando.</p></article>
+        </div>
+        <figure class="exhibit reveal" style="margin-top:28px"><div class="exhibit-frame"><img src="img/nexus_btg_0726_disclaimer.png" alt="Disclaimer da pesquisa sobre risco de mercado"><span class="exhibit-tag">Prova 07 · disclaimer</span></div><figcaption>O próprio relatório alerta que pesquisa eleitoral pode influenciar preços e gerar vantagem indevida a quem recebe informação antes da ampla divulgação. Isso torna a lista de acesso antecipado e os horários de embargo dados de interesse público.</figcaption></figure>
+      </div>
+    </section>
+
+    <!-- ============ 11 A PEÇA SEM DONO (METADADOS) ============ -->
+    <section id="metadados" class="chapter paper">
+      <div class="wrap">
+        <div class="chapter-head"><span class="chapter-no">CAP. 12</span><div class="eyebrow">Assinaturas e metadados</div></div>
+        <div class="section-head reveal">
+          <h2>A peça mais vista é a única sem dono</h2>
+          <p class="deck">Todos os documentos que a Nexus enviou ao juiz eleitoral têm autor e assinatura. Só um arquivo foge à regra: exatamente o relatório de 111 páginas com os resultados, o que a imprensa republica. Os metadados dos PDFs separam a proveniência de cada peça, e a peça mais vista é a menos rastreável.</p>
+        </div>
+
+        <div class="table-wrap mt reveal"><table><thead><tr><th>Documento</th><th>Autor (metadado)</th><th>Aplicativo</th><th class="num">Criado</th><th>Assinatura</th></tr></thead><tbody>
+          <tr><td>Relatório de resultados · 111 pp</td><td class="bad-cell">Microsoft Office User</td><td>PowerPoint 2021</td><td class="num">13/07 06:25</td><td class="bad-cell">nenhuma</td></tr>
+          <tr><td>Questionário</td><td>Nexus</td><td>Word 365</td><td class="num">07/07 10:23</td><td class="ok-cell">assinado</td></tr>
+          <tr><td>Anexo “Bairros” (jul.)</td><td>Nexus</td><td>Word 2019</td><td class="num">12/07 20:33</td><td class="ok-cell">assinado</td></tr>
+          <tr><td>Declaração (PesqEle)</td><td>sistema (JasperReports)</td><td>OpenPDF</td><td class="num">07/07 10:41</td><td class="ok-cell">ICP-Brasil</td></tr>
+        </tbody></table></div>
+        <p class="caption reveal">Reproduz: <span class="mono">pdfinfo -meta</span> em cada PDF de <span class="mono">data/pesquisas/nexus_btg/rodada6</span>. As peças de registro carregam a assinatura digital ICP-Brasil do estatístico responsável (CONRE 8656-A, contratado); o relatório de resultados, não.</p>
+
+        <div class="grid three mt reveal">
+          <article class="card"><span class="stamp fato">Fato · M2</span><h3>Um PowerPoint anônimo</h3><p>O relatório de 111 páginas traz Producer e Creator “Microsoft® PowerPoint® 2021”, autor “Microsoft Office User” (padrão de fábrica) e título “Apresentação do PowerPoint”. Criado em 13/07 às 06:25:09 e modificado às 06:27:57. É o único artefato sem autoria “Nexus” e sem assinatura, montado numa instalação de Office não personalizada.</p></article>
+          <article class="card"><span class="stamp fato">Fato · M3</span><h3>2.000 registrado, 2.003 divulgado</h3><p>O registro no TSE e a declaração assinada trazem 2.000 entrevistados; o relatório e a imprensa, 2.003. A margem de ±2 pontos foi calculada sobre os 2.000. No mesmo processo, a declaração cita a Resolução TSE 23.747/2026 e a página de registro cita a 23.600/2019; o campo “Pagante(s) do trabalho” fica em branco nos dois (ver Cap. 11).</p></article>
+          <article class="card"><span class="stamp inferencia">Inferência · datas</span><h3>O anexo territorial da véspera</h3><p>O anexo “Bairros” de julho foi criado em 12/07 às 20:33, ou seja, montado ainda na noite do último dia de campo (10–12/07), e modificado no dia seguinte. As peças legais têm dono e assinatura; a apresentação que roda na imprensa não tem nome de autor nem assinatura.</p></article>
+        </div>
+
+        <div class="grid two mt reveal">
+          <article class="card flat"><span class="stamp fato">Fato · B1</span><h3>A cadência dobrou em junho</h3><p>As ondas saíram em 30/03, 27/04, 25/05 e então 15/06, 29/06 e 13/07: de mensal para quinzenal a partir de meados de junho, exatamente quando Flávio recua no 1º turno (38→36→35→33→34→34).</p></article>
+          <article class="card flat"><span class="stamp fato">Fato · B2</span><h3>R$ 82,32 por entrevista</h3><p>R$ 164.888,89 divididos por 2.003 entrevistas dão R$ 82,32 cada (R$ 82,44 sobre 2.000). Comparar entre rodadas exigiria os PesqEle das ondas anteriores, não fornecidos nesta pasta.</p></article>
+        </div>
+
+        <p class="caption reveal" style="margin-top:18px">Padrão editorial: os metadados são fatos documentais; a leitura de proveniência é inferência. Nada aqui prova fraude. O ponto é rastreabilidade: a peça mais republicada é a que menos se consegue atribuir. Por privacidade, o nome do responsável técnico e seu registro profissional são públicos; o CPF que consta na assinatura digital não é reproduzido.</p>
+      </div>
+    </section>
+
+    <!-- ============ 12 LUCRO / POLÍTICA ============ -->
+    <section id="lucro" class="chapter ink">
+      <div class="wrap">
+        <div class="chapter-head"><span class="chapter-no">CAP. 13</span><div class="eyebrow">BTG, governos e incentivos</div></div>
+        <div class="section-head reveal">
+          <h2>O banco lucrou muito com Bolsonaro, e ainda mais com Lula</h2>
+          <p class="deck">Vamos aos números do próprio banco. Pelo lucro líquido ajustado nominal, 2019, antes da pandemia, fechou em R$ 3,833 bilhões; 2022, depois dela, em R$ 8,307 bilhões. Sob Lula, vieram R$ 10,419 bilhões em 2023, R$ 12,3 bilhões em 2024 e R$ 16,7 bilhões em 2025. Recorde atrás de recorde não prova alinhamento político com ninguém. Prova outra coisa: destrói a historinha de que o BTG precisaria, na urna, “se salvar” do atual governo. Quem lucra assim não está pedindo socorro.</p>
+        </div>
+        <div class="chart-grid mt reveal">
+          <article class="chart-card"><div class="chart-head"><h3>Lucro líquido ajustado</h3><span>R$ bi nominais</span></div><div id="chart-profit" class="chart"></div></article>
+          <article class="chart-card">
+            <div class="grid two">
+              <div class="card"><div class="metric">29,4%</div><h3>ao ano (crescimento anual composto) · 2019→2022</h3><p>R$ 3,833 bi para R$ 8,307 bi em três anos.</p></div>
+              <div class="card"><div class="metric">26,2%</div><h3>ao ano · 2022→2025</h3><p>R$ 8,307 bi para R$ 16,7 bi em três anos.</p></div>
+              <div class="card"><div class="metric">R$ 39,4 bi</div><h3>2023–2025</h3><p>Soma nominal dos três primeiros anos Lula.</p></div>
+              <div class="card"><div class="metric">+42,3%</div><h3>1T26</h3><p>R$ 4,8 bi contra o 1T25, novo recorde.</p></div>
+            </div>
+          </article>
+        </div>
+        <p class="caption reveal">2019: <a href="https://static.btgpactual.com/media/btg-relatorio-2020-d4-en-20210520161448.pdf">Relatório Anual BTG 2020</a>, que reconcilia 2019 em R$ 3,833 bi. <a href="https://api.mziq.com/mzfilemanager/v2/d/0afe1b62-e299-4dec-a938-763ebc4e2c11/adac4cbe-203c-68b3-5ff1-45847b3dd9a1?origin=1">2022: divulgação de resultados</a>, R$ 8,3065 bi. Demais fontes oficiais: <a href="https://www.btgpactual.com.pe/btg-pactual-cerro-2023-con-record-de-desempeno-en-sus-resultados/">2023</a>, <a href="https://www.btgpactual.com/imprensa/btg-pactual-encerra-2024-com-recordes-de-receita-e-lucro-liquido-e-com-expansao-de-roae-que-fechou-em-23-1">2024</a>, <a href="https://www.btgpactual.com/imprensa/btg-pactual-encerra-2025-com-roae-de-26-9-recordes-de-receitas-em-todas-as-linhas-de-negocio-e-captacao-liquida-de-r-354-bilhoes">2025</a> e <a href="https://www.btgpactual.com/imprensa/btg-pactual-atinge-roae-de-26-6-com-novos-recordes-de-lucro-e-receita-e-captacao-liquida-organica-de-r-83-bi-no-trimestre">1T26</a>. Comparação nominal, sem atribuição causal ao presidente.</p>
+
+        <div class="subhead reveal"><div class="eyebrow">Tarcísio, Flávio e a preferência do mercado</div><h2>Preferência política não é necessidade financeira</h2></div>
+        <div class="grid three reveal">
+          <article class="card"><span class="stamp fato">Relato jornalístico</span><h3>Esteves fez campanha por Tarcísio</h3><p>O PlatôBR relatou que André Esteves chamou Tarcísio de “única saída” e disse que o Brasil ficaria “uninvestable” com novo mandato Lula. É fala reportada, não prova de ordem editorial à pesquisa. <a href="https://platobr.com.br/andre-esteves-a-campanha-por-tarcisio-e-o-brasil-uninvestable-com-lula">Fonte</a>.</p></article>
+          <article class="card"><span class="stamp inferencia">Leitura de incentivo</span><h3>Por que Tarcísio?</h3><p>Para o mercado, ele combinava competitividade eleitoral, histórico executivo, agenda de privatizações e previsibilidade fiscal. Negócios de crédito, M&A e gestão de patrimônio preferem horizonte regulatório legível, mesmo quando trading também ganha com volatilidade.</p></article>
+          <article class="card"><span class="stamp fato">Reação de mercado</span><h3>Flávio foi recebido como risco</h3><p>No anúncio da pré-candidatura, o Ibovespa caiu 4,25%; analistas citaram fragmentação da direita e maior chance de Lula. Foi reação de um dia, não avaliação definitiva de governo. <a href="https://economia.uol.com.br/noticias/reuters/2025/12/05/ibovespa-desaba-com-pre-candidatura-de-flavio-bolsonaro-revertendo-comeco-de-mes-positivo.amp.htm">Reuters/UOL</a>.</p></article>
+        </div>
+        <div class="verdict-box reveal"><strong>O que um governo Flávio poderia significar para o BTG</strong><p>Há cenários opostos: (1) disciplina fiscal e reformas, se a equipe econômica for previsível, favorecem ativos, crédito e investment banking; (2) conflito institucional, personalismo familiar e incerteza de coalizão elevam prêmio de risco e prejudicam originação, embora possam aumentar receitas de mercado no curto prazo. Sem programa, equipe e coalizão, qualquer afirmação categórica é propaganda. O dado disponível é outro: o BTG prosperou sob ambos os governos e Flávio continua competitivo na pesquisa que o banco pagou.</p></div>
+      </div>
+    </section>
+
+    <!-- ============ 14 O CLIENTE QUE TORCE CONTRA O PLACAR ============ -->
+    <section id="ironia" class="chapter ink">
+      <div class="wrap">
+        <div class="chapter-head"><span class="chapter-no">CAP. 14</span><div class="eyebrow">O incentivo do pagante</div></div>
+        <div class="section-head reveal">
+          <h2>O cliente que <em>torce contra</em> o placar</h2>
+          <p class="deck">O banco que pagou esta pesquisa preferia, em público, outro candidato. A pesquisa que ele pagou entrega — em seis rodadas — exatamente o nome que ele preferiria ver desistir como o único competitivo com Lula.</p>
+        </div>
+
+        <!-- (2) linha do tempo: ago/2025 -> jul/2026 -->
+        <div class="timeline reveal" aria-label="Cronologia da ironia, de agosto de 2025 a julho de 2026">
+          <div class="tl-item">
+            <div class="tl-date">ago 2025</div>
+            <div class="tl-body">
+              <span class="stamp credito">Relato jornalístico</span>
+              <h3>O pagante prefere outro nome</h3>
+              <p>André Esteves, dono do BTG, disse a investidores que Tarcísio era “a única saída” e que o Brasil ficaria “uninvestable” com novo mandato de Lula. É fala parafraseada por colunista — o próprio banco negou o termo (crédito de equilíbrio no fim do capítulo). <a href="https://platobr.com.br/andre-esteves-a-campanha-por-tarcisio-e-o-brasil-uninvestable-com-lula">PlatôBR, Guilherme Amado</a>.</p>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-date">set 2025</div>
+            <div class="tl-body">
+              <span class="stamp fato">Fato / Relato</span>
+              <h3>O preferido sai da corrida</h3>
+              <p>Tarcísio descarta a Presidência — “Eu pretendo concorrer à reeleição” — e fica em São Paulo, na primeira declaração explícita após a condenação de Jair Bolsonaro pelo STF. O nome que o mercado queria retira o próprio nome. <a href="https://www.cnnbrasil.com.br/politica/tarcisio-descarta-disputar-presidencia-em-2026-e-aposta-em-reeleicao/">CNN Brasil</a>.</p>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-date">nov 2025</div>
+            <div class="tl-body">
+              <span class="stamp credito">Relato jornalístico</span>
+              <h3>A Faria Lima abre o “Trade Tarcísio”</h3>
+              <p>Gestores e banqueiros torcem abertamente por Tarcísio como candidato da direita, em busca de “gestores que priorizem a estabilidade econômica”. A reportagem fala em “investidores” em geral; não nomeia o BTG. <a href="https://terrabrasilnoticias.com/2025/11/faria-lima-ve-oportunidades-com-tarcisio-na-corrida-a-presidencia/">Terra Brasil Notícias</a>.</p>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-date">dez 2025</div>
+            <div class="tl-body">
+              <span class="stamp credito">Reação de mercado / Relato</span>
+              <h3>Sobra Flávio — risco na Bolsa, e cadeira na mansão</h3>
+              <p>No anúncio da pré-candidatura, o Ibovespa cai 4,25% e analistas citam maior chance de Lula (<a href="https://economia.uol.com.br/noticias/reuters/2025/12/05/ibovespa-desaba-com-pre-candidatura-de-flavio-bolsonaro-revertendo-comeco-de-mes-positivo.amp.htm">Reuters/UOL</a>). Duas semanas depois, em 17/12, Flávio é recebido na mansão de Esteves e “parte do mercado passa a levá-lo mais a sério”, furo de Lauro Jardim (<a href="https://www.bahianoticias.com.br/noticia/311842-flavio-bolsonaro-se-reune-com-dono-do-btg-pactual-em-sao-paulo">O Globo, via Bahia Notícias</a>).</p>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-date">2026</div>
+            <div class="tl-body">
+              <span class="stamp fato">Fato · material auditado</span>
+              <h3>A pesquisa paga entrega o indesejado</h3>
+              <p>Em seis rodadas pagas pelo banco, Flávio aparece como o único oposicionista em empate técnico com Lula. E Renan Santos (MBL), a aposta de “terceira via” do mesmo ecossistema de mercado, marca 35 × Lula num cenário de 2º turno na própria pesquisa Nexus/BTG. O campo que o pagante preferia é o que a pesquisa mostra perdendo por mais.</p>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-date">jun–jul 2026</div>
+            <div class="tl-body">
+              <span class="stamp fato">Fato documental</span>
+              <h3>O sistema que rende ao banco</h3>
+              <p>A Selic é cortada para 14,25% em 17/06 (decisão unânime, de 14,50%), após o pico de 15% em jun/2025 — a maior em quase 20 anos. No mesmo período o Estado eleva tributos e o BTG fecha 2025 com lucro recorde. O banco cujo discurso pede juro menor prospera no juro alto. <a href="https://www.adrianofreire.com.br/blog/copom-junho-2026-selic-1425-o-que-muda">Copom jun/2026</a>.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- (3) pano de fundo: três números-monstro -->
+        <div class="subhead reveal"><div class="eyebrow">O pano de fundo que ninguém lamenta</div><h2>Três números que o mercado não pede para mudar</h2></div>
+        <div class="triptico reveal" aria-label="Selic, impostos e lucro do BTG">
+          <div class="trip">
+            <span class="trip-num monster" data-count-to="14.25" data-count-dec="2" data-count-suf="%" data-count-text="14,25%">14,25%</span>
+            <h3>A Selic de julho/2026</h3>
+            <p>Três cortes após o pico de <b>15%</b> em jun/2025 — a maior taxa em quase 20 anos. O corte de 17/06 (14,50% → 14,25%) foi unânime.</p>
+          </div>
+          <div class="trip">
+            <span class="trip-num monster" data-count-to="17.5" data-count-dec="1" data-count-suf="%" data-count-text="17,5%">17,5%</span>
+            <h3>A nova alíquota única da renda fixa</h3>
+            <p>Antes 15%–22,5% regressiva. E mais: <b>IOF</b>, <b>5% de IR</b> sobre LCI/LCA/CRI/CRA, <b>JCP de 15% para 20%</b>, apostas de <b>12% para 18%</b>. <a href="https://www.cnnbrasil.com.br/economia/macroeconomia/veja-todos-os-impostos-e-taxas-que-governo-lula-aumentou-desde-a-posse/">Lista CNN</a> · <a href="https://borainvestir.b3.com.br/noticias/como-fica-o-iof-e-o-imposto-sobre-lcis-e-lcas-entenda-as-medidas-do-governo/">B3</a>.</p>
+          </div>
+          <div class="trip">
+            <span class="trip-num monster" data-count-to="16.7" data-count-dec="1" data-count-pre="R$ " data-count-suf=" bi" data-count-text="R$ 16,7 bi">R$ 16,7 bi</span>
+            <h3>O lucro recorde do BTG em 2025</h3>
+            <p>+35% sobre 2024, “num ano marcado por juros elevados”, com ROE de 27,6%. <a href="https://www.seudinheiro.com/2026/empresas/balanco-btg-pactual-bpac11-4t25-2025-lucro-rentabilidade-roe-miql/">Seu Dinheiro</a>.</p>
+          </div>
+        </div>
+        <p class="caption reveal"><span class="stamp inferencia" style="margin-right:6px">Leitura de economistas</span>Os juros pagos pela União consumiram cerca de <b>R$ 1 trilhão</b> em doze meses, pressionando a dívida “enquanto dão enormes lucros para os bancos”; o BC estima que cada ponto de Selic acrescenta mais de <b>R$ 50 bilhões</b> à dívida. Os números são atribuíveis ao BC; a leitura do vínculo é de economistas heterodoxos. <a href="https://www.condsef.org.br/noticias/juros-pressionam-divida-mais-que-gastos-publicos-dizem-economistas">Agência Brasil / CONDSEF</a>.</p>
+
+        <!-- (4) fechamento honesto + desmentido + crédito de equilíbrio -->
+        <div class="verdict-box reveal"><strong>A justaposição, sem adjetivo</strong><p>Nada disto prova que o banco ditou uma vírgula da pesquisa. O próprio BTG negou a versão anti-Lula: afirma que Esteves “jamais usou o termo uninvestable”, que é “apolítico” e segue investindo no Brasil; a fala é relato de colunista, com desmentido registrado. O que a cronologia mostra não é ordem editorial — é que o pagante tem preferências, e que a pesquisa que ele paga não as confirma. Ele preferia outro candidato, viu esse candidato deixar a corrida, recebeu em casa justamente aquele que preferiria ver desistir, e mede, rodada após rodada, esse mesmo nome como o único competitivo com Lula — enquanto lucra recordes com o juro alto que o discurso de mercado diz querer ver cair. É por isso que os pesos invisíveis importam: quando o interesse do pagante e o resultado publicado divergem, o que protege a pesquisa é poder conferir a régua. E a régua é o que não se pode ver.</p></div>
+
+        <div class="grid three reveal">
+          <article class="card"><span class="stamp hipotese">Não sustentado</span><h3>E o financiamento?</h3><p>A pergunta óbvia — o BTG banca o MBL ou a terceira via? — não tem lastro. Nenhuma fonte pública liga Esteves ou o banco ao financiamento do MBL, do Partido Missão ou de Renan Santos.</p></article>
+          <article class="card"><span class="stamp fato">Fato</span><h3>Renan abre mão do Fundo</h3><p>Registre-se apenas, como fato, que Renan Santos (MBL) declarou abrir mão do Fundo Eleitoral e aposta em vaquinhas de apoiadores. Proximidade com o mercado não é financiamento pelo banco.</p></article>
+          <article class="card"><span class="stamp fato">Fato</span><h3>O “MBL–Mercado” de 2017</h3><p>O único financiamento MBL–mercado documentado é histórico: um grupo com funcionários de <b>Safra, XP e Merrill Lynch</b> (piauí, 2017) — sem o BTG. Não há elo com o pagante desta pesquisa.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 15 PADRÕES INTERNACIONAIS ============ -->
+    <section id="padroes" class="chapter paper">
+      <div class="wrap">
+        <div class="chapter-head"><span class="chapter-no">CAP. 15</span><div class="eyebrow">Benchmark internacional</div></div>
+        <div class="section-head reveal">
+          <h2>O Brasil registra. O mundo auditável divulga.</h2>
+          <p class="deck">A lei brasileira exige que o questionário e o plano amostral entrem no registro. Mas a regra de 2026 ainda mantém o “relatório completo” trancado até depois da eleição. Pare para pensar no absurdo do calendário: a prova só abre quando o efeito sobre o voto já aconteceu. É perícia de acidente entregue depois do enterro.</p>
+        </div>
+        <div class="standard-grid reveal" role="table" aria-label="Comparação de padrões de transparência">
+          <div class="org head">Padrão</div><div class="head">Exigência útil</div><div class="head" style="text-align:right">Nexus 0726</div>
+          <div class="org"><a href="https://www.tse.jus.br/legislacao/compilada/res/2019/resolucao-no-23-600-de-12-de-dezembro-de-2019">TSE 23.600</a></div><div>Questionário, plano, fonte, relatório completo; §7º-F aceita justificativa sem setor.</div><div class="grade partial">PARCIAL</div>
+          <div class="org"><a href="https://aapor.org/standards-and-ethics/transparency-initiative/">AAPOR</a></div><div>Patrocinador, instrumento exato, frame, recrutamento, pesos, deff, precisão, controle e limitações.</div><div class="grade">FALHA</div>
+          <div class="org"><a href="https://wapor.org/about-wapor/code-of-ethics/">WAPOR</a></div><div>Taxas de resposta/recusa, bases não ponderadas, efeitos do peso e descrição replicável de índices.</div><div class="grade">FALHA</div>
+          <div class="org"><a href="https://www.britishpollingcouncil.org/rules-of-disclosure/">BPC</a></div><div>Em 2 dias: tabelas completas, pergunta e ordem, bases brutas/ponderadas, alvos e mudanças entre ondas.</div><div class="grade">FALHA</div>
+          <div class="org"><a href="https://laws-lois.justice.gc.ca/eng/acts/E-2.01/section-326.html">Canadá, s. 326</a></div><div>Relatório público rápido, contatos, não resposta, weighting factors e margem específica por pergunta.</div><div class="grade">FALHA</div>
+        </div>
+        <div class="callout reveal">O art. 2º, §7º-B, da Resolução 23.600 diz que a publicização do relatório completo ocorre “depois das eleições”. Essa frase precisa morrer. Transparência póstuma não protege o eleitor; só organiza o arquivo morto.</div>
+      </div>
+    </section>
+
+    <!-- ============ 14 MINUTA DE RESOLUÇÃO TSE ============ -->
+    <section id="resolucao" class="chapter paper">
+      <div class="wrap">
+        <div class="chapter-head"><span class="chapter-no">CAP. 16</span><div class="eyebrow">Minuta pronta · via TSE</div></div>
+        <div class="section-head reveal">
+          <h2>Resolução de transparência eleitoral em tempo real</h2>
+          <p class="deck">Não basta reclamar; o dossiê entrega o remédio pronto para assinar. O texto abaixo altera a Resolução TSE 23.600/2019 dentro do que o próprio Tribunal já pode regulamentar hoje, sem esperar o Congresso. A obrigação de microdados vem com salvaguarda da LGPD; a lei proposta na seção seguinte dá a base legal mais robusta para o que a resolução, sozinha, não alcança.</p>
+        </div>
+        <article class="law reveal">
+          <div class="law-title"><h3>Minuta de Resolução TSE</h3><p><strong>Altera a Resolução TSE nº 23.600/2019 para instituir o Pacote Público de Auditoria de Pesquisa Eleitoral.</strong></p></div>
+          <p>O TRIBUNAL SUPERIOR ELEITORAL, no uso das atribuições conferidas pelo art. 23, IX, do Código Eleitoral e pelos arts. 33 e 105 da Lei nº 9.504/1997, RESOLVE:</p>
+          <h4>Art. 1º · Publicidade simultânea</h4>
+          <p>O art. 2º da Resolução TSE nº 23.600/2019 passa a vigorar com as seguintes alterações:</p>
+          <p><strong>“§ 7º-A.</strong> Até o início da primeira divulgação pública e como condição para ela, a entidade ou empresa depositará no PesqEle o Pacote Público de Auditoria, em PDF e formatos abertos CSV ou JSON, com identificação persistente, data, hora e resumo criptográfico dos arquivos.”</p>
+          <p><strong>“§ 7º-B.</strong> O Pacote Público de Auditoria será imediatamente acessível a qualquer pessoa, vedado embargo até o término das eleições.”</p>
+          <p><strong>“§ 7º-G.</strong> O pacote conterá, sem exceção para pergunta de conteúdo eleitoral, político, econômico, social ou de perfil:</p>
+          <ol type="I">
+            <li>redação exata, instruções, estímulos, ordem, rotação, filtros, saltos e códigos de resposta;</li>
+            <li>resultado de todas as alternativas, inclusive outras respostas, branco, nulo, não sabe, não respondeu e recusa;</li>
+            <li>base não ponderada, base ponderada, porcentagem ponderada e soma dos pesos de cada pergunta e subgrupo divulgado;</li>
+            <li>tabelas completas de frequência e cruzamentos efetivamente fornecidos ao contratante ou usados em divulgação;</li>
+            <li>lista e regra de codificação das respostas abertas, com supressão apenas do texto que permita identificar respondente.”</li>
+          </ol>
+          <p><strong>“§ 7º-H.</strong> A ponderação será documentada com:</p>
+          <ol type="I">
+            <li>variáveis, interações, estratos, conglomerados e fontes públicas, com data de extração;</li>
+            <li>distribuições brutas, alvos e distribuições finais;</li>
+            <li>fórmula, algoritmo, software, número de iterações, tolerância, imputação e regra de trimming;</li>
+            <li>mínimo, máximo, média, desvio-padrão e coeficiente de variação dos pesos; efeito de desenho de Kish e tamanho amostral efetivo;</li>
+            <li>TSE como referência obrigatória para sexo, idade, UF e região do eleitorado, excluído o exterior salvo universo declarado; e PNAD Contínua mais recente para renda, escolaridade e condição de atividade, vedada fonte privada sem publicação integral.</li>
+          </ol>
+          <p>Parágrafo único. Divergência do alvo oficial será admitida apenas mediante justificativa técnica pré-registrada e quantificação do impacto.”</p>
+          <p><strong>“§ 7º-I.</strong> Cada estimativa exibirá intervalo de confiança ou margem de erro própria, nível de confiança, base não ponderada, efeito de desenho utilizado e advertência de que pesquisas retratam momento transitório. Diferenças entre candidaturas e entre rodadas terão incerteza específica, vedado aplicar a margem de uma proporção isolada à diferença.”</p>
+          <p><strong>“§ 7º-J.</strong> Em CATI, IVR, SMS, painel ou coleta digital, serão informados frame, cobertura, fornecedor, fixo/celular, deduplicação, tentativas, contatos, elegíveis, completas, parciais, recusas, abandonos e elegibilidade desconhecida, com taxas AAPOR/WAPOR, regra de seleção do respondente e efeito de múltiplos dispositivos.”</p>
+          <p><strong>“§ 7º-K.</strong> A divulgação territorial informará município, bairro, setor ou unidade compatível efetivamente observada; arquivos serão nomeados conforme seu conteúdo. Células com menos de cinquenta entrevistas não poderão ser apresentadas como estimativa local e trarão sinalização de base insuficiente.”</p>
+          <p><strong>“§ 7º-L.</strong> Serão declarados contratante, pagante, beneficiário econômico, origem integral dos recursos e relações societárias, comerciais, de comunicação, assessoria de imprensa, distribuição de conteúdo ou gestão reputacional entre instituto, contratante e empresas do mesmo grupo nos vinte e quatro meses anteriores.”</p>
+          <p><strong>“§ 7º-M.</strong> Serão publicadas a lista de pessoas e organizações com acesso anterior à divulgação, finalidade, data e hora de cada acesso e horário do embargo, especialmente quando o contratante ou destinatário atuar em mercado de valores mobiliários.”</p>
+          <p><strong>“§ 7º-N.</strong> O banco anonimizado em nível de respondente será publicado em até quarenta e oito horas, com peso final, estrato, conglomerado, modo e variáveis necessárias à reprodução, após aplicação de controle de divulgação estatística. Identificadores, telefone, áudio, geolocalização fina e combinações de alto risco serão removidos ou disponibilizados em ambiente seguro de auditoria da Justiça Eleitoral.”</p>
+          <p><strong>“§ 7º-O.</strong> Índices, clusters, modelos e classificações deverão ser acompanhados de fórmula, pontos de corte, código executável ou pseudocódigo suficiente para reprodução independente.”</p>
+          <p><strong>“§ 7º-P.</strong> Mudança de questionário, candidato, ordem, modo, frame, alvo, peso ou cálculo em série histórica será destacada em quadro comparativo; série não comparável não poderá ser apresentada como tendência contínua.”</p>
+          <h4>Art. 2º · Divulgação gráfica</h4>
+          <p>O art. 10 fica acrescido do § 4º: <strong>“Toda peça gráfica informará junto ao dado, em tamanho legível, n, campo, contratante, registro, IC ou margem específica, deff e base do recorte. É vedada escala truncada ou representação que amplifique variação dentro do erro sem advertência equivalente.”</strong></p>
+          <h4>Art. 3º · Correção e sanção</h4>
+          <p>A ausência, inconsistência ou atraso de item obrigatório torna a pesquisa não registrada até saneamento. Erro material em série ou release deverá ser corrigido no mesmo canal, com alcance equivalente, em até vinte e quatro horas, preservado o histórico. A reincidência enseja auditoria técnica independente custeada pelo responsável, sem prejuízo das sanções legais.</p>
+          <h4>Art. 4º · Vigência</h4>
+          <p>Esta Resolução entra em vigor na data de sua publicação, aplicando-se às pesquisas cujo campo se inicie após trinta dias.</p>
+          <div class="law-note"><strong>Nota de competência:</strong> publicidade imediata, relatório, pesos, bases e correções cabem confortavelmente na regulamentação do registro. Microdados públicos e declaração ampliada de relações econômicas podem enfrentar questionamento de reserva legal; por isso a minuta preserva ambiente seguro e é acompanhada do projeto de lei abaixo.</div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ 15 PROJETO DE LEI ============ -->
+    <section id="projeto-lei" class="chapter paper">
+      <div class="wrap">
+        <div class="chapter-head"><span class="chapter-no">CAP. 17</span><div class="eyebrow">Minuta pronta · Congresso Nacional</div></div>
+        <div class="section-head reveal">
+          <h2>Projeto de Lei da Pesquisa Eleitoral Auditável</h2>
+          <p class="deck">Onde a resolução do TSE pode esbarrar em reserva legal, entra a lei. Este texto-base altera os arts. 33 e 34 da Lei nº 9.504/1997 e encerra a discussão sobre competência, dados anonimizados, conflito de interesse e o dever de publicar todas as perguntas, e não só as que rendem manchete.</p>
+        </div>
+        <article class="law reveal">
+          <div class="law-title"><h3>Projeto de Lei nº ___, de 2026</h3><p><strong>Altera os arts. 33 e 34 da Lei nº 9.504, de 30 de setembro de 1997, para assegurar transparência integral, auditabilidade e informação de incerteza em pesquisas eleitorais.</strong></p></div>
+          <p>O CONGRESSO NACIONAL decreta:</p>
+          <h4>Art. 1º</h4>
+          <p>O art. 33 da Lei nº 9.504/1997 passa a vigorar acrescido dos seguintes incisos VIII a XVI e §§ 6º a 14:</p>
+          <p><strong>“VIII</strong> — distribuição bruta, alvo de calibração e distribuição ponderada para sexo, idade, escolaridade, renda, UF, região e demais variáveis de controle;</p>
+          <p><strong>IX</strong> — fórmula e diagnóstico dos pesos, inclusive trimming, imputação, mínimo, máximo, coeficiente de variação, efeito de desenho e tamanho amostral efetivo;</p>
+          <p><strong>X</strong> — base não ponderada e ponderada de cada estimativa e subgrupo divulgado;</p>
+          <p><strong>XI</strong> — resultado completo de toda pergunta substantiva aplicada, ainda que não usada na comunicação principal ou contratada para uso interno;</p>
+          <p><strong>XII</strong> — intervalo de confiança ou margem de erro por estimativa, diferença e subgrupo, considerados desenho, ponderação e não resposta;</p>
+          <p><strong>XIII</strong> — dados de contato, cooperação, recusa, abandono, elegibilidade, duração e controle de qualidade segundo padrão técnico reconhecido;</p>
+          <p><strong>XIV</strong> — identificação do contratante, pagante, beneficiário e de relações societárias ou comerciais relevantes entre estes, o realizador, o distribuidor e seus grupos econômicos;</p>
+          <p><strong>XV</strong> — lista e horário de acesso antecipado aos resultados e condições de embargo;</p>
+          <p><strong>XVI</strong> — microdados anonimizados e documentação necessária à reprodução independente.</p>
+          <p><strong>§ 6º.</strong> O questionário completo e o resultado completo de todas as perguntas serão públicos simultaneamente à primeira divulgação, vedada omissão por decisão editorial ou contratual.</p>
+          <p><strong>§ 7º.</strong> Para as variáveis do universo eleitoral, serão adotados os dados oficiais mais recentes do Tribunal Superior Eleitoral; para renda, escolaridade e condição de atividade, os dados mais recentes da PNAD Contínua, admitida divergência apenas com justificativa pública, prévia e quantificada.</p>
+          <p><strong>§ 8º.</strong> Os dados serão oferecidos em PDF e formato aberto legível por máquina, com resumo criptográfico e histórico imutável de versões.</p>
+          <p><strong>§ 9º.</strong> Microdados serão publicados em até quarenta e oito horas, vedados identificadores diretos e aplicadas técnicas de anonimização, agregação e controle de risco previstas na Lei nº 13.709/2018. Dados de risco residual permanecerão disponíveis à Justiça Eleitoral e a auditor credenciado em ambiente seguro.</p>
+          <p><strong>§ 10.</strong> A proteção de segredo comercial não alcança pergunta, ordem, filtro, frequência, base, peso, alvo, erro amostral, efeito de desenho, taxa de resposta, regra de índice ou informação necessária para reproduzir resultado eleitoral divulgado.</p>
+          <p><strong>§ 11.</strong> Toda divulgação gráfica conterá advertência legível sobre caráter transitório da estimativa, período de campo, base, margem específica, nível de confiança e efeito de desenho.</p>
+          <p><strong>§ 12.</strong> É vedado denominar arquivo ou variável com unidade territorial mais granular que a efetivamente coletada.</p>
+          <p><strong>§ 13.</strong> Erro material será corrigido em até vinte e quatro horas nos mesmos meios e com alcance equivalente, mantidos publicamente o original, a retificação e a causa.</p>
+          <p><strong>§ 14.</strong> O descumprimento dos §§ 6º a 13 caracteriza pesquisa não registrada e sujeita realizador e contratante, assegurados contraditório e ampla defesa, à multa de R$ 100.000 a R$ 1.000.000, graduada por alcance, dano, vantagem econômica e reincidência, além da obrigação de correção.”</p>
+          <h4>Art. 2º</h4>
+          <p>O art. 34 passa a assegurar a partido, federação, coligação, candidata, candidato, Ministério Público Eleitoral, universidade pública e entidade científica sem fins lucrativos acesso auditável ao sistema interno, pesos individuais anonimizados, logs de campo, gravações amostradas sob sigilo e código de processamento, vedada retirada de dado pessoal.</p>
+          <h4>Art. 3º</h4>
+          <p>O TSE manterá repositório nacional aberto com API, versionamento, validação automática de somas, bases, margens, registros profissionais e vínculos declarados, preservando os arquivos por no mínimo dez anos.</p>
+          <h4>Art. 4º</h4>
+          <p>Esta Lei entra em vigor cento e oitenta dias após sua publicação.</p>
+          <div class="law-note"><strong>Desenho institucional:</strong> a multa não pune erro estatístico honesto nem resultado impopular; pune esconder informação obrigatória, mentir metadado ou não corrigir erro material. A fiscalização deve ser técnica, com direito de defesa e padrões públicos.</div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ 16 FONTES E REPRODUÇÃO ============ -->
+    <section id="fontes" class="chapter ink">
+      <div class="wrap">
+        <div class="chapter-head"><span class="chapter-no">CAP. 18</span><div class="eyebrow">Provas, fontes e reprodução</div></div>
+        <div class="section-head reveal">
+          <h2>Do PDF ao cálculo, sem caixa-preta</h2>
+          <p class="deck">Os dez arquivos baixados foram preservados em <span class="mono">data/pesquisas/nexus_btg/rodada6</span>, incluindo o painel mensal do TSE de junho. Os scripts reconstroem hashes, municípios, sobreposição, distribuição por UF, benchmarks PNAD/TSE, margens e lucros. Quem quiser conferir, roda e vê.</p>
+        </div>
+        <div class="repro reveal">python3 scripts/tse-electorate-profile.py<br>uv run --with pypdf --with numpy python3 scripts/nexus-btg-audit.py<br>Saídas: data/outputs/tse_eleitorado_perfil.sqlite · data/outputs/tse_eleitorado_perfil_summary.csv · data/outputs/tse_eleitorado_perfil_benchmark.json · docs/assets/nexus_btg_0726_data.json</div>
+        <h3 style="margin:30px 0 12px">Manifesto dos originais</h3>
+        <div class="table-wrap reveal"><table><thead><tr><th>Arquivo</th><th class="num">Tamanho</th><th>SHA-256</th></tr></thead><tbody id="file-table-body"></tbody></table></div>
+        <h3 style="margin:34px 0 12px">Fontes públicas principais</h3>
+        <ol class="source-list reveal">
+          <li><a href="https://www.nexus.fsb.com.br/estudos-divulgados/pesquisa-btg-nexus-de-intencao-de-votos-para-presidente-do-brasil-13-de-julho-de-2026/">Nexus · 6ª rodada, 13/07/2026</a>.</li>
+          <li><a href="https://www.nexus.fsb.com.br/quem-somos/">Nexus · estrutura e origem na FSB Holding</a>.</li>
+          <li><a href="https://www.tse.jus.br/legislacao/compilada/res/2019/resolucao-no-23-600-de-12-de-dezembro-de-2019">TSE · Resolução 23.600 consolidada em 2026</a>.</li>
+          <li><a href="https://www.planalto.gov.br/ccivil_03/leis/l9504compilado.htm">Lei nº 9.504/1997, arts. 33 e 34</a>.</li>
+          <li><a href="https://dadosabertos.tse.jus.br/dataset/eleitorado-atual">TSE · perfil do eleitorado atual</a>.</li>
+          <li><a href="https://sig.tse.jus.br/ords/dwapr/r/seai/sig-eleitor-eleitorado-mensal/perfil-do-eleitorado-mensal">TSE · painel Perfil do Eleitorado Mensal</a>.</li>
+          <li><a href="https://www.ibge.gov.br/estatisticas/sociais/trabalho/17270-pnad-continua.html">IBGE · PNAD Contínua</a>.</li>
+          <li><a href="https://aapor.org/standards-and-ethics/transparency-initiative/">AAPOR Transparency Initiative</a>.</li>
+          <li><a href="https://wapor.org/about-wapor/code-of-ethics/">WAPOR Code of Ethics</a>.</li>
+          <li><a href="https://www.britishpollingcouncil.org/rules-of-disclosure/">British Polling Council · Rules of Disclosure</a>.</li>
+          <li><a href="https://laws-lois.justice.gc.ca/eng/acts/E-2.01/section-326.html">Canada Elections Act · section 326</a>.</li>
+          <li><a href="https://ri.btgpactual.com/principais-informacoes/relatorios-anuais/">BTG Pactual · relatórios anuais</a>.</li>
+          <li><a href="https://www.btgpactual.com/imprensa">BTG Pactual · imprensa e contato FSB</a>.</li>
+          <li><a href="https://platobr.com.br/andre-esteves-a-campanha-por-tarcisio-e-o-brasil-uninvestable-com-lula">PlatôBR · Esteves e Tarcísio (com desmentido do BTG)</a>.</li>
+          <li><a href="https://economia.uol.com.br/noticias/reuters/2025/12/05/ibovespa-desaba-com-pre-candidatura-de-flavio-bolsonaro-revertendo-comeco-de-mes-positivo.amp.htm">Reuters/UOL · reação à pré-candidatura de Flávio</a>.</li>
+          <li><a href="https://www.cnnbrasil.com.br/politica/tarcisio-descarta-disputar-presidencia-em-2026-e-aposta-em-reeleicao/">CNN Brasil · Tarcísio descarta a Presidência e aposta na reeleição em SP</a>.</li>
+          <li><a href="https://terrabrasilnoticias.com/2025/11/faria-lima-ve-oportunidades-com-tarcisio-na-corrida-a-presidencia/">Terra Brasil Notícias · a Faria Lima e o “Trade Tarcísio”</a>.</li>
+          <li><a href="https://www.bahianoticias.com.br/noticia/311842-flavio-bolsonaro-se-reune-com-dono-do-btg-pactual-em-sao-paulo">Bahia Notícias · Flávio recebido por Esteves (furo de Lauro Jardim/O Globo)</a>.</li>
+          <li><a href="https://www.gazetadopovo.com.br/eleicoes/2026/renan-santos-ataques-lula-bolsonaro-vies-libertario-partido-proprio/">Gazeta do Povo · Renan Santos, MBL/Partido Missão na corrida de 2026</a>.</li>
+          <li><a href="https://www.adrianofreire.com.br/blog/copom-junho-2026-selic-1425-o-que-muda">Copom jun/2026 · Selic 14,25% (corte unânime de 14,50%)</a>.</li>
+          <li><a href="https://www.cnnbrasil.com.br/economia/macroeconomia/veja-todos-os-impostos-e-taxas-que-governo-lula-aumentou-desde-a-posse/">CNN Brasil · lista de impostos e taxas majorados desde 2023</a>.</li>
+          <li><a href="https://borainvestir.b3.com.br/noticias/como-fica-o-iof-e-o-imposto-sobre-lcis-e-lcas-entenda-as-medidas-do-governo/">Bora Investir (B3) · IOF e IR sobre LCI/LCA/CRI/CRA e renda fixa</a>.</li>
+          <li><a href="https://www.seudinheiro.com/2026/empresas/balanco-btg-pactual-bpac11-4t25-2025-lucro-rentabilidade-roe-miql/">Seu Dinheiro · balanço BTG 2025, lucro recorde de R$ 16,68 bi</a>.</li>
+          <li><a href="https://www.condsef.org.br/noticias/juros-pressionam-divida-mais-que-gastos-publicos-dizem-economistas">Agência Brasil / CONDSEF · juros, dívida e lucro dos bancos (leitura heterodoxa)</a>.</li>
+        </ol>
+        <details open><summary>Limitações deste laudo</summary><p>Sem microdados e pesos da Nexus, o laudo não reestima intenção de voto nem calcula deff real. A PNAD mede domicílios e a pesquisa pergunta renda familiar declarada; a comparação é benchmark de calibração, não identidade conceitual perfeita. Lucros são nominais e ajustados conforme métricas gerenciais do BTG; não foram deflacionados e não identificam causalidade presidencial. Matérias sobre preferências políticas são evidência jornalística, não documentação interna.</p></details>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="foot-brand"><img src="img/arvor_logo.png" alt="">Arvor Intelligence</div>
+      <p>Auditoria independente baseada em documentos públicos, bases oficiais e cálculos reproduzíveis. A crítica é metodológica e institucional; não afirma fraude sem prova. Última atualização: 15 de julho de 2026.</p>
+    </div>
+  </footer>
+  <script src="assets/nexus_btg_0726.js" defer></script>
+</body>
+</html>
