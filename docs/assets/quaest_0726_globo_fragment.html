@@ -1,0 +1,310 @@
+<!--
+  Subseção autocontida para o dossiê quaest_0726.html
+  Ângulo: certificador-cliente — a Globo concentra 200+ pesquisas de 2026 na Quaest.
+  Cole a <section id="certificador"> onde couber no <main>. A segunda <section> é a variante 1600x900 para slide.
+  CSS escopado sob .globo-parallel; não vaza para o resto do dossiê.
+-->
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..900,0..100,0..1&amp;family=IBM+Plex+Mono:wght@400;600;700&amp;family=IBM+Plex+Sans+Condensed:wght@400;600;700&amp;display=swap" rel="stylesheet">
+
+<style>
+.globo-parallel {
+  --gp-ink: #11100f;
+  --gp-coal: #1a1917;
+  --gp-paper: #f4f0e6;
+  --gp-signal: #e94935;
+  --gp-acid: #d7ee3f;
+  --gp-cyan: #42c5d5;
+  --gp-good: #168b65;
+  --gp-muted: #9a938a;
+  --gp-display: "Fraunces", Georgia, serif;
+  --gp-sans: "IBM Plex Sans Condensed", Arial, sans-serif;
+  --gp-mono: "IBM Plex Mono", ui-monospace, monospace;
+  color: var(--gp-paper);
+  background:
+    radial-gradient(circle at 90% 8%, rgba(66,197,213,.14), transparent 34%),
+    linear-gradient(160deg, #12110f 0 60%, #201e1b 100%);
+  font-family: var(--gp-display);
+  line-height: 1.55;
+  padding: 64px 0 72px;
+  border-top: 8px solid var(--gp-acid);
+}
+.globo-parallel * { box-sizing: border-box; }
+.globo-parallel .gp-shell { width: min(1240px, calc(100% - 44px)); margin-inline: auto; }
+.globo-parallel .gp-eyebrow {
+  font: 600 .78rem/1.2 var(--gp-mono);
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--gp-acid); margin: 0 0 14px;
+  display: flex; align-items: center; gap: 12px;
+}
+.globo-parallel .gp-eyebrow::before { content: ""; width: 44px; height: 5px; background: var(--gp-acid); }
+.globo-parallel h2 {
+  margin: 0 0 18px;
+  font-size: clamp(2.4rem, 5vw, 4.2rem);
+  line-height: .92; letter-spacing: -.045em;
+  font-variation-settings: "SOFT" 12, "WONK" 1;
+  max-width: 20ch;
+}
+.globo-parallel h2 em { font-style: italic; font-weight: 440; color: var(--gp-acid); }
+.globo-parallel .gp-intro {
+  max-width: 74ch; margin: 0 0 40px;
+  font-size: clamp(1.08rem, 1.7vw, 1.34rem);
+  line-height: 1.42; color: #e6e0d5;
+}
+.globo-parallel .gp-intro b { color: #fff; }
+
+/* dois lados */
+.globo-parallel .gp-duel {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 22px;
+  margin-bottom: 38px;
+}
+.globo-parallel .gp-col {
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 4px; padding: 26px 24px 22px;
+  background: rgba(255,255,255,.02);
+}
+.globo-parallel .gp-col.gp-demand { border-top: 5px solid var(--gp-cyan); }
+.globo-parallel .gp-col.gp-deliver { border-top: 5px solid var(--gp-signal); }
+.globo-parallel .gp-col h3 {
+  margin: 0 0 4px; font-size: 1.5rem; letter-spacing: -.02em;
+}
+.globo-parallel .gp-col .gp-kicker {
+  font: 600 .72rem/1.3 var(--gp-mono); letter-spacing: .1em;
+  text-transform: uppercase; color: var(--gp-muted); margin: 0 0 18px;
+}
+.globo-parallel .gp-demand .gp-kicker { color: var(--gp-cyan); }
+.globo-parallel .gp-deliver .gp-kicker { color: #ff7664; }
+
+.globo-parallel blockquote.gp-q {
+  margin: 0 0 16px; padding: 0 0 0 16px;
+  border-left: 3px solid var(--gp-cyan);
+  font-size: 1.12rem; line-height: 1.36; color: #f2ecdf;
+}
+.globo-parallel blockquote.gp-q cite {
+  display: block; margin-top: 7px; font-style: normal;
+  font: 500 .72rem/1.3 var(--gp-mono); color: var(--gp-muted);
+  letter-spacing: .02em; text-transform: none;
+}
+
+.globo-parallel ul.gp-checklist { list-style: none; margin: 0; padding: 0; }
+.globo-parallel ul.gp-checklist li {
+  display: grid; grid-template-columns: 22px 1fr; gap: 12px;
+  align-items: start; padding: 11px 0;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  font-family: var(--gp-sans); font-size: 1rem; line-height: 1.34; color: #ece6db;
+}
+.globo-parallel ul.gp-checklist li:last-child { border-bottom: 0; }
+.globo-parallel ul.gp-checklist li::before {
+  content: "✕"; color: var(--gp-signal); font: 700 .95rem/1.4 var(--gp-mono);
+}
+.globo-parallel ul.gp-checklist li b { color: #fff; font-weight: 700; }
+
+/* faixa de incentivo */
+.globo-parallel .gp-incentive {
+  border: 1px solid rgba(255,255,255,.16);
+  border-left: 6px solid var(--gp-acid);
+  border-radius: 4px; padding: 26px 28px;
+  background: rgba(215,238,63,.05);
+}
+.globo-parallel .gp-incentive p { margin: 0 0 14px; font-size: 1.14rem; line-height: 1.46; }
+.globo-parallel .gp-incentive p:last-child { margin-bottom: 0; }
+.globo-parallel .gp-incentive strong { color: var(--gp-acid); }
+.globo-parallel .gp-tag {
+  display: inline-block; font: 700 .68rem/1.2 var(--gp-mono);
+  letter-spacing: .08em; text-transform: uppercase;
+  padding: 3px 8px; border-radius: 3px; margin-right: 6px; vertical-align: 1px;
+}
+.globo-parallel .gp-tag.fato { background: var(--gp-cyan); color: #08262b; }
+.globo-parallel .gp-tag.infer { background: var(--gp-acid); color: #22270a; }
+.globo-parallel .gp-tag.hip { background: #3a3733; color: #f4f0e6; border: 1px solid var(--gp-muted); }
+.globo-parallel .gp-chain {
+  margin-top: 22px; font-family: var(--gp-sans);
+  font-size: 1.16rem; line-height: 1.4; color: #fff;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px;
+}
+.globo-parallel .gp-chain span {
+  border: 1px solid rgba(255,255,255,.3); border-radius: 999px;
+  padding: 5px 14px; font: 600 .84rem/1.2 var(--gp-mono); letter-spacing: .02em;
+}
+.globo-parallel .gp-chain b { color: var(--gp-acid); font: 700 1.1rem/1 var(--gp-mono); }
+
+@media (max-width: 860px) {
+  .globo-parallel .gp-duel { grid-template-columns: 1fr; }
+  .globo-parallel h2 { font-size: 2.2rem; }
+}
+
+/* ---- variante slide 1600x900 ---- */
+.globo-slide {
+  box-sizing: border-box;
+  width: 1600px; height: 900px;
+  --gp-acid: #d7ee3f; --gp-signal: #e94935; --gp-cyan: #42c5d5; --gp-muted: #9a938a;
+  --gp-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --gp-sans: "IBM Plex Sans Condensed", Arial, sans-serif;
+  color: #f4f0e6;
+  background:
+    radial-gradient(circle at 88% 10%, rgba(66,197,213,.16), transparent 36%),
+    linear-gradient(160deg, #12110f 0 58%, #201e1b 100%);
+  font-family: "Fraunces", Georgia, serif;
+  padding: 74px 88px; position: relative; overflow: hidden;
+  border-bottom: 10px solid var(--gp-acid);
+}
+.globo-slide * { box-sizing: border-box; }
+.globo-slide .gp-eyebrow {
+  font: 600 1rem/1.2 var(--gp-mono); letter-spacing: .14em; text-transform: uppercase;
+  color: var(--gp-acid); margin: 0 0 20px; display: flex; align-items: center; gap: 14px;
+}
+.globo-slide .gp-eyebrow::before { content: ""; width: 54px; height: 6px; background: var(--gp-acid); }
+.globo-slide h2 {
+  margin: 0 0 40px; font-size: 4.6rem; line-height: .9; letter-spacing: -.05em;
+  font-variation-settings: "SOFT" 12, "WONK" 1; max-width: 24ch;
+}
+.globo-slide h2 em { font-style: italic; color: var(--gp-acid); font-weight: 440; }
+.globo-slide .gp-slide-duel { display: grid; grid-template-columns: 1fr 1fr; gap: 34px; }
+.globo-slide .gp-scol { border-top: 6px solid; padding-top: 20px; }
+.globo-slide .gp-scol.a { border-color: var(--gp-cyan); }
+.globo-slide .gp-scol.b { border-color: var(--gp-signal); }
+.globo-slide .gp-scol .gp-lbl {
+  font: 700 1rem/1.2 var(--gp-mono); letter-spacing: .08em; text-transform: uppercase; margin: 0 0 16px;
+}
+.globo-slide .gp-scol.a .gp-lbl { color: var(--gp-cyan); }
+.globo-slide .gp-scol.b .gp-lbl { color: #ff7664; }
+.globo-slide .gp-scol blockquote {
+  margin: 0 0 16px; padding-left: 18px; border-left: 4px solid var(--gp-cyan);
+  font-size: 1.72rem; line-height: 1.28;
+}
+.globo-slide .gp-scol cite {
+  display: block; font: 500 .95rem/1.3 var(--gp-mono); color: var(--gp-muted); font-style: normal;
+}
+.globo-slide .gp-scol ul { list-style: none; margin: 0; padding: 0; font-family: var(--gp-sans); }
+.globo-slide .gp-scol ul li {
+  display: grid; grid-template-columns: 26px 1fr; gap: 12px; padding: 12px 0;
+  border-bottom: 1px solid rgba(255,255,255,.1); font-size: 1.36rem; line-height: 1.26;
+}
+.globo-slide .gp-scol ul li::before { content: "✕"; color: var(--gp-signal); font: 700 1.2rem/1.2 var(--gp-mono); }
+.globo-slide .gp-foot {
+  position: absolute; left: 88px; right: 88px; bottom: 40px;
+  font-family: var(--gp-sans); font-size: 1.42rem; line-height: 1.32; color: #fff;
+  border-top: 1px solid rgba(255,255,255,.2); padding-top: 22px;
+}
+.globo-slide .gp-foot b { color: var(--gp-acid); }
+.globo-slide::after {
+  content: "brasil.arvor.co"; position: absolute; right: 88px; top: 74px;
+  font: 600 1rem/1 var(--gp-mono); color: rgba(255,255,255,.4); letter-spacing: .1em;
+}
+</style>
+
+<!-- ============ SUBSEÇÃO PARA O DOSSIÊ ============ -->
+<section class="globo-parallel" id="certificador">
+  <div class="gp-shell">
+    <p class="gp-eyebrow">09b · quem audita o auditor</p>
+    <h2>A Globo exige de si um <em>padrão</em> que a rodada de julho não passaria</h2>
+    <p class="gp-intro">
+      Em 12 de julho de 2026 a Quaest anunciou que não atenderá candidatos nem partidos e
+      <b>concentrará esforços em mais de 200 pesquisas já encomendadas pela Globo e afiliadas</b>
+      (Poder360; Metrópoles). O mesmo grupo cujos Princípios Editoriais transformam correção e
+      transparência em obrigação escrita passa a ser o maior cliente — e o selo reputacional na
+      tela — de uma casa cujos artefatos públicos de julho reprovam num checklist básico de
+      controle de qualidade. Não é acusação de fraude nem de manipulação editorial: é uma
+      pergunta de governança. <b>Quem é ao mesmo tempo certificador e cliente exclusivo tem o
+      dever de diligência sobre o que certifica.</b>
+    </p>
+
+    <div class="gp-duel">
+      <div class="gp-col gp-demand">
+        <p class="gp-kicker">o que a Globo escreve sobre si</p>
+        <h3>Os Princípios Editoriais</h3>
+        <blockquote class="gp-q">
+          “Os veículos do Grupo Globo devem ser transparentes em suas ações e em seus propósitos.”
+          <cite>Princípios Editoriais do Grupo Globo, 06/08/2011</cite>
+        </blockquote>
+        <blockquote class="gp-q">
+          “Os erros devem ser corrigidos sem subterfúgios e com destaque.”
+          <cite>Princípios Editoriais — A correção</cite>
+        </blockquote>
+        <blockquote class="gp-q">
+          Informações, para serem publicadas, “devem ser confirmadas pelo maior número de fontes
+          possível”; o rigor com minúcias “não é exagero, mas obrigação”.
+          <cite>Princípios Editoriais — A apuração</cite>
+        </blockquote>
+        <blockquote class="gp-q" style="border-color:var(--gp-acid)">
+          Publicar os princípios serve para “facilitar o julgamento do público sobre o trabalho
+          dos veículos, permitindo, de forma transparente” a verificação.
+          <cite>Grupo Globo, ao divulgar o documento</cite>
+        </blockquote>
+      </div>
+
+      <div class="gp-col gp-deliver">
+        <p class="gp-kicker">o que a Quaest publicou em julho</p>
+        <h3>Os artefatos BR-07181/2026</h3>
+        <ul class="gp-checklist">
+          <li><span><b>Capa “JUNHO/2026” e projeto OP093/25</b> num questionário registrado para julho: a versão oficial não se identifica corretamente.</span></li>
+          <li><span><b>26 resíduos de template</b> — “TRAZER ITEM/OPÇÃO AQUI” — no PDF que deveria ser o instrumento autoexplicativo.</span></li>
+          <li><span><b>36 de 101 perguntas sem topline pública</b>: 64% de cobertura por item; blocos inteiros de tarifas e Michelle retidos.</span></li>
+          <li><span><b>Anonimato prometido, CPF e Instagram pedidos</b> — sem finalidade, base legal ou retenção explicadas no documento.</span></li>
+          <li><span><b>Sem deff, pesos finais nem intervalo da diferença</b>: a incerteza real da manchete fica subdocumentada.</span></li>
+          <li><span><b>Rodapé remete à malha preliminar do IBGE</b> já substituída pela definitiva — referência técnica vencida.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="gp-incentive">
+      <p>
+        <span class="gp-tag fato">Fato</span>
+        A Quaest declarou a concentração de 200+ pesquisas em Globo e afiliadas (12/07/2026); os
+        seis defeitos ao lado são verificáveis nos arquivos registrados no PesqEle.
+      </p>
+      <p>
+        <span class="gp-tag infer">Inferência</span>
+        Um contrato dessa escala cria dever de diligência: a Globo é, ao mesmo tempo, quem
+        estampa o selo “Quaest/Globo” na tela e quem compra a produção com exclusividade. O
+        certificador reputacional e o cliente viram a mesma parte.
+      </p>
+      <p>
+        <span class="gp-tag hip">Hipótese</span>
+        Não afirmamos que a Globo conhecia as falhas nem que houve manipulação editorial. A
+        tensão é de <strong>incentivo e controle de qualidade</strong>: quando o auditor é
+        também o freguês, a auditoria independente do instrumento precisa vir de fora do contrato.
+      </p>
+      <div class="gp-chain">
+        <span>Globo — certificador + cliente exclusivo</span>
+        <b>→</b>
+        <span>Quaest — desenha, coleta, edita e vende</span>
+        <b>→</b>
+        <span>selo na tela</span>
+        <b>→</b>
+        <span>eleitor e mercado</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VARIANTE 1600x900 PARA SLIDE ============ -->
+<section class="globo-slide" id="certificador-slide">
+  <p class="gp-eyebrow">quem audita o auditor</p>
+  <h2>A Globo exige de si o <em>padrão</em> que julho não passaria</h2>
+  <div class="gp-slide-duel">
+    <div class="gp-scol a">
+      <p class="gp-lbl">o que a Globo escreve sobre si</p>
+      <blockquote>
+        “Os erros devem ser corrigidos sem subterfúgios e com destaque.”
+        <cite>Princípios Editoriais do Grupo Globo, 2011</cite>
+      </blockquote>
+      <blockquote>
+        “…transparentes em suas ações e em seus propósitos.”
+        <cite>Princípios Editoriais — Transparência</cite>
+      </blockquote>
+    </div>
+    <div class="gp-scol b">
+      <p class="gp-lbl">o que a Quaest publicou em julho</p>
+      <ul>
+        <li><span>Capa “JUNHO/2026” num registro de julho</span></li>
+        <li><span>26 resíduos de template no instrumento</span></li>
+        <li><span>36 de 101 perguntas sem topline pública</span></li>
+        <li><span>Sem deff, pesos finais ou margem da diferença</span></li>
+      </ul>
+    </div>
+  </div>
+  <p class="gp-foot">
+    Em 12/07/2026 a Quaest concentrou <b>200+ pesquisas na Globo e afiliadas</b>. Quem estampa o
+    selo na tela e compra a produção com exclusividade é a mesma parte — o certificador vira cliente.
+  </p>
+</section>

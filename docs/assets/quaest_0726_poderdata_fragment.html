@@ -1,0 +1,277 @@
+<!-- Fragmento autocontido: Quaest 07/2026 — BENCHMARK PoderData/Aya.
+     A tabela-experimento: desenho de instrumento × não-escolha × placar, com a Quaest no extremo.
+     O braço natural do split-ballot da H-A. Dark editorial. Fraunces / IBM Plex. Sem dependências. Slide 1600x900 no fim. -->
+<section class="qpd" id="quaest-poderdata">
+  <style>
+    .qpd{
+      --ink:#100f0d; --coal:#1a1917; --paper:#f4f0e6;
+      --signal:#e94935; --acid:#d7ee3f; --cyan:#42c5d5; --good:#63c39a; --warn:#e0a63c;
+      --muted:#a49c8e; --line:rgba(244,240,230,.14);
+      --lula:#e05a4d; --flavio:#4a80c4; --park:#8d8577;
+      --display:"Fraunces",Georgia,serif; --sans:"IBM Plex Sans Condensed",Arial,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+      background:var(--ink); color:var(--paper);
+      font-family:var(--display); line-height:1.55;
+      padding:clamp(22px,4vw,56px); border-radius:6px;
+      background-image:linear-gradient(rgba(244,240,230,.028) 1px,transparent 1px);
+      background-size:100% 30px;
+    }
+    .qpd *{box-sizing:border-box;}
+    .qpd .wrap{width:min(1180px,100%);margin-inline:auto;}
+    .qpd .mono{font-family:var(--mono);} .qpd .sans{font-family:var(--sans);}
+    .qpd .kicker{font:600 .72rem/1.3 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);display:flex;align-items:center;gap:12px;}
+    .qpd .kicker::before{content:"";width:44px;height:5px;background:var(--cyan);}
+    .qpd h2{font-size:clamp(1.9rem,4.2vw,3.05rem);line-height:1.03;margin:.5em 0 .3em;font-weight:600;letter-spacing:-.01em;}
+    .qpd h2 em{font-style:italic;color:var(--cyan);}
+    .qpd h3{font-size:clamp(1.2rem,2.3vw,1.6rem);margin:.2em 0 .5em;font-weight:600;}
+    .qpd h3 em{font-style:italic;color:var(--acid);}
+    .qpd .lede{max-width:68ch;color:#e9e3d5;font-size:clamp(1rem,1.5vw,1.16rem);}
+    .qpd p{max-width:74ch;}
+    .qpd b.hl{color:var(--signal);}
+    .qpd .tag{display:inline-block;font:600 .6rem/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:4px 7px;border-radius:3px;vertical-align:middle;margin-right:4px;}
+    .qpd .t-fato{background:rgba(99,195,154,.16);color:var(--good);border:1px solid rgba(99,195,154,.4);}
+    .qpd .t-inf{background:rgba(66,197,213,.14);color:var(--cyan);border:1px solid rgba(66,197,213,.4);}
+    .qpd .t-hip{background:rgba(224,166,60,.14);color:var(--warn);border:1px solid rgba(224,166,60,.4);}
+    .qpd .rule{height:1px;background:var(--line);margin:38px 0;}
+    .qpd .sec-label{font:600 .74rem/1.3 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;}
+    .qpd a{color:var(--cyan);text-underline-offset:3px;}
+    .qpd .callout{border-left:3px solid var(--cyan);padding:8px 0 8px 16px;margin:16px 0;color:#f0eadc;font-size:1.05rem;max-width:72ch;}
+    .qpd .callout b{color:var(--acid);}
+
+    /* ---- Cartões da rodada de hoje ---- */
+    .qpd .today{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:8px 0 4px;}
+    .qpd .tbox{border:1px solid var(--line);border-radius:5px;padding:15px 17px;background:rgba(244,240,230,.02);}
+    .qpd .tbox .big{font:600 2.1rem/1 var(--mono);}
+    .qpd .tbox .big.lu{color:var(--lula);} .qpd .tbox .big.fl{color:var(--flavio);} .qpd .tbox .big.pk{color:var(--cyan);} .qpd .tbox .big.gap{color:var(--acid);}
+    .qpd .tbox .lbl{font-size:.8rem;color:#ccc5b6;margin-top:7px;line-height:1.4;}
+    .qpd .tbox small{display:block;font:400 .62rem/1.3 var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-top:4px;}
+
+    /* ---- Tabela-experimento ---- */
+    .qpd .xwrap{overflow-x:auto;margin:8px 0;}
+    .qpd table.xtab{border-collapse:collapse;width:100%;min-width:760px;font-family:var(--sans);}
+    .qpd table.xtab th,.qpd table.xtab td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--line);font-size:.82rem;vertical-align:middle;}
+    .qpd table.xtab th{font:600 .64rem/1.2 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);white-space:nowrap;}
+    .qpd table.xtab td.num{font-family:var(--mono);text-align:right;font-weight:600;}
+    .qpd table.xtab .inst{font-weight:600;color:#efe9db;white-space:nowrap;}
+    .qpd table.xtab .inst small{display:block;font:400 .6rem/1.3 var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.03em;}
+    .qpd table.xtab td .ne{color:var(--cyan);} .qpd table.xtab td .lu{color:var(--lula);} .qpd table.xtab td .fl{color:var(--flavio);} .qpd table.xtab td .gp{color:var(--acid);}
+    .qpd table.xtab tr.hero td{background:rgba(233,73,53,.08);}
+    .qpd table.xtab tr.hero{box-shadow:inset 3px 0 0 var(--signal);}
+    .qpd table.xtab tr.bench td{background:rgba(66,197,213,.07);}
+    .qpd table.xtab tr.bench{box-shadow:inset 3px 0 0 var(--cyan);}
+    .qpd .yes{color:var(--warn);} .qpd .no{color:var(--good);}
+    /* slide: força a tabela a caber em 1600, sem clipar as colunas de placar */
+    .qpd-slide-shell .xtab{width:100%;min-width:0;table-layout:fixed;}
+    .qpd-slide-shell .xtab th,.qpd-slide-shell .xtab td{font-size:.76rem;padding:7px 9px;}
+    .qpd-slide-shell .xtab td:not(.inst){white-space:normal;}
+    .qpd-slide-shell .xtab .num{white-space:nowrap;}
+
+    /* ---- Duas cédulas lado a lado ---- */
+    .qpd .ballots{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:12px 0;}
+    .qpd .ballot{border:1px solid var(--line);border-radius:6px;padding:18px 20px;background:rgba(244,240,230,.02);}
+    .qpd .ballot.q{border-color:rgba(233,73,53,.35);} .qpd .ballot.p{border-color:rgba(66,197,213,.35);}
+    .qpd .ballot .bh{font:600 .7rem/1.3 var(--mono);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;}
+    .qpd .ballot.q .bh{color:var(--signal);} .qpd .ballot.p .bh{color:var(--cyan);}
+    .qpd .ballot .quo{font-family:var(--mono);font-size:.78rem;color:#e9e3d5;line-height:1.5;margin:0 0 12px;}
+    .qpd .exits{list-style:none;padding:0;margin:0;font-family:var(--sans);font-size:.82rem;}
+    .qpd .exits li{padding:5px 0 5px 22px;position:relative;color:#e9e3d5;}
+    .qpd .exits li.ne::before{content:"▸";position:absolute;left:4px;color:var(--park);}
+    .qpd .exits li.miss{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--muted);}
+    .qpd .exits li.miss::before{content:"✕";position:absolute;left:2px;color:var(--good);text-decoration:none;}
+    .qpd .bmeta{font:600 .66rem/1.4 var(--mono);letter-spacing:.03em;text-transform:uppercase;color:var(--muted);margin-top:12px;border-top:1px solid var(--line);padding-top:10px;}
+
+    /* ---- Veredito ---- */
+    .qpd .verdict{border:1px solid var(--line);border-left:4px solid var(--acid);border-radius:5px;padding:22px 24px;background:rgba(215,238,63,.04);margin:8px 0;}
+    .qpd .verdict .vh{font:600 .72rem/1.3 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--acid);margin-bottom:12px;}
+    .qpd .verdict p{font-size:1.05rem;max-width:80ch;margin:0;}
+    .qpd .verdict p + p{margin-top:12px;}
+    .qpd .foot{font-family:var(--sans);font-size:.76rem;color:var(--muted);margin-top:24px;line-height:1.5;}
+    .qpd .quo-d{font-family:var(--mono);font-size:.82rem;color:#e9e3d5;background:rgba(244,240,230,.03);border:1px dashed var(--line);border-radius:4px;padding:14px 16px;margin:14px 0;max-width:78ch;}
+    .qpd .quo-d b{color:var(--signal);}
+    @media (max-width:680px){
+      .qpd .ballots{grid-template-columns:1fr;}
+    }
+  </style>
+
+  <div class="wrap">
+    <div class="kicker">Genial/Quaest · Julho 2026 · Benchmark PoderData/Aya</div>
+    <h2>O braço natural do <em>split-ballot</em> que a Quaest não roda</h2>
+    <p class="lede">A síntese cravou uma hipótese central (H-A, 48%): a cédula de quatro saídas lida em voz alta é a rampa que <b class="hl">estaciona o anti-Lula mole</b> no branco/nulo, deixando Flávio em 37 quando o campo o põe em 43. O teste que provaria isso é um split-ballot. Não precisamos esperar: <b>a PoderData/Aya divulgada em 16/07 rodou, na prática, um instrumento oposto</b> ao da Quaest, quase no mesmo dia. Vejamos o que aconteceu com o Flávio que falta.</p>
+
+    <div class="rule"></div>
+
+    <!-- BLOCO 1: rodada de hoje -->
+    <div class="sec-label">A rodada divulgada hoje · PoderData/Aya · BR-00059/2026 · campo 12-15 jul · <span class="tag t-fato">Fato</span></div>
+    <div class="today">
+      <div class="tbox"><div class="big lu">45</div><div class="lbl">Lula<small>2º turno</small></div></div>
+      <div class="tbox"><div class="big fl">43</div><div class="lbl">Flávio<small>de volta ao consenso</small></div></div>
+      <div class="tbox"><div class="big gap">+2</div><div class="lbl">gap<small>empate técnico (±2)</small></div></div>
+      <div class="tbox"><div class="big pk">12</div><div class="lbl">não-escolha<small>b/n 9 + NS 2</small></div></div>
+    </div>
+    <p style="margin-top:14px;">Telefônica <b>IVR/URA</b> (resposta pelo teclado, <b>sem entrevistador humano</b>), n=2.400, ligações automatizadas para fixos e celulares, seleção aleatória do discador, ponderação por sexo/idade/instrução/região/renda, margem ±2. Recursos próprios. Passa na checagem de coerência: somas fecham, registro confere. <b>Benchmark auditável</b>, não boato. A rodada de junho (BR-05722, primária no nosso acervo) trazia Lula 46 × Flávio 43, não-escolha 11: a série da PoderData é <b>Flávio 42-43 e não-escolha 11-12</b> em três ondas.</p>
+
+    <div class="rule"></div>
+
+    <!-- BLOCO 2: a tabela-experimento -->
+    <div class="sec-label">A tabela-experimento · desenho de instrumento × não-escolha × placar · <span class="tag t-fato">Fato</span></div>
+    <div class="xwrap">
+      <table class="xtab">
+        <thead>
+          <tr>
+            <th>Instituto · campo</th><th>Modo</th><th>Entrevistador</th><th>Carga</th><th>Cédula 2º turno</th>
+            <th style="text-align:right">Não-esc.</th><th style="text-align:right">Lula</th><th style="text-align:right">Flávio</th><th style="text-align:right">Gap</th>
+          </tr>
+        </thead>
+        <tbody id="xbody"></tbody>
+      </table>
+    </div>
+    <div class="callout"><b>A Quaest está sozinha no extremo.</b> Não-escolha 18 e gap 8, quando o campo inteiro — as duas telefônicas, a online, as presenciais — fica entre 7,6 e 15 de não-escolha e entre 0,2 e 6,5 de gap. Flávio na Quaest é 37; em todo o resto, 40 a 46. A PoderData de hoje, <b>quase simultânea</b> (12-15/07 contra 10-13/07 da Quaest), põe Flávio em 43, o consenso presencial exato de Datafolha (43) e Nexus (44).</div>
+
+    <div class="rule"></div>
+
+    <!-- BLOCO 3: as duas cédulas -->
+    <div class="sec-label">O que muda entre as duas cédulas · <span class="tag t-fato">Fato documental</span> (questionários primários)</div>
+    <div class="ballots">
+      <div class="ballot q">
+        <div class="bh">Quaest · Q23-26 · presencial · ~101 itens</div>
+        <p class="quo">"Num possível segundo turno, você votaria no [nome], no [nome], votaria em branco/nulo ou não iria votar?"</p>
+        <ul class="exits">
+          <li class="ne">branco ou nulo (18)</li>
+          <li class="ne">não iria votar (19)</li>
+          <li class="ne">indeciso / não sabe (88)</li>
+        </ul>
+        <div class="bmeta">3 saídas de não-escolha · lidas em voz alta · entrevistador na porta</div>
+      </div>
+      <div class="ballot p">
+        <div class="bh">PoderData · Q7 · URA/teclado · 17 itens</div>
+        <p class="quo">"E se houver um 2º turno entre Flávio Bolsonaro e Lula, em quem você votaria? [...] branco ou nulo, tecle 3; não sabe, tecle 4."</p>
+        <ul class="exits">
+          <li class="ne">branco ou nulo (tecle 3)</li>
+          <li class="ne">não sabe (tecle 4)</li>
+          <li class="miss">não iria votar — não é oferecido</li>
+        </ul>
+        <div class="bmeta">2 saídas de não-escolha · teclado anônimo · sem entrevistador humano</div>
+      </div>
+    </div>
+    <p>Contra a Quaest, a PoderData muda <b>três eixos ao mesmo tempo</b>: sem entrevistador humano (retira a desejabilidade do face a face), 17 contra ~101 itens (retira a fadiga do instrumento longo) e uma saída de não-escolha a menos (não lê "não iria votar", exatamente a saída para onde a série da Quaest mostrava a direita não-bolsonarista vazar, 9→15). Os três apontam na mesma direção, e Flávio recupera 6 pontos.</p>
+
+    <div class="rule"></div>
+
+    <!-- BLOCO 4: aleatoriedade -->
+    <div class="sec-label">Aleatoriedade · nenhum desenho é "o certo" · <span class="tag t-inf">Inferência calibrada</span></div>
+    <p><b style="color:var(--cyan)">PoderData:</b> seleção aleatória do discador sobre banco de números fixos e celulares (aproxima RDD), probabilística na origem, mas com viés de cobertura e taxa de resposta baixíssima típica de URA. <b style="color:var(--signal)">Quaest:</b> cotas domiciliares em 334 setores, seleção por cota dentro do setor, com viés de seleção do entrevistador. <b style="color:var(--warn)">Atlas:</b> painel digital não-probabilístico, com viés de autosseleção. Cada um tem o seu viés, todos reais. O ponto não é que um é honesto e o outro não. É que <b>desenhos diferentes produzem não-escolha diferente</b> — e a Quaest está no extremo. Modo telefônico não garante não-escolha baixa: a Meio/Ideia, telefônica com voz humana, tem 15. O distintivo da PoderData é a URA <b>sem entrevistador</b> somada ao questionário curto.</p>
+
+    <div class="rule"></div>
+
+    <!-- BLOCO 5: a peça do Dantas + veredito -->
+    <div class="sec-label">A peça de Cláudio Dantas · "PoderData/Aya desmonta Quaest" · recepção</div>
+    <div class="quo-d">Dantas: a rodada de hoje confirma o empate técnico de Nexus, Futura e Gerp e <b>"desmonta"</b> a Quaest, a única a pôr Flávio muito atrás (45 × 37).</div>
+    <p><b class="hl">Onde concordamos</b> (Fato): a aritmética dele está certa no ponto factual. A Quaest é o ponto fora da curva. Flávio 37 e gap 8 são únicos no mercado. <b style="color:var(--cyan)">Onde declinamos</b> (calibragem): a palavra "desmonta" carrega uma implicação de manipulação que a evidência não sustenta. O outlier da Quaest é <b>integralmente explicável por desenho de instrumento</b>, sem supor má-fé. Concordamos com a aritmética; declinamos a inferência de fraude.</p>
+
+    <div class="verdict">
+      <div class="vh">Veredito · a predição da H-A se confirma no resultado</div>
+      <p>Trocado o instrumento, o <b>Flávio que falta reaparece</b>: a PoderData põe não-escolha em 12 (contra 18) e Flávio em 43 (contra 37), gap 2 (contra 8). É a assinatura que a H-A prevê. <b style="color:var(--acid)">É o braço natural do split-ballot que a Quaest não roda</b> — imperfeito, porque muda três eixos de uma vez em vez de isolar só a oferta da cédula, mas apontando inequívoco: instrumento diferente, não-escolha diferente, e a Quaest sozinha no extremo.</p>
+      <p>Duas ressalvas honestas mantêm o rigor. A PoderData <b>também</b> oferece branco/nulo, logo a oferta nua não explica sozinha os 18 da Quaest: o distintivo é o pacote de amplificadores mais a terceira saída não lida. E é um experimento natural, não controlado. O experimento de uma noite que isolaria a variável — split-ballot com a oferta contra a escolha entre dois nomes — só a Quaest pode publicar, e o retém. <b>Prova de opacidade, não de fraude.</b></p>
+    </div>
+
+    <div class="foot">
+      Fontes primárias: pacote PoderData em <span class="mono">data/pesquisas/poderdata/2026-07/</span> (relatório BR-05722 p6/p15/p22-23; questionário Q7; registro TSE BR-00059 do arquivo xhtml). Divulgação de hoje: Poder360, CNN Brasil (16/07). Peça: claudiodantas.com.br. Campo comparado: Quaest 10-13/07 (BR-07181/2026); Datafolha 17-19/06; Nexus/BTG jul; Futura/Apex 7-11/07; Meio/Ideia 3-6/07; AtlasIntel ~1/07. Contas reproduzíveis em <span class="mono">quaest_0726_poderdata.json</span>. brasil.arvor.co
+    </div>
+  </div>
+
+  <!-- ============ VARIANTE SLIDE 1600x900 ============
+       Capturar o elemento .qpd-slide-shell .qpd (1600x900), padding da seção pai zerado. -->
+  <div class="qpd-slide-shell" style="margin-top:40px;overflow-x:auto;">
+    <div class="qpd" style="width:1600px;height:900px;padding:48px 56px;border-radius:0;overflow:hidden;display:grid;grid-template-columns:1fr;grid-template-rows:auto auto 1fr;gap:20px;">
+      <!-- cabeçalho -->
+      <div>
+        <div class="kicker">Genial/Quaest · Julho 2026 · Benchmark PoderData/Aya</div>
+        <h2 style="font-size:2.3rem;margin:.24em 0 .12em;white-space:nowrap;">O braço natural do <em>split-ballot</em> que a Quaest não roda</h2>
+        <p class="lede" style="font-size:1.02rem;max-width:none;">A PoderData/Aya de hoje (URA telefônica, 17 itens, sem entrevistador) rodou, na prática, o instrumento oposto ao da Quaest (presencial, 101 itens, cédula de quatro saídas) quase no mesmo dia. Trocado o instrumento, o Flávio que falta reaparece: 43, gap 2, não-escolha 12.</p>
+      </div>
+
+      <!-- tabela-experimento -->
+      <div>
+        <div class="sec-label" style="margin-bottom:9px;">Desenho de instrumento × não-escolha × placar · 2º turno Lula × Flávio · <span class="tag t-fato">Fato</span></div>
+        <div class="xwrap" style="margin:0;">
+          <table class="xtab" style="min-width:0;">
+            <colgroup>
+              <col style="width:16%"><col style="width:16%"><col style="width:9%"><col style="width:10%"><col style="width:17%">
+              <col style="width:11%"><col style="width:10%"><col style="width:11%">
+            </colgroup>
+            <thead>
+              <tr>
+                <th>Instituto · campo</th><th>Modo</th><th>Entrev.</th><th>Carga</th><th>Cédula 2º turno</th>
+                <th style="text-align:right">Não-esc.</th><th style="text-align:right">Lula</th><th style="text-align:right">Flávio</th>
+              </tr>
+            </thead>
+            <tbody id="xbodySlide"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- rodapé: cédulas resumo + veredito -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:start;">
+        <div>
+          <div class="sec-label" style="margin-bottom:10px;">O que muda entre as cédulas · <span class="tag t-fato">Fato documental</span></div>
+          <div class="ballots" style="grid-template-columns:1fr 1fr;gap:14px;margin:0;">
+            <div class="ballot q" style="padding:13px 15px;">
+              <div class="bh" style="margin-bottom:7px;">Quaest · presencial · 101 itens</div>
+              <ul class="exits" style="font-size:.76rem;">
+                <li class="ne">branco/nulo</li><li class="ne">não iria votar</li><li class="ne">indeciso</li>
+              </ul>
+              <div class="bmeta" style="margin-top:8px;padding-top:7px;">3 saídas lidas · entrevistador na porta</div>
+            </div>
+            <div class="ballot p" style="padding:13px 15px;">
+              <div class="bh" style="margin-bottom:7px;">PoderData · URA · 17 itens</div>
+              <ul class="exits" style="font-size:.76rem;">
+                <li class="ne">branco/nulo</li><li class="ne">não sabe</li><li class="miss">não iria votar</li>
+              </ul>
+              <div class="bmeta" style="margin-top:8px;padding-top:7px;">2 saídas · teclado anônimo · sem humano</div>
+            </div>
+          </div>
+        </div>
+        <div class="verdict" style="margin:0;padding:16px 18px;">
+          <div class="vh" style="margin-bottom:8px;">A predição da H-A se confirma no resultado</div>
+          <p style="font-size:.9rem;">Trocado o instrumento, Flávio recupera 6 pontos rumo ao consenso 43 e a não-escolha cai de 18 para 12. <b style="color:var(--acid)">É o braço natural do split-ballot</b> — imperfeito, muda três eixos de uma vez, mas inequívoco: a Quaest sozinha no extremo. O experimento controlado de uma noite só a Quaest pode publicar, e o retém. <b>Prova de opacidade, não de fraude.</b></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      var shell = document.getElementById('quaest-poderdata');
+      // instituto, sub(campo), modo, entrev(no=good/yes=warn), carga, cedula, ne, lu, fl, gap, cls
+      var rows=[
+        {inst:'Genial/Quaest',sub:'10-13 jul',modo:'presencial domiciliar',ent:'sim',entc:'yes',carga:'~101 itens',ced:'3 saídas lidas',ne:18,lu:45,fl:37,gap:8,cls:'hero'},
+        {inst:'PoderData/Aya',sub:'12-15 jul',modo:'telefônica IVR/URA',ent:'não',entc:'no',carga:'17 itens',ced:'2 saídas (teclado)',ne:12,lu:45,fl:43,gap:2,cls:'bench'},
+        {inst:'PoderData/Aya',sub:'21-24 jun',modo:'telefônica IVR/URA',ent:'não',entc:'no',carga:'17 itens',ced:'2 saídas (teclado)',ne:11,lu:46,fl:43,gap:3,cls:''},
+        {inst:'Datafolha',sub:'17-19 jun',modo:'presencial (fluxo)',ent:'sim',entc:'yes',carga:'n/d',ced:'registra não-voto',ne:10,lu:47,fl:43,gap:4,cls:''},
+        {inst:'BTG/Nexus',sub:'jul (6ª)',modo:'presencial domiciliar',ent:'sim',entc:'yes',carga:'n/d',ced:'n/d',ne:9,lu:47,fl:44,gap:3,cls:''},
+        {inst:'Futura/Apex',sub:'7-11 jul',modo:'presencial',ent:'sim',entc:'yes',carga:'n/d',ced:'oferece b/n/abst.',ne:7.6,lu:46.3,fl:46.1,gap:0.2,cls:''},
+        {inst:'Meio/Ideia',sub:'3-6 jul',modo:'telefônica (voz)',ent:'sim',entc:'yes',carga:'n/d',ced:'n/d',ne:15,lu:45,fl:40,gap:5,cls:''},
+        {inst:'AtlasIntel',sub:'~1 jul',modo:'recrutamento digital',ent:'não',entc:'no',carga:'n/d',ced:'forced-choice',ne:8.9,lu:48.8,fl:42.3,gap:6.5,cls:''}
+      ];
+      function fmt(v){ return Number.isInteger(v)?v:String(v).replace('.',','); }
+      function body(el,noGap){ if(!el) return;
+        el.innerHTML=rows.map(function(r){
+          var badge=r.cls==='hero'?' <span class="tag t-hip" style="margin:0">extremo</span>':(r.cls==='bench'?' <span class="tag t-inf" style="margin:0">hoje</span>':'');
+          var gap=noGap?'':'<td class="num"><span class="gp">+'+fmt(r.gap)+'</span></td>';
+          return '<tr class="'+r.cls+'">'
+            +'<td class="inst">'+r.inst+badge+'<small>'+r.sub+'</small></td>'
+            +'<td>'+r.modo+'</td>'
+            +'<td class="'+r.entc+'">'+r.ent+'</td>'
+            +'<td>'+r.carga+'</td>'
+            +'<td>'+r.ced+'</td>'
+            +'<td class="num"><span class="ne">'+fmt(r.ne)+'</span></td>'
+            +'<td class="num"><span class="lu">'+fmt(r.lu)+'</span></td>'
+            +'<td class="num"><span class="fl">'+fmt(r.fl)+'</span></td>'
+            +gap
+            +'</tr>';
+        }).join('');
+      }
+      body(shell.querySelector('#xbody'),false);
+      body(shell.querySelector('#xbodySlide'),true);
+    })();
+  </script>
+</section>

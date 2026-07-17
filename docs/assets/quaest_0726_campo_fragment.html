@@ -1,0 +1,289 @@
+<!-- Fragmento autocontido: perícia de campo (dias da semana × PEA + fadiga de instrumento).
+     Genial/Quaest jul/2026 (BR-07181/2026). Cole no dossiê quaest_0726.html.
+     Sem dependências externas. Paleta e tipografia alinhadas ao thread do dossiê.
+     Calibragem Fato / Inferência / Hipótese preservada. NÃO editar quaest_0726.html a partir daqui. -->
+<section class="qcp" data-qcp="responsive">
+  <style>
+    .qcp{
+      --qcp-bg:#11100f; --qcp-bg2:#100f0d; --qcp-fg:#efe9e0; --qcp-muted:#8f887c;
+      --qcp-signal:#e94935; --qcp-cyan:#42c5d5; --qcp-acid:#d7ee3f;
+      --qcp-line:#2a2723; --qcp-panel:#161412;
+      background:transparent; color:var(--qcp-fg);
+      font-family:"IBM Plex Sans","Helvetica Neue",system-ui,sans-serif;
+      max-width:980px; margin:0 auto; padding:8px 0 6px; -webkit-font-smoothing:antialiased;
+    }
+    .qcp *{box-sizing:border-box}
+    .qcp-kicker{font:600 11px/1.4 "IBM Plex Mono",monospace; letter-spacing:.18em;
+      text-transform:uppercase; color:var(--qcp-cyan); margin:0 0 8px}
+    .qcp-title{font-family:"Fraunces","Georgia",serif; font-weight:500;
+      font-size:clamp(23px,4vw,36px); line-height:1.08; margin:0 0 8px; color:var(--qcp-fg)}
+    .qcp-title em{font-style:italic; color:var(--qcp-signal)}
+    .qcp-sub{font-size:14px; line-height:1.55; color:var(--qcp-muted); margin:0 0 20px; max-width:74ch}
+    .qcp-tag{display:inline-block; font:600 9.5px/1 "IBM Plex Mono",monospace;
+      letter-spacing:.1em; text-transform:uppercase; padding:3px 6px; border-radius:3px; vertical-align:middle}
+    .qcp-tag--fato{background:rgba(66,197,213,.14); color:#8fdbe6; border:1px solid rgba(66,197,213,.4)}
+    .qcp-tag--inf{background:rgba(215,238,63,.12); color:#c9dd6b; border:1px solid rgba(215,238,63,.35)}
+    .qcp-tag--hip{background:rgba(233,73,53,.13); color:#f0897b; border:1px solid rgba(233,73,53,.4)}
+
+    .qcp-h3{font:600 11px/1.3 "IBM Plex Mono",monospace; letter-spacing:.16em;
+      text-transform:uppercase; color:var(--qcp-muted); margin:30px 0 12px;
+      padding-bottom:7px; border-bottom:1px solid var(--qcp-line)}
+
+    /* calendário cross-round */
+    .qcp-cal{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:0 0 8px}
+    @media(max-width:640px){.qcp-cal{grid-template-columns:1fr}}
+    .qcp-round{background:var(--qcp-panel); border:1px solid var(--qcp-line); border-radius:6px; padding:14px 16px}
+    .qcp-round-h{display:flex; justify-content:space-between; align-items:baseline; margin:0 0 4px}
+    .qcp-round-h b{font:700 15px/1 "IBM Plex Sans",sans-serif; color:var(--qcp-fg)}
+    .qcp-round-h span{font:500 10.5px/1 "IBM Plex Mono",monospace; color:var(--qcp-muted)}
+    .qcp-round-per{font:500 12px/1 "IBM Plex Mono",monospace; color:var(--qcp-cyan); margin:0 0 10px}
+    .qcp-days{display:flex; gap:5px}
+    .qcp-day{flex:1; text-align:center; border-radius:4px; padding:8px 2px 7px; border:1px solid var(--qcp-line)}
+    .qcp-day small{display:block; font:600 9px/1.2 "IBM Plex Mono",monospace; letter-spacing:.05em;
+      text-transform:uppercase; color:var(--qcp-muted); margin-bottom:3px}
+    .qcp-day b{font:700 13px/1 "IBM Plex Sans",sans-serif; color:var(--qcp-fg)}
+    .qcp-day--wknd{background:rgba(233,73,53,.1); border-color:rgba(233,73,53,.4)}
+    .qcp-day--wknd b{color:#f0897b}
+    .qcp-day--week{background:rgba(66,197,213,.08); border-color:rgba(66,197,213,.32)}
+    .qcp-round-ft{font:500 10.5px/1.4 "IBM Plex Sans",sans-serif; color:var(--qcp-muted); margin:10px 0 0}
+    .qcp-round--empty{border-style:dashed; opacity:.72; display:flex; flex-direction:column; justify-content:center}
+    .qcp-round--empty .qcp-empty{font:500 12px/1.5 "IBM Plex Sans",sans-serif; color:var(--qcp-muted)}
+
+    .qcp-cross-note{display:flex; gap:11px; align-items:flex-start;
+      border:1px solid rgba(66,197,213,.4); border-left:3px solid var(--qcp-cyan);
+      background:rgba(66,197,213,.06); border-radius:5px; padding:11px 15px; margin:14px 0 4px;
+      font-size:13px; line-height:1.55; color:var(--qcp-fg)}
+    .qcp-cross-note .ic{font:700 13px/1.3 "IBM Plex Mono",monospace; color:var(--qcp-cyan); flex:none}
+    .qcp-cross-note b{color:#8fdbe6}
+
+    /* painel duas hipóteses */
+    .qcp-hyp{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:8px 0 0}
+    @media(max-width:720px){.qcp-hyp{grid-template-columns:1fr}}
+    .qcp-card{background:var(--qcp-bg2); border:1px solid var(--qcp-line); border-radius:7px; padding:18px 18px 16px; position:relative; overflow:hidden}
+    .qcp-card::before{content:""; position:absolute; top:0; left:0; right:0; height:3px}
+    .qcp-card--h1::before{background:linear-gradient(90deg,var(--qcp-cyan),transparent)}
+    .qcp-card--h2::before{background:linear-gradient(90deg,var(--qcp-signal),transparent)}
+    .qcp-card-k{font:700 10px/1 "IBM Plex Mono",monospace; letter-spacing:.14em; text-transform:uppercase; margin:0 0 6px}
+    .qcp-card--h1 .qcp-card-k{color:var(--qcp-cyan)}
+    .qcp-card--h2 .qcp-card-k{color:var(--qcp-signal)}
+    .qcp-card-t{font-family:"Fraunces",serif; font-weight:500; font-size:19px; line-height:1.15; margin:0 0 8px; color:var(--qcp-fg)}
+    .qcp-card-tese{font-size:12.5px; line-height:1.5; color:var(--qcp-muted); margin:0 0 12px; font-style:italic}
+    .qcp-points{list-style:none; margin:0 0 14px; padding:0}
+    .qcp-points li{font-size:12.5px; line-height:1.5; color:var(--qcp-fg); padding:7px 0; border-top:1px solid rgba(42,39,35,.7); display:flex; gap:8px; align-items:flex-start}
+    .qcp-points li:first-child{border-top:none}
+    .qcp-points .qcp-tag{margin-top:1px; flex:none}
+    .qcp-verdict{border-radius:5px; padding:11px 13px; margin:2px 0 0}
+    .qcp-card--h1 .qcp-verdict{background:rgba(66,197,213,.08); border:1px solid rgba(66,197,213,.3)}
+    .qcp-card--h2 .qcp-verdict{background:rgba(233,73,53,.09); border:1px solid rgba(233,73,53,.32)}
+    .qcp-verdict b{display:block; font:700 10px/1.3 "IBM Plex Mono",monospace; letter-spacing:.12em; text-transform:uppercase; margin:0 0 5px}
+    .qcp-card--h1 .qcp-verdict b{color:#8fdbe6}
+    .qcp-card--h2 .qcp-verdict b{color:#f0897b}
+    .qcp-verdict p{margin:0; font-size:12.5px; line-height:1.55; color:var(--qcp-fg)}
+
+    /* literatura */
+    .qcp-lit{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:6px 0 0}
+    @media(max-width:720px){.qcp-lit{grid-template-columns:1fr}}
+    .qcp-ref{background:var(--qcp-panel); border:1px solid var(--qcp-line); border-radius:6px; padding:13px 15px}
+    .qcp-ref cite{display:block; font:600 12.5px/1.35 "IBM Plex Sans",sans-serif; font-style:normal; color:var(--qcp-fg); margin:0 0 3px}
+    .qcp-ref .qcp-ref-src{font:500 10.5px/1.3 "IBM Plex Mono",monospace; color:var(--qcp-cyan); margin:0 0 8px}
+    .qcp-ref p{margin:0; font-size:12px; line-height:1.5; color:var(--qcp-muted)}
+    .qcp-ref a{color:var(--qcp-cyan); text-decoration:none; border-bottom:1px solid rgba(66,197,213,.3)}
+
+    /* lista não publica */
+    .qcp-hold{background:var(--qcp-bg2); border:1px solid rgba(233,73,53,.35); border-radius:7px; padding:18px 20px 16px; margin:6px 0 0}
+    .qcp-hold-h{font-family:"Fraunces",serif; font-weight:500; font-size:18px; line-height:1.2; margin:0 0 4px; color:var(--qcp-fg)}
+    .qcp-hold-h em{font-style:italic; color:var(--qcp-signal)}
+    .qcp-hold-sub{font:500 11px/1.4 "IBM Plex Mono",monospace; color:var(--qcp-muted); margin:0 0 12px}
+    .qcp-hold ul{list-style:none; margin:0; padding:0; columns:2; column-gap:26px}
+    @media(max-width:640px){.qcp-hold ul{columns:1}}
+    .qcp-hold li{font-size:12.5px; line-height:1.45; color:var(--qcp-fg); padding:6px 0 6px 20px; position:relative; break-inside:avoid}
+    .qcp-hold li::before{content:"—"; position:absolute; left:0; color:var(--qcp-signal); font-family:"IBM Plex Mono",monospace}
+
+    .qcp-foot{font-size:11.5px; line-height:1.55; color:var(--qcp-muted); margin:22px 0 0; padding-top:12px; border-top:1px solid var(--qcp-line); max-width:82ch}
+    .qcp-foot b{color:var(--qcp-fg)}
+    .qcp-foot a{color:var(--qcp-cyan); text-decoration:none}
+  </style>
+
+  <p class="qcp-kicker">Perícia de campo · BR-07181/2026 · dossiê 08</p>
+  <h1 class="qcp-title">O campo é de <em>fim de semana</em>.<br>O instrumento é <em>longo</em> demais.</h1>
+  <p class="qcp-sub">Duas hipóteses de seleção amostral sobre a entrevista presencial domiciliar da Genial/Quaest. Uma cai no calendário; a outra fica de pé na literatura de fadiga. Nenhuma prova viés: as duas mostram que a Quaest retém exatamente os dados que permitiriam medi-lo.</p>
+
+  <!-- 1. CALENDÁRIO CROSS-ROUND -->
+  <div class="qcp-h3">01 · Janela de campo por rodada — o padrão sexta→segunda</div>
+  <div class="qcp-cal">
+    <div class="qcp-round">
+      <div class="qcp-round-h"><b>Junho / 2026</b><span>BR-07661/2026</span></div>
+      <div class="qcp-round-per">05/06 → 08/06/2026</div>
+      <div class="qcp-days">
+        <div class="qcp-day qcp-day--week"><small>Sex</small><b>05</b></div>
+        <div class="qcp-day qcp-day--wknd"><small>Sáb</small><b>06</b></div>
+        <div class="qcp-day qcp-day--wknd"><small>Dom</small><b>07</b></div>
+        <div class="qcp-day qcp-day--week"><small>Seg</small><b>08</b></div>
+      </div>
+      <p class="qcp-round-ft">2 dias úteis · 2 de fim de semana · <span class="qcp-tag qcp-tag--fato">Fato</span></p>
+    </div>
+    <div class="qcp-round">
+      <div class="qcp-round-h"><b>Julho / 2026</b><span>BR-07181/2026</span></div>
+      <div class="qcp-round-per">10/07 → 13/07/2026</div>
+      <div class="qcp-days">
+        <div class="qcp-day qcp-day--week"><small>Sex</small><b>10</b></div>
+        <div class="qcp-day qcp-day--wknd"><small>Sáb</small><b>11</b></div>
+        <div class="qcp-day qcp-day--wknd"><small>Dom</small><b>12</b></div>
+        <div class="qcp-day qcp-day--week"><small>Seg</small><b>13</b></div>
+      </div>
+      <p class="qcp-round-ft">2 dias úteis · 2 de fim de semana · <span class="qcp-tag qcp-tag--fato">Fato</span></p>
+    </div>
+  </div>
+  <div class="qcp-cross-note"><span class="ic">▮</span><span><b>Mesma janela sexta→segunda nas duas rodadas consecutivas.</b> Não é acaso de uma edição: é padrão de campo majoritariamente de fim de semana. A rodada de maio não tem datas no acervo local, registrada como ausência; um terceiro caso elevaria o padrão a Fato robusto. Fonte comparativa: <a href="quaest_100626.html">dossiê de junho (quaest_100626.html)</a>.</span></div>
+
+  <!-- 2. PAINEL DUAS HIPÓTESES -->
+  <div class="qcp-h3">02 · Duas hipóteses de seleção — veredito calibrado de cada</div>
+  <div class="qcp-hyp">
+    <div class="qcp-card qcp-card--h1">
+      <p class="qcp-card-k">Hipótese 1</p>
+      <h3 class="qcp-card-t">Dia da semana × PEA</h3>
+      <p class="qcp-card-tese">Entrevista domiciliar em dia útil perderia a PEA ocupada e sobraria não-PEA (aposentados, donas de casa), suposta mais lulista.</p>
+      <ul class="qcp-points">
+        <li><span class="qcp-tag qcp-tag--fato">Fato</span> Campo sexta→segunda nas duas rodadas: o fim de semana é quando a PEA está em casa. A versão "dia útil de manhã perde a PEA" perde base.</li>
+        <li><span class="qcp-tag qcp-tag--fato">Fato</span> 60+ na Quaest 23,0% vs TSE 23,27% (Δ −0,27). Sem excesso de idosos: a assinatura de não-PEA idosa não aparece.</li>
+        <li><span class="qcp-tag qcp-tag--fato">Fato</span> Amostra sub-representa ≤2 SM em 4,44 p.p. (mais rica). Não-PEA de baixa renda a tornaria mais pobre: o oposto.</li>
+        <li><span class="qcp-tag qcp-tag--hip">Hipótese</span> Resta sobre-seleção de "quem abre a porta" DENTRO da célula de cota, invisível sem ocupação, horário e base não ponderada.</li>
+      </ul>
+      <div class="qcp-verdict"><b>Veredito · fraca / parcialmente refutada</b><p>O calendário de fim de semana e a cota de idade derrubam a versão forte. Sobra um resíduo intra-célula não-falsificável de fora. No máximo Hipótese.</p></div>
+    </div>
+    <div class="qcp-card qcp-card--h2">
+      <p class="qcp-card-k">Hipótese 2 · braço forte</p>
+      <h3 class="qcp-card-t">Questionário longo → fadiga → quem termina</h3>
+      <p class="qcp-card-tese">101 itens, presencial, longo. Quem aguenta até o fim é sistematicamente diferente: mais interessado em política, mais tempo, mais ideológico.</p>
+      <ul class="qcp-points">
+        <li><span class="qcp-tag qcp-tag--fato">Fato</span> Instrumento de 101 itens com blocos longos de imagem/rejeição nome a nome e ternário sem meio-termo.</li>
+        <li><span class="qcp-tag qcp-tag--inf">Inferência</span> Comprimento reduz conclusão; fadiga gera satisficing (mais "não sei", straight-lining, primazia no fim). Cotas não corrigem engajamento dentro da célula.</li>
+        <li><span class="qcp-tag qcp-tag--inf">Inferência</span> Presencial reduz a desistência aberta, mas desloca a seleção para o consentimento na porta e o satisficing terminal. Não some, muda de lugar.</li>
+        <li><span class="qcp-tag qcp-tag--hip">Hipótese</span> Ponte para voto: quem tolera 101 perguntas de política é mais politizado. A direção pró-Lula não é afirmada sem os pesos que a Quaest não publica.</li>
+      </ul>
+      <div class="qcp-verdict"><b>Veredito · plausível, direção em nível de Hipótese</b><p>Ancorada na literatura de burden/satisficing. A ponte para voto e sua direção precisam dos dados retidos. É o vetor de seleção mais difícil de descartar.</p></div>
+    </div>
+  </div>
+
+  <!-- 3. LITERATURA -->
+  <div class="qcp-h3">03 · A literatura da fadiga de instrumento</div>
+  <div class="qcp-lit">
+    <div class="qcp-ref">
+      <cite>Galesic &amp; Bosnjak (2009)</cite>
+      <p class="qcp-ref-src">Public Opinion Quarterly 73(2):349–360</p>
+      <p>Comprimento maior reduz quem inicia e conclui. Questões no fim recebem tempos menores, mais item-nonresponse, respostas abertas mais curtas e menos variabilidade em grades: satisficing por fadiga, medido. <a href="https://academic.oup.com/poq/article-abstract/73/2/349/1939196">poq 73(2)</a></p>
+    </div>
+    <div class="qcp-ref">
+      <cite>Krosnick (1991)</cite>
+      <p class="qcp-ref-src">Applied Cognitive Psychology 5(3):213–236</p>
+      <p>Teoria do satisficing: sob carga cognitiva o respondente adota atalhos, a primeira alternativa plausível, concordância, "não sei", não-diferenciação. Primazia mais forte em menor habilidade cognitiva. <a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/acp.2350050305">acp 5(3)</a></p>
+    </div>
+    <div class="qcp-ref">
+      <cite>Peytchev (2009)</cite>
+      <p class="qcp-ref-src">Public Opinion Quarterly 73(1):74–97</p>
+      <p>Quem interrompe difere de quem conclui; escolaridade associa-se ao break-off. Sabe-se pouco de quem abandona: o mesmo ponto cego que a não-publicação de base e taxa de conclusão cria aqui. <a href="https://academic.oup.com/poq/article-abstract/73/1/74/1868871">poq 73(1)</a></p>
+    </div>
+    <div class="qcp-ref">
+      <cite>Galesic (2006)</cite>
+      <p class="qcp-ref-src">Journal of Official Statistics 22(2):313–328</p>
+      <p>Quem abandona tem menor interesse e maior burden; a queda de qualidade aparece antes do abandono. Interesse no tema seleciona quem permanece: a ponte para "quem tolera 101 perguntas de política é mais engajado". <a href="https://www.websm.org/db/12/12088/Web%20Survey%20Bibliography/Dropouts_on_the_Web_Effects_of_Interest_and_Burden_Experienced_During_an_Online_Survey/">jos 22(2)</a></p>
+    </div>
+  </div>
+
+  <!-- 4. O QUE A QUAEST NÃO PUBLICA -->
+  <div class="qcp-h3">04 · O que a Quaest não publica — e que testaria isto</div>
+  <div class="qcp-hold">
+    <p class="qcp-hold-h">Nove itens de <em>disclosure</em> retidos</p>
+    <p class="qcp-hold-sub">Exigidos por AAPOR / WAPOR / ABEP-BPC · são exatamente o que separaria seleção de ruído</p>
+    <ul>
+      <li>Taxa de resposta / cooperação (AAPOR RR).</li>
+      <li>Taxa de recusa e taxa de contato.</li>
+      <li>Duração média e distribuição da entrevista.</li>
+      <li>Entrevistas por dia e por horário de coleta.</li>
+      <li>Base não ponderada por subgrupo.</li>
+      <li>Conclusão e item-nonresponse por posição no questionário.</li>
+      <li>Ocupação / condição na força de trabalho (PEA) do respondente.</li>
+      <li>Nº de entrevistadores e substituições de cota.</li>
+      <li>Efeito de desenho (deff) e pesos finais.</li>
+    </ul>
+  </div>
+
+  <p class="qcp-foot"><b>Leitura de fechamento.</b> O achado robusto não é "provou-se viés"; é que o desenho tem dois vetores plausíveis de seleção, o campo de fim de semana com filtro de porta e a fadiga de um instrumento de 101 itens, e a Quaest retém precisamente o que permitiria medi-los. Opacidade, não fraude. Datas conferidas com calendário autoritativo. Fonte comparativa da rodada de junho: <a href="quaest_100626.html">quaest_100626.html</a>. Dados reproduzíveis em <b>quaest_0726_campo.json</b>.</p>
+</section>
+
+<!-- ====================== VARIANTE SLIDE 1600×900 ====================== -->
+<section class="qcps" data-qcps="slide" style="margin-top:40px">
+  <style>
+    .qcps{--s-bg:#100f0d; --s-fg:#efe9e0; --s-muted:#8f887c; --s-signal:#e94935; --s-cyan:#42c5d5; --s-acid:#d7ee3f; --s-line:#2a2723; --s-panel:#161412;
+      width:1600px; height:900px; background:var(--s-bg); color:var(--s-fg);
+      font-family:"IBM Plex Sans",system-ui,sans-serif; padding:64px 72px; position:relative; overflow:hidden;
+      transform-origin:top left; margin:0 auto}
+    @media(max-width:1600px){.qcps{transform:scale(calc(100vw / 1600))}}
+    .qcps *{box-sizing:border-box}
+    .qcps-k{font:600 15px/1 "IBM Plex Mono",monospace; letter-spacing:.22em; text-transform:uppercase; color:var(--s-cyan); margin:0 0 16px}
+    .qcps-t{font-family:"Fraunces",serif; font-weight:500; font-size:58px; line-height:1.04; margin:0 0 10px; letter-spacing:-.01em}
+    .qcps-t em{font-style:italic; color:var(--s-signal)}
+    .qcps-sub{font-size:20px; line-height:1.4; color:var(--s-muted); margin:0 0 34px; max-width:110ch}
+    .qcps-grid{display:grid; grid-template-columns:1fr 1fr; gap:32px}
+    .qcps-col h4{font:700 15px/1 "IBM Plex Mono",monospace; letter-spacing:.14em; text-transform:uppercase; margin:0 0 16px; padding-bottom:10px; border-bottom:1px solid var(--s-line)}
+    .qcps-col--h1 h4{color:var(--s-cyan)} .qcps-col--h2 h4{color:var(--s-signal)}
+    .qcps-days{display:flex; gap:10px; margin:0 0 20px}
+    .qcps-round{flex:1}
+    .qcps-round-l{font:600 13px/1 "IBM Plex Mono",monospace; color:var(--s-muted); margin:0 0 7px}
+    .qcps-dd{display:flex; gap:6px}
+    .qcps-dy{flex:1; text-align:center; border-radius:6px; padding:12px 2px 10px; border:1px solid var(--s-line)}
+    .qcps-dy small{display:block; font:600 11px/1.2 "IBM Plex Mono",monospace; text-transform:uppercase; color:var(--s-muted); margin-bottom:5px}
+    .qcps-dy b{font:700 20px/1 "IBM Plex Sans",sans-serif}
+    .qcps-dy--w{background:rgba(233,73,53,.12); border-color:rgba(233,73,53,.42)} .qcps-dy--w b{color:#f0897b}
+    .qcps-dy--u{background:rgba(66,197,213,.08); border-color:rgba(66,197,213,.32)}
+    .qcps-card{background:var(--s-panel); border:1px solid var(--s-line); border-radius:10px; padding:26px 28px; height:100%}
+    .qcps-card--h1{border-top:4px solid var(--s-cyan)} .qcps-card--h2{border-top:4px solid var(--s-signal)}
+    .qcps-ct{font-family:"Fraunces",serif; font-weight:500; font-size:30px; line-height:1.1; margin:0 0 16px}
+    .qcps-card ul{list-style:none; margin:0 0 20px; padding:0}
+    .qcps-card li{font-size:18px; line-height:1.42; padding:11px 0; border-top:1px solid rgba(42,39,35,.7); display:flex; gap:11px; align-items:flex-start}
+    .qcps-card li:first-child{border-top:none}
+    .qcps-vt{display:inline-block; font:700 12px/1 "IBM Plex Mono",monospace; letter-spacing:.1em; text-transform:uppercase; padding:5px 9px; border-radius:4px; flex:none; margin-top:2px}
+    .qcps-vt--f{background:rgba(66,197,213,.16); color:#8fdbe6} .qcps-vt--i{background:rgba(215,238,63,.14); color:#c9dd6b} .qcps-vt--h{background:rgba(233,73,53,.14); color:#f0897b}
+    .qcps-verd{border-radius:8px; padding:16px 18px; font-size:18px; line-height:1.4}
+    .qcps-card--h1 .qcps-verd{background:rgba(66,197,213,.08); border:1px solid rgba(66,197,213,.3)}
+    .qcps-card--h2 .qcps-verd{background:rgba(233,73,53,.09); border:1px solid rgba(233,73,53,.32)}
+    .qcps-verd b{color:var(--s-fg)}
+    .qcps-ft{position:absolute; left:72px; right:72px; bottom:40px; font:500 16px/1.4 "IBM Plex Sans",sans-serif; color:var(--s-muted); padding-top:18px; border-top:1px solid var(--s-line)}
+    .qcps-ft b{color:var(--s-fg)}
+    .qcps-brand{position:absolute; top:64px; right:72px; font:600 13px/1 "IBM Plex Mono",monospace; letter-spacing:.16em; text-transform:uppercase; color:var(--s-muted)}
+  </style>
+  <div class="qcps-brand">Arvor · brasil.arvor.co</div>
+  <p class="qcps-k">Perícia de campo · Genial/Quaest jul/2026</p>
+  <h1 class="qcps-t">O campo é de <em>fim de semana</em>. O instrumento é <em>longo</em> demais.</h1>
+  <p class="qcps-sub">Duas hipóteses de seleção sobre a entrevista presencial domiciliar. Mesma janela sexta→segunda em junho e julho, campo majoritariamente de fim de semana. Nenhuma prova viés; as duas expõem opacidade.</p>
+  <div class="qcps-grid">
+    <div class="qcps-col qcps-col--h1">
+      <div class="qcps-card qcps-card--h1">
+        <div class="qcps-days">
+          <div class="qcps-round"><p class="qcps-round-l">JUN · 05→08</p><div class="qcps-dd"><div class="qcps-dy qcps-dy--u"><small>Sex</small><b>05</b></div><div class="qcps-dy qcps-dy--w"><small>Sáb</small><b>06</b></div><div class="qcps-dy qcps-dy--w"><small>Dom</small><b>07</b></div><div class="qcps-dy qcps-dy--u"><small>Seg</small><b>08</b></div></div></div>
+          <div class="qcps-round"><p class="qcps-round-l">JUL · 10→13</p><div class="qcps-dd"><div class="qcps-dy qcps-dy--u"><small>Sex</small><b>10</b></div><div class="qcps-dy qcps-dy--w"><small>Sáb</small><b>11</b></div><div class="qcps-dy qcps-dy--w"><small>Dom</small><b>12</b></div><div class="qcps-dy qcps-dy--u"><small>Seg</small><b>13</b></div></div></div>
+        </div>
+        <p class="qcps-ct" style="font-size:24px; color:var(--s-cyan)">H1 · Dia da semana × PEA</p>
+        <ul>
+          <li><span class="qcps-vt qcps-vt--f">Fato</span> Campo sexta→segunda: o fim de semana alcança a PEA em casa. A versão "dia útil perde a PEA" cai.</li>
+          <li><span class="qcps-vt qcps-vt--f">Fato</span> 60+ é 23,0% vs 23,27% do TSE: sem excesso de idosos. E idade é cota, apagaria a assinatura.</li>
+          <li><span class="qcps-vt qcps-vt--h">Hipótese</span> Resta o filtro de "quem abre a porta" dentro da célula, invisível sem ocupação e horário.</li>
+        </ul>
+        <div class="qcps-verd"><b>Fraca / parcialmente refutada.</b> Calendário e cota derrubam a versão forte.</div>
+      </div>
+    </div>
+    <div class="qcps-col qcps-col--h2">
+      <div class="qcps-card qcps-card--h2">
+        <p class="qcps-ct" style="color:var(--s-signal)">H2 · 101 itens → fadiga → quem termina</p>
+        <ul>
+          <li><span class="qcps-vt qcps-vt--f">Fato</span> Instrumento longo, presencial, com blocos de rejeição nome a nome e ternário sem meio-termo.</li>
+          <li><span class="qcps-vt qcps-vt--i">Inferência</span> Fadiga gera satisficing e seleciona quem conclui por interesse. Cotas não corrigem engajamento na célula.</li>
+          <li><span class="qcps-vt qcps-vt--i">Inferência</span> Presencial não elimina a seleção: desloca para a porta e o satisficing terminal.</li>
+          <li><span class="qcps-vt qcps-vt--h">Hipótese</span> Quem tolera 101 perguntas de política é mais politizado. A direção precisa dos pesos retidos.</li>
+        </ul>
+        <div class="qcps-verd"><b>Braço forte, direção em nível de Hipótese.</b> O vetor de seleção mais difícil de descartar.</div>
+      </div>
+    </div>
+  </div>
+  <p class="qcps-ft"><b>Opacidade, não fraude.</b> Dois vetores plausíveis de seleção e a Quaest retém taxa de resposta, recusa, duração, horário, base não ponderada e conclusão por posição: exatamente o que os testaria. Fontes: Galesic &amp; Bosnjak 2009 · Krosnick 1991 · Peytchev 2009 · Galesic 2006.</p>
+</section>

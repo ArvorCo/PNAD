@@ -1,0 +1,140 @@
+{
+  "meta": {
+    "titulo": "Quaest julho/2026 — perícia dupla: rejeição do Flávio e reponderação por renda",
+    "gerado_em": "2026-07-16",
+    "autor": "Arvor / brasil.arvor.co",
+    "fonte_primaria": {
+      "deck": "data/pesquisas/quaest/2026-07/Quaest_072026.pdf",
+      "registro_tse": "BR-07181/2026",
+      "campo": "10 a 13 de julho de 2026",
+      "divulgacao": "15 de julho de 2026",
+      "amostra": "2.004 entrevistas presenciais domiciliares",
+      "margem_declarada_pp": 2,
+      "contratante": "Banco Genial S.A."
+    },
+    "metodo_geral": "Todas as contas refeitas em Python (scripts/reweight embutido em quaest_0726_rejeicao_reponderacao_notes.md). Faixas lidas diretamente dos gráficos do deck; páginas citadas em cada bloco."
+  },
+
+  "pericia_1_rejeicao": {
+    "instrumento_quaest": {
+      "pergunta": "Em relação ao/a [nome], você diria que...",
+      "formato": "ternário por nome, escolha única",
+      "opcoes": ["Conhece e votaria", "Não conhece", "Conhece e não votaria"],
+      "rejeicao_operacional": "Conhece e não votaria",
+      "pagina": "p46 (idx45); recorte por segmento em p47 (idx46)",
+      "nota_estrutural": "Não há opção neutra/‘poderia votar’. Logo rejeição ≈ 100 − (conhece e votaria) − (não conhece). Todo não-voto de quem conhece o nome é contabilizado como rejeição, inclusive o não-voto mole/persuadável."
+    },
+    "ordem_lista_testada": [
+      "Lula", "Flávio Bolsonaro", "Ronaldo Caiado", "Romeu Zema",
+      "Joaquim Barbosa", "Escritor Augusto Cury", "Cabo Daciolo",
+      "Renan Santos", "Samara Martins", "Edmilson Costa", "Hertz Dias", "Heró Bezerra"
+    ],
+    "serie_historica_quaest": {
+      "unidade": "% ; colunas = [conhece_e_votaria, nao_conhece, conhece_e_nao_votaria]",
+      "Lula":   {"Abr/26": [43, 2, 55], "Mai/26": [44, 3, 53], "Jun/26": [45, 2, 53], "Jul/26": [47, 3, 50]},
+      "Flávio": {"Abr/26": [39, 9, 52], "Mai/26": [39, 7, 54], "Jun/26": [39, 5, 56], "Jul/26": [38, 5, 57]},
+      "Caiado": {"Abr/26": [18, 50, 32], "Mai/26": [19, 49, 32], "Jun/26": [20, 48, 32], "Jul/26": [22, 44, 34]},
+      "Zema":   {"Abr/26": [18, 51, 31], "Mai/26": [21, 52, 27], "Jun/26": [20, 51, 29], "Jul/26": [19, 50, 31]}
+    },
+    "movimento_jun_jul": {
+      "Flávio_rejeicao": "56 → 57 (+1)",
+      "Lula_rejeicao": "53 → 50 (−3)",
+      "leitura": "O movimento de Flávio (+1) está dentro da margem. A queda de Lula (−3) é o dado que abre a tesoura para 7 pontos de diferença de rejeição em julho. A rejeição de Flávio é estável; o que muda é Lula melhorar."
+    },
+    "benchmark_externo": {
+      "unidade": "% que rejeita (Flávio / Lula)",
+      "linhas": [
+        {"instituto": "Genial/Quaest", "data_campo": "10–13 jul 2026", "modo": "presencial domiciliar", "instrumento": "conhece e não votaria (ternário)", "flavio": 57, "lula": 50, "fonte": "deck jul/2026 p46"},
+        {"instituto": "Genial/Quaest", "data_campo": "5–8 jun 2026", "modo": "presencial domiciliar", "instrumento": "conhece e não votaria (ternário)", "flavio": 56, "lula": 53, "fonte": "deck jul/2026 p46 (série)"},
+        {"instituto": "Datafolha", "data_campo": "17–19 jun 2026", "modo": "presencial", "instrumento": "não votaria de jeito nenhum (estimulada, múltipla)", "flavio": 48, "lula": 46, "fonte": "docs/datafolha_062026.html; Gazeta do Povo"},
+        {"instituto": "Datafolha", "data_campo": "3–5 mar 2026", "modo": "presencial", "instrumento": "não votaria de jeito nenhum", "flavio": 45, "lula": null, "fonte": "Gazeta do Povo"},
+        {"instituto": "BTG/Nexus (6ª rodada)", "data_campo": "jul 2026", "modo": "presencial", "instrumento": "não votaria", "flavio": 50, "lula": 46, "fonte": "docs/nexus_btg_0726.html; Tribuna de Minas"},
+        {"instituto": "Futura/Apex", "data_campo": "2026", "modo": "não especificado", "instrumento": "não votaria de jeito nenhum", "flavio": 49.5, "lula": null, "fonte": "Tribuna de Jundiaí"},
+        {"instituto": "AtlasIntel", "data_campo": "jun 2026 (26/06)", "modo": "recrutamento digital", "instrumento": "medo/‘quem te assusta mais’ — não é rejeição clássica ‘de jeito nenhum’", "flavio": null, "lula": null, "fonte": "docs/atlasintel_260626.html", "nota": "não comparável diretamente na métrica de rejeição"}
+      ],
+      "excesso_quaest_vs_datafolha_jun": {"flavio_pp": 9, "lula_pp": 4, "leitura": "A Quaest está acima de todas as casas para os dois nomes, mas o excesso é assimétrico: +9 pp para Flávio, +4 pp para Lula. O instrumento infla mais o nome com maior camada de não-voto persuadável."}
+    },
+    "mecanica": {
+      "fato": "Instrumentos diferentes: Quaest usa ternário ‘conhece e não votaria’ (sem opção neutra); Datafolha/Futura/Nexus usam ‘não votaria de jeito nenhum’ (núcleo duro).",
+      "inferencia": "O ternário converte o não-voto mole em rejeição. A diferença Quaest − ‘de jeito nenhum’ mede exatamente essa camada mole. Ela é maior em Flávio (+9) que em Lula (+4).",
+      "hipotese": "Como o não-voto de Flávio é mais reversível (Datafolha registra que ele ‘converte indecisos’ e transfere ~2:1), a Quaest superestima o teto de rejeição efetivo dele mais do que o de Lula.",
+      "mudou_jun_jul": "O instrumento não mudou entre junho e julho (mesmo formato ternário, mesma ordem de lista). O que se moveu foi a rejeição de Lula (53→50), não a de Flávio (56→57)."
+    },
+    "coerencia_interna": {
+      "flavio": {"voto_2t": 37, "rejeicao": 57, "soma": 94, "folga_indiferentes_pp": 6, "teto_instrumental": 43},
+      "lula": {"voto_2t": 45, "rejeicao": 50, "soma": 95, "folga_indiferentes_pp": 5, "teto_instrumental": 50},
+      "leitura": "Os dois números são internamente compatíveis (voto 2T + rejeição ≤ 100). Ambos operam colados ao teto que o próprio instrumento define. Mas o teto de Flávio (43) é comprimido pelo instrumento: se a rejeição dura dele fosse 48 (Datafolha), o teto seria 52 e a folga de crescimento saltaria de 6 para ~15 pp. A leitura ‘57 de rejeição’ subestima o espaço real de Flávio."
+    }
+  },
+
+  "pericia_2_reponderacao": {
+    "faixas": ["Até 2 SM", "2 a 5 SM", "5+ SM"],
+    "composicao_amostra_quaest_pct": [31.0, 42.0, 27.0],
+    "alvo_pnad_pct": [35.44, 39.231, 25.329],
+    "alvo_fonte": "docs/assets/quaest_0726_data.json → benchmarks.pnad_income (PNADC anual 1ª visita 2024, universo 16+ com renda domiciliar válida, alvo abr/2026, SM R$ 1.621)",
+    "delta_composicao_pp": {"Até 2 SM": 4.44, "2 a 5 SM": -2.769, "5+ SM": -1.671},
+    "metodo": "Reponderação marginal de tabela publicada: share_reponderado = Σ_faixa (share_na_faixa × peso_alvo_faixa). O ‘publicado reconstruído’ usa a composição Quaest e reproduz o topline do deck (validação).",
+
+    "cenarios": {
+      "1T_estimulado": {
+        "pagina": "p30 (idx29)",
+        "faixas_share": {"Lula": [49, 38, 36], "Flávio": [23, 29, 30]},
+        "topline_publicado": {"Lula": 40, "Flávio": 28},
+        "publicado_reconstruido": {"Lula": 40.87, "Flávio": 27.41},
+        "reponderado_pnad": {"Lula": 41.39, "Flávio": 27.13},
+        "delta": {"Lula": 0.52, "Flávio": -0.28},
+        "margem": {"publicada": 13.46, "reponderada": 14.26, "delta_pp": 0.80}
+      },
+      "aprovacao_lula": {
+        "pagina": "p15 (idx14)",
+        "faixas_share": {"Aprova": [58, 45, 41], "Desaprova": [37, 50, 54]},
+        "topline_publicado": {"Aprova": 48, "Desaprova": 47},
+        "publicado_reconstruido": {"Aprova": 47.95, "Desaprova": 47.05},
+        "reponderado_pnad": {"Aprova": 48.59, "Desaprova": 46.41},
+        "delta": {"Aprova": 0.64, "Desaprova": -0.64},
+        "saldo": {"publicado": 0.90, "reponderado": 2.18, "delta_pp": 1.28}
+      },
+      "2T_lula_x_flavio_PROXY": {
+        "pagina": "p37 (idx36) topline; renda NÃO publicada",
+        "aviso": "HIPÓTESE — o deck não traz 2º turno por renda. Proxy multiplicativo: escala cada faixa do 1T pelos fatores de consolidação do topline 1T→2T (Lula ×45/40, Flávio ×37/28).",
+        "faixas_share_proxy": {"Lula": [55.1, 42.8, 40.5], "Flávio": [30.4, 38.3, 39.6]},
+        "topline_publicado": {"Lula": 45, "Flávio": 37},
+        "publicado_reconstruido": {"Lula": 45.99, "Flávio": 36.2},
+        "reponderado_pnad": {"Lula": 46.58, "Flávio": 35.83},
+        "delta": {"Lula": 0.58, "Flávio": -0.37},
+        "margem": {"publicada": 9.79, "reponderada": 10.75, "delta_pp": 0.96}
+      }
+    },
+
+    "sensibilidade": {
+      "descricao": "±1 pp na meta da faixa baixa (compensado meio-a-meio nas outras duas).",
+      "central":    {"targets": [35.44, 39.231, 25.329], "delta_margem_1T": 0.80, "delta_saldo_aprov": 1.29},
+      "baixa_mais1": {"targets": [36.44, 38.731, 24.829], "delta_margem_1T": 0.99, "delta_saldo_aprov": 1.59},
+      "baixa_menos1": {"targets": [34.44, 39.731, 25.829], "delta_margem_1T": 0.62, "delta_saldo_aprov": 0.99}
+    },
+
+    "componente_reparo_baixa_renda": {
+      "descricao": "Efeito atribuível só a corrigir a sub-representação de −4,44 pp da faixa ≤2 SM, com o perfil de voto do próprio deck.",
+      "Lula_1T_pp": 0.522, "Flávio_1T_pp": -0.283, "Aprova_pp": 0.644, "Desaprova_pp": -0.644
+    },
+
+    "caveats": [
+      "Reponderação MARGINAL de tabela publicada: uma dimensão (renda), sem microdados, sem interação com região/idade/escolaridade.",
+      "O deck publica números inteiros: cada faixa carrega erro de arredondamento de ±0,5 pp, que se propaga na soma ponderada (~±0,3–0,5 pp no topline).",
+      "Resíduo de reconstrução: no 1T o publicado reconstruído (Lula 40,87) difere do topline do deck (40) em ~0,9 pp — a ponderação real da Quaest inclui outras dimensões. Isso define o piso de ruído do método.",
+      "O 2º turno por renda NÃO é publicado; o cenário 2T é PROXY (hipótese), não medição.",
+      "AtlasIntel não entra no benchmark de rejeição por medir ‘medo’, não ‘de jeito nenhum’."
+    ],
+
+    "veredito": {
+      "resumo": "A renda NÃO explica o placar. Reponderar a amostra Quaest (31/42/27) ao alvo PNAD (35/39/25) move a margem Lula−Flávio menos de 1 pp em todos os cortes de voto (1T +0,80; 2T-proxy +0,96) — dentro do orçamento de erro (arredondamento ±0,5 + resíduo de reconstrução ~0,9). A direção é pró-Lula: sub-representar o pobre subestima levemente Lula. O único indicador com efeito perto de 1 pp cheio é o saldo de aprovação (+1,28), porque a aprovação tem o gradiente de renda mais íngreme (58→41). Nenhum desses deltas inverte ou sequer arranha o resultado publicado.",
+      "quanto_explica_pp": {"margem_1T": 0.80, "margem_2T_proxy": 0.96, "saldo_aprovacao": 1.28}
+    }
+  },
+
+  "fontes_web": [
+    {"titulo": "Datafolha: Flávio lidera rejeição (48% jun; 45% mar)", "url": "https://www.gazetadopovo.com.br/eleicoes/2026/ate-onde-vai-rejeicao-flavio-bolsonaro-e-lula/"},
+    {"titulo": "Futura/Apex: 49,5% não votariam de jeito nenhum em Flávio", "url": "https://tribunadejundiai.com.br/politica/eleicoes-2026/rejeicao-flavio-bolsonaro-pesquisa-futura-apex-2026/"},
+    {"titulo": "BTG/Nexus: metade não votaria em Flávio; 46% em Lula", "url": "https://tribunademinas.com.br/noticias/politica/eleicoes-2026/13-07-2026/eleicoes-2026-metade-dos-eleitores-diz-que-nao-votaria-em-flavio-46-dizem-o-mesmo-sobre-lula-aponta-btg-nexus.html"}
+  ]
+}

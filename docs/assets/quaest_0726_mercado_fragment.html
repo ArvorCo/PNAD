@@ -1,0 +1,333 @@
+<!-- =========================================================================
+  FRAGMENTO AUTOCONTIDO · A guinada pró-mercado da Quaest (economia política)
+  Para inserção no dossiê docs/quaest_0726.html (capítulos de incentivos/megafone).
+  Estilos escopados em .qm- para não vazar. Fonts: Fraunces + IBM Plex.
+  Inclui variante 1600x900 (.qm-slide) ao final. Português COM acentos.
+========================================================================== -->
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..900,0..100,0..1&amp;family=IBM+Plex+Mono:wght@400;600;700&amp;family=IBM+Plex+Sans+Condensed:wght@400;600;700&amp;display=swap" rel="stylesheet">
+
+<style>
+.qm-root{
+  --ink:#100f0d; --coal:#1a1917; --paper:#f4f0e6; --signal:#e94935; --acid:#d7ee3f;
+  --cyan:#42c5d5; --good:#168b65; --amber:#ffb44c; --muted:#8f887c;
+  --display:"Fraunces",Georgia,serif; --sans:"IBM Plex Sans Condensed",Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  color:var(--paper); background:var(--ink); font-family:var(--display);
+  padding:54px clamp(20px,4vw,64px); line-height:1.5;
+  background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px);
+  background-size:100% 30px;
+}
+.qm-root *{box-sizing:border-box;}
+.qm-wrap{max-width:1180px;margin-inline:auto;}
+.qm-eyebrow{font:700 .76rem/1.3 var(--mono);letter-spacing:.11em;text-transform:uppercase;color:var(--acid);margin:0 0 10px;display:flex;align-items:center;gap:12px;}
+.qm-eyebrow::before{content:"";width:44px;height:5px;background:var(--acid);}
+.qm-h1{font-family:var(--display);font-size:clamp(2.4rem,5.2vw,4.1rem);line-height:.94;letter-spacing:-.03em;font-variation-settings:"SOFT" 12,"WONK" 1;margin:0 0 18px;max-width:20ch;}
+.qm-h1 em{color:var(--acid);font-style:italic;font-weight:440;}
+.qm-deck{font-size:clamp(1.05rem,1.7vw,1.32rem);line-height:1.42;color:#e0dacd;max-width:80ch;margin:0 0 8px;}
+.qm-deck strong{color:#fff;}
+.qm-mono{font-family:var(--mono);}
+.qm-hr{border:0;border-top:1px solid rgba(255,255,255,.16);margin:44px 0;}
+.qm-kicker{font:700 .74rem/1.3 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--signal);margin:0 0 14px;}
+
+/* stat row */
+.qm-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.16);margin:26px 0;}
+.qm-stat{background:var(--ink);padding:20px 18px;}
+.qm-stat b{display:block;font:700 clamp(1.7rem,3.2vw,2.5rem)/1 var(--mono);letter-spacing:-.04em;color:var(--acid);}
+.qm-stat.red b{color:var(--signal);} .qm-stat.cyan b{color:var(--cyan);}
+.qm-stat span{display:block;margin-top:8px;font-family:var(--sans);font-size:.95rem;line-height:1.28;color:#cfc9bd;}
+
+/* timeline */
+.qm-time{position:relative;margin:22px 0 6px;padding-left:28px;}
+.qm-time::before{content:"";position:absolute;left:7px;top:6px;bottom:6px;width:2px;background:rgba(255,255,255,.2);}
+.qm-trow{position:relative;padding:0 0 22px 22px;}
+.qm-trow::before{content:"";position:absolute;left:-25px;top:4px;width:14px;height:14px;border-radius:50%;background:var(--cyan);border:3px solid var(--ink);}
+.qm-trow.pivot::before{background:var(--signal);}
+.qm-trow:last-child{padding-bottom:0;}
+.qm-tdate{font:700 .78rem/1.2 var(--mono);letter-spacing:.05em;color:var(--acid);text-transform:uppercase;}
+.qm-trow.pivot .qm-tdate{color:var(--signal);}
+.qm-th{margin:4px 0 5px;font-family:var(--sans);font-weight:700;font-size:1.08rem;color:#fff;}
+.qm-tp{margin:0;font:.92rem/1.4 var(--sans);color:#c8c2b6;max-width:82ch;}
+
+/* preference grid */
+.qm-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin:22px 0 6px;}
+.qm-ev{background:var(--coal);border:1px solid rgba(255,255,255,.12);border-top:5px solid var(--cyan);padding:18px 18px 16px;display:grid;align-content:start;gap:9px;}
+.qm-ev.hot{border-top-color:var(--signal);}
+.qm-ev.gold{border-top-color:var(--acid);}
+.qm-evid{font:700 .68rem/1 var(--mono);letter-spacing:.08em;color:var(--muted);}
+.qm-ev h4{margin:0;font-family:var(--sans);font-weight:700;font-size:1.08rem;color:#fff;line-height:1.2;}
+.qm-evnum{font:700 1.9rem/1 var(--mono);letter-spacing:-.03em;color:var(--acid);}
+.qm-ev.hot .qm-evnum{color:var(--signal);} .qm-ev.cyan .qm-evnum{color:var(--cyan);}
+.qm-ev p{margin:0;font:.9rem/1.4 var(--sans);color:#cfc9bd;}
+.qm-ev .lead{color:#e6e0d4;}
+.qm-ev .src{font:.72rem/1.3 var(--mono);color:var(--muted);}
+.qm-ev .src a{color:#a9a396;}
+
+/* systemic node map */
+.qm-sys{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:22px 0 6px;}
+.qm-sysn{background:var(--coal);border:1px solid rgba(255,255,255,.12);border-left:5px solid var(--cyan);padding:18px 18px 16px;display:grid;align-content:start;gap:8px;}
+.qm-sysn.folha{border-left-color:var(--signal);}
+.qm-sysn.estadao{border-left-color:var(--acid);}
+.qm-sysn h4{margin:0;font-family:var(--sans);font-weight:700;font-size:1.06rem;color:#fff;}
+.qm-sysn .role{font:.72rem/1.2 var(--mono);letter-spacing:.04em;text-transform:uppercase;color:var(--acid);}
+.qm-sysn p{margin:0;font:.9rem/1.4 var(--sans);color:#cfc9bd;}
+.qm-sysn .flow{font:.82rem/1.5 var(--mono);color:#e6e0d4;background:rgba(255,255,255,.04);border:1px dashed rgba(255,255,255,.16);padding:9px 11px;}
+.qm-sysn .flow b{color:var(--signal);} .qm-sysn .src{font:.7rem/1.3 var(--mono);color:var(--muted);}
+.qm-sysn .src a{color:#a9a396;}
+
+/* layers */
+.qm-layers{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:22px 0 6px;}
+.qm-layer{background:var(--coal);border:1px solid rgba(255,255,255,.12);padding:20px 20px 18px;}
+.qm-layer .tag{display:inline-block;margin-bottom:12px;padding:5px 9px;font:700 .7rem/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;}
+.qm-layer.f{border-top:5px solid var(--good);}
+.qm-layer.i{border-top:5px solid var(--cyan);}
+.qm-layer.h{border-top:5px solid var(--amber);}
+.qm-layer.f .tag{color:#fff;background:var(--good);}
+.qm-layer.i .tag{color:var(--ink);background:var(--cyan);}
+.qm-layer.h .tag{color:var(--ink);background:var(--amber);}
+.qm-layer h4{margin:0 0 10px;font-family:var(--sans);font-weight:700;font-size:1.05rem;color:#fff;}
+.qm-layer ul{margin:0;padding-left:18px;}
+.qm-layer li{margin:0 0 9px;font:.9rem/1.4 var(--sans);color:#d0cabe;}
+.qm-layer li:last-child{margin-bottom:0;} .qm-layer li strong{color:#fff;}
+
+/* pivot callout (two-col) */
+.qm-two{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin:6px 0;}
+.qm-card{background:var(--coal);border:1px solid rgba(255,255,255,.12);padding:18px 18px 16px;}
+.qm-card h4{margin:0 0 8px;font-family:var(--sans);font-weight:700;font-size:1.05rem;color:#fff;}
+.qm-card p{margin:0 0 8px;font-size:.96rem;line-height:1.42;color:#d7d1c5;}
+.qm-card p:last-child{margin-bottom:0;}
+.qm-tg{display:inline-block;margin-bottom:11px;padding:5px 8px;font:700 .68rem/1 var(--mono);letter-spacing:.05em;text-transform:uppercase;color:#fff;background:var(--muted);}
+.qm-tg.fato{background:var(--good);} .qm-tg.inf{color:var(--ink);background:var(--cyan);}
+.qm-tg.hip{color:var(--ink);background:var(--amber);}
+
+.qm-verdict{background:var(--ink);border:2px solid var(--signal);padding:24px 26px;margin:6px 0;}
+.qm-verdict b{display:block;font:700 .78rem/1.2 var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--signal);margin-bottom:10px;}
+.qm-verdict p{margin:0;font-size:1.12rem;line-height:1.48;color:#f4f0e6;}
+.qm-note{margin:16px 0 0;font:.86rem/1.45 var(--sans);color:#a9a396;}
+.qm-src{margin:30px 0 0;font:.78rem/1.5 var(--sans);color:#8f887c;}
+.qm-src a{color:#a9a396;}
+
+@media(max-width:920px){
+  .qm-stats{grid-template-columns:repeat(2,1fr);}
+  .qm-grid,.qm-layers,.qm-two{grid-template-columns:1fr;}
+}
+
+/* ===== 1600x900 SLIDE VARIANT ===== */
+.qm-slide{width:1600px;height:900px;background:var(--ink);color:var(--paper);font-family:var(--display);
+  padding:70px 84px;display:grid;grid-template-rows:auto auto 1fr auto;gap:24px;
+  background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px);background-size:100% 34px;
+  border:1px solid rgba(255,255,255,.1);margin:0 auto;overflow:hidden;}
+.qm-slide *{box-sizing:border-box;}
+.qm-slide .s-eyebrow{font:700 1rem/1.2 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--acid);display:flex;align-items:center;gap:14px;margin:0;}
+.qm-slide .s-eyebrow::before{content:"";width:60px;height:6px;background:var(--acid);}
+.qm-slide h2{font-size:4.2rem;line-height:.94;letter-spacing:-.03em;margin:0;max-width:26ch;font-variation-settings:"SOFT" 12,"WONK" 1;}
+.qm-slide h2 em{color:var(--acid);font-style:italic;font-weight:440;}
+.qm-slide .s-body{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:center;}
+.qm-slide .s-chain{display:grid;gap:13px;}
+.qm-slide .s-row{display:grid;grid-template-columns:150px 1fr;gap:18px;align-items:center;border-top:1px solid rgba(255,255,255,.16);padding-top:12px;}
+.qm-slide .s-row b{font-family:var(--mono);font-weight:700;font-size:1.15rem;color:var(--acid);}
+.qm-slide .s-row.hot b{color:var(--signal);}
+.qm-slide .s-row span{font:1.02rem/1.28 var(--sans);color:#c3bdb1;}
+.qm-slide .s-row span strong{color:#fff;}
+.qm-slide .s-stats{display:grid;gap:18px;}
+.qm-slide .s-stat{border-left:6px solid var(--cyan);padding-left:20px;}
+.qm-slide .s-stat.acid{border-left-color:var(--acid);}
+.qm-slide .s-stat.red{border-left-color:var(--signal);}
+.qm-slide .s-stat b{display:block;font:700 3.2rem/.95 var(--mono);letter-spacing:-.04em;color:#fff;}
+.qm-slide .s-stat span{display:block;margin-top:8px;font:1.02rem/1.24 var(--sans);color:#c3bdb1;}
+.qm-slide .s-foot{display:flex;justify-content:space-between;align-items:center;border-top:2px solid var(--signal);padding-top:18px;font-family:var(--sans);}
+.qm-slide .s-foot .verdict{font-size:1.24rem;line-height:1.34;max-width:88ch;color:#f4f0e6;}
+.qm-slide .s-foot .mark{font:700 .9rem/1.3 var(--mono);color:var(--acid);text-transform:uppercase;letter-spacing:.08em;white-space:nowrap;padding-left:28px;text-align:right;}
+</style>
+
+<section class="qm-root">
+  <div class="qm-wrap">
+
+    <p class="qm-eyebrow">Anexo · economia política da guinada</p>
+    <h1 class="qm-h1">Trocar de <em>cliente</em> muda a função de perda que a pesquisa serve</h1>
+    <p class="qm-deck">De 2016 a 2025 a Quaest vendeu pesquisa a campanhas e partidos — muitos compradores, rivais entre si. Em <strong>12/07/2026</strong> anunciou que abandona esse mercado para concentrar <strong>200+ pesquisas da Globo</strong> e clientes corporativos. Não é sair da política: é trocar de política de clientela. O novo comprador — mídia concessionária e Faria Lima — tem uma preferência revelada e medida. E essa preferência, em 2026, fez as pazes com a continuidade petista e trata o bolsonarismo radical como risco. Um instituto não precisa ser petista para produzir a leitura que esse cliente prefere.</p>
+
+    <div class="qm-stats">
+      <div class="qm-stat red"><b>12/07/26</b><span>Quaest anuncia fim das pesquisas para candidatos e partidos</span></div>
+      <div class="qm-stat cyan"><b>68% × 3%</b><span>confiança do mercado em Tarcísio vs. Lula (Genial/Quaest, mar/25)</span></div>
+      <div class="qm-stat"><b>&minus;4,31%</b><span>queda do Ibovespa quando Flávio virou pré-candidato (05/12/25)</span></div>
+      <div class="qm-stat"><b>R$ 255 bi</b><span>lucro recorde dos 5 maiores bancos em 2025, com Selic a 15%</span></div>
+    </div>
+
+    <hr class="qm-hr">
+
+    <p class="qm-kicker">01 · a guinada em linha do tempo</p>
+    <div class="qm-time">
+      <div class="qm-trow">
+        <p class="qm-tdate">2016</p>
+        <h3 class="qm-th">Origem na consultoria eleitoral</h3>
+        <p class="qm-tp">Felipe Nunes é convidado a fazer análises e pesquisas para campanhas às prefeituras de Belo Horizonte, Contagem e Rio de Janeiro. A prestação de serviço a candidatos é a raiz do negócio, anterior à marca Quaest.</p>
+      </div>
+      <div class="qm-trow">
+        <p class="qm-tdate">2022</p>
+        <h3 class="qm-th">Série de MG e o &ldquo;fator Lula&rdquo; sobre Kalil (PSD)</h3>
+        <p class="qm-tp">A Genial/Quaest mede a corrida ao governo de Minas com forte ênfase no efeito do apoio de Lula sobre Alexandre Kalil (PSD), que saltava de 30% para 43% quando associado ao petista. O segmento eleitoral-estadual era central.</p>
+      </div>
+      <div class="qm-trow">
+        <p class="qm-tdate">2024</p>
+        <h3 class="qm-th">Contratada pela Globo, vira líder de análise eleitoral</h3>
+        <p class="qm-tp">A Quaest acerta o resultado em 25 das 26 capitais em que atuou e consolida a Globo como cliente-âncora. O portfólio soma três receitas: candidatos/partidos, mídia e corporativo (bancos, Genial).</p>
+      </div>
+      <div class="qm-trow pivot">
+        <p class="qm-tdate">12/07/2026 · a virada</p>
+        <h3 class="qm-th">Sai o candidato, fica o mercado</h3>
+        <p class="qm-tp">O conselho decide não atender candidatos nem partidos na campanha. Restam <strong>200+ pesquisas da Globo</strong> e afiliadas mais trackings e qualitativas para empresas. A independência declarada é de partidos — não de clientes. Muitos compradores adversários dão lugar a poucos compradores com direção econômica comum.</p>
+      </div>
+    </div>
+
+    <hr class="qm-hr">
+
+    <p class="qm-kicker">02 · o mapa de preferências do mercado em 2026</p>
+    <p class="qm-note" style="margin-top:0;margin-bottom:18px;">A própria Quaest opera o termômetro da Faria Lima — a pesquisa Genial/Quaest com o mercado financeiro. Ou seja: o instituto <strong style="color:#e6e0d4;">conhece com precisão a função de preferências do seu novo cliente porque a mede</strong>.</p>
+    <div class="qm-grid">
+      <div class="qm-ev cyan">
+        <p class="qm-evid">E1 · Fato</p>
+        <p class="qm-evnum">68% × 3%</p>
+        <h4>O mercado confia em Tarcísio, não em Lula</h4>
+        <p>Genial/Quaest com 106 fundos SP/RJ (mar/25): Tarcísio tem 68% de confiança; Lula, 3% (93% confiam pouco ou nada). Campos Neto lidera com 70%. A hierarquia é inequívoca — e o instituto a mede.</p>
+        <p class="src"><a href="https://www.cnnbrasil.com.br/economia/macroeconomia/tarcisio-tem-confianca-de-68-do-mercado-lula-3-diz-quaest/">CNN Brasil · Genial/Quaest mercado</a></p>
+      </div>
+      <div class="qm-ev cyan">
+        <p class="qm-evid">E2 · Fato</p>
+        <p class="qm-evnum">93 × 5</p>
+        <h4>Tarcísio é o ideal; Flávio, a opção fraca</h4>
+        <p>Nos cenários do mercado (105 gestores, dez/24), Lula perde para Tarcísio 93 a 5 e para Caiado 91 a 7, mas contra Bolsonaro &ldquo;só&rdquo; 80 a 12. 78% apontam Tarcísio como a alternativa. O bolsonarismo puro desune a oposição e adia a reforma fiscal.</p>
+        <p class="src"><a href="https://newblogs.correiobraziliense.com.br/blog-da-rosana-hessel/genial-quaest-mercado-financeiro-aposta-em-derrota-de-lula-e-de-haddad-em-2026-em-todos-os-cenarios/">Blog Rosana Hessel · Genial/Quaest</a></p>
+      </div>
+      <div class="qm-ev hot">
+        <p class="qm-evid">E3 · Fato</p>
+        <p class="qm-evnum">&minus;4,31%</p>
+        <h4>A candidatura de Flávio derrubou a bolsa</h4>
+        <p>Em 05/12/2025 (&ldquo;Flávio Day 1&rdquo;), o Ibovespa caiu 4,31% (pior pregão desde 2021) e o dólar subiu a R$ 5,43. Gestores leram: Flávio divide a oposição, ameaça a austeridade e mantém a Selic alta. Tarcísio era o preferido. A aversão é a instabilidade — não a direita.</p>
+        <p class="src"><a href="https://www.cnnbrasil.com.br/economia/mercado/por-que-mercado-despencou-com-pre-candidatura-de-flavio-ao-planalto/">CNN Brasil · reação do mercado</a></p>
+      </div>
+      <div class="qm-ev gold">
+        <p class="qm-evid">E4 · Fato</p>
+        <p class="qm-evnum">R$ 255 bi</p>
+        <h4>Bancos e rentistas lucram sob Lula</h4>
+        <p>Os cinco maiores bancos tiveram o maior lucro da história em 2025 — R$ 255 bi, contra R$ 145 bi em 2024 — impulsionados pela Selic a 15% e pelo &ldquo;kit reeleição&rdquo; fiscal. Itaú perto de R$ 100 bi. A continuidade, no arranjo atual, é altamente lucrativa. A paz com Lula tem lastro contábil.</p>
+        <p class="src"><a href="https://www.brasilagro.com.br/conteudo/lucro-dos-bancos-bate-recorde-de-r-255-bilhoes-em-2025.html">Brasilagro · lucro dos bancos 2025</a></p>
+      </div>
+      <div class="qm-ev hot">
+        <p class="qm-evid">E5 · Fato</p>
+        <p class="qm-evnum">&ldquo;Tariflávio&rdquo;</p>
+        <h4>O tarifaço tornou o bolsonarismo tóxico ao agro e à B3</h4>
+        <p>Trump sobretaxou milhares de produtos brasileiros (25%, até 37,5%); vendas industriais aos EUA caíram 8,7%. Flávio, apelidado de &ldquo;Tariflávio&rdquo;, ligou-se ao autor do choque. Até Caiado alertou: o tarifaço &ldquo;vai destruir quem alimenta o Brasil&rdquo;. Flávio ligado ao tarifaço é passivo econômico — independentemente de ideologia.</p>
+        <p class="src"><a href="https://www.intercept.com.br/2026/07/11/flavio-bolsonaro-apoia-tarifaco-de-trump-e-da-outro-vexame-nos-estados-unidos/">Intercept · Flávio e o tarifaço</a></p>
+      </div>
+      <div class="qm-ev">
+        <p class="qm-evid">E6 · Fato (contexto)</p>
+        <p class="qm-evnum">2 dias</p>
+        <h4>O mercado já não se abala com pesquisa</h4>
+        <p>Analistas (Tendências, Empiricus) dizem que a polarização está &ldquo;interiorizada&rdquo; e precificada; só &ldquo;Flávio Day 1&rdquo; (dez/25) e &ldquo;Flávio Day 2&rdquo; (mai/26) moveram o Ibovespa. O externo (Trump) pesa mais. A leitura confortável ao cliente já é: Lula em linha, Flávio como risco.</p>
+        <p class="src"><a href="https://www.moneytimes.com.br/a-historia-se-repete-por-que-o-mercado-nao-se-abala-mais-por-pesquisas-eleitorais-apsa-gaep/">Money Times · cenário precificado</a></p>
+      </div>
+    </div>
+
+    <hr class="qm-hr">
+
+    <p class="qm-kicker">02b · o laço mídia-finanças é sistêmico, não de um ator</p>
+    <p class="qm-note" style="margin-top:0;margin-bottom:18px;">Não é só o circuito Globo/Genial. Em todos os grandes grupos que publicam pesquisa há um laço financeiro estrutural — por concessão e verba (Globo), por controle societário de um banco (Folha) ou por governança cedida a bancos credores (Estadão). O caso mais direto é a Folha: <strong style="color:#e6e0d4;">o grupo dono do Datafolha é dono de um banco listado na NYSE</strong>. Nem o Datafolha nem o Estadão são contrafactuais &ldquo;sem laço com a Faria Lima&rdquo;.</p>
+    <div class="qm-sys">
+      <div class="qm-sysn">
+        <p class="role">Concessão + verba pública</p>
+        <h4>Globo / Genial-Quaest</h4>
+        <p>Concessionária de radiodifusão e maior beneficiária da verba federal (R$ 267 mi, 25,6%); contrata a Quaest, cuja série de mercado é patrocinada por um banco de investimento (Genial).</p>
+        <p class="src"><a href="https://www.poder360.com.br/poder-midia/grupo-globo-recebeu-r-267-mi-de-publicidade-em-35-anos-de-lula/">Poder360 · verba federal</a></p>
+      </div>
+      <div class="qm-sysn folha">
+        <p class="role">Controle societário de banco</p>
+        <h4>Folha / UOL / PagBank</h4>
+        <p>A família Frias controla a editora da Folha e do <strong>Datafolha</strong>. Por via societária, o mesmo grupo controla um banco digital de grande porte.</p>
+        <p class="flow">Folhapar <b>&rarr;</b> 64,46% UOL <b>&rarr;</b> controla PagBank/PagSeguro<br>(NYSE: PAGS, ~US$ 2,4&ndash;2,8 bi; Luiz Frias, chairman)</p>
+        <p class="src"><a href="https://en.wikipedia.org/wiki/Luiz_Frias">Wikipédia/Forbes · estrutura Frias</a> · <a href="https://stockanalysis.com/stocks/pags/">PAGS market cap</a></p>
+      </div>
+      <div class="qm-sysn estadao">
+        <p class="role">Governança cedida a credores</p>
+        <h4>Estadão / bancos credores</h4>
+        <p>Para evitar colapso de caixa, o Estadão captou R$ 142,5 mi de bancos (Itaú, Bradesco, Santander) e fundos (Pátria, Galápagos, Cutrale, Cosan) em 2024.</p>
+        <p class="flow">credores <b>&rarr;</b> 3 de 6 cadeiras + poder de veto<br>CEO de mercado (Galápagos), não mais um Mesquita</p>
+        <p class="src"><a href="https://www.poder360.com.br/poder-midia/estadao-captou-r-1425-mi-de-bancos-e-empresas-saiba-quais-sao/">Poder360</a> · <a href="https://braziljournal.com/estadao-levanta-r-160-milhoes-com-investidores-e-a-propria-familia-mesquita/">Brazil Journal</a></p>
+      </div>
+    </div>
+    <p class="qm-note"><strong>Calibragem do nó Estadão:</strong> a alegação de &ldquo;controle Faria Lima total, Mesquita esvaziada&rdquo; se confirma em parte. É <strong style="color:#e6e0d4;">Fato</strong> que credores ligados ao mercado ganharam 3 de 6 cadeiras, poder de veto e impuseram um CEO externo à família. Mas a Mesquita manteve controle societário como holding e metade do conselho: é poder <em>compartilhado com veto de credores</em>, não esvaziamento total. Anunciantes: os três grupos dependem de verba oficial (UOL: R$ 7,3 mi federais, 6º lugar) e de anunciantes do setor financeiro; falta série pública que quebre a receita de <em>bancos/B3</em> por veículo — lacuna registrada, não estimada.</p>
+    <p class="qm-note"><strong>Rótulo honesto:</strong> as estruturas societária e de governança são <strong style="color:#e6e0d4;">Fato</strong>. Que elas influenciem o desenho ou a leitura das pesquisas do Datafolha ou do Estadão é <strong style="color:#e6e0d4;">Hipótese — não afirmada aqui</strong>. Registrar o laço não é alegar que ele determina resultado; é negar que exista, na prática, um instituto ou veículo relevante &ldquo;limpo&rdquo; de laço com o sistema financeiro. O alinhamento de incentivos é do sistema (Inferência), não de um único ator.</p>
+
+    <hr class="qm-hr">
+
+    <p class="qm-kicker">03 · a síntese em camadas</p>
+    <div class="qm-layers">
+      <div class="qm-layer f">
+        <span class="tag">Fato</span>
+        <h4>O que está documentado</h4>
+        <ul>
+          <li>Quaest atuou para campanhas/partidos de <strong>2016 a 2025</strong>; em 12/07/2026 abandonou o segmento para concentrar 200+ pesquisas da Globo e do corporativo.</li>
+          <li>O mercado tem preferência <strong>medida pela própria Genial/Quaest</strong> por Tarcísio (68%) e desconfiança extrema em Lula (3%).</li>
+          <li>Flávio pré-candidato <strong>derrubou a bolsa 4,31%</strong>; bancos tiveram <strong>lucro recorde</strong> sob Lula; o tarifaço vinculou Flávio a um choque de custo.</li>
+          <li>O laço mídia-finanças é estrutural em <strong>todo o sistema</strong>: Globo (concessão + verba), Folha (dona do PagBank via UOL), Estadão (governança cedida a bancos credores).</li>
+        </ul>
+      </div>
+      <div class="qm-layer i">
+        <span class="tag">Inferência</span>
+        <h4>Para onde o incentivo empurra</h4>
+        <ul>
+          <li>A nova clientela tem <strong>função de perda assimétrica</strong>: a instabilidade bolsonarista custa mais (queda de bolsa, ruído, tarifaço, ameaça ao arcabouço) do que a continuidade petista, já precificada e lucrativa.</li>
+          <li>O cenário aceitável do cliente <strong>inclui o PT</strong>; o pesadelo é a instabilidade ligada a Flávio.</li>
+          <li>A leitura mais confortável ao comprador é <strong>&ldquo;Lula em linha, Flávio em queda e com alta rejeição&rdquo;</strong> — sem precisar de militância.</li>
+          <li>O padrão é <strong>sistêmico, não de um ator</strong>: institutos, contratantes e veículos têm laço com bancos e verba em todos os nós. Alinhamento de incentivos, não conspiração.</li>
+        </ul>
+      </div>
+      <div class="qm-layer h">
+        <span class="tag">Hipótese</span>
+        <h4>O que ainda não está provado</h4>
+        <ul>
+          <li>Esse alinhamento pode se traduzir em escolhas de <strong>desenho e publicação</strong> — o &ldquo;efeito de casa por clientela&rdquo;: ênfase, cadência, título e recorte que favorecem a leitura preferida pelo cliente.</li>
+          <li>Não exige fraude, encomenda ou militância. <strong>É o cliente, não o partido.</strong></li>
+          <li>Encaixa com o achado central: o resíduo anti-Flávio com Lula em linha é <strong>exatamente o que a função de perda do cliente pediria</strong>.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="qm-verdict" style="margin-top:26px;">
+      <b>Veredito calibrado</b>
+      <p>A troca de clientela é <strong>Fato</strong>. A estrutura de preferências do mercado — Tarcísio confiável, Flávio como risco precificado, Lula como continuidade lucrativa — é <strong>Fato</strong>. Que o novo cliente tenha uma função de perda em que a instabilidade custa mais que a continuidade petista é <strong>Inferência</strong> ancorada nesses dados. Que isso se traduza em escolhas de enquadramento é <strong>Hipótese</strong>. O achado é uma correlação de incentivos com o padrão observado, não prova de causa — e o pedido é que o megafone declare de quem é o cliente a cada divulgação.</p>
+    </div>
+
+    <p class="qm-note"><strong>Salvaguarda:</strong> nada aqui afirma conluio, encomenda ou manipulação. Aponta para onde o incentivo empurra. Um instituto que serve a mídia concessionária e a Faria Lima não precisa preferir o PT para que a leitura mais vendável ao seu comprador coincida com &ldquo;Lula estável, Flávio em queda&rdquo;. O partido saiu da fatura; o cliente, não.</p>
+
+    <p class="qm-src">Fontes: <a href="https://www.poder360.com.br/poder-pesquisas/quaest-diz-que-nao-fara-pesquisas-para-candidatos-e-partidos-em-2026/">Poder360 (guinada 12/07)</a> · <a href="https://www.cnnbrasil.com.br/economia/macroeconomia/tarcisio-tem-confianca-de-68-do-mercado-lula-3-diz-quaest/">CNN (Genial/Quaest mercado)</a> · <a href="https://newblogs.correiobraziliense.com.br/blog-da-rosana-hessel/genial-quaest-mercado-financeiro-aposta-em-derrota-de-lula-e-de-haddad-em-2026-em-todos-os-cenarios/">Blog Rosana Hessel</a> · <a href="https://www.cnnbrasil.com.br/economia/mercado/por-que-mercado-despencou-com-pre-candidatura-de-flavio-ao-planalto/">CNN (Flávio Day 1)</a> · <a href="https://www.brasilagro.com.br/conteudo/lucro-dos-bancos-bate-recorde-de-r-255-bilhoes-em-2025.html">Brasilagro (bancos 2025)</a> · <a href="https://www.intercept.com.br/2026/07/11/flavio-bolsonaro-apoia-tarifaco-de-trump-e-da-outro-vexame-nos-estados-unidos/">Intercept (tarifaço)</a> · <a href="https://www.moneytimes.com.br/a-historia-se-repete-por-que-o-mercado-nao-se-abala-mais-por-pesquisas-eleitorais-apsa-gaep/">Money Times</a>. Dados estruturados em <span class="qm-mono">quaest_0726_mercado.json</span>.</p>
+
+  </div>
+</section>
+
+<!-- ============ VARIANTE 1600x900 PARA SLIDE ============ -->
+<div class="qm-root" style="padding:40px;background:#0c0b0a;">
+<div class="qm-slide">
+  <p class="s-eyebrow">Arvor Intelligence · dossiê Quaest 07/2026 · economia política da guinada</p>
+  <h2>Trocar de <em>cliente</em> muda a leitura que a pesquisa serve</h2>
+  <div class="s-body">
+    <div class="s-chain">
+      <div class="s-row"><b>2016&ndash;25</b><span>Quaest vende pesquisa a <strong>campanhas e partidos</strong> — muitos compradores rivais</span></div>
+      <div class="s-row hot"><b>12/07/26</b><span>abandona o segmento eleitoral; concentra <strong>200+ pesquisas da Globo</strong> e do corporativo</span></div>
+      <div class="s-row"><b>o cliente</b><span>mídia concessionária + Faria Lima: prefere <strong>Tarcísio</strong>, teme Flávio, convive com Lula</span></div>
+      <div class="s-row"><b>a função</b><span>instabilidade bolsonarista custa <strong>mais</strong> que a continuidade petista, já precificada</span></div>
+    </div>
+    <div class="s-stats">
+      <div class="s-stat cyan"><b>68% × 3%</b><span>confiança do mercado em Tarcísio vs. Lula (Genial/Quaest mede o próprio cliente)</span></div>
+      <div class="s-stat red"><b>&minus;4,31%</b><span>queda do Ibovespa quando Flávio virou pré-candidato: risco institucional precificado</span></div>
+      <div class="s-stat acid"><b>R$ 255 bi</b><span>lucro recorde dos bancos em 2025, com Selic a 15%: continuidade é lucrativa</span></div>
+    </div>
+  </div>
+  <div class="s-foot">
+    <p class="verdict">Troca de clientela é Fato; função de perda assimétrica é Inferência; efeito de casa por clientela é Hipótese. Correlação de incentivos, não prova de causa. É o cliente, não o partido.</p>
+    <span class="mark">Fato · Inferência · Hipótese<br>seguir o cliente, rotular a dúvida</span>
+  </div>
+</div>
+</div>

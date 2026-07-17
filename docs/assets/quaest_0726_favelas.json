@@ -1,0 +1,714 @@
+{
+  "metadata": {
+    "titulo": "Cobertura de favelas e comunidades urbanas na amostra Quaest",
+    "fonte_classificacao": "IBGE Censo 2022, Agregados por Setores Censitarios (basico BR), CD_TIPO==1 = Favela e Comunidade Urbana",
+    "criterio_esperado": "PPT por populacao (ficha PesqEle BR-07181/2026): esperado = fracao da populacao municipal em setores FCU",
+    "n_setores_distintos": 153691,
+    "municipios_analisados": 213
+  },
+  "rounds": {
+    "junho": {
+      "n": 334,
+      "observed_favela": 25,
+      "expected_favela": 28.26,
+      "p_at_most_observed": 0.2759
+    },
+    "julho": {
+      "n": 334,
+      "observed_favela": 22,
+      "expected_favela": 27.72,
+      "p_at_most_observed": 0.1202
+    }
+  },
+  "capitais": {
+    "São Paulo": {
+      "cd_mun": "3550308",
+      "n_setores_sorteados": 44,
+      "observado_favela": 6,
+      "pop_favela_share": 0.1509,
+      "sec_favela_share": 0.1419,
+      "esperado_favela": 6.64,
+      "p_ate_observado": 0.4964,
+      "universo_setores": 27301,
+      "universo_setores_favela": 3875
+    },
+    "Rio de Janeiro": {
+      "cd_mun": "3304557",
+      "n_setores_sorteados": 24,
+      "observado_favela": 4,
+      "pop_favela_share": 0.2173,
+      "sec_favela_share": 0.2065,
+      "esperado_favela": 5.22,
+      "p_ate_observado": 0.3781,
+      "universo_setores": 13782,
+      "universo_setores_favela": 2846
+    },
+    "Salvador": {
+      "cd_mun": "2927408",
+      "n_setores_sorteados": 8,
+      "observado_favela": 4,
+      "pop_favela_share": 0.4274,
+      "sec_favela_share": 0.4011,
+      "esperado_favela": 3.42,
+      "p_ate_observado": 0.7811,
+      "universo_setores": 4542,
+      "universo_setores_favela": 1822
+    },
+    "Belo Horizonte": {
+      "cd_mun": "3106200",
+      "n_setores_sorteados": 10,
+      "observado_favela": 0,
+      "pop_favela_share": 0.1329,
+      "sec_favela_share": 0.1359,
+      "esperado_favela": 1.33,
+      "p_ate_observado": 0.2403,
+      "universo_setores": 5166,
+      "universo_setores_favela": 702
+    },
+    "Brasília": {
+      "cd_mun": "5300108",
+      "n_setores_sorteados": 10,
+      "observado_favela": 0,
+      "pop_favela_share": 0.0706,
+      "sec_favela_share": 0.0644,
+      "esperado_favela": 0.71,
+      "p_ate_observado": 0.4811,
+      "universo_setores": 5418,
+      "universo_setores_favela": 349
+    },
+    "Fortaleza": {
+      "cd_mun": "2304400",
+      "n_setores_sorteados": 6,
+      "observado_favela": 2,
+      "pop_favela_share": 0.238,
+      "sec_favela_share": 0.2997,
+      "esperado_favela": 1.43,
+      "p_ate_observado": 0.8491,
+      "universo_setores": 4408,
+      "universo_setores_favela": 1321
+    },
+    "Recife": {
+      "cd_mun": "2611606",
+      "n_setores_sorteados": 6,
+      "observado_favela": 1,
+      "pop_favela_share": 0.2428,
+      "sec_favela_share": 0.2748,
+      "esperado_favela": 1.46,
+      "p_ate_observado": 0.551,
+      "universo_setores": 2835,
+      "universo_setores_favela": 779
+    },
+    "Manaus": {
+      "cd_mun": "1302603",
+      "n_setores_sorteados": 6,
+      "observado_favela": 3,
+      "pop_favela_share": 0.5581,
+      "sec_favela_share": 0.5172,
+      "esperado_favela": 3.35,
+      "p_ate_observado": 0.542,
+      "universo_setores": 3281,
+      "universo_setores_favela": 1697
+    },
+    "Goiânia": {
+      "cd_mun": "5208707",
+      "n_setores_sorteados": 3,
+      "observado_favela": 0,
+      "pop_favela_share": 0.0178,
+      "sec_favela_share": 0.0372,
+      "esperado_favela": 0.05,
+      "p_ate_observado": 0.9475,
+      "universo_setores": 2310,
+      "universo_setores_favela": 86
+    },
+    "Belém": {
+      "cd_mun": "1501402",
+      "n_setores_sorteados": 6,
+      "observado_favela": 1,
+      "pop_favela_share": 0.5717,
+      "sec_favela_share": 0.559,
+      "esperado_favela": 3.43,
+      "p_ate_observado": 0.0556,
+      "universo_setores": 2068,
+      "universo_setores_favela": 1156
+    },
+    "Maceió": {
+      "cd_mun": "2704302",
+      "n_setores_sorteados": 2,
+      "observado_favela": 1,
+      "pop_favela_share": 0.1583,
+      "sec_favela_share": 0.2093,
+      "esperado_favela": 0.32,
+      "p_ate_observado": 0.975,
+      "universo_setores": 1620,
+      "universo_setores_favela": 339
+    },
+    "Vitória": {
+      "cd_mun": "3205309",
+      "n_setores_sorteados": 3,
+      "observado_favela": 2,
+      "pop_favela_share": 0.2257,
+      "sec_favela_share": 0.1985,
+      "esperado_favela": 0.68,
+      "p_ate_observado": 0.9885,
+      "universo_setores": 680,
+      "universo_setores_favela": 135
+    },
+    "São Luís": {
+      "cd_mun": "2111300",
+      "n_setores_sorteados": 6,
+      "observado_favela": 1,
+      "pop_favela_share": 0.3458,
+      "sec_favela_share": 0.3157,
+      "esperado_favela": 2.07,
+      "p_ate_observado": 0.3271,
+      "universo_setores": 1736,
+      "universo_setores_favela": 548
+    },
+    "Teresina": {
+      "cd_mun": "2211001",
+      "n_setores_sorteados": 3,
+      "observado_favela": 2,
+      "pop_favela_share": 0.2288,
+      "sec_favela_share": 0.241,
+      "esperado_favela": 0.69,
+      "p_ate_observado": 0.988,
+      "universo_setores": 1531,
+      "universo_setores_favela": 369
+    },
+    "Campo Grande": {
+      "cd_mun": "5002704",
+      "n_setores_sorteados": 3,
+      "observado_favela": 0,
+      "pop_favela_share": 0.0088,
+      "sec_favela_share": 0.0126,
+      "esperado_favela": 0.03,
+      "p_ate_observado": 0.974,
+      "universo_setores": 1665,
+      "universo_setores_favela": 21
+    },
+    "Cuiabá": {
+      "cd_mun": "5103403",
+      "n_setores_sorteados": 2,
+      "observado_favela": 0,
+      "pop_favela_share": 0.1113,
+      "sec_favela_share": 0.109,
+      "esperado_favela": 0.22,
+      "p_ate_observado": 0.7899,
+      "universo_setores": 1147,
+      "universo_setores_favela": 125
+    },
+    "Natal": {
+      "cd_mun": "2408102",
+      "n_setores_sorteados": 6,
+      "observado_favela": 0,
+      "pop_favela_share": 0.1944,
+      "sec_favela_share": 0.1931,
+      "esperado_favela": 1.17,
+      "p_ate_observado": 0.2734,
+      "universo_setores": 1129,
+      "universo_setores_favela": 218
+    }
+  },
+  "nacional": {
+    "n_draws": 668,
+    "observed_favela": 47,
+    "expected_favela": 55.98,
+    "p_at_most_observed": 0.08993,
+    "deficit": 8.98
+  },
+  "favela_sectors_drawn": [
+    {
+      "round": "junho",
+      "geocode": "350950230000255",
+      "municipio": "Campinas",
+      "uf": "SP",
+      "bairro": "Nucleo Residencial Vinte e Oito De Fevereiro",
+      "fcu": "Núcleo Residencial 28 de Fevereiro",
+      "pop": 197
+    },
+    {
+      "round": "junho",
+      "geocode": "351060930000126",
+      "municipio": "Carapicuíba",
+      "uf": "SP",
+      "bairro": "Jardim Ana Estela",
+      "fcu": "Comunidade Savoy",
+      "pop": 824
+    },
+    {
+      "round": "junho",
+      "geocode": "230370905000124",
+      "municipio": "Caucaia",
+      "uf": "CE",
+      "bairro": "Nova Cigana",
+      "fcu": "Nova Cigana",
+      "pop": 981
+    },
+    {
+      "round": "junho",
+      "geocode": "230370917000170",
+      "municipio": "Caucaia",
+      "uf": "CE",
+      "bairro": "Parque Albano",
+      "fcu": "Parque Boa Vista",
+      "pop": 463
+    },
+    {
+      "round": "junho",
+      "geocode": "410580505000118",
+      "municipio": "Colombo",
+      "uf": "PR",
+      "bairro": "Mauá",
+      "fcu": "Vila Zumbi dos Palmares",
+      "pop": 1143
+    },
+    {
+      "round": "junho",
+      "geocode": "351350405000351",
+      "municipio": "Cubatão",
+      "uf": "SP",
+      "bairro": "Vila Esperança",
+      "fcu": "Vila Esperança",
+      "pop": 364
+    },
+    {
+      "round": "junho",
+      "geocode": "230440005140227",
+      "municipio": "Fortaleza",
+      "uf": "CE",
+      "bairro": "Pirambu",
+      "fcu": "Santa Elisa/Pirambu",
+      "pop": 683
+    },
+    {
+      "round": "junho",
+      "geocode": "351880005001232",
+      "municipio": "Guarulhos",
+      "uf": "SP",
+      "bairro": "Guarulhos",
+      "fcu": "Parque Mikail",
+      "pop": 343
+    },
+    {
+      "round": "junho",
+      "geocode": "291360605000026",
+      "municipio": "Ilhéus",
+      "uf": "BA",
+      "bairro": "Basilio",
+      "fcu": "Alto do Basílio",
+      "pop": 553
+    },
+    {
+      "round": "junho",
+      "geocode": "130260305140267",
+      "municipio": "Manaus",
+      "uf": "AM",
+      "bairro": "Gilberto Mestrinho",
+      "fcu": "Grande Vitória",
+      "pop": 788
+    },
+    {
+      "round": "junho",
+      "geocode": "150442205000249",
+      "municipio": "Marituba",
+      "uf": "PA",
+      "bairro": "Riacho Doce",
+      "fcu": "Agrovila Riacho Doce",
+      "pop": 1010
+    },
+    {
+      "round": "junho",
+      "geocode": "431490205000523",
+      "municipio": "Porto Alegre",
+      "uf": "RS",
+      "bairro": "Partenon",
+      "fcu": "Vila Maria da Conceição",
+      "pop": 368
+    },
+    {
+      "round": "junho",
+      "geocode": "261160605220009",
+      "municipio": "Recife",
+      "uf": "PE",
+      "bairro": "Estância",
+      "fcu": "Iraque",
+      "pop": 685
+    },
+    {
+      "round": "junho",
+      "geocode": "120040105000732",
+      "municipio": "Rio Branco",
+      "uf": "AC",
+      "bairro": "Bahia Velha",
+      "fcu": "Bahia",
+      "pop": 280
+    },
+    {
+      "round": "junho",
+      "geocode": "330455705170118",
+      "municipio": "Rio de Janeiro",
+      "uf": "RJ",
+      "bairro": "Engenho Novo",
+      "fcu": "Vila Cabuçu",
+      "pop": 578
+    },
+    {
+      "round": "junho",
+      "geocode": "330455705290644",
+      "municipio": "Rio de Janeiro",
+      "uf": "RJ",
+      "bairro": "Rio Das Pedras",
+      "fcu": "Rio das Pedras",
+      "pop": 304
+    },
+    {
+      "round": "junho",
+      "geocode": "292740805090088",
+      "municipio": "Salvador",
+      "uf": "BA",
+      "bairro": "Pituaçu",
+      "fcu": "Alto da Invasão",
+      "pop": 697
+    },
+    {
+      "round": "junho",
+      "geocode": "292740805220295",
+      "municipio": "Salvador",
+      "uf": "BA",
+      "bairro": "Saboeiro",
+      "fcu": "Invasão de Narandiba",
+      "pop": 955
+    },
+    {
+      "round": "junho",
+      "geocode": "211130005000382",
+      "municipio": "São Luís",
+      "uf": "MA",
+      "bairro": "Coroadinho",
+      "fcu": "Coroadinho",
+      "pop": 657
+    },
+    {
+      "round": "junho",
+      "geocode": "355030813000014",
+      "municipio": "São Paulo",
+      "uf": "SP",
+      "bairro": "Cachoeirinha",
+      "fcu": "Peri Novo II",
+      "pop": 777
+    },
+    {
+      "round": "junho",
+      "geocode": "355030846000220",
+      "municipio": "São Paulo",
+      "uf": "SP",
+      "bairro": "Parque Sto Antonio",
+      "fcu": "Jardim Campo de Fora / Santo Antônio",
+      "pop": 556
+    },
+    {
+      "round": "junho",
+      "geocode": "355030859000214",
+      "municipio": "São Paulo",
+      "uf": "SP",
+      "bairro": "Penha",
+      "fcu": "Tiquatira",
+      "pop": 531
+    },
+    {
+      "round": "junho",
+      "geocode": "355030875000150",
+      "municipio": "São Paulo",
+      "uf": "SP",
+      "bairro": "Jardim Rodolfo Pirani",
+      "fcu": "Núcleo E - São Francisco Global",
+      "pop": 647
+    },
+    {
+      "round": "junho",
+      "geocode": "221100105070155",
+      "municipio": "Teresina",
+      "uf": "PI",
+      "bairro": "Satélite",
+      "fcu": "Bandeirante",
+      "pop": 577
+    },
+    {
+      "round": "junho",
+      "geocode": "221100105080336",
+      "municipio": "Teresina",
+      "uf": "PI",
+      "bairro": "Parque Brasil",
+      "fcu": "Lindalva Soares",
+      "pop": 392
+    },
+    {
+      "round": "julho",
+      "geocode": "330010005000007",
+      "municipio": "Angra dos Reis",
+      "uf": "RJ",
+      "bairro": "Morro Do Santo Antonio",
+      "fcu": "Morro do Santo Antônio",
+      "pop": 906
+    },
+    {
+      "round": "julho",
+      "geocode": "330010015000182",
+      "municipio": "Angra dos Reis",
+      "uf": "RJ",
+      "bairro": "Belem",
+      "fcu": "Parque Belém",
+      "pop": 745
+    },
+    {
+      "round": "julho",
+      "geocode": "150140255000018",
+      "municipio": "Belém",
+      "uf": "PA",
+      "bairro": "Jurunas",
+      "fcu": "Baixadas da Estrada Nova Jurunas",
+      "pop": 833
+    },
+    {
+      "round": "julho",
+      "geocode": "320130805000013",
+      "municipio": "Cariacica",
+      "uf": "ES",
+      "bairro": "Aparecida",
+      "fcu": "Aparecida",
+      "pop": 470
+    },
+    {
+      "round": "julho",
+      "geocode": "320130810000226",
+      "municipio": "Cariacica",
+      "uf": "ES",
+      "bairro": "Rio Branco",
+      "fcu": "Rio Branco A",
+      "pop": 375
+    },
+    {
+      "round": "julho",
+      "geocode": "311860105120008",
+      "municipio": "Contagem",
+      "uf": "MG",
+      "bairro": "Jardim Marrocos",
+      "fcu": "Jardim Marrocos",
+      "pop": 380
+    },
+    {
+      "round": "julho",
+      "geocode": "230440005170332",
+      "municipio": "Fortaleza",
+      "uf": "CE",
+      "bairro": "Vila Uniao",
+      "fcu": "Livreiro Gualter - Vila União",
+      "pop": 340
+    },
+    {
+      "round": "julho",
+      "geocode": "351640805000443",
+      "municipio": "Franco da Rocha",
+      "uf": "SP",
+      "bairro": "Pretoria",
+      "fcu": "Pretória",
+      "pop": 368
+    },
+    {
+      "round": "julho",
+      "geocode": "270430205110261",
+      "municipio": "Maceió",
+      "uf": "AL",
+      "bairro": "Benedito Bentes",
+      "fcu": "Grota da Alegria B",
+      "pop": 579
+    },
+    {
+      "round": "julho",
+      "geocode": "130260305100092",
+      "municipio": "Manaus",
+      "uf": "AM",
+      "bairro": "Santa Luzia",
+      "fcu": "Morro da Liberdade/Santa Luzia",
+      "pop": 621
+    },
+    {
+      "round": "julho",
+      "geocode": "130260305120554",
+      "municipio": "Manaus",
+      "uf": "AM",
+      "bairro": "Colonia Terra Nova",
+      "fcu": "Colônia Terra Nova",
+      "pop": 1074
+    },
+    {
+      "round": "julho",
+      "geocode": "150442205000302",
+      "municipio": "Marituba",
+      "uf": "PA",
+      "bairro": "Sao Joao",
+      "fcu": "Pato Macho",
+      "pop": 827
+    },
+    {
+      "round": "julho",
+      "geocode": "330455705330037",
+      "municipio": "Rio de Janeiro",
+      "uf": "RJ",
+      "bairro": "Rocinha",
+      "fcu": "Rocinha",
+      "pop": 930
+    },
+    {
+      "round": "julho",
+      "geocode": "330455705370342",
+      "municipio": "Rio de Janeiro",
+      "uf": "RJ",
+      "bairro": "Realengo",
+      "fcu": "Do Larguinho",
+      "pop": 675
+    },
+    {
+      "round": "julho",
+      "geocode": "292740805070035",
+      "municipio": "Salvador",
+      "uf": "BA",
+      "bairro": "Engenho Velho De Brotas",
+      "fcu": "Baixa do Porco",
+      "pop": 213
+    },
+    {
+      "round": "julho",
+      "geocode": "292740805150251",
+      "municipio": "Salvador",
+      "uf": "BA",
+      "bairro": "Uruguai",
+      "fcu": "Alagados",
+      "pop": 476
+    },
+    {
+      "round": "julho",
+      "geocode": "355030830001047",
+      "municipio": "São Paulo",
+      "uf": "SP",
+      "bairro": "Cantinho Do Ceu",
+      "fcu": "Recanto do Céu",
+      "pop": 294
+    },
+    {
+      "round": "julho",
+      "geocode": "355030831000253",
+      "municipio": "São Paulo",
+      "uf": "SP",
+      "bairro": "Guaianazes",
+      "fcu": "Vila Roseira",
+      "pop": 643
+    },
+    {
+      "round": "julho",
+      "geocode": "317020605001512",
+      "municipio": "Uberlândia",
+      "uf": "MG",
+      "bairro": "Lagoinha",
+      "fcu": "Lagoinha",
+      "pop": 249
+    },
+    {
+      "round": "julho",
+      "geocode": "320520015080055",
+      "municipio": "Vila Velha",
+      "uf": "ES",
+      "bairro": "Jardim Marilandia",
+      "fcu": "Jardim Marilândia A",
+      "pop": 287
+    },
+    {
+      "round": "julho",
+      "geocode": "320530905090035",
+      "municipio": "Vitória",
+      "uf": "ES",
+      "bairro": "Itararé",
+      "fcu": "Itararé B",
+      "pop": 596
+    },
+    {
+      "round": "julho",
+      "geocode": "320530905120065",
+      "municipio": "Vitória",
+      "uf": "ES",
+      "bairro": "Sao Pedro",
+      "fcu": "São Pedro",
+      "pop": 587
+    }
+  ],
+  "agenda_tematica": {
+    "instrumento": "Quaest_Questionario_072026.pdf",
+    "termos_seguranca_publica": {
+      "seguranca": 0,
+      "violencia": 0,
+      "narcotrafico": 0,
+      "faccao": 0,
+      "pcc_comando": 0,
+      "milicia": 0,
+      "assalto_roubo": 0,
+      "homicidio": 0,
+      "tiroteio": 0,
+      "crime": 1,
+      "policia": 2
+    },
+    "crime_contexto": "unica ocorrencia de 'crime' e sobre crimes financeiros de Daniel Vorcaro/Banco Master; 'Policia Federal' (2x) so nos roteiros lidos dos blocos Master e Jaques Wagner",
+    "contraste_itens": {
+      "mencoes_michelle": 22,
+      "mencoes_tarifa": 17,
+      "mencoes_flavio": 46,
+      "itens_seguranca": 0
+    },
+    "saliencia": "seguranca publica e o problema mais citado do Brasil em 2026, tema de consenso entre eleitores de Lula e da direita; superou a corrupcao pela primeira vez na serie Nexus/BTG (33%). O instrumento nao dedica um item ao tema.",
+    "leitura_fato": "Ausencia de qualquer item sobre seguranca publica/crime organizado no instrumento e verificavel (Fato).",
+    "leituras_hipotese": [
+      "Benigna: rodada focada em corrida eleitoral, tarifaco EUA e crise Michelle/Flavio; seguranca medida em outras ondas.",
+      "Critica: agenda por omissao - o tema que governa o cotidiano de dezenas de milhoes e que lidera as preocupacoes do eleitor fica fora, enquanto crises palacianas ganham dezenas de itens."
+    ]
+  },
+  "literatura": {
+    "datafolha_fbsp_2026": {
+      "fonte": "Datafolha/Forum Brasileiro de Seguranca Publica, divulgada mai/2026",
+      "percentual_percebe_faccao_bairro": 41.2,
+      "pessoas_milhoes": 68.7,
+      "universo": "16 anos ou mais",
+      "n": 2004,
+      "municipios": 137,
+      "capitais_pct": 55.9,
+      "regioes_metro_pct": 46.0,
+      "interior_pct": 34.1,
+      "influencia_regras_locais_muito_moderado_pct": 61.4,
+      "evita_locais_pct": 74.9,
+      "medo_confronto_pct": 81.0,
+      "nota": "mesma abordagem domiciliar, universo 16+ e n~2004 da Quaest - espelho metodologico"
+    },
+    "censo_2022_fcu": {
+      "fonte": "IBGE Censo 2022",
+      "favelas_comunidades": 12348,
+      "moradores_milhoes": 16.4,
+      "pct_populacao": 8.1
+    },
+    "saliencia_seguranca": {
+      "nexus_btg": "seguranca superou corrupcao como problema #1 (33%)",
+      "consenso": "preocupacao igual entre eleitores de Lula (32%) e Flavio (32%)"
+    }
+  },
+  "fontes": [
+    "IBGE Censo 2022 - Agregados por Setores Censitarios, arquivo basico BR (CD_TIPO, CD_FCU, v0001)",
+    "IBGE - Censo 2022: Favelas e Comunidades Urbanas, Resultados do universo",
+    "Datafolha/FBSP - presenca de faccoes e milicias nos bairros (mai/2026)",
+    "FBSP - Anuario Brasileiro de Seguranca Publica 2025",
+    "PesqEle/TSE - registro BR-07181/2026 (ficha tecnica Quaest julho/2026)",
+    "Quaest_Questionario_072026.pdf - instrumento registrado (101 itens)"
+  ],
+  "veredito": {
+    "perna1_cobertura": "Fato: a amostra publicada INCLUI favelas. Nacional: 47 setores FCU sorteados vs 55,98 esperados sob PPT-por-populacao (deficit ~9, ~16%; P(X<=47)=0,090). Sub-representacao leve e NAO significativa; nao ha exclusao sistematica nem zero absoluto. Deficit concentrado em poucas capitais (Belem 1 vs 3,4; BH 0 vs 1,3; Brasilia 0 vs 0,7; Rio 4 vs 5,2). SP praticamente no alvo (6 vs 6,6); Salvador acima (4 vs 3,4).",
+    "perna1_limite": "Isto audita o SORTEIO publicado, nao o CAMPO. Substituicoes de domicilio por seguranca, se houvessem, nao sao observaveis sem microdados; a ficha nao as declara.",
+    "perna2_agenda": "Fato: zero itens de seguranca publica/crime organizado em 101 perguntas, enquanto 22 mencoes a Michelle e 17 a tarifa. Contraste com a saliencia #1 do tema e verificavel.",
+    "hipotese_calibrada": "A hipotese forte de evitar favelas no sorteio NAO se sustenta na aritmetica (Inferencia refutada). O achado que sobrevive e a agenda por omissao (perna 2) e um deficit territorial leve nao-conclusivo (perna 1). Atribuicao a seguranca = Hipotese; efeito no placar = cenario nao calculado (sem microdados)."
+  }
+}

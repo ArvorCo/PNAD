@@ -1,0 +1,205 @@
+<!-- Fragmento autocontido: Quaest 07/2026, atualização das duas minutas (Lei 9.504 + Res. TSE 23.600).
+     Dark editorial. Fraunces / IBM Plex. Sem dependências externas. Slide 1600x900 no fim.
+     As duas legal-boxes trazem os dispositivos NOVOS; o mapa liga cada emenda ao achado que a motivou. -->
+<section class="qpl" id="quaest-pl-update">
+  <style>
+    .qpl{
+      --ink:#100f0d; --coal:#1a1917; --paper:#f4f0e6;
+      --signal:#e94935; --acid:#d7ee3f; --cyan:#42c5d5; --good:#63c39a; --warn:#e0a63c;
+      --muted:#a49c8e; --line:rgba(244,240,230,.14);
+      --display:"Fraunces",Georgia,serif; --sans:"IBM Plex Sans Condensed",Arial,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+      background:var(--ink); color:var(--paper);
+      font-family:var(--display); line-height:1.55;
+      padding:clamp(22px,4vw,56px); border-radius:6px;
+      background-image:linear-gradient(rgba(244,240,230,.028) 1px,transparent 1px);
+      background-size:100% 30px;
+    }
+    .qpl *{box-sizing:border-box;}
+    .qpl .wrap{width:min(1180px,100%);margin-inline:auto;}
+    .qpl .mono{font-family:var(--mono);} .qpl .sans{font-family:var(--sans);}
+    .qpl .kicker{font:600 .72rem/1.3 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--acid);display:flex;align-items:center;gap:12px;}
+    .qpl .kicker::before{content:"";width:44px;height:5px;background:var(--acid);}
+    .qpl h2{font-size:clamp(1.9rem,4.2vw,3.05rem);line-height:1.03;margin:.5em 0 .3em;font-weight:600;letter-spacing:-.01em;}
+    .qpl h2 em{font-style:italic;color:var(--signal);}
+    .qpl h3{font-size:clamp(1.2rem,2.3vw,1.55rem);margin:.2em 0 .5em;font-weight:600;}
+    .qpl h3 em{font-style:italic;color:var(--cyan);}
+    .qpl .lede{max-width:66ch;color:#e9e3d5;font-size:clamp(1rem,1.5vw,1.16rem);}
+    .qpl p{max-width:74ch;}
+    .qpl .tag{display:inline-block;font:600 .58rem/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:4px 7px;border-radius:3px;vertical-align:middle;margin-right:4px;}
+    .qpl .t-fato{background:rgba(99,195,154,.16);color:var(--good);border:1px solid rgba(99,195,154,.4);}
+    .qpl .t-inf{background:rgba(66,197,213,.14);color:var(--cyan);border:1px solid rgba(66,197,213,.4);}
+    .qpl .t-hip{background:rgba(224,166,60,.14);color:var(--warn);border:1px solid rgba(224,166,60,.4);}
+    .qpl .rule{height:1px;background:var(--line);margin:38px 0;}
+    .qpl .sec-label{font:600 .74rem/1.3 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 16px;}
+
+    /* ---- duas legal-boxes ---- */
+    .qpl .laws{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:8px;}
+    @media(max-width:820px){.qpl .laws{grid-template-columns:1fr;}}
+    .qpl .law{border:1px solid var(--line);border-radius:8px;padding:22px 22px 8px;background:rgba(244,240,230,.02);}
+    .qpl .law-top{display:flex;align-items:baseline;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:10px;}
+    .qpl .law-top .via{font:600 .62rem/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--cyan);}
+    .qpl .law-top .via.tse{color:var(--acid);}
+    .qpl .law h3{margin:0;font-size:1.18rem;}
+    .qpl .law ul{list-style:none;margin:6px 0 0;padding:0;}
+    .qpl .law li{position:relative;padding:9px 0 9px 20px;border-top:1px solid rgba(244,240,230,.07);font-size:.9rem;color:#e4dece;line-height:1.42;}
+    .qpl .law li:first-child{border-top:0;}
+    .qpl .law li::before{content:"";position:absolute;left:2px;top:16px;width:7px;height:7px;background:var(--signal);border-radius:1px;}
+    .qpl .law li b{color:#fbf7ec;font-weight:600;}
+    .qpl .law li .ref{display:block;margin-top:3px;font:600 .6rem/1.3 var(--mono);letter-spacing:.04em;color:var(--muted);text-transform:uppercase;}
+
+    /* ---- mapa emenda -> achado ---- */
+    .qpl .map{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden;margin-top:6px;}
+    .qpl .maprow{display:grid;grid-template-columns:230px 1fr;gap:0;background:var(--ink);}
+    @media(max-width:720px){.qpl .maprow{grid-template-columns:1fr;}}
+    .qpl .mapref{padding:15px 16px;background:rgba(244,240,230,.035);font-family:var(--mono);font-size:.72rem;line-height:1.5;color:var(--acid);letter-spacing:.02em;}
+    .qpl .mapref b{display:block;color:#fbf7ec;font-family:var(--display);font-size:.98rem;letter-spacing:0;margin-bottom:5px;font-weight:600;}
+    .qpl .mapwhy{padding:15px 18px;font-size:.9rem;color:#e4dece;line-height:1.5;}
+    .qpl .mapwhy .ach{color:var(--muted);font-style:italic;}
+    .qpl .verdict{margin-top:34px;border-left:3px solid var(--signal);padding:6px 0 6px 20px;font-size:1.06rem;color:#f1ebdb;}
+    .qpl .verdict b{color:var(--signal);}
+    .qpl a{color:var(--cyan);text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(66,197,213,.4);}
+
+    /* ---- slide 1600x900 ---- */
+    .qpl-slide-shell{margin-top:44px;overflow-x:auto;}
+    .qpl-slide{width:1600px;height:900px;background:var(--ink,#100f0d);color:#f4f0e6;border-radius:0;overflow:hidden;
+      padding:56px 64px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto 1fr auto;gap:22px 46px;
+      font-family:"Fraunces",Georgia,serif;
+      background-image:linear-gradient(rgba(244,240,230,.028) 1px,transparent 1px);background-size:100% 34px;}
+    .qpl-slide .s-kick{grid-column:1/3;font:600 .95rem/1 "IBM Plex Mono",monospace;letter-spacing:.18em;text-transform:uppercase;color:#d7ee3f;display:flex;gap:16px;align-items:center;}
+    .qpl-slide .s-kick::before{content:"";width:60px;height:6px;background:#d7ee3f;}
+    .qpl-slide h2{grid-column:1/3;margin:0;font-size:3.5rem;line-height:1.02;font-weight:600;letter-spacing:-.015em;max-width:26ch;}
+    .qpl-slide h2 em{font-style:italic;color:#e94935;}
+    .qpl-slide .col h3{margin:0 0 14px;font:600 1.02rem/1 "IBM Plex Mono",monospace;letter-spacing:.1em;text-transform:uppercase;}
+    .qpl-slide .col.tse h3{color:#d7ee3f;} .qpl-slide .col.pl h3{color:#42c5d5;}
+    .qpl-slide .col ul{list-style:none;margin:0;padding:0;}
+    .qpl-slide .col li{padding:9px 0 9px 22px;position:relative;font-size:1.12rem;line-height:1.34;color:#e7e1d1;border-top:1px solid rgba(244,240,230,.09);}
+    .qpl-slide .col li:first-child{border-top:0;}
+    .qpl-slide .col li::before{content:"";position:absolute;left:2px;top:17px;width:8px;height:8px;background:#e94935;border-radius:1px;}
+    .qpl-slide .s-foot{grid-column:1/3;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(244,240,230,.14);padding-top:20px;}
+    .qpl-slide .s-foot .v{font-size:1.35rem;color:#f1ebdb;} .qpl-slide .s-foot .v b{color:#e94935;}
+    .qpl-slide .s-foot .brand{font:600 1rem/1 "IBM Plex Mono",monospace;letter-spacing:.14em;text-transform:uppercase;color:#a49c8e;}
+  </style>
+
+  <div class="wrap">
+    <p class="kicker">Atualização das minutas · pós-auditoria Quaest 07/2026</p>
+    <h2>As duas peças, agora com as <em>lacunas de julho</em> fechadas</h2>
+    <p class="lede">A redação original nasceu da 6ª rodada BTG/Nexus. A auditoria Genial/Quaest de julho e o debate público com Felipe Nunes expuseram lacunas que a primeira versão não alcançava: a migração entre cenários, o campo sem relógio, o suplemento guardado para depois, o modelo sem especificação, o instrumento com resíduo de template, a pergunta que informa antes de perguntar, a acusação sem simetria e o CPF pedido no formulário. Cada emenda abaixo tem um achado atrás dela. O veredito não muda: <b>prova de opacidade, não de fraude.</b></p>
+
+    <div class="rule"></div>
+
+    <p class="sec-label">As duas legal-boxes, atualizadas</p>
+    <div class="laws">
+      <div class="law">
+        <div class="law-top"><h3>Resolução TSE 23.600</h3><span class="via tse">via TSE · vigência imediata</span></div>
+        <ul>
+          <li><b>Matriz de transição.</b> Publicados dois cenários da mesma rodada (1º e 2º turno), sai o fluxo de preferência que os liga, com base bruta e ponderada. <span class="ref">§ 7º-Q</span></li>
+          <li><b>Campo com relógio.</b> Distribuição das entrevistas por dia da semana e faixa horária, duração média e mediana, global e por bloco. <span class="ref">§ 7º-J ampliado</span></li>
+          <li><b>Suplemento sem gaveta.</b> Recorte da mesma coleta é a mesma pesquisa; topline íntegro; bloco diferido leva o rótulo “opinião medida antes de [fato]”. <span class="ref">§ 7º-R</span></li>
+          <li><b>Pergunta informativa.</b> Rótulo “opinião após estímulo informacional” e o percentual de quem declarou desconhecer o fato até ali. <span class="ref">§ 7º-S</span></li>
+          <li><b>Simetria de enunciado.</b> Acusação e resposta com carga equivalente e revisão de equilíbrio registrada. <span class="ref">§ 7º-T</span></li>
+          <li><b>Identificador forte.</b> CPF, rede social ou geolocalização só com finalidade, base legal e dissociação comprovada; do contrário, vedado. <span class="ref">§ 7º-U</span></li>
+          <li><b>Instrumento íntegro.</b> Versão final sem placeholder nem resíduo de template, hash próprio, capa, rodada e projeto conferidos. <span class="ref">§ 7º-V</span></li>
+          <li><b>Modelo rotulado.</b> Estimativa de MRP/rake é projeção de modelo, com premissas e código. <span class="ref">§ 7º-O ampliado</span></li>
+          <li><b>NS/NR no gráfico.</b> Não sabe, não respondeu e recusa nunca somem da peça; base não ponderada de cada recorte junto ao dado. <span class="ref">art. 10, § 4º</span></li>
+          <li><b>Acesso de pesquisador.</b> Detalhamento de maior valor em ambiente seguro, sob termo de compromisso, sem negar o núcleo replicável. <span class="ref">§ 7º-N ampliado</span></li>
+        </ul>
+      </div>
+      <div class="law">
+        <div class="law-top"><h3>Projeto de Lei · 9.504/1997</h3><span class="via">via Congresso · reserva legal</span></div>
+        <ul>
+          <li><b>Novos elementos do registro.</b> Matriz de transição, campo por dia e hora com duração, conteúdo e “ficou sabendo agora” das perguntas informativas, registro de simetria e especificação de modelos. <span class="ref">art. 33, incs. XVIII a XXII</span></li>
+          <li><b>Suplemento é a mesma pesquisa.</b> Divulgado um resultado, saem todos os blocos; bloco diferido leva o rótulo com a data da medição. <span class="ref">§ 6º-F</span></li>
+          <li><b>Estímulo rotulado.</b> Pergunta que informa fato não pode ser apresentada como opinião prévia e espontânea. <span class="ref">§ 15</span></li>
+          <li><b>Instrumento íntegro.</b> Versão final sem placeholder, hash próprio, coerência de capa, rodada e projeto. <span class="ref">§ 16</span></li>
+          <li><b>Identificador forte.</b> CPF, rede social ou geolocalização com finalidade, base legal e dissociação, ou vedado. <span class="ref">§ 17</span></li>
+          <li><b>NS/NR e base no gráfico.</b> Não sabe, não respondeu e recusa constam da peça, com a base não ponderada de cada recorte. <span class="ref">§ 11 ampliado</span></li>
+          <li><b>Acesso de pesquisador.</b> Auditor e cientista credenciados acessam o detalhamento de maior valor sob compromisso, sem escusa de valor comercial. <span class="ref">art. 34 ampliado</span></li>
+          <li><b>Sanção estendida.</b> O rol do § 14 passa a alcançar o § 6º-F e os §§ 15 a 17. <span class="ref">§ 14</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rule"></div>
+
+    <p class="sec-label">O que mudou na proposta, e por quê</p>
+    <div class="map">
+      <div class="maprow">
+        <div class="mapref"><b>Matriz de transição</b>Res. § 7º-Q · PL inc. XVIII</div>
+        <div class="mapwhy"><span class="tag t-fato">Fato</span>A rodada publica 1º e 2º turno como dois retratos, sem a migração de preferência entre eles. <span class="ach">Achado: cenários somados, fluxo omitido.</span></div>
+      </div>
+      <div class="maprow">
+        <div class="mapref"><b>Campo com relógio</b>Res. § 7º-J · PL inc. XIX</div>
+        <div class="mapwhy"><span class="tag t-fato">Fato</span>Campo sexta a segunda nas duas rodadas, sem horário de coleta nem duração declarados; a Quaest retém justamente o que testaria filtro de porta e fadiga de instrumento. <span class="ach">Achado: perícia de campo, dossiê “campo”.</span></div>
+      </div>
+      <div class="maprow">
+        <div class="mapref"><b>Suplemento sem gaveta</b>Res. § 7º-R · PL § 6º-F</div>
+        <div class="mapwhy"><span class="tag t-fato">Fato</span>A Quaest separa temas em “recortes” divulgados depois, para prolongar visibilidade; Nunes confirma a prática. Reter bloco medido para o ciclo seguinte administra a manchete. <span class="ach">Achado: publicação seletiva temporizada.</span></div>
+      </div>
+      <div class="maprow">
+        <div class="mapref"><b>Modelo rotulado</b>Res. § 7º-O · PL inc. XXII</div>
+        <div class="mapwhy"><span class="tag t-fato">Fato</span>A ficha técnica declara pós-estratificação por rake/MrP, sem especificação nem código. Estimativa de modelo apresentada como leitura direta esconde a escolha do analista. <span class="ach">Achado: rake/MrP sem specs.</span></div>
+      </div>
+      <div class="maprow">
+        <div class="mapref"><b>Instrumento íntegro</b>Res. § 7º-V · PL § 16</div>
+        <div class="mapwhy"><span class="tag t-fato">Fato</span>O questionário de julho traz 31 resíduos de template e o cabeçalho da rodada anterior. Sem hash da versão final e conferência de capa/rodada/projeto, não há como saber o que foi de fato aplicado. <span class="ach">Achado: capa errada e placeholders.</span></div>
+      </div>
+      <div class="maprow">
+        <div class="mapref"><b>Pergunta informativa</b>Res. § 7º-S · PL inc. XX, § 15</div>
+        <div class="mapwhy"><span class="tag t-inf">Inferência</span>Pergunta que informa o eleitor de um fato molda a resposta seguinte. Sem o percentual de quem soube na hora, o efeito do estímulo fica invisível no número. <span class="ach">Achado: estímulos e preâmbulos do instrumento.</span></div>
+      </div>
+      <div class="maprow">
+        <div class="mapref"><b>Simetria de enunciado</b>Res. § 7º-T · PL inc. XXI</div>
+        <div class="mapwhy"><span class="tag t-fato">Fato</span>Preâmbulo acusatório sobre Flávio/Vorcaro sem simetria com o bloco Jaques Wagner/Master, que já vinha com negação explícita. Confronto de versões pede carga equivalente e revisão registrada. <span class="ach">Achado: assimetria de estímulos.</span></div>
+      </div>
+      <div class="maprow">
+        <div class="mapref"><b>Identificador forte</b>Res. § 7º-U · PL § 17</div>
+        <div class="mapwhy"><span class="tag t-fato">Fato</span>Formulário de julho passa a pedir CPF e Instagram. Identificador civil e de rede social só se justificam com finalidade, base legal e dissociação das respostas de opinião. <span class="ach">Achado: nova coleta de CPF/Instagram.</span></div>
+      </div>
+      <div class="maprow">
+        <div class="mapref"><b>NS/NR no gráfico</b>Res. art. 10 § 4º · PL § 11</div>
+        <div class="mapwhy"><span class="tag t-fato">Fato</span>Não sabe, não respondeu e recusa desaparecem de peças gráficas, e recortes saem sem base não ponderada. O que evapora do slide é o que segura a margem. <span class="ach">Achado: NS/NR e base ausentes na peça.</span></div>
+      </div>
+      <div class="maprow">
+        <div class="mapref"><b>Acesso de pesquisador</b>Res. § 7º-N · PL art. 34</div>
+        <div class="mapwhy"><span class="tag t-inf">Inferência</span>Nunes trata microdados como ativo comercial que remunera a empresa. A carência já responde ao núcleo; o ambiente seguro sob termo de compromisso preserva o valor comercial sem negar a reprodução do resultado. <span class="ach">Resposta: microdados como ativo.</span></div>
+      </div>
+    </div>
+
+    <p class="verdict">A auditoria não reescreveu o método da Quaest; escreveu a regra que faria o método aparecer. Dez emendas, dez achados, um só princípio: <b>o número sai com a prova.</b></p>
+    <p style="margin-top:14px;font-size:.86rem;color:var(--muted)">Texto integral e reproduzível em <a href="https://brasil.arvor.co/proposta.html">brasil.arvor.co/proposta.html</a> e nas <a href="https://github.com/ArvorCo/PNAD/blob/main/data/pesquisas/quaest/propostas-regulatorias-2026.md">minutas do repositório</a>. Fato: observação documental. Inferência: leitura mais compatível. Hipótese: exige prova adicional.</p>
+
+    <!-- ============ VARIANTE SLIDE 1600x900 ============ -->
+    <div class="qpl-slide-shell">
+      <div class="qpl-slide">
+        <div class="s-kick">Minutas atualizadas · lacunas de julho</div>
+        <h2>Dez achados da Quaest, <em>dez emendas</em> nas duas peças</h2>
+        <div class="col tse">
+          <h3>Resolução TSE · agora</h3>
+          <ul>
+            <li>Matriz de transição entre 1º e 2º turno</li>
+            <li>Campo por dia, hora e duração da entrevista</li>
+            <li>Suplemento com topline; rótulo “antes do fato”</li>
+            <li>MRP/rake rotulado como projeção de modelo</li>
+            <li>Instrumento final com hash; sem template solto</li>
+            <li>NS/NR e base não ponderada na própria peça</li>
+          </ul>
+        </div>
+        <div class="col pl">
+          <h3>Projeto de Lei · agora</h3>
+          <ul>
+            <li>Incisos XVIII a XXII no registro do art. 33</li>
+            <li>Pergunta informativa não passa por opinião espontânea</li>
+            <li>CPF e rede social só com base legal e dissociação</li>
+            <li>Acusação e resposta com simetria auditável</li>
+            <li>Pesquisador credenciado acessa o detalhamento</li>
+            <li>Sanção do § 14 estendida às novas obrigações</li>
+          </ul>
+        </div>
+        <div class="s-foot">
+          <div class="v">Prova de <b>opacidade</b>, não de fraude. O número sai com a prova.</div>
+          <div class="brand">brasil.arvor.co</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

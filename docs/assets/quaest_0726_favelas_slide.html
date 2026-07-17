@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Dupla invisibilidade do crime organizado — slide 1600×900</title>
+<style>
+  @font-face{font-family:"Fraunces";src:local("Fraunces");}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{background:#000;}
+  .slide{
+    width:1600px;height:900px;overflow:hidden;position:relative;
+    --ink:#11100f;--paper:#f4f0e6;--signal:#e94935;--acid:#d7ee3f;--cyan:#42c5d5;
+    --good:#63c39a;--warn:#e0a63c;--muted:#a49c8e;--line:rgba(244,240,230,.14);
+    --disp:"Fraunces",Georgia,serif;--sans:"IBM Plex Sans Condensed",Arial,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace;
+    background:var(--ink);color:var(--paper);font-family:var(--disp);
+    background-image:linear-gradient(rgba(244,240,230,.03) 1px,transparent 1px);background-size:100% 34px;
+    padding:56px 68px;
+  }
+  .slide::after{content:"BR-07181/2026";position:absolute;right:-14px;bottom:20px;color:rgba(255,255,255,.035);
+    font:800 138px/1 var(--mono);transform:rotate(-8deg);}
+  .mono{font-family:var(--mono);}.sans{font-family:var(--sans);}
+  .kicker{font:600 15px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);display:flex;align-items:center;gap:14px;}
+  .kicker::before{content:"";width:56px;height:6px;background:var(--cyan);}
+  h1{font-size:56px;line-height:.99;font-weight:600;letter-spacing:-.015em;margin:18px 0 6px;max-width:23ch;}
+  h1 em{font-style:italic;color:var(--signal);}
+  .sub{font-family:var(--sans);color:#ded8ca;font-size:19px;max-width:96ch;line-height:1.32;}
+  .cols{display:grid;grid-template-columns:1.28fr 1fr;gap:52px;margin-top:30px;}
+  .lbl{font:600 14px/1 var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;display:flex;align-items:center;gap:10px;}
+  .lbl b{color:var(--acid);}
+  /* headline row */
+  .stats{display:grid;grid-template-columns:repeat(4,auto);gap:34px;margin:2px 0 22px;align-items:end;}
+  .stat b{display:block;font:600 50px/.9 var(--disp);letter-spacing:-.03em;}
+  .stat.so b{color:var(--cyan);}.stat.se b{color:var(--acid);}.stat.sd b{color:var(--warn);}.stat.sp b{color:var(--paper);}
+  .stat span{font-family:var(--sans);font-size:12.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;display:block;margin-top:6px;max-width:22ch;}
+  /* bars */
+  .brow{display:grid;grid-template-columns:150px 1fr 74px;align-items:center;gap:14px;padding:6px 0;}
+  .bn{font:600 15px/1.15 var(--sans);}
+  .bn small{display:block;font:400 11px/1.1 var(--mono);color:var(--muted);margin-top:2px;}
+  .track{position:relative;height:22px;background:rgba(244,240,230,.05);border-radius:2px;}
+  .obs{position:absolute;top:0;bottom:0;left:0;background:var(--cyan);border-radius:2px;opacity:.85;}
+  .exp{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--acid);}
+  .exp::after{content:attr(data-v);position:absolute;top:-15px;left:50%;transform:translateX(-50%);font:600 10px/1 var(--mono);color:var(--acid);}
+  .bv{font:600 14px/1 var(--mono);color:var(--muted);text-align:right;}
+  .bv b{color:var(--cyan);}
+  .leg{display:flex;gap:22px;margin:12px 0 0;font:500 12.5px/1 var(--sans);color:var(--muted);align-items:center;}
+  .leg i{font-style:normal;display:inline-flex;align-items:center;gap:7px;}
+  .sw{width:20px;height:10px;border-radius:2px;display:inline-block;}.sw.c{background:var(--cyan);opacity:.85;}.sw.a{width:3px;height:14px;background:var(--acid);}
+  /* thematic */
+  .crow{display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px;margin-bottom:4px;}
+  .clab{font:600 15px/1.15 var(--sans);}
+  .cn{font:600 22px/1 var(--mono);}
+  .ct{height:10px;background:rgba(244,240,230,.05);border-radius:2px;overflow:hidden;margin-bottom:14px;}
+  .cf{height:100%;border-radius:2px;}
+  .zero{color:var(--signal);}
+  .big{font:600 58px/.9 var(--disp);color:var(--signal);letter-spacing:-.03em;margin:16px 0 8px;}
+  .big small{font-size:.4em;color:var(--muted);}
+  .note{font-family:var(--sans);font-size:14.5px;color:#ccc5b6;line-height:1.4;max-width:52ch;}
+  .note b{color:var(--paper);}
+  .tag{display:inline-block;font:600 10.5px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;padding:4px 7px;border-radius:3px;vertical-align:middle;}
+  .tag.fato{background:rgba(66,197,213,.16);color:#8fdbe6;border:1px solid rgba(66,197,213,.4);}
+  .tag.hip{background:rgba(224,166,60,.16);color:#e6c07a;border:1px solid rgba(224,166,60,.42);}
+  .verdict{margin-top:20px;border-left:3px solid var(--acid);padding:4px 0 4px 18px;font-family:var(--sans);font-size:15px;color:var(--paper);line-height:1.4;max-width:104ch;}
+  .verdict b{font-weight:600;}
+  .foot{position:absolute;left:68px;bottom:26px;font-family:var(--sans);font-size:13px;color:var(--muted);max-width:1180px;line-height:1.35;}
+</style>
+</head>
+<body>
+<div class="slide">
+  <p class="kicker">Autópsia territorial · dupla invisibilidade</p>
+  <h1>O crime organizado não é <em>sorteado</em> nem <em>perguntado</em>.</h1>
+  <p class="sub">Genial/Quaest jul/2026. Duas invisibilidades: a cobertura de favelas fica um pouco abaixo do desenho declarado (déficit leve, não conclusivo); e um instrumento de 101 perguntas não dedica um único item à segurança pública.</p>
+
+  <div class="cols">
+    <div>
+      <div class="lbl"><b>01</b> Cobertura — favelas sorteadas × esperado (PPT por população)</div>
+      <div class="stats">
+        <div class="stat so"><b>47</b><span>setores de favela sorteados</span></div>
+        <div class="stat se"><b>56,0</b><span>esperados sob o sorteio</span></div>
+        <div class="stat sd"><b>−16%</b><span>déficit de ~9 setores</span></div>
+        <div class="stat sp"><b>0,090</b><span>P(≤47) não significativo</span></div>
+      </div>
+      <div class="brow"><div class="bn">São Paulo<small>44 set · 15,1% pop</small></div><div class="track"><div class="obs" style="width:13.6%"></div><div class="exp" style="left:15.1%" data-v="6,6"></div></div><div class="bv"><b>6</b>/6,6</div></div>
+      <div class="brow"><div class="bn">Rio de Janeiro<small>24 set · 21,7% pop</small></div><div class="track"><div class="obs" style="width:16.7%"></div><div class="exp" style="left:21.7%" data-v="5,2"></div></div><div class="bv"><b>4</b>/5,2</div></div>
+      <div class="brow"><div class="bn">Salvador<small>8 set · 42,7% pop</small></div><div class="track"><div class="obs" style="width:50%"></div><div class="exp" style="left:42.7%" data-v="3,4"></div></div><div class="bv"><b>4</b>/3,4</div></div>
+      <div class="brow"><div class="bn">Belém<small>6 set · 57,2% pop</small></div><div class="track"><div class="obs" style="width:16.7%"></div><div class="exp" style="left:57.2%" data-v="3,4"></div></div><div class="bv"><b>1</b>/3,4</div></div>
+      <div class="brow"><div class="bn">Belo Horizonte<small>10 set · 13,3% pop</small></div><div class="track"><div class="obs" style="width:0%"></div><div class="exp" style="left:13.3%" data-v="1,3"></div></div><div class="bv"><b>0</b>/1,3</div></div>
+      <div class="leg"><i><span class="sw c"></span> sorteados</i><i><span class="sw a"></span> esperado sob PPT-população (Censo 2022)</i><span class="tag fato">Fato</span></div>
+    </div>
+
+    <div>
+      <div class="lbl"><b>02</b> Agenda — o instrumento não pergunta segurança</div>
+      <div class="crow"><span class="clab">Menções a Michelle</span><span class="cn">22</span></div>
+      <div class="ct"><div class="cf" style="width:100%;background:#8b857a"></div></div>
+      <div class="crow"><span class="clab">Menções a tarifa/tarifaço</span><span class="cn">17</span></div>
+      <div class="ct"><div class="cf" style="width:77%;background:#8b857a"></div></div>
+      <div class="crow"><span class="clab">Itens sobre segurança/crime</span><span class="cn zero">0</span></div>
+      <div class="ct"><div class="cf" style="width:2%;background:var(--signal)"></div></div>
+      <div class="big">41,2%<small> · ≈68,7 mi 16+</small></div>
+      <p class="note">veem facções ou milícias no próprio bairro — <b>55,9% nas capitais</b>. Datafolha/FBSP mai/2026, <b>mesma abordagem domiciliar e n≈2.004</b> da Quaest. Segurança é o <b>problema #1 do país</b> em 2026. <span class="tag fato">Fato</span></p>
+    </div>
+  </div>
+
+  <div class="verdict"><b>Veredito:</b> a hipótese forte de evitar favelas é <b>refutada pela aritmética</b> — a amostra inclui favelas a ~84% do esperado, sem exclusão sistemática. O que sobrevive é a <b>agenda por omissão</b>: o tema que governa a vida de dezenas de milhões e lidera as preocupações do eleitor não recebe uma pergunta. <span class="tag hip">Razão = Hipótese</span></div>
+
+  <p class="foot">Fontes: IBGE Censo 2022, Agregados por Setores Censitários (CD_TIPO=1 = Favela e Comunidade Urbana); Datafolha/FBSP mai/2026; ficha PesqEle BR-07181/2026; Quaest_Questionario_072026.pdf. brasil.arvor.co</p>
+</div>
+</body>
+</html>

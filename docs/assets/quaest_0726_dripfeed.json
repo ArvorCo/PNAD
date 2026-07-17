@@ -1,0 +1,151 @@
+{
+  "meta": {
+    "title": "Conta-gotas: uma coleta, N manchetes — a publicação escalonada de pesquisas eleitorais (AtlasIntel × Quaest × controle Datafolha)",
+    "scope": "Documenta a tendência de drip-release: uma única janela de campo fatiada em múltiplos relatórios temáticos publicados em dias diferentes, gerando ciclos de manchete consecutivos sobre temas distintos.",
+    "compiled": "2026-07-17",
+    "author_role": "análise de mídia e métodos — dossiê Genial/Quaest 07/2026",
+    "calibration": "Cada item classificado Fato / Inferência / Hipótese. Cronologia = Fato. Intenção de maximizar manchetes = Inferência (fundamentada no desenho). Origem Faria Lima = Hipótese (laços documentados, coordenação NÃO afirmada).",
+    "house": "brasil.arvor.co"
+  },
+  "concept": {
+    "definition": "Drip-release (conta-gotas): o instituto aplica um questionário único em uma única janela de campo, mas divide os resultados em produtos editoriais separados, liberados em dias distintos, cada um com manchete própria.",
+    "taxonomy": {
+      "fatia_independente": "Blocos tematicamente independentes da mesma coleta viram matérias distintas (voto num dia, avaliação de governo noutro). Prática antiga da imprensa brasileira; o leitor não perde contexto causal porque os blocos não se explicam mutuamente.",
+      "retencao": "Blocos medidos que simplesmente não são publicados (perguntas-fantasma). O instituto fica com o mapa completo; o público recebe o recorte.",
+      "mesmo_tema_dois_ciclos": "A inovação criticável: reter um bloco que é parte da MESMA história do deck principal (a corrida eleitoral) e soltá-lo no dia seguinte como manchete causal própria ('51% culpam X', 'tarifaço aumenta voto em Y'). O segundo ciclo herda a autoridade do primeiro e reabre a pauta com título de causa e efeito.",
+      "conta_gotas_de_verificabilidade": "Variante do mesmo padrão em outra roupagem: a manchete circula no dia D, mas o material que permitiria auditá-la (relatório integral, tabelas, questionário) não está ao alcance do leitor comum no mesmo dia — fica atrás de paywall, sem indexação, ou apenas no registro TSE. O conta-gotas não é só de blocos; é de verificabilidade."
+    }
+  },
+  "timelines": {
+    "atlasintel_maio_2026": {
+      "registry": "BR-06939/2026",
+      "field": "13–18/05/2026",
+      "sample": 5032,
+      "releases": [
+        {"date": "2026-05-19", "what": "Release único Atlas/Bloomberg: topline eleitoral + bloco Banco Master no mesmo PDF (48 itens aplicados, 18 publicados como resultado central, 20+ sem topline).", "class": "Fato"}
+      ],
+      "classification": "retencao",
+      "notes": "Aqui o padrão ainda é retenção, não escalonamento: blocos inteiros (problemas do Brasil, medidas de Lula, imagem, partido, ideologia, economia) medidos e nunca publicados. A pré-campanha de Flávio acionou o TSE contra a pesquisa.",
+      "sources": [
+        "https://static.poder360.com.br/2026/05/AtlasIntel-Bloomberg-eleicoes-nacional-19mai2026.pdf",
+        "https://www.correiobraziliense.com.br/politica/2026/05/7423017-pre-campanha-de-flavio-bolsonaro-aciona-tse-contra-pesquisa-atlas-bloomberg.html",
+        "https://brasil.arvor.co/atlas_intel_180526.html"
+      ]
+    },
+    "atlasintel_junho_2026": {
+      "registry": "BR-04582/2026 (substituindo rastro público do BR-03448/2026)",
+      "field": "26–30/06/2026 (registro TSE: 25–30/06)",
+      "sample": 4999,
+      "releases": [
+        {"date": "2026-07-01", "what": "Topline eleitoral Atlas/Bloomberg (Lula 48,8 × Flávio 42,3 no 2º turno) + matéria Bloomberg Línea de aprovação de governo (45,9% aprovam, 52,3% desaprovam). Blocos Michelle, Master/Wagner e EUA/Trump ficam fora.", "class": "Fato"},
+        {"date": "2026-07-02", "what": "Dois relatórios avulsos da MESMA coleta: 'Percepções e impacto do vídeo de Michelle Bolsonaro' (33 p.) e 'Investigações sobre Jaques Wagner e o Banco Master' (21 p.), este com 'EMBARGO DE DIVULGAÇÃO 02/07/2026, 07H00' impresso na capa.", "class": "Fato"},
+        {"date": "após 02/07", "what": "Bloco EUA/Trump/tarifas (Q42–Q50) aplicado e ainda sem topline público na data de compilação do dossiê.", "class": "Fato"}
+      ],
+      "classification": "mesmo_tema_dois_ciclos + retencao",
+      "notes": "Um campo único gerou pelo menos três produtos editoriais em dois dias, com embargo formal na segunda fatia — evidência de que o escalonamento é gerenciado, não acidental. É o caso mais nítido do padrão no corpus auditado.",
+      "sources": [
+        "https://brasil.arvor.co/atlasintel_260626.html",
+        "https://www.bloomberglinea.com.br/brasil/lula-ve-aprovacao-cair-e-fica-atras-de-tarcisio-em-pesquisa-para-2026-aponta-atlas/",
+        "https://www.jota.info/eleicoes/eleicoes-2026/atlasintel-bloomberg-aprovacao-de-lula-sobe-mas-disputa-segue-aberta"
+      ]
+    },
+    "quaest_julho_2026": {
+      "registry": "BR-07181/2026",
+      "field": "10–13/07/2026",
+      "sample": 2004,
+      "releases": [
+        {"date": "2026-07-15", "what": "Deck da corrida eleitoral Genial/Quaest (27ª rodada): 1º turno, 2º turno, aprovação, rejeição, recortes por religião. 65 dos 101 itens numerados publicados. Bloco tarifário (Q57–Q65) ausente.", "class": "Fato"},
+        {"date": "2026-07-16", "what": "Suplemento temático de tarifas: 8 itens novos (Q57–Q65). Manchetes causais: '51% culpam Flávio', 'tarifaço aumenta vontade de votar em Lula (42%)', '49% apoiam retaliação ao Pix'. PDF criado em 16/07 00:41Z com título interno 'Capas_Tematicos_Genial_Novo_Julho/26'.", "class": "Fato"},
+        {"date": "2026-07-17", "what": "Terceira fatia da 27ª rodada NÃO localizada em busca web até a compilação (17/07). O recorte por religião circulou em 15/07 como crosstab do deck principal, não como suplemento novo. 28 itens seguem sem topline.", "class": "Fato (ausência verificada na data)"}
+      ],
+      "template_fingerprint": {
+        "class": "Fato",
+        "detail": "O título interno do PDF usa 'Tematicos' no PLURAL e 'Novo'; a camada de texto da página 4 carrega o resíduo BR-07661/2026 — o registro de JUNHO — sob o cabeçalho visível de julho. Template de suplemento temático reutilizado entre rodadas.",
+        "inference": "A série de suplementos é um formato de produto planejado, não um improviso: a rodada de junho já usava a mesma família de capas.",
+        "hypothesis": "O plural 'Temáticos' aponta para outras fatias por vir na mesma rodada (imagem, economia)."
+      },
+      "field_vs_event": {
+        "class": "Fato",
+        "detail": "O tarifaço de 25% foi confirmado em 15/07, dois dias APÓS o fechamento do campo (13/07). Os números de culpa publicados em 16/07 medem opinião anterior à confirmação, mas circularam num ambiente onde a tarifa já era fato consumado."
+      },
+      "classification": "mesmo_tema_dois_ciclos",
+      "sources": [
+        "https://brasil.arvor.co/quaest_0726.html",
+        "https://www.cartacapital.com.br/cartaexpressa/leia-a-integra-da-nova-pesquisa-quaest-sobre-a-eleicao-presidencial/",
+        "https://www.brasildefato.com.br/2026/07/16/51-culpam-flavio-bolsonaro-por-tarifas-de-trump-aponta-quaest/",
+        "https://www.metropoles.com/brasil/genial-quaest-maioria-responsabiliza-flavio-bolsonaro-por-tarifaco",
+        "https://www.cnnbrasil.com.br/economia/macroeconomia/quaest-63-dos-brasileiros-acham-que-novas-tarifas-prejudicarao-suas-vidas/"
+      ]
+    },
+    "datafolha_folha_gradacao": {
+      "registry": "BR-09956/2026 (junho) / BR-00290/2026 (maio)",
+      "field": "17–19/06/2026 (junho); 12–14/05/2026 (maio, com datas inconsistentes entre produtos)",
+      "sample": 2004,
+      "access_caveat": "folha.uol.com.br, search.folha.uol.com.br e datafolha.folha.uol.com.br bloqueiam o crawler (403). As manchetes da Folha foram datadas por reproduções verificáveis em veículos terceiros, mesmo procedimento adotado com a Globo no dossiê de imprensa.",
+      "releases": [
+        {"date": "2026-06-20", "what": "A MESMA coleta (17–19/06) gera no sábado 20/06 um leque de matérias distintas reproduzidas por terceiros: (1) intenção de voto 1º/2º turno (CNN, Exame, Poder360, InfoMoney); (2) rejeição — 48% rejeitam Flávio, 46% Lula (CNN, Jornal de Brasília); (3) avaliação de governo — 38% ruim/péssimo (Gazeta do Povo); (4) recortes de sustentação — Nordeste, mulheres, estudantes (Brasil 247, reproduzindo matéria 'publicada pela Folha'); (5) leitura Dark Horse — 'Flávio estabiliza após Dark Horse' (Correio Braziliense).", "class": "Fato (datas e títulos via reproduções; autoria Folha por atribuição dos veículos)"},
+        {"date": "2026-06-21 a 23", "what": "A rodada segue rendendo pauta nos dias seguintes: reproduções e análises derivadas em 21/06 e série comparativa abril–junho em 23/06 (O Cafezinho). Matérias NOVAS da Folha em 21–23/06 não puderam ser confirmadas uma a uma por causa do bloqueio do domínio.", "class": "Fato (reverberação datada) / Não verificado (novas matérias próprias da Folha em 21–23/06)"},
+        {"date": "maio/2026", "what": "Rodada de maio (BR-00290/2026): depósito no TSE em 15/05, matéria da Folha em 16/05; datas de campo inconsistentes entre os produtos públicos (registro 12–14/05; texto da Folha 12–13/05; PDF de bairros 13–14/05).", "class": "Fato (dossiê Datafolha 090526)"}
+      ],
+      "verifiability_gap": {
+        "class": "Fato (bloqueio e não indexação) / Inferência (efeito sobre o leitor)",
+        "detail": "O relatório integral e as tabelas da rodada de junho não estavam indexados nem acessíveis no site do instituto durante a checagem (17/07); a auditoria do dossiê Datafolha 06/2026 precisou trabalhar a partir dos documentos do registro TSE, não de um relatório aberto da Folha. Inferência: a manchete circula sem que o leitor comum possa auditar a mesa completa no mesmo dia — conta-gotas de verificabilidade.",
+        "checked": "2026-07-17"
+      },
+      "classification": "fatia_independente seriada + conta_gotas_de_verificabilidade + retencao (perguntas-fantasma documentadas no dossiê Datafolha 06/2026)",
+      "notes": "Correção do status de 'controle': a Folha não pratica o suplemento temático com embargo, mas emite múltiplas manchetes da mesma coleta no mesmo dia e deixa a rodada reverberar nos seguintes, enquanto o material auditável não acompanha a manchete. É gradação do mesmo padrão, não ausência dele.",
+      "sources": [
+        "https://www.cnnbrasil.com.br/eleicoes/no-2o-turno-lula-tem-47-contra-43-de-flavio-bolsonaro-diz-datafolha/",
+        "https://www.cnnbrasil.com.br/eleicoes/datafolha-48-rejeitam-flavio-bolsonaro-e-46-lula/",
+        "https://jornaldebrasilia.com.br/noticias/politica-e-poder/datafolha-flavio-bolsonaro-e-rejeitado-por-48-dos-eleitores-lula-por-46/",
+        "https://www.gazetadopovo.com.br/republica/datafolha-avaliacao-governo-lula-20-06-2026/",
+        "https://www.gazetadopovo.com.br/eleicoes/2026/pesquisa-eleitoral-2026/datafolha-presidente-junho-2026/",
+        "https://www.brasil247.com/regionais/nordeste/nordeste-mulheres-e-estudantes-sustentam-vantagem-de-lula-no-datafolha",
+        "https://www.correiobraziliense.com.br/politica/2026/06/7445255-datafolha-lula-mantem-lideranca-e-flavio-estabiliza-apos-dark-horse.html",
+        "https://marcosalmeidalocutor.wordpress.com/2026/06/21/datafolha-lula-mantem-vantagem-com-41-no-1o-turno-contra-31-de-flavio-bolsonaro-diferenca-no-2o-continua-em-quatro-pontos-para-o-petista/",
+        "https://www.ocafezinho.com/2026/06/23/datafolha-mostra-lula-em-recuperacao-e-flavio-sem-folego-entre-abril-e-junho/",
+        "https://brasil.arvor.co/datafolha_062026.html",
+        "https://brasil.arvor.co/datafolha_090526.html"
+      ]
+    }
+  },
+  "mechanism": {
+    "agenda_setting": {
+      "class": "Fato (literatura) / Inferência (aplicação ao caso)",
+      "literature": "McCombs & Shaw (1972, 'The Agenda-Setting Function of Mass Media', Public Opinion Quarterly, estudo de Chapel Hill): a mídia não diz o que pensar, mas sobre O QUE pensar. A saliência de um tema cresce com a frequência e a recência da cobertura.",
+      "application": "Fatiar a coleta multiplica a recência: cada fatia reinicia o relógio do ciclo de notícia. Uma pesquisa publicada inteira ocupa um dia de pauta; a mesma pesquisa em três fatias ocupa três."
+    },
+    "commercial_incentive": {
+      "class": "Inferência (fundamentada no desenho e nos contratos)",
+      "detail": "Cada fatia é um produto de mídia com a marca do contratante no título ('Genial/Quaest', 'Atlas/Bloomberg'). O patrocinador compra exposição de marca em ambiente de credibilidade jornalística; N fatias = N dias de citação. O embargo impresso (Atlas, 02/07) e o template de capas em série (Quaest, 'Capas_Tematicos') mostram gestão deliberada de calendário editorial.",
+      "genial": "Banco Genial patrocina as rodadas Quaest desde 2022 (eleição 2022, rodadas contínuas depois).",
+      "bloomberg": "AtlasIntel mantém com a Bloomberg o Latam Pulse, série mensal de aprovação de governo e temas políticos em 5 países — um produto de assinatura editorial por desenho."
+    },
+    "faria_lima_hypothesis": {
+      "class": "Hipótese",
+      "statement": "A tendência teria origem no ecossistema Faria Lima: institutos cujo pagador é o mercado financeiro (banco de investimentos, mídia financeira) tratam a pesquisa como produto de conteúdo recorrente, não como fotografia única.",
+      "documented_ties": [
+        "Genial é banco de investimentos; a marca 'Genial/Quaest' encabeça cada fatia (Fato).",
+        "Bloomberg é mídia financeira global; o Latam Pulse é assinatura mensal (Fato).",
+        "AtlasIntel operou com receita bruta de R$ 15,8 mi e lucro de R$ 6,74 mi em 2025 (DRE) — operação comercial madura cujo incentivo é recorrência (Fato o número; Inferência o incentivo).",
+        "Coordenação entre institutos, bancos ou redações: NÃO documentada, NÃO afirmada."
+      ]
+    }
+  },
+  "hypothesis_verdict": {
+    "claim": "Tendência iniciada pela AtlasIntel e agora adotada pela Quaest, com origem no ecossistema Faria Lima.",
+    "verdict": "Parcialmente corroborada, reformulada como gradações do mesmo padrão.",
+    "detail": [
+      "Fato: no corpus 2026 auditado, a Atlas pratica o escalonamento mesmo-tema com embargo antes da Quaest (02/07 vs 16/07), e a Quaest formaliza o formato em série ('Capas_Tematicos', resíduo de junho).",
+      "Reformulação: a Folha/Datafolha não é controle limpo. Ela emite múltiplas manchetes da mesma coleta no mesmo dia (20/06: voto, rejeição, avaliação, recortes, leitura Dark Horse), deixa a rodada reverberar nos dias seguintes e não disponibiliza o relatório integral auditável junto com a manchete (checagem 17/07: site do instituto bloqueado/não indexado; auditoria exigiu o registro TSE). São gradações do mesmo padrão: a Folha sequencia manchetes e atrasa a mesa; Atlas e Quaest formalizam o suplemento temático com embargo e template de série.",
+      "O que permanece distinto: na Folha as fatias são blocos independentes decididos pela redação, sem manchete causal encadeada nem embargo de instituto. A variante mesmo-tema-dois-ciclos com gestão de embargo aparece primeiro na Atlas dentro do corpus.",
+      "Limite: primazia absoluta da Atlas (ninguém fez antes, em nenhuma rodada, em nenhum país) não é demonstrável com o corpus atual. A origem Faria Lima permanece Hipótese: os laços comerciais estão documentados; coordenação, não."
+    ]
+  },
+  "regulatory_response": {
+    "class": "Fato (texto proposto) / posição da casa",
+    "emenda": "A emenda proposta ao PL das pesquisas determina: suplemento temático derivado da mesma coleta integra a mesma pesquisa e, divulgado qualquer resultado dela, o topline íntegro de TODOS os blocos é depositado no Pacote Público de Auditoria no dia seguinte; é vedado reter bloco já medido para ciclo de divulgação posterior; bloco diferido leva rótulo de 'opinião medida antes' do evento.",
+    "one_liner": "O conta-gotas morre quando a primeira fatia obriga a mesa inteira — e o topline integral no dia seguinte à primeira divulgação mata as duas variantes: o suplemento embargado (Atlas/Quaest) e a manchete que circula dias antes do relatório auditável (Folha/Datafolha).",
+    "source": "https://brasil.arvor.co/proposta.html"
+  }
+}

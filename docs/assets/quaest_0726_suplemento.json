@@ -1,0 +1,215 @@
+{
+  "title": "Quaest jul/2026, suplemento temático de tarifas: recontagem de cobertura, verificação Candeloro-2 e achados de perícia",
+  "verdict": "prova de opacidade, não de fraude",
+  "generated": "2026-07-17",
+  "source_note": "Perícia sobre o suplemento Quaest_Tarifas_072026.pdf (27ª rodada). Rótulos Fato/Inferência/Hipótese preservados. Sem CPF legível. Padrões da casa: brasil.arvor.co.",
+  "supplement_file": {
+    "name": "Quaest_Tarifas_072026.pdf",
+    "path": "data/pesquisas/quaest/2026-07/Quaest_Tarifas_072026.pdf",
+    "bytes": 5158217,
+    "sha256": "5ed628b0c162267e08d03a6f3c60387a1b7aaa80f50f3efa01ba08db93159351",
+    "pages": 33,
+    "pdf_metadata": {
+      "title": "Capas_Tematicos_Genial_Novo_Julho/26",
+      "creator": "Google",
+      "producer": "macOS Versão 26.5.2 (Compilação 25F84) Quartz PDFContext",
+      "creation_date_utc": "2026-07-16T00:41:54Z",
+      "mod_date_local": "2026-07-16T00:42:44-03:00",
+      "mod_date_utc": "2026-07-16T03:42:44Z",
+      "reading_fact": "Título do arquivo usa 'Tematicos' no plural e 'Novo'. Exportado do Google (Slides) e reimpresso em macOS Quartz. Criação em 16/07 00:41Z, um dia após a divulgação do deck principal (15/07).",
+      "reading_inference": "Nome de template 'Capas_Tematicos' sugere uma família de suplementos temáticos reutilizada entre rodadas; o deck de tarifas seria um recorte de uma série planejada."
+    },
+    "ficha_tecnica": {
+      "registry_visible": "BR-07181/2026",
+      "registry_hidden_residue": "BR-07661/2026",
+      "residue_note": "A camada de texto extraível da página 4 carrega, sob o cabeçalho visível BR-07181/2026 (julho), a string BR-07661/2026 (o registro de JUNHO). Resíduo de template reaproveitado do deck de junho; não aparece renderizado, mas está no arquivo.",
+      "field": "10 a 13/julho/2026",
+      "public": "brasileiros com 16 anos ou mais",
+      "method": "coleta domiciliar face a face, questionários estruturados",
+      "sample": 2004,
+      "moe_global_pp": 2,
+      "confidence": "95%",
+      "data_sources": ["TSE 2026", "PNAD 2026/1", "PNAD 2025/1", "Censo 2022"],
+      "sampling": "conglomerados em 3 estágios: (1) 120 municípios por PPT (pop. 16+); (2) setores censitários por PPT; (3) número fixo por setor sob cotas de região, sexo, faixa etária, grau de instrução e renda familiar",
+      "post_stratification": "algoritmo iterativo de calibração (rake) para parâmetros com divergência >1% do registro; complementarmente MODELO DE MRP para estimativas de subgrupos",
+      "subgroup_moe_table_page5": {
+        "note": "O suplemento acrescenta uma tabela de margem de erro por subgrupo (3 a 6 p.p.), ausente do destaque do deck principal. Atribui uma margem única por recorte, com vocabulário de erro amostral, a estimativas que a própria ficha declara serem de MRP.",
+        "sexo": {"Feminino": 3, "Masculino": 3},
+        "idade": {"16-34": 4, "35-59": 3, "60+": 5},
+        "escolaridade": {"Fundamental": 3, "Médio": 3, "Superior": 5},
+        "posicionamento_politico": {"Lulista": 5, "Esquerda não lulista": 6, "Independente": 4, "Direita não Bolsonarista": 5, "Bolsonarista": 6},
+        "regiao": {"Sudeste": 3, "Nordeste": 4, "Sul": 6, "Centro-oeste/Norte": 5},
+        "religiao": {"Católicos": 3, "Evangélicos": 4},
+        "voto_2t_2022": {"Lula": 3, "Bolsonaro": 4, "Branco/Nulo/Não foi votar": 5},
+        "renda": {"Até 2 SM": 4, "De 2 a 5 SM": 3, "Mais de 5 SM": 4}
+      }
+    }
+  },
+  "recount": {
+    "method": "Reconciliação item a item do suplemento contra o questionário registrado (BR-07181/2026, 101 itens numerados) e contra a cobertura já apurada do deck principal (quaest_0726_data.json).",
+    "baseline_main_deck": {
+      "total_numbered_questions": 101,
+      "published": 65,
+      "unpublished": 36,
+      "published_pct": 64.4
+    },
+    "supplement_newly_published_ids": [57, 58, 59, 60, 61, 63, 64, 65],
+    "supplement_newly_published_count": 8,
+    "supplement_republished_already_public": {
+      "ids": [66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 91],
+      "note": "Páginas 23–31 reapresentam a composição sociodemográfica da amostra (sexo, idade, escolaridade, renda, religião, região, raça/cor, Bolsa Família) e a escala de posicionamento político (Q91, def_pol), todas já publicadas no deck principal. Não alteram a contagem."
+    },
+    "still_unpublished_after_supplement_ids": [1, 5, 7, 29, 30, 33, 34, 35, 36, 37, 38, 39, 42, 44, 45, 62, 77, 80, 81, 82, 83, 87, 88, 92, 93, 94, 100, 101],
+    "new_totals": {
+      "total_numbered_questions": 101,
+      "published": 73,
+      "unpublished": 28,
+      "published_pct": 72.3
+    },
+    "headline": "73 publicados, 28 fantasmas, 72,3% de cobertura (antes: 65 / 36 / 64,4%). O suplemento acende 8 dos 9 itens do bloco tarifário; sobra 1 fantasma no próprio bloco (Q62, patriotismo).",
+    "still_missing_groups": [
+      {"name": "Bloco tarifário residual", "ids": [62], "detail": "Q62 (representa_patriotismo_hoje): 'Quem representa melhor o discurso de patriotismo e defesa dos interesses do Brasil hoje? Flávio Bolsonaro / Lula'. É o único item do bloco EUA/tarifas que o suplemento ainda retém, justamente o que arma um duelo direto Flávio x Lula sobre defesa do Brasil."},
+      {"name": "Michelle, mulheres e Paulo Figueiredo", "ids": [77, 80, 81, 82, 83], "detail": "Segue integralmente sem topline no suplemento."},
+      {"name": "Diagnóstico eleitoral", "ids": [29, 30], "detail": "Melhor resultado para o Brasil e expectativa de vencedor: seguem retidos."},
+      {"name": "Engajamento eleitoral", "ids": [33, 34, 35, 36, 37, 38, 39], "detail": "Sete ações de interesse/participação: seguem retidas."},
+      {"name": "País e MEI", "ids": [42, 44, 45], "detail": "Direção do país e política para MEIs: seguem retidas."},
+      {"name": "Economia doméstica", "ids": [87, 88], "detail": "Renda versus preços e situação econômica da família: seguem retidas."},
+      {"name": "Ideologia e voto passado", "ids": [92, 93, 94, 100, 101], "detail": "Esquerda/centro/direita (Q92), afetos partidários (Q93, Q94) e recordação de voto (Q100, Q101): seguem retidos. Publicou-se a escala Lulista/Bolsonarista (Q91), reteve-se o eixo esquerda/centro/direita (Q92)."},
+      {"name": "Operacionais e perfil", "ids": [1, 5, 7], "detail": "Elegibilidade, ocupação e consentimento de gravação: itens de triagem, menos noticiáveis."}
+    ]
+  },
+  "topline_map": [
+    {"supp_page": 7, "questionnaire": "Q58", "slug": "trump_carta1", "question_registered": "Você já sabia dessa notícia sobre novas tarifas do governo americano sobre produtos brasileiros ou ficou sabendo agora?", "slide_title": "Sabia da notícia sobre as novas tarifas dos EUA? | Comparativo 2025 e 2026", "series": {"2025": {"Sim": [66, 83], "Não": [34, 17], "months": ["jul/25", "ago/25"]}, "2026": {"Sim": [48, 62], "Não": [52, 38], "months": ["jun/26", "jul/26"]}}, "nsnr_shown": false, "note": "NS/NR ausente do gráfico; Sim+Não fecham 100. Pergunta de conhecimento forçada a binário."},
+    {"supp_page": 9, "questionnaire": "Q59", "slug": "trump_prejudicar", "question_registered": "Você acredita que essas novas tarifas impostas por Trump aos produtos brasileiros vão prejudicar sua vida ou de sua família?", "slide_title": "As novas tarifas vão prejudicar sua vida ou de sua família? | Comparativo 2025 e 2026", "series": {"2025": {"Sim": [79, 77, 74], "Não": [17, 20, 23], "NS/NR": [4, 3, 3], "months": ["jul/25", "ago/25", "set/25"]}, "2026": {"Sim": [55, 63], "Não": [37, 31], "NS/NR": [8, 6], "months": ["jun/26", "jul/26"]}}, "nsnr_shown": true},
+    {"supp_page": 11, "questionnaire": "Q60", "slug": "tarifa_lula_flavio1", "question_registered": "O governo Lula AFIRMA que Flávio Bolsonaro APOIOU o tarifaço dos Estados Unidos para prejudicar o governo Lula. Flávio nega e diz que pediu a Trump para não taxar o Brasil. Com quem você concorda mais?", "slide_title": "Lula acusa Flávio de ter pedido o tarifaço a Trump. Flávio afirma ter pedido a Trump para não taxar o Brasil. Com quem você concorda mais?", "slide_footer": "Lula acusa Flávio Bolsonaro de ter pedido o tarifaço contra o Brasil. Flávio nega e diz que pediu a Trump para não taxar o país. Com quem você concorda mais?", "values": {"Lula": [47, 51], "Flávio": [35, 30], "NS/NR": [18, 19], "months": ["jun/26", "jul/26"]}, "deviation_from_registered": "O instrumento registrado diz 'o governo Lula AFIRMA que Flávio APOIOU'. O slide endurece para 'Lula ACUSA Flávio de ter PEDIDO'. 'Afirma/apoiou' vira 'acusa/pediu': verbo mais forte, Lula posto como acusador ativo, Flávio como réu que nega."},
+    {"supp_page": 12, "questionnaire": "Q61", "slug": "tarifa_lula_flavio2", "question_registered": "Lula diz que essas novas tarifas são uma retaliação dos Estados Unidos ao Pix. Já Flávio Bolsonaro afirma que elas foram causadas pelas declarações de Lula contra os Estados Unidos. Com quem você concorda mais?", "slide_title_page12": "Para Lula, as tarifas são retaliações ao Pix. Para Flávio, são reações às declarações de Lula contra os EUA. Com quem você concorda mais?", "slide_title_page13": "Sobre as novas tarifas, você concorda com Lula que foram pelo Pix, ou com Flávio que foram pelo que Lula fala? | Posicionamento", "values": {"Lula": [46, 49], "Flávio": [36, 33], "Nenhum dos dois": [10, 10], "NS/NR": [8, 8], "months": ["jun/26", "jul/26"]}, "deviation_from_registered": "O título da página 13 reduz a versão de Flávio a 'pelo que Lula fala' (vago), enquanto a de Lula permanece concreta ('pelo Pix'). O registrado é simétrico ('causadas pelas declarações de Lula contra os EUA')."},
+    {"supp_page": 13, "questionnaire": "Q61 (recorte)", "slug": "tarifa_lula_flavio2_posicionamento", "type": "crosstab_por_posicionamento", "subgroups": {
+      "Lulista": {"moe": 5, "Lula": [92, 94], "Flávio": [4, 3], "Nenhum/NS-NR": [4, 3]},
+      "Esquerda não Lulista": {"moe": 6, "Lula": [85, 89], "Flávio": [7, 6], "Nenhum": [3, 2], "NS/NR": [3, 2]},
+      "Independente": {"moe": 4, "Lula": [39, 44], "Flávio": [26, 24], "Nenhum": [22, 17], "NS/NR": [13, 15]},
+      "Direita não Bolsonarista": {"moe": 5, "Flávio": [75, 67], "Lula": [11, 15], "Nenhum/NS-NR": [14, 18]},
+      "Bolsonarista": {"moe": 6, "Flávio": [87, 82], "Lula": [3, 4], "Nenhum": [4, 6], "NS/NR": [6, 8]}
+    }},
+    {"supp_page": 15, "questionnaire": "Q63", "slug": "flavio_tarifa_sabia", "question_registered": "Você já sabia ou ficou sabendo agora que Flávio Bolsonaro foi aos Estados Unidos para falar sobre essas novas tarifas de Trump?", "slide_title": "Sabia que Flávio foi aos EUA falar sobre as tarifas com Trump?", "values": {"Sim": 43, "Não": 57}, "nsnr_shown": false, "note": "57% não sabiam da viagem. NS/NR ausente do gráfico; Sim+Não fecham 100."},
+    {"supp_page": 16, "questionnaire": "Q64", "slug": "flavio_tarifa_reverte", "question_registered": "Na sua opinião, Flávio Bolsonaro tem força para convencer Trump e o governo dos Estados Unidos a voltar atrás nas tarifas contra produtos brasileiros, ou não?", "slide_title": "Na sua opinião, Flávio tem força para convencer Trump a rever as tarifas?", "values": {"Sim": 34, "Não": 58, "NS/NR": 8}},
+    {"supp_page": 18, "questionnaire": "Q65", "slug": "novo_tarifaco_voto", "question_registered": "Esse novo tarifaço de Trump e as respostas que você viu ou ouviu sobre esse novo tarifaço fazem você ter mais vontade de votar em Lula, em Flávio Bolsonaro ou em outro candidato?", "slide_title": "O tarifaço aumenta vontade de votar em quem?", "slide_footer": "Em função do novo aumento de tarifas dos EUA contra o Brasil, sua intenção de voto hoje se aproxima mais de: Lula; Flávio Bolsonaro; outro candidato?", "values": {"Lula": [39, 42], "Flávio": [30, 27], "Outro": [23, 23], "NS/NR": [8, 8], "months": ["jun/26", "jul/26"]}, "deviation_from_registered": "O registrado mede um empurrão auto-relatado ('fazem você ter mais vontade de votar em'). O rodapé do slide reformula como intenção de voto ('sua intenção de voto hoje se aproxima mais de'). O título afirma efeito causal ('O tarifaço aumenta vontade de votar em quem?')."},
+    {"supp_page": 19, "questionnaire": "Q65 (recorte)", "slug": "novo_tarifaco_voto_posicionamento", "type": "crosstab_por_posicionamento", "subgroups": {
+      "Lulista": {"Lula": [92, 93], "Outro": [5, 5], "Flávio": [2, 1], "NS/NR": [1, 1]},
+      "Esquerda não Lulista": {"moe": 6, "Lula": [78, 81], "Outro": [19, 14], "NS/NR": [3, 3], "Flávio": [0, 2]},
+      "Independente": {"moe": 4, "Outro": [45, 38], "Lula": [26, 33], "NS/NR": [15, 16], "Flávio": [14, 13]},
+      "Direita não Bolsonarista": {"moe": 5, "Flávio": [70, 60], "Outro": [19, 29], "NS/NR": [6, 6], "Lula": [5, 5]},
+      "Bolsonarista": {"moe": 6, "Flávio": [88, 81], "Outro": [7, 13], "Lula": [2, 2]}
+    }},
+    {"supp_page": 21, "questionnaire": "Q57", "slug": "favor_eua", "question_registered": "Você tem uma opinião mais favorável ou mais desfavorável sobre os Estados Unidos?", "slide_title": "Você tem uma opinião favorável ou desfavorável sobre os Estados Unidos?", "series": {"months": ["out/23", "fev/24", "mar/25", "ago/25", "mar/26", "abr/26", "mai/26", "jun/26", "jul/26"], "Favorável": [56, 58, 44, 44, 38, 35, 40, 39, 34], "Desfavorável": [25, 24, 41, 48, 48, 51, 45, 46, 48], "NS/NR": [19, 18, 15, 8, 14, 14, 15, 15, 18]}, "note": "Série longa. Em jul/26 o desfavorável (48) supera o favorável (34)."},
+    {"supp_page": 31, "questionnaire": "Q91", "slug": "def_pol", "question_registered": "Nessa escala de posições políticas, em qual grupo você se encaixa?", "slide_title": "Na escala de posições políticas, em qual grupo você se encaixa?", "values": {"Lulista": 19, "Esquerda não Lulista": 13, "Independente": 33, "Direita não Bolsonarista": 21, "Bolsonarista": 12, "NS/NR": 2}, "already_public": true, "note": "Já publicada no deck principal; não altera a contagem."}
+  ],
+  "candeloro2_verification": {
+    "author": "Marcos Paulo Candeloro (cientista político)",
+    "scope": "Cada alegação verificada contra o PDF Quaest_Tarifas_072026.pdf, com página.",
+    "claims": [
+      {
+        "id": "a",
+        "claim": "Pergunta 'Lula acusa... Flávio nega... com quem você concorda mais?' com Lula como acusador ativo e Flávio como réu que nega.",
+        "verdict": "CONFIRMADA",
+        "page": 11,
+        "questionnaire": "Q60",
+        "evidence": "Rodapé do slide: 'Lula acusa Flávio Bolsonaro de ter pedido o tarifaço contra o Brasil. Flávio nega e diz que pediu a Trump para não taxar o país.' Lula é acusador ('acusa'); Flávio é réu ('nega').",
+        "refinement": "Mais grave que o alegado: o slide DIVERGE do instrumento registrado. O questionário (Q60) diz 'o governo Lula AFIRMA que Flávio APOIOU o tarifaço'. O deck público endurece para 'Lula ACUSA Flávio de ter PEDIDO'. A versão exibida é mais carregada que a registrada sob BR-07181/2026."
+      },
+      {
+        "id": "b",
+        "claim": "Pergunta seguinte: versão Lula = 'retaliação ao Pix' vs versão Flávio reduzida.",
+        "verdict": "CONFIRMADA",
+        "page": 13,
+        "questionnaire": "Q61",
+        "evidence": "Título da página 13: 'você concorda com Lula que foram pelo Pix, ou com Flávio que foram pelo que Lula fala?'. A versão de Lula fica concreta ('pelo Pix'); a de Flávio é reduzida a 'pelo que Lula fala'.",
+        "refinement": "A assimetria está no TÍTULO da página de recorte (13). Na página de topline (12) e no rodapé, o registrado é simétrico ('causadas pelas declarações de Lula contra os Estados Unidos'). A redução aparece no texto de maior destaque, não no rodapé técnico."
+      },
+      {
+        "id": "c",
+        "claim": "57% não sabiam da viagem de Flávio aos EUA e em seguida opinam se ele tem força para convencer Trump.",
+        "verdict": "CONFIRMADA",
+        "page": "15-16",
+        "questionnaire": "Q63 → Q64",
+        "evidence": "Página 15 (Q63): 'Sabia que Flávio foi aos EUA...?' Não = 57, Sim = 43. Página 16 (Q64), imediatamente seguinte: 'Flávio tem força para convencer Trump a rever as tarifas?' Sim 34 / Não 58 / NS-NR 8. A sequência Q63→Q64 é idêntica no questionário e no deck.",
+        "refinement": "Exatamente 57% declararam não saber da viagem; a pergunta imediatamente posterior pede juízo sobre a 'força' de Flávio no episódio que a maioria acabara de dizer desconhecer."
+      },
+      {
+        "id": "d",
+        "claim": "Pergunta eleitoral 'em função do novo aumento de tarifas, sua intenção se aproxima mais de Lula, Flávio ou outro?' com título 'O tarifaço aumenta vontade de votar em quem?' e percentuais ~iguais à intenção de voto geral da rodada (Lula 40/45).",
+        "verdict": "CONFIRMADA",
+        "page": 18,
+        "questionnaire": "Q65",
+        "evidence": "Título: 'O tarifaço aumenta vontade de votar em quem?'. Rodapé: 'Em função do novo aumento de tarifas... sua intenção de voto hoje se aproxima mais de: Lula; Flávio Bolsonaro; outro candidato?'. Valores jul/26: Lula 42, Flávio 27, Outro 23, NS-NR 8.",
+        "computation": {
+          "lula_tariff_vs_1T": "42 vs 40 (Δ +2, dentro do arredondamento/MOE)",
+          "flavio_tariff_vs_1T": "27 vs 28 (Δ −1)",
+          "lula_tariff_vs_2T": "42 vs 45 (Δ −3)",
+          "reading": "A intenção 'atribuída à tarifa' reproduz a intenção de 1º turno da rodada. Uma pergunta que devolve o basal não demonstra o efeito causal que o título afirma. Além disso o slide reescreveu o Q65 registrado ('fazem você ter mais vontade de votar em') como intenção de voto ('se aproxima mais de'), trocando um empurrão auto-relatado por uma releitura da intenção."
+        }
+      },
+      {
+        "id": "e",
+        "claim": "Oscilações jun→jul de 4-5 p.p. em recortes com margens declaradas de 4-6.",
+        "verdict": "CONFIRMADA (e subestimada)",
+        "page": "5, 13, 19",
+        "evidence": "A tabela de margens (p.5) declara 3-6 p.p. por subgrupo (posicionamento político 4-6). Nos recortes (p.13 Q61 e p.19 Q65) as oscilações jun→jul chegam a 7-10 p.p.",
+        "computation": {
+          "diff_moe_rule": "A margem da DIFERENÇA entre dois meses ≈ 1,41 × margem única (amostras independentes). margem 4 → dif ~5,7; margem 5 → dif ~7,1; margem 6 → dif ~8,5.",
+          "swings_exceeding_diff_margin": [
+            "Direita não Bolsonarista, Q61, Flávio 75→67 = −8 (margem 5; dif ~7,1), excede",
+            "Direita não Bolsonarista, Q65, Flávio 70→60 = −10 (margem 5; dif ~7,1), excede",
+            "Direita não Bolsonarista, Q65, Outro 19→29 = +10 (margem 5; dif ~7,1), excede",
+            "Independente, Q65, Outro 45→38 = −7 (margem 4; dif ~5,7), excede",
+            "Independente, Q65, Lula 26→33 = +7 (margem 4; dif ~5,7), excede"
+          ],
+          "reading": "Candeloro falou em 4-5 p.p.; as oscilações reais chegam a 10 p.p. e cinco delas excedem até a margem inflada da diferença. Em subgrupos suavizados por MRP, isso reflete deriva de modelo ou volatilidade que a margem única não comporta. A alegação é confirmada e conservadora."
+        }
+      },
+      {
+        "id": "f",
+        "claim": "Ficha técnica declara MRP para subgrupos, apresentados com a mesma tipografia de dados observados.",
+        "verdict": "CONFIRMADA",
+        "page": "4, 5, 13, 19",
+        "evidence": "Página 4: 'complementarmente, usamos MODELO DE MRP PARA ESTIMATIVAS DE SUBGRUPOS DA POPULAÇÃO.' As estimativas de subgrupo (p.13, p.19) usam a mesma tipografia de gráfico de linhas dos toplines nacionais observados (p.11, p.12, p.18); nenhum marcador visual distingue modelado de observado. A tabela da página 5 atribui uma 'margem de erro' única por subgrupo, emprestando o vocabulário do erro amostral a estimativas de modelo.",
+        "refinement": "O leitor não tem como saber, no gráfico, onde termina a observação e começa o modelo. A margem única por recorte reforça a leitura de que subgrupos são medidos, não estimados."
+      }
+    ]
+  },
+  "new_findings": [
+    {
+      "rank": 1,
+      "label": "Fato + Inferência",
+      "title": "O texto publicado diverge do instrumento registrado (Q60 e Q65)",
+      "detail": "O questionário registrado sob BR-07181/2026 e o deck público não trazem a mesma pergunta. Q60 registrado: 'o governo Lula AFIRMA que Flávio APOIOU o tarifaço'; slide: 'Lula ACUSA Flávio de ter PEDIDO o tarifaço'. Q65 registrado: 'fazem você ter mais vontade de votar em'; rodapé do slide: 'sua intenção de voto hoje se aproxima mais de'. As duas reformulações são direcionalmente carregadas: uma transforma 'afirmar/apoiar' em 'acusar/pedir', a outra troca um empurrão auto-relatado por uma releitura de intenção de voto sob manchete causal. O instrumento em registro é mais brando do que o instrumento mostrado ao público.",
+      "severity": "grave"
+    },
+    {
+      "rank": 2,
+      "label": "Fato + Inferência + Hipótese",
+      "title": "'Temáticos' no plural, 'Novo' no template e resíduo do registro de junho: indício de série e de release fatiado",
+      "detail": "Metadado de título: 'Capas_Tematicos_Genial_Novo_Julho/26' (plural, 'Novo'). Criado em 16/07 00:41Z, exportado do Google e reimpresso em macOS Quartz. Na página 4, sob o cabeçalho visível BR-07181/2026 (julho), a camada de texto carrega BR-07661/2026, o registro de JUNHO: resíduo de template reaproveitado. Fato: template de suplemento temático reutilizado entre rodadas. Inferência: o instrumento da rodada é liberado em fatias temáticas, pergunta a pergunta, depois do ciclo de notícia. Hipótese: o plural 'Temáticos' aponta para outros suplementos por vir na mesma rodada (imagem, economia). A capa, ao contrário do deck principal (que trazia 'JUNHO/2026' errado), está corretamente datada 'JULHO 2026'.",
+      "severity": "alta"
+    },
+    {
+      "rank": 3,
+      "label": "Fato",
+      "title": "Q62 (patriotismo) é o único item do bloco tarifário ainda retido; e NS/NR some das perguntas de conhecimento",
+      "detail": "O suplemento publica 8 dos 9 itens do bloco EUA/tarifas. O único retido é Q62 (representa_patriotismo_hoje): 'Quem representa melhor o discurso de patriotismo e defesa dos interesses do Brasil hoje? Flávio Bolsonaro / Lula'. É justamente o item que arma um duelo direto Flávio x Lula sobre 'defender o Brasil'. Somado a isso, o NS/NR é removido dos gráficos das duas perguntas de conhecimento (Q58, p.7; Q63, p.15), forçando um binário Sim/Não (43/57 e 62/38). Onde a resposta 'não sei' importaria menos ao enquadramento, ela aparece (Q59, Q64, Q57); nas de conhecimento, some.",
+      "severity": "média"
+    },
+    {
+      "rank": 4,
+      "label": "Fato + Inferência",
+      "title": "Cronologia: campo antes, tarifa depois, publicação depois",
+      "detail": "Fato: o campo correu de 10 a 13/07 (ficha) e o suplemento foi criado em 16/07 00:41Z (metadado). Inferência (dependente da data de confirmação da tarifa, aqui tomada como contexto do briefing, 15/07): o instrumento tratou como fato consumado ('esse novo tarifaço', 'o novo aumento de tarifas') um episódio que ainda se firmava durante o campo, e o publicou depois, sob manchetes que assumem o tarifaço como dado. A sequência temporal não prova intenção; documenta que a medição precede a consolidação do fato que ela pressupõe."
+    }
+  ],
+  "limits": [
+    "Sem microdados por respondente, pesos finais ou bases não ponderadas por subgrupo.",
+    "As estimativas de subgrupo são declaradas como MRP; sua incerteza real depende do modelo, não divulgado.",
+    "A data de confirmação oficial da tarifa é tratada como contexto do briefing, não verificada de forma independente neste dossiê.",
+    "Divergência entre instrumento registrado e slide é Fato textual; a intenção por trás dela não é afirmada.",
+    "Menção a enquadramento carregado não estabelece fraude: o veredito segue prova de opacidade, não de fraude."
+  ]
+}

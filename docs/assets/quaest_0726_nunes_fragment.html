@@ -1,0 +1,207 @@
+<!-- Fragmento autocontido: o dossie Nunes calibrado + mapa de reacoes esquerda x direita (Genial/Quaest 07/2026).
+     Dark editorial. Fraunces / IBM Plex. Sem dependencias externas. Classes escopadas em .qnunes. -->
+<section class="qnunes" id="quaest-nunes">
+  <style>
+    .qnunes{
+      --ink:#100f0d; --coal:#1a1917; --paper:#f4f0e6; --paper-2:#e8e1d2;
+      --signal:#e94935; --acid:#d7ee3f; --cyan:#42c5d5; --good:#63c39a; --warn:#e0a63c;
+      --muted:#a49c8e; --line:rgba(244,240,230,.14);
+      --display:"Fraunces",Georgia,serif; --sans:"IBM Plex Sans Condensed",Arial,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+      background:var(--ink); color:var(--paper);
+      font-family:var(--display); line-height:1.55;
+      padding:clamp(22px,4vw,56px); border-radius:6px;
+      background-image:linear-gradient(rgba(244,240,230,.028) 1px,transparent 1px);
+      background-size:100% 30px;
+    }
+    .qnunes *{box-sizing:border-box;}
+    .qnunes .wrap{width:min(1180px,100%);margin-inline:auto;}
+    .qnunes .mono{font-family:var(--mono);}
+    .qnunes .sans{font-family:var(--sans);}
+    .qnunes .kicker{font:600 .72rem/1.3 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--acid);display:flex;align-items:center;gap:12px;}
+    .qnunes .kicker::before{content:"";width:44px;height:5px;background:var(--acid);}
+    .qnunes h2{font-size:clamp(1.9rem,4.2vw,3.1rem);line-height:1.03;margin:.5em 0 .3em;font-weight:600;letter-spacing:-.01em;}
+    .qnunes h2 em{font-style:italic;color:var(--signal);}
+    .qnunes .lede{max-width:64ch;color:#e9e3d5;font-size:clamp(1rem,1.5vw,1.18rem);}
+    .qnunes .tag{display:inline-block;font:600 .6rem/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:4px 7px;border-radius:3px;vertical-align:middle;}
+    .qnunes .t-fato{background:rgba(99,195,154,.16);color:var(--good);border:1px solid rgba(99,195,154,.4);}
+    .qnunes .t-inf{background:rgba(66,197,213,.14);color:var(--cyan);border:1px solid rgba(66,197,213,.4);}
+    .qnunes .t-hip{background:rgba(224,166,60,.14);color:var(--warn);border:1px solid rgba(224,166,60,.4);}
+    .qnunes .rule{height:1px;background:var(--line);margin:38px 0;}
+    .qnunes .sec-label{font:600 .74rem/1.3 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:18px;}
+    .qnunes a{color:var(--cyan);text-decoration-color:rgba(66,197,213,.4);text-underline-offset:3px;}
+    .qnunes .foot{font-family:var(--sans);font-size:.78rem;color:var(--muted);margin-top:22px;line-height:1.55;}
+
+    /* Trajetoria strip */
+    .qnunes .traj{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0;border:1px solid var(--line);border-radius:6px;overflow:hidden;}
+    .qnunes .traj .st{padding:15px 16px;border-right:1px solid var(--line);}
+    .qnunes .traj .st:last-child{border-right:none;}
+    .qnunes .traj .yr{font:600 .68rem/1 var(--mono);color:var(--acid);letter-spacing:.06em;}
+    .qnunes .traj .wt{font-family:var(--sans);font-weight:600;font-size:.88rem;margin:7px 0 3px;color:#efe9db;}
+    .qnunes .traj .ws{font-size:.78rem;color:#bdb6a7;line-height:1.35;}
+
+    /* Ledger of allegations */
+    .qnunes .claims{display:grid;gap:14px;}
+    .qnunes .claim{border:1px solid var(--line);border-left:4px solid var(--warn);border-radius:5px;padding:16px 18px;background:rgba(244,240,230,.02);}
+    .qnunes .claim.strong-fact{border-left-color:var(--good);}
+    .qnunes .claim.weak{border-left-color:var(--signal);}
+    .qnunes .claim .ch{display:flex;flex-wrap:wrap;gap:8px;align-items:baseline;justify-content:space-between;}
+    .qnunes .claim .cq{font-size:1.02rem;font-weight:600;color:#f4f0e6;max-width:62ch;line-height:1.28;}
+    .qnunes .claim .cb{font-family:var(--sans);font-size:.9rem;color:#ccc5b6;margin-top:9px;line-height:1.5;max-width:78ch;}
+    .qnunes .grade{font:600 .58rem/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:3px 6px;border-radius:3px;border:1px solid var(--line);color:var(--muted);white-space:nowrap;}
+    .qnunes .grade.g-forte{color:var(--good);border-color:rgba(99,195,154,.4);}
+    .qnunes .grade.g-fraca{color:var(--signal);border-color:rgba(233,73,53,.45);}
+
+    /* Party pills */
+    .qnunes .parties{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 2px;}
+    .qnunes .pp{font:600 .72rem/1 var(--mono);letter-spacing:.04em;padding:7px 10px;border-radius:3px;border:1px solid var(--line);color:#ded8ca;}
+    .qnunes .pp.pt{color:var(--signal);border-color:rgba(233,73,53,.5);}
+    .qnunes .pp.dir{color:var(--cyan);border-color:rgba(66,197,213,.4);}
+
+    /* Reaction map: two columns */
+    .qnunes .rmap{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+    .qnunes .rcol{border:1px solid var(--line);border-radius:6px;padding:16px;}
+    .qnunes .rcol.left{border-top:4px solid var(--signal);}
+    .qnunes .rcol.right{border-top:4px solid var(--cyan);}
+    .qnunes .rcol h4{font-family:var(--sans);font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 4px;font-weight:600;}
+    .qnunes .rcol .rsum{font-family:var(--sans);font-size:.82rem;color:#cfc8ba;margin:0 0 14px;line-height:1.45;}
+    .qnunes .rx{padding:11px 0;border-top:1px solid var(--line);}
+    .qnunes .rx:first-of-type{border-top:none;}
+    .qnunes .rx .rhead{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap;}
+    .qnunes .rx .rwho{font-family:var(--sans);font-weight:600;font-size:.86rem;color:#efe9db;}
+    .qnunes .rx .rdate{font:600 .64rem/1 var(--mono);color:var(--acid);}
+    .qnunes .rx .rkind{font:600 .58rem/1 var(--mono);letter-spacing:.05em;text-transform:uppercase;padding:2px 5px;border-radius:3px;border:1px solid var(--line);color:var(--muted);}
+    .qnunes .rx .rk-atk{color:var(--signal);border-color:rgba(233,73,53,.45);}
+    .qnunes .rx .rk-amp{color:var(--good);border-color:rgba(99,195,154,.4);}
+    .qnunes .rx .rk-neu{color:var(--warn);border-color:rgba(224,166,60,.4);}
+    .qnunes .rx .rq{font-size:.9rem;color:#ded8ca;margin-top:6px;line-height:1.42;max-width:60ch;}
+    .qnunes .rx .rq i{color:#bdb6a7;}
+
+    .qnunes .verdict{border:1px solid rgba(233,73,53,.4);border-radius:6px;padding:20px 22px;margin-top:8px;background:linear-gradient(180deg,rgba(233,73,53,.07),rgba(233,73,53,.02));}
+    .qnunes .verdict b.vt{display:block;font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--signal);margin-bottom:10px;}
+    .qnunes .verdict p{margin:8px 0;font-size:.96rem;color:#e6e0d2;max-width:82ch;}
+    .qnunes .callout{border-left:3px solid var(--acid);padding:14px 18px;margin:8px 0;background:rgba(215,238,63,.05);font-size:1.02rem;color:#efe9db;}
+    .qnunes .callout cite{display:block;margin-top:8px;font-family:var(--mono);font-size:.7rem;color:var(--muted);font-style:normal;letter-spacing:.04em;}
+
+    @media (max-width:720px){
+      .qnunes .rmap{grid-template-columns:1fr;}
+      .qnunes .traj .st{border-right:none;border-bottom:1px solid var(--line);}
+    }
+  </style>
+
+  <div class="wrap">
+    <p class="kicker mono">Efeito de casa &middot; o retrato do CEO &middot; BR-07181/2026</p>
+    <h2>&ldquo;Petista&rdquo; é a acusação.<br>O documento diz <em>fornecedor</em>.</h2>
+    <p class="lede sans">O analista Cláudio Dantas chama Felipe Nunes de &ldquo;petista&rdquo;. Testamos a hipótese com a biografia oficial,
+      o Lattes e as reações datadas. O que sobra depois da perícia: um consultor que já atendeu <b>dez partidos</b> de todo o espectro,
+      atacado como &ldquo;pró-Lula&rdquo; pela direita e como &ldquo;mercado&rdquo; pela esquerda. O vínculo forte de hoje não é o PT: é a Globo.</p>
+
+    <div class="rule"></div>
+
+    <!-- 1 · TRAJETORIA -->
+    <p class="sec-label mono">1 &middot; Trajetória: academia, não militância <span class="tag t-fato">FATO</span></p>
+    <div class="traj">
+      <div class="st"><div class="yr mono">2002&ndash;09</div><div class="wt sans">UFMG</div><div class="ws">Ciências Sociais e mestrado em Ciência Política (orient. Fátima Anastasia).</div></div>
+      <div class="st"><div class="yr mono">2009&ndash;15</div><div class="wt sans">UCLA</div><div class="ws">Doutorado em Ciência Política + mestrado em Estatística (orient. Michael Thies). Swar Prize 2013.</div></div>
+      <div class="st"><div class="yr mono">2014&ndash;16</div><div class="wt sans">UC San Diego</div><div class="ws">Professor na School of Global Policy and Strategy.</div></div>
+      <div class="st"><div class="yr mono">2016&ndash;25</div><div class="wt sans">UFMG + Quaest</div><div class="ws">Professor; diretor do CEL. Cofunda a Quaest (2016).</div></div>
+      <div class="st"><div class="yr mono">2025&ndash;&rarr;</div><div class="wt sans">FGV EESP + Globo</div><div class="ws">Professor na FGV; comentarista Globo/GloboNews; conselheiro da Fundação Roberto Marinho.</div></div>
+    </div>
+    <p class="foot sans">Fonte: Lattes via <a href="https://www.escavador.com/sobre/4022805/felipe-nunes-dos-santos">Escavador</a> (coletado 24/05/2026) e perfil <a href="https://campbrasil.com.br/team/felipe-nunes/">CAMP</a>. Coautor de <i>Biografia do Abismo</i> (HarperCollins, semifinalista Jabuti 2024) com Thomas Traumann, ex-Secom de Dilma: livro que é análise acadêmica de polarização, não panfleto.</p>
+
+    <div class="rule"></div>
+
+    <!-- 2 · O FATO DECISIVO: DEZ PARTIDOS -->
+    <p class="sec-label mono">2 &middot; O fato que derruba a redução: dez partidos-clientes <span class="tag t-fato">FATO</span></p>
+    <p class="sans" style="max-width:74ch;color:#ded8ca;font-size:.98rem;margin:0 0 12px">A própria biografia oficial de Nunes (plataforma UM BRASIL; perfil CAMP) declara que ele
+      <b>&ldquo;coordenou pesquisas para vários partidos e governos&rdquo;</b>. O PT é <b>um</b> entre dez, ao lado de siglas de centro e direita.
+      Quem atende dez partidos é fornecedor, não militante de nenhum.</p>
+    <div class="parties">
+      <span class="pp pt">PT</span><span class="pp dir">PSDB</span><span class="pp dir">DEM</span><span class="pp dir">UNIÃO BRASIL</span>
+      <span class="pp dir">PATRIOTAS</span><span class="pp">PSB</span><span class="pp">PSD</span><span class="pp">PV</span><span class="pp">PROS</span><span class="pp">AVANTE</span>
+    </div>
+    <p class="foot sans">Em vermelho, o PT (a sigla da acusação); em ciano, siglas de centro e direita que também foram clientes. Fonte: <a href="https://umbrasil.com/entrevistados/felipe-nunes/">UM BRASIL</a>. Em 2014, consultoria a seis campanhas de governador e uma presidencial (não nomeadas).</p>
+
+    <div class="rule"></div>
+
+    <!-- 3 · A HIPOTESE PETISTA, DECOMPOSTA -->
+    <p class="sec-label mono">3 &middot; A hipótese &ldquo;petista&rdquo; de Dantas, decomposta</p>
+    <div class="claims">
+      <div class="claim weak">
+        <div class="ch"><span class="cq">&ldquo;Trabalhou na campanha de Dilma Rousseff&rdquo;</span><span class="grade g-fraca">Hipótese &middot; evidência fraca</span></div>
+        <div class="cb">Não localizada em fonte primária. A biografia confirma consultoria a &ldquo;uma campanha presidencial&rdquo; em 2014, sem nomeá-la. Plausível por cronologia; não comprovada como &ldquo;campanha da Dilma&rdquo;.</div>
+      </div>
+      <div class="claim weak">
+        <div class="ch"><span class="cq">&ldquo;Trabalhou na campanha de Fernando Pimentel (PT-MG)&rdquo;</span><span class="grade g-fraca">Hipótese &middot; evidência fraca</span></div>
+        <div class="cb">Não localizada em documento. Compatível com o perfil (mineiro, seis campanhas estaduais em 2014), mas Dantas não apresenta prova. Ausência no Lattes não é negativa: consultoria raramente entra em currículo acadêmico.</div>
+      </div>
+      <div class="claim strong-fact">
+        <div class="ch"><span class="cq">&ldquo;Escreveu livro com Thomas Traumann, ex-Secom de Dilma&rdquo;</span><span class="grade g-forte">Fato (o livro) &middot; inferência fraca (o &ldquo;petismo&rdquo;)</span></div>
+        <div class="cb">O livro existe; Traumann foi ministro da Secom de Dilma (2011&ndash;14): <span class="tag t-fato">FATO</span>. Mas a obra é análise acadêmica de polarização, semifinalista do Jabuti, e Traumann é jornalista crítico do PT. Coautoria não converte Nunes em petista: <span class="tag t-inf">INFERÊNCIA</span>.</div>
+      </div>
+      <div class="claim weak">
+        <div class="ch"><span class="cq">&ldquo;É querido no PT / é petista&rdquo;</span><span class="grade g-fraca">Inferência não sustentada</span></div>
+        <div class="cb">Contraditada pelos dez partidos-clientes, por declarações públicas desfavoráveis a Lula (&ldquo;houve uma quebra de confiança entre o eleitorado e Lula&rdquo;, citado pelo Brasil247) e pelo fato de ser atacado como &ldquo;mercado/Faria Lima&rdquo; pela esquerda. Rótulo de comentarista de campo, não conclusão documental.</div>
+      </div>
+    </div>
+    <p class="foot sans">A alegação original: Cláudio Dantas, coluna <a href="https://claudiodantas.com.br/lula-as-asas-de-cera-e-uma-pesquisa-genial/">&ldquo;Lula, as Asas de Cera e uma Pesquisa Genial&rdquo;</a>, 20/08/2025: &ldquo;Felipe Nunes, da Quaest, é bastante querido no PT. Trabalhou nas campanhas de Dilma Rousseff e Fernando Pimentel.&rdquo;</p>
+
+    <div class="rule"></div>
+
+    <!-- 4 · MAPA DE REACOES -->
+    <p class="sec-label mono">4 &middot; A rodada de julho: quem desconfiou e quem comemorou</p>
+    <div class="rmap">
+      <div class="rcol right">
+        <h4>Direita: desconfiou e atacou</h4>
+        <p class="rsum sans">A desconfiança real e datada da rodada de 15/07 veio da direita e de uma pesquisa rival.</p>
+        <div class="rx">
+          <div class="rhead"><span class="rwho sans">Flávio Bolsonaro</span><span class="rdate mono">15/07/26</span><span class="rkind rk-atk">ataque</span></div>
+          <div class="rq">Invocou o &ldquo;selo de acerto&rdquo; do TSE: <i>&ldquo;talvez, se já existisse, teriam vergonha de publicar essa pesquisa da Quaest hoje.&rdquo;</i> Ataque do alvo direto da queda: indício fraco.</div>
+        </div>
+        <div class="rx">
+          <div class="rhead"><span class="rwho sans">Cláudio Dantas</span><span class="rdate mono">16/07/26</span><span class="rkind rk-atk">desconfiança + rótulo</span></div>
+          <div class="rq"><i>&ldquo;A PoderData/Aya... desmontando o resultado da Quaest. O instituto de Felipe Nunes, que já colaborou com campanhas petistas...&rdquo;</i></div>
+        </div>
+        <div class="rx">
+          <div class="rhead"><span class="rwho sans">Rogério Amorim</span><span class="rdate mono">22/08/25</span><span class="rkind rk-atk">rótulo &ldquo;petista&rdquo;</span></div>
+          <div class="rq"><i>&ldquo;Esse aí nas fotos com os petistas é Felipe Nunes... aquele instituto que sempre coloca o Lula como vencedor.&rdquo;</i></div>
+        </div>
+        <div class="rx">
+          <div class="rhead"><span class="rwho sans">PoderData/Aya</span><span class="rdate mono">16/07/26</span><span class="rkind rk-neu">divergência</span></div>
+          <div class="rq">45&times;43 (empate técnico) contra 45&times;37 da Quaest. Usada para &ldquo;isolar&rdquo; a Quaest. O cap. 11 já documenta: o Flávio da Quaest é o mais baixo do campo.</div>
+        </div>
+      </div>
+      <div class="rcol left">
+        <h4>Esquerda: acreditou e defendeu</h4>
+        <p class="rsum sans">Nesta rodada favorável a Lula, a esquerda amplificou e até defendeu a Quaest. &ldquo;Nem a esquerda acreditou&rdquo; não se sustenta aqui.</p>
+        <div class="rx">
+          <div class="rhead"><span class="rwho sans">O Cafezinho</span><span class="rdate mono">15/07/26</span><span class="rkind rk-amp">amplificação</span></div>
+          <div class="rq"><i>&ldquo;Quaest: Lula abre 8 pontos sobre Flávio no 2º turno.&rdquo;</i> A esquerda comemorou.</div>
+        </div>
+        <div class="rx">
+          <div class="rhead"><span class="rwho sans">Brasil247</span><span class="rdate mono">15/07/26</span><span class="rkind rk-amp">amplificação</span></div>
+          <div class="rq"><i>&ldquo;Com 45%, Lula amplia vantagem... Lula avança forte entre os independentes.&rdquo;</i></div>
+        </div>
+        <div class="rx">
+          <div class="rhead"><span class="rwho sans">Revista Fórum</span><span class="rdate mono">15/07/26</span><span class="rkind rk-amp">defesa</span></div>
+          <div class="rq"><i>&ldquo;Em desespero, Flávio Bolsonaro ataca pesquisa Quaest.&rdquo;</i> A esquerda defendeu o instituto contra a direita.</div>
+        </div>
+        <div class="rx">
+          <div class="rhead"><span class="rwho sans">... mas ataca noutras rodadas</span><span class="rdate mono">2024&ndash;25</span><span class="rkind rk-atk">o outro lado</span></div>
+          <div class="rq">Brasil247 (Bepe Damasco, 03/04/25): <i>&ldquo;As estranhas pesquisas da Quaest.&rdquo;</i> Revista Fórum (10/07/24): a Quaest como parte da <i>&ldquo;mídia corporativa e agentes do mercado financeiro&rdquo;</i>. Quando o dado desagrada, a esquerda ataca, como &ldquo;mercado&rdquo;, não como &ldquo;petista&rdquo;.</div>
+        </div>
+      </div>
+    </div>
+    <p class="foot sans">Contraponto independente: o analista Thiago Sussekind <a href="https://thiagosussekind.substack.com/p/corrida-presidencial-breve-analise">validou</a> a rodada (&ldquo;a recuperação de Lula é real, verificável e teimosamente incompleta&rdquo;), reservando a crítica de margem a BTG/Nexus e Atlas, não a Quaest. Ninguém crível tratou o resultado como fraude.</p>
+
+    <div class="rule"></div>
+
+    <!-- VEREDITO -->
+    <div class="verdict">
+      <b class="vt mono">Veredito calibrado: o dossiê Nunes</b>
+      <p><span class="tag t-fato" style="margin-right:6px">Fato</span>Nunes/Quaest já prestou serviço ao PT, como a outros nove partidos (PSDB, DEM, União Brasil, Patriotas incluídos), e tem proximidade profissional com figuras da órbita petista (Traumann).</p>
+      <p><span class="tag t-hip" style="margin-right:6px">Hipótese fraca</span>As campanhas específicas de Dilma e Pimentel, alegadas por Dantas, não foram documentadas em fonte primária; a pecha &ldquo;petista&rdquo; é retórica de campo, contraditada pela lista de clientes e por falas públicas contra Lula.</p>
+      <p><span class="tag t-inf" style="margin-right:6px">Inferência</span>O vínculo forte, atual e documentável de Nunes não é partidário: é comercial e institucional, e aponta para a <b>Globo</b>. A redução &ldquo;petista&rdquo; desvia do conflito que o dossiê já centra: concessão pública, verba federal e exclusividade de 200+ pesquisas. Um instituto atacado pelos dois lados não é capturado por um deles.</p>
+    </div>
+    <div class="callout">Um instrumento se audita pelo formulário, um autor se audita pelo contrato. O de Nunes hoje não está assinado pelo PT: está assinado pela Globo.<cite>Leitura de efeito de casa &middot; brasil.arvor.co &middot; 17 de julho de 2026</cite></div>
+  </div>
+</section>

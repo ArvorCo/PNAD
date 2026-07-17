@@ -1,0 +1,170 @@
+<!-- Fragmento autocontido: dupla invisibilidade do crime organizado na Genial/Quaest jul/2026.
+     Perna 1 (cobertura): setores de favela sorteados vs esperado sob PPT-por-populacao (IBGE Censo 2022).
+     Perna 2 (agenda): zero itens de seguranca publica no instrumento de 101 perguntas.
+     Cole no dossie. Sem dependencias externas. NAO editar quaest_0726.html/assets a partir daqui.
+     BLINDAGEM: contas de sorteio = FATO; atribuicao a seguranca = INFERENCIA/HIPOTESE; efeito no placar nao calculado. -->
+<section class="qfv" data-qfv="responsive">
+  <style>
+    .qfv{
+      --qfv-ink:#11100f; --qfv-fg:#efe9df; --qfv-muted:#a49c8e;
+      --qfv-signal:#e94935; --qfv-acid:#d7ee3f; --qfv-cyan:#42c5d5;
+      --qfv-good:#63c39a; --qfv-warn:#e0a63c; --qfv-line:rgba(239,233,223,.13);
+      --qfv-disp:"Fraunces",Georgia,serif;
+      --qfv-sans:"IBM Plex Sans Condensed","Arial Narrow",Arial,sans-serif;
+      --qfv-mono:"IBM Plex Mono",ui-monospace,monospace;
+      background:var(--qfv-ink); color:var(--qfv-fg);
+      font-family:"IBM Plex Sans",var(--qfv-sans),system-ui,sans-serif;
+      max-width:1000px; margin:0 auto; padding:30px 30px 26px; border-radius:6px;
+      background-image:linear-gradient(rgba(239,233,223,.028) 1px,transparent 1px); background-size:100% 32px;
+    }
+    .qfv *{box-sizing:border-box}
+    .qfv-kicker{font:600 11px/1.4 var(--qfv-mono); letter-spacing:.18em; text-transform:uppercase;
+      color:var(--qfv-cyan); margin:0 0 8px; display:flex; align-items:center; gap:12px}
+    .qfv-kicker::before{content:""; width:44px; height:5px; background:var(--qfv-cyan)}
+    .qfv-title{font-family:var(--qfv-disp); font-weight:500; font-size:clamp(23px,3.6vw,34px);
+      line-height:1.08; margin:0 0 8px; letter-spacing:-.012em}
+    .qfv-title em{font-style:italic; color:var(--qfv-signal)}
+    .qfv-sub{font-size:14px; line-height:1.55; color:#cfc8bb; margin:0 0 22px; max-width:74ch}
+    .qfv-sub b{color:var(--qfv-fg); font-weight:600}
+    .qfv-leg{font:600 11px/1 var(--qfv-mono); letter-spacing:.15em; text-transform:uppercase;
+      color:var(--qfv-muted); margin:26px 0 12px; padding-bottom:7px; border-bottom:1px solid var(--qfv-line);
+      display:flex; align-items:center; gap:10px}
+    .qfv-leg .qfv-ln{color:var(--qfv-acid)}
+    /* national headline */
+    .qfv-head{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--qfv-line);
+      border:1px solid var(--qfv-line); border-radius:5px; overflow:hidden; margin:0 0 20px}
+    .qfv-cell{background:var(--qfv-ink); padding:15px 16px}
+    .qfv-cell b{display:block; font:600 clamp(1.9rem,4.4vw,2.7rem)/.95 var(--qfv-disp);
+      letter-spacing:-.03em; color:var(--qfv-fg); margin:0 0 4px}
+    .qfv-cell.obs b{color:var(--qfv-cyan)} .qfv-cell.exp b{color:var(--qfv-acid)}
+    .qfv-cell.def b{color:var(--qfv-warn)} .qfv-cell.p b{color:var(--qfv-fg)}
+    .qfv-cell span{font:500 11px/1.35 var(--qfv-sans); letter-spacing:.03em; text-transform:uppercase; color:var(--qfv-muted)}
+    /* capitals bars */
+    .qfv-bars{margin:4px 0 6px}
+    .qfv-brow{display:grid; grid-template-columns:132px 1fr 92px; align-items:center; gap:12px; padding:5px 0}
+    .qfv-bname{font:600 12.5px/1.2 var(--qfv-sans); color:var(--qfv-fg)}
+    .qfv-bname small{display:block; font:400 10px/1.1 var(--qfv-mono); color:var(--qfv-muted); letter-spacing:.02em}
+    .qfv-track{position:relative; height:20px; background:rgba(239,233,223,.05); border-radius:2px}
+    .qfv-exp{position:absolute; top:-3px; bottom:-3px; width:2px; background:var(--qfv-acid); z-index:3}
+    .qfv-exp::after{content:attr(data-v); position:absolute; top:-14px; left:50%; transform:translateX(-50%);
+      font:600 9px/1 var(--qfv-mono); color:var(--qfv-acid); white-space:nowrap}
+    .qfv-obs{position:absolute; top:0; bottom:0; left:0; background:var(--qfv-cyan); border-radius:2px; opacity:.82}
+    .qfv-bval{font:600 11.5px/1.3 var(--qfv-mono); color:var(--qfv-muted); text-align:right}
+    .qfv-bval b{color:var(--qfv-cyan)}
+    .qfv-legend{display:flex; flex-wrap:wrap; gap:8px 20px; margin:12px 0 2px; font:500 11px/1 var(--qfv-sans); color:var(--qfv-muted)}
+    .qfv-legend i{font-style:normal; display:inline-flex; align-items:center; gap:6px}
+    .qfv-sw{width:18px; height:9px; border-radius:2px; display:inline-block}
+    .qfv-sw.c{background:var(--qfv-cyan); opacity:.82} .qfv-sw.a{width:3px; height:13px; background:var(--qfv-acid)}
+    /* tags */
+    .qfv-tag{display:inline-block; font:600 9.5px/1 var(--qfv-sans); letter-spacing:.08em; text-transform:uppercase;
+      padding:3px 6px; border-radius:3px; vertical-align:middle}
+    .qfv-tag.fato{background:rgba(66,197,213,.15); color:#8fdbe6; border:1px solid rgba(66,197,213,.4)}
+    .qfv-tag.inf{background:rgba(164,156,142,.14); color:#c4bcae; border:1px solid rgba(164,156,142,.4)}
+    .qfv-tag.hip{background:rgba(224,166,60,.15); color:#e6c07a; border:1px solid rgba(224,166,60,.42)}
+    /* thematic leg */
+    .qfv-theme{display:grid; grid-template-columns:1fr 1fr; gap:26px; align-items:start; margin:6px 0 4px}
+    @media(max-width:640px){.qfv-theme{grid-template-columns:1fr}.qfv-head{grid-template-columns:1fr 1fr}.qfv-brow{grid-template-columns:104px 1fr 74px}}
+    .qfv-count{display:flex; flex-direction:column; gap:9px}
+    .qfv-crow{display:grid; grid-template-columns:1fr auto; align-items:center; gap:10px}
+    .qfv-ctrack{grid-column:1/-1; height:9px; background:rgba(239,233,223,.05); border-radius:2px; overflow:hidden}
+    .qfv-cfill{height:100%; border-radius:2px}
+    .qfv-clab{font:600 12.5px/1.2 var(--qfv-sans); color:var(--qfv-fg)}
+    .qfv-cn{font:600 15px/1 var(--qfv-mono)}
+    .qfv-zero{color:var(--qfv-signal)} .qfv-hi{color:var(--qfv-fg)}
+    .qfv-ctx{border:1px solid var(--qfv-line); border-radius:5px; padding:16px 18px; background:rgba(239,233,223,.02)}
+    .qfv-ctx .qfv-big{font:600 clamp(2rem,4.8vw,2.9rem)/.95 var(--qfv-disp); color:var(--qfv-signal); letter-spacing:-.03em}
+    .qfv-ctx .qfv-big small{font-size:.42em; color:var(--qfv-muted); letter-spacing:0}
+    .qfv-ctx p{font-size:12.5px; line-height:1.5; color:#cfc8bb; margin:8px 0 0}
+    .qfv-ctx p b{color:var(--qfv-fg)}
+    /* verdict */
+    .qfv-verdict{margin:22px 0 0; border:1px solid var(--qfv-line); border-left:3px solid var(--qfv-acid);
+      border-radius:5px; padding:16px 18px; background:rgba(215,238,63,.05)}
+    .qfv-verdict h4{margin:0 0 9px; font:600 11px/1.3 var(--qfv-mono); letter-spacing:.14em; text-transform:uppercase; color:var(--qfv-acid)}
+    .qfv-verdict p{font-size:13px; line-height:1.55; color:var(--qfv-fg); margin:0 0 8px}
+    .qfv-verdict p:last-child{margin-bottom:0}
+    .qfv-verdict b{font-weight:600}
+    .qfv-foot{font-size:11px; line-height:1.5; color:var(--qfv-muted); margin:16px 0 0; max-width:82ch}
+    .qfv-foot b{color:#cfc8bb; font-weight:600}
+    .qfv-num{font-family:var(--qfv-mono); color:var(--qfv-cyan); font-weight:600}
+  </style>
+
+  <p class="qfv-kicker">Autópsia territorial · dupla invisibilidade</p>
+  <h1 class="qfv-title">O crime organizado governa dezenas de milhões.<br>Na Quaest, ele não é <em>sorteado</em> nem <em>perguntado</em>.</h1>
+  <p class="qfv-sub">Duas invisibilidades, uma pesquisa. <b>Perna 1 — cobertura:</b> os 667 setores das duas rodadas incluem favelas, mas um pouco abaixo do que o próprio desenho declarado prevê. <b>Perna 2 — agenda:</b> um instrumento de 101 perguntas, com 22 menções a Michelle e 17 a tarifa, não dedica um único item à segurança pública. A primeira é um déficit leve e não conclusivo; a segunda é uma ausência total e verificável.</p>
+
+  <p class="qfv-leg"><span class="qfv-ln">01</span> Cobertura — favelas sorteadas × esperado sob PPT por população</p>
+
+  <div class="qfv-head">
+    <div class="qfv-cell obs"><b>47</b><span>setores de favela sorteados (jun+jul)</span></div>
+    <div class="qfv-cell exp"><b>56,0</b><span>esperados sob o sorteio declarado</span></div>
+    <div class="qfv-cell def"><b>−16%</b><span>déficit de ~9 setores</span></div>
+    <div class="qfv-cell p"><b>0,090</b><span>P(sortear ≤47) — não significativo</span></div>
+  </div>
+
+  <div class="qfv-bars">
+    <div class="qfv-brow">
+      <div class="qfv-bname">São Paulo <small>44 setores · 15,1% pop favela</small></div>
+      <div class="qfv-track"><div class="qfv-obs" style="width:13.6%"></div><div class="qfv-exp" style="left:15.1%" data-v="6,6"></div></div>
+      <div class="qfv-bval"><b>6</b> / 6,6</div>
+    </div>
+    <div class="qfv-brow">
+      <div class="qfv-bname">Rio de Janeiro <small>24 setores · 21,7% pop favela</small></div>
+      <div class="qfv-track"><div class="qfv-obs" style="width:16.7%"></div><div class="qfv-exp" style="left:21.7%" data-v="5,2"></div></div>
+      <div class="qfv-bval"><b>4</b> / 5,2</div>
+    </div>
+    <div class="qfv-brow">
+      <div class="qfv-bname">Salvador <small>8 setores · 42,7% pop favela</small></div>
+      <div class="qfv-track"><div class="qfv-obs" style="width:50%"></div><div class="qfv-exp" style="left:42.7%" data-v="3,4"></div></div>
+      <div class="qfv-bval"><b>4</b> / 3,4</div>
+    </div>
+    <div class="qfv-brow">
+      <div class="qfv-bname">Belém <small>6 setores · 57,2% pop favela</small></div>
+      <div class="qfv-track"><div class="qfv-obs" style="width:16.7%"></div><div class="qfv-exp" style="left:57.2%" data-v="3,4"></div></div>
+      <div class="qfv-bval"><b>1</b> / 3,4</div>
+    </div>
+    <div class="qfv-brow">
+      <div class="qfv-bname">Belo Horizonte <small>10 setores · 13,3% pop favela</small></div>
+      <div class="qfv-track"><div class="qfv-obs" style="width:0%"></div><div class="qfv-exp" style="left:13.3%" data-v="1,3"></div></div>
+      <div class="qfv-bval"><b>0</b> / 1,3</div>
+    </div>
+    <div class="qfv-brow">
+      <div class="qfv-bname">Brasília <small>10 setores · 7,1% pop favela</small></div>
+      <div class="qfv-track"><div class="qfv-obs" style="width:0%"></div><div class="qfv-exp" style="left:7.1%" data-v="0,7"></div></div>
+      <div class="qfv-bval"><b>0</b> / 0,7</div>
+    </div>
+  </div>
+  <div class="qfv-legend">
+    <i><span class="qfv-sw c"></span> setores de favela efetivamente sorteados</i>
+    <i><span class="qfv-sw a"></span> esperado sob PPT por população (Censo 2022)</i>
+    <span class="qfv-tag fato">Fato</span>
+  </div>
+  <p class="qfv-foot"><b>Como se lê:</b> a barra ciano é o observado; o traço amarelo é o esperado se o sorteio de setores por probabilidade proporcional à população — o método que a Quaest declara na ficha — não evitasse favelas. <b>São Paulo praticamente no alvo</b> (6 vs 6,6) e <b>Salvador acima</b> (4 vs 3,4) derrubam a versão forte de exclusão. O déficit se concentra em <b>Belém, Belo Horizonte, Brasília e Rio</b>. Isto audita o <b>sorteio publicado</b>, não o campo: substituições de domicílio por segurança, se ocorressem, não são observáveis sem microdados — e a ficha não as declara.</p>
+
+  <p class="qfv-leg"><span class="qfv-ln">02</span> Agenda — o instrumento não pergunta sobre segurança</p>
+
+  <div class="qfv-theme">
+    <div class="qfv-count">
+      <div class="qfv-crow"><span class="qfv-clab">Menções a Michelle</span><span class="qfv-cn qfv-hi">22</span></div>
+      <div class="qfv-ctrack"><div class="qfv-cfill" style="width:100%;background:#8b857a"></div></div>
+      <div class="qfv-crow"><span class="qfv-clab">Menções a tarifa/tarifaço</span><span class="qfv-cn qfv-hi">17</span></div>
+      <div class="qfv-ctrack"><div class="qfv-cfill" style="width:77%;background:#8b857a"></div></div>
+      <div class="qfv-crow"><span class="qfv-clab">Itens sobre segurança / crime organizado</span><span class="qfv-cn qfv-zero">0</span></div>
+      <div class="qfv-ctrack"><div class="qfv-cfill" style="width:2%;background:var(--qfv-signal)"></div></div>
+      <p class="qfv-foot" style="margin-top:12px"><b>Varredura dos 101 itens registrados:</b> zero ocorrências de segurança, violência, facção, tráfico, PCC, milícia, assalto, roubo ou homicídio. A palavra <b>“crime” aparece 1 vez</b> — nos crimes financeiros de Daniel Vorcaro/Banco Master; <b>“Polícia Federal” só 2 vezes</b>, nos roteiros lidos dos blocos Master e Jaques Wagner. <span class="qfv-tag fato">Fato</span></p>
+    </div>
+    <div class="qfv-ctx">
+      <div class="qfv-big">41,2%<small> · ≈68,7 mi</small></div>
+      <p>dos brasileiros de <b>16 anos ou mais</b> veem facções ou milícias no próprio bairro — <b>55,9% nas capitais</b>, universo onde a Quaest concentra o campo. <b>61,4%</b> desses dizem que os grupos influenciam as regras de convivência local.</p>
+      <p style="margin-top:10px">Datafolha/Fórum Brasileiro de Segurança Pública, mai/2026 — <b>mesma abordagem domiciliar, universo 16+ e n≈2.004</b> da própria Quaest. É um espelho metodológico: dá para medir o tema; a Quaest não o mediu.</p>
+      <p style="margin-top:10px">Segurança pública é o <b>problema #1 do país</b> em 2026 e superou a corrupção pela primeira vez na série Nexus/BTG — com preocupação igual entre eleitores de Lula e da direita. <span class="qfv-tag inf">Contexto</span></p>
+    </div>
+  </div>
+
+  <div class="qfv-verdict">
+    <h4>Veredito calibrado</h4>
+    <p><b>Hipótese forte refutada pela aritmética</b> <span class="qfv-tag inf">Inferência</span> — a amostra publicada inclui favelas a ~84% da taxa esperada pelo próprio desenho; não há zero absoluto nem exclusão sistemática. O déficit de ~9 setores (P=0,090) é leve e não conclusivo, e concentrado em poucas capitais. Qualquer domiciliar enfrenta áreas de acesso restrito; o diferencial auditável seria a Quaest <b>declarar ou não</b> substituições por segurança — e a ficha não declara nada a respeito.</p>
+    <p><b>O achado que sobrevive é a agenda por omissão</b> <span class="qfv-tag fato">Fato</span> — nenhum item sobre o tema que lidera as preocupações do eleitor e organiza a vida de dezenas de milhões, enquanto crises palacianas ganham dezenas de perguntas. A ausência é Fato; a razão é <span class="qfv-tag hip">Hipótese</span>: pode ser rodada focada em corrida e economia (leitura benigna), pode ser recorte de agenda conveniente ao contratante. O efeito no placar não foi calculado — sem microdados, seria conjectura.</p>
+  </div>
+
+  <p class="qfv-foot"><b>Fontes:</b> IBGE Censo 2022, Agregados por Setores Censitários (arquivo básico BR, CD_TIPO=1 = Favela e Comunidade Urbana, v0001); IBGE — 12.348 favelas, 16,4 mi de moradores (8,1% da população); Datafolha/FBSP mai/2026; ficha PesqEle BR-07181/2026; Quaest_Questionario_072026.pdf. Reprodução: <span class="qfv-num">scripts/quaest-favela-audit.py</span> → docs/assets/quaest_0726_favelas.json. brasil.arvor.co</p>
+</section>

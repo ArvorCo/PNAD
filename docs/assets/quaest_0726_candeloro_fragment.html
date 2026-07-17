@@ -1,0 +1,306 @@
+<!-- Fragmento autocontido: contraditório externo (crítica de Marcos Paulo Candeloro, "A PESQUISA COMO ENREDO").
+     Genial/Quaest jul/2026 (BR-07181/2026). Cole no dossiê quaest_0726.html.
+     Sem dependências externas. Paleta e tipografia alinhadas aos demais fragmentos do dossiê.
+     Calibragem Fato / Inferência / Hipótese preservada. NÃO editar quaest_0726.html a partir daqui. -->
+<section class="qcx" data-qcx="responsive">
+  <style>
+    .qcx{
+      --qcx-bg:#11100f; --qcx-bg2:#100f0d; --qcx-fg:#efe9e0; --qcx-muted:#8f887c;
+      --qcx-signal:#e94935; --qcx-cyan:#42c5d5; --qcx-acid:#d7ee3f;
+      --qcx-line:#2a2723; --qcx-panel:#161412;
+      background:transparent; color:var(--qcx-fg);
+      font-family:"IBM Plex Sans","Helvetica Neue",system-ui,sans-serif;
+      max-width:980px; margin:0 auto; padding:8px 0 6px; -webkit-font-smoothing:antialiased;
+    }
+    .qcx *{box-sizing:border-box}
+    .qcx-kicker{font:600 11px/1.4 "IBM Plex Mono",monospace; letter-spacing:.18em;
+      text-transform:uppercase; color:var(--qcx-cyan); margin:0 0 8px}
+    .qcx-title{font-family:"Fraunces","Georgia",serif; font-weight:500;
+      font-size:clamp(23px,4vw,36px); line-height:1.08; margin:0 0 10px; color:var(--qcx-fg)}
+    .qcx-title em{font-style:italic; color:var(--qcx-signal)}
+    .qcx-sub{font-size:14px; line-height:1.58; color:var(--qcx-muted); margin:0 0 6px; max-width:78ch}
+    .qcx-sub b{color:var(--qcx-fg); font-weight:600}
+    .qcx-credit{font:500 12px/1.5 "IBM Plex Mono",monospace; color:var(--qcx-muted); margin:6px 0 20px}
+    .qcx-credit b{color:var(--qcx-acid); font-weight:600}
+
+    .qcx-tag{display:inline-block; font:600 9.5px/1 "IBM Plex Mono",monospace;
+      letter-spacing:.1em; text-transform:uppercase; padding:3px 6px; border-radius:3px; vertical-align:middle}
+    .qcx-tag--fato{background:rgba(66,197,213,.14); color:#8fdbe6; border:1px solid rgba(66,197,213,.4)}
+    .qcx-tag--inf{background:rgba(215,238,63,.12); color:#c9dd6b; border:1px solid rgba(215,238,63,.35)}
+    .qcx-tag--hip{background:rgba(233,73,53,.13); color:#f0897b; border:1px solid rgba(233,73,53,.4)}
+
+    /* placar de vereditos */
+    .qcx-score{display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin:4px 0 26px}
+    @media(max-width:640px){.qcx-score{grid-template-columns:repeat(2,1fr)}}
+    .qcx-sc{background:var(--qcx-panel); border:1px solid var(--qcx-line); border-radius:6px; padding:13px 14px; text-align:left}
+    .qcx-sc b{display:block; font:700 27px/1 "Fraunces",serif; color:var(--qcx-fg); margin:0 0 4px}
+    .qcx-sc--conf b{color:var(--qcx-cyan)} .qcx-sc--parc b{color:var(--qcx-acid)}
+    .qcx-sc--novo b{color:var(--qcx-signal)} .qcx-sc--ref b{color:var(--qcx-fg)}
+    .qcx-sc span{font:500 10.5px/1.35 "IBM Plex Mono",monospace; color:var(--qcx-muted); text-transform:uppercase; letter-spacing:.06em}
+
+    .qcx-h3{font:600 11px/1.3 "IBM Plex Mono",monospace; letter-spacing:.16em;
+      text-transform:uppercase; color:var(--qcx-muted); margin:30px 0 12px;
+      padding-bottom:7px; border-bottom:1px solid var(--qcx-line)}
+
+    /* tabela alegação x veredito x página */
+    .qcx-tw{overflow-x:auto; border:1px solid var(--qcx-line); border-radius:7px}
+    .qcx-table{width:100%; border-collapse:collapse; min-width:660px}
+    .qcx-table th{font:600 10px/1.3 "IBM Plex Mono",monospace; letter-spacing:.1em; text-transform:uppercase;
+      color:var(--qcx-muted); text-align:left; padding:11px 13px; border-bottom:1px solid var(--qcx-line); background:var(--qcx-panel)}
+    .qcx-table td{font-size:12.5px; line-height:1.48; color:var(--qcx-fg); padding:11px 13px; border-bottom:1px solid rgba(42,39,35,.6); vertical-align:top}
+    .qcx-table tr:last-child td{border-bottom:none}
+    .qcx-table .qcx-id{font:700 12px/1 "IBM Plex Mono",monospace; color:var(--qcx-cyan)}
+    .qcx-table .qcx-al{font-weight:600; color:var(--qcx-fg)}
+    .qcx-table .qcx-al small{display:block; font:400 11.5px/1.4 "IBM Plex Sans",sans-serif; color:var(--qcx-muted); margin-top:3px}
+    .qcx-table .qcx-src{font:500 11px/1.4 "IBM Plex Mono",monospace; color:var(--qcx-muted); white-space:nowrap}
+    .qcx-vd{display:inline-block; font:700 9.5px/1.25 "IBM Plex Mono",monospace; letter-spacing:.06em; text-transform:uppercase;
+      padding:4px 7px; border-radius:4px; white-space:nowrap}
+    .qcx-vd--conf{background:rgba(66,197,213,.14); color:#8fdbe6; border:1px solid rgba(66,197,213,.4)}
+    .qcx-vd--parc{background:rgba(215,238,63,.12); color:#d7ee3f; border:1px solid rgba(215,238,63,.35)}
+    .qcx-vd--cob{background:rgba(143,136,124,.14); color:#b8b1a4; border:1px solid rgba(143,136,124,.4)}
+    .qcx-badge{display:inline-block; font:700 9px/1 "IBM Plex Mono",monospace; letter-spacing:.05em; text-transform:uppercase;
+      padding:3px 6px; border-radius:3px; margin-top:6px}
+    .qcx-badge--novo{background:rgba(233,73,53,.14); color:#f0897b}
+    .qcx-badge--ref{background:rgba(215,238,63,.1); color:#c9dd6b}
+    .qcx-badge--cob{background:rgba(143,136,124,.14); color:#b8b1a4}
+
+    /* três colunas: confirmamos / nuançamos / refutamos */
+    .qcx-cols{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin:8px 0 0}
+    @media(max-width:760px){.qcx-cols{grid-template-columns:1fr}}
+    .qcx-col{background:var(--qcx-bg2); border:1px solid var(--qcx-line); border-radius:8px; padding:18px 18px 16px; position:relative; overflow:hidden}
+    .qcx-col::before{content:""; position:absolute; top:0; left:0; right:0; height:3px}
+    .qcx-col--conf::before{background:linear-gradient(90deg,var(--qcx-cyan),transparent)}
+    .qcx-col--nua::before{background:linear-gradient(90deg,var(--qcx-acid),transparent)}
+    .qcx-col--ref::before{background:linear-gradient(90deg,var(--qcx-signal),transparent)}
+    .qcx-col-k{font:700 10px/1 "IBM Plex Mono",monospace; letter-spacing:.14em; text-transform:uppercase; margin:0 0 4px}
+    .qcx-col--conf .qcx-col-k{color:var(--qcx-cyan)}
+    .qcx-col--nua .qcx-col-k{color:var(--qcx-acid)}
+    .qcx-col--ref .qcx-col-k{color:var(--qcx-signal)}
+    .qcx-col-t{font-family:"Fraunces",serif; font-weight:500; font-size:18px; line-height:1.14; margin:0 0 11px; color:var(--qcx-fg)}
+    .qcx-col ul{list-style:none; margin:0; padding:0}
+    .qcx-col li{font-size:12.5px; line-height:1.5; color:var(--qcx-fg); padding:8px 0; border-top:1px solid rgba(42,39,35,.7)}
+    .qcx-col li:first-child{border-top:none}
+    .qcx-col li b{color:var(--qcx-fg)}
+    .qcx-col li .ref{display:block; font:500 10.5px/1.4 "IBM Plex Mono",monospace; color:var(--qcx-muted); margin-top:3px}
+
+    /* caixa da inversão */
+    .qcx-flip{display:flex; gap:12px; align-items:flex-start; margin:22px 0 0;
+      border:1px solid rgba(215,238,63,.4); border-left:3px solid var(--qcx-acid);
+      background:rgba(215,238,63,.05); border-radius:6px; padding:14px 17px}
+    .qcx-flip .ic{font:700 15px/1.2 "IBM Plex Mono",monospace; color:var(--qcx-acid); flex:none}
+    .qcx-flip p{margin:0; font-size:13px; line-height:1.55; color:var(--qcx-fg)}
+    .qcx-flip b{color:#d7ee3f}
+
+    .qcx-verd{margin:22px 0 0; background:var(--qcx-bg2); border:1px solid var(--qcx-line); border-radius:8px; padding:18px 20px}
+    .qcx-verd-h{display:block; font:700 10px/1.3 "IBM Plex Mono",monospace; letter-spacing:.12em; text-transform:uppercase; color:var(--qcx-cyan); margin:0 0 7px}
+    .qcx-verd p{margin:0 0 8px; font-size:13px; line-height:1.58; color:var(--qcx-fg)}
+    .qcx-verd p:last-child{margin-bottom:0}
+    .qcx-verd p b{color:var(--qcx-fg); font-weight:600}
+    .qcx-verd .seal{color:var(--qcx-acid); font-weight:600}
+
+    .qcx-foot{font-size:11.5px; line-height:1.55; color:var(--qcx-muted); margin:22px 0 0; padding-top:12px; border-top:1px solid var(--qcx-line); max-width:84ch}
+    .qcx-foot b{color:var(--qcx-fg)}
+  </style>
+
+  <p class="qcx-kicker">Contraditório externo · BR-07181/2026 · dossiê 08</p>
+  <h1 class="qcx-title">A crítica que chama de <em>enredo</em><br>o que chamamos de <em>opacidade</em>.</h1>
+  <p class="qcx-sub">O cientista político <b>Marcos Paulo Candeloro</b> publicou "A PESQUISA COMO ENREDO" sobre o deck principal da Genial/Quaest de julho. Verificamos cada alegação contra os documentos primários: o questionário registrado (101 itens) e o deck de 121 slides. Resultado: seis alegações confirmadas, duas parciais, uma já coberta, nenhuma refutada por inteiro. A única inversão factual é a posição da pergunta do medo. Nada muda o veredito da casa.</p>
+  <p class="qcx-credit">Crédito nominal a <b>Marcos Paulo Candeloro</b> · cotejo Arvor contra questionário e deck primários</p>
+
+  <div class="qcx-score">
+    <div class="qcx-sc qcx-sc--conf"><b>6</b><span>confirmadas<br>b, c, d, e, f, g</span></div>
+    <div class="qcx-sc qcx-sc--parc"><b>2</b><span>parciais<br>a, i</span></div>
+    <div class="qcx-sc qcx-sc--ref"><b>1</b><span>confirmada e já coberta<br>h</span></div>
+    <div class="qcx-sc qcx-sc--novo"><b>3</b><span>acréscimos ao dossiê<br>c, f, g</span></div>
+  </div>
+
+  <!-- TABELA -->
+  <div class="qcx-h3">01 · Alegação × veredito × evidência</div>
+  <div class="qcx-tw">
+    <table class="qcx-table">
+      <thead><tr><th style="width:26px">#</th><th>Alegação de Candeloro</th><th>Veredito</th><th>Onde se lê</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="qcx-id">a</td>
+          <td class="qcx-al">Medo no fim, após ~1h de estímulos; mede emoção, não preferência<small>Emoção: sim. Posição no fim/após estímulos: invertida no campo.</small><span class="qcx-badge qcx-badge--ref">refina o dossiê</span></td>
+          <td><span class="qcx-vd qcx-vd--parc">Parcial</span></td>
+          <td class="qcx-src">Q28 · p.8<br>slide 102</td>
+        </tr>
+        <tr>
+          <td class="qcx-id">b</td>
+          <td class="qcx-al">"Governo Lula" vs "família Bolsonaro voltar ao poder"<small>Assimetria mandato/indivíduo vs dinastia/restauração.</small><span class="qcx-badge qcx-badge--cob">já no dossiê</span></td>
+          <td><span class="qcx-vd qcx-vd--conf">Confirmada</span></td>
+          <td class="qcx-src">Q28, Q29<br>slide 102</td>
+        </tr>
+        <tr>
+          <td class="qcx-id">c</td>
+          <td class="qcx-al">Nota remove NS/NR "para facilitar a legibilidade"<small>Literal na tela do medo por posicionamento. Agregado ainda mostra NS/NR = 4.</small><span class="qcx-badge qcx-badge--novo">acréscimo</span></td>
+          <td><span class="qcx-vd qcx-vd--conf">Confirmada</span></td>
+          <td class="qcx-src">slide 103</td>
+        </tr>
+        <tr>
+          <td class="qcx-id">d</td>
+          <td class="qcx-al">Lula vs PT (sigla); Flávio vs "sua família" (sobrenome)<small>Muda a unidade de comparação entre os dois lados.</small><span class="qcx-badge qcx-badge--ref">refina o dossiê</span></td>
+          <td><span class="qcx-vd qcx-vd--conf">Confirmada</span></td>
+          <td class="qcx-src">Q31, Q32 · p.9<br>slide 100</td>
+        </tr>
+        <tr>
+          <td class="qcx-id">e</td>
+          <td class="qcx-al">12 slides (72 a 83) sobre Michelle × Flávio<small>12 telas exatas; o deck omite Q77, Q80, Q81, Q82, Q83 do campo.</small><span class="qcx-badge qcx-badge--cob">já no dossiê</span></td>
+          <td><span class="qcx-vd qcx-vd--conf">Confirmada</span></td>
+          <td class="qcx-src">slides 72-83</td>
+        </tr>
+        <tr>
+          <td class="qcx-id">f</td>
+          <td class="qcx-al">"Já sabia ou ficou sabendo agora": informa e depois colhe opinião<small>51% ficaram sabendo dos vídeos na hora. Padrão em 10+ itens.</small><span class="qcx-badge qcx-badge--novo">acréscimo (51%)</span></td>
+          <td><span class="qcx-vd qcx-vd--conf">Confirmada</span></td>
+          <td class="qcx-src">Q72 · p.21<br>slide 72</td>
+        </tr>
+        <tr>
+          <td class="qcx-id">g</td>
+          <td class="qcx-al">Wagner: exculpação + isolamento; corredor que Flávio não recebe<small>"Nada de errado" e "pessoal vs institucional do governo Lula" blindam Lula.</small><span class="qcx-badge qcx-badge--novo">acréscimo</span></td>
+          <td><span class="qcx-vd qcx-vd--conf">Confirmada</span></td>
+          <td class="qcx-src">Q69, Q71 · p.20-21<br>slides 90, 94</td>
+        </tr>
+        <tr>
+          <td class="qcx-id">h</td>
+          <td class="qcx-al">Margem de AAS inválida em amostra por cotas; sem deff; recortes dobram<small>"Falsa" exagera; é aproximação design-naive. Cotas confirmadas (folha de cota).</small><span class="qcx-badge qcx-badge--cob">já no dossiê, com mais rigor</span></td>
+          <td><span class="qcx-vd qcx-vd--cob">Confirmada · coberta</span></td>
+          <td class="qcx-src">ficha slide 3<br>cap. 05, 09, 13</td>
+        </tr>
+        <tr>
+          <td class="qcx-id">i</td>
+          <td class="qcx-al">Presencial subestimou o conservador em 2018/2022; sem correção declarada<small>Erro empírico: Fato. Voto envergonhado: Hipótese contestada. Não isola a Quaest.</small><span class="qcx-badge qcx-badge--ref">refina o dossiê</span></td>
+          <td><span class="qcx-vd qcx-vd--parc">Parcial</span></td>
+          <td class="qcx-src">ficha slide 3<br>cap. 11</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- TRÊS COLUNAS -->
+  <div class="qcx-h3">02 · O que confirmamos, o que nuançamos, o que refutamos</div>
+  <div class="qcx-cols">
+    <div class="qcx-col qcx-col--conf">
+      <p class="qcx-col-k">Confirmamos</p>
+      <h3 class="qcx-col-t">A leitura de enredo tem lastro documental.</h3>
+      <ul>
+        <li><span class="qcx-tag qcx-tag--fato">Fato</span> <b>c</b> A nota que apaga NS/NR na tela do medo por posicionamento existe, literal, no slide 103.<span class="ref">Acréscimo ao catálogo de vieses.</span></li>
+        <li><span class="qcx-tag qcx-tag--fato">Fato</span> <b>g</b> O bloco Wagner traz "não houve nada de errado" (slide 90) e "pessoal vs institucional do governo Lula" (slide 94).<span class="ref">Corredor que blinda o governo.</span></li>
+        <li><span class="qcx-tag qcx-tag--fato">Fato</span> <b>f</b> 51% ficaram sabendo dos vídeos na entrevista e depois opinaram sobre eles.<span class="ref">Slide 72.</span></li>
+        <li><span class="qcx-tag qcx-tag--fato">Fato</span> <b>b, d, e</b> Assimetria dinastia vs indivíduo, PT vs família, 12 telas do tema Michelle.<span class="ref">Convergem com o dossiê.</span></li>
+      </ul>
+    </div>
+    <div class="qcx-col qcx-col--nua">
+      <p class="qcx-col-k">Nuançamos</p>
+      <h3 class="qcx-col-t">Onde a acusação vai além da prova.</h3>
+      <ul>
+        <li><span class="qcx-tag qcx-tag--inf">Inferência</span> <b>g</b> Flávio não fica sem defesa: pode concordar com ele (slide 82) e chamar as falas de Michelle de "totalmente falsas". O que falta é o corredor de isolamento institucional.</li>
+        <li><span class="qcx-tag qcx-tag--inf">Inferência</span> <b>h</b> A margem não é "falsa"; é aproximação de amostra aleatória simples sob um desenho por cotas e conglomerados. O dossiê já a corrige com deff.</li>
+        <li><span class="qcx-tag qcx-tag--inf">Inferência</span> <b>c</b> A remoção de NS/NR é de uma tela só; o agregado do medo (slide 102) ainda exibe NS/NR = 4.</li>
+        <li><span class="qcx-tag qcx-tag--hip">Hipótese</span> <b>b, d</b> A existência da assimetria é Fato; que ela MOVA voto é inferência não medida.</li>
+      </ul>
+    </div>
+    <div class="qcx-col qcx-col--ref">
+      <p class="qcx-col-k">Refutamos</p>
+      <h3 class="qcx-col-t">A pergunta do medo vem cedo, não no fim.</h3>
+      <ul>
+        <li><span class="qcx-tag qcx-tag--fato">Fato</span> <b>a</b> No campo, o medo é a Q28 de 101, logo após a intenção de voto e ANTES de MEI, IRPF, Desenrola, 6x1, tarifas, Master e Michelle.</li>
+        <li><span class="qcx-tag qcx-tag--fato">Fato</span> <b>a</b> Nenhum bloco de estímulo a precede. O instrumento estima ~20 minutos, não uma hora.</li>
+        <li><span class="qcx-tag qcx-tag--inf">Inferência</span> <b>a</b> O enredo existe, mas na EDIÇÃO do deck: o resultado do medo é remontado para o slide 102, o clímax. Ordem de deck não é ordem de campo.</li>
+        <li><span class="qcx-tag qcx-tag--hip">Hipótese</span> <b>i</b> Voto envergonhado é mecanismo contestado; e, se o presencial deprime o conservador, é efeito de campo, não da Quaest.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qcx-flip">
+    <span class="ic">&#8644;</span>
+    <p><b>O enredo se fabrica na montagem, não na entrevista.</b> No campo, o eleitor responde ao medo a frio, na Q28, antes de qualquer notícia lida pelo entrevistador. No deck, esse mesmo resultado reaparece no slide 102 de 121, como desfecho. Comparar a ordem do questionário com a ordem do relatório é o que expõe a dramaturgia; e é exatamente essa comparação que sustenta, não enfraquece, a crítica de enredo.</p>
+  </div>
+
+  <div class="qcx-verd">
+    <b class="qcx-verd-h">Veredito do contraditório</b>
+    <p>A crítica de Candeloro é, em quase tudo, compatível com a auditoria. Ela acrescenta três achados citáveis: a nota que apaga NS/NR na tela do medo, a assimetria de exculpação e isolamento no bloco Wagner, e o dado de que 51% souberam dos vídeos de Michelle só na entrevista. Corrige-se um ponto: a pergunta do medo não vem depois de uma hora de estímulos; vem na Q28, antes deles.</p>
+    <p><b>Nenhuma alegação exibe prova de fabricação de entrevistas ou de resultado encomendado.</b> Todas reforçam o mesmo eixo: enquadramento assimétrico, publicação seletiva e incerteza subdocumentada. O veredito permanece <span class="seal">prova de opacidade, não de fraude</span>.</p>
+  </div>
+
+  <p class="qcx-foot"><b>Fontes.</b> Questionário BR-07181/2026 (Q28 p.8, Q31/Q32 p.9, Q69/Q71 p.20-21, Q72 p.21). Deck de 121 slides (ficha slide 3, moderação 100, Michelle 72-83, Wagner 90/94, medo 102/103). Histórico presencial 2018/2022: Seu Dinheiro, CNN Brasil, Estado de Minas, CONTEE. Verificação item a item reproduzível em <b>quaest_0726_candeloro.json</b>. Dossiê completo em <b>brasil.arvor.co/quaest_0726.html</b>.</p>
+</section>
+
+<!-- ====================== VARIANTE SLIDE 1600×900 ====================== -->
+<section class="qcxs" data-qcxs="slide" style="margin-top:40px">
+  <style>
+    .qcxs{--s-bg:#100f0d; --s-fg:#efe9e0; --s-muted:#8f887c; --s-signal:#e94935; --s-cyan:#42c5d5; --s-acid:#d7ee3f; --s-line:#2a2723; --s-panel:#161412;
+      width:1600px; height:900px; background:var(--s-bg); color:var(--s-fg);
+      font-family:"IBM Plex Sans",system-ui,sans-serif; padding:60px 72px; position:relative; overflow:hidden;
+      transform-origin:top left; margin:0 auto}
+    @media(max-width:1600px){.qcxs{transform:scale(calc(100vw / 1600))}}
+    .qcxs *{box-sizing:border-box}
+    .qcxs-k{font:600 15px/1 "IBM Plex Mono",monospace; letter-spacing:.22em; text-transform:uppercase; color:var(--s-cyan); margin:0 0 14px}
+    .qcxs-t{font-family:"Fraunces",serif; font-weight:500; font-size:52px; line-height:1.05; margin:0 0 10px; letter-spacing:-.01em}
+    .qcxs-t em{font-style:italic; color:var(--s-signal)}
+    .qcxs-sub{font-size:19px; line-height:1.4; color:var(--s-muted); margin:0 0 26px; max-width:120ch}
+    .qcxs-sub b{color:var(--s-fg)}
+    .qcxs-grid{display:grid; grid-template-columns:1.15fr 1fr; gap:34px}
+    .qcxs-col h4{font:700 14px/1 "IBM Plex Mono",monospace; letter-spacing:.14em; text-transform:uppercase; margin:0 0 14px; padding-bottom:9px; border-bottom:1px solid var(--s-line); color:var(--s-muted)}
+    /* mini tabela */
+    .qcxs-rows{display:flex; flex-direction:column; gap:8px}
+    .qcxs-row{display:grid; grid-template-columns:24px 1fr 118px; gap:12px; align-items:center; background:var(--s-panel); border:1px solid var(--s-line); border-radius:7px; padding:9px 13px}
+    .qcxs-row .id{font:700 16px/1 "IBM Plex Mono",monospace; color:var(--s-cyan)}
+    .qcxs-row .al{font-size:15px; line-height:1.28; color:var(--s-fg)}
+    .qcxs-vd{font:700 11px/1.2 "IBM Plex Mono",monospace; letter-spacing:.05em; text-transform:uppercase; text-align:center; padding:6px 8px; border-radius:5px}
+    .qcxs-vd--c{background:rgba(66,197,213,.14); color:#8fdbe6; border:1px solid rgba(66,197,213,.4)}
+    .qcxs-vd--p{background:rgba(215,238,63,.12); color:#d7ee3f; border:1px solid rgba(215,238,63,.35)}
+    .qcxs-vd--k{background:rgba(143,136,124,.14); color:#b8b1a4; border:1px solid rgba(143,136,124,.4)}
+    /* coluna direita: três blocos */
+    .qcxs-block{border-radius:9px; padding:18px 20px; margin:0 0 14px; position:relative; overflow:hidden}
+    .qcxs-block::before{content:""; position:absolute; top:0; left:0; right:0; height:4px}
+    .qcxs-block--c{background:var(--s-panel); border:1px solid rgba(66,197,213,.3)} .qcxs-block--c::before{background:var(--s-cyan)}
+    .qcxs-block--n{background:var(--s-panel); border:1px solid rgba(215,238,63,.3)} .qcxs-block--n::before{background:var(--s-acid)}
+    .qcxs-block--r{background:var(--s-panel); border:1px solid rgba(233,73,53,.32)} .qcxs-block--r::before{background:var(--s-signal)}
+    .qcxs-bk{font:700 11px/1 "IBM Plex Mono",monospace; letter-spacing:.14em; text-transform:uppercase; margin:0 0 7px}
+    .qcxs-block--c .qcxs-bk{color:var(--s-cyan)} .qcxs-block--n .qcxs-bk{color:var(--s-acid)} .qcxs-block--r .qcxs-bk{color:var(--s-signal)}
+    .qcxs-block p{margin:0; font-size:16px; line-height:1.42; color:var(--s-fg)}
+    .qcxs-block p b{color:var(--s-fg)}
+    .qcxs-ft{position:absolute; left:72px; right:72px; bottom:36px; font:500 16px/1.4 "IBM Plex Sans",sans-serif; color:var(--s-muted); padding-top:16px; border-top:1px solid var(--s-line)}
+    .qcxs-ft b{color:var(--s-fg)}
+    .qcxs-ft .win{color:var(--s-acid); font-weight:600}
+    .qcxs-brand{position:absolute; top:60px; right:72px; font:600 13px/1 "IBM Plex Mono",monospace; letter-spacing:.16em; text-transform:uppercase; color:var(--s-muted)}
+  </style>
+  <div class="qcxs-brand">Arvor · brasil.arvor.co</div>
+  <p class="qcxs-k">Contraditório externo · Marcos Paulo Candeloro</p>
+  <h1 class="qcxs-t">A crítica que chama de <em>enredo</em> o que chamamos de <em>opacidade</em>.</h1>
+  <p class="qcxs-sub">"A PESQUISA COMO ENREDO", de Marcos Paulo Candeloro, contra o deck da Genial/Quaest de julho, item a item sob os documentos primários. <b>Seis confirmadas, duas parciais, uma já coberta, nenhuma refutada por inteiro.</b></p>
+  <div class="qcxs-grid">
+    <div class="qcxs-col">
+      <h4>Alegação × veredito</h4>
+      <div class="qcxs-rows">
+        <div class="qcxs-row"><span class="id">a</span><span class="al">Medo no fim, após 1h de estímulos</span><span class="qcxs-vd qcxs-vd--p">Parcial</span></div>
+        <div class="qcxs-row"><span class="id">b</span><span class="al">Governo Lula vs família Bolsonaro</span><span class="qcxs-vd qcxs-vd--c">Confirmada</span></div>
+        <div class="qcxs-row"><span class="id">c</span><span class="al">Nota apaga NS/NR na tela do medo</span><span class="qcxs-vd qcxs-vd--c">Confirmada</span></div>
+        <div class="qcxs-row"><span class="id">d</span><span class="al">Lula vs PT; Flávio vs "sua família"</span><span class="qcxs-vd qcxs-vd--c">Confirmada</span></div>
+        <div class="qcxs-row"><span class="id">e</span><span class="al">12 slides (72 a 83) de Michelle</span><span class="qcxs-vd qcxs-vd--c">Confirmada</span></div>
+        <div class="qcxs-row"><span class="id">f</span><span class="al">51% souberam dos vídeos na hora</span><span class="qcxs-vd qcxs-vd--c">Confirmada</span></div>
+        <div class="qcxs-row"><span class="id">g</span><span class="al">Wagner: exculpação + isolamento</span><span class="qcxs-vd qcxs-vd--c">Confirmada</span></div>
+        <div class="qcxs-row"><span class="id">h</span><span class="al">Margem AAS sob cotas, sem deff</span><span class="qcxs-vd qcxs-vd--k">Coberta</span></div>
+        <div class="qcxs-row"><span class="id">i</span><span class="al">Presencial subestima o conservador</span><span class="qcxs-vd qcxs-vd--p">Parcial</span></div>
+      </div>
+    </div>
+    <div class="qcxs-col">
+      <h4>Confirmamos · nuançamos · refutamos</h4>
+      <div class="qcxs-block qcxs-block--c">
+        <p class="qcxs-bk">Confirmamos · acréscimos</p>
+        <p>Nota que apaga NS/NR no slide 103; exculpação e isolamento no bloco Wagner (slides 90, 94); 51% souberam dos vídeos na entrevista.</p>
+      </div>
+      <div class="qcxs-block qcxs-block--n">
+        <p class="qcxs-bk">Nuançamos</p>
+        <p>A margem não é "falsa", é design-naive; Flávio ainda tem defesa no bloco Michelle; o que falta é o isolamento institucional que blinda Lula.</p>
+      </div>
+      <div class="qcxs-block qcxs-block--r">
+        <p class="qcxs-bk">Refutamos</p>
+        <p>O medo é a Q28 no campo, antes de todo estímulo. O enredo está na montagem do deck, não na entrevista.</p>
+      </div>
+    </div>
+  </div>
+  <p class="qcxs-ft"><b>Veredito:</b> <span class="win">prova de opacidade, não de fraude.</span> A crítica reforça o eixo de enquadramento e publicação seletiva; nenhuma alegação prova fabricação. Fontes: questionário BR-07181/2026 · deck 121 slides · quaest_0726_candeloro.json.</p>
+</section>

@@ -1,0 +1,174 @@
+{
+  "meta": {
+    "title": "Perícia de campo: dias da semana e fadiga de instrumento",
+    "subtitle": "Genial/Quaest julho/2026 (BR-07181/2026) sob duas hipóteses de seleção amostral",
+    "dossie": "quaest_0726.html",
+    "dossie_comparativo": "quaest_100626.html",
+    "gerado": "2026-07-17",
+    "calibragem": "Fato = observação documental ou cálculo reproduzível; Inferência = leitura mais compatível com os fatos; Hipótese = exige evidência adicional.",
+    "veredito_curto": "Opacidade, não fraude. Dois vetores plausíveis de seleção (fim de semana/porta e fadiga de instrumento longo); a Quaest retém exatamente os dados que permitiriam medi-los."
+  },
+
+  "campo_declarado": {
+    "fonte": "Registro PesqEle BR-07181/2026 (Quaest_TSE_072026.html) e ficha técnica",
+    "modo": "quantitativa, survey presencial domiciliar, questionário estruturado em tablet",
+    "universo": "eleitores 16+ residentes no Brasil",
+    "desenho": "3 estágios: PPT de municípios; PPT de setores censitários (Censo 2022); cotas de domicílio/pessoa",
+    "cotas": ["sexo", "idade", "renda familiar", "escolaridade"],
+    "pos_estratificacao_declarada": "rake (calibração) e MrP para sexo, idade, renda e escolaridade",
+    "controle": "gravação de áudio de 30% dos questionários; georreferenciamento dos locais; checagem de consistência",
+    "periodo": "10/07/2026 a 13/07/2026",
+    "n": 2004,
+    "setores": 334,
+    "municipios": 120,
+    "entrevistas_por_setor": 6,
+    "itens_questionario": 101,
+    "paginas_deck": 121,
+    "nao_declarado_no_registro": [
+      "número de entrevistadores em campo",
+      "horário/turno de coleta por entrevista",
+      "duração média da entrevista"
+    ]
+  },
+
+  "cross_round": {
+    "titulo": "Janela de campo por rodada Genial/Quaest",
+    "achado": "Padrão sexta→segunda observado nas duas rodadas consecutivas com datas disponíveis. Campo majoritariamente de fim de semana, não acaso de uma edição.",
+    "colunas": ["rodada", "registro_tse", "periodo_campo", "dias_da_semana", "dias_uteis", "dias_fim_de_semana", "status"],
+    "linhas": [
+      {
+        "rodada": "Maio/2026",
+        "registro_tse": "n/d",
+        "periodo_campo": "datas não localizadas nos arquivos do repositório",
+        "dias_da_semana": null,
+        "dias_uteis": null,
+        "dias_fim_de_semana": null,
+        "status": "ausência registrada — sem PDF/registro de maio no acervo local"
+      },
+      {
+        "rodada": "Junho/2026",
+        "registro_tse": "BR-07661/2026 (registro 04/06/2026)",
+        "periodo_campo": "05/06 a 08/06/2026",
+        "dias_da_semana": ["sexta", "sábado", "domingo", "segunda"],
+        "dias_uteis": 2,
+        "dias_fim_de_semana": 2,
+        "status": "Fato — fonte: dossiê quaest_100626.html e Quaest_tse_metadata (05/06 a 08/06)"
+      },
+      {
+        "rodada": "Julho/2026",
+        "registro_tse": "BR-07181/2026 (registro 09/07/2026)",
+        "periodo_campo": "10/07 a 13/07/2026",
+        "dias_da_semana": ["sexta", "sábado", "domingo", "segunda"],
+        "dias_uteis": 2,
+        "dias_fim_de_semana": 2,
+        "status": "Fato — fonte: registro PesqEle BR-07181/2026"
+      }
+    ],
+    "nota_dias_uteis": "Sexta e segunda contam como dias úteis, mas o campo diurno de fim de semana e as janelas noturnas de sexta/segunda alcançam a PEA em casa. Contagem de dias de calendário: 2 úteis, 2 de fim de semana em ambas as rodadas.",
+    "correção_calendario": "Datas conferidas com datetime autoritativo: 05/06/2026=sexta, 06=sábado, 07=domingo, 08=segunda; 10/07/2026=sexta, 11=sábado, 12=domingo, 13=segunda."
+  },
+
+  "hipotese_1_dia_semana_pea": {
+    "titulo": "H1 — Dia da semana × PEA",
+    "tese": "Entrevista domiciliar pesca quem está em casa; em dia útil isso excluiria a PEA ocupada e sobraria não-PEA (aposentados, donas de casa, desalentados), suposta mais lulista.",
+    "teste_adversarial": [
+      {
+        "rotulo": "Fato",
+        "ponto": "O campo é sexta→segunda nas duas rodadas. O fim de semana é justamente quando a PEA ocupada está em casa. Isso ENFRAQUECE a versão 'dia útil de manhã perde a PEA': o desenho da Quaest é majoritariamente de fim de semana."
+      },
+      {
+        "rotulo": "Fato",
+        "ponto": "Pirâmide etária: 60+ na Quaest é 23,0% contra 23,27% do TSE (Δ −0,27 p.p.). Não há excesso de idosos; a Quaest fica de leve ABAIXO. A assinatura demográfica de 'não-PEA idosa' não aparece."
+      },
+      {
+        "rotulo": "Inferência",
+        "ponto": "Idade é variável de cota e de pós-estratificação (rake/MrP declarada na ficha). Qualquer viés de porta na coleta bruta é corrigido na margem de idade — a assinatura de idosos seria apagada por desenho mesmo se existisse."
+      },
+      {
+        "rotulo": "Fato",
+        "ponto": "Tensão de renda: a amostra sub-representa a base ≤2 SM em 4,44 p.p. (amostra MAIS RICA). Não-PEA de baixa renda tornaria a amostra mais POBRE — o oposto do observado. A conciliação exigiria 'aposentados de classe média', mas sem excesso de 60+ esse perfil não se materializa."
+      },
+      {
+        "rotulo": "Hipótese",
+        "ponto": "Cota corrige margens (sexo/idade/renda/escolaridade), não a composição DENTRO de cada célula. Dentro de '35–59' pode restar sobre-seleção de quem abre a porta e aceita a entrevista (informais em casa, desempregados, donas de casa). É invisível sem variável de ocupação/condição na força de trabalho, que a Quaest não coleta nem publica. Sem timestamp por entrevista, a fração caída na sexta/segunda diurnas também é Hipótese."
+      }
+    ],
+    "veredito": {
+      "nivel": "Hipótese fraca / parcialmente refutada",
+      "texto": "O calendário de fim de semana e a cota de idade derrubam a versão forte ('dia útil perde a PEA e sobra não-PEA lulista'): o campo da Quaest é sexta→segunda e a pirâmide não mostra excesso de idosos. Resta apenas um resíduo intra-célula de 'quem abre a porta e aceita a entrevista longa', não-falsificável de fora sem ocupação, horário e base não ponderada. No máximo Hipótese, não demonstrada."
+    }
+  },
+
+  "hipotese_2_fadiga_instrumento": {
+    "titulo": "H2 — Questionário longo → fadiga → seleção de quem termina",
+    "tese": "101 itens, presencial, entrevista longa. Quanto mais longo, mais satisficing e desistência; quem aguenta até o fim é sistematicamente diferente (mais interessado em política, mais tempo disponível, mais ideológico). Se esse perfil correlaciona com voto, vira viés.",
+    "por_que_e_o_braco_forte": "Ao contrário de H1, a fadiga não é neutralizada pelas cotas: cotas fecham margens de sexo/idade/renda/escolaridade, mas não controlam engajamento político nem disponibilidade de tempo DENTRO da célula — exatamente o eixo que a duração seleciona.",
+    "cadeia": [
+      {"rotulo": "Fato", "elo": "Instrumento de 101 itens, presencial domiciliar, com blocos longos de imagem/rejeição nome a nome e ternário sem meio-termo."},
+      {"rotulo": "Inferência (ancorada em literatura)", "elo": "Comprimento maior reduz disposição inicial a participar e taxa de conclusão (Galesic & Bosnjak 2009)."},
+      {"rotulo": "Inferência (ancorada em literatura)", "elo": "Fadiga produz satisficing: tempos de resposta menores, mais item-nonresponse, mais 'não sei', straight-lining e efeitos de primazia nas questões finais (Krosnick 1991; Galesic & Bosnjak 2009)."},
+      {"rotulo": "Inferência (ancorada em literatura)", "elo": "Quem desiste tem menor interesse e maior burden percebido, e a queda de qualidade aparece ANTES da desistência (Galesic 2006). Quem conclui tende a ter maior interesse no tema (topic salience) e maior escolaridade."},
+      {"rotulo": "Hipótese", "elo": "Ponte para voto: quem tolera 101 perguntas sobre política tende a ser mais politizado/engajado/disponível. SE os engajados/disponíveis pendem para um lado no Brasil de 2026, há viés. A DIREÇÃO (pró-Lula ou não) não é afirmada — exige os pesos/microdados que a Quaest não publica."}
+    ],
+    "caveat_modo": "Boa parte da literatura de break-off é de survey WEB. No presencial com entrevistador, a desistência aberta é menor (pressão social), mas a seleção não some: desloca-se para (a) o consentimento na porta — quem aceita uma entrevista longa — e (b) o satisficing nas questões finais. Muda de lugar, não desaparece.",
+    "ponte_com_dossie": "As 36 perguntas sem topline concentram-se em itens numerados altos; o bloco de tarifas abre na Q57 e itens finais são os mais sujeitos a satisficing e 'não sei'. Sem taxa de conclusão e item-nonresponse por posição, não se separa 'não publicou' de 'qualidade degradada no fim do instrumento'. A fadiga poderia interagir com o efeito de casa nos itens terminais.",
+    "veredito": {
+      "nivel": "Braço mais forte — Inferência plausível, direção em nível de Hipótese",
+      "texto": "Plausível e ancorado na literatura de respondent burden/satisficing: instrumento longo seleciona quem conclui por interesse e disponibilidade, e degrada qualidade no fim. A ponte para voto é Hipótese, não Fato; a direção não está demonstrada. Testável só com dados que a Quaest retém."
+    }
+  },
+
+  "literatura_fadiga": [
+    {
+      "citacao": "Galesic, M. & Bosnjak, M. (2009). Effects of Questionnaire Length on Participation and Indicators of Response Quality in a Web Survey.",
+      "veiculo": "Public Opinion Quarterly, 73(2), 349–360",
+      "url": "https://academic.oup.com/poq/article-abstract/73/2/349/1939196",
+      "achado": "Quanto maior o comprimento declarado (10/20/30 min), menos respondentes iniciam e concluem. Questões no fim do questionário recebem tempos de resposta menores, mais item-nonresponse, respostas abertas mais curtas e menor variabilidade em grades — assinatura direta de satisficing por fadiga."
+    },
+    {
+      "citacao": "Krosnick, J. A. (1991). Response strategies for coping with the cognitive demands of attitude measures in surveys.",
+      "veiculo": "Applied Cognitive Psychology, 5(3), 213–236",
+      "url": "https://onlinelibrary.wiley.com/doi/abs/10.1002/acp.2350050305",
+      "achado": "Teoria do satisficing: sob carga cognitiva, o respondente busca resposta 'boa o suficiente' e adota atalhos — escolher a primeira alternativa plausível, concordar com a assertiva, endossar o status quo, não diferenciar, dizer 'não sei', responder ao acaso. Primazia é mais forte em quem tem menor habilidade cognitiva."
+    },
+    {
+      "citacao": "Peytchev, A. (2009). Survey Breakoff.",
+      "veiculo": "Public Opinion Quarterly, 73(1), 74–97",
+      "url": "https://academic.oup.com/poq/article-abstract/73/1/74/1868871",
+      "achado": "Quem interrompe difere sistematicamente de quem conclui; escolaridade (proxy de sofisticação cognitiva) associa-se ao break-off. A evidência sobre os que abandonam é estruturalmente escassa porque quase não se sabe nada deles — o mesmo ponto cego que a não-publicação de base e taxa de conclusão cria aqui."
+    },
+    {
+      "citacao": "Galesic, M. (2006). Dropouts on the Web: Effects of Interest and Burden Experienced During an Online Survey.",
+      "veiculo": "Journal of Official Statistics, 22(2), 313–328",
+      "url": "https://www.websm.org/db/12/12088/Web%20Survey%20Bibliography/Dropouts_on_the_Web_Effects_of_Interest_and_Burden_Experienced_During_an_Online_Survey/",
+      "achado": "Quem abandona expressa menor interesse e maior burden; a preferência por desistir é detectável na queda de qualidade das respostas ANTES do abandono. Interesse no tema seleciona quem permanece — a ponte para 'quem tolera 101 perguntas de política é mais engajado'."
+    }
+  ],
+
+  "o_que_a_quaest_nao_publica": {
+    "titulo": "O que a Quaest não publica — e que testaria ambas as hipóteses",
+    "referencia_normativa": "Itens de disclosure exigidos por AAPOR/WAPOR/ABEP-BPC",
+    "itens": [
+      "Taxa de resposta / cooperação (padrão AAPOR RR).",
+      "Taxa de recusa e taxa de contato.",
+      "Duração média e distribuição da entrevista.",
+      "Distribuição de entrevistas por dia e por horário de coleta.",
+      "Base não ponderada por subgrupo.",
+      "Taxa de conclusão e item-nonresponse por posição no questionário.",
+      "Variável de ocupação / condição na força de trabalho (PEA) do respondente.",
+      "Número de entrevistadores e substituições de cota (portas até fechar as 6 por setor).",
+      "Efeito de desenho (deff) e pesos finais."
+    ]
+  },
+
+  "piramide_etaria_check": {
+    "titulo": "Checagem da pirâmide etária Quaest × TSE",
+    "fonte": "quaest_0726_data.json benchmarks.tse.age; TSE competência junho/2026",
+    "linhas": [
+      {"faixa": "16-34", "quaest": 32.0, "tse": 31.568, "delta": 0.432},
+      {"faixa": "35-59", "quaest": 45.0, "tse": 45.164, "delta": -0.164},
+      {"faixa": "60+", "quaest": 23.0, "tse": 23.269, "delta": -0.269}
+    ],
+    "leitura": "Sem excesso de 60+ (Δ −0,27 p.p.). A ausência de excesso de idosos retira força de H1: a assinatura de sobre-representação de não-PEA idosa não aparece — e, por ser idade uma variável de cota/calibração, tampouco apareceria se existisse."
+  }
+}

@@ -1,0 +1,312 @@
+<!-- Fragmento autocontido: Sankey da transferência 1º→2º turno (Genial/Quaest jul/2026).
+     Cole no dossiê. Sem dependências externas. SVG gerado por <script> IIFE escopado.
+     NÃO editar quaest_0726.html/assets a partir daqui — este é um bloco independente.
+     BLINDAGEM: nós sólidos = FATO (toplines publicados); TODOS os fluxos hachurados = INFERÊNCIA.
+     A Quaest não publica a matriz de transição — nenhum elo deste gráfico foi medido. -->
+<section class="qsk" data-qsk="responsive">
+  <style>
+    .qsk{
+      --qsk-bg:#11100f; --qsk-fg:#efe9e0; --qsk-muted:#8f887c;
+      --qsk-lula:#c15b56; --qsk-flavio:#5f83b3; --qsk-neutro:#6d6a63;
+      --qsk-line:#2a2723;
+      background:transparent; color:var(--qsk-fg);
+      font-family:"IBM Plex Sans","Helvetica Neue",system-ui,sans-serif;
+      max-width:960px; margin:0 auto; padding:8px 0 4px;
+    }
+    .qsk *{box-sizing:border-box}
+    .qsk-kicker{font:600 11px/1.4 "IBM Plex Sans",sans-serif; letter-spacing:.16em;
+      text-transform:uppercase; color:var(--qsk-flavio); margin:0 0 6px}
+    .qsk-title{font-family:"Fraunces","Georgia",serif; font-weight:500;
+      font-size:clamp(20px,3.4vw,29px); line-height:1.12; margin:0 0 4px; color:var(--qsk-fg)}
+    .qsk-sub{font-size:13px; line-height:1.5; color:var(--qsk-muted); margin:0 0 12px; max-width:70ch}
+    .qsk-warn{display:flex; gap:10px; align-items:flex-start;
+      border:1px solid rgba(193,91,86,.45); border-left:3px solid var(--qsk-lula);
+      background:rgba(193,91,86,.07); border-radius:4px; padding:10px 14px; margin:0 0 16px;
+      font-size:12.5px; line-height:1.5; color:var(--qsk-fg)}
+    .qsk-warn b{color:#e0938f}
+    .qsk-warn .qsk-warn-ic{font:700 13px/1.3 "IBM Plex Mono",monospace; color:#e0938f; flex:none}
+    .qsk-svgwrap{width:100%}
+    .qsk svg{width:100%; height:auto; display:block; overflow:visible}
+    .qsk-nodelabel{font:600 13px/1 "IBM Plex Sans",sans-serif; fill:var(--qsk-fg)}
+    .qsk-nodeval{font:700 15px/1 "IBM Plex Mono","IBM Plex Sans",monospace; fill:var(--qsk-fg)}
+    .qsk-nodedesc{font:400 10.5px/1.1 "IBM Plex Sans",sans-serif; fill:var(--qsk-muted)}
+    .qsk-colhead{font:600 11px/1 "IBM Plex Sans",sans-serif; letter-spacing:.14em;
+      text-transform:uppercase; fill:var(--qsk-muted)}
+    .qsk-seal{font:700 10px/1 "IBM Plex Mono",monospace; letter-spacing:.14em}
+    .qsk-delta{font:700 11px/1 "IBM Plex Mono",monospace}
+    .qsk-legend{display:flex; flex-wrap:wrap; gap:12px 22px; margin:14px 0 2px;
+      font-size:12px; color:var(--qsk-muted); align-items:center}
+    .qsk-legend b{color:var(--qsk-fg); font-weight:600}
+    .qsk-sw{display:inline-block; width:22px; height:10px; border-radius:2px; vertical-align:middle; margin-right:6px}
+    .qsk-sw--hatch{background:repeating-linear-gradient(45deg,rgba(143,136,124,.55) 0 3px,transparent 3px 7px);
+      border:1px dashed rgba(143,136,124,.7)}
+    .qsk-foot{font-size:11px; line-height:1.5; color:var(--qsk-muted); margin:12px 0 0; max-width:78ch}
+    .qsk-foot b{color:var(--qsk-fg)}
+    .qsk-tag{display:inline-block; font:600 9.5px/1 "IBM Plex Sans",sans-serif;
+      letter-spacing:.08em; text-transform:uppercase; padding:3px 6px; border-radius:3px; margin-right:2px}
+    .qsk-tag--fato{background:rgba(95,131,179,.16); color:#9db9dd; border:1px solid rgba(95,131,179,.35)}
+    .qsk-tag--inf{background:rgba(120,116,108,.14); color:#b7b0a4; border:1px solid rgba(120,116,108,.4)}
+    .qsk-limits{margin:16px 0 0; border:1px solid var(--qsk-line); border-radius:4px; padding:12px 14px}
+    .qsk-limits h4{margin:0 0 8px; font:600 11px/1.3 "IBM Plex Sans",sans-serif;
+      letter-spacing:.14em; text-transform:uppercase; color:var(--qsk-muted)}
+    .qsk-limits table{width:100%; border-collapse:collapse; font-size:12px}
+    .qsk-limits th{font:600 10px/1.3 "IBM Plex Sans",sans-serif; letter-spacing:.1em;
+      text-transform:uppercase; color:var(--qsk-muted); text-align:right; padding:3px 6px; border-bottom:1px solid var(--qsk-line)}
+    .qsk-limits th:first-child{text-align:left}
+    .qsk-limits td{padding:4px 6px; text-align:right; color:var(--qsk-fg);
+      font-family:"IBM Plex Mono",monospace; border-bottom:1px solid rgba(42,39,35,.5)}
+    .qsk-limits td:first-child{text-align:left; font-family:"IBM Plex Sans",sans-serif; color:var(--qsk-muted)}
+    .qsk-limits tr:last-child td{border-bottom:none}
+    .qsk-limits .qsk-limits-note{font-size:11px; color:var(--qsk-muted); margin:8px 0 0; line-height:1.5}
+  </style>
+
+  <p class="qsk-kicker">Genial/Quaest · Nacional · Julho 2026</p>
+  <h3 class="qsk-title">Para onde vai o voto entre o 1º e o 2º turno<br>no cenário Lula&nbsp;×&nbsp;Flávio Bolsonaro</h3>
+  <p class="qsk-sub">Barras das colunas = <b>FATO</b> (toplines publicados, págs. 25 e 37 do deck).
+    Fluxos hachurados = <b>INFERÊNCIA</b> (uma alocação compatível entre muitas).</p>
+
+  <div class="qsk-warn"><span class="qsk-warn-ic">!</span>
+    <span><b>A Quaest não publica a matriz de transição 1º→2º turno.</b> Nenhum fluxo deste gráfico foi
+    medido: a repartição é modelo (cruzamento-mínimo), não medição. Só os totais de cada barra e os
+    saldos líquidos (+5 Lula, +9 Flávio, +6 Branco/Nulo, −7 Indecisos) são números publicados.</span>
+  </div>
+
+  <div class="qsk-svgwrap"><svg viewBox="0 0 960 560" preserveAspectRatio="xMidYMid meet" role="img"
+       aria-label="Sankey da transferência de votos 1º para 2º turno Quaest julho 2026 — fluxos inferidos, não medidos"></svg></div>
+
+  <div class="qsk-legend">
+    <span><span class="qsk-sw" style="background:var(--qsk-lula)"></span>Lula</span>
+    <span><span class="qsk-sw" style="background:var(--qsk-flavio)"></span>Flávio</span>
+    <span><span class="qsk-sw" style="background:var(--qsk-neutro)"></span>Indefinidos / eliminados</span>
+    <span><span class="qsk-tag qsk-tag--fato">Fato</span>barras (totais publicados)</span>
+    <span><span class="qsk-sw qsk-sw--hatch"></span><span class="qsk-tag qsk-tag--inf">Inferência</span>todos os fluxos</span>
+  </div>
+
+  <div class="qsk-limits">
+    <h4>Limites possíveis de cada fluxo (p.p.) — o dado publicado não fecha mais que isto</h4>
+    <table>
+      <thead><tr><th>Fluxo (origem → destino)</th><th>Modelo</th><th>Mín.</th><th>Máx.</th></tr></thead>
+      <tbody>
+        <tr><td>Outros (Caiado·Zema·Renan) → Flávio</td><td>8</td><td>0</td><td>9</td></tr>
+        <tr><td>Outros → Branco/Nulo</td><td>4</td><td>0</td><td>6</td></tr>
+        <tr><td>Outros → Lula</td><td>1</td><td>0</td><td>5</td></tr>
+        <tr><td>Indecisos → Lula</td><td>4</td><td>0</td><td>5</td></tr>
+        <tr><td>Indecisos → Branco/Nulo</td><td>2</td><td>0</td><td>6</td></tr>
+        <tr><td>Indecisos → Flávio</td><td>1</td><td>0</td><td>9</td></tr>
+      </tbody>
+    </table>
+    <p class="qsk-limits-note">Os mínimos e máximos são os extremos compatíveis com os toplines publicados
+      (conservação de massa, retenção máxima nas demais células). Qualquer combinação dentro desses limites
+      reproduz os mesmos números públicos — por isso nenhum elo individual pode ser afirmado como medido.</p>
+  </div>
+
+  <p class="qsk-foot"><b>Como ler:</b> das ~20 p.p. liberadas no 2º turno — 13 dos candidatos eliminados
+    (Caiado, Zema, Renan e menores, fora da cédula) + 7 de indecisos que decidem — os saldos líquidos
+    publicados são <b>+9 Flávio</b>, <b>+5 Lula</b> e <b>+6 Branco/Nulo</b> (FATO). A divisão exata de cada
+    elo é hipótese. Estrutura estável frente a junho (44×38 → 45×37).</p>
+
+  <script>
+  (function(){
+    var svg = document.currentScript.parentNode.querySelector('svg');
+    var NS='http://www.w3.org/2000/svg';
+    var W=960,H=560,o={pad:{t:64,b:26,l:8,r:8},unit:4.3,gap:15,nodeW:15};
+    var col={lula:'#c15b56',flavio:'#5f83b3',neutro:'#6d6a63'};
+    var soft={lula:'rgba(193,91,86,.40)',flavio:'rgba(95,131,179,.40)',neutro:'rgba(120,116,108,.30)'};
+    var stripe={lula:'rgba(193,91,86,.62)',flavio:'rgba(95,131,179,.62)',neutro:'rgba(150,145,135,.5)'};
+    var r1=[
+      {id:'r1_lula',l:'Lula',v:40,c:'lula',d:''},
+      {id:'r1_flavio',l:'Flávio',v:28,c:'flavio',d:''},
+      {id:'r1_outros',l:'Outros',v:13,c:'neutro',d:'Caiado·Zema·Renan'},
+      {id:'r1_indecisos',l:'Indecisos',v:11,c:'neutro',d:''},
+      {id:'r1_branco',l:'Branco/Nulo',v:8,c:'neutro',d:''}
+    ];
+    var r2=[
+      {id:'r2_lula',l:'Lula',v:45,c:'lula',d:''},
+      {id:'r2_flavio',l:'Flávio',v:37,c:'flavio',d:''},
+      {id:'r2_branco',l:'Branco/Nulo',v:14,c:'neutro',d:''},
+      {id:'r2_indecisos',l:'Indecisos',v:4,c:'neutro',d:''}
+    ];
+    var links=[
+      {s:'r1_lula',t:'r2_lula',v:40,k:'ret'},
+      {s:'r1_flavio',t:'r2_flavio',v:28,k:'ret'},
+      {s:'r1_branco',t:'r2_branco',v:8,k:'ret'},
+      {s:'r1_indecisos',t:'r2_indecisos',v:4,k:'ret'},
+      {s:'r1_outros',t:'r2_flavio',v:8,k:'tr'},
+      {s:'r1_outros',t:'r2_branco',v:4,k:'tr'},
+      {s:'r1_outros',t:'r2_lula',v:1,k:'tr'},
+      {s:'r1_indecisos',t:'r2_lula',v:4,k:'tr'},
+      {s:'r1_indecisos',t:'r2_branco',v:2,k:'tr'},
+      {s:'r1_indecisos',t:'r2_flavio',v:1,k:'tr'}
+    ];
+    var deltas={r2_lula:'+5',r2_flavio:'+9',r2_branco:'+6',r2_indecisos:'−7'};
+
+    function el(t,a){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);return e;}
+
+    // defs: hachura diagonal por cor — TODOS os fluxos são inferidos
+    var defs=el('defs',{});
+    Object.keys(stripe).forEach(function(c){
+      var p=el('pattern',{id:'qskH_'+c,width:'7',height:'7',patternUnits:'userSpaceOnUse',patternTransform:'rotate(45)'});
+      p.appendChild(el('rect',{width:'7',height:'7',fill:soft[c]}));
+      p.appendChild(el('rect',{width:'2.6',height:'7',fill:stripe[c]}));
+      defs.appendChild(p);
+    });
+    svg.appendChild(defs);
+
+    var u=o.unit,gap=o.gap,nodeW=o.nodeW;
+    var xL=o.pad.l+128,xR=W-o.pad.r-110-nodeW;
+    var availH=H-o.pad.t-o.pad.b;
+    function layout(list,x){
+      var total=list.reduce(function(a,n){return a+n.v*u;},0)+(list.length-1)*gap;
+      var y=o.pad.t+(availH-total)/2;
+      list.forEach(function(n){n.x=x;n.y=y;n.h=n.v*u;n.mid=y+n.h/2;y+=n.h+gap;n.tin=n.y;n.tout=n.y;});
+    }
+    layout(r1,xL);layout(r2,xR);
+    var byId={};r1.concat(r2).forEach(function(n){byId[n.id]=n;});
+    var g=document.createDocumentFragment();
+
+    // column headers + selos FATO
+    [[xL,'1º turno'],[xR,'2º turno']].forEach(function(pair){
+      var h=el('text',{x:pair[0]+nodeW/2,y:o.pad.t-38,'text-anchor':'middle','class':'qsk-colhead'});
+      h.textContent=pair[1];g.appendChild(h);
+      var s=el('text',{x:pair[0]+nodeW/2,y:o.pad.t-22,'text-anchor':'middle','class':'qsk-seal',fill:'#9db9dd'});
+      s.textContent='FATO';g.appendChild(s);
+    });
+    // selo INFERÊNCIA no centro da área de fluxo
+    var mid=el('text',{x:(xL+xR+nodeW)/2,y:o.pad.t-22,'text-anchor':'middle','class':'qsk-seal',fill:'#b7b0a4'});
+    mid.textContent='FLUXOS = INFERÊNCIA';g.appendChild(mid);
+
+    links.sort(function(a,b){return (a.k==='ret'?1:0)-(b.k==='ret'?1:0);});
+    links.forEach(function(lk){
+      var s=byId[lk.s],t=byId[lk.t],w=lk.v*u,sy=s.tout,ty=t.tin;s.tout+=w;t.tin+=w;
+      var x0=s.x+nodeW,x1=t.x,cx=(x0+x1)/2;
+      var d='M'+x0+','+sy+'C'+cx+','+sy+' '+cx+','+ty+' '+x1+','+ty
+           +'L'+x1+','+(ty+w)+'C'+cx+','+(ty+w)+' '+cx+','+(sy+w)+' '+x0+','+(sy+w)+'Z';
+      // hachura em TODOS os elos (retenção inclusive): nada aqui foi medido
+      var p=el('path',{d:d,fill:'url(#qskH_'+t.c+')',stroke:stripe[t.c],'stroke-width':'0.8',
+                       'stroke-dasharray':'5 4',opacity:lk.k==='tr'?'0.95':'0.7'});
+      g.appendChild(p);
+    });
+
+    // nós sólidos = FATO
+    r1.concat(r2).forEach(function(n){
+      g.appendChild(el('rect',{x:n.x,y:n.y,width:nodeW,height:Math.max(n.h,1.5),rx:2,fill:col[n.c]}));
+    });
+
+    function label(n,side){
+      var isL=side==='L',tx=isL?n.x-10:n.x+nodeW+10,anc=isL?'end':'start';
+      var lab=el('text',{x:tx,y:n.mid-2,'text-anchor':anc,'class':'qsk-nodelabel'});lab.textContent=n.l;g.appendChild(lab);
+      var val=el('text',{x:tx,y:n.mid+14,'text-anchor':anc,'class':'qsk-nodeval'});
+      if(!isL&&deltas[n.id]){
+        val.textContent=n.v+'% ';
+        var ds=el('tspan',{'class':'qsk-delta'});var dv=deltas[n.id];
+        ds.setAttribute('fill',dv.charAt(0)==='+'?(n.c==='lula'?col.lula:(n.c==='flavio'?col.flavio:'#8f887c')):'#8f887c');
+        ds.textContent=dv;val.appendChild(ds);
+      } else val.textContent=n.v+'%';
+      g.appendChild(val);
+      if(n.d){var dsc=el('text',{x:tx,y:n.mid+27,'text-anchor':anc,'class':'qsk-nodedesc'});dsc.textContent=n.d;g.appendChild(dsc);}
+    }
+    r1.forEach(function(n){label(n,'L');});
+    r2.forEach(function(n){label(n,'R');});
+    svg.appendChild(g);
+  })();
+  </script>
+</section>
+
+<!-- ============ VARIANTE SLIDE 1600×900 ============ -->
+<section class="qsk qsk--slide" data-qsk="slide" style="max-width:1600px">
+  <style>
+    .qsk--slide{background:#11100f; padding:50px 72px 40px; max-width:1600px}
+    .qsk--slide .qsk-title{font-size:40px}
+    .qsk--slide .qsk-kicker{font-size:15px}
+    .qsk--slide .qsk-sub{font-size:17px; max-width:96ch; margin-bottom:10px}
+    .qsk--slide .qsk-warn{font-size:16px; max-width:none; padding:12px 18px}
+    .qsk--slide .qsk-nodelabel{font-size:19px}
+    .qsk--slide .qsk-nodeval{font-size:23px}
+    .qsk--slide .qsk-nodedesc{font-size:14px}
+    .qsk--slide .qsk-colhead{font-size:15px}
+    .qsk--slide .qsk-seal{font-size:13px}
+    .qsk--slide .qsk-delta{font-size:16px}
+    .qsk--slide .qsk-legend{font-size:16px; gap:18px 34px}
+    .qsk--slide .qsk-foot{font-size:15px; max-width:none}
+  </style>
+  <p class="qsk-kicker">Genial/Quaest · Nacional · Julho 2026</p>
+  <h3 class="qsk-title">Transferência de voto 1º → 2º turno · Lula × Flávio Bolsonaro</h3>
+  <div class="qsk-warn"><span class="qsk-warn-ic">!</span>
+    <span><b>A Quaest não publica a matriz de transição.</b> Fluxos hachurados = modelo, não medição.
+    FATO: barras e saldos líquidos (+5 Lula, +9 Flávio, +6 Branco/Nulo, −7 Indecisos). Págs. 25 e 37.</span>
+  </div>
+  <div class="qsk-svgwrap"><svg viewBox="0 0 1456 560" preserveAspectRatio="xMidYMid meet" role="img"
+       aria-label="Sankey slide transferência de votos Quaest julho 2026 — fluxos inferidos, não medidos"></svg></div>
+  <div class="qsk-legend">
+    <span><span class="qsk-sw" style="background:var(--qsk-lula)"></span>Lula</span>
+    <span><span class="qsk-sw" style="background:var(--qsk-flavio)"></span>Flávio</span>
+    <span><span class="qsk-sw" style="background:var(--qsk-neutro)"></span>Indefinidos / eliminados</span>
+    <span><span class="qsk-tag qsk-tag--fato">Fato</span>barras (totais publicados)</span>
+    <span><span class="qsk-sw qsk-sw--hatch"></span><span class="qsk-tag qsk-tag--inf">Inferência</span>todos os fluxos</span>
+    <span>Limites (p.p.): Outros→Flávio 0–9 · Outros→B/N 0–6 · Outros→Lula 0–5 · Indec→Lula 0–5 · Indec→B/N 0–6 · Indec→Flávio 0–9</span>
+  </div>
+  <script>
+  (function(){
+    var svg = document.currentScript.parentNode.querySelector('svg');
+    var NS='http://www.w3.org/2000/svg';
+    var W=1456,H=560,pad={t:92,b:62,l:20,r:20},u=4.6;
+    var o={pad:pad,unit:u,gap:18,nodeW:20};
+    var col={lula:'#c15b56',flavio:'#5f83b3',neutro:'#6d6a63'};
+    var soft={lula:'rgba(193,91,86,.40)',flavio:'rgba(95,131,179,.40)',neutro:'rgba(120,116,108,.30)'};
+    var stripe={lula:'rgba(193,91,86,.62)',flavio:'rgba(95,131,179,.62)',neutro:'rgba(150,145,135,.5)'};
+    var r1=[{id:'r1_lula',l:'Lula',v:40,c:'lula',d:''},{id:'r1_flavio',l:'Flávio',v:28,c:'flavio',d:''},
+      {id:'r1_outros',l:'Outros',v:13,c:'neutro',d:'Caiado·Zema·Renan'},
+      {id:'r1_indecisos',l:'Indecisos',v:11,c:'neutro',d:''},{id:'r1_branco',l:'Branco/Nulo',v:8,c:'neutro',d:''}];
+    var r2=[{id:'r2_lula',l:'Lula',v:45,c:'lula',d:''},{id:'r2_flavio',l:'Flávio',v:37,c:'flavio',d:''},
+      {id:'r2_branco',l:'Branco/Nulo',v:14,c:'neutro',d:''},{id:'r2_indecisos',l:'Indecisos',v:4,c:'neutro',d:''}];
+    var links=[{s:'r1_lula',t:'r2_lula',v:40,k:'ret'},{s:'r1_flavio',t:'r2_flavio',v:28,k:'ret'},
+      {s:'r1_branco',t:'r2_branco',v:8,k:'ret'},{s:'r1_indecisos',t:'r2_indecisos',v:4,k:'ret'},
+      {s:'r1_outros',t:'r2_flavio',v:8,k:'tr'},{s:'r1_outros',t:'r2_branco',v:4,k:'tr'},
+      {s:'r1_outros',t:'r2_lula',v:1,k:'tr'},{s:'r1_indecisos',t:'r2_lula',v:4,k:'tr'},
+      {s:'r1_indecisos',t:'r2_branco',v:2,k:'tr'},{s:'r1_indecisos',t:'r2_flavio',v:1,k:'tr'}];
+    var deltas={r2_lula:'+5',r2_flavio:'+9',r2_branco:'+6',r2_indecisos:'−7'};
+    function el(t,a){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);return e;}
+    var defs=el('defs',{});
+    Object.keys(stripe).forEach(function(c){
+      var p=el('pattern',{id:'qskHS_'+c,width:'9',height:'9',patternUnits:'userSpaceOnUse',patternTransform:'rotate(45)'});
+      p.appendChild(el('rect',{width:'9',height:'9',fill:soft[c]}));
+      p.appendChild(el('rect',{width:'3.4',height:'9',fill:stripe[c]}));
+      defs.appendChild(p);
+    });
+    svg.appendChild(defs);
+    var xL=pad.l+170,xR=W-pad.r-200-o.nodeW,availH=H-pad.t-pad.b;
+    function layout(list,x){var total=list.reduce(function(a,n){return a+n.v*u;},0)+(list.length-1)*o.gap;
+      var y=pad.t+(availH-total)/2;list.forEach(function(n){n.x=x;n.y=y;n.h=n.v*u;n.mid=y+n.h/2;y+=n.h+o.gap;n.tin=n.y;n.tout=n.y;});}
+    layout(r1,xL);layout(r2,xR);
+    var byId={};r1.concat(r2).forEach(function(n){byId[n.id]=n;});
+    var g=document.createDocumentFragment();
+    [[xL,'1º turno'],[xR,'2º turno']].forEach(function(pair){
+      var h=el('text',{x:pair[0]+o.nodeW/2,y:pad.t-48,'text-anchor':'middle','class':'qsk-colhead'});
+      h.textContent=pair[1];g.appendChild(h);
+      var s=el('text',{x:pair[0]+o.nodeW/2,y:pad.t-28,'text-anchor':'middle','class':'qsk-seal',fill:'#9db9dd'});
+      s.textContent='FATO';g.appendChild(s);
+    });
+    var mid=el('text',{x:(xL+xR+o.nodeW)/2,y:pad.t-28,'text-anchor':'middle','class':'qsk-seal',fill:'#b7b0a4'});
+    mid.textContent='FLUXOS = INFERÊNCIA';g.appendChild(mid);
+    links.sort(function(a,b){return (a.k==='ret'?1:0)-(b.k==='ret'?1:0);});
+    links.forEach(function(lk){var s=byId[lk.s],t=byId[lk.t],w=lk.v*u,sy=s.tout,ty=t.tin;s.tout+=w;t.tin+=w;
+      var x0=s.x+o.nodeW,x1=t.x,cx=(x0+x1)/2;
+      var d='M'+x0+','+sy+'C'+cx+','+sy+' '+cx+','+ty+' '+x1+','+ty+'L'+x1+','+(ty+w)+'C'+cx+','+(ty+w)+' '+cx+','+(sy+w)+' '+x0+','+(sy+w)+'Z';
+      var p=el('path',{d:d,fill:'url(#qskHS_'+t.c+')',stroke:stripe[t.c],'stroke-width':'1',
+        'stroke-dasharray':'7 5',opacity:lk.k==='tr'?'0.95':'0.7'});g.appendChild(p);});
+    r1.concat(r2).forEach(function(n){g.appendChild(el('rect',{x:n.x,y:n.y,width:o.nodeW,height:Math.max(n.h,1.5),rx:2,fill:col[n.c]}));});
+    function label(n,side){var isL=side==='L',tx=isL?n.x-14:n.x+o.nodeW+14,anc=isL?'end':'start';
+      var lab=el('text',{x:tx,y:n.mid-4,'text-anchor':anc,'class':'qsk-nodelabel'});lab.textContent=n.l;g.appendChild(lab);
+      var val=el('text',{x:tx,y:n.mid+20,'text-anchor':anc,'class':'qsk-nodeval'});
+      if(!isL&&deltas[n.id]){val.textContent=n.v+'% ';var ds=el('tspan',{'class':'qsk-delta'});var dv=deltas[n.id];
+        ds.setAttribute('fill',dv.charAt(0)==='+'?(n.c==='lula'?col.lula:(n.c==='flavio'?col.flavio:'#8f887c')):'#8f887c');ds.textContent=dv;val.appendChild(ds);}
+      else val.textContent=n.v+'%';g.appendChild(val);
+      if(n.d){var dsc=el('text',{x:tx,y:n.mid+38,'text-anchor':anc,'class':'qsk-nodedesc'});dsc.textContent=n.d;g.appendChild(dsc);}}
+    r1.forEach(function(n){label(n,'L');});r2.forEach(function(n){label(n,'R');});
+    svg.appendChild(g);
+  })();
+  </script>
+  <p class="qsk-foot"><b>Pool liberado ≈ 20 p.p.</b> (13 de candidatos eliminados + 7 de indecisos que decidem) →
+    saldos líquidos publicados: <b style="color:#5f83b3">Flávio +9</b>, <b style="color:#c15b56">Lula +5</b>,
+    <b>Branco/Nulo +6</b>. A repartição elo a elo é inferência. Fonte: Genial/Quaest jul/2026.</p>
+</section>

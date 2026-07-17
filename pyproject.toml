@@ -65,6 +65,9 @@ Article-PT    = "https://github.com/ArvorCo/PNAD/blob/main/docs/artigo_pt.md"
 Article-EN    = "https://github.com/ArvorCo/PNAD/blob/main/docs/artigo_en.md"
 
 [project.optional-dependencies]
+audit = [
+  "pypdf>=5",
+]
 dev = [
   "pytest",
   "pytest-recording>=0.13.4",

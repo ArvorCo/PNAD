@@ -1,0 +1,315 @@
+<!-- Fragmento autocontido: o suplemento temático de tarifas (Quaest 27ª rodada, jul/2026).
+     Recontagem 101 itens · exame do suplemento · verificação Candeloro-2.
+     Genial/Quaest jul/2026 (BR-07181/2026). Cole no dossiê quaest_0726.html.
+     Sem dependências externas. Paleta/tipografia do thread. Calibragem Fato/Inferência/Hipótese.
+     NÃO editar quaest_0726.html a partir daqui. Dados em quaest_0726_suplemento.json. -->
+<section class="qsp" data-qsp="responsive">
+  <style>
+    .qsp{
+      --qsp-bg:#11100f; --qsp-bg2:#100f0d; --qsp-fg:#efe9e0; --qsp-muted:#8f887c;
+      --qsp-signal:#e94935; --qsp-cyan:#42c5d5; --qsp-acid:#d7ee3f;
+      --qsp-line:#2a2723; --qsp-panel:#161412;
+      background:transparent; color:var(--qsp-fg);
+      font-family:"IBM Plex Sans","Helvetica Neue",system-ui,sans-serif;
+      max-width:980px; margin:0 auto; padding:8px 0 6px; -webkit-font-smoothing:antialiased;
+    }
+    .qsp *{box-sizing:border-box}
+    .qsp-kicker{font:600 11px/1.4 "IBM Plex Mono",monospace; letter-spacing:.18em;
+      text-transform:uppercase; color:var(--qsp-cyan); margin:0 0 8px}
+    .qsp-title{font-family:"Fraunces","Georgia",serif; font-weight:500;
+      font-size:clamp(23px,4vw,36px); line-height:1.08; margin:0 0 8px; color:var(--qsp-fg)}
+    .qsp-title em{font-style:italic; color:var(--qsp-signal)}
+    .qsp-sub{font-size:14px; line-height:1.55; color:var(--qsp-muted); margin:0 0 20px; max-width:76ch}
+    .qsp-tag{display:inline-block; font:600 9.5px/1 "IBM Plex Mono",monospace;
+      letter-spacing:.1em; text-transform:uppercase; padding:3px 6px; border-radius:3px; vertical-align:middle}
+    .qsp-tag--fato{background:rgba(66,197,213,.14); color:#8fdbe6; border:1px solid rgba(66,197,213,.4)}
+    .qsp-tag--inf{background:rgba(215,238,63,.12); color:#c9dd6b; border:1px solid rgba(215,238,63,.35)}
+    .qsp-tag--hip{background:rgba(233,73,53,.13); color:#f0897b; border:1px solid rgba(233,73,53,.4)}
+
+    .qsp-h3{font:600 11px/1.3 "IBM Plex Mono",monospace; letter-spacing:.16em;
+      text-transform:uppercase; color:var(--qsp-muted); margin:32px 0 14px;
+      padding-bottom:7px; border-bottom:1px solid var(--qsp-line)}
+
+    /* recontagem: números + barra 101 */
+    .qsp-count{display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:0 0 16px}
+    @media(max-width:560px){.qsp-count{grid-template-columns:1fr}}
+    .qsp-stat{background:var(--qsp-panel); border:1px solid var(--qsp-line); border-radius:7px; padding:15px 16px 13px}
+    .qsp-stat b{display:block; font:700 30px/1 "IBM Plex Sans",sans-serif; letter-spacing:-.01em}
+    .qsp-stat .was{font:500 11px/1 "IBM Plex Mono",monospace; color:var(--qsp-muted); margin:5px 0 0}
+    .qsp-stat small{display:block; font:600 10px/1.3 "IBM Plex Mono",monospace; letter-spacing:.12em;
+      text-transform:uppercase; color:var(--qsp-muted); margin:0 0 8px}
+    .qsp-stat--pub b{color:var(--qsp-cyan)} .qsp-stat--ghost b{color:var(--qsp-signal)} .qsp-stat--pct b{color:var(--qsp-acid)}
+    .qsp-delta{display:inline-block; font:600 10.5px/1 "IBM Plex Mono",monospace; padding:2px 5px;
+      border-radius:3px; background:rgba(215,238,63,.12); color:#c9dd6b; margin-left:6px; vertical-align:middle}
+
+    .qsp-bar-wrap{margin:4px 0 6px}
+    .qsp-bar-lab{display:flex; justify-content:space-between; font:600 10px/1.3 "IBM Plex Mono",monospace;
+      letter-spacing:.08em; text-transform:uppercase; color:var(--qsp-muted); margin:0 0 7px}
+    .qsp-bar{display:grid; grid-template-columns:65fr 8fr 28fr; gap:3px; height:34px}
+    .qsp-seg{border-radius:3px; display:flex; align-items:center; justify-content:center;
+      font:700 12px/1 "IBM Plex Sans",sans-serif; color:#0c0b0a; position:relative; overflow:hidden}
+    .qsp-seg--old{background:#3a6d75; color:#cfeef2}
+    .qsp-seg--new{background:var(--qsp-acid); color:#1a1c05}
+    .qsp-seg--ghost{background:#3a2420; color:#f0897b; border:1px solid rgba(233,73,53,.4)}
+    .qsp-bar-legend{display:flex; flex-wrap:wrap; gap:14px; margin:10px 0 0; font:500 11px/1.4 "IBM Plex Sans",sans-serif; color:var(--qsp-muted)}
+    .qsp-bar-legend span{display:flex; align-items:center; gap:6px}
+    .qsp-dot{width:11px; height:11px; border-radius:3px; flex:none}
+    .qsp-dot--old{background:#3a6d75} .qsp-dot--new{background:var(--qsp-acid)} .qsp-dot--ghost{background:#3a2420; border:1px solid rgba(233,73,53,.5)}
+
+    .qsp-note{display:flex; gap:11px; align-items:flex-start;
+      border:1px solid rgba(215,238,63,.35); border-left:3px solid var(--qsp-acid);
+      background:rgba(215,238,63,.05); border-radius:5px; padding:11px 15px; margin:14px 0 4px;
+      font-size:13px; line-height:1.55; color:var(--qsp-fg)}
+    .qsp-note .ic{font:700 13px/1.3 "IBM Plex Mono",monospace; color:var(--qsp-acid); flex:none}
+    .qsp-note b{color:#e7f39a}
+
+    /* fantasmas restantes */
+    .qsp-hold{background:var(--qsp-bg2); border:1px solid rgba(233,73,53,.35); border-radius:7px; padding:16px 20px 14px; margin:8px 0 0}
+    .qsp-hold ul{list-style:none; margin:0; padding:0; columns:2; column-gap:26px}
+    @media(max-width:640px){.qsp-hold ul{columns:1}}
+    .qsp-hold li{font-size:12.5px; line-height:1.45; color:var(--qsp-fg); padding:7px 0 7px 22px; position:relative; break-inside:avoid}
+    .qsp-hold li::before{content:"›"; position:absolute; left:2px; color:var(--qsp-signal); font-family:"IBM Plex Mono",monospace; font-weight:700}
+    .qsp-hold li b{color:var(--qsp-fg)} .qsp-hold li span{color:var(--qsp-muted)}
+
+    /* exame do suplemento: linha de perguntas */
+    .qsp-exam{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:6px 0 0}
+    @media(max-width:720px){.qsp-exam{grid-template-columns:1fr}}
+    .qsp-ex{background:var(--qsp-panel); border:1px solid var(--qsp-line); border-radius:7px; padding:15px 17px 14px; position:relative; overflow:hidden}
+    .qsp-ex::before{content:""; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--qsp-signal),transparent)}
+    .qsp-ex-q{font:700 10px/1 "IBM Plex Mono",monospace; letter-spacing:.12em; text-transform:uppercase; color:var(--qsp-signal); margin:0 0 7px}
+    .qsp-ex-reg{font-size:12px; line-height:1.5; color:var(--qsp-muted); margin:0 0 9px}
+    .qsp-ex-reg b{color:var(--qsp-fg); font-weight:600}
+    .qsp-ex-slide{font-family:"Fraunces",serif; font-weight:500; font-size:16.5px; line-height:1.2; color:var(--qsp-fg); margin:0 0 9px}
+    .qsp-ex-slide em{font-style:italic; color:var(--qsp-signal)}
+    .qsp-ex-data{font:600 12.5px/1.5 "IBM Plex Sans",sans-serif; color:var(--qsp-fg); margin:0}
+    .qsp-ex-data .v{color:var(--qsp-cyan)}
+
+    /* verificação Candeloro-2 */
+    .qsp-vlist{margin:6px 0 0}
+    .qsp-v{background:var(--qsp-bg2); border:1px solid var(--qsp-line); border-radius:7px; padding:15px 17px 14px; margin:0 0 11px; border-left:3px solid var(--qsp-cyan)}
+    .qsp-v-h{display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; margin:0 0 7px}
+    .qsp-v-id{font:700 12px/1 "IBM Plex Mono",monospace; color:var(--qsp-cyan); flex:none}
+    .qsp-v-vd{font:700 9.5px/1 "IBM Plex Mono",monospace; letter-spacing:.1em; text-transform:uppercase;
+      padding:3px 7px; border-radius:3px; background:rgba(66,197,213,.14); color:#8fdbe6; border:1px solid rgba(66,197,213,.4); flex:none}
+    .qsp-v-pg{font:500 10px/1 "IBM Plex Mono",monospace; color:var(--qsp-muted); margin-left:auto}
+    .qsp-v-claim{font:600 13px/1.4 "IBM Plex Sans",sans-serif; color:var(--qsp-fg); margin:0 0 6px}
+    .qsp-v-ev{font-size:12px; line-height:1.55; color:var(--qsp-muted); margin:0 0 6px}
+    .qsp-v-ev b{color:var(--qsp-fg); font-weight:600}
+    .qsp-v-ref{font-size:12px; line-height:1.55; color:#c9dd6b; margin:0; padding:8px 11px; border-radius:5px; background:rgba(215,238,63,.06); border:1px solid rgba(215,238,63,.25)}
+    .qsp-v-ref b{color:#e7f39a}
+
+    .qsp-swing{width:100%; border-collapse:collapse; margin:8px 0 0; font-size:12px}
+    .qsp-swing th,.qsp-swing td{text-align:left; padding:7px 9px; border-bottom:1px solid var(--qsp-line)}
+    .qsp-swing th{font:600 9.5px/1.2 "IBM Plex Mono",monospace; letter-spacing:.08em; text-transform:uppercase; color:var(--qsp-muted)}
+    .qsp-swing td{color:var(--qsp-fg)} .qsp-swing td.num{font:700 13px/1 "IBM Plex Sans",sans-serif; color:var(--qsp-signal); font-variant-numeric:tabular-nums}
+    .qsp-swing td.moe{font:500 12px/1 "IBM Plex Mono",monospace; color:var(--qsp-muted)}
+    .qsp-swing tr:last-child td{border-bottom:none}
+
+    .qsp-foot{font-size:11.5px; line-height:1.55; color:var(--qsp-muted); margin:24px 0 0; padding-top:12px; border-top:1px solid var(--qsp-line); max-width:84ch}
+    .qsp-foot b{color:var(--qsp-fg)} .qsp-foot a{color:var(--qsp-cyan); text-decoration:none}
+  </style>
+
+  <p class="qsp-kicker">Suplemento de tarifas · BR-07181/2026 · dossiê 09</p>
+  <h1 class="qsp-title">O suplemento acende <em>oito perguntas</em>.<br>Sobram <em>vinte e oito</em> no escuro.</h1>
+  <p class="qsp-sub">A Quaest publicou um recorte temático de tarifas da 27ª rodada, 33 páginas. Ele muda a contagem de fantasmas do questionário e traz, no mesmo movimento, um enquadramento que diverge do instrumento registrado. Recontei item a item e verifiquei, uma a uma, as seis alegações de Marcos Paulo Candeloro contra o PDF.</p>
+
+  <!-- 1. A NOVA CONTAGEM -->
+  <div class="qsp-h3">01 · A nova contagem · 101 itens, depois do suplemento</div>
+  <div class="qsp-count">
+    <div class="qsp-stat qsp-stat--pub"><small>Com topline</small><b>73</b><p class="was">antes 65 <span class="qsp-delta">+8</span></p></div>
+    <div class="qsp-stat qsp-stat--ghost"><small>Fantasmas</small><b>28</b><p class="was">antes 36 <span class="qsp-delta" style="background:rgba(233,73,53,.12);color:#f0897b">−8</span></p></div>
+    <div class="qsp-stat qsp-stat--pct"><small>Cobertura</small><b>72,3%</b><p class="was">antes 64,4%</p></div>
+  </div>
+
+  <div class="qsp-bar-wrap">
+    <div class="qsp-bar-lab"><span>101 itens numerados do questionário</span><span>BR-07181/2026</span></div>
+    <div class="qsp-bar">
+      <div class="qsp-seg qsp-seg--old" title="65 já publicados no deck principal">65</div>
+      <div class="qsp-seg qsp-seg--new" title="8 acesos pelo suplemento: Q57–Q61, Q63–Q65">8</div>
+      <div class="qsp-seg qsp-seg--ghost" title="28 seguem sem topline">28</div>
+    </div>
+    <div class="qsp-bar-legend">
+      <span><i class="qsp-dot qsp-dot--old"></i>65 já publicados (deck principal)</span>
+      <span><i class="qsp-dot qsp-dot--new"></i>8 acesos pelo suplemento</span>
+      <span><i class="qsp-dot qsp-dot--ghost"></i>28 ainda fantasmas</span>
+    </div>
+  </div>
+
+  <div class="qsp-note"><span class="ic">▮</span><span><b>O suplemento acende exatamente o bloco tarifário</b> Q57 a Q65, menos um. São 8 toplines novos: opinião sobre os EUA (Q57), conhecimento das tarifas (Q58), impacto na família (Q59), Lula x Flávio sobre a origem do tarifaço (Q60, Q61), a viagem de Flávio (Q63), a força para convencer Trump (Q64) e o efeito no voto (Q65). As páginas de perfil e a escala Lulista/Bolsonarista (Q91) apenas reapresentam dado já público. <span class="qsp-tag qsp-tag--fato">Fato</span></span></div>
+
+  <!-- fantasmas restantes -->
+  <div class="qsp-hold">
+    <ul>
+      <li><b>Q62</b> <span>patriotismo: quem defende melhor o Brasil, Flávio ou Lula. O único item do bloco de tarifas ainda retido.</span></li>
+      <li><b>Q77, Q80–Q83</b> <span>Michelle, mulheres e o bloco Paulo Figueiredo.</span></li>
+      <li><b>Q29, Q30</b> <span>melhor resultado para o Brasil e expectativa de vencedor.</span></li>
+      <li><b>Q33–Q39</b> <span>sete ações de engajamento eleitoral.</span></li>
+      <li><b>Q42, Q44, Q45</b> <span>direção do país e política para MEIs.</span></li>
+      <li><b>Q87, Q88</b> <span>renda versus preços e situação econômica da família.</span></li>
+      <li><b>Q92, Q93, Q94</b> <span>esquerda/centro/direita e afetos partidários. Publicou-se Q91, reteve-se Q92.</span></li>
+      <li><b>Q100, Q101</b> <span>recordação de voto passado.</span></li>
+    </ul>
+  </div>
+
+  <!-- 2. O EXAME DO SUPLEMENTO -->
+  <div class="qsp-h3">02 · O exame do suplemento · quando o slide não é o instrumento</div>
+  <div class="qsp-exam">
+    <div class="qsp-ex">
+      <p class="qsp-ex-q">Q60 · página 11</p>
+      <p class="qsp-ex-reg">Registrado: <b>o governo Lula AFIRMA que Flávio APOIOU o tarifaço</b> para prejudicar o governo Lula.</p>
+      <p class="qsp-ex-slide">Publicado: <em>Lula acusa</em> Flávio de ter <em>pedido</em> o tarifaço. Flávio nega.</p>
+      <p class="qsp-ex-data">Lula <span class="v">47→51</span> · Flávio <span class="v">35→30</span> · NS/NR <span class="v">18→19</span></p>
+    </div>
+    <div class="qsp-ex">
+      <p class="qsp-ex-q">Q65 · página 18</p>
+      <p class="qsp-ex-reg">Registrado: as respostas ao tarifaço <b>fazem você ter mais vontade de votar em</b> Lula, Flávio ou outro.</p>
+      <p class="qsp-ex-slide">Publicado: <em>O tarifaço aumenta vontade de votar em quem?</em> · sua intenção de voto se aproxima mais de.</p>
+      <p class="qsp-ex-data">Lula <span class="v">42</span> · Flávio <span class="v">27</span> · Outro <span class="v">23</span> &nbsp;·&nbsp; 1º turno da rodada: Lula 40, Flávio 28</p>
+    </div>
+  </div>
+  <div class="qsp-note" style="border-color:rgba(233,73,53,.4);border-left-color:var(--qsp-signal);background:rgba(233,73,53,.05)"><span class="ic" style="color:var(--qsp-signal)">▮</span><span><b>O texto publicado diverge do registrado.</b> Q60 troca "afirma/apoiou" por "acusa/pediu"; Q65 troca "mais vontade de votar" por "intenção de voto". A pergunta do voto, sob manchete de efeito causal, devolve a intenção de 1º turno já conhecida (Lula 42 vs 40; Flávio 27 vs 28): não isola efeito nenhum. <span class="qsp-tag qsp-tag--fato">Fato</span> <span class="qsp-tag qsp-tag--inf">Inferência</span></span></div>
+
+  <!-- 3. VERIFICAÇÃO CANDELORO-2 -->
+  <div class="qsp-h3">03 · Verificação Candeloro-2 · seis alegações contra o PDF</div>
+  <div class="qsp-vlist">
+
+    <div class="qsp-v">
+      <div class="qsp-v-h"><span class="qsp-v-id">(a)</span><span class="qsp-v-vd">Confirmada</span><span class="qsp-v-pg">pág. 11 · Q60</span></div>
+      <p class="qsp-v-claim">"Lula acusa... Flávio nega... com quem você concorda mais?", com Lula como acusador e Flávio como réu.</p>
+      <p class="qsp-v-ev">Rodapé do slide: <b>"Lula acusa Flávio Bolsonaro de ter pedido o tarifaço contra o Brasil. Flávio nega e diz que pediu a Trump para não taxar o país."</b></p>
+      <p class="qsp-v-ref"><b>Refino:</b> mais grave que o alegado. O instrumento registrado dizia "o governo Lula AFIRMA que Flávio APOIOU". O deck endurece para "acusa/pediu". A versão exibida é mais carregada que a registrada.</p>
+    </div>
+
+    <div class="qsp-v">
+      <div class="qsp-v-h"><span class="qsp-v-id">(b)</span><span class="qsp-v-vd">Confirmada</span><span class="qsp-v-pg">pág. 13 · Q61</span></div>
+      <p class="qsp-v-claim">Versão de Lula = "retaliação ao Pix"; versão de Flávio reduzida.</p>
+      <p class="qsp-v-ev">Título da página 13: "você concorda com Lula que foram <b>pelo Pix</b>, ou com Flávio que foram <b>pelo que Lula fala</b>?". Lula fica concreto; Flávio é reduzido a "pelo que Lula fala".</p>
+      <p class="qsp-v-ref"><b>Refino:</b> a assimetria está no título de destaque. No rodapé técnico o registrado é simétrico ("causadas pelas declarações de Lula contra os EUA"). A redução aparece no texto que o leitor lê primeiro.</p>
+    </div>
+
+    <div class="qsp-v">
+      <div class="qsp-v-h"><span class="qsp-v-id">(c)</span><span class="qsp-v-vd">Confirmada</span><span class="qsp-v-pg">pág. 15–16 · Q63→Q64</span></div>
+      <p class="qsp-v-claim">57% não sabiam da viagem de Flávio aos EUA e, em seguida, opinam se ele tem força para convencer Trump.</p>
+      <p class="qsp-v-ev">Página 15: "Sabia que Flávio foi aos EUA?" <b>Não = 57</b>, Sim = 43. Página 16, imediatamente seguinte: "Flávio tem força para convencer Trump?" Sim 34 / Não 58 / NS-NR 8. Sequência idêntica no questionário.</p>
+      <p class="qsp-v-ref"><b>Refino:</b> exatamente 57% dizem desconhecer a viagem; a pergunta seguinte pede juízo sobre a "força" de Flávio no episódio que a maioria acabou de dizer que não conhecia.</p>
+    </div>
+
+    <div class="qsp-v">
+      <div class="qsp-v-h"><span class="qsp-v-id">(d)</span><span class="qsp-v-vd">Confirmada</span><span class="qsp-v-pg">pág. 18 · Q65</span></div>
+      <p class="qsp-v-claim">"O tarifaço aumenta vontade de votar em quem?" com percentuais quase iguais à intenção de voto da rodada.</p>
+      <p class="qsp-v-ev">Valores jul/26: Lula 42, Flávio 27, Outro 23. Deck principal, 1º turno: <b>Lula 40, Flávio 28</b>. Diferença de +2 e −1: dentro do arredondamento.</p>
+      <p class="qsp-v-ref"><b>Cálculo:</b> a intenção "atribuída à tarifa" reproduz o basal de 1º turno. Uma pergunta que devolve o basal não prova o efeito causal que a manchete afirma. O slide ainda reescreveu "ter mais vontade de votar" como "intenção de voto".</p>
+    </div>
+
+    <div class="qsp-v">
+      <div class="qsp-v-h"><span class="qsp-v-id">(e)</span><span class="qsp-v-vd">Confirmada e subestimada</span><span class="qsp-v-pg">pág. 5, 13, 19</span></div>
+      <p class="qsp-v-claim">Oscilações jun→jul de 4-5 p.p. em recortes com margens declaradas de 4-6.</p>
+      <p class="qsp-v-ev">Candeloro falou em 4-5 p.p.; as oscilações reais chegam a 10 p.p. A margem da diferença entre dois meses é ~1,41× a margem única (5 → ~7,1; 4 → ~5,7). Cinco saltos excedem até essa margem inflada:</p>
+      <table class="qsp-swing">
+        <tr><th>Recorte</th><th>Pergunta</th><th>Salto</th><th>Margem</th></tr>
+        <tr><td>Direita não Bolsonarista</td><td>Flávio Q61</td><td class="num">−8</td><td class="moe">5 · dif ~7,1</td></tr>
+        <tr><td>Direita não Bolsonarista</td><td>Flávio Q65</td><td class="num">−10</td><td class="moe">5 · dif ~7,1</td></tr>
+        <tr><td>Direita não Bolsonarista</td><td>Outro Q65</td><td class="num">+10</td><td class="moe">5 · dif ~7,1</td></tr>
+        <tr><td>Independente</td><td>Outro Q65</td><td class="num">−7</td><td class="moe">4 · dif ~5,7</td></tr>
+        <tr><td>Independente</td><td>Lula Q65</td><td class="num">+7</td><td class="moe">4 · dif ~5,7</td></tr>
+      </table>
+    </div>
+
+    <div class="qsp-v">
+      <div class="qsp-v-h"><span class="qsp-v-id">(f)</span><span class="qsp-v-vd">Confirmada</span><span class="qsp-v-pg">pág. 4, 5, 13, 19</span></div>
+      <p class="qsp-v-claim">Ficha declara MRP para subgrupos, apresentados com a mesma tipografia de dados observados.</p>
+      <p class="qsp-v-ev">Página 4: <b>"complementarmente, usamos modelo de MRP para estimativas de subgrupos"</b>. Os recortes (p.13, p.19) usam o mesmo gráfico de linhas dos toplines nacionais observados; nada distingue modelado de medido. A página 5 atribui uma "margem de erro" única por subgrupo, vocabulário de erro amostral emprestado a estimativa de modelo.</p>
+      <p class="qsp-v-ref"><b>Refino:</b> o leitor não tem como saber, no gráfico, onde termina a observação e começa o modelo.</p>
+    </div>
+
+  </div>
+
+  <p class="qsp-foot"><b>Leitura de fechamento.</b> O suplemento melhora a cobertura de 64,4% para 72,3% e, no mesmo gesto, exibe perguntas cujo texto não é o do instrumento registrado, retém o único item de patriotismo que duelaria Flávio e Lula, e apresenta estimativas de MRP como se fossem medidas diretas. As seis alegações de Candeloro se confirmam contra o PDF; uma delas ainda estava subestimada. O achado é o de sempre: <b>prova de opacidade, não de fraude</b>. Dados reproduzíveis em <b>quaest_0726_suplemento.json</b>. Deck principal: <a href="quaest_0726.html">quaest_0726.html</a>.</p>
+</section>
+
+<!-- ====================== VARIANTE SLIDE 1600×900 ====================== -->
+<section class="qsps" data-qsps="slide" style="margin-top:40px">
+  <style>
+    .qsps{--s-bg:#100f0d; --s-fg:#efe9e0; --s-muted:#8f887c; --s-signal:#e94935; --s-cyan:#42c5d5; --s-acid:#d7ee3f; --s-line:#2a2723; --s-panel:#161412;
+      box-sizing:border-box; width:1600px; height:900px; background:var(--s-bg); color:var(--s-fg);
+      font-family:"IBM Plex Sans",system-ui,sans-serif; padding:60px 72px; position:relative; overflow:hidden;
+      transform-origin:top left; margin:0 auto}
+    @media(max-width:1600px){.qsps{transform:scale(calc(100vw / 1600))}}
+    .qsps *{box-sizing:border-box}
+    .qsps-brand{position:absolute; top:60px; right:72px; font:600 13px/1 "IBM Plex Mono",monospace; letter-spacing:.16em; text-transform:uppercase; color:var(--s-muted)}
+    .qsps-k{font:600 15px/1 "IBM Plex Mono",monospace; letter-spacing:.22em; text-transform:uppercase; color:var(--s-cyan); margin:0 0 14px}
+    .qsps-t{font-family:"Fraunces",serif; font-weight:500; font-size:52px; line-height:1.04; margin:0 0 8px; letter-spacing:-.01em}
+    .qsps-t em{font-style:italic; color:var(--s-signal)}
+    .qsps-sub{font-size:19px; line-height:1.4; color:var(--s-muted); margin:0 0 26px; max-width:118ch}
+    .qsps-grid{display:grid; grid-template-columns:1.02fr 1.32fr; gap:36px}
+    .qsps-col{min-width:0}
+    .qsps-col h4{font:700 14px/1 "IBM Plex Mono",monospace; letter-spacing:.14em; text-transform:uppercase; margin:0 0 16px; padding-bottom:10px; border-bottom:1px solid var(--s-line)}
+    .qsps-col--l h4{color:var(--s-acid)} .qsps-col--r h4{color:var(--s-cyan)}
+
+    .qsps-stats{display:flex; gap:14px; margin:0 0 20px}
+    .qsps-stat{flex:1; background:var(--s-panel); border:1px solid var(--s-line); border-radius:10px; padding:16px 16px 13px}
+    .qsps-stat small{display:block; font:600 12px/1.2 "IBM Plex Mono",monospace; letter-spacing:.1em; text-transform:uppercase; color:var(--s-muted); margin:0 0 8px}
+    .qsps-stat b{font:700 40px/1 "IBM Plex Sans",sans-serif; letter-spacing:-.01em}
+    .qsps-stat .w{font:500 13px/1 "IBM Plex Mono",monospace; color:var(--s-muted); margin:6px 0 0}
+    .qsps-stat--p b{color:var(--s-cyan)} .qsps-stat--g b{color:var(--s-signal)} .qsps-stat--c b{color:var(--s-acid)}
+
+    .qsps-bar{display:grid; grid-template-columns:65fr 8fr 28fr; gap:4px; height:52px; margin:0 0 12px}
+    .qsps-seg{border-radius:5px; display:flex; align-items:center; justify-content:center; font:700 20px/1 "IBM Plex Sans",sans-serif}
+    .qsps-seg--o{background:#3a6d75; color:#cfeef2} .qsps-seg--n{background:var(--s-acid); color:#1a1c05} .qsps-seg--g{background:#3a2420; color:#f0897b; border:1px solid rgba(233,73,53,.45)}
+    .qsps-leg{display:flex; flex-direction:column; gap:9px; margin:0 0 20px; font:500 15px/1.35 "IBM Plex Sans",sans-serif; color:var(--s-muted)}
+    .qsps-leg span{display:flex; align-items:center; gap:9px}
+    .qsps-d{width:14px; height:14px; border-radius:4px; flex:none}
+    .qsps-d--o{background:#3a6d75} .qsps-d--n{background:var(--s-acid)} .qsps-d--g{background:#3a2420; border:1px solid rgba(233,73,53,.5)}
+    .qsps-ghost{font-size:15px; line-height:1.5; color:var(--s-fg); background:var(--s-panel); border:1px solid rgba(233,73,53,.35); border-radius:9px; padding:14px 17px}
+    .qsps-ghost b{color:#f0897b}
+
+    .qsps-vrow{display:flex; align-items:flex-start; gap:12px; padding:12px 0; border-top:1px solid rgba(42,39,35,.8)}
+    .qsps-vrow:first-of-type{border-top:none}
+    .qsps-vid{font:700 16px/1.3 "IBM Plex Mono",monospace; color:var(--s-cyan); flex:none; width:30px}
+    .qsps-vtx{flex:1; min-width:0; font-size:16px; line-height:1.38}
+    .qsps-vtx b{color:var(--s-fg)}
+    .qsps-vbadge{font:700 10.5px/1 "IBM Plex Mono",monospace; letter-spacing:.06em; text-transform:uppercase; padding:5px 8px; border-radius:5px; background:rgba(66,197,213,.16); color:#8fdbe6; flex:none; margin-top:1px; width:88px; text-align:center}
+    .qsps-vbadge--x{background:rgba(215,238,63,.14); color:#d7ee3f}
+
+    .qsps-ft{position:absolute; left:72px; right:72px; bottom:38px; font:500 16px/1.4 "IBM Plex Sans",sans-serif; color:var(--s-muted); padding-top:16px; border-top:1px solid var(--s-line)}
+    .qsps-ft b{color:var(--s-fg)}
+  </style>
+  <div class="qsps-brand">Arvor · brasil.arvor.co</div>
+  <p class="qsps-k">Suplemento de tarifas · Genial/Quaest jul/2026</p>
+  <h1 class="qsps-t">O suplemento acende <em>oito</em>. Sobram <em>vinte e oito</em> no escuro.</h1>
+  <p class="qsps-sub">Recorte temático de 33 páginas. Muda a contagem de fantasmas e, no mesmo gesto, exibe perguntas cujo texto diverge do instrumento registrado. Seis alegações de Candeloro, verificadas contra o PDF.</p>
+
+  <div class="qsps-grid">
+    <div class="qsps-col qsps-col--l">
+      <h4>A nova contagem · 101 itens</h4>
+      <div class="qsps-stats">
+        <div class="qsps-stat qsps-stat--p"><small>Publicados</small><b>73</b><p class="w">antes 65 · +8</p></div>
+        <div class="qsps-stat qsps-stat--g"><small>Fantasmas</small><b>28</b><p class="w">antes 36 · −8</p></div>
+        <div class="qsps-stat qsps-stat--c"><small>Cobertura</small><b>72,3%</b><p class="w">antes 64,4%</p></div>
+      </div>
+      <div class="qsps-bar">
+        <div class="qsps-seg qsps-seg--o">65</div>
+        <div class="qsps-seg qsps-seg--n">8</div>
+        <div class="qsps-seg qsps-seg--g">28</div>
+      </div>
+      <div class="qsps-leg">
+        <span><i class="qsps-d qsps-d--o"></i>65 já publicados no deck principal</span>
+        <span><i class="qsps-d qsps-d--n"></i>8 acesos pelo suplemento: Q57–Q61, Q63–Q65</span>
+        <span><i class="qsps-d qsps-d--g"></i>28 ainda sem topline</span>
+      </div>
+      <div class="qsps-ghost">O suplemento acende o bloco tarifário inteiro, <b>menos Q62</b>: o único item que duelaria Flávio e Lula sobre quem "defende melhor o Brasil". Seguem no escuro Michelle e o bloco Paulo Figueiredo (Q77, Q80–Q83), esquerda/centro/direita (Q92) e a recordação de voto (Q100, Q101).</div>
+    </div>
+
+    <div class="qsps-col qsps-col--r">
+      <h4>Verificação Candeloro-2 · seis por seis</h4>
+      <div class="qsps-vrow"><span class="qsps-vid">(a)</span><span class="qsps-vtx"><b>"Lula acusa, Flávio nega."</b> O slide endurece o registrado "afirma/apoiou" para "acusa/pediu". pág. 11.</span><span class="qsps-vbadge">Confirmada</span></div>
+      <div class="qsps-vrow"><span class="qsps-vid">(b)</span><span class="qsps-vtx"><b>Versão de Flávio reduzida</b> a "pelo que Lula fala"; a de Lula fica "pelo Pix". pág. 13.</span><span class="qsps-vbadge">Confirmada</span></div>
+      <div class="qsps-vrow"><span class="qsps-vid">(c)</span><span class="qsps-vtx"><b>57% não sabiam da viagem</b> e, na página seguinte, opinam sobre a "força" de Flávio. pág. 15–16.</span><span class="qsps-vbadge">Confirmada</span></div>
+      <div class="qsps-vrow"><span class="qsps-vid">(d)</span><span class="qsps-vtx"><b>"O tarifaço aumenta o voto de quem?"</b> devolve o 1º turno: Lula 42 vs 40, Flávio 27 vs 28. pág. 18.</span><span class="qsps-vbadge">Confirmada</span></div>
+      <div class="qsps-vrow"><span class="qsps-vid">(e)</span><span class="qsps-vtx"><b>Saltos de até 10 p.p.</b> em recortes de margem 4-6; cinco excedem a margem da diferença. pág. 5/13/19.</span><span class="qsps-vbadge qsps-vbadge--x">Subestimada</span></div>
+      <div class="qsps-vrow"><span class="qsps-vid">(f)</span><span class="qsps-vtx"><b>MRP declarado</b> na ficha, subgrupos plotados como dado observado, margem única emprestada. pág. 4.</span><span class="qsps-vbadge">Confirmada</span></div>
+    </div>
+  </div>
+
+  <p class="qsps-ft"><b>Prova de opacidade, não de fraude.</b> Cobertura sobe para 72,3%, mas o texto exibido não é o registrado, o item de patriotismo fica retido e o MRP é mostrado como medida. Seis alegações confirmadas contra o PDF; uma estava subestimada. Reprodutível em quaest_0726_suplemento.json.</p>
+</section>

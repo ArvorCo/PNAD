@@ -1,0 +1,115 @@
+{
+  "meta": {
+    "titulo": "Transferência de voto 1º → 2º turno — Lula × Flávio Bolsonaro",
+    "pesquisa": "Genial/Quaest Nacional",
+    "onda_principal": "Julho/2026",
+    "onda_comparacao": "Junho/2026",
+    "cenario": "2º turno | Cenário 1 (Lula PT × Flávio Bolsonaro PL)",
+    "fonte_pdf": "data/pesquisas/quaest/2026-07/Quaest_072026.pdf",
+    "paginas_fonte": {
+      "1o_turno_topline": 25,
+      "1o_turno_definitivo_vs_pode_mudar": 35,
+      "2o_turno_cenario1_serie": 37,
+      "2o_turno_cenario1_posicionamento": 38
+    },
+    "aviso_metodologico": "A Quaest NÃO publica a matriz de transição voto-1º-turno × voto-2º-turno. Só publica toplines e recortes por subgrupo (região, sexo, idade, escolaridade, renda, religião e POSICIONAMENTO IDEOLÓGICO autodeclarado). O recorte por 'posicionamento' é proxy ideológico, não é o voto declarado no 1º turno. Portanto: os TOTAIS de cada nó e os DELTAS líquidos são FATO; a alocação dos fluxos entre nós é INFERÊNCIA (modelo de cruzamento-mínimo/retenção-máxima), não é medição.",
+    "nunca": "Fluxo imputado NÃO é fluxo medido. Este diagrama não deve ser lido como se a Quaest tivesse divulgado a transição real."
+  },
+  "fatos": {
+    "primeiro_turno_julho": {
+      "Lula": 40, "Flávio": 28, "Caiado": 4, "Renan Santos": 3, "Zema": 2,
+      "Cabo Daciolo": 1, "Augusto Cury": 1, "Joaquim Barbosa": 1, "Samara Martins": 1,
+      "Indecisos": 11, "Branco/Nulo/Não vai votar": 8,
+      "_soma": 100, "_pagina": 25, "_natureza": "FATO"
+    },
+    "primeiro_turno_junho": {
+      "Lula": 39, "Flávio": 29, "Renan Santos": 3, "Caiado": 3, "Aécio": 2, "Zema": 2,
+      "Augusto Cury": 1, "Joaquim Barbosa": 1, "Samara Martins": 1,
+      "Indecisos": 10, "Branco/Nulo/Não vai votar": 9,
+      "_soma": 100, "_pagina_deck_junho": 22, "_natureza": "FATO"
+    },
+    "segundo_turno_cenario1_julho": {
+      "Lula": 45, "Flávio": 37, "Branco/Nulo/Não vai votar": 14, "Indecisos": 4,
+      "_soma": 100, "_pagina": 37, "_natureza": "FATO"
+    },
+    "segundo_turno_cenario1_junho": {
+      "Lula": 44, "Flávio": 38, "Branco/Nulo/Não vai votar": 14, "Indecisos": 4,
+      "_soma": 100, "_pagina_deck_junho": 34, "_natureza": "FATO"
+    },
+    "deltas_liquidos_1o_para_2o_julho": {
+      "Lula": 5, "Flávio": 9, "Branco/Nulo/Não vai votar": 6, "Indecisos": -7,
+      "_natureza": "FATO (subtração dos toplines publicados)"
+    },
+    "definitivo_vs_pode_mudar_1o_turno_julho": {
+      "_pagina": 35, "_unidade": "% pode mudar",
+      "Lula": 23, "Flávio": 37, "Caiado": 57, "Renan Santos": 65, "Zema": 70,
+      "_natureza": "FATO",
+      "_leitura": "Eleitores de Caiado/Renan/Zema são muito voláteis (57–70% 'pode mudar'), compatível com dispersão no 2º turno."
+    },
+    "serie_direita_nao_bolsonarista_cenario1": {
+      "_pagina": 38,
+      "_ondas": ["Mar/26", "Abr/26", "Mai/26", "Jun/26", "Jul/26"],
+      "Flávio": [84, 90, 88, 82, 74],
+      "Não vai votar": [10, 7, 5, 9, 15],
+      "Lula": [5, null, 6, 7, 8],
+      "Indecisos": [1, 1, 1, 2, 3],
+      "_serie_bolsonarista_flavio": [96, 95, 97, 97, 91],
+      "_natureza": "FATO (série publicada); base do subgrupo NÃO publicada",
+      "_pericia": {
+        "n_segmento_estimado": "≈380–460 (INFERÊNCIA: peso do segmento ~19–23% × n=2.004, resolvido por álgebra págs. 25×32)",
+        "se_diferenca_entre_ondas_pp": {"deff_1": 3.0, "deff_1_5": 3.7, "deff_2": 4.3},
+        "queda_82_74_sigma": "1,9–2,7 (zona cinzenta: pode ser ruído com deff alto)",
+        "queda_90_74_sigma": "3,8–5,3 (dificilmente ruído puro)",
+        "confundidores": [
+          "333/334 setores rotacionados entre jun e jul (Jaccard 0,15%) — amostras territoriais quase disjuntas",
+          "segmento autodeclarado a cada onda: crise Michelle×Flávio pode re-rotular bolsonaristas como 'direita não-bolsonarista' (composição ~19%→~22-23% na reconstrução), diluindo o voto Flávio sem migração real"
+        ],
+        "veredito": "anomalia digna de registro, não prova de manipulação; opacidade (sem base de subgrupo, exigência WAPOR/ABEP) impede separar migração real de artefato"
+      }
+    },
+    "cenario1_por_posicionamento_julho": {
+      "_pagina": 38, "_unidade": "% no 2º turno por autoposicionamento ideológico",
+      "Lulista": {"Lula": 97, "Flávio": 2, "Não vai votar/Indeciso": 1},
+      "Esquerda não Lulista": {"Lula": 86, "Flávio": 9, "Não vai votar/Indeciso": 5},
+      "Independente": {"Lula": 40, "Flávio": 26, "Não vai votar/Indeciso": 34},
+      "Direita não Bolsonarista": {"Flávio": 74, "Lula": 15, "Não vai votar/Indeciso": 11},
+      "Bolsonarista": {"Flávio": 91, "Lula": 5, "Não vai votar/Indeciso": 4},
+      "_natureza": "FATO (recorte publicado), mas é PROXY ideológico — não é voto do 1º turno",
+      "_leitura": "Flávio consolida bolsonaristas (91%) mas VAZA na direita não-bolsonarista: só 74% dele, 15% para Lula, 11% branco/nulo. Assimetria relevante."
+    }
+  },
+  "sankey": {
+    "_natureza": "INFERÊNCIA — modelo de cruzamento-mínimo (retenção máxima). Uma solução compatível entre infinitas. Totais de nó = FATO; repartição dos elos = HIPÓTESE.",
+    "nodes_r1": [
+      {"id": "r1_lula", "label": "Lula", "value": 40, "cor": "lula"},
+      {"id": "r1_flavio", "label": "Flávio", "value": 28, "cor": "flavio"},
+      {"id": "r1_outros", "label": "Caiado/Zema/Renan/menores", "value": 13, "cor": "neutro"},
+      {"id": "r1_indecisos", "label": "Indecisos", "value": 11, "cor": "neutro"},
+      {"id": "r1_branco", "label": "Branco/Nulo", "value": 8, "cor": "neutro"}
+    ],
+    "nodes_r2": [
+      {"id": "r2_lula", "label": "Lula", "value": 45, "cor": "lula"},
+      {"id": "r2_flavio", "label": "Flávio", "value": 37, "cor": "flavio"},
+      {"id": "r2_branco", "label": "Branco/Nulo", "value": 14, "cor": "neutro"},
+      {"id": "r2_indecisos", "label": "Indecisos", "value": 4, "cor": "neutro"}
+    ],
+    "links": [
+      {"source": "r1_lula", "target": "r2_lula", "value": 40, "tipo": "retencao", "natureza": "INFERÊNCIA (piso de retenção)"},
+      {"source": "r1_flavio", "target": "r2_flavio", "value": 28, "tipo": "retencao", "natureza": "INFERÊNCIA (piso de retenção)"},
+      {"source": "r1_branco", "target": "r2_branco", "value": 8, "tipo": "retencao", "natureza": "INFERÊNCIA (piso de retenção)"},
+      {"source": "r1_indecisos", "target": "r2_indecisos", "value": 4, "tipo": "retencao", "natureza": "INFERÊNCIA"},
+      {"source": "r1_outros", "target": "r2_flavio", "value": 8, "tipo": "transferencia", "natureza": "INFERÊNCIA", "min": 0, "max": 9},
+      {"source": "r1_outros", "target": "r2_branco", "value": 4, "tipo": "transferencia", "natureza": "INFERÊNCIA", "min": 0, "max": 6},
+      {"source": "r1_outros", "target": "r2_lula", "value": 1, "tipo": "transferencia", "natureza": "INFERÊNCIA", "min": 0, "max": 5},
+      {"source": "r1_indecisos", "target": "r2_lula", "value": 4, "tipo": "transferencia", "natureza": "INFERÊNCIA", "min": 0, "max": 5},
+      {"source": "r1_indecisos", "target": "r2_branco", "value": 2, "tipo": "transferencia", "natureza": "INFERÊNCIA", "min": 0, "max": 6},
+      {"source": "r1_indecisos", "target": "r2_flavio", "value": 1, "tipo": "transferencia", "natureza": "INFERÊNCIA", "min": 0, "max": 9}
+    ],
+    "restricoes_fato": {
+      "pool_liberado": 20,
+      "detalhe_pool": "Outros candidatos eliminados (13 p.p., fora da cédula do 2º turno) + indecisos que decidem (11→4 = 7 p.p.)",
+      "absorcao_liquida": {"Lula": 5, "Flávio": 9, "Branco/Nulo": 6},
+      "observacao": "A soma da absorção líquida (5+9+6=20) é FATO e fecha com o pool liberado. Como cada elo individual é repartido é HIPÓTESE."
+    }
+  }
+}

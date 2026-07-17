@@ -1,0 +1,202 @@
+{
+  "meta": {
+    "titulo": "Síntese-clímax: por que a Quaest chega ao mesmo Lula mas a um Flávio 6 p.p. menor que o campo",
+    "pergunta": "A Quaest dá Lula 45 (≈ média do campo 46,1) e Flávio 37 (o menor de todo o campo, 6-7 p.p. abaixo dos pares presenciais Datafolha 43 e Nexus 44). Por quê?",
+    "gerado_em": "2026-07-17",
+    "autor": "Arvor / brasil.arvor.co",
+    "fonte_primaria": {
+      "deck": "data/pesquisas/quaest/2026-07/Quaest_072026.pdf",
+      "questionario": "data/pesquisas/quaest/2026-07/Quaest_Questionario_072026.pdf",
+      "registro_tse": "BR-07181/2026",
+      "campo": "10 a 13 de julho de 2026",
+      "amostra": "2.004 presenciais domiciliares (tablet)",
+      "contratante": "Banco Genial S.A."
+    },
+    "calibragem": "Fato = observação documental ou identidade aritmética reproduzível. Inferência = leitura mais compatível com os fatos. Hipótese = exige dado que a Quaest retém.",
+    "tese_central": "A Quaest NÃO transfere voto de Flávio para Lula. Ela ESTACIONA o voto anti-Lula mole no branco/nulo/não-vai-votar. O 'Flávio que falta' não aparece na coluna do Lula; aparece na não-escolha. Isso é Fato aritmético. O PORQUÊ estaciona é o que se probabiliza."
+  },
+
+  "aritmetica_nao_escolha": {
+    "natureza": "FATO — toplines publicados; não-escolha = 100 − Lula − Flávio; todos os institutos reportam sobre o VOTO TOTAL (branco/nulo listado à parte, não votos válidos), logo o denominador é comparável.",
+    "unidade": "% de 2º turno Lula × Flávio (cenário direto)",
+    "colunas": ["instituto", "modo", "campo", "lula", "flavio", "soma_lula_flavio", "nao_escolha", "fonte"],
+    "linhas": [
+      {"instituto": "Genial/Quaest", "modo": "presencial domiciliar", "campo": "10-13 jul 2026", "lula": 45, "flavio": 37, "soma_lula_flavio": 82, "nao_escolha": 18, "detalhe_nao_escolha": "branco/nulo/não vai votar 14 + indeciso/NS 4", "fonte": "deck jul p37"},
+      {"instituto": "Genial/Quaest", "modo": "presencial domiciliar", "campo": "5-8 jun 2026", "lula": 44, "flavio": 38, "soma_lula_flavio": 82, "nao_escolha": 18, "detalhe_nao_escolha": "branco/nulo 14 + indeciso 4", "fonte": "deck jul p37 (série) / deck jun p34"},
+      {"instituto": "Datafolha", "modo": "presencial (fluxo)", "campo": "17-19 jun 2026", "lula": 47, "flavio": 43, "soma_lula_flavio": 90, "nao_escolha": 10, "fonte": "docs/datafolha_062026.html; Gazeta do Povo"},
+      {"instituto": "BTG/Nexus (6ª rodada)", "modo": "presencial domiciliar", "campo": "jul 2026", "lula": 47, "flavio": 44, "soma_lula_flavio": 91, "nao_escolha": 9, "fonte": "docs/nexus_btg_0726.html; Tribuna de Minas"},
+      {"instituto": "Futura/Apex", "modo": "presencial", "campo": "7-11 jul 2026", "lula": 46.3, "flavio": 46.1, "soma_lula_flavio": 92.4, "nao_escolha": 7.6, "detalhe_nao_escolha": "branco/nulo/abstenção 6,5 + NS 1,1", "fonte": "CNN Brasil; registro BR-07294/2026"},
+      {"instituto": "Meio/Ideia", "modo": "telefônica", "campo": "3-6 jul 2026", "lula": 45, "flavio": 40, "soma_lula_flavio": 85, "nao_escolha": 15, "detalhe_nao_escolha": "branco/nulo 10,5 + NS 4,5", "fonte": "Brasil de Fato; registro BR-05628/2026"},
+      {"instituto": "AtlasIntel", "modo": "recrutamento digital", "campo": "~1 jul 2026", "lula": 48.8, "flavio": 42.3, "soma_lula_flavio": 91.1, "nao_escolha": 8.9, "fonte": "Brasil de Fato (Atlas/Bloomberg)"}
+    ],
+    "media_campo_excl_quaest": {
+      "conjunto_4_principais": {"institutos": ["Datafolha", "Nexus", "Futura", "Ideia"], "lula": 46.33, "flavio": 43.28, "nao_escolha": 10.4},
+      "conjunto_5_com_atlas": {"lula": 46.82, "flavio": 43.08, "nao_escolha": 10.1},
+      "referencia_do_enunciado": {"lula": 46.1, "flavio": 43.4, "nao_escolha_implicada": 10.5}
+    },
+    "decomposicao": {
+      "natureza": "FATO (identidade aritmética) + INFERÊNCIA (a leitura do split)",
+      "deficit_lula_vs_campo_pp": 1.1,
+      "deficit_flavio_vs_campo_pp": 6.4,
+      "soma_deficits_pp": 7.5,
+      "excesso_nao_escolha_quaest_vs_campo_pp": 7.5,
+      "identidade": "excesso de não-escolha (7,5) ≡ déficit de Flávio (6,4) + déficit de Lula (1,1). A soma é identidade trivial (tudo fecha em 100); o SUBSTANTIVO é o SPLIT.",
+      "split_do_excesso": {"flavio_pct": 85, "lula_pct": 15, "robustez": "83-85% conforme o conjunto de campo usado (4 ou 5 casas)"},
+      "conclusao_fato": "Lula na Quaest está praticamente no par do campo (−1,1, dentro do ruído). Flávio carrega quase todo o déficit (−6,4). O voto que o campo dá a Flávio, a Quaest o mantém FORA da cédula (branco/nulo/não-vai-votar), não o entrega a Lula. Não é transferência; é estacionamento."
+    },
+    "assinatura_estavel": {
+      "natureza": "FATO",
+      "texto": "A não-escolha da Quaest é 18 em junho E em julho (14 branco/nulo + 4 indeciso nas duas ondas), com soma Lula+Flávio = 82 nas duas. O campo fica em 7,6-15. A estabilidade em duas ondas de amostras territoriais quase disjuntas (333/334 setores rotacionados, Jaccard 0,15%) é a impressão digital de um mecanismo de INSTRUMENTO, não de ruído amostral de uma edição."
+    }
+  },
+
+  "evidencia_instrumento": {
+    "natureza": "FATO — texto literal do questionário Q23-26 (cen2t_pres1..4), Quaest_Questionario_072026.pdf p6",
+    "enunciado_2o_turno": "NUM POSSÍVEL SEGUNDO TURNO, VOCÊ VOTARIA NO [nome], NO [nome], VOTARIA EM BRANCO/NULO OU NÃO IRIA VOTAR? (RU POR LINHA)",
+    "opcoes_codificadas": ["[nome] (1)", "[nome] (2)", "VOTARIA EM BRANCO OU NULO (18)", "NÃO IRIA VOTAR (19)", "AINDA NÃO SE DECIDIU / INDECISO / NÃO SABE (88)"],
+    "leitura": "O próprio ENUNCIADO lido em voz alta oferece 'votaria em branco/nulo ou não iria votar' como alternativa nomeada, ao lado dos dois candidatos. Não é uma escolha forçada entre dois nomes com não-voto registrado só se espontâneo: é uma cédula de quatro saídas, três delas de não-escolha, ditas pelo entrevistador. Essa é a rampa de saída que estaciona o voto mole.",
+    "assimetria": "A oferta é simétrica (vale contra os dois nomes), mas o EFEITO é assimétrico porque Flávio tem mais não-voto persuadável: a perícia de rejeição (ternário 'conhece e não votaria', sem neutro) já mostrava excesso de +9 p.p. em Flávio contra +4 em Lula sobre o Datafolha. A mesma rampa drena mais de quem tem mais camada mole — e essa camada é maior em Flávio.",
+    "priming_espontanea": {"natureza": "INFERÊNCIA", "texto": "O voto espontâneo (54% de indecisos em julho, 56 em junho) ancora identidade de indeciso antes do estimulado; o segmento 'direita não-bolsonarista' vaza para 'não vai votar' (9→15 na série), não para Lula (6→8). O destino do voto que sai de Flávio é a abstenção, confirmado no recorte por posicionamento (p38)."}
+  },
+
+  "hipoteses": [
+    {
+      "id": "H-A",
+      "nome": "Desenho da cédula: rampa de não-escolha lida em voz alta + priming espontânea/ternário",
+      "prob_dominancia": 48,
+      "rotulo": "Fato (mecanismo documentado) + Inferência (magnitude do efeito)",
+      "a_favor": [
+        "Q23-26 lê 'votaria em branco/nulo ou não iria votar' no enunciado (FATO documental).",
+        "Não-escolha 18 estável jun/jul, contra campo 7,6-15.",
+        "Vazamento da direita não-bolsonarista vai para 'não vai votar' (9→15), não para Lula.",
+        "Ternário de rejeição sem neutro comprime o teto de Flávio a 43; excesso +9 vs +4 de Lula.",
+        "Split do déficit 85/15 (Flávio/Lula): a rampa drena o anti-Lula mole, o teto de Lula fica no par do campo."
+      ],
+      "contra": [
+        "A oferta é simétrica no texto; a assimetria vem da composição do eleitorado (mais não-voto mole em Flávio), não do wording em si.",
+        "Futura também oferece branco/nulo/abstenção e tem só 7,6 de não-escolha — o wording não determina sozinho o nível; modo e proeminência importam."
+      ],
+      "teste_discriminante": "Split-ballot no cenário de 2º turno: metade da amostra com o wording atual (lê a rampa), metade com escolha entre os dois nomes e não-voto registrado só se espontâneo. Se Flávio saltar ~5-6 p.p. e a não-escolha cair para ~9-10 no braço forçado, H-A está provada como mecanismo dominante.",
+      "bayes": "Prior alto: oferecer não-escolha explícita infla não-escolha é efeito clássico de survey. Likelihood alta: é o único mecanismo com evidência DOCUMENTAL direta no questionário e que explica o SPLIT 85/15 e a estabilidade jun/jul de uma só tacada."
+    },
+    {
+      "id": "H-B",
+      "nome": "Desejabilidade social presencial domiciliar (shy conservative): entrevistador na porta, áudio, CPF",
+      "prob_dominancia": 18,
+      "rotulo": "Hipótese (demanda que toma a rampa da H-A)",
+      "a_favor": [
+        "Face a face domiciliar + gravação de 30% + CPF pedido no fecho (novo em julho) elevam o custo de declarar Flávio.",
+        "Interage com H-A: o desenho DÁ a saída socialmente confortável ('não vou votar') que o F2F demanda."
+      ],
+      "contra": [
+        "Nexus é TAMBÉM presencial domiciliar e dá Flávio 44 — se fosse só modo, sofreria igual e não sofre.",
+        "Datafolha presencial dá 43. O modo é compartilhado com o campo; não é o que DISTINGUE a Quaest.",
+        "Meio/Ideia é TELEFÔNICA e tem não-escolha 15 — não-escolha alta não exige F2F, o que enfraquece o modo como causa isolada."
+      ],
+      "teste_discriminante": "Publicar a distribuição do não-voto por presença/ausência de gravação de áudio, ou comparar setores com e sem áudio. Se o Flávio for menor onde há gravação, H-B ganha corpo. Sem isso, é a demanda que a H-A supre, não causa autônoma.",
+      "bayes": "Prior médio (shy-conservative é real em 2018/2022). Likelihood baixa como DOMINANTE isolado: os pares de mesmo modo (Nexus/Datafolha) não replicam o efeito, logo o diferencial da Quaest não pode ser o modo puro. Sobra como amplificador de H-A."
+    },
+    {
+      "id": "H-E",
+      "nome": "Amostra/território: 334×6, rotação 333/334, deff alto — ruído amostral no ponto exato de Flávio",
+      "prob_dominancia": 11,
+      "rotulo": "Inferência (explica a oscilação, não o viés persistente)",
+      "a_favor": [
+        "deff realista 1,5-2 com 334 conglomerados; SE da diferença 4-5,6 p.p.",
+        "333/334 setores rotacionados entre jun e jul: amostras quase disjuntas inflam a variância entre ondas."
+      ],
+      "contra": [
+        "A não-escolha 18 é IDÊNTICA em jun e jul, e a soma 82 também. Ruído puro não repete o mesmo desvio em amostras disjuntas.",
+        "O gap de 6 p.p. em Flávio contra o campo é sistemático em duas ondas, não uma flutuação."
+      ],
+      "teste_discriminante": "Publicar deff e pesos finais por PSU. Se o intervalo do Flávio cobrir 43, parte do gap é ruído. Mas a estabilidade jun/jul já limita quanto o ruído pode explicar.",
+      "bayes": "Prior médio (deff alto é fato). Likelihood baixa como dominante: a assinatura estável mata o ruído-puro como explicação principal do resíduo direcional."
+    },
+    {
+      "id": "H-D",
+      "nome": "Ponderação/rake/MRP: metas de renda/escolaridade e projeção de modelo por subgrupo",
+      "prob_dominancia": 8,
+      "rotulo": "Hipótese enfraquecida pelos nossos próprios cálculos",
+      "a_favor": [
+        "Rake e MrP declarados para sexo, idade, renda e escolaridade; MrP projeta subgrupos e pode deprimir Flávio.",
+        "Amostra mais rica (sub-representa ≤2 SM em 4,44 p.p.)."
+      ],
+      "contra": [
+        "Reponderar renda ao alvo PNAD move a margem <1 p.p. e na direção PRÓ-Lula (corrigir amplia Lula, não Flávio).",
+        "Escolaridade sem benchmark computado, mas idade (cota) bate no TSE (60+: 23,0 vs 23,27); sem folga demográfica visível para esconder 6 p.p. de Flávio."
+      ],
+      "teste_discriminante": "Publicar os pesos finais e as metas de calibração (targets de escolaridade). Se a célula MrP de baixa escolaridade/renda estiver puxando Flávio para baixo além do observado, aparece nos pesos.",
+      "bayes": "Prior médio. Likelihood baixa: a reponderação por renda que rodamos mexe <1 p.p. e pró-Lula, refutando a versão renda; sobra só a escolaridade não medida como resíduo."
+    },
+    {
+      "id": "H-F",
+      "nome": "Polegar da casa (viés deliberado — hipótese Dantas)",
+      "prob_dominancia": 7,
+      "rotulo": "Hipótese não sustentada pela evidência",
+      "a_favor": [
+        "Opacidade sistemática: 36 de 101 perguntas sem topline; sem matriz de transição; sem base de subgrupo; CPF adicionado em julho.",
+        "Contexto de contratante financeiro e mercado de narrativa."
+      ],
+      "contra": [
+        "Números internamente coerentes; conservação de massa fecha (pool liberado 20 = +5/+9/+6).",
+        "Flávio segue o MAIS FORTE da direita no próprio deck — produto ruim para 'matar Flávio'.",
+        "O resultado é integralmente explicável por INSTRUMENTO (H-A) sem supor má-fé. Navalha de Occam: não é preciso polegar quando a cédula produz o efeito sozinha.",
+        "Nenhuma prova; só oportunidade e opacidade."
+      ],
+      "teste_discriminante": "Abrir microdados e pesos. Se os pesos forem consistentes com o rake declarado e o não-voto não estiver editado por candidato, H-F cai. A recusa em abrir mantém a hipótese viva por opacidade, não por evidência.",
+      "bayes": "Prior baixo (acusação exige prova). Likelihood baixa: tudo que se vê é reproduzível por desenho legítimo. Prova de opacidade, não de fraude."
+    },
+    {
+      "id": "H-C",
+      "nome": "Fadiga/seleção do instrumento de 101 itens: quem conclui é mais engajado/politizado",
+      "prob_dominancia": 6,
+      "rotulo": "Hipótese direcionalmente incompatível com o resíduo observado",
+      "a_favor": [
+        "101 itens, presencial longo; literatura de satisficing e break-off (Galesic, Krosnick).",
+        "Cotas não fecham engajamento dentro da célula."
+      ],
+      "contra": [
+        "Se a fadiga selecionasse pró-Lula, Lula ficaria ACIMA do campo. Ele está no PAR (−1,1). O voto que falta de Flávio está na não-escolha, não em Lula.",
+        "Fadiga move para Lula ou para 'não sei'; o padrão observado é 'não sei/branco', que é melhor explicado pela rampa da H-A do que pela seleção de engajados."
+      ],
+      "teste_discriminante": "Publicar item-nonresponse e taxa de conclusão por posição no questionário. Se o 'não sei' do 2º turno crescer com a posição, é fadiga; se for constante, é desenho.",
+      "bayes": "Prior médio (fadiga é real). Likelihood baixa para ESTE resíduo: a direção (Lula no par, não acima) contraria a seleção-por-engajamento como causa do gap de Flávio."
+    },
+    {
+      "id": "H-G",
+      "nome": "Universo/denominador: votos válidos vs totais, filtro 16+",
+      "prob_dominancia": 2,
+      "rotulo": "Praticamente refutada",
+      "a_favor": [
+        "Casas podem diferir em universo (voto provável vs registrado)."
+      ],
+      "contra": [
+        "TODOS os institutos aqui reportam sobre o VOTO TOTAL (branco/nulo listado à parte): Futura 6,5+1,1; Ideia 10,5+4,5; Nexus soma 91; Datafolha soma 90. Nenhum publica só votos válidos.",
+        "Logo a não-escolha É comparável entre casas e a Quaest ainda estaciona mais. O denominador não é o mecanismo."
+      ],
+      "teste_discriminante": "Já resolvido: os detalhamentos de branco/nulo publicados confirmam base de voto total em todas as casas.",
+      "bayes": "Prior baixo. Likelihood ~nula: a evidência de denominador comum está publicada e refuta."
+    }
+  ],
+
+  "distribuicao_final": {
+    "soma": 100,
+    "H-A": 48, "H-B": 18, "H-E": 11, "H-D": 8, "H-F": 7, "H-C": 6, "H-G": 2,
+    "leitura_combinada": "H-A + H-B somam 66% e formam o mecanismo dominante conjunto: o INSTRUMENTO oferece a rampa de não-escolha em voz alta (H-A, oferta) e o modo presencial domiciliar cria a demanda por essa saída socialmente confortável (H-B, demanda). A H-A carrega a maior fatia porque é o único fator com evidência documental no questionário e o único que DISTINGUE a Quaest dos pares de mesmo modo (Nexus/Datafolha, que não replicam o efeito). O resto (E/D/F/C/G = 34%) são coadjuvantes ou refutados.",
+    "veredito": "Prova de opacidade, não de fraude. É Fato aritmético que a Quaest estaciona o anti-Lula mole no branco/nulo em vez de entregá-lo a Lula. O PORQUÊ mais provável é a cédula de quatro saídas lida em voz alta, amplificada pelo constrangimento do face a face. A Quaest retém exatamente o dado que provaria ou refutaria isso num experimento de uma noite."
+  },
+
+  "teste_discriminante_numero_1": {
+    "titulo": "O experimento que a Quaest poderia publicar amanhã",
+    "desenho": "Split-ballot no cenário de 2º turno Lula × Flávio. Braço A (atual): entrevistador lê 'votaria no X, no Y, em branco/nulo ou não iria votar?'. Braço B (forçado): entrevistador lê só os dois nomes; branco/nulo/não-voto/NS registrados apenas se espontâneos.",
+    "predicao_H_A": "No braço B, Flávio sobe ~5-6 p.p. (rumo a 42-43, alinhando-se a Datafolha/Nexus), a não-escolha desaba de 18 para ~9-10, e Lula quase não se move (já estava no par do campo).",
+    "por_que_e_o_no1": "Isola o INSTRUMENTO de tudo o mais (modo, amostra, ponderação são idênticos entre os braços). É a única evidência que converte a H-A de mecanismo documentado em mecanismo MEDIDO — e, por eliminação, quantifica o quanto sobra para H-B/E/D/F. Custa uma noite de campo e zero microdado sensível."
+  },
+
+  "fontes_web": [
+    {"titulo": "Datafolha jun: 2º turno Lula 47 x Flávio 43", "url": "https://www.gazetadopovo.com.br/eleicoes/2026/ate-onde-vai-rejeicao-flavio-bolsonaro-e-lula/"},
+    {"titulo": "Futura/Apex jul: Lula 46,3 x Flávio 46,1 (branco/nulo/abstenção 6,5; NS 1,1)", "url": "https://www.cnnbrasil.com.br/eleicoes/futura-apex-lula-flavio-segundo-turno-julho/"},
+    {"titulo": "Meio/Ideia jul: Lula 45 x Flávio 40 (branco/nulo 10,5; NS 4,5)", "url": "https://www.brasildefato.com.br/2026/07/08/pesquisa-meioideia-lula-lidera-cenarios-de-primeiro-e-segundo-turno-contra-flavio-bolsonaro-e-michelle/"},
+    {"titulo": "Nexus/BTG jul: 2º turno 47 a 44 (série de seis rodadas)", "url": "https://www.cartacapital.com.br/politica/a-disputa-entre-lula-e-flavio-bolsonaro-em-segundo-turno-segundo-a-nova-pesquisa-nexus-btg/"}
+  ]
+}

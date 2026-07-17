@@ -1,0 +1,242 @@
+<!-- Fragmento autocontido: Quaest 07/2026 — SÍNTESE-CLÍMAX.
+     "Para onde foi o Flávio que falta": não-escolha por instituto + tabela de hipóteses + veredito.
+     Dark editorial. Fraunces / IBM Plex. Sem dependências externas. Slide 1600x900 no fim. -->
+<section class="qsn" id="quaest-sintese">
+  <style>
+    .qsn{
+      --ink:#100f0d; --coal:#1a1917; --paper:#f4f0e6;
+      --signal:#e94935; --acid:#d7ee3f; --cyan:#42c5d5; --good:#63c39a; --warn:#e0a63c;
+      --muted:#a49c8e; --line:rgba(244,240,230,.14);
+      --lula:#e05a4d; --flavio:#4a80c4; --park:#8d8577;
+      --display:"Fraunces",Georgia,serif; --sans:"IBM Plex Sans Condensed",Arial,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+      background:var(--ink); color:var(--paper);
+      font-family:var(--display); line-height:1.55;
+      padding:clamp(22px,4vw,56px); border-radius:6px;
+      background-image:linear-gradient(rgba(244,240,230,.028) 1px,transparent 1px);
+      background-size:100% 30px;
+    }
+    .qsn *{box-sizing:border-box;}
+    .qsn .wrap{width:min(1180px,100%);margin-inline:auto;}
+    .qsn .mono{font-family:var(--mono);} .qsn .sans{font-family:var(--sans);}
+    .qsn .kicker{font:600 .72rem/1.3 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--acid);display:flex;align-items:center;gap:12px;}
+    .qsn .kicker::before{content:"";width:44px;height:5px;background:var(--acid);}
+    .qsn h2{font-size:clamp(1.9rem,4.2vw,3.05rem);line-height:1.03;margin:.5em 0 .3em;font-weight:600;letter-spacing:-.01em;}
+    .qsn h2 em{font-style:italic;color:var(--signal);}
+    .qsn h3{font-size:clamp(1.25rem,2.4vw,1.7rem);margin:.2em 0 .5em;font-weight:600;}
+    .qsn h3 em{font-style:italic;color:var(--cyan);}
+    .qsn .lede{max-width:66ch;color:#e9e3d5;font-size:clamp(1rem,1.5vw,1.16rem);}
+    .qsn p{max-width:74ch;}
+    .qsn b.hl{color:var(--signal);}
+    .qsn .tag{display:inline-block;font:600 .6rem/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:4px 7px;border-radius:3px;vertical-align:middle;margin-right:4px;}
+    .qsn .t-fato{background:rgba(99,195,154,.16);color:var(--good);border:1px solid rgba(99,195,154,.4);}
+    .qsn .t-inf{background:rgba(66,197,213,.14);color:var(--cyan);border:1px solid rgba(66,197,213,.4);}
+    .qsn .t-hip{background:rgba(224,166,60,.14);color:var(--warn);border:1px solid rgba(224,166,60,.4);}
+    .qsn .rule{height:1px;background:var(--line);margin:38px 0;}
+    .qsn .sec-label{font:600 .74rem/1.3 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;}
+    .qsn a{color:var(--cyan);text-underline-offset:3px;}
+    .qsn .callout{border-left:3px solid var(--signal);padding:8px 0 8px 16px;margin:16px 0;color:#f0eadc;font-size:1.05rem;max-width:70ch;}
+    .qsn .callout b{color:var(--acid);}
+
+    /* ---- Barras empilhadas: Lula | Flávio | Não-escolha ---- */
+    .qsn .stack{display:grid;gap:12px;margin:10px 0 4px;}
+    .qsn .srow{display:grid;grid-template-columns:172px 1fr;gap:14px;align-items:center;}
+    .qsn .sinst{font-family:var(--sans);font-size:.85rem;line-height:1.15;color:#efe9db;font-weight:600;}
+    .qsn .sinst small{display:block;font:400 .62rem/1.3 var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.03em;margin-top:3px;}
+    .qsn .sbar{position:relative;display:flex;height:30px;border-radius:3px;overflow:hidden;background:rgba(244,240,230,.05);}
+    .qsn .seg{display:flex;align-items:center;justify-content:center;font:600 .74rem/1 var(--mono);color:#fff;min-width:0;overflow:hidden;white-space:nowrap;}
+    .qsn .seg.lu{background:var(--lula);}
+    .qsn .seg.fl{background:var(--flavio);}
+    .qsn .seg.pk{background:repeating-linear-gradient(45deg,rgba(141,133,119,.5),rgba(141,133,119,.5) 6px,rgba(141,133,119,.28) 6px,rgba(141,133,119,.28) 12px);color:#e9e3d5;}
+    .qsn .srow.hero .sbar{height:38px;box-shadow:0 0 0 2px var(--acid);}
+    .qsn .stackkey{display:flex;gap:20px;flex-wrap:wrap;margin:14px 0 2px;font:600 .68rem/1 var(--mono);letter-spacing:.05em;text-transform:uppercase;}
+    .qsn .stackkey span{display:inline-flex;align-items:center;gap:7px;color:var(--muted);}
+    .qsn .sw{width:22px;height:11px;border-radius:2px;display:inline-block;}
+    .qsn .sw.lu{background:var(--lula);} .qsn .sw.fl{background:var(--flavio);}
+    .qsn .sw.pk{background:repeating-linear-gradient(45deg,rgba(141,133,119,.6),rgba(141,133,119,.6) 5px,rgba(141,133,119,.3) 5px,rgba(141,133,119,.3) 10px);}
+
+    /* ---- Decomposição do resíduo ---- */
+    .qsn .decomp{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin:8px 0;}
+    .qsn .dbox{border:1px solid var(--line);border-radius:5px;padding:16px 18px;background:rgba(244,240,230,.02);}
+    .qsn .dbox .big{font:600 2.3rem/1 var(--mono);}
+    .qsn .dbox .big.fl{color:var(--flavio);} .qsn .dbox .big.lu{color:var(--lula);} .qsn .dbox .big.pk{color:var(--acid);}
+    .qsn .dbox .lbl{font-size:.82rem;color:#ccc5b6;margin-top:8px;line-height:1.4;}
+
+    /* ---- Tabela de hipóteses com barras de probabilidade ---- */
+    .qsn .hyp{display:grid;gap:9px;margin:8px 0;}
+    .qsn .hrow{display:grid;grid-template-columns:52px 1fr 250px;gap:14px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line);}
+    .qsn .hid{font:600 1.05rem/1 var(--mono);color:var(--cyan);}
+    .qsn .hname{font-family:var(--sans);font-size:.92rem;line-height:1.3;color:#efe9db;}
+    .qsn .hname small{display:block;font:400 .74rem/1.4 var(--display);color:var(--muted);margin-top:2px;font-style:italic;}
+    .qsn .hbar{position:relative;height:22px;background:rgba(244,240,230,.05);border-radius:2px;overflow:hidden;display:flex;align-items:center;}
+    .qsn .hfill{position:absolute;inset:0 auto 0 0;border-radius:2px;}
+    .qsn .hfill.hero{background:linear-gradient(90deg,rgba(215,238,63,.45),var(--acid));}
+    .qsn .hfill.mid{background:linear-gradient(90deg,rgba(66,197,213,.3),var(--cyan));}
+    .qsn .hfill.low{background:rgba(164,156,142,.35);}
+    .qsn .hpct{position:relative;z-index:2;margin-left:auto;padding-right:9px;font:600 .82rem/1 var(--mono);color:#fff;mix-blend-mode:normal;}
+    .qsn .hpct.dark{color:var(--ink);}
+
+    /* ---- Veredito ---- */
+    .qsn .verdict{border:1px solid var(--line);border-left:4px solid var(--acid);border-radius:5px;padding:22px 24px;background:rgba(215,238,63,.04);margin:8px 0;}
+    .qsn .verdict .vh{font:600 .72rem/1.3 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--acid);margin-bottom:12px;}
+    .qsn .verdict p{font-size:1.06rem;max-width:78ch;margin:0;}
+    .qsn .verdict p + p{margin-top:12px;}
+    .qsn .foot{font-family:var(--sans);font-size:.78rem;color:var(--muted);margin-top:24px;line-height:1.5;}
+    .qsn .quo{font-family:var(--mono);font-size:.82rem;color:#e9e3d5;background:rgba(244,240,230,.03);border:1px dashed var(--line);border-radius:4px;padding:14px 16px;margin:14px 0;max-width:76ch;}
+    .qsn .quo b{color:var(--signal);}
+    @media (max-width:680px){
+      .qsn .srow{grid-template-columns:1fr;gap:5px;}
+      .qsn .hrow{grid-template-columns:40px 1fr;gap:8px;}
+      .qsn .hrow .hbar{grid-column:1/-1;}
+    }
+  </style>
+
+  <div class="wrap">
+    <div class="kicker">Genial/Quaest · Julho 2026 · Síntese-clímax</div>
+    <h2>Para onde foi o <em>Flávio que falta</em></h2>
+    <p class="lede">A Quaest chega quase ao mesmo Lula que o campo (45 contra a média 46,1) e ao <b class="hl">menor Flávio de todo o mercado</b> (37, seis a sete pontos abaixo dos pares presenciais Datafolha 43 e Nexus 44). A pergunta é mecânica: o voto que falta de Flávio foi para Lula, ou para fora da cédula?</p>
+
+    <div class="rule"></div>
+
+    <!-- BLOCO 1: barras empilhadas -->
+    <div class="sec-label">Segundo turno Lula × Flávio · % sobre o voto total · <span class="tag t-fato">Fato</span></div>
+    <div class="stack" id="stackBars"></div>
+    <div class="stackkey">
+      <span><i class="sw lu"></i> Lula</span>
+      <span><i class="sw fl"></i> Flávio</span>
+      <span><i class="sw pk"></i> Não-escolha (branco/nulo/não vai votar + indeciso)</span>
+      <span style="color:var(--acid);">▬ contorno = Quaest</span>
+    </div>
+    <p style="margin-top:16px;">Todos os institutos publicam sobre o <b>voto total</b> (branco/nulo à parte, não votos válidos). O denominador é o mesmo: a não-escolha é comparável. A Quaest tem <b class="hl">18</b> de não-escolha, contra 7,6 a 15 no campo, e repete <b>18 em junho e em julho</b> com a mesma soma 82. Não é ruído de uma edição: é assinatura de instrumento.</p>
+
+    <div class="rule"></div>
+
+    <!-- BLOCO 2: decomposição -->
+    <div class="sec-label">A conta do resíduo · Quaest contra a média do campo · <span class="tag t-fato">Fato</span> <span class="tag t-inf">Inferência</span></div>
+    <div class="decomp">
+      <div class="dbox"><div class="big fl">−6,4</div><div class="lbl">déficit de <b style="color:var(--flavio)">Flávio</b> vs média do campo (43,4)</div></div>
+      <div class="dbox"><div class="big lu">−1,1</div><div class="lbl">déficit de <b style="color:var(--lula)">Lula</b> vs média do campo (46,1): praticamente no par</div></div>
+      <div class="dbox"><div class="big pk">+7,5</div><div class="lbl">excesso de <b style="color:var(--acid)">não-escolha</b> da Quaest vs campo</div></div>
+      <div class="dbox"><div class="big" style="color:var(--signal)">85%</div><div class="lbl">do excesso de não-escolha fica <b>do lado de Flávio</b>; só 15% do lado de Lula</div></div>
+    </div>
+    <div class="callout">O excesso de não-escolha (7,5) é exatamente o déficit de Flávio (6,4) mais o de Lula (1,1). Mas <b>85% dele senta oposto a Flávio</b>. Lula está no par do campo. <b>A Quaest não tira voto de Flávio para dar a Lula: ela estaciona o anti-Lula mole no branco/nulo.</b></div>
+
+    <div class="rule"></div>
+
+    <!-- BLOCO 3: a evidência do instrumento -->
+    <div class="sec-label">Por que estaciona · a cédula de quatro saídas · <span class="tag t-fato">Fato documental</span></div>
+    <p>O enunciado do 2º turno da Quaest (Q23-26 do questionário) é lido em voz alta assim:</p>
+    <div class="quo">"Num possível segundo turno, você votaria no [nome], no [nome], <b>votaria em branco/nulo ou não iria votar?</b>"<br><span style="color:var(--muted)">+ código 88: "ainda não se decidiu / indeciso / não sabe".</span></div>
+    <p>Não é escolha forçada entre dois nomes com não-voto anotado só se espontâneo. É uma cédula de <b>quatro saídas, três delas de não-escolha, ditas pelo entrevistador</b>. A oferta é simétrica, mas o efeito é assimétrico: Flávio tem mais não-voto persuadável (o ternário de rejeição sem neutro já mostrava excesso de +9 p.p. nele contra +4 em Lula). A mesma rampa drena mais de quem tem mais camada mole. E a série confirma o destino: a direita não-bolsonarista que larga Flávio vai para "não vou votar" (9→15), <b>não para Lula</b> (6→8).</p>
+
+    <div class="rule"></div>
+
+    <!-- BLOCO 4: hipóteses -->
+    <div class="sec-label">Qual mecanismo domina o resíduo anti-Flávio · distribuição de probabilidade</div>
+    <div class="hyp" id="hypRows"></div>
+    <p style="margin-top:14px;font-size:.94rem;color:#ccc5b6;">H-A + H-B somam <b style="color:var(--acid)">66%</b> e formam o mecanismo conjunto: o instrumento <b>oferece</b> a rampa (H-A), o face a face domiciliar cria a <b>demanda</b> pela saída confortável (H-B). H-A leva a maior fatia por ser o único fator com prova documental no questionário e o único que distingue a Quaest dos pares de mesmo modo, Nexus e Datafolha, que não replicam o efeito.</p>
+
+    <div class="rule"></div>
+
+    <!-- BLOCO 5: veredito + teste -->
+    <div class="verdict">
+      <div class="vh">Veredito · prova de opacidade, não de fraude</div>
+      <p>É <b>Fato aritmético</b> que a Quaest estaciona o anti-Lula mole no branco/nulo em vez de entregá-lo a Lula. O <b>porquê</b> mais provável é a cédula de quatro saídas lida em voz alta, amplificada pelo constrangimento do presencial. Nada disso exige má-fé: a cédula produz o efeito sozinha, e o campo interno é coerente e conserva massa.</p>
+      <p><b style="color:var(--acid)">Teste nº 1 que resolveria amanhã:</b> um split-ballot no 2º turno. Metade da amostra com o texto atual, metade só com os dois nomes e não-voto anotado só se espontâneo. Predição da H-A: no braço forçado, Flávio sobe 5 a 6 pontos rumo a 42-43, a não-escolha desaba de 18 para 9-10 e Lula quase não se move. Isola o instrumento de modo, amostra e ponderação. Custa uma noite de campo e zero microdado sensível. A Quaest retém exatamente esse dado.</p>
+    </div>
+
+    <div class="foot">
+      Fontes: deck Genial/Quaest jul/2026 (BR-07181/2026), p37; questionário Q23-26, p6. Campo: Datafolha 17-19 jun (Lula 47×Flávio 43); Nexus/BTG jul, 6ª rodada (47×44); Futura/Apex 7-11 jul (46,3×46,1; branco/nulo/abstenção 6,5; NS 1,1); Meio/Ideia 3-6 jul, telefônica (45×40; branco/nulo 10,5; NS 4,5); AtlasIntel ~1 jul (48,8×42,3). Contas reproduzíveis em <span class="mono">quaest_0726_sintese.json</span>. brasil.arvor.co
+    </div>
+  </div>
+
+  <!-- ============ VARIANTE SLIDE 1600x900 ============
+       Capturar o elemento .qsn-slide-shell .qsn (1600x900), padding da seção pai zerado. -->
+  <div class="qsn-slide-shell" style="margin-top:40px;overflow-x:auto;">
+    <div class="qsn" style="width:1600px;height:900px;padding:50px 58px;border-radius:0;overflow:hidden;display:grid;grid-template-columns:820px 640px;grid-template-rows:auto 1fr;gap:22px 46px;">
+      <!-- cabeçalho span 2 -->
+      <div style="grid-column:1/3;">
+        <div class="kicker">Genial/Quaest · Julho 2026 · Síntese</div>
+        <h2 style="font-size:2.7rem;margin:.28em 0 .12em;">Para onde foi o <em>Flávio que falta</em></h2>
+        <p class="lede" style="font-size:1.06rem;max-width:none;">Mesmo Lula do campo (45 vs média 46,1), o menor Flávio do mercado (37 vs 43,4). O voto que falta não foi para Lula: parou fora da cédula.</p>
+      </div>
+
+      <!-- coluna esquerda: barras + decomposição -->
+      <div style="min-width:0;">
+        <div class="sec-label" style="margin-bottom:11px;">2º turno Lula × Flávio · % voto total · <span class="tag t-fato">Fato</span></div>
+        <div class="stack" id="stackBarsSlide" style="gap:9px;"></div>
+        <div class="stackkey" style="margin:11px 0 0;font-size:.6rem;gap:14px;">
+          <span><i class="sw lu"></i> Lula</span><span><i class="sw fl"></i> Flávio</span><span><i class="sw pk"></i> Não-escolha</span><span style="color:var(--acid)">▬ Quaest</span>
+        </div>
+        <div class="decomp" style="grid-template-columns:1fr 1fr;gap:11px;margin-top:18px;">
+          <div class="dbox" style="padding:13px 15px;"><div class="big fl" style="font-size:1.9rem;">−6,4</div><div class="lbl" style="font-size:.76rem;">déficit de Flávio vs campo</div></div>
+          <div class="dbox" style="padding:13px 15px;"><div class="big lu" style="font-size:1.9rem;">−1,1</div><div class="lbl" style="font-size:.76rem;">déficit de Lula: no par do campo</div></div>
+          <div class="dbox" style="padding:13px 15px;"><div class="big pk" style="font-size:1.9rem;">+7,5</div><div class="lbl" style="font-size:.76rem;">excesso de não-escolha da Quaest</div></div>
+          <div class="dbox" style="padding:13px 15px;border-color:rgba(233,73,53,.4);"><div class="big" style="font-size:1.9rem;color:var(--signal)">85%</div><div class="lbl" style="font-size:.76rem;">do excesso fica do lado de Flávio</div></div>
+        </div>
+      </div>
+
+      <!-- coluna direita: hipóteses + veredito -->
+      <div style="min-width:0;display:flex;flex-direction:column;">
+        <div class="sec-label" style="margin-bottom:10px;">Qual mecanismo domina · probabilidade</div>
+        <div class="hyp" id="hypRowsSlide" style="gap:6px;"></div>
+        <div class="verdict" style="margin-top:16px;padding:16px 18px;">
+          <div class="vh" style="margin-bottom:8px;">Prova de opacidade, não de fraude</div>
+          <p style="font-size:.9rem;">A Quaest não tira voto de Flávio para dar a Lula: <b style="color:var(--acid)">estaciona o anti-Lula mole no branco/nulo</b>. O porquê é a cédula de quatro saídas lida em voz alta (Q23-26), amplificada pelo presencial. Teste nº 1: split-ballot. No braço forçado, Flávio sobe 5-6 p.p. e a não-escolha desaba para 9-10. Uma noite de campo resolve.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      var shell = document.getElementById('quaest-sintese');
+      // instituto, sub, lula, flavio, nao-escolha, hero(Quaest)
+      var data=[
+        {inst:'Genial/Quaest',sub:'10-13 jul · domiciliar',lu:45,fl:37,pk:18,hero:true},
+        {inst:'Futura/Apex',sub:'7-11 jul · presencial',lu:46.3,fl:46.1,pk:7.6},
+        {inst:'BTG/Nexus',sub:'jul · 6ª rodada',lu:47,fl:44,pk:9},
+        {inst:'Datafolha',sub:'17-19 jun · fluxo',lu:47,fl:43,pk:10},
+        {inst:'AtlasIntel',sub:'~1 jul · digital',lu:48.8,fl:42.3,pk:8.9},
+        {inst:'Meio/Ideia',sub:'3-6 jul · telefônica',lu:45,fl:40,pk:15}
+      ];
+      function fmt(v){ return Number.isInteger(v)?v:String(v).replace('.',','); }
+      function stack(el){ if(!el) return;
+        el.innerHTML=data.map(function(d){
+          return '<div class="srow'+(d.hero?' hero':'')+'"><div class="sinst">'+d.inst+'<small>'+d.sub+'</small></div>'
+            +'<div class="sbar">'
+            +'<div class="seg lu" style="width:'+d.lu+'%">'+fmt(d.lu)+'</div>'
+            +'<div class="seg fl" style="width:'+d.fl+'%">'+fmt(d.fl)+'</div>'
+            +'<div class="seg pk" style="width:'+d.pk+'%">'+fmt(d.pk)+'</div>'
+            +'</div></div>';
+        }).join('');
+      }
+      stack(shell.querySelector('#stackBars'));
+      stack(shell.querySelector('#stackBarsSlide'));
+
+      var hyp=[
+        {id:'H-A',name:'Cédula: rampa de não-escolha lida em voz alta',sub:'oferta — evidência documental',p:48,cls:'hero'},
+        {id:'H-B',name:'Desejabilidade social do presencial domiciliar',sub:'demanda que toma a rampa',p:18,cls:'mid'},
+        {id:'H-E',name:'Amostra/território: rotação e deff alto',sub:'ruído — refutado pela estabilidade jun/jul',p:11,cls:'low'},
+        {id:'H-D',name:'Ponderação/rake/MRP',sub:'renda mexe <1 p.p. e pró-Lula',p:8,cls:'low'},
+        {id:'H-F',name:'Polegar da casa (viés deliberado)',sub:'sem prova; tudo reproduzível por desenho',p:7,cls:'low'},
+        {id:'H-C',name:'Fadiga/seleção dos 101 itens',sub:'moveria p/ Lula, não p/ não-escolha',p:6,cls:'low'},
+        {id:'H-G',name:'Universo/denominador (válidos vs total)',sub:'refutado: todos reportam voto total',p:2,cls:'low'}
+      ];
+      var MAXP=50;
+      function hyprows(el,slide){ if(!el) return;
+        el.innerHTML=hyp.map(function(h){
+          var w=(h.p/MAXP*100).toFixed(1);
+          var dark=(h.cls==='hero')?' dark':'';
+          var nm=slide?'<div class="hname" style="font-size:.8rem;">'+h.id+' · '+h.name+'</div>'
+                      :'<div class="hname">'+h.name+'<small>'+h.sub+'</small></div>';
+          var idcol=slide?'':'<div class="hid">'+h.id+'</div>';
+          var cols=slide?'grid-template-columns:1fr 150px;':'';
+          return '<div class="hrow" style="'+cols+(slide?'padding:6px 0;':'')+'">'+idcol+nm
+            +'<div class="hbar"><div class="hfill '+h.cls+'" style="width:'+w+'%"></div><span class="hpct'+dark+'">'+h.p+'%</span></div></div>';
+        }).join('');
+      }
+      hyprows(shell.querySelector('#hypRows'),false);
+      hyprows(shell.querySelector('#hypRowsSlide'),true);
+    })();
+  </script>
+</section>

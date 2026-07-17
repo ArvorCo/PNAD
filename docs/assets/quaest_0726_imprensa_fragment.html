@@ -1,0 +1,253 @@
+<!-- Fragmento autocontido: Imprensa x Quaest 07/2026 (Folha e Estadão; tríptico com a Globo).
+     Dark editorial. Fraunces / IBM Plex. Sem dependências externas de JS. -->
+<section class="qimp" id="quaest-imprensa">
+  <style>
+    .qimp{
+      --ink:#11100f; --coal:#1a1917; --paper:#f4f0e6; --paper-2:#e8e1d2;
+      --signal:#e94935; --acid:#d7ee3f; --cyan:#42c5d5; --good:#63c39a; --warn:#e0a63c;
+      --muted:#a49c8e; --line:rgba(244,240,230,.14);
+      --display:"Fraunces",Georgia,serif; --sans:"IBM Plex Sans Condensed",Arial,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+      background:var(--ink); color:var(--paper);
+      font-family:var(--display); line-height:1.55;
+      padding:clamp(22px,4vw,56px); border-radius:6px;
+      background-image:linear-gradient(rgba(244,240,230,.028) 1px,transparent 1px);
+      background-size:100% 30px;
+    }
+    .qimp *{box-sizing:border-box;}
+    .qimp .wrap{width:min(1180px,100%);margin-inline:auto;}
+    .qimp .mono{font-family:var(--mono);}
+    .qimp .sans{font-family:var(--sans);}
+    .qimp .kicker{font:600 .72rem/1.3 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--acid);display:flex;align-items:center;gap:12px;}
+    .qimp .kicker::before{content:"";width:44px;height:5px;background:var(--acid);}
+    .qimp h2{font-size:clamp(1.9rem,4.2vw,3.1rem);line-height:1.02;margin:.5em 0 .3em;font-weight:600;letter-spacing:-.01em;}
+    .qimp h2 em{font-style:italic;color:var(--signal);}
+    .qimp .lede{max-width:62ch;color:#e9e3d5;font-size:clamp(1rem,1.5vw,1.18rem);}
+    .qimp .tag{display:inline-block;font:600 .62rem/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:4px 7px;border-radius:3px;vertical-align:middle;}
+    .qimp .t-fato{background:rgba(99,195,154,.16);color:var(--good);border:1px solid rgba(99,195,154,.4);}
+    .qimp .t-inf{background:rgba(66,197,213,.14);color:var(--cyan);border:1px solid rgba(66,197,213,.4);}
+    .qimp .t-hip{background:rgba(224,166,60,.14);color:var(--warn);border:1px solid rgba(224,166,60,.4);}
+    .qimp .rule{height:1px;background:var(--line);margin:36px 0;}
+    .qimp .sec-label{font:600 .74rem/1.3 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:18px;}
+
+    /* Timeline */
+    .qimp .layer-key{display:flex;flex-wrap:wrap;gap:10px;margin:2px 0 14px;}
+    .qimp .lk{font:600 .62rem/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:6px 9px;border-radius:3px;border-left:3px solid;}
+    .qimp .lk-c{color:var(--muted);border-color:var(--muted);background:rgba(164,156,142,.08);}
+    .qimp .lk-a{color:var(--warn);border-color:var(--warn);background:rgba(224,166,60,.08);}
+    .qimp .lk-m{color:var(--cyan);border-color:var(--cyan);background:rgba(66,197,213,.08);}
+    .qimp .tl{position:relative;margin:6px 0 4px;padding-left:0;}
+    .qimp .tl-item{display:grid;grid-template-columns:120px 1fr;gap:18px;padding:16px 0 16px 14px;border-top:1px solid var(--line);border-left:3px solid transparent;}
+    .qimp .tl-item.lyr-c{border-left-color:var(--muted);}
+    .qimp .tl-item.lyr-a{border-left-color:var(--warn);}
+    .qimp .tl-item.lyr-m{border-left-color:var(--cyan);}
+    .qimp .tl-item:first-child{border-top:none;}
+    .qimp .tl-date{font:600 .8rem/1.35 var(--mono);color:var(--acid);}
+    .qimp .tl-actor{font-family:var(--sans);font-weight:600;font-size:.82rem;letter-spacing:.02em;text-transform:uppercase;color:#efe9db;margin-bottom:5px;display:block;}
+    .qimp .tl-body{font-size:.98rem;color:#ded8ca;max-width:74ch;}
+    .qimp .own-flag{display:inline-block;font:600 .58rem/1 var(--mono);letter-spacing:.09em;color:var(--signal);border:1px solid rgba(233,73,53,.5);border-radius:3px;padding:3px 6px;margin-left:8px;vertical-align:middle;}
+    .qimp .quote-flag{display:inline-block;font:600 .58rem/1 var(--mono);letter-spacing:.09em;color:var(--muted);border:1px solid var(--line);border-radius:3px;padding:3px 6px;margin-left:8px;vertical-align:middle;}
+
+    /* Table */
+    .qimp .tbl-scroll{overflow-x:auto;margin:4px 0;-webkit-overflow-scrolling:touch;}
+    .qimp table{border-collapse:collapse;width:100%;min-width:720px;font-size:.9rem;}
+    .qimp th,.qimp td{text-align:left;vertical-align:top;padding:13px 15px;border-bottom:1px solid var(--line);}
+    .qimp thead th{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;border-bottom:1px solid var(--line);}
+    .qimp thead th.folha{color:var(--cyan);}
+    .qimp thead th.estadao{color:var(--acid);}
+    .qimp thead th.globo{color:var(--muted);}
+    .qimp td.axis{font-family:var(--sans);font-weight:600;color:#efe9db;width:22%;font-size:.82rem;}
+    .qimp td.globo-cell{color:var(--muted);font-style:italic;}
+    .qimp .num{font-family:var(--mono);color:var(--signal);font-weight:600;}
+
+    /* Cotejo cards */
+    .qimp .cotejo{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;}
+    .qimp .card{border:1px solid var(--line);border-radius:5px;padding:18px;background:rgba(244,240,230,.02);}
+    .qimp .card .src{font:600 .68rem/1.3 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--cyan);}
+    .qimp .card .hl{font-size:1.02rem;font-weight:600;margin:9px 0;color:#f4f0e6;line-height:1.25;}
+    .qimp .card .vs{font-size:.9rem;color:#ccc5b6;}
+    .qimp .card .vs b{color:var(--signal);}
+
+    /* Incentive map */
+    .qimp .imap{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;}
+    .qimp .ibox{border:1px solid var(--line);border-radius:5px;padding:16px;}
+    .qimp .ibox .big{font:600 1.8rem/1 var(--mono);color:var(--acid);}
+    .qimp .ibox .lbl{font-size:.82rem;color:#ccc5b6;margin-top:8px;}
+    .qimp .ibox.hip{border-color:rgba(224,166,60,.35);}
+    .qimp .foot{font-family:var(--sans);font-size:.78rem;color:var(--muted);margin-top:20px;line-height:1.5;}
+    .qimp a{color:var(--cyan);text-decoration-color:rgba(66,197,213,.4);text-underline-offset:3px;}
+    @media (max-width:640px){
+      .qimp .tl-item{grid-template-columns:1fr;gap:6px;}
+    }
+  </style>
+
+  <div class="wrap">
+    <p class="kicker mono">Auditoria de enquadramento · BR-07181/2026</p>
+    <h2>O <em>Tariflávio</em> vira manchete:<br>da cunhagem ao dado</h2>
+    <p class="lede sans">Como Folha, Estadão e a imprensa em geral converteram uma pesquisa de janela única
+      (campo 10&ndash;13/07) em narrativa tarifária &mdash; e por que a distinção entre <b>manchete própria</b>
+      e <b>aspas de terceiro</b> muda o veredito.</p>
+
+    <div class="rule"></div>
+
+    <!-- TIMELINE -->
+    <p class="sec-label mono">1 · Linha do tempo &mdash; três camadas: cunhagem &rarr; amplificação &rarr; manchete</p>
+    <div class="layer-key">
+      <span class="lk lk-c">CUNHAGEM &mdash; redes, autoria difusa</span>
+      <span class="lk lk-a">AMPLIFICAÇÃO &mdash; máquina Sidônio/PT</span>
+      <span class="lk lk-m">ADOÇÃO EM MANCHETE</span>
+    </div>
+    <div class="tl">
+      <div class="tl-item lyr-c">
+        <div class="tl-date mono">03/06<br>ou antes</div>
+        <div>
+          <span class="tl-actor">Redes (X) · perfis do campo governista <span class="tag t-fato">FATO</span> <span class="quote-flag">AUTOR: HIPÓTESE</span></span>
+          <div class="tl-body">&ldquo;Tariflávio&rdquo; <b>já explode nas redes em início de junho</b> (O Cafezinho, 03/06; Poder360, &ldquo;Flávio vira meme&rdquo;) &mdash; <i>mais de um mês antes</i> da reunião do PT. Uma fonte descreve a hashtag como &ldquo;impulsionada por perfis ligados ao campo governista&rdquo;. O termo é anterior à institucionalização partidária.</div>
+        </div>
+      </div>
+      <div class="tl-item lyr-a">
+        <div class="tl-date mono">desde<br>jan/25</div>
+        <div>
+          <span class="tl-actor">Sidônio Palmeira &mdash; Secom <span class="tag t-fato">FATO</span> <span class="tag t-inf">USO NESTE CASO: INFERÊNCIA</span></span>
+          <div class="tl-body">O ministro instalou na Secom um playbook de <b>apelidos, memes e linguagem de TikTok</b> e pagou <b>~R$ 2 mi a 55+ influenciadores</b>. Em 15/07 Lula o manteve e lhe deu a coordenação da campanha. O padrão de difusão do &ldquo;Tariflávio&rdquo; é <i>compatível</i> com esse método &mdash; mas nenhuma reportagem atribui o termo a Sidônio, e a Secom atacou Flávio oficialmente <i>sem</i> usar o rótulo.</div>
+        </div>
+      </div>
+      <div class="tl-item lyr-m">
+        <div class="tl-date mono">06/07</div>
+        <div>
+          <span class="tl-actor">Estadão &mdash; editorial <span class="tag t-fato">FATO</span> <span class="own-flag">VOZ PRÓPRIA</span></span>
+          <div class="tl-body">Editorial <b>&ldquo;O melhor cabo eleitoral de Lula&rdquo;</b> adota, em voz institucional, a tese de que Flávio ajuda a reeleger Lula &mdash; <i>antes</i> de o PT institucionalizar o rótulo. É o achado mais forte de adesão em voz própria.</div>
+        </div>
+      </div>
+      <div class="tl-item lyr-m">
+        <div class="tl-date mono">07/07</div>
+        <div>
+          <span class="tl-actor">Folha de S.Paulo &mdash; reportagem <span class="tag t-fato">FATO</span> <span class="quote-flag">FALA DO ALVO</span></span>
+          <div class="tl-body">Folha revela a manifestação de Flávio à USTR: <b>ele próprio</b> argumenta que o tarifaço daria &ldquo;vitória política&rdquo; a Lula. A tese avança pela boca do alvo &mdash; aspas de terceiro, não voz do veículo.</div>
+        </div>
+      </div>
+      <div class="tl-item lyr-a">
+        <div class="tl-date mono">14/07<br>noite</div>
+        <div>
+          <span class="tl-actor">PT &mdash; Éden Valadares, sec. de Comunicação <span class="tag t-fato">FATO</span> <span class="tag t-inf">AUTORIA: INFERÊNCIA</span></span>
+          <div class="tl-body">O PT <b>institucionaliza</b> (não cunha) o rótulo, que já circulava desde junho. Fontes creditam a adoção a Éden Valadares &mdash; atribuição de autoria frágil, pois o termo é anterior.</div>
+        </div>
+      </div>
+      <div class="tl-item lyr-m">
+        <div class="tl-date mono">15/07</div>
+        <div>
+          <span class="tl-actor">Poder360 · CNN Brasil · Correio <span class="tag t-fato">FATO</span> <span class="quote-flag">ASPAS ATRIBUÍDAS AO PT</span></span>
+          <div class="tl-body">Confirmado o tarifaço, o rótulo entra em manchetes &mdash; sempre <b>entre aspas e atribuído ao PT</b>: <i>&ldquo;munição do PT&rdquo;</i>, <i>&ldquo;PT quer explorar&rdquo;</i>. Discurso reportado, distância mantida. No mesmo dia sai o deck da corrida <b>sem</b> o bloco tarifário.</div>
+        </div>
+      </div>
+      <div class="tl-item lyr-m">
+        <div class="tl-date mono">16/07</div>
+        <div>
+          <span class="tl-actor">Quaest / imprensa &mdash; bloco tarifário <span class="tag t-fato">FATO</span></span>
+          <div class="tl-body">Quaest libera Q57&ndash;Q65 <b>um dia depois</b>: <span class="num">51%</span> culpam Flávio; <span class="num">42%</span> dizem que a tarifa aumenta o voto em Lula. Uma janela de campo, dois ciclos de notícia. Os números medem opinião de 10&ndash;13/07, <i>antes</i> da confirmação da tarifa em 15/07.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule"></div>
+
+    <!-- 3-OUTLET TABLE -->
+    <p class="sec-label mono">2 · Comparação a três &mdash; manchete &times; o que o dado dizia</p>
+    <div class="tbl-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Eixo de enquadramento</th>
+            <th class="folha">Folha de S.Paulo</th>
+            <th class="estadao">Estadão</th>
+            <th class="globo">Globo &darr;</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="axis">Rótulo &ldquo;Tariflávio&rdquo; em manchete própria</td>
+            <td>Não localizado em voz própria. Reportou a fala de Flávio (&ldquo;daria vitória a Lula&rdquo;).</td>
+            <td>Não como rótulo; adotou a <b>tese</b> em editorial próprio (&ldquo;cabo eleitoral de Lula&rdquo;).</td>
+            <td class="globo-cell">Cobertura da Globo &mdash; outro agente. Onde usado, aspas atribuídas ao PT.</td>
+          </tr>
+          <tr>
+            <td class="axis">Movimento dentro da margem tratado como real</td>
+            <td>Corrida majoritariamente sóbria (45%&times;37%).</td>
+            <td>Ênfase em rejeição/queda de Flávio. Série de rejeição defensável; passo mensal (56&rarr;57) não.</td>
+            <td class="globo-cell">outro agente</td>
+          </tr>
+          <tr>
+            <td class="axis">Omite que Flávio é o adversário mais competitivo</td>
+            <td>Moldura &ldquo;Lula lidera&rdquo; sem destacar o gap.</td>
+            <td>Foco em rejeição obscurece a competitividade relativa.</td>
+            <td class="globo-cell">outro agente</td>
+          </tr>
+          <tr>
+            <td class="axis">Âncora de incentivo &mdash; verba Secom (jan/23&ndash;jun/26)</td>
+            <td>UOL 6º: <span class="num">R$ 7,3 mi</span>. Verba de jornal não isolada.</td>
+            <td>Não isolada em busca aberta.</td>
+            <td class="globo-cell"><span class="num">R$ 267 mi</span> (25,6%) &mdash; maior beneficiário.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="foot sans">Gap de 2&ordm; turno por adversário: <b>Flávio 8</b> &lt; Caiado 9 &lt; Zema 10 &lt; Renan 12. Flávio é, ao mesmo tempo, o adversário <i>mais competitivo</i> de Lula e o de <i>maior rejeição</i> (57%). Margem individual 2,0 pp; margem da diferença &asymp; 3,95 pp (deff&nbsp;1).</p>
+
+    <div class="rule"></div>
+
+    <!-- COTEJO CARDS -->
+    <p class="sec-label mono">3 · As três manchetes mais gritantes &mdash; cotejo</p>
+    <div class="cotejo">
+      <div class="card">
+        <div class="src mono">Estadão · editorial · 06/07 <span class="own-flag">VOZ PRÓPRIA</span></div>
+        <div class="hl">&ldquo;O melhor cabo eleitoral de Lula&rdquo;</div>
+        <div class="vs sans">O veículo adota a tese anti-Flávio em voz institucional, <b>antes</b> de o PT cunhar &ldquo;Tariflávio&rdquo;. Compatível com o dado (Flávio lidera a rejeição), mas é <b>juízo editorial</b>, não leitura de topline.</div>
+      </div>
+      <div class="card">
+        <div class="src mono">Terra · reportagem · 15/07 <span class="quote-flag">MARGEM</span></div>
+        <div class="hl">&ldquo;Quaest revela virada de Lula e queda de Flávio&rdquo;</div>
+        <div class="vs sans">&ldquo;Virada&rdquo; é falso &mdash; Lula já liderava. A &ldquo;queda&rdquo; de Flávio (29&rarr;28; 38&rarr;37) está <b>dentro da margem</b>. Movimento dentro da margem vendido como movimento real.</div>
+      </div>
+      <div class="card">
+        <div class="src mono">Brasil de Fato · dados · 16/07 <span class="quote-flag">TIMING</span></div>
+        <div class="hl">&ldquo;51% culpam Flávio Bolsonaro por tarifas de Trump, aponta Quaest&rdquo;</div>
+        <div class="vs sans">Dado real e bem atribuído &mdash; mas medido <b>antes</b> da confirmação da tarifa (13/07) e publicado <b>depois</b> (16/07), dando respaldo de survey à narrativa Tariflávio num 2&ordm; ciclo.</div>
+      </div>
+    </div>
+
+    <div class="rule"></div>
+
+    <!-- INCENTIVE MAP -->
+    <p class="sec-label mono">4 · Mapa de incentivos &mdash; Faria Lima como hipótese, laços como fato</p>
+    <div class="imap">
+      <div class="ibox">
+        <div class="big mono">R$ 954,5 mi</div>
+        <div class="lbl sans">Verba total da Secom em publicidade (jan/23&ndash;15/jun/26). <span class="tag t-fato">FATO</span> &mdash; estatais/Petrobras opacas desde 2017.</div>
+      </div>
+      <div class="ibox">
+        <div class="big mono">25,6%</div>
+        <div class="lbl sans">Fatia da Globo (R$ 267 mi), 118% acima do 2º colocado. Âncora do tríptico. <span class="tag t-fato">FATO</span></div>
+      </div>
+      <div class="ibox hip">
+        <div class="big mono">Tarcísio</div>
+        <div class="lbl sans">Candidato preferido do eixo Faria Lima/agro na leitura de mercado &mdash; incentivo editorial a desgastar Flávio como direita &ldquo;impalatável&rdquo;. <span class="tag t-hip">HIPÓTESE</span></div>
+      </div>
+      <div class="ibox hip">
+        <div class="big mono" style="font-size:1.15rem;line-height:1.25;padding-top:6px;">laços&nbsp;&ne;<br>conluio</div>
+        <div class="lbl sans">A influência da Faria Lima é hipótese. Documentável: publicidade, colunismo de mercado, leitor-investidor, preferência por Tarcísio. Correlação de incentivo, não coordenação. <span class="tag t-hip">HIPÓTESE</span></div>
+      </div>
+    </div>
+
+    <p class="foot sans">
+      <b>Hipótese sidônica.</b> A máquina de Sidônio Palmeira na Secom (apelidos, memes, ~R$ 2 mi a 55+ influenciadores; coordenação da campanha desde 15/07) é <span class="tag t-fato">FATO</span>. Que o padrão de difusão do &ldquo;Tariflávio&rdquo; seja compatível com esse método é <span class="tag t-inf">INFERÊNCIA</span>. Que Sidônio tenha <i>fabricado</i> o termo é <span class="tag t-hip">HIPÓTESE</span> não comprovada: o apelido é anterior (03/06), a atribuição direta é ao PT (Éden Valadares), e não há fala oficial de Lula/ministro usando o rótulo.
+    </p>
+    <p class="foot sans">
+      <b>Veredito calibrado.</b> Não se documenta &ldquo;contaminação de linguagem&rdquo; plena em manchete própria de Folha ou Estadão:
+      onde &ldquo;Tariflávio&rdquo; aparece em título (CNN, Poder360, Correio), está <i>entre aspas e atribuído ao PT</i> &mdash; discurso reportado, defensável.
+      O achado de voz própria é o <i>editorial</i> do Estadão (06/07), que adota a tese antes do rótulo. A Folha avançou a tese pela fala do próprio Flávio (07/07).
+      Fontes: <a href="https://www.brasildefato.com.br/2026/07/16/51-culpam-flavio-bolsonaro-por-tarifas-de-trump-aponta-quaest/">Brasil de Fato</a>,
+      <a href="https://br.investing.com/news/politics-news/tarifaco-vira-municao-do-pt-para-desgastar-flavio-com-tariflavio-2003099">Poder360</a>,
+      <a href="https://www.cnnbrasil.com.br/blogs/jussara-soares/eleicoes/pt-quer-explorar-tariflavio-senador-tenta-emplacar-partido-do-tarifaco/">CNN Brasil</a>,
+      <a href="https://www.poder360.com.br/poder-midia/grupo-globo-recebeu-r-267-mi-de-publicidade-em-35-anos-de-lula/">Poder360 (Secom)</a>.
+    </p>
+  </div>
+</section>

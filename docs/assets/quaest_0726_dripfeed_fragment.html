@@ -1,0 +1,278 @@
+<!-- Fragmento autocontido: Conta-gotas — uma coleta, N manchetes (AtlasIntel x Quaest x controle Datafolha).
+     Dark editorial. Fraunces / IBM Plex. Sem dependências externas de JS.
+     Ao final do arquivo há a variante slide 1600x900 (section.qdrip-slide). -->
+<section class="qdrip" id="quaest-dripfeed">
+  <style>
+    .qdrip{
+      --ink:#100f0d; --coal:#1a1917; --paper:#f4f0e6; --paper-2:#e8e1d2;
+      --signal:#e94935; --acid:#d7ee3f; --cyan:#42c5d5; --good:#63c39a; --warn:#e0a63c;
+      --muted:#a49c8e; --line:rgba(244,240,230,.14);
+      --display:"Fraunces",Georgia,serif; --sans:"IBM Plex Sans Condensed",Arial,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+      background:var(--ink); color:var(--paper);
+      font-family:var(--display); line-height:1.55;
+      padding:clamp(22px,4vw,56px); border-radius:6px;
+      background-image:linear-gradient(rgba(244,240,230,.028) 1px,transparent 1px);
+      background-size:100% 30px;
+    }
+    .qdrip *{box-sizing:border-box;}
+    .qdrip .wrap{width:min(1180px,100%);margin-inline:auto;}
+    .qdrip .mono{font-family:var(--mono);}
+    .qdrip .sans{font-family:var(--sans);}
+    .qdrip .kicker{font:600 .72rem/1.3 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--acid);display:flex;align-items:center;gap:12px;}
+    .qdrip .kicker::before{content:"";width:44px;height:5px;background:var(--acid);}
+    .qdrip h2{font-size:clamp(1.9rem,4.2vw,3.1rem);line-height:1.02;margin:.5em 0 .3em;font-weight:600;letter-spacing:-.01em;}
+    .qdrip h2 em{font-style:italic;color:var(--signal);}
+    .qdrip .lede{max-width:64ch;color:#e9e3d5;font-size:clamp(1rem,1.5vw,1.18rem);}
+    .qdrip .tag{display:inline-block;font:600 .62rem/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:4px 7px;border-radius:3px;vertical-align:middle;}
+    .qdrip .t-fato{background:rgba(99,195,154,.16);color:var(--good);border:1px solid rgba(99,195,154,.4);}
+    .qdrip .t-inf{background:rgba(66,197,213,.14);color:var(--cyan);border:1px solid rgba(66,197,213,.4);}
+    .qdrip .t-hip{background:rgba(224,166,60,.14);color:var(--warn);border:1px solid rgba(224,166,60,.4);}
+    .qdrip .rule{height:1px;background:var(--line);margin:36px 0;}
+    .qdrip .sec-label{font:600 .74rem/1.3 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:18px;}
+
+    /* Taxonomia */
+    .qdrip .tax{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;}
+    .qdrip .tax .card{border:1px solid var(--line);border-radius:5px;padding:18px;background:rgba(244,240,230,.02);}
+    .qdrip .tax .card h4{font-family:var(--sans);font-size:.86rem;letter-spacing:.04em;text-transform:uppercase;margin:0 0 8px;}
+    .qdrip .tax .card p{font-size:.92rem;color:#d8d2c4;margin:0;}
+    .qdrip .tax .old h4{color:var(--muted);}
+    .qdrip .tax .ret h4{color:var(--warn);}
+    .qdrip .tax .new{border-color:rgba(233,73,53,.45);}
+    .qdrip .tax .new h4{color:var(--signal);}
+
+    /* Timelines comparadas */
+    .qdrip .tlgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;}
+    .qdrip .tlcol{border:1px solid var(--line);border-radius:5px;padding:18px;background:rgba(244,240,230,.02);}
+    .qdrip .tlcol .inst{font-family:var(--sans);font-weight:600;font-size:.95rem;letter-spacing:.03em;text-transform:uppercase;}
+    .qdrip .tlcol .inst.atlas{color:var(--warn);}
+    .qdrip .tlcol .inst.quaest{color:var(--signal);}
+    .qdrip .tlcol .inst.df{color:var(--muted);}
+    .qdrip .tlcol .reg{font:600 .66rem/1.4 var(--mono);color:var(--muted);margin:2px 0 12px;}
+    .qdrip .step{display:grid;grid-template-columns:74px 1fr;gap:12px;padding:11px 0;border-top:1px solid var(--line);}
+    .qdrip .step .d{font:600 .78rem/1.35 var(--mono);color:var(--acid);}
+    .qdrip .step .b{font-size:.9rem;color:#ded8ca;}
+    .qdrip .step .b b{color:#f4f0e6;}
+    .qdrip .step.campo .d{color:var(--cyan);}
+    .qdrip .step.fatia .b b{color:var(--signal);}
+    .qdrip .verdict-chip{display:inline-block;font:600 .6rem/1 var(--mono);letter-spacing:.07em;text-transform:uppercase;padding:5px 8px;border-radius:3px;margin-top:12px;}
+    .qdrip .vc-new{color:var(--signal);border:1px solid rgba(233,73,53,.5);background:rgba(233,73,53,.08);}
+    .qdrip .vc-old{color:var(--muted);border:1px solid var(--line);background:rgba(164,156,142,.06);}
+    .qdrip .vc-ret{color:var(--warn);border:1px solid rgba(224,166,60,.5);background:rgba(224,166,60,.08);}
+
+    /* Mecanismo */
+    .qdrip .mech{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;}
+    .qdrip .mech .mbox{border:1px solid var(--line);border-radius:5px;padding:18px;}
+    .qdrip .mech .mbox .big{font:600 1.6rem/1.1 var(--mono);color:var(--acid);}
+    .qdrip .mech .mbox p{font-size:.9rem;color:#ccc5b6;margin:8px 0 0;}
+    .qdrip .mech .hip{border-color:rgba(224,166,60,.35);}
+
+    /* Lei */
+    .qdrip .law{border:1px solid rgba(215,238,63,.35);border-radius:5px;padding:22px;background:rgba(215,238,63,.04);}
+    .qdrip .law .punch{font-size:clamp(1.15rem,2vw,1.5rem);font-weight:600;color:var(--acid);font-style:italic;margin:0 0 10px;}
+    .qdrip .law p{font-size:.95rem;color:#ded8ca;margin:0;}
+    .qdrip .foot{font-family:var(--sans);font-size:.78rem;color:var(--muted);margin-top:22px;line-height:1.5;}
+    .qdrip a{color:var(--cyan);text-decoration-color:rgba(66,197,213,.4);text-underline-offset:3px;}
+    @media (max-width:640px){ .qdrip .step{grid-template-columns:1fr;gap:4px;} }
+  </style>
+
+  <div class="wrap">
+    <p class="kicker mono">Análise de mídia e métodos · rodadas 2026</p>
+    <h2>Conta-gotas: <em>uma coleta,</em><br>N manchetes</h2>
+    <p class="lede sans">Institutos passaram a fatiar uma única janela de campo em relatórios temáticos soltos em
+      dias diferentes. Cada fatia reinicia o ciclo de notícia; cada capa carrega a marca do contratante.
+      Documentamos a cronologia (Fato), o desenho do incentivo (Inferência) e a origem no ecossistema
+      financeiro (Hipótese).</p>
+
+    <div class="rule"></div>
+
+    <!-- 1. TAXONOMIA -->
+    <p class="sec-label mono">1 · Gradações do mesmo padrão</p>
+    <div class="tax">
+      <div class="card old">
+        <h4>Fatias independentes seriadas</h4>
+        <p>Blocos que não se explicam mutuamente (voto × avaliação × rejeição × recortes) viram matérias
+          distintas da mesma coleta. A Folha faz há décadas &mdash; e em jun/26 emitiu um leque delas num só
+          sábado (20/06), com a rodada reverberando nos dias seguintes. <span class="tag t-fato">FATO</span></p>
+      </div>
+      <div class="card ret">
+        <h4>Conta-gotas de verificabilidade</h4>
+        <p>A manchete circula no dia D, mas o relatório integral auditável não acompanha: paywall, site do
+          instituto sem indexação, mesa completa só no registro TSE. E as perguntas-fantasma: Atlas mai/26,
+          48 itens aplicados e 18 publicados; Quaest jul/26, 28 itens ainda sem topline.
+          <span class="tag t-fato">FATO</span> <span class="tag t-inf">EFEITO NO LEITOR: INFERÊNCIA</span></p>
+      </div>
+      <div class="card new">
+        <h4>Mesmo tema, dois ciclos · a inovação criticável</h4>
+        <p>Reter um bloco da mesma história e soltá-lo no dia seguinte como manchete causal própria
+          (&ldquo;51% culpam&hellip;&rdquo;, &ldquo;tarifaço aumenta voto em&hellip;&rdquo;), com embargo e capa de série.
+          O segundo dia herda a credibilidade do primeiro. <span class="tag t-fato">CRONOLOGIA: FATO</span>
+          <span class="tag t-inf">DESENHO: INFERÊNCIA</span></p>
+      </div>
+    </div>
+
+    <div class="rule"></div>
+
+    <!-- 2. LINHAS DO TEMPO -->
+    <p class="sec-label mono">2 · Linha do tempo comparada &mdash; um campo, N manchetes</p>
+    <div class="tlgrid">
+      <div class="tlcol">
+        <span class="inst atlas">AtlasIntel / Bloomberg · jun&ndash;jul/26</span>
+        <div class="reg mono">BR-04582/2026 · n=4.999 · RDR online</div>
+        <div class="step campo"><span class="d">26&ndash;30/06</span><span class="b"><b>Campo único.</b> 63 perguntas no questionário registrado.</span></div>
+        <div class="step"><span class="d">01/07</span><span class="b"><b>Fatia 1:</b> topline eleitoral + aprovação de governo (Bloomberg Línea). Michelle, Master/Wagner e EUA ficam fora.</span></div>
+        <div class="step fatia"><span class="d">02/07</span><span class="b"><b>Fatias 2 e 3:</b> relatório Michelle (33 p.) e relatório Master/Wagner (21 p.) &mdash; este com <b>EMBARGO 07H00 impresso na capa</b>.</span></div>
+        <div class="step"><span class="d">depois</span><span class="b"><b>Retido:</b> bloco EUA/Trump/tarifas aplicado e sem topline público.</span></div>
+        <span class="verdict-chip vc-new">mesmo tema, ciclos consecutivos + embargo</span>
+      </div>
+      <div class="tlcol">
+        <span class="inst quaest">Genial / Quaest · jul/26 (27ª rodada)</span>
+        <div class="reg mono">BR-07181/2026 · n=2.004 · face a face</div>
+        <div class="step campo"><span class="d">10&ndash;13/07</span><span class="b"><b>Campo único.</b> 101 itens numerados no questionário registrado.</span></div>
+        <div class="step"><span class="d">15/07</span><span class="b"><b>Fatia 1:</b> deck da corrida (65 itens). O bloco tarifário Q57&ndash;Q65 não sai &mdash; no dia em que o tarifaço de 25% é confirmado.</span></div>
+        <div class="step fatia"><span class="d">16/07</span><span class="b"><b>Fatia 2:</b> suplemento de tarifas (8 itens novos): &ldquo;51% culpam Flávio&rdquo;, &ldquo;42% aumenta voto em Lula&rdquo;. PDF criado 16/07 00:41Z, título interno <b>&ldquo;Capas_Tematicos&hellip;&rdquo;</b> no plural, com resíduo do registro de <b>junho</b> na camada de texto.</span></div>
+        <div class="step"><span class="d">17/07</span><span class="b"><b>Fatia 3:</b> não localizada até a compilação. O plural do template sugere série por vir (<span class="tag t-hip">HIPÓTESE</span>). 28 itens sem topline.</span></div>
+        <span class="verdict-chip vc-new">mesmo tema, dois ciclos + template em série</span>
+      </div>
+      <div class="tlcol">
+        <span class="inst df">Folha / Datafolha · jun/26 (gradação)</span>
+        <div class="reg mono">BR-09956/2026 · n=2.004 · pontos de fluxo</div>
+        <div class="step campo"><span class="d">17&ndash;19/06</span><span class="b"><b>Campo único.</b></span></div>
+        <div class="step fatia"><span class="d">20/06</span><span class="b"><b>Leque de manchetes num só dia:</b> voto 1º/2º turno, rejeição (48% × 46%), avaliação (38% ruim/péssimo), recortes (Nordeste, mulheres, estudantes) e leitura Dark Horse &mdash; matérias distintas da mesma coleta, datadas por reproduções de terceiros (domínio Folha bloqueia crawler; mesmo caveat da Globo).</span></div>
+        <div class="step"><span class="d">21&ndash;23/06</span><span class="b"><b>Reverberação:</b> a rodada segue rendendo pauta e análises derivadas; matérias novas próprias da Folha nesses dias não confirmadas uma a uma (bloqueio).</span></div>
+        <div class="step"><span class="d">&mdash;</span><span class="b"><b>Mesa auditável não acompanha:</b> relatório integral não indexado/acessível na checagem (17/07); a auditoria do dossiê exigiu os documentos do registro TSE. Sem manchete causal encadeada nem embargo de instituto.</span></div>
+        <span class="verdict-chip vc-old">fatias independentes seriadas</span>
+        <span class="verdict-chip vc-ret">+ conta-gotas de verificabilidade</span>
+      </div>
+    </div>
+
+    <div class="rule"></div>
+
+    <!-- 3. MECANISMO -->
+    <p class="sec-label mono">3 · O mecanismo &mdash; agenda setting como modelo de negócio</p>
+    <div class="mech">
+      <div class="mbox">
+        <div class="big">1972</div>
+        <p><b>McCombs &amp; Shaw</b> (Chapel Hill): a mídia não diz o que pensar, mas <i>sobre o que</i> pensar.
+          Saliência cresce com frequência e recência. Fatiar a coleta multiplica a recência: cada fatia
+          reinicia o relógio da pauta. <span class="tag t-fato">LITERATURA</span></p>
+      </div>
+      <div class="mbox">
+        <div class="big">1 &rarr; 3&times;</div>
+        <p>Uma pesquisa publicada inteira ocupa um dia de noticiário. A mesma pesquisa em três fatias ocupa três
+          &mdash; cada capa com a marca do contratante no título (&ldquo;Genial/Quaest&rdquo;, &ldquo;Atlas/Bloomberg&rdquo;).
+          <span class="tag t-inf">INFERÊNCIA</span></p>
+      </div>
+      <div class="mbox hip">
+        <div class="big">R$ 15,8 mi</div>
+        <p>Receita da Atlas em 2025 (DRE). Genial é banco de investimentos e patrocina a Quaest desde 2022;
+          o Latam Pulse Atlas/Bloomberg é assinatura mensal. Pagadores do mercado financeiro tratam pesquisa
+          como produto recorrente. Laços: documentados. Coordenação: <b>não afirmada</b>.
+          <span class="tag t-hip">ORIGEM FARIA LIMA: HIPÓTESE</span></p>
+      </div>
+    </div>
+
+    <div class="rule"></div>
+
+    <!-- 4. RESPOSTA REGULATÓRIA -->
+    <p class="sec-label mono">4 · A resposta regulatória</p>
+    <div class="law">
+      <p class="punch">O conta-gotas morre quando a primeira fatia obriga a mesa inteira.</p>
+      <p class="sans">A emenda proposta ao PL das pesquisas determina: <b>suplemento temático derivado da mesma coleta
+        integra a mesma pesquisa</b> &mdash; divulgado qualquer resultado dela, o topline íntegro de todos os blocos
+        entra no Pacote Público de Auditoria no dia seguinte. É vedado reter bloco já medido para ciclo posterior;
+        bloco diferido leva o rótulo &ldquo;opinião medida antes&rdquo; do evento. A regra mata as duas variantes:
+        o <b>suplemento embargado</b> (Atlas/Quaest) e a <b>manchete que circula dias antes do relatório auditável</b>
+        (Folha/Datafolha). Texto completo em
+        <a href="https://brasil.arvor.co/proposta.html">brasil.arvor.co/proposta.html</a>.</p>
+    </div>
+
+    <p class="foot">Calibração: cronologia e documentos = Fato; intenção de maximizar manchetes = Inferência fundamentada
+      no desenho (embargo impresso, template de série); origem no ecossistema Faria Lima = Hipótese com laços comerciais
+      documentados e sem afirmação de coordenação. Fontes e URLs em
+      <span class="mono">quaest_0726_dripfeed.json</span> · brasil.arvor.co</p>
+  </div>
+</section>
+
+<!-- ============================================================
+     VARIANTE SLIDE 1600x900 — captura estática para thread/deck
+     ============================================================ -->
+<section class="qdrip-slide" id="quaest-dripfeed-slide">
+  <style>
+    .qdrip-slide{
+      --ink:#100f0d; --paper:#f4f0e6; --signal:#e94935; --acid:#d7ee3f; --cyan:#42c5d5;
+      --warn:#e0a63c; --good:#63c39a; --muted:#a49c8e; --line:rgba(244,240,230,.16);
+      --display:"Fraunces",Georgia,serif; --sans:"IBM Plex Sans Condensed",Arial,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+      box-sizing:border-box;width:1600px;height:900px;overflow:hidden;position:relative;
+      background:var(--ink);color:var(--paper);font-family:var(--display);
+      padding:64px 72px;display:flex;flex-direction:column;
+      background-image:linear-gradient(rgba(244,240,230,.03) 1px,transparent 1px);
+      background-size:100% 32px;
+    }
+    .qdrip-slide *{box-sizing:border-box;}
+    .qdrip-slide .kick{font:600 15px/1.3 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--acid);display:flex;align-items:center;gap:14px;}
+    .qdrip-slide .kick::before{content:"";width:48px;height:6px;background:var(--acid);}
+    .qdrip-slide h1{font-size:58px;line-height:1;margin:16px 0 8px;font-weight:600;letter-spacing:-.01em;}
+    .qdrip-slide h1 em{font-style:italic;color:var(--signal);}
+    .qdrip-slide .sub{font-family:var(--sans);font-size:21px;color:#d8d2c4;max-width:1050px;margin:0 0 30px;}
+    .qdrip-slide .cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:22px;flex:1;}
+    .qdrip-slide .col{border:1px solid var(--line);border-radius:6px;padding:22px 24px;background:rgba(244,240,230,.02);}
+    .qdrip-slide .inst{font-family:var(--sans);font-weight:600;font-size:19px;letter-spacing:.03em;text-transform:uppercase;}
+    .qdrip-slide .col.atlas .inst{color:var(--warn);}
+    .qdrip-slide .col.quaest .inst{color:var(--signal);}
+    .qdrip-slide .col.df .inst{color:var(--muted);}
+    .qdrip-slide .reg{font:600 13px/1.4 var(--mono);color:var(--muted);margin:3px 0 14px;}
+    .qdrip-slide .st{display:grid;grid-template-columns:104px 1fr;gap:12px;padding:11px 0;border-top:1px solid var(--line);}
+    .qdrip-slide .st .d{font:600 16px/1.3 var(--mono);color:var(--acid);}
+    .qdrip-slide .st.campo .d{color:var(--cyan);}
+    .qdrip-slide .st .b{font-family:var(--sans);font-size:16.5px;line-height:1.32;color:#ded8ca;}
+    .qdrip-slide .st .b b{color:#f4f0e6;}
+    .qdrip-slide .st .b .r{color:var(--signal);font-weight:600;}
+    .qdrip-slide .chip{display:inline-block;font:600 12.5px/1 var(--mono);letter-spacing:.07em;text-transform:uppercase;padding:7px 10px;border-radius:3px;margin-top:14px;}
+    .qdrip-slide .c-new{color:var(--signal);border:1px solid rgba(233,73,53,.55);background:rgba(233,73,53,.08);}
+    .qdrip-slide .c-old{color:var(--muted);border:1px solid var(--line);background:rgba(164,156,142,.06);}
+    .qdrip-slide .bar{display:flex;align-items:center;justify-content:space-between;gap:30px;margin-top:26px;border:1px solid rgba(215,238,63,.4);border-radius:6px;padding:18px 26px;background:rgba(215,238,63,.05);}
+    .qdrip-slide .bar .p{font-size:24px;font-weight:600;font-style:italic;color:var(--acid);}
+    .qdrip-slide .bar .s{font-family:var(--sans);font-size:16px;color:#ccc5b6;max-width:560px;text-align:right;}
+    .qdrip-slide .brand{position:absolute;top:66px;right:72px;font:600 14px/1.4 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:right;}
+    .qdrip-slide .brand b{color:var(--cyan);display:block;}
+  </style>
+  <div class="brand">análise de mídia e métodos<b>brasil.arvor.co</b></div>
+  <p class="kick">Pesquisas eleitorais · rodadas 2026 · cronologia = fato</p>
+  <h1>Conta-gotas: <em>uma coleta, N manchetes</em></h1>
+  <p class="sub">O campo é um só. As manchetes, várias &mdash; em gradações: a Folha sequencia manchetes da mesma coleta
+    e a mesa auditável não acompanha; Atlas e Quaest formalizam o suplemento temático com embargo e template de série.
+    O escalonamento causal do mesmo tema é o formato novo.</p>
+  <div class="cols">
+    <div class="col atlas">
+      <span class="inst">Atlas / Bloomberg</span>
+      <div class="reg">BR-04582/2026 · n=4.999 · online</div>
+      <div class="st campo"><span class="d">26&ndash;30/06</span><span class="b"><b>Campo único</b> · 63 perguntas</span></div>
+      <div class="st"><span class="d">01/07</span><span class="b"><b>Fatia 1:</b> topline eleitoral + aprovação</span></div>
+      <div class="st"><span class="d">02/07</span><span class="b"><b>Fatias 2+3:</b> Michelle (33 p.) e Master/Wagner (21 p.) <span class="r">com EMBARGO 07h00 na capa</span></span></div>
+      <div class="st"><span class="d">depois</span><span class="b"><b>Retido:</b> bloco EUA/tarifas sem topline</span></div>
+      <span class="chip c-new">mesmo tema · ciclos consecutivos</span>
+    </div>
+    <div class="col quaest">
+      <span class="inst">Genial / Quaest</span>
+      <div class="reg">BR-07181/2026 · n=2.004 · face a face</div>
+      <div class="st campo"><span class="d">10&ndash;13/07</span><span class="b"><b>Campo único</b> · 101 itens</span></div>
+      <div class="st"><span class="d">15/07</span><span class="b"><b>Fatia 1:</b> deck da corrida (65 itens); bloco tarifário fica fora</span></div>
+      <div class="st"><span class="d">16/07</span><span class="b"><b>Fatia 2:</b> suplemento de tarifas: <span class="r">&ldquo;51% culpam Flávio&rdquo;</span> · PDF &ldquo;Capas_Tematicos&hellip;&rdquo; no plural, resíduo de junho</span></div>
+      <div class="st"><span class="d">17/07</span><span class="b"><b>Fatia 3:</b> não localizada; template sugere série (hipótese) · 28 itens sem topline</span></div>
+      <span class="chip c-new">mesmo tema · template em série</span>
+    </div>
+    <div class="col df">
+      <span class="inst">Folha / Datafolha (gradação)</span>
+      <div class="reg">BR-09956/2026 · n=2.004 · fluxo</div>
+      <div class="st campo"><span class="d">17&ndash;19/06</span><span class="b"><b>Campo único</b></span></div>
+      <div class="st"><span class="d">20/06</span><span class="b"><b>Leque num só dia:</b> voto, rejeição, avaliação, recortes, leitura Dark Horse · reverbera até 23/06</span></div>
+      <div class="st"><span class="d">&mdash;</span><span class="b"><b>Mesa auditável não acompanha:</b> relatório íntegro não indexado; auditoria via registro TSE</span></div>
+      <span class="chip c-old">fatias independentes seriadas</span>
+    </div>
+  </div>
+  <div class="bar">
+    <span class="p">O conta-gotas morre quando a primeira fatia obriga a mesa inteira.</span>
+    <span class="s">Emenda ao PL das pesquisas: divulgou qualquer fatia da coleta, o topline íntegro vai ao Pacote
+      Público de Auditoria no dia seguinte. Mata o suplemento embargado e a manchete sem relatório auditável.</span>
+  </div>
+</section>

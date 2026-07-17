@@ -1,0 +1,292 @@
+<!-- Fragmento autocontido: Quaest 07/2026 — rejeição do Flávio + reponderação por renda.
+     Dark editorial. Fraunces / IBM Plex. Sem dependências externas. Slide 1600x900 no fim. -->
+<section class="qrr" id="quaest-rejeicao-reponderacao">
+  <style>
+    .qrr{
+      --ink:#11100f; --coal:#1a1917; --paper:#f4f0e6;
+      --signal:#e94935; --acid:#d7ee3f; --cyan:#42c5d5; --good:#63c39a; --warn:#e0a63c;
+      --muted:#a49c8e; --line:rgba(244,240,230,.14);
+      --lula:#e05a4d; --flavio:#4a80c4;
+      --display:"Fraunces",Georgia,serif; --sans:"IBM Plex Sans Condensed",Arial,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+      background:var(--ink); color:var(--paper);
+      font-family:var(--display); line-height:1.55;
+      padding:clamp(22px,4vw,56px); border-radius:6px;
+      background-image:linear-gradient(rgba(244,240,230,.028) 1px,transparent 1px);
+      background-size:100% 30px;
+    }
+    .qrr *{box-sizing:border-box;}
+    .qrr .wrap{width:min(1180px,100%);margin-inline:auto;}
+    .qrr .mono{font-family:var(--mono);} .qrr .sans{font-family:var(--sans);}
+    .qrr .kicker{font:600 .72rem/1.3 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--acid);display:flex;align-items:center;gap:12px;}
+    .qrr .kicker::before{content:"";width:44px;height:5px;background:var(--acid);}
+    .qrr h2{font-size:clamp(1.9rem,4.2vw,3.05rem);line-height:1.03;margin:.5em 0 .3em;font-weight:600;letter-spacing:-.01em;}
+    .qrr h2 em{font-style:italic;color:var(--signal);}
+    .qrr h3{font-size:clamp(1.25rem,2.4vw,1.7rem);margin:.2em 0 .5em;font-weight:600;}
+    .qrr h3 em{font-style:italic;color:var(--cyan);}
+    .qrr .lede{max-width:64ch;color:#e9e3d5;font-size:clamp(1rem,1.5vw,1.16rem);}
+    .qrr .tag{display:inline-block;font:600 .6rem/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:4px 7px;border-radius:3px;vertical-align:middle;margin-right:4px;}
+    .qrr .t-fato{background:rgba(99,195,154,.16);color:var(--good);border:1px solid rgba(99,195,154,.4);}
+    .qrr .t-inf{background:rgba(66,197,213,.14);color:var(--cyan);border:1px solid rgba(66,197,213,.4);}
+    .qrr .t-hip{background:rgba(224,166,60,.14);color:var(--warn);border:1px solid rgba(224,166,60,.4);}
+    .qrr .rule{height:1px;background:var(--line);margin:38px 0;}
+    .qrr .sec-label{font:600 .74rem/1.3 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;}
+    .qrr p{max-width:74ch;}
+    .qrr b.hl{color:var(--signal);}
+
+    /* ---- Benchmark de rejeição (barras horizontais) ---- */
+    .qrr .bench{display:grid;gap:11px;margin:8px 0 6px;}
+    .qrr .brow{display:grid;grid-template-columns:190px 1fr;gap:14px;align-items:center;}
+    .qrr .binst{font-family:var(--sans);font-size:.82rem;line-height:1.2;color:#efe9db;font-weight:600;}
+    .qrr .binst small{display:block;font:400 .64rem/1.3 var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-top:3px;}
+    .qrr .btrack{position:relative;}
+    .qrr .bpair{display:grid;gap:5px;}
+    .qrr .bbar{position:relative;height:19px;background:rgba(244,240,230,.05);border-radius:2px;overflow:hidden;}
+    .qrr .bfill{position:absolute;inset:0 auto 0 0;border-radius:2px;display:flex;align-items:center;}
+    .qrr .bfill.fl{background:linear-gradient(90deg,rgba(74,128,196,.35),var(--flavio));}
+    .qrr .bfill.lu{background:linear-gradient(90deg,rgba(224,90,77,.35),var(--lula));}
+    .qrr .bval{position:absolute;right:7px;top:50%;transform:translateY(-50%);font:600 .72rem/1 var(--mono);color:#fff;}
+    .qrr .bval.out{right:auto;left:calc(var(--w) + 7px);color:var(--muted);}
+    .qrr .bmark{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--acid);opacity:.65;}
+    .qrr .benchkey{display:flex;gap:18px;flex-wrap:wrap;margin:10px 0 2px;font:600 .68rem/1 var(--mono);letter-spacing:.05em;text-transform:uppercase;}
+    .qrr .benchkey span{display:inline-flex;align-items:center;gap:7px;color:var(--muted);}
+    .qrr .sw{width:22px;height:9px;border-radius:2px;display:inline-block;}
+    .qrr .sw.fl{background:var(--flavio);} .qrr .sw.lu{background:var(--lula);}
+    .qrr .sw.mk{width:2px;height:14px;background:var(--acid);}
+
+    /* ---- Tabelas ---- */
+    .qrr .tbl-scroll{overflow-x:auto;margin:6px 0;-webkit-overflow-scrolling:touch;}
+    .qrr table{border-collapse:collapse;width:100%;min-width:640px;font-size:.9rem;}
+    .qrr th,.qrr td{text-align:right;padding:12px 14px;border-bottom:1px solid var(--line);}
+    .qrr th:first-child,.qrr td:first-child{text-align:left;}
+    .qrr thead th{font-family:var(--mono);font-size:.66rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:600;}
+    .qrr td.axis{font-family:var(--sans);font-weight:600;color:#efe9db;}
+    .qrr .num{font-family:var(--mono);}
+    .qrr .num.pos{color:var(--good);} .qrr .num.neg{color:var(--signal);} .qrr .num.dim{color:var(--muted);}
+    .qrr tr.tot td{border-top:2px solid var(--line);border-bottom:none;font-weight:600;}
+    .qrr .band{font:600 .62rem/1 var(--mono);color:var(--warn);}
+
+    /* ---- Cards de veredito ---- */
+    .qrr .verdict{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin:6px 0;}
+    .qrr .vbox{border:1px solid var(--line);border-radius:5px;padding:18px;background:rgba(244,240,230,.02);}
+    .qrr .vbox .big{font:600 2.1rem/1 var(--mono);}
+    .qrr .vbox .big.tiny{color:var(--good);} .qrr .vbox .big.warnc{color:var(--warn);}
+    .qrr .vbox .lbl{font-size:.85rem;color:#ccc5b6;margin-top:8px;line-height:1.4;}
+    .qrr .errband{font:600 .62rem/1 var(--mono);color:var(--muted);letter-spacing:.05em;text-transform:uppercase;margin-top:6px;}
+    .qrr .foot{font-family:var(--sans);font-size:.78rem;color:var(--muted);margin-top:22px;line-height:1.5;}
+    .qrr a{color:var(--cyan);text-underline-offset:3px;}
+    .qrr .callout{border-left:3px solid var(--signal);padding:6px 0 6px 16px;margin:14px 0;color:#e9e3d5;font-size:1.02rem;}
+    @media (max-width:640px){ .qrr .brow{grid-template-columns:1fr;gap:5px;} }
+  </style>
+
+  <div class="wrap">
+    <p class="kicker mono">Perícia estatística · Genial/Quaest · BR-07181/2026 · campo 10–13 jul 2026</p>
+    <h2>A rejeição que o <em>instrumento fabrica</em><br>e a renda que <em>não move o placar</em></h2>
+    <p class="lede sans">Duas contas cirúrgicas sobre a rodada de julho: por que a Quaest crava a maior rejeição
+      de Flávio do mercado (57%) &mdash; e o que sobra quando se reponderam as margens ao perfil de renda do país.</p>
+
+    <div class="rule"></div>
+
+    <!-- ============ PERÍCIA 1 ============ -->
+    <p class="sec-label">Perícia 1 — Rejeição de Flávio entre institutos</p>
+    <h3>Todo mundo mede alto. A Quaest mede <em>mais alto — e só para ele</em>.</h3>
+    <p class="sans">A Quaest não pergunta &ldquo;não votaria de jeito nenhum&rdquo;. Pergunta, nome a nome, um ternário
+      sem meio-termo: <b>conhece e votaria / não conhece / conhece e não votaria</b>. Sem opção neutra, toda recusa
+      mole de quem conhece o nome vira &ldquo;rejeição&rdquo;. <span class="tag t-fato">Fato</span></p>
+
+    <div class="benchkey">
+      <span><i class="sw fl"></i>Flávio</span>
+      <span><i class="sw lu"></i>Lula</span>
+      <span><i class="sw mk"></i>Linha 50%</span>
+    </div>
+    <div class="bench" id="benchBars"></div>
+    <p class="foot sans">Rejeição = % que rejeita o nome. Quaest: &ldquo;conhece e não votaria&rdquo; (ternário, presencial domiciliar).
+      Datafolha/Futura/Nexus: &ldquo;não votaria de jeito nenhum&rdquo;. AtlasIntel mede &ldquo;medo&rdquo; e fica fora da comparação.
+      Marca amarela = 50%. Fontes: deck Quaest p46; Gazeta do Povo; Tribuna de Minas; Tribuna de Jundiaí.</p>
+
+    <div class="callout sans">O excesso da Quaest sobre o Datafolha (junho) é <b class="hl">assimétrico</b>:
+      <b class="hl">+9 pp</b> em Flávio, <b class="hl">+4 pp</b> em Lula. O ternário infla mais o nome com maior camada de não-voto reversível.
+      <span class="tag t-inf">Inferência</span></div>
+
+    <div class="verdict">
+      <div class="vbox">
+        <div class="big warnc">+1 / −3</div>
+        <div class="lbl">Movimento jun→jul: rejeição de <b>Flávio 56→57</b> (dentro da margem); <b>Lula 53→50</b>. Quem se moveu foi Lula, não Flávio.</div>
+      </div>
+      <div class="vbox">
+        <div class="big" style="color:var(--flavio)">43 → 52</div>
+        <div class="lbl">Teto de Flávio. Pela rejeição Quaest (57), teto = 43. Pela rejeição dura Datafolha (48), teto = 52. O instrumento <b>comprime ~9 pp</b> do espaço dele.</div>
+      </div>
+      <div class="vbox">
+        <div class="big tiny">94 / 95</div>
+        <div class="lbl">Coerência interna: voto 2T + rejeição — Flávio 37+57=94, Lula 45+50=95. Compatível: ambos colados ao teto que o próprio instrumento desenha.</div>
+      </div>
+    </div>
+    <p class="sans" style="margin-top:14px"><span class="tag t-hip">Hipótese</span> Como o não-voto de Flávio é
+      mais reversível (o Datafolha registra que ele converte indecisos e transfere ~2:1), a Quaest superestima o teto
+      de rejeição <i>efetivo</i> dele mais do que o de Lula. O &ldquo;57%&rdquo; subestima o espaço real de crescimento de Flávio.</p>
+
+    <div class="rule"></div>
+
+    <!-- ============ PERÍCIA 2 ============ -->
+    <p class="sec-label">Perícia 2 — Reponderação por renda</p>
+    <h3>A amostra pende para o meio. Corrigir para o país <em>quase não mexe</em>.</h3>
+    <p class="sans">A Quaest sub-representa a base (≤2 SM) em <b class="hl">−4,44 pp</b> e infla as faixas do meio.
+      Reponderando cada tabela publicada ao alvo PNAD (35,4 / 39,2 / 25,3), a margem Lula&minus;Flávio anda menos de 1 ponto. <span class="tag t-fato">Fato</span></p>
+
+    <div class="tbl-scroll">
+      <table>
+        <thead>
+          <tr><th>Cenário</th><th>Publicado*</th><th>Reponderado PNAD</th><th>Δ margem/saldo</th><th>Orçamento de erro</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="axis">1º turno — margem Lula−Flávio</td>
+            <td class="num dim">+13,5</td><td class="num">+14,3</td>
+            <td class="num pos">+0,80</td><td class="num dim">±0,9</td>
+          </tr>
+          <tr>
+            <td class="axis">2º turno Lula×Flávio — margem <span class="band">PROXY</span></td>
+            <td class="num dim">+9,8</td><td class="num">+10,7</td>
+            <td class="num pos">+0,96</td><td class="num dim">±0,9</td>
+          </tr>
+          <tr>
+            <td class="axis">Aprovação Lula — saldo (aprova−desaprova)</td>
+            <td class="num dim">+0,9</td><td class="num">+2,2</td>
+            <td class="num pos">+1,28</td><td class="num dim">±0,9</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="foot sans">*Publicado reconstruído a partir das faixas de renda do deck (1T p30; aprovação p15), que reproduz o topline (aprovação 48/47; 1T Lula ~41 vs 40 publicado).
+      Δ positivo = pró-Lula. O 2º turno por renda <b>não é publicado</b>: cenário PROXY multiplicativo, nível hipótese. <span class="tag t-hip">Hipótese</span></p>
+
+    <h3 style="margin-top:26px">Sensibilidade &mdash; robusto nos dois sentidos</h3>
+    <div class="tbl-scroll">
+      <table>
+        <thead>
+          <tr><th>Meta faixa baixa</th><th>Δ margem 1T (pp)</th><th>Δ saldo aprovação (pp)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="axis">Central (35,44%)</td><td class="num">+0,80</td><td class="num">+1,29</td></tr>
+          <tr><td class="axis">Baixa +1 pp (36,44%)</td><td class="num">+0,99</td><td class="num">+1,59</td></tr>
+          <tr><td class="axis">Baixa −1 pp (34,44%)</td><td class="num">+0,62</td><td class="num">+0,99</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="verdict" style="margin-top:24px">
+      <div class="vbox">
+        <div class="big tiny">&lt; 1 pp</div>
+        <div class="lbl">Efeito da renda na margem Lula−Flávio (1T e 2T). Dentro do orçamento de erro.</div>
+        <div class="errband">arredondamento ±0,5 + resíduo ~0,9</div>
+      </div>
+      <div class="vbox">
+        <div class="big warnc">+1,3 pp</div>
+        <div class="lbl">Único indicador com efeito perto de 1 ponto cheio: o saldo de aprovação, cujo gradiente de renda é o mais íngreme (58→41).</div>
+      </div>
+      <div class="vbox">
+        <div class="big" style="color:var(--lula)">pró-Lula</div>
+        <div class="lbl">Direção do viés: sub-representar o pobre <b>subestima</b> Lula. Corrigir <i>amplia</i> a vantagem dele &mdash; de leve.</div>
+      </div>
+    </div>
+
+    <div class="callout sans"><b class="hl">Veredito:</b> a renda <b class="hl">não explica o placar</b>.
+      Reponderar a amostra (31/42/27) ao país (35/39/25) move a disputa Lula&times;Flávio menos de 1 ponto em todo cenário de voto &mdash;
+      dentro do ruído do método. Publicamos assim porque o resultado valeria nos dois sentidos: aqui, ele encolhe a hipótese da renda.</div>
+
+    <p class="foot sans">Perícia Arvor · <a href="https://brasil.arvor.co">brasil.arvor.co</a> ·
+      dados e contas reproduzíveis em <span class="mono">quaest_0726_rejeicao_reponderacao.json</span>.
+      Alvo PNAD: PNADC anual 1ª visita 2024, 16+ com renda domiciliar válida, deflacionada a abr/2026 (SM R$ 1.621).</p>
+  </div>
+
+  <script>
+    (function(){
+      var root = document.getElementById('quaest-rejeicao-reponderacao');
+      var MAX = 60; // escala 0..60% para as barras
+      var data = [
+        {inst:'Genial/Quaest',   sub:'jul 2026 · ternário',       fl:57, lu:50},
+        {inst:'Genial/Quaest',   sub:'jun 2026 · ternário',       fl:56, lu:53},
+        {inst:'BTG/Nexus (6ª)',  sub:'jul 2026 · não votaria',    fl:50, lu:46},
+        {inst:'Futura/Apex',     sub:'2026 · de jeito nenhum',    fl:49.5, lu:null},
+        {inst:'Datafolha',       sub:'jun 2026 · de jeito nenhum',fl:48, lu:46},
+        {inst:'Datafolha',       sub:'mar 2026 · de jeito nenhum',fl:45, lu:null}
+      ];
+      function bar(cls,val){
+        if(val==null) return '<div class="bbar"><span class="bval out" style="--w:0">n/d</span></div>';
+        var w=(val/MAX*100).toFixed(1);
+        return '<div class="bbar"><div class="bfill '+cls+'" style="width:'+w+'%">'
+             + '<span class="bval">'+val+'</span></div></div>';
+      }
+      var mk=(50/MAX*100).toFixed(1);
+      var html = data.map(function(d){
+        return '<div class="brow"><div class="binst">'+d.inst+'<small>'+d.sub+'</small></div>'
+          + '<div class="btrack"><div class="bpair">'
+          + bar('fl',d.fl)+bar('lu',d.lu)
+          + '</div><div class="bmark" style="left:'+mk+'%"></div></div></div>';
+      }).join('');
+      var el = root.querySelector('#benchBars');
+      if(el) el.innerHTML = html;
+    })();
+  </script>
+
+  <!-- ============ VARIANTE SLIDE 1600x900 ============
+       Exportar capturando o elemento .qrr-slide-shell .qrr (1600x900) com o padding
+       da seção pai zerado — o slide é autocontido (grid de colunas 766px/680px). -->
+
+  <div class="qrr-slide-shell" style="margin-top:40px;overflow-x:auto;">
+    <div class="qrr" style="width:1600px;height:900px;padding:52px 56px;border-radius:0;overflow:hidden;display:grid;grid-template-columns:766px 680px;grid-template-rows:auto 1fr;gap:26px 42px;">
+      <div style="grid-column:1/3;">
+        <p class="kicker mono">Genial/Quaest · julho 2026 · perícia Arvor</p>
+        <h2 style="font-size:2.25rem;line-height:1.05;margin:.25em 0 0;max-width:24ch;">A rejeição que o <em>instrumento fabrica</em> &mdash; e a renda que <em>não move o placar</em></h2>
+      </div>
+
+      <div style="min-width:0;">
+        <p class="sec-label">Rejeição de Flávio · casa a casa</p>
+        <div class="benchkey"><span><i class="sw fl"></i>Flávio</span><span><i class="sw lu"></i>Lula</span><span><i class="sw mk"></i>50%</span></div>
+        <div class="bench" id="benchBarsSlide"></div>
+        <p style="font:600 .8rem/1.4 var(--mono);color:var(--warn);margin-top:14px;">Quaest +9 pp vs Datafolha em Flávio · só +4 pp em Lula</p>
+      </div>
+
+      <div style="min-width:0;overflow:hidden;">
+        <p class="sec-label">Reponderação por renda → PNAD</p>
+        <div style="display:grid;grid-template-columns:minmax(0,1fr) 150px;gap:12px;align-items:end;font:600 .62rem/1.2 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:0 0 10px;border-bottom:1px solid var(--line);">
+          <span>Cenário &middot; publicado → reponderado</span><span style="text-align:right;">Δ margem/saldo</span>
+        </div>
+        <div style="display:grid;grid-template-columns:minmax(0,1fr) 150px;gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line);">
+          <span style="min-width:0;"><span class="axis" style="font-size:.92rem;">Margem 1T Lula−Flávio</span><br><span class="mono" style="font-size:.78rem;color:var(--muted);">+13,5 → +14,3</span></span>
+          <b class="mono" style="font-size:1.15rem;color:var(--good);text-align:right;">+0,80</b>
+        </div>
+        <div style="display:grid;grid-template-columns:minmax(0,1fr) 150px;gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line);">
+          <span style="min-width:0;"><span class="axis" style="font-size:.92rem;">Margem 2T <span class="band">proxy</span></span><br><span class="mono" style="font-size:.78rem;color:var(--muted);">+9,8 → +10,7</span></span>
+          <b class="mono" style="font-size:1.15rem;color:var(--good);text-align:right;">+0,96</b>
+        </div>
+        <div style="display:grid;grid-template-columns:minmax(0,1fr) 150px;gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line);">
+          <span style="min-width:0;"><span class="axis" style="font-size:.92rem;">Saldo aprovação</span><br><span class="mono" style="font-size:.78rem;color:var(--muted);">+0,9 → +2,2</span></span>
+          <b class="mono" style="font-size:1.15rem;color:var(--good);text-align:right;">+1,28</b>
+        </div>
+        <div class="vbox" style="margin-top:20px;">
+          <div class="big tiny" style="font-size:2.6rem;">&lt; 1 pp</div>
+          <div class="lbl" style="max-width:none;">Renda <b>não explica</b> a disputa Lula×Flávio.<br>Efeito dentro do erro (±0,5 arred. + ~0,9 resíduo). Viés pró-Lula.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      var shell = document.getElementById('quaest-rejeicao-reponderacao');
+      var el = shell.querySelector('#benchBarsSlide'); if(!el) return;
+      var MAX=60, data=[
+        {inst:'Quaest',sub:'jul · ternário',fl:57,lu:50},
+        {inst:'Nexus',sub:'jul',fl:50,lu:46},
+        {inst:'Futura',sub:'2026',fl:49.5,lu:null},
+        {inst:'Datafolha',sub:'jun · jeito nenhum',fl:48,lu:46}
+      ];
+      function bar(c,v){ if(v==null) return '<div class="bbar"><span class="bval out" style="--w:0">n/d</span></div>';
+        var w=(v/MAX*100).toFixed(1); return '<div class="bbar"><div class="bfill '+c+'" style="width:'+w+'%"><span class="bval">'+v+'</span></div></div>';}
+      var mk=(50/MAX*100).toFixed(1);
+      el.innerHTML=data.map(function(d){return '<div class="brow"><div class="binst">'+d.inst+'<small>'+d.sub+'</small></div>'
+        +'<div class="btrack"><div class="bpair">'+bar('fl',d.fl)+bar('lu',d.lu)+'</div><div class="bmark" style="left:'+mk+'%"></div></div></div>';}).join('');
+    })();
+  </script>
+</section>

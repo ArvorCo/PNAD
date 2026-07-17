@@ -49,7 +49,7 @@ and a specific UF row in the PNADC, it does not belong in public debate.
 
 - **PNADC trimestral** microdata
 - **PNADC anual visita 5** microdata (work + benefits + pensions + capital decomposition)
-- **Censo 2022** aggregated income files
+- **Censo 2022** definitive sector mesh and aggregated income files
 - **TSE eleitorado** open-data resources
 - **BCB / IPCA** inflation series
 - **BCB / minimum wage** nominal monthly series (BCB 1619)
@@ -157,6 +157,25 @@ Main generated outputs:
 - `data/outputs/ipca.csv` — IPCA series
 - `data/outputs/tse_eleitorado_perfil.sqlite` — compact TSE electorate benchmarks
 - `data/outputs/tse_eleitorado_perfil_benchmark.json` — exact gender and age totals for polling audits
+- `data/originals/censo_2022_setores_censitarios/` — official sector-methodology
+  document and compact, reproducible sector validations used in polling audits
+
+### Census-sector audit for electoral polls
+
+The territorial annex is not a vote table. The proper comparison key is the
+IBGE 15-digit census-sector geocode; a neighborhood label can cover multiple
+sectors. Rebuild the June–July 2026 Quaest comparison and refresh the selected
+sector populations from the official Panorama service with:
+
+```bash
+python3 -m pip install -e '.[audit]'
+python3 scripts/quaest-territory-audit.py --refresh-ibge
+python3 scripts/quaest-july-audit.py
+```
+
+The pipeline writes auditable CSVs beside each source annex and publishes the
+summary as `docs/assets/quaest_0726_territory.json`. It deliberately does not
+impute voting behavior from Census demographics.
 
 ---
 

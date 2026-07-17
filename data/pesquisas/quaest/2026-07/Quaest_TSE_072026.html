@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head id="j_id_3"><link type="text/css" rel="stylesheet" href="/javax.faces.resource/theme.css.xhtml?ln=primefaces-aristo" /><link rel="stylesheet" type="text/css" href="/javax.faces.resource/css/bootstrap/bootstrap.min.css.xhtml" /><link rel="stylesheet" type="text/css" href="/javax.faces.resource/css/timeline/timeline.css.xhtml" /><link rel="stylesheet" type="text/css" href="/javax.faces.resource/css/chart/morris.css.xhtml" /><link rel="stylesheet" type="text/css" href="/javax.faces.resource/css/base/sepel2.site.base.css.xhtml" /><link rel="stylesheet" type="text/css" href="/javax.faces.resource/css/base/pesqele.css.xhtml" /><link rel="stylesheet" type="text/css" href="/javax.faces.resource/css/base/font-awesome.min.css.xhtml" /><link rel="stylesheet" type="text/css" href="/javax.faces.resource/components.css.xhtml?ln=primefaces&amp;v=8.0" />
+			<title></title>
+			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+			<link rel="shortcut icon" href="http://www.tse.jus.br/internet/img/favicon.ico" type="image/x-icon" />
+			<!-- Bootstrap CSS -->
+		    <!-- Timeline CSS -->
+		    <!-- Morris Charts CSS -->
+			<!-- Cand CSS -->
+		    <!-- Custom Fonts --></head><body><div id="j_id_g" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-shadow ui-hidden-container"><div class="ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-top"><span id="j_id_g_title" class="ui-dialog-title"></span></div><div class="ui-dialog-content ui-widget-content" id="j_id_g_content"><span id="groupAviso">
+					<div class="modal-body" align="center"><img id="j_id_j" src="/javax.faces.resource/wait.gif.xhtml?ln=images" alt="" /><img id="j_id_k" width="20" height="" alt="" src="/javax.faces.resource/spacer/dot_clear.gif.xhtml?ln=primefaces&amp;v=8.0" /><label id="j_id_l" class="ui-outputlabel ui-widget">Por favor, aguarde...</label>
+					</div></span></div></div>
+			<!-- CABEÇALHO --><!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><body>
+		<div id="siteCabecalho" class="navbar navbar-default navbar-fixed-top site-cabecalho">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#siteCabecalhoMenu" aria-expanded="false" aria-controls="navbar">
+						<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href=""><img id="j_id_s" src="/javax.faces.resource/topo-tse.png.xhtml?ln=images" class="site-cabecalho-logo" alt="Logo do TSE" /> 
+							<span class="site-cabecalho-titulo">PesqEle P&#250;blico</span>
+							<span class="site-cabecalho-titulo-vermelho"></span>
+					</a>
+					<div class="site-versao-nome">3.9.1.0</div>
+				</div>
+			</div>
+		</div><script type="text/javascript" src="/javax.faces.resource/jquery/jquery.js.xhtml?ln=primefaces&amp;v=8.0"></script><script type="text/javascript" src="/javax.faces.resource/jquery/jquery-plugins.js.xhtml?ln=primefaces&amp;v=8.0"></script><script type="text/javascript" src="/javax.faces.resource/core.js.xhtml?ln=primefaces&amp;v=8.0"></script><script type="text/javascript" src="/javax.faces.resource/components.js.xhtml?ln=primefaces&amp;v=8.0"></script><script id="4c9a6e7b-b0f3-46d9-9d81-f80b43b58a61" type="text/javascript">var pf=window.PrimeFaces;if(pf){pf.settings.locale='pt_BR';pf.settings.partialSubmit=true;};
+pf.cw("Dialog","barraProgresso",{id:"j_id_g",modal:true,width:"300",height:"120",appendTo:"@(body)"});if(window.$){$(PrimeFaces.escapeClientId("4c9a6e7b-b0f3-46d9-9d81-f80b43b58a61")).remove();}</script></body>
+</html>
+			<div id="sitePrincipal" class="container-fluid site-principal">
+				<div id="wrapper">
+					<div id="page-content-wrapper"><div id="msg" class="ui-messages ui-widget" aria-live="polite"></div>
+		<style type="text/css">
+			.site-principal { padding-top: 72px; }
+		</style><form id="j_id_12" name="j_id_12" method="post" action="/app/pesquisa/detalhar.xhtml" enctype="application/x-www-form-urlencoded">
+			<p style="float: right;"><button id="j_id_12:j_id_14" name="j_id_12:j_id_14" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left" aria-label="" onclick="window.history.back();" type="button"><span class="ui-button-icon-left ui-icon ui-c ui-icon-back"></span><span class="ui-button-text ui-c">Voltar</span></button><img id="j_id_12:j_id_15" width="5px;" height="" alt="" src="/javax.faces.resource/spacer/dot_clear.gif.xhtml?ln=primefaces&amp;v=8.0" /><button id="j_id_12:j_id_16" name="j_id_12:j_id_16" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left" aria-label="" onclick="imprimir();" type="button"><span class="ui-button-icon-left ui-icon ui-c ui-icon-print"></span><span class="ui-button-text ui-c">Imprimir</span></button>
+			</p>
+			<br /><br /><fieldset id="j_id_12:j_id_18" class="ui-fieldset ui-widget ui-widget-content ui-corner-all ui-hidden-container" style="margin-left: 10px;" data-widget="widget_j_id_12_j_id_18"><div class="ui-fieldset-content">
+				<div id="print">
+					<H4 align="center">Visualizar Pesquisa Eleitoral - BR-07181/2026</H4>
+					<H5 align="center">BRASIL
+					</H5><table id="j_id_12:camposPesquisa" class="ui-panelgrid ui-widget" role="grid"><tbody><tr class="ui-widget-content" role="row"><td role="gridcell" class="ui-panelgrid-cell colunaNegrito25">
+						<label>N&#250;mero de identifica&#231;&#227;o:</label></td><td role="gridcell" class="ui-panelgrid-cell coluna25">BR-07181/2026</td><td role="gridcell" class="ui-panelgrid-cell colunaNegrito25">
+						<label>Data de registro:</label></td><td role="gridcell" class="ui-panelgrid-cell coluna25">09/07/2026</td></tr><tr class="ui-widget-content" role="row"><td role="gridcell" class="ui-panelgrid-cell colunaNegrito25">
+						<label>Cargo(s):</label></td><td role="gridcell" class="ui-panelgrid-cell coluna25">Presidente</td><td role="gridcell" class="ui-panelgrid-cell colunaNegrito25">
+						<label>Data de divulga&#231;&#227;o:</label></td><td role="gridcell" class="ui-panelgrid-cell coluna25">15/07/2026</td></tr><tr class="ui-widget-content" role="row"><td role="gridcell" class="ui-panelgrid-cell colunaNegrito25">
+						<label>Empresa contratada/ Nome Fantasia:</label></td><td role="gridcell" class="ui-panelgrid-cell coluna25">CNPJ: 22445600000104 - 
+							QUAEST PESQUISAS, CONSULTORIA E PROJETOS LTDA.</td><td role="gridcell" class="ui-panelgrid-cell colunaNegrito25">
+						<label>Elei&#231;&#227;o:</label></td><td role="gridcell" class="ui-panelgrid-cell coluna25">Elei&#231;&#245;es Gerais 2026</td></tr><tr class="ui-widget-content" role="row"><td role="gridcell" class="ui-panelgrid-cell colunaNegrito25">
+						<label>Entrevistados:</label></td><td role="gridcell" class="ui-panelgrid-cell coluna25">2004</td><td role="gridcell" class="ui-panelgrid-cell colunaNegrito25">
+						<label>Data de in&#237;cio da pesquisa:</label></td><td role="gridcell" class="ui-panelgrid-cell coluna25">10/07/2026</td></tr><tr class="ui-widget-content" role="row"><td role="gridcell" class="ui-panelgrid-cell colunaNegrito25">
+						<label>Data de t&#233;rmino da pesquisa:</label></td><td role="gridcell" class="ui-panelgrid-cell coluna25">13/07/2026</td><td role="gridcell" class="ui-panelgrid-cell colunaNegrito25">
+						<label>Estat&#237;stico respons&#225;vel:</label></td><td role="gridcell" class="ui-panelgrid-cell coluna25">Margarida Maria de Mendonca</td></tr><tr class="ui-widget-content" role="row"><td role="gridcell" class="ui-panelgrid-cell colunaNegrito25">
+						<label>Registro do estat&#237;stico no CONRE:</label></td><td role="gridcell" class="ui-panelgrid-cell coluna25">6731</td><td role="gridcell" class="ui-panelgrid-cell colunaNegrito25">
+						<label>Tipo de v&#237;nculo do(a) estat&#237;stico(a) com a empresa:</label></td><td role="gridcell" class="ui-panelgrid-cell coluna25">Contratado(a)</td></tr><tr class="ui-widget-content" role="row"><td role="gridcell" class="ui-panelgrid-cell colunaNegrito25"><label id="j_id_12:j_id_28" class="ui-outputlabel ui-widget">Valor:</label></td><td role="gridcell" class="ui-panelgrid-cell coluna25">R$&#160;433.255,92</td><td role="gridcell" class="ui-panelgrid-cell colunaNegrito25"><label id="j_id_12:j_id_2a" class="ui-outputlabel ui-widget">Pesquisa &#233; realizada com recursos pr&#243;prios?</label></td><td role="gridcell" class="ui-panelgrid-cell coluna25">N&#227;o</td></tr></tbody></table>
+					<br /><table><tbody><tr><td class="colunas"><label id="j_id_12:j_id_2e" class="ui-outputlabel ui-widget">Contratante(s): </label></td><td><img id="j_id_12:j_id_2g" width="5px; " height="" alt="" src="/javax.faces.resource/spacer/dot_clear.gif.xhtml?ln=primefaces&amp;v=8.0" />CPF/CNPJ: 45246410000155 - BANCO GENIAL S.A. Origem do Recurso: (Outros: Recursos Pr&#243;prios) </td></tr><tr><td class="colunas"><label id="j_id_12:j_id_2k" class="ui-outputlabel ui-widget">Pagante(s) do trabalho: </label></td><td><img id="j_id_12:j_id_2m" width="5px; " height="" alt="" src="/javax.faces.resource/spacer/dot_clear.gif.xhtml?ln=primefaces&amp;v=8.0" /></td></tr></tbody></table>
+					<br /><table><tbody><tr><td>
+						<label>Metodologia de pesquisa:</label></td></tr><tr><td>Pesquisa quantitativa, de survey, que consiste na realiza&#231;&#227;o de entrevistas pessoais, domiciliares e presenciais, conduzidas por profissionais treinados, com a aplica&#231;&#227;o de question&#225;rios estruturados a uma amostra representativa da popula&#231;&#227;o votante de 16 anos ou mais residente no Brasil. O desenho amostral aplicado combina sorteio probabil&#237;stico de munic&#237;pios e de setores censit&#225;rios fornecidos pelo IBGE (unidades territoriais homog&#234;neas, de tamanho similar a quadras ou blocos), dentro dos quais ser&#227;o selecionadas pessoas respondentes por meio de cotas amostrais.</td></tr><tr><td>
+						<br />
+						<label>Plano amostral e pondera&#231;&#227;o quanto a sexo, idade, grau de instru&#231;&#227;o e n&#237;vel econ&#244;mico do entrevistado; intervalo de confian&#231;a e margem de erro:</label></td></tr><tr><td>O p&#250;blico pesquisado &#233; composto por eleitores de 16 anos ou mais residentes na &#225;rea de abrang&#234;ncia da pesquisa. Para produzir uma amostra representativa desse p&#250;blico-alvo, utilizamos um desenho amostral por conglomerados que prev&#234; tr&#234;s est&#225;gios. No primeiro est&#225;gio, &#233; feito um sorteio probabil&#237;stico de munic&#237;pios para comporem a amostra por meio do m&#233;todo PPT (Probabilidade Proporcional ao Tamanho) a partir de suas popula&#231;&#245;es votantes acima de 16 anos. Dentro da lista de munic&#237;pios sorteados, no segundo est&#225;gio, &#233; realizado um sorteio probabil&#237;stico por meio do m&#233;todo PPT (Probabilidade Proporcional ao Tamanho) de setores censit&#225;rios a serem visitados pelos entrevistadores, sorteio que tem como base o total de habitantes residentes nos setores de acordo com dados do Censo de 2022, o que garante a dispers&#227;o aleat&#243;ria e estat&#237;stica da amostra dentro dos territ&#243;rios municipais, independentemente de divis&#245;es administrativas. Finalmente, dentro da lista de setores censit&#225;rios sorteados, no &#250;ltimo est&#225;gio s&#227;o selecionados domic&#237;lios e pessoas a serem entrevistadas utilizando-se cotas amostrais para as seguintes vari&#225;veis: sexo, idade, renda familiar e escolaridade. O perfil da amostra, definido pelas cotas previstas, &#233; o seguinte:
+
+Sexo: Masculino (47%); Feminino (53%). 
+Faixa et&#225;ria: 16-34 anos (32%); 35-59 anos (45%); 60 ou mais (23%). 
+Renda domiciliar total, incluindo pens&#245;es, benef&#237;cios e rendimentos de trabalhos informais: At&#233; 2 sal&#225;rios-m&#237;nimos (31%); Mais de 2 a 5 sal&#225;rios-m&#237;nimos (42%); Mais de 5 sal&#225;rios-m&#237;nimos (27%). 
+N&#237;vel de instru&#231;&#227;o: At&#233; Fundamental completo ou m&#233;dio incompleto (41%); M&#233;dio completo ou superior incompleto (40%); Superior completo ou mais (19%). 
+
+Fonte dos dados: para a distribui&#231;&#227;o de sexo e idade, TSE-Tribunal Superior Eleitoral - junho/2026; para a malha de setores censit&#225;rios, Censo 2022 (IBGE); para a distribui&#231;&#227;o de renda domiciliar, PNADc Anual 2025, 1a visita (IBGE); e, para a distribui&#231;&#227;o de escolaridade/instru&#231;&#227;o, PNADc trimestral 1-2026 (IBGE).  A PNADc &#233; utilizada por ser a fonte oficial mais atualizada de rendimentos do pa&#237;s, incluindo rendimentos informais, pens&#245;es, entre outros, e corrigindo as defasagens temporais do Censo 2022, al&#233;m de ser a fonte mais atualizada de n&#237;vel de instru&#231;&#227;o da popula&#231;&#227;o com 16 anos ou mais dada aus&#234;ncia de atualiza&#231;&#227;o obrigat&#243;ria da escolaridade no registro de eleitores do TSE.
+
+Est&#225; prevista eventual p&#243;s-estratifica&#231;&#227;o da amostra, por meio de algoritmos de calibra&#231;&#227;o (rake) e modelos (MrP), para corre&#231;&#227;o de estimativas e das distribui&#231;&#245;es das vari&#225;veis sexo, idade, renda familiar e escolaridade, com base nos percentuais anteriormente mencionados, caso ocorram diferen&#231;as entre os percentuais previstos na amostra e a coleta de dados realizada. 
+
+Dentro do p&#250;blico-alvo anteriormente descrito, ser&#227;o realizadas 2.004 entrevistas. O n&#237;vel de confian&#231;a das estimativas &#233; de 95% e a margem de erro m&#225;xima prevista, atendendo &#224;s diretivas do TSE e usando o c&#225;lculo para amostra aleat&#243;ria simples (AAS) como aproxima&#231;&#227;o, &#233; de cerca de 2 pontos percentuais para mais ou para menos em rela&#231;&#227;o aos totais da amostra.</td></tr><tr><td>
+						<br />
+						<label>Sistema interno de controle e verifica&#231;&#227;o, confer&#234;ncia e fiscaliza&#231;&#227;o da coleta de dados e do trabalho de campo:</label></td></tr><tr><td>As entrevistas ser&#227;o realizadas por uma equipe de entrevistadores devidamente qualificada, com experi&#234;ncia e treinamento em pesquisa de opini&#227;o p&#250;blica. Todo trabalho &#233; feito em tablets ou outros dispositivos eletr&#244;nicos. Ap&#243;s a realiza&#231;&#227;o da coleta de dados, as entrevistas junto aos respondentes s&#227;o checadas por meio de procedimentos de consist&#234;ncia e de georreferenciamento dos locais de aplica&#231;&#227;o em tempo real. Adicionalmente, ao longo e ap&#243;s os trabalhos de campo, &#233; realizada uma fiscaliza&#231;&#227;o que consiste na checagem de &#225;udio de uma amostra de 30% dos question&#225;rios aplicados para verifica&#231;&#227;o das respostas e da adequa&#231;&#227;o dos entrevistados aos par&#226;metros amostrais.</td></tr><tr><td>
+						<br />
+						<label>
+						Dados relativos aos munic&#237;pios e bairros abrangidos pela pesquisa. Na aus&#234;ncia de delimita&#231;&#227;o do bairro, 
+						ser&#225; identificada a &#225;rea em que foi realizada a pesquisa(conforme &#167;7&#186;. do art. 2&#186;. da Resolu&#231;&#227;o-TSE n&#186;. 23.600/2019, 
+						A partir do dia em que a pesquisa puder ser divulgada e at&#233; o dia seguinte, o registro dever&#225; ser complementado, sob pena de ser a pesquisa considerada n&#227;o registrada; 
+						na aus&#234;ncia de delimita&#231;&#227;o do bairro, ser&#225; identificada a &#225;rea em que foi realizada):
+						</label></td></tr><tr><td>A &#225;rea de abrang&#234;ncia da coleta &#233; territ&#243;rio nacional. A rela&#231;&#227;o do n&#250;mero de pessoas pesquisadas nas &#225;reas de aplica&#231;&#227;o da pesquisa, discriminadas por munic&#237;pio, bairros e setores censit&#225;rios a partir dos identificadores utilizados pelo IBGE, al&#233;m da composi&#231;&#227;o do eleitorado entrevistado na &#225;rea de abrang&#234;ncia quanto a g&#234;nero, idade, grau de instru&#231;&#227;o e n&#237;vel econ&#244;mico, constar&#225; em anexo. O mapa com os c&#243;digos destes setores censit&#225;rios e as &#225;reas que delimitam no pa&#237;s todo podem ser conferidos na seguinte fonte oficial: https://censo2022.ibge.gov.br/panorama/mapas.html?localidade=&amp;recorte=setores_censitarios</td></tr></tbody></table>
+					<BR />
+						<div class="ui-g">
+							<div class="ui-g-12" style="text-align: center; background: #cccccc; font-weight: 800;padding: 10px;font-size: 14px">
+								Notas Fiscais dos Contratantes
+							</div>
+							<div class="ui-g-12" style="background: #eeeeee">
+									<div class="ui-g-4"><label style="margin:10px">CPF/ CNPJ:</label>45246410000155
+									</div>
+									<div class="ui-g-6"><label style="margin:10px">Nome:</label>BANCO GENIAL S.A.
+									</div>
+									<div class="ui-g-2"><a id="j_id_12:j_id_33:0:historicoNotas" href="#" class="ui-commandlink ui-widget btn btn-info btn-sm" aria-label="Visualizar hist&#243;rico de movimenta&#231;&#245;es das Notas Fiscais do contratante" onclick="PrimeFaces.ab({s:&quot;j_id_12:j_id_33:0:historicoNotas&quot;,f:&quot;j_id_12&quot;,onst:function(cfg){PF('barraProgresso').show();;},onsu:function(data,status,xhr){PF('barraProgresso').hide();;}});return false;" style="color: white; cursor: pointer;" title="Visualizar hist&#243;rico de movimenta&#231;&#245;es das Notas Fiscais do contratante">
+											<span class="glyphicon glyphicon-list" aria-hidden="true"><img id="j_id_12:j_id_33:0:j_id_3d" width="5px;" height="" alt="" src="/javax.faces.resource/spacer/dot_clear.gif.xhtml?ln=primefaces&amp;v=8.0" /><label id="j_id_12:j_id_33:0:j_id_3e" class="ui-outputlabel ui-widget">Visualizar Hist&#243;rico</label>
+											</span></a>
+									</div>
+									<div class="ui-g-12" style="background: #cccccc">
+										<div class="ui-g-10"><label style="margin:1px">Nome do arquivo</label>
+										</div>
+										<div class="ui-g-2"><label style="margin:1px">A&#231;&#245;es</label>
+										</div>
+									</div>
+									<div class="ui-g-12" style="background: #FFFFFF">
+										<div class="ui-g-10">NF n&#194;&#186; 2026- 464 - Banco Genial.pdf
+										</div>
+										<div class="ui-g-2"><button id="j_id_12:j_id_33:0:j_id_3l:0:arquivoNotaFiscal" name="j_id_12:j_id_33:0:j_id_3l:0:arquivoNotaFiscal" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only btn btn-default btn-sm" aria-label="" onclick="PrimeFaces.bcn(this,event,[function(event){this.form.target='_blank'},function(event){}]);" alt="Abrir nota fiscal" title="Abrir nota fiscal" type="submit"><span class="ui-button-icon-left ui-icon ui-c ui-icon-document"></span><span class="ui-button-text ui-c">Abrir nota fiscal</span></button>
+										</div>
+									</div>
+							</div>
+						</div>					
+					<BR />
+					<BR />
+				</div>
+				<br /><table><tbody><tr><td><button id="j_id_12:arquivoQuestionario" name="j_id_12:arquivoQuestionario" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left" aria-label="" onclick="PrimeFaces.bcn(this,event,[function(event){this.form.target='_blank';},function(event){}]);" type="submit"><span class="ui-button-icon-left ui-icon ui-c ui-icon-arrowthick-1-s"></span><span class="ui-button-text ui-c">Visualizar question&#225;rio completo aplicado ou a ser aplicado.</span></button></td></tr><tr><td>
+				    <br /></td></tr><tr><td><button id="j_id_12:arquivoBairros" name="j_id_12:arquivoBairros" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left" aria-label="" onclick="PrimeFaces.bcn(this,event,[function(event){this.form.target='_blank';},function(event){}]);" type="submit"><span class="ui-button-icon-left ui-icon ui-c ui-icon-arrowthick-1-s"></span><span class="ui-button-text ui-c">Visualizar arquivo com detalhamento de bairros/munic&#237;pios.</span></button></td></tr><tr><td>
+				    <br /></td></tr><tr><td><button id="j_id_12:arquivoAssinado" name="j_id_12:arquivoAssinado" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left" aria-label="" onclick="PrimeFaces.bcn(this,event,[function(event){this.form.target='_blank';},function(event){}]);" type="submit"><span class="ui-button-icon-left ui-icon ui-c ui-icon-arrowthick-1-s"></span><span class="ui-button-text ui-c">Visualizar declara&#231;&#227;o assinada pelo respons&#225;vel t&#233;cnico.</span></button></td></tr><tr><td>
+				    <br /></td></tr><tr><td><button id="j_id_12:arquivoResultado" name="j_id_12:arquivoResultado" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left" aria-label="" onclick="PrimeFaces.bcn(this,event,[function(event){this.form.target='_blank';},function(event){}]);" type="submit"><span class="ui-button-icon-left ui-icon ui-c ui-icon-arrowthick-1-s"></span><span class="ui-button-text ui-c">Visualizar arquivo relat&#243;rio completo com o resultado de pesquisa.</span></button></td></tr><tr><td>
+				    <br /></td></tr></tbody></table></div></fieldset>
+			<br /><br /><input type="hidden" name="j_id_12_SUBMIT" value="1" /><input type="hidden" name="javax.faces.ViewState" id="j_id__v_0:javax.faces.ViewState:1" value="OWVkNWVkZjhkMzA5ZGQxOTAwMDAwMDA3" autocomplete="off" /></form>
+					</div>
+				</div>
+			</div>
+        <div id="siteRodape" class="site-rodape site-rodape-sombra">
+            PesqEle - Sistema de Registro de Pesquisas Eleitorais, Vers&#227;o: 3.9.1.0, SECINP - Tribunal Superior Eleitoral.
+        </div>
+		    <!-- Custom Theme JavaScript -->
+			<!-- Bootstrap JavaScript --><script type="text/javascript" src="/javax.faces.resource/jquery/jquery.js.xhtml?ln=primefaces&amp;v=8.0"></script><script type="text/javascript" src="/javax.faces.resource/jquery/jquery-plugins.js.xhtml?ln=primefaces&amp;v=8.0"></script><script type="text/javascript" src="/javax.faces.resource/core.js.xhtml?ln=primefaces&amp;v=8.0"></script><script type="text/javascript" src="/javax.faces.resource/components.js.xhtml?ln=primefaces&amp;v=8.0"></script><script type="text/javascript" src="/javax.faces.resource/js/base/cand.js.xhtml"></script><script type="text/javascript" src="/javax.faces.resource/js/bootstrap/bootstrap.min.js.xhtml"></script><script id="49616486-2896-46f4-9bd4-05ead0b6f6bf" type="text/javascript">var pf=window.PrimeFaces;if(pf){pf.settings.locale='pt_BR';pf.settings.partialSubmit=true;};
+pf.cw("Dialog","barraProgresso",{id:"j_id_g",modal:true,width:"300",height:"120",appendTo:"@(body)"});
+pf.cw("CommandButton","widget_j_id_12_j_id_14",{id:"j_id_12:j_id_14"});
+pf.cw("CommandButton","widget_j_id_12_j_id_16",{id:"j_id_12:j_id_16"});
+pf.cw("CommandButton","widget_j_id_12_j_id_33_0_j_id_3l_0_arquivoNotaFiscal",{id:"j_id_12:j_id_33:0:j_id_3l:0:arquivoNotaFiscal"});
+pf.cw("CommandButton","widget_j_id_12_arquivoQuestionario",{id:"j_id_12:arquivoQuestionario"});
+pf.cw("CommandButton","widget_j_id_12_arquivoBairros",{id:"j_id_12:arquivoBairros"});
+pf.cw("CommandButton","widget_j_id_12_arquivoAssinado",{id:"j_id_12:arquivoAssinado"});
+pf.cw("CommandButton","widget_j_id_12_arquivoResultado",{id:"j_id_12:arquivoResultado"});
+pf.cw("Fieldset","widget_j_id_12_j_id_18",{id:"j_id_12:j_id_18"});if(window.$){$(PrimeFaces.escapeClientId("49616486-2896-46f4-9bd4-05ead0b6f6bf")).remove();}</script></body>
+</html>

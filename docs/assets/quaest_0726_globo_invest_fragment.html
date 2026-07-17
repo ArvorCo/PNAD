@@ -1,0 +1,277 @@
+<!-- =========================================================================
+  FRAGMENTO AUTOCONTIDO · Grupo Globo como contratante/megafone da Quaest
+  Para insercao no dossie docs/quaest_0726.html (secao Genial/Quaest).
+  Estilos escopados em .gi- para nao vazar. Fonts: Fraunces + IBM Plex.
+  Inclui variante 1600x900 (.gi-slide) ao final.
+========================================================================== -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..900,0..100,0..1&amp;family=IBM+Plex+Mono:wght@400;600;700&amp;family=IBM+Plex+Sans+Condensed:wght@400;600;700&amp;display=swap" rel="stylesheet">
+
+<style>
+.gi-root{
+  --ink:#11100f; --coal:#1a1917; --paper:#f4f0e6; --signal:#e94935; --acid:#d7ee3f;
+  --cyan:#42c5d5; --good:#168b65; --amber:#ffb44c; --muted:#8f887c;
+  --display:"Fraunces",Georgia,serif; --sans:"IBM Plex Sans Condensed",Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  color:var(--paper); background:var(--ink); font-family:var(--display);
+  padding:54px clamp(20px,4vw,64px); line-height:1.5;
+  background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px);
+  background-size:100% 30px;
+}
+.gi-root *{box-sizing:border-box;}
+.gi-wrap{max-width:1180px;margin-inline:auto;}
+.gi-eyebrow{font:700 .76rem/1.3 var(--mono);letter-spacing:.11em;text-transform:uppercase;color:var(--acid);margin:0 0 10px;display:flex;align-items:center;gap:12px;}
+.gi-eyebrow::before{content:"";width:44px;height:5px;background:var(--acid);}
+.gi-h1{font-family:var(--display);font-size:clamp(2.4rem,5.2vw,4.1rem);line-height:.94;letter-spacing:-.03em;font-variation-settings:"SOFT" 12,"WONK" 1;margin:0 0 18px;max-width:20ch;}
+.gi-h1 em{color:var(--acid);font-style:italic;font-weight:440;}
+.gi-deck{font-size:clamp(1.05rem,1.7vw,1.32rem);line-height:1.42;color:#e0dacd;max-width:78ch;margin:0 0 8px;}
+.gi-deck strong{color:#fff;}
+.gi-mono{font-family:var(--mono);}
+.gi-hr{border:0;border-top:1px solid rgba(255,255,255,.16);margin:44px 0;}
+.gi-kicker{font:700 .74rem/1.3 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--signal);margin:0 0 14px;}
+
+/* stat row */
+.gi-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.16);margin:26px 0;}
+.gi-stat{background:var(--ink);padding:20px 18px;}
+.gi-stat b{display:block;font:700 clamp(1.9rem,3.4vw,2.7rem)/1 var(--mono);letter-spacing:-.04em;color:var(--acid);}
+.gi-stat.red b{color:var(--signal);} .gi-stat.cyan b{color:var(--cyan);}
+.gi-stat span{display:block;margin-top:8px;font-family:var(--sans);font-size:.95rem;line-height:1.28;color:#cfc9bd;}
+
+/* incentive chain */
+.gi-chain{display:grid;grid-template-columns:repeat(5,1fr);gap:26px;margin:22px 0 6px;}
+.gi-node{position:relative;background:var(--coal);border-top:6px solid var(--acid);padding:16px 15px;min-height:150px;display:grid;align-content:start;gap:8px;}
+.gi-node h4{margin:0;font-family:var(--sans);font-weight:700;font-size:1.02rem;color:#fff;letter-spacing:.01em;}
+.gi-node p{margin:0;font:.78rem/1.32 var(--sans);color:#bdb7ab;}
+.gi-node:not(:last-child)::after{content:"\2192";position:absolute;right:-22px;top:50%;transform:translateY(-50%);color:var(--signal);font:800 1.5rem/1 var(--mono);z-index:2;}
+.gi-node.hot{border-top-color:var(--signal);}
+.gi-node.hot h4{color:#ffd9d2;}
+
+/* verba chart */
+.gi-chartcard{background:var(--coal);border:1px solid rgba(255,255,255,.12);padding:24px 22px;}
+.gi-chartcard h4{margin:0 0 4px;font-family:var(--sans);font-weight:700;font-size:1.05rem;color:#fff;}
+.gi-chartcard .sub{margin:0 0 22px;font:.82rem/1.3 var(--mono);color:var(--muted);}
+.gi-bars{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;align-items:end;height:230px;border-bottom:2px solid rgba(255,255,255,.4);padding-top:8px;}
+.gi-barcol{display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:8px;height:100%;}
+.gi-bar{width:100%;max-width:82px;background:var(--cyan);position:relative;border-radius:2px 2px 0 0;}
+.gi-bar.hi{background:var(--acid);} .gi-bar.lo{background:#5a6a52;}
+.gi-bar .val{position:absolute;top:-24px;left:0;right:0;text-align:center;font:700 .9rem/1 var(--mono);color:#fff;}
+.gi-barlab{font:.78rem/1.2 var(--sans);color:#cfc9bd;text-align:center;}
+.gi-barlab b{display:block;color:#fff;font-family:var(--mono);}
+.gi-chartnote{margin:16px 0 0;font:.82rem/1.4 var(--sans);color:#a9a396;}
+
+/* two-col */
+.gi-two{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
+
+/* cards */
+.gi-card{background:var(--coal);border:1px solid rgba(255,255,255,.12);padding:18px 18px 16px;}
+.gi-card h4{margin:0 0 8px;font-family:var(--sans);font-weight:700;font-size:1.02rem;color:#fff;}
+.gi-card p{margin:0 0 8px;font-size:.98rem;line-height:1.4;color:#d7d1c5;}
+.gi-card p:last-child{margin-bottom:0;}
+.gi-tag{display:inline-block;margin-bottom:11px;padding:5px 8px;font:700 .68rem/1 var(--mono);letter-spacing:.05em;text-transform:uppercase;color:#fff;background:var(--muted);}
+.gi-tag.fato{background:var(--good);} .gi-tag.inf{color:var(--ink);background:var(--cyan);}
+.gi-tag.hip{color:var(--ink);background:var(--amber);} .gi-tag.crit{background:var(--signal);}
+
+/* bias box */
+.gi-bias{border-left:6px solid var(--acid);background:rgba(215,238,63,.06);padding:20px 22px;margin:6px 0;}
+.gi-bias h4{margin:0 0 8px;font-family:var(--sans);font-weight:700;font-size:1.12rem;color:var(--acid);}
+.gi-bias p{margin:0 0 10px;font-size:1rem;line-height:1.45;color:#e0dacd;}
+.gi-bias p:last-child{margin-bottom:0;} .gi-bias a{color:var(--cyan);}
+
+/* headline table */
+.gi-tablewrap{overflow-x:auto;border:1px solid rgba(255,255,255,.14);}
+table.gi-tbl{width:100%;border-collapse:collapse;font-family:var(--sans);min-width:760px;}
+table.gi-tbl th{background:var(--coal);color:var(--acid);text-align:left;font:700 .72rem/1.2 var(--mono);letter-spacing:.05em;text-transform:uppercase;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.18);}
+table.gi-tbl td{padding:13px 14px;border-bottom:1px solid rgba(255,255,255,.09);vertical-align:top;font-size:.92rem;line-height:1.36;color:#d7d1c5;}
+table.gi-tbl tr.grito td{background:rgba(233,73,53,.08);}
+.gi-hl{color:#fff;font-weight:600;} .gi-dt{font-family:var(--mono);color:var(--muted);font-size:.82rem;white-space:nowrap;}
+.gi-flag{display:inline-block;margin-top:6px;padding:2px 6px;font:700 .62rem/1.3 var(--mono);text-transform:uppercase;letter-spacing:.04em;}
+.gi-flag.g{color:#fff;background:var(--signal);} .gi-flag.ok{color:var(--ink);background:var(--good);}
+
+/* history strip */
+.gi-hist{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.gi-histitem{background:var(--coal);border-top:4px solid var(--muted);padding:15px 15px 13px;}
+.gi-histitem.admit{border-top-color:var(--acid);}
+.gi-histitem .yr{font:700 1.4rem/1 var(--mono);color:#fff;}
+.gi-histitem h5{margin:6px 0 6px;font-family:var(--sans);font-size:.95rem;color:#fff;font-weight:700;}
+.gi-histitem p{margin:0;font:.8rem/1.34 var(--sans);color:#bdb7ab;}
+.gi-verdict{background:var(--ink);border:2px solid var(--signal);padding:22px 24px;margin:6px 0;}
+.gi-verdict b{display:block;font:700 .78rem/1.2 var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--signal);margin-bottom:10px;}
+.gi-verdict p{margin:0;font-size:1.12rem;line-height:1.46;color:#f4f0e6;}
+.gi-src{margin:30px 0 0;font:.78rem/1.5 var(--sans);color:#8f887c;}
+.gi-src a{color:#a9a396;}
+
+@media(max-width:920px){
+  .gi-stats{grid-template-columns:repeat(2,1fr);}
+  .gi-chain{grid-template-columns:1fr 1fr;} .gi-node:not(:last-child)::after{display:none;}
+  .gi-two,.gi-hist{grid-template-columns:1fr;}
+  .gi-bars{grid-template-columns:repeat(4,1fr);}
+}
+
+/* ===== 1600x900 SLIDE VARIANT ===== */
+.gi-slide{width:1600px;height:900px;background:var(--ink);color:var(--paper);font-family:var(--display);
+  padding:70px 84px;display:grid;grid-template-rows:auto auto 1fr auto;gap:26px;
+  background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px);background-size:100% 34px;
+  border:1px solid rgba(255,255,255,.1);margin:0 auto;overflow:hidden;}
+.gi-slide *{box-sizing:border-box;}
+.gi-slide .s-eyebrow{font:700 1rem/1.2 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--acid);display:flex;align-items:center;gap:14px;margin:0;}
+.gi-slide .s-eyebrow::before{content:"";width:60px;height:6px;background:var(--acid);}
+.gi-slide h2{font-size:4.6rem;line-height:.92;letter-spacing:-.03em;margin:0;max-width:24ch;font-variation-settings:"SOFT" 12,"WONK" 1;}
+.gi-slide h2 em{color:var(--acid);font-style:italic;font-weight:440;}
+.gi-slide .s-body{display:grid;grid-template-columns:1.05fr .95fr;gap:52px;align-items:center;}
+.gi-slide .s-chain{display:grid;gap:14px;}
+.gi-slide .s-row{display:grid;grid-template-columns:230px 1fr;gap:18px;align-items:center;border-top:1px solid rgba(255,255,255,.16);padding-top:13px;}
+.gi-slide .s-row b{font-family:var(--sans);font-weight:700;font-size:1.28rem;color:#fff;}
+.gi-slide .s-row.hot b{color:#ffd9d2;}
+.gi-slide .s-row span{font:1rem/1.28 var(--sans);color:#c3bdb1;}
+.gi-slide .s-stats{display:grid;gap:20px;}
+.gi-slide .s-stat{border-left:6px solid var(--signal);padding-left:20px;}
+.gi-slide .s-stat.acid{border-left-color:var(--acid);}
+.gi-slide .s-stat.cyan{border-left-color:var(--cyan);}
+.gi-slide .s-stat b{display:block;font:700 3.5rem/.95 var(--mono);letter-spacing:-.04em;color:#fff;}
+.gi-slide .s-stat span{display:block;margin-top:8px;font:1.05rem/1.24 var(--sans);color:#c3bdb1;}
+.gi-slide .s-foot{display:flex;justify-content:space-between;align-items:center;border-top:2px solid var(--signal);padding-top:18px;font-family:var(--sans);}
+.gi-slide .s-foot .verdict{font-size:1.28rem;line-height:1.32;max-width:82ch;color:#f4f0e6;}
+.gi-slide .s-foot .mark{font:700 .9rem/1.3 var(--mono);color:var(--acid);text-transform:uppercase;letter-spacing:.08em;white-space:nowrap;padding-left:28px;}
+</style>
+
+<section class="gi-root">
+  <div class="gi-wrap">
+
+    <p class="gi-eyebrow">Anexo · o dono do megafone</p>
+    <h1 class="gi-h1">O instituto virou <em>exclusivo</em> de quem o poder concede e financia</h1>
+    <p class="gi-deck">A Quaest anunciou em 12/07/2026 que deixa as campanhas para concentrar <strong>mais de 200 pesquisas encomendadas pela Globo e afiliadas</strong>. O comprador dessas pesquisas não é um veículo qualquer: é o maior beneficiário da verba publicitária federal e o titular de uma concessão pública renovada pelo mesmo poder cujas eleições as pesquisas medem. Nada disso é crime. É um circuito de incentivos que o próprio megafone deveria declarar a cada divulgação.</p>
+
+    <div class="gi-stats">
+      <div class="gi-stat cyan"><b>R$ 267 mi</b><span>de publicidade federal a Globo no atual governo (jan/23 a jun/26)</span></div>
+      <div class="gi-stat"><b>25,6%</b><span>de toda a verba publicitária federal &mdash; a maior fatia isolada</span></div>
+      <div class="gi-stat red"><b>200+</b><span>pesquisas Quaest já encomendadas pela Globo e afiliadas em 2026</span></div>
+      <div class="gi-stat"><b>2037</b><span>ano até quando vai a concessão renovada por Bolsonaro em 2022</span></div>
+    </div>
+
+    <hr class="gi-hr">
+
+    <p class="gi-kicker">01 · o mapa de incentivos</p>
+    <div class="gi-chain">
+      <div class="gi-node"><h4>Poder público</h4><p>Concede e renova a outorga de radiodifusão (Constituição, art. 223). É o maior anunciante isolado via Secom e estatais.</p></div>
+      <div class="gi-node hot"><h4>Grupo Globo</h4><p>Concessionária e maior beneficiária da verba federal (25,6%). Contrata a Quaest com exclusividade: 200+ pesquisas.</p></div>
+      <div class="gi-node hot"><h4>Quaest</h4><p>Desenha, coleta, pondera e vende a análise. Deixou campanhas para concentrar-se no cliente Globo.</p></div>
+      <div class="gi-node"><h4>g1 · O Globo · GloboNews</h4><p>Seleciona título, recorte e cadência da difusão ao público. Escolhe o que vira manchete.</p></div>
+      <div class="gi-node"><h4>Eleitor e mercado</h4><p>Recebem o número já enquadrado. Um deles pode precificar a leitura antes da urna.</p></div>
+    </div>
+    <p class="gi-chartnote">Cada elo é lícito e documentado. A soma é um conflito estrutural de papéis: quem paga a concessão, quem paga a publicidade e quem paga a pesquisa se cruzam num circuito único. Auditar o circuito não é acusar fraude &mdash; é pedir transparência sobre o incentivo.</p>
+
+    <hr class="gi-hr">
+
+    <p class="gi-kicker">02 · seguir o dinheiro público</p>
+    <div class="gi-two">
+      <div class="gi-chartcard">
+        <h4>Participação da Globo na verba federal de TV</h4>
+        <p class="sub">% do bolo publicitário federal de televisão</p>
+        <div class="gi-bars">
+          <div class="gi-barcol"><div class="gi-bar lo" style="height:50%"><span class="val">28%</span></div><span class="gi-barlab"><b>2022</b>Bolsonaro</span></div>
+          <div class="gi-barcol"><div class="gi-bar hi" style="height:100%"><span class="val">56%</span></div><span class="gi-barlab"><b>2023</b>Lula 3</span></div>
+          <div class="gi-barcol"><div class="gi-bar" style="height:60%"><span class="val">R$142mi</span></div><span class="gi-barlab"><b>2023</b>vs R$89mi/22</span></div>
+          <div class="gi-barcol"><div class="gi-bar" style="height:88%"><span class="val">49,4%</span></div><span class="gi-barlab"><b>23&ndash;25</b>R$461,5mi TV</span></div>
+        </div>
+        <p class="gi-chartnote">A verba de TV da Globo saltou de R$ 89 mi (2022, Bolsonaro) para R$ 142 mi (2023, Lula), +60%; na janela de 3 anos, +102%. Fonte: Poder360, painel Sicom/Secom.</p>
+      </div>
+      <div class="gi-card" style="display:grid;align-content:center;">
+        <span class="gi-tag inf">Calibragem</span>
+        <h4>O incentivo é bilateral, não de esquerda</h4>
+        <p>No governo Bolsonaro, na verba direta da Secom (2019&ndash;2021), a Globo era só a 3ª colocada (R$ 47,2 mi), atrás de Record e SBT, vistas como aliadas. Cada governo direcionou verba conforme sua relação com o veículo.</p>
+        <p>Ou seja: quem paga muda de cor partidária; a dependência do anunciante-Estado, não. É isso &mdash; e não uma preferência ideológica &mdash; que o circuito Globo&ndash;Quaest deveria declarar.</p>
+      </div>
+    </div>
+
+    <hr class="gi-hr">
+
+    <p class="gi-kicker">03 · o viés que os estudos medem &mdash; contra a hipótese</p>
+    <div class="gi-bias">
+      <h4>A tese de viés &ldquo;esquerdista&rdquo; não se sustenta na literatura</h4>
+      <p>O principal monitoramento acadêmico brasileiro &mdash; o <strong>Manchetômetro</strong> (LEMEP/IESP-UERJ, coord. João Feres Jr.) &mdash; documentou por mais de uma década o oposto: viés <strong>anti-PT / anti-Lula</strong>. Em 2014, Dilma teve a cobertura mais negativa; um paper peer-reviewed mostra que ela não teve &ldquo;lua de mel&rdquo; após vencer.</p>
+      <p>Mais decisivo para o período atual: em <strong>abril de 2026</strong> (DONI #143), Lula e PT foram os atores de valência mais negativa &mdash; O Globo em &minus;1,20. A cobertura da Globo <strong>permanece negativa a Lula</strong> agora. O eixo real do viés medido é econômico (crítica a Bolsonaro-pessoa + leniência com a agenda liberal), não partidário-esquerdista.</p>
+      <p style="color:#a9a396;font-size:.9rem;">Ressalva honesta: o Manchetômetro é amplificado por veículos de esquerda; os dados são acadêmicos, a amplificação é seletiva. A conclusão deste dossiê é que a hipótese de viés pró-Lula da Globo <strong>não</strong> encontra respaldo empírico &mdash; e dizer o contrário seria militância, não auditoria.</p>
+    </div>
+
+    <hr class="gi-hr">
+
+    <p class="gi-kicker">04 · manchete &times; o que o dado dizia</p>
+    <div class="gi-tablewrap">
+      <table class="gi-tbl">
+        <thead><tr><th style="width:40%">Manchete (rodada Quaest, parceria Globo)</th><th style="width:15%">Dado</th><th>O que o dado realmente dizia</th></tr></thead>
+        <tbody>
+          <tr class="grito">
+            <td><span class="gi-hl">&ldquo;Lula amplia vantagem sobre Flávio Bolsonaro e lidera todos os cenários de 2º turno&rdquo;</span><br><span class="gi-dt">15/07/2026</span> <span class="gi-flag g">grito</span></td>
+            <td>45 &times; 37<br><span class="gi-dt">gap 8 pts</span></td>
+            <td>A &ldquo;ampliação&rdquo; de 6 para 8 pts é Lula +1 e Flávio &minus;1, ambos dentro da margem de &plusmn;2 pp. Estatisticamente é estabilidade, não ampliação.</td>
+          </tr>
+          <tr>
+            <td><span class="gi-hl">&ldquo;No 2º turno, Lula registra 42% e Flávio, 41%, em empate técnico&rdquo;</span><br><span class="gi-dt">13/05/2026</span> <span class="gi-flag ok">honesta</span></td>
+            <td>42 &times; 41</td>
+            <td>Reconhece &ldquo;empate técnico&rdquo;. É o contraponto que expõe o drift: em julho, diferenças igualmente dentro da margem viraram &ldquo;vantagem&rdquo;.</td>
+          </tr>
+          <tr class="grito">
+            <td><span class="gi-hl">&ldquo;Aprovação de Lula supera desaprovação pela primeira vez em 12 meses&rdquo;</span><br><span class="gi-dt">15/07/2026</span> <span class="gi-flag g">grito</span></td>
+            <td>48% &times; 47%</td>
+            <td>Virada &ldquo;histórica&rdquo; sobre 1 ponto, dentro da margem: tecnicamente empate. O Povo publicou o mesmo dado com &ldquo;na margem&rdquo; no título &mdash; dava para ser honesto.</td>
+          </tr>
+          <tr class="grito">
+            <td><span class="gi-hl">&ldquo;Apoio a Flávio diminui; Lula vence todos os adversários testados&rdquo;</span><br><span class="gi-dt">15/07/2026</span> <span class="gi-flag g">grito</span></td>
+            <td>Flávio 38&rarr;37</td>
+            <td>Queda de &minus;1 pt (dentro da margem) vira dupla ênfase. Omite que, apesar da queda, Flávio segue o adversário mais forte da direita.</td>
+          </tr>
+          <tr>
+            <td><span class="gi-hl">&ldquo;Rejeição a Flávio sobe pelo 4º mês seguido e chega a 57%&rdquo;</span><br><span class="gi-dt">15/07/2026</span> <span class="gi-flag ok">acerta</span></td>
+            <td>52&rarr;54&rarr;56&rarr;57</td>
+            <td>Aqui a manchete acerta: a série de rejeição é monotônica (4 meses de alta) &mdash; tendência, não ruído. Ainda assim, omite a competitividade de Flávio.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="gi-chartnote"><strong>Padrão dominante:</strong> os títulos de julho amplificaram movimentos de 1 ponto (&ldquo;amplia&rdquo;, &ldquo;abre 12 pontos&rdquo;, &ldquo;supera pela 1ª vez&rdquo;) dentro da margem de &plusmn;2 pp. O mesmo instituto e a mesma margem foram corretamente chamados de &ldquo;empate técnico&rdquo; em maio. O drift de enquadramento &mdash; e não os números &mdash; é o achado.<br><span style="color:#8f887c;font-size:.86rem;">Nota de apuração: globo.com bloqueia o crawler usado; não foi possível capturar URL verbatim do g1/O Globo. As manchetes acima são a mesma rodada divulgada em parceria com a Globo, colhidas em veículos terceiros verificáveis. Cotejo de enquadramento, não transcrição literal da Globo.</span></p>
+
+    <hr class="gi-hr">
+
+    <p class="gi-kicker">05 · o que a própria Globo já admitiu</p>
+    <div class="gi-hist">
+      <div class="gi-histitem admit"><span class="yr">1989</span><h5>Edição do debate Collor &times; Lula</h5><p>Boni admitiu que a edição do JN &ldquo;melhorou a postura de Collor&rdquo;; o JN fez mea-culpa. Enquadrado pela Globo como erro técnico &mdash; é o caso mais forte de viés documentado, CONTRA a esquerda.</p></div>
+      <div class="gi-histitem admit"><span class="yr">2013</span><h5>Editorial &ldquo;apoio a 1964 foi um erro&rdquo;</h5><p>O Globo reconheceu explicitamente: &ldquo;à luz da História&hellip; o apoio foi um erro&rdquo;. Admissão própria, incontroversa.</p></div>
+      <div class="gi-histitem"><span class="yr">1994</span><h5>Caso Escola Base</h5><p>Cobertura precipitada destruiu reputações de inocentes. A Globo foi condenada a indenizar e produziu documentário-retratação (2022).</p></div>
+    </div>
+
+    <div class="gi-verdict" style="margin-top:26px;">
+      <b>Conclusão em uma frase</b>
+      <p>Concessão pública renovável + a maior fatia da verba publicitária federal + exclusividade de 200+ pesquisas Quaest formam um mapa de incentivos que merece auditoria de enquadramento. Não é prova de encomenda: é um conflito estrutural de papéis que o próprio megafone deveria declarar &mdash; e que a evidência de viés, honestamente lida, não resolve a favor de nenhum lado.</p>
+    </div>
+
+    <p class="gi-src">Fontes: <a href="https://www.poder360.com.br/poder-midia/grupo-globo-recebeu-r-267-mi-de-publicidade-em-35-anos-de-lula/">Poder360 (verba federal)</a> · <a href="https://www.poder360.com.br/poder-midia/globo-recebeu-49-da-verba-de-publicidade-de-lula-na-tv/">Poder360 (49% da verba de TV)</a> · <a href="https://www.meioemensagem.com.br/midia/globo-amplia-em-15-a-receita-com-publicidade-em-2025">Meio&amp;Mensagem (faturamento 2025)</a> · <a href="https://www.aosfatos.org/noticias/desenhamos-fatos-sobre-concessao-de-radio-e-televisao/">Aos Fatos (concessão)</a> · <a href="https://manchetometro.com.br/2026/05/05/doni-143-16-a-30-de-abril-de-2026/">Manchetometro DONI #143</a> · <a href="https://www.poder360.com.br/poder-pesquisas/quaest-diz-que-nao-fara-pesquisas-para-candidatos-e-partidos-em-2026/">Poder360 (200+ pesquisas Globo)</a>. Dados estruturados em <span class="gi-mono">quaest_0726_globo_invest.json</span>.</p>
+
+  </div>
+</section>
+
+<!-- ============ VARIANTE 1600x900 PARA SLIDE ============ -->
+<div class="gi-root" style="padding:40px;background:#0c0b0a;">
+<div class="gi-slide">
+  <p class="s-eyebrow">Arvor Intelligence · dossiê Quaest 07/2026 · anexo Globo</p>
+  <h2>O megafone também é <em>cliente</em> &mdash; e quem o Estado concede e financia</h2>
+  <div class="s-body">
+    <div class="s-chain">
+      <div class="s-row"><b>Poder público</b><span>concede a outorga (art. 223) e é o maior anunciante isolado</span></div>
+      <div class="s-row hot"><b>Grupo Globo</b><span>concessionária; maior fatia da verba federal (25,6%); contrata a Quaest</span></div>
+      <div class="s-row hot"><b>Quaest</b><span>desenha, pondera e vende; 200+ pesquisas exclusivas da Globo em 2026</span></div>
+      <div class="s-row"><b>g1 · O Globo · GloboNews</b><span>escolhe título, recorte e cadência da manchete</span></div>
+      <div class="s-row"><b>Eleitor e mercado</b><span>recebem o número já enquadrado</span></div>
+    </div>
+    <div class="s-stats">
+      <div class="s-stat cyan"><b>R$ 267 mi</b><span>verba publicitária federal a Globo no atual governo (25,6% do total)</span></div>
+      <div class="s-stat acid"><b>200+</b><span>pesquisas Quaest encomendadas pela Globo e afiliadas em 2026</span></div>
+      <div class="s-stat"><b>28% &rarr; 56%</b><span>fatia da Globo na verba de TV federal, de 2022 (Bolsonaro) a 2023 (Lula)</span></div>
+    </div>
+  </div>
+  <div class="s-foot">
+    <p class="verdict">Cada elo é lícito. A soma é um conflito estrutural de papéis que merece auditoria de enquadramento &mdash; não prova de encomenda.</p>
+    <span class="mark">Fato + Inferência<br>seguir o dinheiro, rotular a dúvida</span>
+  </div>
+</div>
+</div>

@@ -1,0 +1,130 @@
+{
+  "meta": {
+    "titulo": "PoderData/Aya como benchmark da Genial/Quaest jul/2026: o experimento natural do desenho de instrumento",
+    "proposito": "Este NÃO é um dossiê da PoderData. É um comparativo de DESENHO DE INSTRUMENTO que usa a rodada PoderData/Aya divulgada em 16/07/2026 como braço natural do teste discriminante nº 1 da nossa síntese (split-ballot da rampa de não-escolha). A pergunta: quando se troca a cédula presencial domiciliar de quatro saídas da Quaest por uma cédula telefônica automatizada curta, o Flávio que falta reaparece?",
+    "gerado_em": "2026-07-17",
+    "autor": "Arvor / brasil.arvor.co",
+    "calibragem": "Fato = observação documental ou identidade aritmética reproduzível. Inferência = leitura mais compatível com os fatos. Hipótese = exige dado retido. NADA aqui insinua fraude da Quaest, da Atlas ou de qualquer casa. A força é a aritmética lado a lado, não o adjetivo. Veredito mantido: prova de opacidade, não de fraude.",
+    "vinculo_sintese": "Hipótese central H-A (síntese, prob. 48%): a cédula de quatro saídas lida em voz alta é a rampa que estaciona o anti-Lula mole no branco/nulo/não-vai-votar, com split 85/15 do déficit (Flávio/Lula). Teste discriminante nº 1: split-ballot da oferta. A PoderData é o braço NATURAL desse teste — imperfeito, porque muda três eixos de uma vez, não só a oferta."
+  },
+
+  "poderdata_hoje": {
+    "natureza": "FATO — registro TSE + relatório primário + questionário primário",
+    "rodada_divulgada_hoje": {
+      "registro_tse": "BR-00059/2026",
+      "data_registro": "2026-07-10",
+      "data_divulgacao": "2026-07-16",
+      "campo": "12 a 15 de julho de 2026",
+      "n": 2400,
+      "modo": "telefônica IVR/URA (resposta pelo teclado do telefone; ligações automatizadas para fixos e celulares; sem entrevistador humano)",
+      "universo": "eleitoras e eleitores com 16 anos ou mais",
+      "amostragem": "amostra aleatória simples a partir de banco de números telefônicos fixos e celulares, estratificada por região via CEP (seleção aleatória do discador)",
+      "ponderacao": "paramétrica em sexo, idade, grau de instrução, região e renda/nível econômico; fontes TSE (jun 2026) e IBGE (Censo 2010)",
+      "margem_erro": "±2,0 p.p.; IC 95%",
+      "contratante": "PoderData (recursos próprios; valor R$ 103.715,00)",
+      "estatistico_responsavel": "Anderson Silva de Macedo (CONRE 10507 - 1ª Região)",
+      "toplines_2o_turno": {"lula": 45, "flavio": 43, "branco_nulo": 9, "nao_sabe": 2, "soma_lula_flavio": 88, "nao_escolha": 12, "gap": 2, "obs": "não-escolha = 100 − 45 − 43 = 12; decomposta em branco/nulo 9 + não sabe 2 (diferença por arredondamento IVR)"},
+      "toplines_1o_turno": {"lula": 40, "flavio": 34, "obs": "demais candidatos abaixo de 6 (Renan, Caiado, Zema, Cury)"},
+      "fonte": "PoderData_TSE_072026.xhtml (registro); Poder360 16/07/2026; CNN Brasil"
+    },
+    "rodada_anterior_primaria": {
+      "registro_tse": "BR-05722/2026",
+      "campo": "21 a 24 de junho de 2026",
+      "data_divulgacao": "2026-06-25",
+      "n": 2400,
+      "municipios": 617,
+      "modo": "telefônica IVR/URA (idêntico)",
+      "toplines_2o_turno": {"lula": 46, "flavio": 43, "branco_nulo": 8, "nao_sabe": 3, "soma_lula_flavio": 89, "nao_escolha": 11, "gap": 3},
+      "toplines_1o_turno": {"lula": 40, "flavio": 36},
+      "rejeicao_nao_votaria_de_jeito_nenhum": {"lula": 50, "flavio": 48},
+      "poderia_votar": {"lula": 11, "flavio": 15, "leitura": "Flávio carrega mais camada mole ('poderia votar' 15 vs 11), coerente com a inferência da síntese de que o não-voto persuadável é maior em Flávio"},
+      "fonte": "PoderData_072026.pdf (relatório primário, p6, p15, p22-23), pacote data/pesquisas/poderdata/2026-07/"
+    },
+    "serie_2o_turno": [
+      {"onda": "mai/26", "lula": 46, "flavio": 42, "branco_nulo": 9, "nao_sabe": 3, "nao_escolha": 12},
+      {"onda": "jun/26 (BR-05722)", "lula": 46, "flavio": 43, "branco_nulo": 8, "nao_sabe": 3, "nao_escolha": 11},
+      {"onda": "jul/26 (BR-00059)", "lula": 45, "flavio": 43, "branco_nulo": 9, "nao_sabe": 2, "nao_escolha": 12}
+    ],
+    "auditoria_coerencia": {
+      "natureza": "FATO — o benchmark também precisa aguentar checagem",
+      "somas_fecham": "jun: 46+43+8+3 = 100 (exato); jul: 45+43+9+2 = 99 (fecha em 100 por arredondamento IVR, declarado na ficha técnica). Coerente.",
+      "registro_confere": "capa e ficha do relatório primário batem em BR-05722/2026 (jun); o arquivo de registro TSE do pacote é BR-00059/2026 (jul, divulgado 16/07). São DUAS rodadas distintas — o relatório PDF é a de junho; a divulgação de hoje é a de julho.",
+      "questionario_confere": "PoderData_Questionario_072026.pdf, 3 páginas, 17 perguntas, IVR; declaração do estatístico assinada 10/07/2026 (alinha com o registro da rodada de julho).",
+      "caveat_temporal": "A comparação mais limpa é PoderData jul (campo 12-15/07) × Quaest jul (campo 10-13/07): quase simultâneas, mesmo ciclo noticioso. A rodada de junho entra como ponto de série, não como par temporal.",
+      "veredito_auditoria": "A PoderData passa na checagem básica de coerência: somas fecham, registro confere, questionário público e curto. É um benchmark auditável."
+    }
+  },
+
+  "questionario_contraste": {
+    "natureza": "FATO documental — questionários primários das duas casas",
+    "poderdata": {
+      "extensao": "17 perguntas, 3 páginas, IVR",
+      "abertura": "'Olá, esta é uma ligação do PoderData... Posso tomar poucos minutos do seu tempo? Basta usar o teclado do telefone.'",
+      "pergunta_2o_turno_literal": "Q7: 'E se houver um 2º turno entre Flávio Bolsonaro e Lula, em quem você votaria? Flávio Bolsonaro, tecle 1; Lula, tecle 2; Se votaria em branco ou nulo, tecle 3; Se não sabe, tecle 4.'",
+      "saidas_de_nao_escolha_oferecidas": ["branco ou nulo (tecle 3)", "não sabe (tecle 4)"],
+      "nao_oferece": "NÃO há opção nomeada 'não iria votar' / abstenção. Duas saídas de não-escolha, não três.",
+      "entrevistador_humano": false
+    },
+    "quaest": {
+      "extensao": "~101 itens, 121 páginas, presencial domiciliar em tablet",
+      "pergunta_2o_turno_literal": "Q23-26 (cen2t_pres1..4): 'Num possível segundo turno, você votaria no [nome], no [nome], votaria em branco/nulo ou não iria votar?' + código 88 (ainda não se decidiu / indeciso / não sabe).",
+      "saidas_de_nao_escolha_oferecidas": ["votaria em branco ou nulo (18)", "não iria votar (19)", "indeciso / não sabe (88)"],
+      "entrevistador_humano": true
+    },
+    "diferenca_operacional": "Contra a Quaest, a PoderData muda TRÊS eixos ao mesmo tempo: (1) sem entrevistador humano (URA anônima, teclado) — retira a desejabilidade social do face a face; (2) 17 itens contra ~101 — retira a fadiga do instrumento longo; (3) oferece só branco/nulo, NÃO oferece 'não iria votar' como saída nomeada — atenua a rampa de não-escolha. Os três apontam na mesma direção."
+  },
+
+  "tabela_experimento": {
+    "natureza": "FATO (colunas de desenho e placar) — o coração do comparativo",
+    "unidade": "2º turno Lula × Flávio, % sobre o voto total (branco/nulo à parte); não-escolha = 100 − Lula − Flávio",
+    "colunas": ["instituto", "modo", "entrevistador_humano", "carga_itens", "cedula_oferece_nao_escolha", "nao_escolha", "lula", "flavio", "gap", "fonte"],
+    "linhas": [
+      {"instituto": "Genial/Quaest", "campo": "10-13 jul", "modo": "presencial domiciliar (tablet)", "entrevistador_humano": "sim (na porta)", "carga_itens": "~101 itens / 121 pg", "cedula_oferece_nao_escolha": "3 saídas lidas: branco/nulo + não iria votar + indeciso", "nao_escolha": 18, "lula": 45, "flavio": 37, "gap": 8, "extremo": true, "fonte": "deck jul BR-07181/2026 p37; questionário Q23-26 p6"},
+      {"instituto": "PoderData/Aya", "campo": "12-15 jul", "modo": "telefônica IVR/URA (teclado)", "entrevistador_humano": "não (automatizado)", "carga_itens": "17 itens / 3 pg", "cedula_oferece_nao_escolha": "2 saídas teclada: branco/nulo + não sabe", "nao_escolha": 12, "lula": 45, "flavio": 43, "gap": 2, "benchmark_hoje": true, "fonte": "BR-00059/2026; Poder360 16/07; questionário Q7"},
+      {"instituto": "PoderData/Aya", "campo": "21-24 jun", "modo": "telefônica IVR/URA (teclado)", "entrevistador_humano": "não (automatizado)", "carga_itens": "17 itens / 3 pg", "cedula_oferece_nao_escolha": "2 saídas teclada: branco/nulo + não sabe", "nao_escolha": 11, "lula": 46, "flavio": 43, "gap": 3, "fonte": "relatório primário BR-05722/2026 p15"},
+      {"instituto": "Datafolha", "campo": "17-19 jun", "modo": "presencial (fluxo)", "entrevistador_humano": "sim", "carga_itens": "n/d", "cedula_oferece_nao_escolha": "registra não-voto", "nao_escolha": 10, "lula": 47, "flavio": 43, "gap": 4, "fonte": "docs/datafolha_062026.html"},
+      {"instituto": "BTG/Nexus", "campo": "jul (6ª rodada)", "modo": "presencial domiciliar", "entrevistador_humano": "sim", "carga_itens": "n/d", "cedula_oferece_nao_escolha": "n/d", "nao_escolha": 9, "lula": 47, "flavio": 44, "gap": 3, "fonte": "docs/nexus_btg_0726.html"},
+      {"instituto": "Futura/Apex", "campo": "7-11 jul", "modo": "presencial", "entrevistador_humano": "sim", "carga_itens": "n/d", "cedula_oferece_nao_escolha": "oferece branco/nulo/abstenção", "nao_escolha": 7.6, "lula": 46.3, "flavio": 46.1, "gap": 0.2, "fonte": "CNN Brasil; BR-07294/2026"},
+      {"instituto": "Meio/Ideia", "campo": "3-6 jul", "modo": "telefônica (viva voz)", "entrevistador_humano": "sim", "carga_itens": "n/d", "cedula_oferece_nao_escolha": "n/d", "nao_escolha": 15, "lula": 45, "flavio": 40, "gap": 5, "fonte": "Brasil de Fato; BR-05628/2026"},
+      {"instituto": "AtlasIntel", "campo": "~1 jul", "modo": "recrutamento digital (online)", "entrevistador_humano": "não (online)", "carga_itens": "n/d", "cedula_oferece_nao_escolha": "forced-choice online", "nao_escolha": 8.9, "lula": 48.8, "flavio": 42.3, "gap": 6.5, "fonte": "Brasil de Fato (Atlas/Bloomberg)"}
+    ],
+    "leitura": "A Quaest está sozinha no extremo: não-escolha 18 e gap 8, quando o campo inteiro (incluindo as duas telefônicas e a online) fica entre 7,6 e 15 de não-escolha e entre 0,2 e 6,5 de gap. Flávio na Quaest é 37; em todo o resto, 40 a 46. A PoderData de hoje, quase simultânea (12-15/07 vs 10-13/07 da Quaest), põe Flávio em 43 — exatamente o consenso presencial (Datafolha 43, Nexus 44)."
+  },
+
+  "veredito_predicao_H_A": {
+    "pergunta": "A PoderData de hoje confirma a predição da H-A (instrumentos que não empilham a rampa mostram não-escolha baixa e disputa apertada; a Quaest, no extremo, mostra 18 e gap 8)?",
+    "resposta": "SIM, no nível do resultado — com um caveat de mecanismo que declaramos abertamente.",
+    "confirma_no_resultado": "FATO: PoderData jul = disputa apertada (gap 2, empate técnico), não-escolha 12 (contra 18 da Quaest), Flávio de volta ao consenso 43 (a Quaest o tinha em 37, 6 p.p. abaixo). Trocado o instrumento, o Flávio que falta reaparece. É a assinatura que a H-A prevê.",
+    "caveat_de_mecanismo": "INFERÊNCIA HONESTA: a PoderData NÃO é o braço B limpo do teste discriminante nº 1. O braço B isolaria SÓ a oferta (dois nomes, não-voto anotado só se espontâneo). A PoderData muda três eixos de uma vez (sem entrevistador humano, 17 vs 101 itens, e sem a saída 'não iria votar'). Além disso ela TAMBÉM oferece branco/nulo explicitamente — logo a oferta nua de branco/nulo, sozinha, não explica os 18 da Quaest (a PoderData oferece e fica em 12). O que distingue a Quaest é o PACOTE de amplificadores somado à terceira saída ('não iria votar') que a PoderData não lê.",
+    "sintese_do_veredito": "É O BRAÇO NATURAL do split-ballot que a Quaest não roda — imperfeito porque não isola uma variável, mas apontando inequívoco na direção da H-A: instrumento diferente, não-escolha diferente, e a Quaest sozinha no extremo. Confirma o MECANISMO (o desenho move Flávio e não-escolha juntos) sem substituir o experimento controlado de uma noite que só a Quaest pode publicar.",
+    "reforco_da_serie": "A estabilidade da PoderData (Flávio 42-43 e não-escolha 11-12 em três ondas, mai/jun/jul) espelha a estabilidade da Quaest (18 em jun e jul): duas assinaturas de instrumento estáveis, em polos opostos. Ruído amostral não produz nenhuma das duas."
+  },
+
+  "aleatoriedade": {
+    "natureza": "INFERÊNCIA calibrada — nenhum desenho é 'o certo'",
+    "poderdata": "Seleção aleatória do discador sobre banco de números fixos e celulares (aproxima RDD), estratificada por região via CEP. Probabilística na origem, mas com viés de cobertura (quem tem linha, quem atende URA) e taxa de resposta baixíssima típica de IVR.",
+    "quaest": "Cotas domiciliares em 334 setores censitários por onda (rotação 333/334 entre jun e jul). Seleção do entrevistado por cota dentro do setor, não sorteio; viés de seleção do entrevistador e de disponibilidade domiciliar.",
+    "atlas": "Recrutamento/painel digital não-probabilístico, calibrado por modelagem; viés de autosseleção de quem responde online.",
+    "ponto": "Desenhos amostrais diferentes têm vieses diferentes, todos reais. O achado não é que um é honesto e outro não. É que desenhos diferentes produzem NÃO-ESCOLHA diferente — e a Quaest está no extremo (18), enquanto o campo fica em 7,6-15. Modo telefônico não garante não-escolha baixa: a Meio/Ideia, telefônica com entrevistador humano, tem 15. O que a PoderData tem de distinto é a URA SEM entrevistador somada ao questionário curto. O eixo que move a não-escolha é o DESENHO, não a suposta má-fé de uma casa."
+  },
+
+  "peca_dantas": {
+    "natureza": "recepção — o que a peça alega e nosso veredito calibrado",
+    "titulo": "Pesquisa PoderData/Aya desmonta Quaest sobre vantagem de Lula",
+    "autor": "Cláudio Dantas",
+    "url": "https://claudiodantas.com.br/pesquisa-poderdata-aya-desmonta-quaest-sobre-vantagem-de-lula/",
+    "alegacao": "A rodada PoderData/Aya de hoje confirma o empate técnico já visto em BTG/Nexus, Futura/Apex e Gerp, e 'desmonta' o resultado da Quaest divulgado na véspera. A Quaest seria a ÚNICA a colocar Flávio numericamente muito atrás (45 × 37, gap 8), contra o consenso de disputa apertada (Flávio ~43).",
+    "o_que_concordamos": "FATO: a aritmética de Dantas está certa no ponto factual — a Quaest é o ponto fora da curva. Flávio 37 e gap 8 são únicos no mercado; todo o resto, incluindo a PoderData de hoje, põe Flávio em 40-46 e o gap em 0,2-6,5. Isso é verificável e reproduzível.",
+    "onde_declinamos": "A palavra 'desmonta' carrega uma implicação de erro deliberado ou manipulação que a evidência NÃO sustenta. O outlier da Quaest é integralmente explicável por desenho de instrumento — a cédula de quatro saídas lida em voz alta, o presencial domiciliar, os 101 itens — sem supor má-fé. Concordamos com a aritmética de Dantas (a Quaest é o outlier); declinamos a inferência de manipulação. Navalha de Occam: não é preciso polegar quando a cédula produz o efeito sozinha.",
+    "veredito": "Prova de opacidade, não de fraude. A PoderData reforça que a Quaest está isolada no extremo — e reforça que a única forma de decidir entre 'desenho' e 'polegar' é a Quaest publicar o split-ballot e os microdados. Enquanto retém o dado, a hipótese de viés deliberado vive de opacidade, não de prova."
+  },
+
+  "fontes": [
+    {"titulo": "PoderData/Aya jul: Lula 45 x Flávio 43 (2º turno)", "url": "https://www.poder360.com.br/poderdata/lula-tem-45-contra-43-de-flavio-no-2o-turno-diz-poderdata-aya/"},
+    {"titulo": "PoderData/Aya jul 1º turno: Lula 40, Flávio 34", "url": "https://www.poder360.com.br/poderdata/lula-tem-40-e-flavio-34-no-1o-turno-diz-poderdata-aya/"},
+    {"titulo": "CNN Brasil: PoderData/Aya Lula 45, Flávio 43", "url": "https://www.cnnbrasil.com.br/eleicoes/poderdata-aya-lula-tem-45-das-intencoes-de-voto-no-2a-turno-flavio-43/"},
+    {"titulo": "PoderData/Aya jun: Lula 46 x Flávio 43", "url": "https://www.poder360.com.br/poderdata/lula-tem-46-contra-43-de-flavio-no-2o-turno-diz-poderdata/"},
+    {"titulo": "Cláudio Dantas: 'PoderData/Aya desmonta Quaest'", "url": "https://claudiodantas.com.br/pesquisa-poderdata-aya-desmonta-quaest-sobre-vantagem-de-lula/"},
+    {"titulo": "Pacote primário PoderData (relatório, questionário, registro, DRE, declaração)", "url": "data/pesquisas/poderdata/2026-07/"}
+  ]
+}

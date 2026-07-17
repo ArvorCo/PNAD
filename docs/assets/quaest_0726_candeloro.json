@@ -1,0 +1,218 @@
+{
+  "meta": {
+    "artifact": "Contraditório externo à auditoria Genial/Quaest julho/2026",
+    "dossier": "docs/quaest_0726.html",
+    "site": "brasil.arvor.co",
+    "critic": "Marcos Paulo Candeloro",
+    "critic_role": "cientista político",
+    "critique_1_title": "A PESQUISA COMO ENREDO",
+    "critique_1_object": "deck principal Genial/Quaest julho/2026 (Quaest_072026.pdf, 121 páginas)",
+    "verdict_retained": "prova de opacidade, não de fraude",
+    "verdict_note": "Nenhuma alegação de Candeloro exibe prova de fabricação de entrevistas ou de resultado encomendado. Todas reforçam o eixo de opacidade e enquadramento; nada altera o veredito.",
+    "division_of_labor": "Este arquivo verifica a crítica 1 (A PESQUISA COMO ENREDO), alegações a a i, contra os documentos primários. A crítica 2 (suplemento) é tratada por agente paralelo; os itens marcados supplement_scope=true remetem a esse cotejo.",
+    "primary_sources": [
+      "data/pesquisas/quaest/2026-07/Quaest_Questionario_072026.pdf (38 páginas, 101 itens)",
+      "data/pesquisas/quaest/2026-07/Quaest_072026.pdf (deck, 121 slides)",
+      "docs/assets/quaest_0726_data.json"
+    ],
+    "generated": "2026-07-17",
+    "labels": "Fato = observação documental ou cálculo reproduzível; Inferência = leitura mais compatível; Hipótese = exige evidência adicional"
+  },
+  "summary_counts": {
+    "confirmadas": 6,
+    "parciais": 2,
+    "confirmada_ja_coberta": 1,
+    "refutadas": 0,
+    "note": "b, c, d, e, f, g confirmadas; a e i parciais; h confirmada e já integralmente coberta pelo dossiê. Nenhuma refutada por inteiro; a única inversão factual é a POSIÇÃO da pergunta do medo em a."
+  },
+  "claims": [
+    {
+      "id": "a",
+      "label": "A pergunta do medo vem no fim, após ~1h de estímulos, e mede emoção (medo) em vez de preferência",
+      "candeloro_claim": "O item do medo (mais um governo Lula ou a família Bolsonaro voltar ao poder) aparece no fim do questionário, depois de cerca de uma hora de estímulos, e pergunta medo em vez de preferência.",
+      "verdict": "PARCIAL",
+      "components": {
+        "mede_emocao_nao_preferencia": {
+          "status": "CONFIRMADA",
+          "label_tipo": "Fato",
+          "evidence": "Q28 (mais_medo), pág. 8 do questionário / deck slide 102: 'O que te dá mais medo hoje: mais um governo Lula ou a família Bolsonaro voltar ao poder?' Pergunta medo, não intenção de voto."
+        },
+        "posicao_no_fim_apos_1h": {
+          "status": "NAO CONFIRMADA / invertida no campo",
+          "label_tipo": "Fato",
+          "evidence": "No INSTRUMENTO de campo a pergunta do medo é a Q28 de 101, logo após a intenção de voto (Q8 a Q27) e ANTES de todos os blocos de notícia e estímulo: MEI (Q44), IRPF (Q46), Desenrola (Q49), 6x1 (Q53), EUA/tarifas (Q57 a Q65), Master (Q66 a Q71), Michelle/Figueiredo (Q72 a Q83). Nenhum bloco de estímulo a precede. O próprio instrumento estima duração de ~20 minutos (nota da Q6), não uma hora.",
+          "deck_vs_field": "No DECK, porém, o RESULTADO do medo é o slide 102 de 121, perto do fim: a dramaturgia do relatório coloca o medo como clímax. A leitura de enredo vale para a EDIÇÃO do deck; a alegação sobre a experiência do respondente (medo após 1h de estímulos) é invertida, porque no campo o medo foi perguntado cedo e a frio."
+        }
+      },
+      "quaest_source": {"questao": 28, "questionario_pagina": 8, "deck_slides": [102, 103]},
+      "our_dossier_coverage": "refined",
+      "our_dossier_refs": ["Card 'Voto vem antes dos módulos' (cap. 10)", "Card 'Pergunta do medo' (cap. 03)", "Bias 'Pergunta do medo / futuro do indicativo' (cap. 13)"],
+      "note": "O dossiê já tinha o insumo (voto e temas gerais precedem os módulos) mas não declarava a posição exata (Q28) para preempção. Esta verificação permite refutar de frente a posição alegada e nomear o mecanismo real do enredo: a reordenação campo->deck."
+    },
+    {
+      "id": "b",
+      "label": "Assimetria: 'governo Lula' (institucional/indivíduo) vs 'família Bolsonaro voltar ao poder' (dinastia/restauração)",
+      "candeloro_claim": "O lado Lula é enquadrado como governo/indivíduo; o lado Bolsonaro como família que volta ao poder, carga de dinastia e restauração.",
+      "verdict": "CONFIRMADA",
+      "label_tipo": "Fato (existência) + Inferência (efeito de carga)",
+      "evidence": "Deck slide 102 / Q28: 'mais um governo Lula' vs 'a família Bolsonaro voltar ao poder'. Q28 opções: 'mais um mandato de Lula' vs 'a volta da família Bolsonaro ao poder'. Q29 (melhor_result): 'Lula e o PT vencerem' vs 'a família Bolsonaro voltar a governar o país'. O lado anti-Bolsonaro é sistematicamente dinastia/restauração; o lado Lula é mandato/indivíduo/partido.",
+      "nuance": "Parte da assimetria reflete o fato real da substituição (Jair inelegível, Flávio como preposto da família). A carga emocional desigual entre 'mandato/governo' e 'família ao poder' permanece, e a randomização da ordem das opções não neutraliza o conteúdo.",
+      "quaest_source": {"questoes": [28, 29], "questionario_pagina": 8, "deck_slides": [102]},
+      "our_dossier_coverage": "covered",
+      "our_dossier_refs": ["Card 'Família Bolsonaro × Lula' (cap. 10)", "Bias 'Assimetria de enquadramento governo × oposição' (cap. 13)"],
+      "note": "Corrobora o dossiê; nada de novo, mas convergência independente reforça o achado."
+    },
+    {
+      "id": "c",
+      "label": "Nota de rodapé removendo NS/NR dos gráficos 'para facilitar a legibilidade'",
+      "candeloro_claim": "Há nota removendo Não sabe/Não respondeu dos gráficos para facilitar a legibilidade.",
+      "verdict": "CONFIRMADA",
+      "label_tipo": "Fato",
+      "evidence": "Nota literal no deck slide 103 (medo por Posicionamento): 'Nota: foram removidos os valores de \"Não sabe\" e \"Não respondeu\" do gráfico para facilitar a legibilidade'. Extração textual do deck localiza a nota em um único slide.",
+      "nuance": "Aparece na tela de recortes por posicionamento do medo (small multiples de 5 segmentos), onde remover NS/NR maximiza a polarização visível Sim/Não dentro de cada grupo. Não é remoção geral: o slide agregado do medo (102) exibe NS/NR = 4 em julho. Ainda assim, ocorre justamente na tela do medo, o item de maior valência do deck.",
+      "quaest_source": {"deck_slide": 103},
+      "our_dossier_coverage": "new",
+      "note": "ACRÉSCIMO de Candeloro: o dossiê não registrava esta nota. Defeito de transparência limpo e citável, a integrar ao catálogo de vieses."
+    },
+    {
+      "id": "d",
+      "label": "Moderação: Lula comparado ao PT (sigla) vs Flávio comparado a 'sua família' (sobrenome)",
+      "candeloro_claim": "A pergunta de moderação compara Lula ao PT (partido) e Flávio à sua família (dinastia), assimetria da unidade de comparação.",
+      "verdict": "CONFIRMADA",
+      "label_tipo": "Fato",
+      "evidence": "Q31 (lula_modera), pág. 9: 'Lula é mais moderado que o PT'. Q32 (fbolso_modera), pág. 9: 'Flávio Bolsonaro é mais moderado que sua família'. Deck slide 100 confirma os dois enunciados. Lula é aferido contra uma instituição (PT); Flávio, contra a dinastia (família).",
+      "nuance": "Mesma matriz da alegação b, num par de itens específico. A escolha de comparar cada figura à sua 'referência natural' tem justificativa retórica, mas a unidade muda (partido vs sobrenome), o que dificulta comparar as duas respostas entre si.",
+      "quaest_source": {"questoes": [31, 32], "questionario_pagina": 9, "deck_slides": [100]},
+      "our_dossier_coverage": "refined",
+      "our_dossier_refs": ["Bias 'Assimetria de enquadramento' (cap. 13)"],
+      "note": "O dossiê trata a assimetria em geral; este par Q31/Q32 é um exemplo cirúrgico e citável que o dossiê não isolava."
+    },
+    {
+      "id": "e",
+      "label": "12 slides (72 a 83) sobre Michelle × Flávio",
+      "candeloro_claim": "O deck dedica 12 slides (72 a 83) à briga Michelle x Flávio.",
+      "verdict": "CONFIRMADA",
+      "label_tipo": "Fato",
+      "evidence": "Deck slides 72 a 83 = 12 telas, todas do bloco Michelle/Flávio: conhecimento dos vídeos (72, 73), Michelle acertou/errou (74, 75), declarações verdadeiras/falsas (76, 77), motivação (78, 79), participação aumenta chances (80, 81), com quem concorda (82, 83). Vários itens vêm em par total + recorte por posicionamento.",
+      "nuance": "As 12 telas correspondem a apenas os itens Q72 a Q79. O deck OMITE do bloco de campo a Q77 (briga de família vs disputa de poder), a Q80 (muda o voto em Flávio), a Q81 (respeito às mulheres) e a Q82/Q83 (Paulo Figueiredo). Ou seja: 12 telas de novela, com o efeito eleitoral e a aresta de gênero retidos.",
+      "quaest_source": {"deck_slides": [72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83], "questoes_publicadas": [72, 73, 74, 75, 76, 78, 79], "questoes_omitidas": [77, 80, 81, 82, 83]},
+      "our_dossier_coverage": "covered",
+      "our_dossier_refs": ["'O corte cirúrgico no bloco Michelle' (cap. 10)", "Bias 'Publicação seletiva Michelle/Paulo Figueiredo' (cap. 13)"],
+      "note": "A contagem de Candeloro quantifica e corrobora o achado do dossiê sobre volume editorial dedicado ao tema."
+    },
+    {
+      "id": "f",
+      "label": "Abertura 'já sabia ou ficou sabendo agora': o instrumento informa e depois colhe opinião",
+      "candeloro_claim": "O item de abertura informa o entrevistado sobre os vídeos e só então colhe opinião, fabricando parte da resposta pelo próprio instrumento.",
+      "verdict": "CONFIRMADA",
+      "label_tipo": "Fato (dado) + Inferência (efeito de priming)",
+      "evidence": "Q72 (video_michelle_sabia) / deck slide 72: 51% responderam 'Não, ficou sabendo agora' (49% 'já sabia'). Maioria foi informada pelo preâmbulo do entrevistador e, nos itens seguintes (Q73 a Q83), opina sobre uma briga que acabou de conhecer.",
+      "pattern": "O padrão 'já sabia ou ficou sabendo agora' é sistemático no instrumento: Q44 (MEI), Q49 (Desenrola), Q53 (6x1), Q58 (tarifas), Q63 (Flávio EUA), Q66 (Master), Q68 (Wagner), Q72 (Michelle), Q75 (vídeo Flávio), Q82 (Figueiredo). O instrumento lê um enunciado factual à maioria não informada e depois mede 'opinião'.",
+      "quaest_source": {"questao": 72, "questionario_pagina": 21, "deck_slide": 72, "pct_ficou_sabendo_agora": 51},
+      "our_dossier_coverage": "refined",
+      "our_dossier_refs": ["Bias 'Frame acusatório escândalo lido a todos os 2.004' (cap. 13)", "Demanda 'estímulo informacional' (cap. 12)"],
+      "note": "ACRÉSCIMO quantitativo: o dossiê tinha o conceito (rótulo 'opinião após estímulo informacional') mas não o número 51% nem o mapa completo dos abre-blocos de priming."
+    },
+    {
+      "id": "g",
+      "label": "Wagner/Master: alternativa exculpatória + pergunta de isolamento; corredor que Flávio não recebe",
+      "candeloro_claim": "O bloco Jaques Wagner traz opção exculpatória (não houve nada de errado) e pergunta de isolamento (questão pessoal do senador vs institucional do governo Lula); Flávio não recebe corredor análogo no bloco Michelle.",
+      "verdict": "CONFIRMADA",
+      "label_tipo": "Fato (enunciados) + Inferência (assimetria protetora)",
+      "evidence_exculpatoria": "Q69 (aval_wagner_master), pág. 20 / deck slide 90: 'Algumas pessoas acreditam que Jaques Wagner agiu de forma errada... Outras pessoas acreditam que não houve nada de errado na relação dele com o Banco Master.' Ramo exculpatório explícito.",
+      "evidence_isolamento": "Q71 (tipo_problema_wagner), pág. 21 / deck slide 94: 'Você vê esse caso mais como uma questão pessoal a ser respondida pelo senador Jaques Wagner ou mais como uma questão institucional do governo Lula?' Corredor que blinda o governo Lula.",
+      "assimetria_flavio": "No bloco Michelle não há corredor de isolamento institucional protegendo Flávio. A Q80 (a revelação muda seu voto em Flávio) liga o escândalo ao custo eleitoral de Flávio, o oposto de blindagem, e foi RETIDA do deck; a Q71 que blinda o governo Lula foi PUBLICADA (slide 94). A seletividade de publicação reforça a assimetria de enunciado.",
+      "nuance": "O bloco Michelle não é totalmente desprovido de corredores pró-Flávio: Q76/slide 82 permite concordar com Flávio; Q74/slide 76 permite julgar as declarações de Michelle 'totalmente falsas'. A alegação de que Flávio 'não recebe corredor nenhum' é forte demais; o corredor específico ausente é o de ISOLAMENTO INSTITUCIONAL mais o de EXCULPAÇÃO ('nada de errado'), sem paralelo do lado Bolsonaro em julho.",
+      "quaest_source": {"questoes": [69, 71], "questionario_paginas": [20, 21], "deck_slides": [90, 94], "flavio_item_retido": 80},
+      "our_dossier_coverage": "refined",
+      "our_dossier_refs": ["Card 'Master agora atinge Lula' (cap. 10)", "Bias 'Frame acusatório escândalo' (cap. 13)"],
+      "note": "ACRÉSCIMO mais forte de Candeloro: o dossiê lia o bloco Wagner como MELHORA de simetria (julho passa a atingir Lula, com a negação). Candeloro capta a assimetria de enquadramento DENTRO do bloco (exculpação + isolamento), que blinda o governo. Refina, não contradiz, o 'melhora parcial'."
+    },
+    {
+      "id": "h",
+      "label": "Margem declarada vale sob AAS, falsa em amostra por cotas; deff não reportado; margens de recorte dobram/triplicam",
+      "candeloro_claim": "A margem de 2 p.p. só valeria para o agregado nacional sob amostra aleatória simples; a amostra é por cotas, o deff não é reportado, e as margens de recorte dobram ou triplicam.",
+      "verdict": "CONFIRMADA (com nuance de linguagem) e já integralmente coberta pelo dossiê",
+      "label_tipo": "Fato (ficha) + Inferência (magnitude sem microdados)",
+      "evidence_ficha": "Ficha técnica no deck slide 3: margem de erro estimada de 2 pontos percentuais, 95% de confiança; método 'coleta domiciliar face a face por questionários estruturados'; nenhum deff, nenhum desenho amostral declarado. O questionário usa 'FOLHA DE COTA' para seleção do respondente dentro do setor, confirmando controle por cotas num desenho conglomerado (334 setores x exatamente 6).",
+      "evidence_recorte": "Margens de subgrupo crescem quando n cai: no dossiê, MOE máxima por capital vai de ±8,5 (São Paulo, n=132) a ±20 (Salvador, n=24). Margem da diferença Lula-Flávio: ±3,95 (deff 1) a ±5,58 (deff 2), contra ±2 individual.",
+      "nuance": "'Falsa em amostra por cotas' exagera: a margem publicada não é falsa, é uma aproximação design-naive (amostra aleatória simples), não uma garantia de amostragem probabilística. O dossiê já expressa isto com mais precisão.",
+      "quaest_source": {"deck_slide_ficha": 3, "margem_publicada_pp": 2.0, "srs_pior_caso_pp": 2.19, "diff_moe_deff1_pp": 3.95, "diff_moe_deff2_pp": 5.58},
+      "our_dossier_coverage": "covered",
+      "our_dossier_refs": ["Cap. 05 '±2 não é a margem'", "Cap. 09 território (MOE por capital)", "Bias 7 e 8 (cap. 13)", "quaest_0726_data.json campo 'margin'"],
+      "note": "Candeloro nada acrescenta aqui; o dossiê cobre com mais rigor (cenários de deff, intervalo da diferença, base de subgrupo não publicada)."
+    },
+    {
+      "id": "i",
+      "label": "Face a face subestimou o campo conservador em 2018 e 2022 (voto envergonhado) e a Quaest não declara correção",
+      "candeloro_claim": "Pesquisas presenciais subestimaram Bolsonaro em 2018 e 2022 por voto envergonhado, e a ficha da Quaest não declara nenhuma correção.",
+      "verdict": "PARCIAL / CONFIRMADA COM RESSALVAS",
+      "components": {
+        "erro_empirico_2018_2022": {
+          "status": "CONFIRMADA",
+          "label_tipo": "Fato",
+          "evidence": "2022, 1º turno: na véspera, Ipec e Datafolha apontavam vantagem de ~14 p.p. para Lula; a urna deu 5,23 p.p. Bolsonaro ficou ~6,7 p.p. acima do projetado pelas presenciais; erro de gap de quase 9 p.p. 2018, 1º turno: as pesquisas de véspera colocavam Bolsonaro abaixo dos 46% de votos válidos que obteve. Institutos presenciais (Datafolha, Ipec/Ibope) subestimaram o campo conservador no 1º turno.",
+          "sources": [
+            "https://www.seudinheiro.com/2022/politica/eleicoes-2022-lula-bolsonaro-pesquisas-do-ipec-e-datafolha-erraram-resultados-das-urnas-em-ate-20-pontos-percentuais-nos-estados-lils/",
+            "https://www.cnnbrasil.com.br/politica/resultados-das-urnas-divergem-de-pesquisas-eleitorais/",
+            "https://www.em.com.br/app/noticia/politica/2022/09/26/interna_politica,1398068/pesquisas-eleitorais-erraram-tudo-em-2018-como-diz-bolsonaro.shtml"
+          ]
+        },
+        "mecanismo_voto_envergonhado": {
+          "status": "HIPÓTESE / CONTESTADA",
+          "label_tipo": "Hipótese",
+          "evidence": "A causa 'voto envergonhado' (desejabilidade social) é disputada. Análises apontam que convicção do eleitor enfraquece a tese; alternativas: eleitor de última hora, comparecimento, não resposta diferencial. Além disso, o 2º turno de 2018 do Datafolha acertou (55/45 válidos), então o erro concentrou-se no 1º turno fragmentado.",
+          "sources": [
+            "https://contee.org.br/conviccao-do-eleitor-enfraquece-tese-de-voto-envergonhado-na-disputa-presidencial/"
+          ]
+        },
+        "quaest_nao_declara_correcao": {
+          "status": "CONFIRMADA",
+          "label_tipo": "Fato",
+          "evidence": "A ficha técnica de julho (deck slide 3) não declara nenhuma correção por modo ou por voto envergonhado; informa apenas método presencial, fontes de calibração (TSE 2026, PNAD, Censo) e margem de 2 p.p."
+        }
+      },
+      "ressalvas_que_limitam_o_uso_contra_a_quaest": [
+        "2026 tem Flávio Bolsonaro, não Jair; a transferência de um eventual estigma pessoal do voto é especulativa.",
+        "Se o presencial deprime o conservador, é efeito de MODO comum a todo o campo presencial de 2026, mas Datafolha (43) e Nexus/BTG (44) põem Flávio 6 a 7 p.p. ACIMA da Quaest (37): o histórico presencial não explica o resíduo ESPECÍFICO da Quaest.",
+        "O argumento corta dos dois lados: se o presencial subestima o conservador, o Flávio verdadeiro pode superar TODAS as presenciais de 2026, não só a Quaest, incluindo a Datafolha."
+      ],
+      "quaest_source": {"deck_slide_ficha": 3, "flavio_quaest_2t": 37, "flavio_datafolha_2t": 43, "flavio_nexusbtg_2t": 44},
+      "our_dossier_coverage": "refined",
+      "our_dossier_refs": ["Card 'Controle de modo' (cap. 11)"],
+      "note": "ACRÉSCIMO longitudinal de Candeloro: o histórico 2018/2022 é insumo válido para o capítulo de efeito de casa como cautela do CAMPO INTEIRO. Mas, bem delimitado, é ressalva de campo, não indício contra a Quaest, e o controle de modo cruzado do dossiê já neutraliza a versão forte."
+    }
+  ],
+  "dossier_gains": [
+    {"from_claim": "c", "gain": "A nota que remove NS/NR 'para facilitar a legibilidade' no slide 103 (medo por posicionamento): defeito de transparência novo, citável, a integrar ao catálogo de vieses."},
+    {"from_claim": "g", "gain": "A assimetria DENTRO do bloco Wagner: exculpação 'não houve nada de errado' (slide 90) e isolamento 'pessoal do senador vs institucional do governo Lula' (slide 94), com o item que expõe Flávio (Q80) retido e o que blinda Lula (Q71) publicado. Refina o 'melhora parcial' do dossiê."},
+    {"from_claim": "f", "gain": "O número 51% que ficou sabendo dos vídeos de Michelle na hora (slide 72), mais o mapa completo dos abre-blocos 'já sabia ou ficou sabendo agora': quantifica o priming do instrumento."},
+    {"from_claim": "d", "gain": "O par Q31/Q32 (Lula vs PT; Flávio vs sua família) como exemplo cirúrgico da assimetria de unidade de comparação."},
+    {"from_claim": "e", "gain": "A contagem de 12 telas (slides 72 a 83) dá dimensão editorial ao peso do tema Michelle no deck."},
+    {"from_claim": "a", "gain": "A lente de 'enredo' nomeia o mecanismo real: a reordenação campo->deck. O medo é a Q28 no campo (a frio) e o slide 102 no deck (clímax). O enredo se fabrica na edição, provável ao comparar ordem de campo e ordem de deck."}
+  ],
+  "we_have_candeloro_missed": [
+    "A refutação de a por sequência: a pergunta do medo é a Q28, antes de todo estímulo; a alegação 'após 1h de estímulos' é invertida no campo (deck não é ordem de campo).",
+    "O controle de modo cruzado (cap. 11): o Flávio da Quaest (37) é o menor do campo e abaixo de seus pares presenciais (Datafolha 43, Nexus/BTG 44); modo e voto envergonhado (alegação i) não isolam a Quaest.",
+    "A cadeia de custódia documental: capa JUL != JUN, carimbo ICP-Brasil de 9 de julho, 31 resíduos de template, nota fiscal antes do campo. Ausente da crítica de Candeloro, que fica no instrumento.",
+    "A matemática do deff com números (intervalo da diferença ±3,95 a ±5,58), benchmarks TSE/PNAD e a autópsia territorial (rotação de 333 de 334 setores).",
+    "O contra-enredo calibrado: a pesquisa NÃO prova inviabilidade de Flávio (45x37, melhor adversário de Lula). A crítica de Candeloro tende ao enredo inverso; o veredito da casa é mais calibrado (opacidade, não fraude).",
+    "A reconciliação item a item (65 de 101 publicados) que dá base à alegação e e g de Candeloro, que ele afirma sem a planilha de cobertura."
+  ],
+  "both_missed": [
+    "O conjunto COMPLETO de abre-blocos 'já sabia ou ficou sabendo agora' e seus percentuais de 'ficou sabendo agora' por tema: nem o dossiê nem Candeloro mapearam a bateria inteira, que sistematizaria a crítica de priming (o dossiê tem o conceito, Candeloro tem um dado).",
+    "A conexão explícita 'medo cedo no campo, medo tarde no deck' como o ato editorial que fabrica o enredo: o dossiê tem o fato de sequência, Candeloro tem a lente de enredo, mas nenhum dos dois cruzou os dois para nomear a reordenação como o mecanismo."
+  ],
+  "errors_omissions_in_dossier": [
+    {"severity": "média", "type": "omissão", "item": "A nota de remoção de NS/NR (slide 103) não consta do dossiê. Adicionar ao catálogo de vieses."},
+    {"severity": "média", "type": "sub-leitura", "item": "O card 'Master agora atinge Lula' credita a inclusão de Wagner como melhora de simetria, mas não flagra a exculpação (Q69) e o isolamento (Q71) que blindam o governo dentro do bloco. Nuançar."},
+    {"severity": "baixa", "type": "omissão preventiva", "item": "Os cards 'Pergunta do medo' e 'Voto vem antes dos módulos' estabelecem a sequência mas não declaram a posição exata (Q28) da pergunta do medo, o que teria preempção direta contra a leitura 'medo no fim'."},
+    {"severity": "baixa", "type": "reforço possível", "item": "O capítulo de efeito de casa poderia incorporar o histórico presencial 2018/2022 como cautela de campo (o Flávio da Quaest como piso, não teto), delimitando a alegação i sem lhe conceder força que ela não tem contra a Quaest especificamente."}
+  ],
+  "remaining_unconfirmed": [
+    "Se a nota de remoção de NS/NR aparece em outros slides além do 103: a extração textual só a localiza no 103; slides que são imagem não são verificáveis por texto (aberto).",
+    "A magnitude exata do deff e a direção do efeito de instrumento sobre o voto: seguem Hipótese sem microdados, PSU e pesos finais.",
+    "O mecanismo causal 'voto envergonhado' (alegação i): permanece Hipótese contestada, não Fato.",
+    "Que o enquadramento assimétrico (b, d) MOVA voto de fato: existência é Fato; efeito comportamental é Inferência não medida sem experimento de wording."
+  ]
+}

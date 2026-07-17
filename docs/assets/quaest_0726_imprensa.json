@@ -1,0 +1,334 @@
+{
+  "meta": {
+    "title": "Imprensa e a Quaest julho/2026 — enquadramento Folha e Estadão (tríptico com a Globo)",
+    "scope": "Cotejo entre manchetes de Folha de S.Paulo, Estadão e veículos correlatos e o que o deck Genial/Quaest (BR-07181/2026, campo 10–13/07/2026) efetivamente mostrava.",
+    "author_role": "auditoria de enquadramento de mídia — dossiê Genial/Quaest 07/2026",
+    "compiled": "2026-07-16",
+    "calibration": "Cada item classificado Fato / Inferência / Hipótese. Manchete própria distinguida de aspas de terceiro. Crítica é de enquadramento e incentivo, não de conluio.",
+    "note_globo": "A coluna Globo é prevista para fechamento a três, mas o detalhamento da Globo é produzido por outro agente. Aqui a Globo aparece apenas como âncora de incentivo (verba Secom) e não como corpus de manchete."
+  },
+  "poll_reference": {
+    "registry": "BR-07181/2026",
+    "field": "10–13/07/2026",
+    "deck_release": "15/07/2026",
+    "tariff_block_release": "16/07/2026",
+    "sample": 2004,
+    "individual_moe": 2.0,
+    "difference_moe_deff1": 3.95,
+    "sponsor": "Banco Genial S.A.",
+    "institute": "Quaest Pesquisa e Consultoria Ltda.",
+    "key_numbers": {
+      "first_round_gap_jun_jul": [10, 12],
+      "first_round_lula": [39, 40],
+      "first_round_flavio": [29, 28],
+      "runoff_gap_jun_jul": [6, 8],
+      "runoff_lula": [44, 45],
+      "runoff_flavio": [38, 37],
+      "flavio_reject_series": {"abr": 52, "mai": 54, "jun": 56, "jul": 57},
+      "lula_reject_jul": 50,
+      "runoff_opponents_gap": {"Flávio Bolsonaro": 8, "Ronaldo Caiado": 9, "Romeu Zema": 10, "Renan Santos": 12},
+      "tariff_blame_flavio_pct": 51,
+      "tariff_blame_lula_pct": 30,
+      "tariff_blame_dk": 19,
+      "tariff_retaliacao_pix_pct": 49,
+      "tariff_raises_vote_lula_jun_jul": [39, 42],
+      "tariff_raises_vote_flavio_jun_jul": [30, 27]
+    }
+  },
+  "central_finding_topline_staggering": {
+    "class": "Fato",
+    "statement": "O bloco EUA/tarifas (Q57–Q65) não saiu no deck de 15/07 (dia da corrida eleitoral) e foi divulgado como matéria separada em 16/07 ('51% culpam Flávio', '42% aumenta voto em Lula', '49% retaliação ao Pix'). Uma única janela de campo (10–13/07) gerou dois ciclos de notícia consecutivos.",
+    "field_vs_confirmation": "O tarifaço de 25% foi confirmado em 15/07, dois dias após o fechamento do campo (13/07). Logo, os números de culpa/adesão medem opinião ANTERIOR à confirmação da tarifa, mas foram publicados em 16/07 dentro de um ambiente noticioso onde a tarifa já era fato consumado.",
+    "dossier_reconciliation": "O snapshot do dossiê (quaest_0726_data.json) marca Q57–Q65 como 'sem topline' — verdadeiro para o deck de 15/07. Correção auditável: a Quaest liberou o bloco tarifário em 16/07, escalonado, não suprimido.",
+    "inference": {
+      "class": "Inferência",
+      "text": "O escalonamento entregou os números de culpa tarifária como história própria em 16/07 — exatamente a munição que a coinagem de campanha 'Tariflávio' (definida pelo PT em 14/07) precisava para um segundo dia de pauta."
+    }
+  },
+  "tariflavio_genealogy": [
+    {
+      "date": "2026-06-03 (ou antes)",
+      "actor": "Redes (X) — perfis ligados ao campo governista",
+      "event": "O trocadilho 'tarifa' + 'Flávio' JÁ circula e 'explode nas redes' em início de junho — mais de um mês antes da reunião de estratégia do PT (14/07). O Cafezinho registra 'Tariflávio explode nas redes' em 03/06; Poder360 registra 'Flávio vira meme: TariFlávio'. Uma fonte descreve a hashtag como 'impulsionada por perfis ligados ao campo governista e a movimentos de defesa da soberania'.",
+      "class": "Fato (existência e data) / Inferência (impulso por perfis governistas)",
+      "source_type": "reportagem",
+      "urls": ["https://www.ocafezinho.com/2026/06/03/tariflavio-explode-nas-redes-rejeicao-ao-tarifaco-dos-eua-chega-a-81-e-amplia-desgaste-dos-bolsonaro/", "https://www.poder360.com.br/poder-eleicoes/flavio-vira-meme-por-causa-de-tarifas-dos-eua-tariflavio/", "https://www.brasil247.com/midia/tariflavio-tarifa-de-trump-contra-o-brasil-apoiada-pelos-bolsonaro-ganha-apelido-nas-redes"]
+    },
+    {
+      "date": "2026-07-06",
+      "actor": "Estadão (editorial)",
+      "event": "Editorial 'O melhor cabo eleitoral de Lula' adota, em voz institucional própria, a tese de que Flávio ajuda a reeleger Lula — antes de o PT institucionalizar o rótulo. 'Se a ideia dos Bolsonaro é ajudar a reeleger Lula (...) está dando certo.'",
+      "class": "Fato",
+      "own_voice": true,
+      "source_type": "editorial (voz própria do veículo)",
+      "urls": ["https://www.diariodocentrodomundo.com.br/estadao-se-revolta-com-flavio-bolsonaro-e-o-chama-de-melhor-cabo-eleitoral-de-lula"]
+    },
+    {
+      "date": "2026-07-07",
+      "actor": "Folha de S.Paulo (reportagem)",
+      "event": "Folha revela a manifestação de Flávio à USTR (86 páginas) na qual ELE PRÓPRIO argumenta que o tarifaço daria 'vitória política' a Lula. A tese avança pela boca do próprio alvo, não pelo rótulo de campanha.",
+      "class": "Fato",
+      "own_voice": false,
+      "source_type": "reportagem (fala do próprio Flávio)",
+      "urls": ["https://www.cartacapital.com.br/economia/flavio-bolsonaro-diz-ao-governo-trump-que-tarifaco-daria-vitoria-a-lula/", "https://www.em.com.br/politica/2026/07/7453606-flavio-bolsonaro-diz-a-trump-que-tarifaco-daria-vitoria-a-lula.html"]
+    },
+    {
+      "date": "2026-07-14 (noite)",
+      "actor": "PT — Éden Valadares, secretário nacional de Comunicação",
+      "event": "O PT define a estratégia de comunicação e INSTITUCIONALIZA (não cunha) o rótulo 'Tariflávio', que já circulava desde junho. Parte das fontes credita a adoção diretamente a Éden Valadares — atribuição de autoria específica frágil, dado o uso anterior nas redes.",
+      "class": "Fato (institucionalização pelo PT) / Inferência (autoria específica — o termo é anterior)",
+      "source_type": "reportagem",
+      "urls": ["https://www.brasil247.com/brasil/secretario-do-pt-apelida-tariflavio-apos-nova-taxacao-de-trump", "https://panoramadabahia.com.br/eden-culpa-flavio-bolsonaro-por-taxacao-dos-eua-e-classifica-episodio-como-tariflavio/", "https://www.iguanambi.com.br/noticias/2026/07/15/lula-decide-manter-sidonio-palmeira-na-secom-e-entrega-coordenacao-da-campanha-a-publicitario-baiano-saiba-quem-e/"]
+    },
+    {
+      "date": "2026-07-15",
+      "actor": "Poder360 / CNN Brasil / Correio Braziliense",
+      "event": "Confirmado o tarifaço, o rótulo entra em manchetes — mas ENTRE ASPAS e atribuído ao PT: 'Tarifaço vira munição do PT para desgastar Flávio com TariFlávio' (Poder360); 'PT quer explorar Tariflávio; senador tenta emplacar Partido do Tarifaço' (CNN Brasil). Enquadramento de discurso reportado, não de voz própria.",
+      "class": "Fato",
+      "own_voice": false,
+      "source_type": "manchete com aspas atribuídas ao PT",
+      "urls": ["https://br.investing.com/news/politics-news/tarifaco-vira-municao-do-pt-para-desgastar-flavio-com-tariflavio-2003099", "https://www.cnnbrasil.com.br/blogs/jussara-soares/eleicoes/pt-quer-explorar-tariflavio-senador-tenta-emplacar-partido-do-tarifaco/", "https://www.correiobraziliense.com.br/politica/2026/07/7462377-pt-acusa-familia-bolsonaro-de-traicao-e-chama-taxa-dos-eua-de-tariflavio.html"]
+    },
+    {
+      "date": "2026-07-16",
+      "actor": "Quaest / imprensa",
+      "event": "Quaest libera o bloco tarifário: '51% culpam Flávio'. Os números dão respaldo de survey à narrativa 'Tariflávio' um dia depois da corrida. Brasil de Fato: '51% culpam Flávio Bolsonaro por tarifas de Trump, aponta Quaest'.",
+      "class": "Fato",
+      "own_voice": false,
+      "source_type": "reportagem de dados",
+      "urls": ["https://www.brasildefato.com.br/2026/07/16/51-culpam-flavio-bolsonaro-por-tarifas-de-trump-aponta-quaest/", "https://www.cartacapital.com.br/cartaexpressa/o-impacto-do-tarifaco-nas-intencoes-de-voto-de-lula-e-flavio-bolsonaro-segundo-a-quaest/"]
+    }
+  ],
+  "sidonio_hypothesis": {
+    "premise": "Hipótese de trabalho: 'Tariflávio' não seria orgânico, mas produto da máquina de comunicação de Sidônio Palmeira (marqueteiro da campanha Lula 2022, ministro da Secom desde 14/jan/2025), conhecida por apelidos, memes e enquadramentos virais.",
+    "layer_fato": [
+      {
+        "class": "Fato",
+        "text": "Sidônio Palmeira assumiu a Secom em 14/01/2025 e instalou um playbook de 'linguagem de TikTok': memes (cão caramelo, Star Wars), áudios de trend, edição dinâmica, centralização das redes de Lula na Secom.",
+        "urls": ["https://www.em.com.br/politica/2025/01/7043240-lula-com-linguagem-de-tiktok-as-estrategias-de-sidonio-para-o-governo.html", "https://nucleo.jor.br/reportagem/2025-10-08-sacudida-redes-governo-lula/"]
+      },
+      {
+        "class": "Fato",
+        "text": "Sob Sidônio, a Secom pagou ~R$ 2 mi a influenciadores/artistas desde 2025 (55+ influenciadores, R$ 1 mil a R$ 124,9 mil cada) e elevou a fatia digital a 30%+ da verba (R$ 234,8 mi). Máquina de amplificação paga documentada.",
+        "urls": ["https://www.otempo.com.br/politica/governo/2026/4/11/governo-lula-paga-r-2-milhoes-a-influenciadores-e-artistas-por-campanhas"]
+      },
+      {
+        "class": "Fato",
+        "text": "Em 15/07/2026 Lula manteve Sidônio na Secom E lhe entregou a coordenação da campanha de reeleição — o mesmo operador une aparato de governo e campanha.",
+        "urls": ["https://www.iguanambi.com.br/noticias/2026/07/15/lula-decide-manter-sidonio-palmeira-na-secom-e-entrega-coordenacao-da-campanha-a-publicitario-baiano-saiba-quem-e/"]
+      },
+      {
+        "class": "Fato",
+        "text": "A Secom (governo) emitiu nota oficial em 07/07 acusando Flávio de sugerir o adiamento do tarifaço com 'claro objetivo eleitoreiro' — atacou a substância, mas SEM usar o rótulo 'Tariflávio' na comunicação oficial.",
+        "urls": ["https://www.dgabc.com.br/Noticia/4333885/secom-flavio-optou-por-sugerir-adiamento-do-tarifaco-com-claro-objetivo-eleitoreiro-"]
+      }
+    ],
+    "layer_inferencia": {
+      "class": "Inferência",
+      "text": "O padrão de difusão — apelido em formato meme + impulso por 'perfis ligados ao campo governista' + janela curta e coordenada (institucionalização PT 14/07, confirmação da tarifa 15/07, bloco Quaest 16/07) — é COMPATÍVEL com o método Sidônio (apelidos/memes/influenciadores pagos). A cunhagem não é orgânica pura: um termo de redes de junho foi adotado e industrializado pelo aparato de comunicação governista/petista."
+    },
+    "layer_hipotese": {
+      "class": "Hipótese",
+      "text": "Autoria/manufatura específica por Sidônio/Secom NÃO é documentada. A única atribuição direta em reportagem é a Éden Valadares (PT, partido — não governo). Nenhuma fala pública de Lula ou de ministro usando o termo 'Tariflávio' foi localizada (o elo mais forte está ausente). O termo é anterior (03/06) à reunião petista de 14/07. Logo: 'Sidônio fabricou o Tariflávio' permanece HIPÓTESE não comprovada."
+    },
+    "verdict": "Estrutura de três camadas: (1) CUNHAGEM = termo de redes desde ~03/06, autoria difusa [Fato: existência; Hipótese: autor]; (2) AMPLIFICAÇÃO = janela 14–16/07, padrão compatível com a máquina Sidônio de memes/influenciadores paga e com perfis governistas [Fato: máquina existe; Inferência: uso neste caso]; (3) ADOÇÃO EM MANCHETE = 15–16/07, sempre entre aspas atribuídas ao PT, salvo o editorial próprio do Estadão. Veredito: manufatura sidônica é hipótese plausível e não comprovada; o que é fato é a existência do aparato e a industrialização de um termo pré-existente."
+  },
+  "tariflavio_verdict": {
+    "class": "Inferência calibrada",
+    "text": "Não se documenta 'contaminação de linguagem' plena em manchete própria de Folha ou Estadão: onde o rótulo 'Tariflávio' aparece em título (CNN, Poder360, Correio), está entre aspas e atribuído ao PT — jornalismo de discurso reportado, defensável. O achado mais forte de voz própria é o EDITORIAL do Estadão ('O melhor cabo eleitoral de Lula', 06/07), que adota a substância da tese antes mesmo de o PT cunhar o rótulo. A Folha avançou a tese via reportagem da fala do próprio Flávio (07/07). Ou seja: a tese circulou por juízo editorial e pela boca do alvo, não por adesão ao slogan partidário."
+  },
+  "headlines": [
+    {
+      "outlet": "Estadão",
+      "type": "editorial (voz própria)",
+      "title": "O melhor cabo eleitoral de Lula",
+      "date": "2026-07-06",
+      "url": "https://www.diariodocentrodomundo.com.br/estadao-se-revolta-com-flavio-bolsonaro-e-o-chama-de-melhor-cabo-eleitoral-de-lula",
+      "campaign_term_present": false,
+      "own_voice_thesis": true,
+      "frame": "Adota em voz institucional a tese de que Flávio ajuda a reeleger Lula. Cotejo: coerente com o dado (Flávio é o adversário MAIS competitivo de Lula, gap 8, e ainda assim o de maior rejeição, 57%); mas é juízo editorial, não leitura de topline.",
+      "class": "Fato (título) / Inferência (efeito de enquadramento)"
+    },
+    {
+      "outlet": "Folha de S.Paulo",
+      "type": "reportagem",
+      "title": "Flávio Bolsonaro diz ao governo Trump que tarifaço daria 'vitória' a Lula",
+      "date": "2026-07-07",
+      "url": "https://www.cartacapital.com.br/economia/flavio-bolsonaro-diz-ao-governo-trump-que-tarifaco-daria-vitoria-a-lula/",
+      "campaign_term_present": false,
+      "own_voice_thesis": false,
+      "frame": "Furo da Folha sobre a manifestação de Flávio à USTR. A tese pró-Lula avança pela fala do próprio Flávio — aspas de terceiro, não voz do veículo. Defensável; a escolha de pauta amplifica a tese.",
+      "class": "Fato"
+    },
+    {
+      "outlet": "CNN Brasil (blog Jussara Soares)",
+      "type": "coluna/blog",
+      "title": "PT quer explorar \"Tariflávio\"; senador tenta emplacar \"Partido do Tarifaço\"",
+      "date": "2026-07-15",
+      "url": "https://www.cnnbrasil.com.br/blogs/jussara-soares/eleicoes/pt-quer-explorar-tariflavio-senador-tenta-emplacar-partido-do-tarifaco/",
+      "campaign_term_present": true,
+      "own_voice_thesis": false,
+      "frame": "'Tariflávio' entre aspas, atribuído ao PT ('quer explorar'). Simetria de rótulos: mostra os dois lados tentando empurrar a culpa. Discurso reportado, distância jornalística mantida.",
+      "class": "Fato"
+    },
+    {
+      "outlet": "Poder360",
+      "type": "reportagem",
+      "title": "Tarifaço vira munição do PT para desgastar Flávio com \"TariFlávio\"",
+      "date": "2026-07-15",
+      "url": "https://br.investing.com/news/politics-news/tarifaco-vira-municao-do-pt-para-desgastar-flavio-com-tariflavio-2003099",
+      "campaign_term_present": true,
+      "own_voice_thesis": false,
+      "frame": "Rótulo entre aspas, atribuído explicitamente à estratégia do PT ('vira munição do PT'). Reporta a coinagem como tática de campanha.",
+      "class": "Fato"
+    },
+    {
+      "outlet": "Correio Braziliense",
+      "type": "reportagem",
+      "title": "PT acusa família Bolsonaro de 'traição' e chama taxa dos EUA de 'TariFlávio'",
+      "date": "2026-07-15",
+      "url": "https://www.correiobraziliense.com.br/politica/2026/07/7462377-pt-acusa-familia-bolsonaro-de-traicao-e-chama-taxa-dos-eua-de-tariflavio.html",
+      "campaign_term_present": true,
+      "own_voice_thesis": false,
+      "frame": "Aspas + atribuição direta ao PT ('PT acusa', 'chama de'). Discurso reportado.",
+      "class": "Fato"
+    },
+    {
+      "outlet": "Brasil 247",
+      "type": "reportagem",
+      "title": "Secretário do PT apelida tarifaço de \"tariFlávio\" após nova taxação de Trump",
+      "date": "2026-07-15",
+      "url": "https://www.brasil247.com/brasil/secretario-do-pt-apelida-tariflavio-apos-nova-taxacao-de-trump",
+      "campaign_term_present": true,
+      "own_voice_thesis": false,
+      "frame": "Atribui a autoria a Éden Valadares (secretário de Comunicação do PT). Rótulo entre aspas.",
+      "class": "Fato"
+    },
+    {
+      "outlet": "Terra",
+      "type": "reportagem",
+      "title": "Pesquisa Quaest revela virada de Lula e queda de Flávio Bolsonaro",
+      "date": "2026-07-15",
+      "url": "https://www.terra.com.br/noticias/pesquisa-quaest-revela-virada-de-lula-e-queda-de-flavio-bolsonaro,18ab1b4b65b41fbccc1fb1ae4f5d4519ng4rehk5.html",
+      "campaign_term_present": false,
+      "own_voice_thesis": false,
+      "frame": "Cotejo crítico: 'virada' é incorreto (Lula já liderava; não houve inversão) e 'queda' de Flávio (1º turno 29→28; 2º turno 38→37) está DENTRO da margem individual (2,0) e muito dentro da margem de diferença (~3,95). Movimento dentro da margem tratado como movimento real.",
+      "class": "Fato (título) / Inferência (crítica de enquadramento)"
+    },
+    {
+      "outlet": "Metrópoles",
+      "type": "reportagem",
+      "title": "Genial/Quaest: Lula lidera 2º turno com 45%; Flávio Bolsonaro tem 37%",
+      "date": "2026-07-15",
+      "url": "https://www.metropoles.com/brasil/genial-quaest-lula-lidera-em-todos-os-cenarios-de-1o-e-2o-turnos",
+      "campaign_term_present": false,
+      "own_voice_thesis": false,
+      "frame": "Título correto e sóbrio. Cotejo: omite que Flávio é o adversário MAIS competitivo de Lula (gap 8 < Caiado 9 < Zema 10 < Renan 12) — o 'lidera em todos os cenários' apaga que o cenário mais apertado é justamente contra Flávio.",
+      "class": "Fato"
+    },
+    {
+      "outlet": "O Cafezinho",
+      "type": "reportagem",
+      "title": "Rejeição a Flávio Bolsonaro sobe pelo quarto mês seguido e chega a 57% — a maior entre todos os presidenciáveis testados",
+      "date": "2026-07-15",
+      "url": "https://www.ocafezinho.com/2026/07/15/rejeicao-a-flavio-bolsonaro-sobe-pelo-quarto-mes-seguido-e-chega-a-57-a-maior-entre-todos-os-presidenciaveis-testados",
+      "campaign_term_present": false,
+      "own_voice_thesis": false,
+      "frame": "Cotejo: o passo mês a mês (56→57) está dentro da margem, MAS a série 52→54→56→57 (abr→jul, +5) supera a margem — logo a moldura de 'tendência de alta' é defensável; seria indefensável tratar só o +1 do mês como movimento.",
+      "class": "Fato"
+    },
+    {
+      "outlet": "Gazeta do Povo",
+      "type": "reportagem",
+      "title": "Flávio atua nos EUA contra tarifaço e enfraquece narrativa de Lula sobre ameaça à soberania",
+      "date": "2026-07-07",
+      "url": "https://www.gazetadopovo.com.br/eleicoes/2026/flavio-bolsonaro-eua-tarifaco-lula-discurso-sobre-soberania/",
+      "campaign_term_present": false,
+      "own_voice_thesis": false,
+      "frame": "Contra-enquadramento de veículo alinhado ao mercado/direita: inverte o vetor (Flávio 'enfraquece' a narrativa de Lula). Útil para mostrar que o enquadramento tarifário não foi unidirecional.",
+      "class": "Fato"
+    },
+    {
+      "outlet": "Brasil de Fato",
+      "type": "reportagem de dados",
+      "title": "51% culpam Flávio Bolsonaro por tarifas de Trump, aponta Quaest",
+      "date": "2026-07-16",
+      "url": "https://www.brasildefato.com.br/2026/07/16/51-culpam-flavio-bolsonaro-por-tarifas-de-trump-aponta-quaest/",
+      "campaign_term_present": false,
+      "own_voice_thesis": false,
+      "frame": "Publica o bloco tarifário liberado em 16/07. Cotejo-chave: o dado mede opinião de 10–13/07, ANTES da confirmação da tarifa em 15/07; sai como manchete de survey um dia depois da corrida, dando respaldo estatístico à narrativa Tariflávio.",
+      "class": "Fato"
+    },
+    {
+      "outlet": "Jornal de Brasília",
+      "type": "reportagem",
+      "title": "PT intensifica ataques para desgastar Flávio Bolsonaro com novo tarifaço de Trump",
+      "date": "2026-07-15",
+      "url": "https://jornaldebrasilia.com.br/noticias/politica-e-poder/pt-intensifica-ataques-para-desgastar-flavio-bolsonaro-com-novo-tarifaco-de-trump/",
+      "campaign_term_present": false,
+      "own_voice_thesis": false,
+      "frame": "Reporta a ofensiva do PT. Cita a rejeição 52→57 como acima da margem (correto sobre a série).",
+      "class": "Fato"
+    }
+  ],
+  "faria_lima_incentives": {
+    "class": "Hipótese examinada (âncoras documentáveis + rótulos de hipótese)",
+    "documentable_facts": [
+      {
+        "class": "Fato",
+        "text": "Verba de publicidade da Secom (jan/2023–15/jun/2026): R$ 954,5 milhões. Grupo Globo recebeu R$ 267 mi (25,6%), 118% acima do 2º colocado (Record, R$ 122 mi); Meta R$ 86 mi; UOL (Grupo Folha/UOL) 6º, R$ 7,3 mi.",
+        "url": "https://www.poder360.com.br/poder-midia/grupo-globo-recebeu-r-267-mi-de-publicidade-em-35-anos-de-lula/"
+      },
+      {
+        "class": "Fato",
+        "text": "Gasto anual da Secom com propaganda: R$ 175,9 mi (2023), R$ 234,9 mi (2024), R$ 365,7 mi (2025), R$ 178 mi (até 15/jun/2026). Verba de estatais/Petrobras sem transparência desde 2017.",
+        "url": "https://www.poder360.com.br/poder-midia/verba-publicitaria-de-estatais-segue-sem-transparencia-ha-8-anos/"
+      },
+      {
+        "class": "Fato",
+        "text": "O relatório Genial/Quaest e a leitura de mercado tratam Tarcísio de Freitas como o candidato preferido do eixo Faria Lima e do agronegócio; a preferência do mercado por uma alternativa de direita 'palatável' a Flávio está documentada no próprio material da Genial (patrocinadora da pesquisa).",
+        "url": "https://www.gazetadopovo.com.br/eleicoes/2026/pesquisa-eleitoral-2026/genial-quaest-presidente-julho-2026/"
+      }
+    ],
+    "hypotheses": [
+      {
+        "class": "Hipótese",
+        "text": "A caracterização dos três jornais como 'fortemente influenciados pela Faria Lima' é hipótese, não fato provado. O que é documentável são laços econômicos (publicidade oficial e privada do setor financeiro, eventos patrocinados, colunismo de mercado, leitor-investidor) e a preferência declarada do mercado por Tarcísio/alternativa a Flávio."
+      },
+      {
+        "class": "Hipótese",
+        "text": "O editorial do Estadão adotando a tese anti-Flávio ('melhor cabo eleitoral de Lula') é compatível com — mas não prova — alinhamento a um mercado que prefere Tarcísio a Flávio. Um mercado que quer Tarcísio tem incentivo editorial a desgastar Flávio como candidato de direita. Correlação de incentivo, não evidência de coordenação."
+      },
+      {
+        "class": "Limite",
+        "text": "Não foram localizados, em busca aberta, valores de verba Secom individualizados para Grupo Folha/Estadão (além dos R$ 7,3 mi de UOL). A dependência de verba oficial específica desses dois jornais fica como lacuna a fechar com dados primários da Secom."
+      }
+    ]
+  },
+  "three_outlet_comparison": [
+    {
+      "axis": "Uso do rótulo 'Tariflávio' em manchete própria",
+      "folha": "Não localizado em voz própria. Reportou a fala de Flávio ('daria vitória a Lula').",
+      "estadao": "Não em manchete-rótulo; adotou a TESE em editorial próprio ('melhor cabo eleitoral de Lula').",
+      "globo": "[Cobertura da Globo é de outro agente] — em geral, aspas atribuídas ao PT nos veículos que usaram o rótulo."
+    },
+    {
+      "axis": "Movimento dentro da margem tratado como real",
+      "folha": "Cobertura da corrida majoritariamente sóbria (45%×37%).",
+      "estadao": "Ênfase em rejeição/queda de Flávio; série de rejeição é defensável, passo mensal não.",
+      "globo": "[outro agente]"
+    },
+    {
+      "axis": "Omissão de que Flávio é o adversário mais competitivo",
+      "folha": "Presente na moldura 'Lula lidera' sem destacar gap 8 < 9 < 10 < 12.",
+      "estadao": "Foco em rejeição obscurece competitividade relativa.",
+      "globo": "[outro agente]"
+    },
+    {
+      "axis": "Âncora de incentivo (verba oficial)",
+      "folha": "UOL 6º, R$ 7,3 mi (Secom). Verba específica de jornal não isolada.",
+      "estadao": "Não isolada em busca aberta.",
+      "globo": "R$ 267 mi (25,6% da Secom) — maior beneficiário. [detalhe: outro agente]"
+    }
+  ]
+}
