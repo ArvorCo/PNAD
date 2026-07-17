@@ -1,0 +1,279 @@
+A session-scoped Stop hook is now active with condition: "agora temos nova análise para fazer da @docs/quaest_0726.html. Vamos analisar, melhorar muito o design, tornando-o fantástico e analisar as premissas do relatório para ver se tem algo errado e se tem algo que deixamos passar até aqui. Preciso da sua super inteligência na execução disso daqui para termos o melhor layout e a melhor thread. Cada post precisa ter uns 1000 caracteres de texto na thread, e os slides precisam ser muito bem ilustrados, incluindo a conversa com o Felipe Nunes, os problemas de viés, o house effect etc... vamos deixar o design fantástico e isso tudo muito claro. Ao final vamos ter o laudo e a thread com os slides de forma muito bem organizada. Use subagents nessa meta com o Opus 4.8 extra, enquanto o Fable vai ser usado como main driver desses subagents na execução dessa tarefa para economizarmos com tokens.". Briefly acknowledge the goal, then immediately start (or continue) working toward it — treat the condition itself as your directive and do not pause to ask the user what to do. The hook will block stopping until the condition holds. It auto-clears once the condition is met — do not tell the user to run `/goal clear` after success; that's only for clearing a goal early.
+
+---
+
+importante na produção acrescentar um sankey mostrando transferência de votos do 1o para o 2o turno para o Flávio para tentarmos entender o que está rolando nessa Quaest
+
+---
+
+e vamos criticar a parceria da Quaest com a GLobo mostrando como esses errinhos da pesquisa mostram que a Quaest está longe de um padrão Globo de qualidade
+
+---
+
+e naturalmente investigue a Globo também, seu papel, seu faturamento, a quantidade de receita oriunda de propaganda de estatais e do governo, corrupção, viés jornalístico essencialmente globalista/esquerdista, e investigue as manchetes da Globo de várias matérias relacionadas a Quaest
+
+---
+
+E do Estadão também e da Folha também, vamos mostrar esses 3 jornais, fortemente influenciados pela Faria Lima, como estão reportando as manchetes relacionadas a Quaest e como estão repetindo os termos propostos pela pré-campanha do Lula, como Tariflávio, fazendo propaganda direto na manchete
+
+---
+
+cara, esse gráfico sankey que vc fez mostra uma fraude massiva, se for isso mesmo... do nada indecisos do 1o turno ficam muito decididos no Lula no 2o turno? Se for isso, essa pesquisa é uma fraude enorme... analise isso muito bem e isso vai ser um choque
+
+---
+
+sim, concordo, mas precisa ver porque está estranho mesmo essa pesquisa... o simples fato de indecisos migrarem de 11% para 4% de um turno para outro é estranhíssimo!
+
+---
+
+outro ponto estranho é a rejeição alta do flávio e fazer reponderação da renda para ver se apresenta alguma diferença relevante na amostra...
+
+---
+
+o tariflávio não é orgânico... é sidônico...
+
+---
+
+<task-notification>
+<task-id>afb1bb3bb168f1413</task-id>
+<tool-use-id>toolu_012dYKPU5ZYaoR7yoF79Ad72</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Investigação Globo: dinheiro e manchetes" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>All three deliverables are complete and validated. Final report below.
+
+## Entregáveis (todos criados; `docs/quaest_0726.html` e assets existentes intocados)
+
+- `/Users/leonardodias/arvor/PNAD/docs/assets/quaest_0726_globo_invest.json` — dados estruturados (faturamento, verbas por ano/fonte, 5 episódios históricos, estudos de viés, 10 manchetes com enquadramento). JSON validado.
+- `/Users/leonardodias/arvor/PNAD/docs/assets/quaest_0726_globo_invest_fragment.html` — fragmento dark editorial autocontido (#11100f, Fraunces/IBM Plex): mapa de incentivos (org-chain), gráfico de verba federal de TV, box de viés, tabela manchete×dado, faixa histórica + **variante 1600×900** para slide. Ambas validadas por screenshot (slide confere exatamente 1600×900).
+- `/Users/leonardodias/arvor/PNAD/docs/assets/quaest_0726_globo_invest_notes.md` — síntese de 10 pontos + 2 posts de thread (912 e 884 caracteres).
+
+## Os 5 números/fatos mais fortes (com fonte)
+
+1. **R$ 267 mi = 25,6%** de toda a verba publicitária federal foi para a Globo no atual governo (jan/23–jun/26) — maior fatia isolada. [Poder360](https://www.poder360.com.br/poder-midia/grupo-globo-recebeu-r-267-mi-de-publicidade-em-35-anos-de-lula/)
+2. **28% → 56%**: a fatia da Globo na verba federal de TV saltou de 2022 (Bolsonaro) para 2023 (Lula); em valor, R$ 89 mi → R$ 142 mi (+60%; +102% na janela de 3 anos). [Poder360](https://www.poder360.com.br/midia/lula-deu-60-de-publicidade-a-mais-do-que-bolsonaro-para-globo/)
+3. **Calibragem que derruba a hipótese "esquerdista"**: no governo Bolsonaro (verba direta Secom 2019–21) a Globo era só a 3ª (R$ 47,2 mi), atrás de Record e SBT — o incentivo é bilateral, não ideológico. E o **Manchetômetro** mede viés **anti-PT**, não pró-Lula; em abr/2026 O Globo teve valência −1,20 sobre Lula/PT. [DONI #143](https://manchetometro.com.br/2026/05/05/doni-143-16-a-30-de-abril-de-2026/)
+4. **Concessão pública renovada até 2037** por Bolsonaro (dez/2022), após a ameaça de out/2019 ("a contabilidade tem que estar arrumadinha") — o principal ativo do grupo é bem público concedido pelo mesmo poder cujas eleições as pesquisas medem. [Aos Fatos](https://www.aosfatos.org/noticias/desenhamos-fatos-sobre-concessao-de-radio-e-televisao/)
+5. **Admissão própria documentada**: editorial de O Globo de 31/08/2013 — "à luz da História… o apoio [a 1964] foi um erro" — e a edição do debate Collor×Lula de 1989 (Boni admitiu). O caso mais forte de viés documentado é **contra** a esquerda. [ABI](http://www.abi.org.br/o-globo-admite-apoio-ao-golpe-de-1964/)
+
+## Cotejo de manchetes mais gritante
+
+O mesmo instituto, a mesma margem de ±2 pp, dois pesos: em **maio** (Lula 42 × Flávio 41) a manchete foi honestamente "**empate técnico**"; em **julho** (45 × 37 — variação de Lula +1 e Flávio −1, dentro do ruído) virou "**Lula amplia vantagem**". Par gêmeo: a aprovação de Lula "**superou a desaprovação pela 1ª vez em 12 meses**" com **48 × 47** — 1 ponto, dentro da margem, vendido como virada histórica; O Povo publicou o mesmo dado com a ressalva "**na margem**" no título, provando que dava para ser honesto. Exceção legítima registrada: a rejeição de Flávio (52→54→56→57 em 4 meses) é tendência monotônica — ali a manchete acerta.
+
+## Caveat de honestidade embutido no material
+
+globo.com **bloqueia integralmente** o crawler disponível (g1/O Globo/Valor/GloboNews retornam erro de acesso), então não há URL nem título *verbatim* de domínio Globo. As manchetes cotejadas são a mesma rodada Quaest divulgada em parceria com a Globo, colhidas em veículos terceiros verificáveis, com os itens que reproduzem a fórmula-padrão do g1 marcados como tal. O fragmento e o JSON declaram isso explicitamente — é cotejo de enquadramento, não transcrição literal, para não afirmar mais do que a evidência permite.
+
+Nota de lacuna: dois campos ficaram sem número exato por ausência de dado público — a fatia de cada estatal (Petrobras/Caixa/BB/Correios) que vai à Globo (as contabilizações oficiais não detalham por veículo) e a captação da Globo Filmes via Lei do Audiovisual (exigiria consulta granular à Ancine/SalicNet). Ambas estão sinalizadas como limitação no JSON, não preenchidas com estimativa.</result>
+<usage><subagent_tokens>174026</subagent_tokens><tool_uses>44</tool_uses><duration_ms>785428</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>af98b5f49b9cfa48d</task-id>
+<tool-use-id>toolu_01RooMPC5PBmptrXUPokzqHU</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Sankey transferência 1º→2º turno" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>Concluído. Relatório das duas frentes:
+
+## 1. Veredito da série 84→90→88→82→74 (direita não-bolsonarista)
+
+**Datas (FATO, pág. 38):** ondas mensais Mar/26→Jul/26. Julho: n=2.004, face a face, 10–13/jul, ME ±2 p.p. (pág. 3).
+
+**Base do subgrupo: NÃO publicada** — o deck não traz nem a distribuição marginal do autoposicionamento (a pergunta `def_pol` existe no questionário) nem o n de nenhum recorte, em 121 páginas. Lacuna WAPOR/ABEP registrada.
+
+**n estimado (inferência):** resolvi os pesos dos segmentos por álgebra (topline pág. 25 = Σ peso × coluna da pág. 32): direita não-bolsonarista ≈ **19–23% → n ≈ 380–460**. Margens do recorte: ±4,6 (deff 1) a ±7,1 p.p. (deff 2). Com 334 conglomerados × 6 entrevistas, deff 1,5–2 é o realista.
+
+**As contas (diferença entre ondas independentes, p≈0,78, n≈380):** SE ≈ ±3,0/±3,7/±4,3 p.p. (deff 1/1,5/2).
+- **82→74 (8 p.p.) = 1,9–2,7σ → zona cinzenta.** Com deff 2 pode ser ruído; digo isso com honestidade.
+- **90→74 (16 p.p. desde abril) = 3,8–5,3σ → dificilmente ruído puro.**
+
+**Confundidores documentados:** (b) **333/334 setores rotacionados** entre jun–jul (Jaccard 0,15%) — a queda 82→74 coincide exatamente com a troca quase total da amostra territorial; (c) segmento **autodeclarado a cada onda**: reconstrução sugere composição ~19% (jun) → ~22–23% (jul), compatível com bolsonaristas desiludidos migrando de rótulo (crise Michelle×Flávio, ~15 páginas do deck), o que dilui o voto Flávio **sem migração real**. Sinais convergentes: painel Bolsonarista também caiu (97→91), e o voto que sai de Flávio vai para "não vai votar" (9→15), não para Lula (6→8) — mais desmobilização real do que artefato.
+
+**Veredito calibrado: anomalia digna de registro, não prova de manipulação.** O achado de auditoria é a opacidade: sem base de subgrupo, nem o instituto nem o leitor separam migração real de artefato.
+
+## 2. Blindagem do fragmento (confirmada, revalidada com playwright)
+
+- **Todos** os fluxos agora são hachurados (padrão diagonal SVG) com contorno tracejado — inclusive as "retenções", pois nada foi medido; barras sólidas = FATO. Selos "FATO" nas duas colunas e "FLUXOS = INFERÊNCIA" no centro do gráfico.
+- Banner de aviso impossível de ignorar acima do SVG: "A Quaest não publica a matriz de transição… a repartição é modelo, não medição", com os únicos números que são FATO (saldos +5/+9/+6/−7).
+- Painel "Limites possíveis" com min/max de cada fluxo (Outros→Flávio 0–9, Indec→Flávio 0–9 etc.) e nota explicando que qualquer combinação nesses limites reproduz os mesmos números públicos — mata a leitura "indecisos→Lula = fraude".
+- Mesmo tratamento na variante slide 1600×900 (banner + hachura + selos + linha de limites); corrigida colisão de rótulo com legenda.
+
+## Arquivos atualizados
+- `/Users/leonardodias/arvor/PNAD/docs/assets/quaest_0726_sankey.json` (nova chave `serie_direita_nao_bolsonarista_cenario1` com série, perícia e veredito; JSON validado)
+- `/Users/leonardodias/arvor/PNAD/docs/assets/quaest_0726_sankey_fragment.html` (blindagem nas duas variantes)
+- `/Users/leonardodias/arvor/PNAD/docs/assets/quaest_0726_sankey_notes.md` (nova seção "A queda na direita não-bolsonarista" com todas as contas)</result>
+<usage><subagent_tokens>123868</subagent_tokens><tool_uses>31</tool_uses><duration_ms>525035</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a8e8db3fdc17c66ae</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Manchetes Folha/Estadão e Tariflávio" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>Concluído. Não toquei em `docs/quaest_0726.html` nem nos assets existentes.
+
+## Cronologia do "Tariflávio" (quem primeiro, quando cada jornal adotou)
+
+Três camadas, rigorosamente separadas:
+
+- **Cunhagem (03/06 ou antes)** — o apelido **já explodia nas redes em início de junho** (O Cafezinho 03/06; Poder360 "Flávio vira meme"), **mais de um mês antes** da reunião do PT. Autoria difusa; uma fonte descreve a hashtag como "impulsionada por perfis ligados ao campo governista". Autor específico = **Hipótese**.
+- **Amplificação (14/07)** — o PT **institucionaliza (não cunha)** o rótulo; fontes creditam a Éden Valadares, secretário de Comunicação do **partido**.
+- **Adoção em manchete (15–16/07)** — sempre **entre aspas e atribuída ao PT** (CNN "PT quer explorar 'Tariflávio'"; Poder360 "munição do PT"; Correio).
+
+**Veredito da hipótese sidônica (o que o coordenador pediu):** FATO = Sidônio montou na Secom desde jan/2025 uma máquina de apelidos/memes e ~R$ 2 mi a 55+ influenciadores, e em 15/07 acumulou Secom + coordenação da campanha. INFERÊNCIA = o padrão de difusão é compatível com esse método. **HIPÓTESE não comprovada** = que ele tenha *fabricado* o termo — o apelido é anterior (03/06), a atribuição direta é ao PT, a Secom atacou Flávio oficialmente (07/07) **sem** usar o rótulo, e **nenhuma fala oficial de Lula/ministro com a palavra foi localizada** (o elo mais forte está ausente).
+
+**Contaminação de linguagem em Folha/Estadão: NÃO comprovada em manchete própria.** Onde o rótulo entra em título, está entre aspas atribuídas ao PT (jornalismo defensável). A exceção de voz própria é o **editorial do Estadão**.
+
+## As 3 manchetes mais gritantes (com cotejo)
+
+1. **Estadão, editorial, 06/07 — "O melhor cabo eleitoral de Lula"** — voz própria adota a tese anti-Flávio *antes* de o PT formalizar o rótulo. Juízo editorial, não leitura de topline.
+2. **Terra, 15/07 — "revela virada de Lula e queda de Flávio"** — "virada" é falso (Lula já liderava) e a "queda" (1º turno 29→28; 2º turno 38→37) está **dentro da margem** (individual 2,0; diferença ~3,95). Movimento dentro da margem vendido como real.
+3. **Brasil de Fato, 16/07 — "51% culpam Flávio Bolsonaro, aponta Quaest"** — dado real, mas o bloco tarifário (Q57–Q65) foi medido 10–13/07, **antes** da confirmação da tarifa (15/07), e publicado **depois** (16/07), num segundo ciclo. Correção ao dossiê: o bloco não foi suprimido, foi **escalonado** para 16/07.
+
+Omissão transversal: "Lula lidera em todos os cenários" apaga que o mais apertado é contra Flávio (gap 8 &lt; 9 &lt; 10 &lt; 12).
+
+## Caminhos gerados
+
+- `/Users/leonardodias/arvor/PNAD/docs/assets/quaest_0726_imprensa.json` — manchetes estruturadas, genealogia em três camadas, bloco `sidonio_hypothesis` calibrado, dados Secom/Faria Lima.
+- `/Users/leonardodias/arvor/PNAD/docs/assets/quaest_0726_imprensa_fragment.html` — fragmento dark editorial (#11100f, Fraunces/IBM Plex): linha do tempo de 3 camadas com cores, tabela comparativa a três (coluna Globo reservada), cotejo e mapa de incentivos. Validado por screenshot.
+- `/Users/leonardodias/arvor/PNAD/docs/assets/quaest_0726_imprensa_slide.html` — variante 1600×900. Validada por screenshot.
+- `/Users/leonardodias/arvor/PNAD/docs/assets/quaest_0726_imprensa_notes.md` — síntese (10 pontos) + 2 posts de thread (707 e 816 chars, 1ª pessoa, sem hashtags).
+
+Lacuna honesta registrada: verbas Secom individualizadas de Grupo Folha e Estadão não foram isoladas em busca aberta (só UOL, R$ 7,3 mi) — fica a fechar com dado primário da Secom.</result>
+<usage><subagent_tokens>149743</subagent_tokens><tool_uses>66</tool_uses><duration_ms>909295</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>ab6c66c639e8e7288</task-id>
+<tool-use-id>toolu_0172pyRU11n62KerJrWXV2Z8</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Rejeição Flávio + reponderação renda" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>Both perícias are complete, all contas refeitas em Python, e o fragmento validado por screenshot (corpo + slide 1600×900).
+
+## Deltas da reponderação (reponderado PNAD − publicado)
+
+| Cenário | Publicado | Reponderado | **Δ** | Orçamento de erro |
+|---|---|---|---|---|
+| Margem 1T Lula−Flávio | +13,5 | +14,3 | **+0,80** | ±0,9 |
+| Margem 2T Lula×Flávio (proxy) | +9,8 | +10,7 | **+0,96** | ±0,9 |
+| Saldo aprovação Lula | +0,9 | +2,2 | **+1,28** | ±0,9 |
+
+Sensibilidade (±1 pp na meta da base): margem 1T entre +0,62 e +0,99; aprovação entre +0,99 e +1,59. **Veredito honesto: a renda NÃO explica o placar** — todo delta de voto cabe dentro do ruído do método (arredondamento ±0,5 + resíduo de reconstrução ~0,9). Direção do viés é pró-Lula (sub-representar o pobre subestima Lula). O 2º turno por renda **não é publicado no deck** — só aprovação e 1º turno têm corte de renda; o 2T é proxy multiplicativo, nível hipótese.
+
+## Veredito do benchmark de rejeição
+
+Quaest jul: Flávio **57** / Lula 50. Outras casas: Datafolha jun 48/46, Nexus 50/46, Futura 49,5. A Quaest mede sistematicamente mais alto, mas o excesso é **assimétrico**: +9 pp sobre o Datafolha em Flávio, só +4 pp em Lula. Causa mecânica (Fato): a Quaest usa um ternário por nome — *conhece-e-votaria / não-conhece / conhece-e-não-votaria* — sem opção neutra, convertendo o não-voto persuadável em "rejeição". Como o não-voto de Flávio é o mais reversível (o Datafolha registra conversão de indecisos e transferência ~2:1), o instrumento infla mais o teto dele. Coerência interna preservada (37+57=94; 45+50=95), mas o teto instrumental de Flávio (43) é ~9 pp mais apertado que o teto pela rejeição dura (52). O que abre a tesoura jun→jul não é Flávio subir (56→57, na margem) — é Lula cair (53→50). AtlasIntel fica fora: mede "medo", não rejeição.
+
+## Arquivos gerados (novos; nenhum asset existente tocado)
+
+- `/Users/leonardodias/arvor/PNAD/docs/assets/quaest_0726_rejeicao_reponderacao.json` — dados estruturados das duas perícias, fontes com página, contas passo a passo.
+- `/Users/leonardodias/arvor/PNAD/docs/assets/quaest_0726_rejeicao_reponderacao_fragment.html` — fragmento dark editorial (#11100f, Fraunces/IBM Plex): painel comparativo de rejeição + tabela/sensibilidade da reponderação + slide 1600×900 embutido.
+- `/Users/leonardodias/arvor/PNAD/docs/assets/quaest_0726_rejeicao_reponderacao_notes.md` — síntese Fato/Inferência/Hipótese + 2 posts de thread (~1000 chars, primeira pessoa).
+
+Nota técnica sobre o slide: ele é autocontido (grid 766px/680px, `overflow:hidden`); ao exportar 1600×900 é preciso capturar o elemento `.qrr-slide-shell .qrr` com o padding da seção-pai zerado — senão os 56 px de padding da seção deslocam a largura fixa de 1600 px e cortam a coluna Δ. Documentei isso em comentário no próprio fragmento.</result>
+<usage><subagent_tokens>196543</subagent_tokens><tool_uses>99</tool_uses><duration_ms>1626417</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>w9wdzjabd</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Dynamic workflow "Auditoria adversarial de premissas + redesign + thread/slides do dossiê Quaest 07/26" completed</summary>
+<result>{"forensics_errors":[{"claim":"Dossiê afirma como fato: \"O documento traz 24 ocorrências de 'TRAZER ITEM AQUI' e duas de 'TRAZER OPÇÃO AQUI'\" — hero, og:description, span #template-total e linha do quadro de regressão cravam \"26 resíduos de template\".","problem":"O número 26 é um ARTEFATO DE EXTRAÇÃO, não uma propriedade do documento. O gerador conta `july.upper().count(\"TRAZER ITEM AQUI\")` sobre texto do pypdf (scripts/quaest-july-audit.py linhas 152-154). Em 5 casos o token 'AQUI' quebra para a linha seguinte, então a substring contígua não casa. A contagem semântica real (colapsando espaços em branco) é 28 'TRAZER ITEM AQUI' + 3 'TRAZER OPÇÃO AQUI' = 31 placeholders não resolvidos. Direção: SUBcontagem de 5 (conservadora, não infla a crítica), mas o número cravado está errado num dossiê cuja marca é rigor documental exato.","correction":"Corrigir para 31 resíduos (28 ITEM + 3 OPÇÃO). Na função questionnaire_diagnostics, colapsar espaços antes de contar: `t = re.sub(r\"\\s+\",\" \", july.upper())` e então `t.count(\"TRAZER ITEM AQUI\")`, ou usar regex tolerante a quebra de linha `TRAZER (?:ITEM|OPÇÃO)\\s+AQUI`.","evidence":"pdftotext -raw e -layout do Quaest_Questionario_072026.pdf dão ambos 24/2 (=26) na contagem contígua as-is e 28/3 (=31) ao colapsar espaços; enumerei os 31 slots distintos com contexto (Q13 grid, Q21 2º-turno ×2, Q28 ×2, Q30, Q42 ×2, Q57 opção ×2, Q62 opção, Q69/Q76 ×2, bloco economia Q84-90 ×múltiplos, Q89 ×2, Q90 ×3, Q100 ×2). Todos são placeholders genuínos dentro de enunciados."},{"claim":"Seção Território: \"Rio, ±11,6\" p.p. de margem máxima aproximada AAS para n=72.","problem":"1,96·√(0,25/72)·100 = 11,549 p.p., que arredonda para 11,5 — não 11,6. Erro de arredondamento de 0,1 no último dígito.","correction":"±11,5 p.p. (as demais estão corretas: SP 8,5; BH/Brasília 17,9; Salvador 20).","evidence":"√(0,25/72)=0,0589256; ×1,959964=0,115492; ×100=11,549 → 11,5. Imaterial para qualquer conclusão (o próprio texto rotula \"margem máxima aproximada\"), mas é a única capital fora do arredondamento correto."}],"forensics_missed":[{"finding":"A NFS-e (Quaest_NFe_072026.pdf) da rodada de julho foi EMITIDA em 03/07/2026 17:16:48 — antes do campo (10-13/07) e 6 dias antes do registro no TSE (09/07). Valor bruto R$ 433.255,92; líquido R$ 406.610,68 após R$ 26.645,24 de retenções federais (IRRF 6.498,84 + PIS/COFINS/CSLL 20.146,40) e R$ 10.831,40 de ISSQN. Descrição: \"pesquisa de opinião nacional - mês de julho/26 - parcela (1/1)\".","evidence":"Quaest_NFe_072026.pdf: \"Data e Hora da emissão da NFS-e 03/07/2026 17:16:48\"; \"Valor do Serviço R$ 433.255,92\"; \"Valor Líquido da NFS-e R$ 406.610,68\". Tomador: BANCO GENIAL S.A. CNPJ 45.246.410/0001-55; prestador QUAEST PESQUISAS CNPJ 22.445.600/0001-04.","where_to_add":"Seção 09 (incentivos/org-chain), no nó \"Banco Genial\": a fatura precede a coleta e o registro — fato documentável que qualifica a cadeia financeira (embora faturar no início da competência seja comum). O dossiê hoje só cita o bruto R$ 433.255,92."},{"finding":"O questionário e a Declaração do Estatístico foram assinados digitalmente (ICP-Brasil, Margarida Maria de Mendonça) em 2026-07-09 (13:41:57 no questionário; 14:05:58 na Responsável). Isso é prova dura de que o INSTRUMENTO foi assinado em julho enquanto ostenta capa \"JUNHO/2026\" — corrobora diretamente a tese \"julho arquivado como junho\", mas o dossiê não invoca o carimbo temporal.","evidence":"Quaest_Questionario_072026.pdf (bloco final): \"MENDONCA:58594183615 ... Dados: 2026.07.09 13:41:57 -03'00'\". Quaest_Responsável_072026.pdf: \"Dados: 2026.07.09 14:05:58\". Data casa com o registro BR-07181/2026 de 09/07.","where_to_add":"Seção 02 (cadeia de custódia). Adicionar a data de assinatura ICP-Brasil (09/07/2026) como evidência objetiva ao lado de \"capa JUNHO/2026\": documento assinado em julho, rotulado junho."},{"finding":"O CPF da estatística responsável aparece em texto claro nos PDFs-fonte commitados no repositório público: \"CPF: 585.941.836-15\" (Quaest_Responsável_072026.pdf) e no CN do certificado ICP-Brasil \"MENDONCA:58594183615\" (questionário e Responsável). As imagens publicadas no dossiê não o expõem, mas os arquivos-fonte linkados no GitHub, sim.","evidence":"Quaest_Responsável_072026.pdf: \"Estatístico responsável: Margarida Maria de Mendonca ... CONRE: 6731 CPF: 585.941.836-15\". data/pesquisas/quaest/2026-07/ está linkado publicamente no rodapé de fontes do dossiê.","where_to_add":"Nota de tratamento de dados / checagem interna. Mitigante: dados de registro do estatístico no PesqEle são públicos por norma do TSE. Ainda assim, contra a regra da casa \"NUNCA expor CPF em provas\", avaliar redigir o CPF nos PDFs commitados ou marcar a exceção legal explicitamente."},{"finding":"Os números de registro são não-cronológicos: a rodada de JUNHO tem registro BR-07661/2026 e a de JULHO tem BR-07181/2026 — a pesquisa anterior carrega o número MAIOR. O dossiê usa ambos sem comentar a inversão.","evidence":"Quaest_Bairros_062026.pdf linha 3: \"BR-07661/2026\"; Quaest_Bairros_072026.pdf linha 3 e ficha técnica p.3: \"BR-07181/2026\". Confirmado nos dois anexos.","where_to_add":"Rodapé metodológico do território ou seção 02. Não é necessariamente anômalo (numeração do PesqEle pode não ser sequencial por data), mas merece nota de uma linha para antecipar a pergunta óbvia."},{"finding":"Ambos os anexos territoriais (junho E julho) remetem, no rodapé, ao diretório PRELIMINAR de agregados do IBGE (URL contém \"Agregados_por_Setores_Censitarios_preliminares\"). Isso confirma e ancora a afirmação do dossiê de que \"o rodapé dos dois anexos manda o leitor à malha preliminar\", mas a citação literal da URL não está no dossiê.","evidence":"bairros_jun/jul .txt linha 42/106: \"...Agregados_por_Setores_Censitarios_preliminares/agregados_por_setores_xlsx/UF/\". A auditoria própria validou os 667 códigos contra o serviço atual (definitivo) do Panorama, logo os códigos sobreviveram apesar da referência vencida.","where_to_add":"Seção 06, card \"Quaest ainda aponta a malha preliminar\": citar a URL literal do rodapé como prova, reforçando que a referência técnica está desatualizada embora os geocódigos sejam válidos."}],"house_effect":"FRENTE 3 — HOUSE EFFECT QUAEST NA DISPUTA LULA × FLÁVIO (2º turno, mai–jul/2026)\n\nSÉRIE QUAEST (fonte: docs/assets/quaest_0726_data.json, confirmada pela imprensa): mai 42×41 (gap +1) · jun 44×38 (gap +6) · jul 45×37 (gap +8). 1º turno: jun 39×29 (+10), jul 40×28 (+12). Obs.: o briefing citou \"jun 43×37\"; o número auditado e publicado é 44×38 — uso este.\n\nCAMPO COMPARÁVEL (2º turno Lula×Flávio, coletado da Wikipedia de agregação e confirmado caso a caso na imprensa):\nJULHO: Quaest 45×37 (+8) · Nexus/BTG 47×44 (+3) · Futura/Apex 46,3×46,1 (+0,2) · Ideia 45×40 (+5).\nJUNHO: Atlas 48,8×42,3 (+6,5) · Nexus 47×44 (+3) e 49×43 (+6, onda 12–14) · Datafolha 47×43 (+4) · Futura 48,1×42,9 (+5,2) · MDA 49,3×36,8 (+12,5) · Indexa 47×40 (+7) · PoderData 46×43 (+3) · Vox 45,3×42,8 (+2,5) · Quaest 44×38 (+6).\nMAIO: Datafolha 45×45 e 47×43 · Atlas 48,9×41,8 (+7,1) · RTBD 45×40 (+5) · Nexus 47×43 (+4) · Futura 47,7×42,2 (+5,5) · Quaest 42×41 (+1).\n\nDECOMPOSIÇÃO POR NÍVEL (o achado decisivo). Em JULHO, a média do campo sem Quaest é Lula 46,1 e Flávio 43,4. A Quaest põe Lula em 45 (apenas 1,1 abaixo da média — EM LINHA) e Flávio em 37 (6,4 abaixo da média — o MENOR de todos os institutos de julho). Ou seja: a folga de 8 pontos NÃO nasce de um Lula inflado; nasce de um Flávio deprimido. Quem quiser rotular a Quaest de \"pró-Lula\" erra: o Lula da Quaest é o mais BAIXO do campo de julho junto com o Ideia; o resíduo é ANTI-desafiante, não PRÓ-incumbente.\n\nCONTROLE DE MODO. O contra-argumento óbvio é \"online infla, presencial deprime\". Ele não fecha: os dois pares presenciais da Quaest — Datafolha (pontos de fluxo) e Nexus/BTG (domiciliar) — cravam Flávio em 43 e 44. Mesmo comparando presencial com presencial, a Quaest põe Flávio 6–7 pon
+... (truncated 7770 chars, full result in REDACTED.output)</result>
+<diagnostics>Per-agent results: /Users/leonardodias/.REDACTED.jsonl — one {"type":"result",...} line per completed agent with its full return value.
+If the result above is empty or unexpected, Read this file BEFORE diagnosing — do not assume agents returned non-empty results.
+To re-run with edited post-processing: Workflow({scriptPath: '/Users/leonardodias/.REDACTED.js', resumeFromRunId: 'wf_bea59fe2-c78'}) — agents whose (prompt, opts) are unchanged replay from cache.</diagnostics>
+<usage><agent_count>4</agent_count><agents_done>4</agents_done><agents_error>0</agents_error><agents_skipped>0</agents_skipped><agents_empty_result>0</agents_empty_result><subagent_tokens>1058526</subagent_tokens><tool_uses>253</tool_uses><duration_ms>3158994</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>wejuo4hgi</task-id>
+<tool-use-id>toolu_012kQEy1oyBk4afU2xdQhfhq</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Dynamic workflow "Integração final: fragmentos satélites no dossiê, slides e thread Quaest 07/26" completed</summary>
+<result>{"dossie":"Integration complete and validated. All work confined to the four in-scope files (`quaest_0726.html`, `assets/quaest_0726.css`, `assets/quaest_0726.js`, `index.html`); no Python touched, so no ruff/black needed. Validated via Playwright at 1440 and 390 full-page: 8/8 charts render SVG, `data-evidence: loaded`, zero console errors, responsive stacking confirmed.\n\n## Seções adicionadas (3 novos capítulos, dossiê passou de 15 → 18)\n\n**CAP. 04 · Transferência de voto** (`#transferencia`, ink) — Sankey blindado renderizado em JS na paleta do dossiê (nós sólidos = Fato, TODOS os fluxos hachurados = Inferência), banner \"a Quaest não publica a matriz de transição\", strip de saldos +9/+5/+6/−7, tabela min/máx por fluxo, verdict didático \"o que parece fraude e não é\" (11→4 explicado por cédula 9 nomes→binária; branco/nulo 8→14), perícia da série direita não-bolsonarista (gráfico de linha 84→90→88→82→74, σ 3,8–5,3, confundidores de rotação 333/334 e composição, destino = \"não vai votar\"), veredito Fato/Inferência/Hipótese (\"anomalia registrável, não fraude\").\n\n**CAP. 07 · Rejeição sob perícia** (`#rejeicao`, ink) — benchmark de rejeição casa a casa (barras CSS Flávio×Lula com marca de 50%, no-JS-safe), callout do +9/+4 assimétrico, trio de cards \"a tesoura abre porque Lula cai\" (+1/−3), teto 43→52, coerência 94/95; Perícia 2 reponderação por renda com tabela (Δ&lt;1 p.p.) + sensibilidade, verdict \"resultado que inocenta\" (renda não explica o placar, viés pró-Lula).\n\n**CAP. 14 · O megafone** (`#megafone`, ink) — certificador-cliente (Princípios Editoriais vs checklist ✕ de 6 falhas, com **31 resíduos** reconciliado), dinheiro público (strip R$ 267 mi / 25,6% / 28→56% / 2037 + barras de fatia de TV + calibragem anti-rótulo com Manchetômetro), cotejo manchete×dado a 5 títulos (maio \"empate técnico\" 42×41 vs julho \"amplia\" ±1 p.p.; aprovação 48×47 com O Povo \"na margem\"; exceção legítima rejeição 52→57 monotônica), linha do tempo Tariflávio em 3 camadas (reutiliza `.chrono`) + veredito da hipótese sidônica (não comprovada; voz própria só no editorial do Estadão 06/07).\n\n## Reconciliações aplicadas\n- **Q57–Q65 escalonado, não suprimido:** reescrito em 5 pontos — card 03 do Veredito, verdict-box e heading \"bloco tarifário escalonado\" + figcaption do CAP. 09, e item de viés (agora \"publicação escalonada\", medido antes da tarifa 15/07, publicado 16/07 \"51% culpam Flávio\").\n- **31 resíduos** (não 26) no capítulo Megafone e em `index.html`.\n\n## Infra\n- **CSS:** `.chapter.ink + .chapter.ink` (costura entre capítulos escuros adjacentes), `.flow-banner/.flow-legend/.flow-sw`, `.rej-*` (benchmark), `.pledge`, `.fail-list`; regra responsiva `.rej-row` em ≤620px.\n- **JS:** constantes editoriais `SANKEY`/`SANKEY_COLS` + `voteSankey()` e `rightSeriesChart()`, ligadas no `DOMContentLoaded` como os gráficos de efeito de casa (independentes do `data.json`, com fallback no-JS no texto). `data.json` **não** foi alterado (fora de escopo) — os grupos-fantasma continuam vindo dele sem contradição.\n- **Nav/TOC** renumerada para 18 capítulos; todos os `CAP. NN` e `&lt;section id&gt;` conferidos; `twitter:description` atualizada.\n- **index.html:** links Thread + Slides adicionados ao card em destaque da Quaest; contagem de resíduos corrigida.\n\nCoerência numérica verificada entre seções (45×37, gap 8, 36/101, 31 resíduos, +9/+4, R$ 267 mi/25,6%, 28→56%, saldos +9/+5/+6/−7, σ 3,8–5,3). Design \"perícia documental\", contratos JS↔data.json, fallbacks no-JS e responsivo 360/390px preservados.","slidesThread":"Everything is verified and complete. Final consolidated check passed: deckbar reads \"24 slides\", 24 `data-n` frames, no stale `/ 16` or `Post N/16` refs, 24 JPGs, and git shows only the three permitted paths changed (both HTML files + the `img/quaest_0726_slides/` directory) — the dossier, assets, and everything else untouched.\n\n---\n\n## Entrega concluída\n\n**Slides:** 24 (16 originais + 8 novos), renumerados 01–24, capítulos de eyebrow monotônicos, deckbar/`?slide=N`/OG-capa intactos. Todos re-renderizados a **3200×1800 (@2x)** e revisados um a um (overflow/corte/contraste). CPF nunca legível (slide 04 é template em branco, campos NOME/TELEFONE/E-MAIL vazios).\n\n**Posts:** 24, mapeamento **1:1 post↔slide**, todos na faixa **900–1100 (contagem X-ponderada, emoji=2)**, contadores exatos conferidos por script contra o texto real copiado.\n\n### Contagem por post (ponderada) e mapa post→slide\nPost N → Slide N em todos os casos:\n\n| Post→Slide | wt | | Post→Slide | wt |\n|---|---|---|---|---|\n| 1 | 1076 | | 13 | 1010 |\n| 2 | 1021 | | 14 | 1061 |\n| 3 | 1082 | | 15 | 935 |\n| 4 | 932 | | 16 | 928 |\n| 5 | 974 | | 17 | 976 |\n| 6 | 1009 | | 18 | 1059 |\n| 7 | 945 | | 19 | 931 |\n| 8 | 979 | | 20 | 1022 |\n| 9 | 1072 | | 21 | 1040 |\n| 10 | 971 | | 22 | 966 |\n| 11 | 910 | | 23 | 930 |\n| 12 | 1028 | | 24 | 932 |\n\n### 8 slides/posts novos (posição no arco)\n- **7** — Sankey da transferência 1º→2º turno (blindagem INFERÊNCIA, tag \"fluxos não medidos\", limites; indecisos 11→4 e branco/nulo 8→14 como esperado; matriz não publicada = achado). SVG adaptado à paleta do deck via script escopado.\n- **8** — Perícia da série 84→74 na direita não-bolsonarista (90→74 = 16 p.p. = 3,8–5,3σ; 82→74 na margem; confundidores 333/334 + rótulo autodeclarado; voto vai p/ \"não vai votar\" 9→15, não Lula; carimbo \"anomalia registrável, não manipulação\").\n- **10** — Reponderação por renda (tabela Δ&lt;1 p.p. em todo cenário; direção pró-Lula; \"resultado que inocenta\").\n- **14** — Uma coleta, dois ciclos + Tariflávio 3 camadas (linha do tempo 10–13/07 → 15/07 → 16/07; Fato cunhagem 03/06 / Inferência Sidônio / Hipótese manufatura não provada; voz própria só editorial Estadão 06/07).\n- **17** — Rejeição entre institutos (ternário sem neutro; +9 p.p. Flávio vs +4 Lula; **tesoura abre porque Lula cai 53→50**, não porque Flávio sobe).\n- **20** — Globo dinheiro público (R$ 267 mi/25,6%; 28→56%; concessão 2037; incentivo bilateral; Manchetômetro anti-PT — sem tese \"esquerdista\").\n- **21** — Globo certificador-cliente (\"quem audita o auditor\"; Princípios Editoriais 2011 × artefatos BR-07181).\n- **22** — Cotejo manchete×dado (maio 42×41 \"empate\" vs julho \"amplia\"; aprovação 48×47 \"1ª vez\" / O Povo \"na margem\"; exceção legítima rejeição 52→57; nota de apuração sobre bloqueio do crawler).\n\n### O que mudou nos existentes (reconciliações)\n- **Slide 13 (ex-S10 \"corte\")**: retitulado **\"Um bloco escalonado, outro retido\"**; coluna de tarifas reescrita de \"retido/gaveta\" → **escalonado** (saiu 16/07, 2º ciclo, \"51% culpam Flávio\", sem topline integral); eyebrow \"corte e calendário\". Michelle mantém \"retido\".\n- **Slide 12 (ex-S9 \"fantasma\")**: card Q57–Q65 vira âmbar **\"escalonados: só em 16/07, fora do deck da corrida\"**; cabeçalho \"Blocos que o **deck da corrida (15/07)** não trouxe\".\n- **Post 1**: frase de tarifas reformulada (\"um bloco sobre tarifas que só saiu num segundo ciclo… e outro sobre Michelle que ficou retido\"); 1037→1076.\n- **Post 12**: tarifas \"não entram no deck da corrida — reaparecem num 2º ciclo; Michelle ficam retidos\"; \"relatório\"→\"relatório da corrida\"; 929→1028.\n- **Post 13**: reescrito para \"dois comportamentos\" (tarifas escalonado + Michelle cirúrgico), remete ao post 14; 1059→1010.\n- **Post 16**: \"do bloco retido\" → \"do bloco de tarifas\" (Q59 já não é chamado de retido); 924→928.\n- **Todos os slides/posts originais**: renumerados para /24; `?slide=N`, títulos de iframe e `snum`/`foot` atualizados; deckbar \"24 slides\"; metadados (description/OG/Twitter) atualizados; sem referências `/16` residuais.\n\n**Arquivos alterados (apenas estes):**\n- `/Users/leonardodias/arvor/PNAD/docs/quaest_0726_slides.html`\n- `/Users/leonardodias/arvor/PNAD/docs/quaest_0726_thread.html`\n- `/Users/leonardodias/arvor/PNAD/docs/img/quaest_0726_slides/slide-01.jpg` … `slide-24.jpg` (24 JPGs, 3200
+... (truncated 8 chars, full result in REDACTED.output)</result>
+<diagnostics>Per-agent results: /Users/leonardodias/.REDACTED.jsonl — one {"type":"result",...} line per completed agent with its full return value.
+If the result above is empty or unexpected, Read this file BEFORE diagnosing — do not assume agents returned non-empty results.
+To re-run with edited post-processing: Workflow({scriptPath: '/Users/leonardodias/.REDACTED.js', resumeFromRunId: 'wf_4aa4e7fe-f1b'}) — agents whose (prompt, opts) are unchanged replay from cache.</diagnostics>
+<usage><agent_count>2</agent_count><agents_done>2</agents_done><agents_error>0</agents_error><agents_skipped>0</agents_skipped><agents_empty_result>0</agents_empty_result><subagent_tokens>688144</subagent_tokens><tool_uses>133</tool_uses><duration_ms>2068294</duration_ms></usage>
+</task-notification>
+
+---
+
+[Image: original 3200x1800, displayed at 2000x1125. Multiply coordinates by 1.60 to map to original image.]
+
+---
+
+[Image: original 3200x1800, displayed at 2000x1125. Multiply coordinates by 1.60 to map to original image.]
+
+---
+
+[Image: original 3200x1800, displayed at 2000x1125. Multiply coordinates by 1.60 to map to original image.]
+
+---
+
+# Autonomous loop check
+
+You're being invoked on a timer while the user is away or occupied. The point is to keep work moving forward without the user driving every step — finishing things they started, maintaining PRs they're building, catching problems before they come back to find them. You're a steward, not an initiator. The user set you loose on their work, and the value you provide comes from reliably advancing things they've already set in motion, not from finding new things to do.
+
+The key tension to navigate: the user trusts you enough to run autonomously, but that trust is easily lost. Acting on what the conversation already established is safe and valuable. Inventing new work or making irreversible changes without clear authorization erodes trust fast. When you're unsure whether something falls into "continuing established work" or "inventing new work," lean toward the former only when the transcript provides clear evidence the user wanted it done. If you find yourself reaching for justifications about why a push is probably fine, that's a signal to wait.
+
+## What to act on
+
+The current conversation is your highest-signal source — re-read the transcript above, since everything there is something the user was actively engaged with. The strongest signal is an in-progress PR you've been building together: review comments to address and resolve, failing CI checks to diagnose (and re-enqueue if they're flakes), merge conflicts to fix. The goal is to get the PR into a state where it's ready to merge pending only human review — the user shouldn't come back to find a PR blocked on things you could have handled. After that, look for unfinished implementation where the last exchange left something half-done, and explicit "I'll also..." or "next I'll..." commitments the conversation made and didn't honor. Weaker but still real: dangling questions you could now answer, verification steps that were skipped, edge cases that were mentioned but not handled, and natural continuations that don't require new decisions.
+
+If you find anything in this category, act on it — actually do the work, don't describe what could be done. Run the tests, don't say "you could run the tests." The whole point of autonomous operation is that work gets done while the user is away.
+
+When the conversation transcript has nothing left, the current branch's pull/merge request on the user's SCM is the next-best place to look. This is maintenance work — valuable, but lower priority than continuing the user's active work. Find the PR/MR for the current branch via the SCM's CLI, then check three things: CI status, unresolved review threads, and whether the branch has fallen behind the base. For failing CI, pull the failing job's logs and diagnose before acting — flaky-shaped failures (timeout, runner died, transient network) can be re-enqueued; real failures need a reproduction and a minimal fix. For unresolved review threads, fetch the comment, address the feedback, push, and resolve the thread via, for example, the GitHub GraphQL `resolveReviewThread` mutation (or the equivalent for whichever SCM the project uses). Before pushing anything, check whether someone else has pushed to the branch while you were working — if so, rebase (don't merge) to keep history clean.
+
+When CI is green, threads are clear, and there's idle time, sweeping the branch for issues is a good use of that time — bug-hunt or simplification passes catch problems before reviewers do, saving everyone a round-trip.
+
+If everything is genuinely quiet — no conversation work, no PR maintenance — say so in one sentence and stop. No summary of what you checked, no list of what you might do later. The user will see your message in the transcript when they come back; three consecutive "nothing to do" results means you should scale back to a quick CI check and stop, not narrate.
+
+## Repeated invocations
+
+If you see earlier autonomous checks in this conversation, adjust your scope accordingly. If a previous check left a question the user hasn't answered, the cost of acting depends on reversibility: for reversible actions (local edits, running tests), make your best call and proceed; for irreversible ones (pushing, deleting, sending), keep waiting — the cost of acting wrongly on something irreversible is much higher than the cost of waiting one more cycle. If three or more consecutive checks have found nothing actionable, things are quiet — do one quick CI/threads check and stop in a single line. Repeated "nothing to do" messages clutter the transcript and waste the user's attention when they come back to review.
+
+Read and analyze freely — understanding the state of things has no blast radius. Make edits and run tests when you're confident they continue established work. Commit and push only when you're clearly continuing something the user authorized, or when the work pattern makes the intent obvious — like fixing CI on a PR you've been building together.
+
+
+---
+
+# Autonomous loop tick (dynamic pacing)
+
+Run the autonomous check using the loop instructions established earlier in this conversation. If you cannot find them, treat this as a no-op tick.
+
+You scheduled this tick via the ScheduleWakeup tool (not a recurring cron). To keep the loop alive, call ScheduleWakeup again at the end of this turn with `prompt` set to the literal sentinel `<<autonomous-loop-dynamic>>` — otherwise the loop ends after this tick.
+
+If a Monitor is armed (check TaskList), keep `delaySeconds` at 1200–1800s — the Monitor is the wake signal and this is only the fallback heartbeat. If you were woken by a `<task-notification>`, handle the event before deciding whether to re-arm. To stop the loop, call ScheduleWakeup with `stop: true` and TaskStop the monitor (use TaskList to find its task ID if no longer in context).
+
+Use PushNotification when the loop can't move further without the user, or when something landed that they'd want to act on now: newly blocked on a decision you won't make alone, third straight tick with nothing to do, you're ending the loop, or a major update arrived (CI went red, a review changes the plan). Progress you made yourself isn't a trigger — the transcript covers that. One ping per state, not per tick.
+
+---
+
+Eu detesto travessões e o texto da thread tá cheio deles. Por favor, na thread, substitua os travessões por .,:;, mas não quero travessões.
+
+---
+
+[Request interrupted by user]
