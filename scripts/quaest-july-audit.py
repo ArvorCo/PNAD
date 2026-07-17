@@ -241,7 +241,9 @@ def questionnaire_diagnostics() -> dict:
         "expected_question_count": 101,
         "cover_project": "OP093/25 – GENIAL INVESTIMENTOS",
         "cover_month": "JUNHO/2026",
-        "pdf_metadata_title": PdfReader(SOURCE / QUESTIONNAIRE).metadata.title,
+        "pdf_metadata_title": getattr(
+            PdfReader(SOURCE / QUESTIONNAIRE).metadata, "title", None
+        ),
         "template_residue": _count_template_residue(july),
         "typos": {"sm_ja_sabia": july.upper().count("SM, JÁ SABIA")},
         "privacy": {
@@ -354,6 +356,12 @@ def pnad_income() -> dict:
     total = 0.0
     persons = 0
     with sqlite3.connect(PNAD_DB) as connection:
+        reference_years = sorted(
+            int(value)
+            for (value,) in connection.execute(
+                f"SELECT DISTINCT Ano__ano_de_referencia FROM {table}"
+            )
+        )
         for row in connection.execute(query):
             income, base_value, *rep_values = row
             income = float(income)
@@ -378,8 +386,10 @@ def pnad_income() -> dict:
             {"category": label, "quaest": target, "delta": round(target - estimate, 3)}
         )
         results.append(item)
+    reference_year = reference_years[-1]
     return {
-        "source": "PNAD Contínua anual, 1ª visita, 2024",
+        "source": f"PNAD Contínua anual, 1ª visita, {reference_year}",
+        "reference_year": reference_year,
         "universe": "pessoas de 16 anos ou mais com renda efetiva domiciliar válida",
         "income_target": "abril de 2026",
         "minimum_wage": 1621,

@@ -50,7 +50,7 @@ tesoura não é Flávio subir (56→57, dentro da margem) — é **Lula cair** (
 **Método.** Reponderação marginal de tabela publicada. A Quaest só publica renda em
 aprovação (p15) e 1º turno (p29); o 2º turno por renda **não existe no deck** (cenário 2T
 é PROXY multiplicativo, nível hipótese). Amostra Quaest 31/42/27 → alvo PNAD 35,44/39,23/25,33
-(PNADC anual v1 2024, 16+ com renda válida, abr/2026). `share_repond = Σ share_faixa × peso_alvo`.
+(PNADC anual v1 2025, 16+ com renda válida, abr/2026). `share_repond = Σ share_faixa × peso_alvo`.
 O "publicado reconstruído" reproduz o topline (aprovação 48/47; 1T Lula ~41 vs 40).
 
 **Deltas (reponderado − publicado):**
