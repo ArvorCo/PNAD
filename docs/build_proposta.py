@@ -333,8 +333,8 @@ TEMPLATE = """<!doctype html>
               </tr>
               <tr>
                 <th scope="row">Mapa da coleta</th>
-                <td class="now">O anexo de área física é registrado antes do campo e a publicidade do registro é imediata: a geografia da coleta fica conhecível dias antes de o entrevistador sair.</td>
-                <td class="new">Depósito sob resumo criptográfico, reservado até o fim da coleta e aberto com a primeira divulgação, conferindo o resumo. <span class="ref">Res. § 7º-X · PL § 12-A</span></td>
+                <td class="now">O anexo de área física só precisa ser entregue depois da divulgação, até o dia seguinte (Res. 23.600, art. 2º, § 7º). Não há prova pública de que a amostra estava definida antes do campo.</td>
+                <td class="new">Depósito no registro sob resumo criptográfico, aberto com a primeira divulgação e conferido no ato. A amostra passa a ter data provável anterior ao campo. <span class="ref">Res. § 7º-X · PL § 12-A</span></td>
               </tr>
               <tr>
                 <th scope="row">Fonte da cota</th>
