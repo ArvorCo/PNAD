@@ -1,0 +1,835 @@
+{
+  "generated_from": {
+    "territory_csv": "data/outputs/datafolha_bairros_072026_compare.csv",
+    "tse_zip": "data/raw/tse_eleitorado/perfil_eleitorado_ATUAL.zip",
+    "report_pdf": "data/originals/datafolha_072026/DataFolhaRelatorio072026.pdf"
+  },
+  "painel_municipal": {
+    "municipios_por_onda": {
+      "2026-05": 139,
+      "2026-06": 139,
+      "2026-07": 139
+    },
+    "municipios_nas_tres_ondas": 118,
+    "municipios_com_cota_identica_nas_tres_ondas": 118,
+    "entrevistas_no_painel_fixo": 1752,
+    "share_entrevistas_no_painel_fixo_pct": 87.4,
+    "setores_unicos_por_onda": {
+      "2026-05": 331,
+      "2026-06": 331,
+      "2026-07": 330
+    },
+    "municipios_que_sairam_jun_jul": [
+      "RIO CLARO/SP",
+      "SEVERINIA/SP"
+    ],
+    "municipios_que_entraram_jun_jul": [
+      "OUROESTE/SP",
+      "PIRACICABA/SP"
+    ],
+    "entrevistas_por_linha": {
+      "6": 328,
+      "12": 3
+    },
+    "concentracao": {
+      "top_1": {
+        "entrevistas": 132,
+        "share_pct": 6.6
+      },
+      "top_2": {
+        "entrevistas": 204,
+        "share_pct": 10.2
+      },
+      "top_6": {
+        "entrevistas": 348,
+        "share_pct": 17.4
+      },
+      "top_11": {
+        "entrevistas": 468,
+        "share_pct": 23.4
+      },
+      "top_20": {
+        "entrevistas": 576,
+        "share_pct": 28.7
+      },
+      "top_30": {
+        "entrevistas": 696,
+        "share_pct": 34.7
+      },
+      "top_50": {
+        "entrevistas": 936,
+        "share_pct": 46.7
+      },
+      "top_100": {
+        "entrevistas": 1536,
+        "share_pct": 76.6
+      },
+      "top_139": {
+        "entrevistas": 2004,
+        "share_pct": 100.0
+      }
+    },
+    "capitais_no_painel": 18,
+    "entrevistas_em_capitais": 552,
+    "share_entrevistas_em_capitais_pct": 27.5,
+    "classes_de_tamanho": {
+      "1 mi+ eleitores": {
+        "municipios": 12,
+        "entrevistas": 480,
+        "eleitores": 29280258
+      },
+      "20 mil a 50 mil": {
+        "municipios": 32,
+        "entrevistas": 384,
+        "eleitores": 1058406
+      },
+      "200 mil a 1 mi": {
+        "municipios": 27,
+        "entrevistas": 324,
+        "eleitores": 12901947
+      },
+      "50 mil a 200 mil": {
+        "municipios": 38,
+        "entrevistas": 456,
+        "eleitores": 4117556
+      },
+      "até 20 mil": {
+        "municipios": 30,
+        "entrevistas": 360,
+        "eleitores": 368452
+      }
+    }
+  },
+  "cobertura_eleitoral": {
+    "eleitorado_nacional_sem_exterior": 157846602,
+    "municipios_no_brasil": 5571,
+    "municipios_na_amostra": 139,
+    "share_municipios_pct": 2.5,
+    "eleitorado_coberto": 47726619,
+    "share_eleitorado_coberto_pct": 30.2,
+    "eleitorado_no_painel_fixo": 47034056,
+    "share_eleitorado_painel_fixo_pct": 29.8,
+    "municipios_sem_correspondencia": [],
+    "eleitores_por_entrevista_nacional": 78766,
+    "ufs_ausentes": [
+      {
+        "uf": "AP",
+        "entrevistas": 0,
+        "share_amostra_pct": 0.0,
+        "share_eleitorado_pct": 0.37,
+        "diferenca_pp": -0.37
+      },
+      {
+        "uf": "RR",
+        "entrevistas": 0,
+        "share_amostra_pct": 0.0,
+        "share_eleitorado_pct": 0.25,
+        "diferenca_pp": -0.25
+      }
+    ],
+    "comparacao_uf": [
+      {
+        "uf": "SP",
+        "entrevistas": 444,
+        "share_amostra_pct": 22.16,
+        "share_eleitorado_pct": 21.61,
+        "diferenca_pp": 0.55
+      },
+      {
+        "uf": "MG",
+        "entrevistas": 204,
+        "share_amostra_pct": 10.18,
+        "share_eleitorado_pct": 10.38,
+        "diferenca_pp": -0.2
+      },
+      {
+        "uf": "RJ",
+        "entrevistas": 168,
+        "share_amostra_pct": 8.38,
+        "share_eleitorado_pct": 8.15,
+        "diferenca_pp": 0.24
+      },
+      {
+        "uf": "BA",
+        "entrevistas": 144,
+        "share_amostra_pct": 7.19,
+        "share_eleitorado_pct": 7.17,
+        "diferenca_pp": 0.01
+      },
+      {
+        "uf": "PR",
+        "entrevistas": 108,
+        "share_amostra_pct": 5.39,
+        "share_eleitorado_pct": 5.45,
+        "diferenca_pp": -0.07
+      },
+      {
+        "uf": "RS",
+        "entrevistas": 108,
+        "share_amostra_pct": 5.39,
+        "share_eleitorado_pct": 5.4,
+        "diferenca_pp": -0.01
+      },
+      {
+        "uf": "PE",
+        "entrevistas": 96,
+        "share_amostra_pct": 4.79,
+        "share_eleitorado_pct": 4.58,
+        "diferenca_pp": 0.21
+      },
+      {
+        "uf": "CE",
+        "entrevistas": 96,
+        "share_amostra_pct": 4.79,
+        "share_eleitorado_pct": 4.44,
+        "diferenca_pp": 0.36
+      },
+      {
+        "uf": "PA",
+        "entrevistas": 72,
+        "share_amostra_pct": 3.59,
+        "share_eleitorado_pct": 3.97,
+        "diferenca_pp": -0.38
+      },
+      {
+        "uf": "SC",
+        "entrevistas": 72,
+        "share_amostra_pct": 3.59,
+        "share_eleitorado_pct": 3.63,
+        "diferenca_pp": -0.03
+      },
+      {
+        "uf": "MA",
+        "entrevistas": 60,
+        "share_amostra_pct": 2.99,
+        "share_eleitorado_pct": 3.29,
+        "diferenca_pp": -0.29
+      },
+      {
+        "uf": "GO",
+        "entrevistas": 72,
+        "share_amostra_pct": 3.59,
+        "share_eleitorado_pct": 3.22,
+        "diferenca_pp": 0.37
+      },
+      {
+        "uf": "PB",
+        "entrevistas": 36,
+        "share_amostra_pct": 1.8,
+        "share_eleitorado_pct": 2.06,
+        "diferenca_pp": -0.26
+      },
+      {
+        "uf": "ES",
+        "entrevistas": 24,
+        "share_amostra_pct": 1.2,
+        "share_eleitorado_pct": 1.89,
+        "diferenca_pp": -0.7
+      },
+      {
+        "uf": "AM",
+        "entrevistas": 60,
+        "share_amostra_pct": 2.99,
+        "share_eleitorado_pct": 1.78,
+        "diferenca_pp": 1.22
+      },
+      {
+        "uf": "PI",
+        "entrevistas": 36,
+        "share_amostra_pct": 1.8,
+        "share_eleitorado_pct": 1.72,
+        "diferenca_pp": 0.08
+      },
+      {
+        "uf": "RN",
+        "entrevistas": 36,
+        "share_amostra_pct": 1.8,
+        "share_eleitorado_pct": 1.69,
+        "diferenca_pp": 0.11
+      },
+      {
+        "uf": "MT",
+        "entrevistas": 12,
+        "share_amostra_pct": 0.6,
+        "share_eleitorado_pct": 1.67,
+        "diferenca_pp": -1.07
+      },
+      {
+        "uf": "AL",
+        "entrevistas": 24,
+        "share_amostra_pct": 1.2,
+        "share_eleitorado_pct": 1.55,
+        "diferenca_pp": -0.35
+      },
+      {
+        "uf": "DF",
+        "entrevistas": 36,
+        "share_amostra_pct": 1.8,
+        "share_eleitorado_pct": 1.43,
+        "diferenca_pp": 0.37
+      },
+      {
+        "uf": "MS",
+        "entrevistas": 36,
+        "share_amostra_pct": 1.8,
+        "share_eleitorado_pct": 1.28,
+        "diferenca_pp": 0.51
+      },
+      {
+        "uf": "SE",
+        "entrevistas": 24,
+        "share_amostra_pct": 1.2,
+        "share_eleitorado_pct": 1.1,
+        "diferenca_pp": 0.1
+      },
+      {
+        "uf": "RO",
+        "entrevistas": 12,
+        "share_amostra_pct": 0.6,
+        "share_eleitorado_pct": 0.8,
+        "diferenca_pp": -0.2
+      },
+      {
+        "uf": "TO",
+        "entrevistas": 12,
+        "share_amostra_pct": 0.6,
+        "share_eleitorado_pct": 0.75,
+        "diferenca_pp": -0.15
+      },
+      {
+        "uf": "AC",
+        "entrevistas": 12,
+        "share_amostra_pct": 0.6,
+        "share_eleitorado_pct": 0.39,
+        "diferenca_pp": 0.21
+      },
+      {
+        "uf": "AP",
+        "entrevistas": 0,
+        "share_amostra_pct": 0.0,
+        "share_eleitorado_pct": 0.37,
+        "diferenca_pp": -0.37
+      },
+      {
+        "uf": "RR",
+        "entrevistas": 0,
+        "share_amostra_pct": 0.0,
+        "share_eleitorado_pct": 0.25,
+        "diferenca_pp": -0.25
+      }
+    ]
+  },
+  "recortes_de_campanha": {
+    "natureza_do_municipio": {
+      "fonte_pagina": 32,
+      "grupos": {
+        "Capital + Região Metropolitana": {
+          "lula": 52,
+          "flavio": 39,
+          "base": 787,
+          "share_of_sample_pct": 39.3,
+          "flavio_minus_lula_pp": -13.0,
+          "srs_margin_of_difference_pp": 6.6,
+          "srs_95ci_flavio_minus_lula_pp": [
+            -19.6,
+            -6.4
+          ],
+          "deff_threshold_to_include_zero": 3.88,
+          "arithmetic_contribution_pp": -5.11
+        },
+        "Interior": {
+          "lula": 45,
+          "flavio": 45,
+          "base": 1217,
+          "share_of_sample_pct": 60.7,
+          "flavio_minus_lula_pp": 0.0,
+          "srs_margin_of_difference_pp": 5.33,
+          "srs_95ci_flavio_minus_lula_pp": [
+            -5.33,
+            5.33
+          ],
+          "deff_threshold_to_include_zero": 0.0,
+          "arithmetic_contribution_pp": 0.0
+        }
+      }
+    },
+    "preferencia_partidaria": {
+      "fonte_pagina": 32,
+      "grupos": {
+        "PT": {
+          "lula": 98,
+          "flavio": 2,
+          "base": 485,
+          "share_of_sample_pct": 24.2,
+          "flavio_minus_lula_pp": -96.0,
+          "srs_margin_of_difference_pp": 2.49,
+          "srs_95ci_flavio_minus_lula_pp": [
+            -98.49,
+            -93.51
+          ],
+          "deff_threshold_to_include_zero": 1484.08,
+          "arithmetic_contribution_pp": -23.23
+        },
+        "PL": {
+          "lula": 2,
+          "flavio": 98,
+          "base": 220,
+          "share_of_sample_pct": 11.0,
+          "flavio_minus_lula_pp": 96.0,
+          "srs_margin_of_difference_pp": 3.7,
+          "srs_95ci_flavio_minus_lula_pp": [
+            92.3,
+            99.7
+          ],
+          "deff_threshold_to_include_zero": 673.19,
+          "arithmetic_contribution_pp": 10.54
+        },
+        "Outro partido": {
+          "lula": 42,
+          "flavio": 51,
+          "base": 293,
+          "share_of_sample_pct": 14.6,
+          "flavio_minus_lula_pp": 9.0,
+          "srs_margin_of_difference_pp": 10.99,
+          "srs_95ci_flavio_minus_lula_pp": [
+            -1.99,
+            19.99
+          ],
+          "deff_threshold_to_include_zero": 0.67,
+          "arithmetic_contribution_pp": 1.32
+        },
+        "Nenhum / não tem": {
+          "lula": 35,
+          "flavio": 48,
+          "base": 1006,
+          "share_of_sample_pct": 50.2,
+          "flavio_minus_lula_pp": 13.0,
+          "srs_margin_of_difference_pp": 5.57,
+          "srs_95ci_flavio_minus_lula_pp": [
+            7.43,
+            18.57
+          ],
+          "deff_threshold_to_include_zero": 5.44,
+          "arithmetic_contribution_pp": 6.53
+        }
+      }
+    },
+    "cor_autodeclarada": {
+      "fonte_pagina": 32,
+      "grupos": {
+        "Parda": {
+          "lula": 51,
+          "flavio": 41,
+          "base": 916,
+          "share_of_sample_pct": 45.7,
+          "flavio_minus_lula_pp": -10.0,
+          "srs_margin_of_difference_pp": 6.18,
+          "srs_95ci_flavio_minus_lula_pp": [
+            -16.18,
+            -3.82
+          ],
+          "deff_threshold_to_include_zero": 2.62,
+          "arithmetic_contribution_pp": -4.57
+        },
+        "Branca": {
+          "lula": 40,
+          "flavio": 50,
+          "base": 715,
+          "share_of_sample_pct": 35.7,
+          "flavio_minus_lula_pp": 10.0,
+          "srs_margin_of_difference_pp": 6.92,
+          "srs_95ci_flavio_minus_lula_pp": [
+            3.08,
+            16.92
+          ],
+          "deff_threshold_to_include_zero": 2.09,
+          "arithmetic_contribution_pp": 3.57
+        },
+        "Preta": {
+          "lula": 54,
+          "flavio": 34,
+          "base": 290,
+          "share_of_sample_pct": 14.5,
+          "flavio_minus_lula_pp": -20.0,
+          "srs_margin_of_difference_pp": 10.55,
+          "srs_95ci_flavio_minus_lula_pp": [
+            -30.55,
+            -9.45
+          ],
+          "deff_threshold_to_include_zero": 3.59,
+          "arithmetic_contribution_pp": -2.89
+        }
+      }
+    },
+    "religiao": {
+      "fonte_pagina": 32,
+      "grupos": {
+        "Católica": {
+          "lula": 54,
+          "flavio": 37,
+          "base": 988,
+          "share_of_sample_pct": 49.3,
+          "flavio_minus_lula_pp": -17.0,
+          "srs_margin_of_difference_pp": 5.85,
+          "srs_95ci_flavio_minus_lula_pp": [
+            -22.85,
+            -11.15
+          ],
+          "deff_threshold_to_include_zero": 8.44,
+          "arithmetic_contribution_pp": -8.38
+        },
+        "Evangélica": {
+          "lula": 31,
+          "flavio": 60,
+          "base": 495,
+          "share_of_sample_pct": 24.7,
+          "flavio_minus_lula_pp": 29.0,
+          "srs_margin_of_difference_pp": 8.01,
+          "srs_95ci_flavio_minus_lula_pp": [
+            20.99,
+            37.01
+          ],
+          "deff_threshold_to_include_zero": 13.12,
+          "arithmetic_contribution_pp": 7.16
+        }
+      }
+    },
+    "ocupacao": {
+      "fonte_pagina": 25,
+      "grupos": {
+        "Assalariado com registro": {
+          "lula": 40,
+          "flavio": 46,
+          "base": 497,
+          "share_of_sample_pct": 24.8,
+          "flavio_minus_lula_pp": 6.0,
+          "srs_margin_of_difference_pp": 8.14,
+          "srs_95ci_flavio_minus_lula_pp": [
+            -2.14,
+            14.14
+          ],
+          "deff_threshold_to_include_zero": 0.54,
+          "arithmetic_contribution_pp": 1.49
+        },
+        "Assalariado sem registro": {
+          "lula": 49,
+          "flavio": 39,
+          "base": 127,
+          "share_of_sample_pct": 6.3,
+          "flavio_minus_lula_pp": -10.0,
+          "srs_margin_of_difference_pp": 16.22,
+          "srs_95ci_flavio_minus_lula_pp": [
+            -26.22,
+            6.22
+          ],
+          "deff_threshold_to_include_zero": 0.38,
+          "arithmetic_contribution_pp": -0.63
+        },
+        "Funcionário público": {
+          "lula": 47,
+          "flavio": 42,
+          "base": 136,
+          "share_of_sample_pct": 6.8,
+          "flavio_minus_lula_pp": -5.0,
+          "srs_margin_of_difference_pp": 15.83,
+          "srs_95ci_flavio_minus_lula_pp": [
+            -20.83,
+            10.83
+          ],
+          "deff_threshold_to_include_zero": 0.1,
+          "arithmetic_contribution_pp": -0.34
+        },
+        "Autônomo / liberal / bico": {
+          "lula": 43,
+          "flavio": 47,
+          "base": 478,
+          "share_of_sample_pct": 23.9,
+          "flavio_minus_lula_pp": 4.0,
+          "srs_margin_of_difference_pp": 8.5,
+          "srs_95ci_flavio_minus_lula_pp": [
+            -4.5,
+            12.5
+          ],
+          "deff_threshold_to_include_zero": 0.22,
+          "arithmetic_contribution_pp": 0.95
+        },
+        "Empresário": {
+          "lula": 27,
+          "flavio": 65,
+          "base": 88,
+          "share_of_sample_pct": 4.4,
+          "flavio_minus_lula_pp": 38.0,
+          "srs_margin_of_difference_pp": 18.4,
+          "srs_95ci_flavio_minus_lula_pp": [
+            19.6,
+            56.4
+          ],
+          "deff_threshold_to_include_zero": 4.26,
+          "arithmetic_contribution_pp": 1.67
+        },
+        "Desempregado": {
+          "lula": 54,
+          "flavio": 34,
+          "base": 74,
+          "share_of_sample_pct": 3.7,
+          "flavio_minus_lula_pp": -20.0,
+          "srs_margin_of_difference_pp": 20.88,
+          "srs_95ci_flavio_minus_lula_pp": [
+            -40.88,
+            0.88
+          ],
+          "deff_threshold_to_include_zero": 0.92,
+          "arithmetic_contribution_pp": -0.74
+        },
+        "Dona de casa": {
+          "lula": 61,
+          "flavio": 34,
+          "base": 167,
+          "share_of_sample_pct": 8.3,
+          "flavio_minus_lula_pp": -27.0,
+          "srs_margin_of_difference_pp": 14.2,
+          "srs_95ci_flavio_minus_lula_pp": [
+            -41.2,
+            -12.8
+          ],
+          "deff_threshold_to_include_zero": 3.61,
+          "arithmetic_contribution_pp": -2.25
+        },
+        "Aposentado": {
+          "lula": 60,
+          "flavio": 35,
+          "base": 294,
+          "share_of_sample_pct": 14.7,
+          "flavio_minus_lula_pp": -25.0,
+          "srs_margin_of_difference_pp": 10.77,
+          "srs_95ci_flavio_minus_lula_pp": [
+            -35.77,
+            -14.23
+          ],
+          "deff_threshold_to_include_zero": 5.39,
+          "arithmetic_contribution_pp": -3.67
+        }
+      }
+    }
+  },
+  "primeiro_turno_por_natureza": {
+    "fonte_pagina": 30,
+    "grupos": {
+      "Capital + Região Metropolitana": {
+        "lula": 43,
+        "flavio": 28,
+        "base": 787,
+        "share_of_sample_pct": 39.3,
+        "flavio_minus_lula_pp": -15.0,
+        "srs_margin_of_difference_pp": 5.79,
+        "srs_95ci_flavio_minus_lula_pp": [
+          -20.79,
+          -9.21
+        ],
+        "deff_threshold_to_include_zero": 6.7,
+        "arithmetic_contribution_pp": -5.89
+      },
+      "Interior": {
+        "lula": 38,
+        "flavio": 35,
+        "base": 1217,
+        "share_of_sample_pct": 60.7,
+        "flavio_minus_lula_pp": -3.0,
+        "srs_margin_of_difference_pp": 4.8,
+        "srs_95ci_flavio_minus_lula_pp": [
+          -7.8,
+          1.8
+        ],
+        "deff_threshold_to_include_zero": 0.39,
+        "arithmetic_contribution_pp": -1.82
+      }
+    }
+  },
+  "rejeicao_por_natureza": {
+    "fonte_pagina": 33,
+    "grupos": {
+      "Brasil": {
+        "flavio": 48,
+        "lula": 46,
+        "base": 2004
+      },
+      "Capital + Região Metropolitana": {
+        "flavio": 51,
+        "lula": 44,
+        "base": 787
+      },
+      "Interior": {
+        "flavio": 46,
+        "lula": 48,
+        "base": 1217
+      },
+      "Nenhum / não tem partido": {
+        "flavio": 39,
+        "lula": 55,
+        "base": 1006
+      }
+    }
+  },
+  "espontanea_por_natureza": {
+    "fonte_pagina": 29,
+    "grupos": {
+      "Capital + Região Metropolitana": {
+        "lula": 31,
+        "flavio": 17,
+        "nao_sabe": 34
+      },
+      "Interior": {
+        "lula": 28,
+        "flavio": 17,
+        "nao_sabe": 39
+      },
+      "Nenhum / não tem partido": {
+        "lula": 15,
+        "flavio": 13,
+        "nao_sabe": 53
+      }
+    }
+  },
+  "terreno_2022": {
+    "brasil_bolsonaro_pct": 49.1,
+    "brasil_lula_pct": 50.9,
+    "painel_bolsonaro_pct": 50.88,
+    "painel_lula_pct": 49.12,
+    "painel_bolsonaro_ponderado_por_entrevista_pct": 49.33,
+    "mediana_municipal_bolsonaro_pct": 53.67,
+    "municipios_vencidos_por_bolsonaro": 78,
+    "entrevistas_em_municipios_bolsonaristas": 1080,
+    "share_entrevistas_em_municipios_bolsonaristas_pct": 53.9,
+    "top_10_bolsonaristas": [
+      {
+        "municipio": "CORUPA",
+        "uf": "SC",
+        "entrevistas": 12,
+        "bolsonaro_2022_pct": 78.4
+      },
+      {
+        "municipio": "JOACABA",
+        "uf": "SC",
+        "entrevistas": 12,
+        "bolsonaro_2022_pct": 72.55
+      },
+      {
+        "municipio": "RIO BRANCO",
+        "uf": "AC",
+        "entrevistas": 12,
+        "bolsonaro_2022_pct": 72.51
+      },
+      {
+        "municipio": "CRICIUMA",
+        "uf": "SC",
+        "entrevistas": 12,
+        "bolsonaro_2022_pct": 72.03
+      },
+      {
+        "municipio": "NAVEGANTES",
+        "uf": "SC",
+        "entrevistas": 12,
+        "bolsonaro_2022_pct": 70.11
+      },
+      {
+        "municipio": "MARILIA",
+        "uf": "SP",
+        "entrevistas": 12,
+        "bolsonaro_2022_pct": 69.43
+      },
+      {
+        "municipio": "DESCALVADO",
+        "uf": "SP",
+        "entrevistas": 12,
+        "bolsonaro_2022_pct": 68.68
+      },
+      {
+        "municipio": "COMODORO",
+        "uf": "MT",
+        "entrevistas": 12,
+        "bolsonaro_2022_pct": 68.58
+      },
+      {
+        "municipio": "VACARIA",
+        "uf": "RS",
+        "entrevistas": 12,
+        "bolsonaro_2022_pct": 68.58
+      },
+      {
+        "municipio": "PIRACICABA",
+        "uf": "SP",
+        "entrevistas": 12,
+        "bolsonaro_2022_pct": 67.9
+      }
+    ],
+    "top_10_lulistas": [
+      {
+        "municipio": "AURORA",
+        "uf": "CE",
+        "entrevistas": 12,
+        "bolsonaro_2022_pct": 15.58
+      },
+      {
+        "municipio": "DORMENTES",
+        "uf": "PE",
+        "entrevistas": 12,
+        "bolsonaro_2022_pct": 21.07
+      },
+      {
+        "municipio": "REMIGIO",
+        "uf": "PB",
+        "entrevistas": 12,
+        "bolsonaro_2022_pct": 21.76
+      },
+      {
+        "municipio": "JOAQUIM PIRES",
+        "uf": "PI",
+        "entrevistas": 12,
+        "bolsonaro_2022_pct": 22.1
+      },
+      {
+        "municipio": "AFOGADOS DA INGAZEIRA",
+        "uf": "PE",
+        "entrevistas": 12,
+        "bolsonaro_2022_pct": 22.1
+      },
+      {
+        "municipio": "BROTAS DE MACAUBAS",
+        "uf": "BA",
+        "entrevistas": 12,
+        "bolsonaro_2022_pct": 22.13
+      },
+      {
+        "municipio": "TEOLANDIA",
+        "uf": "BA",
+        "entrevistas": 12,
+        "bolsonaro_2022_pct": 22.14
+      },
+      {
+        "municipio": "MAGALHAES DE ALMEIDA",
+        "uf": "MA",
+        "entrevistas": 12,
+        "bolsonaro_2022_pct": 22.46
+      },
+      {
+        "municipio": "SEBASTIAO LARANJEIRAS",
+        "uf": "BA",
+        "entrevistas": 12,
+        "bolsonaro_2022_pct": 23.36
+      },
+      {
+        "municipio": "SANTA HELENA",
+        "uf": "MA",
+        "entrevistas": 12,
+        "bolsonaro_2022_pct": 23.43
+      }
+    ],
+    "municipios_sem_correspondencia": []
+  },
+  "limitacoes": [
+    "A margem da diferença assume amostragem aleatória simples; o desenho real usa estratos, pontos de fluxo, cotas e ponderação.",
+    "Bases publicadas são ponderadas; sem o n bruto por recorte a incerteza real pode ser maior.",
+    "Repetição de município é repetição documental de unidade de seleção, não repetição do mesmo entrevistado.",
+    "A cobertura de eleitorado casa nome de município por UF; três nomes com apóstrofo ou grafia divergente exigem conferência manual."
+  ]
+}

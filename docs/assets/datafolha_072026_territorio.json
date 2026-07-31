@@ -1,0 +1,145 @@
+{
+  "source_csv": "data/outputs/datafolha_bairros_072026_compare.csv",
+  "waves": {
+    "2026-05": {
+      "points": 334,
+      "cities": 139,
+      "interviews": 2004
+    },
+    "2026-06": {
+      "points": 331,
+      "cities": 139,
+      "interviews": 2004
+    },
+    "2026-07": {
+      "points": 331,
+      "cities": 139,
+      "interviews": 2004
+    }
+  },
+  "persistent_cities": {
+    "count": 118,
+    "share_of_july_cities_pct": 84.9,
+    "july_interviews_inside": 1752,
+    "share_of_july_interviews_pct": 87.4
+  },
+  "city_churn": {
+    "june_to_july_out": [
+      "RIO CLARO/SP",
+      "SEVERINIA/SP"
+    ],
+    "june_to_july_in": [
+      "OUROESTE/SP",
+      "PIRACICABA/SP"
+    ],
+    "may_to_june_out": [
+      "ACARAU/CE",
+      "ALVORADA D OESTE/RO",
+      "CONCORDIA DO PARA/PA",
+      "CRUZILIA/MG",
+      "FELIXLANDIA/MG",
+      "FRONTEIRAS/PI",
+      "GUAMIRANGA/PR",
+      "IBIA/MG",
+      "ITAPOA/SC",
+      "JARDIM/CE",
+      "LAJE/BA",
+      "NOBRES/MT",
+      "OURO BRANCO/MG",
+      "PATO BRANCO/PR",
+      "PEROLA/PR",
+      "RIO POMBA/MG",
+      "SANTA TEREZA DO OEST/PR",
+      "TANGARA/SC",
+      "TURURU/CE"
+    ]
+  },
+  "concentration": {
+    "top_cities": [
+      {
+        "city": "SAO PAULO/SP",
+        "interviews": 132,
+        "share_pct": 6.6
+      },
+      {
+        "city": "RIO DE JANEIRO/RJ",
+        "interviews": 72,
+        "share_pct": 3.6
+      },
+      {
+        "city": "BRASILIA/DF",
+        "interviews": 36,
+        "share_pct": 1.8
+      },
+      {
+        "city": "SALVADOR/BA",
+        "interviews": 36,
+        "share_pct": 1.8
+      },
+      {
+        "city": "FORTALEZA/CE",
+        "interviews": 36,
+        "share_pct": 1.8
+      },
+      {
+        "city": "BELO HORIZONTE/MG",
+        "interviews": 36,
+        "share_pct": 1.8
+      },
+      {
+        "city": "GOIANIA/GO",
+        "interviews": 24,
+        "share_pct": 1.2
+      },
+      {
+        "city": "RECIFE/PE",
+        "interviews": 24,
+        "share_pct": 1.2
+      },
+      {
+        "city": "MANAUS/AM",
+        "interviews": 24,
+        "share_pct": 1.2
+      },
+      {
+        "city": "CURITIBA/PR",
+        "interviews": 24,
+        "share_pct": 1.2
+      },
+      {
+        "city": "PORTO ALEGRE/RS",
+        "interviews": 24,
+        "share_pct": 1.2
+      },
+      {
+        "city": "GOIANESIA/GO",
+        "interviews": 12,
+        "share_pct": 0.6
+      }
+    ],
+    "top_11_share_pct": 23.4
+  },
+  "federal_coverage": {
+    "ufs_present": 25,
+    "ufs_absent": [
+      "AP",
+      "RR"
+    ],
+    "absent_in_every_wave": [
+      "AP",
+      "RR"
+    ]
+  },
+  "cluster_profile": {
+    "interviews_per_point": {
+      "6": 328,
+      "12": 3
+    },
+    "modal_cluster_size": 6,
+    "note": "Conglomerado de tamanho fixo: quase todo setor entrega exatamente 6 entrevistas. É o insumo direto do efeito de desenho que o relatório não publica."
+  },
+  "limitations": [
+    "Repetição de município é repetição documental de unidade primária, não repetição do mesmo entrevistado.",
+    "Amostra-mestra fixa é prática legítima e reduz a variância da variação entre ondas; o problema auditável é a ausência de probabilidades de seleção, estratos e efeito de desenho."
+  ]
+}

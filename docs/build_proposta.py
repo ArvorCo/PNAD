@@ -255,12 +255,12 @@ TEMPLATE = """<!doctype html>
             <p>respostas coletadas do eleitor e sem resultado público. Sete blocos do questionário foram perguntados e não voltaram como frequência — só como agregado ou cruzamento escolhido.</p>
           </div>
           <div class="fact">
-            <strong>7 dias</strong>
-            <p>é o prazo que o registro no PesqEle admite para entregar a relação dos municípios pesquisados, “até o sétimo dia seguinte à data de registro” (Resolução 23.600, art. 2º, § 7º). Nesta rodada: registro em <b>07/07</b>, divulgação em <b>13/07</b>, prazo até <b>14/07</b>. A manchete sai antes de o país saber onde a pesquisa foi feita.</p>
+            <strong>+1 dia</strong>
+            <p>é a janela atual para complementar municípios, bairros, setores, entrevistas e perfil final depois do dia autorizado para divulgação (Resolução 23.600, art. 2º, § 7º, com redação de 2026). A manchete ainda pode sair antes do mapa.</p>
           </div>
           <div class="fact">
-            <strong>depois<br>das eleições</strong>
-            <p>é quando o art. 2º, § 7º-B da Resolução 23.600 manda publicizar o relatório completo. Transparência póstuma não protege o eleitor; só organiza o arquivo morto.</p>
+            <strong>+3 dias</strong>
+            <p>é a carência adicional criada pelo § 7º-C para entregar declaração estatística, relatório e discriminação fiscal. E o § 7º-B ainda manda publicizar o relatório completo somente depois das eleições.</p>
           </div>
           <div class="fact">
             <strong>±4,18</strong>
@@ -291,12 +291,12 @@ TEMPLATE = """<!doctype html>
             <tbody>
               <tr>
                 <th scope="row">Relatório completo</th>
-                <td class="now">Público “depois das eleições” (Res. 23.600, art. 2º, § 7º-B).</td>
+                <td class="now">Pode ser entregue depois da divulgação, com carência adicional de três dias, e só fica público “depois das eleições” (Res. 23.600, art. 2º, §§ 7º-B e 7º-C).</td>
                 <td class="new">Público até a primeira divulgação e, em qualquer hipótese, em no máximo <b>dois dias</b> do fim da coleta. <span class="ref">PL § 6º-A</span></td>
               </tr>
               <tr>
                 <th scope="row">Relação de municípios</th>
-                <td class="now">Pode ser entregue até o <b>7º dia</b> seguinte ao registro — depois da manchete.</td>
+                <td class="now">Pode ser entregue do dia autorizado para divulgação até o <b>dia seguinte</b> — ainda depois da manchete.</td>
                 <td class="new">Sai junto com o número, no mesmo ato, com o n de entrevistas de cada unidade. <span class="ref">PL § 6º e inc. XVII · Res. § 7º-K</span></td>
               </tr>
               <tr>
@@ -323,6 +323,31 @@ TEMPLATE = """<!doctype html>
                 <th scope="row">Perguntas sem resultado</th>
                 <td class="now">O questionário é público, mas o resultado de cada pergunta pode sumir do relatório.</td>
                 <td class="new">Resultado completo de <b>toda</b> pergunta substantiva aplicada, ainda que não usada na comunicação principal. <span class="ref">Res. § 7º-G · PL inc. XI</span></td>
+              </tr>
+              <tr>
+                <th scope="row">Pontos de fluxo</th>
+                <td class="now">Sem obrigação pública de informar abordagens, recusas, horários, reposição ou seleção do transeunte por ponto.</td>
+                <td class="new">Contagem por ponto, elegibilidade, recusa, substituição, horários e regra de seleção; geocódigos validados e protocolo de rotação entre ondas. <span class="ref">Res. §§ 7º-J e 7º-K · PL inc. XXIII</span></td>
+              </tr>
+              <tr>
+                <th scope="row">Mapa da coleta</th>
+                <td class="now">O anexo de área física é registrado antes do campo e a publicidade do registro é imediata: a geografia da coleta fica conhecível dias antes de o entrevistador sair.</td>
+                <td class="new">Depósito sob resumo criptográfico, reservado até o fim da coleta e aberto com a primeira divulgação, conferindo o resumo. <span class="ref">Res. § 7º-X · PL § 12-A</span></td>
+              </tr>
+              <tr>
+                <th scope="row">Fonte da cota</th>
+                <td class="now">Basta dizer que houve ponderação por sexo, idade, escolaridade e renda; a edição da fonte e a distribuição-alvo não são publicadas.</td>
+                <td class="new">Pesquisa, edição, período de referência e data de divulgação de cada fonte, com a distribuição-alvo publicada e, em faixas monetárias, o mês de referência dos valores. <span class="ref">Res. § 7º-Y · PL inc. XXV</span></td>
+              </tr>
+              <tr>
+                <th scope="row">Recrutamento digital</th>
+                <td class="now">Painel online declara fornecedor e cobertura, mas não o mecanismo pelo qual o respondente chegou até ali.</td>
+                <td class="new">Mecanismo de recrutamento, campanhas, identificadores de clique no instrumento, ingresso voluntário ou probabilístico e tratamento da autosseleção. <span class="ref">Res. § 7º-Z · PL inc. XXVI</span></td>
+              </tr>
+              <tr>
+                <th scope="row">Coerência fiscal</th>
+                <td class="now">Valor, declaração e nota fiscal são registrados, mas não passam por reconciliação automática.</td>
+                <td class="new">Contrato, registro, declaração e nota fiscal devem fechar, com correção pública de divergência material. <span class="ref">Res. § 7º-L · PL inc. XXIV</span></td>
               </tr>
               <tr>
                 <th scope="row">Vigência</th>
@@ -362,7 +387,7 @@ TEMPLATE = """<!doctype html>
     <div class="wrap">
       <div class="foot-brand"><img src="img/arvor_logo.png" alt="" width="34" height="34"><span>Arvor Intelligence</span></div>
       <p>A Arvor é uma empresa de tecnologia, não um think tank e não um partido. As críticas que originaram esta proposta são de método e de transparência: nenhum documento do nosso acervo afirma que houve fraude em qualquer pesquisa auditada. <strong>Prova de opacidade, não de fraude.</strong></p>
-      <p>Auditoria independente baseada em documentos públicos, bases oficiais e cálculos reproduzíveis. Por <strong>Leonardo Dias</strong>, com apoio da Arvor. Última atualização: 15 de julho de 2026.</p>
+      <p>Auditoria independente baseada em documentos públicos, bases oficiais e cálculos reproduzíveis. Por <strong>Leonardo Dias</strong>, com apoio da Arvor. Última atualização: 31 de julho de 2026.</p>
     </div>
   </footer>
 

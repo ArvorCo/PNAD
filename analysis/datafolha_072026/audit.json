@@ -1,0 +1,669 @@
+{
+  "generated_from": {
+    "territory_pdfs": {
+      "2026-05": "data/originals/datafolha_052026/BairrosDatafolha052026.pdf",
+      "2026-06": "data/originals/datafolha_062026/bairrosdatafolha062026.pdf",
+      "2026-07": "data/originals/datafolha_072026/BairrosDatafolha072026.pdf"
+    },
+    "tse_benchmark": "data/outputs/tse_eleitorado_perfil_benchmark.json"
+  },
+  "national_poll": {
+    "registration": "BR-01166/2026",
+    "sample": 2004,
+    "municipalities_reported": 139,
+    "field_report": "2026-07-22/2026-07-23",
+    "field_registry": "2026-07-22/2026-07-24",
+    "registered_cost_brl": 307541.6,
+    "invoice_cost_brl": 307641.6,
+    "cost_difference_brl": 100.0,
+    "cost_difference_pct": 0.0325,
+    "registered_cost_per_interview_brl": 153.46,
+    "invoice_cost_per_interview_brl": 153.51,
+    "toplines": {
+      "first_round": {
+        "lula": 40,
+        "flavio": 32,
+        "gap_pp": 8
+      },
+      "second_round": {
+        "lula": 48,
+        "flavio": 43,
+        "gap_pp": 5,
+        "srs_margin_of_difference_pp": 4.17,
+        "srs_95ci_gap_pp": [
+          0.83,
+          9.17
+        ],
+        "deff_threshold_to_include_zero": 1.44
+      },
+      "first_round_gap_srs": {
+        "margin_of_difference_pp": 3.7,
+        "deff_threshold_to_include_zero": 4.68
+      }
+    },
+    "second_round_segments": {
+      "gender": {
+        "men": {
+          "lula": 45,
+          "flavio": 46,
+          "base": 959
+        },
+        "women": {
+          "lula": 50,
+          "flavio": 40,
+          "base": 1045
+        }
+      },
+      "age": {
+        "16-24": {
+          "lula": 46,
+          "flavio": 41,
+          "base": 251
+        },
+        "25-34": {
+          "lula": 47,
+          "flavio": 44,
+          "base": 369
+        },
+        "35-44": {
+          "lula": 38,
+          "flavio": 53,
+          "base": 393
+        },
+        "45-59": {
+          "lula": 50,
+          "flavio": 39,
+          "base": 508
+        },
+        "60+": {
+          "lula": 55,
+          "flavio": 37,
+          "base": 483
+        }
+      },
+      "education": {
+        "fundamental": {
+          "lula": 59,
+          "flavio": 34,
+          "base": 594
+        },
+        "secondary": {
+          "lula": 45,
+          "flavio": 45,
+          "base": 900
+        },
+        "higher": {
+          "lula": 39,
+          "flavio": 48,
+          "base": 509
+        }
+      },
+      "income_minimum_wages": {
+        "up_to_2": {
+          "lula": 56,
+          "flavio": 36,
+          "base": 1002
+        },
+        "2_to_5": {
+          "lula": 39,
+          "flavio": 50,
+          "base": 678
+        },
+        "5_to_10": {
+          "lula": 38,
+          "flavio": 51,
+          "base": 194
+        },
+        "over_10": {
+          "lula": 45,
+          "flavio": 51,
+          "base": 51
+        }
+      },
+      "region": {
+        "southeast": {
+          "lula": 44,
+          "flavio": 46,
+          "base": 840
+        },
+        "south": {
+          "lula": 36,
+          "flavio": 52,
+          "base": 294
+        },
+        "northeast": {
+          "lula": 62,
+          "flavio": 29,
+          "base": 552
+        },
+        "center_west_north": {
+          "lula": 42,
+          "flavio": 49,
+          "base": 317
+        }
+      },
+      "religion": {
+        "catholic": {
+          "lula": 54,
+          "flavio": 37
+        },
+        "evangelical": {
+          "lula": 31,
+          "flavio": 60
+        }
+      }
+    },
+    "second_round_segment_diagnostics": {
+      "gender": {
+        "published_base_total": 2004,
+        "groups": {
+          "men": {
+            "flavio_minus_lula_pp": 1.0,
+            "srs_margin_of_difference_pp": 6.04,
+            "srs_95ci_flavio_minus_lula_pp": [
+              -5.04,
+              7.04
+            ],
+            "deff_threshold_to_include_zero": 0.03,
+            "arithmetic_contribution_pp": 0.48
+          },
+          "women": {
+            "flavio_minus_lula_pp": -10.0,
+            "srs_margin_of_difference_pp": 5.72,
+            "srs_95ci_flavio_minus_lula_pp": [
+              -15.72,
+              -4.28
+            ],
+            "deff_threshold_to_include_zero": 3.06,
+            "arithmetic_contribution_pp": -5.21
+          }
+        }
+      },
+      "age": {
+        "published_base_total": 2004,
+        "groups": {
+          "16-24": {
+            "flavio_minus_lula_pp": -5.0,
+            "srs_margin_of_difference_pp": 11.52,
+            "srs_95ci_flavio_minus_lula_pp": [
+              -16.52,
+              6.52
+            ],
+            "deff_threshold_to_include_zero": 0.19,
+            "arithmetic_contribution_pp": -0.63
+          },
+          "25-34": {
+            "flavio_minus_lula_pp": -3.0,
+            "srs_margin_of_difference_pp": 9.73,
+            "srs_95ci_flavio_minus_lula_pp": [
+              -12.73,
+              6.73
+            ],
+            "deff_threshold_to_include_zero": 0.1,
+            "arithmetic_contribution_pp": -0.55
+          },
+          "35-44": {
+            "flavio_minus_lula_pp": 15.0,
+            "srs_margin_of_difference_pp": 9.31,
+            "srs_95ci_flavio_minus_lula_pp": [
+              5.69,
+              24.31
+            ],
+            "deff_threshold_to_include_zero": 2.59,
+            "arithmetic_contribution_pp": 2.94
+          },
+          "45-59": {
+            "flavio_minus_lula_pp": -11.0,
+            "srs_margin_of_difference_pp": 8.15,
+            "srs_95ci_flavio_minus_lula_pp": [
+              -19.15,
+              -2.85
+            ],
+            "deff_threshold_to_include_zero": 1.82,
+            "arithmetic_contribution_pp": -2.79
+          },
+          "60+": {
+            "flavio_minus_lula_pp": -18.0,
+            "srs_margin_of_difference_pp": 8.4,
+            "srs_95ci_flavio_minus_lula_pp": [
+              -26.4,
+              -9.6
+            ],
+            "deff_threshold_to_include_zero": 4.59,
+            "arithmetic_contribution_pp": -4.34
+          }
+        }
+      },
+      "education": {
+        "published_base_total": 2003,
+        "groups": {
+          "fundamental": {
+            "flavio_minus_lula_pp": -25.0,
+            "srs_margin_of_difference_pp": 7.49,
+            "srs_95ci_flavio_minus_lula_pp": [
+              -32.49,
+              -17.51
+            ],
+            "deff_threshold_to_include_zero": 11.14,
+            "arithmetic_contribution_pp": -7.41
+          },
+          "secondary": {
+            "flavio_minus_lula_pp": 0.0,
+            "srs_margin_of_difference_pp": 6.2,
+            "srs_95ci_flavio_minus_lula_pp": [
+              -6.2,
+              6.2
+            ],
+            "deff_threshold_to_include_zero": 0.0,
+            "arithmetic_contribution_pp": 0.0
+          },
+          "higher": {
+            "flavio_minus_lula_pp": 9.0,
+            "srs_margin_of_difference_pp": 8.07,
+            "srs_95ci_flavio_minus_lula_pp": [
+              0.93,
+              17.07
+            ],
+            "deff_threshold_to_include_zero": 1.25,
+            "arithmetic_contribution_pp": 2.29
+          }
+        }
+      },
+      "income_minimum_wages": {
+        "published_base_total": 1925,
+        "groups": {
+          "up_to_2": {
+            "flavio_minus_lula_pp": -20.0,
+            "srs_margin_of_difference_pp": 5.81,
+            "srs_95ci_flavio_minus_lula_pp": [
+              -25.81,
+              -14.19
+            ],
+            "deff_threshold_to_include_zero": 11.86,
+            "arithmetic_contribution_pp": -10.41
+          },
+          "2_to_5": {
+            "flavio_minus_lula_pp": 11.0,
+            "srs_margin_of_difference_pp": 7.05,
+            "srs_95ci_flavio_minus_lula_pp": [
+              3.95,
+              18.05
+            ],
+            "deff_threshold_to_include_zero": 2.43,
+            "arithmetic_contribution_pp": 3.87
+          },
+          "5_to_10": {
+            "flavio_minus_lula_pp": 13.0,
+            "srs_margin_of_difference_pp": 13.15,
+            "srs_95ci_flavio_minus_lula_pp": [
+              -0.15,
+              26.15
+            ],
+            "deff_threshold_to_include_zero": 0.98,
+            "arithmetic_contribution_pp": 1.31
+          },
+          "over_10": {
+            "flavio_minus_lula_pp": 6.0,
+            "srs_margin_of_difference_pp": 26.84,
+            "srs_95ci_flavio_minus_lula_pp": [
+              -20.84,
+              32.84
+            ],
+            "deff_threshold_to_include_zero": 0.05,
+            "arithmetic_contribution_pp": 0.16
+          }
+        }
+      },
+      "region": {
+        "published_base_total": 2003,
+        "groups": {
+          "southeast": {
+            "flavio_minus_lula_pp": 2.0,
+            "srs_margin_of_difference_pp": 6.41,
+            "srs_95ci_flavio_minus_lula_pp": [
+              -4.41,
+              8.41
+            ],
+            "deff_threshold_to_include_zero": 0.1,
+            "arithmetic_contribution_pp": 0.84
+          },
+          "south": {
+            "flavio_minus_lula_pp": 16.0,
+            "srs_margin_of_difference_pp": 10.57,
+            "srs_95ci_flavio_minus_lula_pp": [
+              5.43,
+              26.57
+            ],
+            "deff_threshold_to_include_zero": 2.29,
+            "arithmetic_contribution_pp": 2.35
+          },
+          "northeast": {
+            "flavio_minus_lula_pp": -33.0,
+            "srs_margin_of_difference_pp": 7.47,
+            "srs_95ci_flavio_minus_lula_pp": [
+              -40.47,
+              -25.53
+            ],
+            "deff_threshold_to_include_zero": 19.53,
+            "arithmetic_contribution_pp": -9.09
+          },
+          "center_west_north": {
+            "flavio_minus_lula_pp": 7.0,
+            "srs_margin_of_difference_pp": 10.47,
+            "srs_95ci_flavio_minus_lula_pp": [
+              -3.47,
+              17.47
+            ],
+            "deff_threshold_to_include_zero": 0.45,
+            "arithmetic_contribution_pp": 1.11
+          }
+        }
+      },
+      "religion": {
+        "published_base_total": 0,
+        "groups": {
+          "catholic": {
+            "status": "unavailable_without_published_base"
+          },
+          "evangelical": {
+            "status": "unavailable_without_published_base"
+          }
+        }
+      }
+    },
+    "policy_diagnostic_sample_planning": {
+      "assumed_deff": 1.5,
+      "target_margin_single_proportion_pp": 5,
+      "required_subgroup_n": 577,
+      "observed_share_5_to_10_sm": 0.0968,
+      "estimated_national_n_for_5_to_10_sm_target": 5961
+    }
+  },
+  "territory": {
+    "rounds": {
+      "2026-05": {
+        "rows": 334,
+        "unique_sectors": 331,
+        "unique_municipalities": 139,
+        "interviews": 2004
+      },
+      "2026-06": {
+        "rows": 331,
+        "unique_sectors": 331,
+        "unique_municipalities": 139,
+        "interviews": 2004
+      },
+      "2026-07": {
+        "rows": 331,
+        "unique_sectors": 330,
+        "unique_municipalities": 139,
+        "interviews": 2004
+      }
+    },
+    "may_to_june": {
+      "sectors": {
+        "repeated": 255,
+        "current_total": 331,
+        "previous_total": 331,
+        "share_of_current_pct": 77.0
+      },
+      "municipalities": {
+        "repeated": 120,
+        "current_total": 139,
+        "previous_total": 139,
+        "share_of_current_pct": 86.3
+      }
+    },
+    "june_to_july": {
+      "sectors": {
+        "repeated": 69,
+        "current_total": 330,
+        "previous_total": 331,
+        "share_of_current_pct": 20.9
+      },
+      "municipalities": {
+        "repeated": 137,
+        "current_total": 139,
+        "previous_total": 139,
+        "share_of_current_pct": 98.6
+      },
+      "neighborhood_labels": {
+        "repeated": 171,
+        "current_total": 331,
+        "previous_total": 331,
+        "share_of_current_pct": 51.7
+      }
+    },
+    "may_to_july": {
+      "sectors": {
+        "repeated": 45,
+        "current_total": 330,
+        "previous_total": 331,
+        "share_of_current_pct": 13.6
+      },
+      "municipalities": {
+        "repeated": 118,
+        "current_total": 139,
+        "previous_total": 139,
+        "share_of_current_pct": 84.9
+      }
+    },
+    "all_three": {
+      "sectors": 44,
+      "municipalities": 118
+    },
+    "duplicate_sectors_july": [
+      {
+        "sector": "130083905000015",
+        "occurrences": 2,
+        "rows": [
+          {
+            "wave": "2026-07",
+            "page": 2,
+            "region": "NORTE",
+            "uf": "AM",
+            "municipality": "CAAPIRANGA",
+            "municipality_code": "1300839",
+            "neighborhood": "CENTRO",
+            "sector": "130083905000015",
+            "interviews": 6
+          },
+          {
+            "wave": "2026-07",
+            "page": 2,
+            "region": "NORTE",
+            "uf": "AM",
+            "municipality": "CAAPIRANGA",
+            "municipality_code": "1300839",
+            "neighborhood": "NOSSA SENHORA DAS GRACAS",
+            "sector": "130083905000015",
+            "interviews": 6
+          }
+        ]
+      }
+    ]
+  },
+  "tse_benchmark": {
+    "gender_raw": {
+      "FEMININO": {
+        "count": 83359909,
+        "pct": 52.81070858908955
+      },
+      "MASCULINO": {
+        "count": 74463357,
+        "pct": 47.17450743729029
+      },
+      "NÃO INFORMADO": {
+        "count": 23336,
+        "pct": 0.014783973620160666
+      }
+    },
+    "gender_binary": {
+      "Mulher": {
+        "count": 83359909,
+        "pct": 52.81851726474853
+      },
+      "Homem": {
+        "count": 74463357,
+        "pct": 47.18148273525147
+      }
+    },
+    "age_raw": {
+      "40 a 44 anos": {
+        "count": 15940764,
+        "pct": 10.098895888807286
+      },
+      "35 a 39 anos": {
+        "count": 15201453,
+        "pct": 9.630522803398707
+      },
+      "30 a 34 anos": {
+        "count": 15045381,
+        "pct": 9.531647060733052
+      },
+      "45 a 49 anos": {
+        "count": 15003935,
+        "pct": 9.505389922806193
+      },
+      "25 a 29 anos": {
+        "count": 14993732,
+        "pct": 9.498926052269406
+      },
+      "50 a 54 anos": {
+        "count": 13083878,
+        "pct": 8.288982996289018
+      },
+      "55 a 59 anos": {
+        "count": 12005062,
+        "pct": 7.605524507901666
+      },
+      "60 a 64 anos": {
+        "count": 10996915,
+        "pct": 6.966836701369092
+      },
+      "21 a 24 anos": {
+        "count": 10841755,
+        "pct": 6.868538734840804
+      },
+      "65 a 69 anos": {
+        "count": 8911839,
+        "pct": 5.645885870891285
+      },
+      "70 a 74 anos": {
+        "count": 6833363,
+        "pct": 4.329116315091787
+      },
+      "75 a 79 anos": {
+        "count": 4641976,
+        "pct": 2.940814652443389
+      },
+      "80 a 84 anos": {
+        "count": 2649848,
+        "pct": 1.6787488399655255
+      },
+      "20 anos": {
+        "count": 2563181,
+        "pct": 1.6238430017011072
+      },
+      "19 anos": {
+        "count": 2325856,
+        "pct": 1.473491333060182
+      },
+      "18 anos": {
+        "count": 2036917,
+        "pct": 1.2904408293819338
+      },
+      "85 a 89 anos": {
+        "count": 1420695,
+        "pct": 0.9000478831973843
+      },
+      "17 anos": {
+        "count": 1252673,
+        "pct": 0.7936014992581215
+      },
+      "16 anos": {
+        "count": 731587,
+        "pct": 0.4634797269820227
+      },
+      "90 a 94 anos": {
+        "count": 631443,
+        "pct": 0.40003585252978713
+      },
+      "95 a 99 anos": {
+        "count": 332099,
+        "pct": 0.2103935059685352
+      },
+      "100 anos ou mais": {
+        "count": 282526,
+        "pct": 0.17898769844915635
+      },
+      "15 anos": {
+        "count": 118514,
+        "pct": 0.0750817556402006
+      },
+      "Inválida": {
+        "count": 1210,
+        "pct": 0.0007665670243569766
+      }
+    },
+    "age_poll_bands": {
+      "45-59": {
+        "count": 40092875,
+        "pct": 25.419177446725346
+      },
+      "60-100": {
+        "count": 36700704,
+        "pct": 23.268516099076024
+      },
+      "35-44": {
+        "count": 31142217,
+        "pct": 19.744394484242566
+      },
+      "25-34": {
+        "count": 30039113,
+        "pct": 19.045018440040383
+      },
+      "16-24": {
+        "count": 19751969,
+        "pct": 12.522893529915681
+      }
+    }
+  },
+  "original_manifest": [
+    {
+      "file": "AssinaturaDatafolha072026.pdf",
+      "bytes": 96546,
+      "sha256": "eb017bc4efb3d5d7000b8954d184e214608f5bf13b4c32412e435e44d564b6c6"
+    },
+    {
+      "file": "BairrosDatafolha072026.pdf",
+      "bytes": 201541,
+      "sha256": "b9d2eada1b1c08e3b5e74798b2eb6d3563ed0e40308a2dc077b51abc36be0f79"
+    },
+    {
+      "file": "DataFolhaRelatorio072026.pdf",
+      "bytes": 1285085,
+      "sha256": "37ee9f41470d1e9eaf6ee1293abb2846c0544d38390f9b2ec81538752449879d"
+    },
+    {
+      "file": "NotaFiscalDatafolha072026.pdf",
+      "bytes": 80104,
+      "sha256": "8272a5e78faa5f1a29b51d078915cc238c49a03809768848e076fb0450bd686f"
+    },
+    {
+      "file": "PesqEleDataFolha072026.pdf",
+      "bytes": 160876,
+      "sha256": "d93737160ade244170197926bc7246317d830667ef744ecb62aca3d052b89207"
+    },
+    {
+      "file": "QuestionarioDatafolha072026.pdf",
+      "bytes": 289818,
+      "sha256": "8083c544cdc57a0f1ee012ae5886d240b038034c22a11a100900eae18c611d60"
+    }
+  ],
+  "limitations": [
+    "A margem calculada para a diferença pressupõe amostragem aleatória simples; o desenho real usa estratos, pontos de fluxo, cotas e ponderação.",
+    "Sem pesos individuais, conglomerados e microdados, não é possível calcular o efeito de desenho real nem reestimar o resultado.",
+    "Sobreposição territorial identifica repetição documental de setor, não repetição do mesmo entrevistado."
+  ]
+}

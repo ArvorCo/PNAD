@@ -1,0 +1,242 @@
+{
+  "generated_from": {
+    "microdado": "data/outputs/base_anual_visita1_labeled_npv.csv",
+    "relatorio": "data/originals/datafolha_072026/DataFolhaRelatorio072026.pdf",
+    "referencia_monetaria": "rendimento domiciliar deflacionado para 2026-04 e convertido em salários mínimos"
+  },
+  "faixas": {
+    "ate2": "Até 2 SM",
+    "de2a5": "Mais de 2 a 5 SM",
+    "de5a10": "Mais de 5 a 10 SM",
+    "mais10": "Mais de 10 SM"
+  },
+  "distribuicoes_pct": {
+    "datafolha_bases_do_cruzamento": {
+      "ate2": 52.05,
+      "de2a5": 35.22,
+      "de5a10": 10.08,
+      "mais10": 2.65
+    },
+    "datafolha_perfil_ponderado": {
+      "ate2": 52.08,
+      "de2a5": 35.42,
+      "de5a10": 10.42,
+      "mais10": 2.08
+    },
+    "pnad_domicilios": {
+      "ate2": 42.93,
+      "de2a5": 35.69,
+      "de5a10": 14.23,
+      "mais10": 7.15
+    },
+    "pnad_pessoas_16": {
+      "ate2": 35.44,
+      "de2a5": 39.23,
+      "de5a10": 16.91,
+      "mais10": 8.42
+    },
+    "pnad_pessoas_16_habitual": {
+      "ate2": 35.12,
+      "de2a5": 40.37,
+      "de5a10": 16.57,
+      "mais10": 7.95
+    }
+  },
+  "distancia_ate2_pp": {
+    "datafolha_menos_pnad_domicilios": 9.12,
+    "datafolha_menos_pnad_pessoas_16": 16.61
+  },
+  "razao_mais10": {
+    "pnad_pessoas_16_sobre_datafolha": 3.18
+  },
+  "segundo_turno": [
+    {
+      "cenario": "Datafolha · bases do cruzamento",
+      "fonte": "relatório, págs. 16 e 18",
+      "distribuicao_pct": {
+        "ate2": 52.05,
+        "de2a5": 35.22,
+        "de5a10": 10.08,
+        "mais10": 2.65
+      },
+      "resultado": {
+        "lula": 47.91,
+        "flavio": 42.84,
+        "branco_nulo": 8.35,
+        "nao_sabe": 0.87,
+        "diferenca_lula_flavio": 5.07
+      }
+    },
+    {
+      "cenario": "Datafolha · perfil ponderado",
+      "fonte": "relatório, pág. 13",
+      "distribuicao_pct": {
+        "ate2": 52.08,
+        "de2a5": 35.42,
+        "de5a10": 10.42,
+        "mais10": 2.08
+      },
+      "resultado": {
+        "lula": 47.88,
+        "flavio": 42.83,
+        "branco_nulo": 8.4,
+        "nao_sabe": 0.88,
+        "diferenca_lula_flavio": 5.05
+      }
+    },
+    {
+      "cenario": "PNAD · domicílios",
+      "fonte": "PNADC anual 2025 visita 1, VD5001",
+      "distribuicao_pct": {
+        "ate2": 42.93,
+        "de2a5": 35.69,
+        "de5a10": 14.23,
+        "mais10": 7.15
+      },
+      "resultado": {
+        "lula": 46.58,
+        "flavio": 44.2,
+        "branco_nulo": 8.35,
+        "nao_sabe": 0.79,
+        "diferenca_lula_flavio": 2.38
+      }
+    },
+    {
+      "cenario": "PNAD · pessoas de 16 anos ou mais",
+      "fonte": "PNADC anual 2025 visita 1, VD5001",
+      "distribuicao_pct": {
+        "ate2": 35.44,
+        "de2a5": 39.23,
+        "de5a10": 16.91,
+        "mais10": 8.42
+      },
+      "resultado": {
+        "lula": 45.36,
+        "flavio": 45.29,
+        "branco_nulo": 8.52,
+        "nao_sabe": 0.75,
+        "diferenca_lula_flavio": 0.07
+      }
+    },
+    {
+      "cenario": "PNAD · pessoas 16+ (renda habitual)",
+      "fonte": "PNADC anual 2025 visita 1, VD5007",
+      "distribuicao_pct": {
+        "ate2": 35.12,
+        "de2a5": 40.37,
+        "de5a10": 16.57,
+        "mais10": 7.95
+      },
+      "resultado": {
+        "lula": 45.29,
+        "flavio": 45.33,
+        "branco_nulo": 8.56,
+        "nao_sabe": 0.75,
+        "diferenca_lula_flavio": -0.04
+      }
+    }
+  ],
+  "primeiro_turno": [
+    {
+      "cenario": "Datafolha · bases do cruzamento",
+      "fonte": "relatório, págs. 16 e 18",
+      "distribuicao_pct": {
+        "ate2": 52.05,
+        "de2a5": 35.22,
+        "de5a10": 10.08,
+        "mais10": 2.65
+      },
+      "resultado": {
+        "lula": 39.77,
+        "flavio": 32.59,
+        "branco_nulo": 7.87,
+        "nao_sabe": 2.39,
+        "diferenca_lula_flavio": 7.18
+      }
+    },
+    {
+      "cenario": "Datafolha · perfil ponderado",
+      "fonte": "relatório, pág. 13",
+      "distribuicao_pct": {
+        "ate2": 52.08,
+        "de2a5": 35.42,
+        "de5a10": 10.42,
+        "mais10": 2.08
+      },
+      "resultado": {
+        "lula": 39.71,
+        "flavio": 32.6,
+        "branco_nulo": 7.9,
+        "nao_sabe": 2.4,
+        "diferenca_lula_flavio": 7.11
+      }
+    },
+    {
+      "cenario": "PNAD · domicílios",
+      "fonte": "PNADC anual 2025 visita 1, VD5001",
+      "distribuicao_pct": {
+        "ate2": 42.93,
+        "de2a5": 35.69,
+        "de5a10": 14.23,
+        "mais10": 7.15
+      },
+      "resultado": {
+        "lula": 38.94,
+        "flavio": 33.28,
+        "branco_nulo": 7.64,
+        "nao_sabe": 2.22,
+        "diferenca_lula_flavio": 5.66
+      }
+    },
+    {
+      "cenario": "PNAD · pessoas de 16 anos ou mais",
+      "fonte": "PNADC anual 2025 visita 1, VD5001",
+      "distribuicao_pct": {
+        "ate2": 35.44,
+        "de2a5": 39.23,
+        "de5a10": 16.91,
+        "mais10": 8.42
+      },
+      "resultado": {
+        "lula": 37.93,
+        "flavio": 33.95,
+        "branco_nulo": 7.58,
+        "nao_sabe": 2.1,
+        "diferenca_lula_flavio": 3.98
+      }
+    },
+    {
+      "cenario": "PNAD · pessoas 16+ (renda habitual)",
+      "fonte": "PNADC anual 2025 visita 1, VD5007",
+      "distribuicao_pct": {
+        "ate2": 35.12,
+        "de2a5": 40.37,
+        "de5a10": 16.57,
+        "mais10": 7.95
+      },
+      "resultado": {
+        "lula": 37.82,
+        "flavio": 34.01,
+        "branco_nulo": 7.6,
+        "nao_sabe": 2.11,
+        "diferenca_lula_flavio": 3.81
+      }
+    }
+  ],
+  "toplines_publicados": {
+    "segundo_turno": {
+      "lula": 48,
+      "flavio": 43
+    },
+    "primeiro_turno": {
+      "lula": 40,
+      "flavio": 32
+    }
+  },
+  "limitacoes": [
+    "Reponderação de uma margem isolada: ignora interações entre renda, região, escolaridade, idade e religião.",
+    "Renda familiar declarada em ponto de fluxo não é o mesmo conceito que rendimento domiciliar medido pela PNAD, e 3,9% da amostra não declarou renda.",
+    "A referência PNAD é a visita 1 de 2025, deflacionada para abril de 2026; o campo do Datafolha é de julho de 2026.",
+    "O exercício não produz o 'resultado real' da eleição nem substitui microdados e pesos individuais, que o instituto não publica."
+  ]
+}

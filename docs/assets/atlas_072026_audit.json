@@ -1,0 +1,760 @@
+{
+  "poll": {
+    "registration": "BR-08602/2026",
+    "published_n": 5021,
+    "field": "2026-07-22/2026-07-27"
+  },
+  "sampling_math": {
+    "srs_moe_95_pct_at_50_pp": 1.383,
+    "n_required_for_1_pp": 9604,
+    "moe_by_assumed_deff_pp": {
+      "1.0": 1.383,
+      "1.5": 1.694,
+      "2.0": 1.956,
+      "2.5": 2.187,
+      "3.0": 2.395
+    },
+    "note": "DEFF values are sensitivity scenarios, not estimates. Nonprobability selection bias is not identified by this calculation."
+  },
+  "renan_overcapture_sensitivity": {
+    "1%": {
+      "adjusted_share_pct": 6.869,
+      "shift_pp": 0.931
+    },
+    "3%": {
+      "adjusted_share_pct": 4.948,
+      "shift_pp": 2.852
+    },
+    "5%": {
+      "adjusted_share_pct": 2.947,
+      "shift_pp": 4.853
+    }
+  },
+  "gender_gap_instability": {
+    "june_women_minus_men_pp": 14.4,
+    "july_women_minus_men_pp": -5.1,
+    "gap_swing_pp": 19.5,
+    "srs_standard_error_pp": 1.908,
+    "srs_z_score": 10.219,
+    "z_score_if_deff_2": 7.226
+  },
+  "succession_ledger": {
+    "total_delta_pp": -6.5,
+    "rows": [
+      {
+        "segment": "Total",
+        "jair_2022_scenario_pct": 42.3,
+        "flavio_2026_pct": 35.8,
+        "delta_pp": -6.5,
+        "retention_pct": 84.6
+      },
+      {
+        "segment": "Homem",
+        "jair_2022_scenario_pct": 45.2,
+        "flavio_2026_pct": 38.5,
+        "delta_pp": -6.7,
+        "retention_pct": 85.2
+      },
+      {
+        "segment": "Mulher",
+        "jair_2022_scenario_pct": 39.6,
+        "flavio_2026_pct": 33.4,
+        "delta_pp": -6.2,
+        "retention_pct": 84.3
+      },
+      {
+        "segment": "16-24",
+        "jair_2022_scenario_pct": 22.7,
+        "flavio_2026_pct": 9.7,
+        "delta_pp": -13.0,
+        "retention_pct": 42.7
+      },
+      {
+        "segment": "25-34",
+        "jair_2022_scenario_pct": 48.8,
+        "flavio_2026_pct": 41.1,
+        "delta_pp": -7.7,
+        "retention_pct": 84.2
+      },
+      {
+        "segment": "35-44",
+        "jair_2022_scenario_pct": 50.2,
+        "flavio_2026_pct": 43.1,
+        "delta_pp": -7.1,
+        "retention_pct": 85.9
+      },
+      {
+        "segment": "45-59",
+        "jair_2022_scenario_pct": 47.9,
+        "flavio_2026_pct": 42.2,
+        "delta_pp": -5.7,
+        "retention_pct": 88.1
+      },
+      {
+        "segment": "60+",
+        "jair_2022_scenario_pct": 34.0,
+        "flavio_2026_pct": 32.2,
+        "delta_pp": -1.8,
+        "retention_pct": 94.7
+      },
+      {
+        "segment": "Fundamental",
+        "jair_2022_scenario_pct": 47.3,
+        "flavio_2026_pct": 43.9,
+        "delta_pp": -3.4,
+        "retention_pct": 92.8
+      },
+      {
+        "segment": "Médio",
+        "jair_2022_scenario_pct": 43.3,
+        "flavio_2026_pct": 35.9,
+        "delta_pp": -7.4,
+        "retention_pct": 82.9
+      },
+      {
+        "segment": "Superior",
+        "jair_2022_scenario_pct": 34.4,
+        "flavio_2026_pct": 25.6,
+        "delta_pp": -8.8,
+        "retention_pct": 74.4
+      },
+      {
+        "segment": "Renda até R$2 mil",
+        "jair_2022_scenario_pct": 40.1,
+        "flavio_2026_pct": 35.3,
+        "delta_pp": -4.8,
+        "retention_pct": 88.0
+      },
+      {
+        "segment": "Renda R$2-3 mil",
+        "jair_2022_scenario_pct": 43.2,
+        "flavio_2026_pct": 40.9,
+        "delta_pp": -2.3,
+        "retention_pct": 94.7
+      },
+      {
+        "segment": "Renda R$3-5 mil",
+        "jair_2022_scenario_pct": 49.7,
+        "flavio_2026_pct": 41.4,
+        "delta_pp": -8.3,
+        "retention_pct": 83.3
+      },
+      {
+        "segment": "Renda R$5-10 mil",
+        "jair_2022_scenario_pct": 41.3,
+        "flavio_2026_pct": 33.4,
+        "delta_pp": -7.9,
+        "retention_pct": 80.9
+      },
+      {
+        "segment": "Renda acima de R$10 mil",
+        "jair_2022_scenario_pct": 33.1,
+        "flavio_2026_pct": 24.1,
+        "delta_pp": -9.0,
+        "retention_pct": 72.8
+      },
+      {
+        "segment": "Católico",
+        "jair_2022_scenario_pct": 40.9,
+        "flavio_2026_pct": 36.3,
+        "delta_pp": -4.6,
+        "retention_pct": 88.8
+      },
+      {
+        "segment": "Evangélico",
+        "jair_2022_scenario_pct": 65.4,
+        "flavio_2026_pct": 51.5,
+        "delta_pp": -13.9,
+        "retention_pct": 78.7
+      },
+      {
+        "segment": "Crente sem religião",
+        "jair_2022_scenario_pct": 34.6,
+        "flavio_2026_pct": 30.1,
+        "delta_pp": -4.5,
+        "retention_pct": 87.0
+      },
+      {
+        "segment": "Agnóstico ou ateu",
+        "jair_2022_scenario_pct": 8.3,
+        "flavio_2026_pct": 5.6,
+        "delta_pp": -2.7,
+        "retention_pct": 67.5
+      },
+      {
+        "segment": "Norte",
+        "jair_2022_scenario_pct": 48.3,
+        "flavio_2026_pct": 37.0,
+        "delta_pp": -11.3,
+        "retention_pct": 76.6
+      },
+      {
+        "segment": "Nordeste",
+        "jair_2022_scenario_pct": 23.5,
+        "flavio_2026_pct": 21.3,
+        "delta_pp": -2.2,
+        "retention_pct": 90.6
+      },
+      {
+        "segment": "Centro-Oeste",
+        "jair_2022_scenario_pct": 47.8,
+        "flavio_2026_pct": 38.0,
+        "delta_pp": -9.8,
+        "retention_pct": 79.5
+      },
+      {
+        "segment": "Sudeste",
+        "jair_2022_scenario_pct": 45.1,
+        "flavio_2026_pct": 37.2,
+        "delta_pp": -7.9,
+        "retention_pct": 82.5
+      },
+      {
+        "segment": "Sul",
+        "jair_2022_scenario_pct": 62.0,
+        "flavio_2026_pct": 55.9,
+        "delta_pp": -6.1,
+        "retention_pct": 90.2
+      },
+      {
+        "segment": "Direita bolsonarista",
+        "jair_2022_scenario_pct": 99.9,
+        "flavio_2026_pct": 97.4,
+        "delta_pp": -2.5,
+        "retention_pct": 97.5
+      },
+      {
+        "segment": "Direita não bolsonarista",
+        "jair_2022_scenario_pct": 73.9,
+        "flavio_2026_pct": 53.6,
+        "delta_pp": -20.3,
+        "retention_pct": 72.5
+      },
+      {
+        "segment": "Independente",
+        "jair_2022_scenario_pct": 34.9,
+        "flavio_2026_pct": 31.6,
+        "delta_pp": -3.3,
+        "retention_pct": 90.5
+      },
+      {
+        "segment": "Sem posicionamento declarado",
+        "jair_2022_scenario_pct": 35.9,
+        "flavio_2026_pct": 16.2,
+        "delta_pp": -19.7,
+        "retention_pct": 45.1
+      }
+    ],
+    "largest_losses": [
+      {
+        "segment": "Direita não bolsonarista",
+        "jair_2022_scenario_pct": 73.9,
+        "flavio_2026_pct": 53.6,
+        "delta_pp": -20.3,
+        "retention_pct": 72.5
+      },
+      {
+        "segment": "Sem posicionamento declarado",
+        "jair_2022_scenario_pct": 35.9,
+        "flavio_2026_pct": 16.2,
+        "delta_pp": -19.7,
+        "retention_pct": 45.1
+      },
+      {
+        "segment": "Evangélico",
+        "jair_2022_scenario_pct": 65.4,
+        "flavio_2026_pct": 51.5,
+        "delta_pp": -13.9,
+        "retention_pct": 78.7
+      },
+      {
+        "segment": "16-24",
+        "jair_2022_scenario_pct": 22.7,
+        "flavio_2026_pct": 9.7,
+        "delta_pp": -13.0,
+        "retention_pct": 42.7
+      },
+      {
+        "segment": "Norte",
+        "jair_2022_scenario_pct": 48.3,
+        "flavio_2026_pct": 37.0,
+        "delta_pp": -11.3,
+        "retention_pct": 76.6
+      },
+      {
+        "segment": "Centro-Oeste",
+        "jair_2022_scenario_pct": 47.8,
+        "flavio_2026_pct": 38.0,
+        "delta_pp": -9.8,
+        "retention_pct": 79.5
+      },
+      {
+        "segment": "Renda acima de R$10 mil",
+        "jair_2022_scenario_pct": 33.1,
+        "flavio_2026_pct": 24.1,
+        "delta_pp": -9.0,
+        "retention_pct": 72.8
+      },
+      {
+        "segment": "Superior",
+        "jair_2022_scenario_pct": 34.4,
+        "flavio_2026_pct": 25.6,
+        "delta_pp": -8.8,
+        "retention_pct": 74.4
+      }
+    ],
+    "most_retained": [
+      {
+        "segment": "60+",
+        "jair_2022_scenario_pct": 34.0,
+        "flavio_2026_pct": 32.2,
+        "delta_pp": -1.8,
+        "retention_pct": 94.7
+      },
+      {
+        "segment": "Nordeste",
+        "jair_2022_scenario_pct": 23.5,
+        "flavio_2026_pct": 21.3,
+        "delta_pp": -2.2,
+        "retention_pct": 90.6
+      },
+      {
+        "segment": "Renda R$2-3 mil",
+        "jair_2022_scenario_pct": 43.2,
+        "flavio_2026_pct": 40.9,
+        "delta_pp": -2.3,
+        "retention_pct": 94.7
+      },
+      {
+        "segment": "Direita bolsonarista",
+        "jair_2022_scenario_pct": 99.9,
+        "flavio_2026_pct": 97.4,
+        "delta_pp": -2.5,
+        "retention_pct": 97.5
+      },
+      {
+        "segment": "Agnóstico ou ateu",
+        "jair_2022_scenario_pct": 8.3,
+        "flavio_2026_pct": 5.6,
+        "delta_pp": -2.7,
+        "retention_pct": 67.5
+      },
+      {
+        "segment": "Independente",
+        "jair_2022_scenario_pct": 34.9,
+        "flavio_2026_pct": 31.6,
+        "delta_pp": -3.3,
+        "retention_pct": 90.5
+      }
+    ],
+    "note": "Ambos os números vêm da mesma onda e dos mesmos respondentes. A Atlas não publica bases por recorte, portanto a diferença não recebe intervalo: é descritiva, não inferencial."
+  },
+  "fear_to_vote_conversion": {
+    "rows": [
+      {
+        "segment": "Total",
+        "fear_lula_pct": 44.6,
+        "fear_flavio_pct": 46.6,
+        "flavio_fear_edge_pp": -2.0,
+        "vote_lula_pct": 44.9,
+        "vote_flavio_pct": 35.8,
+        "flavio_vote_edge_pp": -9.1,
+        "conversion_gap_pp": 7.1
+      },
+      {
+        "segment": "Homem",
+        "fear_lula_pct": 49.2,
+        "fear_flavio_pct": 40.0,
+        "flavio_fear_edge_pp": 9.2,
+        "vote_lula_pct": 40.6,
+        "vote_flavio_pct": 38.5,
+        "flavio_vote_edge_pp": -2.1,
+        "conversion_gap_pp": 11.3
+      },
+      {
+        "segment": "Mulher",
+        "fear_lula_pct": 40.3,
+        "fear_flavio_pct": 52.6,
+        "flavio_fear_edge_pp": -12.3,
+        "vote_lula_pct": 48.9,
+        "vote_flavio_pct": 33.4,
+        "flavio_vote_edge_pp": -15.5,
+        "conversion_gap_pp": 3.2
+      },
+      {
+        "segment": "16-24",
+        "fear_lula_pct": 24.3,
+        "fear_flavio_pct": 48.6,
+        "flavio_fear_edge_pp": -24.3,
+        "vote_lula_pct": 36.9,
+        "vote_flavio_pct": 9.7,
+        "flavio_vote_edge_pp": -27.2,
+        "conversion_gap_pp": 2.9
+      },
+      {
+        "segment": "25-34",
+        "fear_lula_pct": 55.4,
+        "fear_flavio_pct": 31.1,
+        "flavio_fear_edge_pp": 24.3,
+        "vote_lula_pct": 36.8,
+        "vote_flavio_pct": 41.1,
+        "flavio_vote_edge_pp": 4.3,
+        "conversion_gap_pp": 20.0
+      },
+      {
+        "segment": "35-44",
+        "fear_lula_pct": 51.5,
+        "fear_flavio_pct": 40.5,
+        "flavio_fear_edge_pp": 11.0,
+        "vote_lula_pct": 36.8,
+        "vote_flavio_pct": 43.1,
+        "flavio_vote_edge_pp": 6.3,
+        "conversion_gap_pp": 4.7
+      },
+      {
+        "segment": "45-59",
+        "fear_lula_pct": 47.7,
+        "fear_flavio_pct": 49.2,
+        "flavio_fear_edge_pp": -1.5,
+        "vote_lula_pct": 47.8,
+        "vote_flavio_pct": 42.2,
+        "flavio_vote_edge_pp": -5.6,
+        "conversion_gap_pp": 4.1
+      },
+      {
+        "segment": "60+",
+        "fear_lula_pct": 36.9,
+        "fear_flavio_pct": 61.2,
+        "flavio_fear_edge_pp": -24.3,
+        "vote_lula_pct": 60.8,
+        "vote_flavio_pct": 32.2,
+        "flavio_vote_edge_pp": -28.6,
+        "conversion_gap_pp": 4.3
+      },
+      {
+        "segment": "Fundamental",
+        "fear_lula_pct": 52.4,
+        "fear_flavio_pct": 43.6,
+        "flavio_fear_edge_pp": 8.8,
+        "vote_lula_pct": 46.8,
+        "vote_flavio_pct": 43.9,
+        "flavio_vote_edge_pp": -2.9,
+        "conversion_gap_pp": 11.7
+      },
+      {
+        "segment": "Médio",
+        "fear_lula_pct": 43.6,
+        "fear_flavio_pct": 42.8,
+        "flavio_fear_edge_pp": 0.8,
+        "vote_lula_pct": 37.6,
+        "vote_flavio_pct": 35.9,
+        "flavio_vote_edge_pp": -1.7,
+        "conversion_gap_pp": 2.5
+      },
+      {
+        "segment": "Superior",
+        "fear_lula_pct": 36.1,
+        "fear_flavio_pct": 56.4,
+        "flavio_fear_edge_pp": -20.3,
+        "vote_lula_pct": 54.2,
+        "vote_flavio_pct": 25.6,
+        "flavio_vote_edge_pp": -28.6,
+        "conversion_gap_pp": 8.3
+      },
+      {
+        "segment": "Renda até R$2 mil",
+        "fear_lula_pct": 47.4,
+        "fear_flavio_pct": 47.2,
+        "flavio_fear_edge_pp": 0.2,
+        "vote_lula_pct": 53.5,
+        "vote_flavio_pct": 35.3,
+        "flavio_vote_edge_pp": -18.2,
+        "conversion_gap_pp": 18.4
+      },
+      {
+        "segment": "Renda R$2-3 mil",
+        "fear_lula_pct": 44.1,
+        "fear_flavio_pct": 43.0,
+        "flavio_fear_edge_pp": 1.1,
+        "vote_lula_pct": 37.1,
+        "vote_flavio_pct": 40.9,
+        "flavio_vote_edge_pp": 3.8,
+        "conversion_gap_pp": -2.7
+      },
+      {
+        "segment": "Renda R$3-5 mil",
+        "fear_lula_pct": 50.5,
+        "fear_flavio_pct": 39.7,
+        "flavio_fear_edge_pp": 10.8,
+        "vote_lula_pct": 35.8,
+        "vote_flavio_pct": 41.4,
+        "flavio_vote_edge_pp": 5.6,
+        "conversion_gap_pp": 5.2
+      },
+      {
+        "segment": "Renda R$5-10 mil",
+        "fear_lula_pct": 41.0,
+        "fear_flavio_pct": 51.2,
+        "flavio_fear_edge_pp": -10.2,
+        "vote_lula_pct": 47.8,
+        "vote_flavio_pct": 33.4,
+        "flavio_vote_edge_pp": -14.4,
+        "conversion_gap_pp": 4.2
+      },
+      {
+        "segment": "Renda acima de R$10 mil",
+        "fear_lula_pct": 36.1,
+        "fear_flavio_pct": 54.8,
+        "flavio_fear_edge_pp": -18.7,
+        "vote_lula_pct": 52.8,
+        "vote_flavio_pct": 24.1,
+        "flavio_vote_edge_pp": -28.7,
+        "conversion_gap_pp": 10.0
+      },
+      {
+        "segment": "Católico",
+        "fear_lula_pct": 45.5,
+        "fear_flavio_pct": 48.0,
+        "flavio_fear_edge_pp": -2.5,
+        "vote_lula_pct": 50.0,
+        "vote_flavio_pct": 36.3,
+        "flavio_vote_edge_pp": -13.7,
+        "conversion_gap_pp": 11.2
+      },
+      {
+        "segment": "Evangélico",
+        "fear_lula_pct": 66.5,
+        "fear_flavio_pct": 22.6,
+        "flavio_fear_edge_pp": 43.9,
+        "vote_lula_pct": 22.1,
+        "vote_flavio_pct": 51.5,
+        "flavio_vote_edge_pp": 29.4,
+        "conversion_gap_pp": 14.5
+      },
+      {
+        "segment": "Norte",
+        "fear_lula_pct": 52.6,
+        "fear_flavio_pct": 34.4,
+        "flavio_fear_edge_pp": 18.2,
+        "vote_lula_pct": 31.7,
+        "vote_flavio_pct": 37.0,
+        "flavio_vote_edge_pp": 5.3,
+        "conversion_gap_pp": 12.9
+      },
+      {
+        "segment": "Nordeste",
+        "fear_lula_pct": 29.6,
+        "fear_flavio_pct": 62.7,
+        "flavio_fear_edge_pp": -33.1,
+        "vote_lula_pct": 65.8,
+        "vote_flavio_pct": 21.3,
+        "flavio_vote_edge_pp": -44.5,
+        "conversion_gap_pp": 11.4
+      },
+      {
+        "segment": "Centro-Oeste",
+        "fear_lula_pct": 43.6,
+        "fear_flavio_pct": 42.3,
+        "flavio_fear_edge_pp": 1.3,
+        "vote_lula_pct": 39.0,
+        "vote_flavio_pct": 38.0,
+        "flavio_vote_edge_pp": -1.0,
+        "conversion_gap_pp": 2.3
+      },
+      {
+        "segment": "Sudeste",
+        "fear_lula_pct": 46.1,
+        "fear_flavio_pct": 44.8,
+        "flavio_fear_edge_pp": 1.3,
+        "vote_lula_pct": 41.2,
+        "vote_flavio_pct": 37.2,
+        "flavio_vote_edge_pp": -4.0,
+        "conversion_gap_pp": 5.3
+      },
+      {
+        "segment": "Sul",
+        "fear_lula_pct": 63.2,
+        "fear_flavio_pct": 31.6,
+        "flavio_fear_edge_pp": 31.6,
+        "vote_lula_pct": 28.4,
+        "vote_flavio_pct": 55.9,
+        "flavio_vote_edge_pp": 27.5,
+        "conversion_gap_pp": 4.1
+      }
+    ],
+    "largest_unconverted_advantage": [
+      {
+        "segment": "25-34",
+        "fear_lula_pct": 55.4,
+        "fear_flavio_pct": 31.1,
+        "flavio_fear_edge_pp": 24.3,
+        "vote_lula_pct": 36.8,
+        "vote_flavio_pct": 41.1,
+        "flavio_vote_edge_pp": 4.3,
+        "conversion_gap_pp": 20.0
+      },
+      {
+        "segment": "Renda até R$2 mil",
+        "fear_lula_pct": 47.4,
+        "fear_flavio_pct": 47.2,
+        "flavio_fear_edge_pp": 0.2,
+        "vote_lula_pct": 53.5,
+        "vote_flavio_pct": 35.3,
+        "flavio_vote_edge_pp": -18.2,
+        "conversion_gap_pp": 18.4
+      },
+      {
+        "segment": "Evangélico",
+        "fear_lula_pct": 66.5,
+        "fear_flavio_pct": 22.6,
+        "flavio_fear_edge_pp": 43.9,
+        "vote_lula_pct": 22.1,
+        "vote_flavio_pct": 51.5,
+        "flavio_vote_edge_pp": 29.4,
+        "conversion_gap_pp": 14.5
+      },
+      {
+        "segment": "Norte",
+        "fear_lula_pct": 52.6,
+        "fear_flavio_pct": 34.4,
+        "flavio_fear_edge_pp": 18.2,
+        "vote_lula_pct": 31.7,
+        "vote_flavio_pct": 37.0,
+        "flavio_vote_edge_pp": 5.3,
+        "conversion_gap_pp": 12.9
+      },
+      {
+        "segment": "Fundamental",
+        "fear_lula_pct": 52.4,
+        "fear_flavio_pct": 43.6,
+        "flavio_fear_edge_pp": 8.8,
+        "vote_lula_pct": 46.8,
+        "vote_flavio_pct": 43.9,
+        "flavio_vote_edge_pp": -2.9,
+        "conversion_gap_pp": 11.7
+      },
+      {
+        "segment": "Nordeste",
+        "fear_lula_pct": 29.6,
+        "fear_flavio_pct": 62.7,
+        "flavio_fear_edge_pp": -33.1,
+        "vote_lula_pct": 65.8,
+        "vote_flavio_pct": 21.3,
+        "flavio_vote_edge_pp": -44.5,
+        "conversion_gap_pp": 11.4
+      }
+    ],
+    "note": "conversion_gap = vantagem de Flávio no medo menos vantagem de Flávio no voto. Positivo significa que o recorte teme mais o adversário do que o candidato e ainda assim não o acompanha."
+  },
+  "bolsonaro_2022_diaspora": {
+    "rows": {
+      "Flávio Bolsonaro": 72.6,
+      "Renan Santos": 10.2,
+      "Romeu Zema": 6.3,
+      "Ronaldo Caiado": 5.4,
+      "Augusto Cury": 2.7,
+      "Não sei": 1.8,
+      "Lula": 0.5,
+      "Samara Martins": 0.4,
+      "Cabo Daciolo": 0.1,
+      "Voto branco/nulo": 0.1
+    },
+    "stays_with_flavio_pct": 72.6,
+    "moves_to_other_right_pct": 24.7,
+    "moves_to_lula_pct": 0.5,
+    "reading": "O eleitor de Jair/2022 que não está com Flávio não migrou para Lula: migrou para outros candidatos de direita. A perda de 1º turno é recuperável por consolidação, não por conversão."
+  },
+  "government_areas": {
+    "Pobreza e desigualdade social": {
+      "lula": 51,
+      "flavio": 41,
+      "gap_pp": 10
+    },
+    "Proteção do meio ambiente": {
+      "lula": 49,
+      "flavio": 41,
+      "gap_pp": 8
+    },
+    "Saúde": {
+      "lula": 49,
+      "flavio": 43,
+      "gap_pp": 6
+    },
+    "Educação": {
+      "lula": 49,
+      "flavio": 43,
+      "gap_pp": 6
+    },
+    "Economia e inflação": {
+      "lula": 48,
+      "flavio": 44,
+      "gap_pp": 4
+    },
+    "Geração de empregos": {
+      "lula": 48,
+      "flavio": 43,
+      "gap_pp": 5
+    },
+    "Promoção da democracia": {
+      "lula": 48,
+      "flavio": 42,
+      "gap_pp": 6
+    },
+    "Política externa": {
+      "lula": 48,
+      "flavio": 44,
+      "gap_pp": 4
+    },
+    "Infraestrutura": {
+      "lula": 47,
+      "flavio": 44,
+      "gap_pp": 3
+    },
+    "Criminalidade e tráfico de drogas": {
+      "lula": 46,
+      "flavio": 46,
+      "gap_pp": 0
+    },
+    "Combate à corrupção": {
+      "lula": 45,
+      "flavio": 43,
+      "gap_pp": 2
+    },
+    "Equilíbrio fiscal e controle de gastos": {
+      "lula": 45,
+      "flavio": 44,
+      "gap_pp": 1
+    },
+    "Impostos / carga tributária": {
+      "lula": 45,
+      "flavio": 44,
+      "gap_pp": 1
+    }
+  },
+  "datafolha_cluster_math": {
+    "design": "331 setores censitários, 328 deles com exatamente 6 entrevistas (BR-01166/2026, campo 22-23/07/2026).",
+    "cluster_size": 6,
+    "implied_rho": {
+      "second_round_gap": 0.088,
+      "first_round_gap": 0.736
+    },
+    "reading": "Kish: deff = 1 + (m - 1) * rho. Para a vantagem de 5 pontos no 2º turno deixar de ser significativa basta rho = 0,088 entre vizinhos do mesmo setor. Para a vantagem de 8 pontos no 1º turno cair, seria preciso rho = 0,736 — implausível. O 1º turno sobrevive; o 2º turno, não."
+  },
+  "cross_poll_check": {
+    "atlas_renan_pct": 7.8,
+    "datafolha_renan_pct": 3.0,
+    "quaest_renan_pct": 3.0,
+    "atlas_minus_each_pp": 4.8
+  },
+  "interpretation": {
+    "national_operational_band_pp": [
+      4,
+      6
+    ],
+    "fragile_subgroup_band_pp": [
+      8,
+      12
+    ],
+    "warning": "These are audit reading bands, not formal confidence intervals. Atlas would need recruitment probabilities, weights, DEFF and a validated nonprobability model to identify a formal interval."
+  }
+}

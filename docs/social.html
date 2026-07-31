@@ -7,7 +7,7 @@
 <title>Social cards — Arvor Intelligence</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Source+Sans+3:wght@400;600;700;800;900&family=Spline+Sans+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,500&family=IBM+Plex+Mono:wght@400;600;700&family=IBM+Plex+Sans+Condensed:wght@400;600;700&family=Source+Sans+3:wght@400;600;700;800;900&family=Spline+Sans+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#0a0c12; --bg2:#0e1119;
@@ -75,6 +75,45 @@ body{background:#15181f;font-family:var(--sans);padding:28px;display:flex;flex-d
 .rulers{margin-top:20px;font-family:var(--mono);font-size:18px;color:var(--muted)}
 .rulers b{color:var(--green)}
 
+/* ---------- cards do dossiê Datafolha julho/2026 ---------- */
+.df26{
+  --acid:#cfe63c; --cyan:#45c9c2; --dfink:#f4f2ea; --dfink2:#ddd8ca; --dffaint:#7d7a6d;
+  --dfsans:"IBM Plex Sans Condensed",Arial,sans-serif; --dfmono:"IBM Plex Mono",ui-monospace,monospace;
+  background:#0c0d0b;font-family:var(--dfsans);color:var(--dfink)
+}
+.df26 .shot{position:absolute;inset:0;background-image:url("img/datafolha_072026/fotos/fluxo_25demarco.jpg");
+  background-size:cover;background-position:center 40%;filter:grayscale(1) contrast(1.25) brightness(.36)}
+.df26 .veil{position:absolute;inset:0;background:
+  radial-gradient(78% 70% at 8% 6%, rgba(207,230,60,.16), transparent 58%),
+  radial-gradient(70% 70% at 96% 8%, rgba(69,201,194,.14), transparent 58%),
+  linear-gradient(105deg, rgba(12,13,11,.94) 34%, rgba(12,13,11,.70) 74%, rgba(12,13,11,.55) 100%)}
+.df26 .pad{padding:44px 56px}
+.df26 .eyebrow{font-family:var(--dfmono);font-weight:700;font-size:18px;letter-spacing:.2em;color:var(--acid)}
+.df26 .dftitle{font-family:var(--serif);font-weight:900;font-size:67px;line-height:.92;letter-spacing:-.032em;margin-top:16px}
+.df26 .dftitle em{display:block;font-style:italic;font-weight:500;color:var(--acid)}
+.df26 .dfsub{font-size:23px;line-height:1.34;color:var(--dfink2);max-width:640px;margin-top:18px}
+.df26 .dfsub b{color:#fff}
+.df26 .chips{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+.df26 .chip{border:1px solid rgba(244,242,234,.3);border-radius:999px;padding:9px 16px;
+  font-family:var(--dfmono);font-size:17px;color:var(--dfink2);background:rgba(10,11,9,.55);white-space:nowrap}
+.df26 .chip s{text-decoration:none;color:var(--acid);font-weight:700}
+.df26 .foot{border-top:1px solid rgba(244,242,234,.16);font-family:var(--dfmono);font-size:17px;color:var(--dffaint)}
+.df26 .foot b{color:var(--dfink2)}
+.df26 .duel{display:flex;align-items:baseline;gap:10px;font-family:var(--serif);font-weight:900;
+  letter-spacing:-.045em;line-height:.82;position:relative;z-index:2}
+.df26 .duelbox{position:relative;padding:26px 30px 22px;border-radius:16px;
+  background:radial-gradient(120% 120% at 50% 45%, rgba(8,9,7,.86), rgba(8,9,7,.42) 72%, transparent)}
+.df26 .duel .a{font-size:104px;color:#e0483a}
+.df26 .duel .b{font-size:104px;color:#3f8fd6}
+.df26 .duel .x{font-size:42px;color:var(--dffaint);padding:0 4px}
+.df26 .duellab{font-family:var(--dfmono);font-size:17px;color:#9a9789;margin-top:8px;letter-spacing:.05em}
+.df26 .ladder{display:flex;flex-direction:column;gap:12px;margin-top:22px;max-width:640px}
+.df26 .lrow{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:baseline;
+  border-bottom:1px dashed rgba(244,242,234,.18);padding-bottom:10px;font-size:23px;color:var(--dfink2)}
+.df26 .lrow b{font-family:var(--dfmono);font-size:25px;color:var(--dfink)}
+.df26 .lrow.key{font-size:28px;color:#fff}
+.df26 .lrow.key b{color:var(--acid);font-size:32px}
+
 body.solo{padding:0;background:transparent;gap:0}
 body.solo .hint{display:none}
 body.solo .card{display:none}
@@ -82,7 +121,7 @@ body.solo .card.on{display:block}
 </style>
 </head>
 <body>
-<p class="hint">Cards 1200×630. Isolar para render: <b>?card=hub</b> ou <b>?card=nexus</b> (viewport 1200×630).</p>
+<p class="hint">Cards 1200×630. Isolar para render: <b>?card=hub</b>, <b>?card=nexus</b>, <b>?card=proposta</b>, <b>?card=datafolha072026</b> ou <b>?card=datafolha072026thread</b> (viewport 1200×630).</p>
 
 <!-- ============ CARD · HUB / brasil.arvor.co ============ -->
 <section class="card" id="card-hub">
@@ -148,6 +187,53 @@ body.solo .card.on{display:block}
     <div class="foot">
       <span class="brandline"><img src="img/arvor_logo.png" alt=""><b>ARVOR INTELLIGENCE</b></span>
       <span>brasil.arvor.co/proposta.html</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CARD · DOSSIÊ DATAFOLHA JULHO/2026 ============ -->
+<section class="card df26" id="card-datafolha072026">
+  <div class="shot"></div><div class="veil"></div>
+  <div class="pad">
+    <div class="eyebrow">Auditoria · Datafolha julho/2026 · BR-01166/2026</div>
+    <div style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:34px;align-items:center;flex:1">
+      <div>
+        <div class="dftitle">48×43 é a manchete.<em>45×45 é o interior.</em></div>
+        <p class="dfsub">Toda a vantagem de Lula é metropolitana. No interior, onde vivem <b>1.217 dos 2.004 entrevistados</b>, o placar empata — e nenhuma manchete usou o recorte.</p>
+        <div class="chips">
+          <span class="chip"><s>118</s> cidades fixas nas 3 ondas</span>
+          <span class="chip"><s>4 dias</s> entre registro e campo</span>
+          <span class="chip"><s>45,4×45,3</s> reponderado pela PNAD</span>
+        </div>
+      </div>
+      <div class="duelbox" style="text-align:right">
+        <div class="duel"><span class="a">45</span><span class="x">×</span><span class="b">45</span></div>
+        <div class="duellab">2º turno no interior · n=1.217</div>
+      </div>
+    </div>
+    <div class="foot">
+      <span class="brandline"><img src="img/arvor_logo.png" alt=""><b>ARVOR INTELLIGENCE</b></span>
+      <span>brasil.arvor.co/datafolha_072026.html · prova de opacidade, não de fraude</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CARD · THREAD DATAFOLHA JULHO/2026 ============ -->
+<section class="card df26" id="card-datafolha072026thread">
+  <div class="shot" style="background-position:center 52%"></div><div class="veil"></div>
+  <div class="pad">
+    <div class="eyebrow">Thread X · 30 posts · Datafolha julho/2026</div>
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center">
+      <div class="dftitle" style="font-size:58px">DATAFOLHA AJUDA<br>A CAMPANHA<em>offline do Flávio</em></div>
+      <div class="ladder">
+        <div class="lrow"><span>Municípios repetidos nas três ondas</span><b>118 de 139</b></div>
+        <div class="lrow"><span>Registro do mapa antes do campo</span><b>4 dias</b></div>
+        <div class="lrow key"><span>Segundo turno no interior</span><b>45 × 45</b></div>
+      </div>
+    </div>
+    <div class="foot">
+      <span class="brandline"><img src="img/arvor_logo.png" alt=""><b>ARVOR INTELLIGENCE</b></span>
+      <span>brasil.arvor.co/datafolha_072026_thread.html</span>
     </div>
   </div>
 </section>

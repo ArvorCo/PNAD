@@ -1,0 +1,282 @@
+{
+  "poll": {
+    "registration": "BR-08602/2026",
+    "field": "2026-07-22/2026-07-27",
+    "declared_source": "PNADC 2024 para escolaridade e nível econômico",
+    "declared_bands": [
+      "até R$ 2.000",
+      "R$ 2.000–3.000",
+      "R$ 3.000–5.000",
+      "R$ 5.000–10.000",
+      "acima de R$ 10.000"
+    ]
+  },
+  "method": {
+    "variable": "VD5007__rend_habitual_domiciliar",
+    "universe": "pessoas de 16 anos ou mais, peso V1032__peso_com_calibracao",
+    "target_month": "202604",
+    "minimum_wage": {
+      "2024": 1412.0,
+      "2025": 1518.0,
+      "2026": 1621.0
+    },
+    "two_minimum_wages": {
+      "2024": 2824,
+      "2025": 3036,
+      "2026": 3242
+    },
+    "note": "Reponderação em uma única margem, com o voto dentro da faixa mantido fixo. É análise de sensibilidade, não estimativa corrigida: a ponderação da Atlas é conjunta e não é pública."
+  },
+  "diagnostics": {
+    "pnadc_2024_v5": {
+      "label": "PNADC anual 2024 · visita 5",
+      "source": "data/outputs/base_anual_labeled_npv.csv",
+      "universe_millions": 166.9,
+      "rebase_factor_to_target": 1.0067,
+      "adults_between_2700_and_3000_pct": 7.2
+    },
+    "pnadc_2025_v1": {
+      "label": "PNADC anual 2025 · visita 1",
+      "source": "data/outputs/base_anual_visita1_labeled_npv.csv",
+      "universe_millions": 168.3,
+      "rebase_factor_to_target": 1.0,
+      "adults_between_2700_and_3000_pct": 2.6
+    }
+  },
+  "distributions": {
+    "atlas_quota_tse": [
+      22.4,
+      17.1,
+      23.1,
+      23.9,
+      13.5
+    ],
+    "atlas_amostra_publicada": [
+      22.1,
+      17.9,
+      23.2,
+      23.4,
+      13.3
+    ],
+    "pnadc_2024_v5_nominal": [
+      20.3,
+      17.3,
+      24.0,
+      24.6,
+      13.8
+    ],
+    "pnadc_2024_v5_target": [
+      19.2,
+      11.9,
+      27.6,
+      26.0,
+      15.3
+    ],
+    "pnadc_2025_v1_nominal": [
+      16.7,
+      11.4,
+      27.4,
+      27.3,
+      17.3
+    ],
+    "pnadc_2025_v1_target": [
+      16.4,
+      11.1,
+      27.0,
+      27.7,
+      17.8
+    ]
+  },
+  "reweighted_first_round": {
+    "atlas_quota_tse": {
+      "Lula": 45.15,
+      "Flávio Bolsonaro": 35.7,
+      "Renan Santos": 7.73,
+      "Ronaldo Caiado": 3.1,
+      "Romeu Zema": 2.81,
+      "Samara Martins": 2.09,
+      "Augusto Cury": 1.58,
+      "Cabo Daciolo": 0.04,
+      "Hertz Dias": 0.08,
+      "Rui Costa Pimenta": 0.01,
+      "Edmilson Costa": 0.05,
+      "Voto branco/nulo": 0.61,
+      "Não sei": 0.99
+    },
+    "atlas_amostra_publicada": {
+      "Lula": 45.02,
+      "Flávio Bolsonaro": 35.78,
+      "Renan Santos": 7.73,
+      "Ronaldo Caiado": 3.12,
+      "Romeu Zema": 2.8,
+      "Samara Martins": 2.11,
+      "Augusto Cury": 1.58,
+      "Cabo Daciolo": 0.04,
+      "Hertz Dias": 0.08,
+      "Rui Costa Pimenta": 0.01,
+      "Edmilson Costa": 0.05,
+      "Voto branco/nulo": 0.62,
+      "Não sei": 1.0
+    },
+    "pnadc_2024_v5_nominal": {
+      "Lula": 44.92,
+      "Flávio Bolsonaro": 35.72,
+      "Renan Santos": 7.85,
+      "Ronaldo Caiado": 3.16,
+      "Romeu Zema": 2.86,
+      "Samara Martins": 2.09,
+      "Augusto Cury": 1.52,
+      "Cabo Daciolo": 0.04,
+      "Hertz Dias": 0.08,
+      "Rui Costa Pimenta": 0.01,
+      "Edmilson Costa": 0.05,
+      "Voto branco/nulo": 0.62,
+      "Não sei": 1.02
+    },
+    "pnadc_2024_v5_target": {
+      "Lula": 45.07,
+      "Flávio Bolsonaro": 35.44,
+      "Renan Santos": 8.07,
+      "Ronaldo Caiado": 3.08,
+      "Romeu Zema": 3.02,
+      "Samara Martins": 2.0,
+      "Augusto Cury": 1.45,
+      "Cabo Daciolo": 0.04,
+      "Hertz Dias": 0.09,
+      "Rui Costa Pimenta": 0.02,
+      "Edmilson Costa": 0.06,
+      "Voto branco/nulo": 0.58,
+      "Não sei": 1.01
+    },
+    "pnadc_2025_v1_nominal": {
+      "Lula": 45.11,
+      "Flávio Bolsonaro": 35.15,
+      "Renan Santos": 8.21,
+      "Ronaldo Caiado": 3.18,
+      "Romeu Zema": 3.12,
+      "Samara Martins": 1.98,
+      "Augusto Cury": 1.37,
+      "Cabo Daciolo": 0.04,
+      "Hertz Dias": 0.09,
+      "Rui Costa Pimenta": 0.02,
+      "Edmilson Costa": 0.05,
+      "Voto branco/nulo": 0.58,
+      "Não sei": 1.01
+    },
+    "pnadc_2025_v1_target": {
+      "Lula": 45.2,
+      "Flávio Bolsonaro": 35.05,
+      "Renan Santos": 8.23,
+      "Ronaldo Caiado": 3.19,
+      "Romeu Zema": 3.14,
+      "Samara Martins": 1.97,
+      "Augusto Cury": 1.36,
+      "Cabo Daciolo": 0.04,
+      "Hertz Dias": 0.09,
+      "Rui Costa Pimenta": 0.02,
+      "Edmilson Costa": 0.05,
+      "Voto branco/nulo": 0.58,
+      "Não sei": 1.0
+    }
+  },
+  "delta_vs_published": {
+    "atlas_quota_tse": {
+      "Lula": 0.13,
+      "Flávio Bolsonaro": -0.08,
+      "Renan Santos": 0.0,
+      "Ronaldo Caiado": -0.02,
+      "Romeu Zema": 0.01,
+      "Samara Martins": -0.02,
+      "Augusto Cury": 0.0,
+      "Cabo Daciolo": 0.0,
+      "Hertz Dias": 0.0,
+      "Rui Costa Pimenta": 0.0,
+      "Edmilson Costa": 0.0,
+      "Voto branco/nulo": -0.01,
+      "Não sei": -0.01
+    },
+    "atlas_amostra_publicada": {
+      "Lula": 0.0,
+      "Flávio Bolsonaro": 0.0,
+      "Renan Santos": 0.0,
+      "Ronaldo Caiado": 0.0,
+      "Romeu Zema": 0.0,
+      "Samara Martins": 0.0,
+      "Augusto Cury": 0.0,
+      "Cabo Daciolo": 0.0,
+      "Hertz Dias": 0.0,
+      "Rui Costa Pimenta": 0.0,
+      "Edmilson Costa": 0.0,
+      "Voto branco/nulo": 0.0,
+      "Não sei": 0.0
+    },
+    "pnadc_2024_v5_nominal": {
+      "Lula": -0.1,
+      "Flávio Bolsonaro": -0.06,
+      "Renan Santos": 0.12,
+      "Ronaldo Caiado": 0.04,
+      "Romeu Zema": 0.06,
+      "Samara Martins": -0.02,
+      "Augusto Cury": -0.06,
+      "Cabo Daciolo": 0.0,
+      "Hertz Dias": 0.0,
+      "Rui Costa Pimenta": 0.0,
+      "Edmilson Costa": 0.0,
+      "Voto branco/nulo": 0.0,
+      "Não sei": 0.02
+    },
+    "pnadc_2024_v5_target": {
+      "Lula": 0.05,
+      "Flávio Bolsonaro": -0.34,
+      "Renan Santos": 0.34,
+      "Ronaldo Caiado": -0.04,
+      "Romeu Zema": 0.22,
+      "Samara Martins": -0.11,
+      "Augusto Cury": -0.13,
+      "Cabo Daciolo": 0.0,
+      "Hertz Dias": 0.01,
+      "Rui Costa Pimenta": 0.01,
+      "Edmilson Costa": 0.01,
+      "Voto branco/nulo": -0.04,
+      "Não sei": 0.01
+    },
+    "pnadc_2025_v1_nominal": {
+      "Lula": 0.09,
+      "Flávio Bolsonaro": -0.63,
+      "Renan Santos": 0.48,
+      "Ronaldo Caiado": 0.06,
+      "Romeu Zema": 0.32,
+      "Samara Martins": -0.13,
+      "Augusto Cury": -0.21,
+      "Cabo Daciolo": 0.0,
+      "Hertz Dias": 0.01,
+      "Rui Costa Pimenta": 0.01,
+      "Edmilson Costa": 0.0,
+      "Voto branco/nulo": -0.04,
+      "Não sei": 0.01
+    },
+    "pnadc_2025_v1_target": {
+      "Lula": 0.18,
+      "Flávio Bolsonaro": -0.73,
+      "Renan Santos": 0.5,
+      "Ronaldo Caiado": 0.07,
+      "Romeu Zema": 0.34,
+      "Samara Martins": -0.14,
+      "Augusto Cury": -0.22,
+      "Cabo Daciolo": 0.0,
+      "Hertz Dias": 0.01,
+      "Rui Costa Pimenta": 0.01,
+      "Edmilson Costa": 0.0,
+      "Voto branco/nulo": -0.04,
+      "Não sei": 0.0
+    }
+  },
+  "lula_minus_flavio": {
+    "atlas_quota_tse": 9.45,
+    "atlas_amostra_publicada": 9.24,
+    "pnadc_2024_v5_nominal": 9.2,
+    "pnadc_2024_v5_target": 9.63,
+    "pnadc_2025_v1_nominal": 9.96,
+    "pnadc_2025_v1_target": 10.15
+  }
+}
