@@ -323,6 +323,131 @@
     }
   })();
 
+  /* ---------- Sankey 1º → 2º turno: barras = fato, fluxos = inferência ---------- */
+  (function fluxo() {
+    var data = window.__DATAFOLHA_FLUXO__;
+    var host = document.getElementById("grafico-fluxo");
+    if (!data || !host) return;
+
+    var COLOR = { Lula: "#e0483a", "Flávio": "#3f8fd6", "Branco/nulo": "#8a8578", "Não sabe": "#5f5c52" };
+    var ORIGEM_COR = {
+      "Lula (PT)": "#e0483a",
+      "Flávio Bolsonaro (PL)": "#3f8fd6",
+      "Ronaldo Caiado (PSD)": "#f0a930",
+      "Romeu Zema (Novo)": "#34b47e",
+      "Renan Santos (Missão)": "#9b7bd4",
+      "Augusto Cury (Avante)": "#c9a227",
+      "Samara Martins (UP)": "#d1584f",
+      "Cabo Daciolo (Mobiliza)": "#45c9c2",
+      "Rui C. Pimenta (PCO)": "#b4645c",
+      "Branco/nulo/nenhum": "#8a8578",
+      "Não sabe": "#5f5c52"
+    };
+    var DESTINOS = ["Lula", "Flávio", "Branco/nulo", "Não sabe"];
+
+    var W = 1000;
+    var H = 560;
+    var padT = 40;
+    var padB = 26;
+    var barW = 15;
+    var xL = 208;
+    var xR = W - 232;
+    var gap = 9;
+
+    var origens = Object.keys(data.fluxo);
+    var totOrigem = {};
+    var soma = 0;
+    origens.forEach(function (o) {
+      var t = DESTINOS.reduce(function (a, d) {
+        return a + (data.fluxo[o][d] || 0);
+      }, 0);
+      totOrigem[o] = t;
+      soma += t;
+    });
+    var scale = (H - padT - padB - gap * (origens.length - 1)) / soma;
+
+    var yO = {};
+    var cursor = padT;
+    origens.forEach(function (o) {
+      yO[o] = { y0: cursor, y1: cursor + totOrigem[o] * scale, cur: cursor };
+      cursor = yO[o].y1 + gap;
+    });
+
+    var totDestino = {};
+    DESTINOS.forEach(function (d) {
+      totDestino[d] = origens.reduce(function (a, o) {
+        return a + (data.fluxo[o][d] || 0);
+      }, 0);
+    });
+    var yD = {};
+    cursor = padT;
+    var gapD = (H - padT - padB - soma * scale) / (DESTINOS.length - 1);
+    DESTINOS.forEach(function (d) {
+      yD[d] = { y0: cursor, y1: cursor + totDestino[d] * scale, cur: cursor };
+      cursor = yD[d].y1 + gapD;
+    });
+
+    var parts = [
+      '<defs><pattern id="hatch" width="7" height="7" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">' +
+        '<rect width="7" height="7" fill="rgba(244,242,234,.02)"/>' +
+        '<line x1="0" y1="0" x2="0" y2="7" stroke="rgba(244,242,234,.35)" stroke-width="2.4"/></pattern></defs>'
+    ];
+
+    origens.forEach(function (o) {
+      DESTINOS.forEach(function (d) {
+        var v = data.fluxo[o][d] || 0;
+        if (v < 0.02) return;
+        var h = v * scale;
+        var a0 = yO[o].cur;
+        var b0 = yD[d].cur;
+        yO[o].cur += h;
+        yD[d].cur += h;
+        var cx = (xL + barW + xR) / 2;
+        var path =
+          "M" + (xL + barW) + "," + a0 +
+          " C" + cx + "," + a0 + " " + cx + "," + b0 + " " + xR + "," + b0 +
+          " L" + xR + "," + (b0 + h) +
+          " C" + cx + "," + (b0 + h) + " " + cx + "," + (a0 + h) + " " + (xL + barW) + "," + (a0 + h) + " Z";
+        parts.push('<path class="flow" d="' + path + '" fill="' + COLOR[d] + '"/>');
+        parts.push('<path class="flow-hatch" d="' + path + '" fill="url(#hatch)"/>');
+      });
+    });
+
+    origens.forEach(function (o) {
+      var b = yO[o];
+      parts.push(
+        '<rect x="' + xL + '" y="' + b.y0 + '" width="' + barW + '" height="' + Math.max(b.y1 - b.y0, 1.5) +
+          '" fill="' + (ORIGEM_COR[o] || "#8a8578") + '" rx="2"/>'
+      );
+      var label = o.replace(/ \(.*\)/, "");
+      var valor = data.primeiro_turno[o];
+      var small = b.y1 - b.y0 < 14;
+      parts.push(
+        '<text class="sk-label' + (small ? " sk-small" : "") + '" x="' + (xL - 12) +
+          '" y="' + ((b.y0 + b.y1) / 2 + (small ? 3 : 4)) + '" text-anchor="end">' +
+          label + ' <tspan class="sk-num' + (small ? " sk-small" : "") + '">' + valor + "</tspan></text>"
+      );
+    });
+
+    DESTINOS.forEach(function (d) {
+      var b = yD[d];
+      parts.push(
+        '<rect x="' + xR + '" y="' + b.y0 + '" width="' + barW + '" height="' + Math.max(b.y1 - b.y0, 1.5) +
+          '" fill="' + COLOR[d] + '" rx="2"/>'
+      );
+      var key = { Lula: "lula", "Flávio": "flavio", "Branco/nulo": "branco_nulo", "Não sabe": "nao_sabe" }[d];
+      parts.push(
+        '<text class="sk-label" x="' + (xR + barW + 12) + '" y="' + ((b.y0 + b.y1) / 2 + 4) + '">' +
+          d + ' <tspan class="sk-num">' + data.segundo_turno[key] + "</tspan></text>"
+      );
+    });
+
+    parts.push('<text class="sk-head" x="' + xL + '" y="20" text-anchor="end">1º TURNO</text>');
+    parts.push('<text class="sk-head" x="' + (xR + barW) + '" y="20">2º TURNO · LULA × FLÁVIO</text>');
+
+    host.querySelector("svg").innerHTML = parts.join("");
+  })();
+
   /* ---------- explorador dos 139 municípios ---------- */
   var host = document.getElementById("explorador");
   if (!host) return;

@@ -1210,6 +1210,97 @@ tbody tr:hover {
   fill-opacity: 0.17;
 }
 
+/* Sankey: barra é medida publicada, fita é estimativa — daí a hachura. */
+.flow {
+  fill-opacity: 0.2;
+}
+
+.flow-hatch {
+  fill-opacity: 0.16;
+  pointer-events: none;
+}
+
+.sk-label {
+  fill: var(--ink2);
+  font-family: var(--sans);
+  font-size: 14px;
+}
+
+.sk-num {
+  fill: var(--acid);
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.sk-label.sk-small,
+.sk-num.sk-small {
+  font-size: 11px;
+}
+
+.sk-head {
+  fill: var(--faint);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+}
+
+.flow-banner {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  border: 1px dashed var(--line2);
+  border-radius: 4px;
+  padding: 14px 18px;
+  margin-top: 18px;
+  font-size: 0.92rem;
+  color: var(--ink2);
+}
+
+.flow-banner b {
+  color: #fff;
+}
+
+.flow-banner .fb-ic {
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--amber);
+  color: #1a1305;
+  font-family: var(--mono);
+  font-weight: 700;
+}
+
+.flow-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin-top: 14px;
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.flow-legend i {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  margin-right: 7px;
+  vertical-align: -1px;
+}
+
+.flow-legend i.hatch {
+  background:
+    repeating-linear-gradient(45deg, rgb(244 242 234 / 45%) 0 2px, transparent 2px 5px),
+    rgb(244 242 234 / 12%);
+}
+
 .col-title {
   fill: var(--ink);
   font-family: var(--display);

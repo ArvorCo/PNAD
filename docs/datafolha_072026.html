@@ -78,6 +78,7 @@
       <a href="#placar">Placar</a>
       <a href="#interior">Interior</a>
       <a href="#sempartido">Sem partido</a>
+      <a href="#fluxo">Transferência</a>
       <a href="#coalizoes">Coalizões</a>
       <a href="#painel">As 139 cidades</a>
       <a href="#terreno">Terreno 2022</a>
@@ -322,10 +323,103 @@
       </div>
     </section>
 
-    <section id="coalizoes" class="chapter alt">
+    <section id="fluxo" class="chapter alt">
       <div class="wrap">
         <div class="chapter-head reveal">
           <span class="chapter-no">Cap. 04</span>
+          <div>
+            <h2>Para onde vai o voto <em>quando a eleição afunila</em></h2>
+            <p class="lead">Entre o primeiro e o segundo turno, cerca de dezoito pontos são liberados: catorze de candidatos eliminados e quatro de indecisos que decidem. Os totais das barras são o que o Datafolha publicou. A repartição entre elas, não — e é por isso que cada fita aqui está hachurada.</p>
+          </div>
+        </div>
+
+        <div class="flow-banner reveal">
+          <span class="fb-ic">!</span>
+          <span><b>O Datafolha não publica matriz de transição.</b> Nenhum elo do diagrama abaixo foi medido: a repartição é modelo, não medição. Só os totais de cada barra — 40, 32, 4, 3, 3, 2, 1, 1, 1, 8 e 3 no primeiro turno; 48, 43, 9 e 1 no segundo — são números publicados. O que estimamos é uma matriz de afinidade ajustada por <span class="mono">IPF/RAS</span> até fechar exatamente nessas margens.</span>
+        </div>
+
+        <div class="table-wrap reveal">
+          <table>
+            <caption>A prova cruzada: os três cenários de 2º turno da mesma amostra</caption>
+            <thead><tr><th>Cenário</th><th class="num">Lula</th><th class="num">Adversário</th><th class="num">Branco/nulo</th><th class="num">Não sabe</th><th>O que a comparação mede</th></tr></thead>
+            <tbody>
+              <tr><td>A · Lula × <strong>Flávio</strong></td><td class="num">48</td><td class="num">43</td><td class="num">9</td><td class="num">1</td><td>Referência</td></tr>
+              <tr><td>B · Lula × Caiado</td><td class="num">47</td><td class="num">40</td><td class="num">11</td><td class="num">2</td><td>Adversário perde 3; branco/nulo sobe 2</td></tr>
+              <tr><td>C · Lula × Zema</td><td class="num">48</td><td class="num">40</td><td class="num">10</td><td class="num">2</td><td>Adversário perde 3; branco/nulo sobe 1</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny reveal">Três perguntas, a mesma amostra, os mesmos pesos, a mesma semana. É o experimento mais próximo de uma medição de transferência que existe nesta pesquisa — e ele não é estimativa, é topline publicado.</p>
+
+        <div class="grid-3 mt reveal">
+          <article class="card">
+            <span class="stamp fact">Medido</span>
+            <h3>Lula não se move</h3>
+            <p>47, 48 e 48 nos três cenários. <strong>O teto de Lula não depende de quem está do outro lado.</strong> Quem varia é o bloco adversário — o que significa que a disputa de segundo turno é uma disputa interna da oposição, não uma disputa pelo eleitor de Lula.</p>
+          </article>
+          <article class="card">
+            <span class="stamp fact">Medido</span>
+            <h3>3 pontos que só Flávio tem</h3>
+            <p>O bloco anti-Lula rende <strong>43 com Flávio e 40 com Caiado ou Zema</strong>. A diferença não vai para Lula, que fica onde estava: vai para branco e nulo, que sobe de 9 para 11 e 10. É a fidelidade da base bolsonarista, observada e não suposta.</p>
+          </article>
+          <article class="card">
+            <span class="stamp inference">O que isso valida</span>
+            <h3>A premissa da matriz</h3>
+            <p>Se a base de Flávio cruzasse para Lula, Lula subiria quando o adversário fosse outro. Ele não sobe. Isso sustenta a premissa ideológica do diagrama abaixo — <strong>base própria fiel, cruzamento para o campo oposto próximo de zero, vazamento indo para a não-escolha</strong> — sem precisar assumi-la por fé.</p>
+          </article>
+        </div>
+
+        <figure class="figure reveal" id="grafico-fluxo">
+          <div class="figure-head">
+            <h3>Transferência estimada de 1º para 2º turno</h3>
+            <span>Barras: fato · fitas: inferência</span>
+          </div>
+          <div class="canvas"><svg viewBox="0 0 1000 560" role="img" aria-label="Diagrama de fluxo do primeiro para o segundo turno: a base de Lula sustenta 41,2 pontos e a de Flávio 32,9; fora das bases, Flávio consolida 10,1 pontos contra 6,8 de Lula"></svg></div>
+          <div class="flow-legend">
+            <span><i style="background:#e0483a"></i>destino Lula</span>
+            <span><i style="background:#3f8fd6"></i>destino Flávio</span>
+            <span><i style="background:#8a8578"></i>branco, nulo e não sabe</span>
+            <span><i class="hatch"></i>hachura = fluxo estimado, não medido</span>
+          </div>
+          <figcaption><b>Método em cinco passos, o mesmo em toda pesquisa de 1º turno que auditamos:</b> (1) só os toplines entram como fato; (2) os cenários alternativos de 2º turno viram restrição observada, porque medem quanto o bloco perde quando troca de líder; (3) a matriz a priori é construída sobre o eixo ideológico declarado — base própria fiel, candidatura do mesmo campo migrando majoritariamente para o líder do campo, cruzamento para o campo oposto próximo de zero e vazamento para branco/nulo concentrado em quem perde o líder; (4) o <i>iterative proportional fitting</i> ajusta essa prior às margens publicadas por mínima entropia cruzada, com as origens do 1º turno reescaladas de 98 para 101 pontos; (5) publica-se com barra sólida para o medido e fita hachurada para o estimado. É leitura agregada: não descreve o percurso de nenhum eleitor individual. Reprodução em <span class="mono">scripts/datafolha-072026-graficos.py</span>.</figcaption>
+        </figure>
+
+        <div class="kpis duo mt reveal" style="max-width:640px">
+          <article><b>+10,1</b><span>pontos que Flávio consolida fora da própria base</span></article>
+          <article><b>+6,8</b><span>pontos que Lula consolida fora da própria base</span></article>
+          <article><b>1,48 : 1</b><span>razão de consolidação em julho</span></article>
+          <article><b>2 : 1</b><span>a mesma razão em junho — a vantagem encolheu</span></article>
+        </div>
+
+        <div class="grid-3 mt-l reveal">
+          <article class="card">
+            <span class="stamp inference">A direita pulverizada</span>
+            <h3>Afluentes do mesmo rio</h3>
+            <p>Pelo modelo, Caiado entrega cerca de <strong>2,2 dos seus 4 pontos</strong> a Flávio, Renan <strong>1,9 de 3</strong>, Zema <strong>1,8 de 3</strong>, Cury <strong>1,1 de 2</strong> e Daciolo praticamente o ponto inteiro. Nenhuma dessas candidaturas chega a um dígito no primeiro turno, mas somadas valem mais que a distância do segundo.</p>
+          </article>
+          <article class="card">
+            <span class="stamp inference">O vazamento</span>
+            <h3>5,1 pontos que não voltam</h3>
+            <p>O maior fluxo isolado que não vai para candidato nenhum é o branco e nulo que permanece branco e nulo. Somado ao que Caiado, Zema e Renan perdem para a não-escolha, o branco/nulo <strong>sobe de 8 para 9</strong> justamente quando a eleição deveria estar polarizando.</p>
+          </article>
+          <article class="card">
+            <span class="stamp hypothesis">O indeciso que decide</span>
+            <h3>1,0 × 0,6</h3>
+            <p>Dos três pontos de “não sabe” do primeiro turno, sobra um no segundo. Quem decide pende levemente para Lula. Ou seja: <strong>o ganho de Flávio não vem do indeciso</strong> — vem inteiramente da direita que se dispersou no primeiro turno.</p>
+          </article>
+        </div>
+
+        <div class="callout danger reveal">
+          <span class="stamp hypothesis">O limite deste diagrama</span>
+          <p>Qualquer matriz que respeite as margens publicadas reproduz os mesmos totais. A nossa parte de premissas explícitas — base própria fiel, Daciolo e Cury majoritariamente para Flávio, Samara para Lula, branco/nulo alimentado sobretudo pelas candidaturas de direita eliminadas — e o ajuste apenas garante coerência aritmética, não veracidade. <strong>A razão de consolidação em torno de 1,5:1 é robusta à escolha da prior, porque é imposta pelas margens; o corte candidato a candidato não é.</strong> Com a matriz de transição que o instituto tem e não publica, esta seção seria medida em vez de estimada.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="coalizoes" class="chapter">
+      <div class="wrap">
+        <div class="chapter-head reveal">
+          <span class="chapter-no">Cap. 05</span>
           <div>
             <h2>O Brasil não está empatado <em>consigo mesmo</em></h2>
             <p class="lead">O placar nacional esconde duas coalizões sociais quase espelhadas. A clivagem mais forte não é uma oscilação de um ponto: é renda, escolaridade, região, religião, cor, idade e posição no mercado de trabalho.</p>
@@ -406,10 +500,10 @@
       </div>
     </section>
 
-    <section id="painel" class="chapter">
+    <section id="painel" class="chapter alt">
       <div class="wrap">
         <div class="chapter-head reveal">
-          <span class="chapter-no">Cap. 05</span>
+          <span class="chapter-no">Cap. 06</span>
           <div>
             <h2>As mesmas 139 cidades, <em>mês após mês</em></h2>
             <p class="lead">O anexo territorial das três rodadas mostra um padrão que ninguém comentou: os municípios praticamente não mudam, e a cota de entrevistas de cada um é idêntica em maio, junho e julho. O Brasil que o Datafolha mede é um painel fixo, publicado, de 139 cidades.</p>
@@ -512,10 +606,10 @@
       </div>
     </section>
 
-    <section id="terreno" class="chapter alt">
+    <section id="terreno" class="chapter">
       <div class="wrap">
         <div class="chapter-head reveal">
-          <span class="chapter-no">Cap. 06</span>
+          <span class="chapter-no">Cap. 07</span>
           <div>
             <h2>Testamos a suspeita. <em>Ela não sobreviveu.</em></h2>
             <p class="lead">A hipótese natural diante de um painel fixo é a mais grave: teriam escolhido cidades convenientes e travado nelas? A pergunta merece resposta com dados, não com adjetivo. Cruzamos os 139 municípios com o resultado oficial do 2º turno de 2022, voto a voto.</p>
@@ -566,10 +660,10 @@
       </div>
     </section>
 
-    <section id="renda" class="chapter">
+    <section id="renda" class="chapter alt">
       <div class="wrap">
         <div class="chapter-head reveal">
-          <span class="chapter-no">Cap. 07</span>
+          <span class="chapter-no">Cap. 08</span>
           <div>
             <h2>A amostra é mais pobre <em>que o país que ela mede</em></h2>
             <p class="lead">O Datafolha publica o próprio perfil de renda: metade da amostra ponderada declara renda familiar de até dois salários mínimos. A PNAD Contínua, que mede rendimento domiciliar com microdado e peso calibrado, diz outra coisa. Trocar essa régua — e só ela — muda o placar.</p>
@@ -647,10 +741,10 @@
       </div>
     </section>
 
-    <section id="amostra" class="chapter alt">
+    <section id="amostra" class="chapter">
       <div class="wrap">
         <div class="chapter-head reveal">
-          <span class="chapter-no">Cap. 08</span>
+          <span class="chapter-no">Cap. 09</span>
           <div>
             <h2>A amostra é plausível. <em>Os pesos são invisíveis.</em></h2>
             <p class="lead">Sexo, idade e região ficam próximos do eleitorado do TSE. A fragilidade não é uma aberração demográfica evidente: é não ser possível reconciliar amostra bruta, metas registradas, distribuição ponderada e resultado final.</p>
@@ -718,10 +812,10 @@
       </div>
     </section>
 
-    <section id="questionario" class="chapter">
+    <section id="questionario" class="chapter alt">
       <div class="wrap">
         <div class="chapter-head reveal">
-          <span class="chapter-no">Cap. 09</span>
+          <span class="chapter-no">Cap. 10</span>
           <div>
             <h2>A intenção de voto vem primeiro. <em>O verbo é edição.</em></h2>
             <p class="lead">O principal mérito do instrumento é a ordem: espontânea, estimulada, rejeição e segundo turno vêm antes do bloco político-temático. As perguntas sobre prisão, tarifas e imprensa não podem ter contaminado os toplines que as antecedem. O problema aparece depois, na forma de algumas perguntas e na tradução jornalística de outras.</p>
@@ -796,10 +890,10 @@
       </div>
     </section>
 
-    <section id="campanha" class="chapter alt">
+    <section id="campanha" class="chapter">
       <div class="wrap">
         <div class="chapter-head reveal">
-          <span class="chapter-no">Cap. 10</span>
+          <span class="chapter-no">Cap. 11</span>
           <div>
             <h2>Onde se ganha voto <em>no chão</em></h2>
             <p class="lead">Esta seção é assumidamente prescritiva e vale para qualquer candidatura que leia os mesmos números — inclusive a de Flávio Bolsonaro, que é quem o dado desafia. Cada movimento abaixo nasce de uma linha do relatório, com base amostral declarada. Não há aqui técnica de manipulação de pesquisa; há leitura de onde o eleitor está e do que ele responde.</p>
@@ -966,10 +1060,10 @@
       </div>
     </section>
 
-    <section id="tse" class="chapter">
+    <section id="tse" class="chapter alt">
       <div class="wrap">
         <div class="chapter-head reveal">
-          <span class="chapter-no">Cap. 11</span>
+          <span class="chapter-no">Cap. 12</span>
           <div>
             <h2>Há matéria para correção e acesso. <em>Não para acusação vazia.</em></h2>
             <p class="lead">A Resolução TSE 23.600, alterada pela 23.747/2026, exige precisão técnica para impugnar pesquisa. O caminho mais forte é separar inconsistências documentais demonstráveis de lacunas que a regra atual ainda permite.</p>
@@ -1025,10 +1119,10 @@
       </div>
     </section>
 
-    <section id="fontes" class="chapter alt">
+    <section id="fontes" class="chapter">
       <div class="wrap">
         <div class="chapter-head reveal">
-          <span class="chapter-no">Cap. 12</span>
+          <span class="chapter-no">Cap. 13</span>
           <div>
             <h2>Do PDF à conta, <em>sem caixa-preta</em></h2>
             <p class="lead">Os seis documentos da pesquisa nacional estão preservados no acervo bruto do projeto. A auditoria compara os anexos territoriais de maio, junho e julho, valida geocódigos, recalcula a incerteza da diferença e cruza o painel com o eleitorado atual do TSE e com o resultado oficial de 2022.</p>
@@ -1094,6 +1188,7 @@
     </div>
   </footer>
 
+  <script src="assets/datafolha_072026_fluxo.js" defer></script>
   <script src="assets/datafolha_072026_renda.js" defer></script>
   <script src="assets/datafolha_072026_municipios.js" defer></script>
   <script src="assets/datafolha_072026.js" defer></script>

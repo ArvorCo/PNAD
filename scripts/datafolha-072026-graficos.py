@@ -825,6 +825,23 @@ flow_table = {
     s: {t: round(float(FLOW[i, j]), 2) for j, t in enumerate(TARGETS)}
     for i, s in enumerate(SOURCES)
 }
+# Consolidacao fora das bases: quanto cada um ganha do 1o para o 2o turno
+# descontando o proprio eleitorado de origem. Derivado da matriz, nao fixado.
+base_lula = float(FLOW[SOURCES.index("Lula (PT)"), TARGETS.index("Lula")])
+base_flavio = float(
+    FLOW[SOURCES.index("Flávio Bolsonaro (PL)"), TARGETS.index("Flávio")]
+)
+ganho_lula = round(SEGUNDO_TURNO["Flávio Bolsonaro (PL)"]["lula"] - base_lula, 2)
+ganho_flavio = round(
+    SEGUNDO_TURNO["Flávio Bolsonaro (PL)"]["adversario"] - base_flavio, 2
+)
+consolidacao = {
+    "flavio_ganho": ganho_flavio,
+    "lula_ganho": ganho_lula,
+    "razao": round(ganho_flavio / ganho_lula, 2),
+    "junho": {"flavio_ganho": 12, "lula_ganho": 6, "razao": 2.0},
+}
+
 dados = {
     "fonte": "Datafolha, campo 22-24/07/2026, divulgacao 24/07/2026 (imprensa). Relatorio completo pendente.",
     "primeiro_turno_jul": PRIMEIRO_TURNO,
@@ -837,15 +854,36 @@ dados = {
     "metodo_fluxo": "prior de afinidade + IPF (RAS) ate margens publicadas; "
     "origens escaladas 98->101 para fechar com o 2T; leitura agregada, nao painel",
     "fluxo_1t_2t_lula_x_flavio": flow_table,
-    "consolidacao": {
-        "flavio_ganho": 11,
-        "lula_ganho": 8,
-        "razao": round(11 / 8, 2),
-        "junho": {"flavio_ganho": 12, "lula_ganho": 6, "razao": 2.0},
-    },
+    "consolidacao": consolidacao,
 }
 (OUT_DIR / "dados.json").write_text(
     json.dumps(dados, ensure_ascii=False, indent=2), encoding="utf-8"
+)
+
+# Espelho compacto para o dossie: o Sankey da pagina e desenhado em SVG a
+# partir daqui. Script classico porque o dossie tambem abre em file://.
+fluxo_site = {
+    "fonte": dados["fonte"],
+    "metodo": dados["metodo_fluxo"],
+    "primeiro_turno": PRIMEIRO_TURNO,
+    "segundo_turno": {
+        "lula": SEGUNDO_TURNO["Flávio Bolsonaro (PL)"]["lula"],
+        "flavio": SEGUNDO_TURNO["Flávio Bolsonaro (PL)"]["adversario"],
+        "branco_nulo": SEGUNDO_TURNO["Flávio Bolsonaro (PL)"]["bn"],
+        "nao_sabe": SEGUNDO_TURNO["Flávio Bolsonaro (PL)"]["ns"],
+    },
+    "fluxo": flow_table,
+    "consolidacao": consolidacao,
+}
+SITE_DIR = ROOT / "docs" / "assets"
+(SITE_DIR / "datafolha_072026_fluxo.json").write_text(
+    json.dumps(fluxo_site, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+)
+(SITE_DIR / "datafolha_072026_fluxo.js").write_text(
+    "window.__DATAFOLHA_FLUXO__ = "
+    + json.dumps(fluxo_site, ensure_ascii=False, separators=(",", ":"))
+    + ";\n",
+    encoding="utf-8",
 )
 
 print("PNGs em", IMG_DIR)
