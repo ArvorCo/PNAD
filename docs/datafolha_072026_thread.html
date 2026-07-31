@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Thread X — Datafolha ajuda a campanha offline do Flávio · Arvor Intelligence</title>
+<title>Thread X · Datafolha ajuda a campanha offline do Flávio · Arvor Intelligence</title>
 <meta name="description" content="Thread para o X sobre a auditoria do Datafolha de julho/2026 (BR-01166/2026): o painel fixo de 139 municípios registrado quatro dias antes do campo, o empate 45×45 no interior, a metade sem partido, o teste da hipótese com o resultado de 2022, a reponderação por renda contra a PNAD e um plano de campanha de chão. 33 posts longos com texto copiável e card 16:9 em cada um, incluindo a reponderação por renda contra a PNAD.">
 <link rel="canonical" href="https://brasil.arvor.co/datafolha_072026_thread.html">
 <meta property="og:type" content="article">
@@ -22,7 +22,7 @@
 <meta name="twitter:site" content="@leonardodias">
 <meta name="twitter:creator" content="@leonardodias">
 <meta name="twitter:title" content="Datafolha ajuda a campanha offline do Flávio">
-<meta name="twitter:description" content="O mapa das 139 cidades é público antes do campo, e o interior — 61% da amostra — está 45×45.">
+<meta name="twitter:description" content="O mapa das 139 cidades é público antes do campo, e o interior, que é 61% da amostra, está 45×45.">
 <meta name="twitter:image" content="https://brasil.arvor.co/img/datafolha_072026/og_thread.jpg">
 <meta name="twitter:image:alt" content="Datafolha ajuda a campanha offline do Flávio: 118 de 139 municípios repetidos e 45×45 no interior.">
 <link rel="icon" href="favicon.ico" sizes="any">
@@ -100,6 +100,69 @@ header.top .lede b{color:#fff}
 .ex .box.a b{color:var(--acid)}
 .ex .box.c b{color:var(--cyan)}
 
+/* ---------- biblioteca visual dos cards ---------- */
+.ex .bg{position:absolute;inset:0;background-size:cover;background-position:center 42%;filter:grayscale(1) contrast(1.2) brightness(.34);z-index:0}
+.ex .veil{position:absolute;inset:0;z-index:1;background:
+  radial-gradient(80% 70% at 6% 8%, rgba(207,230,60,.13), transparent 58%),
+  linear-gradient(100deg, rgba(10,11,9,.95) 30%, rgba(10,11,9,.72) 70%, rgba(10,11,9,.5) 100%)}
+.ex > *{position:relative;z-index:2}
+.ex .foot{position:absolute}
+.ex .col{display:flex;flex-direction:column;gap:clamp(6px,1cqw,14px);min-width:0}
+.ex .viz{min-width:0;flex:none}
+
+.mini{display:flex;flex-direction:column;gap:clamp(5px,1.1cqw,12px);width:100%}
+.mini .row2{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(2px,.5cqw,5px)}
+.mini .lab{display:flex;justify-content:space-between;gap:10px;font-size:clamp(.6rem,1.75cqw,1.18rem);color:var(--ink2)}
+.mini .lab b{font-family:var(--mono);color:var(--acid)}
+.mini .trk{height:clamp(8px,1.9cqw,22px);background:rgb(244 242 234 / 7%);border-radius:3px;overflow:hidden}
+.mini .trk i{display:block;height:100%;border-radius:3px}
+.mini .row2.dim .lab{color:var(--muted)}
+.mini .row2.dim .lab b{color:var(--muted)}
+
+.dots{display:flex;flex-wrap:wrap;gap:clamp(2px,.62cqw,7px);width:100%}
+.dots span{width:clamp(5px,1.5cqw,17px);aspect-ratio:1;border-radius:50%;background:rgb(244 242 234 / 16%)}
+.dots span.on{background:var(--acid)}
+.dots span.hot{background:var(--lula)}
+.dots span.mid{background:var(--flavio)}
+
+.faces{display:flex;gap:clamp(10px,2.2cqw,26px);align-items:flex-end}
+.face{text-align:center}
+.face img{width:clamp(52px,13cqw,150px);aspect-ratio:1;border-radius:50%;object-fit:cover;object-position:center 22%;
+  filter:grayscale(1) contrast(1.15);border:3px solid rgba(244,242,234,.25)}
+.face b{display:block;font-family:var(--display);font-weight:900;font-size:clamp(1.5rem,5.4cqw,3.9rem);line-height:1;margin-top:.28em;letter-spacing:-.03em}
+.face span{display:block;font-family:var(--mono);font-size:clamp(.5rem,1.25cqw,.84rem);color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+.face.l b{color:var(--lula)}
+.face.f b{color:var(--flavio)}
+
+.stack{display:flex;height:clamp(20px,4.4cqw,52px);width:100%;border-radius:4px;overflow:hidden}
+.stack i{display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;
+  font-size:clamp(.5rem,1.4cqw,.98rem);color:#0d0f0c}
+.stack + .stack{margin-top:clamp(5px,1cqw,11px)}
+.stacklab{display:flex;justify-content:space-between;font-family:var(--mono);font-size:clamp(.5rem,1.25cqw,.86rem);color:var(--muted);margin-top:.3em}
+
+.steps{display:flex;align-items:center;gap:clamp(5px,1.2cqw,14px);width:100%}
+.step{flex:1;border:1px solid var(--line);border-radius:6px;padding:clamp(6px,1.3cqw,14px);text-align:center;background:rgba(10,11,9,.5)}
+.step b{display:block;font-family:var(--mono);font-size:clamp(.6rem,1.7cqw,1.2rem);color:var(--acid)}
+.step span{display:block;font-size:clamp(.5rem,1.2cqw,.84rem);color:var(--muted);margin-top:.25em}
+.steps .arw{color:var(--faint);font-size:clamp(.7rem,1.8cqw,1.3rem)}
+.step.key{border-color:var(--acid);background:rgba(207,230,60,.08)}
+
+.chartbox{width:100%}
+.chartbox svg{width:100%;height:auto;display:block;overflow:visible}
+.chartbox text{font-family:var(--mono)}
+.cx-lab{fill:#9a9789;font-size:11px}
+.cx-val{fill:#f4f2ea;font-size:14px;font-weight:700}
+.cx-acid{fill:#cfe63c}
+.cx-grid{stroke:rgba(244,242,234,.12);stroke-dasharray:3 4}
+.cx-hatch{fill:url(#hx)}
+
+.quote{border-left:3px solid var(--acid);padding-left:clamp(10px,2cqw,20px);font-family:var(--display);
+  font-style:italic;font-size:clamp(.82rem,2.5cqw,1.75rem);line-height:1.2;color:var(--ink)}
+.quote cite{display:block;font-family:var(--mono);font-style:normal;font-size:clamp(.5rem,1.2cqw,.82rem);
+  color:var(--faint);margin-top:.5em;letter-spacing:.08em;text-transform:uppercase}
+.credit{position:absolute;right:clamp(10px,2cqw,18px);top:clamp(10px,2cqw,18px);z-index:3;
+  font-family:var(--mono);font-size:clamp(.42rem,.95cqw,.66rem);color:rgba(244,242,234,.45);letter-spacing:.06em}
+
 .copy{margin-top:15px;background:#08090780;border:1px solid var(--line);border-radius:10px;padding:19px 19px 16px;
   font-family:var(--mono);font-size:.9rem;line-height:1.62;color:var(--ink2);white-space:pre-wrap;word-wrap:break-word;position:relative}
 .copy .cc{position:absolute;top:9px;right:13px;font-size:.68rem;color:var(--faint)}
@@ -130,24 +193,21 @@ footer.foot b{color:var(--ink2)}
   <div class="post-label">Post <b>01</b> · abertura</div>
   <div class="card">
     <div class="ex">
-      <span class="eyebrow">Datafolha · julho de 2026 · BR-01166/2026</span>
-      <p class="huge">4 dias</p>
-      <p class="sub">entre o registro do mapa amostral no TSE e a saída do primeiro entrevistador. <b>Nas três rodadas seguidas.</b></p>
-      <div class="foot"><span>Arvor Intelligence · auditoria independente</span><b>brasil.arvor.co</b></div>
+      <div class="bg" style="background-image:url('img/datafolha_072026/fotos/fluxo_25demarco.jpg')"></div><div class="veil"></div><span class="credit">foto: Otávio Nogueira · CC BY 2.0</span><span class="eyebrow">Datafolha · julho de 2026 · BR-01166/2026</span><p class="huge">4 dias</p><p class="sub">entre o registro do mapa amostral no TSE e a saída do primeiro entrevistador. <b>Nas três rodadas seguidas.</b></p><div class="steps"><div class="step"><b>18/07</b><span>registro no TSE</span></div><span class="arw">→</span><div class="step key"><b>22–24/07</b><span>campo na rua</span></div><span class="arw">→</span><div class="step"><b>24/07</b><span>manchete</span></div></div><div class="foot"><span>Arvor Intelligence · auditoria independente</span><b>brasil.arvor.co</b></div>
     </div>
     <div class="copy"><span class="cc"></span>DATAFOLHA AJUDA A CAMPANHA OFFLINE DO FLÁVIO.
 
 Não é ironia. É consequência do método e da lei.
 
-O Datafolha ouve 2.004 eleitores em pontos de fluxo — rua, feira, calçadão, terminal — distribuídos em 139 municípios. Esse mapa não é secreto: ele é registrado no TSE antes do campo, e o art. 33, §3º da Lei 9.504/1997 manda a Justiça Eleitoral dar publicidade ao registro em 24 horas, colocando as informações à disposição dos interessados.
+O Datafolha ouve 2.004 eleitores em pontos de fluxo (rua, feira, calçadão, terminal) distribuídos em 139 municípios. Esse mapa não é secreto. Ele é registrado no TSE antes do campo, e o art. 33, §3º da Lei 9.504/1997 manda a Justiça Eleitoral dar publicidade ao registro em 24 horas, colocando as informações à disposição dos interessados.
 
 Nas três últimas rodadas, o registro saiu exatamente quatro dias antes de o primeiro entrevistador sair de casa: 16/05 para o campo de 20–22/05; 13/06 para 17–19/06; 18/07 para 22–24/07.
 
 E o mapa quase não muda: 118 dos 139 municípios estão nas três ondas, com a mesma cota de entrevistas em cada uma.
 
-Nesse intervalo, qualquer interessado pode consultar o plano amostral, o questionário e o anexo com a área física do trabalho.
+Nesse intervalo, qualquer interessado consulta o plano amostral, o questionário e o anexo com a área física do trabalho.
 
-Auditamos os seis documentos oficiais do BR-01166/2026. Vai thread — com o número que muda a leitura da eleição e que nenhuma manchete publicou.</div>
+Auditamos os seis documentos oficiais do BR-01166/2026. Vai thread, com o número que muda a leitura da eleição e que nenhuma manchete publicou.</div>
     <button class="copy-btn" type="button">Copiar texto</button>
   </div>
 </article>
@@ -155,19 +215,14 @@ Auditamos os seis documentos oficiais do BR-01166/2026. Vai thread — com o nú
 <article class="post">
   <div class="post-label">Post <b>02</b> · o método</div>
   <div class="card">
-    <div class="ex">
-      <span class="eyebrow">Técnica declarada no registro</span>
-      <p class="huge">ponto<br>de fluxo</p>
-      <p class="sub">Aborda-se <b>quem está passando</b>, não quem está em casa. Quem ocupa a rua entra na conta.</p>
-      <div class="foot"><span>2.004 entrevistas · 139 municípios · 22–24/07/2026</span><b>Arvor</b></div>
+    <div class="ex split">
+      <div class="bg" style="background-image:url('img/datafolha_072026/fotos/rodoviaria_fabriciano.jpg');background-position:center 55%"></div><div class="veil"></div><span class="credit">foto: HVL · CC BY 4.0</span><div class="col"><span class="eyebrow">Técnica declarada no registro</span><p class="huge">ponto<br>de fluxo</p><p class="sub">Aborda-se <b>quem está passando</b>, não quem está em casa. Quem ocupa a rua entra na conta.</p></div><div class="viz" style="width:38%"><div class="mini"><div class="row2"><span class="lab">Entrevistas<b>2.004</b></span><span class="trk"><i style="width:100%;background:#cfe63c"></i></span></div><div class="row2"><span class="lab">Municípios<b>139</b></span><span class="trk"><i style="width:34%;background:#f0a930"></i></span></div><div class="row2"><span class="lab">Pontos de coleta<b>331</b></span><span class="trk"><i style="width:62%;background:#45c9c2"></i></span></div><div class="row2 dim"><span class="lab">Dias de campo<b>3</b></span><span class="trk"><i style="width:12%;background:#8a8578"></i></span></div></div></div><div class="foot"><span>22–24/07/2026 · abordagem pessoal em ponto de fluxo</span><b>Arvor</b></div>
     </div>
-    <div class="copy"><span class="cc"></span>Comecemos pelo método, porque tudo depende dele.
+    <div class="copy"><span class="cc"></span>O registro no TSE diz, com todas as letras: “pesquisa quantitativa, com abordagem pessoal em pontos de fluxo populacional”.
 
-O registro no TSE diz, com todas as letras: “pesquisa quantitativa, com abordagem pessoal em pontos de fluxo populacional”.
+Traduzindo: o entrevistador não vai à casa do eleitor. Ele fica num lugar de passagem, calçadão, feira, terminal, praça, entrada de mercado, e aborda quem passa, respeitando cotas de sexo e idade.
 
-Traduzindo: o entrevistador não vai à casa do eleitor. Ele fica num lugar de passagem — calçadão, feira, terminal, praça, entrada de mercado — e aborda quem passa, respeitando cotas de sexo e idade.
-
-Isso tem uma consequência que quase ninguém enuncia: a pesquisa mede, primeiro, quem está na rua. Aposentado que sai à tarde, dona de casa que faz feira de manhã, trabalhador que passa pelo terminal às 18h. Depois a ponderação corrige a composição por sexo, idade, escolaridade e renda — mas ponderação corrige composição, não corrige quem nunca foi abordado.
+Isso tem uma consequência que quase ninguém enuncia: a pesquisa mede, primeiro, quem está na rua. Aposentado que sai à tarde, dona de casa que faz feira de manhã, trabalhador que passa pelo terminal às 18h. Depois a ponderação corrige a composição por sexo, idade, escolaridade e renda. Mas ponderação corrige composição, não corrige quem nunca foi abordado.
 
 Não é ilegal, não é fraude, e é a técnica de mais da metade do mercado brasileiro. Só que ela tem endereço. E o endereço é público.
 
@@ -179,17 +234,16 @@ Guarde este detalhe, porque ele volta no fim da thread: ponto de fluxo mede pres
 <article class="post">
   <div class="post-label">Post <b>03</b> · o painel fixo</div>
   <div class="card">
-    <div class="ex">
-      <span class="eyebrow">Anexo territorial · maio, junho e julho de 2026</span>
-      <p class="huge">118 <small>de 139</small></p>
-      <p class="sub">municípios aparecem nas <b>três ondas</b> — e todos os 118 com <b>exatamente a mesma cota</b> de entrevistas em cada uma.</p>
-      <div class="foot"><span>87,4% das entrevistas de julho estão nesse painel fixo</span><b>Arvor</b></div>
+    <div class="ex split">
+      <div class="col"><span class="eyebrow">Anexo territorial · maio, junho e julho</span><p class="huge">118 <small>de 139</small></p><p class="sub">municípios aparecem nas <b>três ondas</b>, todos com <b>a mesma cota</b> de entrevistas em cada uma.</p></div><div class="viz" style="width:44%"><div class="dots"><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span></div><p class="sub">cada ponto é um município do anexo de julho</p></div><div class="foot"><span>87,4% das entrevistas de julho estão nesse painel fixo</span><b>Arvor</b></div>
     </div>
-    <div class="copy"><span class="cc"></span>O que mais me chamou a atenção nos anexos não foi um número. Foi uma repetição.
+    <div class="copy"><span class="cc"></span>118 dos 139 municípios de julho já estavam no campo de junho e no de maio.
+
+O que mais me chamou a atenção nos anexos não foi um número. Foi uma repetição.
 
 Cruzei os anexos territoriais das três últimas rodadas nacionais do Datafolha, município a município, pelo código do IBGE.
 
-118 dos 139 municípios de julho já estavam em junho e em maio. E aqui vem a parte que ninguém comentou: os 118 aparecem nas três ondas com a mesma quantidade de entrevistas em cada uma. Não é “parecida”. É idêntica.
+E aqui vem a parte que ninguém comentou: os 118 aparecem nas três ondas com a mesma quantidade de entrevistas em cada uma. Não é “parecida”. É idêntica.
 
 São Paulo: 132 entrevistas em maio, 132 em junho, 132 em julho. Rio: 72, 72, 72. Salvador, Fortaleza, Belo Horizonte e Brasília: 36, sempre. Goiânia, Recife, Manaus, Curitiba e Porto Alegre: 24, sempre.
 
@@ -205,15 +259,8 @@ Escala do que estou falando: essas 118 cidades concentram 1.752 das 2.004 entrev
 <article class="post">
   <div class="post-label">Post <b>04</b> · as duas trocas</div>
   <div class="card">
-    <div class="ex">
-      <span class="eyebrow">Junho → julho · o que mudou no mapa</span>
-      <div class="rows">
-        <div class="row"><span>Saíram do painel</span><b>Rio Claro/SP · Severínia/SP</b></div>
-        <div class="row"><span>Entraram no painel</span><b>Piracicaba/SP · Ouroeste/SP</b></div>
-        <div class="row dim"><span>Municípios mantidos</span><b>137 de 139</b></div>
-      </div>
-      <p class="sub">Duas trocas em um mês. <b>As duas no mesmo estado.</b></p>
-      <div class="foot"><span>Anexos BR-09956/2026 e BR-01166/2026</span><b>Arvor</b></div>
+    <div class="ex split">
+      <div class="col"><span class="eyebrow">Junho → julho · o que mudou no mapa</span><p class="huge">2 <small>trocas</small></p><p class="sub">Rio Claro e Severínia saíram. Piracicaba e Ouroeste entraram. <b>Todas em São Paulo.</b></p></div><div class="viz" style="width:44%"><div class="dots"><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="hot"></span><span class="hot"></span></div><p class="sub">137 municípios mantidos, 2 trocados</p></div><div class="foot"><span>Anexos BR-09956/2026 e BR-01166/2026</span><b>Arvor</b></div>
     </div>
     <div class="copy"><span class="cc"></span>De junho para julho, quantos municípios mudaram na maior pesquisa eleitoral do país?
 
@@ -223,7 +270,7 @@ Saíram Rio Claro (SP) e Severínia (SP). Entraram Piracicaba (SP) e Ouroeste (S
 
 De maio para junho a rotação foi maior: 21 municípios trocados. Ainda assim, 120 dos 139 permaneceram.
 
-Não estou dizendo que trocar pouco é ilegal. Painel fixo reduz variância entre ondas e melhora comparabilidade — é uma escolha técnica defensável, e provavelmente é isso.
+Não estou dizendo que trocar pouco é ilegal. Painel fixo reduz variância entre ondas e melhora comparabilidade. É uma escolha técnica defensável, e provavelmente é isso.
 
 Estou dizendo outra coisa: essa escolha, que muda o significado de toda a série histórica, não aparece em nenhuma linha do relatório de 33 páginas, nem na metodologia registrada. Ninguém pergunta. Ninguém responde.
 
@@ -237,23 +284,20 @@ E a rotação real acontece um nível abaixo: dentro dessas mesmas cidades, 79,1
 <article class="post">
   <div class="post-label">Post <b>05</b> · a granularidade</div>
   <div class="card">
-    <div class="ex">
-      <span class="eyebrow">Julho de 2026 · 331 linhas do anexo</span>
-      <p class="huge">6 <small>entrevistas por setor</small></p>
-      <p class="sub">328 das 331 linhas trazem exatamente seis. Três trazem doze. <b>A amostra é uma grade, não um sorteio livre.</b></p>
-      <div class="foot"><span>330 setores censitários únicos · 139 municípios</span><b>Arvor</b></div>
+    <div class="ex split">
+      <div class="col"><span class="eyebrow">Julho de 2026 · 331 linhas do anexo</span><p class="huge">6 <small>por setor</small></p><p class="sub">328 das 331 linhas trazem exatamente seis entrevistas. <b>A amostra é uma grade, não um sorteio livre.</b></p></div><div class="viz" style="width:40%"><div class="dots" style="max-width:170px"><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span></div><p class="sub">um setor censitário = seis entrevistas</p><div class="mini"><div class="row2"><span class="lab">Linhas com 6 entrevistas<b>328</b></span><span class="trk"><i style="width:99%;background:#cfe63c"></i></span></div><div class="row2 dim"><span class="lab">Linhas com 12<b>3</b></span><span class="trk"><i style="width:1%;background:#8a8578"></i></span></div></div></div><div class="foot"><span>330 setores censitários únicos · 139 municípios</span><b>Arvor</b></div>
     </div>
-    <div class="copy"><span class="cc"></span>Descendo mais um nível: dentro de cada município, o Datafolha declara setores censitários — o geocódigo de 15 dígitos do IBGE.
+    <div class="copy"><span class="cc"></span>Dentro de cada município, o Datafolha declara setores censitários, o geocódigo de 15 dígitos do IBGE.
 
 Em julho são 331 linhas, 330 setores únicos. E 328 dessas linhas trazem exatamente 6 entrevistas. Três trazem 12.
 
-Ou seja: a amostra nacional é uma grade de blocos de seis. Seis pessoas ali, seis pessoas acolá, 334 vezes, e o Brasil inteiro sai disso.
+A amostra nacional é uma grade de blocos de seis. Seis pessoas ali, seis pessoas acolá, 334 vezes, e o Brasil inteiro sai disso.
 
-Detalhe documental: o setor 130083905000015, em Caapiranga (AM), aparece duas vezes no anexo de julho — uma como “Centro”, outra como “Nossa Senhora das Graças” —, com seis entrevistas em cada linha. Em junho esses bairros estavam ligados a setores diferentes.
+Detalhe documental: o setor 130083905000015, em Caapiranga (AM), aparece duas vezes no anexo de julho, uma como “Centro”, outra como “Nossa Senhora das Graças”, com seis entrevistas em cada linha. Em junho esses bairros estavam ligados a setores diferentes.
 
 Pode ser erro de digitação. Pode ser agregação. Mas é o tipo de coisa que precisa ser corrigida ou explicada, porque o geocódigo é a única unidade amostral verificável que existe no documento.
 
-Para comparar as ondas: maio teve 334 linhas para 331 setores únicos; junho, 331 e 331; julho, 331 linhas para 330 setores — daí a duplicidade.</div>
+Para comparar as ondas: maio teve 334 linhas para 331 setores únicos; junho, 331 e 331; julho, 331 linhas para 330 setores. Daí a duplicidade.</div>
     <button class="copy-btn" type="button">Copiar texto</button>
   </div>
 </article>
@@ -261,20 +305,14 @@ Para comparar as ondas: maio teve 334 linhas para 331 setores únicos; junho, 33
 <article class="post">
   <div class="post-label">Post <b>06</b> · o mapa da cobertura</div>
   <div class="card">
-    <div class="ex">
-      <div class="grid2">
-        <div class="box a"><b>2,5%</b><span>dos 5.571 municípios do Brasil entram na amostra</span></div>
-        <div class="box c"><b>30,2%</b><span>do eleitorado nacional vive nesses 139 municípios</span></div>
-        <div class="box"><b>25 de 27</b><span>UFs recebem entrevistas: Amapá e Roraima nunca entram</span></div>
-        <div class="box"><b>78.766</b><span>eleitores “representados” por entrevista, na média nacional</span></div>
-      </div>
-      <div class="foot"><span>TSE Eleitorado, jun./2026 · 157.846.602 eleitores</span><b>Arvor</b></div>
+    <div class="ex split">
+      <div class="col"><span class="eyebrow">Quanto do Brasil cabe no mapa</span><p class="huge">2,5%</p><p class="sub">dos 5.571 municípios do país entram na amostra. Eles concentram <b>30,2% do eleitorado</b>.</p></div><div class="viz" style="width:46%"><div class="mini"><div class="row2"><span class="lab">Municípios do Brasil na amostra<b>2,5%</b></span><span class="trk"><i style="width:2.5%;background:#e0483a"></i></span></div><div class="row2"><span class="lab">Eleitorado coberto<b>30,2%</b></span><span class="trk"><i style="width:30.2%;background:#cfe63c"></i></span></div><div class="row2"><span class="lab">Amostra nas 11 maiores cidades<b>23,4%</b></span><span class="trk"><i style="width:23.4%;background:#45c9c2"></i></span></div><div class="row2 dim"><span class="lab">Estados sem nenhuma entrevista<b>AP e RR</b></span><span class="trk"><i style="width:7.4%;background:#8a8578"></i></span></div></div><p class="sub">cada entrevista carrega, em média, <b>78.766 eleitores</b></p></div><div class="foot"><span>TSE Eleitorado, jun./2026 · 157.846.602 eleitores</span><b>Arvor</b></div>
     </div>
     <div class="copy"><span class="cc"></span>Quanto do Brasil cabe nesse mapa?
 
 Cruzei os 139 municípios com o cadastro atual do TSE, que tem 157.846.602 eleitores residentes no país.
 
-Resultado: as 139 cidades são 2,5% dos 5.571 municípios brasileiros e concentram 30,2% do eleitorado — 47,7 milhões de pessoas.
+As 139 cidades são 2,5% dos 5.571 municípios brasileiros e concentram 30,2% do eleitorado, 47,7 milhões de pessoas.
 
 Duas unidades da federação não recebem uma única entrevista: Amapá e Roraima. Juntas, 0,62% do eleitorado. Já o Amazonas aparece com 2,99% da amostra para 1,78% do eleitorado; Mato Grosso, com 0,60% para 1,67%.
 
@@ -291,18 +329,15 @@ E a concentração tem outro lado: as 30 menores cidades do painel somam 360 ent
   <div class="post-label">Post <b>07</b> · a pergunta desconfortável</div>
   <div class="card">
     <div class="ex">
-      <span class="eyebrow">A hipótese que qualquer um levanta</span>
-      <p class="huge">travaram<br>nas cidades?</p>
-      <p class="sub">Se o painel é fixo, alguém escolheu essas 139. <b>A pergunta é legítima. A resposta tem que vir com dado.</b></p>
-      <div class="foot"><span>Teste: 2º turno presidencial de 2022, município a município</span><b>Arvor</b></div>
+      <div class="bg" style="background-image:url('img/datafolha_072026/fotos/praca_conselheiro_pena.jpg')"></div><div class="veil"></div><span class="credit">foto: HVL · CC BY 4.0</span><span class="eyebrow">A hipótese que qualquer um levanta</span><p class="huge">travaram<br>nas cidades?</p><p class="sub">Se o painel é fixo, alguém escolheu essas 139. <b>A pergunta é legítima. A resposta tem que vir com dado.</b></p><div class="foot"><span>Teste: 2º turno presidencial de 2022, município a município</span><b>Arvor</b></div>
     </div>
-    <div class="copy"><span class="cc"></span>Aqui chega a pergunta que qualquer pessoa desconfiada faz — e que eu fiz:
+    <div class="copy"><span class="cc"></span>Aqui chega a pergunta que qualquer pessoa desconfiada faz, e que eu fiz.
 
-se o painel é praticamente fixo, alguém escolheu essas 139 cidades. E se escolheram cidades convenientes, e travaram nelas, para o número dar sempre no mesmo lugar?
+Se o painel é praticamente fixo, alguém escolheu essas 139 cidades. E se escolheram cidades convenientes, e travaram nelas, para o número dar sempre no mesmo lugar?
 
 É uma acusação séria. Acusação séria exige teste, não adjetivo.
 
-O teste é direto: pegar o resultado oficial do 2º turno presidencial de 2022, município a município, e perguntar como esse conjunto de 139 cidades votou de fato — comparado ao Brasil inteiro.
+O teste é direto: pegar o resultado oficial do 2º turno presidencial de 2022, município a município, e perguntar como esse conjunto de 139 cidades votou de fato, comparado ao Brasil inteiro.
 
 Se o painel fosse escolhido para deprimir a direita, ele apareceria mais lulista que o país. Se fosse o contrário, mais bolsonarista.
 
@@ -318,19 +353,12 @@ Registro com honestidade: eu já tinha a hipótese formada e o post escrito. Pub
 <article class="post">
   <div class="post-label">Post <b>08</b> · a hipótese cai</div>
   <div class="card">
-    <div class="ex">
-      <span class="eyebrow">2º turno de 2022 · voto nominal válido</span>
-      <div class="grid2">
-        <div class="box a"><b>50,88%</b><span>Bolsonaro nas 139 cidades do painel</span></div>
-        <div class="box"><b>49,10%</b><span>Bolsonaro no Brasil inteiro</span></div>
-        <div class="box c"><b>49,33%</b><span>o painel ponderado pelas entrevistas de julho</span></div>
-        <div class="box"><b>78 de 139</b><span>cidades onde Bolsonaro venceu — 53,9% das entrevistas</span></div>
-      </div>
-      <div class="foot"><span>Hipótese testada e derrubada com dado oficial</span><b>Arvor</b></div>
+    <div class="ex split">
+      <div class="col"><span class="eyebrow">2º turno de 2022 · voto nominal válido</span><p class="huge">50,88%</p><p class="sub">foi o voto em Bolsonaro nas 139 cidades do painel. No Brasil inteiro, <b>49,10%</b>. A hipótese caiu.</p></div><div class="viz" style="width:46%"><div class="chartbox"><svg viewBox="0 0 440 156"><text class="cx-lab" x="0" y="17.68">Painel Datafolha</text><rect x="120" y="0" width="245.9" height="26" rx="3" fill="#cfe63c"/><text class="cx-val" x="373.9" y="18.72">50,88%</text><text class="cx-lab" x="0" y="56.68">Brasil</text><rect x="120" y="39" width="237.3" height="26" rx="3" fill="#8a8578"/><text class="cx-val" x="365.3" y="57.72">49,10%</text><text class="cx-lab" x="0" y="95.68">Painel ponderado</text><rect x="120" y="78" width="238.4" height="26" rx="3" fill="#45c9c2"/><text class="cx-val" x="366.4" y="96.72">49,33%</text><text class="cx-lab" x="0" y="134.68">Mediana municipal</text><rect x="120" y="117" width="259.4" height="26" rx="3" fill="#f0a930"/><text class="cx-val" x="387.4" y="135.72">53,67%</text></svg></div><p class="sub">78 das 139 cidades foram vencidas por Bolsonaro</p></div><div class="foot"><span>Hipótese testada e derrubada com dado oficial do TSE</span><b>Arvor</b></div>
     </div>
-    <div class="copy"><span class="cc"></span>O resultado do teste:
+    <div class="copy"><span class="cc"></span>O resultado do teste.
 
-As 139 cidades do painel do Datafolha, somadas, votaram 50,88% em Bolsonaro no 2º turno de 2022, contra 49,10% no Brasil inteiro. A mediana municipal do painel é 53,67% para Bolsonaro. Em 78 das 139 cidades Bolsonaro venceu — e é nelas que estão 1.080 das 2.004 entrevistas.
+As 139 cidades do painel do Datafolha, somadas, votaram 50,88% em Bolsonaro no 2º turno de 2022, contra 49,10% no Brasil inteiro. A mediana municipal do painel é 53,67% para Bolsonaro. Em 78 das 139 cidades Bolsonaro venceu, e é nelas que estão 1.080 das 2.004 entrevistas.
 
 Ponderando cada cidade pelo número de entrevistas que ela recebe, que é como o painel efetivamente pesa, o terreno fica em 49,33%. Praticamente colado ao resultado nacional.
 
@@ -349,14 +377,7 @@ A conta é refazível em dez minutos: pacote de votação por partido, municípi
   <div class="post-label">Post <b>09</b> · o que sobra é pior</div>
   <div class="card">
     <div class="ex">
-      <span class="eyebrow">O problema real não é viés — é previsibilidade</span>
-      <div class="rows">
-        <div class="row"><span>Maio · registro 16/05</span><b>campo 20–22/05</b></div>
-        <div class="row"><span>Junho · registro 13/06</span><b>campo 17–19/06</b></div>
-        <div class="row"><span>Julho · registro 18/07</span><b>campo 22–24/07</b></div>
-      </div>
-      <p class="sub">Lei 9.504/1997, art. 33, §3º: a Justiça Eleitoral <b>dá publicidade ao registro em 24 horas</b>.</p>
-      <div class="foot"><span>Transparência hoje colide com integridade da coleta</span><b>Arvor</b></div>
+      <span class="eyebrow">O problema real não é viés, é previsibilidade</span><div class="steps"><div class="step"><b>16/05 → 20/05</b><span>maio</span></div><span class="arw">→</span><div class="step"><b>13/06 → 17/06</b><span>junho</span></div><span class="arw">→</span><div class="step key"><b>18/07 → 22/07</b><span>julho</span></div></div><p class="huge">4 · 4 · 4</p><p class="sub">dias entre registro e campo. <b>Três rodadas, o mesmo intervalo.</b></p><p class="sub">Lei 9.504/1997, art. 33, §3º: a Justiça Eleitoral dá publicidade ao registro em 24 horas.</p><div class="foot"><span>Transparência hoje colide com integridade da coleta</span><b>Arvor</b></div>
     </div>
     <div class="copy"><span class="cc"></span>Cai a hipótese do viés. Sobra outra coisa, e ela é mais estrutural.
 
@@ -366,7 +387,7 @@ Maio: registro em 16/05, campo de 20 a 22/05. Junho: registro em 13/06, campo de
 
 E o registro é público por lei. O art. 33, §3º da Lei 9.504/1997 determina que a Justiça Eleitoral dê publicidade ao registro em 24 horas e coloque as informações à disposição dos interessados. O anexo com a área física do trabalho é justamente o que cumpre o inciso IV do mesmo artigo.
 
-Ou seja: a transparência que protege o eleitor da fraude também antecipa a geografia da coleta. As duas coisas são verdadeiras ao mesmo tempo. Ninguém está discutindo isso.
+A transparência que protege o eleitor da fraude também antecipa a geografia da coleta. As duas coisas são verdadeiras ao mesmo tempo. Ninguém está discutindo isso.
 
 E isso não é um problema do Datafolha: vale para todo instituto que use ponto de fluxo e registre a área física do trabalho antes de ir a campo.</div>
     <button class="copy-btn" type="button">Copiar texto</button>
@@ -377,10 +398,7 @@ E isso não é um problema do Datafolha: vale para todo instituto que use ponto 
   <div class="post-label">Post <b>10</b> · o mapa como ativo</div>
   <div class="card">
     <div class="ex">
-      <span class="eyebrow">O que o mapa realmente entrega</span>
-      <p class="huge">onde o país<br>é ouvido</p>
-      <p class="sub">139 cidades, 87,4% delas fixas, publicadas mês a mês. <b>É a lista de onde a percepção nacional se forma primeiro.</b></p>
-      <div class="foot"><span>Uso legítimo: agenda de campanha. Não: tentar mexer na pesquisa.</span><b>Arvor</b></div>
+      <div class="bg" style="background-image:url('img/datafolha_072026/fotos/feira_caruaru.jpg')"></div><div class="veil"></div><span class="credit">foto: Edudgarcia · CC BY-SA 4.0</span><span class="eyebrow">O que o mapa realmente entrega</span><p class="huge">onde o país<br>é ouvido</p><p class="sub">139 cidades, 87,4% delas fixas, publicadas mês a mês. <b>É a lista de onde a percepção nacional se forma primeiro.</b></p><div class="foot"><span>Uso legítimo: agenda de campanha. Não: mexer na pesquisa</span><b>Arvor</b></div>
     </div>
     <div class="copy"><span class="cc"></span>Então por que o título desta thread diz que o Datafolha ajuda a campanha offline?
 
@@ -392,7 +410,7 @@ Uma candidatura que faz agenda de rua sistemática nessas cidades não está “
 
 E é aí que entra a parte que quase ninguém tem coragem de falar em público: quem depende de estúdio, avião e capital não pisa nesses lugares. Quem faz chão, pisa.
 
-Não é preciso acreditar em mim: baixe o anexo de qualquer rodada no PesqEle e você terá a lista completa, com município, bairro e geocódigo de 15 dígitos.</div>
+Não é preciso acreditar em mim. Baixe o anexo de qualquer rodada no PesqEle e você terá a lista completa, com município, bairro e geocódigo de 15 dígitos.</div>
     <button class="copy-btn" type="button">Copiar texto</button>
   </div>
 </article>
@@ -400,19 +418,12 @@ Não é preciso acreditar em mim: baixe o anexo de qualquer rodada no PesqEle e 
 <article class="post">
   <div class="post-label">Post <b>11</b> · o limite ético e técnico</div>
   <div class="card">
-    <div class="ex">
-      <span class="eyebrow">Por que “ocupar ponto de fluxo” não funciona</span>
-      <div class="rows">
-        <div class="row"><span>Setores novos de junho para julho</span><b>79,1%</b></div>
-        <div class="row"><span>Entrevistas por setor</span><b>6</b></div>
-        <div class="row"><span>Ponderação por sexo, idade, escolaridade e renda</span><b>absorve concentração</b></div>
-      </div>
-      <p class="sub">O mapa serve para <b>fazer campanha</b>. Não serve para mexer no número.</p>
-      <div class="foot"><span>Arvor Intelligence · regra da casa</span><b>brasil.arvor.co</b></div>
+    <div class="ex split">
+      <div class="col"><span class="eyebrow">Por que ocupar ponto de fluxo não funciona</span><p class="huge">79,1%</p><p class="sub">dos setores censitários de julho são novos em relação a junho. <b>Você sabe a cidade. Não sabe a esquina.</b></p></div><div class="viz" style="width:44%"><div class="mini"><div class="row2"><span class="lab">Setores novos jun → jul<b>79,1%</b></span><span class="trk"><i style="width:79.1%;background:#e0483a"></i></span></div><div class="row2 dim"><span class="lab">Setores repetidos<b>20,9%</b></span><span class="trk"><i style="width:20.9%;background:#8a8578"></i></span></div><div class="row2"><span class="lab">Entrevistas por setor<b>6</b></span><span class="trk"><i style="width:6%;background:#f0a930"></i></span></div></div><p class="sub">e a ponderação por sexo, idade, escolaridade e renda achata concentração artificial</p></div><div class="foot"><span>O mapa serve para fazer campanha, não para fraudar pesquisa</span><b>Arvor</b></div>
     </div>
     <div class="copy"><span class="cc"></span>Agora o contraponto, porque alguém vai pensar nisso e é melhor matar a ideia com conta.
 
-Tentar “ocupar” pontos de fluxo para deslocar um instituto seria indefensável — e, além disso, tecnicamente inútil.
+Tentar “ocupar” pontos de fluxo para deslocar um instituto seria indefensável e, além disso, tecnicamente inútil.
 
 Primeiro: o município repete, mas o setor não. De junho para julho, 79,1% dos setores censitários são novos. Você sabe a cidade; não sabe a esquina.
 
@@ -420,7 +431,7 @@ Segundo: a cota é de seis entrevistas por setor. Para mover um ponto no placar 
 
 Terceiro: a ponderação por sexo, idade, escolaridade e renda achata concentração artificial. Excesso de um perfil vira peso menor.
 
-Ou seja: o mapa é ótimo para decidir agenda de campanha e péssimo para fraudar pesquisa. É bom que seja assim.
+O mapa é ótimo para decidir agenda de campanha e péssimo para fraudar pesquisa. É bom que seja assim.
 
 Registro isso porque a linha é fina e importa: usar dado público para decidir agenda é campanha; tentar interferir na coleta é outra coisa, e a Arvor não recomenda nem ensina.</div>
     <button class="copy-btn" type="button">Copiar texto</button>
@@ -431,19 +442,13 @@ Registro isso porque a linha é fina e importa: usar dado público para decidir 
   <div class="post-label">Post <b>12</b> · o achado central</div>
   <div class="card">
     <div class="ex split">
-      <div>
-        <span class="eyebrow">2º turno · interior · n=1.217</span>
-        <div class="duel"><span class="l">45</span><span class="x">×</span><span class="f">45</span></div>
-        <p class="sub"><b>60,7% da amostra</b> mora fora de capital e região metropolitana. E ali o placar é empate.</p>
-      </div>
-      <div class="box l" style="min-width:34%"><b>52×39</b><span>o mesmo 2º turno em capital + região metropolitana (n=787)</span></div>
-      <div class="foot"><span>Relatório Datafolha julho/2026, página 32</span><b>Arvor</b></div>
+      <div class="col"><span class="eyebrow">2º turno no interior · n=1.217</span><div class="faces"><figure class="face l"><img src="img/datafolha_072026/fotos/lula.jpg" alt=""><b>45</b><span>Lula</span></figure><figure class="face f"><img src="img/datafolha_072026/fotos/flavio_bolsonaro.jpg" alt=""><b>45</b><span>Flávio</span></figure></div><p class="sub"><b>60,7% da amostra</b> mora fora de capital e região metropolitana. E ali o placar empata.</p></div><div class="viz" style="width:44%"><div class="stack"><i style="width:60.7%;background:#cfe63c">60,7%</i><i style="width:39.3%;background:#3a3d35">39,3%</i></div><div class="stacklab"><span>interior · 1.217</span><span>capital + RM · 787</span></div><div class="mini"><div class="row2 dim"><span class="lab">Interior: vantagem de Lula<b>0</b></span><span class="trk"><i style="width:2%;background:#8a8578"></i></span></div><div class="row2"><span class="lab">Capital + RM: vantagem de Lula<b>13 pontos</b></span><span class="trk"><i style="width:100%;background:#e0483a"></i></span></div></div></div><div class="foot"><span>Relatório Datafolha julho/2026, página 32</span><b>Arvor</b></div>
     </div>
-    <div class="copy"><span class="cc"></span>Agora o número que estava dentro do relatório e não virou manchete em lugar nenhum.
+    <div class="copy"><span class="cc"></span>Página 32 do relatório. Está lá o número que não virou manchete em lugar nenhum.
 
-Na página 32, o Datafolha publica o 2º turno por natureza do município. Capital e região metropolitana: Lula 52, Flávio 39. Interior: Lula 45, Flávio 45.
+O Datafolha publica ali o 2º turno por natureza do município. Capital e região metropolitana: Lula 52, Flávio 39. Interior: Lula 45, Flávio 45.
 
-Empate. Numa base de 1.217 entrevistas — 60,7% de toda a amostra nacional.
+Empate. Numa base de 1.217 entrevistas, 60,7% de toda a amostra nacional.
 
 O “Lula 48 × Flávio 43” que circulou no país inteiro é a média de duas eleições diferentes: uma metropolitana, com treze pontos de distância, e uma do interior, empatada.
 
@@ -459,15 +464,8 @@ Bases do recorte, para quem quiser conferir: 787 entrevistas em capital e regiã
 <article class="post">
   <div class="post-label">Post <b>13</b> · a decomposição</div>
   <div class="card">
-    <div class="ex">
-      <span class="eyebrow">De onde vêm, aritmeticamente, os 5 pontos</span>
-      <div class="rows">
-        <div class="row"><span>Capital + Região Metropolitana (n=787)</span><b style="color:var(--lula)">−5,11 pp</b></div>
-        <div class="row"><span>Interior (n=1.217)</span><b>0,00 pp</b></div>
-        <div class="row dim"><span>Saldo nacional Flávio−Lula publicado</span><b>−5 pp</b></div>
-      </div>
-      <p class="sub"><b>Toda a vantagem nacional de Lula é metropolitana.</b> O interior não contribui com nada.</p>
-      <div class="foot"><span>Média ponderada dos dois grupos reproduz o topline</span><b>Arvor</b></div>
+    <div class="ex split">
+      <div class="col"><span class="eyebrow">De onde vêm, aritmeticamente, os 5 pontos</span><p class="huge">−5,11</p><p class="sub">é a contribuição de capital e região metropolitana ao saldo nacional. <b>A do interior é zero.</b></p></div><div class="viz" style="width:46%"><div class="chartbox"><svg viewBox="0 0 440 190"><defs><pattern id="hx" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="6" stroke="rgba(244,242,234,.4)" stroke-width="2"/></pattern></defs><line class="cx-grid" x1="330" y1="0" x2="330" y2="170"/><text class="cx-lab" x="0" y="20">Capital + RM · n=787</text><rect x="180" y="30" width="150" height="30" rx="3" fill="#e0483a"/><text class="cx-val" x="172" y="52" text-anchor="end">−5,11</text><text class="cx-lab" x="0" y="88">Interior · n=1.217</text><rect x="327" y="98" width="6" height="30" rx="3" fill="#8a8578"/><text class="cx-val" x="345" y="120">0,00</text><text class="cx-lab" x="0" y="156">Saldo nacional</text><rect x="183" y="166" width="147" height="4" rx="2" fill="#cfe63c"/><text class="cx-val cx-acid" x="175" y="172" text-anchor="end">−5</text></svg></div></div><div class="foot"><span>A média ponderada dos dois grupos reproduz o topline</span><b>Arvor</b></div>
     </div>
     <div class="copy"><span class="cc"></span>Dá para transformar isso em uma conta de uma linha.
 
@@ -480,7 +478,7 @@ A soma reproduz o topline que a Folha publicou. Não é interpretação: é a m�
 
 Em português claro: em julho de 2026, a vantagem de Lula é inteiramente metropolitana.
 
-Cuidado com o que isso não diz. Não diz que Flávio vence a eleição, porque o voto do interior também não é uniforme. Não diz que o empate no interior é estatisticamente firme — o intervalo do interior sob amostragem aleatória simples vai de −5,3 a +5,3.
+Cuidado com o que isso não diz. Não diz que Flávio vence a eleição, porque o voto do interior também não é uniforme. Não diz que o empate no interior é estatisticamente firme. O intervalo do interior sob amostragem aleatória simples vai de −5,3 a +5,3.
 
 Diz apenas, e com precisão, onde os cinco pontos nascem. E onde eles não nascem.
 
@@ -492,21 +490,15 @@ Fiz a conta com as bases ponderadas publicadas pelo próprio instituto, e ela fe
 <article class="post">
   <div class="post-label">Post <b>14</b> · o primeiro turno</div>
   <div class="card">
-    <div class="ex">
-      <span class="eyebrow">1º turno por natureza do município · página 30</span>
-      <div class="grid2">
-        <div class="box l"><b>43×28</b><span>capital + RM: quinze pontos de distância</span></div>
-        <div class="box f"><b>38×35</b><span>interior: três pontos de distância</span></div>
-      </div>
-      <p class="sub">O “oito pontos de vantagem no 1º turno” é a média de <b>quinze</b> e <b>três</b>.</p>
-      <div class="foot"><span>Relatório Datafolha julho/2026</span><b>Arvor</b></div>
+    <div class="ex split">
+      <div class="col"><span class="eyebrow">1º turno por natureza do município</span><p class="huge">15 × 3</p><p class="sub">pontos de distância. <b>À esquerda, capital e região metropolitana. À direita, o interior.</b></p></div><div class="viz" style="width:48%"><div class="mini"><div class="row2"><span class="lab">Capital + RM · Lula<b>43</b></span><span class="trk"><i style="width:43%;background:#e0483a"></i></span></div><div class="row2"><span class="lab">Capital + RM · Flávio<b>28</b></span><span class="trk"><i style="width:28%;background:#3f8fd6"></i></span></div><div class="row2"><span class="lab">Interior · Lula<b>38</b></span><span class="trk"><i style="width:38%;background:#e0483a"></i></span></div><div class="row2"><span class="lab">Interior · Flávio<b>35</b></span><span class="trk"><i style="width:35%;background:#3f8fd6"></i></span></div></div><p class="sub">o “oito pontos de vantagem” nacional é a média de <b>quinze</b> e <b>três</b></p></div><div class="foot"><span>Relatório Datafolha julho/2026, página 30</span><b>Arvor</b></div>
     </div>
-    <div class="copy"><span class="cc"></span>O mesmo corte aparece no primeiro turno, na página 30, e é ainda mais claro.
+    <div class="copy"><span class="cc"></span>No primeiro turno, página 30, o mesmo corte aparece e fica ainda mais claro.
 
 Capital e região metropolitana: Lula 43, Flávio 28. Quinze pontos.
 Interior: Lula 38, Flávio 35. Três pontos.
 
-O número nacional de primeiro turno — Lula 40, Flávio 32 — é a média dessas duas realidades.
+O número nacional de primeiro turno, Lula 40 e Flávio 32, é a média dessas duas realidades.
 
 Repare no que isso faz com a narrativa. A leitura pública da eleição é construída sobre um agregado que mistura um cenário decidido com um cenário disputado, e depois trata o resultado como se fosse o retrato de um país só.
 
@@ -522,26 +514,20 @@ E é no interior que está o maior estoque de indeciso, como mostro no próximo 
 <article class="post">
   <div class="post-label">Post <b>15</b> · a rejeição que inverte</div>
   <div class="card">
-    <div class="ex">
-      <span class="eyebrow">Rejeição · “não votaria de jeito nenhum”</span>
-      <div class="grid2">
-        <div class="box"><b>48 × 46</b><span>Brasil: Flávio é o mais rejeitado — a manchete</span></div>
-        <div class="box a"><b>46 × 48</b><span>Interior: quem é mais rejeitado é Lula</span></div>
-      </div>
-      <p class="sub">Em capital e RM: Flávio 51, Lula 44. <b>Duas manchetes possíveis, uma publicada.</b></p>
-      <div class="foot"><span>Relatório Datafolha julho/2026, página 33</span><b>Arvor</b></div>
+    <div class="ex split">
+      <div class="col"><span class="eyebrow">Rejeição · “não votaria de jeito nenhum”</span><p class="huge">46 × 48</p><p class="sub">No interior, quem é mais rejeitado <b>é Lula</b>. A manchete nacional diz o contrário.</p></div><div class="viz" style="width:46%"><div class="mini"><div class="row2"><span class="lab">Brasil · Flávio<b>48</b></span><span class="trk"><i style="width:48%;background:#3f8fd6"></i></span></div><div class="row2"><span class="lab">Brasil · Lula<b>46</b></span><span class="trk"><i style="width:46%;background:#e0483a"></i></span></div><div class="row2"><span class="lab">Interior · Flávio<b>46</b></span><span class="trk"><i style="width:46%;background:#3f8fd6"></i></span></div><div class="row2"><span class="lab">Interior · Lula<b>48</b></span><span class="trk"><i style="width:48%;background:#e0483a"></i></span></div><div class="row2 dim"><span class="lab">Capital + RM · Flávio<b>51</b></span><span class="trk"><i style="width:51%;background:#3f8fd6"></i></span></div><div class="row2 dim"><span class="lab">Capital + RM · Lula<b>44</b></span><span class="trk"><i style="width:44%;background:#e0483a"></i></span></div></div></div><div class="foot"><span>Relatório Datafolha julho/2026, página 33</span><b>Arvor</b></div>
     </div>
     <div class="copy"><span class="cc"></span>Tem uma inversão na página 33 que vale sozinha por uma manchete.
 
-A rejeição nacional é: Flávio 48%, Lula 46%. Foi o que se noticiou — “Flávio é o mais rejeitado”.
+A rejeição nacional é: Flávio 48%, Lula 46%. Foi o que se noticiou, “Flávio é o mais rejeitado”.
 
 No interior, onde estão 60,7% das entrevistas, os números viram: Flávio 46%, Lula 48%.
 
 Em capital e região metropolitana: Flávio 51%, Lula 44%.
 
-Ou seja, a frase “o candidato mais rejeitado do país” depende inteiramente de onde você olha. No Brasil metropolitano é Flávio. No Brasil do interior é Lula. E o Brasil do interior é a maior parte da amostra.
+A frase “o candidato mais rejeitado do país” depende inteiramente de onde você olha. No Brasil metropolitano é Flávio. No Brasil do interior é Lula. E o Brasil do interior é a maior parte da amostra.
 
-Nada disso desmente a manchete nacional — o agregado é o agregado. Mas mostra que o teto que se atribui a um candidato é, em boa medida, um teto geográfico.
+Nada disso desmente a manchete nacional, porque o agregado é o agregado. Mas mostra que o teto que se atribui a um candidato é, em boa medida, um teto geográfico.
 
 E teto geográfico se enfrenta com presença. Não com nota de repúdio.
 
@@ -553,19 +539,16 @@ Um ponto técnico a favor do instituto: a rejeição é medida antes do bloco te
 <article class="post">
   <div class="post-label">Post <b>16</b> · o estoque de indecisos</div>
   <div class="card">
-    <div class="ex">
-      <span class="eyebrow">Espontânea · sem mostrar cartão de nomes</span>
-      <p class="huge">39%</p>
-      <p class="sub">dos eleitores do interior <b>não citam nenhum nome</b> espontaneamente. Nas metrópoles, 34%. Lula é citado por 28%; Flávio, por 17%.</p>
-      <div class="foot"><span>Relatório Datafolha julho/2026, página 29</span><b>Arvor</b></div>
+    <div class="ex split">
+      <div class="bg" style="background-image:url('img/atlas_072026/web/eleicao-rua.jpg');background-position:center 40%"></div><div class="veil"></div><span class="credit">foto: Wagner Tamanaha · CC BY-SA 2.0</span><div class="col"><span class="eyebrow">Espontânea · sem mostrar cartão de nomes</span><p class="huge">39%</p><p class="sub">dos eleitores do interior <b>não citam nenhum nome</b>. Nas metrópoles, 34%.</p></div><div class="viz" style="width:38%"><div class="mini"><div class="row2"><span class="lab">Não citam ninguém<b>39%</b></span><span class="trk"><i style="width:39%;background:#8a8578"></i></span></div><div class="row2"><span class="lab">Citam Lula<b>28%</b></span><span class="trk"><i style="width:28%;background:#e0483a"></i></span></div><div class="row2"><span class="lab">Citam Flávio<b>17%</b></span><span class="trk"><i style="width:17%;background:#3f8fd6"></i></span></div></div><p class="sub">quatro em cada dez eleitores do interior ainda não têm candidato formado</p></div><div class="foot"><span>Relatório Datafolha julho/2026, página 29</span><b>Arvor</b></div>
     </div>
     <div class="copy"><span class="cc"></span>E tem estoque para trabalhar.
 
-Na pergunta espontânea — aquela em que o entrevistador não mostra a lista de nomes —, 39% dos eleitores do interior não citam absolutamente ninguém. Nas capitais e regiões metropolitanas, 34%.
+Na pergunta espontânea, aquela em que o entrevistador não mostra a lista de nomes, 39% dos eleitores do interior não citam absolutamente ninguém. Nas capitais e regiões metropolitanas, 34%.
 
 Entre os que citam, no interior: Lula 28%, Flávio 17%.
 
-Isso significa que, no lugar onde a eleição está empatada, quase quatro em cada dez eleitores ainda não têm um nome na cabeça. Não é que estejam contra alguém: é que não há candidato formado ali.
+No lugar onde a eleição está empatada, quase quatro em cada dez eleitores ainda não têm um nome na cabeça. Não é que estejam contra alguém: é que não há candidato formado ali.
 
 Nacionalmente o padrão se repete e fica pior nos grupos que decidem: 45% das mulheres e 46% dos jovens de 16 a 24 anos não citam nenhum nome.
 
@@ -580,21 +563,15 @@ Junte com o recorte anterior e veja o desenho: no interior, placar empatado e 39
   <div class="post-label">Post <b>17</b> · a metade sem partido</div>
   <div class="card">
     <div class="ex split">
-      <div>
-        <span class="eyebrow">Eleitores sem nenhum partido · n=1.006</span>
-        <div class="duel"><span class="f">48</span><span class="x">×</span><span class="l">35</span></div>
-        <p class="sub">2º turno no maior recorte da pesquisa — <b>50,2% da amostra</b>, o dobro do PT.</p>
-      </div>
-      <div class="box a" style="min-width:34%"><b>5,44</b><span>efeito de desenho necessário para esse sinal desaparecer</span></div>
-      <div class="foot"><span>IC 95% sob AAS: +7,4 a +18,6 pontos</span><b>Arvor</b></div>
+      <div class="col"><span class="eyebrow">Eleitores sem nenhum partido · n=1.006</span><div class="faces"><figure class="face f"><img src="img/datafolha_072026/fotos/flavio_bolsonaro.jpg" alt=""><b>48</b><span>Flávio</span></figure><figure class="face l"><img src="img/datafolha_072026/fotos/lula.jpg" alt=""><b>35</b><span>Lula</span></figure></div><p class="sub">2º turno no <b>maior recorte da pesquisa</b>: 50,2% da amostra, o dobro do PT.</p></div><div class="viz" style="width:44%"><div class="dots"><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span></div><p class="sub">metade da amostra não tem partido nenhum</p><div class="mini"><div class="row2"><span class="lab">Deff necessário para zerar o sinal<b>5,44</b></span><span class="trk"><i style="width:100%;background:#cfe63c"></i></span></div><div class="row2 dim"><span class="lab">Deff que zera o 48×43 nacional<b>1,44</b></span><span class="trk"><i style="width:26%;background:#8a8578"></i></span></div></div></div><div class="foot"><span>IC 95% sob AAS: +7,4 a +18,6 pontos</span><b>Arvor</b></div>
     </div>
-    <div class="copy"><span class="cc"></span>Outro recorte que ninguém usou, e que é o maior da pesquisa inteira.
+    <div class="copy"><span class="cc"></span>1.006 dos 2.004 entrevistados dizem não ter partido nenhum.
 
-1.006 dos 2.004 entrevistados dizem não ter partido nenhum. É metade da amostra — maior que o Sudeste, maior que os católicos, o dobro dos que se dizem do PT.
+É metade da amostra e o maior recorte da pesquisa inteira: maior que o Sudeste, maior que os católicos, o dobro dos que se dizem do PT. E ninguém usou.
 
 Nesse bloco, o 2º turno é Flávio 48, Lula 35.
 
-E o sinal é robusto: o intervalo de 95% da diferença, sob amostragem aleatória simples, vai de +7,4 a +18,6 pontos. Seria preciso um efeito de desenho de 5,44 para o resultado tocar zero — muito acima de qualquer coisa plausível.
+E o sinal é robusto: o intervalo de 95% da diferença, sob amostragem aleatória simples, vai de +7,4 a +18,6 pontos. Seria preciso um efeito de desenho de 5,44 para o resultado tocar zero, muito acima de qualquer coisa plausível.
 
 Para comparar: no placar nacional de 48×43, bastaria um efeito de desenho de 1,44 para o intervalo incluir o empate. O instituto não publica esse número.
 
@@ -608,30 +585,22 @@ Vale o inverso também: entre quem tem partido, o jogo está congelado. Quem se 
 <article class="post">
   <div class="post-label">Post <b>18</b> · o paradoxo do bloco</div>
   <div class="card">
-    <div class="ex">
-      <span class="eyebrow">O mesmo bloco de 1.006 eleitores</span>
-      <div class="rows">
-        <div class="row"><span>Rejeitam Lula</span><b>55%</b></div>
-        <div class="row"><span>Rejeitam Flávio</span><b>39%</b></div>
-        <div class="row"><span>Não citam nenhum nome espontaneamente</span><b>53%</b></div>
-        <div class="row"><span>Vão a branco ou nulo no 2º turno</span><b>15%</b></div>
-      </div>
-      <p class="sub">O adversário desse bloco não é o outro candidato. <b>É a não-escolha.</b></p>
-      <div class="foot"><span>Média nacional de branco/nulo no 2º turno: 9%</span><b>Arvor</b></div>
+    <div class="ex split">
+      <div class="col"><span class="eyebrow">O mesmo bloco de 1.006 eleitores</span><p class="huge">15%</p><p class="sub">vai a branco ou nulo no 2º turno, contra 9% na média nacional. <b>O adversário desse bloco é a não-escolha.</b></p></div><div class="viz" style="width:46%"><div class="mini"><div class="row2"><span class="lab">Rejeitam Lula<b>55%</b></span><span class="trk"><i style="width:55%;background:#e0483a"></i></span></div><div class="row2"><span class="lab">Rejeitam Flávio<b>39%</b></span><span class="trk"><i style="width:39%;background:#3f8fd6"></i></span></div><div class="row2"><span class="lab">Não citam nome espontaneamente<b>53%</b></span><span class="trk"><i style="width:53%;background:#8a8578"></i></span></div><div class="row2"><span class="lab">Vão a branco ou nulo<b>15%</b></span><span class="trk"><i style="width:15%;background:#f0a930"></i></span></div></div></div><div class="foot"><span>Média nacional de branco/nulo no 2º turno: 9%</span><b>Arvor</b></div>
     </div>
     <div class="copy"><span class="cc"></span>Mas esse mesmo bloco tem um paradoxo que precisa ser dito, senão vira autoengano.
 
 Entre os 1.006 sem partido: 55% rejeitam Lula, 39% rejeitam Flávio. Ponto para Flávio.
 
-Só que 53% deles não conseguem citar nenhum nome espontaneamente, e 15% vão para branco ou nulo no segundo turno — contra 9% na média nacional.
+Só que 53% deles não conseguem citar nenhum nome espontaneamente, e 15% vão para branco ou nulo no segundo turno, contra 9% na média nacional.
 
 É preferência ativada por estímulo, não identidade consolidada. É o eleitorado mais volátil e o mais decisivo da eleição, e ele decide por rejeição.
 
 O que isso significa na prática: metade da eleição está sendo disputada entre um candidato e a abstenção, não entre dois candidatos.
 
-Quem tratar esse bloco com discurso de sigla vai perdê-lo para o branco e nulo. Ele responde a problema concreto, nome fácil de lembrar e adversário nomeado — e o adversário dele já está nomeado, por 55%.
+Quem tratar esse bloco com discurso de sigla vai perdê-lo para o branco e nulo. Ele responde a problema concreto, nome fácil de lembrar e adversário nomeado. E o adversário dele já está nomeado, por 55%.
 
-Mais um dado do mesmo bloco: na espontânea, Lula tem 15% e Flávio 13%. Ninguém domina o grupo que vai decidir a eleição — ele está vago.</div>
+Mais um dado do mesmo bloco: na espontânea, Lula tem 15% e Flávio 13%. Ninguém domina o grupo que vai decidir a eleição. Ele está vago.</div>
     <button class="copy-btn" type="button">Copiar texto</button>
   </div>
 </article>
@@ -639,14 +608,8 @@ Mais um dado do mesmo bloco: na espontânea, Lula tem 15% e Flávio 13%. Ningué
 <article class="post">
   <div class="post-label">Post <b>19</b> · o maior buraco</div>
   <div class="card">
-    <div class="ex">
-      <span class="eyebrow">Contribuição de cada grupo ao saldo Flávio−Lula</span>
-      <div class="grid2">
-        <div class="box l"><b>−8,38 pp</b><span>católicos (n=988): 54×37 para Lula</span></div>
-        <div class="box f"><b>+7,16 pp</b><span>evangélicos (n=495): 60×31 para Flávio</span></div>
-      </div>
-      <p class="sub">O maior déficit isolado de Flávio <b>não é renda nem região</b>. É o eleitor católico.</p>
-      <div class="foot"><span>Nordeste: −9,09 pp · fundamental: −7,41 pp · mulheres: −5,21 pp</span><b>Arvor</b></div>
+    <div class="ex split">
+      <div class="col"><span class="eyebrow">Contribuição ao saldo Flávio menos Lula</span><p class="huge">−8,38</p><p class="sub">é o que os católicos custam a Flávio. <b>O maior buraco isolado não é renda nem região: é religião.</b></p></div><div class="viz" style="width:52%"><div class="chartbox"><svg viewBox="0 0 460 240"><line class="cx-grid" x1="230" y1="0" x2="230" y2="230"/><rect x="84.56" y="0" width="145" height="22" rx="3" fill="#e0483a"/><text class="cx-lab" x="77" y="16" text-anchor="end">Nordeste −9,09</text><rect x="95.91999999999999" y="33" width="134" height="22" rx="3" fill="#e0483a"/><text class="cx-lab" x="88" y="49" text-anchor="end">Católicos −8,38</text><rect x="111.44" y="66" width="119" height="22" rx="3" fill="#e0483a"/><text class="cx-lab" x="103" y="82" text-anchor="end">Fundamental −7,41</text><rect x="146.64" y="99" width="83" height="22" rx="3" fill="#e0483a"/><text class="cx-lab" x="139" y="115" text-anchor="end">Mulheres −5,21</text><rect x="230" y="132" width="115" height="22" rx="3" fill="#3f8fd6"/><text class="cx-lab" x="353" y="148" text-anchor="start">Evangélicos +7,16</text><rect x="230" y="165" width="104" height="22" rx="3" fill="#3f8fd6"/><text class="cx-lab" x="342" y="181" text-anchor="start">Sem partido +6,53</text><rect x="230" y="198" width="57" height="22" rx="3" fill="#3f8fd6"/><text class="cx-lab" x="295" y="214" text-anchor="start">Brancos +3,57</text></svg></div></div><div class="foot"><span>Diferença do grupo vezes o peso do grupo na amostra</span><b>Arvor</b></div>
     </div>
     <div class="copy"><span class="cc"></span>Onde Flávio realmente perde a eleição, segundo os próprios números do Datafolha?
 
@@ -665,7 +628,7 @@ Brancos: +3,57.
 
 O detalhe que muda estratégia: o segundo maior buraco não é renda nem região. É religião. Católicos são 988 entrevistas, quase metade da amostra, e dão 54×37 para Lula.
 
-Consolidar mais os 60% entre evangélicos rende pouco — a base já está perto do limite. Cada ponto recuperado entre católicos vale mais que qualquer ganho adicional onde já se venceu.
+Consolidar mais os 60% entre evangélicos rende pouco, porque a base já está perto do limite. Cada ponto recuperado entre católicos vale mais que qualquer ganho adicional onde já se venceu.
 
 Uma ressalva obrigatória: essas dimensões se sobrepõem. A mesma pessoa pode ser mulher, nordestina, católica e do interior. Somar os eixos seria erro grosseiro; a leitura é de prioridade.</div>
     <button class="copy-btn" type="button">Copiar texto</button>
@@ -675,16 +638,8 @@ Uma ressalva obrigatória: essas dimensões se sobrepõem. A mesma pessoa pode s
 <article class="post">
   <div class="post-label">Post <b>20</b> · o mundo do trabalho</div>
   <div class="card">
-    <div class="ex">
-      <span class="eyebrow">2º turno por ocupação · página 25</span>
-      <div class="rows">
-        <div class="row"><span>Assalariado com carteira (n=497)</span><b style="color:var(--flavio)">46 × 40</b></div>
-        <div class="row"><span>Assalariado sem carteira (n=127)</span><b style="color:var(--lula)">39 × 49</b></div>
-        <div class="row"><span>Aposentados (n=294)</span><b style="color:var(--lula)">35 × 60</b></div>
-        <div class="row"><span>Donas de casa (n=167)</span><b style="color:var(--lula)">34 × 61</b></div>
-      </div>
-      <p class="sub">Os dois maiores déficits ocupacionais são de <b>renda fixa e cuidado</b> — não de emprego.</p>
-      <div class="foot"><span>Valores: Flávio × Lula</span><b>Arvor</b></div>
+    <div class="ex split">
+      <div class="col"><span class="eyebrow">2º turno por ocupação · página 25</span><p class="huge">461</p><p class="sub">entrevistas estão em aposentados e donas de casa. <b>A pauta de empreendedorismo fala com 88.</b></p></div><div class="viz" style="width:50%"><div class="mini"><div class="row2"><span class="lab">Assalariado com carteira · n=497<b>46 × 40</b></span><span class="trk"><i style="width:46%;background:#3f8fd6"></i></span></div><div class="row2"><span class="lab">Assalariado sem carteira · n=127<b>39 × 49</b></span><span class="trk"><i style="width:49%;background:#e0483a"></i></span></div><div class="row2"><span class="lab">Aposentados · n=294<b>35 × 60</b></span><span class="trk"><i style="width:60%;background:#e0483a"></i></span></div><div class="row2"><span class="lab">Donas de casa · n=167<b>34 × 61</b></span><span class="trk"><i style="width:61%;background:#e0483a"></i></span></div><div class="row2 dim"><span class="lab">Empresários · n=88<b>65 × 27</b></span><span class="trk"><i style="width:65%;background:#3f8fd6"></i></span></div></div><p class="sub">valores: Flávio × Lula</p></div><div class="foot"><span>Os maiores déficits são de renda fixa e cuidado, não de emprego</span><b>Arvor</b></div>
     </div>
     <div class="copy"><span class="cc"></span>E dentro do mundo do trabalho a divisão é mais interessante do que o clichê sugere.
 
@@ -692,11 +647,11 @@ Assalariado com carteira assinada: Flávio 46, Lula 40.
 Assalariado sem carteira: Lula 49, Flávio 39.
 Autônomo, liberal e bico: Flávio 47, Lula 43.
 Funcionário público: Lula 47, Flávio 42.
-Empresário: Flávio 65, Lula 27 — mas a base é de só 88 entrevistas, então é tendência, não medida.
+Empresário: Flávio 65, Lula 27, mas a base é de só 88 entrevistas, então é tendência, não medida.
 
 Agora o que pesa de verdade no agregado:
-Aposentados: Lula 60, Flávio 35 — contribuição de −3,67 pontos.
-Donas de casa: Lula 61, Flávio 34 — contribuição de −2,25.
+Aposentados: Lula 60, Flávio 35, contribuição de −3,67 pontos.
+Donas de casa: Lula 61, Flávio 34, contribuição de −2,25.
 
 Os dois maiores déficits ocupacionais de Flávio não são de emprego. São de renda fixa e de cuidado: aposentadoria, saúde, preço de comida, fila de creche e de cuidador.
 
@@ -710,15 +665,8 @@ E um alerta metodológico que ninguém faz: com 88 entrevistas, o recorte de emp
 <article class="post">
   <div class="post-label">Post <b>21</b> · a prova cruzada</div>
   <div class="card">
-    <div class="ex">
-      <span class="eyebrow">Três cenários de 2º turno · mesma amostra, mesma semana</span>
-      <div class="rows">
-        <div class="row"><span>Lula × Flávio</span><b>48 × 43 · B/N 9</b></div>
-        <div class="row"><span>Lula × Caiado</span><b>47 × 40 · B/N 11</b></div>
-        <div class="row key"><span>Lula não se move em nenhum</span><b>47 · 48 · 48</b></div>
-      </div>
-      <p class="sub">O que muda é o bloco adversário. <b>A perda vai para a urna vazia, não para Lula.</b></p>
-      <div class="foot"><span>Toplines publicados · nada aqui é estimativa</span><b>Arvor</b></div>
+    <div class="ex split">
+      <div class="col"><span class="eyebrow">Três cenários de 2º turno · mesma amostra</span><p class="huge">47 · 48 · 48</p><p class="sub">Lula não se move em nenhum deles. <b>Quem varia é o bloco adversário.</b></p></div><div class="viz" style="width:50%"><div class="chartbox"><svg viewBox="0 0 460 210"><text class="cx-lab" x="0" y="16">Lula × Flávio</text><rect x="0" y="24" width="211" height="18" rx="3" fill="#e0483a"/><text class="cx-val" x="219" y="38">48</text><rect x="0" y="46" width="189" height="18" rx="3" fill="#3f8fd6"/><text class="cx-val" x="197" y="60">43</text><rect x="241" y="46" width="40" height="18" rx="3" fill="#8a8578"/><text class="cx-lab" x="287" y="60">B/N 9</text><text class="cx-lab" x="0" y="82">Lula × Caiado</text><rect x="0" y="90" width="207" height="18" rx="3" fill="#e0483a"/><text class="cx-val" x="215" y="104">47</text><rect x="0" y="112" width="176" height="18" rx="3" fill="#3f8fd6"/><text class="cx-val" x="184" y="126">40</text><rect x="228" y="112" width="48" height="18" rx="3" fill="#8a8578"/><text class="cx-lab" x="282" y="126">B/N 11</text><text class="cx-lab" x="0" y="148">Lula × Zema</text><rect x="0" y="156" width="211" height="18" rx="3" fill="#e0483a"/><text class="cx-val" x="219" y="170">48</text><rect x="0" y="178" width="176" height="18" rx="3" fill="#3f8fd6"/><text class="cx-val" x="184" y="192">40</text><rect x="228" y="178" width="44" height="18" rx="3" fill="#8a8578"/><text class="cx-lab" x="278" y="192">B/N 10</text></svg></div></div><div class="foot"><span>Toplines publicados · nada aqui é estimativa</span><b>Arvor</b></div>
     </div>
     <div class="copy"><span class="cc"></span>Tem um experimento dentro desta pesquisa que quase ninguém lê, e ele é medição pura.
 
@@ -730,13 +678,13 @@ Lula 48 × Zema 40, com 10.
 
 Repare no que não muda: Lula fica em 47, 48 e 48. O teto dele não depende de quem está do outro lado.
 
-E repare no que muda: o bloco adversário rende 43 com Flávio e 40 com os outros dois. Esses três pontos não vão para Lula — ele não sobe. Vão para branco e nulo, que sobe de 9 para 11 e para 10.
+E repare no que muda: o bloco adversário rende 43 com Flávio e 40 com os outros dois. Esses três pontos não vão para Lula, que não sobe. Vão para branco e nulo, que sobe de 9 para 11 e para 10.
 
 Traduzindo: existe um eleitorado que vota em Flávio e simplesmente não vota em Caiado nem em Zema. Ele não muda de lado, ele sai da urna.
 
 Isso não é modelo. São três toplines publicados no mesmo relatório.
 
-Um detalhe que fecha o raciocínio: nos três cenários o “não sabe” fica em 1 ou 2. Não é indecisão que produz a diferença entre 43 e 40 — é recusa de parte do eleitorado de Flávio a votar em outro nome da direita.</div>
+Um detalhe que fecha o raciocínio: nos três cenários o “não sabe” fica em 1 ou 2. Não é indecisão que produz a diferença entre 43 e 40, é recusa de parte do eleitorado de Flávio a votar em outro nome da direita.</div>
     <button class="copy-btn" type="button">Copiar texto</button>
   </div>
 </article>
@@ -744,17 +692,10 @@ Um detalhe que fecha o raciocínio: nos três cenários o “não sabe” fica e
 <article class="post">
   <div class="post-label">Post <b>22</b> · para onde vai o voto</div>
   <div class="card">
-    <div class="ex">
-      <span class="eyebrow">Consolidação fora da própria base · 1º → 2º turno</span>
-      <div class="rows">
-        <div class="row"><span>Flávio consolida</span><b>+10,1 pontos</b></div>
-        <div class="row"><span>Lula consolida</span><b>+6,8 pontos</b></div>
-        <div class="row key"><span>Razão de julho (junho foi 2:1)</span><b>1,48 : 1</b></div>
-      </div>
-      <p class="sub">Barras são fato. <b>Cada fita do diagrama é estimativa</b> — e está hachurada por isso.</p>
-      <div class="foot"><span>Prior ideológica + IPF até as margens publicadas</span><b>Arvor</b></div>
+    <div class="ex split">
+      <div class="col"><span class="eyebrow">Consolidação fora da própria base</span><p class="huge">1,48 : 1</p><p class="sub">Flávio consolida <b>+10,1</b> pontos fora da base; Lula, <b>+6,8</b>. Em junho a razão era 2:1.</p></div><div class="viz" style="width:48%"><div class="chartbox"><svg viewBox="0 0 440 200"><defs><pattern id="hx" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="6" stroke="rgba(244,242,234,.4)" stroke-width="2"/></pattern></defs><rect x="0" y="14" width="16" height="70" rx="3" fill="#e0483a"/><rect x="0" y="98" width="16" height="56" rx="3" fill="#3f8fd6"/><rect x="0" y="162" width="16" height="30" rx="3" fill="#8a8578"/><path d="M16,14 C160,14 250,20 410,20 L410,74 C250,74 160,84 16,84 Z" fill="#e0483a" fill-opacity=".22"/><path d="M16,14 C160,14 250,20 410,20 L410,74 C250,74 160,84 16,84 Z" class="cx-hatch" fill-opacity=".14"/><path d="M16,98 C170,98 260,90 410,86 L410,150 C260,154 170,154 16,154 Z" fill="#3f8fd6" fill-opacity=".22"/><path d="M16,98 C170,98 260,90 410,86 L410,150 C260,154 170,154 16,154 Z" class="cx-hatch" fill-opacity=".14"/><path d="M16,162 C170,162 260,160 410,158 L410,190 C260,192 170,192 16,192 Z" fill="#8a8578" fill-opacity=".2"/><rect x="410" y="20" width="16" height="54" rx="3" fill="#e0483a"/><rect x="410" y="86" width="16" height="64" rx="3" fill="#3f8fd6"/><rect x="410" y="158" width="16" height="34" rx="3" fill="#8a8578"/><text class="cx-lab" x="0" y="8">1º turno</text><text class="cx-lab" x="426" y="8" text-anchor="end">2º turno</text></svg></div><p class="sub">barras: fato · fitas hachuradas: estimativa</p></div><div class="foot"><span>Prior ideológica ajustada por IPF às margens publicadas</span><b>Arvor</b></div>
     </div>
-    <div class="copy"><span class="cc"></span>Com essa restrição na mão, dá para estimar o caminho do voto quando a eleição afunila — dizendo com todas as letras o que é medido e o que não é.
+    <div class="copy"><span class="cc"></span>Com essa restrição na mão, dá para estimar o caminho do voto quando a eleição afunila, dizendo com todas as letras o que é medido e o que não é.
 
 Entre o 1º e o 2º turno, cerca de dezoito pontos são liberados: catorze de candidaturas eliminadas e quatro de indecisos que decidem.
 
@@ -770,15 +711,12 @@ O método, aplicado igual em toda pesquisa de 1º turno que auditamos, está no 
 <article class="post">
   <div class="post-label">Post <b>23</b> · o que o diagrama não é</div>
   <div class="card">
-    <div class="ex">
-      <span class="eyebrow">Blindagem metodológica</span>
-      <p class="huge">nenhum elo<br>foi medido</p>
-      <p class="sub">Nenhum instituto brasileiro publica matriz de transição. <b>Por isso a fita é hachurada e a barra é sólida.</b></p>
-      <div class="foot"><span>A razão sobrevive à troca da prior; o corte por candidato, não</span><b>Arvor</b></div>
+    <div class="ex split">
+      <div class="col"><span class="eyebrow">Blindagem metodológica</span><p class="huge">nenhum elo<br>foi medido</p><p class="sub">Nenhum instituto brasileiro publica matriz de transição. <b>Por isso a fita é hachurada e a barra é sólida.</b></p></div><div class="viz" style="width:34%"><div class="chartbox"><svg viewBox="0 0 260 150"><defs><pattern id="hx" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="6" stroke="rgba(244,242,234,.4)" stroke-width="2"/></pattern></defs><rect x="0" y="10" width="110" height="52" rx="4" fill="#cfe63c"/><text class="cx-lab" x="0" y="82" style="fill:#cfe63c">BARRA = FATO</text><rect x="0" y="96" width="110" height="52" rx="4" fill="#8a8578" fill-opacity=".3"/><rect x="0" y="96" width="110" height="52" rx="4" class="cx-hatch"/><text class="cx-lab" x="130" y="126">FITA = INFERÊNCIA</text></svg></div></div><div class="foot"><span>A razão sobrevive à troca da prior; o corte por candidato, não</span><b>Arvor</b></div>
     </div>
     <div class="copy"><span class="cc"></span>E agora a parte que separa análise de chute, porque um diagrama de fluxo é a peça mais fácil de falsificar em toda a estatística eleitoral.
 
-Nenhum instituto brasileiro publica matriz de transição. Ninguém sabe, com dado, para onde foi o eleitor de Caiado — nem o Datafolha, que teria como saber e não divulga.
+Nenhum instituto brasileiro publica matriz de transição. Ninguém sabe, com dado, para onde foi o eleitor de Caiado, nem o Datafolha, que teria como saber e não divulga.
 
 O que fizemos é explícito: partimos de uma matriz de afinidade ideológica, ajustamos por IPF até bater exatamente nas margens publicadas e desenhamos barra sólida para o que é fato e fita hachurada para o que é estimativa.
 
@@ -786,7 +724,7 @@ E a distinção que importa: a razão de consolidação, em torno de 1,5 para 1,
 
 Qualquer matriz que respeite os toplines devolve os mesmos totais. É por isso que o instituto precisa publicar a dele.
 
-Publicar a matriz custaria uma página. Ela existe no banco de dados de qualquer instituto que pergunte 1º e 2º turno na mesma entrevista — basta cruzar duas variáveis que já foram coletadas do mesmo respondente.</div>
+Publicar a matriz custaria uma página. Ela existe no banco de qualquer instituto que pergunte 1º e 2º turno na mesma entrevista. Basta cruzar duas variáveis já coletadas do mesmo respondente.</div>
     <button class="copy-btn" type="button">Copiar texto</button>
   </div>
 </article>
@@ -794,19 +732,12 @@ Publicar a matriz custaria uma página. Ela existe no banco de dados de qualquer
 <article class="post">
   <div class="post-label">Post <b>24</b> · a régua da renda</div>
   <div class="card">
-    <div class="ex">
-      <span class="eyebrow">Faixa até 2 salários mínimos · três réguas</span>
-      <div class="rows">
-        <div class="row"><span>Amostra do Datafolha</span><b>52,1%</b></div>
-        <div class="row"><span>Domicílios brasileiros, PNAD 2025</span><b>42,9%</b></div>
-        <div class="row key"><span>Pessoas de 16+ anos, PNAD 2025</span><b>35,4%</b></div>
-      </div>
-      <p class="sub"><b>16,6 pontos</b> de distância na faixa onde Lula faz 56×36.</p>
-      <div class="foot"><span>PNADC anual 2025 visita 1 · rendimento domiciliar em SM</span><b>Arvor</b></div>
+    <div class="ex split">
+      <div class="col"><span class="eyebrow">Faixa até 2 salários mínimos</span><p class="huge">16,6 pp</p><p class="sub">de distância entre a amostra e a PNAD, <b>na faixa onde Lula faz 56×36</b>.</p></div><div class="viz" style="width:50%"><div class="chartbox"><svg viewBox="0 0 460 200"><text class="cx-lab" x="0" y="12">Datafolha</text><rect x="0" y="22" width="96" height="81" fill="#e0483a" rx="2"/><text class="cx-lab" x="48" y="66" text-anchor="middle" style="fill:#0d0f0c;font-weight:700">52,1</text><rect x="0" y="103" width="96" height="55" fill="#f0a930" rx="2"/><text class="cx-lab" x="48" y="134" text-anchor="middle" style="fill:#0d0f0c;font-weight:700">35,2</text><rect x="0" y="157" width="96" height="16" fill="#45c9c2" rx="2"/><text class="cx-lab" x="48" y="169" text-anchor="middle" style="fill:#0d0f0c;font-weight:700"></text><rect x="0" y="173" width="96" height="4" fill="#cfe63c" rx="2"/><text class="cx-lab" x="48" y="179" text-anchor="middle" style="fill:#0d0f0c;font-weight:700"></text><text class="cx-lab" x="160" y="12">PNAD domicílios</text><rect x="160" y="22" width="96" height="67" fill="#e0483a" rx="2"/><text class="cx-lab" x="208" y="59" text-anchor="middle" style="fill:#0d0f0c;font-weight:700">42,9</text><rect x="160" y="89" width="96" height="55" fill="#f0a930" rx="2"/><text class="cx-lab" x="208" y="120" text-anchor="middle" style="fill:#0d0f0c;font-weight:700">35,7</text><rect x="160" y="144" width="96" height="22" fill="#45c9c2" rx="2"/><text class="cx-lab" x="208" y="159" text-anchor="middle" style="fill:#0d0f0c;font-weight:700"></text><rect x="160" y="166" width="96" height="11" fill="#cfe63c" rx="2"/><text class="cx-lab" x="208" y="175" text-anchor="middle" style="fill:#0d0f0c;font-weight:700"></text><text class="cx-lab" x="320" y="12">PNAD pessoas 16+</text><rect x="320" y="22" width="96" height="55" fill="#e0483a" rx="2"/><text class="cx-lab" x="368" y="53" text-anchor="middle" style="fill:#0d0f0c;font-weight:700">35,4</text><rect x="320" y="77" width="96" height="61" fill="#f0a930" rx="2"/><text class="cx-lab" x="368" y="111" text-anchor="middle" style="fill:#0d0f0c;font-weight:700">39,2</text><rect x="320" y="138" width="96" height="26" fill="#45c9c2" rx="2"/><text class="cx-lab" x="368" y="155" text-anchor="middle" style="fill:#0d0f0c;font-weight:700"></text><rect x="320" y="164" width="96" height="13" fill="#cfe63c" rx="2"/><text class="cx-lab" x="368" y="174" text-anchor="middle" style="fill:#0d0f0c;font-weight:700"></text></svg></div><p class="sub">vermelho: até 2 SM · âmbar: 2 a 5 · ciano: 5 a 10 · ácido: 10+</p></div><div class="foot"><span>PNADC anual 2025 visita 1 · rendimento domiciliar em SM</span><b>Arvor</b></div>
     </div>
     <div class="copy"><span class="cc"></span>Agora a parte que separa auditoria de comentário: a régua de renda.
 
-O próprio Datafolha publica o perfil econômico da amostra ponderada. Metade dela — 52,1% considerando as bases dos cruzamentos — declara renda familiar de até dois salários mínimos.
+O próprio Datafolha publica o perfil econômico da amostra ponderada. Metade dela, 52,1% considerando as bases dos cruzamentos, declara renda familiar de até dois salários mínimos.
 
 Fui ao microdado da PNAD Contínua anual de 2025, visita 1, com peso calibrado do IBGE, e calculei a mesma faixa com o rendimento domiciliar deflacionado para abril de 2026 e convertido em salários mínimos.
 
@@ -815,7 +746,7 @@ Pessoas de 16 anos ou mais até 2 SM: 35,4%.
 
 A segunda linha é a que importa, porque o universo declarado da pesquisa é exatamente esse: “eleitores com 16 anos ou mais”.
 
-São 16,6 pontos de distância. E no outro extremo: acima de 10 SM, a amostra tem 2,7% e a PNAD tem 8,4% — três vezes mais gente.
+São 16,6 pontos de distância. E no outro extremo: acima de 10 SM, a amostra tem 2,7% e a PNAD tem 8,4%, três vezes mais gente.
 
 Guarde a informação que torna isso decisivo: é justamente na faixa até 2 SM que Lula faz 56×36.
 
@@ -827,26 +758,19 @@ Para efeito de comparação: sexo, idade e macro-região da amostra ficam a meno
 <article class="post">
   <div class="post-label">Post <b>25</b> · a reponderação</div>
   <div class="card">
-    <div class="ex">
-      <span class="eyebrow">2º turno, trocando só a distribuição de renda</span>
-      <div class="rows">
-        <div class="row dim"><span>Régua do Datafolha (reproduz o oficial)</span><b>47,9 × 42,8</b></div>
-        <div class="row"><span>Régua PNAD, domicílios</span><b>46,6 × 44,2</b></div>
-        <div class="row key"><span>Régua PNAD, pessoas 16+</span><b>45,4 × 45,3</b></div>
-      </div>
-      <p class="sub">A vantagem de cinco pontos não sobrevive à troca de <b>uma única margem</b>.</p>
-      <div class="foot"><span>Inferência · sensibilidade de margem única, sem interações</span><b>Arvor</b></div>
+    <div class="ex split">
+      <div class="col"><span class="eyebrow">2º turno, trocando só a distribuição de renda</span><p class="huge">45,4 × 45,3</p><p class="sub">com a régua da PNAD por pessoas de 16 anos ou mais. <b>A vantagem de cinco pontos evapora.</b></p></div><div class="viz" style="width:48%"><div class="chartbox"><svg viewBox="0 0 440 190"><polyline points="30,26 220,58 400,90" fill="none" stroke="#e0483a" stroke-width="4"/><polyline points="30,152 220,120 400,94" fill="none" stroke="#3f8fd6" stroke-width="4"/><circle cx="30" cy="26" r="6" fill="#e0483a"/><circle cx="220" cy="58" r="6" fill="#e0483a"/><circle cx="400" cy="90" r="6" fill="#e0483a"/><circle cx="30" cy="152" r="6" fill="#3f8fd6"/><circle cx="220" cy="120" r="6" fill="#3f8fd6"/><circle cx="400" cy="94" r="6" fill="#3f8fd6"/><text class="cx-val" x="30" y="16">47,9</text><text class="cx-val" x="220" y="48" text-anchor="middle">46,6</text><text class="cx-val" x="392" y="80" text-anchor="end">45,4</text><text class="cx-val" x="30" y="176">42,8</text><text class="cx-val" x="220" y="142" text-anchor="middle">44,2</text><text class="cx-val" x="392" y="118" text-anchor="end">45,3</text><text class="cx-lab" x="30" y="188">Datafolha</text><text class="cx-lab" x="220" y="188" text-anchor="middle">PNAD domicílios</text><text class="cx-lab" x="400" y="188" text-anchor="end">PNAD 16+</text></svg></div></div><div class="foot"><span>Inferência · sensibilidade de margem única, sem interações</span><b>Arvor</b></div>
     </div>
     <div class="copy"><span class="cc"></span>O que acontece com o placar quando você troca só essa régua, e mais nada?
 
-Antes de mexer, a validação obrigatória: aplicando as próprias margens de renda do Datafolha ao próprio cruzamento publicado, chego a Lula 47,9 e Flávio 42,8. Ou seja, reproduzo o 48×43 divulgado. A máquina de cálculo está correta antes de qualquer alteração.
+Antes de mexer, a validação obrigatória: aplicando as próprias margens de renda do Datafolha ao próprio cruzamento publicado, chego a Lula 47,9 e Flávio 42,8. Reproduzo o 48×43 divulgado. A máquina de cálculo está correta antes de qualquer alteração.
 
 Agora trocando apenas a distribuição de renda pela da PNAD:
 
 Domicílios: Lula 46,6 × Flávio 44,2. A vantagem cai de 5,1 para 2,4 pontos.
 Pessoas de 16 anos ou mais: Lula 45,4 × Flávio 45,3. Empate.
 
-Testei também com o rendimento habitual em vez do efetivo, e o desenho é o mesmo — não depende da variável escolhida.
+Testei também com o rendimento habitual em vez do efetivo, e o desenho é o mesmo. Não depende da variável escolhida.
 
 No primeiro turno, o mesmo exercício leva a distância de 7,2 para 4,0 pontos.
 
@@ -860,28 +784,22 @@ Detalhe metodológico que costuma ser omitido em thread: só faz sentido reponde
 <article class="post">
   <div class="post-label">Post <b>26</b> · o precedente e o limite</div>
   <div class="card">
-    <div class="ex">
-      <span class="eyebrow">2º turno de 2022 · Datafolha da véspera × urna</span>
-      <div class="grid2">
-        <div class="box"><b>52 × 48</b><span>Datafolha da véspera, votos válidos (BR-08297/2022)</span></div>
-        <div class="box a"><b>50,90 × 49,10</b><span>resultado oficial, que recalculamos voto a voto</span></div>
-      </div>
-      <p class="sub">O erro foi <b>na mesma direção</b> que a composição de renda corrige.</p>
-      <div class="foot"><span>Correlação de direção não é prova de causa</span><b>Arvor</b></div>
+    <div class="ex split">
+      <div class="col"><span class="eyebrow">2º turno de 2022 · véspera × urna</span><p class="huge">52 × 48</p><p class="sub">foi o Datafolha da véspera. A urna deu <b>50,90 × 49,10</b>. O erro dobrou a diferença.</p></div><div class="viz" style="width:46%"><div class="mini"><div class="row2"><span class="lab">Datafolha véspera · Lula<b>52</b></span><span class="trk"><i style="width:52%;background:#e0483a"></i></span></div><div class="row2"><span class="lab">Datafolha véspera · Bolsonaro<b>48</b></span><span class="trk"><i style="width:48%;background:#3f8fd6"></i></span></div><div class="row2"><span class="lab">Urna · Lula<b>50,90</b></span><span class="trk"><i style="width:50.9%;background:#e0483a"></i></span></div><div class="row2"><span class="lab">Urna · Bolsonaro<b>49,10</b></span><span class="trk"><i style="width:49.1%;background:#3f8fd6"></i></span></div></div><p class="sub">erro na mesma direção que a composição de renda corrige</p></div><div class="foot"><span>Registro BR-08297/2022 · resultado oficial recalculado voto a voto</span><b>Arvor</b></div>
     </div>
     <div class="copy"><span class="cc"></span>Isso tem precedente, e é honesto colocá-lo na mesa com o limite junto.
 
-Na véspera do segundo turno de 2022, o Datafolha publicou Lula 52 × Bolsonaro 48 em votos válidos. A urna deu 50,90 × 49,10 — número que recalculei voto a voto no mesmo pacote do TSE que usei para testar as 139 cidades.
+Na véspera do segundo turno de 2022, o Datafolha publicou Lula 52 × Bolsonaro 48 em votos válidos. A urna deu 50,90 × 49,10, número que recalculei voto a voto no mesmo pacote do TSE que usei para testar as 139 cidades.
 
 A diferença publicada era o dobro da real, e o erro foi todo na mesma direção que a reponderação por renda corrige.
 
-Agora o limite, porque sem ele isto vira militância com planilha:
+Agora o limite, porque sem ele isto vira militância com planilha.
 
 Isso não prova que o erro de 2022 foi causado por renda. Não prova que Flávio está empatado hoje. Renda declarada na rua não é rendimento domiciliar medido pelo IBGE, 3,9% da amostra não declarou renda, e reponderar uma margem isolada ignora que renda, região, escolaridade e religião andam juntas.
 
 O que está provado é mais modesto e mais útil: o “Lula +5” não sobrevive a uma única troca de régua.
 
-E é por isso que a peça inteira termina no mesmo lugar: exigir do instituto o efeito de desenho, o n efetivo e a distribuição dos pesos. Com esses três números, ninguém precisaria reponderar nada por fora.</div>
+Por isso a peça inteira termina no mesmo lugar: exigir do instituto o efeito de desenho, o n efetivo e a distribuição dos pesos. Com esses três números, ninguém precisaria reponderar nada por fora.</div>
     <button class="copy-btn" type="button">Copiar texto</button>
   </div>
 </article>
@@ -890,10 +808,7 @@ E é por isso que a peça inteira termina no mesmo lugar: exigir do instituto o 
   <div class="post-label">Post <b>27</b> · plano 1</div>
   <div class="card">
     <div class="ex">
-      <span class="eyebrow">Plano de chão · movimento 01</span>
-      <p class="huge">70 cidades</p>
-      <p class="sub">do painel têm entre 20 mil e 200 mil eleitores e concentram <b>840 entrevistas — 41,9% da amostra nacional</b>.</p>
-      <div class="foot"><span>Cada ponto no interior vale 0,607 ponto nacional</span><b>Arvor</b></div>
+      <div class="bg" style="background-image:url('img/datafolha_072026/fotos/praca_conselheiro_pena.jpg');background-position:center 60%"></div><div class="veil"></div><span class="credit">foto: HVL · CC BY 4.0</span><span class="eyebrow">Plano de chão · movimento 01</span><p class="huge">70 cidades</p><p class="sub">do painel têm entre 20 mil e 200 mil eleitores e concentram <b>840 entrevistas, 41,9% da amostra nacional</b>.</p><div class="mini"><div class="row2"><span class="lab">Peso de um ponto ganho no interior<b>0,607</b></span><span class="trk"><i style="width:60.7%;background:#cfe63c"></i></span></div><div class="row2 dim"><span class="lab">Peso de um ponto ganho na capital<b>0,393</b></span><span class="trk"><i style="width:39.3%;background:#8a8578"></i></span></div></div><div class="foot"><span>Onde a agenda custa uma fração de um evento metropolitano</span><b>Arvor</b></div>
     </div>
     <div class="copy"><span class="cc"></span>Vamos ao que fazer com isso. Cinco movimentos, todos ancorados em número do próprio relatório.
 
@@ -907,7 +822,7 @@ Custo de uma agenda dessas: uma fração de um evento metropolitano. Rádio loca
 
 Indicador para acompanhar: espontânea de Flávio no interior, hoje em 17%.
 
-Mais um dado para a logística: 30 cidades do painel têm menos de 20 mil eleitores e ainda assim recebem 360 entrevistas — 18% de toda a amostra nacional.</div>
+Mais um dado para a logística: 30 cidades do painel têm menos de 20 mil eleitores e ainda assim recebem 360 entrevistas, 18% de toda a amostra nacional.</div>
     <button class="copy-btn" type="button">Copiar texto</button>
   </div>
 </article>
@@ -915,17 +830,14 @@ Mais um dado para a logística: 30 cidades do painel têm menos de 20 mil eleito
 <article class="post">
   <div class="post-label">Post <b>28</b> · plano 2</div>
   <div class="card">
-    <div class="ex">
-      <span class="eyebrow">Plano de chão · movimento 02</span>
-      <p class="huge">1.006</p>
-      <p class="sub">eleitores sem partido. <b>Adversário deles é a não-escolha</b>: 53% não citam nome, 15% vão a branco e nulo.</p>
-      <div class="foot"><span>Discurso de sigla perde esse bloco para a abstenção</span><b>Arvor</b></div>
+    <div class="ex split">
+      <div class="col"><span class="eyebrow">Plano de chão · movimento 02</span><p class="huge">1.006</p><p class="sub">eleitores sem partido. <b>O adversário deles é a não-escolha</b>, não o outro candidato.</p></div><div class="viz" style="width:42%"><div class="dots"><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span></div><div class="mini"><div class="row2"><span class="lab">Não citam nenhum nome<b>53%</b></span><span class="trk"><i style="width:53%;background:#8a8578"></i></span></div><div class="row2"><span class="lab">Vão a branco ou nulo<b>15%</b></span><span class="trk"><i style="width:15%;background:#f0a930"></i></span></div><div class="row2"><span class="lab">Meta: branco/nulo na média nacional<b>9%</b></span><span class="trk"><i style="width:9%;background:#cfe63c"></i></span></div></div></div><div class="foot"><span>Discurso de sigla perde esse bloco para a abstenção</span><b>Arvor</b></div>
     </div>
-    <div class="copy"><span class="cc"></span>Movimento 2: falar com quem não tem partido — e não pedir que tenha.
+    <div class="copy"><span class="cc"></span>Movimento 2: falar com quem não tem partido, e não pedir que tenha.
 
 É o maior bloco da pesquisa: 1.006 pessoas, 50,2% da amostra. Dá 48×35 a Flávio, rejeita Lula por 55%, e ainda assim 53% dele não cita nenhum nome e 15% vai a branco ou nulo.
 
-Traduzindo em decisão de campanha: nesse bloco, cada minuto gasto em disputa ideológica de sigla é minuto perdido. O que converte é problema concreto e local, nome e número fáceis de memorizar, e um adversário nomeado — que já é rejeitado por mais da metade deles.
+Traduzindo em decisão de campanha: nesse bloco, cada minuto gasto em disputa ideológica de sigla é minuto perdido. O que converte é problema concreto e local, nome e número fáceis de memorizar, e um adversário nomeado, que já é rejeitado por mais da metade deles.
 
 Três erros clássicos a evitar aqui: falar de partido, falar para quem já converteu, e tratar rejeição a Lula como voto conquistado. Rejeição a Lula, nesse grupo, muitas vezes termina em nulo.
 
@@ -939,14 +851,8 @@ Um detalhe de sobreposição que ajuda: boa parte desse bloco mora justamente no
 <article class="post">
   <div class="post-label">Post <b>29</b> · plano 3</div>
   <div class="card">
-    <div class="ex">
-      <span class="eyebrow">Plano de chão · movimento 03</span>
-      <div class="grid2">
-        <div class="box"><b>17%</b><span>citam Flávio espontaneamente, sem cartão de nomes</span></div>
-        <div class="box a"><b>32%</b><span>votam em Flávio quando a lista é mostrada</span></div>
-      </div>
-      <p class="sub">Quinze pontos que só existem <b>quando o entrevistador mostra o cartão</b>.</p>
-      <div class="foot"><span>Lembrança espontânea é função de presença e repetição</span><b>Arvor</b></div>
+    <div class="ex split">
+      <div class="col"><span class="eyebrow">Plano de chão · movimento 03</span><p class="huge">15 pontos</p><p class="sub">separam citar e escolher. Flávio é lembrado por 17% e votado por 32%. <b>O resto depende do cartão.</b></p></div><div class="viz" style="width:46%"><div class="chartbox"><svg viewBox="0 0 440 170"><rect x="0" y="30" width="93" height="34" rx="3" fill="#8a8578"/><text class="cx-val" x="101" y="53">17% espontânea</text><rect x="0" y="96" width="176" height="34" rx="3" fill="#cfe63c"/><text class="cx-val" x="184" y="119">32% estimulada</text><path d="M93,47 L176,113" stroke="#cfe63c" stroke-width="2" stroke-dasharray="4 4"/><text class="cx-lab cx-acid" x="0" y="160">o buraco que só a presença física fecha</text></svg></div></div><div class="foot"><span>45% das mulheres e 46% dos jovens não citam nenhum nome</span><b>Arvor</b></div>
     </div>
     <div class="copy"><span class="cc"></span>Movimento 3: fechar o buraco entre lembrar e escolher.
 
@@ -954,7 +860,7 @@ Na espontânea nacional, Flávio é citado por 17%. Na estimulada, faz 32%. São
 
 No caso de Lula: 30% espontâneo para 40% estimulado. Dez pontos de diferença.
 
-Isso é um diagnóstico de marca, não de posicionamento. Quem só existe quando lembrado por terceiros tem voto de baixa densidade — e voto de baixa densidade é o primeiro a evaporar em semana ruim.
+Isso é um diagnóstico de marca, não de posicionamento. Quem só existe quando lembrado por terceiros tem voto de baixa densidade, e voto de baixa densidade é o primeiro a evaporar em semana ruim.
 
 O remédio não é mais anúncio: é mais presença física, mais repetição local, mais rosto associado a lugar. Quem é citado sem cartão é quem esteve na cidade.
 
@@ -968,19 +874,16 @@ E há um teste simples de sinceridade interna: se a campanha não mede espontân
 <article class="post">
   <div class="post-label">Post <b>30</b> · plano 4</div>
   <div class="card">
-    <div class="ex">
-      <span class="eyebrow">Plano de chão · movimento 04</span>
-      <p class="huge">1,44</p>
-      <p class="sub">é o efeito de desenho que bastaria para o intervalo do 48×43 <b>tocar o zero</b>. O instituto não publica esse número.</p>
-      <div class="foot"><span>Margem da diferença sob AAS: ±4,17 pontos</span><b>Arvor</b></div>
+    <div class="ex split">
+      <div class="col"><span class="eyebrow">Plano de chão · movimento 04</span><p class="huge">1,44</p><p class="sub">é o efeito de desenho que basta para o intervalo do 48×43 <b>tocar o zero</b>. O instituto não publica esse número.</p></div><div class="viz" style="width:46%"><div class="mini"><div class="row2"><span class="lab">Deff que zera o 2º turno<b>1,44</b></span><span class="trk"><i style="width:22%;background:#e0483a"></i></span></div><div class="row2 dim"><span class="lab">Deff que zera o 1º turno<b>4,68</b></span><span class="trk"><i style="width:71%;background:#8a8578"></i></span></div><div class="row2"><span class="lab">Correlação intraclasse equivalente<b>ρ 0,088</b></span><span class="trk"><i style="width:9%;background:#f0a930"></i></span></div></div><p class="sub">com blocos de seis entrevistas por setor, Kish dá deff = 1 + 5ρ</p></div><div class="foot"><span>Margem da diferença sob AAS: ±4,17 pontos</span><b>Arvor</b></div>
     </div>
     <div class="copy"><span class="cc"></span>Movimento 4: brigar com a métrica, nunca com o número.
 
-Contestar “48×43” é perder — o número é fiel ao arquivo. O que é contestável, e verdadeiro, cabe em três frases:
+Contestar “48×43” é perder, porque o número é fiel ao arquivo. O que é contestável, e verdadeiro, cabe em três frases:
 
 1. A margem de ±2 divulgada é de uma proporção isolada. A margem da diferença entre os dois candidatos é ±4,17 pontos, e ninguém publica isso.
 
-2. O efeito de desenho não é divulgado. Bastaria 1,44 para o intervalo da diferença incluir zero — e, como a coleta é feita em blocos de seis entrevistas por setor, pela fórmula de Kish isso equivale a uma correlação intraclasse de apenas 0,088 entre vizinhos do mesmo setor censitário.
+2. O efeito de desenho não é divulgado. Bastaria 1,44 para o intervalo da diferença incluir zero. E, como a coleta é feita em blocos de seis entrevistas por setor, pela fórmula de Kish isso equivale a uma correlação intraclasse de apenas 0,088 entre vizinhos do mesmo setor censitário.
 
 3. O recorte por natureza do município, que está na página 32, mostra 45×45 no interior.
 
@@ -996,15 +899,8 @@ Para referência: no primeiro turno seria preciso deff de 4,68 para os oito pont
 <article class="post">
   <div class="post-label">Post <b>31</b> · plano 5</div>
   <div class="card">
-    <div class="ex">
-      <span class="eyebrow">Plano de chão · movimento 05</span>
-      <div class="rows">
-        <div class="row"><span>Campo no relatório × no registro</span><b>22–23/07 × 22–24/07</b></div>
-        <div class="row"><span>Valor no registro × na nota fiscal</span><b>R$ 307.541,60 × R$ 307.641,60</b></div>
-        <div class="row"><span>Setor duplicado em Caapiranga/AM</span><b>130083905000015</b></div>
-      </div>
-      <p class="sub">Três achados documentais. <b>Nenhum é escândalo. Juntos, são cadeia de custódia.</b></p>
-      <div class="foot"><span>Acesso: arts. 13 e 34 da Res. TSE 23.600</span><b>Arvor</b></div>
+    <div class="ex split">
+      <div class="bg" style="background-image:url('img/atlas_072026/web/congresso.jpg');background-position:center 45%"></div><div class="veil"></div><span class="credit">foto: Wagner Tamanaha · CC BY-SA 2.0</span><div class="col"><span class="eyebrow">Plano de chão · movimento 05</span><p class="huge">3 achados</p><p class="sub">documentais maduros nesta rodada. <b>Nenhum é escândalo. Juntos, são cadeia de custódia.</b></p></div><div class="viz" style="width:42%"><div class="mini"><div class="row2"><span class="lab">Campo: relatório × registro<b>1 dia</b></span><span class="trk"><i style="width:33%;background:#f0a930"></i></span></div><div class="row2"><span class="lab">Valor: registro × nota fiscal<b>R$ 100</b></span><span class="trk"><i style="width:20%;background:#f0a930"></i></span></div><div class="row2"><span class="lab">Setor duplicado em Caapiranga<b>1</b></span><span class="trk"><i style="width:12%;background:#e0483a"></i></span></div></div><p class="sub">acesso pelos arts. 13 e 34 da Res. TSE 23.600</p></div><div class="foot"><span>Pedir deff, n efetivo, CV dos pesos e taxa de recusa</span><b>Arvor</b></div>
     </div>
     <div class="copy"><span class="cc"></span>Movimento 5: usar o direito de acesso em vez de reclamar do resultado.
 
@@ -1014,13 +910,13 @@ Três alvos documentais já estão maduros nesta rodada:
 
 1. O relatório e o anexo dizem campo em 22 e 23/07. O registro e a declaração da estatística dizem 22 a 24/07. Um dia de diferença.
 
-2. Registro e declaração trazem R$ 307.541,60. A nota fiscal traz R$ 307.641,60. Cem reais, 0,033% — não é escândalo, é teste de consistência.
+2. Registro e declaração trazem R$ 307.541,60. A nota fiscal traz R$ 307.641,60. Cem reais, 0,033%. Não é escândalo, é teste de consistência.
 
 3. O setor 130083905000015, em Caapiranga (AM), aparece duas vezes no anexo, com dois bairros diferentes.
 
 E, no mesmo pedido: efeito de desenho, n efetivo, coeficiente de variação dos pesos, taxa de abordagem e taxa de recusa.
 
-Prazo importa: o pedido de acesso tem muito mais força protocolado logo após cada registro, com a rodada ainda quente, do que semanas depois da manchete já consumida.</div>
+Prazo importa: o pedido tem muito mais força protocolado logo após cada registro, com a rodada ainda quente, do que semanas depois da manchete já consumida.</div>
     <button class="copy-btn" type="button">Copiar texto</button>
   </div>
 </article>
@@ -1029,23 +925,15 @@ Prazo importa: o pedido de acesso tem muito mais força protocolado logo após c
   <div class="post-label">Post <b>32</b> · o que não virou manchete</div>
   <div class="card">
     <div class="ex">
-      <span class="eyebrow">O que estava publicado e o que foi noticiado</span>
-      <div class="rows">
-        <div class="row"><span>“Lula 48%, Flávio 43%”</span><b>publicado</b></div>
-        <div class="row"><span>“Inferno astral de Flávio”</span><b>publicado</b></div>
-        <div class="row"><span>“Para 52%, Trump quer ajudar Flávio”</span><b>publicado</b></div>
-        <div class="row dim"><span>Interior 45×45, com n=1.217</span><b style="color:var(--lula)">não publicado</b></div>
-      </div>
-      <p class="sub">O dado estava nas 33 páginas. <b>Não era segredo. Era só desinteresse.</b></p>
-      <div class="foot"><span>Cotejo manchete × relatório</span><b>Arvor</b></div>
+      <span class="eyebrow">O que estava publicado e o que foi noticiado</span><div class="quote">“Datafolha 2º turno: Lula tem 48%, e Flávio Bolsonaro, 43%”<cite>G1 · 24/07 · publicado</cite></div><div class="quote" style="border-left-color:#e0483a">“Inferno astral de Flávio mantém vantagem de Lula”<cite>Folha · 24/07 · publicado</cite></div><div class="quote" style="border-left-color:#8a8578;opacity:.55">Interior 45×45, com base de 1.217 entrevistas<cite>página 32 do relatório · não publicado</cite></div><div class="foot"><span>O dado estava nas 33 páginas. Não era segredo</span><b>Arvor</b></div>
     </div>
     <div class="copy"><span class="cc"></span>Um cotejo final, e sem teoria da conspiração.
 
-Do relatório de 33 páginas saíram manchetes sobre o placar nacional, sobre a rejeição, sobre “inferno astral” e sobre os 52% que veem Trump ajudando Flávio — este último, aliás, medido depois de o entrevistado ouvir a acusação de Lula dentro do próprio enunciado.
+Do relatório de 33 páginas saíram manchetes sobre o placar nacional, sobre a rejeição, sobre “inferno astral” e sobre os 52% que veem Trump ajudando Flávio. Este último, aliás, medido depois de o entrevistado ouvir a acusação de Lula dentro do próprio enunciado.
 
 O que não saiu em manchete nenhuma: capital e região metropolitana 52×39, interior 45×45, com base de 1.217 entrevistas.
 
-Não estou afirmando intenção editorial. Estou afirmando um fato verificável: o dado que muda a leitura da eleição estava publicado, com base declarada, na página 32 — e não foi noticiado, enquanto uma interpretação causal sem respaldo na série virou análise.
+Não estou afirmando intenção editorial. Estou afirmando um fato verificável: o dado que muda a leitura da eleição estava publicado, com base declarada, na página 32, e não foi noticiado, enquanto uma interpretação causal sem respaldo na série virou análise.
 
 Você não precisa acreditar em mim. O PDF é público, o registro é BR-01166/2026, e a página é a 32.
 
@@ -1058,14 +946,11 @@ E o cotejo é reprodutível: qualquer pessoa com o PDF, o número do registro e 
   <div class="post-label">Post <b>33</b> · veredito</div>
   <div class="card">
     <div class="ex">
-      <span class="eyebrow">Veredito calibrado</span>
-      <p class="huge">opaco ≠<br>fraude</p>
-      <p class="sub">Há inconsistências documentais e transparência insuficiente. <b>Não há prova de fabricação nem de escolha enviesada de cidades</b> — testamos, e a hipótese caiu.</p>
-      <div class="foot"><span>Dossiê completo, contas e dados abertos</span><b>brasil.arvor.co/datafolha_072026.html</b></div>
+      <div class="bg" style="background-image:url('img/datafolha_072026/fotos/fluxo_25demarco.jpg');background-position:center 30%"></div><div class="veil"></div><span class="credit">foto: Otávio Nogueira · CC BY 2.0</span><span class="eyebrow">Veredito calibrado</span><p class="huge">opaco ≠<br>fraude</p><p class="sub">Há inconsistências e transparência insuficiente. <b>Não há prova de fabricação nem de escolha enviesada de cidades.</b></p><div class="mini"><div class="row2"><span class="lab">Testado e derrubado: painel enviesado<b>50,88% × 49,10%</b></span><span class="trk"><i style="width:100%;background:#cfe63c"></i></span></div><div class="row2"><span class="lab">Sem resposta: deff, pesos, taxa de recusa<b>não publicados</b></span><span class="trk"><i style="width:100%;background:#e0483a"></i></span></div></div><div class="foot"><span>Dossiê completo, contas e dados abertos</span><b>brasil.arvor.co/datafolha_072026.html</b></div>
     </div>
     <div class="copy"><span class="cc"></span>Fecho como sempre fecho: com o veredito que a evidência sustenta, e não com o que daria mais engajamento.
 
-O Datafolha não fabricou resultado. Não escolheu cidades para deprimir a direita — o painel dele votou 50,88% em Bolsonaro em 2022, contra 49,10% do Brasil. Testei a suspeita e ela caiu.
+O Datafolha não fabricou resultado. Não escolheu cidades para deprimir a direita: o painel dele votou 50,88% em Bolsonaro em 2022, contra 49,10% do Brasil. Testei a suspeita e ela caiu.
 
 O que existe é: um painel municipal fixo e não declarado; cotas idênticas há três rodadas; duas UFs que nunca entram; efeito de desenho, pesos e taxa de recusa não publicados; um dia de divergência no campo; cem reais de diferença na nota; um setor duplicado; e um mapa amostral que é público quatro dias antes de o campo começar.
 
@@ -1073,7 +958,7 @@ Existe um empate de 45×45 no interior, em 61% da amostra, que ninguém noticiou
 
 Prova de opacidade não é prova de fraude. Mas quem mede o país deveria abrir a régua.
 
-Se o instituto responder, publico a resposta inteira — inclusive se ela me contrariar.
+Se o instituto responder, publico a resposta inteira, inclusive se ela me contrariar.
 
 Dossiê completo, com as contas e os dados: brasil.arvor.co/datafolha_072026.html</div>
     <button class="copy-btn" type="button">Copiar texto</button>

@@ -207,6 +207,13 @@ Toda pesquisa de primeiro turno auditada recebe o diagrama de transferência est
 - Reportar sempre a razão de consolidação (ganho de cada finalista fora da própria base) e compará-la com a onda anterior. Datafolha 07/2026: Flávio +10,1 × Lula +6,8, razão 1,48:1, contra 2:1 em junho.
 - A leitura é agregada. Nunca descrever o diagrama como o percurso de eleitores individuais, e nunca somar eixos de recortes que se sobrepõem.
 
+## Regras de escrita (valem para todo texto público da casa)
+- **Travessão é proibido.** O caractere `—` não entra em dossiê, thread, card, home, minuta ou legenda. Não trocar por `–` nem por ` - `: reescrever a frase com vírgula, dois-pontos, ponto e vírgula, parênteses ou ponto final. Aposto duplo entre travessões vira oração à parte. O hífen de palavra composta (`pós-estímulo`) e o `–` de intervalo numérico (`22–24/07`, `45–59 anos`) continuam válidos.
+- Verificar antes de publicar: `grep -c "—" docs/*.html` precisa devolver zero.
+- Frase curta, verbo forte, zero adjetivo decorativo. O número carrega a força; a indignação, não.
+- Abrir cada bloco pela informação mais forte, sem preâmbulo. Cortar muleta (`é importante notar`, `vale dizer`, `ou seja` repetido).
+- Nada de hashtag, emoji ou linguagem de engajamento em thread.
+
 ## Editorial Position & Evidence Discipline
 - Internal collaboration may be frank, politically explicit and use strong language. Public work must remain fully professional, precise, reproducible and legally defensible.
 - The project owner's political framing is that the Lula government represents a communist/authoritarian project, that censorship and institutional overreach are central risks, and that Lula's relationship with Daniel Ortega and the Nicaraguan regime deserves sustained scrutiny. Preserve this as the author's editorial position and research agenda, not as an automatically established empirical fact.
