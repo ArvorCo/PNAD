@@ -197,7 +197,9 @@ TEMPLATE = """<!doctype html>
   <title>A proposta: duas minutas para tornar a pesquisa eleitoral auditável · Arvor</title>
   <meta name="description" content="Minuta de Resolução do TSE e Projeto de Lei que alteram a Resolução 23.600/2019 e a Lei 9.504/1997 para que pesos, bases, relatório completo e relação de municípios de uma pesquisa eleitoral sejam públicos antes da manchete — e não depois da eleição. Texto livre para uso.">
   <link rel="canonical" href="https://brasil.arvor.co/proposta.html">
-  <link rel="icon" href="img/arvor_logo.png">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="img/favicon-180.png">
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="Arvor Intelligence">
   <meta property="og:locale" content="pt_BR">
