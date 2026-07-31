@@ -3,10 +3,18 @@
   "checkpoint_id": "f199ea218921",
   "strategy": "manual-commit",
   "branch": "main",
-  "checkpoints_count": 2,
+  "checkpoints_count": 5,
   "files_touched": [
     "AGENTS.md",
+    "analysis/datafolha_072026/NOTES.md",
+    "analysis/datafolha_072026/blocos/bloco_blocos1t.html",
+    "analysis/datafolha_072026/blocos/bloco_cenarios.html",
+    "analysis/datafolha_072026/blocos/bloco_rejeicao.html",
+    "analysis/datafolha_072026/blocos/bloco_resiliencia.html",
+    "analysis/datafolha_072026/blocos/bloco_sankey.html",
     "analysis/datafolha_072026/campanha.json",
+    "analysis/datafolha_072026/dados.json",
+    "analysis/datafolha_072026/post_x.md",
     "docs/_og_atlas_072026.html",
     "docs/assets/atlas_072026.css",
     "docs/assets/atlas_072026_renda.json",
@@ -32,6 +40,8 @@
     "docs/img/atlas_072026/web/renan.png",
     "docs/img/atlas_072026/web/urna-fila.jpg",
     "docs/img/atlas_072026/web/urna-maquina.jpg",
+    "docs/img/datafolha_072026/blocos_1turno.png",
+    "docs/img/datafolha_072026/cenarios_2turno.png",
     "docs/img/datafolha_072026/fotos/feira_caruaru.jpg",
     "docs/img/datafolha_072026/fotos/flavio_bolsonaro.jpg",
     "docs/img/datafolha_072026/fotos/fluxo_25demarco.jpg",
@@ -40,11 +50,15 @@
     "docs/img/datafolha_072026/fotos/rodoviaria_fabriciano.jpg",
     "docs/img/datafolha_072026/og_dossie.jpg",
     "docs/img/datafolha_072026/og_thread.jpg",
+    "docs/img/datafolha_072026/rejeicao_teto.png",
+    "docs/img/datafolha_072026/resiliencia_series.png",
+    "docs/img/datafolha_072026/sankey_lula_flavio.png",
     "docs/index.html",
     "scripts/atlas-072026-audit.py",
     "scripts/atlas-072026-renda.py",
     "scripts/datafolha-072026-campanha.py",
-    "scripts/datafolha-072026-cidades.py"
+    "scripts/datafolha-072026-cidades.py",
+    "scripts/datafolha-072026-graficos.py"
   ],
   "sessions": [
     {
@@ -53,13 +67,20 @@
       "context": "/f1/99ea218921/0/context.md",
       "content_hash": "/f1/99ea218921/0/content_hash.txt",
       "prompt": "/f1/99ea218921/0/prompt.txt"
+    },
+    {
+      "metadata": "/f1/99ea218921/1/metadata.json",
+      "transcript": "/f1/99ea218921/1/full.jsonl",
+      "context": "/f1/99ea218921/1/context.md",
+      "content_hash": "/f1/99ea218921/1/content_hash.txt",
+      "prompt": "/f1/99ea218921/1/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 674,
-    "cache_creation_tokens": 860219,
-    "cache_read_tokens": 64591689,
-    "output_tokens": 238090,
-    "api_call_count": 192
+    "input_tokens": 753,
+    "cache_creation_tokens": 1188378,
+    "cache_read_tokens": 71083989,
+    "output_tokens": 308517,
+    "api_call_count": 235
   }
 }
