@@ -3,7 +3,7 @@
   "checkpoint_id": "f199ea218921",
   "strategy": "manual-commit",
   "branch": "main",
-  "checkpoints_count": 5,
+  "checkpoints_count": 10,
   "files_touched": [
     "AGENTS.md",
     "analysis/datafolha_072026/NOTES.md",
@@ -15,17 +15,24 @@
     "analysis/datafolha_072026/campanha.json",
     "analysis/datafolha_072026/dados.json",
     "analysis/datafolha_072026/post_x.md",
+    "analysis/datafolha_072026/renda.json",
     "docs/_og_atlas_072026.html",
+    "docs/assets/_preview.html",
     "docs/assets/atlas_072026.css",
     "docs/assets/atlas_072026_renda.json",
+    "docs/assets/datafolha_072026.css",
     "docs/assets/datafolha_072026.js",
     "docs/assets/datafolha_072026_campanha.json",
     "docs/assets/datafolha_072026_creditos.json",
+    "docs/assets/datafolha_072026_municipios.js",
     "docs/assets/datafolha_072026_municipios.json",
+    "docs/assets/datafolha_072026_renda.js",
+    "docs/assets/datafolha_072026_renda.json",
     "docs/assets/datafolha_072026_territorio.json",
     "docs/assets/og_atlas_072026.html",
     "docs/atlas_072026.html",
     "docs/atlas_072026_thread.html",
+    "docs/datafolha_072026.html",
     "docs/datafolha_072026_thread.html",
     "docs/img/atlas_072026/atlas_072026_og.png",
     "docs/img/atlas_072026/report/page-16.jpg",
@@ -58,7 +65,8 @@
     "scripts/atlas-072026-renda.py",
     "scripts/datafolha-072026-campanha.py",
     "scripts/datafolha-072026-cidades.py",
-    "scripts/datafolha-072026-graficos.py"
+    "scripts/datafolha-072026-graficos.py",
+    "scripts/datafolha-072026-renda.py"
   ],
   "sessions": [
     {
@@ -74,13 +82,20 @@
       "context": "/f1/99ea218921/1/context.md",
       "content_hash": "/f1/99ea218921/1/content_hash.txt",
       "prompt": "/f1/99ea218921/1/prompt.txt"
+    },
+    {
+      "metadata": "/f1/99ea218921/2/metadata.json",
+      "transcript": "/f1/99ea218921/2/full.jsonl",
+      "context": "/f1/99ea218921/2/context.md",
+      "content_hash": "/f1/99ea218921/2/content_hash.txt",
+      "prompt": "/f1/99ea218921/2/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 753,
-    "cache_creation_tokens": 1188378,
-    "cache_read_tokens": 71083989,
-    "output_tokens": 308517,
-    "api_call_count": 235
+    "input_tokens": 1332,
+    "cache_creation_tokens": 2735334,
+    "cache_read_tokens": 195471852,
+    "output_tokens": 614410,
+    "api_call_count": 541
   }
 }
