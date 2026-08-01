@@ -429,39 +429,81 @@ Um dado de contexto que quase ninguém lembra: em fevereiro deste ano, na própr
   <div class="post-label">Post 6/31 · a lacuna de conversão</div>
   <div class="card">
     <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">6/31</div></div>
-    <div class="card-body single">
+    <div class="card-body wide-l">
       <div>
         <span class="lead-tag g">a métrica mais acionável da pesquisa</span>
-        <h2>Há eleitorados que temem mais Lula e <em>votam nele assim mesmo.</em></h2>
-        <p class="t">A Atlas pergunta, em blocos separados, qual resultado causa mais medo e em quem a pessoa votaria. Cruzando os dois por recorte aparece o que chamei de <b>lacuna de conversão</b>: quanta vantagem emocional Flávio já tem e não transformou em voto.</p>
-        <p class="t" style="font-family:var(--mono);font-size:.92rem;background:rgba(176,125,16,.14);padding:10px 14px;border-radius:6px">lacuna = (medo de Lula − medo de Flávio) − (voto em Flávio − voto em Lula)</p>
-        <p class="t">Positiva significa: o recorte <b>já</b> teme mais o adversário, e mesmo assim não acompanha nas urnas. Onde isso acontece, o déficit não é de opinião. É de <b>confiança</b>.</p>
+        <h2>A vantagem que Flávio <em>já tem no medo</em>. E quanto dela não vira voto.</h2>
+        <p class="t">Em cada recorte, <b>quantos temem Lula menos quantos temem Flávio</b> é a vantagem emocional dele. E <b>quantos votam em Flávio menos quantos votam em Lula</b> é a vantagem eleitoral.</p>
+        <p class="t">A queda entre uma e outra é a <b>lacuna de conversão</b>. Onde a linha cruza o zero, o recorte teme mais Lula e vota em Lula assim mesmo.</p>
+      </div>
+      <div class="viz">
+        <svg viewBox="0 0 420 232" role="img" aria-label="Vantagem de Flávio no medo e no voto, por recorte: em todos ela cai, e em dois recortes cai abaixo de zero">
+          <g stroke="#d7cdbd" stroke-width="1"><line x1="90" y1="16" x2="90" y2="206"/><line x1="330" y1="16" x2="330" y2="206"/></g>
+          <rect x="90" y="144.6" width="240" height="61.4" fill="#d1332f" opacity=".07"/>
+          <line x1="84" y1="144.6" x2="336" y2="144.6" stroke="#8a8b93" stroke-width="1" stroke-dasharray="4 4"/>
+          <g font-family="Spline Sans Mono" font-size="9" fill="#5f5d57" text-anchor="middle">
+            <text x="90" y="222">VANTAGEM NO MEDO</text><text x="330" y="222">VANTAGEM NO VOTO</text>
+          </g>
+          <g stroke-width="2.6" fill="none">
+            <polyline points="90,23.0 330,63.2" stroke="#1666cf"/>
+            <polyline points="90,77.3 330,132.7" stroke="#1666cf"/>
+            <polyline points="90,120.2 330,152.6" stroke="#d1332f"/>
+            <polyline points="90,144.0 330,195.0" stroke="#d1332f"/>
+          </g>
+          <g font-family="Source Sans 3" font-weight="800" font-size="10.5">
+            <circle cx="90" cy="23.0" r="4" fill="#1666cf"/><circle cx="330" cy="63.2" r="4" fill="#1666cf"/>
+            <circle cx="90" cy="77.3" r="4" fill="#1666cf"/><circle cx="330" cy="132.7" r="4" fill="#1666cf"/>
+            <circle cx="90" cy="120.2" r="4" fill="#d1332f"/><circle cx="330" cy="152.6" r="4" fill="#d1332f"/>
+            <circle cx="90" cy="144.0" r="4" fill="#d1332f"/><circle cx="330" cy="195.0" r="4" fill="#d1332f"/>
+            <text x="82" y="20" text-anchor="end" fill="#2b3039">Evangélicos</text>
+            <text x="82" y="32" text-anchor="end" fill="#1666cf">+43,9</text>
+            <text x="82" y="74" text-anchor="end" fill="#2b3039">25 a 34 anos</text>
+            <text x="82" y="86" text-anchor="end" fill="#1666cf">+24,3</text>
+            <text x="82" y="117" text-anchor="end" fill="#2b3039">Fundamental</text>
+            <text x="82" y="129" text-anchor="end" fill="#1666cf">+8,8</text>
+            <text x="82" y="159" text-anchor="end" fill="#2b3039">Renda até R$ 2 mil</text>
+            <text x="82" y="171" text-anchor="end" fill="#8a8b93">+0,2</text>
+            <text x="338" y="67" fill="#1666cf">+29,4</text>
+            <text x="338" y="136" fill="#1666cf">+4,3</text>
+            <text x="338" y="156" fill="#d1332f">−2,9</text>
+            <text x="338" y="199" fill="#d1332f">−18,2</text>
+          </g>
+        </svg>
+        <p class="sub">A tracejada é o zero, e a faixa vermelha é o terreno abaixo dele. Toda linha desce; duas atravessam.</p>
       </div>
     </div>
     <div class="card-foot"><span>arvor intelligence · atlas 07/2026</span><span>p.38 (medo) cruzada com p.20 (voto)</span></div>
   </div>
-  <div class="copy"><span class="cc">~1120 chars</span>Agora a camada mais útil de todas, e a que nenhuma cobertura tocou.
+  <div class="copy"><span class="cc">~1290 chars</span>Agora a camada mais útil de todas, e a que nenhuma cobertura tocou.
 
 A Atlas faz duas perguntas em blocos separados do questionário:
 
 · qual resultado te causa mais medo, a eleição de Flávio ou a reeleição de Lula?
 · e em quem você votaria?
 
-Cruzei as duas, recorte por recorte. O que aparece eu chamei de LACUNA DE CONVERSÃO:
+Cruzei as duas, recorte por recorte. E medi duas distâncias:
 
-lacuna = (medo de Lula − medo de Flávio) − (voto em Flávio − voto em Lula)
+VANTAGEM NO MEDO = quantos temem Lula, menos quantos temem Flávio.
+VANTAGEM NO VOTO = quantos votam em Flávio, menos quantos votam em Lula.
 
-Traduzindo: quanto de vantagem emocional Flávio já tem e ainda não virou voto.
+A primeira é o quanto o eleitor já concorda que o adversário é o risco. A segunda é o quanto isso virou voto.
 
-Quando essa lacuna é grande, significa uma coisa muito específica, e muito operacional.
+A queda de uma para a outra eu chamei de LACUNA DE CONVERSÃO. E ela existe em todo recorte que olhei:
 
-Significa que o trabalho de convencer aquele eleitor de que o adversário é ruim JÁ ESTÁ FEITO. Ele já tem medo. Já concorda.
+Evangélicos: +43,9 no medo, +29,4 no voto.
+25 a 34 anos: +24,3 no medo, +4,3 no voto.
+Ensino fundamental: +8,8 no medo, e −2,9 no voto.
+Renda até R$2 mil: +0,2 no medo, e −18,2 no voto.
 
-O que falta é convencê-lo de que ESTE é confiável.
+Repare nos dois últimos. A linha atravessa o zero.
 
-Isso não é déficit de opinião. É déficit de confiança. E as duas coisas se resolvem com ferramentas completamente diferentes.
+Significa que esses eleitores temem MAIS a reeleição de Lula do que a eleição de Flávio, e votam em Lula assim mesmo.
 
-Os números do próximo post são, na minha leitura, o achado mais acionável do relatório inteiro.</div>
+Isso muda o tipo de trabalho que a campanha precisa fazer. Convencer aquele eleitor de que o adversário é um risco JÁ ESTÁ FEITO. Ele já concorda.
+
+O que falta é convencê-lo de que este é confiável. Não é déficit de opinião. É déficit de confiança, e as duas coisas se resolvem com ferramentas completamente diferentes.
+
+Os números completos vêm agora.</div>
   <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
 </section>
 
