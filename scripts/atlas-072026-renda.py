@@ -47,6 +47,8 @@ AGE_COL = "V2009__idade_na_data_de_referencia"
 WEIGHT_COL = "V1032__peso_com_calibracao"
 INCOME_COL = "VD5007__rend_habitual_domiciliar"
 MIN_AGE = 16
+# Cortes usados apenas para checar se a conclusão depende do universo escolhido.
+AGE_CUTS = (0, 16, 18, 25)
 
 # Alvo de deflação: último mês disponível na série IPCA do repositório.
 TARGET_MONTH = "202604"
@@ -173,6 +175,43 @@ def scan(path: Path, columns: dict[str, float]) -> dict[str, Any]:
     }
 
 
+def scan_age_cuts(path: Path, column: str, scale: float) -> dict[str, list[float]]:
+    """Repeat the band count under several minimum-age cuts, in one pass."""
+    totals = {cut: 0.0 for cut in AGE_CUTS}
+    bands = {cut: [0.0] * 5 for cut in AGE_CUTS}
+
+    with path.open(newline="", encoding="utf-8") as handle:
+        reader = csv.reader(handle)
+        header = next(reader)
+        income_at = header.index(column)
+        age_at = header.index(AGE_COL)
+        weight_at = header.index(WEIGHT_COL)
+
+        for row in reader:
+            try:
+                weight = float(row[weight_at])
+                age = int(row[age_at])
+            except ValueError:
+                continue
+            raw = row[income_at].strip()
+            if weight <= 0 or not raw:
+                continue
+            try:
+                index = band_of(float(raw) * scale)
+            except ValueError:
+                continue
+            for cut in AGE_CUTS:
+                if age >= cut:
+                    totals[cut] += weight
+                    bands[cut][index] += weight
+
+    return {
+        str(cut): [round(100 * cell / totals[cut], 1) for cell in bands[cut]]
+        for cut in AGE_CUTS
+        if totals[cut]
+    }
+
+
 def reweight(distribution: list[float]) -> dict[str, float]:
     """Post-stratify the first-round scenario on the income margin alone."""
     total = sum(distribution)
@@ -205,6 +244,33 @@ def build() -> dict[str, Any]:
             "universe_millions": result["universe_millions"],
             "rebase_factor_to_target": round(factor, 6),
             "adults_between_2700_and_3000_pct": result["pileup_pct_of_adults"],
+        }
+
+    sensitivity: dict[str, Any] = {}
+    latest = VINTAGES["pnadc_2025_v1"]
+    if latest["file"].exists():
+        shares_by_cut = scan_age_cuts(
+            latest["file"],
+            str(latest["deflated_col"]),
+            ipca_factor(str(latest["deflated_from"]), TARGET_MONTH),
+        )
+        sensitivity = {
+            "note": (
+                "PNADC 2025 a preços do mês-alvo, variando só o corte de idade. "
+                "A distância Lula–Flávio cresce em todos os cortes; o universo "
+                "escolhido (16+) é o mais conservador entre os elegíveis a voto."
+            ),
+            "by_minimum_age": {
+                cut: {
+                    "shares": shares,
+                    "first_round": reweight(shares),
+                    "lula_minus_flavio": round(
+                        reweight(shares)["Lula"] - reweight(shares)["Flávio Bolsonaro"],
+                        2,
+                    ),
+                }
+                for cut, shares in shares_by_cut.items()
+            },
         }
 
     scenarios = {
@@ -248,6 +314,7 @@ def build() -> dict[str, Any]:
             ),
         },
         "diagnostics": diagnostics,
+        "age_cut_sensitivity": sensitivity,
         "distributions": scenarios,
         "reweighted_first_round": toplines,
         "delta_vs_published": deltas,
@@ -269,6 +336,15 @@ def main() -> int:
     print("distribuição da renda familiar (pessoas 16+), em %:")
     for name, shares in audit["distributions"].items():
         print(f"  {name:<28} {shares}")
+    cuts = audit["age_cut_sensitivity"].get("by_minimum_age", {})
+    if cuts:
+        print("\nsensibilidade ao corte de idade (PNADC 2025 a preços do alvo):")
+        for cut, row in cuts.items():
+            label = "todas as idades" if cut == "0" else f"{cut} anos ou mais"
+            print(
+                f'  {label:<18} {row["shares"]} · '
+                f'gap {row["lula_minus_flavio"]:.2f}'
+            )
     print("\n1º turno reponderado só pela margem de renda:")
     for name, line in audit["reweighted_first_round"].items():
         gap = audit["lula_minus_flavio"][name]

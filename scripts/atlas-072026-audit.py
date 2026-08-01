@@ -132,6 +132,35 @@ GOVERNMENT_AREAS = {
     "Impostos / carga tributária": (45, 44),
 }
 
+# Cenário 1 da Atlas (p.18) x 1º turno do Datafolha 07/2026 (BR-01166/2026).
+# A comparação só é válida sobre votos válidos: a Atlas registra 1,6% de
+# branco/nulo + não sei contra 11% do Datafolha, e essa diferença de 9,4
+# pontos comprime mecanicamente todas as porcentagens de um dos dois.
+FIRST_ROUND_ATLAS = {
+    "Lula": 44.9,
+    "Flávio Bolsonaro": 35.8,
+    "Renan Santos": 7.8,
+    "Ronaldo Caiado": 3.1,
+    "Romeu Zema": 2.8,
+    "Samara Martins": 2.1,
+    "Augusto Cury": 1.6,
+    "Cabo Daciolo": 0.1,
+    "Hertz Dias": 0.1,
+    "Edmilson Costa": 0.1,
+}
+FIRST_ROUND_DATAFOLHA = {
+    "Lula": 40.0,
+    "Flávio Bolsonaro": 32.0,
+    "Ronaldo Caiado": 4.0,
+    "Romeu Zema": 3.0,
+    "Renan Santos": 3.0,
+    "Augusto Cury": 2.0,
+    "Samara Martins": 1.0,
+    "Cabo Daciolo": 1.0,
+    "Rui Costa Pimenta": 1.0,
+}
+NON_CHOICE = {"atlas": 1.6, "datafolha": 11.0}
+
 # Datafolha nacional de julho (BR-01166/2026): 331 pontos de fluxo, 2.004
 # entrevistas, 328 pontos com exatamente 6 entrevistas.
 DATAFOLHA_CLUSTER_SIZE = 6
@@ -254,6 +283,51 @@ def fear_to_vote_conversion() -> dict[str, object]:
     }
 
 
+def intensity_premium() -> dict[str, object]:
+    """Compare both July polls on valid votes and rank the online premium.
+
+    A razão Atlas/Datafolha sobre votos válidos isola quanto cada candidatura
+    é ampliada (ou reduzida) por um painel digital autosselecionado em relação
+    a uma coleta presencial em ponto de fluxo. Não identifica a causa: mede a
+    distância entre os dois desenhos, candidato a candidato.
+    """
+    atlas_total = sum(FIRST_ROUND_ATLAS.values())
+    datafolha_total = sum(FIRST_ROUND_DATAFOLHA.values())
+    rows = []
+    for name in FIRST_ROUND_ATLAS:
+        if name not in FIRST_ROUND_DATAFOLHA:
+            continue
+        atlas_valid = 100 * FIRST_ROUND_ATLAS[name] / atlas_total
+        datafolha_valid = 100 * FIRST_ROUND_DATAFOLHA[name] / datafolha_total
+        rows.append(
+            {
+                "candidate": name,
+                "atlas_raw_pct": FIRST_ROUND_ATLAS[name],
+                "datafolha_raw_pct": FIRST_ROUND_DATAFOLHA[name],
+                "atlas_valid_pct": round(atlas_valid, 2),
+                "datafolha_valid_pct": round(datafolha_valid, 2),
+                "ratio": round(atlas_valid / datafolha_valid, 2),
+            }
+        )
+    rows.sort(key=lambda row: row["ratio"], reverse=True)
+    return {
+        "valid_vote_base": {
+            "atlas": round(atlas_total, 1),
+            "datafolha": round(datafolha_total, 1),
+        },
+        "non_choice_pct": NON_CHOICE,
+        "rows": rows,
+        "reading": (
+            "Sobre votos válidos, os dois institutos praticamente coincidem "
+            "nos dois grandes (razão 0,99 em Lula e em Flávio) e divergem só "
+            "nas candidaturas de movimento — Missão e UP para cima, "
+            "governadores e Cury para baixo. O padrão é simétrico entre "
+            "direita e esquerda, o que aponta para intensidade militante "
+            "online, não para viés partidário do instituto."
+        ),
+    }
+
+
 def datafolha_cluster_math() -> dict[str, object]:
     """Translate the Datafolha deff thresholds into intracluster correlation."""
     return {
@@ -347,6 +421,7 @@ def build_audit() -> dict:
             area: {"lula": lula, "flavio": flavio, "gap_pp": lula - flavio}
             for area, (lula, flavio) in GOVERNMENT_AREAS.items()
         },
+        "intensity_premium": intensity_premium(),
         "datafolha_cluster_math": datafolha_cluster_math(),
         "cross_poll_check": {
             "atlas_renan_pct": 7.8,
@@ -383,6 +458,12 @@ def main() -> int:
     print(json.dumps(audit["sampling_math"], ensure_ascii=False))
     for row in audit["succession_ledger"]["largest_losses"]:
         print(f'  {row["segment"]:<32} {row["delta_pp"]:+.1f} pp')
+    print("\nprêmio de intensidade (Atlas/Datafolha sobre votos válidos):")
+    for row in audit["intensity_premium"]["rows"]:
+        print(
+            f'  {row["candidate"]:<20} {row["atlas_valid_pct"]:>6.2f} x '
+            f'{row["datafolha_valid_pct"]:>5.2f}  =  {row["ratio"]:.2f}x'
+        )
     return 0
 
 
