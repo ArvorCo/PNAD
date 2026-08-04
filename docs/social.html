@@ -4,251 +4,95 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex">
-<title>Social cards — Arvor Intelligence</title>
+<title>Social cards · Arvor Intelligence</title>
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="img/favicon-180.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,500&family=IBM+Plex+Mono:wght@400;600;700&family=IBM+Plex+Sans+Condensed:wght@400;600;700&family=Source+Sans+3:wght@400;600;700;800;900&family=Spline+Sans+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;600&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg:#0a0c12; --bg2:#0e1119;
-  --ink:#f4efe3; --ink2:#e7e1d3; --muted:#9199ad; --faint:#666e82;
-  --lula:#e5473f; --lula-l:#f2857f;
-  --flavio:#3f84f2; --flavio-l:#8fb6f7;
-  --gold:#e3a92c;
-  --green:#33c08a;
-  --line:rgba(244,239,227,.14); --line2:rgba(244,239,227,.30);
-  --serif:"Fraunces",Georgia,serif;
-  --sans:"Source Sans 3",ui-sans-serif,system-ui,sans-serif;
-  --mono:"Spline Sans Mono",ui-monospace,monospace;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:#15181f;font-family:var(--sans);padding:28px;display:flex;flex-direction:column;gap:28px;align-items:flex-start}
-.hint{color:#9199ad;font-family:var(--mono);font-size:13px}
-
-/* card 1200x630 exatos — renderizar com viewport 1200,630 e ?card=N */
-.card{
-  width:1200px;height:630px;position:relative;overflow:hidden;
-  background:
-    radial-gradient(1100px 620px at 78% 12%, rgba(63,132,242,.16), transparent 62%),
-    radial-gradient(760px 520px at 6% 96%, rgba(229,71,63,.14), transparent 62%),
-    linear-gradient(160deg,var(--bg2) 0%, var(--bg) 58%, #070910 100%);
-  color:var(--ink);
-}
-/* grão sutil, CSS puro */
-.card::after{
-  content:"";position:absolute;inset:0;pointer-events:none;opacity:.55;
-  background-image:
-    repeating-linear-gradient(0deg, rgba(255,255,255,.014) 0 1px, transparent 1px 3px),
-    repeating-linear-gradient(90deg, rgba(255,255,255,.010) 0 1px, transparent 1px 3px);
-}
-.ring{position:absolute;border:1px solid rgba(244,239,227,.07);border-radius:50%}
-.pad{position:absolute;inset:0;padding:54px 62px;display:flex;flex-direction:column;z-index:3}
-.eyebrow{font-family:var(--mono);font-weight:700;font-size:19px;letter-spacing:.22em;text-transform:uppercase;color:var(--flavio-l)}
-.eyebrow.g{color:var(--gold)}
-.foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:20px;
-  border-top:1px solid var(--line);padding-top:18px;font-family:var(--mono);font-size:18px;color:var(--faint)}
-.foot b{color:var(--ink2);letter-spacing:.04em}
-.brandline{display:flex;align-items:center;gap:12px}
-.brandline img{width:34px;height:34px;object-fit:contain}
-
-/* ---------- card do dossiê Nexus ---------- */
-.title{font-family:var(--serif);font-weight:900;line-height:1.0;letter-spacing:-.02em;color:var(--ink)}
-.score{display:flex;align-items:baseline;gap:6px;font-family:var(--sans);font-weight:900;letter-spacing:-.04em;line-height:.86}
-.score .a{font-size:150px;color:var(--lula-l)}
-.score .x{font-size:78px;color:var(--faint);padding:0 6px}
-.score .b{font-size:150px;color:var(--flavio-l)}
-.scorelab{font-family:var(--mono);font-size:21px;color:var(--muted);margin-top:8px}
-.stamp{display:inline-block;font-family:var(--mono);font-weight:700;font-size:19px;letter-spacing:.05em;
-  color:var(--lula-l);border:2.5px solid var(--lula);border-radius:7px;padding:9px 16px;transform:rotate(-3deg);
-  text-transform:uppercase;background:rgba(229,71,63,.07)}
-.kicker{font-size:26px;line-height:1.4;color:var(--ink2);max-width:600px}
-.kicker b{color:#fff}
-
-/* ---------- card do hub ---------- */
-.hub-title{font-family:var(--serif);font-weight:900;font-size:74px;line-height:.98;letter-spacing:-.025em}
-.hub-title span{color:var(--gold)}
-.hub-sub{font-size:25px;line-height:1.4;color:var(--ink2);max-width:640px;margin-top:18px}
-.stats{display:flex;gap:14px;margin-top:26px;flex-wrap:wrap}
-.stat{border:1px solid var(--line2);border-radius:12px;padding:14px 22px;background:rgba(244,239,227,.03)}
-.stat b{display:block;font-family:var(--sans);font-weight:900;font-size:44px;line-height:1;letter-spacing:-.03em;color:var(--gold)}
-.stat span{display:block;margin-top:6px;font-family:var(--mono);font-size:15px;color:var(--muted);letter-spacing:.04em}
-.rulers{margin-top:20px;font-family:var(--mono);font-size:18px;color:var(--muted)}
-.rulers b{color:var(--green)}
-
-/* ---------- cards do dossiê Datafolha julho/2026 ---------- */
-.df26{
-  --acid:#cfe63c; --cyan:#45c9c2; --dfink:#f4f2ea; --dfink2:#ddd8ca; --dffaint:#7d7a6d;
-  --dfsans:"IBM Plex Sans Condensed",Arial,sans-serif; --dfmono:"IBM Plex Mono",ui-monospace,monospace;
-  background:#0c0d0b;font-family:var(--dfsans);color:var(--dfink)
-}
-.df26 .shot{position:absolute;inset:0;background-image:url("img/datafolha_072026/fotos/fluxo_25demarco.jpg");
-  background-size:cover;background-position:center 40%;filter:grayscale(1) contrast(1.25) brightness(.36)}
-.df26 .veil{position:absolute;inset:0;background:
-  radial-gradient(78% 70% at 8% 6%, rgba(207,230,60,.16), transparent 58%),
-  radial-gradient(70% 70% at 96% 8%, rgba(69,201,194,.14), transparent 58%),
-  linear-gradient(105deg, rgba(12,13,11,.94) 34%, rgba(12,13,11,.70) 74%, rgba(12,13,11,.55) 100%)}
-.df26 .pad{padding:44px 56px}
-.df26 .eyebrow{font-family:var(--dfmono);font-weight:700;font-size:18px;letter-spacing:.2em;color:var(--acid)}
-.df26 .dftitle{font-family:var(--serif);font-weight:900;font-size:67px;line-height:.92;letter-spacing:-.032em;margin-top:16px}
-.df26 .dftitle em{display:block;font-style:italic;font-weight:500;color:var(--acid)}
-.df26 .dfsub{font-size:23px;line-height:1.34;color:var(--dfink2);max-width:640px;margin-top:18px}
-.df26 .dfsub b{color:#fff}
-.df26 .chips{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
-.df26 .chip{border:1px solid rgba(244,242,234,.3);border-radius:999px;padding:9px 16px;
-  font-family:var(--dfmono);font-size:17px;color:var(--dfink2);background:rgba(10,11,9,.55);white-space:nowrap}
-.df26 .chip s{text-decoration:none;color:var(--acid);font-weight:700}
-.df26 .foot{border-top:1px solid rgba(244,242,234,.16);font-family:var(--dfmono);font-size:17px;color:var(--dffaint)}
-.df26 .foot b{color:var(--dfink2)}
-.df26 .duel{display:flex;align-items:baseline;gap:10px;font-family:var(--serif);font-weight:900;
-  letter-spacing:-.045em;line-height:.82;position:relative;z-index:2}
-.df26 .duelbox{position:relative;padding:26px 30px 22px;border-radius:16px;
-  background:radial-gradient(120% 120% at 50% 45%, rgba(8,9,7,.86), rgba(8,9,7,.42) 72%, transparent)}
-.df26 .duel .a{font-size:104px;color:#e0483a}
-.df26 .duel .b{font-size:104px;color:#3f8fd6}
-.df26 .duel .x{font-size:42px;color:var(--dffaint);padding:0 4px}
-.df26 .duellab{font-family:var(--dfmono);font-size:17px;color:#9a9789;margin-top:8px;letter-spacing:.05em}
-.df26 .ladder{display:flex;flex-direction:column;gap:12px;margin-top:22px;max-width:640px}
-.df26 .lrow{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:baseline;
-  border-bottom:1px dashed rgba(244,242,234,.18);padding-bottom:10px;font-size:23px;color:var(--dfink2)}
-.df26 .lrow b{font-family:var(--dfmono);font-size:25px;color:var(--dfink)}
-.df26 .lrow.key{font-size:28px;color:#fff}
-.df26 .lrow.key b{color:var(--acid);font-size:32px}
-
-body.solo{padding:0;background:transparent;gap:0}
-body.solo .hint{display:none}
-body.solo .card{display:none}
-body.solo .card.on{display:block}
+  :root{ --ink:#07111f; --paper:#f2f0e9; --lime:#d9ff43; --muted:#8a95a8; --line:rgba(255,255,255,.14); }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--ink);color:#fffefa;font-family:Inter,system-ui,sans-serif;padding:44px 32px 90px}
+  header{max-width:1240px;margin:0 auto 34px}
+  .eyebrow{font-family:"IBM Plex Mono",monospace;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--lime)}
+  h1{font-family:"Archivo Black",sans-serif;font-size:clamp(32px,5vw,58px);line-height:.94;letter-spacing:-.03em;
+     text-transform:uppercase;margin:14px 0 16px}
+  p{max-width:70ch;color:#c3cddd;font-size:17px;line-height:1.55}
+  p a{color:var(--lime)}
+  code{font-family:"IBM Plex Mono",monospace;font-size:.92em;background:rgba(255,255,255,.08);padding:2px 7px}
+  .grid{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:26px}
+  figure{margin:0;border:1px solid var(--line);background:rgba(255,255,255,.03)}
+  figure img{display:block;width:100%;height:auto;background:var(--ink)}
+  figcaption{display:flex;justify-content:space-between;gap:12px;align-items:baseline;
+             padding:12px 14px;border-top:1px solid var(--line);font-family:"IBM Plex Mono",monospace;font-size:12.5px}
+  figcaption b{color:#fffefa;font-weight:600}
+  figcaption a{color:var(--muted);text-decoration:none}
+  figcaption a:hover{color:var(--lime)}
+  h2{grid-column:1/-1;margin:22px 0 0;font-family:"IBM Plex Mono",monospace;font-size:12.5px;letter-spacing:.14em;
+     text-transform:uppercase;color:var(--lime);border-bottom:1px solid var(--line);padding-bottom:10px}
 </style>
 </head>
 <body>
-<p class="hint">Cards 1200×630. Isolar para render: <b>?card=hub</b>, <b>?card=nexus</b>, <b>?card=proposta</b>, <b>?card=datafolha072026</b> ou <b>?card=datafolha072026thread</b> (viewport 1200×630).</p>
+  <header>
+    <p class="eyebrow">Arvor Intelligence · uso interno</p>
+    <h1>Social cards do acervo</h1>
+    <p>Todos os cards são gerados por <code>python3 scripts/social-cards.py</code> a partir de um manifesto único, no formato 1200×630. A fonte de cada card fica em <code>docs/assets/og/&lt;slug&gt;.html</code> e a imagem em <code>docs/img/og/&lt;slug&gt;.png</code>. Para mudar um texto, edite o manifesto no script e rode de novo: não edite o HTML gerado nem a imagem à mão. Para regerar apenas um, use <code>--only &lt;slug&gt;</code>.</p>
+  </header>
 
-<!-- ============ CARD · HUB / brasil.arvor.co ============ -->
-<section class="card" id="card-hub">
-  <div class="ring" style="width:820px;height:820px;right:-230px;top:-190px"></div>
-  <div class="ring" style="width:520px;height:520px;right:-80px;top:60px"></div>
-  <div class="pad">
-    <div class="eyebrow g">Arvor Intelligence · Acervo público</div>
-    <div style="margin-top:22px">
-      <div class="hub-title">Auditoria de<br>pesquisas <span>eleitorais</span></div>
-      <p class="hub-sub">Todo dossiê aberto: questionário, amostra, margens e calibração contra as fontes oficiais. Com os cálculos que qualquer um refaz.</p>
-      <div class="stats">
-        <div class="stat"><b>7</b><span>AUDITORIAS</span></div>
-        <div class="stat"><b>4</b><span>INSTITUTOS</span></div>
-        <div class="stat"><b>1</b><span>RELATÓRIO PNAD</span></div>
-      </div>
-      <p class="rulers">réguas oficiais: <b>TSE</b> (eleitorado) · <b>IBGE/PNAD</b> (renda e escolaridade)</p>
-    </div>
-    <div class="foot">
-      <span class="brandline"><img src="img/arvor_logo.png" alt=""><b>ARVOR INTELLIGENCE</b></span>
-      <span>brasil.arvor.co</span>
-    </div>
+  <div class="grid">
+    <h2>Acervo e páginas fixas</h2>
+    <figure><img src="img/og/hub.png" alt="Card do acervo" loading="lazy"><figcaption><b>hub</b><a href="index.html">index.html</a></figcaption></figure>
+    <figure><img src="img/og/pnad.png" alt="Card do relatório PNAD" loading="lazy"><figcaption><b>pnad</b><a href="pnad.html">pnad.html</a></figcaption></figure>
+    <figure><img src="img/og/proposta.png" alt="Card da proposta" loading="lazy"><figcaption><b>proposta</b><a href="proposta.html">proposta.html</a></figcaption></figure>
+    <figure><img src="img/og/margens_visuais.png" alt="Card de margens visuais" loading="lazy"><figcaption><b>margens_visuais</b><a href="margens_visuais.html">margens_visuais.html</a></figcaption></figure>
+
+    <h2>BTG/Nexus 03/08/2026</h2>
+    <figure><img src="img/og/nexus_btg_082026_1.png" alt="Card do dossiê Nexus de agosto" loading="lazy"><figcaption><b>nexus_btg_082026_1</b><a href="nexus_btg_082026_1.html">dossiê</a></figcaption></figure>
+    <figure><img src="img/og/nexus_btg_082026_1_thread.png" alt="Card da thread Nexus de agosto" loading="lazy"><figcaption><b>nexus_btg_082026_1_thread</b><a href="nexus_btg_082026_1_thread.html">thread</a></figcaption></figure>
+
+    <h2>AtlasIntel 07/2026</h2>
+    <figure><img src="img/og/atlas_072026.png" alt="Card do dossiê Atlas de julho" loading="lazy"><figcaption><b>atlas_072026</b><a href="atlas_072026.html">dossiê</a></figcaption></figure>
+    <figure><img src="img/og/atlas_072026_thread.png" alt="Card da thread Atlas de julho" loading="lazy"><figcaption><b>atlas_072026_thread</b><a href="atlas_072026_thread.html">thread</a></figcaption></figure>
+
+    <h2>Datafolha 07/2026</h2>
+    <figure><img src="img/og/datafolha_072026.png" alt="Card do dossiê Datafolha de julho" loading="lazy"><figcaption><b>datafolha_072026</b><a href="datafolha_072026.html">dossiê</a></figcaption></figure>
+    <figure><img src="img/og/datafolha_072026_thread.png" alt="Card da thread Datafolha de julho" loading="lazy"><figcaption><b>datafolha_072026_thread</b><a href="datafolha_072026_thread.html">thread</a></figcaption></figure>
+
+    <h2>Quaest/Genial 17/07/2026</h2>
+    <figure><img src="img/og/quaest_0726.png" alt="Card do dossiê Quaest de julho" loading="lazy"><figcaption><b>quaest_0726</b><a href="quaest_0726.html">dossiê</a></figcaption></figure>
+    <figure><img src="img/og/quaest_0726_thread.png" alt="Card da thread Quaest de julho" loading="lazy"><figcaption><b>quaest_0726_thread</b><a href="quaest_0726_thread.html">thread</a></figcaption></figure>
+    <figure><img src="img/og/quaest_0726_slides.png" alt="Card dos slides Quaest de julho" loading="lazy"><figcaption><b>quaest_0726_slides</b><a href="quaest_0726_slides.html">slides</a></figcaption></figure>
+
+    <h2>BTG/Nexus 13/07/2026</h2>
+    <figure><img src="img/og/nexus_btg_0726.png" alt="Card do dossiê Nexus de julho" loading="lazy"><figcaption><b>nexus_btg_0726</b><a href="nexus_btg_0726.html">dossiê</a></figcaption></figure>
+    <figure><img src="img/og/nexus_btg_0726_thread.png" alt="Card da thread Nexus de julho" loading="lazy"><figcaption><b>nexus_btg_0726_thread</b><a href="nexus_btg_0726_thread.html">thread</a></figcaption></figure>
+    <figure><img src="img/og/nexus_btg_0726_slides.png" alt="Card dos slides Nexus de julho" loading="lazy"><figcaption><b>nexus_btg_0726_slides</b><a href="nexus_btg_0726_slides.html">slides</a></figcaption></figure>
+
+    <h2>AtlasIntel 26/06/2026</h2>
+    <figure><img src="img/og/atlasintel_260626.png" alt="Card do dossiê Atlas de junho" loading="lazy"><figcaption><b>atlasintel_260626</b><a href="atlasintel_260626.html">dossiê</a></figcaption></figure>
+    <figure><img src="img/og/atlasintel_260626_thread.png" alt="Card da thread Atlas de junho" loading="lazy"><figcaption><b>atlasintel_260626_thread</b><a href="atlasintel_260626_thread.html">thread</a></figcaption></figure>
+
+    <h2>Datafolha 24/06/2026</h2>
+    <figure><img src="img/og/datafolha_062026.png" alt="Card do dossiê Datafolha de junho" loading="lazy"><figcaption><b>datafolha_062026</b><a href="datafolha_062026.html">dossiê</a></figcaption></figure>
+    <figure><img src="img/og/datafolha_062026_thread.png" alt="Card da thread Datafolha de junho" loading="lazy"><figcaption><b>datafolha_062026_thread</b><a href="datafolha_062026_thread.html">thread</a></figcaption></figure>
+
+    <h2>BTG/Nexus 15/06/2026</h2>
+    <figure><img src="img/og/nexus_btg_150626.png" alt="Card do dossiê Nexus de 15 de junho" loading="lazy"><figcaption><b>nexus_btg_150626</b><a href="nexus_btg_150626.html">dossiê</a></figcaption></figure>
+    <figure><img src="img/og/nexus_btg_150626_thread.png" alt="Card da thread Nexus de 15 de junho" loading="lazy"><figcaption><b>nexus_btg_150626_thread</b><a href="nexus_btg_150626_thread.html">thread</a></figcaption></figure>
+
+    <h2>Quaest/Genial 10/06/2026</h2>
+    <figure><img src="img/og/quaest_100626.png" alt="Card do dossiê Quaest de 10 de junho" loading="lazy"><figcaption><b>quaest_100626</b><a href="quaest_100626.html">dossiê</a></figcaption></figure>
+    <figure><img src="img/og/x_thread.png" alt="Card da thread Quaest de 10 de junho" loading="lazy"><figcaption><b>x_thread</b><a href="x_thread.html">thread</a></figcaption></figure>
+
+    <h2>Rodadas de maio</h2>
+    <figure><img src="img/og/datafolha_090526.png" alt="Card do dossiê Datafolha de maio" loading="lazy"><figcaption><b>datafolha_090526</b><a href="datafolha_090526.html">dossiê</a></figcaption></figure>
+    <figure><img src="img/og/atlas_intel_180526.png" alt="Card do dossiê Atlas de maio" loading="lazy"><figcaption><b>atlas_intel_180526</b><a href="atlas_intel_180526.html">dossiê</a></figcaption></figure>
+
+    <h2>Artigos</h2>
+    <figure><img src="img/og/artigo_pt.png" alt="Card do artigo em português" loading="lazy"><figcaption><b>artigo_pt</b><a href="artigo_pt.html">artigo_pt.html</a></figcaption></figure>
+    <figure><img src="img/og/artigo_en.png" alt="Card do artigo em inglês" loading="lazy"><figcaption><b>artigo_en</b><a href="artigo_en.html">artigo_en.html</a></figcaption></figure>
+    <figure><img src="img/og/artigo_quaest_100626.png" alt="Card do artigo sobre a Quaest de junho" loading="lazy"><figcaption><b>artigo_quaest_100626</b><a href="artigo_quaest_100626.html">artigo</a></figcaption></figure>
+    <figure><img src="img/og/artigo_nexus_btg_150626.png" alt="Card do artigo sobre a Nexus de junho" loading="lazy"><figcaption><b>artigo_nexus_btg_150626</b><a href="artigo_nexus_btg_150626.html">artigo</a></figcaption></figure>
   </div>
-</section>
-
-<!-- ============ CARD · DOSSIÊ BTG/NEXUS 6ª RODADA ============ -->
-<section class="card" id="card-nexus">
-  <div class="ring" style="width:900px;height:900px;right:-280px;top:-150px"></div>
-  <div class="pad">
-    <div class="eyebrow">Auditoria · BTG/Nexus · 6ª rodada · BR-07981/2026</div>
-    <div style="display:grid;grid-template-columns:1fr auto;gap:44px;align-items:center;flex:1;margin-top:6px">
-      <div>
-        <div class="title" style="font-size:66px">O empate que<br>não dá para <span style="color:var(--gold)">auditar</span></div>
-        <p class="kicker" style="margin-top:24px">O placar é plausível. O que não se pode ver é o problema: <b>12 respostas</b> coletadas e nunca devolvidas, e a <b>planilha de pesos</b> que decide tudo.</p>
-      </div>
-      <div style="text-align:center">
-        <div class="score"><span class="a">47</span><span class="x">×</span><span class="b">44</span></div>
-        <div class="scorelab">2º turno · Lula vs Flávio</div>
-        <div style="margin-top:22px"><span class="stamp">Empate técnico</span></div>
-      </div>
-    </div>
-    <div class="foot">
-      <span class="brandline"><img src="img/arvor_logo.png" alt=""><b>ARVOR INTELLIGENCE</b></span>
-      <span>brasil.arvor.co/nexus_btg_0726.html · n=2.003 · fontes TSE/IBGE</span>
-    </div>
-  </div>
-</section>
-
-<!-- ============ CARD · PROPOSTA (PL + Resolução) ============ -->
-<section class="card" id="card-proposta">
-  <div class="ring" style="width:760px;height:760px;right:-200px;bottom:-260px"></div>
-  <div class="pad">
-    <div class="eyebrow g">Proposta Arvor · minutas prontas</div>
-    <div style="margin-top:20px">
-      <div class="hub-title" style="font-size:66px">Que o número saia<br><span>com a prova</span></div>
-      <p class="hub-sub" style="margin-top:16px;max-width:700px">Duas minutas prontas para uso: uma Resolução que o TSE já pode editar hoje e um Projeto de Lei. Texto livre, sem pedido de crédito.</p>
-      <div class="stats" style="margin-top:20px">
-        <div class="stat" style="padding:11px 18px"><b style="font-size:38px">2 dias</b><span>RELATÓRIO COMPLETO</span></div>
-        <div class="stat" style="padding:11px 18px"><b style="font-size:38px">junto</b><span>ONDE FOI COLETADO</span></div>
-        <div class="stat" style="padding:11px 18px"><b style="font-size:38px">já</b><span>VIGÊNCIA IMEDIATA</span></div>
-      </div>
-      <p class="rulers" style="margin-top:16px">altera a <b>Res. TSE 23.600/2019</b> · e os arts. 33 e 34 da <b>Lei 9.504/1997</b></p>
-    </div>
-    <div class="foot">
-      <span class="brandline"><img src="img/arvor_logo.png" alt=""><b>ARVOR INTELLIGENCE</b></span>
-      <span>brasil.arvor.co/proposta.html</span>
-    </div>
-  </div>
-</section>
-
-<!-- ============ CARD · DOSSIÊ DATAFOLHA JULHO/2026 ============ -->
-<section class="card df26" id="card-datafolha072026">
-  <div class="shot"></div><div class="veil"></div>
-  <div class="pad">
-    <div class="eyebrow">Auditoria · Datafolha julho/2026 · BR-01166/2026</div>
-    <div style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:34px;align-items:center;flex:1">
-      <div>
-        <div class="dftitle">48×43 é a manchete.<em>45×45 é o interior.</em></div>
-        <p class="dfsub">Toda a vantagem de Lula é metropolitana. No interior, onde vivem <b>1.217 dos 2.004 entrevistados</b>, o placar empata — e nenhuma manchete usou o recorte.</p>
-        <div class="chips">
-          <span class="chip"><s>118</s> cidades fixas nas 3 ondas</span>
-          <span class="chip"><s>98,6%</s> do mapa já era público</span>
-          <span class="chip"><s>45,4×45,3</s> reponderado pela PNAD</span>
-        </div>
-      </div>
-      <div class="duelbox" style="text-align:right">
-        <div class="duel"><span class="a">45</span><span class="x">×</span><span class="b">45</span></div>
-        <div class="duellab">2º turno no interior · n=1.217</div>
-      </div>
-    </div>
-    <div class="foot">
-      <span class="brandline"><img src="img/arvor_logo.png" alt=""><b>ARVOR INTELLIGENCE</b></span>
-      <span>brasil.arvor.co/datafolha_072026.html · prova de opacidade, não de fraude</span>
-    </div>
-  </div>
-</section>
-
-<!-- ============ CARD · THREAD DATAFOLHA JULHO/2026 ============ -->
-<section class="card df26" id="card-datafolha072026thread">
-  <div class="shot" style="background-position:center 52%"></div><div class="veil"></div>
-  <div class="pad">
-    <div class="eyebrow">Thread X · 30 posts · Datafolha julho/2026</div>
-    <div style="flex:1;display:flex;flex-direction:column;justify-content:center">
-      <div class="dftitle" style="font-size:58px">DATAFOLHA AJUDA<br>A CAMPANHA<em>offline do Flávio</em></div>
-      <div class="ladder">
-        <div class="lrow"><span>Municípios repetidos nas três ondas</span><b>118 de 139</b></div>
-        <div class="lrow"><span>Mapa de julho já publicado em junho</span><b>98,6%</b></div>
-        <div class="lrow key"><span>Segundo turno no interior</span><b>45 × 45</b></div>
-      </div>
-    </div>
-    <div class="foot">
-      <span class="brandline"><img src="img/arvor_logo.png" alt=""><b>ARVOR INTELLIGENCE</b></span>
-      <span>brasil.arvor.co/datafolha_072026_thread.html</span>
-    </div>
-  </div>
-</section>
-
-<script>
-(function(){
-  var c = new URLSearchParams(location.search).get('card');
-  if(!c) return;
-  document.body.classList.add('solo');
-  var el = document.getElementById('card-' + c);
-  if(el) el.classList.add('on');
-})();
-</script>
 </body>
 </html>

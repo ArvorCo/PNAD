@@ -54,7 +54,14 @@ except ModuleNotFoundError:  # pragma: no cover - guidance beats a traceback
 DOCS = Path(__file__).resolve().parent
 
 SITE = "https://brasil.arvor.co"
-OG_IMAGE = f"{SITE}/img/arvor_og.png"
+OG_IMAGE = f"{SITE}/img/og/hub.png"  # usado só como reserva; cada artigo tem o seu
+
+
+def og_image_for(slug: str) -> str:
+    """Card social do artigo, gerado por scripts/social-cards.py."""
+    return f"{SITE}/img/og/{slug}.png"
+
+
 WORDS_PER_MINUTE = 220
 DESCRIPTION_LIMIT = 158
 
@@ -696,7 +703,7 @@ def render(article: Article, by_slug: dict[str, Article]) -> str:
         description=html.escape(make_description(deck, body), quote=True),
         social_title=html.escape(article.social_title or plain_title, quote=True),
         canonical=f"{SITE}/{article.filename}",
-        og_image=OG_IMAGE,
+        og_image=og_image_for(article.slug),
         alternates=alternates,
         skip=html.escape(strings["skip"]),
         nav_aria=html.escape(strings["nav_aria"]),
