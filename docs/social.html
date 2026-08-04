@@ -12,7 +12,8 @@
 <style>
   :root{ --ink:#07111f; --paper:#f2f0e9; --lime:#d9ff43; --muted:#8a95a8; --line:rgba(255,255,255,.14); }
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--ink);color:#fffefa;font-family:Inter,system-ui,sans-serif;padding:44px 32px 90px}
+  body{background:var(--ink);color:#fffefa;font-family:Inter,system-ui,sans-serif;padding:44px 32px 90px;overflow-x:hidden}
+  @media (max-width:560px){body{padding:28px 16px 60px}}
   header{max-width:1240px;margin:0 auto 34px}
   .eyebrow{font-family:"IBM Plex Mono",monospace;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--lime)}
   h1{font-family:"Archivo Black",sans-serif;font-size:clamp(32px,5vw,58px);line-height:.94;letter-spacing:-.03em;
@@ -20,7 +21,7 @@
   p{max-width:70ch;color:#c3cddd;font-size:17px;line-height:1.55}
   p a{color:var(--lime)}
   code{font-family:"IBM Plex Mono",monospace;font-size:.92em;background:rgba(255,255,255,.08);padding:2px 7px}
-  .grid{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:26px}
+  .grid{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(360px,100%),1fr));gap:26px}
   figure{margin:0;border:1px solid var(--line);background:rgba(255,255,255,.03)}
   figure img{display:block;width:100%;height:auto;background:var(--ink)}
   figcaption{display:flex;justify-content:space-between;gap:12px;align-items:baseline;
