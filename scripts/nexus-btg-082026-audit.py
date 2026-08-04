@@ -129,6 +129,7 @@ PROFILES = {
         "education": [36, 41, 23],
         "income": [23, 17, 40, 20],
         "region": [16, 28, 42, 14],
+        "labour": [42, 17, 5, 35],
     },
     "august": {
         "sex": [53, 47],
@@ -136,6 +137,7 @@ PROFILES = {
         "education": [36, 41, 23],
         "income": [22, 18, 40, 21],
         "region": [16, 28, 42, 14],
+        "labour": [43, 17, 5, 35],
     },
 }
 
@@ -352,21 +354,26 @@ TRANSFER_SOURCES = [
 ]
 TRANSFER_ROWS = np.array([41, 37, 5, 4, 3, 1, 1, 1, 4, 3], dtype=float)
 TRANSFER_COLS = np.array([46, 45, 8, 2], dtype=float)
-TRANSFER_PRIOR = np.array(
-    [
-        [98, 0.4, 0.3, 0.3],
-        [0.5, 98, 0.3, 0.2],
-        [17, 52, 30, 0.5],
-        [15, 40, 44, 1],
-        [12, 57, 27, 4],
-        [43, 40, 17, 0.5],
-        [35, 31, 11, 22],
-        [33, 25, 33, 8],
-        [15, 15, 67, 3],
-        [18, 18, 22, 42],
-    ],
-    dtype=float,
-)
+# Seis das dez linhas da matriz de transição foram PUBLICADAS pela Nexus no
+# relatório de 03/08, p. 51 ("Cruzamento (migração de voto)"), no cenário Lula x
+# Flávio. Elas entram como medição, não como estimativa. As quatro linhas que o
+# instituto não publica (base do próprio Lula, base do próprio Flávio, branco/nulo
+# e NS do 1º turno) são as únicas que esta auditoria precisa inferir.
+TRANSFER_MEASURED = {
+    "Caiado": [17, 52, 30, 0],
+    "Renan": [15, 40, 45, 1],
+    "Zema": [12, 57, 27, 4],
+    "Cury": [43, 40, 18, 0],
+    "Daciolo": [35, 31, 11, 22],
+    "Samara": [33, 25, 33, 8],
+}
+# Prior ideológica declarada, aplicada apenas às quatro linhas não publicadas.
+TRANSFER_PRIOR = {
+    "Lula": [98, 0.4, 1.2, 0.4],
+    "Flávio": [0.5, 98, 1.0, 0.5],
+    "B/N": [15, 15, 67, 3],
+    "NS": [18, 18, 22, 42],
+}
 
 
 def sha256(path: Path) -> str:
@@ -473,8 +480,9 @@ def pnad_distribution(column: str, classifier) -> dict:
                 rep = float(value or 0)
                 rep_totals[i] += rep
                 rep_sums[label][i] += rep
+    labels = classifier(None, labels=True)
     result = {}
-    for label in classifier(None, labels=True):
+    for label in labels:
         estimate = 100 * sums[label] / total
         values = [
             100 * value / denominator
@@ -482,7 +490,17 @@ def pnad_distribution(column: str, classifier) -> dict:
             if denominator
         ]
         result[label] = replicate_ci(estimate, values)
-    return {"distribution": result, "weighted_people": round(total), "replicates": 200}
+    shares = [
+        [round(100 * rep_sums[label][i] / rep_totals[i], 4) for label in labels]
+        for i in range(len(reps))
+        if rep_totals[i]
+    ]
+    return {
+        "distribution": result,
+        "weighted_people": round(total),
+        "replicates": 200,
+        "replicate_shares": shares,
+    }
 
 
 def income_classifier(value=None, labels=False):
@@ -563,7 +581,9 @@ def tse_age_bands() -> dict:
     }
 
 
-def official_targets(pnad_income: dict, pnad_education: dict, ages: dict) -> dict:
+def official_targets(
+    pnad_income: dict, pnad_education: dict, ages: dict, labour: dict
+) -> dict:
     with sqlite3.connect(TSE_DB) as connection:
         rows = connection.execute(
             "SELECT dimension, category, tse_pct FROM atlas_comparison"
@@ -593,6 +613,7 @@ def official_targets(pnad_income: dict, pnad_education: dict, ages: dict) -> dic
             regions["Sudeste"],
             regions["Sul"],
         ],
+        "labour": [labour["pnad_distribution"][name] for name in labour["labels"]],
         "tse_metadata": metadata,
     }
 
@@ -662,29 +683,244 @@ def all_reweighting(targets: dict) -> dict:
     return output
 
 
+MARGIN_CONTROL = {
+    "sex": {"label": "Sexo", "quota": True, "weight": True, "source": "TSE"},
+    "age": {"label": "Idade", "quota": True, "weight": True, "source": "TSE"},
+    "education": {
+        "label": "Escolaridade",
+        "quota": True,
+        "weight": True,
+        "source": "PNAD",
+    },
+    "region": {"label": "Região", "quota": True, "weight": True, "source": "TSE"},
+    "income": {"label": "Renda", "quota": False, "weight": True, "source": "PNAD"},
+    "labour": {
+        "label": "Ocupação",
+        "quota": False,
+        "weight": True,
+        "source": "PNAD",
+    },
+}
+
+
+def gradient(cells) -> np.ndarray:
+    """Vantagem de Lula sobre Flávio dentro de cada categoria, em pontos."""
+    matrix = normalize_rows(cells)
+    return matrix[:, 0] - matrix[:, 1]
+
+
+def margin_leverage(
+    targets: dict, wave: str = "august", ballot: str = "runoff"
+) -> dict:
+    """Por que uma margem consegue ou não mover o placar publicado.
+
+    Trocar uma única margem desloca a vantagem em delta = <t - w, v>, o produto
+    interno entre o erro de calibração (alvo oficial menos perfil da amostra) e o
+    gradiente de voto v da margem. Como o erro soma zero, vale a desigualdade de
+    Hoelder |delta| <= TVD * amplitude: uma margem que o instituto obriga a bater
+    com o alvo não move o resultado, por mais inclinado que seja seu gradiente.
+    """
+    rows = []
+    for dimension, meta in MARGIN_CONTROL.items():
+        cells = CROSSTABS[wave][ballot].get(dimension)
+        if cells is None or dimension not in targets:
+            continue
+        vote = gradient(cells)
+        profile = np.asarray(PROFILES[wave][dimension], dtype=float)
+        profile = profile / profile.sum()
+        target = np.asarray(targets[dimension], dtype=float)
+        target = target / target.sum()
+        error = target - profile
+        swing = float(error @ vote)
+        tvd = float(np.abs(error).sum() / 2)
+        amplitude = float(vote.max() - vote.min())
+        bound = tvd * amplitude
+        mean = float(profile @ vote)
+        spread = float(math.sqrt(profile @ (vote - mean) ** 2))
+        rows.append(
+            {
+                "dimension": dimension,
+                "label": meta["label"],
+                "quota_controlled": meta["quota"],
+                "benchmark": meta["source"],
+                "gradient": [round(float(x), 3) for x in vote],
+                "amplitude": round(amplitude, 3),
+                "weighted_sd": round(spread, 3),
+                "tvd_pct": round(100 * tvd, 3),
+                "swing": round(swing, 3),
+                "holder_bound": round(bound, 3),
+                "share_of_bound": round(abs(swing) / bound, 3) if bound else None,
+            }
+        )
+    rows.sort(key=lambda row: abs(row["swing"]), reverse=True)
+    free = [row for row in rows if not row["quota_controlled"]]
+    locked = [row for row in rows if row["quota_controlled"]]
+    published = float(TOPLINES[wave][ballot][0] - TOPLINES[wave][ballot][1])
+    combined = sum(row["swing"] for row in free)
+    return {
+        "wave": wave,
+        "ballot": ballot,
+        "identity": "delta = <t - w, v>",
+        "bound": "|delta| <= TVD(t, w) * amplitude(v)",
+        "summary": {
+            "published_gap": published,
+            "quota_free_swing_sum": round(combined, 3),
+            "quota_free_gap": round(published + combined, 3),
+            "quota_locked_swing_sum": round(sum(row["swing"] for row in locked), 3),
+            "mean_tvd_free_pct": round(
+                sum(row["tvd_pct"] for row in free) / len(free), 3
+            ),
+            "mean_tvd_locked_pct": round(
+                sum(row["tvd_pct"] for row in locked) / len(locked), 3
+            ),
+            "caveat": (
+                "A soma das correções de margem única é aproximada: as margens se "
+                "correlacionam e a calibração oficial é conjunta. Serve como ordem de "
+                "grandeza, não como reponderação multivariada."
+            ),
+        },
+        "note": (
+            "Amplitude e desvio-padrão medem a inclinação política da margem; a TVD mede o "
+            "erro de calibração. O produto limita quanto a margem pode mover a vantagem. "
+            "Margens travadas por cota têm TVD perto de zero e são inertes por construção."
+        ),
+        "margins": rows,
+    }
+
+
+def income_mechanics(targets: dict, income_benchmark: dict, n: int = 2002) -> dict:
+    """Abre a reponderação de renda faixa a faixa, com ponto de virada e incerteza."""
+    labels = income_classifier(None, labels=True)
+    output = {"labels": labels, "n": n, "waves": {}}
+    for wave in ("july", "august"):
+        cells = CROSSTABS[wave]["runoff"]["income"]
+        vote = gradient(cells)
+        profile = np.asarray(PROFILES[wave]["income"], dtype=float)
+        profile = profile / profile.sum()
+        target = np.asarray(targets["income"], dtype=float)
+        target = target / target.sum()
+        error = target - profile
+        contributions = error * vote
+        swing = float(contributions.sum())
+        published = float(TOPLINES[wave]["runoff"][0] - TOPLINES[wave]["runoff"][1])
+        lam = -published / swing if swing else None
+        bands = [
+            {
+                "band": labels[i],
+                "poll_pct": round(100 * float(profile[i]), 3),
+                "pnad_pct": round(100 * float(target[i]), 3),
+                "error_pp": round(100 * float(error[i]), 3),
+                "vote_gap": round(float(vote[i]), 3),
+                "contribution": round(float(contributions[i]), 3),
+                "interviews_gap": round(abs(float(error[i])) * n),
+            }
+            for i in range(len(labels))
+        ]
+        swings = []
+        for shares in income_benchmark.get("replicate_shares", []):
+            replicate = np.asarray(shares, dtype=float)
+            replicate = replicate / replicate.sum()
+            swings.append(float((replicate - profile) @ vote))
+        benchmark_ci = None
+        if swings:
+            low, high = np.quantile(swings, [0.025, 0.975])
+            benchmark_ci = {
+                "replicates": len(swings),
+                "p2_5": round(float(low), 3),
+                "p97_5": round(float(high), 3),
+            }
+        others = vote[1:]
+        output["waves"][wave] = {
+            "published_gap": published,
+            "swing": round(swing, 3),
+            "reweighted_gap": round(published + swing, 3),
+            "bands": bands,
+            "tipping_lambda": round(lam, 4) if lam is not None else None,
+            "tipping_bottom_band_pct": (
+                round(100 * float(profile[0] + lam * error[0]), 3)
+                if lam is not None
+                else None
+            ),
+            "benchmark_ci_swing": benchmark_ci,
+            "step_not_ramp": {
+                "bottom_band_gap": round(float(vote[0]), 3),
+                "other_bands_mean_gap": round(float(others.mean()), 3),
+                "other_bands_range": round(float(others.max() - others.min()), 3),
+                "distance": round(float(vote[0] - others.mean()), 3),
+            },
+        }
+    return output
+
+
 def ipf_transfer() -> dict:
-    matrix = TRANSFER_PRIOR / TRANSFER_PRIOR.sum(axis=1, keepdims=True)
-    rows = TRANSFER_ROWS * TRANSFER_COLS.sum() / TRANSFER_ROWS.sum()
-    matrix *= rows[:, None]
+    """Matriz de transição: seis linhas medidas, quatro estimadas por IPF.
+
+    A Nexus publica o cruzamento do voto de 1º turno com o de 2º turno para o
+    eleitorado dos seis candidatos menores (p. 51). Essas linhas entram fixas. O
+    que sobra das margens publicadas é distribuído entre as quatro linhas que o
+    instituto não abre, por ajuste proporcional iterativo contra a prior.
+    """
+    index = {name: i for i, name in enumerate(TRANSFER_SOURCES)}
+    scale = TRANSFER_COLS.sum() / TRANSFER_ROWS.sum()
+    rows = TRANSFER_ROWS * scale
+    matrix = np.zeros((len(TRANSFER_SOURCES), 4), dtype=float)
+
+    measured = []
+    for name, cells in TRANSFER_MEASURED.items():
+        i = index[name]
+        shares = np.asarray(cells, dtype=float)
+        matrix[i] = shares / shares.sum() * rows[i]
+        measured.append(i)
+
+    unknown = [i for i in range(len(TRANSFER_SOURCES)) if i not in measured]
+    residual = TRANSFER_COLS - matrix[measured].sum(axis=0)
+    sub_rows = rows[unknown] * residual.sum() / rows[unknown].sum()
+    sub = np.array([TRANSFER_PRIOR[TRANSFER_SOURCES[i]] for i in unknown], dtype=float)
+    sub = sub / sub.sum(axis=1, keepdims=True) * sub_rows[:, None]
     for _ in range(10000):
-        matrix *= (TRANSFER_COLS / matrix.sum(axis=0))[None, :]
-        matrix *= (rows / matrix.sum(axis=1))[:, None]
-        if max(abs(matrix.sum(axis=0) - TRANSFER_COLS)) < 1e-10:
+        sub *= (residual / sub.sum(axis=0))[None, :]
+        sub *= (sub_rows / sub.sum(axis=1))[:, None]
+        if max(abs(sub.sum(axis=0) - residual)) < 1e-10:
             break
-    lula_gain = TRANSFER_COLS[0] - rows[0]
-    flavio_gain = TRANSFER_COLS[1] - rows[1]
+    matrix[unknown] = sub
+
+    pool = [index[name] for name in TRANSFER_MEASURED]
+    measured_to_lula = float(matrix[pool, 0].sum())
+    measured_to_flavio = float(matrix[pool, 1].sum())
+    lula_gain = float(TRANSFER_COLS[0] - rows[0])
+    flavio_gain = float(TRANSFER_COLS[1] - rows[1])
     return {
         "sources": TRANSFER_SOURCES,
         "destinations": ["Lula", "Flávio", "B/N", "NS"],
         "matrix": [[round(float(x), 3) for x in row] for row in matrix],
+        "measured_rows": sorted(measured),
+        "inferred_rows": unknown,
         "row_targets_scaled": [round(float(x), 3) for x in rows],
         "column_targets": TRANSFER_COLS.tolist(),
-        "consolidation": {
-            "Lula": round(float(lula_gain), 3),
-            "Flávio": round(float(flavio_gain), 3),
-            "ratio_flavio_lula": round(float(flavio_gain / lula_gain), 3),
+        "measured_pool": {
+            "source": "Relatório de 03/08, p. 51, cruzamento de voto do 1º com o 2º turno",
+            "pool_points": round(float(rows[pool].sum()), 3),
+            "to_lula": round(measured_to_lula, 3),
+            "to_flavio": round(measured_to_flavio, 3),
+            "to_blank_or_null": round(float(matrix[pool, 2].sum()), 3),
+            "to_undecided": round(float(matrix[pool, 3].sum()), 3),
+            "ratio_flavio_lula": round(measured_to_flavio / measured_to_lula, 3),
+            "note": (
+                "Razão medida pelo próprio instituto entre o eleitorado dos seis "
+                "candidatos menores. Não é inferência desta auditoria."
+            ),
         },
-        "prior_note": "Prior ideológica explícita; as margens publicadas fecham por IPF. Os elos não foram medidos.",
+        "consolidation": {
+            "Lula": round(lula_gain, 3),
+            "Flávio": round(flavio_gain, 3),
+            "ratio_flavio_lula": round(flavio_gain / lula_gain, 3),
+        },
+        "method_note": (
+            "Seis linhas vêm publicadas na p. 51 e entram como medição. As quatro "
+            "linhas que a Nexus não publica (base de Lula, base de Flávio, branco/nulo "
+            "e NS) são estimadas por IPF contra prior ideológica explícita, fechando "
+            "exatamente as margens divulgadas."
+        ),
     }
 
 
@@ -1228,7 +1464,8 @@ def build() -> dict:
     income = pnad_distribution("VD5001__rend_efetivo_domiciliar_mw", income_classifier)
     education = education_benchmark()
     ages = tse_age_bands()
-    targets = official_targets(income, education, ages)
+    labour = labour_benchmark()
+    targets = official_targets(income, education, ages, labour)
     reweighted = all_reweighting(targets)
     geography = field_geography()
     deff = geography["august"]["deff_uf_calibration"]
@@ -1242,11 +1479,13 @@ def build() -> dict:
         "benchmarks": {
             "pnad_income_2025": income,
             "pnad_education_2025": education,
-            "pnad_labour_2025": labour_benchmark(),
+            "pnad_labour_2025": labour,
             "tse_age_bands": ages,
             "targets": targets,
         },
         "reweighting": reweighted,
+        "margin_leverage": margin_leverage(targets),
+        "income_mechanics": income_mechanics(targets, income),
         "transfer": ipf_transfer(),
         "second_choice_july": SECOND_CHOICE_JULY,
         "uncontrolled": uncontrolled_margins(),
@@ -1266,6 +1505,18 @@ def build() -> dict:
                 difference_moe(0.46, 0.45, 2002) * math.sqrt(deff), 3
             ),
             "deff_uf_calibration": deff,
+            "first_gap_survives_srs": True,
+            "first_gap_ci_low": round(4 - difference_moe(0.41, 0.37, 2002), 3),
+            "first_gap_deff_to_erase": round(
+                (4 / difference_moe(0.41, 0.37, 2002)) ** 2, 3
+            ),
+            "runoff_gap_survives_srs": False,
+            "significance_note": (
+                "A diferença do 1º turno sobrevive por pouco: o limite inferior do "
+                "intervalo fica em +0,1 ponto e um efeito de desenho de 1,07 já a "
+                "anula, quando só a calibração geográfica medida aqui vale 1,033. A "
+                "diferença do 2º turno não sobrevive: o intervalo contém o zero."
+            ),
             "warning": "Aproximação sob amostra aleatória simples. O desenho CATI, ponderação e efeito de desenho não publicados podem ampliar a incerteza.",
         },
         "women_pnad": women_profiles(),

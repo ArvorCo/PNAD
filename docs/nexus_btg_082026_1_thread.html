@@ -168,210 +168,493 @@ svg{display:block;width:100%;height:auto}
   <div class="sources"><b>Fontes públicas:</b> relatórios, questionários, municípios e declarações do estatístico das rodadas de 27/07 e 03/08/2026 (Nexus/BTG, TSE BR-02874/2026), com hashes SHA-256 na <a href="assets/nexus_btg_082026_1_data.json">base analítica</a>. Benchmarks: <a href="https://dadosabertos.tse.jus.br/dataset/eleitorado-atual">TSE Eleitorado Atual</a> (jun/2026) e microdados <a href="https://www.ibge.gov.br/estatisticas/sociais/trabalho/17270-pnad-continua.html">PNADC anual 2025, 1ª visita</a> (pesos V1032 + 200 réplicas). Reprodução: <span style="font-family:var(--mono)">scripts/nexus-btg-082026-audit.py</span> em <a href="https://github.com/ArvorCo/PNAD">github.com/ArvorCo/PNAD</a>. Retratos: Ricardo Stuckert/PR (Lula, CC BY 2.0) e Agência Senado (Flávio Bolsonaro, CC BY 2.0), via Wikimedia Commons; contexto: Agência Senado (CC BY 2.0) e Wagner Tamanaha (CC BY-SA 2.0). Feito pelos agentes de IA da <a href="https://arvor.co/" rel="noopener">Arvor</a>.</div>
 </header>
 
-<!-- POST 1 · capa · a reponderação do 2º turno -->
+<!-- POST RENDA 1 -->
 <section class="post">
-  <div class="post-label">Post 1/24 · capa · a conta que vira o placar</div>
+  <div class="post-label">Post 1/26 · o resultado · uma linha do perfil vira o placar</div>
   <div class="card">
-    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">1/24</div></div>
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">1/26</div></div>
     <div class="card-body">
       <div>
-        <span class="lead-tag">btg/nexus · 03/08/2026 · segundo turno · n = 2.002</span>
-        <h2>Publicado: <span class="r">Lula por 1</span>. Com a renda da PNAD: <span class="b">Flávio por 1,7</span>.</h2>
-        <p class="t">A Nexus diz que 22% da amostra vive com até 1 salário mínimo. A PNAD 2025 encontra <b>13,5%</b>. É o grupo em que Lula vence por 58 a 32.</p>
-        <p class="t">Trocando só essa margem pela distribuição oficial, mantendo as respostas da própria Nexus, o segundo turno <b>troca de sinal</b>.</p>
+        <span class="lead-tag">btg/nexus · 03/08/2026 · 2º turno · n = 2.002</span>
+        <h2>Publicado: <span class="r">Lula por 1</span>.<br>Com a renda da PNAD 2025: <span class="b">Flávio por 1,7</span>.</h2>
+        <p class="t">A amostra tem <b>21,8%</b> vivendo com até 1 salário mínimo. A PNAD Contínua 2025 encontra <b>13,5%</b>. É a única faixa em que Lula vence: 58 a 32.</p>
+        <p class="t">Trocamos só o tamanho das faixas pela distribuição oficial. As respostas são todas da própria Nexus.</p>
         <div class="kchips"><span class="kchip r">publicado 46,0 × 45,0</span><span class="kchip b">renda PNAD 44,7 × 46,4</span><span class="kchip a">sensibilidade, não correção</span></div>
       </div>
       <div class="viz">
-        <div class="photo-duo">
-          <figure class="f-lula"><img src="img/nexus_btg_082026_1/lula.jpg" alt="Lula"><figcaption><b>46,0 → 44,7</b>publicado → renda PNAD</figcaption></figure>
-          <figure class="f-flavio"><img src="img/nexus_btg_082026_1/flavio.jpg" alt="Flávio Bolsonaro"><figcaption><b>45,0 → 46,4</b>publicado → renda PNAD</figcaption></figure>
-        </div>
-        <p class="sub">fotos: Ricardo Stuckert/PR e Agência Senado, CC BY 2.0</p>
+        <svg viewBox="0 0 540 330" role="img" aria-label="Vantagem de Lula sobre Flávio no segundo turno: publicado mais 1,0 e reponderado menos 1,7">
+          <defs>
+            <pattern id="rwP1sky" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+              <rect width="6" height="6" fill="rgba(116,162,255,.3)"/>
+              <line x1="0" y1="0" x2="0" y2="6" stroke="#74a2ff" stroke-width="3"/>
+            </pattern>
+            <marker id="rwP1arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="#d9ff43"/>
+            </marker>
+          </defs>
+          <line x1="300" y1="46" x2="300" y2="277" stroke="#3a4a66" stroke-width="1.5" stroke-dasharray="5 4"/>
+          <text x="300" y="38" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="13" fill="#8c96a8">empate</text>
+          <line x1="80" y1="270" x2="470" y2="270" stroke="#3a4a66" stroke-width="1.5"/>
+          <g font-family="IBM Plex Mono, monospace" font-size="14" fill="#8c96a8" text-anchor="middle">
+            <text x="96" y="294">−3</text><text x="164" y="294">−2</text><text x="232" y="294">−1</text>
+            <text x="300" y="294">0</text><text x="368" y="294">+1</text><text x="436" y="294">+2</text>
+          </g>
+          <text x="275" y="320" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="13" fill="#687386">vantagem de Lula sobre Flávio, em pontos</text>
+          <line x1="368" y1="120" x2="196" y2="196" stroke="#d9ff43" stroke-width="3" stroke-dasharray="9 6" marker-end="url(#rwP1arrow)"/>
+          <text x="204" y="126" font-family="IBM Plex Mono, monospace" font-size="13" fill="#d9ff43">deslocamento</text>
+          <text x="204" y="152" font-family="Archivo Black, Impact, sans-serif" font-size="24" fill="#d9ff43">−2,70</text>
+          <circle cx="368" cy="110" r="11" fill="#ef3e36"/>
+          <text x="368" y="88" text-anchor="middle" font-family="Archivo Black, Impact, sans-serif" font-size="30" fill="#fffefa">+1,0</text>
+          <text x="525" y="104" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="14" fill="#fffefa">publicado</text>
+          <text x="525" y="124" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="13" fill="#a8afbb">Lula 46,0 × 45,0</text>
+          <circle cx="185" cy="210" r="13" fill="url(#rwP1sky)" stroke="#74a2ff" stroke-width="2"/>
+          <text x="185" y="252" text-anchor="middle" font-family="Archivo Black, Impact, sans-serif" font-size="30" fill="#74a2ff">−1,7</text>
+          <text x="22" y="205" font-family="IBM Plex Mono, monospace" font-size="14" fill="#74a2ff">renda PNAD 2025</text>
+          <text x="22" y="225" font-family="IBM Plex Mono, monospace" font-size="13" fill="#a8afbb">Lula 44,7 × 46,4</text>
+        </svg>
+        <p class="sub">Ponto cheio: publicado. Ponto hachurado: reponderação, que é inferência nossa. Perfil da amostra na p. 113; voto por faixa de renda na p. 53.</p>
       </div>
     </div>
-    <div class="card-foot"><span>arvor intelligence · btg/nexus 03/08/2026</span><span>brasil.arvor.co/nexus_btg_082026_1.html</span></div>
+    <div class="card-foot"><span>arvor intelligence · btg/nexus 03/08/2026</span><span>PNAD Contínua anual 2025 · pesos V1032 + 200 réplicas</span></div>
   </div>
-  <div class="copy"><span class="cc">1456 chars</span>A pesquisa BTG/Nexus desta semana diz: Lula 46, Flávio 45 no segundo turno.
+  <div class="copy"><span class="cc">1613 chars</span>A pesquisa BTG/Nexus de 3 de agosto dá Lula 46, Flávio 45 no segundo turno.
 
-Refizemos a conta com um único ajuste. O placar virou: Flávio 46,4, Lula 44,7.
+Trocamos uma linha do perfil da amostra e o placar inverte: Flávio 46,4, Lula 44,7.
 
-O ajuste: a renda.
+A linha é a renda.
 
-A amostra da Nexus tem 22% de eleitores vivendo com até 1 salário mínimo por domicílio. A PNAD Contínua 2025, do IBGE, a régua oficial do país, encontra 13,5% (±0,25). São 8,5 pontos a mais exatamente no grupo em que Lula vence por 58 a 32.
+A Nexus registra 21,8% da amostra vivendo com até 1 salário mínimo de renda domiciliar. A PNAD Contínua anual de 2025, a régua oficial do país, encontra 13,5%, com margem de 0,25 ponto sobre 200 réplicas do IBGE. São 8,3 pontos a mais exatamente na única faixa em que Lula vence, e vence por 58 a 32.
 
-Na outra ponta, a amostra tem 21% acima de 5 salários mínimos. A PNAD encontra 25,3%. Faltam eleitores no grupo em que Flávio vence por 50 a 43.
+Na outra ponta falta gente. A amostra tem 20,8% acima de 5 salários mínimos; a PNAD encontra 25,3%. É a faixa em que Flávio abre 50 a 43.
 
-Trocamos só essa margem pela distribuição oficial, mantendo todas as respostas publicadas pela própria Nexus, e ancoramos no topline. Resultado: o gap de +1,0 para Lula vira −1,7. A incerteza de arredondamento das tabelas move esse número entre −1,8 e −1,6. O sinal não volta.
+Mantivemos todas as respostas publicadas pela Nexus. Trocamos só o tamanho das faixas pela distribuição oficial e ancoramos no topline. A vantagem de +1,0 para Lula vira −1,7.
 
-Três avisos honestos, porque auditoria sem aviso é propaganda:
-1. Não é uma pesquisa corrigida. A ponderação oficial é conjunta e a Nexus não publica os pesos. Isto é análise de sensibilidade: uma margem por vez.
-2. O intervalo da diferença no segundo turno (~±4,2) é maior que a mudança. Empate antes, empate depois.
-3. O mesmo ajuste no primeiro turno não inverte: Lula 39,7 × 38,2.
+Os cinco posts seguintes abrem a conta inteira: a fórmula, a contribuição de cada faixa, o teorema que explica por que é a renda e não outra margem, os testes de robustez e o que enfraquece o achado.
 
-O que a conta prova não é quem vence. É que o placar divulgado depende de uma escolha de perfil que a régua oficial não sustenta.
+Três limites, ditos antes que perguntem:
 
-Thread com a conta aberta, post a post. Dossiê completo: brasil.arvor.co/nexus_btg_082026_1.html</div>
+1. Não é uma pesquisa corrigida. A ponderação oficial da Nexus é conjunta e os pesos não são publicados. Isto é análise de sensibilidade, uma margem por vez.
+
+2. O intervalo da diferença no segundo turno é de ±4,2 pontos, maior que o deslocamento. Empate antes, empate depois.
+
+3. No primeiro turno o mesmo ajuste não inverte: Lula 39,7 × Flávio 38,3.
+
+O que a conta prova não é quem vence. É que o placar divulgado depende de uma escolha de perfil que a régua oficial não sustenta, e que essa escolha não está publicada.
+
+Dossiê: brasil.arvor.co/nexus_btg_082026_1.html</div>
   <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
 </section>
 
-<!-- POST 2 · como a conta funciona -->
+<!-- POST RENDA 2 -->
 <section class="post">
-  <div class="post-label">Post 2/24 · a mecânica da reponderação</div>
+  <div class="post-label">Post 2/26 · a fórmula · erro de calibração vezes gradiente de voto</div>
   <div class="card light">
-    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">2/24</div></div>
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">2/26</div></div>
+    <div class="card-body single">
+      <h2>A conta inteira cabe em <span class="b">uma linha</span></h2>
+      <svg viewBox="0 0 1130 372" role="img" aria-label="A identidade do deslocamento: erro de calibração vezes gradiente de voto, com exemplo na faixa até 1 salário mínimo">
+        <text x="565" y="44" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-weight="600" font-size="30" fill="#07111f">Δ  =  Σ  ( t − w )  ×  v</text>
+        <text x="565" y="70" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="15" fill="#687386">o deslocamento do placar é a soma, faixa a faixa, do erro de calibração vezes o gradiente de voto</text>
+        <text x="1114" y="44" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="14" fill="#687386">exemplo: faixa até 1 SM</text>
+
+        <g>
+          <rect x="16" y="94" width="330" height="196" rx="9" fill="rgba(255,255,255,.72)" stroke="#d8d2c4" stroke-width="1.5"/>
+          <text x="38" y="124" font-family="IBM Plex Mono, monospace" font-weight="600" font-size="14" letter-spacing="1.2" fill="#1b54f2">1 · ERRO DE CALIBRAÇÃO</text>
+          <text x="38" y="154" font-family="Inter, sans-serif" font-weight="700" font-size="19" fill="#07111f">t − w  =  alvo PNAD − amostra</text>
+          <text x="38" y="192" font-family="IBM Plex Mono, monospace" font-size="18" fill="#3a4353">13,50%  −  21,78%</text>
+          <text x="38" y="234" font-family="Archivo Black, Impact, sans-serif" font-size="30" fill="#ef3e36">−8,28 pp</text>
+          <text x="38" y="264" font-family="Inter, sans-serif" font-size="15" fill="#687386">quantos pontos a amostra erra</text>
+          <text x="38" y="282" font-family="Inter, sans-serif" font-size="15" fill="#687386">no tamanho da faixa</text>
+        </g>
+        <text x="374" y="204" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-weight="600" font-size="34" fill="#07111f">×</text>
+        <g>
+          <rect x="400" y="94" width="330" height="196" rx="9" fill="rgba(255,255,255,.72)" stroke="#d8d2c4" stroke-width="1.5"/>
+          <text x="422" y="124" font-family="IBM Plex Mono, monospace" font-weight="600" font-size="14" letter-spacing="1.2" fill="#1b54f2">2 · GRADIENTE DE VOTO</text>
+          <text x="422" y="154" font-family="Inter, sans-serif" font-weight="700" font-size="19" fill="#07111f">v  =  Lula − Flávio na faixa</text>
+          <text x="422" y="192" font-family="IBM Plex Mono, monospace" font-size="18" fill="#3a4353">58  −  32</text>
+          <text x="422" y="234" font-family="Archivo Black, Impact, sans-serif" font-size="30" fill="#ef3e36">+26,0 pt</text>
+          <text x="422" y="264" font-family="Inter, sans-serif" font-size="15" fill="#687386">quanto a faixa é inclinada</text>
+          <text x="422" y="282" font-family="Inter, sans-serif" font-size="15" fill="#687386">politicamente</text>
+        </g>
+        <text x="758" y="204" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-weight="600" font-size="34" fill="#07111f">=</text>
+        <g>
+          <rect x="784" y="94" width="330" height="196" rx="9" fill="rgba(27,84,242,.07)" stroke="#1b54f2" stroke-width="1.5"/>
+          <text x="806" y="124" font-family="IBM Plex Mono, monospace" font-weight="600" font-size="14" letter-spacing="1.2" fill="#1b54f2">3 · CONTRIBUIÇÃO DA FAIXA</text>
+          <text x="806" y="154" font-family="Inter, sans-serif" font-weight="700" font-size="19" fill="#07111f">o produto dos dois</text>
+          <text x="806" y="192" font-family="IBM Plex Mono, monospace" font-size="18" fill="#3a4353">(−8,28 ÷ 100) × 26,0</text>
+          <text x="806" y="234" font-family="Archivo Black, Impact, sans-serif" font-size="30" fill="#1b54f2">−2,15 pt</text>
+          <text x="806" y="264" font-family="Inter, sans-serif" font-size="15" fill="#687386">quanto essa faixa sozinha</text>
+          <text x="806" y="282" font-family="Inter, sans-serif" font-size="15" fill="#687386">move o placar</text>
+        </g>
+
+        <rect x="16" y="308" width="1098" height="52" rx="8" fill="#07111f"/>
+        <text x="44" y="341" font-family="IBM Plex Mono, monospace" font-size="18" fill="#fffefa">as quatro faixas somam Δ = <tspan fill="#d9ff43" font-weight="600">−2,70</tspan></text>
+        <text x="565" y="341" font-family="IBM Plex Mono, monospace" font-size="18" fill="#8c96a8">·</text>
+        <text x="620" y="341" font-family="IBM Plex Mono, monospace" font-size="18" fill="#fffefa">placar publicado +1,0 − 2,70 = <tspan fill="#d9ff43" font-weight="600">−1,70</tspan></text>
+      </svg>
+      <p class="sub">t e w em fração da amostra, v em pontos. Sem parâmetro livre, sem premissa de comportamento: aritmética sobre duas tabelas publicadas pela Nexus.</p>
+    </div>
+    <div class="card-foot"><span>arvor intelligence · btg/nexus 03/08/2026</span><span>voto por renda p. 53 · perfil da amostra p. 113</span></div>
+  </div>
+  <div class="copy"><span class="cc">1499 chars</span>A fórmula inteira cabe em uma linha: Δ = Σ (t − w) × v.
+
+Em português: o deslocamento do placar é a soma, faixa a faixa, do erro de calibração multiplicado pelo gradiente de voto.
+
+t é o alvo oficial, o tamanho que a faixa tem na PNAD Contínua anual de 2025, pessoas de 16 anos ou mais, renda domiciliar efetiva em salários mínimos, pesos do IBGE e 200 réplicas.
+
+w é o tamanho que a mesma faixa tem na amostra publicada pela Nexus.
+
+t − w é o erro de calibração: quantos pontos a amostra erra no tamanho daquele grupo.
+
+v é o gradiente de voto: quantos pontos Lula faz a mais que Flávio dentro daquela faixa. Número da própria Nexus, página 53.
+
+O produto dos dois é a contribuição da faixa. A soma das quatro é o deslocamento.
+
+A faixa até 1 salário mínimo, por exemplo. A PNAD dá 13,50%, a amostra tem 21,78%: erro de −8,28 pontos. Dentro dela Lula vence por 58 a 32, gradiente de +26,0. Contribuição: (−8,28 ÷ 100) × 26,0 = −2,15 ponto.
+
+Repetindo nas quatro faixas: −2,15 − 0,25 + 0,02 − 0,31 = −2,70.
+
+Placar publicado: +1,0. Somando o deslocamento: −1,70.
+
+Duas leituras saem daí de graça. Erro grande em faixa politicamente plana não move nada. Faixa muito inclinada com o tamanho certo também não move nada. Só o produto move, e é por isso que a maior parte das margens de uma pesquisa é inofensiva.
+
+Não é modelo. Não tem parâmetro livre, não tem premissa nossa sobre comportamento eleitoral e não usa nenhum dado que a Nexus não tenha impresso. É aritmética sobre duas tabelas publicadas.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST RENDA 3 -->
+<section class="post">
+  <div class="post-label">Post 3/26 · a conta faixa a faixa · de +1,0 a −1,7</div>
+  <div class="card">
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">3/26</div></div>
+    <div class="card-body single">
+      <h2>Uma faixa responde por <span class="l">80%</span> do deslocamento</h2>
+      <svg viewBox="0 0 1130 392" role="img" aria-label="Decomposição do deslocamento por faixa de renda, do placar publicado mais 1,0 ao reponderado menos 1,7">
+        <defs>
+          <pattern id="rwP3sky" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+            <rect width="8" height="8" fill="rgba(116,162,255,.26)"/>
+            <line x1="0" y1="0" x2="0" y2="8" stroke="#74a2ff" stroke-width="4"/>
+          </pattern>
+          <pattern id="rwP3red" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+            <rect width="8" height="8" fill="rgba(239,62,54,.26)"/>
+            <line x1="0" y1="0" x2="0" y2="8" stroke="#ef3e36" stroke-width="4"/>
+          </pattern>
+        </defs>
+        <text x="100" y="28" font-family="IBM Plex Mono, monospace" font-size="14" fill="#8c96a8">barra cheia = publicado · barra hachurada = reponderação (inferência)</text>
+        <g stroke-dasharray="4 5" stroke="#2b3850" stroke-width="1.2">
+          <line x1="100" y1="72" x2="1065" y2="72"/><line x1="100" y1="242" x2="1065" y2="242"/>
+        </g>
+        <line x1="100" y1="157" x2="1065" y2="157" stroke="#4a5b78" stroke-width="1.6"/>
+        <g font-family="IBM Plex Mono, monospace" font-size="14" fill="#8c96a8" text-anchor="end">
+          <text x="90" y="77">+1</text><text x="90" y="162">0</text><text x="90" y="247">−1</text>
+        </g>
+        <g stroke="#5b6b88" stroke-width="1.2" stroke-dasharray="3 4">
+          <line x1="219" y1="72" x2="276" y2="72"/>
+          <line x1="384" y1="255" x2="441" y2="255"/>
+          <line x1="549" y1="276" x2="606" y2="276"/>
+          <line x1="714" y1="274" x2="771" y2="274"/>
+          <line x1="879" y1="301" x2="936" y2="301"/>
+        </g>
+        <rect x="111" y="72" width="108" height="85" fill="#ef3e36"/>
+        <text x="165" y="60" text-anchor="middle" font-family="Archivo Black, Impact, sans-serif" font-size="26" fill="#fffefa">+1,0</text>
+        <rect x="276" y="72" width="108" height="183" fill="url(#rwP3sky)" stroke="#74a2ff" stroke-width="1"/>
+        <text x="330" y="173" text-anchor="middle" font-family="Archivo Black, Impact, sans-serif" font-size="30" fill="#fffefa">−2,15</text>
+        <rect x="441" y="255" width="108" height="21" fill="url(#rwP3sky)" stroke="#74a2ff" stroke-width="1"/>
+        <text x="495" y="326" text-anchor="middle" font-family="Archivo Black, Impact, sans-serif" font-size="21" fill="#74a2ff">−0,25</text>
+        <rect x="606" y="272" width="108" height="4" fill="url(#rwP3red)" stroke="#ef3e36" stroke-width="1"/>
+        <text x="660" y="326" text-anchor="middle" font-family="Archivo Black, Impact, sans-serif" font-size="21" fill="#ef3e36">+0,02</text>
+        <rect x="771" y="276" width="108" height="25" fill="url(#rwP3sky)" stroke="#74a2ff" stroke-width="1"/>
+        <text x="825" y="326" text-anchor="middle" font-family="Archivo Black, Impact, sans-serif" font-size="21" fill="#74a2ff">−0,31</text>
+        <rect x="936" y="157" width="108" height="144" fill="url(#rwP3sky)" stroke="#74a2ff" stroke-width="1.6"/>
+        <text x="990" y="145" text-anchor="middle" font-family="Archivo Black, Impact, sans-serif" font-size="30" fill="#74a2ff">−1,70</text>
+        <g text-anchor="middle">
+          <g font-family="Inter, sans-serif" font-weight="700" font-size="17" fill="#fffefa">
+            <text x="165" y="358">publicado</text><text x="330" y="358">Até 1 SM</text><text x="495" y="358">1 a 2 SM</text>
+            <text x="660" y="358">2 a 5 SM</text><text x="825" y="358">5+ SM</text><text x="990" y="358">renda PNAD</text>
+          </g>
+          <g font-family="IBM Plex Mono, monospace" font-size="14" fill="#8c96a8">
+            <text x="165" y="380">Lula 46 × 45</text><text x="330" y="380">−8,28 pp × +26,00</text><text x="495" y="380">+4,12 pp × −6,00</text>
+            <text x="660" y="380">−0,37 pp × −4,95</text><text x="825" y="380">+4,54 pp × −6,93</text><text x="990" y="380">Lula 44,7 × 46,4</text>
+          </g>
+        </g>
+      </svg>
+      <p class="sub">Em entrevistas: o erro da faixa mais pobre vale 166 questionários fora do lugar em 2.002. As outras três somam 180 entrevistas e apenas −0,54 ponto.</p>
+    </div>
+    <div class="card-foot"><span>arvor intelligence · btg/nexus 03/08/2026</span><span>perfil publicado soma 101 e foi normalizado para 100</span></div>
+  </div>
+  <div class="copy"><span class="cc">1507 chars</span>A conta faixa a faixa, aberta.
+
+Ponto de partida: o segundo turno publicado, Lula 46 × Flávio 45. Vantagem de +1,0.
+
+Até 1 SM. A amostra tem 21,78%, a PNAD 13,50%. Erro de −8,28 pontos. É a única faixa em que Lula vence, e vence por 26. Contribuição: −2,15.
+
+1 a 2 SM. A amostra tem 17,82%, a PNAD 21,94%. Faltam 4,12 pontos. Aqui Flávio já vence por 6. Contribuição: −0,25.
+
+2 a 5 SM. A amostra tem 39,60%, a PNAD 39,23%. Praticamente calibrada, erro de 0,37 ponto. Contribuição: +0,02.
+
+Mais de 5 SM. A amostra tem 20,79%, a PNAD 25,33%. Faltam 4,54 pontos na faixa em que Flávio abre 50 a 43. Contribuição: −0,31.
+
+Soma: −2,70. Chegada: −1,70, ou seja, Flávio 46,4 × Lula 44,7.
+
+Repare onde está a força. Uma faixa sozinha responde por 80% do deslocamento. Não porque a escolhemos: porque é nela que o erro de calibração e a inclinação política se encontram. Nas outras três, ou o erro é pequeno, ou o voto é parecido, ou as duas coisas.
+
+Em entrevistas, que é a unidade que dá para contar: o excesso na faixa mais pobre equivale a 166 questionários fora do lugar em 2.002. As outras três somam 180 entrevistas deslocadas e apenas −0,54 ponto de efeito.
+
+Duas notas de transcrição, para quem for conferir. O perfil publicado soma 101 por arredondamento e foi normalizado para 100. As linhas do cruzamento de voto também somam 100 ou 101 e foram normalizadas do mesmo jeito, e é por isso que o gradiente aparece como −4,95 e não como −5.
+
+Reprodução: scripts/nexus-btg-082026-audit.py, no GitHub da Arvor.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST RENDA 4 -->
+<section class="post">
+  <div class="post-label">Post 4/26 · o teorema · por que é a renda, e não a margem mais política</div>
+  <div class="card light">
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">4/26</div></div>
+    <div class="card-body single">
+      <h2>Renda é a <span class="r">terceira</span> margem mais política. E a única solta.</h2>
+      <svg viewBox="0 0 1130 392" role="img" aria-label="As cinco margens: largura é a amplitude do gradiente, altura é o erro de calibração, área é o teto do deslocamento">
+        <defs>
+          <pattern id="rwP4blue" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+            <rect width="8" height="8" fill="rgba(27,84,242,.16)"/>
+            <line x1="0" y1="0" x2="0" y2="8" stroke="#1b54f2" stroke-width="4"/>
+          </pattern>
+          <pattern id="rwP4gray" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+            <rect width="8" height="8" fill="rgba(104,115,134,.14)"/>
+            <line x1="0" y1="0" x2="0" y2="8" stroke="#9aa2b1" stroke-width="4"/>
+          </pattern>
+        </defs>
+        <text x="16" y="26" font-family="IBM Plex Mono, monospace" font-size="15" fill="#687386">largura = inclinação política · altura = erro de calibração · área = teto do deslocamento, |Δ| ≤ erro × amplitude</text>
+
+        <g>
+          <text x="15" y="60" font-family="Inter, sans-serif" font-weight="700" font-size="19" fill="#07111f">Região</text>
+          <text x="15" y="80" font-family="IBM Plex Mono, monospace" font-size="14" fill="#1b54f2">travada por cota</text>
+          <rect x="15" y="288" width="169" height="12" fill="url(#rwP4gray)" stroke="#9aa2b1" stroke-width="1"/>
+          <text x="15" y="280" font-family="IBM Plex Mono, monospace" font-size="14" fill="#687386">erro 0,51%</text>
+          <line x1="15" y1="300" x2="215" y2="300" stroke="#c9c2b2" stroke-width="1.5"/>
+          <text x="15" y="322" font-family="IBM Plex Mono, monospace" font-size="14" fill="#687386">amplitude 38,38</text>
+          <text x="15" y="346" font-family="IBM Plex Mono, monospace" font-size="14" fill="#687386">move o placar</text>
+          <text x="15" y="378" font-family="Archivo Black, Impact, sans-serif" font-size="27" fill="#687386">−0,17</text>
+        </g>
+        <g>
+          <text x="239" y="60" font-family="Inter, sans-serif" font-weight="700" font-size="19" fill="#07111f">Idade</text>
+          <text x="239" y="80" font-family="IBM Plex Mono, monospace" font-size="14" fill="#1b54f2">travada por cota</text>
+          <rect x="239" y="273" width="163" height="27" fill="url(#rwP4gray)" stroke="#9aa2b1" stroke-width="1"/>
+          <text x="239" y="265" font-family="IBM Plex Mono, monospace" font-size="14" fill="#687386">erro 1,23%</text>
+          <line x1="239" y1="300" x2="439" y2="300" stroke="#c9c2b2" stroke-width="1.5"/>
+          <text x="239" y="322" font-family="IBM Plex Mono, monospace" font-size="14" fill="#687386">amplitude 37,00</text>
+          <text x="239" y="346" font-family="IBM Plex Mono, monospace" font-size="14" fill="#687386">move o placar</text>
+          <text x="239" y="378" font-family="Archivo Black, Impact, sans-serif" font-size="27" fill="#687386">−0,04</text>
+        </g>
+        <g>
+          <text x="463" y="60" font-family="Inter, sans-serif" font-weight="700" font-size="19" fill="#1b54f2">Renda</text>
+          <text x="463" y="80" font-family="IBM Plex Mono, monospace" font-size="14" fill="#ef3e36">sem cota de campo</text>
+          <rect x="463" y="110" width="145" height="190" fill="url(#rwP4blue)" stroke="#1b54f2" stroke-width="1.6"/>
+          <text x="463" y="102" font-family="IBM Plex Mono, monospace" font-weight="600" font-size="14" fill="#1b54f2">erro 8,66%</text>
+          <line x1="463" y1="300" x2="663" y2="300" stroke="#c9c2b2" stroke-width="1.5"/>
+          <text x="463" y="322" font-family="IBM Plex Mono, monospace" font-size="14" fill="#3a4353">amplitude 32,93</text>
+          <text x="463" y="346" font-family="IBM Plex Mono, monospace" font-size="14" fill="#3a4353">move o placar</text>
+          <text x="463" y="378" font-family="Archivo Black, Impact, sans-serif" font-size="27" fill="#1b54f2">−2,70</text>
+        </g>
+        <g>
+          <text x="687" y="60" font-family="Inter, sans-serif" font-weight="700" font-size="19" fill="#07111f">Sexo</text>
+          <text x="687" y="80" font-family="IBM Plex Mono, monospace" font-size="14" fill="#1b54f2">travada por cota</text>
+          <rect x="687" y="296" width="144" height="4" fill="url(#rwP4gray)" stroke="#9aa2b1" stroke-width="1"/>
+          <text x="687" y="288" font-family="IBM Plex Mono, monospace" font-size="14" fill="#687386">erro 0,18%</text>
+          <line x1="687" y1="300" x2="887" y2="300" stroke="#c9c2b2" stroke-width="1.5"/>
+          <text x="687" y="322" font-family="IBM Plex Mono, monospace" font-size="14" fill="#687386">amplitude 32,83</text>
+          <text x="687" y="346" font-family="IBM Plex Mono, monospace" font-size="14" fill="#687386">move o placar</text>
+          <text x="687" y="378" font-family="Archivo Black, Impact, sans-serif" font-size="27" fill="#687386">−0,06</text>
+        </g>
+        <g>
+          <text x="911" y="60" font-family="Inter, sans-serif" font-weight="700" font-size="19" fill="#07111f">Escolaridade</text>
+          <text x="911" y="80" font-family="IBM Plex Mono, monospace" font-size="14" fill="#1b54f2">travada por cota</text>
+          <rect x="911" y="239" width="22" height="61" fill="url(#rwP4gray)" stroke="#9aa2b1" stroke-width="1"/>
+          <text x="911" y="231" font-family="IBM Plex Mono, monospace" font-size="14" fill="#687386">erro 2,77%</text>
+          <line x1="911" y1="300" x2="1111" y2="300" stroke="#c9c2b2" stroke-width="1.5"/>
+          <text x="911" y="322" font-family="IBM Plex Mono, monospace" font-size="14" fill="#687386">amplitude 5,04</text>
+          <text x="911" y="346" font-family="IBM Plex Mono, monospace" font-size="14" fill="#687386">move o placar</text>
+          <text x="911" y="378" font-family="Archivo Black, Impact, sans-serif" font-size="27" fill="#687386">−0,10</text>
+        </g>
+      </svg>
+      <p class="sub">Painéis na mesma escala, ordenados pela inclinação. Região é a margem mais política da pesquisa e move quase nada, porque bate o alvo. Renda move 95% do próprio teto.</p>
+    </div>
+    <div class="card-foot"><span>arvor intelligence · btg/nexus 03/08/2026</span><span>2º turno, rodada de 03/08 · alvos TSE (jun/26) e PNAD 2025</span></div>
+  </div>
+  <div class="copy"><span class="cc">1959 chars</span>Testamos a hipótese óbvia e ela caiu.
+
+A hipótese: a renda move o placar porque renda determina o voto mais do que as outras divisões. Falso. O próprio relatório derruba.
+
+Amplitude do gradiente, a distância entre a categoria mais lulista e a mais bolsonarista dentro de cada margem no 2º turno: região 38,4 pontos, idade 37,0, renda 32,9, sexo 32,8, escolaridade 5,0.
+
+Renda é a terceira. Não é a margem mais política da pesquisa, nem perto disso.
+
+O que explica é um teorema, não uma intuição. Como o erro de calibração soma zero entre as categorias, vale |Δ| ≤ TVD × amplitude: o quanto uma margem pode mover o placar é limitado pelo produto entre o erro de calibração dela e a inclinação política dela. São duas condições ao mesmo tempo. Falta uma, a margem é inerte por construção.
+
+Erro de calibração medido nesta rodada: renda 8,66%, escolaridade 2,77%, idade 1,23%, região 0,51%, sexo 0,18%.
+
+Agora fecha. Região é a mais inclinada e move −0,17, porque bate o alvo. Escolaridade erra 2,77% e move −0,10, porque é politicamente plana. Renda tem as duas coisas e move −2,70, consumindo 95% do teto que o teorema permite.
+
+Por que só a renda erra? Sexo, idade e escolaridade são cota de campo declarada no relatório, e o registro no TSE acrescenta região: são travadas antes da primeira ligação, e vieram congeladas dígito por dígito entre as duas ondas. Renda não é cota em nenhum dos dois documentos. Entra só como ponderação declarada.
+
+Correção necessária, e ela reforça o método: renda não está sozinha. Ocupação também não tem cota, também erra feio (7,63%) e move +0,81, na direção contrária, para Lula. A amostra tem 17% de trabalhadores informais contra 24,2% na PNAD, e o informal é o segmento mais lulista da tabela.
+
+Publicamos as duas. As margens sem cota erram sete vezes mais que as travadas, e puxam para lados opostos. Somadas, ainda invertem o sinal, agora por 0,9 e não por 1,7.
+
+Não é acusação, é desenho: o que não é travado, flutua.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+
+<!-- POST RENDA 5 -->
+<section class="post">
+  <div class="post-label">Post 5/26 · robustez · o ponto de virada e as duas incertezas</div>
+  <div class="card">
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">5/26</div></div>
     <div class="card-body wide-r">
       <div>
-        <span class="lead-tag">a mecânica · uma margem por vez</span>
-        <h2>Quem vota em quem, faixa a faixa</h2>
-        <p class="t">As respostas são <b>da própria Nexus</b> (p. 53). Só o tamanho de cada faixa muda: sai o perfil da amostra, entra a PNAD 2025 (pessoas 16+, pesos oficiais e 200 réplicas).</p>
-        <p class="t"><b>Onde Lula ganha, a amostra é maior que o país. Onde Flávio ganha, é menor.</b></p>
+        <span class="lead-tag">quanto é preciso andar para o placar empatar</span>
+        <h2><span class="l">37,1%</span> do caminho já zera a vantagem</h2>
+        <p class="t">Não é preciso chegar à PNAD. Bastava a faixa até 1 SM valer <b>18,7%</b> da amostra em vez de 21,8%. A PNAD diz 13,5%.</p>
+        <p class="t">A Nexus está do outro lado do ponto de virada com folga, não em cima dele.</p>
+        <div class="kchips"><span class="kchip a">166 entrevistas fora do lugar</span><span class="kchip b">nenhum intervalo devolve o sinal</span></div>
       </div>
       <div class="viz">
-        <table class="tbl">
-          <thead><tr><th>Faixa (SM)</th><th>Lula×Flávio</th><th>Nexus</th><th>PNAD 25</th><th>Δ</th></tr></thead>
-          <tbody>
-            <tr><td>Até 1</td><td class="hi">58 × 32</td><td>22%</td><td>13,5%</td><td class="hi">+8,5</td></tr>
-            <tr><td>1 a 2</td><td class="hb">43 × 49</td><td>18%</td><td>21,9%</td><td class="hb">−3,9</td></tr>
-            <tr><td>2 a 5</td><td class="hb">42 × 47</td><td>40%</td><td>39,2%</td><td>+0,8</td></tr>
-            <tr><td>5+</td><td class="hb">43 × 50</td><td>21%</td><td>25,3%</td><td class="hb">−4,3</td></tr>
-          </tbody>
-        </table>
-        <p class="sub">Δ = Nexus menos PNAD, em pontos. Voto: relatório de 03/08, p. 53. Perfil: p. 113.</p>
+        <svg viewBox="0 0 640 404" role="img" aria-label="Ponto de virada da reponderação e os dois intervalos de incerteza">
+          <defs>
+            <pattern id="rwP5red" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+              <rect width="8" height="8" fill="rgba(239,62,54,.3)"/>
+              <line x1="0" y1="0" x2="0" y2="8" stroke="#ef3e36" stroke-width="4"/>
+            </pattern>
+            <pattern id="rwP5sky" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+              <rect width="8" height="8" fill="rgba(116,162,255,.3)"/>
+              <line x1="0" y1="0" x2="0" y2="8" stroke="#74a2ff" stroke-width="4"/>
+            </pattern>
+          </defs>
+          <text x="20" y="24" font-family="IBM Plex Mono, monospace" font-size="14" fill="#8c96a8">o caminho entre o perfil da amostra e o da PNAD</text>
+          <text x="60" y="52" font-family="Archivo Black, Impact, sans-serif" font-size="22" fill="#ef3e36">+1,0</text>
+          <text x="253" y="46" text-anchor="middle" font-family="Archivo Black, Impact, sans-serif" font-size="22" fill="#d9ff43">0,0</text>
+          <text x="580" y="52" text-anchor="end" font-family="Archivo Black, Impact, sans-serif" font-size="22" fill="#74a2ff">−1,7</text>
+          <rect x="60" y="62" width="193" height="32" fill="url(#rwP5red)" stroke="#ef3e36" stroke-width="1"/>
+          <rect x="253" y="62" width="327" height="32" fill="url(#rwP5sky)" stroke="#74a2ff" stroke-width="1"/>
+          <text x="156" y="84" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="14" fill="#fffefa">Lula na frente</text>
+          <text x="416" y="84" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="14" fill="#fffefa">Flávio na frente</text>
+          <line x1="253" y1="54" x2="253" y2="106" stroke="#d9ff43" stroke-width="3"/>
+          <text x="60" y="120" font-family="IBM Plex Mono, monospace" font-size="14" fill="#a8afbb">amostra 21,8%</text>
+          <text x="580" y="120" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="14" fill="#a8afbb">PNAD 13,5%</text>
+          <text x="253" y="124" text-anchor="middle" font-family="Archivo Black, Impact, sans-serif" font-size="19" fill="#d9ff43">18,7%</text>
+          <text x="253" y="145" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="14" fill="#d9ff43">37,1% do caminho</text>
+          <line x1="20" y1="182" x2="620" y2="182" stroke="#2b3850" stroke-width="1.4"/>
+          <text x="20" y="212" font-family="IBM Plex Mono, monospace" font-size="14" fill="#8c96a8">as duas incertezas, em pontos</text>
+          <line x1="520" y1="232" x2="520" y2="368" stroke="#d9ff43" stroke-width="1.4" stroke-dasharray="5 4"/>
+          <text x="20" y="252" font-family="IBM Plex Mono, monospace" font-size="14" fill="#c2cad8">gap reponderado · arredondamento das tabelas</text>
+          <rect x="271" y="258" width="23" height="20" fill="url(#rwP5sky)" stroke="#74a2ff" stroke-width="1.2"/>
+          <text x="265" y="274" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="15" fill="#74a2ff">−1,78</text>
+          <text x="300" y="274" font-family="IBM Plex Mono, monospace" font-size="15" fill="#74a2ff">−1,61</text>
+          <text x="20" y="312" font-family="IBM Plex Mono, monospace" font-size="14" fill="#c2cad8">deslocamento · PNAD, 200 réplicas</text>
+          <rect x="130" y="318" width="23" height="20" fill="url(#rwP5sky)" stroke="#74a2ff" stroke-width="1.2"/>
+          <text x="124" y="334" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="15" fill="#74a2ff">−2,79</text>
+          <text x="159" y="334" font-family="IBM Plex Mono, monospace" font-size="15" fill="#74a2ff">−2,63</text>
+          <line x1="90" y1="368" x2="570" y2="368" stroke="#3a4a66" stroke-width="1.4"/>
+          <g font-family="IBM Plex Mono, monospace" font-size="14" fill="#8c96a8" text-anchor="middle">
+            <text x="100" y="390">−3</text><text x="240" y="390">−2</text><text x="380" y="390">−1</text><text x="520" y="390">0</text>
+          </g>
+          <text x="560" y="228" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="13" fill="#d9ff43">empate</text>
+        </svg>
+        <p class="sub">10.000 sorteios compatíveis com as tabelas impressas para o arredondamento; 200 réplicas oficiais do IBGE para a PNAD.</p>
       </div>
     </div>
-    <div class="card-foot"><span>arvor intelligence · btg/nexus 03/08/2026</span><span>PNAD Contínua anual 2025 · V1032 + 200 réplicas</span></div>
+    <div class="card-foot"><span>arvor intelligence · btg/nexus 03/08/2026</span><span>ponto de virada, arredondamento e réplicas na base analítica</span></div>
   </div>
-  <div class="copy"><span class="cc">1348 chars</span>Como a conta funciona, sem caixa-preta.
+  <div class="copy"><span class="cc">1444 chars</span>Quanto dessa conta sobrevive a quem quiser derrubá-la?
 
-A Nexus publica duas coisas: o perfil de renda da amostra (p. 113) e o voto dentro de cada faixa de renda (p. 53). Nós não tocamos no voto. Tocamos no tamanho das faixas.
+Primeiro teste: o ponto de virada. Não é preciso ir até a PNAD para o placar empatar. Bastam 37,1% do caminho entre o perfil da amostra e o perfil oficial. Em número direto: a faixa até 1 salário mínimo teria de valer 18,7% da amostra, em vez dos 21,8% publicados. A PNAD diz 13,5%. A Nexus está do outro lado do ponto de virada com folga, não em cima dele.
 
-Voto publicado pela Nexus no 2º turno:
-· Até 1 SM: Lula 58 × 32
-· 1 a 2 SM: Flávio 49 × 43
-· 2 a 5 SM: Flávio 47 × 42
-· Mais de 5 SM: Flávio 50 × 43
+Traduzindo para a unidade que dá para contar: o excesso na faixa mais pobre equivale a cerca de 166 entrevistas fora do lugar, em 2.002.
 
-Lula vence em UMA faixa. Flávio vence em três. A pergunta inteira é: quanto pesa cada faixa?
+Segundo teste: o arredondamento. As tabelas publicadas vêm em números inteiros, então cada célula pode estar até meio ponto para qualquer lado. Sorteamos 10.000 combinações compatíveis com o que está impresso e refizemos a conta em cada uma. O gap reponderado fica entre −1,78 e −1,61.
 
-Perfil Nexus: 22 / 18 / 40 / 21.
-PNAD 2025 (pessoas de 16+, renda domiciliar efetiva, pesos oficiais e 200 réplicas): 13,5 / 21,9 / 39,2 / 25,3.
+Terceiro teste: a própria PNAD é uma amostra, não um censo. Repetimos a conta com as 200 réplicas oficiais do IBGE, que é como se mede a incerteza amostral da pesquisa domiciliar. O deslocamento fica entre −2,79 e −2,63.
 
-A amostra tem 8,5 pontos a mais na única faixa em que Lula vence, e 4,3 a menos na faixa mais rica, onde Flávio abre 7.
+Nenhum dos dois intervalos devolve o sinal. Nenhum dos dois chega perto de zero.
 
-Média ponderada com o perfil Nexus reproduz o topline publicado (fecha em 0,1 ponto, o que valida a transcrição). Média ponderada com o perfil PNAD, ancorada no topline: Flávio 46,4 × 44,7.
+O que continua valendo, e dissemos no primeiro post: o intervalo da diferença no segundo turno é de ±4,2 pontos, maior que o deslocamento. Empate antes, empate depois.
 
-Isso não acusa manipulação. Amostra telefônica RDD superamostra quem atende e aceita responder, e a calibração deveria consertar isso. A questão auditável é outra: a Nexus declara ponderar por renda usando PNAD, mas não publica nem os pesos nem a distribuição-alvo. Quando a régua oficial mais recente produz outro vencedor, o mínimo que se exige é o arquivo aberto.
-
-Reprodução: scripts/nexus-btg-082026-audit.py no GitHub da Arvor.</div>
+Ou seja, o que muda não é a certeza sobre quem vence a eleição. É quem aparece na frente da manchete, e por qual escolha de perfil.</div>
   <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
 </section>
 
-<!-- POST 3 · julho na mesma régua -->
+<!-- POST RENDA 6 -->
 <section class="post">
-  <div class="post-label">Post 3/24 · a mesma conta em julho · o sinal virou agora</div>
-  <div class="card">
-    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">3/24</div></div>
+  <div class="post-label">Post 6/26 · julho, o degrau e o que enfraquece o achado</div>
+  <div class="card light">
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">6/26</div></div>
     <div class="card-body">
       <div>
         <span class="lead-tag">27/07 × 03/08 · a mesma régua nas duas ondas</span>
-        <h2>Em julho a conta <span class="l">não virava</span>. Agora vira.</h2>
-        <p class="t">Aplicamos a reponderação idêntica à rodada de 27/07: Lula seguia na frente, <b>+0,9</b>. Na rodada de 03/08, a mesma conta dá <b>−1,7</b>.</p>
-        <p class="t">O placar publicado moveu 2 pontos na semana. O reponderado moveu <b>2,6</b>. A reação de Flávio é maior na régua oficial do que na régua da amostra.</p>
+        <h2>Em julho o desvio era <span class="r">maior</span>. E Lula continuava na frente.</h2>
+        <p class="t">O viés de composição não cresceu: passou de −3,13 para −2,70. O que encolheu foi a vantagem publicada, de 4 pontos para 1.</p>
+        <div class="minibars">
+          <div class="mb"><span class="nm">Até 1 SM</span><span class="tr"><i class="seg lula" style="width:100%"></i></span><span class="v">+26,00</span></div>
+          <div class="mb"><span class="nm">1 a 2 SM</span><span class="tr"><i class="seg flavio" style="width:23.1%"></i></span><span class="v">−6,00</span></div>
+          <div class="mb"><span class="nm">2 a 5 SM</span><span class="tr"><i class="seg flavio" style="width:19%"></i></span><span class="v">−4,95</span></div>
+          <div class="mb"><span class="nm">5+ SM</span><span class="tr"><i class="seg flavio" style="width:26.7%"></i></span><span class="v">−6,93</span></div>
+        </div>
+        <p class="sub">Vantagem de Lula sobre Flávio dentro da faixa. A renda não é rampa, é degrau: entre as três faixas de cima, a variação é de 1,98 ponto.</p>
       </div>
       <div class="viz">
-        <svg viewBox="0 0 520 300" role="img" aria-label="Gap Lula menos Flávio, publicado e reponderado, julho e agosto">
-          <line x1="60" y1="150" x2="490" y2="150" stroke="#3a4a66" stroke-width="1.5" stroke-dasharray="5 4"/>
-          <text x="495" y="154" class="svg-label" text-anchor="end">0</text>
-          <text x="150" y="285" class="svg-label" text-anchor="middle">27/07</text>
-          <text x="400" y="285" class="svg-label" text-anchor="middle">03/08</text>
-          <polyline points="150,70 400,130" fill="none" stroke="#fffefa" stroke-width="4" stroke-linecap="round"/>
-          <circle cx="150" cy="70" r="8" fill="#fffefa"/><circle cx="400" cy="130" r="8" fill="#fffefa"/>
-          <text x="150" y="48" fill="#fffefa" font-family="Archivo Black" font-size="22" text-anchor="middle">+4,0</text>
-          <text x="400" y="112" fill="#fffefa" font-family="Archivo Black" font-size="22" text-anchor="middle">+1,0</text>
-          <text x="80" y="62" class="svg-label">publicado</text>
-          <polyline points="150,133 400,184" fill="none" stroke="#d9ff43" stroke-width="4" stroke-linecap="round" stroke-dasharray="9 6"/>
-          <circle cx="150" cy="133" r="8" fill="#d9ff43"/><circle cx="400" cy="184" r="8" fill="#d9ff43"/>
-          <text x="150" y="168" fill="#d9ff43" font-family="Archivo Black" font-size="22" text-anchor="middle">+0,9</text>
-          <text x="400" y="219" fill="#d9ff43" font-family="Archivo Black" font-size="22" text-anchor="middle">−1,7</text>
-          <text x="80" y="200" class="svg-label" fill="#d9ff43">renda PNAD</text>
+        <svg viewBox="0 0 540 352" role="img" aria-label="Gap publicado e reponderado nas ondas de 27 de julho e 3 de agosto">
+          <line x1="62" y1="221" x2="500" y2="221" stroke="#c9c2b2" stroke-width="1.6" stroke-dasharray="5 4"/>
+          <text x="54" y="226" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="14" fill="#687386">0</text>
+          <polyline points="160,78 400,185" fill="none" stroke="#07111f" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="160" cy="78" r="9" fill="#07111f"/><circle cx="400" cy="185" r="9" fill="#07111f"/>
+          <text x="160" y="60" text-anchor="middle" font-family="Archivo Black, Impact, sans-serif" font-size="26" fill="#07111f">+4,0</text>
+          <text x="400" y="167" text-anchor="middle" font-family="Archivo Black, Impact, sans-serif" font-size="26" fill="#07111f">+1,0</text>
+          <text x="30" y="74" font-family="IBM Plex Mono, monospace" font-size="14" fill="#07111f">publicado</text>
+          <polyline points="160,190 400,281" fill="none" stroke="#1b54f2" stroke-width="4" stroke-linecap="round" stroke-dasharray="9 6"/>
+          <circle cx="160" cy="190" r="9" fill="#1b54f2"/><circle cx="400" cy="281" r="9" fill="#1b54f2"/>
+          <text x="160" y="170" text-anchor="middle" font-family="Archivo Black, Impact, sans-serif" font-size="26" fill="#1b54f2">+0,9</text>
+          <text x="400" y="324" text-anchor="middle" font-family="Archivo Black, Impact, sans-serif" font-size="26" fill="#1b54f2">−1,7</text>
+          <text x="30" y="186" font-family="IBM Plex Mono, monospace" font-size="14" fill="#1b54f2">renda PNAD</text>
+          <g stroke="#ef3e36" stroke-width="1.6">
+            <line x1="196" y1="82" x2="196" y2="186"/><line x1="190" y1="82" x2="202" y2="82"/><line x1="190" y1="186" x2="202" y2="186"/>
+            <line x1="436" y1="189" x2="436" y2="277"/><line x1="430" y1="189" x2="442" y2="189"/><line x1="430" y1="277" x2="442" y2="277"/>
+          </g>
+          <text x="188" y="128" text-anchor="end" font-family="Archivo Black, Impact, sans-serif" font-size="21" fill="#ef3e36">−3,13</text>
+          <text x="448" y="242" font-family="Archivo Black, Impact, sans-serif" font-size="21" fill="#ef3e36">−2,70</text>
+          <g font-family="IBM Plex Mono, monospace" font-size="15" fill="#687386" text-anchor="middle">
+            <text x="160" y="346">27/07</text><text x="400" y="346">03/08</text>
+          </g>
         </svg>
-        <p class="sub">Gap = Lula menos Flávio no 2º turno, em pontos. Linha tracejada lime: reponderado por renda PNAD 2025. A linha cruza o zero entre as duas ondas.</p>
+        <p class="sub">Vantagem de Lula no 2º turno, em pontos. Em vermelho, o deslocamento produzido pela renda em cada onda.</p>
       </div>
     </div>
-    <div class="card-foot"><span>arvor intelligence · btg/nexus 03/08/2026</span><span>reponderação idêntica nas duas ondas · IC de arredondamento no dossiê</span></div>
+    <div class="card-foot"><span>arvor intelligence · btg/nexus 03/08/2026</span><span>reponderação idêntica nas duas ondas</span></div>
   </div>
-  <div class="copy"><span class="cc">1367 chars</span>Objeção óbvia: "vocês escolheram a rodada que dá o resultado que querem".
+  <div class="copy"><span class="cc">1586 chars</span>A objeção previsível: escolheram a rodada que dava o resultado que queriam.
 
-Resposta: aplicamos a conta às duas.
+Resposta: a mesma conta, na rodada anterior, não virava nada. E o desvio era maior.
 
-Rodada de 27/07 (Lula 47 × 43 publicado): reponderando a renda pela mesma PNAD 2025, Lula continuava na frente. Gap de +0,9 (IC de arredondamento: +0,8 a +1,0). A conta não virava o placar. Publicamos assim mesmo.
+Em 27 de julho a amostra tinha 23% na faixa até 1 salário mínimo, contra os mesmos 13,5% da PNAD. O deslocamento foi de −3,13, mais forte que os −2,70 de agosto. Só que a vantagem publicada era de +4,0. Reponderada, ficava em +0,87. Lula continuava na frente, e publicamos assim.
 
-Rodada de 03/08 (Lula 46 × 45): a mesma conta dá −1,7 (IC: −1,8 a −1,6). Agora vira.
+Uma semana depois, o viés de composição não cresceu. Encolheu um pouco. O que virou o sinal foi a vantagem publicada, que caiu de 4 para 1 ponto e passou a caber inteira dentro do desvio.
 
-O que isso diz:
+Agora a fragilidade do método, dita por nós antes que digam por nós.
 
-1. A régua é fixa, o resultado não. Quem calibra a conta para produzir um vencedor não obtém +0,9 numa semana e −1,7 na outra. A mudança vem dos dados da própria Nexus, não da nossa régua.
+A renda não é rampa, é degrau. Na faixa até 1 salário mínimo, Lula vence por 26 pontos. Nas outras três, Flávio vence por 6,00, por 4,95 e por 6,93. A variação entre essas três é de 1,98 ponto: para efeito de voto, elas são o mesmo grupo. A conta inteira depende, portanto, do tamanho de uma faixa só.
 
-2. A reação de Flávio é MAIOR na régua oficial. No placar publicado, ele ganhou 2 pontos de gap em uma semana. No reponderado, 2,6. O movimento que a Nexus mostra é, se algo, subestimado pela composição de renda da amostra.
+Isso é a fragilidade do método e é também a sua transparência. Não há como esconder o que faz o trabalho, e qualquer leitor pode atacar exatamente esse ponto.
 
-3. O viés de composição é estável. Nas duas ondas, a amostra tem gente demais na faixa até 1 SM (23% e 22%, contra 13,5% da PNAD). O desvio não oscila ao acaso: aponta sempre para o mesmo lado, o lado em que Lula vence por 26 pontos.
+Os limites, repetidos de propósito. Isto é análise de sensibilidade, não pesquisa corrigida. A ponderação oficial da Nexus é conjunta e não publicada. Mexemos em uma margem por vez, sem interação com sexo, idade ou região. E o intervalo da diferença continua maior que o deslocamento.
 
-Amostra RDD superamostrar baixa renda não é escândalo, é física de quem atende telefone. O problema auditável: a calibração declarada não publica pesos, alvo nem efeito de desenho. Com o arquivo fechado, cada rodada exige que o leitor confie. Com o arquivo aberto, exigiria que confira.</div>
-  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
-</section>
-
-<!-- POST 4 · a régua envelhecida -->
-<section class="post">
-  <div class="post-label">Post 4/24 · a régua envelhecida · PNAD 2024 quando a 2025 existe</div>
-  <div class="card light">
-    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">4/24</div></div>
-    <div class="card-body wide-l">
-      <div>
-        <span class="lead-tag">metodologia · a vintage da cota</span>
-        <h2>A Nexus calibra com a PNAD <span class="r">de 2024</span></h2>
-        <p class="t">A metodologia declara PNADC anual 2024, 1ª visita, como fonte da cota de renda. A PNAD anual <b>2025 está publicada desde maio de 2026</b>.</p>
-        <p class="t">Renda em salário mínimo envelhece rápido: o mínimo foi de R$ 2.824 (2024) a R$ 3.242 (2026). Faixa nominal antiga <b>empurra gente para baixo</b> na régua de hoje.</p>
-        <p class="t">Nossa sensibilidade usa a base de 2025 com o mesmo conceito de renda efetiva domiciliar. É a régua que existia quando o campo foi feito.</p>
-      </div>
-      <div class="viz">
-        <svg viewBox="0 0 520 300" role="img" aria-label="Linha do tempo das bases PNAD">
-          <line x1="40" y1="150" x2="500" y2="150" stroke="#c9c2b2" stroke-width="2"/>
-          <circle cx="90" cy="150" r="9" fill="#687386"/>
-          <text x="90" y="120" class="svg-label" text-anchor="middle" fill="#687386">PNAD 2024 v1</text>
-          <text x="90" y="185" class="svg-label" text-anchor="middle">a fonte declarada</text>
-          <circle cx="290" cy="150" r="9" fill="#1b54f2"/>
-          <text x="290" y="120" class="svg-label" text-anchor="middle" fill="#1b54f2">mai/2026: sai a PNAD 2025</text>
-          <text x="290" y="185" class="svg-label" text-anchor="middle">a régua atual, ignorada</text>
-          <circle cx="450" cy="150" r="9" fill="#ef3e36"/>
-          <text x="450" y="120" class="svg-label" text-anchor="middle" fill="#ef3e36">31/07: campo</text>
-          <text x="450" y="185" class="svg-label" text-anchor="middle">rodada 8</text>
-        </svg>
-        <p class="sub">Mesmo padrão da AtlasIntel em julho. Duas casas, a mesma escolha silenciosa de vintage: a cota de renda é decisão editorial não publicada.</p>
-      </div>
-    </div>
-    <div class="card-foot"><span>arvor intelligence · btg/nexus 03/08/2026</span><span>metodologia da rodada 8 · IBGE PNADC anual</span></div>
-  </div>
-  <div class="copy"><span class="cc">1383 chars</span>Detalhe de metodologia que ninguém lê e que move placar: a VINTAGE da cota de renda.
-
-A Nexus declara calibrar renda pela PNAD Contínua anual de 2024 (1ª visita). Só que a PNAD anual de 2025 está publicada desde maio de 2026. O campo desta pesquisa é de 31/07 a 02/08. A régua mais recente existia há dois meses e não foi usada.
-
-Por que isso importa em renda, mais do que em sexo ou idade:
-
-Faixas de renda em pesquisa são NOMINAIS ("até 1 salário mínimo", "de 1 a 2"). O salário mínimo foi de R$ 2.824 em 2024 para R$ 3.036 em 2025 e R$ 3.242 em 2026. Cada reajuste move a fronteira das faixas. Uma distribuição de 2024 aplicada em agosto de 2026 superestima a fatia "pobre" do eleitorado simplesmente porque a régua encolheu dois reajustes atrás.
-
-Já vimos este filme: a AtlasIntel de julho declarava a mesma PNAD 2024, e expressar os mesmos microdados a preços atuais movia a faixa de R$ 2.000 a 3.000 de 17,3% para 11,9%. Duas casas diferentes, o mesmo vício de vintage.
-
-A escolha da edição da PNAD não aparece no registro TSE, não aparece no relatório com justificativa, não tem distribuição-alvo publicada. É uma decisão editorial com efeito de pontos percentuais, tomada em silêncio.
-
-Na nossa proposta de resolução, isso é linha expressa: declarar pesquisa, EDIÇÃO, período de referência e mês dos valores nominais de cada fonte de cota. Custa um parágrafo. Vale um placar.</div>
+Resolver isso não exige confiar em ninguém. Exige o arquivo aberto: pesos, distribuição-alvo, edição da PNAD usada e efeito de desenho.</div>
   <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
 </section>
 
 <!-- POST · religião · a margem fantasma -->
 <section class="post">
-  <div class="post-label">Post 5/24 · a margem fantasma · religião</div>
+  <div class="post-label">Post 7/26 · a margem fantasma · religião</div>
   <div class="card">
-    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">5/24</div></div>
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">7/26</div></div>
     <div class="card-body wide-r">
       <div>
         <span class="lead-tag">27/07 → 03/08 · perfil da amostra</span>
@@ -409,14 +692,14 @@ O que NÃO estamos dizendo: que foi de propósito. Religião não se controla em
 
 <!-- POST 5 · o fato -->
 <section class="post">
-  <div class="post-label">Post 6/24 · o fato · empate nas duas bocas</div>
+  <div class="post-label">Post 8/26 · o fato · empate nas duas bocas</div>
   <div class="card">
-    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">6/24</div></div>
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">8/26</div></div>
     <div class="card-body wide-r">
       <div>
         <span class="stamp fact">Fato publicado</span>
-        <h2>41 × 37 e 46 × 45: <span class="l">nenhuma liderança sobrevive</span></h2>
-        <p class="t">Flávio subiu 4 no primeiro turno e 2 no segundo em uma semana. A diferença de 4 pontos tem margem aproximada de <b>±3,9</b>; a de 1 ponto, <b>±4,2</b>. As duas cruzam zero.</p>
+        <h2>No 2º turno não há liderança. No 1º, ela cabe em <span class="l">0,1 ponto</span>.</h2>
+        <p class="t">Flávio subiu 4 no primeiro turno e 2 no segundo em uma semana. A diferença de 1 ponto no 2º turno tem margem de <b>±4,2</b> e contém o zero. A de 4 pontos no 1º turno tem <b>±3,9</b> e termina em <b>+0,1</b>.</p>
         <p class="t">A série de oito rodadas sustenta a palavra <b>reação</b>. Não sustenta virada.</p>
       </div>
       <div class="viz">
@@ -437,13 +720,19 @@ O que NÃO estamos dizendo: que foi de propósito. Religião não se controla em
     </div>
     <div class="card-foot"><span>arvor intelligence · btg/nexus 03/08/2026</span><span>séries: relatórios 30/03 a 03/08 · margens SRS no dossiê</span></div>
   </div>
-  <div class="copy"><span class="cc">1401 chars</span>Antes de auditar, o fato. E o fato desta rodada é grande.
+  <div class="copy"><span class="cc">1928 chars</span>Antes de auditar, o fato. E o fato desta rodada é grande.
 
 Primeiro turno: Lula 41, Flávio 37. Na semana passada eram 42 × 33. Flávio ganhou 4 pontos em sete dias; Lula perdeu 1.
 
 Segundo turno: Lula 46, Flávio 45. Era 47 × 43.
 
-Pela primeira vez na série de oito rodadas da Nexus, o empate estatístico entrou no PRIMEIRO turno. A diferença de 4 pontos carrega margem aproximada de ±3,9 (e isso assumindo amostra aleatória simples, sem o efeito de desenho que a Nexus não publica). A de 1 ponto no segundo turno, ±4,2. Nenhuma das duas diferenças sobrevive.
+Duas diferenças, dois destinos estatísticos distintos, e a distinção importa.
+
+No SEGUNDO turno, a vantagem de 1 ponto tem margem de ±4,2. O intervalo vai de −3,2 a +5,2: contém o zero e contém também o cenário em que Flávio está na frente. Não há liderança a declarar.
+
+No PRIMEIRO turno, a vantagem de 4 pontos tem margem de ±3,9. O intervalo vai de +0,1 a +7,9: não contém o zero. A liderança de Lula sobrevive, e sobrevive por um décimo de ponto.
+
+Esse décimo é o ponto. Todas essas contas assumem amostra aleatória simples, a hipótese mais generosa possível com o instituto. Bastaria um efeito de desenho de 1,07 para a vantagem do primeiro turno virar empate, e só a calibração geográfica que medimos nos anexos de municípios já vale 1,033. O número que resolveria a dúvida é o efeito de desenho real, e a Nexus não publica efeito de desenho nenhum.
 
 O que sustenta a leitura de "reação" e não de ruído:
 · O espontâneo acompanhou na direção certa (Flávio 27 → 28, Lula estável em 36), embora pouco.
@@ -457,9 +746,9 @@ Duas disputas abertas, nenhum líder estatístico. Esse é o placar honesto. Nos
 </section>
 <!-- POST 6 · onde o movimento mora -->
 <section class="post">
-  <div class="post-label">Post 7/24 · o mapa do movimento · homens, Nordeste, anti-ambos</div>
+  <div class="post-label">Post 9/26 · o mapa do movimento · homens, Nordeste, anti-ambos</div>
   <div class="card">
-    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">7/24</div></div>
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">9/26</div></div>
     <div class="card-body wide-r">
       <div>
         <span class="lead-tag">27/07 → 03/08 · variação de Flávio no 1º turno</span>
@@ -498,9 +787,9 @@ Isso importa para o segundo turno: crescimento por consolidação tem teto, e o 
 
 <!-- POST 7 · Nordeste -->
 <section class="post">
-  <div class="post-label">Post 8/24 · Nordeste · 19 pontos em uma semana, e as cautelas</div>
+  <div class="post-label">Post 10/26 · Nordeste · 19 pontos em uma semana, e as cautelas</div>
   <div class="card red">
-    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">8/24</div></div>
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">10/26</div></div>
     <div class="card-body">
       <div>
         <span class="lead-tag">o maior deslocamento da rodada</span>
@@ -538,120 +827,110 @@ O que sobra depois do freio: um deslocamento grande, coerente entre primeiro e s
 
 <!-- POST 8 · transferência / sankey -->
 <section class="post">
-  <div class="post-label">Post 9/24 · a transferência estimada · fato sólido, fita hachurada</div>
+  <div class="post-label">Post 11/26 · a transferência que a Nexus mediu</div>
   <div class="card">
-    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">9/24</div></div>
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">11/26</div></div>
     <div class="card-body wide-r">
       <div>
-        <span class="stamp inf">Inferência rotulada</span>
-        <h2>Consolidação <span class="l">1,66 : 1</span> para Flávio</h2>
-        <p class="t">Do 1º para o 2º turno, Flávio ganha <b>7,6 pontos</b> fora da base própria; Lula, <b>4,6</b>. Era 2:1 em julho: Flávio consolida mais, e Lula passou a consolidar melhor.</p>
-        <p class="t">Barra sólida = número publicado. Fita hachurada = estimativa IPF. <b>Nenhum elo individual foi medido.</b></p>
+        <span class="stamp fact">Medido pela Nexus</span>
+        <h2>A transferência foi medida. E ela <span class="l">não fecha</span> para Flávio.</h2>
+        <p class="t">A p. 51 publica o cruzamento do 1º com o 2º turno para o eleitorado dos seis candidatos menores. Não é estimativa nossa: é medição do instituto.</p>
+        <p class="t">Desses <b>15,2 pontos</b>, Flávio leva <b>45,9%</b>. Para vencer no primeiro turno precisaria de cerca de <b>68%</b>. E quase um terço prefere branco ou nulo.</p>
       </div>
       <div class="viz">
-        <svg viewBox="0 0 560 320" role="img" aria-label="Transferência agregada estimada do primeiro para o segundo turno">
-          <defs>
-            <pattern id="th-r" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="7" height="7" fill="#ef3e36" opacity=".2"/><line x1="0" y1="0" x2="0" y2="7" stroke="#ef3e36" stroke-width="2.4" opacity=".8"/></pattern>
-            <pattern id="th-b" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="7" height="7" fill="#74a2ff" opacity=".2"/><line x1="0" y1="0" x2="0" y2="7" stroke="#74a2ff" stroke-width="2.4" opacity=".8"/></pattern>
-            <pattern id="th-l" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="7" height="7" fill="#d9ff43" opacity=".18"/><line x1="0" y1="0" x2="0" y2="7" stroke="#d9ff43" stroke-width="2.4" opacity=".75"/></pattern>
-          </defs>
-          <path d="M 106 22 C 260 22, 300 22, 452 22 L 452 96 C 300 96, 260 96, 106 96 Z" fill="url(#th-r)"/>
-          <path d="M 106 106 C 260 106, 300 115, 452 115 L 452 182 C 300 182, 260 173, 106 173 Z" fill="url(#th-b)"/>
-          <path d="M 106 183 C 260 183, 300 96, 452 96 L 452 101 C 300 101, 260 188, 106 188 Z" fill="url(#th-r)" opacity=".9"/>
-          <path d="M 106 188 C 260 188, 300 182, 452 182 L 452 195 C 300 195, 260 201, 106 201 Z" fill="url(#th-b)" opacity=".9"/>
-          <path d="M 106 201 C 260 201, 300 206, 452 206 L 452 213 C 300 213, 260 208, 106 208 Z" fill="url(#th-l)"/>
-          <path d="M 106 218 C 260 218, 300 101, 452 101 L 452 105 C 300 105, 260 222, 106 222 Z" fill="url(#th-r)" opacity=".85"/>
-          <path d="M 106 224 C 260 224, 300 213, 452 213 L 452 220 C 300 220, 260 231, 106 231 Z" fill="url(#th-l)" opacity=".9"/>
-          <rect x="92" y="22" width="14" height="74" fill="#ef3e36"/>
-          <rect x="92" y="106" width="14" height="67" fill="#74a2ff"/>
-          <rect x="92" y="183" width="14" height="25" fill="#e8ecf4"/>
-          <rect x="92" y="218" width="14" height="13" fill="#a8afbb"/>
-          <rect x="452" y="22" width="14" height="83" fill="#ef3e36"/>
-          <rect x="452" y="115" width="14" height="81" fill="#74a2ff"/>
-          <rect x="452" y="206" width="14" height="14" fill="#d9ff43"/>
-          <text x="84" y="62" class="svg-label" text-anchor="end" fill="#fffefa">Lula 41</text>
-          <text x="84" y="143" class="svg-label" text-anchor="end" fill="#fffefa">Flávio 37</text>
-          <text x="84" y="200" class="svg-label" text-anchor="end" fill="#fffefa">Direita 14</text>
-          <text x="84" y="228" class="svg-label" text-anchor="end" fill="#fffefa">B/N + NS 7</text>
-          <text x="474" y="66" class="svg-label" fill="#fffefa">Lula 46</text>
-          <text x="474" y="160" class="svg-label" fill="#fffefa">Flávio 45</text>
-          <text x="474" y="217" class="svg-label" fill="#fffefa">B/N + NS 10</text>
-          <text x="106" y="278" class="svg-label">1º turno (fato)</text>
-          <text x="452" y="278" class="svg-label" text-anchor="end">2º turno (fato)</text>
+        <svg viewBox="0 0 560 300" role="img" aria-label="Destino medido do eleitorado dos seis candidatos menores">
+          <text x="0" y="18" font-family="IBM Plex Mono, monospace" font-size="13" fill="#8c96a8">15,2 pontos do 1º turno · cruzamento p. 51</text>
+          <rect x="0" y="40" width="257" height="72" fill="#74a2ff"/>
+          <rect x="257" y="40" width="176" height="72" fill="#d9ff43"/>
+          <rect x="433" y="40" width="109" height="72" fill="#ef3e36"/>
+          <rect x="542" y="40" width="18" height="72" fill="#a8afbb"/>
+          <text x="128" y="84" font-family="Archivo Black, sans-serif" font-size="30" fill="#fff" text-anchor="middle">45,9%</text>
+          <text x="345" y="84" font-family="Archivo Black, sans-serif" font-size="26" fill="#07111f" text-anchor="middle">31,5%</text>
+          <text x="487" y="84" font-family="Archivo Black, sans-serif" font-size="22" fill="#fff" text-anchor="middle">19,5%</text>
+          <text x="128" y="132" font-size="15" font-weight="700" fill="#c2cad8" text-anchor="middle">Flávio</text>
+          <text x="345" y="132" font-size="15" font-weight="700" fill="#c2cad8" text-anchor="middle">Branco ou nulo</text>
+          <text x="487" y="132" font-size="15" font-weight="700" fill="#c2cad8" text-anchor="middle">Lula</text>
+          <line x1="0" y1="176" x2="560" y2="176" stroke="#d9ff43" stroke-width="2"/>
+          <text x="0" y="206" font-size="17" font-weight="700" fill="#fbf8f1">Ele precisaria de 68%. Mediram 45,9%.</text>
+          <text x="0" y="238" font-size="15" fill="#c2cad8">Razão medida entre os finalistas: 2,35 a 1 para Flávio.</text>
+          <text x="0" y="266" font-size="15" fill="#c2cad8">Quase um terço recusa os dois e escolhe branco ou nulo.</text>
         </svg>
-        <p class="sub">Esquema agregado simplificado do diagrama completo do dossiê. Prior ideológica explícita, fechada por IPF nas margens publicadas.</p>
+        <p class="sub">Barras: percentual do pool dos seis candidatos menores em cada destino, pelo cruzamento publicado.</p>
       </div>
     </div>
-    <div class="card-foot"><span>arvor intelligence · btg/nexus 03/08/2026</span><span>diagrama completo e prior: brasil.arvor.co/nexus_btg_082026_1.html</span></div>
+    <div class="card-foot"><span>arvor intelligence · btg/nexus 03/08/2026</span><span>relatório de 03/08, p. 51 · cruzamento publicado</span></div>
   </div>
-  <div class="copy"><span class="cc">1456 chars</span>Do primeiro para o segundo turno, quem herda o quê? Nenhum instituto brasileiro publica matriz de transferência. Então estimamos, com o método fixo da casa e o rótulo na testa: barra sólida é fato, fita hachurada é inferência.
+  <div class="copy"><span class="cc">1471 chars</span>Correção importante, e ela deixa o achado mais forte, não mais fraco.
 
-O método em quatro linhas:
-1. Os toplines são fato: 41/37/14/7 no 1º turno, 46/45/8/2 no 2º.
-2. A migração declarada da p. 51 restringe o modelo (próximo post).
-3. Uma prior ideológica explícita completa o resto: base fiel, cruzamento entre campos perto de zero, branco/nulo alimentado por quem perdeu o candidato.
-4. IPF fecha a aritmética exatamente nas margens publicadas.
+A Nexus PUBLICA a matriz de transferência. Está na página 51 do relatório: o cruzamento entre o voto de 1º turno e o de 2º turno, para o eleitorado de cada candidato menor. Não é estimativa de ninguém. É medição do instituto, e quase nenhuma cobertura usou.
 
-O número robusto (sobrevive à troca da prior, porque é imposto pelas margens): a RAZÃO DE CONSOLIDAÇÃO. Flávio ganha 7,6 pontos fora da própria base; Lula ganha 4,6. Razão 1,66 para 1.
+O que ela mede, transcrito:
+· Eleitor de Caiado: 52% Flávio, 17% Lula, 30% branco/nulo
+· Eleitor de Zema: 57% Flávio, 12% Lula, 27% branco/nulo
+· Eleitor de Renan: 40% Flávio, 15% Lula, 45% branco/nulo
+· Eleitor de Cury: 40% Flávio, 43% Lula, 18% branco/nulo
+· Eleitor de Daciolo: 31% Flávio, 35% Lula, 11% branco/nulo, 22% não sabe
+· Eleitor de Samara: 25% Flávio, 33% Lula, 33% branco/nulo
 
-Em 27/07 essa razão era 2 para 1. Leitura dupla, e as duas valem:
-· Flávio segue absorvendo mais voto de fora que Lula. O campo dele tem mais sobra para colher.
-· Mas a razão CAIU. Lula melhorou a própria consolidação na semana em que Flávio saltou no primeiro turno. O segundo turno apertou menos que o primeiro por isso.
+Somando com o peso de cada candidatura, esses seis eleitorados valem 15,2 pontos do primeiro turno e se repartem assim: Flávio 45,9%, branco ou nulo 31,5%, Lula 19,5%, não sabe 3,1%.
 
-O que não fazemos: dizer quantos eleitores de Caiado vão para Flávio "de verdade", ou tratar cada fita como medição. O corte candidato a candidato depende da prior e está rotulado como inferência no dossiê, com hachura visual em cada fita.
+Três consequências, todas medidas:
 
-Instituto que publicasse a matriz de transição tornaria este post desnecessário. Seguimos esperando.</div>
+1. A RAZÃO REAL É 2,35 PARA 1. Flávio tira 6,95 pontos desse pool contra 2,96 de Lula. Vantagem grande, e nossa, não inferida.
+
+2. E MESMO ASSIM NÃO BASTA. Para vencer no primeiro turno ele precisaria absorver cerca de 68% do pool. O instituto mediu 45,9%. A vitória em turno único não está no dado.
+
+3. O BRANCO/NULO É O TERCEIRO MAIS VOTADO DESSE ELEITORADO. 31,5% recusam os dois finalistas. Entre os eleitores de Renan, 45%.
+
+Quem soma "direita + direita" está somando um bloco que a própria pesquisa mostra que não se soma.</div>
   <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
 </section>
 
 <!-- POST 9 · migração declarada p.51 -->
 <section class="post">
-  <div class="post-label">Post 10/24 · a migração declarada · a prova da página 51</div>
+  <div class="post-label">Post 12/26 · a prova da página 51 e o que ela não cobre</div>
   <div class="card light">
-    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">10/24</div></div>
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">12/26</div></div>
     <div class="card-body">
       <div>
         <span class="stamp fact">Fato publicado</span>
-        <h2>Caiado entrega 52%. Zema, 57%. Renan, <span class="r">só 40%</span></h2>
-        <p class="t">A própria Nexus perguntou para onde vai o eleitor dos candidatos menores num 2º turno Lula × Flávio. A resposta restringe qualquer modelo de transferência.</p>
-        <p class="t">O eleitor de Renan Santos é o que mais recusa a escolha binária: <b>45% branco/nulo</b>.</p>
-      </div>
+        <h2>Seis linhas medidas. <span class="r">Quatro no escuro.</span></h2>
+        <p class="t">A p. 51 abre a transferência do eleitorado dos seis candidatos menores. Não abre a das quatro origens que mais pesam: a base de Lula, a de Flávio, o branco/nulo e o indeciso do 1º turno.</p>
+        <p class="t">Essas quatro valem <b>85 dos 100 pontos</b>. É aí, e só aí, que a auditoria precisa estimar.</p>
       <div class="viz evid">
         <img src="img/nexus_btg_082026_1/ago_p51_migracao.png" alt="Página 51 do relatório Nexus de 3 de agosto: migração declarada dos eleitores de candidatos menores no segundo turno">
-        <p class="cap">Relatório BTG/Nexus 03/08/2026, p. 51. Bases ponderadas pequenas; bases brutas não publicadas.</p>
+        <p class="cap">Relatório BTG/Nexus 03/08/2026, p. 51. Seis origens medidas; as quatro maiores ficam de fora.</p>
       </div>
     </div>
     <div class="card-foot"><span>arvor intelligence · btg/nexus 03/08/2026</span><span>prova visual · crosstab de migração declarada</span></div>
   </div>
-  <div class="copy"><span class="cc">1437 chars</span>A página 51 do relatório é a mais valiosa da rodada, e quase ninguém falou dela.
+  <div class="copy"><span class="cc">1626 chars</span>A página 51 é a mais valiosa da rodada. Também é a que mostra, pelo que NÃO traz, onde a pesquisa fica opaca.
 
-A Nexus perguntou diretamente ao eleitor de cada candidato menor: num segundo turno Lula × Flávio, para onde você vai? Respostas publicadas:
+O que ela cobre: seis linhas da matriz de transferência, uma para o eleitorado de cada candidato menor. Somadas, 15,2 pontos do primeiro turno. Medição limpa.
 
-· Eleitor de CAIADO: 52% Flávio, 17% Lula, 30% branco/nulo
-· Eleitor de ZEMA: 57% Flávio, 12% Lula, 27% branco/nulo
-· Eleitor de RENAN SANTOS: 40% Flávio, 15% Lula, 45% branco/nulo
-· Eleitor de CURY: 43% Lula(!), 40% Flávio
-· Eleitor de DACIOLO: 35% Lula, 31% Flávio
+O que ela não cobre: as outras quatro origens, que valem 85 dos 100 pontos.
+· A base do próprio Lula (41 pontos): quantos ficam com ele no 2º turno?
+· A base do próprio Flávio (37): idem.
+· Quem votou branco ou nulo no 1º turno (4).
+· Quem estava indeciso (3).
 
-Três achados:
+Sem essas quatro linhas, não se sabe a taxa de fidelidade de nenhum dos dois finalistas. É o número que decide segundo turno, e ele não está publicado.
 
-1. A DIREITA TRADICIONAL TRANSFERE PELA METADE. Caiado e Zema, os dois governadores, entregam 52% e 57% a Flávio. Não os dois terços que uma leitura ingênua de "voto de direita" suporia. De cada dez eleitores deles, três preferem anular a escolher.
+Como preenchemos, com o rótulo na testa: prior ideológica explícita (base majoritariamente fiel, cruzamento entre campos perto de zero, branco/nulo do 2º turno alimentado por quem perdeu o candidato) e ajuste proporcional iterativo até bater exatamente nas margens divulgadas. No diagrama do dossiê, as seis linhas medidas aparecem sólidas e as quatro estimadas aparecem hachuradas. A distinção é a informação principal do gráfico.
 
-2. RENAN É OUTRA ESPÉCIE. O eleitorado do Missão é o que mais recusa a binária: 45% branco/nulo, o maior índice do quadro. Voto de movimento, não de campo. Quem soma "Flávio + Renan" como bloco automático está somando errado.
+O que sobrevive à troca da prior: a razão de consolidação agregada, 1,66 a 1 para Flávio, porque ela é imposta pelas margens publicadas. Era 2 a 1 em julho: Flávio segue colhendo mais fora da base, mas Lula passou a consolidar melhor.
 
-3. CURY DIVIDE PARA LULA. O único menor cujo eleitorado pende a Lula. Pequeno (1%), mas o sinal importa para modelar o centro.
+O que NÃO sobrevive: qualquer afirmação sobre fidelidade de base. Essa a Nexus tem, e não divulgou.
 
-Aviso metodológico: essas bases são fatias de 1% a 5% de 2.002 entrevistas. Margens enormes, bases brutas não publicadas. Tratamos como restrição de ordem de grandeza, não como precisão decimal.
-
-É essa página que amarra o Sankey do post anterior: a prior não inventa os cruzamentos, ela respeita o que a própria Nexus mediu.</div>
+Aviso de sempre: as bases da p. 51 são fatias de 1% a 5% de 2.002 entrevistas, com margens enormes e bases brutas não publicadas. Ordem de grandeza, não precisão decimal.</div>
   <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
 </section>
 
 <!-- POST 10 · caminho vs conversão -->
 <section class="post">
-  <div class="post-label">Post 11/24 · o teto aritmético · caminho existe, conversão não</div>
+  <div class="post-label">Post 13/26 · o teto aritmético · caminho existe, conversão não</div>
   <div class="card blue">
-    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">11/24</div></div>
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">13/26</div></div>
     <div class="card-body wide-l">
       <div>
         <span class="lead-tag">primeiro turno · votos válidos</span>
@@ -691,9 +970,9 @@ Tudo isso descreve agregados desta pesquisa. Não descreve indivíduos, e margem
 
 <!-- POST 11 · mulheres · o muro -->
 <section class="post">
-  <div class="post-label">Post 12/24 · mulheres · o muro que não se moveu</div>
+  <div class="post-label">Post 14/26 · mulheres · o muro que não se moveu</div>
   <div class="card">
-    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">12/24</div></div>
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">14/26</div></div>
     <div class="card-body wide-r">
       <div>
         <span class="stamp fact">Fato publicado</span>
@@ -732,9 +1011,9 @@ Para chegar mais perto do porquê sem inventar dado, fomos à régua oficial: a 
 
 <!-- POST · 54-54-54-54 -->
 <section class="post">
-  <div class="post-label">Post 13/24 · o muro testado quatro vezes · 54-54-54-54</div>
+  <div class="post-label">Post 15/26 · o muro testado quatro vezes · 54-54-54-54</div>
   <div class="card red">
-    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">13/24</div></div>
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">15/26</div></div>
     <div class="card-body wide-r">
       <div>
         <span class="lead-tag">2º turno entre mulheres · quatro cenários, mesma amostra</span>
@@ -754,7 +1033,7 @@ Para chegar mais perto do porquê sem inventar dado, fomos à régua oficial: a 
     </div>
     <div class="card-foot"><span>arvor intelligence · btg/nexus 03/08/2026</span><span>cenários alternativos de 2º turno · mesma amostra, mesmos pesos</span></div>
   </div>
-  <div class="copy"><span class="cc">1552 chars</span>A pesquisa testou o segundo turno quatro vezes, com quatro adversários diferentes, nas mesmas 2.002 pessoas. Entre as mulheres, o resultado é um dos números mais eloquentes do ano:
+  <div class="copy"><span class="cc">1599 chars</span>A pesquisa testou o segundo turno quatro vezes, com quatro adversários diferentes, nas mesmas 2.002 pessoas. Entre as mulheres, o resultado é um dos números mais eloquentes do ano:
 
 Lula × Flávio: 54 × 37
 Lula × Zema: 54 × 31
@@ -773,15 +1052,15 @@ Por que isso importa mais do que parece:
 
 3. A rejeição confirma: 56% das mulheres não votariam em Flávio de jeito nenhum (homens: 42%). E o potencial declarado dele entre mulheres é 39%, dois pontos acima do que já tira. Não há folga feminina a converter; há muro a contornar por outros recortes.
 
-Método: cenários alternativos na mesma amostra são a restrição observada mais forte que uma pesquisa publica, porque recrutamento, pesos e semana se cancelam. Nenhum elo individual foi medido; a comparação é agregada.</div>
+Método: cenários alternativos na mesma amostra são a restrição observada mais forte que uma pesquisa publica, porque recrutamento, pesos e semana se cancelam. A comparação é entre colunas de cenário, não entre eleitores: ninguém foi seguido de um cenário ao outro.</div>
   <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
 </section>
 
 <!-- POST 12 · mulheres na PNAD · o país material -->
 <section class="post">
-  <div class="post-label">Post 14/24 · mulheres na PNAD · o país por trás do muro</div>
+  <div class="post-label">Post 16/26 · mulheres na PNAD · o país por trás do muro</div>
   <div class="card light">
-    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">14/24</div></div>
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">16/26</div></div>
     <div class="card-body wide-r">
       <div>
         <span class="lead-tag">pnad 2025/2026 · pessoas 16+ · descritivo</span>
@@ -826,9 +1105,9 @@ Nada disso "explica" o voto, e quem disser que explica está vendendo causalidad
 
 <!-- POST 13 · mulheres · a geografia -->
 <section class="post">
-  <div class="post-label">Post 15/24 · mulheres · a geografia da assimetria</div>
+  <div class="post-label">Post 17/26 · mulheres · a geografia da assimetria</div>
   <div class="card">
-    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">15/24</div></div>
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">17/26</div></div>
     <div class="card-body wide-r">
       <div>
         <span class="lead-tag">pnad 2025 · mulheres 16+ por região</span>
@@ -874,9 +1153,9 @@ O muro de 19 pontos tem fundação material. Saber disso muda a pergunta certa: 
 
 <!-- POST 14 · cluster artefato -->
 <section class="post">
-  <div class="post-label">Post 16/24 · o modelo Nexus · aversão vendida como identidade</div>
+  <div class="post-label">Post 18/26 · o modelo Nexus · aversão vendida como identidade</div>
   <div class="card light">
-    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">16/24</div></div>
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">18/26</div></div>
     <div class="card-body wide-l">
       <div>
         <span class="lead-tag">o construto · "polarização" da casa</span>
@@ -915,9 +1194,9 @@ O achado útil: o instrumento mede aversão, depois transforma aversão em ident
 
 <!-- POST 15 · Renan / rejeição -->
 <section class="post">
-  <div class="post-label">Post 17/24 · rejeição · o desconhecido também rejeita</div>
+  <div class="post-label">Post 19/26 · rejeição · o desconhecido também rejeita</div>
   <div class="card">
-    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">17/24</div></div>
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">19/26</div></div>
     <div class="card-body">
       <div>
         <span class="lead-tag">conhecimento × rejeição</span>
@@ -957,9 +1236,9 @@ Limite de sempre: contas sobre percentuais arredondados, denominadores não publ
 
 <!-- POST 16 · território -->
 <section class="post">
-  <div class="post-label">Post 18/24 · o chão da amostra · 55% dos municípios trocaram</div>
+  <div class="post-label">Post 20/26 · o chão da amostra · 55% dos municípios trocaram</div>
   <div class="card">
-    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">18/24</div></div>
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">20/26</div></div>
     <div class="card-body wide-r">
       <div>
         <span class="lead-tag">municípios das duas ondas · anexos TSE</span>
@@ -1006,9 +1285,9 @@ Compare com a Datafolha: 139 municípios FIXOS, 118 idênticos em três ondas. F
 
 <!-- POST · geografia × TSE + probabilístico × cotas -->
 <section class="post">
-  <div class="post-label">Post 19/24 · a margem de vitrine · probabilístico no TSE, cotas no relatório</div>
+  <div class="post-label">Post 21/26 · a margem de vitrine · probabilístico no TSE, cotas no relatório</div>
   <div class="card light">
-    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">19/24</div></div>
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">21/26</div></div>
     <div class="card-body">
       <div>
         <span class="stamp lim">Contradição documental</span>
@@ -1050,9 +1329,9 @@ A pergunta de sempre, pela oitava rodada: qual é o efeito de desenho desta pesq
 
 <!-- POST · nota fiscal de maio -->
 <section class="post">
-  <div class="post-label">Post 20/24 · o rastro documental · a pesquisa faturada três meses antes</div>
+  <div class="post-label">Post 22/26 · o rastro documental · a pesquisa faturada três meses antes</div>
   <div class="card">
-    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">20/24</div></div>
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">22/26</div></div>
     <div class="card-body">
       <div>
         <span class="stamp fact">Fato documental</span>
@@ -1085,9 +1364,9 @@ Leitura calibrada, porque aqui é fácil errar a mão: NADA disso é ilegal. O q
 
 <!-- POST · narrado sem margem -->
 <section class="post">
-  <div class="post-label">Post 21/24 · o que o relatório narra sem margem, e o que coleta sem publicar</div>
+  <div class="post-label">Post 23/26 · o que o relatório narra sem margem, e o que coleta sem publicar</div>
   <div class="card light">
-    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">21/24</div></div>
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">23/26</div></div>
     <div class="card-body wide-l">
       <div>
         <span class="lead-tag">a régua que o próprio relatório declara e ignora</span>
@@ -1128,9 +1407,9 @@ Completo o inventário com o desvio que favorece o outro lado, pelo padrão sim�
 
 <!-- POST 18 · questionário mudou -->
 <section class="post">
-  <div class="post-label">Post 22/24 · o questionário mudou · o que entrou e o que sumiu</div>
+  <div class="post-label">Post 24/26 · o questionário mudou · o que entrou e o que sumiu</div>
   <div class="card light">
-    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">22/24</div></div>
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">24/26</div></div>
     <div class="card-body">
       <div>
         <span class="lead-tag">rodada 7 → rodada 8 · diff do instrumento</span>
@@ -1184,14 +1463,14 @@ Instrumento é decisão editorial. Toda decisão editorial não anotada é uma v
 
 <!-- POST 19 · o arquivo fechado / veredito -->
 <section class="post">
-  <div class="post-label">Post 23/24 · veredito · prova de opacidade, não de fraude</div>
+  <div class="post-label">Post 25/26 · veredito · prova de opacidade, não de fraude</div>
   <div class="card">
-    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">23/24</div></div>
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">25/26</div></div>
     <div class="card-body wide-l">
       <div>
         <span class="lead-tag">veredito calibrado</span>
         <h2>O que a rodada 8 prova, <span class="l">e o que não prova</span></h2>
-        <p class="t"><b>Prova:</b> empate estatístico nas duas bocas; o placar do 2º turno depende da composição de renda; a régua de renda declarada está desatualizada; a série mudou de instrumento sem anotar.</p>
+        <p class="t"><b>Prova:</b> empate estatístico no 2º turno e liderança de 0,1 ponto no 1º; o placar do 2º turno depende da composição de renda; a régua de renda declarada está desatualizada; a série mudou de instrumento sem anotar.</p>
         <p class="t"><b>Não prova:</b> fraude, manipulação deliberada ou placar "verdadeiro" alternativo. Sem pesos, paradata e deff, nem a Nexus nem nós fechamos essa conta.</p>
       </div>
       <div class="viz">
@@ -1212,10 +1491,10 @@ Instrumento é decisão editorial. Toda decisão editorial não anotada é uma v
     </div>
     <div class="card-foot"><span>arvor intelligence · btg/nexus 03/08/2026</span><span>o mesmo pedido das onze auditorias do acervo</span></div>
   </div>
-  <div class="copy"><span class="cc">2223 chars</span>Veredito da 8ª rodada BTG/Nexus, com os rótulos que valem para todo o acervo.
+  <div class="copy"><span class="cc">2178 chars</span>Veredito da 8ª rodada BTG/Nexus, com os rótulos que valem para todo o acervo.
 
 FATO (documentado):
-· Lula 41 × 37 e 46 × 45, com piso aritmético de margem em ±2,19, não ±2. Nenhuma diferença sobrevive. Empate duplo.
+· Lula 41 × 37 e 46 × 45, com piso aritmético de margem em ±2,19, não ±2. No 2º turno não há liderança estatística. No 1º, ela termina em +0,1 e um efeito de desenho de 1,07 a apaga.
 · Toda margem controlada da amostra está congelada entre as ondas; a religião, que ninguém controla, moveu 5 pontos.
 · Lula faz 54% entre mulheres nos quatro cenários de 2º turno. O muro não depende do adversário.
 · A nota fiscal da rodada foi emitida em 5 de maio, três meses antes do campo: produto de assinatura, com juridico@fsb.com.br no documento.
@@ -1227,13 +1506,13 @@ INFERÊNCIA (nossa, com método aberto):
 · Consolidação de 1,66:1 para Flávio via IPF, fitas rotuladas como inferência.
 · Rejeição de Renan entre conhecidos perto de 54%.
 
-HIPÓTESE (declarada como tal):
+HIPÓTESE:
 · Parte do salto nordestino pode ser recomposição amostral (55% do território girou e 3 pontos do Nordeste publicado nascem de peso). Indecidível sem pesos.
 · A escala que define os clusters passou a vir depois de cinco blocos de culpa do governo, na onda em que "bolsonaristas convictos" marcou o máximo da série. Sem split-ballot, fica como hipótese.
 
 O QUE A RODADA NÃO PROVA: fraude. Não há, nestes documentos, evidência de manipulação deliberada. Há uma pesquisa que pede confiança onde deveria oferecer conferência: sem pesos individuais, sem distribuição-alvo das cotas, sem efeito de desenho, sem taxas de resposta, sem bases brutas dos recortes, sem os cortes dos clusters.
 
-Nota de contexto que o leitor tem direito de conhecer: a Nexus pertence à holding FSB, grupo cuja receita inclui contratos de publicidade com o governo federal. Isso não invalida um número sequer desta pesquisa. Torna a abertura do arquivo mais necessária, não menos: quem tem conflito potencial audita-se abrindo dados.
+Nota de contexto: a Nexus pertence à holding FSB, grupo cuja receita inclui contratos de publicidade com o governo federal. Isso não invalida um número sequer desta pesquisa. Torna a abertura do arquivo mais necessária, não menos.
 
 Prova de opacidade, não de fraude. Pela décima primeira vez.</div>
   <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
@@ -1241,9 +1520,9 @@ Prova de opacidade, não de fraude. Pela décima primeira vez.</div>
 
 <!-- POST 20 · CTA -->
 <section class="post">
-  <div class="post-label">Post 24/24 · fecho · o arquivo aberto da auditoria</div>
+  <div class="post-label">Post 26/26 · fecho · o arquivo aberto da auditoria</div>
   <div class="card blue">
-    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">24/24</div></div>
+    <div class="card-head"><div class="brand"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · auditoria eleitoral</span></div></div><div class="pno">26/26</div></div>
     <div class="card-body wide-l">
       <div>
         <span class="lead-tag">tudo aberto · reproduza a conta</span>
