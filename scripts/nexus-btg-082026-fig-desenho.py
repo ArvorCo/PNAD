@@ -952,9 +952,10 @@ def fig_base_vs_margem(data: dict) -> str:
     canvas.text(865, 182, "descreve cerca de 3 pessoas.", size=15)
     canvas.line(865, 204, 1140, 204, stroke=LINE)
     canvas.text(865, 232, "Margem publicada", size=19, weight=800)
-    canvas.text(865, 258, "O relatório traz margem por", size=15)
-    canvas.text(865, 278, "recorte apenas para sexo:", size=15)
-    canvas.text(865, 298, "±3 pontos, na página 114.", size=15)
+    canvas.text(865, 258, "A p. 114 publica margem para", size=15)
+    canvas.text(865, 278, "as oito dimensões do perfil,", size=15)
+    canvas.text(865, 298, "de ±3 a ±10. As páginas", size=15)
+    canvas.text(865, 318, "seguintes narram sem ela.", size=15)
     return canvas.render()
 
 

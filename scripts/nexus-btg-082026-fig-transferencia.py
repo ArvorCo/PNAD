@@ -227,7 +227,7 @@ def pool_medido(data: dict) -> str:
     canvas.text(
         left,
         254,
-        "Flávio capta 45,9% do pool. Para vencer no 1º turno precisaria de cerca de 68%.",
+        "Flávio capta 45,9% deste pool no 2º turno. Para vencer no 1º precisaria de cerca de 63% dele.",
         size=18,
         weight=700,
     )
@@ -241,7 +241,7 @@ def pool_medido(data: dict) -> str:
     canvas.text(
         left,
         314,
-        "Razão medida entre os dois finalistas: 2,35 a 1 para Flávio. Não é estimativa desta auditoria.",
+        "Razão medida entre os finalistas: 2,35 a 1 para Flávio. Medição do instituto, não estimativa nossa.",
         size=15,
         fill=AMBER,
         weight=700,

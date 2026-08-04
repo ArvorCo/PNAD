@@ -707,8 +707,8 @@ def geografia(base: dict) -> str:
     canvas.text(
         40,
         62,
-        "O degrau não é gradual: entre Sudeste e Norte a renda cai pela metade e a "
-        "dependência de transferência triplica.",
+        "O degrau não é gradual: do Sul ao Nordeste a renda cai à metade e a "
+        "dependência de transferência quase quintuplica.",
         size=17,
         fill=INK,
         weight="600",
