@@ -148,6 +148,32 @@ PROFILES = {
 CROSSTABS = {
     "july": {
         "first": {
+            "sex": [
+                [47, 28, 5, 3, 3, 2, 0, 0, 8, 3],
+                [37, 39, 6, 8, 4, 1, 1, 0, 4, 1],
+            ],
+            "age": [
+                [35, 31, 4, 16, 3, 4, 0, 0, 7, 1],
+                [38, 37, 4, 7, 4, 1, 1, 0, 6, 1],
+                [41, 34, 7, 2, 4, 2, 1, 0, 7, 2],
+                [54, 29, 7, 1, 3, 1, 0, 0, 3, 2],
+            ],
+            "education": [
+                [53, 29, 5, 2, 1, 1, 1, 0, 5, 2],
+                [35, 39, 5, 6, 3, 2, 1, 0, 7, 2],
+                [39, 29, 7, 7, 7, 3, 0, 0, 5, 2],
+            ],
+            "region": [
+                [33, 39, 11, 4, 2, 1, 0, 0, 5, 4],
+                [57, 24, 5, 5, 1, 1, 0, 0, 6, 0],
+                [41, 32, 4, 5, 6, 3, 1, 0, 7, 2],
+                [31, 47, 5, 7, 2, 1, 0, 0, 4, 2],
+            ],
+            "condition": [
+                [42, 31, 6, 4, 3, 2, 1, 0, 9, 2],
+                [42, 31, 5, 5, 5, 3, 1, 0, 5, 3],
+                [42, 35, 6, 5, 3, 2, 0, 0, 5, 2],
+            ],
             "income": [
                 [58, 24, 3, 2, 1, 0, 0, 0, 8, 3],
                 [47, 30, 7, 3, 1, 1, 0, 0, 8, 2],
@@ -168,6 +194,11 @@ CROSSTABS = {
             ],
         },
         "runoff": {
+            "sex": [[54, 36, 9, 1], [41, 50, 8, 1]],
+            "age": [[42, 46, 11, 1], [42, 48, 10, 0], [46, 42, 11, 2], [59, 36, 3, 2]],
+            "education": [[58, 34, 6, 1], [40, 49, 10, 1], [44, 44, 11, 1]],
+            "region": [[41, 51, 6, 3], [62, 30, 7, 1], [45, 43, 11, 1], [36, 57, 7, 1]],
+            "condition": [[47, 40, 11, 2], [48, 42, 9, 1], [48, 44, 7, 1]],
             "income": [[62, 28, 8, 2], [53, 39, 8, 0], [42, 48, 9, 1], [39, 51, 10, 0]],
             "religion": [
                 [55, 36, 8, 1],
@@ -228,6 +259,7 @@ CROSSTABS = {
             "education": [[47, 43, 6, 3], [44, 45, 9, 2], [46, 45, 8, 1]],
             "income": [[58, 32, 6, 4], [43, 49, 7, 1], [42, 47, 10, 2], [43, 50, 7, 1]],
             "region": [[44, 48, 6, 2], [52, 39, 7, 1], [47, 42, 8, 3], [32, 57, 9, 1]],
+            "condition": [[49, 39, 10, 2], [45, 42, 10, 3], [44, 48, 6, 2]],
             "religion": [
                 [51, 41, 7, 1],
                 [31, 59, 8, 2],
@@ -849,6 +881,64 @@ def income_mechanics(targets: dict, income_benchmark: dict, n: int = 2002) -> di
                 "distance": round(float(vote[0] - others.mean()), 3),
             },
         }
+    return output
+
+
+SEGMENT_LABELS = {
+    "sex": ["Mulheres", "Homens"],
+    "age": ["16 a 24", "25 a 40", "41 a 59", "60 ou mais"],
+    "education": ["Fundamental", "Médio", "Superior"],
+    "income": ["Até 1 SM", "1 a 2 SM", "2 a 5 SM", "Mais de 5 SM"],
+    "region": ["Norte/Centro-Oeste", "Nordeste", "Sudeste", "Sul"],
+    "condition": ["Capital", "Região metropolitana", "Interior"],
+    "religion": ["Católicos", "Evangélicos", "Outras religiões", "Sem religião"],
+    "labour": ["PEA formal", "PEA informal", "Desocupados", "Fora da força"],
+}
+
+
+def segment_shift() -> dict:
+    """Variação de cada candidato dentro de cada recorte, de 27/07 para 03/08.
+
+    Só entram recortes publicados nas DUAS ondas, para que toda variação citada
+    no dossiê possa ser refeita a partir desta base. Julho vem das pp. 28, 29,
+    57 e 58 do relatório de 27/07; agosto, das pp. 28, 29, 52 e 53.
+    """
+    output = {}
+    for ballot in ("first", "runoff"):
+        rows = []
+        shared = set(CROSSTABS["july"][ballot]) & set(CROSSTABS["august"][ballot])
+        for dimension in sorted(shared):
+            july_cells = CROSSTABS["july"][ballot][dimension]
+            august_cells = CROSSTABS["august"][ballot][dimension]
+            if (
+                ballot == "first"
+                and len(july_cells[0]) == 10
+                and len(august_cells[0]) == 8
+            ):
+                # Agosto agrega Cury, Daciolo e Samara em "Outros"; julho os abre.
+                july_cells = [[*row[:5], sum(row[5:8]), *row[8:]] for row in july_cells]
+            july = normalize_rows(july_cells)
+            august = normalize_rows(august_cells)
+            if july.shape != august.shape:
+                continue
+            labels = SEGMENT_LABELS.get(dimension, [])
+            for i in range(july.shape[0]):
+                rows.append(
+                    {
+                        "dimension": dimension,
+                        "category": labels[i] if i < len(labels) else str(i),
+                        "lula_july": round(float(july[i, 0]), 1),
+                        "lula_august": round(float(august[i, 0]), 1),
+                        "lula_delta": round(float(august[i, 0] - july[i, 0]), 1),
+                        "flavio_july": round(float(july[i, 1]), 1),
+                        "flavio_august": round(float(august[i, 1]), 1),
+                        "flavio_delta": round(float(august[i, 1] - july[i, 1]), 1),
+                        "gap_july": round(float(july[i, 0] - july[i, 1]), 1),
+                        "gap_august": round(float(august[i, 0] - august[i, 1]), 1),
+                    }
+                )
+        rows.sort(key=lambda row: row["flavio_delta"], reverse=True)
+        output[ballot] = rows
     return output
 
 
@@ -1486,6 +1576,7 @@ def build() -> dict:
         "reweighting": reweighted,
         "margin_leverage": margin_leverage(targets),
         "income_mechanics": income_mechanics(targets, income),
+        "segment_shift": segment_shift(),
         "transfer": ipf_transfer(),
         "second_choice_july": SECOND_CHOICE_JULY,
         "uncontrolled": uncontrolled_margins(),

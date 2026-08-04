@@ -529,180 +529,90 @@ def fig_gap_incerteza(data: dict) -> str:
 
 
 def fig_movimento_segmentos(data: dict) -> str:
-    july = data["toplines"]["july"]["first"]
-    august = data["toplines"]["august"]["first"]
-    labels = data["toplines"]["july"]["labels"]
-    bands = data["income_mechanics"]["waves"]
+    """Onde o voto se moveu entre as duas ondas, recorte a recorte.
 
-    moves = sorted(
-        (
-            {
-                "label": labels[i],
-                "july": july[i],
-                "august": august[i],
-                "delta": august[i] - july[i],
-            }
-            for i in range(len(labels))
-        ),
-        key=lambda row: (-row["delta"], -row["august"]),
-    )
-    lost = -sum(row["delta"] for row in moves if row["delta"] < 0)
-    lula_lost = -next(row["delta"] for row in moves if row["label"] == "Lula")
-
-    height = 520
+    Usa data["segment_shift"]["first"], que só existe para recortes publicados
+    nas DUAS ondas, de modo que toda variação desenhada aqui é refazível.
+    """
+    rows = data["segment_shift"]["first"]
     canvas = Canvas(
         FULL,
-        height,
-        aria=(
-            "Variação de cada opção de voto entre 27 de julho e 3 de agosto no "
-            "primeiro turno, e vantagem de Lula no segundo turno por faixa de renda."
-        ),
+        872,
+        aria="Variação de cada candidato por recorte entre 27 de julho e 3 de agosto",
     )
 
-    kicker(canvas, 40, 48, "1º TURNO, VARIAÇÃO DE 27/07 PARA 03/08, EM PONTOS", INK)
-    kicker(canvas, 700, 48, "2º TURNO, VANTAGEM DE LULA POR FAIXA DE RENDA", INK)
-    canvas.line(672, 30, 672, 470, stroke=LINE, width=1.5)
+    left, right = 250, 150
+    span = FULL - left - right
+    top = 118
+    step = 24.5
+    escala = span / 2 / 16.0
 
-    # ---- painel esquerdo
-    ax0, ax1 = 268, 640
-    lo, hi = -3.0, 5.0
-    scale = (ax1 - ax0) / (hi - lo)
-
-    def apx(value: float) -> float:
-        return ax0 + (value - lo) * scale
-
-    row_y, step = 112, 34
-    canvas.line(
-        apx(0), row_y - 26, apx(0), row_y + step * len(moves) - 14, stroke=INK, width=2
+    canvas.label(
+        60,
+        52,
+        "variação em pontos no 1º turno, de 27/07 para 03/08, dentro de cada recorte",
     )
-    canvas.label(apx(0), row_y - 34, "sem mudança", anchor="middle")
+    zero = left + span / 2
+    canvas.text(zero - 12, 96, "Flávio perde", size=13, fill=MUTED, anchor="end")
+    canvas.text(zero + 12, 96, "Flávio ganha", size=13, fill=MUTED)
 
-    for index, move in enumerate(moves):
-        y = row_y + index * step
-        color = OPTION_COLOR.get(move["label"], MUTED)
-        name = LONG_LABEL.get(move["label"], move["label"])
-        canvas.text(150, y + 6, name, size=16, fill=INK, weight="700", anchor="end")
-        canvas.label(250, y + 6, f"{move['july']} → {move['august']}", anchor="end")
-
-        delta = move["delta"]
-        if delta == 0:
-            canvas.circle(apx(0), y, 7, WHITE)
-            canvas.circle(apx(0), y, 7, "none", stroke=GRAY, stroke_width=3)
-            canvas.text(apx(0) + 16, y + 6, "0", size=16, fill=MUTED, weight="700")
-            continue
-        left = apx(min(0, delta))
-        canvas.rect(
-            left,
-            y - 12,
-            abs(delta) * scale,
-            24,
-            color,
-            rx=3,
-            stroke=OLIVE if color == LIME else None,
-            stroke_width=1.6 if color == LIME else None,
+    for i, row in enumerate(rows):
+        y = top + i * step
+        fd, ld = row["flavio_delta"], row["lula_delta"]
+        canvas.text(
+            left - 16, y + 11, row["category"], size=14, weight=700, anchor="end"
         )
-        if delta > 0:
-            canvas.text(
-                apx(delta) + 12,
-                y + 6,
-                signed(delta, 0),
-                size=17,
-                fill=INK,
-                weight="800",
-            )
-        else:
-            canvas.text(
-                apx(delta) - 12,
-                y + 6,
-                signed(delta, 0),
-                size=17,
-                fill=INK,
-                weight="800",
-                anchor="end",
-            )
+        canvas.label(left - 16, y + 11, "", size=11)
+        for delta, cor, alt in ((fd, BLUE, 0), (ld, RED, 8)):
+            w = abs(delta) * escala
+            x = zero - w if delta < 0 else zero
+            canvas.rect(x, y + alt, w, 7, cor)
+        maior = max(abs(fd), abs(ld))
+        xr = (
+            zero + maior * escala + 10
+            if fd + ld >= 0 or fd > 0
+            else zero - maior * escala - 10
+        )
+        anchor = "start" if xr > zero else "end"
+        canvas.text(
+            xr,
+            y + 13,
+            f"F {signed(fd)}   L {signed(ld)}",
+            size=12.5,
+            fill=MUTED,
+            anchor=anchor,
+        )
 
+    canvas.line(zero, top - 8, zero, top + len(rows) * step - 4, stroke=INK, width=1.5)
+
+    base = top + len(rows) * step + 22
+    canvas.rect(60, base, FULL - 210, 2, AMBER)
     canvas.text(
-        40,
-        row_y + step * len(moves) + 20,
-        f"Flávio subiu {br(moves[0]['delta'], 0)}. "
-        f"Dos {br(lost, 0)} pontos que saíram de alguma opção, {br(lula_lost, 0)} era de Lula.",
+        60,
+        base + 30,
+        "O maior deslocamento não é o Nordeste: é a faixa de 1 a 2 salários mínimos, que virou 24 pontos.",
         size=17,
-        fill=INK,
-        weight="800",
+        weight=700,
     )
-
-    # ---- painel direito
-    bx0, bx1 = 838, 1128
-    blo, bhi = -16.0, 38.0
-    bscale = (bx1 - bx0) / (bhi - blo)
-
-    def bpx(value: float) -> float:
-        return bx0 + (value - blo) * bscale
-
-    canvas.line(bpx(0), 96, bpx(0), 424, stroke=INK, width=2)
-    canvas.label(bpx(0), 88, "empate", anchor="middle")
-
-    brow, bstep = 148, 84
-    for index, band in enumerate(bands["july"]["bands"]):
-        y = brow + index * bstep
-        name = band["band"]
-        old = band["vote_gap"]
-        new = bands["august"]["bands"][index]["vote_gap"]
-        canvas.text(824, y + 6, name, size=17, fill=INK, weight="700", anchor="end")
-
-        canvas.line(bpx(old), y, bpx(new), y, stroke=GRAY, width=3)
-        arrow(canvas, bpx(old), y, bpx(new), y, INK, width=3, head=10)
-        canvas.circle(bpx(old), y, 8, WHITE)
-        canvas.circle(bpx(old), y, 8, "none", stroke=GRAY, stroke_width=3)
-        canvas.circle(bpx(new), y, 8, RED if new > 0 else BLUE)
-
-        canvas.label(bpx(old), y - 18, f"27/07 {signed(old, 0)}", anchor="middle")
-        canvas.text(
-            bpx(new),
-            y + 34,
-            f"03/08 {signed(new, 0)}",
-            size=16,
-            fill=RED if new > 0 else BLUE,
-            weight="800",
-            anchor="middle",
-        )
-        canvas.text(
-            824,
-            y + 28,
-            signed(new - old, 0),
-            size=22,
-            fill=INK,
-            weight="800",
-            anchor="end",
-            font_family=DISPLAY,
-        )
-
     canvas.text(
-        700,
-        446,
-        "Vantagem = Lula menos Flávio dentro da faixa.",
-        size=15,
+        60,
+        base + 54,
+        "E o eleitor de 16 a 24 anos foi na direção oposta à de todo o resto: Lula +15,3 ali.",
+        size=16,
         fill=MUTED,
     )
+    canvas.rect(60, base + 72, 18, 8, BLUE)
+    canvas.text(84, base + 80, "Flávio", size=13, fill=MUTED)
+    canvas.rect(148, base + 72, 18, 8, RED)
+    canvas.text(172, base + 80, "Lula", size=13, fill=MUTED)
     canvas.text(
-        700,
-        468,
-        "Ponto vermelho, Lula à frente; ponto azul, Flávio.",
-        size=15,
-        fill=MUTED,
-    )
-    canvas.text(
-        40,
-        502,
-        "Percentuais publicados nas duas rodadas. A Nexus não divulga a matriz que "
-        "ligaria uma opção à outra, então nenhuma seta aqui descreve eleitor migrando.",
-        size=15,
+        230,
+        base + 80,
+        "Percentuais normalizados para 100 dentro de cada linha, o que muda o dígito ante o publicado.",
+        size=13,
         fill=MUTED,
     )
     return canvas.render()
-
-
-# ---------------------------------------------------------------- figura 4
 
 
 def fig_religiao_composicao(data: dict) -> str:

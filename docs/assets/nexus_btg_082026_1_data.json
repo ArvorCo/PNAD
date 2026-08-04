@@ -1827,6 +1827,162 @@
   "reweighting": {
     "july": {
       "first": {
+        "sex": {
+          "reproduced": [
+            42.379,
+            33.138,
+            5.469,
+            5.329,
+            3.467,
+            1.536,
+            0.465,
+            0.0,
+            6.144,
+            2.071
+          ],
+          "direct": [
+            42.36,
+            33.157,
+            5.47,
+            5.338,
+            3.469,
+            1.534,
+            0.467,
+            0.0,
+            6.137,
+            2.068
+          ],
+          "anchored": [
+            41.98,
+            33.019,
+            6.002,
+            5.009,
+            3.002,
+            1.998,
+            1.002,
+            0.0,
+            5.993,
+            1.996
+          ],
+          "gap": 8.962
+        },
+        "age": {
+          "reproduced": [
+            42.574,
+            33.415,
+            5.747,
+            4.942,
+            3.649,
+            1.698,
+            0.643,
+            0.0,
+            5.75,
+            1.582
+          ],
+          "direct": [
+            42.427,
+            33.458,
+            5.711,
+            5.058,
+            3.651,
+            1.709,
+            0.645,
+            0.0,
+            5.772,
+            1.57
+          ],
+          "anchored": [
+            41.853,
+            33.043,
+            5.963,
+            5.115,
+            3.002,
+            2.011,
+            1.002,
+            0.0,
+            6.022,
+            1.988
+          ],
+          "gap": 8.81
+        },
+        "education": {
+          "reproduced": [
+            42.683,
+            33.273,
+            5.494,
+            4.814,
+            3.22,
+            1.881,
+            0.774,
+            0.0,
+            5.85,
+            2.012
+          ],
+          "direct": [
+            42.266,
+            33.329,
+            5.538,
+            4.947,
+            3.364,
+            1.931,
+            0.751,
+            0.0,
+            5.861,
+            2.012
+          ],
+          "anchored": [
+            41.582,
+            33.057,
+            6.044,
+            5.134,
+            3.144,
+            2.05,
+            0.978,
+            0.0,
+            6.011,
+            2.0
+          ],
+          "gap": 8.526
+        },
+        "region": {
+          "reproduced": [
+            42.888,
+            33.044,
+            5.562,
+            5.13,
+            3.384,
+            1.833,
+            0.416,
+            0.0,
+            5.982,
+            1.761
+          ],
+          "direct": [
+            42.779,
+            33.145,
+            5.557,
+            5.14,
+            3.389,
+            1.834,
+            0.416,
+            0.0,
+            5.973,
+            1.768
+          ],
+          "anchored": [
+            41.891,
+            33.101,
+            5.994,
+            5.011,
+            3.005,
+            2.0,
+            1.0,
+            0.0,
+            5.991,
+            2.007
+          ],
+          "gap": 8.79
+        },
         "income": {
           "reproduced": [
             42.672,
@@ -1907,6 +2063,90 @@
         }
       },
       "runoff": {
+        "sex": {
+          "reproduced": [
+            47.89,
+            42.58,
+            8.53,
+            1.0
+          ],
+          "direct": [
+            47.866,
+            42.605,
+            8.528,
+            1.0
+          ],
+          "anchored": [
+            46.976,
+            43.025,
+            8.998,
+            1.0
+          ],
+          "gap": 3.951
+        },
+        "age": {
+          "reproduced": [
+            47.285,
+            42.699,
+            8.743,
+            1.273
+          ],
+          "direct": [
+            47.143,
+            42.808,
+            8.795,
+            1.254
+          ],
+          "anchored": [
+            46.858,
+            43.109,
+            9.052,
+            0.981
+          ],
+          "gap": 3.749
+        },
+        "education": {
+          "reproduced": [
+            47.611,
+            42.574,
+            8.812,
+            1.004
+          ],
+          "direct": [
+            47.183,
+            42.871,
+            8.943,
+            1.003
+          ],
+          "anchored": [
+            46.572,
+            43.297,
+            9.131,
+            1.0
+          ],
+          "gap": 3.275
+        },
+        "region": {
+          "reproduced": [
+            47.745,
+            42.44,
+            8.501,
+            1.314
+          ],
+          "direct": [
+            47.633,
+            42.553,
+            8.502,
+            1.312
+          ],
+          "anchored": [
+            46.888,
+            43.113,
+            9.002,
+            0.998
+          ],
+          "gap": 3.775
+        },
         "income": {
           "reproduced": [
             47.87,
@@ -2539,6 +2779,648 @@
         }
       }
     }
+  },
+  "segment_shift": {
+    "first": [
+      {
+        "dimension": "income",
+        "category": "1 a 2 SM",
+        "lula_july": 47.5,
+        "lula_august": 37.4,
+        "lula_delta": -10.1,
+        "flavio_july": 30.3,
+        "flavio_august": 44.4,
+        "flavio_delta": 14.1,
+        "gap_july": 17.2,
+        "gap_august": -7.1
+      },
+      {
+        "dimension": "region",
+        "category": "Nordeste",
+        "lula_july": 57.6,
+        "lula_august": 48.0,
+        "lula_delta": -9.6,
+        "flavio_july": 24.2,
+        "flavio_august": 34.0,
+        "flavio_delta": 9.8,
+        "gap_july": 33.3,
+        "gap_august": 14.0
+      },
+      {
+        "dimension": "education",
+        "category": "Fundamental",
+        "lula_july": 53.5,
+        "lula_august": 43.6,
+        "lula_delta": -10.0,
+        "flavio_july": 29.3,
+        "flavio_august": 38.6,
+        "flavio_delta": 9.3,
+        "gap_july": 24.2,
+        "gap_august": 5.0
+      },
+      {
+        "dimension": "age",
+        "category": "41 a 59",
+        "lula_july": 41.0,
+        "lula_august": 40.4,
+        "lula_delta": -0.6,
+        "flavio_july": 34.0,
+        "flavio_august": 41.4,
+        "flavio_delta": 7.4,
+        "gap_july": 7.0,
+        "gap_august": -1.0
+      },
+      {
+        "dimension": "religion",
+        "category": "Católicos",
+        "lula_july": 49.0,
+        "lula_august": 45.5,
+        "lula_delta": -3.5,
+        "flavio_july": 27.0,
+        "flavio_august": 33.7,
+        "flavio_delta": 6.7,
+        "gap_july": 22.0,
+        "gap_august": 11.9
+      },
+      {
+        "dimension": "sex",
+        "category": "Homens",
+        "lula_july": 36.6,
+        "lula_august": 34.0,
+        "lula_delta": -2.6,
+        "flavio_july": 38.6,
+        "flavio_august": 45.0,
+        "flavio_delta": 6.4,
+        "gap_july": -2.0,
+        "gap_august": -11.0
+      },
+      {
+        "dimension": "age",
+        "category": "25 a 40",
+        "lula_july": 38.4,
+        "lula_august": 33.3,
+        "lula_delta": -5.1,
+        "flavio_july": 37.4,
+        "flavio_august": 43.4,
+        "flavio_delta": 6.1,
+        "gap_july": 1.0,
+        "gap_august": -10.1
+      },
+      {
+        "dimension": "education",
+        "category": "Superior",
+        "lula_july": 39.4,
+        "lula_august": 39.4,
+        "lula_delta": 0.0,
+        "flavio_july": 29.3,
+        "flavio_august": 34.3,
+        "flavio_delta": 5.1,
+        "gap_july": 10.1,
+        "gap_august": 5.1
+      },
+      {
+        "dimension": "labour",
+        "category": "PEA informal",
+        "lula_july": 44.4,
+        "lula_august": 42.4,
+        "lula_delta": -2.0,
+        "flavio_july": 32.3,
+        "flavio_august": 37.4,
+        "flavio_delta": 5.1,
+        "gap_july": 12.1,
+        "gap_august": 5.1
+      },
+      {
+        "dimension": "labour",
+        "category": "Fora da força",
+        "lula_july": 55.6,
+        "lula_august": 48.5,
+        "lula_delta": -7.1,
+        "flavio_july": 27.3,
+        "flavio_august": 31.3,
+        "flavio_delta": 4.0,
+        "gap_july": 28.3,
+        "gap_august": 17.2
+      },
+      {
+        "dimension": "region",
+        "category": "Sul",
+        "lula_july": 31.3,
+        "lula_august": 27.3,
+        "lula_delta": -4.0,
+        "flavio_july": 47.5,
+        "flavio_august": 51.5,
+        "flavio_delta": 4.0,
+        "gap_july": -16.2,
+        "gap_august": -24.2
+      },
+      {
+        "dimension": "region",
+        "category": "Sudeste",
+        "lula_july": 40.6,
+        "lula_august": 42.0,
+        "lula_delta": 1.4,
+        "flavio_july": 31.7,
+        "flavio_august": 35.0,
+        "flavio_delta": 3.3,
+        "gap_july": 8.9,
+        "gap_august": 7.0
+      },
+      {
+        "dimension": "labour",
+        "category": "PEA formal",
+        "lula_july": 31.3,
+        "lula_august": 35.0,
+        "lula_delta": 3.7,
+        "flavio_july": 39.4,
+        "flavio_august": 42.0,
+        "flavio_delta": 2.6,
+        "gap_july": -8.1,
+        "gap_august": -7.0
+      },
+      {
+        "dimension": "income",
+        "category": "2 a 5 SM",
+        "lula_july": 35.6,
+        "lula_august": 38.4,
+        "lula_delta": 2.7,
+        "flavio_july": 37.6,
+        "flavio_august": 39.4,
+        "flavio_delta": 1.8,
+        "gap_july": -2.0,
+        "gap_august": -1.0
+      },
+      {
+        "dimension": "age",
+        "category": "60 ou mais",
+        "lula_july": 54.0,
+        "lula_august": 49.5,
+        "lula_delta": -4.5,
+        "flavio_july": 29.0,
+        "flavio_august": 30.7,
+        "flavio_delta": 1.7,
+        "gap_july": 25.0,
+        "gap_august": 18.8
+      },
+      {
+        "dimension": "income",
+        "category": "Até 1 SM",
+        "lula_july": 58.6,
+        "lula_august": 53.5,
+        "lula_delta": -5.1,
+        "flavio_july": 24.2,
+        "flavio_august": 25.7,
+        "flavio_delta": 1.5,
+        "gap_july": 34.3,
+        "gap_august": 27.7
+      },
+      {
+        "dimension": "sex",
+        "category": "Mulheres",
+        "lula_july": 47.5,
+        "lula_august": 48.0,
+        "lula_delta": 0.5,
+        "flavio_july": 28.3,
+        "flavio_august": 29.0,
+        "flavio_delta": 0.7,
+        "gap_july": 19.2,
+        "gap_august": 19.0
+      },
+      {
+        "dimension": "income",
+        "category": "Mais de 5 SM",
+        "lula_july": 34.3,
+        "lula_august": 39.0,
+        "lula_delta": 4.7,
+        "flavio_july": 37.4,
+        "flavio_august": 38.0,
+        "flavio_delta": 0.6,
+        "gap_july": -3.0,
+        "gap_august": 1.0
+      },
+      {
+        "dimension": "labour",
+        "category": "Desocupados",
+        "lula_july": 41.4,
+        "lula_august": 42.0,
+        "lula_delta": 0.6,
+        "flavio_july": 30.3,
+        "flavio_august": 30.0,
+        "flavio_delta": -0.3,
+        "gap_july": 11.1,
+        "gap_august": 12.0
+      },
+      {
+        "dimension": "religion",
+        "category": "Evangélicos",
+        "lula_july": 28.3,
+        "lula_august": 28.0,
+        "lula_delta": -0.3,
+        "flavio_july": 50.5,
+        "flavio_august": 50.0,
+        "flavio_delta": -0.5,
+        "gap_july": -22.2,
+        "gap_august": -22.0
+      },
+      {
+        "dimension": "education",
+        "category": "Médio",
+        "lula_july": 35.0,
+        "lula_august": 40.0,
+        "lula_delta": 5.0,
+        "flavio_july": 39.0,
+        "flavio_august": 37.0,
+        "flavio_delta": -2.0,
+        "gap_july": -4.0,
+        "gap_august": 3.0
+      },
+      {
+        "dimension": "religion",
+        "category": "Outras religiões",
+        "lula_july": 35.4,
+        "lula_august": 46.5,
+        "lula_delta": 11.1,
+        "flavio_july": 32.3,
+        "flavio_august": 30.3,
+        "flavio_delta": -2.0,
+        "gap_july": 3.0,
+        "gap_august": 16.2
+      },
+      {
+        "dimension": "religion",
+        "category": "Sem religião",
+        "lula_july": 49.5,
+        "lula_august": 52.5,
+        "lula_delta": 3.0,
+        "flavio_july": 25.7,
+        "flavio_august": 23.2,
+        "flavio_delta": -2.5,
+        "gap_july": 23.8,
+        "gap_august": 29.3
+      },
+      {
+        "dimension": "region",
+        "category": "Norte/Centro-Oeste",
+        "lula_july": 33.3,
+        "lula_august": 40.0,
+        "lula_delta": 6.7,
+        "flavio_july": 39.4,
+        "flavio_august": 34.0,
+        "flavio_delta": -5.4,
+        "gap_july": -6.1,
+        "gap_august": 6.0
+      },
+      {
+        "dimension": "age",
+        "category": "16 a 24",
+        "lula_july": 34.7,
+        "lula_august": 50.0,
+        "lula_delta": 15.3,
+        "flavio_july": 30.7,
+        "flavio_august": 21.0,
+        "flavio_delta": -9.7,
+        "gap_july": 4.0,
+        "gap_august": 29.0
+      }
+    ],
+    "runoff": [
+      {
+        "dimension": "income",
+        "category": "1 a 2 SM",
+        "lula_july": 53.0,
+        "lula_august": 43.0,
+        "lula_delta": -10.0,
+        "flavio_july": 39.0,
+        "flavio_august": 49.0,
+        "flavio_delta": 10.0,
+        "gap_july": 14.0,
+        "gap_august": -6.0
+      },
+      {
+        "dimension": "region",
+        "category": "Nordeste",
+        "lula_july": 62.0,
+        "lula_august": 52.5,
+        "lula_delta": -9.5,
+        "flavio_july": 30.0,
+        "flavio_august": 39.4,
+        "flavio_delta": 9.4,
+        "gap_july": 32.0,
+        "gap_august": 13.1
+      },
+      {
+        "dimension": "education",
+        "category": "Fundamental",
+        "lula_july": 58.6,
+        "lula_august": 47.5,
+        "lula_delta": -11.1,
+        "flavio_july": 34.3,
+        "flavio_august": 43.4,
+        "flavio_delta": 9.1,
+        "gap_july": 24.2,
+        "gap_august": 4.0
+      },
+      {
+        "dimension": "age",
+        "category": "41 a 59",
+        "lula_july": 45.5,
+        "lula_august": 43.0,
+        "lula_delta": -2.5,
+        "flavio_july": 41.6,
+        "flavio_august": 48.0,
+        "flavio_delta": 6.4,
+        "gap_july": 4.0,
+        "gap_august": -5.0
+      },
+      {
+        "dimension": "labour",
+        "category": "Desocupados",
+        "lula_july": 47.0,
+        "lula_august": 51.5,
+        "lula_delta": 4.5,
+        "flavio_july": 34.0,
+        "flavio_august": 40.4,
+        "flavio_delta": 6.4,
+        "gap_july": 13.0,
+        "gap_august": 11.1
+      },
+      {
+        "dimension": "labour",
+        "category": "Fora da força",
+        "lula_july": 59.0,
+        "lula_august": 52.0,
+        "lula_delta": -7.0,
+        "flavio_july": 34.0,
+        "flavio_august": 39.0,
+        "flavio_delta": 5.0,
+        "gap_july": 25.0,
+        "gap_august": 13.0
+      },
+      {
+        "dimension": "religion",
+        "category": "Católicos",
+        "lula_july": 55.0,
+        "lula_august": 51.0,
+        "lula_delta": -4.0,
+        "flavio_july": 36.0,
+        "flavio_august": 41.0,
+        "flavio_delta": 5.0,
+        "gap_july": 19.0,
+        "gap_august": 10.0
+      },
+      {
+        "dimension": "condition",
+        "category": "Interior",
+        "lula_july": 48.0,
+        "lula_august": 44.0,
+        "lula_delta": -4.0,
+        "flavio_july": 44.0,
+        "flavio_august": 48.0,
+        "flavio_delta": 4.0,
+        "gap_july": 4.0,
+        "gap_august": -4.0
+      },
+      {
+        "dimension": "income",
+        "category": "Até 1 SM",
+        "lula_july": 62.0,
+        "lula_august": 58.0,
+        "lula_delta": -4.0,
+        "flavio_july": 28.0,
+        "flavio_august": 32.0,
+        "flavio_delta": 4.0,
+        "gap_july": 34.0,
+        "gap_august": 26.0
+      },
+      {
+        "dimension": "age",
+        "category": "25 a 40",
+        "lula_july": 42.0,
+        "lula_august": 39.0,
+        "lula_delta": -3.0,
+        "flavio_july": 48.0,
+        "flavio_august": 51.0,
+        "flavio_delta": 3.0,
+        "gap_july": -6.0,
+        "gap_august": -12.0
+      },
+      {
+        "dimension": "sex",
+        "category": "Homens",
+        "lula_july": 41.0,
+        "lula_august": 37.0,
+        "lula_delta": -4.0,
+        "flavio_july": 50.0,
+        "flavio_august": 53.0,
+        "flavio_delta": 3.0,
+        "gap_july": -9.0,
+        "gap_august": -16.0
+      },
+      {
+        "dimension": "labour",
+        "category": "PEA informal",
+        "lula_july": 48.5,
+        "lula_august": 46.5,
+        "lula_delta": -2.0,
+        "flavio_july": 41.4,
+        "flavio_august": 43.6,
+        "flavio_delta": 2.2,
+        "gap_july": 7.1,
+        "gap_august": 3.0
+      },
+      {
+        "dimension": "age",
+        "category": "60 ou mais",
+        "lula_july": 59.0,
+        "lula_august": 53.0,
+        "lula_delta": -6.0,
+        "flavio_july": 36.0,
+        "flavio_august": 38.0,
+        "flavio_delta": 2.0,
+        "gap_july": 23.0,
+        "gap_august": 15.0
+      },
+      {
+        "dimension": "region",
+        "category": "Sul",
+        "lula_july": 35.6,
+        "lula_august": 32.3,
+        "lula_delta": -3.3,
+        "flavio_july": 56.4,
+        "flavio_august": 57.6,
+        "flavio_delta": 1.1,
+        "gap_july": -20.8,
+        "gap_august": -25.3
+      },
+      {
+        "dimension": "education",
+        "category": "Superior",
+        "lula_july": 44.0,
+        "lula_august": 46.0,
+        "lula_delta": 2.0,
+        "flavio_july": 44.0,
+        "flavio_august": 45.0,
+        "flavio_delta": 1.0,
+        "gap_july": 0.0,
+        "gap_august": 1.0
+      },
+      {
+        "dimension": "sex",
+        "category": "Mulheres",
+        "lula_july": 54.0,
+        "lula_august": 53.5,
+        "lula_delta": -0.5,
+        "flavio_july": 36.0,
+        "flavio_august": 36.6,
+        "flavio_delta": 0.6,
+        "gap_july": 18.0,
+        "gap_august": 16.8
+      },
+      {
+        "dimension": "condition",
+        "category": "Região metropolitana",
+        "lula_july": 48.0,
+        "lula_august": 45.0,
+        "lula_delta": -3.0,
+        "flavio_july": 42.0,
+        "flavio_august": 42.0,
+        "flavio_delta": 0.0,
+        "gap_july": 6.0,
+        "gap_august": 3.0
+      },
+      {
+        "dimension": "condition",
+        "category": "Capital",
+        "lula_july": 47.0,
+        "lula_august": 49.0,
+        "lula_delta": 2.0,
+        "flavio_july": 40.0,
+        "flavio_august": 39.0,
+        "flavio_delta": -1.0,
+        "gap_july": 7.0,
+        "gap_august": 10.0
+      },
+      {
+        "dimension": "region",
+        "category": "Sudeste",
+        "lula_july": 45.0,
+        "lula_august": 47.0,
+        "lula_delta": 2.0,
+        "flavio_july": 43.0,
+        "flavio_august": 42.0,
+        "flavio_delta": -1.0,
+        "gap_july": 2.0,
+        "gap_august": 5.0
+      },
+      {
+        "dimension": "income",
+        "category": "2 a 5 SM",
+        "lula_july": 42.0,
+        "lula_august": 41.6,
+        "lula_delta": -0.4,
+        "flavio_july": 48.0,
+        "flavio_august": 46.5,
+        "flavio_delta": -1.5,
+        "gap_july": -6.0,
+        "gap_august": -5.0
+      },
+      {
+        "dimension": "income",
+        "category": "Mais de 5 SM",
+        "lula_july": 39.0,
+        "lula_august": 42.6,
+        "lula_delta": 3.6,
+        "flavio_july": 51.0,
+        "flavio_august": 49.5,
+        "flavio_delta": -1.5,
+        "gap_july": -12.0,
+        "gap_august": -6.9
+      },
+      {
+        "dimension": "labour",
+        "category": "PEA formal",
+        "lula_july": 37.0,
+        "lula_august": 39.4,
+        "lula_delta": 2.4,
+        "flavio_july": 52.0,
+        "flavio_august": 50.5,
+        "flavio_delta": -1.5,
+        "gap_july": -15.0,
+        "gap_august": -11.1
+      },
+      {
+        "dimension": "religion",
+        "category": "Sem religião",
+        "lula_july": 57.6,
+        "lula_august": 60.0,
+        "lula_delta": 2.4,
+        "flavio_july": 31.3,
+        "flavio_august": 29.0,
+        "flavio_delta": -2.3,
+        "gap_july": 26.3,
+        "gap_august": 31.0
+      },
+      {
+        "dimension": "region",
+        "category": "Norte/Centro-Oeste",
+        "lula_july": 40.6,
+        "lula_august": 44.0,
+        "lula_delta": 3.4,
+        "flavio_july": 50.5,
+        "flavio_august": 48.0,
+        "flavio_delta": -2.5,
+        "gap_july": -9.9,
+        "gap_august": -4.0
+      },
+      {
+        "dimension": "religion",
+        "category": "Evangélicos",
+        "lula_july": 30.0,
+        "lula_august": 31.0,
+        "lula_delta": 1.0,
+        "flavio_july": 62.0,
+        "flavio_august": 59.0,
+        "flavio_delta": -3.0,
+        "gap_july": -32.0,
+        "gap_august": -28.0
+      },
+      {
+        "dimension": "religion",
+        "category": "Outras religiões",
+        "lula_july": 40.0,
+        "lula_august": 48.5,
+        "lula_delta": 8.5,
+        "flavio_july": 44.0,
+        "flavio_august": 40.4,
+        "flavio_delta": -3.6,
+        "gap_july": -4.0,
+        "gap_august": 8.1
+      },
+      {
+        "dimension": "education",
+        "category": "Médio",
+        "lula_july": 40.0,
+        "lula_august": 44.0,
+        "lula_delta": 4.0,
+        "flavio_july": 49.0,
+        "flavio_august": 45.0,
+        "flavio_delta": -4.0,
+        "gap_july": -9.0,
+        "gap_august": -1.0
+      },
+      {
+        "dimension": "age",
+        "category": "16 a 24",
+        "lula_july": 42.0,
+        "lula_august": 56.0,
+        "lula_delta": 14.0,
+        "flavio_july": 46.0,
+        "flavio_august": 31.0,
+        "flavio_delta": -15.0,
+        "gap_july": -4.0,
+        "gap_august": 25.0
+      }
+    ]
   },
   "transfer": {
     "sources": [
