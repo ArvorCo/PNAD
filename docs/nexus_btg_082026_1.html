@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script>document.documentElement.classList.add('js')</script>
   <title>O empate entrou no primeiro turno | Auditoria BTG/Nexus 03/08/2026</title>
-  <meta name="description" content="Auditoria independente da 8ª rodada BTG/Nexus: comparação com 27 de julho, renda PNAD 2025, transferência agregada, mulheres, regiões, rejeição e desenho amostral.">
+  <meta name="description" content="Auditoria independente da 8ª rodada BTG/Nexus: a margem fantasma da religião, renda PNAD 2025, transferência agregada, mulheres, nota fiscal de maio e desenho amostral.">
   <link rel="canonical" href="https://brasil.arvor.co/nexus_btg_082026_1.html">
   <meta property="og:title" content="O empate entrou no primeiro turno">
   <meta property="og:description" content="Lula 41, Flávio 37. No segundo turno, 46 a 45. A nova Nexus fecha as duas bocas e expõe onde a medição é frágil.">
@@ -19,6 +19,7 @@
       <a class="brand" href="index.html">Arvor Intelligence</a>
       <nav aria-label="Navegação do relatório">
         <a href="#placar">Placar</a>
+        <a href="#religiao">Religião</a>
         <a href="#renda">Renda</a>
         <a href="#transferencia">Transferência</a>
         <a href="#mulheres">Mulheres</a>
@@ -45,7 +46,7 @@
   <aside class="signal">
     <div class="wrap">
       <div class="mono">Veredito curto</div>
-      <div>A corrida apertou. Não há liderança estatística no primeiro nem no segundo turno. A renda é a margem que mais muda o placar; o sexo e a região quase não movem o resultado nacional.</div>
+      <div>A corrida apertou. Não há liderança estatística no primeiro nem no segundo turno. Duas margens explicam quase todo o movimento do placar: a renda, que a régua oficial desmente, e a religião, que ninguém controla. Sexo e região quase não movem o resultado nacional.</div>
     </div>
   </aside>
 
@@ -129,10 +130,56 @@
       </div>
     </section>
 
+    <section id="religiao" class="section-white">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div class="kicker">03 · A margem fantasma</div>
+          <div>
+            <h2>A religião mudou. Ninguém controla a religião.</h2>
+            <p class="lead">Entre as duas ondas, católicos foram de 53% para 48% da amostra e evangélicos de 25% para 30%. Toda margem controlada por cota ou peso está congelada dígito por dígito. A que mais se moveu é a de maior gradiente político do relatório, e não é cota, não é alvo de peso e não é comentada.</p>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <article class="card reveal">
+            <span class="stamp inference">Contrafactual</span>
+            <span class="card-number blue">47,4×44,6</span>
+            <h3>Agosto com o perfil de julho</h3>
+            <p>As próprias respostas de agosto, pesadas pela composição religiosa de julho, dariam 2,8 pontos de vantagem no segundo turno, não 1. Só a troca de composição vale −2,57 pontos.</p>
+          </article>
+          <article class="card reveal">
+            <span class="stamp fact">Fato publicado</span>
+            <span class="card-number red">28×50</span>
+            <h3>Evangélicos não se moveram</h3>
+            <p>Lula 28% e Flávio 50% no primeiro turno, idênticos nas duas ondas. O ganho de Flávio veio de católicos (27% para 34%) e da troca de 5 pontos de católico por evangélico na amostra.</p>
+          </article>
+          <article class="card reveal">
+            <span class="stamp limit">Limite</span>
+            <span class="card-number">z=3,55</span>
+            <h3>Grande demais para ruído simples</h3>
+            <p>Sob amostra aleatória simples, a mudança evangélica tem p=0,0004. Seria preciso um efeito de desenho de 3,3 para virar ruído, e o instituto não publica efeito de desenho nenhum.</p>
+          </article>
+        </div>
+
+        <div class="callout reveal" style="margin-top:28px">
+          <h3>Mais de dois terços do estreitamento do segundo turno é composição da amostra, não mudança de opinião.</h3>
+        </div>
+
+        <figure class="evidence-image reveal">
+          <img src="img/nexus_btg_082026_1/ago_p28_primeiro_turno_religiao.png" alt="Página do relatório Nexus de agosto com o primeiro turno por religião">
+          <figcaption>Relatório de 03/08, p. 28. Perfis religiosos: p. 117 (julho) e p. 113 (agosto). Decomposição composição x comportamento reproduzida em <code>uncontrolled.religion</code> no JSON da auditoria.</figcaption>
+        </figure>
+
+        <div class="guardrail reveal" style="margin-top:28px">
+          <strong>Hipótese não afirmada.</strong> Nada nos documentos sustenta que a mudança seja proposital, e religião não é controlável em discagem aleatória. O achado é estrutural: o placar entre ondas se move por uma margem que ninguém controla, pondera ou comenta. Sem os pesos e o efeito de desenho, movimento real e recomposição amostral são indistinguíveis.
+        </div>
+      </div>
+    </section>
+
     <section id="renda" class="section-white">
       <div class="wrap">
         <div class="section-head reveal">
-          <div class="kicker">03 · PNAD 2025</div>
+          <div class="kicker">04 · PNAD 2025</div>
           <div>
             <h2>A margem que troca o sinal</h2>
             <p class="lead">A amostra publicada comprime os extremos de renda. Ao trocar apenas essa distribuição pela PNAD Contínua anual 2025, mantendo as respostas da própria Nexus, o segundo turno passa de Lula +1 para Flávio +1,7.</p>
@@ -155,17 +202,18 @@
                 <tr><td>Publicado</td><td>46,0</td><td>45,0</td><td class="hot">+1,0</td></tr>
                 <tr><td>Renda PNAD</td><td>44,7</td><td>46,4</td><td class="cold">−1,7</td></tr>
                 <tr><td>Sexo TSE</td><td>46,0</td><td>45,0</td><td>+0,9</td></tr>
-                <tr><td>Idade TSE</td><td>45,6</td><td>45,2</td><td>+0,4</td></tr>
+                <tr><td>Idade TSE</td><td>46,0</td><td>45,0</td><td>+1,0</td></tr>
                 <tr><td>Região TSE</td><td>45,9</td><td>45,1</td><td>+0,8</td></tr>
               </tbody>
             </table>
           </article>
         </div>
 
-        <div class="grid-3" style="margin-top:22px">
+        <div class="grid-4" style="margin-top:22px">
           <article class="card reveal"><span class="card-number red">22%</span><h3>Até 1 salário mínimo na Nexus</h3><p>A PNAD encontra 13,50% ±0,25. A amostra tem 8,5 pontos a mais no grupo em que Lula vence por 58% a 32% no segundo turno.</p></article>
           <article class="card reveal"><span class="card-number blue">21%</span><h3>Mais de 5 salários na Nexus</h3><p>A PNAD encontra 25,33% ±0,53. Nesse grupo, Flávio vence por 50% a 43%.</p></article>
-          <article class="card reveal"><span class="card-number">1,44</span><h3>Gap do primeiro turno</h3><p>A mesma troca reduz Lula 41 x 37 para 39,7 x 38,2. Não vira o primeiro turno, mas quase apaga a vantagem.</p></article>
+          <article class="card reveal"><span class="card-number">1,46</span><h3>Gap do primeiro turno</h3><p>A mesma troca reduz Lula 41 x 37 para 39,7 x 38,3. Não vira o primeiro turno, mas quase apaga a vantagem.</p></article>
+          <article class="card reveal"><span class="card-number red">17%</span><h3>PEA informal na Nexus</h3><p>A PNAD encontra 24,2%: o segmento mais lulista da tabela (47 x 44 no 2º turno) está sub-representado em 30%. O formal, mais bolsonarista, tem 43% contra 36,8% reais. Reponderar essa margem abre a vantagem de 1,0 para 1,8.</p></article>
         </div>
 
         <div class="guardrail reveal" style="margin-top:28px">
@@ -177,7 +225,7 @@
     <section id="transferencia" class="section-blue">
       <div class="wrap">
         <div class="section-head reveal">
-          <div class="kicker">04 · Transferência</div>
+          <div class="kicker">05 · Transferência</div>
           <div>
             <h2>O caminho existe. A conversão ainda não.</h2>
             <p class="lead">Caiado, Renan, Zema, Cury e Daciolo somam 14 pontos. Flávio precisaria de cerca de 9,5 deles para cruzar 50% dos votos válidos. As transferências publicadas apontam algo perto da metade, não dos dois terços necessários.</p>
@@ -209,7 +257,7 @@
     <section id="mulheres" class="section-white">
       <div class="wrap">
         <div class="section-head reveal">
-          <div class="kicker">05 · Mulheres</div>
+          <div class="kicker">06 · Mulheres</div>
           <div>
             <h2>Um muro estável, não um bloco simples</h2>
             <p class="lead">Lula vence entre mulheres por 48% a 29% no primeiro turno e 54% a 37% no segundo. A vantagem quase não mudou. A PNAD ajuda a decompor condições domiciliares; não mede voto, religião ou persuasibilidade.</p>
@@ -222,10 +270,32 @@
           <article class="card reveal"><span class="card-number blue">54%</span><h3>Aprovam Lula</h3><p>Entre homens, 39%. A avaliação do governo acompanha a escolha eleitoral, sem provar causa.</p></article>
         </div>
 
+        <div class="callout reveal" style="margin-top:28px">
+          <h3>Lula faz 54% entre mulheres nos quatro cenários de segundo turno. O adversário faz 37, 31, 32 e 29, e a diferença vai inteira para branco e nulo.</h3>
+        </div>
+        <div class="grid-3" style="margin-top:22px">
+          <article class="card reveal"><span class="stamp fact">Fato publicado</span><span class="card-number red">54-54-54-54</span><h3>O muro não depende do adversário</h3><p>Contra Flávio, Zema, Caiado e Renan, Lula marca os mesmos 54% entre mulheres. O muro não é elasticidade de Lula: é o campo adversário que não retém voto feminino quando troca de nome.</p></article>
+          <article class="card reveal"><span class="stamp fact">Fato publicado</span><span class="card-number blue">56%</span><h3>Rejeição a Flávio entre mulheres</h3><p>Contra 42% entre homens. Lula inverte: 40% entre mulheres, 59% entre homens. A eleição é um referendo de sexo nas duas direções.</p></article>
+          <article class="card reveal"><span class="stamp limit">Limite</span><span class="card-number">39%</span><h3>O teto declarado de Flávio</h3><p>Potencial de voto entre mulheres: 39%, dois pontos acima do que ele já tira no segundo turno. Dentro desta amostra, não há folga feminina a converter.</p></article>
+        </div>
+
         <h3 style="margin-top:50px">Cinco arquétipos domiciliares descritivos</h3>
         <p class="footnote">Universo: mulheres de 16 anos ou mais. “Com menor” significa presença de pessoa abaixo de 18 anos no domicílio; não significa maternidade comprovada.</p>
         <div id="archetypes" class="grid-3" aria-live="polite">
           <article class="card">Carregando perfis PNAD 2025…</article>
+        </div>
+
+        <div class="grid-2" style="margin-top:26px">
+          <article class="chart-shell reveal">
+            <div class="chart-title">O país material: mulheres x homens, 16+</div>
+            <div id="women-material" class="chart" data-label="Indicadores socioeconômicos por sexo"></div>
+            <p class="chart-note">PNAD Contínua anual 2025 (1ª visita) e trimestral 1T/2026. Mais escolarizada, mais pobre, mais chefe de família: 13,7% das mulheres adultas recebem Bolsa Família em nome próprio, contra 1,8% dos homens.</p>
+          </article>
+          <article class="chart-shell reveal">
+            <div class="chart-title">A geografia da assimetria: mulheres 16+ por região</div>
+            <div id="women-region" class="chart" data-label="Mulheres por região: renda, pobreza e Bolsa Família"></div>
+            <p class="chart-note">Renda domiciliar per capita a preços de abril/2026. A nordestina vive com 54% da renda média da sulista; o Nordeste concentra 26,8% das mulheres adultas do país.</p>
+          </article>
         </div>
 
         <div class="guardrail reveal" style="margin-top:28px">
@@ -237,7 +307,7 @@
     <section class="section-red">
       <div class="wrap">
         <div class="section-head reveal">
-          <div class="kicker">06 · Regiões</div>
+          <div class="kicker">07 · Regiões</div>
           <div>
             <h2>O Nordeste fechou 19 pontos em uma semana</h2>
             <p class="lead">No primeiro turno, a vantagem de Lula caiu de 33 para 14. No segundo, de 32 para 13. É o maior deslocamento regional da rodada e também o que mais pede cautela.</p>
@@ -265,7 +335,7 @@
     <section class="section-white">
       <div class="wrap">
         <div class="section-head reveal">
-          <div class="kicker">07 · Modelo Nexus</div>
+          <div class="kicker">08 · Modelo Nexus</div>
           <div>
             <h2>O “bolsonarista que vota em Lula” é um artefato possível</h2>
             <p class="lead">A Nexus chama de “bolsonarista convicto” um cluster criado por notas de sentimento contra Lula e contra Bolsonaro e sua família. O rótulo não vem de uma pergunta positiva de identidade, e os pontos de corte não foram publicados.</p>
@@ -281,13 +351,21 @@
         <div class="callout reveal" style="margin-top:28px">
           <h3>O achado útil não é “há lulistas bolsonaristas”. É: o instrumento mede aversão, depois transforma aversão em identidade.</h3>
         </div>
+
+        <h3 style="margin-top:50px">O relatório sabe a margem e narra sem ela</h3>
+        <div class="grid-4" style="margin-top:18px">
+          <article class="card reveal"><span class="card-number red">≈3</span><h3>Pessoas no gráfico de Daciolo</h3><p>Com 1% de intenção (~20 entrevistados), Daciolo recebe um gráfico de certeza de voto de 17% x 83%. Os 17% são cerca de três pessoas. Samara Martins, também com 1%, não aparece: o critério não é explicado.</p></article>
+          <article class="card reveal"><span class="card-number red">±10</span><h3>A margem que a p. 114 declara</h3><p>Para desocupados. A p. 12 imprime "11% de bolsonaristas convictos" nesse grupo, contra 29% nacional, sem repetir a ressalva. A p. 114 não cobre nenhum dos seis clusters.</p></article>
+          <article class="card reveal"><span class="card-number red">0</span><h3>Menções a cor ou raça</h3><p>A última pergunta de toda entrevista é cor ou raça, nas duas ondas. Nos 236 páginas dos dois relatórios: zero ocorrências. Coletada sempre, publicada nunca, inauditável por consequência.</p></article>
+          <article class="card reveal"><span class="card-number">101%</span><h3>A cota de idade filhada</h3><p>As faixas declaradas no registro somam 101, arredondando para cima as duas faixas mais velhas, onde Lula vence. Pequeno e provavelmente inócuo; publicado pelo mesmo padrão simétrico de prova.</p></article>
+        </div>
       </div>
     </section>
 
     <section class="section-dark">
       <div class="wrap">
         <div class="section-head reveal">
-          <div class="kicker">08 · Rejeição e governo</div>
+          <div class="kicker">09 · Rejeição e governo</div>
           <div>
             <h2>O desconhecido também rejeita</h2>
             <p class="lead">Renan tem 47% de desconhecimento e 28% de rejeição bruta. Entre quem consegue avaliá-lo, sua rejeição estimada chega a 54%, a maior do grupo. A falta de conhecimento não é reserva automática.</p>
@@ -318,7 +396,7 @@
     <section id="metodo" class="section-white">
       <div class="wrap">
         <div class="section-head reveal">
-          <div class="kicker">09 · Desenho</div>
+          <div class="kicker">10 · Desenho</div>
           <div>
             <h2>RDD probabilístico, execução opaca</h2>
             <p class="lead">A unidade primária é o telefone gerado por Random Digit Dialing. O relatório informa quotas e calibração, mas não publica taxa de contato, elegibilidade, resposta, distribuição dos pesos ou efeito de desenho.</p>
@@ -332,19 +410,32 @@
           <article class="card reveal"><span class="card-number blue">126</span><h3>São Paulo</h3><p>Maior concentração bruta atual, contra 108 entrevistas na rodada anterior.</p></article>
         </div>
 
+        <div class="grid-4" style="margin-top:22px">
+          <article class="card reveal"><span class="card-number red">±2,19</span><h3>O piso da margem real</h3><p>Com n = 2.002, a margem mínima é ±2,19 mesmo sob amostra aleatória simples, não os ±2 da capa. Só a calibração geográfica já a leva a ±2,23; as demais margens de peso só aumentam.</p></article>
+          <article class="card reveal"><span class="card-number red">51,9</span><h3>χ² da alocação por UF</h3><p>Contra o eleitorado do TSE, com 26 graus de liberdade (crítico a 5%: 38,9; p = 0,0018). Em julho, 214,0. O Maranhão fica em 0,35x e 0,50x da sua fatia do eleitorado nas duas ondas.</p></article>
+          <article class="card reveal"><span class="card-number blue">3 pts</span><h3>O Nordeste que o peso fabrica</h3><p>A região recebeu 24,6% e 25,1% das entrevistas de campo e aparece com 28% no perfil final. Cerca de 3 pontos do Nordeste do relatório são produzidos por ponderação, exatamente onde está o salto de 19 pontos.</p></article>
+          <article class="card reveal"><span class="card-number">0,37–5,55</span><h3>Efeito de desenho implícito</h3><p>A dispersão das oito ondas implica deff de 0,37 (série de cluster lisa demais) a 5,55 (comparecimento). Um único ±2 não descreve as duas pontas.</p></article>
+        </div>
+
         <div class="grid-2" style="margin-top:22px">
           <article class="card reveal">
-            <h3>O bruto regional foi ponderado</h3>
-            <p>Nordeste recebeu 25,07% das entrevistas brutas e aparece com 28% no perfil final. Sul caiu de 15,58% bruto para 14% ponderado. A calibração regional trabalhou como esperado.</p>
+            <span class="stamp limit">Contradição documental</span>
+            <h3>Probabilístico no TSE, cotas no relatório</h3>
+            <p>O registro afirma que "cada número telefônico elegível possui probabilidade conhecida de ser selecionado". O relatório, p. 4, diz que a amostra foi definida por cotas de sexo, idade, escolaridade, tipo de telefonia e DDD. Cota interrompe a seleção quando o estrato enche e a probabilidade deixa de ser conhecida: os dois textos não são compatíveis, e as listas de controle divergem entre si (o TSE lista região; o relatório, DDD).</p>
           </article>
           <article class="card reveal">
             <h3>A referência de renda envelheceu</h3>
-            <p>A metodologia declara PNADC anual 2024, 1ª visita. Em agosto de 2026, a PNAD anual 2025 já estava publicada. Nossa sensibilidade usa a base de 2025 e mantém o mesmo conceito de renda efetiva domiciliar.</p>
+            <p>A metodologia declara PNADC anual 2024, 1ª visita. Em agosto de 2026, a PNAD anual 2025 já estava publicada. Nossa sensibilidade usa a base de 2025 e mantém o mesmo conceito de renda efetiva domiciliar. O bruto regional confirma a calibração em ação: Nordeste 25,1% em campo, 28% no perfil; Sul 15,6% bruto, 14% ponderado.</p>
           </article>
         </div>
 
+        <figure class="evidence-image reveal">
+          <img src="img/nexus_btg_082026_1/ago_registro_p01_plano_amostral.png" alt="Plano amostral do registro TSE da rodada de agosto">
+          <figcaption>Registro TSE BR-02874/2026, plano amostral. A margem de ±2 só tem definição formal sob amostragem probabilística; sob cota, é convenção.</figcaption>
+        </figure>
+
         <div class="guardrail reveal" style="margin-top:28px">
-          <strong>Rotação não prova viés.</strong> Em RDD, municípios são consequência dos números sorteados, não necessariamente unidades selecionadas de uma lista territorial. A troca de municípios amplia a volatilidade entre ondas; sem probabilidades, paradata e pesos, não é possível atribuir o salto regional a erro ou fraude.
+          <strong>Rotação não prova viés.</strong> Em RDD, municípios são consequência dos números sorteados, não necessariamente unidades selecionadas de uma lista territorial. A troca de municípios amplia a volatilidade entre ondas; sem probabilidades, paradata e pesos, não é possível atribuir o salto regional a erro ou fraude. E registre-se o que fecha: as entrevistas somam exatamente 2.004 e 2.002, todas as 27 UFs aparecem nas duas ondas e nenhuma linha de crosstab soma fora da tolerância declarada.
         </div>
       </div>
     </section>
@@ -352,7 +443,34 @@
     <section class="section-dark">
       <div class="wrap">
         <div class="section-head reveal">
-          <div class="kicker">10 · Reprodutibilidade</div>
+          <div class="kicker">11 · O rastro documental</div>
+          <div>
+            <h2>A pesquisa de agosto foi faturada em maio</h2>
+            <p class="lead">A nota fiscal da rodada, depositada no TSE, foi emitida em 5 de maio de 2026, com vencimento em 5 de junho, para a "pesquisa eleitoral 1 de agosto de 2026". O campo só aconteceu de 31/07 a 02/08.</p>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <article class="card reveal"><span class="card-number lime">05/05</span><h3>NFS-e nº 310</h3><p>R$ 164.888,89, tomador Banco BTG Pactual, gerada às 19:11 de 5 de maio. O mesmo valor aparece na declaração do estatístico de julho: preço unitário idêntico entre rodadas.</p></article>
+          <article class="card reveal"><span class="card-number lime">−3 dias</span><h3>Atestado antes do campo</h3><p>A declaração do estatístico das duas ondas é assinada com ICP-Brasil três dias antes de o campo começar (21/07 e 28/07). A regra do TSE exige registro prévio, então a antecedência é estrutural. O que falta é o ato inverso: nenhum documento posterior confirma que o campo declarado foi o realizado.</p></article>
+          <article class="card reveal"><span class="card-number lime">FSB</span><h3>O vínculo vira documento</h3><p>O e-mail do prestador na nota é juridico@fsb.com.br e o questionário registrado traz o timbre "FSB holding" ao lado de "nexus.". O vínculo Nexus/FSB, holding com contratos de publicidade federal, deixa de ser contexto e passa a ser documento primário no tribunal.</p></article>
+        </div>
+
+        <figure class="evidence-image reveal">
+          <img src="img/nexus_btg_082026_1/ago_nf_p01_nota_fiscal.png" alt="Nota fiscal da pesquisa de agosto, com dados bancários tarjados">
+          <figcaption>NFS-e nº 310, Distrito Federal, emitida em 05/05/2026 para a rodada de 03/08. Dados bancários tarjados por esta auditoria.</figcaption>
+        </figure>
+
+        <div class="guardrail reveal" style="margin-top:28px;background:#fff;color:#07111f">
+          <strong>Nada disso é ilegal.</strong> A leitura correta é outra: o calendário de rodadas de 2026 estava contratado e precificado três meses antes, com data nominal que não coincide com campo nem divulgação. A pesquisa é um produto de assinatura com data marcada, não uma reação ao noticiário, e cada rodada deveria ser lida assim.
+        </div>
+      </div>
+    </section>
+
+    <section class="section-dark">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div class="kicker">12 · Reprodutibilidade</div>
           <div>
             <h2>Cinco blindagens</h2>
             <p class="lead">A conta foi construída para separar o que a Nexus mediu do que esta auditoria estima.</p>
@@ -369,11 +487,11 @@
         <div class="grid-2" style="margin-top:26px">
           <article class="card reveal">
             <h3>Questionário mudou</h3>
-            <p>A rodada atual acrescentou Samara Martins, Edmilson Costa, Hero Marques, Hertz Dias e Rui Costa Pimenta. Retirou a segunda opção de voto, a motivação do voto e o bloco sobre tarifas; incluiu avaliação de governo e bem-estar.</p>
+            <p>A cédula estimulada foi de 7 para 12 nomes; a bateria de rejeição, de 7 para 5. Cury e Daciolo podem receber voto, mas não podem mais receber rejeição, sem nota de critério. Saíram a segunda opção de voto, a motivação do 2º turno, o voto ideal x útil, o "contra quem" e o bloco do tarifaço; entraram cinco blocos de atribuição de responsabilidade ao governo. A rodada perdeu os instrumentos que mediam solidez de voto e ganhou os que medem culpa.</p>
           </article>
           <article class="card reveal">
-            <h3>Ordem protegida</h3>
-            <p>As perguntas de voto continuam antes das escalas de polarização e da avaliação do governo. Isso reduz contaminação direta do voto pelos enquadramentos posteriores.</p>
+            <h3>Ordem protegida, com um asterisco</h3>
+            <p>O voto segue no início (P2/P3), limpo de efeito de ordem, e a p. 4 de agosto passou a declarar que o relatório reordena as perguntas por eixo temático. O asterisco: a escala anti-Lula/anti-Bolsonaro que define os clusters é a penúltima pergunta e, em agosto, passou a vir depois de cinco blocos sobre culpa do governo. Nessa onda, "bolsonaristas convictos" marcou o máximo da série (29%). Hipótese registrada, sem prova de causa: um split-ballot resolveria.</p>
           </article>
         </div>
       </div>
@@ -382,7 +500,7 @@
     <section id="fontes" class="section-white">
       <div class="wrap">
         <div class="section-head reveal">
-          <div class="kicker">11 · Fontes</div>
+          <div class="kicker">13 · Fontes</div>
           <div>
             <h2>Documentos e código</h2>
             <p class="lead">Relatórios, questionários, registros, municípios e declaração do estatístico foram arquivados por onda. O JSON publicado contém hashes SHA-256 de cada documento.</p>

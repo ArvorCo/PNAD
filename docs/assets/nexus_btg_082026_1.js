@@ -57,7 +57,7 @@
         const barY = y + j * 24;
         const barWidth = (width - left - right) * value / Math.max(60, max);
         svg.append(svgEl("rect", { x: left, y: barY, width: barWidth, height: 17, fill: colors[j], rx: 2 }));
-        addText(svg, left + barWidth + 7, barY + 13, `${value}%`, "value-label", "start");
+        addText(svg, left + barWidth + 7, barY + 13, `${value.toLocaleString("pt-BR")}%`, "value-label", "start");
       });
     });
     labels.forEach((label, i) => {
@@ -127,7 +127,7 @@
     rows.forEach((value, i) => {
       const { y, h } = sourcePos[i];
       svg.append(svgEl("rect", { x: barX0, y, width: barW, height: Math.max(h, 2), fill: sourceColors[sources[i]] || "#e8ecf4" }));
-      const label = addText(svg, barX0 - 12, y + h / 2 + 4, `${sources[i]} ${Math.round(rows[i] * 10) / 10}`, "sankey-label", "end");
+      const label = addText(svg, barX0 - 12, y + h / 2 + 4, `${sources[i]} ${(Math.round(rows[i] * 10) / 10).toLocaleString("pt-BR")}`, "sankey-label", "end");
       if (h < 13) label.setAttribute("y", y + h / 2 + 3.5);
     });
     cols.forEach((value, j) => {
@@ -157,6 +157,47 @@
     }));
   }
 
+  function womenMaterial(women) {
+    const host = $("#women-material");
+    if (!host || !women) return;
+    const ft = women.forca_de_trabalho.por_sexo;
+    const esc = women.escolaridade.por_sexo;
+    const bf = women.bolsa_familia.por_sexo;
+    const chefia = women.chefia_domiciliar.por_sexo_do_responsavel;
+    const rows = [
+      { name: "Força de trabalho", m: ft.mulheres.taxa_de_participacao.pct, h: ft.homens.taxa_de_participacao.pct },
+      { name: "Ensino superior", m: esc.mulheres.distribuicao.Superior.pct, h: esc.homens.distribuicao.Superior.pct },
+      { name: "Chefia o domicílio", m: chefia.mulheres.chefia_pct.pct, h: chefia.homens.chefia_pct.pct },
+      { name: "Bolsa Família (titular)", m: bf.mulheres.recebe_pessoalmente.pct, h: bf.homens.recebe_pessoalmente.pct },
+      { name: "Domicílio até 1 SM", m: women.renda_domiciliar_por_faixa.por_sexo.mulheres.distribuicao["Até 1 SM"].pct, h: women.renda_domiciliar_por_faixa.por_sexo.homens.distribuicao["Até 1 SM"].pct },
+    ];
+    groupedBars("#women-material", rows.map(row => ({ name: row.name, values: [Number(row.m.toFixed(1)), Number(row.h.toFixed(1))] })), ["Mulheres", "Homens"], ["#ef3e36", "#1b54f2"]);
+  }
+
+  function womenRegion(women) {
+    const host = $("#women-region");
+    if (!host || !women) return;
+    const regions = women.regiao.por_regiao;
+    const order = ["Nordeste", "Norte", "Centro-Oeste", "Sudeste", "Sul"];
+    const table = document.createElement("table");
+    table.className = "delta-table";
+    table.innerHTML = `<thead><tr><th>Região</th><th>Renda p.c.</th><th>Até 1 SM</th><th>Bolsa Família</th><th>Ocupadas</th></tr></thead>`;
+    const body = document.createElement("tbody");
+    order.forEach(name => {
+      const region = regions[name];
+      if (!region) return;
+      const row = document.createElement("tr");
+      const money = Math.round(region.renda_per_capita_media_brl.valor).toLocaleString("pt-BR");
+      row.innerHTML = `<td>${name}</td><td>R$ ${money}</td>
+        <td class="${region.ate_1_sm_pct.pct > 20 ? "hot" : ""}">${region.ate_1_sm_pct.pct.toFixed(1).replace(".", ",")}%</td>
+        <td>${region.bolsa_familia_pct.pct.toFixed(1).replace(".", ",")}%</td>
+        <td>${region.ocupadas_pct.pct.toFixed(1).replace(".", ",")}%</td>`;
+      body.append(row);
+    });
+    table.append(body);
+    host.replaceChildren(table);
+  }
+
   function fillMetrics(data) {
     const paths = {
       "territory-overlap": data.territory.overlap,
@@ -175,14 +216,19 @@
     $$(".reveal").forEach(node => observer.observe(node));
   }
 
-  fetch("assets/nexus_btg_082026_1_data.json")
-    .then(response => { if (!response.ok) throw new Error(`HTTP ${response.status}`); return response.json(); })
-    .then(data => {
+  const asJson = response => { if (!response.ok) throw new Error(`HTTP ${response.status}`); return response.json(); };
+  Promise.all([
+    fetch("assets/nexus_btg_082026_1_data.json").then(asJson),
+    fetch("assets/nexus_btg_082026_1_mulheres.json").then(asJson).catch(() => null),
+  ])
+    .then(([data, women]) => {
       lineChart("#first-series", data.series.first, data.series.dates);
       lineChart("#runoff-series", data.series.runoff, data.series.dates);
       incomeChart(data);
       transferFlow(data);
       archetypes(data);
+      womenMaterial(women);
+      womenRegion(women);
       fillMetrics(data);
       document.documentElement.classList.add("data-ready");
     })

@@ -1,0 +1,1880 @@
+{
+  "generated_at": "2026-08-04",
+  "warning": "A PNAD Contínua não mede intenção de voto, religião, aprovação de governo nem persuasibilidade. Todo número deste arquivo é descritivo: descreve o universo social em que a pesquisa foi a campo, nunca a preferência eleitoral de quem vive nele. Aproximar um recorte social de um resultado publicado é contexto, não é causa.",
+  "fontes": {
+    "domicilio_renda_regiao": {
+      "tabela": "base_anual_visita1_labeled_npv",
+      "pesquisa": "PNAD Contínua anual 2025, 1ª visita",
+      "peso": "V1032__peso_com_calibracao",
+      "replicas": 200,
+      "adultos_16_mais": 168346362
+    },
+    "trabalho_renda_escolaridade": {
+      "tabela": "base_labeled_npv",
+      "pesquisa": "PNAD Contínua trimestral, 1º trimestre de 2026",
+      "peso": "V1028__peso_com_calibracao",
+      "replicas": 200,
+      "adultos_16_mais": 169177021
+    },
+    "nivel_de_confianca": 0.95,
+    "deflator": "IPCA, preços de abril de 2026"
+  },
+  "nexus_referencia": {
+    "first_labels": [
+      "Lula",
+      "Flávio",
+      "Caiado",
+      "Renan",
+      "Zema",
+      "Outros",
+      "B/N",
+      "NS"
+    ],
+    "runoff_labels": [
+      "Lula",
+      "adversário",
+      "B/N",
+      "NS"
+    ],
+    "first": {
+      "total": [
+        41,
+        37,
+        5,
+        4,
+        3,
+        3,
+        4,
+        3
+      ],
+      "mulheres": [
+        48,
+        29,
+        4,
+        1,
+        2,
+        6,
+        6,
+        4
+      ],
+      "homens": [
+        34,
+        45,
+        5,
+        7,
+        4,
+        1,
+        2,
+        2
+      ],
+      "pagina": 28
+    },
+    "runoff_cenarios": {
+      "Lula x Flávio Bolsonaro": {
+        "total": [
+          46,
+          45,
+          8,
+          2
+        ],
+        "mulheres": [
+          54,
+          37,
+          7,
+          3
+        ],
+        "homens": [
+          37,
+          53,
+          9,
+          1
+        ],
+        "pagina": 52
+      },
+      "Lula x Romeu Zema": {
+        "total": [
+          46,
+          40,
+          10,
+          3
+        ],
+        "mulheres": [
+          54,
+          31,
+          11,
+          4
+        ],
+        "homens": [
+          37,
+          51,
+          9,
+          3
+        ],
+        "pagina": 54
+      },
+      "Lula x Ronaldo Caiado": {
+        "total": [
+          46,
+          42,
+          10,
+          3
+        ],
+        "mulheres": [
+          54,
+          32,
+          11,
+          3
+        ],
+        "homens": [
+          37,
+          53,
+          8,
+          3
+        ],
+        "pagina": 56
+      },
+      "Lula x Renan Santos": {
+        "total": [
+          47,
+          37,
+          13,
+          3
+        ],
+        "mulheres": [
+          54,
+          29,
+          13,
+          3
+        ],
+        "homens": [
+          38,
+          45,
+          14,
+          3
+        ],
+        "pagina": 58
+      }
+    },
+    "aprovacao_do_governo": {
+      "labels": [
+        "Aprova",
+        "Desaprova",
+        "NS/NR"
+      ],
+      "total": [
+        47,
+        48,
+        5
+      ],
+      "mulheres": [
+        54,
+        39,
+        7
+      ],
+      "homens": [
+        39,
+        58,
+        3
+      ],
+      "pagina": 85
+    },
+    "avaliacao_do_governo": {
+      "labels": [
+        "Ótimo",
+        "Bom",
+        "Regular",
+        "Ruim",
+        "Péssimo",
+        "NS/NR"
+      ],
+      "total": [
+        16,
+        21,
+        18,
+        8,
+        35,
+        2
+      ],
+      "mulheres": [
+        19,
+        23,
+        21,
+        7,
+        28,
+        2
+      ],
+      "homens": [
+        13,
+        19,
+        15,
+        9,
+        42,
+        1
+      ],
+      "pagina": 79
+    },
+    "potencial_de_voto": {
+      "mulheres": {
+        "Lula": 59,
+        "Flávio": 39
+      },
+      "homens": {
+        "Lula": 39,
+        "Flávio": 56
+      },
+      "pagina": 69
+    },
+    "rejeicao": {
+      "mulheres": {
+        "Lula": 40,
+        "Flávio": 56
+      },
+      "homens": {
+        "Lula": 59,
+        "Flávio": 42
+      },
+      "pagina": 70
+    },
+    "income_labels": [
+      "Até 1 SM",
+      "1-2 SM",
+      "2-5 SM",
+      "5+ SM"
+    ],
+    "income_first_lula_flavio": [
+      [
+        54,
+        26
+      ],
+      [
+        37,
+        44
+      ],
+      [
+        38,
+        39
+      ],
+      [
+        39,
+        38
+      ]
+    ],
+    "income_runoff_lula_flavio": [
+      [
+        58,
+        32
+      ],
+      [
+        43,
+        49
+      ],
+      [
+        42,
+        47
+      ],
+      [
+        43,
+        50
+      ]
+    ],
+    "perfil_da_amostra": {
+      "sexo": {
+        "Feminino": 53,
+        "Masculino": 47
+      },
+      "idade": {
+        "16 a 24": 12,
+        "25 a 40": 30,
+        "41 a 59": 34,
+        "60 ou mais": 24
+      },
+      "escolaridade": {
+        "Fundamental": 36,
+        "Médio": 41,
+        "Superior": 23
+      },
+      "renda_familiar": {
+        "Até 1 SM": 22,
+        "1 a 2 SM": 18,
+        "2 a 5 SM": 40,
+        "5+ SM": 21
+      },
+      "pea": {
+        "Formal": 43,
+        "Informal": 17,
+        "Desocupados": 5,
+        "Não PEA": 35
+      },
+      "regiao": {
+        "Norte/Centro-Oeste": 16,
+        "Nordeste": 28,
+        "Sudeste": 42,
+        "Sul": 14
+      },
+      "municipio": {
+        "Capital": 27,
+        "RM": 12,
+        "Interior": 60
+      },
+      "religiao": {
+        "Católicos": 48,
+        "Evangélicos": 30,
+        "Outras religiões": 9,
+        "Sem religião": 12
+      },
+      "pagina": 113
+    },
+    "margem_por_perfil_pp": {
+      "Feminino": 3,
+      "Masculino": 3,
+      "pagina": 114
+    },
+    "entrevistas": 2002,
+    "referencia_declarada": "O relatório declara, na página 4, que a amostra foi construída com a PNAD Contínua, suplemento anual acumulado da 1ª visita de 2024, e com dados do Tribunal Superior Eleitoral. A PNAD anual de 2025 já estava publicada quando esta rodada foi a campo.",
+    "nota": "Sexo é o único recorte por sexo divulgado. Não há cruzamento publicado de sexo com renda, idade, escolaridade, religião, PEA ou região, e é justamente nesses cruzamentos que a diferença entre mulheres e homens poderia ser explicada. As páginas 69 e 70 vêm em blocos de duas colunas no PDF; a ordem entre Lula e Flávio foi conferida contra os recortes de sexo e de renda das páginas 28 e 52."
+  },
+  "renda_do_trabalho": {
+    "rotulo": "Rendimento efetivo de todos os trabalhos, por sexo",
+    "universo": "Pessoas de 16 anos ou mais, ocupadas e com rendimento de trabalho declarado maior que zero. PNAD Contínua trimestral, 1º trimestre de 2026. Valores a preços de abril de 2026 pelo IPCA.",
+    "por_sexo": {
+      "mulheres": {
+        "media_brl": {
+          "valor": 3631.7,
+          "moe": 65.55,
+          "low": 3566.15,
+          "high": 3697.25
+        },
+        "mediana_brl": 2214.74,
+        "media_horas_trabalho_principal": {
+          "valor": 37.31,
+          "moe": 0.11,
+          "low": 37.2,
+          "high": 37.42
+        },
+        "media_brl_por_hora": {
+          "valor": 22.3,
+          "moe": 0.41,
+          "low": 21.88,
+          "high": 22.71
+        },
+        "pessoas": 42435070
+      },
+      "homens": {
+        "media_brl": {
+          "valor": 4512.72,
+          "moe": 111.56,
+          "low": 4401.16,
+          "high": 4624.27
+        },
+        "mediana_brl": 2718.09,
+        "media_horas_trabalho_principal": {
+          "valor": 41.15,
+          "moe": 0.08,
+          "low": 41.07,
+          "high": 41.24
+        },
+        "media_brl_por_hora": {
+          "valor": 24.82,
+          "moe": 0.61,
+          "low": 24.22,
+          "high": 25.43
+        },
+        "pessoas": 55841001
+      }
+    },
+    "razao_media_mulher_homem": {
+      "razao": 0.8048,
+      "moe": 0.0162,
+      "low": 0.7886,
+      "high": 0.8209
+    },
+    "razao_mediana_mulher_homem": 0.8148,
+    "razao_hora_mulher_homem": {
+      "razao": 0.8981,
+      "moe": 0.0204,
+      "low": 0.8778,
+      "high": 0.9185
+    },
+    "por_faixa_de_horas": {
+      "Até 14h": {
+        "mulheres": {
+          "valor": 1100.43,
+          "moe": 83.49,
+          "low": 1016.94,
+          "high": 1183.92
+        },
+        "homens": {
+          "valor": 1864.23,
+          "moe": 226.37,
+          "low": 1637.85,
+          "high": 2090.6
+        },
+        "razao_mulher_homem": {
+          "razao": 0.5903,
+          "moe": 0.0823,
+          "low": 0.508,
+          "high": 0.6726
+        }
+      },
+      "15-39h": {
+        "mulheres": {
+          "valor": 2760.41,
+          "moe": 78.73,
+          "low": 2681.67,
+          "high": 2839.14
+        },
+        "homens": {
+          "valor": 3191.45,
+          "moe": 224.95,
+          "low": 2966.5,
+          "high": 3416.39
+        },
+        "razao_mulher_homem": {
+          "razao": 0.8649,
+          "moe": 0.0629,
+          "low": 0.802,
+          "high": 0.9279
+        }
+      },
+      "40-44h": {
+        "mulheres": {
+          "valor": 3936.18,
+          "moe": 73.92,
+          "low": 3862.27,
+          "high": 4010.1
+        },
+        "homens": {
+          "valor": 4470.3,
+          "moe": 102.9,
+          "low": 4367.4,
+          "high": 4573.2
+        },
+        "razao_mulher_homem": {
+          "razao": 0.8805,
+          "moe": 0.0169,
+          "low": 0.8636,
+          "high": 0.8974
+        }
+      },
+      "45-48h": {
+        "mulheres": {
+          "valor": 3287.86,
+          "moe": 136.73,
+          "low": 3151.13,
+          "high": 3424.58
+        },
+        "homens": {
+          "valor": 3968.81,
+          "moe": 165.42,
+          "low": 3803.39,
+          "high": 4134.23
+        },
+        "razao_mulher_homem": {
+          "razao": 0.8284,
+          "moe": 0.0432,
+          "low": 0.7853,
+          "high": 0.8716
+        }
+      },
+      "49h ou mais": {
+        "mulheres": {
+          "valor": 6127.68,
+          "moe": 370.52,
+          "low": 5757.15,
+          "high": 6498.2
+        },
+        "homens": {
+          "valor": 6926.58,
+          "moe": 347.97,
+          "low": 6578.62,
+          "high": 7274.55
+        },
+        "razao_mulher_homem": {
+          "razao": 0.8847,
+          "moe": 0.0557,
+          "low": 0.829,
+          "high": 0.9404
+        }
+      }
+    },
+    "por_escolaridade": {
+      "Fundamental": {
+        "mulheres": {
+          "valor": 1665.26,
+          "moe": 28.42,
+          "low": 1636.84,
+          "high": 1693.68
+        },
+        "homens": {
+          "valor": 2502.12,
+          "moe": 82.42,
+          "low": 2419.7,
+          "high": 2584.54
+        },
+        "razao_mulher_homem": {
+          "razao": 0.6655,
+          "moe": 0.024,
+          "low": 0.6415,
+          "high": 0.6896
+        },
+        "composicao_pct": {
+          "mulheres": {
+            "pct": 16.9246,
+            "moe": 0.3708,
+            "low": 16.5538,
+            "high": 17.2955
+          },
+          "homens": {
+            "pct": 27.9904,
+            "moe": 0.4271,
+            "low": 27.5634,
+            "high": 28.4175
+          }
+        }
+      },
+      "Médio": {
+        "mulheres": {
+          "valor": 2322.03,
+          "moe": 26.52,
+          "low": 2295.51,
+          "high": 2348.56
+        },
+        "homens": {
+          "valor": 3324.36,
+          "moe": 74.11,
+          "low": 3250.25,
+          "high": 3398.47
+        },
+        "razao_mulher_homem": {
+          "razao": 0.6985,
+          "moe": 0.0172,
+          "low": 0.6813,
+          "high": 0.7157
+        },
+        "composicao_pct": {
+          "mulheres": {
+            "pct": 42.5057,
+            "moe": 0.5138,
+            "low": 41.9918,
+            "high": 43.0195
+          },
+          "homens": {
+            "pct": 45.3097,
+            "moe": 0.4875,
+            "low": 44.8221,
+            "high": 45.7972
+          }
+        }
+      },
+      "Superior": {
+        "mulheres": {
+          "valor": 5824.22,
+          "moe": 128.21,
+          "low": 5696.0,
+          "high": 5952.43
+        },
+        "homens": {
+          "valor": 8637.13,
+          "moe": 274.46,
+          "low": 8362.67,
+          "high": 8911.59
+        },
+        "razao_mulher_homem": {
+          "razao": 0.6743,
+          "moe": 0.0187,
+          "low": 0.6557,
+          "high": 0.693
+        },
+        "composicao_pct": {
+          "mulheres": {
+            "pct": 40.5697,
+            "moe": 0.6556,
+            "low": 39.9141,
+            "high": 41.2253
+          },
+          "homens": {
+            "pct": 26.6999,
+            "moe": 0.5912,
+            "low": 26.1087,
+            "high": 27.2911
+          }
+        }
+      }
+    },
+    "limite": "A razão por hora usa só quem tem um único trabalho, para que o rendimento de todos os trabalhos e as horas do trabalho principal descrevam a mesma jornada. A base não mede trabalho doméstico não remunerado, então a jornada total das mulheres está subestimada por construção. Nada aqui identifica discriminação: é diferença observada, não efeito causal isolado."
+  },
+  "forca_de_trabalho": {
+    "rotulo": "Força de trabalho, ocupação e informalidade, por sexo",
+    "universo": "Pessoas de 16 anos ou mais. PNAD Contínua trimestral, 1º trimestre de 2026. Denominador da participação e do nível de ocupação: pessoas em idade de trabalhar com condição de força de trabalho conhecida.",
+    "por_sexo": {
+      "mulheres": {
+        "taxa_de_participacao": {
+          "pct": 54.1815,
+          "moe": 0.2779,
+          "low": 53.9035,
+          "high": 54.4594
+        },
+        "nivel_de_ocupacao": {
+          "pct": 50.2789,
+          "moe": 0.2914,
+          "low": 49.9875,
+          "high": 50.5703
+        },
+        "taxa_de_desocupacao": {
+          "pct": 7.2027,
+          "moe": 0.263,
+          "low": 6.9397,
+          "high": 7.4657
+        },
+        "fora_da_forca_de_trabalho": {
+          "pct": 45.8185,
+          "moe": 0.2779,
+          "low": 45.5406,
+          "high": 46.0965
+        },
+        "sem_carteira_conta_propria_ou_familiar": {
+          "pct": 45.5452,
+          "moe": 0.4907,
+          "low": 45.0545,
+          "high": 46.0359
+        },
+        "sem_carteira_estrito": {
+          "pct": 23.6783,
+          "moe": 0.3763,
+          "low": 23.3019,
+          "high": 24.0546
+        },
+        "empregado_privado_com_carteira": {
+          "pct": 36.8082,
+          "moe": 0.4926,
+          "low": 36.3155,
+          "high": 37.3008
+        },
+        "setor_publico_ou_militar": {
+          "pct": 16.542,
+          "moe": 0.3504,
+          "low": 16.1916,
+          "high": 16.8924
+        },
+        "conta_propria": {
+          "pct": 20.1358,
+          "moe": 0.4145,
+          "low": 19.7213,
+          "high": 20.5503
+        },
+        "empregador": {
+          "pct": 2.9516,
+          "moe": 0.1694,
+          "low": 2.7823,
+          "high": 3.121
+        },
+        "trabalhador_familiar_auxiliar": {
+          "pct": 1.7311,
+          "moe": 0.105,
+          "low": 1.6262,
+          "high": 1.8361
+        },
+        "trabalho_domestico": {
+          "pct": 11.2632,
+          "moe": 0.2985,
+          "low": 10.9647,
+          "high": 11.5617
+        },
+        "composicao_do_universo_adulto": {
+          "denominador": "pessoas de 16 anos ou mais em idade de trabalhar",
+          "ocupado_formal_amplo": {
+            "pct": 27.3793,
+            "moe": 0.304,
+            "low": 27.0753,
+            "high": 27.6833
+          },
+          "ocupado_informal_amplo": {
+            "pct": 22.8996,
+            "moe": 0.2706,
+            "low": 22.629,
+            "high": 23.1702
+          },
+          "ocupado_sem_carteira_estrito": {
+            "pct": 11.9052,
+            "moe": 0.2008,
+            "low": 11.7044,
+            "high": 12.106
+          },
+          "desocupado": {
+            "pct": 3.9025,
+            "moe": 0.1445,
+            "low": 3.758,
+            "high": 4.047
+          },
+          "fora_da_forca": {
+            "pct": 45.8185,
+            "moe": 0.2779,
+            "low": 45.5406,
+            "high": 46.0965
+          }
+        },
+        "pessoas_16_mais": 87867327,
+        "ocupados": 44178742
+      },
+      "homens": {
+        "taxa_de_participacao": {
+          "pct": 74.4566,
+          "moe": 0.2412,
+          "low": 74.2155,
+          "high": 74.6978
+        },
+        "nivel_de_ocupacao": {
+          "pct": 70.7299,
+          "moe": 0.2558,
+          "low": 70.4741,
+          "high": 70.9857
+        },
+        "taxa_de_desocupacao": {
+          "pct": 5.0052,
+          "moe": 0.1591,
+          "low": 4.8461,
+          "high": 5.1644
+        },
+        "fora_da_forca_de_trabalho": {
+          "pct": 25.5434,
+          "moe": 0.2412,
+          "low": 25.3022,
+          "high": 25.7845
+        },
+        "sem_carteira_conta_propria_ou_familiar": {
+          "pct": 47.5244,
+          "moe": 0.4201,
+          "low": 47.1042,
+          "high": 47.9445
+        },
+        "sem_carteira_estrito": {
+          "pct": 17.242,
+          "moe": 0.3158,
+          "low": 16.9261,
+          "high": 17.5578
+        },
+        "empregado_privado_com_carteira": {
+          "pct": 39.7777,
+          "moe": 0.4555,
+          "low": 39.3222,
+          "high": 40.2332
+        },
+        "setor_publico_ou_militar": {
+          "pct": 9.3362,
+          "moe": 0.2486,
+          "low": 9.0876,
+          "high": 9.5848
+        },
+        "conta_propria": {
+          "pct": 29.6138,
+          "moe": 0.3855,
+          "low": 29.2283,
+          "high": 29.9993
+        },
+        "empregador": {
+          "pct": 5.0896,
+          "moe": 0.2148,
+          "low": 4.8748,
+          "high": 5.3045
+        },
+        "trabalhador_familiar_auxiliar": {
+          "pct": 0.6686,
+          "moe": 0.0542,
+          "low": 0.6144,
+          "high": 0.7228
+        },
+        "trabalho_domestico": {
+          "pct": 0.7816,
+          "moe": 0.0598,
+          "low": 0.7218,
+          "high": 0.8414
+        },
+        "composicao_do_universo_adulto": {
+          "denominador": "pessoas de 16 anos ou mais em idade de trabalhar",
+          "ocupado_formal_amplo": {
+            "pct": 37.116,
+            "moe": 0.3023,
+            "low": 36.8136,
+            "high": 37.4183
+          },
+          "ocupado_informal_amplo": {
+            "pct": 33.6139,
+            "moe": 0.3415,
+            "low": 33.2725,
+            "high": 33.9554
+          },
+          "ocupado_sem_carteira_estrito": {
+            "pct": 12.1952,
+            "moe": 0.2281,
+            "low": 11.9671,
+            "high": 12.4233
+          },
+          "desocupado": {
+            "pct": 3.7267,
+            "moe": 0.1193,
+            "low": 3.6074,
+            "high": 3.8461
+          },
+          "fora_da_forca": {
+            "pct": 25.5434,
+            "moe": 0.2412,
+            "low": 25.3022,
+            "high": 25.7845
+          }
+        },
+        "pessoas_16_mais": 81309694,
+        "ocupados": 57510269
+      }
+    },
+    "trabalho_domestico": {
+      "mulheres_no_total": {
+        "pct": 91.7148,
+        "moe": 0.5869,
+        "low": 91.128,
+        "high": 92.3017
+      },
+      "sem_carteira_no_total": {
+        "pct": 76.1754,
+        "moe": 0.9822,
+        "low": 75.1932,
+        "high": 77.1576
+      },
+      "pessoas": 5425450
+    },
+    "perfil_pea_da_nexus_pct": {
+      "Formal": 43,
+      "Informal": 17,
+      "Desocupados": 5,
+      "Não PEA": 35
+    },
+    "limite": "Informalidade tem duas leituras aqui. A estrita é só quem não tem carteira assinada (posições 2, 4 e 6 da VD4009). A ampla soma conta própria e trabalhador familiar auxiliar. A base extraída não traz o CNPJ do negócio, então na leitura ampla toda conta própria entra como informal e a taxa fica acima da definição oficial do IBGE. A comparação entre sexos, que é o objeto aqui, sobrevive às duas. O perfil de PEA da Nexus é autodeclarado pelo entrevistado e não reproduz nenhuma das duas definições: serve para comparar ordem de grandeza, não para calibrar."
+  },
+  "escolaridade": {
+    "rotulo": "Escolaridade por sexo",
+    "universo": "Pessoas de 16 anos ou mais com nível de instrução conhecido. PNAD Contínua trimestral, 1º trimestre de 2026. Os três grupos seguem a convenção da casa: fundamental (VD3004 1 a 3), médio (4 e 5) e superior (6 e 7), comparáveis à quota de escolaridade da Nexus.",
+    "por_sexo": {
+      "mulheres": {
+        "distribuicao": {
+          "Fundamental": {
+            "pct": 31.5657,
+            "moe": 0.3388,
+            "low": 31.2269,
+            "high": 31.9045
+          },
+          "Médio": {
+            "pct": 40.7208,
+            "moe": 0.3241,
+            "low": 40.3967,
+            "high": 41.0449
+          },
+          "Superior": {
+            "pct": 27.7135,
+            "moe": 0.4711,
+            "low": 27.2425,
+            "high": 28.1846
+          }
+        },
+        "superior_completo": {
+          "pct": 21.5165,
+          "moe": 0.4418,
+          "low": 21.0746,
+          "high": 21.9583
+        },
+        "media_anos_de_estudo": {
+          "valor": 10.72,
+          "moe": 0.04,
+          "low": 10.68,
+          "high": 10.76
+        },
+        "mediana_anos_de_estudo": 12.0
+      },
+      "homens": {
+        "distribuicao": {
+          "Fundamental": {
+            "pct": 35.0216,
+            "moe": 0.3664,
+            "low": 34.6552,
+            "high": 35.388
+          },
+          "Médio": {
+            "pct": 42.514,
+            "moe": 0.3638,
+            "low": 42.1502,
+            "high": 42.8778
+          },
+          "Superior": {
+            "pct": 22.4644,
+            "moe": 0.4836,
+            "low": 21.9808,
+            "high": 22.948
+          }
+        },
+        "superior_completo": {
+          "pct": 16.8099,
+          "moe": 0.4386,
+          "low": 16.3713,
+          "high": 17.2485
+        },
+        "media_anos_de_estudo": {
+          "valor": 10.29,
+          "moe": 0.04,
+          "low": 10.25,
+          "high": 10.33
+        },
+        "mediana_anos_de_estudo": 12.0
+      }
+    },
+    "superior_completo_diferenca_pp": 4.7066,
+    "superior_completo_por_idade": {
+      "16-24": {
+        "mulheres": {
+          "pct": 5.5185,
+          "moe": 0.3919,
+          "low": 5.1266,
+          "high": 5.9105
+        },
+        "homens": {
+          "pct": 3.7645,
+          "moe": 0.3216,
+          "low": 3.4429,
+          "high": 4.0861
+        },
+        "diferenca_pp": 1.754
+      },
+      "25-40": {
+        "mulheres": {
+          "pct": 30.473,
+          "moe": 0.7026,
+          "low": 29.7704,
+          "high": 31.1756
+        },
+        "homens": {
+          "pct": 23.1902,
+          "moe": 0.7149,
+          "low": 22.4753,
+          "high": 23.9052
+        },
+        "diferenca_pp": 7.2828
+      },
+      "41-59": {
+        "mulheres": {
+          "pct": 25.7256,
+          "moe": 0.6725,
+          "low": 25.0531,
+          "high": 26.398
+        },
+        "homens": {
+          "pct": 19.4644,
+          "moe": 0.6305,
+          "low": 18.8339,
+          "high": 20.0948
+        },
+        "diferenca_pp": 6.2612
+      },
+      "60+": {
+        "mulheres": {
+          "pct": 14.5516,
+          "moe": 0.5448,
+          "low": 14.0068,
+          "high": 15.0964
+        },
+        "homens": {
+          "pct": 13.3712,
+          "moe": 0.6082,
+          "low": 12.763,
+          "high": 13.9795
+        },
+        "diferenca_pp": 1.1804
+      }
+    },
+    "limite": "A mediana de anos de estudo é ponto, sem intervalo: mediana ponderada não herda intervalo das réplicas neste cálculo. Escolaridade é atributo da pessoa, não preferência."
+  },
+  "chefia_domiciliar": {
+    "rotulo": "Chefia de domicílio e arranjo familiar",
+    "universo": "Domicílios particulares da PNAD Contínua anual 2025, 1ª visita, um registro por domicílio, com o peso da pessoa responsável. Menor = morador com menos de 18 anos. Cônjuge = presença de cônjuge ou companheiro no domicílio.",
+    "por_sexo_do_responsavel": {
+      "mulheres": {
+        "chefia_pct": {
+          "pct": 52.3572,
+          "moe": 0.3342,
+          "low": 52.023,
+          "high": 52.6914
+        },
+        "arranjos": {
+          "Com cônjuge, com menor": {
+            "domicilios_pct": {
+              "pct": 13.2769,
+              "moe": 0.2363,
+              "low": 13.0406,
+              "high": 13.5132
+            },
+            "renda_per_capita_brl": {
+              "valor": 1873.86,
+              "moe": 62.27,
+              "low": 1811.59,
+              "high": 1936.13
+            },
+            "moradores_media": {
+              "valor": 3.96,
+              "moe": 0.02,
+              "low": 3.94,
+              "high": 3.98
+            },
+            "bolsa_familia_pct": {
+              "pct": 31.9709,
+              "moe": 1.0598,
+              "low": 30.9111,
+              "high": 33.0307
+            },
+            "domicilios": 10529207
+          },
+          "Com cônjuge, sem menor": {
+            "domicilios_pct": {
+              "pct": 11.5404,
+              "moe": 0.234,
+              "low": 11.3065,
+              "high": 11.7744
+            },
+            "renda_per_capita_brl": {
+              "valor": 3116.18,
+              "moe": 114.98,
+              "low": 3001.2,
+              "high": 3231.17
+            },
+            "moradores_media": {
+              "valor": 2.49,
+              "moe": 0.02,
+              "low": 2.48,
+              "high": 2.51
+            },
+            "bolsa_familia_pct": {
+              "pct": 9.0227,
+              "moe": 0.5899,
+              "low": 8.4328,
+              "high": 9.6127
+            },
+            "domicilios": 9152086
+          },
+          "Sem cônjuge, com menor": {
+            "domicilios_pct": {
+              "pct": 10.3169,
+              "moe": 0.2258,
+              "low": 10.0911,
+              "high": 10.5427
+            },
+            "renda_per_capita_brl": {
+              "valor": 1142.99,
+              "moe": 31.51,
+              "low": 1111.48,
+              "high": 1174.5
+            },
+            "moradores_media": {
+              "valor": 3.25,
+              "moe": 0.03,
+              "low": 3.22,
+              "high": 3.28
+            },
+            "bolsa_familia_pct": {
+              "pct": 42.6322,
+              "moe": 1.326,
+              "low": 41.3062,
+              "high": 43.9582
+            },
+            "domicilios": 8181793
+          },
+          "Sem cônjuge, sem menor": {
+            "domicilios_pct": {
+              "pct": 17.2229,
+              "moe": 0.2266,
+              "low": 16.9964,
+              "high": 17.4495
+            },
+            "renda_per_capita_brl": {
+              "valor": 2972.72,
+              "moe": 84.28,
+              "low": 2888.45,
+              "high": 3057.0
+            },
+            "moradores_media": {
+              "valor": 1.7,
+              "moe": 0.02,
+              "low": 1.68,
+              "high": 1.71
+            },
+            "bolsa_familia_pct": {
+              "pct": 9.1661,
+              "moe": 0.4585,
+              "low": 8.7076,
+              "high": 9.6246
+            },
+            "domicilios": 13658573
+          }
+        }
+      },
+      "homens": {
+        "chefia_pct": {
+          "pct": 47.6428,
+          "moe": 0.3342,
+          "low": 47.3086,
+          "high": 47.977
+        },
+        "arranjos": {
+          "Com cônjuge, com menor": {
+            "domicilios_pct": {
+              "pct": 15.1002,
+              "moe": 0.2622,
+              "low": 14.838,
+              "high": 15.3624
+            },
+            "renda_per_capita_brl": {
+              "valor": 2271.29,
+              "moe": 71.49,
+              "low": 2199.8,
+              "high": 2342.78
+            },
+            "moradores_media": {
+              "valor": 3.86,
+              "moe": 0.02,
+              "low": 3.84,
+              "high": 3.88
+            },
+            "bolsa_familia_pct": {
+              "pct": 23.9813,
+              "moe": 0.8516,
+              "low": 23.1297,
+              "high": 24.8329
+            },
+            "domicilios": 11975163
+          },
+          "Com cônjuge, sem menor": {
+            "domicilios_pct": {
+              "pct": 16.2461,
+              "moe": 0.2792,
+              "low": 15.9669,
+              "high": 16.5253
+            },
+            "renda_per_capita_brl": {
+              "valor": 3605.47,
+              "moe": 124.12,
+              "low": 3481.35,
+              "high": 3729.58
+            },
+            "moradores_media": {
+              "valor": 2.46,
+              "moe": 0.02,
+              "low": 2.44,
+              "high": 2.47
+            },
+            "bolsa_familia_pct": {
+              "pct": 6.41,
+              "moe": 0.3887,
+              "low": 6.0214,
+              "high": 6.7987
+            },
+            "domicilios": 12883904
+          },
+          "Sem cônjuge, com menor": {
+            "domicilios_pct": {
+              "pct": 1.6593,
+              "moe": 0.1006,
+              "low": 1.5587,
+              "high": 1.7599
+            },
+            "renda_per_capita_brl": {
+              "valor": 1925.5,
+              "moe": 203.38,
+              "low": 1722.12,
+              "high": 2128.88
+            },
+            "moradores_media": {
+              "valor": 3.31,
+              "moe": 0.08,
+              "low": 3.24,
+              "high": 3.39
+            },
+            "bolsa_familia_pct": {
+              "pct": 20.6109,
+              "moe": 2.4944,
+              "low": 18.1165,
+              "high": 23.1053
+            },
+            "domicilios": 1315882
+          },
+          "Sem cônjuge, sem menor": {
+            "domicilios_pct": {
+              "pct": 14.6371,
+              "moe": 0.2736,
+              "low": 14.3635,
+              "high": 14.9107
+            },
+            "renda_per_capita_brl": {
+              "valor": 3821.4,
+              "moe": 168.61,
+              "low": 3652.79,
+              "high": 3990.0
+            },
+            "moradores_media": {
+              "valor": 1.39,
+              "moe": 0.02,
+              "low": 1.37,
+              "high": 1.4
+            },
+            "bolsa_familia_pct": {
+              "pct": 6.3705,
+              "moe": 0.4325,
+              "low": 5.9379,
+              "high": 6.803
+            },
+            "domicilios": 11607911
+          }
+        }
+      }
+    },
+    "responsavel_mulher_sem_conjuge_com_menor": {
+      "domicilios_pct": {
+        "pct": 10.3169,
+        "moe": 0.2258,
+        "low": 10.0911,
+        "high": 10.5427
+      },
+      "razao_sobre_o_arranjo_masculino": {
+        "razao": 6.2177,
+        "moe": 0.3932,
+        "low": 5.8246,
+        "high": 6.6109
+      }
+    },
+    "menores_de_18_com_responsavel_mulher_sem_conjuge": {
+      "pct": 25.9488,
+      "moe": 0.5825,
+      "low": 25.3662,
+      "high": 26.5313
+    },
+    "domicilios": 79304519,
+    "limite": "O peso do domicílio é o peso da pessoa responsável, aproximação usual quando a base não traz peso domiciliar próprio. A calibração da PNAD é por sexo e idade, então moradores do mesmo domicílio podem ter pesos diferentes e o total de domicílios é estimativa, não contagem."
+  },
+  "renda_domiciliar_por_faixa": {
+    "rotulo": "Renda domiciliar em salários mínimos, por sexo",
+    "universo": "Pessoas de 16 anos ou mais. PNAD Contínua anual 2025, 1ª visita. Renda efetiva do domicílio (VD5001) em salários mínimos, nas mesmas quatro faixas do dossiê e da quota de renda da Nexus.",
+    "por_sexo": {
+      "mulheres": {
+        "distribuicao": {
+          "Até 1 SM": {
+            "pct": 14.6618,
+            "moe": 0.2824,
+            "low": 14.3794,
+            "high": 14.9442
+          },
+          "1-2 SM": {
+            "pct": 22.2973,
+            "moe": 0.3838,
+            "low": 21.9135,
+            "high": 22.6811
+          },
+          "2-5 SM": {
+            "pct": 38.6614,
+            "moe": 0.4485,
+            "low": 38.2129,
+            "high": 39.1098
+          },
+          "5+ SM": {
+            "pct": 24.3328,
+            "moe": 0.5285,
+            "low": 23.8043,
+            "high": 24.8613
+          }
+        },
+        "pessoas_por_faixa": {
+          "Até 1 SM": 12813125,
+          "1-2 SM": 19485911,
+          "2-5 SM": 33786635,
+          "5+ SM": 21264712
+        },
+        "renda_per_capita_media_brl": {
+          "valor": 2491.36,
+          "moe": 48.37,
+          "low": 2442.99,
+          "high": 2539.73
+        },
+        "renda_per_capita_mediana_brl": 1572.61,
+        "renda_domiciliar_media_sm": {
+          "valor": 4.327,
+          "moe": 0.085,
+          "low": 4.242,
+          "high": 4.412
+        },
+        "pessoas_16_mais": 87391195
+      },
+      "homens": {
+        "distribuicao": {
+          "Até 1 SM": {
+            "pct": 12.2317,
+            "moe": 0.2723,
+            "low": 11.9594,
+            "high": 12.5041
+          },
+          "1-2 SM": {
+            "pct": 21.5442,
+            "moe": 0.3758,
+            "low": 21.1684,
+            "high": 21.92
+          },
+          "2-5 SM": {
+            "pct": 39.8191,
+            "moe": 0.5334,
+            "low": 39.2857,
+            "high": 40.3525
+          },
+          "5+ SM": {
+            "pct": 26.3864,
+            "moe": 0.5941,
+            "low": 25.7923,
+            "high": 26.9805
+          }
+        },
+        "pessoas_por_faixa": {
+          "Até 1 SM": 9902200,
+          "1-2 SM": 17441126,
+          "2-5 SM": 32235657,
+          "5+ SM": 21361163
+        },
+        "renda_per_capita_media_brl": {
+          "valor": 2728.57,
+          "moe": 57.51,
+          "low": 2671.06,
+          "high": 2786.07
+        },
+        "renda_per_capita_mediana_brl": 1632.86,
+        "renda_domiciliar_media_sm": {
+          "valor": 4.607,
+          "moe": 0.103,
+          "low": 4.504,
+          "high": 4.71
+        },
+        "pessoas_16_mais": 80955167
+      }
+    },
+    "mulheres_no_total_da_faixa": {
+      "Até 1 SM": {
+        "pct": 56.4074,
+        "moe": 0.4737,
+        "low": 55.9337,
+        "high": 56.8811
+      },
+      "1-2 SM": {
+        "pct": 52.7687,
+        "moe": 0.3003,
+        "low": 52.4684,
+        "high": 53.069
+      },
+      "2-5 SM": {
+        "pct": 51.1746,
+        "moe": 0.2242,
+        "low": 50.9504,
+        "high": 51.3988
+      },
+      "5+ SM": {
+        "pct": 49.8869,
+        "moe": 0.3348,
+        "low": 49.5521,
+        "high": 50.2216
+      }
+    },
+    "mulheres_no_total_de_adultos": {
+      "pct": 51.9115,
+      "moe": 0.0384,
+      "low": 51.8731,
+      "high": 51.95
+    },
+    "excesso_feminino_na_faixa_mais_baixa_pp": 4.4959,
+    "limite": "Renda do domicílio, não da pessoa: descreve o domicílio em que a mulher vive, não o que ela recebe. A faixa é a mesma da quota da pesquisa, o que permite comparar composição, nunca intenção."
+  },
+  "bolsa_familia": {
+    "rotulo": "Bolsa Família entre adultos, por sexo",
+    "universo": "Pessoas de 16 anos ou mais. PNAD Contínua anual 2025, 1ª visita. Domicílio beneficiário = pelo menos um morador declarou ter recebido Bolsa Família.",
+    "por_sexo": {
+      "mulheres": {
+        "vive_em_domicilio_beneficiario": {
+          "pct": 19.1268,
+          "moe": 0.3525,
+          "low": 18.7743,
+          "high": 19.4793
+        },
+        "recebe_pessoalmente": {
+          "pct": 13.7465,
+          "moe": 0.2337,
+          "low": 13.5127,
+          "high": 13.9802
+        }
+      },
+      "homens": {
+        "vive_em_domicilio_beneficiario": {
+          "pct": 16.3113,
+          "moe": 0.3363,
+          "low": 15.975,
+          "high": 16.6476
+        },
+        "recebe_pessoalmente": {
+          "pct": 1.796,
+          "moe": 0.0881,
+          "low": 1.7079,
+          "high": 1.8841
+        }
+      }
+    },
+    "mulheres_entre_quem_recebe": {
+      "pct": 89.2038,
+      "moe": 0.4779,
+      "low": 88.7259,
+      "high": 89.6817
+    },
+    "adultos_que_recebem": 13467129,
+    "limite": "Declaração do morador, não registro administrativo do CadÚnico. O titular preferencial do programa é a mulher, então a diferença por sexo em quem recebe é desenho do programa, não comportamento."
+  },
+  "piramide_etaria": {
+    "rotulo": "Pirâmide etária adulta nas faixas da pesquisa",
+    "universo": "Pessoas de 16 anos ou mais. PNAD Contínua anual 2025, 1ª visita. Faixas 16 a 24, 25 a 40, 41 a 59 e 60 ou mais, que são as faixas efetivamente usadas pela Nexus, conferidas nas páginas 11, 28, 52 e 113 do relatório de 03/08/2026.",
+    "faixas_nexus": {
+      "por_sexo": {
+        "mulheres": {
+          "16-24": {
+            "pct": 15.404,
+            "moe": 0.0828,
+            "low": 15.3213,
+            "high": 15.4868
+          },
+          "25-40": {
+            "pct": 30.1508,
+            "moe": 0.1153,
+            "low": 30.0355,
+            "high": 30.266
+          },
+          "41-59": {
+            "pct": 31.8934,
+            "moe": 0.1124,
+            "low": 31.781,
+            "high": 32.0058
+          },
+          "60+": {
+            "pct": 22.5518,
+            "moe": 0.0221,
+            "low": 22.5297,
+            "high": 22.5739
+          }
+        },
+        "homens": {
+          "16-24": {
+            "pct": 17.1722,
+            "moe": 0.0924,
+            "low": 17.0798,
+            "high": 17.2646
+          },
+          "25-40": {
+            "pct": 31.884,
+            "moe": 0.0944,
+            "low": 31.7896,
+            "high": 31.9784
+          },
+          "41-59": {
+            "pct": 31.7477,
+            "moe": 0.0947,
+            "low": 31.653,
+            "high": 31.8423
+          },
+          "60+": {
+            "pct": 19.1962,
+            "moe": 0.0214,
+            "low": 19.1747,
+            "high": 19.2176
+          }
+        }
+      },
+      "mulheres_no_total_da_faixa": {
+        "16-24": {
+          "pct": 49.196,
+          "moe": 0.2357,
+          "low": 48.9603,
+          "high": 49.4316
+        },
+        "25-40": {
+          "pct": 50.5151,
+          "moe": 0.115,
+          "low": 50.4001,
+          "high": 50.6301
+        },
+        "41-59": {
+          "pct": 52.0259,
+          "moe": 0.1111,
+          "low": 51.9148,
+          "high": 52.137
+        },
+        "60+": {
+          "pct": 55.9123,
+          "moe": 0.0,
+          "low": 55.9123,
+          "high": 55.9123
+        }
+      }
+    },
+    "faixas_alternativas": {
+      "por_sexo": {
+        "mulheres": {
+          "16-24": {
+            "pct": 15.404,
+            "moe": 0.0828,
+            "low": 15.3213,
+            "high": 15.4868
+          },
+          "25-44": {
+            "pct": 37.8855,
+            "moe": 0.0371,
+            "low": 37.8485,
+            "high": 37.9226
+          },
+          "45-59": {
+            "pct": 24.1586,
+            "moe": 0.0236,
+            "low": 24.135,
+            "high": 24.1823
+          },
+          "60+": {
+            "pct": 22.5518,
+            "moe": 0.0221,
+            "low": 22.5297,
+            "high": 22.5739
+          }
+        },
+        "homens": {
+          "16-24": {
+            "pct": 17.1722,
+            "moe": 0.0924,
+            "low": 17.0798,
+            "high": 17.2646
+          },
+          "25-44": {
+            "pct": 39.7971,
+            "moe": 0.0444,
+            "low": 39.7527,
+            "high": 39.8416
+          },
+          "45-59": {
+            "pct": 23.8345,
+            "moe": 0.0266,
+            "low": 23.8079,
+            "high": 23.8611
+          },
+          "60+": {
+            "pct": 19.1962,
+            "moe": 0.0214,
+            "low": 19.1747,
+            "high": 19.2176
+          }
+        }
+      },
+      "mulheres_no_total_da_faixa": {
+        "16-24": {
+          "pct": 49.196,
+          "moe": 0.2357,
+          "low": 48.9603,
+          "high": 49.4316
+        },
+        "25-44": {
+          "pct": 50.6818,
+          "moe": 0.0,
+          "low": 50.6818,
+          "high": 50.6818
+        },
+        "45-59": {
+          "pct": 52.2486,
+          "moe": 0.0,
+          "low": 52.2486,
+          "high": 52.2486
+        },
+        "60+": {
+          "pct": 55.9123,
+          "moe": 0.0,
+          "low": 55.9123,
+          "high": 55.9123
+        }
+      },
+      "nota": "Corte 25-44 e 45-59, usado por outros institutos. Não é o corte da Nexus e não deve ser comparado com a quota publicada por ela."
+    },
+    "quota_nexus_idade_pct": {
+      "16 a 24": 12,
+      "25 a 40": 30,
+      "41 a 59": 34,
+      "60 ou mais": 24
+    },
+    "quota_nexus_sexo_pct": {
+      "Feminino": 53,
+      "Masculino": 47
+    },
+    "eleitorado_tse_nas_faixas_nexus": {
+      "eleitores_16_mais": 157726878,
+      "distribuicao_pct": {
+        "16-24": 12.523,
+        "25-40": 30.704,
+        "41-59": 33.504,
+        "60+": 23.269
+      },
+      "fonte": "TSE, perfil do eleitorado atual, gerado em 01/07/2026",
+      "nota": "Faixas quinquenais do TSE repartidas com hipótese de distribuição uniforme dentro da faixa, porque o corte da Nexus cai no meio do grupo de 40 a 44 anos. Exclui eleitores no exterior e menores de 16."
+    },
+    "desvio_quota_menos_eleitorado_pp": {
+      "16-24": -0.523,
+      "25-40": -0.704,
+      "41-59": 0.496,
+      "60+": 0.731
+    },
+    "limite": "A quota da pesquisa é do eleitorado, a PNAD é da população residente. As duas não precisam coincidir: o eleitorado exclui quem não se alistou e inclui quem mora fora do país. Comparar a quota da Nexus com um recorte etário diferente do dela produz desvio aparente onde não há desvio nenhum. Margem de erro zero em algumas faixas não é precisão infinita: a PNAD calibra os pesos, e as 200 réplicas, contra projeções de população por sexo e idade, de modo que a composição por sexo dentro de uma faixa que coincide com o grupo de calibração é fixa por construção."
+  },
+  "regiao": {
+    "rotulo": "Mulheres de 16 anos ou mais por região",
+    "universo": "Mulheres de 16 anos ou mais. PNAD Contínua anual 2025, 1ª visita. Renda per capita do domicílio a preços de abril de 2026.",
+    "por_regiao": {
+      "Norte": {
+        "mulheres_16_mais_pct": {
+          "pct": 7.9621,
+          "moe": 0.08,
+          "low": 7.8821,
+          "high": 8.042
+        },
+        "renda_per_capita_media_brl": {
+          "valor": 1730.04,
+          "moe": 75.98,
+          "low": 1654.06,
+          "high": 1806.02
+        },
+        "ate_1_sm_pct": {
+          "pct": 17.9804,
+          "moe": 0.9495,
+          "low": 17.0309,
+          "high": 18.9299
+        },
+        "bolsa_familia_pct": {
+          "pct": 35.5326,
+          "moe": 1.3339,
+          "low": 34.1987,
+          "high": 36.8665
+        },
+        "ocupadas_pct": {
+          "pct": 47.2438,
+          "moe": 1.1465,
+          "low": 46.0973,
+          "high": 48.3904
+        },
+        "mulheres": 6958139
+      },
+      "Nordeste": {
+        "mulheres_16_mais_pct": {
+          "pct": 26.7984,
+          "moe": 0.1541,
+          "low": 26.6443,
+          "high": 26.9525
+        },
+        "renda_per_capita_media_brl": {
+          "valor": 1621.45,
+          "moe": 51.69,
+          "low": 1569.76,
+          "high": 1673.14
+        },
+        "ate_1_sm_pct": {
+          "pct": 25.1519,
+          "moe": 0.6282,
+          "low": 24.5237,
+          "high": 25.7801
+        },
+        "bolsa_familia_pct": {
+          "pct": 34.9653,
+          "moe": 0.8602,
+          "low": 34.1051,
+          "high": 35.8255
+        },
+        "ocupadas_pct": {
+          "pct": 41.4442,
+          "moe": 0.6189,
+          "low": 40.8253,
+          "high": 42.0631
+        },
+        "mulheres": 23419412
+      },
+      "Sudeste": {
+        "mulheres_16_mais_pct": {
+          "pct": 42.6457,
+          "moe": 0.2092,
+          "low": 42.4366,
+          "high": 42.8549
+        },
+        "renda_per_capita_media_brl": {
+          "valor": 2912.89,
+          "moe": 102.82,
+          "low": 2810.07,
+          "high": 3015.71
+        },
+        "ate_1_sm_pct": {
+          "pct": 10.5237,
+          "moe": 0.4736,
+          "low": 10.0502,
+          "high": 10.9973
+        },
+        "bolsa_familia_pct": {
+          "pct": 11.3336,
+          "moe": 0.5753,
+          "low": 10.7583,
+          "high": 11.9089
+        },
+        "ocupadas_pct": {
+          "pct": 54.7362,
+          "moe": 0.6526,
+          "low": 54.0836,
+          "high": 55.3889
+        },
+        "mulheres": 37268603
+      },
+      "Sul": {
+        "mulheres_16_mais_pct": {
+          "pct": 14.7874,
+          "moe": 0.1234,
+          "low": 14.664,
+          "high": 14.9108
+        },
+        "renda_per_capita_media_brl": {
+          "valor": 3009.14,
+          "moe": 86.74,
+          "low": 2922.4,
+          "high": 3095.88
+        },
+        "ate_1_sm_pct": {
+          "pct": 8.5082,
+          "moe": 0.4528,
+          "low": 8.0555,
+          "high": 8.961
+        },
+        "bolsa_familia_pct": {
+          "pct": 7.4762,
+          "moe": 0.5436,
+          "low": 6.9327,
+          "high": 8.0198
+        },
+        "ocupadas_pct": {
+          "pct": 57.6984,
+          "moe": 0.7616,
+          "low": 56.9368,
+          "high": 58.46
+        },
+        "mulheres": 12922885
+      },
+      "Centro-Oeste": {
+        "mulheres_16_mais_pct": {
+          "pct": 7.8065,
+          "moe": 0.0825,
+          "low": 7.724,
+          "high": 7.889
+        },
+        "renda_per_capita_media_brl": {
+          "valor": 2969.72,
+          "moe": 141.57,
+          "low": 2828.15,
+          "high": 3111.29
+        },
+        "ate_1_sm_pct": {
+          "pct": 9.5283,
+          "moe": 0.6296,
+          "low": 8.8987,
+          "high": 10.158
+        },
+        "bolsa_familia_pct": {
+          "pct": 12.6654,
+          "moe": 0.9425,
+          "low": 11.7229,
+          "high": 13.608
+        },
+        "ocupadas_pct": {
+          "pct": 56.8218,
+          "moe": 1.0315,
+          "low": 55.7903,
+          "high": 57.8533
+        },
+        "mulheres": 6822156
+      }
+    },
+    "nordestinas_entre_as_mulheres_ate_1_sm": {
+      "pct": 45.9719,
+      "moe": 1.0044,
+      "low": 44.9674,
+      "high": 46.9763
+    },
+    "limite": "Recorte de residência, não de origem. A região descreve composição de renda, não preferência política."
+  },
+  "cor_raca": {
+    "rotulo": "Cor ou raça declarada, adultos por sexo",
+    "universo": "Pessoas de 16 anos ou mais. PNAD Contínua anual 2025, 1ª visita.",
+    "por_sexo": {
+      "mulheres": {
+        "Branca": {
+          "pct": 43.8641,
+          "moe": 0.4787,
+          "low": 43.3855,
+          "high": 44.3428
+        },
+        "Preta": {
+          "pct": 10.5854,
+          "moe": 0.2863,
+          "low": 10.2991,
+          "high": 10.8717
+        },
+        "Amarela": {
+          "pct": 0.728,
+          "moe": 0.0997,
+          "low": 0.6283,
+          "high": 0.8277
+        },
+        "Parda": {
+          "pct": 44.335,
+          "moe": 0.4486,
+          "low": 43.8865,
+          "high": 44.7836
+        },
+        "Indígena": {
+          "pct": 0.4704,
+          "moe": 0.0457,
+          "low": 0.4247,
+          "high": 0.5162
+        }
+      },
+      "homens": {
+        "Branca": {
+          "pct": 42.0206,
+          "moe": 0.5005,
+          "low": 41.5201,
+          "high": 42.5211
+        },
+        "Preta": {
+          "pct": 11.7617,
+          "moe": 0.3155,
+          "low": 11.4462,
+          "high": 12.0772
+        },
+        "Amarela": {
+          "pct": 0.6743,
+          "moe": 0.0985,
+          "low": 0.5758,
+          "high": 0.7729
+        },
+        "Parda": {
+          "pct": 45.095,
+          "moe": 0.4624,
+          "low": 44.6326,
+          "high": 45.5573
+        },
+        "Indígena": {
+          "pct": 0.4348,
+          "moe": 0.0605,
+          "low": 0.3742,
+          "high": 0.4953
+        }
+      }
+    },
+    "limite": "Autodeclaração no momento da entrevista. A Nexus não publica quota nem recorte de cor ou raça nesta rodada, então não há comparação possível com a pesquisa."
+  }
+}
