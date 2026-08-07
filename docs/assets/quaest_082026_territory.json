@@ -1,0 +1,991 @@
+{
+  "metadata": {
+    "july_registry": "BR-07181/2026",
+    "august_registry": "BR-06591/2026",
+    "sampling_unit": "setor censitário IBGE 2022",
+    "comparison_key": "geocódigo de 15 dígitos",
+    "warning": "The annex has no vote, inclusion probabilities or respondent weights. Territory cannot support ecological inference about candidate vote."
+  },
+  "rounds": {
+    "july": {
+      "sectors": 334,
+      "interviews": 2004,
+      "municipalities": 120,
+      "municipality_neighborhood_pairs": 324,
+      "interviews_per_sector": {
+        "6": 334
+      },
+      "regions": {
+        "Sudeste": 141,
+        "Nordeste": 92,
+        "Norte": 28,
+        "Centro-Oeste": 25,
+        "Sul": 48
+      },
+      "states": {
+        "MG": 29,
+        "RJ": 28,
+        "BA": 23,
+        "CE": 15,
+        "SP": 74,
+        "PA": 10,
+        "AM": 6,
+        "DF": 5,
+        "MA": 12,
+        "PE": 14,
+        "PR": 21,
+        "PB": 5,
+        "PI": 6,
+        "ES": 10,
+        "SC": 15,
+        "AL": 5,
+        "MS": 2,
+        "RN": 9,
+        "GO": 15,
+        "RS": 12,
+        "RO": 3,
+        "TO": 3,
+        "AC": 6,
+        "MT": 3,
+        "SE": 3
+      },
+      "capitals": 17,
+      "top_municipalities": [
+        {
+          "municipality_code": "3550308",
+          "municipality": "São Paulo",
+          "uf": "SP",
+          "sectors": 22,
+          "interviews": 132
+        },
+        {
+          "municipality_code": "3304557",
+          "municipality": "Rio de Janeiro",
+          "uf": "RJ",
+          "sectors": 12,
+          "interviews": 72
+        },
+        {
+          "municipality_code": "3106200",
+          "municipality": "Belo Horizonte",
+          "uf": "MG",
+          "sectors": 5,
+          "interviews": 30
+        },
+        {
+          "municipality_code": "5300108",
+          "municipality": "Brasília",
+          "uf": "DF",
+          "sectors": 5,
+          "interviews": 30
+        },
+        {
+          "municipality_code": "2927408",
+          "municipality": "Salvador",
+          "uf": "BA",
+          "sectors": 4,
+          "interviews": 24
+        },
+        {
+          "municipality_code": "3300100",
+          "municipality": "Angra dos Reis",
+          "uf": "RJ",
+          "sectors": 3,
+          "interviews": 18
+        },
+        {
+          "municipality_code": "2901908",
+          "municipality": "Aporá",
+          "uf": "BA",
+          "sectors": 3,
+          "interviews": 18
+        },
+        {
+          "municipality_code": "2301000",
+          "municipality": "Aquiraz",
+          "uf": "CE",
+          "sectors": 3,
+          "interviews": 18
+        },
+        {
+          "municipality_code": "3503208",
+          "municipality": "Araraquara",
+          "uf": "SP",
+          "sectors": 3,
+          "interviews": 18
+        },
+        {
+          "municipality_code": "1501402",
+          "municipality": "Belém",
+          "uf": "PA",
+          "sectors": 3,
+          "interviews": 18
+        },
+        {
+          "municipality_code": "1300805",
+          "municipality": "Borba",
+          "uf": "AM",
+          "sectors": 3,
+          "interviews": 18
+        },
+        {
+          "municipality_code": "2102101",
+          "municipality": "Brejo",
+          "uf": "MA",
+          "sectors": 3,
+          "interviews": 18
+        },
+        {
+          "municipality_code": "4103701",
+          "municipality": "Cambé",
+          "uf": "PR",
+          "sectors": 3,
+          "interviews": 18
+        },
+        {
+          "municipality_code": "2504009",
+          "municipality": "Campina Grande",
+          "uf": "PB",
+          "sectors": 3,
+          "interviews": 18
+        },
+        {
+          "municipality_code": "2202208",
+          "municipality": "Campo Maior",
+          "uf": "PI",
+          "sectors": 3,
+          "interviews": 18
+        }
+      ],
+      "selected_sector_population": {
+        "available": 334,
+        "minimum": 119,
+        "median": 596,
+        "maximum": 2662,
+        "below_50": 0,
+        "below_100": 0
+      }
+    },
+    "august": {
+      "sectors": 334,
+      "interviews": 2004,
+      "municipalities": 120,
+      "municipality_neighborhood_pairs": 324,
+      "interviews_per_sector": {
+        "6": 334
+      },
+      "regions": {
+        "Centro-Oeste": 25,
+        "Nordeste": 92,
+        "Sudeste": 141,
+        "Sul": 48,
+        "Norte": 28
+      },
+      "states": {
+        "GO": 9,
+        "PI": 3,
+        "SP": 68,
+        "SC": 15,
+        "MG": 32,
+        "ES": 8,
+        "PB": 9,
+        "PA": 16,
+        "MA": 12,
+        "RR": 3,
+        "RJ": 33,
+        "DF": 5,
+        "PE": 20,
+        "PR": 18,
+        "CE": 15,
+        "RS": 15,
+        "MT": 8,
+        "BA": 20,
+        "MS": 3,
+        "AM": 6,
+        "AL": 2,
+        "SE": 6,
+        "RN": 5,
+        "RO": 3
+      },
+      "capitals": 18,
+      "top_municipalities": [
+        {
+          "municipality_code": "3550308",
+          "municipality": "São Paulo",
+          "uf": "SP",
+          "sectors": 22,
+          "interviews": 132
+        },
+        {
+          "municipality_code": "3304557",
+          "municipality": "Rio de Janeiro",
+          "uf": "RJ",
+          "sectors": 12,
+          "interviews": 72
+        },
+        {
+          "municipality_code": "3106200",
+          "municipality": "Belo Horizonte",
+          "uf": "MG",
+          "sectors": 5,
+          "interviews": 30
+        },
+        {
+          "municipality_code": "5300108",
+          "municipality": "Brasília",
+          "uf": "DF",
+          "sectors": 5,
+          "interviews": 30
+        },
+        {
+          "municipality_code": "2927408",
+          "municipality": "Salvador",
+          "uf": "BA",
+          "sectors": 4,
+          "interviews": 24
+        },
+        {
+          "municipality_code": "2200400",
+          "municipality": "Altos",
+          "uf": "PI",
+          "sectors": 3,
+          "interviews": 18
+        },
+        {
+          "municipality_code": "4201208",
+          "municipality": "Antônio Carlos",
+          "uf": "SC",
+          "sectors": 3,
+          "interviews": 18
+        },
+        {
+          "municipality_code": "3200805",
+          "municipality": "Baixo Guandu",
+          "uf": "ES",
+          "sectors": 3,
+          "interviews": 18
+        },
+        {
+          "municipality_code": "2501500",
+          "municipality": "Bananeiras",
+          "uf": "PB",
+          "sectors": 3,
+          "interviews": 18
+        },
+        {
+          "municipality_code": "1501303",
+          "municipality": "Barcarena",
+          "uf": "PA",
+          "sectors": 3,
+          "interviews": 18
+        },
+        {
+          "municipality_code": "2101608",
+          "municipality": "Barra do Corda",
+          "uf": "MA",
+          "sectors": 3,
+          "interviews": 18
+        },
+        {
+          "municipality_code": "1501451",
+          "municipality": "Belterra",
+          "uf": "PA",
+          "sectors": 3,
+          "interviews": 18
+        },
+        {
+          "municipality_code": "1400100",
+          "municipality": "Boa Vista",
+          "uf": "RR",
+          "sectors": 3,
+          "interviews": 18
+        },
+        {
+          "municipality_code": "3300506",
+          "municipality": "Bom Jardim",
+          "uf": "RJ",
+          "sectors": 3,
+          "interviews": 18
+        },
+        {
+          "municipality_code": "1501782",
+          "municipality": "Breu Branco",
+          "uf": "PA",
+          "sectors": 3,
+          "interviews": 18
+        }
+      ],
+      "selected_sector_population": {
+        "available": 334,
+        "minimum": 98,
+        "median": 568,
+        "maximum": 2258,
+        "below_50": 0,
+        "below_100": 1
+      }
+    }
+  },
+  "comparison": {
+    "common_municipalities": 22,
+    "municipality_jaccard_pct": 10.09,
+    "common_municipality_codes": [
+      "1302603",
+      "2111300",
+      "2304400",
+      "2509396",
+      "2611606",
+      "2704302",
+      "2927408",
+      "3106200",
+      "3155405",
+      "3205309",
+      "3301702",
+      "3304557",
+      "3304904",
+      "3509502",
+      "3518800",
+      "3547809",
+      "3550308",
+      "4106902",
+      "4209300",
+      "4314902",
+      "5208707",
+      "5300108"
+    ],
+    "common_exact_sectors": 0,
+    "sector_jaccard_pct": 0.0,
+    "common_sector_details": [],
+    "common_municipality_neighborhoods": 9,
+    "common_neighborhood_details": [
+      {
+        "municipality": "Salvador",
+        "uf": "BA",
+        "neighborhood_june": "Uruguai",
+        "neighborhood_july": "Uruguai",
+        "june_sectors": [
+          "292740805150251"
+        ],
+        "july_sectors": [
+          "292740805150049"
+        ],
+        "same_exact_sector": false
+      },
+      {
+        "municipality": "Rio de Janeiro",
+        "uf": "RJ",
+        "neighborhood_june": "Realengo",
+        "neighborhood_july": "Realengo",
+        "june_sectors": [
+          "330455705370342"
+        ],
+        "july_sectors": [
+          "330455705370233"
+        ],
+        "same_exact_sector": false
+      },
+      {
+        "municipality": "Rio de Janeiro",
+        "uf": "RJ",
+        "neighborhood_june": "Recreio Dos Bandeirantes",
+        "neighborhood_july": "Recreio Dos Bandeirantes",
+        "june_sectors": [
+          "330455705290691"
+        ],
+        "july_sectors": [
+          "330455705290471"
+        ],
+        "same_exact_sector": false
+      },
+      {
+        "municipality": "São Paulo",
+        "uf": "SP",
+        "neighborhood_june": "Campo Grande",
+        "neighborhood_july": "Campo Grande",
+        "june_sectors": [
+          "355030816000213"
+        ],
+        "july_sectors": [
+          "355030816000140"
+        ],
+        "same_exact_sector": false
+      },
+      {
+        "municipality": "São Paulo",
+        "uf": "SP",
+        "neighborhood_june": "Ipiranga",
+        "neighborhood_july": "Ipiranga",
+        "june_sectors": [
+          "355030834000046"
+        ],
+        "july_sectors": [
+          "355030834000269"
+        ],
+        "same_exact_sector": false
+      },
+      {
+        "municipality": "São Paulo",
+        "uf": "SP",
+        "neighborhood_june": "Jaragua",
+        "neighborhood_july": "Jaragua",
+        "june_sectors": [
+          "355030842000191"
+        ],
+        "july_sectors": [
+          "355030842000744"
+        ],
+        "same_exact_sector": false
+      },
+      {
+        "municipality": "Curitiba",
+        "uf": "PR",
+        "neighborhood_june": "Cajuru",
+        "neighborhood_july": "Cajuru",
+        "june_sectors": [
+          "410690205030263"
+        ],
+        "july_sectors": [
+          "410690205030004"
+        ],
+        "same_exact_sector": false
+      },
+      {
+        "municipality": "Curitiba",
+        "uf": "PR",
+        "neighborhood_june": "Portao",
+        "neighborhood_july": "Portao",
+        "june_sectors": [
+          "410690205060518"
+        ],
+        "july_sectors": [
+          "410690205060007"
+        ],
+        "same_exact_sector": false
+      },
+      {
+        "municipality": "Brasília",
+        "uf": "DF",
+        "neighborhood_june": "Planaltina",
+        "neighborhood_july": "Planaltina",
+        "june_sectors": [
+          "530010805110066"
+        ],
+        "july_sectors": [
+          "530010805110238"
+        ],
+        "same_exact_sector": false
+      }
+    ],
+    "same_neighborhood_but_different_sector": 9
+  },
+  "capitals": {
+    "july": [
+      {
+        "municipality_code": "3550308",
+        "municipality": "São Paulo",
+        "uf": "SP",
+        "sectors": 22,
+        "interviews": 132,
+        "neighborhoods": [
+          "Barra Funda",
+          "Brasilandia",
+          "Campo Grande",
+          "Jardim Sonia Inga",
+          "Ermelino Matarazzo",
+          "Cantinho Do Ceu",
+          "Guaianazes",
+          "Ipiranga",
+          "Itaim Bibi",
+          "Jardim Norma",
+          "Jaragua",
+          "Conjunto Promorar Sao Luis",
+          "Perdizes",
+          "Pirituba",
+          "Sacoma",
+          "Vila Ema",
+          "Sao Miguel",
+          "Tatuape",
+          "Vila Leopoldina",
+          "Pq Vila Maria",
+          "Vila California",
+          "Lajeado"
+        ]
+      },
+      {
+        "municipality_code": "3304557",
+        "municipality": "Rio de Janeiro",
+        "uf": "RJ",
+        "sectors": 12,
+        "interviews": 72,
+        "neighborhoods": [
+          "Copacabana",
+          "Andarai",
+          "Iraja",
+          "Tanque",
+          "Vila Kennedy",
+          "Cosmos",
+          "Santa Cruz",
+          "Anchieta",
+          "Recreio Dos Bandeirantes",
+          "Rocinha",
+          "Realengo",
+          "Vigário Geral"
+        ]
+      },
+      {
+        "municipality_code": "3106200",
+        "municipality": "Belo Horizonte",
+        "uf": "MG",
+        "sectors": 5,
+        "interviews": 30,
+        "neighborhoods": [
+          "Pompeia",
+          "Alto Caicaras",
+          "Diamante",
+          "Belmonte",
+          "Santa Monica"
+        ]
+      },
+      {
+        "municipality_code": "5300108",
+        "municipality": "Brasília",
+        "uf": "DF",
+        "sectors": 5,
+        "interviews": 30,
+        "neighborhoods": [
+          "Gama",
+          "Planaltina",
+          "Ceilandia",
+          "Santa Maria",
+          "Sudoeste"
+        ]
+      },
+      {
+        "municipality_code": "2927408",
+        "municipality": "Salvador",
+        "uf": "BA",
+        "sectors": 4,
+        "interviews": 24,
+        "neighborhoods": [
+          "Engenho Velho De Brotas",
+          "Uruguai",
+          "Cidade Nova",
+          "Valeria"
+        ]
+      },
+      {
+        "municipality_code": "1501402",
+        "municipality": "Belém",
+        "uf": "PA",
+        "sectors": 3,
+        "interviews": 18,
+        "neighborhoods": [
+          "Cidade Velha",
+          "Jurunas",
+          "Campina"
+        ]
+      },
+      {
+        "municipality_code": "4106902",
+        "municipality": "Curitiba",
+        "uf": "PR",
+        "sectors": 3,
+        "interviews": 18,
+        "neighborhoods": [
+          "Cajuru",
+          "Portao",
+          "Tatuquara"
+        ]
+      },
+      {
+        "municipality_code": "2304400",
+        "municipality": "Fortaleza",
+        "uf": "CE",
+        "sectors": 3,
+        "interviews": 18,
+        "neighborhoods": [
+          "Jacarecanga",
+          "Vila Uniao",
+          "Jangurussu"
+        ]
+      },
+      {
+        "municipality_code": "5208707",
+        "municipality": "Goiânia",
+        "uf": "GO",
+        "sectors": 3,
+        "interviews": 18,
+        "neighborhoods": [
+          "Setor Oeste",
+          "Residencial Olinda",
+          "Vila Clemente"
+        ]
+      },
+      {
+        "municipality_code": "1302603",
+        "municipality": "Manaus",
+        "uf": "AM",
+        "sectors": 3,
+        "interviews": 18,
+        "neighborhoods": [
+          "Lago Azul",
+          "Santa Luzia",
+          "Colonia Terra Nova"
+        ]
+      },
+      {
+        "municipality_code": "2408102",
+        "municipality": "Natal",
+        "uf": "RN",
+        "sectors": 3,
+        "interviews": 18,
+        "neighborhoods": [
+          "Potengi",
+          "Lagoa Azul",
+          "Alecrim"
+        ]
+      },
+      {
+        "municipality_code": "2611606",
+        "municipality": "Recife",
+        "uf": "PE",
+        "sectors": 3,
+        "interviews": 18,
+        "neighborhoods": [
+          "Cajueiro",
+          "Iputinga",
+          "Ipsep"
+        ]
+      },
+      {
+        "municipality_code": "1200401",
+        "municipality": "Rio Branco",
+        "uf": "AC",
+        "sectors": 3,
+        "interviews": 18,
+        "neighborhoods": [
+          "Jardim Nazle",
+          "Vila Acre",
+          "Cidade Do Povo"
+        ]
+      },
+      {
+        "municipality_code": "2111300",
+        "municipality": "São Luís",
+        "uf": "MA",
+        "sectors": 3,
+        "interviews": 18,
+        "neighborhoods": [
+          "Angelim",
+          "Pedrinhas",
+          "Conjunto Alameda Dos Sonhos"
+        ]
+      },
+      {
+        "municipality_code": "3205309",
+        "municipality": "Vitória",
+        "uf": "ES",
+        "sectors": 3,
+        "interviews": 18,
+        "neighborhoods": [
+          "Itararé",
+          "Sao Pedro",
+          "Mata Da Praia"
+        ]
+      },
+      {
+        "municipality_code": "2704302",
+        "municipality": "Maceió",
+        "uf": "AL",
+        "sectors": 2,
+        "interviews": 12,
+        "neighborhoods": [
+          "Ponta Grossa",
+          "Benedito Bentes"
+        ]
+      },
+      {
+        "municipality_code": "4314902",
+        "municipality": "Porto Alegre",
+        "uf": "RS",
+        "sectors": 2,
+        "interviews": 12,
+        "neighborhoods": [
+          "Petropolis",
+          "Itu Sabara"
+        ]
+      }
+    ],
+    "august": [
+      {
+        "municipality_code": "3550308",
+        "municipality": "São Paulo",
+        "uf": "SP",
+        "sectors": 22,
+        "interviews": 132,
+        "neighborhoods": [
+          "Vila Rio Branco",
+          "Vila Santa Teresa",
+          "Conj Hab Padre Jose De Anchieta",
+          "Vila Nova Cachoeirinha",
+          "Campo Grande",
+          "Parque Munhoz",
+          "Consolacao",
+          "Vila Natal",
+          "Ipiranga",
+          "Itaim Paulista",
+          "Jaragua",
+          "Jardim Tomas",
+          "Jose Bonifacio",
+          "Mooca",
+          "Penha",
+          "Vila Zat",
+          "Vila Das Merces",
+          "Jardim Sao Francisco",
+          "Sapopemba",
+          "Saude",
+          "Vila Isolina Mazzei",
+          "Sao Domingos"
+        ]
+      },
+      {
+        "municipality_code": "3304557",
+        "municipality": "Rio de Janeiro",
+        "uf": "RJ",
+        "sectors": 12,
+        "interviews": 72,
+        "neighborhoods": [
+          "Botafogo",
+          "Tijuca",
+          "Abolicao",
+          "Sao Francisco Xavier",
+          "Quintino Bocaiuva",
+          "Bangu",
+          "Inhoaiba",
+          "Paciencia",
+          "Galeao",
+          "Recreio Dos Bandeirantes",
+          "Engenho Da Rainha",
+          "Realengo"
+        ]
+      },
+      {
+        "municipality_code": "3106200",
+        "municipality": "Belo Horizonte",
+        "uf": "MG",
+        "sectors": 5,
+        "interviews": 30,
+        "neighborhoods": [
+          "União",
+          "Grajau",
+          "Bonsucesso",
+          "Novo Aarao Reis",
+          "Maria Helena"
+        ]
+      },
+      {
+        "municipality_code": "5300108",
+        "municipality": "Brasília",
+        "uf": "DF",
+        "sectors": 5,
+        "interviews": 30,
+        "neighborhoods": [
+          "Taguatinga Norte",
+          "Planaltina",
+          "Samambaia",
+          "Aguas Claras",
+          "Itapoã"
+        ]
+      },
+      {
+        "municipality_code": "2927408",
+        "municipality": "Salvador",
+        "uf": "BA",
+        "sectors": 4,
+        "interviews": 24,
+        "neighborhoods": [
+          "Costa Azul",
+          "Uruguai",
+          "Caixa Dagua",
+          "Mussurunga"
+        ]
+      },
+      {
+        "municipality_code": "1400100",
+        "municipality": "Boa Vista",
+        "uf": "RR",
+        "sectors": 3,
+        "interviews": 18,
+        "neighborhoods": [
+          "Santa Luzia",
+          "São Bento",
+          "Cidade Satelite"
+        ]
+      },
+      {
+        "municipality_code": "5103403",
+        "municipality": "Cuiabá",
+        "uf": "MT",
+        "sectors": 3,
+        "interviews": 18,
+        "neighborhoods": [
+          "Lixeira",
+          "Jd Imperial 2",
+          "Guia"
+        ]
+      },
+      {
+        "municipality_code": "4106902",
+        "municipality": "Curitiba",
+        "uf": "PR",
+        "sectors": 3,
+        "interviews": 18,
+        "neighborhoods": [
+          "Cajuru",
+          "Portao",
+          "Cidade Industrial De Curitiba"
+        ]
+      },
+      {
+        "municipality_code": "4205407",
+        "municipality": "Florianópolis",
+        "uf": "SC",
+        "sectors": 3,
+        "interviews": 18,
+        "neighborhoods": [
+          "Monte Cristo",
+          "Morro Das Pedras",
+          "Sambaqui"
+        ]
+      },
+      {
+        "municipality_code": "2304400",
+        "municipality": "Fortaleza",
+        "uf": "CE",
+        "sectors": 3,
+        "interviews": 18,
+        "neighborhoods": [
+          "Aldeota",
+          "Sapiranga",
+          "Conjunto Ceará i"
+        ]
+      },
+      {
+        "municipality_code": "5208707",
+        "municipality": "Goiânia",
+        "uf": "GO",
+        "sectors": 3,
+        "interviews": 18,
+        "neighborhoods": [
+          "Marista",
+          "Novo Mundo",
+          "Vila Cristina"
+        ]
+      },
+      {
+        "municipality_code": "1302603",
+        "municipality": "Manaus",
+        "uf": "AM",
+        "sectors": 3,
+        "interviews": 18,
+        "neighborhoods": [
+          "São Francisco",
+          "Cidade De Deus",
+          "Zumbi Dos Palmares"
+        ]
+      },
+      {
+        "municipality_code": "1100205",
+        "municipality": "Porto Velho",
+        "uf": "RO",
+        "sectors": 3,
+        "interviews": 18,
+        "neighborhoods": [
+          "Nossa Senhora Das Graças",
+          "Nova Mutum",
+          "Aeroclube"
+        ]
+      },
+      {
+        "municipality_code": "2611606",
+        "municipality": "Recife",
+        "uf": "PE",
+        "sectors": 3,
+        "interviews": 18,
+        "neighborhoods": [
+          "Arruda",
+          "Engenho Do Meio",
+          "Ibura"
+        ]
+      },
+      {
+        "municipality_code": "2111300",
+        "municipality": "São Luís",
+        "uf": "MA",
+        "sectors": 3,
+        "interviews": 18,
+        "neighborhoods": [
+          "Sao Braz Dos Macacos",
+          "Forquilha",
+          "Turu"
+        ]
+      },
+      {
+        "municipality_code": "3205309",
+        "municipality": "Vitória",
+        "uf": "ES",
+        "sectors": 3,
+        "interviews": 18,
+        "neighborhoods": [
+          "Santa Tereza",
+          "Santa Martha",
+          "Jardim Camburi"
+        ]
+      },
+      {
+        "municipality_code": "2704302",
+        "municipality": "Maceió",
+        "uf": "AL",
+        "sectors": 2,
+        "interviews": 12,
+        "neighborhoods": [
+          "Serraria",
+          "Cidade Universitária"
+        ]
+      },
+      {
+        "municipality_code": "4314902",
+        "municipality": "Porto Alegre",
+        "uf": "RS",
+        "sectors": 2,
+        "interviews": 12,
+        "neighborhoods": [
+          "Menino Deus",
+          "Jardim Itu Sabara"
+        ]
+      }
+    ]
+  },
+  "ibge_validation": {
+    "retrieved": "2026-08-07",
+    "errors": {},
+    "reference_file": "data/originals/censo_2022_setores_censitarios/quaest_sector_reference_2026-08-07.json"
+  },
+  "design": {
+    "clusters": 334,
+    "interviews_per_cluster": 6,
+    "cluster_deff": [
+      {
+        "rho": 0.05,
+        "deff": 1.25
+      },
+      {
+        "rho": 0.1,
+        "deff": 1.5
+      },
+      {
+        "rho": 0.2,
+        "deff": 2.0
+      }
+    ]
+  }
+}

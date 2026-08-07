@@ -1,5 +1,10 @@
 # Repository Guidelines
 
+## Canonical Workspace
+- The only writable source of truth for this project is `~/arvor/PNAD`.
+- `~/clawd/projects/PNAD` is a replicated vault mirror. Treat it as read-only: never create, edit, generate, copy, or retain project artifacts there.
+- Project reports, sources, datasets, scripts, tests, images, and temporary work must stay under `~/arvor/PNAD`.
+
 ## Single Source of Truth
 - Agent instructions live in `AGENTS.md`.
 - `CLAUDE.md` and `GEMINI.md` should be symlinks to this file.
@@ -213,6 +218,14 @@ Toda pesquisa de primeiro turno auditada recebe o diagrama de transferência est
 5. **Publicação com blindagem.** Fita sólida = elo medido pelo instituto, fita hachurada = elo estimado por nós, com a legenda declarando quantas origens são de cada tipo. Nunca escrever que nenhum elo foi medido sem antes conferir a página de cruzamento. Mantenha a distinção de robustez: **a razão de consolidação fora das bases é imposta pelas margens e sobrevive à troca da prior; o corte candidato a candidato depende da prior e não deve ser tratado como medição.**
 - Reportar sempre a razão de consolidação (ganho de cada finalista fora da própria base) e compará-la com a onda anterior. Datafolha 07/2026: Flávio +10,1 × Lula +6,8, razão 1,48:1, contra 2:1 em junho.
 - A leitura é agregada. Nunca descrever o diagrama como o percurso de eleitores individuais, e nunca somar eixos de recortes que se sobrepõem.
+
+## Método de leitura estratégica (Quaest 08/2026 em diante)
+Quando o relatório do instituto é imagem sem camada de texto, a transcrição página a página vira parte do produto: grave cada bloco no script de auditoria com a página de origem ao lado, e prove a transcrição recompondo o placar publicado a partir de um cruzamento independente. Na Quaest 08/2026, o cruzamento por posicionamento devolve Lula 38,3 e Flávio 29,6 contra 39 e 30 publicados, com resíduo igual ao bloco de 2% sem posição declarada. Sem esse controle, nenhuma conta derivada é publicável.
+- **O vão**: desaprovação do governo menos voto no adversário, dentro do mesmo recorte, com as duas metades vindas do mesmo relatório. Só vira número nacional quando os recortes formam partição fechada (as três faixas de renda somam 100%). Rótulo obrigatório: teto endereçável, não previsão, porque desaprovar não é estar disponível. Complete sempre com a não escolha do recorte, que diz se o voto ausente está com o incumbente ou fora da urna.
+- **Substituição medida**: quando o instituto roda vários segundos turnos na mesma amostra, a comparação é experimento, não especulação. Reporte que o incumbente quase não se move e que a variação inteira fica no desafiante e na não escolha. É a prova mais forte de voto útil que existe em pesquisa brasileira publicada, e é rara.
+- **Contraponto obrigatório**: procure o recorte em que o substituto bate o candidato preferido e publique com o mesmo destaque. Na Quaest 08/2026, Caiado vence Flávio em renda alta, homens, Centro-Oeste/Norte e superior, exatamente onde o vão é maior.
+- **Alcance efetivo de programa de governo**: multiplique alcance declarado por efeito sentido. IRPF chega a 6,3% do eleitorado e Desenrola 2.0 a 2,6%. Diga junto que alcance baixo não é efeito eleitoral nulo, porque política pública produz símbolo além de dinheiro.
+- **Canal contra déficit**: cruze fonte de informação por recorte com a margem do candidato no mesmo recorte. Quando o canal forte da campanha alcança melhor quem já vota nela, o problema é de distribuição, não de mensagem.
 
 ## Regras de escrita (valem para todo texto público da casa)
 - **Travessão é proibido.** O caractere `—` não entra em dossiê, thread, card, home, minuta ou legenda. Não trocar por `–` nem por ` - `: reescrever a frase com vírgula, dois-pontos, ponto e vírgula, parênteses ou ponto final. Aposto duplo entre travessões vira oração à parte. O hífen de palavra composta (`pós-estímulo`) e o `–` de intervalo numérico (`22–24/07`, `45–59 anos`) continuam válidos.
