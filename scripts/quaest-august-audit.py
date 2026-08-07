@@ -252,7 +252,7 @@ FIRST_ROUND_BY_BLOC = {
         "Renan": 6,
         "Caiado": 5,
         "Zema": 4,
-        "outros": 5,
+        "outros": 4,
         "indecisos": 21,
         "branco_nulo": 17,
     },
@@ -279,8 +279,8 @@ FIRST_ROUND_BY_BLOC = {
 }
 
 RUNOFF_BY_BLOC = {
-    "Lulista": {"Lula": 97, "Flávio": 1, "nao_vota": 1, "indecisos": 0},
-    "Esquerda não lulista": {"Lula": 91, "Flávio": 4, "nao_vota": 1, "indecisos": 4},
+    "Lulista": {"Lula": 97, "Flávio": 1, "nao_vota": 1, "indecisos": 1},
+    "Esquerda não lulista": {"Lula": 91, "Flávio": 3, "nao_vota": 4, "indecisos": 2},
     "Independente": {"Lula": 33, "Flávio": 30, "nao_vota": 29, "indecisos": 8},
     "Direita não bolsonarista": {
         "Lula": 5,
@@ -483,7 +483,7 @@ SCENARIO_SEGMENTS = {
 VOTE_FIRMNESS = {
     "Lula": {"definitiva": 77, "pode_mudar": 22},
     "Flávio Bolsonaro": {"definitiva": 68, "pode_mudar": 32},
-    "Ronaldo Caiado": {"definitiva": 47, "pode_mudar": 53},
+    "Ronaldo Caiado": {"definitiva": 53, "pode_mudar": 47},
     "Renan Santos": {"definitiva": 55, "pode_mudar": 45},
     "Romeu Zema": {"definitiva": 20, "pode_mudar": 79},
 }
@@ -714,6 +714,417 @@ SPONTANEOUS = {
     "Jair Bolsonaro": [2, 1, 1, 1],
     "indecisos": [57, 56, 54, 51],
 }
+
+# ---------------------------------------------------------------------------
+# Balanço semântico do questionário registrado. Os 109 itens numerados incluem
+# linhas de matriz (12 candidatos, 16 instituições, 5 nomes para vice), então a
+# leitura útil é por bloco temático. "Ônus" responde a uma pergunta só: quem a
+# pergunta coloca no banco dos réus. É classificação nossa, e está aberta item a
+# item exatamente para poder ser contestada.
+# ---------------------------------------------------------------------------
+
+QUESTION_BLOCKS = [
+    {
+        "range": "Q1-Q15",
+        "items": 15,
+        "tema": "Elegibilidade, sexo, idade, escolaridade e ocupação",
+        "onus": "operacional",
+        "tipo": "cadastro",
+        "manchete": False,
+    },
+    {
+        "range": "Q16-Q21",
+        "items": 6,
+        "tema": "Voto espontâneo e voto estimulado de 1º turno",
+        "onus": "disputa",
+        "tipo": "voto",
+        "manchete": True,
+    },
+    {
+        "range": "Q22",
+        "items": 1,
+        "tema": "A escolha é definitiva ou pode mudar",
+        "onus": "disputa",
+        "tipo": "voto",
+        "manchete": True,
+    },
+    {
+        "range": "Q23-Q26",
+        "items": 4,
+        "tema": "Quatro cenários de 2º turno",
+        "onus": "disputa",
+        "tipo": "voto",
+        "manchete": True,
+    },
+    {
+        "range": "Q27",
+        "items": 1,
+        "tema": "Lula merece mais quatro anos",
+        "onus": "Lula",
+        "tipo": "desempenho",
+        "manchete": True,
+    },
+    {
+        "range": "Q28",
+        "items": 1,
+        "tema": "Medo de mais um governo Lula ou da volta dos Bolsonaro",
+        "onus": "ambos",
+        "tipo": "afeto",
+        "manchete": True,
+    },
+    {
+        "range": "Q29-Q30",
+        "items": 2,
+        "tema": "Melhor resultado para o Brasil e quem o eleitor espera que vença",
+        "onus": "ambos",
+        "tipo": "voto",
+        "manchete": True,
+    },
+    {
+        "range": "Q31-Q33",
+        "items": 3,
+        "tema": "O candidato precisa crer em Deus, ser da sua religião, ouvir líderes religiosos",
+        "onus": "atributo",
+        "tipo": "atributo",
+        "manchete": True,
+    },
+    {
+        "range": "Q34-Q38",
+        "items": 5,
+        "tema": "Imagem de cinco nomes cogitados para vice",
+        "onus": "atributo",
+        "tipo": "atributo",
+        "manchete": False,
+    },
+    {
+        "range": "Q39-Q43",
+        "items": 5,
+        "tema": "Senado e momento da decisão de voto",
+        "onus": "disputa",
+        "tipo": "voto",
+        "manchete": False,
+    },
+    {
+        "range": "Q44-Q47",
+        "items": 4,
+        "tema": "Aprovação, avaliação, direção do país e notícias sobre o governo",
+        "onus": "Lula",
+        "tipo": "desempenho",
+        "manchete": True,
+    },
+    {
+        "range": "Q48-Q49",
+        "items": 2,
+        "tema": "Isenção do IRPF até R$ 5 mil: alcance e efeito na renda",
+        "onus": "Lula",
+        "tipo": "entrega de governo",
+        "manchete": True,
+    },
+    {
+        "range": "Q50-Q54",
+        "items": 5,
+        "tema": "Endividamento e Desenrola 2.0: conhecimento, avaliação, alcance e efeito",
+        "onus": "Lula",
+        "tipo": "entrega de governo",
+        "manchete": True,
+    },
+    {
+        "range": "Q55-Q60",
+        "items": 6,
+        "tema": "Economia em 12 meses, alimentos, poder de compra, emprego, renda e expectativa",
+        "onus": "Lula",
+        "tipo": "desempenho",
+        "manchete": True,
+    },
+    {
+        "range": "Q61-Q62",
+        "items": 2,
+        "tema": "Opinião sobre os Estados Unidos e alinhamento do próximo presidente",
+        "onus": "contexto",
+        "tipo": "contexto",
+        "manchete": False,
+    },
+    {
+        "range": "Q63",
+        "items": 1,
+        "tema": "Efeito de um apoio de Trump ao candidato",
+        "onus": "Flávio",
+        "tipo": "episódio",
+        "manchete": True,
+    },
+    {
+        "range": "Q64-Q68",
+        "items": 5,
+        "tema": "Tarifaço: conhecimento, efeito, resposta do governo e reação desejada",
+        "onus": "Lula",
+        "tipo": "desempenho",
+        "manchete": True,
+    },
+    {
+        "range": "Q69",
+        "items": 1,
+        "tema": "Quem representa melhor o patriotismo e a defesa do Brasil",
+        "onus": "Flávio",
+        "tipo": "atributo",
+        "manchete": True,
+    },
+    {
+        "range": "Q70-Q71",
+        "items": 2,
+        "tema": "Apoio de Javier Milei a Flávio Bolsonaro",
+        "onus": "Flávio",
+        "tipo": "episódio",
+        "manchete": True,
+    },
+    {
+        "range": "Q72-Q73",
+        "items": 2,
+        "tema": "Vídeo de Jair Bolsonaro gerado por inteligência artificial na campanha",
+        "onus": "Flávio",
+        "tipo": "episódio",
+        "manchete": True,
+    },
+    {
+        "range": "Q74-Q75",
+        "items": 2,
+        "tema": "Proibição de Flávio visitar Jair Bolsonaro",
+        "onus": "Flávio",
+        "tipo": "episódio",
+        "manchete": True,
+    },
+    {
+        "range": "Q76-Q77",
+        "items": 2,
+        "tema": "Reunião com embaixadores e pedido de observadores internacionais",
+        "onus": "Flávio",
+        "tipo": "episódio",
+        "manchete": True,
+    },
+    {
+        "range": "Q78-Q82",
+        "items": 5,
+        "tema": "Desentendimento público e reconciliação entre Michelle e Flávio",
+        "onus": "Flávio",
+        "tipo": "episódio",
+        "manchete": True,
+    },
+    {
+        "range": "Q83-Q99",
+        "items": 17,
+        "tema": "Confiança em 16 instituições e pessoas",
+        "onus": "instituições",
+        "tipo": "atributo",
+        "manchete": True,
+    },
+    {
+        "range": "Q100-Q102",
+        "items": 3,
+        "tema": "Autoposição ideológica e afetos por PT e Jair Bolsonaro",
+        "onus": "cadastro político",
+        "tipo": "cadastro",
+        "manchete": True,
+    },
+    {
+        "range": "Q103-Q104",
+        "items": 2,
+        "tema": "Maior preocupação com o Brasil e fonte de informação política",
+        "onus": "contexto",
+        "tipo": "contexto",
+        "manchete": True,
+    },
+    {
+        "range": "Q105-Q107",
+        "items": 3,
+        "tema": "Religião, Bolsa Família e cor ou raça",
+        "onus": "operacional",
+        "tipo": "cadastro",
+        "manchete": False,
+    },
+    {
+        "range": "Q108-Q109",
+        "items": 2,
+        "tema": "Voto recordado em 2022 e comparecimento em 2024",
+        "onus": "operacional",
+        "tipo": "validação",
+        "manchete": False,
+    },
+]
+
+# Perguntas que chamam atenção pela redação ou pela companhia em que aparecem.
+# Transcrição literal do questionário registrado no TSE.
+ODDITIES = [
+    {
+        "id": "Q92",
+        "quote": "NO PIX",
+        "context": "item da bateria de confiança institucional, entre a Presidência da República e a imprensa",
+        "why": "Um sistema de pagamentos entra na mesma escala do STF e das urnas eletrônicas.",
+    },
+    {
+        "id": "Q97",
+        "quote": "NOS JUÍZES DE FUTEBOL",
+        "context": "penúltimo item da bateria de confiança institucional",
+        "why": "Transforma a medida de confiança institucional em piada, e cria a manchete pronta de comparação.",
+    },
+    {
+        "id": "Q98",
+        "quote": "NA SUA ESPOSA/MARIDO/COMPANHEIRO(A)/NAMORADO(A)",
+        "context": "último item da bateria de confiança institucional",
+        "why": "Confiança conjugal na mesma régua das Forças Armadas. O bloco inteiro ficou sem divulgação.",
+    },
+    {
+        "id": "Q31-Q33",
+        "quote": "ACREDITE EM DEUS / SEJA DA MESMA RELIGIÃO QUE VOCÊ / OUÇA LÍDERES RELIGIOSOS AO TOMAR DECISÕES",
+        "context": "três atributos que o eleitor deveria exigir do candidato",
+        "why": "Mede tolerância religiosa em ano eleitoral e não foi divulgado.",
+    },
+    {
+        "id": "Q73",
+        "quote": (
+            "ALGUMAS PESSOAS ACHAM QUE NÃO HÁ NENHUM PROBLEMA EM A CAMPANHA "
+            "usar vídeo de Jair Bolsonaro gerado por inteligência artificial"
+        ),
+        "context": "pergunta de escolha forçada entre duas opiniões",
+        "why": "Único item do questionário sobre uso de IA na campanha, e ficou sem resultado publicado.",
+    },
+    {
+        "id": "Q37",
+        "quote": "AO TENENTE-CORONEL AROLDO MEDINA",
+        "context": "quarto dos cinco nomes da bateria de imagem para vice",
+        "why": (
+            "Não é nome-fantasma: é o vice anunciado por Renan Santos em 1º de julho de 2026. "
+            "A bateria mede o vice do concorrente e não foi divulgada."
+        ),
+    },
+]
+
+# Cobertura verificada da rodada de agosto. Só entram peças que conseguimos
+# abrir e datar. Ausência aqui significa que não recuperamos, não que não existe.
+PRESS_COVERAGE = [
+    {
+        "outlet": "Poder360",
+        "title": "Lula tem 44% ante 39% de Flávio no 2º turno, diz Quaest",
+        "url": "https://www.poder360.com.br/poder-eleicoes-2026/lula-tem-44-ante-39-de-flavio-no-2o-turno-diz-quaest/",
+        "block": "Q23-Q26",
+        "angle": "placar",
+    },
+    {
+        "outlet": "Metrópoles",
+        "title": "Genial/Quaest: Lula lidera 1º e 2º turnos, mas Flávio cresce",
+        "url": "https://www.metropoles.com/brasil/genial-quaest-lula-lidera-1o-e-2o-turnos-mas-flavio-cresce",
+        "block": "Q23-Q26",
+        "angle": "placar com concessão",
+    },
+    {
+        "outlet": "Exame",
+        "title": "Pesquisa Genial/Quaest: Lula tem 44% e Flávio Bolsonaro, 39%, no 2º turno",
+        "url": "https://exame.com/brasil/pesquisa-genial-quaest-lula-tem-44-e-flavio-bolsonaro-39-no-2o-turno/",
+        "block": "Q23-Q26",
+        "angle": "placar",
+    },
+    {
+        "outlet": "Exame",
+        "title": "Lula lidera em 4 estados e Flávio Bolsonaro vence em 1: os números da pesquisa Genial/Quaest",
+        "url": "https://exame.com/brasil/lula-lidera-em-4-estados-e-flavio-bolsonaro-vence-em-1-os-numeros-da-pesquisa-genial-quaest/",
+        "block": "Q16-Q21",
+        "angle": "placar estadual",
+    },
+    {
+        "outlet": "Correio Braziliense",
+        "title": "No 2º turno, Lula tem 44% e Flávio Bolsonaro 39%, mostra Genial/Quaest",
+        "url": "https://www.correiobraziliense.com.br/politica/2026/08/7474010-no-2-turno-lula-tem-44-e-flavio-bolsonaro-39-mostra-genial-quaest.html",
+        "block": "Q23-Q26",
+        "angle": "placar",
+    },
+    {
+        "outlet": "CNN Brasil",
+        "title": "Quaest: voto independente em Lula cai sete pontos percentuais em agosto",
+        "url": "https://www.cnnbrasil.com.br/eleicoes/quaest-voto-independente-em-lula-cai-sete-pontos-percentuais-em-agosto/",
+        "block": "Q23-Q26",
+        "angle": "recorte de posicionamento",
+    },
+    {
+        "outlet": "CNN Brasil",
+        "title": "Quaest: para 59% do eleitorado paz entre Flávio e Michelle é positiva",
+        "url": "https://www.cnnbrasil.com.br/eleicoes/quaest-para-59-do-eleitorado-paz-entre-flavio-e-michelle-e-positiva/",
+        "block": "Q78-Q82",
+        "angle": "episódio da família",
+    },
+    {
+        "outlet": "InfoMoney",
+        "title": "Quaest: Para 59%, manifestação de paz entre Michelle e Flávio Bolsonaro foi positiva",
+        "url": "https://www.infomoney.com.br/politica/quaest-para-59-manifestacao-de-paz-entre-michelle-e-flavio-bolsonaro-foi-positiva/",
+        "block": "Q78-Q82",
+        "angle": "episódio da família",
+    },
+    {
+        "outlet": "Diario de Pernambuco",
+        "title": "Para 59%, manifestação de paz entre Michelle e Flávio Bolsonaro foi positiva, afirma Genial/Quaest",
+        "url": "https://www.diariodepernambuco.com.br/politica/2026/08/11720413-para-59-manifestacao-de-paz-entre-michelle-e-flavio-bolsonaro-foi-positiva-afirma-genial-quaest.html",
+        "block": "Q78-Q82",
+        "angle": "episódio da família",
+    },
+    {
+        "outlet": "Revista Fórum",
+        "title": "“Trégua” com Michelle e proibição de visita a Bolsonaro ajudam Flávio, diz Quaest",
+        "url": "https://revistaforum.com.br/politica/tregua-michelle-visita-bolsonaro-flavio-quaest/",
+        "block": "Q74-Q75",
+        "angle": "episódio da família",
+    },
+    {
+        "outlet": "Diario de Pernambuco",
+        "title": "Lula é aprovado por 48% e desaprovado por 47%, mesmos porcentuais de julho, diz Genial/Quaest",
+        "url": "https://www.diariodepernambuco.com.br/politica/2026/08/11720402-lula-e-aprovado-por-48-e-desaprovado-por-47-mesmos-porcentuais-de-julho-diz-genial-quaest.html",
+        "block": "Q44-Q47",
+        "angle": "aprovação",
+    },
+    {
+        "outlet": "Brasil 247",
+        "title": "Lula mantém aprovação superior à desaprovação, aponta Quaest",
+        "url": "https://www.brasil247.com/brasil/lula-mantem-aprovacao-superior-a-desaprovacao-aponta-quaest/",
+        "block": "Q44-Q47",
+        "angle": "aprovação",
+    },
+    {
+        "outlet": "Brasil de Fato",
+        "title": "Pesquisa Quaest: Lula lidera todos os cenários de segundo turno e tem vantagem sobre Flávio Bolsonaro para a Presidência",
+        "url": "https://www.brasildefato.com.br/2026/08/05/lula-lidera-todos-os-cenarios-de-segundo-turno-e-tem-vantagem-sobre-flavio-bolsonaro-para-a-presidencia/",
+        "block": "Q23-Q26",
+        "angle": "placar",
+    },
+    {
+        "outlet": "O Cafezinho",
+        "title": "Quaest mostra Lula firme do primeiro ao segundo turno e aprovação estável",
+        "url": "https://www.ocafezinho.com/2026/08/05/quaest-mostra-lula-firme-do-primeiro-ao-segundo-turno-e-aprovacao-estavel",
+        "block": "Q44-Q47",
+        "angle": "aprovação",
+    },
+    {
+        "outlet": "Jornal Grande Bahia",
+        "title": "Pesquisa Genial/Quaest de agosto de 2026: Lula tem 39% contra 30% de Flávio Bolsonaro, vence quatro cenários de 2º turno e governo registra 48% de aprovação",
+        "url": "https://jornalgrandebahia.com.br/2026/08/pesquisa-genial-quaest-de-agosto-de-2026-lula-tem-39-contra-30-de-flavio-bolsonaro-vence-quatro-cenarios-de-2o-turno-e-governo-registra-48-de-aprovacao/",
+        "block": "Q23-Q26",
+        "angle": "placar",
+    },
+]
+
+# Contraprova: o mesmo bloco econômico rendeu manchete própria em outras ondas.
+ECONOMY_HEADLINES_OTHER_WAVES = [
+    {
+        "outlet": "CNN Brasil",
+        "title": "Quaest: Para 69%, preços dos alimentos subiram no último mês",
+        "url": "https://www.cnnbrasil.com.br/economia/macroeconomia/quaest-para-69-precos-dos-alimentos-subiram-no-ultimo-mes/",
+        "published": "2026-05-13",
+        "wave": "campo de 8 a 11 de maio de 2026",
+    },
+    {
+        "outlet": "Rádio Itatiaia",
+        "title": "Preço dos alimentos subiu e poder de compra caiu para mais de 70%, aponta Quaest",
+        "url": "https://www.itatiaia.com.br/economia/preco-dos-alimentos-subiu-e-poder-de-compra-caiu-para-mais-de-70-aponta-quaest/",
+        "published": "2026-04-15",
+        "wave": "campo de 9 a 13 de abril de 2026",
+    },
+]
+
 
 COMPARATORS = [
     {
@@ -1390,7 +1801,7 @@ def strategy_swot() -> dict:
             },
             {
                 "claim": "Terceira via é voto frouxo e desconhecida",
-                "evidence": "79% do voto de Zema e 53% do de Caiado podem mudar; 65% não conhecem Renan, 49% não conhecem Zema, 44% não conhecem Caiado (pp. 34, 36).",
+                "evidence": "79% do voto de Zema e 47% do de Caiado podem mudar; 65% não conhecem Renan, 49% não conhecem Zema, 44% não conhecem Caiado (pp. 34, 36).",
             },
             {
                 "claim": "A faixa que decide é a de 2 a 5 salários",
@@ -1419,6 +1830,93 @@ def strategy_swot() -> dict:
                 "evidence": "Violência é a maior preocupação para 29%, contra 13% para economia; o relatório não cruza preocupação com voto (p. 98).",
             },
         ],
+    }
+
+
+def question_ledger() -> dict:
+    """Semantic balance of the registered questionnaire, block by block."""
+    published = PUBLISHED_QUESTIONS
+    rows = []
+    for block in QUESTION_BLOCKS:
+        first, _, last = block["range"].partition("-")
+        low = int(first[1:])
+        high = int(last[1:]) if last else low
+        ids = list(range(low, high + 1))
+        printed = [q for q in ids if q in published]
+        rows.append(
+            {
+                **block,
+                "published_items": len(printed),
+                "withheld_items": len(ids) - len(printed),
+                "fully_published": len(printed) == len(ids),
+                "fully_withheld": not printed,
+            }
+        )
+    by_onus: dict[str, dict] = {}
+    for row in rows:
+        bucket = by_onus.setdefault(
+            row["onus"], {"blocks": 0, "items": 0, "published": 0, "withheld": 0}
+        )
+        bucket["blocks"] += 1
+        bucket["items"] += row["items"]
+        bucket["published"] += row["published_items"]
+        bucket["withheld"] += row["withheld_items"]
+    episodes = [row for row in rows if row["tipo"] == "episódio"]
+    delivery = [row for row in rows if row["tipo"] == "entrega de governo"]
+    performance = [row for row in rows if row["tipo"] == "desempenho"]
+    return {
+        "blocks": rows,
+        "by_onus": by_onus,
+        "totals": {
+            "items": sum(row["items"] for row in rows),
+            "bolsonaro_episode_items": sum(row["items"] for row in episodes),
+            "lula_performance_items": sum(row["items"] for row in performance),
+            "lula_delivery_items": sum(row["items"] for row in delivery),
+            "opposition_policy_items": 0,
+        },
+        "asymmetry": (
+            "O questionário mede o que o governo faz e o que acontece com a família "
+            "Bolsonaro. Nenhum item pergunta sobre proposta, programa ou agenda de "
+            "qualquer candidato de oposição."
+        ),
+        "method": (
+            "Classificação nossa por bloco temático, publicada item a item para poder "
+            "ser contestada. Os 109 números incluem linhas de matriz, por isso a "
+            "leitura por bloco é a única honesta."
+        ),
+    }
+
+
+def press_ledger() -> dict:
+    """Which blocks actually became headlines in the recovered coverage."""
+    by_block: dict[str, list[dict]] = {}
+    for item in PRESS_COVERAGE:
+        by_block.setdefault(item["block"], []).append(item)
+    ledger = []
+    for block in QUESTION_BLOCKS:
+        pieces = by_block.get(block["range"], [])
+        ledger.append(
+            {
+                "range": block["range"],
+                "tema": block["tema"],
+                "onus": block["onus"],
+                "headline_ready": block["manchete"],
+                "pieces": len(pieces),
+                "outlets": sorted({piece["outlet"] for piece in pieces}),
+            }
+        )
+    economy = next(row for row in ledger if row["range"] == "Q55-Q60")
+    return {
+        "ledger": ledger,
+        "pieces": PRESS_COVERAGE,
+        "outlets": sorted({item["outlet"] for item in PRESS_COVERAGE}),
+        "economy_block_pieces": economy["pieces"],
+        "economy_other_waves": ECONOMY_HEADLINES_OTHER_WAVES,
+        "limit": (
+            "Levantamento por busca aberta em 7 de agosto de 2026. Ausência de uma "
+            "peça nesta lista significa que não a recuperamos, não que não exista. "
+            "Portais com paywall ou que bloqueiam leitura automatizada não entraram."
+        ),
     }
 
 
@@ -1490,6 +1988,9 @@ def build_payload(refresh_ibge: bool) -> dict:
             "programs": program_reach(),
             "media": media_asymmetry(),
             "swot": strategy_swot(),
+            "questionnaire_balance": question_ledger(),
+            "press": press_ledger(),
+            "oddities": ODDITIES,
         },
         "uncertainty": {
             "first_round": margin_scenarios(0.39, 0.30),

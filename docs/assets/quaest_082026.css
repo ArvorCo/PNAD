@@ -489,3 +489,23 @@ footer a { color: var(--white); }
 }
 .card .checklist li:first-child { border-top: 0; }
 .card .checklist li::before { content: '›'; left: 2px; top: 8px; font-size: 18px; }
+
+/* Conversão por bloco: saiu do SVG para caber e ficar legível. */
+.bloc-legend {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 22px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+.bloc-legend article { padding: 14px 16px; background: var(--paper); border: 1px solid var(--line); }
+.bloc-legend h4 { margin: 0; font: 700 1rem/1.15 var(--sans); }
+.bloc-legend .share { display: block; margin-top: 3px; color: var(--muted); font: 12px var(--mono); }
+.bloc-legend dl { display: grid; gap: 7px; margin: 12px 0 0; }
+.bloc-legend div { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.bloc-legend dt { color: var(--muted); font-size: .82rem; }
+.bloc-legend dd { margin: 0; font: 700 17px var(--mono); }
+.bloc-legend dd.gold { color: var(--gold); }
+.bloc-legend dd.blue { color: var(--blue); }
+@media (max-width: 980px) { .bloc-legend { grid-template-columns: repeat(2, 1fr); } }
