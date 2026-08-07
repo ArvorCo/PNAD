@@ -1003,6 +1003,7 @@ PRESS_COVERAGE = [
     {
         "outlet": "Poder360",
         "title": "Lula tem 44% ante 39% de Flávio no 2º turno, diz Quaest",
+        "frame": "placar",
         "url": "https://www.poder360.com.br/poder-eleicoes-2026/lula-tem-44-ante-39-de-flavio-no-2o-turno-diz-quaest/",
         "block": "Q23-Q26",
         "angle": "placar",
@@ -1010,6 +1011,7 @@ PRESS_COVERAGE = [
     {
         "outlet": "Metrópoles",
         "title": "Genial/Quaest: Lula lidera 1º e 2º turnos, mas Flávio cresce",
+        "frame": "placar mais movimento de Flávio",
         "url": "https://www.metropoles.com/brasil/genial-quaest-lula-lidera-1o-e-2o-turnos-mas-flavio-cresce",
         "block": "Q23-Q26",
         "angle": "placar com concessão",
@@ -1017,6 +1019,7 @@ PRESS_COVERAGE = [
     {
         "outlet": "Exame",
         "title": "Pesquisa Genial/Quaest: Lula tem 44% e Flávio Bolsonaro, 39%, no 2º turno",
+        "frame": "placar",
         "url": "https://exame.com/brasil/pesquisa-genial-quaest-lula-tem-44-e-flavio-bolsonaro-39-no-2o-turno/",
         "block": "Q23-Q26",
         "angle": "placar",
@@ -1024,6 +1027,7 @@ PRESS_COVERAGE = [
     {
         "outlet": "Exame",
         "title": "Lula lidera em 4 estados e Flávio Bolsonaro vence em 1: os números da pesquisa Genial/Quaest",
+        "frame": "placar",
         "url": "https://exame.com/brasil/lula-lidera-em-4-estados-e-flavio-bolsonaro-vence-em-1-os-numeros-da-pesquisa-genial-quaest/",
         "block": "Q16-Q21",
         "angle": "placar estadual",
@@ -1031,6 +1035,7 @@ PRESS_COVERAGE = [
     {
         "outlet": "Correio Braziliense",
         "title": "No 2º turno, Lula tem 44% e Flávio Bolsonaro 39%, mostra Genial/Quaest",
+        "frame": "placar",
         "url": "https://www.correiobraziliense.com.br/politica/2026/08/7474010-no-2-turno-lula-tem-44-e-flavio-bolsonaro-39-mostra-genial-quaest.html",
         "block": "Q23-Q26",
         "angle": "placar",
@@ -1038,6 +1043,7 @@ PRESS_COVERAGE = [
     {
         "outlet": "CNN Brasil",
         "title": "Quaest: voto independente em Lula cai sete pontos percentuais em agosto",
+        "frame": "perda de Lula",
         "url": "https://www.cnnbrasil.com.br/eleicoes/quaest-voto-independente-em-lula-cai-sete-pontos-percentuais-em-agosto/",
         "block": "Q23-Q26",
         "angle": "recorte de posicionamento",
@@ -1045,6 +1051,7 @@ PRESS_COVERAGE = [
     {
         "outlet": "CNN Brasil",
         "title": "Quaest: para 59% do eleitorado paz entre Flávio e Michelle é positiva",
+        "frame": "episódio da família",
         "url": "https://www.cnnbrasil.com.br/eleicoes/quaest-para-59-do-eleitorado-paz-entre-flavio-e-michelle-e-positiva/",
         "block": "Q78-Q82",
         "angle": "episódio da família",
@@ -1052,6 +1059,7 @@ PRESS_COVERAGE = [
     {
         "outlet": "InfoMoney",
         "title": "Quaest: Para 59%, manifestação de paz entre Michelle e Flávio Bolsonaro foi positiva",
+        "frame": "episódio da família",
         "url": "https://www.infomoney.com.br/politica/quaest-para-59-manifestacao-de-paz-entre-michelle-e-flavio-bolsonaro-foi-positiva/",
         "block": "Q78-Q82",
         "angle": "episódio da família",
@@ -1059,6 +1067,7 @@ PRESS_COVERAGE = [
     {
         "outlet": "Diario de Pernambuco",
         "title": "Para 59%, manifestação de paz entre Michelle e Flávio Bolsonaro foi positiva, afirma Genial/Quaest",
+        "frame": "episódio da família",
         "url": "https://www.diariodepernambuco.com.br/politica/2026/08/11720413-para-59-manifestacao-de-paz-entre-michelle-e-flavio-bolsonaro-foi-positiva-afirma-genial-quaest.html",
         "block": "Q78-Q82",
         "angle": "episódio da família",
@@ -1066,6 +1075,7 @@ PRESS_COVERAGE = [
     {
         "outlet": "Revista Fórum",
         "title": "“Trégua” com Michelle e proibição de visita a Bolsonaro ajudam Flávio, diz Quaest",
+        "frame": "episódio da família",
         "url": "https://revistaforum.com.br/politica/tregua-michelle-visita-bolsonaro-flavio-quaest/",
         "block": "Q74-Q75",
         "angle": "episódio da família",
@@ -1073,6 +1083,7 @@ PRESS_COVERAGE = [
     {
         "outlet": "Diario de Pernambuco",
         "title": "Lula é aprovado por 48% e desaprovado por 47%, mesmos porcentuais de julho, diz Genial/Quaest",
+        "frame": "aprovação estável",
         "url": "https://www.diariodepernambuco.com.br/politica/2026/08/11720402-lula-e-aprovado-por-48-e-desaprovado-por-47-mesmos-porcentuais-de-julho-diz-genial-quaest.html",
         "block": "Q44-Q47",
         "angle": "aprovação",
@@ -1080,6 +1091,7 @@ PRESS_COVERAGE = [
     {
         "outlet": "Brasil 247",
         "title": "Lula mantém aprovação superior à desaprovação, aponta Quaest",
+        "frame": "aprovação estável",
         "url": "https://www.brasil247.com/brasil/lula-mantem-aprovacao-superior-a-desaprovacao-aponta-quaest/",
         "block": "Q44-Q47",
         "angle": "aprovação",
@@ -1087,6 +1099,7 @@ PRESS_COVERAGE = [
     {
         "outlet": "Brasil de Fato",
         "title": "Pesquisa Quaest: Lula lidera todos os cenários de segundo turno e tem vantagem sobre Flávio Bolsonaro para a Presidência",
+        "frame": "placar",
         "url": "https://www.brasildefato.com.br/2026/08/05/lula-lidera-todos-os-cenarios-de-segundo-turno-e-tem-vantagem-sobre-flavio-bolsonaro-para-a-presidencia/",
         "block": "Q23-Q26",
         "angle": "placar",
@@ -1094,6 +1107,7 @@ PRESS_COVERAGE = [
     {
         "outlet": "O Cafezinho",
         "title": "Quaest mostra Lula firme do primeiro ao segundo turno e aprovação estável",
+        "frame": "aprovação estável",
         "url": "https://www.ocafezinho.com/2026/08/05/quaest-mostra-lula-firme-do-primeiro-ao-segundo-turno-e-aprovacao-estavel",
         "block": "Q44-Q47",
         "angle": "aprovação",
@@ -1101,27 +1115,42 @@ PRESS_COVERAGE = [
     {
         "outlet": "Jornal Grande Bahia",
         "title": "Pesquisa Genial/Quaest de agosto de 2026: Lula tem 39% contra 30% de Flávio Bolsonaro, vence quatro cenários de 2º turno e governo registra 48% de aprovação",
+        "frame": "placar",
         "url": "https://jornalgrandebahia.com.br/2026/08/pesquisa-genial-quaest-de-agosto-de-2026-lula-tem-39-contra-30-de-flavio-bolsonaro-vence-quatro-cenarios-de-2o-turno-e-governo-registra-48-de-aprovacao/",
         "block": "Q23-Q26",
         "angle": "placar",
     },
 ]
 
-# Contraprova: o mesmo bloco econômico rendeu manchete própria em outras ondas.
-ECONOMY_HEADLINES_OTHER_WAVES = [
+# Trilha de auditoria do "nenhuma peça sobre o bloco econômico". A busca devolveu
+# quatro peças que pareciam ser desta rodada. Todas foram abertas e datadas: são
+# de outras ondas da mesma Quaest. Ficam aqui como prova de que o zero foi
+# testado, e não como argumento: comparar cobertura de ondas diferentes confunde
+# o leitor e não sustenta conclusão sobre esta.
+RECOVERY_CHECK = [
+    {
+        "outlet": "InfoMoney",
+        "title": "Preços pesam no bolso do eleitor e corroem apoio a reeleição de Lula, mostra Quaest",
+        "published": "2026-04-15",
+        "wave": "campo de 9 a 13 de abril de 2026, TSE BR-09285/2026",
+    },
+    {
+        "outlet": "Gazeta do Povo",
+        "title": "Eleitor de Lula sente mais a perda do poder de compra",
+        "published": "2026-04-29",
+        "wave": "campo de 9 a 13 de abril de 2026, TSE BR-09285/2026",
+    },
     {
         "outlet": "CNN Brasil",
         "title": "Quaest: Para 69%, preços dos alimentos subiram no último mês",
-        "url": "https://www.cnnbrasil.com.br/economia/macroeconomia/quaest-para-69-precos-dos-alimentos-subiram-no-ultimo-mes/",
         "published": "2026-05-13",
         "wave": "campo de 8 a 11 de maio de 2026",
     },
     {
-        "outlet": "Rádio Itatiaia",
-        "title": "Preço dos alimentos subiu e poder de compra caiu para mais de 70%, aponta Quaest",
-        "url": "https://www.itatiaia.com.br/economia/preco-dos-alimentos-subiu-e-poder-de-compra-caiu-para-mais-de-70-aponta-quaest/",
-        "published": "2026-04-15",
-        "wave": "campo de 9 a 13 de abril de 2026",
+        "outlet": "O Estopim",
+        "title": "Economia cresce, mas 68% dizem ter menos poder de compra",
+        "published": "2026-07-15",
+        "wave": "campo de 10 a 13 de julho de 2026, TSE BR-07181/2026",
     },
 ]
 
@@ -1906,12 +1935,16 @@ def press_ledger() -> dict:
             }
         )
     economy = next(row for row in ledger if row["range"] == "Q55-Q60")
+    frames: dict[str, int] = {}
+    for item in PRESS_COVERAGE:
+        frames[item["frame"]] = frames.get(item["frame"], 0) + 1
     return {
         "ledger": ledger,
         "pieces": PRESS_COVERAGE,
         "outlets": sorted({item["outlet"] for item in PRESS_COVERAGE}),
         "economy_block_pieces": economy["pieces"],
-        "economy_other_waves": ECONOMY_HEADLINES_OTHER_WAVES,
+        "frames": frames,
+        "recovery_check": RECOVERY_CHECK,
         "limit": (
             "Levantamento por busca aberta em 7 de agosto de 2026. Ausência de uma "
             "peça nesta lista significa que não a recuperamos, não que não exista. "

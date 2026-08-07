@@ -234,9 +234,27 @@ def test_press_ledger_only_lists_recovered_pieces(payload: dict) -> None:
     assert len(press["pieces"]) == 15
     assert len(press["outlets"]) == 12
     assert press["economy_block_pieces"] == 0
-    assert press["economy_other_waves"], "a contraprova de outras ondas é obrigatória"
-    for piece in press["pieces"] + press["economy_other_waves"]:
+    assert press["recovery_check"], "o zero precisa vir com a trilha de auditoria"
+    assert sum(press["frames"].values()) == len(press["pieces"])
+    for piece in press["pieces"]:
         assert piece["url"].startswith("https://")
+
+
+def test_public_pages_never_compare_across_waves(pages: dict[str, str]) -> None:
+    """Cobertura de outras ondas fica no JSON, nunca no texto público."""
+    for name, html in pages.items():
+        for wave in press_other_wave_markers():
+            assert wave not in html, f"{name} cita cobertura de outra onda: {wave}"
+
+
+def press_other_wave_markers() -> list[str]:
+    return [
+        "Itatiaia",
+        "13 de maio",
+        "15 de abril",
+        "Preços pesam no bolso do eleitor",
+        "Eleitor de Lula sente mais a perda",
+    ]
 
 
 def test_press_limit_is_stated_in_the_dossier(pages: dict[str, str]) -> None:
