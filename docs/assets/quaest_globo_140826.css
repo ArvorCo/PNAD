@@ -266,8 +266,13 @@
 
 /* Figura fotográfica. A legenda carrega o número, não o adjetivo. */
 .photo { margin: 30px 0 0; background: var(--white); border: 1px solid var(--line); box-shadow: var(--shadow); }
-.photo img { width: 100%; height: 260px; object-fit: cover; filter: grayscale(.28) contrast(1.04); }
-.photo.wide img { height: 340px; }
+/* O recorte é por foto, no atributo style de cada imagem, porque `cover`
+   centralizado corta o rosto de retrato vertical e sobra o peito. */
+.photo img { width: 100%; height: 300px; object-fit: cover; object-position: center; filter: grayscale(.22) contrast(1.04); }
+.photo.wide img { height: 400px; }
+/* Retrato vertical em caixa larga sempre corta rosto, qualquer que seja o
+   ponto de foco. Aqui a foto inteira aparece, sobre um fundo neutro. */
+.photo.portrait img { height: 380px; object-fit: contain; background: #e7eaec; }
 .photo figcaption {
   padding: 16px 20px;
   color: var(--ink);
