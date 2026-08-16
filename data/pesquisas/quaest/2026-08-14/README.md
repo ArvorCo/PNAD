@@ -25,9 +25,14 @@ fecha em R$ 2.457.876,00: seis pesquisas de R$ 314.628,00 e uma de R$ 570.108,00
 ```bash
 python3 scripts/quaest-globo-140826-audit.py --refresh-ibge
 python3 scripts/quaest-globo-140826-estrategia.py
+python3 scripts/quaest-globo-140826-embed.py
 python3 scripts/quaest-globo-140826-thread.py
 pytest -q tests/
 ```
+
+A ordem importa: `embed` copia as duas bases já geradas para dentro do HTML do
+dossiê. Sem esse passo a página continua desenhando pelos arquivos JSON, o que
+funciona em servidor e falha quando alguém abre o arquivo direto do disco.
 
 O primeiro script confere os documentos, grava os hashes SHA-256, refaz as
 contas do dossiê e gera:
