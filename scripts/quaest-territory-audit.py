@@ -53,8 +53,8 @@ MESH_API = (
 )
 
 ROW_RE = re.compile(
-    r"^(?P<municipality>.+?) \((?P<uf>[A-Z]{2})\) "
-    r"(?P<neighborhood>.+?) (?P<sector_code>\d{15}) "
+    r"^(?P<municipality>.+?)\s+\((?P<uf>[A-Z]{2})\)\s*"
+    r"(?P<neighborhood>.+?)\s+(?P<sector_code>\d{15})\s+"
     r"(?P<interviews>\d+)$"
 )
 

@@ -38,6 +38,18 @@ def test_parse_rows_rejects_uf_code_mismatch():
         )
 
 
+def test_parse_rows_accepts_pdf_text_without_space_after_state():
+    rows = MODULE.parse_rows(
+        "Nova Olinda do Maranhão (MA)Bairro Novo 210735707000001 6",
+        "agosto/2026",
+        "BR-06773/2026",
+    )
+
+    assert len(rows) == 1
+    assert rows[0].municipality == "Nova Olinda do Maranhão"
+    assert rows[0].neighborhood == "Bairro Novo"
+
+
 def test_comparison_separates_neighborhood_from_exact_sector():
     june = MODULE.parse_rows(
         "São Paulo (SP) Jaragua 355030842000610 6\n"
