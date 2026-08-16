@@ -1,7 +1,43 @@
 :root {
   --globo-cyan: #59e2e8;
   --globo-violet: #836dff;
+  /* Ciano e dourado só têm contraste sobre fundo escuro. Estas são as
+     versões legíveis sobre papel e branco. */
+  --globo-teal-ink: #14595e;
+  --globo-gold-ink: #8a5e05;
+  --globo-red-ink: #b2302a;
+  --globo-red-bar: #c03830;
+  --globo-blue-ink: #1c5ad6;
+  --globo-violet-deep: #5b3fd6;
+  --globo-on-navy: #b6c4d1;
 }
+
+/* Vermelho, azul, dourado e ciano da casa foram desenhados para fundo escuro.
+   Sobre papel e branco eles ficam abaixo do mínimo de contraste, então cada um
+   tem aqui a sua versão escura. Conferido com auditoria de pixel, não no olho.
+   Cartão, callout, ficha e tabela são sempre claros, mesmo dentro de capítulo
+   escuro, e por isso a regra vale para eles em qualquer capítulo. */
+.globo-round .stamp.limit,
+.globo-round .metric.red-ink,
+.globo-round .ledger-row code,
+.globo-round .map-row output.down,
+.globo-round .media-list .tag.runoff,
+.globo-round .chapter:not(.red) code { color: var(--globo-red-ink); }
+
+.globo-round .plan-tags .src,
+.globo-round .media-list a,
+.globo-round .media-list .tag.first,
+.globo-round .case-file a { color: var(--globo-blue-ink); }
+
+.globo-round .chapter.dark .comparison-table th,
+.globo-round .chapter.dark .territory-strip span { color: var(--globo-on-navy); }
+
+
+/* Dourado sobre superfície clara precisa escurecer para ser lido. */
+.globo-round .card .metric.gold,
+.globo-round .card .stamp.inference,
+.globo-round .callout .stamp.inference,
+.globo-round .chart-shell .stamp.inference { color: var(--globo-gold-ink); }
 
 .globo-round .hero {
   background:
@@ -25,6 +61,14 @@
 }
 
 .globo-round .hero h1 em { color: var(--globo-cyan); }
+
+/* O numerador de capítulo só fica ciano onde o fundo é escuro. Sobre papel,
+   o ciano tem contraste de 1,41 e é ilegível. */
+.globo-round .chapter .sec-no { color: var(--globo-teal-ink); }
+.globo-round .chapter.dark .sec-no,
+.globo-round .chapter.red .sec-no { color: var(--globo-cyan); }
+/* Ciano sobre o azul do capítulo dá 3,17. Branco dá 4,95. */
+.globo-round .chapter.blue .sec-no { color: #fff; }
 .globo-round .toc a:hover,
 .globo-round .toc a.active { border-color: var(--globo-cyan); }
 .globo-round .case-file { box-shadow: 18px 18px 0 rgba(89, 226, 232, .28); }
@@ -39,9 +83,11 @@
   background: var(--line);
 }
 
-.proofline article { padding: 24px; background: var(--white); }
+/* Fundo claro dentro de capítulo escuro: a cor do texto precisa ser explícita,
+   senão herda o branco do capítulo e some. */
+.proofline article { padding: 24px; color: var(--ink); background: var(--white); }
 .proofline b { display: block; color: var(--blue); font: 800 31px/1 var(--mono); }
-.proofline span { display: block; margin-top: 9px; font-size: .84rem; }
+.proofline span { display: block; margin-top: 9px; color: var(--ink); font-size: .84rem; }
 
 .rank-chart,
 .gap-chart,
@@ -85,18 +131,19 @@
 .channel-track { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
 .channel-track span { min-width: 0; padding: 5px 8px; color: #fff; font: 700 11px var(--mono); }
 .channel-track .social { background: var(--blue); text-align: right; }
-.channel-track .tv { background: var(--red); }
+.channel-track .tv { background: var(--globo-red-bar); }
 
-.finance-ledger { margin-top: 26px; border-top: 5px solid var(--ink); }
+.finance-ledger { margin-top: 26px; border-top: 5px solid var(--white); }
 .finance-row {
   display: grid;
   grid-template-columns: 170px minmax(220px, .8fr) minmax(0, 1.2fr);
   gap: 20px;
   padding: 18px 0;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid rgba(255, 253, 248, .28);
 }
-.finance-row code { color: var(--red); font: 700 14px var(--mono); }
-.finance-row p { margin: 0; color: var(--muted); }
+/* O capítulo das notas fiscais é vermelho escuro: cinza e vermelho somem nele. */
+.finance-row code { color: #ffd9d5; font: 700 14px var(--mono); }
+.finance-row p { margin: 0; color: #f4e3e1; }
 
 .transfer-shell { overflow-x: auto; }
 .transfer-shell svg { min-width: 900px; width: 100%; height: auto; }
@@ -150,10 +197,10 @@
   color: #fff;
   font: 700 11px var(--mono);
 }
-.map-track .lula { background: var(--red); }
+.map-track .lula { background: var(--globo-red-bar); }
 .map-track .flavio { background: var(--blue); }
-.map-track .third { background: var(--globo-violet); }
-.map-track .none { background: #b7bdc2; }
+.map-track .third { background: var(--globo-violet-deep); }
+.map-track .none { color: var(--ink); background: #c9cfd3; }
 
 .map-key { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 12px; font: 11px var(--mono); }
 .map-key span { display: flex; align-items: center; gap: 7px; }
@@ -229,7 +276,7 @@
   gap: 18px;
   margin-top: 26px;
 }
-.question-strip article { padding: 24px; background: var(--white); border-top: 7px solid var(--blue); }
+.question-strip article { padding: 24px; color: var(--ink); background: var(--white); border-top: 7px solid var(--blue); }
 .question-strip article:last-child { border-color: var(--globo-violet); }
 .question-strip b { display: block; font: 800 36px/1 var(--mono); }
 

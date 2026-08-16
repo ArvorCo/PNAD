@@ -27,6 +27,7 @@ OWN = "img/quaest_globo_140826"
 
 # Cor por papel, repetida no CSS da página.
 RED = "#ef3e36"
+RED_L = "#ff8a84"
 BLUE = "#1b54f2"
 BLUE_L = "#74a2ff"
 LIME = "#d9ff43"
@@ -581,13 +582,16 @@ header.top p b{color:#fff}
 .kchips{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
 .kchip{border:1px solid var(--line2);border-radius:999px;padding:5px 12px;font-size:.79rem;font-weight:700;color:var(--ink2);background:rgba(7,11,18,.5)}
 .kchip.b{color:var(--blue)} .kchip.r{color:var(--red-l)} .kchip.a{color:var(--lime)} .kchip.g{color:var(--green)}
-.card-foot{display:flex;justify-content:space-between;gap:14px;padding-top:12px;border-top:1px solid var(--line);
-  font-family:var(--mono);font-size:.74rem;color:var(--faint);letter-spacing:.03em}
+/* O rodapé do card fica sobre a foto, cuja luminância varia. Sem uma faixa
+   sólida por baixo, o contraste do texto depende do enquadramento da imagem. */
+.card-foot{display:flex;justify-content:space-between;gap:14px;margin:0 -30px -26px;padding:12px 30px 22px;
+  border-top:1px solid var(--line);background:rgba(7,11,18,.88);
+  font-family:var(--mono);font-size:.74rem;color:var(--muted);letter-spacing:.03em}
 .viz{min-width:0}
 svg{display:block;width:100%;height:auto}
 .copy{margin-top:14px;background:#070b12;border:1px solid var(--line);border-radius:10px;padding:18px 20px;
   font-family:var(--mono);font-size:.9rem;line-height:1.6;color:var(--ink2);white-space:pre-wrap;word-wrap:break-word;position:relative}
-.copy .cc{position:absolute;top:10px;right:14px;font-size:.68rem;color:var(--faint)}
+.copy .cc{position:absolute;top:10px;right:14px;font-size:.68rem;color:var(--muted)}
 .copy-btn{margin-top:9px;background:var(--blue-d);border:0;color:#fff;font-weight:700;font-size:.82rem;padding:9px 16px;border-radius:7px;cursor:pointer;font-family:var(--sans)}
 .copy-btn:active{transform:translateY(1px)}
 .copy-btn.ok{background:var(--lime);color:#1e2405}
@@ -790,7 +794,7 @@ def viz_equation(spec, width):
         label = (
             "fecha" if missing <= 0.01 else f"faltam {missing:.2f}".replace(".", ",")
         )
-        color = LIME if missing <= 0.01 else RED
+        color = LIME if missing <= 0.01 else RED_L
         parts.append(text_node(126 + track, y + 17, label, 13, color, MONO, "700"))
     footer_lines(parts, spec["foot"], 44 + len(spec["rows"]) * 44 + 8, width)
     return parts
