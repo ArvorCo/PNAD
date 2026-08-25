@@ -5,7 +5,9 @@ A primeira auditoria (scripts/datafolha-082026-audit.py) tratou do placar, da
 reponderacao por renda, do territorio e das manchetes. Esta camada le o anexo
 inteiro de tabelas cruzadas (scripts/datafolha-082026-cruzamentos.py), soma a
 ele as duas paginas de divulgacao que ninguem cita, o questionario aplicado e
-o registro no TSE, e mede o que o relatorio coletou e nao publicou.
+o registro no TSE, e mede o que o relatorio coletou e nao publicou. A estrela
+da auditoria continua sendo a reponderacao por renda, em
+scripts/datafolha-082026-audit.py e scripts/datafolha-082026-historico-renda.py.
 
 Uso:
   python3 scripts/datafolha-082026-cruzamentos.py
@@ -34,49 +36,48 @@ OUT_SITE_JS = ASSETS / "datafolha_082026_fundo.js"
 SAMPLE = 2058
 
 # ---------------------------------------------------------------------------
-# Paginas 12 e 13 do relatorio de divulgacao. A linha de bases diz, com todas
-# as letras, "entrevistas": sao contagens de campo, nao bases ponderadas.
-# ---------------------------------------------------------------------------
-
+# As duas paginas de divulgacao que a cobertura ignora. Os percentuais sao os
+# publicados; a linha de bases do relatorio e reproduzida como consta, sem
+# afirmacao sobre ser contagem de campo ou base ponderada.
 DECK_DECISION = {
     "page": 12,
     "question": "Em relacao ao seu voto para presidente, voce diria que esta totalmente decidido ou seu voto ainda pode mudar?",
-    "base_label": "Entrevistados que citaram alguma opcao de voto (1.980 entrevistas)",
-    "total": {"decidido": 72, "pode_mudar": 27, "nao_sabe": 1, "entrevistas": 1980},
+    "base_label": "Entrevistados que citaram alguma opcao de voto na estimulada",
+    "total": {"decidido": 72, "pode_mudar": 27, "nao_sabe": 1, "base": 1980},
     "por_candidato": {
         "Lula (PT)": {
             "decidido": 82,
             "pode_mudar": 18,
             "nao_sabe": 0,
-            "entrevistas": 860,
+            "base": 860,
             "moe": 3,
         },
         "Flavio Bolsonaro (PL)": {
             "decidido": 78,
             "pode_mudar": 21,
             "nao_sabe": 1,
-            "entrevistas": 612,
+            "base": 612,
             "moe": 4,
         },
         "Ronaldo Caiado (PSD)": {
             "decidido": 57,
             "pode_mudar": 42,
             "nao_sabe": 1,
-            "entrevistas": 111,
+            "base": 111,
             "moe": 9,
         },
         "Renan Santos (MISSAO)": {
             "decidido": 54,
             "pode_mudar": 46,
             "nao_sabe": 0,
-            "entrevistas": 74,
+            "base": 74,
             "moe": 12,
         },
         "Zema (NOVO)": {
             "decidido": 29,
             "pode_mudar": 69,
             "nao_sabe": 2,
-            "entrevistas": 58,
+            "base": 58,
             "moe": 13,
         },
     },
@@ -85,13 +86,13 @@ DECK_DECISION = {
 DECK_MOTIVATION = {
     "page": 13,
     "question": "E voce votaria em ___ porque ele(a) tem as melhores propostas e e o(a) mais preparado(a) ou para evitar que outro(a) candidato seja eleito?",
-    "base_label": "Entrevistados que citaram algum candidato (1.836 entrevistas)",
+    "base_label": "Entrevistados que citaram algum candidato na estimulada",
     "total": {
         "propostas": 61,
         "evitar": 30,
         "outras": 7,
         "nao_sabe": 2,
-        "entrevistas": 1836,
+        "base": 1836,
     },
     "por_candidato": {
         "Renan Santos (MISSAO)": {
@@ -99,41 +100,40 @@ DECK_MOTIVATION = {
             "evitar": 24,
             "outras": 1,
             "nao_sabe": 2,
-            "entrevistas": 74,
+            "base": 74,
         },
         "Lula (PT)": {
             "propostas": 68,
             "evitar": 23,
             "outras": 8,
             "nao_sabe": 1,
-            "entrevistas": 860,
+            "base": 860,
         },
         "Ronaldo Caiado (PSD)": {
             "propostas": 60,
             "evitar": 31,
             "outras": 8,
             "nao_sabe": 1,
-            "entrevistas": 111,
+            "base": 111,
         },
         "Zema (NOVO)": {
             "propostas": 57,
             "evitar": 37,
             "outras": 5,
             "nao_sabe": 1,
-            "entrevistas": 58,
+            "base": 58,
         },
         "Flavio Bolsonaro (PL)": {
             "propostas": 56,
             "evitar": 35,
             "outras": 7,
             "nao_sabe": 2,
-            "entrevistas": 612,
+            "base": 612,
         },
     },
 }
 
-# Base ponderada da mesma pergunta no anexo, pagina 27 de 29 (p.49 do PDF).
-WEIGHTED_MOTIVATION_BASE = 1850
+# Base ponderada das mesmas perguntas no anexo, paginas 26 e 27 de 29.
 WEIGHTED_DECISION_BASE = 1980
 
 # Serie do primeiro turno estimulado, pagina 9 (situacao sem Marcal).
@@ -386,7 +386,7 @@ def open_market(crosstabs: dict[str, object]) -> dict[str, object]:
                 "voto_pct": share,
                 "pode_mudar_pct": row["pode_mudar"],
                 "pontos_do_eleitorado": round(points, 2),
-                "entrevistas": row["entrevistas"],
+                "base": row["base"],
             }
         )
 
@@ -410,65 +410,6 @@ def open_market(crosstabs: dict[str, object]) -> dict[str, object]:
             "Datafolha pergunta a todo eleitor que citou um voto se ele pode mudar. "
             "Somando a resposta com os indecisos, o proprio instituto mede um "
             "eleitorado em aberto muitas vezes maior do que a diferenca do placar."
-        ),
-    }
-
-
-def field_versus_weight(crosstabs: dict[str, object]) -> dict[str, object]:
-    """Bases de campo da pagina 12 contra os percentuais ponderados publicados."""
-    first, _ = merge(crosstabs["estimulada_b"])
-    shares = first["Total"]
-    valid, _ = merge(crosstabs["validos_b"])
-    valid_shares = valid["Total"]
-
-    rows = []
-    for candidate, deck in DECK_DECISION["por_candidato"].items():
-        raw = 100 * deck["entrevistas"] / SAMPLE
-        weighted = shares[candidate]
-        rows.append(
-            {
-                "candidato": candidate,
-                "entrevistas": deck["entrevistas"],
-                "campo_pct": round(raw, 2),
-                "ponderado_pct": weighted,
-                "efeito_do_peso_pp": round(weighted - raw, 2),
-                "campo_validos_pct": round(
-                    100 * deck["entrevistas"] / DECK_MOTIVATION["total"]["entrevistas"],
-                    2,
-                ),
-                "ponderado_validos_pct": valid_shares[candidate],
-            }
-        )
-
-    lula = rows[0]
-    flavio = rows[1]
-    return {
-        "prova_de_que_a_base_e_de_campo": {
-            "pagina_13_diz": DECK_MOTIVATION["base_label"],
-            "entrevistas_na_divulgacao": DECK_MOTIVATION["total"]["entrevistas"],
-            "base_ponderada_no_anexo": WEIGHTED_MOTIVATION_BASE,
-            "diferenca": WEIGHTED_MOTIVATION_BASE
-            - DECK_MOTIVATION["total"]["entrevistas"],
-            "leitura": (
-                "A mesma pergunta tem 1.836 na divulgacao e 1.850 no anexo. "
-                "A divulgacao conta entrevistas; o anexo conta base ponderada. "
-                "Os dois numeros aparecem sob rotulos quase iguais e nunca sao "
-                "apresentados como grandezas diferentes."
-            ),
-        },
-        "linhas": rows,
-        "gap_de_campo_pp": round(lula["campo_pct"] - flavio["campo_pct"], 2),
-        "gap_ponderado_pp": lula["ponderado_pct"] - flavio["ponderado_pct"],
-        "gap_de_campo_validos_pp": round(
-            lula["campo_validos_pct"] - flavio["campo_validos_pct"], 2
-        ),
-        "gap_ponderado_validos_pp": lula["ponderado_validos_pct"]
-        - flavio["ponderado_validos_pct"],
-        "leitura": (
-            "A ponderacao e legitima e esta declarada no registro. O ponto "
-            "auditavel e outro: metade da diferenca publicada no primeiro turno "
-            "nasce do peso, e o leitor nao tem como saber disso porque a linha "
-            "de bases da divulgacao nunca e apresentada como contagem de campo."
         ),
     }
 
@@ -855,7 +796,6 @@ def main() -> None:
             "anexo_de_cruzamentos": "29 paginas, 14 tabelas, 11 recortes",
         },
         "mercado_aberto": open_market(crosstabs),
-        "campo_versus_peso": field_versus_weight(crosstabs),
         "piso_de_ruido": noise_floor(crosstabs),
         "vao": gap_analysis(crosstabs),
         "substituicao": substitution(crosstabs),
@@ -899,12 +839,8 @@ def main() -> None:
     )
 
     market = payload["mercado_aberto"]
-    weight = payload["campo_versus_peso"]
     print(
         f"mercado aberto: {market['mercado_aberto_pct']} pontos contra gap de {market['gap_publicado_1turno']}"
-    )
-    print(
-        f"gap de campo {weight['gap_de_campo_pp']} pp x gap ponderado {weight['gap_ponderado_pp']} pp"
     )
     print(f"piso de ruido nacional: {payload['piso_de_ruido']['piso_nacional_pct']}%")
     print(f"vao nacional: {payload['vao']['vao_nacional_pp']} pp")

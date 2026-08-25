@@ -13,35 +13,35 @@
         "voto_pct": 39,
         "pode_mudar_pct": 18,
         "pontos_do_eleitorado": 7.02,
-        "entrevistas": 860
+        "base": 860
       },
       {
         "candidato": "Flavio Bolsonaro (PL)",
         "voto_pct": 33,
         "pode_mudar_pct": 21,
         "pontos_do_eleitorado": 6.93,
-        "entrevistas": 612
+        "base": 612
       },
       {
         "candidato": "Ronaldo Caiado (PSD)",
         "voto_pct": 5,
         "pode_mudar_pct": 42,
         "pontos_do_eleitorado": 2.1,
-        "entrevistas": 111
+        "base": 111
       },
       {
         "candidato": "Zema (NOVO)",
         "voto_pct": 3,
         "pode_mudar_pct": 69,
         "pontos_do_eleitorado": 2.07,
-        "entrevistas": 58
+        "base": 58
       },
       {
         "candidato": "Renan Santos (MISSAO)",
         "voto_pct": 4,
         "pode_mudar_pct": 46,
         "pontos_do_eleitorado": 1.84,
-        "entrevistas": 74
+        "base": 74
       }
     ],
     "pontos_moveis_nos_cinco_maiores": 19.96,
@@ -52,67 +52,6 @@
     "voto_cristalizado_pct": 70.02,
     "gap_publicado_1turno": 6,
     "leitura": "Datafolha pergunta a todo eleitor que citou um voto se ele pode mudar. Somando a resposta com os indecisos, o proprio instituto mede um eleitorado em aberto muitas vezes maior do que a diferenca do placar."
-  },
-  "campo_versus_peso": {
-    "prova_de_que_a_base_e_de_campo": {
-      "pagina_13_diz": "Entrevistados que citaram algum candidato (1.836 entrevistas)",
-      "entrevistas_na_divulgacao": 1836,
-      "base_ponderada_no_anexo": 1850,
-      "diferenca": 14,
-      "leitura": "A mesma pergunta tem 1.836 na divulgacao e 1.850 no anexo. A divulgacao conta entrevistas; o anexo conta base ponderada. Os dois numeros aparecem sob rotulos quase iguais e nunca sao apresentados como grandezas diferentes."
-    },
-    "linhas": [
-      {
-        "candidato": "Lula (PT)",
-        "entrevistas": 860,
-        "campo_pct": 41.79,
-        "ponderado_pct": 39,
-        "efeito_do_peso_pp": -2.79,
-        "campo_validos_pct": 46.84,
-        "ponderado_validos_pct": 43
-      },
-      {
-        "candidato": "Flavio Bolsonaro (PL)",
-        "entrevistas": 612,
-        "campo_pct": 29.74,
-        "ponderado_pct": 33,
-        "efeito_do_peso_pp": 3.26,
-        "campo_validos_pct": 33.33,
-        "ponderado_validos_pct": 37
-      },
-      {
-        "candidato": "Ronaldo Caiado (PSD)",
-        "entrevistas": 111,
-        "campo_pct": 5.39,
-        "ponderado_pct": 5,
-        "efeito_do_peso_pp": -0.39,
-        "campo_validos_pct": 6.05,
-        "ponderado_validos_pct": 6
-      },
-      {
-        "candidato": "Renan Santos (MISSAO)",
-        "entrevistas": 74,
-        "campo_pct": 3.6,
-        "ponderado_pct": 4,
-        "efeito_do_peso_pp": 0.4,
-        "campo_validos_pct": 4.03,
-        "ponderado_validos_pct": 4
-      },
-      {
-        "candidato": "Zema (NOVO)",
-        "entrevistas": 58,
-        "campo_pct": 2.82,
-        "ponderado_pct": 3,
-        "efeito_do_peso_pp": 0.18,
-        "campo_validos_pct": 3.16,
-        "ponderado_validos_pct": 3
-      }
-    ],
-    "gap_de_campo_pp": 12.05,
-    "gap_ponderado_pp": 6,
-    "gap_de_campo_validos_pp": 13.51,
-    "gap_ponderado_validos_pp": 6,
-    "leitura": "A ponderacao e legitima e esta declarada no registro. O ponto auditavel e outro: metade da diferenca publicada no primeiro turno nasce do peso, e o leitor nao tem como saber disso porque a linha de bases da divulgacao nunca e apresentada como contagem de campo."
   },
   "piso_de_ruido": {
     "nomes_sem_traccao": [
@@ -1825,47 +1764,47 @@
     "decisao": {
       "page": 12,
       "question": "Em relacao ao seu voto para presidente, voce diria que esta totalmente decidido ou seu voto ainda pode mudar?",
-      "base_label": "Entrevistados que citaram alguma opcao de voto (1.980 entrevistas)",
+      "base_label": "Entrevistados que citaram alguma opcao de voto na estimulada",
       "total": {
         "decidido": 72,
         "pode_mudar": 27,
         "nao_sabe": 1,
-        "entrevistas": 1980
+        "base": 1980
       },
       "por_candidato": {
         "Lula (PT)": {
           "decidido": 82,
           "pode_mudar": 18,
           "nao_sabe": 0,
-          "entrevistas": 860,
+          "base": 860,
           "moe": 3
         },
         "Flavio Bolsonaro (PL)": {
           "decidido": 78,
           "pode_mudar": 21,
           "nao_sabe": 1,
-          "entrevistas": 612,
+          "base": 612,
           "moe": 4
         },
         "Ronaldo Caiado (PSD)": {
           "decidido": 57,
           "pode_mudar": 42,
           "nao_sabe": 1,
-          "entrevistas": 111,
+          "base": 111,
           "moe": 9
         },
         "Renan Santos (MISSAO)": {
           "decidido": 54,
           "pode_mudar": 46,
           "nao_sabe": 0,
-          "entrevistas": 74,
+          "base": 74,
           "moe": 12
         },
         "Zema (NOVO)": {
           "decidido": 29,
           "pode_mudar": 69,
           "nao_sabe": 2,
-          "entrevistas": 58,
+          "base": 58,
           "moe": 13
         }
       }
@@ -1873,13 +1812,13 @@
     "motivacao": {
       "page": 13,
       "question": "E voce votaria em ___ porque ele(a) tem as melhores propostas e e o(a) mais preparado(a) ou para evitar que outro(a) candidato seja eleito?",
-      "base_label": "Entrevistados que citaram algum candidato (1.836 entrevistas)",
+      "base_label": "Entrevistados que citaram algum candidato na estimulada",
       "total": {
         "propostas": 61,
         "evitar": 30,
         "outras": 7,
         "nao_sabe": 2,
-        "entrevistas": 1836
+        "base": 1836
       },
       "por_candidato": {
         "Renan Santos (MISSAO)": {
@@ -1887,35 +1826,35 @@
           "evitar": 24,
           "outras": 1,
           "nao_sabe": 2,
-          "entrevistas": 74
+          "base": 74
         },
         "Lula (PT)": {
           "propostas": 68,
           "evitar": 23,
           "outras": 8,
           "nao_sabe": 1,
-          "entrevistas": 860
+          "base": 860
         },
         "Ronaldo Caiado (PSD)": {
           "propostas": 60,
           "evitar": 31,
           "outras": 8,
           "nao_sabe": 1,
-          "entrevistas": 111
+          "base": 111
         },
         "Zema (NOVO)": {
           "propostas": 57,
           "evitar": 37,
           "outras": 5,
           "nao_sabe": 1,
-          "entrevistas": 58
+          "base": 58
         },
         "Flavio Bolsonaro (PL)": {
           "propostas": 56,
           "evitar": 35,
           "outras": 7,
           "nao_sabe": 2,
-          "entrevistas": 612
+          "base": 612
         }
       }
     }

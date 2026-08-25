@@ -243,7 +243,7 @@ def mercado_aberto(data: dict) -> None:
         ax2.text(
             value + 2.0,
             y[index],
-            f"{point:.1f} pontos do eleitorado nacional  ·  {row['entrevistas']} entrevistas",
+            f"{point:.1f} pontos do eleitorado nacional",
             va="center",
             fontsize=9.8,
             color=C["muted"],
@@ -265,96 +265,6 @@ def mercado_aberto(data: dict) -> None:
     )
     fig.tight_layout()
     finish(fig, "fundo_mercado_aberto.png")
-
-
-def campo_versus_peso(data: dict) -> None:
-    weight = data["campo_versus_peso"]
-    rows = weight["linhas"]
-    fig, ax = plt.subplots(figsize=(11.4, 6.0))
-
-    y = np.arange(len(rows))[::-1]
-    for index, row in enumerate(rows):
-        raw = row["campo_pct"]
-        weighted = row["ponderado_pct"]
-        color = C["flavio"] if weighted > raw else C["lula"]
-        ax.plot(
-            [raw, weighted],
-            [y[index], y[index]],
-            color=color,
-            linewidth=3.2,
-            zorder=3,
-            alpha=0.55,
-        )
-        ax.scatter(
-            [raw],
-            [y[index]],
-            s=150,
-            color=C["gray"],
-            zorder=4,
-            edgecolor=C["paper"],
-            linewidth=1.6,
-        )
-        ax.scatter(
-            [weighted],
-            [y[index]],
-            s=190,
-            color=color,
-            zorder=5,
-            edgecolor=C["paper"],
-            linewidth=1.6,
-        )
-        ax.text(
-            raw,
-            y[index] + 0.28,
-            f"{raw:.1f} em campo",
-            ha="center",
-            fontsize=9.2,
-            color=C["muted"],
-        )
-        ax.text(
-            weighted,
-            y[index] - 0.36,
-            f"{weighted} publicado",
-            ha="center",
-            fontsize=9.8,
-            color=color,
-            fontweight="bold",
-        )
-
-    ax.set_yticks(y)
-    ax.set_yticklabels(
-        [
-            f"{label(row['candidato'])}\n{row['entrevistas']} entrevistas"
-            for row in rows
-        ],
-        fontsize=10.5,
-    )
-    ax.set_xlim(0, 48)
-    ax.set_ylim(-0.85, len(rows) - 0.35)
-    ax.set_xlabel("intenção de voto no 1º turno, em %", fontsize=10)
-    frame(ax)
-    ax.set_title(
-        "A diferença de campo é 12,1 pontos. A publicada é 6.",
-        fontsize=17,
-        fontweight="bold",
-        loc="left",
-        pad=16,
-    )
-    fig.tight_layout()
-    fig.subplots_adjust(bottom=0.28)
-    fig.text(
-        0.012,
-        0.055,
-        "Cinza: entrevistas realmente colhidas, declaradas na linha de bases da página 12 do relatório. "
-        "Cor: percentual ponderado publicado.\n"
-        "A ponderação está declarada no registro do TSE e é legítima. O que não está declarado é que a linha de bases "
-        "da divulgação conta entrevistas,\ne a do anexo conta base ponderada. A mesma pergunta aparece com 1.836 numa "
-        "página e 1.850 na outra.",
-        fontsize=9.6,
-        color=C["muted"],
-        va="bottom",
-    )
-    finish(fig, "fundo_campo_versus_peso.png")
 
 
 def piso_de_ruido(data: dict) -> None:
@@ -1105,8 +1015,7 @@ def motivacao(data: dict) -> None:
     ax.set_yticks(y)
     ax.set_yticklabels(
         [
-            f"{label(name)}\n{deck['por_candidato'][name]['entrevistas']} entrevistas · "
-            f"{decision['por_candidato'][name]['pode_mudar']}% pode mudar"
+            f"{label(name)}\n{decision['por_candidato'][name]['pode_mudar']}% pode mudar"
             for name in order
         ],
         fontsize=10.2,
@@ -1338,7 +1247,6 @@ def main() -> None:
     data = json.loads(DATA.read_text(encoding="utf-8"))
     print("figuras:")
     mercado_aberto(data)
-    campo_versus_peso(data)
     piso_de_ruido(data)
     vao(data)
     substituicao(data)
