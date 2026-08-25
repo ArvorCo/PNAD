@@ -27,6 +27,7 @@ from matplotlib.patches import Patch  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "analysis" / "datafolha_082026" / "aprofundamento.json"
+PAUTA = ROOT / "analysis" / "datafolha_082026" / "pauta.json"
 IMG = ROOT / "docs" / "img" / "datafolha_082026"
 IMG.mkdir(parents=True, exist_ok=True)
 
@@ -1243,6 +1244,93 @@ def alvos(data: dict) -> None:
     finish(fig, "fundo_alvos.png")
 
 
+def pauta(data: dict) -> None:
+    """Quantas perguntas de cada tipo cada onda aplicou."""
+    ondas = data["ondas"]
+    fig, ax = plt.subplots(figsize=(11.6, 6.6))
+    y = np.arange(len(ondas))[::-1]
+    cores = {"caso": C["lula"], "politica": C["flavio"], "consumo": C["gray_soft"]}
+    nomes = {
+        "caso": "mede o efeito de um fato concreto, com pessoas nomeadas",
+        "politica": "tema político geral",
+        "consumo": "consumo e entretenimento",
+    }
+    for indice, onda in enumerate(ondas):
+        soma = {"caso": 0, "politica": 0, "consumo": 0}
+        for modulo in onda["modulos"]:
+            soma[modulo["categoria"]] += modulo["quantidade"]
+        esquerda = 0
+        for categoria in ("caso", "politica", "consumo"):
+            largura = soma[categoria]
+            if largura:
+                ax.barh(
+                    y[indice],
+                    largura,
+                    left=esquerda,
+                    height=0.54,
+                    color=cores[categoria],
+                    zorder=3,
+                )
+                ax.text(
+                    esquerda + largura / 2,
+                    y[indice],
+                    str(largura),
+                    ha="center",
+                    va="center",
+                    fontsize=12,
+                    fontweight="bold",
+                    color="white" if categoria != "consumo" else C["ink"],
+                )
+            esquerda += largura
+        agentes = onda["agentes_citados"]
+        resumo = (
+            f"{len(agentes)} pessoas nomeadas" if agentes else "nenhuma pessoa nomeada"
+        )
+        ax.text(
+            esquerda + 0.6,
+            y[indice],
+            f"{onda['palavras_no_questionario']} palavras  ·  {resumo}",
+            va="center",
+            fontsize=10,
+            color=C["muted"],
+        )
+
+    ax.set_yticks(y)
+    ax.set_yticklabels([onda["label"] for onda in ondas], fontsize=13)
+    ax.set_xlim(0, 40)
+    ax.set_xlabel("perguntas temáticas no questionário aplicado", fontsize=10.5)
+    frame(ax)
+    ax.legend(
+        handles=[
+            Patch(color=cores[k], label=nomes[k])
+            for k in ("caso", "politica", "consumo")
+        ],
+        frameon=False,
+        fontsize=9.8,
+        loc="upper center",
+        ncol=3,
+        bbox_to_anchor=(0.5, -0.14),
+    )
+    ax.set_title(
+        "Em agosto o questionário parou de perguntar sobre fatos",
+        fontsize=17.5,
+        fontweight="bold",
+        loc="left",
+        pad=16,
+    )
+    fig.tight_layout()
+    note(
+        fig,
+        "Perguntas temáticas são as que não medem intenção de voto, avaliação de governo nem perfil do entrevistado. "
+        "Em maio, sete delas trataram\nde um único caso envolvendo o candidato de oposição; em julho, nove trataram da prisão "
+        "de Jair Bolsonaro, das decisões de Alexandre de Moraes\ne da atribuição de culpa pelas tarifas. Em agosto, nenhuma "
+        "pergunta cita qualquer agente político, e as três aplicadas não foram publicadas.",
+        bottom=0.30,
+        y=0.035,
+    )
+    finish(fig, "fundo_pauta.png")
+
+
 def main() -> None:
     data = json.loads(DATA.read_text(encoding="utf-8"))
     print("figuras:")
@@ -1256,6 +1344,7 @@ def main() -> None:
     motivacao(data)
     conversao(data)
     alvos(data)
+    pauta(json.loads(PAUTA.read_text(encoding="utf-8")))
 
 
 if __name__ == "__main__":

@@ -441,7 +441,7 @@ NOME_FAIXA = {
 }
 
 
-def build_cards(renda, fundo, audit):
+def build_cards(renda, fundo, audit, pauta):
     """Monta os dezoito cards a partir dos JSON de auditoria."""
     waves = renda["waves"]
     agosto = waves[-1]
@@ -459,6 +459,7 @@ def build_cards(renda, fundo, audit):
         voto[NOME_FAIXA[band]] = (100 * row[0] / soma, 100 * row[1] / soma)
     bases = dict(zip(faixas, agosto["bases"]))
     base_total = sum(agosto["bases"])
+    ondas_pauta = pauta["ondas"]
     publicado = {
         item[0]: item[1]
         for item in zip(("lula", "flavio", "branco", "indeciso"), agosto["published"])
@@ -529,7 +530,7 @@ def build_cards(renda, fundo, audit):
                 "Troque só isso. Nada mais. O mesmo relatório devolve Lula 44,2 e Flávio 46,0.",
                 "Nesta thread eu mostro a conta inteira, com os números na tela, para você refazer sozinho.",
                 "E, no caminho, ensino o suficiente de estatística para você nunca mais precisar acreditar numa manchete de pesquisa: o que é amostra, por que a margem da capa não serve para comparar dois candidatos, como uma amostra nacional é sorteada e o que exatamente acontece quando um instituto pondera.",
-                "Dezoito posts. Nenhum documento sigiloso. Nenhuma conta que não caiba numa planilha.",
+                "Vinte posts. Nenhum documento sigiloso. Nenhuma conta que não caiba numa planilha.",
             ],
         },
         {
@@ -1174,6 +1175,108 @@ def build_cards(renda, fundo, audit):
             ],
         },
         {
+            "kind": "fato",
+            "kicker": "a pauta",
+            "photo": f"{PHOTOS}/banca.jpg",
+            "pos": "center 45%",
+            "tag": "quatro questionários registrados no TSE, lado a lado",
+            "metric": "7 e depois 0",
+            "title": "O questionário parou de perguntar sobre fatos",
+            "lead": "Toda pesquisa registrada publica o questionário aplicado. Comparando as quatro últimas ondas, aparece uma coisa que nenhuma delas mostra sozinha: a pauta temática existia, nomeava pessoas e media o custo eleitoral de fatos. Em agosto ela desapareceu inteira.",
+            "chips": [
+                ("l", "maio: 7 perguntas de caso"),
+                ("b", "julho: 9"),
+                ("a", "agosto: nenhuma"),
+            ],
+            "viz": {
+                "type": "dumbbell",
+                "title": "perguntas temáticas por onda, e quantas medem um fato concreto",
+                "min": 0,
+                "max": 27,
+                "rows": [
+                    {
+                        "label": onda["label"],
+                        "a": onda["perguntas_de_caso"],
+                        "b": onda["perguntas_tematicas"],
+                        "a_label": f"{onda['perguntas_de_caso']} de caso",
+                        "b_label": f"{onda['perguntas_tematicas']} temáticas",
+                        "color": LIME if onda["perguntas_de_caso"] else GREY,
+                    }
+                    for onda in ondas_pauta
+                ],
+                "foot": [
+                    "Cinza: nenhuma pergunta mede um fato concreto.",
+                    "O questionário caiu de 3.461 palavras em junho para 1.764 em agosto.",
+                ],
+            },
+            "foot": [
+                "questionários de maio, junho, julho e agosto",
+                "PesqEle, registros públicos",
+            ],
+            "copy": [
+                "A pauta. Este é o achado que só aparece quando você abre as quatro ondas ao mesmo tempo.",
+                "Todo questionário aplicado é público. Comparando maio, junho, julho e agosto, o número de perguntas temáticas, ou seja, as que não são intenção de voto, avaliação de governo nem perfil, foi 16, 25, 23 e 3.",
+                "E o número de perguntas que medem o efeito eleitoral de um fato concreto, com pessoas nomeadas dentro do enunciado, foi 7, 3, 9 e zero.",
+                "Em agosto nenhuma pergunta cita qualquer agente político. O questionário caiu de 3.461 palavras em junho para 1.764.",
+                "Não faltou espaço. Em maio o instituto dedicou nove perguntas a apostas esportivas online, cassinos e endividamento. Em julho, nove perguntas à Copa do Mundo, ao técnico Carlo Ancelotti e a apostas durante a Copa.",
+                "Na primeira onda depois do registro de candidaturas, não coube uma única pergunta sobre um fato político.",
+            ],
+        },
+        {
+            "kind": "fato",
+            "kicker": "a bateria",
+            "photo": f"{PHOTOS}/congresso.jpg",
+            "pos": "center 40%",
+            "tag": "onda de 20 e 21 de maio, perguntas P.3 a P.9",
+            "metric": "informar, julgar, medir",
+            "title": "Como se mede o custo de um fato",
+            "lead": "Existe um desenho clássico para medir o dano eleitoral de um escândalo: contar o fato ao entrevistado, pedir um juízo, medir o efeito sobre o voto e perguntar o que o político deveria fazer. Em quatro ondas, ele foi aplicado uma vez, a um único político.",
+            "chips": [
+                ("c", "P.3 informa"),
+                ("a", "P.4 julga"),
+                ("l", "P.8 sugere desistir"),
+            ],
+            "viz": {
+                "type": "ladder",
+                "title": "os quatro degraus da bateria de maio",
+                "steps": [
+                    {
+                        "label": "Conta o fato ao entrevistado",
+                        "value": "P.3",
+                        "color": CYAN,
+                    },
+                    {
+                        "label": "Pede o juízo: agiu bem ou agiu mal?",
+                        "value": "P.4",
+                        "color": AMBER,
+                    },
+                    {
+                        "label": "Mede a mudança de confiança no voto",
+                        "value": "P.6 e P.7",
+                        "color": LULA,
+                    },
+                    {
+                        "label": "Pergunta se deveria abrir mão da candidatura",
+                        "value": "P.8 e P.9",
+                        "color": LIME,
+                    },
+                ],
+            },
+            "foot": [
+                "questionário de maio, páginas 3 e 4",
+                "cartão 9 lista quatro substitutos",
+            ],
+            "copy": [
+                "A bateria. Vale a pena ver como se mede o custo eleitoral de um fato, porque o desenho é bom e é justamente por isso que a comparação importa.",
+                "Na onda de 20 e 21 de maio, o Datafolha aplicou sete perguntas seguidas sobre um único caso, na seguinte ordem.",
+                "Primeiro informou o fato ao entrevistado, com detalhe. Depois pediu o juízo moral: agiu bem ou agiu mal. Depois citou uma frase específica do diálogo divulgado e perguntou se as duas pessoas têm relação próxima.",
+                "Aí veio a medição do custo: você pensava em votar nele antes? E depois, a confiança aumentou, diminuiu ou não mudou?",
+                "E fechou perguntando se ele deveria manter a candidatura ou abrir mão e apoiar outro, com um cartão listando quatro substitutos possíveis.",
+                "Duas ressalvas que o método exige. A bateria vem depois das perguntas de voto, então não contamina o placar daquela onda: isso é bom desenho. E julho não foi unilateral, porque a bateria das tarifas nomeia Lula e permite responsabilizá-lo, inclusive como principal culpado.",
+                "O ponto não é que o instituto pergunte. É que esse desenho, em quatro meses, foi usado uma vez só, e em agosto não foi usado para nada.",
+            ],
+        },
+        {
             "kind": "conta",
             "kicker": "a robustez",
             "photo": f"{PHOTOS}/antena.jpg",
@@ -1636,7 +1739,8 @@ def main() -> None:
     renda = json.loads((ANALYSIS / "historico_renda.json").read_text(encoding="utf-8"))
     fundo = json.loads((ANALYSIS / "aprofundamento.json").read_text(encoding="utf-8"))
     audit = json.loads((ANALYSIS / "audit.json").read_text(encoding="utf-8"))
-    cards = build_cards(renda, fundo, audit)
+    pauta = json.loads((ANALYSIS / "pauta.json").read_text(encoding="utf-8"))
+    cards = build_cards(renda, fundo, audit, pauta)
     total = len(cards)
 
     rail = "".join(f'<a href="#p{i}">{i}</a>' for i in range(1, total + 1))
@@ -1684,11 +1788,11 @@ def main() -> None:
   <a class="back" href="datafolha_082026.html">Ir para o dossiê completo</a>
 </header>
 <h1>Uma pesquisa não mente.<em>Ela depende de uma régua.</em></h1>
-<p class="deck">Thread da auditoria do <b>Datafolha de 18 e 19 de agosto de 2026</b>, registro TSE BR-04496/2026, 2.058 entrevistas. Dezoito cards que ensinam o suficiente de estatística para você ler qualquer pesquisa sozinho, e que refazem, com os números na tela, a conta que leva o segundo turno publicado de <b>47 × 43</b> para <b>44,2 × 46,0</b> quando a distribuição de renda vem do IBGE.</p>
+<p class="deck">Thread da auditoria do <b>Datafolha de 18 e 19 de agosto de 2026</b>, registro TSE BR-04496/2026, 2.058 entrevistas. Vinte cards que ensinam o suficiente de estatística para você ler qualquer pesquisa sozinho, e que refazem, com os números na tela, a conta que leva o segundo turno publicado de <b>47 × 43</b> para <b>44,2 × 46,0</b> quando a distribuição de renda vem do IBGE.</p>
 <div class="howto"><b>Como usar.</b> Cada bloco traz o card 16:9 para anexar e, logo abaixo, o texto exato do post com a contagem de caracteres. O botão copia sem formatação. Aula ensina o conceito. Fato publicado vem com a página do relatório. A conta vem com a fórmula aberta e o resultado conferível.</div>
 <div class="legend">{legend}</div>
 </div>
-<nav class="rail" aria-label="Ir para o post"><div class="wrap"><b>18 posts</b>{rail}</div></nav>
+<nav class="rail" aria-label="Ir para o post"><div class="wrap"><b>20 posts</b>{rail}</div></nav>
 <div class="wrap">
 {posts}
 </div>
