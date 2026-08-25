@@ -1,0 +1,383 @@
+window.DATAFOLHA_082026_HISTORICO_RENDA = {
+  "method": {
+    "label": "sensibilidade de pós-estratificação por uma margem",
+    "formula": "publicado + (topline PNADC - topline recomposto pelas bases de renda)",
+    "benchmark": "PNADC anual 2025, visita 1, VD5001, pessoas de 16 anos ou mais",
+    "common_rule": "mesmo benchmark em todas as ondas; quatro faixas quando publicadas e três em agosto",
+    "limitations": [
+      "Não há microdados, pesos individuais, estratos, PSU nem efeito de desenho público.",
+      "Renda familiar declarada no Datafolha não é idêntica ao rendimento domiciliar da PNADC.",
+      "Ajustar uma margem não identifica interações com escolaridade, região, idade ou religião.",
+      "A série mostra tendência sob uma régua comum de renda, não a tendência real da eleição."
+    ]
+  },
+  "target_profiles_pct": {
+    "tres_faixas": {
+      "ate2": 35.42836419937419,
+      "de2a5": 39.21812791114937,
+      "mais5": 25.353507889476447
+    },
+    "quatro_faixas": {
+      "ate2": 35.42836419937419,
+      "de2a5": 39.21812791114937,
+      "de5a10": 16.92569358117042,
+      "mais10": 8.427814308306028
+    }
+  },
+  "waves": [
+    {
+      "id": "2026-05-21",
+      "label": "20–21/mai",
+      "field": "20 e 21/05/2026",
+      "report": "data/originals/datafolha_052026/DataFolhaRelatorio052026.pdf",
+      "pdf_page": 23,
+      "table_page": 23,
+      "published": [
+        47,
+        43,
+        9,
+        2
+      ],
+      "bands": [
+        "ate2",
+        "de2a5",
+        "de5a10",
+        "mais10"
+      ],
+      "bases": [
+        1001,
+        682,
+        170,
+        71
+      ],
+      "rows": [
+        [
+          55,
+          35,
+          8,
+          1
+        ],
+        [
+          40,
+          50,
+          9,
+          1
+        ],
+        [
+          33,
+          56,
+          11,
+          0
+        ],
+        [
+          35,
+          61,
+          5,
+          0
+        ]
+      ],
+      "source_profile_pct": {
+        "ate2": 52.027,
+        "de2a5": 35.447,
+        "de5a10": 8.836,
+        "mais10": 3.69
+      },
+      "target_profile_pct": {
+        "ate2": 35.428,
+        "de2a5": 39.218,
+        "de5a10": 16.926,
+        "mais10": 8.428
+      },
+      "reproduced_from_cells": {
+        "lula": 47.277,
+        "flavio": 43.294,
+        "branco_nulo": 8.549,
+        "indecisos": 0.88
+      },
+      "counterfactual_direct": {
+        "lula": 43.876,
+        "flavio": 46.703,
+        "branco_nulo": 8.672,
+        "indecisos": 0.75
+      },
+      "adjusted": {
+        "lula": 43.598,
+        "flavio": 46.409,
+        "branco_nulo": 9.123,
+        "indecisos": 1.87
+      },
+      "published_gap_lula_minus_flavio": 4.0,
+      "adjusted_gap_lula_minus_flavio": -2.811,
+      "rounding_sensitivity": {
+        "draws": 10000,
+        "gap_p2_5": -2.969,
+        "gap_median": -2.807,
+        "gap_p97_5": -2.648,
+        "share_flavio_ahead": 1.0
+      }
+    },
+    {
+      "id": "2026-06-18",
+      "label": "17–18/jun",
+      "field": "17 e 18/06/2026",
+      "report": "data/originals/datafolha_062026/DataFolhaRelatorio062026.pdf",
+      "pdf_page": 25,
+      "table_page": 25,
+      "published": [
+        47,
+        43,
+        8,
+        1
+      ],
+      "bands": [
+        "ate2",
+        "de2a5",
+        "de5a10",
+        "mais10"
+      ],
+      "bases": [
+        1010,
+        680,
+        162,
+        67
+      ],
+      "rows": [
+        [
+          53,
+          38,
+          8,
+          2
+        ],
+        [
+          41,
+          49,
+          9,
+          1
+        ],
+        [
+          42,
+          51,
+          7,
+          0
+        ],
+        [
+          43,
+          54,
+          3,
+          0
+        ]
+      ],
+      "source_profile_pct": {
+        "ate2": 52.632,
+        "de2a5": 35.435,
+        "de5a10": 8.442,
+        "mais10": 3.491
+      },
+      "target_profile_pct": {
+        "ate2": 35.428,
+        "de2a5": 39.218,
+        "de5a10": 16.926,
+        "mais10": 8.428
+      },
+      "reproduced_from_cells": {
+        "lula": 47.194,
+        "flavio": 43.356,
+        "branco_nulo": 8.054,
+        "indecisos": 1.397
+      },
+      "counterfactual_direct": {
+        "lula": 45.403,
+        "flavio": 45.729,
+        "branco_nulo": 7.773,
+        "indecisos": 1.094
+      },
+      "adjusted": {
+        "lula": 45.209,
+        "flavio": 45.374,
+        "branco_nulo": 7.72,
+        "indecisos": 0.697
+      },
+      "published_gap_lula_minus_flavio": 4.0,
+      "adjusted_gap_lula_minus_flavio": -0.164,
+      "rounding_sensitivity": {
+        "draws": 10000,
+        "gap_p2_5": -0.326,
+        "gap_median": -0.165,
+        "gap_p97_5": -0.004,
+        "share_flavio_ahead": 0.9785
+      }
+    },
+    {
+      "id": "2026-07-23",
+      "label": "22–23/jul",
+      "field": "22 e 23/07/2026",
+      "report": "data/originals/datafolha_072026/DataFolhaRelatorio072026.pdf",
+      "pdf_page": 18,
+      "table_page": 18,
+      "published": [
+        48,
+        43,
+        9,
+        1
+      ],
+      "bands": [
+        "ate2",
+        "de2a5",
+        "de5a10",
+        "mais10"
+      ],
+      "bases": [
+        1002,
+        678,
+        194,
+        51
+      ],
+      "rows": [
+        [
+          56,
+          36,
+          7,
+          1
+        ],
+        [
+          39,
+          50,
+          10,
+          1
+        ],
+        [
+          38,
+          51,
+          11,
+          0
+        ],
+        [
+          45,
+          51,
+          3,
+          0
+        ]
+      ],
+      "source_profile_pct": {
+        "ate2": 52.052,
+        "de2a5": 35.221,
+        "de5a10": 10.078,
+        "mais10": 2.649
+      },
+      "target_profile_pct": {
+        "ate2": 35.428,
+        "de2a5": 39.218,
+        "de5a10": 16.926,
+        "mais10": 8.428
+      },
+      "reproduced_from_cells": {
+        "lula": 47.919,
+        "flavio": 42.854,
+        "branco_nulo": 8.355,
+        "indecisos": 0.873
+      },
+      "counterfactual_direct": {
+        "lula": 45.398,
+        "flavio": 45.337,
+        "branco_nulo": 8.519,
+        "indecisos": 0.746
+      },
+      "adjusted": {
+        "lula": 45.478,
+        "flavio": 45.483,
+        "branco_nulo": 9.164,
+        "indecisos": 0.874
+      },
+      "published_gap_lula_minus_flavio": 5.0,
+      "adjusted_gap_lula_minus_flavio": -0.005,
+      "rounding_sensitivity": {
+        "draws": 10000,
+        "gap_p2_5": -0.157,
+        "gap_median": -0.003,
+        "gap_p97_5": 0.149,
+        "share_flavio_ahead": 0.5154
+      }
+    },
+    {
+      "id": "2026-08-19",
+      "label": "18–19/ago",
+      "field": "18 e 19/08/2026",
+      "report": "data/originals/datafolha_082026/DatafolhaRelatorio082026.pdf",
+      "pdf_page": 44,
+      "table_page": 22,
+      "published": [
+        47,
+        43,
+        9,
+        2
+      ],
+      "bands": [
+        "ate2",
+        "de2a5",
+        "mais5"
+      ],
+      "bases": [
+        1031,
+        704,
+        249
+      ],
+      "rows": [
+        [
+          55,
+          35,
+          8,
+          1
+        ],
+        [
+          37,
+          51,
+          10,
+          2
+        ],
+        [
+          39,
+          54,
+          7,
+          0
+        ]
+      ],
+      "source_profile_pct": {
+        "ate2": 51.966,
+        "de2a5": 35.484,
+        "mais5": 12.55
+      },
+      "target_profile_pct": {
+        "ate2": 35.428,
+        "de2a5": 39.218,
+        "mais5": 25.354
+      },
+      "reproduced_from_cells": {
+        "lula": 46.894,
+        "flavio": 43.246,
+        "branco_nulo": 8.626,
+        "indecisos": 1.235
+      },
+      "counterfactual_direct": {
+        "lula": 44.081,
+        "flavio": 46.217,
+        "branco_nulo": 8.559,
+        "indecisos": 1.142
+      },
+      "adjusted": {
+        "lula": 44.187,
+        "flavio": 45.972,
+        "branco_nulo": 8.933,
+        "indecisos": 1.908
+      },
+      "published_gap_lula_minus_flavio": 4.0,
+      "adjusted_gap_lula_minus_flavio": -1.784,
+      "rounding_sensitivity": {
+        "draws": 10000,
+        "gap_p2_5": -1.959,
+        "gap_median": -1.781,
+        "gap_p97_5": -1.609,
+        "share_flavio_ahead": 1.0
+      }
+    }
+  ]
+};

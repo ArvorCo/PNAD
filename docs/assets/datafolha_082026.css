@@ -1,0 +1,132 @@
+/* Extensão do layout Datafolha 07/2026 para a auditoria de agosto. */
+.hero {
+  min-height: 94vh;
+}
+
+.hero-photo {
+  background-position: center 44%;
+}
+
+.report-chart {
+  margin: 28px 0 0;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: #f4f0e8;
+  overflow: hidden;
+}
+
+.report-chart img {
+  width: 100%;
+  height: auto;
+}
+
+.report-chart figcaption {
+  padding: 13px 16px;
+  color: var(--muted);
+  background: var(--bg3);
+  border-top: 1px solid var(--line);
+  font-size: 0.84rem;
+}
+
+.headline-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 16px;
+}
+
+.headline-card {
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--bg3);
+  padding: 20px;
+}
+
+.headline-card .outlet {
+  font-family: var(--mono);
+  color: var(--acid);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.headline-card h3 {
+  margin: 10px 0 12px;
+  font-family: var(--display);
+  font-size: 1.45rem;
+  line-height: 1.15;
+}
+
+.headline-card h3 a {
+  color: var(--ink);
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--line2);
+  text-underline-offset: 4px;
+}
+
+.headline-card p {
+  margin: 0;
+  color: var(--ink2);
+  font-size: 0.91rem;
+}
+
+.missing-headline {
+  border-left: 3px solid var(--acid);
+}
+
+.source-headline {
+  grid-column: 1 / -1;
+  border-left: 3px solid var(--lula);
+  background-image: linear-gradient(90deg, rgb(224 72 58 / 8%), transparent 62%);
+}
+
+.source-headline h3 {
+  max-width: 34ch;
+  font-size: clamp(1.6rem, 3.3vw, 2.45rem);
+}
+
+.signal {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.7fr) minmax(0, 1.3fr);
+  gap: 20px;
+  padding: 22px;
+  border: 1px solid var(--line);
+  background: var(--bg3);
+  border-radius: 4px;
+}
+
+.signal b {
+  font-family: var(--display);
+  color: var(--acid);
+  font-size: clamp(2.2rem, 6vw, 4.2rem);
+  line-height: 0.95;
+}
+
+.signal p {
+  margin: 0;
+  color: var(--ink2);
+}
+
+.signal + .signal {
+  margin-top: 14px;
+}
+
+.hatched {
+  background-image: repeating-linear-gradient(135deg, rgb(240 169 48 / 9%) 0 5px, transparent 5px 11px);
+}
+
+.compact td,
+.compact th {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+@media (width <= 720px) {
+  .signal {
+    grid-template-columns: 1fr;
+  }
+
+  .report-chart {
+    margin-left: -8px;
+    margin-right: -8px;
+  }
+}

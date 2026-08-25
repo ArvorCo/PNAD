@@ -46,9 +46,9 @@ CARDS: list[dict] = [
         "eyebrow": "Arvor Intelligence · acervo aberto",
         "title": "Toda pesquisa",
         "title_em": "deixa rastro",
-        "lede": "Quatorze auditorias de pesquisas eleitorais recalculadas contra a fonte oficial: <b>TSE</b> para o eleitorado, <b>IBGE/PNAD</b> para renda e escolaridade.",
+        "lede": "Quinze auditorias de pesquisas eleitorais recalculadas contra a fonte oficial: <b>TSE</b> para o eleitorado, <b>IBGE/PNAD</b> para renda e escolaridade.",
         "stats": [
-            ("14", "auditorias"),
+            ("15", "auditorias"),
             ("4", "institutos"),
             ("0", "acusações de fraude"),
         ],
@@ -81,6 +81,21 @@ CARDS: list[dict] = [
         "foot": "texto livre para qualquer parlamentar, partido ou o próprio TSE",
         "accent": "lime",
         "photo": "img/atlas_072026/web/congresso.jpg",
+    },
+    {
+        "slug": "datafolha_082026",
+        "eyebrow": "Datafolha · 21/08/2026 · BR-04496/2026",
+        "title": "47×43 é o publicado.",
+        "title_em": "A renda troca o sinal.",
+        "lede": "Alinhar só a renda à PNADC leva o segundo turno a <b>Lula 44,2 × 46,0 Flávio</b>. Sensibilidade, não recontagem.",
+        "stats": [
+            ("−1,78", "gap após renda PNADC"),
+            ("1,27:1", "consolidação fora das bases"),
+            ("47%", "sem partido"),
+        ],
+        "foot": "auditoria independente · n = 2.058 · ponto de fluxo",
+        "accent": "red",
+        "photo": "img/atlas_072026/web/eleicao-rua.jpg",
     },
     {
         "slug": "nexus_btg_240826",
