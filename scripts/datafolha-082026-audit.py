@@ -38,7 +38,6 @@ from pathlib import Path
 import numpy as np
 import pdfplumber
 
-
 ROOT = Path(__file__).resolve().parents[1]
 ORIGINALS = ROOT / "data" / "originals"
 OUTPUTS = ROOT / "data" / "outputs"
@@ -112,7 +111,12 @@ RUNOFF_CROSSTABS = {
             "Nordeste": [61, 30, 8, 2],
             "Centro-Oeste/Norte": [42, 49, 8, 1],
         },
-        "bases": {"Sudeste": 862, "Sul": 304, "Nordeste": 569, "Centro-Oeste/Norte": 323},
+        "bases": {
+            "Sudeste": 862,
+            "Sul": 304,
+            "Nordeste": 569,
+            "Centro-Oeste/Norte": 323,
+        },
     },
 }
 
@@ -148,12 +152,17 @@ DATAFOLHA_PROFILE = {
     "regiao": {"Sudeste": 42, "Sul": 15, "Nordeste": 28, "Centro-Oeste/Norte": 16},
 }
 
-RAW_PROFILE = {
-    "sexo": {"Masculino": 969, "Feminino": 1089},
-    "idade": {"16-24": 241, "25-34": 398, "35-44": 396, "45-59": 535, "60+": 488},
-    "escolaridade": {"Fundamental": 549, "Medio": 1005, "Superior": 504},
-    "renda": {"Ate 2 SM": 1035, "2 a 5 SM": 701, "Mais de 5 SM": 252, "NS/recusa": 70},
-    "regiao": {"Sudeste": 868, "Sul": 294, "Nordeste": 560, "Centro-Oeste/Norte": 336},
+# Bases ponderadas de cada recorte, linha final das tabelas do anexo,
+# paginas 9 a 29 de 29. Nao sao contagens de entrevistas: o proprio anexo as
+# rotula como "Base ponderada". As unicas contagens de campo publicadas estao
+# nas paginas 12 e 13 da divulgacao e sao tratadas em
+# scripts/datafolha-082026-aprofundamento.py.
+WEIGHTED_BASES = {
+    "sexo": {"Masculino": 982, "Feminino": 1076},
+    "idade": {"16-24": 263, "25-34": 382, "35-44": 403, "45-59": 522, "60+": 488},
+    "escolaridade": {"Fundamental": 617, "Medio": 926, "Superior": 514},
+    "renda": {"Ate 2 SM": 1031, "2 a 5 SM": 704, "Mais de 5 SM": 249},
+    "regiao": {"Sudeste": 862, "Sul": 304, "Nordeste": 569, "Centro-Oeste/Norte": 323},
 }
 
 HEADLINES = [
@@ -322,7 +331,9 @@ def sql_distribution(
         SELECT category, SUM(weight) FROM x
         WHERE category IS NOT NULL GROUP BY category
     """
-    values = {str(category): float(total) for category, total in connection.execute(query)}
+    values = {
+        str(category): float(total) for category, total in connection.execute(query)
+    }
     return normalize_dict(values)
 
 
@@ -409,16 +420,32 @@ def tse_benchmarks() -> dict[str, object]:
 
     sex = normalize_dict({"Masculino": sex_raw["Homem"], "Feminino": sex_raw["Mulher"]})
     age_keys = {
-        "16-24": ["16 anos", "17 anos", "18 anos", "19 anos", "20 anos", "21 a 24 anos"],
+        "16-24": [
+            "16 anos",
+            "17 anos",
+            "18 anos",
+            "19 anos",
+            "20 anos",
+            "21 a 24 anos",
+        ],
         "25-34": ["25 a 29 anos", "30 a 34 anos"],
         "35-44": ["35 a 39 anos", "40 a 44 anos"],
         "45-59": ["45 a 49 anos", "50 a 54 anos", "55 a 59 anos"],
         "60+": [
-            "60 a 64 anos", "65 a 69 anos", "70 a 74 anos", "75 a 79 anos",
-            "80 a 84 anos", "85 a 89 anos", "90 a 94 anos", "95 a 99 anos", "100 anos ou mais",
+            "60 a 64 anos",
+            "65 a 69 anos",
+            "70 a 74 anos",
+            "75 a 79 anos",
+            "80 a 84 anos",
+            "85 a 89 anos",
+            "90 a 94 anos",
+            "95 a 99 anos",
+            "100 anos ou mais",
         ],
     }
-    age = normalize_dict({key: sum(age_raw[item] for item in items) for key, items in age_keys.items()})
+    age = normalize_dict(
+        {key: sum(age_raw[item] for item in items) for key, items in age_keys.items()}
+    )
     region = normalize_dict(
         {
             "Sudeste": region_raw["Sudeste"],
@@ -454,7 +481,9 @@ def margin_topline(matrix: np.ndarray, weights: np.ndarray) -> np.ndarray:
 
 def single_reweight(dimension: str, target: dict[str, float]) -> dict[str, object]:
     categories, matrix, bases = row_matrix(dimension)
-    target_weights = np.array([target[category] for category in categories], dtype=float)
+    target_weights = np.array(
+        [target[category] for category in categories], dtype=float
+    )
     reproduced = margin_topline(matrix, bases)
     counterfactual = margin_topline(matrix, target_weights)
     result = PUBLISHED_RUNOFF + (counterfactual - reproduced)
@@ -463,16 +492,23 @@ def single_reweight(dimension: str, target: dict[str, float]) -> dict[str, objec
         "page": RUNOFF_CROSSTABS[dimension]["page"],
         "categories": categories,
         "published_profile_from_bases": {
-            key: round(value, 3) for key, value in zip(categories, normalize_dict(dict(zip(categories, bases))).values())
+            key: round(value, 3)
+            for key, value in zip(
+                categories, normalize_dict(dict(zip(categories, bases))).values()
+            )
         },
         "target_profile": {key: round(target[key], 3) for key in categories},
-        "reproduced_from_published_cells": dict(zip(VOTE_KEYS, np.round(reproduced, 3))),
+        "reproduced_from_published_cells": dict(
+            zip(VOTE_KEYS, np.round(reproduced, 3))
+        ),
         "result": dict(zip(VOTE_KEYS, np.round(result, 3))),
         "gap_lula_minus_flavio": round(float(result[0] - result[1]), 3),
     }
 
 
-def combined_reweight(targets: dict[str, dict[str, float]], iterations: int = 80) -> dict[str, object]:
+def combined_reweight(
+    targets: dict[str, dict[str, float]], iterations: int = 80
+) -> dict[str, object]:
     dimensions = list(RUNOFF_CROSSTABS)
     matrices: dict[str, np.ndarray] = {}
     source_weights: dict[str, np.ndarray] = {}
@@ -481,7 +517,9 @@ def combined_reweight(targets: dict[str, dict[str, float]], iterations: int = 80
         categories, matrix, bases = row_matrix(dimension)
         matrices[dimension] = matrix / matrix.sum(axis=1, keepdims=True)
         source_weights[dimension] = bases / bases.sum()
-        raw_target = np.array([targets[dimension][key] for key in categories], dtype=float)
+        raw_target = np.array(
+            [targets[dimension][key] for key in categories], dtype=float
+        )
         target_weights[dimension] = raw_target / raw_target.sum()
 
     seed = source_weights[dimensions[0]]
@@ -491,7 +529,9 @@ def combined_reweight(targets: dict[str, dict[str, float]], iterations: int = 80
 
     for _ in range(iterations):
         row_mass = joint.sum(axis=-1)
-        joint *= np.divide(seed, row_mass, out=np.ones_like(row_mass), where=row_mass > 0)[..., None]
+        joint *= np.divide(
+            seed, row_mass, out=np.ones_like(row_mass), where=row_mass > 0
+        )[..., None]
         for axis, dimension in enumerate(dimensions):
             for index in range(len(source_weights[dimension])):
                 selector: list[int | slice] = [slice(None)] * (len(dimensions) + 1)
@@ -500,7 +540,9 @@ def combined_reweight(targets: dict[str, dict[str, float]], iterations: int = 80
                 sum_axes = tuple(range(block.ndim - 1))
                 current = block.sum(axis=sum_axes)
                 desired = source_weights[dimension][index] * matrices[dimension][index]
-                scale = np.divide(desired, current, out=np.ones_like(current), where=current > 0)
+                scale = np.divide(
+                    desired, current, out=np.ones_like(current), where=current > 0
+                )
                 joint[tuple(selector)] = block * scale
 
     cell_mass = joint.sum(axis=-1)
@@ -510,7 +552,9 @@ def combined_reweight(targets: dict[str, dict[str, float]], iterations: int = 80
     target_seed = target_weights[dimensions[0]]
     for dimension in dimensions[1:]:
         target_seed = np.multiply.outer(target_seed, target_weights[dimension])
-    target_top = (target_seed[..., None] * conditional).sum(axis=tuple(range(len(dimensions))))
+    target_top = (target_seed[..., None] * conditional).sum(
+        axis=tuple(range(len(dimensions)))
+    )
     delta = (target_top - source_top) * 100
     result = PUBLISHED_RUNOFF + delta
     return {
@@ -529,19 +573,27 @@ def rounding_sensitivity(
     seed: int = 20260825,
 ) -> dict[str, object]:
     categories, matrix, bases = row_matrix(dimension)
-    target_weights = np.array([target[category] for category in categories], dtype=float)
+    target_weights = np.array(
+        [target[category] for category in categories], dtype=float
+    )
     generator = random.Random(seed)
     gaps = []
     for _ in range(draws):
         perturbed = np.array(
-            [[max(0.0, value + generator.uniform(-0.5, 0.5)) for value in row] for row in matrix]
+            [
+                [max(0.0, value + generator.uniform(-0.5, 0.5)) for value in row]
+                for row in matrix
+            ]
         )
         reproduced = margin_topline(perturbed, bases)
         counterfactual = margin_topline(perturbed, target_weights)
         result = PUBLISHED_RUNOFF + (counterfactual - reproduced)
         gaps.append(float(result[0] - result[1]))
     gaps.sort()
-    pick = lambda q: gaps[min(draws - 1, max(0, int(q * (draws - 1))))]
+
+    def pick(q: float) -> float:
+        return gaps[min(draws - 1, max(0, int(q * (draws - 1))))]
+
     return {
         "dimension": dimension,
         "draws": draws,
@@ -576,13 +628,18 @@ def margin_scenarios(p_a: float, p_b: float, n: int) -> dict[str, object]:
 
 def territory_audit() -> tuple[dict[str, object], list[dict[str, object]]]:
     locations = {wave: extract_locations(path, wave) for wave, path in ROUNDS.items()}
-    sectors = {wave: {str(row["sector"]) for row in rows} for wave, rows in locations.items()}
+    sectors = {
+        wave: {str(row["sector"]) for row in rows} for wave, rows in locations.items()
+    }
     cities = {
         wave: {str(row["municipality_code"]) for row in rows}
         for wave, rows in locations.items()
     }
     neighborhoods = {
-        wave: {f'{row["municipality_code"]}|{str(row["neighborhood"]).upper()}' for row in rows}
+        wave: {
+            f'{row["municipality_code"]}|{str(row["neighborhood"]).upper()}'
+            for row in rows
+        }
         for wave, rows in locations.items()
     }
     counts = Counter(str(row["sector"]) for row in locations["2026-08"])
@@ -613,7 +670,9 @@ def territory_audit() -> tuple[dict[str, object], list[dict[str, object]]]:
         "july_to_august": {
             "sectors": overlap(sectors["2026-08"], sectors["2026-07"]),
             "municipalities": overlap(cities["2026-08"], cities["2026-07"]),
-            "neighborhood_labels": overlap(neighborhoods["2026-08"], neighborhoods["2026-07"]),
+            "neighborhood_labels": overlap(
+                neighborhoods["2026-08"], neighborhoods["2026-07"]
+            ),
             "interviews_in_repeated_municipalities": interviews_in_july_cities,
             "share_interviews_in_repeated_municipalities": round(
                 interviews_in_july_cities / august_interviews, 6
@@ -652,8 +711,16 @@ def write_territory_csv(rows: list[dict[str, object]]) -> None:
         for wave in waves
     }
     fieldnames = [
-        "wave", "page", "region", "uf", "municipality", "municipality_code",
-        "neighborhood", "sector", "interviews", *[f"sector_in_{wave}" for wave in waves],
+        "wave",
+        "page",
+        "region",
+        "uf",
+        "municipality",
+        "municipality_code",
+        "neighborhood",
+        "sector",
+        "interviews",
+        *[f"sector_in_{wave}" for wave in waves],
     ]
     with OUT_TERRITORY.open("w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(handle, fieldnames=fieldnames)
@@ -661,7 +728,13 @@ def write_territory_csv(rows: list[dict[str, object]]) -> None:
         for row in rows:
             sector = str(row["sector"])
             writer.writerow(
-                {**row, **{f"sector_in_{wave}": int(sector in sector_sets[wave]) for wave in waves}}
+                {
+                    **row,
+                    **{
+                        f"sector_in_{wave}": int(sector in sector_sets[wave])
+                        for wave in waves
+                    },
+                }
             )
 
 
@@ -679,14 +752,21 @@ def main() -> None:
         "renda": pnad["renda"],
         "regiao": tse["regiao"],
     }
-    single = {dimension: single_reweight(dimension, target) for dimension, target in targets.items()}
+    single = {
+        dimension: single_reweight(dimension, target)
+        for dimension, target in targets.items()
+    }
     combined = combined_reweight(targets)
     rounding = rounding_sensitivity("renda", targets["renda"])
     territory, rows = territory_audit()
     write_territory_csv(rows)
 
     income_profile_nonmissing = normalize_dict(
-        {key: value for key, value in DATAFOLHA_PROFILE["renda"].items() if key != "NS/recusa"}
+        {
+            key: value
+            for key, value in DATAFOLHA_PROFILE["renda"].items()
+            if key != "NS/recusa"
+        }
     )
     pnad_income = pnad["renda"]
     observed_gap = 4.0
@@ -720,7 +800,7 @@ def main() -> None:
             "runoff": dict(zip(VOTE_KEYS, PUBLISHED_RUNOFF.tolist())),
             "runoff_alternatives": RUNOFF_ALTERNATIVES,
             "profiles": DATAFOLHA_PROFILE,
-            "raw_profile_counts": RAW_PROFILE,
+            "weighted_bases": WEIGHTED_BASES,
         },
         "benchmarks": {"pnad": pnad, "tse": tse},
         "profile_deltas": {
@@ -729,7 +809,11 @@ def main() -> None:
                     "category": category,
                     "datafolha": DATAFOLHA_PROFILE[dimension][category],
                     "official": round(targets[dimension][category], 3),
-                    "delta": round(DATAFOLHA_PROFILE[dimension][category] - targets[dimension][category], 3),
+                    "delta": round(
+                        DATAFOLHA_PROFILE[dimension][category]
+                        - targets[dimension][category],
+                        3,
+                    ),
                 }
                 for category in targets[dimension]
             ]
@@ -741,13 +825,20 @@ def main() -> None:
             "income_rounding_sensitivity": rounding,
             "income_tipping_point": {
                 "share_of_path_datafolha_to_pnad": round(tipping, 4),
-                "datafolha_nonmissing_profile": {key: round(value, 3) for key, value in income_profile_nonmissing.items()},
-                "pnad_profile": {key: round(value, 3) for key, value in pnad_income.items()},
+                "datafolha_nonmissing_profile": {
+                    key: round(value, 3)
+                    for key, value in income_profile_nonmissing.items()
+                },
+                "pnad_profile": {
+                    key: round(value, 3) for key, value in pnad_income.items()
+                },
                 "excess_up_to_2_sm_pp_weighted_profile": round(
                     DATAFOLHA_PROFILE["renda"]["Ate 2 SM"] - pnad_income["Ate 2 SM"], 3
                 ),
                 "interview_equivalent": round(
-                    2058 * (DATAFOLHA_PROFILE["renda"]["Ate 2 SM"] - pnad_income["Ate 2 SM"]) / 100
+                    2058
+                    * (DATAFOLHA_PROFILE["renda"]["Ate 2 SM"] - pnad_income["Ate 2 SM"])
+                    / 100
                 ),
             },
             "limitations": [
@@ -778,7 +869,15 @@ def main() -> None:
                 "reading": "Trocar o lider da oposicao quase nao move Lula; reduz o adversario e aumenta a nao escolha.",
             },
             "unaligned": {
-                "first_round": {"lula": 19, "flavio": 21, "caiado": 8, "renan": 11, "zema": 6, "blank": 17, "undecided": 8},
+                "first_round": {
+                    "lula": 19,
+                    "flavio": 21,
+                    "caiado": 8,
+                    "renan": 11,
+                    "zema": 6,
+                    "blank": 17,
+                    "undecided": 8,
+                },
                 "runoff": {"lula": 33, "flavio": 38, "blank": 26, "undecided": 4},
                 "vote_can_change": 49,
             },
@@ -792,7 +891,9 @@ def main() -> None:
             "municipality_nature": {
                 "metro": {"share": 40, "lula": 49, "flavio": 41},
                 "interior": {"share": 60, "lula": 46, "flavio": 44},
-                "metro_share_of_national_gap_pct": round((0.40 * 8) / (0.40 * 8 + 0.60 * 2) * 100, 1),
+                "metro_share_of_national_gap_pct": round(
+                    (0.40 * 8) / (0.40 * 8 + 0.60 * 2) * 100, 1
+                ),
             },
         },
         "source_manifest": manifest,
@@ -807,7 +908,9 @@ def main() -> None:
     OUT_JSON.write_text(payload, encoding="utf-8")
     OUT_SITE_JSON.write_text(payload, encoding="utf-8")
     OUT_SITE_JS.write_text(
-        "window.__DATAFOLHA_082026__=" + json.dumps(output, ensure_ascii=False, separators=(",", ":")) + ";\n",
+        "window.__DATAFOLHA_082026__="
+        + json.dumps(output, ensure_ascii=False, separators=(",", ":"))
+        + ";\n",
         encoding="utf-8",
     )
 

@@ -27,7 +27,6 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import numpy as np
 
-
 ROOT = Path(__file__).resolve().parents[1]
 AUDIT = ROOT / "analysis" / "datafolha_082026" / "audit.json"
 PNAD_CACHE = ROOT / "data" / "outputs" / "pnad_2025v1_renda_faixas.json"
@@ -35,7 +34,9 @@ OUT_ANALYSIS = ROOT / "analysis" / "datafolha_082026" / "historico_renda.json"
 OUT_SITE = ROOT / "docs" / "assets" / "datafolha_082026_historico_renda.json"
 OUT_JS = ROOT / "docs" / "assets" / "datafolha_082026_historico_renda.js"
 OUT_IMG = ROOT / "docs" / "img" / "datafolha_082026" / "historico_2turno_pnadc.png"
-OUT_IMG_MOBILE = ROOT / "docs" / "img" / "datafolha_082026" / "historico_2turno_pnadc_mobile.png"
+OUT_IMG_MOBILE = (
+    ROOT / "docs" / "img" / "datafolha_082026" / "historico_2turno_pnadc_mobile.png"
+)
 
 OPTIONS = ("lula", "flavio", "branco_nulo", "indecisos")
 
@@ -161,7 +162,9 @@ def rounding_test(
     published = np.array(wave["published"], dtype=float)
     gaps = np.empty(draws)
     for index in range(draws):
-        perturbed = np.maximum(0, original + generator.uniform(-0.5, 0.5, original.shape))
+        perturbed = np.maximum(
+            0, original + generator.uniform(-0.5, 0.5, original.shape)
+        )
         adjusted = published + (topline(perturbed, target) - topline(perturbed, bases))
         gaps[index] = adjusted[0] - adjusted[1]
     p2, median, p97 = np.quantile(gaps, [0.025, 0.5, 0.975])
@@ -191,13 +194,19 @@ def calculate() -> dict[str, object]:
         output_waves.append(
             {
                 **wave,
-                "source_profile_pct": dict(zip(wave["bands"], np.round(source_profile, 3))),
+                "source_profile_pct": dict(
+                    zip(wave["bands"], np.round(source_profile, 3))
+                ),
                 "target_profile_pct": dict(zip(wave["bands"], np.round(target, 3))),
                 "reproduced_from_cells": dict(zip(OPTIONS, np.round(reproduced, 3))),
-                "counterfactual_direct": dict(zip(OPTIONS, np.round(counterfactual, 3))),
+                "counterfactual_direct": dict(
+                    zip(OPTIONS, np.round(counterfactual, 3))
+                ),
                 "adjusted": dict(zip(OPTIONS, np.round(adjusted, 3))),
                 "published_gap_lula_minus_flavio": float(published[0] - published[1]),
-                "adjusted_gap_lula_minus_flavio": round(float(adjusted[0] - adjusted[1]), 3),
+                "adjusted_gap_lula_minus_flavio": round(
+                    float(adjusted[0] - adjusted[1]), 3
+                ),
                 "rounding_sensitivity": rounding_test(wave, target),
             }
         )
@@ -270,13 +279,69 @@ def draw(data: dict[str, object]) -> None:
 
     ax.plot(x, pub_l, "-o", color=C["lula"], lw=2.8, ms=7, label="Lula, publicado")
     ax.plot(x, pub_f, "-o", color=C["flavio"], lw=2.8, ms=7, label="Flávio, publicado")
-    ax.plot(x, adj_l, "--o", color=C["lula"], lw=2.4, ms=7, mfc=C["bg"], mew=2, label="Lula, PNADC")
-    ax.plot(x, adj_f, "--o", color=C["flavio"], lw=2.4, ms=7, mfc=C["bg"], mew=2, label="Flávio, PNADC")
+    ax.plot(
+        x,
+        adj_l,
+        "--o",
+        color=C["lula"],
+        lw=2.4,
+        ms=7,
+        mfc=C["bg"],
+        mew=2,
+        label="Lula, PNADC",
+    )
+    ax.plot(
+        x,
+        adj_f,
+        "--o",
+        color=C["flavio"],
+        lw=2.4,
+        ms=7,
+        mfc=C["bg"],
+        mew=2,
+        label="Flávio, PNADC",
+    )
     for index in range(len(x)):
-        ax.annotate(f"{pub_l[index]:.0f}", (x[index], pub_l[index]), xytext=(0, 10), textcoords="offset points", ha="center", color=C["lula"], fontsize=10, fontweight="bold")
-        ax.annotate(f"{pub_f[index]:.0f}", (x[index], pub_f[index]), xytext=(0, -18), textcoords="offset points", ha="center", color=C["flavio"], fontsize=10, fontweight="bold")
-        ax.annotate(f"{adj_l[index]:.1f}".replace(".", ","), (x[index], adj_l[index]), xytext=(-12, -20 if adj_l[index] <= adj_f[index] else 10), textcoords="offset points", ha="right", color=C["lula"], fontsize=9.5, fontweight="bold")
-        ax.annotate(f"{adj_f[index]:.1f}".replace(".", ","), (x[index], adj_f[index]), xytext=(12, 10 if adj_f[index] >= adj_l[index] else -20), textcoords="offset points", ha="left", color=C["flavio"], fontsize=9.5, fontweight="bold")
+        ax.annotate(
+            f"{pub_l[index]:.0f}",
+            (x[index], pub_l[index]),
+            xytext=(0, 10),
+            textcoords="offset points",
+            ha="center",
+            color=C["lula"],
+            fontsize=10,
+            fontweight="bold",
+        )
+        ax.annotate(
+            f"{pub_f[index]:.0f}",
+            (x[index], pub_f[index]),
+            xytext=(0, -18),
+            textcoords="offset points",
+            ha="center",
+            color=C["flavio"],
+            fontsize=10,
+            fontweight="bold",
+        )
+        ax.annotate(
+            f"{adj_l[index]:.1f}".replace(".", ","),
+            (x[index], adj_l[index]),
+            xytext=(-12, -20 if adj_l[index] <= adj_f[index] else 10),
+            textcoords="offset points",
+            ha="right",
+            color=C["lula"],
+            fontsize=9.5,
+            fontweight="bold",
+        )
+        ax.annotate(
+            f"{adj_f[index]:.1f}".replace(".", ","),
+            (x[index], adj_f[index]),
+            xytext=(12, 10 if adj_f[index] >= adj_l[index] else -20),
+            textcoords="offset points",
+            ha="left",
+            color=C["flavio"],
+            fontsize=9.5,
+            fontweight="bold",
+        )
     ax.set_ylim(41.5, 49.5)
     ax.set_yticks([42, 44, 46, 48])
     ax.set_ylabel("Intenção de voto, %", fontsize=11)
@@ -295,23 +360,78 @@ def draw(data: dict[str, object]) -> None:
     )
 
     gap_ax.axhline(0, color=C["ink"], linewidth=1.1)
-    gap_ax.plot(x, gap_pub, "-o", color=C["published"], lw=2.8, ms=7, label="Saldo publicado")
-    gap_ax.plot(x, gap_adj, "--o", color=C["gold"], lw=2.8, ms=7, mfc=C["bg"], mew=2, label="Saldo PNADC")
+    gap_ax.plot(
+        x, gap_pub, "-o", color=C["published"], lw=2.8, ms=7, label="Saldo publicado"
+    )
+    gap_ax.plot(
+        x,
+        gap_adj,
+        "--o",
+        color=C["gold"],
+        lw=2.8,
+        ms=7,
+        mfc=C["bg"],
+        mew=2,
+        label="Saldo PNADC",
+    )
     gap_ax.fill_between(x, 0, gap_adj, color=C["gold"], alpha=0.08)
     for index, value in enumerate(gap_pub):
-        gap_ax.annotate(f"Lula +{value:.0f}", (x[index], value), xytext=(0, 10), textcoords="offset points", ha="center", fontsize=9.5, fontweight="bold", color=C["published"])
+        gap_ax.annotate(
+            f"Lula +{value:.0f}",
+            (x[index], value),
+            xytext=(0, 10),
+            textcoords="offset points",
+            ha="center",
+            fontsize=9.5,
+            fontweight="bold",
+            color=C["published"],
+        )
     for index, value in enumerate(gap_adj):
         label_offset = 10 if value < -0.5 else -20
-        gap_ax.annotate(label_gap(float(value)), (x[index], value), xytext=(0, label_offset), textcoords="offset points", ha="center", fontsize=9.5, fontweight="bold", color=C["gold"])
+        gap_ax.annotate(
+            label_gap(float(value)),
+            (x[index], value),
+            xytext=(0, label_offset),
+            textcoords="offset points",
+            ha="center",
+            fontsize=9.5,
+            fontweight="bold",
+            color=C["gold"],
+        )
     gap_ax.set_ylim(-3.6, 6.0)
     gap_ax.set_yticks([-2, 0, 2, 4, 6])
     gap_ax.set_ylabel("Lula menos Flávio, p.p.", fontsize=11)
     gap_ax.set_xticks(x, labels, fontsize=10.5, fontweight="bold")
-    gap_ax.legend(frameon=False, ncol=2, fontsize=10, loc="lower center", bbox_to_anchor=(0.5, -0.28))
+    gap_ax.legend(
+        frameon=False,
+        ncol=2,
+        fontsize=10,
+        loc="lower center",
+        bbox_to_anchor=(0.5, -0.28),
+    )
 
-    fig.suptitle("A mesma régua de renda apaga a vantagem publicada", x=0.055, ha="left", y=0.975, fontsize=23, fontweight="bold")
-    fig.text(0.055, 0.925, "Quatro ondas Datafolha: Lula +4 a +5 no placar divulgado. Com a PNADC 2025, maio e agosto invertem; junho e julho viram empate.", fontsize=11.5, color=C["muted"])
-    fig.text(0.055, 0.018, "Sensibilidade por uma margem. Linhas sólidas: publicado. Tracejadas: mesmo benchmark PNADC anual 2025, pessoas 16+. Sem microdados, pesos e deff, não é estimativa do resultado real.", fontsize=9, color=C["muted"])
+    fig.suptitle(
+        "A mesma régua de renda apaga a vantagem publicada",
+        x=0.055,
+        ha="left",
+        y=0.975,
+        fontsize=23,
+        fontweight="bold",
+    )
+    fig.text(
+        0.055,
+        0.925,
+        "Quatro ondas Datafolha: Lula +4 a +5 no placar divulgado. Com a PNADC 2025, maio e agosto invertem; junho e julho viram empate.",
+        fontsize=11.5,
+        color=C["muted"],
+    )
+    fig.text(
+        0.055,
+        0.018,
+        "Sensibilidade por uma margem. Linhas sólidas: publicado. Tracejadas: mesmo benchmark PNADC anual 2025, pessoas 16+. Sem microdados, pesos e deff, não é estimativa do resultado real.",
+        fontsize=9,
+        color=C["muted"],
+    )
     fig.savefig(OUT_IMG, dpi=180, bbox_inches="tight", facecolor=C["bg"])
     plt.close(fig)
 
@@ -344,37 +464,124 @@ def draw_mobile(data: dict[str, object]) -> None:
         current.spines["bottom"].set_color(C["grid"])
 
     ax.plot(x, pub_l, "-o", color=C["lula"], lw=2.2, ms=5.5, label="Lula, publicado")
-    ax.plot(x, pub_f, "-o", color=C["flavio"], lw=2.2, ms=5.5, label="Flávio, publicado")
-    ax.plot(x, adj_l, "--o", color=C["lula"], lw=2, ms=5.5, mfc=C["bg"], mew=1.6, label="Lula, PNADC")
-    ax.plot(x, adj_f, "--o", color=C["flavio"], lw=2, ms=5.5, mfc=C["bg"], mew=1.6, label="Flávio, PNADC")
+    ax.plot(
+        x, pub_f, "-o", color=C["flavio"], lw=2.2, ms=5.5, label="Flávio, publicado"
+    )
+    ax.plot(
+        x,
+        adj_l,
+        "--o",
+        color=C["lula"],
+        lw=2,
+        ms=5.5,
+        mfc=C["bg"],
+        mew=1.6,
+        label="Lula, PNADC",
+    )
+    ax.plot(
+        x,
+        adj_f,
+        "--o",
+        color=C["flavio"],
+        lw=2,
+        ms=5.5,
+        mfc=C["bg"],
+        mew=1.6,
+        label="Flávio, PNADC",
+    )
     for index in range(len(x)):
-        ax.annotate(f"{adj_l[index]:.1f}".replace(".", ","), (x[index], adj_l[index]), xytext=(-6, -15 if adj_l[index] <= adj_f[index] else 8), textcoords="offset points", ha="right", fontsize=8, fontweight="bold", color=C["lula"])
-        ax.annotate(f"{adj_f[index]:.1f}".replace(".", ","), (x[index], adj_f[index]), xytext=(6, 8 if adj_f[index] >= adj_l[index] else -15), textcoords="offset points", ha="left", fontsize=8, fontweight="bold", color=C["flavio"])
+        ax.annotate(
+            f"{adj_l[index]:.1f}".replace(".", ","),
+            (x[index], adj_l[index]),
+            xytext=(-6, -15 if adj_l[index] <= adj_f[index] else 8),
+            textcoords="offset points",
+            ha="right",
+            fontsize=8,
+            fontweight="bold",
+            color=C["lula"],
+        )
+        ax.annotate(
+            f"{adj_f[index]:.1f}".replace(".", ","),
+            (x[index], adj_f[index]),
+            xytext=(6, 8 if adj_f[index] >= adj_l[index] else -15),
+            textcoords="offset points",
+            ha="left",
+            fontsize=8,
+            fontweight="bold",
+            color=C["flavio"],
+        )
     ax.set_ylim(41.5, 49.5)
     ax.set_yticks([42, 44, 46, 48])
     ax.set_ylabel("Voto, %", fontsize=8.5)
     ax.tick_params(axis="x", labelbottom=False)
     ax.tick_params(axis="y", labelsize=8)
-    ax.legend(frameon=False, ncol=2, fontsize=7.5, loc="upper center", bbox_to_anchor=(0.5, 1.19), columnspacing=1.3, handlelength=2.1)
+    ax.legend(
+        frameon=False,
+        ncol=2,
+        fontsize=7.5,
+        loc="upper center",
+        bbox_to_anchor=(0.5, 1.19),
+        columnspacing=1.3,
+        handlelength=2.1,
+    )
 
     gap_ax.axhline(0, color=C["ink"], linewidth=1)
     gap_ax.plot(x, gap_pub, "-o", color=C["published"], lw=2.2, ms=5.5)
-    gap_ax.plot(x, gap_adj, "--o", color=C["gold"], lw=2.2, ms=5.5, mfc=C["bg"], mew=1.6)
+    gap_ax.plot(
+        x, gap_adj, "--o", color=C["gold"], lw=2.2, ms=5.5, mfc=C["bg"], mew=1.6
+    )
     gap_ax.fill_between(x, 0, gap_adj, color=C["gold"], alpha=0.08)
     for index, value in enumerate(gap_pub):
-        gap_ax.annotate(f"Lula +{value:.0f}", (x[index], value), xytext=(0, 8), textcoords="offset points", ha="center", fontsize=7.8, fontweight="bold", color=C["published"])
+        gap_ax.annotate(
+            f"Lula +{value:.0f}",
+            (x[index], value),
+            xytext=(0, 8),
+            textcoords="offset points",
+            ha="center",
+            fontsize=7.8,
+            fontweight="bold",
+            color=C["published"],
+        )
     for index, value in enumerate(gap_adj):
         label_offset = 8 if value < -0.5 else -15
-        gap_ax.annotate(label_gap(float(value)), (x[index], value), xytext=(0, label_offset), textcoords="offset points", ha="center", fontsize=7.8, fontweight="bold", color=C["gold"])
+        gap_ax.annotate(
+            label_gap(float(value)),
+            (x[index], value),
+            xytext=(0, label_offset),
+            textcoords="offset points",
+            ha="center",
+            fontsize=7.8,
+            fontweight="bold",
+            color=C["gold"],
+        )
     gap_ax.set_ylim(-3.6, 6)
     gap_ax.set_yticks([-2, 0, 2, 4, 6])
     gap_ax.set_ylabel("Lula menos Flávio, p.p.", fontsize=8.5)
     gap_ax.set_xticks(x, labels, fontsize=7.8, fontweight="bold")
     gap_ax.tick_params(axis="y", labelsize=8)
 
-    fig.suptitle("A régua comum apaga a vantagem", x=0.07, ha="left", y=0.985, fontsize=15, fontweight="bold")
-    fig.text(0.07, 0.945, "Publicado: Lula +4 a +5. PNADC 2025: empate ou Flávio à frente.", fontsize=8.3, color=C["muted"])
-    fig.text(0.07, 0.012, "Sensibilidade por renda, não resultado real. Sólida: publicado. Tracejada: PNADC 2025, pessoas 16+.", fontsize=6.7, color=C["muted"])
+    fig.suptitle(
+        "A régua comum apaga a vantagem",
+        x=0.07,
+        ha="left",
+        y=0.985,
+        fontsize=15,
+        fontweight="bold",
+    )
+    fig.text(
+        0.07,
+        0.945,
+        "Publicado: Lula +4 a +5. PNADC 2025: empate ou Flávio à frente.",
+        fontsize=8.3,
+        color=C["muted"],
+    )
+    fig.text(
+        0.07,
+        0.012,
+        "Sensibilidade por renda, não resultado real. Sólida: publicado. Tracejada: PNADC 2025, pessoas 16+.",
+        fontsize=6.7,
+        color=C["muted"],
+    )
     fig.savefig(OUT_IMG_MOBILE, dpi=180, bbox_inches="tight", facecolor=C["bg"])
     plt.close(fig)
 
@@ -386,7 +593,10 @@ def write(data: dict[str, object]) -> None:
     OUT_IMG.parent.mkdir(parents=True, exist_ok=True)
     OUT_ANALYSIS.write_text(encoded, encoding="utf-8")
     OUT_SITE.write_text(encoded, encoding="utf-8")
-    OUT_JS.write_text("window.DATAFOLHA_082026_HISTORICO_RENDA = " + encoded.rstrip() + ";\n", encoding="utf-8")
+    OUT_JS.write_text(
+        "window.DATAFOLHA_082026_HISTORICO_RENDA = " + encoded.rstrip() + ";\n",
+        encoding="utf-8",
+    )
 
 
 def main() -> None:

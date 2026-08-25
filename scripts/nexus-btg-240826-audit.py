@@ -96,7 +96,17 @@ CROSSTABS = {
 }
 
 # Report p. 52. Each row is a published measurement, despite rounding to 100 or 101.
-TRANSFER_SOURCES = ["Lula", "Flávio", "Caiado", "Renan", "Zema", "Cury", "Samara", "B/N", "NS"]
+TRANSFER_SOURCES = [
+    "Lula",
+    "Flávio",
+    "Caiado",
+    "Renan",
+    "Zema",
+    "Cury",
+    "Samara",
+    "B/N",
+    "NS",
+]
 TRANSFER_ROWS = np.array([41, 37, 5, 3, 3, 2, 1, 5, 3], dtype=float)
 TRANSFER_COLS = np.array([46, 45, 8, 1], dtype=float)
 TRANSFER_MEASURED = {
@@ -116,10 +126,34 @@ TRANSFER_PRIOR = {
 # Report pp. 23, 27, 33, 35 and 52. These marginals are published separately.
 # Nexus does not publish the three-way cross candidate × certainty × runoff.
 USEFUL_VOTE_CANDIDATES = [
-    {"candidate": "Renan", "first_round": 3, "can_change": 47, "runoff_lula": 8, "runoff_flavio": 51},
-    {"candidate": "Caiado", "first_round": 5, "can_change": 44, "runoff_lula": 23, "runoff_flavio": 54},
-    {"candidate": "Zema", "first_round": 3, "can_change": 57, "runoff_lula": 8, "runoff_flavio": 72},
-    {"candidate": "Cury", "first_round": 2, "can_change": 69, "runoff_lula": 31, "runoff_flavio": 48},
+    {
+        "candidate": "Renan",
+        "first_round": 3,
+        "can_change": 47,
+        "runoff_lula": 8,
+        "runoff_flavio": 51,
+    },
+    {
+        "candidate": "Caiado",
+        "first_round": 5,
+        "can_change": 44,
+        "runoff_lula": 23,
+        "runoff_flavio": 54,
+    },
+    {
+        "candidate": "Zema",
+        "first_round": 3,
+        "can_change": 57,
+        "runoff_lula": 8,
+        "runoff_flavio": 72,
+    },
+    {
+        "candidate": "Cury",
+        "first_round": 2,
+        "can_change": 69,
+        "runoff_lula": 31,
+        "runoff_flavio": 48,
+    },
 ]
 
 STRATEGIC_RESERVOIRS = {
@@ -150,31 +184,151 @@ STRATEGIC_RESERVOIRS = {
 }
 
 QUESTION_PUBLICATION = [
-    {"item": "PF1–PF3", "content": "sexo, idade, escolaridade", "status": "perfil e cruzamentos", "pages": "111; 11–12; 29–30; 53–60; 92–99"},
-    {"item": "PF4–PF9", "content": "trabalho, vínculo, CNPJ, inatividade e busca", "status": "só agregado em PEA", "pages": "111"},
-    {"item": "PF10–PF11", "content": "UF e município", "status": "só região e condição municipal", "pages": "111"},
-    {"item": "P1", "content": "interesse eleitoral", "status": "topline", "pages": "6–7"},
+    {
+        "item": "PF1–PF3",
+        "content": "sexo, idade, escolaridade",
+        "status": "perfil e cruzamentos",
+        "pages": "111; 11–12; 29–30; 53–60; 92–99",
+    },
+    {
+        "item": "PF4–PF9",
+        "content": "trabalho, vínculo, CNPJ, inatividade e busca",
+        "status": "só agregado em PEA",
+        "pages": "111",
+    },
+    {
+        "item": "PF10–PF11",
+        "content": "UF e município",
+        "status": "só região e condição municipal",
+        "pages": "111",
+    },
+    {
+        "item": "P1",
+        "content": "interesse eleitoral",
+        "status": "topline",
+        "pages": "6–7",
+    },
     {"item": "P2", "content": "voto espontâneo", "status": "topline", "pages": "16–17"},
-    {"item": "P3", "content": "1º turno, dois cenários", "status": "topline e cruzamentos", "pages": "18–30"},
-    {"item": "P4", "content": "certeza do voto", "status": "topline e cruzamentos", "pages": "31–35"},
-    {"item": "P5", "content": "quatro cenários de 2º turno", "status": "topline e cruzamentos", "pages": "37–60"},
-    {"item": "P6", "content": "potencial e rejeição de cinco nomes", "status": "topline e cruzamentos", "pages": "62–70"},
-    {"item": "P7", "content": "preferência por bloco político", "status": "topline e cruzamentos", "pages": "71–73"},
-    {"item": "P8–P9", "content": "avaliação e aprovação do governo", "status": "topline e cruzamentos", "pages": "88–99"},
-    {"item": "P10", "content": "problemas do Brasil", "status": "topline e cruzamentos", "pages": "101–103"},
-    {"item": "P11–P13", "content": "economia atual, retrospectiva e expectativa", "status": "topline e cruzamentos", "pages": "105–109"},
-    {"item": "P14–P18", "content": "busca, exposição e identificação de campanha", "status": "topline e cruzamentos", "pages": "75–86"},
-    {"item": "P19", "content": "escala 0–10 de comparecimento", "status": "não publicada", "pages": "não se aplica"},
-    {"item": "P20", "content": "probabilidade categórica de comparecimento", "status": "topline", "pages": "13–14"},
-    {"item": "P21", "content": "comparecimento municipal em 2024", "status": "não publicada", "pages": "não se aplica"},
-    {"item": "P22–P23", "content": "comparecimento presidencial em 2022 e 2018", "status": "só índice combinado", "pages": "21; 39; 41; 43; 45"},
-    {"item": "P24", "content": "voto Lula/Bolsonaro em 2022", "status": "só cruzamento, base ausente", "pages": "22; 46"},
-    {"item": "P25", "content": "Anti-Lula e Anti-Bolsonaro/família", "status": "topline e cluster sem fórmula", "pages": "8–12; 23–28; 35; 47–49; 73; 77; 84"},
-    {"item": "PF13", "content": "Bolsa Família", "status": "só cruzamento, base ausente", "pages": "50–51"},
-    {"item": "PF14", "content": "renda individual", "status": "não publicada", "pages": "não se aplica"},
-    {"item": "PF15", "content": "renda familiar", "status": "perfil e cruzamentos", "pages": "12; 30; 54; 69–70; 93; 99; 111"},
-    {"item": "PF16", "content": "religião", "status": "perfil e cruzamentos", "pages": "11; 29; 53; 69–70; 92; 98; 111"},
-    {"item": "PF17", "content": "cor ou raça", "status": "não publicada", "pages": "não se aplica"},
+    {
+        "item": "P3",
+        "content": "1º turno, dois cenários",
+        "status": "topline e cruzamentos",
+        "pages": "18–30",
+    },
+    {
+        "item": "P4",
+        "content": "certeza do voto",
+        "status": "topline e cruzamentos",
+        "pages": "31–35",
+    },
+    {
+        "item": "P5",
+        "content": "quatro cenários de 2º turno",
+        "status": "topline e cruzamentos",
+        "pages": "37–60",
+    },
+    {
+        "item": "P6",
+        "content": "potencial e rejeição de cinco nomes",
+        "status": "topline e cruzamentos",
+        "pages": "62–70",
+    },
+    {
+        "item": "P7",
+        "content": "preferência por bloco político",
+        "status": "topline e cruzamentos",
+        "pages": "71–73",
+    },
+    {
+        "item": "P8–P9",
+        "content": "avaliação e aprovação do governo",
+        "status": "topline e cruzamentos",
+        "pages": "88–99",
+    },
+    {
+        "item": "P10",
+        "content": "problemas do Brasil",
+        "status": "topline e cruzamentos",
+        "pages": "101–103",
+    },
+    {
+        "item": "P11–P13",
+        "content": "economia atual, retrospectiva e expectativa",
+        "status": "topline e cruzamentos",
+        "pages": "105–109",
+    },
+    {
+        "item": "P14–P18",
+        "content": "busca, exposição e identificação de campanha",
+        "status": "topline e cruzamentos",
+        "pages": "75–86",
+    },
+    {
+        "item": "P19",
+        "content": "escala 0–10 de comparecimento",
+        "status": "não publicada",
+        "pages": "não se aplica",
+    },
+    {
+        "item": "P20",
+        "content": "probabilidade categórica de comparecimento",
+        "status": "topline",
+        "pages": "13–14",
+    },
+    {
+        "item": "P21",
+        "content": "comparecimento municipal em 2024",
+        "status": "não publicada",
+        "pages": "não se aplica",
+    },
+    {
+        "item": "P22–P23",
+        "content": "comparecimento presidencial em 2022 e 2018",
+        "status": "só índice combinado",
+        "pages": "21; 39; 41; 43; 45",
+    },
+    {
+        "item": "P24",
+        "content": "voto Lula/Bolsonaro em 2022",
+        "status": "só cruzamento, base ausente",
+        "pages": "22; 46",
+    },
+    {
+        "item": "P25",
+        "content": "Anti-Lula e Anti-Bolsonaro/família",
+        "status": "topline e cluster sem fórmula",
+        "pages": "8–12; 23–28; 35; 47–49; 73; 77; 84",
+    },
+    {
+        "item": "PF13",
+        "content": "Bolsa Família",
+        "status": "só cruzamento, base ausente",
+        "pages": "50–51",
+    },
+    {
+        "item": "PF14",
+        "content": "renda individual",
+        "status": "não publicada",
+        "pages": "não se aplica",
+    },
+    {
+        "item": "PF15",
+        "content": "renda familiar",
+        "status": "perfil e cruzamentos",
+        "pages": "12; 30; 54; 69–70; 93; 99; 111",
+    },
+    {
+        "item": "PF16",
+        "content": "religião",
+        "status": "perfil e cruzamentos",
+        "pages": "11; 29; 53; 69–70; 92; 98; 111",
+    },
+    {
+        "item": "PF17",
+        "content": "cor ou raça",
+        "status": "não publicada",
+        "pages": "não se aplica",
+    },
 ]
 
 TESTIMONY_CHECKS = [
@@ -234,7 +388,9 @@ def documents() -> list[dict]:
         if path.suffix.lower() == ".pdf":
             reader = PdfReader(path)
             item["pages"] = len(reader.pages)
-            item["text_characters"] = sum(len(page.extract_text() or "") for page in reader.pages)
+            item["text_characters"] = sum(
+                len(page.extract_text() or "") for page in reader.pages
+            )
         result.append(item)
     return result
 
@@ -260,10 +416,35 @@ def tse_targets() -> dict[str, list[float]]:
             )
         )
     age_counts = [
-        sum(ages[name] for name in ("16 anos", "17 anos", "18 anos", "19 anos", "20 anos", "21 a 24 anos")),
-        sum(ages[name] for name in ("25 a 29 anos", "30 a 34 anos", "35 a 39 anos")) + ages["40 a 44 anos"] / 5,
-        ages["40 a 44 anos"] * 4 / 5 + sum(ages[name] for name in ("45 a 49 anos", "50 a 54 anos", "55 a 59 anos")),
-        sum(ages[name] for name in ("60 a 64 anos", "65 a 69 anos", "70 a 74 anos", "75 a 79 anos", "80 a 84 anos", "85 a 89 anos", "90 a 94 anos", "95 a 99 anos", "100 anos ou mais")),
+        sum(
+            ages[name]
+            for name in (
+                "16 anos",
+                "17 anos",
+                "18 anos",
+                "19 anos",
+                "20 anos",
+                "21 a 24 anos",
+            )
+        ),
+        sum(ages[name] for name in ("25 a 29 anos", "30 a 34 anos", "35 a 39 anos"))
+        + ages["40 a 44 anos"] / 5,
+        ages["40 a 44 anos"] * 4 / 5
+        + sum(ages[name] for name in ("45 a 49 anos", "50 a 54 anos", "55 a 59 anos")),
+        sum(
+            ages[name]
+            for name in (
+                "60 a 64 anos",
+                "65 a 69 anos",
+                "70 a 74 anos",
+                "75 a 79 anos",
+                "80 a 84 anos",
+                "85 a 89 anos",
+                "90 a 94 anos",
+                "95 a 99 anos",
+                "100 anos ou mais",
+            )
+        ),
     ]
     age_total = sum(age_counts)
     return {
@@ -320,7 +501,10 @@ def reweight(cells, profile, target, published) -> dict:
         "anchored": anchored.round(3).tolist(),
         "gap": round(gap, 3),
         "swing": round(gap - published_gap, 3),
-        "two_candidate_share": [round(100 * anchored[0] / (anchored[0] + anchored[1]), 3), round(100 * anchored[1] / (anchored[0] + anchored[1]), 3)],
+        "two_candidate_share": [
+            round(100 * anchored[0] / (anchored[0] + anchored[1]), 3),
+            round(100 * anchored[1] / (anchored[0] + anchored[1]), 3),
+        ],
     }
 
 
@@ -332,7 +516,12 @@ def rounding_interval(cells, profile, target, published, seed: int) -> dict:
         jittered = np.clip(matrix + rng.uniform(-0.5, 0.5, matrix.shape), 0, None)
         gaps.append(reweight(jittered, profile, target, published)["gap"])
     low, median, high = np.quantile(gaps, [0.025, 0.5, 0.975])
-    return {"draws": len(gaps), "p2_5": round(float(low), 3), "median": round(float(median), 3), "p97_5": round(float(high), 3)}
+    return {
+        "draws": len(gaps),
+        "p2_5": round(float(low), 3),
+        "median": round(float(median), 3),
+        "p97_5": round(float(high), 3),
+    }
 
 
 def all_reweighting(targets: dict[str, list[float]]) -> dict:
@@ -340,14 +529,25 @@ def all_reweighting(targets: dict[str, list[float]]) -> dict:
     for ballot in ("first", "runoff"):
         published = TOPLINES[ballot]
         for index, dimension in enumerate(("sex", "age", "region", "income")):
-            result = reweight(CROSSTABS[ballot][dimension], PROFILE[dimension], targets[dimension], published)
+            result = reweight(
+                CROSSTABS[ballot][dimension],
+                PROFILE[dimension],
+                targets[dimension],
+                published,
+            )
             result["rounding"] = rounding_interval(
-                CROSSTABS[ballot][dimension], PROFILE[dimension], targets[dimension], published, 240826 + index + (10 if ballot == "runoff" else 0)
+                CROSSTABS[ballot][dimension],
+                PROFILE[dimension],
+                targets[dimension],
+                published,
+                240826 + index + (10 if ballot == "runoff" else 0),
             )
             output[ballot][dimension] = result
     for ballot in ("first", "runoff"):
         published_gap = TOPLINES[ballot][0] - TOPLINES[ballot][1]
-        additive = published_gap + sum(output[ballot][name]["swing"] for name in output[ballot])
+        additive = published_gap + sum(
+            output[ballot][name]["swing"] for name in output[ballot]
+        )
         output[ballot]["additive_all_margins"] = {
             "gap": round(additive, 3),
             "warning": "Soma descritiva das quatro correções univariadas; não é raking nem reponderação multivariada.",
@@ -367,7 +567,9 @@ def transfer_ipf() -> dict:
     unknown = [i for i in range(len(TRANSFER_SOURCES)) if i not in measured]
     residual = TRANSFER_COLS - matrix[measured].sum(axis=0)
     sub_rows = TRANSFER_ROWS[unknown]
-    sub = np.asarray([TRANSFER_PRIOR[TRANSFER_SOURCES[i]] for i in unknown], dtype=float)
+    sub = np.asarray(
+        [TRANSFER_PRIOR[TRANSFER_SOURCES[i]] for i in unknown], dtype=float
+    )
     sub = sub / sub.sum(axis=1, keepdims=True) * sub_rows[:, None]
     for _ in range(10_000):
         sub *= (residual / sub.sum(axis=0))[None, :]
@@ -394,7 +596,11 @@ def transfer_ipf() -> dict:
             "ratio_flavio_lula": round(float(pool[1] / pool[0]), 3),
             "approx_unweighted_n": round(INTERVIEWS_REPORT * pool_points / 100),
         },
-        "consolidation": {"lula_gain": lula_gain, "flavio_gain": flavio_gain, "ratio_flavio_lula": round(flavio_gain / lula_gain, 3)},
+        "consolidation": {
+            "lula_gain": lula_gain,
+            "flavio_gain": flavio_gain,
+            "ratio_flavio_lula": round(flavio_gain / lula_gain, 3),
+        },
         "method": "Cinco linhas são medições da p. 52. As quatro linhas ausentes são fechadas por IPF/RAS contra prior ideológica explícita.",
     }
 
@@ -408,9 +614,15 @@ def _joint_from_odds_ratio(p: float, q: float, odds_ratio: float) -> float:
     b = (1 - odds_ratio) * (p + q) - 1
     c = odds_ratio * p * q
     roots = np.roots([a, b, c])
-    valid = [float(root.real) for root in roots if abs(root.imag) < 1e-10 and lower - 1e-10 <= root.real <= upper + 1e-10]
+    valid = [
+        float(root.real)
+        for root in roots
+        if abs(root.imag) < 1e-10 and lower - 1e-10 <= root.real <= upper + 1e-10
+    ]
     if len(valid) != 1:
-        raise ValueError("Odds ratio does not yield a unique feasible joint probability")
+        raise ValueError(
+            "Odds ratio does not yield a unique feasible joint probability"
+        )
     return valid[0]
 
 
@@ -470,26 +682,49 @@ def useful_vote_sensitivity() -> dict:
             "max_entropy_points": base * potential * imputed_flavio,
             "joint_lower_points": base * lower,
             "joint_upper_points": base * upper,
-            "or_0_5_points": base * _joint_from_odds_ratio(potential, imputed_flavio, 0.5),
-            "or_2_points": base * _joint_from_odds_ratio(potential, imputed_flavio, 2.0),
+            "or_0_5_points": base
+            * _joint_from_odds_ratio(potential, imputed_flavio, 0.5),
+            "or_2_points": base
+            * _joint_from_odds_ratio(potential, imputed_flavio, 2.0),
         }
         for key in total_keys:
             totals[key] += row[f"{key}_points"]
-        rows.append({key: round(value, 3) if isinstance(value, float) else value for key, value in row.items()})
+        rows.append(
+            {
+                key: round(value, 3) if isinstance(value, float) else value
+                for key, value in row.items()
+            }
+        )
     totals = {key: round(value, 3) for key, value in totals.items()}
     baseline = TOPLINES["first"][1]
     scenarios = {
         "baseline_flavio": baseline,
         "baseline_lula": TOPLINES["first"][0],
-        "full_migration_using_printed_cells": round(baseline + totals["migration_printed"], 3),
-        "full_migration_lula_using_printed_cells": round(TOPLINES["first"][0] + totals["migration_lula_printed"], 3),
-        "full_migration_after_row_normalization": round(baseline + totals["migration_normalized"], 3),
-        "full_migration_lula_after_row_normalization": round(TOPLINES["first"][0] + totals["migration_lula_normalized"], 3),
+        "full_migration_using_printed_cells": round(
+            baseline + totals["migration_printed"], 3
+        ),
+        "full_migration_lula_using_printed_cells": round(
+            TOPLINES["first"][0] + totals["migration_lula_printed"], 3
+        ),
+        "full_migration_after_row_normalization": round(
+            baseline + totals["migration_normalized"], 3
+        ),
+        "full_migration_lula_after_row_normalization": round(
+            TOPLINES["first"][0] + totals["migration_lula_normalized"], 3
+        ),
         "all_potential_moves_to_flavio": round(baseline + totals["potential"], 3),
         "maximum_entropy_ns_imputed": round(baseline + totals["max_entropy"], 3),
-        "maximum_entropy_lula_ns_imputed": round(TOPLINES["first"][0] + totals["max_entropy_lula"], 3),
-        "odds_ratio_sensitivity_0_5_to_2": [round(baseline + totals["or_0_5"], 3), round(baseline + totals["or_2"], 3)],
-        "partial_identification_range": [round(baseline + totals["joint_lower"], 3), round(baseline + totals["joint_upper"], 3)],
+        "maximum_entropy_lula_ns_imputed": round(
+            TOPLINES["first"][0] + totals["max_entropy_lula"], 3
+        ),
+        "odds_ratio_sensitivity_0_5_to_2": [
+            round(baseline + totals["or_0_5"], 3),
+            round(baseline + totals["or_2"], 3),
+        ],
+        "partial_identification_range": [
+            round(baseline + totals["joint_lower"], 3),
+            round(baseline + totals["joint_upper"], 3),
+        ],
     }
     return {
         "rows": rows,
@@ -543,14 +778,22 @@ def target_comparison(targets: dict[str, list[float]]) -> dict:
             "target": target.round(3).tolist(),
             "delta_target_minus_poll": (target - poll).round(3).tolist(),
             "weight_factor": (target / poll).round(4).tolist(),
-            "total_variation_distance_pp": round(float(np.abs(target - poll).sum() / 2), 3),
+            "total_variation_distance_pp": round(
+                float(np.abs(target - poll).sum() / 2), 3
+            ),
         }
     return result
 
 
 def omissions_summary() -> dict:
-    fully_absent = [row for row in QUESTION_PUBLICATION if row["status"] == "não publicada"]
-    partial = [row for row in QUESTION_PUBLICATION if row["status"].startswith("só ") or "sem fórmula" in row["status"]]
+    fully_absent = [
+        row for row in QUESTION_PUBLICATION if row["status"] == "não publicada"
+    ]
+    partial = [
+        row
+        for row in QUESTION_PUBLICATION
+        if row["status"].startswith("só ") or "sem fórmula" in row["status"]
+    ]
     return {
         "fully_absent": len(fully_absent),
         "partial_or_non_reproducible": len(partial),
@@ -612,7 +855,12 @@ def main() -> None:
         json.dumps(payload, ensure_ascii=False, separators=(",", ":")) + "\n",
         encoding="utf-8",
     )
-    print(json.dumps({"output": str(args.output), "bytes": args.output.stat().st_size}, ensure_ascii=False))
+    print(
+        json.dumps(
+            {"output": str(args.output), "bytes": args.output.stat().st_size},
+            ensure_ascii=False,
+        )
+    )
 
 
 if __name__ == "__main__":

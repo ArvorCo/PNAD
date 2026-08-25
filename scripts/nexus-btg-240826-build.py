@@ -17,7 +17,11 @@ TARGET = ROOT / "docs/nexus_btg_240826.html"
 def main() -> None:
     figures = json.loads(FIGURES.read_text(encoding="utf-8"))
     count = inject(TARGET, figures)
-    print(json.dumps({"target": str(TARGET), "figures_injected": count}, ensure_ascii=False))
+    print(
+        json.dumps(
+            {"target": str(TARGET), "figures_injected": count}, ensure_ascii=False
+        )
+    )
 
 
 if __name__ == "__main__":
