@@ -441,7 +441,7 @@ NOME_FAIXA = {
 }
 
 
-def build_cards(renda, fundo, audit, pauta):
+def build_cards(renda, fundo, audit, pauta, cobertura):
     """Monta os dezoito cards a partir dos JSON de auditoria."""
     waves = renda["waves"]
     agosto = waves[-1]
@@ -460,6 +460,7 @@ def build_cards(renda, fundo, audit, pauta):
     bases = dict(zip(faixas, agosto["bases"]))
     base_total = sum(agosto["bases"])
     ondas_pauta = pauta["ondas"]
+    antes_do_campo = cobertura["itens_antes_do_campo"]
     publicado = {
         item[0]: item[1]
         for item in zip(("lula", "flavio", "branco", "indeciso"), agosto["published"])
@@ -530,7 +531,7 @@ def build_cards(renda, fundo, audit, pauta):
                 "Troque só isso. Nada mais. O mesmo relatório devolve Lula 44,2 e Flávio 46,0.",
                 "Nesta thread eu mostro a conta inteira, com os números na tela, para você refazer sozinho.",
                 "E, no caminho, ensino o suficiente de estatística para você nunca mais precisar acreditar numa manchete de pesquisa: o que é amostra, por que a margem da capa não serve para comparar dois candidatos, como uma amostra nacional é sorteada e o que exatamente acontece quando um instituto pondera.",
-                "Vinte posts. Nenhum documento sigiloso. Nenhuma conta que não caiba numa planilha.",
+                "Vinte e um posts. Nenhum documento sigiloso. Nenhuma conta que não caiba numa planilha.",
             ],
         },
         {
@@ -1277,6 +1278,63 @@ def build_cards(renda, fundo, audit, pauta):
             ],
         },
         {
+            "kind": "fato",
+            "kicker": "o contraste",
+            "photo": f"{PHOTOS}/banca.jpg",
+            "pos": "center 55%",
+            "tag": "quem pagou a pesquisa noticiou o caso até a véspera",
+            "metric": f"{antes_do_campo} matérias, 0 perguntas",
+            "title": "Os contratantes noticiaram. O questionário não perguntou.",
+            "lead": "Esta pesquisa foi paga pela Folha de S.Paulo e pela TV Globo. Entre 31 de julho e 17 de agosto os dois publicaram a abertura de três inquéritos, a fala do próprio presidente sobre o caso e a informação de que o adversário faria dele eixo de campanha.",
+            "chips": [
+                ("l", "31/07 a 17/08"),
+                ("b", "45 resultados na busca da Folha"),
+                ("a", "0 perguntas no campo de 18/08"),
+            ],
+            "viz": {
+                "type": "checklist",
+                "title": "publicado pelos contratantes antes do campo",
+                "items": [
+                    (
+                        "31/07, G1",
+                        "“PF abre inquérito contra Lulinha: entenda o que está sendo investigado”",
+                    ),
+                    (
+                        "04 e 05/08, G1 e Bom Dia Brasil",
+                        "“Dino autoriza abertura do terceiro inquérito envolvendo Lulinha”",
+                    ),
+                    (
+                        "13/08, Folha",
+                        "“Plano de Flávio Bolsonaro usa escândalo do INSS para desgastar Lula”",
+                    ),
+                    (
+                        "14/08, Folha e G1",
+                        "“Lula diz confiar em Lulinha, mas não pedirá encerramento da investigação”",
+                    ),
+                    (
+                        "17/08, Folha, 21h07",
+                        "“Amiga de Lulinha comprou joias para ex-chefe de gabinete de Lula, aponta PF”",
+                    ),
+                    (
+                        "18/08, Datafolha",
+                        "Primeiro dia de campo. Nenhuma pergunta sobre o caso.",
+                    ),
+                ],
+            },
+            "foot": [
+                "buscas nos próprios veículos, com filtro de período",
+                "search.folha.uol.com.br e g1.globo.com/busca",
+            ],
+            "copy": [
+                "O contraste. Esta pesquisa foi paga pela Folha de S.Paulo e pela TV Globo, e é aí que a comparação de pauta deixa de ser curiosidade metodológica.",
+                "Entre 31 de julho e 17 de agosto, os dois contratantes publicaram, com data e hora: a abertura do primeiro inquérito contra o filho do presidente, a autorização do terceiro, a fala do próprio presidente sobre o caso, e uma reportagem informando que o adversário faria do assunto ponto central da campanha.",
+                "A última delas saiu às 21h07 do dia 17. O campo começou na manhã do dia 18.",
+                "A busca do próprio jornal devolve 45 resultados para o tema entre 1º e 17 de agosto. O questionário aplicado nos dias 18 e 19 tem zero perguntas sobre isso.",
+                "Dois dias depois de publicar a pesquisa, a Folha escreveu que corrupção se tornou tema central da eleição.",
+                "E a defesa do instituto, dita por nós antes que alguém precise dizer: as mensagens da Polícia Federal que citam nominalmente o filho do presidente só vieram a público em 20 de agosto, depois de o campo fechar. Só que o caso não nasceu no dia 20, e em maio o instituto pegou um fato da semana anterior e o transformou em sete perguntas.",
+            ],
+        },
+        {
             "kind": "conta",
             "kicker": "a robustez",
             "photo": f"{PHOTOS}/antena.jpg",
@@ -1740,7 +1798,8 @@ def main() -> None:
     fundo = json.loads((ANALYSIS / "aprofundamento.json").read_text(encoding="utf-8"))
     audit = json.loads((ANALYSIS / "audit.json").read_text(encoding="utf-8"))
     pauta = json.loads((ANALYSIS / "pauta.json").read_text(encoding="utf-8"))
-    cards = build_cards(renda, fundo, audit, pauta)
+    cobertura = json.loads((ANALYSIS / "cobertura.json").read_text(encoding="utf-8"))
+    cards = build_cards(renda, fundo, audit, pauta, cobertura)
     total = len(cards)
 
     rail = "".join(f'<a href="#p{i}">{i}</a>' for i in range(1, total + 1))
@@ -1788,11 +1847,11 @@ def main() -> None:
   <a class="back" href="datafolha_082026.html">Ir para o dossiê completo</a>
 </header>
 <h1>Uma pesquisa não mente.<em>Ela depende de uma régua.</em></h1>
-<p class="deck">Thread da auditoria do <b>Datafolha de 18 e 19 de agosto de 2026</b>, registro TSE BR-04496/2026, 2.058 entrevistas. Vinte cards que ensinam o suficiente de estatística para você ler qualquer pesquisa sozinho, e que refazem, com os números na tela, a conta que leva o segundo turno publicado de <b>47 × 43</b> para <b>44,2 × 46,0</b> quando a distribuição de renda vem do IBGE.</p>
+<p class="deck">Thread da auditoria do <b>Datafolha de 18 e 19 de agosto de 2026</b>, registro TSE BR-04496/2026, 2.058 entrevistas. Vinte e um cards que ensinam o suficiente de estatística para você ler qualquer pesquisa sozinho, e que refazem, com os números na tela, a conta que leva o segundo turno publicado de <b>47 × 43</b> para <b>44,2 × 46,0</b> quando a distribuição de renda vem do IBGE.</p>
 <div class="howto"><b>Como usar.</b> Cada bloco traz o card 16:9 para anexar e, logo abaixo, o texto exato do post com a contagem de caracteres. O botão copia sem formatação. Aula ensina o conceito. Fato publicado vem com a página do relatório. A conta vem com a fórmula aberta e o resultado conferível.</div>
 <div class="legend">{legend}</div>
 </div>
-<nav class="rail" aria-label="Ir para o post"><div class="wrap"><b>20 posts</b>{rail}</div></nav>
+<nav class="rail" aria-label="Ir para o post"><div class="wrap"><b>21 posts</b>{rail}</div></nav>
 <div class="wrap">
 {posts}
 </div>
