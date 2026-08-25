@@ -1,0 +1,163 @@
+{
+  "pergunta": "Em que momento passou a existir o documento que permite conferir a manchete, comparado com o momento em que a manchete foi publicada.",
+  "metodo": "Leitura do campo creationDate do proprio PDF, que registra quando o arquivo foi produzido. Nao informa a data de publicacao; estabelece o instante antes do qual o arquivo nao existia.",
+  "ondas": [
+    {
+      "id": "2026-05",
+      "label": "20–21/mai",
+      "campo": [
+        "2026-05-20",
+        "2026-05-21"
+      ],
+      "divulgacao": "2026-05-22",
+      "documentos": [
+        {
+          "tipo": "questionario",
+          "rotulo": "Questionário aplicado",
+          "arquivo": "QuestionarioDatafolha052026.pdf",
+          "criado_em": "2026-05-16T11:47",
+          "dias_apos_divulgacao": -6,
+          "existia_na_divulgacao": true
+        },
+        {
+          "tipo": "bairros",
+          "rotulo": "Anexo de municípios e bairros",
+          "arquivo": "BairrosDatafolha052026.pdf",
+          "criado_em": "2026-05-22T17:55",
+          "dias_apos_divulgacao": 0,
+          "existia_na_divulgacao": true
+        },
+        {
+          "tipo": "relatorio",
+          "rotulo": "Relatório completo",
+          "arquivo": "DataFolhaRelatorio052026.pdf",
+          "criado_em": "2026-05-25T17:16",
+          "dias_apos_divulgacao": 3,
+          "existia_na_divulgacao": false
+        }
+      ],
+      "atraso_do_relatorio_em_dias": 3
+    },
+    {
+      "id": "2026-06",
+      "label": "17–18/jun",
+      "campo": [
+        "2026-06-17",
+        "2026-06-18"
+      ],
+      "divulgacao": "2026-06-19",
+      "documentos": [
+        {
+          "tipo": "questionario",
+          "rotulo": "Questionário aplicado",
+          "arquivo": "QuestionarioDatafolha062026.pdf",
+          "criado_em": "2026-06-12T18:59",
+          "dias_apos_divulgacao": -7,
+          "existia_na_divulgacao": true
+        },
+        {
+          "tipo": "bairros",
+          "rotulo": "Anexo de municípios e bairros",
+          "arquivo": "bairrosdatafolha062026.pdf",
+          "criado_em": "2026-06-19T21:33",
+          "dias_apos_divulgacao": 0,
+          "existia_na_divulgacao": true
+        },
+        {
+          "tipo": "relatorio",
+          "rotulo": "Relatório completo",
+          "arquivo": "DataFolhaRelatorio062026.pdf",
+          "criado_em": "2026-06-22T12:41",
+          "dias_apos_divulgacao": 3,
+          "existia_na_divulgacao": false
+        }
+      ],
+      "atraso_do_relatorio_em_dias": 3
+    },
+    {
+      "id": "2026-07",
+      "label": "22–23/jul",
+      "campo": [
+        "2026-07-22",
+        "2026-07-23"
+      ],
+      "divulgacao": "2026-07-24",
+      "documentos": [
+        {
+          "tipo": "questionario",
+          "rotulo": "Questionário aplicado",
+          "arquivo": "QuestionarioDatafolha072026.pdf",
+          "criado_em": "2026-07-17T19:01",
+          "dias_apos_divulgacao": -7,
+          "existia_na_divulgacao": true
+        },
+        {
+          "tipo": "bairros",
+          "rotulo": "Anexo de municípios e bairros",
+          "arquivo": "BairrosDatafolha072026.pdf",
+          "criado_em": "2026-07-24T14:32",
+          "dias_apos_divulgacao": 0,
+          "existia_na_divulgacao": true
+        },
+        {
+          "tipo": "relatorio",
+          "rotulo": "Relatório completo",
+          "arquivo": "DataFolhaRelatorio072026.pdf",
+          "criado_em": "2026-07-27T12:49",
+          "dias_apos_divulgacao": 3,
+          "existia_na_divulgacao": false
+        }
+      ],
+      "atraso_do_relatorio_em_dias": 3
+    },
+    {
+      "id": "2026-08",
+      "label": "18–19/ago",
+      "campo": [
+        "2026-08-18",
+        "2026-08-19"
+      ],
+      "divulgacao": "2026-08-21",
+      "documentos": [
+        {
+          "tipo": "questionario",
+          "rotulo": "Questionário aplicado",
+          "arquivo": "DatafolhaQuestionario082026.pdf",
+          "criado_em": "2026-08-15T21:57",
+          "dias_apos_divulgacao": -6,
+          "existia_na_divulgacao": true
+        },
+        {
+          "tipo": "bairros",
+          "rotulo": "Anexo de municípios e bairros",
+          "arquivo": "DatafolhaBairros082026.pdf",
+          "criado_em": "2026-08-22T00:55",
+          "dias_apos_divulgacao": 1,
+          "existia_na_divulgacao": false
+        },
+        {
+          "tipo": "relatorio",
+          "rotulo": "Relatório completo",
+          "arquivo": "DatafolhaRelatorio082026.pdf",
+          "criado_em": "2026-08-24T16:27",
+          "dias_apos_divulgacao": 3,
+          "existia_na_divulgacao": false
+        }
+      ],
+      "atraso_do_relatorio_em_dias": 3
+    }
+  ],
+  "resumo": {
+    "atraso_do_relatorio_por_onda": {
+      "20–21/mai": 3,
+      "17–18/jun": 3,
+      "22–23/jul": 3,
+      "18–19/ago": 3
+    },
+    "ondas_com_relatorio_disponivel_na_divulgacao": 0,
+    "total_de_ondas": 4,
+    "atraso_minimo": 3,
+    "atraso_maximo": 3
+  },
+  "leitura": "Nas quatro ondas o questionario ficou pronto antes do campo e o anexo territorial no dia da divulgacao ou no seguinte. O relatorio completo, que traz as tabelas cruzadas, o perfil da amostra e as margens por recorte, foi produzido tres dias depois da divulgacao em todas elas. Durante esses tres dias a discussao publica corre sobre dois numeros e o documento que permite conferí-los ainda nao existe."
+}

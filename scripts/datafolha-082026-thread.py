@@ -410,7 +410,73 @@ def viz_ladder(spec):
     return svg("".join(parts), height=y - 8, label=spec["title"])
 
 
+def viz_diverge(spec):
+    """Barras divergentes de um zero central: publicado contra reponderado."""
+    parts = [text(0, 18, spec["title"], size=12, fill=FAINT)]
+    zero, escala = 330, 46.0
+    y = 46
+    for linha in spec["rows"]:
+        for chave, cor, deslocamento in (("a", LULA, 0), ("b", None, 26)):
+            valor = linha[chave]
+            cor_final = cor or (
+                LIME if valor < -0.5 else (GREY if abs(valor) < 0.5 else LULA)
+            )
+            # A barra usa o vermelho da paleta; o rótulo usa a versão clareada,
+            # porque texto de 12px sobre o painel do card reprova na WCAG AA.
+            cor_rotulo = LULA_TXT if cor_final == LULA else cor_final
+            largura = abs(valor) * escala
+            x = zero if valor >= 0 else zero - largura
+            parts.append(rect(x, y + deslocamento, max(largura, 2), 20, cor_final, 2))
+            rotulo = linha[f"{chave}_label"]
+            if valor >= 0:
+                parts.append(
+                    text(
+                        zero + largura + 8,
+                        y + deslocamento + 14,
+                        rotulo,
+                        size=12,
+                        fill=cor_rotulo,
+                        family=SANS,
+                        weight=700,
+                    )
+                )
+            else:
+                parts.append(
+                    text(
+                        zero - largura - 8,
+                        y + deslocamento + 14,
+                        rotulo,
+                        anchor="end",
+                        size=12,
+                        fill=cor_rotulo,
+                        family=SANS,
+                        weight=700,
+                    )
+                )
+        parts.append(
+            text(0, y + 28, linha["label"], size=13, fill=INK, family=SANS, weight=600)
+        )
+        y += 66
+    parts.append(line(zero, 36, zero, y - 8, INK, 2))
+    parts.append(text(zero, 30, "empate", size=11, fill=MUTED, anchor="middle"))
+    for indice, item in enumerate(spec.get("foot", [])):
+        parts.append(
+            text(
+                0,
+                y + 22 + indice * 26,
+                item,
+                size=15,
+                fill=INK if indice == 0 else LIME,
+                family=SANS,
+                weight=700,
+            )
+        )
+    altura = y + 22 + 26 * max(len(spec.get("foot", [])) - 1, 0) + 12
+    return svg("".join(parts), height=altura, label=spec["title"])
+
+
 RENDER = {
+    "diverge": viz_diverge,
     "bignum": viz_bignum,
     "stack": viz_stack,
     "calc": viz_calc,
@@ -531,7 +597,7 @@ def build_cards(renda, fundo, audit, pauta, cobertura):
                 "Troque só isso. Nada mais. O mesmo relatório devolve Lula 44,2 e Flávio 46,0.",
                 "Nesta thread eu mostro a conta inteira, com os números na tela, para você refazer sozinho.",
                 "E, no caminho, ensino o suficiente de estatística para você nunca mais precisar acreditar numa manchete de pesquisa: o que é amostra, por que a margem da capa não serve para comparar dois candidatos, como uma amostra nacional é sorteada e o que exatamente acontece quando um instituto pondera.",
-                "Vinte e um posts. Nenhum documento sigiloso. Nenhuma conta que não caiba numa planilha.",
+                "Vinte e três posts. Nenhum documento sigiloso. Nenhuma conta que não caiba numa planilha.",
             ],
         },
         {
@@ -576,6 +642,59 @@ def build_cards(renda, fundo, audit, pauta, cobertura):
                 "É muita transparência, e é bom que seja. O problema não é falta de documento. É que a cobertura para na página 2 e o país inteiro discute duas linhas de um arquivo de cinquenta e uma páginas.",
                 "O relatório tem duas partes. As vinte e duas primeiras páginas são a apresentação, e é de lá que sai a notícia. As vinte e nove seguintes são o anexo de tabelas cruzadas: catorze tabelas, cada uma repartida por onze recortes, de renda a religião.",
                 "As outras quarenta e nove páginas estão abertas há dias e continuam abertas agora. Nesta thread nós vamos até elas.",
+            ],
+        },
+        {
+            "kind": "fato",
+            "kicker": "o prazo",
+            "photo": f"{PHOTOS}/urna-maquina.jpg",
+            "pos": "center 40%",
+            "tag": "metadado do próprio arquivo do instituto",
+            "metric": "+3 dias",
+            "title": "A manchete saiu na sexta. O documento nasceu na segunda.",
+            "lead": "O relatório completo de 51 páginas é o único documento que permite conferir o número da manchete. O arquivo carrega dentro de si a data em que foi produzido: 24 de agosto às 16h27. A pesquisa foi divulgada no dia 21.",
+            "chips": [
+                ("l", "divulgação 21/08"),
+                ("a", "arquivo criado 24/08"),
+                ("c", "4 de 4 ondas"),
+            ],
+            "viz": {
+                "type": "ladder",
+                "title": "quando cada peça passou a existir, onda de agosto",
+                "steps": [
+                    {
+                        "label": "Questionário aplicado fica pronto",
+                        "value": "15/08",
+                        "color": GREEN,
+                    },
+                    {
+                        "label": "Campo, 2.058 entrevistas na rua",
+                        "value": "18 e 19/08",
+                        "color": CYAN,
+                    },
+                    {
+                        "label": "Divulgação: a manchete sai",
+                        "value": "21/08",
+                        "color": AMBER,
+                    },
+                    {
+                        "label": "Relatório completo é produzido",
+                        "value": "24/08",
+                        "color": LULA,
+                    },
+                ],
+            },
+            "foot": [
+                "campo creationDate do PDF, dentro do arquivo",
+                "igual em maio, junho, julho e agosto",
+            ],
+            "copy": [
+                "O prazo. Antes de discutir qualquer número, uma pergunta que quase ninguém faz: quando foi possível conferir esse número?",
+                "Todo PDF guarda dentro de si a data em que foi produzido. O relatório completo do Datafolha de agosto, com as 51 páginas, as tabelas cruzadas e as margens por recorte, traz 24 de agosto às 16h27.",
+                "A pesquisa foi divulgada no dia 21, uma sexta-feira. Durante três dias o país discutiu dois números e o documento que permite checá-los ainda não existia.",
+                "E não é um acidente desta onda. Em maio, divulgação dia 22 e relatório criado dia 25. Em junho, 19 e 22. Em julho, 24 e 27. Em agosto, 21 e 24. Quatro ondas, sempre exatamente três dias.",
+                "O que o metadado prova: um arquivo criado no dia 24 não podia estar disponível no dia 21. O que ele não prova: irregularidade. Prazos de depósito são matéria da Resolução do TSE e exigem leitura do dispositivo, não do arquivo.",
+                "O que fica é a ordem, e ela é sempre a mesma: primeiro o número, depois o debate nacional, depois o documento. Quando o relatório chega, o ciclo já fechou.",
             ],
         },
         {
@@ -1123,6 +1242,52 @@ def build_cards(renda, fundo, audit, pauta, cobertura):
                 "Em nenhuma das quatro Lula fica à frente. E a leitura de tendência também muda: sob esta régua, o desafiante perdeu cerca de um ponto entre maio e agosto, em vez de estar correndo atrás de uma vantagem consolidada.",
                 "São duas eleições diferentes, e a diferença não é acadêmica. Uma disputa em que o presidente lidera com folga desde maio e uma disputa empatada desde maio produzem decisões opostas sobre aliança, agenda e prioridade de recurso, dos dois lados. Só uma das duas está sendo noticiada.",
                 "E repare no que este exercício não faz: ele não escolhe a onda que dá o resultado desejado. São as quatro ondas disponíveis, com a mesma fórmula e o mesmo benchmark, publicadas juntas.",
+            ],
+        },
+        {
+            "kind": "tese",
+            "kicker": "a manchete",
+            "photo": f"{PHOTOS}/banca.jpg",
+            "pos": "center 35%",
+            "tag": "duas provas independentes que a palavra não passa",
+            "metric": "quatro contra quatro",
+            "title": "“Lidera” precisa passar em dois testes",
+            "lead": "Quando um jornal escreve que alguém lidera, está afirmando liderança identificada. Essa afirmação tem de passar num teste de amostragem e num teste de composição. No segundo turno de agosto ela não passa em nenhum dos dois.",
+            "chips": [
+                ("l", "intervalo inclui zero"),
+                ("c", "sinal inverte com o IBGE"),
+                ("a", "4 de 4 ondas"),
+            ],
+            "viz": {
+                "type": "diverge",
+                "title": "saldo do 2º turno: publicado (vermelho) e com a renda do IBGE",
+                "rows": [
+                    {
+                        "label": wave["label"],
+                        "a": wave["published_gap_lula_minus_flavio"],
+                        "b": wave["adjusted_gap_lula_minus_flavio"],
+                        "a_label": f"Lula +{wave['published_gap_lula_minus_flavio']:.0f}",
+                        "b_label": rotulo_gap(wave["adjusted_gap_lula_minus_flavio"]),
+                    }
+                    for wave in waves
+                ],
+                "foot": [
+                    "As quatro manchetes dizem a mesma coisa.",
+                    "As quatro contas, com a régua oficial, dizem o contrário.",
+                ],
+            },
+            "foot": [
+                "margem da diferença: ±4,095 a 95%",
+                "10.000 simulações mantêm o sinal invertido",
+            ],
+            "copy": [
+                "A manchete. Aqui está a parte que não é técnica, é de responsabilidade.",
+                "Quando um texto escreve que alguém lidera, ele afirma uma liderança identificada. Essa afirmação precisa passar em dois testes independentes.",
+                "Teste um, de amostragem: a diferença de quatro pontos tem margem de 4,095 pontos a 95%, sob a hipótese mais generosa possível. O intervalo vai de −0,10 a +8,10 e contém o empate.",
+                "Teste dois, de composição: trocando só a distribuição de renda pela do IBGE, o saldo vira Flávio +1,78. E não é uma onda isolada, são as quatro, com a mesma fórmula.",
+                "Escrever “lidera” sobre um resultado que não sobrevive a nenhum dos dois não é erro de rodapé. É transformar em fato consumado o que a própria pesquisa apresenta como indeterminado, e fazê-lo nos três dias em que o documento que permitiria contestar ainda não existe.",
+                "A correção é barata: “Lula tem 47%, Flávio tem 43%, e a diferença não separa os dois com 95% de confiança.” Nove palavras a mais e a frase fica verdadeira.",
+                "E para ser justo: no primeiro turno, “lidera” está correto. O saldo de seis pontos tem intervalo de +2,34 a +9,66. O problema é usar a mesma palavra para as duas situações, que são estatisticamente diferentes. A pesquisa distingue. A cobertura, não.",
             ],
         },
         {
@@ -1847,11 +2012,11 @@ def main() -> None:
   <a class="back" href="datafolha_082026.html">Ir para o dossiê completo</a>
 </header>
 <h1>Uma pesquisa não mente.<em>Ela depende de uma régua.</em></h1>
-<p class="deck">Thread da auditoria do <b>Datafolha de 18 e 19 de agosto de 2026</b>, registro TSE BR-04496/2026, 2.058 entrevistas. Vinte e um cards que ensinam o suficiente de estatística para você ler qualquer pesquisa sozinho, e que refazem, com os números na tela, a conta que leva o segundo turno publicado de <b>47 × 43</b> para <b>44,2 × 46,0</b> quando a distribuição de renda vem do IBGE.</p>
+<p class="deck">Thread da auditoria do <b>Datafolha de 18 e 19 de agosto de 2026</b>, registro TSE BR-04496/2026, 2.058 entrevistas. Vinte e três cards que ensinam o suficiente de estatística para você ler qualquer pesquisa sozinho, e que refazem, com os números na tela, a conta que leva o segundo turno publicado de <b>47 × 43</b> para <b>44,2 × 46,0</b> quando a distribuição de renda vem do IBGE.</p>
 <div class="howto"><b>Como usar.</b> Cada bloco traz o card 16:9 para anexar e, logo abaixo, o texto exato do post com a contagem de caracteres. O botão copia sem formatação. Aula ensina o conceito. Fato publicado vem com a página do relatório. A conta vem com a fórmula aberta e o resultado conferível.</div>
 <div class="legend">{legend}</div>
 </div>
-<nav class="rail" aria-label="Ir para o post"><div class="wrap"><b>21 posts</b>{rail}</div></nav>
+<nav class="rail" aria-label="Ir para o post"><div class="wrap"><b>23 posts</b>{rail}</div></nav>
 <div class="wrap">
 {posts}
 </div>

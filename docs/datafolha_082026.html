@@ -60,6 +60,7 @@
             <b><s>30 pts</s> de eleitorado em aberto</b>
             <b><s>9,67%</s> piso de ruído da rejeição</b>
             <b><s>7 pts</s> de vão anti-governo</b>
+            <b><s>+3 dias</s> entre a manchete e o relatório</b>
             <b><s>7 × 0</s> perguntas de caso, maio contra agosto</b>
             <b><s>8</s> perguntas coletadas e não publicadas</b>
           </div>
@@ -94,7 +95,7 @@
       <a href="#pauta">A pauta que sumiu</a>
       <a href="#coletado">Não publicado</a>
       <a href="#traducao">Em português</a>
-      <a href="#manchetes">Manchetes</a>
+      <a href="#manchetes">Manchete e prazo</a>
       <a href="#omitido">O que faltou</a>
       <a href="#campanha">Estratégia</a>
       <a href="#fontes">Fontes</a>
@@ -129,6 +130,11 @@
           <span class="stamp inference">Vão</span>
           <strong>7 pontos</strong>
           <p>Desaprovam o governo e não votam na oposição. Teto endereçável, estável entre 6,40 e 7,05 nas seis partições fechadas.</p>
+        </article>
+        <article class="verdict-card">
+          <span class="stamp fact">Prazo</span>
+          <strong>+3 dias</strong>
+          <p>Entre a manchete e a criação do relatório que permite conferi-la. Quatro ondas, quatro vezes, sempre três dias.</p>
         </article>
         <article class="verdict-card">
           <span class="stamp fact">Pauta</span>
@@ -1059,9 +1065,69 @@
         <div class="chapter-head reveal">
           <span class="chapter-no">Cap. 14</span>
           <div>
-            <h2>A certeza nasce no relatório. <em>A cobertura precisa qualificá-la.</em></h2>
-            <p class="lead">Nenhuma manchete recuperada de G1, Folha ou UOL diz literalmente “Lula lidera o segundo turno”. Os títulos são numéricos. A formulação de vantagem aparece no título do próprio relatório Datafolha; “o petista lidera” aparece no corpo da Folha. Quando quatro pontos têm margem de ±4,10, essa distinção entre manchete, corpo e documento-fonte precisa ficar visível.</p>
+            <h2>A manchete saiu na sexta. <em>O documento que permite conferi-la nasceu na segunda.</em></h2>
+            <p class="lead">O relatório completo do Datafolha, com as 51 páginas, as tabelas cruzadas, o perfil da amostra e as margens por recorte, é o único documento que permite checar o número que virou notícia. O arquivo carrega no próprio metadado a data em que foi produzido: <strong>24 de agosto às 16h27</strong>. A pesquisa foi divulgada em <strong>21 de agosto</strong>. Por três dias o país inteiro discutiu dois números, e o documento que os sustenta ainda não existia.</p>
           </div>
+        </div>
+
+        <figure class="report-chart reveal">
+          <img src="img/datafolha_082026/fundo_documentos.png" alt="Quando cada documento da pesquisa foi produzido, em relação ao dia da divulgação, nas quatro ondas">
+          <figcaption>Data de produção lida no metadado de cada PDF. O questionário fica pronto antes do campo, o anexo territorial no dia da divulgação ou no seguinte, e o relatório completo três dias depois.</figcaption>
+        </figure>
+
+        <div class="kpis reveal">
+          <article><b>4 de 4</b><span>ondas em que o relatório completo nasce depois da manchete</span></article>
+          <article><b>+3 dias</b><span>exatamente, em maio, junho, julho e agosto</span></article>
+          <article><b>25/05 · 22/06</b><span>27/07 e 24/08: as quatro datas de produção</span></article>
+          <article><b>6 a 7 dias</b><span>de antecedência do questionário em relação ao campo</span></article>
+        </div>
+
+        <div class="callout danger reveal">
+          <span class="stamp fact">O que o metadado prova e o que não prova</span>
+          <p><strong>Prova:</strong> um arquivo produzido em 24 de agosto não podia estar disponível em 21. O campo <span class="mono">creationDate</span> do PDF registra o instante antes do qual aquele arquivo não existia, e ele está dentro do arquivo do próprio instituto. <strong>Não prova:</strong> a data exata em que o relatório foi publicado no site do Datafolha ou anexado ao registro, que pode ser posterior ainda. E não prova irregularidade: a Resolução TSE 23.600 fixa prazos para o depósito das peças, e verificar se este caso os cumpre exige a leitura do dispositivo, não do metadado.</p>
+          <p>O que fica estabelecido é mais simples e não depende de norma nenhuma: <strong>a ordem é sempre a mesma</strong>. Primeiro o número, depois a discussão nacional, depois o documento. Quatro ondas, quatro vezes, sempre com três dias de distância.</p>
+        </div>
+
+        <div class="callout reveal">
+          <span class="stamp inference">Por que isso importa mais do que parece</span>
+          <p>Nesses três dias acontece tudo o que decide como um número é lembrado: a manchete, a análise dos colunistas, o debate nas redes, a reação das campanhas e a segunda onda de matérias sobre a primeira. Quando o relatório finalmente aparece, o ciclo já fechou. Uma auditoria como esta, publicada agora, chega quatro dias depois de a conversa terminar. <strong>Não é censura nem ocultação: é uma janela de exclusividade interpretativa</strong>, em que quem tem o número fala sozinho porque ninguém mais pode conferir.</p>
+        </div>
+
+        <div class="chapter-head mt-l reveal">
+          <span class="chapter-no">A palavra</span>
+          <div>
+            <h2>“Lidera” é uma palavra <em>que precisa passar em dois testes</em></h2>
+            <p class="lead">Nenhuma manchete recuperada de G1, Folha ou UOL diz literalmente “Lula lidera o segundo turno”: os títulos são numéricos. A formulação de vantagem aparece no título do próprio relatório Datafolha, e “o petista lidera” aparece no corpo da Folha. Quando um jornal escreve isso, está afirmando uma liderança identificada. E essa afirmação tem de passar em dois testes independentes, um de amostragem e um de composição. No segundo turno de agosto ela não passa em nenhum dos dois.</p>
+          </div>
+        </div>
+
+        <figure class="report-chart reveal">
+          <img src="img/datafolha_082026/fundo_manchete_versus_renda.png" alt="Saldo do segundo turno publicado e o mesmo saldo com a distribuição de renda do IBGE, nas quatro ondas">
+          <figcaption>Barra de cima: o saldo publicado, que virou manchete. Barra de baixo: o mesmo relatório e as mesmas respostas, trocando apenas a distribuição de renda pela do IBGE. Em nenhuma das quatro ondas a vantagem publicada sobrevive.</figcaption>
+        </figure>
+
+        <div class="grid-2 reveal">
+          <article class="card">
+            <span class="stamp fact">Teste 1, amostragem</span>
+            <h3>O intervalo já inclui o zero</h3>
+            <p>A diferença de quatro pontos tem margem de <strong>±4,095</strong> a 95%, sob a hipótese mais generosa possível, que é amostragem aleatória simples. O intervalo vai de &minus;0,10 a +8,10. Ele contém o empate. Isso sozinho já retira o direito de escrever “lidera” sem qualificação.</p>
+          </article>
+          <article class="card">
+            <span class="stamp inference">Teste 2, composição</span>
+            <h3>O sinal inverte com a régua oficial</h3>
+            <p>Trocando apenas a distribuição de renda pela da PNAD Contínua do IBGE, o saldo vira <strong>Flávio +1,78</strong>. E não é uma onda isolada: acontece nas quatro, com a mesma fórmula e o mesmo benchmark. Em 10 mil simulações que perturbam cada célula impressa, o sinal se mantém invertido em <strong>100%</strong> dos sorteios.</p>
+          </article>
+        </div>
+
+        <div class="callout danger reveal">
+          <span class="stamp inference">O julgamento, e ele é duro</span>
+          <p>Escrever “lidera” sobre um resultado que não sobrevive a nenhum dos dois testes não é erro técnico de rodapé. <strong>É transformar em fato consumado aquilo que a própria pesquisa apresenta como indeterminado</strong>, e fazê-lo justamente nos três dias em que o documento que permitiria contestar ainda não existe. O leitor não recebe um número com incerteza: recebe um vencedor.</p>
+          <p>E a correção é barata. <em>“Lula tem 47%, Flávio tem 43%, e a diferença não separa os dois com 95% de confiança.”</em> São nove palavras a mais e a frase fica verdadeira. Ninguém precisa esconder o placar, publicar a reponderação nem concordar com esta auditoria para escrevê-la.</p>
+        </div>
+
+        <div class="callout reveal">
+          <span class="stamp good">A crítica precisa é melhor que a genérica</span>
+          <p><strong>No primeiro turno, “lidera” está correto.</strong> O saldo de seis pontos tem intervalo de +2,34 a +9,66 e resiste até efeito de desenho 2. Ali existe liderança medida e a palavra é apropriada. O problema é que o mesmo texto usa a mesma palavra para as duas situações, que são estatisticamente diferentes: uma é liderança identificada, a outra é vantagem numérica dentro da margem. <strong>A cobertura não distingue as duas, e a pesquisa distingue.</strong> Está tudo no relatório, na página 3, na tabela de margens por segmento, que nasceu três dias depois da manchete.</p>
         </div>
 
         <div class="headline-grid reveal">
@@ -1153,6 +1219,8 @@
         </div>
 
         <div class="headline-grid reveal">
+          <article class="headline-card missing-headline"><span class="outlet">Prazo</span><h3>O relatório que sustenta a manchete de sexta foi criado na segunda</h3><p>Metadado do próprio PDF: 24/08 às 16h27, três dias depois da divulgação. Igual em maio, junho e julho.</p></article>
+          <article class="headline-card missing-headline"><span class="outlet">Sensibilidade</span><h3>Nenhuma das quatro vantagens publicadas sobrevive à renda do IBGE</h3><p>Publicado: Lula +4, +4, +5, +4. Com a régua oficial: Flávio +2,81, empate, empate, Flávio +1,78.</p></article>
           <article class="headline-card missing-headline"><span class="outlet">Contratantes</span><h3>Folha e Globo noticiaram o caso até a véspera; a pesquisa que pagaram não perguntou</h3><p>Dez matérias entre 31 de julho e 17 de agosto nos dois contratantes. Zero perguntas no campo de 18 e 19.</p></article>
           <article class="headline-card missing-headline"><span class="outlet">Pauta</span><h3>Datafolha fez 7 perguntas sobre um caso em maio e nenhuma em agosto</h3><p>A bateria que mediu o custo eleitoral de um fato, e perguntou se o candidato deveria desistir, não teve equivalente em quatro meses.</p></article>
           <article class="headline-card missing-headline"><span class="outlet">Mercado aberto</span><h3>Datafolha mede 30 pontos do eleitorado ainda em aberto</h3><p>Vinte e seis por cento dizem que o voto pode mudar e quatro por cento estão indecisos. A diferença noticiada foi de seis.</p></article>
@@ -1316,8 +1384,8 @@
             <span class="stamp fact">Reprodução</span>
             <h3>Dados, auditoria e gráficos</h3>
             <p><span class="mono">scripts/datafolha-082026-audit.py</span> extrai território, consulta PNADC e TSE, repondera e calcula incerteza.<br><span class="mono">scripts/datafolha-082026-graficos.py</span> fecha a matriz IPF e gera os gráficos estratégicos.<br><span class="mono">scripts/datafolha-082026-figuras.py</span> gera as comparações de perfil e sensibilidade.<br><span class="mono">scripts/datafolha-082026-historico-renda.py</span> padroniza quatro ondas pela mesma PNADC.</p>
-            <p><strong>Segunda camada.</strong><br><span class="mono">scripts/datafolha-082026-cruzamentos.py</span> lê as 14 tabelas do anexo direto do texto do PDF, sem digitação manual, e valida a leitura recompondo o placar publicado a partir de cruzamentos independentes.<br><span class="mono">scripts/datafolha-082026-aprofundamento.py</span> calcula mercado aberto, campo contra peso, piso de ruído, vão, substituição, conversão e cobertura dos recortes.<br><span class="mono">scripts/datafolha-082026-figuras-fundo.py</span> desenha as onze figuras novas.<br><span class="mono">scripts/datafolha-082026-prints.py</span> recorta as páginas originais citadas.<br><span class="mono">scripts/datafolha-082026-pauta.py</span> extrai os blocos de pergunta dos quatro questionários de maio a agosto e classifica a pauta temática de cada onda.<br><span class="mono">scripts/datafolha-082026-cobertura.py</span> registra a linha do tempo do que os dois contratantes publicaram antes do campo, com as consultas de busca declaradas.</p>
-            <p>Saídas públicas: <a href="assets/datafolha_082026_data.json">base analítica</a>, <a href="assets/datafolha_082026_fluxo.json">matriz de transferência</a>, <a href="assets/datafolha_082026_historico_renda.json">série histórica de renda</a> e <a href="assets/datafolha_082026_fundo.json">segunda camada</a> , <a href="assets/datafolha_082026_pauta.json">comparação de pauta</a> e <a href="assets/datafolha_082026_cobertura.json">linha do tempo da cobertura</a>.</p>
+            <p><strong>Segunda camada.</strong><br><span class="mono">scripts/datafolha-082026-cruzamentos.py</span> lê as 14 tabelas do anexo direto do texto do PDF, sem digitação manual, e valida a leitura recompondo o placar publicado a partir de cruzamentos independentes.<br><span class="mono">scripts/datafolha-082026-aprofundamento.py</span> calcula mercado aberto, campo contra peso, piso de ruído, vão, substituição, conversão e cobertura dos recortes.<br><span class="mono">scripts/datafolha-082026-figuras-fundo.py</span> desenha as onze figuras novas.<br><span class="mono">scripts/datafolha-082026-prints.py</span> recorta as páginas originais citadas.<br><span class="mono">scripts/datafolha-082026-pauta.py</span> extrai os blocos de pergunta dos quatro questionários de maio a agosto e classifica a pauta temática de cada onda.<br><span class="mono">scripts/datafolha-082026-cobertura.py</span> registra a linha do tempo do que os dois contratantes publicaram antes do campo, com as consultas de busca declaradas.<br><span class="mono">scripts/datafolha-082026-documentos.py</span> lê o metadado de produção de cada PDF nas quatro ondas e compara com as datas de campo e divulgação.</p>
+            <p>Saídas públicas: <a href="assets/datafolha_082026_data.json">base analítica</a>, <a href="assets/datafolha_082026_fluxo.json">matriz de transferência</a>, <a href="assets/datafolha_082026_historico_renda.json">série histórica de renda</a> e <a href="assets/datafolha_082026_fundo.json">segunda camada</a> , <a href="assets/datafolha_082026_pauta.json">comparação de pauta</a> , <a href="assets/datafolha_082026_cobertura.json">linha do tempo da cobertura</a> e <a href="assets/datafolha_082026_documentos.json">datas de produção dos documentos</a>.</p>
           </article>
           <article class="card">
             <span class="stamp inference">Regra de evidência</span>
@@ -1333,7 +1401,7 @@
 
         <h3 class="mt-l">Fontes primárias e cobertura examinada</h3>
         <ol class="source-list">
-          <li>Datafolha, relatório BR-04496/2026, 51 páginas, campo 18–19/08/2026; tabelas completas nas páginas 23–51.</li>
+          <li>Datafolha, relatório BR-04496/2026, 51 páginas, campo 18–19/08/2026; tabelas completas nas páginas 23–51. O metadado do arquivo registra produção em 24/08/2026 às 16h27, três dias depois da divulgação.</li>
           <li>Datafolha, cruzamentos Lula × Flávio por renda: 20–21/05, página 23; 17–18/06, página 25; 22–23/07, página 18; 18–19/08, tabela 7.1, página 22.</li>
           <li>Datafolha, anexo de tabelas cruzadas, 29 páginas, 14 tabelas por 11 recortes; páginas 24 a 51 do PDF. A leitura foi validada recompondo Lula 47 e Flávio 43 a partir do cruzamento por identificação política (46,98 e 43,29) e por região (47,08 e 42,64).</li>
           <li>Datafolha, relatório de divulgação, página 12, grau de definição do voto por candidato, e página 13, motivação do voto por candidato.</li>

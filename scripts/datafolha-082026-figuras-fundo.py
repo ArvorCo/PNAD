@@ -23,11 +23,14 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
+from matplotlib.lines import Line2D  # noqa: E402
 from matplotlib.patches import Patch  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "analysis" / "datafolha_082026" / "aprofundamento.json"
 PAUTA = ROOT / "analysis" / "datafolha_082026" / "pauta.json"
+RENDA = ROOT / "analysis" / "datafolha_082026" / "historico_renda.json"
+DOCS = ROOT / "analysis" / "datafolha_082026" / "documentos.json"
 IMG = ROOT / "docs" / "img" / "datafolha_082026"
 IMG.mkdir(parents=True, exist_ok=True)
 
@@ -1244,6 +1247,229 @@ def alvos(data: dict) -> None:
     finish(fig, "fundo_alvos.png")
 
 
+def manchete_versus_renda(data: dict) -> None:
+    """O placar publicado e o mesmo placar sob a régua de renda do IBGE."""
+    ondas = data["waves"]
+    fig, ax = plt.subplots(figsize=(12.8, 7.6))
+    y = np.arange(len(ondas))[::-1]
+    altura = 0.34
+
+    for indice, onda in enumerate(ondas):
+        pub = onda["published_gap_lula_minus_flavio"]
+        adj = onda["adjusted_gap_lula_minus_flavio"]
+        ax.barh(
+            y[indice] + altura / 2 + 0.03, pub, height=altura, color=C["lula"], zorder=3
+        )
+        cor = C["lula"] if adj > 0.5 else (C["flavio"] if adj < -0.5 else C["gray"])
+        ax.barh(y[indice] - altura / 2 - 0.03, adj, height=altura, color=cor, zorder=3)
+
+        ax.text(
+            pub + 0.22,
+            y[indice] + altura / 2 + 0.03,
+            f"Lula +{pub:.0f}",
+            va="center",
+            fontsize=13,
+            fontweight="bold",
+            color=C["lula"],
+        )
+        if abs(adj) < 0.5:
+            rotulo, lado = "empate", 0.22
+        elif adj < 0:
+            rotulo, lado = f"Flávio +{abs(adj):.2f}".replace(".", ","), -0.22
+        else:
+            rotulo, lado = f"Lula +{adj:.2f}".replace(".", ","), 0.22
+        ax.text(
+            adj + lado,
+            y[indice] - altura / 2 - 0.03,
+            rotulo,
+            va="center",
+            ha="left" if lado > 0 else "right",
+            fontsize=13,
+            fontweight="bold",
+            color=cor,
+        )
+
+    ax.axvline(0, color=C["ink"], linewidth=1.6, zorder=4)
+    ax.text(
+        0, len(ondas) - 0.42, "empate", ha="center", fontsize=10.5, color=C["muted"]
+    )
+    ax.set_yticks(y)
+    ax.set_yticklabels([onda["label"] for onda in ondas], fontsize=14)
+    ax.set_xlim(-5.2, 7.6)
+    ax.set_xlabel("vantagem no 2º turno, em pontos percentuais", fontsize=10.5)
+    ax.set_xticks([-4, -2, 0, 2, 4, 6])
+    ax.set_xticklabels(["4 Flávio", "2", "0", "2", "4", "6 Lula"])
+    frame(ax)
+    ax.legend(
+        handles=[
+            Patch(color=C["lula"], label="o que foi publicado, e virou manchete"),
+            Patch(
+                color=C["flavio"],
+                label="a mesma pesquisa com a distribuição de renda do IBGE",
+            ),
+            Patch(color=C["gray"], label="empate sob a régua do IBGE"),
+        ],
+        frameon=False,
+        fontsize=10.4,
+        loc="upper center",
+        ncol=2,
+        bbox_to_anchor=(0.5, -0.12),
+    )
+    ax.set_title(
+        "Quatro manchetes de vantagem. Quatro contas que dizem o contrário.",
+        fontsize=19,
+        fontweight="bold",
+        loc="left",
+        pad=18,
+    )
+    fig.tight_layout()
+    note(
+        fig,
+        "Barra de cima: o saldo do segundo turno como o instituto publicou e a imprensa noticiou. "
+        "Barra de baixo: o mesmo relatório, as mesmas respostas,\ntrocando apenas a distribuição de renda pela da PNAD "
+        "Contínua do IBGE. Em nenhuma das quatro ondas a vantagem publicada sobrevive.\n"
+        "É análise de sensibilidade, não recontagem: mede de qual régua a manchete depende, não quem vence a eleição.",
+        bottom=0.30,
+        y=0.035,
+    )
+    finish(fig, "fundo_manchete_versus_renda.png")
+
+
+def documentos(data: dict) -> None:
+    """Quando cada documento passou a existir, contra o dia da manchete."""
+    ondas = data["ondas"]
+    fig, ax = plt.subplots(figsize=(11.8, 6.4))
+    y = np.arange(len(ondas))[::-1]
+    cores = {"questionario": C["green"], "bairros": C["gold"], "relatorio": C["lula"]}
+    marcas = {"questionario": "o", "bairros": "s", "relatorio": "D"}
+
+    for indice, onda in enumerate(ondas):
+        base = np.datetime64(onda["divulgacao"])
+        ax.barh(y[indice], 3, left=0, height=0.5, color=C["lula"], alpha=0.12, zorder=2)
+        for documento in onda["documentos"]:
+            dias = (np.datetime64(documento["criado_em"][:10]) - base) / np.timedelta64(
+                1, "D"
+            )
+            ax.scatter(
+                [dias],
+                [y[indice]],
+                s=190,
+                color=cores[documento["tipo"]],
+                marker=marcas[documento["tipo"]],
+                zorder=5,
+                edgecolor=C["paper"],
+                linewidth=1.4,
+            )
+        campo = (np.datetime64(onda["campo"][0]) - base) / np.timedelta64(1, "D")
+        ax.plot(
+            [campo, campo + 1],
+            [y[indice], y[indice]],
+            color=C["ink"],
+            linewidth=6,
+            solid_capstyle="butt",
+            zorder=3,
+            alpha=0.55,
+        )
+        ax.text(
+            3.25,
+            y[indice],
+            "+3 dias",
+            va="center",
+            fontsize=11,
+            color=C["lula"],
+            fontweight="bold",
+        )
+
+    ax.axvline(0, color=C["ink"], linewidth=1.8, zorder=4)
+    ax.set_ylim(-1.05, len(ondas) - 0.35)
+    ax.text(
+        0,
+        -0.78,
+        "divulgação: a manchete sai",
+        ha="center",
+        fontsize=11,
+        color=C["ink"],
+        fontweight="bold",
+    )
+    ax.text(
+        3.1,
+        -0.78,
+        "e aqui nasce o arquivo",
+        ha="center",
+        fontsize=11,
+        color=C["lula"],
+        fontweight="bold",
+    )
+    ax.set_yticks(y)
+    ax.set_yticklabels([onda["label"] for onda in ondas], fontsize=13)
+    ax.set_xlim(-8.5, 5.2)
+    ax.set_xlabel("dias em relação à divulgação", fontsize=10.5)
+    frame(ax)
+    ax.legend(
+        handles=[
+            Line2D(
+                [],
+                [],
+                marker="o",
+                linestyle="",
+                markersize=11,
+                color=C["green"],
+                label="questionário aplicado",
+            ),
+            Line2D(
+                [],
+                [],
+                marker="_",
+                linestyle="",
+                markersize=16,
+                markeredgewidth=4,
+                color=C["ink"],
+                label="campo",
+            ),
+            Line2D(
+                [],
+                [],
+                marker="s",
+                linestyle="",
+                markersize=10,
+                color=C["gold"],
+                label="anexo de municípios e bairros",
+            ),
+            Line2D(
+                [],
+                [],
+                marker="D",
+                linestyle="",
+                markersize=10,
+                color=C["lula"],
+                label="relatório completo, 51 páginas",
+            ),
+        ],
+        frameon=False,
+        fontsize=10,
+        loc="upper center",
+        ncol=4,
+        bbox_to_anchor=(0.5, -0.13),
+    )
+    ax.set_title(
+        "A manchete sai três dias antes do documento que permite conferi-la",
+        fontsize=18,
+        fontweight="bold",
+        loc="left",
+        pad=18,
+    )
+    fig.tight_layout()
+    note(
+        fig,
+        "Data de produção lida no metadado de cada PDF, que registra o instante antes do qual o arquivo não existia. "
+        "Em quatro ondas seguidas o relatório\ncompleto foi gerado exatamente três dias depois da divulgação: 25/05, 22/06, "
+        "27/07 e 24/08. O questionário sempre fica pronto antes do campo.",
+        bottom=0.28,
+        y=0.035,
+    )
+    finish(fig, "fundo_documentos.png")
+
+
 def pauta(data: dict) -> None:
     """Quantas perguntas de cada tipo cada onda aplicou."""
     ondas = data["ondas"]
@@ -1345,6 +1571,8 @@ def main() -> None:
     conversao(data)
     alvos(data)
     pauta(json.loads(PAUTA.read_text(encoding="utf-8")))
+    manchete_versus_renda(json.loads(RENDA.read_text(encoding="utf-8")))
+    documentos(json.loads(DOCS.read_text(encoding="utf-8")))
 
 
 if __name__ == "__main__":

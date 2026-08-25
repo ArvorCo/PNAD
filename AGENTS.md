@@ -260,6 +260,20 @@ A comparação de pauta entre ondas fica muito mais forte quando cruzada com o q
 - **A defesa do instituto entra no nosso texto, não na resposta dele.** Em agosto/2026: as mensagens da PF que citam nominalmente o filho do presidente só vieram a público em 20/08, depois de o campo fechar. Registramos isso antes de qualquer conclusão, e mostramos o que ela não explica: o primeiro inquérito era notícia desde 31/07 e em maio o instituto transformou um fato da semana anterior em sete perguntas.
 - **Nunca diga que o veículo escondeu o caso.** A busca da própria Folha devolve 377 resultados para o caso que atinge a oposição e 79 para o que atinge o governo. Os dois aparecem. O desequilíbrio está no questionário que a cobertura contratou, e essa distinção é o que torna a crítica irrespondível.
 
+## Data de produção dos documentos (método da casa, 25/08/2026)
+Todo PDF guarda no campo `creationDate` o instante em que foi produzido. Reprodução: `python3 scripts/datafolha-082026-documentos.py`, que lê esse metadado nos questionários, anexos territoriais e relatórios completos e compara com campo e divulgação.
+- **Achado do Datafolha 2026, quatro ondas em quatro:** o relatório completo é gerado **exatamente três dias depois da divulgação** (25/05, 22/06, 27/07 e 24/08). O questionário fica pronto de seis a sete dias antes do campo e o anexo territorial no dia da divulgação ou no seguinte, o que é compatível com a Res. TSE 23.600 art. 2º §7º. Durante os três dias entre a manchete e o arquivo, a discussão pública corre sem que exista o documento que permite conferi-la.
+- **O que o metadado prova:** um arquivo criado no dia 24 não podia estar disponível no dia 21. **O que não prova:** a data de publicação efetiva, nem irregularidade. Prazo de depósito é matéria de resolução e exige ler o dispositivo, não o arquivo. Escreva as duas coisas juntas.
+- Rode esse teste em toda auditoria nova. É barato, é interno ao arquivo do próprio instituto e não depende de nenhuma fonte externa.
+
+## Como criticar uma manchete de pesquisa (regra fixa)
+Uma manchete que diz "lidera" afirma liderança identificada, e a afirmação precisa passar em **dois testes independentes**, nomeados assim no texto:
+1. **Amostragem**: o intervalo de 95% da diferença não pode conter o zero. Em agosto/2026, 47 × 43 dá de −0,10 a +8,10 e contém.
+2. **Composição**: o sinal precisa sobreviver à troca da margem dominante pela régua oficial. Em agosto vira Flávio +1,78, e nas quatro ondas.
+- **Publique a versão correta da frase**, para que a crítica seja construtiva e barata de aceitar: "Lula tem 47%, Flávio tem 43%, e a diferença não separa os dois com 95% de confiança."
+- **Diga onde a manchete acerta.** No 1º turno "lidera" é correto (+2,34 a +9,66). O erro é usar a mesma palavra para duas situações estatisticamente diferentes. Crítica precisa vale mais que crítica geral e é irrespondível.
+- **O gráfico que comunica isso** é de barras divergentes de um zero central, uma linha por onda, publicado acima e reponderado abaixo: `fundo_manchete_versus_renda.png`. O espelho é imediato e dispensa legenda técnica.
+
 ## Thread educativa (padrão a partir do Datafolha 08/2026)
 A thread deixou de ser resumo do dossiê e virou aula. Referência: `scripts/datafolha-082026-thread.py`, que gera `docs/datafolha_082026_thread.html` com dezoito cards 16:9 e o texto copiável embaixo de cada um.
 - **Arco fixo**: tese, ficha do documento, quatro aulas (o que é amostra, margem da diferença, estratificação e cota, ponderação), a régua, a conta em quatro passos, a série, os limites, a robustez, conheça o país, checklist de leitura, o que exigir de transparência, fecho.

@@ -102,11 +102,11 @@ CARDS: list[dict] = [
         "eyebrow": "Thread · Datafolha 21/08/2026",
         "title": "Uma pesquisa não mente.",
         "title_em": "Ela depende de uma régua.",
-        "lede": "Dezoito cards que ensinam a ler qualquer pesquisa e refazem, com os números na tela, a conta que leva o 2º turno de <b>47 × 43</b> para <b>44,2 × 46,0</b>.",
+        "lede": "Vinte e três cards que ensinam a ler qualquer pesquisa e refazem, com os números na tela, a conta que leva o 2º turno de <b>47 × 43</b> para <b>44,2 × 46,0</b>.",
         "stats": [
             ("3 linhas", "de média ponderada"),
             ("4 de 4", "ondas sem vantagem de Lula"),
-            ("0", "documentos sigilosos"),
+            ("+3 dias", "da manchete até o relatório"),
         ],
         "foot": "arvor intelligence · perícia eleitoral",
         "accent": "blue",
