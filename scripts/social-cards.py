@@ -98,6 +98,21 @@ CARDS: list[dict] = [
         "photo": "img/atlas_072026/web/eleicao-rua.jpg",
     },
     {
+        "slug": "datafolha_082026_thread",
+        "eyebrow": "Thread · Datafolha 21/08/2026",
+        "title": "Uma pesquisa não mente.",
+        "title_em": "Ela depende de uma régua.",
+        "lede": "Dezoito cards que ensinam a ler qualquer pesquisa e refazem, com os números na tela, a conta que leva o 2º turno de <b>47 × 43</b> para <b>44,2 × 46,0</b>.",
+        "stats": [
+            ("3 linhas", "de média ponderada"),
+            ("4 de 4", "ondas sem vantagem de Lula"),
+            ("0", "documentos sigilosos"),
+        ],
+        "foot": "arvor intelligence · perícia eleitoral",
+        "accent": "blue",
+        "thread": True,
+    },
+    {
         "slug": "nexus_btg_240826",
         "eyebrow": "BTG/Nexus · 24/08/2026 · BR-09028/2026",
         "title": "Há um roteiro.",

@@ -1,0 +1,1086 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Datafolha 08/2026: a thread que ensina a ler a pesquisa · Arvor</title>
+<meta name="description" content="Thread educativa da auditoria Datafolha BR-04496/2026: o que é amostra, margem, estratificação e ponderação, a reponderação por renda refeita passo a passo com a PNAD do IBGE, e a série de quatro ondas que muda a narrativa da eleição.">
+<link rel="canonical" href="https://brasil.arvor.co/datafolha_082026_thread.html">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0c0d0b">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Arvor Intelligence">
+<meta property="og:title" content="A thread que ensina a ler uma pesquisa eleitoral">
+<meta property="og:description" content="Dezoito cards: margem da diferença, estratificação, ponderação e a conta de três linhas que leva o segundo turno de 47×43 para 44,2×46,0.">
+<meta property="og:url" content="https://brasil.arvor.co/datafolha_082026_thread.html">
+<meta property="og:image" content="https://brasil.arvor.co/img/og/datafolha_082026_thread.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@leonardodias">
+<meta name="twitter:title" content="A thread que ensina a ler uma pesquisa eleitoral">
+<meta name="twitter:description" content="Do que é uma amostra até a média ponderada que troca o sinal do segundo turno. Dezoito cards com o texto pronto.">
+<meta name="twitter:image" content="https://brasil.arvor.co/img/og/datafolha_082026_thread.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,500&amp;family=IBM+Plex+Mono:wght@400;600&amp;family=IBM+Plex+Sans+Condensed:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --bg:#0c0d0b;--bg2:#131512;--bg3:#191c18;--ink:#f4f2ea;--ink2:#ddd8ca;
+  --muted:#9a9789;--faint:#868376;--lime:#cfe63c;--cyan:#45c9c2;--amber:#f0a930;
+  --green:#34b47e;--lula:#e0483a;--flavio:#3f8fd6;
+  --line:rgb(244 242 234 / 13%);--line2:rgb(244 242 234 / 26%);
+  --display:Fraunces,Georgia,serif;--sans:"IBM Plex Sans Condensed",Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;--wrap:min(1180px,calc(100% - 40px));
+}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:17px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.wrap{width:var(--wrap);margin:0 auto}
+a{color:var(--cyan)}
+.top{padding:34px 0 8px;display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between}
+.brand-lockup{display:flex;align-items:center;gap:11px;font-family:var(--mono);
+  font-size:.76rem;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+.brand-lockup img{width:26px;height:26px;border-radius:4px}
+.top .back{font-family:var(--mono);font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--lime);text-decoration:none;border:1px solid var(--line2);border-radius:999px;padding:7px 15px}
+h1{font-family:var(--display);font-size:clamp(2.3rem,6.4vw,4.4rem);line-height:.98;
+  letter-spacing:-.028em;margin:18px 0 0;font-weight:900}
+h1 em{display:block;font-style:italic;color:var(--lime);font-weight:500}
+.deck{max-width:76ch;color:var(--ink2);margin:20px 0 0;font-size:1.06rem}
+.howto{margin:26px 0 0;border:1px solid var(--line);border-left:3px solid var(--cyan);
+  border-radius:4px;background:var(--bg3);padding:18px 20px;color:var(--ink2);font-size:.95rem}
+.howto b{color:var(--ink)}
+.legend{display:flex;flex-wrap:wrap;gap:9px;margin:20px 0 0}
+.legend span{font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;
+  border:1px solid currentcolor;border-radius:999px;padding:5px 11px}
+.rail{position:sticky;top:0;z-index:30;margin:30px 0 0;padding:11px 0;
+  background:rgb(12 13 11 / 93%);backdrop-filter:blur(10px);border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line)}
+.rail .wrap{display:flex;gap:5px;align-items:center;overflow-x:auto;scrollbar-width:none}
+.rail .wrap::-webkit-scrollbar{display:none}
+.rail b{font-family:var(--mono);font-size:.68rem;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--faint);margin-right:8px;white-space:nowrap}
+.rail a{width:26px;height:26px;flex:0 0 auto;display:grid;place-items:center;border-radius:5px;
+  border:1px solid var(--line);color:var(--muted);text-decoration:none;
+  font-family:var(--mono);font-size:.72rem}
+.rail a:hover{color:var(--ink);border-color:var(--line2)}
+.post{margin:52px 0 0;scroll-margin-top:64px}
+.post-label{font-family:var(--mono);font-size:.72rem;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--faint);margin-bottom:11px}
+.post-label b{color:var(--ink)}
+.card{position:relative;aspect-ratio:16/9;border:1px solid var(--line2);border-radius:8px;
+  overflow:hidden;background:#0a0b09;container-type:inline-size;display:flex;flex-direction:column}
+.card::before{content:"";position:absolute;inset:0;background-image:var(--photo);
+  background-size:cover;background-position:var(--pos,center);opacity:.30}
+.card::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(102deg,rgb(10 11 9 / 96%) 0 46%,rgb(10 11 9 / 78%) 68%,rgb(10 11 9 / 88%) 100%)}
+.card>*{position:relative;z-index:2}
+.stripe{position:absolute;inset:0 0 auto 0;height:4px;z-index:3;background:var(--accent)}
+.card-head{display:flex;align-items:center;justify-content:space-between;gap:14px;
+  padding:2.2cqw 2.6cqw 0}
+.chead{display:flex;align-items:center;gap:9px}
+.chead img{width:2.6cqw;height:2.6cqw;min-width:22px;min-height:22px;border-radius:4px}
+.chead b{display:block;font-size:1.35cqw;line-height:1.2}
+.chead span{display:block;font-family:var(--mono);font-size:1.05cqw;color:var(--muted)}
+.pno{font-family:var(--mono);font-size:1.15cqw;color:var(--accent);letter-spacing:.1em}
+.card-body{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.18fr);
+  gap:2.4cqw;padding:1.6cqw 2.6cqw;align-items:stretch}
+.card-body>.said{display:flex;flex-direction:column;justify-content:center;min-width:0}
+.lead-tag{display:inline-block;font-family:var(--mono);font-size:1.02cqw;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--accent);border:1px solid currentcolor;
+  border-radius:999px;padding:.45cqw 1cqw}
+.metric{font-family:var(--display);font-weight:900;font-size:3.5cqw;line-height:.98;
+  letter-spacing:-.03em;color:var(--accent);margin:1.1cqw 0 .2cqw}
+.card h2{font-family:var(--display);font-size:2.05cqw;line-height:1.1;margin:0 0 .9cqw;font-weight:700}
+.card .t{font-size:1.28cqw;line-height:1.5;color:var(--ink2);margin:0}
+.kchips{display:flex;flex-wrap:wrap;gap:.6cqw;margin-top:1.2cqw}
+.kchip{font-family:var(--mono);font-size:1cqw;border:1px solid currentcolor;border-radius:999px;
+  padding:.4cqw .85cqw;white-space:nowrap}
+.kchip.l{color:var(--lula)}.kchip.b{color:var(--flavio)}.kchip.a{color:var(--amber)}
+.kchip.c{color:var(--cyan)}.kchip.g{color:var(--green)}
+.viz{border:1px solid var(--line);border-radius:6px;background:rgb(244 242 234 / 5%);padding:1.6cqw;
+  min-width:0;display:flex;align-items:center;justify-content:center}
+.viz svg{width:100%;height:auto;display:block}
+.card-foot{flex:0 0 auto;display:flex;justify-content:space-between;gap:12px;
+  padding:1.3cqw 2.6cqw;font-family:var(--mono);font-size:1cqw;color:var(--faint);
+  border-top:1px solid var(--line)}
+.copy{margin:14px 0 0;border:1px solid var(--line);border-radius:6px;background:var(--bg2);
+  padding:20px 22px;font-family:var(--mono);font-size:.9rem;line-height:1.72;color:var(--ink2);
+  white-space:pre-wrap;position:relative}
+.cc{position:absolute;top:12px;right:18px;font-size:.7rem;color:var(--faint);letter-spacing:.09em}
+.copy-btn{margin-top:10px;font-family:var(--mono);font-size:.74rem;letter-spacing:.11em;
+  text-transform:uppercase;background:transparent;color:var(--lime);border:1px solid var(--line2);
+  border-radius:999px;padding:9px 18px;cursor:pointer}
+.copy-btn:hover{border-color:var(--lime)}
+footer{margin:72px 0 0;border-top:1px solid var(--line);padding:34px 0 60px;color:var(--muted);font-size:.92rem}
+footer h2{font-family:var(--display);font-size:1.6rem;margin:0 0 10px;color:var(--ink)}
+footer p{max-width:78ch}
+/* No celular o card 16:9 fica pequeno demais para ler. Ele deixa de ser
+   proporcional e passa a empilhar, com tipografia em pixel. O card 16:9 para
+   anexar continua exato na largura de trabalho, acima de 720px. */
+@media (width <= 720px){
+  body{font-size:16px}
+  .card{aspect-ratio:auto}
+  .card-head{padding:16px 18px 0}
+  .chead img{width:26px;height:26px}
+  .chead b{font-size:.92rem}
+  .chead span{font-size:.72rem}
+  .pno{font-size:.8rem}
+  .card-body{grid-template-columns:minmax(0,1fr);gap:16px;padding:16px 18px 20px}
+  .lead-tag{font-size:.68rem;padding:5px 11px}
+  .metric{font-size:2.5rem;margin:12px 0 4px}
+  .card h2{font-size:1.5rem;margin-bottom:9px}
+  .card .t{font-size:.98rem;line-height:1.55}
+  .kchips{gap:7px;margin-top:13px}
+  .kchip{font-size:.7rem;padding:4px 9px}
+  .viz{padding:14px}
+  .card-foot{padding:12px 18px;font-size:.68rem;flex-direction:column;gap:4px}
+  .copy{padding:16px 15px;font-size:.84rem}
+  .cc{position:static;display:block;text-align:right;margin-bottom:8px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <div class="brand-lockup"><img src="img/arvor_logo.png" alt="Arvor"><span>Arvor Intelligence · perícia eleitoral</span></div>
+  <a class="back" href="datafolha_082026.html">Ir para o dossiê completo</a>
+</header>
+<h1>Uma pesquisa não mente.<em>Ela depende de uma régua.</em></h1>
+<p class="deck">Thread da auditoria do <b>Datafolha de 18 e 19 de agosto de 2026</b>, registro TSE BR-04496/2026, 2.058 entrevistas. Dezoito cards que ensinam o suficiente de estatística para você ler qualquer pesquisa sozinho, e que refazem, com os números na tela, a conta que leva o segundo turno publicado de <b>47 × 43</b> para <b>44,2 × 46,0</b> quando a distribuição de renda vem do IBGE.</p>
+<div class="howto"><b>Como usar.</b> Cada bloco traz o card 16:9 para anexar e, logo abaixo, o texto exato do post com a contagem de caracteres. O botão copia sem formatação. Aula ensina o conceito. Fato publicado vem com a página do relatório. A conta vem com a fórmula aberta e o resultado conferível.</div>
+<div class="legend"><span style="color:#cfe63c">a tese</span><span style="color:#45c9c2">aula</span><span style="color:#f0a930">a conta</span><span style="color:#3f8fd6">fato publicado</span><span style="color:#34b47e">o que fazer</span></div>
+</div>
+<nav class="rail" aria-label="Ir para o post"><div class="wrap"><b>18 posts</b><a href="#p1">1</a><a href="#p2">2</a><a href="#p3">3</a><a href="#p4">4</a><a href="#p5">5</a><a href="#p6">6</a><a href="#p7">7</a><a href="#p8">8</a><a href="#p9">9</a><a href="#p10">10</a><a href="#p11">11</a><a href="#p12">12</a><a href="#p13">13</a><a href="#p14">14</a><a href="#p15">15</a><a href="#p16">16</a><a href="#p17">17</a><a href="#p18">18</a></div></nav>
+<div class="wrap">
+
+<section class="post" id="p1">
+  <div class="post-label">Post 1/18 · a tese · <b>mesma pesquisa, duas eleições</b></div>
+  <div class="card" style="--accent:#cfe63c;--photo:url('img/quaest_082026/web/banca.jpg');--pos:center 40%">
+    <span class="stripe" aria-hidden="true"></span>
+    <div class="card-head">
+      <div class="chead"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · perícia eleitoral</span></div></div>
+      <div class="pno">1/18</div>
+    </div>
+    <div class="card-body">
+      <div class="said">
+        <span class="lead-tag">datafolha · 18–19/08/2026 · n = 2.058 · BR-04496/2026</span>
+        <p class="metric">47×43 vira 44,2×46,0</p>
+        <h2>A manchete depende de uma régua</h2>
+        <p class="t">A Folha e a Globo publicaram: Lula 47, Flávio 43 no segundo turno. O número está certo. O que ele significa depende de uma escolha que a manchete não conta: qual retrato do Brasil a pesquisa usa para pesar as respostas.</p>
+        <div class="kchips"><span class="kchip l">50% até 2 SM na pesquisa</span><span class="kchip c">35,4% na PNAD do IBGE</span><span class="kchip a">sensibilidade, não recontagem</span></div>
+      </div>
+      <div class="viz"><svg viewBox="0 0 660 252" role="img" aria-label="segundo turno, 18 e 19 de agosto de 2026"><text x="0" y="22" font-family="IBM Plex Mono, monospace" font-size="12" fill="#8f8c7f" font-weight="400" text-anchor="start">segundo turno, 18 e 19 de agosto de 2026</text><text x="0" y="88" font-family="Fraunces, Georgia, serif" font-size="56" fill="#f4f2ea" font-weight="700" text-anchor="start">47 × 43</text><text x="0" y="116" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#9a9789" font-weight="400" text-anchor="start">publicado pelo instituto</text><text x="0" y="200" font-family="Fraunces, Georgia, serif" font-size="56" fill="#cfe63c" font-weight="700" text-anchor="start">44,2 × 46,0</text><text x="0" y="228" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#9a9789" font-weight="400" text-anchor="start">com a distribuição de renda do IBGE</text></svg></div>
+    </div>
+    <div class="card-foot"><span>arvor intelligence · brasil.arvor.co</span><span>relatório completo, p. 22 do anexo</span></div>
+  </div>
+  <div class="copy" data-copy="A Folha e a Globo publicaram no dia 21: Lula 47, Flávio 43 no segundo turno. O número está certo. Eu conferi célula por célula.
+
+O que ele significa depende de uma escolha que nenhuma manchete conta. Toda pesquisa pesa as respostas para que a amostra pareça com o país. Para isso, ela precisa de um retrato do país. E o retrato de renda que o Datafolha usa não é o do IBGE.
+
+O Datafolha apresenta um Brasil em que 50% dos eleitores vivem com até dois salários mínimos no domicílio. A PNAD Contínua, a maior pesquisa domiciliar do país, mede 35,4%.
+
+Troque só isso. Nada mais. O mesmo relatório devolve Lula 44,2 e Flávio 46,0.
+
+Nesta thread eu mostro a conta inteira, com os números na tela, para você refazer sozinho.
+
+E, no caminho, ensino o suficiente de estatística para você nunca mais precisar acreditar numa manchete de pesquisa: o que é amostra, por que a margem da capa não serve para comparar dois candidatos, como uma amostra nacional é sorteada e o que exatamente acontece quando um instituto pondera.
+
+Dezoito posts. Nenhum documento sigiloso. Nenhuma conta que não caiba numa planilha."><span class="cc">1099 chars</span>A Folha e a Globo publicaram no dia 21: Lula 47, Flávio 43 no segundo turno. O número está certo. Eu conferi célula por célula.
+
+O que ele significa depende de uma escolha que nenhuma manchete conta. Toda pesquisa pesa as respostas para que a amostra pareça com o país. Para isso, ela precisa de um retrato do país. E o retrato de renda que o Datafolha usa não é o do IBGE.
+
+O Datafolha apresenta um Brasil em que 50% dos eleitores vivem com até dois salários mínimos no domicílio. A PNAD Contínua, a maior pesquisa domiciliar do país, mede 35,4%.
+
+Troque só isso. Nada mais. O mesmo relatório devolve Lula 44,2 e Flávio 46,0.
+
+Nesta thread eu mostro a conta inteira, com os números na tela, para você refazer sozinho.
+
+E, no caminho, ensino o suficiente de estatística para você nunca mais precisar acreditar numa manchete de pesquisa: o que é amostra, por que a margem da capa não serve para comparar dois candidatos, como uma amostra nacional é sorteada e o que exatamente acontece quando um instituto pondera.
+
+Dezoito posts. Nenhum documento sigiloso. Nenhuma conta que não caiba numa planilha.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+<section class="post" id="p2">
+  <div class="post-label">Post 2/18 · fato publicado · <b>a ficha</b></div>
+  <div class="card" style="--accent:#3f8fd6;--photo:url('img/quaest_082026/web/urna-maquina.jpg')">
+    <span class="stripe" aria-hidden="true"></span>
+    <div class="card-head">
+      <div class="chead"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · perícia eleitoral</span></div></div>
+      <div class="pno">2/18</div>
+    </div>
+    <div class="card-body">
+      <div class="said">
+        <span class="lead-tag">tudo isto é público e qualquer um baixa</span>
+        <p class="metric">51 páginas</p>
+        <h2>Comece pelo documento, não pela notícia</h2>
+        <p class="t">Toda pesquisa registrada no TSE publica o relatório completo, o questionário aplicado, o plano amostral, a lista de municípios e a nota fiscal. Está no PesqEle, é grátis e não exige cadastro.</p>
+        <div class="kchips"><span class="kchip c">PesqEle é público</span><span class="kchip b">questionário aplicado</span><span class="kchip a">R$ 307.641,60</span></div>
+      </div>
+      <div class="viz"><svg viewBox="0 0 660 244" role="img" aria-label="o que existe e quase ninguém abre"><text x="0" y="20" font-family="IBM Plex Mono, monospace" font-size="12" fill="#8f8c7f" font-weight="400" text-anchor="start">o que existe e quase ninguém abre</text><circle cx="12" cy="49" r="11" fill="none" stroke="#45c9c2" stroke-width="1.6"/><text x="12" y="54" font-family="IBM Plex Mono, monospace" font-size="12" fill="#45c9c2" font-weight="400" text-anchor="middle">1</text><text x="36" y="52" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">Relatório completo, 51 páginas</text><text x="36" y="73" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="13" fill="#9a9789" font-weight="400" text-anchor="start">As 22 primeiras viram notícia. As 29 do anexo trazem 14 tabelas cruzadas.</text><circle cx="12" cy="103" r="11" fill="none" stroke="#45c9c2" stroke-width="1.6"/><text x="12" y="108" font-family="IBM Plex Mono, monospace" font-size="12" fill="#45c9c2" font-weight="400" text-anchor="middle">2</text><text x="36" y="106" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">Questionário aplicado, 8 páginas</text><text x="36" y="127" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="13" fill="#9a9789" font-weight="400" text-anchor="start">A ordem, o texto exato e os cartões mostrados ao entrevistado.</text><circle cx="12" cy="157" r="11" fill="none" stroke="#45c9c2" stroke-width="1.6"/><text x="12" y="162" font-family="IBM Plex Mono, monospace" font-size="12" fill="#45c9c2" font-weight="400" text-anchor="middle">3</text><text x="36" y="160" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">Registro no TSE</text><text x="36" y="181" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="13" fill="#9a9789" font-weight="400" text-anchor="start">Plano amostral, cotas declaradas, fonte dos dados e valor pago.</text><circle cx="12" cy="211" r="11" fill="none" stroke="#45c9c2" stroke-width="1.6"/><text x="12" y="216" font-family="IBM Plex Mono, monospace" font-size="12" fill="#45c9c2" font-weight="400" text-anchor="middle">4</text><text x="36" y="214" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">Anexo de bairros</text><text x="36" y="235" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="13" fill="#9a9789" font-weight="400" text-anchor="start">Município, bairro e setor censitário de cada entrevista.</text></svg></div>
+    </div>
+    <div class="card-foot"><span>pesqele-divulgacao.tse.jus.br</span><span>registro BR-04496/2026</span></div>
+  </div>
+  <div class="copy" data-copy="Antes de qualquer conta, a ficha. Datafolha, registro TSE BR-04496/2026. Campo em 18 e 19 de agosto de 2026. 2.058 entrevistas presenciais em pontos de fluxo, em 128 municípios. Contrataram a Folha de S.Paulo e a TV Globo, por R$ 307.641,60.
+
+Tudo isso é público. O sistema chama PesqEle, é do Tribunal Superior Eleitoral, é grátis e não pede cadastro. De lá saem o relatório completo de 51 páginas, o questionário aplicado com 8 páginas, o plano amostral, a lista de municípios e bairros e as notas fiscais.
+
+É muita transparência, e é bom que seja. O problema não é falta de documento. É que a cobertura para na página 2 e o país inteiro discute duas linhas de um arquivo de cinquenta e uma páginas.
+
+O relatório tem duas partes. As vinte e duas primeiras páginas são a apresentação, e é de lá que sai a notícia. As vinte e nove seguintes são o anexo de tabelas cruzadas: catorze tabelas, cada uma repartida por onze recortes, de renda a religião.
+
+As outras quarenta e nove páginas estão abertas há dias e continuam abertas agora. Nesta thread nós vamos até elas."><span class="cc">1066 chars</span>Antes de qualquer conta, a ficha. Datafolha, registro TSE BR-04496/2026. Campo em 18 e 19 de agosto de 2026. 2.058 entrevistas presenciais em pontos de fluxo, em 128 municípios. Contrataram a Folha de S.Paulo e a TV Globo, por R$ 307.641,60.
+
+Tudo isso é público. O sistema chama PesqEle, é do Tribunal Superior Eleitoral, é grátis e não pede cadastro. De lá saem o relatório completo de 51 páginas, o questionário aplicado com 8 páginas, o plano amostral, a lista de municípios e bairros e as notas fiscais.
+
+É muita transparência, e é bom que seja. O problema não é falta de documento. É que a cobertura para na página 2 e o país inteiro discute duas linhas de um arquivo de cinquenta e uma páginas.
+
+O relatório tem duas partes. As vinte e duas primeiras páginas são a apresentação, e é de lá que sai a notícia. As vinte e nove seguintes são o anexo de tabelas cruzadas: catorze tabelas, cada uma repartida por onze recortes, de renda a religião.
+
+As outras quarenta e nove páginas estão abertas há dias e continuam abertas agora. Nesta thread nós vamos até elas.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+<section class="post" id="p3">
+  <div class="post-label">Post 3/18 · aula · <b>aula 1</b></div>
+  <div class="card" style="--accent:#45c9c2;--photo:url('img/quaest_082026/web/feira.jpg')">
+    <span class="stripe" aria-hidden="true"></span>
+    <div class="card-head">
+      <div class="chead"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · perícia eleitoral</span></div></div>
+      <div class="pno">3/18</div>
+    </div>
+    <div class="card-body">
+      <div class="said">
+        <span class="lead-tag">o que é uma pesquisa, sem jargão</span>
+        <p class="metric">2.058 para 158 milhões</p>
+        <h2>A colher e a panela</h2>
+        <p class="t">Você não precisa tomar a sopa inteira para saber se está salgada. Precisa mexer bem e provar uma colher. Pesquisa é isso: 2.058 pessoas para falar de 158 milhões de eleitores.</p>
+        <div class="kchips"><span class="kchip c">amostra</span><span class="kchip b">universo</span><span class="kchip a">mexer bem = sortear</span></div>
+      </div>
+      <div class="viz"><svg viewBox="0 0 660 326" role="img" aria-label="por que 2.058 pessoas conseguem falar do país"><text x="0" y="20" font-family="IBM Plex Mono, monospace" font-size="12" fill="#8f8c7f" font-weight="400" text-anchor="start">por que 2.058 pessoas conseguem falar do país</text><rect x="0.0" y="46.0" width="660.0" height="60.0" rx="4" fill="rgba(244,242,234,.05)" opacity="1.0"/><rect x="0.0" y="46.0" width="4.0" height="60.0" rx="0" fill="#45c9c2" opacity="1.0"/><text x="20" y="72" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8f8c7f" font-weight="400" text-anchor="start">passo 1</text><text x="20" y="92" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">Mexer a panela é sortear</text><text x="640" y="84" font-family="Fraunces, Georgia, serif" font-size="20" fill="#45c9c2" font-weight="700" text-anchor="end">aleatório</text><rect x="0.0" y="118.0" width="660.0" height="60.0" rx="4" fill="rgba(244,242,234,.05)" opacity="1.0"/><rect x="0.0" y="118.0" width="4.0" height="60.0" rx="0" fill="#45c9c2" opacity="1.0"/><text x="20" y="144" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8f8c7f" font-weight="400" text-anchor="start">passo 2</text><text x="20" y="164" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">Se o sorteio é honesto, a colher representa</text><text x="640" y="156" font-family="Fraunces, Georgia, serif" font-size="20" fill="#45c9c2" font-weight="700" text-anchor="end">amostra</text><rect x="0.0" y="190.0" width="660.0" height="60.0" rx="4" fill="rgba(244,242,234,.05)" opacity="1.0"/><rect x="0.0" y="190.0" width="4.0" height="60.0" rx="0" fill="#cfe63c" opacity="1.0"/><text x="20" y="216" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8f8c7f" font-weight="400" text-anchor="start">passo 3</text><text x="20" y="236" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">Quanto maior a colher, menor o erro</text><text x="640" y="228" font-family="Fraunces, Georgia, serif" font-size="20" fill="#cfe63c" font-weight="700" text-anchor="end">±2 p.p.</text><rect x="0.0" y="262.0" width="660.0" height="60.0" rx="4" fill="rgba(244,242,234,.05)" opacity="1.0"/><rect x="0.0" y="262.0" width="4.0" height="60.0" rx="0" fill="#e0483a" opacity="1.0"/><text x="20" y="288" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8f8c7f" font-weight="400" text-anchor="start">passo 4</text><text x="20" y="308" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">Colher mal mexida não representa nada</text><text x="640" y="300" font-family="Fraunces, Georgia, serif" font-size="20" fill="#e0483a" font-weight="700" text-anchor="end">viés</text></svg></div>
+    </div>
+    <div class="card-foot"><span>eleitorado residente no Brasil: 157.846.602</span><span>TSE, competência junho de 2026</span></div>
+  </div>
+  <div class="copy" data-copy="Aula 1. Como 2.058 pessoas falam por 158 milhões de eleitores.
+
+Você não precisa tomar a sopa inteira para saber se está salgada. Precisa mexer bem e provar uma colher. É exatamente isso que uma pesquisa faz.
+
+O segredo não é o tamanho da colher, é o mexer. Se o sorteio é honesto, uma colher pequena diz muito sobre a panela. Se a panela não foi mexida, nem uma tigela inteira serve.
+
+Daí vem a diferença entre dois erros que costumam ser confundidos.
+
+Erro de amostragem é o azar do sorteio. Ele encolhe quando a amostra cresce e é o que a margem de erro mede.
+
+Viés é a panela mal mexida: quando um tipo de gente tem mais chance de cair na colher do que outro. Esse não encolhe com amostra maior. Só encolhe com desenho melhor, ou com correção declarada.
+
+Um exemplo de viés que você reconhece na hora: entrevistar só em ponto de fluxo, no meio da tarde, num dia útil. Quem está trabalhando dentro de um escritório fechado tem menos chance de ser abordado que quem circula na rua. Aumentar a amostra de 2 mil para 20 mil não conserta isso. Só o desenho conserta, ou uma correção declarada depois.
+
+Guarde essa distinção entre erro de sorteio e viés. A thread inteira depende dela."><span class="cc">1183 chars</span>Aula 1. Como 2.058 pessoas falam por 158 milhões de eleitores.
+
+Você não precisa tomar a sopa inteira para saber se está salgada. Precisa mexer bem e provar uma colher. É exatamente isso que uma pesquisa faz.
+
+O segredo não é o tamanho da colher, é o mexer. Se o sorteio é honesto, uma colher pequena diz muito sobre a panela. Se a panela não foi mexida, nem uma tigela inteira serve.
+
+Daí vem a diferença entre dois erros que costumam ser confundidos.
+
+Erro de amostragem é o azar do sorteio. Ele encolhe quando a amostra cresce e é o que a margem de erro mede.
+
+Viés é a panela mal mexida: quando um tipo de gente tem mais chance de cair na colher do que outro. Esse não encolhe com amostra maior. Só encolhe com desenho melhor, ou com correção declarada.
+
+Um exemplo de viés que você reconhece na hora: entrevistar só em ponto de fluxo, no meio da tarde, num dia útil. Quem está trabalhando dentro de um escritório fechado tem menos chance de ser abordado que quem circula na rua. Aumentar a amostra de 2 mil para 20 mil não conserta isso. Só o desenho conserta, ou uma correção declarada depois.
+
+Guarde essa distinção entre erro de sorteio e viés. A thread inteira depende dela.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+<section class="post" id="p4">
+  <div class="post-label">Post 4/18 · aula · <b>aula 2</b></div>
+  <div class="card" style="--accent:#45c9c2;--photo:url('img/quaest_082026/web/urna-fila.jpg')">
+    <span class="stripe" aria-hidden="true"></span>
+    <div class="card-head">
+      <div class="chead"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · perícia eleitoral</span></div></div>
+      <div class="pno">4/18</div>
+    </div>
+    <div class="card-body">
+      <div class="said">
+        <span class="lead-tag">a margem que a capa não traz</span>
+        <p class="metric">±2 não é ±2</p>
+        <h2>A margem da diferença é maior</h2>
+        <p class="t">A capa diz margem de dois pontos. Isso vale para cada número sozinho. Comparar dois candidatos tem incerteza maior, porque quando um sobe o outro tende a cair, e o erro dos dois se soma.</p>
+        <div class="kchips"><span class="kchip b">cada número: ±2</span><span class="kchip l">a diferença: ±4,10</span><span class="kchip a">o intervalo cruza zero</span></div>
+      </div>
+      <div class="viz"><svg viewBox="0 0 660 266" role="img" aria-label="intervalo de 95% para a diferença Lula menos Flávio"><text x="0" y="20" font-family="IBM Plex Mono, monospace" font-size="12" fill="#8f8c7f" font-weight="400" text-anchor="start">intervalo de 95% para a diferença Lula menos Flávio</text><text x="0" y="67" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="14" fill="#f4f2ea" font-weight="600" text-anchor="start">2º turno, 4 pts</text><line x1="240.9" y1="62.0" x2="497.8" y2="62.0" stroke="rgba(244,242,234,.22)" stroke-width="6"/><circle cx="240.9" cy="62" r="8" fill="#939cae"/><circle cx="497.8" cy="62" r="8" fill="#e0483a"/><text x="240.86666666666667" y="46" font-family="IBM Plex Mono, monospace" font-size="12" fill="#939cae" font-weight="400" text-anchor="middle">−0,10</text><text x="497.8" y="88" font-family="IBM Plex Mono, monospace" font-size="12" fill="#ea6a5c" font-weight="400" text-anchor="middle">+8,10</text><text x="0" y="141" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="14" fill="#f4f2ea" font-weight="600" text-anchor="start">1º turno, 6 pts</text><line x1="317.3" y1="136.0" x2="546.7" y2="136.0" stroke="rgba(244,242,234,.22)" stroke-width="6"/><circle cx="317.3" cy="136" r="8" fill="#939cae"/><circle cx="546.7" cy="136" r="8" fill="#3f8fd6"/><text x="317.32" y="120" font-family="IBM Plex Mono, monospace" font-size="12" fill="#939cae" font-weight="400" text-anchor="middle">+2,34</text><text x="546.6800000000001" y="162" font-family="IBM Plex Mono, monospace" font-size="12" fill="#3f8fd6" font-weight="400" text-anchor="middle">+9,66</text><text x="0" y="228" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">O intervalo do 2º turno inclui o zero.</text><text x="0" y="254" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#cfe63c" font-weight="700" text-anchor="start">O do 1º turno não inclui. Só um dos dois é liderança.</text></svg></div>
+    </div>
+    <div class="card-foot"><span>aproximação de amostragem aleatória simples</span><span>o instituto não publica o efeito de desenho</span></div>
+  </div>
+  <div class="copy" data-copy="Aula 2. A margem de erro da capa não serve para comparar dois candidatos.
+
+Quando a pesquisa diz margem de dois pontos, isso vale para cada número isolado. Lula 47 quer dizer algo entre 45 e 49.
+
+Comparar dois candidatos é outra conta. Se um sobe, o outro tende a cair: os dois erros andam juntos e a incerteza da diferença fica maior que a de cada parte.
+
+Para 47 contra 43, com 2.058 entrevistas, a margem da diferença é de 4,095 pontos. O intervalo da vantagem de quatro pontos vai de −0,10 a +8,10.
+
+Ele inclui o zero. Isso não prova empate no eleitorado. Prova que esta amostra não separa os dois com 95% de confiança.
+
+No primeiro turno, 39 contra 33, a mesma conta dá de +2,34 a +9,66. Não inclui o zero. Ali existe liderança medida.
+
+A conta, para quem quiser conferir: a variância da diferença entre duas proporções da mesma pesquisa é a soma das duas menos o quadrado da diferença, tudo dividido pelo tamanho da amostra. Com 0,47 e 0,43 em 2.058 entrevistas, dá 4,095 pontos a 95%.
+
+Uma pesquisa, duas situações diferentes, uma manchete só. Aprenda a pedir a margem da diferença, e repare em quem nunca a publica."><span class="cc">1123 chars</span>Aula 2. A margem de erro da capa não serve para comparar dois candidatos.
+
+Quando a pesquisa diz margem de dois pontos, isso vale para cada número isolado. Lula 47 quer dizer algo entre 45 e 49.
+
+Comparar dois candidatos é outra conta. Se um sobe, o outro tende a cair: os dois erros andam juntos e a incerteza da diferença fica maior que a de cada parte.
+
+Para 47 contra 43, com 2.058 entrevistas, a margem da diferença é de 4,095 pontos. O intervalo da vantagem de quatro pontos vai de −0,10 a +8,10.
+
+Ele inclui o zero. Isso não prova empate no eleitorado. Prova que esta amostra não separa os dois com 95% de confiança.
+
+No primeiro turno, 39 contra 33, a mesma conta dá de +2,34 a +9,66. Não inclui o zero. Ali existe liderança medida.
+
+A conta, para quem quiser conferir: a variância da diferença entre duas proporções da mesma pesquisa é a soma das duas menos o quadrado da diferença, tudo dividido pelo tamanho da amostra. Com 0,47 e 0,43 em 2.058 entrevistas, dá 4,095 pontos a 95%.
+
+Uma pesquisa, duas situações diferentes, uma manchete só. Aprenda a pedir a margem da diferença, e repare em quem nunca a publica.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+<section class="post" id="p5">
+  <div class="post-label">Post 5/18 · aula · <b>aula 3</b></div>
+  <div class="card" style="--accent:#45c9c2;--photo:url('img/quaest_082026/web/rodoviaria_fabriciano.jpg')">
+    <span class="stripe" aria-hidden="true"></span>
+    <div class="card-head">
+      <div class="chead"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · perícia eleitoral</span></div></div>
+      <div class="pno">5/18</div>
+    </div>
+    <div class="card-body">
+      <div class="said">
+        <span class="lead-tag">como uma amostra nacional é montada</span>
+        <p class="metric">estrato, sorteio, cota</p>
+        <h2>Ninguém sorteia 2.058 brasileiros no vácuo</h2>
+        <p class="t">O Datafolha divide o país em estratos por região e por natureza do município, sorteia cidades com probabilidade proporcional ao tamanho, depois bairros e pontos, e no ponto aplica cotas de gênero e idade. Isso é boa prática e está declarado.</p>
+        <div class="kchips"><span class="kchip c">estratificação</span><span class="kchip b">PPT</span><span class="kchip a">cota no ponto de fluxo</span></div>
+      </div>
+      <div class="viz"><svg viewBox="0 0 660 326" role="img" aria-label="o caminho até o entrevistado, como declarado no TSE"><text x="0" y="20" font-family="IBM Plex Mono, monospace" font-size="12" fill="#8f8c7f" font-weight="400" text-anchor="start">o caminho até o entrevistado, como declarado no TSE</text><rect x="0.0" y="46.0" width="660.0" height="60.0" rx="4" fill="rgba(244,242,234,.05)" opacity="1.0"/><rect x="0.0" y="46.0" width="4.0" height="60.0" rx="0" fill="#45c9c2" opacity="1.0"/><text x="20" y="72" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8f8c7f" font-weight="400" text-anchor="start">passo 1</text><text x="20" y="92" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">Estratos: 5 regiões × capital, RM ou interior</text><text x="640" y="84" font-family="Fraunces, Georgia, serif" font-size="20" fill="#45c9c2" font-weight="700" text-anchor="end">1</text><rect x="0.0" y="118.0" width="660.0" height="60.0" rx="4" fill="rgba(244,242,234,.05)" opacity="1.0"/><rect x="0.0" y="118.0" width="4.0" height="60.0" rx="0" fill="#45c9c2" opacity="1.0"/><text x="20" y="144" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8f8c7f" font-weight="400" text-anchor="start">passo 2</text><text x="20" y="164" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">Sorteio de municípios com prob. proporcional ao tamanho</text><text x="640" y="156" font-family="Fraunces, Georgia, serif" font-size="20" fill="#45c9c2" font-weight="700" text-anchor="end">2</text><rect x="0.0" y="190.0" width="660.0" height="60.0" rx="4" fill="rgba(244,242,234,.05)" opacity="1.0"/><rect x="0.0" y="190.0" width="4.0" height="60.0" rx="0" fill="#45c9c2" opacity="1.0"/><text x="20" y="216" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8f8c7f" font-weight="400" text-anchor="start">passo 3</text><text x="20" y="236" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">Sorteio de bairros e pontos de abordagem</text><text x="640" y="228" font-family="Fraunces, Georgia, serif" font-size="20" fill="#45c9c2" font-weight="700" text-anchor="end">3</text><rect x="0.0" y="262.0" width="660.0" height="60.0" rx="4" fill="rgba(244,242,234,.05)" opacity="1.0"/><rect x="0.0" y="262.0" width="4.0" height="60.0" rx="0" fill="#f0a930" opacity="1.0"/><text x="20" y="288" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8f8c7f" font-weight="400" text-anchor="start">passo 4</text><text x="20" y="308" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">No ponto, cotas de gênero e faixa etária</text><text x="640" y="300" font-family="Fraunces, Georgia, serif" font-size="20" fill="#f0a930" font-weight="700" text-anchor="end">4</text></svg></div>
+    </div>
+    <div class="card-foot"><span>registro BR-04496/2026, plano amostral</span><span>128 municípios, 288 setores censitários</span></div>
+  </div>
+  <div class="copy" data-copy="Aula 3. Estratificação e cota, que é como uma amostra nacional nasce.
+
+Ninguém sorteia 2.058 brasileiros de uma lista única. O país é dividido em estratos: as cinco regiões, cruzadas com capital, região metropolitana e interior. Dentro de cada estrato sorteiam-se municípios com probabilidade proporcional ao tamanho, ou seja, cidade grande tem mais chance de entrar. Depois sorteiam-se bairros e pontos de abordagem. Só então o entrevistador aborda alguém.
+
+No ponto entra a cota: o entrevistador precisa preencher um número de homens e de mulheres, e de cada faixa de idade. Isso impede que a amostra vire só quem tem tempo de parar na rua.
+
+Tudo isso está declarado no registro do TSE, e é boa prática. Vale dizer com todas as letras: o desenho do Datafolha é sério.
+
+Nesta onda foram 128 municípios e 288 setores censitários, com média de 7,15 entrevistas por setor. Isso tem uma consequência que quase nunca é dita: sete pessoas do mesmo quarteirão se parecem mais entre si do que sete pessoas sorteadas em sete cidades. Amostra em conglomerado tem incerteza maior que a fórmula da capa supõe, e o instituto não publica o quanto.
+
+O que fica de fora da cota é o que mais interessa aqui. Renda não é cota. Renda entra depois, na ponderação. E é aí que a régua importa."><span class="cc">1272 chars</span>Aula 3. Estratificação e cota, que é como uma amostra nacional nasce.
+
+Ninguém sorteia 2.058 brasileiros de uma lista única. O país é dividido em estratos: as cinco regiões, cruzadas com capital, região metropolitana e interior. Dentro de cada estrato sorteiam-se municípios com probabilidade proporcional ao tamanho, ou seja, cidade grande tem mais chance de entrar. Depois sorteiam-se bairros e pontos de abordagem. Só então o entrevistador aborda alguém.
+
+No ponto entra a cota: o entrevistador precisa preencher um número de homens e de mulheres, e de cada faixa de idade. Isso impede que a amostra vire só quem tem tempo de parar na rua.
+
+Tudo isso está declarado no registro do TSE, e é boa prática. Vale dizer com todas as letras: o desenho do Datafolha é sério.
+
+Nesta onda foram 128 municípios e 288 setores censitários, com média de 7,15 entrevistas por setor. Isso tem uma consequência que quase nunca é dita: sete pessoas do mesmo quarteirão se parecem mais entre si do que sete pessoas sorteadas em sete cidades. Amostra em conglomerado tem incerteza maior que a fórmula da capa supõe, e o instituto não publica o quanto.
+
+O que fica de fora da cota é o que mais interessa aqui. Renda não é cota. Renda entra depois, na ponderação. E é aí que a régua importa.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+<section class="post" id="p6">
+  <div class="post-label">Post 6/18 · aula · <b>aula 4</b></div>
+  <div class="card" style="--accent:#45c9c2;--photo:url('img/quaest_082026/web/supermercado.jpg')">
+    <span class="stripe" aria-hidden="true"></span>
+    <div class="card-head">
+      <div class="chead"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · perícia eleitoral</span></div></div>
+      <div class="pno">6/18</div>
+    </div>
+    <div class="card-body">
+      <div class="said">
+        <span class="lead-tag">o passo que decide o placar</span>
+        <p class="metric">peso</p>
+        <h2>Ponderar é corrigir a colher pela panela</h2>
+        <p class="t">Se o campo trouxe gente demais de um tipo e de menos de outro, o instituto multiplica cada resposta por um número para que o retrato final tenha a cara do país. É legítimo, é padrão e é necessário. Só que exige um retrato do país para comparar.</p>
+        <div class="kchips"><span class="kchip c">ponderar é legítimo</span><span class="kchip a">depende do benchmark</span><span class="kchip b">renda não é cota</span></div>
+      </div>
+      <div class="viz"><svg viewBox="0 0 660 326" role="img" aria-label="como um peso é construído"><text x="0" y="20" font-family="IBM Plex Mono, monospace" font-size="12" fill="#8f8c7f" font-weight="400" text-anchor="start">como um peso é construído</text><rect x="0.0" y="46.0" width="660.0" height="60.0" rx="4" fill="rgba(244,242,234,.05)" opacity="1.0"/><rect x="0.0" y="46.0" width="4.0" height="60.0" rx="0" fill="#939cae" opacity="1.0"/><text x="20" y="72" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8f8c7f" font-weight="400" text-anchor="start">passo 1</text><text x="20" y="92" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">O campo trouxe 52% até 2 salários</text><text x="640" y="84" font-family="Fraunces, Georgia, serif" font-size="20" fill="#939cae" font-weight="700" text-anchor="end">obtido</text><rect x="0.0" y="118.0" width="660.0" height="60.0" rx="4" fill="rgba(244,242,234,.05)" opacity="1.0"/><rect x="0.0" y="118.0" width="4.0" height="60.0" rx="0" fill="#f0a930" opacity="1.0"/><text x="20" y="144" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8f8c7f" font-weight="400" text-anchor="start">passo 2</text><text x="20" y="164" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">A referência escolhida diz 49%</text><text x="640" y="156" font-family="Fraunces, Georgia, serif" font-size="20" fill="#f0a930" font-weight="700" text-anchor="end">alvo</text><rect x="0.0" y="190.0" width="660.0" height="60.0" rx="4" fill="rgba(244,242,234,.05)" opacity="1.0"/><rect x="0.0" y="190.0" width="4.0" height="60.0" rx="0" fill="#45c9c2" opacity="1.0"/><text x="20" y="216" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8f8c7f" font-weight="400" text-anchor="start">passo 3</text><text x="20" y="236" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">Peso da faixa: alvo dividido por obtido</text><text x="640" y="228" font-family="Fraunces, Georgia, serif" font-size="20" fill="#45c9c2" font-weight="700" text-anchor="end">0,94</text><rect x="0.0" y="262.0" width="660.0" height="60.0" rx="4" fill="rgba(244,242,234,.05)" opacity="1.0"/><rect x="0.0" y="262.0" width="4.0" height="60.0" rx="0" fill="#cfe63c" opacity="1.0"/><text x="20" y="288" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8f8c7f" font-weight="400" text-anchor="start">passo 4</text><text x="20" y="308" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">Troque a referência e o peso muda junto</text><text x="640" y="300" font-family="Fraunces, Georgia, serif" font-size="20" fill="#cfe63c" font-weight="700" text-anchor="end">0,68</text></svg></div>
+    </div>
+    <div class="card-foot"><span>49% é a referência declarada ao TSE</span><span>35,4% é a PNADC anual 2025 do IBGE</span></div>
+  </div>
+  <div class="copy" data-copy="Aula 4. Ponderação, o passo silencioso que decide o placar.
+
+Nenhuma pesquisa de rua sai perfeita do campo. Vem gente demais de um tipo e de menos de outro. O instituto então multiplica cada entrevista por um número, o peso, para que o retrato final tenha a cara do país.
+
+O peso é simples de entender. Se o campo trouxe 52% de eleitores de até dois salários mínimos e a referência diz que o país tem 49%, a faixa recebe peso 0,94: cada resposta dela vale um pouco menos. Se a referência dissesse 35%, o peso seria 0,68, e o mesmo grupo pesaria muito menos.
+
+Repare no que acabou de acontecer. A pesquisa é a mesma, as respostas são as mesmas, o campo é o mesmo. O resultado muda porque a referência mudou.
+
+Ponderar é legítimo, padrão e necessário. Não é truque. Mas depende inteiramente de qual retrato do país você escolhe como verdadeiro.
+
+E há um detalhe de calendário que vale registrar. O registro no TSE declara que a referência de renda usada vem da PNAD anual de 2024. A PNAD anual de 2025 já estava publicada quando o campo foi a campo, em agosto de 2026. Além disso, o cartão de renda mostrado ao entrevistado usa reais de 2026: dois salários mínimos são R$ 3.242 hoje e eram R$ 2.824 em 2024. A régua da pergunta e a régua da cota estão em anos diferentes.
+
+É essa escolha que ninguém discute na manchete. Vamos discutir agora."><span class="cc">1340 chars</span>Aula 4. Ponderação, o passo silencioso que decide o placar.
+
+Nenhuma pesquisa de rua sai perfeita do campo. Vem gente demais de um tipo e de menos de outro. O instituto então multiplica cada entrevista por um número, o peso, para que o retrato final tenha a cara do país.
+
+O peso é simples de entender. Se o campo trouxe 52% de eleitores de até dois salários mínimos e a referência diz que o país tem 49%, a faixa recebe peso 0,94: cada resposta dela vale um pouco menos. Se a referência dissesse 35%, o peso seria 0,68, e o mesmo grupo pesaria muito menos.
+
+Repare no que acabou de acontecer. A pesquisa é a mesma, as respostas são as mesmas, o campo é o mesmo. O resultado muda porque a referência mudou.
+
+Ponderar é legítimo, padrão e necessário. Não é truque. Mas depende inteiramente de qual retrato do país você escolhe como verdadeiro.
+
+E há um detalhe de calendário que vale registrar. O registro no TSE declara que a referência de renda usada vem da PNAD anual de 2024. A PNAD anual de 2025 já estava publicada quando o campo foi a campo, em agosto de 2026. Além disso, o cartão de renda mostrado ao entrevistado usa reais de 2026: dois salários mínimos são R$ 3.242 hoje e eram R$ 2.824 em 2024. A régua da pergunta e a régua da cota estão em anos diferentes.
+
+É essa escolha que ninguém discute na manchete. Vamos discutir agora.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+<section class="post" id="p7">
+  <div class="post-label">Post 7/18 · a conta · <b>a régua</b></div>
+  <div class="card" style="--accent:#f0a930;--photo:url('img/quaest_082026/web/feira_caruaru.jpg')">
+    <span class="stripe" aria-hidden="true"></span>
+    <div class="card-head">
+      <div class="chead"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · perícia eleitoral</span></div></div>
+      <div class="pno">7/18</div>
+    </div>
+    <div class="card-body">
+      <div class="said">
+        <span class="lead-tag">duas fotografias do mesmo país</span>
+        <p class="metric">50% × 35,4%</p>
+        <h2>O Brasil da pesquisa e o Brasil do IBGE</h2>
+        <p class="t">O perfil publicado na página 5 do anexo diz que metade do eleitorado vive com até dois salários mínimos no domicílio. A PNAD Contínua anual mais recente, que visitou 152.488 domicílios, mede 35,4% entre pessoas de 16 anos ou mais.</p>
+        <div class="kchips"><span class="kchip l">Datafolha 52,0%</span><span class="kchip c">PNADC 35,4%</span><span class="kchip a">diferença de 16,5 pontos</span></div>
+      </div>
+      <div class="viz"><svg viewBox="0 0 660 324" role="img" aria-label="distribuição de renda domiciliar, em salários mínimos"><text x="0" y="20" font-family="IBM Plex Mono, monospace" font-size="12" fill="#8f8c7f" font-weight="400" text-anchor="start">distribuição de renda domiciliar, em salários mínimos</text><text x="0" y="44" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="14" fill="#f4f2ea" font-weight="700" text-anchor="start">Como a pesquisa distribui o eleitorado</text><rect x="0.0" y="52.0" width="343.0" height="54.0" rx="3" fill="#e0483a" opacity="1.0"/><text x="171.50099999999998" y="79" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="16" fill="#0c0d0b" font-weight="700" text-anchor="middle">52.0%</text><text x="171.50099999999998" y="97" font-family="IBM Plex Mono, monospace" font-size="11" fill="#0c0d0b" font-weight="400" text-anchor="middle">até 2 SM</text><rect x="343.0" y="52.0" width="234.2" height="54.0" rx="3" fill="#f0a930" opacity="1.0"/><text x="460.08599999999996" y="79" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="16" fill="#0c0d0b" font-weight="700" text-anchor="middle">35.5%</text><text x="460.08599999999996" y="97" font-family="IBM Plex Mono, monospace" font-size="11" fill="#0c0d0b" font-weight="400" text-anchor="middle">2 a 5</text><rect x="577.2" y="52.0" width="82.8" height="54.0" rx="3" fill="#3f8fd6" opacity="1.0"/><text x="618.5849999999999" y="79" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="16" fill="#0c0d0b" font-weight="700" text-anchor="middle">12.6%</text><text x="618.5849999999999" y="97" font-family="IBM Plex Mono, monospace" font-size="11" fill="#0c0d0b" font-weight="400" text-anchor="middle">mais de 5</text><text x="0" y="152" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="14" fill="#f4f2ea" font-weight="700" text-anchor="start">Como o IBGE mede o país</text><rect x="0.0" y="160.0" width="233.8" height="54.0" rx="3" fill="#e0483a" opacity="1.0"/><text x="116.919" y="187" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="16" fill="#0c0d0b" font-weight="700" text-anchor="middle">35.4%</text><text x="116.919" y="205" font-family="IBM Plex Mono, monospace" font-size="11" fill="#0c0d0b" font-weight="400" text-anchor="middle">até 2 SM</text><rect x="233.8" y="160.0" width="258.9" height="54.0" rx="3" fill="#f0a930" opacity="1.0"/><text x="363.264" y="187" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="16" fill="#0c0d0b" font-weight="700" text-anchor="middle">39.2%</text><text x="363.264" y="205" font-family="IBM Plex Mono, monospace" font-size="11" fill="#0c0d0b" font-weight="400" text-anchor="middle">2 a 5</text><rect x="492.7" y="160.0" width="167.3" height="54.0" rx="3" fill="#3f8fd6" opacity="1.0"/><text x="576.345" y="187" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="16" fill="#0c0d0b" font-weight="700" text-anchor="middle">25.4%</text><text x="576.345" y="205" font-family="IBM Plex Mono, monospace" font-size="11" fill="#0c0d0b" font-weight="400" text-anchor="middle">mais de 5</text><text x="0" y="286" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="16" fill="#f4f2ea" font-weight="700" text-anchor="start">A faixa mais pobre pesa 16,5 pontos a mais na pesquisa.</text><text x="0" y="312" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="16" fill="#cfe63c" font-weight="700" text-anchor="start">A faixa acima de 5 salários pesa metade do que o IBGE mede.</text></svg></div>
+    </div>
+    <div class="card-foot"><span>Datafolha, anexo p. 5 e 22</span><span>IBGE, PNADC anual 2025, visita 1</span></div>
+  </div>
+  <div class="copy" data-copy="A régua. Aqui está a escolha inteira, em dois números.
+
+O Datafolha apresenta um eleitorado em que 52,0% das rendas informadas ficam até dois salários mínimos, 35,5% entre dois e cinco, e 12,6% acima de cinco.
+
+A PNAD Contínua anual do IBGE, que visitou 152.488 domicílios e pergunta rendimento fonte por fonte, mede 35,4%, 39,2% e 25,4% entre pessoas de 16 anos ou mais.
+
+São 16,5 pontos de diferença na faixa mais pobre. E a faixa acima de cinco salários aparece na pesquisa com metade do peso que o IBGE mede.
+
+Duas explicações honestas para isso, e as duas importam. Primeira: renda declarada de improviso na rua não é a mesma coisa que rendimento domiciliar levantado com questionário longo em casa. Segunda: a referência que o instituto declarou ao TSE vem da PNAD de 2024, e a de 2025 já estava publicada quando o campo foi a campo.
+
+A PNAD anual de 2025 que usamos como referência entrevistou 408.364 pessoas em 152.488 domicílios. Não é uma pesquisa concorrente do Datafolha: é a base estatística com que o próprio país mede desemprego, pobreza e renda.
+
+Nada disso é fraude, e é importante dizer com todas as letras. É uma escolha de régua, declarada e legítima. Só que ela decide o placar, e por isso merece estar na manchete tanto quanto o placar."><span class="cc">1259 chars</span>A régua. Aqui está a escolha inteira, em dois números.
+
+O Datafolha apresenta um eleitorado em que 52,0% das rendas informadas ficam até dois salários mínimos, 35,5% entre dois e cinco, e 12,6% acima de cinco.
+
+A PNAD Contínua anual do IBGE, que visitou 152.488 domicílios e pergunta rendimento fonte por fonte, mede 35,4%, 39,2% e 25,4% entre pessoas de 16 anos ou mais.
+
+São 16,5 pontos de diferença na faixa mais pobre. E a faixa acima de cinco salários aparece na pesquisa com metade do peso que o IBGE mede.
+
+Duas explicações honestas para isso, e as duas importam. Primeira: renda declarada de improviso na rua não é a mesma coisa que rendimento domiciliar levantado com questionário longo em casa. Segunda: a referência que o instituto declarou ao TSE vem da PNAD de 2024, e a de 2025 já estava publicada quando o campo foi a campo.
+
+A PNAD anual de 2025 que usamos como referência entrevistou 408.364 pessoas em 152.488 domicílios. Não é uma pesquisa concorrente do Datafolha: é a base estatística com que o próprio país mede desemprego, pobreza e renda.
+
+Nada disso é fraude, e é importante dizer com todas as letras. É uma escolha de régua, declarada e legítima. Só que ela decide o placar, e por isso merece estar na manchete tanto quanto o placar.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+<section class="post" id="p8">
+  <div class="post-label">Post 8/18 · a conta · <b>a conta, passo 1</b></div>
+  <div class="card" style="--accent:#f0a930;--photo:url('img/quaest_082026/web/eleicao-rua.jpg')">
+    <span class="stripe" aria-hidden="true"></span>
+    <div class="card-head">
+      <div class="chead"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · perícia eleitoral</span></div></div>
+      <div class="pno">8/18</div>
+    </div>
+    <div class="card-body">
+      <div class="said">
+        <span class="lead-tag">os números estão na página 22 do anexo</span>
+        <p class="metric">3 linhas</p>
+        <h2>A tabela inteira cabe num cartão</h2>
+        <p class="t">O relatório publica o segundo turno por faixa de renda. São três linhas. Com elas e com os pesos, qualquer pessoa refaz o placar nacional numa planilha.</p>
+        <div class="kchips"><span class="kchip l">até 2 SM: Lula 55, Flávio 35</span><span class="kchip b">2 a 5: Lula 37, Flávio 51</span><span class="kchip b">+5: Lula 39, Flávio 54</span></div>
+      </div>
+      <div class="viz"><svg viewBox="0 0 660 274" role="img" aria-label="segundo turno por faixa de renda, relatório p. 22 do anexo"><text x="0" y="18" font-family="IBM Plex Mono, monospace" font-size="12" fill="#8f8c7f" font-weight="400" text-anchor="start">segundo turno por faixa de renda, relatório p. 22 do anexo</text><line x1="0.0" y1="32.0" x2="660.0" y2="32.0" stroke="rgba(244,242,234,.22)" stroke-width="1"/><text x="0" y="50" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8f8c7f" font-weight="400" text-anchor="start">faixa de renda</text><text x="272" y="50" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8f8c7f" font-weight="400" text-anchor="end">base ponderada</text><text x="396" y="50" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8f8c7f" font-weight="400" text-anchor="end">Lula</text><text x="520" y="50" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8f8c7f" font-weight="400" text-anchor="end">Flávio</text><text x="656" y="50" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8f8c7f" font-weight="400" text-anchor="end">não escolhe</text><text x="0" y="78" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="14" fill="#f4f2ea" font-weight="600" text-anchor="start">Até 2 SM</text><text x="272" y="78" font-family="IBM Plex Mono, monospace" font-size="14" fill="#9a9789" font-weight="400" text-anchor="end">1.031</text><text x="396" y="78" font-family="IBM Plex Mono, monospace" font-size="14" fill="#9a9789" font-weight="400" text-anchor="end">55</text><text x="520" y="78" font-family="IBM Plex Mono, monospace" font-size="14" fill="#9a9789" font-weight="400" text-anchor="end">35</text><text x="656" y="78" font-family="IBM Plex Mono, monospace" font-size="14" fill="#9a9789" font-weight="400" text-anchor="end">9</text><text x="0" y="112" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="14" fill="#f4f2ea" font-weight="600" text-anchor="start">2 a 5 SM</text><text x="272" y="112" font-family="IBM Plex Mono, monospace" font-size="14" fill="#9a9789" font-weight="400" text-anchor="end">704</text><text x="396" y="112" font-family="IBM Plex Mono, monospace" font-size="14" fill="#9a9789" font-weight="400" text-anchor="end">37</text><text x="520" y="112" font-family="IBM Plex Mono, monospace" font-size="14" fill="#9a9789" font-weight="400" text-anchor="end">51</text><text x="656" y="112" font-family="IBM Plex Mono, monospace" font-size="14" fill="#9a9789" font-weight="400" text-anchor="end">12</text><text x="0" y="146" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="14" fill="#f4f2ea" font-weight="600" text-anchor="start">Mais de 5 SM</text><text x="272" y="146" font-family="IBM Plex Mono, monospace" font-size="14" fill="#9a9789" font-weight="400" text-anchor="end">249</text><text x="396" y="146" font-family="IBM Plex Mono, monospace" font-size="14" fill="#9a9789" font-weight="400" text-anchor="end">39</text><text x="520" y="146" font-family="IBM Plex Mono, monospace" font-size="14" fill="#9a9789" font-weight="400" text-anchor="end">54</text><text x="656" y="146" font-family="IBM Plex Mono, monospace" font-size="14" fill="#9a9789" font-weight="400" text-anchor="end">7</text><line x1="0.0" y1="160.0" x2="660.0" y2="160.0" stroke="rgba(244,242,234,.22)" stroke-width="1"/><text x="0" y="192" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">soma das bases</text><text x="656" y="192" font-family="Fraunces, Georgia, serif" font-size="22" fill="#f4f2ea" font-weight="700" text-anchor="end">1.984</text><text x="0" y="236" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">Quem ganha menos vota mais em Lula. Quem ganha mais vota mais em Flávio.</text><text x="0" y="262" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#cfe63c" font-weight="700" text-anchor="start">Então o peso de cada faixa decide o placar nacional.</text></svg></div>
+    </div>
+    <div class="card-foot"><span>74 entrevistados não informaram renda</span><span>e por isso ficam fora desta tabela</span></div>
+  </div>
+  <div class="copy" data-copy="A conta, passo 1. A tabela que faz tudo funcionar tem três linhas.
+
+O relatório publica o segundo turno separado por faixa de renda familiar, na página 22 do anexo de tabelas cruzadas.
+
+Até 2 salários mínimos, base ponderada 1.031: Lula 55, Flávio 35.
+
+De 2 a 5 salários, base 704: Lula 37, Flávio 51.
+
+Acima de 5 salários, base 249: Lula 39, Flávio 54.
+
+Repare no padrão, porque é ele que torna a régua decisiva. Quem ganha menos vota mais em Lula. Quem ganha mais vota mais em Flávio. A inversão acontece já na segunda faixa.
+
+Quando o voto varia tanto entre as faixas, o peso que você dá a cada faixa não é detalhe técnico. É o resultado.
+
+A coluna que sobra, de quem não escolhe ninguém, também tem padrão: 9% na faixa mais pobre, 12% na do meio, 7% na mais rica.
+
+E um detalhe honesto: 74 entrevistados não informaram renda e por isso não aparecem em nenhuma das três linhas. A soma das bases dá 1.984, não 2.058.
+
+Guarde estes nove números. No próximo post nós os usamos."><span class="cc">977 chars</span>A conta, passo 1. A tabela que faz tudo funcionar tem três linhas.
+
+O relatório publica o segundo turno separado por faixa de renda familiar, na página 22 do anexo de tabelas cruzadas.
+
+Até 2 salários mínimos, base ponderada 1.031: Lula 55, Flávio 35.
+
+De 2 a 5 salários, base 704: Lula 37, Flávio 51.
+
+Acima de 5 salários, base 249: Lula 39, Flávio 54.
+
+Repare no padrão, porque é ele que torna a régua decisiva. Quem ganha menos vota mais em Lula. Quem ganha mais vota mais em Flávio. A inversão acontece já na segunda faixa.
+
+Quando o voto varia tanto entre as faixas, o peso que você dá a cada faixa não é detalhe técnico. É o resultado.
+
+A coluna que sobra, de quem não escolhe ninguém, também tem padrão: 9% na faixa mais pobre, 12% na do meio, 7% na mais rica.
+
+E um detalhe honesto: 74 entrevistados não informaram renda e por isso não aparecem em nenhuma das três linhas. A soma das bases dá 1.984, não 2.058.
+
+Guarde estes nove números. No próximo post nós os usamos.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+<section class="post" id="p9">
+  <div class="post-label">Post 9/18 · a conta · <b>a conta, passo 2</b></div>
+  <div class="card" style="--accent:#f0a930;--photo:url('img/quaest_082026/web/antena.jpg')">
+    <span class="stripe" aria-hidden="true"></span>
+    <div class="card-head">
+      <div class="chead"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · perícia eleitoral</span></div></div>
+      <div class="pno">9/18</div>
+    </div>
+    <div class="card-body">
+      <div class="said">
+        <span class="lead-tag">primeiro, provar que a leitura está certa</span>
+        <p class="metric">46,9 × 43,2</p>
+        <h2>A média ponderada devolve o placar publicado</h2>
+        <p class="t">Multiplique o voto de cada faixa pelo peso dela na pesquisa e some. Se a conta estiver certa, ela tem que reproduzir o número que o instituto publicou. Reproduz.</p>
+        <div class="kchips"><span class="kchip c">peso × voto, soma</span><span class="kchip b">publicado: 47</span><span class="kchip a">recomposto: 46,9</span></div>
+      </div>
+      <div class="viz"><svg viewBox="0 0 660 274" role="img" aria-label="média ponderada com os pesos da própria pesquisa, voto em Lula"><text x="0" y="18" font-family="IBM Plex Mono, monospace" font-size="12" fill="#8f8c7f" font-weight="400" text-anchor="start">média ponderada com os pesos da própria pesquisa, voto em Lula</text><line x1="0.0" y1="32.0" x2="660.0" y2="32.0" stroke="rgba(244,242,234,.22)" stroke-width="1"/><text x="0" y="50" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8f8c7f" font-weight="400" text-anchor="start">faixa de renda</text><text x="272" y="50" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8f8c7f" font-weight="400" text-anchor="end">peso na pesquisa</text><text x="396" y="50" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8f8c7f" font-weight="400" text-anchor="end">voto em Lula</text><text x="520" y="50" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8f8c7f" font-weight="400" text-anchor="end">contribuição</text><text x="0" y="78" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="14" fill="#f4f2ea" font-weight="600" text-anchor="start">Até 2 SM</text><text x="272" y="78" font-family="IBM Plex Mono, monospace" font-size="14" fill="#9a9789" font-weight="400" text-anchor="end">51.97%</text><text x="396" y="78" font-family="IBM Plex Mono, monospace" font-size="14" fill="#9a9789" font-weight="400" text-anchor="end">55.6</text><text x="520" y="78" font-family="IBM Plex Mono, monospace" font-size="14" fill="#cfe63c" font-weight="400" text-anchor="end">28.87</text><text x="0" y="112" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="14" fill="#f4f2ea" font-weight="600" text-anchor="start">2 a 5 SM</text><text x="272" y="112" font-family="IBM Plex Mono, monospace" font-size="14" fill="#9a9789" font-weight="400" text-anchor="end">35.48%</text><text x="396" y="112" font-family="IBM Plex Mono, monospace" font-size="14" fill="#9a9789" font-weight="400" text-anchor="end">37.0</text><text x="520" y="112" font-family="IBM Plex Mono, monospace" font-size="14" fill="#cfe63c" font-weight="400" text-anchor="end">13.13</text><text x="0" y="146" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="14" fill="#f4f2ea" font-weight="600" text-anchor="start">Mais de 5 SM</text><text x="272" y="146" font-family="IBM Plex Mono, monospace" font-size="14" fill="#9a9789" font-weight="400" text-anchor="end">12.55%</text><text x="396" y="146" font-family="IBM Plex Mono, monospace" font-size="14" fill="#9a9789" font-weight="400" text-anchor="end">39.0</text><text x="520" y="146" font-family="IBM Plex Mono, monospace" font-size="14" fill="#cfe63c" font-weight="400" text-anchor="end">4.89</text><line x1="0.0" y1="160.0" x2="660.0" y2="160.0" stroke="rgba(244,242,234,.22)" stroke-width="1"/><text x="0" y="192" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">soma das contribuições</text><text x="656" y="192" font-family="Fraunces, Georgia, serif" font-size="22" fill="#cfe63c" font-weight="700" text-anchor="end">46.89</text><text x="0" y="236" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">O instituto publicou 47. A conta devolve 46,9.</text><text x="0" y="262" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#cfe63c" font-weight="700" text-anchor="start">A leitura da tabela está correta, e agora dá para mexer nela.</text></svg></div>
+    </div>
+    <div class="card-foot"><span>percentuais renormalizados por linha</span><span>arredondamento do relatório é de 1 ponto</span></div>
+  </div>
+  <div class="copy" data-copy="A conta, passo 2. Antes de mudar qualquer coisa, é preciso provar que a leitura está certa.
+
+A regra é a média ponderada, que você já usa sem saber. É a mesma conta da média do boletim quando cada prova vale um peso diferente.
+
+Multiplique o voto de cada faixa pelo peso daquela faixa e some tudo.
+
+Com os pesos da própria pesquisa: 51,97% vezes 55,6 dá 28,9. Mais 35,48% vezes 37, que dá 13,1. Mais 12,55% vezes 39, que dá 4,9.
+
+Soma: 46,9.
+
+O Datafolha publicou 47. A diferença é arredondamento das células impressas.
+
+Isso é o controle de qualidade da auditoria. Se a recomposição não batesse com o publicado, qualquer conta derivada estaria errada e nada do que vem a seguir valeria. Ela bate.
+
+Se ficou abstrato, pense no boletim da escola. Você tirou 8 na prova que vale 50% da nota, 6 na que vale 30% e 4 na que vale 20%. A média não é 6, que seria a média simples. É 8 vezes 0,5, mais 6 vezes 0,3, mais 4 vezes 0,2, que dá 6,6. O peso muda o resultado sem mudar nenhuma nota.
+
+É exatamente a mesma conta. As faixas de renda são as provas, o voto é a nota e o peso é quanto cada faixa vale no país.
+
+Agora dá para trocar uma peça e ver o que acontece."><span class="cc">1158 chars</span>A conta, passo 2. Antes de mudar qualquer coisa, é preciso provar que a leitura está certa.
+
+A regra é a média ponderada, que você já usa sem saber. É a mesma conta da média do boletim quando cada prova vale um peso diferente.
+
+Multiplique o voto de cada faixa pelo peso daquela faixa e some tudo.
+
+Com os pesos da própria pesquisa: 51,97% vezes 55,6 dá 28,9. Mais 35,48% vezes 37, que dá 13,1. Mais 12,55% vezes 39, que dá 4,9.
+
+Soma: 46,9.
+
+O Datafolha publicou 47. A diferença é arredondamento das células impressas.
+
+Isso é o controle de qualidade da auditoria. Se a recomposição não batesse com o publicado, qualquer conta derivada estaria errada e nada do que vem a seguir valeria. Ela bate.
+
+Se ficou abstrato, pense no boletim da escola. Você tirou 8 na prova que vale 50% da nota, 6 na que vale 30% e 4 na que vale 20%. A média não é 6, que seria a média simples. É 8 vezes 0,5, mais 6 vezes 0,3, mais 4 vezes 0,2, que dá 6,6. O peso muda o resultado sem mudar nenhuma nota.
+
+É exatamente a mesma conta. As faixas de renda são as provas, o voto é a nota e o peso é quanto cada faixa vale no país.
+
+Agora dá para trocar uma peça e ver o que acontece.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+<section class="post" id="p10">
+  <div class="post-label">Post 10/18 · a conta · <b>a conta, passo 3</b></div>
+  <div class="card" style="--accent:#f0a930;--photo:url('img/quaest_082026/web/fluxo_25demarco.jpg')">
+    <span class="stripe" aria-hidden="true"></span>
+    <div class="card-head">
+      <div class="chead"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · perícia eleitoral</span></div></div>
+      <div class="pno">10/18</div>
+    </div>
+    <div class="card-body">
+      <div class="said">
+        <span class="lead-tag">troque só os pesos, não toque no resto</span>
+        <p class="metric">44,1 × 46,2</p>
+        <h2>Os mesmos votos, a régua do IBGE</h2>
+        <p class="t">Não se muda nenhuma resposta, nenhuma célula, nenhum entrevistado. Muda-se apenas quanto cada faixa de renda pesa, usando a distribuição da PNAD Contínua. A soma vira outra.</p>
+        <div class="kchips"><span class="kchip c">mesmas respostas</span><span class="kchip a">outros pesos</span><span class="kchip l">outro resultado</span></div>
+      </div>
+      <div class="viz"><svg viewBox="0 0 660 274" role="img" aria-label="a mesma média ponderada com os pesos do IBGE, voto em Lula"><text x="0" y="18" font-family="IBM Plex Mono, monospace" font-size="12" fill="#8f8c7f" font-weight="400" text-anchor="start">a mesma média ponderada com os pesos do IBGE, voto em Lula</text><line x1="0.0" y1="32.0" x2="660.0" y2="32.0" stroke="rgba(244,242,234,.22)" stroke-width="1"/><text x="0" y="50" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8f8c7f" font-weight="400" text-anchor="start">faixa de renda</text><text x="272" y="50" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8f8c7f" font-weight="400" text-anchor="end">peso na PNADC</text><text x="396" y="50" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8f8c7f" font-weight="400" text-anchor="end">voto em Lula</text><text x="520" y="50" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8f8c7f" font-weight="400" text-anchor="end">contribuição</text><text x="0" y="78" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="14" fill="#f4f2ea" font-weight="600" text-anchor="start">Até 2 SM</text><text x="272" y="78" font-family="IBM Plex Mono, monospace" font-size="14" fill="#9a9789" font-weight="400" text-anchor="end">35.43%</text><text x="396" y="78" font-family="IBM Plex Mono, monospace" font-size="14" fill="#9a9789" font-weight="400" text-anchor="end">55.6</text><text x="520" y="78" font-family="IBM Plex Mono, monospace" font-size="14" fill="#cfe63c" font-weight="400" text-anchor="end">19.68</text><text x="0" y="112" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="14" fill="#f4f2ea" font-weight="600" text-anchor="start">2 a 5 SM</text><text x="272" y="112" font-family="IBM Plex Mono, monospace" font-size="14" fill="#9a9789" font-weight="400" text-anchor="end">39.22%</text><text x="396" y="112" font-family="IBM Plex Mono, monospace" font-size="14" fill="#9a9789" font-weight="400" text-anchor="end">37.0</text><text x="520" y="112" font-family="IBM Plex Mono, monospace" font-size="14" fill="#cfe63c" font-weight="400" text-anchor="end">14.51</text><text x="0" y="146" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="14" fill="#f4f2ea" font-weight="600" text-anchor="start">Mais de 5 SM</text><text x="272" y="146" font-family="IBM Plex Mono, monospace" font-size="14" fill="#9a9789" font-weight="400" text-anchor="end">25.35%</text><text x="396" y="146" font-family="IBM Plex Mono, monospace" font-size="14" fill="#9a9789" font-weight="400" text-anchor="end">39.0</text><text x="520" y="146" font-family="IBM Plex Mono, monospace" font-size="14" fill="#cfe63c" font-weight="400" text-anchor="end">9.89</text><line x1="0.0" y1="160.0" x2="660.0" y2="160.0" stroke="rgba(244,242,234,.22)" stroke-width="1"/><text x="0" y="192" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">soma das contribuições</text><text x="656" y="192" font-family="Fraunces, Georgia, serif" font-size="22" fill="#cfe63c" font-weight="700" text-anchor="end">44.08</text><text x="0" y="236" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">Lula sai de 46.89 para 44.08.</text><text x="0" y="262" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#cfe63c" font-weight="700" text-anchor="start">Flávio, de 43.25 para 46.22.</text></svg></div>
+    </div>
+    <div class="card-foot"><span>PNADC anual 2025, visita 1, VD5001</span><span>pessoas de 16 anos ou mais</span></div>
+  </div>
+  <div class="copy" data-copy="A conta, passo 3. Agora troque uma coisa só.
+
+Nenhuma resposta muda. Nenhuma célula da tabela muda. Nenhum entrevistado é acrescentado ou removido. Muda apenas quanto cada faixa de renda pesa no total, usando a distribuição da PNAD Contínua no lugar da distribuição da pesquisa.
+
+35,43% vezes 55,6 dá 19,7. Mais 39,22% vezes 37, que dá 14,5. Mais 25,35% vezes 39, que dá 9,9.
+
+Soma: 44,1. Lula caiu 2,8 pontos.
+
+Fazendo o mesmo com a coluna de Flávio: 46,2. Ele subiu 3,0.
+
+É toda a magia. Uma média ponderada de três linhas, que cabe numa planilha e leva dois minutos.
+
+Vale repetir o que não mudou, porque é isso que dá força ao exercício: as três linhas de voto continuam idênticas às que o instituto imprimiu. Ninguém foi reentrevistado, nenhum número foi corrigido, nenhuma resposta foi descartada.
+
+A pergunta que fica não é técnica, é editorial: qual das duas réguas descreve melhor o eleitorado brasileiro de 2026? Uma responde por uma pergunta rápida em ponto de fluxo, a outra por um questionário domiciliar de 152 mil casas."><span class="cc">1035 chars</span>A conta, passo 3. Agora troque uma coisa só.
+
+Nenhuma resposta muda. Nenhuma célula da tabela muda. Nenhum entrevistado é acrescentado ou removido. Muda apenas quanto cada faixa de renda pesa no total, usando a distribuição da PNAD Contínua no lugar da distribuição da pesquisa.
+
+35,43% vezes 55,6 dá 19,7. Mais 39,22% vezes 37, que dá 14,5. Mais 25,35% vezes 39, que dá 9,9.
+
+Soma: 44,1. Lula caiu 2,8 pontos.
+
+Fazendo o mesmo com a coluna de Flávio: 46,2. Ele subiu 3,0.
+
+É toda a magia. Uma média ponderada de três linhas, que cabe numa planilha e leva dois minutos.
+
+Vale repetir o que não mudou, porque é isso que dá força ao exercício: as três linhas de voto continuam idênticas às que o instituto imprimiu. Ninguém foi reentrevistado, nenhum número foi corrigido, nenhuma resposta foi descartada.
+
+A pergunta que fica não é técnica, é editorial: qual das duas réguas descreve melhor o eleitorado brasileiro de 2026? Uma responde por uma pergunta rápida em ponto de fluxo, a outra por um questionário domiciliar de 152 mil casas.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+<section class="post" id="p11">
+  <div class="post-label">Post 11/18 · a conta · <b>a conta, passo 4</b></div>
+  <div class="card" style="--accent:#f0a930;--photo:url('img/quaest_082026/web/urna-fila.jpg');--pos:center 35%">
+    <span class="stripe" aria-hidden="true"></span>
+    <div class="card-head">
+      <div class="chead"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · perícia eleitoral</span></div></div>
+      <div class="pno">11/18</div>
+    </div>
+    <div class="card-body">
+      <div class="said">
+        <span class="lead-tag">o resultado, ancorado no que o instituto publicou</span>
+        <p class="metric">44,19 × 45,97</p>
+        <h2>O segundo turno troca de sinal</h2>
+        <p class="t">Para não trocar o placar do instituto pelo nosso, ancoramos: partimos do 47 e do 43 publicados e aplicamos apenas a diferença que a troca de régua produziu. Nada é inventado, e a origem continua sendo o número oficial.</p>
+        <div class="kchips"><span class="kchip l">Lula 47 → 44,19</span><span class="kchip b">Flávio 43 → 45,97</span><span class="kchip a">saldo −1,78</span></div>
+      </div>
+      <div class="viz"><svg viewBox="0 0 660 326" role="img" aria-label="do publicado ao reponderado, em quatro linhas"><text x="0" y="20" font-family="IBM Plex Mono, monospace" font-size="12" fill="#8f8c7f" font-weight="400" text-anchor="start">do publicado ao reponderado, em quatro linhas</text><rect x="0.0" y="46.0" width="660.0" height="60.0" rx="4" fill="rgba(244,242,234,.05)" opacity="1.0"/><rect x="0.0" y="46.0" width="4.0" height="60.0" rx="0" fill="#939cae" opacity="1.0"/><text x="20" y="72" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8f8c7f" font-weight="400" text-anchor="start">passo 1</text><text x="20" y="92" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">Placar publicado pelo instituto</text><text x="640" y="84" font-family="Fraunces, Georgia, serif" font-size="20" fill="#939cae" font-weight="700" text-anchor="end">47 × 43</text><rect x="0.0" y="118.0" width="660.0" height="60.0" rx="4" fill="rgba(244,242,234,.05)" opacity="1.0"/><rect x="0.0" y="118.0" width="4.0" height="60.0" rx="0" fill="#45c9c2" opacity="1.0"/><text x="20" y="144" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8f8c7f" font-weight="400" text-anchor="start">passo 2</text><text x="20" y="164" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">Recomposto com os pesos da pesquisa</text><text x="640" y="156" font-family="Fraunces, Georgia, serif" font-size="20" fill="#45c9c2" font-weight="700" text-anchor="end">46,89 × 43,25</text><rect x="0.0" y="190.0" width="660.0" height="60.0" rx="4" fill="rgba(244,242,234,.05)" opacity="1.0"/><rect x="0.0" y="190.0" width="4.0" height="60.0" rx="0" fill="#f0a930" opacity="1.0"/><text x="20" y="216" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8f8c7f" font-weight="400" text-anchor="start">passo 3</text><text x="20" y="236" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">Recomposto com os pesos do IBGE</text><text x="640" y="228" font-family="Fraunces, Georgia, serif" font-size="20" fill="#f0a930" font-weight="700" text-anchor="end">44,08 × 46,22</text><rect x="0.0" y="262.0" width="660.0" height="60.0" rx="4" fill="rgba(244,242,234,.05)" opacity="1.0"/><rect x="0.0" y="262.0" width="4.0" height="60.0" rx="0" fill="#cfe63c" opacity="1.0"/><text x="20" y="288" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8f8c7f" font-weight="400" text-anchor="start">passo 4</text><text x="20" y="308" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">Publicado mais a diferença da troca</text><text x="640" y="300" font-family="Fraunces, Georgia, serif" font-size="20" fill="#cfe63c" font-weight="700" text-anchor="end">44,19 × 45,97</text></svg></div>
+    </div>
+    <div class="card-foot"><span>fórmula aberta: publicado + (PNADC − recomposto)</span><span>docs e scripts em brasil.arvor.co</span></div>
+  </div>
+  <div class="copy" data-copy="A conta, passo 4. O resultado, e a blindagem que ele exige.
+
+Não trocamos o placar do instituto pelo nosso. Ancoramos. Partimos do 47 e do 43 publicados e somamos apenas a diferença que a troca de régua produziu.
+
+Lula: 47 menos 2,81 dá 44,19.
+
+Flávio: 43 mais 2,97 dá 45,97.
+
+A vantagem publicada de quatro pontos para Lula vira uma vantagem de 1,78 ponto para Flávio.
+
+A fórmula inteira é esta: publicado mais a diferença entre a recomposição com a régua do IBGE e a recomposição com a régua da pesquisa. Ela está no script, o script está público, e o resultado é conferível por qualquer pessoa com uma planilha.
+
+Por que ancorar em vez de publicar direto o 44,08 contra 46,22 da recomposição? Porque a recomposição usa só uma margem e o instituto pondera por várias ao mesmo tempo. Ancorando, o número que sai continua sendo o do instituto mais o efeito isolado da troca, e não uma pesquisa nossa.
+
+E vale repetir: isto é análise de sensibilidade, não recontagem. Mede de qual régua o placar depende, não quem está ganhando a eleição."><span class="cc">1037 chars</span>A conta, passo 4. O resultado, e a blindagem que ele exige.
+
+Não trocamos o placar do instituto pelo nosso. Ancoramos. Partimos do 47 e do 43 publicados e somamos apenas a diferença que a troca de régua produziu.
+
+Lula: 47 menos 2,81 dá 44,19.
+
+Flávio: 43 mais 2,97 dá 45,97.
+
+A vantagem publicada de quatro pontos para Lula vira uma vantagem de 1,78 ponto para Flávio.
+
+A fórmula inteira é esta: publicado mais a diferença entre a recomposição com a régua do IBGE e a recomposição com a régua da pesquisa. Ela está no script, o script está público, e o resultado é conferível por qualquer pessoa com uma planilha.
+
+Por que ancorar em vez de publicar direto o 44,08 contra 46,22 da recomposição? Porque a recomposição usa só uma margem e o instituto pondera por várias ao mesmo tempo. Ancorando, o número que sai continua sendo o do instituto mais o efeito isolado da troca, e não uma pesquisa nossa.
+
+E vale repetir: isto é análise de sensibilidade, não recontagem. Mede de qual régua o placar depende, não quem está ganhando a eleição.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+<section class="post" id="p12">
+  <div class="post-label">Post 12/18 · a conta · <b>a série</b></div>
+  <div class="card" style="--accent:#f0a930;--photo:url('img/quaest_082026/web/congresso.jpg')">
+    <span class="stripe" aria-hidden="true"></span>
+    <div class="card-head">
+      <div class="chead"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · perícia eleitoral</span></div></div>
+      <div class="pno">12/18</div>
+    </div>
+    <div class="card-body">
+      <div class="said">
+        <span class="lead-tag">quatro ondas, a mesma régua nas quatro</span>
+        <p class="metric">4 de 4</p>
+        <h2>A eleição que não foi noticiada</h2>
+        <p class="t">Maio, junho, julho e agosto renderam quatro manchetes iguais: Lula à frente por quatro a cinco pontos. Aplique a mesma distribuição de renda do IBGE às quatro e a vantagem some nas quatro.</p>
+        <div class="kchips"><span class="kchip l">publicado: +4, +4, +5, +4</span><span class="kchip c">sob a régua: −2,81 a −1,78</span><span class="kchip a">nenhuma onda com Lula à frente</span></div>
+      </div>
+      <div class="viz"><svg viewBox="0 0 660 346" role="img" aria-label="saldo Lula menos Flávio no 2º turno, em pontos"><text x="0" y="18" font-family="IBM Plex Mono, monospace" font-size="12" fill="#8f8c7f" font-weight="400" text-anchor="start">saldo Lula menos Flávio no 2º turno, em pontos</text><line x1="46.0" y1="166.0" x2="596.0" y2="166.0" stroke="rgba(244,242,234,.35)" stroke-width="1" stroke-dasharray="4 4"/><text x="0" y="170.0" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8f8c7f" font-weight="400" text-anchor="start">empate</text><text x="0" y="58.0" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8f8c7f" font-weight="400" text-anchor="start">+8</text><text x="0" y="114.0" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8f8c7f" font-weight="400" text-anchor="start">+4</text><text x="0" y="226.0" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8f8c7f" font-weight="400" text-anchor="start">-4</text><polyline fill="none" stroke="#e0483a" stroke-width="3" points="46.0,110.0 229.3,110.0 412.7,96.0 596.0,110.0"/><polyline fill="none" stroke="#cfe63c" stroke-width="3" stroke-dasharray="7 5" points="46.0,205.4 229.3,168.3 412.7,166.1 596.0,191.0"/><circle cx="46.0" cy="110.0" r="6" fill="#e0483a"/><circle cx="46.0" cy="205.4" r="6" fill="#cfe63c"/><text x="46.0" y="95.0" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="12" fill="#ea6a5c" font-weight="700" text-anchor="middle">Lula +4</text><text x="46.0" y="228.35399999999998" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="12" fill="#cfe63c" font-weight="700" text-anchor="middle">Flávio +2,8</text><text x="46.0" y="277" font-family="IBM Plex Mono, monospace" font-size="12" fill="#9a9789" font-weight="400" text-anchor="middle">20–21/mai</text><circle cx="229.3" cy="110.0" r="6" fill="#e0483a"/><circle cx="229.3" cy="168.3" r="6" fill="#cfe63c"/><text x="229.33333333333334" y="95.0" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="12" fill="#ea6a5c" font-weight="700" text-anchor="middle">Lula +4</text><text x="229.33333333333334" y="191.296" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="12" fill="#cfe63c" font-weight="700" text-anchor="middle">empate</text><text x="229.33333333333334" y="277" font-family="IBM Plex Mono, monospace" font-size="12" fill="#9a9789" font-weight="400" text-anchor="middle">17–18/jun</text><circle cx="412.7" cy="96.0" r="6" fill="#e0483a"/><circle cx="412.7" cy="166.1" r="6" fill="#cfe63c"/><text x="412.6666666666667" y="81.0" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="12" fill="#ea6a5c" font-weight="700" text-anchor="middle">Lula +5</text><text x="412.6666666666667" y="189.07" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="12" fill="#cfe63c" font-weight="700" text-anchor="middle">empate</text><text x="412.6666666666667" y="277" font-family="IBM Plex Mono, monospace" font-size="12" fill="#9a9789" font-weight="400" text-anchor="middle">22–23/jul</text><circle cx="596.0" cy="110.0" r="6" fill="#e0483a"/><circle cx="596.0" cy="191.0" r="6" fill="#cfe63c"/><text x="596.0" y="95.0" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="12" fill="#ea6a5c" font-weight="700" text-anchor="end">Lula +4</text><text x="596.0" y="213.976" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="12" fill="#cfe63c" font-weight="700" text-anchor="end">Flávio +1,8</text><text x="596.0" y="277" font-family="IBM Plex Mono, monospace" font-size="12" fill="#9a9789" font-weight="400" text-anchor="end">18–19/ago</text><text x="0" y="306" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">Linha cheia: o que foi publicado.</text><text x="0" y="332" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#cfe63c" font-weight="700" text-anchor="start">Linha tracejada: a mesma pesquisa sob a renda do IBGE.</text></svg></div>
+    </div>
+    <div class="card-foot"><span>mesma fórmula e mesmo benchmark nas quatro ondas</span><span>relatórios de maio, junho, julho e agosto</span></div>
+  </div>
+  <div class="copy" data-copy="A série. Aqui a coisa deixa de ser um número e vira uma narrativa inteira.
+
+As quatro últimas ondas do Datafolha renderam quatro manchetes iguais: Lula lidera o segundo turno por quatro a cinco pontos. Estabilidade, dizem. Vantagem consolidada.
+
+Aplique a mesma distribuição de renda do IBGE às quatro, com a mesma fórmula, sem escolher onda.
+
+Maio: Flávio +2,81.
+
+Junho: empate, Flávio +0,16.
+
+Julho: empate exato.
+
+Agosto: Flávio +1,78.
+
+Em nenhuma das quatro Lula fica à frente. E a leitura de tendência também muda: sob esta régua, o desafiante perdeu cerca de um ponto entre maio e agosto, em vez de estar correndo atrás de uma vantagem consolidada.
+
+São duas eleições diferentes, e a diferença não é acadêmica. Uma disputa em que o presidente lidera com folga desde maio e uma disputa empatada desde maio produzem decisões opostas sobre aliança, agenda e prioridade de recurso, dos dois lados. Só uma das duas está sendo noticiada.
+
+E repare no que este exercício não faz: ele não escolhe a onda que dá o resultado desejado. São as quatro ondas disponíveis, com a mesma fórmula e o mesmo benchmark, publicadas juntas."><span class="cc">1123 chars</span>A série. Aqui a coisa deixa de ser um número e vira uma narrativa inteira.
+
+As quatro últimas ondas do Datafolha renderam quatro manchetes iguais: Lula lidera o segundo turno por quatro a cinco pontos. Estabilidade, dizem. Vantagem consolidada.
+
+Aplique a mesma distribuição de renda do IBGE às quatro, com a mesma fórmula, sem escolher onda.
+
+Maio: Flávio +2,81.
+
+Junho: empate, Flávio +0,16.
+
+Julho: empate exato.
+
+Agosto: Flávio +1,78.
+
+Em nenhuma das quatro Lula fica à frente. E a leitura de tendência também muda: sob esta régua, o desafiante perdeu cerca de um ponto entre maio e agosto, em vez de estar correndo atrás de uma vantagem consolidada.
+
+São duas eleições diferentes, e a diferença não é acadêmica. Uma disputa em que o presidente lidera com folga desde maio e uma disputa empatada desde maio produzem decisões opostas sobre aliança, agenda e prioridade de recurso, dos dois lados. Só uma das duas está sendo noticiada.
+
+E repare no que este exercício não faz: ele não escolhe a onda que dá o resultado desejado. São as quatro ondas disponíveis, com a mesma fórmula e o mesmo benchmark, publicadas juntas.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+<section class="post" id="p13">
+  <div class="post-label">Post 13/18 · aula · <b>o limite</b></div>
+  <div class="card" style="--accent:#45c9c2;--photo:url('img/quaest_082026/web/praca_conselheiro_pena.jpg')">
+    <span class="stripe" aria-hidden="true"></span>
+    <div class="card-head">
+      <div class="chead"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · perícia eleitoral</span></div></div>
+      <div class="pno">13/18</div>
+    </div>
+    <div class="card-body">
+      <div class="said">
+        <span class="lead-tag">o que este número é e o que ele não é</span>
+        <p class="metric">sensibilidade</p>
+        <h2>Não é recontagem, e dizer isso é parte do método</h2>
+        <p class="t">Reponderar uma margem publicada mostra de qual régua o resultado depende. Não identifica o resultado verdadeiro do eleitorado, porque a ponderação real do instituto é conjunta e não é pública.</p>
+        <div class="kchips"><span class="kchip a">quatro limites declarados</span><span class="kchip c">falsificável</span><span class="kchip b">sem microdados</span></div>
+      </div>
+      <div class="viz"><svg viewBox="0 0 660 244" role="img" aria-label="os quatro limites, declarados antes de qualquer conclusão"><text x="0" y="20" font-family="IBM Plex Mono, monospace" font-size="12" fill="#8f8c7f" font-weight="400" text-anchor="start">os quatro limites, declarados antes de qualquer conclusão</text><circle cx="12" cy="49" r="11" fill="none" stroke="#45c9c2" stroke-width="1.6"/><text x="12" y="54" font-family="IBM Plex Mono, monospace" font-size="12" fill="#45c9c2" font-weight="400" text-anchor="middle">1</text><text x="36" y="52" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">Não há microdados nem pesos individuais</text><text x="36" y="73" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="13" fill="#9a9789" font-weight="400" text-anchor="start">Sem eles, interações entre renda e outras margens não são identificáveis.</text><circle cx="12" cy="103" r="11" fill="none" stroke="#45c9c2" stroke-width="1.6"/><text x="12" y="108" font-family="IBM Plex Mono, monospace" font-size="12" fill="#45c9c2" font-weight="400" text-anchor="middle">2</text><text x="36" y="106" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">Renda de rua não é renda do IBGE</text><text x="36" y="127" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="13" fill="#9a9789" font-weight="400" text-anchor="start">Uma pergunta rápida em ponto de fluxo capta menos que um questionário domiciliar.</text><circle cx="12" cy="157" r="11" fill="none" stroke="#45c9c2" stroke-width="1.6"/><text x="12" y="162" font-family="IBM Plex Mono, monospace" font-size="12" fill="#45c9c2" font-weight="400" text-anchor="middle">3</text><text x="36" y="160" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">Uma margem por vez</text><text x="36" y="181" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="13" fill="#9a9789" font-weight="400" text-anchor="start">Ajustar renda não corrige escolaridade, idade, região ou religião ao mesmo tempo.</text><circle cx="12" cy="211" r="11" fill="none" stroke="#45c9c2" stroke-width="1.6"/><text x="12" y="216" font-family="IBM Plex Mono, monospace" font-size="12" fill="#45c9c2" font-weight="400" text-anchor="middle">4</text><text x="36" y="214" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">Tendência sob uma régua, não a eleição</text><text x="36" y="235" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="13" fill="#9a9789" font-weight="400" text-anchor="start">A série mostra dependência do benchmark, não quem está ganhando.</text></svg></div>
+    </div>
+    <div class="card-foot"><span>as limitações estão no JSON público</span><span>analysis/datafolha_082026</span></div>
+  </div>
+  <div class="copy" data-copy="O limite. Esta é a parte que separa auditoria de propaganda, e ela vem antes da conclusão, não depois.
+
+O que fizemos é análise de sensibilidade: trocar uma peça e medir o efeito. Ela responde a uma pergunta precisa e estreita, que é de qual régua o placar depende.
+
+Ela não responde quem está ganhando a eleição, e por quatro motivos que declaramos antes de qualquer número.
+
+Um: não existem microdados nem pesos individuais públicos. Sem eles não dá para saber como renda interage com escolaridade, idade e região dentro da ponderação real do instituto, que é conjunta.
+
+Dois: renda declarada de improviso na rua não é idêntica ao rendimento domiciliar levantado pelo IBGE com questionário longo.
+
+Três: ajustamos uma margem por vez. As outras ficam como estão.
+
+Quatro: a série mostra tendência sob uma régua comum, não a tendência real da eleição.
+
+Quem publica sensibilidade como se fosse recontagem está fazendo a mesma coisa que a manchete que critica."><span class="cc">959 chars</span>O limite. Esta é a parte que separa auditoria de propaganda, e ela vem antes da conclusão, não depois.
+
+O que fizemos é análise de sensibilidade: trocar uma peça e medir o efeito. Ela responde a uma pergunta precisa e estreita, que é de qual régua o placar depende.
+
+Ela não responde quem está ganhando a eleição, e por quatro motivos que declaramos antes de qualquer número.
+
+Um: não existem microdados nem pesos individuais públicos. Sem eles não dá para saber como renda interage com escolaridade, idade e região dentro da ponderação real do instituto, que é conjunta.
+
+Dois: renda declarada de improviso na rua não é idêntica ao rendimento domiciliar levantado pelo IBGE com questionário longo.
+
+Três: ajustamos uma margem por vez. As outras ficam como estão.
+
+Quatro: a série mostra tendência sob uma régua comum, não a tendência real da eleição.
+
+Quem publica sensibilidade como se fosse recontagem está fazendo a mesma coisa que a manchete que critica.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+<section class="post" id="p14">
+  <div class="post-label">Post 14/18 · a conta · <b>a robustez</b></div>
+  <div class="card" style="--accent:#f0a930;--photo:url('img/quaest_082026/web/antena.jpg');--pos:center 60%">
+    <span class="stripe" aria-hidden="true"></span>
+    <div class="card-head">
+      <div class="chead"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · perícia eleitoral</span></div></div>
+      <div class="pno">14/18</div>
+    </div>
+    <div class="card-body">
+      <div class="said">
+        <span class="lead-tag">o achado sobrevive ao arredondamento</span>
+        <p class="metric">100%</p>
+        <h2>Não é sorte do arredondamento</h2>
+        <p class="t">As células do relatório vêm arredondadas em número inteiro. Perturbando cada uma em meio ponto e refazendo a conta dez mil vezes, o sinal se mantém em todos os sorteios. E, das cinco margens testadas, quatro não mudam nada.</p>
+        <div class="kchips"><span class="kchip a">10.000 simulações</span><span class="kchip c">100% invertem</span><span class="kchip b">69,2% do caminho basta</span></div>
+      </div>
+      <div class="viz"><svg viewBox="0 0 660 488" role="img" aria-label="efeito de cada margem no saldo do 2º turno, em pontos"><text x="0" y="20" font-family="IBM Plex Mono, monospace" font-size="12" fill="#8f8c7f" font-weight="400" text-anchor="start">efeito de cada margem no saldo do 2º turno, em pontos</text><text x="0" y="67" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="14" fill="#f4f2ea" font-weight="600" text-anchor="start">Sexo</text><line x1="515.6" y1="62.0" x2="520.8" y2="62.0" stroke="rgba(244,242,234,.22)" stroke-width="6"/><circle cx="515.6" cy="62" r="8" fill="#939cae"/><circle cx="520.8" cy="62" r="8" fill="#939cae"/><text x="515.5555555555555" y="46" font-family="IBM Plex Mono, monospace" font-size="12" fill="#939cae" font-weight="400" text-anchor="middle">publicado</text><text x="520.7777777777778" y="88" font-family="IBM Plex Mono, monospace" font-size="12" fill="#939cae" font-weight="400" text-anchor="middle">+4,10</text><text x="0" y="141" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="14" fill="#f4f2ea" font-weight="600" text-anchor="start">Idade</text><line x1="512.9" y1="136.0" x2="515.6" y2="136.0" stroke="rgba(244,242,234,.22)" stroke-width="6"/><circle cx="515.6" cy="136" r="8" fill="#939cae"/><circle cx="512.9" cy="136" r="8" fill="#939cae"/><text x="515.5555555555555" y="120" font-family="IBM Plex Mono, monospace" font-size="12" fill="#939cae" font-weight="400" text-anchor="middle">publicado</text><text x="512.9444444444445" y="162" font-family="IBM Plex Mono, monospace" font-size="12" fill="#939cae" font-weight="400" text-anchor="middle">+3,95</text><text x="0" y="215" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="14" fill="#f4f2ea" font-weight="600" text-anchor="start">Região</text><line x1="515.6" y1="210.0" x2="515.6" y2="210.0" stroke="rgba(244,242,234,.22)" stroke-width="6"/><circle cx="515.6" cy="210" r="8" fill="#939cae"/><circle cx="515.6" cy="210" r="8" fill="#939cae"/><text x="515.5555555555555" y="194" font-family="IBM Plex Mono, monospace" font-size="12" fill="#939cae" font-weight="400" text-anchor="middle">publicado</text><text x="515.5555555555555" y="236" font-family="IBM Plex Mono, monospace" font-size="12" fill="#939cae" font-weight="400" text-anchor="middle">+4,00</text><text x="0" y="289" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="14" fill="#f4f2ea" font-weight="600" text-anchor="start">Escolaridade</text><line x1="515.6" y1="284.0" x2="572.5" y2="284.0" stroke="rgba(244,242,234,.22)" stroke-width="6"/><circle cx="515.6" cy="284" r="8" fill="#939cae"/><circle cx="572.5" cy="284" r="8" fill="#3f8fd6"/><text x="515.5555555555555" y="268" font-family="IBM Plex Mono, monospace" font-size="12" fill="#939cae" font-weight="400" text-anchor="middle">publicado</text><text x="572.4777777777778" y="310" font-family="IBM Plex Mono, monospace" font-size="12" fill="#3f8fd6" font-weight="400" text-anchor="middle">+5,09</text><text x="0" y="363" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="14" fill="#f4f2ea" font-weight="600" text-anchor="start">Renda</text><line x1="213.7" y1="358.0" x2="515.6" y2="358.0" stroke="rgba(244,242,234,.22)" stroke-width="6"/><circle cx="515.6" cy="358" r="8" fill="#939cae"/><circle cx="213.7" cy="358" r="8" fill="#cfe63c"/><text x="515.5555555555555" y="342" font-family="IBM Plex Mono, monospace" font-size="12" fill="#939cae" font-weight="400" text-anchor="middle">publicado</text><text x="213.7111111111111" y="384" font-family="IBM Plex Mono, monospace" font-size="12" fill="#cfe63c" font-weight="400" text-anchor="middle">−1,78</text><text x="0" y="450" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">Quatro margens preservam a liderança publicada.</text><text x="0" y="476" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#cfe63c" font-weight="700" text-anchor="start">Só a renda troca o sinal.</text></svg></div>
+    </div>
+    <div class="card-foot"><span>10.000 sorteios com células perturbadas em ±0,5</span><span>intervalo simulado: −1,96 a −1,61</span></div>
+  </div>
+  <div class="copy" data-copy="A robustez. Toda conta boa precisa passar por um teste que poderia derrubá-la.
+
+As tabelas do relatório vêm arredondadas em número inteiro. Um 55 pode ser qualquer coisa entre 54,5 e 55,5. Isso poderia, sozinho, explicar uma inversão apertada.
+
+Então perturbamos cada célula em meio ponto para cima ou para baixo, renormalizamos as linhas e refizemos a conta dez mil vezes.
+
+Flávio fica à frente em 100% dos sorteios. O intervalo simulado do saldo vai de −1,96 a −1,61. O achado não é sorte de arredondamento.
+
+Segundo teste, mais duro. Fizemos o mesmo exercício com as outras quatro margens que o relatório publica.
+
+Sexo: o saldo vai de +4 para +4,10. Idade: +3,95. Região: +4,00. Escolaridade: +5,09, ou seja, amplia a vantagem de Lula.
+
+Quatro das cinco margens preservam a liderança publicada. Só a renda troca o sinal. Não estamos escolhendo a margem que dá o resultado que queremos: estamos relatando a única que muda alguma coisa."><span class="cc">938 chars</span>A robustez. Toda conta boa precisa passar por um teste que poderia derrubá-la.
+
+As tabelas do relatório vêm arredondadas em número inteiro. Um 55 pode ser qualquer coisa entre 54,5 e 55,5. Isso poderia, sozinho, explicar uma inversão apertada.
+
+Então perturbamos cada célula em meio ponto para cima ou para baixo, renormalizamos as linhas e refizemos a conta dez mil vezes.
+
+Flávio fica à frente em 100% dos sorteios. O intervalo simulado do saldo vai de −1,96 a −1,61. O achado não é sorte de arredondamento.
+
+Segundo teste, mais duro. Fizemos o mesmo exercício com as outras quatro margens que o relatório publica.
+
+Sexo: o saldo vai de +4 para +4,10. Idade: +3,95. Região: +4,00. Escolaridade: +5,09, ou seja, amplia a vantagem de Lula.
+
+Quatro das cinco margens preservam a liderança publicada. Só a renda troca o sinal. Não estamos escolhendo a margem que dá o resultado que queremos: estamos relatando a única que muda alguma coisa.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+<section class="post" id="p15">
+  <div class="post-label">Post 15/18 · o que fazer · <b>conheça o país</b></div>
+  <div class="card" style="--accent:#34b47e;--photo:url('img/quaest_082026/web/feira.jpg');--pos:center 55%">
+    <span class="stripe" aria-hidden="true"></span>
+    <div class="card-head">
+      <div class="chead"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · perícia eleitoral</span></div></div>
+      <div class="pno">15/18</div>
+    </div>
+    <div class="card-body">
+      <div class="said">
+        <span class="lead-tag">a régua está pública e é de graça</span>
+        <p class="metric">brasil.arvor.co</p>
+        <h2>Ler pesquisa começa por conhecer o Brasil</h2>
+        <p class="t">Ninguém consegue julgar se um retrato do país está certo sem saber como o país é. A PNAD Contínua do IBGE é pública, gratuita e cobre renda, escolaridade, trabalho, cor e região. Nós processamos os microdados e publicamos o resultado aberto.</p>
+        <div class="kchips"><span class="kchip c">PNADC é pública</span><span class="kchip b">microdados abertos</span><span class="kchip a">nosso ensaio é gratuito</span></div>
+      </div>
+      <div class="viz"><svg viewBox="0 0 660 244" role="img" aria-label="o que você descobre sobre o Brasil em vinte minutos"><text x="0" y="20" font-family="IBM Plex Mono, monospace" font-size="12" fill="#8f8c7f" font-weight="400" text-anchor="start">o que você descobre sobre o Brasil em vinte minutos</text><circle cx="12" cy="49" r="11" fill="none" stroke="#45c9c2" stroke-width="1.6"/><text x="12" y="54" font-family="IBM Plex Mono, monospace" font-size="12" fill="#45c9c2" font-weight="400" text-anchor="middle">1</text><text x="36" y="52" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">Quanto o brasileiro realmente ganha</text><text x="36" y="73" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="13" fill="#9a9789" font-weight="400" text-anchor="start">Renda domiciliar por faixa de salário mínimo, por estado e por região.</text><circle cx="12" cy="103" r="11" fill="none" stroke="#45c9c2" stroke-width="1.6"/><text x="12" y="108" font-family="IBM Plex Mono, monospace" font-size="12" fill="#45c9c2" font-weight="400" text-anchor="middle">2</text><text x="36" y="106" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">Quem estudou até onde</text><text x="36" y="127" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="13" fill="#9a9789" font-weight="400" text-anchor="start">Escolaridade da população de 16 anos ou mais, que é o universo eleitoral.</text><circle cx="12" cy="157" r="11" fill="none" stroke="#45c9c2" stroke-width="1.6"/><text x="12" y="162" font-family="IBM Plex Mono, monospace" font-size="12" fill="#45c9c2" font-weight="400" text-anchor="middle">3</text><text x="36" y="160" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">Onde as pessoas moram e trabalham</text><text x="36" y="181" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="13" fill="#9a9789" font-weight="400" text-anchor="start">Capital, região metropolitana e interior; ocupação e informalidade.</text><circle cx="12" cy="211" r="11" fill="none" stroke="#45c9c2" stroke-width="1.6"/><text x="12" y="216" font-family="IBM Plex Mono, monospace" font-size="12" fill="#45c9c2" font-weight="400" text-anchor="middle">4</text><text x="36" y="214" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">Como isso muda a leitura de qualquer pesquisa</text><text x="36" y="235" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="13" fill="#9a9789" font-weight="400" text-anchor="start">Com o perfil oficial na mão, você confere a régua de qualquer instituto.</text></svg></div>
+    </div>
+    <div class="card-foot"><span>brasil.arvor.co · O Brasil em Números</span><span>IBGE, PNAD Contínua, microdados</span></div>
+  </div>
+  <div class="copy" data-copy="Conheça o país. Esta é a parte que nenhuma thread de pesquisa costuma dizer.
+
+Você não consegue julgar se o retrato de um instituto está certo sem saber como o Brasil é de verdade. E o Brasil de verdade está público.
+
+A PNAD Contínua do IBGE é a maior pesquisa domiciliar do país. Ela visita mais de 150 mil domicílios, pergunta rendimento fonte por fonte, escolaridade, ocupação, cor e região, e publica os microdados de graça.
+
+O problema é que microdado bruto tem quase dois gigabytes e não abre no Excel. Por isso nós processamos e publicamos o resultado aberto, com o código à vista, em brasil.arvor.co.
+
+Lá está quanto o brasileiro realmente ganha por faixa de salário mínimo, quem estudou até onde entre os eleitores de 16 anos ou mais, e onde as pessoas moram e trabalham.
+
+A edição que usamos aqui, a anual de 2025, entrevistou 408.364 pessoas em 152.488 domicílios.
+
+Com esse perfil na mão você confere a régua de qualquer instituto, em qualquer eleição, sem depender de ninguém. Inclusive de nós.
+
+E vale para muito além de pesquisa eleitoral. O mesmo hábito serve para orçamento público, inflação, emprego e dívida: os dados oficiais estão publicados, e quase toda discussão nacional acontece sem que ninguém abra a planilha."><span class="cc">1237 chars</span>Conheça o país. Esta é a parte que nenhuma thread de pesquisa costuma dizer.
+
+Você não consegue julgar se o retrato de um instituto está certo sem saber como o Brasil é de verdade. E o Brasil de verdade está público.
+
+A PNAD Contínua do IBGE é a maior pesquisa domiciliar do país. Ela visita mais de 150 mil domicílios, pergunta rendimento fonte por fonte, escolaridade, ocupação, cor e região, e publica os microdados de graça.
+
+O problema é que microdado bruto tem quase dois gigabytes e não abre no Excel. Por isso nós processamos e publicamos o resultado aberto, com o código à vista, em brasil.arvor.co.
+
+Lá está quanto o brasileiro realmente ganha por faixa de salário mínimo, quem estudou até onde entre os eleitores de 16 anos ou mais, e onde as pessoas moram e trabalham.
+
+A edição que usamos aqui, a anual de 2025, entrevistou 408.364 pessoas em 152.488 domicílios.
+
+Com esse perfil na mão você confere a régua de qualquer instituto, em qualquer eleição, sem depender de ninguém. Inclusive de nós.
+
+E vale para muito além de pesquisa eleitoral. O mesmo hábito serve para orçamento público, inflação, emprego e dívida: os dados oficiais estão publicados, e quase toda discussão nacional acontece sem que ninguém abra a planilha.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+<section class="post" id="p16">
+  <div class="post-label">Post 16/18 · o que fazer · <b>como ler uma manchete</b></div>
+  <div class="card" style="--accent:#34b47e;--photo:url('img/quaest_082026/web/banca.jpg');--pos:center 60%">
+    <span class="stripe" aria-hidden="true"></span>
+    <div class="card-head">
+      <div class="chead"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · perícia eleitoral</span></div></div>
+      <div class="pno">16/18</div>
+    </div>
+    <div class="card-body">
+      <div class="said">
+        <span class="lead-tag">seis perguntas antes de acreditar</span>
+        <p class="metric">6 perguntas</p>
+        <h2>O checklist que cabe no bolso</h2>
+        <p class="t">Não é preciso ser estatístico. É preciso fazer seis perguntas, e todas têm resposta pública. Se alguma delas não tiver, isso também é informação.</p>
+        <div class="kchips"><span class="kchip c">leva dois minutos</span><span class="kchip b">tudo é público</span><span class="kchip a">vale para qualquer instituto</span></div>
+      </div>
+      <div class="viz"><svg viewBox="0 0 660 352" role="img" aria-label="antes de compartilhar qualquer pesquisa"><text x="0" y="20" font-family="IBM Plex Mono, monospace" font-size="12" fill="#8f8c7f" font-weight="400" text-anchor="start">antes de compartilhar qualquer pesquisa</text><circle cx="12" cy="49" r="11" fill="none" stroke="#45c9c2" stroke-width="1.6"/><text x="12" y="54" font-family="IBM Plex Mono, monospace" font-size="12" fill="#45c9c2" font-weight="400" text-anchor="middle">1</text><text x="36" y="52" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">A margem é da diferença ou de cada número?</text><text x="36" y="73" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="13" fill="#9a9789" font-weight="400" text-anchor="start">Vantagem de 4 pontos com margem de 2 não é liderança estabelecida.</text><circle cx="12" cy="103" r="11" fill="none" stroke="#45c9c2" stroke-width="1.6"/><text x="12" y="108" font-family="IBM Plex Mono, monospace" font-size="12" fill="#45c9c2" font-weight="400" text-anchor="middle">2</text><text x="36" y="106" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">Qual é o retrato do país usado para pesar?</text><text x="36" y="127" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="13" fill="#9a9789" font-weight="400" text-anchor="start">Procure renda, escolaridade e o ano da fonte no registro do TSE.</text><circle cx="12" cy="157" r="11" fill="none" stroke="#45c9c2" stroke-width="1.6"/><text x="12" y="162" font-family="IBM Plex Mono, monospace" font-size="12" fill="#45c9c2" font-weight="400" text-anchor="middle">3</text><text x="36" y="160" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">O que aparece no anexo e não na manchete?</text><text x="36" y="181" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="13" fill="#9a9789" font-weight="400" text-anchor="start">Os cruzamentos costumam contar uma história mais rica que o topline.</text><circle cx="12" cy="211" r="11" fill="none" stroke="#45c9c2" stroke-width="1.6"/><text x="12" y="216" font-family="IBM Plex Mono, monospace" font-size="12" fill="#45c9c2" font-weight="400" text-anchor="middle">4</text><text x="36" y="214" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">O instituto publicou o efeito de desenho?</text><text x="36" y="235" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="13" fill="#9a9789" font-weight="400" text-anchor="start">Amostra por conglomerado tem incerteza maior que a fórmula da capa.</text><circle cx="12" cy="265" r="11" fill="none" stroke="#45c9c2" stroke-width="1.6"/><text x="12" y="270" font-family="IBM Plex Mono, monospace" font-size="12" fill="#45c9c2" font-weight="400" text-anchor="middle">5</text><text x="36" y="268" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">Quais perguntas foram feitas e não publicadas?</text><text x="36" y="289" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="13" fill="#9a9789" font-weight="400" text-anchor="start">Compare o questionário registrado com o relatório divulgado.</text><circle cx="12" cy="319" r="11" fill="none" stroke="#45c9c2" stroke-width="1.6"/><text x="12" y="324" font-family="IBM Plex Mono, monospace" font-size="12" fill="#45c9c2" font-weight="400" text-anchor="middle">6</text><text x="36" y="322" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">A manchete usa verbo de causa?</text><text x="36" y="343" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="13" fill="#9a9789" font-weight="400" text-anchor="start">Derrapa, dispara e reage costumam descrever ruído de uma onda.</text></svg></div>
+    </div>
+    <div class="card-foot"><span>cada pergunta tem resposta no PesqEle</span><span>e as seis levam menos de dez minutos</span></div>
+  </div>
+  <div class="copy" data-copy="Como ler uma manchete de pesquisa. Seis perguntas, todas com resposta pública.
+
+Um. A margem citada é de cada número ou da diferença entre dois? Vantagem de quatro pontos com margem de dois não é liderança estabelecida.
+
+Dois. Qual retrato do país foi usado para pesar as respostas? Procure renda e escolaridade no registro do TSE, e olhe o ano da fonte.
+
+Três. O que está no anexo e não virou manchete? Os cruzamentos quase sempre contam uma história mais rica que o topline.
+
+Quatro. O instituto publicou o efeito de desenho? Amostra colhida em conglomerados tem incerteza maior que a fórmula simples da capa.
+
+Cinco. Quais perguntas foram aplicadas e não publicadas? Basta comparar o questionário registrado com o relatório divulgado.
+
+Seis. A manchete usa verbo de causa? Derrapa, dispara e reage quase sempre descrevem oscilação dentro da margem.
+
+Seis perguntas, dez minutos, nenhuma conta difícil. É o suficiente para você parar de ser leitor de manchete e virar leitor de pesquisa."><span class="cc">989 chars</span>Como ler uma manchete de pesquisa. Seis perguntas, todas com resposta pública.
+
+Um. A margem citada é de cada número ou da diferença entre dois? Vantagem de quatro pontos com margem de dois não é liderança estabelecida.
+
+Dois. Qual retrato do país foi usado para pesar as respostas? Procure renda e escolaridade no registro do TSE, e olhe o ano da fonte.
+
+Três. O que está no anexo e não virou manchete? Os cruzamentos quase sempre contam uma história mais rica que o topline.
+
+Quatro. O instituto publicou o efeito de desenho? Amostra colhida em conglomerados tem incerteza maior que a fórmula simples da capa.
+
+Cinco. Quais perguntas foram aplicadas e não publicadas? Basta comparar o questionário registrado com o relatório divulgado.
+
+Seis. A manchete usa verbo de causa? Derrapa, dispara e reage quase sempre descrevem oscilação dentro da margem.
+
+Seis perguntas, dez minutos, nenhuma conta difícil. É o suficiente para você parar de ser leitor de manchete e virar leitor de pesquisa.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+<section class="post" id="p17">
+  <div class="post-label">Post 17/18 · o que fazer · <b>o que exigir</b></div>
+  <div class="card" style="--accent:#34b47e;--photo:url('img/quaest_082026/web/congresso.jpg');--pos:center 45%">
+    <span class="stripe" aria-hidden="true"></span>
+    <div class="card-head">
+      <div class="chead"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · perícia eleitoral</span></div></div>
+      <div class="pno">17/18</div>
+    </div>
+    <div class="card-body">
+      <div class="said">
+        <span class="lead-tag">transparência que custa quase nada</span>
+        <p class="metric">5 itens</p>
+        <h2>O que falta, e é barato entregar</h2>
+        <p class="t">O Datafolha já publica muito mais do que a maioria. Os cinco itens abaixo custam pouco, não expõem nenhum entrevistado e encerrariam metade das discussões públicas sobre pesquisa no Brasil.</p>
+        <div class="kchips"><span class="kchip c">não expõe ninguém</span><span class="kchip b">custo baixo</span><span class="kchip a">vale para todos os institutos</span></div>
+      </div>
+      <div class="viz"><svg viewBox="0 0 660 298" role="img" aria-label="cinco itens que resolveriam a discussão"><text x="0" y="20" font-family="IBM Plex Mono, monospace" font-size="12" fill="#8f8c7f" font-weight="400" text-anchor="start">cinco itens que resolveriam a discussão</text><circle cx="12" cy="49" r="11" fill="none" stroke="#45c9c2" stroke-width="1.6"/><text x="12" y="54" font-family="IBM Plex Mono, monospace" font-size="12" fill="#45c9c2" font-weight="400" text-anchor="middle">1</text><text x="36" y="52" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">O efeito de desenho de cada estimativa</text><text x="36" y="73" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="13" fill="#9a9789" font-weight="400" text-anchor="start">Uma linha por tabela, e a margem passa a ser a verdadeira.</text><circle cx="12" cy="103" r="11" fill="none" stroke="#45c9c2" stroke-width="1.6"/><text x="12" y="108" font-family="IBM Plex Mono, monospace" font-size="12" fill="#45c9c2" font-weight="400" text-anchor="middle">2</text><text x="36" y="106" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">A distribuição de pesos</text><text x="36" y="127" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="13" fill="#9a9789" font-weight="400" text-anchor="start">Média, mínimo, máximo e dispersão, sem identificar ninguém.</text><circle cx="12" cy="157" r="11" fill="none" stroke="#45c9c2" stroke-width="1.6"/><text x="12" y="162" font-family="IBM Plex Mono, monospace" font-size="12" fill="#45c9c2" font-weight="400" text-anchor="middle">3</text><text x="36" y="160" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">O ano e a tabela exata do benchmark</text><text x="36" y="181" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="13" fill="#9a9789" font-weight="400" text-anchor="start">Qual PNAD, qual variável, qual universo, qual data de referência.</text><circle cx="12" cy="211" r="11" fill="none" stroke="#45c9c2" stroke-width="1.6"/><text x="12" y="216" font-family="IBM Plex Mono, monospace" font-size="12" fill="#45c9c2" font-weight="400" text-anchor="middle">4</text><text x="36" y="214" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">As perguntas aplicadas e não publicadas</text><text x="36" y="235" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="13" fill="#9a9789" font-weight="400" text-anchor="start">Ou o dado, ou a razão de não publicar.</text><circle cx="12" cy="265" r="11" fill="none" stroke="#45c9c2" stroke-width="1.6"/><text x="12" y="270" font-family="IBM Plex Mono, monospace" font-size="12" fill="#45c9c2" font-weight="400" text-anchor="middle">5</text><text x="36" y="268" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#f4f2ea" font-weight="700" text-anchor="start">O cruzamento do voto de 1º com o de 2º turno</text><text x="36" y="289" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="13" fill="#9a9789" font-weight="400" text-anchor="start">É a única forma de medir transferência sem estimar nada.</text></svg></div>
+    </div>
+    <div class="card-foot"><span>nenhum item exige microdado individual</span><span>e todos cabem em duas páginas do relatório</span></div>
+  </div>
+  <div class="copy" data-copy="O que exigir dos institutos. E é preciso começar reconhecendo: o Datafolha publica muito mais do que a maioria. Relatório completo, questionário, plano amostral, municípios e notas fiscais.
+
+Faltam cinco coisas. Nenhuma delas expõe qualquer entrevistado e todas cabem em duas páginas.
+
+O efeito de desenho de cada estimativa. Uma linha por tabela, e a margem publicada passa a ser a margem verdadeira.
+
+A distribuição dos pesos. Média, mínimo, máximo e dispersão. Isso mostra quanto trabalho o peso está fazendo, sem identificar ninguém.
+
+O ano e a tabela exata do benchmark de renda e escolaridade. Qual PNAD, qual variável, qual universo.
+
+As perguntas que foram aplicadas e não publicadas, ou a razão de não publicar.
+
+E o cruzamento do voto de primeiro turno com o de segundo, que é a única forma de medir transferência sem estimar nada.
+
+Isso não é ataque a instituto. É a diferença entre uma pesquisa que pode ser conferida e uma pesquisa em que é preciso acreditar."><span class="cc">972 chars</span>O que exigir dos institutos. E é preciso começar reconhecendo: o Datafolha publica muito mais do que a maioria. Relatório completo, questionário, plano amostral, municípios e notas fiscais.
+
+Faltam cinco coisas. Nenhuma delas expõe qualquer entrevistado e todas cabem em duas páginas.
+
+O efeito de desenho de cada estimativa. Uma linha por tabela, e a margem publicada passa a ser a margem verdadeira.
+
+A distribuição dos pesos. Média, mínimo, máximo e dispersão. Isso mostra quanto trabalho o peso está fazendo, sem identificar ninguém.
+
+O ano e a tabela exata do benchmark de renda e escolaridade. Qual PNAD, qual variável, qual universo.
+
+As perguntas que foram aplicadas e não publicadas, ou a razão de não publicar.
+
+E o cruzamento do voto de primeiro turno com o de segundo, que é a única forma de medir transferência sem estimar nada.
+
+Isso não é ataque a instituto. É a diferença entre uma pesquisa que pode ser conferida e uma pesquisa em que é preciso acreditar.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+<section class="post" id="p18">
+  <div class="post-label">Post 18/18 · a tese · <b>o fecho</b></div>
+  <div class="card" style="--accent:#cfe63c;--photo:url('img/quaest_082026/web/eleicao-rua.jpg');--pos:center 55%">
+    <span class="stripe" aria-hidden="true"></span>
+    <div class="card-head">
+      <div class="chead"><img src="img/arvor_logo.png" alt="Arvor"><div><b>Arvor Intelligence</b><span>@leonardodias · perícia eleitoral</span></div></div>
+      <div class="pno">18/18</div>
+    </div>
+    <div class="card-body">
+      <div class="said">
+        <span class="lead-tag">a conta está aberta, refaça</span>
+        <p class="metric">refaça a conta</p>
+        <h2>A verdade não estava escondida</h2>
+        <p class="t">Nada nesta thread foi vazado, hackeado ou obtido em off. Tudo saiu de arquivos que qualquer pessoa baixa de graça, com uma média ponderada de três linhas. O que faltava não era acesso. Era conta.</p>
+        <div class="kchips"><span class="kchip c">51 páginas públicas</span><span class="kchip b">três linhas de conta</span><span class="kchip a">código aberto</span></div>
+      </div>
+      <div class="viz"><svg viewBox="0 0 660 252" role="img" aria-label="o que foi preciso para chegar aqui"><text x="0" y="22" font-family="IBM Plex Mono, monospace" font-size="12" fill="#8f8c7f" font-weight="400" text-anchor="start">o que foi preciso para chegar aqui</text><text x="0" y="88" font-family="Fraunces, Georgia, serif" font-size="56" fill="#f4f2ea" font-weight="700" text-anchor="start">0</text><text x="0" y="116" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#9a9789" font-weight="400" text-anchor="start">documentos sigilosos usados</text><text x="0" y="200" font-family="Fraunces, Georgia, serif" font-size="56" fill="#cfe63c" font-weight="700" text-anchor="start">3</text><text x="0" y="228" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="15" fill="#9a9789" font-weight="400" text-anchor="start">linhas de média ponderada</text></svg></div>
+    </div>
+    <div class="card-foot"><span>dossiê completo em brasil.arvor.co</span><span>scripts e dados abertos, sem paywall</span></div>
+  </div>
+  <div class="copy" data-copy="O fecho.
+
+Nada nesta thread foi vazado, hackeado ou conseguido em off. Cada número saiu de um arquivo público, baixado de graça do sistema do TSE, e de uma média ponderada de três linhas que cabe numa planilha.
+
+O que faltava não era acesso. Era conta.
+
+É por isso que este trabalho é publicado com os scripts abertos e com as limitações declaradas antes das conclusões. Se algum número aqui estiver errado, ele é falsificável em vinte minutos, e é assim que tem de ser.
+
+A disputa que importa não é entre pessoas. É entre uma leitura pública que cabe numa manchete e uma leitura pública que exige dez minutos de aritmética. A primeira é barata de produzir e cara de desfazer. A segunda está ao alcance de qualquer eleitor que decida olhar.
+
+Quanto mais gente aprender a abrir o anexo, conferir a régua e refazer a média, menos poder tem quem depende de que ninguém confira.
+
+Se você chegou até aqui, já sabe mais sobre leitura de pesquisa do que a maior parte de quem comenta pesquisa. Use isso na próxima manchete que aparecer, inclusive nas nossas.
+
+O dossiê completo, com dezesseis capítulos, está em brasil.arvor.co. Os dados e os scripts também. Refaça a conta."><span class="cc">1167 chars</span>O fecho.
+
+Nada nesta thread foi vazado, hackeado ou conseguido em off. Cada número saiu de um arquivo público, baixado de graça do sistema do TSE, e de uma média ponderada de três linhas que cabe numa planilha.
+
+O que faltava não era acesso. Era conta.
+
+É por isso que este trabalho é publicado com os scripts abertos e com as limitações declaradas antes das conclusões. Se algum número aqui estiver errado, ele é falsificável em vinte minutos, e é assim que tem de ser.
+
+A disputa que importa não é entre pessoas. É entre uma leitura pública que cabe numa manchete e uma leitura pública que exige dez minutos de aritmética. A primeira é barata de produzir e cara de desfazer. A segunda está ao alcance de qualquer eleitor que decida olhar.
+
+Quanto mais gente aprender a abrir o anexo, conferir a régua e refazer a média, menos poder tem quem depende de que ninguém confira.
+
+Se você chegou até aqui, já sabe mais sobre leitura de pesquisa do que a maior parte de quem comenta pesquisa. Use isso na próxima manchete que aparecer, inclusive nas nossas.
+
+O dossiê completo, com dezesseis capítulos, está em brasil.arvor.co. Os dados e os scripts também. Refaça a conta.</div>
+  <button class="copy-btn" onclick="cp(this)">Copiar texto</button>
+</section>
+</div>
+<footer><div class="wrap">
+  <h2>Refaça a conta</h2>
+  <p>Todos os números desta thread saem de arquivos públicos do sistema PesqEle do Tribunal Superior Eleitoral e dos microdados da PNAD Contínua do IBGE. O dossiê completo, com dezesseis capítulos, está em <a href="datafolha_082026.html">brasil.arvor.co/datafolha_082026.html</a>, e o retrato do país que serve de régua está em <a href="pnad.html">O Brasil em Números</a>.</p>
+  <p>Reponderar uma margem publicada é análise de sensibilidade: mostra de qual régua o resultado depende, não identifica o resultado verdadeiro do eleitorado. Sem microdados, pesos individuais e efeito de desenho, nenhum exercício aqui substitui a apuração oficial nem permite acusar fabricação de dados.</p>
+  <p>Fotografias de bancos livres do Wikimedia Commons, com autoria e licença creditadas no dossiê. Nenhum instituto, veículo, partido ou campanha financiou ou revisou esta thread.</p>
+</div></footer>
+<script>
+function cp(button){
+  const node = button.previousElementSibling;
+  const text = node.getAttribute('data-copy') || node.innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    const original = button.textContent;
+    button.textContent = 'copiado';
+    setTimeout(() => { button.textContent = original; }, 1600);
+  });
+}
+</script>
+</body>
+</html>

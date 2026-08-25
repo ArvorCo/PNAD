@@ -244,6 +244,17 @@ Antes de auditar qualquer relatório, extraia o **anexo inteiro de tabelas cruza
 - **Série congelada.** Antes de aceitar narrativa de tendência, ponha 1º e 2º turno lado a lado. Em agosto a diferença do 1º turno caiu de dez para seis pontos enquanto o 2º turno marcou 43 em quatro ondas seguidas: a convergência é voto útil que o 2º turno já contava. E o desafiante marcava 33 em março e marca 33 agora; a queda é do incumbente.
 - **Capítulo estratégico com o mesmo rigor.** O dossiê pode ter lado. Cada movimento recomendado precisa de número com página ao lado, o juízo editorial precisa estar rotulado como juízo editorial, e o capítulo precisa conter o achado que contraria o próprio autor. Em agosto: Flávio é o adversário mais forte no agregado por 3,4 pontos sobre Caiado **e** perde para os próprios substitutos entre os não alinhados, 38 contra 46, 45 e 44.
 
+## Thread educativa (padrão a partir do Datafolha 08/2026)
+A thread deixou de ser resumo do dossiê e virou aula. Referência: `scripts/datafolha-082026-thread.py`, que gera `docs/datafolha_082026_thread.html` com dezoito cards 16:9 e o texto copiável embaixo de cada um.
+- **Arco fixo**: tese, ficha do documento, quatro aulas (o que é amostra, margem da diferença, estratificação e cota, ponderação), a régua, a conta em quatro passos, a série, os limites, a robustez, conheça o país, checklist de leitura, o que exigir de transparência, fecho.
+- **A conta aparece na tela.** O card do tipo `calc` mostra faixa, peso, voto e contribuição, linha a linha, e a soma no rodapé. O passo 2 é obrigatório: recompor o placar com os pesos do próprio instituto para provar que a leitura está certa antes de trocar qualquer coisa. Em agosto/2026 devolve 46,89 contra 47 publicado.
+- **Analogia doméstica em toda aula.** A colher e a panela para amostra, a média do boletim para média ponderada, o restaurante para o vão. Sem analogia o leitor abandona no terceiro post.
+- **Nada digitado à mão.** Pesos, votos, bases, série e placar saem de `analysis/datafolha_082026/*.json`. O gerador só carrega texto.
+- **Contraste medido no SVG também.** O `scripts/contrast-audit.py` lê texto dentro de `<svg>`. Cores de gráfico costumam reprovar sobre o painel do card: em agosto foi preciso clarear `FAINT` para `#8f8c7f`, `GREY` para `#939cae`, criar `LULA_TXT` `#ea6a5c` para texto pequeno e remover a opacidade das barras. Rode a auditoria antes de publicar.
+- **No celular o card empilha.** Abaixo de 720px o `aspect-ratio` sai e a tipografia passa de `cqw` para pixel, senão o card fica ilegível. O 16:9 exato continua valendo na largura de trabalho, que é o que se anexa no X.
+- **Posts de 950 a 1.400 caracteres.** Menos que isso vira legenda, mais que isso não cabe.
+- **Declarar o limite antes da conclusão**, num post próprio, e fechar convidando o leitor a refazer a conta.
+
 ## Regras de escrita (valem para todo texto público da casa)
 - **Travessão é proibido.** O caractere `—` não entra em dossiê, thread, card, home, minuta ou legenda. Não trocar por `–` nem por ` - `: reescrever a frase com vírgula, dois-pontos, ponto e vírgula, parênteses ou ponto final. Aposto duplo entre travessões vira oração à parte. O hífen de palavra composta (`pós-estímulo`) e o `–` de intervalo numérico (`22–24/07`, `45–59 anos`) continuam válidos.
 - Verificar antes de publicar: `grep -c "—" docs/*.html` precisa devolver zero.
