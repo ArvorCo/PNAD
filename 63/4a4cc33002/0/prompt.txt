@@ -1,0 +1,11 @@
+In ~/arvor/PNAD, docs/index.html fails 29 WCAG AA contrast checks. This predates the Datafolha 08/2026 second-layer work (verified: `git show HEAD~1:docs/index.html` also reports 29).
+
+Reproduce:
+  python3 -m http.server 8899 --directory docs &
+  python3 scripts/contrast-audit.py http://localhost:8899/index.html
+
+Failures cluster in: `a.tag primary` (17), `span.featured-flag` (7), `p.ficha-date` (2), `p.colophon` (1), `span.stamp inferencia` (1), one bare `span`. Several report color == background, which may be a real defect or an artifact of how the audit samples elements that carry their own background; verify visually with a headless Chrome screenshot before changing colors.
+
+The house rule in AGENTS.md is zero lint and zero contrast failures. docs/quaest_globo_140826.html already returns 0, so use its palette decisions as the reference. Note that docs/datafolha_082026.css already contains a worked example of the fix pattern (a lightened `--faint`, a dedicated `.brand span` color, and a lightened `.stamp.hypothesis`), all derived from measured contrast ratios.
+
+Do not change the visual identity beyond what the measurements require. Re-run the audit until it returns 0, keep `grep -c "—" docs/index.html` at zero, and commit directly to main.
