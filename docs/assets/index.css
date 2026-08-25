@@ -24,8 +24,22 @@
   --amber: #ff9d5c;
   --navy: #08275c;
   --blue: #1f5fbf;
-  --green: #06775a;
-  --gold: #a06d00;
+  /* Verde e dourado da casa foram desenhados sobre papel claro, mas os
+     carimbos caem sobre --paper-2, que é mais escuro, e ali reprovavam na
+     WCAG AA. Estas são as versões medidas por scripts/contrast-audit.py, não
+     escolhidas no olho. */
+  --green: #066f54;
+  --gold: #825900;
+  /* O laranja precisa ficar como está: ele também pinta o H1 do masthead
+     sobre fundo escuro, onde escurecer piora. Esta é a versão de tinta, só
+     para texto sobre papel. */
+  --orange-ink: #bb550e;
+  /* Cinza de apoio sobre fundo escuro. O gradiente laranja do masthead clareia
+     o fundo no canto direito, e é ali que o mínimo aperta. */
+  --on-ink-faint: #979286;
+  /* O rodapé é de propósito mais apagado que o masthead; escurece só até o
+     mínimo, para não achatar a hierarquia. */
+  --on-ink-fine: #868176;
   --serif: "Newsreader", Georgia, serif;
   --display: "Fraunces", Georgia, serif;
   --sans: "Archivo", system-ui, sans-serif;
@@ -137,13 +151,13 @@ h3 { font-family: var(--sans); font-weight: 700; font-size: 1.16rem; line-height
 .brand { display: flex; align-items: center; gap: 12px; }
 .brand img { width: 44px; height: 44px; object-fit: contain; flex: none; }
 .brand b { font-family: var(--sans); font-weight: 800; font-size: .8rem; letter-spacing: .18em; color: var(--amber); text-transform: uppercase; }
-.brand i { display: block; font-style: normal; font-family: var(--sans); font-weight: 500; font-size: .66rem; letter-spacing: .1em; color: #8f8b80; text-transform: uppercase; margin-top: 3px; }
+.brand i { display: block; font-style: normal; font-family: var(--sans); font-weight: 500; font-size: .66rem; letter-spacing: .1em; color: var(--on-ink-faint); text-transform: uppercase; margin-top: 3px; }
 
 .rule-row {
   display: flex; align-items: center; justify-content: space-between; gap: 20px;
   padding-bottom: 22px; margin-bottom: 44px; border-bottom: 1px solid rgba(255, 255, 255, .18);
 }
-.rule-row .stampline { font-family: var(--mono); font-size: .7rem; letter-spacing: .12em; color: #8f8b80; text-transform: uppercase; text-align: right; }
+.rule-row .stampline { font-family: var(--mono); font-size: .7rem; letter-spacing: .12em; color: var(--on-ink-faint); text-transform: uppercase; text-align: right; }
 
 .masthead-grid { display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(300px, .88fr); gap: 52px; align-items: end; padding-bottom: 46px; }
 .masthead h1 { color: #fbf7ee; margin: 18px 0 26px; max-width: 12ch; }
@@ -157,7 +171,7 @@ h3 { font-family: var(--sans); font-weight: 700; font-size: 1.16rem; line-height
   padding: 11px 16px; border-bottom: 1px solid rgba(255, 255, 255, .18);
   font-family: var(--sans); font-weight: 800; font-size: .64rem; letter-spacing: .16em; text-transform: uppercase; color: var(--amber);
 }
-.ledger-head span:last-child { color: #8f8b80; font-family: var(--mono); font-weight: 500; letter-spacing: .08em; }
+.ledger-head span:last-child { color: var(--on-ink-faint); font-family: var(--mono); font-weight: 500; letter-spacing: .08em; }
 .ledger-row { display: flex; align-items: baseline; gap: 14px; padding: 13px 16px; border-bottom: 1px dashed rgba(255, 255, 255, .14); }
 .ledger-row:last-child { border-bottom: 0; }
 .ledger-row b {
@@ -166,7 +180,7 @@ h3 { font-family: var(--sans); font-weight: 700; font-size: 1.16rem; line-height
   min-width: 2.6ch; text-align: right; flex: none;
 }
 .ledger-row span { font-family: var(--sans); font-size: .82rem; line-height: 1.35; color: #cfcabb; }
-.ledger-row span em { font-style: normal; display: block; font-size: .7rem; color: #8f8b80; margin-top: 2px; }
+.ledger-row span em { font-style: normal; display: block; font-size: .7rem; color: var(--on-ink-faint); margin-top: 2px; }
 
 /* =========================================================
    NAV
@@ -349,7 +363,9 @@ h3 { font-family: var(--sans); font-weight: 700; font-size: 1.16rem; line-height
   font-family: var(--mono); font-weight: 600; font-size: .72rem; letter-spacing: .1em;
   color: var(--muted); /* sem opacity: o número do acervo é informação, tem de ler */
 }
-.ficha-date { font-family: var(--sans); font-weight: 700; font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+/* A tarja de 4px no topo continua no tom do acento; só o texto da data usa a
+   versão de tinta, e apenas onde o acento reprova sobre papel branco. */
+.ficha-date { font-family: var(--sans); font-weight: 700; font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-ink, var(--accent)); }
 .ficha h3 {
   margin: 8px 0 0; font-family: var(--display); font-optical-sizing: auto; font-weight: 900;
   font-size: clamp(1.5rem, 2.1vw, 1.95rem); line-height: .98; letter-spacing: -.025em; color: var(--ink);
@@ -417,7 +433,7 @@ footer a { color: #ffc178; }
 .foot-list a { display: block; padding: 9px 0; font-family: var(--sans); font-size: .84rem; text-decoration: none; color: #cfcabb; }
 .foot-list a:hover { color: var(--amber); }
 .foot-title { font-family: var(--sans); font-weight: 800; font-size: .66rem; letter-spacing: .16em; text-transform: uppercase; color: var(--amber); margin-bottom: 8px; }
-.colophon { margin-top: 34px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, .16); font-family: var(--mono); font-size: .72rem; letter-spacing: .04em; color: #6f6b62; }
+.colophon { margin-top: 34px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, .16); font-family: var(--mono); font-size: .72rem; letter-spacing: .04em; color: var(--on-ink-fine); }
 
 /* =========================================================
    REVEAL (progressive enhancement)

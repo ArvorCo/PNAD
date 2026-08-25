@@ -34,6 +34,12 @@ COLLECT = """
     const st = getComputedStyle(el);
     if (st.display === 'none' || st.visibility === 'hidden') return;
     if (parseFloat(st.opacity) === 0 || st.position === 'fixed') return;
+    // Opacidade zero herdada apaga o elemento sem zerar a opacidade dele.
+    // Sem esta checagem o recorte leria o fundo da seção atrás de um cartão
+    // que não foi pintado, e devolveria reprovação inventada.
+    for (let up = el.parentElement; up && up !== document.body; up = up.parentElement) {
+      if (parseFloat(getComputedStyle(up).opacity) === 0) return;
+    }
     const box = el.getBoundingClientRect();
     if (box.width < 4 || box.height < 4) return;
     if (box.top + window.scrollY < 0 || box.left < 0) return;
@@ -61,7 +67,24 @@ HIDE = """
 })
 """
 
-REVEAL = "() => document.querySelectorAll('.reveal').forEach(n => n.classList.add('visible'))"
+# O acervo tem três convenções de revelação ao rolar: `.reveal.in`,
+# `.reveal.visible` e `.rv.in`. Marcar as classes reproduz o estado de quem
+# rolou a página inteira; a folha injetada é a rede de segurança para qualquer
+# convenção futura. Sem isso a página é fotografada com os blocos ainda em
+# `opacity: 0`, e o recorte lê o fundo da seção em vez do cartão.
+REVEAL = """
+() => {
+  document.querySelectorAll('.reveal, .rv').forEach(node => {
+    node.classList.add('in');
+    node.classList.add('visible');
+  });
+  const sheet = document.createElement('style');
+  sheet.textContent =
+    '.reveal, .rv { opacity: 1 !important; transform: none !important;' +
+    ' transition: none !important; animation: none !important }';
+  document.head.appendChild(sheet);
+}
+"""
 
 
 def parse_rgb(value: str) -> tuple[float, float, float, float]:
