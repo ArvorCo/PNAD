@@ -126,6 +126,33 @@ def threshold_for(size: float, weight: str) -> float:
     return 3.0 if large else 4.5
 
 
+def full_page_image(page, Image):
+    """Fotografa a pagina inteira em faixas.
+
+    O Chromium nao devolve captura acima de aproximadamente 16.384 pixels de
+    altura: o excedente volta branco, o que fazia o auditor acusar contraste
+    falso no rodape de dossies longos. Capturar em faixas e costurar resolve.
+    """
+    width, height = page.evaluate(
+        "() => [document.documentElement.scrollWidth, document.documentElement.scrollHeight]"
+    )
+    width, height = int(width), int(height)
+    faixa = 8000
+    if height <= faixa:
+        return Image.open(io.BytesIO(page.screenshot(full_page=True))).convert("RGB")
+    canvas = Image.new("RGB", (width, height), (255, 255, 255))
+    topo = 0
+    while topo < height:
+        altura = min(faixa, height - topo)
+        raw = page.screenshot(
+            full_page=True,
+            clip={"x": 0, "y": topo, "width": width, "height": altura},
+        )
+        canvas.paste(Image.open(io.BytesIO(raw)).convert("RGB"), (0, topo))
+        topo += altura
+    return canvas
+
+
 def audit_page(page, url: str) -> list[dict]:
     from PIL import Image
 
@@ -136,7 +163,7 @@ def audit_page(page, url: str) -> list[dict]:
     items = page.evaluate(COLLECT)
     page.evaluate(HIDE)
     page.wait_for_timeout(300)
-    shot = Image.open(io.BytesIO(page.screenshot(full_page=True)))
+    shot = full_page_image(page, Image)
     problems = []
     for item in items:
         handle = page.query_selector(f'[data-contrast-audit="{item["id"]}"]')
