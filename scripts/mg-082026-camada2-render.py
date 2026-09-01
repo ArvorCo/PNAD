@@ -292,9 +292,9 @@ CH = f"""{INICIO}
           <div class="chart-shell dark-card">
             <div class="chart-title"><div><p class="kicker">Limite do índice</p><h3>O que ele não mede</h3></div></div>
             <div class="limit-list">
-              <p><b>Não é transferência.</b> São cargos, cédulas e incentivos diferentes, medidos em eleições passadas. O índice mostra alcance territorial comparado, não que o eleitor de um nome siga para outro.</p>
-              <p><b>Não é pessoa.</b> A unidade é o município. Nenhuma linha aqui autoriza afirmar comportamento de indivíduo ou de grupo demográfico dentro de uma cidade.</p>
-              <p><b>Não é previsão.</b> O denominador é 2022. Estrutura partidária, adversários e contexto econômico mudaram desde então.</p>
+              <p><b>Mede alcance, não repasse.</b> Senador, deputado e presidente disputam cédulas e incentivos diferentes. O índice mostra onde um nome chegou mais longe que o topo da chapa, e a distância entre chegar longe e entregar voto a outro candidato é justamente o que a campanha tem de construir.</p>
+              <p><b>Mede território, não gente.</b> A unidade é o município, e município agrega eleitores muito diferentes entre si. Uma cidade com índice alto tem bolsões de índice baixo dentro dela.</p>
+              <p><b>Mede o passado.</b> O denominador é 2022. Desde então mudaram partido, adversário e economia, e o índice não sabe disso.</p>
             </div>
           </div>
         </div>

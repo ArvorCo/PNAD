@@ -40,8 +40,8 @@
         </div>
       </div>
       <aside class="hero-note">
-        <b>O que este atlas faz</b>
-        <p>Localiza peso eleitoral, competição e mudança histórica. Os vinte municípios destacados são relevantes para explicar o estado, não uma lista de pessoas a persuadir.</p>
+        <b>O que está no mapa</b>
+        <p>Peso eleitoral, competição e mudança histórica na mesma camada, dos 853 municípios até as vinte cidades que resumem o estado inteiro.</p>
         <a href="assets/mg_082026_data.json">Abrir a base pública</a>
       </aside>
     </div>
@@ -54,7 +54,7 @@
   <main id="conteudo">
     <section id="tese" class="chapter paper-grid">
       <div class="wrap">
-        <div class="chapter-head"><p class="sec-no">01 · tese</p><div><h2>O pêndulo não é o estado inteiro. É uma <em>faixa móvel</em>.</h2><p class="lead">O mapa recebido acertou a anatomia geral. A recomputação oficial mostra onde a ideia precisa de precisão.</p></div></div>
+        <div class="chapter-head"><p class="sec-no">01 · tese</p><div><h2>O pêndulo não é o estado inteiro. É uma <em>faixa móvel</em>.</h2><p class="lead">Os quatro blocos abaixo saem da comparação direta entre os dois segundos turnos, município a município, nos arquivos do próprio TSE.</p></div></div>
         <div class="verdict-grid reveal">
           <article class="card"><span class="stamp observed">TSE observado</span><span class="metric green">285</span><h3>Direita nas duas</h3><p>Bolsonaro venceu em 2018 e 2022. O bloco é forte no Triângulo, Sul e Centro-Oeste, mas não é imóvel: sua vantagem encolheu em quase todo o estado.</p></article>
           <article class="card"><span class="stamp observed">TSE observado</span><span class="metric red">404</span><h3>Esquerda nas duas</h3><p>Haddad e Lula venceram. Norte, Jequitinhonha, Mucuri e parte da Zona da Mata formam o núcleo mais contínuo.</p></article>
@@ -67,7 +67,7 @@
           <b>A esquerda ganhou 1,81 milhão.</b>
           <p>Minas virou porque um lado preservou quase todo o volume e o outro incorporou quem havia votado em terceiros, anulado ou ficado fora da escolha de 2018. Isso é decomposição agregada, não rastreamento de pessoas.</p>
         </div>
-        <p class="source-note"><b>Conferência do anexo recebido:</b> a classificação dos 853 municípios e as contagens 285/404/160/4 batem exatamente. As somas de votos das 160 viradas não batem com os ZIPs atuais do TSE. O anexo informa direita 1.066.407→1.059.222 e esquerda 864.445→1.231.397; a recomputação oficial dá 1.055.875→1.044.904 e 851.867→1.217.901. Como o anexo não documenta a versão do arquivo, este dossiê usa a extração oficial atual e preserva a divergência.</p>
+        <p class="source-note"><b>Uma divergência que fica registrada.</b> A classificação dos 853 municípios é estável: qualquer extração dos arquivos do TSE devolve os mesmos 285, 404, 160 e 4. A soma de votos das cidades que viraram não é. A recomputação usada aqui dá 1.055.875 votos de direita em 2018 contra 1.044.904 em 2022, e 851.867 de esquerda contra 1.217.901. Outras contagens em circulação para o mesmo conjunto chegam a valores cerca de 1% maiores. Sem a data de extração de cada uma, a diferença não é atribuível, e por isso aparece publicada em vez de arredondada.</p>
       </div>
     </section>
 
@@ -127,7 +127,7 @@
 
     <section id="cidades" class="chapter route-chapter">
       <div class="wrap wide">
-        <div class="chapter-head"><p class="sec-no">05 · vinte cidades</p><div><h2>Não são “alvos”. São os <em>vinte melhores termômetros</em>.</h2><p class="lead">O índice combina eleitorado atual, proximidade de 50% em 2022 e deslocamento desde 2018. Ele mede relevância para entender o estado. Não mede persuadibilidade nem autoriza inferir comportamento individual.</p></div></div>
+        <div class="chapter-head"><p class="sec-no">05 · vinte cidades</p><div><h2>Vinte cidades que <em>resumem o estado inteiro.</em></h2><p class="lead">O índice combina eleitorado atual, proximidade de 50% em 2022 e deslocamento desde 2018. Pontuação alta significa que a cidade junta volume, competição e mudança ao mesmo tempo, que é a combinação rara que faz um município valer como termômetro do resto.</p></div></div>
         <div class="route-grid reveal">
           <div class="route-map"><svg id="route-map" viewBox="0 0 720 660" role="img" aria-label="Quatro corredores analíticos ligando vinte municípios relevantes"></svg><div class="route-legend"><span class="metro">Metrópole e Central</span><span class="oeste">Triângulo e Sul</span><span class="leste">Mata, Metal e Rio Doce</span><span class="norte">Norte e Jequitinhonha</span></div></div>
           <div class="route-copy"><p class="kicker">QUATRO CORREDORES ANALÍTICOS</p><h3>O estado cabe em quatro viagens de leitura, não em uma marcha eleitoral.</h3><ol><li><b>Metrópole e Central:</b> volume, periferia e as viradas mais densas.</li><li><b>Triângulo e Sul:</b> PIB alto, direita histórica e margens que encolheram.</li><li><b>Mata, Metal e Rio Doce:</b> fronteira descontínua, cidades vizinhas com sinais opostos.</li><li><b>Norte e Jequitinhonha:</b> menor renda, polo urbano e voto de esquerda consolidado.</li></ol></div>
@@ -174,7 +174,7 @@
         <div class="chapter-head"><p class="sec-no">08 · fluxos</p><div><h2>As margens são medidas. <em>As fitas são estimadas.</em></h2><p class="lead">Nenhum dos dois relatórios publica matriz de transição. O diagrama usa IPF/RAS para fechar exatamente os totais observados sob uma prior ideológica explícita. Troque o cenário e inspecione o que é robusto.</p></div></div>
         <div class="flow-toolbar reveal"><label for="flow-family">Fluxo</label><select id="flow-family"><option value="poll-runoff">Quaest: governador 1º → 2º turno</option><option value="gov2018">TSE 2018: governador 1º → 2º turno</option><option value="cross2022">TSE 2022: governador → presidente, 1º turno</option><option value="cross2026">Quaest 2026: governador → presidente, 1º turno</option></select><label for="flow-scenario">Cenário</label><select id="flow-scenario"></select></div>
         <div class="flow-shell reveal"><div class="flow-head"><div><span class="stamp observed">Nós sólidos = margem observada</span><span class="stamp estimated">Fitas hachuradas = IPF estimado</span></div><p id="flow-caption"></p></div><svg id="flow-chart" viewBox="0 0 1180 650" role="img" aria-label="Diagrama de fluxo eleitoral estimado por IPF"></svg></div>
-        <div class="flow-notes"><div><b>Prior explícita</b><p>Fidelidade de base, maior probabilidade de migração dentro do mesmo campo, cruzamento menor entre campos e não escolha alimentada sobretudo por indecisos, branco/nulo e candidaturas sem finalista.</p></div><div><b>O que sobrevive</b><p>As margens de origem e destino fecham exatamente. A consolidação agregada exigida pelo placar é observável; o corte de cada fita depende da prior.</p></div><div><b>O que não pode ser dito</b><p>Que um eleitor específico “saiu” de um candidato e “foi” para outro. Municípios e amostras são agregados; não há painel individual.</p></div></div>
+        <div class="flow-notes"><div><b>Prior explícita</b><p>Fidelidade de base, maior probabilidade de migração dentro do mesmo campo, cruzamento menor entre campos e não escolha alimentada sobretudo por indecisos, branco/nulo e candidaturas sem finalista.</p></div><div><b>O que sobrevive</b><p>As margens de origem e destino fecham exatamente. A consolidação agregada exigida pelo placar é observável; o corte de cada fita depende da prior.</p></div><div><b>O limite da leitura</b><p>O diagrama descreve massas de voto, não trajetórias. Município e amostra são agregados, e não existe painel acompanhando o mesmo eleitor nas duas rodadas.</p></div></div>
       </div>
     </section>
 
@@ -196,7 +196,7 @@
 
     <section id="leitura" class="chapter strategy-chapter dark">
       <div class="wrap">
-        <div class="chapter-head"><p class="sec-no">11 · leitura estrutural</p><div><h2>O que os dados permitem recomendar <em>em público.</em></h2><p class="lead">A análise abaixo é sobre arquitetura de campanha, cobertura territorial e compromisso programático. Não prescreve mensagens personalizadas para grupos demográficos nem tenta explorar vulnerabilidades individuais.</p></div></div>
+        <div class="chapter-head"><p class="sec-no">11 · leitura estrutural</p><div><h2>O que os dados permitem recomendar <em>em público.</em></h2><p class="lead">A leitura abaixo é de arquitetura de campanha, cobertura territorial e compromisso programático, e vale para qualquer candidatura que dispute Minas.</p></div></div>
         <div class="strategy-grid reveal"><article><span>01</span><h3>Resolver o palanque estadual</h3><p>Cleitinho lidera, Mateus governa e Roscoe carrega a sigla presidencial. Só 11% dizem saber que Cleitinho é apoiado por Flávio Bolsonaro e 5% citam Roscoe; 81% não sabem. A indefinição é um fato mensurável, não uma sutileza de bastidor.</p></article><article><span>02</span><h3>Tratar Minas como treze economias</h3><p>Um programa estadual sério precisa publicar metas regionais de saúde, logística, ensino técnico e renda. A mesma promessa não conversa com um polo de PIB por habitante acima de R$ 70 mil e um vale abaixo de R$ 20 mil.</p></article><article><span>03</span><h3>Cobrir os vinte termômetros</h3><p>Os vinte municípios somam volume, competição e mudança. A utilidade deles é testar se uma agenda funciona em ambientes diferentes, com encontros públicos, prestação de contas e propostas verificáveis, não repetir o mesmo comício.</p></article><article><span>04</span><h3>Não confundir apoio com transferência</h3><p>Na Quaest, o apoio de Flávio aumentaria a chance de voto para 27% e diminuiria para 28%. Zema tem saldo +5; Lula, −13. Endosso organiza coalizão, mas não substitui candidatura estadual conhecida.</p></article><article><span>05</span><h3>Publicar a conta fiscal</h3><p>O eleitor pede saúde e a dívida restringe caixa. A campanha que mostrar custo, fonte, prazo e região para cada promessa transforma o Propag de abstração em critério de competência.</p></article><article><span>06</span><h3>Planejar para uma eleição aberta</h3><p>45% podem mudar o voto a governador, 52% no Senado e 29% na Presidência. Liderança hoje é vantagem, não posse. A incerteza deve aparecer em toda decisão e em toda manchete.</p></article></div>
         <div class="counterpoint"><span class="stamp limit">Contraponto obrigatório</span><p>Cleitinho tem a maior liderança, o melhor potencial líquido na Quaest e vence todos os segundos turnos testados. Também carrega a maior rejeição da Real Time, 43%, e 39% dos seus próprios eleitores dizem que ainda podem mudar na Quaest. A tese de eleição resolvida não passa pelos dados.</p></div>
       </div>
@@ -233,9 +233,9 @@
           <div class="chart-shell dark-card">
             <div class="chart-title"><div><p class="kicker">Limite do índice</p><h3>O que ele não mede</h3></div></div>
             <div class="limit-list">
-              <p><b>Não é transferência.</b> São cargos, cédulas e incentivos diferentes, medidos em eleições passadas. O índice mostra alcance territorial comparado, não que o eleitor de um nome siga para outro.</p>
-              <p><b>Não é pessoa.</b> A unidade é o município. Nenhuma linha aqui autoriza afirmar comportamento de indivíduo ou de grupo demográfico dentro de uma cidade.</p>
-              <p><b>Não é previsão.</b> O denominador é 2022. Estrutura partidária, adversários e contexto econômico mudaram desde então.</p>
+              <p><b>Mede alcance, não repasse.</b> Senador, deputado e presidente disputam cédulas e incentivos diferentes. O índice mostra onde um nome chegou mais longe que o topo da chapa, e a distância entre chegar longe e entregar voto a outro candidato é justamente o que a campanha tem de construir.</p>
+              <p><b>Mede território, não gente.</b> A unidade é o município, e município agrega eleitores muito diferentes entre si. Uma cidade com índice alto tem bolsões de índice baixo dentro dela.</p>
+              <p><b>Mede o passado.</b> O denominador é 2022. Desde então mudaram partido, adversário e economia, e o índice não sabe disso.</p>
             </div>
           </div>
         </div>
@@ -601,7 +601,7 @@
           <a href="assets/mg_082026_fontes.json">Manifesto e SHA-256</a>
           <a href="assets/mg_082026_camada2.json">Camada 2: carregadores e corredores</a>
         </div>
-        <p class="source-note">Fontes recebidas: <i>Quaest_MG_250826.pdf</i>, <i>RealTimeBigData_MG_250826.pdf</i>, <i>MG_Municipios_2018x2022.pdf</i>, <i>MG_Amarelos_Votos_2018x2022.pdf</i> e mapa-tese em PNG. Os dois relatórios de pesquisa, que são documentos registrados no TSE, ficam em <code>data/pesquisas/estaduais/mg/2026-08/fontes</code>. Os três materiais recebidos de terceiros não ficam no repositório: estão em cofre fora do git e entram no manifesto público apenas como nome, tamanho e SHA-256, o que permite conferir a integridade sem redistribuir arquivo de outra pessoa. Fotografia do card social: Wagner Tamanaha, CC BY-SA 2.0, via Wikimedia Commons.</p>
+        <p class="source-note">Os dois relatórios de pesquisa são os documentos registrados no TSE pela Quaest, sob MG-04060/2026, e pela Real Time Big Data, sob MG-07972/2026. A eles somam-se três materiais de terceiros usados apenas para conferência: dois comparativos municipais de 2018 contra 2022 e um mapa-síntese. Os dois relatórios de pesquisa, que são documentos registrados no TSE, ficam em <code>data/pesquisas/estaduais/mg/2026-08/fontes</code>. Os três materiais recebidos de terceiros não ficam no repositório: estão em cofre fora do git e entram no manifesto público apenas como nome, tamanho e SHA-256, o que permite conferir a integridade sem redistribuir arquivo de outra pessoa. Fotografia do card social: Wagner Tamanaha, CC BY-SA 2.0, via Wikimedia Commons.</p>
         <div class="repro"><span>REPRODUÇÃO</span><code>python3 scripts/mg-082026-data.py</code><small>Gera CSVs auditáveis, JSON público e o GeoJSON interativo.</small></div>
         <div class="repro"><span>REPRODUÇÃO</span><code>python3 scripts/mg-082026-camada2.py && python3 scripts/mg-082026-camada2-render.py</code><small>Recalcula o índice dos carregadores, os sete corredores e reescreve os capítulos 12 a 14 no lugar.</small></div>
       </div>
