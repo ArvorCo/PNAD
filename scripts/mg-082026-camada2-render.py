@@ -129,6 +129,125 @@ def corredor(c: dict) -> str:
         </article>"""
 
 
+PARADAS = [
+    (
+        "Congonhas",
+        "minerio",
+        "Trocou de lado em 2022 e Cleitinho correu dez pontos à frente de Bolsonaro ali.",
+        "Caminhada de romaria no entorno da Basílica do Bom Jesus de Matosinhos.",
+    ),
+    (
+        "Itabira",
+        "minerio",
+        "É o maior credor individual da cobrança de CFEM, com R$ 822,6 milhões estimados, e trocou de lado em 2022.",
+        "Audiência aberta com prefeito e câmara, com o valor devido no painel.",
+    ),
+    (
+        "Mariana",
+        "minerio",
+        "Bolsonaro fez menos de trinta por cento no 1º turno e os três carregadores rendem acima dele.",
+        "Encontro de centro histórico, sem carreata.",
+    ),
+    (
+        "Contagem",
+        "metropolitano",
+        "Segunda maior cidade do estado, margem apertada e Nikolas passou de vinte por cento dos válidos.",
+        "Motociata metropolitana ligando Contagem, Betim e Ibirité.",
+    ),
+    (
+        "Betim",
+        "metropolitano",
+        "Ficou dentro de cinco pontos em 2022 e recebe o novo campus da UFMG no ano que vem.",
+        "Portaria de fábrica e caminhada de comércio, com Nikolas.",
+    ),
+    (
+        "Ribeirão das Neves",
+        "metropolitano",
+        "É a terceira maior virada do estado em eleitorado e ficou a pouco mais de um ponto.",
+        "Feira livre de sábado de manhã.",
+    ),
+    (
+        "Ibirité",
+        "metropolitano",
+        "Foi decidida por menos de meio ponto e tem deputado federal de base própria na cidade.",
+        "Agenda de segurança em base comunitária, com Engler.",
+    ),
+    (
+        "Divinópolis",
+        "oeste",
+        "Cleitinho fez quase vinte pontos a mais que Bolsonaro ali, no mesmo dia e na mesma urna.",
+        "Comício de praça com o senador abrindo e fechando.",
+    ),
+    (
+        "Nova Serrana",
+        "oeste",
+        "É a maior cidade mais bolsonarista de Minas e o polo calçadista opera com cerca de 30% da capacidade.",
+        "Chão de fábrica, com pauta de crédito, energia e importação.",
+    ),
+    (
+        "Ipatinga",
+        "aco",
+        "A Usiminas desativou o alto-forno 1 e demitiu mais de cem pessoas na usina da cidade.",
+        "Portaria de fábrica na troca de turno.",
+    ),
+    (
+        "Governador Valadares",
+        "aco",
+        "É polo de sete regiões e a região ficou quase empatada, mesmo com a cidade mais à direita que o entorno.",
+        "Motociata em avenida larga, mais reunião separada com comércio.",
+    ),
+    (
+        "Juiz de Fora",
+        "mata",
+        "É o maior município do estado que trocou de lado entre 2018 e 2022, com quase quatrocentos mil eleitores.",
+        "A motociata pendente, do aeroporto ao centro.",
+    ),
+    (
+        "Barbacena",
+        "mata",
+        "Trocou de lado e deslocou nove pontos para a esquerda entre as duas eleições.",
+        "Caminhada de comércio de rua, com pauta de fila de saúde.",
+    ),
+    (
+        "Uberlândia",
+        "producao",
+        "Concentra cerca de 58% das empresas abertas no Triângulo no primeiro trimestre de 2026 e tem margem estreita.",
+        "Motociata, onde Bolsonaro fez a primeira de Minas, mais agenda de logística.",
+    ),
+    (
+        "Varginha",
+        "producao",
+        "Está no centro da cadeia do café que perdeu 34% do valor exportado aos Estados Unidos no semestre.",
+        "Encontro de cooperativas, com pauta de tarifa, crédito e frete.",
+    ),
+    (
+        "Montes Claros",
+        "vales",
+        "Maior cidade do Norte, onde a tarefa declarada é comprimir diferença e não converter região.",
+        "Rádio AM e FM regional, mais agenda de água e irrigação.",
+    ),
+]
+
+
+def paradas_html() -> str:
+    por_nome = {c["mun"]: (c, cor) for cor in D["corredores"] for c in cor["cidades"]}
+    linhas = []
+    for mun, slug, motivo, formato in PARADAS:
+        c, cor = por_nome[mun]
+        virou = (
+            ' <span class="tag-virou">virou</span>'
+            if c["virada"] == "Direita→esquerda"
+            else ""
+        )
+        linhas.append(
+            f"<tr><th scope=row>{escape(mun)}{virou}<small>{escape(cor['nome'])}</small></th>"
+            f"<td class=num>{num(c['el'])}</td><td class=num>{pct(c['bol1'])}</td>"
+            f"<td class=num>{pp(c['marg'])}</td>"
+            f"<td>{escape(motivo)}</td><td>{escape(formato)}</td></tr>"
+        )
+    return "".join(linhas)
+
+
 trio = D["trio"]
 trio_linhas = "".join(
     f"<tr><th scope=row>{escape(x['mun'])}</th><td>{escape(x['meso'])}</td>"
@@ -207,6 +326,10 @@ CH = f"""{INICIO}
           <li><b>Juiz de Fora e a Mata.</b> O maior município que trocou de lado entre 2018 e 2022, com a agenda simbólica mais carregada e ainda pendente do calendário de campanha.</li>
           <li><b>Os vales, em fundo contínuo.</b> Nunca uma onda própria. Rádio regional e parlamentar local. O objetivo mensurável é reduzir diferença, não vencer região.</li>
         </ol>
+        <div class="scroll-x reveal"><table class="carrier-table paradas">
+          <caption>Dezesseis paradas, sem data, cobrindo os sete corredores</caption>
+          <thead><tr><th>parada</th><th>eleitores</th><th>Bolso 1T</th><th>margem E 2T</th><th>por que aqui</th><th>formato</th></tr></thead>
+          <tbody>{paradas_html()}</tbody></table></div>
         <div class="counterpoint">
           <span class="stamp limit">Contraponto obrigatório</span>
           <p>A tese deste capítulo enfraquece em {pct([c for c in D['corredores'] if c['slug'] == 'producao'][0]['resumo']['share_mg'], 2)} do eleitorado de Minas. No Corredor da Produção os três carregadores rendem abaixo de Bolsonaro, o que significa que a parte mais rica e mais industrial do estado não é destravável por aliança regional. Some-se a isso que as {EST['viradas_de']} cidades que trocaram de lado têm margem média de {pp(EST['margem_media_viradas'])} para a esquerda, e não empate: apenas {EST['viradas_ate_5pp']} delas ficaram dentro de cinco pontos. Recuperar esse bloco é mais caro do que o mapa sugere à primeira vista.</p>

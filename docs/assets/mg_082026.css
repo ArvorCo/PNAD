@@ -416,3 +416,6 @@ table.mini td.num { text-align: right; }
 .stake p { grid-column: 1 / -1; margin: 0; padding: 18px 22px; color: #c8d1c9; background: #162119; font-size: .92rem; }
 .stake p a { color: #9fc6e8; font-weight: 700; }
 @media (max-width: 760px) { .stake { grid-template-columns: 1fr; } }
+.paradas { min-width: 980px; }
+.paradas tbody th small { display: block; margin-top: 3px; color: #b6c0b7; font-size: .68rem; font-weight: 400; letter-spacing: .05em; text-transform: uppercase; }
+.paradas td:nth-child(5), .paradas td:nth-child(6) { max-width: 300px; white-space: normal; }
