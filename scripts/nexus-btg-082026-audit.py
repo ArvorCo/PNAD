@@ -54,11 +54,11 @@ UF_BY_PREFIX = {
     53: "DF",
 }
 REGION_BY_UF = {
-    **{uf: "Norte" for uf in "RO AC AM RR PA AP TO".split()},
-    **{uf: "Nordeste" for uf in "MA PI CE RN PB PE AL SE BA".split()},
-    **{uf: "Sudeste" for uf in "MG ES RJ SP".split()},
-    **{uf: "Sul" for uf in "PR SC RS".split()},
-    **{uf: "Centro-Oeste" for uf in "MS MT GO DF".split()},
+    **dict.fromkeys(["RO", "AC", "AM", "RR", "PA", "AP", "TO"], "Norte"),
+    **dict.fromkeys(["MA", "PI", "CE", "RN", "PB", "PE", "AL", "SE", "BA"], "Nordeste"),
+    **dict.fromkeys(["MG", "ES", "RJ", "SP"], "Sudeste"),
+    **dict.fromkeys(["PR", "SC", "RS"], "Sul"),
+    **dict.fromkeys(["MS", "MT", "GO", "DF"], "Centro-Oeste"),
 }
 
 DATES = [
@@ -518,7 +518,7 @@ def pnad_distribution(column: str, classifier) -> dict:
         estimate = 100 * sums[label] / total
         values = [
             100 * value / denominator
-            for value, denominator in zip(rep_sums[label], rep_totals)
+            for value, denominator in zip(rep_sums[label], rep_totals, strict=False)
             if denominator
         ]
         result[label] = replicate_ci(estimate, values)
@@ -1083,7 +1083,7 @@ def profile_shift_test(dimension: str, labels: list[str]) -> list[dict]:
     n_july, n_august = INTERVIEWS["july"], INTERVIEWS["august"]
     critical = NormalDist().inv_cdf(0.975)
     rows = []
-    for label, before, after in zip(labels, july, august):
+    for label, before, after in zip(labels, july, august, strict=False):
         p1, p2 = before / 100, after / 100
         error = math.sqrt(p1 * (1 - p1) / n_july + p2 * (1 - p2) / n_august)
         z = (p2 - p1) / error if error else 0.0
@@ -1172,13 +1172,15 @@ def labour_benchmark() -> dict:
     distribution = {
         label: round(100 * totals[label] / grand, 2) for label in LABOUR_LABELS
     }
-    published = dict(zip(LABOUR_LABELS, UNCONTROLLED_PROFILES["august"]["labour"]))
+    published = dict(
+        zip(LABOUR_LABELS, UNCONTROLLED_PROFILES["august"]["labour"], strict=False)
+    )
     return {
         "labels": LABOUR_LABELS,
         "pnad_distribution": distribution,
         "published_profile_august": published,
         "published_profile_july": dict(
-            zip(LABOUR_LABELS, UNCONTROLLED_PROFILES["july"]["labour"])
+            zip(LABOUR_LABELS, UNCONTROLLED_PROFILES["july"]["labour"], strict=False)
         ),
         "gap_pp": {
             label: round(published[label] - distribution[label], 2)
@@ -1262,6 +1264,7 @@ def field_geography() -> dict:
                 zip(
                     ["Norte/Centro-Oeste", "Nordeste", "Sudeste", "Sul"],
                     PROFILES[key]["region"],
+                    strict=False,
                 )
             ),
             "northeast_field_pct": round(100 * region_counts["Nordeste"] / total, 2),

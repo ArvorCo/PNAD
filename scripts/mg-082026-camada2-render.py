@@ -232,7 +232,7 @@ PARADAS = [
 def paradas_html() -> str:
     por_nome = {c["mun"]: (c, cor) for cor in D["corredores"] for c in cor["cidades"]}
     linhas = []
-    for mun, slug, motivo, formato in PARADAS:
+    for mun, _slug, motivo, formato in PARADAS:
         c, cor = por_nome[mun]
         virou = (
             ' <span class="tag-virou">virou</span>'
@@ -332,7 +332,7 @@ CH = f"""{INICIO}
           <tbody>{paradas_html()}</tbody></table></div>
         <div class="counterpoint">
           <span class="stamp limit">Contraponto obrigatório</span>
-          <p>A tese deste capítulo enfraquece em {pct([c for c in D['corredores'] if c['slug'] == 'producao'][0]['resumo']['share_mg'], 2)} do eleitorado de Minas. No Corredor da Produção os três carregadores rendem abaixo de Bolsonaro, o que significa que a parte mais rica e mais industrial do estado não é destravável por aliança regional. Some-se a isso que as {EST['viradas_de']} cidades que trocaram de lado têm margem média de {pp(EST['margem_media_viradas'])} para a esquerda, e não empate: apenas {EST['viradas_ate_5pp']} delas ficaram dentro de cinco pontos. Recuperar esse bloco é mais caro do que o mapa sugere à primeira vista.</p>
+          <p>A tese deste capítulo enfraquece em {pct(next(c for c in D['corredores'] if c['slug'] == 'producao')['resumo']['share_mg'], 2)} do eleitorado de Minas. No Corredor da Produção os três carregadores rendem abaixo de Bolsonaro, o que significa que a parte mais rica e mais industrial do estado não é destravável por aliança regional. Some-se a isso que as {EST['viradas_de']} cidades que trocaram de lado têm margem média de {pp(EST['margem_media_viradas'])} para a esquerda, e não empate: apenas {EST['viradas_ate_5pp']} delas ficaram dentro de cinco pontos. Recuperar esse bloco é mais caro do que o mapa sugere à primeira vista.</p>
         </div>
       </div>
     </section>

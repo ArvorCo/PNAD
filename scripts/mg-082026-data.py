@@ -21,8 +21,8 @@ import csv
 import gzip
 import io
 import json
-import os
 import math
+import os
 import re
 import sqlite3
 import unicodedata
@@ -458,7 +458,8 @@ def fetch_pnad(table: str, fields: list[str], weight_prefix: str):
     with sqlite3.connect(f"file:{PNAD_DB}?mode=ro", uri=True) as connection:
         rows = connection.execute(sql).fetchall()
     dims = [
-        numpy_column(column) for column in zip(*(row[: len(fields)] for row in rows))
+        numpy_column(column)
+        for column in zip(*(row[: len(fields)] for row in rows), strict=False)
     ]
     weights = np.array([row[len(fields) :] for row in rows], dtype=float)
     return dims, weights
@@ -536,8 +537,8 @@ def read_pnad() -> dict:
         employed,
         position,
         work_income,
-        q_capital,
-        q_metro,
+        _q_capital,
+        _q_metro,
     ), qw = fetch_pnad("base_labeled_npv", quarter_fields, "V1028")
     q_adults = q_age >= 16
     labor = q_adults & (labor_force == 1)
@@ -962,7 +963,7 @@ def validate_polls() -> dict:
             "max_erro_arredondamento_pp": round(float(np.max(np.abs(errors))), 3),
             "recomposto": {
                 label: round(float(value), 3)
-                for label, value in zip(labels, recomposed)
+                for label, value in zip(labels, recomposed, strict=False)
             },
         }
     return checks

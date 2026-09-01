@@ -4,11 +4,11 @@ from __future__ import annotations
 import argparse
 import csv
 import sys
+from collections.abc import Iterable
 from pathlib import Path
-from typing import Dict, Iterable, List, Optional, Tuple
 
 
-def _to_float(x: str) -> Optional[float]:
+def _to_float(x: str) -> float | None:
     if x is None:
         return None
     s = str(x).strip().replace(",", ".")
@@ -20,7 +20,7 @@ def _to_float(x: str) -> Optional[float]:
         return None
 
 
-def read_ipca_csv(path: Path) -> Dict[str, float]:
+def read_ipca_csv(path: Path) -> dict[str, float]:
     """Read a simple CSV of monthly IPCA index levels into a map.
 
     Accepted headers:
@@ -39,7 +39,7 @@ def read_ipca_csv(path: Path) -> Dict[str, float]:
             raise ValueError(
                 "ipca csv must have columns (date,index) or (year,month,index)"
             )
-        out: Dict[str, float] = {}
+        out: dict[str, float] = {}
         for row in r:
             if date_based:
                 key = str(row.get("date", "")).strip()
@@ -55,7 +55,7 @@ def read_ipca_csv(path: Path) -> Dict[str, float]:
         return out
 
 
-def build_deflators(index: Dict[str, float], target: str) -> Dict[str, float]:
+def build_deflators(index: dict[str, float], target: str) -> dict[str, float]:
     """Compute deflator factors to convert values from t to target month.
 
     Factor = index[target] / index[t]. If either is missing, t not included.
@@ -63,7 +63,7 @@ def build_deflators(index: Dict[str, float], target: str) -> Dict[str, float]:
     if target not in index:
         raise ValueError(f"target {target} missing from index data")
     target_idx = index[target]
-    out: Dict[str, float] = {}
+    out: dict[str, float] = {}
     for ym, val in index.items():
         if val and val != 0:
             out[ym] = float(target_idx) / float(val)
@@ -72,7 +72,7 @@ def build_deflators(index: Dict[str, float], target: str) -> Dict[str, float]:
 
 def _detect_year_quarter_columns(
     headers: Iterable[str],
-) -> Tuple[Optional[str], Optional[str]]:
+) -> tuple[str | None, str | None]:
     # Prefer canonical names with labels attached
     year_col = next((c for c in headers if c.startswith("Ano__")), None)
     quarter_col = next((c for c in headers if c.startswith("Trimestre__")), None)
@@ -92,12 +92,12 @@ def _quarter_to_month(q: int) -> int:
 def apply_deflator_to_csv(
     in_path: Path,
     out_path: Path,
-    factor_map: Dict[str, float],
+    factor_map: dict[str, float],
     columns: Iterable[str],
     *,
-    date_col: Optional[str] = None,
-    year_col: Optional[str] = None,
-    quarter_col: Optional[str] = None,
+    date_col: str | None = None,
+    year_col: str | None = None,
+    quarter_col: str | None = None,
     target_label: str = "jul2025",
     min_wage: float = 1518.0,
 ) -> None:
@@ -116,12 +116,11 @@ def apply_deflator_to_csv(
         r = csv.DictReader(fh_in)
         headers = r.fieldnames or []
 
-        if date_col is None:
-            # Try detect year/quarter if not provided
-            if year_col is None or quarter_col is None:
-                ycol, qcol = _detect_year_quarter_columns(headers)
-                year_col = year_col or ycol
-                quarter_col = quarter_col or qcol
+        # Try detect year/quarter if not provided
+        if date_col is None and (year_col is None or quarter_col is None):
+            ycol, qcol = _detect_year_quarter_columns(headers)
+            year_col = year_col or ycol
+            quarter_col = quarter_col or qcol
         # Validate
         if date_col is None and (not year_col or not quarter_col):
             raise ValueError(
@@ -167,7 +166,7 @@ def apply_deflator_to_csv(
             w.writerow(row)
 
 
-def _auto_income_columns(headers: Iterable[str]) -> List[str]:
+def _auto_income_columns(headers: Iterable[str]) -> list[str]:
     # Trimestral (renda do trabalho)
     quarterly_prefixes = ["VD4019", "VD4020"]
     # Anual visita 5 (fontes de renda e agregados domiciliares monetários)
@@ -190,7 +189,7 @@ def _auto_income_columns(headers: Iterable[str]) -> List[str]:
         "VD5011",
     ]
 
-    detected: List[str] = []
+    detected: list[str] = []
     headers_list = list(headers)
     for prefix in quarterly_prefixes + annual_prefixes:
         match = next((h for h in headers_list if h.startswith(prefix)), None)
@@ -199,7 +198,7 @@ def _auto_income_columns(headers: Iterable[str]) -> List[str]:
     return detected
 
 
-def main(argv: Optional[list[str]] = None) -> int:
+def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(
         description="NPV helpers for PNADC: build deflators and apply to income columns"
     )

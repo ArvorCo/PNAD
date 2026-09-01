@@ -49,7 +49,7 @@ def income_composition(data: dict) -> None:
     ax.set_facecolor(C["bg"])
     for y, values in enumerate((poll, pnad)):
         left = 0.0
-        for value, label, color in zip(values, labels, colors):
+        for value, _label, color in zip(values, labels, colors, strict=False):
             ax.barh(
                 y,
                 value,
@@ -231,7 +231,7 @@ def profile_benchmark(data: dict) -> None:
     ]
     fig, axes = plt.subplots(2, 3, figsize=(15, 9))
     axes = axes.ravel()
-    for ax, (title, key) in zip(axes, dimensions):
+    for ax, (title, key) in zip(axes, dimensions, strict=False):
         rows = data["profile_deltas"][key]
         labels = [row["category"].replace(" a ", "–") for row in rows]
         values = [row["delta"] for row in rows]

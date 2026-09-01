@@ -155,7 +155,7 @@ def anchor_articles(fragment: str, prefix: str) -> tuple[str, list[tuple[str, st
         items.append((anchor, label))
         return f'<h4 id="{anchor}">{match.group(1)}</h4>'
 
-    fragment = re.sub(r"<h4>(.*?)</h4>", _add_id, fragment, flags=re.S)
+    fragment = re.sub(r"<h4>(.*?)</h4>", _add_id, fragment, flags=re.DOTALL)
     return fragment, items
 
 
@@ -430,7 +430,7 @@ def build(output: Path) -> int:
                 f'ERRO: nenhum artigo (<h4>) encontrado na seção "{section_id}". '
                 "O sumário ficaria vazio — recusando gerar página degradada."
             )
-        title_match = re.search(r"<h2[^>]*>(.*?)</h2>", fragment, flags=re.S)
+        title_match = re.search(r"<h2[^>]*>(.*?)</h2>", fragment, flags=re.DOTALL)
         if not title_match:
             sys.exit(
                 f'ERRO: seção "{section_id}" sem <h2> — não dá para montar o sumário.'

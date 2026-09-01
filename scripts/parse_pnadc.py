@@ -17,12 +17,13 @@ import argparse
 import csv
 import json
 from pathlib import Path
-from typing import Optional, Tuple
 
 COMMON_DELIMS = [",", ";", "\t", "|"]
 
 
-def sniff_delimiter(sample_text: str, candidates: list[str] = None) -> Tuple[str, bool]:
+def sniff_delimiter(
+    sample_text: str, candidates: list[str] | None = None
+) -> tuple[str, bool]:
     """Return (delimiter, has_header) guessed from sample text.
 
     Falls back to semicolon/comma/tab/pipe frequency if csv.Sniffer fails.
@@ -64,7 +65,7 @@ def sniff_delimiter(sample_text: str, candidates: list[str] = None) -> Tuple[str
 
 
 def summarize_file(
-    path: Path, delimiter: Optional[str] = None, has_header: Optional[bool] = None
+    path: Path, delimiter: str | None = None, has_header: bool | None = None
 ) -> dict:
     """Stream through file to collect a minimal summary.
 
@@ -105,8 +106,8 @@ def summarize_file(
 def write_sample_csv(
     path: Path,
     out_dir: Path,
-    delimiter: Optional[str] = None,
-    has_header: Optional[bool] = None,
+    delimiter: str | None = None,
+    has_header: bool | None = None,
     sample_rows: int = 100,
 ) -> Path:
     """Write a small CSV sample to out_dir/sample.csv and return its path."""
@@ -146,7 +147,7 @@ def write_sample_csv(
     return out_path
 
 
-def main(argv: Optional[list[str]] = None) -> int:
+def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(
         description="PNADC helper: summarize and sample data files"
     )

@@ -494,14 +494,16 @@ def single_reweight(dimension: str, target: dict[str, float]) -> dict[str, objec
         "published_profile_from_bases": {
             key: round(value, 3)
             for key, value in zip(
-                categories, normalize_dict(dict(zip(categories, bases))).values()
+                categories,
+                normalize_dict(dict(zip(categories, bases, strict=False))).values(),
+                strict=False,
             )
         },
         "target_profile": {key: round(target[key], 3) for key in categories},
         "reproduced_from_published_cells": dict(
-            zip(VOTE_KEYS, np.round(reproduced, 3))
+            zip(VOTE_KEYS, np.round(reproduced, 3), strict=False)
         ),
-        "result": dict(zip(VOTE_KEYS, np.round(result, 3))),
+        "result": dict(zip(VOTE_KEYS, np.round(result, 3), strict=False)),
         "gap_lula_minus_flavio": round(float(result[0] - result[1]), 3),
     }
 
@@ -560,7 +562,7 @@ def combined_reweight(
     return {
         "method": "IPF de efeitos principais sobre os cruzamentos unidimensionais publicados",
         "dimensions": dimensions,
-        "result": dict(zip(VOTE_KEYS, np.round(result, 3))),
+        "result": dict(zip(VOTE_KEYS, np.round(result, 3), strict=False)),
         "gap_lula_minus_flavio": round(float(result[0] - result[1]), 3),
         "limitation": "Sem microdados, interacoes demograficas alem dos efeitos principais nao sao identificadas.",
     }
@@ -797,7 +799,7 @@ def main() -> None:
                 "note": "Cada nota fiscal atribui 50% da rodada nacional ao contratante formal. UOL nao aparece como contratante juridico separado nem como pagador em nota fiscal; isso nao elimina seu vinculo com o Grupo Folha.",
             },
             "first_round": FIRST_ROUND,
-            "runoff": dict(zip(VOTE_KEYS, PUBLISHED_RUNOFF.tolist())),
+            "runoff": dict(zip(VOTE_KEYS, PUBLISHED_RUNOFF.tolist(), strict=False)),
             "runoff_alternatives": RUNOFF_ALTERNATIVES,
             "profiles": DATAFOLHA_PROFILE,
             "weighted_bases": WEIGHTED_BASES,

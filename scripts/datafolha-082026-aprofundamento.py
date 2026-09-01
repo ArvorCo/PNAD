@@ -563,7 +563,7 @@ def substitution(crosstabs: dict[str, object]) -> dict[str, object]:
     rows = []
     per_segment: dict[str, dict[str, int]] = {}
     for name, (key, row) in scenarios.items():
-        table, bases = merge(crosstabs[key])
+        table, _bases = merge(crosstabs[key])
         rows.append(
             {
                 "adversario": name,

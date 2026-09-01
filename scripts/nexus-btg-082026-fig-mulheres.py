@@ -201,7 +201,7 @@ def cenarios(ref: dict) -> str:
 
         anda = x0
         for valor, cor, nome in zip(
-            mulher, [RED, SKY, LIME, GRAY], ["Lula", curto, "B/N", "NS"]
+            mulher, [RED, SKY, LIME, GRAY], ["Lula", curto, "B/N", "NS"], strict=False
         ):
             largura = valor * esc
             canvas.rect(anda, y, largura, 38, cor)
@@ -751,7 +751,7 @@ def geografia(base: dict) -> str:
         y = 128.0 + indice * 50 + (44 if indice >= 3 else 0)
         bloco = regioes[nome]
         canvas.text(40, y + 19, nome, size=17, fill=INK, weight="700")
-        for coluna, chave in zip(colunas, chaves):
+        for coluna, chave in zip(colunas, chaves, strict=False):
             _t, _s, x, largura, teto, cor, casas = coluna
             campo = bloco[chave]
             valor = campo.get("valor", campo.get("pct"))
@@ -802,7 +802,7 @@ def deslocamento(data: dict) -> str:
         for item in data["margin_leverage"]["margins"]
         if item["dimension"] == "region"
     )["gradient"]
-    for nome, publicado in zip(REGIOES, gradiente):
+    for nome, publicado in zip(REGIOES, gradiente, strict=False):
         lula, flavio = AGOSTO_2T[nome]
         if abs((lula - flavio) - publicado) > 0.4:
             raise SystemExit(f"crosstab regional divergente do JSON em {nome}")

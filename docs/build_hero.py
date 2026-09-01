@@ -12,10 +12,10 @@ import subprocess
 import sys
 from pathlib import Path
 
-import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
-from matplotlib.colors import LinearSegmentedColormap
+import matplotlib.pyplot as plt
 from matplotlib.collections import PatchCollection
+from matplotlib.colors import LinearSegmentedColormap
 from matplotlib.path import Path as MplPath
 
 ROOT = Path(__file__).resolve().parent.parent

@@ -405,7 +405,7 @@ def transfer_payload() -> dict:
     columns = list(TRANSFER_TARGETS)
     matrix = ipf()
     cells = {
-        row: round_values(dict(zip(columns, matrix[index])), 3)
+        row: round_values(dict(zip(columns, matrix[index], strict=False)), 3)
         for index, row in enumerate(rows)
     }
     lula_gain = TRANSFER_TARGETS["Lula"] - cells["Lula"]["Lula"]
@@ -418,7 +418,8 @@ def transfer_payload() -> dict:
         "sources": TRANSFER_SOURCES,
         "targets": TRANSFER_TARGETS,
         "prior": {
-            key: dict(zip(columns, values)) for key, values in TRANSFER_PRIOR.items()
+            key: dict(zip(columns, values, strict=False))
+            for key, values in TRANSFER_PRIOR.items()
         },
         "matrix": cells,
         "outside_base_gain": {
@@ -478,7 +479,7 @@ def invoice_payload() -> dict:
     texts = [pdf_text(path) for path in paths]
     normalized = [re.sub(r"\s+", " ", text).upper() for text in texts]
     required = ["409.646,00", "314.628,00", "570.108,00", "7 PESQUISAS"]
-    for path, text in zip(paths, normalized):
+    for path, text in zip(paths, normalized, strict=False):
         missing = [value for value in required if value not in text]
         if missing:
             raise ValueError(f"Invoice transcription failed for {path}: {missing}")
@@ -503,7 +504,7 @@ def invoice_payload() -> dict:
             "amount_brl": 409_646,
         }
         for path, number, recipient, installment, issued in zip(
-            paths, invoice_numbers, recipients, installments, dates
+            paths, invoice_numbers, recipients, installments, dates, strict=False
         )
     ]
     regular = 314_628

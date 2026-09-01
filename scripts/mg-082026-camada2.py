@@ -924,7 +924,7 @@ def main() -> None:
         w.writerows(sorted(rows, key=lambda r: -r["el"]))
     with (DERIVED / "corredores.csv").open("w", newline="", encoding="utf-8") as fh:
         w = csv.DictWriter(
-            fh, fieldnames=["slug", "nome"] + list(corredores[0]["resumo"].keys())
+            fh, fieldnames=["slug", "nome", *list(corredores[0]["resumo"].keys())]
         )
         w.writeheader()
         for c in corredores:

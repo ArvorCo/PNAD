@@ -195,14 +195,18 @@ def calculate() -> dict[str, object]:
             {
                 **wave,
                 "source_profile_pct": dict(
-                    zip(wave["bands"], np.round(source_profile, 3))
+                    zip(wave["bands"], np.round(source_profile, 3), strict=False)
                 ),
-                "target_profile_pct": dict(zip(wave["bands"], np.round(target, 3))),
-                "reproduced_from_cells": dict(zip(OPTIONS, np.round(reproduced, 3))),
+                "target_profile_pct": dict(
+                    zip(wave["bands"], np.round(target, 3), strict=False)
+                ),
+                "reproduced_from_cells": dict(
+                    zip(OPTIONS, np.round(reproduced, 3), strict=False)
+                ),
                 "counterfactual_direct": dict(
-                    zip(OPTIONS, np.round(counterfactual, 3))
+                    zip(OPTIONS, np.round(counterfactual, 3), strict=False)
                 ),
-                "adjusted": dict(zip(OPTIONS, np.round(adjusted, 3))),
+                "adjusted": dict(zip(OPTIONS, np.round(adjusted, 3), strict=False)),
                 "published_gap_lula_minus_flavio": float(published[0] - published[1]),
                 "adjusted_gap_lula_minus_flavio": round(
                     float(adjusted[0] - adjusted[1]), 3

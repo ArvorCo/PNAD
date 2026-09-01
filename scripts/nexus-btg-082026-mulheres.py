@@ -323,7 +323,7 @@ def tse_electorate_by_age() -> dict:
         "SELECT category, qt_eleitores FROM summary "
         "WHERE dimension = 'idade_raw' AND universe = 'Brasil sem exterior'"
     )
-    totals: dict[str, float] = {band: 0.0 for band in AGE_BANDS}
+    totals: dict[str, float] = dict.fromkeys(AGE_BANDS, 0.0)
     with sqlite3.connect(f"file:{TSE_DB}?mode=ro", uri=True) as connection:
         for category, voters in connection.execute(query):
             for band, share in tse_age_shares(category):
@@ -368,7 +368,7 @@ def chunks(connection: sqlite3.Connection, sql: str, n_dims: int):
         rows = cursor.fetchmany(CHUNK)
         if not rows:
             return
-        columns = list(zip(*(row[:n_dims] for row in rows)))
+        columns = list(zip(*(row[:n_dims] for row in rows), strict=False))
         weights = np.array([row[n_dims:] for row in rows], dtype=np.float64)
         yield columns, weights
 

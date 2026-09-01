@@ -660,7 +660,7 @@ def _combined_reweight_delta(
     cell_mass = joint.sum(axis=-1)
     conditional = joint / np.where(cell_mass > 0, cell_mass, 1.0)[..., None]
     top_nexus = (seed[..., None] * conditional).sum(
-        axis=tuple(other_axes) + (len(REWEIGHT_DIMS) - 1,)
+        axis=(*tuple(other_axes), len(REWEIGHT_DIMS) - 1)
     )
     off_seed = official[REWEIGHT_DIMS[0]]
     for dimension in REWEIGHT_DIMS[1:]:

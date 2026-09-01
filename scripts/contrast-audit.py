@@ -192,7 +192,7 @@ def audit_page(page, url: str) -> list[dict]:
                     "minimum": minimum,
                     "where": f'{item["tag"]}.{item["cls"]}'.strip("."),
                     "color": item["color"],
-                    "background": "rgb%s" % (background,),
+                    "background": f"rgb{background}",
                     "font_px": item["size"],
                     "text": item["text"],
                 }

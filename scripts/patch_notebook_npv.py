@@ -4,10 +4,9 @@ from __future__ import annotations
 import json
 import sys
 from pathlib import Path
-from typing import List, Dict
 
 
-def make_markdown_cell(text: str) -> Dict:
+def make_markdown_cell(text: str) -> dict:
     return {
         "cell_type": "markdown",
         "metadata": {},
@@ -15,7 +14,7 @@ def make_markdown_cell(text: str) -> Dict:
     }
 
 
-def make_code_cell(code: str) -> Dict:
+def make_code_cell(code: str) -> dict:
     return {
         "cell_type": "code",
         "metadata": {},
@@ -31,7 +30,7 @@ def main(argv=None) -> int:
         print(f"ERROR: notebook not found: {nb_path}", file=sys.stderr)
         return 1
     nb = json.loads(nb_path.read_text(encoding="utf-8"))
-    cells: List[Dict] = nb.get("cells", [])
+    cells: list[dict] = nb.get("cells", [])
 
     md = make_markdown_cell("""# NPV Setup (IPCA BCB) — deflate VD4020 to present value
 

@@ -35,10 +35,10 @@ from pathlib import Path
 import matplotlib
 
 matplotlib.use("Agg")
-import matplotlib.pyplot as plt  # noqa: E402
-import numpy as np  # noqa: E402
-from matplotlib.patches import FancyBboxPatch, PathPatch  # noqa: E402
-from matplotlib.path import Path as MplPath  # noqa: E402
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib.patches import FancyBboxPatch, PathPatch
+from matplotlib.path import Path as MplPath
 
 ROOT = Path(__file__).resolve().parents[1]
 IMG_DIR = ROOT / "docs" / "img" / "datafolha_082026"
@@ -239,18 +239,18 @@ def draw_sankey() -> None:
 
     # posicoes (top -> bottom)
     src_y, y = {}, 0.95
-    for s, h in zip(SOURCES, src_h):
+    for s, h in zip(SOURCES, src_h, strict=False):
         src_y[s] = (y - h, y)
         y -= h + gap_s
     tgt_y, y = {}, 0.95
-    for t, h in zip(TARGETS, tgt_h):
+    for t, h in zip(TARGETS, tgt_h, strict=False):
         tgt_y[t] = (y - h, y)
         y -= h + gap_t
 
     x0, x1, bw = 0.235, 0.765, 0.014
 
     # nos
-    for i, s in enumerate(SOURCES):
+    for s in SOURCES:
         yb, yt = src_y[s]
         ax.add_patch(
             FancyBboxPatch(
@@ -617,7 +617,9 @@ def draw_serie() -> None:
         mew=2.4,
         label="Flávio Bolsonaro (PL)",
     )
-    for xi, (lv, fv) in enumerate(zip(SERIE_LF["lula"], SERIE_LF["flavio"])):
+    for xi, (lv, fv) in enumerate(
+        zip(SERIE_LF["lula"], SERIE_LF["flavio"], strict=False)
+    ):
         # quem esta em cima leva o rotulo para cima; empate separa os dois
         if lv > fv:
             off_l, off_f = (0, 11), (0, -21)
@@ -663,7 +665,7 @@ def draw_serie() -> None:
         fontsize=10.5,
         color=C["muted"],
         ha="center",
-        arrowprops=dict(arrowstyle="->", color=C["faint"]),
+        arrowprops={"arrowstyle": "->", "color": C["faint"]},
     )
     ax.annotate(
         "Flávio chega a liderar:\n46 × 45 (abr)",
@@ -672,7 +674,7 @@ def draw_serie() -> None:
         fontsize=10.5,
         color=C["muted"],
         ha="center",
-        arrowprops=dict(arrowstyle="->", color=C["faint"]),
+        arrowprops={"arrowstyle": "->", "color": C["faint"]},
     )
 
     ax.set_xticks(x)
@@ -766,7 +768,7 @@ def draw_rejeicao() -> None:
         xytext=(22, 30.5),
         fontsize=12,
         color=C["ink"],
-        arrowprops=dict(arrowstyle="->", color=C["faint"]),
+        arrowprops={"arrowstyle": "->", "color": C["faint"]},
     )
 
     ax.set_xlabel("Rejeição: 'não votaria de jeito nenhum' (%)", fontsize=12.5)

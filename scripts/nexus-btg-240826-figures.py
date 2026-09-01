@@ -10,7 +10,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from svgkit import Canvas, FULL, MONO, br, signed, write_fragments  # noqa: E402
+from svgkit import FULL, MONO, Canvas, br, signed, write_fragments  # noqa: E402
 
 DATA = ROOT / "docs/assets/nexus_btg_240826_data.json"
 OUTPUT = ROOT / "docs/assets/figuras/nexus_btg_240826.json"
@@ -113,7 +113,7 @@ def reweight_gaps(data: dict) -> str:
     for ballot, title, x0 in panels:
         width = 500
 
-        def project(value: float, x0: float = x0) -> float:
+        def project(value: float, x0: float = x0, width: float = width) -> float:
             return x0 + (value - scale_min) / (scale_max - scale_min) * width
 
         canvas.text(x0, 42, title, size=16, family=MONO, weight=700)
@@ -645,7 +645,7 @@ def measured_pool(data: dict) -> str:
     )
     left, width, y, height = 44, 1092, 118, 76
     cursor = left
-    for name, value, color in zip(names, values, colors):
+    for name, value, color in zip(names, values, colors, strict=False):
         part = width * value / 100
         canvas.rect(cursor, y, part, height, color)
         if part > 70:

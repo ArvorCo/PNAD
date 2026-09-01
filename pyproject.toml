@@ -86,3 +86,13 @@ target-version = ["py310", "py311", "py312", "py313"]
 [tool.ruff]
 target-version = "py310"
 line-length = 88
+
+# O conjunto de regras e declarado, e nao herdado do padrao da versao instalada.
+# Sem isso, cada release do ruff muda o portao de qualidade sem que o codigo mude,
+# que foi o que deixou o CI vermelho em 31/08/2026.
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I", "UP", "B", "C4", "SIM", "RUF", "PIE", "FURB"]
+# N999 exigiria renomear todo script, e o projeto adota kebab-case por convencao
+# documentada em AGENTS.md. BLE001 e TRY sao ruido em script de linha de comando,
+# onde capturar excecao ampla e imprimir aviso e o comportamento desejado.
+ignore = ["RUF001", "RUF002", "RUF003"]

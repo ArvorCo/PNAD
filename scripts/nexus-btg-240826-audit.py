@@ -650,7 +650,7 @@ def useful_vote_sensitivity() -> dict:
         "or_0_5",
         "or_2",
     ]
-    totals = {key: 0.0 for key in total_keys}
+    totals = dict.fromkeys(total_keys, 0.0)
     for source in USEFUL_VOTE_CANDIDATES:
         candidate = source["candidate"]
         base = source["first_round"]

@@ -9,17 +9,21 @@ import math
 import re
 import sys
 import unicodedata
+from collections.abc import Iterable, Sequence
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, Iterable, List, Optional, Sequence, Tuple
 
 # Reuse delimiter/header detection from existing helper
 SCRIPT_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = SCRIPT_DIR.parent
 if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
+from layout_sas import (  # type: ignore  # noqa: E402
+    extract_line,
+    fields_index,
+    parse_layout,
+)
 from parse_pnadc import sniff_delimiter  # type: ignore  # noqa: E402
-from layout_sas import parse_layout, fields_index, extract_line  # type: ignore  # noqa: E402
 
 # ---------- Safe filter expression (row-aware) ----------
 
@@ -151,7 +155,7 @@ def compile_row_expr(expr: str, columns: Sequence[str]):
     return code
 
 
-def eval_row_expr(code, row: Dict[str, str]) -> bool:
+def eval_row_expr(code, row: dict[str, str]) -> bool:
     # Only expose row and builtins needed for casting
     env = {
         "row": row,
@@ -164,7 +168,7 @@ def eval_row_expr(code, row: Dict[str, str]) -> bool:
 
 
 def open_reader(
-    path: Path, delimiter: Optional[str] = None, has_header: Optional[bool] = None
+    path: Path, delimiter: str | None = None, has_header: bool | None = None
 ):
     path = Path(path)
     with path.open("r", encoding="utf-8-sig", errors="replace") as fh:
@@ -218,14 +222,13 @@ def cmd_inspect(args: argparse.Namespace) -> int:
 
 def iter_rows(
     path: Path, delimiter=None, has_header=None
-) -> Tuple[Iterable[Dict[str, str]], List[str]]:
+) -> tuple[Iterable[dict[str, str]], list[str]]:
     fh, reader, cols = open_reader(path, delimiter, has_header)
 
     def gen():
         nonlocal fh
         with fh:
-            for row in reader:
-                yield row
+            yield from reader
 
     return gen(), cols
 
@@ -291,7 +294,7 @@ def cmd_sample(args: argparse.Namespace) -> int:
 
     rows, cols = iter_rows(Path(args.input))
     k = args.n
-    reservoir: List[Dict[str, str]] = []
+    reservoir: list[dict[str, str]] = []
     for i, r in enumerate(rows):
         if i < k:
             reservoir.append(r)
@@ -311,7 +314,7 @@ def cmd_sample(args: argparse.Namespace) -> int:
 class AggSpec:
     name: str  # output column name
     func: str  # one of: count,sum,mean,min,max
-    column: Optional[str]  # None for count
+    column: str | None  # None for count
 
 
 def parse_agg(spec: str) -> AggSpec:
@@ -322,7 +325,7 @@ def parse_agg(spec: str) -> AggSpec:
     func, inner = spec.split("(", 1)
     func = func.strip().lower()
     col = inner[:-1].strip()  # drop )
-    column = col if col else None
+    column = col or None
     name = f"{func}{'_' + column if column else ''}"
     if func not in {"count", "sum", "mean", "min", "max"}:
         raise ValueError(f"Unsupported agg func: {func}")
@@ -343,9 +346,9 @@ def cmd_agg(args: argparse.Namespace) -> int:
             return 2
 
     # Accumulators: dict[key_tuple] -> dict of agg state
-    state: Dict[Tuple[str, ...], Dict[str, object]] = {}
+    state: dict[tuple[str, ...], dict[str, object]] = {}
 
-    def to_float(x: str) -> Optional[float]:
+    def to_float(x: str) -> float | None:
         if x is None or x == "":
             return None
         try:
@@ -385,13 +388,7 @@ def cmd_agg(args: argparse.Namespace) -> int:
     for a in aggs:
         if a.func == "count":
             out_cols.append("count")
-        elif a.func == "sum":
-            out_cols.append(a.name)
-        elif a.func == "mean":
-            out_cols.append(a.name)
-        elif a.func == "min":
-            out_cols.append(a.name)
-        elif a.func == "max":
+        elif a.func == "sum" or a.func == "mean" or a.func == "min" or a.func == "max":
             out_cols.append(a.name)
 
     w = csv.writer(sys.stdout)
@@ -566,7 +563,7 @@ def build_parser() -> argparse.ArgumentParser:
     return p
 
 
-def main(argv: Optional[List[str]] = None) -> int:
+def main(argv: list[str] | None = None) -> int:
     p = build_parser()
     args = p.parse_args(argv)
     return int(args.func(args) or 0)
@@ -1301,7 +1298,7 @@ def cmd_household_agg(args: argparse.Namespace) -> int:
                     st[c] = row.get(c, "")
 
     # Emit CSV
-    out_cols = ["dom_id"] + carry_cols + ["household_persons", "household_income"]
+    out_cols = ["dom_id", *carry_cols, "household_persons", "household_income"]
     w = csv.DictWriter(sys.stdout, fieldnames=out_cols)
     w.writeheader()
     for st in households.values():
@@ -1400,7 +1397,7 @@ def cmd_dict_extract(args: argparse.Namespace) -> int:
                 {
                     "var": var,
                     "sheet": chosen_name,
-                    "rows": int(len(out)),
+                    "rows": len(out),
                     "out": str(out_path),
                 },
                 ensure_ascii=False,

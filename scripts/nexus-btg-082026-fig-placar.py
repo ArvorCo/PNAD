@@ -94,7 +94,7 @@ def declutter(
     """Empurra rótulos para a direita até nenhum encostar no vizinho."""
     placed: list[float] = []
     edge = None
-    for center, width in zip(centers, widths):
+    for center, width in zip(centers, widths, strict=False):
         left = center - width / 2
         if edge is not None and left < edge + gap:
             left = edge + gap
@@ -673,7 +673,7 @@ def fig_religiao_composicao(data: dict) -> str:
             200, name_y[index] + 6, name, size=16, fill=INK, weight="700", anchor="end"
         )
 
-    for index, name in enumerate(names):
+    for index in range(len(names)):
         delta = august[index] - july[index]
         y = (centers["27/07"][index] + centers["03/08"][index]) / 2
         color = RED if delta < 0 else (OLIVE if delta > 0 else GRAY)
@@ -998,7 +998,7 @@ def fig_margens_congeladas(data: dict) -> str:
         margins.append(
             {
                 "name": name,
-                "shift": max(abs(a - j) for j, a in zip(july, august)),
+                "shift": max(abs(a - j) for j, a in zip(july, august, strict=False)),
                 "july": july,
                 "august": august,
                 "badge": badge,
@@ -1024,7 +1024,7 @@ def fig_margens_congeladas(data: dict) -> str:
     def py(value: float) -> float:
         return base - (value - lo) / (hi - lo) * (base - top)
 
-    for tick in range(0, 6):
+    for tick in range(6):
         canvas.line(110, py(tick), 1140, py(tick), stroke=LINE, width=1)
         canvas.label(100, py(tick) + 5, br(tick, 0), anchor="end")
     canvas.line(110, base, 1140, base, stroke=INK, width=1.8)

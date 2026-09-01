@@ -69,8 +69,7 @@ def parse_cells_fallback(path: Path):
                 try:
                     # remove trailing comma if present
                     s = stripped
-                    if s.endswith(","):
-                        s = s[:-1]
+                    s = s.removesuffix(",")
                     # only attempt if it begins and ends with quotes
                     if s.startswith('"') and s.endswith('"'):
                         text = json.loads(s)

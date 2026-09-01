@@ -50,7 +50,7 @@ def ensure_basico() -> None:
     CENSO_DIR.mkdir(parents=True, exist_ok=True)
     zip_path = CENSO_DIR / "Agregados_por_setores_basico_BR.zip"
     print(f"baixando basico do IBGE -> {zip_path}")
-    urllib.request.urlretrieve(BASICO_URL, zip_path)  # noqa: S310
+    urllib.request.urlretrieve(BASICO_URL, zip_path)
     with zipfile.ZipFile(zip_path) as zf:
         zf.extractall(CENSO_DIR)
 
@@ -89,8 +89,8 @@ def scan_questionario() -> dict | None:
     the recorded audited values instead of failing."""
     if not shutil.which("pdftotext") or not QUESTIONARIO_PDF.exists():
         return None
-    txt = subprocess.run(  # noqa: S603
-        ["pdftotext", "-layout", str(QUESTIONARIO_PDF), "-"],  # noqa: S607
+    txt = subprocess.run(
+        ["pdftotext", "-layout", str(QUESTIONARIO_PDF), "-"],
         capture_output=True,
         text=True,
         check=True,
@@ -251,13 +251,13 @@ def load_basico_universe(muni_codes):
             is_fav = row[i_tipo] == "1"
             m = muni.setdefault(
                 cd_mun,
-                dict(
-                    nm_mun=row[i_nmmun],
-                    pop_total=0,
-                    pop_favela=0,
-                    sec_total=0,
-                    sec_favela=0,
-                ),
+                {
+                    "nm_mun": row[i_nmmun],
+                    "pop_total": 0,
+                    "pop_favela": 0,
+                    "sec_total": 0,
+                    "sec_favela": 0,
+                },
             )
             m["pop_total"] += pop
             m["sec_total"] += 1
@@ -265,15 +265,15 @@ def load_basico_universe(muni_codes):
                 m["pop_favela"] += pop
                 m["sec_favela"] += 1
             geoc = row[i_set]
-            sector[geoc] = dict(
-                cd_tipo=row[i_tipo],
-                is_favela=is_fav,
-                pop=pop,
-                cd_fcu=row[i_fcu] if row[i_fcu] not in ("", ".") else None,
-                nm_fcu=row[i_nmfcu] if row[i_nmfcu] not in ("", ".") else None,
-                cd_mun=cd_mun,
-                nm_mun=row[i_nmmun],
-            )
+            sector[geoc] = {
+                "cd_tipo": row[i_tipo],
+                "is_favela": is_fav,
+                "pop": pop,
+                "cd_fcu": row[i_fcu] if row[i_fcu] not in ("", ".") else None,
+                "nm_fcu": row[i_nmfcu] if row[i_nmfcu] not in ("", ".") else None,
+                "cd_mun": cd_mun,
+                "nm_mun": row[i_nmmun],
+            }
     return sector, muni
 
 
@@ -284,7 +284,7 @@ def binom_upper_tail_le(k, n, p):
         return 1.0
     # cumulative
     c = 0.0
-    for i in range(0, k + 1):
+    for i in range(k + 1):
         c += math.comb(n, i) * (p**i) * ((1 - p) ** (n - i))
     return c
 
@@ -358,43 +358,43 @@ def main():
                     }
                 )
             classified.append(
-                dict(
-                    geocode=geoc,
-                    municipio=r["municipality"],
-                    uf=r["uf"],
-                    is_favela=is_fav,
-                    p_muni=round(p_muni, 4),
-                )
+                {
+                    "geocode": geoc,
+                    "municipio": r["municipality"],
+                    "uf": r["uf"],
+                    "is_favela": is_fav,
+                    "p_muni": round(p_muni, 4),
+                }
             )
         expected = sum(probs)
         p_le = poisson_binomial_le(obs_fav, probs)
-        round_agg[rnd] = dict(
-            n=len(rows),
-            observed_favela=obs_fav,
-            expected_favela=round(expected, 2),
-            p_at_most_observed=round(p_le, 4),
-            probs=probs,
-            classified=classified,
-        )
-        result["rounds"][rnd] = dict(
-            n=len(rows),
-            observed_favela=obs_fav,
-            expected_favela=round(expected, 2),
-            p_at_most_observed=round(p_le, 4),
-        )
+        round_agg[rnd] = {
+            "n": len(rows),
+            "observed_favela": obs_fav,
+            "expected_favela": round(expected, 2),
+            "p_at_most_observed": round(p_le, 4),
+            "probs": probs,
+            "classified": classified,
+        }
+        result["rounds"][rnd] = {
+            "n": len(rows),
+            "observed_favela": obs_fav,
+            "expected_favela": round(expected, 2),
+            "p_at_most_observed": round(p_le, 4),
+        }
 
     # National aggregate (both rounds pooled = 668 draws, 667 distinct)
     pooled_probs, pooled_obs = [], 0
     for rnd in rounds:
         pooled_probs += round_agg[rnd]["probs"]
         pooled_obs += round_agg[rnd]["observed_favela"]
-    result["nacional"] = dict(
-        n_draws=len(pooled_probs),
-        observed_favela=pooled_obs,
-        expected_favela=round(sum(pooled_probs), 2),
-        p_at_most_observed=round(poisson_binomial_le(pooled_obs, pooled_probs), 5),
-        deficit=round(sum(pooled_probs) - pooled_obs, 2),
-    )
+    result["nacional"] = {
+        "n_draws": len(pooled_probs),
+        "observed_favela": pooled_obs,
+        "expected_favela": round(sum(pooled_probs), 2),
+        "p_at_most_observed": round(poisson_binomial_le(pooled_obs, pooled_probs), 5),
+        "deficit": round(sum(pooled_probs) - pooled_obs, 2),
+    }
 
     # Capitals detail (pooled jun+jul draws in each capital)
     for code, name in CAPITAL_CODES.items():
@@ -410,19 +410,19 @@ def main():
         n = len(drawn)
         obs = sum(1 for _, _, f in drawn if f)
         p = m["pop_favela"] / m["pop_total"] if m["pop_total"] else 0.0
-        result["capitais"][name] = dict(
-            cd_mun=code,
-            n_setores_sorteados=n,
-            observado_favela=obs,
-            pop_favela_share=round(p, 4),
-            sec_favela_share=(
+        result["capitais"][name] = {
+            "cd_mun": code,
+            "n_setores_sorteados": n,
+            "observado_favela": obs,
+            "pop_favela_share": round(p, 4),
+            "sec_favela_share": (
                 round(m["sec_favela"] / m["sec_total"], 4) if m["sec_total"] else 0
             ),
-            esperado_favela=round(n * p, 2),
-            p_ate_observado=round(binom_upper_tail_le(obs, n, p), 4),
-            universo_setores=m["sec_total"],
-            universo_setores_favela=m["sec_favela"],
-        )
+            "esperado_favela": round(n * p, 2),
+            "p_ate_observado": round(binom_upper_tail_le(obs, n, p), 4),
+            "universo_setores": m["sec_total"],
+            "universo_setores_favela": m["sec_favela"],
+        }
 
     # Leg 2 + literature + verdict
     agenda = scan_questionario()

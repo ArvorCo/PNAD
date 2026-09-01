@@ -124,7 +124,7 @@ def ipca_factor(from_month: str, to_month: str) -> float:
 
 def scan(path: Path, columns: dict[str, float]) -> dict[str, Any]:
     """Stream one PNADC file and accumulate weighted band shares per column."""
-    totals = {name: 0.0 for name in columns}
+    totals = dict.fromkeys(columns, 0.0)
     bands = {name: [0.0] * 5 for name in columns}
     pileup = 0.0
     pileup_total = 0.0
@@ -177,7 +177,7 @@ def scan(path: Path, columns: dict[str, float]) -> dict[str, Any]:
 
 def scan_age_cuts(path: Path, column: str, scale: float) -> dict[str, list[float]]:
     """Repeat the band count under several minimum-age cuts, in one pass."""
-    totals = {cut: 0.0 for cut in AGE_CUTS}
+    totals = dict.fromkeys(AGE_CUTS, 0.0)
     bands = {cut: [0.0] * 5 for cut in AGE_CUTS}
 
     with path.open(newline="", encoding="utf-8") as handle:
@@ -217,7 +217,7 @@ def reweight(distribution: list[float]) -> dict[str, float]:
     total = sum(distribution)
     weights = [share / total for share in distribution]
     return {
-        name: round(sum(a * b for a, b in zip(cells, weights)), 2)
+        name: round(sum(a * b for a, b in zip(cells, weights, strict=False)), 2)
         for name, cells in VOTE_BY_BAND.items()
     }
 

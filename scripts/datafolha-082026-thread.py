@@ -240,12 +240,14 @@ def viz_series(spec):
         for index, w in enumerate(spec["waves"])
     ]
     parts.append(
-        '<polyline fill="none" stroke="%s" stroke-width="3" points="%s"/>'
-        % (LULA, " ".join(f"{x:.1f},{y:.1f}" for x, y in pub))
+        '<polyline fill="none" stroke="{}" stroke-width="3" points="{}"/>'.format(
+            LULA, " ".join(f"{x:.1f},{y:.1f}" for x, y in pub)
+        )
     )
     parts.append(
-        '<polyline fill="none" stroke="%s" stroke-width="3" stroke-dasharray="7 5" points="%s"/>'
-        % (LIME, " ".join(f"{x:.1f},{y:.1f}" for x, y in adj))
+        '<polyline fill="none" stroke="{}" stroke-width="3" stroke-dasharray="7 5" points="{}"/>'.format(
+            LIME, " ".join(f"{x:.1f},{y:.1f}" for x, y in adj)
+        )
     )
     for index, wave in enumerate(spec["waves"]):
         x = left + index * step
@@ -520,16 +522,18 @@ def build_cards(renda, fundo, audit, pauta, cobertura):
     }
     # Cada linha do relatorio soma 99 a 101 por arredondamento; renormalizamos.
     voto = {}
-    for band, row in zip(agosto["bands"], agosto["rows"]):
+    for band, row in zip(agosto["bands"], agosto["rows"], strict=False):
         soma = sum(row)
         voto[NOME_FAIXA[band]] = (100 * row[0] / soma, 100 * row[1] / soma)
-    bases = dict(zip(faixas, agosto["bases"]))
+    bases = dict(zip(faixas, agosto["bases"], strict=False))
     base_total = sum(agosto["bases"])
     ondas_pauta = pauta["ondas"]
     antes_do_campo = cobertura["itens_antes_do_campo"]
     publicado = {
         item[0]: item[1]
-        for item in zip(("lula", "flavio", "branco", "indeciso"), agosto["published"])
+        for item in zip(
+            ("lula", "flavio", "branco", "indeciso"), agosto["published"], strict=False
+        )
     }
     ajustado = agosto["adjusted"]
 

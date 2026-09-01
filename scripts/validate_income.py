@@ -4,11 +4,11 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+from collections.abc import Iterable
 from pathlib import Path
-from typing import Iterable, Optional
 
 
-def _to_float(x: str) -> Optional[float]:
+def _to_float(x: str) -> float | None:
     if x is None:
         return None
     s = str(x).strip().replace(",", ".")
@@ -23,8 +23,7 @@ def _to_float(x: str) -> Optional[float]:
 def _read_rows(path: Path) -> Iterable[dict]:
     with Path(path).open("r", encoding="utf-8-sig", errors="replace", newline="") as fh:
         r = csv.DictReader(fh)
-        for row in r:
-            yield row
+        yield from r
 
 
 def cmd_vd4020_components(args: argparse.Namespace) -> int:
@@ -92,7 +91,7 @@ def cmd_vd4020_vs_principal(args: argparse.Namespace) -> int:
             sm = _to_float(row.get(sec_money, ""))
             if sm is None:
                 cnt_when_no_secondary += 1
-                if abs((t - p)) <= tol:
+                if abs(t - p) <= tol:
                     equal_when_no_secondary += 1
         if args.limit and comparable >= args.limit:
             break
@@ -113,7 +112,7 @@ def cmd_vd4020_vs_principal(args: argparse.Namespace) -> int:
     return 0
 
 
-def main(argv: Optional[list[str]] = None) -> int:
+def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(
         description="Validate PNADC income consistency (e.g., VD4020 vs components)"
     )

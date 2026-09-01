@@ -179,25 +179,25 @@ TABLES = {
     "turno2_flavio": {
         "title": "Segundo turno, situacao A: Lula x Flavio Bolsonaro",
         "pages": {"bloco1": 44, "bloco2": 44, "bloco3": 44},
-        "rows": ["Lula (PT)", "Flavio Bolsonaro (PL)"] + NON_VOTE,
+        "rows": ["Lula (PT)", "Flavio Bolsonaro (PL)", *NON_VOTE],
         "annex_pages": {"bloco1": 22, "bloco2": 22, "bloco3": 22},
     },
     "turno2_caiado": {
         "title": "Segundo turno, situacao B: Lula x Ronaldo Caiado",
         "pages": {"bloco1": 45, "bloco2": 45, "bloco3": 45},
-        "rows": ["Lula (PT)", "Ronaldo Caiado (PSD)"] + NON_VOTE,
+        "rows": ["Lula (PT)", "Ronaldo Caiado (PSD)", *NON_VOTE],
         "annex_pages": {"bloco1": 23, "bloco2": 23, "bloco3": 23},
     },
     "turno2_zema": {
         "title": "Segundo turno, situacao C: Lula x Zema",
         "pages": {"bloco1": 46, "bloco2": 46, "bloco3": 46},
-        "rows": ["Lula (PT)", "Zema (NOVO)"] + NON_VOTE,
+        "rows": ["Lula (PT)", "Zema (NOVO)", *NON_VOTE],
         "annex_pages": {"bloco1": 24, "bloco2": 24, "bloco3": 24},
     },
     "turno2_renan": {
         "title": "Segundo turno, situacao D: Lula x Renan Santos",
         "pages": {"bloco1": 47, "bloco2": 47, "bloco3": 47},
-        "rows": ["Lula (PT)", "Renan Santos (MISSAO)"] + NON_VOTE,
+        "rows": ["Lula (PT)", "Renan Santos (MISSAO)", *NON_VOTE],
         "annex_pages": {"bloco1": 25, "bloco2": 25, "bloco3": 25},
     },
     "definicao": {
@@ -299,15 +299,15 @@ def build(document: fitz.Document) -> dict[str, object]:
                         f"{key}/{block_name}: largura {len(run)} != {len(names)}"
                     )
             values = {
-                label: dict(zip(names, run))
-                for label, run in zip(spec["rows"], block[:-1])
+                label: dict(zip(names, run, strict=False))
+                for label, run in zip(spec["rows"], block[:-1], strict=False)
             }
             table["blocks"][block_name] = {
                 "pdf_page": page,
                 "annex_page": spec["annex_pages"][block_name],
                 "columns": names,
                 "rows": values,
-                "base": dict(zip(names, block[-1])),
+                "base": dict(zip(names, block[-1], strict=False)),
             }
         tables[key] = table
     return tables

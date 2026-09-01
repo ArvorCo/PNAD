@@ -285,6 +285,14 @@ A thread deixou de ser resumo do dossiê e virou aula. Referência: `scripts/dat
 - **Posts de 950 a 1.400 caracteres.** Menos que isso vira legenda, mais que isso não cabe.
 - **Declarar o limite antes da conclusão**, num post próprio, e fechar convidando o leitor a refazer a conta.
 
+## Portão de lint declarado, não herdado (01/09/2026)
+O CI instalava `ruff` e `black` sem versão fixa e o projeto não declarava conjunto de regras. Resultado: toda release nova do ruff mudava o portão sem que uma linha de código mudasse, e a main ficou vermelha com 638 achados que não existiam no dia anterior.
+- `pyproject.toml` agora declara `[tool.ruff.lint] select`. O CI fixa `ruff~=0.16.5` e `black~=26.3.1`.
+- **`N999` fica de fora por decisão consciente**, e não por conveniência: a regra exigiria renomear todo script, e o projeto adota `kebab-case` por convenção documentada neste arquivo. Regra que contraria convenção declarada do projeto sai do conjunto, com o motivo escrito ao lado.
+- Os 638 achados foram corrigidos, não silenciados: 601 por `ruff --fix` e `--unsafe-fixes`, 9 à mão. `enumerate` com índice descartado virou laço simples, e os três `B023` passaram a fixar a variável de laço no argumento padrão.
+- **Prova de que o fix automático não mudou comportamento:** regenerar `mg_082026_camada2.json` antes e depois devolve JSON idêntico, e os 111 testes seguem passando. Faça essa comparação sempre que aplicar `--unsafe-fixes`.
+- `docs/pnad.html` estava fora de sincronia com `docs/index.template.html`, com metatags OG editadas direto no HTML gerado. Regenerar recuperou seis metatags e não perdeu nenhuma. Reforça a regra: página gerada por script se edita no template.
+
 ## Índice dos carregadores (método da casa, atlas estaduais, 01/09/2026)
 Comparar 41% de um senador com 6% de um deputado estadual não diz nada, e comparar volume bruto leva à conclusão errada. A régua correta normaliza cada nome pela própria média estadual e compara com o topo da chapa na mesma cédula. Reprodução: `python3 scripts/mg-082026-camada2.py`, que escreve `docs/assets/mg_082026_camada2.json` e `derivados/carregadores-municipais.csv`.
 - **Fórmula.** `indice = 100 * (cand_municipio / cand_estado) / (presidencial_1T_municipio / presidencial_1T_estado)`, sobre votos válidos do próprio cargo. Cem significa render o mesmo que o topo da chapa rendeu ali.

@@ -10,17 +10,17 @@ import math
 import os
 import re
 import shutil
-import ssl
 import sqlite3
+import ssl
 import subprocess
 import sys
 import time
 import xml.etree.ElementTree as ET
 import zipfile
 from collections import defaultdict
+from collections.abc import Sequence
 from pathlib import Path
 from statistics import NormalDist
-from typing import Dict, List, Optional, Sequence, Tuple
 from urllib.error import HTTPError, URLError
 from urllib.parse import quote_plus, urlparse
 from urllib.request import Request, urlopen
@@ -124,13 +124,13 @@ MACRO_REGION_ORDER = [
 REPLICATE_WEIGHT_BASE_RE = re.compile(r"^V(1028|1032)(\d{3})$")
 
 
-def _replicate_prefix_for_weight(weight_col: Optional[str]) -> str:
+def _replicate_prefix_for_weight(weight_col: str | None) -> str:
     # PNADC trimestral replicates are V1028001..V1028200;
     # PNADC anual replicates are V1032001..V1032200.
     if not weight_col:
         return "V1028"
     base = weight_col.split("__", 1)[0]
-    if base.startswith("V1032") or base.startswith("V1031"):
+    if base.startswith(("V1032", "V1031")):
         return "V1032"
     return "V1028"
 
@@ -215,23 +215,23 @@ def _fetch_json(url: str, *, timeout: int = 120) -> object:
         return json.loads(resp.read().decode("utf-8", errors="replace"))
 
 
-def _extract_relative_hrefs(html: str) -> List[str]:
+def _extract_relative_hrefs(html: str) -> list[str]:
     hrefs = re.findall(r'href="([^"]+)"', html, flags=re.IGNORECASE)
-    rel: List[str] = []
+    rel: list[str] = []
     for href in hrefs:
         h = href.strip()
-        if not h or h.startswith("?") or h.startswith("/") or ":" in h:
+        if not h or h.startswith(("?", "/")) or ":" in h:
             continue
         rel.append(h)
     return rel
 
 
-def _list_hrefs(url: str) -> List[str]:
+def _list_hrefs(url: str) -> list[str]:
     html = _fetch_text(url)
     return _extract_relative_hrefs(html)
 
 
-def _parse_pnadc_zip_name(name: str) -> Optional[Dict[str, object]]:
+def _parse_pnadc_zip_name(name: str) -> dict[str, object] | None:
     m = PNADC_ZIP_RE.match(name)
     if not m:
         return None
@@ -241,8 +241,8 @@ def _parse_pnadc_zip_name(name: str) -> Optional[Dict[str, object]]:
     return {"name": name, "quarter": quarter, "year": year, "revision": revision}
 
 
-def _group_latest_by_quarter(file_names: Sequence[str]) -> Dict[int, Dict[str, object]]:
-    latest: Dict[int, Dict[str, object]] = {}
+def _group_latest_by_quarter(file_names: Sequence[str]) -> dict[int, dict[str, object]]:
+    latest: dict[int, dict[str, object]] = {}
     for name in file_names:
         parsed = _parse_pnadc_zip_name(name)
         if parsed is None:
@@ -288,7 +288,7 @@ def _anual_table_default(visit: object = 5) -> str:
     return f"{_anual_base_name_default(visit)}_labeled_npv"
 
 
-def _parse_pnadc_anual_zip_name(name: str) -> Optional[Dict[str, object]]:
+def _parse_pnadc_anual_zip_name(name: str) -> dict[str, object] | None:
     m = PNADC_ANUAL_VISITA_ZIP_RE.match(name)
     if not m:
         return None
@@ -298,7 +298,7 @@ def _parse_pnadc_anual_zip_name(name: str) -> Optional[Dict[str, object]]:
     return {"name": name, "year": year, "visit": visit, "revision": revision}
 
 
-def _parse_pnadc_anual_txt_name(name: str) -> Optional[Dict[str, object]]:
+def _parse_pnadc_anual_txt_name(name: str) -> dict[str, object] | None:
     m = PNADC_ANUAL_VISITA_TXT_RE.match(name)
     if not m:
         return None
@@ -308,7 +308,7 @@ def _parse_pnadc_anual_txt_name(name: str) -> Optional[Dict[str, object]]:
     return {"name": name, "year": year, "visit": visit, "revision": revision}
 
 
-def _parse_pnadc_anual_layout_name(name: str) -> Optional[Dict[str, object]]:
+def _parse_pnadc_anual_layout_name(name: str) -> dict[str, object] | None:
     m = PNADC_ANUAL_VISITA_LAYOUT_RE.match(name)
     if not m:
         return None
@@ -318,14 +318,14 @@ def _parse_pnadc_anual_layout_name(name: str) -> Optional[Dict[str, object]]:
     return {"name": name, "year": year, "visit": visit, "revision": revision}
 
 
-def _parse_pnadc_anual_visita5_zip_name(name: str) -> Optional[Dict[str, object]]:
+def _parse_pnadc_anual_visita5_zip_name(name: str) -> dict[str, object] | None:
     parsed = _parse_pnadc_anual_zip_name(name)
     if parsed is None or int(str(parsed["visit"])) != 5:
         return None
     return parsed
 
 
-def _parse_pnadc_anual_visita5_txt_name(name: str) -> Optional[Dict[str, object]]:
+def _parse_pnadc_anual_visita5_txt_name(name: str) -> dict[str, object] | None:
     parsed = _parse_pnadc_anual_txt_name(name)
     if parsed is None or int(str(parsed["visit"])) != 5:
         return None
@@ -336,9 +336,9 @@ def _group_latest_anual_by_year(
     file_names: Sequence[str],
     *,
     visit: object = 5,
-) -> Dict[int, Dict[str, object]]:
+) -> dict[int, dict[str, object]]:
     visit_int = _normalise_anual_visit(visit)
-    latest: Dict[int, Dict[str, object]] = {}
+    latest: dict[int, dict[str, object]] = {}
     for name in file_names:
         parsed = _parse_pnadc_anual_zip_name(name)
         if parsed is None or int(str(parsed["visit"])) != visit_int:
@@ -355,9 +355,9 @@ def _group_latest_anual_by_year(
 
 def _extract_zip_all(
     zip_path: Path, out_dir: Path, *, quiet: bool = False
-) -> List[Path]:
+) -> list[Path]:
     out_dir.mkdir(parents=True, exist_ok=True)
-    extracted: List[Path] = []
+    extracted: list[Path] = []
     with zipfile.ZipFile(zip_path) as zf:
         members = [m for m in zf.namelist() if not m.endswith("/")]
         for member in members:
@@ -371,9 +371,9 @@ def _extract_zip_all(
     return extracted
 
 
-def _latest_local_raw(raw_dir: Path) -> Optional[Path]:
+def _latest_local_raw(raw_dir: Path) -> Path | None:
     best_key: tuple[int, int] | None = None
-    best_path: Optional[Path] = None
+    best_path: Path | None = None
     if not raw_dir.exists():
         return None
     for path in raw_dir.glob("PNADC_*.txt"):
@@ -387,16 +387,14 @@ def _latest_local_raw(raw_dir: Path) -> Optional[Path]:
     return best_path
 
 
-def _latest_local_raw_anual(raw_dir: Path) -> Optional[Path]:
+def _latest_local_raw_anual(raw_dir: Path) -> Path | None:
     return _latest_local_raw_anual_visit(raw_dir, visit=5)
 
 
-def _latest_local_raw_anual_visit(
-    raw_dir: Path, *, visit: object = 5
-) -> Optional[Path]:
+def _latest_local_raw_anual_visit(raw_dir: Path, *, visit: object = 5) -> Path | None:
     visit_int = _normalise_anual_visit(visit)
     best_key: tuple[int, str] | None = None
-    best_path: Optional[Path] = None
+    best_path: Path | None = None
     if not raw_dir.exists():
         return None
     for path in raw_dir.glob("*.txt"):
@@ -410,10 +408,10 @@ def _latest_local_raw_anual_visit(
     return best_path
 
 
-def _latest_local_layout_anual(docs_dir: Path, *, visit: object = 5) -> Optional[Path]:
+def _latest_local_layout_anual(docs_dir: Path, *, visit: object = 5) -> Path | None:
     visit_int = _normalise_anual_visit(visit)
     best_key: tuple[int, str] | None = None
-    best_path: Optional[Path] = None
+    best_path: Path | None = None
     if not docs_dir.exists():
         return None
     for path in docs_dir.glob("input_PNADC_*_visita*.txt"):
@@ -427,7 +425,7 @@ def _latest_local_layout_anual(docs_dir: Path, *, visit: object = 5) -> Optional
     return best_path
 
 
-def _head_meta(url: str, *, timeout: int = 120) -> Dict[str, str]:
+def _head_meta(url: str, *, timeout: int = 120) -> dict[str, str]:
     req = Request(url, method="HEAD", headers={"User-Agent": TOOL_USER_AGENT})
     with _urlopen_retry_ssl(req, timeout=timeout) as resp:
         return {
@@ -442,10 +440,10 @@ def _download_if_changed(
     url: str,
     destination: Path,
     *,
-    previous_meta: Optional[Dict[str, str]] = None,
+    previous_meta: dict[str, str] | None = None,
     force: bool = False,
     quiet: bool = False,
-) -> Dict[str, object]:
+) -> dict[str, object]:
     destination = Path(destination)
     destination.parent.mkdir(parents=True, exist_ok=True)
 
@@ -506,7 +504,7 @@ def _download_if_changed(
 
 def _extract_single_txt(
     zip_path: Path, output_dir: Path, *, quiet: bool = False
-) -> Optional[Path]:
+) -> Path | None:
     with zipfile.ZipFile(zip_path) as zf:
         members = [n for n in zf.namelist() if n.lower().endswith(".txt")]
         if not members:
@@ -522,7 +520,7 @@ def _extract_single_txt(
         return target
 
 
-def _extract_year_tokens(text: str) -> List[int]:
+def _extract_year_tokens(text: str) -> list[int]:
     years = []
     for y in re.findall(r"(?<!\d)(20\d{2})(?!\d)", text):
         try:
@@ -534,7 +532,7 @@ def _extract_year_tokens(text: str) -> List[int]:
 
 def _fetch_tse_resources(
     api_base: str, query: str, *, rows: int = 50
-) -> List[Dict[str, object]]:
+) -> list[dict[str, object]]:
     base = api_base.rstrip("/")
     url = f"{base}/api/3/action/package_search?q={quote_plus(query)}&rows={int(rows)}"
     payload = _fetch_json(url)
@@ -547,7 +545,7 @@ def _fetch_tse_resources(
     if not isinstance(packages, list):
         return []
 
-    out: List[Dict[str, object]] = []
+    out: list[dict[str, object]] = []
     seen_urls: set[str] = set()
     for pkg in packages:
         if not isinstance(pkg, dict):
@@ -610,8 +608,8 @@ def _fetch_tse_resources(
 
 
 def _select_tse_resources(
-    resources: Sequence[Dict[str, object]], *, year: Optional[int], all_years: bool
-) -> List[Dict[str, object]]:
+    resources: Sequence[dict[str, object]], *, year: int | None, all_years: bool
+) -> list[dict[str, object]]:
     filtered = [dict(r) for r in resources]
     if year is not None:
         filtered = [r for r in filtered if int(str(r.get("year") or -1)) == int(year)]
@@ -619,7 +617,7 @@ def _select_tse_resources(
         return []
 
     # Keep latest by kind/year unless caller asks for all years.
-    latest_by_key: Dict[Tuple[str, int], Dict[str, object]] = {}
+    latest_by_key: dict[tuple[str, int], dict[str, object]] = {}
     for r in filtered:
         kind = str(r.get("kind", "other"))
         y = int(str(r.get("year") or 0))
@@ -641,7 +639,7 @@ def _select_tse_resources(
     if all_years or year is not None:
         return by_key
 
-    latest_by_kind: Dict[str, Dict[str, object]] = {}
+    latest_by_kind: dict[str, dict[str, object]] = {}
     for r in by_key:
         kind = str(r.get("kind", "other"))
         prev = latest_by_kind.get(kind)
@@ -656,7 +654,7 @@ def _quarter_to_month(q: int) -> int:
     return {1: 3, 2: 6, 3: 9, 4: 12}.get(q, 12)
 
 
-def _parse_float(value: str | None) -> Optional[float]:
+def _parse_float(value: str | None) -> float | None:
     if value is None:
         return None
     s = str(value).strip().replace(",", ".")
@@ -668,8 +666,8 @@ def _parse_float(value: str | None) -> Optional[float]:
         return None
 
 
-def _parse_ranges(spec: str) -> List[Dict[str, object]]:
-    out: List[Dict[str, object]] = []
+def _parse_ranges(spec: str) -> list[dict[str, object]]:
+    out: list[dict[str, object]] = []
     for token in [p.strip() for p in spec.split(";") if p.strip()]:
         m_plus = PLUS_RE.match(token)
         if m_plus:
@@ -688,7 +686,7 @@ def _parse_ranges(spec: str) -> List[Dict[str, object]]:
         out.append({"label": token, "min": lo, "max": hi})
     if not out:
         raise ValueError("empty range specification")
-    prev_min: Optional[float] = None
+    prev_min: float | None = None
     for item in out:
         cur = float(item["min"])
         if prev_min is not None and cur < prev_min:
@@ -697,7 +695,7 @@ def _parse_ranges(spec: str) -> List[Dict[str, object]]:
     return out
 
 
-def _classify_range(value: float, ranges: Sequence[Dict[str, object]]) -> str:
+def _classify_range(value: float, ranges: Sequence[dict[str, object]]) -> str:
     for item in ranges:
         lo = float(item["min"])
         hi = item["max"]
@@ -710,7 +708,7 @@ def _classify_range(value: float, ranges: Sequence[Dict[str, object]]) -> str:
     return str(ranges[-1]["label"])
 
 
-def _find_col(headers: Sequence[str], prefix: str, fallback: str) -> Optional[str]:
+def _find_col(headers: Sequence[str], prefix: str, fallback: str) -> str | None:
     c = next((h for h in headers if h.startswith(prefix)), None)
     if c:
         return c
@@ -719,7 +717,7 @@ def _find_col(headers: Sequence[str], prefix: str, fallback: str) -> Optional[st
     return None
 
 
-def _detect_income_col(headers: Sequence[str], requested: Optional[str]) -> str:
+def _detect_income_col(headers: Sequence[str], requested: str | None) -> str:
     if requested:
         if requested not in headers:
             raise ValueError(f"income column not found: {requested}")
@@ -803,8 +801,8 @@ ANNUAL_INCOME_LENS_LABELS = {
 }
 
 
-def _detect_income_source_cols(headers: Sequence[str]) -> Dict[str, str]:
-    found: Dict[str, str] = {}
+def _detect_income_source_cols(headers: Sequence[str]) -> dict[str, str]:
+    found: dict[str, str] = {}
     for key, prefix in INCOME_SOURCE_COLS.items():
         col = next((h for h in headers if h.startswith(prefix)), None)
         if col:
@@ -815,7 +813,7 @@ def _detect_income_source_cols(headers: Sequence[str]) -> Dict[str, str]:
 def _detect_pnad_mode(headers: Sequence[str]) -> str:
     if any(h.startswith("VD5001") for h in headers):
         return "anual"
-    if any(h.startswith("VD4020") or h.startswith("VD4019") for h in headers):
+    if any(h.startswith(("VD4020", "VD4019")) for h in headers):
         return "trimestral"
     raise ValueError(
         "could not auto-detect mode: expected VD5001 or VD4019/VD4020 columns"
@@ -832,15 +830,15 @@ def _detect_pnad_mode_from_file(path: Path) -> str:
 
 
 def _calculate_income_composition(
-    row: Dict[str, str],
+    row: dict[str, str],
     total_income_col: str,
-    source_cols: Dict[str, str],
-) -> Dict[str, float]:
+    source_cols: dict[str, str],
+) -> dict[str, float]:
     total = _parse_float(row.get(total_income_col, "")) or 0.0
     if total <= 0:
         return {}
 
-    sources: Dict[str, float] = {}
+    sources: dict[str, float] = {}
     non_work_total = 0.0
     for key, col in source_cols.items():
         val = _parse_float(row.get(col, "")) or 0.0
@@ -854,15 +852,15 @@ def _calculate_income_composition(
 
 
 def _calculate_household_income_sources(
-    row: Dict[str, str],
+    row: dict[str, str],
     total_income_col: str,
-    source_cols: Dict[str, str],
-) -> Dict[str, float]:
+    source_cols: dict[str, str],
+) -> dict[str, float]:
     total = _parse_float(row.get(total_income_col, "")) or 0.0
     if total < 0:
         total = 0.0
 
-    out: Dict[str, float] = {"total": float(total)}
+    out: dict[str, float] = {"total": float(total)}
     non_work_total = 0.0
     for key, col in source_cols.items():
         val = _parse_float(row.get(col, "")) or 0.0
@@ -874,8 +872,8 @@ def _calculate_household_income_sources(
     return out
 
 
-def _aggregate_income_by_category(sources: Dict[str, float]) -> Dict[str, float]:
-    categories: Dict[str, float] = {k: 0.0 for k in INCOME_CATEGORY_ORDER}
+def _aggregate_income_by_category(sources: dict[str, float]) -> dict[str, float]:
+    categories: dict[str, float] = dict.fromkeys(INCOME_CATEGORY_ORDER, 0.0)
     categories["trabalho"] = float(sources.get("trabalho", 0.0) or 0.0)
     for cat in INCOME_CATEGORY_ORDER:
         if cat == "trabalho":
@@ -886,7 +884,7 @@ def _aggregate_income_by_category(sources: Dict[str, float]) -> Dict[str, float]
     return categories
 
 
-def _calculate_income_lenses(sources: Dict[str, float]) -> Dict[str, float]:
+def _calculate_income_lenses(sources: dict[str, float]) -> dict[str, float]:
     total = max(0.0, float(sources.get("total", 0.0) or 0.0))
     social = sum(
         float(sources.get(k, 0.0) or 0.0)
@@ -916,7 +914,7 @@ def _clone_args(args: argparse.Namespace, **updates: object) -> argparse.Namespa
     return argparse.Namespace(**data)
 
 
-def _pick_dashboard_input(mode: str) -> Optional[Path]:
+def _pick_dashboard_input(mode: str) -> Path | None:
     for candidate in DEFAULT_DASHBOARD_INPUT_CANDIDATES.get(mode, []):
         if candidate.exists():
             return candidate
@@ -925,12 +923,12 @@ def _pick_dashboard_input(mode: str) -> Optional[Path]:
 
 def _resolve_dashboard_jobs(
     args: argparse.Namespace,
-) -> List[Tuple[str, Path, argparse.Namespace]]:
+) -> list[tuple[str, Path, argparse.Namespace]]:
     requested_mode = str(getattr(args, "mode", "auto") or "auto").strip().lower()
     primary_input = str(getattr(args, "input", "") or "").strip()
     annual_input = str(getattr(args, "input_anual", "") or "").strip()
 
-    jobs_by_mode: Dict[str, Tuple[Path, argparse.Namespace]] = {}
+    jobs_by_mode: dict[str, tuple[Path, argparse.Namespace]] = {}
 
     def add_job(mode: str, path_value: object) -> None:
         path = Path(str(path_value)).expanduser()
@@ -976,7 +974,7 @@ def _resolve_dashboard_jobs(
                     "could not auto-discover dashboard input. Use --input and/or --input-anual."
                 )
 
-    ordered_jobs: List[Tuple[str, Path, argparse.Namespace]] = []
+    ordered_jobs: list[tuple[str, Path, argparse.Namespace]] = []
     for mode in ("trimestral", "anual"):
         job = jobs_by_mode.get(mode)
         if job is None:
@@ -986,9 +984,9 @@ def _resolve_dashboard_jobs(
 
 
 def _build_dashboard_bundle_summary(
-    dashboards: Dict[str, Dict[str, object]],
-) -> Dict[str, object]:
-    by_mode: Dict[str, object] = {}
+    dashboards: dict[str, dict[str, object]],
+) -> dict[str, object]:
+    by_mode: dict[str, object] = {}
     for mode, payload in dashboards.items():
         modes_map = payload.get("modes", {})
         mode_data = modes_map.get("alvo") if isinstance(modes_map, dict) else None
@@ -1018,9 +1016,9 @@ def _build_dashboard_bundle_summary(
     }
 
 
-def _build_dashboard_artifact(args: argparse.Namespace) -> Dict[str, object]:
+def _build_dashboard_artifact(args: argparse.Namespace) -> dict[str, object]:
     jobs = _resolve_dashboard_jobs(args)
-    dashboards: Dict[str, Dict[str, object]] = {}
+    dashboards: dict[str, dict[str, object]] = {}
     for mode, _, job_args in jobs:
         dashboards[mode] = _build_dashboard_payload(job_args)
     if len(dashboards) == 1:
@@ -1034,13 +1032,11 @@ def _build_dashboard_artifact(args: argparse.Namespace) -> Dict[str, object]:
     }
 
 
-def _is_dashboard_bundle(payload: Dict[str, object]) -> bool:
+def _is_dashboard_bundle(payload: dict[str, object]) -> bool:
     return bool(payload.get("bundle")) and isinstance(payload.get("dashboards"), dict)
 
 
-def _detect_weight_col(
-    headers: Sequence[str], requested: Optional[str]
-) -> Optional[str]:
+def _detect_weight_col(headers: Sequence[str], requested: str | None) -> str | None:
     if requested:
         if requested not in headers:
             raise ValueError(f"weight column not found: {requested}")
@@ -1059,8 +1055,8 @@ def _detect_weight_col(
 
 def _detect_replicate_weight_cols(
     headers: Sequence[str], *, base_prefix: str = "V1028"
-) -> List[str]:
-    pairs: List[Tuple[int, str]] = []
+) -> list[str]:
+    pairs: list[tuple[int, str]] = []
     for h in headers:
         base = h.split("__", 1)[0]
         m = re.fullmatch(rf"{re.escape(base_prefix)}(\d{{3}})", base)
@@ -1083,8 +1079,8 @@ def _ci_from_replicates(
     replicate_thetas: Sequence[float],
     *,
     ci_level: float,
-    clamp: Optional[Tuple[float, float]] = None,
-) -> Optional[Dict[str, float]]:
+    clamp: tuple[float, float] | None = None,
+) -> dict[str, float] | None:
     vals = [float(x) for x in replicate_thetas if math.isfinite(float(x))]
     r = len(vals)
     if r < 2:
@@ -1110,8 +1106,8 @@ def _ci_from_replicates(
     }
 
 
-def _read_salario_minimo_csv(path: Path) -> Dict[str, float]:
-    out: Dict[str, float] = {}
+def _read_salario_minimo_csv(path: Path) -> dict[str, float]:
+    out: dict[str, float] = {}
     with Path(path).open("r", encoding="utf-8", errors="replace", newline="") as fh:
         r = csv.DictReader(fh)
         cols = {c.lower(): c for c in (r.fieldnames or [])}
@@ -1129,8 +1125,8 @@ def _read_salario_minimo_csv(path: Path) -> Dict[str, float]:
     return out
 
 
-def _latest_target_month(ipca_index: Dict[str, float]) -> str:
-    return sorted(ipca_index.keys())[-1]
+def _latest_target_month(ipca_index: dict[str, float]) -> str:
+    return max(ipca_index.keys())
 
 
 def _norm_text(value: str) -> str:
@@ -1172,11 +1168,11 @@ def _macro_region_from_uf(uf_value: str) -> str:
 
 
 def _series_value_at_or_before(
-    series: Dict[str, float], target: str
-) -> Tuple[str, float]:
+    series: dict[str, float], target: str
+) -> tuple[str, float]:
     if target in series:
         return target, float(series[target])
-    candidates = [k for k in series.keys() if k <= target]
+    candidates = [k for k in series if k <= target]
     if not candidates:
         raise ValueError(f"no series value available at or before {target}")
     best = max(candidates)
@@ -1186,10 +1182,10 @@ def _series_value_at_or_before(
 def _resolve_pipeline_target_and_min_wage(
     *,
     target_arg: str,
-    min_wage_arg: Optional[float],
+    min_wage_arg: float | None,
     ipca_csv: Path,
     salario_minimo_csv: Path,
-) -> Tuple[str, float, str]:
+) -> tuple[str, float, str]:
     try:
         from npv_deflators import read_ipca_csv  # type: ignore
     except Exception as exc:
@@ -1221,18 +1217,18 @@ def _colorize(text: str, code: object, enabled: bool) -> str:
         return text
     if isinstance(code, int):
         return f"\033[{code}m{text}\033[0m"
-    return f"\033[{str(code)}m{text}\033[0m"
+    return f"\033[{code!s}m{text}\033[0m"
 
 
 def _bar(pct: float, width: int = 28, char: str = "█") -> str:
-    n = max(0, min(width, int(round(width * max(0.0, min(100.0, pct)) / 100.0))))
+    n = max(0, min(width, round(width * max(0.0, min(100.0, pct)) / 100.0)))
     return char * n + " " * (width - n)
 
 
 def _spark(value: float, width: int = 16) -> str:
     blocks = "▁▂▃▄▅▆▇█"
     pct = max(0.0, min(100.0, value))
-    idx = int(round((len(blocks) - 1) * pct / 100.0))
+    idx = round((len(blocks) - 1) * pct / 100.0)
     return blocks[idx] * width
 
 
@@ -1262,16 +1258,16 @@ def _fmt_brl(value: float) -> str:
 
 
 def _ranges_money_from_specs(
-    range_specs: Sequence[Dict[str, object]],
+    range_specs: Sequence[dict[str, object]],
     sm_value: float,
-) -> List[Dict[str, object]]:
-    out: List[Dict[str, object]] = []
+) -> list[dict[str, object]]:
+    out: list[dict[str, object]] = []
     for spec in range_specs:
         label = str(spec.get("label", ""))
         lo_sm = float(spec.get("min", 0.0) or 0.0)
         hi_raw = spec.get("max")
         lo_brl = lo_sm * float(sm_value)
-        hi_brl: Optional[float]
+        hi_brl: float | None
         money_label: str
         if hi_raw is None:
             hi_brl = None
@@ -1294,7 +1290,7 @@ def _ranges_money_from_specs(
 
 
 def _mini_pie(
-    bands: Sequence[Dict[str, object]],
+    bands: Sequence[dict[str, object]],
     colors: Sequence[object],
     use_color: bool,
     slices: int = 24,
@@ -1309,7 +1305,7 @@ def _mini_pie(
     for i in frac_idx[:remaining]:
         alloc[i] += 1
 
-    parts: List[str] = []
+    parts: list[str] = []
     for i, n in enumerate(alloc):
         if n <= 0:
             continue
@@ -1319,7 +1315,7 @@ def _mini_pie(
 
 
 def _stacked_mix_bar(
-    bands: Sequence[Dict[str, object]],
+    bands: Sequence[dict[str, object]],
     *,
     pct_key: str,
     width: int,
@@ -1336,7 +1332,7 @@ def _stacked_mix_bar(
     for i in frac_idx[:remaining]:
         alloc[i] += 1
 
-    parts: List[str] = []
+    parts: list[str] = []
     for i, n in enumerate(alloc):
         if n <= 0:
             continue
@@ -1349,7 +1345,7 @@ def _stacked_mix_bar(
 
 
 def _band_pct(
-    row: Dict[str, object], range_label: str, *, pct_key: str = "persons_pct"
+    row: dict[str, object], range_label: str, *, pct_key: str = "persons_pct"
 ) -> float:
     bands = row.get("bands", [])
     if not isinstance(bands, list):
@@ -1372,7 +1368,7 @@ def _brazil_flag_strip(use_color: bool, width: int = 64) -> str:
     sizes = [int(width * 0.56), int(width * 0.21), int(width * 0.13)]
     sizes.append(max(0, width - sum(sizes)))
     palette = ["1;38;5;46", "1;38;5;226", "1;38;5;21", "1;38;5;15"]
-    out: List[str] = []
+    out: list[str] = []
     for i, n in enumerate(sizes):
         if n > 0:
             out.append(_colorize("█" * n, palette[i], use_color))
@@ -1394,7 +1390,7 @@ def _print_two_columns(
         print(f"{left_cell:<{width}}{spacer}{right_cell}")
 
 
-def _brazil_band_colors(n: int) -> List[object]:
+def _brazil_band_colors(n: int) -> list[object]:
     # Brasil-inspired socioeconomic palette from poorer to richer:
     # green -> yellow -> blue -> white.
     base = [
@@ -1411,7 +1407,7 @@ def _brazil_band_colors(n: int) -> List[object]:
     return out
 
 
-def _brazil_band_gradients(n: int) -> List[List[int]]:
+def _brazil_band_gradients(n: int) -> list[list[int]]:
     base = [
         [22, 28, 34, 40, 46],  # green ramp
         [178, 184, 190, 220, 226],  # yellow ramp
@@ -1425,10 +1421,10 @@ def _gradient_bar(
     pct: float, *, width: int, palette: Sequence[int], use_color: bool
 ) -> str:
     p = max(0.0, min(100.0, pct))
-    n = max(0, min(width, int(round(width * p / 100.0))))
+    n = max(0, min(width, round(width * p / 100.0)))
     if n <= 0:
         return _colorize("░" * width, "38;5;238", use_color)
-    parts: List[str] = []
+    parts: list[str] = []
     for i in range(n):
         level = int((i * len(palette)) / max(1, n))
         level = min(level, len(palette) - 1)
@@ -1442,7 +1438,7 @@ def _badge(text: str, *, fg: int, bg: int, use_color: bool) -> str:
     return _colorize(f" {text} ", f"1;38;5;{fg};48;5;{bg}", use_color)
 
 
-def _print_renda_pretty(payload: Dict[str, object], *, no_color: bool = False) -> None:
+def _print_renda_pretty(payload: dict[str, object], *, no_color: bool = False) -> None:
     colors = _brazil_band_colors(len(payload.get("ranges", []) or []))
     gradients = _brazil_band_gradients(len(payload.get("ranges", []) or []))
     use_color = _supports_color(no_color=no_color)
@@ -1556,7 +1552,7 @@ def _safe_div(num: float, den: float) -> float:
     return float(num) / float(den)
 
 
-def _weighted_median(pairs: Sequence[Tuple[float, float]]) -> float:
+def _weighted_median(pairs: Sequence[tuple[float, float]]) -> float:
     data = [(x, w) for (x, w) in pairs if w > 0]
     if not data:
         return 0.0
@@ -1571,7 +1567,7 @@ def _weighted_median(pairs: Sequence[Tuple[float, float]]) -> float:
     return float(data[-1][0])
 
 
-def _weighted_gini(pairs: Sequence[Tuple[float, float]]) -> float:
+def _weighted_gini(pairs: Sequence[tuple[float, float]]) -> float:
     data = [(max(0.0, x), w) for (x, w) in pairs if w > 0]
     if not data:
         return 0.0
@@ -1610,7 +1606,7 @@ def _age_band(age_value: str) -> str:
     return "60+"
 
 
-def _age_label_sort_key(label: str) -> Tuple[int, str]:
+def _age_label_sort_key(label: str) -> tuple[int, str]:
     s = str(label).strip()
     if s == "sem_idade":
         return (9999, s)
@@ -1748,8 +1744,8 @@ def _metro_region_bucket(raw_value: str, label_value: str) -> str:
 
 
 def _counter_to_sorted_rows(
-    counter: Dict[str, float], total: float
-) -> List[Dict[str, object]]:
+    counter: dict[str, float], total: float
+) -> list[dict[str, object]]:
     rows = []
     for k, v in counter.items():
         rows.append(
@@ -1763,10 +1759,12 @@ def _counter_to_sorted_rows(
     return rows
 
 
-def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
+def _build_dashboard_payload(args: argparse.Namespace) -> dict[str, object]:
     try:
-        from npv_deflators import build_deflators  # type: ignore
-        from npv_deflators import read_ipca_csv
+        from npv_deflators import (
+            build_deflators,  # type: ignore
+            read_ipca_csv,
+        )
     except Exception as exc:
         raise ValueError(f"could not import deflator helpers: {exc}") from exc
 
@@ -1794,18 +1792,18 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
     skipped_invalid_weight = 0
     inconsistent_household_weight = 0
     selected_income_col = ""
-    selected_weight_col: Optional[str] = None
+    selected_weight_col: str | None = None
     ci_level = _normalize_ci_level(args.ci_level)
     use_ci = (not args.unweighted) and (not args.no_ci)
-    replicate_weight_cols: List[str] = []
+    replicate_weight_cols: list[str] = []
     replicate_count = 0
-    households: Dict[str, Dict[str, object]] = {}
-    dimension_labels: Dict[str, str] = {}
-    dim_keys: List[str] = []
+    households: dict[str, dict[str, object]] = {}
+    dimension_labels: dict[str, str] = {}
+    dim_keys: list[str] = []
 
     # Dashboard v2.0: Initialize variables that need to persist outside with block
     pnad_mode = "trimestral"
-    income_source_cols: Dict[str, str] = {}
+    income_source_cols: dict[str, str] = {}
     is_anual_mode = False
 
     with input_path.open("r", encoding="utf-8-sig", errors="replace", newline="") as fh:
@@ -1872,9 +1870,7 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
             pnad_mode = pnad_mode_arg
 
         has_anual_cols = any(h.startswith("VD5001") for h in headers)
-        has_tri_cols = any(
-            h.startswith("VD4020") or h.startswith("VD4019") for h in headers
-        )
+        has_tri_cols = any(h.startswith(("VD4020", "VD4019")) for h in headers)
         if pnad_mode == "anual" and not has_anual_cols:
             raise ValueError(
                 "modo anual solicitado, mas coluna VD5001 nao foi encontrada"
@@ -2045,7 +2041,7 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
 
             st = households.get(dom)
             if st is None:
-                rep_household_weights: List[float] = []
+                rep_household_weights: list[float] = []
                 if use_ci:
                     for rep_col in replicate_weight_cols:
                         rep_raw = row.get(rep_col, "")
@@ -2056,12 +2052,12 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
                             else 0.0
                         )
 
-                income_sources_nominal_init: Dict[str, float] = {}
-                income_sources_target_init: Dict[str, float] = {}
+                income_sources_nominal_init: dict[str, float] = {}
+                income_sources_target_init: dict[str, float] = {}
                 if is_anual_mode:
-                    src_keys = list(income_source_cols.keys()) + ["trabalho", "total"]
-                    income_sources_nominal_init = {k: 0.0 for k in src_keys}
-                    income_sources_target_init = {k: 0.0 for k in src_keys}
+                    src_keys = [*list(income_source_cols.keys()), "trabalho", "total"]
+                    income_sources_nominal_init = dict.fromkeys(src_keys, 0.0)
+                    income_sources_target_init = dict.fromkeys(src_keys, 0.0)
 
                 st = {
                     "dom_id": dom,
@@ -2150,7 +2146,7 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
             age_sex_counts[str(age_band or "sem_idade")][_sex_bucket(sex)] += sw
 
     modes = ["periodo", "alvo"] if args.sm_mode == "both" else [args.sm_mode]
-    modes_out: Dict[str, object] = {}
+    modes_out: dict[str, object] = {}
     for mode in modes:
         national = {
             "households_total": 0.0,
@@ -2178,21 +2174,21 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
                 else {}
             ),
         }
-        uf_stats: Dict[str, Dict[str, object]] = {}
-        macro_stats: Dict[str, Dict[str, object]] = {}
+        uf_stats: dict[str, dict[str, object]] = {}
+        macro_stats: dict[str, dict[str, object]] = {}
         demo = {k: defaultdict(float) for k in dim_keys}
         cross = {k: defaultdict(lambda: defaultdict(float)) for k in dim_keys}
         age_sex = defaultdict(lambda: defaultdict(float))
-        ratio_pairs: List[Tuple[float, float]] = []
-        income_pairs: List[Tuple[float, float]] = []
+        ratio_pairs: list[tuple[float, float]] = []
+        income_pairs: list[tuple[float, float]] = []
         sm_ref_weighted_sum = 0.0
         sm_ref_weight_total = 0.0
-        sm_ref_min: Optional[float] = None
-        sm_ref_max: Optional[float] = None
+        sm_ref_min: float | None = None
+        sm_ref_max: float | None = None
 
         def ensure_group(
-            container: Dict[str, Dict[str, object]], key: str, label: str
-        ) -> Dict[str, object]:
+            container: dict[str, dict[str, object]], key: str, label: str
+        ) -> dict[str, object]:
             g = container.get(key)
             if g is None:
                 rep_households_total = [0.0] * replicate_count if use_ci else []
@@ -2231,7 +2227,7 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
             return g
 
         def add_replicate_stats(
-            g_obj: Dict[str, object],
+            g_obj: dict[str, object],
             *,
             ratio_value: float,
             band_label: str,
@@ -2363,7 +2359,7 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
                     for sx, val in sx_map.items():
                         age_sex[str(age_lbl)][str(sx)] += float(val)
 
-        def finalize_group(g: Dict[str, object]) -> Dict[str, object]:
+        def finalize_group(g: dict[str, object]) -> dict[str, object]:
             hh_total = float(g["households_total"])
             pp_total = float(g["persons_total"])
             avg_sm = _safe_div(float(g["sum_ratio"]), hh_total)
@@ -2371,7 +2367,7 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
             rep_households_total = g.get("rep_households_total", [])
             rep_persons_total = g.get("rep_persons_total", [])
             rep_sum_ratio = g.get("rep_sum_ratio", [])
-            avg_sm_ci: Optional[Dict[str, float]] = None
+            avg_sm_ci: dict[str, float] | None = None
             if (
                 use_ci
                 and isinstance(rep_households_total, list)
@@ -2399,7 +2395,7 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
                 bp = float(b["persons"])
                 hp = round(100.0 * _safe_div(bh, hh_total), 4)
                 pp = round(100.0 * _safe_div(bp, pp_total), 4)
-                row_out: Dict[str, object] = {
+                row_out: dict[str, object] = {
                     "range": lbl,
                     "households": bh,
                     "households_pct": hp,
@@ -2484,7 +2480,7 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
                             )
                 bands_rows.append(row_out)
 
-            out_row: Dict[str, object] = {
+            out_row: dict[str, object] = {
                 "group": g["group"],
                 "label": g["label"],
                 "households_total": hh_total,
@@ -2555,14 +2551,14 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
         )
 
         persons_total = float(national_out["persons_total"])
-        demographics_out: Dict[str, List[Dict[str, object]]] = {}
+        demographics_out: dict[str, list[dict[str, object]]] = {}
         for k, v in demo.items():
             rows = _counter_to_sorted_rows(v, persons_total)
             if k == "age":
                 rows.sort(key=lambda r: _age_label_sort_key(str(r.get("label", ""))))
             demographics_out[k] = rows
 
-        def cross_rows(src: Dict[str, Dict[str, float]]) -> List[Dict[str, object]]:
+        def cross_rows(src: dict[str, dict[str, float]]) -> list[dict[str, object]]:
             rows = []
             for k, v in src.items():
                 total = sum(v.values())
@@ -2579,7 +2575,7 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
             return rows
 
         cross_out = {f"{k}_by_band": cross_rows(v) for k, v in cross.items()}
-        age_pyramid_rows: List[Dict[str, object]] = []
+        age_pyramid_rows: list[dict[str, object]] = []
         for age_lbl in sorted(age_sex.keys(), key=_age_label_sort_key):
             sx_map = age_sex[age_lbl]
             female = float(sx_map.get("F", 0.0))
@@ -2669,12 +2665,12 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
                 "variance_formula": "var=(1/(R-1))*sum((theta_r-theta)^2)",
                 "replicate_weight_base": replicate_base_prefix,
                 "replicate_weight_count": int(replicate_count),
-                "replicate_weight_columns_detected": int(len(replicate_weight_cols)),
+                "replicate_weight_columns_detected": len(replicate_weight_cols),
                 "person_weight_assumption": "persons_weight_rep=persons_in_dom*household_rep_weight",
             },
         }
 
-    income_composition_payload: Dict[str, object] = {
+    income_composition_payload: dict[str, object] = {
         "income_composition_national": {},
         "income_sources_detail": {},
         "income_lenses_national": {},
@@ -2697,21 +2693,21 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
             "income_sources_target" if use_target_values else "income_sources_nominal"
         )
 
-        annual_source_keys = list(INCOME_SOURCE_COLS.keys()) + ["trabalho"]
-        source_totals = {k: 0.0 for k in annual_source_keys}
-        source_recipients = {k: 0.0 for k in INCOME_SOURCE_COLS.keys()}
-        lens_totals = {k: 0.0 for k in ANNUAL_INCOME_LENS_ORDER}
+        annual_source_keys = [*list(INCOME_SOURCE_COLS.keys()), "trabalho"]
+        source_totals = dict.fromkeys(annual_source_keys, 0.0)
+        source_recipients = dict.fromkeys(INCOME_SOURCE_COLS.keys(), 0.0)
+        lens_totals = dict.fromkeys(ANNUAL_INCOME_LENS_ORDER, 0.0)
         national_total_income = 0.0
         national_total_weight = 0.0
-        income_pairs: List[Tuple[float, float]] = []
+        income_pairs: list[tuple[float, float]] = []
 
-        uf_income_composition: Dict[str, Dict[str, object]] = {}
-        band_income_composition: Dict[str, Dict[str, object]] = {
+        uf_income_composition: dict[str, dict[str, object]] = {}
+        band_income_composition: dict[str, dict[str, object]] = {
             str(item["label"]): {
                 "households": 0.0,
                 "total_income": 0.0,
-                "sources": {k: 0.0 for k in annual_source_keys},
-                "lenses": {k: 0.0 for k in ANNUAL_INCOME_LENS_ORDER},
+                "sources": dict.fromkeys(annual_source_keys, 0.0),
+                "lenses": dict.fromkeys(ANNUAL_INCOME_LENS_ORDER, 0.0),
             }
             for item in ranges
         }
@@ -2731,9 +2727,9 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
             if not isinstance(raw_sources, dict):
                 raw_sources = {}
 
-            source_amounts: Dict[str, float] = {}
+            source_amounts: dict[str, float] = {}
             non_work_total = 0.0
-            for src_key in INCOME_SOURCE_COLS.keys():
+            for src_key in INCOME_SOURCE_COLS:
                 val = float(raw_sources.get(src_key, 0.0) or 0.0)
                 if val < 0:
                     val = 0.0
@@ -2759,7 +2755,7 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
                 lens_totals[lens_key] += (
                     float(lens_amounts.get(lens_key, 0.0) or 0.0) * hh_w
                 )
-            for src_key in INCOME_SOURCE_COLS.keys():
+            for src_key in INCOME_SOURCE_COLS:
                 if float(source_amounts.get(src_key, 0.0) or 0.0) > 0:
                     source_recipients[src_key] += hh_w
 
@@ -2770,7 +2766,7 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
                         "uf_label": uf_label,
                         "households": 0.0,
                         "total_income": 0.0,
-                        "sources": {k: 0.0 for k in annual_source_keys},
+                        "sources": dict.fromkeys(annual_source_keys, 0.0),
                     }
                 uf_data = uf_income_composition[uf_code]
                 uf_data["households"] = float(uf_data["households"]) + hh_w
@@ -2819,12 +2815,12 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
 
         total_income_mean = _safe_div(national_total_income, national_total_weight)
         total_income_median = _weighted_median(income_pairs)
-        income_composition_national: Dict[str, object] = {}
-        income_sources_detail: Dict[str, object] = {}
-        income_lenses_national: Dict[str, object] = {}
+        income_composition_national: dict[str, object] = {}
+        income_sources_detail: dict[str, object] = {}
+        income_lenses_national: dict[str, object] = {}
 
         if national_total_income > 0 and national_total_weight > 0:
-            for src_key in INCOME_SOURCE_COLS.keys():
+            for src_key in INCOME_SOURCE_COLS:
                 src_total = float(source_totals.get(src_key, 0.0) or 0.0)
                 income_sources_detail[src_key] = {
                     "label": INCOME_SOURCE_LABELS.get(src_key, src_key),
@@ -2867,7 +2863,7 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
                     ),
                 }
 
-        uf_dependency_ranking: List[Dict[str, object]] = []
+        uf_dependency_ranking: list[dict[str, object]] = []
         for uf_code, uf_data in uf_income_composition.items():
             total_inc = float(uf_data.get("total_income", 0.0) or 0.0)
             hh_count = float(uf_data.get("households", 0.0) or 0.0)
@@ -2903,8 +2899,8 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
             key=lambda x: float(x.get("dependency_score", 0.0)), reverse=True
         )
 
-        composition_by_band: Dict[str, object] = {}
-        income_lenses_by_band: Dict[str, object] = {}
+        composition_by_band: dict[str, object] = {}
+        income_lenses_by_band: dict[str, object] = {}
         total_households_in_bands = sum(
             float(x.get("households", 0.0) or 0.0)
             for x in band_income_composition.values()
@@ -2928,7 +2924,7 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
             band_lenses = (
                 band_data.get("lenses", {}) if isinstance(band_data, dict) else {}
             )
-            composition: Dict[str, float] = {}
+            composition: dict[str, float] = {}
             for cat in INCOME_CATEGORY_ORDER:
                 if cat == "trabalho":
                     cat_total = (
@@ -3035,12 +3031,12 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
             "variance_formula": "var=(1/(R-1))*sum((theta_r-theta)^2)",
             "replicate_weight_base": replicate_base_prefix,
             "replicate_weight_count": int(replicate_count),
-            "replicate_weight_columns_detected": int(len(replicate_weight_cols)),
+            "replicate_weight_columns_detected": len(replicate_weight_cols),
             "person_weight_assumption": "persons_weight_rep=persons_in_dom*household_rep_weight",
         },
         "dimension_labels": dimension_labels,
         "modes": modes_out,
-        "total_households": int(len(households)),
+        "total_households": len(households),
         "total_income_mean": (
             round(float(total_income_mean), 2) if is_anual_mode else None
         ),
@@ -3064,7 +3060,7 @@ def _build_dashboard_payload(args: argparse.Namespace) -> Dict[str, object]:
             "ci_requested": bool((not args.unweighted) and (not args.no_ci)),
             "ci_effective": bool(use_ci),
             "ci_level": ci_level,
-            "replicate_weights_found": int(len(replicate_weight_cols)),
+            "replicate_weights_found": len(replicate_weight_cols),
             "pnad_mode": pnad_mode,
             "income_source_cols_detected": (
                 list(income_source_cols.keys()) if income_source_cols else []
@@ -3112,7 +3108,7 @@ _UF_ORDER_RICHER_TO_POORER = [
 ]
 
 
-def _cv_from_moe(value: float, moe: float, ci_level: float = 0.95) -> Optional[float]:
+def _cv_from_moe(value: float, moe: float, ci_level: float = 0.95) -> float | None:
     if value is None or moe is None or value == 0:
         return None
     try:
@@ -3125,7 +3121,7 @@ def _cv_from_moe(value: float, moe: float, ci_level: float = 0.95) -> Optional[f
     return abs(se / float(value))
 
 
-def _quality_badge(cv: Optional[float], use_color: bool) -> str:
+def _quality_badge(cv: float | None, use_color: bool) -> str:
     if cv is None:
         return _colorize("·", "38;5;244", use_color)
     if cv < 0.05:
@@ -3146,12 +3142,12 @@ def _sparkline(
     vmin = min(vals)
     vmax = max(vals)
     rng = vmax - vmin
-    chars: List[str] = []
+    chars: list[str] = []
     for v in vals:
         if rng <= 0:
             idx = len(_SPARK_CHARS) // 2
         else:
-            idx = int(round((v - vmin) / rng * (len(_SPARK_CHARS) - 1)))
+            idx = round((v - vmin) / rng * (len(_SPARK_CHARS) - 1))
         chars.append(_SPARK_CHARS[max(0, min(len(_SPARK_CHARS) - 1, idx))])
     text = "".join(chars)
     return _colorize(text, color, use_color) if use_color else text
@@ -3188,10 +3184,10 @@ def _section_headline(text: str, *, use_color: bool) -> str:
     return _colorize(f" ▎ {text}", "1;38;5;231", use_color)
 
 
-def _narrative(text: str, *, use_color: bool, width: int = 90) -> List[str]:
+def _narrative(text: str, *, use_color: bool, width: int = 90) -> list[str]:
     # Soft italic-like narrative panel with left rule.
     words = text.split()
-    lines: List[str] = []
+    lines: list[str] = []
     current = ""
     inner_width = max(20, width - 6)
     for w in words:
@@ -3216,19 +3212,19 @@ def _hero_card(
     *,
     title: str,
     subtitle: str,
-    metrics: Sequence[Tuple[str, str, str, Optional[float]]],
+    metrics: Sequence[tuple[str, str, str, float | None]],
     use_color: bool,
     width: int = 92,
-) -> List[str]:
+) -> list[str]:
     # metrics: list of (big_value, unit_suffix, label, cv_or_none)
     inner = width - 4  # content width between "║ " and " ║"
     top_bar = "╔" + "═" * (width - 2) + "╗"
     mid_sep = "╠" + "═" * (width - 2) + "╣"
     bot_bar = "╚" + "═" * (width - 2) + "╝"
 
-    def _wrap(text: str) -> List[str]:
+    def _wrap(text: str) -> list[str]:
         words = text.split()
-        lines: List[str] = []
+        lines: list[str] = []
         cur = ""
         for w in words:
             trial = (cur + " " + w).strip()
@@ -3244,7 +3240,7 @@ def _hero_card(
     cols = len(metrics)
     col_w = (width - 2) // max(1, cols)
 
-    out: List[str] = []
+    out: list[str] = []
     out.append(_colorize(top_bar, "1;38;5;226", use_color))
     for line in _wrap(title):
         out.append(_colorize("║ " + line.ljust(inner) + " ║", "1;38;5;226", use_color))
@@ -3278,8 +3274,8 @@ def _hero_card(
     out.append(_colorize("║" + lbl_body + "║", "38;5;252", use_color))
 
     # quality row (colored) — build with visible-len aware padding
-    colored_parts: List[str] = []
-    for big, _, _, cv in metrics:
+    colored_parts: list[str] = []
+    for _, _, _, cv in metrics:
         badge = _quality_badge(cv, use_color=use_color)
         if cv is None:
             cell = f"{badge} {_colorize('referência', '38;5;244', use_color)}"
@@ -3313,13 +3309,13 @@ def _visible_len(s: str) -> int:
 
 
 def _mini_lorenz(
-    bands: Sequence[Dict[str, object]],
+    bands: Sequence[dict[str, object]],
     gini: float,
     *,
     use_color: bool,
     width: int = 54,
     height: int = 10,
-) -> List[str]:
+) -> list[str]:
     # Approximate Lorenz curve from population-weighted bands.
     # Use income midpoint per band (with 10+ capped at 15 SM) to compute cumulative income share.
     midpoints = {"0-2": 1.0, "2-5": 3.5, "5-10": 7.5, "10+": 15.0}
@@ -3332,7 +3328,7 @@ def _mini_lorenz(
     total_income = sum(hp * mp for _, hp, mp in rows) or 1.0
     cum_pop = 0.0
     cum_inc = 0.0
-    points: List[Tuple[float, float]] = [(0.0, 0.0)]
+    points: list[tuple[float, float]] = [(0.0, 0.0)]
     for _, hp, mp in rows:
         cum_pop += hp
         cum_inc += hp * mp / total_income
@@ -3351,7 +3347,7 @@ def _mini_lorenz(
     # equality line (diagonal) using light dots
     for i in range(1, width):
         t = i / (width - 1)
-        y = int(round((1.0 - t) * (height - 2)))
+        y = round((1.0 - t) * (height - 2))
         if 0 <= y <= height - 2:
             grid[y][i] = "·"
 
@@ -3368,7 +3364,7 @@ def _mini_lorenz(
     for i in range(1, width):
         t = i / (width - 1)
         yv = _interp(t)
-        yr = int(round((1.0 - yv) * (height - 2)))
+        yr = round((1.0 - yv) * (height - 2))
         yr = max(0, min(height - 2, yr))
         grid[yr][i] = "●"
         if prev_y is not None and abs(prev_y - yr) > 1:
@@ -3380,8 +3376,8 @@ def _mini_lorenz(
     # shade the Gini area (between diagonal and curve)
     for i in range(1, width):
         t = i / (width - 1)
-        eq_y = int(round((1.0 - t) * (height - 2)))
-        curve_y = int(round((1.0 - _interp(t)) * (height - 2)))
+        eq_y = round((1.0 - t) * (height - 2))
+        curve_y = round((1.0 - _interp(t)) * (height - 2))
         lo, hi = sorted((eq_y, curve_y))
         for yy in range(lo + 1, hi):
             if 0 <= yy <= height - 2 and grid[yy][i] == " ":
@@ -3390,7 +3386,7 @@ def _mini_lorenz(
     out = []
     head = _colorize(f" Curva de Lorenz · Gini = {gini:.3f}", "1;38;5;214", use_color)
     out.append(head)
-    for y, row in enumerate(grid):
+    for row in grid:
         line = "".join(row)
         if use_color:
             line = line.replace("●", _colorize("●", "1;38;5;196", use_color))
@@ -3413,17 +3409,17 @@ def _mini_lorenz(
 
 
 def _uf_band_heatmap(
-    rows: Sequence[Dict[str, object]],
+    rows: Sequence[dict[str, object]],
     ranges: Sequence[str],
     *,
     use_color: bool,
     cell_width: int = 6,
-) -> List[str]:
+) -> list[str]:
     if not rows:
         return []
 
     # Sort by share of 10+ band descending, fallback to income rank
-    def _pct_of(row: Dict[str, object], band: str) -> float:
+    def _pct_of(row: dict[str, object], band: str) -> float:
         for b in row.get("bands", []) or []:
             if isinstance(b, dict) and str(b.get("range", "")) == band:
                 return float(b.get("persons_pct", b.get("households_pct", 0.0)) or 0.0)
@@ -3449,7 +3445,7 @@ def _uf_band_heatmap(
             [248, 250, 252, 254, 15],  # white
         ]
         ramp = ramps[range_idx % len(ramps)]
-        level = int(round(min(1.0, max(0.0, pct / 100.0)) * (len(ramp) - 1)))
+        level = round(min(1.0, max(0.0, pct / 100.0)) * (len(ramp) - 1))
         color = f"1;38;5;16;48;5;{ramp[level]}"
         txt = f"{pct:4.1f}%".center(cell_width)
         return _colorize(txt, color, use_color)
@@ -3464,17 +3460,17 @@ def _uf_band_heatmap(
 
 
 def _bullet_chart_rows(
-    rows: Sequence[Dict[str, object]],
+    rows: Sequence[dict[str, object]],
     *,
     value_key: str,
-    moe_key: Optional[str],
+    moe_key: str | None,
     benchmark: float,
     max_value: float,
     label_width: int,
     use_color: bool,
     width: int = 24,
-) -> List[str]:
-    out: List[str] = []
+) -> list[str]:
+    out: list[str] = []
     if max_value <= 0:
         max_value = 1.0
     for i, row in enumerate(rows, start=1):
@@ -3485,8 +3481,8 @@ def _bullet_chart_rows(
             else 0.0
         )
         label = str(row.get("label", ""))
-        n_fill = int(round(width * min(1.0, val / max_value)))
-        bench_pos = int(round(width * min(1.0, benchmark / max_value)))
+        n_fill = round(width * min(1.0, val / max_value))
+        bench_pos = round(width * min(1.0, benchmark / max_value))
         track = [" "] * width
         for j in range(n_fill):
             track[j] = "▰"
@@ -3505,10 +3501,7 @@ def _bullet_chart_rows(
         delta = _delta_arrow(val, benchmark, use_color)
         cv = _cv_from_moe(val, moe) if moe else None
         badge = _quality_badge(cv, use_color)
-        if moe:
-            val_txt = f"{val:5.2f}±{moe:4.2f}"
-        else:
-            val_txt = f"{val:5.2f}"
+        val_txt = f"{val:5.2f}±{moe:4.2f}" if moe else f"{val:5.2f}"
         out.append(
             f"  {i:>2}. {label:<{label_width}} {''.join(colored)} {val_txt:<14} {delta}  {badge}"
         )
@@ -3516,13 +3509,13 @@ def _bullet_chart_rows(
 
 
 def _ascii_brazil_map(
-    uf_rows: Sequence[Dict[str, object]],
+    uf_rows: Sequence[dict[str, object]],
     *,
     use_color: bool,
-) -> List[str]:
+) -> list[str]:
     # Coarse geographic layout of Brazilian states. Each UF is a 2-char cell.
     # Value source: avg_household_sm if present; fallback to 10+ band pct.
-    value_by_uf: Dict[str, float] = {}
+    value_by_uf: dict[str, float] = {}
     for r in uf_rows:
         if not isinstance(r, dict):
             continue
@@ -3579,7 +3572,7 @@ def _ascii_brazil_map(
         }
         return m.get(name, name[:2].upper())
 
-    code_to_val: Dict[str, float] = {_code(k): v for k, v in value_by_uf.items()}
+    code_to_val: dict[str, float] = {_code(k): v for k, v in value_by_uf.items()}
 
     # Rough geographic grid (8 rows × 12 cols). Use '  ' for empty.
     grid = [["  "] * 12 for _ in range(8)]
@@ -3624,7 +3617,7 @@ def _ascii_brazil_map(
         if val is None:
             return _colorize(code, "48;5;236;38;5;244", use_color)
         t = (val - vmin) / rng
-        idx = int(round(t * (len(ramp) - 1)))
+        idx = round(t * (len(ramp) - 1))
         idx = max(0, min(len(ramp) - 1, idx))
         color = f"1;38;5;16;48;5;{ramp[idx]}"
         return _colorize(code, color, use_color)
@@ -3652,12 +3645,12 @@ def _ascii_brazil_map(
 
 
 def _sankey_composition(
-    composition: Dict[str, float],
-    band_breakdown: Dict[str, Dict[str, float]],
+    composition: dict[str, float],
+    band_breakdown: dict[str, dict[str, float]],
     *,
     use_color: bool,
     ranges: Sequence[str],
-) -> List[str]:
+) -> list[str]:
     # composition: {"trabalho": pct, "beneficios_sociais": pct, "previdencia": pct, "capital": pct}
     src_order = [
         ("trabalho", "Trabalho", "1;38;5;46"),
@@ -3673,7 +3666,7 @@ def _sankey_composition(
         pct = float(composition.get(key, 0.0) or 0.0)
         if pct <= 0:
             continue
-        bar_len = max(1, int(round(pct / total * 36)))
+        bar_len = max(1, round(pct / total * 36))
         bar = _colorize("━" * bar_len, color, use_color)
         out.append(f"  {label:<12} {pct:5.1f}% {bar}╮")
     out.append(
@@ -3695,9 +3688,9 @@ def _gauge(
     *,
     vmin: float,
     vmax: float,
-    thresholds: Sequence[Tuple[float, str, str]],
+    thresholds: Sequence[tuple[float, str, str]],
     use_color: bool,
-) -> List[str]:
+) -> list[str]:
     # thresholds: sorted list of (upper_bound, color, severity_label)
     pct = max(0.0, min(1.0, (value - vmin) / max(1e-9, vmax - vmin)))
     severity_color = "1;38;5;46"
@@ -3714,7 +3707,7 @@ def _gauge(
 
     # Render half-circle gauge in 3 rows (arc: ╱─╲)
     width = 13
-    needle_pos = int(round(pct * (width - 1)))
+    needle_pos = round(pct * (width - 1))
     row1_list = [" "] * width
     row1_list[0] = "╱"
     row1_list[-1] = "╲"
@@ -3746,13 +3739,13 @@ def _gauge(
 
 
 def _braille_scatter(
-    points: Sequence[Tuple[float, float]],
+    points: Sequence[tuple[float, float]],
     *,
     width: int = 40,
     height: int = 8,
     use_color: bool,
     color: object = "1;38;5;46",
-) -> List[str]:
+) -> list[str]:
     # Each cell is 2 wide × 4 tall sub-pixels via Braille (U+2800..U+28FF).
     if not points:
         return []
@@ -3791,17 +3784,17 @@ def _braille_scatter(
 
 
 def _dot_plot_whiskers(
-    rows: Sequence[Dict[str, object]],
+    rows: Sequence[dict[str, object]],
     *,
     value_key: str,
-    moe_key: Optional[str],
+    moe_key: str | None,
     label_width: int,
     benchmark: float,
     max_value: float,
     width: int = 32,
     use_color: bool,
-) -> List[str]:
-    out: List[str] = []
+) -> list[str]:
+    out: list[str] = []
     if max_value <= 0:
         max_value = 1.0
     for row in rows:
@@ -3812,10 +3805,10 @@ def _dot_plot_whiskers(
             else 0.0
         )
         label = str(row.get("label", ""))[:label_width]
-        pos = int(round(width * min(1.0, val / max_value)))
-        low_pos = int(round(width * max(0.0, (val - moe) / max_value)))
-        high_pos = int(round(width * min(1.0, (val + moe) / max_value)))
-        bench_pos = int(round(width * min(1.0, benchmark / max_value)))
+        pos = round(width * min(1.0, val / max_value))
+        low_pos = round(width * max(0.0, (val - moe) / max_value))
+        high_pos = round(width * min(1.0, (val + moe) / max_value))
+        bench_pos = round(width * min(1.0, benchmark / max_value))
         track = [" "] * (width + 1)
         for j in range(low_pos, high_pos + 1):
             if 0 <= j <= width:
@@ -3849,10 +3842,10 @@ def _country_comparison(
     top_uf_sm: float,
     bottom_uf_sm: float,
     sm_reference_brl: float,
-) -> List[Tuple[str, str, str]]:
+) -> list[tuple[str, str, str]]:
     # Rough GDP-per-capita proxy via income in SM. Returns (label, peer_country, flag).
     # Multipliers are schematic, for narrative purposes only.
-    def _peer(sm: float) -> Tuple[str, str]:
+    def _peer(sm: float) -> tuple[str, str]:
         if sm >= 5.0:
             return ("Portugal", "🇵🇹")
         if sm >= 3.5:
@@ -3874,7 +3867,7 @@ def _country_comparison(
     return items
 
 
-def _official_seal(payload: Dict[str, object], *, use_color: bool) -> List[str]:
+def _official_seal(payload: dict[str, object], *, use_color: bool) -> list[str]:
     md = (
         payload.get("metadata", {}) if isinstance(payload.get("metadata"), dict) else {}
     )
@@ -3930,12 +3923,12 @@ def _official_seal(payload: Dict[str, object], *, use_color: bool) -> List[str]:
 
 
 def _executive_briefing(
-    payload: Dict[str, object],
-    mode_data: Dict[str, object],
+    payload: dict[str, object],
+    mode_data: dict[str, object],
     *,
     use_color: bool,
     width: int = 92,
-) -> List[str]:
+) -> list[str]:
     nat = mode_data.get("national", {})
     ranges = payload.get("ranges", [])
     insights = (
@@ -3986,8 +3979,8 @@ def _executive_briefing(
         if isinstance(cross.get("race_by_band"), list)
         else []
     )
-    race_high: Dict[str, float] = {}
-    race_low: Dict[str, float] = {}
+    race_high: dict[str, float] = {}
+    race_low: dict[str, float] = {}
     for r in race_rows:
         if not isinstance(r, dict):
             continue
@@ -4077,7 +4070,7 @@ def _executive_briefing(
 
 
 def _print_dashboard_mode(
-    payload: Dict[str, object],
+    payload: dict[str, object],
     mode: str,
     *,
     no_color: bool = False,
@@ -4219,7 +4212,7 @@ def _print_dashboard_mode(
             legend = []
             socio = ["mais pobre", "media baixa", "media alta", "mais rica"]
             ranges_money = mode_data.get("ranges_money", [])
-            money_map: Dict[str, str] = {}
+            money_map: dict[str, str] = {}
             if isinstance(ranges_money, list):
                 for item in ranges_money:
                     if not isinstance(item, dict):
@@ -4291,7 +4284,7 @@ def _print_dashboard_mode(
                 print(
                     _colorize("  Fontes detalhadas (V500xA2)", "1;38;5;221", use_color)
                 )
-                for src_key in INCOME_SOURCE_COLS.keys():
+                for src_key in INCOME_SOURCE_COLS:
                     item = income_sources_detail.get(src_key, {})
                     if not isinstance(item, dict):
                         continue
@@ -4376,7 +4369,7 @@ def _print_dashboard_mode(
                 f"  {i:>2}. {u['label']:<{uf_name_width}} {share:5.2f}% {heat}"
             )
         _print_two_columns(left, right, width=58, gap=3)
-        print("")
+        print()
         print(_colorize("  Bottom 10 UFs por renda (SM)", "1;38;5;196", use_color))
         for i, u in enumerate(mode_data.get("bottom10_uf_income", []), start=1):
             val = float(u["avg_household_sm"])
@@ -4396,7 +4389,7 @@ def _print_dashboard_mode(
             and isinstance(uf_dependency_ranking, list)
             and uf_dependency_ranking
         ):
-            print("")
+            print()
             print(
                 _colorize(
                     "  Ranking de dependencia por UF (beneficios + previdencia)",
@@ -4420,7 +4413,7 @@ def _print_dashboard_mode(
                     dep, width=8, palette=[52, 88, 124, 160, 196], use_color=use_color
                 )
                 print(
-                    f"  {i:>2}. {str(row.get('uf_label', '')):<{uf_name_width}} "
+                    f"  {i:>2}. {row.get('uf_label', '')!s:<{uf_name_width}} "
                     f"{dep:6.2f}% {work:6.2f}% {ben:7.2f}% {prev:6.2f}% {_fmt_brl(inc):>12} {dep_bar}"
                 )
         print()
@@ -4533,7 +4526,7 @@ def _print_dashboard_mode(
         print()
         print(_colorize(" Macro-regiões do Brasil", "1;38;5;39", use_color))
         macro_list = mode_data.get("macro_regions", [])
-        macro_map: Dict[str, Dict[str, object]] = {}
+        macro_map: dict[str, dict[str, object]] = {}
         if isinstance(macro_list, list):
             for mr in macro_list:
                 if isinstance(mr, dict):
@@ -4565,7 +4558,7 @@ def _print_dashboard_mode(
             print(
                 f"  {mr['label']:<12} pop={share:5.2f}% {pbar}  media={avg:5.2f} SM  mix={mix}"
             )
-        print("")
+        print()
 
     if show("population"):
         print(
@@ -4697,7 +4690,7 @@ def _print_dashboard_mode(
                 max(20, max((len(x) for x in labels_out), default=20)),
             )
 
-            for row, lbl in zip(show_rows, labels_out):
+            for row, lbl in zip(show_rows, labels_out, strict=False):
                 pct = float(row.get("pct", 0.0) or 0.0)
                 bar = _gradient_bar(
                     pct,
@@ -4717,8 +4710,8 @@ def _print_dashboard_mode(
                 print(
                     f"   - {'Outros':<{demog_label_width}} {hidden_pct:5.1f}% {other_bar}"
                 )
-            print("")
-        print("")
+            print()
+        print()
 
     if show("pyramid"):
         print(
@@ -4772,8 +4765,8 @@ def _print_dashboard_mode(
                 male_pct = float(row.get("male_pct", 0.0) or 0.0)
                 other_total_pct += float(row.get("other_pct", 0.0) or 0.0)
 
-                f_len = int(round(width * female_pct / max_pct))
-                m_len = int(round(width * male_pct / max_pct))
+                f_len = round(width * female_pct / max_pct)
+                m_len = round(width * male_pct / max_pct)
                 f_len = max(0, min(width, f_len))
                 m_len = max(0, min(width, m_len))
 
@@ -4788,7 +4781,7 @@ def _print_dashboard_mode(
                 )
             if other_total_pct > 0.01:
                 print(f"  Outros/sem info de sexo: {other_total_pct:.2f}%")
-            print("")
+            print()
 
     if show("cross"):
         print(
@@ -4831,7 +4824,7 @@ def _print_dashboard_mode(
                 row_list = [r for r in rows if isinstance(r, dict)]
                 by_label = {str(r.get("label", "")): r for r in row_list}
 
-                def _zero_cross_row(label: str) -> Dict[str, object]:
+                def _zero_cross_row(label: str) -> dict[str, object]:
                     return {
                         "label": label,
                         "total": 0.0,
@@ -4872,7 +4865,7 @@ def _print_dashboard_mode(
                     max_len=max_label_len_by_dim.get(dim, 28),
                 )
                 print(f"   - {lbl:<28} {' | '.join(parts)}")
-            print("")
+            print()
 
     if show("insights"):
         ins = mode_data.get("insights", {})
@@ -5052,7 +5045,7 @@ def _print_dashboard_mode(
                 and isinstance(composition_by_band, dict)
                 and composition_by_band
             ):
-                print("")
+                print()
                 print(
                     _colorize(
                         "  Composicao de renda por faixa de SM", "1;38;5;117", use_color
@@ -5083,10 +5076,10 @@ def _print_dashboard_mode(
                         use_color=use_color,
                     )
                     print(
-                        f"   - {str(band_label):<8} dom={hh_pct:5.1f}% "
+                        f"   - {band_label!s:<8} dom={hh_pct:5.1f}% "
                         f"trab={trab:5.1f}% ben={ben:5.1f}% prev={prev:5.1f}% cap={cap:5.1f}% {mix_bar}"
                     )
-            print("")
+            print()
 
     if show("meta"):
         md = payload.get("metadata", {})
@@ -5231,7 +5224,7 @@ def _print_dashboard_mode(
                 cv_b = _cv_from_moe(hp_v, float(hp_moe_v), 0.95)
                 badge = _quality_badge(cv_b, use_color)
                 print(
-                    f"   {badge} Domicílios faixa {str(b.get('range', '')):<8} CV = {(cv_b or 0) * 100:5.2f}%"
+                    f"   {badge} Domicílios faixa {b.get('range', '')!s:<8} CV = {(cv_b or 0) * 100:5.2f}%"
                 )
             print()
 
@@ -5264,7 +5257,7 @@ def _print_dashboard_mode(
 
 
 def _print_dashboard_bundle_pretty(
-    payload: Dict[str, object], *, no_color: bool = False
+    payload: dict[str, object], *, no_color: bool = False
 ) -> None:
     dashboards = payload.get("dashboards", {})
     if not isinstance(dashboards, dict) or not dashboards:
@@ -5304,18 +5297,18 @@ def _print_dashboard_bundle_pretty(
         color="1;38;5;46",
         use_color=use_color,
     )
-    print("")
+    print()
     for mode in ("trimestral", "anual"):
         item = dashboards.get(mode)
         if not isinstance(item, dict):
             continue
         print(_colorize(f"### Bloco {mode.upper()}", "1;38;5;117", use_color))
         _print_dashboard_pretty(item, no_color=no_color)
-        print("")
+        print()
 
 
 def _run_dashboard_bundle_interactive(
-    payload: Dict[str, object], *, no_color: bool = False
+    payload: dict[str, object], *, no_color: bool = False
 ) -> None:
     dashboards = payload.get("dashboards", {})
     if not isinstance(dashboards, dict) or not dashboards:
@@ -5401,7 +5394,7 @@ def _run_dashboard_bundle_interactive(
 
 
 def _print_dashboard_pretty(
-    payload: Dict[str, object], *, no_color: bool = False
+    payload: dict[str, object], *, no_color: bool = False
 ) -> None:
     use_color = _supports_color(no_color=no_color)
     pnad_mode = payload.get("pnad_mode", "trimestral")
@@ -5481,12 +5474,12 @@ def _print_dashboard_pretty(
             print(ln)
         print()
 
-    for mode in payload.get("modes", {}).keys():
+    for mode in payload.get("modes", {}):
         _print_dashboard_mode(payload, mode, no_color=no_color)
 
 
 def _run_dashboard_interactive(
-    payload: Dict[str, object], *, no_color: bool = False
+    payload: dict[str, object], *, no_color: bool = False
 ) -> None:
     modes = list(payload.get("modes", {}).keys())
     if not modes:
@@ -5587,15 +5580,15 @@ def cmd_ibge_sync(args: argparse.Namespace) -> int:
     if not isinstance(files_meta, dict):
         files_meta = {}
 
-    sync_events: List[Dict[str, object]] = []
-    scope_errors: List[Dict[str, str]] = []
+    sync_events: list[dict[str, object]] = []
+    scope_errors: list[dict[str, str]] = []
 
     def record_scope_error(scope: str, exc: Exception) -> None:
         msg = str(exc)
         scope_errors.append({"scope": scope, "error": msg})
         print(f"WARN: {scope} sync failed: {msg}", file=sys.stderr)
 
-    def sync_one(url: str, destination: Path) -> Dict[str, object]:
+    def sync_one(url: str, destination: Path) -> dict[str, object]:
         prev = (
             files_meta.get(url, {}) if isinstance(files_meta.get(url, {}), dict) else {}
         )
@@ -5616,16 +5609,16 @@ def cmd_ibge_sync(args: argparse.Namespace) -> int:
         sync_events.append(event)
         return event
 
-    selected_year: Optional[int] = None
-    selected_raw_files: List[str] = []
-    extracted_txt: List[str] = []
+    selected_year: int | None = None
+    selected_raw_files: list[str] = []
+    extracted_txt: list[str] = []
 
     with_anual = bool(args.with_anual or args.full)
     with_censo = bool(args.with_censo or args.full)
     with_tse = bool(args.with_tse or args.full)
 
     # ---------------- Trimestral PNADC (existing behavior) ----------------
-    root_hrefs: List[str] = []
+    root_hrefs: list[str] = []
     needs_trimestral_index = (not args.no_docs) or (not args.no_raw)
     if needs_trimestral_index:
         try:
@@ -5775,7 +5768,7 @@ def cmd_ibge_sync(args: argparse.Namespace) -> int:
     anual_raw_dir_resolved = anual_raw_dir_arg or _anual_raw_dir_default(anual_visit)
     anual_docs_dir_resolved = anual_docs_dir_arg or _anual_docs_dir_default(anual_visit)
 
-    anual_payload: Dict[str, object] = {
+    anual_payload: dict[str, object] = {
         "enabled": with_anual,
         "visit": anual_visit,
         "base_url": anual_base_url,
@@ -5791,7 +5784,7 @@ def cmd_ibge_sync(args: argparse.Namespace) -> int:
         anual_base = anual_base_url
         anual_raw_dir = Path(anual_raw_dir_resolved)
         anual_docs_dir = Path(anual_docs_dir_resolved)
-        anual_selected_year: Optional[int] = None
+        anual_selected_year: int | None = None
 
         try:
             if not args.no_anual_docs:
@@ -5833,8 +5826,8 @@ def cmd_ibge_sync(args: argparse.Namespace) -> int:
                     selected_years = [years[-1]]
 
                 anual_selected_year = selected_years[-1]
-                anual_files: List[str] = []
-                anual_txt: List[str] = []
+                anual_files: list[str] = []
+                anual_txt: list[str] = []
                 for y in selected_years:
                     file_name = str(latest_by_year[y]["name"])
                     anual_files.append(file_name)
@@ -5866,7 +5859,7 @@ def cmd_ibge_sync(args: argparse.Namespace) -> int:
             record_scope_error(f"anual_visita{anual_visit}", exc)
 
     # ---------------- Censo 2022 agregados de renda do responsavel ----------------
-    censo_payload: Dict[str, object] = {
+    censo_payload: dict[str, object] = {
         "enabled": with_censo,
         "base_url": args.censo_base_url,
         "folder": args.censo_folder,
@@ -5882,7 +5875,7 @@ def cmd_ibge_sync(args: argparse.Namespace) -> int:
         try:
             hrefs = _list_hrefs(censo_base + censo_folder)
             files = sorted([h for h in hrefs if not h.endswith("/")])
-            extracted_files: List[str] = []
+            extracted_files: list[str] = []
             for name in files:
                 url = censo_base + censo_folder + name
                 dest = censo_dir / name
@@ -5911,7 +5904,7 @@ def cmd_ibge_sync(args: argparse.Namespace) -> int:
             record_scope_error("censo_renda_responsavel", exc)
 
     # ---------------- TSE dados abertos (perfil do eleitorado) ----------------
-    tse_payload: Dict[str, object] = {
+    tse_payload: dict[str, object] = {
         "enabled": with_tse,
         "api_base": args.tse_api_base,
         "query": args.tse_query,
@@ -5933,7 +5926,7 @@ def cmd_ibge_sync(args: argparse.Namespace) -> int:
             tse_payload["resources_found"] = len(resources)
             tse_payload["resources_selected"] = selected
 
-            extracted_files: List[str] = []
+            extracted_files: list[str] = []
             for item in selected:
                 url = str(item.get("url", "") or "")
                 if not url:
@@ -6064,8 +6057,10 @@ def cmd_renda_por_faixa_sm(args: argparse.Namespace) -> int:
         return 2
 
     try:
-        from npv_deflators import build_deflators  # type: ignore
-        from npv_deflators import read_ipca_csv
+        from npv_deflators import (
+            build_deflators,  # type: ignore
+            read_ipca_csv,
+        )
     except Exception as exc:
         print(f"ERROR: could not import deflator helpers: {exc}", file=sys.stderr)
         return 2
@@ -6106,16 +6101,16 @@ def cmd_renda_por_faixa_sm(args: argparse.Namespace) -> int:
     skipped_invalid_weight = 0
     inconsistent_household_weight = 0
 
-    households: Dict[str, Dict[str, object]] = {}
+    households: dict[str, dict[str, object]] = {}
     selected_income_col = ""
-    selected_weight_col: Optional[str] = None
+    selected_weight_col: str | None = None
     try:
         ci_level = _normalize_ci_level(args.ci_level)
     except Exception as exc:
         print(f"ERROR: invalid --ci-level: {exc}", file=sys.stderr)
         return 2
     use_ci = (not args.unweighted) and (not args.no_ci)
-    replicate_weight_cols: List[str] = []
+    replicate_weight_cols: list[str] = []
     replicate_count = 0
 
     try:
@@ -6193,12 +6188,11 @@ def cmd_renda_por_faixa_sm(args: argparse.Namespace) -> int:
                 uf_label = (
                     str(row.get(uf_label_col, "")).strip() if uf_label_col else ""
                 )
-                if uf_filter:
-                    if (
-                        _norm_text(uf_code) not in uf_filter
-                        and _norm_text(uf_label) not in uf_filter
-                    ):
-                        continue
+                if uf_filter and (
+                    _norm_text(uf_code) not in uf_filter
+                    and _norm_text(uf_label) not in uf_filter
+                ):
+                    continue
 
                 row_weight = 1.0
                 if selected_weight_col:
@@ -6221,7 +6215,7 @@ def cmd_renda_por_faixa_sm(args: argparse.Namespace) -> int:
 
                 st = households.get(dom)
                 if st is None:
-                    rep_household_weights: List[float] = []
+                    rep_household_weights: list[float] = []
                     if use_ci:
                         for rep_col in replicate_weight_cols:
                             rep_raw = row.get(rep_col, "")
@@ -6260,7 +6254,7 @@ def cmd_renda_por_faixa_sm(args: argparse.Namespace) -> int:
         return 2
 
     group_mode = args.group_by
-    by_group: Dict[str, Dict[str, object]] = {}
+    by_group: dict[str, dict[str, object]] = {}
     for h in households.values():
         uf_code = str(h.get("uf_code", "")).strip()
         uf_label = str(h.get("uf_label", "")).strip()
@@ -6383,7 +6377,7 @@ def cmd_renda_por_faixa_sm(args: argparse.Namespace) -> int:
     else:
         group_keys = sorted(by_group.keys())
 
-    groups_out: List[Dict[str, object]] = []
+    groups_out: list[dict[str, object]] = []
     for gkey in group_keys:
         g = by_group[gkey]
         htot = float(g["households_total"]) or 0.0
@@ -6396,7 +6390,7 @@ def cmd_renda_por_faixa_sm(args: argparse.Namespace) -> int:
         rep_persons_total = g.get("rep_persons_total", [])
         rep_sum_ratio = g.get("rep_sum_ratio_household_weighted", [])
 
-        avg_sm_ci: Optional[Dict[str, float]] = None
+        avg_sm_ci: dict[str, float] | None = None
         if (
             use_ci
             and isinstance(rep_households_total, list)
@@ -6422,7 +6416,7 @@ def cmd_renda_por_faixa_sm(args: argparse.Namespace) -> int:
             bp = float(b["persons"])
             hp = round((100.0 * bh / htot), 4) if htot else 0.0
             pp = round((100.0 * bp / ptot), 4) if ptot else 0.0
-            row_out: Dict[str, object] = {
+            row_out: dict[str, object] = {
                 "range": label,
                 "households": bh,
                 "households_pct": hp,
@@ -6499,7 +6493,7 @@ def cmd_renda_por_faixa_sm(args: argparse.Namespace) -> int:
                         )
             bands_out.append(row_out)
 
-        group_out: Dict[str, object] = {
+        group_out: dict[str, object] = {
             "group": g["group"],
             "label": g["label"],
             "households_total": htot,
@@ -6522,8 +6516,8 @@ def cmd_renda_por_faixa_sm(args: argparse.Namespace) -> int:
 
     sm_ref_weighted_sum = 0.0
     sm_ref_weight_total = 0.0
-    sm_ref_min: Optional[float] = None
-    sm_ref_max: Optional[float] = None
+    sm_ref_min: float | None = None
+    sm_ref_max: float | None = None
     for h in households.values():
         sm_target = float(h.get("sm_target") or 0.0)
         if sm_target <= 0:
@@ -6569,7 +6563,7 @@ def cmd_renda_por_faixa_sm(args: argparse.Namespace) -> int:
             "variance_formula": "var=(1/(R-1))*sum((theta_r-theta)^2)",
             "replicate_weight_base": replicate_base_prefix,
             "replicate_weight_count": int(replicate_count),
-            "replicate_weight_columns_detected": int(len(replicate_weight_cols)),
+            "replicate_weight_columns_detected": len(replicate_weight_cols),
             "person_weight_assumption": "persons_weight_rep=persons_in_dom*household_rep_weight",
         },
         "metadata": {
@@ -6589,7 +6583,7 @@ def cmd_renda_por_faixa_sm(args: argparse.Namespace) -> int:
             "ci_requested": bool((not args.unweighted) and (not args.no_ci)),
             "ci_effective": bool(use_ci),
             "ci_level": ci_level,
-            "replicate_weights_found": int(len(replicate_weight_cols)),
+            "replicate_weights_found": len(replicate_weight_cols),
         },
     }
 
@@ -6620,12 +6614,12 @@ def _is_float(value: str) -> bool:
         return False
 
 
-def _infer_column_types(csv_path: Path, sample_rows: int = 5000) -> Dict[str, str]:
+def _infer_column_types(csv_path: Path, sample_rows: int = 5000) -> dict[str, str]:
     with csv_path.open("r", encoding="utf-8-sig", errors="replace", newline="") as fh:
         reader = csv.DictReader(fh)
         columns = reader.fieldnames or []
-        states: Dict[str, str] = {c: "INTEGER" for c in columns}
-        nonempty: Dict[str, int] = {c: 0 for c in columns}
+        states: dict[str, str] = dict.fromkeys(columns, "INTEGER")
+        nonempty: dict[str, int] = dict.fromkeys(columns, 0)
 
         for i, row in enumerate(reader):
             if i >= sample_rows:
@@ -6645,9 +6639,8 @@ def _infer_column_types(csv_path: Path, sample_rows: int = 5000) -> Dict[str, st
                     else:
                         states[col] = "TEXT"
                     continue
-                if states[col] == "REAL":
-                    if not _is_float(raw):
-                        states[col] = "TEXT"
+                if states[col] == "REAL" and not _is_float(raw):
+                    states[col] = "TEXT"
 
         for col in columns:
             if nonempty[col] == 0:
@@ -6667,8 +6660,8 @@ def build_sqlite_from_csv(
     table: str,
     if_exists: str = "replace",
     chunk_size: int = 5000,
-    index_columns: Optional[Sequence[str]] = None,
-) -> Dict[str, object]:
+    index_columns: Sequence[str] | None = None,
+) -> dict[str, object]:
     csv_path = Path(csv_path)
     db_path = Path(db_path)
     db_path.parent.mkdir(parents=True, exist_ok=True)
@@ -6701,7 +6694,7 @@ def build_sqlite_from_csv(
             "r", encoding="utf-8-sig", errors="replace", newline=""
         ) as fh:
             reader = csv.DictReader(fh)
-            batch: List[tuple] = []
+            batch: list[tuple] = []
             total = 0
             for row in reader:
                 batch.append(tuple(row.get(c, "") for c in columns))
@@ -6819,7 +6812,7 @@ def _truncate_cell(value: str, width: int) -> str:
 
 
 def _format_table(
-    rows: Sequence[Dict[str, object]],
+    rows: Sequence[dict[str, object]],
     columns: Sequence[str],
     *,
     max_col_width: int = 48,
@@ -6829,9 +6822,9 @@ def _format_table(
         return "(sem colunas)"
 
     widths = [len(c) for c in cols]
-    matrix: List[List[str]] = []
+    matrix: list[list[str]] = []
     for row in rows:
-        row_cells: List[str] = []
+        row_cells: list[str] = []
         for i, c in enumerate(cols):
             txt = _cell_text(row.get(c))
             row_cells.append(txt)
@@ -6878,7 +6871,7 @@ def cmd_query(args: argparse.Namespace) -> int:
         return 2
 
     started = time.perf_counter()
-    conn: Optional[sqlite3.Connection] = None
+    conn: sqlite3.Connection | None = None
     replicate_cols_detected = 0
     replicate_base_detected = ""
     try:
@@ -6893,7 +6886,7 @@ def cmd_query(args: argparse.Namespace) -> int:
             cur = conn.cursor()
             cur.execute(sql)
             columns = [str(d[0]) for d in (cur.description or [])]
-            rows: List[Dict[str, object]] = []
+            rows: list[dict[str, object]] = []
             truncated = False
             if columns:
                 limit = max(1, int(args.max_rows))
@@ -6998,7 +6991,7 @@ def _resolve_pipeline_raw_path(
     out_dir: Path,
     *,
     latest_resolver=_latest_local_raw,
-) -> Tuple[Optional[Path], Optional[int]]:
+) -> tuple[Path | None, int | None]:
     if args.download_url:
         fallback_name = "PNADC_download.txt"
         if str(args.raw).strip().lower() != "latest":
@@ -7008,7 +7001,7 @@ def _resolve_pipeline_raw_path(
             or Path(urlparse(args.download_url).path).name
             or fallback_name
         )
-        raw_path: Optional[Path] = out_dir / filename
+        raw_path: Path | None = out_dir / filename
     elif str(args.raw).strip().lower() == "latest":
         latest = latest_resolver(Path(args.raw_dir))
         if latest is None:
@@ -7042,9 +7035,9 @@ def _run_pipeline_core(
     args: argparse.Namespace,
     *,
     base_name: str,
-    default_keep: Optional[str] = None,
+    default_keep: str | None = None,
     latest_resolver=_latest_local_raw,
-    sync_args_extra: Optional[Sequence[str]] = None,
+    sync_args_extra: Sequence[str] | None = None,
 ) -> int:
     out_dir = Path(args.out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -7072,7 +7065,7 @@ def _run_pipeline_core(
         labeled_csv = out_dir / f"{base_name}_labeled.csv"
         npv_csv = out_dir / f"{base_name}_labeled_npv.csv"
         ipca_csv = Path(args.ipca_csv)
-        keep_value = args.keep if args.keep else default_keep
+        keep_value = args.keep or default_keep
 
         fwf_cmd = [
             sys.executable,
@@ -7216,7 +7209,7 @@ def cmd_pipeline_run_anual(args: argparse.Namespace) -> int:
     if not base_name:
         base_name = _anual_base_name_default(visit)
 
-    sync_args_extra: List[str] = []
+    sync_args_extra: list[str] = []
     if visit != 5:
         sync_args_extra.extend(["--anual-visit", str(visit)])
 
@@ -7834,7 +7827,7 @@ Legacy commands still work directly:
     return p
 
 
-def main(argv: Optional[List[str]] = None) -> int:
+def main(argv: list[str] | None = None) -> int:
     argv = list(argv) if argv is not None else sys.argv[1:]
 
     invoked_name = Path(sys.argv[0]).stem.lower()

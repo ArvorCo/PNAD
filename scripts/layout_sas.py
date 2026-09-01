@@ -2,10 +2,9 @@
 from __future__ import annotations
 
 import re
+import unicodedata
 from dataclasses import dataclass
 from pathlib import Path
-from typing import List, Optional
-import unicodedata
 
 
 @dataclass
@@ -14,8 +13,8 @@ class Field:
     start: int  # 0-based start index
     width: int
     kind: str  # 'char' or 'num'
-    label: Optional[str] = None  # comment text if present
-    slug: Optional[str] = None  # normalized label (lowercase, ascii, underscores)
+    label: str | None = None  # comment text if present
+    slug: str | None = None  # normalized label (lowercase, ascii, underscores)
 
 
 POS_RE = re.compile(r"^@\s*(\d+)")
@@ -29,16 +28,13 @@ def _slugify(text: str) -> str:
     return text.lower()
 
 
-def _parse_layout_line(line: str) -> Optional[Field]:
+def _parse_layout_line(line: str) -> Field | None:
     # Remove trailing comments
     label = None
     if "/*" in line:
         before, after = line.split("/*", 1)
         line = before
-        if "*/" in after:
-            label = after.split("*/", 1)[0].strip()
-        else:
-            label = after.strip()
+        label = after.split("*/", 1)[0].strip() if "*/" in after else after.strip()
     line = line.strip()
     if not line or not line.startswith("@"):
         return None
@@ -56,7 +52,7 @@ def _parse_layout_line(line: str) -> Optional[Field]:
     name = parts[0]
     # The format/informat token may include $, letters and a width like 8. or 10.2 or $CHAR4.
     # Read tokens until we find a dot (.) indicating the end of the informat.
-    fmt_tokens: List[str] = []
+    fmt_tokens: list[str] = []
     i = 1
     while i < len(parts):
         tok = parts[i]
@@ -78,10 +74,10 @@ def _parse_layout_line(line: str) -> Optional[Field]:
     return Field(name=name, start=start, width=width, kind=kind, label=label, slug=slug)
 
 
-def parse_layout(path: Path) -> List[Field]:
-    fields: List[Field] = []
+def parse_layout(path: Path) -> list[Field]:
+    fields: list[Field] = []
     raw_bytes = Path(path).read_bytes()
-    text: Optional[str] = None
+    text: str | None = None
     for enc in ("utf-8-sig", "utf-8", "iso-8859-1"):
         try:
             text = raw_bytes.decode(enc)
@@ -99,7 +95,7 @@ def parse_layout(path: Path) -> List[Field]:
     return fields
 
 
-def fields_index(fields: List[Field]) -> dict:
+def fields_index(fields: list[Field]) -> dict:
     return {f.name: f for f in fields}
 
 
@@ -107,8 +103,8 @@ def slice_line(line: str, field: Field) -> str:
     return line[field.start : field.start + field.width]
 
 
-def extract_line(line: str, selected: List[Field]) -> List[str]:
-    out: List[str] = []
+def extract_line(line: str, selected: list[Field]) -> list[str]:
+    out: list[str] = []
     for f in selected:
         val = slice_line(line, f).rstrip("\n\r")
         # normalize spaces

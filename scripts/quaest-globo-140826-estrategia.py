@@ -495,7 +495,7 @@ def load_audit():
 
 
 def as_row(values: list[int]) -> dict[str, int]:
-    return dict(zip(BALLOT, values))
+    return dict(zip(BALLOT, values, strict=False))
 
 
 def validate(audit) -> None:

@@ -1406,7 +1406,7 @@ def income_benchmark() -> dict:
     stored_16_plus = [item["estimate"] for item in benchmark["bands"]]
     if any(
         abs(current - stored) > 0.002
-        for current, stored in zip(verified_16_plus, stored_16_plus)
+        for current, stored in zip(verified_16_plus, stored_16_plus, strict=False)
     ):
         raise ValueError(
             "Stored PNAD benchmark does not reproduce the V2009 >= 16 filter"
@@ -1417,7 +1417,7 @@ def income_benchmark() -> dict:
     flavio = [0.23, 0.32, 0.35]
 
     def weighted(shares: list[float], weights: list[float]) -> float:
-        return 100 * sum(a * b for a, b in zip(shares, weights))
+        return 100 * sum(a * b for a, b in zip(shares, weights, strict=False))
 
     published_mix = [weighted(lula, quaest), weighted(flavio, quaest)]
     pnad_mix = [weighted(lula, target), weighted(flavio, target)]
@@ -1425,7 +1425,9 @@ def income_benchmark() -> dict:
         "benchmark": benchmark,
         "age_scope_check": scope_check,
         "quaest_target": [31, 42, 27],
-        "deltas_pp": [round(100 * (q - t), 3) for q, t in zip(quaest, target)],
+        "deltas_pp": [
+            round(100 * (q - t), 3) for q, t in zip(quaest, target, strict=False)
+        ],
         "first_round_income_shares": {"Lula": [51, 37, 31], "Flávio": [23, 32, 35]},
         "published_mix_reconstructed": [round(x, 3) for x in published_mix],
         "pnad_marginal_sensitivity": [round(x, 3) for x in pnad_mix],

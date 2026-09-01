@@ -157,9 +157,11 @@ def inject(html_path, figures: dict[str, str]) -> int:
     for name, markup in figures.items():
         pattern = re.compile(
             rf"(<!--FIG:{re.escape(name)}-->).*?(<!--/FIG:{re.escape(name)}-->)",
-            re.S,
+            re.DOTALL,
         )
-        html, hits = pattern.subn(lambda m: m.group(1) + markup + m.group(2), html)
+        html, hits = pattern.subn(
+            lambda m, markup=markup: m.group(1) + markup + m.group(2), html
+        )
         count += hits
     html_path.write_text(html, encoding="utf-8")
     return count

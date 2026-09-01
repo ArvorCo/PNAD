@@ -167,7 +167,7 @@ def texto_do_pdf(caminho: Path) -> str:
 # P.n engole o resto do arquivo, inclusive o cartao de candidatos.
 MARCADOR = re.compile(
     r"^\s*(P\.\d+[a-c]?\.?|[A-ZÇÃÕÁÉÍÓÚÂÊÔ][A-ZÇÃÕÁÉÍÓÚÂÊÔ_0-9]{3,})[\s\.]",
-    flags=re.M,
+    flags=re.MULTILINE,
 )
 PERGUNTA = re.compile(r"^P\.\d+[a-c]?$")
 

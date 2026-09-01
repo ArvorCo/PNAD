@@ -417,7 +417,7 @@ def alavanca(data: dict) -> str:
 
     for bound, dash in ((1.0, "3 4"), (2.0, "3 4")):
         pts = []
-        for step in range(0, 121):
+        for step in range(121):
             amp = 3 + step * (xmax - 3) / 120
             tvd = 100 * bound / amp
             if tvd <= ymax:

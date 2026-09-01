@@ -4,19 +4,16 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+from collections.abc import Iterable
 from pathlib import Path
-from typing import Iterable, Optional
-from urllib.request import urlopen, Request
+from urllib.request import Request, urlopen
 
 BCB_SERIES_INDEX = 433  # IPCA (variação mensal, %) – mensal
 
 
-def _fetch_bcb(series: int, last: Optional[int] = None) -> list[dict]:
+def _fetch_bcb(series: int, last: int | None = None) -> list[dict]:
     base = f"https://api.bcb.gov.br/dados/serie/bcdata.sgs.{series}/dados"
-    if last:
-        url = f"{base}/ultimos/{int(last)}?formato=json"
-    else:
-        url = f"{base}?formato=json"
+    url = f"{base}/ultimos/{int(last)}?formato=json" if last else f"{base}?formato=json"
     req = Request(url, headers={"User-Agent": "pnad-npv/1.0"})
     with urlopen(req, timeout=60) as resp:
         data = resp.read().decode("utf-8")
@@ -76,7 +73,7 @@ def emit_csv(items: Iterable[dict], out: Path) -> Path:
     return out
 
 
-def main(argv: Optional[list[str]] = None) -> int:
+def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(
         description="Fetch monthly IPCA index and write CSV (date,index)"
     )

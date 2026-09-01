@@ -41,12 +41,14 @@ def embed(page: Path) -> dict:
             raise FileNotFoundError(source)
         body = compact(source)
         pattern = re.compile(
-            r'(<script type="application/json" id="%s">).*?(</script>)' % element_id,
-            re.S,
+            rf'(<script type="application/json" id="{element_id}">).*?(</script>)',
+            re.DOTALL,
         )
         if not pattern.search(html):
             raise ValueError(f"A página não tem a tag de dados {element_id}")
-        html = pattern.sub(lambda m: m.group(1) + body + m.group(2), html, count=1)
+        html = pattern.sub(
+            lambda m, body=body: m.group(1) + body + m.group(2), html, count=1
+        )
         sizes[element_id] = len(body)
     page.write_text(html)
     return sizes

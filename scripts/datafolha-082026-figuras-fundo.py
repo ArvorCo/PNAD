@@ -21,10 +21,10 @@ from pathlib import Path
 import matplotlib
 
 matplotlib.use("Agg")
-import matplotlib.pyplot as plt  # noqa: E402
-import numpy as np  # noqa: E402
-from matplotlib.lines import Line2D  # noqa: E402
-from matplotlib.patches import Patch  # noqa: E402
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib.lines import Line2D
+from matplotlib.patches import Patch
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "analysis" / "datafolha_082026" / "aprofundamento.json"
@@ -233,7 +233,9 @@ def mercado_aberto(data: dict) -> None:
     y = np.arange(len(rows))[::-1]
 
     ax2.barh(y, change, color=C["gold"], height=0.46, zorder=3)
-    for index, (value, point, row) in enumerate(zip(change, points, rows)):
+    for index, (value, point, _row) in enumerate(
+        zip(change, points, rows, strict=False)
+    ):
         ax2.text(
             value - 1.5,
             y[index],
@@ -308,7 +310,7 @@ def piso_de_ruido(data: dict) -> None:
         color=C["ink"],
         fontweight="bold",
     )
-    for index, (g, n) in enumerate(zip(gross, net)):
+    for index, (g, n) in enumerate(zip(gross, net, strict=False)):
         ax1.text(
             g + 0.8, y[index], f"{g:.0f}", va="center", fontsize=10, color=C["muted"]
         )

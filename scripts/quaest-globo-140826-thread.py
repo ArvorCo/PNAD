@@ -700,7 +700,7 @@ def viz_duel(spec, width):
     for index, row in enumerate(rows):
         y = top + index * gap
         parts.append(text_node(14, y + 14, row["label"], 13, INK, SANS, "600"))
-        for offset, (key, color) in enumerate(zip(("a", "b"), colors)):
+        for offset, (key, color) in enumerate(zip(("a", "b"), colors, strict=False)):
             value = row[key]
             length = max(2, value * scale)
             bar_y = y + offset * 17
@@ -711,7 +711,7 @@ def viz_duel(spec, width):
                 text_node(196 + length, bar_y + 12, value, 13, INK, MONO, "700")
             )
     legend_y = top + len(rows) * gap + 6
-    for offset, (name, color) in enumerate(zip(spec["legend"], colors)):
+    for offset, (name, color) in enumerate(zip(spec["legend"], colors, strict=False)):
         x = 14 + offset * 190
         parts.append(
             f'<rect x="{x}" y="{legend_y}" width="13" height="13" fill="{color}"/>'
@@ -945,7 +945,7 @@ def build(posts: list[dict]) -> str:
         raise ValueError(f"{len(posts)} posts para {len(CARDS)} cards")
     chunks = [HEAD]
     total = len(posts)
-    for post, card in zip(posts, CARDS):
+    for post, card in zip(posts, CARDS, strict=False):
         number = post["number"]
         lead = post["text"].split("\n\n")[0]
         photo = card["photo"]
