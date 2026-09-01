@@ -285,6 +285,30 @@ A thread deixou de ser resumo do dossiê e virou aula. Referência: `scripts/dat
 - **Posts de 950 a 1.400 caracteres.** Menos que isso vira legenda, mais que isso não cabe.
 - **Declarar o limite antes da conclusão**, num post próprio, e fechar convidando o leitor a refazer a conta.
 
+## Índice dos carregadores (método da casa, atlas estaduais, 01/09/2026)
+Comparar 41% de um senador com 6% de um deputado estadual não diz nada, e comparar volume bruto leva à conclusão errada. A régua correta normaliza cada nome pela própria média estadual e compara com o topo da chapa na mesma cédula. Reprodução: `python3 scripts/mg-082026-camada2.py`, que escreve `docs/assets/mg_082026_camada2.json` e `derivados/carregadores-municipais.csv`.
+- **Fórmula.** `indice = 100 * (cand_municipio / cand_estado) / (presidencial_1T_municipio / presidencial_1T_estado)`, sobre votos válidos do próprio cargo. Cem significa render o mesmo que o topo da chapa rendeu ali.
+- **Use o 1º turno presidencial como denominador**, não o 2º. O 2º turno já consolidou voto útil e infla artificialmente a base de comparação. Em MG a escolha muda o resultado do Cleitinho de 8,17 para 2,03 pontos abaixo de Bolsonaro.
+- **Achado que derruba o lugar-comum de MG 2026:** Cleitinho fez 41,33% e Bolsonaro 43,36% no mesmo dia e na mesma urna. Ele não é um puxador maior; é um puxador **complementar**. Rende acima no Oeste (índice 130), Central Mineira, Jequitinhonha, Mucuri e no cinturão do minério, e abaixo no Triângulo, Sul e região metropolitana, que já eram de Bolsonaro. Nikolas é o inverso: amplifica base (pico em Nova Serrana, onde Bolsonaro fez 66,8%) e só abre fronteira na periferia metropolitana.
+- **Sempre publicar os três limites junto:** não é transferência, não é pessoa, não é previsão. Cargos, cédulas e incentivos são diferentes.
+- **Engler é fenômeno intramunicipal.** No município a leitura satura; dentro de BH a zona eleitoral ainda é grossa demais (índice de 67 a 115 em 18 zonas). Bairro exige `votacao_secao_<ano>_MG.zip` cruzado com `eleitorado_local_votacao_<ano>.zip`.
+
+## Corredores de campanha (método da casa)
+Agrupar municípios por base econômica, imprensa e formato de encontro possível, e não por mesorregião do IBGE. Sete corredores em MG. Para cada um: pauta extraída da imprensa local com link, quem tem base eleitoral medida em 2022, quem sobe no palanque, formato de evento e o que não dizer.
+- **A convergência que decide o alvo:** procure o corredor onde (a) o topo da chapa ficou abaixo da média, (b) os carregadores ficam acima, e (c) existe pauta material com valor, devedor e destinatário. Em MG isso é o Quadrilátero Ferrífero, com a cobrança de R$ 17,7 bilhões de CFEM à Vale, R$ 3,2 bilhões destinados a municípios mineiros, e seis das doze cidades tendo trocado de lado em 2022.
+- **Âncora regional é medida, não suposta:** parlamentar eleito cuja votação nominal de 2022 se concentra na mesorregião. Onde não existe âncora, diga: no Jequitinhonha o único com domínio é do PT, e no Mucuri e na Central Mineira nenhum eleito tem base concentrada.
+- **Publique o corredor que contraria a própria tese.** Em MG é o Corredor da Produção, 13,85% do eleitorado, onde os três carregadores rendem abaixo do topo da chapa.
+
+## Materiais recebidos de terceiros
+Relatório de terceiro, mapa recebido e anexo sigiloso não ficam no repositório público, nem mesmo em pasta ignorada dentro dele. Vão para o cofre da campanha correspondente, em `~/arvor/campanhas/<candidato>/data/raw/`, que é ignorado pelo git daquele repositório.
+- O manifesto público continua registrando **nome, tamanho e SHA-256** com o caminho `cofre-externo/<arquivo>` e a nota de que o arquivo não é redistribuído. Isso preserva a conferência de integridade sem publicar documento alheio.
+- `scripts/mg-082026-data.py` lê esse cofre por `MG_FONTES_RECEBIDAS` e segue funcionando se o arquivo não estiver presente, apenas avisando.
+
+## Auditoria de contraste em página longa (correção de 01/09/2026)
+`page.screenshot(full_page=True)` no Chromium não devolve captura acima de aproximadamente 16.384 pixels de altura: o excedente volta branco. Em dossiê longo isso fazia `scripts/contrast-audit.py` acusar dezenas de reprovações falsas no rodapé, com texto claro sobre fundo "branco" que na verdade é escuro. O script agora fotografa em faixas de 8.000 pixels e costura. Antes da correção o atlas de MG acusava 441 reprovações; depois, 69 reais, e zero após a correção da paleta.
+- Paleta que passa em WCAG AA sobre papel da casa: `--muted` em `#535b54`, dourado de texto pequeno em `#7d5b00`, vermelho sobre fundo escuro em `#f0a79c`, rótulo de barra com chip de fundo claro e texto `--ink`.
+- Rode a auditoria em toda página publicada, não só nas novas, e trate reprovação herdada como dívida a pagar.
+
 ## Regras de escrita (valem para todo texto público da casa)
 - **Travessão é proibido.** O caractere `—` não entra em dossiê, thread, card, home, minuta ou legenda. Não trocar por `–` nem por ` - `: reescrever a frase com vírgula, dois-pontos, ponto e vírgula, parênteses ou ponto final. Aposto duplo entre travessões vira oração à parte. O hífen de palavra composta (`pós-estímulo`) e o `–` de intervalo numérico (`22–24/07`, `45–59 anos`) continuam válidos.
 - Verificar antes de publicar: `grep -c "—" docs/*.html` precisa devolver zero.

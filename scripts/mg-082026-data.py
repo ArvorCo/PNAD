@@ -21,6 +21,7 @@ import csv
 import gzip
 import io
 import json
+import os
 import math
 import re
 import sqlite3
@@ -91,33 +92,53 @@ def cached_json(name: str, url: str):
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+# Materiais recebidos de terceiros nao ficam no repositorio. Ficam num cofre
+# fora do git, e o manifesto publica apenas nome, tamanho e SHA-256, o que
+# preserva a auditabilidade sem redistribuir o arquivo.
+FONTES_RECEBIDAS = Path(
+    os.environ.get(
+        "MG_FONTES_RECEBIDAS",
+        Path.home() / "arvor/campanhas/flaviobolsonaro/data/raw/mg_2026",
+    )
+).expanduser()
+
+
 def source_manifest() -> dict:
     import hashlib
 
     files = [
-        BASE / "fontes/quaest-mg-2026-08-25.pdf",
-        BASE / "fontes/real-time-big-data-mg-2026-08-25.pdf",
-        BASE / "fontes/mg-municipios-2018x2022.pdf",
-        BASE / "fontes/mg-amarelos-votos-2018x2022.pdf",
-        BASE / "fontes/mapa-tese-recebido-2018x2022.png",
-        TSE_RESULTS / "votacao_candidato_munzona_2018.zip",
-        TSE_RESULTS / "votacao_candidato_munzona_2022.zip",
-        TSE_PROFILE,
-        PIB_ZIP,
+        (BASE / "fontes/quaest-mg-2026-08-25.pdf", False),
+        (BASE / "fontes/real-time-big-data-mg-2026-08-25.pdf", False),
+        (FONTES_RECEBIDAS / "mg-municipios-2018x2022.pdf", True),
+        (FONTES_RECEBIDAS / "mg-amarelos-votos-2018x2022.pdf", True),
+        (FONTES_RECEBIDAS / "mapa-tese-recebido-2018x2022.png", True),
+        (TSE_RESULTS / "votacao_candidato_munzona_2018.zip", False),
+        (TSE_RESULTS / "votacao_candidato_munzona_2022.zip", False),
+        (TSE_PROFILE, False),
+        (PIB_ZIP, False),
     ]
     records = []
-    for path in files:
+    for path, externo in files:
+        if externo and not path.exists():
+            print(f"aviso: material recebido ausente do cofre, {path}")
+            continue
         digest = hashlib.sha256()
         with path.open("rb") as handle:
             for block in iter(lambda: handle.read(1024 * 1024), b""):
                 digest.update(block)
-        records.append(
-            {
-                "path": str(path.relative_to(ROOT)),
-                "bytes": path.stat().st_size,
-                "sha256": digest.hexdigest(),
-            }
-        )
+        record = {
+            "path": (
+                f"cofre-externo/{path.name}" if externo else str(path.relative_to(ROOT))
+            ),
+            "bytes": path.stat().st_size,
+            "sha256": digest.hexdigest(),
+        }
+        if externo:
+            record["nota"] = (
+                "Material recebido de terceiro. Fica fora do repositório; "
+                "publicamos o hash para conferência, não o arquivo."
+            )
+        records.append(record)
     return {
         "generated": "2026-08-31",
         "files": records,
@@ -167,14 +188,39 @@ def read_ibge() -> tuple[dict, dict]:
     with zipfile.ZipFile(PIB_ZIP) as archive:
         payload = archive.read(archive.namelist()[0])
     frame = pd.read_excel(io.BytesIO(payload), sheet_name="PIB dos Municípios")
-    mg = frame[(frame["Sigla da Unidade da Federação"] == "MG") & (frame["Ano"].isin([2021, 2023]))]
-    pib_col = next(col for col in frame if col.startswith("Produto Interno Bruto,") and "per capita" not in col)
-    pc_col = next(col for col in frame if col.startswith("Produto Interno Bruto per capita"))
+    mg = frame[
+        (frame["Sigla da Unidade da Federação"] == "MG")
+        & (frame["Ano"].isin([2021, 2023]))
+    ]
+    pib_col = next(
+        col
+        for col in frame
+        if col.startswith("Produto Interno Bruto,") and "per capita" not in col
+    )
+    pc_col = next(
+        col for col in frame if col.startswith("Produto Interno Bruto per capita")
+    )
     sector_cols = {
-        "agro": next(col for col in frame if col.startswith("Valor adicionado bruto da Agropecuária")),
-        "industria": next(col for col in frame if col.startswith("Valor adicionado bruto da Indústria")),
-        "servicos": next(col for col in frame if col.startswith("Valor adicionado bruto dos Serviços")),
-        "administracao": next(col for col in frame if col.startswith("Valor adicionado bruto da Administração")),
+        "agro": next(
+            col
+            for col in frame
+            if col.startswith("Valor adicionado bruto da Agropecuária")
+        ),
+        "industria": next(
+            col
+            for col in frame
+            if col.startswith("Valor adicionado bruto da Indústria")
+        ),
+        "servicos": next(
+            col
+            for col in frame
+            if col.startswith("Valor adicionado bruto dos Serviços")
+        ),
+        "administracao": next(
+            col
+            for col in frame
+            if col.startswith("Valor adicionado bruto da Administração")
+        ),
     }
     for row in mg.to_dict("records"):
         code = str(int(row["Código do Município"]))
@@ -184,11 +230,19 @@ def read_ibge() -> tuple[dict, dict]:
         else:
             total = sum(float(row[col]) for col in sector_cols.values())
             for key, col in sector_cols.items():
-                municipalities[code][f"vab_{key}_2021_mil_reais"] = round(float(row[col]), 3)
-                municipalities[code][f"participacao_{key}_2021_pct"] = round(100 * float(row[col]) / total, 3)
-            municipalities[code]["atividade_principal_2021"] = row["Atividade com maior valor adicionado bruto"]
+                municipalities[code][f"vab_{key}_2021_mil_reais"] = round(
+                    float(row[col]), 3
+                )
+                municipalities[code][f"participacao_{key}_2021_pct"] = round(
+                    100 * float(row[col]) / total, 3
+                )
+            municipalities[code]["atividade_principal_2021"] = row[
+                "Atividade com maior valor adicionado bruto"
+            ]
 
-    geometry_by_code = {feature["properties"]["codarea"]: feature for feature in geometry["features"]}
+    geometry_by_code = {
+        feature["properties"]["codarea"]: feature for feature in geometry["features"]
+    }
     return municipalities, geometry_by_code
 
 
@@ -219,10 +273,20 @@ def education_band(code: str) -> str | None:
 
 
 def read_tse_electorate() -> tuple[dict, dict]:
-    by_city = defaultdict(lambda: {"total": 0, "gender": Counter(), "age": Counter(), "school": Counter()})
-    state = {"total": 0, "gender": Counter(), "age": Counter(), "school": Counter(), "mandatory": Counter()}
+    by_city = defaultdict(
+        lambda: {"total": 0, "gender": Counter(), "age": Counter(), "school": Counter()}
+    )
+    state = {
+        "total": 0,
+        "gender": Counter(),
+        "age": Counter(),
+        "school": Counter(),
+        "mandatory": Counter(),
+    }
     with zipfile.ZipFile(TSE_PROFILE) as archive:
-        member = next(name for name in archive.namelist() if name.lower().endswith(".csv"))
+        member = next(
+            name for name in archive.namelist() if name.lower().endswith(".csv")
+        )
         with archive.open(member) as raw:
             text = io.TextIOWrapper(raw, encoding="latin-1", newline="")
             for row in csv.DictReader(text, delimiter=";"):
@@ -250,13 +314,20 @@ def read_tse_electorate() -> tuple[dict, dict]:
         return {
             "eleitores_2026": total,
             "mulheres_pct": round(100 * record["gender"].get("Feminino", 0) / total, 3),
-            "idade_pct": {key: round(100 * value / total, 3) for key, value in record["age"].items()},
-            "escolaridade_pct": {key: round(100 * value / total, 3) for key, value in record["school"].items()},
+            "idade_pct": {
+                key: round(100 * value / total, 3)
+                for key, value in record["age"].items()
+            },
+            "escolaridade_pct": {
+                key: round(100 * value / total, 3)
+                for key, value in record["school"].items()
+            },
         }
 
     state_summary = summarize(state)
     state_summary["obrigatoriedade_pct"] = {
-        key: round(100 * value / state["total"], 3) for key, value in state["mandatory"].items()
+        key: round(100 * value / state["total"], 3)
+        for key, value in state["mandatory"].items()
     }
     return {key: summarize(value) for key, value in by_city.items()}, state_summary
 
@@ -279,7 +350,10 @@ def scan_elections() -> tuple[list[dict], dict]:
             state_offices = {"GOVERNADOR", "SENADOR"}
             if year == 2022:
                 state_offices.add("DEPUTADO FEDERAL")
-            for member, offices in ((mg_member, state_offices), (br_member, {"PRESIDENTE"})):
+            for member, offices in (
+                (mg_member, state_offices),
+                (br_member, {"PRESIDENTE"}),
+            ):
                 with archive.open(member) as raw:
                     text = io.TextIOWrapper(raw, encoding="latin-1", newline="")
                     for row in csv.DictReader(text, delimiter=";"):
@@ -336,23 +410,37 @@ def scan_elections() -> tuple[list[dict], dict]:
 
 
 def numpy_column(values) -> np.ndarray:
-    return np.array([np.nan if value in (None, "") else float(value) for value in values], dtype=float)
+    return np.array(
+        [np.nan if value in (None, "") else float(value) for value in values],
+        dtype=float,
+    )
 
 
-def replicate_stat(theta: float, replicas: np.ndarray, digits: int = 2, key: str = "valor") -> dict:
+def replicate_stat(
+    theta: float, replicas: np.ndarray, digits: int = 2, key: str = "valor"
+) -> dict:
     variance = float(np.sum((replicas - theta) ** 2) / (len(replicas) - 1))
     moe = Z95 * math.sqrt(variance)
-    return {key: round(theta, digits), "moe": round(moe, digits), "low": round(theta - moe, digits), "high": round(theta + moe, digits)}
+    return {
+        key: round(theta, digits),
+        "moe": round(moe, digits),
+        "low": round(theta - moe, digits),
+        "high": round(theta + moe, digits),
+    }
 
 
-def weighted_ratio(weights: np.ndarray, mask: np.ndarray, universe: np.ndarray, key: str = "pct") -> dict:
+def weighted_ratio(
+    weights: np.ndarray, mask: np.ndarray, universe: np.ndarray, key: str = "pct"
+) -> dict:
     num = np.einsum("i,ij->j", mask.astype(float), weights)
     den = np.einsum("i,ij->j", universe.astype(float), weights)
     values = 100 * num / den
     return replicate_stat(float(values[0]), values[1:], 2, key)
 
 
-def weighted_mean(weights: np.ndarray, values: np.ndarray, universe: np.ndarray, key: str = "media") -> dict:
+def weighted_mean(
+    weights: np.ndarray, values: np.ndarray, universe: np.ndarray, key: str = "media"
+) -> dict:
     known = universe & np.isfinite(values)
     num = np.einsum("i,ij->j", np.where(known, values, 0.0), weights)
     den = np.einsum("i,ij->j", known.astype(float), weights)
@@ -361,12 +449,17 @@ def weighted_mean(weights: np.ndarray, values: np.ndarray, universe: np.ndarray,
 
 
 def fetch_pnad(table: str, fields: list[str], weight_prefix: str):
-    replicas = [f"{weight_prefix}{index:03d}__peso_replicado_{index}" for index in range(1, REPLICATES + 1)]
+    replicas = [
+        f"{weight_prefix}{index:03d}__peso_replicado_{index}"
+        for index in range(1, REPLICATES + 1)
+    ]
     weight = f"{weight_prefix}__peso_com_calibracao"
     sql = f'SELECT {",".join(fields)}, {weight}, {",".join(replicas)} FROM "{table}" WHERE UF__unidade_da_federacao=31'
     with sqlite3.connect(f"file:{PNAD_DB}?mode=ro", uri=True) as connection:
         rows = connection.execute(sql).fetchall()
-    dims = [numpy_column(column) for column in zip(*(row[: len(fields)] for row in rows))]
+    dims = [
+        numpy_column(column) for column in zip(*(row[: len(fields)] for row in rows))
+    ]
     weights = np.array([row[len(fields) :] for row in rows], dtype=float)
     return dims, weights
 
@@ -405,9 +498,15 @@ def read_pnad() -> dict:
             "60+": weighted_ratio(aw, age >= 60, adults),
         },
         "renda_domiciliar_16_mais": {
-            "Até 2 SM": weighted_ratio(aw, income_known & (income_mw <= 2), income_known),
-            "Mais de 2 a 5 SM": weighted_ratio(aw, income_known & (income_mw > 2) & (income_mw <= 5), income_known),
-            "Mais de 5 SM": weighted_ratio(aw, income_known & (income_mw > 5), income_known),
+            "Até 2 SM": weighted_ratio(
+                aw, income_known & (income_mw <= 2), income_known
+            ),
+            "Mais de 2 a 5 SM": weighted_ratio(
+                aw, income_known & (income_mw > 2) & (income_mw <= 5), income_known
+            ),
+            "Mais de 5 SM": weighted_ratio(
+                aw, income_known & (income_mw > 5), income_known
+            ),
         },
         "renda_pc_media_todos_abril_2026": weighted_mean(aw, income_pc, all_people),
         "bolsa_familia_pessoas_pct": weighted_ratio(aw, bolsa == 1, all_people),
@@ -430,24 +529,39 @@ def read_pnad() -> dict:
         "Capital__municipio_da_capital",
         "RM_RIDE__reg_metr_e_reg_adm_int_des",
     ]
-    (q_age, school, labor_force, employed, position, work_income, q_capital, q_metro), qw = fetch_pnad(
-        "base_labeled_npv", quarter_fields, "V1028"
-    )
+    (
+        q_age,
+        school,
+        labor_force,
+        employed,
+        position,
+        work_income,
+        q_capital,
+        q_metro,
+    ), qw = fetch_pnad("base_labeled_npv", quarter_fields, "V1028")
     q_adults = q_age >= 16
     labor = q_adults & (labor_force == 1)
     occupied = q_adults & (employed == 1)
     informal = occupied & np.isin(position, [2, 4, 6, 9, 10])
     quarter = {
         "escolaridade_16_mais": {
-            "Fundamental": weighted_ratio(qw, q_adults & (school >= 1) & (school <= 3), q_adults),
-            "Médio": weighted_ratio(qw, q_adults & (school >= 4) & (school <= 5), q_adults),
+            "Fundamental": weighted_ratio(
+                qw, q_adults & (school >= 1) & (school <= 3), q_adults
+            ),
+            "Médio": weighted_ratio(
+                qw, q_adults & (school >= 4) & (school <= 5), q_adults
+            ),
             "Superior": weighted_ratio(qw, q_adults & (school >= 6), q_adults),
         },
         "participacao_trabalho_16_mais_pct": weighted_ratio(qw, labor, q_adults),
         "ocupacao_16_mais_pct": weighted_ratio(qw, occupied, q_adults),
-        "desocupacao_forca_trabalho_pct": weighted_ratio(qw, labor & (employed == 2), labor),
+        "desocupacao_forca_trabalho_pct": weighted_ratio(
+            qw, labor & (employed == 2), labor
+        ),
         "informalidade_ocupados_pct": weighted_ratio(qw, informal, occupied),
-        "renda_media_trabalho_ocupados_abril_2026": weighted_mean(qw, work_income, occupied),
+        "renda_media_trabalho_ocupados_abril_2026": weighted_mean(
+            qw, work_income, occupied
+        ),
     }
     return {
         "anual_2025_visita1": annual,
@@ -467,26 +581,239 @@ QUAEST = {
     "campo": "21–24/08/2026",
     "entrevistas": 1506,
     "margem_erro_pp": 3,
-    "governador_1t": {"pagina": 8, "valores": {"Cleitinho Azevedo": 29, "Patrus Ananias": 11, "Alexandre Kalil": 10, "Mateus Simões": 7, "Gabriel Azevedo": 5, "Flávio Roscoe": 3, "Ben Mendes": 2, "Túlio Lopes": 1, "Rafael Duda": 1, "Indira Xavier": 0, "Henrique Áreas": 0, "Indecisos": 19, "Branco/nulo/não vai votar": 12}},
-    "governador_1t_sexo": {"pagina": 9, "perfil": {"Feminino": 52, "Masculino": 48}, "valores": {"Feminino": [23, 11, 10, 6, 6, 3, 1, 1, 1, 0, 0, 25, 13], "Masculino": [36, 10, 11, 7, 4, 3, 3, 1, 1, 0, 0, 13, 11]}},
-    "governador_1t_renda": {"pagina": 12, "perfil": {"Até 2 SM": 27, "Mais de 2 a 5 SM": 46, "Mais de 5 SM": 27}, "valores": {"Até 2 SM": [26, 9, 9, 7, 5, 2, 1, 1, 1, 0, 0, 23, 16], "Mais de 2 a 5 SM": [32, 10, 11, 8, 4, 4, 2, 1, 1, 0, 0, 20, 9], "Mais de 5 SM": [31, 13, 11, 4, 5, 5, 5, 2, 1, 0, 0, 14, 14]}},
-    "segundos_turnos": {"pagina": 20, "cenarios": {"Cleitinho × Kalil": [48, 27, 15, 10], "Cleitinho × Patrus": [51, 26, 12, 11], "Cleitinho × Mateus": [49, 17, 17, 17], "Kalil × Patrus": [42, 18, 15, 25], "Kalil × Mateus": [32, 30, 17, 21], "Patrus × Mateus": [35, 31, 15, 19]}, "ordem": ["candidato 1", "candidato 2", "indecisos", "branco/nulo"]},
-    "decisao_governador": {"pagina": 17, "definitiva": 54, "pode_mudar": 45, "ns_nr": 1},
-    "potencial_rejeicao_governador": {"pagina": 70, "valores": {"Cleitinho Azevedo": [46, 34, 20], "Mateus Simões": [31, 53, 16], "Alexandre Kalil": [29, 30, 41], "Patrus Ananias": [24, 36, 40], "Flávio Roscoe": [17, 69, 14], "Gabriel Azevedo": [15, 68, 17]}},
-    "preferencia_alinhamento_governador": {"pagina": 74, "Lula": 34, "Independente": 31, "Flávio Bolsonaro": 30, "NS/NR": 5},
-    "impacto_apoio": {"pagina": 75, "valores": {"Lula": [23, 38, 36, 3], "Flávio Bolsonaro": [27, 40, 28, 5], "Zema": [26, 49, 21, 4]}, "ordem": ["aumentaria", "não mudaria", "diminuiria", "ns/nr"]},
-    "governo_mateus": {"aprovacao_pagina": 77, "aprova": 37, "desaprova": 27, "ns_nr": 36, "avaliacao_pagina": 86, "positivo": 30, "regular": 30, "negativo": 16, "ns_nr_avaliacao": 24},
-    "mudanca": {"pagina": 95, "continuar": 16, "mudar_so_ruim": 43, "mudar_totalmente": 37, "ns_nr": 4},
+    "governador_1t": {
+        "pagina": 8,
+        "valores": {
+            "Cleitinho Azevedo": 29,
+            "Patrus Ananias": 11,
+            "Alexandre Kalil": 10,
+            "Mateus Simões": 7,
+            "Gabriel Azevedo": 5,
+            "Flávio Roscoe": 3,
+            "Ben Mendes": 2,
+            "Túlio Lopes": 1,
+            "Rafael Duda": 1,
+            "Indira Xavier": 0,
+            "Henrique Áreas": 0,
+            "Indecisos": 19,
+            "Branco/nulo/não vai votar": 12,
+        },
+    },
+    "governador_1t_sexo": {
+        "pagina": 9,
+        "perfil": {"Feminino": 52, "Masculino": 48},
+        "valores": {
+            "Feminino": [23, 11, 10, 6, 6, 3, 1, 1, 1, 0, 0, 25, 13],
+            "Masculino": [36, 10, 11, 7, 4, 3, 3, 1, 1, 0, 0, 13, 11],
+        },
+    },
+    "governador_1t_renda": {
+        "pagina": 12,
+        "perfil": {"Até 2 SM": 27, "Mais de 2 a 5 SM": 46, "Mais de 5 SM": 27},
+        "valores": {
+            "Até 2 SM": [26, 9, 9, 7, 5, 2, 1, 1, 1, 0, 0, 23, 16],
+            "Mais de 2 a 5 SM": [32, 10, 11, 8, 4, 4, 2, 1, 1, 0, 0, 20, 9],
+            "Mais de 5 SM": [31, 13, 11, 4, 5, 5, 5, 2, 1, 0, 0, 14, 14],
+        },
+    },
+    "segundos_turnos": {
+        "pagina": 20,
+        "cenarios": {
+            "Cleitinho × Kalil": [48, 27, 15, 10],
+            "Cleitinho × Patrus": [51, 26, 12, 11],
+            "Cleitinho × Mateus": [49, 17, 17, 17],
+            "Kalil × Patrus": [42, 18, 15, 25],
+            "Kalil × Mateus": [32, 30, 17, 21],
+            "Patrus × Mateus": [35, 31, 15, 19],
+        },
+        "ordem": ["candidato 1", "candidato 2", "indecisos", "branco/nulo"],
+    },
+    "decisao_governador": {
+        "pagina": 17,
+        "definitiva": 54,
+        "pode_mudar": 45,
+        "ns_nr": 1,
+    },
+    "potencial_rejeicao_governador": {
+        "pagina": 70,
+        "valores": {
+            "Cleitinho Azevedo": [46, 34, 20],
+            "Mateus Simões": [31, 53, 16],
+            "Alexandre Kalil": [29, 30, 41],
+            "Patrus Ananias": [24, 36, 40],
+            "Flávio Roscoe": [17, 69, 14],
+            "Gabriel Azevedo": [15, 68, 17],
+        },
+    },
+    "preferencia_alinhamento_governador": {
+        "pagina": 74,
+        "Lula": 34,
+        "Independente": 31,
+        "Flávio Bolsonaro": 30,
+        "NS/NR": 5,
+    },
+    "impacto_apoio": {
+        "pagina": 75,
+        "valores": {
+            "Lula": [23, 38, 36, 3],
+            "Flávio Bolsonaro": [27, 40, 28, 5],
+            "Zema": [26, 49, 21, 4],
+        },
+        "ordem": ["aumentaria", "não mudaria", "diminuiria", "ns/nr"],
+    },
+    "governo_mateus": {
+        "aprovacao_pagina": 77,
+        "aprova": 37,
+        "desaprova": 27,
+        "ns_nr": 36,
+        "avaliacao_pagina": 86,
+        "positivo": 30,
+        "regular": 30,
+        "negativo": 16,
+        "ns_nr_avaliacao": 24,
+    },
+    "mudanca": {
+        "pagina": 95,
+        "continuar": 16,
+        "mudar_so_ruim": 43,
+        "mudar_totalmente": 37,
+        "ns_nr": 4,
+    },
     "zema_sucessor": {"pagina": 97, "merece": 40, "nao_merece": 47, "ns_nr": 13},
-    "senado": {"pagina": 102, "combinado": {"Marília Campos": 15, "Carlos Viana": 8, "Domingos Sávio": 8, "Marcelo Aro": 6, "Áurea Carolina": 2, "Marco Antônio Superman": 2, "Carlin Moura": 2, "Gustavo Galassi": 1, "Marcelo Heringer": 1, "Ana Luiza do MLB": 1, "Manoel Carvalho": 1, "Juiz Ramon Moreira": 1, "Indecisos": 31, "Branco/nulo/não vai votar": 21}, "primeiro": {"Marília Campos": 19, "Carlos Viana": 10, "Domingos Sávio": 10, "Marcelo Aro": 6, "Áurea Carolina": 1, "Indecisos": 28, "Branco/nulo/não vai votar": 18}, "segundo": {"Marília Campos": 10, "Carlos Viana": 6, "Domingos Sávio": 6, "Marcelo Aro": 6, "Áurea Carolina": 3, "Indecisos": 34, "Branco/nulo/não vai votar": 24}},
+    "senado": {
+        "pagina": 102,
+        "combinado": {
+            "Marília Campos": 15,
+            "Carlos Viana": 8,
+            "Domingos Sávio": 8,
+            "Marcelo Aro": 6,
+            "Áurea Carolina": 2,
+            "Marco Antônio Superman": 2,
+            "Carlin Moura": 2,
+            "Gustavo Galassi": 1,
+            "Marcelo Heringer": 1,
+            "Ana Luiza do MLB": 1,
+            "Manoel Carvalho": 1,
+            "Juiz Ramon Moreira": 1,
+            "Indecisos": 31,
+            "Branco/nulo/não vai votar": 21,
+        },
+        "primeiro": {
+            "Marília Campos": 19,
+            "Carlos Viana": 10,
+            "Domingos Sávio": 10,
+            "Marcelo Aro": 6,
+            "Áurea Carolina": 1,
+            "Indecisos": 28,
+            "Branco/nulo/não vai votar": 18,
+        },
+        "segundo": {
+            "Marília Campos": 10,
+            "Carlos Viana": 6,
+            "Domingos Sávio": 6,
+            "Marcelo Aro": 6,
+            "Áurea Carolina": 3,
+            "Indecisos": 34,
+            "Branco/nulo/não vai votar": 24,
+        },
+    },
     "decisao_senado": {"pagina": 104, "definitiva": 48, "pode_mudar": 52},
-    "presidente": {"cenario_1_pagina": 108, "cenario_1": {"Lula": 31, "Flávio Bolsonaro": 31, "Zema": 6, "Pablo Marçal": 3, "Renan Santos": 3, "Ronaldo Caiado": 2, "Augusto Cury": 1, "Indecisos": 16, "Branco/nulo/não vai votar": 7}, "cenario_2_pagina": 116, "cenario_2": {"Flávio Bolsonaro": 31, "Lula": 30, "Zema": 7, "Ronaldo Caiado": 3, "Renan Santos": 3, "Augusto Cury": 1, "Indecisos": 17, "Branco/nulo/não vai votar": 8}},
-    "decisao_presidente": {"pagina": 143, "definitiva": 71, "pode_mudar": 29, "por_candidato_pagina": 144, "Lula": [81, 19], "Flávio Bolsonaro": [74, 26], "Zema": [49, 51]},
-    "governo_lula": {"aprovacao_pagina": 125, "aprova": 41, "desaprova": 52, "ns_nr": 7, "avaliacao_pagina": 134, "positivo": 30, "regular": 24, "negativo": 45, "ns_nr_avaliacao": 1},
-    "problemas": {"pagina": 146, "valores": {"Saúde": 28, "Violência": 13, "Economia": 10, "Educação": 9, "Corrupção": 7, "Infraestrutura": 7, "Pobreza/desigualdade": 4, "Desemprego": 2, "Enchentes": 1, "Outros": 7, "Nenhum": 1, "NS/NR": 11}},
-    "midia": {"pagina": 148, "valores": {"Redes sociais": 35, "TV": 32, "Amigos/familiares": 10, "Sites e portais": 8, "WhatsApp/Telegram": 3, "Rádio": 2, "Chat com IA": 1, "Jornais impressos": 1, "Não se informa": 7, "NS/NR": 1}},
-    "identificacao": {"pagina": 150, "valores": {"Lulista": 20, "Esquerda não lulista": 12, "Independente": 29, "Direita não bolsonarista": 18, "Bolsonarista": 17, "NS/NR": 4}},
-    "perfil": {"paginas": [152, 153, 154, 155, 156], "sexo": {"Feminino": 52, "Masculino": 48}, "idade": {"16-34": 29, "35-59": 45, "60+": 26}, "escolaridade": {"Fundamental": 44, "Médio": 38, "Superior": 18}, "raca": {"Parda": 47, "Branca": 40, "Preta": 13}, "renda": {"Até 2 SM": 27, "Mais de 2 a 5 SM": 46, "Mais de 5 SM": 27}},
+    "presidente": {
+        "cenario_1_pagina": 108,
+        "cenario_1": {
+            "Lula": 31,
+            "Flávio Bolsonaro": 31,
+            "Zema": 6,
+            "Pablo Marçal": 3,
+            "Renan Santos": 3,
+            "Ronaldo Caiado": 2,
+            "Augusto Cury": 1,
+            "Indecisos": 16,
+            "Branco/nulo/não vai votar": 7,
+        },
+        "cenario_2_pagina": 116,
+        "cenario_2": {
+            "Flávio Bolsonaro": 31,
+            "Lula": 30,
+            "Zema": 7,
+            "Ronaldo Caiado": 3,
+            "Renan Santos": 3,
+            "Augusto Cury": 1,
+            "Indecisos": 17,
+            "Branco/nulo/não vai votar": 8,
+        },
+    },
+    "decisao_presidente": {
+        "pagina": 143,
+        "definitiva": 71,
+        "pode_mudar": 29,
+        "por_candidato_pagina": 144,
+        "Lula": [81, 19],
+        "Flávio Bolsonaro": [74, 26],
+        "Zema": [49, 51],
+    },
+    "governo_lula": {
+        "aprovacao_pagina": 125,
+        "aprova": 41,
+        "desaprova": 52,
+        "ns_nr": 7,
+        "avaliacao_pagina": 134,
+        "positivo": 30,
+        "regular": 24,
+        "negativo": 45,
+        "ns_nr_avaliacao": 1,
+    },
+    "problemas": {
+        "pagina": 146,
+        "valores": {
+            "Saúde": 28,
+            "Violência": 13,
+            "Economia": 10,
+            "Educação": 9,
+            "Corrupção": 7,
+            "Infraestrutura": 7,
+            "Pobreza/desigualdade": 4,
+            "Desemprego": 2,
+            "Enchentes": 1,
+            "Outros": 7,
+            "Nenhum": 1,
+            "NS/NR": 11,
+        },
+    },
+    "midia": {
+        "pagina": 148,
+        "valores": {
+            "Redes sociais": 35,
+            "TV": 32,
+            "Amigos/familiares": 10,
+            "Sites e portais": 8,
+            "WhatsApp/Telegram": 3,
+            "Rádio": 2,
+            "Chat com IA": 1,
+            "Jornais impressos": 1,
+            "Não se informa": 7,
+            "NS/NR": 1,
+        },
+    },
+    "identificacao": {
+        "pagina": 150,
+        "valores": {
+            "Lulista": 20,
+            "Esquerda não lulista": 12,
+            "Independente": 29,
+            "Direita não bolsonarista": 18,
+            "Bolsonarista": 17,
+            "NS/NR": 4,
+        },
+    },
+    "perfil": {
+        "paginas": [152, 153, 154, 155, 156],
+        "sexo": {"Feminino": 52, "Masculino": 48},
+        "idade": {"16-34": 29, "35-59": 45, "60+": 26},
+        "escolaridade": {"Fundamental": 44, "Médio": 38, "Superior": 18},
+        "raca": {"Parda": 47, "Branca": 40, "Preta": 13},
+        "renda": {"Até 2 SM": 27, "Mais de 2 a 5 SM": 46, "Mais de 5 SM": 27},
+    },
 }
 
 
@@ -496,13 +823,127 @@ REALTIME = {
     "campo": "22–26/08/2026",
     "entrevistas": 2000,
     "margem_erro_pp": 2,
-    "perfil": {"pagina": 3, "sexo": {"Homem": 47, "Mulher": 53}, "idade": {"16-34": 29, "35-59": 45, "60+": 26}, "escolaridade": {"Até fundamental completo": 41, "Até médio completo": 44, "Superior incompleto ou mais": 15}, "renda": {"Até 2 SM": 45, "2 a 5 SM": 35, "Mais de 5 SM": 20}},
-    "governador_1t": {"pagina": 7, "valores": {"Cleitinho Azevedo": 33, "Patrus Ananias": 15, "Alexandre Kalil": 13, "Mateus Simões": 11, "Gabriel Azevedo": 7, "Flávio Roscoe": 5, "Ben Mendes": 3, "Indira Xavier": 1, "Outros": 1, "Branco/nulo": 5, "NS/NR": 6}},
-    "segundos_turnos": {"paginas": [12, 13, 14, 15, 16, 17], "cenarios": {"Cleitinho × Kalil": [46, 35, 8, 11], "Kalil × Mateus": [35, 35, 17, 13], "Kalil × Patrus": [38, 38, 12, 12], "Cleitinho × Mateus": [46, 31, 11, 12], "Cleitinho × Patrus": [45, 40, 6, 9], "Patrus × Mateus": [37, 33, 18, 12]}, "ordem": ["candidato 1", "candidato 2", "ns/nr", "branco/nulo"]},
-    "rejeicao": {"pagina": 19, "valores": {"Cleitinho Azevedo": 43, "Patrus Ananias": 42, "Alexandre Kalil": 40, "Flávio Roscoe": 26, "Mateus Simões": 25, "Ben Mendes": 19, "Gabriel Azevedo": 18, "Túlio Lopes": 18, "Indira Xavier": 17, "Rafael Duda": 16, "Henrique Áreas": 11}},
-    "votabilidade": {"paginas": [21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31], "ordem": ["votaria com certeza", "considera", "conhece e não votaria", "não conhece suficiente"], "valores": {"Alexandre Kalil": [9, 36, 44, 11], "Ben Mendes": [1, 18, 21, 60], "Cleitinho Azevedo": [19, 28, 47, 6], "Flávio Roscoe": [2, 28, 29, 41], "Gabriel Azevedo": [4, 36, 24, 36], "Henrique Áreas": [0, 7, 14, 79], "Indira Xavier": [1, 17, 26, 56], "Mateus Simões": [7, 37, 32, 24], "Patrus Ananias": [10, 29, 46, 15], "Túlio Lopes": [0, 10, 26, 64], "Rafael Duda": [0, 14, 26, 60]}},
-    "governo_mateus": {"pagina": 33, "aprova": 56, "desaprova": 40, "ns_nr": 4, "otimo_bom": 28, "regular": 41, "ruim_pessimo": 28, "ns_nr_avaliacao": 3},
-    "senado": {"paginas": [36, 37], "consolidado": {"Marília Campos": 24, "Carlos Viana": 13, "Domingos Sávio": 13, "Marcelo Aro": 12, "Áurea Carolina": 9, "Marco Antônio Superman": 4, "Branco/nulo": 8, "NS/NR": 11}, "primeiro": {"Marília Campos": 31, "Carlos Viana": 16, "Domingos Sávio": 12, "Marcelo Aro": 11, "Áurea Carolina": 7, "Marco Antônio Superman": 3, "Branco/nulo": 6, "NS/NR": 10}, "segundo": {"Marília Campos": 17, "Carlos Viana": 10, "Domingos Sávio": 14, "Marcelo Aro": 12, "Áurea Carolina": 10, "Marco Antônio Superman": 5, "Outros": 4, "Branco/nulo": 10, "NS/NR": 12}},
+    "perfil": {
+        "pagina": 3,
+        "sexo": {"Homem": 47, "Mulher": 53},
+        "idade": {"16-34": 29, "35-59": 45, "60+": 26},
+        "escolaridade": {
+            "Até fundamental completo": 41,
+            "Até médio completo": 44,
+            "Superior incompleto ou mais": 15,
+        },
+        "renda": {"Até 2 SM": 45, "2 a 5 SM": 35, "Mais de 5 SM": 20},
+    },
+    "governador_1t": {
+        "pagina": 7,
+        "valores": {
+            "Cleitinho Azevedo": 33,
+            "Patrus Ananias": 15,
+            "Alexandre Kalil": 13,
+            "Mateus Simões": 11,
+            "Gabriel Azevedo": 7,
+            "Flávio Roscoe": 5,
+            "Ben Mendes": 3,
+            "Indira Xavier": 1,
+            "Outros": 1,
+            "Branco/nulo": 5,
+            "NS/NR": 6,
+        },
+    },
+    "segundos_turnos": {
+        "paginas": [12, 13, 14, 15, 16, 17],
+        "cenarios": {
+            "Cleitinho × Kalil": [46, 35, 8, 11],
+            "Kalil × Mateus": [35, 35, 17, 13],
+            "Kalil × Patrus": [38, 38, 12, 12],
+            "Cleitinho × Mateus": [46, 31, 11, 12],
+            "Cleitinho × Patrus": [45, 40, 6, 9],
+            "Patrus × Mateus": [37, 33, 18, 12],
+        },
+        "ordem": ["candidato 1", "candidato 2", "ns/nr", "branco/nulo"],
+    },
+    "rejeicao": {
+        "pagina": 19,
+        "valores": {
+            "Cleitinho Azevedo": 43,
+            "Patrus Ananias": 42,
+            "Alexandre Kalil": 40,
+            "Flávio Roscoe": 26,
+            "Mateus Simões": 25,
+            "Ben Mendes": 19,
+            "Gabriel Azevedo": 18,
+            "Túlio Lopes": 18,
+            "Indira Xavier": 17,
+            "Rafael Duda": 16,
+            "Henrique Áreas": 11,
+        },
+    },
+    "votabilidade": {
+        "paginas": [21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
+        "ordem": [
+            "votaria com certeza",
+            "considera",
+            "conhece e não votaria",
+            "não conhece suficiente",
+        ],
+        "valores": {
+            "Alexandre Kalil": [9, 36, 44, 11],
+            "Ben Mendes": [1, 18, 21, 60],
+            "Cleitinho Azevedo": [19, 28, 47, 6],
+            "Flávio Roscoe": [2, 28, 29, 41],
+            "Gabriel Azevedo": [4, 36, 24, 36],
+            "Henrique Áreas": [0, 7, 14, 79],
+            "Indira Xavier": [1, 17, 26, 56],
+            "Mateus Simões": [7, 37, 32, 24],
+            "Patrus Ananias": [10, 29, 46, 15],
+            "Túlio Lopes": [0, 10, 26, 64],
+            "Rafael Duda": [0, 14, 26, 60],
+        },
+    },
+    "governo_mateus": {
+        "pagina": 33,
+        "aprova": 56,
+        "desaprova": 40,
+        "ns_nr": 4,
+        "otimo_bom": 28,
+        "regular": 41,
+        "ruim_pessimo": 28,
+        "ns_nr_avaliacao": 3,
+    },
+    "senado": {
+        "paginas": [36, 37],
+        "consolidado": {
+            "Marília Campos": 24,
+            "Carlos Viana": 13,
+            "Domingos Sávio": 13,
+            "Marcelo Aro": 12,
+            "Áurea Carolina": 9,
+            "Marco Antônio Superman": 4,
+            "Branco/nulo": 8,
+            "NS/NR": 11,
+        },
+        "primeiro": {
+            "Marília Campos": 31,
+            "Carlos Viana": 16,
+            "Domingos Sávio": 12,
+            "Marcelo Aro": 11,
+            "Áurea Carolina": 7,
+            "Marco Antônio Superman": 3,
+            "Branco/nulo": 6,
+            "NS/NR": 10,
+        },
+        "segundo": {
+            "Marília Campos": 17,
+            "Carlos Viana": 10,
+            "Domingos Sávio": 14,
+            "Marcelo Aro": 12,
+            "Áurea Carolina": 10,
+            "Marco Antônio Superman": 5,
+            "Outros": 4,
+            "Branco/nulo": 10,
+            "NS/NR": 12,
+        },
+    },
 }
 
 
@@ -519,23 +960,41 @@ def validate_polls() -> dict:
         checks[dimension] = {
             "pagina": block["pagina"],
             "max_erro_arredondamento_pp": round(float(np.max(np.abs(errors))), 3),
-            "recomposto": {label: round(float(value), 3) for label, value in zip(labels, recomposed)},
+            "recomposto": {
+                label: round(float(value), 3)
+                for label, value in zip(labels, recomposed)
+            },
         }
     return checks
 
 
 def index_elections(rows: list[dict]):
-    return {(row["ano"], row["turno"], row["cargo"], row["municipio_norm"], row["candidato"]): row["votos"] for row in rows}
+    return {
+        (
+            row["ano"],
+            row["turno"],
+            row["cargo"],
+            row["municipio_norm"],
+            row["candidato"],
+        ): row["votos"]
+        for row in rows
+    }
 
 
 def candidate_name(state: dict, key: str, party: str) -> str:
-    return next(item["nome"] for item in state[key]["candidatos"] if item["partido"] == party)
+    return next(
+        item["nome"] for item in state[key]["candidatos"] if item["partido"] == party
+    )
 
 
-def enrich_municipalities(municipalities: dict, electorate: dict, election_rows: list[dict], state: dict) -> list[dict]:
+def enrich_municipalities(
+    municipalities: dict, electorate: dict, election_rows: list[dict], state: dict
+) -> list[dict]:
     lookup = index_elections(election_rows)
     finalist = {
-        (2018, "Presidente", "right"): candidate_name(state, "2018_2_presidente", "PSL"),
+        (2018, "Presidente", "right"): candidate_name(
+            state, "2018_2_presidente", "PSL"
+        ),
         (2018, "Presidente", "left"): candidate_name(state, "2018_2_presidente", "PT"),
         (2022, "Presidente", "right"): candidate_name(state, "2022_2_presidente", "PL"),
         (2022, "Presidente", "left"): candidate_name(state, "2022_2_presidente", "PT"),
@@ -552,8 +1011,12 @@ def enrich_municipalities(municipalities: dict, electorate: dict, election_rows:
         if voter is None:
             raise KeyError(f"Município sem eleitorado TSE: {record['municipio']}")
         item = record | voter
-        item["nikolas_2022_votos"] = lookup.get((2022, 1, "Deputado Federal", city, nikolas), 0)
-        deputado_valid = lookup.get((2022, 1, "Deputado Federal", city, "__TOTAL_VALIDOS__"), 0)
+        item["nikolas_2022_votos"] = lookup.get(
+            (2022, 1, "Deputado Federal", city, nikolas), 0
+        )
+        deputado_valid = lookup.get(
+            (2022, 1, "Deputado Federal", city, "__TOTAL_VALIDOS__"), 0
+        )
         item["deputado_federal_2022_votos_validos"] = deputado_valid
         item["nikolas_2022_pct_validos_deputado"] = round(
             100 * item["nikolas_2022_votos"] / deputado_valid if deputado_valid else 0,
@@ -561,29 +1024,58 @@ def enrich_municipalities(municipalities: dict, electorate: dict, election_rows:
         )
         shares = {}
         for year in (2018, 2022):
-            right = lookup.get((year, 2, "Presidente", city, finalist[(year, "Presidente", "right")]), 0)
-            left = lookup.get((year, 2, "Presidente", city, finalist[(year, "Presidente", "left")]), 0)
+            right = lookup.get(
+                (year, 2, "Presidente", city, finalist[(year, "Presidente", "right")]),
+                0,
+            )
+            left = lookup.get(
+                (year, 2, "Presidente", city, finalist[(year, "Presidente", "left")]), 0
+            )
             valid = right + left
-            shares[year] = {"right": right, "left": left, "valid": valid, "left_share": left / valid if valid else 0}
+            shares[year] = {
+                "right": right,
+                "left": left,
+                "valid": valid,
+                "left_share": left / valid if valid else 0,
+            }
             item[f"pres_{year}_direita_votos"] = right
             item[f"pres_{year}_esquerda_votos"] = left
-            item[f"pres_{year}_esquerda_pct_validos"] = round(100 * shares[year]["left_share"], 4)
-            item[f"pres_{year}_margem_esquerda_pp"] = round(100 * (2 * shares[year]["left_share"] - 1), 4)
+            item[f"pres_{year}_esquerda_pct_validos"] = round(
+                100 * shares[year]["left_share"], 4
+            )
+            item[f"pres_{year}_margem_esquerda_pp"] = round(
+                100 * (2 * shares[year]["left_share"] - 1), 4
+            )
         item["pres_virada"] = (
-            "Direita→esquerda" if shares[2018]["left_share"] < 0.5 <= shares[2022]["left_share"]
-            else "Esquerda→direita" if shares[2018]["left_share"] >= 0.5 > shares[2022]["left_share"]
-            else "Direita nas duas" if shares[2022]["left_share"] < 0.5
-            else "Esquerda nas duas"
+            "Direita→esquerda"
+            if shares[2018]["left_share"] < 0.5 <= shares[2022]["left_share"]
+            else (
+                "Esquerda→direita"
+                if shares[2018]["left_share"] >= 0.5 > shares[2022]["left_share"]
+                else (
+                    "Direita nas duas"
+                    if shares[2022]["left_share"] < 0.5
+                    else "Esquerda nas duas"
+                )
+            )
         )
-        item["pres_deslocamento_esquerda_pp"] = round(100 * (shares[2022]["left_share"] - shares[2018]["left_share"]), 4)
-        item["eleitores_por_100_habitantes"] = round(100 * item["eleitores_2026"] / item["populacao_2022"], 2)
+        item["pres_deslocamento_esquerda_pp"] = round(
+            100 * (shares[2022]["left_share"] - shares[2018]["left_share"]), 4
+        )
+        item["eleitores_por_100_habitantes"] = round(
+            100 * item["eleitores_2026"] / item["populacao_2022"], 2
+        )
         closeness = max(0.0, 1 - abs(item["pres_2022_margem_esquerda_pp"]) / 25)
         movement = min(abs(item["pres_deslocamento_esquerda_pp"]) / 15, 1)
-        item["indice_pivotal_bruto"] = item["eleitores_2026"] * (0.4 + 0.6 * closeness) * (0.5 + 0.5 * movement)
+        item["indice_pivotal_bruto"] = (
+            item["eleitores_2026"] * (0.4 + 0.6 * closeness) * (0.5 + 0.5 * movement)
+        )
         out.append(item)
     maximum = max(item["indice_pivotal_bruto"] for item in out)
     for item in out:
-        item["indice_pivotal"] = round(100 * item.pop("indice_pivotal_bruto") / maximum, 2)
+        item["indice_pivotal"] = round(
+            100 * item.pop("indice_pivotal_bruto") / maximum, 2
+        )
     return sorted(out, key=lambda item: item["municipio"])
 
 
@@ -601,34 +1093,59 @@ def aggregate_regions(municipalities: list[dict]) -> list[dict]:
         left22 = sum(item["pres_2022_esquerda_votos"] for item in items)
         right22 = sum(item["pres_2022_direita_votos"] for item in items)
         covered = sum(item["moradores_cobertos_renda_2022"] for item in items)
-        mean_income = sum(item["renda_pc_media_2022"] * item["moradores_cobertos_renda_2022"] for item in items) / covered
+        mean_income = (
+            sum(
+                item["renda_pc_media_2022"] * item["moradores_cobertos_renda_2022"]
+                for item in items
+            )
+            / covered
+        )
         sectors = {
             key: sum(item[f"vab_{key}_2021_mil_reais"] for item in items)
             for key in ("agro", "industria", "servicos", "administracao")
         }
         sector_total = sum(sectors.values())
         nikolas_votes = sum(item["nikolas_2022_votos"] for item in items)
-        deputy_valid = sum(item["deputado_federal_2022_votos_validos"] for item in items)
-        out.append({
-            "regiao_intermediaria": name,
-            "municipios": len(items),
-            "populacao_2022": population,
-            "eleitores_2026": electors,
-            "pib_2023_mil_reais": round(pib, 3),
-            "pib_pc_aproximado_2023": round(1000 * pib / population, 2),
-            "renda_pc_media_2022": round(mean_income, 2),
-            "nikolas_2022_votos": nikolas_votes,
-            "nikolas_2022_pct_validos_deputado": round(100 * nikolas_votes / deputy_valid, 3),
-            "vab_2021_pct": {key: round(100 * value / sector_total, 3) for key, value in sectors.items()},
-            "esquerda_2018_pct_validos": round(100 * left18 / (left18 + right18), 3),
-            "esquerda_2022_pct_validos": round(100 * left22 / (left22 + right22), 3),
-            "deslocamento_esquerda_pp": round(100 * left22 / (left22 + right22) - 100 * left18 / (left18 + right18), 3),
-        })
+        deputy_valid = sum(
+            item["deputado_federal_2022_votos_validos"] for item in items
+        )
+        out.append(
+            {
+                "regiao_intermediaria": name,
+                "municipios": len(items),
+                "populacao_2022": population,
+                "eleitores_2026": electors,
+                "pib_2023_mil_reais": round(pib, 3),
+                "pib_pc_aproximado_2023": round(1000 * pib / population, 2),
+                "renda_pc_media_2022": round(mean_income, 2),
+                "nikolas_2022_votos": nikolas_votes,
+                "nikolas_2022_pct_validos_deputado": round(
+                    100 * nikolas_votes / deputy_valid, 3
+                ),
+                "vab_2021_pct": {
+                    key: round(100 * value / sector_total, 3)
+                    for key, value in sectors.items()
+                },
+                "esquerda_2018_pct_validos": round(
+                    100 * left18 / (left18 + right18), 3
+                ),
+                "esquerda_2022_pct_validos": round(
+                    100 * left22 / (left22 + right22), 3
+                ),
+                "deslocamento_esquerda_pp": round(
+                    100 * left22 / (left22 + right22)
+                    - 100 * left18 / (left18 + right18),
+                    3,
+                ),
+            }
+        )
     total_pib = sum(item["pib_2023_mil_reais"] for item in out)
     total_electors = sum(item["eleitores_2026"] for item in out)
     for item in out:
         item["pib_mg_pct"] = round(100 * item["pib_2023_mil_reais"] / total_pib, 3)
-        item["eleitorado_mg_pct"] = round(100 * item["eleitores_2026"] / total_electors, 3)
+        item["eleitorado_mg_pct"] = round(
+            100 * item["eleitores_2026"] / total_electors, 3
+        )
     return sorted(out, key=lambda item: item["eleitores_2026"], reverse=True)
 
 
@@ -648,7 +1165,9 @@ def main():
     municipalities, geometry = read_ibge()
     electorate, electorate_state = read_tse_electorate()
     election_rows, election_state = scan_elections()
-    municipal = enrich_municipalities(municipalities, electorate, election_rows, election_state)
+    municipal = enrich_municipalities(
+        municipalities, electorate, election_rows, election_state
+    )
     regions = aggregate_regions(municipal)
     pnad = read_pnad()
     checks = validate_polls()
@@ -657,22 +1176,42 @@ def main():
     flat = []
     nested = {"idade_pct", "escolaridade_pct"}
     for row in municipal:
-        flat.append({key: json.dumps(value, ensure_ascii=False) if key in nested else value for key, value in row.items()})
+        flat.append(
+            {
+                key: json.dumps(value, ensure_ascii=False) if key in nested else value
+                for key, value in row.items()
+            }
+        )
     write_csv(DERIVED / "municipios.csv", flat)
     write_csv(DERIVED / "regioes-intermediarias.csv", regions)
 
     top = sorted(municipal, key=lambda item: item["indice_pivotal"], reverse=True)[:20]
     public_keys = [
-        "codigo_ibge", "municipio", "regiao_imediata", "regiao_intermediaria",
-        "populacao_2022", "eleitores_2026", "renda_pc_media_2022", "renda_pc_mediana_2022",
-        "pib_2023_mil_reais", "pib_pc_2023", "atividade_principal_2021",
-        "participacao_agro_2021_pct", "participacao_industria_2021_pct",
-        "participacao_servicos_2021_pct", "participacao_administracao_2021_pct",
-        "nikolas_2022_votos", "nikolas_2022_pct_validos_deputado",
+        "codigo_ibge",
+        "municipio",
+        "regiao_imediata",
+        "regiao_intermediaria",
+        "populacao_2022",
+        "eleitores_2026",
+        "renda_pc_media_2022",
+        "renda_pc_mediana_2022",
+        "pib_2023_mil_reais",
+        "pib_pc_2023",
+        "atividade_principal_2021",
+        "participacao_agro_2021_pct",
+        "participacao_industria_2021_pct",
+        "participacao_servicos_2021_pct",
+        "participacao_administracao_2021_pct",
+        "nikolas_2022_votos",
+        "nikolas_2022_pct_validos_deputado",
         "deputado_federal_2022_votos_validos",
-        "pres_2018_esquerda_pct_validos", "pres_2022_esquerda_pct_validos",
-        "pres_2018_margem_esquerda_pp", "pres_2022_margem_esquerda_pp",
-        "pres_deslocamento_esquerda_pp", "pres_virada", "indice_pivotal",
+        "pres_2018_esquerda_pct_validos",
+        "pres_2022_esquerda_pct_validos",
+        "pres_2018_margem_esquerda_pp",
+        "pres_2022_margem_esquerda_pp",
+        "pres_deslocamento_esquerda_pp",
+        "pres_virada",
+        "indice_pivotal",
     ]
     geo_features = []
     by_code = {item["codigo_ibge"]: item for item in municipal}
@@ -689,24 +1228,53 @@ def main():
         "eleitorado_tse_2026": electorate_state,
         "pnad": pnad,
         "eleicoes": election_state,
-        "pesquisas": {"quaest": QUAEST, "real_time": REALTIME, "validacao_quaest": checks},
+        "pesquisas": {
+            "quaest": QUAEST,
+            "real_time": REALTIME,
+            "validacao_quaest": checks,
+        },
         "regioes": regions,
-        "top_20_pivotais": [{key: item.get(key) for key in public_keys} for item in top],
+        "top_20_pivotais": [
+            {key: item.get(key) for key in public_keys} for item in top
+        ],
     }
-    (DERIVED / "auditoria.json").write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    (DERIVED / "auditoria.json").write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
     manifest = source_manifest()
-    (DERIVED / "fontes.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
-    (PUBLIC / "mg_082026_data.json").write_text(json.dumps(payload, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
-    (PUBLIC / "mg_082026_fontes.json").write_text(json.dumps(manifest, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
-    (PUBLIC / "mg_082026_municipios.geojson").write_text(json.dumps({"type": "FeatureCollection", "features": geo_features}, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
-    print(json.dumps({
-        "municipios": len(municipal),
-        "eleitores_2026": electorate_state["eleitores_2026"],
-        "regioes_intermediarias": len(regions),
-        "viradas": Counter(item["pres_virada"] for item in municipal),
-        "top_20": [item["municipio"] for item in top],
-        "validacao_quaest": checks,
-    }, ensure_ascii=False, indent=2, default=dict))
+    (DERIVED / "fontes.json").write_text(
+        json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
+    (PUBLIC / "mg_082026_data.json").write_text(
+        json.dumps(payload, ensure_ascii=False, separators=(",", ":")), encoding="utf-8"
+    )
+    (PUBLIC / "mg_082026_fontes.json").write_text(
+        json.dumps(manifest, ensure_ascii=False, separators=(",", ":")),
+        encoding="utf-8",
+    )
+    (PUBLIC / "mg_082026_municipios.geojson").write_text(
+        json.dumps(
+            {"type": "FeatureCollection", "features": geo_features},
+            ensure_ascii=False,
+            separators=(",", ":"),
+        ),
+        encoding="utf-8",
+    )
+    print(
+        json.dumps(
+            {
+                "municipios": len(municipal),
+                "eleitores_2026": electorate_state["eleitores_2026"],
+                "regioes_intermediarias": len(regions),
+                "viradas": Counter(item["pres_virada"] for item in municipal),
+                "top_20": [item["municipio"] for item in top],
+                "validacao_quaest": checks,
+            },
+            ensure_ascii=False,
+            indent=2,
+            default=dict,
+        )
+    )
 
 
 if __name__ == "__main__":
