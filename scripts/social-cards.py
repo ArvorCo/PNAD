@@ -72,6 +72,21 @@ CARDS: list[dict] = [
         "photo": "img/atlas_072026/web/eleicao-rua.jpg",
     },
     {
+        "slug": "mg_082026_thread",
+        "eyebrow": "Thread · Minas Gerais · setembro de 2026",
+        "title": "Cleitinho não puxa mais voto.",
+        "title_em": "Ele puxa em outro lugar.",
+        "lede": "Dois posts e uma imagem: o mapa de quem vai mais longe que Bolsonaro em cada uma das <b>853 cidades</b> de Minas, e o alvo no cinturão do minério.",
+        "stats": [
+            ("431", "cidades de Cleitinho"),
+            ("42", "onde os três somam"),
+            ("R$ 3,2 bi", "de royalties em disputa"),
+        ],
+        "foot": "arvor intelligence · perícia eleitoral",
+        "accent": "blue",
+        "thread": True,
+    },
+    {
         "slug": "pnad",
         "eyebrow": "O Brasil em Números · PNAD Contínua",
         "title": "O país que",

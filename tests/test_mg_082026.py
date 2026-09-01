@@ -1,7 +1,7 @@
 import json
+import re
 from collections import Counter
 from pathlib import Path
-
 
 ROOT = Path(__file__).resolve().parents[1]
 # O teste le o que e publicado, e nao a copia derivada em data/, que fica fora
@@ -23,14 +23,19 @@ def test_mg_outputs_cover_the_complete_state():
     assert data["eleitorado_tse_2026"]["eleitores_2026"] == 16_379_550
     assert len(data["regioes"]) == 13
     assert len(geo["features"]) == 853
-    assert len({feature["properties"]["codigo_ibge"] for feature in geo["features"]}) == 853
+    assert (
+        len({feature["properties"]["codigo_ibge"] for feature in geo["features"]})
+        == 853
+    )
     assert sum(region["eleitores_2026"] for region in data["regioes"]) == 16_379_550
     assert PUBLIC.exists()
 
 
 def test_mg_historical_flip_counts_are_stable():
     geo = load(GEO)
-    counts = Counter(feature["properties"]["pres_virada"] for feature in geo["features"])
+    counts = Counter(
+        feature["properties"]["pres_virada"] for feature in geo["features"]
+    )
     assert counts == {
         "Direita nas duas": 285,
         "Esquerda nas duas": 404,
@@ -48,8 +53,14 @@ def test_mg_poll_margins_and_recomposition_are_audited():
         assert sum(values) == 100
     for values in polls["real_time"]["segundos_turnos"]["cenarios"].values():
         assert sum(values) == 100
-    assert polls["validacao_quaest"]["governador_1t_sexo"]["max_erro_arredondamento_pp"] <= 0.52
-    assert polls["validacao_quaest"]["governador_1t_renda"]["max_erro_arredondamento_pp"] == 1.11
+    assert (
+        polls["validacao_quaest"]["governador_1t_sexo"]["max_erro_arredondamento_pp"]
+        <= 0.52
+    )
+    assert (
+        polls["validacao_quaest"]["governador_1t_renda"]["max_erro_arredondamento_pp"]
+        == 1.11
+    )
 
 
 def test_mg_top_twenty_are_unique_and_formula_is_public():
@@ -70,16 +81,25 @@ def test_mg_nikolas_vote_is_municipally_reproduced():
     assert nikolas["nome"] == "Nikolas Ferreira"
     assert nikolas["votos"] == 1_492_047
     assert round(nikolas["votos"] / election["candidatos"][1]["votos"], 2) == 6.24
-    assert sum(feature["properties"]["nikolas_2022_votos"] for feature in geo["features"]) == nikolas["votos"]
-    bh = next(region for region in data["regioes"] if region["regiao_intermediaria"] == "Belo Horizonte")
+    assert (
+        sum(feature["properties"]["nikolas_2022_votos"] for feature in geo["features"])
+        == nikolas["votos"]
+    )
+    bh = next(
+        region
+        for region in data["regioes"]
+        if region["regiao_intermediaria"] == "Belo Horizonte"
+    )
     assert bh["nikolas_2022_votos"] == 649_235
 
 
 def test_mg_public_copy_avoids_em_dash():
     for path in (
         ROOT / "docs/mg_082026.html",
+        ROOT / "docs/mg_082026_thread.html",
         ROOT / "docs/assets/mg_082026.js",
         ROOT / "docs/assets/mg_082026.css",
+        ROOT / "docs/assets/og/mg_082026_infografico.html",
     ):
         assert "—" not in path.read_text(encoding="utf-8")
 
@@ -122,3 +142,18 @@ def test_mg_corridors_cover_distinct_municipalities():
     assert minerio["resumo"]["iC"] > 100
     assert minerio["resumo"]["iN"] > 100
     assert minerio["resumo"]["iE"] > 100
+
+
+def test_mg_two_posts_fit_the_platform():
+    pagina = (ROOT / "docs/mg_082026_thread.html").read_text(encoding="utf-8")
+    assert 'src="img/og/mg_082026_infografico.png"' in pagina
+    assert "brasil.arvor.co/mg_082026.html" in pagina
+    assert (ROOT / "docs/img/og/mg_082026_infografico.png").exists()
+    # O primeiro post passa de 280 caracteres e por isso exige conta paga,
+    # mas tem de caber no limite de 25 mil do X Premium com folga.
+    copias = re.findall(r'data-copy="(.*?)"', pagina, re.DOTALL)
+    assert len(copias) == 2
+    assert 1500 < len(copias[0]) < 4000
+    assert 200 < len(copias[1]) < 900
+    for texto in copias:
+        assert "\u2014" not in texto
