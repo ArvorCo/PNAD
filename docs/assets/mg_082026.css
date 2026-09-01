@@ -112,7 +112,7 @@ button, input, select { font: inherit; }
 .bar-row { display: grid; grid-template-columns: minmax(120px, 1.2fr) 3fr auto; gap: 12px; align-items: center; margin: 11px 0; }
 .bar-row .label { color: inherit; font-size: .8rem; font-weight: 700; }
 .bar-track { height: 20px; background: rgb(128 138 129 / .2); }
-.bar-fill { height: 100%; background: var(--gold); }
+.bar-fill { display: block; height: 100%; background: var(--gold); }
 .bar-row .value { min-width: 62px; text-align: right; font-variant-numeric: tabular-nums; font-weight: 850; }
 .bar-row.dual { grid-template-columns: minmax(120px, 1.2fr) 3fr 3fr auto; }
 .bar-fill.green { background: var(--green-2); }.bar-fill.red { background: var(--red-2); }.bar-fill.blue { background: var(--blue); }
