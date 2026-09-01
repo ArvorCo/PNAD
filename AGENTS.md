@@ -285,6 +285,13 @@ A thread deixou de ser resumo do dossiê e virou aula. Referência: `scripts/dat
 - **Posts de 950 a 1.400 caracteres.** Menos que isso vira legenda, mais que isso não cabe.
 - **Declarar o limite antes da conclusão**, num post próprio, e fechar convidando o leitor a refazer a conta.
 
+## Auditoria de renderização (método da casa, 01/09/2026)
+Contraste mede a cor. Renderização mede se o desenho chegou à tela. São defeitos diferentes e o segundo passa por revisão de código sem ser visto. Reprodução: `python3 scripts/render-audit.py http://localhost:4173/<pagina>.html`.
+- **O caso que originou a regra:** as barras dos gráficos são marcadas como `<i>` ou `<span>`, que são `display: inline` por padrão, e elemento inline ignora `width` e `height`. A porcentagem estava certa no atributo, a cor certa no CSS, e a barra não pintava nada. Atingia os cinco gráficos do atlas de MG e mais seis barras do dossiê Quaest de julho. Correção: `display: block` na regra `.bar-fill`.
+- O script falha quando um elemento dimensionado tem área zero, quando um container cujo `id` termina em `chart`, `map`, `scatter`, `table-body`, `legend` ou `readout` fica vazio, e quando o console acusa erro. Ignora `<defs>`, `<pattern>` e demais elementos de definição de SVG, que não ocupam área por desenho.
+- **Rode nas páginas antigas também, não só na nova.** A varredura das 25 páginas publicadas encontrou o defeito em duas, uma delas no ar desde julho.
+- Valide o guarda revertendo a correção: se o script não acusar, o guarda não serve.
+
 ## Portão de lint declarado, não herdado (01/09/2026)
 O CI instalava `ruff` e `black` sem versão fixa e o projeto não declarava conjunto de regras. Resultado: toda release nova do ruff mudava o portão sem que uma linha de código mudasse, e a main ficou vermelha com 638 achados que não existiam no dia anterior.
 - `pyproject.toml` agora declara `[tool.ruff.lint] select`. O CI fixa `ruff~=0.16.5` e `black~=26.3.1`.

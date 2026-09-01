@@ -43,8 +43,14 @@ SONDA = """
   }
 
   const alvo = /(chart|map|scatter|table-body|legend|readout)$/;
+  // <defs>, <pattern>, <linearGradient> e afins definem pintura e nao ocupam
+  // area por desenho. Medir altura neles produz falso positivo.
+  const definicao = new Set(['DEFS', 'PATTERN', 'LINEARGRADIENT', 'RADIALGRADIENT',
+                             'CLIPPATH', 'MASK', 'SYMBOL', 'MARKER', 'FILTER']);
   for (const el of document.querySelectorAll('[id]')) {
     if (!alvo.test(el.id)) continue;
+    if (definicao.has(el.tagName.toUpperCase())) continue;
+    if (el.closest('defs')) continue;
     const caixa = px(el);
     if (el.children.length === 0 || caixa.height < 8) {
       problemas.push({tipo: 'container de grafico vazio', tag: '#' + el.id,

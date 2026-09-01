@@ -292,7 +292,7 @@ p { margin: 0 0 1em; }
 .bar-row { display: grid; grid-template-columns: minmax(120px, 200px) minmax(0, 1fr) 56px; gap: 12px; align-items: center; margin: 9px 0; font: .88rem/1.2 var(--sans); }
 .bar-track { height: 15px; background: var(--paper-2); overflow: hidden; }
 .chapter.ink .bar-track { background: rgba(255, 255, 255, .1); }
-.bar-fill { height: 100%; background: var(--steel); }
+.bar-fill { display: block; height: 100%; background: var(--steel); }
 .bar-fill.signal { background: var(--signal); }
 .bar-fill.amber { background: var(--amber); }
 .bar-fill.pine { background: var(--pine); }
