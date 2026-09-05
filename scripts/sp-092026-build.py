@@ -2259,6 +2259,8 @@ def ch_fontes():
         + " · "
         + link("assets/sp_092026_camada2.json", "Camada 2")
         + " · "
+        + link("sp_092026_thread.html", "A thread em nove cards")
+        + " · "
         + link("index.html", "Voltar ao acervo")
         + "</p>"
     )

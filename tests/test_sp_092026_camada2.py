@@ -220,3 +220,12 @@ def test_pontes_surplus_is_geographic(k):
         r["pontes_menos_bol1_pp"] >= 4 and r["estoque_pct"] >= 4.9 for r in p["alvos"]
     )
     assert all("companhia" in c["pauta"] for c in k["corredores"])
+
+
+def test_thread_page_has_nine_square_cards():
+    html = (ROOT / "docs/sp_092026_thread.html").read_text()
+    assert html.count('class="card"') == 9
+    assert "aspect-ratio:1/1" in html
+    assert "—" not in html and "–" not in html
+    assert "#" not in html.split('data-copy="')[1].split('"')[0]
+    assert html.count("<svg") == 9

@@ -86,6 +86,20 @@ CARDS: list[dict] = [
         "photo": "img/atlas_072026/web/eleicao-rua.jpg",
     },
     {
+        "slug": "sp_092026_thread",
+        "eyebrow": "Thread · São Paulo · setembro de 2026",
+        "title": "Um em sete eleitores de Tarcísio",
+        "title_em": "não vota Flávio.",
+        "lede": "Cinco pontos em nove cards quadrados: o vazamento e seus destinos, o teste da terceira via, <b>as cidades onde o eleitor mora</b>, os puxadores e quem acompanha Flávio em cada corredor.",
+        "stats": [
+            ("7,0", "pontos de vão"),
+            ("1,1 mi", "com endereço"),
+            ("+12,3", "Pontes em Bauru"),
+        ],
+        "foot": "TSE 2022 · PNAD 2025 · Datafolha, Atlas, Quaest, Real Time · corte em 05/09/2026",
+        "accent": "blue",
+    },
+    {
         "slug": "mg_082026_thread",
         "eyebrow": "Thread · Minas Gerais · setembro de 2026",
         "title": "Cleitinho não puxa mais voto.",
