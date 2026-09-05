@@ -42,6 +42,16 @@ ACCENTS = {
 # sustenta. Os textos vêm das fichas revisadas do acervo em docs/index.html.
 CARDS: list[dict] = [
     {
+        "slug": "sp_092026",
+        "eyebrow": "Atlas estadual 02 · São Paulo · setembro de 2026",
+        "title": "A maioria permaneceu.",
+        "title_em": "A vantagem encolheu.",
+        "lede": "Votos e economia dos <b>645 municípios paulistas</b>, PNAD e pesquisas estaduais recentes. Dados, fontes e limites explícitos.",
+        "stats": [("34,1 mi", "eleitores"), ("83", "viradas para Lula"), ("645", "municípios")],
+        "foot": "TSE · IBGE · pesquisas estaduais · corte em 05/09/2026",
+        "accent": "amber",
+    },
+    {
         "slug": "hub",
         "eyebrow": "Arvor Intelligence · acervo aberto",
         "title": "Toda pesquisa",

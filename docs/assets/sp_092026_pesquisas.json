@@ -1,0 +1,335 @@
+{
+  "corte": "2026-09-05",
+  "pesquisas": [
+    {
+      "id": "parana",
+      "nome": "Paraná",
+      "campo": "16 a 18/08",
+      "divulgacao": "19/08/2026",
+      "n": 1680,
+      "me": 2.4,
+      "metodo": "Domiciliar presencial",
+      "registro": "SP-08913/2026",
+      "governo": [
+        50,
+        33.8
+      ],
+      "governo2": [
+        53,
+        36.9
+      ],
+      "nao_escolha_gov": 12.3,
+      "paginas": "3, 8 e 11",
+      "status": "PDF conferido"
+    },
+    {
+      "id": "datafolha",
+      "nome": "Datafolha",
+      "campo": "18 e 19/08",
+      "divulgacao": "21/08/2026",
+      "n": 1610,
+      "me": 2,
+      "metodo": "Presencial em pontos de fluxo",
+      "registro": "SP-01806/2026; BR-07185/2026",
+      "governo": [
+        45,
+        27
+      ],
+      "governo2": [
+        54,
+        35
+      ],
+      "nao_escolha_gov": 15,
+      "presidente": [
+        37,
+        33
+      ],
+      "presidente2": [
+        47,
+        42
+      ],
+      "paginas": "2, 8 e 10; Presidência: Folha de 22/08",
+      "status": "PDF estadual; Presidência em notícia"
+    },
+    {
+      "id": "rt_gov",
+      "nome": "Real Time Big Data",
+      "campo": "19 a 22/08",
+      "divulgacao": "24/08/2026",
+      "n": 2000,
+      "me": 2,
+      "metodo": "Telefone, segundo iG",
+      "registro": "SP-01347/2026; BR-06537/2026",
+      "governo": [
+        52,
+        35
+      ],
+      "nao_escolha_gov": 11,
+      "presidente": [
+        38,
+        33
+      ],
+      "presidente2": [
+        44,
+        49
+      ],
+      "paginas": "iG e Metrópoles, 24/08",
+      "status": "Notícias; PDF pendente",
+      "nota": "Cenário presidencial inclui Marçal. Resultado de 2º turno desfavorável a Flávio reproduz a notícia; exige confirmação no PDF. Manchete e corpo do iG usam cenários distintos."
+    },
+    {
+      "id": "quaest",
+      "nome": "Quaest",
+      "campo": "21 a 24/08",
+      "divulgacao": "25/08/2026",
+      "n": 1800,
+      "me": 2,
+      "metodo": "Domiciliar presencial",
+      "registro": "SP-06946/2026; BR-02096/2026",
+      "governo": [
+        40,
+        27
+      ],
+      "governo2": [
+        47,
+        30
+      ],
+      "nao_escolha_gov": 27,
+      "presidente": [
+        30,
+        29
+      ],
+      "paginas": "2, 8, 20 e 75",
+      "status": "PDF conferido",
+      "nota": "Presidência sem Marçal (cenário II). Com Marçal: Flávio 30 e Lula 30. Não há 2º turno presidencial neste PDF."
+    },
+    {
+      "id": "atlas",
+      "nome": "Atlas/Estadão",
+      "campo": "26 a 31/08",
+      "divulgacao": "03/09/2026",
+      "n": 1810,
+      "me": 1,
+      "metodo": "Recrutamento digital RDR",
+      "registro": "SP-06964/2026; BR-02563/2026",
+      "governo": [
+        51.1,
+        39.9
+      ],
+      "governo2": [
+        53.2,
+        42.6
+      ],
+      "nao_escolha_gov": 5.5,
+      "presidente": [
+        39.9,
+        36
+      ],
+      "presidente2": [
+        46.8,
+        43.3
+      ],
+      "paginas": "5, 8, 12, 17 e 21",
+      "status": "PDF conferido",
+      "nota": "A p. 5 declara ±1 pp; o catálogo público da Atlas declara ±2 pp. Divergência preservada."
+    }
+  ],
+  "urls": {
+    "atlas": "https://cdn1.atlasintel.org/pesquisa_atlas_estadao__eleicoes_sao_paulo_2026__260901_d7bd2dffe42f5965.pdf",
+    "quaest": "https://quaest.com.br/wp-content/uploads/2026/08/QUAEST1SP2508.pdf",
+    "parana": "https://paranapesquisas.com.br/wp-content/uploads/2026/08/SP_Ago26.pdf",
+    "datafolha": "https://www1.folha.uol.com.br/poder/2026/08/datafolha-tarcisio-lidera-disputa-para-governo-de-sp-com-45-contra-27-de-haddad.shtml",
+    "datafolha_pres": "https://www1.folha.uol.com.br/poder/2026/08/datafolha-flavio-tem-47-e-lula-42-em-sp-no-2o-turno-mg-marca-empate.shtml",
+    "rt_gov": "https://ultimosegundo.ig.com.br/2026-08-24/realtime-big-data-em-sp--tarcisio-com-54--e-haddad-com-36-.html",
+    "rt_pres": "https://www.metropoles.com/sao-paulo/flavio-lidera-disputa-em-sp-com-38-diz-pesquisa-real-time-big-data",
+    "verita": "https://goiasnoticia.com.br/verita-em-sp-tarcisio-lidera-governo-e-senado-segue-com-empate-tecnico-prado-derrite-silva-palumbo-e-tebet-disputam/"
+  },
+  "validacoes": {
+    "datafolha_p27": {
+      "Tarcísio (REPUBLICANOS)": {
+        "sexo": {
+          "recomposto": 44.679503105590065,
+          "publicado": 45,
+          "residuo_pp": -0.3204968944099349
+        },
+        "idade": {
+          "recomposto": 44.69670602858918,
+          "publicado": 45,
+          "residuo_pp": -0.3032939714108167
+        },
+        "escolaridade": {
+          "recomposto": 44.414543194530765,
+          "publicado": 45,
+          "residuo_pp": -0.5854568054692351
+        }
+      },
+      "Fernando Haddad (PT)": {
+        "sexo": {
+          "recomposto": 27.526708074534163,
+          "publicado": 27,
+          "residuo_pp": 0.526708074534163
+        },
+        "idade": {
+          "recomposto": 27.09446861404599,
+          "publicado": 27,
+          "residuo_pp": 0.09446861404599005
+        },
+        "escolaridade": {
+          "recomposto": 27.27594779366066,
+          "publicado": 27,
+          "residuo_pp": 0.27594779366065936
+        }
+      }
+    },
+    "atlas": {
+      "Tarcísio": {
+        "sexo": {
+          "recomposto": 50.9541,
+          "publicado": 51.1,
+          "residuo_pp": -0.14590000000000458
+        },
+        "renda": {
+          "recomposto": 50.986313686313686,
+          "publicado": 51.1,
+          "residuo_pp": -0.11368631368631554
+        }
+      },
+      "Flávio": {
+        "sexo": {
+          "recomposto": 39.8315,
+          "publicado": 39.9,
+          "residuo_pp": -0.06850000000000023
+        },
+        "renda": {
+          "recomposto": 39.751248751248745,
+          "publicado": 39.9,
+          "residuo_pp": -0.14875124875125323
+        }
+      }
+    },
+    "quaest": {
+      "Tarcísio_sexo": 39.64,
+      "Haddad_sexo": 27.53,
+      "Tarcísio_renda": 40.85,
+      "Haddad_renda": 27.25
+    }
+  },
+  "arquivos": [
+    {
+      "nome": "atlas.pdf",
+      "sha256": "41cbe7f7d5a6feca29a1fc12d0ba1b3bea21d37c5af9a213ef4ae70528d7d8ff",
+      "bytes": 5486474,
+      "paginas": 44
+    },
+    {
+      "nome": "datafolha.pdf",
+      "sha256": "e92ceccdb6481206508179841c18cd22a86101c5eac29c6ed90f77c400e9a8f7",
+      "bytes": 1329426,
+      "paginas": 46
+    },
+    {
+      "nome": "parana.pdf",
+      "sha256": "2f9386e568f2bcb01126bdfc4342766af13588b5efabedb3e7e6cebf3f860842",
+      "bytes": 555125,
+      "paginas": 20
+    },
+    {
+      "nome": "quaest.pdf",
+      "sha256": "345e9d5a6e2ce0a9bd60067bf7f35fe9250f1b59c59b0257a0ed1979dcaa4b97",
+      "bytes": 45645391,
+      "paginas": 117
+    }
+  ],
+  "perfis_renda_sm": {
+    "Quaest": [
+      19,
+      44,
+      37
+    ],
+    "Datafolha": [
+      37.826086956521735,
+      42.79503105590062,
+      15.962732919254657
+    ],
+    "Datafolha_sem_renda_classificada": 3.4161490683229814
+  },
+  "atlas_alternativos": {
+    "Flávio": [
+      46.8,
+      43.3,
+      9.9
+    ],
+    "Caiado": [
+      45.4,
+      41.1,
+      13.4
+    ],
+    "Zema": [
+      43.8,
+      42.7,
+      13.5
+    ],
+    "Renan": [
+      33.5,
+      43.1,
+      23.4
+    ]
+  },
+  "senado_quaest": {
+    "Guilherme Derrite": [
+      12,
+      17,
+      8
+    ],
+    "Marina Silva": [
+      12,
+      15,
+      9
+    ],
+    "Simone Tebet": [
+      11,
+      15,
+      7
+    ],
+    "André do Prado": [
+      7,
+      7,
+      7
+    ],
+    "Salles": [
+      4,
+      4,
+      5
+    ]
+  },
+  "senado_datafolha": {
+    "Simone Tebet": 12,
+    "Marina Silva": 12,
+    "André do Prado": 10,
+    "Guilherme Derrite": 7,
+    "Ricardo Salles": 6
+  },
+  "temas_quaest": {
+    "Violência": 34,
+    "Saúde": 22,
+    "Economia": 8,
+    "Educação": 6,
+    "Corrupção": 4,
+    "Desemprego": 4,
+    "Pobreza/desigualdade": 3
+  },
+  "temas_atlas": {
+    "Criminalidade": 59.4,
+    "Educação": 35.9,
+    "Saúde": 29.2,
+    "Violência contra a mulher": 19.9,
+    "Impostos": 17.3,
+    "Inflação": 15.4
+  },
+  "limites": [
+    "Datafolha recebido cobre governo, Senado e avaliação estadual; não contém tabelas presidenciais.",
+    "Veritá julho: localizado em notícia, denominador a confirmar no relatório; excluído da comparação em votos totais.",
+    "Futura: busca não confirmou relatório estadual recente comparável; pesquisa nacional não substitui SP.",
+    "Sem microdados pareados de governo e Presidência, diferenças de margens não identificam voto combinado."
+  ]
+}
