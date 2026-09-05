@@ -28,6 +28,7 @@ VAO = K["vao"]
 E = K["estrategia"]
 CARR = K["carregadores"]
 F3 = K["fluxos3"]
+PONTES = K["pontes"]
 MICRO = K["micro"]
 SERIE = R["serie"]
 CORR = K["corredores"]
@@ -549,7 +550,14 @@ def grouped_svg(groups, series, ident, title, maxv=70):
                 f'<text x="{x + bw / 2:.1f}" y="{base - h - 5:.1f}" text-anchor="middle" class="axis-t">{fmt(v, 0 if float(v).is_integer() else 1)}</text>'
             )
         parts.append(
-            f'<text x="{gx + (len(series) * (bw + 4)) / 2:.1f}" y="{base + 20}" text-anchor="middle" class="sk-label">{esc(label)}</text>'
+            '<text x="{:.1f}" y="{}" text-anchor="middle" class="sk-label sk-small">{}</text>'.format(
+                gx + (len(series) * (bw + 4)) / 2,
+                base + 20,
+                "".join(
+                    f'<tspan x="{gx + (len(series) * (bw + 4)) / 2:.1f}" dy="{0 if k == 0 else 16}">{esc(part)}</tspan>'
+                    for k, part in enumerate(label.split(" · "))
+                ),
+            )
         )
     lx = 60
     for name, color in series:
@@ -862,7 +870,7 @@ def ch_mapa():
         + "</select></label></div>"
     )
     body += (
-        '<div class="map-layout"><div>'
+        '<div class="map-layout"><div><div class="zoom-bar" role="group" aria-label="Zoom do mapa"><button type="button" data-zoom="in">Aproximar</button><button type="button" data-zoom="out">Afastar</button><button type="button" data-zoom="metro">Grande São Paulo</button><button type="button" data-zoom="baixada">Baixada</button><button type="button" data-zoom="campinas">Campinas</button><button type="button" data-zoom="reset">Estado inteiro</button><span class="micro">Arraste para mover; a roda do mouse aproxima. Municípios pequenos, como São Caetano do Sul, aparecem no zoom da Grande São Paulo.</span></div>'
         + svgmap()
         + '<p id="map-legend" class="legend"><span>Verde: Bolsonaro nas duas · Ocre: Bolsonaro → Lula · Vermelho: PT nas duas · Cinza: empate</span></p></div><aside id="map-readout" aria-live="polite"><span class="eyebrow">Atlas municipal</span><h3>645 histórias locais</h3><p>Toque no mapa ou escolha um município para consultar votos, eleitorado, renda e os índices dos carregadores.</p><p>A camada Tarcísio menos Bolsonaro compara os dois no 2º turno de 2022, mesmo universo, e mostra que eram o mesmo eleitorado. A camada de estoque aplica a cada cidade o cruzamento da Atlas por voto de 2022 e é o mapa do eleitor de Tarcísio que ainda não é de Flávio, detalhado no capítulo 16.</p></aside></div><noscript><p>O mapa inicial funciona sem JavaScript. Para as demais camadas, consulte a tabela municipal e o CSV.</p></noscript><p class="note">Fonte: TSE e IBGE. Eleitorado: arquivo gerado em 01/07/2026, competência junho. Votos legislativos são nominais recebidos, separados dos votos de legenda e da situação jurídica atual. Índices definidos no capítulo 15; estoque definido no capítulo 16.</p>'
     )
@@ -872,6 +880,8 @@ def ch_mapa():
         "O território, <em>em vinte e seis camadas.</em>",
         "A consulta combina resultado, mudança histórica, contexto econômico e o rendimento relativo de cada nome da direita. Cada cargo conserva seu próprio denominador.",
         body,
+        False,
+        True,
     )
 
 
@@ -1410,6 +1420,32 @@ def ch_renda():
     )
 
 
+def resumo_tres_niveis():
+    r = {f["nome"].split(":")[0]: f["resumo"] for f in F3["fluxos"]}
+    a, d, t = r["Atlas"], r["Datafolha"], r["Real Time"]
+    via = {
+        f["nome"].split(":")[0]: sorted(
+            [
+                c
+                for c in f["caminhos"]
+                if c["via"] in ("Cury", "Renan", "Zema", "Caiado", "Marçal")
+            ],
+            key=lambda c: -c["tarcisio_para_via"],
+        )[:2]
+        for f in F3["fluxos"]
+    }
+
+    def dois(k):
+        return " e ".join(
+            f'{esc(c["via"])} ({fmt(c["tarcisio_para_via"], 1)})' for c in via[k]
+        )
+
+    return (
+        f'<p>Nos três institutos, quase nada do voto de Tarcísio termina em Lula: {fmt(a["tarcisio_para_lula_total"], 1)} ponto na Atlas, {fmt(d["tarcisio_para_lula_total"], 1)} no Datafolha e {fmt(t["tarcisio_para_lula_total"], 1)} na Real Time, de um total de {fmt(a["tarcisio_total_2t"], 1)}, {fmt(d["tarcisio_total_2t"], 1)} e {fmt(t["tarcisio_total_2t"], 1)} pontos que saem de Tarcísio. A regra ideológica que o modelo respeita é a que a Atlas mede: o eleitor de Haddad não vai a Flávio (zero na p. 19, zero estrutural aqui), e o eleitor de Tarcísio vai a Lula em proporção pequena (0,5% no 1º turno e 2,3% no 2º turno entre quem votou Tarcísio em 2022, p. 19 e 23). A terceira via carrega uma fatia bem maior do voto de Tarcísio no 1º turno: {fmt(a["tarcisio_para_terceira_via"], 1)} pontos na Atlas, {fmt(d["tarcisio_para_terceira_via"], 1)} no Datafolha e {fmt(t["tarcisio_para_terceira_via"], 1)} na Real Time, onde Marçal está na lista. No 2º turno essa fatia volta em boa parte a Flávio ({fmt(a["terceira_via_para_flavio"], 1)}, {fmt(d["terceira_via_para_flavio"], 1)} e {fmt(t["terceira_via_para_flavio"], 1)} pontos) ou anula ({fmt(a["terceira_via_para_nao_escolha"], 1)}, {fmt(d["terceira_via_para_nao_escolha"], 1)} e {fmt(t["terceira_via_para_nao_escolha"], 1)}). Para Lula vão {fmt(a["terceira_via_para_lula"], 1)}, {fmt(d["terceira_via_para_lula"], 1)} e {fmt(t["terceira_via_para_lula"], 1)}: só na Real Time, onde Lula tem 49 contra Haddad 36, o modelo precisa de um fluxo visível da terceira via para fechar a conta. Ao fim do caminho, {fmt(a["retencao_flavio_pct"], 1)}%, {fmt(d["retencao_flavio_pct"], 1)}% e {fmt(t["retencao_flavio_pct"], 1)}% do eleitor de Tarcísio no 1º turno termina com Flávio, contra 86,8%, 86,0% e 80,4% no diagrama de dois níveis, que parte do 2º turno estadual.</p>'
+        f'<p>Quem carrega no 1º turno: na Atlas, {dois("Atlas")}; no Datafolha, {dois("Datafolha")}; na Real Time, {dois("Real Time")}. <b>O custo da terceira via para a direita paulista é o nulo do 2º turno, não o voto em Lula.</b> A hipótese de que Renan alimenta Lula não passa no teste com os dados de agosto; ela passaria se o eleitor de Tarcísio que escolhe terceira via se comportasse como o eleitor de Garcia, e a Atlas mostra que não se comporta: entre os que votaram Tarcísio em 2022 e escolhem terceira via em 2026, zero vai a Lula (p. 19 e 23). O que Renan e Cury custam à direita é o eleitor de Tarcísio que, sem o candidato do 1º turno, anula no 2º.</p>'
+    )
+
+
 def tres_niveis_html():
     body = '<h3 class="mt">Três níveis: por onde passa o voto de Tarcísio antes de chegar ao 2º turno</h3><p>A hipótese a testar é direta: parte do voto de Tarcísio que termina em Lula passaria por Renan Santos ou por outro nome da terceira via no 1º turno. Para testar, o diagrama ganha uma coluna: governador no 1º turno, presidente no 1º turno, presidente no 2º turno. As fitas verdes são a parcela que saiu de Tarcísio; onde uma fita verde chega a Lula ou à não escolha na terceira coluna, ali está o vazamento, e a coluna do meio diz por quem ele passou.</p>'
     for i, f in enumerate(F3["fluxos"]):
@@ -1445,7 +1481,9 @@ def tres_niveis_html():
         )
         body += "</div>"
     body += (
-        '<div class="callout counter"><span class="stamp limit">O que o teste devolve</span><h3>A terceira via não leva o voto de Tarcísio a Lula. Leva ao nulo, e devolve a maior parte a Flávio.</h3><p>Nos três institutos, o eleitor de Tarcísio que termina em Lula é, em mais de 85% dos casos, alguém que já vota Lula no 1º turno: 5,7 de 6,5 pontos na Atlas, 5,4 de 6,0 no Datafolha, 5,0 de 8,6 na Real Time. É o eleitor que separa os dois cargos de propósito, não o que se perde no caminho. A terceira via carrega uma fatia maior do voto de Tarcísio no 1º turno (8,3 pontos na Atlas, 5,6 no Datafolha, 12,2 na Real Time, onde Marçal está na lista), e no 2º turno essa fatia se divide em dois terços para Flávio e um terço para a não escolha. Só na Real Time, onde Lula tem 49, o modelo precisa mandar 1,8 ponto da terceira via para Lula para fechar a conta.</p><p>Quem carrega: na Atlas, Renan (3,3) e Cury (3,3) empatados; no Datafolha, Caiado (1,8) e Zema (1,7); na Real Time, Marçal (5,4) e Renan (3,0). <b>O custo da terceira via para a direita paulista é o nulo do 2º turno, não o voto em Lula.</b> A hipótese de que Renan alimenta Lula não passa no teste com os dados de agosto; ela passaria se o eleitor de Tarcísio que escolhe terceira via se comportasse como o eleitor de Garcia, e a Atlas mostra que não se comporta: entre os que votaram Tarcísio em 2022 e escolhem terceira via em 2026, zero vai a Lula (p. 19 e 23).</p><p class="note">Método em '
+        '<div class="callout counter"><span class="stamp limit">O que o teste devolve</span><h3>A terceira via não leva o voto de Tarcísio a Lula. Leva ao nulo, e devolve a maior parte a Flávio.</h3>'
+        + resumo_tres_niveis()
+        + '<p class="note">Método em '
         + link("assets/sp_092026_camada2.json", "sp_092026_camada2.json")
         + ": estágio 1 com prior composta pela origem de 2022 (Atlas p. 10 e 19, pesos do TSE); estágio 2 com prior condicionada à origem e ao intermediário, calibrada em p. 19 e 23; cubo ajustado às células do estágio 1 e à margem do 2º turno. A Quaest não publica 2º turno presidencial e fica fora. Estimativa, não medição: o cruzamento direto exigiria microdados.</p></div>"
     )
@@ -1732,6 +1770,73 @@ def ch_leitura():
     )
 
 
+def pontes_html():
+    e = PONTES["estado"]
+    body = '<h3 class="mt">Pontes: onde o senador rendeu acima de Bolsonaro, e onde isso encontra o estoque</h3>'
+    body += f'<p>Marcos Pontes fez {fmt(e["pontes"], 2)}% para o Senado no 1º turno de 2022 contra {fmt(e["bolsonaro_1t"], 2)}% de Bolsonaro para presidente, na mesma cédula: +1,97 ponto no estado e acima em {fmt(e["municipios_pontes_acima"])} dos 645 municípios. A diferença tem geografia. Ela é máxima em Bauru, cidade natal dele, e no centro-oeste paulista de Jaú, Ourinhos, Botucatu, Lins e Marília; é positiva em Sorocaba, Itu e no Vale do Paraíba de Guaratinguetá e Caçapava; e é zero ou negativa na capital, em Santana de Parnaíba, na Baixada e em Piedade. Pontes não é um nome da metrópole: é um nome do interior que Bolsonaro já tinha, com um excedente próprio no eixo Bauru-Marília-Sorocaba. Formado no ITA e ex-ministro de Ciência e Tecnologia, ele tem também um ativo biográfico nos dois corredores de tecnologia, o do Vale e o de Campinas.</p>'
+    body += '<div class="split"><div class="chart-shell"><div class="chart-title"><div><p class="kicker">Pontes menos Bolsonaro, 1º turno de 2022</p><h3>As vinte cidades com maior excedente</h3></div><span>40 mil eleitores ou mais</span></div>'
+    body += table(
+        [
+            "município",
+            "região",
+            "eleitores",
+            "Pontes",
+            "Bolsonaro",
+            "diferença",
+            "índice Pontes",
+            "estoque",
+        ],
+        [
+            [
+                esc(r["nome"]),
+                esc(r["regiao"]),
+                fmt(r["eleitorado"]),
+                fmt(r["pontes"], 1) + "%",
+                fmt(r["bol1"], 1) + "%",
+                sgn(r["pontes_menos_bol1_pp"]) + " pp",
+                fmt(r["i_pontes"]),
+                fmt(r["estoque_pct"], 1) + "%",
+            ]
+            for r in PONTES["top"]
+        ],
+        cls="compact",
+    )
+    body += (
+        '<p class="note">No fundo da lista: '
+        + ", ".join(
+            f'{esc(r["nome"])} ({sgn(r["pontes_menos_bol1_pp"])})'
+            for r in PONTES["fundo"]
+        )
+        + ". Pontes rende abaixo de Bolsonaro na capital e no colar metropolitano rico.</p></div>"
+    )
+    body += '<div class="chart-shell"><div class="chart-title"><div><p class="kicker">Onde a companhia de Pontes faz sentido</p><h3>Excedente de 4 pontos ou mais e estoque de 4,9% ou mais</h3></div></div>'
+    body += table(
+        [
+            "município",
+            "região",
+            "eleitores",
+            "Pontes menos Bolsonaro",
+            "estoque",
+            "Garcia 1T",
+        ],
+        [
+            [
+                esc(r["nome"]),
+                esc(r["regiao"]),
+                fmt(r["eleitorado"]),
+                sgn(r["pontes_menos_bol1_pp"]) + " pp",
+                fmt(r["estoque_pct"], 2) + "%",
+                fmt(r["garcia1"], 1) + "%",
+            ]
+            for r in PONTES["alvos"]
+        ],
+        cls="compact",
+    )
+    body += '<p class="note">São as cidades em que os dois sinais coincidem: Pontes chegou mais longe que Bolsonaro em 2022 e o eleitor de Tarcísio que não é de Flávio pesa acima da média. É a lista curta para agendas conjuntas de Flávio com Pontes. <b>O índice mede alcance, não repasse</b>: Pontes é PL de origem militar e científica, não bolsonarista de primeira hora, e o eleitor que votou nele e não em Bolsonaro pode ser exatamente o que recusa a marca. Isso é o que a agenda conjunta testa, e o que nenhuma pesquisa publicada mede.</p></div></div>'
+    body += '<p class="note">Cálculo: ' + esc(PONTES["definicao"]) + "</p>"
+    return body
+
+
 def ch_carregadores():
     est = CARR["estado"]
     body = '<div class="ledger">'
@@ -1766,6 +1871,7 @@ def ch_carregadores():
     )
     body += '<div class="split"><div class="chart-shell"><div class="chart-title"><div><p class="kicker">O que o 2º turno de 2022 mostra</p><h3>Tarcísio e Bolsonaro eram o mesmo eleitorado</h3></div></div><p>No 2º turno de 2022, mesmo universo de eleitores, Tarcísio fez 55,27% e Bolsonaro 55,24%. Em 597 dos 645 municípios Tarcísio ficou à frente, mas por margens que somam 84.771 votos no estado inteiro; a maior diferença entre as grandes cidades é São José dos Campos, +0,87 ponto. Não existe cidade de 2022 em que o governador tenha tido um eleitorado próprio que o presidente não tivesse. O eleitor de Tarcísio que não é de Flávio é fenômeno do mandato, medido pelas pesquisas de 2026, e por isso o capítulo 16 o localiza aplicando o cruzamento da Atlas ao voto de 2022 de cada cidade, em vez de procurar uma diferença que a urna de 2022 não registrou.</p></div>'
     body += '<div class="chart-shell"><div class="chart-title"><div><p class="kicker">Limite do índice</p><h3>O que ele não mede</h3></div></div><div class="limit-list"><p><b>Mede alcance, não repasse.</b> Governador, senador, deputado e presidente disputam cédulas e incentivos diferentes. O índice mostra onde um nome chegou mais longe que o topo da chapa, e a distância entre chegar longe e entregar voto a outro candidato é justamente o que a campanha tem de construir.</p><p><b>Mede território, não gente.</b> A unidade é o município. A capital, com 9,1 milhões de eleitores, tem bolsões de índice alto e baixo dentro dela, e a leitura por zona eleitoral exige o arquivo de seção, que não está nesta versão.</p><p><b>Mede o passado.</b> O denominador é 2022. Desde então mudaram partido, adversário e economia. Derrite fez 1,05% como deputado e hoje disputa o Senado: o índice dele mostra a geografia da base, não o teto.</p></div></div></div>'
+    body += pontes_html()
     body += '<div class="grid-3"><article class="card"><span class="metric">107</span><h3>Tarcísio no Porto</h3><p>É o corredor onde o governador mais rende acima de Bolsonaro no 1º turno, porque Garcia foi fraco ali: Baixada Santista, com 48,4% para Bolsonaro no 1º turno e o túnel como pauta. No interior rico (Tecnologia 104, Aeroespacial 105, Sorocaba 103, Agro 103) ele também rende acima. Na capital e no ABC, 97; no oeste metropolitano, 95.</p></article><article class="card"><span class="metric gold">434</span><h3>Derrite em Sorocaba</h3><p>A base do candidato ao Senado é concentrada no sudoeste: no corredor de Sorocaba ele rende mais de quatro vezes o que Bolsonaro rendeu ali. No Porto, 37; na Tecnologia, 64. É um nome regional que precisa da chapa para virar estadual, e a chapa precisa dele onde ele existe.</p></article><article class="card"><span class="metric red">Pontes</span><h3>O carregador que sobrou</h3><p>Marcos Pontes fez 49,68% para o Senado e superou Bolsonaro em todas as regiões. É o único nome da direita paulista com prova de voto acima do topo da chapa em todo o estado, e não está na cédula de 2026 como candidato. Como cabo eleitoral, é o ativo mais subutilizado da campanha.</p></article></div>'
     body += (
         '<p class="note"><b>Cálculo.</b> '
@@ -1916,7 +2022,7 @@ def ch_corredores():
             + "</ul>"
         )
         body += (
-            f'<h4>Quem sobe no palanque</h4><p>{esc(pa["palanque"])}</p><p class="corridor-frase">{esc(pa["frase"])}</p><h4>Formato de encontro que a região comporta</h4><ul class="eventos">'
+            f'<h4>Quem sobe no palanque</h4><p>{esc(pa["palanque"])}</p><h4>Quem acompanha Flávio na jornada</h4><p class="corridor-companhia">{esc(pa["companhia"])}</p><p class="corridor-frase">{esc(pa["frase"])}</p><h4>Formato de encontro que a região comporta</h4><ul class="eventos">'
             + "".join(f"<li>{esc(e)}</li>" for e in pa["eventos"])
             + "</ul>"
         )

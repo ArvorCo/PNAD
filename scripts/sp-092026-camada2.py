@@ -1122,6 +1122,11 @@ def carregadores(corredores_def):
             "regiao_atlas": (
                 "capital" if i == CAPITAL_ID else REGIAO_IBGE_PARA_ATLAS[r["regiao"]]
             ),
+            "pontes_menos_bol1_pp": (
+                round(100 * votos["pontes"].get(i, 0) / total["SENADOR"][i] - bol1, 2)
+                if total["SENADOR"][i]
+                else 0.0
+            ),
             "garcia1": round(
                 100 * votos["garcia"].get(i, 0) / total["GOVERNADOR"][i], 2
             ),
@@ -1445,6 +1450,7 @@ CORREDORES = [
 
 PAUTA = {
     "capital": {
+        "companhia": "Tarcísio abre e Derrite fala de segurança: é o nome da direita com imagem positiva (+7) e a menor rejeição (30,2%) na Atlas. Ricardo Nunes entra como máquina, não como rosto, com imagem 31 × 49. Na Câmara, Delegado Palumbo (MDB) e Tomé Abduch (Republicanos) têm a base concentrada na cidade. Pontes rende 96 na capital, abaixo do topo da chapa: não é o corredor dele.",
         "agenda": "Segurança de bairro e trem que anda. O eleitor da capital mede o governo pela catraca e pela esquina, não pelo discurso nacional.",
         "palanque": "Tarcísio e Ricardo Nunes com Flávio, na ordem estadual primeiro. Na Atlas, Tarcísio tem 52% de imagem positiva e Nunes 31% contra 49% negativa (p. 37): o prefeito soma máquina, não soma imagem.",
         "frase": "Quem manda no trem e na polícia já mostrou o que faz. Agora é a vez do país.",
@@ -1478,6 +1484,7 @@ PAUTA = {
         "juizo": "É o maior eleitorado do país numa só urna e o lugar onde o vão Tarcísio-Flávio na Atlas é 5,2 pontos. A campanha ganha mais transferindo a credibilidade do serviço estadual do que repetindo o discurso nacional.",
     },
     "leste": {
+        "companhia": "Tarcísio no comando e André do Prado como carregador local: o presidente da Assembleia é de Guararema e rende índice 344 no Alto Tietê, o maior do corredor. Marcos Pontes (99) entra no chão de fábrica de Guarulhos e São Bernardo como engenheiro e ex-ministro, não como palanque. Deputados de base: Marcio Alvino (Guarulhos), Thiago Auricchio (São Caetano), Alex Manente e Carla Morando (São Bernardo).",
         "agenda": "Emprego industrial e trem. É o berço do PT e o lugar onde a montadora demite ou contrata em manchete.",
         "palanque": "Tarcísio no comando com Flávio ao lado; Marcos Pontes, que fez 10,7 milhões de votos em 2022, como voz técnica em fábrica. Nenhum carregador do PL domina o ABC, e o rosto estadual vale mais que o federal.",
         "frase": "Emprego não tem partido. Tem fábrica aberta ou fechada.",
@@ -1511,6 +1518,7 @@ PAUTA = {
         "juizo": "É o segundo maior eleitorado do estado e o mais sensível a emprego industrial. A pauta de comércio exterior e energia é federal, e é onde o candidato a presidente fala com autoridade própria.",
     },
     "oeste_metro": {
+        "companhia": "Tarcísio com André do Prado (110) e os deputados do eixo Castello: Bruna Furlan (Barueri) e Gerson Pessoa (Osasco). Pontes rende 100, neutro; Derrite e Salles ficam abaixo de 80 e não somam aqui.",
         "agenda": "Trem que descarrila e cidade que cresce sem serviço. Osasco e Barueri são a metrópole que deu certo economicamente e ainda assim vê a Linha 8 parar duas vezes na mesma semana.",
         "palanque": "Tarcísio com Flávio, e o prefeito local no palco. É o corredor onde a direita já é maioria e onde a cobrança de serviço recai sobre a concessão estadual.",
         "frase": "Cidade que paga a conta tem direito a trem que chega.",
@@ -1544,6 +1552,7 @@ PAUTA = {
         "juizo": "É o corredor de menor custo por voto da metrópole: direita majoritária, cobrança concentrada num serviço estadual visível e prefeituras aliadas. A entrega do trem é o teste.",
     },
     "porto": {
+        "companhia": "Tarcísio sozinho no comando: é o corredor em que ele mais rende acima de Bolsonaro (107). Rosana Valle (PL, Santos) e Paulo Alexandre Barbosa (ex-prefeito de Santos) são as bases medidas; Alberto Mourão carrega Praia Grande. Pontes rende 100 e Derrite 37: nenhum dos dois entra na foto do porto.",
         "agenda": "O porto no limite e o túnel que sai do papel. A Baixada tem a maior obra federal-estadual do estado em andamento e a fila de navios como métrica diária.",
         "palanque": "Tarcísio e Flávio juntos, com o túnel Santos-Guarujá como prova de que os dois níveis de governo podem trabalhar juntos. É a única pauta da Baixada em que o adversário federal também tem crédito.",
         "frase": "O túnel foi assinado. Falta quem faça a fila de navios andar.",
@@ -1577,6 +1586,7 @@ PAUTA = {
         "juizo": "É onde a pauta federal mais concreta do estado encontra uma obra estadual visível. Raro caso em que o candidato a presidente pode prometer algo que só o presidente entrega: o leilão do terminal.",
     },
     "tecnologia": {
+        "companhia": "Tarcísio (104) e Marcos Pontes (101) juntos, com Pontes no papel de ex-ministro de Ciência e Tecnologia diante de Unicamp, CPqD e Viracopos: é o único corredor onde a biografia dele vira pauta. Salles (118) e Carla (116) rendem acima da média no eleitor rico de Campinas, mas dividem onde Tarcísio soma. Base local: Valéria Bolsonaro (PL, Campinas) e Rogério Nogueira (Indaiatuba).",
         "agenda": "Indústria que muda de cidade e mobilidade que chega tarde. Campinas perdeu a Toyota de Indaiatuba para Sorocaba e espera o trem intercidades desde a década passada.",
         "palanque": "Tarcísio no comando: é o corredor onde ele mais supera Flávio entre os polos do interior, 58,0 × 52,8 na região Atlas de Campinas e SJC. Flávio como convidado da agenda de emprego.",
         "frase": "Fábrica que fecha aqui não pode virar fábrica que abre em outro país.",
@@ -1610,6 +1620,7 @@ PAUTA = {
         "juizo": "Segundo maior eleitorado do interior, direita majoritária e o maior eleitorado universitário fora da capital. É onde a campanha precisa conquistar o eleitor de Tarcísio que ainda não é de Flávio, e onde ele existe em número.",
     },
     "aeroespacial": {
+        "companhia": "Marcos Pontes é o nome do corredor: formado no ITA, astronauta treinado pelo DCTA de São José dos Campos, ex-ministro da pasta que financia INPE e Embraer. Rende 102 no corredor, +5,9 pontos sobre Bolsonaro em Guaratinguetá e +4,9 em Caçapava, onde o estoque é de 5,2%. Tarcísio (105) e Eduardo Bolsonaro (117) completam; André do Prado rende 266 em Jacareí e no norte do Vale. Base medida: Letícia Aguiar (PP, São José dos Campos).",
         "agenda": "Tarifa americana e emprego de engenheiro. O Vale exporta avião e importa a conta de qualquer briga comercial.",
         "palanque": "Flávio com autoridade própria: comércio exterior é competência federal. Tarcísio fecha com a pauta de Tamoios e Litoral Norte.",
         "frase": "Quem exporta avião não pode ser refém de tarifa. Isso se resolve em Brasília e em Washington.",
@@ -1643,6 +1654,7 @@ PAUTA = {
         "juizo": "Direita consolidada, renda acima da média e a pauta federal mais nítida do estado. O corredor não precisa de conversão, precisa de mobilização e de resposta técnica.",
     },
     "sorocaba": {
+        "companhia": "Derrite (434) é a base e Pontes (104) é o complemento: +6,0 pontos sobre Bolsonaro em Sorocaba, +5,7 em Itu, +5,8 em Avaré, +4,7 em Votorantim. É o corredor onde os dois carregadores da direita rendem acima do topo ao mesmo tempo. Vitor Lippi (ex-prefeito de Sorocaba) e Simone Marquetto (Itapetininga) são as bases locais.",
         "agenda": "A fábrica que veio. Sorocaba ganhou a segunda planta da Toyota e 2.000 empregos, e o sudoeste industrial quer saber quem garante o próximo ciclo.",
         "palanque": "Tarcísio abre, Flávio fecha. A atração da Toyota é crédito do governo estadual e a região é a mais bolsonarista dos grandes polos: 60,8% para Tarcísio e 55,3% para Flávio na região Atlas de Prudente, Marília e Sorocaba.",
         "frase": "A fábrica veio porque aqui tem quem trabalhe e quem governe.",
@@ -1676,6 +1688,7 @@ PAUTA = {
         "juizo": "É o corredor onde o palanque estadual empurra o nacional sem esforço, e onde a foto conjunta soma. Custo baixo, retorno de mobilização.",
     },
     "cana": {
+        "companhia": "Tarcísio (102) e Pontes (102) empatados, com Salles (115) e Carla (106) acima da média no eleitor do agronegócio. Bases medidas: Ricardo Silva e Delegada Graciela (Ribeirão Preto), Rafael Silva (Franca), Léo Oliveira (Araraquara). Pontes rende +5,3 em Ibitinga e +4,8 em Leme, mas não é a região dele.",
         "agenda": "Etanol que cai na usina e não cai na bomba, tarifa americana no sapato de Franca. A pauta é preço, e preço é federal.",
         "palanque": "Flávio com os deputados de base própria da região e com Tarcísio na pauta de rodovia. Nenhum carregador estadual domina o nordeste paulista; o crédito local vale mais que o nome estadual.",
         "frase": "A usina baixou 23%. A bomba baixou 10%. Alguém ficou com a diferença.",
@@ -1715,6 +1728,7 @@ PAUTA = {
         "juizo": "Direita consolidada, renda média alta e uma pauta de preço que só o governo federal resolve. Corredor de mobilização, e o único onde a economia agrícola tem número diário na TV local.",
     },
     "agro_oeste": {
+        "companhia": "Marcos Pontes é o carregador do centro-oeste paulista: nasceu em Bauru, onde fez 66,1% contra 53,8% de Bolsonaro, +12,3 pontos, e rende acima do topo em Jaú (+6,2), Ourinhos (+6,7), Marília (+5,3), Lins (+5,6), Botucatu (+5,8), Birigui (+5,6) e Assis (+5,2). Derrite (105) e Salles (125) também rendem acima. Bases medidas: Dani Alonso e Vinicius Camarinha (Marília), Mauro Bragato (Presidente Prudente).",
         "agenda": "Emprego que cresce e serviço que falta. O oeste está gerando emprego formal e ainda depende de voo, hospital regional e água que o município não entrega sozinho.",
         "palanque": "Tarcísio e Flávio com os deputados de base concentrada no oeste; é o maior corredor bolsonarista do estado em número de municípios e onde a política se faz por polo regional.",
         "frase": "O oeste sustenta o estado. O estado precisa chegar ao oeste.",
@@ -1892,6 +1906,39 @@ def main():
         [r for r in rows if r["eleitorado"] >= 40000 and r["tar2_menos_bol2_pp"] < 0],
         key=lambda r: r["votos_tarcisio_sem_bolsonaro"],
     )
+    pontes_top = sorted(
+        [r for r in rows if r["eleitorado"] >= 40000],
+        key=lambda r: -r["pontes_menos_bol1_pp"],
+    )
+    pontes_alvos = sorted(
+        [
+            r
+            for r in rows
+            if r["eleitorado"] >= 40000
+            and r["pontes_menos_bol1_pp"] >= 4
+            and r["estoque_pct"] >= 4.9
+        ],
+        key=lambda r: -r["eleitorado"],
+    )
+    pontes = {
+        "definicao": (
+            "Pontes menos Bolsonaro = participação de Marcos Pontes nos votos nominais para o Senado "
+            "no 1º turno de 2022 menos a de Bolsonaro nos votos nominais para presidente, no mesmo "
+            "município. Os universos são quase iguais (mesma cédula, mesmo dia); a diferença estadual é "
+            "+1,97 ponto. Alvos = cidades com 40 mil eleitores ou mais em que Pontes rendeu ao menos 4 "
+            "pontos acima de Bolsonaro e o estoque localizado é de 4,9% ou mais."
+        ),
+        "estado": {
+            "pontes": estado["pontes"],
+            "bolsonaro_1t": estado["bolsonaro_1t"],
+            "municipios_pontes_acima": sum(
+                1 for r in rows if r["pontes_menos_bol1_pp"] > 0
+            ),
+        },
+        "top": pontes_top[:20],
+        "fundo": sorted(pontes_top, key=lambda r: r["pontes_menos_bol1_pp"])[:6],
+        "alvos": pontes_alvos,
+    }
     gov2_total = sum(r["2022_GOVERNADOR_2_total"] for r in CITIES)
     micro = {
         "definicao": (
@@ -1962,6 +2009,7 @@ def main():
         "vao": vao(),
         "estrategia": ESTRATEGIA,
         "micro": micro,
+        "pontes": pontes,
         "carregadores": {
             "estado": estado,
             "chaves": [
@@ -1982,6 +2030,7 @@ def main():
                         "estoque_pct",
                         "estoque2t_votos",
                         "estoque2t_pct",
+                        "pontes_menos_bol1_pp",
                         "garcia1",
                         "tar1",
                         *tuple("i_" + x for x in INDICES),
@@ -2144,28 +2193,43 @@ PRES2 = ["Flávio", "Lula", "Não escolha"]
 
 
 def prior_estagio1():
-    """Prior gov 2026 -> pres 1º turno, composta pela origem de 2022 (Atlas p. 10 e p. 19)."""
-    destinos = ["Tarcísio", "Haddad", "Outros", "Não escolha"]
-    p10 = dict(ATLAS_P10_POR_2022)
-    p10["Outro"] = {
-        "Tarcísio": 10.0,
-        "Haddad": 60.0,
-        "Outros": 20.0,
-        "Não escolha": 10.0,
-    }
+    """Prior gov 2026 -> pres 1º turno: a linha da Atlas p. 19 do grupo de 2022 correspondente.
+
+    Tarcísio 2026 herda a linha de quem votou Tarcísio em 2022; Haddad 2026, a de quem votou
+    Haddad (zero estrutural para Flávio); os candidatos menores de esquerda, a linha "outro";
+    a não escolha, a média de brancos e não votantes. Misturar origens pela composição do
+    eleitorado de 2026 (Atlas p. 10) foi testado e descartado: trata o não votante de 2022 que
+    hoje vota Haddad como o não votante médio, que dá 23% a Flávio, e cria um fluxo
+    Haddad-Flávio que nenhum cruzamento publicado sustenta.
+    """
     prior = {}
-    composicao = {}
-    for d in destinos:
-        pesos = {g: PESO_2022[g] * p10[g][d] / 100 for g in PESO_2022}
-        tot = sum(pesos.values())
-        comp = {g: w / tot for g, w in pesos.items()}
-        composicao[d] = {g: round(v, 3) for g, v in comp.items()}
+    for origem, grupos in (
+        ("Tarcísio", ["Tarcísio"]),
+        ("Haddad", ["Haddad"]),
+        ("Outros", ["Outro"]),
+        ("Não escolha", ["Branco ou nulo", "Não votou"]),
+    ):
         row = dict.fromkeys(PRES1, 0.0)
-        for g, share in comp.items():
+        for g in grupos:
             for c, v in ATLAS_P19_COMPLETO[g].items():
-                row[c] += share * v / 100
+                row[c] += v / 100 / len(grupos)
+        if origem == "Outros":
+            row["Flávio"] = 0.02
         row["Marçal"] = 0.0
-        prior[d] = [row[c] for c in PRES1]
+        prior[origem] = [row[c] for c in PRES1]
+    composicao = {}
+    for d in ("Tarcísio", "Haddad", "Outros", "Não escolha"):
+        pesos = {
+            g: PESO_2022[g]
+            * ATLAS_P10_POR_2022.get(
+                g,
+                {"Tarcísio": 10.0, "Haddad": 60.0, "Outros": 20.0, "Não escolha": 10.0},
+            )[d]
+            / 100
+            for g in PESO_2022
+        }
+        tot = sum(pesos.values())
+        composicao[d] = {g: round(w / tot, 3) for g, w in pesos.items()}
     return prior, composicao
 
 
@@ -2347,9 +2411,10 @@ def fluxos_tres_niveis():
     return {
         "metodo": (
             "Dois estágios de IPF encadeados. Estágio 1 (governador 1º turno para presidente 1º turno): "
-            "a prior de cada candidato a governador é a mistura, pela composição do seu eleitorado por "
-            "voto de 2022 (Atlas p. 10, pesos do TSE 2022), das linhas da Atlas p. 19 que dão o voto "
-            "presidencial de cada grupo de 2022. Estágio 2 (presidente 1º para 2º turno): prior declarada, "
+            "a prior de cada candidato a governador é a linha da Atlas p. 19 do grupo de 2022 "
+            "correspondente (Tarcísio 2022 para Tarcísio 2026, Haddad 2022 para Haddad 2026, com zero "
+            "estrutural de Haddad para Flávio). A composição do eleitorado de 2026 por voto de 2022 "
+            "(Atlas p. 10) fica publicada como referência, não como prior. Estágio 2 (presidente 1º para 2º turno): prior declarada, "
             "condicionada à origem estadual e ao candidato intermediário, calibrada nos saltos medidos "
             "pela Atlas por grupo de 2022 entre p. 19 e p. 23: eleitor de Tarcísio em 2022 que escolheu "
             "terceira via termina 67% em Flávio, 0% em Lula e 33% na não escolha; eleitor de Garcia, 26%, "

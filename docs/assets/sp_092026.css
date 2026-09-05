@@ -1058,3 +1058,35 @@ table.compact th,table.compact td {
   font-size:16.5px;
   padding:16px 18px}
 }
+
+.sk-small {
+  font-size:13px}
+.zoom-bar {
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  align-items:center;
+  margin:0 0 10px}
+.zoom-bar button {
+  padding:6px 12px;
+  border:1px solid var(--ink);
+  background:#fffdf8;
+  border-radius:3px;
+  font-size:13px}
+.zoom-bar button:hover {
+  background:var(--ink);
+  color:var(--paper)}
+.zoom-bar .micro {
+  flex-basis:100%;
+  margin:0}
+#municipal-map {
+  cursor:grab;
+  touch-action:none}
+#municipal-map.dragging {
+  cursor:grabbing}
+.corridor-companhia {
+  font-size:15px;
+  padding:14px 18px;
+  background:#f3efe4;
+  border-left:4px solid var(--corr,var(--green));
+  margin:0 0 6px}

@@ -60,6 +60,29 @@
     legend.firstElementChild.textContent = key==='virada' ? 'Verde: Bolsonaro nas duas · Ocre: Bolsonaro → Lula · Vermelho: PT nas duas · Cinza: empate' : diverging ? `Vermelho: negativo · Claro: zero · Verde: positivo. Escala simétrica de −${fmt(bound,2)} a +${fmt(bound,2)} pp.` : index ? `Vermelho: abaixo de 100 (rende menos que Bolsonaro rendeu ali) · Claro: 100 · Verde: acima de 100. Escala logarítmica, saturando em um terço e no triplo. Intervalo observado: ${fmt(lo)} a ${fmt(hi)}.` : `Claro: menor valor · Verde escuro: maior valor. Intervalo observado: ${fmt(lo,log?0:2)} a ${fmt(hi,log?0:2)}. Escala ${log?'logarítmica para acomodar diferenças de magnitude':'linear'}.`;
     selected();
   }
+  const svg = document.querySelector('#municipal-map');
+  const base = [0, 0, 1000, 660];
+  let vb = base.slice();
+  const apply = () => svg.setAttribute('viewBox', vb.join(' '));
+  const zoomTo = (cx, cy, w) => { const h = w * 0.66; vb = [cx - w / 2, cy - h / 2, w, h]; apply(); };
+  const presets = {metro: [738, 470, 170], baixada: [760, 560, 150], campinas: [640, 400, 220]};
+  const cityCenter = id => { const el = svg.querySelector(`path[data-id="${id}"]`); if (!el) return null; const b = el.getBBox(); return [b.x + b.width / 2, b.y + b.height / 2]; };
+  const capital = cityCenter('3550308');
+  if (capital) { presets.metro = [capital[0], capital[1], 170]; presets.baixada = [capital[0] + 25, capital[1] + 55, 150]; }
+  const campinas = cityCenter('3509502'); if (campinas) presets.campinas = [campinas[0], campinas[1], 220];
+  document.querySelectorAll('.zoom-bar button').forEach(btn => btn.addEventListener('click', () => {
+    const kind = btn.dataset.zoom;
+    if (kind === 'reset') { vb = base.slice(); apply(); return; }
+    const cx = vb[0] + vb[2] / 2, cy = vb[1] + vb[3] / 2;
+    if (kind === 'in') zoomTo(cx, cy, vb[2] / 1.6);
+    else if (kind === 'out') zoomTo(cx, cy, Math.min(1000, vb[2] * 1.6));
+    else if (presets[kind]) zoomTo(...presets[kind]);
+  }));
+  svg.addEventListener('wheel', e => { e.preventDefault(); const cx = vb[0] + vb[2] / 2, cy = vb[1] + vb[3] / 2; zoomTo(cx, cy, Math.min(1000, Math.max(60, vb[2] * (e.deltaY > 0 ? 1.15 : 0.87)))); }, {passive: false});
+  let drag = null;
+  svg.addEventListener('pointerdown', e => { drag = [e.clientX, e.clientY, vb.slice()]; svg.classList.add('dragging'); });
+  window.addEventListener('pointermove', e => { if (!drag) return; const r = svg.getBoundingClientRect(); const k = vb[2] / r.width; vb = [drag[2][0] - (e.clientX - drag[0]) * k, drag[2][1] - (e.clientY - drag[1]) * k, vb[2], vb[3]]; apply(); });
+  window.addEventListener('pointerup', () => { drag = null; svg.classList.remove('dragging'); });
   Promise.all([
     fetch('assets/sp_092026_data.json').then(r=>{if(!r.ok)throw new Error('dados indisponíveis');return r.json();}),
     fetch('assets/sp_092026_camada2.json').then(r=>{if(!r.ok)throw new Error('camada 2 indisponível');return r.json();})

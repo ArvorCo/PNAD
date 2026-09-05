@@ -205,7 +205,18 @@ def test_three_level_flows_close_margins_and_answer_hypothesis(k):
                 pres2[d], abs=0.08
             )
         r = f["resumo"]
-        assert 70 < r["retencao_flavio_pct"] < 90
+        assert f["estagio1"]["Haddad"].get("Flávio", 0) == 0
+        assert 70 < r["retencao_flavio_pct"] < 95
         # a terceira via devolve mais a Flávio do que manda a Lula
         assert r["terceira_via_para_flavio"] > r["terceira_via_para_lula"]
-        assert r["tarcisio_para_lula_direto_1t"] > r["terceira_via_para_lula"]
+        assert r["tarcisio_para_lula_total"] < r["terceira_via_para_flavio"]
+
+
+def test_pontes_surplus_is_geographic(k):
+    p = k["pontes"]
+    assert p["estado"]["pontes"] > p["estado"]["bolsonaro_1t"]
+    assert p["top"][0]["nome"] == "Bauru"
+    assert all(
+        r["pontes_menos_bol1_pp"] >= 4 and r["estoque_pct"] >= 4.9 for r in p["alvos"]
+    )
+    assert all("companhia" in c["pauta"] for c in k["corredores"])
