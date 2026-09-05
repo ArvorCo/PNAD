@@ -167,9 +167,11 @@ def elections(cities):
             r["tarcisio_2022_2_pct"] - r["jair_2022_2_pct"]
         )
         r["virada"] = " → ".join(
-            "Jair"
-            if r[f"jair_{year}_2"] > r[f"pt_{year}_2"]
-            else ("PT" if r[f"jair_{year}_2"] < r[f"pt_{year}_2"] else "Empate")
+            (
+                "Jair"
+                if r[f"jair_{year}_2"] > r[f"pt_{year}_2"]
+                else ("PT" if r[f"jair_{year}_2"] < r[f"pt_{year}_2"] else "Empate")
+            )
             for year in (2018, 2022)
         )
     return {k: dict(v) for k, v in totals.items()}, audit

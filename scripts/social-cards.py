@@ -44,10 +44,14 @@ CARDS: list[dict] = [
     {
         "slug": "sp_092026",
         "eyebrow": "Atlas estadual 02 · São Paulo · setembro de 2026",
-        "title": "A maioria permaneceu.",
-        "title_em": "A vantagem encolheu.",
-        "lede": "Votos e economia dos <b>645 municípios paulistas</b>, PNAD e pesquisas estaduais recentes. Dados, fontes e limites explícitos.",
-        "stats": [("34,1 mi", "eleitores"), ("83", "viradas para Lula"), ("645", "municípios")],
+        "title": "O voto de Tarcísio",
+        "title_em": "que ainda não é de Flávio.",
+        "lede": "Um em cada sete eleitores de Tarcísio no 2º turno não vota Flávio. <b>Reponderação, três fluxos, o vão por recorte</b> e nove corredores de campanha em SP.",
+        "stats": [
+            ("7,0", "pontos de vão"),
+            ("14%", "do eleitor de Tarcísio"),
+            ("9", "corredores"),
+        ],
         "foot": "TSE · IBGE · pesquisas estaduais · corte em 05/09/2026",
         "accent": "amber",
     },
