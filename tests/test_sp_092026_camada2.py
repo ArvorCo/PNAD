@@ -174,3 +174,38 @@ def test_corridors_are_disjoint_and_sourced(k):
     assert "—" not in html and "–" not in html
     assert html.count('class="corridor"') == 9
     assert html.count("<svg") >= 13
+
+
+def test_three_level_flows_close_margins_and_answer_hypothesis(k):
+    f3 = k["fluxos3"]
+    assert [f["nome"].split(":")[0] for f in f3["fluxos"]] == [
+        "Datafolha",
+        "Atlas",
+        "Real Time",
+    ] or [f["nome"].split(":")[0] for f in f3["fluxos"]] == [
+        "Atlas",
+        "Datafolha",
+        "Real Time",
+    ]
+    for f in f3["fluxos"]:
+        gov1, pres1, pres2 = (
+            f["niveis"]["gov1"],
+            f["niveis"]["pres1"],
+            f["niveis"]["pres2"],
+        )
+        s1, s2 = sum(gov1.values()), sum(pres1.values())
+        for o, row in f["estagio1"].items():
+            assert sum(row.values()) == pytest.approx(gov1[o] * s2 / s1, abs=0.06)
+        for c in pres1:
+            assert sum(f["estagio1"][o][c] for o in gov1) == pytest.approx(
+                pres1[c], abs=0.06
+            )
+        for d in pres2:
+            assert sum(f["estagio2"][c][d] for c in pres1) == pytest.approx(
+                pres2[d], abs=0.08
+            )
+        r = f["resumo"]
+        assert 70 < r["retencao_flavio_pct"] < 90
+        # a terceira via devolve mais a Flávio do que manda a Lula
+        assert r["terceira_via_para_flavio"] > r["terceira_via_para_lula"]
+        assert r["tarcisio_para_lula_direto_1t"] > r["terceira_via_para_lula"]

@@ -27,6 +27,7 @@ FLOWS = K["fluxos"]
 VAO = K["vao"]
 E = K["estrategia"]
 CARR = K["carregadores"]
+F3 = K["fluxos3"]
 MICRO = K["micro"]
 SERIE = R["serie"]
 CORR = K["corredores"]
@@ -294,6 +295,132 @@ def sankey_svg(flow, ident):
     )
     return (
         f'<svg id="{ident}" viewBox="0 0 {W} {H}" role="img" aria-label="{esc(flow["nome"])}"><title>{esc(flow["nome"])}</title>'
+        + "".join(parts)
+        + "</svg>"
+    )
+
+
+def sankey3_svg(f, ident):
+    """Três colunas: governador 1º turno, presidente 1º turno, presidente 2º turno. Parcela de Tarcísio em verde."""
+    W, H = 1000, 520
+    top, bottom = 44, 490
+    xs = (175, 500, 825)
+    node_w = 26
+    color_of = {
+        "Flávio": GOLD,
+        "Lula": RED,
+        "Tarcísio": GREEN,
+        "Haddad": RED,
+        "Não escolha": "#8a8f86",
+        "Outros": "#7f9aa8",
+        "Cury": "#7f9aa8",
+        "Renan": "#7f9aa8",
+        "Zema": "#7f9aa8",
+        "Caiado": "#7f9aa8",
+        "Marçal": "#7f9aa8",
+    }
+    cls_of = {"Flávio": "dir", "Lula": "esq", "Não escolha": "neu"}
+    levels = [f["niveis"]["gov1"], f["niveis"]["pres1"], f["niveis"]["pres2"]]
+    parts = [
+        hatch_defs(),
+        f'<pattern id="h-tar-{ident}" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(45)"><rect width="7" height="7" fill="{GREEN}" fill-opacity="0.22"/><line x1="0" y1="0" x2="0" y2="7" stroke="{GREEN}" stroke-width="2.6" stroke-opacity="0.85"/></pattern>',
+    ]
+    pos = []
+    for li, level in enumerate(levels):
+        n = len(level)
+        scale = (bottom - top - 8 * (n - 1)) / sum(level.values())
+        y = top
+        cur = {}
+        for name, v in level.items():
+            h = v * scale
+            cur[name] = {"y0": y, "h": h, "in": y, "out": y, "scale": scale}
+            parts.append(
+                f'<rect x="{xs[li]}" y="{y:.1f}" width="{node_w}" height="{max(h, 1):.1f}" fill="{color_of.get(name, "#7f9aa8")}"/>'
+            )
+            anchor = "end" if li == 0 else "start"
+            lx = xs[li] - 10 if li == 0 else xs[li] + node_w + 10
+            parts.append(
+                f'<text x="{lx}" y="{y + h / 2 + 5:.1f}" text-anchor="{anchor}" class="sk-label{" sk-mid" if li == 1 else ""}">{esc(name)} <tspan class="sk-val">{fmt(v, 1 if isinstance(v, float) else 0)}</tspan></text>'
+            )
+            y += h + 8
+        pos.append(cur)
+
+    def ribbon(x1, x2, y1, y2, h, fill, title):
+        xm = (x1 + x2) / 2
+        return f'<path d="M{x1},{y1:.1f} C{xm},{y1:.1f} {xm},{y2:.1f} {x2},{y2:.1f} L{x2},{y2 + h:.1f} C{xm},{y2 + h:.1f} {xm},{y1 + h:.1f} {x1},{y1 + h:.1f} Z" fill="{fill}" stroke="#192e2b" stroke-opacity="0.18" stroke-width="0.5"><title>{title}</title></path>'
+
+    ribbons, labels = [], []
+    # estágio 1
+    for o, row in f["estagio1"].items():
+        for c, v in row.items():
+            if v < 0.15:
+                continue
+            h1 = v * pos[0][o]["scale"]
+            h2 = v * pos[1][c]["scale"]
+            y1 = pos[0][o]["out"]
+            y2 = pos[1][c]["in"]
+            pos[0][o]["out"] += h1
+            pos[1][c]["in"] += h2
+            fill = (
+                f"url(#h-tar-{ident})"
+                if o == "Tarcísio"
+                else f"url(#h-{cls_of.get(c, 'out')})"
+            )
+            ribbons.append(
+                ribbon(
+                    xs[0] + node_w,
+                    xs[1],
+                    y1,
+                    y2,
+                    (h1 + h2) / 2,
+                    fill,
+                    f"{esc(o)} para {esc(c)}: {fmt(v, 1)} pontos (estimado)",
+                )
+            )
+            if v >= 2 and o == "Tarcísio" and c != "Flávio":
+                labels.append(
+                    f'<text x="{(xs[0] + xs[1]) / 2 + 13:.1f}" y="{(y1 + y2) / 2 + h2 / 2 + 4:.1f}" text-anchor="middle" class="sk-flow">Tarcísio para {esc(c)}: {fmt(v, 1)}</text>'
+                )
+    # estágio 2: parcela de Tarcísio primeiro, depois o resto
+    for c, row in f["estagio2"].items():
+        for d, v in row.items():
+            vt = f["estagio2_origem_tarcisio"][c][d]
+            for part, fill, tag in (
+                (vt, f"url(#h-tar-{ident})", "origem Tarcísio"),
+                (v - vt, f"url(#h-{cls_of.get(d, 'out')})", "outras origens"),
+            ):
+                if part < 0.15:
+                    continue
+                h1 = part * pos[1][c]["scale"]
+                h2 = part * pos[2][d]["scale"]
+                y1 = pos[1][c]["out"]
+                y2 = pos[2][d]["in"]
+                pos[1][c]["out"] += h1
+                pos[2][d]["in"] += h2
+                ribbons.append(
+                    ribbon(
+                        xs[1] + node_w,
+                        xs[2],
+                        y1,
+                        y2,
+                        (h1 + h2) / 2,
+                        fill,
+                        f"{esc(c)} para {esc(d)}, {tag}: {fmt(part, 1)} pontos (estimado)",
+                    )
+                )
+    parts.extend(ribbons)
+    parts.extend(labels)
+    for li, t in enumerate(
+        ("Governador · 1º turno", "Presidente · 1º turno", "Presidente · 2º turno")
+    ):
+        parts.append(
+            f'<text x="{xs[li] + node_w / 2}" y="{top - 16}" text-anchor="middle" class="sk-head">{t}</text>'
+        )
+    parts.append(
+        f'<rect x="{xs[0]}" y="{H - 14}" width="16" height="10" fill="url(#h-tar-{ident})"/><text x="{xs[0] + 22}" y="{H - 5}" class="axis-t">parcela que saiu de Tarcísio</text>'
+    )
+    return (
+        f'<svg id="{ident}" viewBox="0 0 {W} {H}" role="img" aria-label="{esc(f["nome"])}"><title>{esc(f["nome"])}</title>'
         + "".join(parts)
         + "</svg>"
     )
@@ -1283,6 +1410,48 @@ def ch_renda():
     )
 
 
+def tres_niveis_html():
+    body = '<h3 class="mt">Três níveis: por onde passa o voto de Tarcísio antes de chegar ao 2º turno</h3><p>A hipótese a testar é direta: parte do voto de Tarcísio que termina em Lula passaria por Renan Santos ou por outro nome da terceira via no 1º turno. Para testar, o diagrama ganha uma coluna: governador no 1º turno, presidente no 1º turno, presidente no 2º turno. As fitas verdes são a parcela que saiu de Tarcísio; onde uma fita verde chega a Lula ou à não escolha na terceira coluna, ali está o vazamento, e a coluna do meio diz por quem ele passou.</p>'
+    for i, f in enumerate(F3["fluxos"]):
+        r = f["resumo"]
+        body += (
+            f'<div class="flow-shell"><div class="flow-head"><div>{stamp("observed", "Nós = margem publicada")} {stamp("estimated", "Fitas = IPF em dois estágios")}</div><p class="flow-caption">{esc(f["nome"])}. {esc(f["fonte"])}.</p></div>'
+            + sankey3_svg(f, f"flow3-{i}")
+        )
+        body += '<div class="flow-facts">'
+        body += f'<div><span>Direto, sem passar pela terceira via</span><b>{fmt(r["tarcisio_para_lula_direto_1t"], 1)} pontos de Tarcísio já votam Lula no 1º turno</b><small>de {fmt(r["tarcisio_para_lula_total"], 1)} que terminam em Lula no 2º turno</small></div>'
+        body += f'<div><span>Pela terceira via</span><b>{fmt(r["tarcisio_para_terceira_via"], 1)} pontos de Tarcísio escolhem terceira via no 1º turno</b><small>no 2º turno: {fmt(r["terceira_via_para_flavio"], 1)} voltam a Flávio, {fmt(r["terceira_via_para_nao_escolha"], 1)} anulam, {fmt(r["terceira_via_para_lula"], 1)} vão a Lula; maior carregador: {esc(r["maior_via_terceira"])}</small></div>'
+        body += f'<div><span>Retenção ao fim do caminho</span><b>{fmt(r["retencao_flavio_pct"], 1)}% do eleitor de Tarcísio termina com Flávio</b><small>{fmt(r["tarcisio_para_nao_escolha_total"], 1)} pontos terminam na não escolha</small></div></div>'
+        body += table(
+            [
+                "Candidato intermediário",
+                "Tarcísio para ele · 1º turno",
+                "Dele para Flávio · 2º",
+                "Dele para Lula · 2º",
+                "Dele para não escolha · 2º",
+            ],
+            [
+                [
+                    esc(c["via"]),
+                    fmt(c["tarcisio_para_via"], 2),
+                    fmt(c["tarcisio_via_flavio"], 2),
+                    fmt(c["tarcisio_via_lula"], 2),
+                    fmt(c["tarcisio_via_nao_escolha"], 2),
+                ]
+                for c in f["caminhos"]
+                if c["tarcisio_para_via"] >= 0.1
+            ],
+            cls="compact",
+        )
+        body += "</div>"
+    body += (
+        '<div class="callout counter"><span class="stamp limit">O que o teste devolve</span><h3>A terceira via não leva o voto de Tarcísio a Lula. Leva ao nulo, e devolve a maior parte a Flávio.</h3><p>Nos três institutos, o eleitor de Tarcísio que termina em Lula é, em mais de 85% dos casos, alguém que já vota Lula no 1º turno: 5,7 de 6,5 pontos na Atlas, 5,4 de 6,0 no Datafolha, 5,0 de 8,6 na Real Time. É o eleitor que separa os dois cargos de propósito, não o que se perde no caminho. A terceira via carrega uma fatia maior do voto de Tarcísio no 1º turno (8,3 pontos na Atlas, 5,6 no Datafolha, 12,2 na Real Time, onde Marçal está na lista), e no 2º turno essa fatia se divide em dois terços para Flávio e um terço para a não escolha. Só na Real Time, onde Lula tem 49, o modelo precisa mandar 1,8 ponto da terceira via para Lula para fechar a conta.</p><p>Quem carrega: na Atlas, Renan (3,3) e Cury (3,3) empatados; no Datafolha, Caiado (1,8) e Zema (1,7); na Real Time, Marçal (5,4) e Renan (3,0). <b>O custo da terceira via para a direita paulista é o nulo do 2º turno, não o voto em Lula.</b> A hipótese de que Renan alimenta Lula não passa no teste com os dados de agosto; ela passaria se o eleitor de Tarcísio que escolhe terceira via se comportasse como o eleitor de Garcia, e a Atlas mostra que não se comporta: entre os que votaram Tarcísio em 2022 e escolhem terceira via em 2026, zero vai a Lula (p. 19 e 23).</p><p class="note">Método em '
+        + link("assets/sp_092026_camada2.json", "sp_092026_camada2.json")
+        + ": estágio 1 com prior composta pela origem de 2022 (Atlas p. 10 e 19, pesos do TSE); estágio 2 com prior condicionada à origem e ao intermediário, calibrada em p. 19 e 23; cubo ajustado às células do estágio 1 e à margem do 2º turno. A Quaest não publica 2º turno presidencial e fica fora. Estimativa, não medição: o cruzamento direto exigiria microdados.</p></div>"
+    )
+    return body
+
+
 def ch_fluxos():
     body = '<div class="flow-notes"><div><b>Nós sólidos</b><p>São as margens publicadas de cada instituto: o 2º turno estadual à esquerda e o presidencial à direita, na mesma amostra.</p></div><div><b>Fitas hachuradas</b><p>São estimativa por IPF. A prior é empírica: a Atlas cruza o voto de 2022 para governador com o voto presidencial de 2026 (p. 23), e essa proporção é o ponto de partida ajustado até fechar as margens de cada instituto.</p></div><div><b>O que sobrevive à troca da prior</b><p>Quanto Flávio recebe a menos que Tarcísio, quanto Lula recebe a mais que Haddad e quanto a não escolha cresce. Esses três números são impostos pelas margens. O corte fita a fita depende da prior e não deve ser tratado como medição.</p></div></div>'
     for i, f in enumerate(FLOWS):
@@ -1296,6 +1465,7 @@ def ch_fluxos():
         body += f'<div><span>Estimado por IPF</span><b>{fmt(es["tarcisio_para_direita_pct"], 1)}% do eleitor de Tarcísio vota Flávio</b><small>{fmt(es["tarcisio_para_esquerda_pct"], 1)}% vai a Lula ({fmt(es["tarcisio_para_esquerda_pontos"], 1)} pontos) e {fmt(es["tarcisio_para_nao_escolha_pct"], 1)}% anula ou não sabe ({fmt(es["tarcisio_para_nao_escolha_pontos"], 1)} pontos)</small></div>'
         body += f'<div><span>Fidelidade do outro lado</span><b>{fmt(es["haddad_para_esquerda_pct"], 1)}% do eleitor de Haddad vota Lula</b><small>{"1º turno: parte do eleitor de Tarcísio vai a Caiado, Zema, Renan e Cury" if f["tipo"] != "2T para 2T" else "a base petista não vaza"}</small></div></div></div>'
     body += '<div class="grid-4"><article class="card"><span class="metric">14,0%</span><h3>Datafolha: o vazamento vai para Lula</h3><p>Tarcísio 54 vira Flávio 47 e Haddad 35 vira Lula 42. Sete pontos saem de um lado e sete entram no outro, com a não escolha parada em 11 e 10. A pesquisa de pontos de fluxo mede um eleitor de Tarcísio que, sem Tarcísio, prefere Lula a Flávio.</p></article><article class="card"><span class="metric gold">13,2%</span><h3>Atlas: o vazamento vai para o branco</h3><p>Tarcísio 53,2 vira Flávio 46,8, mas Haddad 42,6 vira Lula 43,3, quase nada. A perda de 6,4 pontos aparece na não escolha, que sobe de 4,2 para 9,9. A pesquisa digital mede um eleitor de Tarcísio que, sem Tarcísio, não vota em ninguém.</p></article><article class="card"><span class="metric">19,6%</span><h3>Real Time: o maior vazamento, e para Lula</h3><p>Tarcísio 54 vira Flávio 44 e Haddad 36 vira Lula 49: dez pontos saem de um lado e treze entram no outro. Um em cada cinco eleitores de Tarcísio não vota Flávio, e o IPF estima 11,9% deles com Lula. É a pesquisa telefônica, e é a que mais separa o governador do candidato.</p></article><article class="card"><span class="metric red">36,7%</span><h3>Quaest: a dispersão do 1º turno</h3><p>Sem 2º turno presidencial no relatório, o destino é o 1º turno: Tarcísio 47 vira Flávio 30. A prior da Atlas manda cerca de um quinto do eleitor de Tarcísio para Caiado, Zema, Renan e Cury, e é aí que o voto útil da direita ainda está por consolidar.</p></article></div>'
+    body += tres_niveis_html()
     body += '<div class="callout"><h3>O que as quatro pesquisas dizem juntas</h3><p>Em qualquer método, entre um em sete e um em cinco eleitores de Tarcísio no 2º turno não vota Flávio no 2º turno: 14,0% no Datafolha, 13,2% na Atlas, 19,6% na Real Time. A divergência entre os institutos é sobre o destino. Presencial e telefônico, ele vira voto em Lula; digital, vira voto nulo. Para a campanha as duas leituras convergem numa só instrução: <b>o eleitor de Tarcísio que falta é conquistável, porque nem o Datafolha o dá como petista convicto nem a Atlas o dá como abstencionista convicto</b>. Ele está no meio, e o capítulo seguinte mostra onde.</p></div>'
     alt = E["atlas"]["cenarios_2t"]
     body += (
@@ -1623,13 +1793,13 @@ def ch_micro():
     body += f'<div><span>Estoque localizado pelo 2º turno</span><b>{fmt(e["estoque2t_votos_total"] / 1e6, 2)} mi</b><small>{fmt(100 * co["Tarcísio 2T"], 1)}% dos eleitores de Tarcísio e {fmt(100 * co["Haddad 2T"], 1)}% dos de Haddad em 2022</small></div>'
     body += "<div><span>Vão total da Atlas</span><b>2,2 mi</b><small>6,4 pontos de 34,1 milhões; o estoque localiza a metade que votou em candidato em 2022</small></div></div>"
     body += (
-        '<div class="plain">A urna de 2022 não separa Tarcísio de Bolsonaro: no 2º turno os dois tiveram o mesmo eleitorado em toda cidade, com diferença abaixo de um ponto. O que separa os dois em 2026 é o mandato, e quem mede isso são as pesquisas. A Atlas cruza o voto de 2022 com a intenção de 2026 e diz quanto de cada eleitorado antigo virou eleitor de Tarcísio que não é de Flávio: '
+        '<div class="plain">A urna de 2022 não separa Tarcísio de Bolsonaro: no 2º turno os dois tiveram o mesmo eleitorado em toda cidade, com diferença abaixo de um ponto. O que separa os dois em 2026 é o mandato, e quem mede isso são as pesquisas. A Atlas de agosto de 2026 pergunta ao entrevistado em quem votou em 2022 e cruza essa lembrança com a intenção de 2026 (p. 14, 19 e 23); não há pesquisa de 2022 aqui, e Rodrigo Garcia aparece só como origem: é o eleitor que votou nele em 2022 e hoje responde à Atlas. O cruzamento diz quanto de cada eleitorado de 2022 virou eleitor de Tarcísio que não é de Flávio: '
         + fmt(100 * co["Tarcísio"], 1)
         + "% dos que votaram Tarcísio no 1º turno, "
         + fmt(100 * co["Haddad"], 1)
         + "% dos que votaram Haddad e "
         + fmt(100 * co["Rodrigo Garcia"], 1)
-        + "% dos que votaram Rodrigo Garcia. Aplicar essas fatias ao voto de cada município é o mapa mais preciso que os documentos permitem, e ele aponta para o eleitor tucano do interior rico.</div>"
+        + "% dos que votaram Rodrigo Garcia. Os votos de 2022 de cada cidade são dado eleitoral do TSE; as fatias vêm da pesquisa de 2026. Aplicar as fatias ao voto de cada município é o mapa mais preciso que os documentos permitem, e ele aponta para o eleitor tucano do interior rico.</div>"
     )
     top = m["trabalho"]
     body += '<div class="chart-shell"><div class="chart-title"><div><p class="kicker">Onde o estoque é maior em votos</p><h3>As trinta cidades com mais eleitores de Tarcísio que não são de Flávio</h3></div><span>municípios com 30 mil eleitores ou mais</span></div>'

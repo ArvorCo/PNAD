@@ -1958,6 +1958,7 @@ def main():
         },
         "reponderacao": reponderacao(),
         "fluxos": fluxos(),
+        "fluxos3": fluxos_tres_niveis(),
         "vao": vao(),
         "estrategia": ESTRATEGIA,
         "micro": micro,
@@ -2028,6 +2029,348 @@ def main():
             c["resumo"]["i_derrite"],
             [a["nome"] for a in c["ancoras"]],
         )
+
+
+# ------------------------------------------------------------- três níveis
+# Atlas p. 10: intenção de 2026 para governador por voto de 2022 (1º turno).
+ATLAS_P10_POR_2022 = {
+    "Tarcísio": {"Tarcísio": 98.0, "Haddad": 0.4, "Outros": 0.0, "Não escolha": 1.5},
+    "Haddad": {"Tarcísio": 0.3, "Haddad": 97.3, "Outros": 2.1, "Não escolha": 0.2},
+    "Rodrigo Garcia": {
+        "Tarcísio": 36.5,
+        "Haddad": 50.9,
+        "Outros": 2.0,
+        "Não escolha": 10.6,
+    },
+    "Branco ou nulo": {
+        "Tarcísio": 0.3,
+        "Haddad": 7.7,
+        "Outros": 46.2,
+        "Não escolha": 45.7,
+    },
+    "Não votou": {"Tarcísio": 43.6, "Haddad": 43.6, "Outros": 2.8, "Não escolha": 9.9},
+}
+# Atlas p. 19: 1º turno presidencial de 2026 por voto de 2022 para governador (1º turno).
+ATLAS_P19_COMPLETO = {
+    "Tarcísio": {
+        "Flávio": 85.1,
+        "Lula": 0.5,
+        "Cury": 4.8,
+        "Renan": 6.5,
+        "Zema": 1.6,
+        "Caiado": 0.9,
+        "Outros": 0.1,
+        "Não escolha": 0.4,
+    },
+    "Haddad": {
+        "Flávio": 0.0,
+        "Lula": 95.2,
+        "Cury": 1.7,
+        "Renan": 0.1,
+        "Zema": 0.0,
+        "Caiado": 0.8,
+        "Outros": 2.0,
+        "Não escolha": 0.1,
+    },
+    "Rodrigo Garcia": {
+        "Flávio": 11.0,
+        "Lula": 27.0,
+        "Cury": 31.9,
+        "Renan": 6.7,
+        "Zema": 8.2,
+        "Caiado": 6.8,
+        "Outros": 0.0,
+        "Não escolha": 8.5,
+    },
+    "Outro": {
+        "Flávio": 9.4,
+        "Lula": 47.3,
+        "Cury": 24.5,
+        "Renan": 7.9,
+        "Zema": 0.0,
+        "Caiado": 0.0,
+        "Outros": 9.9,
+        "Não escolha": 0.9,
+    },
+    "Branco ou nulo": {
+        "Flávio": 0.4,
+        "Lula": 7.8,
+        "Cury": 33.7,
+        "Renan": 25.1,
+        "Zema": 0.0,
+        "Caiado": 0.1,
+        "Outros": 16.4,
+        "Não escolha": 16.5,
+    },
+    "Não votou": {
+        "Flávio": 22.9,
+        "Lula": 35.0,
+        "Cury": 7.0,
+        "Renan": 18.4,
+        "Zema": 0.0,
+        "Caiado": 0.9,
+        "Outros": 8.2,
+        "Não escolha": 7.6,
+    },
+}
+# Peso de cada grupo de 2022 no eleitorado paulista: votos do TSE (1º turno para
+# governador) e comparecimento. Brancos/nulos e abstenção aproximados pela
+# diferença entre eleitorado, comparecimento e válidos.
+PESO_2022 = {
+    "Tarcísio": 0.285,
+    "Haddad": 0.240,
+    "Rodrigo Garcia": 0.124,
+    "Outro": 0.024,
+    "Branco ou nulo": 0.115,
+    "Não votou": 0.212,
+}
+PRES1 = [
+    "Flávio",
+    "Lula",
+    "Cury",
+    "Renan",
+    "Zema",
+    "Caiado",
+    "Marçal",
+    "Outros",
+    "Não escolha",
+]
+PRES2 = ["Flávio", "Lula", "Não escolha"]
+# Prior do 2º estágio, declarada. Calibrada nos saltos medidos pela Atlas por grupo de
+# 2022 entre p. 19 e p. 23: entre eleitores de Garcia, a terceira via de 1º turno (53,6)
+# termina 47% em Lula, 26% em Flávio e 27% na não escolha; entre eleitores de Tarcísio
+# 2022 (13,8), 67% em Flávio, 0% em Lula e 33% na não escolha. Cury é o favorito do
+# eleitor de Garcia; Renan, do não votante e do branco de 2022.
+
+
+def prior_estagio1():
+    """Prior gov 2026 -> pres 1º turno, composta pela origem de 2022 (Atlas p. 10 e p. 19)."""
+    destinos = ["Tarcísio", "Haddad", "Outros", "Não escolha"]
+    p10 = dict(ATLAS_P10_POR_2022)
+    p10["Outro"] = {
+        "Tarcísio": 10.0,
+        "Haddad": 60.0,
+        "Outros": 20.0,
+        "Não escolha": 10.0,
+    }
+    prior = {}
+    composicao = {}
+    for d in destinos:
+        pesos = {g: PESO_2022[g] * p10[g][d] / 100 for g in PESO_2022}
+        tot = sum(pesos.values())
+        comp = {g: w / tot for g, w in pesos.items()}
+        composicao[d] = {g: round(v, 3) for g, v in comp.items()}
+        row = dict.fromkeys(PRES1, 0.0)
+        for g, share in comp.items():
+            for c, v in ATLAS_P19_COMPLETO[g].items():
+                row[c] += share * v / 100
+        row["Marçal"] = 0.0
+        prior[d] = [row[c] for c in PRES1]
+    return prior, composicao
+
+
+def prior_destino(origem, via):
+    """Prior do destino de 2º turno condicionada à origem estadual e ao candidato intermediário."""
+    if via == "Flávio":
+        return [0.99, 0.005, 0.005]
+    if via == "Lula":
+        return [0.005, 0.99, 0.005]
+    if via == "Outros":
+        return [0.02, 0.88, 0.10]
+    if via == "Não escolha":
+        return {"Tarcísio": [0.35, 0.10, 0.55], "Haddad": [0.05, 0.40, 0.55]}.get(
+            origem, [0.15, 0.30, 0.55]
+        )
+    # terceira via: Cury, Renan, Zema, Caiado, Marçal
+    return {
+        "Tarcísio": [0.67, 0.03, 0.30],
+        "Haddad": [0.10, 0.70, 0.20],
+        "Outros": [0.10, 0.65, 0.25],
+    }.get(origem, [0.26, 0.47, 0.27])
+
+
+def ipf3(prior, celulas, cols, iters=3000):
+    """Ajusta o cubo origem x via x destino: soma em destino = célula do estágio 1; soma em (origem, via) = margem do 2º turno."""
+    m = prior * celulas[:, :, None]
+    for _ in range(iters):
+        m *= (celulas / np.maximum(m.sum(axis=2), 1e-12))[:, :, None]
+        m *= (cols / np.maximum(m.sum(axis=(0, 1)), 1e-12))[None, None, :]
+    return m
+
+
+def flow3(nome, fonte, gov1, pres1, pres2, prior1):
+    origens = list(gov1)
+    p1 = [c for c in PRES1 if pres1.get(c, 0) > 0]
+    rows = np.array([gov1[o] for o in origens], dtype=float)
+    cols1 = np.array([pres1[c] for c in p1], dtype=float)
+    pr1 = np.array(
+        [
+            [
+                prior1[o][PRES1.index(c)]
+                + (0.02 if c == "Marçal" and o in ("Tarcísio", "Não escolha") else 0.0)
+                for c in p1
+            ]
+            for o in origens
+        ]
+    )
+    m1 = ipf(pr1, rows * cols1.sum() / rows.sum(), cols1)
+    cols2 = np.array([pres2[c] for c in PRES2], dtype=float)
+    celulas = m1 * cols2.sum() / m1.sum()
+    pr2 = np.array([[prior_destino(o, c) for c in p1] for o in origens])
+    cubo = ipf3(pr2, celulas, cols2)
+    est1 = {
+        o: {c: round(float(m1[i, j]), 2) for j, c in enumerate(p1)}
+        for i, o in enumerate(origens)
+    }
+    est2 = {
+        c: {d: round(float(cubo[:, j, k].sum()), 2) for k, d in enumerate(PRES2)}
+        for j, c in enumerate(p1)
+    }
+    est2_tarcisio = {
+        c: {d: round(float(cubo[0, j, k]), 2) for k, d in enumerate(PRES2)}
+        for j, c in enumerate(p1)
+    }
+    caminhos = []
+    for j, c in enumerate(p1):
+        t_c = float(cubo[0, j].sum())
+        caminhos.append(
+            {
+                "via": c,
+                "tarcisio_para_via": round(t_c, 2),
+                "via_para_lula_pct": round(
+                    100 * float(cubo[:, j, 1].sum() / max(cubo[:, j].sum(), 1e-9)), 1
+                ),
+                "tarcisio_via_lula": round(float(cubo[0, j, 1]), 2),
+                "tarcisio_via_flavio": round(float(cubo[0, j, 0]), 2),
+                "tarcisio_via_nao_escolha": round(float(cubo[0, j, 2]), 2),
+            }
+        )
+    terceira = [
+        k for k in caminhos if k["via"] in ("Cury", "Renan", "Zema", "Caiado", "Marçal")
+    ]
+    t_total = float(cubo[0].sum())
+    return {
+        "nome": nome,
+        "fonte": fonte,
+        "niveis": {"gov1": gov1, "pres1": {c: pres1[c] for c in p1}, "pres2": pres2},
+        "estagio1": est1,
+        "estagio2": est2,
+        "estagio2_origem_tarcisio": est2_tarcisio,
+        "caminhos": caminhos,
+        "resumo": {
+            "tarcisio_total_2t": round(t_total, 2),
+            "tarcisio_para_flavio_total": round(float(cubo[0, :, 0].sum()), 2),
+            "tarcisio_para_lula_total": round(float(cubo[0, :, 1].sum()), 2),
+            "tarcisio_para_nao_escolha_total": round(float(cubo[0, :, 2].sum()), 2),
+            "tarcisio_para_lula_direto_1t": round(
+                float(cubo[0, p1.index("Lula")].sum()), 2
+            ),
+            "tarcisio_para_terceira_via": round(
+                sum(k["tarcisio_para_via"] for k in terceira), 2
+            ),
+            "terceira_via_para_lula": round(
+                sum(k["tarcisio_via_lula"] for k in terceira), 2
+            ),
+            "terceira_via_para_flavio": round(
+                sum(k["tarcisio_via_flavio"] for k in terceira), 2
+            ),
+            "terceira_via_para_nao_escolha": round(
+                sum(k["tarcisio_via_nao_escolha"] for k in terceira), 2
+            ),
+            "maior_via_terceira": max(terceira, key=lambda k: k["tarcisio_para_via"])[
+                "via"
+            ],
+            "maior_via_para_lula": max(terceira, key=lambda k: k["tarcisio_via_lula"])[
+                "via"
+            ],
+            "retencao_flavio_pct": round(100 * float(cubo[0, :, 0].sum()) / t_total, 1),
+        },
+    }
+
+
+def fluxos_tres_niveis():
+    prior1, composicao = prior_estagio1()
+    out = [
+        flow3(
+            "Atlas: governador 1º turno, presidente 1º turno, presidente 2º turno",
+            "Atlas/Estadão p. 8, 17 e 21",
+            {"Tarcísio": 51.1, "Haddad": 39.9, "Outros": 3.5, "Não escolha": 5.5},
+            {
+                "Flávio": 39.9,
+                "Lula": 36.0,
+                "Cury": 8.6,
+                "Renan": 6.8,
+                "Zema": 1.6,
+                "Caiado": 1.5,
+                "Outros": 2.8,
+                "Não escolha": 2.8,
+            },
+            {"Flávio": 46.8, "Lula": 43.3, "Não escolha": 9.9},
+            prior1,
+        ),
+        flow3(
+            "Datafolha: governador 1º turno, presidente 1º turno, presidente 2º turno",
+            "Datafolha p. 8 e Poder360 de 22/08/2026",
+            {"Tarcísio": 45, "Haddad": 27, "Outros": 13, "Não escolha": 15},
+            {
+                "Flávio": 37,
+                "Lula": 33,
+                "Cury": 3,
+                "Renan": 5,
+                "Zema": 3,
+                "Caiado": 4,
+                "Outros": 5,
+                "Não escolha": 10,
+            },
+            {"Flávio": 47, "Lula": 42, "Não escolha": 10},
+            prior1,
+        ),
+        flow3(
+            "Real Time: governador 1º turno, presidente 1º turno, presidente 2º turno",
+            "Real Time Big Data, laudo de governo p. 7 e laudo presidencial p. 7 e 12",
+            {"Tarcísio": 52, "Haddad": 35, "Outros": 2, "Não escolha": 11},
+            {
+                "Flávio": 38,
+                "Lula": 33,
+                "Cury": 1,
+                "Renan": 7,
+                "Zema": 3,
+                "Caiado": 4,
+                "Marçal": 7,
+                "Outros": 1,
+                "Não escolha": 6,
+            },
+            {"Flávio": 44, "Lula": 49, "Não escolha": 7},
+            prior1,
+        ),
+    ]
+    return {
+        "metodo": (
+            "Dois estágios de IPF encadeados. Estágio 1 (governador 1º turno para presidente 1º turno): "
+            "a prior de cada candidato a governador é a mistura, pela composição do seu eleitorado por "
+            "voto de 2022 (Atlas p. 10, pesos do TSE 2022), das linhas da Atlas p. 19 que dão o voto "
+            "presidencial de cada grupo de 2022. Estágio 2 (presidente 1º para 2º turno): prior declarada, "
+            "condicionada à origem estadual e ao candidato intermediário, calibrada nos saltos medidos "
+            "pela Atlas por grupo de 2022 entre p. 19 e p. 23: eleitor de Tarcísio em 2022 que escolheu "
+            "terceira via termina 67% em Flávio, 0% em Lula e 33% na não escolha; eleitor de Garcia, 26%, "
+            "47% e 27%. O cubo origem x via x destino é ajustado para fechar as células do estágio 1 e a "
+            "margem do 2º turno, sem supor independência dentro do candidato intermediário. Nós são "
+            "medição; fitas e caminhos são estimativa."
+        ),
+        "composicao_gov2026_por_2022": composicao,
+        "prior_estagio1": {
+            o: dict(zip(PRES1, [round(v, 3) for v in prior1[o]], strict=True))
+            for o in prior1
+        },
+        "prior_estagio2": {
+            "terceira via, origem Tarcísio": prior_destino("Tarcísio", "Cury"),
+            "terceira via, origem Haddad": prior_destino("Haddad", "Cury"),
+            "terceira via, outras origens": prior_destino("Não escolha", "Cury"),
+            "não escolha, origem Tarcísio": prior_destino("Tarcísio", "Não escolha"),
+        },
+        "pesos_2022": PESO_2022,
+        "fluxos": out,
+    }
 
 
 if __name__ == "__main__":
