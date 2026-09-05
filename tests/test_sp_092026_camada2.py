@@ -1,6 +1,7 @@
 """Contratos da camada 2 do atlas paulista: reponderação, IPF, vão, índice e corredores."""
 
 import json
+from itertools import pairwise
 from pathlib import Path
 
 import pytest
@@ -69,9 +70,48 @@ def test_ipf_closes_published_margins(k):
 
 def test_flows_cover_three_institutes_and_leak_is_similar(k):
     names = [f["nome"].split(":")[0] for f in k["fluxos"]]
-    assert names == ["Datafolha", "Atlas", "Quaest"]
-    leaks = [100 - f["estimado"]["tarcisio_para_direita_pct"] for f in k["fluxos"][:2]]
-    assert all(12 < leak < 16 for leak in leaks)
+    assert names == ["Datafolha", "Atlas", "Real Time", "Quaest"]
+    leaks = [100 - f["estimado"]["tarcisio_para_direita_pct"] for f in k["fluxos"][:3]]
+    assert all(12 < leak < 21 for leak in leaks)
+
+
+def test_stock_is_consistent_between_rounds(k):
+    m = k["micro"]
+    e = m["estado"]
+    co = m["coeficientes"]
+    assert co == {
+        "Tarcísio": 0.047,
+        "Haddad": 0.018,
+        "Rodrigo Garcia": 0.115,
+        "Tarcísio 2T": 0.063,
+        "Haddad 2T": 0.026,
+    }
+    assert (
+        abs(e["estoque_votos_total"] - e["estoque2t_votos_total"])
+        / e["estoque_votos_total"]
+        < 0.05
+    )
+    assert e["tar2"] == pytest.approx(55.27) and e["bol2"] == pytest.approx(55.24)
+    assert e["votos_tarcisio_sem_bolsonaro_acima"] < 100000
+    top = m["trabalho"]
+    assert top[0]["nome"] == "São Paulo"
+    assert all(a["estoque_votos"] >= b["estoque_votos"] for a, b in pairwise(top))
+    assert all(r["eleitorado"] >= 40000 for r in m["densidade"])
+
+
+def test_series_reweighted_effect_is_stable(k):
+    q = k["reponderacao"]["serie"]["quaest_gov2"]["ondas"]
+    assert [o["onda"] for o in q] == ["abr/26", "jul/26", "ago/26"]
+    efeitos = [o["diferenca_sensibilidade"] - o["diferenca_publicada"] for o in q]
+    assert all(-1.5 < e < -0.5 for e in efeitos)
+    for o in q:
+        for c in o["candidatos"].values():
+            assert abs(c["residuo_pp"]) < 0.7
+    df = k["reponderacao"]["serie"]["datafolha_gov2"]["ondas"]
+    assert [o["diferenca_publicada"] for o in df] == [15, 16, 19]
+    assert df[-1]["diferenca_sensibilidade"] > 19
+    rt = k["reponderacao"]["realtime"]
+    assert rt["gov1"]["diferenca_sensibilidade"] > rt["gov1"]["diferenca_publicada"]
 
 
 def test_gap_by_segment_is_consistent(k):
@@ -133,4 +173,4 @@ def test_corridors_are_disjoint_and_sourced(k):
     html = (ROOT / "docs/sp_092026.html").read_text()
     assert "—" not in html and "–" not in html
     assert html.count('class="corridor"') == 9
-    assert html.count("<svg") >= 11
+    assert html.count("<svg") >= 13

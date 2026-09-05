@@ -31,7 +31,7 @@
     const val = key==='virada' ? r.virada : fmt(r[key] || 0, countLayer ? 0 : (key.startsWith('i_') ? 0 : 2));
     const indices = Object.entries(INDEX_NAMES).map(([k,n]) => `<div><dt>Índice ${escape(n)}</dt><dd>${fmt(r[k] || 0)}</dd></div>`).join('');
     panel.innerHTML = `<span class="eyebrow">${escape(r.regiao)} · IBGE ${r.id}</span><h3>${escape(r.nome)}</h3><p><b>${escape(layer.selectedOptions[0].textContent)}</b><br>${escape(val)}</p><dl>${[
-      ['Eleitorado 2026',fmt(r.eleitorado)],['Vencedores',r.virada],['Bolsonaro 2022 · 1º',fmt(r.jair_2022_1_pct,2)+'%'],['Tarcísio 2022 · 1º',fmt(r.tarcisio_2022_1_pct,2)+'%'],['Rodrigo Garcia 2022 · 1º',fmt(r.garcia1||0,2)+'%'],['Bolsonaro 2018 · 2º',fmt(r.jair_2018_2)+' · '+fmt(r.jair_2018_2_pct,2)+'%'],['Bolsonaro 2022 · 2º',fmt(r.jair_2022_2)+' · '+fmt(r.jair_2022_2_pct,2)+'%'],['Tarcísio 2022 · 2º',fmt(r.tarcisio_2022_2)+' · '+fmt(r.tarcisio_2022_2_pct,2)+'%'],['Renda pc · Censo 2022','R$ '+fmt(r.renda,2)]
+      ['Eleitorado 2026',fmt(r.eleitorado)],['Vencedores',r.virada],['Bolsonaro 2022 · 1º',fmt(r.jair_2022_1_pct,2)+'%'],['Tarcísio 2022 · 1º',fmt(r.tarcisio_2022_1_pct,2)+'%'],['Rodrigo Garcia 2022 · 1º',fmt(r.garcia1||0,2)+'%'],['Tarcísio menos Bolsonaro · 2º',fmt(r.tar2_menos_bol2_pp||0,2)+' pp'],['Estoque localizado',fmt(r.estoque_votos||0)+' · '+fmt(r.estoque_pct||0,2)+'%'],['Bolsonaro 2018 · 2º',fmt(r.jair_2018_2)+' · '+fmt(r.jair_2018_2_pct,2)+'%'],['Bolsonaro 2022 · 2º',fmt(r.jair_2022_2)+' · '+fmt(r.jair_2022_2_pct,2)+'%'],['Tarcísio 2022 · 2º',fmt(r.tarcisio_2022_2)+' · '+fmt(r.tarcisio_2022_2_pct,2)+'%'],['Renda pc · Censo 2022','R$ '+fmt(r.renda,2)]
     ].map(([a,b])=>`<div><dt>${escape(a)}</dt><dd>${escape(b)}</dd></div>`).join('')}${indices}</dl><p class="note">Índice 100 = o nome rendeu no município o mesmo que Bolsonaro rendeu no 1º turno de 2022, em relação às respectivas médias estaduais.</p>`;
     paths.forEach(p=>p.classList.toggle('selected',p.dataset.id===city.value));
   }
@@ -40,7 +40,7 @@
     const key = layer.value;
     const values = Object.values(byId).map(r=>r[key] || 0);
     const lo = Math.min(...values), hi = Math.max(...values);
-    const log = key==='eleitorado' || key.endsWith('_1') || key==='pib_pc_2023';
+    const log = key==='eleitorado' || key.endsWith('_1') || key==='pib_pc_2023' || key==='estoque_votos';
     const diverging = key.endsWith('_pp');
     const index = key.startsWith('i_');
     const bound = Math.max(Math.abs(lo),Math.abs(hi));

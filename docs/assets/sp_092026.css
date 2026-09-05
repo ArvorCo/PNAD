@@ -636,6 +636,11 @@ details:not([open])>*:not(summary) {
   grid-template-columns:repeat(3,1fr);
   gap:26px;
   margin:34px 0}
+.grid-4 {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:22px;
+  margin:34px 0}
 .card {
   border-top:3px solid var(--green);
   padding-top:18px;
@@ -998,7 +1003,7 @@ table.compact th,table.compact td {
 .dark .chart-shell line {
   stroke-opacity:.6}
 @media(max-width:1000px) {
-  .ledger,.grid-3,.strategy-grid,.flow-notes,.flow-facts {
+  .ledger,.grid-3,.grid-4,.strategy-grid,.flow-notes,.flow-facts {
   grid-template-columns:repeat(2,1fr)}
   .ledger>div:nth-child(odd) {
   border-left:0}
@@ -1012,7 +1017,7 @@ table.compact th,table.compact td {
   grid-template-columns:repeat(4,1fr)}
 }
 @media(max-width:640px) {
-  .ledger,.grid-3,.strategy-grid,.flow-notes,.flow-facts {
+  .ledger,.grid-3,.grid-4,.strategy-grid,.flow-notes,.flow-facts {
   grid-template-columns:1fr}
   .ledger>div {
   border-left:0;

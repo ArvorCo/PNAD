@@ -19,6 +19,8 @@ URLS = {
     "datafolha_pres": "https://www1.folha.uol.com.br/poder/2026/08/datafolha-flavio-tem-47-e-lula-42-em-sp-no-2o-turno-mg-marca-empate.shtml",
     "rt_gov": "https://ultimosegundo.ig.com.br/2026-08-24/realtime-big-data-em-sp--tarcisio-com-54--e-haddad-com-36-.html",
     "rt_pres": "https://www.metropoles.com/sao-paulo/flavio-lidera-disputa-em-sp-com-38-diz-pesquisa-real-time-big-data",
+    "rt_pres_pdf": "https://static.poder360.com.br/uploads/2026/08/realtime-big-data-presidente-sao-paulo-24ago.pdf",
+    "datafolha_jul_pdf": "https://static.poder360.com.br/uploads/2026/07/DatafolhaSP-governo-5jul2026.pdf",
     "verita": "https://goiasnoticia.com.br/verita-em-sp-tarcisio-lidera-governo-e-senado-segue-com-empate-tecnico-prado-derrite-silva-palumbo-e-tebet-disputam/",
 }
 POLLS = [
@@ -64,12 +66,13 @@ POLLS = [
         "metodo": "Telefone, segundo iG",
         "registro": "SP-01347/2026; BR-06537/2026",
         "governo": [52, 35],
+        "governo2": [54, 36],
         "nao_escolha_gov": 11,
         "presidente": [38, 33],
         "presidente2": [44, 49],
-        "paginas": "iG e Metrópoles, 24/08",
-        "status": "Notícias; PDF pendente",
-        "nota": "Cenário presidencial inclui Marçal. Resultado de 2º turno desfavorável a Flávio reproduz a notícia; exige confirmação no PDF. Manchete e corpo do iG usam cenários distintos.",
+        "paginas": "governo: 3, 7, 10 e 12; Presidência: 3, 7, 10 e 12",
+        "status": "Dois PDFs conferidos (governo e Presidência)",
+        "nota": "Cenário presidencial inclui Marçal (7%). O 2º turno presidencial com Lula à frente, 49 × 44, está confirmado no laudo BR-06537/2026, p. 12. Renda em três faixas nos dois laudos.",
     },
     {
         "id": "quaest",
@@ -225,6 +228,7 @@ def main():
             "Quaest": [19, 44, 37],
             "Datafolha": [609 / 1610 * 100, 689 / 1610 * 100, 257 / 1610 * 100],
             "Datafolha_sem_renda_classificada": 55 / 1610 * 100,
+            "Real Time": [31, 39, 30],
         },
         "atlas_alternativos": {
             "Flávio": [46.8, 43.3, 9.9],
@@ -264,7 +268,8 @@ def main():
             "Inflação": 15.4,
         },
         "limites": [
-            "Datafolha recebido cobre governo, Senado e avaliação estadual; não contém tabelas presidenciais.",
+            "Datafolha recebido cobre governo, Senado e avaliação estadual; não contém tabelas presidenciais. O PDF de julho hospedado pelo Poder360 é a matéria, sem anexo de cruzamentos.",
+            "Real Time: dois laudos (governo SP-01347/2026 e Presidência BR-06537/2026), 28 e 17 páginas, com renda em três faixas e sem cruzamento entre governo e Presidência.",
             "Veritá julho: localizado em notícia, denominador a confirmar no relatório; excluído da comparação em votos totais.",
             "Futura: busca não confirmou relatório estadual recente comparável; pesquisa nacional não substitui SP.",
             "Sem microdados pareados de governo e Presidência, diferenças de margens não identificam voto combinado.",

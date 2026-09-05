@@ -110,6 +110,120 @@ DATAFOLHA = {
         "renda": {"Tarcísio": [50, 57, 58], "Haddad": [35, 34, 38]},
     },
 }
+REALTIME = {
+    "fonte": "Real Time Big Data, campo 19 a 22/08/2026, n = 2.000, telefone, SP-01347/2026 e BR-06537/2026",
+    "pesos_renda": [31, 39, 30],  # perfil da amostra, p. 3 dos dois laudos
+    "gov1": {
+        "pagina": 10,
+        "publicado": {"Tarcísio": 52, "Haddad": 35},
+        "renda": {"Tarcísio": [42, 52, 62], "Haddad": [46, 35, 23]},
+    },
+    "pres1": {
+        "pagina": 10,
+        "publicado": {"Flávio": 38, "Lula": 33},
+        "renda": {"Flávio": [34, 40, 40], "Lula": [43, 30, 27]},
+        "nota": "Laudo presidencial separado (BR-06537/2026), mesma amostra e mesmo perfil. Cenário com Marçal (7%).",
+    },
+}
+SERIE_QUAEST_GOV2 = {
+    "fonte": "Genial/Quaest, p. 20 e 24: 2º turno para governador por renda em três ondas",
+    "pesos_renda": [19, 44, 37],
+    "nota": "As bases por faixa só estão publicadas na onda de agosto; aplicadas às três ondas, recompõem os placares de abril e julho com resíduo máximo de 0,3 pp.",
+    "ondas": [
+        {
+            "onda": "abr/26",
+            "publicado": {"Tarcísio": 49, "Haddad": 32},
+            "renda": {"Tarcísio": [35, 50, 55], "Haddad": [35, 32, 30]},
+        },
+        {
+            "onda": "jul/26",
+            "publicado": {"Tarcísio": 48, "Haddad": 32},
+            "renda": {"Tarcísio": [35, 51, 52], "Haddad": [39, 30, 30]},
+        },
+        {
+            "onda": "ago/26",
+            "publicado": {"Tarcísio": 47, "Haddad": 30},
+            "renda": {"Tarcísio": [30, 47, 54], "Haddad": [38, 28, 29]},
+        },
+    ],
+}
+SERIE_PUBLICADA = {
+    "datafolha_gov2": {
+        "fonte": "Datafolha, p. 10 do relatório de agosto",
+        "ondas": [("mar/26", 52, 37), ("jul/26", 53, 37), ("ago/26", 54, 35)],
+    },
+    "datafolha_gov1": {
+        "fonte": "Datafolha, p. 8 do relatório de agosto; março e julho pelo Poder360",
+        "ondas": [("mar/26", 44, 31), ("jul/26", 46, 30), ("ago/26", 45, 27)],
+    },
+    "realtime_gov1": {
+        "fonte": "Real Time Big Data, junho (Exame, 16/06/2026) e agosto (laudo, p. 7)",
+        "ondas": [("jun/26", 46, 33), ("ago/26", 52, 35)],
+    },
+    "quaest_gov2": {
+        "fonte": "Genial/Quaest, p. 20",
+        "ondas": [("abr/26", 49, 32), ("jul/26", 48, 32), ("ago/26", 47, 30)],
+    },
+}
+# Vão regional medido pela Atlas (p. 14 e 23), por região do próprio instituto.
+ATLAS_REGIAO = {
+    "capital": {"rotulo": "Cidade de São Paulo", "tarcisio": 48.9, "flavio": 43.7},
+    "rm_santos": {
+        "rotulo": "RM de São Paulo e Santos",
+        "tarcisio": 50.3,
+        "flavio": 40.4,
+    },
+    "campinas_sjc": {
+        "rotulo": "Campinas e São José dos Campos",
+        "tarcisio": 58.0,
+        "flavio": 52.8,
+    },
+    "norte": {
+        "rotulo": "Rio Preto, Ribeirão Preto, Araraquara e Bauru",
+        "tarcisio": 48.4,
+        "flavio": 42.5,
+    },
+    "oeste": {
+        "rotulo": "Presidente Prudente, Marília, Sorocaba e Araçatuba",
+        "tarcisio": 60.8,
+        "flavio": 55.3,
+    },
+}
+REGIAO_IBGE_PARA_ATLAS = {
+    "São Paulo": "rm_santos",
+    "Campinas": "campinas_sjc",
+    "São José dos Campos": "campinas_sjc",
+    "São José do Rio Preto": "norte",
+    "Ribeirão Preto": "norte",
+    "Araraquara": "norte",
+    "Bauru": "norte",
+    "Presidente Prudente": "oeste",
+    "Marília": "oeste",
+    "Sorocaba": "oeste",
+    "Araçatuba": "oeste",
+}
+CAPITAL_ID = "3550308"
+CARRIER_ROWS: dict = {}
+
+
+def coeficientes_estoque():
+    """Fatia de cada eleitorado de 2022 que vota Tarcísio e não vota Flávio (Atlas p. 14 e 23)."""
+    out = {}
+    for g, rotulo, gov, pres in SEGMENTOS:
+        if g == "Voto para governador em 2022, 1º turno" and rotulo in (
+            "Tarcísio",
+            "Haddad",
+            "Rodrigo Garcia",
+        ):
+            out[rotulo] = round((gov[0] - pres[1]) / 100, 4)
+        if g == "Voto para governador em 2022, 2º turno" and rotulo in (
+            "Tarcísio",
+            "Haddad",
+        ):
+            out[rotulo + " 2T"] = round((gov[0] - pres[1]) / 100, 4)
+    return out
+
+
 # Perfil de renda declarado no próprio relatório do Datafolha (p. 24):
 # 38% até 2 SM, 20% de 2 a 3, 23% de 3 a 5, 12% de 5 a 10, 3% de 10 a 20,
 # 1% de 20 a 50, 0% acima de 50, 2% recusa, 1% não sabe.
@@ -253,6 +367,8 @@ SEGMENTOS = [
         [47.4, 30.0, 22.6],
     ),
 ]
+
+ESTOQUE = coeficientes_estoque()
 
 # Atlas p. 19: Presidência 1º turno 2026 por voto para governador em 2022 (2º turno).
 ATLAS_P19 = {
@@ -567,6 +683,7 @@ def reponderacao():
             "PNAD 2025 (16+)": PNAD_SM3,
             "Datafolha": [round(100 * w / 1610, 2) for w in DATAFOLHA["pesos_renda"]],
             "Quaest": QUAEST["pesos_renda"],
+            "Real Time": REALTIME["pesos_renda"],
         },
         "perfil_atlas_brl5": {
             "Atlas": ATLAS["pesos_renda"],
@@ -591,6 +708,50 @@ def reponderacao():
             "pres1": reweight_block(ATLAS, "pres1", PNAD_BRL5),
             "pres2": reweight_block(ATLAS, "pres2", PNAD_BRL5),
         },
+        "realtime": {
+            "fonte": REALTIME["fonte"],
+            "gov1": reweight_block(REALTIME, "gov1", PNAD_SM3),
+            "pres1": reweight_block(REALTIME, "pres1", PNAD_SM3),
+        },
+        "serie": serie_reponderada(),
+    }
+
+
+def serie_reponderada():
+    """Série do 2º turno estadual: Quaest reponderada em três ondas; Datafolha com um ponto."""
+    quaest = []
+    for onda in SERIE_QUAEST_GOV2["ondas"]:
+        inst = {
+            "pesos_renda": SERIE_QUAEST_GOV2["pesos_renda"],
+            "x": {"pagina": 24, "publicado": onda["publicado"], "renda": onda["renda"]},
+        }
+        r = reweight_block(inst, "x", PNAD_SM3)
+        quaest.append(
+            {"onda": onda["onda"], **{k: v for k, v in r.items() if k != "pagina"}}
+        )
+    df = reweight_block(DATAFOLHA, "gov2", PNAD_SM3)
+    return {
+        "quaest_gov2": {
+            "fonte": SERIE_QUAEST_GOV2["fonte"],
+            "nota": SERIE_QUAEST_GOV2["nota"],
+            "ondas": quaest,
+        },
+        "datafolha_gov2": {
+            "fonte": SERIE_PUBLICADA["datafolha_gov2"]["fonte"],
+            "nota": "O cruzamento de renda só existe no relatório completo de agosto; os de março e julho não estão públicos com anexo, por isso a série reponderada do Datafolha tem um ponto.",
+            "ondas": [
+                {
+                    "onda": o,
+                    "publicado": {"Tarcísio": t, "Haddad": h},
+                    "diferenca_publicada": t - h,
+                    "diferenca_sensibilidade": (
+                        df["diferenca_sensibilidade"] if o == "ago/26" else None
+                    ),
+                }
+                for o, t, h in SERIE_PUBLICADA["datafolha_gov2"]["ondas"]
+            ],
+        },
+        "publicadas": SERIE_PUBLICADA,
     }
 
 
@@ -694,6 +855,17 @@ def fluxos():
             "2T para 2T",
         ),
     ]
+    out.append(
+        flow(
+            "Real Time: governo 2º turno para Presidência 2º turno",
+            "Real Time Big Data, laudo de governo p. 12 e laudo presidencial p. 12, campo 19 a 22/08, telefone",
+            {"Tarcísio": 54, "Haddad": 36, "Não escolha": 10},
+            {"Flávio": 44, "Lula": 49, "Não escolha": 7},
+            prior_2t,
+            nota_2t,
+            "2T para 2T",
+        )
+    )
     # Quaest não publica 2º turno presidencial: o destino é o 1º turno, cenário II.
     cols_q = [
         "Flávio",
@@ -939,6 +1111,17 @@ def carregadores(corredores_def):
             "tar1": round(r["tarcisio_2022_1_pct"], 2),
             "tar2": round(r["tarcisio_2022_2_pct"], 2),
             "tar1_menos_bol1_pp": round(r["tarcisio_2022_1_pct"] - bol1, 2),
+            "tar2_menos_bol2_pp": round(
+                r["tarcisio_2022_2_pct"] - r["jair_2022_2_pct"], 2
+            ),
+            "votos_tarcisio_sem_bolsonaro": round(
+                (r["tarcisio_2022_2_pct"] - r["jair_2022_2_pct"])
+                / 100
+                * r["2022_GOVERNADOR_2_total"]
+            ),
+            "regiao_atlas": (
+                "capital" if i == CAPITAL_ID else REGIAO_IBGE_PARA_ATLAS[r["regiao"]]
+            ),
             "garcia1": round(
                 100 * votos["garcia"].get(i, 0) / total["GOVERNADOR"][i], 2
             ),
@@ -952,6 +1135,24 @@ def carregadores(corredores_def):
             "virada": r["virada"],
             "renda": r["renda"],
         }
+        ra = ATLAS_REGIAO[d["regiao_atlas"]]
+        d["vao_regional_atlas"] = round(ra["tarcisio"] - ra["flavio"], 1)
+        g1 = votos["garcia"].get(i, 0)
+        partes = {
+            "Tarcísio": ESTOQUE["Tarcísio"] * r["tarcisio_2022_1"],
+            "Haddad": ESTOQUE["Haddad"] * r.get("haddad_2022_1", 0),
+            "Rodrigo Garcia": ESTOQUE["Rodrigo Garcia"] * g1,
+        }
+        d["estoque_votos"] = round(sum(partes.values()))
+        d["estoque_garcia_votos"] = round(partes["Rodrigo Garcia"])
+        d["estoque_pct"] = round(
+            100 * sum(partes.values()) / r["2022_GOVERNADOR_1_total"], 2
+        )
+        e2 = ESTOQUE["Tarcísio 2T"] * r["tarcisio_2022_2"] + ESTOQUE[
+            "Haddad 2T"
+        ] * r.get("haddad_2022_2", 0)
+        d["estoque2t_votos"] = round(e2)
+        d["estoque2t_pct"] = round(100 * e2 / r["2022_GOVERNADOR_2_total"], 2)
         for k in INDICES:
             pct = (
                 100 * votos[k].get(i, 0) / total[cargo_de[k]][i]
@@ -1609,6 +1810,18 @@ def agrega(sel, eleitorado_sp, votos_extra):
                 round(100 * (share / votos_extra["estado"][k]) / base) if base else 0
             )
     out["tar1_menos_bol1_pp"] = round(out["tarcisio"] - bol1, 2)
+    gov2 = sum(c["2022_GOVERNADOR_2_total"] for c in cs)
+    tar2 = 100 * sum(c["tarcisio_2022_2"] for c in cs) / gov2
+    out["tar2"] = round(tar2, 2)
+    out["tar2_menos_bol2_pp"] = round(tar2 - bol2, 2)
+    out["votos_tarcisio_sem_bolsonaro"] = sum(
+        CARRIER_ROWS[c["id"]]["votos_tarcisio_sem_bolsonaro"] for c in cs
+    )
+    out["estoque_votos"] = sum(CARRIER_ROWS[c["id"]]["estoque_votos"] for c in cs)
+    out["estoque2t_votos"] = sum(CARRIER_ROWS[c["id"]]["estoque2t_votos"] for c in cs)
+    out["estoque_pct"] = round(
+        100 * out["estoque_votos"] / sum(c["2022_GOVERNADOR_1_total"] for c in cs), 2
+    )
     return out
 
 
@@ -1626,6 +1839,7 @@ def main():
     extra = {"votos": votos, "total": total, "cargo": cargo_de, "estado": estado}
     eleitorado_sp = sum(r["eleitorado"] for r in rows)
     byid = {r["id"]: r for r in rows}
+    CARRIER_ROWS.update(byid)
     corredores = []
     for slug, nome, sub, nomes in CORREDORES:
         sel = [byid[byname[n]] for n in nomes]
@@ -1663,9 +1877,74 @@ def main():
         regioes.append({"regiao": reg} | agrega(sel, eleitorado_sp, extra))
     regioes.sort(key=lambda r: -r["eleitores"])
     complementares = sorted(
-        [r for r in rows if r["eleitorado"] >= 40000 and r["tar1_menos_bol1_pp"] > 0],
-        key=lambda r: -r["tar1_menos_bol1_pp"],
+        [r for r in rows if r["eleitorado"] >= 40000 and r["tar2_menos_bol2_pp"] > 0],
+        key=lambda r: -r["votos_tarcisio_sem_bolsonaro"],
     )
+    acima = [r for r in rows if r["tar2_menos_bol2_pp"] > 0]
+    trabalho = sorted(
+        [r for r in rows if r["eleitorado"] >= 30000],
+        key=lambda r: -r["estoque_votos"],
+    )
+    densidade = sorted(
+        [r for r in rows if r["eleitorado"] >= 40000], key=lambda r: -r["estoque_pct"]
+    )
+    contrarios = sorted(
+        [r for r in rows if r["eleitorado"] >= 40000 and r["tar2_menos_bol2_pp"] < 0],
+        key=lambda r: r["votos_tarcisio_sem_bolsonaro"],
+    )
+    gov2_total = sum(r["2022_GOVERNADOR_2_total"] for r in CITIES)
+    micro = {
+        "definicao": (
+            "Diferença local = Tarcísio menos Bolsonaro no 2º turno de 2022, em pontos, no mesmo "
+            "universo de eleitores. Votos de Tarcísio sem Bolsonaro = essa diferença aplicada aos "
+            "votos válidos para governador da cidade. Potencial = eleitorado de 2026 vezes a soma do "
+            "vão regional medido pela Atlas (Tarcísio 2º turno menos Flávio 2º turno na região do "
+            "instituto, p. 14 e 23) com a diferença local de 2022. É estimativa, não medição: a "
+            "Atlas mede cinco regiões, e a diferença local vem de outra eleição."
+        ),
+        "definicao_estoque": (
+            "Estoque localizado = fatia medida pela Atlas (p. 14 e 23) de cada eleitorado do 1º turno "
+            "de 2022 para governador que hoje vota Tarcísio no 2º turno e não vota Flávio no 2º turno, "
+            "aplicada aos votos de 2022 de cada município. Coeficientes: Tarcísio 2022 "
+            f"{ESTOQUE['Tarcísio'] * 100:.1f}%, Haddad 2022 {ESTOQUE['Haddad'] * 100:.1f}%, Rodrigo Garcia "
+            f"2022 {ESTOQUE['Rodrigo Garcia'] * 100:.1f}%. Não inclui quem votou branco, nulo ou não votou "
+            "em 2022, porque o TSE não fornece esses grupos por município nesta base, nem os eleitores "
+            "de Poit e Elvis Cezar, não medidos pela Atlas. É a metade localizável do vão."
+        ),
+        "coeficientes": ESTOQUE,
+        "estado": {
+            "tar2": round(
+                100 * sum(r["tarcisio_2022_2"] for r in CITIES) / gov2_total, 2
+            ),
+            "bol2": round(
+                100
+                * sum(r["jair_2022_2"] for r in CITIES)
+                / sum(r["2022_PRESIDENTE_2_total"] for r in CITIES),
+                2,
+            ),
+            "municipios_tarcisio_acima": len(acima),
+            "eleitores_tarcisio_acima": sum(r["eleitorado"] for r in acima),
+            "votos_tarcisio_sem_bolsonaro_acima": sum(
+                r["votos_tarcisio_sem_bolsonaro"] for r in acima
+            ),
+            "estoque_votos_total": sum(r["estoque_votos"] for r in rows),
+            "estoque_garcia_total": sum(r["estoque_garcia_votos"] for r in rows),
+            "estoque2t_votos_total": sum(r["estoque2t_votos"] for r in rows),
+            "estoque_pct": round(
+                100
+                * sum(r["estoque_votos"] for r in rows)
+                / sum(r["2022_GOVERNADOR_1_total"] for r in CITIES),
+                2,
+            ),
+        },
+        "regioes_atlas": ATLAS_REGIAO,
+        "trabalho": trabalho[:30],
+        "densidade": densidade[:15],
+        "acima_top": sorted(acima, key=lambda r: -r["votos_tarcisio_sem_bolsonaro"])[
+            :10
+        ],
+        "contrarios": contrarios[:12],
+    }
     payload = {
         "meta": {
             "gerado_por": "scripts/sp-092026-camada2.py",
@@ -1681,6 +1960,7 @@ def main():
         "fluxos": fluxos(),
         "vao": vao(),
         "estrategia": ESTRATEGIA,
+        "micro": micro,
         "carregadores": {
             "estado": estado,
             "chaves": [
@@ -1695,6 +1975,12 @@ def main():
                     for k in (
                         "id",
                         "tar1_menos_bol1_pp",
+                        "tar2_menos_bol2_pp",
+                        "votos_tarcisio_sem_bolsonaro",
+                        "estoque_votos",
+                        "estoque_pct",
+                        "estoque2t_votos",
+                        "estoque2t_pct",
                         "garcia1",
                         "tar1",
                         *tuple("i_" + x for x in INDICES),

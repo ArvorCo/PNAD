@@ -27,6 +27,8 @@ FLOWS = K["fluxos"]
 VAO = K["vao"]
 E = K["estrategia"]
 CARR = K["carregadores"]
+MICRO = K["micro"]
+SERIE = R["serie"]
 CORR = K["corredores"]
 INK, GREEN, GOLD, RED, MUTED, PAPER = (
     "#192e2b",
@@ -349,16 +351,16 @@ def lollipop_svg(rows, ident, title):
 def diverging_svg(rows, ident, title, lo=-5, hi=25):
     W = 1000
     rowh = 46
-    H = 70 + rowh * len(rows) + 30
+    H = 70 + rowh * len(rows) + 56
     x0, x1 = 330, 940
     sx = lambda v: x0 + (x1 - x0) * (v - lo) / (hi - lo)  # noqa: E731
     parts = [f'<text x="{x0}" y="26" class="sk-head">{esc(title)}</text>']
     for tick in range(lo, hi + 1, 5):
         parts.append(
-            f'<line x1="{sx(tick):.1f}" y1="46" x2="{sx(tick):.1f}" y2="{H - 30}" stroke="{"#192e2b" if tick == 0 else "#c9c9bc"}" stroke-width="{2 if tick == 0 else 1}"/>'
+            f'<line x1="{sx(tick):.1f}" y1="46" x2="{sx(tick):.1f}" y2="{H - 56}" stroke="{"#192e2b" if tick == 0 else "#c9c9bc"}" stroke-width="{2 if tick == 0 else 1}"/>'
         )
         parts.append(
-            f'<text x="{sx(tick):.1f}" y="{H - 12}" text-anchor="middle" class="axis-t">{sgn(tick, 0)}</text>'
+            f'<text x="{sx(tick):.1f}" y="{H - 40}" text-anchor="middle" class="axis-t">{sgn(tick, 0)}</text>'
         )
     y = 62
     for r in rows:
@@ -379,10 +381,10 @@ def diverging_svg(rows, ident, title, lo=-5, hi=25):
             )
         y += rowh
     parts.append(
-        f'<rect x="{x0}" y="{H - 52}" width="14" height="10" fill="{GREEN}"/><text x="{x0 + 20}" y="{H - 43}" class="axis-t">diferença publicada (direita menos esquerda)</text>'
+        f'<rect x="{x0}" y="{H - 22}" width="14" height="10" fill="{GREEN}"/><text x="{x0 + 20}" y="{H - 13}" class="axis-t">diferença publicada (direita menos esquerda)</text>'
     )
     parts.append(
-        f'<rect x="{x0 + 330}" y="{H - 52}" width="14" height="10" fill="{GOLD}"/><text x="{x0 + 350}" y="{H - 43}" class="axis-t">diferença com a renda da PNAD 2025</text>'
+        f'<rect x="{x0 + 330}" y="{H - 22}" width="14" height="10" fill="{GOLD}"/><text x="{x0 + 350}" y="{H - 13}" class="axis-t">diferença com a renda da PNAD 2025</text>'
     )
     return (
         f'<svg id="{ident}" viewBox="0 0 {W} {H}" role="img" aria-label="{esc(title)}"><title>{esc(title)}</title>'
@@ -690,7 +692,12 @@ def ch_economia():
 def ch_mapa():
     opts = [
         ("virada", "Vencedores 2018 × 2022"),
-        ("tar1_menos_bol1_pp", "Tarcísio menos Bolsonaro, 1º turno 2022 (pp)"),
+        ("tar2_menos_bol2_pp", "Tarcísio menos Bolsonaro, 2º turno 2022 (pp)"),
+        (
+            "estoque_pct",
+            "Estoque localizado de Tarcísio sem Flávio (% do 1º turno 2022)",
+        ),
+        ("estoque_votos", "Estoque localizado, em votos"),
         ("garcia1", "Rodrigo Garcia 2022 · 1º turno (%)"),
         ("jair_2018_2_pct", "Bolsonaro 2018 · 2º turno (%)"),
         ("jair_2022_2_pct", "Bolsonaro 2022 · 2º turno (%)"),
@@ -730,12 +737,12 @@ def ch_mapa():
     body += (
         '<div class="map-layout"><div>'
         + svgmap()
-        + '<p id="map-legend" class="legend"><span>Verde: Bolsonaro nas duas · Ocre: Bolsonaro → Lula · Vermelho: PT nas duas · Cinza: empate</span></p></div><aside id="map-readout" aria-live="polite"><span class="eyebrow">Atlas municipal</span><h3>645 histórias locais</h3><p>Toque no mapa ou escolha um município para consultar votos, eleitorado, renda e os índices dos carregadores.</p><p>A camada Tarcísio menos Bolsonaro mostra onde o governador rendeu acima do topo da chapa em 2022, que é o mapa do voto de Tarcísio que Flávio ainda precisa buscar. A camada Rodrigo Garcia mostra onde ficou o eleitor tucano de 2022.</p></aside></div><noscript><p>O mapa inicial funciona sem JavaScript. Para as demais camadas, consulte a tabela municipal e o CSV.</p></noscript><p class="note">Fonte: TSE e IBGE. Eleitorado: arquivo gerado em 01/07/2026, competência junho. Votos legislativos são nominais recebidos, separados dos votos de legenda e da situação jurídica atual. Índices definidos no capítulo 15.</p>'
+        + '<p id="map-legend" class="legend"><span>Verde: Bolsonaro nas duas · Ocre: Bolsonaro → Lula · Vermelho: PT nas duas · Cinza: empate</span></p></div><aside id="map-readout" aria-live="polite"><span class="eyebrow">Atlas municipal</span><h3>645 histórias locais</h3><p>Toque no mapa ou escolha um município para consultar votos, eleitorado, renda e os índices dos carregadores.</p><p>A camada Tarcísio menos Bolsonaro compara os dois no 2º turno de 2022, mesmo universo, e mostra que eram o mesmo eleitorado. A camada de estoque aplica a cada cidade o cruzamento da Atlas por voto de 2022 e é o mapa do eleitor de Tarcísio que ainda não é de Flávio, detalhado no capítulo 16.</p></aside></div><noscript><p>O mapa inicial funciona sem JavaScript. Para as demais camadas, consulte a tabela municipal e o CSV.</p></noscript><p class="note">Fonte: TSE e IBGE. Eleitorado: arquivo gerado em 01/07/2026, competência junho. Votos legislativos são nominais recebidos, separados dos votos de legenda e da situação jurídica atual. Índices definidos no capítulo 15; estoque definido no capítulo 16.</p>'
     )
     return chapter(
         3,
         "mapa",
-        "O território, <em>em vinte e quatro camadas.</em>",
+        "O território, <em>em vinte e seis camadas.</em>",
         "A consulta combina resultado, mudança histórica, contexto econômico e o rendimento relativo de cada nome da direita. Cada cargo conserva seu próprio denominador.",
         body,
     )
@@ -757,7 +764,8 @@ def ch_regioes():
             "Bolsonaro 2018 · 2º",
             "Bolsonaro 2022 · 2º",
             "Tarcísio 2022 · 2º",
-            "Tarcísio menos Bolsonaro · 1º",
+            "Tarcísio menos Bolsonaro · 2º",
+            "Estoque localizado · %",
             "PIB 2023 · R$ bi",
         ],
         [
@@ -768,7 +776,8 @@ def ch_regioes():
                 fmt(100 * r["jair_2018_2"] / r["2018_PRESIDENTE_2_total"], 2) + "%",
                 fmt(100 * r["jair_2022_2"] / r["2022_PRESIDENTE_2_total"], 2) + "%",
                 fmt(100 * r["tarcisio_2022_2"] / r["2022_GOVERNADOR_2_total"], 2) + "%",
-                sgn(creg[r["nome"]]["tar1_menos_bol1_pp"], 2) + " pp",
+                sgn(creg[r["nome"]]["tar2_menos_bol2_pp"], 2) + " pp",
+                fmt(creg[r["nome"]]["estoque_pct"], 2) + "%",
                 fmt(r["pib_2023"] / 1e9, 1),
             ]
             for r in regs
@@ -777,7 +786,7 @@ def ch_regioes():
     body += (
         "<p>A região intermediária de São Paulo reúne "
         + fmt(regs[0]["eleitorado"] / D["eleitorado"]["total"] * 100, 1)
-        + '% do eleitorado estadual e é a única em que Bolsonaro ficou abaixo de 50% em 2022. Nas dez restantes, ele venceu com folga, e em todas Tarcísio rendeu no 1º turno abaixo do que Bolsonaro rendeu: a coluna de diferença é negativa em toda a tabela porque o governador teve 42,32% contra 47,71% do presidente na mesma cédula, com Rodrigo Garcia levando 18,4%. A leitura relativa, no capítulo 15, corrige essa escala.</p><p class="note">Regiões geográficas intermediárias do IBGE; percentuais agregados por soma de votos, nunca média simples dos percentuais municipais.</p>'
+        + '% do eleitorado estadual e é a única em que Bolsonaro ficou abaixo de 50% em 2022. Nas dez restantes, ele venceu com folga. No 2º turno de 2022, mesmo universo de eleitores, Tarcísio e Bolsonaro ficaram a menos de um ponto em toda região: a coluna de diferença mostra que em 2022 eles eram o mesmo eleitorado, com leve vantagem de Tarcísio no interior e leve desvantagem na região de São Paulo. O eleitor de Tarcísio que não é de Flávio nasceu depois disso, e a coluna de estoque, definida no capítulo 16, mostra onde ele está mais concentrado: 5,5% do 1º turno na região de Rio Preto contra 4,5% na de São Paulo.</p><p class="note">Regiões geográficas intermediárias do IBGE; percentuais agregados por soma de votos, nunca média simples dos percentuais municipais.</p>'
     )
     return chapter(
         4,
@@ -798,8 +807,9 @@ def ch_cidades():
             "Vencedores 2018 → 2022",
             "Bolsonaro 2022 · 2º",
             "Tarcísio 2022 · 2º",
-            "Tarcísio menos Bolsonaro · 1º",
+            "Tarcísio menos Bolsonaro · 2º",
             "Garcia 2022 · 1º",
+            "Estoque localizado",
         ],
         [
             [
@@ -808,8 +818,12 @@ def ch_cidades():
                 r["virada"],
                 fmt(r["jair_2022_2_pct"], 2) + "%",
                 fmt(r["tarcisio_2022_2_pct"], 2) + "%",
-                sgn(cm[r["id"]]["tar1_menos_bol1_pp"], 2) + " pp",
+                sgn(cm[r["id"]]["tar2_menos_bol2_pp"], 2) + " pp",
                 fmt(cm[r["id"]]["garcia1"], 1) + "%",
+                fmt(cm[r["id"]]["estoque_votos"])
+                + " · "
+                + fmt(cm[r["id"]]["estoque_pct"], 1)
+                + "%",
             ]
             for r in biggest
         ],
@@ -817,7 +831,7 @@ def ch_cidades():
     body += (
         "<p>As vinte maiores cidades somam "
         + fmt(100 * sum(r["eleitorado"] for r in biggest) / D["eleitorado"]["total"], 1)
-        + '% do eleitorado. Em todas elas Tarcísio rendeu abaixo de Bolsonaro no 1º turno de 2022, e a distância é maior justamente nas cidades em que Rodrigo Garcia foi mais votado: o eleitor tucano de 2022 votou Bolsonaro para presidente e Garcia para governador, e no 2º turno foi para Tarcísio. Esse eleitor existe, tem endereço e é o objeto do capítulo 11.</p><p class="note">Seleção objetiva: os vinte maiores eleitorados no arquivo do TSE de julho de 2026. Ambos os percentuais de voto do 2º turno são de 2022.</p>'
+        + '% do eleitorado. No 2º turno de 2022, Tarcísio e Bolsonaro ficaram a menos de um ponto em todas elas: a coluna de diferença não separa os dois. O que separa é o 1º turno, onde Rodrigo Garcia levou de 12% a 22% do voto dessas cidades, e esse é o eleitor que hoje dá 36,5% a Tarcísio e 25,0% a Flávio na Atlas. A última coluna aplica esse cruzamento a cada cidade e é detalhada no capítulo 16.</p><p class="note">Seleção objetiva: os vinte maiores eleitorados no arquivo do TSE de julho de 2026. Ambos os percentuais de voto do 2º turno são de 2022.</p>'
     )
     return chapter(
         5,
@@ -939,7 +953,7 @@ def ch_pesquisas():
         )
         + '<p class="note">T = Tarcísio; H = Haddad; F = Flávio; L = Lula. Votos totais em %, com não escolha fora dos pares. Real Time inclui Marçal no 1º turno e é a única com Lula à frente no 2º turno presidencial em SP; o PDF segue pendente. A Quaest não publica 2º turno presidencial no relatório estadual.</p></div>'
     )
-    body += '<div class="callout"><h3>Tarcísio rende acima de Flávio em todas as pesquisas que medem os dois.</h3><p>Datafolha: 54 × 35 no governo e 47 × 42 na Presidência, uma distância de 19 contra 5. Atlas: 53,2 × 42,6 e 46,8 × 43,3, 10,6 contra 3,5. Real Time: 52 × 35 no 1º turno estadual e 44 × 49 no 2º presidencial. A diferença entre o governador e o candidato a presidente, no mesmo estado e na mesma amostra, é o objeto dos capítulos 10 e 11.</p></div>'
+    body += '<div class="callout"><h3>Tarcísio rende acima de Flávio em todas as pesquisas que medem os dois.</h3><p>Datafolha: 54 × 35 no governo e 47 × 42 na Presidência, uma distância de 19 contra 5. Atlas: 53,2 × 42,6 e 46,8 × 43,3, 10,6 contra 3,5. Real Time: 54 × 36 no governo e 44 × 49 na Presidência, 18 contra −5, o maior contraste dos quatro. A diferença entre o governador e o candidato a presidente, no mesmo estado e na mesma amostra, é o objeto dos capítulos 10 e 11.</p></div>'
     body += table(
         ["Instituto", "Amostra", "Margem declarada", "Método", "Registro", "Documento"],
         [
@@ -1001,6 +1015,112 @@ def ch_comparabilidade():
     )
 
 
+def serie_html():
+    q = SERIE["quaest_gov2"]
+    df = SERIE["datafolha_gov2"]
+    groups = [
+        (
+            f"Quaest {o['onda']}",
+            {
+                "diferença publicada": o["diferenca_publicada"],
+                "com renda PNAD": o["diferenca_sensibilidade"],
+            },
+        )
+        for o in q["ondas"]
+    ] + [
+        (
+            f"Datafolha {o['onda']}",
+            {
+                "diferença publicada": o["diferenca_publicada"],
+                "com renda PNAD": o["diferenca_sensibilidade"],
+            },
+        )
+        for o in df["ondas"]
+    ]
+    body = (
+        '<h3>A série: a régua desloca, mas não muda a forma</h3><div class="chart-shell">'
+        + grouped_svg(
+            groups,
+            [("diferença publicada", GREEN), ("com renda PNAD", GOLD)],
+            "series-chart",
+            "Tarcísio menos Haddad no 2º turno, por onda, em pontos",
+            25,
+        )
+        + '<p class="note">'
+        + esc(q["fonte"])
+        + ". "
+        + esc(q["nota"])
+        + " "
+        + esc(df["nota"])
+        + "</p></div>"
+    )
+    rows = []
+    for o in q["ondas"]:
+        t, h = o["candidatos"]["Tarcísio"], o["candidatos"]["Haddad"]
+        rows.append(
+            [
+                "Quaest · " + o["onda"],
+                fmt(t["publicado"]) + " × " + fmt(h["publicado"]),
+                fmt(t["sensibilidade"], 1) + " × " + fmt(h["sensibilidade"], 1),
+                fmt(o["diferenca_publicada"]),
+                fmt(o["diferenca_sensibilidade"], 1),
+                sgn(o["diferenca_sensibilidade"] - o["diferenca_publicada"], 1),
+            ]
+        )
+    dfc = R["datafolha"]["gov2"]["candidatos"]
+    for o in df["ondas"]:
+        sens = o["diferenca_sensibilidade"]
+        rows.append(
+            [
+                "Datafolha · " + o["onda"],
+                fmt(o["publicado"]["Tarcísio"]) + " × " + fmt(o["publicado"]["Haddad"]),
+                (
+                    "sem anexo público"
+                    if sens is None
+                    else fmt(dfc["Tarcísio"]["sensibilidade"], 1)
+                    + " × "
+                    + fmt(dfc["Haddad"]["sensibilidade"], 1)
+                ),
+                fmt(o["diferenca_publicada"]),
+                "" if sens is None else fmt(sens, 1),
+                "" if sens is None else sgn(sens - o["diferenca_publicada"], 1),
+            ]
+        )
+    rt = R["realtime"]["gov1"]
+    for o, t, h in SERIE["publicadas"]["realtime_gov1"]["ondas"]:
+        ago = o == "ago/26"
+        rows.append(
+            [
+                "Real Time · " + o + " · 1º turno",
+                fmt(t) + " × " + fmt(h),
+                (
+                    fmt(rt["candidatos"]["Tarcísio"]["sensibilidade"], 1)
+                    + " × "
+                    + fmt(rt["candidatos"]["Haddad"]["sensibilidade"], 1)
+                    if ago
+                    else "sem laudo com renda"
+                ),
+                fmt(t - h),
+                fmt(rt["diferenca_sensibilidade"], 1) if ago else "",
+                sgn(rt["diferenca_sensibilidade"] - (t - h), 1) if ago else "",
+            ]
+        )
+    body += table(
+        [
+            "Onda",
+            "Publicado",
+            "Com renda PNAD",
+            "Diferença publicada",
+            "Diferença PNAD",
+            "Efeito",
+        ],
+        rows,
+        cls="compact",
+    )
+    body += "<p>Na Quaest, a única com três ondas cruzadas por renda, o efeito da régua oficial é de −0,9, −1,1 e −1,3 ponto sobre a vantagem de Tarcísio: estável, pequeno e sempre no mesmo sentido, porque a amostra domiciliar é um pouco mais rica que o estado. No Datafolha o efeito é de +0,7 em agosto, e a série publicada vai de 15 a 19 pontos entre março e agosto; os relatórios de março e julho não estão públicos com o anexo de cruzamentos, e o PDF hospedado pelo Poder360 em julho é a matéria, não o anexo. Nenhuma régua transforma a disputa estadual: o que a série mostra é que o resultado de SP para governador não depende do peso da renda. A Presidência é outra história, contada acima: só a Atlas tem gradiente invertido, e só nela a régua muda o vencedor.</p>"
+    return body
+
+
 def ch_renda():
     perf = R["perfis"]
     groups = [
@@ -1011,7 +1131,12 @@ def ch_renda():
         '<div class="split"><div class="chart-shell">'
         + grouped_svg(
             groups,
-            [("PNAD 2025 (16+)", INK), ("Datafolha", GREEN), ("Quaest", GOLD)],
+            [
+                ("PNAD 2025 (16+)", INK),
+                ("Datafolha", GREEN),
+                ("Quaest", GOLD),
+                ("Real Time", BLUE),
+            ],
             "income-profile",
             "Perfil de renda familiar: amostra × PNAD, em %",
             50,
@@ -1036,12 +1161,19 @@ def ch_renda():
         )
         + '<p class="note">Atlas p. 5. A Atlas usa faixas em reais; a PNAD foi cortada nas mesmas faixas, em preços de abril de 2026.</p></div></div>'
     )
-    body += '<div class="grid-3"><article class="card"><span class="metric">37,8%</span><h3>até 2 SM no Datafolha</h3><p>Contra 23,2% na PNAD. A amostra de pontos de fluxo é 14,7 pontos mais pobre que o estado na faixa de baixo e tem 16,0% acima de 5 SM contra 34,6% na PNAD.</p></article><article class="card"><span class="metric gold">19%</span><h3>até 2 SM na Quaest</h3><p>Contra 23,2% na PNAD. A amostra domiciliar da Quaest é ligeiramente mais rica que o estado; a distância é de 4 pontos.</p></article><article class="card"><span class="metric red">25,7%</span><h3>acima de R$ 10 mil na Atlas</h3><p>Contra 19,8% na amostra da Atlas. A Atlas também é mais pobre que a PNAD nas duas faixas de baixo, 13,0 e 12,7 contra 10,1 e 7,9.</p></article></div>'
+    body += (
+        '<div class="grid-4"><article class="card"><span class="metric">37,8%</span><h3>até 2 SM no Datafolha</h3><p>Contra 23,2% na PNAD. A amostra de pontos de fluxo é 14,7 pontos mais pobre que o estado na faixa de baixo e tem 16,0% acima de 5 SM contra 34,6% na PNAD.</p></article><article class="card"><span class="metric gold">19%</span><h3>até 2 SM na Quaest</h3><p>Contra 23,2% na PNAD. A amostra domiciliar da Quaest é ligeiramente mais rica que o estado; a distância é de 4 pontos.</p></article><article class="card"><span class="metric red">25,7%</span><h3>acima de R$ 10 mil na Atlas</h3><p>Contra 19,8% na amostra da Atlas. A Atlas também é mais pobre que a PNAD nas duas faixas de baixo, 13,0 e 12,7 contra 10,1 e 7,9.</p></article><article class="card"><span class="metric">31%</span><h3>até 2 SM na Real Time</h3><p>Contra 23,2% na PNAD. A amostra telefônica é 7,9 pontos mais pobre na faixa de baixo e tem 30% acima de 5 SM contra 34,6%. Reponderada, a diferença de Tarcísio sobe de 17 para '
+        + fmt(R["realtime"]["gov1"]["diferenca_sensibilidade"], 1)
+        + " e a de Flávio de 5 para "
+        + fmt(R["realtime"]["pres1"]["diferenca_sensibilidade"], 1)
+        + ".</p></article></div>"
+    )
     rows = []
     for inst, lab in (
         ("datafolha", "Datafolha"),
         ("quaest", "Quaest"),
         ("atlas", "Atlas"),
+        ("realtime", "Real Time"),
     ):
         for q, qlab in (
             ("gov1", "governo 1º turno"),
@@ -1073,6 +1205,7 @@ def ch_renda():
         ("datafolha", "Datafolha"),
         ("quaest", "Quaest"),
         ("atlas", "Atlas"),
+        ("realtime", "Real Time"),
     ):
         for q, qlab in (
             ("gov1", "Governo 1º"),
@@ -1108,7 +1241,7 @@ def ch_renda():
         trows,
         cls="compact",
     )
-    body += '<div class="callout counter"><span class="stamp limit">O achado que contraria a tese</span><h3>A amostra mais pobre do Datafolha não esconde voto de direita. Na Atlas, a régua da PNAD tira a liderança de Flávio.</h3><p>A hipótese de partida era simples: amostra mais pobre que o estado subestima a direita, e a régua oficial a devolveria. O Datafolha é de fato 14,7 pontos mais pobre na faixa de baixo, mas o efeito é pequeno e vai nos dois sentidos: Tarcísio sobe de 54 para 55,3 e Haddad de 35 para 35,6 no 2º turno, porque entre os mais pobres do Datafolha a não escolha é de 20% contra 6% entre os mais ricos. Na Quaest o efeito é de menos de um ponto. Na Atlas o sinal inverte: Flávio faz 65,7% entre quem ganha até R$ 2 mil e 28,5% acima de R$ 10 mil, o oposto do que Quaest e Datafolha medem para a direita. Com a renda da PNAD, o 46,8 × 43,3 da Atlas vira 45,1 × 44,5, e o 39,9 × 36,0 do 1º turno vira empate em 37,4.</p><p>O que isso prova não é que Flávio perde em SP. Prova que <b>o gradiente de renda do voto de direita tem sinal oposto entre a pesquisa digital e as presenciais</b>, e que essa divergência é maior que qualquer efeito de reponderação. É um problema de método que os três institutos precisam explicar, e é um alerta para a campanha: a base pobre que a Atlas mede para Flávio não aparece nas urnas simuladas do Datafolha e da Quaest.</p></div>'
+    body += '<div class="callout counter"><span class="stamp limit">O achado que contraria a tese</span><h3>A amostra mais pobre do Datafolha não esconde voto de direita. Na Atlas, a régua da PNAD tira a liderança de Flávio.</h3><p>A hipótese de partida era simples: amostra mais pobre que o estado subestima a direita, e a régua oficial a devolveria. O Datafolha é de fato 14,7 pontos mais pobre na faixa de baixo, mas o efeito é pequeno e vai nos dois sentidos: Tarcísio sobe de 54 para 55,3 e Haddad de 35 para 35,6 no 2º turno, porque entre os mais pobres do Datafolha a não escolha é de 20% contra 6% entre os mais ricos. Na Quaest o efeito é de cerca de um ponto contra Tarcísio, e na Real Time, a mais pobre das amostras depois do Datafolha, de quase três pontos a favor. Na Atlas o sinal inverte: Flávio faz 65,7% entre quem ganha até R$ 2 mil e 28,5% acima de R$ 10 mil, o oposto do que Quaest e Datafolha medem para a direita. Com a renda da PNAD, o 46,8 × 43,3 da Atlas vira 45,1 × 44,5, e o 39,9 × 36,0 do 1º turno vira empate em 37,4.</p><p>O que isso prova não é que Flávio perde em SP. Prova que <b>o gradiente de renda do voto de direita tem sinal oposto entre a pesquisa digital e as presenciais e telefônica</b>, e que essa divergência é maior que qualquer efeito de reponderação. É um problema de método que os três institutos precisam explicar, e é um alerta para a campanha: a base pobre que a Atlas mede para Flávio não aparece nas urnas simuladas do Datafolha e da Quaest.</p></div>'
     body += "<h3>Controles de transcrição</h3>" + table(
         ["Fonte", "Controle", "Maior resíduo"],
         [
@@ -1127,8 +1260,14 @@ def ch_renda():
                 "Renda em três faixas; governo e Presidência",
                 "2,32 pp em Flávio, 1º turno: controle reprovado, registrado",
             ],
+            [
+                "Real Time, p. 10 dos dois laudos",
+                "Renda em três faixas; governo e Presidência, 1º turno",
+                "0,9 pp",
+            ],
         ],
     )
+    body += serie_html()
     body += (
         '<p class="note">Método: para cada faixa, o voto publicado na faixa é mantido e só o peso da faixa é trocado pelo da PNAD; a sensibilidade é publicado + (reponderado − recomposto), para não herdar arredondamento. A ponderação dos institutos é conjunta e não publicada; isto é sensibilidade de uma margem, nunca voto corrigido. '
         + link("assets/sp_092026_camada2.json", "Base com todas as células")
@@ -1138,7 +1277,7 @@ def ch_renda():
         9,
         "renda",
         "A régua da renda <em>muda pouco, e não para o lado esperado.</em>",
-        "As três amostras têm perfis de renda diferentes da PNAD. Trocar o peso de cada faixa pelo peso oficial é a única sensibilidade que o relatório do instituto permite. O resultado contraria a hipótese de partida, e é publicado com o mesmo destaque.",
+        "As quatro amostras têm perfis de renda diferentes da PNAD. Trocar o peso de cada faixa pelo peso oficial é a única sensibilidade que o relatório do instituto permite. O resultado contraria a hipótese de partida, e é publicado com o mesmo destaque. A série mostra que o deslocamento é estável de onda para onda.",
         body,
         True,
     )
@@ -1156,8 +1295,8 @@ def ch_fluxos():
         body += f'<div><span>Imposto pelas margens</span><b>Flávio recebe {fmt(rb["diferenca_tarcisio_menos_direita_pp"], 1)} pontos a menos que Tarcísio</b><small>Lula recebe {sgn(rb["diferenca_esquerda_menos_haddad_pp"], 1)} sobre Haddad; não escolha {sgn(rb["variacao_nao_escolha_pp"], 1)}</small></div>'
         body += f'<div><span>Estimado por IPF</span><b>{fmt(es["tarcisio_para_direita_pct"], 1)}% do eleitor de Tarcísio vota Flávio</b><small>{fmt(es["tarcisio_para_esquerda_pct"], 1)}% vai a Lula ({fmt(es["tarcisio_para_esquerda_pontos"], 1)} pontos) e {fmt(es["tarcisio_para_nao_escolha_pct"], 1)}% anula ou não sabe ({fmt(es["tarcisio_para_nao_escolha_pontos"], 1)} pontos)</small></div>'
         body += f'<div><span>Fidelidade do outro lado</span><b>{fmt(es["haddad_para_esquerda_pct"], 1)}% do eleitor de Haddad vota Lula</b><small>{"1º turno: parte do eleitor de Tarcísio vai a Caiado, Zema, Renan e Cury" if f["tipo"] != "2T para 2T" else "a base petista não vaza"}</small></div></div></div>'
-    body += '<div class="grid-3"><article class="card"><span class="metric">14,0%</span><h3>Datafolha: o vazamento vai para Lula</h3><p>Tarcísio 54 vira Flávio 47 e Haddad 35 vira Lula 42. Sete pontos saem de um lado e sete entram no outro, com a não escolha parada em 11 e 10. A pesquisa de pontos de fluxo mede um eleitor de Tarcísio que, sem Tarcísio, prefere Lula a Flávio.</p></article><article class="card"><span class="metric gold">13,2%</span><h3>Atlas: o vazamento vai para o branco</h3><p>Tarcísio 53,2 vira Flávio 46,8, mas Haddad 42,6 vira Lula 43,3, quase nada. A perda de 6,4 pontos aparece na não escolha, que sobe de 4,2 para 9,9. A pesquisa digital mede um eleitor de Tarcísio que, sem Tarcísio, não vota em ninguém.</p></article><article class="card"><span class="metric red">36,7%</span><h3>Quaest: a dispersão do 1º turno</h3><p>Sem 2º turno presidencial no relatório, o destino é o 1º turno: Tarcísio 47 vira Flávio 30. A prior da Atlas manda cerca de um quinto do eleitor de Tarcísio para Caiado, Zema, Renan e Cury, e é aí que o voto útil da direita ainda está por consolidar.</p></article></div>'
-    body += '<div class="callout"><h3>O que as três pesquisas dizem juntas</h3><p>Em qualquer método, cerca de um em cada sete eleitores de Tarcísio no 2º turno não vota Flávio no 2º turno. A divergência entre os institutos não é sobre o tamanho do vazamento: é sobre o destino. Presencial, ele vira voto em Lula; digital, vira voto nulo. Para a campanha as duas leituras convergem numa só instrução: <b>o eleitor de Tarcísio que falta é conquistável, porque nem o Datafolha o dá como petista convicto nem a Atlas o dá como abstencionista convicto</b>. Ele está no meio, e o capítulo seguinte mostra onde.</p></div>'
+    body += '<div class="grid-4"><article class="card"><span class="metric">14,0%</span><h3>Datafolha: o vazamento vai para Lula</h3><p>Tarcísio 54 vira Flávio 47 e Haddad 35 vira Lula 42. Sete pontos saem de um lado e sete entram no outro, com a não escolha parada em 11 e 10. A pesquisa de pontos de fluxo mede um eleitor de Tarcísio que, sem Tarcísio, prefere Lula a Flávio.</p></article><article class="card"><span class="metric gold">13,2%</span><h3>Atlas: o vazamento vai para o branco</h3><p>Tarcísio 53,2 vira Flávio 46,8, mas Haddad 42,6 vira Lula 43,3, quase nada. A perda de 6,4 pontos aparece na não escolha, que sobe de 4,2 para 9,9. A pesquisa digital mede um eleitor de Tarcísio que, sem Tarcísio, não vota em ninguém.</p></article><article class="card"><span class="metric">19,6%</span><h3>Real Time: o maior vazamento, e para Lula</h3><p>Tarcísio 54 vira Flávio 44 e Haddad 36 vira Lula 49: dez pontos saem de um lado e treze entram no outro. Um em cada cinco eleitores de Tarcísio não vota Flávio, e o IPF estima 11,9% deles com Lula. É a pesquisa telefônica, e é a que mais separa o governador do candidato.</p></article><article class="card"><span class="metric red">36,7%</span><h3>Quaest: a dispersão do 1º turno</h3><p>Sem 2º turno presidencial no relatório, o destino é o 1º turno: Tarcísio 47 vira Flávio 30. A prior da Atlas manda cerca de um quinto do eleitor de Tarcísio para Caiado, Zema, Renan e Cury, e é aí que o voto útil da direita ainda está por consolidar.</p></article></div>'
+    body += '<div class="callout"><h3>O que as quatro pesquisas dizem juntas</h3><p>Em qualquer método, entre um em sete e um em cinco eleitores de Tarcísio no 2º turno não vota Flávio no 2º turno: 14,0% no Datafolha, 13,2% na Atlas, 19,6% na Real Time. A divergência entre os institutos é sobre o destino. Presencial e telefônico, ele vira voto em Lula; digital, vira voto nulo. Para a campanha as duas leituras convergem numa só instrução: <b>o eleitor de Tarcísio que falta é conquistável, porque nem o Datafolha o dá como petista convicto nem a Atlas o dá como abstencionista convicto</b>. Ele está no meio, e o capítulo seguinte mostra onde.</p></div>'
     alt = E["atlas"]["cenarios_2t"]
     body += (
         "<h3>Cenários alternativos na mesma amostra da Atlas</h3>"
@@ -1180,8 +1319,8 @@ def ch_fluxos():
     return chapter(
         10,
         "fluxos",
-        "De Tarcísio para Flávio: <em>três institutos, um vazamento, dois destinos.</em>",
-        "Nenhum dos três relatórios publica o cruzamento do voto estadual de 2026 com o presidencial de 2026. Os diagramas usam IPF para fechar exatamente as margens observadas sob uma prior medida pela Atlas no voto de 2022. As fitas são estimativa; os totais não.",
+        "De Tarcísio para Flávio: <em>quatro institutos, um vazamento, dois destinos.</em>",
+        "Nenhum dos quatro relatórios publica o cruzamento do voto estadual de 2026 com o presidencial de 2026. Os diagramas usam IPF para fechar exatamente as margens observadas sob uma prior medida pela Atlas no voto de 2022. As fitas são estimativa; os totais não.",
         body,
         False,
         True,
@@ -1192,7 +1331,7 @@ def ch_vao():
     seg = VAO["segmentos"]
     groups_order = ["Sexo", "Idade", "Escolaridade", "Renda", "Religião", "Região"]
     rows = [s for g in groups_order for s in seg if s["grupo"] == g]
-    body = '<div class="ledger"><div><span>Vão total na Atlas</span><b>6,4 pontos</b><small>Tarcísio 53,2 no 2º turno estadual, Flávio 46,8 no presidencial</small></div><div><span>Vão total no Datafolha</span><b>7,0 pontos</b><small>Tarcísio 54, Flávio 47</small></div><div><span>Desaprovação de Lula em SP</span><b>58%</b><small>Atlas p. 26; Flávio tem 46,8: teto endereçável de 11,2</small></div><div><span>Tarcísio merece reeleição</span><b>52,4%</b><small>Atlas p. 30; 42,4% dizem não</small></div></div>'
+    body = '<div class="ledger"><div><span>Vão total na Atlas</span><b>6,4 pontos</b><small>Tarcísio 53,2 no 2º turno estadual, Flávio 46,8 no presidencial</small></div><div><span>Vão total no Datafolha</span><b>7,0 pontos</b><small>Tarcísio 54, Flávio 47</small></div><div><span>Vão total na Real Time</span><b>10,0 pontos</b><small>Tarcísio 54, Flávio 44; Lula 49 contra Haddad 36</small></div><div><span>Desaprovação de Lula em SP</span><b>58%</b><small>Atlas p. 26; Flávio tem 46,8: teto endereçável de 11,2</small></div></div>'
     body += (
         '<div class="chart-shell">'
         + lollipop_svg(
@@ -1355,7 +1494,7 @@ def ch_temas():
         + source("atlas", "p. 41")
         + "</article></div>"
     )
-    body += '<p>Violência e criminalidade lideram nas duas réguas, com distância de 12 pontos sobre o segundo tema na Quaest e de 23,5 na Atlas. Educação aparece em segundo na Atlas (35,9%) e em quarto na Quaest (6%): a diferença é da pergunta, não da opinião. A Atlas permite até três respostas; a Quaest pede o problema mais grave. Os valores não medem a mesma coisa e não devem ser usados para dizer que um tema cresceu de uma pesquisa para outra.</p><h3>Como os temas aparecem nas notícias locais</h3><p class="note">Seleção documental, não amostra representativa da imprensa nem medição de prioridades regionais. A pauta de cada corredor de campanha, no capítulo 16, usa outra seleção, com valor, devedor e destinatário.</p><div class="news-grid">'
+    body += '<p>Violência e criminalidade lideram nas duas réguas, com distância de 12 pontos sobre o segundo tema na Quaest e de 23,5 na Atlas. Educação aparece em segundo na Atlas (35,9%) e em quarto na Quaest (6%): a diferença é da pergunta, não da opinião. A Atlas permite até três respostas; a Quaest pede o problema mais grave. Os valores não medem a mesma coisa e não devem ser usados para dizer que um tema cresceu de uma pesquisa para outra.</p><h3>Como os temas aparecem nas notícias locais</h3><p class="note">Seleção documental, não amostra representativa da imprensa nem medição de prioridades regionais. A pauta de cada corredor de campanha, no capítulo 17, usa outra seleção, com valor, devedor e destinatário.</p><div class="news-grid">'
     for region, title, copy, date, outlet, url in NEWS:
         body += f'<article><span class="eyebrow">{esc(region)}</span><h3>{esc(title)}</h3><p>{esc(copy)}</p><p class="note">{esc(date)} · {link(url, outlet)}</p></article>'
     body += (
@@ -1381,7 +1520,7 @@ def ch_leitura():
     items = [
         (
             "Fechar o vão antes de abrir frente nova",
-            "Um em cada sete eleitores de Tarcísio no 2º turno não vota Flávio (Datafolha 14,0%, Atlas 13,2%). É o maior estoque de voto de direita disponível no país numa só unidade da federação: 7 pontos de 34,1 milhões de eleitores são 2,4 milhões de votos. Nenhuma outra frente rende isso.",
+            "Entre um em sete e um em cinco eleitores de Tarcísio no 2º turno não vota Flávio (Datafolha 14,0%, Atlas 13,2%, Real Time 19,6%). É o maior estoque de voto de direita disponível no país numa só unidade da federação: 7 pontos de 34,1 milhões de eleitores são 2,4 milhões de votos, e o capítulo 16 localiza 1,1 milhão deles cidade a cidade. Nenhuma outra frente rende isso.",
         ),
         (
             "Tarcísio abre, Flávio fecha, sempre nessa ordem",
@@ -1389,7 +1528,7 @@ def ch_leitura():
         ),
         (
             "Falar com o eleitor de Rodrigo Garcia como quem pede voto, não como quem cobra fidelidade",
-            "Foram 4,3 milhões de votos em 2022. Hoje 36,5% deles estão com Tarcísio e 25,0% com Flávio; no 1º turno, 31,9% escolhem Augusto Cury (Atlas p. 19 e 23). Esse eleitor é de centro-direita, de ensino superior e da metrópole, e quer competência administrativa, não bandeira. A pauta que funciona com ele é a do capítulo 16: trem, porto, tarifa e emprego, com número.",
+            "Foram 4,3 milhões de votos em 2022. Hoje 36,5% deles estão com Tarcísio e 25,0% com Flávio; no 1º turno, 31,9% escolhem Augusto Cury (Atlas p. 19 e 23). Esse eleitor é de centro-direita, de ensino superior e da metrópole, e quer competência administrativa, não bandeira. A pauta que funciona com ele é a do capítulo 17: trem, porto, tarifa e emprego, com número. As cidades onde ele pesa mais estão no capítulo 16.",
         ),
         (
             "Trocar identidade por serviço na metrópole",
@@ -1401,7 +1540,7 @@ def ch_leitura():
         ),
         (
             "Planejar para uma eleição que a Real Time diz que está perdida",
-            "A Real Time é a única com Lula à frente em SP, 49 × 44, com 2.000 entrevistas telefônicas. O PDF está pendente e o resultado é preservado. Uma campanha séria não descarta a pesquisa que a contraria; ela testa se a divergência vem do método (telefone, cenário com Marçal) ou do eleitorado, e a resposta decide o tamanho do esforço em SP.",
+            "A Real Time é a única com Lula à frente em SP, 49 × 44, com 2.000 entrevistas telefônicas, e os dois laudos confirmam: Tarcísio 54 × 36 no mesmo campo. É o maior vão dos quatro institutos, 10 pontos, e o IPF põe 11,9% do eleitor de Tarcísio com Lula. Uma campanha séria não descarta a pesquisa que a contraria; ela testa se a divergência vem do método (telefone, cenário com Marçal) ou do eleitorado. Reponderada pela PNAD, a Real Time sobe a vantagem de Flávio no 1º turno de 5 para 6,4: a amostra telefônica pobre não explica o 2º turno.",
         ),
     ]
     body += (
@@ -1455,35 +1594,9 @@ def ch_carregadores():
         + "".join(rows)
         + "</tbody></table></div>"
     )
-    comp = CARR["complementares_tarcisio"]
-    body += '<div class="split"><div class="chart-shell"><div class="chart-title"><div><p class="kicker">Onde Tarcísio rendeu acima de Bolsonaro no 1º turno</p><h3>Cidades complementares, com 40 mil eleitores ou mais</h3></div></div>'
-    body += table(
-        [
-            "município",
-            "região",
-            "eleitores",
-            "Bolsonaro 1T",
-            "Tarcísio 1T",
-            "diferença",
-            "Garcia 1T",
-        ],
-        [
-            [
-                esc(r["nome"]),
-                esc(r["regiao"]),
-                fmt(r["eleitorado"]),
-                fmt(r["bol1"], 1) + "%",
-                fmt(r["tar1"], 1) + "%",
-                sgn(r["tar1_menos_bol1_pp"], 1) + " pp",
-                fmt(r["garcia1"], 1) + "%",
-            ]
-            for r in comp[:15]
-        ],
-        cls="compact",
-    )
-    body += '<p class="note">São os municípios em que o governador teve, em 2022, mais votos que o presidente na mesma cédula. É a lista curta de lugares onde o eleitor já separou os dois nomes a favor do estadual.</p></div>'
+    body += '<div class="split"><div class="chart-shell"><div class="chart-title"><div><p class="kicker">O que o 2º turno de 2022 mostra</p><h3>Tarcísio e Bolsonaro eram o mesmo eleitorado</h3></div></div><p>No 2º turno de 2022, mesmo universo de eleitores, Tarcísio fez 55,27% e Bolsonaro 55,24%. Em 597 dos 645 municípios Tarcísio ficou à frente, mas por margens que somam 84.771 votos no estado inteiro; a maior diferença entre as grandes cidades é São José dos Campos, +0,87 ponto. Não existe cidade de 2022 em que o governador tenha tido um eleitorado próprio que o presidente não tivesse. O eleitor de Tarcísio que não é de Flávio é fenômeno do mandato, medido pelas pesquisas de 2026, e por isso o capítulo 16 o localiza aplicando o cruzamento da Atlas ao voto de 2022 de cada cidade, em vez de procurar uma diferença que a urna de 2022 não registrou.</p></div>'
     body += '<div class="chart-shell"><div class="chart-title"><div><p class="kicker">Limite do índice</p><h3>O que ele não mede</h3></div></div><div class="limit-list"><p><b>Mede alcance, não repasse.</b> Governador, senador, deputado e presidente disputam cédulas e incentivos diferentes. O índice mostra onde um nome chegou mais longe que o topo da chapa, e a distância entre chegar longe e entregar voto a outro candidato é justamente o que a campanha tem de construir.</p><p><b>Mede território, não gente.</b> A unidade é o município. A capital, com 9,1 milhões de eleitores, tem bolsões de índice alto e baixo dentro dela, e a leitura por zona eleitoral exige o arquivo de seção, que não está nesta versão.</p><p><b>Mede o passado.</b> O denominador é 2022. Desde então mudaram partido, adversário e economia. Derrite fez 1,05% como deputado e hoje disputa o Senado: o índice dele mostra a geografia da base, não o teto.</p></div></div></div>'
-    body += '<div class="grid-3"><article class="card"><span class="metric">107</span><h3>Tarcísio no Porto</h3><p>É o corredor onde o governador mais rende acima de Bolsonaro: Baixada Santista, com 48,4% para Bolsonaro no 1º turno e o túnel como pauta. No interior rico (Tecnologia 104, Aeroespacial 105, Sorocaba 103, Agro 103) ele também rende acima. Na capital e no ABC, 97; no oeste metropolitano, 95.</p></article><article class="card"><span class="metric gold">434</span><h3>Derrite em Sorocaba</h3><p>A base do candidato ao Senado é concentrada no sudoeste: no corredor de Sorocaba ele rende mais de quatro vezes o que Bolsonaro rendeu ali. No Porto, 37; na Tecnologia, 64. É um nome regional que precisa da chapa para virar estadual, e a chapa precisa dele onde ele existe.</p></article><article class="card"><span class="metric red">Pontes</span><h3>O carregador que sobrou</h3><p>Marcos Pontes fez 49,68% para o Senado e superou Bolsonaro em todas as regiões. É o único nome da direita paulista com prova de voto acima do topo da chapa em todo o estado, e não está na cédula de 2026 como candidato. Como cabo eleitoral, é o ativo mais subutilizado da campanha.</p></article></div>'
+    body += '<div class="grid-3"><article class="card"><span class="metric">107</span><h3>Tarcísio no Porto</h3><p>É o corredor onde o governador mais rende acima de Bolsonaro no 1º turno, porque Garcia foi fraco ali: Baixada Santista, com 48,4% para Bolsonaro no 1º turno e o túnel como pauta. No interior rico (Tecnologia 104, Aeroespacial 105, Sorocaba 103, Agro 103) ele também rende acima. Na capital e no ABC, 97; no oeste metropolitano, 95.</p></article><article class="card"><span class="metric gold">434</span><h3>Derrite em Sorocaba</h3><p>A base do candidato ao Senado é concentrada no sudoeste: no corredor de Sorocaba ele rende mais de quatro vezes o que Bolsonaro rendeu ali. No Porto, 37; na Tecnologia, 64. É um nome regional que precisa da chapa para virar estadual, e a chapa precisa dele onde ele existe.</p></article><article class="card"><span class="metric red">Pontes</span><h3>O carregador que sobrou</h3><p>Marcos Pontes fez 49,68% para o Senado e superou Bolsonaro em todas as regiões. É o único nome da direita paulista com prova de voto acima do topo da chapa em todo o estado, e não está na cédula de 2026 como candidato. Como cabo eleitoral, é o ativo mais subutilizado da campanha.</p></article></div>'
     body += (
         '<p class="note"><b>Cálculo.</b> '
         + esc(K["meta"]["definicao_indice"])
@@ -1500,12 +1613,118 @@ def ch_carregadores():
     )
 
 
+def ch_micro():
+    m = MICRO
+    e = m["estado"]
+    co = m["coeficientes"]
+    body = '<div class="ledger">'
+    body += f'<div><span>2º turno de 2022, mesmo universo</span><b>{fmt(e["tar2"], 2)} × {fmt(e["bol2"], 2)}</b><small>Tarcísio e Bolsonaro; {fmt(e["municipios_tarcisio_acima"])} municípios com Tarcísio à frente, por {fmt(e["votos_tarcisio_sem_bolsonaro_acima"])} votos somados</small></div>'
+    body += f'<div><span>Estoque localizado pelo 1º turno</span><b>{fmt(e["estoque_votos_total"] / 1e6, 2)} mi</b><small>{fmt(e["estoque_pct"], 2)}% dos votos de 2022; {fmt(e["estoque_garcia_total"] / 1e3)} mil vêm do eleitor de Garcia</small></div>'
+    body += f'<div><span>Estoque localizado pelo 2º turno</span><b>{fmt(e["estoque2t_votos_total"] / 1e6, 2)} mi</b><small>{fmt(100 * co["Tarcísio 2T"], 1)}% dos eleitores de Tarcísio e {fmt(100 * co["Haddad 2T"], 1)}% dos de Haddad em 2022</small></div>'
+    body += "<div><span>Vão total da Atlas</span><b>2,2 mi</b><small>6,4 pontos de 34,1 milhões; o estoque localiza a metade que votou em candidato em 2022</small></div></div>"
+    body += (
+        '<div class="plain">A urna de 2022 não separa Tarcísio de Bolsonaro: no 2º turno os dois tiveram o mesmo eleitorado em toda cidade, com diferença abaixo de um ponto. O que separa os dois em 2026 é o mandato, e quem mede isso são as pesquisas. A Atlas cruza o voto de 2022 com a intenção de 2026 e diz quanto de cada eleitorado antigo virou eleitor de Tarcísio que não é de Flávio: '
+        + fmt(100 * co["Tarcísio"], 1)
+        + "% dos que votaram Tarcísio no 1º turno, "
+        + fmt(100 * co["Haddad"], 1)
+        + "% dos que votaram Haddad e "
+        + fmt(100 * co["Rodrigo Garcia"], 1)
+        + "% dos que votaram Rodrigo Garcia. Aplicar essas fatias ao voto de cada município é o mapa mais preciso que os documentos permitem, e ele aponta para o eleitor tucano do interior rico.</div>"
+    )
+    top = m["trabalho"]
+    body += '<div class="chart-shell"><div class="chart-title"><div><p class="kicker">Onde o estoque é maior em votos</p><h3>As trinta cidades com mais eleitores de Tarcísio que não são de Flávio</h3></div><span>municípios com 30 mil eleitores ou mais</span></div>'
+    body += table(
+        [
+            "município",
+            "região",
+            "eleitores 2026",
+            "Garcia 1T 2022",
+            "estoque · votos",
+            "estoque · % do 1T",
+            "estoque pelo 2T",
+            "Tarcísio menos Bolsonaro 2T",
+            "índice Tarcísio",
+            "vão regional Atlas",
+        ],
+        [
+            [
+                esc(r["nome"]),
+                esc(r["regiao"]),
+                fmt(r["eleitorado"]),
+                fmt(r["garcia1"], 1) + "%",
+                fmt(r["estoque_votos"]),
+                fmt(r["estoque_pct"], 2) + "%",
+                fmt(r["estoque2t_votos"]),
+                sgn(r["tar2_menos_bol2_pp"], 2) + " pp",
+                fmt(r["i_tarcisio"]),
+                sgn(r["vao_regional_atlas"]) + " pp",
+            ]
+            for r in top
+        ],
+        cls="compact",
+    )
+    body += "</div>"
+    dens = m["densidade"]
+    body += '<div class="split"><div class="chart-shell"><div class="chart-title"><div><p class="kicker">Onde o estoque é mais denso</p><h3>As quinze cidades com maior fatia de estoque</h3></div><span>40 mil eleitores ou mais</span></div>'
+    body += table(
+        [
+            "município",
+            "região",
+            "eleitores",
+            "Garcia 1T",
+            "estoque · %",
+            "estoque · votos",
+        ],
+        [
+            [
+                esc(r["nome"]),
+                esc(r["regiao"]),
+                fmt(r["eleitorado"]),
+                fmt(r["garcia1"], 1) + "%",
+                fmt(r["estoque_pct"], 2) + "%",
+                fmt(r["estoque_votos"]),
+            ]
+            for r in dens
+        ],
+        cls="compact",
+    )
+    body += '<p class="note">A densidade segue o voto de Rodrigo Garcia em 2022: Olímpia, Cruzeiro, Bragança Paulista, Porto Ferreira e Boituva são cidades em que o tucano fez de 24% a 39% no 1º turno. É o interior rico de tradição PSDB, e é onde o eleitor de Tarcísio que ainda não é de Flávio pesa mais em proporção.</p></div>'
+    body += '<div class="chart-shell"><div class="chart-title"><div><p class="kicker">Contraponto</p><h3>O que a urna de 2022 não entrega</h3></div></div><div class="limit-list">'
+    body += (
+        "<p><b>A lista de 2022 não é lista de alvos.</b> As maiores diferenças municipais entre Tarcísio e Bolsonaro no 2º turno de 2022 são "
+        + ", ".join(
+            f'{esc(r["nome"])} ({sgn(r["tar2_menos_bol2_pp"], 2)} pp, {fmt(r["votos_tarcisio_sem_bolsonaro"])} votos)'
+            for r in m["acima_top"][:4]
+        )
+        + ". São frações de ponto. Quem procurar em 2022 a cidade onde o governador tinha voto próprio não vai encontrar.</p>"
+    )
+    body += "<p><b>O estoque é estimativa.</b> Os coeficientes vêm de uma pesquisa com 1.810 entrevistas, recortada por voto declarado de 2022, e a memória de voto tem erro. O estoque de cada cidade herda essa incerteza e não deve ser lido com precisão de unidade.</p>"
+    body += "<p><b>Metade do vão não tem endereço.</b> Quem votou branco, nulo ou não votou em 2022 responde por boa parte do vão da Atlas (branco e nulo de 2022: Tarcísio 22,9, Flávio 0,4), e a base municipal usada aqui não traz esses grupos. O estoque localizado é a metade que votou em candidato.</p>"
+    body += "<p><b>A capital concentra volume, não densidade.</b> São Paulo tem 283 mil eleitores de estoque, um quarto do total, com 4,5% de fatia. Rio Preto tem 12,9 mil com 5,4%. Volume decide onde gastar tempo; densidade decide onde a mensagem certa rende mais por evento.</p></div></div></div>"
+    body += (
+        '<p class="note"><b>Cálculo.</b> '
+        + esc(m["definicao_estoque"])
+        + " Fonte dos coeficientes: Atlas/Estadão p. 14 e 23. Fonte dos votos: TSE 2022, 1º e 2º turnos, por município. Camadas correspondentes no mapa do capítulo 3. Base em "
+        + link("assets/sp_092026_camada2.json", "sp_092026_camada2.json")
+        + ".</p>"
+    )
+    return chapter(
+        16,
+        "cidades-trabalho",
+        "As cidades onde mora <em>o voto de Tarcísio que não é de Flávio.</em>",
+        "A urna de 2022 mostra que Tarcísio e Bolsonaro eram o mesmo eleitorado. A pesquisa de 2026 mostra que deixaram de ser. Cruzar as duas, cidade a cidade, é a única forma de dar endereço ao vão.",
+        body,
+        False,
+        True,
+    )
+
+
 def ch_corredores():
     body = '<div class="stance"><span class="stamp limit">Posição declarada</span><p>Este capítulo tem lado, e o diz. As recomendações são dirigidas à campanha de Flávio Bolsonaro em São Paulo, em associação com Tarcísio. Cada corredor reúne municípios com a mesma base econômica, a mesma imprensa e o mesmo tipo de encontro público possível. Para cada um: o que os jornais paulistas publicaram, com data e link; quem tem base eleitoral medida ali; quem sobe no palanque; o formato que a região comporta; o que não dizer; e o juízo editorial, rotulado como tal. O corredor que contraria a própria tese é o da Capital: 26,8% do eleitorado, Tarcísio 48,9 × Haddad 48,4 e a maior perda de volume da direita entre 2018 e 2022.</p></div>'
     body += (
         '<div class="route-grid"><div class="route-map">'
         + route_map()
-        + '</div><div class="route-copy"><p class="kicker">NOVE CORREDORES</p><h3>O estado cabe em nove viagens, e a ordem delas está no capítulo 17.</h3><ol>'
+        + '</div><div class="route-copy"><p class="kicker">NOVE CORREDORES</p><h3>O estado cabe em nove viagens, e a ordem delas está no capítulo 18.</h3><ol>'
         + "".join(
             f'<li><span class="dot" style="background:{ROTA_CORES[c["slug"]]}"></span><b>{esc(c["nome"].replace("Corredor ", ""))}:</b> {fmt(c["resumo"]["eleitores"])} eleitores, {fmt(c["resumo"]["share_sp"], 1)}% do estado, Bolsonaro {fmt(c["resumo"]["bol1"], 1)}% no 1º turno.</li>'
             for c in CORR
@@ -1574,7 +1793,7 @@ def ch_corredores():
             )
         body += "</tbody></table></div></article>"
     return chapter(
-        16,
+        17,
         "corredores",
         "A economia manda na pauta, <em>e a pauta muda a cada cem quilômetros.</em>",
         "Nove corredores, da capital ao oeste. Para cada um, a pauta vem da imprensa local com link, o palanque vem do índice dos carregadores e o formato vem do que a região comporta.",
@@ -1617,7 +1836,7 @@ def ch_ordem():
     )
     body += '<div class="callout"><h3>A regra de convergência</h3><p>O alvo prioritário é o corredor em que três condições se encontram: (a) o topo da chapa ficou abaixo da média estadual em 2022, (b) o carregador estadual rende acima ou aprova acima, e (c) existe pauta material com valor, devedor e destinatário publicados na imprensa local. Em São Paulo isso é a metrópole com o trem e a segurança, e é a Baixada com o porto. O interior de direita não precisa de convergência: precisa de calendário.</p><p>Sem datas. A ordem é de prioridade, não de agenda, e vale enquanto os números de agosto valerem. A próxima onda das três pesquisas reabre este capítulo.</p></div>'
     return chapter(
-        17,
+        18,
         "ordem",
         "Sem datas. <em>Com ordem.</em>",
         "Cinco movimentos, na ordem em que os números os pedem. Cada um tem o motivo numérico ao lado e nenhum depende de promessa que a campanha não pode cumprir.",
@@ -1638,7 +1857,8 @@ def ch_dados():
             "Bolsonaro 2018 · 2º",
             "Bolsonaro 2022 · 2º",
             "Tarcísio 2022 · 2º",
-            "Tarcísio menos Bolsonaro · 1º",
+            "Tarcísio menos Bolsonaro · 2º",
+            "Estoque · %",
             "Garcia 1º",
             "Vencedores",
         ],
@@ -1651,7 +1871,8 @@ def ch_dados():
                 fmt(r["jair_2018_2_pct"], 2) + "%",
                 fmt(r["jair_2022_2_pct"], 2) + "%",
                 fmt(r["tarcisio_2022_2_pct"], 2) + "%",
-                sgn(cm[r["id"]]["tar1_menos_bol1_pp"], 2),
+                sgn(cm[r["id"]]["tar2_menos_bol2_pp"], 2),
+                fmt(cm[r["id"]]["estoque_pct"], 2) + "%",
                 fmt(cm[r["id"]]["garcia1"], 1) + "%",
                 r["virada"],
             ]
@@ -1676,7 +1897,7 @@ def ch_dados():
         + "</p>"
     )
     return chapter(
-        18,
+        19,
         "dados",
         "Todos os municípios, <em>com a mesma regra.</em>",
         "O arquivo completo inclui os votos nominais dos parlamentares por ano, os totais por cargo, PIB, eleitorado, os índices dos carregadores e as fontes geográficas.",
@@ -1685,7 +1906,7 @@ def ch_dados():
 
 
 def ch_fontes():
-    body = '<ol class="method-list"><li><b>TSE.</b> ZIPs de votação por candidato, município e zona de 2018 e 2022. Presidência no arquivo BR filtrado por SP; demais cargos no arquivo SP, evitando duplicidade. Junção ao IBGE por nome normalizado e exceções explícitas. São 645 municípios.</li><li><b>Empates.</b> Comparação das contagens inteiras. Percentual igual a 50% não é vitória do candidato oposto. Guará permanece em categoria separada.</li><li><b>PNAD.</b> Renda conhecida de pessoas 16+; estatísticas monetárias e domínios identificados. População anual estimada e eleitorado cadastrado não são intercambiáveis. Os intervalos usam 200 réplicas oficiais e aproximação normal.</li><li><b>Pesquisas.</b> Percentuais publicados e arredondamentos preservados. Bases ponderadas não são contagens de campo. Toda tabela cruzada foi transcrita com a página ao lado e provada recompondo o placar publicado; o único controle reprovado (Quaest p. 79, Flávio) está declarado no capítulo 9.</li><li><b>Reponderação.</b> Sensibilidade de uma margem: o voto por faixa é mantido e só o peso da faixa muda para o da PNAD 2025. Publicada como publicado + (reponderado − recomposto). Nunca chamada de voto corrigido.</li><li><b>Fluxos.</b> IPF/RAS sobre margens publicadas, com prior empírica da Atlas (p. 19 e 23) sobre o voto de 2022. Nós são medição; fitas são estimativa. Só o vazamento agregado sobrevive à troca da prior.</li><li><b>Índice dos carregadores.</b> Participação municipal do nome dividida pela participação estadual, dividida pelo mesmo quociente de Bolsonaro no 1º turno de 2022, vezes cem, sobre votos nominais do próprio cargo.</li><li><b>Geografia.</b> Municípios agrupados nas onze regiões intermediárias IBGE e em nove corredores declarados no script. A malha é simplificada para visualização; área não representa população.</li><li><b>Imprensa.</b> Cada fato dos corredores tem veículo, data e link, conferidos no próprio veículo. Resultado nulo de buscador não foi tratado como ausência de cobertura.</li><li><b>Rastreabilidade.</b> Os quatro PDFs têm SHA-256, número de páginas, registros e status de conferência na base de pesquisas. A ausência de um PDF ou cruzamento é indicada onde limita a análise.</li></ol>'
+    body = '<ol class="method-list"><li><b>TSE.</b> ZIPs de votação por candidato, município e zona de 2018 e 2022. Presidência no arquivo BR filtrado por SP; demais cargos no arquivo SP, evitando duplicidade. Junção ao IBGE por nome normalizado e exceções explícitas. São 645 municípios.</li><li><b>Empates.</b> Comparação das contagens inteiras. Percentual igual a 50% não é vitória do candidato oposto. Guará permanece em categoria separada.</li><li><b>PNAD.</b> Renda conhecida de pessoas 16+; estatísticas monetárias e domínios identificados. População anual estimada e eleitorado cadastrado não são intercambiáveis. Os intervalos usam 200 réplicas oficiais e aproximação normal.</li><li><b>Pesquisas.</b> Percentuais publicados e arredondamentos preservados. Bases ponderadas não são contagens de campo. Toda tabela cruzada foi transcrita com a página ao lado e provada recompondo o placar publicado; o único controle reprovado (Quaest p. 79, Flávio) está declarado no capítulo 9.</li><li><b>Reponderação.</b> Sensibilidade de uma margem: o voto por faixa é mantido e só o peso da faixa muda para o da PNAD 2025. Publicada como publicado + (reponderado − recomposto). Nunca chamada de voto corrigido.</li><li><b>Estoque localizado.</b> Fatia de cada eleitorado de 2022 (1º e 2º turnos para governador) que vota Tarcísio e não vota Flávio, medida pela Atlas, aplicada aos votos municipais do TSE. Estimativa; cobre só quem votou em candidato.</li><li><b>Fluxos.</b> IPF/RAS sobre margens publicadas, com prior empírica da Atlas (p. 19 e 23) sobre o voto de 2022. Nós são medição; fitas são estimativa. Só o vazamento agregado sobrevive à troca da prior.</li><li><b>Índice dos carregadores.</b> Participação municipal do nome dividida pela participação estadual, dividida pelo mesmo quociente de Bolsonaro no 1º turno de 2022, vezes cem, sobre votos nominais do próprio cargo.</li><li><b>Geografia.</b> Municípios agrupados nas onze regiões intermediárias IBGE e em nove corredores declarados no script. A malha é simplificada para visualização; área não representa população.</li><li><b>Imprensa.</b> Cada fato dos corredores tem veículo, data e link, conferidos no próprio veículo. Resultado nulo de buscador não foi tratado como ausência de cobertura.</li><li><b>Rastreabilidade.</b> Os quatro PDFs têm SHA-256, número de páginas, registros e status de conferência na base de pesquisas. A ausência de um PDF ou cruzamento é indicada onde limita a análise.</li></ol>'
     body += table(
         ["Fonte", "Acesso"],
         [
@@ -1748,7 +1969,8 @@ def ch_fontes():
                 "Real Time Big Data, SP, 24/08/2026",
                 link(P["urls"]["rt_gov"], "iG")
                 + " · "
-                + link(P["urls"]["rt_pres"], "Metrópoles"),
+                + link(P["urls"]["rt_pres_pdf"], "PDF presidencial, Poder360")
+                + " · laudo de governo recebido, SHA-256 na base de pesquisas",
             ],
         ],
     )
@@ -1765,10 +1987,10 @@ def ch_fontes():
         + "</p>"
     )
     return chapter(
-        19,
+        20,
         "fontes",
         "Uma trilha pública <em>para refazer as contas.</em>",
-        "Atlas descritivo até o capítulo 13, leitura estratégica declarada do 14 ao 17. Toda conta derivada tem a fonte, a página e o script ao lado.",
+        "Atlas descritivo até o capítulo 13, leitura estratégica declarada do 14 ao 18. Toda conta derivada tem a fonte, a página e o script ao lado.",
         body,
     )
 
@@ -1790,6 +2012,7 @@ def build():
         ch_temas(),
         ch_leitura(),
         ch_carregadores(),
+        ch_micro(),
         ch_corredores(),
         ch_ordem(),
         ch_dados(),
@@ -1807,6 +2030,7 @@ def build():
         ("senado", "Senado"),
         ("leitura", "Leitura"),
         ("carregadores", "Carregadores"),
+        ("cidades-trabalho", "Cidades"),
         ("corredores", "Corredores"),
         ("ordem", "Ordem"),
         ("fontes", "Fontes"),

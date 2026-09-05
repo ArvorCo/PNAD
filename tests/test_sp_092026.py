@@ -75,9 +75,10 @@ def test_polls_keep_unavailable_questions_and_source_limits():
     data = asset("sp_092026_pesquisas.json")
     polls = {p["id"]: p for p in data["pesquisas"]}
     assert "presidente2" not in polls["quaest"]
-    assert "Notícias" in polls["rt_gov"]["status"]
+    assert "conferidos" in polls["rt_gov"]["status"]
+    assert polls["rt_gov"]["governo2"] == [54, 36]
     assert polls["rt_gov"]["presidente2"] == [44, 49]
-    assert len(data["arquivos"]) == 4
+    assert len(data["arquivos"]) == 7
     assert all(len(f["sha256"]) == 64 for f in data["arquivos"])
     for dimensions in data["validacoes"]["datafolha_p27"].values():
         assert all(abs(v["residuo_pp"]) < 1 for v in dimensions.values())
