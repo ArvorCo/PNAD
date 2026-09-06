@@ -81,6 +81,7 @@ def text(
         if halo
         else ""
     )
+    size = round(size * 1.12)
     return f'<text x="{x:.1f}" y="{y:.1f}" font-size="{size}" fill="{fill}" font-family="{esc(family)}" font-weight="{weight}" text-anchor="{anchor}"{h}>{esc(value)}</text>'
 
 
@@ -119,7 +120,7 @@ def viz_dumbbell_vao():
         text(
             x0,
             34,
-            "TARCÍSIO (GOVERNO, 2º TURNO) E FLÁVIO (PRESIDÊNCIA, 2º TURNO), MESMA AMOSTRA",
+            "TARCÍSIO (GOVERNO 2º) E FLÁVIO (PRESIDÊNCIA 2º), MESMA AMOSTRA",
             15,
             MUTED,
         )
@@ -163,7 +164,7 @@ def viz_dumbbell_vao():
         text(
             x0,
             H - 14,
-            "Fontes: Datafolha p. 6 e Poder360; Atlas p. 12 e 21; Real Time p. 12 dos dois laudos.",
+            "Fontes: Datafolha p. 6 e Poder360; Atlas p. 12 e 21; Real Time p. 12.",
             13,
             FAINT,
         )
@@ -178,7 +179,7 @@ def viz_stack_destinos():
         text(
             60,
             34,
-            "DESTINO DO ELEITOR DE TARCÍSIO NO 2º TURNO PRESIDENCIAL, EM % (ESTIMADO POR IPF)",
+            "DESTINO DO ELEITOR DE TARCÍSIO NO 2º TURNO PRESIDENCIAL, EM % (IPF)",
             15,
             MUTED,
         )
@@ -257,7 +258,7 @@ def viz_stack_destinos():
             text(
                 60,
                 yy,
-                f"{key}: Flávio recebe {fmt(rb['diferenca_tarcisio_menos_direita_pp'], 1)} pontos a menos que Tarcísio; Lula {sgn(rb['diferenca_esquerda_menos_haddad_pp'], 1)} sobre Haddad; não escolha {sgn(rb['variacao_nao_escolha_pp'], 1)}.",
+                f"{key}: Flávio {sgn(-rb['diferenca_tarcisio_menos_direita_pp'], 1)} sobre Tarcísio; Lula {sgn(rb['diferenca_esquerda_menos_haddad_pp'], 1)} sobre Haddad; não escolha {sgn(rb['variacao_nao_escolha_pp'], 1)}.",
                 15,
                 INK2,
             )
@@ -277,7 +278,7 @@ def viz_stack_destinos():
         text(
             60,
             H - 8,
-            "Prior empírica: Atlas p. 23, voto de 2022 cruzado com 2026. Fitas são estimativa; nós são medição.",
+            "Prior empírica: Atlas p. 23, voto de 2022 cruzado com 2026. Fitas estimadas; nós medidos.",
             13,
             FAINT,
         )
@@ -414,13 +415,13 @@ def viz_sankey3_datafolha():
 
 def viz_bars_estoque():
     top = MICRO["trabalho"][:12]
-    dens = MICRO["densidade"][:6]
-    W, H = 1000, 660
+    dens = MICRO["densidade"][:5]
+    W, H = 1000, 700
     out = [
         text(
             40,
             34,
-            "ESTOQUE LOCALIZADO: ELEITORES DE TARCÍSIO QUE NÃO SÃO DE FLÁVIO, POR CIDADE",
+            "ESTOQUE LOCALIZADO: ELEITORES DE TARCÍSIO QUE NÃO SÃO DE FLÁVIO",
             15,
             MUTED,
         )
@@ -464,7 +465,7 @@ def viz_bars_estoque():
         text(
             x,
             H - 30,
-            f"Total localizado: {fmt(e['estoque_votos_total'] / 1e6, 2)} mi de votos ({fmt(e['estoque_pct'], 2)}% do 1º turno de 2022), {fmt(e['estoque_garcia_total'] / 1e3)} mil do eleitor de Garcia.",
+            f"Total localizado: {fmt(e['estoque_votos_total'] / 1e6, 2)} mi ({fmt(e['estoque_pct'], 2)}% do 1º turno de 2022), {fmt(e['estoque_garcia_total'] / 1e3)} mil do eleitor de Garcia.",
             12,
             FAINT,
         )
@@ -473,7 +474,7 @@ def viz_bars_estoque():
         text(
             x,
             H - 12,
-            "Coeficientes: Atlas p. 14, 19 e 23 (voto declarado de 2022). Votos: TSE 2022 por município.",
+            "Coeficientes: Atlas p. 14, 19 e 23 (voto declarado de 2022). Votos: TSE 2022.",
             12,
             FAINT,
         )
@@ -488,7 +489,7 @@ def viz_pontes():
         text(
             40,
             34,
-            "PONTES MENOS BOLSONARO NO 1º TURNO DE 2022, EM PONTOS (CIDADES DE 40 MIL ELEITORES OU MAIS)",
+            "PONTES MENOS BOLSONARO, 1º TURNO DE 2022, EM PONTOS (40 MIL ELEITORES OU MAIS)",
             15,
             MUTED,
         )
@@ -513,7 +514,7 @@ def viz_pontes():
         text(
             40,
             y,
-            "OUTROS PUXADORES E ONDE RENDEM ACIMA DO TOPO DA CHAPA (ÍNDICE 100 = BOLSONARO)",
+            "OUTROS PUXADORES E ONDE RENDEM ACIMA DO TOPO (ÍNDICE 100 = BOLSONARO)",
             14,
             MUTED,
         )
@@ -523,9 +524,7 @@ def viz_pontes():
     cards.append(
         ("Derrite", by["sorocaba"]["i_derrite"], "corredor de Sorocaba", AMBER)
     )
-    cards.append(
-        ("André do Prado", by["leste"]["i_prado"], "ABC, Guarulhos e Alto Tietê", AMBER)
-    )
+    cards.append(("André do Prado", by["leste"]["i_prado"], "ABC e Alto Tietê", AMBER))
     cards.append(("Tarcísio", by["porto"]["i_tarcisio"], "Baixada Santista", GREEN))
     cards.append(
         ("Pontes", by["agro_oeste"]["i_pontes"], "Agro do Oeste e Bauru", CYAN)
@@ -542,7 +541,7 @@ def viz_pontes():
         text(
             40,
             H - 60,
-            "Agendas conjuntas Flávio e Pontes (excedente de 4 pontos ou mais e estoque de 4,9% ou mais):",
+            "Agendas conjuntas Flávio e Pontes (excedente de 4 pontos e estoque de 4,9% ou mais):",
             15,
             INK2,
             SANS,
@@ -556,7 +555,7 @@ def viz_pontes():
         text(
             40,
             H - 10,
-            "Índice mede alcance, não repasse: onde o nome chegou mais longe que Bolsonaro em 2022. TSE 2022, votos nominais por cargo.",
+            "Índice mede alcance, não repasse. TSE 2022, votos nominais por cargo.",
             12,
             FAINT,
         )
@@ -589,10 +588,10 @@ def viz_companhia():
     ]
     cols = [
         (40, "corredor"),
-        (320, "eleitores"),
-        (430, "Bolsonaro 1T"),
-        (540, "quem acompanha"),
-        (785, "índices"),
+        (300, "eleitores"),
+        (400, "Bolsonaro 1T"),
+        (510, "quem acompanha"),
+        (760, "índices"),
     ]
     y = 74
     for x, lab in cols:
@@ -617,19 +616,19 @@ def viz_companhia():
                 600,
             )
         )
-        out.append(text(320, y, fmt(r["eleitores"] / 1e6, 2) + " mi", 15, INK2))
-        out.append(text(430, y, fmt(r["bol1"], 1) + "%", 15, INK2))
-        out.append(text(540, y, principal, 15, LIME, SANS, 600))
-        out.append(text(540, y + 20, apoio, 12, INK2))
+        out.append(text(300, y, fmt(r["eleitores"] / 1e6, 2) + " mi", 15, INK2))
+        out.append(text(400, y, fmt(r["bol1"], 1) + "%", 15, INK2))
+        out.append(text(510, y, principal, 15, LIME, SANS, 600))
+        out.append(text(510, y + 20, apoio, 12, INK2))
         idx = f"T {fmt(r['i_tarcisio'])} · P {fmt(r['i_pontes'])} · D {fmt(r['i_derrite'])} · Pr {fmt(r['i_prado'])}"
-        out.append(text(785, y, idx, 12, INK2))
+        out.append(text(760, y, idx, 11, INK2))
         out.append(line(40, y + 32, 960, y + 32, "rgb(244 242 234 / 12%)"))
         y += 60
     out.append(
         text(
             40,
             H - 12,
-            "T = Tarcísio, P = Pontes, D = Derrite, Pr = André do Prado. Índice 100 = rende como Bolsonaro rendeu no corredor no 1º turno de 2022.",
+            "T Tarcísio · P Pontes · D Derrite · Pr André do Prado. Índice 100 = rende como Bolsonaro no corredor, 1º turno de 2022.",
             12,
             FAINT,
         )
@@ -668,7 +667,7 @@ def viz_renda():
         text(
             40,
             34,
-            "DIFERENÇA DIREITA MENOS ESQUERDA: PUBLICADA E COM A RENDA DA PNAD 2025",
+            "DIFERENÇA DIREITA MENOS ESQUERDA: PUBLICADA E COM A RENDA DA PNAD",
             15,
             MUTED,
         )
@@ -695,17 +694,17 @@ def viz_renda():
         out.append(text(sx(sens) + 6, y + 28, sgn(sens), 12, AMBER))
         y += 52
     out.append(
-        rect(x0, H - 44, 18, 12, INK2, 2) + text(x0 + 26, H - 33, "publicada", 14, INK2)
+        rect(x0, H - 68, 18, 12, INK2, 2) + text(x0 + 26, H - 57, "publicada", 14, INK2)
     )
     out.append(
-        rect(x0 + 140, H - 44, 18, 12, AMBER, 2)
-        + text(x0 + 166, H - 33, "com os pesos de renda da PNADC 2025", 14, INK2)
+        rect(x0 + 140, H - 68, 18, 12, AMBER, 2)
+        + text(x0 + 166, H - 57, "com os pesos de renda da PNADC 2025", 14, INK2)
     )
     out.append(
         text(
             40,
             H - 26,
-            "Sensibilidade de uma margem: o voto por faixa fica, só o peso da faixa muda. Nunca voto corrigido.",
+            "Sensibilidade de uma margem: o voto por faixa fica, só o peso muda. Nunca voto corrigido.",
             12,
             FAINT,
         )
@@ -714,7 +713,7 @@ def viz_renda():
         text(
             40,
             H - 8,
-            "Datafolha p. 27 e 33; Quaest p. 9, 24 e 79; Atlas p. 10, 14, 18 e 23; Real Time p. 10 dos dois laudos.",
+            "Datafolha p. 27 e 33; Quaest p. 9, 24 e 79; Atlas p. 10, 14, 18 e 23; Real Time p. 10.",
             12,
             FAINT,
         )
@@ -755,7 +754,7 @@ def viz_ordem():
         text(
             40,
             34,
-            "O QUE TARCÍSIO, PONTES E OS PUXADORES PRECISAM FAZER, NA ORDEM EM QUE OS NÚMEROS PEDEM",
+            "O QUE TARCÍSIO, PONTES E OS PUXADORES PRECISAM FAZER, NA ORDEM DOS NÚMEROS",
             15,
             MUTED,
         )
@@ -764,7 +763,7 @@ def viz_ordem():
     for n, t, d in steps:
         out.append(text(40, y + 30, n, 40, LIME, DISPLAY, 900))
         out.append(text(120, y + 12, t, 21, INK, SANS, 700))
-        for k, chunk in enumerate(textwrap.wrap(d, 92)[:2]):
+        for k, chunk in enumerate(textwrap.wrap(d, 76)[:2]):
             out.append(text(120, y + 40 + 22 * k, chunk, 15, INK2))
         out.append(line(40, y + 84, 960, y + 84, "rgb(244 242 234 / 12%)"))
         y += 104
@@ -1050,35 +1049,35 @@ h1 em{display:block;font-style:italic;color:var(--lime);font-weight:500}
 .rail b{font-family:var(--mono);font-size:.68rem;letter-spacing:.13em;text-transform:uppercase;color:var(--faint);margin-right:8px;white-space:nowrap}
 .rail a{width:26px;height:26px;flex:0 0 auto;display:grid;place-items:center;border-radius:5px;border:1px solid var(--line);color:var(--muted);text-decoration:none;font-family:var(--mono);font-size:.72rem}
 .post{margin:52px 0 0;scroll-margin-top:64px}
-.post-label{font-family:var(--mono);font-size:.72rem;letter-spacing:.13em;text-transform:uppercase;color:var(--faint);margin-bottom:11px}
+.post-label{width:min(100%,760px);margin-left:auto;margin-right:auto;font-family:var(--mono);font-size:.72rem;letter-spacing:.13em;text-transform:uppercase;color:var(--faint);margin-bottom:11px}
 .post-label b{color:var(--ink)}
 /* O card é quadrado: 1:1, na largura de trabalho de 1080px, que é o que se anexa. */
-.card{position:relative;aspect-ratio:1/1;border:1px solid var(--line2);border-radius:8px;overflow:hidden;background:#0a0b09;container-type:inline-size;display:flex;flex-direction:column}
+.card{position:relative;aspect-ratio:1/1;width:min(100%,760px);margin:0 auto;border:1px solid var(--line2);border-radius:8px;overflow:hidden;background:#0a0b09;container-type:inline-size;display:flex;flex-direction:column}
 .card::before{content:"";position:absolute;inset:0;background:radial-gradient(120% 80% at 100% 0%,rgb(69 201 194 / 10%) 0,transparent 55%),radial-gradient(90% 70% at 0% 100%,rgb(207 230 60 / 8%) 0,transparent 60%)}
 .card>*{position:relative;z-index:2}
 .stripe{position:absolute;inset:0 0 auto 0;height:4px;z-index:3;background:var(--accent)}
 .card-head{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:2.2cqw 2.6cqw 0}
 .chead{display:flex;align-items:center;gap:9px}
 .chead img{width:2.6cqw;height:2.6cqw;min-width:22px;min-height:22px;border-radius:4px}
-.chead b{display:block;font-size:1.35cqw;line-height:1.2}
-.chead span{display:block;font-family:var(--mono);font-size:1.05cqw;color:var(--muted)}
-.pno{font-family:var(--mono);font-size:1.15cqw;color:var(--accent);letter-spacing:.1em}
+.chead b{display:block;font-size:1.7cqw;line-height:1.2}
+.chead span{display:block;font-family:var(--mono);font-size:1.3cqw;color:var(--muted)}
+.pno{font-family:var(--mono);font-size:1.4cqw;color:var(--accent);letter-spacing:.1em}
 .card-body{flex:1;min-height:0;display:grid;grid-template-rows:auto minmax(0,1fr);gap:1.6cqw;padding:1.4cqw 2.6cqw}
 .said{display:grid;grid-template-columns:auto minmax(0,1fr);gap:0 2.4cqw;align-items:start}
 .said .num{grid-row:1/3}
-.lead-tag{display:inline-block;font-family:var(--mono);font-size:1.02cqw;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);border:1px solid currentcolor;border-radius:999px;padding:.45cqw 1cqw}
-.metric{font-family:var(--display);font-weight:900;font-size:5.2cqw;line-height:.95;letter-spacing:-.03em;color:var(--accent);margin:.8cqw 0 0;white-space:nowrap}
-.card h2{font-family:var(--display);font-size:2.35cqw;line-height:1.1;margin:.6cqw 0 .7cqw;font-weight:700}
-.card .t{font-size:1.32cqw;line-height:1.45;color:var(--ink2);margin:0}
+.lead-tag{display:inline-block;font-family:var(--mono);font-size:1.25cqw;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);border:1px solid currentcolor;border-radius:999px;padding:.45cqw 1cqw}
+.metric{font-family:var(--display);font-weight:900;font-size:6cqw;line-height:.95;letter-spacing:-.03em;color:var(--accent);margin:.8cqw 0 0;white-space:nowrap}
+.card h2{font-family:var(--display);font-size:2.9cqw;line-height:1.1;margin:.6cqw 0 .7cqw;font-weight:700}
+.card .t{font-size:1.62cqw;line-height:1.42;color:var(--ink2);margin:0}
 .kchips{display:flex;flex-wrap:wrap;gap:.6cqw;margin-top:.9cqw}
-.kchip{font-family:var(--mono);font-size:1cqw;border:1px solid currentcolor;border-radius:999px;padding:.4cqw .85cqw;white-space:nowrap}
+.kchip{font-family:var(--mono);font-size:1.22cqw;border:1px solid currentcolor;border-radius:999px;padding:.4cqw .85cqw;white-space:nowrap}
 .kchip.l{color:#ea6a5c}.kchip.b{color:var(--flavio)}.kchip.a{color:var(--amber)}.kchip.c{color:var(--cyan)}.kchip.g{color:var(--green)}
 .viz{border:1px solid var(--line);border-radius:6px;background:rgb(244 242 234 / 5%);padding:1.4cqw;min-width:0;min-height:0;display:flex;align-items:center;justify-content:center}
 .viz svg{width:100%;height:100%;max-height:100%;display:block}
-.card-foot{flex:0 0 auto;display:flex;justify-content:space-between;gap:12px;padding:1.2cqw 2.6cqw;font-family:var(--mono);font-size:1cqw;color:var(--faint);border-top:1px solid var(--line)}
-.copy{margin:14px 0 0;border:1px solid var(--line);border-radius:6px;background:var(--bg2);padding:20px 22px;font-family:var(--mono);font-size:.9rem;line-height:1.72;color:var(--ink2);white-space:pre-wrap;position:relative}
+.card-foot{flex:0 0 auto;display:flex;justify-content:space-between;gap:12px;padding:1.2cqw 2.6cqw;font-family:var(--mono);font-size:1.2cqw;color:var(--faint);border-top:1px solid var(--line)}
+.copy{margin:14px auto 0;width:min(100%,760px);border:1px solid var(--line);border-radius:6px;background:var(--bg2);padding:20px 22px;font-family:var(--mono);font-size:.9rem;line-height:1.72;color:var(--ink2);white-space:pre-wrap;position:relative}
 .cc{position:absolute;top:12px;right:18px;font-size:.7rem;color:var(--faint);letter-spacing:.09em}
-.copy-btn{margin-top:10px;font-family:var(--mono);font-size:.74rem;letter-spacing:.11em;text-transform:uppercase;background:transparent;color:var(--lime);border:1px solid var(--line2);border-radius:999px;padding:9px 18px;cursor:pointer}
+.copy-btn{margin:10px auto 0;display:block;width:min(100%,760px);text-align:left;font-family:var(--mono);font-size:.74rem;letter-spacing:.11em;text-transform:uppercase;background:transparent;color:var(--lime);border:1px solid var(--line2);border-radius:999px;padding:9px 18px;cursor:pointer}
 .copy-btn:hover{border-color:var(--lime)}
 footer{margin:72px 0 0;border-top:1px solid var(--line);padding:34px 0 60px;color:var(--muted);font-size:.92rem}
 footer h2{font-family:var(--display);font-size:1.6rem;margin:0 0 10px;color:var(--ink)}
@@ -1191,7 +1190,7 @@ def main() -> None:
   </div>
   <h1>O voto de Tarcísio que ainda não é de Flávio. <em>Cinco pontos, nove cards.</em></h1>
   <p class="deck">A thread do atlas de São Paulo. Cada card é quadrado, 1:1, denso de propósito: o gráfico carrega a informação e o texto embaixo é o post, pronto para copiar. Os cinco pontos: o vazamento e seus destinos, o teste da terceira via, as cidades onde o eleitor mora, os puxadores que rendem acima de Bolsonaro e quem acompanha Flávio em cada corredor. Antes da conclusão, os limites, inclusive o achado que contraria a tese.</p>
-  <div class="howto"><b>Como usar.</b> Cada card é a imagem do post; anexe na largura de trabalho, acima de 720 pixels, para manter o quadrado exato. O texto embaixo tem de 950 a 1.400 caracteres e cabe num post longo. Nenhum número foi digitado à mão: todos vêm dos arquivos <code>sp_092026_camada2.json</code> e <code>sp_092026_pesquisas.json</code>, gerados pelos scripts do dossiê.</div>
+  <div class="howto"><b>Como usar.</b> Cada card é a imagem do post, um quadrado de 760 pixels que cabe na tela de um notebook para o print; acima de 720 pixels de janela o quadrado é exato. O texto embaixo tem de 950 a 1.400 caracteres e cabe num post longo. Nenhum número foi digitado à mão: todos vêm dos arquivos <code>sp_092026_camada2.json</code> e <code>sp_092026_pesquisas.json</code>, gerados pelos scripts do dossiê.</div>
 </header>
 <nav class="rail" aria-label="Posts"><div class="wrap"><b>Posts</b>{rail}</div></nav>
 <main class="wrap">{posts}</main>
