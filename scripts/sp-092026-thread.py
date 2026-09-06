@@ -680,11 +680,11 @@ def viz_renda():
                 sx(t),
                 60,
                 sx(t),
-                H - 90,
+                H - 110,
                 "rgb(244 242 234 / 14%)" if t else "rgb(244 242 234 / 45%)",
             )
         )
-        out.append(text(sx(t), H - 70, sgn(t, 0), 13, FAINT, anchor="middle"))
+        out.append(text(sx(t), H - 92, sgn(t, 0), 13, FAINT, anchor="middle"))
     y = 76
     for lab, pub, sens in rows:
         out.append(text(x0 - 14, y + 20, lab, 15, INK, SANS, 600, "end"))
