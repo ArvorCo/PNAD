@@ -1,0 +1,78 @@
+{
+ "id": "futura_2026-05-20",
+ "instituto": "Futura",
+ "contratante": "não declarado no relatório; o documento circula com marca-d'água da Apex em todas as páginas",
+ "registro_tse": "BR-06529/2026",
+ "campo": {
+  "inicio": "2026-05-15",
+  "fim": "2026-05-20"
+ },
+ "divulgacao": "2026-05-22",
+ "n": 2000,
+ "metodo": "telefônico, CATI em 878 cidades",
+ "fonte": {
+  "pdf": "data/originals/apex_futura_052026_20/Relatorio.pdf",
+  "url": null,
+  "paginas": {
+   "perfil_renda": 3,
+   "1t": 6,
+   "2t": 7
+  }
+ },
+ "renda": {
+  "unidade": "salarios_minimos",
+  "ano_referencia": 2026,
+  "faixas": [
+   {
+    "rotulo": "Até 1 SM (até R$ 1.621)",
+    "max": 1
+   },
+   {
+    "rotulo": "De 1 a 2 SM (R$ 1.621 a 3.242)",
+    "max": 2
+   },
+   {
+    "rotulo": "De 2 a 5 SM (R$ 3.242 a 8.105)",
+    "max": 5
+   },
+   {
+    "rotulo": "De 5 a 10 SM (R$ 8.105 a 16.210)",
+    "max": 10
+   },
+   {
+    "rotulo": "Mais de 10 SM (acima de R$ 16.210)",
+    "max": null
+   }
+  ],
+  "amostra_pct": [
+   34.0,
+   24.9,
+   21.8,
+   6.3,
+   4.4
+  ],
+  "nota": "Perfil da amostra da p. 3; 8,5% respondem NS/NR na renda e ficam fora das cinco faixas."
+ },
+ "ignorar": true,
+ "motivo": "O relatório publica o perfil de renda da amostra mas nenhum cruzamento do voto por renda. Os recortes impressos do voto são gênero, faixa etária, região, religião e escolaridade; o painel de renda que reaparece em toda página é o filtro de caracterização da amostra do Power BI, não uma quebra do voto. Sem o cruzamento por faixa não há o que reponderar.",
+ "publicado": {
+  "2t": {
+   "lula": 47.7,
+   "flavio": 42.2,
+   "branco_nulo": 9.0,
+   "indecisos": 1.2
+  },
+  "1t": {
+   "lula": 42.7,
+   "flavio": 35.6,
+   "zema": 3.9,
+   "caiado": 3.3,
+   "renan_santos": 1.7,
+   "cury": 0.9,
+   "outros": 1.4,
+   "branco_nulo": 7.8,
+   "indecisos": 2.8
+  }
+ },
+ "notas": "Cenário 1 da p. 6 e 2º turno Lula × Flávio da p. 7. O relatório testa ainda cenários sem Flávio e com Michelle Bolsonaro, além de 2º turnos com Caiado, Zema e Michelle, que não entram no agregador. A capa rotula a onda como mai/26 - 2. Em outros entram Cabo Daciolo 1,0 e Aldo Rebelo 0,4."
+}

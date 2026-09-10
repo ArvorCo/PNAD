@@ -1,0 +1,128 @@
+{
+ "id": "mda_2026-06-14",
+ "instituto": "MDA",
+ "contratante": "Confederação Nacional do Transporte (CNT)",
+ "registro_tse": "BR-04256/2026",
+ "campo": {
+  "inicio": "2026-06-10",
+  "fim": "2026-06-14"
+ },
+ "divulgacao": "2026-06-16",
+ "n": 2002,
+ "metodo": "presencial domiciliar",
+ "fonte": {
+  "pdf": "data/originals/mda_062026_14/Relatorio.pdf",
+  "url": null,
+  "paginas": {
+   "perfil_renda": 76,
+   "1t": 9,
+   "1t_renda": 10,
+   "2t": 15,
+   "2t_renda": 16
+  }
+ },
+ "renda": {
+  "unidade": "salarios_minimos",
+  "ano_referencia": 2026,
+  "faixas": [
+   {
+    "rotulo": "Menos de 2 SM (até R$ 3.242)",
+    "max": 2
+   },
+   {
+    "rotulo": "De 2 até 5 SM (R$ 3.242 a 8.105)",
+    "max": 5
+   },
+   {
+    "rotulo": "Mais de 5 SM (acima de R$ 8.105)",
+    "max": null
+   }
+  ],
+  "amostra_pct": [
+   42.2,
+   35.8,
+   21.7
+  ],
+  "nota": "Distribuição das entrevistas por renda familiar, p. 76; 0,3% respondem NS/NR e ficam fora das três faixas (o motor renormaliza). Renda familiar é uma das quatro variáveis de controle declaradas na metodologia (p. 3), então a distribuição publicada é a atingida em campo sob cota, e não um perfil ponderado à parte."
+ },
+ "publicado": {
+  "2t": {
+   "lula": 49.3,
+   "flavio": 36.8,
+   "branco_nulo": 11.2,
+   "indecisos": 2.7
+  },
+  "1t": {
+   "lula": 41.8,
+   "flavio": 28.2,
+   "outros": 14.8,
+   "branco_nulo": 7.0,
+   "indecisos": 7.9
+  }
+ },
+ "cruzamentos": {
+  "2t": {
+   "opcoes": [
+    "lula",
+    "flavio",
+    "branco_nulo",
+    "indecisos"
+   ],
+   "linhas": [
+    [
+     57,
+     29,
+     11,
+     2
+    ],
+    [
+     43,
+     42,
+     13,
+     3
+    ],
+    [
+     44,
+     44,
+     8,
+     4
+    ]
+   ],
+   "nota": "2º turno Lula × Flávio Bolsonaro, estratificadas, p. 16 do PDF. Os números são imagem e foram lidos na renderização; a coluna de indeciso fica parcialmente cortada pela borda do gráfico e foi conferida com recorte ampliado. As linhas de menos de 2 SM e de 2 a 5 SM somam 99 e 101 no relatório, efeito de arredondamento do próprio instituto, e foram copiadas como estão."
+  },
+  "1t": {
+   "opcoes": [
+    "lula",
+    "flavio",
+    "outros",
+    "branco_nulo",
+    "indecisos"
+   ],
+   "linhas": [
+    [
+     49,
+     22,
+     13,
+     7,
+     8
+    ],
+    [
+     35,
+     32,
+     16,
+     8,
+     9
+    ],
+    [
+     38,
+     34,
+     17,
+     5,
+     7
+    ]
+   ],
+   "nota": "Estimulada de 1º turno, estratificadas, p. 10 do PDF. O instituto só publica cinco categorias no cruzamento (Lula, Flávio, Outros, Branco/Nulo, Indeciso), então o placar de publicado.1t usa as mesmas cinco chaves: outros = 14,8 é a soma de Ronaldo Caiado 4,0, Romeu Zema 2,8, Joaquim Barbosa 2,3, Renan Santos 2,0, Michel Temer 1,9 e Augusto Cury 1,8, todos abertos na p. 9. As linhas de menos de 2 SM e de mais de 5 SM somam 99 e 101, efeito de arredondamento, e foram copiadas como estão."
+  }
+ },
+ "notas": "168ª rodada da Pesquisa CNT de Opinião. Relatório completo gerado em 16/06/2026 10:42 (creationDate do PDF) e divulgado no mesmo dia. A série da p. 15 dá o 2º turno Lula × adversário do campo Bolsonaro em fev/25 42 × 43, jun/25 41 × 44, set/25 46 × 38, nov/25 49 × 37, abr/26 45 × 40 e jun/26 49 × 37, com a ressalva impressa de que até nov/25 o adversário é Jair Bolsonaro e a partir de abr/26 é Flávio. O relatório traz ainda 2º turnos alternativos (Zema, Caiado, Renan Santos, Cury) nas pp. 17 a 20, que não entram no agregador."
+}

@@ -1,0 +1,75 @@
+{
+ "id": "vox_brasil_2026-06-03",
+ "instituto": "Vox Brasil",
+ "contratante": "Instituto Vox Brasil Opinião e Pesquisas Ltda (recursos próprios)",
+ "registro_tse": "BR-08016/2026",
+ "campo": {
+  "inicio": "2026-06-01",
+  "fim": "2026-06-03"
+ },
+ "divulgacao": "2026-06-05",
+ "n": 2100,
+ "metodo": "presencial domiciliar, questionário estruturado",
+ "fonte": {
+  "pdf": "data/originals/vox_brasil_062026_06/Relatorio.pdf",
+  "url": "https://static.poder360.com.br/uploads/2026/06/pesquisa-vox-brasil-5jun2026.pdf",
+  "paginas": {
+   "perfil_renda": 7,
+   "1t": 8,
+   "1t_renda": 12,
+   "2t": 16,
+   "2t_renda": 18
+  }
+ },
+ "renda": {
+  "unidade": "salarios_minimos",
+  "ano_referencia": 2026,
+  "faixas": [
+   {
+    "rotulo": "Até 2 SM",
+    "max": 2
+   },
+   {
+    "rotulo": "Mais de 2 a 5 SM",
+    "max": 5
+   },
+   {
+    "rotulo": "Mais de 5 a 10 SM",
+    "max": 10
+   },
+   {
+    "rotulo": "Acima de 10 SM",
+    "max": null
+   }
+  ],
+  "amostra_pct": [
+   83.5,
+   11.8,
+   3.2,
+   1.5
+  ],
+  "nota": "Gráfico NÍVEL ECONÔMICO (SALÁRIOS MÍNIMOS) da p. 7, com destaque impresso de que 83,5% da amostra ganham até 2 salários mínimos. As quatro faixas somam 100 e não há categoria de renda não declarada. A ficha técnica da p. 3 declara ponderação por sexo, idade, escolaridade e renda, o que torna o desencontro entre esse perfil e o cruzamento por renda mais difícil de explicar como descuido de diagramação."
+ },
+ "ignorar": true,
+ "motivo": "O relatório publica cruzamento do voto por renda (1º turno na p. 12 e 2º turno na p. 18), e o cruzamento não passa no controle de recomposição. Com o único perfil de renda publicado pelo próprio relatório (p. 7: 83,5 / 11,8 / 3,2 / 1,5), as linhas de renda do 1º turno devolvem Lula 53,02 contra 42,1 publicado, Flávio 25,45 contra 33,6 e Caiado 3,57 contra 6,9; no 2º turno devolvem Lula 52,63 contra 47,8. O erro não é de transcrição: no mesmo documento a quebra por sexo recompõe o 1º turno em 42,13 contra 42,1 publicado e a quebra por escolaridade recompõe o 2º turno em 47,68 contra 47,8. Caiado é o teste mais duro: seu maior valor em qualquer faixa de renda é 7,0, então nenhuma distribuição de renda produz os 6,9 publicados junto com um Lula de 42,1. A onda de 26 a 28/07 repete o mesmo padrão. Sem margem de renda que feche com o placar, a reponderação não é publicável.",
+ "publicado": {
+  "2t": {
+   "lula": 47.8,
+   "flavio": 41.3,
+   "branco_nulo": 6.5,
+   "indecisos": 4.4
+  },
+  "1t": {
+   "lula": 42.1,
+   "flavio": 33.6,
+   "caiado": 6.9,
+   "zema": 5.1,
+   "renan_santos": 3.1,
+   "cury": 0.5,
+   "outros": 3.5,
+   "branco_nulo": 2.9,
+   "indecisos": 2.3
+  }
+ },
+ "notas": "Resultado geral do 1º turno na p. 8 e 2º turno Lula × Flávio na p. 16. Em outros entram Aécio Neves 2,1, Joaquim Barbosa 1,1 e Cabo Daciolo 0,3. As linhas de renda do 1º turno, na ordem das faixas, dão Lula 55,1 / 45,0 / 37,8 / 32,9 e Flávio 23,5 / 33,2 / 39,9 / 41,7; as do 2º turno dão Lula 53,8 / 48,8 / 42,8 / 38,5 e Flávio 34,3 / 40,5 / 46,1 / 50,1. O deck é imagem, sem camada de texto, e foi lido página a página na renderização. O relatório traz ainda 2º turnos com Zema, Caiado e Aécio Neves, que não entram no agregador."
+}

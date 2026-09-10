@@ -1,0 +1,76 @@
+{
+ "id": "vox_brasil_2026-07-28",
+ "instituto": "Vox Brasil",
+ "contratante": "Instituto Vox Brasil Opinião e Pesquisas Ltda (recursos próprios)",
+ "registro_tse": "BR-01084/2026",
+ "campo": {
+  "inicio": "2026-07-26",
+  "fim": "2026-07-28"
+ },
+ "divulgacao": "2026-07-31",
+ "n": 2100,
+ "metodo": "presencial domiciliar, questionário estruturado",
+ "fonte": {
+  "pdf": "data/originals/vox_brasil_072026_28/Relatorio.pdf",
+  "url": "https://static.poder360.com.br/uploads/2026/07/RELATORIO-VOX-BRASIL-NACIONAL-5-31-07-2026.pdf",
+  "paginas": {
+   "perfil_renda": 6,
+   "1t": 7,
+   "1t_renda": 9,
+   "2t": 13,
+   "2t_renda": 15
+  }
+ },
+ "renda": {
+  "unidade": "salarios_minimos",
+  "ano_referencia": 2026,
+  "faixas": [
+   {
+    "rotulo": "Até 2 SM",
+    "max": 2
+   },
+   {
+    "rotulo": "Mais de 2 a 5 SM",
+    "max": 5
+   },
+   {
+    "rotulo": "Mais de 5 a 10 SM",
+    "max": 10
+   },
+   {
+    "rotulo": "Acima de 10 SM",
+    "max": null
+   }
+  ],
+  "amostra_pct": [
+   83.9,
+   12.4,
+   2.8,
+   0.9
+  ],
+  "nota": "Gráfico NÍVEL ECONÔMICO (SALÁRIOS MINÍMOS) da p. 6. As quatro faixas somam 100 e não há categoria de renda não declarada. São exatamente os mesmos quatro números da onda de 25 a 27/08, o que sugere tabela de cota fixa e não distribuição observada."
+ },
+ "ignorar": true,
+ "motivo": "Esta é a única onda da série em que o instituto publica cruzamento do voto por renda (1º turno na p. 9 e 2º turno na p. 15), e o cruzamento não passa no controle de recomposição. Com o único perfil de renda publicado pelo próprio relatório (p. 6: 83,9 / 12,4 / 2,8 / 0,9), as linhas de renda do 1º turno devolvem Lula 52,99 contra 40,5 publicado e Flávio 25,37 contra 31,2, um erro de 12,5 e 5,8 pontos; no 2º turno devolvem Lula 52,89 contra 47,5, erro de 5,4 pontos. O controle mostra que o problema é da margem de renda e não da transcrição: na mesma página, a quebra por escolaridade recompõe o 2º turno em 47,30 contra 47,5 publicado, e a quebra por faixa etária recompõe o 1º turno em 40,43 contra 40,5. Nenhuma distribuição de renda única reproduz ao mesmo tempo os dois turnos a partir dessas linhas. Sem margem de renda que feche com o placar, a reponderação não é publicável.",
+ "publicado": {
+  "2t": {
+   "lula": 47.5,
+   "flavio": 41.1,
+   "branco_nulo": 7.5,
+   "indecisos": 3.9
+  },
+  "1t": {
+   "lula": 40.5,
+   "flavio": 31.2,
+   "caiado": 5.5,
+   "zema": 3.2,
+   "renan_santos": 3.0,
+   "cury": 1.1,
+   "samara": 0.2,
+   "outros": 3.4,
+   "branco_nulo": 2.3,
+   "indecisos": 9.6
+  }
+ },
+ "notas": "Estimulada da p. 7 e 2º turno Lula × Flávio da p. 13. Em outros entram Cabo Daciolo 0,9, Clariana Barão 0,7, Edmilson Costa 0,6, Leonardo Avalanche 0,5, Rui Costa Pimenta 0,4 e Hertz Dias 0,3. As linhas de renda do 1º turno, na ordem das faixas, dão Lula 55,2 / 43,0 / 37,8 / 31,9 e Flávio 23,4 / 34,2 / 39,9 / 42,7; as do 2º turno dão Lula 54,0 / 48,5 / 43,8 / 37,5 e Flávio 34,1 / 40,8 / 45,1 / 50,1. A linha de 2 a 5 SM do 1º turno soma 99,0 no relatório. O relatório traz ainda 2º turnos com Zema e Caiado, que não entram no agregador."
+}

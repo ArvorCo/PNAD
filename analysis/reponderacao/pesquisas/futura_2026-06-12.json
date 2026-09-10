@@ -1,0 +1,78 @@
+{
+ "id": "futura_2026-06-12",
+ "instituto": "Futura",
+ "contratante": "não declarado no relatório; o documento circula com marca-d'água do Poder360 em todas as páginas",
+ "registro_tse": "BR-01461/2026",
+ "campo": {
+  "inicio": "2026-06-08",
+  "fim": "2026-06-12"
+ },
+ "divulgacao": "2026-06-16",
+ "n": 2000,
+ "metodo": "telefônico, CATI em 861 cidades",
+ "fonte": {
+  "pdf": "data/originals/apex_futura_062026_12/Relatorio.pdf",
+  "url": null,
+  "paginas": {
+   "perfil_renda": 3,
+   "1t": 15,
+   "2t": 16
+  }
+ },
+ "renda": {
+  "unidade": "salarios_minimos",
+  "ano_referencia": 2026,
+  "faixas": [
+   {
+    "rotulo": "Até 1 SM (até R$ 1.621)",
+    "max": 1
+   },
+   {
+    "rotulo": "De 1 a 2 SM (R$ 1.621 a 3.242)",
+    "max": 2
+   },
+   {
+    "rotulo": "De 2 a 5 SM (R$ 3.242 a 8.105)",
+    "max": 5
+   },
+   {
+    "rotulo": "De 5 a 10 SM (R$ 8.105 a 16.210)",
+    "max": 10
+   },
+   {
+    "rotulo": "Mais de 10 SM (acima de R$ 16.210)",
+    "max": null
+   }
+  ],
+  "amostra_pct": [
+   30.1,
+   26.8,
+   22.0,
+   7.7,
+   5.1
+  ],
+  "nota": "Perfil da amostra da p. 3; 8,2% respondem NS/NR na renda e ficam fora das cinco faixas."
+ },
+ "ignorar": true,
+ "motivo": "O relatório publica o perfil de renda da amostra mas nenhum cruzamento do voto por renda. Os recortes impressos do voto são gênero, faixa etária, região, religião e escolaridade; o painel de renda que reaparece em toda página é o filtro de caracterização da amostra do Power BI, não uma quebra do voto. Sem o cruzamento por faixa não há o que reponderar.",
+ "publicado": {
+  "2t": {
+   "lula": 48.1,
+   "flavio": 42.9,
+   "branco_nulo": 7.2,
+   "indecisos": 1.8
+  },
+  "1t": {
+   "lula": 41.6,
+   "flavio": 34.1,
+   "caiado": 4.5,
+   "zema": 3.5,
+   "renan_santos": 2.3,
+   "cury": 0.9,
+   "outros": 3.2,
+   "branco_nulo": 6.3,
+   "indecisos": 3.7
+  }
+ },
+ "notas": "Cenário 1 da p. 15 e 2º turno Lula × Flávio da p. 16. O relatório testa ainda cenários sem Flávio e 2º turnos com Caiado, Zema e Renan Santos, que não entram no agregador. Em outros entram Joaquim Barbosa 2,1 e Cabo Daciolo 1,1, nenhum deles com chave própria no manifesto."
+}

@@ -1,0 +1,150 @@
+{
+ "id": "gerp_2026-06-05",
+ "instituto": "Gerp",
+ "contratante": "Gerp Mercadologia (pesquisa institucional; o relatório não declara contratante externo)",
+ "registro_tse": "BR-01792/2026",
+ "campo": {
+  "inicio": "2026-06-02",
+  "fim": "2026-06-05"
+ },
+ "divulgacao": "2026-06-09",
+ "n": 2000,
+ "metodo": "telefônico, GerpCati remoto com cédula estimulada lida ao entrevistado",
+ "fonte": {
+  "pdf": "data/originals/gerp_062026_05/Relatorio.pdf",
+  "url": "https://gerp.com.br/relatorios/02-05%20JUN%20Elei%C3%A7%C3%B5es%202026_Presidente.pdf",
+  "paginas": {
+   "perfil_renda": 4,
+   "1t_renda": 14
+  }
+ },
+ "renda": {
+  "unidade": "salarios_minimos",
+  "ano_referencia": 2026,
+  "faixas": [
+   {
+    "rotulo": "Até 1 SM (até R$ 1.621)",
+    "max": 1
+   },
+   {
+    "rotulo": "Mais de 1 a 2 SM (R$ 1.621 a 3.242)",
+    "max": 2
+   },
+   {
+    "rotulo": "Mais de 2 a 5 SM (R$ 3.242 a 8.105)",
+    "max": 5
+   },
+   {
+    "rotulo": "Mais de 5 a 10 SM (R$ 8.105 a 16.210)",
+    "max": 10
+   },
+   {
+    "rotulo": "Mais de 10 a 20 SM (R$ 16.210 a 32.420)",
+    "max": 20
+   },
+   {
+    "rotulo": "Mais de 20 SM (acima de R$ 32.420)",
+    "max": null
+   }
+  ],
+  "amostra_pct": [
+   23.6,
+   23.8,
+   32.6,
+   12.8,
+   4.9,
+   2.2
+  ],
+  "nota": "Perfil ponderado da p. 4, publicado com uma casa decimal (23,6 / 23,8 / 32,6 / 12,8 / 4,9 / 2,2). O cruzamento da p. 14 declara % ponderadas; com as bases não ponderadas (n = 427, 444, 622, 310, 155 e 42) o resíduo sobe de 0,55 para 0,82 ponto."
+ },
+ "publicado": {
+  "1t": {
+   "flavio": 35,
+   "lula": 34,
+   "renan_santos": 4,
+   "zema": 2,
+   "caiado": 2,
+   "outros": 2,
+   "indecisos": 12,
+   "branco_nulo": 7
+  }
+ },
+ "cruzamentos": {
+  "1t": {
+   "opcoes": [
+    "flavio",
+    "lula",
+    "renan_santos",
+    "zema",
+    "caiado",
+    "outros",
+    "indecisos",
+    "branco_nulo"
+   ],
+   "linhas": [
+    [
+     30,
+     36,
+     3,
+     1,
+     1,
+     0,
+     14,
+     13
+    ],
+    [
+     36,
+     31,
+     2,
+     2,
+     3,
+     1,
+     14,
+     9
+    ],
+    [
+     36,
+     35,
+     5,
+     2,
+     1,
+     2,
+     13,
+     4
+    ],
+    [
+     36,
+     34,
+     8,
+     5,
+     4,
+     3,
+     6,
+     1
+    ],
+    [
+     47,
+     31,
+     1,
+     8,
+     7,
+     2,
+     2,
+     2
+    ],
+    [
+     40,
+     44,
+     2,
+     7,
+     0,
+     0,
+     7,
+     0
+    ]
+   ],
+   "nota": "P3 estimulada de 1º turno, p. 14 do PDF, bloco RENDA. A tabela exibe as 8 categorias mais citadas: Augusto Cury (1%), Cabo Daciolo, Samara Martins, Aldo Rebelo, Rui Costa Pimenta e Edmilson Costa (0% cada) não têm linha, e as linhas somam entre 97 e 100. A coluna outros contém apenas Joaquim Barbosa, que não tem chave própria no manifesto."
+  }
+ },
+ "notas": "O 2º turno Flávio 45% × Lula 39% está na p. 20 e só é cruzado por sexo e região (p. 21), então só o 1º turno entra na reponderação."
+}

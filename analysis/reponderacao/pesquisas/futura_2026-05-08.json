@@ -1,0 +1,78 @@
+{
+ "id": "futura_2026-05-08",
+ "instituto": "Futura",
+ "contratante": "não declarado no relatório; o documento circula com marca-d'água da Apex em todas as páginas",
+ "registro_tse": "BR-03678/2026",
+ "campo": {
+  "inicio": "2026-05-04",
+  "fim": "2026-05-08"
+ },
+ "divulgacao": "2026-05-11",
+ "n": 2000,
+ "metodo": "telefônico, CATI em 870 cidades",
+ "fonte": {
+  "pdf": "data/originals/apex_futura_052026_08/Relatorio.pdf",
+  "url": null,
+  "paginas": {
+   "perfil_renda": 3,
+   "1t": 7,
+   "2t": 8
+  }
+ },
+ "renda": {
+  "unidade": "salarios_minimos",
+  "ano_referencia": 2026,
+  "faixas": [
+   {
+    "rotulo": "Até 1 SM (até R$ 1.621)",
+    "max": 1
+   },
+   {
+    "rotulo": "De 1 a 2 SM (R$ 1.621 a 3.242)",
+    "max": 2
+   },
+   {
+    "rotulo": "De 2 a 5 SM (R$ 3.242 a 8.105)",
+    "max": 5
+   },
+   {
+    "rotulo": "De 5 a 10 SM (R$ 8.105 a 16.210)",
+    "max": 10
+   },
+   {
+    "rotulo": "Mais de 10 SM (acima de R$ 16.210)",
+    "max": null
+   }
+  ],
+  "amostra_pct": [
+   35.5,
+   24.1,
+   21.7,
+   7.0,
+   3.0
+  ],
+  "nota": "Perfil da amostra da p. 3; 8,7% respondem NS/NR na renda e ficam fora das cinco faixas."
+ },
+ "ignorar": true,
+ "motivo": "O relatório publica o perfil de renda da amostra mas nenhum cruzamento do voto por renda. Os recortes impressos do voto são gênero, faixa etária, região, religião e escolaridade; o painel de renda que reaparece em toda página é o filtro de caracterização da amostra do Power BI, não uma quebra do voto. Sem o cruzamento por faixa não há o que reponderar.",
+ "publicado": {
+  "2t": {
+   "flavio": 46.9,
+   "lula": 44.4,
+   "branco_nulo": 6.7,
+   "indecisos": 1.9
+  },
+  "1t": {
+   "lula": 38.3,
+   "flavio": 36.1,
+   "caiado": 4.4,
+   "zema": 3.6,
+   "renan_santos": 1.5,
+   "cury": 1.4,
+   "outros": 5.1,
+   "branco_nulo": 5.5,
+   "indecisos": 4.1
+  }
+ },
+ "notas": "Cenário 1 da p. 7 e 2º turno Lula × Flávio da p. 8. O relatório testa ainda um cenário com Fernando Haddad no lugar de Lula e 2º turnos alternativos com Caiado, Zema, Ciro Gomes e Haddad × Flávio, que não entram no agregador. Em outros entram Ciro Gomes 4,4, Cabo Daciolo 0,6 e Aldo Rebelo 0,1, nenhum deles com chave própria no manifesto."
+}

@@ -1,0 +1,174 @@
+{
+ "id": "gerp_2026-05-12",
+ "instituto": "Gerp",
+ "contratante": "Gerp Mercadologia (pesquisa institucional; o relatório não declara contratante externo)",
+ "registro_tse": "BR-03369/2026",
+ "campo": {
+  "inicio": "2026-05-08",
+  "fim": "2026-05-12"
+ },
+ "divulgacao": "2026-05-14",
+ "n": 2000,
+ "metodo": "telefônico, GerpCati com cédula estimulada lida ao entrevistado",
+ "fonte": {
+  "pdf": "data/originals/gerp_052026_12/Relatorio.pdf",
+  "url": "https://gerp.com.br/relatorios/20260514%20Elei%C3%A7%C3%B5es%202026_14a_Presidente.pdf",
+  "paginas": {
+   "perfil_renda": 5,
+   "1t_renda": 11
+  }
+ },
+ "renda": {
+  "unidade": "salarios_minimos",
+  "ano_referencia": 2026,
+  "faixas": [
+   {
+    "rotulo": "Até 1 SM (até R$ 1.621)",
+    "max": 1
+   },
+   {
+    "rotulo": "Mais de 1 a 2 SM (R$ 1.621 a 3.242)",
+    "max": 2
+   },
+   {
+    "rotulo": "Mais de 2 a 5 SM (R$ 3.242 a 8.105)",
+    "max": 5
+   },
+   {
+    "rotulo": "Mais de 5 a 10 SM (R$ 8.105 a 16.210)",
+    "max": 10
+   },
+   {
+    "rotulo": "Mais de 10 a 20 SM (R$ 16.210 a 32.420)",
+    "max": 20
+   },
+   {
+    "rotulo": "Mais de 20 SM (acima de R$ 32.420)",
+    "max": null
+   }
+  ],
+  "amostra_pct": [
+   22,
+   24,
+   33,
+   14,
+   5,
+   2
+  ],
+  "nota": "Perfil ponderado da p. 5 (renda familiar mensal em salários mínimos; a p. 3 declara a cota como renda do chefe do domicílio e a ponderação por sexo, faixa etária, renda do chefe do domicílio e regiões). O cruzamento da p. 11 traz bases não ponderadas (n = 298, 305, 619, 449, 215 e 114); com elas o resíduo sobe de 0,42 para 0,58 ponto, então fica o perfil ponderado."
+ },
+ "publicado": {
+  "1t": {
+   "flavio": 36,
+   "lula": 34,
+   "outros": 6,
+   "zema": 5,
+   "marcal": 2,
+   "cury": 1,
+   "caiado": 1,
+   "renan_santos": 1,
+   "samara": 1,
+   "branco_nulo": 4,
+   "indecisos": 8
+  }
+ },
+ "cruzamentos": {
+  "1t": {
+   "opcoes": [
+    "flavio",
+    "lula",
+    "outros",
+    "zema",
+    "marcal",
+    "cury",
+    "caiado",
+    "renan_santos",
+    "samara",
+    "branco_nulo",
+    "indecisos"
+   ],
+   "linhas": [
+    [
+     32,
+     36,
+     5,
+     4,
+     2,
+     1,
+     2,
+     0,
+     1,
+     7,
+     11
+    ],
+    [
+     32,
+     36,
+     5,
+     4,
+     3,
+     1,
+     0,
+     2,
+     1,
+     5,
+     10
+    ],
+    [
+     39,
+     32,
+     7,
+     5,
+     2,
+     2,
+     1,
+     2,
+     0,
+     3,
+     6
+    ],
+    [
+     40,
+     33,
+     9,
+     6,
+     1,
+     2,
+     1,
+     0,
+     2,
+     1,
+     5
+    ],
+    [
+     34,
+     30,
+     4,
+     9,
+     0,
+     0,
+     6,
+     2,
+     0,
+     8,
+     7
+    ],
+    [
+     39,
+     48,
+     5,
+     2,
+     0,
+     1,
+     1,
+     1,
+     0,
+     0,
+     2
+    ]
+   ],
+   "nota": "Intenção de voto estimulada, cenário principal da série (p. 9 do PDF, com 13 nomes), cruzada por renda na p. 11. A coluna outros soma Ciro Gomes (6%), Rui Costa Pimenta (0%) e Cabo Daciolo (0%), que não têm chave própria no manifesto. Células em branco no PDF (traço) viraram 0. O relatório traz ainda um cenário 2 reduzido, sem Marçal e sem Cury (pp. 13 a 15), que não entra aqui."
+  }
+ },
+ "notas": "O relatório da 14ª pesquisa não imprime o número de registro em nenhuma página. BR-03369/2026 vem da ficha metodológica publicada pela Gazeta do Povo em 14/05/2026 (gazetadopovo.com.br/eleicoes/2026/pesquisa-eleitoral-2026/gerp-presidente-maio-2026/), que confere com o campo de 08 a 12/05 e com as 2.000 entrevistas do próprio relatório. O 2º turno Flávio 50% × Lula 43% está na p. 19 e não é cruzado por renda, então só o 1º turno entra na reponderação."
+}

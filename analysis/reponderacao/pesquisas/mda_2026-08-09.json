@@ -1,0 +1,128 @@
+{
+ "id": "mda_2026-08-09",
+ "instituto": "MDA",
+ "contratante": "Confederação Nacional do Transporte (CNT)",
+ "registro_tse": "BR-06935/2026",
+ "campo": {
+  "inicio": "2026-08-05",
+  "fim": "2026-08-09"
+ },
+ "divulgacao": "2026-08-11",
+ "n": 2002,
+ "metodo": "presencial, domiciliar e ponto de fluxo",
+ "fonte": {
+  "pdf": "data/originals/mda_082026_09/Relatorio.pdf",
+  "url": "https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2026/08/Relatorio-Pesquisa-CNT-de-Opiniao-R169-AGOSTO26_7486.pdf",
+  "paginas": {
+   "perfil_renda": 72,
+   "1t": 8,
+   "1t_renda": 9,
+   "2t": 14,
+   "2t_renda": 15
+  }
+ },
+ "renda": {
+  "unidade": "salarios_minimos",
+  "ano_referencia": 2026,
+  "faixas": [
+   {
+    "rotulo": "Menos de 2 SM (até R$ 3.242)",
+    "max": 2
+   },
+   {
+    "rotulo": "De 2 até 5 SM (R$ 3.242 a 8.105)",
+    "max": 5
+   },
+   {
+    "rotulo": "Mais de 5 SM (acima de R$ 8.105)",
+    "max": null
+   }
+  ],
+  "amostra_pct": [
+   44.7,
+   35.1,
+   19.0
+  ],
+  "nota": "Distribuição das entrevistas por renda familiar, p. 72; 1,2% respondem NS/NR e ficam fora das três faixas (o motor renormaliza). Renda familiar é uma das quatro variáveis de controle declaradas na metodologia (p. 3), junto com gênero, idade e nível de instrução, então a distribuição publicada é a atingida em campo sob cota, e não um perfil ponderado à parte. É a única distribuição de renda do relatório."
+ },
+ "publicado": {
+  "2t": {
+   "lula": 48.0,
+   "flavio": 39.1,
+   "branco_nulo": 10.6,
+   "indecisos": 2.3
+  },
+  "1t": {
+   "lula": 42.4,
+   "flavio": 28.7,
+   "outros": 14.7,
+   "branco_nulo": 6.8,
+   "indecisos": 7.2
+  }
+ },
+ "cruzamentos": {
+  "2t": {
+   "opcoes": [
+    "lula",
+    "flavio",
+    "branco_nulo",
+    "indecisos"
+   ],
+   "linhas": [
+    [
+     54,
+     31,
+     11,
+     3
+    ],
+    [
+     42,
+     44,
+     12,
+     2
+    ],
+    [
+     43,
+     48,
+     7,
+     2
+    ]
+   ],
+   "nota": "2º turno Lula × Flávio Bolsonaro, estratificadas, p. 15 do PDF. Os números da página são imagem e foram lidos na renderização; os rótulos da coluna de indeciso ficam parcialmente cortados pela borda do gráfico e foram conferidos com recorte ampliado. A linha de menos de 2 SM soma 99 no relatório (54+31+11+3), efeito de arredondamento do próprio instituto, e foi copiada como está."
+  },
+  "1t": {
+   "opcoes": [
+    "lula",
+    "flavio",
+    "outros",
+    "branco_nulo",
+    "indecisos"
+   ],
+   "linhas": [
+    [
+     48,
+     24,
+     13,
+     8,
+     8
+    ],
+    [
+     37,
+     32,
+     17,
+     7,
+     7
+    ],
+    [
+     39,
+     34,
+     17,
+     5,
+     5
+    ]
+   ],
+   "nota": "Estimulada de 1º turno, estratificadas, p. 9 do PDF. O instituto só publica cinco categorias no cruzamento (Lula, Flávio, Outros, Branco/Nulo, Indeciso), então o placar de publicado.1t usa as mesmas cinco chaves: outros = 14,7 é a soma de Ronaldo Caiado 4,0, Romeu Zema 3,3, Renan Santos 2,8, Samara Martins 1,6, Augusto Cury 1,2, Rui Costa Pimenta 0,9 e outros 0,9, todos abertos na p. 8. A linha de menos de 2 SM soma 101 no relatório, efeito de arredondamento, e foi copiada como está."
+  }
+ },
+ "notas": "169ª rodada da Pesquisa CNT de Opinião. Relatório completo gerado em 11/08/2026 08:44 (creationDate do PDF), no mesmo dia da divulgação. A série da p. 14 dá o 2º turno Lula × Flávio em abr/26 45 × 40, jun/26 49 × 37 e ago/26 48 × 39; a da p. 8 dá o 1º turno em 39 × 30, 42 × 28 e 42 × 29. O relatório também traz 2º turnos alternativos (Zema, Caiado, Renan Santos, Cury) nas pp. 16 a 19, que não entram no agregador."
+}
