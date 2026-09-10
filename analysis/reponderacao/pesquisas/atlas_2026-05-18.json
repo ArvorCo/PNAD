@@ -1,0 +1,148 @@
+{
+ "id": "atlas_2026-05-18",
+ "instituto": "AtlasIntel",
+ "contratante": "Bloomberg",
+ "registro_tse": "BR-06939/2026",
+ "campo": {
+  "inicio": "2026-05-13",
+  "fim": "2026-05-18"
+ },
+ "divulgacao": "2026-05-19",
+ "n": 5032,
+ "metodo": "online (recrutamento digital aleatório, Atlas RDR)",
+ "fonte": {
+  "pdf": "data/pesquisas/atlas/2026-05-19/atlas_bloomberg_nacional_2026-05-19.pdf",
+  "url": null,
+  "paginas": {
+   "perfil_renda": 5,
+   "1t_renda": 20
+  }
+ },
+ "renda": {
+  "unidade": "reais_nominais",
+  "mes_precos": "202605",
+  "faixas": [
+   {
+    "rotulo": "R$0 a R$2.000",
+    "max": 2000
+   },
+   {
+    "rotulo": "R$2.000 a R$3.000",
+    "max": 3000
+   },
+   {
+    "rotulo": "R$3.000 a R$5.000",
+    "max": 5000
+   },
+   {
+    "rotulo": "R$5.000 a R$10.000",
+    "max": 10000
+   },
+   {
+    "rotulo": "Acima de R$10.000",
+    "max": null
+   }
+  ],
+  "amostra_pct": [
+   22.8,
+   17.7,
+   22.4,
+   24.0,
+   13.1
+  ],
+  "nota": "Renda familiar mensal em reais nominais, faixas do cartão da Atlas. Perfil ponderado da amostra publicado na p. 5; o relatório não traz bases não ponderadas por faixa. A Atlas declara a PNADC 2024 como fonte da cota de nível econômico nos registros de junho e julho de 2026; o registro desta onda (BR-06939/2026) não foi consultado no repositório."
+ },
+ "publicado": {
+  "2t": {
+   "lula": 48.9,
+   "flavio": 41.8,
+   "branco_nulo": 9.3
+  },
+  "1t": {
+   "lula": 47.0,
+   "flavio": 34.3,
+   "renan_santos": 6.9,
+   "zema": 5.2,
+   "caiado": 2.7,
+   "cury": 0.4,
+   "outros": 0.2,
+   "branco_nulo": 1.4,
+   "indecisos": 1.9
+  }
+ },
+ "cruzamentos": {
+  "1t": {
+   "opcoes": [
+    "lula",
+    "flavio",
+    "renan_santos",
+    "zema",
+    "caiado",
+    "cury",
+    "outros",
+    "branco_nulo",
+    "indecisos"
+   ],
+   "linhas": [
+    [
+     49.3,
+     34.7,
+     4.4,
+     5.4,
+     0.9,
+     0.7,
+     0.0,
+     0.4,
+     4.2
+    ],
+    [
+     43.0,
+     34.5,
+     7.0,
+     5.7,
+     4.3,
+     0.1,
+     0.0,
+     2.3,
+     3.1
+    ],
+    [
+     44.1,
+     39.1,
+     9.2,
+     3.7,
+     2.2,
+     0.6,
+     0.3,
+     0.8,
+     0.0
+    ],
+    [
+     45.6,
+     36.5,
+     7.2,
+     3.3,
+     3.2,
+     0.3,
+     0.2,
+     2.6,
+     1.1
+    ],
+    [
+     55.8,
+     21.9,
+     6.5,
+     10.3,
+     3.5,
+     0.5,
+     0.6,
+     0.7,
+     0.4
+    ]
+   ],
+   "nota": "Cenário 1 de 1º turno (o que a Atlas usa na série temporal), cruzamento por renda familiar na p. 20 do PDF. Aldo Rebelo (0,2% no total) entra em outros. Branco/nulo e não sei são publicados separados no 1º turno e ficam em branco_nulo e indecisos."
+  }
+ },
+ "notas": "O relatório não publica cruzamento de 2º turno por renda: o 2º turno aparece só como placar agregado (p. 29 e p. 30), com uma única coluna de não escolha (Branco/Nulo/Não sei = 9,3%). Por isso só o 1º turno é reponderável nesta onda. O registro TSE declara recursos próprios da AtlasIntel; Bloomberg é a parceria de divulgação que dá nome à série.",
+ "dossie": "atlas_intel_180526.html"
+}

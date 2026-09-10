@@ -1,0 +1,156 @@
+{
+ "id": "verita_2026-09-04",
+ "instituto": "Veritá",
+ "contratante": "Iniciativa própria do Instituto Veritá",
+ "registro_tse": "BR-09426/2026",
+ "campo": {
+  "inicio": "2026-09-01",
+  "fim": "2026-09-04"
+ },
+ "divulgacao": "2026-09-05",
+ "n": 3840,
+ "metodo": "telefônico, URA com reconhecimento de voz e transcrição de áudio",
+ "fonte": {
+  "pdf": "data/originals/verita_092026/Relatorio.pdf",
+  "url": null,
+  "paginas": {
+   "perfil_renda": 4,
+   "1t_renda": 10,
+   "2t_renda": 13
+  }
+ },
+ "renda": {
+  "unidade": "salarios_minimos",
+  "ano_referencia": 2026,
+  "faixas": [
+   {
+    "rotulo": "Abaixo de 2 SM (até R$ 3.242)",
+    "max": 2
+   },
+   {
+    "rotulo": "Entre 2 e 5 SM (R$ 3.242 a 8.105)",
+    "max": 5
+   },
+   {
+    "rotulo": "Acima de 5 SM (acima de R$ 8.105)",
+    "max": null
+   }
+  ],
+  "bases": [
+   1677,
+   1445,
+   718
+  ],
+  "nota": "Renda familiar declarada em múltiplos do salário mínimo (a URA não mostra cartão em reais); salário mínimo de 2026 = R$ 1.621. As três faixas somam as 3.840 entrevistas: não há categoria de renda não declarada. Bases não ponderadas da tabela de parâmetros metodológicos, p. 4. O perfil mudou muito entre 20/08 e 04/09 (38,3/34,7/27,0 para 43,7/37,6/18,7) sem mudança declarada de plano amostral."
+ },
+ "publicado": {
+  "2t": {
+   "flavio": 48.5,
+   "lula": 43.1,
+   "branco_nulo": 4.9,
+   "indecisos": 3.6
+  },
+  "1t": {
+   "flavio": 38.9,
+   "lula": 38.4,
+   "cury": 12.2,
+   "renan_santos": 3.7,
+   "caiado": 1.9,
+   "marcal": 1.4,
+   "zema": 0.3,
+   "samara": 0.2,
+   "outros": 1.0,
+   "branco_nulo": 1.1,
+   "indecisos": 0.9
+  }
+ },
+ "cruzamentos": {
+  "2t": {
+   "opcoes": [
+    "lula",
+    "flavio",
+    "branco_nulo",
+    "indecisos"
+   ],
+   "linhas": [
+    [
+     47.1,
+     45.6,
+     3.6,
+     3.6
+    ],
+    [
+     40.3,
+     50.7,
+     5.0,
+     3.9
+    ],
+    [
+     38.9,
+     50.9,
+     7.4,
+     2.8
+    ]
+   ],
+   "nota": "Pergunta 06, simulação de 2º turno Lula × Flávio Bolsonaro, p. 13 do PDF. Percentuais sobre o total de entrevistados; em válidos o placar publicado é 53,0 × 47,0."
+  },
+  "1t": {
+   "opcoes": [
+    "lula",
+    "flavio",
+    "cury",
+    "renan_santos",
+    "caiado",
+    "marcal",
+    "zema",
+    "samara",
+    "outros",
+    "branco_nulo",
+    "indecisos"
+   ],
+   "linhas": [
+    [
+     44.1,
+     36.0,
+     11.2,
+     2.9,
+     1.4,
+     1.1,
+     0.4,
+     0.3,
+     1.3,
+     0.8,
+     0.7
+    ],
+    [
+     36.5,
+     41.4,
+     13.3,
+     4.0,
+     2.1,
+     1.2,
+     0.3,
+     0.0,
+     0.4,
+     0.3,
+     0.4
+    ],
+    [
+     28.8,
+     40.9,
+     12.3,
+     4.9,
+     2.6,
+     2.6,
+     0.4,
+     0.0,
+     1.6,
+     3.6,
+     2.1
+    ]
+   ],
+   "nota": "Pergunta 05, estimulada, p. 10 do PDF. Percentuais sobre o total; em válidos o placar é Flávio 39,7 × Lula 39,2. Em outros entram Hertz Dias, Edmilson Costa e Clariana Barão (0,4 + 0,3 + 0,3 = 1,0 no nacional). Célula em branco no PDF virou 0."
+  }
+ },
+ "notas": "O relatório não imprime data de divulgação; divulgacao usa o creationDate do PDF (05/09/2026 17:33). Augusto Cury salta de 2,2% em agosto para 12,2% em setembro no mesmo desenho, o que merece checagem antes de qualquer leitura de tendência."
+}

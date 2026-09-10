@@ -1,0 +1,111 @@
+{
+ "id": "poderdata_2026-07-29",
+ "instituto": "PoderData",
+ "contratante": "Poder360",
+ "registro_tse": "BR-07845/2026",
+ "campo": {
+  "inicio": "2026-07-26",
+  "fim": "2026-07-29"
+ },
+ "divulgacao": "2026-07-30",
+ "n": 2400,
+ "metodo": "telefônico (IVR/URA, discagem aleatória para celular e fixo)",
+ "fonte": {
+  "pdf": "data/originals/poderdata_072026_29/Relatorio.pdf",
+  "url": "https://www.poder360.com.br/poderdata/lula-tem-41-e-flavio-35-no-1o-turno/",
+  "paginas": {
+   "perfil_renda": 4,
+   "1t_renda": 11
+  }
+ },
+ "renda": {
+  "unidade": "salarios_minimos",
+  "ano_referencia": 2026,
+  "faixas": [
+   {
+    "rotulo": "Até 2 SM (até R$ 3.242)",
+    "max": 2
+   },
+   {
+    "rotulo": "De 2 a 5 SM (R$ 3.242 a 8.105)",
+    "max": 5
+   },
+   {
+    "rotulo": "Mais de 5 SM (acima de R$ 8.105)",
+    "max": null
+   }
+  ],
+  "amostra_pct": [
+   46,
+   33,
+   21
+  ],
+  "nota": "Cartão de renda em salários mínimos, sem valores em reais impressos no relatório; a régua adotada é o mínimo de 2026 (R$ 1.621), ano do campo. O perfil 46/33/21 é a distribuição ponderada da amostra (p. 4) e repete-se idêntica nas sete ondas, porque renda é uma das variáveis da ponderação paramétrica declarada na ficha técnica. O relatório não publica bases não ponderadas por faixa."
+ },
+ "publicado": {
+  "2t": {
+   "lula": 46,
+   "flavio": 43,
+   "branco_nulo": 9,
+   "indecisos": 2
+  },
+  "1t": {
+   "lula": 41,
+   "flavio": 35,
+   "cury": 3,
+   "renan_santos": 4,
+   "zema": 3,
+   "caiado": 5,
+   "branco_nulo": 5,
+   "indecisos": 4
+  }
+ },
+ "cruzamentos": {
+  "1t": {
+   "opcoes": [
+    "lula",
+    "flavio",
+    "cury",
+    "renan_santos",
+    "zema",
+    "caiado",
+    "branco_nulo",
+    "indecisos"
+   ],
+   "linhas": [
+    [
+     41,
+     35,
+     4,
+     3,
+     2,
+     3,
+     7,
+     5
+    ],
+    [
+     39,
+     36,
+     3,
+     4,
+     3,
+     6,
+     5,
+     5
+    ],
+    [
+     43,
+     34,
+     2,
+     4,
+     5,
+     7,
+     2,
+     2
+    ]
+   ],
+   "nota": "Estimulada, cenário único do relatório; topline na tabela de série da p. 6."
+  }
+ },
+ "notas": "2400 entrevistas em 677 municípios nas 27 UFs, margem de erro declarada de +/- 2,0 p.p. (1,8 p.p. na onda de 3.000). O relatório publica o 2º turno Lula x Flávio apenas como série nacional, sem cruzamento por renda em nenhuma das sete ondas; por isso só o 1º turno é reponderável. PoderData divulga a série sob a marca PoderData/Aya (parceria de distribuição com a banca digital Aya Bancah); a pesquisa é feita com recursos próprios do Poder360."
+}

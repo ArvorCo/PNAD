@@ -1,0 +1,155 @@
+{
+ "id": "atlas_2026-07-27",
+ "instituto": "AtlasIntel",
+ "contratante": "Bloomberg",
+ "registro_tse": "BR-08602/2026",
+ "campo": {
+  "inicio": "2026-07-22",
+  "fim": "2026-07-27"
+ },
+ "divulgacao": "2026-07-29",
+ "n": 5021,
+ "metodo": "online (recrutamento digital aleatório, Atlas RDR)",
+ "fonte": {
+  "pdf": "data/originals/atlas_072026/Relatorio.pdf",
+  "url": "https://static.poder360.com.br/uploads/2026/07/AtlasIntel-nacional-29jul2026.pdf",
+  "paginas": {
+   "perfil_renda": 5,
+   "1t_renda": 20
+  }
+ },
+ "renda": {
+  "unidade": "reais_nominais",
+  "mes_precos": "202607",
+  "faixas": [
+   {
+    "rotulo": "R$0 a R$2.000",
+    "max": 2000
+   },
+   {
+    "rotulo": "R$2.000 a R$3.000",
+    "max": 3000
+   },
+   {
+    "rotulo": "R$3.000 a R$5.000",
+    "max": 5000
+   },
+   {
+    "rotulo": "R$5.000 a R$10.000",
+    "max": 10000
+   },
+   {
+    "rotulo": "Acima de R$10.000",
+    "max": null
+   }
+  ],
+  "amostra_pct": [
+   22.1,
+   17.9,
+   23.2,
+   23.4,
+   13.3
+  ],
+  "nota": "Renda familiar mensal em reais nominais, faixas do cartão da Atlas. Perfil ponderado da amostra na p. 5; não há bases não ponderadas por faixa. O registro BR-08602/2026 declara a cota de nível econômico em 22,4 / 17,1 / 23,1 / 23,9 / 13,5 com fonte PNADC 2024, enquanto a PNADC anual 2025 (visita 1) já estava publicada desde maio de 2026. Faixa nominal de 2024 aplicada a renda declarada em 2026."
+ },
+ "publicado": {
+  "2t": {
+   "lula": 49.2,
+   "flavio": 42.9,
+   "branco_nulo": 7.9
+  },
+  "1t": {
+   "lula": 44.9,
+   "flavio": 35.8,
+   "renan_santos": 7.8,
+   "caiado": 3.1,
+   "zema": 2.8,
+   "samara": 2.1,
+   "cury": 1.6,
+   "outros": 0.2,
+   "branco_nulo": 0.6,
+   "indecisos": 1.0
+  }
+ },
+ "cruzamentos": {
+  "1t": {
+   "opcoes": [
+    "lula",
+    "flavio",
+    "renan_santos",
+    "caiado",
+    "zema",
+    "samara",
+    "cury",
+    "outros",
+    "branco_nulo",
+    "indecisos"
+   ],
+   "linhas": [
+    [
+     53.5,
+     35.3,
+     3.4,
+     0.6,
+     1.4,
+     1.9,
+     3.7,
+     0.0,
+     0.1,
+     0.0
+    ],
+    [
+     37.1,
+     40.9,
+     7.2,
+     5.3,
+     1.3,
+     3.5,
+     1.6,
+     0.1,
+     1.4,
+     1.8
+    ],
+    [
+     35.8,
+     41.4,
+     10.6,
+     2.7,
+     3.7,
+     2.0,
+     0.7,
+     0.4,
+     0.6,
+     2.1
+    ],
+    [
+     47.8,
+     33.4,
+     8.5,
+     3.0,
+     2.9,
+     1.8,
+     1.0,
+     0.0,
+     0.7,
+     0.6
+    ],
+    [
+     52.8,
+     24.1,
+     9.3,
+     5.3,
+     5.4,
+     1.3,
+     0.6,
+     0.5,
+     0.3,
+     0.4
+    ]
+   ],
+   "nota": "Cenário 1 de 1º turno, cruzamento por renda familiar dividido em duas páginas: os sete primeiros nomes na p. 20 e os seis menores na p. 21. Em outros entram Cabo Daciolo (0,1% no total), Hertz Dias (0,1%), Rui Costa Pimenta (0,0%) e Edmilson Costa (0,0%). Mesmos números já transcritos em scripts/atlas-072026-renda.py, agora conferidos contra o PDF original."
+  }
+ },
+ "notas": "Sem cruzamento de 2º turno por renda: o 2º turno sai só como placar agregado (p. 29 e p. 30), com uma única coluna Branco/Nulo/Não sei = 7,9%. PDF baixado do Poder360 e conferido: título interno 'Pesquisa Atlas/Bloomberg - Nacional 260728', 5.021 respondentes, campo 22–27/07/2026, registro BR-08602/2026. O registro declara recursos próprios da AtlasIntel; Bloomberg é a parceria de divulgação que dá nome à série.",
+ "dossie": "atlas_072026.html"
+}

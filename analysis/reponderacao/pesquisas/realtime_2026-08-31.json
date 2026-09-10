@@ -1,0 +1,123 @@
+{
+ "id": "realtime_2026-08-31",
+ "instituto": "Real Time Big Data",
+ "contratante": "não declarado no relatório de divulgação",
+ "registro_tse": "BR-03490/2026",
+ "campo": {
+  "inicio": "2026-08-27",
+  "fim": "2026-08-31"
+ },
+ "divulgacao": "2026-09-01",
+ "n": 2000,
+ "metodo": "telefônico, entrevistadores humanos, com abordagem inicial por ligação e mensagem",
+ "fonte": {
+  "pdf": "data/originals/realtime_092026_01/Relatorio.pdf",
+  "url": null,
+  "paginas": {
+   "perfil_renda": 3,
+   "1t": 8,
+   "1t_renda": 11,
+   "2t": 22
+  }
+ },
+ "renda": {
+  "unidade": "salarios_minimos",
+  "ano_referencia": 2026,
+  "faixas": [
+   {
+    "rotulo": "Até 2 SM (até R$ 3.242)",
+    "max": 2
+   },
+   {
+    "rotulo": "De 2 a 5 SM (R$ 3.242 a 8.105)",
+    "max": 5
+   },
+   {
+    "rotulo": "Mais do que 5 SM (acima de R$ 8.105)",
+    "max": null
+   }
+  ],
+  "amostra_pct": [
+   46,
+   33,
+   21
+  ],
+  "nota": "Perfil da amostra da p. 3, único perfil de renda publicado; o relatório não diz se é ponderado nem publica bases por faixa. As três faixas somam 100, ou seja, não há categoria de renda não declarada."
+ },
+ "publicado": {
+  "2t": {
+   "lula": 44,
+   "flavio": 44,
+   "branco_nulo": 9,
+   "indecisos": 3
+  },
+  "1t": {
+   "lula": 38,
+   "flavio": 29,
+   "cury": 10,
+   "renan_santos": 6,
+   "caiado": 4,
+   "marcal": 3,
+   "zema": 2,
+   "outros": 2,
+   "branco_nulo": 3,
+   "indecisos": 3
+  }
+ },
+ "cruzamentos": {
+  "1t": {
+   "opcoes": [
+    "lula",
+    "flavio",
+    "cury",
+    "renan_santos",
+    "caiado",
+    "marcal",
+    "zema",
+    "outros",
+    "branco_nulo",
+    "indecisos"
+   ],
+   "linhas": [
+    [
+     48,
+     25,
+     8,
+     3,
+     3,
+     2,
+     1,
+     2,
+     4,
+     4
+    ],
+    [
+     31,
+     33,
+     12,
+     6,
+     5,
+     4,
+     2,
+     2,
+     2,
+     3
+    ],
+    [
+     25,
+     31,
+     13,
+     13,
+     10,
+     2,
+     4,
+     0,
+     1,
+     1
+    ]
+   ],
+   "nota": "Estimulada presidente, cenário 01 (com Pablo Marçal), p. 11 do PDF. Os gráficos são imagem e a página foi renderizada para conferência. Em outros o próprio instituto soma Clariana Barão, Rui Costa Pimenta, Samara, Edmilson Costa, Hertz Dias e Veterinário Wilson Grassi, nenhum deles chegando a 1%; a célula de outros na faixa mais alta está em branco no gráfico e virou 0. O cenário 02 (sem Marçal, pp. 15 e 18) dá o mesmo perfil de renda e o mesmo resíduo."
+  }
+ },
+ "notas": "O 2º turno Lula × Flávio (44 × 44, p. 22) não é cruzado por renda em nenhuma página, então só o 1º turno entra na reponderação. Ressalva de transcrição: Ronaldo Caiado marca 3, 5 e 10 por faixa e 4 no nacional; com o perfil publicado isso recompõe 5,1, e essa linha responde sozinha por todo o resíduo da onda. Os demais nomes fecham com menos de 0,45 ponto de desvio."
+}

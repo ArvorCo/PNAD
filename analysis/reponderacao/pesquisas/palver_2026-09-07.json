@@ -1,0 +1,126 @@
+{
+ "id": "palver_2026-09-07",
+ "instituto": "Palver",
+ "contratante": "Palver (iniciativa própria, onda 2)",
+ "registro_tse": "BR-05420/2026",
+ "campo": {
+  "inicio": "2026-09-04",
+  "fim": "2026-09-07"
+ },
+ "divulgacao": "2026-09-09",
+ "n": 5000,
+ "metodo": "online, amostra não probabilística recrutada por anúncios em redes sociais, calibrada por raking",
+ "fonte": {
+  "pdf": "data/originals/palver_092026/Relatorio.pdf",
+  "url": null,
+  "paginas": {
+   "perfil_renda": 19,
+   "1t_renda": 28,
+   "2t_renda": 38
+  }
+ },
+ "renda": {
+  "unidade": "salarios_minimos",
+  "ano_referencia": 2026,
+  "faixas": [
+   {
+    "rotulo": "Até 2 SM (até R$ 3.242)",
+    "max": 2
+   },
+   {
+    "rotulo": "2 a 5 SM (R$ 3.242 a 8.105)",
+    "max": 5
+   },
+   {
+    "rotulo": "Mais de 5 SM (acima de R$ 8.105)",
+    "max": null
+   }
+  ],
+  "amostra_pct": [
+   42,
+   40,
+   18
+  ],
+  "nota": "Percentuais depois da calibração, p. 19; as bases não ponderadas são 1.618, 2.161 e 1.221 e recompõem pior (resíduo de Lula no 2º turno sobe de 0,34 para 0,92). A renda é variável de raking: a p. 15 declara as metas populacionais como até R$ 3.242 (42,12%), de R$ 3.242 a R$ 8.105 (39,56%) e acima de R$ 8.105 (18,31%), ancoradas na PNADC anual 2024 visita 5. Os cortes em reais são exatamente 2 e 5 salários mínimos de 2026 (R$ 1.621)."
+ },
+ "publicado": {
+  "2t": {
+   "flavio": 46,
+   "lula": 44,
+   "branco_nulo": 9,
+   "indecisos": 1
+  },
+  "1t": {
+   "lula": 40,
+   "flavio": 39,
+   "renan_santos": 11,
+   "cury": 4,
+   "caiado": 1,
+   "zema": 1,
+   "outros": 1,
+   "branco_nulo": 1,
+   "indecisos": 1
+  }
+ },
+ "cruzamentos": {
+  "2t": {
+   "opcoes": [
+    "flavio",
+    "lula",
+    "branco_nulo",
+    "indecisos"
+   ],
+   "linhas": [
+    [
+     45,
+     49,
+     5,
+     1
+    ],
+    [
+     51,
+     37,
+     11,
+     1
+    ],
+    [
+     40,
+     46,
+     13,
+     1
+    ]
+   ],
+   "nota": "Questão 5, 2º turno cenário 1 (Lula × Flávio Bolsonaro), p. 38 do PDF, bloco Renda familiar. As páginas de resultado são imagem; a página foi renderizada e lida."
+  },
+  "1t": {
+   "opcoes": [
+    "lula",
+    "flavio",
+    "renan_santos",
+    "cury"
+   ],
+   "linhas": [
+    [
+     46,
+     39,
+     7,
+     4
+    ],
+    [
+     35,
+     44,
+     13,
+     5
+    ],
+    [
+     39,
+     31,
+     19,
+     4
+    ]
+   ],
+   "nota": "Questão 3, estimulada de 1º turno cenário 2 (sem Pablo Marçal), p. 28 do PDF, bloco Renda familiar. A própria página avisa que opções abaixo de 2% ficaram de fora, então só quatro candidaturas têm linha e o cruzamento não fecha em 100. O cenário 1 (Questão 2, com Marçal, p. 26) é o primeiro do relatório mas não recebe nenhum cruzamento; ele difere do cenário 2 só em Flávio (40 contra 39) e no branco/nulo."
+  }
+ },
+ "notas": "Onda 2, com embargo até as 9h de 09/09/2026, data usada como divulgação. A Palver publica intervalo de credibilidade por linha (o 2º turno sai Flávio 46 de 45 a 48 e Lula 44 de 42 a 45) e declara efeito dos pesos desiguais de 3,28, com n efetivo de Kish de 1.527 contra 5.000 entrevistas. Amostra não probabilística recrutada por anúncio: a reponderação por renda vale como sensibilidade sobre o que o instituto publicou, e não corrige viés de recrutamento."
+}

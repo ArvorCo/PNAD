@@ -1,0 +1,156 @@
+{
+ "id": "verita_2026-08-20",
+ "instituto": "Veritá",
+ "contratante": "Iniciativa própria do Instituto Veritá",
+ "registro_tse": "BR-04006/2026",
+ "campo": {
+  "inicio": "2026-08-16",
+  "fim": "2026-08-20"
+ },
+ "divulgacao": "2026-08-20",
+ "n": 3840,
+ "metodo": "telefônico, URA com reconhecimento de voz e transcrição de áudio",
+ "fonte": {
+  "pdf": "data/originals/verita_082026/Relatorio.pdf",
+  "url": null,
+  "paginas": {
+   "perfil_renda": 4,
+   "1t_renda": 11,
+   "2t_renda": 13
+  }
+ },
+ "renda": {
+  "unidade": "salarios_minimos",
+  "ano_referencia": 2026,
+  "faixas": [
+   {
+    "rotulo": "Abaixo de 2 SM (até R$ 3.242)",
+    "max": 2
+   },
+   {
+    "rotulo": "Entre 2 e 5 SM (R$ 3.242 a 8.105)",
+    "max": 5
+   },
+   {
+    "rotulo": "Acima de 5 SM (acima de R$ 8.105)",
+    "max": null
+   }
+  ],
+  "bases": [
+   1472,
+   1331,
+   1037
+  ],
+  "nota": "Renda familiar declarada em múltiplos do salário mínimo (a URA não mostra cartão em reais); salário mínimo de 2026 = R$ 1.621. As três faixas somam as 3.840 entrevistas, ou seja, o relatório não publica categoria de renda não declarada. Bases não ponderadas da tabela de parâmetros metodológicos, p. 4."
+ },
+ "publicado": {
+  "2t": {
+   "flavio": 47.3,
+   "lula": 42.0,
+   "branco_nulo": 6.1,
+   "indecisos": 4.6
+  },
+  "1t": {
+   "lula": 39.3,
+   "flavio": 39.1,
+   "marcal": 5.2,
+   "renan_santos": 3.8,
+   "caiado": 3.3,
+   "cury": 2.2,
+   "zema": 1.3,
+   "samara": 0.4,
+   "outros": 1.4,
+   "branco_nulo": 1.8,
+   "indecisos": 2.4
+  }
+ },
+ "cruzamentos": {
+  "2t": {
+   "opcoes": [
+    "lula",
+    "flavio",
+    "branco_nulo",
+    "indecisos"
+   ],
+   "linhas": [
+    [
+     49.4,
+     42.4,
+     4.9,
+     3.4
+    ],
+    [
+     39.1,
+     52.0,
+     6.1,
+     2.8
+    ],
+    [
+     35.1,
+     48.3,
+     7.8,
+     8.8
+    ]
+   ],
+   "nota": "Pergunta 07, simulação de 2º turno Lula × Flávio Bolsonaro, p. 13 do PDF. Percentuais sobre o total de entrevistados (a linha soma 100 com branco/nulo e NS/NR), não sobre os votos válidos; o placar publicado em válidos é 53,0 × 47,0."
+  },
+  "1t": {
+   "opcoes": [
+    "lula",
+    "flavio",
+    "marcal",
+    "renan_santos",
+    "caiado",
+    "cury",
+    "zema",
+    "samara",
+    "outros",
+    "branco_nulo",
+    "indecisos"
+   ],
+   "linhas": [
+    [
+     47.0,
+     35.0,
+     4.6,
+     1.4,
+     1.3,
+     1.9,
+     0.4,
+     0.3,
+     1.7,
+     2.6,
+     3.9
+    ],
+    [
+     36.4,
+     41.9,
+     5.7,
+     2.9,
+     3.5,
+     3.0,
+     2.3,
+     0.6,
+     0.2,
+     1.9,
+     1.7
+    ],
+    [
+     32.0,
+     41.6,
+     5.3,
+     8.4,
+     5.8,
+     1.5,
+     1.1,
+     0.1,
+     2.3,
+     0.6,
+     1.3
+    ]
+   ],
+   "nota": "Pergunta 06, estimulada, p. 11 do PDF. Percentuais sobre o total (a linha soma 100); o placar em válidos é Lula 41,0 × Flávio 40,9. Em outros entram Clariana Barão, Hertz Dias, Edmilson Costa e Rui Costa Pimenta (0,8 + 0,4 + 0,1 + 0,1 = 1,4 no nacional). Célula em branco no PDF virou 0."
+  }
+ },
+ "notas": "O relatório não imprime data de divulgação; divulgacao usa o creationDate do PDF (20/08/2026 22:45), no mesmo dia do fim do campo. O instituto não publica perfil ponderado de renda, só as bases não ponderadas."
+}

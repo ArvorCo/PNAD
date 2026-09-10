@@ -1,0 +1,121 @@
+{
+ "id": "poderdata_2026-08-12",
+ "instituto": "PoderData",
+ "contratante": "Poder360",
+ "registro_tse": "BR-06868/2026",
+ "campo": {
+  "inicio": "2026-08-09",
+  "fim": "2026-08-12"
+ },
+ "divulgacao": "2026-08-13",
+ "n": 2400,
+ "metodo": "telefônico (IVR/URA, discagem aleatória para celular e fixo)",
+ "fonte": {
+  "pdf": "data/originals/poderdata_082026_12/Relatorio.pdf",
+  "url": "https://www.poder360.com.br/poderdata/poderdata-aya-lula-tem-41-e-flavio-35-no-1o-turno/",
+  "paginas": {
+   "perfil_renda": 4,
+   "1t_renda": 11
+  }
+ },
+ "renda": {
+  "unidade": "salarios_minimos",
+  "ano_referencia": 2026,
+  "faixas": [
+   {
+    "rotulo": "Até 2 SM (até R$ 3.242)",
+    "max": 2
+   },
+   {
+    "rotulo": "De 2 a 5 SM (R$ 3.242 a 8.105)",
+    "max": 5
+   },
+   {
+    "rotulo": "Mais de 5 SM (acima de R$ 8.105)",
+    "max": null
+   }
+  ],
+  "amostra_pct": [
+   46,
+   33,
+   21
+  ],
+  "nota": "Cartão de renda em salários mínimos, sem valores em reais impressos no relatório; a régua adotada é o mínimo de 2026 (R$ 1.621), ano do campo. O perfil 46/33/21 é a distribuição ponderada da amostra (p. 4) e repete-se idêntica nas sete ondas, porque renda é uma das variáveis da ponderação paramétrica declarada na ficha técnica. O relatório não publica bases não ponderadas por faixa."
+ },
+ "publicado": {
+  "2t": {
+   "lula": 46,
+   "flavio": 45,
+   "branco_nulo": 8,
+   "indecisos": 1
+  },
+  "1t": {
+   "lula": 41,
+   "flavio": 35,
+   "cury": 3,
+   "renan_santos": 4,
+   "zema": 3,
+   "caiado": 4,
+   "samara": 0,
+   "outros": 3,
+   "branco_nulo": 4,
+   "indecisos": 2
+  }
+ },
+ "cruzamentos": {
+  "1t": {
+   "opcoes": [
+    "lula",
+    "flavio",
+    "cury",
+    "renan_santos",
+    "zema",
+    "caiado",
+    "samara",
+    "outros",
+    "branco_nulo",
+    "indecisos"
+   ],
+   "linhas": [
+    [
+     39,
+     35,
+     2,
+     4,
+     2,
+     3,
+     1,
+     3,
+     7,
+     3
+    ],
+    [
+     39,
+     41,
+     4,
+     4,
+     3,
+     4,
+     0,
+     1,
+     4,
+     1
+    ],
+    [
+     47,
+     31,
+     3,
+     5,
+     4,
+     6,
+     1,
+     1,
+     1,
+     2
+    ]
+   ],
+   "nota": "Estimulada, cenário único do relatório (p. 6), com a lista completa de 13 candidaturas registradas. `outros` soma Clariana Barão, Edmilson Costa, Hertz Dias, Leonardo Avalanche, Rui Costa Pimenta e Veterinário Wilson Grassi (3% / 1% / 1% por faixa; 3% no total)."
+  }
+ },
+ "notas": "2400 entrevistas em 658 municípios nas 27 UFs, margem de erro declarada de +/- 2,0 p.p. (1,8 p.p. na onda de 3.000). O relatório publica o 2º turno Lula x Flávio apenas como série nacional, sem cruzamento por renda em nenhuma das sete ondas; por isso só o 1º turno é reponderável. PoderData divulga a série sob a marca PoderData/Aya (parceria de distribuição com a banca digital Aya Bancah); a pesquisa é feita com recursos próprios do Poder360."
+}

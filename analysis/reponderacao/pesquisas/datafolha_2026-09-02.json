@@ -1,0 +1,151 @@
+{
+ "id": "datafolha_2026-09-02",
+ "instituto": "Datafolha",
+ "contratante": "Folha de S.Paulo e TV Globo",
+ "registro_tse": "BR-03669/2026",
+ "campo": {
+  "inicio": "2026-09-01",
+  "fim": "2026-09-02"
+ },
+ "divulgacao": "2026-09-03",
+ "n": 2002,
+ "metodo": "presencial, pontos de fluxo",
+ "fonte": {
+  "pdf": "data/originals/datafolha_092026/DatafolhaRelatorio092026.pdf",
+  "url": "https://media.folha.uol.com.br/datafolha/2026/09/08/ytu06vgp4wq-0ibvzl4ra35bdjmrzjl1d-4kmkky97a.pdf",
+  "paginas": {
+   "perfil_renda": 28,
+   "2t_renda": 45,
+   "1t_renda": 38
+  }
+ },
+ "renda": {
+  "unidade": "salarios_minimos",
+  "ano_referencia": 2026,
+  "faixas": [
+   {
+    "rotulo": "Até 2 SM (até R$ 3.242)",
+    "max": 2
+   },
+   {
+    "rotulo": "2 a 5 SM (R$ 3.242 a 8.105)",
+    "max": 5
+   },
+   {
+    "rotulo": "Mais de 5 SM (acima de R$ 8.105)",
+    "max": null
+   }
+  ],
+  "bases": [
+   1011,
+   666,
+   241
+  ],
+  "nota": "Renda familiar mensal declarada com cartão em reais de 2026 (salário mínimo de R$ 1.621). Três faixas, as mesmas de agosto. Linha 'Base ponderada' da tabela de 2º turno situação A (p. 45 do PDF), idêntica à da tabela de 1º turno; quem não declarou renda fica fora (1% de recusa e 3% de não sabe no perfil da amostra, p. 28)."
+ },
+ "publicado": {
+  "2t": {
+   "lula": 46,
+   "flavio": 44,
+   "branco_nulo": 9,
+   "indecisos": 2
+  },
+  "1t": {
+   "lula": 38,
+   "flavio": 33,
+   "cury": 8,
+   "caiado": 4,
+   "renan_santos": 3,
+   "zema": 2,
+   "samara": 1,
+   "branco_nulo": 6,
+   "indecisos": 3,
+   "outros": 2
+  }
+ },
+ "cruzamentos": {
+  "2t": {
+   "opcoes": [
+    "lula",
+    "flavio",
+    "branco_nulo",
+    "indecisos"
+   ],
+   "linhas": [
+    [
+     55,
+     36,
+     7,
+     2
+    ],
+    [
+     38,
+     50,
+     11,
+     1
+    ],
+    [
+     32,
+     60,
+     7,
+     1
+    ]
+   ],
+   "nota": "Segundo turno situação A, Lula × Flavio Bolsonaro, p. 45 do PDF. As situações B (Lula × Caiado) e C (Lula × Zema) não entram."
+  },
+  "1t": {
+   "opcoes": [
+    "lula",
+    "flavio",
+    "cury",
+    "caiado",
+    "renan_santos",
+    "zema",
+    "samara",
+    "branco_nulo",
+    "indecisos",
+    "outros"
+   ],
+   "linhas": [
+    [
+     45,
+     27,
+     5,
+     4,
+     2,
+     2,
+     1,
+     7,
+     4,
+     2
+    ],
+    [
+     32,
+     38,
+     10,
+     4,
+     4,
+     3,
+     1,
+     5,
+     2,
+     1
+    ],
+    [
+     27,
+     45,
+     11,
+     4,
+     5,
+     1,
+     0,
+     5,
+     1,
+     0
+    ]
+   ],
+   "nota": "Estimulada, situação B (sem Marçal), p. 38 do PDF. É o cenário da manchete e da série histórica do próprio instituto: o texto de divulgação abre por ele ('no cenário sem o nome do PRTB, Lula tem hoje 38%, ante 33% de Flavio') e o gráfico de tendência das oito ondas de 2026 (p. 9 e 10) é rotulado 'cenário sem Marçal'. Em agosto o cenário da manchete foi a situação A, com Marçal; em setembro a situação A passou a ser o cenário secundário (Lula 39, Flavio 32, Cury 7, p. 33). Candidatos com 1% ou menos somados em outros: Edmilson Costa (PCB), Rui Costa Pimenta (PCO), Veterinário Wilson Grassi (Democrata), Clariana Barao (DC) e Hertz Dias (PSTU). Samara (UP) fica separada, como em agosto. Célula em branco no PDF (traço) vale 0."
+  }
+ },
+ "notas": "Célula vazia no relatório aparece como traço e foi transcrita como 0. As linhas de 1º turno somam 99, 100 e 99 por arredondamento do próprio instituto. O PDF traz o deck de divulgação (p. 1 a 24) seguido do relatório completo numerado de 1 a 29 (p. 25 a 52); as páginas registradas em fonte.paginas são as do PDF, contadas a partir de 1. O campo é 01 e 02 de setembro de 2026 segundo a ficha técnica (p. 3 e 26), o que resolve a divergência entre Wikipedia (1 a 2/09) e Gazeta do Povo (1 a 3/09)."
+}

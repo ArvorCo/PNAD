@@ -40,7 +40,39 @@ ACCENTS = {
 
 # Cada card: título curto, uma linha de leitura e até três números que o dossiê
 # sustenta. Os textos vêm das fichas revisadas do acervo em docs/index.html.
+
+
+def _agregador_counts() -> tuple[str, str]:
+    """Ondas e institutos do agregador, lidos do JSON gerado, para o card não envelhecer."""
+    path = (
+        Path(__file__).resolve().parents[1]
+        / "docs"
+        / "assets"
+        / "reponderacao_pnad.json"
+    )
+    if not path.exists():
+        return "40", "9"
+    data = json.loads(path.read_text(encoding="utf-8"))
+    return str(len(data["pesquisas"])), str(len(data["institutos"]))
+
+
+_ONDAS, _INSTITUTOS = _agregador_counts()
+
 CARDS: list[dict] = [
+    {
+        "slug": "reponderacao_pnad",
+        "eyebrow": "Agregador Arvor · pesquisas sob a régua do IBGE",
+        "title": "A corrida",
+        "title_em": "sob a régua oficial.",
+        "lede": "Toda pesquisa nacional reponderada pela distribuição de renda da <b>PNAD Contínua anual de 2025</b>. Uma margem trocada, o resto como o instituto ponderou.",
+        "stats": [
+            (_ONDAS, "ondas desde maio de 2026"),
+            (_INSTITUTOS, "institutos na mesma régua"),
+            ("1", "margem trocada: a renda"),
+        ],
+        "foot": "sensibilidade sob régua comum, não resultado de eleição",
+        "accent": "blue",
+    },
     {
         "slug": "sp_092026",
         "eyebrow": "Atlas estadual 02 · São Paulo · setembro de 2026",

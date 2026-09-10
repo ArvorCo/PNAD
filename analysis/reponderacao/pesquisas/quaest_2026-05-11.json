@@ -1,0 +1,153 @@
+{
+ "id": "quaest_2026-05-11",
+ "instituto": "Quaest",
+ "contratante": "Banco Genial S.A. (Genial Investimentos)",
+ "registro_tse": "BR-03598/2026",
+ "campo": {
+  "inicio": "2026-05-08",
+  "fim": "2026-05-11"
+ },
+ "divulgacao": "2026-05-13",
+ "n": 2004,
+ "metodo": "presencial, domiciliar (conglomerados em 3 estágios: 120 municípios por PPT, setores censitários por PPT, cotas de região, sexo, faixa etária, grau de instrução e renda familiar no último estágio; pós-estratificação por rake)",
+ "fonte": {
+  "pdf": "data/originals/quaest_052026/Relatorio.pdf",
+  "url": "https://quaest.com.br/wp-content/uploads/2026/05/GENIALQUAESTMAIO26.pdf",
+  "paginas": {
+   "perfil_renda": 145,
+   "1t_renda": 32,
+   "1t_topline": 27,
+   "2t_renda": 47,
+   "2t_topline": 41
+  }
+ },
+ "renda": {
+  "unidade": "salarios_minimos",
+  "ano_referencia": 2026,
+  "faixas": [
+   {
+    "rotulo": "Até 2 SM (até R$ 3.242)",
+    "max": 2
+   },
+   {
+    "rotulo": "Mais de 2 a 5 SM (R$ 3.242 a 8.105)",
+    "max": 5
+   },
+   {
+    "rotulo": "Mais de 5 SM (acima de R$ 8.105)",
+    "max": null
+   }
+  ],
+  "amostra_pct": [
+   33,
+   42,
+   25
+  ],
+  "nota": "Renda domiciliar total (soma da renda de todos os moradores do domicílio: salários, bicos, benefícios sociais, pensões e outras fontes), em múltiplos do salário mínimo de 2026 (R$ 1.621): até 2 SM (até R$ 3.242), mais de 2 a 5 SM (R$ 3.242 a R$ 8.105) e mais de 5 SM. O relatório publica o perfil ponderado da amostra na p. 145 (33/42/25) e não traz bases não ponderadas por faixa, por isso amostra_pct. Este perfil é diferente do 31/42/27 das ondas de junho em diante, o que é coerente com a ficha técnica desta onda (p. 3), que declara como fonte dos dados TSE 2026, PNAD 2025/4, PNAD 2024/2 e Censo 2022, e não a PNADc anual 2025 de 1ª visita. O relatório rotula o cruzamento do 1º turno como Renda familiar (p. 32) e o do 2º turno como Renda domiciliar (p. 47); as faixas são as mesmas. Quem não declarou renda fica fora."
+ },
+ "publicado": {
+  "2t": {
+   "lula": 42,
+   "flavio": 41,
+   "branco_nulo": 14,
+   "indecisos": 3
+  },
+  "1t": {
+   "lula": 39,
+   "flavio": 33,
+   "caiado": 4,
+   "zema": 4,
+   "renan_santos": 2,
+   "cury": 1,
+   "samara": 1,
+   "outros": 1,
+   "indecisos": 5,
+   "branco_nulo": 10
+  }
+ },
+ "cruzamentos": {
+  "2t": {
+   "opcoes": [
+    "lula",
+    "flavio",
+    "branco_nulo",
+    "indecisos"
+   ],
+   "linhas": [
+    [
+     50,
+     32,
+     14,
+     4
+    ],
+    [
+     40,
+     44,
+     15,
+     1
+    ],
+    [
+     34,
+     51,
+     12,
+     3
+    ]
+   ],
+   "nota": "Cenário 1 (Lula x Flávio Bolsonaro), estimulado, p. 47, coluna Mai/26 da série por faixa de renda, com as quatro opções impressas (Lula, Flávio, Não vai votar, Indecisos). Cada faixa soma 100. Os mesmos números aparecem na coluna Mai 26 da série por faixa de renda do relatório Quaest/Globo de 14/08/2026 (data/pesquisas/quaest/2026-08-14/relatorio.pdf, p. 36), o que confirma a leitura por fonte independente. A série equivalente do relatório Quaest/Globo de 08/09/2026 (data/originals/quaest_092026_01/Relatorio.pdf, p. 41) já começa em junho e não serve de controle para esta onda."
+  },
+  "1t": {
+   "opcoes": [
+    "lula",
+    "flavio",
+    "caiado",
+    "zema",
+    "renan_santos",
+    "cury",
+    "samara",
+    "outros",
+    "indecisos",
+    "branco_nulo"
+   ],
+   "linhas": [
+    [
+     47,
+     26,
+     3,
+     2,
+     2,
+     1,
+     2,
+     0,
+     7,
+     10
+    ],
+    [
+     37,
+     34,
+     3,
+     5,
+     2,
+     2,
+     1,
+     1,
+     4,
+     11
+    ],
+    [
+     31,
+     39,
+     6,
+     6,
+     2,
+     1,
+     1,
+     1,
+     3,
+     10
+    ]
+   ],
+   "nota": "Estimulada, cenário único do relatório, p. 32. Cabo Daciolo (Mobiliza), Aldo Rebelo (DC) e Hertz Dias (PSTU) somados em outros; célula em branco no gráfico (Hertz Dias na coluna mais de 5 SM e na coluna Mai/26 do topline) lida como 0. Cada faixa soma 100."
+  }
+ },
+ "notas": "25ª rodada Genial/Quaest, campo de 08 a 11/05/2026, divulgada em 13/05/2026. Registro TSE BR-03598/2026, 2.004 entrevistas, margem de erro declarada de 2 pontos, 95% de confiança, público de 16 anos ou mais. O 2º turno tem quatro cenários estimulados (p. 40); só o Cenário 1, Lula x Flávio Bolsonaro, entra aqui. O perfil de renda desta onda é 33/42/25, e não o 31/42/27 que a Quaest passa a publicar a partir de junho de 2026."
+}

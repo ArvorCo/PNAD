@@ -1,0 +1,163 @@
+{
+ "id": "nexus_2026-08-23",
+ "instituto": "Nexus",
+ "contratante": "Banco BTG Pactual",
+ "registro_tse": "BR-09028/2026",
+ "campo": {
+  "inicio": "2026-08-21",
+  "fim": "2026-08-23"
+ },
+ "divulgacao": "2026-08-24",
+ "n": 2006,
+ "metodo": "telefônico, CATI com cotas de sexo, idade, escolaridade, tipo de telefonia e DDD",
+ "fonte": {
+  "pdf": "data/pesquisas/nexus_btg/rodada11_2026-08-24/relatorio.pdf",
+  "url": "https://www.nexus.fsb.com.br/estudos-divulgados/pesquisa-btg-nexus-de-intencao-de-votos-para-presidente-do-brasil-24-de-agosto-de-2026/",
+  "paginas": {
+   "perfil_renda": 111,
+   "1t_renda": 30,
+   "2t_renda": 54
+  }
+ },
+ "renda": {
+  "unidade": "salarios_minimos",
+  "ano_referencia": 2026,
+  "faixas": [
+   {
+    "rotulo": "Até 1 S.M. (até R$ 1.621)",
+    "max": 1
+   },
+   {
+    "rotulo": "De 1 até 2 S.M. (R$ 1.621 a 3.242)",
+    "max": 2
+   },
+   {
+    "rotulo": "De 2 até 5 S.M. (R$ 3.242 a 8.105)",
+    "max": 5
+   },
+   {
+    "rotulo": "Mais de 5 S.M. (acima de R$ 8.105)",
+    "max": null
+   }
+  ],
+  "amostra_pct": [
+   19,
+   18,
+   40,
+   23
+  ],
+  "nota": "PF15: renda familiar do mês passado, cartão em reais de 2026 (até R$ 1.621,00 = 1 SM; R$ 1.621,01 a 3.242,00; R$ 3.242,01 a 4.863,00; R$ 4.863,01 a 8.105,00; mais de R$ 8.105,01); o relatório junta as duas faixas centrais em 'De 2 até 5 S.M.'. Perfil ponderado da amostra: o relatório não publica base não ponderada por faixa. Sem rendimento, não sabe e recusa ficam fora. Cartão conferido no questionário registrado desta onda."
+ },
+ "publicado": {
+  "2t": {
+   "lula": 46,
+   "flavio": 45,
+   "branco_nulo": 8,
+   "indecisos": 1
+  },
+  "1t": {
+   "lula": 41,
+   "flavio": 37,
+   "caiado": 5,
+   "renan_santos": 3,
+   "zema": 3,
+   "outros": 3,
+   "branco_nulo": 5,
+   "indecisos": 3
+  }
+ },
+ "cruzamentos": {
+  "2t": {
+   "opcoes": [
+    "lula",
+    "flavio",
+    "branco_nulo",
+    "indecisos"
+   ],
+   "linhas": [
+    [
+     57,
+     29,
+     10,
+     3
+    ],
+    [
+     49,
+     40,
+     8,
+     3
+    ],
+    [
+     42,
+     49,
+     8,
+     1
+    ],
+    [
+     41,
+     53,
+     5,
+     0
+    ]
+   ],
+   "nota": "Cenário Lula vs. Flávio Bolsonaro, único par do relatório que interessa ao agregador."
+  },
+  "1t": {
+   "opcoes": [
+    "lula",
+    "flavio",
+    "caiado",
+    "renan_santos",
+    "zema",
+    "outros",
+    "branco_nulo",
+    "indecisos"
+   ],
+   "linhas": [
+    [
+     55,
+     26,
+     2,
+     0,
+     1,
+     5,
+     8,
+     4
+    ],
+    [
+     42,
+     32,
+     6,
+     1,
+     2,
+     5,
+     6,
+     7
+    ],
+    [
+     38,
+     41,
+     5,
+     5,
+     3,
+     3,
+     4,
+     2
+    ],
+    [
+     36,
+     41,
+     5,
+     6,
+     4,
+     5,
+     2,
+     1
+    ]
+   ],
+   "nota": "Estimulada, Cenário 1, p. 30. A coluna 'Outros' já vem agregada pelo instituto."
+  }
+ },
+ "notas": "11ª rodada da série BTG/Nexus de 2026.",
+ "dossie": "nexus_btg_240826.html"
+}

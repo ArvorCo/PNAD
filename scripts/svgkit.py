@@ -63,7 +63,7 @@ class Canvas:
             f"<rect {_attrs({'x': x, 'y': y, 'width': max(w, 0), 'height': max(h, 0), 'fill': fill, **kw})}/>"
         )
 
-    def line(self, x1, y1, x2, y2, stroke=LINE, width=1, **kw) -> None:
+    def line(self, x1, y1, x2, y2, stroke=LINE, width: float = 1, **kw) -> None:
         self.add(
             f"<line {_attrs({'x1': x1, 'y1': y1, 'x2': x2, 'y2': y2, 'stroke': stroke, 'stroke_width': width, **kw})}/>"
         )
@@ -81,7 +81,7 @@ class Canvas:
         x,
         y,
         value,
-        size=15,
+        size: float = 15,
         fill=INK,
         family=SANS,
         weight=None,
@@ -105,7 +105,7 @@ class Canvas:
             **kw,
         )
 
-    def number(self, x, y, value, size=34, fill=INK, **kw) -> None:
+    def number(self, x, y, value, size: float = 34, fill=INK, **kw) -> None:
         """Número-monstro: a informação que o leitor leva mesmo sem ler o resto."""
         self.text(x, y, value, size=size, fill=fill, family=DISPLAY, **kw)
 

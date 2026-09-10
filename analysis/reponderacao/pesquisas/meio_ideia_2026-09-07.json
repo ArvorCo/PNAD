@@ -1,0 +1,106 @@
+{
+ "id": "meio_ideia_2026-09-07",
+ "instituto": "Meio/Ideia",
+ "contratante": "Canal Meio, em parceria com o Instituto Ideia",
+ "registro_tse": "BR-07935/2026",
+ "campo": {
+  "inicio": "2026-09-04",
+  "fim": "2026-09-07"
+ },
+ "divulgacao": "2026-09-08",
+ "n": 1500,
+ "metodo": "telefônico, RDD com PPT e questionário estruturado",
+ "fonte": {
+  "pdf": "data/originals/meio_ideia_092026/Relatorio.pdf",
+  "url": null,
+  "paginas": {
+   "1t": 8,
+   "2t": 18,
+   "2t_renda": 22
+  }
+ },
+ "renda": {
+  "unidade": "salarios_minimos",
+  "ano_referencia": 2026,
+  "faixas": [
+   {
+    "rotulo": "Até 1 SM (até R$ 1.621)",
+    "max": 1
+   },
+   {
+    "rotulo": "1 a 3 SM (R$ 1.621 a 4.863)",
+    "max": 3
+   },
+   {
+    "rotulo": "3 a 5 SM (R$ 4.863 a 8.105)",
+    "max": 5
+   },
+   {
+    "rotulo": "Mais de 5 SM (acima de R$ 8.105)",
+    "max": null
+   }
+  ],
+  "nota": "O relatório não publica nem bases nem percentuais da amostra por faixa de renda. A metodologia da p. 77 lista as variáveis de ponderação (sexo, idade, grau de instrução e nível econômico) e o nível econômico ali é condição de atividade (economicamente ativo 62% × não ativo 38%), não faixa de renda. Renda entra só como quebra da p. 22."
+ },
+ "ignorar": true,
+ "motivo": "O cruzamento do 2º turno por renda existe (p. 22) mas o relatório não publica o perfil de renda da amostra, nem em bases nem em percentuais. Sem os pesos das quatro faixas não há como recompor o placar publicado, que é a prova de leitura exigida antes de trocar a margem. Tentar resolver os pesos a partir das quatro linhas é inviável: as faixas 1 a 3 SM e 3 a 5 SM têm perfil de voto quase idêntico (41,1 × 50,9 e 41,8 × 51,7), o sistema fica malcondicionado e devolve pesos negativos.",
+ "publicado": {
+  "2t": {
+   "lula": 46,
+   "flavio": 46,
+   "branco_nulo": 3.5,
+   "indecisos": 4.5
+  },
+  "1t": {
+   "lula": 38.4,
+   "flavio": 37.3,
+   "cury": 6.6,
+   "renan_santos": 4,
+   "caiado": 4,
+   "zema": 1.5,
+   "marcal": 1.5,
+   "samara": 0.7,
+   "outros": 0.9,
+   "branco_nulo": 2.5,
+   "indecisos": 2.8
+  }
+ },
+ "cruzamentos": {
+  "2t": {
+   "opcoes": [
+    "lula",
+    "flavio",
+    "branco_nulo",
+    "indecisos"
+   ],
+   "linhas": [
+    [
+     59.8,
+     30.4,
+     3.7,
+     6.2
+    ],
+    [
+     41.1,
+     50.9,
+     4.4,
+     3.6
+    ],
+    [
+     41.8,
+     51.7,
+     2.0,
+     4.5
+    ],
+    [
+     40.0,
+     55.8,
+     1.2,
+     3.0
+    ]
+   ],
+   "nota": "Transcrito da p. 22 do PDF (os gráficos são imagem; a página foi renderizada e lida). Guardado para o dia em que o instituto publicar o perfil de renda da amostra; enquanto isso a pesquisa fica marcada como ignorar."
+  }
+ },
+ "notas": "Estimulada de 1º turno na p. 8 e 2º turno Lula × Flávio na p. 18. Em outros entram Rui Costa Pimenta 0,4, Veterinário Wilson Grassi 0,2, Hertz Dias 0,1, Clariana Barão 0,1 e Edmilson Costa 0,1. O relatório não imprime data de divulgação; divulgacao usa o creationDate do PDF (08/09/2026 22:12)."
+}

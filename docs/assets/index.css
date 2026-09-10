@@ -501,3 +501,14 @@ footer a { color: #ffc178; }
   .sec { padding: 22px 0; break-inside: avoid; }
   a { color: #000; }
 }
+
+/* ===== Agregador Arvor na home: card de largura inteira com o gráfico ===== */
+.featured.agregador { grid-template-columns: minmax(0, 1fr); }
+.agregador-head { padding: clamp(22px, 2.4vw, 34px) clamp(22px, 2.4vw, 34px) 8px; }
+.agregador-head .title { margin-top: 4px; }
+.agregador-head > p { margin: 14px 0 0; font-size: 1.02rem; line-height: 1.5; max-width: 72ch; }
+.agregador-chart { padding: 6px clamp(14px, 2vw, 30px) 0; border-top: 1px solid var(--edge); }
+.agregador-chart svg { display: block; width: 100%; height: auto; }
+.agregador-foot { padding: 0 clamp(22px, 2.4vw, 34px) clamp(22px, 2.4vw, 34px); display: flex; flex-direction: column; }
+.agregador-placar { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 720px) { .agregador-placar { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

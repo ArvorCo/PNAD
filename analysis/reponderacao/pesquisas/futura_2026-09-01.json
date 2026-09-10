@@ -1,0 +1,80 @@
+{
+ "id": "futura_2026-09-01",
+ "instituto": "Futura",
+ "contratante": "não declarado no relatório; o documento circula com marca-d'água do Poder360 e disclaimer da Apex Partners",
+ "registro_tse": "BR-02793/2026",
+ "campo": {
+  "inicio": "2026-08-27",
+  "fim": "2026-09-01"
+ },
+ "divulgacao": "2026-09-01",
+ "n": 2000,
+ "metodo": "telefônico, CATI em 677 cidades",
+ "fonte": {
+  "pdf": "data/originals/apex_futura_092026/Relatorio.pdf",
+  "url": null,
+  "paginas": {
+   "perfil_renda": 5,
+   "1t": 22,
+   "2t": 26
+  }
+ },
+ "renda": {
+  "unidade": "salarios_minimos",
+  "ano_referencia": 2026,
+  "faixas": [
+   {
+    "rotulo": "Até 1 SM",
+    "max": 1
+   },
+   {
+    "rotulo": "De 1 a 2 SM",
+    "max": 2
+   },
+   {
+    "rotulo": "De 2 a 5 SM",
+    "max": 5
+   },
+   {
+    "rotulo": "De 5 a 10 SM",
+    "max": 10
+   },
+   {
+    "rotulo": "Mais de 10 SM",
+    "max": null
+   }
+  ],
+  "amostra_pct": [
+   26.8,
+   23.1,
+   26.5,
+   9.9,
+   5.7
+  ],
+  "nota": "Perfil da amostra da p. 5; 8,0% respondem NS/NR na renda e ficam fora das cinco faixas."
+ },
+ "ignorar": true,
+ "motivo": "O relatório publica o perfil de renda da amostra (p. 5) mas nenhum cruzamento do voto por renda. As três páginas de cruzamento do 1º turno (pp. 23, 24 e 25) quebram por sexo, região, faixa etária e posição no eixo político, e o 2º turno (pp. 26 a 33) não é cruzado por nada. Sem o cruzamento por faixa não há o que reponderar.",
+ "publicado": {
+  "2t": {
+   "lula": 45.6,
+   "flavio": 45.2,
+   "branco_nulo": 7.2,
+   "indecisos": 2.0
+  },
+  "1t": {
+   "lula": 38.7,
+   "flavio": 33.6,
+   "cury": 9.9,
+   "caiado": 3.5,
+   "renan_santos": 2.8,
+   "marcal": 2.7,
+   "zema": 1.6,
+   "samara": 0.4,
+   "outros": 0.7,
+   "branco_nulo": 2.0,
+   "indecisos": 4.1
+  }
+ },
+ "notas": "Rodada 3 do cenário eleitoral 2026 da Futura Inteligência. Estimulada cenário 1 na p. 22 e 2º turno Lula × Flávio na p. 26. Em outros entram Rui Costa Pimenta 0,3, Veterinário Wilson Grassi 0,3 e Hertz Dias 0,1. O PDF não traz creationDate (foi reprocessado por pypdf) e a capa registra a divulgação como rótulo de onda (Agosto 2026 - 2), não como data; divulgacao usa o último dia de campo."
+}
