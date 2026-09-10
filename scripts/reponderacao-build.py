@@ -38,6 +38,8 @@ PAGE = DOCS / "reponderacao_pnad.html"
 SHEET = ASSETS / "reponderacao_pnad.css"
 TABLE_CSV = ASSETS / "reponderacao_pnad.csv"
 HOME_SVG = ASSETS / "reponderacao_home.svg"
+TIP_SHEET = ASSETS / "reponderacao_tip.css"
+TIP_SCRIPT = ASSETS / "reponderacao_tip.js"
 INDEX = DOCS / "index.html"
 
 # Paleta do papel da casa. Os tons de texto pequeno são os que passam em
@@ -203,6 +205,112 @@ def _estrela(cx: float, cy: float, r: float) -> str:
     return "M" + "L".join(pontos) + "Z"
 
 
+# --------------------------------------------------------------------------- #
+# Camada interativa: grupos com área de toque, ficha embutida na página
+# --------------------------------------------------------------------------- #
+TIPS: dict[str, str] = {}
+
+
+def _tip_id(pesquisa: dict, turno: str) -> str:
+    return f"{pesquisa['id']}|{turno}"
+
+
+def registra_tip(chave: str, html: str) -> str:
+    """Guarda a ficha de um alvo e devolve a chave usada no atributo data."""
+    TIPS[chave] = html
+    return chave
+
+
+def abre_alvo(cv: Canvas, chave: str, rotulo: str) -> None:
+    """Abre um grupo sensível ao ponteiro. O desenho continua sendo o do SVG."""
+    cv.add(
+        f'<g class="hit" role="img" aria-label="{esc(rotulo, quote=True)}"'
+        f' data-k="{esc(chave, quote=True)}">'
+    )
+
+
+def fecha_alvo(cv: Canvas) -> None:
+    cv.add("</g>")
+
+
+def area_alvo(cv: Canvas, cx: float, cy: float, r: float) -> None:
+    """Alvo circular transparente, maior que o marcador, para o ponteiro pegar."""
+    cv.circle(cx, cy, r, "transparent", **{"class": "hit-area"})
+
+
+def halo(cv: Canvas, cx: float, cy: float, r: float, cor: str) -> None:
+    """Anel que só aparece no hover, para dizer qual ponto está sendo lido."""
+    cv.circle(
+        cx,
+        cy,
+        r,
+        "none",
+        stroke=cor,
+        stroke_width=2,
+        **{"class": "hit-halo"},
+    )
+
+
+def ficha_onda(pesquisa: dict, turno: str) -> str:
+    """Ficha completa de uma onda: documento, placar publicado e reponderado."""
+    t = pesquisa["turnos"][turno]
+    adj = ajustado(t)
+    pub = t["publicado"]
+    linhas = [
+        '<table class="tip-tab"><thead><tr><th></th>'
+        + "".join(f"<th>{esc(rotulo(c))}</th>" for c in PAR)
+        + "<th>dif.</th></tr></thead><tbody>"
+    ]
+    for nome, fonte, cls in (
+        ("publicado", pub, "pub"),
+        ("reponderado", adj, "adj"),
+    ):
+        linhas.append(
+            f'<tr class="{cls}"><th scope="row">{nome}</th>'
+            + "".join(f"<td>{br(fonte[c], 1)}</td>" for c in PAR)
+            + f"<td>{sinal(gap(fonte), 1)}</td></tr>"
+        )
+    linhas.append("</tbody></table>")
+    extras = [c for c in t["opcoes"] if c not in PAR and pub.get(c, 0) >= 1]
+    corpo = [
+        f'<p class="tip-head"><b>{esc(pesquisa["instituto"])}</b>'
+        f"<span>{esc(TURNOS[turno])}</span></p>",
+        f'<p class="tip-doc">campo {esc(periodo(pesquisa["campo"]))} · '
+        f'n = {br(pesquisa["n"], 0)} · {esc(pesquisa.get("registro_tse") or "sem registro")}</p>',
+        "".join(linhas),
+        f'<p class="tip-nota">Margem de 95% da diferença publicada: ±{br(t.get("margem_diferenca_95", 0.0), 1)}.',
+    ]
+    desvio = pesquisa["desvio_ate_primeira_faixa"]
+    if desvio >= 0:
+        composicao = f"A amostra tem {br(desvio, 1)} pontos a mais na faixa mais pobre que a PNAD."
+    else:
+        composicao = f"A amostra tem {br(-desvio, 1)} pontos a menos na faixa mais pobre que a PNAD."
+    corpo.append(f" {composicao} Prova de leitura: {br(t['residuo_max'], 2)}.</p>")
+    if extras:
+        itens = ", ".join(f"{esc(rotulo(c))} {br(pub[c], 1)}" for c in extras[:6])
+        corpo.append(f'<p class="tip-nota">Também na cédula: {itens}.</p>')
+    return "".join(corpo)
+
+
+def resumo_onda(pesquisa: dict, turno: str) -> str:
+    """Texto curto para leitor de tela, no aria-label do grupo."""
+    t = pesquisa["turnos"][turno]
+    adj = ajustado(t)
+    return (
+        f"{pesquisa['instituto']}, campo até {longo(pesquisa['campo']['fim'])}, "
+        f"{TURNOS[turno]}: publicado Lula {br(t['publicado']['lula'], 1)} e "
+        f"Flávio {br(t['publicado']['flavio'], 1)}; reponderado Lula "
+        f"{br(adj['lula'], 1)} e Flávio {br(adj['flavio'], 1)}."
+    )
+
+
+def alvo_onda(cv: Canvas, pesquisa: dict, turno: str) -> str:
+    """Abre o grupo de uma onda e devolve a chave da ficha."""
+    chave = registra_tip(_tip_id(pesquisa, turno), ficha_onda(pesquisa, turno))
+    abre_alvo(cv, chave, resumo_onda(pesquisa, turno))
+    return chave
+
+
 def marcador(
     cv: Canvas, shape: str, cx: float, cy: float, r: float, cor: str, cheio: bool
 ) -> None:
@@ -359,17 +467,25 @@ def serie_svg(ident: str, turno: str, compacta: bool = False) -> str:
                 _linha(cv, trecho, COR[chave], nome)
 
     raio = 4.6 if compacta else (5.8 if len(polls) <= 8 else 4.4)
+    alcance = max(raio * 2.0, 9.0)
     for p in polls:
         t = p["turnos"][turno]
         x = px(dia(p["campo"]["fim"]))
         shape = forma(p["instituto"])
+        alvo_onda(cv, p, turno)
+        cv.line(x, topo, x, base, stroke=INK, width=1, **{"class": "hit-cross"})
         for chave in PAR:
             y_pub, y_adj = py(t["publicado"][chave]), py(ajustado(t)[chave])
             cv.line(
                 x, y_pub, x, y_adj, stroke=COR[chave], width=1.3, stroke_dasharray="2 3"
             )
+            halo(cv, x, y_pub, raio + 4.5, COR[chave])
+            halo(cv, x, y_adj, raio + 4.5, COR[chave])
             marcador(cv, shape, x, y_pub, raio, COR[chave], False)
             marcador(cv, shape, x, y_adj, raio, COR[chave], True)
+            area_alvo(cv, x, y_pub, alcance)
+            area_alvo(cv, x, y_adj, alcance)
+        fecha_alvo(cv)
 
     _bloco_direita(cv, turno, pub, adj, dir_, topo, base, py, compacta)
 
@@ -556,6 +672,18 @@ def gap_svg(ident: str, turno: str) -> str:
     y = 52
     for p in polls:
         t = p["turnos"][turno]
+        alvo_onda(cv, p, turno)
+        cv.rect(20, y, dir_ - 20, linha_alt, "transparent", **{"class": "hit-area"})
+        cv.rect(
+            20,
+            y,
+            dir_ - 20,
+            linha_alt,
+            "none",
+            stroke=INK,
+            stroke_width=1.5,
+            **{"class": "hit-halo"},
+        )
         cv.line(20, y, dir_, y, stroke=LINE, width=1)
         cv.text(
             20,
@@ -635,6 +763,7 @@ def gap_svg(ident: str, turno: str) -> str:
         cv.line(a, ym, b, ym, stroke=INK, width=1.4)
         cv.line(a, ym - 6, a, ym + 6, stroke=INK, width=1.4)
         cv.line(b, ym - 6, b, ym + 6, stroke=INK, width=1.4)
+        fecha_alvo(cv)
         y += linha_alt
 
     cv.line(20, y, dir_, y, stroke=LINE, width=1)
@@ -692,12 +821,20 @@ def instituto_svg(nome: str, turno: str) -> str:
         if len(polls) > 1:
             _linha(cv, pub, COR[chave], "publicado")
             _linha(cv, adj, COR[chave], "ajustado")
-        for (x, y_pub), (_, y_adj) in zip(pub, adj, strict=True):
+        for indice, (ponto_pub, ponto_adj) in enumerate(zip(pub, adj, strict=True)):
+            x, y_pub = ponto_pub
+            y_adj = ponto_adj[1]
+            alvo_onda(cv, polls[indice], turno)
             cv.line(
                 x, y_pub, x, y_adj, stroke=COR[chave], width=1.2, stroke_dasharray="2 3"
             )
+            halo(cv, x, y_pub, 9.0, COR[chave])
+            halo(cv, x, y_adj, 9.0, COR[chave])
             marcador(cv, shape, x, y_pub, 4.6, COR[chave], False)
             marcador(cv, shape, x, y_adj, 4.6, COR[chave], True)
+            area_alvo(cv, x, y_pub, 10.0)
+            area_alvo(cv, x, y_adj, 10.0)
+            fecha_alvo(cv)
 
     passo = max(1, math.ceil(len(polls) / 6))
     for i, p in enumerate(polls):
@@ -719,6 +856,48 @@ def instituto_svg(nome: str, turno: str) -> str:
 # --------------------------------------------------------------------------- #
 # Figura: composição de renda de cada pesquisa
 # --------------------------------------------------------------------------- #
+def ficha_faixa(pesquisa: dict, indice: int) -> str:
+    """Ficha de uma faixa de renda: o que o instituto tinha e o que a PNAD mede."""
+    renda = pesquisa["renda"]
+    faixa = renda["faixas"][indice]
+    amostra = renda["amostra_pct"][indice]
+    corte = renda["cortes_brl_202604"][indice]
+    piso = renda["cortes_brl_202604"][indice - 1] if indice else 0.0
+    linhas = [
+        f'<p class="tip-head"><b>{esc(faixa)}</b>'
+        f'<span>{esc(pesquisa["instituto"])}</span></p>'
+    ]
+    if corte is None:
+        regua = f"acima de R$ {br(piso, 0)}"
+    elif indice == 0:
+        regua = f"até R$ {br(corte, 0)}"
+    else:
+        regua = f"de R$ {br(piso, 0)} a R$ {br(corte, 0)}"
+    linhas.append(
+        f'<p class="tip-doc">na régua da PNAD, {esc(regua)} a preços de abr. de 2026</p>'
+    )
+    linhas.append(
+        '<table class="tip-tab"><thead><tr><th></th><th>fatia</th></tr></thead><tbody>'
+    )
+    for nome, valor, cls in (
+        ("amostra", amostra, "pub"),
+        ("PNAD 16+", renda["pnad_pct"][CEN][indice], "adj"),
+    ):
+        linhas.append(
+            f'<tr class="{cls}"><th scope="row">{nome}</th>'
+            f"<td>{br(valor, 1)}%</td></tr>"
+        )
+    delta = amostra - renda["pnad_pct"][CEN][indice]
+    linhas.append("</tbody></table>")
+    lado = "acima" if delta >= 0 else "abaixo"
+    linhas.append(
+        f'<p class="tip-nota">A amostra está {br(abs(delta), 1)} pontos {lado} da '
+        "régua oficial nesta faixa. A reponderação corrige exatamente isso, "
+        "mantendo o voto medido dentro dela.</p>"
+    )
+    return "".join(linhas)
+
+
 def renda_svg(pesquisa: dict) -> str:
     renda = pesquisa["renda"]
     faixas = renda["faixas"]
@@ -755,6 +934,25 @@ def renda_svg(pesquisa: dict) -> str:
 
     y = 58
     for i, faixa in enumerate(faixas):
+        chave = registra_tip(f"{pesquisa['id']}|renda|{i}", ficha_faixa(pesquisa, i))
+        abre_alvo(
+            cv,
+            chave,
+            f"{faixa}: amostra {br(amostra[i], 1)}%, PNAD {br(alvo[i], 1)}%.",
+        )
+        cv.rect(
+            8, y, largura - 16, alto_grupo - 6, "transparent", **{"class": "hit-area"}
+        )
+        cv.rect(
+            8,
+            y,
+            largura - 16,
+            alto_grupo - 6,
+            "none",
+            stroke=GOLD,
+            stroke_width=1.5,
+            **{"class": "hit-halo"},
+        )
         cv.text(16, y + 16, faixa, size=12.5, fill=INK)
         for nome, valor, cor, deslocamento in (
             ("amostra", amostra[i], INK, 26),
@@ -782,6 +980,7 @@ def renda_svg(pesquisa: dict) -> str:
             anchor="end",
             family=MONO,
         )
+        fecha_alvo(cv)
         y += alto_grupo
     cv.label(16, altura - 12, "diferença em pontos, amostra menos PNAD", size=11.5)
     return cv.render()
@@ -886,10 +1085,17 @@ def slope_svg(pesquisa: dict) -> str:
 # --------------------------------------------------------------------------- #
 # Blocos de HTML
 # --------------------------------------------------------------------------- #
-def figura(ident: str, kicker: str, titulo: str, svg: str, nota: str) -> str:
+def figura(
+    ident: str, kicker: str, titulo: str, svg: str, nota: str, dica: bool = True
+) -> str:
+    aviso = (
+        '<p class="dica">Passe o ponteiro sobre uma onda para abrir a ficha</p>'
+        if dica
+        else ""
+    )
     return (
         f'<figure class="chart-shell reveal"><p class="kicker">{esc(kicker)}</p>'
-        f"<h3>{esc(titulo)}</h3>"
+        f"<h3>{esc(titulo)}</h3>{aviso}"
         f'<div class="fig wide" id="{ident}" tabindex="0" role="region"'
         f' aria-label="{esc(titulo, quote=True)}">{svg}</div>'
         f'<figcaption class="note">{nota}</figcaption></figure>'
@@ -1029,6 +1235,7 @@ def cartao(pesquisa: dict) -> str:
         f'<div class="chart-shell"><p class="kicker">Composição de renda</p>'
         f"<h4>A amostra declara {br(renda['amostra_pct'][0], 1)}% na faixa mais baixa. "
         f"A PNAD mede {br(alvo[0], 1)}%.</h4>"
+        '<p class="dica">Passe o ponteiro sobre uma faixa</p>'
         f'<div class="fig" tabindex="0" role="region" aria-label="Composição de renda">'
         f"{renda_svg(pesquisa)}</div>"
         f'<p class="note">Desvio na primeira faixa: {br(desvio, 1)} pontos. '
@@ -1508,15 +1715,114 @@ html{scroll-behavior:auto}
 .js .reveal{opacity:1;transform:none}}
 """
 
+TIP_CSS = """/* ---- camada interativa: alvo, halo e ficha ------------------------------ */
+.hit{cursor:pointer}
+.hit-area{fill:transparent}
+.hit-halo,.hit-cross{opacity:0;pointer-events:none;transition:opacity .12s ease}
+.hit-cross{stroke-dasharray:3 4;stroke-opacity:.5}
+.hit:hover .hit-halo,.hit.on .hit-halo{opacity:1}
+.hit:hover .hit-cross,.hit.on .hit-cross{opacity:1}
+.fig.lendo .hit:not(:hover):not(.on){opacity:.42;transition:opacity .12s ease}
+#tip{position:fixed;z-index:60;max-inline-size:340px;padding:14px 16px;
+background:#192e2b;color:#f4f0e7;border:1px solid #0f1f1d;
+box-shadow:0 10px 30px rgba(15,31,29,.34);font-size:13.5px;line-height:1.5;
+pointer-events:none;opacity:0;transform:translateY(4px);transition:opacity .12s ease,transform .12s ease}
+#tip.on{opacity:1;transform:translateY(0)}
+#tip p{margin:0 0 8px}
+#tip p:last-child{margin-bottom:0}
+.tip-head{display:flex;align-items:baseline;gap:10px;font-size:15px}
+.tip-head b{font-weight:800;letter-spacing:.01em}
+.tip-head span{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11px;
+letter-spacing:.14em;text-transform:uppercase;color:#b9c6bd}
+.tip-doc{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11.5px;color:#b9c6bd}
+.tip-tab{width:100%;border-collapse:collapse;margin:2px 0 9px;
+font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:12.5px}
+.tip-tab th,.tip-tab td{padding:3px 0;text-align:right;font-weight:500}
+.tip-tab thead th{color:#b9c6bd;font-size:11px;letter-spacing:.06em;
+border-bottom:1px solid #3d554f;text-transform:uppercase}
+.tip-tab tbody th{text-align:left;color:#b9c6bd;font-weight:500;padding-right:12px}
+.tip-tab tr.adj td,.tip-tab tr.adj th{color:#ffd9a3}
+.tip-tab tr.pub td{color:#fffdf8}
+.tip-nota{font-size:12px;color:#b9c6bd}
+.dica{display:inline-flex;align-items:center;gap:7px;margin-top:2px;
+font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11.5px;
+letter-spacing:.06em;text-transform:uppercase;color:#535b54}
+.dica::before{content:"";inline-size:9px;block-size:9px;border:2px solid #535b54;
+border-radius:50%}
+@media (hover:none){.dica::after{content:"toque"}}
+"""
+
+TIP_JS = """(function(){
+var fichas={};
+document.querySelectorAll('script.tips').forEach(function(no){
+try{var d=JSON.parse(no.textContent);for(var k in d){fichas[k]=d[k];}}catch(e){}});
+if(!Object.keys(fichas).length)return;
+
+var caixa=document.createElement('div');
+caixa.id='tip';caixa.setAttribute('role','status');caixa.hidden=true;
+document.body.appendChild(caixa);
+var atual=null;
+
+function fecha(){
+if(!atual)return;
+atual.classList.remove('on');
+var fig=atual.closest('.fig');if(fig)fig.classList.remove('lendo');
+atual=null;caixa.classList.remove('on');
+setTimeout(function(){if(!atual)caixa.hidden=true;},140);}
+
+function posiciona(alvo){
+var r=alvo.getBoundingClientRect();
+var c=caixa.getBoundingClientRect();
+var margem=12;
+var x=r.left+r.width/2-c.width/2;
+x=Math.max(margem,Math.min(x,window.innerWidth-c.width-margem));
+var y=r.top-c.height-14;
+if(y<margem)y=Math.min(r.bottom+14,window.innerHeight-c.height-margem);
+caixa.style.left=Math.round(x)+'px';
+caixa.style.top=Math.round(Math.max(margem,y))+'px';}
+
+function abre(alvo){
+var chave=alvo.getAttribute('data-k');
+var html=fichas[chave];
+if(!html)return;
+if(atual===alvo){posiciona(alvo);return;}
+fecha();
+atual=alvo;
+alvo.classList.add('on');
+var fig=alvo.closest('.fig');if(fig)fig.classList.add('lendo');
+caixa.innerHTML=html;
+caixa.hidden=false;
+posiciona(alvo);
+requestAnimationFrame(function(){caixa.classList.add('on');});}
+
+function alvoDe(ev){
+var no=ev.target;
+return no&&no.closest?no.closest('.hit'):null;}
+
+document.addEventListener('pointerover',function(ev){
+if(ev.pointerType==='touch')return;
+var alvo=alvoDe(ev);
+if(alvo)abre(alvo);else if(atual&&!ev.target.closest('#tip'))fecha();});
+
+document.addEventListener('pointerdown',function(ev){
+var alvo=alvoDe(ev);
+if(alvo){abre(alvo);}else{fecha();}});
+
+document.addEventListener('keydown',function(ev){if(ev.key==='Escape')fecha();});
+window.addEventListener('scroll',function(){if(atual)posiciona(atual);},{passive:true});
+window.addEventListener('resize',fecha);
+})();"""
+
 SCRIPT = """(function(){
 var alvos=document.querySelectorAll('.reveal');
 if(!('IntersectionObserver' in window)){
-for(var i=0;i<alvos.length;i++){alvos[i].classList.add('in');}return;}
-var obs=new IntersectionObserver(function(itens){
+for(var i=0;i<alvos.length;i++){alvos[i].classList.add('in');}}
+else{var obs=new IntersectionObserver(function(itens){
 itens.forEach(function(item){if(item.isIntersecting){
 item.target.classList.add('in');obs.unobserve(item.target);}});},
 {rootMargin:'0px 0px -6% 0px'});
-alvos.forEach(function(n){obs.observe(n);});
+alvos.forEach(function(n){obs.observe(n);});}
+
 })();"""
 
 
@@ -1554,7 +1860,7 @@ def head() -> str:
         f'<meta name="twitter:image" content="{og}">'
         f'<meta name="twitter:title" content="{esc(titulo, quote=True)}">'
         f'<meta name="twitter:description" content="{esc(descricao, quote=True)}">'
-        '<link rel="stylesheet" href="assets/reponderacao_pnad.css">'
+        '<link rel="stylesheet" href="assets/reponderacao_pnad.css"><link rel="stylesheet" href="assets/reponderacao_tip.css">'
         "</head>"
     )
 
@@ -1601,6 +1907,16 @@ def toc() -> str:
     )
 
 
+def bloco_tips(chaves: list[str] | None = None) -> str:
+    """Fichas dos alvos embutidas na própria página, sem depender de rede."""
+    dados = TIPS if chaves is None else {k: TIPS[k] for k in chaves if k in TIPS}
+    if not dados:
+        return ""
+    texto = json.dumps(dados, ensure_ascii=False, separators=(",", ":"))
+    seguro = texto.replace("</", "<\\/")
+    return f'<script type="application/json" class="tips">{seguro}</script>'
+
+
 def build_html() -> str:
     corpo = "".join(
         [
@@ -1626,7 +1942,9 @@ def build_html() -> str:
         f"{esc(longo(D['referencia']))}</span>"
         '<span><a href="index.html">Biblioteca</a> · <a href="pnad.html">A PNAD por dentro</a>'
         " · uso livre com crédito e link</span></footer>"
-        f"<script>{SCRIPT}</script></body></html>"
+        + bloco_tips()
+        + f"<script>{SCRIPT}</script>"
+        '<script src="assets/reponderacao_tip.js" defer></script></body></html>'
     )
 
 
@@ -1717,14 +2035,17 @@ def build() -> None:
     if "—" in html:
         raise SystemExit("travessão encontrado no HTML gerado")
     SHEET.write_text(CSS, encoding="utf-8")
+    TIP_SHEET.write_text(TIP_CSS, encoding="utf-8")
+    TIP_SCRIPT.write_text(TIP_JS, encoding="utf-8")
     PAGE.write_text(html.replace("<section ", "\n<section ") + "\n", encoding="utf-8")
     write_csv()
 
     home = serie_svg("home2t", "2t", compacta=True)
     HOME_SVG.write_text(home + "\n", encoding="utf-8")
+    chaves_home = [_tip_id(p, "2t") for p in PESQUISAS if "2t" in p["turnos"]]
     if INDEX.exists():
         for nome, fragmento in (
-            ("reponderacao_home", home),
+            ("reponderacao_home", home + bloco_tips(chaves_home)),
             ("reponderacao_home_placar", placar_home()),
         ):
             if inject(INDEX, {nome: fragmento}):
@@ -1737,6 +2058,7 @@ def build() -> None:
                 )
     print("Página gerada:", PAGE)
     print("Folha de estilo:", SHEET)
+    print("Camada interativa:", TIP_SHEET, "e", TIP_SCRIPT)
     print("Tabela:", TABLE_CSV)
 
 

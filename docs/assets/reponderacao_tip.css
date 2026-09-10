@@ -1,0 +1,35 @@
+/* ---- camada interativa: alvo, halo e ficha ------------------------------ */
+.hit{cursor:pointer}
+.hit-area{fill:transparent}
+.hit-halo,.hit-cross{opacity:0;pointer-events:none;transition:opacity .12s ease}
+.hit-cross{stroke-dasharray:3 4;stroke-opacity:.5}
+.hit:hover .hit-halo,.hit.on .hit-halo{opacity:1}
+.hit:hover .hit-cross,.hit.on .hit-cross{opacity:1}
+.fig.lendo .hit:not(:hover):not(.on){opacity:.42;transition:opacity .12s ease}
+#tip{position:fixed;z-index:60;max-inline-size:340px;padding:14px 16px;
+background:#192e2b;color:#f4f0e7;border:1px solid #0f1f1d;
+box-shadow:0 10px 30px rgba(15,31,29,.34);font-size:13.5px;line-height:1.5;
+pointer-events:none;opacity:0;transform:translateY(4px);transition:opacity .12s ease,transform .12s ease}
+#tip.on{opacity:1;transform:translateY(0)}
+#tip p{margin:0 0 8px}
+#tip p:last-child{margin-bottom:0}
+.tip-head{display:flex;align-items:baseline;gap:10px;font-size:15px}
+.tip-head b{font-weight:800;letter-spacing:.01em}
+.tip-head span{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11px;
+letter-spacing:.14em;text-transform:uppercase;color:#b9c6bd}
+.tip-doc{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11.5px;color:#b9c6bd}
+.tip-tab{width:100%;border-collapse:collapse;margin:2px 0 9px;
+font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:12.5px}
+.tip-tab th,.tip-tab td{padding:3px 0;text-align:right;font-weight:500}
+.tip-tab thead th{color:#b9c6bd;font-size:11px;letter-spacing:.06em;
+border-bottom:1px solid #3d554f;text-transform:uppercase}
+.tip-tab tbody th{text-align:left;color:#b9c6bd;font-weight:500;padding-right:12px}
+.tip-tab tr.adj td,.tip-tab tr.adj th{color:#ffd9a3}
+.tip-tab tr.pub td{color:#fffdf8}
+.tip-nota{font-size:12px;color:#b9c6bd}
+.dica{display:inline-flex;align-items:center;gap:7px;margin-top:2px;
+font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11.5px;
+letter-spacing:.06em;text-transform:uppercase;color:#535b54}
+.dica::before{content:"";inline-size:9px;block-size:9px;border:2px solid #535b54;
+border-radius:50%}
+@media (hover:none){.dica::after{content:"toque"}}
