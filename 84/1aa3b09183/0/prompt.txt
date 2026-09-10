@@ -1,0 +1,817 @@
+A session-scoped Stop hook is now active with condition: "Diante do que já fizemos de análise, vamos criar uma página nova chamada reponderacao_pnad.html que vai mostrar todas as pesquisas que podemos achar que possam ser reponderadas com a PNAD e mostrar, de uma forma bonita e com gráficos de série histórica, o resultado publicado vs o resultado reponderado, procurando, assim, mostrar como está a corrida eleitoral de verdade o máximo de pesquisas que pudermos, preferencialmente a partir de maio, quando começaram publicações mensais nesse sentido, até as últimas pesquisas nacionais que ainda nem baixamos e que vc precisa baixar os relatórios.
+
+Geralmente as notícias do portal poder360 sempre publicam as íntegras dos relatórios que vc pode baixar para analisar e reponderar com PNAD.
+
+Caso o relatório da pesquisa não tenha o dado, você poderá baixá-los também do site do TSE que talvez tenham os arquivos necessários para montar essa página nova e linká-la na home page com destaque, além de produzir um novo tipo de gráfico que vai trabalhar com todas as pesquisas publicas reponderadas num único relatório, similar ao polling data, para colocar na home-page do index.html e uma página completa com um grande dashboard de gráficos mostrando as reponderaçÕes das diferentes pesquisas individualmente, e criando uma média entre as pesquisas que permitam as pessoas acompanharem o nosso agregador principal da Arvor. E vamos criar métodos para atualizar da forma mais automática possível com futuras pesquisas nessa página com o nosso método de reponderação por renda. 
+
+Capriche nisso com subagentes rodando OPUS para otimizar nossos gastos e mantendo o driver inteligente com o FABLE". Briefly acknowledge the goal, then immediately start (or continue) working toward it — treat the condition itself as your directive and do not pause to ask the user what to do. The hook will block stopping until the condition holds. It auto-clears once the condition is met — do not tell the user to run `/goal clear` after success; that's only for clearing a goal early.
+
+---
+
+<task-notification>
+<task-id>a1b4ee46ba9d7c49e</task-id>
+<tool-use-id>toolu_01LGMLwosNwe6BEuy1q5N1AE</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Inventory existing income reweightings" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>I have a complete picture. Here is the inventory.
+
+## 1. National presidential polls WITH a computed income re-weighting
+
+| # | Institute / wave | TSE reg. | Field → publication | Source PDF on disk | Income bands (institute) &amp; sample % | Crosstab page(s) |
+|---|---|---|---|---|---|---|
+| 1 | Datafolha 05/2026 | BR-07489/2026 | 20–22/05 → 22/05/2026 | `data/originals/datafolha_052026/DataFolhaRelatorio052026.pdf` | 4 SM bands; weighted bases 1001/682/170/71 → **52.03 / 35.45 / 8.84 / 3.69** | p.23 (2T) |
+| 2 | Datafolha 06/2026 | BR-09956/2026 | 17–19/06 → 19/06/2026 | `data/originals/datafolha_062026/DataFolhaRelatorio062026.pdf` | bases 1010/680/162/67 → **52.63 / 35.44 / 8.44 / 3.49** | p.25 (2T); profile p.17 |
+| 3 | Datafolha 07/2026 | BR-01166/2026 | 22–24/07 → 24/07/2026 | `data/originals/datafolha_072026/DataFolhaRelatorio072026.pdf` | bases 1002/678/194/51 → **52.05 / 35.22 / 10.08 / 2.65**; weighted profile p.13 → 52.08/35.42/10.42/2.08 (+4 % refusal) | 1T p.16, 2T p.18, profile p.13 |
+| 4 | Datafolha 08/2026 | BR-04496/2026 | 18–20/08 → 21/08/2026 | `data/originals/datafolha_082026/DatafolhaRelatorio082026.pdf` | 3 SM bands; bases 1031/704/249 → **51.97 / 35.48 / 12.55** (published profile 50/34/12 + 4 NS) | annex p.22 (divulgation p.44) |
+| 5 | AtlasIntel/Bloomberg 07/2026 | BR-08602/2026 | 22–27/07/2026 | **PDF absent** (`Atlas_0726.pdf` cited in `scripts/atlas-072026-renda.py:17` only) | 5 **reais** bands (≤2k / 2–3k / 3–5k / 5–10k / &gt;10k); TSE quota 22.4/17.1/23.1/23.9/13.5; published sample **22.1 / 17.9 / 23.2 / 23.4 / 13.3** | pp.20–21 (1T by income) |
+| 6 | Quaest/Genial 06/2026 | BR-07661/2026 | → 10/06/2026 | `data/pesquisas/quaest/2026-06/pesquisa_genial_quaest_jun2026.pdf` | 3 SM bands **31 / 42 / 27** | 1T by income (dossier §Reponderação) |
+| 7 | Quaest/Genial 07/2026 | BR-07181/2026 | 10–13/07 → 15/07/2026 | `data/pesquisas/quaest/2026-07/Quaest_072026.pdf` | **31 / 42 / 27** | 1T p.30 (idx29); approval p.15; **2T by income not published** |
+| 8 | Quaest/Genial 08/2026 | BR-06591/2026 | 31/07–03/08 → 05/08/2026 | `data/pesquisas/quaest/2026-08/relatorio.pdf` | **31 / 42 / 27** (p.107) | 1T segments; 2T segments p.? |
+| 9 | Nexus/BTG 6ª rodada | BR-07981/2026 | 10–12/07 → 13/07/2026 | `data/pesquisas/nexus_btg/rodada6/NexusBTG_072026.pdf` | 4 SM bands **20 / 20 / 40 / 20** | 2T p.50; profile p.109 |
+| 10 | Nexus/BTG 7ª rodada | BR-01489/2026 | 24–26/07 → 27/07/2026 | `data/pesquisas/nexus_btg/rodada7_2026-07-27/relatorio.pdf` | **23 / 17 / 40 / 20** | 1T pp.28–29, 2T pp.57–58 |
+| 11 | Nexus/BTG 8ª rodada | BR-02874/2026 | 31/07–02/08 → 03/08/2026 | `data/pesquisas/nexus_btg/rodada8_2026-08-03/relatorio.pdf` | **22 / 18 / 40 / 21** | 1T pp.28–29, 2T pp.52–53 |
+| 12 | Nexus/BTG 11ª rodada | BR-09028/2026 | 21–23/08 → 24/08/2026 | `data/pesquisas/nexus_btg/rodada11_2026-08-24/relatorio.pdf` (also `data/originals/nexus_btg_082026_24/Relatorio.pdf`) | **19 / 18 / 40 / 23** | 1T pp.29–30, 2T pp.53–54 |
+
+### Published toplines, PNAD benchmark, re-weighted result, reproduction residual
+
+| # | Published (1T / 2T) | PNAD benchmark used | Re-weighted result | Reproduction residual | Script → JSON |
+|---|---|---|---|---|---|
+| 1 | 2T 47 / 43 / 9 / 2 | PNADC-A **2025 v1, VD5001, persons 16+**: 35.428 / 39.218 / 16.926 / 8.428 | 2T **Lula 43.60 × Flávio 46.41**; gap **−2.81** (95 % rounding CI −2.97…−2.65; P(Flávio ahead)=1.00) | recomposed 47.277 / 43.294 → **+0.28 / +0.29 pp** ✅ | `scripts/datafolha-082026-historico-renda.py` (WAVES L44–110) → `docs/assets/datafolha_082026_historico_renda.json`, `analysis/datafolha_082026/historico_renda.json` |
+| 2 | 2T 47 / 43 / 8 / 1 | same | 2T **Lula 45.21 × Flávio 45.37**; gap **−0.16** (−0.33…−0.00; P=0.978) | recomposed 47.194 / 43.356 → **+0.19 / +0.36 pp** ✅ | same script/JSON. **Earlier ad-hoc run** in `data/outputs/datafolha_reweight_sensitivity.json` (households 46.44 × 44.92; persons 16+ 45.59 × 45.86; region/TSE 47.09 × 43.39) rendered in `docs/datafolha_062026.html:700–719` — **no generator script in repo** |
+| 3 | 1T 40 / 32 · 2T 48 / 43 | 5 universes: Datafolha bases; Datafolha profile p.13; PNAD **households** 42.93/35.69/14.23/7.15; PNAD **persons 16+ VD5001** 35.44/39.23/16.91/8.42; PNAD persons 16+ **VD5007** 35.12/40.37/16.57/7.95 | 2T: bases 47.91×42.84 → households **46.58×44.20** → persons 16+ **45.36×45.29** (gap +0.07) → VD5007 **45.29×45.33** (−0.04). 1T: 39.77×32.59 → 38.94×33.28 → **37.93×33.95** → 37.82×34.01 | recomposed 1T 39.77/32.59 vs 40/32 (**−0.23/+0.59**); 2T 47.92/42.85 vs 48/43 (**−0.08/−0.15**) ✅ | `scripts/datafolha-072026-renda.py` → `analysis/datafolha_072026/renda.json`, `docs/assets/datafolha_072026_renda.json` + `.js`. Historico line: adjusted **45.478 × 45.483**, gap **−0.005** |
+| 4 | 1T Lula 39 / Flávio 33 / Caiado 5 / Renan 4 / Zema 3 / Cury 2 · 2T 47 / 43 / 9 / 2 (alt. 2T: Caiado 47×40, Zema 48×38, Renan 47×37) | PNADC-A 2025 v1 VD5001 16+, 3 bands **35.428 / 39.218 / 25.354** | single-margin renda: **Lula 44.19 × Flávio 45.97**, gap **−1.78** (−1.96…−1.61; P=1.00). Combined main-effects IPF (5 margins): **44.87 × 45.49**, gap **−0.62**. Tipping point at 69.2 % of the path | recomposed 46.894 / 43.246 vs 47/43 → **−0.11 / +0.25 pp** ✅ | `scripts/datafolha-082026-audit.py` (`pnad_benchmarks` L340, reweighting L748–846) → `analysis/datafolha_082026/audit.json`, `docs/assets/datafolha_082026_data.json` |
+| 5 | 1T Lula **45.0** × Flávio **35.8** (Renan 7.8, Caiado, Zema, Cury…) | 4 rulers: PNADC-A **2024 v5** nominal 20.3/17.3/24.0/24.6/13.8 and at abr/2026 prices 19.2/11.9/27.6/26.0/15.3; PNADC-A **2025 v1** nominal 16.7/11.4/27.4/27.3/17.3 and at abr/2026 prices **16.4/11.1/27.0/27.7/17.8**. Universe: persons 16+, `VD5007__rend_habitual_domiciliar`, weight V1032, target month 202604 | 1T: sample 45.02×35.78 (gap 9.24) → 2024@2026 **45.07×35.44** (9.63) → 2025 nominal **45.11×35.15** (9.96) → **2025@2026 45.20×35.05 (gap 10.15, +0.91)**. Age-cut sensitivity 0/16/18/25 all in same direction | recomposition with published sample profile = 45.02/35.78 vs published 45.0/35.8 → **≈ ±0.02 pp** ✅ | `scripts/atlas-072026-renda.py` → `docs/assets/atlas_072026_renda.json` |
+| 6 | 1T 39 / 29 | PNAD 2025 v1 adults 16+ 35.4/39.2/25.3; **plus** a households/responsáveis variant 42.9/35.7/21.4 | 1T: declared 39.4×28.9 → persons 16+ **40.1×28.5** → households **41.4×27.8**. Region/TSE variant 39.5×29.0 | recomposed 39.4 / 28.9 vs 39 / 29 → **+0.4 / −0.1 pp** ✅ | **no script** — table lives inline in `docs/quaest_100626.html:655–700` |
+| 7 | 1T 40 / 28 · 2T 45 / 37 (Caiado 45×36, Zema 45×35, Renan 45×33) · approval 48/47 | PNAD 2025 v1 VD5001 16+ **35.44 / 39.231 / 25.329** (200 replicate CIs) | 1T **Lula 41.39 × Flávio 27.13** (margin 13.46 → 14.26, **+0.80**); approval saldo +0.9 → +2.18 (**+1.28**); **2T is a PROXY** (income not published): 46.58 × 35.83 (+0.96) | recomposed 1T 40.87 / 27.41 vs 40 / 28 → **+0.87 / −0.59 pp** — flagged in the JSON as the method's noise floor ⚠️ | `docs/assets/quaest_0726_rejeicao_reponderacao.json` (+ `_fragment.html`, `_notes.md`); benchmark from `scripts/quaest-july-audit.py::pnad_income` (L338) → `docs/assets/quaest_0726_data.json` `benchmarks.pnad_income` |
+| 8 | 1T Lula 37 × Flávio 32-ish (income rows 51/37/31 vs 23/32/35); 2T segments 54/30, 41/43, 36/44 | same 3-band PNAD (35.44/39.231/25.329); deltas −4.44 / +2.769 / +1.671 | **1T only**: published mix 39.72 / 30.02 → PNAD **40.44 / 29.57**; gap change **+1.172 pp** (pro-Lula — Quaest sample is *richer* than PNAD) | reconstruction of published mix is the check; age-scope check verifies the ≥16 filter reproduces stored bands to 0.002 pp ✅ | `scripts/quaest-august-audit.py::income_benchmark` (L1399) + `pnad_age_scope_check` (L1341) → `docs/assets/quaest_082026_data.json` `benchmarks.income` |
+| 9 | 2T **47 / 44 / 8 / 1** (p.49–50) | PNAD 2025 v1 VD5001 16+ **13.498 / 21.942 / 39.231 / 25.329** (200 replicates, ±MoE) vs Nexus 20/20/40/20 | scenario **d — renda (PNAD)**: **Lula 46.08 × Flávio 44.69**, gap **1.39** (from 3.00; Δgap −1.61), CI95 1.32…1.46, two-way Lula 50.8 %. Other margins: sexo 3.22, idade 3.95, escolaridade 2.59, região; plus a raking/IPF combined scenario | renda margin reproduces 47.00 / 43.60 → **0.00 / −0.40 pp** (all 5 margins within ±0.5) ✅ | `scripts/nexus-btg-audit.py` (`pnad_income` L459, rulers L758, validation L787) → `docs/assets/nexus_btg_0726_data.json` `.reweight` |
+| 10 | 1T 42/33/6/5/3/2/1/0/6/2 · 2T **47 / 43 / 9 / 1** | same 4-band PNAD | 2T income **anchored 45.483 × 44.616**, gap **0.868** (rounding 0.768…0.968). 1T income anchored Lula 40.34 × Flávio 33.90, gap 6.44 (from ~9) | 2T income reproduced 47.87 / 42.47 → **+0.87 / −0.53 pp** ✅ | `scripts/nexus-btg-082026-audit.py` (`pnad_distribution` L494, `reweight` L658, `all_reweighting` L693) → `docs/assets/nexus_btg_082026_1_data.json` `.reweighting.july` |
+| 11 | 1T 41/37/5/4/3/1/1/1/4/3 · 2T **46 / 45 / 8 / 2** | same | 2T income **anchored 44.743 × 46.440**, gap **−1.697** (−1.781…−1.614). 1T income anchored 39.74 × 38.28, gap 1.46 (from ~4) | 2T income reproduced 45.618 / 44.426 → **−0.38 / −0.57 pp** ✅ | same script/JSON, `.reweighting.august` |
+| 12 | 1T 41/37/5/3/3/3/5/3 · 2T **46 / 45 / 8 / 1** | same 4-band PNAD (13.4977/21.9424/39.2311/25.3287); TVD vs poll = **6.27 pp**, weight factors 0.710/1.219/0.981/1.101 | 2T income **anchored 45.405 × 45.835**, gap **−0.430** (swing −1.43; rounding −0.490…−0.369; two-way 49.76/50.24). 1T income anchored 40.19 × 37.48, gap 2.717 (swing −1.28). Additive-all-margins 2T gap −0.512 | 2T income reproduced 46.085 / 44.679 → **+0.09 / −0.32 pp** ✅ (sexo/idade/região residuals all &lt; 0.6) | `scripts/nexus-btg-240826-audit.py` (`income_target` L462, `reweight` L487, `rounding_interval` L511) → `docs/assets/nexus_btg_240826_data.json`; test `tests/test_nexus_btg_240826_audit.py:16` |
+
+**Cross-cutting caveat recorded in every artifact:** all of these are single-margin post-stratification of *published, already-weighted* cells — never a microdata re-weight. Every JSON carries an explicit `limitations`/`caveats`/`method.note` block.
+
+---
+
+## 2. National polls on disk with an income crosstab and NO re-weighting
+
+Everything under `data/originals/` dated **10/09/2026** is a fresh, untouched corpus — no script, JSON or dossier references any of it.
+
+| Institute / wave | TSE reg. | Field → publication | PDF | Income bands &amp; sample % | Vote-by-income crosstab? |
+|---|---|---|---|---|---|
+| Gerp (GerpCATI) | BR-08045/2026 | 06–10/08 → 10/08/2026 | `data/originals/gerp_082026_10/Relatorio.pdf` | 6 SM bands (≤1 / 1–2 / 2–5 / 5–10 / 10–20 / 20+); n per band 476/559/824/344/155/42 | **Yes** — "03 · ESTIMULADA · IDADE E RENDA" (1T + 2T sections) |
+| Gerp / AESP Rádio+TV | BR-03547/2026 | 21–25/08 → ~25/08/2026 | `data/originals/gerp_082026_25/Relatorio.pdf` | same 6 SM bands | **Yes** — 1T espontânea + estimulada + 2T by income |
+| Meio/Ideia | (not on cover) | 04–07/09/2026 | `data/originals/meio_ideia_092026/Relatorio.pdf` | 4 bands (≤1 / 1–3 / 3–5 / &gt;5 SM) | **Yes** — "POR RENDA" |
+| **Nexus/BTG 12ª rodada** | BR-08900/2026 | 28–30/08 → 31/08/2026 | `data/originals/nexus_btg_082026_31/Relatorio.pdf` | 4 SM bands **19 / 18 / 40 / 23** (p.114) | **Yes** — 1T pp.15+, 2T pp.40+ (1T Lula 37 esp.; 2T Lula 46 × Flávio 45). Directly re-runnable through `nexus-btg-240826-audit.py` |
+| Palver | — | 09/2026 (embargo 09/09) | `data/originals/palver_092026/Relatorio.pdf` | **no income breakdown found** | No |
+| PoderData | BR-04882/2026 | 25–28/05/2026 | `data/originals/poderdata_052026/Relatorio.pdf` | 3 bands (≤2 / 2–5 / &gt;5 SM) | **Yes** (renda is a declared weighting variable) |
+| PoderData | BR-05722/2026 | 21–24/06/2026 | `data/originals/poderdata_062026/Relatorio.pdf` | same | **Yes** |
+| PoderData | BR-00059/2026 | 12–15/07/2026 | `data/originals/poderdata_072026_16/Relatorio.pdf` (dup: `data/pesquisas/poderdata/2026-07/PoderData_072026.pdf`) | same | **Yes** |
+| PoderData | BR-07845/2026 | 26–29/07/2026 | `data/originals/poderdata_072026_29/Relatorio.pdf` | same | **Yes** |
+| PoderData | BR-06868/2026 | 09–12/08/2026 | `data/originals/poderdata_082026_12/Relatorio.pdf` | same | **Yes** |
+| PoderData | BR-04974/2026 | 23–26/08/2026 | `data/originals/poderdata_082026_26/Relatorio.pdf` | same | **Yes** |
+| PoderData | BR-07561/2026 | 30/08–02/09/2026 (n=3000) | `data/originals/poderdata_092026_02/Relatorio.pdf` | **46 / 33 / 21** | **Yes** |
+| Instituto Veritá | BR-04006/2026 | 16–20/08/2026 (n=3840) | `data/originals/verita_082026/Relatorio.pdf` | 3 bands (&lt;2 / 2–5 / &gt;5 SM) | **Yes** |
+| Instituto Veritá | BR-09426/2026 | 01–04/09/2026 (n=3840) | `data/originals/verita_092026/Relatorio.pdf` | **43.7 / 37.6 / 18.7** (n 1677/1445/718) | **Yes** |
+| Vox Brasil | BR-05519/2026 | 25–27/08 → 29/08/2026 | `data/originals/vox_brasil_082026/Relatorio.pdf` | 4 bands: **83.9 / 12.4 / 2.8 / 0.9** — extreme low-income skew, the single largest PNAD gap in the corpus | **Yes** |
+| AtlasIntel/Bloomberg | BR-06939/2026 | ~18/05/2026 | `data/pesquisas/atlas/2026-05-19/atlas_bloomberg_nacional_2026-05-19.pdf` | reais bands (Atlas standard) | Yes; only PNAD benchmark comparison in `docs/atlas_intel_180526.html` |
+| AtlasIntel/Bloomberg | BR-03448 / BR-04582/2026 | ~26–30/06/2026 | `data/pesquisas/atlas/2026-06-30/atlas_bloomberg_nacional_2026-06-30.pdf` | reais bands; PNAD reference computed in `data/outputs/atlas_260626/pnad_benchmarks.json` but **never applied to the vote** | Yes, not re-weighted |
+| Nexus/BTG rodadas 1–4 | BR-01075, BR-04193, BR-06645/2026 (+ mar.) | 03, 04, 05, 15/06/2026 | `data/pesquisas/nexus_btg/rodada{1,2,3,4}*/btg_nexus_rodada*.pdf` | 4 SM bands | Yes (rodada 4 dossier `docs/nexus_btg_150626.html` shows only sample-vs-target deltas, e.g. "Até 2 SM −2.9") |
+| **Quaest/Globo 14/08** | BR-06773/2026 | 10–13/08 → 14/08/2026 | `data/pesquisas/quaest/2026-08-14/relatorio.pdf` | **31 / 42 / 27** (`SAMPLE_SHARES["income"]`, `scripts/quaest-globo-140826-audit.py:243`) | **Yes** — 2T by income p.31 (58/27, 38/43, 34/48) + approval by income. **The most re-weight-ready gap in the repo**: profile, crosstab and PNAD benchmark all already exist |
+| Datafolha 10/05 (crime organizado) | — | 10/05/2026 | `data/pesquisas/datafolha/2026-05-10/relatorio_datafolha_crime_organizado_2026-05-10.pdf` | — | Not an income-crosstabbed vote report |
+| Datafolha 16/05 (Lula×Flávio) | BR-00290/2026 | ~09–16/05/2026 | `data/pesquisas/datafolha/2026-05-16/relatorio_datafolha_lula_flavio_2026-05-16.pdf` | — | **No full vote × income table published** — `docs/datafolha_090526.html:527–552` explicitly states re-weighting is impossible for this wave |
+| PoderData 07/2026 (dup set) | BR-00059/2026 | 12–15/07/2026 | `data/pesquisas/poderdata/2026-07/PoderData_072026.pdf` | 3 bands | Yes; only used as a comparator in `docs/assets/quaest_0726_poderdata.json` |
+
+---
+
+## 3. State-level polls — **out of scope** for the national aggregator
+
+| Scope | Institutes / waves | Files | Status |
+|---|---|---|---|
+| **SP** | Datafolha (SP-01806 + BR-07185), Quaest (SP-06946 + BR-02096), Real Time Big Data (SP-01347 + **BR-06537**), Atlas/Estadão (SP-06964 + **BR-02563**), Paraná Pesquisas (SP-08913), Datafolha SP jul (governo) | `data/pesquisas/estaduais/sp/2026-09/fontes/*.pdf` | **Already re-weighted**, incl. *presidential* SP-subsample rows: Atlas pres1 Flávio 39.9→37.37 × Lula 36.0→37.39 (gap 3.9→−0.02); Atlas pres2 46.8→45.07 × 43.3→44.48 (gap 3.5→0.59); Real Time pres1 Flávio 38→38.47 × Lula 33→31.84; Quaest pres1 residual +2.32 pp = **reproduction check FAILED**, logged as such. Script `scripts/sp-092026-camada2.py` + `scripts/sp-092026-pnad.py` → `docs/assets/sp_092026_camada2.json` (`reponderacao`), `docs/assets/sp_092026_pnad.json`. PNAD-SP 16+ 3 bands **23.15 / 42.22 / 34.62**; 5 reais bands 10.05/7.89/23.07/33.31/25.68. Tests: `tests/test_sp_092026_camada2.py` |
+| **MG** | Quaest (MG-04060 + BR-09818), Real Time Big Data | `data/pesquisas/estaduais/mg/2026-08/fontes/*.pdf` | PNAD-MG benchmark computed (`docs/assets/mg_082026_data.json` `.pnad`) and sample-vs-PNAD compared (PNAD 31.1 vs Quaest 27 vs Real Time 45 in ≤2 SM), but **no vote re-weighting** |
+
+---
+
+## 4. PNAD benchmark values available in the repo
+
+**Canonical 16+ persons distribution, PNADC anual 2025 visita 1, `VD5001__rend_efetivo_domiciliar_mw`, weight `V1032__peso_com_calibracao`** (universe: 323,023 person-records, 168,290,529 weighted people; minimum wage R$ 1,621; income deflated to abril/2026):
+
+| Band cut | Value | Where it lives |
+|---|---|---|
+| 4 bands ≤2 / 2–5 / 5–10 / &gt;10 SM | **35.44 / 39.23 / 16.91 / 8.42** (households: 42.93 / 35.69 / 14.23 / 7.15) | `data/outputs/pnad_2025v1_renda_faixas.json` — also holds VD5007 (35.12/40.37/16.57/7.95 and 42.85/36.55/13.88/6.72). Built by `scripts/datafolha-072026-renda.py::build_pnad` (L128–181), rebuilt with `--rebuild-pnad` |
+| 4 bands ≤1 / 1–2 / 2–5 / 5+ SM **with 200-replicate CIs** | **13.498 ±0.247 / 21.942 ±0.357 / 39.231 ±0.457 / 25.329 ±0.535** | `docs/assets/nexus_btg_0726_data.json` `.pnad_income` (`scripts/nexus-btg-audit.py::pnad_income`, L459) and `docs/assets/nexus_btg_082026_1_data.json` `.benchmarks.pnad_income_2025` (+ full `replicate_shares` matrix, `scripts/nexus-btg-082026-audit.py::pnad_distribution` L494 / `income_classifier` L538). Point-only copy in `docs/assets/nexus_btg_240826_data.json` `.benchmarks.pnad_income` (`income_target`, L462) |
+| 3 bands ≤2 / 2–5 / 5+ SM | **35.44 ±0.467 / 39.231 ±0.457 / 25.329 ±0.535** | `docs/assets/quaest_0726_data.json` `.benchmarks.pnad_income`; also `analysis/datafolha_082026/audit.json` `.benchmarks.pnad.renda` (35.428 / 39.218 / 25.354, `scripts/datafolha-082026-audit.py::pnad_benchmarks` L340). Age-scope diagnostics (all ages 37.046/38.713/24.241; 17+ 35.347/39.257/25.396) in `docs/assets/quaest_082026_data.json` `.benchmarks.income.age_scope_check` |
+| 5 **reais** bands (0–2k / 2–3k / 3–5k / 5–10k / &gt;10k) | persons 16+ deflated **17.061 / 10.928 / 26.095 / 27.286 / 18.629**; raw 18.761/11.530/26.449/26.232/17.028; households deflated 22.923/12.095/25.552/23.623/15.806 | `data/outputs/atlas_260626/pnad_income_benchmarks_compare.json` (2025 v1 block) and `data/outputs/atlas_260626/pnad_benchmarks.json` (2024 v5 block). Also `docs/assets/atlas_072026_renda.json` `.distributions` (VD5007-based: 16.4/11.1/27.0/27.7/17.8 at abr/2026) |
+| Households + persons in SM with money labels | `data/outputs/atlas_260626/pnad_renda_pais.json` (SM reference R$ 1,575.09 at abr/2026 ⇒ 2 SM = R$ 3,150.18, 5 SM = R$ 7,875.44, 10 SM = R$ 15,750.89) |
+
+### Recomputing for arbitrary band cutoffs in reais
+
+1. **Streaming reference — `scripts/atlas-072026-renda.py::scan` (L~117–160), driven by `BAND_CEILINGS` (L69).** Streams `data/outputs/base_anual_visita1_labeled_npv.csv` (and `base_anual_labeled_npv.csv` for the 2024 v5 vintage). Columns used:
+   - `V2009__idade_na_data_de_referencia` (age filter, `MIN_AGE = 16`, `AGE_CUTS = (0,16,18,25)`)
+   - `V1032__peso_com_calibracao` (weight)
+   - `VD5007__rend_habitual_domiciliar` (nominal reais) and `VD5007__rend_habitual_domiciliar_202604` (deflated to `TARGET_MONTH`)
+   - `ipca_factor(from, to)` (L112) rebases via `data/outputs/ipca.csv`
+   Change `BAND_CEILINGS` / `BAND_LABELS` and the deflated-column suffix and rerun.
+2. **SM cutoffs:** `scripts/datafolha-072026-renda.py::classify` (L111) + `build_pnad` (L128) over the same CSV, using `VD5001__rend_efetivo_domiciliar_mw` / `VD5007__rend_habitual_domiciliar_mw`; `V2005__condicao_no_domicilio == 1` selects one row per household.
+3. **CLI with replicate-weight CIs:** `brasil renda-por-faixa-sm` = `scripts/pnad.py::cmd_renda_por_faixa_sm` (L6052; parser at L7305, `set_defaults` L7380). Takes `--input`, `--ranges "0-2;2-5;5-10;10+"`, `--group-by pais|uf`, `--target 202604`, `--ipca-csv`, `--salario-minimo-csv`; emits `ranges_money` (`_ranges_money_from_specs` L1260) converting each SM cut to reais at `sm_reference_value`, with bootstrap-replicate variance (`var=(1/(R-1))*Σ(θr−θ)²`).
+4. **SQLite path (fastest for replicate CIs):** `data/outputs/brasil.sqlite`, table `base_anual_visita1_labeled_npv`, weights `V1032__peso_com_calibracao` + `V1032001..V1032200__peso_replicado_*` — see `scripts/nexus-btg-082026-audit.py::pnad_distribution` (L494).
+
+---
+
+## 5. Cleanest generic references for the re-weighting arithmetic
+
+| Rank | Location | Signature | Why |
+|---|---|---|---|
+| **1** | `scripts/nexus-btg-240826-audit.py` L482–526 | `normalise_rows(cells) -&gt; np.ndarray`; `reweight(cells, profile, target, published) -&gt; dict`; `rounding_interval(cells, profile, target, published, seed) -&gt; dict` | Smallest complete implementation. Returns `reproduced` / `direct` / `anchored` / `gap` / `swing` / `two_candidate_share`, with the anchoring identity `published + direct − reproduced` that cancels rounding. 10 000-draw uniform ±0.5 pp jitter CI. Covered by `tests/test_nexus_btg_240826_audit.py:16` |
+| 2 | `scripts/nexus-btg-082026-audit.py` L653–737 | `normalize_rows`, `reweight(cells, profile, target, published)`, `rounding_sensitivity(...)`, `all_reweighting(targets)` | Identical contract, generalised over N margins × 2 waves; adds `margin_leverage` (L744) and `income_mechanics` (L823) |
+| 3 | `scripts/datafolha-072026-renda.py` L96–219 | `Distribution` NamedTuple (`.as_dict()`, `.weights()`), `classify(value)`, `normalize(tally)`, `reweight(crosstab: dict[str, dict[str, int]], weights: dict[str, float]) -&gt; dict`, `scenario(label, source, distribution, kind)` | Cleanest **dict-based, no-numpy** version — best to read first. Also the canonical `build_pnad()` streamer |
+| 4 | `scripts/datafolha-082026-historico-renda.py` L120–215 | `normalized_rows(rows)`, `topline(rows, weights) -&gt; np.ndarray`, `rounding_test(wave, target, draws=10_000)`, `load_targets()` | The multi-wave series pattern; shows how to split a 3-band benchmark into 4 bands (`load_targets`, L144–152) |
+
+Repo doctrine for all of these is in `AGENTS.md` (income re-weighting is "a estrela do dossiê de pesquisa", L236; Atlas nominal-vintage rule L243; the "reproduce the published topline before publishing any derived number" requirement, L238).</result>
+<usage><subagent_tokens>255290</subagent_tokens><tool_uses>106</tool_uses><duration_ms>591346</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a3fc04a4b1b8a6af6</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Find and download new national polls" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>Done. Here is the state of play.
+
+## What I found on disk first (not re-downloaded)
+The repo already had far more than the brief assumed. Besides `data/originals/datafolha_05..08_2026`, there is a whole parallel archive at **`data/pesquisas/`**: Quaest (06, 07, 08, 08-14), Nexus/BTG (rodadas 1–11), AtlasIntel (19/05, 30/06), PoderData (one wave), plus state polls under `estaduais/mg` and `estaduais/sp`.
+
+## Downloaded: 21 new national report PDFs
+All written to `data/originals/&lt;instituto&gt;_&lt;MMYYYY&gt;[_DD]/Relatorio.pdf`, all verified as real PDFs with working text layers. Manifest at **`data/originals/pesquisas_nacionais_manifest_2026.json`** (27 records, 26 with TSE registration).
+
+| Instituto | Campo | Amostra | 1º t. Lula×Flávio | Baixado | Renda × voto (págs) |
+|---|---|---|---|---|---|
+| Gerp | 3–8 set | 2.400 | 34 × 37 | **não** | — |
+| Palver | 4–7 set | 5.000 | 40 × 40 | sim | 15 |
+| Meio/Ideia | 4–7 set | 1.500 | 38,4 × 37,3 | sim | 22 |
+| Nexus/BTG | 4–7 set | 2.002 | 39 × 35 | sim | 12, 34, 63–81, 100… |
+| Quaest | 3–6 set | 2.004 | 36 × 29 | **não** | — |
+| Veritá | 1–4 set | 3.804 | 38,4 × 38,9 | sim | 13, 16, 19, 22, 25, 31 |
+| Datafolha | 1–3 set | 2.002 | 38 × 33 | **não** | — |
+| PoderData/Aya | 30 ago–2 set | 3.000 | 37 × 34 | sim | 12, 27, 32 |
+| Quaest | 30 ago–1 set | 2.004 | 37 × 30 | **não** | — |
+| Apex/Futura | 27 ago–1 set | 2.000 | 38,7 × 33,6 | sim | 5 |
+| Real Time Big Data | 27–31 ago | 2.000 | 38 × 29 | sim | 11, 18 |
+| Nexus/BTG | 28–30 ago | 2.005 | 39 × 33 | sim | 12, 34, 58–74, 95, 101 |
+| AtlasIntel | 25–30 ago | 5.014 | 43,4 × 33,7 | **parcial** | anexo sem camada útil |
+| Vox Brasil | 25–27 ago | 2.100 | 37,1 × 34,8 | sim | 6 |
+| PoderData/Aya | 23–26 ago | 2.400 | 38 × 35 | sim | 11, 27, 33 |
+| Gerp | 21–25 ago | 2.400 | 37 × 38 | sim | 12, 15, 23, 27, 30, 32, 39, 41 |
+| Nexus/BTG | 21–23 ago | 2.006 | 41 × 37 | sim | 12, 30, 54–70, 93, 99 |
+| Indexa/Broadcast | 20–23 ago | 2.000 | 39 × 34 | **não** | — |
+
+Backfill for institutes the repo lacked: Veritá 16–20/ago, PoderData 09–12/ago, Gerp 06–10/ago, PoderData 26–28/jul, 13–16/jul, 21–24/jun, 26–29/mai.
+
+**17 of the 21 have income-by-vote crosstabs**, page numbers recorded per report. The richest are Nexus/BTG (10–14 pages each), Veritá and Gerp.
+
+## Four things worth your attention
+
+**1. Not obtainable publicly (all attempts logged in the manifest):** Datafolha 09/2026 (BR-03669/2026), Quaest 09/2026 both waves (BR-07065, BR-01720), AtlasIntel nacional 08/2026 (BR-07972), Indexa 08/2026 (BR-06366), Gerp 09/2026 (BR-00251). These are outlet-exclusive. I tried Poder360, Gazeta do Povo, CNN, CartaCapital, `atlasintel.org/polls` (both tabs), `quaest.com.br/relatorios`, and the Genial LP — none host them.
+
+**2. The Atlas "2ª opção" file carries BR-07972/2026** — the same registration as the 25–30/ago national poll. It is a 10-page excerpt of that wave, not a new survey. It does not substitute for the full national report.
+
+**3. A dating error in your archive:** `data/pesquisas/poderdata/2026-07/PoderData_072026.pdf` is byte-identical (866.565 bytes) to the **21–24 June** wave I downloaded. The folder is mislabelled as July.
+
+**4. `Atlas_0726.pdf` was only in `~/Downloads`, never in the repo** — even though `scripts/atlas-072026-audit.py` cites it by name. I copied it to `data/originals/atlas_072026/Relatorio.pdf` (BR-08602/2026) and labelled its provenance honestly in the manifest. As your CLAUDE.md documents, Atlas crossbreaks are images, so it has no usable income text layer.
+
+## Two cautions
+
+I did **not** transcribe second-round numbers from the Wikipedia second-round table: its institute column is offset by one row against the dates, so it pairs the wrong sample sizes with the wrong institutes. Where a second-round figure appears in the manifest it came from a news article and is flagged as such, with a note to confirm against the report before publishing. Every unknown is `null` with a reason.
+
+Also: **`git status` is not clean, and none of it is mine.** `AGENTS.md`, `docs/index.html`, `docs/assets/index.css` are modified and there are new untracked `analysis/reponderacao/`, `docs/reponderacao_pnad.html` and `scripts/reponderacao-benchmark.py` files. It was clean at the start of my session and I only wrote under `data/originals/` (gitignored). Another session is likely working in this repo concurrently — worth checking before you commit anything.</result>
+<usage><subagent_tokens>243840</subagent_tokens><tool_uses>81</tool_uses><duration_ms>949644</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a39424c1da7e6ca8c</task-id>
+<tool-use-id>toolu_0139okQPAbjUjDAbzd5YFSSP</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Transcribe PoderData polls to manifest" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>Done. Seven files written, nothing else touched.
+
+## Waves written (all in `analysis/reponderacao/pesquisas/`)
+
+| Arquivo | Campo | n | Registro | 1T publicado | 1T reponderado (PNAD 16+) | Resíduo | 2T publicado |
+|---|---|---|---|---|---|---|---|
+| `poderdata_2026-05-28.json` | 25–28/05 | 2400 | BR-04882/2026 | Lula 40 × Flávio 35 (+5) | 39,84 × 35,50 (+4,34) | 0,67 | 46 × 42 |
+| `poderdata_2026-06-24.json` | 21–24/06 | 2400 | BR-05722/2026 | 40 × 36 (+4) | 40,26 × 35,99 (+4,27) | 0,74 | 46 × 43 |
+| `poderdata_2026-07-15.json` | 12–15/07 | 2400 | BR-00059/2026 | 40 × 34 (+6) | 39,75 × 34,42 (+5,33) | 0,42 | 45 × 43 |
+| `poderdata_2026-07-29.json` | 26–29/07 | 2400 | BR-07845/2026 | 41 × 35 (+6) | 40,96 × 35,02 (+5,94) | 0,46 | 46 × 43 |
+| `poderdata_2026-08-12.json` | 09–12/08 | 2400 | BR-06868/2026 | 41 × 35 (+6) | 41,35 × 35,20 (+6,15) | 1,14 | 46 × 45 |
+| `poderdata_2026-08-26.json` | 23–26/08 | 2400 | BR-04974/2026 | 38 × 35 (+3) | 37,69 × 35,42 (+2,27) | 0,58 | 45 × 44 |
+| `poderdata_2026-09-02.json` | 30/08–02/09 | 3000 | BR-07561/2026 | 37 × 34 (+3) | 36,61 × 34,61 (+2,00) | 1,15 | 44 × 45 |
+
+Todos os resíduos abaixo de 1,5 pp. Desvio da 1ª faixa é +10,56 pp em todas as ondas (46% declarado contra 35,4% da PNADC 2025), idêntico porque a renda é variável de ponderação.
+
+## Achados que mudam o produto
+
+**PoderData não publica cruzamento de 2º turno por renda em nenhuma das sete ondas.** O 2º turno Lula × Flávio sai só como série nacional (p. 15–19, conforme a onda). Varri as 357 páginas dos sete PDFs página a página procurando `Renda` + `Até 2 SM`: os únicos cruzamentos por renda são 1º turno, motivo de voto, avaliação e aprovação. Por isso `cruzamentos` tem apenas `1t`; `publicado` traz os dois turnos, como manda o manifesto. Consequência: as ondas do PoderData entram no agregador só no 1º turno.
+
+**O perfil de renda é a cota, não a amostra medida.** 46/33/21 nas sete ondas, sem uma casa decimal de variação, e a ficha técnica declara renda entre as variáveis da ponderação paramétrica. O relatório não publica bases não ponderadas por faixa, então não houve teste bases-versus-perfil.
+
+**O cartão é em salários mínimos, sem reais impressos.** `ano_referencia` = 2026 (R$ 1.621), ano do campo. Registrei isso em `renda.nota`: diferente do Datafolha, aqui não há régua de reais para conferir contra a cota.
+
+**Duas ondas com resíduo alto vieram do próprio relatório.** Agosto/12 (1,14) e setembro/02 (1,15), ambos em Flávio. Renderizei as páginas 11 e 12 em imagem e conferi célula a célula: a transcrição está certa; a diferença é a não resposta e o arredondamento que a própria ficha avisa ("diferenças entre as frequências totais e os percentuais em tabelas de cruzamento podem acontecer"). Na p. 11 de agosto/12 a Samara Martins tem 1/0/1 por faixa e 0% no Total, prova visível do arredondamento.
+
+## Decisões de transcrição registradas nas notas
+
+- Joaquim Barbosa (3% em maio, 3%/2% em junho) não tem chave no manifesto e foi para `outros`. Some da lista a partir de julho.
+- Nas ondas de agosto e setembro, `outros` soma Clariana Barão, Edmilson Costa, Hertz Dias, Rui Costa Pimenta, Veterinário Wilson Grassi e (só em 12/08) Leonardo Avalanche.
+- Topline de maio e junho vem do gráfico da p. 6; de julho em diante usei as tabelas de série (p. 6 do relatório de 29/07 e p. 7 do de 02/09), que são inequívocas na extração de texto. Onde os dois existem, batem.
+- `contratante` = Poder360: as matérias dizem que a pesquisa é feita com recursos próprios, e "Aya" é a Aya Bancah, parceira de distribuição, não contratante. Registrei nas notas.
+- Datas de divulgação conferidas na assinatura de cada matéria do Poder360 (29/05, 25/06, 16/07, 30/07, 13/08, 27/08, 03/09), não no `creationDate` do PDF, que diverge em duas ondas (17/07 e 27/08).
+
+## O que não fiz
+
+`pytest -q tests/test_reponderacao_pnad.py` termina com 2 falhas, **ambas anteriores aos meus arquivos** (confirmei removendo os sete e rodando de novo: as mesmas duas falhas, mesmas mensagens):
+
+1. `test_poll_files_have_required_fields` quebra em `vox_brasil_2026-08-27.json`, que não tem `cruzamentos`.
+2. `test_datafolha_series_matches_published_dossier` faz `p["turnos"]["2t"]` para toda pesquisa e estoura em `gerp_2026-08-10`, que só tem 1º turno. As sete ondas do PoderData caem no mesmo caso, então o teste precisa passar a filtrar por presença de `2t`.
+
+Não corrigi nem o teste nem o arquivo da Vox porque a instrução era escrever só arquivos `poderdata_`. O `calcular` foi rodado com `--output` para o scratchpad, para não sobrescrever `docs/assets/reponderacao_pnad.json`. `git status` continua mostrando exatamente as mesmas modificações de antes.</result>
+<usage><subagent_tokens>200822</subagent_tokens><tool_uses>57</tool_uses><duration_ms>462236</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a56d829a08d2b96e9</task-id>
+<tool-use-id>toolu_01AuR5acP43B1zrzWF5Dj5LE</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Transcribe AtlasIntel polls to manifest" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>Four files written, one per national AtlasIntel/Bloomberg wave in the window. All numbers were read off the original PDFs (crossbreaks rendered with PyMuPDF at 115 dpi and re-cropped at 300 dpi to confirm each digit).
+
+## Waves written
+
+| Arquivo | Campo | Registro | n | 1T publicado (L × F) | 1T reponderado | Gap pub → ajust | Resíduo |
+|---|---|---|---|---|---|---|---|
+| `atlas_2026-05-18.json` | 13–18/05 | BR-06939/2026 | 5.032 | 47,0 × 34,3 | 47,47 × 33,83 | +12,7 → +13,65 | **0,105** |
+| `atlas_2026-06-30.json` | 26–30/06 | BR-04582/2026 | 4.999 | 46,3 × 36,6 | 47,09 × 35,36 | +9,7 → +11,73 | **0,117** |
+| `atlas_2026-07-27.json` | 22–27/07 | BR-08602/2026 | 5.021 | 44,9 × 35,8 | 45,28 × 34,91 | +9,1 → +10,36 | **0,123** |
+| `atlas_2026-08-30.json` | 25–30/08 | BR-07972/2026 | 5.014 | 43,4 × 33,7 | 44,71 × 32,94 | +9,7 → +11,77 | **0,104** |
+
+Residuals are the lowest in the whole manifest (0,10 a 0,12 contra 0,4 a 1,15 dos demais institutos), which is expected: the Atlas profile is the weighted sample profile the institute itself used, so the crossbreak recomposes the topline almost exactly. `pytest -q tests/test_reponderacao_pnad.py`: 12 passed.
+
+## Achados que valem registro
+
+- **A reponderação por renda anda a favor de Lula na Atlas, ao contrário do Datafolha.** A Atlas é 5,0 a 5,8 pontos mais pobre que a PNAD na faixa até R$ 2.000 (22 contra 17 por cento) e sub-representa a faixa acima de R$ 10.000 (13,3 contra 18,6). Como na Atlas o voto em Lula cresce com a renda no topo (55,8 em maio, 53,0 em agosto na faixa acima de R$ 10 mil), trocar a margem alarga a vantagem em vez de fechá-la. É o mesmo sinal invertido já documentado em SP: na Atlas a direita é relativamente mais forte entre os pobres.
+- **Nenhuma onda da Atlas publica cruzamento de 2º turno por renda.** O 2º turno sai só como placar agregado, com uma única coluna Branco/Nulo/Não sei. Os quatro arquivos trazem `publicado.2t` (48,9×41,8; 48,8×42,3; 49,2×42,9; 47,1×42,6) mas sem `cruzamentos.2t`, então nenhuma onda Atlas entra na série reponderada de 2º turno do agregador.
+- **Julho conferido contra o original.** Baixei o PDF do Poder360 (`data/originals/atlas_072026/Relatorio.pdf`, título interno 260728) e as 13 linhas de `VOTE_BY_BAND` de `scripts/atlas-072026-renda.py` batem célula a célula com as p. 20 e 21. `ATLAS_SAMPLE` (22,1/17,9/23,2/23,4/13,3) bate com a p. 5.
+- **Existe onda de agosto e ela estava só pela metade no repositório.** `data/originals/atlas_092026_01/` guarda apenas o relatório complementar de segunda opção de voto (10 páginas, sem intenção de voto). Baixei o relatório nacional completo do CDN da própria Atlas para `data/originals/atlas_082026/Relatorio.pdf` (49 páginas, embargo 31/08 07h00).
+- **Cota de renda declarada em safra velha, e o registro prova.** `registro_tse_atlas_junho_2026.pdf` diz, com todas as letras: "FONTE DOS DADOS: PNADC 2024 para escolaridade e nível econômico". A cota de junho (22,4/17,1/23,1/23,9/13,5) é idêntica à de julho. Registrado em `renda.nota` de cada onda.
+
+## O que não deu para fazer
+
+1. **Onda de setembro.** Há sinal de uma Atlas nacional com campo 04–09/09/2026 e divulgação marcada para hoje (10/09), registro citado como BR-01452/2026. Nenhum PDF público localizado: nem no CDN da Atlas, nem no Poder360. Não escrevi arquivo, porque não vou transcrever placar de release de imprensa sem o relatório.
+2. **Registro TSE de maio e agosto.** Não estão no repositório e não os busquei no DivulgaCand. Por isso a nota de renda dessas duas ondas diz que a fonte PNADC 2024 está declarada nos registros de junho e julho, sem estender a afirmação às outras duas.
+3. **Deflação das faixas.** A série IPCA do repositório termina em 202604, então `mes_precos` 202605 a 202608 caem no fallback do motor e o fator vira 1,0: as faixas nominais são lidas a preços de abril/2026. Para uma onda de agosto isso ignora quatro meses de inflação, o que empurra levemente a amostra para faixas mais altas do que a régua real. Atualizar `data/outputs/ipca.csv` corrige sem tocar nos JSON.
+4. **Contratante.** Os arquivos dizem `Bloomberg`, como pedido e como a série é conhecida, mas o registro TSE declara recursos próprios da AtlasIntel. A ressalva está no campo `notas` de cada onda.
+
+Efeito colateral do comando pedido: `scripts/reponderacao-pnad.py calcular` regravou `docs/assets/reponderacao_pnad.json` (arquivo gerado, ainda não versionado). Fora isso, só criei os quatro `atlas_*.json` e baixei os dois PDFs em `data/originals/`.</result>
+<usage><subagent_tokens>252260</subagent_tokens><tool_uses>83</tool_uses><duration_ms>633308</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a7c1fc0b4d400529a</task-id>
+<tool-use-id>toolu_01BT8MhTQLEze5QXwZQviuxE</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Transcribe Nexus/BTG polls to manifest" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>Done. Eleven national BTG/Nexus waves transcribed, all with residuals well under the 1.5 pp threshold.
+
+## Waves written (`analysis/reponderacao/pesquisas/nexus_&lt;fim do campo&gt;.json`)
+
+| Arquivo | Rodada | Campo | TSE | n | 2T publicado | 2T ajustado | Resíduo 2T | Resíduo 1T |
+|---|---|---|---|---|---|---|---|---|
+| `nexus_2026-05-24` | 3 | 22–24/05 | BR-04193/2026 | 2.045 | 47×43 | 46,1×44,6 | 0,50 | 0,55 |
+| `nexus_2026-06-14` | 4 | 12–14/06 | BR-06645/2026 | 2.017 | 49×43 | 48,0×44,0 | 0,36 | 0,66 |
+| `nexus_2026-06-28` | 5 | 26–28/06 | BR-08521/2026 | 2.009 | 47×44 | 45,8×45,3 | 0,47 | 0,55 |
+| `nexus_2026-07-12` | 6 | 10–12/07 | BR-07981/2026 | 2.003 | 47×44 | 46,1×44,7 | 0,40 | 0,40 |
+| `nexus_2026-07-26` | 7 | 24–26/07 | BR-01489/2026 | 2.004 | 47×43 | 45,4×44,7 | 0,87 | 0,53 |
+| `nexus_2026-08-02` | 8 | 31/07–02/08 | BR-02874/2026 | 2.002 | 46×45 | 44,8×46,5 | 0,29 | 0,52 |
+| `nexus_2026-08-09` | 9 | 07–09/08 | BR-08428/2026 | 2.001 | 47×44 | 46,2×44,5 | 0,28 | 0,46 |
+| `nexus_2026-08-16` | 10 | 14–16/08 | BR-03317/2026 | 2.003 | 47×44 | 46,7×44,3 | 0,21 | 0,54 |
+| `nexus_2026-08-23` | 11 | 21–23/08 | BR-09028/2026 | 2.006 | 46×45 | 45,4×45,9 | 0,50 | 0,56 |
+| `nexus_2026-08-30` | 12 | 28–30/08 | BR-08900/2026 | 2.005 | 46×45 | 44,9×46,2 | 0,66 | 0,52 |
+| `nexus_2026-09-07` | 13 | 04–07/09 | BR-06790/2026 | 2.002 | 45×46 | 44,5×46,6 | 0,57 | 0,53 |
+
+`python3 -m pytest -q tests/test_reponderacao_pnad.py` → 12 passed. (Na primeira rodada havia uma falha em `vox_brasil_2026-08-27.json`, sem `cruzamentos`; não é arquivo meu e já estava corrigida na segunda execução.)
+
+## Correções ao briefing
+
+- **Rodadas 1 e 2 são de março (27–29/03) e abril (24–26/04)**, fora da janela "maio em diante". Não gravei arquivo para elas; os PDFs estão em `data/pesquisas/nexus_btg/rodada1_2026-03/` e `rodada2_2026-04/` se quiser incluí-las.
+- **Rodadas 9 e 10 existem e são nacionais.** Baixei os relatórios públicos do Poder360 para `data/originals/nexus_btg_082026_10/Relatorio.pdf` (9ª, BR-08428/2026) e `data/originals/nexus_btg_082026_17/Relatorio.pdf` (10ª, BR-03317/2026). Também faltava a **rodada 5** (29/06, BR-08521/2026), baixada para `data/originals/nexus_btg_062026_29/Relatorio.pdf`.
+- **Rodada 13**: campo é **04 a 07/09** (quatro dias, não 05–07) e o registro é **BR-06790/2026**.
+- Os registros BR-01075 e BR-06645 citados no briefing são das rodadas **2** e **4**; BR-04193 é a **3**.
+- **Método é telefônico (CATI)**, não presencial: cotas de sexo, idade, escolaridade, tipo de telefonia e DDD; universo 16+, 27 UFs.
+
+## Notas de transcrição
+
+- Faixas: 4 bandas em SM (`max` 1, 2, 5, null). O cartão PF15 usa **reais de 2026** (R$ 1.621 = 1 SM), conferido nos questionários registrados das rodadas 4, 6, 7, 8 e 11; as demais ondas não têm questionário no repositório e a nota do arquivo diz isso.
+- Perfil de renda usado é o **ponderado** (`amostra_pct`) da página "Perfil da amostra" — o relatório não publica base não ponderada por faixa. Reproduz o topline: por exemplo a rodada 7 devolve Lula 47,87 e Flávio 42,47 contra 47×43 publicados, idêntico ao já gravado em `docs/assets/nexus_btg_082026_1_data.json`.
+- Colunas do 1º turno lidas por posição x com PyMuPDF, não por heurística de texto. Joaquim Barbosa, Aécio Neves e Cabo Daciolo (rodadas 3 a 7) foram somados em `outros`, porque não têm chave própria no esquema; "Escritor Augusto Cury" entra como `cury`; nas rodadas 8 em diante a coluna "Outros" já vem agregada pelo instituto.
+- 2º turno: sempre a página Lula × Flávio Bolsonaro (o relatório traz também Caiado, Zema, Renan e, na 13ª, Cury).
+- `fonte.url` aponta para o PDF no Poder360 quando localizado; nas rodadas 6 e 13… nas rodadas 6 e 11 o PDF do Poder360 não foi encontrado e o link é a página do estudo em `nexus.fsb.com.br`.
+
+Rodar `reponderacao-pnad.py calcular` reescreveu `docs/assets/reponderacao_pnad.json`, como pedido; nenhum outro arquivo do repositório foi tocado.</result>
+<usage><subagent_tokens>245149</subagent_tokens><tool_uses>67</tool_uses><duration_ms>811975</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>acb1f999d0eb7eb72</task-id>
+<tool-use-id>toolu_01JXiza5izjGnYTXpnanHrDe</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Transcribe smaller institutes to manifest" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>Done. Seven files written under `analysis/reponderacao/pesquisas/`, four reweightable and three marked `ignorar`. All 12 tests in `tests/test_reponderacao_pnad.py` pass.
+
+## Waves written (reweightable)
+
+| Arquivo | Campo | n / método | Turno | Publicado L × F | Reponderado L × F | Gap pub → aj | Resíduo |
+|---|---|---|---|---|---|---|---|
+| `gerp_2026-08-10` | 06–10/08 | 2.400 · telefônico GerpCati | 1T | 38 × 38 | 36,82 × 39,36 | 0,0 → −2,54 | 0,55 |
+| `verita_2026-08-20` | 16–20/08 | 3.840 · URA com reconhecimento de voz | 1T | 39,3 × 39,1 | 39,03 × 39,32 | +0,2 → −0,29 | 0,07 |
+| | | | 2T | 42,0 × 47,3 | 41,73 × 47,66 | −5,3 → −5,92 | 0,03 |
+| `gerp_2026-08-25` | 21–25/08 | 2.400 · telefônico (com AESP) | 1T | 37,2 × 37,6 | 36,24 × 39,10 | −0,4 → −2,86 | 0,44 |
+| | | | 2T | 42 × 47 | 40,54 × 48,80 | −5,0 → −8,27 | 0,21 |
+| `realtime_2026-08-31` | 27–31/08 | 2.000 · telefônico humano | 1T | 38 × 29 | 35,89 × 29,77 | +9,0 → +6,12 | 1,13 |
+| `verita_2026-09-04` | 01–04/09 | 3.840 · URA | 1T | 38,4 × 38,9 | 37,23 × 39,32 | −0,5 → −2,10 | 0,07 |
+| | | | 2T | 43,1 × 48,5 | 42,43 × 48,95 | −5,4 → −6,52 | 0,09 |
+| `palver_2026-09-07` | 04–07/09 | 5.000 · online não probabilístico, raking | 1T | 40 × 39 | 39,55 × 38,36 | +1,0 → +1,19 | 0,56 |
+| | | | 2T | 44 × 46 | 43,86 × 45,58 | −2,0 → −1,72 | 0,50 |
+
+## Não reponderáveis (com `ignorar` + `motivo` + toplines)
+
+- **`vox_brasil_2026-08-27`** (BR-05519/2026, 25–27/08, n=2.100, presencial): publica o perfil de renda (p. 6, em SM: 83,9 / 12,4 / 2,8 / 0,9) mas nenhum cruzamento de voto por renda — as 25 páginas de resultado são só resultado geral e o anexo é a lista de setores. Toplines gravados: 2T Flávio 45,1 × Lula 44,5; 1T Lula 37,1 × Flávio 34,8.
+- **`futura_2026-09-01`** (BR-02793/2026, 27/08–01/09, n=2.000, CATI): perfil de renda em cinco faixas na p. 5, mas os cruzamentos do 1T (pp. 23–25) são por sexo, região, idade e eixo político, e o 2T (pp. 26–33) não tem cruzamento nenhum. Toplines: 2T Lula 45,6 × Flávio 45,2; 1T Lula 38,7 × Flávio 33,6.
+- **`meio_ideia_2026-09-07`** (BR-07935/2026, 04–07/09, n=1.500, telefônico RDD): tem o cruzamento do 2T por renda (p. 22, transcrito e guardado no arquivo) mas **não publica o perfil de renda da amostra**, nem em bases nem em percentuais — o "nível econômico" da metodologia é condição de atividade, não faixa. Tentei resolver os pesos pelas quatro linhas: as faixas 1–3 SM e 3–5 SM têm perfil quase idêntico, o sistema fica malcondicionado e devolve pesos negativos. Fica ignorado até o instituto publicar o perfil.
+
+## Achados e ressalvas de transcrição
+
+- **A Palver contraria o pedido**: a instrução dizia que não havia quebra por renda, mas há duas (1T cenário 2 na p. 28 e 2T cenário 1 na p. 38). As páginas de resultado são imagem e foram renderizadas com PyMuPDF. Renda é variável de raking na Palver, com metas ancoradas na PNADC anual 2024 visita 5, e os cortes declarados em reais (R$ 3.242 e R$ 8.105) são exatamente 2 e 5 salários mínimos de 2026.
+- **Gerp 10/08 não tem 2º turno por renda** (só sexo, região e voto de 1º turno), ao contrário do que o pedido supunha; e as bases por faixa da onda de 25/08 são 433/572/824/366/131/74, não as de 10/08. Nas duas ondas o perfil ponderado recompõe melhor que as bases não ponderadas, e isso está registrado em `renda.nota`.
+- **Veritá publica o cruzamento sobre o total, não sobre válidos.** Usei a coluna "Porcentual" para que a recomposição feche (resíduo 0,03 a 0,09, o menor do agregador) e registrei o placar em válidos na nota. Chama atenção que o perfil de renda salte de 38,3/34,7/27,0 para 43,7/37,6/18,7 entre 20/08 e 04/09 sem mudança declarada de plano amostral, e que Cury vá de 2,2% a 12,2% no mesmo desenho.
+- **Real Time é o único resíduo acima de 1 (1,13)** e ele vem inteiro de uma linha: Ronaldo Caiado marca 3, 5 e 10 por faixa e 4 no nacional, o que recompõe 5,1. Os demais nomes fecham com menos de 0,45. Está declarado em `notas`. Só o 1º turno entra: o 2º turno (44 × 44) não é cruzado por renda em nenhuma página.
+- **Datas de divulgação**: Veritá (as duas ondas), Gerp 25/08 e Meio/Ideia não imprimem data de divulgação; usei o `creationDate` do PDF e disse isso em `notas`. O PDF da Futura foi reprocessado por pypdf e perdeu o `creationDate`, e a capa registra "Agosto 2026 - 2" como rótulo de onda, não como data; ali usei o último dia de campo.
+- **`fonte.url` ficou null em todos**: nenhum relatório imprime link para si mesmo. O que aparece é endereço institucional (canalmeio.com.br, gerp.com.br, palver.com), que não é a fonte do documento.
+- **Vox Brasil publica série de seis ondas** (14/05, 20/05, 05/06, 27/06, 31/07, 29/08) mas só o PDF de 29/08 está no repositório; não transcrevi as anteriores porque não há documento para conferir.</result>
+<usage><subagent_tokens>296519</subagent_tokens><tool_uses>73</tool_uses><duration_ms>785381</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>ad78e205103cc4428</task-id>
+<tool-use-id>toolu_01PQWkJ3WKbhqS6Y5SuDqab1</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Retry September reports via browser" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>All four reports obtained. No need for the TSE registry fallback.
+
+## Results
+
+**1. Datafolha 09/2026 (BR-03669/2026)** — obtained
+- `/Users/leonardodias/arvor/PNAD/data/originals/datafolha_092026/DatafolhaRelatorio092026.pdf`, 1,576,595 bytes, 52 pages, full text layer
+- Income pages: 3, 5, 27, 28, 30, 33, 36, 38, 41, 43, 45–52; income crossed with vote on all but page 3
+- How: `curl` reaches `datafolha.folha.uol.com.br` fine (only WebFetch is blocked). The "BAIXE AQUI O RELATÓRIO COMPLETO" link sits in the 09/2026 article and points at `media.folha.uol.com.br` (not `media1`)
+- Two corrections to the manifest: the methodology page says field was **01–02/09**, not 01–03, which settles the Wikipedia/Gazeta divergence; and the PDF's `creationDate` is 08/09 13:24, **5 days** after divulgation, breaking the +3-day pattern found in the four earlier waves
+
+**2. Quaest Rodada 2, campo 30/08–01/09 (BR-07065/2026)** — obtained
+- `.../data/originals/quaest_092026_01/Relatorio.pdf`, 76,075,816 bytes, 227 pages
+- 22 income crosstab pages: 11, 22, 31, 41, 50, 58, 67, 76, 87, 97, 120, 129, 139, 154, 164, 174, 184, 194, 203, 207, 214, 222
+
+**3. Quaest Rodada 3, campo 03–06/09 (BR-01720/2026)** — obtained
+- `.../data/originals/quaest_092026_06/Relatorio.pdf`, 65,006,418 bytes, 221 pages
+- 22 income crosstab pages: 11, 22, 32, 42, 51, 60, 69, 78, 89, 102, 112, 129, 139, 145, 153, 154, 155, 169, 185, 195, 205, 215
+- Both Quaest waves: **not G1-exclusive**. Quaest publishes them itself at `quaest.com.br/relatorios/`, and the WordPress REST API (`/wp-json/wp/v2/media?mime_type=application/pdf`) lists every PDF unauthenticated. Text layer is **partial**: question titles are text, the tables are 600-dpi images, so the house image-transcription method applies. OCR of page 2 confirms registry, field dates, 2,004 interviews and, notably, that the declared contractor is **Globo Comunicação e Participações / Editora Globo, not Genial** — the manifest attribution is wrong for these two waves. Quaest also declares income as a field quota and post-stratifies with MrP/rake against PNADc 2/2026 and PNAD Anual 2025 visita 1.
+
+**4. AtlasIntel/Bloomberg national, campo 25–30/08 (BR-07972/2026)** — obtained
+- `.../data/originals/atlas_082026/Relatorio.pdf`, 5,629,460 bytes, 49 pages
+- The previous agent looked at the right tab but missed the link: the card is under **Exclusive Polls**, and recent national waves live on host `cdn1.atlasintel.org` with speaking filenames, while older ones use UUIDs on `cdn`. General Release has only state and thematic polls.
+- Text layer covers titles only (8,957 useful characters over 49 pages); crossbreaks are images, as already known for Atlas 07/2026. Only page 4 mentions "renda" in text. By OCR, income pages are 4, 5, 9, 12, 16, 28, 32, 34, 36, 38, 40, 43, 46, 48, twelve of them crossed with vote.
+
+Manifest updated at `/Users/leonardodias/arvor/PNAD/data/originals/pesquisas_nacionais_manifest_2026.json`: only a `retry_notes` field added to those four records, with SHA-256, page maps, URLs and the corrections above. Every pre-existing field is byte-for-byte unchanged.
+
+One thing worth flagging: partway through, `git diff --stat` showed uncommitted edits to `AGENTS.md`, `docs/assets/index.css`, `docs/index.html` and `scripts/svgkit.py` that were not there when this session started and that I did not make. Another session is probably writing to the repo concurrently.</result>
+<usage><subagent_tokens>162764</subagent_tokens><tool_uses>31</tool_uses><duration_ms>524602</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a32888eae3a4c4239</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Transcribe Datafolha September poll" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>Done. `analysis/reponderacao/pesquisas/datafolha_2026-09-02.json` written; nothing else touched except the regenerated `docs/assets/reponderacao_pnad.json`, which is the output of the `calcular` run you asked for.
+
+## Resultados
+
+| | Publicado | Reponderado (pessoas 16+, efetivo) | Resíduo |
+|---|---|---|---|
+| 1º turno | Lula 38 × Flávio 33 (+5) | Lula 35,07 × Flávio 35,84 (−0,77) | **0,51** |
+| 2º turno | Lula 46 × Flávio 44 (+2) | Lula 42,24 × Flávio 47,75 (−5,51) | **0,21** |
+
+Recomposição com os pesos do próprio instituto: 1T Lula 38,22 / Flávio 33,08; 2T Lula 46,21 / Flávio 43,88. Ambos os resíduos bem abaixo de 1,5 pp. `pytest -q tests/test_reponderacao_pnad.py`: 12 passed.
+
+Margem 95% da diferença no 2T: 4,155 pp, ou seja, o 46 × 44 publicado já não separa os dois nem no teste de amostragem, e a reponderação por renda inverte o sinal. Desvio da amostra até a primeira faixa: 17,5 pp mais pobre que a PNAD, o maior das ondas Datafolha (agosto foi menor).
+
+## Decisões e achados
+
+**O cenário da manchete é a situação B, não a A.** Inversão em relação a agosto. A situação A é a com Marçal (Lula 39 × Flávio 32, Cury 7, p. 33 do PDF); a B é a sem Marçal (Lula 38 × Flávio 33, Cury 8, p. 38). O texto de divulgação abre pela B ("no cenário sem o nome do PRTB, Lula tem hoje 38%, ante 33%"), o gráfico de tendência das oito ondas de 2026 (p. 9 e 10) é rotulado "cenário sem Marçal", o título do relatório usa o Cury 8% da B, e o manifesto registra 38/33. Em agosto o arquivo da casa usou a situação A (com Marçal). Transcrevi a B e deixei isso escrito na `nota` do cruzamento de 1T, com os números da A ao lado. Se a casa preferir série homogênea com agosto, é trocar por A (p. 33) — mas aí a manchete e a série do próprio instituto ficam de fora.
+
+**Faixas de renda idênticas às de agosto**: três, Até 2 S.M. / Mais de 2 a 5 / Mais de 5, cartão em reais de 2026 (SM R$ 1.621). Sem mudança de definição.
+
+**Bases**: 1011 / 666 / 241, da linha "Base ponderada" da tabela de 2º turno situação A (p. 45), idênticas às do 1º turno. A ficha técnica (p. 26) diz explicitamente que a base de cada recorte é **ponderada** — corrigi a redação da `nota` em relação ao arquivo de agosto, que chamava as bases de "não ponderadas". Somam 1918 contra 2002 do total: os 84 de diferença são a recusa (1%) e o não sabe (3%) do perfil (p. 28), que o motor renormaliza.
+
+**2º turno**: usei a situação A (Lula × Flávio, p. 45). O relatório traz ainda B (Lula × Caiado 46 × 41) e C (Lula × Zema 48 × 39), que por regra não entram.
+
+**Outros pontos**:
+- Células vazias vêm como traço no PDF e foram transcritas como 0; está na `nota` e em `notas`.
+- Linhas de 1T somam 99, 100 e 99 por arredondamento do instituto; não corrigi.
+- Campo confirmado como 01 e 02/09 pela ficha técnica (p. 3 e 26), o que resolve a divergência Wikipedia × Gazeta do Povo registrada no manifesto.
+- O PDF tem o deck de divulgação nas p. 1 a 24 e o relatório completo numerado de 1 a 29 nas p. 25 a 52. As páginas em `fonte.paginas` são as do PDF (28 perfil, 38 1T, 45 2T). Vale notar que o arquivo de agosto usa números de página que parecem ser do relatório interno, não do PDF, e a `nota` dele ainda diverge do campo `paginas` (31 contra 32) — dívida pequena, mas real.
+- `n` = 2.002 em 125 municípios (p. 26). O `creationDate` do PDF é 08/09, cinco dias após a divulgação de 03/09, quebrando o padrão de +3 dias das quatro ondas anteriores; já estava no manifesto e não entrou no JSON por não haver campo para isso.</result>
+<usage><subagent_tokens>136735</subagent_tokens><tool_uses>18</tool_uses><duration_ms>175357</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>acebd25dd66b851c4</task-id>
+<tool-use-id>toolu_01T18vs5rSAYXZHdtqkk4RoS</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Transcribe Quaest polls to manifest" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>Done. Six national Genial/Quaest and Quaest/Globo waves written, all verified against the PDFs.
+
+## Waves written (`analysis/reponderacao/pesquisas/quaest_&lt;fim do campo&gt;.json`)
+
+| Arquivo | Registro | Campo → div. | Turno | Publicado | Reponderado PNAD | Resíduo |
+|---|---|---|---|---|---|---|
+| `quaest_2026-06-08` | BR-07661/2026 | 05–08/06 → 10/06 | 1T | 39 × 29 (+10) | 39,62 × 28,66 (+10,96) | 0,44 |
+| | | | 2T | 44 × 38 (+6) | 44,57 × 37,55 (+7,02) | 0,40 |
+| `quaest_2026-07-13` | BR-07181/2026 | 10–13/07 → 15/07 | 1T | 40 × 28 (+12) | 40,49 × 27,73 (+12,76) | 0,87 |
+| | | | 2T | 45 × 37 (+8) | 45,50 × 36,52 (+8,98) | 0,60 |
+| `quaest_2026-08-03` | BR-06591/2026 | 31/07–03/08 → 05/08 | 1T | 39 × 30 (+9) | 39,67 × 29,58 (+10,09) | 0,72 |
+| | | | 2T | 44 × 39 (+5) | 44,62 × 38,44 (+6,18) | 0,32 |
+| `quaest_2026-08-13` (Globo) | BR-06773/2026 | 10–13/08 → 14/08 | 1T | 38 × 31 (+7) | 38,80 × 30,54 (+8,26) | 0,77 |
+| | | | 2T | 43 × 40 (+3) | 43,90 × 39,26 (+4,64) | 0,61 |
+| `quaest_2026-09-01` (Globo) | BR-07065/2026 | 30/08–01/09 → 02/09 | 1T | 37 × 30 (+7) | 37,73 × 29,22 (+8,51) | 0,35 |
+| | | | 2T | 42 × 41 (+1) | 42,56 × 40,26 (+2,30) | 0,39 |
+| `quaest_2026-09-06` (Globo) | BR-01720/2026 | 03–06/09 → 07/09 | 1T | 36 × 29 (+7) | 36,76 × 28,29 (+8,47) | 0,97 |
+| | | | 2T | 41 × 41 (0) | 41,59 × 40,30 (+1,29) | 0,30 |
+
+Maior resíduo 0,97 pp, bem abaixo de 1,5. `pytest -q tests/test_reponderacao_pnad.py`: 12 passed.
+
+## Achados que mudam o escopo do pedido
+
+**O 2º turno por renda existe para junho e julho.** O briefing dizia que não. A Quaest publica a série por faixa de renda no relatório Quaest/Globo de 14/08 (p. 36) e nos de setembro (p. 41 e 42), com as quatro opções (Lula, Flávio, branco/nulo, indecisos) para Mai, Jun, Jul, 05 Ago, 14 Ago, 02 Set e 07 Set. As colunas coincidentes entre os três relatórios batem célula a célula, e cada faixa recompõe o topline daquela onda. Por isso todas as seis ondas têm 1T **e** 2T. A origem está declarada em `cruzamentos.2t.nota` e em `fonte.serie_2t_renda` de cada arquivo.
+
+**Duas ondas de setembro que não estavam no briefing**, ambas Quaest/Globo, baixadas para `data/originals/quaest_092026/`. O PesqEle recusa o relatório completo destas duas com a resposta literal de que o arquivo só sai depois da eleição; a íntegra veio do site da própria Quaest (`quaest.com.br/wp-json/wp/v2/media`, rota reutilizável em ondas futuras). Registrei isso em `notas`.
+
+**Três células derivadas, marcadas como tais.** Na onda de 07/09 a página de renda do 1º turno mudou de formato: virou painel de linhas com os menores já agregados em "Outros" pelo instituto, e omite um rótulo por painel onde as linhas se cruzam. Cury na faixa até 2 SM (5), branco/nulo em 2 a 5 SM (8) e indecisos em mais de 5 SM (5) vêm por resíduo da coluna, que é partição fechada de 100. A ordem vertical dos pontos confirma cada uma, a coluna 02/Set do mesmo gráfico reproduz sem resíduo a página da onda anterior, e Cury recomposto dá 8,03 contra 8 publicado. Está escrito na `nota` do cruzamento; não é transcrição e não deve ser citado como tal.
+
+## Detalhes de método
+
+- Perfil de renda 31/42/27 em todas as seis ondas, idêntico à cota registrada no TSE, sem publicação do desvio entre campo e peso. Usei `amostra_pct`, não `bases`.
+- Cartão em reais de 2026 (R$ 3.242 e R$ 8.105, dois e cinco salários de R$ 1.621), confirmado no questionário registrado de cada onda: `ano_referencia` 2026. A cota, porém, é calibrada em PNADc anual 2025: régua da pergunta e régua da cota em anos diferentes, o mesmo defeito do Datafolha em versão menor.
+- A Quaest sub-representa a faixa até 2 SM em 4,44 pp, então a reponderação move sempre a favor de Lula, entre +0,96 e +1,51 ponto de margem. Nenhuma onda inverte o sinal.
+- Sinal forte na última onda: 41 × 41 publicado vira 41,59 × 40,30 reponderado, e a margem de 95% da diferença é 3,96 pontos. Nem publicado nem reponderado separa os dois.
+
+## O que não foi feito
+
+**A onda de maio de 2026 não entrou.** As séries dos relatórios posteriores dão o 2º turno por renda de Mai/26 (até 2 SM 50/32/14/4, 2 a 5 SM 40/44/15/1, mais de 5 SM 34/51/12/3) e o topline 42 × 41 × 14 × 3, mas o relatório da onda não está no repositório e não conheço campo, registro TSE, n, contratante nem o 1º turno por renda. Preencher isso exigiria inventar. Se quiser, é a mesma rota do site da Quaest.
+
+Sem dossiê da casa para as duas ondas de setembro, então `dossie` ficou de fora nesses dois arquivos; as quatro anteriores apontam para `quaest_100626.html`, `quaest_0726.html`, `quaest_082026.html` e `quaest_globo_140826.html`.
+
+Só toquei em arquivos com prefixo `quaest_`. Durante a execução a suíte acusou por um tempo duas falhas vindas de arquivos de outros institutos (`vox_brasil_2026-08-27.json` sem `cruzamentos` e `gerp_2026-08-10` sem 2T, este último quebrando `test_datafolha_series_matches_published_dossier` com `KeyError: '2t'`); não mexi neles e na verificação final a suíte está verde. Vale notar que aquele teste quebra por `KeyError` sempre que uma pesquisa só tiver 1º turno, o que é fragilidade do teste, não do dado.</result>
+<usage><subagent_tokens>324428</subagent_tokens><tool_uses>76</tool_uses><duration_ms>1154867</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a07cb38a49d11a06d</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Build the aggregator page and home chart" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>Done. Report below.
+
+## Files written
+
+| File | What |
+|---|---|
+| `/Users/leonardodias/arvor/PNAD/scripts/reponderacao-build.py` | the generator (stdlib + `scripts/svgkit.py`), 100% data-driven from `docs/assets/reponderacao_pnad.json` |
+| `/Users/leonardodias/arvor/PNAD/docs/reponderacao_pnad.html` | the page (598 KB, every figure inline SVG) |
+| `/Users/leonardodias/arvor/PNAD/docs/assets/reponderacao_pnad.css` | page stylesheet, house paper palette |
+| `/Users/leonardodias/arvor/PNAD/docs/assets/reponderacao_pnad.csv` | one row per pesquisa × turno, published and re-weighted, plus the other options as `chave=valor` pairs |
+| `/Users/leonardodias/arvor/PNAD/docs/assets/reponderacao_home.svg` | the compact 1180×360 home fragment |
+| `/Users/leonardodias/arvor/PNAD/docs/index.html` | fragment injected between `&lt;!--FIG:reponderacao_home--&gt;` and, since the markers were already there, `&lt;!--FIG:reponderacao_home_placar--&gt;` too (4-cell placar). Nothing else in `index.html` was touched. |
+| `/Users/leonardodias/arvor/PNAD/scripts/social-cards.py` + `docs/img/og/reponderacao_pnad.png` + `docs/assets/og/reponderacao_pnad.html` | OG card added to the manifest and rendered, because the metatags point at it (house rule) |
+
+## What the page contains
+
+Masthead, hero, sticky TOC, then seven chapters: (1) 2º turno time series with per-poll dots, hollow = published / filled = re-weighted, thin dashed vs thick solid kernel lines, right-edge number-monsters, legend naming FATO and INFERÊNCIA, plus the `agregador.ultimo` placar strip; (2) the same for 1º turno with the other candidacies table (last wave per institute, all waves in the CSV); (3) "manchete contra régua" diverging bars with the 95% difference whisker on the published bar and hatch on the re-weighted bar; (4) small multiples per institute; (5) one card per poll, newest first, with source PDF and page numbers, dossier link when present, income composition (amostra vs PNAD, deviation of the first band), slope publicado → reponderado for each turno, the three-scenario table and a green/amber "prova de leitura" chip; (6) method with formula, benchmark, kernel, limits and the two commands to add a poll; (7) sources table plus JSON/CSV downloads; footer.
+
+Nine institutes get nine distinct marker shapes; adding a tenth cycles the vocabulary. The gap chart switches to compact rows above 14 waves. Everything re-renders from the JSON: it grew from 4 waves/1 institute to 39 waves/9 institutes mid-task and the page absorbed it with no code change.
+
+## Gates
+
+- `ruff check` and `black --check` (uv, python 3.13): clean on `reponderacao-build.py` and `social-cards.py`.
+- `grep -c "—"` on the HTML, the CSS, the home SVG and `index.html`: **0**.
+- `render-audit.py` on `reponderacao_pnad.html` and `index.html`: **0** problems.
+- `contrast-audit.py` (playwright is installed) on both: **0** below WCAG AA.
+- JS disabled: 86+ inline SVGs still render, `#manchete-chart` measures 1102×~1200, all `.reveal` blocks visible (reveal is gated behind the inline `js` class).
+- Mobile 390px: `window.scrollX` stays 0 after `scrollTo(500,0)`; no unclipped element exceeds the viewport. Wide charts scroll inside their own `.fig` region (`tabindex="0" role="region"`).
+
+## Screenshots (scratchpad)
+
+`desktop_hero2t.png`, `desktop_hero1t.png`, `desktop_gap.png`, `desktop_institutos.png`, `desktop_card.png`, `desktop_metodo.png`, `desk_fontes.png`, `desk_sec1t.png`, `home_agregador.png`, `mob_sec2t.png`, `mob_card.png`, `mob_inst.png`, `mobile_*.png`, `nojs_top.png` — all under `REDACTED`.
+
+## Open issues
+
+1. **The JSON is still moving.** Another agent rewrote it three times while I worked (4 → 20 → 37 → 39 waves). The page was rebuilt last against `gerado_em 2026-09-10T02:17:10`. Re-run `python3 scripts/reponderacao-build.py` after the last poll lands.
+2. **The kernel line is a staircase**, flat between waves and stepping on each field-end date. That is what an exponential-decay average over past polls does; it is not a rendering bug. If a smoother read is wanted it has to change in `scripts/reponderacao-pnad.py`, which I did not touch.
+3. **`docs/index.html` has no link to the page in its main index list** beyond the featured card another agent added; whoever owns the hub may want a row in the library listing.
+4. A static server is still running on port 4173 (`python3 -m http.server 4173 --directory docs`) in case other agents are auditing; kill it when done.
+5. Nothing was committed.</result>
+<usage><subagent_tokens>301171</subagent_tokens><tool_uses>118</tool_uses><duration_ms>1564541</duration_ms></usage>
+</task-notification>
+
+---
+
+[Image: original 1280x2148, displayed at 1192x2000. Multiply coordinates by 1.07 to map to original image.]
+
+---
+
+<task-notification>
+<task-id>bogpru4iu</task-id>
+<tool-use-id>toolu_01Qx1fkTsnuREoKFe96iTpEd</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Background command "Wait for the CI run and report job conclusions" completed (exit code 0)</summary>
+</task-notification>
+
+---
+
+só tem uma onda da gerp, mas há muito mais ondas publicadas, é o caso de baixar outras ondas para vermos isso, ou só tem essa onda que tem dados de renda?
+
+---
+
+<task-notification>
+<task-id>ac58b03bed9ca21dd</task-id>
+<tool-use-id>toolu_01Gij2DaRUmiijojiyXPzaJi</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Fetch and transcribe all Gerp waves" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>Done. Nine Gerp national presidential waves from May to September 2026, all found, all public, all transcribed.
+
+## Where the reports were
+
+The key was `https://gerp.com.br/relatorios/manifest.json` — the institute's own report library index, loaded by JS on `relatorios.html`. It has 48 PDFs and the files download directly from `https://gerp.com.br/relatorios/&lt;arquivo&gt;` with no lead form. Their site is not WordPress (Apache static), so the `wp-json` route 404s. TSE's `divulgacandcontas` REST API is Akamai-blocked (403), so registrations came from the reports themselves and, for the two May waves, from Gazeta do Povo's methodology box.
+
+## Every Gerp national wave since May
+
+| Campo | Registro TSE | n | Divulgação | Contratante | Relatório | Cruzamento por renda | Arquivo |
+|---|---|---|---|---|---|---|---|
+| 08–12/05 (14ª) | BR-03369/2026 | 2.000 | 14/05 | Gerp (institucional) | público | 1T (p. 11) | `gerp_2026-05-12.json` |
+| 18–21/05 (15ª) | BR-07971/2026 | 2.000 | 22/05 | Gerp (institucional) | público | 1T (p. 12) | `gerp_2026-05-21.json` |
+| 02–05/06 | BR-01792/2026 | 2.000 | 09/06 | Gerp (institucional) | público | 1T (p. 14) | `gerp_2026-06-05.json` |
+| 15–18/06 | BR-09657/2026 | 2.000 | 24/06 | Gerp (institucional) | público | 1T (p. 14) | `gerp_2026-06-18.json` |
+| 03–07/07 | BR-03067/2026 | 2.000 | 08/07 | **AESP Rádio + TV** | público | **1T (p. 12) e 2T (p. 24)** | `gerp_2026-07-07.json` |
+| 15–17/07 | BR-05026/2026 | 2.000 | 22/07 | Gerp (institucional) | público | 1T (p. 18) | `gerp_2026-07-17.json` |
+| 06–10/08 | BR-08045/2026 | 2.400 | 11/08 | Gerp (institucional) | já no repo | 1T (p. 15) | já existia |
+| 21–25/08 | BR-03547/2026 | 2.400 | 26/08 | Gerp + AESP | já no repo | 1T e 2T | já existia |
+| 03–08/09 | BR-00251/2026 | 2.400 | 09/09 | Gerp + AESP | **público, baixado** | **1T (p. 15) e 2T (p. 23)** | `gerp_2026-09-08.json` |
+
+Nenhuma onda ficou sem relatório e nenhuma ficou sem cruzamento por renda, então não escrevi nenhum arquivo com `ignorar: true`.
+
+**A onda 03–08/09 (BR-00251/2026), marcada como NAO BAIXADO no `pesquisas_nacionais_manifest_2026.json`, existe e está pública** na biblioteca do próprio instituto: `20260908 Relatório Presidência 2026 - DIVULGAÇÃO.pdf.pdf` (48 páginas, camada de texto nativa). Poder360 e Gazeta do Povo realmente não hospedam o PDF; a Gerp hospeda.
+
+## Publicado × reponderado (PNAD pessoas 16+, efetivo)
+
+| Onda | Turno | Publicado (L×F) | Ajustado | Resíduo |
+|---|---|---|---|---|
+| 12/05 | 1T | 34 × 36 | 33,6 × 36,7 | 0,42 |
+| 21/05 | 1T | 38 × 38 | 36,9 × 38,6 | 0,47 |
+| 05/06 | 1T | 34 × 35 | 33,9 × 35,8 | 0,55 |
+| 18/06 | 1T | 37 × 34 | 36,4 × 35,7 | 0,73 |
+| 07/07 | 1T | 36 × 36 | 35,1 × 38,6 | 0,27 |
+| 07/07 | 2T | 42 × 45 | 40,3 × 47,9 | 0,32 |
+| 17/07 | 1T | 38 × 38 | 36,6 × 39,3 | 0,35 |
+| 08/09 | 1T | 34,4 × 36,6 | 32,3 × 38,5 | 0,39 |
+| 08/09 | 2T | 40 × 47 | 38,1 × 48,9 | 0,50 |
+
+Todos os resíduos ficam entre 0,27 e 0,73, bem abaixo do teto de 1,5. `pytest -q tests/test_reponderacao_pnad.py`: 12 passed.
+
+O sinal é consistente e forte: **em nove ondas seguidas a troca da margem de renda pela régua da PNAD move o placar da Gerp para Flávio**, entre 1,1 e 4 pontos de diferença. A Gerp é o instituto mais pobre da série na faixa até 1 SM, e o eleitor de até 1 SM é o mais lulista da amostra dela.
+
+## Resposta à pergunta
+
+**A Gerp publica cruzamento de voto por renda em todas as ondas nacionais, mas só publica o 2º turno por renda em três delas.** As nove ondas trazem o 1º turno estimulado por faixa de renda; o 2º turno Lula × Flávio só é cruzado por renda em 03–07/07 (AESP), 21–25/08 e 03–08/09. Nas demais o 2º turno aparece só por sexo e região. As seis faixas de SM (até 1, 1 a 2, 2 a 5, 5 a 10, 10 a 20, mais de 20) são idênticas em todas as ondas, o que dá uma série de renda comparável de maio a setembro, coisa que nenhum outro instituto da pasta oferece.
+
+## Decisões de transcrição que valem registro
+
+- **Perfil ponderado em todas as nove.** Testei os dois lados como manda o README. O perfil ponderado ganha em oito ondas, às vezes por muito (07/07: resíduo 0,27 contra 2,15 no 1T e 0,32 contra 2,83 no 2T). Na 15ª de maio as bases não ponderadas ganham por 0,09 ponto (0,385 contra 0,470), diferença dentro do arredondamento: fiquei com o perfil ponderado porque as células do cruzamento são percentuais ponderados no mesmo template da casa, e escrevi os dois números na `renda.nota` para o leitor conferir a moeda que joguei.
+- **Chaves.** Ciro Gomes (6% em maio), Joaquim Barbosa (2% em junho), Rui Costa Pimenta e Cabo Daciolo entraram em `outros`, com o conteúdo exato declarado em cada `nota`, seguindo a convenção que o `gerp_2026-08-10.json` já usava para o Daciolo. Nenhuma chave nova foi criada.
+- **Cenário principal da 14ª.** O relatório de maio traz dois cenários de 1º turno; usei o principal da série (p. 9 a p. 12, 13 nomes, Flávio 36 × Lula 34), não o cenário 2 reduzido das pp. 13 a 15.
+- **Divergência documental na 15ª:** o relatório declara campo de 18 a 21/05 (p. 3) e rotula a coluna da série como 21/05 (p. 10); a ficha da Gazeta do Povo, que carrega o registro BR-07971/2026, declara 19 a 22/05. Fiquei com as datas do relatório, que é a fonte primária, e deixei a divergência escrita no campo `notas` para reconciliação, não como suspeita.
+- **Registros de maio:** nenhum dos dois relatórios de maio imprime número de registro em página alguma. BR-03369/2026 e BR-07971/2026 vêm das fichas metodológicas da Gazeta do Povo, com o link na `notas` de cada arquivo, e conferem com campo e amostra do próprio relatório.
+
+## Achado de contexto que pode virar dossiê
+
+A p. 14 do relatório de setembro declara em letra da própria Gerp que **a série divulgada publicamente tem seis medições (05/06, 18/06, 17/07, 10/08, 25/08 e 08/09) e que "as demais medições do período constam do relatório completo e não foram objeto de divulgação"**. O instituto admite, no documento, que mediu mais do que publicou. A onda AESP de 03–07/07, que está na biblioteca do instituto e tem registro próprio (BR-03067/2026), nem sequer entra nessa contagem de seis.
+
+## Arquivos tocados
+
+Escritos: `analysis/reponderacao/pesquisas/gerp_2026-05-12.json`, `gerp_2026-05-21.json`, `gerp_2026-06-05.json`, `gerp_2026-06-18.json`, `gerp_2026-07-07.json`, `gerp_2026-07-17.json`, `gerp_2026-09-08.json`, mais os sete PDFs em `data/originals/gerp_{052026_12,052026_21,062026_05,062026_18,072026_07,072026_17,092026_08}/Relatorio.pdf`.
+
+Uma ressalva sobre escopo: rodar `scripts/reponderacao-pnad.py calcular` regenerou `docs/assets/reponderacao_pnad.json`, que agora aparece como modificado no git. É a saída esperada do comando que você pediu para rodar, e ele já incorpora as sete ondas novas, mas está fora do prefixo `gerp_`. Se você tem um build próprio em andamento, vale saber. Os arquivos `mda_2026-08-09.json` e `realtime_2026-07-20.json`, também sem rastreio, não são meus.</result>
+<usage><subagent_tokens>225549</subagent_tokens><tool_uses>58</tool_uses><duration_ms>611233</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>afef18c5066b00084</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "TSE registry check" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>Done. Everything below comes from the live TSE registry; no files were written.
+
+## Correction on the target URL
+
+`https://divulgacandcontas.tse.jus.br/divulga/#/pesquisas` **no longer exists**. It renders "ERRO AO CARREGAR A PÁGINA". I confirmed by reading the Angular bundle's route table (`main.fa26d702058874e6.js`): the only routes are `home`, `diplomacao`, `candidato`, `eleicao`, `ata`, `ata-suplementar`, `eleicao-suplementar`, `consulta-individual`, `bem-na-foto`, `bem-na-foto-partido`, `partidos`, `404`, `504`. There is no `pesquisas` route and no `rest/v1/pesquisa*` endpoint (only `/divulga/rest/v1/ata`, `/eleicao`, `/sistema`).
+
+The registry now lives at **PesqEle Público**: `https://pesqele-divulgacao.tse.jus.br/app/pesquisa/listar.xhtml` (v3.9.2). That is where all results below come from.
+
+## The "API"
+
+There is **no JSON API**. PesqEle is a JSF/PrimeFaces app. Everything is a form postback to a single endpoint:
+
+- **Search / paginate**: `POST https://pesqele-divulgacao.tse.jus.br/app/pesquisa/listar.xhtml` with `Faces-Request: partial/ajax`, `javax.faces.partial.ajax=true`, `javax.faces.source=formPesquisa:idBtnPesquisar`, `javax.faces.partial.execute=@all`, `javax.faces.partial.render=formPesquisa`, plus `formPesquisa:eleicoes_input=81` (Eleições Gerais 2026), `formPesquisa:filtroUF_input=BR`, `formPesquisa:empresas_input=&lt;empresaId&gt;`, `formPesquisa_SUBMIT=1` and a valid `javax.faces.ViewState`. Response is XML `&lt;partial-response&gt;`; the results table is in `&lt;update id="formPesquisa"&gt;` and the total in `rowCount:N`.
+- **Detail**: same POST with `javax.faces.source=formPesquisa:tabelaPesquisas:&lt;globalRowIndex&gt;:detalhar`, then a plain `GET /app/pesquisa/detalhar.xhtml` (session-bound to the row you just selected).
+- Gotcha that cost me an hour: the ViewState comes back as `&lt;update id="j_id__v_0:javax.faces.ViewState:1"&gt;`, not `id="javax.faces.ViewState"`. With a stale ViewState the detail action silently no-ops and `detalhar.xhtml` serves the previously selected record. Pagination is 10 rows/page; total results capped at 50.
+
+## Critical methodological finding
+
+**`BR-XXXXX/2026` does NOT mean a national sample.** The `BR` prefix means the *office* is federal (Presidente), so the registration goes to the TSE. The *universe* can be a single state or even one city. I opened every record's "Metodologia de pesquisa" to classify it. Of the 18 registrations these four institutes filed with abrangência BRASIL in the window, **only 3 have a national universe** — all three are MDA/CNT.
+
+## Results: field dates 01/05/2026 to 10/09/2026, Eleição = Eleições Gerais 2026, UF = BR
+
+### 1. Paraná Pesquisas — 8 in window, ZERO national
+Empresa: `INSTITUTO PARANA DE PESQUISAS E ANALISE DE CONSUMIDOR LTDA`, CNPJ 81.908.345/0001-40 (empresa id 5351). 27 BR/2026 registrations total.
+
+| Registro | Registrado | Campo | n | Universo | Contratante | Valor | Divulgação |
+|---|---|---|---|---|---|---|---|
+| BR-04315/2026 | 05/05/2026 | 08–10/05 | 1.500 | Paraná | **PARTIDO LIBERAL (PL)**, CNPJ 08.517.423/0001-95 | R$ 135.225,00 | 11/05 |
+| BR-09570/2026 | 07/05/2026 | 10–12/05 | 1.510 | Bahia | S2R Comunicação / Bahia Notícias, 08.259.692/0001-07 | R$ 45.000,00 | 13/05 |
+| BR-05947/2026 | 28/05/2026 | 31/05–02/06 | 1.000 | Acre | o próprio instituto (recursos próprios, NF não exigida) | R$ 40.000,00 | 03/06 |
+| BR-07555/2026 | 29/05/2026 | 01–03/06 | 1.680 | Rio de Janeiro | o próprio instituto | R$ 45.000,00 | 04/06 |
+| BR-05929/2026 | 04/06/2026 | 07–09/06 | 1.300 | Tocantins | o próprio instituto | R$ 40.000,00 | 10/06 |
+| BR-05371/2026 | 26/06/2026 | 29/06–01/07 | 1.600 | Rio de Janeiro | o próprio instituto | R$ 45.000,00 | 02/07 |
+| BR-09071/2026 | 23/07/2026 | 25–28/07 | 1.680 | São Paulo | o próprio instituto | R$ 50.000,00 | 29/07 |
+| BR-06493/2026 | 25/07/2026 | 28–30/07 | 1.600 | Rio de Janeiro | o próprio instituto | R$ 45.000,00 | 31/07 |
+
+Boundary case, excluded: **BR-05143/2026**, registered 09/09/2026 but **field 12–14/09** (outside the window), n=1.504, universe Tocantins, contratante FIETO (Federação das Indústrias do Estado do Tocantins), R$ 105.000,00, divulgação 15/09.
+
+**Paraná Pesquisas registered no national presidential poll with fieldwork in this window.** Its only three national-universe registrations in all of 2026 are BR-08254/2026 (field 25–28/01), BR-07974/2026 (22–25/02) and BR-00873/2026 (25–28/03). I verified this by opening all 27 detail pages, not by inference.
+
+### 2. Ipespe — 2 in window, ZERO national. Meta — zero registrations at all
+Empresa: `IPESPE INST DE PESQUISAS SOCIAIS POLITICAS E ECONOMICAS`, CNPJ 11.849.437/0001-10 (id 3305). 3 BR/2026 total, 6 across all abrangências.
+
+| Registro | Registrado | Campo | n | Universo | Contratante | Valor | Divulgação |
+|---|---|---|---|---|---|---|---|
+| BR-06997/2026 | 10/06/2026 | 11–14/06 | 1.000 | Pernambuco | Editora Folha de Pernambuco Ltda, 01.935.632/0001-00 | R$ 60.000,00 | 16/06 |
+| BR-08707/2026 | 22/07/2026 | 22–25/07 | 1.000 | Pernambuco | Editora Folha de Pernambuco Ltda | R$ 60.000,00 | 28/07 |
+
+Out of window: BR-06510/2026, field 06–09/02, n=1.500, telephone.
+
+**Meta: zero.** Filter Eleição = Eleições Gerais 2026, Empresa = `META PESQUISAS DE MERCADO LTDA` (id 286501) → 0 records with UF=BR and 0 with UF blank (all abrangências). Same for `INSTITUTO META, PESQUISA E SERVICOS LTDA - ME` (id 33750): 0 and 0. `META COMUNICACAO LTDA` (id 581352) is an ad agency, not a pollster.
+
+### 3. Ipsos / Ipec — 3 in window, ZERO national, and Ipsos itself has zero
+Two separate legal entities, and they behave very differently:
+
+- **`IPSOS BRASIL PESQUISAS DE MERCADO LTDA` (id 53300): ZERO.** Filter: Eleição = Eleições Gerais 2026 + Empresa = Ipsos Brasil, run twice, once with UF = BRASIL (rowCount 0) and once with UF = [selecione], i.e. every abrangência (rowCount 0). Ipsos Brasil has not registered a single electoral poll for the 2026 general election.
+- **`INTELIGENCIA EM PESQUISA E CONSULTORIA LTDA / IPEC`, CNPJ 40.735.589/0001-90 (id 6150)** — this is the real Ipsos-Ipec entity, and it is *not* the entry that a name search for "Ipec" turns up first. 8 registrations in 2026, 4 with abrangência BR:
+
+| Registro | Registrado | Campo | n | Universo | Contratante | Valor | Divulgação |
+|---|---|---|---|---|---|---|---|
+| BR-00962/2026 | 28/05/2026 | 28/05–03/06 | 800 | Estado do Ceará | Rádio Costa do Sol Ltda, 35.008.325/0001-03 | R$ 90.000,00 | 03/06 |
+| BR-07235/2026 | 22/07/2026 | 22–28/07 | 800 | Estado do Ceará | Rádio Costa do Sol Ltda | R$ 90.000,00 | 28/07 |
+| BR-06231/2026 | 13/08/2026 | 13–19/08 | 800 | Estado do Ceará | Rádio Costa do Sol Ltda | R$ 90.000,00 | 19/08 |
+
+Out of window: BR-05376/2026, field 19–25/03. **No national Ipec poll in the window.**
+
+Two homonyms checked and cleared: `IPEC - INSTITUTO DE PESQUISA E CONSULTORIA LTDA - ME` (id 8403) → 0 BR, 0 total; `IBOPE INTELIGENCIA PESQUISA E CONSULTORIA LTDA` (id 1053, the pre-2021 Ipec) → 0 BR, 0 total.
+
+### 4. MDA / CNT — 4 in window, 3 of them genuinely national
+Empresa: `MDA-PESQUISA DE OPINIAO PUBLICA E CONSULT. ESTATIST. LTDA - EPP`, CNPJ 19.090.489/0001-68 (id 6315). 5 BR/2026 total.
+
+| Registro | Registrado | Campo | n | Universo | Contratante | Valor | Divulgação |
+|---|---|---|---|---|---|---|---|
+| BR-04256/2026 | 10/06/2026 | 10–14/06 | 2.002 | **Brasil** | **CNT**, CNPJ 00.721.183/0001-34 | R$ 230.038,00 | 16/06 |
+| BR-01709/2026 | 08/07/2026 | 07–12/07 | 600 | **Uberaba/MG** | Ligre Propaganda Ltda / Solis Propaganda, 08.600.564/0001-77 | R$ 20.000,00 | 14/07 |
+| BR-06935/2026 | 05/08/2026 | 05–09/08 | 2.002 | **Brasil** | **CNT** | R$ 230.038,00 | 11/08 |
+| BR-06902/2026 | 09/09/2026 | 09–13/09 | 2.002 | **Brasil** | **CNT** | R$ 222.453,00 | 15/09 |
+
+Note BR-06902: field opens 09/09, inside the window, and closes 13/09, after it. Out of window: BR-02847/2026, CNT, field 08–12/04, n=2.002.
+
+All three CNT waves declare the same design: quantitative survey, face-to-face interviews in households and at flow points, universe "eleitores e eleitoras do Brasil com 16 anos ou mais", n=2.002. The price drop from R$ 230.038,00 to R$ 222.453,00 in September is the only variation.
+
+## Bottom line for the window 01/05–10/09/2026
+
+Only **three** national-universe presidential polls were registered at the TSE by these four institutes, all by **MDA for the CNT**: BR-04256 (June), BR-06935 (August), BR-06902 (September, field partly outside). Paraná Pesquisas, Ipespe and Ipec filed 13 BR-numbered registrations between them in the same window, and **every one is a state or municipal sample of the presidential race**, not a national one. Meta and Ipsos Brasil registered nothing at all for the 2026 general election, under any abrangência.
+
+One caveat I will not paper over: the three Ipec registrations name Rádio Costa do Sol Ltda as contratante while the methodology text declares a Ceará universe. I report both fields exactly as the registry prints them; reconciling that pairing would need the edital or the full report, which I did not open.</result>
+<usage><subagent_tokens>189993</subagent_tokens><tool_uses>67</tool_uses><duration_ms>1015110</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>ae4fabad0491c89fc</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Fetch earlier waves of other institutes" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>Done. Everything below is in the repo; `python3 scripts/reponderacao-pnad.py calcular --hoje 2026-09-10` and `pytest -q tests/test_reponderacao_pnad.py` (12 passed) both run clean.
+
+## 14 arquivos novos
+
+**Reponderáveis (6 ondas, todas com resíduo bem abaixo de 1,5 pp)**
+
+| arquivo | campo | publicado 1T / 2T | reponderado | resíduo |
+|---|---|---|---|---|
+| `realtime_2026-05-04` | 02–04/05 | 40×34 / 43×44 (2T sem renda) | 38,7×34,8 | 0,46 |
+| `realtime_2026-05-30` | 29–30/05 | 38×31 / 45×40 (2T sem renda) | 36,6×31,7 | 0,41 |
+| `realtime_2026-07-20` | 18–20/07 | 40×33 / 45×42 (2T sem renda) | 38,1×34,2 | 0,38 |
+| `mda_2026-06-14` | 10–14/06 | 41,8×28,2 / 49,3×36,8 | 40,9×29,0 / 48,3×37,8 | 0,22 / 0,16 |
+| `mda_2026-08-09` | 05–09/08 | 42,4×28,7 / 48,0×39,1 | 41,4×29,6 / 46,9×40,7 | 0,07 / 0,38 |
+
+**Com `ignorar: true` (8)**: `futura_2026-05-08`, `-05-20`, `-06-12`, `-07-11`, `-08-07`; `vox_brasil_2026-05-12`, `-05-19`, `-06-03`, `-07-28`.
+
+PDFs em `data/originals/`: `realtime_052026_04`, `realtime_052026_30`, `realtime_072026_20`, `mda_062026_14`, `mda_082026_09`, `apex_futura_{052026_08,052026_20,062026_12,072026_11,082026_07}`, `vox_brasil_{052026_12,052026_19,062026_06,072026_28}`.
+
+## Por instituto, toda onda nacional desde maio
+
+**Veritá** — 3 ondas. 22–26/05 (n=3.330) **não pública**: o portal `eleicoes26.institutoverita.com.br` roda sobre um Supabase hoje com NXDOMAIN, e o Wayback só guardou Brasil de abril e de agosto. Publicado (Instagram): 1T Lula 40,6 × Flávio 42,6; 2T 46,8 × 53,2. 16–20/08 e 01–04/09 já estavam no repo. Não existe onda nacional de junho nem de julho.
+
+**Real Time Big Data** — 4 ondas, todas baixadas e transcritas (a de 27–31/08 já estava). Cruza renda **só no 1º turno**, nunca no 2º. Perfil de renda idêntico em todas as ondas (46/33/21), o que parece cota fixa e não distribuição observada. **Anomalia**: as capas de 29–30/05 e de 18–20/07 imprimem o mesmo registro BR-05864/2026; anotei nos dois arquivos que o número precisa ser conferido no TSE.
+
+**Vox Brasil** — 6 ondas. Cinco baixadas; **23–25/06 não é pública** (Poder360 só publicou 7 JPGs de infográfico próprio; a media API do Poder360, o site do instituto e o Wayback não têm `NACIONAL-4`). Publicado nessa onda: 1T Lula 38,3 × Flávio 32,2; 2T 45,3 × 42,8. As ondas de maio e a de agosto não trazem cruzamento por renda. **As de 01–03/06 e 26–28/07 trazem, e o cruzamento não fecha**: com o único perfil de renda do próprio relatório (83,5% até 2 SM), as linhas devolvem Lula 53,0 contra 42,1 publicado em junho e 53,0 contra 40,5 em julho. Não é erro de transcrição: no mesmo documento a quebra por sexo recompõe o 1º turno em 42,13 contra 42,1 e a por escolaridade recompõe o 2º turno em 47,68 contra 47,8. O teste que mata é Caiado: o maior valor dele em qualquer faixa é 7,0 e o publicado é 6,9, o que nenhuma distribuição de renda produz junto com Lula em 42,1. Os dois arquivos ficaram `ignorar` com essa conta escrita no `motivo`.
+
+**Paraná Pesquisas** — **nenhuma onda nacional no período**. A última é 25–28/03. Verificado no feed WordPress do próprio instituto (41 releases entre 20/04 e 09/09, todos estaduais ou municipais), na biblioteca de mídia deles (89 arquivos, nenhum `Brasil_*`/`Nacional_*`), no hub da Gazeta do Povo (maio a setembro dão 404) e na cobertura de CNN e Poder360. Ressalva: eles seguem medindo presidente **dentro de amostras estaduais** com registro de prefixo `BR-`, o que engana quem olha só o número.
+
+**Meta/Ipespe** — **nenhuma onda no período**. O domínio é `ipespe.org.br`; a categoria Pesquisas cobre 25/07 a 03/09 e só tem recortes de outros institutos e trabalho de Pernambuco. Zero menções na Wikipédia.
+
+**Ipsos-Ipec** — **nenhuma onda nacional no período**. A última é 04–08/12/2025. No período o instituto está ativo só no Ceará (BR-06231/2026, contratante Rádio Costa do Sol, n=800 em 40 municípios cearenses).
+
+**MDA/CNT** — 2 ondas no período, ambas transcritas. Não há 170ª rodada até 10/09. **Nota auditável**: a coleta muda entre as duas, de `presencial domiciliar` em junho para `presencial, domiciliar e ponto de fluxo` em agosto, dentro de uma série lida como tendência.
+
+**Futura (Apex/Futura)** — 6 ondas, cinco baixadas agora. **Nenhuma cruza voto por renda.** Nos exports Power BI de maio e junho o painel de renda é filtro de caracterização; no layout novo de julho e agosto as páginas de cruzamento quebram por sexo, região, idade e escala de polarização. A p. 4 da onda de julho anuncia a troca da referência de escolaridade da ponderação, do cadastro do TSE para a PNADC do IBGE.
+
+## Quem nunca publica cruzamento por renda
+
+Futura, nas seis ondas. Vox Brasil publica em duas das seis, e nas duas o cruzamento não recompõe o placar. Real Time publica sempre, mas só no 1º turno. MDA/CNT é o único dos oito que publica os dois turnos por renda, com a ressalva de usar só três faixas (`&lt;2`, `2–5`, `&gt;5`).
+
+## Aberto
+
+O registro do TSE (`divulgacandcontas.tse.jus.br`) está atrás de WAF Akamai e devolve 403 a qualquer chamada de linha de comando; as negativas de Paraná, Ipespe e Ipsos vêm do canal de publicação de cada instituto mais dois agregadores, o que é forte mas não é o registro. Uma passada com navegador embutido fecharia isso. Também não mexi em `data/originals/pesquisas_nacionais_manifest_2026.json` (outro agente estava escrevendo ali) nem regenerei `docs/reponderacao_pnad.html`; `docs/assets/reponderacao_pnad.json` está atualizado.</result>
+<usage><subagent_tokens>399550</subagent_tokens><tool_uses>140</tool_uses><duration_ms>1348562</duration_ms></usage>
+</task-notification>
