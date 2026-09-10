@@ -699,7 +699,10 @@ def instituto_svg(nome: str, turno: str) -> str:
             marcador(cv, shape, x, y_pub, 4.6, COR[chave], False)
             marcador(cv, shape, x, y_adj, 4.6, COR[chave], True)
 
+    passo = max(1, math.ceil(len(polls) / 6))
     for i, p in enumerate(polls):
+        if (len(polls) - 1 - i) % passo:
+            continue
         cv.label(px(i), base + 20, curto(p["campo"]["fim"]), anchor="middle", size=11)
     ultimo = polls[-1]["turnos"][turno]
     cv.text(
@@ -1194,13 +1197,35 @@ def ch_manchete() -> str:
     )
 
 
+def _painel_instituto(nome: str, turno: str) -> str:
+    ondas = sum(1 for p in PESQUISAS if p["instituto"] == nome and turno in p["turnos"])
+    total = sum(1 for p in PESQUISAS if p["instituto"] == nome)
+    if turno == "2t" and ondas < total:
+        cobertura = f"{ondas} de {total} ondas cruzam o 2º turno por renda"
+    elif turno == "1t" and not any(
+        "2t" in p["turnos"] for p in PESQUISAS if p["instituto"] == nome
+    ):
+        cobertura = f"{plural(ondas, 'onda', 'ondas')}; o instituto não cruza o 2º turno por renda"
+    else:
+        cobertura = plural(ondas, "onda auditada", "ondas auditadas")
+    return (
+        f'<article class="panel reveal"><h3>{esc(nome)} <small>{TURNOS[turno]}</small></h3>'
+        f'<div class="fig">{instituto_svg(nome, turno)}</div>'
+        f'<p class="note">{cobertura}. Vazado é publicado, cheio é reponderado.</p></article>'
+    )
+
+
 def ch_institutos() -> str:
-    paineis = "".join(
-        f'<article class="panel reveal"><h3>{esc(nome)}</h3>'
-        f'<div class="fig">{instituto_svg(nome, "2t")}</div>'
-        f'<p class="note">{plural(sum(1 for p in PESQUISAS if p["instituto"] == nome), "onda auditada", "ondas auditadas")}. '
-        f"Vazado é publicado, cheio é reponderado.</p></article>"
+    so_1t = [
+        nome
         for nome in INSTITUTOS
+        if not any(p["instituto"] == nome and "2t" in p["turnos"] for p in PESQUISAS)
+    ]
+    paineis = "".join(
+        _painel_instituto(nome, turno)
+        for nome in INSTITUTOS
+        for turno in ("2t", "1t")
+        if any(p["instituto"] == nome and turno in p["turnos"] for p in PESQUISAS)
     )
     return capitulo(
         4,
@@ -1209,7 +1234,9 @@ def ch_institutos() -> str:
         "O mesmo desenho repetido em painéis pequenos, para comparar a distância entre a "
         "publicação e a régua dentro de cada casa.",
         f'<div class="grid-3">{paineis}</div>'
-        '<p class="note">Painéis com uma só onda mostram os pontos sem linha: com uma '
+        '<p class="note">Cada instituto recebe um painel por turno que cruza por renda: '
+        f"quem só publica o 1º turno por faixa de renda ({esc(', '.join(so_1t))}) "
+        "aparece só com ele. Painéis com uma só onda mostram os pontos sem linha: com uma "
         "medida não há série. A escala vertical é própria de cada painel.</p>",
     )
 
@@ -1415,7 +1442,7 @@ border-radius:3px;margin:0 0 8px;border:1px solid currentColor}
 .poll-head h3{font-family:Georgia,serif;font-size:29px;font-weight:400;letter-spacing:-.02em}
 .proofs{display:flex;flex-direction:column;align-items:flex-end;gap:2px}
 .panel{border-top:2px solid var(--ink);padding-top:16px;min-width:0}
-.panel h3{font-size:16px}
+.panel h3{font-size:16px}.panel h3 small{font:500 12px/1 var(--mono,monospace);color:#535b54;margin-left:6px;letter-spacing:.04em}
 .table-scroll{max-width:100%;overflow:auto;margin:24px 0;border-top:2px solid currentColor}
 table{width:100%;border-collapse:collapse;font-size:13px;line-height:1.45;
 font-variant-numeric:tabular-nums}
