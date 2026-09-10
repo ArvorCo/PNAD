@@ -1836,6 +1836,11 @@ def head() -> str:
         f"Lula {br(ultimo['ajustado']['lula'], 1)} e Flávio {br(ultimo['ajustado']['flavio'], 1)}."
     )
     og = "https://brasil.arvor.co/img/og/reponderacao_pnad.png"
+    alt_card = (
+        f"Agregador Arvor: {len(PESQUISAS)} ondas de {len(INSTITUTOS)} institutos "
+        "reponderadas pela renda da PNAD, com uma margem trocada e o resto como "
+        "o instituto ponderou."
+    )
     return (
         '<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">'
         '<meta name="viewport" content="width=device-width, initial-scale=1">'
@@ -1854,10 +1859,12 @@ def head() -> str:
         f'<meta property="og:description" content="{esc(descricao, quote=True)}">'
         '<meta property="og:url" content="https://brasil.arvor.co/reponderacao_pnad.html">'
         f'<meta property="og:image" content="{og}">'
+        f'<meta property="og:image:alt" content="{esc(alt_card, quote=True)}">'
         '<meta property="og:image:width" content="1200">'
         '<meta property="og:image:height" content="630">'
         '<meta name="twitter:card" content="summary_large_image">'
         f'<meta name="twitter:image" content="{og}">'
+        f'<meta name="twitter:image:alt" content="{esc(alt_card, quote=True)}">'
         f'<meta name="twitter:title" content="{esc(titulo, quote=True)}">'
         f'<meta name="twitter:description" content="{esc(descricao, quote=True)}">'
         '<link rel="stylesheet" href="assets/reponderacao_pnad.css"><link rel="stylesheet" href="assets/reponderacao_tip.css">'
