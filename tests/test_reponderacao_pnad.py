@@ -163,3 +163,42 @@ def test_poll_files_have_required_fields():
             assert len(table["linhas"]) == len(bands), (path.name, turno)
             for row in table["linhas"]:
                 assert len(row) == len(table["opcoes"]), (path.name, turno)
+
+
+def test_quaest_september_partial_source_and_current_wave(output):
+    """A matéria atual fornece só 2T; cotas registradas não viram perfil observado."""
+    raw = json.loads((POLLS / "quaest_2026-09-13.json").read_text())
+    assert set(raw["cruzamentos"]) == set(raw["publicado"]) == {"2t"}
+    assert raw["cruzamentos"]["2t"]["linhas"] == [
+        [51, 32, 12, 5],
+        [36, 46, 13, 5],
+        [34, 47, 14, 5],
+    ]
+    assert raw["renda"]["amostra_pct"] == [31, 42, 27]
+    assert raw["registro_tse"] == "BR-03607/2026"
+    poll = next(p for p in output["pesquisas"] if p["id"] == raw["id"])
+    assert poll["renda"]["perfil_tipo"] == "cota_registrada"
+    assert poll["fonte"]["tipo"] == "materia"
+    assert poll["fonte"]["pdf"] is None
+    result = poll["turnos"]["2t"]
+    assert result["residuo_max"] == pytest.approx(0.11)
+    adjusted = result["cenarios"][SCENARIO]["ajustado"]
+    assert adjusted["lula"] == pytest.approx(40.657, abs=0.001)
+    assert adjusted["flavio"] == pytest.approx(41.399, abs=0.001)
+    assert sum(adjusted.values()) == pytest.approx(100.0)
+
+
+def test_partial_source_labels_reach_the_published_card():
+    from bs4 import BeautifulSoup
+
+    html = BeautifulSoup(
+        (ROOT / "docs/reponderacao_pnad.html").read_text(), "html.parser"
+    )
+    card = html.find(id="pesquisa-quaest_2026-09-13")
+    text = card.get_text(" ", strip=True)
+    assert "Fonte parcial: g1 + cotas registradas no TSE." in text
+    assert "perfil ponderado final, ainda não conferido" in text
+    assert "COTA REGISTRADA" in text
+    assert "Matéria do g1 (renda)" in text
+    assert "PDF do relatório" not in text
+    assert "AMOSTRA DO INSTITUTO" not in text

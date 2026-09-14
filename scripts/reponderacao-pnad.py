@@ -246,6 +246,7 @@ def process_poll(
         "amostra_pct": [round(v, 3) for v in source],
         "pnad_pct": {name: [round(v, 3) for v in t] for name, t in targets.items()},
         "nota": poll["renda"].get("nota"),
+        "perfil_tipo": poll["renda"].get("perfil_tipo", "perfil_publicado"),
     }
     out["desvio_ate_primeira_faixa"] = round(source[0] - targets[MAIN_SERIES][0], 3)
     out["turnos"] = {}

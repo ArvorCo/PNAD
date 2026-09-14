@@ -91,6 +91,11 @@ ROTULOS = {
     "marcal": "Marçal",
     "cury": "Cury",
     "samara": "Samara",
+    "rui": "Rui Costa Pimenta",
+    "clariana": "Clariana Barão",
+    "edmilson": "Edmilson Costa",
+    "grassi": "Wilson Grassi",
+    "hertz": "Hertz Dias",
     "outros": "Outros",
     "branco_nulo": "Branco e nulo",
     "indecisos": "Indecisos",
@@ -285,7 +290,13 @@ def ficha_onda(pesquisa: dict, turno: str) -> str:
         composicao = f"A amostra tem {br(desvio, 1)} pontos a mais na faixa mais pobre que a PNAD."
     else:
         composicao = f"A amostra tem {br(-desvio, 1)} pontos a menos na faixa mais pobre que a PNAD."
+    if pesquisa["renda"].get("perfil_tipo") == "cota_registrada":
+        composicao = composicao.replace("A amostra tem", "A cota registrada tem")
     corpo.append(f" {composicao} Prova de leitura: {br(t['residuo_max'], 2)}.</p>")
+    if pesquisa["fonte"].get("nota"):
+        corpo.append(
+            f'<p class="tip-nota"><b>{esc(pesquisa["fonte"].get("status", ""))}</b> {esc(pesquisa["fonte"]["nota"])}</p>'
+        )
     if extras:
         itens = ", ".join(f"{esc(rotulo(c))} {br(pub[c], 1)}" for c in extras[:6])
         corpo.append(f'<p class="tip-nota">Também na cédula: {itens}.</p>')
@@ -859,6 +870,11 @@ def instituto_svg(nome: str, turno: str) -> str:
 def ficha_faixa(pesquisa: dict, indice: int) -> str:
     """Ficha de uma faixa de renda: o que o instituto tinha e o que a PNAD mede."""
     renda = pesquisa["renda"]
+    perfil = (
+        "cota registrada"
+        if renda.get("perfil_tipo") == "cota_registrada"
+        else "amostra"
+    )
     faixa = renda["faixas"][indice]
     amostra = renda["amostra_pct"][indice]
     corte = renda["cortes_brl_202604"][indice]
@@ -880,7 +896,7 @@ def ficha_faixa(pesquisa: dict, indice: int) -> str:
         '<table class="tip-tab"><thead><tr><th></th><th>fatia</th></tr></thead><tbody>'
     )
     for nome, valor, cls in (
-        ("amostra", amostra, "pub"),
+        (perfil, amostra, "pub"),
         ("PNAD 16+", renda["pnad_pct"][CEN][indice], "adj"),
     ):
         linhas.append(
@@ -891,7 +907,7 @@ def ficha_faixa(pesquisa: dict, indice: int) -> str:
     linhas.append("</tbody></table>")
     lado = "acima" if delta >= 0 else "abaixo"
     linhas.append(
-        f'<p class="tip-nota">A amostra está {br(abs(delta), 1)} pontos {lado} da '
+        f'<p class="tip-nota">A {perfil} está {br(abs(delta), 1)} pontos {lado} da '
         "régua oficial nesta faixa. A reponderação corrige exatamente isso, "
         "mantendo o voto medido dentro dela.</p>"
     )
@@ -900,6 +916,11 @@ def ficha_faixa(pesquisa: dict, indice: int) -> str:
 
 def renda_svg(pesquisa: dict) -> str:
     renda = pesquisa["renda"]
+    perfil = (
+        "cota registrada"
+        if renda.get("perfil_tipo") == "cota_registrada"
+        else "amostra"
+    )
     faixas = renda["faixas"]
     amostra = renda["amostra_pct"]
     alvo = renda["pnad_pct"][CEN]
@@ -910,13 +931,15 @@ def renda_svg(pesquisa: dict) -> str:
     maximo = max(max(amostra), max(alvo), 10) * 1.06
 
     cv = Canvas(
-        largura, altura, aria="Composição de renda: amostra do instituto contra a PNAD."
+        largura,
+        altura,
+        aria=f"Composição de renda: {perfil} do instituto contra a PNAD.",
     )
     cv.rect(0, 0, largura, altura, PANEL)
     cv.text(
         16,
         24,
-        "AMOSTRA DO INSTITUTO",
+        "COTA REGISTRADA" if perfil == "cota registrada" else "AMOSTRA DO INSTITUTO",
         size=10.5,
         fill=INK,
         weight=700,
@@ -938,7 +961,7 @@ def renda_svg(pesquisa: dict) -> str:
         abre_alvo(
             cv,
             chave,
-            f"{faixa}: amostra {br(amostra[i], 1)}%, PNAD {br(alvo[i], 1)}%.",
+            f"{faixa}: {perfil} {br(amostra[i], 1)}%, PNAD {br(alvo[i], 1)}%.",
         )
         cv.rect(
             8, y, largura - 16, alto_grupo - 6, "transparent", **{"class": "hit-area"}
@@ -982,7 +1005,7 @@ def renda_svg(pesquisa: dict) -> str:
         )
         fecha_alvo(cv)
         y += alto_grupo
-    cv.label(16, altura - 12, "diferença em pontos, amostra menos PNAD", size=11.5)
+    cv.label(16, altura - 12, f"diferença em pontos, {perfil} menos PNAD", size=11.5)
     return cv.render()
 
 
@@ -1168,7 +1191,7 @@ def chip_prova(pesquisa: dict) -> str:
 def paginas_fonte(fonte: dict) -> str:
     itens = fonte.get("paginas") or {}
     if not itens:
-        return "páginas não declaradas"
+        return fonte.get("localizador", "páginas não declaradas")
     return ", ".join(
         f"p. {valor} ({PAGINAS.get(chave, chave.replace('_', ' '))})"
         for chave, valor in itens.items()
@@ -1184,8 +1207,20 @@ def cartao(pesquisa: dict) -> str:
         f' · <a href="{esc(dossie, quote=True)}">dossiê completo</a>' if dossie else ""
     )
     url = (pesquisa["fonte"] or {}).get("url")
+    rotulo_fonte = pesquisa["fonte"].get("rotulo", "PDF do relatório")
     link_pdf = (
-        f' · <a href="{esc(url, quote=True)}">PDF do relatório</a>' if url else ""
+        f' · <a href="{esc(url, quote=True)}">{esc(rotulo_fonte)}</a>' if url else ""
+    )
+    fonte_nota = pesquisa["fonte"].get("nota", "")
+    aviso_fonte = (
+        f'<p class="note"><b>{esc(pesquisa["fonte"].get("status", ""))}</b> {esc(fonte_nota)}</p>'
+        if fonte_nota
+        else ""
+    )
+    perfil_verbo = (
+        "O registro prevê"
+        if renda.get("perfil_tipo") == "cota_registrada"
+        else "A amostra declara"
     )
 
     cenarios = []
@@ -1227,13 +1262,13 @@ def cartao(pesquisa: dict) -> str:
         f"campo de {esc(periodo(pesquisa['campo']))}</h3>"
         f'<p class="note">{esc(pesquisa["registro_tse"])} · contratante {esc(pesquisa["contratante"])} · '
         f"n = {br(pesquisa['n'], 0)} · {esc(pesquisa['metodo'])} · divulgação em "
-        f"{esc(longo(pesquisa['divulgacao']))}{link_dossie}{link_pdf}</p>"
-        f'<p class="note">Fonte: <code>{esc(pesquisa["fonte"]["pdf"] or "sem PDF arquivado")}</code>, '
+        f"{esc(longo(pesquisa['divulgacao']))}{link_dossie}{link_pdf}</p>{aviso_fonte}"
+        f'<p class="note">Fonte: <code>{esc(pesquisa["fonte"].get("arquivo") or pesquisa["fonte"].get("pdf") or "sem arquivo arquivado")}</code>, '
         f"{esc(paginas_fonte(pesquisa['fonte']))}.</p></div>"
         f'<div class="proofs">{chip_prova(pesquisa)}</div></header>'
         f'<div class="split">'
         f'<div class="chart-shell"><p class="kicker">Composição de renda</p>'
-        f"<h4>A amostra declara {br(renda['amostra_pct'][0], 1)}% na faixa mais baixa. "
+        f"<h4>{perfil_verbo} {br(renda['amostra_pct'][0], 1)}% na faixa mais baixa. "
         f"A PNAD mede {br(alvo[0], 1)}%.</h4>"
         '<p class="dica">Passe o ponteiro sobre uma faixa</p>'
         f'<div class="fig" tabindex="0" role="region" aria-label="Composição de renda">'
@@ -1288,6 +1323,20 @@ def ch_segundo_turno() -> str:
         + sinal(gap(kernel["ajustado"]), 1)
         + " ponto para Lula.</p>"
     )
+    parciais = [
+        p
+        for p in PESQUISAS
+        if "2t" in p["turnos"] and p["fonte"].get("tipo") == "materia"
+    ]
+    if parciais:
+        corpo += (
+            '<p class="note">A série inclui fonte parcial: '
+            + "; ".join(
+                f'<a href="#pesquisa-{esc(p["id"])}">{esc(p["instituto"])} ({longo(p["divulgacao"])})</a>'
+                for p in parciais
+            )
+            + ". Os votos por renda vêm da divulgação e a reponderação usa as cotas registradas, condicionada à confirmação do perfil ponderado final.</p>"
+        )
     return capitulo(
         1,
         "segundo-turno",
@@ -1516,7 +1565,7 @@ def ch_fontes() -> str:
             esc(periodo(p["campo"])),
             esc(p["registro_tse"]),
             br(p["n"], 0),
-            f'<code>{esc(p["fonte"]["pdf"] or "sem PDF arquivado")}</code>',
+            f'<code>{esc(p["fonte"].get("arquivo") or p["fonte"].get("pdf") or "sem arquivo arquivado")}</code>',
             esc(paginas_fonte(p["fonte"])),
         ]
         for p in RECENTES
@@ -1525,10 +1574,10 @@ def ch_fontes() -> str:
         7,
         "fontes",
         "Fontes e dados abertos",
-        "Cada número desta página sai de um relatório registrado no TSE e de um microdado "
+        "Cada número desta página combina uma divulgação identificada pelo registro no TSE e um microdado "
         "público do IBGE.",
         tabela(
-            ["Instituto", "Campo", "Registro TSE", "n", "Arquivo", "Páginas"],
+            ["Instituto", "Campo", "Registro TSE", "n", "Arquivo", "Localização"],
             linhas,
         )
         + '<div class="downloads reveal">'
@@ -1560,7 +1609,7 @@ a{color:inherit;text-underline-offset:4px}
 a:hover{color:var(--red)}
 :focus-visible{outline:3px solid #bd5332;outline-offset:4px}
 code{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:.86em;
-background:#192e2b0e;padding:1px 5px}
+background:#192e2b0e;padding:1px 5px;overflow-wrap:anywhere}
 pre{overflow:auto;padding:18px;background:#192e2b0e;font-size:13px;margin:18px 0}
 pre code{background:none;padding:0}
 .wrap{max-width:1240px;margin:auto;padding:0 44px}
@@ -2032,7 +2081,7 @@ def write_csv() -> None:
                 ]
             )
     with TABLE_CSV.open("w", encoding="utf-8", newline="") as handle:
-        escritor = csv.writer(handle)
+        escritor = csv.writer(handle, lineterminator="\n")
         escritor.writerow(cabeca)
         escritor.writerows(linhas)
 

@@ -1,0 +1,172 @@
+{
+  "instituto": "Datafolha",
+  "contratante": "Folha de S.Paulo e TV Globo",
+  "metodo": "presencial, pontos de fluxo",
+  "id": "datafolha_2026-09-10",
+  "registro_tse": "BR-01833/2026",
+  "campo": {
+    "inicio": "2026-09-08",
+    "fim": "2026-09-10"
+  },
+  "divulgacao": "2026-09-11",
+  "n": 2002,
+  "dossie": "datafolha_14092026.html",
+  "fonte": {
+    "pdf": "data/pesquisas/datafolha/2026-09-11/relatorio.pdf",
+    "url": "https://brasil.arvor.co/fontes/datafolha_14092026.pdf",
+    "paginas": {
+      "perfil_renda": 32,
+      "1t_renda": 42,
+      "2t_renda": 49
+    },
+    "nota": "Relatório completo de 57 páginas recebido em 14/09; divulgação da pesquisa em 11/09 e campo em 8 a 10/09. Bases ponderadas extraídas do anexo, não cotas inferidas."
+  },
+  "renda": {
+    "unidade": "salarios_minimos",
+    "ano_referencia": 2026,
+    "faixas": [
+      {
+        "rotulo": "Até 2 SM (até R$ 3.242)",
+        "max": 2
+      },
+      {
+        "rotulo": "2 a 5 SM (R$ 3.242 a 8.105)",
+        "max": 5
+      },
+      {
+        "rotulo": "Mais de 5 SM (acima de R$ 8.105)",
+        "max": null
+      }
+    ],
+    "bases": [
+      991,
+      689,
+      234
+    ],
+    "nota": "Bases ponderadas 991/689/234, idênticas nas tabelas de intenção de voto dos dois turnos (pp. 42 e 49). Somam 1.914; 88 das 2.002 entrevistas não aparecem nas faixas publicadas. Normalização entre renda declarada, mantendo o placar nacional como âncora. Perfil detalhado p. 32: recusa 2%, não sabe 3%, percentuais arredondados. A sensibilidade não identifica o voto dos sem renda declarada."
+  },
+  "publicado": {
+    "1t": {
+      "lula": 39,
+      "flavio": 35,
+      "cury": 6,
+      "caiado": 4,
+      "renan_santos": 3,
+      "zema": 2,
+      "samara": 1,
+      "rui": 1,
+      "clariana": 1,
+      "edmilson": 1,
+      "grassi": 0,
+      "hertz": 0,
+      "branco_nulo": 6,
+      "indecisos": 4
+    },
+    "2t": {
+      "lula": 46,
+      "flavio": 44,
+      "branco_nulo": 8,
+      "indecisos": 1
+    }
+  },
+  "cruzamentos": {
+    "1t": {
+      "opcoes": [
+        "lula",
+        "flavio",
+        "cury",
+        "caiado",
+        "renan_santos",
+        "zema",
+        "samara",
+        "rui",
+        "clariana",
+        "edmilson",
+        "grassi",
+        "hertz",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          47,
+          27,
+          4,
+          4,
+          2,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          6,
+          5
+        ],
+        [
+          31,
+          42,
+          8,
+          4,
+          3,
+          2,
+          2,
+          1,
+          0,
+          0,
+          0,
+          0,
+          5,
+          2
+        ],
+        [
+          27,
+          47,
+          6,
+          4,
+          7,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          7,
+          1
+        ]
+      ],
+      "nota": "Texto nativo, estimulada_b; traço convertido em zero. Linhas mantidas como publicadas, sem normalizar os votos arredondados. Situação B sem Marçal no 1º turno."
+    },
+    "2t": {
+      "opcoes": [
+        "lula",
+        "flavio",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          55,
+          35,
+          8,
+          2
+        ],
+        [
+          39,
+          52,
+          9,
+          0
+        ],
+        [
+          32,
+          60,
+          8,
+          0
+        ]
+      ],
+      "nota": "Texto nativo, turno2_flavio; traço convertido em zero. Linhas mantidas como publicadas, sem normalizar os votos arredondados. Situação B sem Marçal no 1º turno."
+    }
+  }
+}

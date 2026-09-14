@@ -1,0 +1,105 @@
+{
+  "instituto": "Quaest",
+  "contratante": "Globo Comunicação e Participações S/A e Editora Globo S/A",
+  "metodo": "presencial, domiciliar (sorteio PPT de municípios e setores censitários, cotas no último estágio)",
+  "id": "quaest_2026-09-13",
+  "registro_tse": "BR-03607/2026",
+  "campo": {
+    "inicio": "2026-09-10",
+    "fim": "2026-09-13"
+  },
+  "divulgacao": "2026-09-14",
+  "n": 2004,
+  "fonte": {
+    "tipo": "materia",
+    "rotulo": "Matéria do g1 (renda)",
+    "pdf": null,
+    "arquivo": "data/pesquisas/quaest/2026-09-14/g1-segmentos.html",
+    "url": "https://g1.globo.com/politica/eleicoes/2026/pesquisa-eleitoral/noticia/2026/09/14/2-turno-lula-e-flavio-bolsonaro-quaest-segmentos.ghtml",
+    "localizador": "Arte “2º turno: Lula x Flávio Bolsonaro - Renda”, coluna 14/9",
+    "paginas": {},
+    "status": "Fonte parcial: g1 + cotas registradas no TSE.",
+    "nota": "Relatório completo não consultado. Os votos por renda são desta rodada; os pesos são as cotas declaradas no registro atual. A conta pressupõe sua aplicação ao perfil ponderado final, ainda não conferido.",
+    "complementares": [
+      {
+        "tipo": "materia",
+        "url": "https://g1.globo.com/politica/eleicoes/2026/pesquisa-eleitoral/noticia/2026/09/14/quaest-2-turno-setembro.ghtml",
+        "arquivo": "data/pesquisas/quaest/2026-09-14/g1-placar.html",
+        "uso": "Placar geral: Lula 40, Flávio 42, B/N/não vai votar 13, indecisos 5."
+      },
+      {
+        "tipo": "registro_tse",
+        "url": "https://pesqele-divulgacao.tse.jus.br/app/pesquisa/listar.xhtml",
+        "identificacao": "BR-03607/2026",
+        "consulta": "2026-09-14",
+        "trecho": "Renda domiciliar total, incluindo pensões, benefícios e rendimentos de trabalhos informais: Até 2 salários-mínimos (31%); Mais de 2 a 5 salários-mínimos (42%); Mais de 5 salários-mínimos (27%).",
+        "uso": "Cotas desta rodada, campo, n, contratantes e metodologia; consulta direta à interface pública."
+      }
+    ]
+  },
+  "renda": {
+    "unidade": "salarios_minimos",
+    "ano_referencia": 2026,
+    "faixas": [
+      {
+        "rotulo": "Até 2 SM (até R$ 3.242)",
+        "max": 2
+      },
+      {
+        "rotulo": "Mais de 2 a 5 SM (R$ 3.242 a 8.105)",
+        "max": 5
+      },
+      {
+        "rotulo": "Mais de 5 SM (acima de R$ 8.105)",
+        "max": null
+      }
+    ],
+    "amostra_pct": [
+      31,
+      42,
+      27
+    ],
+    "perfil_tipo": "cota_registrada",
+    "nota": "Cotas do registro BR-03607/2026, consultado em 14/09: 31% até 2 SM, 42% de mais de 2 a 5 SM, 27% acima de 5 SM. Não são contagens de campo nem distribuição final publicada. O plano cita PNADc anual 2025, 1ª visita. Cortes em salários de 2026, como rotulados no g1. O cálculo é condicionado à aplicação dessas cotas ao perfil final; relatório completo, pesos e tratamento de renda não declarada ainda não conferidos. Atualização exclusiva do segundo turno; não se reutiliza o cruzamento de primeiro turno de 7/9."
+  },
+  "publicado": {
+    "2t": {
+      "lula": 40,
+      "flavio": 42,
+      "branco_nulo": 13,
+      "indecisos": 5
+    }
+  },
+  "cruzamentos": {
+    "2t": {
+      "opcoes": [
+        "lula",
+        "flavio",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          51,
+          32,
+          12,
+          5
+        ],
+        [
+          36,
+          46,
+          13,
+          5
+        ],
+        [
+          34,
+          47,
+          14,
+          5
+        ]
+      ],
+      "nota": "Transcrição visual da coluna 14/9 da arte de renda do g1, quatro opções por faixa; cada linha soma 100. Branco/nulo inclui não vai votar. Coluna 7/9 foi conferida contra a onda anterior, sem usar seus votos na rodada nova."
+    }
+  },
+  "notas": "Fonte parcial explicitada no card e nas fichas do agregador. Conferir distribuição ponderada final quando a íntegra estiver disponível."
+}

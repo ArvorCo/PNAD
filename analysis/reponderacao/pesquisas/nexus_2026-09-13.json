@@ -1,0 +1,169 @@
+{
+  "id": "nexus_2026-09-13",
+  "instituto": "Nexus",
+  "contratante": "Banco BTG Pactual",
+  "registro_tse": "BR-04076/2026",
+  "campo": {
+    "inicio": "2026-09-11",
+    "fim": "2026-09-13"
+  },
+  "divulgacao": "2026-09-14",
+  "n": 2003,
+  "metodo": "telefônico, CATI com cotas de sexo, idade, escolaridade, tipo de telefonia e DDD",
+  "fonte": {
+    "pdf": "data/pesquisas/nexus_btg/rodada14_2026-09-14/relatorio.pdf",
+    "url": "https://brasil.arvor.co/fontes/nexus_btg_140926.pdf",
+    "paginas": {
+      "perfil_renda": 152,
+      "1t_renda": 34,
+      "2t_renda": 76
+    }
+  },
+  "renda": {
+    "unidade": "salarios_minimos",
+    "ano_referencia": 2026,
+    "faixas": [
+      {
+        "rotulo": "Até 1 S.M. (até R$ 1.621)",
+        "max": 1
+      },
+      {
+        "rotulo": "De 1 até 2 S.M. (R$ 1.621 a 3.242)",
+        "max": 2
+      },
+      {
+        "rotulo": "De 2 até 5 S.M. (R$ 3.242 a 8.105)",
+        "max": 5
+      },
+      {
+        "rotulo": "Mais de 5 S.M. (acima de R$ 8.105)",
+        "max": null
+      }
+    ],
+    "amostra_pct": [
+      19,
+      18,
+      40,
+      23
+    ],
+    "nota": "Perfil ponderado de renda da p. 152. O relatório declara PNADC anual 2025 visita 1 e TSE junho/2026 como referências (p. 4), sem publicar pesos ou bases brutas. Cortes em salários de 2026, coerentes com os cartões registrados de rodadas anteriores; o questionário registrado desta rodada não foi obtido. Teste em reais nominais depende dessa hipótese de continuidade. Renda familiar declarada não é idêntica à renda domiciliar efetiva da PNAD; pessoas 16+ não são cadastro eleitoral."
+  },
+  "publicado": {
+    "2t": {
+      "lula": 47,
+      "flavio": 46,
+      "branco_nulo": 6,
+      "indecisos": 1
+    },
+    "1t": {
+      "lula": 42,
+      "flavio": 37,
+      "cury": 6,
+      "caiado": 5,
+      "renan_santos": 2,
+      "zema": 1,
+      "outros": 1,
+      "branco_nulo": 4,
+      "indecisos": 2
+    }
+  },
+  "cruzamentos": {
+    "2t": {
+      "opcoes": [
+        "lula",
+        "flavio",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          57,
+          34,
+          7,
+          2
+        ],
+        [
+          53,
+          39,
+          8,
+          0
+        ],
+        [
+          41,
+          53,
+          6,
+          1
+        ],
+        [
+          46,
+          48,
+          5,
+          0
+        ]
+      ],
+      "nota": "Extração programática da p. 76, na ordem das faixas da p. 152."
+    },
+    "1t": {
+      "opcoes": [
+        "lula",
+        "flavio",
+        "cury",
+        "caiado",
+        "renan_santos",
+        "zema",
+        "outros",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          53,
+          24,
+          4,
+          6,
+          1,
+          0,
+          2,
+          6,
+          5
+        ],
+        [
+          49,
+          33,
+          4,
+          7,
+          1,
+          0,
+          1,
+          5,
+          1
+        ],
+        [
+          35,
+          44,
+          8,
+          4,
+          1,
+          1,
+          1,
+          3,
+          2
+        ],
+        [
+          42,
+          39,
+          6,
+          3,
+          5,
+          2,
+          1,
+          2,
+          0
+        ]
+      ],
+      "nota": "Extração programática da p. 34, na ordem das faixas da p. 152."
+    }
+  },
+  "notas": "14ª rodada. Relatório de 155 páginas.",
+  "dossie": "nexus_btg_140926.html"
+}
