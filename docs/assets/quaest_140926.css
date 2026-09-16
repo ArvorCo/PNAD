@@ -1,0 +1,80 @@
+/* Extensão do mesmo layout de agosto. Gráficos e conteúdo não dependem de JS. */
+:root { --muted:#526171; --red:#b8322b; --gold:#815900; --green:#116645; }
+.hero::after { content:'140926'; }
+.case-file::before { background:#a52b25; }
+.case-file dt { color:#526171; }
+.hero .deck { color:#edf1f3; }
+.hero strong { color:var(--lime); }
+.chapter-content>p, .chapter-content>h3 { max-width:960px; }
+.chapter-content>p { margin:24px 0; }
+.chapter-content h3 { margin-top:38px; font-family:var(--serif); font-size:1.6rem; line-height:1.25; }
+.chapter { scroll-margin-top:75px; }
+.verdict-grid { grid-template-columns:repeat(auto-fit,minmax(min(100%,235px),1fr)); }
+.card .metric { font-size:clamp(26px,2.8vw,40px); color:#143b62; line-height:1.22; overflow-wrap:anywhere; }
+.card .stamp { color:#25455f; background:#e8edf0; border:1px solid #98a9b5; font-size:11px; }
+.card p { color:#435262; }
+.card h3 { margin-top:12px; }
+.plain-language { color:#102438; }
+.source { color:#526171; font-size:.88rem; }
+.source a { color:#174fad; }
+.table-scroll { overflow:auto; margin:28px 0; border:1px solid #b6c1c8; background:#fffdf8; scrollbar-width:thin; }
+.table-scroll table { border-collapse:collapse; width:100%; font-size:1rem; line-height:1.4; }
+.table-scroll th,.table-scroll td { padding:15px 17px; border-bottom:1px solid #d4dadd; text-align:left; vertical-align:top; }
+.table-scroll thead th { color:#fffdf8; background:#102438; font-size:.88rem; }
+.table-scroll tbody th { font-weight:600; color:#102438; }
+.table-scroll tbody tr:nth-child(even) { background:#eef1ee; }
+.table-scroll tbody td { min-width:74px; color:#233747; }
+.table-scroll a { color:#174fad; }
+.table-scroll .source { margin:0; min-width:85px; }
+.table-scroll:focus-visible,summary:focus-visible { outline:3px solid #1c55b2; outline-offset:3px; }
+.chart-shell { background:#fffdf8; padding:22px; margin:35px 0; border:1px solid #bbc7cc; box-shadow:8px 8px 0 #dce4df; }
+.chart-shell svg { width:100%; height:auto; }
+.chart-shell figcaption { color:#526171; padding:18px 5px 0; font-size:.9rem; line-height:1.5; }
+.chart-shell svg g:focus path,.chart-shell svg g:hover path { opacity:.8; }
+.formula { padding:26px; color:#fffdf8; background:#102438; font-family:var(--mono); font-size:1.05rem; }
+details { margin:28px 0; border:1px solid #a6b3bd; background:#fffdf8; padding:20px 24px; }
+summary { cursor:pointer; font-weight:700; font-size:1.14rem; }
+details[open] summary { margin-bottom:22px; }
+.source-gallery { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:25px; }
+.source-gallery figure { margin:0; }
+.source-gallery img { width:100%; height:auto; border:1px solid #bbc7cc; }
+.source-gallery figcaption { color:#435262; font-size:.9rem; margin-top:8px; }
+pre { white-space:pre-wrap; overflow-wrap:anywhere; font-size:.88rem; }
+.sources li { margin:14px 0; overflow-wrap:anywhere; }
+.report-footer { padding:45px 0; background:#102438; color:#dce5ec; }
+.report-footer a { color:#b7d0ff; }
+@media(max-width:700px) {
+  .hero-grid { gap:35px; padding:48px 0 70px; }
+  .hero h1 { font-size:clamp(48px,12vw,70px); }
+  .brand { font-size:10px; align-items:flex-start; }
+  .brand>span { text-align:right; max-width:110px; }
+  .chapter { padding:65px 0; }
+  .chapter-head { margin-bottom:30px; }
+  .chart-shell { padding:8px; box-shadow:4px 4px 0 #dce4df; overflow:auto; }
+  .chart-shell svg { min-width:960px; }
+  .table-scroll th,.table-scroll td { padding:12px; }
+  .source-gallery { grid-template-columns:1fr; }
+  details { padding:16px; }
+  .hero-stats b { font-size:24px; }
+  .formula { padding:18px; font-size:.88rem; }
+}
+@media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }
+@media print {
+  .toc,.skip { display:none; }
+  .hero { min-height:0; }
+  .chapter { padding:35px 0; }
+  .table-scroll { overflow:visible; }
+  details:not([open]) { display:none; }
+  .card,.chart-shell { break-inside:avoid; }
+}
+/* A lista de fontes desta edição usa fundo claro. */
+:root { --blue:#1b5cc4; }
+.sources li { display:block; border-color:#bac5cc; }
+.sources li::before { color:#174fad; margin-right:12px; }
+.sources a { color:#174fad; }
+@media(max-width:700px) {
+  .brand { flex-direction:row; }
+  .brand a { max-width:240px; font-size:9px; }
+  .brand>span { font-size:9px; max-width:105px; }
+  .chart-shell::before { content:'Deslize o gráfico na horizontal para ver todos os dados'; display:block; color:#526171; font-size:14px; padding:6px; }
+}

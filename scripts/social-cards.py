@@ -60,6 +60,20 @@ _ONDAS, _INSTITUTOS = _agregador_counts()
 
 CARDS: list[dict] = [
     {
+        "slug": "quaest_14092026",
+        "eyebrow": "Quaest / Globo · 14 de setembro de 2026",
+        "title": "Dois pontos.",
+        "title_em": "Menos de um com a PNAD.",
+        "lede": "O 40 × 42 publicado vira <b>Lula 40,66 × Flávio 41,40</b>. Transferência medida, adesão frágil e o inventário do questionário.",
+        "stats": [
+            ("0,74", "ponto na régua PNAD"),
+            ("4", "origens de transferência medidas"),
+            ("66", "itens registrados auditados"),
+        ],
+        "foot": "sensibilidade de renda, não previsão eleitoral",
+        "accent": "lime",
+    },
+    {
         "slug": "reponderacao_pnad",
         "eyebrow": "Agregador Arvor · pesquisas sob a régua do IBGE",
         "title": "A corrida",
@@ -208,7 +222,11 @@ CARDS: list[dict] = [
         "title": "A renda muda",
         "title_em": "o placar.",
         "lede": "46 × 44 publicados. Na sensibilidade PNAD, <b>Lula 42,41 × Flávio 47,89</b>. Histórico, transferências medidas e anexo territorial conferidos.",
-        "stats": [("15", "tabelas extraídas"), ("303", "setores auditados"), ("2", "origens de voto medidas")],
+        "stats": [
+            ("15", "tabelas extraídas"),
+            ("303", "setores auditados"),
+            ("2", "origens de voto medidas"),
+        ],
         "foot": "dossiê de 14/09/2026 · sensibilidade, não previsão eleitoral",
         "accent": "red",
     },
@@ -781,7 +799,7 @@ def render_card(card: dict) -> str:
     else:
         right = ""
     title = escape(card["title"])
-    title_em = f'<em>{escape(card["title_em"])}</em>' if card.get("title_em") else ""
+    title_em = f"<em>{escape(card['title_em'])}</em>" if card.get("title_em") else ""
     longest = max(len(card["title"]), len(card.get("title_em", "")))
     title_size = 68 if longest <= 20 else 58 if longest <= 26 else 50
     tag = '\n    <span class="tag">Thread</span>' if card.get("thread") else ""
