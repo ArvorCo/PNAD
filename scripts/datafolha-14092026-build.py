@@ -66,6 +66,16 @@ def flat(key):
     return rows
 
 
+def camada_campanha(kind):
+    spec = importlib.util.spec_from_file_location(
+        "campanha_camada", ROOT / "scripts" / "campanha-092026-camada.py"
+    )
+    assert spec and spec.loader
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod.CAPITULOS[kind]()
+
+
 def main():
     html = f"""<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Datafolha: a renda muda o placar | Arvor · 14/09/2026</title>
@@ -75,7 +85,7 @@ def main():
 <p class="kicker">DATAFOLHA / BR-01833/2026 / RELATÓRIO COMPLETO</p><h1>A renda muda<br><em>o placar.</em></h1><p class="deck">O empate publicado sobrevive de uma semana para outra. A sensibilidade à renda também: com a referência principal da PNAD anual 2025, Flávio fica numericamente à frente nos dois turnos.</p>
 <div class="score-grid"><div><span>2º TURNO · PUBLICADO</span><b><i class="lula">46</i> <small>×</small> <i class="flavio">44</i></b><p>Lula / Flávio</p></div><div><span>2º TURNO · SENSIBILIDADE PNAD</span><b><i class="lula">42,41</i> <small>×</small> <i class="flavio">47,89</i></b><p>Renda efetiva · pessoas de 16 anos ou mais</p></div></div>
 <p class="boundary">Análise de uma margem de ponderação. Não é previsão, resultado corrigido nem reprodução dos pesos conjuntos do instituto.</p><p class="meta">Campo: 8–10 de setembro · Divulgação: 11/09 · Dossiê: 14/09/2026<br>2.002 entrevistas · 125 municípios · Folha de S.Paulo e TV Globo</p></div></header>
-<nav aria-label="Capítulos"><div class="wrap"><a href="#renda">01 Renda</a><a href="#historico">02 Histórico</a><a href="#voto-util">03 Voto útil</a><a href="#transferencia">04 Sankey</a><a href="#alternativos">05 Alternativas</a><a href="#territorio">06 Território</a><a href="#questionario">07 Questionário</a><a href="#limites">08 Limites</a><a href="#tabelas">09 Tabelas</a><a href="#fontes">10 Fontes</a></div></nav><main class="wrap">"""
+<nav aria-label="Capítulos"><div class="wrap"><a href="#renda">01 Renda</a><a href="#historico">02 Histórico</a><a href="#voto-util">03 Voto útil</a><a href="#transferencia">04 Sankey</a><a href="#alternativos">05 Alternativas</a><a href="#territorio">06 Território</a><a href="#questionario">07 Questionário</a><a href="#limites">08 Limites</a><a href="#tabelas">09 Tabelas</a><a href="#campanha">10 Campanha</a><a href="#fontes">11 Fontes</a></div></nav><main class="wrap">"""
     html += start(
         "renda",
         "01",
@@ -424,8 +434,17 @@ def main():
     html += '<p>O ponto “·” representa o traço do PDF. Para a conta, ele é tratado como zero, sem atribuir uma fração não publicada. Votos válidos têm universo próprio e não são misturados com percentuais do eleitorado total. <a href="assets/datafolha_14092026_cruzamentos.json">Baixar todas as tabelas em JSON</a>.</p></section>'
 
     html += start(
-        "fontes",
+        "campanha",
         "10",
+        "Onde está o voto,<br>e a que distância ele está.",
+        "O anexo regional do próprio relatório, cruzado com as quinze pesquisas estaduais do mesmo período e com o resultado do TSE de 2022 em 5.751 municípios. A leitura que a campanha usa, com o número ao lado.",
+    )
+    html += camada_campanha("datafolha")
+    html += "</section>"
+
+    html += start(
+        "fontes",
+        "11",
         "Documento, conta<br>e trilha de reprodução.",
         "O laudo parte de três PDFs preservados e de uma captura textual do registro público. Os arquivos derivados permitem refazer a leitura sem transcrever percentuais à mão.",
     )

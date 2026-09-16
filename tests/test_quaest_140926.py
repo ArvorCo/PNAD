@@ -112,7 +112,8 @@ def test_static_report_local_links_and_sources():
     soup = BeautifulSoup(source, "html.parser")
     ids = [tag["id"] for tag in soup.select("[id]")]
     assert len(ids) == len(set(ids))
-    assert len(soup.select("main section")) == 20
+    # 20 capitulos do laudo mais a camada de campanha de 16/09.
+    assert len(soup.select("main section")) == 21
     assert len(soup.select("svg")) == 3
     assert "—" not in source
     assert "Não há fita de Lula ou Flávio" in soup.get_text()

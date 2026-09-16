@@ -62,6 +62,16 @@ def adj(ballot, scenario="pessoas16_efetivo"):
     return R["turnos"][ballot]["cenarios"][scenario]["ajustado"]
 
 
+def camada_campanha(kind):
+    spec = importlib.util.spec_from_file_location(
+        "campanha_camada", ROOT / "scripts" / "campanha-092026-camada.py"
+    )
+    assert spec and spec.loader
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod.CAPITULOS[kind]()
+
+
 sections = []
 sections.append(
     section(
@@ -586,6 +596,17 @@ evidence = "".join(
 )
 sections[-1] = sections[-1].replace("</section>", evidence + "</section>")
 
+sections.insert(
+    len(sections) - 1,
+    section(
+        "campanha",
+        "12",
+        "Onde está o voto,<br>e a que distância ele está.",
+        "O gradiente de renda e de município do próprio relatório, cruzado com as quinze pesquisas estaduais do mesmo período e com o TSE de 2022 em 5.751 municípios.",
+        camada_campanha("nexus"),
+    ),
+)
+
 nav = [
     ("renda", "Renda"),
     ("conta", "A conta"),
@@ -598,6 +619,7 @@ nav = [
     ("incerteza", "Incerteza"),
     ("documento", "Documento"),
     ("anexo", "Anexo"),
+    ("campanha", "Campanha"),
     ("fontes", "Fontes"),
 ]
 html = (

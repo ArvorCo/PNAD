@@ -60,6 +60,35 @@ _ONDAS, _INSTITUTOS = _agregador_counts()
 
 CARDS: list[dict] = [
     {
+        "slug": "estaduais_092026",
+        "eyebrow": "Atlas estadual · setembro de 2026",
+        "title": "A direita ganha o estado.",
+        "title_em": "E perde o país no mesmo domicílio.",
+        "lede": "Quinze pesquisas estaduais e o TSE de 2022 em 5.751 municípios. O vão entre a candidatura de direita ao governo e a presidencial chega a <b>33 pontos</b>, medido na mesma entrevista.",
+        "stats": [
+            ("33", "pontos de vão no Ceará"),
+            ("26,6 mi", "de eleitores em estados sem visita"),
+            ("54", "municípios guardam metade do voto do NE"),
+        ],
+        "foot": "leitura descritiva de pesquisa, não previsão eleitoral",
+        "accent": "lime",
+    },
+    {
+        "slug": "superthread_092026",
+        "eyebrow": "Thread · rodada de setembro de 2026",
+        "title": "Quatro pesquisas, uma régua só.",
+        "title_em": "E o mapa que ninguém abriu.",
+        "lede": "Datafolha, CNT/MDA, BTG/Nexus e Quaest discordam do placar e concordam no efeito da renda. Depois, as quinze estaduais que não viraram manchete.",
+        "stats": [
+            ("7", "cards quadrados, texto pronto"),
+            ("4 / 4", "pesquisas andam para o mesmo lado"),
+            ("693 mil", "votos de Bolsonaro em Manaus"),
+        ],
+        "foot": "sensibilidade de uma margem sob régua comum",
+        "accent": "blue",
+        "thread": True,
+    },
+    {
         "slug": "quaest_14092026",
         "eyebrow": "Quaest / Globo · 14 de setembro de 2026",
         "title": "Dois pontos.",

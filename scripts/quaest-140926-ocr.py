@@ -40,9 +40,7 @@ def page_ocr(task):
             k: (
                 int(v)
                 if k in ["left", "top", "width", "height"]
-                else float(v)
-                if k == "conf"
-                else v
+                else float(v) if k == "conf" else v
             )
             for k, v in r.items()
             if k in ["text", "left", "top", "width", "height", "conf"]

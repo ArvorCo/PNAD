@@ -89,9 +89,7 @@ def cards(rows):
 
 
 def figure(svg, caption):
-    return (
-        f'<figure class="chart-shell" tabindex="0">{svg}<figcaption>{caption}</figcaption></figure>'
-    )
+    return f'<figure class="chart-shell" tabindex="0">{svg}<figcaption>{caption}</figcaption></figure>'
 
 
 NAV = {
@@ -114,6 +112,7 @@ NAV = {
     "agregados": "Agregados",
     "diagnostico": "Diagnóstico",
     "cobranca": "Cobrança",
+    "campanha": "Campanha",
     "fontes": "Fontes",
 }
 SECTIONS = []
@@ -221,6 +220,16 @@ def sources():
     )
 
 
+def camada_campanha(kind):
+    spec = importlib.util.spec_from_file_location(
+        "campanha_camada", ROOT / "scripts" / "campanha-092026-camada.py"
+    )
+    assert spec and spec.loader
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod.CAPITULOS[kind]()
+
+
 def main():
     global SECTIONS
     SECTIONS = []
@@ -241,6 +250,14 @@ def main():
     body = (
         module("quaest-140926-chapters").chapters(b)
         + module("quaest-140926-chapters-extra").chapters(b)
+        + [
+            section(
+                "campanha",
+                "Onde está o voto, e a que distância ele está.",
+                "A mesma casa publicou quinze pesquisas estaduais em agosto e setembro. Cruzadas com o TSE de 2022 em 5.751 municípios, elas dão o teto endereçável de cada estado e o tema de cada um.",
+                camada_campanha("quaest"),
+            )
+        ]
         + [sources()]
     )
     links = "".join(f'<a href="#{slug}">{NAV[slug]}</a>' for slug, _ in SECTIONS)
