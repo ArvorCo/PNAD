@@ -1,0 +1,134 @@
+{
+  "id": "mda_2026-09-13",
+  "instituto": "MDA",
+  "contratante": "Confederação Nacional do Transporte (CNT)",
+  "registro_tse": "BR-06902/2026",
+  "campo": {
+    "inicio": "2026-09-09",
+    "fim": "2026-09-13"
+  },
+  "divulgacao": "2026-09-15",
+  "n": 2002,
+  "metodo": "presencial, domiciliar e ponto de fluxo; cotas de gênero, idade, renda e instrução; sem ponderação posterior declarada",
+  "fonte": {
+    "tipo": "relatorio",
+    "rotulo": "Relatório CNT/MDA, 170ª rodada",
+    "pdf": "data/pesquisas/cnt-mda/2026-09-15/relatorio.pdf",
+    "url": "https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2026/09/41c8cf7e-63b9-4165-be91-3f4545ba7649-1.pdf",
+    "paginas": {
+      "metodologia": 3,
+      "perfil_renda": 40,
+      "1t": 8,
+      "1t_renda": 9,
+      "2t": 12,
+      "2t_renda": 13
+    },
+    "status": "Relatório completo conferido.",
+    "nota": "A p.3 declara que não houve ponderação dos dados. A composição publicada na p.40 é a distribuição das entrevistas, com 1,4% de renda NS/NR. Capa e metodologia trazem BR-06902/2026; a contracapa repete BR-06935/2026, código da onda anterior."
+  },
+  "renda": {
+    "unidade": "salarios_minimos",
+    "ano_referencia": 2026,
+    "faixas": [
+      {
+        "rotulo": "Menos de 2 SM (até R$ 3.242)",
+        "max": 2
+      },
+      {
+        "rotulo": "De 2 até 5 SM (R$ 3.242 a 8.105)",
+        "max": 5
+      },
+      {
+        "rotulo": "Mais de 5 SM (acima de R$ 8.105)",
+        "max": null
+      }
+    ],
+    "amostra_pct": [
+      43.8,
+      33.8,
+      21.0
+    ],
+    "perfil_tipo": "perfil_publicado",
+    "nota": "P.40: menos de 2 SM = 43,8%; de 2 até 5 SM = 33,8%; mais de 5 SM = 21,0%; NS/NR = 1,4%. O motor exclui NS/NR da distribuição de renda e renormaliza as três faixas (44,42% / 34,28% / 21,30%), mantendo o placar total como âncora, sem imputar o voto de quem não declarou renda. A metodologia da p.3 inclui renda nas variáveis de controle e afirma que não foi utilizada ponderação nos dados. Cortes nominais em salários mínimos de 2026; não confundir renda familiar com per capita."
+  },
+  "publicado": {
+    "1t": {
+      "lula": 40.5,
+      "flavio": 30.4,
+      "outros": 15.6,
+      "branco_nulo": 6.0,
+      "indecisos": 7.5
+    },
+    "2t": {
+      "lula": 47.3,
+      "flavio": 40.0,
+      "branco_nulo": 10.2,
+      "indecisos": 2.5
+    }
+  },
+  "cruzamentos": {
+    "1t": {
+      "opcoes": [
+        "lula",
+        "flavio",
+        "outros",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          47,
+          24,
+          13,
+          7,
+          8
+        ],
+        [
+          37,
+          33,
+          18,
+          5,
+          7
+        ],
+        [
+          34,
+          40,
+          17,
+          5,
+          5
+        ]
+      ],
+      "nota": "P.9, três linhas de renda conferidas visualmente. Outros agrupa Cury, Caiado, Renan, Marçal, Zema e demais nomes da p.8, total 15,6%. As linhas somam 99, 100 e 101; preservamos os arredondamentos publicados, sem preencher células por resíduo."
+    },
+    "2t": {
+      "opcoes": [
+        "lula",
+        "flavio",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          54,
+          33,
+          10,
+          4
+        ],
+        [
+          45,
+          43,
+          11,
+          2
+        ],
+        [
+          39,
+          50,
+          10,
+          1
+        ]
+      ],
+      "nota": "P.13, Lula x Flávio. Valores conferidos na renderização, incluindo os rótulos de indecisos na borda direita: 4, 2 e 1. As linhas somam 101, 101 e 100; preservadas como publicadas."
+    }
+  },
+  "notas": "170ª rodada CNT/MDA. Sensibilidade de uma margem com a mesma fórmula e os três universos PNAD do agregador. Recomposta também por sexo como controle independente da leitura. Os percentuais ajustados não são um novo resultado oficial nem uma previsão; podem não somar exatamente 100 devido aos arredondamentos das tabelas originais."
+}

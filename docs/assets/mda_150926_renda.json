@@ -1,0 +1,305 @@
+{
+  "fonte": {
+    "tipo": "relatorio",
+    "rotulo": "Relatório CNT/MDA, 170ª rodada",
+    "pdf": "data/pesquisas/cnt-mda/2026-09-15/relatorio.pdf",
+    "url": "https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2026/09/41c8cf7e-63b9-4165-be91-3f4545ba7649-1.pdf",
+    "paginas": {
+      "metodologia": 3,
+      "perfil_renda": 40,
+      "1t": 8,
+      "1t_renda": 9,
+      "2t": 12,
+      "2t_renda": 13
+    },
+    "status": "Relatório completo conferido.",
+    "nota": "A p.3 declara que não houve ponderação dos dados. A composição publicada na p.40 é a distribuição das entrevistas, com 1,4% de renda NS/NR. Capa e metodologia trazem BR-06902/2026; a contracapa repete BR-06935/2026, código da onda anterior."
+  },
+  "sha256": "ce1a1f63a709bcabdbf7fd18a2d0058f7ee9849744294c9e22d9286a5e60e4bc",
+  "bytes": 4269954,
+  "perfil_renda_incluindo_nsr": [
+    43.8,
+    33.8,
+    21.0,
+    1.4
+  ],
+  "outros_1t": {
+    "cury": 6.0,
+    "caiado": 3.0,
+    "renan": 2.7,
+    "marcal": 1.8,
+    "zema": 1.0,
+    "outros_nomes": 1.1
+  },
+  "controle_sexo": {
+    "pesos": [
+      47.6,
+      52.4
+    ],
+    "1t": [
+      [
+        38,
+        35
+      ],
+      [
+        43,
+        26
+      ]
+    ],
+    "2t": [
+      [
+        43,
+        45
+      ],
+      [
+        51,
+        35
+      ]
+    ]
+  },
+  "provas": {
+    "1t": {
+      "recomposto_sexo_lula_flavio": [
+        40.62,
+        30.283999999999995
+      ],
+      "residuo_sexo_max": 0.11999999999999744,
+      "recomposto_renda": {
+        "lula": 40.803,
+        "flavio": 30.493,
+        "outros": 15.566,
+        "branco_nulo": 5.888,
+        "indecisos": 7.018
+      },
+      "residuo_renda_max": 0.303
+    },
+    "2t": {
+      "recomposto_sexo_lula_flavio": [
+        47.192,
+        39.76
+      ],
+      "residuo_sexo_max": 0.240000000000002,
+      "recomposto_renda": {
+        "lula": 47.72,
+        "flavio": 40.049,
+        "branco_nulo": 10.343,
+        "indecisos": 2.675
+      },
+      "residuo_renda_max": 0.42
+    }
+  },
+  "resultado": {
+    "id": "mda_2026-09-13",
+    "instituto": "MDA",
+    "contratante": "Confederação Nacional do Transporte (CNT)",
+    "registro_tse": "BR-06902/2026",
+    "campo": {
+      "inicio": "2026-09-09",
+      "fim": "2026-09-13"
+    },
+    "divulgacao": "2026-09-15",
+    "n": 2002,
+    "metodo": "presencial, domiciliar e ponto de fluxo; cotas de gênero, idade, renda e instrução; sem ponderação posterior declarada",
+    "fonte": {
+      "tipo": "relatorio",
+      "rotulo": "Relatório CNT/MDA, 170ª rodada",
+      "pdf": "data/pesquisas/cnt-mda/2026-09-15/relatorio.pdf",
+      "url": "https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2026/09/41c8cf7e-63b9-4165-be91-3f4545ba7649-1.pdf",
+      "paginas": {
+        "metodologia": 3,
+        "perfil_renda": 40,
+        "1t": 8,
+        "1t_renda": 9,
+        "2t": 12,
+        "2t_renda": 13
+      },
+      "status": "Relatório completo conferido.",
+      "nota": "A p.3 declara que não houve ponderação dos dados. A composição publicada na p.40 é a distribuição das entrevistas, com 1,4% de renda NS/NR. Capa e metodologia trazem BR-06902/2026; a contracapa repete BR-06935/2026, código da onda anterior."
+    },
+    "renda": {
+      "unidade": "salarios_minimos",
+      "faixas": [
+        "Menos de 2 SM (até R$ 3.242)",
+        "De 2 até 5 SM (R$ 3.242 a 8.105)",
+        "Mais de 5 SM (acima de R$ 8.105)"
+      ],
+      "cortes_brl_202604": [
+        3215.9,
+        8039.76,
+        null
+      ],
+      "amostra_pct": [
+        44.422,
+        34.28,
+        21.298
+      ],
+      "pnad_pct": {
+        "pessoas16_efetivo": [
+          35.187,
+          39.259,
+          25.554
+        ],
+        "pessoas16_habitual": [
+          34.864,
+          40.402,
+          24.734
+        ],
+        "domicilios_efetivo": [
+          42.672,
+          35.771,
+          21.557
+        ]
+      },
+      "nota": "P.40: menos de 2 SM = 43,8%; de 2 até 5 SM = 33,8%; mais de 5 SM = 21,0%; NS/NR = 1,4%. O motor exclui NS/NR da distribuição de renda e renormaliza as três faixas (44,42% / 34,28% / 21,30%), mantendo o placar total como âncora, sem imputar o voto de quem não declarou renda. A metodologia da p.3 inclui renda nas variáveis de controle e afirma que não foi utilizada ponderação nos dados. Cortes nominais em salários mínimos de 2026; não confundir renda familiar com per capita.",
+      "perfil_tipo": "perfil_publicado"
+    },
+    "desvio_ate_primeira_faixa": 9.235,
+    "turnos": {
+      "2t": {
+        "opcoes": [
+          "lula",
+          "flavio",
+          "branco_nulo",
+          "indecisos"
+        ],
+        "publicado": {
+          "lula": 47.3,
+          "flavio": 40.0,
+          "branco_nulo": 10.2,
+          "indecisos": 2.5
+        },
+        "recomposto": {
+          "lula": 47.72,
+          "flavio": 40.049,
+          "branco_nulo": 10.343,
+          "indecisos": 2.675
+        },
+        "residuo_max": 0.42,
+        "cenarios": {
+          "pessoas16_efetivo": {
+            "contrafactual": {
+              "lula": 46.634,
+              "flavio": 41.27,
+              "branco_nulo": 10.393,
+              "indecisos": 2.448
+            },
+            "ajustado": {
+              "lula": 46.214,
+              "flavio": 41.221,
+              "branco_nulo": 10.25,
+              "indecisos": 2.273
+            }
+          },
+          "pessoas16_habitual": {
+            "contrafactual": {
+              "lula": 46.654,
+              "flavio": 41.245,
+              "branco_nulo": 10.404,
+              "indecisos": 2.45
+            },
+            "ajustado": {
+              "lula": 46.234,
+              "flavio": 41.196,
+              "branco_nulo": 10.261,
+              "indecisos": 2.274
+            }
+          },
+          "domicilios_efetivo": {
+            "contrafactual": {
+              "lula": 47.547,
+              "flavio": 40.242,
+              "branco_nulo": 10.358,
+              "indecisos": 2.638
+            },
+            "ajustado": {
+              "lula": 47.127,
+              "flavio": 40.193,
+              "branco_nulo": 10.215,
+              "indecisos": 2.462
+            }
+          }
+        },
+        "gap_publicado": 7.299999999999997,
+        "gap_ajustado": 4.993000000000002,
+        "margem_diferenca_95": 4.08
+      },
+      "1t": {
+        "opcoes": [
+          "lula",
+          "flavio",
+          "outros",
+          "branco_nulo",
+          "indecisos"
+        ],
+        "publicado": {
+          "lula": 40.5,
+          "flavio": 30.4,
+          "outros": 15.6,
+          "branco_nulo": 6.0,
+          "indecisos": 7.5
+        },
+        "recomposto": {
+          "lula": 40.803,
+          "flavio": 30.493,
+          "outros": 15.566,
+          "branco_nulo": 5.888,
+          "indecisos": 7.018
+        },
+        "residuo_max": 0.303,
+        "cenarios": {
+          "pessoas16_efetivo": {
+            "contrafactual": {
+              "lula": 39.752,
+              "flavio": 31.622,
+              "outros": 15.985,
+              "branco_nulo": 5.704,
+              "indecisos": 6.841
+            },
+            "ajustado": {
+              "lula": 39.449,
+              "flavio": 31.529,
+              "outros": 16.019,
+              "branco_nulo": 5.815,
+              "indecisos": 7.323
+            }
+          },
+          "pessoas16_habitual": {
+            "contrafactual": {
+              "lula": 39.744,
+              "flavio": 31.594,
+              "outros": 16.009,
+              "branco_nulo": 5.697,
+              "indecisos": 6.854
+            },
+            "ajustado": {
+              "lula": 39.441,
+              "flavio": 31.501,
+              "outros": 16.044,
+              "branco_nulo": 5.809,
+              "indecisos": 7.336
+            }
+          },
+          "domicilios_efetivo": {
+            "contrafactual": {
+              "lula": 40.62,
+              "flavio": 30.669,
+              "outros": 15.651,
+              "branco_nulo": 5.853,
+              "indecisos": 6.996
+            },
+            "ajustado": {
+              "lula": 40.317,
+              "flavio": 30.576,
+              "outros": 15.685,
+              "branco_nulo": 5.965,
+              "indecisos": 7.477
+            }
+          }
+        },
+        "gap_publicado": 10.100000000000001,
+        "gap_ajustado": 7.919999999999998,
+        "margem_diferenca_95": 3.662
+      }
+    }
+  }
+}
