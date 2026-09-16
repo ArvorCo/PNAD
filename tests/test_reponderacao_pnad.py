@@ -165,10 +165,10 @@ def test_poll_files_have_required_fields():
                 assert len(row) == len(table["opcoes"]), (path.name, turno)
 
 
-def test_quaest_september_partial_source_and_current_wave(output):
-    """A matéria atual fornece só 2T; cotas registradas não viram perfil observado."""
+def test_quaest_september_full_source_and_current_wave(output):
+    """A íntegra confirma 2T e perfil, acrescentando 1T sem reutilizar a onda anterior."""
     raw = json.loads((POLLS / "quaest_2026-09-13.json").read_text())
-    assert set(raw["cruzamentos"]) == set(raw["publicado"]) == {"2t"}
+    assert set(raw["cruzamentos"]) == set(raw["publicado"]) == {"1t", "2t"}
     assert raw["cruzamentos"]["2t"]["linhas"] == [
         [51, 32, 12, 5],
         [36, 46, 13, 5],
@@ -177,9 +177,9 @@ def test_quaest_september_partial_source_and_current_wave(output):
     assert raw["renda"]["amostra_pct"] == [31, 42, 27]
     assert raw["registro_tse"] == "BR-03607/2026"
     poll = next(p for p in output["pesquisas"] if p["id"] == raw["id"])
-    assert poll["renda"]["perfil_tipo"] == "cota_registrada"
-    assert poll["fonte"]["tipo"] == "materia"
-    assert poll["fonte"]["pdf"] is None
+    assert poll["renda"]["perfil_tipo"] == "perfil_publicado"
+    assert poll["fonte"]["tipo"] == "relatorio"
+    assert poll["fonte"]["pdf"].endswith("2026-09-14/relatorio.pdf")
     result = poll["turnos"]["2t"]
     assert result["residuo_max"] == pytest.approx(0.11)
     adjusted = result["cenarios"][SCENARIO]["ajustado"]
@@ -188,7 +188,7 @@ def test_quaest_september_partial_source_and_current_wave(output):
     assert sum(adjusted.values()) == pytest.approx(100.0)
 
 
-def test_partial_source_labels_reach_the_published_card():
+def test_full_source_labels_reach_the_published_card():
     from bs4 import BeautifulSoup
 
     html = BeautifulSoup(
@@ -196,9 +196,63 @@ def test_partial_source_labels_reach_the_published_card():
     )
     card = html.find(id="pesquisa-quaest_2026-09-13")
     text = card.get_text(" ", strip=True)
-    assert "Fonte parcial: g1 + cotas registradas no TSE." in text
-    assert "perfil ponderado final, ainda não conferido" in text
-    assert "COTA REGISTRADA" in text
-    assert "Matéria do g1 (renda)" in text
-    assert "PDF do relatório" not in text
-    assert "AMOSTRA DO INSTITUTO" not in text
+    assert "Relatório completo conferido." in text
+    assert "Fonte parcial" not in text
+    assert "COTA REGISTRADA" not in text
+    assert "Relatório completo (205 páginas)" in text
+    assert "AMOSTRA DO INSTITUTO" in text
+
+
+def test_mda_september_profile_excludes_income_nonresponse(output):
+    raw = json.loads((POLLS / "mda_2026-09-13.json").read_text())
+    assert raw["renda"]["amostra_pct"] == [43.8, 33.8, 21.0]
+    assert sum(raw["renda"]["amostra_pct"]) == pytest.approx(98.6)
+    assert raw["publicado"]["1t"]["outros"] == pytest.approx(15.6)
+    assert raw["registro_tse"] == "BR-06902/2026"
+    poll = next(p for p in output["pesquisas"] if p["id"] == raw["id"])
+    assert poll["renda"]["amostra_pct"] == pytest.approx([44.422, 34.280, 21.298])
+    assert poll["desvio_ate_primeira_faixa"] == pytest.approx(9.235, abs=0.001)
+    assert poll["fonte"]["paginas"]["perfil_renda"] == 40
+
+
+def test_mda_september_anchored_results_and_rounding(output):
+    poll = next(p for p in output["pesquisas"] if p["id"] == "mda_2026-09-13")
+    for turno, expected in [("1t", [39.449, 31.529]), ("2t", [46.214, 41.221])]:
+        result = poll["turnos"][turno]
+        adjusted = result["cenarios"][SCENARIO]["ajustado"]
+        assert [adjusted["lula"], adjusted["flavio"]] == pytest.approx(expected)
+        assert result["residuo_max"] < 0.5
+    raw = json.loads((POLLS / "mda_2026-09-13.json").read_text())
+    assert [sum(r) for r in raw["cruzamentos"]["1t"]["linhas"]] == [99, 100, 101]
+    assert [sum(r) for r in raw["cruzamentos"]["2t"]["linhas"]] == [101, 101, 100]
+
+
+def test_mda_september_reading_has_independent_sex_check():
+    audit = json.loads((ROOT / "docs/assets/mda_150926_renda.json").read_text())
+    assert audit["provas"]["1t"]["recomposto_sexo_lula_flavio"] == pytest.approx(
+        [40.62, 30.284]
+    )
+    assert audit["provas"]["2t"]["recomposto_sexo_lula_flavio"] == pytest.approx(
+        [47.192, 39.76]
+    )
+    assert audit["perfil_renda_incluindo_nsr"] == [43.8, 33.8, 21.0, 1.4]
+    assert (
+        audit["sha256"]
+        == "ce1a1f63a709bcabdbf7fd18a2d0058f7ee9849744294c9e22d9286a5e60e4bc"
+    )
+
+
+def test_latest_wave_mean_uses_new_mda_wave(output):
+    # Independent reconstruction ensures August was replaced in the per-institute mean.
+    polls = [p for p in output["pesquisas"] if "2t" in p["turnos"]]
+    latest = {}
+    for p in sorted(polls, key=lambda p: p["campo"]["fim"]):
+        latest[p["instituto"]] = p
+    assert latest["MDA"]["id"] == "mda_2026-09-13"
+    mean = sum(
+        p["turnos"]["2t"]["cenarios"][SCENARIO]["ajustado"]["lula"]
+        for p in latest.values()
+    ) / len(latest)
+    assert output["agregador"]["ultimo"]["2t"]["media_simples"]["ajustado"][
+        "lula"
+    ] == round(mean, 2)
