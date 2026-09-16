@@ -19,6 +19,15 @@ TSE_QUOTE = (
 
 
 def main():
+    current = ROOT / "analysis/reponderacao/pesquisas/quaest_2026-09-13.json"
+    if (
+        current.exists()
+        and json.loads(current.read_text()).get("fonte", {}).get("tipo") == "relatorio"
+    ):
+        print(
+            "Fonte integral já disponível; use scripts/quaest-140926-audit.py. Importação parcial preservada apenas como histórico."
+        )
+        return
     text = (FOLDER / "g1-segmentos.txt").read_text()
     assert "BR-03607/2026" in text and "51% x 32%" in text
     assert all(sum(row) == 100 for row in ROWS)

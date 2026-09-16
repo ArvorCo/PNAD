@@ -1,85 +1,102 @@
 {
   "registro_tse": "BR-03607/2026",
   "fontes": {
-    "tipo": "materia",
-    "rotulo": "Matéria do g1 (renda)",
-    "pdf": null,
-    "arquivo": "data/pesquisas/quaest/2026-09-14/g1-segmentos.html",
-    "url": "https://g1.globo.com/politica/eleicoes/2026/pesquisa-eleitoral/noticia/2026/09/14/2-turno-lula-e-flavio-bolsonaro-quaest-segmentos.ghtml",
-    "localizador": "Arte “2º turno: Lula x Flávio Bolsonaro - Renda”, coluna 14/9",
-    "paginas": {},
-    "status": "Fonte parcial: g1 + cotas registradas no TSE.",
-    "nota": "Relatório completo não consultado. Os votos por renda são desta rodada; os pesos são as cotas declaradas no registro atual. A conta pressupõe sua aplicação ao perfil ponderado final, ainda não conferido.",
-    "complementares": [
-      {
-        "tipo": "materia",
-        "url": "https://g1.globo.com/politica/eleicoes/2026/pesquisa-eleitoral/noticia/2026/09/14/quaest-2-turno-setembro.ghtml",
-        "arquivo": "data/pesquisas/quaest/2026-09-14/g1-placar.html",
-        "uso": "Placar geral: Lula 40, Flávio 42, B/N/não vai votar 13, indecisos 5."
-      },
-      {
-        "tipo": "registro_tse",
-        "url": "https://pesqele-divulgacao.tse.jus.br/app/pesquisa/listar.xhtml",
-        "identificacao": "BR-03607/2026",
-        "consulta": "2026-09-14",
-        "trecho": "Renda domiciliar total, incluindo pensões, benefícios e rendimentos de trabalhos informais: Até 2 salários-mínimos (31%); Mais de 2 a 5 salários-mínimos (42%); Mais de 5 salários-mínimos (27%).",
-        "uso": "Cotas desta rodada, campo, n, contratantes e metodologia; consulta direta à interface pública."
-      }
-    ]
-  },
-  "transcricao_renda": {
-    "ordem": [
-      "lula",
-      "flavio",
-      "branco_nulo",
-      "indecisos"
-    ],
-    "linhas": [
-      [
-        51,
-        32,
-        12,
-        5
-      ],
-      [
-        36,
-        46,
-        13,
-        5
-      ],
-      [
-        34,
-        47,
-        14,
-        5
-      ]
-    ]
+    "tipo": "relatorio",
+    "rotulo": "Relatório completo (205 páginas)",
+    "pdf": "data/pesquisas/quaest/2026-09-14/relatorio.pdf",
+    "url": "https://quaest.com.br/wp-content/uploads/2026/09/QUAEST4PRESIDENCIAL1409.pdf",
+    "paginas": {
+      "perfil_renda": 199,
+      "1t_renda": 22,
+      "1t_topline": 16,
+      "2t_renda": 33,
+      "2t_topline": 28
+    },
+    "status": "Relatório completo conferido.",
+    "nota": "Íntegra de 14/09 confirma perfil 31/42/27 e cruzamento de 2º turno anteriormente obtido no g1; acrescenta o primeiro turno sem Marçal. O PDF chama essa lista de cenário 1, embora ela corresponda à lista do cenário 2 registrado."
   },
   "arquivos": [
     {
-      "arquivo": "g1-placar.html",
-      "bytes": 1501944,
-      "sha256": "b4571f98fc9ac8fc0a510f55747aa652a7f65dc7a2cd65451c79fd7f6a7341de"
+      "arquivo": "data/pesquisas/quaest/2026-09-07/relatorio.pdf",
+      "bytes": 65006418,
+      "sha256": "0be87e1836fcbc51a23d84ebb3439f3ce11c73b8cff8dd7607f2dcdbe6039aa3"
     },
     {
-      "arquivo": "g1-placar.txt",
-      "bytes": 4665,
-      "sha256": "aab03cef3a67613923d5ed657092123e5782c0fb3eb18e82815e9d351a05d518"
+      "arquivo": "data/pesquisas/quaest/2026-09-07/questionario.pdf",
+      "bytes": 804333,
+      "sha256": "f70cd436d66a1c74a214544faff54f25ab1b61764cd290d095aaaabc795b4de6"
     },
     {
-      "arquivo": "g1-renda.jpg",
-      "bytes": 189104,
-      "sha256": "9cd545af02847151216f66bd020388956ddb051b4e13b6ddb66e83d7df58530e"
+      "arquivo": "data/pesquisas/quaest/2026-09-07/bairros.pdf",
+      "bytes": 287436,
+      "sha256": "f77506a8246a41cb26fd1f88c2332b4375c6271e71e39d148e0ddc500aaae329"
     },
     {
-      "arquivo": "g1-segmentos.html",
-      "bytes": 1516748,
-      "sha256": "840be7f4ba8a24c2d0f4ecb17fff1f72e5176579a3d82b94e845ee8d7270e41c"
+      "arquivo": "data/pesquisas/quaest/2026-09-07/registro.txt",
+      "bytes": 7846,
+      "sha256": "8715f07f8201fd4fa8fe8b997f36116981c5968791d13e234455976e3a45dcc7"
     },
     {
-      "arquivo": "g1-segmentos.txt",
-      "bytes": 4565,
-      "sha256": "586a78a06460a578c0e00235628bf923375959dab7f61ab1f124747c080bcf52"
+      "arquivo": "data/pesquisas/quaest/2026-09-14/relatorio.pdf",
+      "bytes": 78426051,
+      "sha256": "5e41b979d0f82011fbbe03ff72556995a673b64978465469cf0b544ec16fd929"
+    },
+    {
+      "arquivo": "data/pesquisas/quaest/2026-09-14/questionario.pdf",
+      "bytes": 801749,
+      "sha256": "99d98b759bf3e9be954011afc2c98da3c1c28dc4e6869a9d6dd17aa144f75715"
+    },
+    {
+      "arquivo": "data/pesquisas/quaest/2026-09-14/bairros.pdf",
+      "bytes": 287215,
+      "sha256": "905f65c3db891fc4654bcfdd2250e29ad47883bddca130047bcd4be94e9edef2"
+    },
+    {
+      "arquivo": "data/pesquisas/quaest/2026-09-14/registro.txt",
+      "bytes": 7846,
+      "sha256": "0fd17467c10ea2def648b46c017d9644269daedf0043460c227321b3277902c7"
+    },
+    {
+      "arquivo": "data/pesquisas/quaest/2026-09-14/g1-stf.html",
+      "bytes": 1459426,
+      "sha256": "58a199851186cf7fd125c8ce2ee438088fd8db706b443c62b2c16baa7ff9c6ca"
+    },
+    {
+      "arquivo": "data/pesquisas/quaest/2026-09-14/g1-stf.txt",
+      "bytes": 5396,
+      "sha256": "ea434446fe510acc7215e83b72a93f0efb1c869e3672ec292dea1eafb17642ec"
+    },
+    {
+      "arquivo": "data/pesquisas/quaest/2026-09-14/g1-reformas.html",
+      "bytes": 1449954,
+      "sha256": "a14283bf412589cf3e3b90c52c5ed489252b17e1b0ab3b533b41d71237fd44b3"
+    },
+    {
+      "arquivo": "data/pesquisas/quaest/2026-09-14/g1-reformas.txt",
+      "bytes": 3100,
+      "sha256": "4b4b2a5bf34dc123f1bb0b9249ddd548ad436cfa211d01ed5b5e5779927180d5"
+    },
+    {
+      "arquivo": "data/pesquisas/quaest/2026-09-14/catalogo-pdfs.json",
+      "bytes": 22449,
+      "sha256": "dc488694bf14db128575e8213ab929ac8b561a208279c923a7fc7d2c7e67bb25"
+    },
+    {
+      "arquivo": "data/pesquisas/quaest/2026-09-14/cnn-placar.html",
+      "bytes": 403983,
+      "sha256": "ebb68ff9b65b877f5f2d10e4b7683f8415ef48bb4fa5b7f410538e658e78da30"
     }
-  ]
+  ],
+  "ocr": "426 páginas processadas; OCR serve como índice, não como transcrição numérica validada. Tabelas do dossiê conferidas visualmente com páginas citadas.",
+  "externas": {
+    "stf": "https://g1.globo.com/politica/eleicoes/2026/noticia/2026/09/14/quaest-67percent-dizem-que-crise-no-stf-nao-influencia-voto-para-presidente.ghtml",
+    "reforms": "https://g1.globo.com/politica/eleicoes/2026/noticia/2026/09/14/crise-no-stf-maioria-defendem-aumentar-exigencias-para-nomeacao-de-ministros-do-supremo-mostra-pesquisa-quaest.ghtml",
+    "stf_impact": [
+      67,
+      22,
+      7,
+      4
+    ],
+    "note": "Somente fontes conferidas. Não é levantamento exaustivo de publicações externas. A lista de respostas à Q47 na matéria de reformas soma 108%; não incorporada como partição válida."
+  }
 }
