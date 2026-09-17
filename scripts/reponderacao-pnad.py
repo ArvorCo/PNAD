@@ -236,6 +236,8 @@ def process_poll(
             "metodo",
             "fonte",
             "dossie",
+            "publicado",
+            "sem_cruzamento",
         )
         if key in poll
     }

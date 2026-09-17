@@ -1,0 +1,91 @@
+{
+  "instituto": "Futura",
+  "contratante": "Futura/100% Cidades, recursos próprios segundo Poder360",
+  "metodo": "telefônico, CATI, abrangência nacional",
+  "renda": {
+    "unidade": "salarios_minimos",
+    "ano_referencia": 2026,
+    "faixas": [
+      {
+        "rotulo": "Até 1 SM",
+        "max": 1
+      },
+      {
+        "rotulo": "De 1 a 2 SM",
+        "max": 2
+      },
+      {
+        "rotulo": "De 2 a 5 SM",
+        "max": 5
+      },
+      {
+        "rotulo": "De 5 a 10 SM",
+        "max": 10
+      },
+      {
+        "rotulo": "Mais de 10 SM",
+        "max": null
+      }
+    ],
+    "amostra_pct": [
+      28.2,
+      20.5,
+      23.9,
+      9.4,
+      5.1
+    ],
+    "nota": "P. 7: cinco faixas de renda e 13,0% NS/NR. A soma impressa é 100,1% por arredondamento. NS/NR não é uma faixa.",
+    "mes_precos": "202609"
+  },
+  "id": "futura_2026-09-15",
+  "registro_tse": "BR-00749/2026",
+  "n": 2000,
+  "campo": {
+    "inicio": "2026-09-11",
+    "fim": "2026-09-15"
+  },
+  "divulgacao": "2026-09-17",
+  "fonte": {
+    "tipo": "relatorio",
+    "pdf": "data/originals/futura_092026_17/relatorio.pdf",
+    "url": "https://static.poder360.com.br/uploads/2026/09/Pesquisa-Presidente-Brasil-Futura-Setembro.pdf",
+    "sha256": "0616361dbe5d603e5c26dcf854fca62e6d1eb7ac1d67f7cf1889ce633645d14d",
+    "bytes": 2929821,
+    "total_paginas": 43,
+    "status": "Relatório completo conferido.",
+    "paginas": {
+      "perfil_renda": 7,
+      "1t_topline": 22,
+      "2t_topline": 26
+    },
+    "nota": "PDF disponibilizado publicamente pelo Poder360; preservado como recebido, inclusive as marcas-d’água."
+  },
+  "publicado": {
+    "1t": {
+      "lula": 38.3,
+      "flavio": 37.7,
+      "cury": 6.5,
+      "caiado": 4.5,
+      "renan_santos": 3.4,
+      "marcal": 1.9,
+      "zema": 1.0,
+      "samara": 0.2,
+      "clariana": 0.1,
+      "edmilson": 0.1,
+      "grassi": 0.1,
+      "hertz": 0,
+      "rui": 0,
+      "branco_nulo": 2.7,
+      "indecisos": 3.4
+    },
+    "2t": {
+      "lula": 43.7,
+      "flavio": 48.1,
+      "branco_nulo": 6.5,
+      "indecisos": 1.7
+    }
+  },
+  "cruzamentos": {},
+  "ignorar": true,
+  "motivo": "O perfil de renda está na p. 7, mas o voto não é cruzado por renda: pp. 23–25 (1º turno) e p. 27 (Lula × Flávio no 2º turno) cruzam sexo, região, idade e posição política. Sem voto por faixa não há reponderação em nenhum turno."
+}

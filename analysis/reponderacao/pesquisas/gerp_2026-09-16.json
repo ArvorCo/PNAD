@@ -1,0 +1,220 @@
+{
+  "instituto": "Gerp",
+  "contratante": "Gerp Mercadologia, recursos próprios",
+  "metodo": "telefônico, GerpCati com cédula estimulada lida ao entrevistado, cotas estratificadas por UF",
+  "renda": {
+    "unidade": "salarios_minimos",
+    "ano_referencia": 2026,
+    "faixas": [
+      {
+        "rotulo": "Até 1 SM (até R$ 1.621)",
+        "max": 1
+      },
+      {
+        "rotulo": "Mais de 1 a 2 SM (R$ 1.621 a 3.242)",
+        "max": 2
+      },
+      {
+        "rotulo": "Mais de 2 a 5 SM (R$ 3.242 a 8.105)",
+        "max": 5
+      },
+      {
+        "rotulo": "Mais de 5 a 10 SM (R$ 8.105 a 16.210)",
+        "max": 10
+      },
+      {
+        "rotulo": "Mais de 10 a 20 SM (R$ 16.210 a 32.420)",
+        "max": 20
+      },
+      {
+        "rotulo": "Mais de 20 SM (acima de R$ 32.420)",
+        "max": null
+      }
+    ],
+    "amostra_pct": [
+      23,
+      23,
+      33,
+      14,
+      5,
+      2
+    ],
+    "nota": "Perfil ponderado da p. 8, conferido nesta onda. As pp. 15 e 23 declaram percentuais ponderados; as bases n = 511, 501, 803, 376, 146 e 63 são contagens não ponderadas e não substituem esse perfil. Cortes em salários mínimos de 2026 (R$ 1.621).",
+    "mes_precos": "202609"
+  },
+  "id": "gerp_2026-09-16",
+  "registro_tse": "BR-00535/2026",
+  "n": 2400,
+  "campo": {
+    "inicio": "2026-09-14",
+    "fim": "2026-09-16"
+  },
+  "divulgacao": "2026-09-17",
+  "fonte": {
+    "tipo": "relatorio",
+    "pdf": "data/originals/gerp_092026_17/relatorio.pdf",
+    "url": "https://static.poder360.com.br/uploads/2026/09/pesquisa-gerp-presidencia-republica-17set2026.pdf",
+    "sha256": "6243dbcadc828eaf6c59f974f5e77301560ac837c7783606f02239bad8d206d6",
+    "bytes": 817274,
+    "total_paginas": 50,
+    "status": "Relatório completo conferido.",
+    "paginas": {
+      "perfil_renda": 8,
+      "1t_topline": 13,
+      "1t_renda": 15,
+      "2t_topline": 21,
+      "2t_renda": 23
+    },
+    "nota": "P. 15 exibe 9 de 13 categorias; as quatro omitidas têm 0% no total. Não imputamos células de renda para essas candidaturas. P. 7 declara confiança de 95%, enquanto p. 8 mostra 95,55%."
+  },
+  "publicado": {
+    "1t": {
+      "flavio": 40,
+      "lula": 37,
+      "cury": 7,
+      "caiado": 3,
+      "renan_santos": 2,
+      "zema": 1,
+      "marcal": 1,
+      "branco_nulo": 4,
+      "indecisos": 4
+    },
+    "2t": {
+      "flavio": 50,
+      "lula": 43,
+      "branco_nulo": 6,
+      "indecisos": 1
+    }
+  },
+  "cruzamentos": {
+    "1t": {
+      "opcoes": [
+        "flavio",
+        "lula",
+        "cury",
+        "caiado",
+        "renan_santos",
+        "zema",
+        "marcal",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          30,
+          46,
+          7,
+          2,
+          1,
+          0,
+          0,
+          5,
+          8
+        ],
+        [
+          41,
+          35,
+          5,
+          6,
+          3,
+          1,
+          0,
+          4,
+          4
+        ],
+        [
+          45,
+          32,
+          9,
+          3,
+          3,
+          1,
+          1,
+          2,
+          4
+        ],
+        [
+          47,
+          35,
+          9,
+          1,
+          2,
+          1,
+          0,
+          5,
+          0
+        ],
+        [
+          40,
+          36,
+          1,
+          9,
+          2,
+          3,
+          5,
+          0,
+          4
+        ],
+        [
+          38,
+          42,
+          13,
+          1,
+          0,
+          0,
+          6,
+          0,
+          0
+        ]
+      ],
+      "nota": "Extração programática da p. 15, confirmada na página renderizada. Arredondamentos preservados."
+    },
+    "2t": {
+      "opcoes": [
+        "flavio",
+        "lula",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          37,
+          52,
+          8,
+          3
+        ],
+        [
+          51,
+          43,
+          3,
+          2
+        ],
+        [
+          54,
+          37,
+          8,
+          0
+        ],
+        [
+          57,
+          39,
+          4,
+          1
+        ],
+        [
+          57,
+          40,
+          3,
+          1
+        ],
+        [
+          38,
+          46,
+          16,
+          1
+        ]
+      ],
+      "nota": "Extração programática da p. 23, confirmada na página renderizada. Arredondamentos preservados."
+    }
+  }
+}

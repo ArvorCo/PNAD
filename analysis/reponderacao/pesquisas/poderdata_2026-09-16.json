@@ -1,0 +1,165 @@
+{
+  "instituto": "PoderData",
+  "contratante": "Poder360",
+  "metodo": "telefônico (IVR/URA, discagem aleatória para celular e fixo)",
+  "renda": {
+    "unidade": "salarios_minimos",
+    "ano_referencia": 2026,
+    "faixas": [
+      {
+        "rotulo": "Até 2 SM (até R$ 3.242)",
+        "max": 2
+      },
+      {
+        "rotulo": "De 2 a 5 SM (R$ 3.242 a 8.105)",
+        "max": 5
+      },
+      {
+        "rotulo": "Mais de 5 SM (acima de R$ 8.105)",
+        "max": null
+      }
+    ],
+    "amostra_pct": [
+      46,
+      33,
+      21
+    ],
+    "nota": "Perfil ponderado desta onda, p. 4: sem rendimentos até 2 SM = 46%; mais de 2 a 5 SM = 33%; mais de 5 SM = 21%. O cartão não imprime valores em reais; usamos o mínimo de 2026 (R$ 1.621).",
+    "mes_precos": "202609"
+  },
+  "id": "poderdata_2026-09-16",
+  "registro_tse": "BR-00360/2026",
+  "n": 3000,
+  "campo": {
+    "inicio": "2026-09-13",
+    "fim": "2026-09-16"
+  },
+  "divulgacao": "2026-09-17",
+  "fonte": {
+    "tipo": "relatorio",
+    "pdf": "data/originals/poderdata_092026_17/relatorio.pdf",
+    "url": "https://static.poder360.com.br/uploads/2026/09/poderdata-presidente-17set.pdf",
+    "sha256": "f963c843350ae697387ed7ad721e39feb40f5400d3a5865f102e8c3f388b2766",
+    "bytes": 1976146,
+    "total_paginas": 62,
+    "status": "Relatório completo conferido.",
+    "paginas": {
+      "perfil_renda": 4,
+      "1t_topline": 7,
+      "1t_renda": 12,
+      "2t_topline": 16
+    },
+    "complementos": [
+      {
+        "rotulo": "PoderData: estratificação do 2º turno por renda",
+        "url": "https://static.poder360.com.br/uploads/2026/09/pd-pesquisa-eleitoral-intencao-presidente-16-set-2026-05-scaled.png",
+        "arquivo": "data/originals/poderdata_092026_17/pd-pesquisa-eleitoral-intencao-presidente-16-set-2026-05-scaled.png",
+        "sha256": "bbf149ca6d401a010dc27a7051c5295f3510b80a53c5a905516174fccaea88ec",
+        "materia": "https://www.poder360.com.br/poderdata/flavio-tem-46-e-lula-44-no-2o-turno-diz-poderdata-aya/",
+        "localizador": "bloco renda familiar; campo 13–16/09/2026"
+      }
+    ],
+    "nota": "PDF localizado no catálogo público de mídia do Poder360, complementado pelo gráfico oficial de estratificação do 2º turno na matéria. O relatório declara 752 municípios; matéria e gráfico citam 623. Mantemos os metadados do documento e registramos a divergência."
+  },
+  "publicado": {
+    "1t": {
+      "lula": 37,
+      "flavio": 36,
+      "cury": 8,
+      "renan_santos": 3,
+      "caiado": 3,
+      "marcal": 1,
+      "zema": 1,
+      "samara": 1,
+      "branco_nulo": 4,
+      "indecisos": 2,
+      "outros": 4
+    },
+    "2t": {
+      "lula": 44,
+      "flavio": 46,
+      "branco_nulo": 8,
+      "indecisos": 2
+    }
+  },
+  "cruzamentos": {
+    "1t": {
+      "opcoes": [
+        "lula",
+        "flavio",
+        "cury",
+        "renan_santos",
+        "caiado",
+        "marcal",
+        "zema",
+        "samara",
+        "branco_nulo",
+        "indecisos",
+        "outros"
+      ],
+      "linhas": [
+        [
+          42,
+          29,
+          7,
+          2,
+          2,
+          2,
+          1,
+          1,
+          6,
+          3,
+          5
+        ],
+        [
+          30,
+          45,
+          10,
+          4,
+          2,
+          1,
+          1,
+          1,
+          3,
+          1,
+          2
+        ],
+        [
+          36,
+          40,
+          9,
+          2,
+          4,
+          1,
+          1,
+          0,
+          1,
+          1,
+          3
+        ]
+      ],
+      "nota": "Todas as 15 opções extraídas do texto nativo da p. 12. Outros reúne Hertz Dias, Clariana Barão, Rui Costa Pimenta, Edmilson Costa e Wilson Grassi, como nas ondas anteriores, evitando inferência subdecimal para nomes com topline arredondado a zero. Colunas arredondadas somam 100%, 101% e 99%; não se inventa complemento para fechar 100%."
+    },
+    "2t": {
+      "opcoes": [
+        "lula",
+        "flavio"
+      ],
+      "linhas": [
+        [
+          50,
+          39
+        ],
+        [
+          35,
+          52
+        ],
+        [
+          42,
+          50
+        ]
+      ],
+      "nota": "Imagem oficial de estratificação de Lula × Flávio, na matéria do Poder360 de 17/09. O PDF não traz este cruzamento. A imagem identifica o campo de 13 a 16/09 e BR-00360/2026. Só Lula e Flávio são medidos por faixa; não se imputam brancos ou indecisos."
+    }
+  }
+}

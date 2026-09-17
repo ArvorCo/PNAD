@@ -19,6 +19,7 @@ Uso:
 from __future__ import annotations
 
 import csv
+import importlib
 import json
 import math
 import sys
@@ -30,6 +31,8 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from svgkit import FULL, MONO, Canvas, br, inject  # noqa: E402
+
+coverage_html = importlib.import_module("reponderacao-cobertura").coverage_html
 
 DOCS = ROOT / "docs"
 ASSETS = DOCS / "assets"
@@ -1211,6 +1214,10 @@ def cartao(pesquisa: dict) -> str:
     link_pdf = (
         f' · <a href="{esc(url, quote=True)}">{esc(rotulo_fonte)}</a>' if url else ""
     )
+    link_pdf += "".join(
+        f' · <a href="{esc(s["url"], quote=True)}">{esc(s["rotulo"])}</a>'
+        for s in pesquisa["fonte"].get("complementos", [])
+    )
     fonte_nota = pesquisa["fonte"].get("nota", "")
     aviso_fonte = (
         f'<p class="note"><b>{esc(pesquisa["fonte"].get("status", ""))}</b> {esc(fonte_nota)}</p>'
@@ -1948,6 +1955,7 @@ def hero() -> str:
 
 def toc() -> str:
     itens = [
+        ("atualizacao", "Atualização"),
         ("segundo-turno", "2º turno"),
         ("primeiro-turno", "1º turno"),
         ("manchete", "Manchete"),
@@ -1976,6 +1984,7 @@ def bloco_tips(chaves: list[str] | None = None) -> str:
 def build_html() -> str:
     corpo = "".join(
         [
+            coverage_html(D, tabela),
             ch_segundo_turno(),
             ch_primeiro_turno(),
             ch_manchete(),
