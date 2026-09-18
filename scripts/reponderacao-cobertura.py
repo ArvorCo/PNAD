@@ -42,7 +42,10 @@ def coverage_html(data, table):
                 if result
                 else "Sem cruzamento de renda"
             )
-            if turn == "1t" and p.get("selecao_1t", {}).get("status") == "excluido_com_marcal":
+            if (
+                turn == "1t"
+                and p.get("selecao_1t", {}).get("status") == "excluido_com_marcal"
+            ):
                 adjusted = "Excluído: cenário com Marçal"
             cells += [score(original), adjusted]
         rows.append(cells)

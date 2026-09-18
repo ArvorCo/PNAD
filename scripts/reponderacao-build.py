@@ -310,7 +310,9 @@ def ficha_onda(pesquisa: dict, turno: str) -> str:
         itens = ", ".join(f"{esc(rotulo(c))} {br(pub[c], 1)}" for c in extras[:6])
         corpo.append(f'<p class="tip-nota">Também na cédula: {itens}.</p>')
     if turno == "1t" and pesquisa.get("selecao_1t"):
-        corpo.append(f'<p class="tip-nota">Cenário sem Marçal. {esc(pesquisa["selecao_1t"]["nota"])}</p>')
+        corpo.append(
+            f'<p class="tip-nota">Cenário sem Marçal. {esc(pesquisa["selecao_1t"]["nota"])}</p>'
+        )
     return "".join(corpo)
 
 
@@ -483,7 +485,9 @@ def serie_svg(ident: str, turno: str, compacta: bool = False) -> str:
         )
 
     for chave in chaves:
-        cv.add(f'<g data-serie="{chave}"><title>{esc(rotulo(chave))}: média publicada e reponderada</title>')
+        cv.add(
+            f'<g data-serie="{chave}"><title>{esc(rotulo(chave))}: média publicada e reponderada</title>'
+        )
         for nome, dados in (("publicado", pub), ("ajustado", adj)):
             trecho: list[tuple[float, float]] = []
             for d, v in zip(datas, dados[chave], strict=True):

@@ -56,8 +56,10 @@ def end_labels(cv, pub, adj, right, top, bottom, py, colors, number):
 def group_summary(data, table, number):
     groups = data["agregador"]["grupos_1t"]
     current = groups["ultimo"]
+
     def fmt(value):
         return "Sem dado" if value is None else number(value, 2) + "%"
+
     rows = [
         [
             escape(label),
