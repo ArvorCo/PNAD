@@ -42,6 +42,8 @@ def coverage_html(data, table):
                 if result
                 else "Sem cruzamento de renda"
             )
+            if turn == "1t" and p.get("selecao_1t", {}).get("status") == "excluido_com_marcal":
+                adjusted = "Excluído: cenário com Marçal"
             cells += [score(original), adjusted]
         rows.append(cells)
         reasons = list((p.get("sem_cruzamento") or {}).values())
@@ -76,7 +78,7 @@ def coverage_html(data, table):
         )
         + "".join(notes)
         + '<p class="note">As médias publicada e reponderada usam o mesmo conjunto de pesquisas com cruzamento '
-        "de renda em cada turno. Os placares sem ajuste desta tabela não entram em nenhuma das duas médias. "
+        "de renda em cada turno, usando somente cenários sem Marçal no 1º turno. Os placares sem ajuste desta tabela não entram em nenhuma das duas médias. "
         "Reponderação é sensibilidade de uma margem, não previsão nem voto corrigido.</p>"
         "</div></section>"
     )

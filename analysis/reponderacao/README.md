@@ -30,14 +30,39 @@ Exemplo completo: `pesquisas/datafolha_2026-08-19.json`. O motor é `scripts/rep
 
 ## Chaves das opções (usar sempre estas)
 
-`lula`, `flavio`, `caiado`, `zema`, `cury`, `renan_santos`, `marcal`, `samara`, `outros`, `branco_nulo`, `indecisos`.
+`lula`, `flavio`, `caiado`, `zema`, `cury`, `renan_santos`, `marcal`, `samara`, `clariana`, `grassi`, `rui`, `edmilson`, `hertz`, `ciro`, `aldo`, `outros`, `branco_nulo`, `indecisos`.
 Quando o instituto publica um único número de não escolha, usar `branco_nulo` e deixar `indecisos` fora.
-Candidatos com 1% ou menos podem ser somados em `outros`. As chaves de `publicado` precisam existir em `opcoes`.
+Preservar os candidatos individualmente sempre que o cruzamento permitir: agregar em `outros` impede a separação editorial dos grupos. Nomes sem cruzamento podem constar em `publicado`, mas não recebem reponderação nem são preenchidos com zero.
 
 ## Regras de transcrição
 
 1. Copiar exatamente o que está no PDF, sem arredondar nem corrigir. Célula em branco vira `0` e a nota registra.
 2. O cruzamento precisa recompor o placar publicado: rodar `python3 scripts/reponderacao-pnad.py calcular` e conferir o resíduo impresso. Acima de 1,5 pp, procurar o erro (base errada, coluna trocada, perfil ponderado versus não ponderado) antes de gravar.
 3. Se o instituto publica o perfil ponderado da amostra e também bases não ponderadas, testar os dois e ficar com o que recompõe melhor; registrar em `renda.nota`.
-4. Preferir o cenário estimulado principal (o que o instituto usa na manchete). Registrar em `nota` qual cenário foi usado.
+4. Usar cenário estimulado **sem Marçal**, com seu próprio placar e seu próprio cruzamento de renda. Sem alternativa documentada, excluir aquele primeiro turno, preservando o segundo. Nunca remover apenas o voto de Marçal ou redistribuí-lo.
 5. Segundo turno: Lula × Flávio Bolsonaro. Outros pares não entram.
+
+## Seleção e grupos do primeiro turno (18/09/2026)
+
+`scripts/reponderacao-cenarios.py` documenta as alternativas transcritas, com páginas físicas do PDF: Datafolha agosto (36–37), Real Time setembro (15/18), Quaest 02/09 (25/31), Quaest 07/09 (26/32) e Gerp maio (13/14). Também individualiza os menores da situação B do Datafolha 03/09 (37–38), sem alterar Lula ou Flávio. Os manifestos originais não são sobrescritos. O JSON gerado registra `selecao_1t` e conserva o resultado anterior em `turnos_arquivados`, fora de médias, séries e CSV corrente. Dossiês históricos podem consultar esse arquivo explicitamente.
+
+Marçal também está dentro de `outros` na MDA de 15/09: sua exclusão não pode depender apenas da chave individual `marcal`. Ao cadastrar uma nova onda, conferir a lista completa do cenário no relatório.
+
+`scripts/reponderacao-grupos.py` soma as candidaturas dentro de cada onda e depois aplica a mesma meia-vida de 14 dias aos dois grupos:
+
+- **Outros (centro-direita), cinza:** Zema, Augusto Cury, Ronaldo Caiado, Renan Santos e Clariana Barão.
+- **Outros (esquerda + nanicos), preto:** Samara, Rui Costa Pimenta, Edmilson Costa, Hertz Dias e Wilson Grassi. A inclusão de Grassi é no residual de nanicos, não uma atribuição de posição de esquerda.
+
+Classificação editorial aprovada pelo responsável pelo projeto. A inclusão de Clariana considera suas [propostas econômicas](https://clarianabarao.com.br/propostas); a manutenção de Grassi no residual considera a pauta da candidatura e a orientação partidária descritas no [perfil publicado pela Band](https://www.band.com.br/politica/eleicoes/eleicoes-2026-conheca-as-propostas-e-o-perfil-de-wilson-grassi-democrata).
+
+Os grupos só usam ondas em que a divisão por renda é identificável. `Outros` indivisível ou candidato sem linha de renda não vira zero: nem mesmo um total publicado de 0% permite inferir zeros em cada faixa. Por isso, Atlas 17/09 entra na curva de Lula/Flávio, mas não nas curvas dos grupos. Na referência de 17/09, a cobertura dos grupos é de quatro ondas (Datafolha 19/08, 02/09 e 10/09; Quaest 01/09), de dois institutos; último campo em 10/09. As quatro linhas do gráfico não são uma partição somável, pois a cobertura dos líderes é mais ampla.
+
+Reprodução:
+
+```sh
+python3 scripts/reponderacao-pnad.py calcular --hoje 2026-09-17
+python3 scripts/reponderacao-build.py
+pytest -q
+```
+
+A página publica cobertura, exclusões e seleção por onda. `docs/assets/reponderacao_grupos_1t.csv` contém as somas publicadas e reponderadas por grupo e onda.

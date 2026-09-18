@@ -33,6 +33,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from svgkit import FULL, MONO, Canvas, br, inject  # noqa: E402
 
 coverage_html = importlib.import_module("reponderacao-cobertura").coverage_html
+groups_view = importlib.import_module("reponderacao-grupos-view")
 
 DOCS = ROOT / "docs"
 ASSETS = DOCS / "assets"
@@ -99,6 +100,8 @@ ROTULOS = {
     "edmilson": "Edmilson Costa",
     "grassi": "Wilson Grassi",
     "hertz": "Hertz Dias",
+    "ciro": "Ciro Gomes",
+    "aldo": "Aldo Rebelo",
     "outros": "Outros",
     "branco_nulo": "Branco e nulo",
     "indecisos": "Indecisos",
@@ -130,6 +133,9 @@ INSTITUTOS = list(D["institutos"])
 PAR = ("lula", "flavio")
 COR = {"lula": RED, "flavio": BLUE}
 COR_TXT = {"lula": RED_TXT, "flavio": BLUE_TXT}
+COR.update(groups_view.GROUP_COLORS)
+COR_TXT.update(groups_view.GROUP_COLORS)
+ROTULOS.update(groups_view.GROUP_LABELS)
 
 
 def frase(texto: str) -> str:
@@ -303,6 +309,8 @@ def ficha_onda(pesquisa: dict, turno: str) -> str:
     if extras:
         itens = ", ".join(f"{esc(rotulo(c))} {br(pub[c], 1)}" for c in extras[:6])
         corpo.append(f'<p class="tip-nota">Também na cédula: {itens}.</p>')
+    if turno == "1t" and pesquisa.get("selecao_1t"):
+        corpo.append(f'<p class="tip-nota">Cenário sem Marçal. {esc(pesquisa["selecao_1t"]["nota"])}</p>')
     return "".join(corpo)
 
 
@@ -408,9 +416,10 @@ def serie_svg(ident: str, turno: str, compacta: bool = False) -> str:
     pub, adj = serie[turno]["publicado"], serie[turno]["ajustado"]
     polls = [p for p in PESQUISAS if turno in p["turnos"]]
 
+    chaves = (*PAR, *groups_view.GROUP_LABELS) if turno == "1t" else PAR
     valores: list[float] = []
     for fonte in (pub, adj):
-        for chave in PAR:
+        for chave in chaves:
             valores += [v for v in fonte[chave] if v is not None]
     for p in polls:
         t = p["turnos"][turno]
@@ -418,12 +427,18 @@ def serie_svg(ident: str, turno: str, compacta: bool = False) -> str:
             valores.append(t["publicado"][chave])
             valores.append(ajustado(t)[chave])
     lo = math.floor((min(valores) - 2.0) / 5) * 5
+    if turno == "1t":
+        lo = 0
     hi = math.ceil((max(valores) + 2.0) / 5) * 5
 
     legendas = 1 if compacta else (2 if len(INSTITUTOS) > 1 else 1)
     altura = 360 if compacta else 400 + 30 * legendas
+    if turno == "1t":
+        altura = 660
     largura = FULL
     esq, dir_ = 54, largura - (168 if compacta else 190)
+    if turno == "1t":
+        dir_ = largura - 225
     topo, base = (30 if compacta else 44), altura - (
         46 if compacta else 46 + 30 * legendas
     )
@@ -467,7 +482,8 @@ def serie_svg(ident: str, turno: str, compacta: bool = False) -> str:
             size=12,
         )
 
-    for chave in PAR:
+    for chave in chaves:
+        cv.add(f'<g data-serie="{chave}"><title>{esc(rotulo(chave))}: média publicada e reponderada</title>')
         for nome, dados in (("publicado", pub), ("ajustado", adj)):
             trecho: list[tuple[float, float]] = []
             for d, v in zip(datas, dados[chave], strict=True):
@@ -479,6 +495,8 @@ def serie_svg(ident: str, turno: str, compacta: bool = False) -> str:
                 trecho.append((px(d), py(v)))
             if len(trecho) > 1:
                 _linha(cv, trecho, COR[chave], nome)
+
+        cv.add("</g>")
 
     raio = 4.6 if compacta else (5.8 if len(polls) <= 8 else 4.4)
     alcance = max(raio * 2.0, 9.0)
@@ -501,12 +519,15 @@ def serie_svg(ident: str, turno: str, compacta: bool = False) -> str:
             area_alvo(cv, x, y_adj, alcance)
         fecha_alvo(cv)
 
-    _bloco_direita(cv, turno, pub, adj, dir_, topo, base, py, compacta)
+    if turno == "1t":
+        groups_view.end_labels(cv, pub, adj, dir_, topo, base, py, COR_TXT, br)
+    else:
+        _bloco_direita(cv, turno, pub, adj, dir_, topo, base, py, compacta)
 
     if not compacta:
         _legenda(cv, esq, base + 52, largura)
         if legendas > 1:
-            _legenda_institutos(cv, esq, base + 82)
+            _legenda_institutos(cv, esq, base + 82, {p["instituto"] for p in polls})
     return cv.render()
 
 
@@ -618,9 +639,11 @@ def _legenda(cv: Canvas, x0: float, y: float, largura: float) -> None:
             x, y = x0, y + 26
 
 
-def _legenda_institutos(cv: Canvas, x0: float, y: float) -> None:
+def _legenda_institutos(cv: Canvas, x0: float, y: float, presentes: set[str]) -> None:
     x = x0
     for nome in INSTITUTOS:
+        if nome not in presentes:
+            continue
         marcador(cv, forma(nome), x + 7, y, 5.6, INK, True)
         cv.text(x + 20, y + 4, nome, size=12.5, fill=INK)
         x += 20 + len(nome) * 7.2 + 26
@@ -1270,6 +1293,7 @@ def cartao(pesquisa: dict) -> str:
         f'<p class="note">{esc(pesquisa["registro_tse"])} · contratante {esc(pesquisa["contratante"])} · '
         f"n = {br(pesquisa['n'], 0)} · {esc(pesquisa['metodo'])} · divulgação em "
         f"{esc(longo(pesquisa['divulgacao']))}{link_dossie}{link_pdf}</p>{aviso_fonte}"
+        f"{groups_view.selection_note(pesquisa)}"
         f'<p class="note">Fonte: <code>{esc(pesquisa["fonte"].get("arquivo") or pesquisa["fonte"].get("pdf") or "sem arquivo arquivado")}</code>, '
         f"{esc(paginas_fonte(pesquisa['fonte']))}.</p></div>"
         f'<div class="proofs">{chip_prova(pesquisa)}</div></header>'
@@ -1285,7 +1309,7 @@ def cartao(pesquisa: dict) -> str:
         f'<div class="chart-shell"><p class="kicker">Placar sob a régua</p>'
         f"<h4>Só a margem de renda muda.</h4>"
         f'<div class="fig" tabindex="0" role="region" aria-label="Placar sob a régua">'
-        f"{slope_svg(pesquisa)}</div>"
+        f"{slope_svg(pesquisa) if pesquisa['turnos'] else '<p>Sem cenário elegível nesta onda. O primeiro turno com Marçal permanece apenas no arquivo histórico.</p>'}</div>"
         f'<p class="note">Ponto vazado é o publicado pelo instituto. Ponto cheio é a '
         f"reponderação Arvor, que é inferência.</p></div></div>"
         + tabela(
@@ -1384,15 +1408,20 @@ def ch_primeiro_turno() -> str:
                 ]
             )
     corpo = (
-        figura(
+        groups_view.scenario_summary(D, tabela)
+        + figura(
             "primeiro-turno-chart",
             "Série do 1º turno",
-            "Lula e Flávio no 1º turno, publicado contra reponderado.",
+            "Lula, Flávio e dois grupos de outras candidaturas, publicado contra reponderado.",
             serie_svg("s1t", "1t"),
-            "A série começa na primeira onda que publicou o cruzamento de renda do 1º turno. "
-            "Antes disso não há linha, e a ausência é declarada em vez de interpolada.",
+            "Lula e Flávio usam os cenários sem Marçal com cruzamento de renda. "
+            "Os grupos usam apenas ondas que permitem separar as candidaturas por renda, "
+            "com cobertura e datas informadas abaixo. Cinza: centro-direita; preto: esquerda + nanicos. "
+            "Tracejado é publicado; contínuo é reponderado. "
+            "No celular, deslize o gráfico para ver as datas recentes e os grupos.",
         )
         + placar("1t")
+        + groups_view.group_summary(D, tabela, br)
         + '<h3 class="reveal">As demais candidaturas sob a mesma troca</h3>'
         + tabela(
             ["Instituto", "Campo", "Opção", "Publicado", "Reponderado", "Efeito"],
@@ -2104,6 +2133,7 @@ def build() -> None:
     TIP_SCRIPT.write_text(TIP_JS, encoding="utf-8")
     PAGE.write_text(html.replace("<section ", "\n<section ") + "\n", encoding="utf-8")
     write_csv()
+    groups_view.write_group_csv(ASSETS / "reponderacao_grupos_1t.csv", D)
 
     home = serie_svg("home2t", "2t", compacta=True)
     HOME_SVG.write_text(home + "\n", encoding="utf-8")

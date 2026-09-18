@@ -217,8 +217,10 @@ def test_mda_september_profile_excludes_income_nonresponse(output):
 
 def test_mda_september_anchored_results_and_rounding(output):
     poll = next(p for p in output["pesquisas"] if p["id"] == "mda_2026-09-13")
+    assert "1t" not in poll["turnos"]
+    assert poll["selecao_1t"]["status"] == "excluido_com_marcal"
     for turno, expected in [("1t", [39.449, 31.529]), ("2t", [46.214, 41.221])]:
-        result = poll["turnos"][turno]
+        result = (poll["turnos_arquivados"] if turno == "1t" else poll["turnos"])[turno]
         adjusted = result["cenarios"][SCENARIO]["ajustado"]
         assert [adjusted["lula"], adjusted["flavio"]] == pytest.approx(expected)
         assert result["residuo_max"] < 0.5

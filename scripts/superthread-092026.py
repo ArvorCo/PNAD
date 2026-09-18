@@ -95,7 +95,10 @@ NV = EST["nao_visitados"]
 
 
 def turno(instituto: str, t: str) -> dict:
-    return ONDAS[instituto]["turnos"][t]
+    # Este dossiê descreve ondas históricas fixas, inclusive o cenário MDA com
+    # Marçal, agora arquivado fora do agregador corrente de primeiro turno.
+    poll = ONDAS[instituto]
+    return poll["turnos"].get(t) or poll.get("turnos_arquivados", {})[t]
 
 
 def ajustado(instituto: str, t: str, quem: str) -> float:

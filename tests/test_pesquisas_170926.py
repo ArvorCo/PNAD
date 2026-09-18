@@ -34,7 +34,13 @@ def test_documented_coverage_is_not_imputed(output, slug, turns, topline):
     assert [raw["publicado"]["2t"][c] for c in ["lula", "flavio"]] == topline
     if turns:
         p = next(p for p in output["pesquisas"] if p["id"] == slug)
-        assert set(p["turnos"]) == turns
+        expected_turns = turns - (
+            {"1t"} if "marcal" in raw.get("publicado", {}).get("1t", {}) else set()
+        )
+        assert set(p["turnos"]) == expected_turns
+        if expected_turns != turns:
+            assert p["selecao_1t"]["status"] == "excluido_com_marcal"
+            assert "1t" in p["turnos_arquivados"]
         assert p["publicado"]["2t"] == raw["publicado"]["2t"]
     else:
         assert raw["ignorar"]
@@ -100,7 +106,8 @@ def test_page_shows_all_four_sources_without_fake_adjustments():
     text = section.get_text(" ", strip=True)
     for name in ["AtlasIntel", "PoderData", "Gerp", "Futura", "17/09/2026"]:
         assert name in text
-    assert text.count("Sem cruzamento de renda") == 3
+    assert text.count("Sem cruzamento de renda") == 2
+    assert text.count("Excluído: cenário com Marçal") == 3
     assert len(section.select('a[href$=".pdf"]')) == 4
     assert "Lula × Flávio" in text
     assert "mesmo conjunto" in text

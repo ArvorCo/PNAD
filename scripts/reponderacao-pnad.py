@@ -25,6 +25,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import importlib.util
 import json
 import math
 import re
@@ -238,6 +239,7 @@ def process_poll(
             "dossie",
             "publicado",
             "sem_cruzamento",
+            "selecao_1t",
         )
         if key in poll
     }
@@ -364,7 +366,18 @@ def aggregate(polls: list[dict[str, Any]], today: date) -> dict[str, Any]:
                 for key in ("publicado", "ajustado")
             },
         }
+    spec = importlib.util.spec_from_file_location(
+        "income_groups", ROOT / "scripts/reponderacao-grupos.py"
+    )
+    groups_module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(groups_module)
+    groups = groups_module.aggregate_groups(
+        polls, series["datas"], today, MAIN_SERIES, HALF_LIFE_DAYS
+    )
+    for kind in ("publicado", "ajustado"):
+        series["1t"][kind].update(groups["serie"][kind])
     return {
+        "grupos_1t": groups,
         "metodo": {
             "kernel": "média ponderada no tempo, peso 0,5^(dias desde o fim do campo / 14)",
             "linha": "a série desenhada usa o mesmo peso nos dois lados de cada dia (alisador simétrico); o valor corrente usa só ondas já encerradas",
@@ -401,9 +414,22 @@ def build(today: date | None = None) -> dict[str, Any]:
     bench = Benchmark()
     ipca = load_ipca()
     raw_polls, skipped = load_polls()
-    polls = [process_poll(p, bench, ipca) for p in raw_polls]
+    spec = importlib.util.spec_from_file_location(
+        "first_round_scenarios", ROOT / "scripts/reponderacao-cenarios.py"
+    )
+    selection = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(selection)
+    polls = [
+        process_poll(selection.select_first_round(p), bench, ipca) for p in raw_polls
+    ]
+    skipped = [selection.select_first_round(p) for p in skipped]
     for poll, raw in zip(polls, raw_polls, strict=False):
         poll["arquivo"] = raw["_arquivo"]
+        if poll.get("selecao_1t") and raw.get("cruzamentos", {}).get("1t"):
+            original = process_poll(raw, bench, ipca)["turnos"]["1t"]
+            if original != poll["turnos"].get("1t"):
+                # Preserva a reprodução de dossiês históricos; nunca entra na média.
+                poll["turnos_arquivados"] = {"1t": original}
     institutes = sorted({p["instituto"] for p in polls})
     return {
         "gerado_em": datetime.now().isoformat(timespec="seconds"),
@@ -443,6 +469,7 @@ def build(today: date | None = None) -> dict[str, Any]:
                     "fonte",
                     "publicado",
                     "motivo",
+                    "selecao_1t",
                 )
             }
             for poll in skipped
