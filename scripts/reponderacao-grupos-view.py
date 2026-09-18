@@ -71,6 +71,10 @@ def group_summary(data, table, number):
     ]
     eligible = groups["ondas"]
     institutes = sorted({p["instituto"] for p in eligible})
+    first_field = min((p["campo"]["fim"] for p in eligible), default=None)
+    first_date = (
+        "/".join(reversed(first_field.split("-"))) if first_field else "sem dado"
+    )
     last_field = max((p["campo"]["fim"] for p in eligible), default=None)
     last_date = "/".join(reversed(last_field.split("-"))) if last_field else "sem dado"
     coverage = [
@@ -78,6 +82,32 @@ def group_summary(data, table, number):
         for name, ident in groups["ultima_onda_por_instituto"].items()
     ]
     excluded = [[escape(p["id"]), escape(p["motivo"])] for p in groups["excluidas"]]
+    polls = {p["id"]: p for p in data["pesquisas"]}
+    historical = []
+    for row in sorted(eligible, key=lambda p: p["campo"]["fim"]):
+        source = row["fonte_grupos"]
+        poll = polls[row["id"]]
+        page = source.get("pagina_renda", poll["fonte"]["paginas"].get("1t_renda"))
+        note = poll.get("selecao_1t", {}).get("nota", source["nota"])
+        url = poll["fonte"].get("url")
+        source_label = (
+            f'<a href="{escape(url, quote=True)}">PDF, p. {page}</a>'
+            if url
+            else f"PDF arquivado, p. {page}"
+        )
+        if source.get("correcao_outros"):
+            correction = source["correcao_outros"]
+            note += (
+                f' Soma de outros por renda: {correction["renda_anterior"]}'
+                f' corrigida para {correction["renda_corrigida"]}.'
+            )
+        historical.append(
+            [
+                escape(row["id"]),
+                source_label,
+                escape(note),
+            ]
+        )
     return (
         '<div id="grupos-primeiro-turno"><h3>Os outros candidatos, em dois grupos</h3>'
         + table(
@@ -90,12 +120,13 @@ def group_summary(data, table, number):
             rows,
         )
         + f'<p class="note">{escape(groups["regra"])}</p>'
-        + f'<p class="note"><b>Cobertura: {len(eligible)} ondas de {len(institutes)} institutos; último campo em {last_date}.</b> '
+        + f'<p class="note"><b>Cobertura: {len(eligible)} ondas de {len(institutes)} institutos; encerramentos de campo de {first_date} a {last_date}.</b> '
         + escape(groups["cobertura"])
         + " Mesma meia-vida de 14 dias, mesma régua PNAD e mesmos pesos entre publicado e reponderado. "
         "A média simples usa a última onda elegível de cada instituto, que pode ser anterior à sua última publicação.</p>"
         "<details><summary>Conferir ondas utilizadas e exclusões</summary>"
         + table(["Instituto", "Última onda elegível"], coverage)
+        + table(["Onda utilizada", "Fonte", "Conferência da composição"], historical)
         + table(["Onda excluída dos grupos", "Motivo"], excluded)
         + '<p><a href="assets/reponderacao_grupos_1t.csv">Baixar as somas por onda (CSV)</a></p>'
         "</details></div>"
@@ -151,7 +182,7 @@ def write_group_csv(path, data):
             "publicado",
             "reponderado",
         ]
-        writer = csv.DictWriter(handle, fieldnames=fields)
+        writer = csv.DictWriter(handle, fieldnames=fields, lineterminator="\n")
         writer.writeheader()
         for row in data["agregador"]["grupos_1t"]["ondas"]:
             for group in GROUP_LABELS:

@@ -6,10 +6,12 @@ GROUPS = {
     "outros_centro_direita": "Outros (centro-direita)",
     "outros_esquerda_nanicos": "Outros (esquerda + nanicos)",
 }
-CENTER = {"zema", "cury", "caiado", "renan_santos", "clariana"}
+CURRENT_CENTER = {"zema", "cury", "caiado", "renan_santos", "clariana"}
+CENTER = CURRENT_CENTER | {"aecio", "aldo", "avalanche"}
 NON_CHOICE = {"branco_nulo", "indecisos", "nao_sabe", "nenhum"}
 LEADERS = {"lula", "flavio"}
-LEFT_NANICOS = {"samara", "rui", "edmilson", "hertz", "grassi"}
+CURRENT_LEFT = {"samara", "rui", "edmilson", "hertz", "grassi"}
+LEFT_NANICOS = CURRENT_LEFT | {"joaquim", "ciro", "daciolo", "hero", "outros_esquerda"}
 
 
 def split_poll(poll, scenario):
@@ -24,11 +26,12 @@ def split_poll(poll, scenario):
             None,
             "Residual outros sem divisão individual por renda entre os dois grupos.",
         )
-    missing = CENTER - options
-    if missing:
+    verified = poll.get("grupos_1t_fonte", {}).get("lista_completa")
+    if not verified and not (CURRENT_CENTER | CURRENT_LEFT).issubset(options):
+        missing = (CURRENT_CENTER | CURRENT_LEFT) - options
         return (
             None,
-            "Sem voto por renda individualizado de: "
+            "Sem lista histórica completa validada ou voto por renda de: "
             + ", ".join(sorted(missing))
             + ".",
         )
@@ -52,9 +55,8 @@ def split_poll(poll, scenario):
             + ", ".join(sorted(unknown))
             + ".",
         )
+    center = options & CENTER
     rest = options & LEFT_NANICOS
-    if not rest:
-        return None, "Sem categoria identificada para as demais candidaturas."
     values = {
         "publicado": result["publicado"],
         "ajustado": result["cenarios"][scenario]["ajustado"],
@@ -64,16 +66,22 @@ def split_poll(poll, scenario):
         "instituto": poll["instituto"],
         "campo": poll["campo"],
         "componentes": {
-            "outros_centro_direita": sorted(CENTER),
+            "outros_centro_direita": sorted(center),
             "outros_esquerda_nanicos": sorted(rest),
         },
         **{
             kind: {
-                "outros_centro_direita": round(sum(v[k] for k in CENTER), 3),
+                "outros_centro_direita": round(sum(v[k] for k in center), 3),
                 "outros_esquerda_nanicos": round(sum(v[k] for k in rest), 3),
             }
             for kind, v in values.items()
         },
+        "fonte_grupos": poll.get(
+            "grupos_1t_fonte",
+            {
+                "nota": "Cenário contemporâneo completo, com todos os nomes individualizados por renda."
+            },
+        ),
     }, None
 
 
@@ -145,8 +153,8 @@ def aggregate_groups(polls, dates, today, scenario, half_life):
     }
     return {
         "rotulos": GROUPS,
-        "regra": "Centro-direita = Zema + Cury + Caiado + Renan Santos + Clariana Barão. Esquerda + nanicos = Samara, Rui Costa Pimenta, Edmilson Costa, Hertz Dias e Wilson Grassi; Grassi integra o residual de nanicos, sem ser classificado como esquerda. Classificação editorial, não atributo medido pelo instituto. Brancos, nulos e indecisos ficam fora. Primeiro somamos os candidatos por onda; depois calculamos a média dos grupos.",
-        "cobertura": "As duas linhas usam as mesmas ondas com divisão identificável por renda; não se reparte outros nem se preenche candidato sem cruzamento com zero, mesmo que tenha arredondado para 0% no total. Lula e Flávio usam todas as ondas elegíveis sem Marçal, um conjunto mais amplo. Por isso, as quatro médias não formam uma partição somável.",
+        "regra": "Centro-direita = Zema, Cury, Caiado, Renan Santos e Clariana Barão; no histórico, também Aécio Neves, Aldo Rebelo e Leonardo Avalanche. Esquerda + nanicos = Samara, Rui Costa Pimenta, Edmilson Costa, Hertz Dias e Wilson Grassi; no histórico, também Joaquim Barbosa, Ciro Gomes, Cabo Daciolo e Heró Bezerra. Grassi integra o residual de nanicos, sem ser classificado como esquerda; o mesmo rótulo residual não atribui ideologia uniforme aos demais. Classificação editorial. Brancos, nulos e indecisos ficam fora. Primeiro somamos os candidatos oferecidos em cada cenário; depois calculamos a média dos grupos.",
+        "cobertura": "As duas linhas usam as mesmas ondas com divisão identificável por renda. Recuperamos nos relatórios as candidaturas antes somadas internamente em outros. Uma candidatura não oferecida não é exigida para incluir a onda; se nenhum nome de um grupo foi oferecido, sua soma naquele cenário é zero, não uma estimativa eleitoral para nomes ausentes. Isso difere de candidato oferecido sem cruzamento, que nunca vira zero. Categorias do instituto que misturam os dois grupos continuam excluídas. A composição das cédulas muda ao longo do tempo. Lula e Flávio usam um conjunto mais amplo; as quatro médias não formam uma partição somável.",
         "ondas": eligible,
         "excluidas": excluded,
         "ultima_onda_por_instituto": {name: row["id"] for name, row in latest.items()},

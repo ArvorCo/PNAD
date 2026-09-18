@@ -21,6 +21,8 @@ def load(name):
 
 
 GROUPS = load("reponderacao-grupos")
+HISTORY = load("reponderacao-historico-1t")
+ENTRIES = json.loads(HISTORY.MANIFEST.read_text())
 OUTPUT = json.loads((ROOT / "docs/assets/reponderacao_pnad.json").read_text())
 
 
@@ -30,9 +32,12 @@ def test_groups_sum_candidates_before_averaging():
         result = polls[row["id"]]["turnos"]["1t"]
         center = set(row["componentes"]["outros_centro_direita"])
         residual = set(row["componentes"]["outros_esquerda_nanicos"])
-        assert center == {"zema", "cury", "caiado", "renan_santos", "clariana"}
-        assert residual == {"samara", "rui", "edmilson", "hertz", "grassi"}
+        assert center == set(result["opcoes"]) & GROUPS.CENTER
+        assert residual == set(result["opcoes"]) & GROUPS.LEFT_NANICOS
         assert not center & residual
+        assert center | residual == (
+            set(result["opcoes"]) - GROUPS.LEADERS - GROUPS.NON_CHOICE
+        )
         for kind in ("publicado", "ajustado"):
             values = (
                 result["publicado"]
@@ -87,6 +92,86 @@ def test_marcal_cannot_leak_into_a_group_even_at_zero():
     assert GROUPS.split_poll(poll, SCENARIO)[0] is None
 
 
+def test_historical_classification_matches_approved_partition():
+    assert {"aecio", "aldo", "avalanche"} <= GROUPS.CENTER
+    assert {"joaquim", "ciro", "daciolo", "hero"} <= GROUPS.LEFT_NANICOS
+    assert not GROUPS.CENTER & GROUPS.LEFT_NANICOS
+
+
+def test_historical_series_reaches_may_without_requiring_future_candidates():
+    group = OUTPUT["agregador"]["grupos_1t"]
+    first = min(group["ondas"], key=lambda p: p["campo"]["fim"])
+    assert first["id"] == "realtime_2026-05-04"
+    assert "clariana" not in first["componentes"]["outros_centro_direita"]
+    assert {p["campo"]["fim"][5:7] for p in group["ondas"]} == {
+        "05",
+        "06",
+        "07",
+        "08",
+        "09",
+    }
+    for kind in ["publicado", "ajustado"]:
+        for key in GROUPS.GROUPS:
+            for day, value in zip(
+                OUTPUT["agregador"]["serie"]["datas"],
+                group["serie"][kind][key],
+                strict=True,
+            ):
+                assert (value is not None) == (day >= "2026-05-04")
+
+
+@pytest.mark.parametrize(
+    "ident", ["atlas_2026-05-18", "poderdata_2026-07-15", "poderdata_2026-07-29"]
+)
+def test_empty_group_only_when_verified_roster_offers_no_candidate(ident):
+    poll = next(p for p in OUTPUT["pesquisas"] if p["id"] == ident)
+    row, reason = GROUPS.split_poll(poll, SCENARIO)
+    assert reason is None
+    key = "outros_esquerda_nanicos"
+    assert row["componentes"][key] == []
+    assert row["publicado"][key] == row["ajustado"][key] == 0
+    unverified = copy.deepcopy(poll)
+    unverified.pop("grupos_1t_fonte")
+    assert GROUPS.split_poll(unverified, SCENARIO)[0] is None
+
+
+def test_historical_decomposition_is_pure_and_preserves_leaders():
+    engine = load("reponderacao-pnad")
+    selection = load("reponderacao-cenarios")
+    bench, ipca = engine.Benchmark(), engine.load_ipca()
+    for ident in ENTRIES:
+        raw = selection.select_first_round(HISTORY.raw(ident))
+        before = copy.deepcopy(raw)
+        refined = HISTORY.refine(raw, ENTRIES)
+        assert raw == before
+        old = engine.process_poll(raw, bench, ipca)
+        new = engine.process_poll(refined, bench, ipca)
+        assert old["turnos"].get("2t") == new["turnos"].get("2t")
+        for key in ["lula", "flavio"]:
+            assert (
+                old["turnos"]["1t"]["publicado"][key]
+                == new["turnos"]["1t"]["publicado"][key]
+            )
+            for scenario, result in old["turnos"]["1t"]["cenarios"].items():
+                assert (
+                    result["ajustado"][key]
+                    == new["turnos"]["1t"]["cenarios"][scenario]["ajustado"][key]
+                )
+
+
+def test_decomposition_rejects_unreconciled_income_or_topline():
+    ident = "atlas_2026-06-30"
+    for field in ["publicado", "renda"]:
+        entries = copy.deepcopy(ENTRIES)
+        column = entries[ident]["decomposicao_outros"]["joaquim"]
+        if field == "renda":
+            column[field][0] += 1
+        else:
+            column[field] += 1
+        with pytest.raises(AssertionError):
+            HISTORY.refine(HISTORY.raw(ident), entries)
+
+
 def test_every_second_round_is_preserved_and_first_round_selection_is_enforced():
     engine = load("reponderacao-pnad")
     selection = load("reponderacao-cenarios")
@@ -119,7 +204,8 @@ def test_page_has_gray_and_black_lines_and_explicit_coverage():
         assert len(paths) == 2
         assert all(p["stroke"] == color for p in paths)
     text = html.find(id="grupos-primeiro-turno").get_text(" ", strip=True)
-    assert "4 ondas de 2 institutos" in text
+    assert "28 ondas de 7 institutos" in text
+    assert "04/05/2026" in text
     assert "10/09/2026" in text
     assert "Grassi integra o residual" in text
     assert html.find(id="selecao-primeiro-turno")

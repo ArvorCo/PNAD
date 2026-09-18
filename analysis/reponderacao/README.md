@@ -50,16 +50,21 @@ Marçal também está dentro de `outros` na MDA de 15/09: sua exclusão não pod
 
 `scripts/reponderacao-grupos.py` soma as candidaturas dentro de cada onda e depois aplica a mesma meia-vida de 14 dias aos dois grupos:
 
-- **Outros (centro-direita), cinza:** Zema, Augusto Cury, Ronaldo Caiado, Renan Santos e Clariana Barão.
-- **Outros (esquerda + nanicos), preto:** Samara, Rui Costa Pimenta, Edmilson Costa, Hertz Dias e Wilson Grassi. A inclusão de Grassi é no residual de nanicos, não uma atribuição de posição de esquerda.
+- **Outros (centro-direita), cinza:** Zema, Augusto Cury, Ronaldo Caiado, Renan Santos e Clariana Barão; no histórico, Aécio Neves, Aldo Rebelo e Leonardo Avalanche.
+- **Outros (esquerda + nanicos), preto:** Samara, Rui Costa Pimenta, Edmilson Costa, Hertz Dias e Wilson Grassi; no histórico, Joaquim Barbosa, Ciro Gomes, Cabo Daciolo e Heró Bezerra. A inclusão no residual não atribui posição de esquerda a todos esses nomes.
 
 Classificação editorial aprovada pelo responsável pelo projeto. A inclusão de Clariana considera suas [propostas econômicas](https://clarianabarao.com.br/propostas); a manutenção de Grassi no residual considera a pauta da candidatura e a orientação partidária descritas no [perfil publicado pela Band](https://www.band.com.br/politica/eleicoes/eleicoes-2026-conheca-as-propostas-e-o-perfil-de-wilson-grassi-democrata).
 
-Os grupos só usam ondas em que a divisão por renda é identificável. `Outros` indivisível ou candidato sem linha de renda não vira zero: nem mesmo um total publicado de 0% permite inferir zeros em cada faixa. Por isso, Atlas 17/09 entra na curva de Lula/Flávio, mas não nas curvas dos grupos. Na referência de 17/09, a cobertura dos grupos é de quatro ondas (Datafolha 19/08, 02/09 e 10/09; Quaest 01/09), de dois institutos; último campo em 10/09. As quatro linhas do gráfico não são uma partição somável, pois a cobertura dos líderes é mais ampla.
+Os grupos só usam ondas em que a divisão por renda é identificável. `Outros` indivisível ou candidato sem linha de renda não vira zero: nem mesmo um total publicado de 0% permite inferir zeros em cada faixa. Por isso, Atlas 17/09 entra na curva de Lula/Flávio, mas não nas curvas dos grupos. Na referência de 17/09, a cobertura é de **28 ondas de sete institutos**, com encerramentos de campo de **04/05 a 10/09**: Atlas, Datafolha, Gerp, Nexus, PoderData, Quaest e Real Time. As quatro linhas do gráfico não são uma partição somável, pois a cobertura dos líderes é mais ampla.
+
+`scripts/reponderacao-historico-1t.py` reconstrói 24 ondas históricas no manifesto `grupos_1t_historico.json`: extrai texto nativo por coordenadas ou rótulos e registra transcrições de tabelas em imagem, sempre com página. O cálculo consome esse manifesto e desfaz agregações internas de `outros`. As somas por faixa e o total publicado são conferidos contra o registro anterior. A releitura do Datafolha corrigiu dois antigos vetores de `outros`: junho, `[5,3,6,6]` para `[5,3,7,5]`; julho, `[4,2,2,1]` para `[3,2,2,0]`. Os manifestos originais e os vetores anteriores ficam preservados para auditoria. Lula e Flávio e todo o segundo turno são preservados.
+
+Uma lista histórica completa permite incluir a onda sem exigir candidaturas que ainda não eram oferecidas. Se nenhum candidato de um grupo foi oferecido (Atlas 18/05 e PoderData 15/07 e 29/07), sua soma no cenário é zero. Isso não estima o voto de candidatos ausentes. A composição das cédulas muda ao longo do tempo. As 21 ondas com divisão ainda não identificável ficam explicitamente excluídas dos grupos, sem imputação.
 
 Reprodução:
 
 ```sh
+python3 scripts/reponderacao-historico-1t.py  # PDFs locais; requer PyMuPDF
 python3 scripts/reponderacao-pnad.py calcular --hoje 2026-09-17
 python3 scripts/reponderacao-build.py
 pytest -q

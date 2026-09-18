@@ -240,6 +240,7 @@ def process_poll(
             "publicado",
             "sem_cruzamento",
             "selecao_1t",
+            "grupos_1t_fonte",
         )
         if key in poll
     }
@@ -419,8 +420,19 @@ def build(today: date | None = None) -> dict[str, Any]:
     )
     selection = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(selection)
+    spec = importlib.util.spec_from_file_location(
+        "historical_groups", ROOT / "scripts/reponderacao-historico-1t.py"
+    )
+    historical = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(historical)
+    historical_entries = json.loads(historical.MANIFEST.read_text(encoding="utf-8"))
     polls = [
-        process_poll(selection.select_first_round(p), bench, ipca) for p in raw_polls
+        process_poll(
+            historical.refine(selection.select_first_round(p), historical_entries),
+            bench,
+            ipca,
+        )
+        for p in raw_polls
     ]
     skipped = [selection.select_first_round(p) for p in skipped]
     for poll, raw in zip(polls, raw_polls, strict=False):
