@@ -1,0 +1,78 @@
+{
+  "id": "atlas_2026-09-16",
+  "modo": "Online",
+  "subtipo": "Formulário web · Atlas RDR",
+  "selecao": "Convites durante navegação na web, geolocalizados. O relatório chama o recrutamento de aleatório; não apresenta cadastro nem probabilidades individuais de inclusão.",
+  "fontes": "TSE 2026: sexo e idade. PNADC 2026: escolaridade. PNADC 2025: renda.",
+  "pnad": "Renda: 2025; escolaridade: 2026. Visita e trimestre não identificados.",
+  "pesos": "Pós-estratificação iterativa de sexo, idade, escolaridade, renda, região e comportamento eleitoral anterior. Registro admite até 1 pp de afastamento dos alvos.",
+  "voto": "Voto anterior declarado",
+  "voto_detalhe": "O relatório inclui comportamento eleitoral anterior entre as variáveis de calibração. O questionário pergunta 1º e 2º turnos de 2022 (pp. 9–10), mas o método não especifica qual turno entra nem os alvos políticos.",
+  "controle": "Registro: checagem manual de pelo menos 15% dos questionários e consistência interna.",
+  "precisao": "Relatório: ±1 pp, 95%. Não localizamos efeito do desenho, tamanho efetivo nem modelo validado para a seleção digital.",
+  "alerta": "O relatório define população adulta; o registro usa eleitorado e a faixa inicial 16–24. O plano desta onda já declara renda PNADC 2025, sem permitir inferir visita ou preços.",
+  "paginas": [
+    4,
+    5
+  ],
+  "instituto": "AtlasIntel",
+  "criterios": [
+    {
+      "pontos": 1,
+      "evidencia": "Registro e relatório identificam universo, modalidade, campo, tamanho e responsável/contratante."
+    },
+    {
+      "pontos": 0.5,
+      "evidencia": "Convites durante navegação na web, geolocalizados. O relatório chama o recrutamento de aleatório; não apresenta cadastro nem probabilidades individuais de inclusão."
+    },
+    {
+      "pontos": 0.5,
+      "evidencia": "TSE 2026: sexo e idade. PNADC 2026: escolaridade. PNADC 2025: renda. Renda: 2025; escolaridade: 2026. Visita e trimestre não identificados."
+    },
+    {
+      "pontos": 0.5,
+      "evidencia": "Pós-estratificação iterativa de sexo, idade, escolaridade, renda, região e comportamento eleitoral anterior. Registro admite até 1 pp de afastamento dos alvos."
+    },
+    {
+      "pontos": 1,
+      "evidencia": "Questionário completo desta onda obtido no PesqEle; ordem e alternativas acessíveis no PDF vinculado."
+    },
+    {
+      "pontos": 1,
+      "evidencia": "Registro: checagem manual de pelo menos 15% dos questionários e consistência interna."
+    },
+    {
+      "pontos": 0,
+      "evidencia": "Não localizamos o balanço de tentativas, contatos, elegíveis, recusas e entrevistas que permita calcular taxa de resposta/participação."
+    },
+    {
+      "pontos": 0,
+      "evidencia": "Relatório: ±1 pp, 95%. Não localizamos efeito do desenho, tamanho efetivo nem modelo validado para a seleção digital."
+    },
+    {
+      "pontos": 0.5,
+      "evidencia": "O relatório publica perfil amostral, mas não todos os diagnósticos de pesos e bases brutas versus ponderadas."
+    },
+    {
+      "pontos": 0,
+      "evidencia": "Não localizamos, nos documentos consultados, base individual anonimizada com pesos e código suficiente para reproduzir esta onda."
+    }
+  ],
+  "registro_tse": "BR-06221/2026",
+  "campo": {
+    "inicio": "2026-09-11",
+    "fim": "2026-09-16"
+  },
+  "n": 5018,
+  "contratante": "Bloomberg",
+  "fonte_registro": "fontes/reponderacao_metodologias/atlas_2026-09-16/registro-metodologia.txt",
+  "fonte_questionario": "fontes/reponderacao_metodologias/atlas_2026-09-16/questionario.pdf",
+  "fonte_relatorio": "https://cdn1.atlasintel.org/pesquisa_atlas_bloomberg__nacional_260916__e482014325df7284.pdf",
+  "proveniencia": {
+    "consulta": "2026-09-21",
+    "registro_html_sha256": "ea1294446d893b16d8920a6484d981ccb2e6a58b8572adff22008e46caabe786",
+    "questionario_sha256": "13f89530083008682b03c8f58b669dc8871627528180e2c5d36c0309d0c2d15e",
+    "relatorio_original": "data/originals/atlas_092026_17/relatorio.pdf",
+    "relatorio_sha256": "75fe2f64a22d553a2f9349094dad7e3577c3425ab95bb0618e96c39e8ddd4e2c"
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "id": "quaest_2026-09-13",
+  "modo": "Presencial",
+  "subtipo": "Domiciliar",
+  "selecao": "Sorteio PPT de municípios e de setores censitários; seleção de domicílios e pessoas por cotas de sexo, idade, renda e escolaridade no último estágio.",
+  "fontes": "TSE julho/2026: sexo e idade. Censo 2022: setores. PNADC anual 2025, 1ª visita: renda. PNADC 2º tri/2026: escolaridade.",
+  "pnad": "Renda: anual 2025, 1ª visita. Escolaridade: 2º trimestre de 2026.",
+  "pesos": "Registro admite eventual rake e MRP para correção de distribuições e estimativas. O plano não informa quais modelos foram efetivamente aplicados nesta onda.",
+  "voto": "Não declarado como peso",
+  "voto_detalhe": "Pergunta 65 coleta voto no 2º turno de 2022. O plano não identifica uso dessa variável na calibração; mencionar MRP não permite presumir seus preditores.",
+  "controle": "Registro: tablets, georreferenciamento em tempo real, consistência e checagem de áudio de 30% dos questionários.",
+  "precisao": "Registro: cerca de ±2 pp, 95%, aproximação por amostra aleatória simples. Sem efeito dos conglomerados ou modelo aplicado divulgado.",
+  "alerta": "Duas etapas com sorteio, última por cotas. Rake e MRP são possibilidades registradas, não comprovação de aplicação.",
+  "paginas": [],
+  "instituto": "Quaest",
+  "criterios": [
+    {
+      "pontos": 1,
+      "evidencia": "Registro e relatório identificam universo, modalidade, campo, tamanho e responsável/contratante."
+    },
+    {
+      "pontos": 1,
+      "evidencia": "Sorteio PPT de municípios e de setores censitários; seleção de domicílios e pessoas por cotas de sexo, idade, renda e escolaridade no último estágio."
+    },
+    {
+      "pontos": 1,
+      "evidencia": "TSE julho/2026: sexo e idade. Censo 2022: setores. PNADC anual 2025, 1ª visita: renda. PNADC 2º tri/2026: escolaridade. Renda: anual 2025, 1ª visita. Escolaridade: 2º trimestre de 2026."
+    },
+    {
+      "pontos": 0.5,
+      "evidencia": "Registro admite eventual rake e MRP para correção de distribuições e estimativas. O plano não informa quais modelos foram efetivamente aplicados nesta onda."
+    },
+    {
+      "pontos": 1,
+      "evidencia": "Questionário completo desta onda obtido no PesqEle; ordem e alternativas acessíveis no PDF vinculado."
+    },
+    {
+      "pontos": 1,
+      "evidencia": "Registro: tablets, georreferenciamento em tempo real, consistência e checagem de áudio de 30% dos questionários."
+    },
+    {
+      "pontos": 0,
+      "evidencia": "Não localizamos o balanço de tentativas, contatos, elegíveis, recusas e entrevistas que permita calcular taxa de resposta/participação."
+    },
+    {
+      "pontos": 0.5,
+      "evidencia": "Registro: cerca de ±2 pp, 95%, aproximação por amostra aleatória simples. Sem efeito dos conglomerados ou modelo aplicado divulgado."
+    },
+    {
+      "pontos": 0.5,
+      "evidencia": "O relatório publica perfil amostral, mas não todos os diagnósticos de pesos e bases brutas versus ponderadas."
+    },
+    {
+      "pontos": 0,
+      "evidencia": "Não localizamos, nos documentos consultados, base individual anonimizada com pesos e código suficiente para reproduzir esta onda."
+    }
+  ],
+  "registro_tse": "BR-03607/2026",
+  "campo": {
+    "inicio": "2026-09-10",
+    "fim": "2026-09-13"
+  },
+  "n": 2004,
+  "contratante": "Globo Comunicação e Participações S/A e Editora Globo S/A",
+  "fonte_registro": "fontes/reponderacao_metodologias/quaest_2026-09-13/registro-metodologia.txt",
+  "fonte_questionario": "fontes/reponderacao_metodologias/quaest_2026-09-13/questionario.pdf",
+  "fonte_relatorio": "https://quaest.com.br/wp-content/uploads/2026/09/QUAEST4PRESIDENCIAL1409.pdf",
+  "proveniencia": {
+    "consulta": "2026-09-21",
+    "registro_html_sha256": "cc12dbcf510f510c55985725933d915f1a84fb784aafa1ea7803e9153a529179",
+    "questionario_sha256": "99d98b759bf3e9be954011afc2c98da3c1c28dc4e6869a9d6dd17aa144f75715",
+    "relatorio_original": "data/pesquisas/quaest/2026-09-14/relatorio.pdf",
+    "relatorio_sha256": "5e41b979d0f82011fbbe03ff72556995a673b64978465469cf0b544ec16fd929"
+  }
+}

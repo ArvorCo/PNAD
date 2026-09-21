@@ -1,0 +1,77 @@
+{
+  "id": "mda_2026-09-13",
+  "modo": "Presencial",
+  "subtipo": "Domicílios e pontos de fluxo",
+  "selecao": "Distribuição por região, UF e porte municipal; sorteio de municípios, bairros e setores; abordagem final por cotas de sexo, idade, renda e escolaridade.",
+  "fontes": "TSE julho/2026; Censo 2022; PNAD anual 2024 para renda; PNAD trimestral 2025 e TSE para escolaridade.",
+  "pnad": "Renda: anual 2024, visita não indicada. Escolaridade: trimestral 2025, trimestre não indicado.",
+  "pesos": "Registro prevê peso inicial 1 e correções se necessárias. Relatório declara que não foi utilizada ponderação nesta onda.",
+  "voto": "Não declarado como peso",
+  "voto_detalhe": "O relatório declara ausência de ponderação. O plano de eventuais correções não inclui voto em 2022.",
+  "controle": "Registro: georreferenciamento, gravação, consistência e auditoria de pelo menos 20% por áudio ou recontato.",
+  "precisao": "±2,2 pp, 95%. Não localizamos efeito dos conglomerados nem tamanho efetivo.",
+  "alerta": "Domicílios e fluxo são duas formas de abordagem presencial, não duas modalidades. A composição depende das cotas cumpridas em campo.",
+  "paginas": [
+    3
+  ],
+  "instituto": "MDA",
+  "criterios": [
+    {
+      "pontos": 1,
+      "evidencia": "Registro e relatório identificam universo, modalidade, campo, tamanho e responsável/contratante."
+    },
+    {
+      "pontos": 1,
+      "evidencia": "Distribuição por região, UF e porte municipal; sorteio de municípios, bairros e setores; abordagem final por cotas de sexo, idade, renda e escolaridade."
+    },
+    {
+      "pontos": 0.5,
+      "evidencia": "TSE julho/2026; Censo 2022; PNAD anual 2024 para renda; PNAD trimestral 2025 e TSE para escolaridade. Renda: anual 2024, visita não indicada. Escolaridade: trimestral 2025, trimestre não indicado."
+    },
+    {
+      "pontos": 1,
+      "evidencia": "Registro prevê peso inicial 1 e correções se necessárias. Relatório declara que não foi utilizada ponderação nesta onda."
+    },
+    {
+      "pontos": 1,
+      "evidencia": "Questionário completo desta onda obtido no PesqEle; ordem e alternativas acessíveis no PDF vinculado."
+    },
+    {
+      "pontos": 1,
+      "evidencia": "Registro: georreferenciamento, gravação, consistência e auditoria de pelo menos 20% por áudio ou recontato."
+    },
+    {
+      "pontos": 0,
+      "evidencia": "Não localizamos o balanço de tentativas, contatos, elegíveis, recusas e entrevistas que permita calcular taxa de resposta/participação."
+    },
+    {
+      "pontos": 0,
+      "evidencia": "±2,2 pp, 95%. Não localizamos efeito dos conglomerados nem tamanho efetivo."
+    },
+    {
+      "pontos": 0.5,
+      "evidencia": "O relatório publica perfil amostral, mas não todos os diagnósticos de pesos e bases brutas versus ponderadas."
+    },
+    {
+      "pontos": 0,
+      "evidencia": "Não localizamos, nos documentos consultados, base individual anonimizada com pesos e código suficiente para reproduzir esta onda."
+    }
+  ],
+  "registro_tse": "BR-06902/2026",
+  "campo": {
+    "inicio": "2026-09-09",
+    "fim": "2026-09-13"
+  },
+  "n": 2002,
+  "contratante": "Confederação Nacional do Transporte (CNT)",
+  "fonte_registro": "fontes/reponderacao_metodologias/mda_2026-09-13/registro-metodologia.txt",
+  "fonte_questionario": "fontes/reponderacao_metodologias/mda_2026-09-13/questionario.pdf",
+  "fonte_relatorio": "https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2026/09/41c8cf7e-63b9-4165-be91-3f4545ba7649-1.pdf",
+  "proveniencia": {
+    "consulta": "2026-09-21",
+    "registro_html_sha256": "a4de62109486d55f2ad189489b85c0ad20ed89c8805b64d946be9bdbb5a40bf9",
+    "questionario_sha256": "6bafa0bcca12a0dd27b1fc448bb32a545b26ceec01683266f9ffeb789549c884",
+    "relatorio_original": "data/pesquisas/cnt-mda/2026-09-15/relatorio.pdf",
+    "relatorio_sha256": "ce1a1f63a709bcabdbf7fd18a2d0058f7ee9849744294c9e22d9286a5e60e4bc"
+  }
+}

@@ -1,5 +1,6 @@
 """Regressões documentais: nova renda por onda, cobertura por turno e agregação."""
 
+import importlib
 import json
 from pathlib import Path
 
@@ -73,7 +74,11 @@ def test_gerp_uses_weighted_shares_not_raw_counts(output):
 
 def test_new_results_stay_in_bounds_and_recompose(output):
     for p in output["pesquisas"]:
-        if p.get("divulgacao") != "2026-09-17":
+        if p["id"] not in {
+            "atlas_2026-09-16",
+            "poderdata_2026-09-16",
+            "gerp_2026-09-16",
+        }:
             continue
         for r in p["turnos"].values():
             assert r["residuo_max"] <= 0.65
@@ -98,9 +103,27 @@ def test_latest_comparable_mean_includes_gerp_and_poderdata(output):
     ] == round(avg, 2)
 
 
-def test_page_shows_all_four_sources_without_fake_adjustments():
+def test_page_shows_all_four_sources_without_fake_adjustments(output, monkeypatch):
+    """Exercita a cobertura histórica sem exigir que 17/09 seja sempre a última onda."""
+    monkeypatch.syspath_prepend(str(ROOT / "scripts"))
+    builder = importlib.import_module("reponderacao-build")
+    historical = {
+        **output,
+        **{
+            key: [
+                p
+                for p in output[key]
+                if max(
+                    p.get("divulgacao") or p["campo"]["fim"],
+                    p.get("fonte", {}).get("relatorio_completo", ""),
+                )
+                <= "2026-09-17"
+            ]
+            for key in ["pesquisas", "nao_reponderaveis"]
+        },
+    }
     html = BeautifulSoup(
-        (ROOT / "docs/reponderacao_pnad.html").read_text(), "html.parser"
+        builder.coverage_html(historical, builder.tabela), "html.parser"
     )
     section = html.find(id="atualizacao")
     text = section.get_text(" ", strip=True)

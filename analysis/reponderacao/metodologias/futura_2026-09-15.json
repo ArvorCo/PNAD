@@ -1,0 +1,79 @@
+{
+  "id": "futura_2026-09-15",
+  "modo": "Telefônica",
+  "subtipo": "CATI · entrevistador humano",
+  "selecao": "Estratificação por região e UF; seleção auxiliada por computador e cotas de sexo, idade e escolaridade. Origem do cadastro telefônico não identificada no plano.",
+  "fontes": "TSE agosto/2026: geografia, sexo e idade. PNADC 2º tri/2026: escolaridade. Censo 2010: renda.",
+  "pnad": "2º trimestre de 2026, somente para escolaridade. Renda: Censo 2010.",
+  "pesos": "Correção prevista de sexo, idade e escolaridade se desvio superar 3 pp. Renda com fator 1. Relatório anuncia troca da escolaridade do TSE pela PNAD nesta onda.",
+  "voto": "Não declarado como peso",
+  "voto_detalhe": "Voto no 2º turno de 2022 não consta das variáveis de ponderação do registro.",
+  "controle": "Registro: supervisão durante a coleta e checagem de pelo menos 20% dos questionários de cada entrevistador.",
+  "precisao": "Registro: ±2,2 pp, 95%, calculados por amostra aleatória simples. Sem diagnóstico público de efeito dos pesos.",
+  "alerta": "A modernização da escolaridade não atualizou a referência de renda. Não há cruzamentos eleitorais por renda no relatório de 43 páginas.",
+  "paginas": [
+    5,
+    6,
+    7
+  ],
+  "instituto": "Futura",
+  "criterios": [
+    {
+      "pontos": 1,
+      "evidencia": "Registro e relatório identificam universo, modalidade, campo, tamanho e responsável/contratante."
+    },
+    {
+      "pontos": 0.5,
+      "evidencia": "Estratificação por região e UF; seleção auxiliada por computador e cotas de sexo, idade e escolaridade. Origem do cadastro telefônico não identificada no plano."
+    },
+    {
+      "pontos": 1,
+      "evidencia": "TSE agosto/2026: geografia, sexo e idade. PNADC 2º tri/2026: escolaridade. Censo 2010: renda. 2º trimestre de 2026, somente para escolaridade. Renda: Censo 2010."
+    },
+    {
+      "pontos": 0.5,
+      "evidencia": "Correção prevista de sexo, idade e escolaridade se desvio superar 3 pp. Renda com fator 1. Relatório anuncia troca da escolaridade do TSE pela PNAD nesta onda."
+    },
+    {
+      "pontos": 1,
+      "evidencia": "Questionário completo desta onda obtido no PesqEle; ordem e alternativas acessíveis no PDF vinculado."
+    },
+    {
+      "pontos": 1,
+      "evidencia": "Registro: supervisão durante a coleta e checagem de pelo menos 20% dos questionários de cada entrevistador."
+    },
+    {
+      "pontos": 0,
+      "evidencia": "Não localizamos o balanço de tentativas, contatos, elegíveis, recusas e entrevistas que permita calcular taxa de resposta/participação."
+    },
+    {
+      "pontos": 0.5,
+      "evidencia": "Registro: ±2,2 pp, 95%, calculados por amostra aleatória simples. Sem diagnóstico público de efeito dos pesos."
+    },
+    {
+      "pontos": 0.5,
+      "evidencia": "O relatório publica perfil amostral, mas não todos os diagnósticos de pesos e bases brutas versus ponderadas."
+    },
+    {
+      "pontos": 0,
+      "evidencia": "Não localizamos, nos documentos consultados, base individual anonimizada com pesos e código suficiente para reproduzir esta onda."
+    }
+  ],
+  "registro_tse": "BR-00749/2026",
+  "campo": {
+    "inicio": "2026-09-11",
+    "fim": "2026-09-15"
+  },
+  "n": 2000,
+  "contratante": "Futura/100% Cidades, recursos próprios segundo Poder360",
+  "fonte_registro": "fontes/reponderacao_metodologias/futura_2026-09-15/registro-metodologia.txt",
+  "fonte_questionario": "fontes/reponderacao_metodologias/futura_2026-09-15/questionario.pdf",
+  "fonte_relatorio": "https://static.poder360.com.br/uploads/2026/09/Pesquisa-Presidente-Brasil-Futura-Setembro.pdf",
+  "proveniencia": {
+    "consulta": "2026-09-21",
+    "registro_html_sha256": "84660549fd84948b15bc9f23d16a4e45fd689fa7b2f80c2a58af7476e5266eee",
+    "questionario_sha256": "0955e4f2ee57d8868fa8ee2bf52d932b18f89cee7b9febe2c54eba30e458b7f3",
+    "relatorio_original": "data/originals/futura_092026_17/relatorio.pdf",
+    "relatorio_sha256": "0616361dbe5d603e5c26dcf854fca62e6d1eb7ac1d67f7cf1889ce633645d14d"
+  }
+}

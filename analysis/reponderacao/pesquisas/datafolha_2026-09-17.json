@@ -1,0 +1,173 @@
+{
+  "instituto": "Datafolha",
+  "contratante": "Folha de S.Paulo e TV Globo",
+  "metodo": "presencial, pontos de fluxo",
+  "id": "datafolha_2026-09-17",
+  "registro_tse": "BR-04029/2026",
+  "campo": {
+    "inicio": "2026-09-15",
+    "fim": "2026-09-17"
+  },
+  "divulgacao": "2026-09-17",
+  "n": 2001,
+  "dossie": "datafolha_21092026.html",
+  "fonte": {
+    "pdf": "data/pesquisas/datafolha/2026-09-17/relatorio.pdf",
+    "url": "https://brasil.arvor.co/fontes/datafolha_21092026.pdf",
+    "relatorio_completo": "2026-09-21",
+    "paginas": {
+      "perfil_renda": 30,
+      "1t_renda": 35,
+      "2t_renda": 42
+    },
+    "nota": "Relatório completo de 50 páginas publicado em 21/09; resultados divulgados em 17/09. O registro prevê 2.002 entrevistas; o relatório e o anexo territorial somam 2.001."
+  },
+  "renda": {
+    "unidade": "salarios_minimos",
+    "ano_referencia": 2026,
+    "faixas": [
+      {
+        "rotulo": "Até 2 SM (até R$ 3.242)",
+        "max": 2
+      },
+      {
+        "rotulo": "2 a 5 SM (R$ 3.242 a 8.105)",
+        "max": 5
+      },
+      {
+        "rotulo": "Mais de 5 SM (acima de R$ 8.105)",
+        "max": null
+      }
+    ],
+    "bases": [
+      992,
+      655,
+      266
+    ],
+    "nota": "Bases ponderadas da intenção de voto, pp. 35 e 42. Somam 1.913; 88 casos não aparecem no cruzamento de renda. Normalização entre renda declarada e delta ancorado no placar nacional; não identifica o voto dos casos sem renda publicada."
+  },
+  "publicado": {
+    "1t": {
+      "lula": 39,
+      "flavio": 36,
+      "cury": 6,
+      "caiado": 4,
+      "renan_santos": 3,
+      "zema": 2,
+      "samara": 1,
+      "rui": 1,
+      "edmilson": 0,
+      "clariana": 0,
+      "hertz": 0,
+      "grassi": 0,
+      "branco_nulo": 6,
+      "indecisos": 3
+    },
+    "2t": {
+      "lula": 46,
+      "flavio": 44,
+      "branco_nulo": 8,
+      "indecisos": 1
+    }
+  },
+  "cruzamentos": {
+    "1t": {
+      "opcoes": [
+        "lula",
+        "flavio",
+        "cury",
+        "caiado",
+        "renan_santos",
+        "zema",
+        "samara",
+        "rui",
+        "edmilson",
+        "clariana",
+        "hertz",
+        "grassi",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          46,
+          29,
+          4,
+          4,
+          2,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          7,
+          3
+        ],
+        [
+          33,
+          41,
+          7,
+          4,
+          3,
+          3,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          5,
+          2
+        ],
+        [
+          28,
+          44,
+          10,
+          5,
+          5,
+          3,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          2,
+          1
+        ]
+      ],
+      "nota": "Extração automática, estimulada_b. Traço convertido em zero apenas na conta. Inteiros mantidos sem normalização; cenário B no primeiro turno."
+    },
+    "2t": {
+      "opcoes": [
+        "lula",
+        "flavio",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          53,
+          37,
+          8,
+          1
+        ],
+        [
+          41,
+          50,
+          8,
+          1
+        ],
+        [
+          32,
+          60,
+          7,
+          1
+        ]
+      ],
+      "nota": "Extração automática, turno2_flavio. Traço convertido em zero apenas na conta. Inteiros mantidos sem normalização; cenário B no primeiro turno."
+    }
+  }
+}

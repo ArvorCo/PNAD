@@ -15,17 +15,25 @@ def score(values):
 
 def source_link(poll):
     url = (poll.get("fonte") or {}).get("url")
+    label = (poll.get("fonte") or {}).get("rotulo", poll["instituto"])
     if not url:
-        return escape(poll["instituto"])
-    return f'<a href="{escape(url, quote=True)}">{escape(poll["instituto"])}</a>'
+        return escape(label)
+    return f'<a href="{escape(url, quote=True)}">{escape(label)}</a>'
 
 
 def coverage_html(data, table):
-    """Exibe a última divulgação e a última onda não reponderável por instituto."""
+    """Exibe novas divulgações e relatórios completos recebidos na última atualização."""
     polls = data["pesquisas"] + data.get("nao_reponderaveis", [])
-    latest = max(p.get("divulgacao") or p["campo"]["fim"] for p in polls)
+
+    def documentary_date(poll):
+        return max(
+            poll.get("divulgacao") or poll["campo"]["fim"],
+            (poll.get("fonte") or {}).get("relatorio_completo", ""),
+        )
+
+    latest = max(documentary_date(p) for p in polls)
     recent = sorted(
-        (p for p in polls if p.get("divulgacao") == latest),
+        (p for p in polls if documentary_date(p) == latest),
         key=lambda p: p["instituto"],
     )
     rows, notes = [], []
@@ -44,11 +52,29 @@ def coverage_html(data, table):
             )
             if (
                 turn == "1t"
-                and p.get("selecao_1t", {}).get("status") == "excluido_com_marcal"
+                and (p.get("selecao_1t") or {}).get("status") == "excluido_com_marcal"
             ):
                 adjusted = "Excluído: cenário com Marçal"
             cells += [score(original), adjusted]
         rows.append(cells)
+        if p.get("fonte", {}).get("relatorio_completo") == latest:
+            details = (
+                f'<a href="#pesquisa-{escape(p["id"], quote=True)}">'
+                "Ver cálculo e cenários de renda</a>"
+                if turns else ""
+            )
+            if p.get("dossie"):
+                details += (
+                    (" · " if details else "")
+                    + f'<a href="{escape(p["dossie"], quote=True)}">Ler dossiê completo</a>'
+                )
+            notes.append(
+                f'<p class="note"><b>{escape(p["instituto"])}.</b> Relatório completo '
+                f"disponibilizado em {'/'.join(reversed(latest.split('-')))}; "
+                f"pesquisa divulgada em {'/'.join(reversed(p['divulgacao'].split('-')))}. "
+                "A data nova do documento não transforma o campo em uma nova onda. "
+                f"{details}</p>"
+            )
         reasons = list((p.get("sem_cruzamento") or {}).values())
         if p.get("motivo"):
             reasons.append(p["motivo"])
@@ -59,12 +85,12 @@ def coverage_html(data, table):
         for extra in p.get("fonte", {}).get("complementos", []):
             notes.append(
                 f'<p class="note"><a href="{escape(extra["url"], quote=True)}">'
-                f'{escape(extra["rotulo"])}</a>: fonte complementar ao PDF.</p>'
+                f"{escape(extra['rotulo'])}</a>: fonte complementar ao PDF.</p>"
             )
     day = "/".join(reversed(latest.split("-")))
     recent_html = (
         '<section id="atualizacao" class="chapter"><div class="wrap">'
-        f'<p class="eyebrow">Última divulgação · {day}</p>'
+        f'<p class="eyebrow">Atualização documental · {day}</p>'
         "<h2>O que entrou nesta atualização</h2>"
         "<p>Todos os placares abaixo estão na ordem <b>Lula × Flávio</b>, em %. "
         "O ajuste troca apenas a distribuição de renda pela PNAD. "

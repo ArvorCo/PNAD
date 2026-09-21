@@ -1,0 +1,78 @@
+{
+  "id": "vox_brasil_2026-08-27",
+  "modo": "Presencial",
+  "subtipo": "Domiciliar",
+  "selecao": "Registro descreve sorteios de bairros/setores, ruas e casas (sistemático). Dentro da casa, entrevista o eleitor que atende, com controles posteriores; seleção nacional dos municípios pouco detalhada.",
+  "fontes": "TSE abril/2026 para sexo, idade e escolaridade; Censo 2022 declarado para renda, com link genérico ao Sidra.",
+  "pnad": "Não citada. Censo 2022 declarado para renda, sem número de tabela.",
+  "pesos": "Registro descreve ponderação demográfica e referência de renda com 83,89% até 2 SM. Falta identificar tabela, conceito e universo dessa renda.",
+  "voto": "Não declarado como peso",
+  "voto_detalhe": "Voto em 2022 não consta da lista de ponderação do registro.",
+  "controle": "Registro: supervisão de campo, consistência e checagem de 20% dos questionários de cada entrevistador.",
+  "precisao": "±2,15 pp, 95%. Não localizamos ajuste para conglomerados ou dispersão de pesos.",
+  "alerta": "Entrevistar quem atende à porta não equivale a sortear o morador. Sem a tabela do Censo não é possível validar a natureza do alvo de renda declarado.",
+  "paginas": [
+    2
+  ],
+  "instituto": "Vox Brasil",
+  "criterios": [
+    {
+      "pontos": 1,
+      "evidencia": "Registro e relatório identificam universo, modalidade, campo, tamanho e responsável/contratante."
+    },
+    {
+      "pontos": 0.5,
+      "evidencia": "Registro descreve sorteios de bairros/setores, ruas e casas (sistemático). Dentro da casa, entrevista o eleitor que atende, com controles posteriores; seleção nacional dos municípios pouco detalhada."
+    },
+    {
+      "pontos": 0.5,
+      "evidencia": "TSE abril/2026 para sexo, idade e escolaridade; Censo 2022 declarado para renda, com link genérico ao Sidra. Não citada. Censo 2022 declarado para renda, sem número de tabela."
+    },
+    {
+      "pontos": 0.5,
+      "evidencia": "Registro descreve ponderação demográfica e referência de renda com 83,89% até 2 SM. Falta identificar tabela, conceito e universo dessa renda."
+    },
+    {
+      "pontos": 1,
+      "evidencia": "Questionário completo desta onda obtido no PesqEle; ordem e alternativas acessíveis no PDF vinculado."
+    },
+    {
+      "pontos": 1,
+      "evidencia": "Registro: supervisão de campo, consistência e checagem de 20% dos questionários de cada entrevistador."
+    },
+    {
+      "pontos": 0,
+      "evidencia": "Não localizamos o balanço de tentativas, contatos, elegíveis, recusas e entrevistas que permita calcular taxa de resposta/participação."
+    },
+    {
+      "pontos": 0,
+      "evidencia": "±2,15 pp, 95%. Não localizamos ajuste para conglomerados ou dispersão de pesos."
+    },
+    {
+      "pontos": 0.5,
+      "evidencia": "O relatório publica perfil amostral, mas não todos os diagnósticos de pesos e bases brutas versus ponderadas."
+    },
+    {
+      "pontos": 0,
+      "evidencia": "Não localizamos, nos documentos consultados, base individual anonimizada com pesos e código suficiente para reproduzir esta onda."
+    }
+  ],
+  "registro_tse": "BR-05519/2026",
+  "campo": {
+    "inicio": "2026-08-25",
+    "fim": "2026-08-27"
+  },
+  "n": 2100,
+  "contratante": "Instituto Vox Brasil Opinião e Pesquisas Ltda (recursos próprios)",
+  "fonte_registro": "fontes/reponderacao_metodologias/vox_brasil_2026-08-27/registro-metodologia.txt",
+  "fonte_questionario": "fontes/reponderacao_metodologias/vox_brasil_2026-08-27/questionario.pdf",
+  "fonte_relatorio": "fontes/reponderacao_metodologias/vox_brasil_2026-08-27/relatorio-metodologia.pdf",
+  "relatorio_excerto": true,
+  "proveniencia": {
+    "consulta": "2026-09-21",
+    "registro_html_sha256": "044d4b2e4dee063207948d72ff452bf6427cf81c9e255c90f1a964451f2ae0c6",
+    "questionario_sha256": "4162e4d05655aabce444d2339c52c1642c6623966bae5f75003987f6dfaa8332",
+    "relatorio_original": "data/originals/vox_brasil_082026/Relatorio.pdf",
+    "relatorio_sha256": "17bb1930e4d382870084d7c5106ca08b92ac1fd7bb59a07695273fede747a37e"
+  }
+}

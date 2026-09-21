@@ -1,0 +1,82 @@
+{
+  "id": "gerp_2026-09-16",
+  "modo": "Telefônica",
+  "subtipo": "GerpCATI · entrevistador humano",
+  "selecao": "O relatório descreve discagem RDD e cotas por UF, sexo, idade e renda, até preenchê-las. O registro especifica cotas de renda do chefe do domicílio.",
+  "fontes": "Registro: IBGE e TSE, sem edições. Relatório: IBGE/Censo 2022 para a ponderação.",
+  "pnad": "Não citada. Fontes e conceito de renda precisam de conciliação entre registro e relatório.",
+  "pesos": "Registro: correção de geografia, sexo, idade e renda do chefe se desvio superar 2 pp. Relatório acrescenta escolaridade e publica perfil ponderado.",
+  "voto": "Não declarado como peso",
+  "voto_detalhe": "Voto em 2022 não consta da lista de calibração no registro ou na metodologia do relatório.",
+  "controle": "Gravação das entrevistas, consistência e recontato de pelo menos 20% dos entrevistados, segundo registro e relatório.",
+  "precisao": "Registro: ±2,04 pp, 95,55%; relatório: ±2 pp, 95%. Não localizamos ajuste por desenho ou dispersão dos pesos.",
+  "alerta": "Registro fala em renda do chefe; questionário e relatório usam renda familiar. Cadastro, cotas e conceito de renda não são intercambiáveis. RDD sorteia números, não garante por si só probabilidade igual para pessoas.",
+  "paginas": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "instituto": "Gerp",
+  "criterios": [
+    {
+      "pontos": 1,
+      "evidencia": "Registro e relatório identificam universo, modalidade, campo, tamanho e responsável/contratante."
+    },
+    {
+      "pontos": 0.5,
+      "evidencia": "O relatório descreve discagem RDD e cotas por UF, sexo, idade e renda, até preenchê-las. O registro especifica cotas de renda do chefe do domicílio."
+    },
+    {
+      "pontos": 0.5,
+      "evidencia": "Registro: IBGE e TSE, sem edições. Relatório: IBGE/Censo 2022 para a ponderação. Não citada. Fontes e conceito de renda precisam de conciliação entre registro e relatório."
+    },
+    {
+      "pontos": 0.5,
+      "evidencia": "Registro: correção de geografia, sexo, idade e renda do chefe se desvio superar 2 pp. Relatório acrescenta escolaridade e publica perfil ponderado."
+    },
+    {
+      "pontos": 1,
+      "evidencia": "Questionário completo desta onda obtido no PesqEle; ordem e alternativas acessíveis no PDF vinculado."
+    },
+    {
+      "pontos": 1,
+      "evidencia": "Gravação das entrevistas, consistência e recontato de pelo menos 20% dos entrevistados, segundo registro e relatório."
+    },
+    {
+      "pontos": 0,
+      "evidencia": "Não localizamos o balanço de tentativas, contatos, elegíveis, recusas e entrevistas que permita calcular taxa de resposta/participação."
+    },
+    {
+      "pontos": 0,
+      "evidencia": "Registro: ±2,04 pp, 95,55%; relatório: ±2 pp, 95%. Não localizamos ajuste por desenho ou dispersão dos pesos."
+    },
+    {
+      "pontos": 0.5,
+      "evidencia": "O relatório publica perfil amostral, mas não todos os diagnósticos de pesos e bases brutas versus ponderadas."
+    },
+    {
+      "pontos": 0,
+      "evidencia": "Não localizamos, nos documentos consultados, base individual anonimizada com pesos e código suficiente para reproduzir esta onda."
+    }
+  ],
+  "registro_tse": "BR-00535/2026",
+  "campo": {
+    "inicio": "2026-09-14",
+    "fim": "2026-09-16"
+  },
+  "n": 2400,
+  "contratante": "Gerp Mercadologia, recursos próprios",
+  "fonte_registro": "fontes/reponderacao_metodologias/gerp_2026-09-16/registro-metodologia.txt",
+  "fonte_questionario": "fontes/reponderacao_metodologias/gerp_2026-09-16/questionario.pdf",
+  "fonte_relatorio": "https://static.poder360.com.br/uploads/2026/09/pesquisa-gerp-presidencia-republica-17set2026.pdf",
+  "proveniencia": {
+    "consulta": "2026-09-21",
+    "registro_html_sha256": "f4e0cbfb200380694c65314f6d03816e1d67d5890d4ffc8e0700797bc8a52d3c",
+    "questionario_sha256": "d5dc7ef8c32fb2d2de807155dc6fd4ea973be28a1988877056aaa371d7f33a4a",
+    "relatorio_original": "data/originals/gerp_092026_17/relatorio.pdf",
+    "relatorio_sha256": "6243dbcadc828eaf6c59f974f5e77301560ac837c7783606f02239bad8d206d6"
+  }
+}

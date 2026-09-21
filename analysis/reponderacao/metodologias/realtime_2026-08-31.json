@@ -1,0 +1,78 @@
+{
+  "id": "realtime_2026-08-31",
+  "modo": "Híbrida",
+  "subtipo": "Prevista no TSE; relatório: telefônica",
+  "selecao": "Registro prevê humanos e IA, com abordagens telefônicas e digitais: sorteio PPT de municípios/localidades e cotas finais. Relatório descreve entrevistas telefônicas humanas, recrutadas por chamadas e mensagens.",
+  "fontes": "TSE julho/2026: sexo, idade e escolaridade. IBGE/Censo 2010: renda domiciliar.",
+  "pnad": "Não citada. Referência de renda: Censo 2010.",
+  "pesos": "Registro prevê correção de sexo e idade se desvio superar 3 pp; escolaridade e renda com fator 1. Proporção de entrevistas por modalidade não identificada.",
+  "voto": "Não declarado como peso",
+  "voto_detalhe": "Voto em 2022 não aparece entre as variáveis de ponderação registradas.",
+  "controle": "Registro: supervisores humanos e sorteio de 15% para verificação posterior.",
+  "precisao": "±2 pp, 95%, sob modelo de amostra aleatória simples. Sem efeito do desenho e sem bases separadas por modalidade.",
+  "alerta": "Híbrida é a classificação do plano registrado. O relatório declara coleta telefônica; não comprova respostas online. Esta é a última onda nacional no acervo; as divulgações de 21/09 são estaduais.",
+  "paginas": [
+    2
+  ],
+  "instituto": "Real Time Big Data",
+  "criterios": [
+    {
+      "pontos": 0.5,
+      "evidencia": "Campo, n e universo identificados, mas modalidade registrada e modalidade descrita no relatório diferem."
+    },
+    {
+      "pontos": 0.5,
+      "evidencia": "Registro prevê humanos e IA, com abordagens telefônicas e digitais: sorteio PPT de municípios/localidades e cotas finais. Relatório descreve entrevistas telefônicas humanas, recrutadas por chamadas e mensagens."
+    },
+    {
+      "pontos": 1,
+      "evidencia": "TSE julho/2026: sexo, idade e escolaridade. IBGE/Censo 2010: renda domiciliar. Não citada. Referência de renda: Censo 2010."
+    },
+    {
+      "pontos": 0.5,
+      "evidencia": "Registro prevê correção de sexo e idade se desvio superar 3 pp; escolaridade e renda com fator 1. Proporção de entrevistas por modalidade não identificada."
+    },
+    {
+      "pontos": 1,
+      "evidencia": "Questionário completo desta onda obtido no PesqEle; ordem e alternativas acessíveis no PDF vinculado."
+    },
+    {
+      "pontos": 1,
+      "evidencia": "Registro: supervisores humanos e sorteio de 15% para verificação posterior."
+    },
+    {
+      "pontos": 0,
+      "evidencia": "Não localizamos o balanço de tentativas, contatos, elegíveis, recusas e entrevistas que permita calcular taxa de resposta/participação."
+    },
+    {
+      "pontos": 0.5,
+      "evidencia": "±2 pp, 95%, sob modelo de amostra aleatória simples. Sem efeito do desenho e sem bases separadas por modalidade."
+    },
+    {
+      "pontos": 0.5,
+      "evidencia": "O relatório publica perfil amostral, mas não todos os diagnósticos de pesos e bases brutas versus ponderadas."
+    },
+    {
+      "pontos": 0,
+      "evidencia": "Não localizamos, nos documentos consultados, base individual anonimizada com pesos e código suficiente para reproduzir esta onda."
+    }
+  ],
+  "registro_tse": "BR-03490/2026",
+  "campo": {
+    "inicio": "2026-08-27",
+    "fim": "2026-08-31"
+  },
+  "n": 2000,
+  "contratante": "não declarado no relatório de divulgação",
+  "fonte_registro": "fontes/reponderacao_metodologias/realtime_2026-08-31/registro-metodologia.txt",
+  "fonte_questionario": "fontes/reponderacao_metodologias/realtime_2026-08-31/questionario.pdf",
+  "fonte_relatorio": "fontes/reponderacao_metodologias/realtime_2026-08-31/relatorio-metodologia.pdf",
+  "relatorio_excerto": true,
+  "proveniencia": {
+    "consulta": "2026-09-21",
+    "registro_html_sha256": "ab5bae7f018c6111d1f60b69e4192f37de3d0b48ed2d5885cb8bd29b568c06dc",
+    "questionario_sha256": "df5b9feb528874b5a0862f7117435cb26f24aaa849c358b1f92de3ef451b200d",
+    "relatorio_original": "data/originals/realtime_092026_01/Relatorio.pdf",
+    "relatorio_sha256": "fbead320462161bf74ef2eeef6b525771e75a2f88d3744139c77f60abc4796f1"
+  }
+}

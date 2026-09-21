@@ -1,0 +1,79 @@
+{
+  "id": "datafolha_2026-09-17",
+  "modo": "Presencial",
+  "subtipo": "Pontos de fluxo",
+  "selecao": "Estratos por região e tipo de município. Sorteio PPT dos municípios; sorteio de bairros e pontos de abordagem; seleção final controlada por cotas de sexo e idade.",
+  "fontes": "TSE; Censo 2022; estimativas populacionais 2025; PNADC-A 2024; levantamentos próprios.",
+  "pnad": "Anual 2024. Visita não identificada no registro.",
+  "pesos": "Ponderação prevista por região, natureza do município, sexo e idade; escolaridade condicional. Renda: referência 49% / 47% / 4%, com fator 1, mantendo o campo.",
+  "voto": "Não declarado como peso",
+  "voto_detalhe": "O questionário coleta o voto no 2º turno de 2022 entre elegíveis (p. 3). Essa variável não consta do plano de ponderação consultado. Coletar não significa ponderar.",
+  "controle": "Registro: tablets, consistência e verificação de no mínimo 20% dos questionários de cada entrevistador, presencialmente ou por telefone.",
+  "precisao": "Registro: ±2 pp, 95%, aproximação por amostra aleatória simples. Sem efeito dos conglomerados divulgado nos documentos consultados.",
+  "alerta": "Seleção final por cotas; probabilidades individuais não publicadas. Registro prevê 2.002 entrevistas, relatório informa 2.001. Anexo territorial data 14–16/09, registro e relatório 15–17/09.",
+  "paginas": [
+    2,
+    28,
+    29
+  ],
+  "instituto": "Datafolha",
+  "criterios": [
+    {
+      "pontos": 1,
+      "evidencia": "Registro e relatório identificam universo, modalidade, campo, tamanho e responsável/contratante."
+    },
+    {
+      "pontos": 1,
+      "evidencia": "Estratos por região e tipo de município. Sorteio PPT dos municípios; sorteio de bairros e pontos de abordagem; seleção final controlada por cotas de sexo e idade."
+    },
+    {
+      "pontos": 0.5,
+      "evidencia": "TSE; Censo 2022; estimativas populacionais 2025; PNADC-A 2024; levantamentos próprios. Anual 2024. Visita não identificada no registro."
+    },
+    {
+      "pontos": 0.5,
+      "evidencia": "Ponderação prevista por região, natureza do município, sexo e idade; escolaridade condicional. Renda: referência 49% / 47% / 4%, com fator 1, mantendo o campo."
+    },
+    {
+      "pontos": 1,
+      "evidencia": "Questionário completo desta onda obtido no PesqEle; ordem e alternativas acessíveis no PDF vinculado."
+    },
+    {
+      "pontos": 1,
+      "evidencia": "Registro: tablets, consistência e verificação de no mínimo 20% dos questionários de cada entrevistador, presencialmente ou por telefone."
+    },
+    {
+      "pontos": 0,
+      "evidencia": "Não localizamos o balanço de tentativas, contatos, elegíveis, recusas e entrevistas que permita calcular taxa de resposta/participação."
+    },
+    {
+      "pontos": 0.5,
+      "evidencia": "Registro: ±2 pp, 95%, aproximação por amostra aleatória simples. Sem efeito dos conglomerados divulgado nos documentos consultados."
+    },
+    {
+      "pontos": 0.5,
+      "evidencia": "O relatório publica perfil amostral, mas não todos os diagnósticos de pesos e bases brutas versus ponderadas."
+    },
+    {
+      "pontos": 0,
+      "evidencia": "Não localizamos, nos documentos consultados, base individual anonimizada com pesos e código suficiente para reproduzir esta onda."
+    }
+  ],
+  "registro_tse": "BR-04029/2026",
+  "campo": {
+    "inicio": "2026-09-15",
+    "fim": "2026-09-17"
+  },
+  "n": 2001,
+  "contratante": "Folha de S.Paulo e TV Globo",
+  "fonte_registro": "fontes/reponderacao_metodologias/datafolha_2026-09-17/registro-metodologia.txt",
+  "fonte_questionario": "fontes/reponderacao_metodologias/datafolha_2026-09-17/questionario.pdf",
+  "fonte_relatorio": "https://brasil.arvor.co/fontes/datafolha_21092026.pdf",
+  "proveniencia": {
+    "consulta": "2026-09-21",
+    "registro_html_sha256": "13e20df7cd5d8805023086a7d69460df04917abf9a065b8ecc3150820727070b",
+    "questionario_sha256": "d96fa3234204fc4246c77dd206da5535de62c8298f967750d61e3dec0c04185a",
+    "relatorio_original": "data/pesquisas/datafolha/2026-09-17/relatorio.pdf",
+    "relatorio_sha256": "6fdc7d08c70b3607ded11e50ca5cbc6ebb60b890d79321d1799c8d9972cd3c83"
+  }
+}

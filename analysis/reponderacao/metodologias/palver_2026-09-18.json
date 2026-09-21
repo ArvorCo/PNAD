@@ -1,0 +1,81 @@
+{
+  "id": "palver_2026-09-18",
+  "modo": "Online",
+  "subtipo": "Opt-in · anúncios em redes sociais",
+  "selecao": "Adesão voluntária após anúncio em 30 células de idade × sexo × região e dois criativos (60 variações). Link individual gerado após clique; sem formulário aberto. Seleção não probabilística declarada.",
+  "fontes": "PNADC 2024, 5ª visita; TSE para voto de 2022 e filiação partidária em agosto/2026. Demografia vem da PNAD, não do cadastro eleitoral atual.",
+  "pnad": "2024, 5ª visita; renda domiciliar habitual no código público.",
+  "pesos": "Raking de escolaridade; idade × renda × região × sexo; região × voto de 2022; filiação partidária. Sem aparo. Código público arquivado ainda é da versão anterior à filiação.",
+  "voto": "Sim · 2º turno de 2022",
+  "voto_detalhe": "Calibra Lula, Bolsonaro e branco/nulo por região. Também inclui filiação ao PL, PT, Missão e demais partidos. O questionário atual distingue elegibilidade e comparecimento antes do voto (pp. 11–12); falta o código v2 para auditar o tratamento dos não votantes.",
+  "controle": "Registro: consistência em 100%, detecção de duplicações e auditoria manual de amostra aleatória de 10%.",
+  "precisao": "Relatório: ±3 pp, 95%; n efetivo 1.232 de 5.000; efeito de pesos 4,06; peso máximo 21,73. Kish mede desigualdade de pesos, não elimina viés de seleção.",
+  "alerta": "Microdados prometidos para depois do segundo turno. O código aberto e os alvos permitem auditar o método, mas ainda não refazer a calibração da onda 3 com TSE + PNAD 2025.",
+  "paginas": [
+    6,
+    15,
+    18,
+    19,
+    20
+  ],
+  "instituto": "Palver",
+  "criterios": [
+    {
+      "pontos": 1,
+      "evidencia": "Registro e relatório identificam universo, modalidade, campo, tamanho e responsável/contratante."
+    },
+    {
+      "pontos": 1,
+      "evidencia": "Adesão voluntária após anúncio em 30 células de idade × sexo × região e dois criativos (60 variações). Link individual gerado após clique; sem formulário aberto. Seleção não probabilística declarada."
+    },
+    {
+      "pontos": 1,
+      "evidencia": "PNADC 2024, 5ª visita; TSE para voto de 2022 e filiação partidária em agosto/2026. Demografia vem da PNAD, não do cadastro eleitoral atual. 2024, 5ª visita; renda domiciliar habitual no código público."
+    },
+    {
+      "pontos": 1,
+      "evidencia": "Raking de escolaridade; idade × renda × região × sexo; região × voto de 2022; filiação partidária. Sem aparo. Código público arquivado ainda é da versão anterior à filiação."
+    },
+    {
+      "pontos": 1,
+      "evidencia": "Questionário completo desta onda obtido no PesqEle; ordem e alternativas acessíveis no PDF vinculado."
+    },
+    {
+      "pontos": 1,
+      "evidencia": "Registro: consistência em 100%, detecção de duplicações e auditoria manual de amostra aleatória de 10%."
+    },
+    {
+      "pontos": 0,
+      "evidencia": "Não localizamos o balanço de tentativas, contatos, elegíveis, recusas e entrevistas que permita calcular taxa de resposta/participação."
+    },
+    {
+      "pontos": 0.5,
+      "evidencia": "Relatório: ±3 pp, 95%; n efetivo 1.232 de 5.000; efeito de pesos 4,06; peso máximo 21,73. Kish mede desigualdade de pesos, não elimina viés de seleção."
+    },
+    {
+      "pontos": 1,
+      "evidencia": "Perfil e diagnóstico de pesos publicados na p. 20: mínimo, mediana, máximo, coeficiente de variação, n efetivo e efeito dos pesos."
+    },
+    {
+      "pontos": 0.5,
+      "evidencia": "Código e alvos abertos, porém snapshot ainda da versão anterior; sem microdados e configuração v2 da onda atual."
+    }
+  ],
+  "registro_tse": "BR-00860/2026",
+  "campo": {
+    "inicio": "2026-09-15",
+    "fim": "2026-09-18"
+  },
+  "n": 5000,
+  "contratante": "Palver (iniciativa própria, onda 3, método v2)",
+  "fonte_registro": "fontes/reponderacao_metodologias/palver_2026-09-18/registro-metodologia.txt",
+  "fonte_questionario": "fontes/reponderacao_metodologias/palver_2026-09-18/questionario.pdf",
+  "fonte_relatorio": "https://www.palver.com/api/surveys/voting-intention-2026-september-w3/report",
+  "proveniencia": {
+    "consulta": "2026-09-21",
+    "registro_html_sha256": "347b13ad99bc41163a370d49f363f034fa0ef66bc2643d7ac08fbbfe3367f8ac",
+    "questionario_sha256": "0abb2ee175d5ef0f682b1521d39d20d34cb2ab7223d899500b13c30b701b50a9",
+    "relatorio_original": "data/originals/palver_092026_21/relatorio.pdf",
+    "relatorio_sha256": "e25b4eb93ba1cffa949d3d9483446efc1cf9d7d392645659b909da9c28d8e02f"
+  }
+}

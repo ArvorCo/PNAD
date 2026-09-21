@@ -1,0 +1,77 @@
+{
+  "id": "poderdata_2026-09-16",
+  "modo": "Telefônica",
+  "subtipo": "IVR · ligação automatizada",
+  "selecao": "Sorteio em banco de telefones fixos e celulares, estratificado por região a partir do CEP associado ao número. Questionários incompletos são descartados.",
+  "fontes": "TSE agosto/2026 para sexo, idade, escolaridade e região. IBGE/Censo 2010 para renda.",
+  "pnad": "Não citada. Referência de renda: Censo 2010.",
+  "pesos": "Registro prevê ponderação por sexo, idade, escolaridade, região e renda; relatório confirma ponderação paramétrica, sem publicar receita completa e dispersão.",
+  "voto": "Não declarado como peso",
+  "voto_detalhe": "Voto em 2022 não consta das variáveis de ponderação declaradas.",
+  "controle": "Registro: supervisão, consistência e verificação posterior de pelo menos 30%, correspondentes a 900 entrevistas.",
+  "precisao": "Relatório: ±1,8 pp, 95%; reconhece cobertura incompleta da lista telefônica e diz considerar ponderação, sem publicar o cálculo do efeito do desenho.",
+  "alerta": "A p. 2 traz 623 municípios na ficha e 752 no rodapé. A referência de renda permanece no Censo 2010.",
+  "paginas": [
+    2
+  ],
+  "instituto": "PoderData",
+  "criterios": [
+    {
+      "pontos": 1,
+      "evidencia": "Registro e relatório identificam universo, modalidade, campo, tamanho e responsável/contratante."
+    },
+    {
+      "pontos": 0.5,
+      "evidencia": "Sorteio em banco de telefones fixos e celulares, estratificado por região a partir do CEP associado ao número. Questionários incompletos são descartados."
+    },
+    {
+      "pontos": 1,
+      "evidencia": "TSE agosto/2026 para sexo, idade, escolaridade e região. IBGE/Censo 2010 para renda. Não citada. Referência de renda: Censo 2010."
+    },
+    {
+      "pontos": 0.5,
+      "evidencia": "Registro prevê ponderação por sexo, idade, escolaridade, região e renda; relatório confirma ponderação paramétrica, sem publicar receita completa e dispersão."
+    },
+    {
+      "pontos": 1,
+      "evidencia": "Questionário completo desta onda obtido no PesqEle; ordem e alternativas acessíveis no PDF vinculado."
+    },
+    {
+      "pontos": 1,
+      "evidencia": "Registro: supervisão, consistência e verificação posterior de pelo menos 30%, correspondentes a 900 entrevistas."
+    },
+    {
+      "pontos": 0,
+      "evidencia": "Não localizamos o balanço de tentativas, contatos, elegíveis, recusas e entrevistas que permita calcular taxa de resposta/participação."
+    },
+    {
+      "pontos": 0.5,
+      "evidencia": "Relatório: ±1,8 pp, 95%; reconhece cobertura incompleta da lista telefônica e diz considerar ponderação, sem publicar o cálculo do efeito do desenho."
+    },
+    {
+      "pontos": 0.5,
+      "evidencia": "O relatório publica perfil amostral, mas não todos os diagnósticos de pesos e bases brutas versus ponderadas."
+    },
+    {
+      "pontos": 0,
+      "evidencia": "Não localizamos, nos documentos consultados, base individual anonimizada com pesos e código suficiente para reproduzir esta onda."
+    }
+  ],
+  "registro_tse": "BR-00360/2026",
+  "campo": {
+    "inicio": "2026-09-13",
+    "fim": "2026-09-16"
+  },
+  "n": 3000,
+  "contratante": "Poder360",
+  "fonte_registro": "fontes/reponderacao_metodologias/poderdata_2026-09-16/registro-metodologia.txt",
+  "fonte_questionario": "fontes/reponderacao_metodologias/poderdata_2026-09-16/questionario.pdf",
+  "fonte_relatorio": "https://static.poder360.com.br/uploads/2026/09/poderdata-presidente-17set.pdf",
+  "proveniencia": {
+    "consulta": "2026-09-21",
+    "registro_html_sha256": "dbc20c40c33ae1dc60272fdaad3125903ffe694479e8680d8514d856110463ac",
+    "questionario_sha256": "42434c13c2433a3759f39728e140548b94eed9775965a1da04cce04b0d1711f2",
+    "relatorio_original": "data/originals/poderdata_092026_17/relatorio.pdf",
+    "relatorio_sha256": "f963c843350ae697387ed7ad721e39feb40f5400d3a5865f102e8c3f388b2766"
+  }
+}

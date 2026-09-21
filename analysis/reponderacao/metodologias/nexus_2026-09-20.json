@@ -1,0 +1,78 @@
+{
+  "id": "nexus_2026-09-20",
+  "modo": "Telefônica",
+  "subtipo": "CATI · entrevistador humano",
+  "selecao": "Sorteio de números fixos e móveis em cadastro descrito a partir da Anatel, estratificado por DDD. Controles de região, telefonia, sexo, idade e escolaridade.",
+  "fontes": "PNADC anual acumulada 2025, 1ª visita; TSE junho/2026 para sexo, idade e região; Anatel para telefonia.",
+  "pnad": "Anual 2025, 1ª visita.",
+  "pesos": "Registro prevê correção das variáveis de controle, mais renda e participação na força de trabalho. Não especifica algoritmo, aparo ou diagnóstico dos pesos efetivos.",
+  "voto": "Não declarado como peso",
+  "voto_detalhe": "Pergunta 26 coleta voto no 2º turno de 2022. Essa variável não consta do plano de ponderação consultado.",
+  "controle": "Registro: auditoria de cerca de 20% dos questionários durante o campo, assistida por software.",
+  "precisao": "±2 pp, 95%. Sem efeito de desenho ou tamanho efetivo publicados nos documentos consultados.",
+  "alerta": "Registro prevê 2.000 entrevistas; relatório informa 2.006. Usar PNAD 2025 não garante a mesma distribuição: conceito, universo e agregação também importam.",
+  "paginas": [
+    4,
+    137
+  ],
+  "instituto": "Nexus",
+  "criterios": [
+    {
+      "pontos": 1,
+      "evidencia": "Registro e relatório identificam universo, modalidade, campo, tamanho e responsável/contratante."
+    },
+    {
+      "pontos": 0.5,
+      "evidencia": "Sorteio de números fixos e móveis em cadastro descrito a partir da Anatel, estratificado por DDD. Controles de região, telefonia, sexo, idade e escolaridade."
+    },
+    {
+      "pontos": 1,
+      "evidencia": "PNADC anual acumulada 2025, 1ª visita; TSE junho/2026 para sexo, idade e região; Anatel para telefonia. Anual 2025, 1ª visita."
+    },
+    {
+      "pontos": 0.5,
+      "evidencia": "Registro prevê correção das variáveis de controle, mais renda e participação na força de trabalho. Não especifica algoritmo, aparo ou diagnóstico dos pesos efetivos."
+    },
+    {
+      "pontos": 1,
+      "evidencia": "Questionário completo desta onda obtido no PesqEle; ordem e alternativas acessíveis no PDF vinculado."
+    },
+    {
+      "pontos": 1,
+      "evidencia": "Registro: auditoria de cerca de 20% dos questionários durante o campo, assistida por software."
+    },
+    {
+      "pontos": 0,
+      "evidencia": "Não localizamos o balanço de tentativas, contatos, elegíveis, recusas e entrevistas que permita calcular taxa de resposta/participação."
+    },
+    {
+      "pontos": 0,
+      "evidencia": "±2 pp, 95%. Sem efeito de desenho ou tamanho efetivo publicados nos documentos consultados."
+    },
+    {
+      "pontos": 0.5,
+      "evidencia": "O relatório publica perfil amostral, mas não todos os diagnósticos de pesos e bases brutas versus ponderadas."
+    },
+    {
+      "pontos": 0,
+      "evidencia": "Não localizamos, nos documentos consultados, base individual anonimizada com pesos e código suficiente para reproduzir esta onda."
+    }
+  ],
+  "registro_tse": "BR-00485/2026",
+  "campo": {
+    "inicio": "2026-09-18",
+    "fim": "2026-09-20"
+  },
+  "n": 2006,
+  "contratante": "Banco BTG Pactual",
+  "fonte_registro": "fontes/reponderacao_metodologias/nexus_2026-09-20/registro-metodologia.txt",
+  "fonte_questionario": "fontes/reponderacao_metodologias/nexus_2026-09-20/questionario.pdf",
+  "fonte_relatorio": "https://static.poder360.com.br/uploads/2026/09/BTG-Nexus-Eleicoes-2026-Rodada-15.pdf",
+  "proveniencia": {
+    "consulta": "2026-09-21",
+    "registro_html_sha256": "71d43b44512e25fc180a3b427b79da91e956452a6c21c889c780f54a85fd30ed",
+    "questionario_sha256": "efebee09ce8194b237d18721e67312bcb1552b5105c237558f710a69d66c68db",
+    "relatorio_original": "data/originals/nexus_092026_21/relatorio.pdf",
+    "relatorio_sha256": "4f8059462f1510e8c8f6b0127e2b872782c08ae5e162078b80cddd1c3005cb55"
+  }
+}

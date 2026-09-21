@@ -1,0 +1,13 @@
+@import url('datafolha_14092026.css');
+.simulation{padding:24px 30px;border:1px solid var(--line);max-width:820px;background:#eee7d8;margin:32px 0}
+.simulation h3{margin-top:0}.simulation p{font-size:19px}
+.simulation label{display:flex;justify-content:space-between;font:600 14px var(--sans);margin:24px 0 12px}
+.simulation input{display:block;width:100%;accent-color:var(--blue);min-height:32px}
+.simulation output{font-variant-numeric:tabular-nums}
+#es-result{font:600 20px/1.6 var(--sans);min-height:64px}
+.finding-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;border-block:2px solid var(--ink);padding:28px 0;margin:35px 0}
+.finding-grid b{display:block;font:500 58px var(--display);color:var(--red)}
+.finding-grid span{display:block;font:14px/1.6 var(--sans);max-width:260px}
+.hero h1{font-size:clamp(56px,7.7vw,100px)}
+input:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+@media(max-width:700px){.finding-grid{grid-template-columns:1fr;gap:18px}.finding-grid>div{display:flex;align-items:center;gap:24px}.finding-grid b{min-width:95px;font-size:48px}.simulation{padding:20px}.hero h1{font-size:58px}}

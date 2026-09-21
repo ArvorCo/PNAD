@@ -1,0 +1,246 @@
+{
+  "data": "2026-09-21",
+  "controles": {
+    "nexus_2026-09-20": {
+      "1t": {
+        "pagina": 33,
+        "pesos": [
+          53,
+          47
+        ],
+        "linhas": [
+          [
+            49,
+            29
+          ],
+          [
+            30,
+            46
+          ]
+        ],
+        "recomposto_lula_flavio": [
+          40.07,
+          36.99
+        ],
+        "residuo_max": 0.07000000000000028,
+        "residuo_renda": 0.58
+      },
+      "2t": {
+        "pagina": 80,
+        "pesos": [
+          53,
+          47
+        ],
+        "linhas": [
+          [
+            56,
+            35
+          ],
+          [
+            35,
+            57
+          ]
+        ],
+        "recomposto_lula_flavio": [
+          46.13,
+          45.34
+        ],
+        "residuo_max": 0.3400000000000034,
+        "residuo_renda": 0.45
+      }
+    },
+    "palver_2026-09-18": {
+      "1t": {
+        "pagina": 32,
+        "pesos": [
+          48.12,
+          51.88
+        ],
+        "linhas": [
+          [
+            34,
+            45
+          ],
+          [
+            49,
+            40
+          ]
+        ],
+        "recomposto_lula_flavio": [
+          41.78200000000001,
+          42.406000000000006
+        ],
+        "residuo_max": 0.7820000000000107,
+        "residuo_renda": 0.63
+      },
+      "2t": {
+        "pagina": 40,
+        "pesos": [
+          48.12,
+          51.88
+        ],
+        "linhas": [
+          [
+            34,
+            51
+          ],
+          [
+            51,
+            44
+          ]
+        ],
+        "recomposto_lula_flavio": [
+          42.8196,
+          47.3684
+        ],
+        "residuo_max": 0.36840000000000117,
+        "residuo_renda": 0.348
+      }
+    }
+  },
+  "palver": {
+    "git_commit": "7523cf14f0095f088ac9680e9c64a9923289fdb1",
+    "github": "https://github.com/palverdata/pesquisa-palver/blob/7523cf14f0095f088ac9680e9c64a9923289fdb1",
+    "microdados_publicos": false,
+    "fonte_ausencia": {
+      "pdf_pagina": 6,
+      "arquivo": "README.md",
+      "secao": "Os microdados ponderados"
+    },
+    "pnad": {
+      "ano": 2024,
+      "visita": 5,
+      "variavel_renda": "VD5007",
+      "sm_cortes": 1621
+    },
+    "voto_2022": {
+      "usa": true,
+      "cruzamento": [
+        "reg_std",
+        "vote_std"
+      ],
+      "categorias": [
+        "Lula",
+        "Jair Bolsonaro",
+        "Branco/Nulo"
+      ],
+      "exclui_exterior": true,
+      "nota": "Código público v1 recodifica quem não votou ou não informou para Branco/Nulo; o alvo regional considera votos depositados, excluindo abstenções. O PDF v2 confirma região × voto, mas a configuração da onda 3 não está no snapshot."
+    },
+    "filiacao": {
+      "introduzida_v2": true,
+      "referencia": "TSE agosto/2026",
+      "pagina": 13
+    },
+    "diagnosticos": {
+      "n": 5000,
+      "n_efetivo_kish": 1232,
+      "deff_pesos": 4.06,
+      "peso_min": 0.00022,
+      "peso_mediano": 0.404,
+      "peso_max": 21.73,
+      "aparado": false
+    },
+    "onda2_revisada": {
+      "1t": {
+        "lula": 41,
+        "flavio": 40,
+        "renan_santos": 9,
+        "cury": 5
+      },
+      "2t": {
+        "lula": 44,
+        "flavio": 47,
+        "branco_nulo": 8,
+        "indecisos": 1
+      }
+    },
+    "limite": "Sem respostas individuais e pesos, TSE + PNAD 2025 em calibração conjunta não é identificável. As tabelas de renda permitem somente a sensibilidade marginal publicada no agregador."
+  },
+  "fontes": [
+    {
+      "instituto": "nexus",
+      "artigo": "https://www.poder360.com.br/poder-eleicoes-2026/lula-46-flavio-bolsonaro-45-btg-2-turno-btg-nexus/",
+      "url": "https://static.poder360.com.br/uploads/2026/09/BTG-Nexus-Eleicoes-2026-Rodada-15.pdf",
+      "pdf": "data/originals/nexus_092026_21/relatorio.pdf",
+      "bytes": 2563884,
+      "sha256": "4f8059462f1510e8c8f6b0127e2b872782c08ae5e162078b80cddd1c3005cb55",
+      "paginas": 140
+    },
+    {
+      "instituto": "realtime_sp",
+      "artigo": "https://www.poder360.com.br/poder-eleicoes-2026/flavio-tem-51-contra-45-de-lula-no-2o-turno-em-sp-diz-pesquisa/",
+      "url": "https://static.poder360.com.br/uploads/2026/09/Real-Time-Big-Data-SP-presidente-21set2026.pdf",
+      "pdf": "data/originals/realtime_sp_092026_21/relatorio.pdf",
+      "bytes": 3769501,
+      "sha256": "2d219a1f6587008850d5969174ae7a3ebf92002590819ef87187cffbc831437b",
+      "paginas": 24
+    },
+    {
+      "instituto": "realtime_pr",
+      "artigo": "https://www.poder360.com.br/poder-eleicoes-2026/flavio-tem-61-contra-30-de-lula-no-2o-turno-no-pr-diz-pesquisa/",
+      "url": "https://static.poder360.com.br/uploads/2026/09/real-time-big-data-PR-presidente-21set2026.pdf",
+      "pdf": "data/originals/realtime_pr_092026_21/relatorio.pdf",
+      "bytes": 3176659,
+      "sha256": "3b4a4b27f4e72b1c11ec7f1c17575cecc10f7a4968a868d971551e7731b3da3c",
+      "paginas": 17
+    },
+    {
+      "instituto": "realtime_ac",
+      "artigo": "https://www.poder360.com.br/poder-eleicoes-2026/flavio-tem-53-e-lula-29-no-acre-diz-real-time/",
+      "url": "https://static.poder360.com.br/uploads/2026/09/Big-time-Acre-pesquisa.pdf",
+      "pdf": "data/originals/realtime_ac_092026_21/relatorio.pdf",
+      "bytes": 3633134,
+      "sha256": "06f4c4ba143d6dbdd5458e927e8ef85ec17096325c2e4cd05b230c028e2517cf",
+      "paginas": 23
+    },
+    {
+      "instituto": "palver",
+      "artigo": "https://www.palver.com/survey",
+      "url": "https://www.palver.com/api/surveys/voting-intention-2026-september-w3/report",
+      "pdf": "data/originals/palver_092026_21/relatorio.pdf",
+      "bytes": 26008995,
+      "sha256": "e25b4eb93ba1cffa949d3d9483446efc1cf9d7d392645659b909da9c28d8e02f",
+      "paginas": 131
+    },
+    {
+      "instituto": "realtime_mg",
+      "artigo": "https://www.poder360.com.br/poder-eleicoes-2026/cinco-candidatos-ao-senado-empatam-em-minas-gerais/",
+      "url": "https://static.poder360.com.br/uploads/2026/09/Minas-Gerais-MG-07331-2026-Set26-3.pdf",
+      "pdf": "data/originals/realtime_mg_092026_21/relatorio.pdf",
+      "bytes": 4324736,
+      "sha256": "9244d5b0d02707bc4d0ba54fc962b5157fde67b628c4dd9fa338b850ea8ee7f9",
+      "paginas": 40
+    }
+  ],
+  "estaduais": [
+    {
+      "uf": "SP",
+      "registro": "BR-09702/2026",
+      "n": 2000,
+      "divulgacao_pdf": "2026-09-21",
+      "fonte": "realtime_sp"
+    },
+    {
+      "uf": "PR",
+      "registro": "BR-08843/2026",
+      "n": 1600,
+      "divulgacao_pdf": "2026-09-16",
+      "fonte": "realtime_pr"
+    },
+    {
+      "uf": "AC",
+      "registro": "BR-01620/2026",
+      "n": 1600,
+      "divulgacao_pdf": "2026-09-21",
+      "fonte": "realtime_ac"
+    },
+    {
+      "uf": "MG",
+      "registro": "MG-07331/2026",
+      "n": 2000,
+      "divulgacao_pdf": "2026-09-21",
+      "fonte": "realtime_mg"
+    }
+  ]
+}

@@ -204,8 +204,11 @@ def test_page_has_gray_and_black_lines_and_explicit_coverage():
         assert len(paths) == 2
         assert all(p["stroke"] == color for p in paths)
     text = html.find(id="grupos-primeiro-turno").get_text(" ", strip=True)
-    assert "28 ondas de 7 institutos" in text
+    waves = OUTPUT["agregador"]["grupos_1t"]["ondas"]
+    houses = {p["instituto"] for p in waves}
+    assert f"{len(waves)} ondas de {len(houses)} institutos" in text
     assert "04/05/2026" in text
-    assert "10/09/2026" in text
+    latest = max(p["campo"]["fim"] for p in waves)
+    assert "/".join(reversed(latest.split("-"))) in text
     assert "Grassi integra o residual" in text
     assert html.find(id="selecao-primeiro-turno")

@@ -1,0 +1,78 @@
+{
+  "id": "meio_ideia_2026-09-07",
+  "modo": "Telefônica",
+  "subtipo": "Entrevista por telefone · RDD",
+  "selecao": "Registro declara geração aleatória de números (RDD) e seleção PPT. A passagem de linhas telefônicas a pessoas e a cobertura do cadastro não são detalhadas.",
+  "fontes": "PNAD 2025; Censo 2022; TSE 2025. Sem atribuição completa de edição a cada variável.",
+  "pnad": "2025, sem indicar anual/trimestral, visita ou trimestre.",
+  "pesos": "Sexo e idade podem ser corrigidos quando o desvio supera 2,5 pp. Escolaridade e condição de atividade têm fator 1. O nível econômico do plano é atividade econômica, não renda.",
+  "voto": "Não declarado como peso",
+  "voto_detalhe": "PF5 pergunta voto no 2º turno de 2022. O plano de pesos menciona somente correções de sexo e idade.",
+  "controle": "Registro e relatório: monitoramento das ligações, consistência e rechecagem por telefone de 30% de cada entrevistador.",
+  "precisao": "±2,5 pp, 95%, sob modelo de amostra aleatória simples. Sem efeito de desenho publicado nos documentos consultados.",
+  "alerta": "Há cruzamento eleitoral por renda, mas falta o perfil amostral dessas faixas. Não é possível reproduzir a reponderação de renda apenas com o relatório.",
+  "paginas": [
+    77
+  ],
+  "instituto": "Meio/Ideia",
+  "criterios": [
+    {
+      "pontos": 1,
+      "evidencia": "Registro e relatório identificam universo, modalidade, campo, tamanho e responsável/contratante."
+    },
+    {
+      "pontos": 0.5,
+      "evidencia": "Registro declara geração aleatória de números (RDD) e seleção PPT. A passagem de linhas telefônicas a pessoas e a cobertura do cadastro não são detalhadas."
+    },
+    {
+      "pontos": 0.5,
+      "evidencia": "PNAD 2025; Censo 2022; TSE 2025. Sem atribuição completa de edição a cada variável. 2025, sem indicar anual/trimestral, visita ou trimestre."
+    },
+    {
+      "pontos": 0.5,
+      "evidencia": "Sexo e idade podem ser corrigidos quando o desvio supera 2,5 pp. Escolaridade e condição de atividade têm fator 1. O nível econômico do plano é atividade econômica, não renda."
+    },
+    {
+      "pontos": 1,
+      "evidencia": "Questionário completo desta onda obtido no PesqEle; ordem e alternativas acessíveis no PDF vinculado."
+    },
+    {
+      "pontos": 1,
+      "evidencia": "Registro e relatório: monitoramento das ligações, consistência e rechecagem por telefone de 30% de cada entrevistador."
+    },
+    {
+      "pontos": 0,
+      "evidencia": "Não localizamos o balanço de tentativas, contatos, elegíveis, recusas e entrevistas que permita calcular taxa de resposta/participação."
+    },
+    {
+      "pontos": 0.5,
+      "evidencia": "±2,5 pp, 95%, sob modelo de amostra aleatória simples. Sem efeito de desenho publicado nos documentos consultados."
+    },
+    {
+      "pontos": 0.5,
+      "evidencia": "O relatório publica perfil amostral, mas não todos os diagnósticos de pesos e bases brutas versus ponderadas."
+    },
+    {
+      "pontos": 0,
+      "evidencia": "Não localizamos, nos documentos consultados, base individual anonimizada com pesos e código suficiente para reproduzir esta onda."
+    }
+  ],
+  "registro_tse": "BR-07935/2026",
+  "campo": {
+    "inicio": "2026-09-04",
+    "fim": "2026-09-07"
+  },
+  "n": 1500,
+  "contratante": "Canal Meio, em parceria com o Instituto Ideia",
+  "fonte_registro": "fontes/reponderacao_metodologias/meio_ideia_2026-09-07/registro-metodologia.txt",
+  "fonte_questionario": "fontes/reponderacao_metodologias/meio_ideia_2026-09-07/questionario.pdf",
+  "fonte_relatorio": "fontes/reponderacao_metodologias/meio_ideia_2026-09-07/relatorio-metodologia.pdf",
+  "relatorio_excerto": true,
+  "proveniencia": {
+    "consulta": "2026-09-21",
+    "registro_html_sha256": "eb58002062d44c83c69fe10e6c502b9cbd4e3f17560e168d56d158e894d9af97",
+    "questionario_sha256": "846bd64cb1fef7975250e7677bf07a949a809ef93ad49e42c5c3d9b1129583f2",
+    "relatorio_original": "data/originals/meio_ideia_092026/Relatorio.pdf",
+    "relatorio_sha256": "aae4145c591ee56b7160f1a41a6e5ecfc7a04e0b9c62e6fafae9094a0b07898f"
+  }
+}

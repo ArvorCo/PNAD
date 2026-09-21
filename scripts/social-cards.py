@@ -246,6 +246,16 @@ CARDS: list[dict] = [
         "thread": True,
     },
     {
+        "slug": "datafolha_21092026",
+        "eyebrow": "Datafolha · relatório completo · 21/09/2026",
+        "title": "O empate.",
+        "title_em": "A régua da renda.",
+        "lede": "46 × 44 publicados. Sensibilidade PNAD: <b>Lula 42,95 × Flávio 47,33</b>. O Sudeste conferido com as estaduais; os limites da reconstrução dos microdados.",
+        "stats": [("13", "tabelas extraídas"), ("3 UFs", "comparadas no Sudeste"), ("2 bases", "sintéticas, mesmas margens")],
+        "foot": "campo 15–17/09 · sensibilidade, não previsão eleitoral",
+        "accent": "red",
+    },
+    {
         "slug": "datafolha_14092026",
         "eyebrow": "Datafolha · relatório completo · BR-01833/2026",
         "title": "A renda muda",

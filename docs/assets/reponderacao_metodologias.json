@@ -1,0 +1,3724 @@
+{
+  "referencia": "2026-09-21",
+  "escopo": "Últimas ondas nacionais disponíveis no acervo em 21/09/2026; nota dos documentos consultados, não previsão de acerto.",
+  "rubrica": [
+    {
+      "criterio": "Ficha básica",
+      "regra": "Universo, modalidade, datas, n e contratante identificados e conciliados."
+    },
+    {
+      "criterio": "Recrutamento e seleção",
+      "regra": "Origem do contato, etapas e regra de seleção da pessoa descritas; cotas explicitadas quando usadas."
+    },
+    {
+      "criterio": "Fontes dos alvos",
+      "regra": "Fontes e edições identificadas para as variáveis; PNAD com trimestre ou visita, quando aplicável."
+    },
+    {
+      "criterio": "Calibração",
+      "regra": "Variáveis, alvos e procedimento efetivo especificados; ausência de ponderação explicitamente confirmada também atende."
+    },
+    {
+      "criterio": "Questionário",
+      "regra": "Instrumento completo da onda acessível, com alternativas e ordem."
+    },
+    {
+      "criterio": "Controle de campo",
+      "regra": "Procedimento concreto e cobertura quantitativa das verificações declarados."
+    },
+    {
+      "criterio": "Não resposta",
+      "regra": "Balanço de contatos, elegibilidade, recusas e completas suficiente para calcular resposta ou participação."
+    },
+    {
+      "criterio": "Incerteza",
+      "regra": "Cálculo adequado ao desenho e aos pesos, ou modelo de seleção com hipóteses e validação; somente AAS explícita, limites ou Kish recebe parcial."
+    },
+    {
+      "criterio": "Diagnóstico da amostra",
+      "regra": "Perfil e diagnóstico da dispersão dos pesos/tamanho efetivo; somente perfil recebe parcial."
+    },
+    {
+      "criterio": "Reprodução independente",
+      "regra": "Microdados anônimos, pesos e código da onda disponíveis; código ou alvos executáveis parciais recebem metade."
+    }
+  ],
+  "efeito_casa": {
+    "dias": 45,
+    "raio_dias": 7,
+    "minimo_outros_institutos": 3,
+    "faixa_proximidade_pp": 2,
+    "formula": "100 * (Lula - Flavio) / (Lula + Flavio)",
+    "resumo": "Mediana dos desvios à mediana de outros institutos, uma onda mais próxima por instituto, datas centrais de campo; revisões substituem a mesma amostra.",
+    "limites": "Descritivo e relativo ao conjunto. Não estima erro contra a verdade, causalidade, alinhamento político ou significância. Ondas e pares se sobrepõem."
+  },
+  "institutos": [
+    {
+      "id": "atlas_2026-09-16",
+      "modo": "Online",
+      "subtipo": "Formulário web · Atlas RDR",
+      "selecao": "Convites durante navegação na web, geolocalizados. O relatório chama o recrutamento de aleatório; não apresenta cadastro nem probabilidades individuais de inclusão.",
+      "fontes": "TSE 2026: sexo e idade. PNADC 2026: escolaridade. PNADC 2025: renda.",
+      "pnad": "Renda: 2025; escolaridade: 2026. Visita e trimestre não identificados.",
+      "pesos": "Pós-estratificação iterativa de sexo, idade, escolaridade, renda, região e comportamento eleitoral anterior. Registro admite até 1 pp de afastamento dos alvos.",
+      "voto": "Voto anterior declarado",
+      "voto_detalhe": "O relatório inclui comportamento eleitoral anterior entre as variáveis de calibração. O questionário pergunta 1º e 2º turnos de 2022 (pp. 9–10), mas o método não especifica qual turno entra nem os alvos políticos.",
+      "controle": "Registro: checagem manual de pelo menos 15% dos questionários e consistência interna.",
+      "precisao": "Relatório: ±1 pp, 95%. Não localizamos efeito do desenho, tamanho efetivo nem modelo validado para a seleção digital.",
+      "alerta": "O relatório define população adulta; o registro usa eleitorado e a faixa inicial 16–24. O plano desta onda já declara renda PNADC 2025, sem permitir inferir visita ou preços.",
+      "paginas": [
+        4,
+        5
+      ],
+      "instituto": "AtlasIntel",
+      "criterios": [
+        {
+          "pontos": 1,
+          "evidencia": "Registro e relatório identificam universo, modalidade, campo, tamanho e responsável/contratante."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "Convites durante navegação na web, geolocalizados. O relatório chama o recrutamento de aleatório; não apresenta cadastro nem probabilidades individuais de inclusão."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "TSE 2026: sexo e idade. PNADC 2026: escolaridade. PNADC 2025: renda. Renda: 2025; escolaridade: 2026. Visita e trimestre não identificados."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "Pós-estratificação iterativa de sexo, idade, escolaridade, renda, região e comportamento eleitoral anterior. Registro admite até 1 pp de afastamento dos alvos."
+        },
+        {
+          "pontos": 1,
+          "evidencia": "Questionário completo desta onda obtido no PesqEle; ordem e alternativas acessíveis no PDF vinculado."
+        },
+        {
+          "pontos": 1,
+          "evidencia": "Registro: checagem manual de pelo menos 15% dos questionários e consistência interna."
+        },
+        {
+          "pontos": 0,
+          "evidencia": "Não localizamos o balanço de tentativas, contatos, elegíveis, recusas e entrevistas que permita calcular taxa de resposta/participação."
+        },
+        {
+          "pontos": 0,
+          "evidencia": "Relatório: ±1 pp, 95%. Não localizamos efeito do desenho, tamanho efetivo nem modelo validado para a seleção digital."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "O relatório publica perfil amostral, mas não todos os diagnósticos de pesos e bases brutas versus ponderadas."
+        },
+        {
+          "pontos": 0,
+          "evidencia": "Não localizamos, nos documentos consultados, base individual anonimizada com pesos e código suficiente para reproduzir esta onda."
+        }
+      ],
+      "registro_tse": "BR-06221/2026",
+      "campo": {
+        "inicio": "2026-09-11",
+        "fim": "2026-09-16"
+      },
+      "n": 5018,
+      "contratante": "Bloomberg",
+      "fonte_registro": "fontes/reponderacao_metodologias/atlas_2026-09-16/registro-metodologia.txt",
+      "fonte_questionario": "fontes/reponderacao_metodologias/atlas_2026-09-16/questionario.pdf",
+      "fonte_relatorio": "https://cdn1.atlasintel.org/pesquisa_atlas_bloomberg__nacional_260916__e482014325df7284.pdf",
+      "proveniencia": {
+        "consulta": "2026-09-21",
+        "registro_html_sha256": "ea1294446d893b16d8920a6484d981ccb2e6a58b8572adff22008e46caabe786",
+        "questionario_sha256": "13f89530083008682b03c8f58b669dc8871627528180e2c5d36c0309d0c2d15e",
+        "relatorio_original": "data/originals/atlas_092026_17/relatorio.pdf",
+        "relatorio_sha256": "75fe2f64a22d553a2f9349094dad7e3577c3425ab95bb0618e96c39e8ddd4e2c"
+      },
+      "nota": 5.0,
+      "sinal": {
+        "desvio_mediano": 1.9050913913394392,
+        "n_ondas": 3,
+        "direcao": "Próximo da mediana",
+        "evidencia": "exploratório",
+        "minimo": 0.8952655808772535,
+        "maximo": 4.5761937736655245,
+        "ondas": [
+          {
+            "id": "atlas_2026-08-30",
+            "campo": {
+              "inicio": "2026-08-25",
+              "fim": "2026-08-30"
+            },
+            "publicado": {
+              "lula": 47.1,
+              "flavio": 42.6,
+              "branco_nulo": 10.3
+            },
+            "diferenca_validos": 5.016722408026756,
+            "mediana_outros": 0.44052863436123185,
+            "desvio": 4.5761937736655245,
+            "pares": [
+              {
+                "id": "datafolha_2026-09-02",
+                "instituto": "Datafolha",
+                "distancia_dias": 5.0,
+                "diferenca_validos": 2.2222222222222223
+              },
+              {
+                "id": "futura_2026-09-01",
+                "instituto": "Futura",
+                "distancia_dias": 2.0,
+                "diferenca_validos": 0.44052863436123185
+              },
+              {
+                "id": "gerp_2026-08-25",
+                "instituto": "Gerp",
+                "distancia_dias": 4.5,
+                "diferenca_validos": -5.617977528089888
+              },
+              {
+                "id": "nexus_2026-08-30",
+                "instituto": "Nexus",
+                "distancia_dias": 1.5,
+                "diferenca_validos": 1.098901098901099
+              },
+              {
+                "id": "poderdata_2026-08-26",
+                "instituto": "PoderData",
+                "distancia_dias": 3.0,
+                "diferenca_validos": 1.1235955056179776
+              },
+              {
+                "id": "quaest_2026-09-01",
+                "instituto": "Quaest",
+                "distancia_dias": 3.5,
+                "diferenca_validos": 1.2048192771084338
+              },
+              {
+                "id": "realtime_2026-08-31",
+                "instituto": "Real Time Big Data",
+                "distancia_dias": 1.5,
+                "diferenca_validos": 0.0
+              },
+              {
+                "id": "verita_2026-09-04",
+                "instituto": "Veritá",
+                "distancia_dias": 6.0,
+                "diferenca_validos": -5.895196506550217
+              },
+              {
+                "id": "vox_brasil_2026-08-27",
+                "instituto": "Vox Brasil",
+                "distancia_dias": 1.5,
+                "diferenca_validos": -0.6696428571428588
+              }
+            ]
+          },
+          {
+            "id": "atlas_2026-09-09",
+            "campo": {
+              "inicio": "2026-09-04",
+              "fim": "2026-09-09"
+            },
+            "publicado": {
+              "lula": 46.2,
+              "flavio": 46.4,
+              "branco_nulo": 7.4
+            },
+            "diferenca_validos": -0.21598272138228483,
+            "mediana_outros": -1.1112483022595383,
+            "desvio": 0.8952655808772535,
+            "pares": [
+              {
+                "id": "datafolha_2026-09-10",
+                "instituto": "Datafolha",
+                "distancia_dias": 2.5,
+                "diferenca_validos": 2.2222222222222223
+              },
+              {
+                "id": "futura_2026-09-15",
+                "instituto": "Futura",
+                "distancia_dias": 6.5,
+                "diferenca_validos": -4.793028322440085
+              },
+              {
+                "id": "gerp_2026-09-08",
+                "instituto": "Gerp",
+                "distancia_dias": 1.0,
+                "diferenca_validos": -8.045977011494253
+              },
+              {
+                "id": "mda_2026-09-13",
+                "instituto": "MDA",
+                "distancia_dias": 4.5,
+                "diferenca_validos": 8.361970217640318
+              },
+              {
+                "id": "meio_ideia_2026-09-07",
+                "instituto": "Meio/Ideia",
+                "distancia_dias": 1.0,
+                "diferenca_validos": 0.0
+              },
+              {
+                "id": "nexus_2026-09-07",
+                "instituto": "Nexus",
+                "distancia_dias": 1.0,
+                "diferenca_validos": -1.098901098901099
+              },
+              {
+                "id": "palver_2026-09-07_v2",
+                "instituto": "Palver",
+                "distancia_dias": 1.0,
+                "diferenca_validos": -3.2967032967032965
+              },
+              {
+                "id": "poderdata_2026-09-02",
+                "instituto": "PoderData",
+                "distancia_dias": 6.0,
+                "diferenca_validos": -1.1235955056179776
+              },
+              {
+                "id": "quaest_2026-09-06",
+                "instituto": "Quaest",
+                "distancia_dias": 2.0,
+                "diferenca_validos": 0.0
+              },
+              {
+                "id": "verita_2026-09-04",
+                "instituto": "Veritá",
+                "distancia_dias": 4.0,
+                "diferenca_validos": -5.895196506550217
+              }
+            ]
+          },
+          {
+            "id": "atlas_2026-09-16",
+            "campo": {
+              "inicio": "2026-09-11",
+              "fim": "2026-09-16"
+            },
+            "publicado": {
+              "lula": 46.8,
+              "flavio": 47.2,
+              "branco_nulo": 6.0
+            },
+            "diferenca_validos": -0.4255319148936231,
+            "mediana_outros": -2.330623306233062,
+            "desvio": 1.9050913913394392,
+            "pares": [
+              {
+                "id": "datafolha_2026-09-17",
+                "instituto": "Datafolha",
+                "distancia_dias": 2.5,
+                "diferenca_validos": 2.2222222222222223
+              },
+              {
+                "id": "futura_2026-09-15",
+                "instituto": "Futura",
+                "distancia_dias": 0.5,
+                "diferenca_validos": -4.793028322440085
+              },
+              {
+                "id": "gerp_2026-09-16",
+                "instituto": "Gerp",
+                "distancia_dias": 1.5,
+                "diferenca_validos": -7.526881720430108
+              },
+              {
+                "id": "mda_2026-09-13",
+                "instituto": "MDA",
+                "distancia_dias": 2.5,
+                "diferenca_validos": 8.361970217640318
+              },
+              {
+                "id": "nexus_2026-09-13",
+                "instituto": "Nexus",
+                "distancia_dias": 1.5,
+                "diferenca_validos": 1.075268817204301
+              },
+              {
+                "id": "palver_2026-09-18",
+                "instituto": "Palver",
+                "distancia_dias": 3.0,
+                "diferenca_validos": -4.444444444444445
+              },
+              {
+                "id": "poderdata_2026-09-16",
+                "instituto": "PoderData",
+                "distancia_dias": 1.0,
+                "diferenca_validos": -2.2222222222222223
+              },
+              {
+                "id": "quaest_2026-09-13",
+                "instituto": "Quaest",
+                "distancia_dias": 2.0,
+                "diferenca_validos": -2.4390243902439024
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "datafolha_2026-09-17",
+      "modo": "Presencial",
+      "subtipo": "Pontos de fluxo",
+      "selecao": "Estratos por região e tipo de município. Sorteio PPT dos municípios; sorteio de bairros e pontos de abordagem; seleção final controlada por cotas de sexo e idade.",
+      "fontes": "TSE; Censo 2022; estimativas populacionais 2025; PNADC-A 2024; levantamentos próprios.",
+      "pnad": "Anual 2024. Visita não identificada no registro.",
+      "pesos": "Ponderação prevista por região, natureza do município, sexo e idade; escolaridade condicional. Renda: referência 49% / 47% / 4%, com fator 1, mantendo o campo.",
+      "voto": "Não declarado como peso",
+      "voto_detalhe": "O questionário coleta o voto no 2º turno de 2022 entre elegíveis (p. 3). Essa variável não consta do plano de ponderação consultado. Coletar não significa ponderar.",
+      "controle": "Registro: tablets, consistência e verificação de no mínimo 20% dos questionários de cada entrevistador, presencialmente ou por telefone.",
+      "precisao": "Registro: ±2 pp, 95%, aproximação por amostra aleatória simples. Sem efeito dos conglomerados divulgado nos documentos consultados.",
+      "alerta": "Seleção final por cotas; probabilidades individuais não publicadas. Registro prevê 2.002 entrevistas, relatório informa 2.001. Anexo territorial data 14–16/09, registro e relatório 15–17/09.",
+      "paginas": [
+        2,
+        28,
+        29
+      ],
+      "instituto": "Datafolha",
+      "criterios": [
+        {
+          "pontos": 1,
+          "evidencia": "Registro e relatório identificam universo, modalidade, campo, tamanho e responsável/contratante."
+        },
+        {
+          "pontos": 1,
+          "evidencia": "Estratos por região e tipo de município. Sorteio PPT dos municípios; sorteio de bairros e pontos de abordagem; seleção final controlada por cotas de sexo e idade."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "TSE; Censo 2022; estimativas populacionais 2025; PNADC-A 2024; levantamentos próprios. Anual 2024. Visita não identificada no registro."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "Ponderação prevista por região, natureza do município, sexo e idade; escolaridade condicional. Renda: referência 49% / 47% / 4%, com fator 1, mantendo o campo."
+        },
+        {
+          "pontos": 1,
+          "evidencia": "Questionário completo desta onda obtido no PesqEle; ordem e alternativas acessíveis no PDF vinculado."
+        },
+        {
+          "pontos": 1,
+          "evidencia": "Registro: tablets, consistência e verificação de no mínimo 20% dos questionários de cada entrevistador, presencialmente ou por telefone."
+        },
+        {
+          "pontos": 0,
+          "evidencia": "Não localizamos o balanço de tentativas, contatos, elegíveis, recusas e entrevistas que permita calcular taxa de resposta/participação."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "Registro: ±2 pp, 95%, aproximação por amostra aleatória simples. Sem efeito dos conglomerados divulgado nos documentos consultados."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "O relatório publica perfil amostral, mas não todos os diagnósticos de pesos e bases brutas versus ponderadas."
+        },
+        {
+          "pontos": 0,
+          "evidencia": "Não localizamos, nos documentos consultados, base individual anonimizada com pesos e código suficiente para reproduzir esta onda."
+        }
+      ],
+      "registro_tse": "BR-04029/2026",
+      "campo": {
+        "inicio": "2026-09-15",
+        "fim": "2026-09-17"
+      },
+      "n": 2001,
+      "contratante": "Folha de S.Paulo e TV Globo",
+      "fonte_registro": "fontes/reponderacao_metodologias/datafolha_2026-09-17/registro-metodologia.txt",
+      "fonte_questionario": "fontes/reponderacao_metodologias/datafolha_2026-09-17/questionario.pdf",
+      "fonte_relatorio": "https://brasil.arvor.co/fontes/datafolha_21092026.pdf",
+      "proveniencia": {
+        "consulta": "2026-09-21",
+        "registro_html_sha256": "13e20df7cd5d8805023086a7d69460df04917abf9a065b8ecc3150820727070b",
+        "questionario_sha256": "d96fa3234204fc4246c77dd206da5535de62c8298f967750d61e3dec0c04185a",
+        "relatorio_original": "data/pesquisas/datafolha/2026-09-17/relatorio.pdf",
+        "relatorio_sha256": "6fdc7d08c70b3607ded11e50ca5cbc6ebb60b890d79321d1799c8d9972cd3c83"
+      },
+      "nota": 6.0,
+      "sinal": {
+        "desvio_mediano": 3.9491944369993153,
+        "n_ondas": 4,
+        "direcao": "Mais Lula",
+        "evidencia": "exploratório",
+        "minimo": 2.4382049436045072,
+        "maximo": 4.5528455284552845,
+        "ondas": [
+          {
+            "id": "datafolha_2026-08-19",
+            "campo": {
+              "inicio": "2026-08-18",
+              "fim": "2026-08-19"
+            },
+            "publicado": {
+              "lula": 47,
+              "flavio": 43,
+              "branco_nulo": 9,
+              "indecisos": 2
+            },
+            "diferenca_validos": 4.444444444444445,
+            "mediana_outros": 1.098901098901099,
+            "desvio": 3.3455433455433456,
+            "pares": [
+              {
+                "id": "gerp_2026-08-25",
+                "instituto": "Gerp",
+                "distancia_dias": 4.5,
+                "diferenca_validos": -5.617977528089888
+              },
+              {
+                "id": "nexus_2026-08-23",
+                "instituto": "Nexus",
+                "distancia_dias": 3.5,
+                "diferenca_validos": 1.098901098901099
+              },
+              {
+                "id": "poderdata_2026-08-26",
+                "instituto": "PoderData",
+                "distancia_dias": 6.0,
+                "diferenca_validos": 1.1235955056179776
+              },
+              {
+                "id": "quaest_2026-08-13",
+                "instituto": "Quaest",
+                "distancia_dias": 7.0,
+                "diferenca_validos": 3.6144578313253013
+              },
+              {
+                "id": "verita_2026-08-20",
+                "instituto": "Veritá",
+                "distancia_dias": 0.5,
+                "diferenca_validos": -5.9350503919372875
+              }
+            ]
+          },
+          {
+            "id": "datafolha_2026-09-02",
+            "campo": {
+              "inicio": "2026-09-01",
+              "fim": "2026-09-02"
+            },
+            "publicado": {
+              "lula": 46,
+              "flavio": 44,
+              "branco_nulo": 9,
+              "indecisos": 2
+            },
+            "diferenca_validos": 2.2222222222222223,
+            "mediana_outros": -0.21598272138228483,
+            "desvio": 2.4382049436045072,
+            "pares": [
+              {
+                "id": "atlas_2026-09-09",
+                "instituto": "AtlasIntel",
+                "distancia_dias": 5.0,
+                "diferenca_validos": -0.21598272138228483
+              },
+              {
+                "id": "futura_2026-09-01",
+                "instituto": "Futura",
+                "distancia_dias": 3.0,
+                "diferenca_validos": 0.44052863436123185
+              },
+              {
+                "id": "gerp_2026-09-08",
+                "instituto": "Gerp",
+                "distancia_dias": 4.0,
+                "diferenca_validos": -8.045977011494253
+              },
+              {
+                "id": "meio_ideia_2026-09-07",
+                "instituto": "Meio/Ideia",
+                "distancia_dias": 4.0,
+                "diferenca_validos": 0.0
+              },
+              {
+                "id": "nexus_2026-08-30",
+                "instituto": "Nexus",
+                "distancia_dias": 3.5,
+                "diferenca_validos": 1.098901098901099
+              },
+              {
+                "id": "palver_2026-09-07_v2",
+                "instituto": "Palver",
+                "distancia_dias": 4.0,
+                "diferenca_validos": -3.2967032967032965
+              },
+              {
+                "id": "poderdata_2026-09-02",
+                "instituto": "PoderData",
+                "distancia_dias": 1.0,
+                "diferenca_validos": -1.1235955056179776
+              },
+              {
+                "id": "quaest_2026-09-01",
+                "instituto": "Quaest",
+                "distancia_dias": 1.5,
+                "diferenca_validos": 1.2048192771084338
+              },
+              {
+                "id": "realtime_2026-08-31",
+                "instituto": "Real Time Big Data",
+                "distancia_dias": 3.5,
+                "diferenca_validos": 0.0
+              },
+              {
+                "id": "verita_2026-09-04",
+                "instituto": "Veritá",
+                "distancia_dias": 1.0,
+                "diferenca_validos": -5.895196506550217
+              },
+              {
+                "id": "vox_brasil_2026-08-27",
+                "instituto": "Vox Brasil",
+                "distancia_dias": 6.5,
+                "diferenca_validos": -0.6696428571428588
+              }
+            ]
+          },
+          {
+            "id": "datafolha_2026-09-10",
+            "campo": {
+              "inicio": "2026-09-08",
+              "fim": "2026-09-10"
+            },
+            "publicado": {
+              "lula": 46,
+              "flavio": 44,
+              "branco_nulo": 8,
+              "indecisos": 1
+            },
+            "diferenca_validos": 2.2222222222222223,
+            "mediana_outros": -2.330623306233062,
+            "desvio": 4.5528455284552845,
+            "pares": [
+              {
+                "id": "atlas_2026-09-09",
+                "instituto": "AtlasIntel",
+                "distancia_dias": 2.5,
+                "diferenca_validos": -0.21598272138228483
+              },
+              {
+                "id": "futura_2026-09-15",
+                "instituto": "Futura",
+                "distancia_dias": 4.0,
+                "diferenca_validos": -4.793028322440085
+              },
+              {
+                "id": "gerp_2026-09-08",
+                "instituto": "Gerp",
+                "distancia_dias": 3.5,
+                "diferenca_validos": -8.045977011494253
+              },
+              {
+                "id": "mda_2026-09-13",
+                "instituto": "MDA",
+                "distancia_dias": 2.0,
+                "diferenca_validos": 8.361970217640318
+              },
+              {
+                "id": "meio_ideia_2026-09-07",
+                "instituto": "Meio/Ideia",
+                "distancia_dias": 3.5,
+                "diferenca_validos": 0.0
+              },
+              {
+                "id": "nexus_2026-09-13",
+                "instituto": "Nexus",
+                "distancia_dias": 3.0,
+                "diferenca_validos": 1.075268817204301
+              },
+              {
+                "id": "palver_2026-09-07_v2",
+                "instituto": "Palver",
+                "distancia_dias": 3.5,
+                "diferenca_validos": -3.2967032967032965
+              },
+              {
+                "id": "poderdata_2026-09-16",
+                "instituto": "PoderData",
+                "distancia_dias": 5.5,
+                "diferenca_validos": -2.2222222222222223
+              },
+              {
+                "id": "quaest_2026-09-13",
+                "instituto": "Quaest",
+                "distancia_dias": 2.5,
+                "diferenca_validos": -2.4390243902439024
+              },
+              {
+                "id": "verita_2026-09-04",
+                "instituto": "Veritá",
+                "distancia_dias": 6.5,
+                "diferenca_validos": -5.895196506550217
+              }
+            ]
+          },
+          {
+            "id": "datafolha_2026-09-17",
+            "campo": {
+              "inicio": "2026-09-15",
+              "fim": "2026-09-17"
+            },
+            "publicado": {
+              "lula": 46,
+              "flavio": 44,
+              "branco_nulo": 8,
+              "indecisos": 1
+            },
+            "diferenca_validos": 2.2222222222222223,
+            "mediana_outros": -2.330623306233062,
+            "desvio": 4.5528455284552845,
+            "pares": [
+              {
+                "id": "atlas_2026-09-16",
+                "instituto": "AtlasIntel",
+                "distancia_dias": 2.5,
+                "diferenca_validos": -0.4255319148936231
+              },
+              {
+                "id": "futura_2026-09-15",
+                "instituto": "Futura",
+                "distancia_dias": 3.0,
+                "diferenca_validos": -4.793028322440085
+              },
+              {
+                "id": "gerp_2026-09-16",
+                "instituto": "Gerp",
+                "distancia_dias": 1.0,
+                "diferenca_validos": -7.526881720430108
+              },
+              {
+                "id": "mda_2026-09-13",
+                "instituto": "MDA",
+                "distancia_dias": 5.0,
+                "diferenca_validos": 8.361970217640318
+              },
+              {
+                "id": "nexus_2026-09-20",
+                "instituto": "Nexus",
+                "distancia_dias": 3.0,
+                "diferenca_validos": 1.098901098901099
+              },
+              {
+                "id": "palver_2026-09-18",
+                "instituto": "Palver",
+                "distancia_dias": 0.5,
+                "diferenca_validos": -4.444444444444445
+              },
+              {
+                "id": "poderdata_2026-09-16",
+                "instituto": "PoderData",
+                "distancia_dias": 1.5,
+                "diferenca_validos": -2.2222222222222223
+              },
+              {
+                "id": "quaest_2026-09-13",
+                "instituto": "Quaest",
+                "distancia_dias": 4.5,
+                "diferenca_validos": -2.4390243902439024
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "futura_2026-09-15",
+      "modo": "Telefônica",
+      "subtipo": "CATI · entrevistador humano",
+      "selecao": "Estratificação por região e UF; seleção auxiliada por computador e cotas de sexo, idade e escolaridade. Origem do cadastro telefônico não identificada no plano.",
+      "fontes": "TSE agosto/2026: geografia, sexo e idade. PNADC 2º tri/2026: escolaridade. Censo 2010: renda.",
+      "pnad": "2º trimestre de 2026, somente para escolaridade. Renda: Censo 2010.",
+      "pesos": "Correção prevista de sexo, idade e escolaridade se desvio superar 3 pp. Renda com fator 1. Relatório anuncia troca da escolaridade do TSE pela PNAD nesta onda.",
+      "voto": "Não declarado como peso",
+      "voto_detalhe": "Voto no 2º turno de 2022 não consta das variáveis de ponderação do registro.",
+      "controle": "Registro: supervisão durante a coleta e checagem de pelo menos 20% dos questionários de cada entrevistador.",
+      "precisao": "Registro: ±2,2 pp, 95%, calculados por amostra aleatória simples. Sem diagnóstico público de efeito dos pesos.",
+      "alerta": "A modernização da escolaridade não atualizou a referência de renda. Não há cruzamentos eleitorais por renda no relatório de 43 páginas.",
+      "paginas": [
+        5,
+        6,
+        7
+      ],
+      "instituto": "Futura",
+      "criterios": [
+        {
+          "pontos": 1,
+          "evidencia": "Registro e relatório identificam universo, modalidade, campo, tamanho e responsável/contratante."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "Estratificação por região e UF; seleção auxiliada por computador e cotas de sexo, idade e escolaridade. Origem do cadastro telefônico não identificada no plano."
+        },
+        {
+          "pontos": 1,
+          "evidencia": "TSE agosto/2026: geografia, sexo e idade. PNADC 2º tri/2026: escolaridade. Censo 2010: renda. 2º trimestre de 2026, somente para escolaridade. Renda: Censo 2010."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "Correção prevista de sexo, idade e escolaridade se desvio superar 3 pp. Renda com fator 1. Relatório anuncia troca da escolaridade do TSE pela PNAD nesta onda."
+        },
+        {
+          "pontos": 1,
+          "evidencia": "Questionário completo desta onda obtido no PesqEle; ordem e alternativas acessíveis no PDF vinculado."
+        },
+        {
+          "pontos": 1,
+          "evidencia": "Registro: supervisão durante a coleta e checagem de pelo menos 20% dos questionários de cada entrevistador."
+        },
+        {
+          "pontos": 0,
+          "evidencia": "Não localizamos o balanço de tentativas, contatos, elegíveis, recusas e entrevistas que permita calcular taxa de resposta/participação."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "Registro: ±2,2 pp, 95%, calculados por amostra aleatória simples. Sem diagnóstico público de efeito dos pesos."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "O relatório publica perfil amostral, mas não todos os diagnósticos de pesos e bases brutas versus ponderadas."
+        },
+        {
+          "pontos": 0,
+          "evidencia": "Não localizamos, nos documentos consultados, base individual anonimizada com pesos e código suficiente para reproduzir esta onda."
+        }
+      ],
+      "registro_tse": "BR-00749/2026",
+      "campo": {
+        "inicio": "2026-09-11",
+        "fim": "2026-09-15"
+      },
+      "n": 2000,
+      "contratante": "Futura/100% Cidades, recursos próprios segundo Poder360",
+      "fonte_registro": "fontes/reponderacao_metodologias/futura_2026-09-15/registro-metodologia.txt",
+      "fonte_questionario": "fontes/reponderacao_metodologias/futura_2026-09-15/questionario.pdf",
+      "fonte_relatorio": "https://static.poder360.com.br/uploads/2026/09/Pesquisa-Presidente-Brasil-Futura-Setembro.pdf",
+      "proveniencia": {
+        "consulta": "2026-09-21",
+        "registro_html_sha256": "84660549fd84948b15bc9f23d16a4e45fd689fa7b2f80c2a58af7476e5266eee",
+        "questionario_sha256": "0955e4f2ee57d8868fa8ee2bf52d932b18f89cee7b9febe2c54eba30e458b7f3",
+        "relatorio_original": "data/originals/futura_092026_17/relatorio.pdf",
+        "relatorio_sha256": "0616361dbe5d603e5c26dcf854fca62e6d1eb7ac1d67f7cf1889ce633645d14d"
+      },
+      "nota": 6.0,
+      "sinal": {
+        "desvio_mediano": -1.5143113097604652,
+        "n_ondas": 2,
+        "direcao": "Próximo da mediana",
+        "evidencia": "poucas ondas",
+        "minimo": -3.4691512538821625,
+        "maximo": 0.44052863436123185,
+        "ondas": [
+          {
+            "id": "futura_2026-09-01",
+            "campo": {
+              "inicio": "2026-08-27",
+              "fim": "2026-09-01"
+            },
+            "publicado": {
+              "lula": 45.6,
+              "flavio": 45.2,
+              "branco_nulo": 7.2,
+              "indecisos": 2.0
+            },
+            "diferenca_validos": 0.44052863436123185,
+            "mediana_outros": 0.0,
+            "desvio": 0.44052863436123185,
+            "pares": [
+              {
+                "id": "atlas_2026-08-30",
+                "instituto": "AtlasIntel",
+                "distancia_dias": 2.0,
+                "diferenca_validos": 5.016722408026756
+              },
+              {
+                "id": "datafolha_2026-09-02",
+                "instituto": "Datafolha",
+                "distancia_dias": 3.0,
+                "diferenca_validos": 2.2222222222222223
+              },
+              {
+                "id": "gerp_2026-08-25",
+                "instituto": "Gerp",
+                "distancia_dias": 6.5,
+                "diferenca_validos": -5.617977528089888
+              },
+              {
+                "id": "meio_ideia_2026-09-07",
+                "instituto": "Meio/Ideia",
+                "distancia_dias": 7.0,
+                "diferenca_validos": 0.0
+              },
+              {
+                "id": "nexus_2026-08-30",
+                "instituto": "Nexus",
+                "distancia_dias": 0.5,
+                "diferenca_validos": 1.098901098901099
+              },
+              {
+                "id": "palver_2026-09-07_v2",
+                "instituto": "Palver",
+                "distancia_dias": 7.0,
+                "diferenca_validos": -3.2967032967032965
+              },
+              {
+                "id": "poderdata_2026-09-02",
+                "instituto": "PoderData",
+                "distancia_dias": 2.0,
+                "diferenca_validos": -1.1235955056179776
+              },
+              {
+                "id": "quaest_2026-09-01",
+                "instituto": "Quaest",
+                "distancia_dias": 1.5,
+                "diferenca_validos": 1.2048192771084338
+              },
+              {
+                "id": "realtime_2026-08-31",
+                "instituto": "Real Time Big Data",
+                "distancia_dias": 0.5,
+                "diferenca_validos": 0.0
+              },
+              {
+                "id": "verita_2026-09-04",
+                "instituto": "Veritá",
+                "distancia_dias": 4.0,
+                "diferenca_validos": -5.895196506550217
+              },
+              {
+                "id": "vox_brasil_2026-08-27",
+                "instituto": "Vox Brasil",
+                "distancia_dias": 3.5,
+                "diferenca_validos": -0.6696428571428588
+              }
+            ]
+          },
+          {
+            "id": "futura_2026-09-15",
+            "campo": {
+              "inicio": "2026-09-11",
+              "fim": "2026-09-15"
+            },
+            "publicado": {
+              "lula": 43.7,
+              "flavio": 48.1,
+              "branco_nulo": 6.5,
+              "indecisos": 1.7
+            },
+            "diferenca_validos": -4.793028322440085,
+            "mediana_outros": -1.3238770685579226,
+            "desvio": -3.4691512538821625,
+            "pares": [
+              {
+                "id": "atlas_2026-09-16",
+                "instituto": "AtlasIntel",
+                "distancia_dias": 0.5,
+                "diferenca_validos": -0.4255319148936231
+              },
+              {
+                "id": "datafolha_2026-09-17",
+                "instituto": "Datafolha",
+                "distancia_dias": 3.0,
+                "diferenca_validos": 2.2222222222222223
+              },
+              {
+                "id": "gerp_2026-09-16",
+                "instituto": "Gerp",
+                "distancia_dias": 2.0,
+                "diferenca_validos": -7.526881720430108
+              },
+              {
+                "id": "mda_2026-09-13",
+                "instituto": "MDA",
+                "distancia_dias": 2.0,
+                "diferenca_validos": 8.361970217640318
+              },
+              {
+                "id": "nexus_2026-09-13",
+                "instituto": "Nexus",
+                "distancia_dias": 1.0,
+                "diferenca_validos": 1.075268817204301
+              },
+              {
+                "id": "palver_2026-09-18",
+                "instituto": "Palver",
+                "distancia_dias": 3.5,
+                "diferenca_validos": -4.444444444444445
+              },
+              {
+                "id": "poderdata_2026-09-16",
+                "instituto": "PoderData",
+                "distancia_dias": 1.5,
+                "diferenca_validos": -2.2222222222222223
+              },
+              {
+                "id": "quaest_2026-09-13",
+                "instituto": "Quaest",
+                "distancia_dias": 1.5,
+                "diferenca_validos": -2.4390243902439024
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "gerp_2026-09-16",
+      "modo": "Telefônica",
+      "subtipo": "GerpCATI · entrevistador humano",
+      "selecao": "O relatório descreve discagem RDD e cotas por UF, sexo, idade e renda, até preenchê-las. O registro especifica cotas de renda do chefe do domicílio.",
+      "fontes": "Registro: IBGE e TSE, sem edições. Relatório: IBGE/Censo 2022 para a ponderação.",
+      "pnad": "Não citada. Fontes e conceito de renda precisam de conciliação entre registro e relatório.",
+      "pesos": "Registro: correção de geografia, sexo, idade e renda do chefe se desvio superar 2 pp. Relatório acrescenta escolaridade e publica perfil ponderado.",
+      "voto": "Não declarado como peso",
+      "voto_detalhe": "Voto em 2022 não consta da lista de calibração no registro ou na metodologia do relatório.",
+      "controle": "Gravação das entrevistas, consistência e recontato de pelo menos 20% dos entrevistados, segundo registro e relatório.",
+      "precisao": "Registro: ±2,04 pp, 95,55%; relatório: ±2 pp, 95%. Não localizamos ajuste por desenho ou dispersão dos pesos.",
+      "alerta": "Registro fala em renda do chefe; questionário e relatório usam renda familiar. Cadastro, cotas e conceito de renda não são intercambiáveis. RDD sorteia números, não garante por si só probabilidade igual para pessoas.",
+      "paginas": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "instituto": "Gerp",
+      "criterios": [
+        {
+          "pontos": 1,
+          "evidencia": "Registro e relatório identificam universo, modalidade, campo, tamanho e responsável/contratante."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "O relatório descreve discagem RDD e cotas por UF, sexo, idade e renda, até preenchê-las. O registro especifica cotas de renda do chefe do domicílio."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "Registro: IBGE e TSE, sem edições. Relatório: IBGE/Censo 2022 para a ponderação. Não citada. Fontes e conceito de renda precisam de conciliação entre registro e relatório."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "Registro: correção de geografia, sexo, idade e renda do chefe se desvio superar 2 pp. Relatório acrescenta escolaridade e publica perfil ponderado."
+        },
+        {
+          "pontos": 1,
+          "evidencia": "Questionário completo desta onda obtido no PesqEle; ordem e alternativas acessíveis no PDF vinculado."
+        },
+        {
+          "pontos": 1,
+          "evidencia": "Gravação das entrevistas, consistência e recontato de pelo menos 20% dos entrevistados, segundo registro e relatório."
+        },
+        {
+          "pontos": 0,
+          "evidencia": "Não localizamos o balanço de tentativas, contatos, elegíveis, recusas e entrevistas que permita calcular taxa de resposta/participação."
+        },
+        {
+          "pontos": 0,
+          "evidencia": "Registro: ±2,04 pp, 95,55%; relatório: ±2 pp, 95%. Não localizamos ajuste por desenho ou dispersão dos pesos."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "O relatório publica perfil amostral, mas não todos os diagnósticos de pesos e bases brutas versus ponderadas."
+        },
+        {
+          "pontos": 0,
+          "evidencia": "Não localizamos, nos documentos consultados, base individual anonimizada com pesos e código suficiente para reproduzir esta onda."
+        }
+      ],
+      "registro_tse": "BR-00535/2026",
+      "campo": {
+        "inicio": "2026-09-14",
+        "fim": "2026-09-16"
+      },
+      "n": 2400,
+      "contratante": "Gerp Mercadologia, recursos próprios",
+      "fonte_registro": "fontes/reponderacao_metodologias/gerp_2026-09-16/registro-metodologia.txt",
+      "fonte_questionario": "fontes/reponderacao_metodologias/gerp_2026-09-16/questionario.pdf",
+      "fonte_relatorio": "https://static.poder360.com.br/uploads/2026/09/pesquisa-gerp-presidencia-republica-17set2026.pdf",
+      "proveniencia": {
+        "consulta": "2026-09-21",
+        "registro_html_sha256": "f4e0cbfb200380694c65314f6d03816e1d67d5890d4ffc8e0700797bc8a52d3c",
+        "questionario_sha256": "d5dc7ef8c32fb2d2de807155dc6fd4ea973be28a1988877056aaa371d7f33a4a",
+        "relatorio_original": "data/originals/gerp_092026_17/relatorio.pdf",
+        "relatorio_sha256": "6243dbcadc828eaf6c59f974f5e77301560ac837c7783606f02239bad8d206d6"
+      },
+      "nota": 5.0,
+      "sinal": {
+        "desvio_mediano": -6.295348523296619,
+        "n_ondas": 4,
+        "direcao": "Mais Flávio",
+        "evidencia": "exploratório",
+        "minimo": -7.937985650803111,
+        "maximo": -5.569430569430569,
+        "ondas": [
+          {
+            "id": "gerp_2026-08-10",
+            "campo": {
+              "inicio": "2026-08-06",
+              "fim": "2026-08-10"
+            },
+            "publicado": {
+              "flavio": 45,
+              "lula": 43,
+              "branco_nulo": 10,
+              "indecisos": 2
+            },
+            "diferenca_validos": -2.272727272727273,
+            "mediana_outros": 3.2967032967032965,
+            "desvio": -5.569430569430569,
+            "pares": [
+              {
+                "id": "futura_2026-08-07",
+                "instituto": "Futura",
+                "distancia_dias": 3.0,
+                "diferenca_validos": 2.7624309392265194
+              },
+              {
+                "id": "mda_2026-08-09",
+                "instituto": "MDA",
+                "distancia_dias": 1.0,
+                "diferenca_validos": 10.218140068886337
+              },
+              {
+                "id": "nexus_2026-08-09",
+                "instituto": "Nexus",
+                "distancia_dias": 0.0,
+                "diferenca_validos": 3.2967032967032965
+              },
+              {
+                "id": "poderdata_2026-08-12",
+                "instituto": "PoderData",
+                "distancia_dias": 2.5,
+                "diferenca_validos": 1.098901098901099
+              },
+              {
+                "id": "quaest_2026-08-13",
+                "instituto": "Quaest",
+                "distancia_dias": 3.5,
+                "diferenca_validos": 3.6144578313253013
+              }
+            ]
+          },
+          {
+            "id": "gerp_2026-08-25",
+            "campo": {
+              "inicio": "2026-08-21",
+              "fim": "2026-08-25"
+            },
+            "publicado": {
+              "flavio": 47,
+              "lula": 42,
+              "branco_nulo": 8,
+              "indecisos": 3
+            },
+            "diferenca_validos": -5.617977528089888,
+            "mediana_outros": 0.7697148666311654,
+            "desvio": -6.3876923947210535,
+            "pares": [
+              {
+                "id": "atlas_2026-08-30",
+                "instituto": "AtlasIntel",
+                "distancia_dias": 4.5,
+                "diferenca_validos": 5.016722408026756
+              },
+              {
+                "id": "datafolha_2026-08-19",
+                "instituto": "Datafolha",
+                "distancia_dias": 4.5,
+                "diferenca_validos": 4.444444444444445
+              },
+              {
+                "id": "futura_2026-09-01",
+                "instituto": "Futura",
+                "distancia_dias": 6.5,
+                "diferenca_validos": 0.44052863436123185
+              },
+              {
+                "id": "nexus_2026-08-23",
+                "instituto": "Nexus",
+                "distancia_dias": 1.0,
+                "diferenca_validos": 1.098901098901099
+              },
+              {
+                "id": "poderdata_2026-08-26",
+                "instituto": "PoderData",
+                "distancia_dias": 1.5,
+                "diferenca_validos": 1.1235955056179776
+              },
+              {
+                "id": "realtime_2026-08-31",
+                "instituto": "Real Time Big Data",
+                "distancia_dias": 6.0,
+                "diferenca_validos": 0.0
+              },
+              {
+                "id": "verita_2026-08-20",
+                "instituto": "Veritá",
+                "distancia_dias": 5.0,
+                "diferenca_validos": -5.9350503919372875
+              },
+              {
+                "id": "vox_brasil_2026-08-27",
+                "instituto": "Vox Brasil",
+                "distancia_dias": 3.0,
+                "diferenca_validos": -0.6696428571428588
+              }
+            ]
+          },
+          {
+            "id": "gerp_2026-09-08",
+            "campo": {
+              "inicio": "2026-09-03",
+              "fim": "2026-09-08"
+            },
+            "publicado": {
+              "flavio": 47,
+              "lula": 40,
+              "branco_nulo": 11,
+              "indecisos": 3
+            },
+            "diferenca_validos": -8.045977011494253,
+            "mediana_outros": -0.10799136069114242,
+            "desvio": -7.937985650803111,
+            "pares": [
+              {
+                "id": "atlas_2026-09-09",
+                "instituto": "AtlasIntel",
+                "distancia_dias": 1.0,
+                "diferenca_validos": -0.21598272138228483
+              },
+              {
+                "id": "datafolha_2026-09-10",
+                "instituto": "Datafolha",
+                "distancia_dias": 3.5,
+                "diferenca_validos": 2.2222222222222223
+              },
+              {
+                "id": "futura_2026-09-01",
+                "instituto": "Futura",
+                "distancia_dias": 7.0,
+                "diferenca_validos": 0.44052863436123185
+              },
+              {
+                "id": "mda_2026-09-13",
+                "instituto": "MDA",
+                "distancia_dias": 5.5,
+                "diferenca_validos": 8.361970217640318
+              },
+              {
+                "id": "meio_ideia_2026-09-07",
+                "instituto": "Meio/Ideia",
+                "distancia_dias": 0.0,
+                "diferenca_validos": 0.0
+              },
+              {
+                "id": "nexus_2026-09-07",
+                "instituto": "Nexus",
+                "distancia_dias": 0.0,
+                "diferenca_validos": -1.098901098901099
+              },
+              {
+                "id": "palver_2026-09-07_v2",
+                "instituto": "Palver",
+                "distancia_dias": 0.0,
+                "diferenca_validos": -3.2967032967032965
+              },
+              {
+                "id": "poderdata_2026-09-02",
+                "instituto": "PoderData",
+                "distancia_dias": 5.0,
+                "diferenca_validos": -1.1235955056179776
+              },
+              {
+                "id": "quaest_2026-09-06",
+                "instituto": "Quaest",
+                "distancia_dias": 1.0,
+                "diferenca_validos": 0.0
+              },
+              {
+                "id": "verita_2026-09-04",
+                "instituto": "Veritá",
+                "distancia_dias": 3.0,
+                "diferenca_validos": -5.895196506550217
+              }
+            ]
+          },
+          {
+            "id": "gerp_2026-09-16",
+            "campo": {
+              "inicio": "2026-09-14",
+              "fim": "2026-09-16"
+            },
+            "publicado": {
+              "flavio": 50,
+              "lula": 43,
+              "branco_nulo": 6,
+              "indecisos": 1
+            },
+            "diferenca_validos": -7.526881720430108,
+            "mediana_outros": -1.3238770685579226,
+            "desvio": -6.2030046518721855,
+            "pares": [
+              {
+                "id": "atlas_2026-09-16",
+                "instituto": "AtlasIntel",
+                "distancia_dias": 1.5,
+                "diferenca_validos": -0.4255319148936231
+              },
+              {
+                "id": "datafolha_2026-09-17",
+                "instituto": "Datafolha",
+                "distancia_dias": 1.0,
+                "diferenca_validos": 2.2222222222222223
+              },
+              {
+                "id": "futura_2026-09-15",
+                "instituto": "Futura",
+                "distancia_dias": 2.0,
+                "diferenca_validos": -4.793028322440085
+              },
+              {
+                "id": "mda_2026-09-13",
+                "instituto": "MDA",
+                "distancia_dias": 4.0,
+                "diferenca_validos": 8.361970217640318
+              },
+              {
+                "id": "nexus_2026-09-13",
+                "instituto": "Nexus",
+                "distancia_dias": 3.0,
+                "diferenca_validos": 1.075268817204301
+              },
+              {
+                "id": "palver_2026-09-18",
+                "instituto": "Palver",
+                "distancia_dias": 1.5,
+                "diferenca_validos": -4.444444444444445
+              },
+              {
+                "id": "poderdata_2026-09-16",
+                "instituto": "PoderData",
+                "distancia_dias": 0.5,
+                "diferenca_validos": -2.2222222222222223
+              },
+              {
+                "id": "quaest_2026-09-13",
+                "instituto": "Quaest",
+                "distancia_dias": 3.5,
+                "diferenca_validos": -2.4390243902439024
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mda_2026-09-13",
+      "modo": "Presencial",
+      "subtipo": "Domicílios e pontos de fluxo",
+      "selecao": "Distribuição por região, UF e porte municipal; sorteio de municípios, bairros e setores; abordagem final por cotas de sexo, idade, renda e escolaridade.",
+      "fontes": "TSE julho/2026; Censo 2022; PNAD anual 2024 para renda; PNAD trimestral 2025 e TSE para escolaridade.",
+      "pnad": "Renda: anual 2024, visita não indicada. Escolaridade: trimestral 2025, trimestre não indicado.",
+      "pesos": "Registro prevê peso inicial 1 e correções se necessárias. Relatório declara que não foi utilizada ponderação nesta onda.",
+      "voto": "Não declarado como peso",
+      "voto_detalhe": "O relatório declara ausência de ponderação. O plano de eventuais correções não inclui voto em 2022.",
+      "controle": "Registro: georreferenciamento, gravação, consistência e auditoria de pelo menos 20% por áudio ou recontato.",
+      "precisao": "±2,2 pp, 95%. Não localizamos efeito dos conglomerados nem tamanho efetivo.",
+      "alerta": "Domicílios e fluxo são duas formas de abordagem presencial, não duas modalidades. A composição depende das cotas cumpridas em campo.",
+      "paginas": [
+        3
+      ],
+      "instituto": "MDA",
+      "criterios": [
+        {
+          "pontos": 1,
+          "evidencia": "Registro e relatório identificam universo, modalidade, campo, tamanho e responsável/contratante."
+        },
+        {
+          "pontos": 1,
+          "evidencia": "Distribuição por região, UF e porte municipal; sorteio de municípios, bairros e setores; abordagem final por cotas de sexo, idade, renda e escolaridade."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "TSE julho/2026; Censo 2022; PNAD anual 2024 para renda; PNAD trimestral 2025 e TSE para escolaridade. Renda: anual 2024, visita não indicada. Escolaridade: trimestral 2025, trimestre não indicado."
+        },
+        {
+          "pontos": 1,
+          "evidencia": "Registro prevê peso inicial 1 e correções se necessárias. Relatório declara que não foi utilizada ponderação nesta onda."
+        },
+        {
+          "pontos": 1,
+          "evidencia": "Questionário completo desta onda obtido no PesqEle; ordem e alternativas acessíveis no PDF vinculado."
+        },
+        {
+          "pontos": 1,
+          "evidencia": "Registro: georreferenciamento, gravação, consistência e auditoria de pelo menos 20% por áudio ou recontato."
+        },
+        {
+          "pontos": 0,
+          "evidencia": "Não localizamos o balanço de tentativas, contatos, elegíveis, recusas e entrevistas que permita calcular taxa de resposta/participação."
+        },
+        {
+          "pontos": 0,
+          "evidencia": "±2,2 pp, 95%. Não localizamos efeito dos conglomerados nem tamanho efetivo."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "O relatório publica perfil amostral, mas não todos os diagnósticos de pesos e bases brutas versus ponderadas."
+        },
+        {
+          "pontos": 0,
+          "evidencia": "Não localizamos, nos documentos consultados, base individual anonimizada com pesos e código suficiente para reproduzir esta onda."
+        }
+      ],
+      "registro_tse": "BR-06902/2026",
+      "campo": {
+        "inicio": "2026-09-09",
+        "fim": "2026-09-13"
+      },
+      "n": 2002,
+      "contratante": "Confederação Nacional do Transporte (CNT)",
+      "fonte_registro": "fontes/reponderacao_metodologias/mda_2026-09-13/registro-metodologia.txt",
+      "fonte_questionario": "fontes/reponderacao_metodologias/mda_2026-09-13/questionario.pdf",
+      "fonte_relatorio": "https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2026/09/41c8cf7e-63b9-4165-be91-3f4545ba7649-1.pdf",
+      "proveniencia": {
+        "consulta": "2026-09-21",
+        "registro_html_sha256": "a4de62109486d55f2ad189489b85c0ad20ed89c8805b64d946be9bdbb5a40bf9",
+        "questionario_sha256": "6bafa0bcca12a0dd27b1fc448bb32a545b26ceec01683266f9ffeb789549c884",
+        "relatorio_original": "data/pesquisas/cnt-mda/2026-09-15/relatorio.pdf",
+        "relatorio_sha256": "ce1a1f63a709bcabdbf7fd18a2d0058f7ee9849744294c9e22d9286a5e60e4bc"
+      },
+      "nota": 6.0,
+      "sinal": {
+        "desvio_mediano": 9.019950784761178,
+        "n_ondas": 2,
+        "direcao": "Mais Lula",
+        "evidencia": "poucas ondas",
+        "minimo": 7.455709129659818,
+        "maximo": 10.58419243986254,
+        "ondas": [
+          {
+            "id": "mda_2026-08-09",
+            "campo": {
+              "inicio": "2026-08-05",
+              "fim": "2026-08-09"
+            },
+            "publicado": {
+              "lula": 48.0,
+              "flavio": 39.1,
+              "branco_nulo": 10.6,
+              "indecisos": 2.3
+            },
+            "diferenca_validos": 10.218140068886337,
+            "mediana_outros": 2.7624309392265194,
+            "desvio": 7.455709129659818,
+            "pares": [
+              {
+                "id": "futura_2026-08-07",
+                "instituto": "Futura",
+                "distancia_dias": 2.0,
+                "diferenca_validos": 2.7624309392265194
+              },
+              {
+                "id": "gerp_2026-08-10",
+                "instituto": "Gerp",
+                "distancia_dias": 1.0,
+                "diferenca_validos": -2.272727272727273
+              },
+              {
+                "id": "nexus_2026-08-09",
+                "instituto": "Nexus",
+                "distancia_dias": 1.0,
+                "diferenca_validos": 3.2967032967032965
+              },
+              {
+                "id": "poderdata_2026-08-12",
+                "instituto": "PoderData",
+                "distancia_dias": 3.5,
+                "diferenca_validos": 1.098901098901099
+              },
+              {
+                "id": "quaest_2026-08-13",
+                "instituto": "Quaest",
+                "distancia_dias": 4.5,
+                "diferenca_validos": 3.6144578313253013
+              }
+            ]
+          },
+          {
+            "id": "mda_2026-09-13",
+            "campo": {
+              "inicio": "2026-09-09",
+              "fim": "2026-09-13"
+            },
+            "publicado": {
+              "lula": 47.3,
+              "flavio": 40.0,
+              "branco_nulo": 10.2,
+              "indecisos": 2.5
+            },
+            "diferenca_validos": 8.361970217640318,
+            "mediana_outros": -2.2222222222222223,
+            "desvio": 10.58419243986254,
+            "pares": [
+              {
+                "id": "atlas_2026-09-16",
+                "instituto": "AtlasIntel",
+                "distancia_dias": 2.5,
+                "diferenca_validos": -0.4255319148936231
+              },
+              {
+                "id": "datafolha_2026-09-10",
+                "instituto": "Datafolha",
+                "distancia_dias": 2.0,
+                "diferenca_validos": 2.2222222222222223
+              },
+              {
+                "id": "futura_2026-09-15",
+                "instituto": "Futura",
+                "distancia_dias": 2.0,
+                "diferenca_validos": -4.793028322440085
+              },
+              {
+                "id": "gerp_2026-09-16",
+                "instituto": "Gerp",
+                "distancia_dias": 4.0,
+                "diferenca_validos": -7.526881720430108
+              },
+              {
+                "id": "meio_ideia_2026-09-07",
+                "instituto": "Meio/Ideia",
+                "distancia_dias": 5.5,
+                "diferenca_validos": 0.0
+              },
+              {
+                "id": "nexus_2026-09-13",
+                "instituto": "Nexus",
+                "distancia_dias": 1.0,
+                "diferenca_validos": 1.075268817204301
+              },
+              {
+                "id": "palver_2026-09-18",
+                "instituto": "Palver",
+                "distancia_dias": 5.5,
+                "diferenca_validos": -4.444444444444445
+              },
+              {
+                "id": "poderdata_2026-09-16",
+                "instituto": "PoderData",
+                "distancia_dias": 3.5,
+                "diferenca_validos": -2.2222222222222223
+              },
+              {
+                "id": "quaest_2026-09-13",
+                "instituto": "Quaest",
+                "distancia_dias": 0.5,
+                "diferenca_validos": -2.4390243902439024
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "meio_ideia_2026-09-07",
+      "modo": "Telefônica",
+      "subtipo": "Entrevista por telefone · RDD",
+      "selecao": "Registro declara geração aleatória de números (RDD) e seleção PPT. A passagem de linhas telefônicas a pessoas e a cobertura do cadastro não são detalhadas.",
+      "fontes": "PNAD 2025; Censo 2022; TSE 2025. Sem atribuição completa de edição a cada variável.",
+      "pnad": "2025, sem indicar anual/trimestral, visita ou trimestre.",
+      "pesos": "Sexo e idade podem ser corrigidos quando o desvio supera 2,5 pp. Escolaridade e condição de atividade têm fator 1. O nível econômico do plano é atividade econômica, não renda.",
+      "voto": "Não declarado como peso",
+      "voto_detalhe": "PF5 pergunta voto no 2º turno de 2022. O plano de pesos menciona somente correções de sexo e idade.",
+      "controle": "Registro e relatório: monitoramento das ligações, consistência e rechecagem por telefone de 30% de cada entrevistador.",
+      "precisao": "±2,5 pp, 95%, sob modelo de amostra aleatória simples. Sem efeito de desenho publicado nos documentos consultados.",
+      "alerta": "Há cruzamento eleitoral por renda, mas falta o perfil amostral dessas faixas. Não é possível reproduzir a reponderação de renda apenas com o relatório.",
+      "paginas": [
+        77
+      ],
+      "instituto": "Meio/Ideia",
+      "criterios": [
+        {
+          "pontos": 1,
+          "evidencia": "Registro e relatório identificam universo, modalidade, campo, tamanho e responsável/contratante."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "Registro declara geração aleatória de números (RDD) e seleção PPT. A passagem de linhas telefônicas a pessoas e a cobertura do cadastro não são detalhadas."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "PNAD 2025; Censo 2022; TSE 2025. Sem atribuição completa de edição a cada variável. 2025, sem indicar anual/trimestral, visita ou trimestre."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "Sexo e idade podem ser corrigidos quando o desvio supera 2,5 pp. Escolaridade e condição de atividade têm fator 1. O nível econômico do plano é atividade econômica, não renda."
+        },
+        {
+          "pontos": 1,
+          "evidencia": "Questionário completo desta onda obtido no PesqEle; ordem e alternativas acessíveis no PDF vinculado."
+        },
+        {
+          "pontos": 1,
+          "evidencia": "Registro e relatório: monitoramento das ligações, consistência e rechecagem por telefone de 30% de cada entrevistador."
+        },
+        {
+          "pontos": 0,
+          "evidencia": "Não localizamos o balanço de tentativas, contatos, elegíveis, recusas e entrevistas que permita calcular taxa de resposta/participação."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "±2,5 pp, 95%, sob modelo de amostra aleatória simples. Sem efeito de desenho publicado nos documentos consultados."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "O relatório publica perfil amostral, mas não todos os diagnósticos de pesos e bases brutas versus ponderadas."
+        },
+        {
+          "pontos": 0,
+          "evidencia": "Não localizamos, nos documentos consultados, base individual anonimizada com pesos e código suficiente para reproduzir esta onda."
+        }
+      ],
+      "registro_tse": "BR-07935/2026",
+      "campo": {
+        "inicio": "2026-09-04",
+        "fim": "2026-09-07"
+      },
+      "n": 1500,
+      "contratante": "Canal Meio, em parceria com o Instituto Ideia",
+      "fonte_registro": "fontes/reponderacao_metodologias/meio_ideia_2026-09-07/registro-metodologia.txt",
+      "fonte_questionario": "fontes/reponderacao_metodologias/meio_ideia_2026-09-07/questionario.pdf",
+      "fonte_relatorio": "fontes/reponderacao_metodologias/meio_ideia_2026-09-07/relatorio-metodologia.pdf",
+      "relatorio_excerto": true,
+      "proveniencia": {
+        "consulta": "2026-09-21",
+        "registro_html_sha256": "eb58002062d44c83c69fe10e6c502b9cbd4e3f17560e168d56d158e894d9af97",
+        "questionario_sha256": "846bd64cb1fef7975250e7677bf07a949a809ef93ad49e42c5c3d9b1129583f2",
+        "relatorio_original": "data/originals/meio_ideia_092026/Relatorio.pdf",
+        "relatorio_sha256": "aae4145c591ee56b7160f1a41a6e5ecfc7a04e0b9c62e6fafae9094a0b07898f"
+      },
+      "nota": 5.5,
+      "sinal": {
+        "desvio_mediano": 0.657441910141692,
+        "n_ondas": 1,
+        "direcao": "Próximo da mediana",
+        "evidencia": "poucas ondas",
+        "minimo": 0.657441910141692,
+        "maximo": 0.657441910141692,
+        "ondas": [
+          {
+            "id": "meio_ideia_2026-09-07",
+            "campo": {
+              "inicio": "2026-09-04",
+              "fim": "2026-09-07"
+            },
+            "publicado": {
+              "lula": 46,
+              "flavio": 46,
+              "branco_nulo": 3.5,
+              "indecisos": 4.5
+            },
+            "diferenca_validos": 0.0,
+            "mediana_outros": -0.657441910141692,
+            "desvio": 0.657441910141692,
+            "pares": [
+              {
+                "id": "atlas_2026-09-09",
+                "instituto": "AtlasIntel",
+                "distancia_dias": 1.0,
+                "diferenca_validos": -0.21598272138228483
+              },
+              {
+                "id": "datafolha_2026-09-10",
+                "instituto": "Datafolha",
+                "distancia_dias": 3.5,
+                "diferenca_validos": 2.2222222222222223
+              },
+              {
+                "id": "futura_2026-09-01",
+                "instituto": "Futura",
+                "distancia_dias": 7.0,
+                "diferenca_validos": 0.44052863436123185
+              },
+              {
+                "id": "gerp_2026-09-08",
+                "instituto": "Gerp",
+                "distancia_dias": 0.0,
+                "diferenca_validos": -8.045977011494253
+              },
+              {
+                "id": "mda_2026-09-13",
+                "instituto": "MDA",
+                "distancia_dias": 5.5,
+                "diferenca_validos": 8.361970217640318
+              },
+              {
+                "id": "nexus_2026-09-07",
+                "instituto": "Nexus",
+                "distancia_dias": 0.0,
+                "diferenca_validos": -1.098901098901099
+              },
+              {
+                "id": "palver_2026-09-07_v2",
+                "instituto": "Palver",
+                "distancia_dias": 0.0,
+                "diferenca_validos": -3.2967032967032965
+              },
+              {
+                "id": "poderdata_2026-09-02",
+                "instituto": "PoderData",
+                "distancia_dias": 5.0,
+                "diferenca_validos": -1.1235955056179776
+              },
+              {
+                "id": "quaest_2026-09-06",
+                "instituto": "Quaest",
+                "distancia_dias": 1.0,
+                "diferenca_validos": 0.0
+              },
+              {
+                "id": "verita_2026-09-04",
+                "instituto": "Veritá",
+                "distancia_dias": 3.0,
+                "diferenca_validos": -5.895196506550217
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "nexus_2026-09-20",
+      "modo": "Telefônica",
+      "subtipo": "CATI · entrevistador humano",
+      "selecao": "Sorteio de números fixos e móveis em cadastro descrito a partir da Anatel, estratificado por DDD. Controles de região, telefonia, sexo, idade e escolaridade.",
+      "fontes": "PNADC anual acumulada 2025, 1ª visita; TSE junho/2026 para sexo, idade e região; Anatel para telefonia.",
+      "pnad": "Anual 2025, 1ª visita.",
+      "pesos": "Registro prevê correção das variáveis de controle, mais renda e participação na força de trabalho. Não especifica algoritmo, aparo ou diagnóstico dos pesos efetivos.",
+      "voto": "Não declarado como peso",
+      "voto_detalhe": "Pergunta 26 coleta voto no 2º turno de 2022. Essa variável não consta do plano de ponderação consultado.",
+      "controle": "Registro: auditoria de cerca de 20% dos questionários durante o campo, assistida por software.",
+      "precisao": "±2 pp, 95%. Sem efeito de desenho ou tamanho efetivo publicados nos documentos consultados.",
+      "alerta": "Registro prevê 2.000 entrevistas; relatório informa 2.006. Usar PNAD 2025 não garante a mesma distribuição: conceito, universo e agregação também importam.",
+      "paginas": [
+        4,
+        137
+      ],
+      "instituto": "Nexus",
+      "criterios": [
+        {
+          "pontos": 1,
+          "evidencia": "Registro e relatório identificam universo, modalidade, campo, tamanho e responsável/contratante."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "Sorteio de números fixos e móveis em cadastro descrito a partir da Anatel, estratificado por DDD. Controles de região, telefonia, sexo, idade e escolaridade."
+        },
+        {
+          "pontos": 1,
+          "evidencia": "PNADC anual acumulada 2025, 1ª visita; TSE junho/2026 para sexo, idade e região; Anatel para telefonia. Anual 2025, 1ª visita."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "Registro prevê correção das variáveis de controle, mais renda e participação na força de trabalho. Não especifica algoritmo, aparo ou diagnóstico dos pesos efetivos."
+        },
+        {
+          "pontos": 1,
+          "evidencia": "Questionário completo desta onda obtido no PesqEle; ordem e alternativas acessíveis no PDF vinculado."
+        },
+        {
+          "pontos": 1,
+          "evidencia": "Registro: auditoria de cerca de 20% dos questionários durante o campo, assistida por software."
+        },
+        {
+          "pontos": 0,
+          "evidencia": "Não localizamos o balanço de tentativas, contatos, elegíveis, recusas e entrevistas que permita calcular taxa de resposta/participação."
+        },
+        {
+          "pontos": 0,
+          "evidencia": "±2 pp, 95%. Sem efeito de desenho ou tamanho efetivo publicados nos documentos consultados."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "O relatório publica perfil amostral, mas não todos os diagnósticos de pesos e bases brutas versus ponderadas."
+        },
+        {
+          "pontos": 0,
+          "evidencia": "Não localizamos, nos documentos consultados, base individual anonimizada com pesos e código suficiente para reproduzir esta onda."
+        }
+      ],
+      "registro_tse": "BR-00485/2026",
+      "campo": {
+        "inicio": "2026-09-18",
+        "fim": "2026-09-20"
+      },
+      "n": 2006,
+      "contratante": "Banco BTG Pactual",
+      "fonte_registro": "fontes/reponderacao_metodologias/nexus_2026-09-20/registro-metodologia.txt",
+      "fonte_questionario": "fontes/reponderacao_metodologias/nexus_2026-09-20/questionario.pdf",
+      "fonte_relatorio": "https://static.poder360.com.br/uploads/2026/09/BTG-Nexus-Eleicoes-2026-Rodada-15.pdf",
+      "proveniencia": {
+        "consulta": "2026-09-21",
+        "registro_html_sha256": "71d43b44512e25fc180a3b427b79da91e956452a6c21c889c780f54a85fd30ed",
+        "questionario_sha256": "efebee09ce8194b237d18721e67312bcb1552b5105c237558f710a69d66c68db",
+        "relatorio_original": "data/originals/nexus_092026_21/relatorio.pdf",
+        "relatorio_sha256": "4f8059462f1510e8c8f6b0127e2b872782c08ae5e162078b80cddd1c3005cb55"
+      },
+      "nota": 5.5,
+      "sinal": {
+        "desvio_mediano": 1.098901098901099,
+        "n_ondas": 7,
+        "direcao": "Próximo da mediana",
+        "evidencia": "exploratório",
+        "minimo": -0.9909097382099565,
+        "maximo": 4.4322344322344325,
+        "ondas": [
+          {
+            "id": "nexus_2026-08-09",
+            "campo": {
+              "inicio": "2026-08-07",
+              "fim": "2026-08-09"
+            },
+            "publicado": {
+              "lula": 47,
+              "flavio": 44,
+              "branco_nulo": 8,
+              "indecisos": 1
+            },
+            "diferenca_validos": 3.2967032967032965,
+            "mediana_outros": 2.7624309392265194,
+            "desvio": 0.5342723574767771,
+            "pares": [
+              {
+                "id": "futura_2026-08-07",
+                "instituto": "Futura",
+                "distancia_dias": 3.0,
+                "diferenca_validos": 2.7624309392265194
+              },
+              {
+                "id": "gerp_2026-08-10",
+                "instituto": "Gerp",
+                "distancia_dias": 0.0,
+                "diferenca_validos": -2.272727272727273
+              },
+              {
+                "id": "mda_2026-08-09",
+                "instituto": "MDA",
+                "distancia_dias": 1.0,
+                "diferenca_validos": 10.218140068886337
+              },
+              {
+                "id": "poderdata_2026-08-12",
+                "instituto": "PoderData",
+                "distancia_dias": 2.5,
+                "diferenca_validos": 1.098901098901099
+              },
+              {
+                "id": "quaest_2026-08-13",
+                "instituto": "Quaest",
+                "distancia_dias": 3.5,
+                "diferenca_validos": 3.6144578313253013
+              }
+            ]
+          },
+          {
+            "id": "nexus_2026-08-16",
+            "campo": {
+              "inicio": "2026-08-14",
+              "fim": "2026-08-16"
+            },
+            "publicado": {
+              "lula": 47,
+              "flavio": 44,
+              "branco_nulo": 8,
+              "indecisos": 1
+            },
+            "diferenca_validos": 3.2967032967032965,
+            "mediana_outros": 1.098901098901099,
+            "desvio": 2.1978021978021975,
+            "pares": [
+              {
+                "id": "datafolha_2026-08-19",
+                "instituto": "Datafolha",
+                "distancia_dias": 3.5,
+                "diferenca_validos": 4.444444444444445
+              },
+              {
+                "id": "gerp_2026-08-10",
+                "instituto": "Gerp",
+                "distancia_dias": 7.0,
+                "diferenca_validos": -2.272727272727273
+              },
+              {
+                "id": "poderdata_2026-08-12",
+                "instituto": "PoderData",
+                "distancia_dias": 4.5,
+                "diferenca_validos": 1.098901098901099
+              },
+              {
+                "id": "quaest_2026-08-13",
+                "instituto": "Quaest",
+                "distancia_dias": 3.5,
+                "diferenca_validos": 3.6144578313253013
+              },
+              {
+                "id": "verita_2026-08-20",
+                "instituto": "Veritá",
+                "distancia_dias": 3.0,
+                "diferenca_validos": -5.9350503919372875
+              }
+            ]
+          },
+          {
+            "id": "nexus_2026-08-23",
+            "campo": {
+              "inicio": "2026-08-21",
+              "fim": "2026-08-23"
+            },
+            "publicado": {
+              "lula": 46,
+              "flavio": 45,
+              "branco_nulo": 8,
+              "indecisos": 1
+            },
+            "diferenca_validos": 1.098901098901099,
+            "mediana_outros": 0.0,
+            "desvio": 1.098901098901099,
+            "pares": [
+              {
+                "id": "atlas_2026-08-30",
+                "instituto": "AtlasIntel",
+                "distancia_dias": 5.5,
+                "diferenca_validos": 5.016722408026756
+              },
+              {
+                "id": "datafolha_2026-08-19",
+                "instituto": "Datafolha",
+                "distancia_dias": 3.5,
+                "diferenca_validos": 4.444444444444445
+              },
+              {
+                "id": "gerp_2026-08-25",
+                "instituto": "Gerp",
+                "distancia_dias": 1.0,
+                "diferenca_validos": -5.617977528089888
+              },
+              {
+                "id": "poderdata_2026-08-26",
+                "instituto": "PoderData",
+                "distancia_dias": 2.5,
+                "diferenca_validos": 1.1235955056179776
+              },
+              {
+                "id": "realtime_2026-08-31",
+                "instituto": "Real Time Big Data",
+                "distancia_dias": 7.0,
+                "diferenca_validos": 0.0
+              },
+              {
+                "id": "verita_2026-08-20",
+                "instituto": "Veritá",
+                "distancia_dias": 4.0,
+                "diferenca_validos": -5.9350503919372875
+              },
+              {
+                "id": "vox_brasil_2026-08-27",
+                "instituto": "Vox Brasil",
+                "distancia_dias": 4.0,
+                "diferenca_validos": -0.6696428571428588
+              }
+            ]
+          },
+          {
+            "id": "nexus_2026-08-30",
+            "campo": {
+              "inicio": "2026-08-28",
+              "fim": "2026-08-30"
+            },
+            "publicado": {
+              "lula": 46,
+              "flavio": 45,
+              "branco_nulo": 8,
+              "indecisos": 1
+            },
+            "diferenca_validos": 1.098901098901099,
+            "mediana_outros": 0.0,
+            "desvio": 1.098901098901099,
+            "pares": [
+              {
+                "id": "atlas_2026-08-30",
+                "instituto": "AtlasIntel",
+                "distancia_dias": 1.5,
+                "diferenca_validos": 5.016722408026756
+              },
+              {
+                "id": "datafolha_2026-09-02",
+                "instituto": "Datafolha",
+                "distancia_dias": 3.5,
+                "diferenca_validos": 2.2222222222222223
+              },
+              {
+                "id": "futura_2026-09-01",
+                "instituto": "Futura",
+                "distancia_dias": 0.5,
+                "diferenca_validos": 0.44052863436123185
+              },
+              {
+                "id": "gerp_2026-08-25",
+                "instituto": "Gerp",
+                "distancia_dias": 6.0,
+                "diferenca_validos": -5.617977528089888
+              },
+              {
+                "id": "poderdata_2026-09-02",
+                "instituto": "PoderData",
+                "distancia_dias": 2.5,
+                "diferenca_validos": -1.1235955056179776
+              },
+              {
+                "id": "quaest_2026-09-01",
+                "instituto": "Quaest",
+                "distancia_dias": 2.0,
+                "diferenca_validos": 1.2048192771084338
+              },
+              {
+                "id": "realtime_2026-08-31",
+                "instituto": "Real Time Big Data",
+                "distancia_dias": 0.0,
+                "diferenca_validos": 0.0
+              },
+              {
+                "id": "verita_2026-09-04",
+                "instituto": "Veritá",
+                "distancia_dias": 4.5,
+                "diferenca_validos": -5.895196506550217
+              },
+              {
+                "id": "vox_brasil_2026-08-27",
+                "instituto": "Vox Brasil",
+                "distancia_dias": 3.0,
+                "diferenca_validos": -0.6696428571428588
+              }
+            ]
+          },
+          {
+            "id": "nexus_2026-09-07",
+            "campo": {
+              "inicio": "2026-09-04",
+              "fim": "2026-09-07"
+            },
+            "publicado": {
+              "lula": 45,
+              "flavio": 46,
+              "branco_nulo": 8,
+              "indecisos": 1
+            },
+            "diferenca_validos": -1.098901098901099,
+            "mediana_outros": -0.10799136069114242,
+            "desvio": -0.9909097382099565,
+            "pares": [
+              {
+                "id": "atlas_2026-09-09",
+                "instituto": "AtlasIntel",
+                "distancia_dias": 1.0,
+                "diferenca_validos": -0.21598272138228483
+              },
+              {
+                "id": "datafolha_2026-09-10",
+                "instituto": "Datafolha",
+                "distancia_dias": 3.5,
+                "diferenca_validos": 2.2222222222222223
+              },
+              {
+                "id": "futura_2026-09-01",
+                "instituto": "Futura",
+                "distancia_dias": 7.0,
+                "diferenca_validos": 0.44052863436123185
+              },
+              {
+                "id": "gerp_2026-09-08",
+                "instituto": "Gerp",
+                "distancia_dias": 0.0,
+                "diferenca_validos": -8.045977011494253
+              },
+              {
+                "id": "mda_2026-09-13",
+                "instituto": "MDA",
+                "distancia_dias": 5.5,
+                "diferenca_validos": 8.361970217640318
+              },
+              {
+                "id": "meio_ideia_2026-09-07",
+                "instituto": "Meio/Ideia",
+                "distancia_dias": 0.0,
+                "diferenca_validos": 0.0
+              },
+              {
+                "id": "palver_2026-09-07_v2",
+                "instituto": "Palver",
+                "distancia_dias": 0.0,
+                "diferenca_validos": -3.2967032967032965
+              },
+              {
+                "id": "poderdata_2026-09-02",
+                "instituto": "PoderData",
+                "distancia_dias": 5.0,
+                "diferenca_validos": -1.1235955056179776
+              },
+              {
+                "id": "quaest_2026-09-06",
+                "instituto": "Quaest",
+                "distancia_dias": 1.0,
+                "diferenca_validos": 0.0
+              },
+              {
+                "id": "verita_2026-09-04",
+                "instituto": "Veritá",
+                "distancia_dias": 3.0,
+                "diferenca_validos": -5.895196506550217
+              }
+            ]
+          },
+          {
+            "id": "nexus_2026-09-13",
+            "campo": {
+              "inicio": "2026-09-11",
+              "fim": "2026-09-13"
+            },
+            "publicado": {
+              "lula": 47,
+              "flavio": 46,
+              "branco_nulo": 6,
+              "indecisos": 1
+            },
+            "diferenca_validos": 1.075268817204301,
+            "mediana_outros": -2.2222222222222223,
+            "desvio": 3.2974910394265233,
+            "pares": [
+              {
+                "id": "atlas_2026-09-16",
+                "instituto": "AtlasIntel",
+                "distancia_dias": 1.5,
+                "diferenca_validos": -0.4255319148936231
+              },
+              {
+                "id": "datafolha_2026-09-10",
+                "instituto": "Datafolha",
+                "distancia_dias": 3.0,
+                "diferenca_validos": 2.2222222222222223
+              },
+              {
+                "id": "futura_2026-09-15",
+                "instituto": "Futura",
+                "distancia_dias": 1.0,
+                "diferenca_validos": -4.793028322440085
+              },
+              {
+                "id": "gerp_2026-09-16",
+                "instituto": "Gerp",
+                "distancia_dias": 3.0,
+                "diferenca_validos": -7.526881720430108
+              },
+              {
+                "id": "mda_2026-09-13",
+                "instituto": "MDA",
+                "distancia_dias": 1.0,
+                "diferenca_validos": 8.361970217640318
+              },
+              {
+                "id": "meio_ideia_2026-09-07",
+                "instituto": "Meio/Ideia",
+                "distancia_dias": 6.5,
+                "diferenca_validos": 0.0
+              },
+              {
+                "id": "palver_2026-09-18",
+                "instituto": "Palver",
+                "distancia_dias": 4.5,
+                "diferenca_validos": -4.444444444444445
+              },
+              {
+                "id": "poderdata_2026-09-16",
+                "instituto": "PoderData",
+                "distancia_dias": 2.5,
+                "diferenca_validos": -2.2222222222222223
+              },
+              {
+                "id": "quaest_2026-09-13",
+                "instituto": "Quaest",
+                "distancia_dias": 0.5,
+                "diferenca_validos": -2.4390243902439024
+              }
+            ]
+          },
+          {
+            "id": "nexus_2026-09-20",
+            "campo": {
+              "inicio": "2026-09-18",
+              "fim": "2026-09-20"
+            },
+            "publicado": {
+              "lula": 46,
+              "flavio": 45,
+              "branco_nulo": 7,
+              "indecisos": 1
+            },
+            "diferenca_validos": 1.098901098901099,
+            "mediana_outros": -3.3333333333333335,
+            "desvio": 4.4322344322344325,
+            "pares": [
+              {
+                "id": "atlas_2026-09-16",
+                "instituto": "AtlasIntel",
+                "distancia_dias": 5.5,
+                "diferenca_validos": -0.4255319148936231
+              },
+              {
+                "id": "datafolha_2026-09-17",
+                "instituto": "Datafolha",
+                "distancia_dias": 3.0,
+                "diferenca_validos": 2.2222222222222223
+              },
+              {
+                "id": "futura_2026-09-15",
+                "instituto": "Futura",
+                "distancia_dias": 6.0,
+                "diferenca_validos": -4.793028322440085
+              },
+              {
+                "id": "gerp_2026-09-16",
+                "instituto": "Gerp",
+                "distancia_dias": 4.0,
+                "diferenca_validos": -7.526881720430108
+              },
+              {
+                "id": "palver_2026-09-18",
+                "instituto": "Palver",
+                "distancia_dias": 2.5,
+                "diferenca_validos": -4.444444444444445
+              },
+              {
+                "id": "poderdata_2026-09-16",
+                "instituto": "PoderData",
+                "distancia_dias": 4.5,
+                "diferenca_validos": -2.2222222222222223
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "palver_2026-09-18",
+      "modo": "Online",
+      "subtipo": "Opt-in · anúncios em redes sociais",
+      "selecao": "Adesão voluntária após anúncio em 30 células de idade × sexo × região e dois criativos (60 variações). Link individual gerado após clique; sem formulário aberto. Seleção não probabilística declarada.",
+      "fontes": "PNADC 2024, 5ª visita; TSE para voto de 2022 e filiação partidária em agosto/2026. Demografia vem da PNAD, não do cadastro eleitoral atual.",
+      "pnad": "2024, 5ª visita; renda domiciliar habitual no código público.",
+      "pesos": "Raking de escolaridade; idade × renda × região × sexo; região × voto de 2022; filiação partidária. Sem aparo. Código público arquivado ainda é da versão anterior à filiação.",
+      "voto": "Sim · 2º turno de 2022",
+      "voto_detalhe": "Calibra Lula, Bolsonaro e branco/nulo por região. Também inclui filiação ao PL, PT, Missão e demais partidos. O questionário atual distingue elegibilidade e comparecimento antes do voto (pp. 11–12); falta o código v2 para auditar o tratamento dos não votantes.",
+      "controle": "Registro: consistência em 100%, detecção de duplicações e auditoria manual de amostra aleatória de 10%.",
+      "precisao": "Relatório: ±3 pp, 95%; n efetivo 1.232 de 5.000; efeito de pesos 4,06; peso máximo 21,73. Kish mede desigualdade de pesos, não elimina viés de seleção.",
+      "alerta": "Microdados prometidos para depois do segundo turno. O código aberto e os alvos permitem auditar o método, mas ainda não refazer a calibração da onda 3 com TSE + PNAD 2025.",
+      "paginas": [
+        6,
+        15,
+        18,
+        19,
+        20
+      ],
+      "instituto": "Palver",
+      "criterios": [
+        {
+          "pontos": 1,
+          "evidencia": "Registro e relatório identificam universo, modalidade, campo, tamanho e responsável/contratante."
+        },
+        {
+          "pontos": 1,
+          "evidencia": "Adesão voluntária após anúncio em 30 células de idade × sexo × região e dois criativos (60 variações). Link individual gerado após clique; sem formulário aberto. Seleção não probabilística declarada."
+        },
+        {
+          "pontos": 1,
+          "evidencia": "PNADC 2024, 5ª visita; TSE para voto de 2022 e filiação partidária em agosto/2026. Demografia vem da PNAD, não do cadastro eleitoral atual. 2024, 5ª visita; renda domiciliar habitual no código público."
+        },
+        {
+          "pontos": 1,
+          "evidencia": "Raking de escolaridade; idade × renda × região × sexo; região × voto de 2022; filiação partidária. Sem aparo. Código público arquivado ainda é da versão anterior à filiação."
+        },
+        {
+          "pontos": 1,
+          "evidencia": "Questionário completo desta onda obtido no PesqEle; ordem e alternativas acessíveis no PDF vinculado."
+        },
+        {
+          "pontos": 1,
+          "evidencia": "Registro: consistência em 100%, detecção de duplicações e auditoria manual de amostra aleatória de 10%."
+        },
+        {
+          "pontos": 0,
+          "evidencia": "Não localizamos o balanço de tentativas, contatos, elegíveis, recusas e entrevistas que permita calcular taxa de resposta/participação."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "Relatório: ±3 pp, 95%; n efetivo 1.232 de 5.000; efeito de pesos 4,06; peso máximo 21,73. Kish mede desigualdade de pesos, não elimina viés de seleção."
+        },
+        {
+          "pontos": 1,
+          "evidencia": "Perfil e diagnóstico de pesos publicados na p. 20: mínimo, mediana, máximo, coeficiente de variação, n efetivo e efeito dos pesos."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "Código e alvos abertos, porém snapshot ainda da versão anterior; sem microdados e configuração v2 da onda atual."
+        }
+      ],
+      "registro_tse": "BR-00860/2026",
+      "campo": {
+        "inicio": "2026-09-15",
+        "fim": "2026-09-18"
+      },
+      "n": 5000,
+      "contratante": "Palver (iniciativa própria, onda 3, método v2)",
+      "fonte_registro": "fontes/reponderacao_metodologias/palver_2026-09-18/registro-metodologia.txt",
+      "fonte_questionario": "fontes/reponderacao_metodologias/palver_2026-09-18/questionario.pdf",
+      "fonte_relatorio": "https://www.palver.com/api/surveys/voting-intention-2026-september-w3/report",
+      "proveniencia": {
+        "consulta": "2026-09-21",
+        "registro_html_sha256": "347b13ad99bc41163a370d49f363f034fa0ef66bc2643d7ac08fbbfe3367f8ac",
+        "questionario_sha256": "0abb2ee175d5ef0f682b1521d39d20d34cb2ab7223d899500b13c30b701b50a9",
+        "relatorio_original": "data/originals/palver_092026_21/relatorio.pdf",
+        "relatorio_sha256": "e25b4eb93ba1cffa949d3d9483446efc1cf9d7d392645659b909da9c28d8e02f"
+      },
+      "nota": 8.0,
+      "sinal": {
+        "desvio_mediano": -3.154639655949338,
+        "n_ondas": 2,
+        "direcao": "Mais Flávio",
+        "evidencia": "poucas ondas",
+        "minimo": -3.188711936012154,
+        "maximo": -3.120567375886522,
+        "ondas": [
+          {
+            "id": "palver_2026-09-07_v2",
+            "campo": {
+              "inicio": "2026-09-04",
+              "fim": "2026-09-07"
+            },
+            "publicado": {
+              "lula": 44,
+              "flavio": 47,
+              "branco_nulo": 8,
+              "indecisos": 1
+            },
+            "diferenca_validos": -3.2967032967032965,
+            "mediana_outros": -0.10799136069114242,
+            "desvio": -3.188711936012154,
+            "pares": [
+              {
+                "id": "atlas_2026-09-09",
+                "instituto": "AtlasIntel",
+                "distancia_dias": 1.0,
+                "diferenca_validos": -0.21598272138228483
+              },
+              {
+                "id": "datafolha_2026-09-10",
+                "instituto": "Datafolha",
+                "distancia_dias": 3.5,
+                "diferenca_validos": 2.2222222222222223
+              },
+              {
+                "id": "futura_2026-09-01",
+                "instituto": "Futura",
+                "distancia_dias": 7.0,
+                "diferenca_validos": 0.44052863436123185
+              },
+              {
+                "id": "gerp_2026-09-08",
+                "instituto": "Gerp",
+                "distancia_dias": 0.0,
+                "diferenca_validos": -8.045977011494253
+              },
+              {
+                "id": "mda_2026-09-13",
+                "instituto": "MDA",
+                "distancia_dias": 5.5,
+                "diferenca_validos": 8.361970217640318
+              },
+              {
+                "id": "meio_ideia_2026-09-07",
+                "instituto": "Meio/Ideia",
+                "distancia_dias": 0.0,
+                "diferenca_validos": 0.0
+              },
+              {
+                "id": "nexus_2026-09-07",
+                "instituto": "Nexus",
+                "distancia_dias": 0.0,
+                "diferenca_validos": -1.098901098901099
+              },
+              {
+                "id": "poderdata_2026-09-02",
+                "instituto": "PoderData",
+                "distancia_dias": 5.0,
+                "diferenca_validos": -1.1235955056179776
+              },
+              {
+                "id": "quaest_2026-09-06",
+                "instituto": "Quaest",
+                "distancia_dias": 1.0,
+                "diferenca_validos": 0.0
+              },
+              {
+                "id": "verita_2026-09-04",
+                "instituto": "Veritá",
+                "distancia_dias": 3.0,
+                "diferenca_validos": -5.895196506550217
+              }
+            ]
+          },
+          {
+            "id": "palver_2026-09-18",
+            "campo": {
+              "inicio": "2026-09-15",
+              "fim": "2026-09-18"
+            },
+            "publicado": {
+              "lula": 43,
+              "flavio": 47,
+              "branco_nulo": 9,
+              "indecisos": 1
+            },
+            "diferenca_validos": -4.444444444444445,
+            "mediana_outros": -1.3238770685579226,
+            "desvio": -3.120567375886522,
+            "pares": [
+              {
+                "id": "atlas_2026-09-16",
+                "instituto": "AtlasIntel",
+                "distancia_dias": 3.0,
+                "diferenca_validos": -0.4255319148936231
+              },
+              {
+                "id": "datafolha_2026-09-17",
+                "instituto": "Datafolha",
+                "distancia_dias": 0.5,
+                "diferenca_validos": 2.2222222222222223
+              },
+              {
+                "id": "futura_2026-09-15",
+                "instituto": "Futura",
+                "distancia_dias": 3.5,
+                "diferenca_validos": -4.793028322440085
+              },
+              {
+                "id": "gerp_2026-09-16",
+                "instituto": "Gerp",
+                "distancia_dias": 1.5,
+                "diferenca_validos": -7.526881720430108
+              },
+              {
+                "id": "mda_2026-09-13",
+                "instituto": "MDA",
+                "distancia_dias": 5.5,
+                "diferenca_validos": 8.361970217640318
+              },
+              {
+                "id": "nexus_2026-09-20",
+                "instituto": "Nexus",
+                "distancia_dias": 2.5,
+                "diferenca_validos": 1.098901098901099
+              },
+              {
+                "id": "poderdata_2026-09-16",
+                "instituto": "PoderData",
+                "distancia_dias": 2.0,
+                "diferenca_validos": -2.2222222222222223
+              },
+              {
+                "id": "quaest_2026-09-13",
+                "instituto": "Quaest",
+                "distancia_dias": 5.0,
+                "diferenca_validos": -2.4390243902439024
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "poderdata_2026-09-16",
+      "modo": "Telefônica",
+      "subtipo": "IVR · ligação automatizada",
+      "selecao": "Sorteio em banco de telefones fixos e celulares, estratificado por região a partir do CEP associado ao número. Questionários incompletos são descartados.",
+      "fontes": "TSE agosto/2026 para sexo, idade, escolaridade e região. IBGE/Censo 2010 para renda.",
+      "pnad": "Não citada. Referência de renda: Censo 2010.",
+      "pesos": "Registro prevê ponderação por sexo, idade, escolaridade, região e renda; relatório confirma ponderação paramétrica, sem publicar receita completa e dispersão.",
+      "voto": "Não declarado como peso",
+      "voto_detalhe": "Voto em 2022 não consta das variáveis de ponderação declaradas.",
+      "controle": "Registro: supervisão, consistência e verificação posterior de pelo menos 30%, correspondentes a 900 entrevistas.",
+      "precisao": "Relatório: ±1,8 pp, 95%; reconhece cobertura incompleta da lista telefônica e diz considerar ponderação, sem publicar o cálculo do efeito do desenho.",
+      "alerta": "A p. 2 traz 623 municípios na ficha e 752 no rodapé. A referência de renda permanece no Censo 2010.",
+      "paginas": [
+        2
+      ],
+      "instituto": "PoderData",
+      "criterios": [
+        {
+          "pontos": 1,
+          "evidencia": "Registro e relatório identificam universo, modalidade, campo, tamanho e responsável/contratante."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "Sorteio em banco de telefones fixos e celulares, estratificado por região a partir do CEP associado ao número. Questionários incompletos são descartados."
+        },
+        {
+          "pontos": 1,
+          "evidencia": "TSE agosto/2026 para sexo, idade, escolaridade e região. IBGE/Censo 2010 para renda. Não citada. Referência de renda: Censo 2010."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "Registro prevê ponderação por sexo, idade, escolaridade, região e renda; relatório confirma ponderação paramétrica, sem publicar receita completa e dispersão."
+        },
+        {
+          "pontos": 1,
+          "evidencia": "Questionário completo desta onda obtido no PesqEle; ordem e alternativas acessíveis no PDF vinculado."
+        },
+        {
+          "pontos": 1,
+          "evidencia": "Registro: supervisão, consistência e verificação posterior de pelo menos 30%, correspondentes a 900 entrevistas."
+        },
+        {
+          "pontos": 0,
+          "evidencia": "Não localizamos o balanço de tentativas, contatos, elegíveis, recusas e entrevistas que permita calcular taxa de resposta/participação."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "Relatório: ±1,8 pp, 95%; reconhece cobertura incompleta da lista telefônica e diz considerar ponderação, sem publicar o cálculo do efeito do desenho."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "O relatório publica perfil amostral, mas não todos os diagnósticos de pesos e bases brutas versus ponderadas."
+        },
+        {
+          "pontos": 0,
+          "evidencia": "Não localizamos, nos documentos consultados, base individual anonimizada com pesos e código suficiente para reproduzir esta onda."
+        }
+      ],
+      "registro_tse": "BR-00360/2026",
+      "campo": {
+        "inicio": "2026-09-13",
+        "fim": "2026-09-16"
+      },
+      "n": 3000,
+      "contratante": "Poder360",
+      "fonte_registro": "fontes/reponderacao_metodologias/poderdata_2026-09-16/registro-metodologia.txt",
+      "fonte_questionario": "fontes/reponderacao_metodologias/poderdata_2026-09-16/questionario.pdf",
+      "fonte_relatorio": "https://static.poder360.com.br/uploads/2026/09/poderdata-presidente-17set.pdf",
+      "proveniencia": {
+        "consulta": "2026-09-21",
+        "registro_html_sha256": "dbc20c40c33ae1dc60272fdaad3125903ffe694479e8680d8514d856110463ac",
+        "questionario_sha256": "42434c13c2433a3759f39728e140548b94eed9775965a1da04cce04b0d1711f2",
+        "relatorio_original": "data/originals/poderdata_092026_17/relatorio.pdf",
+        "relatorio_sha256": "f963c843350ae697387ed7ad721e39feb40f5400d3a5865f102e8c3f388b2766"
+      },
+      "nota": 6.0,
+      "sinal": {
+        "desvio_mediano": -0.9567697876357186,
+        "n_ondas": 4,
+        "direcao": "Próximo da mediana",
+        "evidencia": "exploratório",
+        "minimo": -2.1978021978021975,
+        "maximo": 0.6830668712567458,
+        "ondas": [
+          {
+            "id": "poderdata_2026-08-12",
+            "campo": {
+              "inicio": "2026-08-09",
+              "fim": "2026-08-12"
+            },
+            "publicado": {
+              "lula": 46,
+              "flavio": 45,
+              "branco_nulo": 8,
+              "indecisos": 1
+            },
+            "diferenca_validos": 1.098901098901099,
+            "mediana_outros": 3.2967032967032965,
+            "desvio": -2.1978021978021975,
+            "pares": [
+              {
+                "id": "futura_2026-08-07",
+                "instituto": "Futura",
+                "distancia_dias": 5.5,
+                "diferenca_validos": 2.7624309392265194
+              },
+              {
+                "id": "gerp_2026-08-10",
+                "instituto": "Gerp",
+                "distancia_dias": 2.5,
+                "diferenca_validos": -2.272727272727273
+              },
+              {
+                "id": "mda_2026-08-09",
+                "instituto": "MDA",
+                "distancia_dias": 3.5,
+                "diferenca_validos": 10.218140068886337
+              },
+              {
+                "id": "nexus_2026-08-09",
+                "instituto": "Nexus",
+                "distancia_dias": 2.5,
+                "diferenca_validos": 3.2967032967032965
+              },
+              {
+                "id": "quaest_2026-08-13",
+                "instituto": "Quaest",
+                "distancia_dias": 1.0,
+                "diferenca_validos": 3.6144578313253013
+              }
+            ]
+          },
+          {
+            "id": "poderdata_2026-08-26",
+            "campo": {
+              "inicio": "2026-08-23",
+              "fim": "2026-08-26"
+            },
+            "publicado": {
+              "lula": 45,
+              "flavio": 44,
+              "branco_nulo": 9,
+              "indecisos": 2
+            },
+            "diferenca_validos": 1.1235955056179776,
+            "mediana_outros": 0.44052863436123185,
+            "desvio": 0.6830668712567458,
+            "pares": [
+              {
+                "id": "atlas_2026-08-30",
+                "instituto": "AtlasIntel",
+                "distancia_dias": 3.0,
+                "diferenca_validos": 5.016722408026756
+              },
+              {
+                "id": "datafolha_2026-08-19",
+                "instituto": "Datafolha",
+                "distancia_dias": 6.0,
+                "diferenca_validos": 4.444444444444445
+              },
+              {
+                "id": "futura_2026-09-01",
+                "instituto": "Futura",
+                "distancia_dias": 5.0,
+                "diferenca_validos": 0.44052863436123185
+              },
+              {
+                "id": "gerp_2026-08-25",
+                "instituto": "Gerp",
+                "distancia_dias": 1.5,
+                "diferenca_validos": -5.617977528089888
+              },
+              {
+                "id": "nexus_2026-08-23",
+                "instituto": "Nexus",
+                "distancia_dias": 2.5,
+                "diferenca_validos": 1.098901098901099
+              },
+              {
+                "id": "quaest_2026-09-01",
+                "instituto": "Quaest",
+                "distancia_dias": 6.5,
+                "diferenca_validos": 1.2048192771084338
+              },
+              {
+                "id": "realtime_2026-08-31",
+                "instituto": "Real Time Big Data",
+                "distancia_dias": 4.5,
+                "diferenca_validos": 0.0
+              },
+              {
+                "id": "verita_2026-08-20",
+                "instituto": "Veritá",
+                "distancia_dias": 6.5,
+                "diferenca_validos": -5.9350503919372875
+              },
+              {
+                "id": "vox_brasil_2026-08-27",
+                "instituto": "Vox Brasil",
+                "distancia_dias": 1.5,
+                "diferenca_validos": -0.6696428571428588
+              }
+            ]
+          },
+          {
+            "id": "poderdata_2026-09-02",
+            "campo": {
+              "inicio": "2026-08-30",
+              "fim": "2026-09-02"
+            },
+            "publicado": {
+              "lula": 44,
+              "flavio": 45,
+              "branco_nulo": 8,
+              "indecisos": 3
+            },
+            "diferenca_validos": -1.1235955056179776,
+            "mediana_outros": 0.0,
+            "desvio": -1.1235955056179776,
+            "pares": [
+              {
+                "id": "atlas_2026-08-30",
+                "instituto": "AtlasIntel",
+                "distancia_dias": 4.0,
+                "diferenca_validos": 5.016722408026756
+              },
+              {
+                "id": "datafolha_2026-09-02",
+                "instituto": "Datafolha",
+                "distancia_dias": 1.0,
+                "diferenca_validos": 2.2222222222222223
+              },
+              {
+                "id": "futura_2026-09-01",
+                "instituto": "Futura",
+                "distancia_dias": 2.0,
+                "diferenca_validos": 0.44052863436123185
+              },
+              {
+                "id": "gerp_2026-09-08",
+                "instituto": "Gerp",
+                "distancia_dias": 5.0,
+                "diferenca_validos": -8.045977011494253
+              },
+              {
+                "id": "meio_ideia_2026-09-07",
+                "instituto": "Meio/Ideia",
+                "distancia_dias": 5.0,
+                "diferenca_validos": 0.0
+              },
+              {
+                "id": "nexus_2026-08-30",
+                "instituto": "Nexus",
+                "distancia_dias": 2.5,
+                "diferenca_validos": 1.098901098901099
+              },
+              {
+                "id": "palver_2026-09-07_v2",
+                "instituto": "Palver",
+                "distancia_dias": 5.0,
+                "diferenca_validos": -3.2967032967032965
+              },
+              {
+                "id": "quaest_2026-09-01",
+                "instituto": "Quaest",
+                "distancia_dias": 0.5,
+                "diferenca_validos": 1.2048192771084338
+              },
+              {
+                "id": "realtime_2026-08-31",
+                "instituto": "Real Time Big Data",
+                "distancia_dias": 2.5,
+                "diferenca_validos": 0.0
+              },
+              {
+                "id": "verita_2026-09-04",
+                "instituto": "Veritá",
+                "distancia_dias": 2.0,
+                "diferenca_validos": -5.895196506550217
+              },
+              {
+                "id": "vox_brasil_2026-08-27",
+                "instituto": "Vox Brasil",
+                "distancia_dias": 5.5,
+                "diferenca_validos": -0.6696428571428588
+              }
+            ]
+          },
+          {
+            "id": "poderdata_2026-09-16",
+            "campo": {
+              "inicio": "2026-09-13",
+              "fim": "2026-09-16"
+            },
+            "publicado": {
+              "lula": 44,
+              "flavio": 46,
+              "branco_nulo": 8,
+              "indecisos": 2
+            },
+            "diferenca_validos": -2.2222222222222223,
+            "mediana_outros": -1.4322781525687627,
+            "desvio": -0.7899440696534596,
+            "pares": [
+              {
+                "id": "atlas_2026-09-16",
+                "instituto": "AtlasIntel",
+                "distancia_dias": 1.0,
+                "diferenca_validos": -0.4255319148936231
+              },
+              {
+                "id": "datafolha_2026-09-17",
+                "instituto": "Datafolha",
+                "distancia_dias": 1.5,
+                "diferenca_validos": 2.2222222222222223
+              },
+              {
+                "id": "futura_2026-09-15",
+                "instituto": "Futura",
+                "distancia_dias": 1.5,
+                "diferenca_validos": -4.793028322440085
+              },
+              {
+                "id": "gerp_2026-09-16",
+                "instituto": "Gerp",
+                "distancia_dias": 0.5,
+                "diferenca_validos": -7.526881720430108
+              },
+              {
+                "id": "mda_2026-09-13",
+                "instituto": "MDA",
+                "distancia_dias": 3.5,
+                "diferenca_validos": 8.361970217640318
+              },
+              {
+                "id": "nexus_2026-09-13",
+                "instituto": "Nexus",
+                "distancia_dias": 2.5,
+                "diferenca_validos": 1.075268817204301
+              },
+              {
+                "id": "palver_2026-09-18",
+                "instituto": "Palver",
+                "distancia_dias": 2.0,
+                "diferenca_validos": -4.444444444444445
+              },
+              {
+                "id": "quaest_2026-09-13",
+                "instituto": "Quaest",
+                "distancia_dias": 3.0,
+                "diferenca_validos": -2.4390243902439024
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "quaest_2026-09-13",
+      "modo": "Presencial",
+      "subtipo": "Domiciliar",
+      "selecao": "Sorteio PPT de municípios e de setores censitários; seleção de domicílios e pessoas por cotas de sexo, idade, renda e escolaridade no último estágio.",
+      "fontes": "TSE julho/2026: sexo e idade. Censo 2022: setores. PNADC anual 2025, 1ª visita: renda. PNADC 2º tri/2026: escolaridade.",
+      "pnad": "Renda: anual 2025, 1ª visita. Escolaridade: 2º trimestre de 2026.",
+      "pesos": "Registro admite eventual rake e MRP para correção de distribuições e estimativas. O plano não informa quais modelos foram efetivamente aplicados nesta onda.",
+      "voto": "Não declarado como peso",
+      "voto_detalhe": "Pergunta 65 coleta voto no 2º turno de 2022. O plano não identifica uso dessa variável na calibração; mencionar MRP não permite presumir seus preditores.",
+      "controle": "Registro: tablets, georreferenciamento em tempo real, consistência e checagem de áudio de 30% dos questionários.",
+      "precisao": "Registro: cerca de ±2 pp, 95%, aproximação por amostra aleatória simples. Sem efeito dos conglomerados ou modelo aplicado divulgado.",
+      "alerta": "Duas etapas com sorteio, última por cotas. Rake e MRP são possibilidades registradas, não comprovação de aplicação.",
+      "paginas": [],
+      "instituto": "Quaest",
+      "criterios": [
+        {
+          "pontos": 1,
+          "evidencia": "Registro e relatório identificam universo, modalidade, campo, tamanho e responsável/contratante."
+        },
+        {
+          "pontos": 1,
+          "evidencia": "Sorteio PPT de municípios e de setores censitários; seleção de domicílios e pessoas por cotas de sexo, idade, renda e escolaridade no último estágio."
+        },
+        {
+          "pontos": 1,
+          "evidencia": "TSE julho/2026: sexo e idade. Censo 2022: setores. PNADC anual 2025, 1ª visita: renda. PNADC 2º tri/2026: escolaridade. Renda: anual 2025, 1ª visita. Escolaridade: 2º trimestre de 2026."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "Registro admite eventual rake e MRP para correção de distribuições e estimativas. O plano não informa quais modelos foram efetivamente aplicados nesta onda."
+        },
+        {
+          "pontos": 1,
+          "evidencia": "Questionário completo desta onda obtido no PesqEle; ordem e alternativas acessíveis no PDF vinculado."
+        },
+        {
+          "pontos": 1,
+          "evidencia": "Registro: tablets, georreferenciamento em tempo real, consistência e checagem de áudio de 30% dos questionários."
+        },
+        {
+          "pontos": 0,
+          "evidencia": "Não localizamos o balanço de tentativas, contatos, elegíveis, recusas e entrevistas que permita calcular taxa de resposta/participação."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "Registro: cerca de ±2 pp, 95%, aproximação por amostra aleatória simples. Sem efeito dos conglomerados ou modelo aplicado divulgado."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "O relatório publica perfil amostral, mas não todos os diagnósticos de pesos e bases brutas versus ponderadas."
+        },
+        {
+          "pontos": 0,
+          "evidencia": "Não localizamos, nos documentos consultados, base individual anonimizada com pesos e código suficiente para reproduzir esta onda."
+        }
+      ],
+      "registro_tse": "BR-03607/2026",
+      "campo": {
+        "inicio": "2026-09-10",
+        "fim": "2026-09-13"
+      },
+      "n": 2004,
+      "contratante": "Globo Comunicação e Participações S/A e Editora Globo S/A",
+      "fonte_registro": "fontes/reponderacao_metodologias/quaest_2026-09-13/registro-metodologia.txt",
+      "fonte_questionario": "fontes/reponderacao_metodologias/quaest_2026-09-13/questionario.pdf",
+      "fonte_relatorio": "https://quaest.com.br/wp-content/uploads/2026/09/QUAEST4PRESIDENCIAL1409.pdf",
+      "proveniencia": {
+        "consulta": "2026-09-21",
+        "registro_html_sha256": "cc12dbcf510f510c55985725933d915f1a84fb784aafa1ea7803e9153a529179",
+        "questionario_sha256": "99d98b759bf3e9be954011afc2c98da3c1c28dc4e6869a9d6dd17aa144f75715",
+        "relatorio_original": "data/pesquisas/quaest/2026-09-14/relatorio.pdf",
+        "relatorio_sha256": "5e41b979d0f82011fbbe03ff72556995a673b64978465469cf0b544ec16fd929"
+      },
+      "nota": 6.5,
+      "sinal": {
+        "desvio_mediano": 0.5340048067405334,
+        "n_ondas": 4,
+        "direcao": "Próximo da mediana",
+        "evidencia": "exploratório",
+        "minimo": -2.0134924753502794,
+        "maximo": 1.2048192771084338,
+        "ondas": [
+          {
+            "id": "quaest_2026-08-13",
+            "campo": {
+              "inicio": "2026-08-10",
+              "fim": "2026-08-13"
+            },
+            "publicado": {
+              "lula": 43,
+              "flavio": 40,
+              "branco_nulo": 13,
+              "indecisos": 4
+            },
+            "diferenca_validos": 3.6144578313253013,
+            "mediana_outros": 2.7624309392265194,
+            "desvio": 0.8520268920987819,
+            "pares": [
+              {
+                "id": "datafolha_2026-08-19",
+                "instituto": "Datafolha",
+                "distancia_dias": 7.0,
+                "diferenca_validos": 4.444444444444445
+              },
+              {
+                "id": "futura_2026-08-07",
+                "instituto": "Futura",
+                "distancia_dias": 6.5,
+                "diferenca_validos": 2.7624309392265194
+              },
+              {
+                "id": "gerp_2026-08-10",
+                "instituto": "Gerp",
+                "distancia_dias": 3.5,
+                "diferenca_validos": -2.272727272727273
+              },
+              {
+                "id": "mda_2026-08-09",
+                "instituto": "MDA",
+                "distancia_dias": 4.5,
+                "diferenca_validos": 10.218140068886337
+              },
+              {
+                "id": "nexus_2026-08-16",
+                "instituto": "Nexus",
+                "distancia_dias": 3.5,
+                "diferenca_validos": 3.2967032967032965
+              },
+              {
+                "id": "poderdata_2026-08-12",
+                "instituto": "PoderData",
+                "distancia_dias": 1.0,
+                "diferenca_validos": 1.098901098901099
+              },
+              {
+                "id": "verita_2026-08-20",
+                "instituto": "Veritá",
+                "distancia_dias": 6.5,
+                "diferenca_validos": -5.9350503919372875
+              }
+            ]
+          },
+          {
+            "id": "quaest_2026-09-01",
+            "campo": {
+              "inicio": "2026-08-30",
+              "fim": "2026-09-01"
+            },
+            "publicado": {
+              "lula": 42,
+              "flavio": 41,
+              "branco_nulo": 13,
+              "indecisos": 4
+            },
+            "diferenca_validos": 1.2048192771084338,
+            "mediana_outros": 0.0,
+            "desvio": 1.2048192771084338,
+            "pares": [
+              {
+                "id": "atlas_2026-08-30",
+                "instituto": "AtlasIntel",
+                "distancia_dias": 3.5,
+                "diferenca_validos": 5.016722408026756
+              },
+              {
+                "id": "datafolha_2026-09-02",
+                "instituto": "Datafolha",
+                "distancia_dias": 1.5,
+                "diferenca_validos": 2.2222222222222223
+              },
+              {
+                "id": "futura_2026-09-01",
+                "instituto": "Futura",
+                "distancia_dias": 1.5,
+                "diferenca_validos": 0.44052863436123185
+              },
+              {
+                "id": "gerp_2026-09-08",
+                "instituto": "Gerp",
+                "distancia_dias": 5.5,
+                "diferenca_validos": -8.045977011494253
+              },
+              {
+                "id": "meio_ideia_2026-09-07",
+                "instituto": "Meio/Ideia",
+                "distancia_dias": 5.5,
+                "diferenca_validos": 0.0
+              },
+              {
+                "id": "nexus_2026-08-30",
+                "instituto": "Nexus",
+                "distancia_dias": 2.0,
+                "diferenca_validos": 1.098901098901099
+              },
+              {
+                "id": "palver_2026-09-07_v2",
+                "instituto": "Palver",
+                "distancia_dias": 5.5,
+                "diferenca_validos": -3.2967032967032965
+              },
+              {
+                "id": "poderdata_2026-09-02",
+                "instituto": "PoderData",
+                "distancia_dias": 0.5,
+                "diferenca_validos": -1.1235955056179776
+              },
+              {
+                "id": "realtime_2026-08-31",
+                "instituto": "Real Time Big Data",
+                "distancia_dias": 2.0,
+                "diferenca_validos": 0.0
+              },
+              {
+                "id": "verita_2026-09-04",
+                "instituto": "Veritá",
+                "distancia_dias": 2.5,
+                "diferenca_validos": -5.895196506550217
+              },
+              {
+                "id": "vox_brasil_2026-08-27",
+                "instituto": "Vox Brasil",
+                "distancia_dias": 5.0,
+                "diferenca_validos": -0.6696428571428588
+              }
+            ]
+          },
+          {
+            "id": "quaest_2026-09-06",
+            "campo": {
+              "inicio": "2026-09-03",
+              "fim": "2026-09-06"
+            },
+            "publicado": {
+              "lula": 41,
+              "flavio": 41,
+              "branco_nulo": 13,
+              "indecisos": 5
+            },
+            "diferenca_validos": 0.0,
+            "mediana_outros": -0.21598272138228483,
+            "desvio": 0.21598272138228483,
+            "pares": [
+              {
+                "id": "atlas_2026-09-09",
+                "instituto": "AtlasIntel",
+                "distancia_dias": 2.0,
+                "diferenca_validos": -0.21598272138228483
+              },
+              {
+                "id": "datafolha_2026-09-02",
+                "instituto": "Datafolha",
+                "distancia_dias": 3.0,
+                "diferenca_validos": 2.2222222222222223
+              },
+              {
+                "id": "futura_2026-09-01",
+                "instituto": "Futura",
+                "distancia_dias": 6.0,
+                "diferenca_validos": 0.44052863436123185
+              },
+              {
+                "id": "gerp_2026-09-08",
+                "instituto": "Gerp",
+                "distancia_dias": 1.0,
+                "diferenca_validos": -8.045977011494253
+              },
+              {
+                "id": "mda_2026-09-13",
+                "instituto": "MDA",
+                "distancia_dias": 6.5,
+                "diferenca_validos": 8.361970217640318
+              },
+              {
+                "id": "meio_ideia_2026-09-07",
+                "instituto": "Meio/Ideia",
+                "distancia_dias": 1.0,
+                "diferenca_validos": 0.0
+              },
+              {
+                "id": "nexus_2026-09-07",
+                "instituto": "Nexus",
+                "distancia_dias": 1.0,
+                "diferenca_validos": -1.098901098901099
+              },
+              {
+                "id": "palver_2026-09-07_v2",
+                "instituto": "Palver",
+                "distancia_dias": 1.0,
+                "diferenca_validos": -3.2967032967032965
+              },
+              {
+                "id": "poderdata_2026-09-02",
+                "instituto": "PoderData",
+                "distancia_dias": 4.0,
+                "diferenca_validos": -1.1235955056179776
+              },
+              {
+                "id": "realtime_2026-08-31",
+                "instituto": "Real Time Big Data",
+                "distancia_dias": 6.5,
+                "diferenca_validos": 0.0
+              },
+              {
+                "id": "verita_2026-09-04",
+                "instituto": "Veritá",
+                "distancia_dias": 2.0,
+                "diferenca_validos": -5.895196506550217
+              }
+            ]
+          },
+          {
+            "id": "quaest_2026-09-13",
+            "campo": {
+              "inicio": "2026-09-10",
+              "fim": "2026-09-13"
+            },
+            "publicado": {
+              "lula": 40,
+              "flavio": 42,
+              "branco_nulo": 13,
+              "indecisos": 5
+            },
+            "diferenca_validos": -2.4390243902439024,
+            "mediana_outros": -0.4255319148936231,
+            "desvio": -2.0134924753502794,
+            "pares": [
+              {
+                "id": "atlas_2026-09-16",
+                "instituto": "AtlasIntel",
+                "distancia_dias": 2.0,
+                "diferenca_validos": -0.4255319148936231
+              },
+              {
+                "id": "datafolha_2026-09-10",
+                "instituto": "Datafolha",
+                "distancia_dias": 2.5,
+                "diferenca_validos": 2.2222222222222223
+              },
+              {
+                "id": "futura_2026-09-15",
+                "instituto": "Futura",
+                "distancia_dias": 1.5,
+                "diferenca_validos": -4.793028322440085
+              },
+              {
+                "id": "gerp_2026-09-16",
+                "instituto": "Gerp",
+                "distancia_dias": 3.5,
+                "diferenca_validos": -7.526881720430108
+              },
+              {
+                "id": "mda_2026-09-13",
+                "instituto": "MDA",
+                "distancia_dias": 0.5,
+                "diferenca_validos": 8.361970217640318
+              },
+              {
+                "id": "meio_ideia_2026-09-07",
+                "instituto": "Meio/Ideia",
+                "distancia_dias": 6.0,
+                "diferenca_validos": 0.0
+              },
+              {
+                "id": "nexus_2026-09-13",
+                "instituto": "Nexus",
+                "distancia_dias": 0.5,
+                "diferenca_validos": 1.075268817204301
+              },
+              {
+                "id": "palver_2026-09-18",
+                "instituto": "Palver",
+                "distancia_dias": 5.0,
+                "diferenca_validos": -4.444444444444445
+              },
+              {
+                "id": "poderdata_2026-09-16",
+                "instituto": "PoderData",
+                "distancia_dias": 3.0,
+                "diferenca_validos": -2.2222222222222223
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "realtime_2026-08-31",
+      "modo": "Híbrida",
+      "subtipo": "Prevista no TSE; relatório: telefônica",
+      "selecao": "Registro prevê humanos e IA, com abordagens telefônicas e digitais: sorteio PPT de municípios/localidades e cotas finais. Relatório descreve entrevistas telefônicas humanas, recrutadas por chamadas e mensagens.",
+      "fontes": "TSE julho/2026: sexo, idade e escolaridade. IBGE/Censo 2010: renda domiciliar.",
+      "pnad": "Não citada. Referência de renda: Censo 2010.",
+      "pesos": "Registro prevê correção de sexo e idade se desvio superar 3 pp; escolaridade e renda com fator 1. Proporção de entrevistas por modalidade não identificada.",
+      "voto": "Não declarado como peso",
+      "voto_detalhe": "Voto em 2022 não aparece entre as variáveis de ponderação registradas.",
+      "controle": "Registro: supervisores humanos e sorteio de 15% para verificação posterior.",
+      "precisao": "±2 pp, 95%, sob modelo de amostra aleatória simples. Sem efeito do desenho e sem bases separadas por modalidade.",
+      "alerta": "Híbrida é a classificação do plano registrado. O relatório declara coleta telefônica; não comprova respostas online. Esta é a última onda nacional no acervo; as divulgações de 21/09 são estaduais.",
+      "paginas": [
+        2
+      ],
+      "instituto": "Real Time Big Data",
+      "criterios": [
+        {
+          "pontos": 0.5,
+          "evidencia": "Campo, n e universo identificados, mas modalidade registrada e modalidade descrita no relatório diferem."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "Registro prevê humanos e IA, com abordagens telefônicas e digitais: sorteio PPT de municípios/localidades e cotas finais. Relatório descreve entrevistas telefônicas humanas, recrutadas por chamadas e mensagens."
+        },
+        {
+          "pontos": 1,
+          "evidencia": "TSE julho/2026: sexo, idade e escolaridade. IBGE/Censo 2010: renda domiciliar. Não citada. Referência de renda: Censo 2010."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "Registro prevê correção de sexo e idade se desvio superar 3 pp; escolaridade e renda com fator 1. Proporção de entrevistas por modalidade não identificada."
+        },
+        {
+          "pontos": 1,
+          "evidencia": "Questionário completo desta onda obtido no PesqEle; ordem e alternativas acessíveis no PDF vinculado."
+        },
+        {
+          "pontos": 1,
+          "evidencia": "Registro: supervisores humanos e sorteio de 15% para verificação posterior."
+        },
+        {
+          "pontos": 0,
+          "evidencia": "Não localizamos o balanço de tentativas, contatos, elegíveis, recusas e entrevistas que permita calcular taxa de resposta/participação."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "±2 pp, 95%, sob modelo de amostra aleatória simples. Sem efeito do desenho e sem bases separadas por modalidade."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "O relatório publica perfil amostral, mas não todos os diagnósticos de pesos e bases brutas versus ponderadas."
+        },
+        {
+          "pontos": 0,
+          "evidencia": "Não localizamos, nos documentos consultados, base individual anonimizada com pesos e código suficiente para reproduzir esta onda."
+        }
+      ],
+      "registro_tse": "BR-03490/2026",
+      "campo": {
+        "inicio": "2026-08-27",
+        "fim": "2026-08-31"
+      },
+      "n": 2000,
+      "contratante": "não declarado no relatório de divulgação",
+      "fonte_registro": "fontes/reponderacao_metodologias/realtime_2026-08-31/registro-metodologia.txt",
+      "fonte_questionario": "fontes/reponderacao_metodologias/realtime_2026-08-31/questionario.pdf",
+      "fonte_relatorio": "fontes/reponderacao_metodologias/realtime_2026-08-31/relatorio-metodologia.pdf",
+      "relatorio_excerto": true,
+      "proveniencia": {
+        "consulta": "2026-09-21",
+        "registro_html_sha256": "ab5bae7f018c6111d1f60b69e4192f37de3d0b48ed2d5885cb8bd29b568c06dc",
+        "questionario_sha256": "df5b9feb528874b5a0862f7117435cb26f24aaa849c358b1f92de3ef451b200d",
+        "relatorio_original": "data/originals/realtime_092026_01/Relatorio.pdf",
+        "relatorio_sha256": "fbead320462161bf74ef2eeef6b525771e75a2f88d3744139c77f60abc4796f1"
+      },
+      "nota": 5.5,
+      "sinal": {
+        "desvio_mediano": -0.44052863436123185,
+        "n_ondas": 1,
+        "direcao": "Próximo da mediana",
+        "evidencia": "poucas ondas",
+        "minimo": -0.44052863436123185,
+        "maximo": -0.44052863436123185,
+        "ondas": [
+          {
+            "id": "realtime_2026-08-31",
+            "campo": {
+              "inicio": "2026-08-27",
+              "fim": "2026-08-31"
+            },
+            "publicado": {
+              "lula": 44,
+              "flavio": 44,
+              "branco_nulo": 9,
+              "indecisos": 3
+            },
+            "diferenca_validos": 0.0,
+            "mediana_outros": 0.44052863436123185,
+            "desvio": -0.44052863436123185,
+            "pares": [
+              {
+                "id": "atlas_2026-08-30",
+                "instituto": "AtlasIntel",
+                "distancia_dias": 1.5,
+                "diferenca_validos": 5.016722408026756
+              },
+              {
+                "id": "datafolha_2026-09-02",
+                "instituto": "Datafolha",
+                "distancia_dias": 3.5,
+                "diferenca_validos": 2.2222222222222223
+              },
+              {
+                "id": "futura_2026-09-01",
+                "instituto": "Futura",
+                "distancia_dias": 0.5,
+                "diferenca_validos": 0.44052863436123185
+              },
+              {
+                "id": "gerp_2026-08-25",
+                "instituto": "Gerp",
+                "distancia_dias": 6.0,
+                "diferenca_validos": -5.617977528089888
+              },
+              {
+                "id": "nexus_2026-08-30",
+                "instituto": "Nexus",
+                "distancia_dias": 0.0,
+                "diferenca_validos": 1.098901098901099
+              },
+              {
+                "id": "poderdata_2026-09-02",
+                "instituto": "PoderData",
+                "distancia_dias": 2.5,
+                "diferenca_validos": -1.1235955056179776
+              },
+              {
+                "id": "quaest_2026-09-01",
+                "instituto": "Quaest",
+                "distancia_dias": 2.0,
+                "diferenca_validos": 1.2048192771084338
+              },
+              {
+                "id": "verita_2026-09-04",
+                "instituto": "Veritá",
+                "distancia_dias": 4.5,
+                "diferenca_validos": -5.895196506550217
+              },
+              {
+                "id": "vox_brasil_2026-08-27",
+                "instituto": "Vox Brasil",
+                "distancia_dias": 3.0,
+                "diferenca_validos": -0.6696428571428588
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "verita_2026-09-04",
+      "modo": "Telefônica",
+      "subtipo": "URA · voz automatizada",
+      "selecao": "Registro prevê estratos regionais, sorteio PPT de municípios e seleção por cotas. Ligações para celulares; participação voluntária. IA é descrita apenas para transcrição do áudio.",
+      "fontes": "Registro: TSE junho/2026; PNADC 1º tri/2026 para escolaridade; PNADC anual 2025 para renda. Relatório traz referências genéricas mais antigas.",
+      "pnad": "Renda: anual 2025, visita não indicada. Escolaridade: 1º trimestre de 2026.",
+      "pesos": "Peso inicial 1; eventuais ajustes de sexo, idade, escolaridade e renda se diferenças relevantes. Não há receita dos pesos finais nos documentos consultados.",
+      "voto": "Não declarado como peso",
+      "voto_detalhe": "Q15 coleta voto no 2º turno de 2022. O plano não declara calibração por essa resposta.",
+      "controle": "Registro: gravação integral das entrevistas e checagem de cerca de 20%.",
+      "precisao": "±2 pp, 95%, calculados sob amostra aleatória simples. Sem efeito dos pesos ou do desenho publicado.",
+      "alerta": "O registro especifica PNAD 2025/2026; a ficha do relatório cita TSE 2024, Censo 2022 e PNAD sem edição. A tabela preserva a diferença documental.",
+      "paginas": [
+        3,
+        4
+      ],
+      "instituto": "Veritá",
+      "criterios": [
+        {
+          "pontos": 1,
+          "evidencia": "Registro e relatório identificam universo, modalidade, campo, tamanho e responsável/contratante."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "Registro prevê estratos regionais, sorteio PPT de municípios e seleção por cotas. Ligações para celulares; participação voluntária. IA é descrita apenas para transcrição do áudio."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "Registro: TSE junho/2026; PNADC 1º tri/2026 para escolaridade; PNADC anual 2025 para renda. Relatório traz referências genéricas mais antigas. Renda: anual 2025, visita não indicada. Escolaridade: 1º trimestre de 2026."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "Peso inicial 1; eventuais ajustes de sexo, idade, escolaridade e renda se diferenças relevantes. Não há receita dos pesos finais nos documentos consultados."
+        },
+        {
+          "pontos": 1,
+          "evidencia": "Questionário completo desta onda obtido no PesqEle; ordem e alternativas acessíveis no PDF vinculado."
+        },
+        {
+          "pontos": 1,
+          "evidencia": "Registro: gravação integral das entrevistas e checagem de cerca de 20%."
+        },
+        {
+          "pontos": 0,
+          "evidencia": "Não localizamos o balanço de tentativas, contatos, elegíveis, recusas e entrevistas que permita calcular taxa de resposta/participação."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "±2 pp, 95%, calculados sob amostra aleatória simples. Sem efeito dos pesos ou do desenho publicado."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "O relatório publica perfil amostral, mas não todos os diagnósticos de pesos e bases brutas versus ponderadas."
+        },
+        {
+          "pontos": 0,
+          "evidencia": "Não localizamos, nos documentos consultados, base individual anonimizada com pesos e código suficiente para reproduzir esta onda."
+        }
+      ],
+      "registro_tse": "BR-09426/2026",
+      "campo": {
+        "inicio": "2026-09-01",
+        "fim": "2026-09-04"
+      },
+      "n": 3840,
+      "contratante": "Iniciativa própria do Instituto Veritá",
+      "fonte_registro": "fontes/reponderacao_metodologias/verita_2026-09-04/registro-metodologia.txt",
+      "fonte_questionario": "fontes/reponderacao_metodologias/verita_2026-09-04/questionario.pdf",
+      "fonte_relatorio": "fontes/reponderacao_metodologias/verita_2026-09-04/relatorio-metodologia.pdf",
+      "relatorio_excerto": true,
+      "proveniencia": {
+        "consulta": "2026-09-21",
+        "registro_html_sha256": "0a8ee29d4c020b16be487ae0d7ce6f652067f1072024db043251355eb87633e8",
+        "questionario_sha256": "8d11835e30599b4f64278e9e5aa3da1aca26080e65f97d62b4ac8fa44b5b521d",
+        "relatorio_original": "data/originals/verita_092026/Relatorio.pdf",
+        "relatorio_sha256": "adf5cce332b8daa4c3548b1fa80f4dfea7821817f3d44c1245eebe60776a351b"
+      },
+      "nota": 5.5,
+      "sinal": {
+        "desvio_mediano": -7.50947941724983,
+        "n_ondas": 2,
+        "direcao": "Mais Flávio",
+        "evidencia": "poucas ondas",
+        "minimo": -9.231753688640584,
+        "maximo": -5.787205145859075,
+        "ondas": [
+          {
+            "id": "verita_2026-08-20",
+            "campo": {
+              "inicio": "2026-08-16",
+              "fim": "2026-08-20"
+            },
+            "publicado": {
+              "flavio": 47.3,
+              "lula": 42.0,
+              "branco_nulo": 6.1,
+              "indecisos": 4.6
+            },
+            "diferenca_validos": -5.9350503919372875,
+            "mediana_outros": 3.2967032967032965,
+            "desvio": -9.231753688640584,
+            "pares": [
+              {
+                "id": "datafolha_2026-08-19",
+                "instituto": "Datafolha",
+                "distancia_dias": 0.5,
+                "diferenca_validos": 4.444444444444445
+              },
+              {
+                "id": "gerp_2026-08-25",
+                "instituto": "Gerp",
+                "distancia_dias": 5.0,
+                "diferenca_validos": -5.617977528089888
+              },
+              {
+                "id": "nexus_2026-08-16",
+                "instituto": "Nexus",
+                "distancia_dias": 3.0,
+                "diferenca_validos": 3.2967032967032965
+              },
+              {
+                "id": "poderdata_2026-08-26",
+                "instituto": "PoderData",
+                "distancia_dias": 6.5,
+                "diferenca_validos": 1.1235955056179776
+              },
+              {
+                "id": "quaest_2026-08-13",
+                "instituto": "Quaest",
+                "distancia_dias": 6.5,
+                "diferenca_validos": 3.6144578313253013
+              }
+            ]
+          },
+          {
+            "id": "verita_2026-09-04",
+            "campo": {
+              "inicio": "2026-09-01",
+              "fim": "2026-09-04"
+            },
+            "publicado": {
+              "flavio": 48.5,
+              "lula": 43.1,
+              "branco_nulo": 4.9,
+              "indecisos": 3.6
+            },
+            "diferenca_validos": -5.895196506550217,
+            "mediana_outros": -0.10799136069114242,
+            "desvio": -5.787205145859075,
+            "pares": [
+              {
+                "id": "atlas_2026-09-09",
+                "instituto": "AtlasIntel",
+                "distancia_dias": 4.0,
+                "diferenca_validos": -0.21598272138228483
+              },
+              {
+                "id": "datafolha_2026-09-02",
+                "instituto": "Datafolha",
+                "distancia_dias": 1.0,
+                "diferenca_validos": 2.2222222222222223
+              },
+              {
+                "id": "futura_2026-09-01",
+                "instituto": "Futura",
+                "distancia_dias": 4.0,
+                "diferenca_validos": 0.44052863436123185
+              },
+              {
+                "id": "gerp_2026-09-08",
+                "instituto": "Gerp",
+                "distancia_dias": 3.0,
+                "diferenca_validos": -8.045977011494253
+              },
+              {
+                "id": "meio_ideia_2026-09-07",
+                "instituto": "Meio/Ideia",
+                "distancia_dias": 3.0,
+                "diferenca_validos": 0.0
+              },
+              {
+                "id": "nexus_2026-09-07",
+                "instituto": "Nexus",
+                "distancia_dias": 3.0,
+                "diferenca_validos": -1.098901098901099
+              },
+              {
+                "id": "palver_2026-09-07_v2",
+                "instituto": "Palver",
+                "distancia_dias": 3.0,
+                "diferenca_validos": -3.2967032967032965
+              },
+              {
+                "id": "poderdata_2026-09-02",
+                "instituto": "PoderData",
+                "distancia_dias": 2.0,
+                "diferenca_validos": -1.1235955056179776
+              },
+              {
+                "id": "quaest_2026-09-06",
+                "instituto": "Quaest",
+                "distancia_dias": 2.0,
+                "diferenca_validos": 0.0
+              },
+              {
+                "id": "realtime_2026-08-31",
+                "instituto": "Real Time Big Data",
+                "distancia_dias": 4.5,
+                "diferenca_validos": 0.0
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "vox_brasil_2026-08-27",
+      "modo": "Presencial",
+      "subtipo": "Domiciliar",
+      "selecao": "Registro descreve sorteios de bairros/setores, ruas e casas (sistemático). Dentro da casa, entrevista o eleitor que atende, com controles posteriores; seleção nacional dos municípios pouco detalhada.",
+      "fontes": "TSE abril/2026 para sexo, idade e escolaridade; Censo 2022 declarado para renda, com link genérico ao Sidra.",
+      "pnad": "Não citada. Censo 2022 declarado para renda, sem número de tabela.",
+      "pesos": "Registro descreve ponderação demográfica e referência de renda com 83,89% até 2 SM. Falta identificar tabela, conceito e universo dessa renda.",
+      "voto": "Não declarado como peso",
+      "voto_detalhe": "Voto em 2022 não consta da lista de ponderação do registro.",
+      "controle": "Registro: supervisão de campo, consistência e checagem de 20% dos questionários de cada entrevistador.",
+      "precisao": "±2,15 pp, 95%. Não localizamos ajuste para conglomerados ou dispersão de pesos.",
+      "alerta": "Entrevistar quem atende à porta não equivale a sortear o morador. Sem a tabela do Censo não é possível validar a natureza do alvo de renda declarado.",
+      "paginas": [
+        2
+      ],
+      "instituto": "Vox Brasil",
+      "criterios": [
+        {
+          "pontos": 1,
+          "evidencia": "Registro e relatório identificam universo, modalidade, campo, tamanho e responsável/contratante."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "Registro descreve sorteios de bairros/setores, ruas e casas (sistemático). Dentro da casa, entrevista o eleitor que atende, com controles posteriores; seleção nacional dos municípios pouco detalhada."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "TSE abril/2026 para sexo, idade e escolaridade; Censo 2022 declarado para renda, com link genérico ao Sidra. Não citada. Censo 2022 declarado para renda, sem número de tabela."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "Registro descreve ponderação demográfica e referência de renda com 83,89% até 2 SM. Falta identificar tabela, conceito e universo dessa renda."
+        },
+        {
+          "pontos": 1,
+          "evidencia": "Questionário completo desta onda obtido no PesqEle; ordem e alternativas acessíveis no PDF vinculado."
+        },
+        {
+          "pontos": 1,
+          "evidencia": "Registro: supervisão de campo, consistência e checagem de 20% dos questionários de cada entrevistador."
+        },
+        {
+          "pontos": 0,
+          "evidencia": "Não localizamos o balanço de tentativas, contatos, elegíveis, recusas e entrevistas que permita calcular taxa de resposta/participação."
+        },
+        {
+          "pontos": 0,
+          "evidencia": "±2,15 pp, 95%. Não localizamos ajuste para conglomerados ou dispersão de pesos."
+        },
+        {
+          "pontos": 0.5,
+          "evidencia": "O relatório publica perfil amostral, mas não todos os diagnósticos de pesos e bases brutas versus ponderadas."
+        },
+        {
+          "pontos": 0,
+          "evidencia": "Não localizamos, nos documentos consultados, base individual anonimizada com pesos e código suficiente para reproduzir esta onda."
+        }
+      ],
+      "registro_tse": "BR-05519/2026",
+      "campo": {
+        "inicio": "2026-08-25",
+        "fim": "2026-08-27"
+      },
+      "n": 2100,
+      "contratante": "Instituto Vox Brasil Opinião e Pesquisas Ltda (recursos próprios)",
+      "fonte_registro": "fontes/reponderacao_metodologias/vox_brasil_2026-08-27/registro-metodologia.txt",
+      "fonte_questionario": "fontes/reponderacao_metodologias/vox_brasil_2026-08-27/questionario.pdf",
+      "fonte_relatorio": "fontes/reponderacao_metodologias/vox_brasil_2026-08-27/relatorio-metodologia.pdf",
+      "relatorio_excerto": true,
+      "proveniencia": {
+        "consulta": "2026-09-21",
+        "registro_html_sha256": "044d4b2e4dee063207948d72ff452bf6427cf81c9e255c90f1a964451f2ae0c6",
+        "questionario_sha256": "4162e4d05655aabce444d2339c52c1642c6623966bae5f75003987f6dfaa8332",
+        "relatorio_original": "data/originals/vox_brasil_082026/Relatorio.pdf",
+        "relatorio_sha256": "17bb1930e4d382870084d7c5106ca08b92ac1fd7bb59a07695273fede747a37e"
+      },
+      "nota": 5.0,
+      "sinal": {
+        "desvio_mediano": -1.780891159402397,
+        "n_ondas": 1,
+        "direcao": "Próximo da mediana",
+        "evidencia": "poucas ondas",
+        "minimo": -1.780891159402397,
+        "maximo": -1.780891159402397,
+        "ondas": [
+          {
+            "id": "vox_brasil_2026-08-27",
+            "campo": {
+              "inicio": "2026-08-25",
+              "fim": "2026-08-27"
+            },
+            "publicado": {
+              "flavio": 45.1,
+              "lula": 44.5,
+              "branco_nulo": 7.9,
+              "indecisos": 2.5
+            },
+            "diferenca_validos": -0.6696428571428588,
+            "mediana_outros": 1.1112483022595383,
+            "desvio": -1.780891159402397,
+            "pares": [
+              {
+                "id": "atlas_2026-08-30",
+                "instituto": "AtlasIntel",
+                "distancia_dias": 1.5,
+                "diferenca_validos": 5.016722408026756
+              },
+              {
+                "id": "datafolha_2026-09-02",
+                "instituto": "Datafolha",
+                "distancia_dias": 6.5,
+                "diferenca_validos": 2.2222222222222223
+              },
+              {
+                "id": "futura_2026-09-01",
+                "instituto": "Futura",
+                "distancia_dias": 3.5,
+                "diferenca_validos": 0.44052863436123185
+              },
+              {
+                "id": "gerp_2026-08-25",
+                "instituto": "Gerp",
+                "distancia_dias": 3.0,
+                "diferenca_validos": -5.617977528089888
+              },
+              {
+                "id": "nexus_2026-08-30",
+                "instituto": "Nexus",
+                "distancia_dias": 3.0,
+                "diferenca_validos": 1.098901098901099
+              },
+              {
+                "id": "poderdata_2026-08-26",
+                "instituto": "PoderData",
+                "distancia_dias": 1.5,
+                "diferenca_validos": 1.1235955056179776
+              },
+              {
+                "id": "quaest_2026-09-01",
+                "instituto": "Quaest",
+                "distancia_dias": 5.0,
+                "diferenca_validos": 1.2048192771084338
+              },
+              {
+                "id": "realtime_2026-08-31",
+                "instituto": "Real Time Big Data",
+                "distancia_dias": 3.0,
+                "diferenca_validos": 0.0
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
