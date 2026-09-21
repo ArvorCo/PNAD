@@ -509,7 +509,7 @@ def instituto_svg(nome: str, turno: str, historico: list[dict] | None = None) ->
             (px(i), py(ajustado(p["turnos"][turno])[chave]))
             for i, p in enumerate(polls)
         ]
-        if len(polls) > 1 and historico is None:
+        if len(polls) > 1:
             _linha(cv, pub, COR[chave], "publicado")
             _linha(cv, adj, COR[chave], "ajustado")
         for indice, (ponto_pub, ponto_adj) in enumerate(zip(pub, adj, strict=True)):

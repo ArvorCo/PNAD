@@ -80,8 +80,8 @@ def audit_html(data, table):
             ],
             score_rows,
         )
-        + '<p class="note">Três ondas independentes, quatro versões documentais. Pontos do histórico '
-        "não são conectados: a mudança entre v1 e v2 é de calibração, sem novo campo. "
+        + '<p class="note">Três ondas independentes, quatro versões documentais. As linhas ligam '
+        "as versões publicadas; a mudança entre v1 e v2 é de calibração, sem novo campo. "
         "Sensibilidade de renda, sem recalibração conjunta e sem novo intervalo de confiança.</p>"
         "<h3>A distribuição de renda foi conferida</h3>"
         "<p>Na onda 3, as bases brutas são <b>1.321 / 2.203 / 1.476</b>. Elas não são os pesos: "
