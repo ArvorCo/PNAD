@@ -19,7 +19,7 @@
       "gap_lula_rival": 7,
       "overlap_topline": [
         0,
-        42
+        42.0
       ],
       "overlap_topline_rounding": [
         0,
@@ -30,8 +30,8 @@
         "governor": 19,
         "lula": 95,
         "overlap": [
-          14,
-          19
+          14.0,
+          19.0
         ],
         "overlap_rounding": [
           13.0,
@@ -2267,6 +2267,23 @@
       "first_president": {
         "Flavio Bolsonaro (PL)": 35,
         "Lula (PT)": 33,
+        "Escritor Augusto Cury (AVANTE)": 7,
+        "Renan Santos (MISSÃO)": 6,
+        "Ronaldo Caiado (PSD)": 4,
+        "Samara (UP)": 2,
+        "Zema (NOVO)": 2,
+        "Rui Costa Pimenta (PCO)": 1,
+        "Veterinário Wilson Grassi(DEMOCRATA)": 1,
+        "Clariana Barao (DC)": 1,
+        "Edmilson Costa (PCB)": 0,
+        "Hertz Dias (PSTU)": 0,
+        "Em branco/nulo/nenhum": 6,
+        "Indecisos": 2
+      },
+      "first_president_scenario": "Situação B, sem Pablo Marçal",
+      "first_president_com_marcal": {
+        "Flavio Bolsonaro (PL)": 35,
+        "Lula (PT)": 33,
         "Escritor Augusto Cury (AVANTE)": 8,
         "Renan Santos (MISSÃO)": 5,
         "Ronaldo Caiado (PSD)": 4,
@@ -2283,13 +2300,23 @@
       },
       "pages": {
         "governor": 39,
-        "president": 58
+        "president": 58,
+        "president_first_round": [
+          52,
+          53
+        ],
+        "president_first_round_com_marcal": [
+          49,
+          50,
+          51
+        ]
       },
       "assumptions": [
         "Registros, projeto, campo, n e bases ponderadas coincidem. Igualdade dos pesos individuais entre perguntas não é demonstrável sem os microdados.",
         "Limites de interseção condicionados ao mesmo universo e aos mesmos pesos finais. Não são cruzamentos observados nem intervalos populacionais.",
         "Arredondamento: ±0,5 ponto por proporção; bases ponderadas tratadas como exatas, embora publicadas como inteiros.",
-        "PT é partido de preferência, não equivale a voto em Lula nem à escala bolsonarista/petista."
+        "PT é partido de preferência, não equivale a voto em Lula nem à escala bolsonarista/petista.",
+        "Primeiro turno presidencial: Situação B, sem Pablo Marçal. A Situação A do anexo é o cenário com Marçal e fica preservada em `first_president_com_marcal`."
       ],
       "source": {
         "article": "https://datafolha.folha.uol.com.br/eleicoes/2026/09/tarcisio-de-freitas-republicanos-lidera-com-49-das-intencoes-de-voto-para-governador-de-sp.shtml",
@@ -2316,8 +2343,8 @@
       "gap_governor_flavio": 14,
       "gap_lula_rival": 22,
       "overlap_topline": [
-        5,
-        46
+        5.0,
+        46.0
       ],
       "overlap_topline_rounding": [
         4.0,
@@ -2328,8 +2355,8 @@
         "governor": 34,
         "lula": 97,
         "overlap": [
-          31,
-          34
+          31.0,
+          34.0
         ],
         "overlap_rounding": [
           30.0,
@@ -5067,6 +5094,23 @@
         "Indecisos": 10
       },
       "first_president": {
+        "Lula (PT)": 37,
+        "Flavio Bolsonaro (PL)": 35,
+        "Escritor Augusto Cury (AVANTE)": 5,
+        "Zema (NOVO)": 5,
+        "Ronaldo Caiado (PSD)": 3,
+        "Renan Santos (MISSÃO)": 2,
+        "Samara (UP)": 2,
+        "Rui Costa Pimenta (PCO)": 1,
+        "Veterinário Wilson Grassi (DEMOCRATA)": 0,
+        "Edmilson Costa (PCB)": 0,
+        "Clariana Barao (DC)": 0,
+        "Hertz Dias (PSTU)": 0,
+        "Em branco/nulo/nenhum": 5,
+        "Indecisos": 5
+      },
+      "first_president_scenario": "Situação B, sem Pablo Marçal",
+      "first_president_com_marcal": {
         "Lula (PT)": 38,
         "Flavio Bolsonaro (PL)": 34,
         "Zema (NOVO)": 5,
@@ -5085,13 +5129,23 @@
       },
       "pages": {
         "governor": 40,
-        "president": 94
+        "president": 94,
+        "president_first_round": [
+          88,
+          89
+        ],
+        "president_first_round_com_marcal": [
+          85,
+          86,
+          87
+        ]
       },
       "assumptions": [
         "Registros, projeto, campo, n e bases ponderadas coincidem. Igualdade dos pesos individuais entre perguntas não é demonstrável sem os microdados.",
         "Limites de interseção condicionados ao mesmo universo e aos mesmos pesos finais. Não são cruzamentos observados nem intervalos populacionais.",
         "Arredondamento: ±0,5 ponto por proporção; bases ponderadas tratadas como exatas, embora publicadas como inteiros.",
-        "PT é partido de preferência, não equivale a voto em Lula nem à escala bolsonarista/petista."
+        "PT é partido de preferência, não equivale a voto em Lula nem à escala bolsonarista/petista.",
+        "Primeiro turno presidencial: Situação B, sem Pablo Marçal. A Situação A do anexo é o cenário com Marçal e fica preservada em `first_president_com_marcal`."
       ],
       "kalil": {
         "Cleitinho Azevedo (REPUBLICANOS)": 54,
@@ -10123,7 +10177,7 @@
         }
       },
       "president": {
-        "estimulada": {
+        "estimulada_com_marcal": {
           "blocks": {
             "bloco1": {
               "pdf_page": 49,
@@ -10724,6 +10778,588 @@
                   "Interior": 2,
                   "PT": 1,
                   "PL": null,
+                  "Outro partido": 1,
+                  "Nao tem": 4
+                }
+              },
+              "base": {
+                "Total": 1610,
+                "Regiao metropolitana": 751,
+                "Interior": 859,
+                "PT": 387,
+                "PL": 252,
+                "Outro partido": 237,
+                "Nao tem": 734
+              }
+            }
+          }
+        },
+        "estimulada": {
+          "blocks": {
+            "bloco1": {
+              "pdf_page": 52,
+              "annex_page": 10,
+              "columns": [
+                "Total",
+                "Masculino",
+                "Feminino",
+                "16-24",
+                "25-34",
+                "35-44",
+                "45-59",
+                "60+",
+                "Fundamental",
+                "Medio",
+                "Superior"
+              ],
+              "rows": {
+                "Flavio Bolsonaro (PL)": {
+                  "Total": 35,
+                  "Masculino": 39,
+                  "Feminino": 32,
+                  "16-24": 26,
+                  "25-34": 36,
+                  "35-44": 36,
+                  "45-59": 36,
+                  "60+": 38,
+                  "Fundamental": 30,
+                  "Medio": 37,
+                  "Superior": 35
+                },
+                "Lula (PT)": {
+                  "Total": 33,
+                  "Masculino": 31,
+                  "Feminino": 35,
+                  "16-24": 33,
+                  "25-34": 35,
+                  "35-44": 29,
+                  "45-59": 33,
+                  "60+": 35,
+                  "Fundamental": 42,
+                  "Medio": 32,
+                  "Superior": 30
+                },
+                "Escritor Augusto Cury (AVANTE)": {
+                  "Total": 7,
+                  "Masculino": 6,
+                  "Feminino": 7,
+                  "16-24": 9,
+                  "25-34": 7,
+                  "35-44": 10,
+                  "45-59": 6,
+                  "60+": 2,
+                  "Fundamental": 2,
+                  "Medio": 6,
+                  "Superior": 10
+                },
+                "Renan Santos (MISSÃO)": {
+                  "Total": 6,
+                  "Masculino": 8,
+                  "Feminino": 4,
+                  "16-24": 10,
+                  "25-34": 8,
+                  "35-44": 6,
+                  "45-59": 4,
+                  "60+": 3,
+                  "Fundamental": 2,
+                  "Medio": 6,
+                  "Superior": 7
+                },
+                "Ronaldo Caiado (PSD)": {
+                  "Total": 4,
+                  "Masculino": 5,
+                  "Feminino": 4,
+                  "16-24": 2,
+                  "25-34": 1,
+                  "35-44": 2,
+                  "45-59": 4,
+                  "60+": 10,
+                  "Fundamental": 8,
+                  "Medio": 3,
+                  "Superior": 4
+                },
+                "Samara (UP)": {
+                  "Total": 2,
+                  "Masculino": 1,
+                  "Feminino": 2,
+                  "16-24": 4,
+                  "25-34": 3,
+                  "35-44": 1,
+                  "45-59": 1,
+                  "60+": 0,
+                  "Fundamental": 2,
+                  "Medio": 2,
+                  "Superior": 1
+                },
+                "Zema (NOVO)": {
+                  "Total": 2,
+                  "Masculino": 2,
+                  "Feminino": 1,
+                  "16-24": 0,
+                  "25-34": 1,
+                  "35-44": 2,
+                  "45-59": 3,
+                  "60+": 1,
+                  "Fundamental": 0,
+                  "Medio": 1,
+                  "Superior": 3
+                },
+                "Rui Costa Pimenta (PCO)": {
+                  "Total": 1,
+                  "Masculino": 1,
+                  "Feminino": 1,
+                  "16-24": null,
+                  "25-34": 1,
+                  "35-44": 1,
+                  "45-59": 2,
+                  "60+": 1,
+                  "Fundamental": 1,
+                  "Medio": 1,
+                  "Superior": 1
+                },
+                "Veterinário Wilson Grassi(DEMOCRATA)": {
+                  "Total": 1,
+                  "Masculino": null,
+                  "Feminino": 1,
+                  "16-24": null,
+                  "25-34": 1,
+                  "35-44": 1,
+                  "45-59": 1,
+                  "60+": 1,
+                  "Fundamental": 1,
+                  "Medio": 1,
+                  "Superior": 1
+                },
+                "Clariana Barao (DC)": {
+                  "Total": 1,
+                  "Masculino": 0,
+                  "Feminino": 1,
+                  "16-24": 1,
+                  "25-34": 1,
+                  "35-44": 0,
+                  "45-59": 1,
+                  "60+": null,
+                  "Fundamental": 1,
+                  "Medio": 1,
+                  "Superior": 0
+                },
+                "Edmilson Costa (PCB)": {
+                  "Total": 0,
+                  "Masculino": 0,
+                  "Feminino": 1,
+                  "16-24": 1,
+                  "25-34": 0,
+                  "35-44": null,
+                  "45-59": 0,
+                  "60+": 1,
+                  "Fundamental": 0,
+                  "Medio": 1,
+                  "Superior": 0
+                },
+                "Hertz Dias (PSTU)": {
+                  "Total": 0,
+                  "Masculino": 0,
+                  "Feminino": null,
+                  "16-24": 1,
+                  "25-34": 0,
+                  "35-44": 0,
+                  "45-59": null,
+                  "60+": null,
+                  "Fundamental": null,
+                  "Medio": 0,
+                  "Superior": 0
+                },
+                "Em branco/nulo/nenhum": {
+                  "Total": 6,
+                  "Masculino": 4,
+                  "Feminino": 8,
+                  "16-24": 8,
+                  "25-34": 5,
+                  "35-44": 8,
+                  "45-59": 8,
+                  "60+": 4,
+                  "Fundamental": 6,
+                  "Medio": 6,
+                  "Superior": 6
+                },
+                "Indecisos": {
+                  "Total": 2,
+                  "Masculino": 1,
+                  "Feminino": 3,
+                  "16-24": 4,
+                  "25-34": 1,
+                  "35-44": 3,
+                  "45-59": 2,
+                  "60+": 3,
+                  "Fundamental": 3,
+                  "Medio": 3,
+                  "Superior": 1
+                }
+              },
+              "base": {
+                "Total": 1610,
+                "Masculino": 765,
+                "Feminino": 845,
+                "16-24": 224,
+                "25-34": 286,
+                "35-44": 312,
+                "45-59": 407,
+                "60+": 380,
+                "Fundamental": 313,
+                "Medio": 809,
+                "Superior": 488
+              }
+            },
+            "bloco2": {
+              "pdf_page": 53,
+              "annex_page": 11,
+              "columns": [
+                "Total",
+                "Ate 2 SM",
+                "2 a 5 SM",
+                "Mais de 5 SM",
+                "PEA",
+                "Nao PEA",
+                "Branca",
+                "Preta",
+                "Parda",
+                "Catolica",
+                "Evangelica"
+              ],
+              "rows": {
+                "Flavio Bolsonaro (PL)": {
+                  "Total": 35,
+                  "Ate 2 SM": 33,
+                  "2 a 5 SM": 38,
+                  "Mais de 5 SM": 33,
+                  "PEA": 35,
+                  "Nao PEA": 35,
+                  "Branca": 39,
+                  "Preta": 22,
+                  "Parda": 35,
+                  "Catolica": 33,
+                  "Evangelica": 48
+                },
+                "Lula (PT)": {
+                  "Total": 33,
+                  "Ate 2 SM": 35,
+                  "2 a 5 SM": 30,
+                  "Mais de 5 SM": 35,
+                  "PEA": 32,
+                  "Nao PEA": 35,
+                  "Branca": 30,
+                  "Preta": 46,
+                  "Parda": 34,
+                  "Catolica": 37,
+                  "Evangelica": 21
+                },
+                "Escritor Augusto Cury (AVANTE)": {
+                  "Total": 7,
+                  "Ate 2 SM": 4,
+                  "2 a 5 SM": 8,
+                  "Mais de 5 SM": 9,
+                  "PEA": 8,
+                  "Nao PEA": 3,
+                  "Branca": 7,
+                  "Preta": 5,
+                  "Parda": 7,
+                  "Catolica": 6,
+                  "Evangelica": 6
+                },
+                "Renan Santos (MISSÃO)": {
+                  "Total": 6,
+                  "Ate 2 SM": 4,
+                  "2 a 5 SM": 7,
+                  "Mais de 5 SM": 10,
+                  "PEA": 7,
+                  "Nao PEA": 2,
+                  "Branca": 6,
+                  "Preta": 4,
+                  "Parda": 6,
+                  "Catolica": 5,
+                  "Evangelica": 6
+                },
+                "Ronaldo Caiado (PSD)": {
+                  "Total": 4,
+                  "Ate 2 SM": 5,
+                  "2 a 5 SM": 4,
+                  "Mais de 5 SM": 4,
+                  "PEA": 4,
+                  "Nao PEA": 6,
+                  "Branca": 5,
+                  "Preta": 5,
+                  "Parda": 4,
+                  "Catolica": 6,
+                  "Evangelica": 3
+                },
+                "Samara (UP)": {
+                  "Total": 2,
+                  "Ate 2 SM": 3,
+                  "2 a 5 SM": 2,
+                  "Mais de 5 SM": 0,
+                  "PEA": 2,
+                  "Nao PEA": 2,
+                  "Branca": 1,
+                  "Preta": 3,
+                  "Parda": 2,
+                  "Catolica": 1,
+                  "Evangelica": 2
+                },
+                "Zema (NOVO)": {
+                  "Total": 2,
+                  "Ate 2 SM": 1,
+                  "2 a 5 SM": 2,
+                  "Mais de 5 SM": 2,
+                  "PEA": 2,
+                  "Nao PEA": 1,
+                  "Branca": 2,
+                  "Preta": 2,
+                  "Parda": 1,
+                  "Catolica": 2,
+                  "Evangelica": 1
+                },
+                "Rui Costa Pimenta (PCO)": {
+                  "Total": 1,
+                  "Ate 2 SM": 1,
+                  "2 a 5 SM": 1,
+                  "Mais de 5 SM": 1,
+                  "PEA": 1,
+                  "Nao PEA": 1,
+                  "Branca": 1,
+                  "Preta": 1,
+                  "Parda": 1,
+                  "Catolica": 1,
+                  "Evangelica": 1
+                },
+                "Veterinário Wilson Grassi(DEMOCRATA)": {
+                  "Total": 1,
+                  "Ate 2 SM": 1,
+                  "2 a 5 SM": 0,
+                  "Mais de 5 SM": null,
+                  "PEA": 1,
+                  "Nao PEA": 1,
+                  "Branca": 0,
+                  "Preta": null,
+                  "Parda": 1,
+                  "Catolica": 1,
+                  "Evangelica": 1
+                },
+                "Clariana Barao (DC)": {
+                  "Total": 1,
+                  "Ate 2 SM": 1,
+                  "2 a 5 SM": 0,
+                  "Mais de 5 SM": null,
+                  "PEA": 0,
+                  "Nao PEA": 1,
+                  "Branca": 0,
+                  "Preta": 1,
+                  "Parda": 1,
+                  "Catolica": 1,
+                  "Evangelica": null
+                },
+                "Edmilson Costa (PCB)": {
+                  "Total": 0,
+                  "Ate 2 SM": 1,
+                  "2 a 5 SM": 0,
+                  "Mais de 5 SM": null,
+                  "PEA": 0,
+                  "Nao PEA": 0,
+                  "Branca": 0,
+                  "Preta": 1,
+                  "Parda": 0,
+                  "Catolica": 1,
+                  "Evangelica": 0
+                },
+                "Hertz Dias (PSTU)": {
+                  "Total": 0,
+                  "Ate 2 SM": 0,
+                  "2 a 5 SM": 0,
+                  "Mais de 5 SM": 0,
+                  "PEA": 0,
+                  "Nao PEA": 0,
+                  "Branca": 0,
+                  "Preta": 0,
+                  "Parda": 0,
+                  "Catolica": 0,
+                  "Evangelica": null
+                },
+                "Em branco/nulo/nenhum": {
+                  "Total": 6,
+                  "Ate 2 SM": 7,
+                  "2 a 5 SM": 5,
+                  "Mais de 5 SM": 5,
+                  "PEA": 6,
+                  "Nao PEA": 7,
+                  "Branca": 6,
+                  "Preta": 8,
+                  "Parda": 6,
+                  "Catolica": 4,
+                  "Evangelica": 6
+                },
+                "Indecisos": {
+                  "Total": 2,
+                  "Ate 2 SM": 4,
+                  "2 a 5 SM": 1,
+                  "Mais de 5 SM": 2,
+                  "PEA": 2,
+                  "Nao PEA": 4,
+                  "Branca": 2,
+                  "Preta": 2,
+                  "Parda": 3,
+                  "Catolica": 2,
+                  "Evangelica": 3
+                }
+              },
+              "base": {
+                "Total": 1610,
+                "Ate 2 SM": 637,
+                "2 a 5 SM": 693,
+                "Mais de 5 SM": 233,
+                "PEA": 1182,
+                "Nao PEA": 428,
+                "Branca": 758,
+                "Preta": 211,
+                "Parda": 606,
+                "Catolica": 714,
+                "Evangelica": 481
+              }
+            },
+            "bloco3": {
+              "pdf_page": 53,
+              "annex_page": 11,
+              "columns": [
+                "Total",
+                "Regiao metropolitana",
+                "Interior",
+                "PT",
+                "PL",
+                "Outro partido",
+                "Nao tem"
+              ],
+              "rows": {
+                "Flavio Bolsonaro (PL)": {
+                  "Total": 35,
+                  "Regiao metropolitana": 29,
+                  "Interior": 40,
+                  "PT": 2,
+                  "PL": 90,
+                  "Outro partido": 38,
+                  "Nao tem": 33
+                },
+                "Lula (PT)": {
+                  "Total": 33,
+                  "Regiao metropolitana": 38,
+                  "Interior": 29,
+                  "PT": 84,
+                  "PL": null,
+                  "Outro partido": 25,
+                  "Nao tem": 21
+                },
+                "Escritor Augusto Cury (AVANTE)": {
+                  "Total": 7,
+                  "Regiao metropolitana": 6,
+                  "Interior": 7,
+                  "PT": 2,
+                  "PL": 2,
+                  "Outro partido": 8,
+                  "Nao tem": 10
+                },
+                "Renan Santos (MISSÃO)": {
+                  "Total": 6,
+                  "Regiao metropolitana": 6,
+                  "Interior": 6,
+                  "PT": 2,
+                  "PL": 2,
+                  "Outro partido": 13,
+                  "Nao tem": 7
+                },
+                "Ronaldo Caiado (PSD)": {
+                  "Total": 4,
+                  "Regiao metropolitana": 5,
+                  "Interior": 4,
+                  "PT": 2,
+                  "PL": 4,
+                  "Outro partido": 5,
+                  "Nao tem": 5
+                },
+                "Samara (UP)": {
+                  "Total": 2,
+                  "Regiao metropolitana": 2,
+                  "Interior": 1,
+                  "PT": 1,
+                  "PL": 0,
+                  "Outro partido": 3,
+                  "Nao tem": 2
+                },
+                "Zema (NOVO)": {
+                  "Total": 2,
+                  "Regiao metropolitana": 2,
+                  "Interior": 1,
+                  "PT": 1,
+                  "PL": null,
+                  "Outro partido": 2,
+                  "Nao tem": 3
+                },
+                "Rui Costa Pimenta (PCO)": {
+                  "Total": 1,
+                  "Regiao metropolitana": 1,
+                  "Interior": 1,
+                  "PT": 1,
+                  "PL": null,
+                  "Outro partido": 1,
+                  "Nao tem": 1
+                },
+                "Veterinário Wilson Grassi(DEMOCRATA)": {
+                  "Total": 1,
+                  "Regiao metropolitana": 1,
+                  "Interior": 1,
+                  "PT": 1,
+                  "PL": 0,
+                  "Outro partido": 1,
+                  "Nao tem": 1
+                },
+                "Clariana Barao (DC)": {
+                  "Total": 1,
+                  "Regiao metropolitana": 0,
+                  "Interior": 1,
+                  "PT": 1,
+                  "PL": null,
+                  "Outro partido": 0,
+                  "Nao tem": 1
+                },
+                "Edmilson Costa (PCB)": {
+                  "Total": 0,
+                  "Regiao metropolitana": 0,
+                  "Interior": 1,
+                  "PT": 1,
+                  "PL": null,
+                  "Outro partido": 0,
+                  "Nao tem": 0
+                },
+                "Hertz Dias (PSTU)": {
+                  "Total": 0,
+                  "Regiao metropolitana": 0,
+                  "Interior": 0,
+                  "PT": 0,
+                  "PL": null,
+                  "Outro partido": 1,
+                  "Nao tem": 0
+                },
+                "Em branco/nulo/nenhum": {
+                  "Total": 6,
+                  "Regiao metropolitana": 7,
+                  "Interior": 6,
+                  "PT": 2,
+                  "PL": 1,
+                  "Outro partido": 1,
+                  "Nao tem": 12
+                },
+                "Indecisos": {
+                  "Total": 2,
+                  "Regiao metropolitana": 2,
+                  "Interior": 2,
+                  "PT": 1,
+                  "PL": 0,
                   "Outro partido": 1,
                   "Nao tem": 4
                 }
@@ -16956,7 +17592,7 @@
         }
       },
       "president": {
-        "estimulada": {
+        "estimulada_com_marcal": {
           "blocks": {
             "bloco1": {
               "pdf_page": 85,
@@ -17559,6 +18195,588 @@
                   "PL": 2,
                   "Outro partido": 1,
                   "Nao tem": 7
+                }
+              },
+              "base": {
+                "Total": 1204,
+                "Regiao metropolitana": 331,
+                "Interior": 873,
+                "PT": 291,
+                "PL": 168,
+                "Outro partido": 184,
+                "Nao tem": 562
+              }
+            }
+          }
+        },
+        "estimulada": {
+          "blocks": {
+            "bloco1": {
+              "pdf_page": 88,
+              "annex_page": 10,
+              "columns": [
+                "Total",
+                "Masculino",
+                "Feminino",
+                "16-24",
+                "25-34",
+                "35-44",
+                "45-59",
+                "60+",
+                "Fundamental",
+                "Medio",
+                "Superior"
+              ],
+              "rows": {
+                "Lula (PT)": {
+                  "Total": 37,
+                  "Masculino": 39,
+                  "Feminino": 36,
+                  "16-24": 34,
+                  "25-34": 35,
+                  "35-44": 32,
+                  "45-59": 37,
+                  "60+": 44,
+                  "Fundamental": 46,
+                  "Medio": 33,
+                  "Superior": 33
+                },
+                "Flavio Bolsonaro (PL)": {
+                  "Total": 35,
+                  "Masculino": 39,
+                  "Feminino": 31,
+                  "16-24": 31,
+                  "25-34": 39,
+                  "35-44": 40,
+                  "45-59": 35,
+                  "60+": 29,
+                  "Fundamental": 28,
+                  "Medio": 38,
+                  "Superior": 38
+                },
+                "Escritor Augusto Cury (AVANTE)": {
+                  "Total": 5,
+                  "Masculino": 3,
+                  "Feminino": 7,
+                  "16-24": 9,
+                  "25-34": 7,
+                  "35-44": 8,
+                  "45-59": 4,
+                  "60+": 2,
+                  "Fundamental": 1,
+                  "Medio": 7,
+                  "Superior": 9
+                },
+                "Zema (NOVO)": {
+                  "Total": 5,
+                  "Masculino": 4,
+                  "Feminino": 6,
+                  "16-24": 9,
+                  "25-34": 5,
+                  "35-44": 5,
+                  "45-59": 4,
+                  "60+": 5,
+                  "Fundamental": 5,
+                  "Medio": 5,
+                  "Superior": 5
+                },
+                "Ronaldo Caiado (PSD)": {
+                  "Total": 3,
+                  "Masculino": 4,
+                  "Feminino": 3,
+                  "16-24": null,
+                  "25-34": 1,
+                  "35-44": 4,
+                  "45-59": 4,
+                  "60+": 5,
+                  "Fundamental": 4,
+                  "Medio": 3,
+                  "Superior": 3
+                },
+                "Renan Santos (MISSÃO)": {
+                  "Total": 2,
+                  "Masculino": 3,
+                  "Feminino": 1,
+                  "16-24": 3,
+                  "25-34": 4,
+                  "35-44": 2,
+                  "45-59": 1,
+                  "60+": 1,
+                  "Fundamental": 2,
+                  "Medio": 1,
+                  "Superior": 4
+                },
+                "Samara (UP)": {
+                  "Total": 2,
+                  "Masculino": 2,
+                  "Feminino": 1,
+                  "16-24": 2,
+                  "25-34": 1,
+                  "35-44": 1,
+                  "45-59": 2,
+                  "60+": 2,
+                  "Fundamental": 2,
+                  "Medio": 1,
+                  "Superior": 1
+                },
+                "Rui Costa Pimenta (PCO)": {
+                  "Total": 1,
+                  "Masculino": 1,
+                  "Feminino": 0,
+                  "16-24": 1,
+                  "25-34": 1,
+                  "35-44": 1,
+                  "45-59": 1,
+                  "60+": 0,
+                  "Fundamental": 0,
+                  "Medio": 1,
+                  "Superior": 1
+                },
+                "Veterinário Wilson Grassi (DEMOCRATA)": {
+                  "Total": 0,
+                  "Masculino": 0,
+                  "Feminino": 0,
+                  "16-24": null,
+                  "25-34": 0,
+                  "35-44": 0,
+                  "45-59": null,
+                  "60+": 0,
+                  "Fundamental": 1,
+                  "Medio": 0,
+                  "Superior": null
+                },
+                "Edmilson Costa (PCB)": {
+                  "Total": 0,
+                  "Masculino": 0,
+                  "Feminino": null,
+                  "16-24": 1,
+                  "25-34": null,
+                  "35-44": null,
+                  "45-59": null,
+                  "60+": null,
+                  "Fundamental": 0,
+                  "Medio": null,
+                  "Superior": null
+                },
+                "Clariana Barao (DC)": {
+                  "Total": 0,
+                  "Masculino": null,
+                  "Feminino": 0,
+                  "16-24": null,
+                  "25-34": null,
+                  "35-44": null,
+                  "45-59": 0,
+                  "60+": null,
+                  "Fundamental": null,
+                  "Medio": 0,
+                  "Superior": null
+                },
+                "Hertz Dias (PSTU)": {
+                  "Total": null,
+                  "Masculino": null,
+                  "Feminino": null,
+                  "16-24": null,
+                  "25-34": null,
+                  "35-44": null,
+                  "45-59": null,
+                  "60+": null,
+                  "Fundamental": null,
+                  "Medio": null,
+                  "Superior": null
+                },
+                "Em branco/nulo/nenhum": {
+                  "Total": 5,
+                  "Masculino": 3,
+                  "Feminino": 7,
+                  "16-24": 7,
+                  "25-34": 3,
+                  "35-44": 5,
+                  "45-59": 5,
+                  "60+": 5,
+                  "Fundamental": 5,
+                  "Medio": 6,
+                  "Superior": 3
+                },
+                "Indecisos": {
+                  "Total": 5,
+                  "Masculino": 2,
+                  "Feminino": 8,
+                  "16-24": 3,
+                  "25-34": 3,
+                  "35-44": 3,
+                  "45-59": 6,
+                  "60+": 6,
+                  "Fundamental": 7,
+                  "Medio": 4,
+                  "Superior": 3
+                }
+              },
+              "base": {
+                "Total": 1204,
+                "Masculino": 589,
+                "Feminino": 615,
+                "16-24": 135,
+                "25-34": 215,
+                "35-44": 219,
+                "45-59": 308,
+                "60+": 327,
+                "Fundamental": 385,
+                "Medio": 542,
+                "Superior": 277
+              }
+            },
+            "bloco2": {
+              "pdf_page": 89,
+              "annex_page": 11,
+              "columns": [
+                "Total",
+                "Ate 2 SM",
+                "2 a 5 SM",
+                "Mais de 5 SM",
+                "PEA",
+                "Nao PEA",
+                "Branca",
+                "Preta",
+                "Parda",
+                "Catolica",
+                "Evangelica"
+              ],
+              "rows": {
+                "Lula (PT)": {
+                  "Total": 37,
+                  "Ate 2 SM": 44,
+                  "2 a 5 SM": 32,
+                  "Mais de 5 SM": 28,
+                  "PEA": 34,
+                  "Nao PEA": 45,
+                  "Branca": 34,
+                  "Preta": 46,
+                  "Parda": 36,
+                  "Catolica": 42,
+                  "Evangelica": 24
+                },
+                "Flavio Bolsonaro (PL)": {
+                  "Total": 35,
+                  "Ate 2 SM": 28,
+                  "2 a 5 SM": 38,
+                  "Mais de 5 SM": 49,
+                  "PEA": 37,
+                  "Nao PEA": 29,
+                  "Branca": 39,
+                  "Preta": 24,
+                  "Parda": 37,
+                  "Catolica": 31,
+                  "Evangelica": 47
+                },
+                "Escritor Augusto Cury (AVANTE)": {
+                  "Total": 5,
+                  "Ate 2 SM": 3,
+                  "2 a 5 SM": 8,
+                  "Mais de 5 SM": 6,
+                  "PEA": 7,
+                  "Nao PEA": 2,
+                  "Branca": 5,
+                  "Preta": 5,
+                  "Parda": 6,
+                  "Catolica": 4,
+                  "Evangelica": 7
+                },
+                "Zema (NOVO)": {
+                  "Total": 5,
+                  "Ate 2 SM": 7,
+                  "2 a 5 SM": 4,
+                  "Mais de 5 SM": 4,
+                  "PEA": 5,
+                  "Nao PEA": 5,
+                  "Branca": 5,
+                  "Preta": 5,
+                  "Parda": 5,
+                  "Catolica": 5,
+                  "Evangelica": 6
+                },
+                "Ronaldo Caiado (PSD)": {
+                  "Total": 3,
+                  "Ate 2 SM": 3,
+                  "2 a 5 SM": 4,
+                  "Mais de 5 SM": 3,
+                  "PEA": 3,
+                  "Nao PEA": 4,
+                  "Branca": 4,
+                  "Preta": 2,
+                  "Parda": 3,
+                  "Catolica": 3,
+                  "Evangelica": 3
+                },
+                "Renan Santos (MISSÃO)": {
+                  "Total": 2,
+                  "Ate 2 SM": 1,
+                  "2 a 5 SM": 2,
+                  "Mais de 5 SM": 5,
+                  "PEA": 3,
+                  "Nao PEA": 0,
+                  "Branca": 2,
+                  "Preta": 3,
+                  "Parda": 2,
+                  "Catolica": 2,
+                  "Evangelica": 2
+                },
+                "Samara (UP)": {
+                  "Total": 2,
+                  "Ate 2 SM": 2,
+                  "2 a 5 SM": 1,
+                  "Mais de 5 SM": 0,
+                  "PEA": 2,
+                  "Nao PEA": 1,
+                  "Branca": 1,
+                  "Preta": 1,
+                  "Parda": 2,
+                  "Catolica": 1,
+                  "Evangelica": 2
+                },
+                "Rui Costa Pimenta (PCO)": {
+                  "Total": 1,
+                  "Ate 2 SM": 0,
+                  "2 a 5 SM": 1,
+                  "Mais de 5 SM": 0,
+                  "PEA": 1,
+                  "Nao PEA": 0,
+                  "Branca": 0,
+                  "Preta": 1,
+                  "Parda": 1,
+                  "Catolica": 1,
+                  "Evangelica": null
+                },
+                "Veterinário Wilson Grassi (DEMOCRATA)": {
+                  "Total": 0,
+                  "Ate 2 SM": 0,
+                  "2 a 5 SM": null,
+                  "Mais de 5 SM": null,
+                  "PEA": 0,
+                  "Nao PEA": 1,
+                  "Branca": 0,
+                  "Preta": null,
+                  "Parda": 0,
+                  "Catolica": 0,
+                  "Evangelica": null
+                },
+                "Edmilson Costa (PCB)": {
+                  "Total": 0,
+                  "Ate 2 SM": 0,
+                  "2 a 5 SM": null,
+                  "Mais de 5 SM": null,
+                  "PEA": 0,
+                  "Nao PEA": null,
+                  "Branca": null,
+                  "Preta": null,
+                  "Parda": 0,
+                  "Catolica": null,
+                  "Evangelica": 0
+                },
+                "Clariana Barao (DC)": {
+                  "Total": 0,
+                  "Ate 2 SM": null,
+                  "2 a 5 SM": 0,
+                  "Mais de 5 SM": null,
+                  "PEA": 0,
+                  "Nao PEA": null,
+                  "Branca": null,
+                  "Preta": null,
+                  "Parda": 0,
+                  "Catolica": null,
+                  "Evangelica": 0
+                },
+                "Hertz Dias (PSTU)": {
+                  "Total": null,
+                  "Ate 2 SM": null,
+                  "2 a 5 SM": null,
+                  "Mais de 5 SM": null,
+                  "PEA": null,
+                  "Nao PEA": null,
+                  "Branca": null,
+                  "Preta": null,
+                  "Parda": null,
+                  "Catolica": null,
+                  "Evangelica": null
+                },
+                "Em branco/nulo/nenhum": {
+                  "Total": 5,
+                  "Ate 2 SM": 5,
+                  "2 a 5 SM": 6,
+                  "Mais de 5 SM": 4,
+                  "PEA": 5,
+                  "Nao PEA": 5,
+                  "Branca": 3,
+                  "Preta": 8,
+                  "Parda": 5,
+                  "Catolica": 4,
+                  "Evangelica": 4
+                },
+                "Indecisos": {
+                  "Total": 5,
+                  "Ate 2 SM": 6,
+                  "2 a 5 SM": 3,
+                  "Mais de 5 SM": 1,
+                  "PEA": 4,
+                  "Nao PEA": 6,
+                  "Branca": 6,
+                  "Preta": 4,
+                  "Parda": 4,
+                  "Catolica": 5,
+                  "Evangelica": 4
+                }
+              },
+              "base": {
+                "Total": 1204,
+                "Ate 2 SM": 585,
+                "2 a 5 SM": 417,
+                "Mais de 5 SM": 156,
+                "PEA": 835,
+                "Nao PEA": 369,
+                "Branca": 379,
+                "Preta": 222,
+                "Parda": 565,
+                "Catolica": 697,
+                "Evangelica": 288
+              }
+            },
+            "bloco3": {
+              "pdf_page": 89,
+              "annex_page": 11,
+              "columns": [
+                "Total",
+                "Regiao metropolitana",
+                "Interior",
+                "PT",
+                "PL",
+                "Outro partido",
+                "Nao tem"
+              ],
+              "rows": {
+                "Lula (PT)": {
+                  "Total": 37,
+                  "Regiao metropolitana": 32,
+                  "Interior": 39,
+                  "PT": 88,
+                  "PL": 2,
+                  "Outro partido": 29,
+                  "Nao tem": 25
+                },
+                "Flavio Bolsonaro (PL)": {
+                  "Total": 35,
+                  "Regiao metropolitana": 33,
+                  "Interior": 35,
+                  "PT": 1,
+                  "PL": 88,
+                  "Outro partido": 44,
+                  "Nao tem": 33
+                },
+                "Escritor Augusto Cury (AVANTE)": {
+                  "Total": 5,
+                  "Regiao metropolitana": 7,
+                  "Interior": 5,
+                  "PT": 3,
+                  "PL": 2,
+                  "Outro partido": 6,
+                  "Nao tem": 8
+                },
+                "Zema (NOVO)": {
+                  "Total": 5,
+                  "Regiao metropolitana": 7,
+                  "Interior": 5,
+                  "PT": 2,
+                  "PL": 3,
+                  "Outro partido": 7,
+                  "Nao tem": 7
+                },
+                "Ronaldo Caiado (PSD)": {
+                  "Total": 3,
+                  "Regiao metropolitana": 5,
+                  "Interior": 3,
+                  "PT": 2,
+                  "PL": 3,
+                  "Outro partido": 4,
+                  "Nao tem": 4
+                },
+                "Renan Santos (MISSÃO)": {
+                  "Total": 2,
+                  "Regiao metropolitana": 3,
+                  "Interior": 2,
+                  "PT": 1,
+                  "PL": null,
+                  "Outro partido": 4,
+                  "Nao tem": 3
+                },
+                "Samara (UP)": {
+                  "Total": 2,
+                  "Regiao metropolitana": 1,
+                  "Interior": 2,
+                  "PT": 2,
+                  "PL": null,
+                  "Outro partido": 1,
+                  "Nao tem": 2
+                },
+                "Rui Costa Pimenta (PCO)": {
+                  "Total": 1,
+                  "Regiao metropolitana": 0,
+                  "Interior": 1,
+                  "PT": 0,
+                  "PL": null,
+                  "Outro partido": 0,
+                  "Nao tem": 1
+                },
+                "Veterinário Wilson Grassi (DEMOCRATA)": {
+                  "Total": 0,
+                  "Regiao metropolitana": 0,
+                  "Interior": 0,
+                  "PT": null,
+                  "PL": null,
+                  "Outro partido": null,
+                  "Nao tem": 0
+                },
+                "Edmilson Costa (PCB)": {
+                  "Total": 0,
+                  "Regiao metropolitana": null,
+                  "Interior": 0,
+                  "PT": 0,
+                  "PL": null,
+                  "Outro partido": null,
+                  "Nao tem": null
+                },
+                "Clariana Barao (DC)": {
+                  "Total": 0,
+                  "Regiao metropolitana": 0,
+                  "Interior": null,
+                  "PT": null,
+                  "PL": null,
+                  "Outro partido": 0,
+                  "Nao tem": null
+                },
+                "Hertz Dias (PSTU)": {
+                  "Total": null,
+                  "Regiao metropolitana": null,
+                  "Interior": null,
+                  "PT": null,
+                  "PL": null,
+                  "Outro partido": null,
+                  "Nao tem": null
+                },
+                "Em branco/nulo/nenhum": {
+                  "Total": 5,
+                  "Regiao metropolitana": 5,
+                  "Interior": 5,
+                  "PT": 1,
+                  "PL": 1,
+                  "Outro partido": 2,
+                  "Nao tem": 9
+                },
+                "Indecisos": {
+                  "Total": 5,
+                  "Regiao metropolitana": 7,
+                  "Interior": 4,
+                  "PT": 0,
+                  "PL": 2,
+                  "Outro partido": 1,
+                  "Nao tem": 9
                 }
               },
               "base": {

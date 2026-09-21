@@ -5,6 +5,7 @@ import importlib.util
 import json
 from html import escape
 from pathlib import Path
+from types import ModuleType
 
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / "docs/assets"
@@ -13,17 +14,26 @@ CEN = "pessoas16_efetivo"
 D = json.loads((ASSETS / f"{SLUG}_data.json").read_text())
 T = json.loads((ASSETS / f"{SLUG}_cruzamentos.json").read_text())["tabelas"]
 R, G, F = D["reweight"], D["geography"], D["transfer"]
-spec = importlib.util.spec_from_file_location(
-    "figs", ROOT / "scripts/datafolha-21092026-figures.py"
-)
-figs = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(figs)
+
+
+def load_module(name: str, path: Path) -> ModuleType:
+    """Carrega um script irmao pelo caminho, porque o nome tem hifen."""
+    spec = importlib.util.spec_from_file_location(name, path)
+    if spec is None or spec.loader is None:
+        raise ImportError(f"nao foi possivel carregar {path}")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+figs = load_module("figs", ROOT / "scripts/datafolha-21092026-figures.py")
 fmt = figs.fmt
-spec_gov = importlib.util.spec_from_file_location(
+governor_view = load_module(
     "governor_view", ROOT / "scripts/datafolha-21092026-governadores-view.py"
 )
-governor_view = importlib.util.module_from_spec(spec_gov)
-spec_gov.loader.exec_module(governor_view)
+southeast_view = load_module(
+    "southeast_view", ROOT / "scripts/datafolha-21092026-sudeste-view.py"
+)
 
 
 def ref(page, kind=""):
@@ -69,7 +79,7 @@ def main():
 <h1>O empate.<br><em>A régua da renda.</em></h1><p class="deck">O placar nacional repete 46 × 44. A troca da referência de renda mantém Flávio numericamente à frente. O relatório completo permite conferir a conta, comparar o Sudeste e testar os limites da engenharia reversa.</p>
 <div class="score-grid"><div><span>2º TURNO · PUBLICADO</span><b><i class="lula">46</i> <small>×</small> <i class="flavio">44</i></b><p>Lula / Flávio</p></div><div><span>2º TURNO · SENSIBILIDADE PNAD 2025</span><b><i class="lula">{fmt(adjusted["lula"])}</i> <small>×</small> <i class="flavio">{fmt(adjusted["flavio"])}</i></b><p>Renda domiciliar efetiva · pessoas de 16 anos ou mais</p></div></div>
 <p class="boundary">Sensibilidade a uma margem de ponderação. Não é previsão, voto corrigido nem reprodução dos pesos conjuntos do instituto.</p><p class="meta">Campo: 15–17/09 · Divulgação: 17/09 · Relatório completo e dossiê: 21/09/2026<br>2.001 entrevistas no relatório · presencial em pontos de fluxo · Folha e TV Globo</p></div></header>
-<nav aria-label="Capítulos"><div class="wrap"><a href="#renda">01 Renda</a><a href="#sudeste">02 Sudeste</a><a href="#governadores">02b Governadores</a><a href="#microdados">03 Microdados</a><a href="#historico">04 Série</a><a href="#transferencia">05 Transferências</a><a href="#documentos">06 Documentos</a><a href="#tabelas">07 Tabelas</a><a href="#fontes">08 Fontes</a></div></nav><main class="wrap">"""
+<nav aria-label="Capítulos"><div class="wrap"><a href="#renda">01 Renda</a><a href="#sudeste">02 Sudeste</a><a href="#governadores">02b Governadores</a><a href="#sudeste-campanha">02c Campanha</a><a href="#microdados">03 Microdados</a><a href="#historico">04 Série</a><a href="#transferencia">05 Transferências</a><a href="#documentos">06 Documentos</a><a href="#tabelas">07 Tabelas</a><a href="#fontes">08 Fontes</a></div></nav><main class="wrap">"""
     h += section(
         "renda",
         "01",
@@ -121,9 +131,11 @@ def main():
         ("PNAD · domicílios · efetiva", "domicilios_efetivo"),
     ]:
         vals = [
-            R["turnos"][t]["publicado"]
-            if key is None
-            else R["turnos"][t]["cenarios"][key]["ajustado"]
+            (
+                R["turnos"][t]["publicado"]
+                if key is None
+                else R["turnos"][t]["cenarios"][key]["ajustado"]
+            )
             for t in ["1t", "2t"]
         ]
         variants.append(
@@ -194,9 +206,10 @@ def main():
     h += f"<p>SP, RJ e MG representam <strong>{fmt(100 * (1 - G['weights']['ES']))}%</strong> do eleitorado do Sudeste. Ponderados pelo TSE e normalizados apenas entre esses três estados, resultam em <strong>{pair(G['known_conditional'])}</strong>. Não é uma nova pesquisa regional: falta o ES, e somar pesquisas não reconstrói a amostra nacional. A proximidade com o 42 × 47 regional do mesmo campo <strong>não aponta uma contradição clara</strong>.</p>"
     h += "<p>Os pesos vêm do perfil TSE gerado em 01/07/2026, competência junho, disponível no acervo. Não usamos média simples dos estados nem seus tamanhos de amostra como pesos eleitorais. Também não confundimos voto total com voto válido: a normalização dos válidos deve vir depois da agregação dos votos totais.</p>"
     h += f"<details><summary>Quanto o ES ausente permite variar a conta?</summary><p>Fixando os pontos publicados dos outros três estados, Lula no Sudeste poderia ficar entre {fmt(G['bounds']['lula'][0])}% e {fmt(G['bounds']['lula'][1])}%; Flávio, entre {fmt(G['bounds']['flavio'][0])}% e {fmt(G['bounds']['flavio'][1])}%. Os máximos não podem ocorrer juntos. O intervalo aritmético da diferença Lula menos Flávio é de {fmt(G['gap_bounds'][0])} a {fmt(G['gap_bounds'][1])} pontos, permitindo qualquer divisão dos votos capixabas. Não são intervalos de confiança: congelam estimativas arredondadas e ignoram o erro amostral.</p><p>Tentar deduzir o voto capixaba pela diferença entre pesquisas amplifica cada ponto regional por <strong>{fmt(1 / G['weights']['ES'])}</strong>. A igualdade exata entre os pontos dos candidatos exigiria ES em 24,39 × 49,36 para a regional antiga, ou 24,39 × 27,17 para a nova. Esses resíduos algébricos não medem o ES; mudam violentamente com arredondamento, amostras e datas. Não os usamos para atribuir um estado a um candidato.</p></details>"
-    h += '<div class="simulation"><h3>Explore o peso do estado ausente</h3><p>Hipótese ilustrativa para o ES, mantendo SP, RJ e MG nos pontos publicados. Não é pesquisa nem previsão.</p><label for="es-lula">Lula no ES <output id="es-lula-out">40%</output></label><input id="es-lula" type="range" min="0" max="100" value="40"><label for="es-flavio">Flávio no ES <output id="es-flavio-out">50%</output></label><input id="es-flavio" type="range" min="0" max="100" value="50"><p id="es-result" aria-live="polite"></p><noscript>Ative JavaScript para explorar. A tabela e os limites acima continuam disponíveis.</noscript></div>'
+    h += '<div class="simulation" id="simulador-es"><h3>Explore o peso do estado ausente</h3><p>Hipótese ilustrativa para o ES, mantendo SP, RJ e MG nos pontos publicados. Não é pesquisa nem previsão.</p><label for="es-lula">Lula no ES <output id="es-lula-out">40%</output></label><input id="es-lula" type="range" min="0" max="100" value="40"><label for="es-flavio">Flávio no ES <output id="es-flavio-out">50%</output></label><input id="es-flavio" type="range" min="0" max="100" value="50"><p id="es-result" aria-live="polite"></p><noscript>Ative JavaScript para explorar. A tabela e os limites acima continuam disponíveis.</noscript></div>'
     h += f"<p>No anexo territorial do novo nacional, o Sudeste tem 840 entrevistas de campo: SP 448, MG 196, RJ 168 e ES 28. Na tabela de voto, a base regional ponderada é 838. Os recortes estaduais de voto dessa amostra nacional não foram publicados; não podemos identificar em qual UF ela diverge das pesquisas estaduais independentes. {ref(3, '_bairros')} {ref(4, '_bairros')}</p></section>"
     h += governor_view.render(table, fmt)
+    h += southeast_view.render(table, figure, fmt)
     h += section(
         "microdados",
         "03",
@@ -372,15 +385,17 @@ def main():
         "Da fonte à conta.",
         "Documentos originais, dados derivados e roteiro de reprodução.",
     )
-    h += f'''<ol><li><a href="fontes/{SLUG}.pdf">Relatório nacional completo, 50 páginas</a> · <a href="{D["provenance"]["official_report_url"]}">original no Datafolha</a>. O PDF recebido em Downloads foi movido ao acervo e seu SHA256 confere com o download oficial.</li><li><a href="fontes/{SLUG}_estaduais.pdf">Relatório estadual completo, 132 páginas</a> · <a href="{D["provenance"]["official_states_url"]}">original no Datafolha</a>. Campo 8–10/09; metodologia p. 2; segundo turno SP p. 58, RJ p. 76, MG p. 94.</li><li><a href="fontes/{SLUG}_registro.txt">Registro BR-04029/2026</a> · <a href="fontes/{SLUG}_questionario.pdf">questionário</a> · <a href="fontes/{SLUG}_bairros.pdf">território e perfil de campo</a> · <a href="https://pesqele-divulgacao.tse.jus.br/app/pesquisa/listar.xhtml">PesqEle</a>.</li><li><a href="https://dadosabertos.tse.jus.br/dataset/eleitorado-atual">Perfil oficial do eleitorado, TSE</a>. Cópia usada: geração 01/07/2026, excluído exterior. Totais estaduais e hash preservados no JSON analítico.</li><li><a href="assets/{SLUG}_data.json">Cálculos, conferências, fontes e hashes</a> · <a href="assets/{SLUG}_identificacao.json">certificados da projeção conjunta</a> · <a href="reponderacao_pnad.html#metodo">método e referências PNAD</a>.</li><li><a href="https://ec.europa.eu/eurostat/web/products-statistical-working-papers/-/ks-ra-13-020">Eurostat, Statistical matching: a model based approach for data integration</a>. Referência sobre suposições de identificação; não certificação desta auditoria.</li></ol>
+    h += f"""<ol><li><a href="fontes/{SLUG}.pdf">Relatório nacional completo, 50 páginas</a> · <a href="{D["provenance"]["official_report_url"]}">original no Datafolha</a>. O PDF recebido em Downloads foi movido ao acervo e seu SHA256 confere com o download oficial.</li><li><a href="fontes/{SLUG}_estaduais.pdf">Relatório estadual completo, 132 páginas</a> · <a href="{D["provenance"]["official_states_url"]}">original no Datafolha</a>. Campo 8–10/09; metodologia p. 2; segundo turno SP p. 58, RJ p. 76, MG p. 94.</li><li><a href="fontes/{SLUG}_registro.txt">Registro BR-04029/2026</a> · <a href="fontes/{SLUG}_questionario.pdf">questionário</a> · <a href="fontes/{SLUG}_bairros.pdf">território e perfil de campo</a> · <a href="https://pesqele-divulgacao.tse.jus.br/app/pesquisa/listar.xhtml">PesqEle</a>.</li><li><a href="https://dadosabertos.tse.jus.br/dataset/eleitorado-atual">Perfil oficial do eleitorado, TSE</a>. Cópia usada: geração 01/07/2026, excluído exterior. Totais estaduais e hash preservados no JSON analítico.</li><li><a href="fontes/{SLUG}_governador_sp.pdf">Governador de São Paulo</a> · <a href="fontes/{SLUG}_governador_rj.pdf">do Rio de Janeiro</a> · <a href="fontes/{SLUG}_governador_mg.pdf">de Minas Gerais</a>. Datafolha, campo 8–10/09/2026, projetos PO4285, PO4286 e PO4287, registros SP-04189 e BR-03904, RJ-09217 e BR-06361, MG-01611 e BR-03022.</li>{southeast_view.fonte_es()}<li><a href="assets/{SLUG}_sudeste.json">Camada do Sudeste: vão, cruzamentos publicados, IPF com três priors, limites de Fréchet e cobertura</a> · <a href="assets/{SLUG}_sudeste.csv">placar dos quatro estados</a> · <a href="assets/{SLUG}_cobertura_sudeste.json">cobertura do contratante por estado</a>. Geradas por <code>scripts/datafolha-21092026-sudeste.py</code> e <code>scripts/datafolha-21092026-cobertura-sudeste.py</code>.</li><li><a href="assets/{SLUG}_data.json">Cálculos, conferências, fontes e hashes</a> · <a href="assets/{SLUG}_identificacao.json">certificados da projeção conjunta</a> · <a href="assets/{SLUG}_governadores.json">27 tabelas dos anexos estaduais</a> · <a href="reponderacao_pnad.html#metodo">método e referências PNAD</a>.</li><li><a href="https://ec.europa.eu/eurostat/web/products-statistical-working-papers/-/ks-ra-13-020">Eurostat, Statistical matching: a model based approach for data integration</a>. Referência sobre suposições de identificação; não certificação desta auditoria.</li></ol>
 <details><summary>Reproduzir no repositório</summary><pre>python3 scripts/datafolha-21092026-extract.py
 python3 scripts/datafolha-21092026-audit.py
 python3 scripts/datafolha-21092026-governadores.py
+python3 scripts/datafolha-21092026-sudeste.py
+python3 scripts/datafolha-21092026-cobertura-sudeste.py
 python3 scripts/datafolha-21092026-build.py
 python3 scripts/reponderacao-pnad.py calcular --hoje 2026-09-21
 python3 scripts/reponderacao-build.py
 python3 scripts/social-cards.py --only datafolha_21092026</pre><p class="hash">SHA256 nacional: {D["provenance"]["relatorio.pdf"]["sha256"]}</p></details></section></main><footer class="wrap">Arvor · 21 de setembro de 2026 · Sensibilidade e auditoria documental. <a href="index.html">Biblioteca</a> · <a href="reponderacao_pnad.html">Comparar pesquisas</a></footer>
-<script type="application/json" id="southeast-data">{json.dumps({"weight": G["weights"]["ES"], "known": G["known_contribution"]})}</script></body></html>'''
+<script type="application/json" id="southeast-data">{json.dumps({"weight": G["weights"]["ES"], "known": G["known_contribution"]})}</script></body></html>"""
     assert "—" not in h
     (ROOT / "docs" / f"{SLUG}.html").write_text(
         h.replace("<section ", "\n<section ") + "\n"

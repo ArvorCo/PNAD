@@ -1,6 +1,9 @@
 'use strict';
-const output = document.querySelector('.flow-readout');
+const fallback = document.querySelector('.flow-readout');
 for (const flow of document.querySelectorAll('.flow')) {
+  const figure = flow.closest('figure');
+  const sibling = figure && figure.nextElementSibling;
+  const output = sibling && sibling.classList.contains('flow-readout') ? sibling : fallback;
   const show = () => { if (output) output.textContent = flow.getAttribute('aria-label'); };
   for (const event of ['pointerenter', 'focus', 'click']) flow.addEventListener(event, show);
 }

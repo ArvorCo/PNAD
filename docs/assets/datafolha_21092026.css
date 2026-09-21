@@ -9,5 +9,22 @@
 .finding-grid b{display:block;font:500 58px var(--display);color:var(--red)}
 .finding-grid span{display:block;font:14px/1.6 var(--sans);max-width:260px}
 .hero h1{font-size:clamp(56px,7.7vw,100px)}
+h4{font:700 17px var(--sans);margin:30px 0 8px;letter-spacing:.01em}
+#sudeste-campanha ul{max-width:910px}
+#sudeste-campanha li{line-height:1.5}
+#sudeste-campanha .flow-readout{margin:0 0 30px}
 input:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
 @media(max-width:700px){.finding-grid{grid-template-columns:1fr;gap:18px}.finding-grid>div{display:flex;align-items:center;gap:24px}.finding-grid b{min-width:95px;font-size:48px}.simulation{padding:20px}.hero h1{font-size:58px}}
+
+/* Duas larguras para a mesma figura. Abaixo de 720px o placar do Sudeste
+   troca pelo desenho empilhado, que cabe inteiro na tela: na versão larga a
+   coluna do 2º turno saía do quadro e ficava escondida atrás da rolagem. */
+.fig-estreita{display:none}
+.fig-larga svg,.fig-estreita svg{display:block;width:100%;height:auto}
+.fig-estreita svg{min-width:0}
+.fig-rolar{display:none}
+@media(max-width:719px){
+.fig-larga{display:none}
+.fig-estreita{display:block}
+.fig-rolar{display:block;margin-top:6px;font-weight:600;color:var(--ink)}
+}

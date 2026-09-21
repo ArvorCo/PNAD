@@ -61,7 +61,8 @@ def coverage_html(data, table):
             details = (
                 f'<a href="#pesquisa-{escape(p["id"], quote=True)}">'
                 "Ver cálculo e cenários de renda</a>"
-                if turns else ""
+                if turns
+                else ""
             )
             if p.get("dossie"):
                 details += (

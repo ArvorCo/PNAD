@@ -58,9 +58,9 @@ def poll_record(tables):
         "nota": "Relatório completo de 50 páginas publicado em 21/09; resultados divulgados em 17/09. O registro prevê 2.002 entrevistas; o relatório e o anexo territorial somam 2.001.",
     }
     p["renda"]["bases"] = [992, 655, 266]
-    p["renda"]["nota"] = (
-        "Bases ponderadas da intenção de voto, pp. 35 e 42. Somam 1.913; 88 casos não aparecem no cruzamento de renda. Normalização entre renda declarada e delta ancorado no placar nacional; não identifica o voto dos casos sem renda publicada."
-    )
+    p["renda"][
+        "nota"
+    ] = "Bases ponderadas da intenção de voto, pp. 35 e 42. Somam 1.913; 88 casos não aparecem no cruzamento de renda. Normalização entre renda declarada e delta ancorado no placar nacional; não identifica o voto dos casos sem renda publicada."
     names = [
         "lula",
         "flavio",
@@ -103,9 +103,9 @@ def poll_record(tables):
             if t == "1t"
             else ["Lula", "Flavio", "Em branco", "Indecisos"]
         )
-        assert all(e in label for e, label in zip(expected, labels, strict=True)), (
-            labels
-        )
+        assert all(
+            e in label for e, label in zip(expected, labels, strict=True)
+        ), labels
         p["publicado"][t] = dict(
             zip(options, [r["Total"] for r in rows.values()], strict=True)
         )

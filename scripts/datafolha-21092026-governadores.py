@@ -5,6 +5,7 @@ import importlib.util
 import json
 import re
 from pathlib import Path
+from types import ModuleType
 
 import fitz
 
@@ -13,8 +14,11 @@ FOLDER = ROOT / "data/pesquisas/datafolha/2026-09-10-governadores"
 ASSETS = ROOT / "docs/assets"
 
 
-def module(name):
-    spec = importlib.util.spec_from_file_location(name, ROOT / f"scripts/{name}.py")
+def module(name: str) -> ModuleType:
+    path = ROOT / f"scripts/{name}.py"
+    spec = importlib.util.spec_from_file_location(name, path)
+    if spec is None or spec.loader is None:
+        raise ImportError(f"nao foi possivel carregar {path}")
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
     return mod
@@ -86,7 +90,18 @@ def extract(pdf, pages, offset):
     return result
 
 
-def overlap(a, b, rounding=0):
+# O anexo presidencial estadual chama de Situacao A o cenario COM Pablo Marcal
+# e de Situacao B o cenario SEM Marcal, que e o que reproduz o placar publicado.
+# A casa exclui cenarios com Marcal, entao o 1o turno usado aqui e a Situacao B.
+# A leitura e conferida pela presenca da linha de Marcal, nao pelo rotulo.
+PRES_FIRST_ROUND = {
+    "SP": {"com_marcal": [49, 50, 51], "sem_marcal": [52, 53]},
+    "MG": {"com_marcal": [85, 86, 87], "sem_marcal": [88, 89]},
+}
+MARCAL = "Pablo Marçal (PRTB)"
+
+
+def overlap(a: float, b: float, rounding: float = 0.0) -> list[float]:
     return [max(0, a + b - 100 - 2 * rounding), min(100, a + rounding, b + rounding)]
 
 
@@ -133,6 +148,11 @@ def analyze(uf, tables, presidential):
     pt_a, pt_b = gov[leader]["PT"], pres[lula]["PT"]
     first, _ = FLAT(tables["estimulada"])
     pres_first, _ = FLAT(presidential["estimulada"])
+    pres_first_marcal, _ = FLAT(presidential["estimulada_com_marcal"])
+    if MARCAL in pres_first:
+        raise ValueError(f"Situacao B com Marcal em {uf}")
+    if MARCAL not in pres_first_marcal:
+        raise ValueError(f"Situacao A sem Marcal em {uf}")
     result = {
         "uf": uf,
         "project": "PO4285" if uf == "SP" else "PO4287",
@@ -163,15 +183,22 @@ def analyze(uf, tables, presidential):
         "flags_over_1_05pp": flags,
         "first_governor": {k: v["Total"] for k, v in first.items()},
         "first_president": {k: v["Total"] for k, v in pres_first.items()},
+        "first_president_scenario": "Situação B, sem Pablo Marçal",
+        "first_president_com_marcal": {
+            k: v["Total"] for k, v in pres_first_marcal.items()
+        },
         "pages": {
             "governor": PAGES[uf]["turno2"][0],
             "president": 58 if uf == "SP" else 94,
+            "president_first_round": PRES_FIRST_ROUND[uf]["sem_marcal"],
+            "president_first_round_com_marcal": PRES_FIRST_ROUND[uf]["com_marcal"],
         },
         "assumptions": [
             "Registros, projeto, campo, n e bases ponderadas coincidem. Igualdade dos pesos individuais entre perguntas não é demonstrável sem os microdados.",
             "Limites de interseção condicionados ao mesmo universo e aos mesmos pesos finais. Não são cruzamentos observados nem intervalos populacionais.",
             "Arredondamento: ±0,5 ponto por proporção; bases ponderadas tratadas como exatas, embora publicadas como inteiros.",
             "PT é partido de preferência, não equivale a voto em Lula nem à escala bolsonarista/petista.",
+            "Primeiro turno presidencial: Situação B, sem Pablo Marçal. A Situação A do anexo é o cenário com Marçal e fica preservada em `first_president_com_marcal`.",
         ],
     }
     if uf == "MG":
@@ -189,7 +216,8 @@ def main():
         pres = extract(
             president,
             {
-                "estimulada": [49, 50, 51] if uf == "SP" else [85, 86, 87],
+                "estimulada_com_marcal": PRES_FIRST_ROUND[uf]["com_marcal"],
+                "estimulada": PRES_FIRST_ROUND[uf]["sem_marcal"],
                 "turno2": [58] if uf == "SP" else [94],
             },
             42 if uf == "SP" else 78,
