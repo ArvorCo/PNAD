@@ -359,6 +359,7 @@ def ch_primeiro_turno() -> str:
             "com cobertura e datas informadas abaixo. Cinza: centro-direita; preto: esquerda + nanicos. "
             "Roxo: indecisos; verde: branco/nulo/não vai votar. "
             "Média móvel de 7 dias pela divulgação, sempre para trás. Tracejado é publicado; contínuo é reponderado. "
+            "Pontilhado conecta lacunas apenas visualmente, sem entrar na média. "
             "No celular, deslize o gráfico para ver as datas recentes e os grupos.",
         )
         + importlib.import_module("reponderacao-janela-view").summary(D, "1t", tabela)

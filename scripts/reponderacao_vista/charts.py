@@ -34,6 +34,8 @@ from reponderacao_vista.context import (
     rotulo,
     sinal,
 )
+from reponderacao_vista.gaps import draw_bridges
+from reponderacao_vista.gaps import legend as gap_legend
 from reponderacao_vista.markers import (
     abre_alvo,
     alvo_onda,
@@ -89,14 +91,14 @@ def serie_svg(ident: str, turno: str, compacta: bool = False) -> str:
     legendas = 1 if compacta else (2 if len(INSTITUTOS) > 1 else 1)
     altura = 360 if compacta else 400 + 30 * legendas
     if not compacta:
-        altura = 780 if turno == "1t" else 560
+        altura = 810 if turno == "1t" else 590
     largura = FULL
     esq, dir_ = 54, largura - (168 if compacta else 190)
     if not compacta:
         dir_ = largura - 225
     topo, base = (
         (30 if compacta else 44),
-        altura - (46 if compacta else 46 + 30 * legendas),
+        altura - (46 if compacta else 76 + 30 * legendas),
     )
 
     d0, d1 = datas[0], datas[-1]
@@ -143,6 +145,10 @@ def serie_svg(ident: str, turno: str, compacta: bool = False) -> str:
             f'<g data-serie="{chave}"><title>{esc(rotulo(chave))}: média publicada e reponderada</title>'
         )
         for nome, dados in (("publicado", pub), ("ajustado", adj)):
+            if not compacta:
+                draw_bridges(
+                    cv, datas, dados[chave], px, py, COR[chave], nome, rotulo(chave)
+                )
             trecho: list[tuple[float, float]] = []
             for d, v in zip(datas, dados[chave], strict=True):
                 if v is None:
@@ -186,6 +192,7 @@ def serie_svg(ident: str, turno: str, compacta: bool = False) -> str:
         _legenda(cv, esq, base + 52, largura)
         if legendas > 1:
             _legenda_institutos(cv, esq, base + 82, {p["instituto"] for p in polls})
+        gap_legend(cv, esq, base + 110, MUTED)
     return cv.render()
 
 

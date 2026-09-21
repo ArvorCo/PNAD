@@ -388,7 +388,7 @@ def aggregate(polls: list[dict[str, Any]], today: date) -> dict[str, Any]:
         "grupos_1t": groups,
         "metodo": {
             "kernel": "média móvel retrospectiva de 7 dias, de D-6 a D pela divulgação, com a última onda elegível de cada instituto e peso igual entre casas",
-            "linha": "cada data usa somente pesquisas já divulgadas dentro da janela; sem pesquisas elegíveis, a linha fica interrompida, sem zero nem carregamento da média antiga",
+            "linha": "cada data usa somente pesquisas já divulgadas dentro da janela; sem pesquisas elegíveis, o valor fica ausente, sem zero nem carregamento da média antiga. O pontilhado liga os extremos disponíveis apenas no desenho, sem entrar no cálculo",
             "janela_dias": WINDOW_DAYS,
             "data_elegibilidade": "divulgacao",
             "historico": "Recalculado com os documentos hoje disponíveis; não é arquivo das versões dos dados que estavam disponíveis em cada dia. Datas de divulgação ausentes são excluídas.",

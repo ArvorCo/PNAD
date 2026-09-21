@@ -38,7 +38,10 @@ def summary(data, turn, table):
     return (
         f'<div id="janela-{turn}"><p class="note"><b>Média móvel de 7 dias: dia observado e seis dias anteriores.</b> '
         "A entrada ocorre pela divulgação, nunca antes. Cada instituto tem peso igual e contribui "
-        "com sua última onda elegível na janela. Sem pesquisa, deixamos uma lacuna. Entradas e saídas "
+        "com sua última onda elegível na janela. Sem pesquisa, o valor permanece ausente. "
+        "O pontilhado apenas liga visualmente os extremos por interpolação linear retrospectiva; "
+        "não cria uma pesquisa, não preenche as tabelas e não entra nas médias. Não extrapolamos "
+        "antes do primeiro nem depois do último ponto disponível. Entradas e saídas "
         "de institutos também movem a média; uma semana com poucas casas exige mais cautela.</p>"
         + table(["Linhas", "Institutos na janela atual", "Cobertura atual"], latest)
         + "<details><summary>Conferir a cobertura de cada data</summary>"
