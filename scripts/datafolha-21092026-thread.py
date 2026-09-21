@@ -160,6 +160,15 @@ CRUZ_MG = cruzamento("MG", "presidente, 2o turno")["linhas"][
 ]
 CRUZ_RJ = cruzamento("RJ", "presidente, 2o turno")["linhas"]["Eduardo Paes (PSD)"]
 LINHAS_MEDIDAS = S["varredura_de_cruzamentos"]["linhas_medidas"]
+# A linha do Rio que o dossie passou a publicar com base e intervalo: ela e
+# pequena em pontos do eleitorado e mesmo assim tem o zero fora do intervalo.
+RUAS_LULA = next(
+    r
+    for r in S["transferencia"]["RJ"]["incerteza_das_linhas_medidas"]
+    if r["origem"].startswith("Douglas Ruas")
+    and r["destino"] == LULA
+    and r["turno"] == "2º turno"
+)
 # Dois numeros diferentes, que nao podem ser trocados um pelo outro: o
 # eleitorado de Tarcisio que nao vota Flavio no 1o turno, e a parte desse
 # eleitorado cujo destino o relatorio nao abre.
@@ -812,13 +821,24 @@ def build_cards() -> list[dict]:
                     f"1º turno. São {fmt(TARCISIO_FORA_FLAVIO)} pontos desse eleitorado "
                     f"fora de Flávio, e o instituto abre parte deles: {CRUZ_SP[LULA]} "
                     f"vão a Lula e {CRUZ_SP[CURY]} a Cury. O destino dos outros "
-                    f"{fmt(TARCISIO_SEM_LINHA)} o relatório não abre."
+                    f"{fmt(TARCISIO_SEM_LINHA)} o relatório não abre. Esses "
+                    f"{CRUZ_SP[LULA]} viram piso do 2º turno: estimativa nossa não pode "
+                    "ficar abaixo do que o instituto mediu."
                 ),
                 (
                     f"Rio. Quem vota em Paes dá {CRUZ_RJ[FLAVIO]} a Flávio e "
                     f"{CRUZ_RJ[LULA]} a Lula no 2º turno. É o cruzamento que mostra por "
                     "que o Rio inverte o sinal: o eleitorado do favorito ao governo é de "
                     "centro e de esquerda, e o presidenciável da direita vive fora dele."
+                ),
+                (
+                    "Linha medida também tem intervalo: os "
+                    f"{RUAS_LULA['valor_pct']}% de Ruas para Lula saem de "
+                    f"{RUAS_LULA['n_subamostra']} entrevistas, de "
+                    f"{fmt(RUAS_LULA['ic95_com_deff_pct'][0], 1)} a "
+                    f"{fmt(RUAS_LULA['ic95_com_deff_pct'][1], 1)} com efeito de "
+                    f"desenho, e valem {fmt(RUAS_LULA['pontos_do_eleitorado_pp'], 2)} "
+                    "ponto do eleitorado."
                 ),
                 (
                     "Dois limites andam colados no número. A leitura é agregada: o "

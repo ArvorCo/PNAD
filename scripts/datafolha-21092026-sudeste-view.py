@@ -42,6 +42,10 @@ def modulo(caminho: str, nome: str) -> ModuleType:
 
 
 FIG = modulo("scripts/datafolha-21092026-sudeste-figuras.py", "sudeste_figuras")
+TRANSFER = modulo(
+    "scripts/datafolha-21092026-sudeste-view-transferencia.py",
+    "sudeste_view_transferencia",
+)
 curto = FIG.primeiro_nome
 milhar = FIG.milhar
 sinal = FIG.sinal
@@ -235,183 +239,20 @@ def abertura(dados, table, figure):
 
 
 def transferencia(dados, table, figure):
-    varredura = dados["varredura_de_cruzamentos"]
-    h = bloco("sudeste-transferencia", "Treze linhas medidas. O resto é hipótese.")
-    h += (
-        "<p>Antes de estimar qualquer coisa, procuramos o cruzamento publicado. Ele "
-        "existe. O relatório presidencial estadual cruza o voto para governador com "
-        "o voto para presidente no texto corrido, em São Paulo, no Rio e em Minas: "
-        f"<strong>{varredura['linhas_medidas']} linhas</strong> de origem, com a "
-        "página ao lado. Elas entram fixas, como medição. Os anexos de tabelas "
-        "cruzadas têm três blocos e nenhum deles usa o voto de outro cargo como "
-        "coluna; os relatórios de governador não citam a Presidência.</p>"
+    """Capítulo da transferência, extraído para módulo próprio."""
+    return TRANSFER.capitulo(
+        dados,
+        table,
+        figure,
+        {
+            "bloco": bloco,
+            "ref_pres": ref_pres,
+            "num": num,
+            "curto": curto,
+            "aviso_rolar": aviso_rolar,
+            "FIG": FIG,
+        },
     )
-    linhas = []
-    for cruzamento in dados["cruzamentos_publicados"]:
-        destino = (
-            "1º turno" if "1o turno" in cruzamento["destino_pergunta"] else "2º turno"
-        )
-        for origem, valores in cruzamento["linhas"].items():
-            linhas.append(
-                [
-                    curto(origem),
-                    cruzamento["uf"],
-                    destino,
-                    ", ".join(
-                        f"{curto(nome)} {valor}%" for nome, valor in valores.items()
-                    ),
-                    f"{100 - sum(valores.values())}%",
-                    ref_pres(cruzamento["pagina"], f"p. {cruzamento['pagina']}"),
-                ]
-            )
-    h += table(
-        [
-            "Eleitorado do candidato ao governo",
-            "UF",
-            "Destino",
-            "Destinos publicados",
-            "Fora dos destinos publicados",
-            "Fonte",
-        ],
-        linhas,
-    )
-    h += (
-        "<p>Três leituras diretas, sem modelo. Em Minas, <strong>25% do eleitor de "
-        "Cleitinho vota em Lula</strong> no segundo turno presidencial, e 29% não "
-        f"votam em Flávio. {ref_pres(21, 'p. 21')} Em São Paulo, <strong>41% do "
-        "eleitorado de Tarcísio ficam fora de Flávio</strong> já no primeiro turno: "
-        f"12 pontos com Lula e 8 com Cury. {ref_pres(4, 'p. 4')} No Rio, o eleitor "
-        f"de Eduardo Paes dá 28% a Flávio no segundo turno. {ref_pres(13, 'p. 13')}</p>"
-    )
-    h += (
-        "<p>O que falta é a matriz completa, com bases e pesos, e a fidelidade de "
-        "base do segundo turno estadual. Por isso o diagrama abaixo tem duas "
-        "naturezas de fita: <strong>sólida onde existe linha publicada</strong> e "
-        "hachurada onde a célula é estimada por ajuste proporcional iterativo contra "
-        "uma prior declarada. Toda célula não medida carrega a faixa de Fréchet, que "
-        "é o único número imune à prior.</p>"
-    )
-    for uf in UFS:
-        alvo = dados["transferencia"][uf]["gov1_pres2"]
-        variante = alvo["variantes"]["ideologica"]
-        publicadas = len(variante["linhas_medidas"])
-        h += figure(
-            FIG.sankey(
-                uf,
-                alvo,
-                f"{uf}: do voto de governador ao 2º turno presidencial",
-                "Origem: voto estimulado para governador. Destino: 2º turno "
-                "presidencial. Mesma amostra, campo de 8 a 10/09/2026.",
-            ),
-            aviso_rolar(
-                f"{NOME_UF[uf]}. {publicadas} das "
-                f"{len(variante['origem_pct'])} origens têm linha publicada pelo "
-                "instituto; as demais são estimadas. A largura é massa percentual "
-                "agregada, não acompanhamento de pessoas. Candidaturas abaixo de "
-                "3% sem linha publicada aparecem somadas em uma origem única."
-            ),
-        )
-        h += (
-            '<div class="flow-readout" aria-live="polite">Toque em uma fita ou use '
-            "Tab para ler origem, destino, natureza e faixa de Fréchet.</div>"
-        )
-    h += (
-        "<p>São Paulo é o caso a cobrar. O instituto publicou o cruzamento com o "
-        "<strong>primeiro</strong> turno presidencial e nenhuma linha com o segundo. "
-        "Por isso o diagrama paulista sai inteiramente hachurado, enquanto o carioca "
-        "tem duas origens sólidas e o mineiro, três.</p>"
-    )
-    h += bloco("sudeste-robustez", "O que sobrevive à troca da prior.")
-    linhas = []
-    pares = (
-        ("gov1_pres1", "Governador 1º → presidente 1º"),
-        ("gov1_pres2", "Governador 1º → presidente 2º"),
-        ("gov2_pres2", "Governador 2º → presidente 2º"),
-    )
-    for uf in UFS:
-        for chave, rotulo in pares:
-            robustez = dados["transferencia"][uf][chave]["robustez"]
-            faixa = robustez["celula_direita_para_flavio"]
-            valores = list(robustez["vazamento_da_direita_pct"].values())
-            linhas.append(
-                [
-                    f"{uf} · {rotulo}",
-                    "Medida" if robustez["medida"] else "Estimada",
-                    f"{num(min(valores))} a {num(max(valores))}%",
-                    f"{num(robustez['amplitude_entre_priors_pp'])} pp",
-                    f"{num(faixa['frechet_min_pp'], 1)} a "
-                    f"{num(faixa['frechet_max_pp'], 1)} pp",
-                ]
-            )
-    h += table(
-        [
-            "Estado e par de perguntas",
-            "Natureza",
-            "Vazamento da direita, entre as priors",
-            "Amplitude",
-            "Fréchet da célula direita → Flávio",
-        ],
-        linhas,
-    )
-    amplitude = {
-        uf: dados["transferencia"][uf]["gov2_pres2"]["robustez"][
-            "amplitude_entre_priors_pp"
-        ]
-        for uf in UFS
-    }
-    h += (
-        "<p>A leitura é direta. <strong>Onde há linha publicada, a amplitude entre "
-        "as priors é zero</strong>: a prior não move nada, porque a margem já está "
-        "medida. Onde não há, ela decide o resultado, e vai de "
-        f"{num(amplitude['MG'])} pontos em Minas a {num(amplitude['RJ'])} pontos no "
-        "Rio, no par de segundo turno contra segundo turno, que é justamente o par "
-        "que nenhum dos três relatórios cruza. Publicá-lo custaria uma tabela ao "
-        "instituto e encerraria a discussão.</p>"
-    )
-    serie = dados["transferencia"]["SP"]["serie_do_vazamento"]
-    setembro = list(serie["setembro_2026_pct"].values())
-    h += (
-        "<p><strong>Série de São Paulo.</strong> Em agosto a mesma conta devolveu "
-        f"{num(serie['agosto_2026_datafolha_pct'])}% do eleitor de Tarcísio fora de "
-        f"Flávio no segundo turno pelo Datafolha e "
-        f"{num(serie['agosto_2026_atlas_pct'])}% pela Atlas. Em setembro, a faixa "
-        f"entre as priors vai de {num(min(setembro))}% a {num(max(setembro))}%. A "
-        "régua é a mesma nos dois campos, com origem e destino nas mesmas perguntas, "
-        "e os dois números continuam sendo estimativa por ajuste proporcional, não "
-        "medição. Por isso a comparação vale como série, e não como uma medida "
-        'única. <a class="refs" href="sp_092026.html">Atlas de São Paulo</a></p>'
-    )
-    h += (
-        "<details><summary>Faixa de Fréchet de cada célula dos três diagramas</summary>"
-    )
-    linhas = []
-    for uf in UFS:
-        _, _, _, celulas = FIG.celulas_do_diagrama(
-            dados["transferencia"][uf]["gov1_pres2"]
-        )
-        for celula in celulas:
-            linhas.append(
-                [
-                    f"{uf} · {curto(celula['origem'])}",
-                    FIG.CURTO[celula["destino"]],
-                    num(celula["valor_pp"]),
-                    f"{num(celula['frechet_min_pp'], 1)} a "
-                    f"{num(celula['frechet_max_pp'], 1)}",
-                    "Publicada" if celula["medida"] else "Estimada",
-                ]
-            )
-    h += table(
-        ["Origem", "Destino", "Valor no diagrama, pp", "Fréchet, pp", "Natureza"],
-        linhas,
-    )
-    h += (
-        "<p>A prior é declarada e ideológica: base própria fiel, candidatura do mesmo "
-        "campo migrando majoritariamente para o líder do campo, cruzamento para o "
-        "campo oposto próximo de zero e não escolha absorvendo parte das perdas. Os "
-        "zeros são estruturais e o ajuste proporcional os preserva. A leitura é "
-        "agregada e nunca descreve o percurso de um entrevistado.</p></details>"
-    )
-    return h
 
 
 def vao_por_recorte(dados, table, figure):
@@ -733,6 +574,9 @@ def rota(dados, table):
     sp = carrega("sp_092026_camada2.json")
     minerio = next(c for c in mg["corredores"] if c["slug"] == "minerio")
     vao = {uf: dados["estados"][uf]["vao"]["turno2"]["vao_pp"] for uf in UFS}
+    fuga_sp = dados["transferencia"]["SP"]["gov2_pres2"]["robustez"][
+        "destino_do_vazamento_pct"
+    ]
     h = bloco("sudeste-rota", "O que fazer. Juízo editorial declarado.")
     h += (
         '<p class="boundary">O que vem abaixo é <strong>juízo editorial desta '
@@ -754,9 +598,14 @@ def rota(dados, table):
             [
                 "2 · São Paulo",
                 "Disputar de volta o voto que sai de Tarcísio para outras direitas "
-                "antes de disputar o que sai para Lula.",
+                "no 1º turno, e tratar como disputa direta com Lula o que sobra "
+                "no 2º.",
                 "41% do eleitorado de Tarcísio fora de Flávio no 1º turno, dos quais "
-                f"8 pontos com Cury e 12 com Lula. {ref_pres(4, 'p. 4')}",
+                f"8 pontos com Cury e 12 com Lula. {ref_pres(4, 'p. 4')} No 2º "
+                f"turno, com o piso medido, {num(fuga_sp['lula'])}% desse "
+                f"eleitorado fica com Lula contra {num(fuga_sp['nao_escolha'])}% "
+                "na não escolha: a perda que sobrevive ao segundo turno vai para "
+                "o adversário, não para a abstenção.",
             ],
             [
                 "3 · Rio de Janeiro",

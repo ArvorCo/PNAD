@@ -279,12 +279,18 @@ def frechet(origem_pp, destino_pp):
 
 
 def celulas_do_diagrama(bloco):
-    """Linhas do diagrama já agrupadas, com faixa de Fréchet e natureza."""
+    """Linhas do diagrama já agrupadas, com faixa de Fréchet e natureza.
+
+    Três naturezas, e não duas: medida é a linha que o instituto publica no par
+    do diagrama, ancorada é a célula cujo piso vem de uma linha medida em outro
+    par da mesma amostra, e estimada é o resto.
+    """
     variante = bloco["variantes"]["ideologica"]
     medidas = set(variante["linhas_medidas"])
+    ancoradas = set(variante.get("linhas_ancoradas", []))
     origem_pct, destino_pct = variante["origem_pct"], variante["destino_pct"]
     publicadas = {(c["origem"], c["destino"]): c for c in variante["celulas"]}
-    ordem, resto = ordena_origens(origem_pct, medidas)
+    ordem, resto = ordena_origens(origem_pct, medidas | ancoradas)
     saida = []
     for nome in ordem:
         agrupada = nome == DEMAIS
@@ -303,7 +309,7 @@ def celulas_do_diagrama(bloco):
                 if celula is None
                 else (celula["frechet_min_pp"], celula["frechet_max_pp"])
             )
-            medida = bool(celula) and celula["estado"] == "medida" and not agrupada
+            estado = "estimada" if agrupada or not celula else celula["estado"]
             saida.append(
                 {
                     "origem": nome,
@@ -313,20 +319,27 @@ def celulas_do_diagrama(bloco):
                     "valor_pp": valor,
                     "frechet_min_pp": baixo,
                     "frechet_max_pp": alto,
-                    "medida": medida,
+                    "estado": estado,
+                    "medida": estado == "medida",
+                    "ancorada": estado == "ancorada",
+                    "piso_medido_pp": (celula or {}).get("piso_medido_pp"),
+                    "piso_pagina": (((celula or {}).get("piso_fonte") or {}) or {}).get(
+                        "pagina"
+                    ),
                 }
             )
-    return ordem, list(destino_pct), medidas, saida
+    return ordem, list(destino_pct), medidas, ancoradas, saida
 
 
 def sankey(uf, bloco, titulo, subtitulo, escala=3.6):
     """Fluxo agregado do voto de governador para o 2º turno presidencial."""
-    ordem, destinos, medidas, celulas = celulas_do_diagrama(bloco)
+    ordem, destinos, medidas, ancoradas, celulas = celulas_do_diagrama(bloco)
     massa = {c["origem"]: c["massa_origem_pp"] for c in celulas}
     destino_pct = {c["destino"]: c["massa_destino_pp"] for c in celulas}
 
     corpo = "<defs>"
     padroes = {}
+    pontos = {}
     for i, (chave, cor) in enumerate(CORES_DESTINO.items()):
         padroes[chave] = f"hachura-{uf.lower()}-{i}"
         corpo += (
@@ -334,6 +347,17 @@ def sankey(uf, bloco, titulo, subtitulo, escala=3.6):
             'width="9" height="9" patternTransform="rotate(35)">'
             f'<rect width="9" height="9" fill="{PAPER}"/>'
             f'<rect width="4" height="9" fill="{cor}"/></pattern>'
+        )
+        # Terceira textura: celula ancorada em linha medida de outro par. Ponto
+        # sobre a cor cheia, e nao listra sobre papel, para ler como medicao
+        # parcial e nao como estimativa livre.
+        pontos[chave] = f"ponto-{uf.lower()}-{i}"
+        corpo += (
+            f'<pattern id="{pontos[chave]}" patternUnits="userSpaceOnUse" '
+            'width="10" height="10">'
+            f'<rect width="10" height="10" fill="{cor}"/>'
+            f'<circle cx="3" cy="3" r="2.1" fill="{PAPER}"/>'
+            f'<circle cx="8" cy="8" r="2.1" fill="{PAPER}"/></pattern>'
         )
     corpo += "</defs>"
     corpo += text(30, 28, titulo, 22, INK, weight="700")
@@ -363,20 +387,28 @@ def sankey(uf, bloco, titulo, subtitulo, escala=3.6):
         espessura = celula["valor_pp"] * escala
         topo_esq[nome] += espessura
         topo_dir[destino] += espessura
-        natureza = (
-            "linha publicada pelo instituto"
-            if celula["medida"]
-            else "estimada por ajuste proporcional iterativo"
-        )
+        if celula["medida"]:
+            natureza = "linha publicada pelo instituto"
+        elif celula["ancorada"]:
+            natureza = (
+                "estimada com piso medido de "
+                f"{fmt(celula['piso_medido_pp'] or 0, 2)} pontos, da p. "
+                f"{celula['piso_pagina']}"
+            )
+        else:
+            natureza = "estimada por ajuste proporcional iterativo"
         rotulo = (
             f"{primeiro_nome(nome)} para {CURTO[destino]}: "
             f"{fmt(celula['valor_pp'], 2)} pontos, {natureza}. "
             f"Faixa de Fréchet: {fmt(celula['frechet_min_pp'])} a "
             f"{fmt(celula['frechet_max_pp'])} pontos."
         )
-        preenche = (
-            CORES_DESTINO[destino] if celula["medida"] else f"url(#{padroes[destino]})"
-        )
+        if celula["medida"]:
+            preenche = CORES_DESTINO[destino]
+        elif celula["ancorada"]:
+            preenche = f"url(#{pontos[destino]})"
+        else:
+            preenche = f"url(#{padroes[destino]})"
         corpo += (
             f'<path d="M240 {a:.1f} C480 {a:.1f} 590 {b:.1f} 818 {b:.1f} '
             f"L818 {b + espessura:.1f} C590 {b + espessura:.1f} "
@@ -390,7 +422,7 @@ def sankey(uf, bloco, titulo, subtitulo, escala=3.6):
             f'<rect x="228" y="{esquerda[nome]:.1f}" width="10" '
             f'height="{alto:.1f}" fill="{INK}"/>'
         )
-        marca = " ·" if nome in medidas else ""
+        marca = " ·" if nome in medidas else (" ∘" if nome in ancoradas else "")
         corpo += text(
             218,
             esquerda[nome] + alto / 2 + 5,
@@ -413,20 +445,33 @@ def sankey(uf, bloco, titulo, subtitulo, escala=3.6):
             CORES_DESTINO[nome],
             weight="600",
         )
+    solidas = sum(1 for nome in ordem if nome in medidas)
+    com_ponto = sum(1 for nome in ordem if nome in ancoradas and nome not in medidas)
     rodape = altura + 14
     corpo += text(
         30,
         rodape,
-        f"Fita sólida: {len(medidas)} origens com linha publicada. "
-        f"Fita hachurada: {len(ordem) - len(medidas)} origens estimadas. "
-        "O ponto ao lado do nome marca a origem publicada.",
+        f"Fita sólida: {solidas} origens com linha publicada neste par. "
+        f"Fita pontilhada: {com_ponto} origens com piso medido em outro par da "
+        "mesma amostra. "
+        f"Fita hachurada: {len(ordem) - solidas - com_ponto} origens sem piso "
+        "medido.",
         14,
+    )
+    corpo += text(
+        30,
+        rodape + 20,
+        "A largura é proporcional em toda fita, sem espessura mínima: fluxo "
+        "pequeno aparece pequeno.",
+        13,
+        MUTED,
     )
     return svg(
         corpo,
-        rodape + 26,
+        rodape + 44,
         f"{uf}: fluxo agregado do voto de governador para o segundo turno "
-        f"presidencial, com {len(medidas)} de {len(ordem)} origens medidas",
+        f"presidencial, com {solidas} de {len(ordem)} origens medidas e "
+        f"{com_ponto} ancoradas em linha medida de outro par",
     )
 
 

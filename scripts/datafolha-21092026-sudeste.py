@@ -406,34 +406,11 @@ ES_TRANSCRICAO = {
     "aprovacao_lula": {"pagina": 16, "aprova": 41, "desaprova": 55},
 }
 
-# Prior ideologica declarada, por campo da candidatura de origem. Os zeros sao
-# estruturais e o IPF os preserva. Nao ha prior empirica fora de SP.
-PRIOR_IDEOLOGICA = {
-    "direita": {"flavio": 0.90, "lula": 0.02, "nao_escolha": 0.08},
-    "centro": {"flavio": 0.34, "lula": 0.40, "nao_escolha": 0.26},
-    "centro-esquerda": {"flavio": 0.14, "lula": 0.66, "nao_escolha": 0.20},
-    "esquerda": {"flavio": 0.02, "lula": 0.92, "nao_escolha": 0.06},
-    "nao_escolha": {"flavio": 0.22, "lula": 0.22, "nao_escolha": 0.56},
-}
-PRIOR_POLARIZADA = {
-    "direita": {"flavio": 0.97, "lula": 0.01, "nao_escolha": 0.02},
-    "centro": {"flavio": 0.45, "lula": 0.45, "nao_escolha": 0.10},
-    "centro-esquerda": {"flavio": 0.08, "lula": 0.85, "nao_escolha": 0.07},
-    "esquerda": {"flavio": 0.01, "lula": 0.97, "nao_escolha": 0.02},
-    "nao_escolha": {"flavio": 0.30, "lula": 0.30, "nao_escolha": 0.40},
-}
-PRIOR_FROUXA = {
-    "direita": {"flavio": 0.75, "lula": 0.10, "nao_escolha": 0.15},
-    "centro": {"flavio": 0.30, "lula": 0.33, "nao_escolha": 0.37},
-    "centro-esquerda": {"flavio": 0.20, "lula": 0.50, "nao_escolha": 0.30},
-    "esquerda": {"flavio": 0.08, "lula": 0.77, "nao_escolha": 0.15},
-    "nao_escolha": {"flavio": 0.18, "lula": 0.18, "nao_escolha": 0.64},
-}
-PRIORS = {
-    "ideologica": PRIOR_IDEOLOGICA,
-    "polarizada": PRIOR_POLARIZADA,
-    "frouxa": PRIOR_FROUXA,
-}
+# Efeito de desenho plausivel para a subamostra de cada linha publicada. O
+# instituto nao publica o dele; este e o valor de Kish com cerca de seis
+# entrevistas por setor e correlacao intraclasse de 0,10, a mesma regua ja usada
+# nos dossies nacionais desta casa.
+DEFF_PLAUSIVEL = 1.5
 
 # Intersecoes minimas ja publicadas no dossie, dentro da preferencia partidaria
 # pelo PT. Preferencia por partido nao e voto presidencial nem escala
@@ -441,13 +418,6 @@ PRIORS = {
 INTERSECOES_PT_PUBLICADAS = {
     "MG": {"par": "Lula/Cleitinho", "valores": [97, 34], "minimo_pp": 31},
     "SP": {"par": "Lula/Tarcísio", "valores": [95, 19], "minimo_pp": 14},
-}
-
-NAO_ESCOLHA = {
-    "Em branco/nulo/nenhum",
-    "Em branco/ nulo/ nenhum",
-    "Indecisos",
-    "Não sabe",
 }
 
 
@@ -464,6 +434,24 @@ def modulo(nome: str) -> ModuleType:
 
 EXTRACT = modulo("datafolha-21092026-extract")
 EXTRACT.COLUMNS[3] = BLOCO3_ESTADUAL
+CADEIA = modulo("datafolha-21092026-cadeia")
+
+# O motor de transferencia vive em `datafolha-21092026-cadeia.py`. As tabelas de
+# prior, o campo de cada partido e a nao escolha sao dele, para que a matriz de
+# duas vias e as duas cadeias de tres niveis leiam exatamente a mesma declaracao.
+NAO_ESCOLHA = CADEIA.NAO_ESCOLHA
+CAMPO_PARTIDO = CADEIA.CAMPO_PARTIDO
+PRIORS = CADEIA.PRIORS
+RETENCAO_PADRAO = CADEIA.RETENCAO_PADRAO
+RETENCOES = CADEIA.RETENCOES
+FIDELIDADE_PADRAO = CADEIA.FIDELIDADE_PADRAO
+FIDELIDADES = CADEIA.FIDELIDADES
+campo_de = CADEIA.campo_de
+frechet = CADEIA.frechet
+ipf = CADEIA.ipf
+matriz_transferencia = CADEIA.matriz_transferencia
+vazamento = CADEIA.vazamento
+melhor_do_campo = CADEIA.melhor_do_campo
 
 
 def achatar(tabela: dict) -> tuple[dict, dict]:
@@ -514,13 +502,6 @@ def sha256(caminho: Path) -> str:
 def topo(tabela: dict) -> dict:
     linhas, _ = achatar(tabela)
     return {k: v["Total"] for k, v in linhas.items()}
-
-
-def campo_de(rotulo: str) -> str:
-    achado = re.search(r"\(([^)]+)\)\s*$", rotulo)
-    if not achado:
-        return "nao_escolha" if rotulo in NAO_ESCOLHA else "desconhecido"
-    return CAMPO_PARTIDO.get(achado.group(1).upper(), "desconhecido")
 
 
 # --------------------------------------------------------------------------- #
@@ -599,14 +580,6 @@ def margem_diferenca(a: float, b: float, n: float) -> float:
 # --------------------------------------------------------------------------- #
 # O vao                                                                       #
 # --------------------------------------------------------------------------- #
-
-
-def melhor_do_campo(valores: dict, campo: str) -> tuple[str | None, float]:
-    candidatos = {k: v for k, v in valores.items() if campo_de(k) == campo}
-    if not candidatos:
-        return None, 0.0
-    nome = max(candidatos, key=lambda k: candidatos[k])
-    return nome, candidatos[nome]
 
 
 def vao_por_recorte(gov: dict, pres: dict, nome_gov: str, abertas: set) -> list:
@@ -743,171 +716,6 @@ def senado(tabelas: dict, pres_turno2: dict, pres_turno1: dict, abertas: set) ->
             "formato da pergunta, não força eleitoral."
         ),
     }
-
-
-# --------------------------------------------------------------------------- #
-# Fréchet e IPF                                                               #
-# --------------------------------------------------------------------------- #
-
-
-def frechet(linha: float, coluna: float) -> tuple[float, float]:
-    return max(0.0, linha + coluna - 1.0), min(linha, coluna)
-
-
-def ipf(
-    prior: list[list[float]],
-    linhas: list[float],
-    colunas: list[float],
-    iteracoes: int = 2000,
-    tolerancia: float = 1e-12,
-) -> list[list[float]]:
-    m = [row[:] for row in prior]
-    for _ in range(iteracoes):
-        pior = 0.0
-        for i, alvo in enumerate(linhas):
-            soma = sum(m[i])
-            if soma <= 0:
-                if alvo > 0:
-                    raise ValueError("Linha com prior nula e margem positiva")
-                continue
-            fator = alvo / soma
-            pior = max(pior, abs(fator - 1))
-            m[i] = [v * fator for v in m[i]]
-        for j, alvo in enumerate(colunas):
-            soma = sum(m[i][j] for i in range(len(m)))
-            if soma <= 0:
-                if alvo > 0:
-                    raise ValueError("Coluna com prior nula e margem positiva")
-                continue
-            fator = alvo / soma
-            pior = max(pior, abs(fator - 1))
-            for i in range(len(m)):
-                m[i][j] *= fator
-        if pior < tolerancia:
-            break
-    return m
-
-
-def _normalizar(valores: dict) -> dict:
-    total = sum(valores.values())
-    return {k: v / total for k, v in valores.items()}
-
-
-def matriz_transferencia(
-    origem: dict,
-    destino: dict,
-    medidas: dict,
-    prior_nome: str,
-    prior_empirica: dict | None = None,
-) -> dict:
-    """IPF contra prior, com as linhas publicadas fixas como medicao."""
-    linhas = list(origem)
-    colunas = list(destino)
-    r = _normalizar(origem)
-    c = _normalizar(destino)
-    tabela_prior = PRIORS[prior_nome]
-
-    fixo = [[0.0] * len(colunas) for _ in linhas]
-    livre = [[1.0] * len(colunas) for _ in linhas]
-    marca = [["estimada"] * len(colunas) for _ in linhas]
-    for i, nome in enumerate(linhas):
-        publicado = medidas.get(nome, {})
-        for j, destino_nome in enumerate(colunas):
-            if destino_nome in publicado:
-                fixo[i][j] = r[nome] * publicado[destino_nome] / 100
-                livre[i][j] = 0.0
-                marca[i][j] = "medida"
-
-    residuo_linha = [r[nome] - sum(fixo[i]) for i, nome in enumerate(linhas)]
-    residuo_coluna = [
-        c[nome] - sum(fixo[i][j] for i in range(len(linhas)))
-        for j, nome in enumerate(colunas)
-    ]
-    if min(residuo_linha) < -1e-9 or min(residuo_coluna) < -1e-9:
-        raise ValueError("Linhas publicadas incompativeis com as margens")
-
-    prior = [[0.0] * len(colunas) for _ in linhas]
-    for i, nome in enumerate(linhas):
-        campo = campo_de(nome)
-        if prior_empirica and nome in prior_empirica:
-            peso = prior_empirica[nome]
-        else:
-            base = tabela_prior.get(campo, tabela_prior["nao_escolha"])
-            peso = base
-        for j, destino_nome in enumerate(colunas):
-            if livre[i][j] == 0.0:
-                continue
-            if destino_nome == FLAVIO:
-                valor = peso.get("flavio", 0.0)
-            elif destino_nome == LULA:
-                valor = peso.get("lula", 0.0)
-            else:
-                valor = peso.get("nao_escolha", 0.0) / max(
-                    1, sum(1 for x in colunas if x not in (FLAVIO, LULA))
-                )
-            prior[i][j] = max(valor, 1e-9)
-
-    ajustado = ipf(prior, residuo_linha, residuo_coluna)
-    final = [
-        [fixo[i][j] + ajustado[i][j] for j in range(len(colunas))]
-        for i in range(len(linhas))
-    ]
-
-    celulas = []
-    for i, nome in enumerate(linhas):
-        for j, destino_nome in enumerate(colunas):
-            lo, hi = frechet(r[nome], c[destino_nome])
-            estado = marca[i][j]
-            if estado != "medida" and hi - lo < 0.01:
-                estado = "limitada"
-            celulas.append(
-                {
-                    "origem": nome,
-                    "destino": destino_nome,
-                    "valor_pp": round(100 * final[i][j], 3),
-                    "frechet_min_pp": round(100 * lo, 3),
-                    "frechet_max_pp": round(100 * hi, 3),
-                    "estado": estado,
-                }
-            )
-    return {
-        "prior": prior_nome,
-        "prior_empirica": bool(prior_empirica),
-        "origem_pct": {k: round(100 * v, 2) for k, v in r.items()},
-        "destino_pct": {k: round(100 * v, 2) for k, v in c.items()},
-        "matriz_pp": {
-            nome: {colunas[j]: round(100 * final[i][j], 3) for j in range(len(colunas))}
-            for i, nome in enumerate(linhas)
-        },
-        "condicional_pct": {
-            nome: {
-                colunas[j]: round(100 * final[i][j] / r[nome], 2)
-                for j in range(len(colunas))
-            }
-            for i, nome in enumerate(linhas)
-            if r[nome] > 0
-        },
-        "celulas": celulas,
-        "linhas_medidas": sorted(set(medidas) & set(linhas)),
-        "residuo_margem_linha_pp": round(
-            100 * max(abs(sum(final[i]) - r[nome]) for i, nome in enumerate(linhas)), 6
-        ),
-        "residuo_margem_coluna_pp": round(
-            100
-            * max(
-                abs(sum(final[i][j] for i in range(len(linhas))) - c[nome])
-                for j, nome in enumerate(colunas)
-            ),
-            6,
-        ),
-    }
-
-
-def vazamento(matriz: dict, origem: str, destino: str) -> float | None:
-    cond = matriz["condicional_pct"].get(origem)
-    if not cond:
-        return None
-    return round(100 - cond.get(destino, 0.0), 2)
 
 
 # --------------------------------------------------------------------------- #
@@ -1381,6 +1189,286 @@ def montar_estado(uf: str, gov: dict, pres: dict, n: int, abertas: set) -> dict:
     }
 
 
+def pagina_do_cruzamento(uf: str, destino_pergunta: str) -> dict | None:
+    for item in CRUZAMENTOS_PUBLICADOS:
+        if item["uf"] == uf and item["destino_pergunta"] == destino_pergunta:
+            return {"pdf": item["pdf"], "pagina": item["pagina"]}
+    return None
+
+
+def pisos_do_turno1(medidas_1t: dict, medidas_2t: dict, retencao: float) -> dict:
+    """Piso condicional do 2o turno para origem medida so no 1o turno.
+
+    Quem ja vota num finalista no 1o turno permanece com ele em `retencao`.
+    A origem que o instituto mede nos dois turnos nao precisa de piso: o valor
+    publicado entra fixo e o piso viraria uma segunda regra sobre a mesma
+    celula.
+    """
+    saida: dict = {}
+    for origem, linha in medidas_1t.items():
+        if origem in medidas_2t:
+            continue
+        for destino in (FLAVIO, LULA):
+            if destino in linha:
+                saida.setdefault(origem, {})[destino] = linha[destino] * retencao
+    return saida
+
+
+def motor_do_par(
+    par: str,
+    prior: str,
+    dados: dict,
+    retencao: float,
+    fidelidade: float,
+    empirica: dict | None,
+) -> dict:
+    """Escolhe o motor de cada par e devolve a matriz no formato unico."""
+    if par == "gov1_pres1":
+        return matriz_transferencia(
+            dados["gov1"],
+            dados["pres1"],
+            dados["medidas_1t"],
+            prior,
+            fontes_do_piso=dados["fontes_1t"],
+        )
+    if par == "gov1_pres2":
+        if dados["medidas_2t"]:
+            return matriz_transferencia(
+                dados["gov1"],
+                dados["pres2"],
+                dados["medidas_2t"],
+                prior,
+                pisos_pct=pisos_do_turno1(
+                    dados["medidas_1t"], dados["medidas_2t"], retencao
+                ),
+                fontes_do_piso={**dados["fontes_1t"], **dados["fontes_2t"]},
+            )
+        estagio1 = motor_do_par("gov1_pres1", prior, dados, retencao, fidelidade, None)
+        return CADEIA.cadeia_presidencial(
+            dados["gov1"],
+            dados["pres1"],
+            dados["pres2"],
+            estagio1["matriz_exata"],
+            dados["medidas_1t"],
+            prior,
+            retencao=retencao,
+            fonte_do_piso=dados["fonte_1t"],
+            prior_empirica=empirica,
+        )
+    estagio1 = motor_do_par("gov1_pres2", prior, dados, retencao, fidelidade, None)
+    transferencia_estadual = matriz_transferencia(
+        dados["gov1"], dados["gov2"], {}, prior, fidelidade=fidelidade
+    )
+    return CADEIA.cadeia_estadual(
+        dados["gov2"],
+        dados["pres2"],
+        dados["gov1"],
+        estagio1["matriz_exata"],
+        estagio1["celulas"],
+        transferencia_estadual["matriz_exata"],
+        prior,
+        fidelidade=fidelidade,
+        prior_empirica=empirica,
+    )
+
+
+def robustez_do_par(origem: dict, variantes: dict, medidas: dict) -> dict:
+    """Vazamento da melhor candidatura de direita, entre as priors."""
+    direita = melhor_do_campo(origem, "direita")
+    if not direita[0]:
+        return {}
+    nome = direita[0]
+    fugas = {p: vazamento(v, nome, FLAVIO) for p, v in variantes.items()}
+    validos = [v for v in fugas.values() if v is not None]
+    base = variantes["ideologica"]
+    cond = base["condicional_pct"][nome]
+    celula_flavio = CADEIA.celula(base, nome, FLAVIO)
+    celula_lula = CADEIA.celula(base, nome, LULA)
+    estados = {c["estado"] for v in variantes.values() for c in v["celulas"]}
+    natureza = "medida" if nome in medidas else celula_lula["estado"]
+    return {
+        "vazamento_da_direita_pct": fugas,
+        "amplitude_entre_priors_pp": round(max(validos) - min(validos), 2),
+        "origem": nome,
+        "medida": nome in medidas,
+        "natureza": natureza,
+        "destino_do_vazamento_pct": {
+            "lula": round(cond.get(LULA, 0.0), 2),
+            "outras_candidaturas_de_direita": round(
+                sum(
+                    v
+                    for k, v in cond.items()
+                    if k != FLAVIO and campo_de(k) == "direita"
+                ),
+                2,
+            ),
+            "centro_e_esquerda_alem_de_lula": round(
+                sum(
+                    v
+                    for k, v in cond.items()
+                    if k != LULA
+                    and campo_de(k) in ("centro", "centro-esquerda", "esquerda")
+                ),
+                2,
+            ),
+            "nao_escolha": round(
+                sum(v for k, v in cond.items() if k in NAO_ESCOLHA), 2
+            ),
+        },
+        "celula_direita_para_flavio": celula_flavio,
+        "celula_direita_para_lula": celula_lula,
+        "direita_para_lula_pct": {
+            p: round(v["condicional_pct"][nome].get(LULA, 0.0), 2)
+            for p, v in variantes.items()
+        },
+        "direita_para_nao_escolha_pct": {
+            p: round(
+                sum(
+                    x for k, x in v["condicional_pct"][nome].items() if k in NAO_ESCOLHA
+                ),
+                2,
+            )
+            for p, v in variantes.items()
+        },
+        "estados_das_celulas": sorted(estados),
+    }
+
+
+def sensibilidade_do_par(
+    par: str, dados: dict, empirica: dict | None, origem: dict
+) -> list:
+    """Grade de prior contra retencao e fidelidade, com os escalares que contam."""
+    nome = melhor_do_campo(origem, "direita")[0]
+    if not nome or par == "gov1_pres1":
+        return []
+    combinacoes = {(p, RETENCAO_PADRAO, FIDELIDADE_PADRAO) for p in PRIORS}
+    combinacoes |= {(p, r, FIDELIDADE_PADRAO) for p in PRIORS for r in RETENCOES}
+    if par == "gov2_pres2":
+        combinacoes |= {(p, RETENCAO_PADRAO, f) for p in PRIORS for f in FIDELIDADES}
+    grade = []
+    for prior, retencao, fidelidade in sorted(combinacoes):
+        matriz = motor_do_par(par, prior, dados, retencao, fidelidade, empirica)
+        cond = matriz["condicional_pct"][nome]
+        grade.append(
+            {
+                "prior": prior,
+                "retencao": retencao,
+                "fidelidade": fidelidade,
+                "direita_para_flavio_pct": round(cond.get(FLAVIO, 0.0), 2),
+                "direita_para_lula_pct": round(cond.get(LULA, 0.0), 2),
+                "direita_para_nao_escolha_pct": round(
+                    sum(v for k, v in cond.items() if k in NAO_ESCOLHA), 2
+                ),
+                "vazamento_pct": round(100 - cond.get(FLAVIO, 0.0), 2),
+                "direita_para_lula_pp": matriz["matriz_pp"][nome][LULA],
+            }
+        )
+    return grade
+
+
+def incerteza_das_linhas_medidas(uf: str, n: int, origem_pct: dict) -> list:
+    """Cada linha publicada e proporcao de subamostra, com n e IC95 ao lado.
+
+    Linha medida tambem tem incerteza. Publicar o ponto sem a base e sem o
+    intervalo apresenta como exato um numero que vem de algumas centenas de
+    entrevistas, e a critica nao sobreviveria a citacao hostil.
+    """
+    saida = []
+    for item in CRUZAMENTOS_PUBLICADOS:
+        if item["uf"] != uf:
+            continue
+        turno = "1º turno" if "1o turno" in item["destino_pergunta"] else "2º turno"
+        for origem, linha in item["linhas"].items():
+            massa = origem_pct.get(origem)
+            if massa is None:
+                continue
+            base = n * massa / 100
+            for destino, valor in linha.items():
+                p = valor / 100
+                erro = Z95 * math.sqrt(max(p * (1 - p), 0) / base)
+                erro_deff = erro * math.sqrt(DEFF_PLAUSIVEL)
+                saida.append(
+                    {
+                        "uf": uf,
+                        "origem": origem,
+                        "destino": destino,
+                        "turno": turno,
+                        "valor_pct": valor,
+                        "massa_da_origem_pct": massa,
+                        "n_subamostra": round(base),
+                        "margem_pp": round(100 * erro, 2),
+                        "ic95_pct": [
+                            round(100 * max(p - erro, 0), 2),
+                            round(100 * min(p + erro, 1), 2),
+                        ],
+                        "margem_com_deff_pp": round(100 * erro_deff, 2),
+                        "ic95_com_deff_pct": [
+                            round(100 * max(p - erro_deff, 0), 2),
+                            round(100 * min(p + erro_deff, 1), 2),
+                        ],
+                        "deff": DEFF_PLAUSIVEL,
+                        "zero_dentro_do_ic": p - erro_deff <= 0,
+                        "pontos_do_eleitorado_pp": round(massa * p, 2),
+                        "fonte": {"pdf": item["pdf"], "pagina": item["pagina"]},
+                    }
+                )
+    return saida
+
+
+def conta_na_tela(uf: str, gov1: dict, pres2: dict, dados: dict, alvo_matriz: dict):
+    """Quanto do voto de Lula no estado sai do eleitorado de cada governador.
+
+    Aritmetica na tela, sem modelo: massa da origem vezes a linha publicada.
+    Onde o instituto mede o 2º turno, a parcela e medicao. Onde mede so o 1º,
+    como em Sao Paulo, a parcela e o piso da linha de 1º turno multiplicada
+    pela retencao declarada, e a estimativa ancorada aparece ao lado.
+    """
+    direita = melhor_do_campo(gov1, "direita")[0]
+    if not direita:
+        return None
+    medidas = dados["medidas_2t"] or dados["medidas_1t"]
+    direto = bool(dados["medidas_2t"])
+    fator = 1.0 if direto else RETENCAO_PADRAO
+    parcelas = []
+    for origem, linha in medidas.items():
+        if LULA not in linha or origem not in gov1:
+            continue
+        parcelas.append(
+            {
+                "origem": origem,
+                "massa_pct": gov1[origem],
+                "linha_pct": linha[LULA],
+                "pontos_pp": round(gov1[origem] * linha[LULA] * fator / 100, 2),
+                "e_da_direita": origem == direita,
+            }
+        )
+    if not parcelas:
+        return None
+    medido = sum(p["pontos_pp"] for p in parcelas)
+    da_direita = sum(p["pontos_pp"] for p in parcelas if p["e_da_direita"])
+    resto = 100 - sum(p["massa_pct"] for p in parcelas)
+    alvo = pres2[LULA]
+    return {
+        "candidatura_de_direita": direita,
+        "natureza": "medida" if direto else "piso medido de 1º turno com retenção",
+        "retencao": None if direto else RETENCAO_PADRAO,
+        "lula_no_estado_pct": alvo,
+        "fora_da_direita_pp": round(100 - gov1[direita], 2),
+        "parcelas": parcelas,
+        "medido_pp": round(medido, 2),
+        "medido_na_direita_pp": round(da_direita, 2),
+        "estimativa_ancorada_na_direita_pp": alvo_matriz["matriz_pp"][direita][LULA],
+        "resto_do_eleitorado_pp": round(resto, 2),
+        "exigencia_com_a_direita_pct": round(100 * (alvo - medido) / resto, 2),
+        "exigencia_sem_a_direita_pct": round(
+            100 * (alvo - medido + da_direita) / resto, 2
+        ),
+        "um_em_cada": round(alvo / da_direita, 2) if da_direita else None,
+        "um_em_cada_ancorado": round(alvo / alvo_matriz["matriz_pp"][direita][LULA], 2),
+        "fonte": dados["fonte_2t"] if direto else dados["fonte_1t"],
+    }
+
+
 def transferencias(uf: str, estado: dict, gov: dict, pres: dict) -> dict:
     gov1 = {
         k: v for k, v in topo(gov["estimulada"]).items() if v > 0 or k in NAO_ESCOLHA
@@ -1408,60 +1496,59 @@ def transferencias(uf: str, estado: dict, gov: dict, pres: dict) -> dict:
             for k, v in fluxo["prior"].items()
             if k in traducao
         }
-    saida = {}
-    cenarios = [
-        ("gov1_pres1", gov1, pres1, estado["cruzamentos_publicados"]["turno1"], None),
-        ("gov1_pres2", gov1, pres2, estado["cruzamentos_publicados"]["turno2"], None),
-        ("gov2_pres2", gov2, pres2, {}, empirica),
+    dados = {
+        "gov1": gov1,
+        "gov2": gov2,
+        "pres1": pres1,
+        "pres2": pres2,
+        "medidas_1t": estado["cruzamentos_publicados"]["turno1"],
+        "medidas_2t": estado["cruzamentos_publicados"]["turno2"],
+        "fonte_1t": pagina_do_cruzamento(uf, "presidente, 1o turno"),
+        "fonte_2t": pagina_do_cruzamento(uf, "presidente, 2o turno"),
+    }
+    for turno in ("1t", "2t"):
+        dados[f"fontes_{turno}"] = {
+            (origem, destino): dados[f"fonte_{turno}"]
+            for origem, linha in dados[f"medidas_{turno}"].items()
+            for destino in linha
+        }
+    saida: dict = {}
+    pares = [
+        ("gov1_pres1", gov1, dados["medidas_1t"]),
+        ("gov1_pres2", gov1, dados["medidas_2t"]),
+        ("gov2_pres2", gov2, {}),
     ]
-    for nome, origem, destino, medidas, emp in cenarios:
+    for nome, origem, medidas in pares:
         variantes = {}
         for prior in PRIORS:
-            variantes[prior] = matriz_transferencia(origem, destino, medidas, prior)
-        if emp:
-            variantes["empirica_atlas"] = matriz_transferencia(
-                origem, destino, medidas, "ideologica", prior_empirica=emp
+            variantes[prior] = motor_do_par(
+                nome, prior, dados, RETENCAO_PADRAO, FIDELIDADE_PADRAO, None
             )
-        direita = melhor_do_campo(origem, "direita")
-        robusto = {}
-        if direita[0]:
-            fugas = {p: vazamento(v, direita[0], FLAVIO) for p, v in variantes.items()}
-            robusto["vazamento_da_direita_pct"] = fugas
-            validos = [v for v in fugas.values() if v is not None]
-            robusto["amplitude_entre_priors_pp"] = round(max(validos) - min(validos), 2)
-            robusto["origem"] = direita[0]
-            robusto["medida"] = direita[0] in medidas
-            base = variantes["ideologica"]
-            cond = base["condicional_pct"][direita[0]]
-            robusto["destino_do_vazamento_pct"] = {
-                "lula": round(cond.get(LULA, 0.0), 2),
-                "outras_candidaturas_de_direita": round(
-                    sum(
-                        v
-                        for k, v in cond.items()
-                        if k != FLAVIO and campo_de(k) == "direita"
-                    ),
-                    2,
-                ),
-                "centro_e_esquerda_alem_de_lula": round(
-                    sum(
-                        v
-                        for k, v in cond.items()
-                        if k != LULA
-                        and campo_de(k) in ("centro", "centro-esquerda", "esquerda")
-                    ),
-                    2,
-                ),
-                "nao_escolha": round(
-                    sum(v for k, v in cond.items() if k in NAO_ESCOLHA), 2
-                ),
+        if empirica and nome != "gov1_pres1":
+            variantes["empirica_atlas"] = motor_do_par(
+                nome, "ideologica", dados, RETENCAO_PADRAO, FIDELIDADE_PADRAO, empirica
+            )
+        robusto = robustez_do_par(origem, variantes, medidas)
+        if nome != "gov1_pres1":
+            sem_ancora = {
+                prior: vazamento(
+                    matriz_transferencia(origem, pres2, medidas, prior),
+                    robusto["origem"],
+                    FLAVIO,
+                )
+                for prior in PRIORS
             }
-            celula = next(
-                c
-                for c in base["celulas"]
-                if c["origem"] == direita[0] and c["destino"] == FLAVIO
+            robusto["vazamento_sem_ancoragem_pct"] = sem_ancora
+            robusto["ganho_da_ancoragem_pp"] = round(
+                min(robusto["vazamento_da_direita_pct"][p] for p in PRIORS)
+                - min(sem_ancora[p] for p in PRIORS),
+                2,
             )
-            robusto["celula_direita_para_flavio"] = celula
+        # A matriz sem arredondamento so serve para encadear estagios. Ela sai
+        # do JSON publicado para nao dobrar o tamanho do arquivo com digito que
+        # nenhuma leitura usa.
+        for matriz in variantes.values():
+            matriz.pop("matriz_exata", None)
         saida[nome] = {
             "origem_pergunta": (
                 "governador, estimulada"
@@ -1473,10 +1560,65 @@ def transferencias(uf: str, estado: dict, gov: dict, pres: dict) -> dict:
                 if nome.endswith("pres1")
                 else "presidente, 2o turno"
             ),
+            "motor": variantes["ideologica"]["motor"],
             "variantes": variantes,
             "robustez": robusto,
+            "sensibilidade": sensibilidade_do_par(nome, dados, empirica, origem),
         }
     saida["intersecao_pt_publicada"] = INTERSECOES_PT_PUBLICADAS.get(uf)
+    saida["fidelidade_estadual_conferida"] = {
+        "regra": (
+            "A cadeia do 2º turno estadual supõe que quem escolhe uma "
+            "candidatura no 1º turno estadual continua com ela no 2º. A "
+            "condição necessária é que as duas candidaturas do 2º turno não "
+            "percam voto do 1º para o 2º turno."
+        ),
+        "fidelidade_declarada": FIDELIDADE_PADRAO,
+        "linhas": [
+            {
+                "candidatura": nome,
+                "turno1_pct": gov1.get(nome),
+                "turno2_pct": valor,
+                "variacao_pp": valor - gov1.get(nome, 0),
+                "compativel": valor >= gov1.get(nome, 0),
+            }
+            for nome, valor in gov2.items()
+            if nome in gov1 and nome not in NAO_ESCOLHA
+        ],
+    }
+    saida["coerencia_das_linhas_medidas"] = CADEIA.coerencia_turno1_turno2(
+        dados["medidas_1t"],
+        dados["medidas_2t"],
+        saida["gov1_pres1"]["variantes"]["ideologica"]["origem_pct"],
+        RETENCAO_PADRAO,
+    )
+    saida["incerteza_das_linhas_medidas"] = incerteza_das_linhas_medidas(
+        uf, estado["n"], saida["gov1_pres1"]["variantes"]["ideologica"]["origem_pct"]
+    )
+    saida["conta_na_tela"] = conta_na_tela(
+        uf, gov1, pres2, dados, saida["gov1_pres2"]["variantes"]["ideologica"]
+    )
+    direita_2t = melhor_do_campo(gov2, "direita")[0]
+    if direita_2t:
+        base = saida["gov2_pres2"]["variantes"]["ideologica"]
+        saida["fracao_do_voto_de_lula_na_direita_estadual"] = {
+            "candidatura": direita_2t,
+            "pontos_pp": base["matriz_pp"][direita_2t][LULA],
+            "fracao_pct": round(
+                100 * base["matriz_pp"][direita_2t][LULA] / pres2[LULA], 2
+            ),
+            "faixa_pp": list(
+                CADEIA.faixa(
+                    v["matriz_pp"][direita_2t][LULA]
+                    for v in saida["gov2_pres2"]["variantes"].values()
+                )
+            ),
+            "nota": (
+                "Parcela do voto de Lula no estado que sai do eleitorado da "
+                "candidatura de direita ao governo no 2º turno estadual. "
+                "Estimativa ancorada na linha medida, não medição direta."
+            ),
+        }
     if uf == "SP":
         saida["serie_do_vazamento"] = {
             "agosto_2026_datafolha_pct": 14.0,
@@ -1485,21 +1627,36 @@ def transferencias(uf: str, estado: dict, gov: dict, pres: dict) -> dict:
             "setembro_2026_pct": saida["gov2_pres2"]["robustez"][
                 "vazamento_da_direita_pct"
             ],
+            "setembro_2026_sem_ancoragem_pct": saida["gov2_pres2"]["robustez"][
+                "vazamento_sem_ancoragem_pct"
+            ],
             "nota": (
                 "Mesma conta, dois campos. Em setembro a origem é a mesma "
                 "pergunta de 2º turno estadual e o destino, a mesma pergunta "
-                "de 2º turno presidencial. Comparar como série, não como "
-                "medição única: os dois números são estimativa por IPF."
+                "de 2º turno presidencial. A série de agosto foi estimada sem "
+                "piso medido; a de setembro está ancorada na linha de 1º turno "
+                "da p. 4, e por isso não é comparável ponto a ponto com o "
+                "número antigo sem a ressalva."
             ),
         }
     saida["limites"] = [
         "Leitura agregada. O diagrama não descreve o percurso de eleitores.",
         "Os limites de Fréchet são os únicos números imunes à prior.",
+        "O piso medido depende da retenção declarada, que é hipótese e não "
+        "medição: quem escolhe um finalista no 1º turno permanece com ele em "
+        f"{RETENCAO_PADRAO:.2f}, e a sensibilidade desce até "
+        f"{min(RETENCOES):.2f}.",
+        "A fidelidade de base do 2º turno estadual também é hipótese. A "
+        "condição necessária foi conferida: as duas candidaturas do 2º turno "
+        "estadual crescem do 1º para o 2º turno nos três estados.",
         "O relatório não declara se a origem do cruzamento publicado é o voto "
         "estimulado de 1º turno ou o de 2º turno para governador; a leitura "
         "adotada é a estimulada de 1º turno.",
         "Preferência partidária não é voto presidencial nem escala "
         "bolsonarista/petista.",
+        "Linha publicada é proporção de subamostra e carrega intervalo: as "
+        "bases e os IC95 de cada uma estão em "
+        "`incerteza_das_linhas_medidas`.",
     ]
     return saida
 
@@ -1663,6 +1820,45 @@ def achados(estados: dict, regional: dict, es: dict, transfer: dict) -> list:
             ),
             "vazamento_pct": sp.get("vazamento_da_direita_pct"),
             "amplitude_entre_priors_pp": sp.get("amplitude_entre_priors_pp"),
+        }
+    )
+    sp2 = transfer["SP"]["gov1_pres2"]["robustez"]
+    lista.append(
+        {
+            "id": "piso_medido_ancora_o_segundo_turno",
+            "contraprova": False,
+            "texto": (
+                "A estimativa de 2º turno não pode ficar abaixo do que o "
+                "instituto mede no 1º turno na mesma amostra. Em São Paulo o "
+                "eleitor de Tarcísio já entrega 12% a Lula no 1º turno "
+                "presidencial (p. 4), e a cadeia de três níveis carrega esse "
+                "piso para o 2º turno em vez de deixar a prior decidir."
+            ),
+            "antes_pp": 2.232,
+            "depois_pp": sp2["celula_direita_para_lula"]["valor_pp"],
+            "piso_medido_pp": sp2["celula_direita_para_lula"].get("piso_medido_pp"),
+            "fonte": {"pdf": "datafolha_21092026_estaduais.pdf", "pagina": 4},
+        }
+    )
+    lista.append(
+        {
+            "id": "linha_medida_em_subamostra_pequena",
+            "contraprova": True,
+            "texto": (
+                "Linha publicada também tem incerteza. Douglas Ruas dá 7% a "
+                "Lula no 2º turno presidencial (p. 13), o que em 304 "
+                "entrevistas ponderadas dá intervalo de 3,5 a 10,5 pontos "
+                "mesmo com efeito de desenho de 1,5: o zero fica fora, e a "
+                "linha se sustenta. Já Patrus para Flávio, 3% em 157 "
+                "entrevistas, tem o zero dentro do intervalo."
+            ),
+            "linhas_com_zero_no_intervalo": [
+                f"{r['uf']} · {r['origem']} para {r['destino']}, {r['turno']}"
+                for uf in transfer
+                for r in transfer[uf]["incerteza_das_linhas_medidas"]
+                if r["zero_dentro_do_ic"]
+            ],
+            "deff": DEFF_PLAUSIVEL,
         }
     )
     return lista

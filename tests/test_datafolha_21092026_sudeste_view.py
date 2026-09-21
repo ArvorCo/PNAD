@@ -99,29 +99,89 @@ def test_fitas_medidas_batem_com_o_json():
             if c["estado"] == "medida"
             and variante["matriz_pp"][c["origem"]][c["destino"]] > 0
         )
+        ancoradas_json = sum(
+            1
+            for c in variante["celulas"]
+            if c["estado"] == "ancorada"
+            and variante["matriz_pp"][c["origem"]][c["destino"]] > 0
+        )
         svg = svg_do_estado(uf)
         fitas = re.findall(r'<path d="M240[^>]*?fill="([^"]+)"', svg)
         solidas = [f for f in fitas if not f.startswith("url(")]
-        hachuradas = [f for f in fitas if f.startswith("url(")]
+        pontilhadas = [f for f in fitas if f.startswith("url(#ponto-")]
+        hachuradas = [f for f in fitas if f.startswith("url(#hachura-")]
         assert len(solidas) == medidas_json, (uf, len(solidas), medidas_json)
+        assert len(pontilhadas) == ancoradas_json, (uf, len(pontilhadas))
         assert hachuradas, uf
-        assert len(fitas) == len(solidas) + len(hachuradas)
+        assert len(fitas) == len(solidas) + len(pontilhadas) + len(hachuradas)
+
+
+def test_a_fita_ancorada_tem_textura_propria_e_so_ela():
+    """Três naturezas, três preenchimentos, sem nenhum atalho visual."""
+    variante = D["transferencia"]["SP"]["gov1_pres2"]["variantes"]["ideologica"]
+    assert variante["motor"] == "cadeia_3niveis"
+    assert set(variante["linhas_ancoradas"]) == {
+        "Tarcísio (REPUBLICANOS)",
+        "Fernando Haddad (PT)",
+    }
+    svg = svg_do_estado("SP")
+    # São Paulo não tem linha publicada no par do diagrama: nenhuma fita sólida.
+    assert not [
+        f
+        for f in re.findall(r'<path d="M240[^>]*?fill="([^"]+)"', svg)
+        if not f.startswith("url(")
+    ]
+    assert "url(#ponto-sp-" in svg
+    assert "piso medido de" in svg
 
 
 def test_legenda_declara_as_origens_de_cada_tipo():
     for uf in UFS:
-        publicadas = len(
-            D["transferencia"][uf]["gov1_pres2"]["variantes"]["ideologica"][
-                "linhas_medidas"
-            ]
-        )
-        ordem, _, medidas, _ = FIG.celulas_do_diagrama(
+        variante = D["transferencia"][uf]["gov1_pres2"]["variantes"]["ideologica"]
+        publicadas = len(variante["linhas_medidas"])
+        ordem, _, medidas, ancoradas, _ = FIG.celulas_do_diagrama(
             D["transferencia"][uf]["gov1_pres2"]
         )
         assert len(medidas) == publicadas
+        so_ancoradas = len([k for k in ancoradas if k not in medidas])
         svg = svg_do_estado(uf)
-        assert f"Fita sólida: {publicadas} origens com linha publicada." in svg
-        assert f"Fita hachurada: {len(ordem) - publicadas} origens estimadas." in svg
+        assert (
+            f"Fita sólida: {publicadas} origens com linha publicada neste par." in svg
+        )
+        assert (
+            f"Fita pontilhada: {so_ancoradas} origens com piso medido em outro par"
+            in svg
+        )
+        assert (
+            f"Fita hachurada: {len(ordem) - publicadas - so_ancoradas} origens sem "
+            "piso medido." in svg
+        )
+        # A legenda não pode mais dizer que zero origens têm linha publicada sem
+        # explicar que São Paulo tem linha medida no 1º turno e que ela ancora.
+        if publicadas == 0:
+            assert "piso medido" in svg
+
+
+def test_fita_nao_tem_espessura_minima():
+    """Largura proporcional em toda fita: fluxo pequeno aparece pequeno."""
+    escala = 3.6
+    for uf in UFS:
+        *_, celulas = FIG.celulas_do_diagrama(D["transferencia"][uf]["gov1_pres2"])
+        svg = svg_do_estado(uf)
+        alturas = []
+        for trecho in re.finditer(
+            r'<path d="M240 ([\d.]+) C480 [\d.]+ 590 ([\d.]+) 818 [\d.]+ '
+            r"L818 ([\d.]+)",
+            svg,
+        ):
+            alturas.append(float(trecho.group(3)) - float(trecho.group(2)))
+        esperadas = sorted(
+            c["valor_pp"] * escala for c in celulas if c["valor_pp"] >= 1e-9
+        )
+        # As coordenadas do SVG saem com uma casa decimal, entao a folga so
+        # cobre esse arredondamento, e nao uma espessura minima de desenho.
+        assert sorted(alturas) == pytest.approx(esperadas, abs=0.11), uf
+        assert min(alturas) < 2 * escala, uf
 
 
 def test_frechet_da_figura_reproduz_o_json():
@@ -130,7 +190,7 @@ def test_frechet_da_figura_reproduz_o_json():
     for uf in UFS:
         variante = D["transferencia"][uf]["gov1_pres2"]["variantes"]["ideologica"]
         publicadas = {(c["origem"], c["destino"]): c for c in variante["celulas"]}
-        _, _, _, celulas = FIG.celulas_do_diagrama(D["transferencia"][uf]["gov1_pres2"])
+        *_, celulas = FIG.celulas_do_diagrama(D["transferencia"][uf]["gov1_pres2"])
         for celula in celulas:
             chave = (celula["origem"], celula["destino"])
             if chave not in publicadas:
@@ -145,7 +205,7 @@ def test_frechet_da_figura_reproduz_o_json():
 
 def test_massa_de_cada_diagrama_fecha_em_cem():
     for uf in UFS:
-        _, _, _, celulas = FIG.celulas_do_diagrama(D["transferencia"][uf]["gov1_pres2"])
+        *_, celulas = FIG.celulas_do_diagrama(D["transferencia"][uf]["gov1_pres2"])
         assert sum(c["valor_pp"] for c in celulas) == pytest.approx(100, abs=0.05)
 
 

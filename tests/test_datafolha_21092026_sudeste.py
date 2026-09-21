@@ -128,6 +128,144 @@ def test_linha_publicada_entra_fixa_como_medicao():
     assert conferidas > 0
 
 
+def test_celula_de_segundo_turno_respeita_o_piso_medido_no_primeiro():
+    """A regra nova da casa: estimativa não fica abaixo de medição da mesma amostra.
+
+    Para toda origem com linha publicada de 1º turno para um finalista, o valor
+    de 2º turno precisa ficar acima do piso, que é a linha medida multiplicada
+    pela retenção declarada. Antes da correção, São Paulo entregava 2,232 pontos
+    de Tarcísio para Lula contra 5,88 pontos já medidos no 1º turno.
+    """
+    conferidas = 0
+    for uf, cenario, prior, matriz in variantes():
+        if cenario == "gov1_pres1":
+            continue
+        for celula in matriz["celulas"]:
+            piso = celula.get("piso_medido_pp")
+            if piso is None:
+                continue
+            assert celula["estado"] == "ancorada", (uf, cenario, prior, celula)
+            assert celula["valor_pp"] >= piso - 1e-6, (uf, cenario, prior, celula)
+            assert celula["limite_inferior_informado_pp"] >= piso - 1e-6
+            assert celula["limite_inferior_informado_pp"] >= celula["frechet_min_pp"]
+            conferidas += 1
+    assert conferidas >= 12
+
+
+def test_sao_paulo_usa_cadeia_e_sai_acima_do_valor_antigo():
+    sp = D["transferencia"]["SP"]
+    for cenario in ("gov1_pres2", "gov2_pres2"):
+        assert sp[cenario]["motor"] == "cadeia_3niveis"
+    medido_pp = 49 / 99 * 12  # linha da p. 4 aplicada a massa normalizada
+    for cenario in ("gov1_pres2", "gov2_pres2"):
+        celula = sp[cenario]["robustez"]["celula_direita_para_lula"]
+        assert celula["valor_pp"] > 2.232, cenario
+        assert celula["valor_pp"] >= medido_pp * 0.93, cenario
+    # O vazamento total subiu porque o piso medido entrou na conta.
+    antes = sp["gov2_pres2"]["robustez"]["vazamento_sem_ancoragem_pct"]
+    depois = sp["gov2_pres2"]["robustez"]["vazamento_da_direita_pct"]
+    assert min(depois.values()) > min(antes.values())
+
+
+def test_a_cadeia_fecha_nas_margens_do_estagio_e_do_segundo_turno():
+    for uf, cenario, prior, matriz in variantes():
+        if matriz.get("motor") != "cadeia_3niveis":
+            continue
+        assert matriz["celulas_do_cubo"] > 0, (uf, cenario, prior)
+        assert matriz["residuo_margem_linha_pp"] < 1e-6
+        assert matriz["residuo_margem_coluna_pp"] < 1e-6
+        for linha, destinos in matriz["matriz_pp"].items():
+            assert sum(destinos.values()) == pytest.approx(
+                matriz["origem_pct"][linha], abs=0.01
+            )
+
+
+def test_linha_medida_de_dois_turnos_nao_contraria_a_de_um_turno():
+    """Onde o instituto mede os dois turnos, o par precisa ser coerente."""
+    total = 0
+    for uf in UFS:
+        linhas = D["transferencia"][uf]["coerencia_das_linhas_medidas"]
+        for linha in linhas:
+            assert linha["coerente"], (uf, linha)
+            total += 1
+    assert total == 10
+    # A mais apertada de todas: Patrus para Flávio, 3% nos dois turnos.
+    apertada = min(
+        (
+            linha
+            for uf in UFS
+            for linha in D["transferencia"][uf]["coerencia_das_linhas_medidas"]
+        ),
+        key=lambda linha: linha["folga_pp"],
+    )
+    assert apertada["origem"].startswith("Patrus")
+    assert apertada["folga_pp"] < 0.1
+
+
+def test_fidelidade_estadual_tem_a_condicao_necessaria_conferida():
+    for uf in UFS:
+        bloco = D["transferencia"][uf]["fidelidade_estadual_conferida"]
+        assert bloco["linhas"]
+        for linha in bloco["linhas"]:
+            assert linha["compativel"], (uf, linha)
+            assert linha["variacao_pp"] >= 0
+
+
+def test_linha_publicada_vem_com_base_e_intervalo():
+    """Medição em subamostra pequena também tem incerteza, e ela é publicada."""
+    ruas = None
+    for uf in UFS:
+        itens = D["transferencia"][uf]["incerteza_das_linhas_medidas"]
+        assert itens
+        for item in itens:
+            baixo, alto = item["ic95_com_deff_pct"]
+            assert baixo <= item["valor_pct"] <= alto
+            assert item["ic95_pct"][0] >= baixo
+            assert item["ic95_pct"][1] <= alto
+            assert item["n_subamostra"] > 50
+            assert item["deff"] > 1
+            if (
+                uf == "RJ"
+                and item["origem"].startswith("Douglas Ruas")
+                and item["destino"] == LULA
+                and item["turno"] == "2º turno"
+            ):
+                ruas = item
+    # A linha que o dono do projeto contestou: o zero fica fora do intervalo.
+    assert ruas is not None
+    assert ruas["valor_pct"] == 7
+    assert ruas["zero_dentro_do_ic"] is False
+    assert ruas["pontos_do_eleitorado_pp"] == pytest.approx(1.77, abs=0.01)
+
+
+def test_a_conta_na_tela_reproduz_a_aritmetica_publicada():
+    mg = D["transferencia"]["MG"]["conta_na_tela"]
+    assert mg["natureza"] == "medida"
+    assert mg["lula_no_estado_pct"] == 46
+    assert mg["fora_da_direita_pp"] == 63
+    assert mg["medido_pp"] == pytest.approx(28.73, abs=0.01)
+    assert mg["exigencia_com_a_direita_pct"] == pytest.approx(44.28, abs=0.05)
+    assert mg["exigencia_sem_a_direita_pct"] == pytest.approx(68.0, abs=0.05)
+    sp = D["transferencia"]["SP"]["conta_na_tela"]
+    assert sp["natureza"].startswith("piso medido")
+    assert sp["lula_no_estado_pct"] == 42
+    assert sp["fora_da_direita_pp"] == 51
+    assert sp["estimativa_ancorada_na_direita_pp"] > sp["medido_na_direita_pp"]
+    fracao = D["transferencia"]["MG"]["fracao_do_voto_de_lula_na_direita_estadual"]
+    assert fracao["candidatura"].startswith("Cleitinho")
+    assert fracao["pontos_pp"] > 10
+    assert 20 < fracao["fracao_pct"] < 45
+
+
+def test_sensibilidade_roda_prior_retencao_e_fidelidade():
+    for uf in UFS:
+        grade = D["transferencia"][uf]["gov2_pres2"]["sensibilidade"]
+        assert len(grade) >= 15
+        assert {g["retencao"] for g in grade} >= {0.93, 0.99}
+        assert {g["fidelidade"] for g in grade} >= {0.93, 0.99}
+        assert {g["prior"] for g in grade} == {"ideologica", "polarizada", "frouxa"}
+
+
 def test_o_instituto_publica_cruzamento_entre_cargos():
     varredura = D["varredura_de_cruzamentos"]
     assert varredura["linhas_medidas"] >= 13
