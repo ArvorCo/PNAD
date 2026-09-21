@@ -21,30 +21,29 @@ def test_new_waves_recompose_by_two_independent_partitions():
             assert control["residuo_max"] < 0.8
             assert control["residuo_renda"] < 0.8
             assert sum(control["pesos"]) == pytest.approx(100)
-            assert poll["turnos"][turn]["residuo_max"] == control["residuo_renda"]
+            if ident == "palver_2026-09-18":
+                assert poll["fonte"]["tipo"] == "explorer"
+                assert poll["turnos"][turn]["residuo_max"] == 0
+            else:
+                assert poll["turnos"][turn]["residuo_max"] == control["residuo_renda"]
 
 
 def test_revised_wave_never_reuses_old_income_crossbreaks():
     assert "palver_2026-09-07" not in {p["id"] for p in OUTPUT["pesquisas"]}
-    revised = next(
-        p for p in OUTPUT["nao_reponderaveis"] if p["id"] == "palver_2026-09-07_v2"
-    )
-    assert revised["publicado"]["2t"] == {
-        "lula": 44,
-        "flavio": 47,
-        "branco_nulo": 8,
-        "indecisos": 1,
-    }
-    assert "turnos" not in revised
+    revised = next(p for p in OUTPUT["pesquisas"] if p["id"] == "palver_2026-09-07_v2")
+    assert revised["publicado"]["2t"]["flavio"] == pytest.approx(47.412, abs=0.001)
+    assert set(revised["turnos"]) == {"2t"}
+    assert revised["selecao_1t"]["status"] == "excluido_com_marcal"
+    assert revised["turnos"]["2t"]["residuo_max"] == 0
     assert revised["campo"]["fim"] == "2026-09-07"
     assert revised["divulgacao"] == "2026-09-21"
 
 
 def test_targets_are_not_mislabelled_as_observed_weighted_sample():
     poll = next(p for p in OUTPUT["pesquisas"] if p["id"] == "palver_2026-09-18")
-    assert poll["renda"]["perfil_tipo"] == "alvo_de_calibracao"
+    assert poll["renda"]["perfil_tipo"] == "perfil_ponderado_reconstituido"
     assert poll["renda"]["amostra_pct"] == pytest.approx(
-        [42.124, 39.564, 18.312], abs=0.001
+        [42.123, 39.563, 18.314], abs=0.001
     )
     assert AUDIT["palver"]["pnad"]["ano"] == 2024
     assert AUDIT["palver"]["voto_2022"]["usa"] is True
@@ -84,4 +83,4 @@ def test_skip_home_preserves_home_and_its_chart(tmp_path, monkeypatch):
     html = builder.PAGE.read_text()
     assert 'id="palver-pesos"' in html
     assert "palver_2026-09-18" in html
-    assert "META DE CALIBRAÇÃO" in html
+    assert "perfil ponderado recuperado" in html

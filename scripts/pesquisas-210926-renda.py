@@ -330,6 +330,9 @@ def main():
         assert hashlib.sha256(payload).hexdigest() == source["sha256"]
     dump(BASE / "auditoria_20260921.json", audit)
     dump(ROOT / "docs/assets/reponderacao_20260921.json", audit)
+    # Explorer supersedes PDF-only transcriptions when the archived tables exist.
+    if (BASE / "palver_explorer_20260921/audit.json").exists():
+        load_module("palver-explorer-integrate").integrate()
     print(json.dumps(checks, ensure_ascii=False, indent=2))
 
 

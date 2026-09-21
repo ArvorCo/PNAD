@@ -1,7 +1,7 @@
 {
   "id": "palver_2026-09-18",
   "instituto": "Palver",
-  "contratante": "Palver (iniciativa própria, onda 3, método v2)",
+  "contratante": "Palver (iniciativa própria)",
   "registro_tse": "BR-00860/2026",
   "campo": {
     "inicio": "2026-09-15",
@@ -10,19 +10,6 @@
   "divulgacao": "2026-09-21",
   "n": 5000,
   "metodo": "online, amostra não probabilística recrutada por anúncios em redes sociais, calibrada por raking",
-  "fonte": {
-    "pdf": "data/originals/palver_092026_21/relatorio.pdf",
-    "tipo": "relatorio",
-    "url": "https://www.palver.com/api/surveys/voting-intention-2026-september-w3/report",
-    "paginas": {
-      "metodologia": 18,
-      "perfil_renda": 18,
-      "1t_topline": 31,
-      "1t_renda": 32,
-      "2t_topline": 38,
-      "2t_renda": 40
-    }
-  },
   "renda": {
     "unidade": "salarios_minimos",
     "ano_referencia": 2026,
@@ -41,14 +28,141 @@
       }
     ],
     "amostra_pct": [
-      42.12,
-      39.56,
-      18.31
+      42.122941368112784,
+      39.56309619417734,
+      18.31396243770991
     ],
-    "nota": "Metas de calibração declaradas na p. 18, normalizadas de 99,99% para 100%; não são contagens brutas nem perfil ponderado medido nesta onda. A p. 20 declara aderência exata às margens sem aparo, mas a p. 18 admite tolerância de até 3 pp. Sem diagnóstico de margens publicado da onda 3, a recomposição condiciona-se ao alvo. Referência do instituto: PNADC 2024 visita 5, renda domiciliar habitual VD5007, cortes nominais de R$ 3.242 e R$ 8.105.",
-    "perfil_tipo": "alvo_de_calibracao"
+    "nota": "Margem ponderada recuperada das tabelas exatas do Explorer, com posto completo e recomposição dos dois turnos e do n efetivo. Não usar as contagens brutas como pesos. Referência da Palver: PNADC 2024, visita 5. Valores nominais em salários mínimos de 2026.",
+    "perfil_tipo": "perfil_ponderado_reconstituido"
   },
   "publicado": {
+    "1t": {
+      "flavio": 42.3254939757094,
+      "lula": 41.3233661100936,
+      "renan_santos": 11.4311666737253,
+      "cury": 1.8411506335436998,
+      "caiado": 0.691348896039324,
+      "zema": 0.65340680173844,
+      "outros": 0.847293922368055,
+      "branco_nulo": 0.60579169120236,
+      "indecisos": 0.280981295579865
+    },
+    "2t": {
+      "flavio": 47.391887281529996,
+      "lula": 42.9278734247398,
+      "branco_nulo": 8.548215005459591,
+      "indecisos": 1.13202428827061
+    }
+  },
+  "cruzamentos": {
+    "1t": {
+      "opcoes": [
+        "flavio",
+        "lula",
+        "renan_santos",
+        "cury",
+        "caiado",
+        "zema",
+        "outros",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          46.1531512819983,
+          42.8119045830839,
+          6.73273190689607,
+          1.6912666634805,
+          0.267225821096711,
+          0.23671302234685399,
+          0.572009684253334,
+          1.17704658715153,
+          0.35795044969273
+        ],
+        [
+          41.723183858448195,
+          38.2151307507273,
+          14.5905025629267,
+          2.4197870717748,
+          0.5754012641216699,
+          0.693764790341257,
+          1.28542197583893,
+          0.26169503993285,
+          0.23511268588825798
+        ],
+        [
+          34.8228613996381,
+          44.6142866795657,
+          15.4127617413613,
+          0.9358798358891159,
+          1.9173292817742,
+          1.52463719258051,
+          0.533985400376677,
+          0.035221143753355104,
+          0.203037325061067
+        ]
+      ],
+      "nota": "Tabela pública do Explorer; percentuais sem arredondamento e todas as alternativas expostas.",
+      "proveniencia": {
+        "total": {
+          "url": "https://www.palver.com.br/survey/explore?wave=03_pesquisa_2026_09_21&question=stimulated_1r_vote_1_h",
+          "retrieved_utc": "2026-09-21T20:15:37.871792+00:00",
+          "html_sha256": "ecc1c3acb6dbf66ec50a8a488dd2b4661d33c1a9fc1bbf1909a687afded28ec5",
+          "snapshot": "data/originals/palver_explorer_20260921/03_pesquisa_2026_09_21/stimulated_1r_vote_1_h--total.html.gz"
+        },
+        "renda": {
+          "url": "https://www.palver.com.br/survey/explore?wave=03_pesquisa_2026_09_21&question=stimulated_1r_vote_1_h&breakdown=inc_std",
+          "retrieved_utc": "2026-09-21T20:15:38.913203+00:00",
+          "html_sha256": "8dd56b5b4540b15d14a9c9bd7c3924119c10328620fd866f5d3c0d612f6ce1a6",
+          "snapshot": "data/originals/palver_explorer_20260921/03_pesquisa_2026_09_21/stimulated_1r_vote_1_h--inc_std.html.gz"
+        }
+      }
+    },
+    "2t": {
+      "opcoes": [
+        "flavio",
+        "lula",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          49.512457241541306,
+          43.5220228110348,
+          5.04732362365026,
+          1.91819632377364
+        ],
+        [
+          47.4065788811715,
+          40.9446347747139,
+          11.1358250710473,
+          0.5129612730672589
+        ],
+        [
+          42.4827427111951,
+          45.8456331343563,
+          11.0104880732128,
+          0.661136081235784
+        ]
+      ],
+      "nota": "Tabela pública do Explorer; percentuais sem arredondamento e todas as alternativas expostas.",
+      "proveniencia": {
+        "total": {
+          "url": "https://www.palver.com.br/survey/explore?wave=03_pesquisa_2026_09_21&question=lula_flavio",
+          "retrieved_utc": "2026-09-21T20:15:25.286563+00:00",
+          "html_sha256": "344f6e2de3d65a82b2700b7bb7399c6be07d16ca583101b99004f50741699423",
+          "snapshot": "data/originals/palver_explorer_20260921/03_pesquisa_2026_09_21/lula_flavio--total.html.gz"
+        },
+        "renda": {
+          "url": "https://www.palver.com.br/survey/explore?wave=03_pesquisa_2026_09_21&question=lula_flavio&breakdown=inc_std",
+          "retrieved_utc": "2026-09-21T20:15:26.331218+00:00",
+          "html_sha256": "ce005726e707a10952206246191cee6bd9dfda8d91fc72a91b5eccefc9902f17",
+          "snapshot": "data/originals/palver_explorer_20260921/03_pesquisa_2026_09_21/lula_flavio--inc_std.html.gz"
+        }
+      }
+    }
+  },
+  "publicado_pdf": {
     "1t": {
       "lula": 41,
       "flavio": 42,
@@ -67,69 +181,12 @@
       "indecisos": 1
     }
   },
-  "cruzamentos": {
-    "1t": {
-      "opcoes": [
-        "lula",
-        "flavio",
-        "renan_santos",
-        "cury",
-        "outros"
-      ],
-      "linhas": [
-        [
-          43,
-          46,
-          7,
-          2,
-          1
-        ],
-        [
-          38,
-          42,
-          15,
-          2,
-          1
-        ],
-        [
-          45,
-          35,
-          15,
-          1,
-          0
-        ]
-      ],
-      "nota": "Questão 2, p. 32, transcrição visual. Somente as cinco opções exibidas têm ajuste; não se estima voto das opções omitidas. Controle independente por sexo na mesma página."
-    },
-    "2t": {
-      "opcoes": [
-        "lula",
-        "flavio",
-        "branco_nulo",
-        "indecisos"
-      ],
-      "linhas": [
-        [
-          44,
-          50,
-          5,
-          2
-        ],
-        [
-          41,
-          47,
-          11,
-          1
-        ],
-        [
-          46,
-          42,
-          11,
-          1
-        ]
-      ],
-      "nota": "Questão 4, cenário 1, p. 40, transcrição visual. Controle independente por sexo. Arredondamentos mantidos, inclusive soma de 101% na primeira faixa."
-    }
-  },
-  "notas": "O PDF pp. 16 e 22 encerra o campo em 18/09, apesar de notícia citar 20/09. PNAD 2024 visita 5, região × voto de 2022 e filiação partidária. Microdados prometidos somente após o 2º turno (p. 6). n efetivo Kish 1.232, efeito dos pesos 4,06, máximo 21,73, sem aparo (p. 20)."
+  "fonte": {
+    "tipo": "explorer",
+    "url": "https://www.palver.com.br/survey/explore?wave=03_pesquisa_2026_09_21&question=lula_flavio&breakdown=inc_std",
+    "rotulo": "Palver · Onda 3",
+    "onda_explorer": "03_pesquisa_2026_09_21",
+    "snapshot": "analysis/reponderacao/palver_explorer_20260921/03_pesquisa_2026_09_21/",
+    "nota": "Onda 3. Percentuais exatos do Explorer, sem arredondar o placar de partida. Distribuição ponderada de renda recuperada por sistema linear e validada contra os dois turnos e o n efetivo. Os n por faixa são contagens brutas, não os pesos de composição. O catálogo encerra o campo em 20/09; mantemos 18/09 conforme o PDF. Divergência documental pendente."
+  }
 }

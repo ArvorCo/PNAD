@@ -128,7 +128,10 @@ def audit():
             }
             if wid == result["latest_wave"]:
                 turns[turn]["pdf_anchored_pair"] = {
-                    k: poll["turnos"][turn]["publicado"][k]
+                    k: {
+                        "1t": {"lula": 41, "flavio": 42},
+                        "2t": {"lula": 43, "flavio": 47},
+                    }[turn][k]
                     + counterfactual["pessoas16_efetivo"][label]
                     - published[label]
                     for k, label in PAIR.items()
@@ -336,9 +339,10 @@ def report(data):
         "- **Respostas múltiplas:** desgaste Master e STF podem somar mais de 100%. "
         "Não normalizar essas tabelas como se fossem uma escolha exclusiva.",
         "",
-        "Nenhuma série pública do agregador foi alterada por esta exploração. "
-        "Os dados extraídos e os novos cálculos ficam disponíveis para uma atualização "
-        "explícita, com a convenção de ancoragem e as discrepâncias registradas.",
+        "A integração no agregador é feita por `palver-explorer-integrate.py`: "
+        "usa os percentuais exatos do Explorer, mantém a onda 2 original fora das médias "
+        "e publica as quatro versões no histórico, inclusive os cenários com Marçal "
+        "excluídos da média do primeiro turno.",
         "",
         "## Reprodução",
         "",

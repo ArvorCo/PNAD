@@ -98,7 +98,7 @@ def coverage_html(data, table):
         "Sem voto por faixa no mesmo turno, o resultado permanece apenas como publicação do instituto.</p>"
         + table(
             [
-                "Instituto e PDF",
+                "Instituto e fonte",
                 "1º publicado",
                 "1º reponderado",
                 "2º publicado",

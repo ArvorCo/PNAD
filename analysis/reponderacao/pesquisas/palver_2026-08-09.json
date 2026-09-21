@@ -1,0 +1,174 @@
+{
+  "id": "palver_2026-08-09",
+  "instituto": "Palver",
+  "contratante": "Palver (iniciativa própria)",
+  "registro_tse": "BR-06596/2026",
+  "campo": {
+    "inicio": "2026-08-03",
+    "fim": "2026-08-09"
+  },
+  "divulgacao": "2026-08-10",
+  "n": 5000,
+  "metodo": "online, amostra não probabilística recrutada por anúncios em redes sociais, calibrada por raking",
+  "renda": {
+    "unidade": "salarios_minimos",
+    "ano_referencia": 2026,
+    "faixas": [
+      {
+        "rotulo": "Até 2 SM (até R$ 3.242)",
+        "max": 2
+      },
+      {
+        "rotulo": "2 a 5 SM (R$ 3.242 a 8.105)",
+        "max": 5
+      },
+      {
+        "rotulo": "Mais de 5 SM (acima de R$ 8.105)",
+        "max": null
+      }
+    ],
+    "amostra_pct": [
+      42.12294144273033,
+      39.56309614318948,
+      18.313962414080244
+    ],
+    "nota": "Margem ponderada recuperada das tabelas exatas do Explorer, com posto completo e recomposição dos dois turnos e do n efetivo. Não usar as contagens brutas como pesos. Referência da Palver: PNADC 2024, visita 5. Valores nominais em salários mínimos de 2026.",
+    "perfil_tipo": "perfil_ponderado_reconstituido"
+  },
+  "publicado": {
+    "1t": {
+      "lula": 44.253267184550396,
+      "flavio": 39.9017401719458,
+      "renan_santos": 10.2431406236734,
+      "caiado": 1.57021683740831,
+      "zema": 1.20594430990564,
+      "samara": 0.799870517591784,
+      "outros": 0.546916097867628,
+      "branco_nulo": 1.1206653559400899,
+      "indecisos": 0.358238901116925
+    },
+    "2t": {
+      "lula": 46.2088028848977,
+      "flavio": 45.5064497761986,
+      "branco_nulo": 7.6905446683520395,
+      "indecisos": 0.594202670551626
+    }
+  },
+  "cruzamentos": {
+    "1t": {
+      "opcoes": [
+        "lula",
+        "flavio",
+        "renan_santos",
+        "caiado",
+        "zema",
+        "samara",
+        "outros",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          45.991122400536696,
+          42.7023609134347,
+          6.589802560633911,
+          1.34939999665256,
+          0.7864711212910069,
+          0.317207857535272,
+          0.382752314405856,
+          1.61756739768939,
+          0.263315437820537
+        ],
+        [
+          40.5849553962089,
+          42.6409499510748,
+          11.5002356860252,
+          1.0084704922646501,
+          1.36253742813158,
+          1.4400690432546799,
+          0.786127045461604,
+          0.183275198323485,
+          0.493379759255186
+        ],
+        [
+          48.1806640438515,
+          27.542754266685797,
+          15.9303190797612,
+          3.2916291020468504,
+          1.8324682542953799,
+          0.527015045772346,
+          0.407740084356356,
+          2.0027836521787403,
+          0.28462647105177
+        ]
+      ],
+      "nota": "Tabela pública do Explorer; percentuais sem arredondamento e todas as alternativas expostas.",
+      "proveniencia": {
+        "total": {
+          "url": "https://www.palver.com.br/survey/explore?wave=01_pesquisa_2026_08_10&question=stimulated_1r_vote_1_h",
+          "retrieved_utc": "2026-09-21T20:15:09.231904+00:00",
+          "html_sha256": "9501471678e8c424bf5452ba596812a96f045a86e8eb01668140e9f6fd574a23",
+          "snapshot": "data/originals/palver_explorer_20260921/01_pesquisa_2026_08_10/stimulated_1r_vote_1_h--total.html.gz"
+        },
+        "renda": {
+          "url": "https://www.palver.com.br/survey/explore?wave=01_pesquisa_2026_08_10&question=stimulated_1r_vote_1_h&breakdown=inc_std",
+          "retrieved_utc": "2026-09-21T20:15:10.139784+00:00",
+          "html_sha256": "43fef8d809bb191f842c554a5bf1399fdd1f77f90d937ec3512b08be48800259",
+          "snapshot": "data/originals/palver_explorer_20260921/01_pesquisa_2026_08_10/stimulated_1r_vote_1_h--inc_std.html.gz"
+        }
+      }
+    },
+    "2t": {
+      "opcoes": [
+        "lula",
+        "flavio",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          46.8298347815901,
+          46.8628315148781,
+          5.47639402694675,
+          0.830939676585042
+        ],
+        [
+          43.3212154366855,
+          47.8588720148488,
+          8.53485136853263,
+          0.285061179933071
+        ],
+        [
+          51.018368812002905,
+          37.3048442277457,
+          10.959261143039601,
+          0.717525817211677
+        ]
+      ],
+      "nota": "Tabela pública do Explorer; percentuais sem arredondamento e todas as alternativas expostas.",
+      "proveniencia": {
+        "total": {
+          "url": "https://www.palver.com.br/survey/explore?wave=01_pesquisa_2026_08_10&question=lula_flavio",
+          "retrieved_utc": "2026-09-21T20:14:36.755189+00:00",
+          "html_sha256": "25695bbc71e32a2aa9418300f9823ef29033ce88fdfd15861bf24311a59877b9",
+          "snapshot": "data/originals/palver_explorer_20260921/01_pesquisa_2026_08_10/lula_flavio--total.html.gz"
+        },
+        "renda": {
+          "url": "https://www.palver.com.br/survey/explore?wave=01_pesquisa_2026_08_10&question=lula_flavio&breakdown=inc_std",
+          "retrieved_utc": "2026-09-21T20:14:37.255503+00:00",
+          "html_sha256": "665cfe5bb85ab430585c20541558ecb5881e89266a0889dfcd846d22df834f65",
+          "snapshot": "data/originals/palver_explorer_20260921/01_pesquisa_2026_08_10/lula_flavio--inc_std.html.gz"
+        }
+      }
+    }
+  },
+  "fonte": {
+    "tipo": "explorer",
+    "url": "https://www.palver.com.br/survey/explore?wave=01_pesquisa_2026_08_10&question=lula_flavio&breakdown=inc_std",
+    "rotulo": "Palver · Onda 1",
+    "onda_explorer": "01_pesquisa_2026_08_10",
+    "snapshot": "analysis/reponderacao/palver_explorer_20260921/01_pesquisa_2026_08_10/",
+    "nota": "Onda 1. Percentuais exatos do Explorer, sem arredondar o placar de partida. Distribuição ponderada de renda recuperada por sistema linear e validada contra os dois turnos e o n efetivo. Os n por faixa são contagens brutas, não os pesos de composição.",
+    "campo_fonte": "https://github.com/palverdata/pesquisa-palver/blob/7523cf14f0095f088ac9680e9c64a9923289fdb1/ondas/2026-08-10/config.yaml"
+  }
+}

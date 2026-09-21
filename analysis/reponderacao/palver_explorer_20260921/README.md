@@ -72,7 +72,7 @@ Também há voto atual por voto declarado em 2022, sexo, idade, raça, escolarid
 - **Cobertura:** identificação política da onda 3 cobre 4.924 pessoas. Não recompor o nacional com esses grupos sem tratar os 76 casos ausentes.
 - **Respostas múltiplas:** desgaste Master e STF podem somar mais de 100%. Não normalizar essas tabelas como se fossem uma escolha exclusiva.
 
-Nenhuma série pública do agregador foi alterada por esta exploração. Os dados extraídos e os novos cálculos ficam disponíveis para uma atualização explícita, com a convenção de ancoragem e as discrepâncias registradas.
+A integração no agregador é feita por `palver-explorer-integrate.py`: usa os percentuais exatos do Explorer, mantém a onda 2 original fora das médias e publica as quatro versões no histórico, inclusive os cenários com Marçal excluídos da média do primeiro turno.
 
 ## Reprodução
 

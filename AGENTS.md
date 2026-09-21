@@ -443,3 +443,8 @@ Relatório de terceiro, mapa recebido e anexo sigiloso não ficam no repositóri
 - No anexo presidencial estadual, Situação A é o cenário COM Marçal e B o SEM. A casa usa a B; a A fica guardada em `first_president_com_marcal`.
 - Figura larga ganha variante empilhada para telas abaixo de 720 px, as duas embutidas e trocadas por CSS, sem JS. Arquivo PDF novo em `docs/fontes/` exige `git lfs push origin main` antes do `git push`.
 - A busca do UOL devolve vazio no navegador embutido; a da Folha funciona com filtro de período e forneceu 72 dos 76 itens.
+
+## Integração do Palver Explorer
+- `python3 scripts/palver-explorer-integrate.py` integra as tabelas arquivadas ao agregador; depois execute `reponderacao-pnad.py calcular --hoje 2026-09-21` e `reponderacao-build.py`. O gerador antigo `pesquisas-210926-renda.py` reaplica essa integração ao final para não restaurar transcrições superadas.
+- Os painéis Palver mostram três ondas e quatro versões: 09/08, 07/09 v1, 07/09 v2 e 18/09. A v1 substituída é só histórico; os cenários principais do Explorer de 07/09 contêm Marçal e ficam fora da média do primeiro turno. A alternativa sem Marçal do PDF antigo permanece no manifesto arquivado, sem ser confundida com o cenário do Explorer.
+- O perfil ponderado de renda é recuperado por sistema linear de posto completo e validado pelo n efetivo. Usar os percentuais exatos do Explorer como âncora; preservar os placares inteiros do PDF em `publicado_pdf`. Histórico completo em `docs/assets/palver_explorer_historico.json`; os n de grupo são contagens brutas e não podem ser usados como pesos de composição.

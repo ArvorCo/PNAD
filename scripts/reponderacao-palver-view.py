@@ -6,6 +6,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 AUDIT = ROOT / "docs/assets/reponderacao_20260921.json"
+HISTORY = ROOT / "docs/assets/palver_explorer_historico.json"
+
+
+def history_polls():
+    return json.loads(HISTORY.read_text())["pesquisas"]
 
 
 def fmt(value):
@@ -19,24 +24,34 @@ def audit_html(data, table):
     poll = next((p for p in data["pesquisas"] if p["id"] == "palver_2026-09-18"), None)
     if not poll:
         return ""
-    url = poll["fonte"]["url"]
+    url = "https://www.palver.com/api/surveys/voting-intention-2026-september-w3/report"
     github = audit["palver"]["github"]
     score_rows = []
-    for turn, title in [("1t", "1º turno"), ("2t", "2º turno")]:
-        result = poll["turnos"][turn]
-        values = [result["publicado"]] + [
-            result["cenarios"][key]["ajustado"]
-            for key in ["pessoas16_efetivo", "pessoas16_habitual"]
+    for wave in history_polls():
+        cells = [
+            f'<a href="{escape(wave["fonte"]["url"], quote=True)}">{escape(wave["rotulo_historico"])}</a>'
         ]
-        score_rows.append(
-            [title] + [f'{fmt(v["lula"])} × {fmt(v["flavio"])}' for v in values]
+        for turn in ["1t", "2t"]:
+            result = wave["turnos"][turn]
+            for values in [
+                result["publicado"],
+                result["cenarios"]["pessoas16_efetivo"]["ajustado"],
+            ]:
+                cells.append(f"{fmt(values['lula'])} × {fmt(values['flavio'])}")
+        cells.append(
+            "Arquivo, fora das médias"
+            if wave["substituida"]
+            else "Só 2º turno (1º com Marçal)"
+            if wave["primeiro_turno_com_marcal"]
+            else "1º e 2º turnos"
         )
+        score_rows.append(cells)
     sources = {s["instituto"]: s for s in audit["fontes"]}
     states = [
         [
             s["uf"],
             escape(s["registro"]),
-            f'{s["n"]:,}'.replace(",", "."),
+            f"{s['n']:,}".replace(",", "."),
             "/".join(reversed(s["divulgacao_pdf"].split("-"))),
             f'<a href="{escape(sources[s["fonte"]]["url"], quote=True)}">Íntegra</a>',
         ]
@@ -45,45 +60,49 @@ def audit_html(data, table):
     return (
         '<section id="palver-pesos" class="chapter"><div class="wrap">'
         '<p class="eyebrow">Palver · auditoria de calibração · 21/09/2026</p>'
-        "<h2>O código é aberto. Os pesos individuais ainda não.</h2>"
-        "<p>A Palver usa <b>PNADC 2024, visita 5</b>, e pondera por "
-        "<b>região × voto no segundo turno de 2022</b>. Nesta divulgação, acrescenta "
-        "filiação partidária, com cadastro do TSE de agosto de 2026. Não é a régua PNAD 2025 "
-        f'usada aqui. <a href="{url}#page=18">Metodologia, pp. 18–20</a>.</p>'
-        "<p>O relatório promete divulgar os microdados <b>depois do segundo turno</b>. "
-        "O repositório consultado contém o motor e os alvos; o arquivo com uma linha por entrevistado, "
-        "<code>peso</code> e <code>peso_norm</code> não está publicado. Sem essas respostas e pesos, "
-        "não é possível recalibrar conjuntamente sexo, idade e região pelo eleitorado TSE "
-        "e renda e escolaridade pela PNAD 2025. "
-        f'<a href="{url}#page=6">Relatório, p. 6</a>; '
-        f'<a href="{github}/README.md">README do código arquivado</a>.</p>'
-        "<h3>O teste que os dados públicos permitem</h3>"
-        "<p>Trocamos somente a margem de renda e mantemos a ancoragem no placar publicado. "
-        "A coluna habitual usa o mesmo conceito de rendimento <code>VD5007</code> adotado "
-        "no código da Palver; a efetiva segue a convenção do agregador. "
-        "<b>Ordem: Lula × Flávio, em %.</b></p>"
+        "<h2>Três ondas. Quatro versões. Todas visíveis.</h2>"
+        '<p>O <a href="https://www.palver.com.br/survey/explore">Explorer da Palver</a> '
+        "disponibiliza percentuais sem arredondamento, contagens por célula e tamanho efetivo. "
+        "Integramos todas as ondas: agosto, setembro original, setembro revisada e a onda 3. "
+        "A segunda onda é a mesma amostra em duas calibrações, portanto só a revisada entra nas médias. "
+        "Os primeiros turnos de 07/09 incluem Marçal: aparecem no histórico, mas ficam fora da média do 1º turno.</p>"
+        "<p>Os placares de partida são agora os <b>valores exatos do Explorer</b>. "
+        "Isso evita ancorar tabelas decimais em totais já arredondados. Todos os cenários abaixo "
+        "trocam somente a distribuição de renda pela PNAD 2025. <b>Ordem: Lula × Flávio, em %.</b></p>"
         + table(
-            ["Turno", "Publicado", "PNAD 2025 · efetiva", "PNAD 2025 · habitual"],
+            [
+                "Onda e fonte",
+                "1º publicado",
+                "1º reponderado",
+                "2º publicado",
+                "2º reponderado",
+                "Uso nas médias",
+            ],
             score_rows,
         )
-        + '<p class="note">Sensibilidades marginais, sem recalibração conjunta e sem intervalo novo. '
-        "Os pesos de renda de partida são os <b>alvos declarados</b> de 42,12% / 39,56% / 18,31%, "
-        "normalizados para 100%, pois não há diagnóstico público da aderência da onda 3. "
-        "A p. 20 declara aderência exata sem aparo; a p. 18 admite tolerância de até 3 pp. "
-        "Renda e sexo recompõem os dois candidatos a menos de 0,8 pp dos placares, "
-        "controle de leitura que não substitui a base individual. Renda nas pp. 32 e 40.</p>"
-        "<h3>A onda anterior mudou de método</h3>"
-        "<p>A Palver reapresentou a amostra de 04–07/09 sob o registro BR-06100/2026. "
-        "Na versão revisada, o primeiro turno passa a <b>Lula 41 × 40 Flávio</b> "
-        "(antes, 40 × 39), e o segundo a <b>44 × 47</b> (antes, 44 × 46). "
-        "São mudanças de calibração sobre as mesmas entrevistas. A versão original permanece "
-        "arquivada e sai da série ativa; a revisada só entra como placar publicado, pois as "
-        "pp. 30 e 37 não trazem o cruzamento de renda revisto. "
-        f'<a href="{url}#page=12">Mudança explicada pela Palver, pp. 12–16</a>.</p>'
-        '<p class="note">O snapshot do GitHub ainda contém apenas as configurações das ondas 1 e 2 '
-        "com método v1 e filiação desativada. O PDF da onda 3 descreve o método v2, mas sua "
-        "configuração não aparece nesse snapshot. A promessa de código aberto não prova "
-        "que a configuração da última divulgação já esteja disponível.</p>"
+        + '<p class="note">Três ondas independentes, quatro versões documentais. Pontos do histórico '
+        "não são conectados: a mudança entre v1 e v2 é de calibração, sem novo campo. "
+        "Sensibilidade de renda, sem recalibração conjunta e sem novo intervalo de confiança.</p>"
+        "<h3>A distribuição de renda foi conferida</h3>"
+        "<p>Na onda 3, as bases brutas são <b>1.321 / 2.203 / 1.476</b>. Elas não são os pesos: "
+        "o perfil ponderado recuperado das tabelas é <b>42,1229% / 39,5631% / 18,3140%</b>, "
+        "coerente com os alvos declarados. O sistema linear tem posto completo, recompõe "
+        "43 perguntas de base 5.000 e recupera o n efetivo de <b>1.231,71</b>. "
+        "Agora verificamos a aderência; antes, o cálculo dependia da hipótese de aderência aos alvos.</p>"
+        "<p>A Palver declara <b>PNADC 2024, visita 5</b>, ponderação por "
+        "<b>região × voto no segundo turno de 2022</b> e, na versão revisada, filiação partidária. "
+        "Os cruzamentos públicos não expõem os pesos individuais nem a tabela conjunta necessária "
+        "para recalibrar simultaneamente TSE + PNAD 2025. "
+        f'<a href="{url}#page=18">Metodologia, pp. 18–20</a>.</p>'
+        '<p><a href="assets/palver_explorer_historico.json">Histórico completo calculado (JSON)</a> · '
+        '<a href="assets/palver_explorer_auditoria.json">Auditoria dos cruzamentos (JSON)</a> · '
+        '<a href="https://github.com/ArvorCo/PNAD/tree/main/analysis/reponderacao/palver_explorer_20260921">'
+        "186 tabelas e reprodução</a>.</p>"
+        "<h3>Divergências documentais preservadas</h3>"
+        "<p>O catálogo do Explorer encerra a onda 3 em 20/09, mas o PDF informa 18/09; "
+        "mantemos 18/09 na série. Na onda 2 revisada, Lula aparece com 40,440% no primeiro "
+        "turno do Explorer e 41% no PDF p. 30. O arredondamento convencional isolado não "
+        "explica essa diferença. Os valores do painel e do PDF permanecem separados nos arquivos.</p>"
         "<details><summary>Como o código trata o voto de 2022 e os pesos extremos</summary>"
         "<p>Na versão pública consultada, o alvo usa Lula, Jair Bolsonaro e branco/nulo "
         "por região, exclui o exterior e considera os votos depositados. Os totais regionais "

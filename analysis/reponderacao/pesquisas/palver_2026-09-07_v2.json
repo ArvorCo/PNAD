@@ -1,7 +1,7 @@
 {
   "id": "palver_2026-09-07_v2",
   "instituto": "Palver",
-  "contratante": "Palver",
+  "contratante": "Palver (iniciativa própria)",
   "registro_tse": "BR-06100/2026",
   "campo": {
     "inicio": "2026-09-04",
@@ -9,17 +9,165 @@
   },
   "divulgacao": "2026-09-21",
   "n": 5000,
-  "fonte": {
-    "pdf": "data/originals/palver_092026_21/relatorio.pdf",
-    "tipo": "relatorio",
-    "url": "https://www.palver.com/api/surveys/voting-intention-2026-september-w3/report",
-    "paginas": {
-      "1t_topline": 30,
-      "2t_topline": 37
-    },
-    "rotulo": "Palver · onda 2 revisada"
+  "metodo": "online, amostra não probabilística recrutada por anúncios em redes sociais, calibrada por raking",
+  "renda": {
+    "unidade": "salarios_minimos",
+    "ano_referencia": 2026,
+    "faixas": [
+      {
+        "rotulo": "Até 2 SM (até R$ 3.242)",
+        "max": 2
+      },
+      {
+        "rotulo": "2 a 5 SM (R$ 3.242 a 8.105)",
+        "max": 5
+      },
+      {
+        "rotulo": "Mais de 5 SM (acima de R$ 8.105)",
+        "max": null
+      }
+    ],
+    "amostra_pct": [
+      42.12294136805163,
+      39.56309619420964,
+      18.313962437738716
+    ],
+    "nota": "Margem ponderada recuperada das tabelas exatas do Explorer, com posto completo e recomposição dos dois turnos e do n efetivo. Não usar as contagens brutas como pesos. Referência da Palver: PNADC 2024, visita 5. Valores nominais em salários mínimos de 2026.",
+    "perfil_tipo": "perfil_ponderado_reconstituido"
   },
   "publicado": {
+    "1t": {
+      "flavio": 40.4952756439453,
+      "lula": 40.440165011899,
+      "renan_santos": 9.36365358540726,
+      "cury": 4.735278564746849,
+      "caiado": 0.819540171261086,
+      "zema": 0.8102020787263421,
+      "marcal": 0.638956191185656,
+      "outros": 1.26230702078166,
+      "branco_nulo": 0.517295605231513,
+      "indecisos": 0.9173261268153019
+    },
+    "2t": {
+      "flavio": 47.4116164584474,
+      "lula": 43.8509188920083,
+      "branco_nulo": 7.81270554363978,
+      "indecisos": 0.924759105904467
+    }
+  },
+  "cruzamentos": {
+    "1t": {
+      "opcoes": [
+        "flavio",
+        "lula",
+        "renan_santos",
+        "cury",
+        "caiado",
+        "zema",
+        "marcal",
+        "outros",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          38.720659480499904,
+          46.202727375623894,
+          5.83895309255849,
+          4.30282729239718,
+          0.9075966326585441,
+          0.571909884630884,
+          0.871441431150731,
+          0.497118215424083,
+          0.559075735956015,
+          1.52769085910021
+        ],
+        [
+          45.8757804284119,
+          34.8120345590702,
+          10.4257569062926,
+          5.30635596127527,
+          0.49786620658629,
+          1.04413600506242,
+          0.4748270737062,
+          0.39636873110678805,
+          0.510500020796253,
+          0.656374107692149
+        ],
+        [
+          32.953632145046505,
+          39.3442902034663,
+          15.1761945202122,
+          4.49625490188033,
+          1.3119088150067701,
+          0.852924547568574,
+          0.458792773241941,
+          4.89293601558667,
+          0.435879710598184,
+          0.0771863673924288
+        ]
+      ],
+      "nota": "Tabela pública do Explorer; percentuais sem arredondamento e todas as alternativas expostas.",
+      "proveniencia": {
+        "total": {
+          "url": "https://www.palver.com.br/survey/explore?wave=02_pesquisa_2026_09_21&question=stimulated_1r_vote_1_h",
+          "retrieved_utc": "2026-09-21T20:15:19.005365+00:00",
+          "html_sha256": "a232a9c4be50b0a1a443f0d96e062e3cf6b60408a99308aeffc166cadc33ab3a",
+          "snapshot": "data/originals/palver_explorer_20260921/02_pesquisa_2026_09_21/stimulated_1r_vote_1_h--total.html.gz"
+        },
+        "renda": {
+          "url": "https://www.palver.com.br/survey/explore?wave=02_pesquisa_2026_09_21&question=stimulated_1r_vote_1_h&breakdown=inc_std",
+          "retrieved_utc": "2026-09-21T20:15:20.039417+00:00",
+          "html_sha256": "83f84db598a71c26ced402e84e6ee0faa370ef68cc41ae4acd7dce16fabc1d64",
+          "snapshot": "data/originals/palver_explorer_20260921/02_pesquisa_2026_09_21/stimulated_1r_vote_1_h--inc_std.html.gz"
+        }
+      }
+    },
+    "2t": {
+      "opcoes": [
+        "flavio",
+        "lula",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          45.0673333551943,
+          49.5835858952508,
+          4.61999528082791,
+          0.729085468726927
+        ],
+        [
+          52.5661902140806,
+          37.036778333540795,
+          9.40033739816326,
+          0.996694054215274
+        ],
+        [
+          41.668304600983,
+          45.385906332926105,
+          11.726370632108,
+          1.21941843398286
+        ]
+      ],
+      "nota": "Tabela pública do Explorer; percentuais sem arredondamento e todas as alternativas expostas.",
+      "proveniencia": {
+        "total": {
+          "url": "https://www.palver.com.br/survey/explore?wave=02_pesquisa_2026_09_21&question=lula_flavio",
+          "retrieved_utc": "2026-09-21T20:15:16.897772+00:00",
+          "html_sha256": "1b37743eb04cefceed173f79104d2194f55c9521359f2335f2e0d5106b48e5ce",
+          "snapshot": "data/originals/palver_explorer_20260921/02_pesquisa_2026_09_21/lula_flavio--total.html.gz"
+        },
+        "renda": {
+          "url": "https://www.palver.com.br/survey/explore?wave=02_pesquisa_2026_09_21&question=lula_flavio&breakdown=inc_std",
+          "retrieved_utc": "2026-09-21T20:15:17.418853+00:00",
+          "html_sha256": "abd4faf27da2485fab32c66022b567040177bd795cbba8a23c56a5fd208e3116",
+          "snapshot": "data/originals/palver_explorer_20260921/02_pesquisa_2026_09_21/lula_flavio--inc_std.html.gz"
+        }
+      }
+    }
+  },
+  "publicado_pdf": {
     "1t": {
       "lula": 41,
       "flavio": 40,
@@ -33,6 +181,12 @@
       "indecisos": 1
     }
   },
-  "ignorar": true,
-  "motivo": "Recalibração da mesma amostra de 04–07/09 por filiação partidária. Placares revistos nas pp. 30 e 37 da onda 3, sem cruzamento por renda revisto. Não se reaplica o cruzamento da versão v1 aos novos placares."
+  "fonte": {
+    "tipo": "explorer",
+    "url": "https://www.palver.com.br/survey/explore?wave=02_pesquisa_2026_09_21&question=lula_flavio&breakdown=inc_std",
+    "rotulo": "Palver · Onda 2 revisada",
+    "onda_explorer": "02_pesquisa_2026_09_21",
+    "snapshot": "analysis/reponderacao/palver_explorer_20260921/02_pesquisa_2026_09_21/",
+    "nota": "Onda 2 revisada. Percentuais exatos do Explorer, sem arredondar o placar de partida. Distribuição ponderada de renda recuperada por sistema linear e validada contra os dois turnos e o n efetivo. Os n por faixa são contagens brutas, não os pesos de composição. O PDF p. 30 mostra Lula 41% no 1º turno; o Explorer registra 40,440%. Versões preservadas, sem misturar os valores."
+  }
 }

@@ -420,6 +420,22 @@ def ch_manchete() -> str:
 
 
 def _painel_instituto(nome: str, turno: str) -> str:
+    if nome == "Palver":
+        historico = importlib.import_module("reponderacao-palver-view").history_polls()
+        return (
+            f'<article class="panel reveal" data-instituto="Palver" data-turno="{turno}">'
+            f"<h3>Palver <small>{TURNOS[turno]}</small></h3>"
+            f'<div class="fig">{instituto_svg(nome, turno, historico)}</div>'
+            '<p class="note"><b>3 ondas · 4 versões.</b> A onda 2 original (v1) foi substituída '
+            "pela revisada (v2). Todos os pontos estão visíveis; a v1 fica fora das médias. "
+            + (
+                "Os dois cenários de 07/09 incluem Marçal e também ficam fora da média do 1º turno. "
+                if turno == "1t"
+                else ""
+            )
+            + "Vazado é publicado, cheio é reponderado. "
+            '<a href="#palver-pesos">Fontes, valores e critérios</a>.</p></article>'
+        )
     ondas = sum(1 for p in PESQUISAS if p["instituto"] == nome and turno in p["turnos"])
     total = sum(1 for p in PESQUISAS if p["instituto"] == nome)
     if turno == "2t" and ondas < total:
@@ -531,7 +547,7 @@ def ch_fontes() -> str:
             esc(periodo(p["campo"])),
             esc(p["registro_tse"]),
             br(p["n"], 0),
-            f'<code>{esc(p["fonte"].get("arquivo") or p["fonte"].get("pdf") or "sem arquivo arquivado")}</code>',
+            f"<code>{esc(p['fonte'].get('arquivo') or p['fonte'].get('pdf') or 'sem arquivo arquivado')}</code>",
             esc(paginas_fonte(p["fonte"])),
         ]
         for p in RECENTES
@@ -554,7 +570,7 @@ def ch_fontes() -> str:
         '<a class="download" href="pnad.html"><b>A PNAD por dentro</b>'
         "<span>de onde vem a distribuição de renda usada como régua</span></a></div>"
         f'<p class="note">Régua: {esc(BENCH["benchmark"])}, arquivo '
-        f'<code>{esc(BENCH["source"])}</code>. Preços de '
+        f"<code>{esc(BENCH['source'])}</code>. Preços de "
         f"{MESES[int(BENCH['price_month'][4:]) - 1]}. de {BENCH['price_month'][:4]}. "
         f"Conta gerada em {esc(longo(D['gerado_em'][:10]))}, referência de "
         f"{esc(longo(D['referencia']))}.</p>",

@@ -92,8 +92,9 @@ def serie_svg(ident: str, turno: str, compacta: bool = False) -> str:
     esq, dir_ = 54, largura - (168 if compacta else 190)
     if turno == "1t":
         dir_ = largura - 225
-    topo, base = (30 if compacta else 44), altura - (
-        46 if compacta else 46 + 30 * legendas
+    topo, base = (
+        (30 if compacta else 44),
+        altura - (46 if compacta else 46 + 30 * legendas),
     )
 
     d0, d1 = datas[0], datas[-1]
@@ -459,10 +460,14 @@ def gap_svg(ident: str, turno: str) -> str:
     return cv.render()
 
 
-def instituto_svg(nome: str, turno: str) -> str:
-    polls = [p for p in PESQUISAS if p["instituto"] == nome and turno in p["turnos"]]
-    largura, altura = 380, 258
-    esq, dir_, topo, base = 44, largura - 16, 30, altura - 54
+def instituto_svg(nome: str, turno: str, historico: list[dict] | None = None) -> str:
+    polls = (
+        historico
+        if historico is not None
+        else [p for p in PESQUISAS if p["instituto"] == nome and turno in p["turnos"]]
+    )
+    largura, altura = 380, 284 if historico is not None else 258
+    esq, dir_, topo, base = 44, largura - 16, 30, altura - (76 if historico is not None else 54)
     cv = Canvas(
         largura, altura, aria=f"{nome}: {TURNOS[turno]} publicado e reponderado."
     )
@@ -504,7 +509,7 @@ def instituto_svg(nome: str, turno: str) -> str:
             (px(i), py(ajustado(p["turnos"][turno])[chave]))
             for i, p in enumerate(polls)
         ]
-        if len(polls) > 1:
+        if len(polls) > 1 and historico is None:
             _linha(cv, pub, COR[chave], "publicado")
             _linha(cv, adj, COR[chave], "ajustado")
         for indice, (ponto_pub, ponto_adj) in enumerate(zip(pub, adj, strict=True)):
@@ -526,7 +531,18 @@ def instituto_svg(nome: str, turno: str) -> str:
     for i, p in enumerate(polls):
         if (len(polls) - 1 - i) % passo:
             continue
-        cv.label(px(i), base + 20, curto(p["campo"]["fim"]), anchor="middle", size=11)
+        cv.label(
+            px(i),
+            base + 20,
+            p.get("rotulo_eixo", curto(p["campo"]["fim"])),
+            anchor="middle",
+            size=10 if historico is not None else 11,
+        )
+        if historico is not None:
+            status = "substituída" if p.get("substituida") else ""
+            if turno == "1t" and p.get("primeiro_turno_com_marcal"):
+                status = "com Marçal"
+            cv.label(px(i), base + 33, status, anchor="middle", size=9)
     ultimo = polls[-1]["turnos"][turno]
     cv.text(
         esq,
@@ -557,7 +573,7 @@ def ficha_faixa(pesquisa: dict, indice: int) -> str:
     piso = renda["cortes_brl_202604"][indice - 1] if indice else 0.0
     linhas = [
         f'<p class="tip-head"><b>{esc(faixa)}</b>'
-        f'<span>{esc(pesquisa["instituto"])}</span></p>'
+        f"<span>{esc(pesquisa['instituto'])}</span></p>"
     ]
     if corte is None:
         regua = f"acima de R$ {br(piso, 0)}"

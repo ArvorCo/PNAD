@@ -1,0 +1,1086 @@
+{
+  "pesquisas": [
+    {
+      "id": "palver_2026-08-09",
+      "instituto": "Palver",
+      "contratante": "Palver (iniciativa própria)",
+      "registro_tse": "BR-06596/2026",
+      "campo": {
+        "inicio": "2026-08-03",
+        "fim": "2026-08-09"
+      },
+      "divulgacao": "2026-08-10",
+      "n": 5000,
+      "metodo": "online, amostra não probabilística recrutada por anúncios em redes sociais, calibrada por raking",
+      "fonte": {
+        "tipo": "explorer",
+        "url": "https://www.palver.com.br/survey/explore?wave=01_pesquisa_2026_08_10&question=lula_flavio&breakdown=inc_std",
+        "rotulo": "Palver · Onda 1",
+        "onda_explorer": "01_pesquisa_2026_08_10",
+        "snapshot": "analysis/reponderacao/palver_explorer_20260921/01_pesquisa_2026_08_10/",
+        "nota": "Onda 1. Percentuais exatos do Explorer, sem arredondar o placar de partida. Distribuição ponderada de renda recuperada por sistema linear e validada contra os dois turnos e o n efetivo. Os n por faixa são contagens brutas, não os pesos de composição.",
+        "campo_fonte": "https://github.com/palverdata/pesquisa-palver/blob/7523cf14f0095f088ac9680e9c64a9923289fdb1/ondas/2026-08-10/config.yaml"
+      },
+      "publicado": {
+        "1t": {
+          "lula": 44.253267184550396,
+          "flavio": 39.9017401719458,
+          "renan_santos": 10.2431406236734,
+          "caiado": 1.57021683740831,
+          "zema": 1.20594430990564,
+          "samara": 0.799870517591784,
+          "outros": 0.546916097867628,
+          "branco_nulo": 1.1206653559400899,
+          "indecisos": 0.358238901116925
+        },
+        "2t": {
+          "lula": 46.2088028848977,
+          "flavio": 45.5064497761986,
+          "branco_nulo": 7.6905446683520395,
+          "indecisos": 0.594202670551626
+        }
+      },
+      "renda": {
+        "unidade": "salarios_minimos",
+        "faixas": [
+          "Até 2 SM (até R$ 3.242)",
+          "2 a 5 SM (R$ 3.242 a 8.105)",
+          "Mais de 5 SM (acima de R$ 8.105)"
+        ],
+        "cortes_brl_202604": [
+          3215.9,
+          8039.76,
+          null
+        ],
+        "amostra_pct": [
+          42.123,
+          39.563,
+          18.314
+        ],
+        "pnad_pct": {
+          "pessoas16_efetivo": [
+            35.187,
+            39.259,
+            25.554
+          ],
+          "pessoas16_habitual": [
+            34.864,
+            40.402,
+            24.734
+          ],
+          "domicilios_efetivo": [
+            42.672,
+            35.771,
+            21.557
+          ]
+        },
+        "nota": "Margem ponderada recuperada das tabelas exatas do Explorer, com posto completo e recomposição dos dois turnos e do n efetivo. Não usar as contagens brutas como pesos. Referência da Palver: PNADC 2024, visita 5. Valores nominais em salários mínimos de 2026.",
+        "perfil_tipo": "perfil_ponderado_reconstituido"
+      },
+      "desvio_ate_primeira_faixa": 6.936,
+      "turnos": {
+        "2t": {
+          "opcoes": [
+            "lula",
+            "flavio",
+            "branco_nulo",
+            "indecisos"
+          ],
+          "publicado": {
+            "lula": 46.2088028848977,
+            "flavio": 45.5064497761986,
+            "branco_nulo": 7.6905446683520395,
+            "indecisos": 0.594202670551626
+          },
+          "recomposto": {
+            "lula": 46.209,
+            "flavio": 45.506,
+            "branco_nulo": 7.691,
+            "indecisos": 0.594
+          },
+          "residuo_max": 0.0,
+          "cenarios": {
+            "pessoas16_efetivo": {
+              "contrafactual": {
+                "lula": 46.523,
+                "flavio": 44.811,
+                "branco_nulo": 8.078,
+                "indecisos": 0.588
+              },
+              "ajustado": {
+                "lula": 46.523,
+                "flavio": 44.811,
+                "branco_nulo": 8.078,
+                "indecisos": 0.588
+              }
+            },
+            "pessoas16_habitual": {
+              "contrafactual": {
+                "lula": 46.448,
+                "flavio": 44.901,
+                "branco_nulo": 8.068,
+                "indecisos": 0.582
+              },
+              "ajustado": {
+                "lula": 46.448,
+                "flavio": 44.901,
+                "branco_nulo": 8.068,
+                "indecisos": 0.582
+              }
+            },
+            "domicilios_efetivo": {
+              "contrafactual": {
+                "lula": 46.478,
+                "flavio": 45.159,
+                "branco_nulo": 7.752,
+                "indecisos": 0.611
+              },
+              "ajustado": {
+                "lula": 46.478,
+                "flavio": 45.159,
+                "branco_nulo": 7.752,
+                "indecisos": 0.611
+              }
+            }
+          },
+          "gap_publicado": 0.7023531086991,
+          "gap_ajustado": 1.7120000000000033,
+          "margem_diferenca_95": 2.654
+        },
+        "1t": {
+          "opcoes": [
+            "lula",
+            "flavio",
+            "renan_santos",
+            "caiado",
+            "zema",
+            "samara",
+            "outros",
+            "branco_nulo",
+            "indecisos"
+          ],
+          "publicado": {
+            "lula": 44.253267184550396,
+            "flavio": 39.9017401719458,
+            "renan_santos": 10.2431406236734,
+            "caiado": 1.57021683740831,
+            "zema": 1.20594430990564,
+            "samara": 0.799870517591784,
+            "outros": 0.546916097867628,
+            "branco_nulo": 1.1206653559400899,
+            "indecisos": 0.358238901116925
+          },
+          "recomposto": {
+            "lula": 44.253,
+            "flavio": 39.902,
+            "renan_santos": 10.243,
+            "caiado": 1.57,
+            "zema": 1.206,
+            "samara": 0.8,
+            "outros": 0.547,
+            "branco_nulo": 1.121,
+            "indecisos": 0.358
+          },
+          "residuo_max": 0.0,
+          "cenarios": {
+            "pessoas16_efetivo": {
+              "contrafactual": {
+                "lula": 44.428,
+                "flavio": 38.804,
+                "renan_santos": 10.904,
+                "caiado": 1.712,
+                "zema": 1.28,
+                "samara": 0.812,
+                "outros": 0.548,
+                "branco_nulo": 1.153,
+                "indecisos": 0.359
+              },
+              "ajustado": {
+                "lula": 44.428,
+                "flavio": 38.804,
+                "renan_santos": 10.904,
+                "caiado": 1.712,
+                "zema": 1.28,
+                "samara": 0.812,
+                "outros": 0.548,
+                "branco_nulo": 1.153,
+                "indecisos": 0.359
+              }
+            },
+            "pessoas16_habitual": {
+              "contrafactual": {
+                "lula": 44.349,
+                "flavio": 38.928,
+                "renan_santos": 10.884,
+                "caiado": 1.692,
+                "zema": 1.278,
+                "samara": 0.823,
+                "outros": 0.552,
+                "branco_nulo": 1.133,
+                "indecisos": 0.362
+              },
+              "ajustado": {
+                "lula": 44.349,
+                "flavio": 38.928,
+                "renan_santos": 10.884,
+                "caiado": 1.692,
+                "zema": 1.278,
+                "samara": 0.823,
+                "outros": 0.552,
+                "branco_nulo": 1.133,
+                "indecisos": 0.362
+              }
+            },
+            "domicilios_efetivo": {
+              "contrafactual": {
+                "lula": 44.529,
+                "flavio": 39.412,
+                "renan_santos": 10.36,
+                "caiado": 1.646,
+                "zema": 1.218,
+                "samara": 0.764,
+                "outros": 0.532,
+                "branco_nulo": 1.188,
+                "indecisos": 0.35
+              },
+              "ajustado": {
+                "lula": 44.529,
+                "flavio": 39.412,
+                "renan_santos": 10.36,
+                "caiado": 1.646,
+                "zema": 1.218,
+                "samara": 0.764,
+                "outros": 0.532,
+                "branco_nulo": 1.188,
+                "indecisos": 0.35
+              }
+            }
+          },
+          "gap_publicado": 4.351527012604599,
+          "gap_ajustado": 5.623999999999995,
+          "margem_diferenca_95": 2.54
+        }
+      },
+      "rotulo_historico": "Onda 1",
+      "rotulo_eixo": "09/08",
+      "substituida": false,
+      "primeiro_turno_com_marcal": false
+    },
+    {
+      "id": "palver_2026-09-07",
+      "instituto": "Palver",
+      "contratante": "Palver (iniciativa própria)",
+      "registro_tse": "BR-05420/2026",
+      "campo": {
+        "inicio": "2026-09-04",
+        "fim": "2026-09-07"
+      },
+      "divulgacao": "2026-09-09",
+      "n": 5000,
+      "metodo": "online, amostra não probabilística recrutada por anúncios em redes sociais, calibrada por raking",
+      "fonte": {
+        "tipo": "explorer",
+        "url": "https://www.palver.com.br/survey/explore?wave=02_pesquisa_2026_09_09&question=lula_flavio&breakdown=inc_std",
+        "rotulo": "Palver · Onda 2 original · substituída",
+        "onda_explorer": "02_pesquisa_2026_09_09",
+        "snapshot": "analysis/reponderacao/palver_explorer_20260921/02_pesquisa_2026_09_09/",
+        "nota": "Onda 2 original · substituída. Percentuais exatos do Explorer, sem arredondar o placar de partida. Distribuição ponderada de renda recuperada por sistema linear e validada contra os dois turnos e o n efetivo. Os n por faixa são contagens brutas, não os pesos de composição."
+      },
+      "publicado": {
+        "1t": {
+          "lula": 40.1592064068766,
+          "flavio": 39.7034225932782,
+          "renan_santos": 11.293367648191099,
+          "cury": 4.36191824746905,
+          "caiado": 0.7429213919745851,
+          "zema": 0.723404547782271,
+          "marcal": 0.5843432093508351,
+          "outros": 1.05075743138318,
+          "branco_nulo": 0.487803659178914,
+          "indecisos": 0.892854864515359
+        },
+        "2t": {
+          "flavio": 46.4149724764196,
+          "lula": 43.7425338680781,
+          "branco_nulo": 8.97716402678749,
+          "indecisos": 0.86532962871486
+        }
+      },
+      "renda": {
+        "unidade": "salarios_minimos",
+        "faixas": [
+          "Até 2 SM (até R$ 3.242)",
+          "2 a 5 SM (R$ 3.242 a 8.105)",
+          "Mais de 5 SM (acima de R$ 8.105)"
+        ],
+        "cortes_brl_202604": [
+          3215.9,
+          8039.76,
+          null
+        ],
+        "amostra_pct": [
+          42.123,
+          39.563,
+          18.314
+        ],
+        "pnad_pct": {
+          "pessoas16_efetivo": [
+            35.187,
+            39.259,
+            25.554
+          ],
+          "pessoas16_habitual": [
+            34.864,
+            40.402,
+            24.734
+          ],
+          "domicilios_efetivo": [
+            42.672,
+            35.771,
+            21.557
+          ]
+        },
+        "nota": "Margem ponderada recuperada das tabelas exatas do Explorer, com posto completo e recomposição dos dois turnos e do n efetivo. Não usar as contagens brutas como pesos. Referência da Palver: PNADC 2024, visita 5. Valores nominais em salários mínimos de 2026.",
+        "perfil_tipo": "perfil_ponderado_reconstituido"
+      },
+      "desvio_ate_primeira_faixa": 6.936,
+      "turnos": {
+        "2t": {
+          "opcoes": [
+            "flavio",
+            "lula",
+            "branco_nulo",
+            "indecisos"
+          ],
+          "publicado": {
+            "flavio": 46.4149724764196,
+            "lula": 43.7425338680781,
+            "branco_nulo": 8.97716402678749,
+            "indecisos": 0.86532962871486
+          },
+          "recomposto": {
+            "flavio": 46.415,
+            "lula": 43.743,
+            "branco_nulo": 8.977,
+            "indecisos": 0.865
+          },
+          "residuo_max": 0.0,
+          "cenarios": {
+            "pessoas16_efetivo": {
+              "contrafactual": {
+                "flavio": 46.039,
+                "lula": 43.535,
+                "branco_nulo": 9.54,
+                "indecisos": 0.887
+              },
+              "ajustado": {
+                "flavio": 46.039,
+                "lula": 43.535,
+                "branco_nulo": 9.54,
+                "indecisos": 0.887
+              }
+            },
+            "pessoas16_habitual": {
+              "contrafactual": {
+                "flavio": 46.145,
+                "lula": 43.421,
+                "branco_nulo": 9.546,
+                "indecisos": 0.887
+              },
+              "ajustado": {
+                "flavio": 46.145,
+                "lula": 43.421,
+                "branco_nulo": 9.546,
+                "indecisos": 0.887
+              }
+            },
+            "domicilios_efetivo": {
+              "contrafactual": {
+                "flavio": 46.035,
+                "lula": 44.101,
+                "branco_nulo": 8.998,
+                "indecisos": 0.866
+              },
+              "ajustado": {
+                "flavio": 46.035,
+                "lula": 44.101,
+                "branco_nulo": 8.998,
+                "indecisos": 0.866
+              }
+            }
+          },
+          "gap_publicado": -2.6724386083415013,
+          "gap_ajustado": -2.504000000000005,
+          "margem_diferenca_95": 2.631
+        },
+        "1t": {
+          "opcoes": [
+            "lula",
+            "flavio",
+            "renan_santos",
+            "cury",
+            "caiado",
+            "zema",
+            "marcal",
+            "outros",
+            "branco_nulo",
+            "indecisos"
+          ],
+          "publicado": {
+            "lula": 40.1592064068766,
+            "flavio": 39.7034225932782,
+            "renan_santos": 11.293367648191099,
+            "cury": 4.36191824746905,
+            "caiado": 0.7429213919745851,
+            "zema": 0.723404547782271,
+            "marcal": 0.5843432093508351,
+            "outros": 1.05075743138318,
+            "branco_nulo": 0.487803659178914,
+            "indecisos": 0.892854864515359
+          },
+          "recomposto": {
+            "lula": 40.159,
+            "flavio": 39.703,
+            "renan_santos": 11.293,
+            "cury": 4.362,
+            "caiado": 0.743,
+            "zema": 0.723,
+            "marcal": 0.584,
+            "outros": 1.051,
+            "branco_nulo": 0.488,
+            "indecisos": 0.893
+          },
+          "residuo_max": 0.0,
+          "cenarios": {
+            "pessoas16_efetivo": {
+              "contrafactual": {
+                "lula": 39.666,
+                "flavio": 39.185,
+                "renan_santos": 12.206,
+                "cury": 4.326,
+                "caiado": 0.763,
+                "zema": 0.735,
+                "marcal": 0.558,
+                "outros": 1.297,
+                "branco_nulo": 0.475,
+                "indecisos": 0.789
+              },
+              "ajustado": {
+                "lula": 39.666,
+                "flavio": 39.185,
+                "renan_santos": 12.206,
+                "cury": 4.326,
+                "caiado": 0.763,
+                "zema": 0.735,
+                "marcal": 0.558,
+                "outros": 1.297,
+                "branco_nulo": 0.475,
+                "indecisos": 0.789
+              }
+            },
+            "pessoas16_habitual": {
+              "contrafactual": {
+                "lula": 39.596,
+                "flavio": 39.305,
+                "renan_santos": 12.175,
+                "cury": 4.338,
+                "caiado": 0.757,
+                "zema": 0.738,
+                "marcal": 0.557,
+                "outros": 1.268,
+                "branco_nulo": 0.475,
+                "indecisos": 0.791
+              },
+              "ajustado": {
+                "lula": 39.596,
+                "flavio": 39.305,
+                "renan_santos": 12.175,
+                "cury": 4.338,
+                "caiado": 0.757,
+                "zema": 0.738,
+                "marcal": 0.557,
+                "outros": 1.268,
+                "branco_nulo": 0.475,
+                "indecisos": 0.791
+              }
+            },
+            "domicilios_efetivo": {
+              "contrafactual": {
+                "lula": 40.35,
+                "flavio": 39.27,
+                "renan_santos": 11.464,
+                "cury": 4.317,
+                "caiado": 0.767,
+                "zema": 0.713,
+                "marcal": 0.586,
+                "outros": 1.166,
+                "branco_nulo": 0.486,
+                "indecisos": 0.881
+              },
+              "ajustado": {
+                "lula": 40.35,
+                "flavio": 39.27,
+                "renan_santos": 11.464,
+                "cury": 4.317,
+                "caiado": 0.767,
+                "zema": 0.713,
+                "marcal": 0.586,
+                "outros": 1.166,
+                "branco_nulo": 0.486,
+                "indecisos": 0.881
+              }
+            }
+          },
+          "gap_publicado": 0.45578381359840137,
+          "gap_ajustado": 0.48099999999999454,
+          "margem_diferenca_95": 2.477
+        }
+      },
+      "rotulo_historico": "Onda 2 original · substituída",
+      "rotulo_eixo": "07/09 v1",
+      "substituida": true,
+      "primeiro_turno_com_marcal": true
+    },
+    {
+      "id": "palver_2026-09-07_v2",
+      "instituto": "Palver",
+      "contratante": "Palver (iniciativa própria)",
+      "registro_tse": "BR-06100/2026",
+      "campo": {
+        "inicio": "2026-09-04",
+        "fim": "2026-09-07"
+      },
+      "divulgacao": "2026-09-21",
+      "n": 5000,
+      "metodo": "online, amostra não probabilística recrutada por anúncios em redes sociais, calibrada por raking",
+      "fonte": {
+        "tipo": "explorer",
+        "url": "https://www.palver.com.br/survey/explore?wave=02_pesquisa_2026_09_21&question=lula_flavio&breakdown=inc_std",
+        "rotulo": "Palver · Onda 2 revisada",
+        "onda_explorer": "02_pesquisa_2026_09_21",
+        "snapshot": "analysis/reponderacao/palver_explorer_20260921/02_pesquisa_2026_09_21/",
+        "nota": "Onda 2 revisada. Percentuais exatos do Explorer, sem arredondar o placar de partida. Distribuição ponderada de renda recuperada por sistema linear e validada contra os dois turnos e o n efetivo. Os n por faixa são contagens brutas, não os pesos de composição. O PDF p. 30 mostra Lula 41% no 1º turno; o Explorer registra 40,440%. Versões preservadas, sem misturar os valores."
+      },
+      "publicado": {
+        "1t": {
+          "flavio": 40.4952756439453,
+          "lula": 40.440165011899,
+          "renan_santos": 9.36365358540726,
+          "cury": 4.735278564746849,
+          "caiado": 0.819540171261086,
+          "zema": 0.8102020787263421,
+          "marcal": 0.638956191185656,
+          "outros": 1.26230702078166,
+          "branco_nulo": 0.517295605231513,
+          "indecisos": 0.9173261268153019
+        },
+        "2t": {
+          "flavio": 47.4116164584474,
+          "lula": 43.8509188920083,
+          "branco_nulo": 7.81270554363978,
+          "indecisos": 0.924759105904467
+        }
+      },
+      "renda": {
+        "unidade": "salarios_minimos",
+        "faixas": [
+          "Até 2 SM (até R$ 3.242)",
+          "2 a 5 SM (R$ 3.242 a 8.105)",
+          "Mais de 5 SM (acima de R$ 8.105)"
+        ],
+        "cortes_brl_202604": [
+          3215.9,
+          8039.76,
+          null
+        ],
+        "amostra_pct": [
+          42.123,
+          39.563,
+          18.314
+        ],
+        "pnad_pct": {
+          "pessoas16_efetivo": [
+            35.187,
+            39.259,
+            25.554
+          ],
+          "pessoas16_habitual": [
+            34.864,
+            40.402,
+            24.734
+          ],
+          "domicilios_efetivo": [
+            42.672,
+            35.771,
+            21.557
+          ]
+        },
+        "nota": "Margem ponderada recuperada das tabelas exatas do Explorer, com posto completo e recomposição dos dois turnos e do n efetivo. Não usar as contagens brutas como pesos. Referência da Palver: PNADC 2024, visita 5. Valores nominais em salários mínimos de 2026.",
+        "perfil_tipo": "perfil_ponderado_reconstituido"
+      },
+      "desvio_ate_primeira_faixa": 6.936,
+      "turnos": {
+        "2t": {
+          "opcoes": [
+            "flavio",
+            "lula",
+            "branco_nulo",
+            "indecisos"
+          ],
+          "publicado": {
+            "flavio": 47.4116164584474,
+            "lula": 43.8509188920083,
+            "branco_nulo": 7.81270554363978,
+            "indecisos": 0.924759105904467
+          },
+          "recomposto": {
+            "flavio": 47.412,
+            "lula": 43.851,
+            "branco_nulo": 7.813,
+            "indecisos": 0.925
+          },
+          "residuo_max": 0.0,
+          "cenarios": {
+            "pessoas16_efetivo": {
+              "contrafactual": {
+                "flavio": 47.143,
+                "lula": 43.585,
+                "branco_nulo": 8.313,
+                "indecisos": 0.959
+              },
+              "ajustado": {
+                "flavio": 47.143,
+                "lula": 43.585,
+                "branco_nulo": 8.313,
+                "indecisos": 0.959
+              }
+            },
+            "pessoas16_habitual": {
+              "contrafactual": {
+                "flavio": 47.256,
+                "lula": 43.476,
+                "branco_nulo": 8.309,
+                "indecisos": 0.958
+              },
+              "ajustado": {
+                "flavio": 47.256,
+                "lula": 43.476,
+                "branco_nulo": 8.309,
+                "indecisos": 0.958
+              }
+            },
+            "domicilios_efetivo": {
+              "contrafactual": {
+                "flavio": 47.017,
+                "lula": 44.191,
+                "branco_nulo": 7.862,
+                "indecisos": 0.931
+              },
+              "ajustado": {
+                "flavio": 47.017,
+                "lula": 44.191,
+                "branco_nulo": 7.862,
+                "indecisos": 0.931
+              }
+            }
+          },
+          "gap_publicado": -3.560697566439096,
+          "gap_ajustado": -3.558,
+          "margem_diferenca_95": 2.646
+        },
+        "1t": {
+          "opcoes": [
+            "flavio",
+            "lula",
+            "renan_santos",
+            "cury",
+            "caiado",
+            "zema",
+            "marcal",
+            "outros",
+            "branco_nulo",
+            "indecisos"
+          ],
+          "publicado": {
+            "flavio": 40.4952756439453,
+            "lula": 40.440165011899,
+            "renan_santos": 9.36365358540726,
+            "cury": 4.735278564746849,
+            "caiado": 0.819540171261086,
+            "zema": 0.8102020787263421,
+            "marcal": 0.638956191185656,
+            "outros": 1.26230702078166,
+            "branco_nulo": 0.517295605231513,
+            "indecisos": 0.9173261268153019
+          },
+          "recomposto": {
+            "flavio": 40.495,
+            "lula": 40.44,
+            "renan_santos": 9.364,
+            "cury": 4.735,
+            "caiado": 0.82,
+            "zema": 0.81,
+            "marcal": 0.639,
+            "outros": 1.262,
+            "branco_nulo": 0.517,
+            "indecisos": 0.917
+          },
+          "residuo_max": 0.0,
+          "cenarios": {
+            "pessoas16_efetivo": {
+              "contrafactual": {
+                "flavio": 40.056,
+                "lula": 39.978,
+                "renan_santos": 10.026,
+                "cury": 4.746,
+                "caiado": 0.85,
+                "zema": 0.829,
+                "marcal": 0.61,
+                "outros": 1.581,
+                "branco_nulo": 0.509,
+                "indecisos": 0.815
+              },
+              "ajustado": {
+                "flavio": 40.056,
+                "lula": 39.978,
+                "renan_santos": 10.026,
+                "cury": 4.746,
+                "caiado": 0.85,
+                "zema": 0.829,
+                "marcal": 0.61,
+                "outros": 1.581,
+                "branco_nulo": 0.509,
+                "indecisos": 0.815
+              }
+            },
+            "pessoas16_habitual": {
+              "contrafactual": {
+                "flavio": 40.185,
+                "lula": 39.904,
+                "renan_santos": 10.002,
+                "cury": 4.756,
+                "caiado": 0.842,
+                "zema": 0.832,
+                "marcal": 0.609,
+                "outros": 1.544,
+                "branco_nulo": 0.509,
+                "indecisos": 0.817
+              },
+              "ajustado": {
+                "flavio": 40.185,
+                "lula": 39.904,
+                "renan_santos": 10.002,
+                "cury": 4.756,
+                "caiado": 0.842,
+                "zema": 0.832,
+                "marcal": 0.609,
+                "outros": 1.544,
+                "branco_nulo": 0.509,
+                "indecisos": 0.817
+              }
+            },
+            "domicilios_efetivo": {
+              "contrafactual": {
+                "flavio": 40.037,
+                "lula": 40.65,
+                "renan_santos": 9.493,
+                "cury": 4.703,
+                "caiado": 0.848,
+                "zema": 0.801,
+                "marcal": 0.641,
+                "outros": 1.409,
+                "branco_nulo": 0.515,
+                "indecisos": 0.903
+              },
+              "ajustado": {
+                "flavio": 40.037,
+                "lula": 40.65,
+                "renan_santos": 9.493,
+                "cury": 4.703,
+                "caiado": 0.848,
+                "zema": 0.801,
+                "marcal": 0.641,
+                "outros": 1.409,
+                "branco_nulo": 0.515,
+                "indecisos": 0.903
+              }
+            }
+          },
+          "gap_publicado": -0.05511063204630062,
+          "gap_ajustado": -0.07799999999999585,
+          "margem_diferenca_95": 2.494
+        }
+      },
+      "rotulo_historico": "Onda 2 revisada",
+      "rotulo_eixo": "07/09 v2",
+      "substituida": false,
+      "primeiro_turno_com_marcal": true
+    },
+    {
+      "id": "palver_2026-09-18",
+      "instituto": "Palver",
+      "contratante": "Palver (iniciativa própria)",
+      "registro_tse": "BR-00860/2026",
+      "campo": {
+        "inicio": "2026-09-15",
+        "fim": "2026-09-18"
+      },
+      "divulgacao": "2026-09-21",
+      "n": 5000,
+      "metodo": "online, amostra não probabilística recrutada por anúncios em redes sociais, calibrada por raking",
+      "fonte": {
+        "tipo": "explorer",
+        "url": "https://www.palver.com.br/survey/explore?wave=03_pesquisa_2026_09_21&question=lula_flavio&breakdown=inc_std",
+        "rotulo": "Palver · Onda 3",
+        "onda_explorer": "03_pesquisa_2026_09_21",
+        "snapshot": "analysis/reponderacao/palver_explorer_20260921/03_pesquisa_2026_09_21/",
+        "nota": "Onda 3. Percentuais exatos do Explorer, sem arredondar o placar de partida. Distribuição ponderada de renda recuperada por sistema linear e validada contra os dois turnos e o n efetivo. Os n por faixa são contagens brutas, não os pesos de composição. O catálogo encerra o campo em 20/09; mantemos 18/09 conforme o PDF. Divergência documental pendente."
+      },
+      "publicado": {
+        "1t": {
+          "flavio": 42.3254939757094,
+          "lula": 41.3233661100936,
+          "renan_santos": 11.4311666737253,
+          "cury": 1.8411506335436998,
+          "caiado": 0.691348896039324,
+          "zema": 0.65340680173844,
+          "outros": 0.847293922368055,
+          "branco_nulo": 0.60579169120236,
+          "indecisos": 0.280981295579865
+        },
+        "2t": {
+          "flavio": 47.391887281529996,
+          "lula": 42.9278734247398,
+          "branco_nulo": 8.548215005459591,
+          "indecisos": 1.13202428827061
+        }
+      },
+      "renda": {
+        "unidade": "salarios_minimos",
+        "faixas": [
+          "Até 2 SM (até R$ 3.242)",
+          "2 a 5 SM (R$ 3.242 a 8.105)",
+          "Mais de 5 SM (acima de R$ 8.105)"
+        ],
+        "cortes_brl_202604": [
+          3215.9,
+          8039.76,
+          null
+        ],
+        "amostra_pct": [
+          42.123,
+          39.563,
+          18.314
+        ],
+        "pnad_pct": {
+          "pessoas16_efetivo": [
+            35.187,
+            39.259,
+            25.554
+          ],
+          "pessoas16_habitual": [
+            34.864,
+            40.402,
+            24.734
+          ],
+          "domicilios_efetivo": [
+            42.672,
+            35.771,
+            21.557
+          ]
+        },
+        "nota": "Margem ponderada recuperada das tabelas exatas do Explorer, com posto completo e recomposição dos dois turnos e do n efetivo. Não usar as contagens brutas como pesos. Referência da Palver: PNADC 2024, visita 5. Valores nominais em salários mínimos de 2026.",
+        "perfil_tipo": "perfil_ponderado_reconstituido"
+      },
+      "desvio_ate_primeira_faixa": 6.936,
+      "turnos": {
+        "2t": {
+          "opcoes": [
+            "flavio",
+            "lula",
+            "branco_nulo",
+            "indecisos"
+          ],
+          "publicado": {
+            "flavio": 47.391887281529996,
+            "lula": 42.9278734247398,
+            "branco_nulo": 8.548215005459591,
+            "indecisos": 1.13202428827061
+          },
+          "recomposto": {
+            "flavio": 47.392,
+            "lula": 42.928,
+            "branco_nulo": 8.548,
+            "indecisos": 1.132
+          },
+          "residuo_max": 0.0,
+          "cenarios": {
+            "pessoas16_efetivo": {
+              "contrafactual": {
+                "flavio": 46.889,
+                "lula": 43.104,
+                "branco_nulo": 8.961,
+                "indecisos": 1.045
+              },
+              "ajustado": {
+                "flavio": 46.889,
+                "lula": 43.104,
+                "branco_nulo": 8.961,
+                "indecisos": 1.045
+              }
+            },
+            "pessoas16_habitual": {
+              "contrafactual": {
+                "flavio": 46.923,
+                "lula": 43.055,
+                "branco_nulo": 8.982,
+                "indecisos": 1.04
+              },
+              "ajustado": {
+                "flavio": 46.923,
+                "lula": 43.055,
+                "branco_nulo": 8.982,
+                "indecisos": 1.04
+              }
+            },
+            "domicilios_efetivo": {
+              "contrafactual": {
+                "flavio": 47.244,
+                "lula": 43.101,
+                "branco_nulo": 8.511,
+                "indecisos": 1.145
+              },
+              "ajustado": {
+                "flavio": 47.244,
+                "lula": 43.101,
+                "branco_nulo": 8.511,
+                "indecisos": 1.145
+              }
+            }
+          },
+          "gap_publicado": -4.464013856790196,
+          "gap_ajustado": -3.7850000000000037,
+          "margem_diferenca_95": 2.631
+        },
+        "1t": {
+          "opcoes": [
+            "flavio",
+            "lula",
+            "renan_santos",
+            "cury",
+            "caiado",
+            "zema",
+            "outros",
+            "branco_nulo",
+            "indecisos"
+          ],
+          "publicado": {
+            "flavio": 42.3254939757094,
+            "lula": 41.3233661100936,
+            "renan_santos": 11.4311666737253,
+            "cury": 1.8411506335436998,
+            "caiado": 0.691348896039324,
+            "zema": 0.65340680173844,
+            "outros": 0.847293922368055,
+            "branco_nulo": 0.60579169120236,
+            "indecisos": 0.280981295579865
+          },
+          "recomposto": {
+            "flavio": 42.325,
+            "lula": 41.323,
+            "renan_santos": 11.431,
+            "cury": 1.841,
+            "caiado": 0.691,
+            "zema": 0.653,
+            "outros": 0.847,
+            "branco_nulo": 0.606,
+            "indecisos": 0.281
+          },
+          "residuo_max": 0.0,
+          "cenarios": {
+            "pessoas16_efetivo": {
+              "contrafactual": {
+                "flavio": 41.519,
+                "lula": 41.468,
+                "renan_santos": 12.036,
+                "cury": 1.784,
+                "caiado": 0.81,
+                "zema": 0.745,
+                "outros": 0.842,
+                "branco_nulo": 0.526,
+                "indecisos": 0.27
+              },
+              "ajustado": {
+                "flavio": 41.519,
+                "lula": 41.468,
+                "renan_santos": 12.036,
+                "cury": 1.784,
+                "caiado": 0.81,
+                "zema": 0.745,
+                "outros": 0.842,
+                "branco_nulo": 0.526,
+                "indecisos": 0.27
+              }
+            },
+            "pessoas16_habitual": {
+              "contrafactual": {
+                "flavio": 41.561,
+                "lula": 41.401,
+                "renan_santos": 12.054,
+                "cury": 1.799,
+                "caiado": 0.8,
+                "zema": 0.74,
+                "outros": 0.851,
+                "branco_nulo": 0.525,
+                "indecisos": 0.27
+              },
+              "ajustado": {
+                "flavio": 41.561,
+                "lula": 41.401,
+                "renan_santos": 12.054,
+                "cury": 1.799,
+                "caiado": 0.8,
+                "zema": 0.74,
+                "outros": 0.851,
+                "branco_nulo": 0.525,
+                "indecisos": 0.27
+              }
+            },
+            "domicilios_efetivo": {
+              "contrafactual": {
+                "flavio": 42.126,
+                "lula": 41.556,
+                "renan_santos": 11.415,
+                "cury": 1.789,
+                "caiado": 0.733,
+                "zema": 0.678,
+                "outros": 0.819,
+                "branco_nulo": 0.603,
+                "indecisos": 0.281
+              },
+              "ajustado": {
+                "flavio": 42.126,
+                "lula": 41.556,
+                "renan_santos": 11.415,
+                "cury": 1.789,
+                "caiado": 0.733,
+                "zema": 0.678,
+                "outros": 0.819,
+                "branco_nulo": 0.603,
+                "indecisos": 0.281
+              }
+            }
+          },
+          "gap_publicado": -1.0021278656157975,
+          "gap_ajustado": -0.05099999999999483,
+          "margem_diferenca_95": 2.535
+        }
+      },
+      "rotulo_historico": "Onda 3",
+      "rotulo_eixo": "18/09",
+      "substituida": false,
+      "primeiro_turno_com_marcal": false
+    }
+  ],
+  "nota": "Três ondas, quatro versões. A original da onda 2 é arquivo; cenários com Marçal não entram na média do 1º turno. Histórico usa todas as versões."
+}

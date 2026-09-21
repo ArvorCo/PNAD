@@ -106,7 +106,7 @@ def ficha_onda(pesquisa: dict, turno: str) -> str:
         f'<p class="tip-head"><b>{esc(pesquisa["instituto"])}</b>'
         f"<span>{esc(TURNOS[turno])}</span></p>",
         f'<p class="tip-doc">campo {esc(periodo(pesquisa["campo"]))} · '
-        f'n = {br(pesquisa["n"], 0)} · {esc(pesquisa.get("registro_tse") or "sem registro")}</p>',
+        f"n = {br(pesquisa['n'], 0)} · {esc(pesquisa.get('registro_tse') or 'sem registro')}</p>",
         "".join(linhas),
         f'<p class="tip-nota">Margem de 95% da diferença publicada: ±{br(t.get("margem_diferenca_95", 0.0), 1)}.',
     ]
@@ -128,6 +128,18 @@ def ficha_onda(pesquisa: dict, turno: str) -> str:
     if turno == "1t" and pesquisa.get("selecao_1t"):
         corpo.append(
             f'<p class="tip-nota">Cenário sem Marçal. {esc(pesquisa["selecao_1t"]["nota"])}</p>'
+        )
+    if pesquisa.get("rotulo_historico"):
+        corpo.append(
+            f'<p class="tip-nota"><b>{esc(pesquisa["rotulo_historico"])}</b>. Histórico documental.</p>'
+        )
+    if pesquisa.get("substituida"):
+        corpo.append(
+            '<p class="tip-nota">Versão substituída, fora das médias dos dois turnos.</p>'
+        )
+    if turno == "1t" and pesquisa.get("primeiro_turno_com_marcal"):
+        corpo.append(
+            '<p class="tip-nota">Cenário com Marçal, fora da média do primeiro turno.</p>'
         )
     return "".join(corpo)
 
