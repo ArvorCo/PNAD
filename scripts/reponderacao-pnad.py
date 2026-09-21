@@ -377,7 +377,20 @@ def aggregate(polls: list[dict[str, Any]], today: date) -> dict[str, Any]:
     )
     for kind in ("publicado", "ajustado"):
         series["1t"][kind].update(groups["serie"][kind])
+    spec = importlib.util.spec_from_file_location(
+        "non_choice", ROOT / "scripts/reponderacao-nao-escolha.py"
+    )
+    non_choice_module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(non_choice_module)
+    non_choice = {}
+    for turn in ("1t", "2t"):
+        non_choice[turn] = non_choice_module.aggregate(
+            polls, turn, series["datas"], today, MAIN_SERIES, HALF_LIFE_DAYS
+        )
+        for kind in ("publicado", "ajustado"):
+            series[turn][kind].update(non_choice[turn]["serie"][kind])
     return {
+        "nao_escolha": non_choice,
         "grupos_1t": groups,
         "metodo": {
             "kernel": "média ponderada no tempo, peso 0,5^(dias desde o fim do campo / 14)",

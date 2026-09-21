@@ -16,6 +16,7 @@ from svgkit import br  # noqa: E402
 
 coverage_html = importlib.import_module("reponderacao-cobertura").coverage_html
 groups_view = importlib.import_module("reponderacao-grupos-view")
+non_choice_view = importlib.import_module("reponderacao-nao-escolha-view")
 DOCS = ROOT / "docs"
 ASSETS = DOCS / "assets"
 DATA = ASSETS / "reponderacao_pnad.json"
@@ -125,6 +126,9 @@ COR.update(groups_view.GROUP_COLORS)
 COR_TXT.update(groups_view.GROUP_COLORS)
 
 ROTULOS.update(groups_view.GROUP_LABELS)
+COR.update(non_choice_view.COLORS)
+COR_TXT.update(non_choice_view.COLORS)
+ROTULOS.update(non_choice_view.LABELS)
 
 
 def frase(texto: str) -> str:

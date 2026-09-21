@@ -195,7 +195,7 @@ def test_page_has_gray_and_black_lines_and_explicit_coverage():
         (ROOT / "docs/reponderacao_pnad.html").read_text(), "html.parser"
     )
     chart = html.find(id="primeiro-turno-chart")
-    assert len(chart.select("g[data-serie]")) == 4
+    assert len(chart.select("g[data-serie]")) == 6
     for key, color in [
         ("outros_centro_direita", "#626262"),
         ("outros_esquerda_nanicos", "#000000"),

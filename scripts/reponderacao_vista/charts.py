@@ -70,6 +70,8 @@ def serie_svg(ident: str, turno: str, compacta: bool = False) -> str:
     polls = [p for p in PESQUISAS if turno in p["turnos"]]
 
     chaves = (*PAR, *groups_view.GROUP_LABELS) if turno == "1t" else PAR
+    if not compacta:
+        chaves = (*chaves, "indecisos", "branco_nulo")
     valores: list[float] = []
     for fonte in (pub, adj):
         for chave in chaves:
@@ -80,17 +82,17 @@ def serie_svg(ident: str, turno: str, compacta: bool = False) -> str:
             valores.append(t["publicado"][chave])
             valores.append(ajustado(t)[chave])
     lo = math.floor((min(valores) - 2.0) / 5) * 5
-    if turno == "1t":
+    if not compacta:
         lo = 0
     hi = math.ceil((max(valores) + 2.0) / 5) * 5
 
     legendas = 1 if compacta else (2 if len(INSTITUTOS) > 1 else 1)
     altura = 360 if compacta else 400 + 30 * legendas
-    if turno == "1t":
-        altura = 660
+    if not compacta:
+        altura = 780 if turno == "1t" else 560
     largura = FULL
     esq, dir_ = 54, largura - (168 if compacta else 190)
-    if turno == "1t":
+    if not compacta:
         dir_ = largura - 225
     topo, base = (
         (30 if compacta else 44),
@@ -175,8 +177,8 @@ def serie_svg(ident: str, turno: str, compacta: bool = False) -> str:
             area_alvo(cv, x, y_adj, alcance)
         fecha_alvo(cv)
 
-    if turno == "1t":
-        groups_view.end_labels(cv, pub, adj, dir_, topo, base, py, COR_TXT, br)
+    if not compacta:
+        groups_view.end_labels(cv, pub, adj, dir_, topo, base, py, COR_TXT, br, chaves)
     else:
         _bloco_direita(cv, turno, pub, adj, dir_, topo, base, py, compacta)
 
@@ -467,7 +469,12 @@ def instituto_svg(nome: str, turno: str, historico: list[dict] | None = None) ->
         else [p for p in PESQUISAS if p["instituto"] == nome and turno in p["turnos"]]
     )
     largura, altura = 380, 284 if historico is not None else 258
-    esq, dir_, topo, base = 44, largura - 16, 30, altura - (76 if historico is not None else 54)
+    esq, dir_, topo, base = (
+        44,
+        largura - 16,
+        30,
+        altura - (76 if historico is not None else 54),
+    )
     cv = Canvas(
         largura, altura, aria=f"{nome}: {TURNOS[turno]} publicado e reponderado."
     )

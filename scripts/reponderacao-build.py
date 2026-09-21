@@ -267,9 +267,14 @@ def ch_segundo_turno() -> str:
             "Cada onda entra pela data final do campo. A linha fina e tracejada é a média "
             "das pesquisas como foram publicadas. A linha cheia é a mesma média depois de "
             "trocar uma margem, a de renda, pela distribuição da PNAD Contínua anual de 2025. "
-            "A troca é nossa, e por isso a linha cheia é inferência declarada.",
+            "A troca é nossa, e por isso a linha cheia é inferência declarada. "
+            "Roxo: indecisos; verde: branco/nulo/não vai votar. As duas linhas usam "
+            "as ondas que separam essas respostas, com cobertura informada abaixo.",
         )
         + placar("2t")
+        + importlib.import_module("reponderacao-nao-escolha-view").summary(
+            D, "2t", tabela, br
+        )
         + '<p class="plain reveal">Publicado, a média Arvor marca Lula '
         + br(kernel["publicado"]["lula"], 1)
         + " e Flávio "
@@ -302,7 +307,7 @@ def ch_segundo_turno() -> str:
         1,
         "segundo-turno",
         "O 2º turno sob a régua oficial",
-        "Uma linha por candidato, publicada e reponderada, com todos os pontos de campo à vista.",
+        "Candidatos, indecisos e branco/nulo/não vai votar, com médias publicadas e reponderadas.",
         corpo,
     )
 
@@ -342,16 +347,20 @@ def ch_primeiro_turno() -> str:
         + figura(
             "primeiro-turno-chart",
             "Série do 1º turno",
-            "Lula, Flávio e dois grupos de outras candidaturas, publicado contra reponderado.",
+            "Lula, Flávio, demais candidaturas, indecisos e branco/nulo/não vai votar.",
             serie_svg("s1t", "1t"),
             "Lula e Flávio usam os cenários sem Marçal com cruzamento de renda. "
             "Os grupos usam apenas ondas que permitem separar as candidaturas por renda, "
             "com cobertura e datas informadas abaixo. Cinza: centro-direita; preto: esquerda + nanicos. "
+            "Roxo: indecisos; verde: branco/nulo/não vai votar. "
             "Tracejado é publicado; contínuo é reponderado. "
             "No celular, deslize o gráfico para ver as datas recentes e os grupos.",
         )
         + placar("1t")
         + groups_view.group_summary(D, tabela, br)
+        + importlib.import_module("reponderacao-nao-escolha-view").summary(
+            D, "1t", tabela, br
+        )
         + '<h3 class="reveal">As demais candidaturas sob a mesma troca</h3>'
         + tabela(
             ["Instituto", "Campo", "Opção", "Publicado", "Reponderado", "Efeito"],
@@ -804,6 +813,9 @@ def build(*, update_home: bool = True) -> None:
     PAGE.write_text(html.replace("<section ", "\n<section ") + "\n", encoding="utf-8")
     write_csv()
     groups_view.write_group_csv(ASSETS / "reponderacao_grupos_1t.csv", D)
+    importlib.import_module("reponderacao-nao-escolha-view").write_csv(
+        ASSETS / "reponderacao_nao_escolha.csv", D
+    )
 
     if update_home:
         home = serie_svg("home2t", "2t", compacta=True)

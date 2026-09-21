@@ -13,9 +13,9 @@ GROUP_LABELS = {
 }
 
 
-def end_labels(cv, pub, adj, right, top, bottom, py, colors, number):
-    """Quatro rótulos com espaçamento mínimo, sem colisão nas duas caudas."""
-    keys = ("lula", "flavio", *GROUP_LABELS)
+def end_labels(cv, pub, adj, right, top, bottom, py, colors, number, keys=None):
+    """Rótulos com espaçamento mínimo, incluindo as séries de não escolha."""
+    keys = keys or ("lula", "flavio", *GROUP_LABELS)
     blocks = sorted((py(adj[k][-1]), k) for k in keys if adj[k][-1] is not None)
     height, gap = 84, 10
     positions = []
@@ -35,10 +35,16 @@ def end_labels(cv, pub, adj, right, top, bottom, py, colors, number):
         x = right + 18
         color = colors[key]
         cv.line(right, center, x - 7, y + height / 2, stroke=color, width=1.2)
-        title = {"lula": "LULA", "flavio": "FLÁVIO"}.get(key, "OUTROS")
+        title = {
+            "lula": "LULA",
+            "flavio": "FLÁVIO",
+            "indecisos": "INDECISOS",
+            "branco_nulo": "BRANCO/NULO",
+        }.get(key, "OUTROS")
         subtitle = {
             "outros_centro_direita": "(centro-direita)",
             "outros_esquerda_nanicos": "(esquerda + nanicos)",
+            "branco_nulo": "+ não vai votar",
         }.get(key, "")
         cv.text(x, y + 13, title, size=12, fill=color, weight=700)
         if subtitle:
