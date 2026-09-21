@@ -1,0 +1,2806 @@
+{
+  "source": {
+    "url": "https://www.palver.com.br/survey/explore",
+    "retrieved_utc": "2026-09-21T20:14:36.165831+00:00",
+    "html_sha256": "b9bc71f10bafce4a9f8e5871c44a9f56bb328bf1b0bd764f9538ed93b6f1177a",
+    "snapshot": "data/originals/palver_explorer_20260921/catalog.html.gz"
+  },
+  "queries": 196,
+  "tables": 186,
+  "latest_wave": "03_pesquisa_2026_09_21",
+  "benchmark_pct": {
+    "pessoas16_efetivo": [
+      35.187,
+      39.259,
+      25.554
+    ],
+    "pessoas16_habitual": [
+      34.864,
+      40.402,
+      24.734
+    ],
+    "domicilios_efetivo": [
+      42.672,
+      35.771,
+      21.557
+    ]
+  },
+  "benchmark_source": "docs/assets/reponderacao_pnad.json, palver_2026-09-18.renda.pnad_pct",
+  "benchmark_scope": "Common September 2026 income ruler for all archived versions; not each wave's historical price ruler.",
+  "waves": {
+    "01_pesquisa_2026_08_10": {
+      "catalog": {
+        "id": "01_pesquisa_2026_08_10",
+        "sequence": 1,
+        "date": "2026-08-10T00:00:00.000Z",
+        "fieldEnd": "2026-08-09T00:00:00.000Z",
+        "trendEnabled": false
+      },
+      "margins": {
+        "sex_std": {
+          "identified": true,
+          "rank": 2,
+          "groups": [
+            "Homem",
+            "Mulher"
+          ],
+          "max_residual": 2.220446049250313e-16,
+          "condition_number": 9.069606059184057,
+          "weighted_pct": [
+            48.13309097045767,
+            51.866909029542306
+          ],
+          "raw_n": [
+            2764,
+            2236
+          ],
+          "raw_pct": [
+            55.279999999999994,
+            44.72
+          ],
+          "neff": [
+            583.917498582247,
+            578.996898175087
+          ],
+          "mean_normalized_weight": [
+            0.8707143807969913,
+            1.1598146026284057
+          ],
+          "reconstructed_neff": 1160.9082893658158,
+          "published_neff": 1160.90828936582
+        },
+        "age_std": {
+          "identified": true,
+          "rank": 3,
+          "groups": [
+            "16 a 34 anos",
+            "35 a 59 anos",
+            "60 anos ou mais"
+          ],
+          "max_residual": 4.440892098500626e-16,
+          "condition_number": 38.566655863369284,
+          "weighted_pct": [
+            36.06915800370848,
+            43.537475043471815,
+            20.39336695281972
+          ],
+          "raw_n": [
+            1572,
+            2105,
+            1323
+          ],
+          "raw_pct": [
+            31.44,
+            42.1,
+            26.46
+          ],
+          "neff": [
+            453.972671433642,
+            509.412710586953,
+            205.155219161982
+          ],
+          "mean_normalized_weight": [
+            1.1472378499907276,
+            1.0341443003199955,
+            0.7707243746341541
+          ],
+          "reconstructed_neff": 1160.9082893658137,
+          "published_neff": 1160.90828936582
+        },
+        "race_std": {
+          "identified": true,
+          "rank": 2,
+          "groups": [
+            "Branca",
+            "Preta, Parda, Indígena ou Amarela"
+          ],
+          "max_residual": 4.440892098500626e-16,
+          "condition_number": 88.61126042315037,
+          "weighted_pct": [
+            50.9401001666581,
+            49.05989983334189
+          ],
+          "raw_n": [
+            2881,
+            2119
+          ],
+          "raw_pct": [
+            57.620000000000005,
+            42.38
+          ],
+          "neff": [
+            729.209324810904,
+            476.0956586033
+          ],
+          "mean_normalized_weight": [
+            0.8840697703342258,
+            1.1576191560486524
+          ],
+          "reconstructed_neff": 1160.90828936581,
+          "published_neff": 1160.90828936582
+        },
+        "edu_std": {
+          "identified": true,
+          "rank": 3,
+          "groups": [
+            "Fundamental",
+            "Médio",
+            "Superior"
+          ],
+          "max_residual": 2.220446049250313e-16,
+          "condition_number": 20.628837743107418,
+          "weighted_pct": [
+            43.817921183531624,
+            38.33027510382791,
+            17.851803712640464
+          ],
+          "raw_n": [
+            403,
+            2048,
+            2549
+          ],
+          "raw_pct": [
+            8.06,
+            40.96,
+            50.980000000000004
+          ],
+          "neff": [
+            271.15432081254,
+            1126.47899796614,
+            1392.74826210808
+          ],
+          "mean_normalized_weight": [
+            5.436466648080846,
+            0.9357977320270485,
+            0.3501726895378671
+          ],
+          "reconstructed_neff": 1160.9082893658144,
+          "published_neff": 1160.90828936582
+        },
+        "inc_std": {
+          "identified": true,
+          "rank": 3,
+          "groups": [
+            "Até 2 salários mínimos",
+            "2 a 5 salários mínimos",
+            "Mais de 5 salários mínimos"
+          ],
+          "max_residual": 6.661338147750939e-16,
+          "condition_number": 37.797595817523806,
+          "weighted_pct": [
+            42.12294144273033,
+            39.56309614318948,
+            18.313962414080244
+          ],
+          "raw_n": [
+            1277,
+            2048,
+            1675
+          ],
+          "raw_pct": [
+            25.540000000000003,
+            40.96,
+            33.5
+          ],
+          "neff": [
+            358.614354429693,
+            542.256464705606,
+            430.197747841527
+          ],
+          "mean_normalized_weight": [
+            1.6492929304123072,
+            0.965895901933337,
+            0.5466854451964253
+          ],
+          "reconstructed_neff": 1160.9082893658083,
+          "published_neff": 1160.90828936582
+        },
+        "reg_std": {
+          "identified": true,
+          "rank": 5,
+          "groups": [
+            "Norte",
+            "Nordeste",
+            "Centro-Oeste",
+            "Sudeste",
+            "Sul"
+          ],
+          "max_residual": 6.661338147750939e-16,
+          "condition_number": 147.9308888576263,
+          "weighted_pct": [
+            8.174844821193206,
+            26.319991239192188,
+            7.926685960055532,
+            42.752837030613286,
+            14.825640948945832
+          ],
+          "raw_n": [
+            603,
+            1412,
+            532,
+            1525,
+            928
+          ],
+          "raw_pct": [
+            12.06,
+            28.24,
+            10.639999999999999,
+            30.5,
+            18.56
+          ],
+          "neff": [
+            171.312333895728,
+            324.658441854441,
+            118.390731812602,
+            388.726536058267,
+            256.373828471867
+          ],
+          "mean_normalized_weight": [
+            0.6778478292863355,
+            0.9320110212178537,
+            0.7449892819601065,
+            1.401732361659452,
+            0.7987953097492366
+          ],
+          "reconstructed_neff": 1160.9082893658235,
+          "published_neff": 1160.90828936582
+        },
+        "vote_std": {
+          "identified": true,
+          "rank": 3,
+          "groups": [
+            "Lula",
+            "Jair Bolsonaro",
+            "Branco/Nulo ou Não votei"
+          ],
+          "max_residual": 5.551115123125783e-16,
+          "condition_number": 3.6208702246679287,
+          "weighted_pct": [
+            48.2690205870784,
+            47.15592553105942,
+            4.575053881862137
+          ],
+          "raw_n": [
+            2065,
+            2177,
+            758
+          ],
+          "raw_pct": [
+            41.3,
+            43.54,
+            15.160000000000002
+          ],
+          "neff": [
+            487.765511404831,
+            595.208696722549,
+            206.627820573082
+          ],
+          "mean_normalized_weight": [
+            1.168741418573327,
+            1.0830483585452324,
+            0.30178455685106437
+          ],
+          "reconstructed_neff": 1160.9082893658167,
+          "published_neff": 1160.90828936582
+        },
+        "stimulated_1r_vote_1_h": {
+          "identified": false,
+          "reason": "breakdown_unavailable"
+        },
+        "stimulated_2r_vote_1_h": {
+          "identified": true,
+          "rank": 3,
+          "groups": [
+            "Lula (PT)",
+            "Flávio Bolsonaro (PL)",
+            "Indecisos, brancos e nulos"
+          ],
+          "max_residual": 8.881784197001252e-16,
+          "condition_number": 1.732482628914744,
+          "weighted_pct": [
+            46.20880288489771,
+            45.50644977619858,
+            8.284747338903625
+          ],
+          "raw_n": [
+            2126,
+            2159,
+            715
+          ],
+          "raw_pct": [
+            42.52,
+            43.18,
+            14.299999999999999
+          ],
+          "neff": [
+            483.828758668888,
+            548.391529464107,
+            161.688705774727
+          ],
+          "mean_normalized_weight": [
+            1.086754536333436,
+            1.0538779475729174,
+            0.5793529607624913
+          ],
+          "reconstructed_neff": 1160.9082893658167,
+          "published_neff": 1160.90828936582
+        },
+        "relig_std": {
+          "identified": true,
+          "rank": 4,
+          "groups": [
+            "Católica",
+            "Evangélica/Protestante",
+            "Sem religião",
+            "Outra"
+          ],
+          "max_residual": 2.220446049250313e-16,
+          "condition_number": 98.4452081722611,
+          "weighted_pct": [
+            42.89654197081226,
+            27.487217356001892,
+            12.820613422894633,
+            16.795627250291208
+          ],
+          "raw_n": [
+            2242,
+            1135,
+            770,
+            853
+          ],
+          "raw_pct": [
+            44.84,
+            22.7,
+            15.4,
+            17.06
+          ],
+          "neff": [
+            487.223759380526,
+            274.446251727443,
+            233.842066783311,
+            204.21942659806
+          ],
+          "mean_normalized_weight": [
+            0.9566579386889441,
+            1.2108906324229909,
+            0.8325073651230281,
+            0.9845033558201176
+          ],
+          "reconstructed_neff": 1160.9082893658158,
+          "published_neff": 1160.90828936582
+        },
+        "relig_std_2": {
+          "identified": false,
+          "reason": "breakdown_unavailable"
+        },
+        "ideol_std": {
+          "identified": true,
+          "rank": 3,
+          "groups": [
+            "Esquerda",
+            "Centro ou sem posicionamento",
+            "Direita"
+          ],
+          "max_residual": 4.440892098500626e-16,
+          "condition_number": 24.82192039866665,
+          "weighted_pct": [
+            36.9705186987392,
+            15.640006517039714,
+            47.38947478422113
+          ],
+          "raw_n": [
+            1777,
+            731,
+            2492
+          ],
+          "raw_pct": [
+            35.54,
+            14.62,
+            49.84
+          ],
+          "neff": [
+            394.851457491825,
+            169.493002019019,
+            605.464521373082
+          ],
+          "mean_normalized_weight": [
+            1.0402509481918738,
+            1.0697678876224155,
+            0.9508321585919167
+          ],
+          "reconstructed_neff": 1160.908289365813,
+          "published_neff": 1160.90828936582
+        },
+        "identification_h": {
+          "identified": false,
+          "reason": "different_universe",
+          "base": 4943
+        }
+      },
+      "turns": {
+        "1t": {
+          "published_exact": {
+            "Lula (PT)": 44.253267184550396,
+            "Flávio Bolsonaro (PL)": 39.9017401719458,
+            "Renan Santos (Missão)": 10.2431406236734,
+            "Ronaldo Caiado (PSD)": 1.57021683740831,
+            "Zema (Novo)": 1.20594430990564,
+            "Samara (UP)": 0.799870517591784,
+            "Outros": 0.546916097867628,
+            "Branco/nulo ou não votaria": 1.1206653559400899,
+            "Indecisos": 0.358238901116925
+          },
+          "income_standardized": {
+            "pessoas16_efetivo": {
+              "Lula (PT)": 44.428230767840304,
+              "Flávio Bolsonaro (PL)": 38.80436570121161,
+              "Renan Santos (Missão)": 10.904465092629064,
+              "Ronaldo Caiado (PSD)": 1.7118717081173673,
+              "Zema (Novo)": 1.279923100061485,
+              "Samara (UP)": 0.8116460593189563,
+              "Outros": 0.5474985748041828,
+              "Branco/nulo ou não votaria": 1.152916784812538,
+              "Indecisos": 0.35908221120447514
+            },
+            "pessoas16_habitual": {
+              "Lula (PT)": 44.34848403750567,
+              "Flávio Bolsonaro (PL)": 38.92797254841518,
+              "Renan Santos (Missão)": 10.883999107795443,
+              "Ronaldo Caiado (PSD)": 1.6920486052179804,
+              "Zema (Novo)": 1.2779303614580368,
+              "Samara (UP)": 0.8227599437281852,
+              "Outros": 0.5519042482665559,
+              "Branco/nulo ou não votaria": 1.133364051686973,
+              "Indecisos": 0.36153709592597705
+            },
+            "domicilios_efetivo": {
+              "Lula (PT)": 44.52928189346797,
+              "Flávio Bolsonaro (PL)": 39.412437193249275,
+              "Renan Santos (Missão)": 10.359848739945898,
+              "Ronaldo Caiado (PSD)": 1.646132431887808,
+              "Zema (Novo)": 1.2180214018727011,
+              "Samara (UP)": 0.7640946678472275,
+              "Outros": 0.5324301030200369,
+              "Branco/nulo ou não votaria": 1.1875478030344813,
+              "Indecisos": 0.35020576567458217
+            }
+          },
+          "raw_pct": {
+            "Lula (PT)": 40.54,
+            "Flávio Bolsonaro (PL)": 36.7,
+            "Renan Santos (Missão)": 16.04,
+            "Ronaldo Caiado (PSD)": 2.02,
+            "Zema (Novo)": 1.8,
+            "Samara (UP)": 0.78,
+            "Outros": 0.74,
+            "Branco/nulo ou não votaria": 1.0,
+            "Indecisos": 0.38
+          }
+        },
+        "2t": {
+          "published_exact": {
+            "Lula (PT)": 46.2088028848977,
+            "Flávio Bolsonaro (PL)": 45.5064497761986,
+            "Branco/nulo ou não votaria": 7.6905446683520395,
+            "Indecisos": 0.594202670551626
+          },
+          "income_standardized": {
+            "pessoas16_efetivo": {
+              "Lula (PT)": 46.522723899105685,
+              "Flávio Bolsonaro (PL)": 44.811418983407776,
+              "Branco/nulo ou não votaria": 8.078205657526317,
+              "Indecisos": 0.587651459960175
+            },
+            "pessoas16_habitual": {
+              "Lula (PT)": 46.448274400944044,
+              "Flávio Bolsonaro (PL)": 44.901179222076934,
+              "Branco/nulo ou não votaria": 8.068204314588684,
+              "Indecisos": 0.5823420623903046
+            },
+            "domicilios_efetivo": {
+              "Lula (PT)": 46.47768883666036,
+              "Flávio Bolsonaro (PL)": 45.15870984263549,
+              "Branco/nulo ou não votaria": 7.75237646682157,
+              "Indecisos": 0.6112248538825491
+            }
+          },
+          "raw_pct": {
+            "Lula (PT)": 42.52,
+            "Flávio Bolsonaro (PL)": 43.18,
+            "Branco/nulo ou não votaria": 13.84,
+            "Indecisos": 0.46
+          }
+        }
+      }
+    },
+    "02_pesquisa_2026_09_09": {
+      "catalog": {
+        "id": "02_pesquisa_2026_09_09",
+        "sequence": 2,
+        "date": "2026-09-09T00:00:00.000Z",
+        "fieldEnd": "2026-09-07T00:00:00.000Z",
+        "trendEnabled": false
+      },
+      "margins": {
+        "sex_std": {
+          "identified": true,
+          "rank": 2,
+          "groups": [
+            "Homem",
+            "Mulher"
+          ],
+          "max_residual": 4.440892098500626e-16,
+          "condition_number": 10.573833003733839,
+          "weighted_pct": [
+            48.133090903414534,
+            51.86690909658551
+          ],
+          "raw_n": [
+            2767,
+            2233
+          ],
+          "raw_pct": [
+            55.34,
+            44.66
+          ],
+          "neff": [
+            927.48870855296,
+            663.788144644303
+          ],
+          "mean_normalized_weight": [
+            0.8697703452008408,
+            1.1613727966096175
+          ],
+          "reconstructed_neff": 1526.5578324711548,
+          "published_neff": 1526.55783247115
+        },
+        "age_std": {
+          "identified": true,
+          "rank": 3,
+          "groups": [
+            "16 a 34 anos",
+            "35 a 59 anos",
+            "60 anos ou mais"
+          ],
+          "max_residual": 5.551115123125783e-16,
+          "condition_number": 89.92257620631787,
+          "weighted_pct": [
+            36.06915805044375,
+            43.53747509944028,
+            20.393366850115974
+          ],
+          "raw_n": [
+            1436,
+            2225,
+            1339
+          ],
+          "raw_pct": [
+            28.720000000000002,
+            44.5,
+            26.779999999999998
+          ],
+          "neff": [
+            411.620927210391,
+            802.119271493046,
+            404.987467649834
+          ],
+          "mean_normalized_weight": [
+            1.2558899042633616,
+            0.978370226953714,
+            0.7615148188990282
+          ],
+          "reconstructed_neff": 1526.5578324711557,
+          "published_neff": 1526.55783247115
+        },
+        "race_std": {
+          "identified": true,
+          "rank": 2,
+          "groups": [
+            "Branca",
+            "Preta, Parda, Indígena ou Amarela"
+          ],
+          "max_residual": 4.440892098500626e-16,
+          "condition_number": 24.726579305150754,
+          "weighted_pct": [
+            44.606040094878196,
+            55.39395990512185
+          ],
+          "raw_n": [
+            2551,
+            2449
+          ],
+          "raw_pct": [
+            51.019999999999996,
+            48.980000000000004
+          ],
+          "neff": [
+            777.056599760019,
+            769.020849747202
+          ],
+          "mean_normalized_weight": [
+            0.8742853801426538,
+            1.13095059014132
+          ],
+          "reconstructed_neff": 1526.5578324711532,
+          "published_neff": 1526.55783247115
+        },
+        "edu_std": {
+          "identified": true,
+          "rank": 3,
+          "groups": [
+            "Fundamental",
+            "Médio",
+            "Superior"
+          ],
+          "max_residual": 6.106226635438361e-16,
+          "condition_number": 22.92415783123596,
+          "weighted_pct": [
+            43.81792115038306,
+            38.33027511988403,
+            17.85180372973295
+          ],
+          "raw_n": [
+            665,
+            2406,
+            1929
+          ],
+          "raw_pct": [
+            13.3,
+            48.120000000000005,
+            38.58
+          ],
+          "neff": [
+            415.073138282615,
+            1000.68409673474,
+            697.705320431591
+          ],
+          "mean_normalized_weight": [
+            3.2945805376227857,
+            0.7965560083101418,
+            0.4627217140936483
+          ],
+          "reconstructed_neff": 1526.5578324711464,
+          "published_neff": 1526.55783247115
+        },
+        "inc_std": {
+          "identified": true,
+          "rank": 3,
+          "groups": [
+            "Até 2 salários mínimos",
+            "2 a 5 salários mínimos",
+            "Mais de 5 salários mínimos"
+          ],
+          "max_residual": 6.661338147750939e-16,
+          "condition_number": 17.111949635317785,
+          "weighted_pct": [
+            42.12294136796025,
+            39.56309619404897,
+            18.313962437990856
+          ],
+          "raw_n": [
+            1618,
+            2161,
+            1221
+          ],
+          "raw_pct": [
+            32.36,
+            43.22,
+            24.42
+          ],
+          "neff": [
+            547.588946421713,
+            678.77663425555,
+            333.920597754986
+          ],
+          "mean_normalized_weight": [
+            1.3016978173040867,
+            0.9153886208711005,
+            0.7499575117932373
+          ],
+          "reconstructed_neff": 1526.5578324711516,
+          "published_neff": 1526.55783247115
+        },
+        "reg_std": {
+          "identified": true,
+          "rank": 5,
+          "groups": [
+            "Norte",
+            "Nordeste",
+            "Centro-Oeste",
+            "Sudeste",
+            "Sul"
+          ],
+          "max_residual": 2.220446049250313e-16,
+          "condition_number": 129.5808248823299,
+          "weighted_pct": [
+            8.174844831701055,
+            26.31999127302698,
+            7.9266859702461945,
+            42.75283695702161,
+            14.82564096800418
+          ],
+          "raw_n": [
+            513,
+            1363,
+            497,
+            1721,
+            906
+          ],
+          "raw_pct": [
+            10.26,
+            27.26,
+            9.94,
+            34.42,
+            18.12
+          ],
+          "neff": [
+            171.735006751568,
+            362.328704859149,
+            181.396238198652,
+            564.902628769967,
+            329.217751137387
+          ],
+          "mean_normalized_weight": [
+            0.7967685021151126,
+            0.9655169212409015,
+            0.7974533169261765,
+            1.2420928807966765,
+            0.8181921064019967
+          ],
+          "reconstructed_neff": 1526.5578324711591,
+          "published_neff": 1526.55783247115
+        },
+        "vote_std": {
+          "identified": true,
+          "rank": 3,
+          "groups": [
+            "Lula",
+            "Jair Bolsonaro",
+            "Branco/Nulo ou Não votei"
+          ],
+          "max_residual": 6.661338147750939e-16,
+          "condition_number": 3.552844767937557,
+          "weighted_pct": [
+            48.2690205345822,
+            47.15592557881635,
+            4.575053886601515
+          ],
+          "raw_n": [
+            1366,
+            2804,
+            830
+          ],
+          "raw_pct": [
+            27.32,
+            56.08,
+            16.6
+          ],
+          "neff": [
+            532.443614063473,
+            1061.04437030884,
+            264.688492405847
+          ],
+          "mean_normalized_weight": [
+            1.766801630109158,
+            0.8408688583954415,
+            0.2756056558193684
+          ],
+          "reconstructed_neff": 1526.557832471152,
+          "published_neff": 1526.55783247115
+        },
+        "stimulated_1r_vote_1_h": {
+          "identified": false,
+          "reason": "breakdown_unavailable"
+        },
+        "stimulated_2r_vote_1_h": {
+          "identified": true,
+          "rank": 3,
+          "groups": [
+            "Lula (PT)",
+            "Flávio Bolsonaro (PL)",
+            "Indecisos, brancos e nulos"
+          ],
+          "max_residual": 4.996003610813204e-16,
+          "condition_number": 1.750213789415451,
+          "weighted_pct": [
+            43.742533868078105,
+            46.41497247641959,
+            9.842493655502329
+          ],
+          "raw_n": [
+            1352,
+            2798,
+            850
+          ],
+          "raw_pct": [
+            27.04,
+            55.96,
+            17.0
+          ],
+          "neff": [
+            502.096173521874,
+            925.241796946909,
+            235.461253893044
+          ],
+          "mean_normalized_weight": [
+            1.6176972584348412,
+            0.8294312451111435,
+            0.5789702150295487
+          ],
+          "reconstructed_neff": 1526.5578324711537,
+          "published_neff": 1526.55783247115
+        },
+        "relig_std": {
+          "identified": true,
+          "rank": 4,
+          "groups": [
+            "Católica",
+            "Evangélica/Protestante",
+            "Sem religião",
+            "Outra"
+          ],
+          "max_residual": 1.1102230246251565e-15,
+          "condition_number": 168.3131441722313,
+          "weighted_pct": [
+            46.08826406129156,
+            29.142677326127135,
+            10.330493918969614,
+            14.438564693611806
+          ],
+          "raw_n": [
+            2315,
+            1498,
+            499,
+            688
+          ],
+          "raw_pct": [
+            46.300000000000004,
+            29.959999999999997,
+            9.98,
+            13.76
+          ],
+          "neff": [
+            694.867528359083,
+            504.28752009332,
+            135.984465921014,
+            203.414315239623
+          ],
+          "mean_normalized_weight": [
+            0.9954268695743317,
+            0.9727195369201315,
+            1.0351196311592799,
+            1.0493142945938811
+          ],
+          "reconstructed_neff": 1526.5578324711505,
+          "published_neff": 1526.55783247115
+        },
+        "relig_std_2": {
+          "identified": false,
+          "reason": "breakdown_unavailable"
+        },
+        "ideol_std": {
+          "identified": true,
+          "rank": 3,
+          "groups": [
+            "Esquerda",
+            "Centro ou sem posicionamento",
+            "Direita"
+          ],
+          "max_residual": 5.551115123125783e-16,
+          "condition_number": 15.990275157639793,
+          "weighted_pct": [
+            30.889651330135877,
+            22.28422857991005,
+            46.826120089954024
+          ],
+          "raw_n": [
+            963,
+            1014,
+            3023
+          ],
+          "raw_pct": [
+            19.259999999999998,
+            20.28,
+            60.46
+          ],
+          "neff": [
+            364.759706534904,
+            291.044025341345,
+            983.897356994948
+          ],
+          "mean_normalized_weight": [
+            1.603824056601032,
+            1.0988278392460575,
+            0.7744975205086673
+          ],
+          "reconstructed_neff": 1526.5578324711569,
+          "published_neff": 1526.55783247115
+        },
+        "identification_h": {
+          "identified": false,
+          "reason": "different_universe",
+          "base": 4904
+        }
+      },
+      "turns": {
+        "1t": {
+          "published_exact": {
+            "Lula (PT)": 40.1592064068766,
+            "Flávio Bolsonaro (PL)": 39.7034225932782,
+            "Renan Santos (Missão)": 11.293367648191099,
+            "Escritor Augusto Cury (Avante)": 4.36191824746905,
+            "Ronaldo Caiado (PSD)": 0.7429213919745851,
+            "Zema (Novo)": 0.723404547782271,
+            "Pablo Marçal (PRTB)": 0.5843432093508351,
+            "Outros": 1.05075743138318,
+            "Branco/nulo ou não votaria": 0.487803659178914,
+            "Indecisos": 0.892854864515359
+          },
+          "income_standardized": {
+            "pessoas16_efetivo": {
+              "Lula (PT)": 39.66559906305773,
+              "Flávio Bolsonaro (PL)": 39.185235150923376,
+              "Renan Santos (Missão)": 12.20608770738811,
+              "Escritor Augusto Cury (Avante)": 4.325557642686537,
+              "Ronaldo Caiado (PSD)": 0.7632056677422061,
+              "Zema (Novo)": 0.7349112429518859,
+              "Pablo Marçal (PRTB)": 0.5576964311335961,
+              "Outros": 1.2973745321473826,
+              "Branco/nulo ou não votaria": 0.47487243156898884,
+              "Indecisos": 0.7894601304001944
+            },
+            "pessoas16_habitual": {
+              "Lula (PT)": 39.59648548479687,
+              "Flávio Bolsonaro (PL)": 39.30485331306038,
+              "Renan Santos (Missão)": 12.174877687127914,
+              "Escritor Augusto Cury (Avante)": 4.338401730807947,
+              "Ronaldo Caiado (PSD)": 0.7565095310072621,
+              "Zema (Novo)": 0.7383754774970659,
+              "Pablo Marçal (PRTB)": 0.5566783538693071,
+              "Outros": 1.2680395693494733,
+              "Branco/nulo ou não votaria": 0.47516742657872196,
+              "Indecisos": 0.790611425905073
+            },
+            "domicilios_efetivo": {
+              "Lula (PT)": 40.35040115548775,
+              "Flávio Bolsonaro (PL)": 39.27037528448964,
+              "Renan Santos (Missão)": 11.464216365060192,
+              "Escritor Augusto Cury (Avante)": 4.316854249971245,
+              "Ronaldo Caiado (PSD)": 0.7665138848069584,
+              "Zema (Novo)": 0.7128362466965402,
+              "Pablo Marçal (PRTB)": 0.5857177168800612,
+              "Outros": 1.165852908790828,
+              "Branco/nulo ou não votaria": 0.4858684975402546,
+              "Indecisos": 0.8813636902765438
+            }
+          },
+          "raw_pct": {
+            "Lula (PT)": 25.1,
+            "Flávio Bolsonaro (PL)": 49.42,
+            "Renan Santos (Missão)": 17.96,
+            "Escritor Augusto Cury (Avante)": 3.32,
+            "Ronaldo Caiado (PSD)": 1.14,
+            "Zema (Novo)": 1.02,
+            "Pablo Marçal (PRTB)": 0.66,
+            "Outros": 0.36,
+            "Branco/nulo ou não votaria": 0.56,
+            "Indecisos": 0.46
+          }
+        },
+        "2t": {
+          "published_exact": {
+            "Flávio Bolsonaro (PL)": 46.4149724764196,
+            "Lula (PT)": 43.7425338680781,
+            "Branco/nulo ou não votaria": 8.97716402678749,
+            "Indecisos": 0.86532962871486
+          },
+          "income_standardized": {
+            "pessoas16_efetivo": {
+              "Flávio Bolsonaro (PL)": 46.03854842706532,
+              "Lula (PT)": 43.53462307606909,
+              "Branco/nulo ou não votaria": 9.540017600809623,
+              "Indecisos": 0.8868108960559183
+            },
+            "pessoas16_habitual": {
+              "Flávio Bolsonaro (PL)": 46.14514924579578,
+              "Lula (PT)": 43.421331981269674,
+              "Branco/nulo ou não votaria": 9.546338874560814,
+              "Indecisos": 0.8871798983736836
+            },
+            "domicilios_efetivo": {
+              "Flávio Bolsonaro (PL)": 46.03540432303644,
+              "Lula (PT)": 44.100681101808846,
+              "Branco/nulo ou não votaria": 8.99820329178175,
+              "Indecisos": 0.8657112833729139
+            }
+          },
+          "raw_pct": {
+            "Flávio Bolsonaro (PL)": 55.96,
+            "Lula (PT)": 27.04,
+            "Branco/nulo ou não votaria": 15.98,
+            "Indecisos": 1.02
+          }
+        }
+      }
+    },
+    "02_pesquisa_2026_09_21": {
+      "catalog": {
+        "id": "02_pesquisa_2026_09_21",
+        "sequence": 2,
+        "date": "2026-09-21T00:00:00.000Z",
+        "fieldEnd": "2026-09-07T00:00:00.000Z",
+        "trendEnabled": true
+      },
+      "margins": {
+        "sex_std": {
+          "identified": true,
+          "rank": 2,
+          "groups": [
+            "Homem",
+            "Mulher"
+          ],
+          "max_residual": 2.7755575615628914e-16,
+          "condition_number": 11.034898499473442,
+          "weighted_pct": [
+            48.13309090364194,
+            51.86690909635805
+          ],
+          "raw_n": [
+            2767,
+            2233
+          ],
+          "raw_pct": [
+            55.34,
+            44.66
+          ],
+          "neff": [
+            827.451864953232,
+            653.593262033468
+          ],
+          "mean_normalized_weight": [
+            0.8697703452049501,
+            1.1613727966045242
+          ],
+          "reconstructed_neff": 1445.9447357665815,
+          "published_neff": 1445.94473576658
+        },
+        "age_std": {
+          "identified": true,
+          "rank": 3,
+          "groups": [
+            "16 a 34 anos",
+            "35 a 59 anos",
+            "60 anos ou mais"
+          ],
+          "max_residual": 3.885780586188048e-16,
+          "condition_number": 72.86830375251596,
+          "weighted_pct": [
+            36.06915805032379,
+            43.53747509952511,
+            20.393366850151075
+          ],
+          "raw_n": [
+            1436,
+            2225,
+            1339
+          ],
+          "raw_pct": [
+            28.720000000000002,
+            44.5,
+            26.779999999999998
+          ],
+          "neff": [
+            381.164199560338,
+            779.334628272945,
+            388.503783652177
+          ],
+          "mean_normalized_weight": [
+            1.2558899042591851,
+            0.9783702269556205,
+            0.7615148189003389
+          ],
+          "reconstructed_neff": 1445.944735766582,
+          "published_neff": 1445.94473576658
+        },
+        "race_std": {
+          "identified": true,
+          "rank": 2,
+          "groups": [
+            "Branca",
+            "Preta, Parda, Indígena ou Amarela"
+          ],
+          "max_residual": 4.440892098500626e-16,
+          "condition_number": 27.86106986327123,
+          "weighted_pct": [
+            44.11245859581212,
+            55.88754140418788
+          ],
+          "raw_n": [
+            2551,
+            2449
+          ],
+          "raw_pct": [
+            51.019999999999996,
+            48.980000000000004
+          ],
+          "neff": [
+            757.76519553256,
+            718.367832724216
+          ],
+          "mean_normalized_weight": [
+            0.8646111053667606,
+            1.1410277951038765
+          ],
+          "reconstructed_neff": 1445.944735766582,
+          "published_neff": 1445.94473576658
+        },
+        "edu_std": {
+          "identified": true,
+          "rank": 3,
+          "groups": [
+            "Fundamental",
+            "Médio",
+            "Superior"
+          ],
+          "max_residual": 6.106226635438361e-16,
+          "condition_number": 30.08418952006154,
+          "weighted_pct": [
+            43.817921150478206,
+            38.33027511992058,
+            17.85180372960121
+          ],
+          "raw_n": [
+            665,
+            2406,
+            1929
+          ],
+          "raw_pct": [
+            13.3,
+            48.120000000000005,
+            38.58
+          ],
+          "neff": [
+            396.160284623307,
+            976.074941718979,
+            564.925333253897
+          ],
+          "mean_normalized_weight": [
+            3.29458053762994,
+            0.7965560083109015,
+            0.4627217140902336
+          ],
+          "reconstructed_neff": 1445.944735766587,
+          "published_neff": 1445.94473576658
+        },
+        "inc_std": {
+          "identified": true,
+          "rank": 3,
+          "groups": [
+            "Até 2 salários mínimos",
+            "2 a 5 salários mínimos",
+            "Mais de 5 salários mínimos"
+          ],
+          "max_residual": 2.7755575615628914e-16,
+          "condition_number": 20.778148140528618,
+          "weighted_pct": [
+            42.12294136805163,
+            39.56309619420964,
+            18.313962437738716
+          ],
+          "raw_n": [
+            1618,
+            2161,
+            1221
+          ],
+          "raw_pct": [
+            32.36,
+            43.22,
+            24.42
+          ],
+          "neff": [
+            526.084180271811,
+            620.153835660833,
+            329.08051342621
+          ],
+          "mean_normalized_weight": [
+            1.3016978173069107,
+            0.9153886208748182,
+            0.7499575117829121
+          ],
+          "reconstructed_neff": 1445.9447357665838,
+          "published_neff": 1445.94473576658
+        },
+        "reg_std": {
+          "identified": true,
+          "rank": 5,
+          "groups": [
+            "Norte",
+            "Nordeste",
+            "Centro-Oeste",
+            "Sudeste",
+            "Sul"
+          ],
+          "max_residual": 4.440892098500626e-16,
+          "condition_number": 126.7169239063304,
+          "weighted_pct": [
+            8.17484483172836,
+            26.31999127309986,
+            7.926685970264264,
+            42.752836956850274,
+            14.825640968057217
+          ],
+          "raw_n": [
+            513,
+            1363,
+            497,
+            1721,
+            906
+          ],
+          "raw_pct": [
+            10.26,
+            27.26,
+            9.94,
+            34.42,
+            18.12
+          ],
+          "neff": [
+            159.088197299905,
+            345.418813444404,
+            176.316630077983,
+            536.738615458631,
+            301.690970205882
+          ],
+          "mean_normalized_weight": [
+            0.7967685021177738,
+            0.9655169212435751,
+            0.7974533169279943,
+            1.2420928807916987,
+            0.8181921064049236
+          ],
+          "reconstructed_neff": 1445.9447357665806,
+          "published_neff": 1445.94473576658
+        },
+        "vote_std": {
+          "identified": true,
+          "rank": 3,
+          "groups": [
+            "Lula",
+            "Jair Bolsonaro",
+            "Branco/Nulo ou Não votei"
+          ],
+          "max_residual": 5.551115123125783e-16,
+          "condition_number": 3.8015329914717397,
+          "weighted_pct": [
+            48.269020534516,
+            47.15592557885807,
+            4.575053886625877
+          ],
+          "raw_n": [
+            1366,
+            2804,
+            830
+          ],
+          "raw_pct": [
+            27.32,
+            56.08,
+            16.6
+          ],
+          "neff": [
+            519.051451654551,
+            952.789626468693,
+            224.419298696894
+          ],
+          "mean_normalized_weight": [
+            1.766801630106735,
+            0.8408688583961852,
+            0.27560565582083596
+          ],
+          "reconstructed_neff": 1445.9447357665845,
+          "published_neff": 1445.94473576658
+        },
+        "stimulated_1r_vote_1_h": {
+          "identified": false,
+          "reason": "breakdown_unavailable"
+        },
+        "stimulated_2r_vote_1_h": {
+          "identified": true,
+          "rank": 3,
+          "groups": [
+            "Lula (PT)",
+            "Flávio Bolsonaro (PL)",
+            "Indecisos, brancos e nulos"
+          ],
+          "max_residual": 6.661338147750939e-16,
+          "condition_number": 1.7775905364276052,
+          "weighted_pct": [
+            43.85091889200836,
+            47.411616458447426,
+            8.737464649544275
+          ],
+          "raw_n": [
+            1352,
+            2798,
+            850
+          ],
+          "raw_pct": [
+            27.04,
+            55.96,
+            17.0
+          ],
+          "neff": [
+            495.368867973964,
+            866.607975763675,
+            173.400392236466
+          ],
+          "mean_normalized_weight": [
+            1.6217055803257532,
+            0.8472411804583171,
+            0.5139685087967221
+          ],
+          "reconstructed_neff": 1445.94473576658,
+          "published_neff": 1445.94473576658
+        },
+        "relig_std": {
+          "identified": true,
+          "rank": 4,
+          "groups": [
+            "Católica",
+            "Evangélica/Protestante",
+            "Sem religião",
+            "Outra"
+          ],
+          "max_residual": 6.661338147750939e-16,
+          "condition_number": 130.82383408628098,
+          "weighted_pct": [
+            45.87807139597269,
+            29.289004810467784,
+            10.006010870683465,
+            14.826912922875996
+          ],
+          "raw_n": [
+            2315,
+            1498,
+            499,
+            688
+          ],
+          "raw_pct": [
+            46.300000000000004,
+            29.959999999999997,
+            9.98,
+            13.76
+          ],
+          "neff": [
+            692.262467516154,
+            456.379519435896,
+            119.51747630694,
+            189.833776555173
+          ],
+          "mean_normalized_weight": [
+            0.9908870711873151,
+            0.9776036318580703,
+            1.0026062996676819,
+            1.077537276371802
+          ],
+          "reconstructed_neff": 1445.944735766584,
+          "published_neff": 1445.94473576658
+        },
+        "relig_std_2": {
+          "identified": true,
+          "rank": 6,
+          "groups": [
+            "Católica",
+            "Protestantes Históricas",
+            "Pentecostais e Neopentecostais",
+            "Outras",
+            "Sem religião",
+            "Outra religião"
+          ],
+          "max_residual": 1.4432899320127035e-15,
+          "condition_number": 225.08592681817888,
+          "weighted_pct": [
+            45.87807139597273,
+            7.091740204028346,
+            14.074194075372533,
+            8.123070531066693,
+            10.006010870683268,
+            14.826912922876275
+          ],
+          "raw_n": [
+            2315,
+            464,
+            626,
+            408,
+            499,
+            688
+          ],
+          "raw_pct": [
+            46.300000000000004,
+            9.28,
+            12.520000000000001,
+            8.16,
+            9.98,
+            13.76
+          ],
+          "neff": [
+            692.262467516154,
+            142.475863232234,
+            190.408589553833,
+            135.663991245018,
+            119.51747630694,
+            189.833776555173
+          ],
+          "mean_normalized_weight": [
+            0.9908870711873159,
+            0.7641961426754684,
+            1.1241369069786369,
+            0.995474329787585,
+            1.0026062996676621,
+            1.0775372763718223
+          ],
+          "reconstructed_neff": 1445.9447357665892,
+          "published_neff": 1445.94473576658
+        },
+        "ideol_std": {
+          "identified": true,
+          "rank": 3,
+          "groups": [
+            "Esquerda",
+            "Centro ou sem posicionamento",
+            "Direita"
+          ],
+          "max_residual": 6.661338147750939e-16,
+          "condition_number": 16.05809435207134,
+          "weighted_pct": [
+            30.69067076988669,
+            22.75107092355443,
+            46.55825830655893
+          ],
+          "raw_n": [
+            963,
+            1014,
+            3023
+          ],
+          "raw_pct": [
+            19.259999999999998,
+            20.28,
+            60.46
+          ],
+          "neff": [
+            339.442759940718,
+            317.22533597808,
+            863.848930263277
+          ],
+          "mean_normalized_weight": [
+            1.5934927710221543,
+            1.121847678676254,
+            0.7700671238266447
+          ],
+          "reconstructed_neff": 1445.944735766581,
+          "published_neff": 1445.94473576658
+        },
+        "identification_h": {
+          "identified": false,
+          "reason": "different_universe",
+          "base": 4904
+        }
+      },
+      "turns": {
+        "1t": {
+          "published_exact": {
+            "Flávio Bolsonaro (PL)": 40.4952756439453,
+            "Lula (PT)": 40.440165011899,
+            "Renan Santos (Missão)": 9.36365358540726,
+            "Escritor Augusto Cury (Avante)": 4.735278564746849,
+            "Ronaldo Caiado (PSD)": 0.819540171261086,
+            "Zema (Novo)": 0.8102020787263421,
+            "Pablo Marçal (PRTB)": 0.638956191185656,
+            "Outros": 1.26230702078166,
+            "Branco/nulo ou não votaria": 0.517295605231513,
+            "Indecisos": 0.9173261268153019
+          },
+          "income_standardized": {
+            "pessoas16_efetivo": {
+              "Flávio Bolsonaro (PL)": 40.05598224813891,
+              "Lula (PT)": 39.97825024779993,
+              "Renan Santos (Missão)": 10.025725076214993,
+              "Escritor Augusto Cury (Avante)": 4.746231103839353,
+              "Ronaldo Caiado (PSD)": 0.8500584997641034,
+              "Zema (Novo)": 0.829111624218198,
+              "Pablo Marçal (PRTB)": 0.6102863625195702,
+              "Outros": 1.5808722560295037,
+              "Branco/nulo ou não votaria": 0.5085238836215038,
+              "Indecisos": 0.8149586978539128
+            },
+            "pessoas16_habitual": {
+              "Flávio Bolsonaro (PL)": 40.18505490472427,
+              "Lula (PT)": 39.90429381371841,
+              "Renan Santos (Missão)": 10.001586864099213,
+              "Escritor Augusto Cury (Avante)": 4.7561153301268675,
+              "Ronaldo Caiado (PSD)": 0.8420599210988422,
+              "Zema (Novo)": 0.8322048485386414,
+              "Pablo Marçal (PRTB)": 0.6091367794088315,
+              "Outros": 1.5436749834624237,
+              "Branco/nulo ou não votaria": 0.508978870605162,
+              "Indecisos": 0.8168936842173226
+            },
+            "domicilios_efetivo": {
+              "Flávio Bolsonaro (PL)": 40.03691971207382,
+              "Lula (PT)": 40.649689347012455,
+              "Renan Santos (Missão)": 9.492527819328629,
+              "Escritor Augusto Cury (Avante)": 4.703496722317844,
+              "Ronaldo Caiado (PSD)": 0.8481895390970451,
+              "Zema (Novo)": 0.8014082210599265,
+              "Pablo Marçal (PRTB)": 0.64061383816385,
+              "Outros": 1.4086855605699922,
+              "Branco/nulo ou não votaria": 0.5151423496998289,
+              "Indecisos": 0.903326890676586
+            }
+          },
+          "raw_pct": {
+            "Flávio Bolsonaro (PL)": 49.42,
+            "Lula (PT)": 25.1,
+            "Renan Santos (Missão)": 17.96,
+            "Escritor Augusto Cury (Avante)": 3.32,
+            "Ronaldo Caiado (PSD)": 1.14,
+            "Zema (Novo)": 1.02,
+            "Pablo Marçal (PRTB)": 0.66,
+            "Outros": 0.36,
+            "Branco/nulo ou não votaria": 0.56,
+            "Indecisos": 0.46
+          }
+        },
+        "2t": {
+          "published_exact": {
+            "Flávio Bolsonaro (PL)": 47.4116164584474,
+            "Lula (PT)": 43.8509188920083,
+            "Branco/nulo ou não votaria": 7.81270554363978,
+            "Indecisos": 0.924759105904467
+          },
+          "income_standardized": {
+            "pessoas16_efetivo": {
+              "Flávio Bolsonaro (PL)": 47.14272176157331,
+              "Lula (PT)": 43.585159679242615,
+              "Branco/nulo ou não votaria": 8.312672949938708,
+              "Indecisos": 0.9594456092452983
+            },
+            "pessoas16_habitual": {
+              "Flávio Bolsonaro (PL)": 47.256305731254926,
+              "Lula (PT)": 43.476170641223334,
+              "Branco/nulo ou não votaria": 8.309039982459355,
+              "Indecisos": 0.9584836450623315
+            },
+            "domicilios_efetivo": {
+              "Flávio Bolsonaro (PL)": 47.01702081364119,
+              "Lula (PT)": 44.19057357910118,
+              "Branco/nulo ou não votaria": 7.861892794095386,
+              "Indecisos": 0.9305128131621851
+            }
+          },
+          "raw_pct": {
+            "Flávio Bolsonaro (PL)": 55.96,
+            "Lula (PT)": 27.04,
+            "Branco/nulo ou não votaria": 15.98,
+            "Indecisos": 1.02
+          }
+        }
+      }
+    },
+    "03_pesquisa_2026_09_21": {
+      "catalog": {
+        "id": "03_pesquisa_2026_09_21",
+        "sequence": 3,
+        "date": "2026-09-21T00:00:00.000Z",
+        "fieldEnd": "2026-09-20T00:00:00.000Z",
+        "trendEnabled": true
+      },
+      "margins": {
+        "sex_std": {
+          "identified": true,
+          "rank": 2,
+          "groups": [
+            "Homem",
+            "Mulher"
+          ],
+          "max_residual": 3.608224830031759e-16,
+          "condition_number": 9.738683737769218,
+          "weighted_pct": [
+            48.13309090379699,
+            51.86690909620301
+          ],
+          "raw_n": [
+            2445,
+            2555
+          ],
+          "raw_pct": [
+            48.9,
+            51.1
+          ],
+          "neff": [
+            566.171473525599,
+            668.075988522046
+          ],
+          "mean_normalized_weight": [
+            0.9843167873987115,
+            1.0150080057965363
+          ],
+          "reconstructed_neff": 1231.7108505814244,
+          "published_neff": 1231.71085058142
+        },
+        "age_std": {
+          "identified": true,
+          "rank": 3,
+          "groups": [
+            "16 a 34 anos",
+            "35 a 59 anos",
+            "60 anos ou mais"
+          ],
+          "max_residual": 4.440892098500626e-16,
+          "condition_number": 58.6554689720677,
+          "weighted_pct": [
+            36.069158050485136,
+            43.53747509943982,
+            20.39336685007508
+          ],
+          "raw_n": [
+            1420,
+            2093,
+            1487
+          ],
+          "raw_pct": [
+            28.4,
+            41.86,
+            29.74
+          ],
+          "neff": [
+            395.317111570955,
+            550.557563622858,
+            300.301737005756
+          ],
+          "mean_normalized_weight": [
+            1.270040776425533,
+            1.040073461525079,
+            0.6857218174201438
+          ],
+          "reconstructed_neff": 1231.710850581425,
+          "published_neff": 1231.71085058142
+        },
+        "race_std": {
+          "identified": true,
+          "rank": 2,
+          "groups": [
+            "Branca",
+            "Preta, Parda, Indígena ou Amarela"
+          ],
+          "max_residual": 6.661338147750939e-16,
+          "condition_number": 38.403564821984396,
+          "weighted_pct": [
+            49.31324338790208,
+            50.68675661209798
+          ],
+          "raw_n": [
+            2802,
+            2198
+          ],
+          "raw_pct": [
+            56.04,
+            43.96
+          ],
+          "neff": [
+            734.783971854503,
+            534.209563195911
+          ],
+          "mean_normalized_weight": [
+            0.8799650854372248,
+            1.1530199411305273
+          ],
+          "reconstructed_neff": 1231.710850581423,
+          "published_neff": 1231.71085058142
+        },
+        "edu_std": {
+          "identified": true,
+          "rank": 3,
+          "groups": [
+            "Fundamental",
+            "Médio",
+            "Superior"
+          ],
+          "max_residual": 3.885780586188048e-16,
+          "condition_number": 16.77515707921402,
+          "weighted_pct": [
+            43.81792115039913,
+            38.33027512001663,
+            17.851803729584205
+          ],
+          "raw_n": [
+            471,
+            2162,
+            2367
+          ],
+          "raw_pct": [
+            9.42,
+            43.24,
+            47.339999999999996
+          ],
+          "neff": [
+            303.218521903349,
+            982.250594509519,
+            1095.41096687747
+          ],
+          "mean_normalized_weight": [
+            4.6515839862419455,
+            0.8864540962076001,
+            0.37709767067140276
+          ],
+          "reconstructed_neff": 1231.7108505814267,
+          "published_neff": 1231.71085058142
+        },
+        "inc_std": {
+          "identified": true,
+          "rank": 3,
+          "groups": [
+            "Até 2 salários mínimos",
+            "2 a 5 salários mínimos",
+            "Mais de 5 salários mínimos"
+          ],
+          "max_residual": 4.440892098500626e-16,
+          "condition_number": 33.705461756131506,
+          "weighted_pct": [
+            42.122941368112784,
+            39.56309619417734,
+            18.31396243770991
+          ],
+          "raw_n": [
+            1321,
+            2203,
+            1476
+          ],
+          "raw_pct": [
+            26.419999999999998,
+            44.06,
+            29.520000000000003
+          ],
+          "neff": [
+            401.171209936627,
+            587.948064558861,
+            324.473605687417
+          ],
+          "mean_normalized_weight": [
+            1.5943581138574103,
+            0.8979368178433351,
+            0.6203916814942381
+          ],
+          "reconstructed_neff": 1231.7108505814263,
+          "published_neff": 1231.71085058142
+        },
+        "reg_std": {
+          "identified": true,
+          "rank": 5,
+          "groups": [
+            "Norte",
+            "Nordeste",
+            "Centro-Oeste",
+            "Sudeste",
+            "Sul"
+          ],
+          "max_residual": 5.551115123125783e-16,
+          "condition_number": 145.94492986389844,
+          "weighted_pct": [
+            8.17484483174554,
+            26.319991273075143,
+            7.926685970268023,
+            42.752836956812175,
+            14.825640968099066
+          ],
+          "raw_n": [
+            480,
+            1407,
+            440,
+            1869,
+            804
+          ],
+          "raw_pct": [
+            9.6,
+            28.139999999999997,
+            8.799999999999999,
+            37.38,
+            16.08
+          ],
+          "neff": [
+            105.459609385413,
+            300.636507614415,
+            131.157042725533,
+            483.895086242381,
+            237.745618564126
+          ],
+          "mean_normalized_weight": [
+            0.8515463366401603,
+            0.9353230729593157,
+            0.900759769348639,
+            1.1437356061212458,
+            0.9219925975185986
+          ],
+          "reconstructed_neff": 1231.7108505814244,
+          "published_neff": 1231.71085058142
+        },
+        "vote_std": {
+          "identified": true,
+          "rank": 3,
+          "groups": [
+            "Lula",
+            "Jair Bolsonaro",
+            "Branco/Nulo ou Não votei"
+          ],
+          "max_residual": 8.881784197001252e-16,
+          "condition_number": 3.9257874207441263,
+          "weighted_pct": [
+            48.26902053439692,
+            47.15592557893221,
+            4.575053886670944
+          ],
+          "raw_n": [
+            1559,
+            2642,
+            799
+          ],
+          "raw_pct": [
+            31.180000000000003,
+            52.839999999999996,
+            15.98
+          ],
+          "neff": [
+            462.727479944504,
+            746.392427915189,
+            200.473834504103
+          ],
+          "mean_normalized_weight": [
+            1.5480763481204913,
+            0.8924285688669987,
+            0.28629874134361355
+          ],
+          "reconstructed_neff": 1231.7108505814228,
+          "published_neff": 1231.71085058142
+        },
+        "stimulated_1r_vote_1_h": {
+          "identified": true,
+          "rank": 6,
+          "groups": [
+            "Lula (PT)",
+            "Flávio Bolsonaro (PL)",
+            "Renan Santos (Missão)",
+            "Escritor Augusto Cury (Avante)",
+            "Outros candidatos",
+            "Indecisos, brancos e nulos"
+          ],
+          "max_residual": 3.885780586188048e-16,
+          "condition_number": 4.468577575894476,
+          "weighted_pct": [
+            41.323366110093595,
+            42.325493975709385,
+            11.431166673725285,
+            1.8411506335437038,
+            2.1920496201457933,
+            0.8867729867822258
+          ],
+          "raw_n": [
+            1503,
+            2395,
+            857,
+            105,
+            95,
+            45
+          ],
+          "raw_pct": [
+            30.06,
+            47.9,
+            17.14,
+            2.1,
+            1.9,
+            0.8999999999999999
+          ],
+          "neff": [
+            413.19456092029,
+            609.822552193877,
+            189.785637566588,
+            40.0780786340632,
+            23.4946926614211,
+            11.108933339275
+          ],
+          "mean_normalized_weight": [
+            1.3746961447136925,
+            0.8836220036682545,
+            0.6669292108357809,
+            0.8767383969255731,
+            1.1537103263925228,
+            0.9853033186469177
+          ],
+          "reconstructed_neff": 1231.7108505814238,
+          "published_neff": 1231.71085058142
+        },
+        "stimulated_2r_vote_1_h": {
+          "identified": true,
+          "rank": 3,
+          "groups": [
+            "Lula (PT)",
+            "Flávio Bolsonaro (PL)",
+            "Indecisos, brancos e nulos"
+          ],
+          "max_residual": 6.661338147750939e-16,
+          "condition_number": 1.7830096774699489,
+          "weighted_pct": [
+            42.92787342473986,
+            47.39188728153001,
+            9.680239293730207
+          ],
+          "raw_n": [
+            1569,
+            2657,
+            774
+          ],
+          "raw_pct": [
+            31.380000000000003,
+            53.14,
+            15.479999999999999
+          ],
+          "neff": [
+            439.221043058456,
+            692.845895082835,
+            137.504239610542
+          ],
+          "mean_normalized_weight": [
+            1.3680010651606074,
+            0.8918307730811067,
+            0.625338455667326
+          ],
+          "reconstructed_neff": 1231.710850581423,
+          "published_neff": 1231.71085058142
+        },
+        "relig_std": {
+          "identified": true,
+          "rank": 4,
+          "groups": [
+            "Católica",
+            "Evangélica/Protestante",
+            "Sem religião",
+            "Outra"
+          ],
+          "max_residual": 4.440892098500626e-16,
+          "condition_number": 145.7873981818065,
+          "weighted_pct": [
+            47.394897053150075,
+            25.731021304833853,
+            12.391562795781809,
+            14.482518846234301
+          ],
+          "raw_n": [
+            2470,
+            1247,
+            520,
+            763
+          ],
+          "raw_pct": [
+            49.4,
+            24.94,
+            10.4,
+            15.260000000000002
+          ],
+          "neff": [
+            572.2166291325,
+            343.509314668526,
+            127.709763171656,
+            197.227226206638
+          ],
+          "mean_normalized_weight": [
+            0.9594108715212566,
+            1.0317169729283822,
+            1.1914964226713278,
+            0.9490510384164024
+          ],
+          "reconstructed_neff": 1231.7108505814208,
+          "published_neff": 1231.71085058142
+        },
+        "relig_std_2": {
+          "identified": true,
+          "rank": 6,
+          "groups": [
+            "Católica",
+            "Protestantes Históricas",
+            "Pentecostais e Neopentecostais",
+            "Outras",
+            "Sem religião",
+            "Outra religião"
+          ],
+          "max_residual": 3.3306690738754696e-16,
+          "condition_number": 219.92017591289485,
+          "weighted_pct": [
+            47.394897053149506,
+            6.706588655419892,
+            11.406144014468094,
+            7.618288634945866,
+            12.391562795781894,
+            14.482518846234754
+          ],
+          "raw_n": [
+            2470,
+            441,
+            475,
+            331,
+            520,
+            763
+          ],
+          "raw_pct": [
+            49.4,
+            8.82,
+            9.5,
+            6.619999999999999,
+            10.4,
+            15.260000000000002
+          ],
+          "neff": [
+            572.2166291325,
+            118.840621499135,
+            142.459731555039,
+            91.2984505484047,
+            127.709763171656,
+            197.227226206638
+          ],
+          "mean_normalized_weight": [
+            0.959410871521245,
+            0.7603842012947722,
+            1.2006467383650625,
+            1.1507988874540585,
+            1.191496422671336,
+            0.949051038416432
+          ],
+          "reconstructed_neff": 1231.7108505814194,
+          "published_neff": 1231.71085058142
+        },
+        "ideol_std": {
+          "identified": true,
+          "rank": 3,
+          "groups": [
+            "Esquerda",
+            "Centro ou sem posicionamento",
+            "Direita"
+          ],
+          "max_residual": 6.661338147750939e-16,
+          "condition_number": 26.12271878194934,
+          "weighted_pct": [
+            34.02343839083134,
+            21.607576818918293,
+            44.36898479025034
+          ],
+          "raw_n": [
+            1229,
+            975,
+            2796
+          ],
+          "raw_pct": [
+            24.58,
+            19.5,
+            55.92
+          ],
+          "neff": [
+            331.145656871708,
+            248.142986540828,
+            718.066740033019
+          ],
+          "mean_normalized_weight": [
+            1.384191960570844,
+            1.1080808625086302,
+            0.7934367809415296
+          ],
+          "reconstructed_neff": 1231.7108505814242,
+          "published_neff": 1231.71085058142
+        },
+        "identification_h": {
+          "identified": false,
+          "reason": "different_universe",
+          "base": 4924
+        }
+      },
+      "turns": {
+        "1t": {
+          "published_exact": {
+            "Flávio Bolsonaro (PL)": 42.3254939757094,
+            "Lula (PT)": 41.3233661100936,
+            "Renan Santos (Missão)": 11.4311666737253,
+            "Escritor Augusto Cury (Avante)": 1.8411506335436998,
+            "Ronaldo Caiado (PSD)": 0.691348896039324,
+            "Zema (Novo)": 0.65340680173844,
+            "Outros": 0.847293922368055,
+            "Branco/nulo ou não votaria": 0.60579169120236,
+            "Indecisos": 0.280981295579865
+          },
+          "income_standardized": {
+            "pessoas16_efetivo": {
+              "Flávio Bolsonaro (PL)": 41.518648094648434,
+              "Lula (PT)": 41.467837865173976,
+              "Renan Santos (Missão)": 12.03570891264638,
+              "Escritor Augusto Cury (Avante)": 1.784244940650057,
+              "Ronaldo Caiado (PSD)": 0.8098798566154051,
+              "Zema (Novo)": 0.7452631184052851,
+              "Outros": 0.8423714903050822,
+              "Branco/nulo ou não votaria": 0.5259066494229788,
+              "Indecisos": 0.27013907213235716
+            },
+            "pessoas16_habitual": {
+              "Flávio Bolsonaro (PL)": 41.560921944032614,
+              "Lula (PT)": 41.400517207079,
+              "Renan Santos (Missão)": 12.054346986602194,
+              "Escritor Augusto Cury (Avante)": 1.7987661009031102,
+              "Ronaldo Caiado (PSD)": 0.7998714535516251,
+              "Zema (Novo)": 0.7399262419175452,
+              "Outros": 0.8508375919256942,
+              "Branco/nulo ou não votaria": 0.5248071498741343,
+              "Indecisos": 0.2700053241140517
+            },
+            "domicilios_efetivo": {
+              "Flávio Bolsonaro (PL)": 42.12603704497981,
+              "Lula (PT)": 41.5561321240502,
+              "Renan Santos (Missão)": 11.414689079680457,
+              "Escritor Augusto Cury (Avante)": 1.7890269603075795,
+              "Ronaldo Caiado (PSD)": 0.7331760618394154,
+              "Zema (Novo)": 0.6778428236534011,
+              "Outros": 0.8190075002011266,
+              "Branco/nulo ou não votaria": 0.6034728743625914,
+              "Indecisos": 0.2806155309253847
+            }
+          },
+          "raw_pct": {
+            "Flávio Bolsonaro (PL)": 47.9,
+            "Lula (PT)": 30.06,
+            "Renan Santos (Missão)": 17.14,
+            "Escritor Augusto Cury (Avante)": 2.1,
+            "Ronaldo Caiado (PSD)": 0.82,
+            "Zema (Novo)": 0.62,
+            "Outros": 0.46,
+            "Branco/nulo ou não votaria": 0.54,
+            "Indecisos": 0.36
+          },
+          "pdf_anchored_pair": {
+            "lula": 41.144471755080374,
+            "flavio": 41.19315411893903
+          }
+        },
+        "2t": {
+          "published_exact": {
+            "Flávio Bolsonaro (PL)": 47.391887281529996,
+            "Lula (PT)": 42.9278734247398,
+            "Branco/nulo ou não votaria": 8.548215005459591,
+            "Indecisos": 1.13202428827061
+          },
+          "income_standardized": {
+            "pessoas16_efetivo": {
+              "Flávio Bolsonaro (PL)": 46.88933720495905,
+              "Lula (PT)": 43.10394142387715,
+              "Branco/nulo ou não votaria": 8.961435450325075,
+              "Indecisos": 1.045285920838698
+            },
+            "pessoas16_habitual": {
+              "Flávio Bolsonaro (PL)": 46.922910674448865,
+              "Lula (PT)": 43.055428273970776,
+              "Branco/nulo ou não votaria": 8.982129073382412,
+              "Indecisos": 1.0395319781979346
+            },
+            "domicilios_efetivo": {
+              "Flávio Bolsonaro (PL)": 47.243767931946685,
+              "Lula (PT)": 43.100966013960864,
+              "Branco/nulo ou não votaria": 8.510720836790853,
+              "Indecisos": 1.1445452173015747
+            }
+          },
+          "raw_pct": {
+            "Flávio Bolsonaro (PL)": 53.14,
+            "Lula (PT)": 31.38,
+            "Branco/nulo ou não votaria": 14.62,
+            "Indecisos": 0.86
+          },
+          "pdf_anchored_pair": {
+            "lula": 43.17606799913736,
+            "flavio": 46.49744992342905
+          }
+        }
+      }
+    }
+  },
+  "income_checks": [
+    {
+      "question": "spontaneous_vote_norm",
+      "max_residual_pp": 5.684341886080802e-14
+    },
+    {
+      "question": "stimulated_1r_vote_1_h",
+      "max_residual_pp": 2.1316282072803006e-14
+    },
+    {
+      "question": "motivo_1t",
+      "max_residual_pp": 6.394884621840902e-14
+    },
+    {
+      "question": "lula_flavio",
+      "max_residual_pp": 2.1316282072803006e-14
+    },
+    {
+      "question": "motivo_lula_flavio",
+      "max_residual_pp": 1.0658141036401503e-13
+    },
+    {
+      "question": "lula_cury",
+      "max_residual_pp": 9.237055564881302e-14
+    },
+    {
+      "question": "lula_renan",
+      "max_residual_pp": 5.684341886080802e-14
+    },
+    {
+      "question": "lula_caiado",
+      "max_residual_pp": 5.684341886080802e-14
+    },
+    {
+      "question": "lula_zema",
+      "max_residual_pp": 1.1368683772161603e-13
+    },
+    {
+      "question": "recall_rejection_flavio_bolsonaro_h",
+      "max_residual_pp": 7.815970093361102e-14
+    },
+    {
+      "question": "recall_rejection_lula_h",
+      "max_residual_pp": 9.947598300641403e-14
+    },
+    {
+      "question": "recall_rejection_renan_santos_h",
+      "max_residual_pp": 8.526512829121202e-14
+    },
+    {
+      "question": "recall_rejection_romeu_zema_h",
+      "max_residual_pp": 4.263256414560601e-14
+    },
+    {
+      "question": "recall_rejection_ronaldo_caiado_h",
+      "max_residual_pp": 4.263256414560601e-14
+    },
+    {
+      "question": "recall_rejection_augusto_cury_h",
+      "max_residual_pp": 7.815970093361102e-14
+    },
+    {
+      "question": "president_approval",
+      "max_residual_pp": 7.815970093361102e-14
+    },
+    {
+      "question": "government_evaluation_h",
+      "max_residual_pp": 7.105427357601002e-14
+    },
+    {
+      "question": "main_problem_country",
+      "max_residual_pp": 3.907985046680551e-14
+    },
+    {
+      "question": "problema_familia",
+      "max_residual_pp": 8.348877145181177e-14
+    },
+    {
+      "question": "economic_macro_retro",
+      "max_residual_pp": 5.684341886080802e-14
+    },
+    {
+      "question": "economic_pocket_retro",
+      "max_residual_pp": 4.618527782440651e-14
+    },
+    {
+      "question": "economic_macro_prosp",
+      "max_residual_pp": 4.973799150320701e-14
+    },
+    {
+      "question": "economic_pocket_prosp",
+      "max_residual_pp": 6.039613253960852e-14
+    },
+    {
+      "question": "public_policy_support_anistia_8_janeiro",
+      "max_residual_pp": 4.263256414560601e-14
+    },
+    {
+      "question": "public_policy_support_porte_de_armas",
+      "max_residual_pp": 8.526512829121202e-14
+    },
+    {
+      "question": "public_policy_support_casamento_homoafetivo",
+      "max_residual_pp": 7.105427357601002e-14
+    },
+    {
+      "question": "public_policy_support_proibir_aborto",
+      "max_residual_pp": 4.973799150320701e-14
+    },
+    {
+      "question": "public_policy_support_terras_indigenas",
+      "max_residual_pp": 7.815970093361102e-14
+    },
+    {
+      "question": "public_policy_support_cotas",
+      "max_residual_pp": 2.1316282072803006e-14
+    },
+    {
+      "question": "public_policy_support_privatizar_correios",
+      "max_residual_pp": 4.263256414560601e-14
+    },
+    {
+      "question": "public_policy_support_desvincular_previdencia",
+      "max_residual_pp": 7.815970093361102e-14
+    },
+    {
+      "question": "public_policy_support_pisos_saude_educacao",
+      "max_residual_pp": 5.684341886080802e-14
+    },
+    {
+      "question": "public_policy_support_alinhar_eua",
+      "max_residual_pp": 9.947598300641403e-14
+    },
+    {
+      "question": "desgaste_master",
+      "max_residual_pp": 1.3500311979441904e-13
+    },
+    {
+      "question": "desgaste_stf",
+      "max_residual_pp": 9.237055564881302e-14
+    },
+    {
+      "question": "vote_stf",
+      "max_residual_pp": 1.7763568394002505e-14
+    },
+    {
+      "question": "ideology",
+      "max_residual_pp": 8.526512829121202e-14
+    },
+    {
+      "question": "identification_h",
+      "max_residual_pp": 5.684341886080802e-14
+    },
+    {
+      "question": "neg_identification_antipetista_h",
+      "max_residual_pp": 3.552713678800501e-14
+    },
+    {
+      "question": "neg_identification_antibolsonarista_h",
+      "max_residual_pp": 6.394884621840902e-14
+    },
+    {
+      "question": "anti_cruzado",
+      "max_residual_pp": 7.815970093361102e-14
+    },
+    {
+      "question": "party_affiliation",
+      "max_residual_pp": 3.019806626980426e-14
+    },
+    {
+      "question": "registered_voter_last_election",
+      "max_residual_pp": 4.263256414560601e-14
+    }
+  ],
+  "conditional_questions_not_recomposed": [
+    {
+      "question": "party_affiliated",
+      "base": 556
+    }
+  ],
+  "wave2_same_raw_vote_income_counts": true,
+  "transfer_1t_2t": {
+    "wave_id": "03_pesquisa_2026_09_21",
+    "question_key": "lula_flavio",
+    "question_label": "Lula x Flávio Bolsonaro",
+    "question_statement": "Em um eventual 2º turno nas próximas eleições para Presidente, como você votaria se estes fossem os candidatos? (cenário 1)",
+    "question_section": "2º turno estimulada",
+    "breakdown_key": "stimulated_1r_vote_1_h",
+    "breakdown_label": "Eleitor no 1º turno",
+    "groups": [
+      "Lula (PT)",
+      "Flávio Bolsonaro (PL)",
+      "Renan Santos (Missão)",
+      "Escritor Augusto Cury (Avante)",
+      "Outros candidatos",
+      "Indecisos, brancos e nulos"
+    ],
+    "answers": [
+      "Flávio Bolsonaro (PL)",
+      "Lula (PT)",
+      "Branco/nulo ou não votaria",
+      "Indecisos"
+    ],
+    "cells": [
+      {
+        "group": "Lula (PT)",
+        "answer": "Flávio Bolsonaro (PL)",
+        "share": 0.000257965009126013,
+        "low": 0,
+        "high": 0.000688129007395981,
+        "n": 3
+      },
+      {
+        "group": "Lula (PT)",
+        "answer": "Lula (PT)",
+        "share": 0.989164029691112,
+        "low": 0.968875301342908,
+        "high": 1,
+        "n": 1498
+      },
+      {
+        "group": "Lula (PT)",
+        "answer": "Branco/nulo ou não votaria",
+        "share": 6.27592129210494e-05,
+        "low": 0,
+        "high": 0.000331617464108988,
+        "n": 1
+      },
+      {
+        "group": "Lula (PT)",
+        "answer": "Indecisos",
+        "share": 0.0105152460868411,
+        "low": 0,
+        "high": 0.0307296399793078,
+        "n": 1
+      },
+      {
+        "group": "Flávio Bolsonaro (PL)",
+        "answer": "Flávio Bolsonaro (PL)",
+        "share": 0.999445701393145,
+        "low": 0.998582110490877,
+        "high": 1,
+        "n": 2392
+      },
+      {
+        "group": "Flávio Bolsonaro (PL)",
+        "answer": "Lula (PT)",
+        "share": 0,
+        "low": 0,
+        "high": 0,
+        "n": 0
+      },
+      {
+        "group": "Flávio Bolsonaro (PL)",
+        "answer": "Branco/nulo ou não votaria",
+        "share": 0.000245197627575707,
+        "low": 0,
+        "high": 0.000667720416412342,
+        "n": 2
+      },
+      {
+        "group": "Flávio Bolsonaro (PL)",
+        "answer": "Indecisos",
+        "share": 0.000309100979278884,
+        "low": 0,
+        "high": 0.00106261827269002,
+        "n": 1
+      },
+      {
+        "group": "Renan Santos (Missão)",
+        "answer": "Flávio Bolsonaro (PL)",
+        "share": 0.252909751746421,
+        "low": 0.191125785398193,
+        "high": 0.31469371809465,
+        "n": 156
+      },
+      {
+        "group": "Renan Santos (Missão)",
+        "answer": "Lula (PT)",
+        "share": 0.0576841917477954,
+        "low": 0.00583610607414012,
+        "high": 0.109532277421451,
+        "n": 27
+      },
+      {
+        "group": "Renan Santos (Missão)",
+        "answer": "Branco/nulo ou não votaria",
+        "share": 0.642300833042592,
+        "low": 0.569342907826146,
+        "high": 0.715258758259039,
+        "n": 644
+      },
+      {
+        "group": "Renan Santos (Missão)",
+        "answer": "Indecisos",
+        "share": 0.0471052234631909,
+        "low": 0.0130209983530583,
+        "high": 0.0811894485733235,
+        "n": 30
+      },
+      {
+        "group": "Escritor Augusto Cury (Avante)",
+        "answer": "Flávio Bolsonaro (PL)",
+        "share": 0.419689107373516,
+        "low": 0.268721882763585,
+        "high": 0.570656331983447,
+        "n": 47
+      },
+      {
+        "group": "Escritor Augusto Cury (Avante)",
+        "answer": "Lula (PT)",
+        "share": 0.221061256108073,
+        "low": 0.0802765107778926,
+        "high": 0.361846001438253,
+        "n": 15
+      },
+      {
+        "group": "Escritor Augusto Cury (Avante)",
+        "answer": "Branco/nulo ou não votaria",
+        "share": 0.359249636518411,
+        "low": 0.210409557519512,
+        "high": 0.50808971551731,
+        "n": 43
+      },
+      {
+        "group": "Escritor Augusto Cury (Avante)",
+        "answer": "Indecisos",
+        "share": 0,
+        "low": 0,
+        "high": 0,
+        "n": 0
+      },
+      {
+        "group": "Outros candidatos",
+        "answer": "Flávio Bolsonaro (PL)",
+        "share": 0.50839499863317,
+        "low": 0.312494027835089,
+        "high": 0.704295969431251,
+        "n": 50
+      },
+      {
+        "group": "Outros candidatos",
+        "answer": "Lula (PT)",
+        "share": 0.367049034721571,
+        "low": 0.16312617649286,
+        "high": 0.570971892950283,
+        "n": 24
+      },
+      {
+        "group": "Outros candidatos",
+        "answer": "Branco/nulo ou não votaria",
+        "share": 0.0929307964398713,
+        "low": 0,
+        "high": 0.199125003833438,
+        "n": 16
+      },
+      {
+        "group": "Outros candidatos",
+        "answer": "Indecisos",
+        "share": 0.0316251702053872,
+        "low": 0,
+        "high": 0.0703426388786662,
+        "n": 5
+      },
+      {
+        "group": "Indecisos, brancos e nulos",
+        "answer": "Flávio Bolsonaro (PL)",
+        "share": 0.339436174695003,
+        "low": 0.0734039693453504,
+        "high": 0.605468380044655,
+        "n": 9
+      },
+      {
+        "group": "Indecisos, brancos e nulos",
+        "answer": "Lula (PT)",
+        "share": 0.204439813121202,
+        "low": 0,
+        "high": 0.450382832931259,
+        "n": 5
+      },
+      {
+        "group": "Indecisos, brancos e nulos",
+        "answer": "Branco/nulo ou não votaria",
+        "share": 0.369715798305452,
+        "low": 0.0842772208170835,
+        "high": 0.65515437579382,
+        "n": 25
+      },
+      {
+        "group": "Indecisos, brancos e nulos",
+        "answer": "Indecisos",
+        "share": 0.0864082138783434,
+        "low": 0,
+        "high": 0.197826335013332,
+        "n": 6
+      }
+    ],
+    "group_stats": [
+      {
+        "group": "Lula (PT)",
+        "n": 1503,
+        "n_eff": 413.19456092029
+      },
+      {
+        "group": "Flávio Bolsonaro (PL)",
+        "n": 2395,
+        "n_eff": 609.822552193877
+      },
+      {
+        "group": "Renan Santos (Missão)",
+        "n": 857,
+        "n_eff": 189.785637566588
+      },
+      {
+        "group": "Escritor Augusto Cury (Avante)",
+        "n": 105,
+        "n_eff": 40.0780786340632
+      },
+      {
+        "group": "Outros candidatos",
+        "n": 95,
+        "n_eff": 23.4946926614211
+      },
+      {
+        "group": "Indecisos, brancos e nulos",
+        "n": 45,
+        "n_eff": 11.108933339275
+      }
+    ],
+    "base": 5000,
+    "weighted": true
+  },
+  "past_vote_current_vote": {
+    "wave_id": "03_pesquisa_2026_09_21",
+    "question_key": "lula_flavio",
+    "question_label": "Lula x Flávio Bolsonaro",
+    "question_statement": "Em um eventual 2º turno nas próximas eleições para Presidente, como você votaria se estes fossem os candidatos? (cenário 1)",
+    "question_section": "2º turno estimulada",
+    "breakdown_key": "vote_std",
+    "breakdown_label": "Voto no 2º turno de 2022",
+    "groups": [
+      "Lula",
+      "Jair Bolsonaro",
+      "Branco/Nulo ou Não votei"
+    ],
+    "answers": [
+      "Flávio Bolsonaro (PL)",
+      "Lula (PT)",
+      "Branco/nulo ou não votaria",
+      "Indecisos"
+    ],
+    "cells": [
+      {
+        "group": "Lula",
+        "answer": "Flávio Bolsonaro (PL)",
+        "share": 0.068622290405819,
+        "low": 0.0429796946875032,
+        "high": 0.0942648861241348,
+        "n": 60
+      },
+      {
+        "group": "Lula",
+        "answer": "Lula (PT)",
+        "share": 0.864030177869168,
+        "low": 0.830393663173045,
+        "high": 0.897666692565292,
+        "n": 1434
+      },
+      {
+        "group": "Lula",
+        "answer": "Branco/nulo ou não votaria",
+        "share": 0.0524411725728199,
+        "low": 0.0341792866136238,
+        "high": 0.070703058532016,
+        "n": 54
+      },
+      {
+        "group": "Lula",
+        "answer": "Indecisos",
+        "share": 0.0149063591521926,
+        "low": 0,
+        "high": 0.0328039369784917,
+        "n": 11
+      },
+      {
+        "group": "Jair Bolsonaro",
+        "answer": "Flávio Bolsonaro (PL)",
+        "share": 0.899099979364656,
+        "low": 0.880637829747583,
+        "high": 0.917562128981729,
+        "n": 2372
+      },
+      {
+        "group": "Jair Bolsonaro",
+        "answer": "Lula (PT)",
+        "share": 0.0101122911137415,
+        "low": 0.00489933256397913,
+        "high": 0.015325249663504,
+        "n": 31
+      },
+      {
+        "group": "Jair Bolsonaro",
+        "answer": "Branco/nulo ou não votaria",
+        "share": 0.0837670161228873,
+        "low": 0.0672911697764627,
+        "high": 0.100242862469312,
+        "n": 224
+      },
+      {
+        "group": "Jair Bolsonaro",
+        "answer": "Indecisos",
+        "share": 0.00702071339871496,
+        "low": 0,
+        "high": 0.0146920619153208,
+        "n": 15
+      },
+      {
+        "group": "Branco/Nulo ou Não votei",
+        "answer": "Flávio Bolsonaro (PL)",
+        "share": 0.36757268078839,
+        "low": 0.289515564038856,
+        "high": 0.445629797537923,
+        "n": 225
+      },
+      {
+        "group": "Branco/Nulo ou Não votei",
+        "answer": "Lula (PT)",
+        "share": 0.162867716555888,
+        "low": 0.101029554114548,
+        "high": 0.224705878997228,
+        "n": 104
+      },
+      {
+        "group": "Branco/Nulo ou Não votei",
+        "answer": "Branco/nulo ou não votaria",
+        "share": 0.451758567796486,
+        "low": 0.360238733157165,
+        "high": 0.543278402435808,
+        "n": 453
+      },
+      {
+        "group": "Branco/Nulo ou Não votei",
+        "answer": "Indecisos",
+        "share": 0.017801034859236,
+        "low": 0.0019693403034318,
+        "high": 0.0336327294150402,
+        "n": 17
+      }
+    ],
+    "group_stats": [
+      {
+        "group": "Lula",
+        "n": 1559,
+        "n_eff": 462.727479944504
+      },
+      {
+        "group": "Jair Bolsonaro",
+        "n": 2642,
+        "n_eff": 746.392427915189
+      },
+      {
+        "group": "Branco/Nulo ou Não votei",
+        "n": 799,
+        "n_eff": 200.473834504103
+      }
+    ],
+    "base": 5000,
+    "weighted": true
+  },
+  "caveats": [
+    "No respondent identifiers, individual weights or full demographic joint table are exposed by these tables.",
+    "Recovered weighted margins and cell mean weights are aggregate inferences, not downloaded individual weights.",
+    "Reweighting changes income alone, not joint TSE + PNAD calibration; no new confidence interval is inferred.",
+    "Wave 2 first-round scenario includes Pablo Marçal; it cannot enter the project's no-Marçal first-round series.",
+    "Explorer wave 3 fieldEnd is 2026-09-20; PDF pp. 16/22/30 says 18/09. Preserve both as a documentary discrepancy.",
+    "Explorer revised wave 2 Lula first round is 40.440%; PDF p. 30 labels it 41%. Needs version/rounding reconciliation.",
+    "vote_std pools blank/null and non-voters. This does not establish how individual 2022 eligibility was calibrated.",
+    "Two multiple-response questions (desgaste_master and desgaste_stf) may legitimately sum above 100%.",
+    "Identification breakdown omits 76 respondents in wave 3; it is not a closed partition of all 5000."
+  ]
+}
