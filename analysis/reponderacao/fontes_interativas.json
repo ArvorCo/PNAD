@@ -1,0 +1,41 @@
+{
+  "registrado_em": "2026-09-21",
+  "fontes": [
+    {
+      "id": "palver_explorer",
+      "url": "https://www.palver.com.br/survey/explore",
+      "institutos": [
+        "Palver"
+      ],
+      "turnos": [
+        "1t",
+        "2t"
+      ],
+      "acervo": "analysis/reponderacao/palver_explorer_20260921",
+      "extrator": "scripts/palver-explorer-extract.py",
+      "cuidados": [
+        "Distinguir versão e onda.",
+        "n bruto não é peso.",
+        "Não inferir microdados individuais dos cruzamentos."
+      ]
+    },
+    {
+      "id": "g1_quaest_presidente_1t",
+      "url": "https://g1.globo.com/politica/eleicoes/2026/pesquisa-eleitoral/presidente-1-turno-quaest/",
+      "institutos": [
+        "Quaest"
+      ],
+      "turnos": [
+        "1t"
+      ],
+      "origem": "URL indicada pelo usuário",
+      "status_consulta": "Navegador bloqueou acesso por política de segurança em 21/09/2026; conteúdo não consultado.",
+      "cuidados": [
+        "Arquivar a onda e o cenário exibidos.",
+        "Conferir perfil de renda no registro atual.",
+        "Não transportar cruzamentos do primeiro para o segundo turno."
+      ]
+    }
+  ],
+  "descoberta_futura": "Localizar links próprios dos demais painéis G1, inclusive Datafolha e segundo turno, sem presumir suas URLs ou disponibilidade."
+}
