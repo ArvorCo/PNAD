@@ -131,21 +131,23 @@ def test_aggregator_series_covers_reference_date(output):
     assert latest is not None and 30 < latest < 60
 
 
-def test_kernel_average_weights_recent_polls_more(engine):
+def test_moving_average_excludes_polls_outside_seven_days(engine):
     polls = [
         {
             "instituto": "A",
             "campo": {"fim": "2026-05-01"},
+            "divulgacao": "2026-05-02",
             "turnos": {"2t": {"publicado": {"lula": 40.0}, "cenarios": {}}},
         },
         {
             "instituto": "B",
             "campo": {"fim": "2026-06-01"},
+            "divulgacao": "2026-06-01",
             "turnos": {"2t": {"publicado": {"lula": 50.0}, "cenarios": {}}},
         },
     ]
     value = engine.kernel_average(polls, "2t", "publicado", "lula", date(2026, 6, 1))
-    assert 47 < value < 50
+    assert value == 50
 
 
 def test_poll_files_have_required_fields():

@@ -1,6 +1,14 @@
 """Séries de indecisos e branco/nulo/não vai votar, com cobertura pareada."""
 
+import importlib.util
 from datetime import date
+from pathlib import Path
+
+spec = importlib.util.spec_from_file_location(
+    "rolling_window", Path(__file__).with_name("reponderacao-janela.py")
+)
+WINDOW = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(WINDOW)
 
 LABELS = {"indecisos": "Indecisos", "branco_nulo": "Branco/nulo/não vai votar"}
 
@@ -34,6 +42,7 @@ def extract(poll, turn, scenario):
         "id": poll["id"],
         "instituto": poll["instituto"],
         "campo": poll["campo"],
+        "divulgacao": poll.get("divulgacao"),
         "componentes": {"indecisos": ["indecisos"], "branco_nulo": blank},
         **{
             kind: {
@@ -45,21 +54,11 @@ def extract(poll, turn, scenario):
     }, None
 
 
-def average(rows, kind, key, day, half_life, causal=False):
-    pairs = []
-    for row in rows:
-        end = date.fromisoformat(row["campo"]["fim"])
-        if causal and end > day:
-            continue
-        pairs.append((0.5 ** (abs((day - end).days) / half_life), row[kind][key]))
-    return (
-        round(sum(w * v for w, v in pairs) / sum(w for w, _ in pairs), 2)
-        if pairs
-        else None
-    )
+def average(rows, kind, key, day, window_days=7):
+    return WINDOW.mean(rows, kind, key, day, window_days)
 
 
-def aggregate(polls, turn, dates, today, scenario, half_life):
+def aggregate(polls, turn, dates, today, scenario, window_days):
     rows, excluded = [], []
     for poll in polls:
         if turn not in poll.get("turnos", {}):
@@ -71,12 +70,12 @@ def aggregate(polls, turn, dates, today, scenario, half_life):
             )
         else:
             rows.append(row)
-    start = min((r["campo"]["fim"] for r in rows), default=None)
+    start = min((r["divulgacao"] for r in rows if r.get("divulgacao")), default=None)
     series = {
         kind: {
             key: [
                 (
-                    average(rows, kind, key, date.fromisoformat(day), half_life)
+                    average(rows, kind, key, date.fromisoformat(day), window_days)
                     if start and day >= start
                     else None
                 )
@@ -87,12 +86,13 @@ def aggregate(polls, turn, dates, today, scenario, half_life):
         for kind in ("publicado", "ajustado")
     }
     return {
+        "cobertura_movel": WINDOW.coverage(rows, dates, window_days),
         "rotulos": LABELS,
         "ondas": rows,
         "excluidas": excluded,
         "serie": series,
-        "regra": "Mesma média móvel dos candidatos: peso 0,5^(distância em dias/14), "
-        "alisador simétrico no histórico e somente campos encerrados no valor corrente. "
+        "regra": "Mesma média móvel retrospectiva de 7 dias dos candidatos: divulgações de D-6 a D, "
+        "última onda elegível de cada instituto e peso igual entre casas. "
         "As duas linhas usam as mesmas ondas com ambas as categorias publicadas e cruzadas "
         "por renda; os pesos são idênticos antes e depois do ajuste. Não há preenchimento "
         "por zero nem por complemento de 100%. Branco/nulo inclui não vai votar quando "
@@ -102,10 +102,7 @@ def aggregate(polls, turn, dates, today, scenario, half_life):
         "de intenção, não estimativa de abstenção. A cobertura difere da dos candidatos; "
         "as linhas não formam uma partição que some 100%.",
         "ultimo": {
-            kind: {
-                key: average(rows, kind, key, today, half_life, causal=True)
-                for key in LABELS
-            }
+            kind: {key: average(rows, kind, key, today, window_days) for key in LABELS}
             for kind in series
         },
     }

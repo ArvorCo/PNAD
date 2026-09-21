@@ -111,7 +111,10 @@ def placar(turno: str) -> str:
         return ""
     simples, kernel = ultimo["media_simples"], ultimo["kernel"]
     blocos = []
-    for nome, dados in (("Média simples", simples), ("Média Arvor", kernel)):
+    for nome, dados in (
+        ("Média simples · sem janela", simples),
+        ("Média móvel · 7 dias", kernel),
+    ):
         for tipo, marca in (("publicado", "fato"), ("ajustado", "inferencia")):
             v = dados[tipo]
             blocos.append(
@@ -123,11 +126,12 @@ def placar(turno: str) -> str:
                 f"{'s' if abs(round(gap(v), 1)) != 1 else ''}</small></div>"
             )
     lista = ", ".join(ultimo["institutos"])
+    janela = ", ".join(ultimo["cobertura_movel"]["institutos"]) or "nenhum"
     return (
         f'<div class="ledger reveal">{"".join(blocos)}</div>'
         f'<p class="note">Média simples: última onda de cada instituto, peso igual. '
         f"Média Arvor: {esc(AGG['metodo']['kernel'])}. "
-        f"Institutos na conta: {esc(lista)}. Cenário: {esc(CENARIOS[CEN])}.</p>"
+        f"Institutos na média simples: {esc(lista)}. Na janela de 7 dias: {esc(janela)}. Cenário: {esc(CENARIOS[CEN])}.</p>"
     )
 
 
@@ -264,13 +268,14 @@ def ch_segundo_turno() -> str:
             "Série do 2º turno",
             "O que os institutos publicaram e o que a mesma amostra devolve sob a renda do IBGE.",
             serie_svg("s2t", "2t"),
-            "Cada onda entra pela data final do campo. A linha fina e tracejada é a média "
+            "Cada onda entra pela data de divulgação. A média usa apenas os sete dias até a data observada. A linha fina e tracejada é a média "
             "das pesquisas como foram publicadas. A linha cheia é a mesma média depois de "
             "trocar uma margem, a de renda, pela distribuição da PNAD Contínua anual de 2025. "
             "A troca é nossa, e por isso a linha cheia é inferência declarada. "
             "Roxo: indecisos; verde: branco/nulo/não vai votar. As duas linhas usam "
             "as ondas que separam essas respostas, com cobertura informada abaixo.",
         )
+        + importlib.import_module("reponderacao-janela-view").summary(D, "2t", tabela)
         + placar("2t")
         + importlib.import_module("reponderacao-nao-escolha-view").summary(
             D, "2t", tabela, br
@@ -353,9 +358,10 @@ def ch_primeiro_turno() -> str:
             "Os grupos usam apenas ondas que permitem separar as candidaturas por renda, "
             "com cobertura e datas informadas abaixo. Cinza: centro-direita; preto: esquerda + nanicos. "
             "Roxo: indecisos; verde: branco/nulo/não vai votar. "
-            "Tracejado é publicado; contínuo é reponderado. "
+            "Média móvel de 7 dias pela divulgação, sempre para trás. Tracejado é publicado; contínuo é reponderado. "
             "No celular, deslize o gráfico para ver as datas recentes e os grupos.",
         )
+        + importlib.import_module("reponderacao-janela-view").summary(D, "1t", tabela)
         + placar("1t")
         + groups_view.group_summary(D, tabela, br)
         + importlib.import_module("reponderacao-nao-escolha-view").summary(
@@ -527,13 +533,11 @@ def ch_metodo() -> str:
         "cada ficha como teste de robustez.</p></article></div>"
         '<div class="split">'
         "<article><h3>As médias</h3>"
-        f"<p>{esc(frase(AGG['metodo']['kernel']))} A meia-vida é de "
-        f"{br(AGG['metodo']['meia_vida_dias'], 0)} dias sobre a data final do campo, "
-        "de modo que uma onda de um mês atrás pesa cerca de um quarto de uma onda "
-        "desta semana.</p>"
+        f"<p>{esc(frase(AGG['metodo']['kernel']))}. {esc(frase(AGG['metodo']['linha']))}</p>"
+        f"<p>{esc(AGG['metodo']['historico'])}</p>"
         f"<p>{esc(frase(AGG['metodo']['media_simples']))} As duas médias aparecem lado a lado "
         "porque respondem a perguntas diferentes: a simples mostra a fotografia mais "
-        "recente de cada casa, a ponderada no tempo mostra a tendência.</p></article>"
+        "recente de cada casa, a móvel mostra apenas a semana observada.</p></article>"
         "<article><h3>Os limites</h3>"
         f'<ol class="method-list">{limites}</ol></article></div>'
         '<div class="callout reveal"><h3>Como acrescentar uma pesquisa</h3>'
@@ -813,6 +817,9 @@ def build(*, update_home: bool = True) -> None:
     PAGE.write_text(html.replace("<section ", "\n<section ") + "\n", encoding="utf-8")
     write_csv()
     groups_view.write_group_csv(ASSETS / "reponderacao_grupos_1t.csv", D)
+    importlib.import_module("reponderacao-janela-view").write_csv(
+        ASSETS / "reponderacao_medias_7d.csv", D
+    )
     importlib.import_module("reponderacao-nao-escolha-view").write_csv(
         ASSETS / "reponderacao_nao_escolha.csv", D
     )

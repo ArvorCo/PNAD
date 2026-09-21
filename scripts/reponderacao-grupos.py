@@ -1,6 +1,14 @@
 """Grupos editoriais do 1º turno, sem repartir categorias não identificadas."""
 
+import importlib.util
 from datetime import date
+from pathlib import Path
+
+spec = importlib.util.spec_from_file_location(
+    "rolling_window", Path(__file__).with_name("reponderacao-janela.py")
+)
+WINDOW = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(WINDOW)
 
 GROUPS = {
     "outros_centro_direita": "Outros (centro-direita)",
@@ -65,6 +73,7 @@ def split_poll(poll, scenario):
         "id": poll["id"],
         "instituto": poll["instituto"],
         "campo": poll["campo"],
+        "divulgacao": poll.get("divulgacao"),
         "componentes": {
             "outros_centro_direita": sorted(center),
             "outros_esquerda_nanicos": sorted(rest),
@@ -85,20 +94,11 @@ def split_poll(poll, scenario):
     }, None
 
 
-def weighted(rows, kind, group, day, half_life, causal=False):
-    pairs = []
-    for row in rows:
-        end = date.fromisoformat(row["campo"]["fim"])
-        if causal and end > day:
-            continue
-        weight = 0.5 ** (abs((day - end).days) / half_life)
-        pairs.append((weight, row[kind][group]))
-    if not pairs:
-        return None
-    return round(sum(w * v for w, v in pairs) / sum(w for w, _ in pairs), 2)
+def weighted(rows, kind, key, day, window_days=7):
+    return WINDOW.mean(rows, kind, key, day, window_days)
 
 
-def aggregate_groups(polls, dates, today, scenario, half_life):
+def aggregate_groups(polls, dates, today, scenario, window_days):
     eligible, excluded = [], []
     for poll in polls:
         if "1t" not in poll["turnos"]:
@@ -110,14 +110,17 @@ def aggregate_groups(polls, dates, today, scenario, half_life):
             excluded.append(
                 {"id": poll["id"], "instituto": poll["instituto"], "motivo": reason}
             )
-    # Mantém a convenção do gráfico existente, com alisador simétrico,
-    # mas não extrapola grupos para antes da primeira onda identificável.
-    start = min((row["campo"]["fim"] for row in eligible), default=None)
+    # A janela é retrospectiva e ancorada na divulgação, como a dos candidatos.
+    start = min(
+        (row["divulgacao"] for row in eligible if row.get("divulgacao")), default=None
+    )
     series = {
         kind: {
             group: [
                 (
-                    weighted(eligible, kind, group, date.fromisoformat(day), half_life)
+                    weighted(
+                        eligible, kind, group, date.fromisoformat(day), window_days
+                    )
                     if start and day >= start
                     else None
                 )
@@ -133,10 +136,7 @@ def aggregate_groups(polls, dates, today, scenario, half_life):
             latest[row["instituto"]] = row
     summary = {
         "kernel": {
-            kind: {
-                g: weighted(eligible, kind, g, today, half_life, causal=True)
-                for g in GROUPS
-            }
+            kind: {g: weighted(eligible, kind, g, today, window_days) for g in GROUPS}
             for kind in series
         },
         "media_simples": {
@@ -152,6 +152,7 @@ def aggregate_groups(polls, dates, today, scenario, half_life):
         },
     }
     return {
+        "cobertura_movel": WINDOW.coverage(eligible, dates, window_days),
         "rotulos": GROUPS,
         "regra": "Centro-direita = Zema, Cury, Caiado, Renan Santos e Clariana Barão; no histórico, também Aécio Neves, Aldo Rebelo e Leonardo Avalanche. Esquerda + nanicos = Samara, Rui Costa Pimenta, Edmilson Costa, Hertz Dias e Wilson Grassi; no histórico, também Joaquim Barbosa, Ciro Gomes, Cabo Daciolo e Heró Bezerra. Grassi integra o residual de nanicos, sem ser classificado como esquerda; o mesmo rótulo residual não atribui ideologia uniforme aos demais. Classificação editorial. Brancos, nulos e indecisos ficam fora. Primeiro somamos os candidatos oferecidos em cada cenário; depois calculamos a média dos grupos.",
         "cobertura": "As duas linhas usam as mesmas ondas com divisão identificável por renda. Recuperamos nos relatórios as candidaturas antes somadas internamente em outros. Uma candidatura não oferecida não é exigida para incluir a onda; se nenhum nome de um grupo foi oferecido, sua soma naquele cenário é zero, não uma estimativa eleitoral para nomes ausentes. Isso difere de candidato oferecido sem cruzamento, que nunca vira zero. Categorias do instituto que misturam os dois grupos continuam excluídas. A composição das cédulas muda ao longo do tempo. Lula e Flávio usam um conjunto mais amplo; as quatro médias não formam uma partição somável.",

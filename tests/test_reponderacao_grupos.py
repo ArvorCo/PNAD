@@ -3,7 +3,6 @@
 import copy
 import importlib.util
 import json
-from datetime import date
 from pathlib import Path
 
 import pytest
@@ -55,16 +54,11 @@ def test_groups_sum_candidates_before_averaging():
 def test_both_lines_use_same_time_weights_and_match_endpoint():
     agg = OUTPUT["agregador"]
     group = agg["grupos_1t"]
-    today = date.fromisoformat(OUTPUT["referencia"])
-    weights = [
-        0.5 ** ((today - date.fromisoformat(p["campo"]["fim"])).days / 14)
-        for p in group["ondas"]
-    ]
+    selected_ids = set(group["cobertura_movel"][-1]["ondas"])
+    selected = [p for p in group["ondas"] if p["id"] in selected_ids]
     for kind in ("publicado", "ajustado"):
         for key in GROUPS.GROUPS:
-            expected = sum(
-                w * p[kind][key] for w, p in zip(weights, group["ondas"], strict=True)
-            ) / sum(weights)
+            expected = sum(p[kind][key] for p in selected) / len(selected)
             assert group["ultimo"]["kernel"][kind][key] == pytest.approx(
                 expected, abs=0.005
             )
@@ -117,7 +111,11 @@ def test_historical_series_reaches_may_without_requiring_future_candidates():
                 group["serie"][kind][key],
                 strict=True,
             ):
-                assert (value is not None) == (day >= "2026-05-04")
+                assert (value is not None) == bool(
+                    next(c for c in group["cobertura_movel"] if c["data"] == day)[
+                        "ondas"
+                    ]
+                )
 
 
 @pytest.mark.parametrize(
@@ -201,7 +199,7 @@ def test_page_has_gray_and_black_lines_and_explicit_coverage():
         ("outros_esquerda_nanicos", "#000000"),
     ]:
         paths = chart.select(f'g[data-serie="{key}"] path')
-        assert len(paths) == 2
+        assert len(paths) >= 2
         assert all(p["stroke"] == color for p in paths)
     text = html.find(id="grupos-primeiro-turno").get_text(" ", strip=True)
     waves = OUTPUT["agregador"]["grupos_1t"]["ondas"]

@@ -114,7 +114,7 @@ def serie_svg(ident: str, turno: str, compacta: bool = False) -> str:
         altura,
         aria=(
             f"Série do {TURNOS[turno]}: intenção de voto publicada e reponderada "
-            "pela distribuição de renda da PNAD."
+            "pela distribuição de renda da PNAD, média móvel retrospectiva de 7 dias pela divulgação."
         ),
     )
     cv.rect(0, 0, largura, altura, PANEL)
@@ -160,7 +160,7 @@ def serie_svg(ident: str, turno: str, compacta: bool = False) -> str:
     alcance = max(raio * 2.0, 9.0)
     for p in polls:
         t = p["turnos"][turno]
-        x = px(dia(p["campo"]["fim"]))
+        x = px(dia(p["divulgacao"]))
         shape = forma(p["instituto"])
         alvo_onda(cv, p, turno)
         cv.line(x, topo, x, base, stroke=INK, width=1, **{"class": "hit-cross"})

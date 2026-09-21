@@ -12,8 +12,8 @@ por faixa de renda e placar. O motor aplica sempre a mesma conta:
    pessoas de 16 anos ou mais em cada faixa.
 3. Troca só essa margem: ``ajustado = publicado + (contrafactual - recomposto)``.
 
-Depois calcula a média Arvor, uma média ponderada no tempo com meia-vida de
-14 dias sobre a data final do campo, publicada e reponderada lado a lado.
+Depois calcula a média Arvor em janela retrospectiva de sete dias pela data
+de divulgação, com a última onda de cada instituto e peso igual entre casas.
 
 Uso:
   python3 scripts/reponderacao-pnad.py            # calcula e grava o JSON
@@ -51,7 +51,12 @@ SCENARIOS = {
     "pessoas16_habitual": "PNAD pessoas 16+ (rendimento habitual, VD5007)",
     "domicilios_efetivo": "PNAD domicílios (rendimento efetivo, VD5001)",
 }
-HALF_LIFE_DAYS = 14.0
+spec = importlib.util.spec_from_file_location(
+    "rolling_window", ROOT / "scripts/reponderacao-janela.py"
+)
+WINDOW = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(WINDOW)
+WINDOW_DAYS = WINDOW.WINDOW_DAYS
 NON_VOTE = {"branco_nulo", "indecisos", "nao_sabe", "nenhum", "outros"}
 CANDIDATES_2T = ("lula", "flavio")
 MIN_WAGE_BY_YEAR = {2024: 1412.0, 2025: 1518.0, 2026: 1621.0}
@@ -280,35 +285,21 @@ def process_poll(
 # --------------------------------------------------------------------------- #
 # Média Arvor
 # --------------------------------------------------------------------------- #
-def kernel_average(
-    polls: list[dict[str, Any]],
-    turno: str,
-    key: str,
-    option: str,
-    day: date,
-    causal: bool = True,
-) -> float | None:
-    """Média com peso 0,5^(|dias|/14). Causal usa só ondas já encerradas em ``day``;
-    a linha de tendência desenhada usa os dois lados, como um alisador simétrico."""
-    num = den = 0.0
-    for poll in polls:
-        result = poll["turnos"].get(turno)
-        if not result:
-            continue
-        end = date.fromisoformat(poll["campo"]["fim"])
-        if end > day and causal:
-            continue
-        value = (
-            result["publicado"][option]
+def kernel_average(polls, turno, key, option, day):
+    """Nome legado; agora calcula média móvel retrospectiva de sete dias."""
+    rows = [p for p in polls if turno in p["turnos"]]
+    selected = WINDOW.select(rows, day)
+    if not selected:
+        return None
+    values = [
+        (
+            p["turnos"][turno]["publicado"][option]
             if key == "publicado"
-            else result["cenarios"][MAIN_SERIES]["ajustado"][option]
+            else p["turnos"][turno]["cenarios"][MAIN_SERIES]["ajustado"][option]
         )
-        if value is None:
-            continue
-        weight = 0.5 ** (abs((day - end).days) / HALF_LIFE_DAYS)
-        num += weight * value
-        den += weight
-    return None if den == 0 else num / den
+        for p in selected
+    ]
+    return sum(values) / len(values)
 
 
 def aggregate(polls: list[dict[str, Any]], today: date) -> dict[str, Any]:
@@ -321,10 +312,7 @@ def aggregate(polls: list[dict[str, Any]], today: date) -> dict[str, Any]:
         for key in ("publicado", "ajustado"):
             series[turno][key] = {}
             for option in CANDIDATES_2T:
-                values = [
-                    kernel_average(polls, turno, key, option, d, causal=False)
-                    for d in days
-                ]
+                values = [kernel_average(polls, turno, key, option, d) for d in days]
                 series[turno][key][option] = [
                     None if v is None else round(v, 2) for v in values
                 ]
@@ -359,10 +347,7 @@ def aggregate(polls: list[dict[str, Any]], today: date) -> dict[str, Any]:
             "media_simples": summary,
             "kernel": {
                 key: {
-                    option: round(
-                        kernel_average(polls, turno, key, option, today) or 0.0, 2
-                    )
-                    for option in CANDIDATES_2T
+                    option: series[turno][key][option][-1] for option in CANDIDATES_2T
                 }
                 for key in ("publicado", "ajustado")
             },
@@ -373,7 +358,7 @@ def aggregate(polls: list[dict[str, Any]], today: date) -> dict[str, Any]:
     groups_module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(groups_module)
     groups = groups_module.aggregate_groups(
-        polls, series["datas"], today, MAIN_SERIES, HALF_LIFE_DAYS
+        polls, series["datas"], today, MAIN_SERIES, WINDOW_DAYS
     )
     for kind in ("publicado", "ajustado"):
         series["1t"][kind].update(groups["serie"][kind])
@@ -385,17 +370,28 @@ def aggregate(polls: list[dict[str, Any]], today: date) -> dict[str, Any]:
     non_choice = {}
     for turn in ("1t", "2t"):
         non_choice[turn] = non_choice_module.aggregate(
-            polls, turn, series["datas"], today, MAIN_SERIES, HALF_LIFE_DAYS
+            polls, turn, series["datas"], today, MAIN_SERIES, WINDOW_DAYS
         )
         for kind in ("publicado", "ajustado"):
             series[turn][kind].update(non_choice[turn]["serie"][kind])
+    coverage = {
+        turn: WINDOW.coverage(
+            [p for p in polls if turn in p["turnos"]], series["datas"]
+        )
+        for turn in ("1t", "2t")
+    }
+    for turn in latest:
+        latest[turn]["cobertura_movel"] = coverage[turn][-1]
     return {
+        "cobertura_movel": coverage,
         "nao_escolha": non_choice,
         "grupos_1t": groups,
         "metodo": {
-            "kernel": "média ponderada no tempo, peso 0,5^(dias desde o fim do campo / 14)",
-            "linha": "a série desenhada usa o mesmo peso nos dois lados de cada dia (alisador simétrico); o valor corrente usa só ondas já encerradas",
-            "meia_vida_dias": HALF_LIFE_DAYS,
+            "kernel": "média móvel retrospectiva de 7 dias, de D-6 a D pela divulgação, com a última onda elegível de cada instituto e peso igual entre casas",
+            "linha": "cada data usa somente pesquisas já divulgadas dentro da janela; sem pesquisas elegíveis, a linha fica interrompida, sem zero nem carregamento da média antiga",
+            "janela_dias": WINDOW_DAYS,
+            "data_elegibilidade": "divulgacao",
+            "historico": "Recalculado com os documentos hoje disponíveis; não é arquivo das versões dos dados que estavam disponíveis em cada dia. Datas de divulgação ausentes são excluídas.",
             "media_simples": "última onda de cada instituto, peso igual",
             "cenario": SCENARIOS[MAIN_SERIES],
         },

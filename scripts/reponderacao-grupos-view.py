@@ -128,7 +128,7 @@ def group_summary(data, table, number):
         + f'<p class="note">{escape(groups["regra"])}</p>'
         + f'<p class="note"><b>Cobertura: {len(eligible)} ondas de {len(institutes)} institutos; encerramentos de campo de {first_date} a {last_date}.</b> '
         + escape(groups["cobertura"])
-        + " Mesma meia-vida de 14 dias, mesma régua PNAD e mesmos pesos entre publicado e reponderado. "
+        + " Mesma janela retrospectiva de 7 dias pela divulgação, última onda elegível por instituto, mesma régua PNAD e mesmos pesos entre publicado e reponderado. "
         "A média simples usa a última onda elegível de cada instituto, que pode ser anterior à sua última publicação.</p>"
         "<details><summary>Conferir ondas utilizadas e exclusões</summary>"
         + table(["Instituto", "Última onda elegível"], coverage)

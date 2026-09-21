@@ -22,12 +22,8 @@ OUTPUT = json.loads((ROOT / "docs/assets/reponderacao_pnad.json").read_text())
 @pytest.mark.parametrize("turn", ["1t", "2t"])
 def test_average_reproduces_time_weights_and_same_cohort(turn):
     group = OUTPUT["agregador"]["nao_escolha"][turn]
-    today = date.fromisoformat(OUTPUT["referencia"])
     polls = {p["id"]: p for p in OUTPUT["pesquisas"]}
-    weights = [
-        0.5 ** ((today - date.fromisoformat(r["campo"]["fim"])).days / 14)
-        for r in group["ondas"]
-    ]
+    selected_ids = set(group["cobertura_movel"][-1]["ondas"])
     for kind in ["publicado", "ajustado"]:
         for key in MODULE.LABELS:
             values = []
@@ -41,8 +37,9 @@ def test_average_reproduces_time_weights_and_same_cohort(turn):
                 assert row[kind][key] == pytest.approx(
                     sum(source[k] for k in row["componentes"][key])
                 )
-                values.append(row[kind][key])
-            expected = sum(w * v for w, v in zip(weights, values)) / sum(weights)
+                if row["id"] in selected_ids:
+                    values.append(row[kind][key])
+            expected = sum(values) / len(values)
             assert group["ultimo"][kind][key] == pytest.approx(expected, abs=0.005)
             assert (
                 OUTPUT["agregador"]["serie"][turn][kind][key][-1]
@@ -74,15 +71,16 @@ def test_missing_data_are_not_zero_and_separate_nonvoting_is_summed():
 
 def test_empty_series_stays_missing_and_does_not_extrapolate_backwards():
     q = next(p for p in OUTPUT["pesquisas"] if p["id"] == "quaest_2026-09-20")
-    empty = MODULE.aggregate([q], "1t", ["2026-09-21"], date(2026, 9, 21), SCENARIO, 14)
+    empty = MODULE.aggregate([q], "1t", ["2026-09-21"], date(2026, 9, 21), SCENARIO, 7)
     assert empty["serie"]["ajustado"]["indecisos"] == [None]
     for t in ["1t", "2t"]:
         g = OUTPUT["agregador"]["nao_escolha"][t]
-        start = min(r["campo"]["fim"] for r in g["ondas"])
         for day, value in zip(
             OUTPUT["agregador"]["serie"]["datas"], g["serie"]["ajustado"]["indecisos"]
         ):
-            assert (value is not None) == (day >= start)
+            assert (value is not None) == bool(
+                next(c for c in g["cobertura_movel"] if c["data"] == day)["ondas"]
+            )
 
 
 def test_both_charts_have_distinct_lines_and_auditable_coverage():
@@ -94,8 +92,8 @@ def test_both_charts_have_distinct_lines_and_auditable_coverage():
         assert len(chart.select("g[data-serie]")) == count
         for key, color in [("indecisos", "#8350a0"), ("branco_nulo", "#28705f")]:
             paths = chart.select(f'g[data-serie="{key}"] path')
-            assert len(paths) == 2 and all(p["stroke"] == color for p in paths)
-            assert sum(p.has_attr("stroke-dasharray") for p in paths) == 1
+            assert len(paths) >= 2 and all(p["stroke"] == color for p in paths)
+            assert sum(p.has_attr("stroke-dasharray") for p in paths) * 2 == len(paths)
         text = html.find(id=f"nao-escolha-{turn}").get_text(" ", strip=True)
         assert (
             "Não vai votar é declaração" in text and "não formam uma partição" in text
