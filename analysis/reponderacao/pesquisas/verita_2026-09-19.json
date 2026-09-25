@@ -1,0 +1,101 @@
+{
+  "id": "verita_2026-09-19",
+  "instituto": "Veritá",
+  "contratante": "Iniciativa própria do Instituto Veritá",
+  "registro_tse": "27 registros estaduais (p. 4)",
+  "campo": {
+    "inicio": "2026-09-10",
+    "fim": "2026-09-19"
+  },
+  "divulgacao": "2026-09-24",
+  "n": 40500,
+  "metodo": "telefônico, URA com reconhecimento de voz e transcrição de áudio",
+  "fonte": {
+    "tipo": "relatorio",
+    "pdf": "data/originals/verita_092026_24/relatorio.pdf",
+    "url": "https://lgjdbpskgjfbmlffbntx.supabase.co/storage/v1/object/public/pesquisas/pdfs/1790267604047_Relatorio_Nacional_Verita_30_Anos_Eleicoes_2026_40.500_Entrevistas.pdf",
+    "paginas": {
+      "metodologia": 3,
+      "registros": 4,
+      "1t_topline": 5,
+      "1t_renda": 12
+    },
+    "sha256": "6c2b54c4574f4652dc353e338dc137cbd8c8bb08dec60c43caf0a3bf7c59ffdb",
+    "bytes": 4604920,
+    "total_paginas": 27,
+    "conferido_em": "2026-09-24",
+    "status": "Relatório completo arquivado e conferido."
+  },
+  "renda": {
+    "unidade": "salarios_minimos",
+    "ano_referencia": 2026,
+    "faixas": [
+      {
+        "rotulo": "Abaixo de 2 SM (até R$ 3.242)",
+        "max": 2
+      },
+      {
+        "rotulo": "Entre 2 e 5 SM (R$ 3.242 a 8.105)",
+        "max": 5
+      },
+      {
+        "rotulo": "Acima de 5 SM (acima de R$ 8.105)",
+        "max": null
+      }
+    ],
+    "nota": "Há voto por renda na p. 12, mas não há composição ponderada nacional de renda. Não se reutilizam as bases da pesquisa anterior."
+  },
+  "publicado": {
+    "1t": {
+      "flavio": 43.6,
+      "lula": 40.0,
+      "cury": 5.4,
+      "renan_santos": 2.9,
+      "caiado": 1.8,
+      "zema": 0.6,
+      "marcal": 0.5,
+      "clariana": 0.3,
+      "samara": 0.2,
+      "hertz": 0.1,
+      "edmilson": 0.1,
+      "rui": 0.1,
+      "grassi": 0,
+      "indecisos": 3.6,
+      "branco_nulo": 0.7
+    }
+  },
+  "cruzamentos": {
+    "1t": {
+      "opcoes": [
+        "flavio",
+        "lula",
+        "outros",
+        "nao_escolha"
+      ],
+      "linhas": [
+        [
+          39,
+          43.9,
+          11.8,
+          5.3
+        ],
+        [
+          46.3,
+          37.5,
+          12.8,
+          3.4
+        ],
+        [
+          47.5,
+          37.1,
+          11.4,
+          4
+        ]
+      ],
+      "nota": "P. 12, base total. Branco/nulo e NS/NR vêm agrupados. Não confundir com votos válidos da p. 19."
+    }
+  },
+  "notas": "BR-02386/2026 refere-se apenas ao Acre, não às 40.500 entrevistas nacionais. Todos os 27 registros constam da p. 4. Placares em votos totais, não válidos.",
+  "ignorar": true,
+  "motivo": "Consolidação nacional de 27 amostras estaduais, ponderadas pelo eleitorado de cada UF. Há cruzamento de renda, mas falta a distribuição ponderada nacional entre as faixas. O 1º turno inclui Marçal e não há alternativa sem ele; o relatório não publica 2º turno. Não integra as médias."
+}

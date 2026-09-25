@@ -10,7 +10,30 @@ HISTORY = ROOT / "docs/assets/palver_explorer_historico.json"
 
 
 def history_polls():
-    return json.loads(HISTORY.read_text())["pesquisas"]
+    polls = json.loads(HISTORY.read_text())["pesquisas"]
+    known = {p["id"] for p in polls}
+    current = json.loads((ROOT / "docs/assets/reponderacao_pnad.json").read_text())
+    for poll in current["pesquisas"]:
+        if poll["instituto"] != "Palver" or poll["id"] in known:
+            continue
+        polls.append(
+            {
+                **poll,
+                "rotulo_historico": poll["fonte"].get(
+                    "rotulo", "Onda de " + poll["divulgacao"]
+                ),
+                "rotulo_eixo": "/".join(reversed(poll["campo"]["fim"][5:].split("-"))),
+                "substituida": False,
+                "primeiro_turno_com_marcal": False,
+            }
+        )
+    return sorted(polls, key=lambda p: (p["campo"]["fim"], p["id"]))
+
+
+def history_count():
+    polls = history_polls()
+    waves = len({(p["campo"]["inicio"], p["campo"]["fim"]) for p in polls})
+    return f"{waves} ondas · {len(polls)} versões"
 
 
 def fmt(value):
@@ -41,9 +64,11 @@ def audit_html(data, table):
         cells.append(
             "Arquivo, fora das médias"
             if wave["substituida"]
-            else "Só 2º turno (1º com Marçal)"
-            if wave["primeiro_turno_com_marcal"]
-            else "1º e 2º turnos"
+            else (
+                "Só 2º turno (1º com Marçal)"
+                if wave["primeiro_turno_com_marcal"]
+                else "1º e 2º turnos"
+            )
         )
         score_rows.append(cells)
     sources = {s["instituto"]: s for s in audit["fontes"]}
@@ -59,11 +84,12 @@ def audit_html(data, table):
     ]
     return (
         '<section id="palver-pesos" class="chapter"><div class="wrap">'
-        '<p class="eyebrow">Palver · auditoria de calibração · 21/09/2026</p>'
-        "<h2>Três ondas. Quatro versões. Todas visíveis.</h2>"
+        '<p class="eyebrow">Palver · auditoria de calibração · 24/09/2026</p>'
+        f"<h2>{history_count()}.</h2>"
         '<p>O <a href="https://www.palver.com.br/survey/explore">Explorer da Palver</a> '
         "disponibiliza percentuais sem arredondamento, contagens por célula e tamanho efetivo. "
-        "Integramos todas as ondas: agosto, setembro original, setembro revisada e a onda 3. "
+        "Este arquivo compara agosto, setembro original, setembro revisada e as ondas 3 e 4. "
+        "A onda 4, divulgada em 24/09, também está integrada às séries e à ficha de cálculo do agregador. "
         "A segunda onda é a mesma amostra em duas calibrações, portanto só a revisada entra nas médias. "
         "Os primeiros turnos de 07/09 incluem Marçal: aparecem no histórico, mas ficam fora da média do 1º turno.</p>"
         "<p>Os placares de partida são agora os <b>valores exatos do Explorer</b>. "
@@ -80,7 +106,7 @@ def audit_html(data, table):
             ],
             score_rows,
         )
-        + '<p class="note">Três ondas independentes, quatro versões documentais. As linhas ligam '
+        + '<p class="note">Cada onda representa uma amostra; versões da mesma onda não são independentes. As linhas ligam '
         "as versões publicadas; a mudança entre v1 e v2 é de calibração, sem novo campo. "
         "Sensibilidade de renda, sem recalibração conjunta e sem novo intervalo de confiança.</p>"
         "<h3>A distribuição de renda foi conferida</h3>"
@@ -94,10 +120,11 @@ def audit_html(data, table):
         "Os cruzamentos públicos não expõem os pesos individuais nem a tabela conjunta necessária "
         "para recalibrar simultaneamente TSE + PNAD 2025. "
         f'<a href="{url}#page=18">Metodologia, pp. 18–20</a>.</p>'
-        '<p><a href="assets/palver_explorer_historico.json">Histórico completo calculado (JSON)</a> · '
-        '<a href="assets/palver_explorer_auditoria.json">Auditoria dos cruzamentos (JSON)</a> · '
+        '<p><a href="assets/palver_explorer_historico.json">Arquivo até a onda 3 (JSON)</a> · '
+        '<a href="assets/palver_explorer_auditoria.json">Auditoria dos cruzamentos até a onda 3 (JSON)</a> · '
         '<a href="https://github.com/ArvorCo/PNAD/tree/main/analysis/reponderacao/palver_explorer_20260921">'
-        "186 tabelas e reprodução</a>.</p>"
+        "186 tabelas e reprodução</a> · "
+        '<a href="assets/reponderacao_20260924.json">Auditoria da onda 4 (JSON)</a>.</p>'
         "<h3>Divergências documentais preservadas</h3>"
         "<p>O catálogo do Explorer encerra a onda 3 em 20/09, mas o PDF informa 18/09; "
         "mantemos 18/09 na série. Na onda 2 revisada, Lula aparece com 40,440% no primeiro "

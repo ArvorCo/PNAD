@@ -1,0 +1,114 @@
+{
+  "instituto": "Quaest",
+  "contratante": "Globo Comunicação e Participações S/A e Editora Globo S/A",
+  "metodo": "presencial, domiciliar (sorteio PPT de municípios e setores censitários, cotas no último estágio)",
+  "id": "quaest_2026-09-20",
+  "registro_tse": "BR-06004/2026",
+  "campo": {
+    "inicio": "2026-09-17",
+    "fim": "2026-09-20"
+  },
+  "divulgacao": "2026-09-21",
+  "n": 2004,
+  "fonte": {
+    "tipo": "capturas_fornecidas_usuario",
+    "rotulo": "Quaest · G1 (prints, 1º turno)",
+    "url": "https://g1.globo.com/politica/eleicoes/2026/pesquisa-eleitoral/presidente-1-turno-quaest/",
+    "pdf": null,
+    "paginas": {},
+    "arquivo": "docs/assets/quaest_210926_fontes.json",
+    "localizador": "Coluna 21/09 dos quatro prints: geral e três faixas de renda",
+    "status": "Fonte parcial: G1 + cotas registradas no TSE.",
+    "nota": "Prints do G1 enviados pelo usuário em 21/09 e cotas do registro atual. O ajuste pressupõe perfil ponderado final de 31/42/27, ainda não conferido na íntegra. As cotas recompõem Lula 37,30 e Flávio 32,06, contra 37 e 33 publicados; o resíduo de 0,94 ponto em Flávio permanece documentado. A fórmula parte do placar publicado e acrescenta somente o delta da troca de renda. Cruzamentos incorporados: Lula, Flávio, Cury e Caiado. Séries menores sobrepostas e linhas cinza sem legenda no recorte não foram imputadas. Esta onda não entra na decomposição dos demais candidatos em grupos. Segundo turno ainda sem cruzamento arquivado.",
+    "complementos": [
+      {
+        "url": "fontes/quaest_21092026/g1-geral.png",
+        "rotulo": "Print geral"
+      },
+      {
+        "url": "fontes/quaest_21092026/g1-renda-2-a-5-sm.png",
+        "rotulo": "Print renda-2-a-5-sm"
+      },
+      {
+        "url": "fontes/quaest_21092026/g1-renda-ate-2-sm.png",
+        "rotulo": "Print renda-ate-2-sm"
+      },
+      {
+        "url": "fontes/quaest_21092026/g1-renda-mais-5-sm.png",
+        "rotulo": "Print renda-mais-5-sm"
+      },
+      {
+        "url": "fontes/quaest_21092026/registro-tse.txt",
+        "rotulo": "Registro BR-06004/2026"
+      }
+    ]
+  },
+  "renda": {
+    "unidade": "salarios_minimos",
+    "ano_referencia": 2026,
+    "faixas": [
+      {
+        "rotulo": "Até 2 SM (até R$ 3.242)",
+        "max": 2
+      },
+      {
+        "rotulo": "Mais de 2 a 5 SM (R$ 3.242 a 8.105)",
+        "max": 5
+      },
+      {
+        "rotulo": "Mais de 5 SM (acima de R$ 8.105)",
+        "max": null
+      }
+    ],
+    "amostra_pct": [
+      31,
+      42,
+      27
+    ],
+    "perfil_tipo": "cota_registrada",
+    "nota": "Cotas atuais, não bases brutas nem perfil final confirmado: 31/42/27. Registro cita PNADC anual 2025, visita 1. Sensibilidade condicionada à aplicação dessas cotas ao perfil ponderado final. Referência Arvor: pessoas 16+ na PNAD anual 2025."
+  },
+  "publicado": {
+    "1t": {
+      "lula": 37,
+      "flavio": 33,
+      "cury": 6,
+      "caiado": 4
+    }
+  },
+  "cruzamentos": {
+    "1t": {
+      "opcoes": [
+        "lula",
+        "flavio",
+        "cury",
+        "caiado"
+      ],
+      "linhas": [
+        [
+          49,
+          23,
+          4,
+          4
+        ],
+        [
+          34,
+          33,
+          6,
+          4
+        ],
+        [
+          29,
+          41,
+          8,
+          4
+        ]
+      ],
+      "nota": "Transcrição visual da coluna 21/09. Tabela parcial de quatro candidatos; linhas não somam 100 e não são renormalizadas. Não há imputação dos nomes omitidos."
+    }
+  },
+  "sem_cruzamento": {
+    "2t": "21/09: ainda sem cruzamento de renda do 2º turno no acervo; a série reponderada desse turno continua na onda de 14/09. Fonte parcial do 1º turno usa cotas registradas 31/42/27, condicionadas à confirmação do perfil final."
+  },
+  "notas": "Prints do G1 enviados pelo usuário em 21/09 e cotas do registro atual. O ajuste pressupõe perfil ponderado final de 31/42/27, ainda não conferido na íntegra. As cotas recompõem Lula 37,30 e Flávio 32,06, contra 37 e 33 publicados; o resíduo de 0,94 ponto em Flávio permanece documentado. A fórmula parte do placar publicado e acrescenta somente o delta da troca de renda. Cruzamentos incorporados: Lula, Flávio, Cury e Caiado. Séries menores sobrepostas e linhas cinza sem legenda no recorte não foram imputadas. Esta onda não entra na decomposição dos demais candidatos em grupos. Segundo turno ainda sem cruzamento arquivado."
+}

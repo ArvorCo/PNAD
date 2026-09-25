@@ -25,7 +25,8 @@ def valid_gap(poll):
 def deduplicate(polls, reference):
     """Última revisão divulgada por instituto e período, inclusive fora da renda."""
     result = {}
-    for poll in sorted(polls, key=lambda p: (p["divulgacao"], p["id"])):
+    released = (p for p in polls if p.get("divulgacao"))
+    for poll in sorted(released, key=lambda p: (p["divulgacao"], p["id"])):
         if poll["divulgacao"] > reference or poll["campo"]["fim"] > reference:
             continue
         if valid_gap(poll) is None:

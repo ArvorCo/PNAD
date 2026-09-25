@@ -1,0 +1,124 @@
+{
+  "instituto": "Real Time Big Data",
+  "contratante": "não declarado no relatório de divulgação",
+  "metodo": "telefônico, entrevistadores humanos, com abordagem inicial por ligação e mensagem",
+  "renda": {
+    "unidade": "salarios_minimos",
+    "ano_referencia": 2026,
+    "faixas": [
+      {
+        "rotulo": "Até 2 SM (até R$ 3.242)",
+        "max": 2
+      },
+      {
+        "rotulo": "De 2 a 5 SM (R$ 3.242 a 8.105)",
+        "max": 5
+      },
+      {
+        "rotulo": "Mais do que 5 SM (acima de R$ 8.105)",
+        "max": null
+      }
+    ],
+    "amostra_pct": [
+      46,
+      33,
+      21
+    ],
+    "nota": "Perfil da onda atual, p. 3. O relatório não distingue bases brutas e ponderadas. As faixas somam 100%.",
+    "mes_precos": "202609"
+  },
+  "id": "realtime_2026-09-23",
+  "campo": {
+    "inicio": "2026-09-19",
+    "fim": "2026-09-23"
+  },
+  "divulgacao": "2026-09-24",
+  "registro_tse": "BR-04202/2026",
+  "n": 2000,
+  "publicado": {
+    "1t": {
+      "lula": 41,
+      "flavio": 37,
+      "cury": 6,
+      "renan_santos": 6,
+      "caiado": 2,
+      "zema": 1,
+      "branco_nulo": 3,
+      "indecisos": 3,
+      "outros": 1
+    },
+    "2t": {
+      "lula": 44,
+      "flavio": 45,
+      "branco_nulo": 8,
+      "indecisos": 3
+    }
+  },
+  "cruzamentos": {
+    "1t": {
+      "opcoes": [
+        "lula",
+        "flavio",
+        "cury",
+        "renan_santos",
+        "caiado",
+        "zema",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          52,
+          25,
+          9,
+          2,
+          1,
+          1,
+          4,
+          4
+        ],
+        [
+          35,
+          44,
+          5,
+          6,
+          2,
+          1,
+          2,
+          3
+        ],
+        [
+          24,
+          50,
+          3,
+          13,
+          6,
+          2,
+          1,
+          1
+        ]
+      ],
+      "nota": "Extração nativa da p. 11, conferida visualmente. Outros (1% nacional) não entra no ajuste: a faixa superior está sem valor impresso. Não se renormaliza a tabela parcial."
+    }
+  },
+  "fonte": {
+    "tipo": "relatorio",
+    "pdf": "data/originals/realtime_092026_24/relatorio.pdf",
+    "url": "https://static.poder360.com.br/uploads/2026/09/Pesquisa-presidencial-Real-Time-Big-Data-24-set-2026.pdf",
+    "paginas": {
+      "metodologia": 2,
+      "perfil_renda": 3,
+      "1t_topline": 8,
+      "1t_renda": 11,
+      "2t_topline": 15
+    },
+    "sha256": "43d7b3abcba7bf0ee5bcfb1c037073071b037955433efbbdebbdef7c42f97ced",
+    "bytes": 26182054,
+    "total_paginas": 65,
+    "conferido_em": "2026-09-24",
+    "status": "Relatório completo arquivado e conferido."
+  },
+  "sem_cruzamento": {
+    "2t": "As pp. 15–22 trazem cenários agregados, sem voto por renda do 2º turno. O ajuste do primeiro não é transferido ao segundo."
+  }
+}

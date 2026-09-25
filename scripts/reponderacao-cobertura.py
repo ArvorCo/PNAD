@@ -1,6 +1,7 @@
 """Cobertura documental do agregador, inclusive ondas sem ajuste identificável."""
 
 from html import escape
+from pathlib import Path
 
 
 def number(value):
@@ -29,6 +30,8 @@ def coverage_html(data, table):
         return max(
             poll.get("divulgacao") or poll["campo"]["fim"],
             (poll.get("fonte") or {}).get("relatorio_completo", ""),
+            (poll.get("fonte") or {}).get("conferido_em", ""),
+            (poll.get("fonte") or {}).get("atualizado_em", ""),
         )
 
     latest = max(documentary_date(p) for p in polls)
@@ -41,14 +44,18 @@ def coverage_html(data, table):
     for p in recent:
         turns = p.get("turnos", {})
         pub = p.get("publicado", {})
-        cells = [source_link(p)]
+        release = p.get("divulgacao")
+        cells = [
+            source_link(p),
+            "/".join(reversed(release.split("-"))) if release else "Não informada",
+        ]
         for turn in ["1t", "2t"]:
             result = turns.get(turn)
             original = pub.get(turn, (result or {}).get("publicado", {}))
             adjusted = (
                 score(result["cenarios"][scenario]["ajustado"])
                 if result
-                else "Sem cruzamento de renda"
+                else "Sem ajuste disponível"
             )
             if (
                 turn == "1t"
@@ -57,6 +64,11 @@ def coverage_html(data, table):
                 adjusted = "Excluído: cenário com Marçal"
             cells += [score(original), adjusted]
         rows.append(cells)
+        if p.get("fonte", {}).get("atualizado_em") == latest:
+            notes.append(
+                f'<p class="note"><b>{escape(p["instituto"])}.</b> '
+                f'{escape(p["fonte"].get("nota", ""))}</p>'
+            )
         if p.get("fonte", {}).get("relatorio_completo") == latest:
             details = (
                 f'<a href="#pesquisa-{escape(p["id"], quote=True)}">'
@@ -89,16 +101,24 @@ def coverage_html(data, table):
                 f"{escape(extra['rotulo'])}</a>: fonte complementar ao PDF.</p>"
             )
     day = "/".join(reversed(latest.split("-")))
+    audit = f"reponderacao_{latest.replace('-', '')}.json"
+    audit_link = (
+        f'<p class="note"><a href="assets/{audit}">Inventário da atualização: fontes, '
+        "arquivos, SHA-256 e conferência das contas</a>.</p>"
+        if (Path(__file__).resolve().parents[1] / "docs/assets" / audit).exists()
+        else ""
+    )
     recent_html = (
         '<section id="atualizacao" class="chapter"><div class="wrap">'
         f'<p class="eyebrow">Atualização documental · {day}</p>'
         "<h2>O que entrou nesta atualização</h2>"
         "<p>Todos os placares abaixo estão na ordem <b>Lula × Flávio</b>, em %. "
         "O ajuste troca apenas a distribuição de renda pela PNAD. "
-        "Sem voto por faixa no mesmo turno, o resultado permanece apenas como publicação do instituto.</p>"
+        "Sem voto por faixa e perfil de renda da mesma onda, o resultado permanece apenas como publicação do instituto.</p>"
         + table(
             [
                 "Instituto e fonte",
+                "Divulgação",
                 "1º publicado",
                 "1º reponderado",
                 "2º publicado",
@@ -107,6 +127,7 @@ def coverage_html(data, table):
             rows,
         )
         + "".join(notes)
+        + audit_link
         + '<p class="note">As médias publicada e reponderada usam o mesmo conjunto de pesquisas com cruzamento '
         "de renda em cada turno, usando somente cenários sem Marçal no 1º turno. Os placares sem ajuste desta tabela não entram em nenhuma das duas médias. "
         "Reponderação é sensibilidade de uma margem, não previsão nem voto corrigido.</p>"

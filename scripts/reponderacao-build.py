@@ -437,12 +437,13 @@ def ch_manchete() -> str:
 
 def _painel_instituto(nome: str, turno: str) -> str:
     if nome == "Palver":
-        historico = importlib.import_module("reponderacao-palver-view").history_polls()
+        palver_view = importlib.import_module("reponderacao-palver-view")
+        historico = palver_view.history_polls()
         return (
             f'<article class="panel reveal" data-instituto="Palver" data-turno="{turno}">'
             f"<h3>Palver <small>{TURNOS[turno]}</small></h3>"
             f'<div class="fig">{instituto_svg(nome, turno, historico)}</div>'
-            '<p class="note"><b>3 ondas · 4 versões.</b> A onda 2 original (v1) foi substituída '
+            f'<p class="note"><b>{palver_view.history_count()}.</b> A onda 2 original (v1) foi substituída '
             "pela revisada (v2). Todos os pontos estão visíveis; a v1 fica fora das médias. "
             + (
                 "Os dois cenários de 07/09 incluem Marçal e também ficam fora da média do 1º turno. "

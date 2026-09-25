@@ -92,7 +92,7 @@ def test_latest_comparable_mean_includes_gerp_and_poderdata(output):
         if "2t" in p["turnos"]:
             latest[p["instituto"]] = p
     assert latest["Gerp"]["id"] == "gerp_2026-09-16"
-    assert latest["PoderData"]["id"] == "poderdata_2026-09-16"
+    assert latest["PoderData"]["campo"]["fim"] >= "2026-09-16"
     assert not ({"AtlasIntel", "Futura"} & latest.keys())
     avg = sum(
         p["turnos"]["2t"]["cenarios"]["pessoas16_efetivo"]["ajustado"]["flavio"]
@@ -129,7 +129,7 @@ def test_page_shows_all_four_sources_without_fake_adjustments(output, monkeypatc
     text = section.get_text(" ", strip=True)
     for name in ["AtlasIntel", "PoderData", "Gerp", "Futura", "17/09/2026"]:
         assert name in text
-    assert text.count("Sem cruzamento de renda") == 2
+    assert text.count("Sem ajuste disponível") == 2
     assert text.count("Excluído: cenário com Marçal") == 3
     assert len(section.select('a[href$=".pdf"]')) == 4
     assert "Lula × Flávio" in text

@@ -143,7 +143,11 @@ def test_aggregator_includes_complete_report_without_redating_poll():
     assert p["turnos"] == D["reweight"]["turnos"]
     assert p["divulgacao"] == "2026-09-17"
     assert p["fonte"]["relatorio_completo"] == "2026-09-21"
-    html = (ROOT / "docs/reponderacao_pnad.html").read_text()
+    # Exercise this documentary update independently of subsequent releases.
+    html = load("reponderacao-cobertura").coverage_html(
+        {**agg, "pesquisas": [p], "nao_reponderaveis": []},
+        lambda headers, rows: "",
+    )
     assert "Relatório completo disponibilizado em 21/09/2026" in html
 
 

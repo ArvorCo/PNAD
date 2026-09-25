@@ -48,8 +48,8 @@ def test_average_reproduces_time_weights_and_same_cohort(turn):
 
 
 def test_missing_data_are_not_zero_and_separate_nonvoting_is_summed():
-    q = next(p for p in OUTPUT["pesquisas"] if p["id"] == "quaest_2026-09-20")
-    assert MODULE.extract(q, "1t", SCENARIO)[0] is None
+    q = next(p for p in OUTPUT["pesquisas"] if p["id"] == "poderdata_2026-09-23")
+    assert MODULE.extract(q, "2t", SCENARIO)[0] is None
     p = copy.deepcopy(
         next(p for p in OUTPUT["pesquisas"] if p["id"] == "datafolha_2026-09-17")
     )
@@ -70,8 +70,8 @@ def test_missing_data_are_not_zero_and_separate_nonvoting_is_summed():
 
 
 def test_empty_series_stays_missing_and_does_not_extrapolate_backwards():
-    q = next(p for p in OUTPUT["pesquisas"] if p["id"] == "quaest_2026-09-20")
-    empty = MODULE.aggregate([q], "1t", ["2026-09-21"], date(2026, 9, 21), SCENARIO, 7)
+    q = next(p for p in OUTPUT["pesquisas"] if p["id"] == "poderdata_2026-09-23")
+    empty = MODULE.aggregate([q], "2t", ["2026-09-24"], date(2026, 9, 24), SCENARIO, 7)
     assert empty["serie"]["ajustado"]["indecisos"] == [None]
     for t in ["1t", "2t"]:
         g = OUTPUT["agregador"]["nao_escolha"][t]

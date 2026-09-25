@@ -1,0 +1,529 @@
+{
+  "waves": [
+    {
+      "id": "01_pesquisa_2026_08_10",
+      "sequence": 1,
+      "date": "2026-08-10T00:00:00.000Z",
+      "fieldEnd": "2026-08-09T00:00:00.000Z",
+      "trendEnabled": false
+    },
+    {
+      "id": "02_pesquisa_2026_09_09",
+      "sequence": 2,
+      "date": "2026-09-09T00:00:00.000Z",
+      "fieldEnd": "2026-09-07T00:00:00.000Z",
+      "trendEnabled": false
+    },
+    {
+      "id": "02_pesquisa_2026_09_21",
+      "sequence": 2,
+      "date": "2026-09-21T00:00:00.000Z",
+      "fieldEnd": "2026-09-07T00:00:00.000Z",
+      "trendEnabled": true
+    },
+    {
+      "id": "03_pesquisa_2026_09_21",
+      "sequence": 3,
+      "date": "2026-09-21T00:00:00.000Z",
+      "fieldEnd": "2026-09-20T00:00:00.000Z",
+      "trendEnabled": true
+    },
+    {
+      "id": "04_pesquisa_2026_09_24",
+      "sequence": 4,
+      "date": "2026-09-24T00:00:00.000Z",
+      "fieldEnd": "2026-09-23T00:00:00.000Z",
+      "trendEnabled": true
+    }
+  ],
+  "questions": [
+    {
+      "key": "spontaneous_vote_norm",
+      "label": "Voto espontâneo",
+      "statement": "Se a eleição para presidente fosse acontecer hoje, em quem você votaria?",
+      "section": "1º turno espontânea",
+      "note": "Estimativas derivadas de perguntas em duas etapas: decisão de voto e voto espontâneo digitado em caixa de texto. Quem disse não ter escolhido entra como indeciso; quem disse votar em branco ou não votar, como branco/nulo ou não votaria. Candidatos citados por poucos respondentes foram agrupados em Outros.",
+      "tipo": "espontanea"
+    },
+    {
+      "key": "spontaneous_vote_norm_agrupado",
+      "label": "Voto espontâneo (agrupado)",
+      "statement": "Se a eleição para presidente fosse acontecer hoje, em quem você votaria?",
+      "section": "1º turno espontânea",
+      "note": "Mesma pergunta do gráfico anterior, com um corte a mais: todo candidato com menos de 1,00% das intenções de voto no total entra em Outros. Indecisos e branco/nulo ficam à parte mesmo abaixo do corte, e o conjunto agrupado é recalculado a cada onda.",
+      "tipo": "espontanea"
+    },
+    {
+      "key": "stimulated_1r_vote_1_h",
+      "label": "Cenário estimulado",
+      "statement": "Se a eleição para presidente fosse acontecer hoje e estes fossem os candidatos, em quem você votaria?",
+      "section": "1º turno estimulada",
+      "note": "Candidatos com menos de 1%, após arredondamento, foram agrupados em Outros.",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "stimulated_1r_vote_1_h_agrupado",
+      "label": "Cenário estimulado (agrupado)",
+      "statement": "Se a eleição para presidente fosse acontecer hoje e estes fossem os candidatos, em quem você votaria?",
+      "section": "1º turno estimulada",
+      "note": "Mesma pergunta do gráfico anterior, com um corte a mais: todo candidato com menos de 1,00% das intenções de voto no total entra em Outros. Indecisos e branco/nulo ficam à parte mesmo abaixo do corte, e o conjunto agrupado é recalculado a cada onda.",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "motivo_1t",
+      "label": "Motivo do voto no 1º turno",
+      "statement": "Qual é o principal motivo pelo qual você votaria, no 1º turno, na opção que acabou de escolher?",
+      "section": "1º turno estimulada",
+      "note": "Pergunta estimulada: o respondente escolheu o principal motivo entre as opções apresentadas, logo após o cenário.",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "lula_flavio",
+      "label": "Lula x Flávio Bolsonaro",
+      "statement": "Em um eventual 2º turno nas próximas eleições para Presidente, como você votaria se estes fossem os candidatos? (cenário 1)",
+      "section": "2º turno estimulada",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "motivo_lula_flavio",
+      "label": "Motivo do voto no 2º turno Lula x Flávio Bolsonaro",
+      "statement": "Qual é o principal motivo pelo qual você votaria, no 2º turno, na opção que acabou de escolher?",
+      "section": "2º turno estimulada",
+      "note": "Pergunta estimulada: o respondente escolheu o principal motivo entre as opções apresentadas, logo após o cenário.",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "lula_cury",
+      "label": "Lula x Augusto Cury",
+      "statement": "Em um eventual 2º turno nas próximas eleições para Presidente, como você votaria se estes fossem os candidatos? (cenário 2)",
+      "section": "2º turno estimulada",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "lula_renan",
+      "label": "Lula x Renan Santos",
+      "statement": "Em um eventual 2º turno nas próximas eleições para Presidente, como você votaria se estes fossem os candidatos? (cenário 3)",
+      "section": "2º turno estimulada",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "lula_caiado",
+      "label": "Lula x Ronaldo Caiado",
+      "statement": "Em um eventual 2º turno nas próximas eleições para Presidente, como você votaria se estes fossem os candidatos? (cenário 4)",
+      "section": "2º turno estimulada",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "lula_zema",
+      "label": "Lula x Romeu Zema",
+      "statement": "Em um eventual 2º turno nas próximas eleições para Presidente, como você votaria se estes fossem os candidatos? (cenário 5)",
+      "section": "2º turno estimulada",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "recall_rejection_flavio_bolsonaro_h",
+      "label": "Flávio Bolsonaro",
+      "statement": "Dentre estes possíveis candidatos, gostaria que você me dissesse se você conhece esse candidato e qual a chance de você votar nele: — Flávio Bolsonaro",
+      "section": "Reconhecimento e Rejeição",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "recall_rejection_lula_h",
+      "label": "Lula",
+      "statement": "Dentre estes possíveis candidatos, gostaria que você me dissesse se você conhece esse candidato e qual a chance de você votar nele: — Lula",
+      "section": "Reconhecimento e Rejeição",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "recall_rejection_renan_santos_h",
+      "label": "Renan Santos",
+      "statement": "Dentre estes possíveis candidatos, gostaria que você me dissesse se você conhece esse candidato e qual a chance de você votar nele: — Renan Santos",
+      "section": "Reconhecimento e Rejeição",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "recall_rejection_romeu_zema_h",
+      "label": "Romeu Zema",
+      "statement": "Dentre estes possíveis candidatos, gostaria que você me dissesse se você conhece esse candidato e qual a chance de você votar nele: — Zema",
+      "section": "Reconhecimento e Rejeição",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "recall_rejection_ronaldo_caiado_h",
+      "label": "Ronaldo Caiado",
+      "statement": "Dentre estes possíveis candidatos, gostaria que você me dissesse se você conhece esse candidato e qual a chance de você votar nele: — Ronaldo Caiado",
+      "section": "Reconhecimento e Rejeição",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "recall_rejection_augusto_cury_h",
+      "label": "Augusto Cury",
+      "statement": "Dentre estes possíveis candidatos, gostaria que você me dissesse se você conhece esse candidato e qual a chance de você votar nele: — Escritor Augusto Cury",
+      "section": "Reconhecimento e Rejeição",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "president_approval",
+      "label": "Aprovação de Lula",
+      "statement": "Você aprova ou desaprova a maneira como Lula está lidando com seu trabalho como presidente?",
+      "section": "Aprovação e Avaliação do Governo",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "government_evaluation_h",
+      "label": "Avaliação do governo",
+      "statement": "Para você, o governo Lula está fazendo um trabalho ótimo, bom, regular, ruim ou péssimo?",
+      "section": "Aprovação e Avaliação do Governo",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "main_problem_country",
+      "label": "Maior problema do Brasil",
+      "statement": "Na sua opinião, dentre as opções abaixo, qual é o maior problema do Brasil hoje em dia?",
+      "section": "Problemas do Brasil e Expectativas Econômicas",
+      "note": "Pergunta estimulada: o respondente escolheu entre as opções apresentadas.",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "problema_familia",
+      "label": "Maior problema da família",
+      "statement": "Na sua opinião, dentre as opções abaixo, qual é o maior problema que a sua família enfrenta hoje em dia?",
+      "section": "Problemas do Brasil e Expectativas Econômicas",
+      "note": "Pergunta estimulada: o respondente escolheu entre as opções apresentadas.",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "economic_macro_retro",
+      "label": "País, últimos 12 meses",
+      "statement": "Pensando nos últimos 12 meses, você diria que a situação econômica do Brasil: melhorou, ficou praticamente igual ou piorou?",
+      "section": "Problemas do Brasil e Expectativas Econômicas",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "economic_pocket_retro",
+      "label": "Família, últimos 12 meses",
+      "statement": "Pensando nos últimos 12 meses, você diria que a situação econômica da sua família: melhorou, ficou praticamente igual ou piorou?",
+      "section": "Problemas do Brasil e Expectativas Econômicas",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "economic_macro_prosp",
+      "label": "País, próximos 12 meses",
+      "statement": "Pensando nos próximos 12 meses, qual a sua expectativa em relação à situação econômica do Brasil? Você acredita que vai melhorar, ficar do mesmo jeito ou piorar?",
+      "section": "Problemas do Brasil e Expectativas Econômicas",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "economic_pocket_prosp",
+      "label": "Família, próximos 12 meses",
+      "statement": "Pensando nos próximos 12 meses, qual a sua expectativa em relação a a situação econômica da sua família? Você acredita que vai melhorar, ficar do mesmo jeito ou piorar?",
+      "section": "Problemas do Brasil e Expectativas Econômicas",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "public_policy_support_anistia_8_janeiro",
+      "label": "Anistia aos atos de 8 de janeiro",
+      "statement": "Nos últimos anos, o governo e o congresso têm debatido diferentes propostas de políticas públicas. Para cada uma das propostas abaixo, indique se você apoia ou é contra: — Anistiar todos os envolvidos nos atos de 8 de janeiro de 2023",
+      "section": "Políticas Públicas",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "public_policy_support_porte_de_armas",
+      "label": "Porte de armas",
+      "statement": "Nos últimos anos, o governo e o congresso têm debatido diferentes propostas de políticas públicas. Para cada uma das propostas abaixo, indique se você apoia ou é contra: — Permitir o porte de armas por cidadãos comuns",
+      "section": "Políticas Públicas",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "public_policy_support_casamento_homoafetivo",
+      "label": "Casamento homoafetivo",
+      "statement": "Nos últimos anos, o governo e o congresso têm debatido diferentes propostas de políticas públicas. Para cada uma das propostas abaixo, indique se você apoia ou é contra: — Permitir o casamento entre pessoas do mesmo sexo",
+      "section": "Políticas Públicas",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "public_policy_support_proibir_aborto",
+      "label": "Proibir o aborto",
+      "statement": "Nos últimos anos, o governo e o congresso têm debatido diferentes propostas de políticas públicas. Para cada uma das propostas abaixo, indique se você apoia ou é contra: — Proibir aborto em todas as situações, incluindo risco de vida e violência sexual",
+      "section": "Políticas Públicas",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "public_policy_support_terras_indigenas",
+      "label": "Demarcação de terras indígenas",
+      "statement": "Nos últimos anos, o governo e o congresso têm debatido diferentes propostas de políticas públicas. Para cada uma das propostas abaixo, indique se você apoia ou é contra: — Ampliar a demarcação de terras indígenas",
+      "section": "Políticas Públicas",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "public_policy_support_cotas",
+      "label": "Cotas em universidades e concursos",
+      "statement": "Nos últimos anos, o governo e o congresso têm debatido diferentes propostas de políticas públicas. Para cada uma das propostas abaixo, indique se você apoia ou é contra: — Reservar vagas para negros e indígenas em universidades e concursos públicos",
+      "section": "Políticas Públicas",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "public_policy_support_privatizar_correios",
+      "label": "Privatizar os Correios",
+      "statement": "Nos últimos anos, o governo e o congresso têm debatido diferentes propostas de políticas públicas. Para cada uma das propostas abaixo, indique se você apoia ou é contra: — Privatizar os Correios",
+      "section": "Políticas Públicas",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "public_policy_support_desvincular_previdencia",
+      "label": "Desvincular a previdência do mínimo",
+      "statement": "Nos últimos anos, o governo e o congresso têm debatido diferentes propostas de políticas públicas. Para cada uma das propostas abaixo, indique se você apoia ou é contra: — Desvincular o reajuste dos benefícios previdenciários ao salário mínimo",
+      "section": "Políticas Públicas",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "public_policy_support_pisos_saude_educacao",
+      "label": "Retirar pisos de saúde e educação",
+      "statement": "Nos últimos anos, o governo e o congresso têm debatido diferentes propostas de políticas públicas. Para cada uma das propostas abaixo, indique se você apoia ou é contra: — Retirar os pisos mínimos de gastos com saúde e educação",
+      "section": "Políticas Públicas",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "public_policy_support_alinhar_eua",
+      "label": "Alinhar política externa aos EUA",
+      "statement": "Nos últimos anos, o governo e o congresso têm debatido diferentes propostas de políticas públicas. Para cada uma das propostas abaixo, indique se você apoia ou é contra: — Alinhar a política externa brasileira aos Estados Unidos",
+      "section": "Políticas Públicas",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "desgaste_master",
+      "label": "Desgaste de imagem com o caso Banco Master",
+      "statement": "Na sua opinião, quais das seguintes instituições ou grupos políticos sofreram desgaste de imagem em razão do caso do Banco Master?",
+      "section": "Banco Master e STF",
+      "note": "Múltipla escolha feita a quem disse ter ouvido falar do caso do Banco Master: cada barra é a parcela que citou a instituição, e as barras não somam 100%. Quem disse não conhecer o caso, ou não soube responder, entra em Não conhece o caso ou não sabe.",
+      "tipo": "estimulada",
+      "multiple": true
+    },
+    {
+      "key": "desgaste_stf",
+      "label": "Desgaste de imagem com os acontecimentos no STF",
+      "statement": "Na sua opinião, quem sofreu desgaste de imagem em razão dos acontecimentos recentes no STF?",
+      "section": "Banco Master e STF",
+      "note": "Múltipla escolha feita a quem disse ter ouvido falar dos acontecimentos no STF: cada barra é a parcela que citou o nome, e as barras não somam 100%. Quem disse não conhecer o caso, ou não soube responder, entra em Não conhece o caso ou não sabe.",
+      "tipo": "estimulada",
+      "multiple": true
+    },
+    {
+      "key": "vote_stf",
+      "label": "Influência do STF no voto",
+      "statement": "Os acontecimentos recentes no STF influenciam de alguma forma seu voto para presidente?",
+      "section": "Banco Master e STF",
+      "note": "Pergunta feita a quem disse ter ouvido falar dos acontecimentos no STF. Quem disse não conhecer o caso, ou não soube responder, entra em Não conhece o caso ou não sabe.",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "vote_pbf",
+      "label": "Influência do reajuste do Bolsa Família no voto",
+      "statement": "O reajuste do Bolsa Família influencia de alguma forma seu voto para presidente?",
+      "section": "Bolsa Família",
+      "note": "Pergunta feita a quem disse ter ouvido falar do reajuste do Bolsa Família. Quem disse não conhecer o reajuste, ou não soube responder, entra em Não conhece o caso ou não sabe.",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "receive_pbf",
+      "label": "Recebe Bolsa Família em casa",
+      "statement": "Você ou alguém na sua casa recebe dinheiro do Bolsa Família?",
+      "section": "Bolsa Família",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "ideology",
+      "label": "Espectro Ideológico",
+      "statement": "Qual é seu posicionamento ideológico?",
+      "section": "Espectro Ideológico e Identificação Política",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "identification_h",
+      "label": "Identificação Política",
+      "statement": "Qual das seguintes identidades políticas melhor descrevem o seu posicionamento?",
+      "section": "Espectro Ideológico e Identificação Política",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "neg_identification_antipetista_h",
+      "label": "Antipetismo",
+      "statement": "Em uma escala de 1 a 5, em que 1 significa “não me considero nem um pouco” e 5 significa “me considero totalmente”, o quanto você se considera: — Antipetista",
+      "section": "Espectro Ideológico e Identificação Política",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "neg_identification_antibolsonarista_h",
+      "label": "Antibolsonarismo",
+      "statement": "Em uma escala de 1 a 5, em que 1 significa “não me considero nem um pouco” e 5 significa “me considero totalmente”, o quanto você se considera: — Antibolsonarista",
+      "section": "Espectro Ideológico e Identificação Política",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "anti_cruzado",
+      "label": "Antipetismo × antibolsonarismo",
+      "statement": "Em uma escala de 1 a 5, em que 1 significa “não me considero nem um pouco” e 5 significa “me considero totalmente”, o quanto você se considera: — Antipetista / — Antibolsonarista",
+      "section": "Espectro Ideológico e Identificação Política",
+      "note": "Variável derivada do cruzamento das escalas de antipetismo e antibolsonarismo: conta como antipetista, ou antibolsonarista, quem se declarou 4 ou 5. Quem respondeu “Não sei” em uma das duas escalas não é situado num quadrante.",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "party_affiliation",
+      "label": "Filiação partidária",
+      "statement": "Atualmente, você possui filiação formal a algum partido político, registrada na Justiça Eleitoral?",
+      "section": "Espectro Ideológico e Identificação Política",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "party_affiliated",
+      "label": "Partido de filiação",
+      "statement": "A qual partido você é filiado?",
+      "section": "Espectro Ideológico e Identificação Política",
+      "note": "Base: apenas respondentes que declararam ter filiação formal a algum partido político.",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "registered_voter_last_election",
+      "label": "Tinha título regular em 2022",
+      "statement": "Você possuía título de eleitor regularizado e podia votar na eleição de 2022?",
+      "section": "Participação eleitoral",
+      "tipo": "estimulada"
+    }
+  ],
+  "breakdowns": [
+    {
+      "key": "sex_std",
+      "label": "Sexo",
+      "levels": [
+        "Homem",
+        "Mulher"
+      ]
+    },
+    {
+      "key": "age_std",
+      "label": "Idade",
+      "levels": [
+        "16 a 34 anos",
+        "35 a 59 anos",
+        "60 anos ou mais"
+      ]
+    },
+    {
+      "key": "race_std",
+      "label": "Cor ou raça",
+      "levels": [
+        "Branca",
+        "Preta, Parda, Indígena ou Amarela"
+      ]
+    },
+    {
+      "key": "edu_std",
+      "label": "Escolaridade",
+      "levels": [
+        "Fundamental",
+        "Médio",
+        "Superior"
+      ]
+    },
+    {
+      "key": "inc_std",
+      "label": "Renda familiar",
+      "levels": [
+        "Até 2 salários mínimos",
+        "2 a 5 salários mínimos",
+        "Mais de 5 salários mínimos"
+      ]
+    },
+    {
+      "key": "reg_std",
+      "label": "Região",
+      "levels": [
+        "Norte",
+        "Nordeste",
+        "Centro-Oeste",
+        "Sudeste",
+        "Sul"
+      ]
+    },
+    {
+      "key": "vote_std",
+      "label": "Voto no 2º turno de 2022",
+      "levels": [
+        "Lula",
+        "Jair Bolsonaro",
+        "Branco/Nulo ou Não votei"
+      ]
+    },
+    {
+      "key": "stimulated_1r_vote_1_h",
+      "label": "Eleitor no 1º turno",
+      "levels": [
+        "Lula (PT)",
+        "Flávio Bolsonaro (PL)",
+        "Renan Santos (Missão)",
+        "Escritor Augusto Cury (Avante)",
+        "Outros candidatos",
+        "Indecisos, brancos e nulos"
+      ]
+    },
+    {
+      "key": "stimulated_2r_vote_1_h",
+      "label": "Voto no 2º turno Lula x Flávio",
+      "levels": [
+        "Lula (PT)",
+        "Flávio Bolsonaro (PL)",
+        "Indecisos, brancos e nulos"
+      ]
+    },
+    {
+      "key": "relig_std",
+      "label": "Religião",
+      "levels": [
+        "Católica",
+        "Evangélica/Protestante",
+        "Sem religião",
+        "Outra"
+      ]
+    },
+    {
+      "key": "relig_std_2",
+      "label": "Religião (evangélicos por vertente)",
+      "levels": [
+        "Católica",
+        "Protestantes Históricas",
+        "Pentecostais e Neopentecostais",
+        "Outras",
+        "Sem religião",
+        "Outra religião"
+      ]
+    },
+    {
+      "key": "receive_pbf",
+      "label": "Recebe Bolsa Família em casa",
+      "levels": [
+        "Sim",
+        "Não"
+      ]
+    },
+    {
+      "key": "ideol_std",
+      "label": "Espectro Ideológico",
+      "levels": [
+        "Esquerda",
+        "Centro ou sem posicionamento",
+        "Direita"
+      ]
+    },
+    {
+      "key": "identification_h",
+      "label": "Identificação Política",
+      "levels": [
+        "Lulista",
+        "Simpatiza com a esquerda",
+        "Independente",
+        "Simpatiza com a direita",
+        "Bolsonarista"
+      ]
+    }
+  ]
+}

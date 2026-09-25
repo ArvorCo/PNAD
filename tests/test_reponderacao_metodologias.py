@@ -80,6 +80,15 @@ def test_window_and_publication_cutoff_are_enforced():
     assert {p["instituto"] for p in result["ondas"][0]["pares"]} == {"B", "C", "D"}
 
 
+def test_announced_poll_without_confirmed_release_is_not_a_peer():
+    announced = poll("Pending", "2026-09-10", 90, 10)
+    announced["divulgacao"] = None
+    rows = [*peers(), poll("A", "2026-09-10"), announced]
+    result = HOUSE.compare(rows, "2026-09-24")
+    assert "Pending" not in result
+    assert {p["instituto"] for p in result["A"]["ondas"][0]["pares"]} == {"B", "C", "D"}
+
+
 def test_field_midpoint_controls_matching_and_boundary_is_inclusive():
     a = poll("A", "2026-09-16")
     a["campo"]["inicio"] = "2026-09-04"  # central date September 10

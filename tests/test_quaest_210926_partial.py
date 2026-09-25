@@ -1,6 +1,7 @@
 """A fonte parcial não vira perfil final, distribuição completa ou segundo turno."""
 
 import hashlib
+import importlib.util
 import json
 from pathlib import Path
 
@@ -12,7 +13,11 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def test_partial_quaest_anchors_delta_and_keeps_rounds_separate():
     data = json.loads((ROOT / "docs/assets/reponderacao_pnad.json").read_text())
-    poll = next(p for p in data["pesquisas"] if p["id"] == "quaest_2026-09-20")
+    spec = importlib.util.spec_from_file_location("engine", ROOT / "scripts/reponderacao-pnad.py")
+    engine = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(engine)
+    archived = json.loads((ROOT / "analysis/reponderacao/atualizacao_20260924/quaest-fonte-parcial-anterior.json").read_text())
+    poll = engine.process_poll(archived, engine.Benchmark(), engine.load_ipca())
     assert set(poll["turnos"]) == {"1t"}
     assert poll["renda"]["perfil_tipo"] == "cota_registrada"
     assert poll["renda"]["amostra_pct"] == [31, 42, 27]
@@ -32,11 +37,7 @@ def test_partial_quaest_anchors_delta_and_keeps_rounds_separate():
     # Não fechar a tabela parcial em 100 nem inventar os candidatos ocultos.
     assert set(adjusted) == {"lula", "flavio", "cury", "caiado"}
     assert sum(adjusted.values()) < 85
-    latest_runoff = max(
-        p["campo"]["fim"] for p in data["pesquisas"]
-        if p["instituto"] == "Quaest" and "2t" in p["turnos"]
-    )
-    assert latest_runoff == "2026-09-13"
+    assert "2t" not in poll["turnos"]
 
 
 def test_quaest_source_archive_and_visible_qualifications():
@@ -46,9 +47,9 @@ def test_quaest_source_archive_and_visible_qualifications():
         assert hashlib.sha256(path.read_bytes()).hexdigest() == item["sha256"]
     html = BeautifulSoup((ROOT / "docs/reponderacao_pnad.html").read_text(), "html.parser")
     text = html.find(id="pesquisa-quaest_2026-09-20").get_text(" ", strip=True)
-    assert "Fonte parcial" in text
-    assert "COTA REGISTRADA" in text
+    assert "Perfil final confirmado" in text
+    assert "COTA REGISTRADA" not in text
     assert "0,94" in text
-    assert "não foram imputadas" in text
+    assert "2º turno" in text
     update = html.find(id="atualizacao").get_text(" ", strip=True)
-    assert "Quaest" in update and "perfil final" in update
+    assert "Quaest" in update and "Substitui a fonte parcial" in update

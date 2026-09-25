@@ -1,0 +1,185 @@
+{
+  "instituto": "PoderData",
+  "contratante": "Poder360",
+  "metodo": "telefônico (IVR/URA, discagem aleatória para celular e fixo)",
+  "renda": {
+    "unidade": "salarios_minimos",
+    "ano_referencia": 2026,
+    "faixas": [
+      {
+        "rotulo": "Até 2 SM (até R$ 3.242)",
+        "max": 2
+      },
+      {
+        "rotulo": "De 2 a 5 SM (R$ 3.242 a 8.105)",
+        "max": 5
+      },
+      {
+        "rotulo": "Mais de 5 SM (acima de R$ 8.105)",
+        "max": null
+      }
+    ],
+    "amostra_pct": [
+      46,
+      33,
+      21
+    ],
+    "nota": "Perfil da onda atual, p. 4: 46/33/21. A primeira faixa inclui sem rendimentos. Perfil conferido na imagem do PDF.",
+    "mes_precos": "202609"
+  },
+  "id": "poderdata_2026-09-23",
+  "campo": {
+    "inicio": "2026-09-20",
+    "fim": "2026-09-23"
+  },
+  "divulgacao": "2026-09-24",
+  "registro_tse": "BR-01739/2026",
+  "n": 3000,
+  "publicado": {
+    "1t": {
+      "lula": 41,
+      "flavio": 39,
+      "cury": 6,
+      "renan_santos": 3,
+      "caiado": 2,
+      "zema": 1,
+      "samara": 1,
+      "rui": 1,
+      "clariana": 1,
+      "avalanche": 0,
+      "hertz": 0,
+      "edmilson": 0,
+      "grassi": 0,
+      "branco_nulo": 4,
+      "indecisos": 2
+    },
+    "2t": {
+      "lula": 45,
+      "flavio": 46,
+      "branco_nulo": 7,
+      "indecisos": 2
+    }
+  },
+  "cruzamentos": {
+    "1t": {
+      "opcoes": [
+        "lula",
+        "flavio",
+        "cury",
+        "renan_santos",
+        "caiado",
+        "zema",
+        "samara",
+        "rui",
+        "clariana",
+        "avalanche",
+        "hertz",
+        "edmilson",
+        "grassi",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          45,
+          33,
+          6,
+          2,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          6,
+          3
+        ],
+        [
+          37,
+          48,
+          4,
+          3,
+          2,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          2,
+          1
+        ],
+        [
+          37,
+          45,
+          6,
+          4,
+          3,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          2,
+          1
+        ]
+      ],
+      "nota": "Extração nativa da p. 12; conferência por sexo na p. 8."
+    },
+    "2t": {
+      "opcoes": [
+        "lula",
+        "flavio"
+      ],
+      "linhas": [
+        [
+          50,
+          38
+        ],
+        [
+          41,
+          52
+        ],
+        [
+          40,
+          54
+        ]
+      ],
+      "nota": "Gráfico de estratificação publicado pelo PoderData em 24/09, campo 20–23/09. O PDF não traz este cruzamento. Branco/nulo e indecisos não são separados por renda; só Lula e Flávio são ajustados."
+    }
+  },
+  "fonte": {
+    "tipo": "relatorio",
+    "pdf": "data/originals/poderdata_092026_24/relatorio.pdf",
+    "url": "https://static.poder360.com.br/uploads/2026/09/Relatorio-PoderData-Eleitoral-23set26.pdf",
+    "paginas": {
+      "metodologia": 2,
+      "perfil_renda": 4,
+      "1t_renda": 12,
+      "2t_topline": 18,
+      "2t_renda": "gráfico complementar de 24/09"
+    },
+    "sha256": "36e40595f854c2fd2d5255073475cb7fe62da95fc390aa9f3ae31628d373e9a1",
+    "bytes": 1031226,
+    "total_paginas": 44,
+    "conferido_em": "2026-09-24",
+    "status": "Relatório completo arquivado e conferido.",
+    "complementos": [
+      {
+        "rotulo": "PoderData: 2º turno por renda",
+        "url": "https://static.poder360.com.br/uploads/2026/09/pd-pesquisa-eleitoral-intencao-presidente-23-set-2026-06-scaled.jpg",
+        "arquivo": "data/originals/poderdata_092026_24/pd-pesquisa-eleitoral-intencao-presidente-23-set-2026-06-scaled.jpg",
+        "sha256": "d238b1c964c6588325b5098a1e09bfd9aeb8ff348df9369b07a07ec2b3830950"
+      }
+    ]
+  },
+  "notas": "O cruzamento do 1º turno recompõe Flávio em 40,47%, contra 39% publicado, resíduo de 1,47 pp. A conta preserva o placar publicado e acrescenta apenas o delta da troca de renda. No 2º turno o maior resíduo é 0,07 pp."
+}
