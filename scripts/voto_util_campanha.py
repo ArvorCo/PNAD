@@ -195,7 +195,7 @@ def frases_uf(uf: str) -> list[str]:
             ):
                 dez = round((100 - g["flavio_entre_eleitores"]) / 10)
                 out.append(
-                    f"Quem vota em {g['nome']} para governador: {dez} de cada 10 eleitores dele ainda não votam em Flávio para presidente. "
+                    f"Quem vota em {g['nome']} para governador: {dez} de cada 10 eleitores de {g['nome']} ainda não votam em Flávio para presidente. "
                     f"Governador forte precisa de presidente parceiro."
                 )
                 break
@@ -206,7 +206,7 @@ def frases_uf(uf: str) -> list[str]:
         )
         if tv[1] >= 4:
             out.append(
-                f"{tv[0]} tem {fmt(tv[1])}% {em(uf)} e não chega perto do 2º turno em nenhuma pesquisa nacional. O voto nele pesa pouco no 1º turno e não existe no 2º."
+                f"{tv[0]} tem {fmt(tv[1])}% {em(uf)} e não chega perto do 2º turno em nenhuma pesquisa nacional. Esse voto pesa pouco no 1º turno e não existe no 2º."
             )
         q = (e.get("quem_ganha") or {}).get("valores")
         p2 = e.get("pres_2t")
@@ -299,7 +299,7 @@ def ficha_uf(uf: str) -> str:
                 "Campo",
                 "1º turno Flávio × Lula",
                 "2º turno Flávio × Lula",
-                "Terceira via de direita",
+                "Terceira via fora da esquerda",
                 "Indecisos / branco",
             ],
             linhas,
@@ -315,7 +315,7 @@ def ficha_uf(uf: str) -> str:
         for g in e["indicadores"].get("governador_cruzamento", []):
             if g["voto_governador"] >= 5:
                 itens.append(
-                    f"<li>{esc(g['nome'])} ({esc(g['partido'])}), {fmt(g['voto_governador'])}% ao governo: eleitores dele votam {fmt(g['flavio_entre_eleitores'])}% Flávio, {fmt(g['lula_entre_eleitores'])}% Lula, {fmt(g['fora_entre_eleitores'])}% em outro, indecisos ou branco.</li>"
+                    f"<li>{esc(g['nome'])} ({esc(g['partido'])}), {fmt(g['voto_governador'])}% ao governo, {esc(g['campo'])}: o eleitorado de {esc(g['nome'])} vota {fmt(g['flavio_entre_eleitores'])}% Flávio, {fmt(g['lula_entre_eleitores'])}% Lula, {fmt(g['fora_entre_eleitores'])}% em outro, indecisos ou branco.</li>"
                 )
         if itens:
             gov = "<h4>Governador</h4><ul>" + "".join(itens) + "</ul>"
@@ -323,13 +323,15 @@ def ficha_uf(uf: str) -> str:
         dirs = [
             c
             for c in sen.get("candidatos", [])
-            if c["campo"] in ("direita", "centro-direita") and c["valor"]
+            if c["campo"] in ("direita", "centro-direita")
+            and not c.get("alinhado_lula")
+            and c["valor"]
         ][:3]
         if dirs:
             gov += (
-                "<h4>Senado, direita</h4><p>"
+                "<h4>Senado, direita e centro-direita</h4><p>"
                 + "; ".join(
-                    f"{esc(c['nome'])} ({esc(c['partido'])}) {fmt(c['valor'])}%"
+                    f"{esc(c['nome'])} ({esc(c['partido'])}{', exceção declarada' if c.get('campo_nota') else ''}) {fmt(c['valor'])}%"
                     for c in dirs
                 )
                 + "</p>"
@@ -354,7 +356,7 @@ def cap_estados() -> str:
         "Estado por estado",
         "A ficha do seu estado",
         f"""
-<p class="lead">Cada ficha junta as duas pesquisas estaduais mais recentes, o cruzamento com governador quando existe, os nomes de direita ao Senado e frases prontas, escritas a partir do número do próprio estado. Estão ordenadas pelo tamanho da reserva.</p>
+<p class="lead">Cada ficha junta as duas pesquisas estaduais mais recentes, o cruzamento com governador quando existe, os nomes de direita e centro-direita ao Senado e frases prontas, escritas a partir do número do próprio estado. Estão ordenadas pelo tamanho da reserva.</p>
 <div class="seletor" hidden><label for="sel-uf">Ir para o estado</label><select id="sel-uf"><option value="">escolha</option>{opcoes}</select></div>
 <div class="fichas">{fichas}</div>
 """,
@@ -432,11 +434,11 @@ def cap_argumentos() -> str:
             ],
         ),
         (
-            "Para quem vota no governador ou no senador de direita",
+            "Para quem vota em governador ou senador fora do campo de Lula",
             [
                 "Governador sem presidente parceiro governa de freio de mão puxado.",
                 "Senado de direita sem presidente de direita é oposição. Com presidente, é governo.",
-                f"Nos doze estados em que a Quaest cruzou os votos, {fmt(F['gov_enderecavel'] / 1e6, 1)} milhões de eleitores votam num governador de direita ou de centro e ainda não votam em Flávio.",
+                f"Nos doze estados em que a Quaest cruzou os votos, {fmt(F['gov_enderecavel'] / 1e6, 1)} milhões de eleitores votam num governador fora do campo de Lula e ainda não votam em Flávio.",
             ],
         ),
         (
@@ -464,7 +466,7 @@ def cap_argumentos() -> str:
         "O que dizer",
         "Argumentos por público: o alvo é a inutilidade do voto, nunca a pessoa",
         f"""
-<p class="lead">Três regras antes das frases. Primeira: não ataque o candidato de quem você quer convencer; ele gosta dele, e é por isso que votou. Ataque a inutilidade do voto que não chega ao 2º turno. Segunda: use o número do estado da pessoa, não o nacional. Terceira: termine sempre com um pedido concreto, votar no dia 4, levar alguém junto.</p>
+<p class="lead">Três regras antes das frases. Primeira: não ataque o candidato de quem você quer convencer; a pessoa gosta de quem escolheu, e foi por isso que escolheu. Ataque a inutilidade do voto que não chega ao 2º turno. Segunda: use o número do estado da pessoa, não o nacional. Terceira: termine sempre com um pedido concreto, votar no dia 4, levar alguém junto.</p>
 <div class="args">{blocos}</div>
 <h3>Onde está a reserva, por grupo</h3>
 <p>No Datafolha de 15 a 17 de setembro, a maior distância entre o voto de Flávio no 2º e no 1º turno está na renda acima de 5 salários ({fmt(rica["f1"])}% no 1º turno, {fmt(rica["f2"])}% no 2º), entre quem não tem partido ({fmt(nt["f1"])}% e {fmt(nt["f2"])}%), entre os evangélicos ({fmt(ev["f1"])}% e {fmt(ev["f2"])}%) e no ensino superior ({fmt(sp["f1"])}% e {fmt(sp["f2"])}%). Entre os jovens de 16 a 24 anos, {fmt(jov["pode_mudar"])}% dizem que o voto ainda pode mudar, a maior volatilidade da pesquisa. Entre as mulheres, Flávio tem {fmt(mu["f1"])}% no 1º turno e {fmt(mu["f2"])}% no 2º, contra {fmt(mu["l2"])}% de Lula: é o grupo mais difícil e o que mais pesa.</p>
@@ -480,6 +482,25 @@ def captura_flavio() -> float:
     return D["nacional"]["fenomeno"]["captura_flavio"]
 
 
+def frase_tarcisio() -> str:
+    """Frase de SP a partir do cruzamento presidente x governador da Quaest."""
+    g = next(
+        (
+            x
+            for x in EST["SP"]["indicadores"].get("governador_cruzamento", [])
+            if x["nome"].startswith("Tarc")
+        ),
+        None,
+    )
+    if not g:
+        return "O eleitor de Tarcísio que ainda não fechou o presidente é conversa de família, de trabalho, de grupo de mensagem."
+    fora = 100 - g["flavio_entre_eleitores"]
+    return (
+        f"{fmt(fora)}% dos eleitores de Tarcísio ainda não votam em Flávio: {fmt(g['fora_entre_eleitores'])}% estão na terceira via, "
+        f"indecisos ou em branco, e {fmt(g['lula_entre_eleitores'])}% em Lula. É conversa de família, de trabalho, de grupo de mensagem."
+    )
+
+
 def cap_sotaques() -> str:
     reg = F["reserva_regiao"]
     sp, mg, rj = RES["SP"], RES["MG"], RES["RJ"]
@@ -491,15 +512,15 @@ def cap_sotaques() -> str:
             [
                 "Aqui ninguém gosta de desperdício. Voto em quem não chega é voto que fica pelo caminho.",
                 "Lula precisa do Nordeste para fechar no 1º turno. Cada voto de Flávio aqui é o que segura a eleição aberta.",
-                "Quem vota em ACM Neto, Ciro Gomes ou Raquel Lyra para governador e ainda não decidiu o presidente: a sua escolha estadual já diz o que você quer mudar.",
+                "Quem vota em ACM Neto, Ciro Gomes ou Raquel Lyra para governador já escolheu, para o estado, um nome que não é do PT nem do PSB. A mesma escolha cabe na urna para presidente.",
             ],
         ),
         (
             "São Paulo",
             f"Reserva de {mil(sp['reserva_eleitores'])}",
             [
-                "São Paulo decide o tamanho da vitória. É o maior estoque de voto útil do país.",
-                "Três em cada dez eleitores de Tarcísio ainda não votam em Flávio. É conversa de família, de trabalho, de grupo de mensagem.",
+                "São Paulo decide o tamanho do resultado. É o maior estoque de voto útil do país.",
+                frase_tarcisio(),
             ],
         ),
         (
@@ -514,7 +535,7 @@ def cap_sotaques() -> str:
             "Rio de Janeiro",
             f"Reserva de {mil(rj['reserva_eleitores'])}",
             [
-                "Papo reto: o 2º turno já está escolhido. O 1º turno é para dizer com quantos votos.",
+                "Papo reto: o 2º turno já está desenhado, Lula contra Flávio. O 1º turno é para dizer com quantos votos cada um chega.",
                 "Oito em cada dez eleitores de Douglas Ruas já votam em Flávio. Falta o resto do Rio.",
             ],
         ),
@@ -522,7 +543,7 @@ def cap_sotaques() -> str:
             "Sul",
             f"Reserva de {mil(sul)}",
             [
-                "No Sul o voto útil está mais adiantado. O que falta agora é comparecer: no Paraná e no Rio Grande do Sul, o eleitor que costuma faltar é mais lulista que o que sempre vota.",
+                "No Sul, Flávio já lidera com folga. O que decide agora é comparecer: no Paraná e no Rio Grande do Sul, o eleitor que costuma faltar é mais lulista que o que sempre vota.",
                 "Quem vota em Moro, Jorginho Mello ou Zucco já escolheu o lado. Leve esse voto até a urna para presidente também.",
             ],
         ),
@@ -623,7 +644,7 @@ def cap_lei() -> str:
 <li>Conversar, publicar e compartilhar opinião na internet como pessoa física, sem pagar para impulsionar (Lei 9.504/1997, art. 57-C: impulsionamento pago é só de partido, coligação e candidato).</li>
 <li>Distribuir material, fazer caminhada, carreata e passeata até as 22h do sábado, 3 de outubro (art. 39, § 9º).</li>
 <li>No dia 4, manifestar a preferência em silêncio, com bandeira, broche, adesivo ou camiseta (art. 39-A).</li>
-<li>Levar à seção quem mora com você, no seu carro, para votar (Lei 6.091/1974, art. 5º, III).</li>
+<li>Levar à seção, no seu próprio carro, os membros da sua família para votar (Lei 6.091/1974, art. 5º, III). Transporte de outros eleitores é proibido do dia 3 ao dia 5.</li>
 </ul></div>
 <div class="card nao"><h3>Não pode</h3><ul>
 <li>Publicar conteúdo novo ou impulsionar propaganda no dia da eleição. O que foi publicado antes pode ficar no ar (Lei 9.504/1997, art. 39, § 5º, IV).</li>

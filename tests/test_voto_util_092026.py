@@ -239,3 +239,35 @@ def test_pagina_sem_travessao_e_com_todos_os_capitulos() -> None:
     )
     for uf in UFS:
         assert f'id="uf-{uf}"' in html, uf
+
+
+def test_tucano_e_centro_esquerda_e_nao_entra_como_direita(data: dict) -> None:
+    """Decisão editorial declarada: PSDB e Cidadania são centro-esquerda."""
+    assert B.campo_de("PSDB") == "centro-esquerda"
+    assert B.campo_de("CIDADANIA") == "centro-esquerda"
+    assert B.campo_de("PSD") == "centro"
+    for e in data["estados"].values():
+        lider = e["indicadores"].get("senado_direita_lider")
+        if lider:
+            assert lider["campo"] in ("direita", "centro-direita")
+            assert lider["partido"] not in ("PSDB", "CIDADANIA")
+            assert not lider["alinhado_lula"]
+
+
+def test_governadores_do_campo_de_lula_ficam_fora_do_alvo(data: dict) -> None:
+    for e in data["estados"].values():
+        for g in e["indicadores"].get("governador_cruzamento", []):
+            if g["partido"] in ("PT", "PSB", "PSOL", "PCdoB", "PDT"):
+                assert g["alinhado_lula"], g["nome"]
+
+
+def test_pagina_sem_marcador_de_template_vazio() -> None:
+    import html as html_mod
+    import re
+
+    if not PAGINA.exists():
+        pytest.skip("rode scripts/voto-util-092026-build.py antes")
+    s = PAGINA.read_text(encoding="utf-8")
+    s = re.sub(r"<script.*?</script>|<style.*?</style>", "", s, flags=re.DOTALL)
+    texto = html_mod.unescape(re.sub(r"<[^>]+>", " ", s))
+    assert "{" not in texto and "}" not in texto

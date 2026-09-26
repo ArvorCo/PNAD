@@ -250,6 +250,7 @@ def main() -> None:
     n_quaest = len(CAP.EST)
     n_rt = len(CAP.D["realtime"])
     n_atlas = len(CAP.D.get("atlas", {}))
+    n_nac = len({o["instituto"] for o in CAP.D["nacional"]["ondas"]})
     rel_txt = (
         f"{n_quaest} relatórios estaduais da Quaest, {n_rt} da Real Time Big Data"
         + (f" e {n_atlas} da AtlasIntel" if n_atlas else "")
@@ -301,7 +302,7 @@ def main() -> None:
 <dl class="case-file">
 <div><dt>Relatórios estaduais</dt><dd>{rel_curto}</dd></div>
 <div><dt>Onda mais recente</dt><dd>Quaest, 19 a 24/09</dd></div>
-<div><dt>Pesquisas nacionais</dt><dd>9 institutos registrados</dd></div>
+<div><dt>Pesquisas nacionais</dt><dd>{n_nac} institutos registrados</dd></div>
 <div><dt>Base eleitoral</dt><dd>TSE 2022 e eleitorado 2026</dd></div>
 <div><dt>Natureza</dt><dd>Análise e cenário, não pesquisa</dd></div>
 <div><dt>Lado</dt><dd>Declarado: voto útil em Flávio</dd></div>

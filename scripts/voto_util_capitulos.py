@@ -202,7 +202,7 @@ def _fatos() -> dict:
     gov_end = gov_lula = 0
     for e in EST.values():
         for g in e["indicadores"].get("governador_cruzamento", []):
-            if g["campo"] in ("direita", "centro-direita", "centro"):
+            if not g.get("alinhado_lula"):
                 gov_end += g["enderecavel_eleitores"] or 0
                 gov_lula += round(e["peso"] * (g["cruzado_lula_pp"] or 0) / 100)
     por_regiao: dict[str, int] = {}
@@ -257,12 +257,13 @@ def cap_tese() -> str:
     so_lula = cen("Só Lula consolida")
     dois = cen("Os dois lados consolidam")
     q, q0, qj = F["quaest_ultima"], F["quaest_inicio_set"], F["quaest_junho"]
+    n_inst = len(FEN["institutos"])
     return section(
         "tese",
         "A tese",
         "O voto útil deixou de ser opção. Virou voto necessário.",
         f"""
-<p class="lead">Na reta final, a terceira via está secando e quase tudo o que sai dela vai para um lado. Desde 26 de agosto, somando oito institutos nacionais, Flávio ganhou {fmt(FEN["soma_delta_flavio"], 1)} pontos e Lula ganhou {fmt(FEN["soma_delta_lula"], 1)}. De cada dez pontos que mudaram de dono, {fmt(10 * FEN["captura_flavio"])} foram para Flávio. É o fenômeno que esta casa descreveu em junho, quando a Quaest mostrava Flávio com {fmt(qj["flavio"])}% no 1º turno e {fmt(qj["flavio_2t"])}% no 2º, e chamamos os {fmt(qj["flavio_2t"] - qj["flavio"])} pontos de diferença de voto útil reprimido.</p>
+<p class="lead">Na reta final, a terceira via está secando e quase tudo o que sai dela vai para um lado. Desde 26 de agosto, na média de {n_inst} institutos nacionais, a terceira via perdeu {fmt(-FEN["soma_delta_terceira"] / n_inst, 1)} pontos, Flávio ganhou {fmt(FEN["soma_delta_flavio"] / n_inst, 1)} e Lula ganhou {fmt(FEN["soma_delta_lula"] / n_inst, 1)}. De cada dez pontos que os dois ganharam, {fmt(10 * FEN["captura_flavio"])} foram para Flávio. É o fenômeno que esta casa descreveu em junho, quando a Quaest mostrava Flávio com {fmt(qj["flavio"])}% no 1º turno e {fmt(qj["flavio_2t"])}% no 2º, e chamamos os {fmt(qj["flavio_2t"] - qj["flavio"])} pontos de diferença de voto útil reprimido.</p>
 <p>O reprimido começou a sair. Em 1º de setembro a Quaest tinha Flávio com {fmt(q0["flavio"])}% no 1º turno e {fmt(q0["flavio_2t"])}% no 2º: {fmt(q0["flavio_2t"] - q0["flavio"])} pontos de distância. Em 20 de setembro, {fmt(q["flavio"])}% e {fmt(q["flavio_2t"])}%: {fmt(q["flavio_2t"] - q["flavio"])} pontos. Andou {fmt((q0["flavio_2t"] - q0["flavio"]) - (q["flavio_2t"] - q["flavio"]))}, faltam {fmt(q["flavio_2t"] - q["flavio"])}. E nos estados, que é onde o voto mora, a mesma conta soma <strong>{fmt(F["reserva_total"] / 1e6, 1)} milhões de eleitores</strong> que já escolheram Flávio contra Lula e ainda não o escolheram no 1º turno.</p>
 <p>Este mapa diz onde estão essas pessoas, estado por estado, e por que o voto delas deixou de ser opcional. O modelo de cenário no fim da página, calibrado pela média das pesquisas nacionais da última semana e ponderado por quem de fato comparece, mostra quatro coisas:</p>
 <ol class="numeros">
@@ -310,7 +311,7 @@ def cap_fenomeno() -> str:
 <p class="lead">A AtlasIntel é o caso mais nítido. Em {a0["fim"][8:10]}/{a0["fim"][5:7]} ela media {fmt(a0["terceira"], 1)}% para todos os candidatos fora da polarização; em {a1["fim"][8:10]}/{a1["fim"][5:7]}, {fmt(a1["terceira"], 1)}%. No mesmo intervalo, Flávio foi de {fmt(a0["flavio"], 1)}% para {fmt(a1["flavio"], 1)}%, e Lula de {fmt(a0["lula"], 1)}% para {fmt(a1["lula"], 1)}%.</p>
 {figure("fenomeno", "Primeira onda de cada instituto a partir de 26/08, quando todas as candidaturas atuais já estavam no cartão, contra a mais recente. Terceira via é a soma dos votos em candidatos que não são Lula nem Flávio. Fonte: relatórios registrados no TSE, base do agregador Arvor.")}
 {table(["Instituto", "Período", "Terceira via", "Flávio", "Lula", "Parte de Flávio no ganho dos dois"], linhas, "Queda da terceira via por instituto")}
-<p>Somando os oito institutos com duas ondas no período, a terceira via perdeu {fmt(-FEN["soma_delta_terceira"], 1)} pontos. Flávio ganhou {fmt(FEN["soma_delta_flavio"], 1)} e Lula {fmt(FEN["soma_delta_lula"], 1)}. A razão de captura, ganho de Flávio sobre o ganho somado dos dois, é de <strong>{fmt(100 * FEN["captura_flavio"])}%</strong>.</p>
+<p>Na média dos {len(FEN["institutos"])} institutos com duas ondas no período, a terceira via perdeu {fmt(-FEN["soma_delta_terceira"] / len(FEN["institutos"]), 1)} pontos. Flávio ganhou {fmt(FEN["soma_delta_flavio"] / len(FEN["institutos"]), 1)} e Lula {fmt(FEN["soma_delta_lula"] / len(FEN["institutos"]), 1)}. A razão de captura, ganho de Flávio sobre o ganho somado dos dois, é de <strong>{fmt(100 * FEN["captura_flavio"])}%</strong>.</p>
 <div class="callout contra"><b>O que contraria a tese, com o mesmo destaque.</b> O movimento não é uniforme. Onde o instituto não mostra queda da terceira via ou mostra captura abaixo de metade para Flávio: {esc(contra_txt)}. E Lula também cresce em quase todos: o voto útil está acontecendo dos dois lados, o que é exatamente o risco que o capítulo do modelo mede.</div>
 """,
     )
@@ -491,12 +492,12 @@ def cap_terceira() -> str:
     )
     return section(
         "terceira",
-        "Oportunidade 1",
+        "Oportunidade 2",
         "A terceira via: quem ainda está lá e quão firme está",
         f"""
 <p class="lead">Na última pesquisa nacional de cada instituto, nenhuma candidatura de terceira via passa de um dígito: o maior número é {fmt(F["maior_terceira"]["valor"], 1)}%. O voto que ainda está nelas é o mais volátil da eleição: onde a Quaest pergunta, {fmt(cury_med)}% do eleitor de Augusto Cury, em média, diz que o voto é definitivo, contra {fmt(fl_med)}% do eleitor de Flávio. Quase metade do eleitor de Cury diz, com todas as letras, que pode mudar.</p>
 <p>O caso de Goiás mostra a velocidade. Ronaldo Caiado, ex-governador e candidato a presidente, tinha {fmt(caiado_ini)}% no próprio estado em agosto. Em 24 de setembro, {fmt(caiado_fim)}%. Flávio subiu de {fmt(flavio_ini)}% para {fmt(flavio_fim)}% no mesmo intervalo.{go_txt}</p>
-{table(["UF", "Cury", "Caiado", "Zema", "Renan", "Terceira via de direita", "Eleitores", "Eleitor de Cury com voto definitivo", "Fonte"], linhas, "Terceira via por estado")}
+{table(["UF", "Cury", "Caiado", "Zema", "Renan", "Terceira via fora da esquerda", "Eleitores", "Eleitor de Cury com voto definitivo", "Fonte"], linhas, "Terceira via por estado")}
 <p class="source">Percentuais do 1º turno presidencial na lista completa de candidatos. Eleitores = votantes esperados vezes o percentual. A coluna de voto definitivo só existe onde a Quaest publicou o recorte por candidato.</p>
 """,
     )
@@ -507,10 +508,7 @@ def _gov_linhas() -> list[tuple[str, dict]]:
     out = []
     for uf, e in EST.items():
         for g in e["indicadores"].get("governador_cruzamento", []):
-            if (
-                g["campo"] in ("direita", "centro-direita", "centro")
-                and g["voto_governador"] >= 5
-            ):
+            if not g.get("alinhado_lula") and g["voto_governador"] >= 5:
                 out.append((uf, g))
     out.sort(key=lambda x: -(x[1]["enderecavel_eleitores"] or 0))
     return out
@@ -527,7 +525,7 @@ def cap_governadores() -> str:
             else ""
         )
         destaques.append(
-            f"<li><b>{esc(g['nome'])} ({esc(uf)})</b>: {fmt(g['voto_governador'])}% para governador. Entre os eleitores dele, {fmt(g['flavio_entre_eleitores'])}% votam Flávio{mov}, "
+            f"<li><b>{esc(g['nome'])} ({esc(g['partido'])}, {esc(g['campo'])}, {esc(uf)})</b>: {fmt(g['voto_governador'])}% para governador. Entre os eleitores de {esc(g['nome'])}, {fmt(g['flavio_entre_eleitores'])}% votam Flávio{mov}, "
             f"{fmt(g['lula_entre_eleitores'])}% votam Lula e {fmt(g['fora_entre_eleitores'])}% estão na terceira via, indecisos ou em branco: <strong>{mil(g['enderecavel_eleitores'])}</strong> de eleitores.</li>"
         )
     sem_cx = []
@@ -540,6 +538,7 @@ def cap_governadores() -> str:
             [
                 uf,
                 f"{esc(g['nome'])} ({esc(g['partido'])})",
+                esc(g["campo"]),
                 fmt(g["valor"]),
                 fmt(e["pres_1t"]["grupos"]["F"]),
                 sgn(i["vao_governador_pp"]),
@@ -559,17 +558,17 @@ def cap_governadores() -> str:
     ]
     return section(
         "governadores",
-        "Oportunidade 2",
-        "O eleitor do governador de direita que ainda não é eleitor de Flávio",
+        "Oportunidade 3",
+        "Quem vota em governador fora do campo de Lula e ainda não vota em Flávio",
         f"""
-<p class="lead">Nas doze ondas de setembro, a Quaest cruzou o voto para presidente com o voto para governador. É o dado mais útil da eleição para quem faz campanha de rua: diz, dentro do eleitorado de cada candidato a governador, quantos já votam em Flávio e quantos ainda não. Somados os candidatos fora da esquerda, são <strong>{fmt(F["gov_enderecavel"] / 1e6, 1)} milhões de eleitores</strong> que votam no governador de direita ou de centro e, para presidente, estão na terceira via, indecisos ou em branco. Outros {fmt(F["gov_cruzado_lula"] / 1e6, 1)} milhões votam no mesmo governador e em Lula.</p>
-{figure("governadores", "Cruzamento presidente (1º turno) por governador (1º turno), rodada de 19 a 24/09. Só candidatos fora da esquerda com 5% ou mais. Coluna da direita: eleitores do governador que não votam nem em Flávio nem em Lula. Classificação de campo declarada no fim da página.", wide=True)}
+<p class="lead">Nas doze ondas de setembro, a Quaest cruzou o voto para presidente com o voto para governador. É o dado mais útil da eleição para quem faz campanha de rua: diz, dentro do eleitorado de cada candidatura ao governo, quantos já votam em Flávio e quantos ainda não. Somadas as candidaturas que não são da esquerda nem aliadas declaradas de Lula, são <strong>{fmt(F["gov_enderecavel"] / 1e6, 1)} milhões de eleitores</strong> que escolheram, para o governo do estado, um nome fora do campo de Lula e, para presidente, estão na terceira via, indecisos ou em branco. Outros {fmt(F["gov_cruzado_lula"] / 1e6, 1)} milhões votam no mesmo governador e em Lula. O campo de cada nome vai ao lado, porque fora do campo de Lula não quer dizer de direita: os tucanos, por exemplo, são centro-esquerda.</p>
+{figure("governadores", "Cruzamento presidente (1º turno) por governador (1º turno), rodada de 19 a 24/09. Só candidaturas que não são da esquerda nem aliadas declaradas de Lula, com 5% ou mais; o campo de cada uma vai ao lado do nome. Coluna da direita: eleitores do governador que não votam nem em Flávio nem em Lula. Classificação de campo declarada no fim da página.", wide=True)}
 <ul class="destaques">{"".join(destaques)}</ul>
-<p>O movimento dentro desses eleitorados é o fenômeno em tamanho real. Em {len(subiram)} dos {len(subiram) + len(caiu)} governadores com duas rodadas, a parte que vota em Flávio subiu. {"Caiu em " + ", ".join(esc(g["nome"]) for _, g in caiu) + "." if caiu else ""}</p>
-<div class="callout"><b>O eleitor mais difícil vale o dobro.</b> Onde o eleitor do governador de direita vota Lula (ACM Neto na Bahia, Ciro Gomes no Ceará, Raquel Lyra em Pernambuco), cada conversão tira um voto de Lula e dá um a Flávio: move a margem em dois. É a conversa mais difícil e a mais valiosa, e só funciona com o argumento do estado, não com o nacional.</div>
+<p>O movimento dentro desses eleitorados é o fenômeno em tamanho real. Em {len(subiram)} das {len(subiram) + len(caiu)} candidaturas medidas em duas rodadas, a parte do eleitorado que vota em Flávio subiu. {"Caiu em " + ", ".join(esc(g["nome"]) for _, g in caiu) + "." if caiu else ""}</p>
+<div class="callout"><b>O eleitor mais difícil vale o dobro.</b> Onde o eleitorado de uma candidatura ao governo fora do campo de Lula vota Lula para presidente (ACM Neto na Bahia, Ciro Gomes no Ceará, Raquel Lyra em Pernambuco), cada conversão tira um voto de Lula e dá um a Flávio: move a margem em dois. É a conversa mais difícil e a mais valiosa, e só funciona com o argumento do estado, não com o nacional.</div>
 <h3>Estados sem o cruzamento</h3>
-<p>Nas ondas de agosto a Quaest não cruzou presidente com governador. Ali só dá para medir o vão: o melhor candidato fora da esquerda ao governo menos o voto de Flávio no mesmo relatório. É teto endereçável, não previsão, porque votar num governador não obriga ninguém a nada para presidente.</p>
-{table(["UF", "Candidato fora da esquerda mais votado", "Governo", "Flávio", "Vão"], sem_cx, "Vão entre governador e Flávio nos estados sem cruzamento")}
+<p>Nas ondas de agosto a Quaest não cruzou presidente com governador. Ali só dá para medir o vão: o candidato mais votado ao governo fora do campo de Lula menos o voto de Flávio no mesmo relatório. É teto endereçável, não previsão, porque votar num governador não obriga ninguém a nada para presidente.</p>
+{table(["UF", "Mais votado fora do campo de Lula", "Campo", "Governo", "Flávio", "Vão"], sem_cx, "Vão entre governador e Flávio nos estados sem cruzamento")}
 """,
     )
 
@@ -582,16 +581,25 @@ def cap_senado() -> str:
         cands = [c for c in sen.get("candidatos", []) if c["valor"] is not None]
         if not cands:
             continue
-        direita = [c for c in cands if c["campo"] in ("direita", "centro-direita")][:3]
+        direita = [
+            c
+            for c in cands
+            if c["campo"] in ("direita", "centro-direita")
+            and not c.get("alinhado_lula")
+        ][:3]
         soma = sum(
-            c["valor"] for c in cands if c["campo"] in ("direita", "centro-direita")
+            c["valor"]
+            for c in cands
+            if c["campo"] in ("direita", "centro-direita")
+            and not c.get("alinhado_lula")
         )
         linhas.append(
             [
                 uf,
                 "; ".join(
-                    f"{esc(c['nome'])} ({esc(c['partido'])}) {fmt(c['valor'])}"
+                    f"{esc(c['nome'])} ({esc(c['partido'])}{', exceção' if c.get('campo_nota') else ''}) {fmt(c['valor'])}"
                     for c in direita
+                    if c["valor"]
                 )
                 or "n/d",
                 fmt(soma),
@@ -601,12 +609,12 @@ def cap_senado() -> str:
         )
     return section(
         "senado",
-        "Oportunidade 3",
+        "Oportunidade 4",
         "O Senado que a direita quer eleger precisa de um presidente para funcionar",
         f"""
 <p class="lead">Em 2026 cada estado elege dois senadores, dois terços da Casa. O eleitor de direita que escolhe com cuidado os dois nomes para o Senado e deixa a Presidência para depois está montando uma oposição, não um governo. A tabela compara, estado a estado, a soma dos candidatos de direita e centro-direita ao Senado, na média das duas vagas, com o voto de Flávio na mesma amostra.</p>
-{table(["UF", "Principais nomes de direita ao Senado", "Direita no Senado", "Flávio", "Diferença"], linhas, "Senado de direita contra Flávio por estado")}
-<p class="source">Quaest, intenção de voto estimulada para senador, média das duas vagas. Classificação por partido, com as exceções declaradas no fim da página. Onde a diferença é positiva, há eleitor que vota em senador de direita e ainda não vota em Flávio; onde é negativa, Flávio já puxa mais que a chapa ao Senado.</p>
+{table(["UF", "Principais nomes de direita e centro-direita ao Senado", "Direita e centro-direita no Senado", "Flávio", "Diferença"], linhas, "Senado de direita e centro-direita contra Flávio por estado")}
+<p class="source">Quaest, intenção de voto estimulada para senador, média das duas vagas. Classificação por partido, com as exceções declaradas no fim da página: tucanos (PSDB e Cidadania) são centro-esquerda e o PSD é centro, por isso Aécio Neves, Plínio Valério ou Marcelo Castro não entram na coluna. Nomes marcados com "exceção" têm o campo definido pelo alinhamento declarado, não pela sigla. Onde a diferença é positiva, há eleitor que vota em senador de direita ou centro-direita e ainda não vota em Flávio; onde é negativa, Flávio já puxa mais que a chapa ao Senado.</p>
 <div class="callout"><b>Como usar.</b> O argumento não é contra o candidato ao Senado; é a favor do casamento. Senador de direita com presidente de direita aprova. Senador de direita com presidente de esquerda obstrui, e obstrução não entrega segurança, reforma nem corte de imposto.</div>
 """,
     )
@@ -656,7 +664,7 @@ def cap_provavel() -> str:
     top = ", ".join(f"{uf} ({mil(v)})" for uf, v in linhas[:5])
     return section(
         "provavel",
-        "Oportunidade 4",
+        "Oportunidade 5",
         "Quem de fato vota: o eleitor provável não é trunfo automático",
         f"""
 <p class="lead">A Quaest pergunta, em doze estados, se o entrevistado sempre vota, se já deixou de votar e se vai votar agora. Cruzando essa resposta com o voto, dá para pesar cada eleitor pela chance de comparecer. O resultado nacional é quase neutro e merece ser dito sem enfeite: entre todos os entrevistados, Lula tem {pct(hoje_todos["lula_validos"])} dos válidos; entre os eleitores prováveis, {pct(hoje_lv["lula_validos"])}. O comparecimento não entrega a eleição para ninguém.</p>
@@ -716,7 +724,7 @@ def cap_resiliente() -> str:
 <p class="lead">Nos estados em que a Quaest mediu duas vezes, a parte do eleitor de Flávio que diz que o voto é definitivo subiu em {len(subiu)} de {len(sub)}. Na última rodada, fica entre {fmt(min(x[2] for x in sub))}% e {fmt(max(x[2] for x in sub))}%. O voto que ainda pode mudar é de {fmt(min(pm))}% a {fmt(max(pm))}% do eleitorado de Flávio, e é para esse eleitor que a última semana de ataques vai ser desenhada.</p>
 {figure("definitiva", "Quaest: você diria que a sua escolha de voto para presidente é definitiva ou pode mudar? Ponto vazado: rodada anterior. Verde: candidaturas de terceira via com 5% ou mais no estado.")}
 <h3>A profecia que o adversário mais precisa</h3>
-<p>Em {len(lidera_e_acha_que_perde)} dos {len(lidera)} estados em que Flávio lidera o 2º turno, mais eleitores apostam na vitória de Lula do que na dele. E em {aposta_maior} dos {len(exp)} estados com as duas perguntas, a aposta na vitória de Lula é maior que o voto em Lula no 2º turno.{sp_txt} Quem acha que já perdeu fica em casa, vota em branco ou vota no candidato de protesto. O antídoto é mostrar ao eleitor o número do estado dele: ele não está sozinho, está na maioria.</p>
+<p>Em {len(lidera_e_acha_que_perde)} dos {len(lidera)} estados em que Flávio lidera o 2º turno, mais eleitores apostam na vitória de Lula do que na dele. E em {aposta_maior} dos {len(exp)} estados com as duas perguntas, a aposta na vitória de Lula é maior que o voto em Lula no 2º turno.{sp_txt} Quem acha que já perdeu fica em casa, vota em branco ou vota no candidato de protesto. O antídoto é mostrar o número do próprio estado: quem acha que perdeu não está sozinho, está na maioria.</p>
 {figure("expectativa", "Quaest, 2º turno Lula × Flávio e pergunta sobre quem vai ganhar a eleição para presidente, independentemente do voto. Rodada de 19 a 24/09.")}
 """,
     )
@@ -798,7 +806,7 @@ def cap_modelo() -> str:
         "Se der certo: quanto Flávio teria dos votos válidos",
         f"""
 <p class="lead">A pergunta é condicional e o modelo responde condicionalmente. Pegamos cada estado, pesamos cada eleitor pela chance de comparecer, e movemos para o 1º turno uma fração da reserva que o próprio estado já mostra no 2º turno. Somamos os 27 estados pelo número de pessoas que de fato votam. O resultado não é previsão de urna: é a aritmética do voto útil, com as hipóteses na mesa.</p>
-{figure("modelo", "Média das bases estaduais ({casas_txt()}), cada uma calibrada pela média nacional da última semana e ponderada por eleitor provável. Faixa amarela: acima de 50% dos válidos a eleição termina no 1º turno.", wide=True)}
+{figure("modelo", f"Média das bases estaduais ({casas_txt()}), cada uma calibrada pela média nacional da última semana e ponderada por eleitor provável. Faixa amarela: acima de 50% dos válidos a eleição termina no 1º turno.", wide=True)}
 {calculadora()}
 <div class="grid2">
 <div class="card destaque-azul"><h3>{titulo_limiar(l1, l2)}</h3><p>Flávio termina o 1º turno na frente se {faixa_lista([l1, l2])} da reserva antecipar o voto e Lula ficar onde está, conforme a base ({casas_txt()}). Se Lula antecipar a mesma fração, é preciso {faixa_lista([d1, d2])}.</p></div>
@@ -922,7 +930,7 @@ def cap_nacional() -> str:
 <div class="card"><h3>O voto de Flávio endureceu</h3><p>Na série da Nexus, a parte do eleitor de Flávio que diz que a decisão está tomada foi de {fmt(cert_f[0]) if cert_f else "n/d"}% em {esc(cert_r[0]) if cert_r else ""} para {fmt(cert_f[-1]) if cert_f else "n/d"}% em {esc(cert_r[-1]) if cert_r else ""}. Na Quaest, de {fmt(qf[0][0]) if qf else "n/d"}% em 14/08 para {fmt(qf[-1][0]) if qf else "n/d"}% em 21/09. O eleitor de Cury, de Caiado e de Zema fica perto de metade: é o voto que ainda se move.</p></div>
 </div>
 <h3>O eleitor de terceira via acha que Lula vai ganhar</h3>
-<p>Entre os eleitores de Cury, {fmt(exp.get("Cury", {}).get("Lula"))}% acham que Lula vence a eleição, contra {fmt(exp.get("Cury", {}).get("Flávio"))}% que apostam em Flávio. Entre os de Caiado, {fmt(exp.get("Caiado", {}).get("Lula"))}% contra {fmt(exp.get("Caiado", {}).get("Flávio"))}% (Nexus, p. 48). E {fmt(mot.get("Cury", [0, 0])[1])}% do eleitor de Cury dizem que ele não é o candidato ideal, só o melhor entre os disponíveis (p. 46). É o eleitor que não quer Lula, acha que Lula ganha e ainda não percebeu que o voto dele é a diferença.</p>
+<p>Entre os eleitores de Cury, {fmt(exp.get("Cury", {}).get("Lula"))}% acham que Lula vence a eleição, contra {fmt(exp.get("Cury", {}).get("Flávio"))}% que apostam em Flávio. Entre os de Caiado, {fmt(exp.get("Caiado", {}).get("Lula"))}% contra {fmt(exp.get("Caiado", {}).get("Flávio"))}% (Nexus, p. 48). E {fmt(mot.get("Cury", [0, 0])[1])}% do eleitor de Cury dizem que ele não é o candidato ideal, só o melhor entre os disponíveis (p. 46). É o eleitor que não quer Lula, acha que Lula ganha e ainda não percebeu que é o próprio voto que faz a diferença.</p>
 <h3>O comparecimento, pela Nexus</h3>
 <p>Quem votou nas duas últimas eleições dá {fmt(presenca.get("Lula"))} a {fmt(presenca.get("Flávio"))} para Lula; quem se absteve nas duas, {fmt(abst.get("Lula"))} a {fmt(abst.get("Flávio"))} (p. 22). Na Nexus, portanto, o eleitor que falta é mais lulista, e o comparecimento favorece Flávio. Na Quaest estadual o efeito líquido é quase nulo. As duas leituras entram no texto; nenhuma autoriza contar com a abstenção do outro lado.</p>
 """,
@@ -945,10 +953,22 @@ def cap_limites() -> str:
 <li><b>Datas diferentes.</b> Treze estados só têm Quaest de agosto; o movimento de setembro foi estimado pelo que a própria Quaest mediu nos outros doze. A Real Time cobre 23 estados, alguns com campo no começo de setembro.</li>
 <li><b>Eleitor provável é autodeclarado.</b> A pergunta sobre comparecimento mede intenção, não comportamento. O cadastro eleitoral também infla a abstenção oficial com eleitores que já não existem.</li>
 <li><b>Transferência de indecisos e brancos é hipótese.</b> Nenhum instituto publica para onde vão no 2º turno. Isso só afeta quanto da reserva sai de voto válido, não o tamanho dela.</li>
-<li><b>Classificação de campo é editorial.</b> Direita, centro e esquerda para governador e senador seguem o partido, com as exceções listadas abaixo. O cruzamento da Quaest não depende dessa classificação: ele mede o voto do eleitor de cada nome.</li>
+<li><b>Classificação de campo é editorial.</b> Direita, centro-direita, centro, centro-esquerda e esquerda seguem o partido do candidato, com as exceções listadas nas fontes. Tucanos são centro-esquerda; o PSD é centro. "Fora do campo de Lula" quer dizer só que o nome não é da esquerda nem aliado declarado do governo federal, e não que seja de direita. O cruzamento da Quaest não depende dessa classificação: ele mede o voto do eleitorado de cada nome.</li>
 <li><b>O capítulo de campanha tem lado.</b> Ele foi escrito para quem faz campanha voluntária por Flávio Bolsonaro. Os números que ele usa são os mesmos que o resto da página publica, inclusive os que contrariam a tese.</li>
 </ol>
 """,
+    )
+
+
+def mapa_partidos() -> str:
+    grupos: dict[str, list[str]] = {}
+    for sigla, campo in D.get("partido_campo", {}).items():
+        if sigla in ("UNIAO", "PCDOB"):
+            continue
+        grupos.setdefault(campo, []).append(sigla)
+    ordem = ("direita", "centro-direita", "centro", "centro-esquerda", "esquerda")
+    return "; ".join(
+        f"{c}, {', '.join(sorted(grupos[c]))}" for c in ordem if c in grupos
     )
 
 
@@ -989,7 +1009,7 @@ def cap_fontes() -> str:
             f"{esc(o['instituto'])} {o['fim'][8:10]}/{o['fim'][5:7]} ({esc(o.get('registro') or 'n/d')})"
         )
     exc = "".join(
-        f"<li>{esc(x['nome'])} ({x['uf']}): {esc(x['campo'])}, {esc(x['motivo'])}.</li>"
+        f"<li>{esc(x['nome'])} ({x['uf']}): {esc(x['campo'])}{', aliado de Lula' if x.get('alinhado_lula') else ''}; {esc(x['motivo'])}.</li>"
         for x in D["campo_excecao"]
     )
     return section(
@@ -1011,7 +1031,8 @@ def cap_fontes() -> str:
 <p>{"; ".join(nac)}. Matriz de transferência, voto de 2022, certeza, expectativa e comparecimento: Nexus/BTG de 18 a 20/09 (BR-00485/2026), Quaest de 17 a 20/09 (BR-06004/2026), Datafolha de 15 a 17/09 (BR-04029/2026), AtlasIntel, Real Time e PoderData de 24/09.</p>
 <h3>Base eleitoral</h3>
 <p>TSE, resultados simplificados de 2022 por UF (eleições 544 e 545, <code>resultados.tse.jus.br</code>); votação por município e zona de 2022; perfil do eleitorado de julho de 2026. Malha de UFs do IBGE (API de malhas, qualidade mínima).</p>
-<h3>Classificação de campo com exceção declarada</h3>
+<h3>Classificação de campo</h3>
+<p>Pela sigla do candidato, como decisão editorial declarada: {mapa_partidos()}. Fora do campo de Lula quer dizer: não é da esquerda nem tem aliança local declarada com o governo federal. Exceções por candidato:</p>
 <ul class="fontes">{exc}</ul>
 <h3>Reprodução</h3>
 <p class="repro">python3 scripts/voto-util-092026-tse.py<br>python3 scripts/voto-util-092026-data.py<br>python3 scripts/voto-util-092026-build.py<br>pytest -q tests/test_voto_util_092026.py</p>
@@ -1037,7 +1058,7 @@ def cap_reencontro() -> str:
     antigos = [uf for uf, x in r.items() if (x.get("campo") or "")[:10] < "2026-09-10"]
     return section(
         "reencontro",
-        "Oportunidade 5",
+        "Oportunidade 1",
         "O eleitor de Bolsonaro de 2022 que ainda não voltou",
         f"""
 <p class="lead">A AtlasIntel pergunta, em cada estado, em quem o entrevistado votou no 2º turno de 2022 e cruza com o voto de hoje. Somados os {len(r)} estados em que ela publicou esse cruzamento, <strong>{fmt(total / 1e6, 1)} milhões</strong> de eleitores que votaram em Bolsonaro em 2022 estão hoje na terceira via, indecisos ou em branco. Os maiores estoques: {top_txt}.</p>

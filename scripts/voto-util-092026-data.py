@@ -69,24 +69,18 @@ NOMES = {
 # Alinhamento local que contraria a sigla nacional. Juizo editorial declarado:
 # a pagina publica esta tabela.
 CAMPO_EXCECAO = {
-    ("GO", "Daniel Vilela"): ("centro-direita", "vice e sucessor de Ronaldo Caiado"),
-    ("ES", "Ricardo Ferraço"): ("centro-esquerda", "vice de Renato Casagrande (PSB)"),
-    ("AP", "Clécio"): ("centro-esquerda", "governador aliado do governo federal"),
-    ("AM", "Omar Aziz"): (
-        "centro-esquerda",
-        "senador do PSD aliado do governo federal",
-    ),
-    ("AL", "Renan Filho"): (
-        "centro-esquerda",
-        "ex-ministro dos Transportes do governo Lula",
-    ),
-    ("RJ", "Eduardo Paes"): ("centro-esquerda", "prefeito do Rio aliado de Lula"),
-    ("PB", "Lucas Ribeiro"): ("centro-esquerda", "vice de João Azevêdo (PSB)"),
-    ("PE", "João Campos"): ("esquerda", "PSB, aliado de Lula"),
-    ("CE", "Ciro Gomes"): ("centro-direita", "oposição ao PT cearense"),
-    ("PB", "Cícero Lucena"): ("centro", "prefeito de João Pessoa"),
-}
-NAO_ESQUERDA = {"direita", "centro-direita", "centro"}
+    ("GO", "Daniel Vilela"): ("centro-direita", "vice e sucessor de Ronaldo Caiado", False),
+    ("ES", "Ricardo Ferraço"): ("centro", "vice de Renato Casagrande (PSB), aliado de Lula", True),
+    ("AP", "Clécio"): ("centro-direita", "governador eleito em 2022 com apoio de Lula e Randolfe Rodrigues", True),
+    ("AM", "Omar Aziz"): ("centro", "senador do PSD aliado do governo federal", True),
+    ("AL", "Renan Filho"): ("centro", "ex-ministro dos Transportes do governo Lula", True),
+    ("RJ", "Eduardo Paes"): ("centro", "prefeito do Rio aliado de Lula", True),
+    ("PB", "Lucas Ribeiro"): ("centro-direita", "vice de João Azevêdo (PSB), aliado de Lula", True),
+    ("MG", "Carlos Viana"): ("direita", "candidato do PL ao governo de Minas em 2022", False),
+    ("PR", "Cristina Graeml"): ("direita", "jornalista de perfil conservador", False),
+    ("RN", "Zenaide Maia"): ("centro", "senadora aliada de Lula", True),
+    ("MA", "Fufuca"): ("centro-direita", "ex-ministro do Esporte do governo Lula", True),
+}  # fmt: skip
 
 
 def pct(x: float, total: float) -> float:
@@ -102,10 +96,19 @@ def tse_por_uf() -> dict[str, dict]:
 
 
 def classifica(uf: str, lista: list[dict]) -> list[dict]:
+    """Campo pela sigla, com excecao declarada, e alinhamento com Lula.
+
+    `alinhado_lula` e verdadeiro para a esquerda e para quem tem alianca local
+    declarada com o governo federal. Candidatos de centro-esquerda fora dessa
+    alianca (os tucanos, por exemplo) ficam fora do campo de Lula sem virar
+    direita.
+    """
     for c in lista:
         exc = CAMPO_EXCECAO.get((uf, c["nome"]))
         if exc:
-            c["campo"], c["campo_nota"] = exc
+            c["campo"], c["campo_nota"], c["alinhado_lula"] = exc
+        else:
+            c["alinhado_lula"] = c["campo"] == "esquerda"
     return lista
 
 
@@ -603,6 +606,7 @@ def indicadores(e: dict) -> dict:
                     "nome": cand["nome"],
                     "partido": cand["partido"],
                     "campo": cand["campo"],
+                    "alinhado_lula": cand["alinhado_lula"],
                     "voto_governador": cand["valor"],
                     "flavio_entre_eleitores": g["F"],
                     "lula_entre_eleitores": g["L"],
@@ -620,7 +624,7 @@ def indicadores(e: dict) -> dict:
         (
             c
             for c in gov.get("candidatos", [])
-            if c["campo"] in NAO_ESQUERDA and c["valor"] is not None
+            if not c["alinhado_lula"] and c["valor"] is not None
         ),
         key=lambda c: c["valor"],
         default=None,
@@ -637,7 +641,9 @@ def indicadores(e: dict) -> dict:
     dir_sen = [
         c
         for c in sen.get("candidatos", [])
-        if c["campo"] in ("direita", "centro-direita") and c["valor"] is not None
+        if c["campo"] in ("direita", "centro-direita")
+        and not c["alinhado_lula"]
+        and c["valor"] is not None
     ]
     if dir_sen:
         out["senado_direita_soma"] = rnd(sum(c["valor"] for c in dir_sen), 1)
@@ -1347,9 +1353,16 @@ def main() -> None:
         "tse_brasil_2022": TSE["brasil_2022"],
         "municipios_2022": TSE["municipios_top_ganho_bolsonaro"],
         "campo_excecao": [
-            {"uf": k[0], "nome": k[1], "campo": v[0], "motivo": v[1]}
+            {
+                "uf": k[0],
+                "nome": k[1],
+                "campo": v[0],
+                "motivo": v[1],
+                "alinhado_lula": v[2],
+            }
             for k, v in CAMPO_EXCECAO.items()
         ],
+        "partido_campo": B.PARTIDO_CAMPO,
     }
     OUT.write_text(
         json.dumps(payload, ensure_ascii=False, indent=1) + "\n", encoding="utf-8"

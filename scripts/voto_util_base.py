@@ -46,15 +46,19 @@ ALIAS = {
 
 # Partidos por campo, para classificar governador e senado. Padrao por partido,
 # com excecao declarada por candidato quando o alinhamento local contraria a sigla.
+# Tucanos (PSDB e Cidadania, federados) sao centro-esquerda por decisao editorial
+# declarada; o PSD de Kassab e centro; Uniao, PP e Podemos, centro-direita.
 PARTIDO_CAMPO = {
-    "PL": "direita", "NOVO": "direita", "REPUBLICANOS": "direita", "PP": "direita",
-    "UNIÃO": "direita", "UNIAO": "direita", "PODEMOS": "direita", "PRD": "direita",
-    "DC": "direita", "AGIR": "direita", "MISSÃO": "direita", "PRTB": "direita",
-    "MOBILIZA": "direita", "DEMOCRATA": "direita", "PSD": "centro-direita",
-    "MDB": "centro", "PSDB": "centro-direita", "CIDADANIA": "centro", "AVANTE": "centro",
-    "SOLIDARIEDADE": "centro-esquerda", "PDT": "esquerda", "PT": "esquerda", "PSB": "esquerda",
-    "PCdoB": "esquerda", "PCDOB": "esquerda", "PV": "esquerda", "PSOL": "esquerda",
-    "REDE": "esquerda", "UP": "esquerda", "PCB": "esquerda", "PSTU": "esquerda", "PCO": "esquerda",
+    "PL": "direita", "NOVO": "direita", "REPUBLICANOS": "direita", "PRTB": "direita",
+    "DC": "direita", "MISSÃO": "direita", "DEMOCRATA": "direita",
+    "PP": "centro-direita", "UNIÃO": "centro-direita", "UNIAO": "centro-direita",
+    "PODEMOS": "centro-direita", "PRD": "centro-direita", "AGIR": "centro-direita",
+    "MOBILIZA": "centro-direita",
+    "PSD": "centro", "MDB": "centro", "AVANTE": "centro",
+    "PSDB": "centro-esquerda", "CIDADANIA": "centro-esquerda", "SOLIDARIEDADE": "centro-esquerda",
+    "PDT": "esquerda", "PT": "esquerda", "PSB": "esquerda", "PCdoB": "esquerda",
+    "PCDOB": "esquerda", "PV": "esquerda", "PSOL": "esquerda", "REDE": "esquerda",
+    "UP": "esquerda", "PCB": "esquerda", "PSTU": "esquerda", "PCO": "esquerda",
 }  # fmt: skip
 
 

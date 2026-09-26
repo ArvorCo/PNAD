@@ -405,14 +405,18 @@ def fig_mapa_reserva(width=660, height=660) -> str:
             return "#e3e0d6"
         return AZUIS[_classe(v, cortes)]
 
-    def lab(uf: str, v) -> str:
+    def lab(uf: str, _v) -> str:
         return uf
 
     def tip(uf: str, v) -> str:
         r = res.get(uf, {})
         fontes = (
             " e ".join(
-                {"quaest": "Quaest", "realtime": "Real Time"}.get(c["casa"], c["casa"])
+                str(
+                    {"quaest": "Quaest", "realtime": "Real Time"}.get(
+                        c["casa"], c["casa"]
+                    )
+                )
                 for c in r.get("casas", [])
             )
             or "estimativa sem pesquisa"
@@ -446,7 +450,7 @@ def fig_mapa_reserva(width=660, height=660) -> str:
         height=height,
         label="Mapa da reserva de 2º turno de Flávio por estado",
         legend="".join(leg),
-        escuro=lambda uf, v: v is not None and _classe(v, cortes) >= 4,
+        escuro=lambda _uf, v: v is not None and _classe(v, cortes) >= 4,
     )
 
 
@@ -513,10 +517,7 @@ def fig_governadores(width=1000) -> str:
     linhas = []
     for uf, e in DATA["estados"].items():
         for g in e["indicadores"].get("governador_cruzamento", []):
-            if (
-                g["campo"] in ("direita", "centro-direita", "centro")
-                and g["voto_governador"] >= 5
-            ):
+            if not g.get("alinhado_lula") and g["voto_governador"] >= 5:
                 linhas.append((uf, g))
     linhas.sort(key=lambda x: -(x[1]["enderecavel_eleitores"] or 0))
     top, row = 70, 34
@@ -526,7 +527,7 @@ def fig_governadores(width=1000) -> str:
         text(
             0,
             20,
-            "Como vota, para presidente, o eleitor de cada candidato a governador fora da esquerda",
+            "Como vota, para presidente, o eleitorado de cada candidatura ao governo fora do campo de Lula",
             14,
             INK,
             SANS,
@@ -579,7 +580,13 @@ def fig_governadores(width=1000) -> str:
             text(0, y + 14, f"{g['nome']} ({g['partido']}) · {uf}", 13, INK, SANS, 700)
         )
         body.append(
-            text(0, y + 28, f"{fmt(g['voto_governador'])}% no governo", 11, MUTED)
+            text(
+                0,
+                y + 28,
+                f"{fmt(g['voto_governador'])}% no governo · {g['campo']}",
+                11,
+                MUTED,
+            )
         )
         cx = x0
         for k, cor, nome in partes:
@@ -592,7 +599,7 @@ def fig_governadores(width=1000) -> str:
                     20,
                     cor,
                     2,
-                    f"{g['nome']}: {nome} {fmt(gr[k])}% dos eleitores dele",
+                    f"{g['nome']}: {nome} {fmt(gr[k])}% dos eleitores de {g['nome']}",
                 )
             )
             if w > 26:
@@ -625,7 +632,7 @@ def fig_governadores(width=1000) -> str:
         "".join(body),
         width,
         height,
-        "Voto presidencial dos eleitores de candidatos a governador fora da esquerda",
+        "Voto presidencial dos eleitores de candidatos a governador fora do campo de Lula",
     )
 
 
