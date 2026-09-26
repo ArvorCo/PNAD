@@ -247,6 +247,14 @@ def main() -> None:
     f = CAP.F
     n_quaest = len(CAP.EST)
     n_rt = len(CAP.D["realtime"])
+    n_atlas = len(CAP.D.get("atlas", {}))
+    rel_txt = (
+        f"{n_quaest} relatórios estaduais da Quaest, {n_rt} da Real Time Big Data"
+        + (f" e {n_atlas} da AtlasIntel" if n_atlas else "")
+    )
+    rel_curto = f"{n_quaest} Quaest, {n_rt} Real Time" + (
+        f" e {n_atlas} Atlas" if n_atlas else ""
+    )
     titulo = "O mapa do voto útil: onde estão os votos que decidem o 1º turno | Arvor"
     descricao = (
         f"{CAP.fmt(f['reserva_total'] / 1e6, 1)} milhões de eleitores já votam em Flávio no 2º turno e ainda não no 1º. "
@@ -286,10 +294,10 @@ def main() -> None:
 <div class="brand"><a href="index.html"><img src="img/arvor_logo.png" alt="">Arvor Intelligence · Perícia eleitoral</a></div>
 <p class="eyebrow">Mapa do voto útil · 1º turno de 4 de outubro · dados até 25/09/2026</p>
 <h1>O voto útil já começou.<em>Falta chegar a {CAP.fmt(f["reserva_total"] / 1e6, 1)} milhões de eleitores.</em></h1>
-<p class="deck">A terceira via está secando e sete de cada dez pontos que ela perde vão para Flávio Bolsonaro. Este mapa lê {n_quaest} relatórios estaduais da Quaest e {n_rt} da Real Time Big Data, estado por estado, para dizer onde está quem já escolheu Flávio no 2º turno e ainda não no 1º, quem vota em governador e senador de direita e ainda não fechou o presidente, e o que dizer a cada um. No fim, o modelo de cenário responde à pergunta que importa: se der certo, quanto Flávio teria dos votos válidos.</p>
+<p class="deck">A terceira via está secando e sete de cada dez pontos que ela perde vão para Flávio Bolsonaro. Este mapa lê {rel_txt}, estado por estado, para dizer onde está quem já escolheu Flávio no 2º turno e ainda não no 1º, quem vota em governador e senador de direita e ainda não fechou o presidente, e o que dizer a cada um. No fim, o modelo de cenário responde à pergunta que importa: se der certo, quanto Flávio teria dos votos válidos.</p>
 {CAP.hero_stats()}
 <dl class="case-file">
-<div><dt>Relatórios estaduais</dt><dd>{n_quaest} Quaest e {n_rt} Real Time</dd></div>
+<div><dt>Relatórios estaduais</dt><dd>{rel_curto}</dd></div>
 <div><dt>Onda mais recente</dt><dd>Quaest, 19 a 24/09</dd></div>
 <div><dt>Pesquisas nacionais</dt><dd>9 institutos registrados</dd></div>
 <div><dt>Base eleitoral</dt><dd>TSE 2022 e eleitorado 2026</dd></div>

@@ -940,18 +940,17 @@ def fig_segmentos(segmentos: list[dict], width=1000) -> str:
 
 # ----------------------------------------------------------- contribuicao
 def fig_contribuicao(width=1000) -> str:
-    rows = DATA["modelos"]["quaest"]["contribuicao"]
-    rt = {r["uf"]: r for r in DATA["modelos"]["realtime"]["contribuicao"]}
+    casas = DATA["auxiliar"].get("casas", ["quaest", "realtime"])
+    por_casa = [
+        {
+            r["uf"]: r["ganho_flavio_eleitores"]
+            for r in DATA["modelos"][c]["contribuicao"]
+        }
+        for c in casas
+    ]
+    ufs = set.intersection(*(set(x) for x in por_casa))
     todos = sorted(
-        (
-            (
-                r["uf"],
-                (r["ganho_flavio_eleitores"] + rt[r["uf"]]["ganho_flavio_eleitores"])
-                / 2,
-            )
-            for r in rows
-            if r["uf"] in rt
-        ),
+        ((uf, sum(x[uf] for x in por_casa) / len(por_casa)) for uf in ufs),
         key=lambda x: -x[1],
     )
     total = sum(v for _, v in todos)

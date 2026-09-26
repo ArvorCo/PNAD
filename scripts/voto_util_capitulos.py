@@ -93,7 +93,64 @@ EST = D["estados"]
 RES = D["auxiliar"]["reserva_uf"]
 TSE = D["tse_uf"]
 MED = D["modelos"]["media"]
-MQ, MR = D["modelos"]["quaest"], D["modelos"]["realtime"]
+CASAS = D["auxiliar"].get("casas", ["quaest", "realtime"])
+NOME_CASA = {"quaest": "Quaest", "realtime": "Real Time", "atlas": "AtlasIntel"}
+MODS = {c: D["modelos"][c] for c in CASAS}
+MQ, MR = MODS["quaest"], MODS["realtime"]
+
+
+def grupos(valores: dict) -> dict:
+    """F, L, terceira via de direita, indecisos e branco de uma lista de 1o turno."""
+    v = {k: (x or 0) for k, x in (valores or {}).items()}
+    tdir = sum(
+        v.get(k, 0)
+        for k in (
+            "Cury",
+            "Caiado",
+            "Renan",
+            "Zema",
+            "Avalanche",
+            "Marçal",
+            "Clariana",
+            "Grassi",
+            "Outros",
+        )
+    )
+    return {
+        "F": v.get("Flávio", 0),
+        "L": v.get("Lula", 0),
+        "Tdir": tdir,
+        "I": v.get("Indecisos", 0),
+        "B": v.get("Branco/nulo", 0),
+    }
+
+
+def casas_txt() -> str:
+    nomes = [NOME_CASA[c] for c in CASAS]
+    return ", ".join(nomes[:-1]) + " e " + nomes[-1]
+
+
+def lim_faixa(chave: str) -> tuple[float, float]:
+    vals = [
+        m["limiares"][chave] for m in MODS.values() if m["limiares"][chave] is not None
+    ]
+    return min(vals), max(vals)
+
+
+def p_faixa(cenario: str, chave: str) -> str:
+    return faixa_lista(
+        [
+            next(c for c in m["cenarios"] if c["nome"] == cenario)[chave]
+            for m in MODS.values()
+        ]
+    )
+
+
+def faixa_lista(vals: list[float]) -> str:
+    x, y = round(100 * min(vals)), round(100 * max(vals))
+    return f"{x}%" if x == y else f"{x}% a {y}%"
+
+
 FEN = D["nacional"]["fenomeno"]
 ALVO = D["auxiliar"]["alvo_nacional"]
 B22 = D["tse_brasil_2022"]
@@ -183,14 +240,7 @@ def hero_stats() -> str:
     hoje = cen("Hoje, eleitor provável")
     completo = cen("Voto útil completo")
     so_lula = cen("Só Lula consolida")
-    lim = min(
-        MQ["limiares"]["primeiro_lugar_so_direita"],
-        MR["limiares"]["primeiro_lugar_so_direita"],
-    )
-    lim_hi = max(
-        MQ["limiares"]["primeiro_lugar_so_direita"],
-        MR["limiares"]["primeiro_lugar_so_direita"],
-    )
+    lim, lim_hi = lim_faixa("primeiro_lugar_so_direita")
     return f"""
 <div class="hero-stats">
 <div><b>{fmt(100 * FEN["captura_flavio"])}%</b><span>de tudo o que Flávio e Lula ganharam desde 26/08, em oito institutos, foi para Flávio</span></div>
@@ -221,7 +271,7 @@ def cap_tese() -> str:
 <li><b>Se os dois lados fizerem</b>, o 1º turno empata: {pct(dois["flavio_validos"])} a {pct(dois["lula_validos"])}. Quem chega na frente depende de quem mobiliza melhor.</li>
 <li><b>Se só a direita fizer</b>, Flávio termina o 1º turno com {pct(completo["flavio_validos"])} dos válidos e {fmt(completo["margem"], 1)} pontos de vantagem, com faixa até {pct(completo["flavio_p90"])}.</li>
 </ol>
-<div class="callout"><b>O que este mapa é.</b> Leitura de {len(EST)} relatórios estaduais da Quaest lidos página a página, {len(D["realtime"])} relatórios estaduais da Real Time Big Data, as pesquisas nacionais registradas no TSE e o resultado oficial de 2022. O capítulo de campanha é juízo editorial declarado, a serviço de uma candidatura, com o número ao lado de cada argumento. O modelo é cenário condicional, não previsão e não pesquisa: ele não entrevista ninguém, só refaz a conta das pesquisas registradas sob hipóteses explícitas.</div>
+<div class="callout"><b>O que este mapa é.</b> Leitura de {len(EST)} relatórios estaduais da Quaest lidos página a página, {len(D["realtime"])} relatórios estaduais da Real Time Big Data, {len(D.get("atlas", {}))} da AtlasIntel e {len([x for x in D.get("outros_estaduais", []) if "Atlas" not in x["instituto"]])} de outros institutos, as pesquisas nacionais registradas no TSE e o resultado oficial de 2022. O capítulo de campanha é juízo editorial declarado, a serviço de uma candidatura, com o número ao lado de cada argumento. O modelo é cenário condicional, não previsão e não pesquisa: ele não entrevista ninguém, só refaz a conta das pesquisas registradas sob hipóteses explícitas.</div>
 """,
     )
 
@@ -317,7 +367,6 @@ def cap_mapa() -> str:
     linhas = []
     for uf, r in sorted(RES.items(), key=lambda kv: -kv[1]["reserva_eleitores"]):
         casas = {c["casa"]: c for c in r["casas"]}
-        q, rt = casas.get("quaest"), casas.get("realtime")
 
         def cel(c):
             if not c:
@@ -329,8 +378,7 @@ def cap_mapa() -> str:
                 f"{uf} <span class='sub'>{esc(TSE[uf]['regiao'])}</span>",
                 mil(r["reserva_eleitores"]),
                 fmt(r["reserva_pp"], 1),
-                cel(q),
-                cel(rt),
+                *[cel(casas.get(c)) for c in CASAS],
                 mil(r["votantes_esperados"]),
                 (
                     "estimativa"
@@ -338,7 +386,7 @@ def cap_mapa() -> str:
                     else ", ".join(
                         f"{esc(c['casa'])}: {cel(c)}"
                         for c in r["casas"]
-                        if c["casa"] not in ("quaest", "realtime")
+                        if c["casa"] not in CASAS
                     )
                 ),
             ]
@@ -361,11 +409,11 @@ def cap_mapa() -> str:
         f"""
 <p class="lead">A reserva de cada estado é a diferença entre o voto de Flávio no 2º turno e no 1º turno, <strong>na mesma amostra</strong>: mesmo questionário, mesmo entrevistado, mesmo peso. Não é suposição sobre para onde vai a terceira via; é gente que o próprio instituto mediu escolhendo Flávio contra Lula e escolhendo outro nome, ou ninguém, no 1º turno. Multiplicada pelos eleitores que compareceram em 2022, vira gente de carne e osso.</p>
 <div class="mapa-grid">
-{figure("mapa_reserva", "Média das duas casas onde as duas mediram. Eleitor provável: pesos do cruzamento por comparecimento da Quaest. Passe o ponteiro sobre o estado para ver o número exato e a fonte.")}
+{figure("mapa_reserva", "Média das casas que mediram cada estado. Eleitor provável: pesos do cruzamento por comparecimento da Quaest. Passe o ponteiro sobre o estado para ver o número exato e a fonte.")}
 {figure("ranking_reserva", "Eleitores esperados = eleitorado de 2026 (TSE, julho) vezes o comparecimento do 1º turno de 2022 no estado.")}
 </div>
 <p>Por região: {reg_txt}. Os três maiores estados, {", ".join(uf for uf, _ in top3)}, guardam {mil(top3_soma)}, ou {fmt(100 * top3_soma / F["reserva_total"])}% de toda a reserva. {comparacao}</p>
-{table(["UF", "Reserva", "Pontos", "Quaest 1º → 2º", "Real Time 1º → 2º", "Votantes esperados", "Outra casa"], linhas, "Reserva de 2º turno por estado")}
+{table(["UF", "Reserva", "Pontos", *[f"{NOME_CASA[c]} 1º → 2º" for c in CASAS], "Votantes esperados", "Outra casa"], linhas, "Reserva de 2º turno por estado")}
 <p class="source">Quaest: onda de 19 a 24/09 em 12 estados e de 20 a 28/08 nos demais (neste caso, somado o movimento médio de agosto para setembro medido nos estados que a Quaest ouviu duas vezes). Real Time Big Data: pesquisas estaduais de 29/08 a 24/09. {nota_terceiros()} Fontes completas no fim da página.</p>
 """,
     )
@@ -676,19 +724,17 @@ def cap_resiliente() -> str:
 
 # ------------------------------------------------------------------ modelo
 def _linha_cenario(nome: str) -> list:
-    q, r, m, b = (
-        cen(nome, MQ),
-        cen(nome, MR),
-        cen(nome),
-        cen(nome, D["modelos"]["media_bruto"]),
-    )
+    m, b = cen(nome), cen(nome, D["modelos"]["media_bruto"])
+    por_casa = [cen(nome, MODS[c]) for c in CASAS]
     return [
         esc(nome),
         f"{fmt(m['flavio_validos'], 1)} × {fmt(m['lula_validos'], 1)}",
         f"{fmt(m['flavio_p10'], 1)} a {fmt(m['flavio_p90'], 1)}",
         f"{fmt(m['lula_p10'], 1)} a {fmt(m['lula_p90'], 1)}",
-        f"{fmt(q['flavio_validos'], 1)} × {fmt(q['lula_validos'], 1)}",
-        f"{fmt(r['flavio_validos'], 1)} × {fmt(r['lula_validos'], 1)}",
+        *[
+            f"{fmt(x['flavio_validos'], 1)} × {fmt(x['lula_validos'], 1)}"
+            for x in por_casa
+        ],
         f"{fmt(b['flavio_validos'], 1)} × {fmt(b['lula_validos'], 1)}",
     ]
 
@@ -721,42 +767,49 @@ def calculadora() -> str:
 <script type="application/json" id="calc-dados">{json.dumps(dados, separators=(",", ":"))}</script>"""
 
 
-def faixa(a: float, b: float) -> str:
-    """Faixa entre as duas bases, em %, sem repetir numero igual."""
-    x, y = sorted((round(100 * a), round(100 * b)))
-    return f"{x}%" if x == y else f"{x}% a {y}%"
+def titulo_limiar(lo: float, hi: float) -> str:
+    """Titulo do cartao do limiar, fiel a faixa entre as bases."""
+    if hi <= 0.35:
+        return "Um terço basta para liderar"
+    if lo <= 0.35:
+        return "De um terço a dois quintos bastam para liderar"
+    return f"{round(100 * lo)}% a {round(100 * hi)}% bastam para liderar"
+
+
+def atlas_txt() -> str:
+    if "atlas" not in CASAS:
+        return ""
+    datas = sorted(p["fim"] for p in D["atlas"].values())
+    return f", mais AtlasIntel (recrutamento digital, {len(D['atlas'])} estados, campo até {datas[-1][8:10]}/{datas[-1][5:7]})"
 
 
 def cap_modelo() -> str:
-    lq, lr = MQ["limiares"], MR["limiares"]
+    l1, l2 = lim_faixa("primeiro_lugar_so_direita")
+    d1, d2 = lim_faixa("primeiro_lugar_dois_lados")
     completo = cen("Voto útil completo")
     so_lula = cen("Só Lula consolida")
     nomes = [c["nome"] for c in MED["cenarios"]]
     linhas = [_linha_cenario(n) for n in nomes]
     fat = D["auxiliar"]["fatores_calibracao"]
     ondas = ", ".join(o.split("_")[0].capitalize() for o in ALVO["ondas"])
-    pq = next(c for c in MQ["cenarios"] if c["nome"] == "Só Lula consolida")
-    pr = next(c for c in MR["cenarios"] if c["nome"] == "Só Lula consolida")
-    fq = next(c for c in MQ["cenarios"] if c["nome"] == "Voto útil completo")
-    fr = next(c for c in MR["cenarios"] if c["nome"] == "Voto útil completo")
     return section(
         "modelo",
         "O modelo",
         "Se der certo: quanto Flávio teria dos votos válidos",
         f"""
 <p class="lead">A pergunta é condicional e o modelo responde condicionalmente. Pegamos cada estado, pesamos cada eleitor pela chance de comparecer, e movemos para o 1º turno uma fração da reserva que o próprio estado já mostra no 2º turno. Somamos os 27 estados pelo número de pessoas que de fato votam. O resultado não é previsão de urna: é a aritmética do voto útil, com as hipóteses na mesa.</p>
-{figure("modelo", "Média das duas bases estaduais (Quaest e Real Time), calibrada pela média nacional da última semana e ponderada por eleitor provável. Faixa amarela: acima de 50% dos válidos a eleição termina no 1º turno.", wide=True)}
+{figure("modelo", "Média das bases estaduais ({casas_txt()}), cada uma calibrada pela média nacional da última semana e ponderada por eleitor provável. Faixa amarela: acima de 50% dos válidos a eleição termina no 1º turno.", wide=True)}
 {calculadora()}
 <div class="grid2">
-<div class="card destaque-azul"><h3>Um terço basta para liderar</h3><p>Flávio termina o 1º turno na frente se {fmt(100 * lq["primeiro_lugar_so_direita"])}% (base Quaest) a {fmt(100 * lr["primeiro_lugar_so_direita"])}% (base Real Time) da reserva antecipar o voto e Lula ficar onde está. Se Lula antecipar a mesma fração, é preciso {fmt(100 * lq["primeiro_lugar_dois_lados"])}% a {fmt(100 * lr["primeiro_lugar_dois_lados"])}%.</p></div>
-<div class="card destaque-vermelho"><h3>O risco é unilateral</h3><p>Se só a esquerda fizer voto útil, Lula vai a {pct(so_lula["lula_validos"])} dos válidos, com faixa até {pct(so_lula["lula_p90"])}. Nas simulações desse cenário, Lula passa de 50% em {faixa(pq["p_lula_50"], pr["p_lula_50"])} das vezes. Com o voto útil completo da direita, Flávio chega a {pct(completo["flavio_validos"])} e passa de 50% em {faixa(fq["p_flavio_50"], fr["p_flavio_50"])} das simulações.</p></div>
+<div class="card destaque-azul"><h3>{titulo_limiar(l1, l2)}</h3><p>Flávio termina o 1º turno na frente se {faixa_lista([l1, l2])} da reserva antecipar o voto e Lula ficar onde está, conforme a base ({casas_txt()}). Se Lula antecipar a mesma fração, é preciso {faixa_lista([d1, d2])}.</p></div>
+<div class="card destaque-vermelho"><h3>O risco é unilateral</h3><p>Se só a esquerda fizer voto útil, Lula vai a {pct(so_lula["lula_validos"])} dos válidos, com faixa até {pct(so_lula["lula_p90"])}. Nas simulações desse cenário, Lula passa de 50% em {p_faixa("Só Lula consolida", "p_lula_50")} das vezes, conforme a base. Com o voto útil completo da direita, Flávio chega a {pct(completo["flavio_validos"])} e passa de 50% em {p_faixa("Voto útil completo", "p_flavio_50")} das simulações.</p></div>
 </div>
-{table(["Cenário", "Flávio × Lula (válidos)", "Faixa de Flávio", "Faixa de Lula", "Base Quaest", "Base Real Time", "Sem calibração"], linhas, "Cenários do modelo")}
+{table(["Cenário", "Flávio × Lula (válidos)", "Faixa de Flávio", "Faixa de Lula", *[f"Base {NOME_CASA[c]}" for c in CASAS], "Sem calibração"], linhas, "Cenários do modelo")}
 <p class="source">Faixas de 80%: 3.000 simulações por base, com erro amostral de cada estado (efeito de desenho 1,5), um erro comum nacional de 1,5 ponto e, onde o 2º turno não foi medido, incerteza de 35% na reserva estimada. A coluna sem calibração usa só as pesquisas estaduais, sem ajuste pela média nacional.</p>
-{figure("contribuicao", "Ganho de Flávio, em votos, com o voto útil completo da direita. Média das duas bases.")}
+{figure("contribuicao", "Ganho de Flávio, em votos, com o voto útil completo da direita. Média das bases estaduais.")}
 <h3>A conta em cinco passos</h3>
 <ol class="passos">
-<li><b>Base estadual.</b> Para cada estado, a pesquisa mais recente de cada casa: Quaest (presencial, 19 a 24/09 em 12 estados; agosto mais o movimento médio medido nos outros) e Real Time Big Data (telefone, 29/08 a 24/09). Onde uma casa falta, a outra cobre; o {nota_terceiros()}</li>
+<li><b>Base estadual.</b> Para cada estado, a pesquisa mais recente de cada casa: Quaest (presencial, 19 a 24/09 em 12 estados; agosto mais o movimento médio medido nos outros) e Real Time Big Data (telefone, 29/08 a 24/09){atlas_txt()}. Onde uma casa falta, as outras cobrem. {nota_terceiros()}</li>
 <li><b>Eleitor provável.</b> Onde a Quaest cruza voto com comparecimento, cada grupo pesa pela proporção dos que dizem que vão votar. Onde não cruza, aplicamos o deslocamento médio medido.</li>
 <li><b>Calibração nacional.</b> As pesquisas estaduais têm datas e métodos diferentes. Ajustamos o nível com três fatores comuns a todos os estados (Flávio × {fmt(fat["quaest"]["flavio"], 3)}, Lula × {fmt(fat["quaest"]["lula"], 3)}, terceira via × {fmt(fat["quaest"]["terceira"], 3)} na base Quaest) até a soma nacional reproduzir a média das ondas divulgadas na última semana ({esc(ondas)}): Flávio {pct(ALVO["flavio_validos"], 2)} e Lula {pct(ALVO["lula_validos"], 2)} dos válidos no 1º turno, e Flávio com {pct(ALVO["flavio_2t_dos_dois"], 2)} dos votos dos dois no 2º. A geografia fica, o nível acompanha a notícia mais fresca.</li>
 <li><b>Reserva.</b> Em cada estado, Flávio no 2º turno menos Flávio no 1º; o mesmo para Lula. Onde o 2º turno não foi medido na mesma amostra, estimamos pela relação observada nos estados medidos entre a inclinação do estado e o destino do voto de fora.</li>
@@ -912,8 +965,15 @@ def cap_fontes() -> str:
         r.append(
             f"<li><b>{uf}</b>: {link}, registro {esc(x.get('registro') or 'n/d')}, campo {esc(x.get('campo') or 'n/d')}, n = {fmt(x['n'])}, 1º turno p. {x.get('pagina_1t')}, 2º turno p. {x.get('pagina_2t')}.</li>"
         )
+    atl = []
+    for uf, x in sorted(D.get("atlas", {}).items()):
+        atl.append(
+            f"<li><b>{uf}</b>: {esc(x['json'].replace('.json', ''))}, registro {esc(x.get('registro') or 'n/d')}, campo {esc(data_campo(x.get('campo')))}, n = {fmt(x['n'])}, 1º turno p. {x.get('pagina_1t')}, 2º turno p. {x.get('pagina_2t')}.</li>"
+        )
     outras = []
     for d in D.get("outros_estaduais", []):
+        if "Atlas" in d["instituto"]:
+            continue
         link = (
             f'<a href="{esc(d["url_pdf"])}">PDF</a>'
             if d.get("url_pdf")
@@ -940,6 +1000,9 @@ def cap_fontes() -> str:
 <h3>Pesquisas estaduais Quaest</h3>
 <p>Relatórios em imagem, transcritos página a página; cada número guarda a página de origem nos arquivos de <code>analysis/voto_util/quaest/</code>.</p>
 <ul class="fontes">{"".join(q)}</ul>
+<h3>Pesquisas estaduais AtlasIntel</h3>
+<p>Recrutamento digital aleatório; relatórios em imagem, transcritos página a página.</p>
+<ul class="fontes">{"".join(atl) or "<li>Nenhuma transcrita nesta versão.</li>"}</ul>
 <h3>Pesquisas estaduais Real Time Big Data</h3>
 <ul class="fontes">{"".join(r)}</ul>
 <h3>Outras pesquisas estaduais</h3>

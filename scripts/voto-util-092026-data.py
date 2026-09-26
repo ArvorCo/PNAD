@@ -1139,25 +1139,31 @@ def main() -> None:
     brt = base_realtime(rt, estados, nac, aux["deslocamento_lv_medio"])
     terceiros = terceiros_por_uf()
     bter = base_estadual(terceiros, estados, nac, aux["deslocamento_lv_medio"])
+    atlas = estaduais_por_uf(lambda inst: "Atlas" in inst)
+    bat = base_estadual(atlas, estados, nac, aux["deslocamento_lv_medio"])
     bases = {
-        "quaest": completa(bq, [brt, bter], tse, "Quaest"),
-        "realtime": completa(brt, [bq, bter], tse, "Real Time"),
+        "quaest": completa(bq, [brt, bat, bter], tse, "Quaest"),
+        "realtime": completa(brt, [bq, bat, bter], tse, "Real Time"),
     }
+    # A AtlasIntel so vira base propria com cobertura suficiente; abaixo disso
+    # cada estado dela seria emprestado de outra casa e a media ficaria torta.
+    if len(bat) >= 15:
+        bases["atlas"] = completa(bat, [bq, brt, bter], tse, "AtlasIntel")
+    casas = list(bases)
     alvo = alvo_nacional(nac)
     calibradas = {nome: calibra(b, tse, alvo) for nome, b in bases.items()}
     mods = {nome: modelo(c["base"], tse) for nome, c in calibradas.items()}
     for nome, b in bases.items():
         mods[f"{nome}_bruto"] = modelo(b, tse, n_sim=1500)
-    mods["media"] = media_modelos({k: mods[k] for k in ("quaest", "realtime")})
-    mods["media_bruto"] = media_modelos(
-        {k: mods[f"{k}_bruto"] for k in ("quaest", "realtime")}
-    )
+    mods["media"] = media_modelos({k: mods[k] for k in casas})
+    mods["media_bruto"] = media_modelos({k: mods[f"{k}_bruto"] for k in casas})
+    aux["casas"] = casas
     aux["alvo_nacional"] = alvo
     aux["fatores_calibracao"] = {nome: c["fatores"] for nome, c in calibradas.items()}
-    # Reserva por UF na media das duas casas, para o mapa.
+    # Reserva por UF na media das casas que mediram a UF, para o mapa.
     for uf in tse:
         vals = []
-        for nome in ("quaest", "realtime"):
+        for nome in casas:
             r = bases[nome][uf]
             if r.get("emprestado") or r.get("estimado"):
                 continue
@@ -1191,9 +1197,9 @@ def main() -> None:
         else:
             b = bases["quaest"][uf]
             r = b["lv"]
-            casas = []
+            casas_uf = []
             if not b.get("estimado"):
-                casas = [
+                casas_uf = [
                     {
                         "casa": b["fonte"].split(" (")[0],
                         "reserva": max(0.0, r["F2"] - r["F"]),
@@ -1206,7 +1212,7 @@ def main() -> None:
                     }
                 ]
             aux.setdefault("reserva_uf", {})[uf] = {
-                "casas": casas,
+                "casas": casas_uf,
                 "estimado": bool(b.get("estimado")),
                 "reserva_pp": rnd(max(0.0, r["F2"] - r["F"]), 2),
                 "reserva_eleitores": round(peso * max(0.0, r["F2"] - r["F"]) / 100),
@@ -1222,6 +1228,7 @@ def main() -> None:
         "nacional": nac,
         "estados": estados,
         "realtime": rt,
+        "atlas": atlas,
         "auxiliar": aux,
         "modelos": mods,
         "sem_quaest": sorted(set(NOMES) - set(estados)),
@@ -1320,7 +1327,7 @@ def main() -> None:
     print("reserva: reta", aux["reserva"]["flavio"], "n", aux["reserva"]["n"])
     print("deslocamento LV medio:", aux["deslocamento_lv_medio"])
     print("alvo nacional:", alvo, aux["fatores_calibracao"])
-    for nome in ("quaest", "realtime", "media", "media_bruto"):
+    for nome in (*casas, "media", "media_bruto"):
         print("==", nome)
         for c in mods[nome]["cenarios"]:
             print(

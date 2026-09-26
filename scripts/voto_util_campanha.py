@@ -258,13 +258,28 @@ def ficha_uf(uf: str) -> str:
                 f"{fmt(g['I'])} / {fmt(g['B'])}",
             ]
         )
-    if rt:
-        g = rt["grupos"]
-        v2 = rt["segundo_turno"]
+    outras = [("Real Time", rt), ("AtlasIntel", D.get("atlas", {}).get(uf))]
+    outras += [
+        (
+            x["instituto"],
+            {
+                "campo": x["campo"],
+                "grupos": CAP.grupos(x["pres_1t"]),
+                "segundo_turno": x["pres_2t"],
+            },
+        )
+        for x in D.get("outros_estaduais", [])
+        if x["uf"] == uf and "Atlas" not in x["instituto"]
+    ]
+    for nome, p in outras:
+        if not p:
+            continue
+        g = p["grupos"]
+        v2 = p["segundo_turno"]
         linhas.append(
             [
-                "Real Time",
-                esc(data_br(rt.get("campo"))),
+                esc(nome),
+                esc(data_br(p.get("campo"))),
                 f"{fmt(g['F'])} × {fmt(g['L'])}",
                 f"{fmt(v2['Flávio'])} × {fmt(v2['Lula'])}" if v2 else "não mediu",
                 fmt(g["Tdir"]),
