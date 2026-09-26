@@ -1,0 +1,303 @@
+A session-scoped Stop hook is now active with condition: "Um fenômeno vem acontecendo na reta final, algo que acertamos na nossa análise de junho da quaest quando falamos do Voto útil.
+
+Diante disso, vamos construir o mapa do voto útil no Flávio no 1o turno analisando todas as pesquisas estaduais da quaest identificando dois tipos de oportunidades:
+
+1) Votos terceira via em cada estado que podem virar voto útil
+2) Votos em governadores e senadores de direita em cada estado que podem virar voto útil
+3) Sei lá o que mais que poderíamos descobrir nos dados que nos daria esse voto útil
+
+Para isso vamos analisar o máximo de pesquisas estaduais que pudermos, incluindo datafolha, quaest, Real Time Big Data e outras, com o intuito de identificar o mapa do voto útil no Flávio
+
+O objetivo é construir então o docs/mapa_do_voto_util.html com tudo o que temos de bom: mapas, gráficos, argumentos técnicos, políticos e frases ideais que os eleitores podem usar para obter voto útil na reta final da campanha. O objetivo é construirmos esse mapa para os bolsonaristas fazerem campanha voluntária no voto útil no Flávio e para isso precisamos do máximo de inteligÊncia possível., com o máximo de beleza, gráficos claros, argumentos lindos, pontos importantes e, ao final, um modelo preditivo de voto útil que leve em consideração também a abstenção a partir de dados que tivermos de várias pesquisas para fazer uma previsibilidade de, se der certo, qual seria a porcentagem de votos válidos do Flávio no final considerando algo de likely voter no processo.
+
+Existem várias maneiras de se fazer isso. Mas o mais importante é que já temos no nosso diretório várias pesquisas ataulizadas estaduais, mas será necessário baixar mais relatórios na íntegra para compelmentar isso. Busque tudo,baixe tudo, seja criativo no processo, vá além do óbvio e encontre o que é bom e útil para o Brasil e use ótimos argumentos para a inutilidade do voto branco, nulo, terceira via em cada região, em cada sotaque, em cada ramo, em cada área do Brasil e tudo o mais. Vá fundo, Vá além, vá fora da curva. E se baseie também numa premissa: a última semana antes da eleição terá muitos ataques em entiras a FLávio visando pegar o indeciso e o voto fraco no Flávio na reta final, mas temos de usar argumentos que transformem o voto útil em voto necessário e resiliente, voto que aguenta pancada até a reta final. Capriche, ache os dados e me pergunte caso tenha qualquer dúvida ou ideia fora do que foi falado aqui para vermos se seguimos adiante ou não". Briefly acknowledge the goal, then immediately start (or continue) working toward it — treat the condition itself as your directive and do not pause to ask the user what to do. The hook will block stopping until the condition holds. It auto-clears once the condition is met — do not tell the user to run `/goal clear` after success; that's only for clearing a goal early.
+
+---
+
+Base directory for this skill: /private/tmp/claude-501/bundled-skills/2.1.281/07791d6ba6a238d02bbd7ec958f29b82/dataviz
+
+# Data Visualization
+
+A chart is **read by people and executed by you**. This skill turns "make it look
+good" into a procedure with checks, so the result is right by construction rather
+than by taste.
+
+**The method here is design-system-agnostic.** Nothing in the procedure, the form
+heuristic, the six checks, or the mark specs is specific to one product. A design
+system supplies a small set of *parameters* (its ramps, a categorical order, a
+diverging pair, a status palette, a texture, its surfaces, its filter components);
+the method consumes them unchanged. A **validated default palette** is the
+reference instance, fully specified in `references/palette.md`. To target your
+brand, read that file's structure and substitute its values - touch nothing else.
+
+> The single most important habit: **the color part is computable, so compute it.**
+> Never eyeball whether a palette is colorblind-safe - run `scripts/validate_palette.js`.
+
+## The procedure - do these in order
+
+Color comes LAST. Most bad charts pick colors first.
+
+1. **Pick the form.** What is the data's job - magnitude, identity, polarity, a
+   single headline, change-over-time? The job picks the chart type, and sometimes
+   the answer is *not a chart* (a stat tile or hero number). -> `references/choosing-a-form.md`
+2. **Assign color by the job it does.** Categorical (identity), sequential
+   (magnitude), diverging (polarity), or status (state) - each has one rule.
+   Assign categorical hues in fixed order, never cycled. -> `references/color-formula.md`
+3. **VALIDATE the palette - run the script, don't reason about Delta E.**
+   `node scripts/validate_palette.js "<hex,hex,...>" --mode light` (relative to
+   this skill's base directory - or load it as `<script type="module">` in the
+   chart's own page, where it reads
+   `data-palette` off `<body>` and logs a `console.table` report). It returns
+   pass/fail on the lightness band, chroma floor, adjacent-pair CVD separation,
+   the normal-vision floor, and contrast. Fix anything that FAILs before continuing. Re-run for
+   `--mode dark` with that mode's surface.
+4. **Apply mark specs & spacers.** Thin marks, 4px rounded data-ends anchored to
+   the baseline, 2px lines, >=8px markers, a 2px surface gap between fills (stacked
+   segments and adjacent bars alike) and a 2px surface ring on overlapping marks,
+   selective direct labels. -> `references/marks-and-anatomy.md`
+5. **Add the hover layer - by default.** An HTML/SVG chart *is* interactive; ship
+   a crosshair+tooltip on line/area and a per-mark hover tooltip on bar/dot/cell.
+   The only form that skips it is a bare stat tile with no plot. Hit targets bigger
+   than the mark; filters in one row above the charts. -> `references/interaction.md`
+6. **Final accessibility pass.** For >= 2 series a legend is always present and <= 4
+   are also direct-labeled (a single series needs no legend box - the title names
+   it), so identity is never color-alone; a table view exists; dark mode is **selected** - its own
+   steps from the same ramps, validated against the dark surface, not an automatic
+   flip; texture is available for the CVD/print/forced-colors case.
+7. **Render it and look at it.** The validator checks color, not layout - open or
+   screenshot the output and eyeball it for label collisions, geometry, and overflow
+   before calling it done.
+
+Then check the result against **`references/anti-patterns.md`** - it is the catalog
+of what goes wrong. If your chart matches an entry, it's wrong.
+
+## Non-negotiables (true in every design system)
+
+- **Assign categorical hues in fixed order, never cycled.** A 9th series is never a
+  generated hue - it folds into "Other," small multiples, or composite encoding.
+- **One axis.** Never a dual-axis chart (two y-scales). Two measures of different
+  scale -> two charts, small multiples, or indexed to a common base. *(This is the
+  #1 chart mistake - see anti-patterns.)*
+- **Color follows the entity, never its rank.** A filter that changes the series
+  count must not repaint the survivors.
+- **Sequential = one hue, light->dark. Diverging = two hues + a neutral gray
+  midpoint.** Never a rainbow; never a hue at the diverging midpoint.
+- **Run the validator before shipping any categorical palette.** CVD Delta E >= 8 is the
+  target (OKLab ×100); 6-8 is a floor that is legal ONLY with secondary encoding. A
+  normal-vision floor below 15 is a hard FAIL - full-color readers can't tell the
+  pair apart; re-step it on the adjacent pairlist (secondary encoding does not excuse
+  this one); under `--pairs all` cut series or facet instead - see check 4. A contrast WARN
+  obligates visible labels or a table view - it is not dismissable.
+- **Thin marks; a legend always present for >= 2 series (none for one), with
+  selective direct labels (never a number on every point); recessive grid/axes.**
+- **Text wears text tokens, never the series color** - values, labels, and legends
+  stay in primary/secondary/muted ink; a colored mark beside them carries identity.
+- **Status colors are reserved** (good/warning/serious/critical) and never reused
+  for "series 4"; they ship with an icon + label, never color alone.
+
+## Plugging in a design system
+
+The method is invariant; only these parameters change per system. The reference
+instance - every value filled in - is `references/palette.md`.
+
+| Parameter | What the system provides |
+|---|---|
+| **Ramps** | the hue scales (named steps) the palette draws from |
+| **Categorical theme** | the fixed hue order (a named theme); default + alternates |
+| **Sequential hue** | the default single hue for magnitude |
+| **Diverging pair** | two warm/cool poles + a neutral midpoint |
+| **Status palette** | good / warning / serious / critical - steps distinct from categorical |
+| **Texture fill** | one directional hand-drawn fill, used at 45° / 135° |
+| **Surfaces** | light & dark chart-surface colors (the validator needs these) |
+| **Filter controls** | date-range & dimension controls (behavioral spec in `interaction.md`) |
+
+To onboard a new system: fill those rows, feed its ramps to the validator, and let
+it snap each slot to the nearest passing step. Structure and rules stay as written.
+
+## Reference files
+
+| File | What it answers |
+|------|-----------------|
+| `references/choosing-a-form.md` | Which chart type / is it even a chart? |
+| `references/color-formula.md` | The four jobs, the six checks, snap-to-passing |
+| `references/marks-and-anatomy.md` | Mark specs, spacers, labels, figures, hero number |
+| `references/interaction.md` | Tooltips & hover, filters & time ranges |
+| `references/components.md` | The pieces a chart is made of - build each in plain HTML |
+| `references/anti-patterns.md` | **What goes wrong - check every chart against this** |
+| `references/palette.md` | **The reference palette instance** - every parameter, filled in; swap for your brand's |
+| `scripts/validate_palette.js` | Runnable six-checks validator (run it; don't eyeball) |
+
+---
+
+Your response above was cut off mid-stream. Resume directly from where it stops — no apology, no recap. If none of it survived, answer the request from the start.
+
+---
+
+[Request interrupted by user]
+
+---
+
+<task-notification>
+<task-id>ad5086b4e1d104e6e</task-id>
+<tool-use-id>toolu_01A2SxYbCHdGkKV1x66dNdrW</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>failed</status>
+<summary>Agent "Transcribe national voto útil layer" failed: Agent stalled: no progress for 600s (stream watchdog did not recover)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>Transcription done. Now I'll write the JSON files through a generator script in the scratchpad, with the controls computed inside it.</result>
+</task-notification>
+
+---
+
+[Image: original 1280x2604, displayed at 983x2000. Multiply coordinates by 1.30 to map to original image.]
+
+---
+
+[Image: original 1280x3001, displayed at 853x2000. Multiply coordinates by 1.50 to map to original image.]
+
+---
+
+[Image: original 1280x3295, displayed at 777x2000. Multiply coordinates by 1.65 to map to original image.]
+
+---
+
+[Image: original 1280x4147, displayed at 617x2000. Multiply coordinates by 2.07 to map to original image.]
+
+---
+
+[Image: original 1280x2110, displayed at 1213x2000. Multiply coordinates by 1.06 to map to original image.]
+
+---
+
+[Image: original 1280x2513, displayed at 1019x2000. Multiply coordinates by 1.26 to map to original image.]
+
+---
+
+[Image: original 750x6270, displayed at 239x2000. Multiply coordinates by 3.14 to map to original image.]
+
+---
+
+continue
+
+---
+
+<task-notification>
+<task-id>a156b7c01075f9a99</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Transcribe Atlas state polls group B" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>Transcrevi as 12 pesquisas. Oito Atlas estão em `analysis/voto_util/outros/` e passam em `pytest tests/test_voto_util_092026.py` (74 testes). As outras quatro não têm voto presidencial e foram para uma subpasta. Nada foi commitado.
+
+**Onde está cada arquivo**
+- **`analysis/voto_util/outros/`**: `atlasintel_{PB,BA,PI}_20260902`, `AM_20260903`, `{GO,DF,MS}_20260901`, `ES_20260831`.
+- **`analysis/voto_util/outros/sem_presidente/`**: `atlasintel_SE_20260909`, `datafolha_CE_20260917`, `paranapesquisas_BA_20260923`, `paranapesquisas_ES_20260922`.
+
+A subpasta existe porque o teste `test_primeiro_turno_real_time_fecha_cem` exige, em todo `outros/*.json`, um 1º turno presidencial somando de 97 a 100 e com página. Se esses quatro ficassem em `outros/`, a suíte quebraria. Como o glob não entra em subpastas, os dados ficam guardados e fora do teste e de `carrega_outros()`. Se quiser que entrem no modelo, é preciso ajustar esse teste.
+
+| UF | campo | n | Lula | Flávio | 3ª via somada | 2º turno Flávio × Lula (branco/nulo/não sei) |
+|---|---|---|---|---|---|---|
+| PB | 28/08–02/09 | 1.207 | 51,8 | 28,1 | 16,0 | 33,4 × 56,3 (10,3) |
+| BA | 28/08–02/09 | 1.804 | 52,8 | 24,4 | 17,8 | 29,0 × 58,1 (12,9) |
+| PI | 28/08–02/09 | 1.622 | 60,3 | 19,3 | 15,6 | 24,4 × 68,3 (7,3) |
+| AM | 29/08–03/09 | 1.185 | 39,2 | 41,3 | 18,3 | 48,0 × 41,3 (10,7) |
+| GO | 27/08–01/09 | 1.214 | 26,9 | 38,2 | 32,5 (Caiado 19,2) | 54,6 × 32,9 (12,5) |
+| DF | 27/08–01/09 | 1.193 | 36,8 | 42,4 | 19,5 | 47,4 × 42,5 (10,2) |
+| ES | 26/08–31/08 | 1.194 | 33,6 | 44,5 | 20,9 | 53,5 × 36,7 (9,9) |
+| MS | 27/08–01/09 | 1.204 | 32,6 | 46,6 | 19,1 | 57,1 × 36,1 (6,8) |
+| SE | 04/09–09/09 | 1.227 | não tem | não tem | não tem | não tem |
+
+Todos os números foram lidos na imagem, nenhum ilegível. Cada JSON guarda a página de cada bloco, o sha256, os bytes e os dois registros no TSE (o BR e o estadual).
+
+**Pontos que você precisa saber**
+1. **Datas:** estas são as ondas de 26/08 a 09/09, não de 15 a 20/09. Cada estado tinha um só arquivo no lote.
+2. **2º turno:** a Atlas junta "Branco / Nulo / Não sei" numa barra só. Gravei em `Branco/nulo` e deixei `Indecisos` como null. Os cenários contra Caiado, Zema e Renan estão em `pres_2t.outros_cenarios`.
+3. **Candidatos ausentes:** quem não aparece no gráfico ficou null, não zero. No ES, o rodapé da p. 18 diz que Clariana, Edmilson e Grassi não foram citados, e também ficaram null.
+4. **Cruzamentos:** a Atlas não cruza o voto presidencial de 2026 com o de governador de 2026. O que existe é o voto em 2022, e transcrevi quatro blocos por estado:
+   - presidente de 2026 (1º e 2º turnos) por voto presidencial no 2º turno de 2022;
+   - presidente de 2026 (1º e 2º turnos) por voto para governador em 2022.
+
+   O turno de 2022 usado para governador varia por estado e está anotado em cada bloco. Conferi de novo, célula por célula, os de BA, PI, DF, ES e MS, e todos bateram. Em todas as colunas a soma fica a menos de 0,35 de 100. Não transcrevi as colunas de voto para senador em 2022 do ES e do MS.
+5. **Contratante:** fica null em todas as Atlas. Os relatórios mostram só parceiros de mídia no cabeçalho (A Tarde na BA, Meio Norte no PI, Estadão no MS), que gravei em `parceiro_midia`. `url_pdf` também ficou null, porque não há registro de URL no repositório.
+
+**Relatórios sem voto presidencial**
+- **Atlas SE:** a p. 5 cita o registro BR-08229/2026, mas o PDF de 31 páginas só traz governo, aprovação, imagem e problemas. Transcrevi os dois cenários de governador e, da p. 10, o cruzamento do governador por voto presidencial em 2022.
+- **Datafolha CE:** o PDF é só de governador e senador, embora cite o registro BR-00180/2026. Por isso não existe Situação B nem Lula × Flávio. O cruzamento com presidente só aparece no texto corrido e na direção inversa, governador por voto presidencial. Entre eleitores de Flávio, Ciro tem 89% no 1º turno e 92% no 2º. Entre eleitores de Lula, Elmano tem 67%, e no 2º turno fica 71 × 27 contra Ciro. Gravei isso em `cruzamentos`, junto com rejeição e aprovação por voto presidencial.
+- **Paraná Pesquisas BA e ES:** os dois registros dizem "para os cargos de Governador e Senador", então não há voto presidencial nem registro BR. O texto nativo foi conferido na imagem e nas tabelas comparativas. A primeira mais a segunda opção de senado reproduzem a resposta múltipla. Os relatórios não imprimem partido; os de governador copiei do relatório Atlas do mesmo estado e anotei a origem.
+
+Provavelmente o voto presidencial do Datafolha CE e da Atlas SE está em relatórios separados que não foram baixados.
+
+Os scripts de transcrição estão no rascunho (`atlas_b/`): `top_b.py`, `cruz_b.py`, `extra_b.py`, `build_b.py` e `others_b.py`.</result>
+<usage><subagent_tokens>405138</subagent_tokens><tool_uses>138</tool_uses><duration_ms>1219866</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a524ccfb5eee077db</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Transcribe Atlas state polls group A" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>Transcrevi os 11 PDFs, um JSON por estado, sempre da onda mais recente, no formato das instruções. Pus o que fugiu do formato nas notas e nos campos extras. As somas fecham entre 99,8 e 100,2 em todos os blocos principais. Nenhum valor foi completado para 100.
+
+| UF | campo | n | Lula | Flávio | terceira via* | 2º turno Flávio × Lula |
+|---|---|---|---|---|---|---|
+| SP | 15–20/09 | 1.800 | 39,8 | 45,1 | 11,9 | 48,8 × 42,8 (cinza 8,3) |
+| RJ | 15–20/09 | 1.829 | 41,1 | 40,3 | 9,5 (Zema 0,6 está dentro de Outros) | 44,9 × 44,7 (10,5) |
+| MG | 15–20/09 | 1.799 | 48,8 | 43,4 | 6,5 | 47,1 × 49,9 (3) |
+| RS | 15–20/09 | 1.819 | 36,2 | 41,6 | 20,3 | 47,9 × 44,4 (7,7) |
+| CE | 15–20/09 | 1.815 | 56,6 | 33,8 | 8,6 | 38,3 × 57,7 (4) |
+| PE | 15–20/09 | 1.836 | 58,3 | 29,9 | 7,9 | 32,7 × 60,5 (6,9) |
+| PR | 11–16/09 | 1.794 | 34,0 | 53,7 | 9,8 | 57,5 × 38,8 (3,7) |
+| SC | 04–09/09 | 1.211 | 25,0 | 48,0 | 25,0 | 61,5 × 27,5 (11) |
+| MT | 04–09/09 | 1.209 | 31,2 | 53,8 | 12,9 | 59,1 × 35,2 (5,7) |
+| RR | 04–09/09 | 1.200 | 20,7 | 58,6 | 17,7 | 66,4 × 25,6 (8) |
+| AL | 04–09/09 | 1.208 | 47,7 | 37,0 | 13,1 | 40,0 × 50,6 (9,4) |
+
+\*Terceira via = Cury + Caiado + Renan + Zema. "Cinza" é a barra única que o gráfico imprime para Branco / Nulo / Não sei. Ela ficou em `Branco/nulo`, com `Indecisos` = null.
+
+**Leituras duvidosas**
+- **PR, 2º turno (p. 26):** o rótulo da barra cinza sai cortado na impressão; só dá para ler ".7%". Tirei o 3,7 da série temporal da p. 28, onde está legível e bate com os 57,5 e 38,8 da p. 26.
+- **Valores impressos sem casa decimal:** MG "3%", CE "4%", SC "11%" e RR "8%" na barra cinza, e AL "40%" para Flávio. Transcrevi como estão; as somas dão 100,0.
+- **CE, cruzamento da p. 29:** na coluna de voto para governador em 2022, "Outro" soma 79,2 e "Branco/nulo" soma 93,8. Conferi duas vezes e é assim que está impresso.
+- **Colunas de cruzamento abaixo de 100 (de 94,4 a 98,2) em PE, MG, PR e RS:** as tabelas não trazem as candidaturas menores. O relatório também não tem coluna Total; o total é o próprio 1º ou 2º turno.
+- **SP:** a coluna "Outro" (governador 2022) só aparece na p. 23, então tem apenas as linhas daquela página.
+- **RJ:** o bloco de governador vem rotulado "VOTO GOVERNADOR 2022", sem dizer o turno. Há dois cenários de governador: p. 8 (com Garotinho) e p. 12 (sem ele). O principal é o da p. 8, e o outro está em `governador_1t_cenario2`.
+- **MG:** a capa traz o campo como "15/-20/09/2026". A p. 22 não tem o rótulo de votos válidos, mas é essa a distribuição; ficou em `pres_1t_validos`.
+- **Datas nas séries:** CE rotula a onda atual como "21 Set" e PR como "17 Set", um dia depois do fim do campo. O divisor da p. 3 de RR diz "08/2026".
+- **Margem:** em MT e RR aparece "3 p.p.", sem o sinal ±.
+- **Contratante = null em todos:** nenhum PDF declara. Registrei a parceria de mídia que aparece impressa: Estadão em SP (no texto do cabeçalho) e no RJ (só pelo logo nas imagens), Focus Poder no CE e ND Mais em SC. O arquivo de MG tem "estadao" no nome, mas as páginas não mostram esse logo.
+
+Decisões de formato:
+- Segui a convenção do agente paralelo (arquivos de GO, DF e outros): `registro_tse` recebe o número BR e `registro_tse_estadual` o do estado, ambos da p. 5.
+- Candidato sem barra própria no gráfico fica null; os valores que só aparecem no rodapé foram para `outros_detalhe` e `nao_pontuaram`. Avalanche e Marçal não aparecem em nenhum relatório.
+- `divulgacao` = null em todos. PE tem embargo na capa, 22/09/2026 às 16h30, gravado em `embargo_divulgacao`.
+- Além do que foi pedido, os JSONs trazem os cruzamentos do 2º turno Lula × Flávio por voto de 2022 e por governador, a coluna de governador no 2º turno de 2022 (SP, RS, PE) e os outros cenários de 2º turno.
+
+Não fiz commit e só escrevi em `analysis/voto_util/outros/` e no rascunho `atlas_a/`.
+
+Arquivos em `/Users/leonardodias/arvor/PNAD/analysis/voto_util/outros/`:
+- `atlasintel_SP_20260920.json`
+- `atlasintel_RJ_20260920.json`
+- `atlasintel_MG_20260920.json`
+- `atlasintel_RS_20260920.json`
+- `atlasintel_CE_20260920.json`
+- `atlasintel_PE_20260920.json`
+- `atlasintel_PR_20260916.json`
+- `atlasintel_SC_20260909.json`
+- `atlasintel_MT_20260909.json`
+- `atlasintel_RR_20260909.json`
+- `atlasintel_AL_20260909.json`</result>
+<usage><subagent_tokens>361063</subagent_tokens><tool_uses>232</tool_uses><duration_ms>1464530</duration_ms></usage>
+</task-notification>
+
+---
+
+Alguns errinhos. Raquel Lyra é mulher. Alguns candidatos como Aécio não são necessariamente de direita, então fica estranho colocá-lo ali como direita. Aproveite para revisar outros pontos e inconsistências como essa que detectei para tentar resolver o problema. Aécio é tucano e tucano e centro-esquerda
+
+---
+
+[Image: original 1280x3278, displayed at 781x2000. Multiply coordinates by 1.64 to map to original image.]
