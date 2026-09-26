@@ -1077,6 +1077,72 @@ def modelo(base: dict[str, dict], tse: dict[str, dict], n_sim: int = 3000) -> di
     }
 
 
+def reencontro_2022(tse: dict[str, dict]) -> dict[str, dict]:
+    """Eleitor de Bolsonaro em 2022 que ainda nao vota em Flavio, por UF.
+
+    A AtlasIntel cruza, em cada estado, o voto de 2026 com a lembranca
+    declarada do voto no 2o turno de 2022. Multiplicamos a parte desse
+    eleitorado que esta na terceira via, indecisa ou em branco pelos votos que
+    Bolsonaro teve no estado no 2o turno de 2022 (TSE). E lembranca declarada
+    numa pesquisa de 2026, nao pesquisa de 2022.
+    """
+    out = {}
+    for d in B.carrega_outros():
+        if "Atlas" not in d.get("instituto", ""):
+            continue
+        cx = (d.get("cruzamentos") or {}).get("pres_1t_x_voto_2022") or {}
+        col = next(
+            (
+                v
+                for k, v in (cx.get("colunas") or {}).items()
+                if k.startswith("Bolsonaro")
+            ),
+            None,
+        )
+        if not col:
+            continue
+        v = B.normaliza(col)
+        g = B.agrupa(v)
+        cx2 = (d.get("cruzamentos") or {}).get("pres_2t_x_voto_2022") or {}
+        col2 = next(
+            (
+                x
+                for k, x in (cx2.get("colunas") or {}).items()
+                if k.startswith("Bolsonaro")
+            ),
+            None,
+        )
+        nao = next(
+            (
+                x
+                for k, x in (cx.get("colunas") or {}).items()
+                if k.startswith("Não votou")
+            ),
+            None,
+        )
+        fora = g["Tdir"] + g["I"] + g["B"]
+        votos = tse[d["uf"]]["t2"]["bolsonaro"]
+        out[d["uf"]] = {
+            "campo": d.get("campo"),
+            "pagina": cx.get("pagina"),
+            "flavio": rnd(g["F"], 1),
+            "lula": rnd(g["L"], 1),
+            "terceira": rnd(g["Tdir"], 1),
+            "branco_indeciso": rnd(g["I"] + g["B"], 1),
+            "fora_pp": rnd(fora, 1),
+            "flavio_2t": rnd(B.normaliza(col2).get("Flávio"), 1) if col2 else None,
+            "bolsonaro_2022_votos": votos,
+            "fora_eleitores": round(votos * fora / 100),
+            "lula_eleitores": round(votos * g["L"] / 100),
+            "nao_votou_2022": (
+                {k: rnd(x, 1) for k, x in B.agrupa(B.normaliza(nao)).items()}
+                if nao
+                else None
+            ),
+        }
+    return dict(sorted(out.items(), key=lambda kv: -kv[1]["fora_eleitores"]))
+
+
 def media_modelos(mods: dict[str, dict]) -> dict:
     """Media simples das duas casas, cenario a cenario e ponto a ponto da curva."""
     nomes = list(mods)
@@ -1158,6 +1224,7 @@ def main() -> None:
     mods["media"] = media_modelos({k: mods[k] for k in casas})
     mods["media_bruto"] = media_modelos({k: mods[f"{k}_bruto"] for k in casas})
     aux["casas"] = casas
+    aux["reencontro_2022"] = reencontro_2022(tse)
     aux["alvo_nacional"] = alvo
     aux["fatores_calibracao"] = {nome: c["fatores"] for nome, c in calibradas.items()}
     # Reserva por UF na media das casas que mediram a UF, para o mapa.

@@ -229,6 +229,12 @@ def frases_uf(uf: str) -> list[str]:
             out.append(
                 "Aqui quem costuma faltar vota mais em Flávio do que quem sempre vota. Leve um vizinho, um parente, um colega para votar."
             )
+    reen = D["auxiliar"].get("reencontro_2022", {}).get(uf)
+    if reen and reen["fora_eleitores"] >= 30000:
+        out.insert(
+            1,
+            f"Quem votou em Bolsonaro em 2022 {em(uf)}: {fmt(reen['fora_pp'])}% ainda não votam em Flávio nem em Lula. São {mil(reen['fora_eleitores'])} de eleitores que já estiveram do nosso lado.",
+        )
     if TSE[uf]["regiao"] == "Nordeste":
         out.append(
             "Cada voto aqui é um voto a menos na conta que pode fechar a eleição no 1º turno. No Nordeste, votar Flávio é segurar a eleição aberta."

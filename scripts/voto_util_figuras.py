@@ -1005,6 +1005,92 @@ def fig_contribuicao(width=1000) -> str:
     )
 
 
+# ----------------------------------------------------------- reencontro 2022
+def fig_reencontro(width=1000) -> str:
+    """Eleitor de Bolsonaro em 2022: como vota hoje, por estado (AtlasIntel)."""
+    dados = DATA["auxiliar"].get("reencontro_2022", {})
+    linhas = list(dados.items())
+    top, row = 70, 32
+    height = top + row * len(linhas) + 30
+    x0, x1 = 150, width - 150
+    body = [
+        text(
+            0,
+            20,
+            "Quem votou em Bolsonaro no 2º turno de 2022: em quem vota hoje no 1º turno",
+            14,
+            INK,
+            SANS,
+            700,
+        ),
+        legenda(
+            0,
+            48,
+            [
+                (FLAVIO, "Flávio"),
+                (TERCEIRA, "terceira via"),
+                (BRANCO, "branco, nulo ou não sabe"),
+                (LULA, "Lula"),
+            ],
+        ),
+        text(width, 48, "fora de Flávio e de Lula", 12, INK, SANS, 700, "end"),
+    ]
+    for i, (uf, r) in enumerate(linhas):
+        y = top + i * row
+        partes = [
+            ("flavio", FLAVIO, "Flávio"),
+            ("terceira", TERCEIRA, "terceira via"),
+            ("branco_indeciso", BRANCO, "branco, nulo ou não sabe"),
+            ("lula", LULA, "Lula"),
+        ]
+        tot = sum(r[k] or 0 for k, _, _ in partes) or 1
+        body.append(text(0, y + 15, uf, 13.5, INK, SANS, 700))
+        body.append(
+            text(
+                34,
+                y + 15,
+                (
+                    f"campo até {r['campo'][-2:]}/{r['campo'][-5:-3]}"
+                    if r.get("campo")
+                    else ""
+                ),
+                11,
+                MUTED,
+            )
+        )
+        cx = x0
+        for k, cor, nome in partes:
+            v = r[k] or 0
+            w = (x1 - x0) * v / tot
+            body.append(
+                rect(
+                    cx,
+                    y + 4,
+                    max(w - 1.5, 0),
+                    20,
+                    cor,
+                    2,
+                    f"{uf}: {fmt(v, 1)}% do eleitor de Bolsonaro 2022 vota {nome}",
+                )
+            )
+            if w > 30:
+                body.append(
+                    text(
+                        cx + w / 2, y + 18, fmt(v), 11.5, "#ffffff", MONO, 700, "middle"
+                    )
+                )
+            cx += w
+        body.append(
+            text(width, y + 18, mil(r["fora_eleitores"]), 13, INK, MONO, 700, "end")
+        )
+    return svg(
+        "".join(body),
+        width,
+        height,
+        "Voto atual do eleitor de Bolsonaro em 2022 por estado",
+    )
+
+
 FIGURAS = {
     "fenomeno": fig_fenomeno,
     "modelo": fig_modelo,
@@ -1015,4 +1101,5 @@ FIGURAS = {
     "definitiva": fig_definitiva,
     "expectativa": fig_expectativa,
     "contribuicao": fig_contribuicao,
+    "reencontro": fig_reencontro,
 }

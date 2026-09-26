@@ -217,6 +217,7 @@ def test_pagina_sem_travessao_e_com_todos_os_capitulos() -> None:
         "matematica",
         "mapa",
         "nacional",
+        "reencontro",
         "terceira",
         "governadores",
         "senado",

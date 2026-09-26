@@ -1018,3 +1018,31 @@ def cap_fontes() -> str:
 <p>Base pública: <a href="assets/voto_util_092026.json">voto_util_092026.json</a> e <a href="https://github.com/ArvorCo/PNAD/blob/main/derivados/voto-util-092026-estados.csv">voto-util-092026-estados.csv</a>. Municípios: <a href="https://github.com/ArvorCo/PNAD/blob/main/analysis/voto_util/reserva_2022_municipios.csv">reserva_2022_municipios.csv</a>.</p>
 """,
     )
+
+
+# ------------------------------------------------------------------ reencontro
+def cap_reencontro() -> str:
+    r = D["auxiliar"].get("reencontro_2022", {})
+    if not r:
+        return ""
+    total = sum(x["fora_eleitores"] for x in r.values())
+    top = list(r.items())[:4]
+    top_txt = "; ".join(
+        f"{uf}, {mil(x['fora_eleitores'])} ({fmt(x['fora_pp'], 1)}%)" for uf, x in top
+    )
+    novos = [
+        (uf, x["nao_votou_2022"]) for uf, x in r.items() if x.get("nao_votou_2022")
+    ]
+    novos_l = sum(1 for _, n in novos if n["L"] > n["F"])
+    antigos = [uf for uf, x in r.items() if (x.get("campo") or "")[:10] < "2026-09-10"]
+    return section(
+        "reencontro",
+        "Oportunidade 5",
+        "O eleitor de Bolsonaro de 2022 que ainda não voltou",
+        f"""
+<p class="lead">A AtlasIntel pergunta, em cada estado, em quem o entrevistado votou no 2º turno de 2022 e cruza com o voto de hoje. Somados os {len(r)} estados em que ela publicou esse cruzamento, <strong>{fmt(total / 1e6, 1)} milhões</strong> de eleitores que votaram em Bolsonaro em 2022 estão hoje na terceira via, indecisos ou em branco. Os maiores estoques: {top_txt}.</p>
+{figure("reencontro", "AtlasIntel, presidente 1º turno por voto declarado no 2º turno de 2022, relatórios estaduais. Coluna da direita: votos de Bolsonaro no estado em 2022 (TSE) vezes a parte desse eleitorado que hoje não vota nem em Flávio nem em Lula.", wide=True)}
+<p>É a conversa mais fácil da eleição: a pessoa já votou na direita contra Lula uma vez. No 2º turno de 2026, a mesma pesquisa mostra que esse eleitor volta quase inteiro para Flávio. O voto útil é pedir que ele volte já no 1º.</p>
+<div class="callout"><b>Cuidados com o número.</b> É lembrança de voto declarada numa pesquisa de 2026, não pesquisa de 2022. A AtlasIntel recruta pela internet e tende a mostrar menos indecisão que as pesquisas presenciais. Parte dos relatórios é de antes de 10 de setembro ({", ".join(antigos) or "nenhum"}), quando a terceira via ainda era maior. E o outro lado da conta: em {novos_l} dos {len(novos)} estados, quem não votou em 2022 prefere Lula, o que torna o comparecimento do eleitor de direita ainda mais necessário.</div>
+""",
+    )
