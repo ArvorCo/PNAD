@@ -46,6 +46,7 @@ SECOES = [
     ("nacional", "Para onde vão"),
     ("reencontro", "Eleitor de 2022"),
     ("terceira", "Terceira via"),
+    ("movimentos", "Zema e Caiado"),
     ("governadores", "Governadores"),
     ("senado", "Senado"),
     ("provavel", "Comparecimento"),
@@ -120,6 +121,8 @@ th,td{text-align:left;padding:9px 13px;border-bottom:1px solid var(--line);white
 thead th{font-family:var(--mono);font-size:.7rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);background:var(--paper2)}
 tbody th{font-weight:600}
 .compact table{font-size:.86rem}
+.quebra td{white-space:normal;min-width:120px;vertical-align:top}
+.quebra td:nth-child(3){min-width:340px}
 .sub{font-family:var(--mono);font-size:.74rem;color:var(--muted)}
 .source{font-family:var(--mono);font-size:.78rem;color:var(--muted);line-height:1.55}
 .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:22px 0}
@@ -231,6 +234,7 @@ def main() -> None:
             CAP.cap_nacional(),
             CAP.cap_reencontro(),
             CAP.cap_terceira(),
+            CAP.cap_movimentos(),
             CAP.cap_governadores(),
             CAP.cap_senado(),
             CAP.cap_provavel(),

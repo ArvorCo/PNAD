@@ -272,6 +272,7 @@ def cap_tese() -> str:
 <li><b>Se os dois lados fizerem</b>, o 1º turno empata: {pct(dois["flavio_validos"])} a {pct(dois["lula_validos"])}. Quem chega na frente depende de quem mobiliza melhor.</li>
 <li><b>Se só a direita fizer</b>, Flávio termina o 1º turno com {pct(completo["flavio_validos"])} dos válidos e {fmt(completo["margem"], 1)} pontos de vantagem, com faixa até {pct(completo["flavio_p90"])}.</li>
 </ol>
+<p><b>Zema e Caiado.</b> Zema já disse que, contra o PT, estará com Flávio, e o Novo discute retirar a candidatura; Caiado e Kassab não têm negociação pública. Se alguém desistir agora, não há substituto e o voto no número dele é nulo. O capítulo <a href="#movimentos">Zema, Caiado e o prazo que já passou</a> mostra a conta: desistência só ajuda se o eleitor digitar 22.</p>
 <div class="callout"><b>O que este mapa é.</b> Leitura de {len(EST)} relatórios estaduais da Quaest lidos página a página, {len(D["realtime"])} relatórios estaduais da Real Time Big Data, {len(D.get("atlas", {}))} da AtlasIntel e {len([x for x in D.get("outros_estaduais", []) if "Atlas" not in x["instituto"]])} de outros institutos, as pesquisas nacionais registradas no TSE e o resultado oficial de 2022. O capítulo de campanha é juízo editorial declarado, a serviço de uma candidatura, com o número ao lado de cada argumento. O modelo é cenário condicional, não previsão e não pesquisa: ele não entrevista ninguém, só refaz a conta das pesquisas registradas sob hipóteses explícitas.</div>
 """,
     )
@@ -1065,5 +1066,92 @@ def cap_reencontro() -> str:
 {figure("reencontro", "AtlasIntel, presidente 1º turno por voto declarado no 2º turno de 2022, relatórios estaduais. Coluna da direita: votos de Bolsonaro no estado em 2022 (TSE) vezes a parte desse eleitorado que hoje não vota nem em Flávio nem em Lula.", wide=True)}
 <p>É a conversa mais fácil da eleição: a pessoa já votou na direita contra Lula uma vez. No 2º turno de 2026, a mesma pesquisa mostra que esse eleitor volta quase inteiro para Flávio. O voto útil é pedir que ele volte já no 1º.</p>
 <div class="callout"><b>Cuidados com o número.</b> É lembrança de voto declarada numa pesquisa de 2026, não pesquisa de 2022. A AtlasIntel recruta pela internet e tende a mostrar menos indecisão que as pesquisas presenciais. Parte dos relatórios é de antes de 10 de setembro ({", ".join(antigos) or "nenhum"}), quando a terceira via ainda era maior. E o outro lado da conta: em {novos_l} dos {len(novos)} estados, quem não votou em 2022 prefere Lula, o que torna o comparecimento do eleitor de direita ainda mais necessário.</div>
+""",
+    )
+
+
+# ------------------------------------------------------------------ zema e caiado
+def _valor_casa(uf: str, casa: str, nome: str) -> str:
+    if casa == "quaest":
+        v = EST.get(uf, {}).get("pres_1t", {}).get("valores", {}).get(nome)
+    else:
+        v = D.get(casa, {}).get(uf, {}).get("valores", {}).get(nome)
+    return "n/d" if v is None else f"{fmt(v, 1 if v % 1 else 0)}%"
+
+
+def cap_movimentos() -> str:
+    mov = D["auxiliar"].get("movimentos") or {}
+    des = D["auxiliar"].get("desistencias") or {}
+    if not mov or not des:
+        return ""
+    linhas = [
+        [
+            f"{x['data'][8:10]}/{x['data'][5:7]}",
+            esc(x["quem"]),
+            esc(x["resumo"]),
+            f'<a href="{esc(x["url"])}">{esc(x["veiculo"])}</a>',
+            esc(x["tipo"]),
+        ]
+        for x in mov["itens"]
+    ]
+    h = des["hoje"]
+    cen_linhas = [
+        [
+            "Hoje, eleitor provável",
+            f"{fmt(h['flavio_validos'], 1)}%",
+            f"{fmt(h['lula_validos'], 1)}%",
+            sgn(h["margem"], 1),
+            "",
+        ]
+    ]
+    for c in des["cenarios"]:
+        cen_linhas.append(
+            [
+                esc(c["nome"]),
+                f"{fmt(c['flavio_validos'], 1)}%",
+                f"{fmt(c['lula_validos'], 1)}%",
+                sgn(c["margem"], 1),
+                f"+{fmt(c['nulos_novos_pp_validos'], 1)}",
+            ]
+        )
+    tz, tcn, tcd = (
+        des["taxas"]["zema_nexus"],
+        des["taxas"]["caiado_nexus"],
+        des["taxas"]["caiado_datafolha"],
+    )
+    zema_cen = des["cenarios"][0]
+    go = D["auxiliar"].get("reencontro_2022", {}).get("GO")
+    go_txt = ""
+    if go:
+        go_txt = (
+            f" Em Goiás, pela AtlasIntel, {fmt(go['terceira'])}% de quem votou em Bolsonaro em 2022 estão hoje na terceira via, "
+            f"{fmt(go.get('candidatos', {}).get('Caiado', 0), 1)} pontos deles com Caiado. Somados, são {mil(go['fora_eleitores'])} de eleitores que já estiveram com a direita, "
+            "e ali a decisão de Caiado pesa."
+        )
+    regras = "".join(
+        f'<li>{esc(r["texto"])} <a href="{esc(r["url"])}">{esc(r["fonte"])}</a>.</li>'
+        for r in mov.get("regras", [])
+    )
+    num = mov.get("numeros", {})
+    return section(
+        "movimentos",
+        "Movimentações",
+        "Zema, Caiado e o prazo que já passou",
+        f"""
+<p class="lead">{esc(mov["status_em_26_09"])} O que existe até agora está na tabela, com o tipo de evidência de cada item: declaração pública atribuída, relato com fonte anônima ou relato sem fonte identificada. O Novo já faz voto útil por conta própria: com aval de Zema, candidatos do partido declararam voto em Flávio no 1º turno. No PSD, o relato é de neutralidade institucional num eventual 2º turno e apoio pessoal de Caiado a Flávio.</p>
+{table(["Data", "Quem", "O que", "Veículo", "Evidência"], linhas, "Movimentações de Zema, Caiado e Kassab", "compact quebra")}
+<h3>A regra que muda tudo: depois de 14/09, desistir não tem substituto</h3>
+<ul class="fontes">{regras}</ul>
+<p>Na prática: se Zema ou Caiado desistirem agora, o nome e a foto continuam na urna e <strong>quem digitar {num.get("Novo", 30)} ou {num.get("PSD", 55)} anula o próprio voto</strong>. E voto nulo, como mostra o capítulo da regra do jogo, baixa a régua de 50% para quem lidera. A desistência só ajuda Flávio se o eleitor mudar o voto para o 22. Se ele continuar digitando o número antigo, a desistência ajuda Lula.</p>
+<h3>A conta: quanto cada desistência move</h3>
+<p>Zema tem, na média das pesquisas nacionais da última semana, {fmt(des["zema_validos"], 1)}% dos votos válidos; Caiado, {fmt(des["caiado_validos"], 1)}%. Para onde vai esse eleitor quem mediu foi a Nexus (18 a 20/09, p. 79): {fmt(100 * tz["flavio"])}% do eleitor de Zema escolhe Flávio contra Lula e {fmt(100 * tz["lula"])}% escolhe Lula. O de Caiado se divide: {fmt(100 * tcn["flavio"])}% Flávio e {fmt(100 * tcn["lula"])}% Lula na Nexus; {fmt(100 * tcd["flavio"])}% e {fmt(100 * tcd["lula"])}% no Datafolha (15 a 17/09, p. 7). O resto vai para branco, nulo ou indecisão.</p>
+{table(["Cenário", "Flávio (válidos)", "Lula (válidos)", "Diferença", "Nulos novos"], cen_linhas, "Efeito das desistências de Zema e Caiado")}
+<p class="source">Parte do cenário "Hoje, eleitor provável" da média das bases, calibrado pela média nacional. Nulos novos em pontos dos votos válidos de hoje. Este efeito é parte da reserva de 2º turno do capítulo do modelo, não se soma a ela.</p>
+<div class="callout contra"><b>O que a conta mostra, contra a intuição.</b> A saída de Zema move a diferença de {sgn(h["margem"], 1)} para {sgn(zema_cen["margem"], 1)} pontos: ajuda, mas pouco, porque ele tem cerca de 1% dos válidos. A saída de Caiado move pouco a diferença nacional e <em>aumenta</em> a parcela de Lula nos válidos, porque o eleitor de Caiado se divide e parte dele vira nulo. Desistência não é voto útil. Voto útil é o eleitor mudar o voto, com ou sem desistência.{go_txt}</div>
+<h3>Caiado e Kassab: o que é fato e o que é hipótese</h3>
+<p><b>Fato.</b> Kassab é o vice na chapa de Caiado. Em agosto, disse que o Centrão age pela reeleição de Lula e que Flávio tem chance zero; Caiado respondeu que não estará com Lula em nenhum turno. Em 25/09 o candidato do PSD ao governo de Santa Catarina disse que apoiará Flávio num 2º turno. Em 26/09 o PlatôBR relatou, com fontes anônimas, que Kassab quer o PSD neutro no 2º turno e que Caiado apoiaria Flávio pessoalmente.</p>
+<p><b>Hipótese, sem registro público até 26/09.</b> Uma retirada negociada no 1º turno. Ela exigiria a renúncia da chapa inteira, Caiado e Kassab, porque presidente e vice são eleitos juntos, e deixaria o nome na urna sem substituto. Se acontecer, vale a mesma regra: o recado é digitar 22, não 55.</p>
+<h3>Em cada estado</h3>
+<p>Zema tem {_valor_casa("MG", "quaest", "Zema")} em Minas pela Quaest, {_valor_casa("MG", "realtime", "Zema")} pela Real Time e {_valor_casa("MG", "atlas", "Zema")} pela AtlasIntel: nem no próprio estado ele é o voto que decide. Caiado tem {_valor_casa("GO", "quaest", "Caiado")} em Goiás pela Quaest, {_valor_casa("GO", "realtime", "Caiado")} pela Real Time e {_valor_casa("GO", "atlas", "Caiado")} pela AtlasIntel: ali, e só ali, a decisão dele pesa de verdade.</p>
 """,
     )

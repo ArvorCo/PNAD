@@ -229,6 +229,14 @@ def frases_uf(uf: str) -> list[str]:
             out.append(
                 "Aqui quem costuma faltar vota mais em Flávio do que quem sempre vota. Leve um vizinho, um parente, um colega para votar."
             )
+    if uf == "MG":
+        out.append(
+            "Zema já disse que, contra o PT, estará com Flávio. Se ele desistir, quem digitar 30 anula o voto: o número que conta é o 22."
+        )
+    if uf == "GO":
+        out.append(
+            "Se a chapa de Caiado sair, quem digitar 55 anula o voto. Em Goiás, onde Caiado ainda tem dois dígitos, o recado é um só: 22."
+        )
     reen = D["auxiliar"].get("reencontro_2022", {}).get(uf)
     if reen and reen["fora_eleitores"] >= 30000:
         out.insert(
@@ -239,7 +247,7 @@ def frases_uf(uf: str) -> list[str]:
         out.append(
             "Cada voto aqui é um voto a menos na conta que pode fechar a eleição no 1º turno. No Nordeste, votar Flávio é segurar a eleição aberta."
         )
-    return out[:4]
+    return out[:5]
 
 
 def ficha_uf(uf: str) -> str:
@@ -388,6 +396,7 @@ def cap_argumentos() -> str:
                 "Nenhuma candidatura de terceira via passa de um dígito em pesquisa nacional. O 1º turno não escolhe o melhor nome, escolhe quem vai ao 2º. Escolha quem chega.",
                 "Voto de protesto que não chega ao 2º turno vira aplauso para quem já está no poder.",
                 f"Não é traição ao seu candidato. É conta: de tudo o que a terceira via perdeu e foi para Flávio ou Lula desde agosto, {fmt(100 * captura_flavio())}% foi para Flávio. Quem pensa como você já está fazendo essa conta.",
+                "Se o seu candidato desistir, não digite o número dele. Depois de 14 de setembro não existe substituto, o nome continua na urna e o voto no número é nulo.",
             ],
         ),
         (
@@ -402,6 +411,7 @@ def cap_argumentos() -> str:
             [
                 f"Em Goiás, onde Caiado governou, ele caiu de {fmt(caiado0)}% para {fmt(caiado1)}% em um mês. O próprio goiano já fez a conta.",
                 "Segurança pública e agro precisam de um presidente que chegue ao 2º turno. O voto que chega é o que protege essa agenda.",
+                "Caiado disse que não estará com Lula em nenhum cenário nem turno (Poder360, 15/08). Se a chapa dele sair, o 55 vira voto nulo; o voto que conta contra Lula é o 22.",
             ],
         ),
         (
@@ -409,6 +419,8 @@ def cap_argumentos() -> str:
             [
                 "Gestão é escolher onde o recurso rende mais. O voto rende mais onde decide.",
                 "O 2º turno já está desenhado: é Lula ou Flávio. Quem quer menos Estado e contas em ordem escolhe agora o lado que pode vencer.",
+                "Zema disse que, contra o PT, estará com Flávio, e deu aval para candidatos do Novo votarem em Flávio já no 1º turno (CNN Brasil, 24/09). O próprio Novo está fazendo voto útil.",
+                "Se Zema desistir, o 30 vira voto nulo, e nulo ajuda quem lidera. O voto que conta é o 22.",
             ],
         ),
         (

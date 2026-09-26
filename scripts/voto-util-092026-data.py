@@ -1137,6 +1137,9 @@ def reencontro_2022(tse: dict[str, dict]) -> dict[str, dict]:
             "branco_indeciso": rnd(g["I"] + g["B"], 1),
             "fora_pp": rnd(fora, 1),
             "flavio_2t": rnd(B.normaliza(col2).get("Flávio"), 1) if col2 else None,
+            "candidatos": {
+                k: rnd(x, 1) for k, x in v.items() if k in B.TERCEIRA_DIREITA
+            },
             "bolsonaro_2022_votos": votos,
             "fora_eleitores": round(votos * fora / 100),
             "lula_eleitores": round(votos * g["L"] / 100),
@@ -1147,6 +1150,115 @@ def reencontro_2022(tse: dict[str, dict]) -> dict[str, dict]:
             ),
         }
     return dict(sorted(out.items(), key=lambda kv: -kv[1]["fora_eleitores"]))
+
+
+def desistencias(nac: dict, alvo: dict, media: dict) -> dict:
+    """Efeito aritmetico de Zema e Caiado desistirem em favor de Flavio.
+
+    Parte do cenario "Hoje, eleitor provavel" da media das bases. O peso de
+    cada nome nos validos vem das ondas nacionais da ultima semana (as mesmas
+    da calibracao). O destino do eleitor vem de quem mediu: a Nexus (21/09,
+    p. 79) para Zema e Caiado, e o Datafolha (21/09, p. 7) para Caiado. A
+    parcela que nao vai nem para Flavio nem para Lula vira branco ou nulo:
+    depois de 14/09 nao ha substituto, e o voto no numero de quem desistiu e
+    nulo. Este efeito e parte da reserva de 2o turno, nao soma a ela.
+    """
+    pesq = {p["id"]: p for p in AGREG["pesquisas"]}
+    qn = (
+        (nac["fontes"].get("quaest_20260921") or {})
+        .get("blocos", {})
+        .get("voto_1t_estimulado", {})
+    )
+    q_ult = list((qn.get("rodadas") or {}).values())[-1] if qn else {}
+    pesos: dict[str, list[float]] = {"zema": [], "caiado": []}
+    usadas = []
+    for oid in alvo["ondas"]:
+        pub = pesq[oid]["publicado"]["1t"]
+        if pub.get("zema") is None and oid.startswith("quaest") and q_ult:
+            pub = {k.lower(): v for k, v in q_ult.items()}
+            pub = {
+                "lula": pub.get("lula"),
+                "flavio": pub.get("flávio"),
+                "zema": pub.get("zema"),
+                "caiado": pub.get("caiado"),
+                "outros": sum(
+                    v
+                    for k, v in q_ult.items()
+                    if k
+                    not in (
+                        "Lula",
+                        "Flávio",
+                        "Zema",
+                        "Caiado",
+                        "Indecisos",
+                        "Branco/nulo",
+                    )
+                ),
+            }
+        if pub.get("zema") is None or pub.get("caiado") is None:
+            continue
+        validos = sum(
+            v
+            for k, v in pub.items()
+            if k not in ("branco_nulo", "indecisos") and v is not None
+        )
+        pesos["zema"].append(100 * pub["zema"] / validos)
+        pesos["caiado"].append(100 * pub["caiado"] / validos)
+        usadas.append(oid)
+    z, c = statistics.mean(pesos["zema"]), statistics.mean(pesos["caiado"])
+    mat = (nac.get("transferencia") or {}).get("linhas", {})
+    dfm = (
+        (nac["fontes"].get("datafolha_20260921") or {})
+        .get("blocos", {})
+        .get("transferencia_1t_para_2t_lula_x_flavio", {})
+        .get("linhas", {})
+    )
+    taxa = {
+        "zema_nexus": (mat["Zema"]["Flávio"] / 100, mat["Zema"]["Lula"] / 100),
+        "caiado_nexus": (mat["Caiado"]["Flávio"] / 100, mat["Caiado"]["Lula"] / 100),
+        "caiado_datafolha": (
+            dfm["Caiado"]["Flávio"] / 100,
+            dfm["Caiado"]["Lula"] / 100,
+        ),
+    }
+    hoje = next(x for x in media["cenarios"] if x["nome"] == "Hoje, eleitor provável")
+    f0, l0, o0 = hoje["flavio_validos"], hoje["lula_validos"], hoje["outros_validos"]
+
+    def aplica(saidas: list[tuple[float, tuple[float, float]]]) -> dict:
+        f, lu, o = f0, l0, o0
+        for peso, (tf, tl) in saidas:
+            f += peso * tf
+            lu += peso * tl
+            o -= peso
+        tot = f + lu + o
+        return {
+            "flavio_validos": rnd(100 * f / tot, 2),
+            "lula_validos": rnd(100 * lu / tot, 2),
+            "margem": rnd(100 * (f - lu) / tot, 2),
+            "nulos_novos_pp_validos": rnd(100 - tot, 2),
+        }
+
+    return {
+        "ondas": usadas,
+        "zema_validos": rnd(z, 2),
+        "caiado_validos": rnd(c, 2),
+        "taxas": {k: {"flavio": v[0], "lula": v[1]} for k, v in taxa.items()},
+        "hoje": {"flavio_validos": f0, "lula_validos": l0, "margem": rnd(f0 - l0, 2)},
+        "cenarios": [
+            {
+                "nome": "Zema desiste e apoia Flávio",
+                **aplica([(z, taxa["zema_nexus"])]),
+            },
+            {
+                "nome": "Zema e Caiado desistem (destino de Caiado pela Nexus)",
+                **aplica([(z, taxa["zema_nexus"]), (c, taxa["caiado_nexus"])]),
+            },
+            {
+                "nome": "Zema e Caiado desistem (destino de Caiado pelo Datafolha)",
+                **aplica([(z, taxa["zema_nexus"]), (c, taxa["caiado_datafolha"])]),
+            },
+        ],
+    }
 
 
 def media_modelos(mods: dict[str, dict]) -> dict:
@@ -1232,6 +1344,10 @@ def main() -> None:
     aux["casas"] = casas
     aux["reencontro_2022"] = reencontro_2022(tse)
     aux["alvo_nacional"] = alvo
+    aux["desistencias"] = desistencias(nac, alvo, mods["media"])
+    aux["movimentos"] = json.loads(
+        (ROOT / "analysis/voto_util/movimentos_092026.json").read_text(encoding="utf-8")
+    )
     aux["fatores_calibracao"] = {nome: c["fatores"] for nome, c in calibradas.items()}
     # Reserva por UF na media das casas que mediram a UF, para o mapa.
     for uf in tse:

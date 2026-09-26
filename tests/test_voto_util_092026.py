@@ -219,6 +219,7 @@ def test_pagina_sem_travessao_e_com_todos_os_capitulos() -> None:
         "nacional",
         "reencontro",
         "terceira",
+        "movimentos",
         "governadores",
         "senado",
         "provavel",
@@ -271,3 +272,20 @@ def test_pagina_sem_marcador_de_template_vazio() -> None:
     s = re.sub(r"<script.*?</script>|<style.*?</style>", "", s, flags=re.DOTALL)
     texto = html_mod.unescape(re.sub(r"<[^>]+>", " ", s))
     assert "{" not in texto and "}" not in texto
+
+
+def test_movimentos_tem_fonte_e_tipo_de_evidencia(data: dict) -> None:
+    mov = data["auxiliar"]["movimentos"]
+    assert mov["itens"], "linha do tempo vazia"
+    for item in mov["itens"]:
+        assert item["url"].startswith("https://")
+        assert item["tipo"] and item["veiculo"] and len(item["data"]) == 10
+    assert any("14/09/2026" in r["texto"] for r in mov["regras"])
+
+
+def test_desistencias_so_movem_quem_saiu(data: dict) -> None:
+    des = data["auxiliar"]["desistencias"]
+    assert 0 < des["zema_validos"] < 5 and 0 < des["caiado_validos"] < 10
+    for c in des["cenarios"]:
+        assert c["nulos_novos_pp_validos"] > 0
+        assert c["flavio_validos"] > des["hoje"]["flavio_validos"]
