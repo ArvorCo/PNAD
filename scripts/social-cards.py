@@ -60,6 +60,20 @@ _ONDAS, _INSTITUTOS = _agregador_counts()
 
 CARDS: list[dict] = [
     {
+        "slug": "mapa_do_voto_util",
+        "eyebrow": "Mapa do voto útil · 1º turno de 2026",
+        "title": "O voto útil já começou.",
+        "title_em": "Falta chegar a 10,8 milhões de eleitores.",
+        "lede": "25 pesquisas estaduais Quaest e 23 Real Time, estado por estado. Sete de cada dez pontos que a terceira via perde vão para Flávio. <b>Um terço da reserva basta para liderar o 1º turno.</b>",
+        "stats": [
+            ("10,8 mi", "votam Flávio no 2º turno e ainda não no 1º"),
+            ("71%", "do ganho dos dois desde 26/08 foi de Flávio"),
+            ("48,6%", "é onde Lula chega se só a esquerda consolidar"),
+        ],
+        "foot": "análise de pesquisas registradas e cenário condicional, não previsão",
+        "accent": "amber",
+    },
+    {
         "slug": "estaduais_092026",
         "eyebrow": "Atlas estadual · setembro de 2026",
         "title": "A direita ganha o estado.",

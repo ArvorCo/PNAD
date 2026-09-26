@@ -1,0 +1,444 @@
+{
+ "instituto": "Datafolha (contratantes Folha de S.Paulo e TV Globo)",
+ "arquivo": "data/pesquisas/datafolha/2026-09-17/relatorio.pdf",
+ "registro_tse": "BR-04029/2026",
+ "campo": "15 a 17/09/2026",
+ "divulgacao": "17/09/2026 (relatório completo publicado em 21/09/2026)",
+ "n": 2001,
+ "metodo": "Abordagem pessoal em pontos de fluxo, 125 municípios (p. 2)",
+ "arquivos_ja_existentes": {
+  "cruzamentos_anexo": "docs/assets/datafolha_21092026_cruzamentos.json (tabelas 'definicao' p. 47 e 'motivacao' p. 48, por sexo, idade, escolaridade, renda, PEA, cor, religião, região, porte e partido)",
+  "cruzamentos_brutos": "data/pesquisas/datafolha/2026-09-17/cruzamentos.json",
+  "sudeste": "docs/assets/datafolha_21092026_sudeste.json (transferência governador x presidente em SP/RJ/MG, outro universo)"
+ },
+ "blocos": {
+  "voto_1t": {
+   "pagina": 5,
+   "valores": {
+    "Lula": 39,
+    "Flávio": 36,
+    "Cury": 6,
+    "Caiado": 4,
+    "Renan": 3,
+    "Zema": 2,
+    "Samara": 1,
+    "Rui": 1,
+    "Branco/nulo": 6,
+    "Indecisos": 3
+   }
+  },
+  "decisao_do_voto_1t_por_candidato": {
+   "paginas": {
+    "grafico": 12,
+    "texto": 6
+   },
+   "pergunta": "Em relação ao seu voto para presidente em ___, você diria que: está totalmente decidido a votar em ___ ou seu voto ainda pode mudar? (base: 1.943 que citaram opção na estimulada)",
+   "colunas": [
+    "Está totalmente decidido",
+    "O voto ainda pode mudar",
+    "Não sabe"
+   ],
+   "bases": {
+    "Total": 1943,
+    "Lula": 844,
+    "Flávio": 637,
+    "Caiado": 86,
+    "Cury": 116,
+    "Renan": 49
+   },
+   "margem_de_erro_pp": {
+    "Total": 2,
+    "Lula": 3,
+    "Flávio": 4,
+    "Caiado": 11,
+    "Cury": 9,
+    "Renan": 14
+   },
+   "rodadas": [
+    "18-19/08",
+    "01-02/09",
+    "08-10/09",
+    "15-17/09"
+   ],
+   "linhas": {
+    "Total": [
+     [
+      72,
+      27,
+      1
+     ],
+     [
+      71,
+      28,
+      0
+     ],
+     [
+      75,
+      25,
+      0
+     ],
+     [
+      76,
+      24,
+      0
+     ]
+    ],
+    "Lula": [
+     [
+      82,
+      18,
+      0
+     ],
+     [
+      81,
+      18,
+      0
+     ],
+     [
+      84,
+      16,
+      0
+     ],
+     [
+      84,
+      16,
+      1
+     ]
+    ],
+    "Flávio": [
+     [
+      78,
+      21,
+      1
+     ],
+     [
+      80,
+      20,
+      0
+     ],
+     [
+      81,
+      19,
+      0
+     ],
+     [
+      82,
+      18,
+      0
+     ]
+    ],
+    "Caiado": [
+     [
+      57,
+      42,
+      1
+     ],
+     [
+      50,
+      50,
+      0
+     ],
+     [
+      49,
+      51,
+      0
+     ],
+     [
+      56,
+      44,
+      0
+     ]
+    ],
+    "Cury": [
+     null,
+     [
+      50,
+      50,
+      0
+     ],
+     [
+      43,
+      57,
+      0
+     ],
+     [
+      54,
+      46,
+      0
+     ]
+    ],
+    "Renan": [
+     [
+      54,
+      46,
+      0
+     ],
+     [
+      35,
+      65,
+      0
+     ],
+     [
+      58,
+      42,
+      0
+     ],
+     [
+      53,
+      45,
+      2
+     ]
+    ]
+   },
+   "texto_p6": "Entre não alinhados nem ao petismo nem ao bolsonarismo, 46% ainda podem mudar o voto; no grupo que vota branco ou nulo, 64% estão convictos.",
+   "anexo": "Por perfil: docs/assets/datafolha_21092026_cruzamentos.json, tabela 'definicao' (p. 47). Total 76/24/0; PT 86/14; PL 91/9; sem partido 63/36; Sudeste 72/27."
+  },
+  "motivacao_propostas_ou_evitar": {
+   "paginas": {
+    "grafico": 13,
+    "texto": 6
+   },
+   "pergunta": "E você votaria em ___ porque ele(a) tem as melhores propostas e é o(a) mais preparado(a) ou para evitar que outro candidato seja eleito? (base: 1.822)",
+   "colunas": [
+    "Melhores propostas",
+    "Evitar que outro seja eleito",
+    "Outras respostas",
+    "Não sabe"
+   ],
+   "bases": {
+    "Total": 1822,
+    "Renan": 49,
+    "Lula": 844,
+    "Caiado": 86,
+    "Flávio": 637,
+    "Cury": 116
+   },
+   "rodadas": [
+    "18-19/08",
+    "01-02/09",
+    "08-10/09",
+    "15-17/09"
+   ],
+   "linhas_15_17_09": {
+    "Total": [
+     65,
+     28,
+     6,
+     1
+    ],
+    "Lula": [
+     75,
+     18,
+     5,
+     null
+    ],
+    "Flávio": [
+     58,
+     35,
+     6,
+     1
+    ],
+    "Cury": [
+     50,
+     45,
+     5,
+     0
+    ],
+    "Caiado": [
+     62,
+     31,
+     6,
+     1
+    ],
+    "Renan": [
+     79,
+     13,
+     4,
+     5
+    ]
+   },
+   "serie_evitar": {
+    "Total": [
+     30,
+     28,
+     28,
+     28
+    ],
+    "Lula": [
+     23,
+     21,
+     22,
+     18
+    ],
+    "Flávio": [
+     35,
+     34,
+     35,
+     35
+    ],
+    "Caiado": [
+     31,
+     39,
+     34,
+     31
+    ],
+    "Renan": [
+     24,
+     21,
+     19,
+     13
+    ],
+    "Cury": [
+     null,
+     28,
+     27,
+     45
+    ]
+   },
+   "serie_propostas": {
+    "Total": [
+     61,
+     63,
+     64,
+     65
+    ],
+    "Lula": [
+     68,
+     71,
+     71,
+     75
+    ],
+    "Flávio": [
+     56,
+     57,
+     58,
+     58
+    ],
+    "Caiado": [
+     60,
+     52,
+     60,
+     62
+    ],
+    "Renan": [
+     73,
+     73,
+     73,
+     79
+    ],
+    "Cury": [
+     null,
+     63,
+     62,
+     50
+    ]
+   },
+   "anexo": "Por perfil: docs/assets/datafolha_21092026_cruzamentos.json, tabela 'motivacao' (p. 48). Evitar: sem partido 37; Sul 34; mais de 5 SM 37; branca 34."
+  },
+  "transferencia_1t_para_2t_lula_x_flavio": {
+   "pagina": 7,
+   "fonte": "texto corrido do relatório; o anexo de tabelas não cruza 2º turno por voto no 1º turno",
+   "linhas": {
+    "Cury": {
+     "Flávio": 44,
+     "Lula": 32
+    },
+    "Caiado": {
+     "Flávio": 42,
+     "Lula": 27
+    }
+   },
+   "margem_de_erro_pp": {
+    "Cury": 9,
+    "Caiado": 11
+   },
+   "nota": "O restante das linhas (24 e 31 pontos) não é publicado; inclui branco/nulo e indecisos."
+  },
+  "segundo_turno_cenarios": {
+   "paginas": {
+    "texto": 7,
+    "series": [
+     15,
+     16,
+     17,
+     18,
+     19
+    ]
+   },
+   "cenarios": {
+    "Lula x Flávio": {
+     "Lula": 46,
+     "Flávio": 44,
+     "Branco/nulo": 8,
+     "Indecisos": 1
+    },
+    "Lula x Caiado": {
+     "Lula": 46,
+     "Caiado": 42,
+     "Branco/nulo": 10,
+     "Indecisos": 2
+    },
+    "Lula x Zema": {
+     "Lula": 48,
+     "Zema": 39,
+     "Branco/nulo": 11,
+     "Indecisos": 2
+    },
+    "Lula x Renan": {
+     "Lula": 47,
+     "Renan": 38,
+     "Branco/nulo": 13,
+     "Indecisos": 2
+    },
+    "Lula x Cury": {
+     "Lula": 44,
+     "Cury": 44,
+     "Branco/nulo": 10,
+     "Indecisos": 1
+    }
+   },
+   "nao_alinhados_lula_x_flavio": {
+    "Flávio": 39,
+    "Lula": 33
+   }
+  },
+  "rejeicao": {
+   "pagina": 7,
+   "valores": {
+    "Flávio": 47,
+    "Lula": 47,
+    "Renan": 15,
+    "Zema": 14,
+    "Caiado": 13,
+    "Rui": 11,
+    "Samara": 10,
+    "Edmilson": 10,
+    "Cury": 9,
+    "Clariana": 7,
+    "Hertz": 7,
+    "Grassi": 6,
+    "Rejeita todos": 2,
+    "Não rejeita nenhum": 2,
+    "NS": 2
+   }
+  }
+ },
+ "derivados": {
+  "aviso": "Conta da casa, não medição.",
+  "contribuicao_ao_2t_em_pontos_do_eleitorado": {
+   "Cury": {
+    "Flávio": 2.64,
+    "Lula": 1.92
+   },
+   "Caiado": {
+    "Flávio": 1.68,
+    "Lula": 1.08
+   }
+  }
+ },
+ "notas": [
+  "Segunda opção, potencial de voto (único/poderia) e comparecimento declarado não foram perguntados nesta onda (questionário e relatório de 50 páginas conferidos).",
+  "Série de Cury na decisão do voto tem só três ondas; a de 18–19/08 não existe no gráfico.",
+  "Lula 15–17/09 na motivação soma 98 (75+18+5) sem rótulo de não sabe; registrado None. Na decisão do voto, Lula 84+16+1 soma 101 por arredondamento (rótulo 1 visível no gráfico)."
+ ]
+}

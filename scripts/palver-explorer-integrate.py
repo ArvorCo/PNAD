@@ -125,17 +125,17 @@ def integrate():
             "Os n por faixa são contagens brutas, não os pesos de composição.",
         }
         if ident == "palver_2026-09-18":
-            poll["fonte"]["nota"] += (
-                " O catálogo encerra o campo em 20/09; mantemos 18/09 conforme o PDF. Divergência documental pendente."
-            )
+            poll["fonte"][
+                "nota"
+            ] += " O catálogo encerra o campo em 20/09; mantemos 18/09 conforme o PDF. Divergência documental pendente."
         if ident.endswith("_v2"):
-            poll["fonte"]["nota"] += (
-                " O PDF p. 30 mostra Lula 41% no 1º turno; o Explorer registra 40,440%. Versões preservadas, sem misturar os valores."
-            )
+            poll["fonte"][
+                "nota"
+            ] += " O PDF p. 30 mostra Lula 41% no 1º turno; o Explorer registra 40,440%. Versões preservadas, sem misturar os valores."
         if wid.startswith("01_"):
-            poll["fonte"]["campo_fonte"] = (
-                "https://github.com/palverdata/pesquisa-palver/blob/7523cf14f0095f088ac9680e9c64a9923289fdb1/ondas/2026-08-10/config.yaml"
-            )
+            poll["fonte"][
+                "campo_fonte"
+            ] = "https://github.com/palverdata/pesquisa-palver/blob/7523cf14f0095f088ac9680e9c64a9923289fdb1/ondas/2026-08-10/config.yaml"
         margin = audit["waves"][wid]["margins"]["inc_std"]
         assert margin["identified"] and margin["max_residual"] < 1e-10
         poll["renda"].update(
