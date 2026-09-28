@@ -18,7 +18,7 @@ ROOT = Path(__file__).resolve().parents[1]
 # Carregado pelo build depois de voto_util_capitulos, que ja esta em sys.modules.
 CAP = sys.modules["voto_util_capitulos"]
 
-D, EST, RES, TSE = CAP.D, CAP.EST, CAP.RES, CAP.TSE
+D, EST, RES, TSE, FIG = CAP.D, CAP.EST, CAP.RES, CAP.TSE, CAP.FIG
 fmt, sgn, mil, pct, section, table, cen, F = (
     CAP.fmt,
     CAP.sgn,
@@ -183,7 +183,7 @@ def frases_uf(uf: str) -> list[str]:
     e = EST.get(uf)
     if r["reserva_eleitores"] >= 30000:
         out.append(
-            f"{maiuscula(em(uf))}, {mil(r['reserva_eleitores'])} de eleitores já votam em Flávio no 2º turno e ainda não no 1º. "
+            f"{maiuscula(em(uf))}, {FIG.eleitores(r['reserva_eleitores'])} já votam em Flávio no 2º turno e ainda não no 1º. "
             f"Se eles anteciparem, a eleição muda aqui antes de mudar no país."
         )
     if e:
@@ -226,8 +226,10 @@ def frases_uf(uf: str) -> list[str]:
             and (lv["outros"]["F"] - lv["outros"]["L"])
             > (lv["sempre"]["F"] - lv["sempre"]["L"]) + 2
         ):
+            # A regra compara a vantagem sobre Lula, nao a parcela de Flavio: no
+            # RJ e em SC ele tem menos voto entre quem falta, com vantagem maior.
             out.append(
-                "Aqui quem costuma faltar vota mais em Flávio do que quem sempre vota. Leve um vizinho, um parente, um colega para votar."
+                "Aqui a vantagem de Flávio sobre Lula é maior entre quem costuma faltar à urna do que entre quem sempre vota. Leve um vizinho, um parente, um colega para votar."
             )
     if uf == "MG":
         out.append(
@@ -241,13 +243,110 @@ def frases_uf(uf: str) -> list[str]:
     if reen and reen["fora_eleitores"] >= 30000:
         out.insert(
             1,
-            f"Quem votou em Bolsonaro em 2022 {em(uf)}: {fmt(reen['fora_pp'])}% ainda não votam em Flávio nem em Lula. São {mil(reen['fora_eleitores'])} de eleitores que já estiveram do nosso lado.",
+            f"Quem votou em Bolsonaro em 2022 {em(uf)}: {fmt(reen['fora_pp'])}% ainda não votam em Flávio nem em Lula. São {FIG.eleitores(reen['fora_eleitores'])} que já estiveram do nosso lado.",
         )
     if TSE[uf]["regiao"] == "Nordeste":
         out.append(
             "Cada voto aqui é um voto a menos na conta que pode fechar a eleição no 1º turno. No Nordeste, votar Flávio é segurar a eleição aberta."
         )
     return out[:5]
+
+
+# ------------------------------------------------------------ o que doi e noticias
+PROB = D["auxiliar"].get("problemas", {}).get("estados", {})
+NOTICIAS = D["auxiliar"].get("noticias", {})
+FORA_DO_RANKING = ("Outros", "NS/NR", "Nenhum")
+EIXO = {
+    "campanha_flavio": "Campanha",
+    "problema_local": "Problema local",
+    "governo_federal": "Governo federal",
+    "ataque": "Ataque e resposta",
+}
+EVIDENCIA_PLENA = ("declaração pública", "dado oficial")
+
+
+def ranking_problemas(uf: str) -> list[tuple[str, int]]:
+    p = PROB.get(uf)
+    if not p:
+        return []
+    return sorted(
+        ((k, v) for k, v in p["valores"].items() if k not in FORA_DO_RANKING),
+        key=lambda x: -x[1],
+    )
+
+
+def resumo_problemas() -> str:
+    """Primeiro lugar por estado; empate vira categoria propria."""
+    lider: dict[str, list[str]] = {}
+    empates = []
+    for uf in PROB:
+        top = ranking_problemas(uf)
+        primeiros = [k for k, v in top if v == top[0][1]]
+        if len(primeiros) > 1:
+            empates.append(
+                f"{em(uf)}, {' e '.join(k.lower() for k in primeiros)} empatam"
+            )
+        else:
+            lider.setdefault(primeiros[0], []).append(uf)
+    ordem = sorted(lider.items(), key=lambda x: -len(x[1]))
+    partes = [f"{k.lower()} em {len(ufs)}" for k, ufs in ordem]
+    menores = "; ".join(
+        f"{k.lower()}: {', '.join(sorted(ufs))}" for k, ufs in ordem[1:]
+    )
+    txt = f"Perguntado pela Quaest sobre o problema mais grave do seu estado, o eleitor responde {' e '.join(partes)} dos {len(PROB)} estados medidos"
+    if menores:
+        txt += f" ({menores})"
+    if empates:
+        txt += "; " + "; ".join(empates)
+    return txt + "."
+
+
+def bloco_dor(uf: str, e: dict | None) -> str:
+    partes = []
+    p = PROB.get(uf)
+    if p:
+        top = ranking_problemas(uf)[:3]
+        k0, v0 = top[0]
+        antes = (p.get("anterior") or {}).get(k0)
+        var = ""
+        if antes is not None and antes != v0:
+            var = f", {'subiu' if v0 > antes else 'caiu'} de {fmt(antes)}% na onda anterior"
+        itens = ", ".join(f"{k.lower()} {fmt(v)}%" for k, v in top)
+        partes.append(
+            f"<p>Problema mais grave do estado: {esc(itens)} (Quaest, {esc(p['campo'])}, p. {p['pagina']}{esc(var)}).</p>"
+        )
+    medo = (e or {}).get("medo") or {}
+    if medo.get("valores"):
+        lula = medo["valores"].get("Mais um mandato do Lula")
+        bolso = medo["valores"].get("A volta da família Bolsonaro ao poder")
+        partes.append(
+            f"<p>Medo: {fmt(lula)}% temem mais um mandato de Lula e {fmt(bolso)}% temem mais a volta da família Bolsonaro (Quaest, p. {medo['pagina']}).</p>"
+        )
+    return ("<h4>O que dói</h4>" + "".join(partes)) if partes else ""
+
+
+def bloco_noticias(uf: str) -> str:
+    n = NOTICIAS.get(uf)
+    if not n:
+        return ""
+    lis = []
+    for i in n["itens"]:
+        marca = "" if i["tipo"] in EVIDENCIA_PLENA else f" <em>{esc(i['tipo'])}</em>"
+        resumo = (
+            f'<span class="resumo">{esc(i["resumo"])}</span>'
+            if i["eixo"] == "ataque"
+            else ""
+        )
+        lis.append(
+            f'<li><span class="quando">{i["data"][8:10]}/{i["data"][5:7]}</span> '
+            f'<span class="eixo">{esc(EIXO.get(i["eixo"], i["eixo"]))}</span> '
+            f'<a href="{esc(i["url"])}" rel="noopener">{esc(i["titulo"])}</a> '
+            f'<span class="veiculo">{esc(i["veiculo"])}</span>{marca}{resumo}</li>'
+        )
+    return (
+        f"<h4>Notícias de 1º a 26/09</h4><ul class='noticias'>{''.join(lis)}</ul>"
+        f"<h4>O que não dizer</h4><p class='cuidado'>{esc(n['cuidado'])}</p>"
+    )
 
 
 def ficha_uf(uf: str) -> str:
@@ -348,7 +447,7 @@ def ficha_uf(uf: str) -> str:
     resumo = f"{mil(r['reserva_eleitores'])} na reserva"
     return (
         f'<details class="ficha" id="uf-{uf}"><summary><b>{uf}</b> {esc(NOMES[uf])} <span>{esc(resumo)}</span></summary>'
-        f'<div class="ficha-corpo">{tab}{gov}<h4>Para usar na conversa</h4><ul class="frases">{frases}</ul></div></details>'
+        f'<div class="ficha-corpo">{tab}{gov}{bloco_dor(uf, e)}<h4>Para usar na conversa</h4><ul class="frases">{frases}</ul>{bloco_noticias(uf)}</div></details>'
     )
 
 
@@ -364,7 +463,9 @@ def cap_estados() -> str:
         "Estado por estado",
         "A ficha do seu estado",
         f"""
-<p class="lead">Cada ficha junta as duas pesquisas estaduais mais recentes, o cruzamento com governador quando existe, os nomes de direita e centro-direita ao Senado e frases prontas, escritas a partir do número do próprio estado. Estão ordenadas pelo tamanho da reserva.</p>
+<p class="lead">Cada ficha junta as pesquisas estaduais mais recentes, o cruzamento com governador quando existe, os nomes de direita e centro-direita ao Senado, o que mais dói no estado, frases prontas escritas a partir do número do próprio estado, as notícias estaduais de 1º a 26 de setembro e o que não dizer para não ser desmentido. Estão ordenadas pelo tamanho da reserva.</p>
+<p>{esc(resumo_problemas())} É por aí que a conversa começa. Piauí e Sergipe não têm essa pergunta publicada.</p>
+<p class="sub">Notícias com veículo, data conferida na página ou no endereço e link; relato com fonte anônima e coluna de opinião vêm marcados. A coleta chegou ao limite de buscas antes do fim, e parte dos estados foi lida direto nas páginas dos veículos: ausência de notícia na ficha não prova ausência de cobertura.</p>
 <div class="seletor" hidden><label for="sel-uf">Ir para o estado</label><select id="sel-uf"><option value="">escolha</option>{opcoes}</select></div>
 <div class="fichas">{fichas}</div>
 """,

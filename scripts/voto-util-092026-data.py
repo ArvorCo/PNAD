@@ -6,6 +6,8 @@ Entradas, todas no repositorio:
   analysis/voto_util/outros/*.json          pesquisas estaduais de outros institutos
   analysis/voto_util/nacional/*.json        camada nacional (transferencia, certeza)
   analysis/voto_util/tse_2022_uf.json       TSE 2022 por UF + eleitorado 2026
+  analysis/voto_util/problemas_quaest_092026.json  maior problema do estado (Quaest)
+  analysis/voto_util/noticias/<UF>.json     noticias estaduais de 01 a 26/09 com link
   docs/assets/reponderacao_pnad.json        agregador nacional da casa
 
 Saidas:
@@ -50,6 +52,8 @@ AGREG = json.loads(
     (ROOT / "docs/assets/reponderacao_pnad.json").read_text(encoding="utf-8")
 )
 NACIONAL_DIR = ROOT / "analysis/voto_util/nacional"
+PROBLEMAS = ROOT / "analysis/voto_util/problemas_quaest_092026.json"
+NOTICIAS_DIR = ROOT / "analysis/voto_util/noticias"
 OUT = ROOT / "docs/assets/voto_util_092026.json"
 CSV_OUT = ROOT / "derivados/voto-util-092026-estados.csv"
 
@@ -1308,6 +1312,59 @@ def media_modelos(mods: dict[str, dict]) -> dict:
     return {"cenarios": cen, "curvas": curvas}
 
 
+def problemas_quaest() -> dict:
+    """Maior problema do estado, transcrito da imagem de cada relatorio Quaest.
+
+    Cada leitura tem de fechar 100: e a unica prova interna de que nenhum rotulo
+    sobreposto no grafico ficou de fora.
+    """
+    d = json.loads(PROBLEMAS.read_text(encoding="utf-8"))
+    for uf, p in d["estados"].items():
+        soma = sum(p["valores"].values())
+        if soma != 100:
+            raise ValueError(f"problemas {uf}: soma {soma}")
+    return d
+
+
+def noticias_estaduais() -> dict[str, dict]:
+    """Noticias de 01 a 26/09 por UF, mais recente primeiro.
+
+    A 'leitura' de cada arquivo fica fora da pagina: cita placares de pesquisa
+    tirados de materia, sem o PDF do instituto conferido. O 'cuidado' entra,
+    porque so diz o que nao afirmar.
+    """
+    out: dict[str, dict] = {}
+    for path in sorted(NOTICIAS_DIR.glob("*.json")):
+        d = json.loads(path.read_text(encoding="utf-8"))
+        itens = []
+        for i in d["itens"]:
+            if not i["url"].startswith("https://"):
+                raise ValueError(f"noticia sem https em {path.name}: {i['url']}")
+            if not "2026-09-01" <= i["data"] <= HOJE.isoformat():
+                raise ValueError(f"noticia fora da janela em {path.name}: {i['data']}")
+            itens.append(
+                {
+                    k: i[k]
+                    for k in (
+                        "eixo",
+                        "data",
+                        "veiculo",
+                        "titulo",
+                        "url",
+                        "tipo",
+                        "resumo",
+                    )
+                }
+            )
+        itens.sort(key=lambda i: i["data"], reverse=True)
+        out[d["uf"]] = {
+            "coletado_em": d["coletado_em"],
+            "itens": itens,
+            "cuidado": d["cuidado"],
+        }
+    return out
+
+
 def main() -> None:
     nac = nacional()
     nac["fenomeno"] = fenomeno(nac["ondas"])
@@ -1349,6 +1406,8 @@ def main() -> None:
         (ROOT / "analysis/voto_util/movimentos_092026.json").read_text(encoding="utf-8")
     )
     aux["fatores_calibracao"] = {nome: c["fatores"] for nome, c in calibradas.items()}
+    aux["problemas"] = problemas_quaest()
+    aux["noticias"] = noticias_estaduais()
     # Reserva por UF na media das casas que mediram a UF, para o mapa.
     for uf in tse:
         vals = []

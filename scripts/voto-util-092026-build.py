@@ -73,7 +73,7 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);f
 .wrap{width:var(--wrap);margin:0 auto}
 a{color:#1d5f97}
 a:hover{color:#123f66}
-code{font-family:var(--mono);font-size:.86em;background:var(--paper2);padding:1px 5px;border-radius:3px}
+code{font-family:var(--mono);font-size:.86em;background:var(--paper2);padding:1px 5px;border-radius:3px;overflow-wrap:anywhere}
 .skip{position:absolute;left:-9999px}
 .skip:focus{left:8px;top:8px;background:var(--ink);color:var(--paper);padding:10px 14px;z-index:99}
 .hero{background:linear-gradient(160deg,var(--hero) 0%,var(--hero2) 70%,#1b3f2c 100%);color:#f4f2ea;padding:0 0 48px;position:relative;overflow:hidden}
@@ -146,7 +146,7 @@ ul.frases li{margin:0 0 8px;font-size:1rem}
 ul.frases li::marker{content:"› ";color:var(--flavio)}
 ul.ramos li{margin:0 0 8px;max-width:84ch}
 .fichas{display:grid;gap:10px;margin:18px 0}
-.ficha{background:#fff;border:1px solid var(--line);border-radius:8px}
+.ficha{background:#fff;border:1px solid var(--line);border-radius:8px;min-width:0}
 .ficha summary{cursor:pointer;padding:12px 16px;display:flex;gap:10px;align-items:baseline;list-style:none}
 .ficha summary::-webkit-details-marker{display:none}
 .ficha summary::before{content:"+";font-family:var(--mono);color:var(--flavio);font-weight:700}
@@ -154,6 +154,13 @@ ul.ramos li{margin:0 0 8px;max-width:84ch}
 .ficha summary b{font-family:var(--mono);font-size:.9rem;color:var(--flavio-txt)}
 .ficha summary span{margin-left:auto;font-family:var(--mono);font-size:.8rem;color:var(--muted)}
 .ficha-corpo{padding:0 16px 14px}
+ul.noticias{padding-left:0;list-style:none;margin:0}
+ul.noticias li{margin:0 0 9px;font-size:.95rem;max-width:84ch}
+ul.noticias .quando,ul.noticias .eixo,ul.noticias .veiculo{font-family:var(--mono);font-size:.74rem;color:var(--muted)}
+ul.noticias .eixo{text-transform:uppercase;letter-spacing:.06em;margin-right:4px}
+ul.noticias em{font-family:var(--mono);font-size:.74rem;font-style:normal;color:var(--lula-txt)}
+ul.noticias .resumo{display:block;font-size:.88rem;color:var(--muted);margin-top:2px}
+.ficha .cuidado{border-left:3px solid var(--lula);background:var(--paper2);padding:10px 14px;font-size:.93rem}
 .seletor{display:flex;gap:10px;align-items:center;margin:14px 0;font-family:var(--mono);font-size:.85rem}
 .seletor select{font:inherit;padding:6px 10px;border:1px solid var(--line);border-radius:6px;background:#fff}
 .calc{background:#fff;border:2px solid var(--flavio);border-radius:10px;padding:18px 20px;margin:24px 0}

@@ -77,6 +77,12 @@ def mil(n: float | None) -> str:
     return f"{fmt(n / 1e3, 0)} mil"
 
 
+def eleitores(n: float | None) -> str:
+    """'2,01 mi de eleitores', mas '660 mil eleitores': 'mil' não pede 'de'."""
+    de = " de" if n is not None and abs(n) >= 1e6 else ""
+    return f"{mil(n)}{de} eleitores"
+
+
 def svg(body: str, width: float, height: float, label: str, defs: str = "") -> str:
     return (
         f'<svg viewBox="0 0 {width:.0f} {height:.0f}" role="img" aria-label="{esc(label)}" '
@@ -421,7 +427,7 @@ def fig_mapa_reserva(width=660, height=660) -> str:
             )
             or "estimativa sem pesquisa"
         )
-        return f"{uf}: {mil(v)} de eleitores votam Flávio no 2º turno e ainda não no 1º ({fmt(r.get('reserva_pp'), 1)} pontos; {fontes})"
+        return f"{uf}: {eleitores(v)} votam Flávio no 2º turno e ainda não no 1º ({fmt(r.get('reserva_pp'), 1)} pontos; {fontes})"
 
     valores = {uf: r["reserva_eleitores"] for uf, r in res.items()}
     lx, ly = 16, height - 180

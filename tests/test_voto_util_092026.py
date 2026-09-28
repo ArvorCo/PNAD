@@ -283,6 +283,42 @@ def test_movimentos_tem_fonte_e_tipo_de_evidencia(data: dict) -> None:
     assert any("14/09/2026" in r["texto"] for r in mov["regras"])
 
 
+def test_problemas_do_estado_fecham_cem_com_pagina(data: dict) -> None:
+    """Transcricao da imagem: somar 100 e a prova de que nenhum rotulo sumiu."""
+    p = data["auxiliar"]["problemas"]["estados"]
+    assert set(p) == UFS - {"PI", "SE"}
+    for uf, x in p.items():
+        assert sum(x["valores"].values()) == 100, uf
+        assert x["pagina"] and x["rodada"] and x["arquivo"].startswith("QUAEST")
+
+
+def test_noticias_tem_link_data_na_janela_e_sem_leitura(data: dict) -> None:
+    n = data["auxiliar"]["noticias"]
+    assert set(n) == UFS
+    for uf, x in n.items():
+        assert x["itens"] and x["cuidado"], uf
+        assert "leitura" not in x, "leitura cita placar de materia sem PDF"
+        datas = [i["data"] for i in x["itens"]]
+        assert datas == sorted(datas, reverse=True)
+        for i in x["itens"]:
+            assert i["url"].startswith("https://")
+            assert "2026-09-01" <= i["data"] <= data["gerado_em"]
+            assert i["tipo"] and i["veiculo"] and i["titulo"]
+
+
+def test_ficha_traz_o_que_doi_noticias_e_o_que_nao_dizer() -> None:
+    if not PAGINA.exists():
+        pytest.skip("rode scripts/voto-util-092026-build.py antes")
+    html = PAGINA.read_text(encoding="utf-8")
+    assert html.count("<h4>O que dói</h4>") == 25
+    assert html.count("<h4>O que não dizer</h4>") == 27
+    assert html.count("<h4>Notícias de 1º a 26/09</h4>") == 27
+    # A regra do comparecimento compara vantagem sobre Lula, nao a parcela de
+    # Flavio; no RJ e em SC ele tem menos voto entre quem costuma faltar.
+    assert "vota mais em Flávio do que quem sempre vota" not in html
+    assert "mil de eleitores" not in html
+
+
 def test_desistencias_so_movem_quem_saiu(data: dict) -> None:
     des = data["auxiliar"]["desistencias"]
     assert 0 < des["zema_validos"] < 5 and 0 < des["caiado_validos"] < 10

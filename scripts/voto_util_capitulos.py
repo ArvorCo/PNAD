@@ -527,7 +527,7 @@ def cap_governadores() -> str:
         )
         destaques.append(
             f"<li><b>{esc(g['nome'])} ({esc(g['partido'])}, {esc(g['campo'])}, {esc(uf)})</b>: {fmt(g['voto_governador'])}% para governador. Entre os eleitores de {esc(g['nome'])}, {fmt(g['flavio_entre_eleitores'])}% votam Flávio{mov}, "
-            f"{fmt(g['lula_entre_eleitores'])}% votam Lula e {fmt(g['fora_entre_eleitores'])}% estão na terceira via, indecisos ou em branco: <strong>{mil(g['enderecavel_eleitores'])}</strong> de eleitores.</li>"
+            f"{fmt(g['lula_entre_eleitores'])}% votam Lula e {fmt(g['fora_entre_eleitores'])}% estão na terceira via, indecisos ou em branco: <strong>{FIG.eleitores(g['enderecavel_eleitores'])}</strong>.</li>"
         )
     sem_cx = []
     for uf, e in sorted(EST.items()):
@@ -1032,6 +1032,8 @@ def cap_fontes() -> str:
 <p>{"; ".join(nac)}. Matriz de transferência, voto de 2022, certeza, expectativa e comparecimento: Nexus/BTG de 18 a 20/09 (BR-00485/2026), Quaest de 17 a 20/09 (BR-06004/2026), Datafolha de 15 a 17/09 (BR-04029/2026), AtlasIntel, Real Time e PoderData de 24/09.</p>
 <h3>Base eleitoral</h3>
 <p>TSE, resultados simplificados de 2022 por UF (eleições 544 e 545, <code>resultados.tse.jus.br</code>); votação por município e zona de 2022; perfil do eleitorado de julho de 2026. Malha de UFs do IBGE (API de malhas, qualidade mínima).</p>
+<h3>Problema do estado e notícias</h3>
+<p>Problema mais grave do estado: pergunta da Quaest "Na sua opinião, qual é o problema mais grave que o seu estado enfrenta hoje?", publicada como imagem em cada relatório estadual e transcrita página a página em <code>analysis/voto_util/problemas_quaest_092026.json</code>, com página e onda; as {len(D["auxiliar"].get("problemas", {}).get("estados", {}))} leituras fecham 100. Notícias estaduais de 1º a 26/09/2026: {sum(len(n["itens"]) for n in D["auxiliar"].get("noticias", {}).values())} itens com veículo, data conferida na página ou no endereço, título, link e tipo de evidência, em <code>analysis/voto_util/noticias/</code>. A leitura editorial da coleta fica fora da página, porque cita placares de pesquisa tirados de matéria sem o PDF do instituto.</p>
 <h3>Classificação de campo</h3>
 <p>Pela sigla do candidato, como decisão editorial declarada: {mapa_partidos()}. Fora do campo de Lula quer dizer: não é da esquerda nem tem aliança local declarada com o governo federal. Exceções por candidato:</p>
 <ul class="fontes">{exc}</ul>
@@ -1125,7 +1127,7 @@ def cap_movimentos() -> str:
     if go:
         go_txt = (
             f" Em Goiás, pela AtlasIntel, {fmt(go['terceira'])}% de quem votou em Bolsonaro em 2022 estão hoje na terceira via, "
-            f"{fmt(go.get('candidatos', {}).get('Caiado', 0), 1)} pontos deles com Caiado. Somados, são {mil(go['fora_eleitores'])} de eleitores que já estiveram com a direita, "
+            f"{fmt(go.get('candidatos', {}).get('Caiado', 0), 1)} pontos deles com Caiado. Somados, são {FIG.eleitores(go['fora_eleitores'])} que já estiveram com a direita, "
             "e ali a decisão de Caiado pesa."
         )
     regras = "".join(
