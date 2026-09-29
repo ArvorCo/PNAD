@@ -132,7 +132,7 @@ def test_a_fita_ancorada_tem_textura_propria_e_so_ela():
         if not f.startswith("url(")
     ]
     assert "url(#ponto-sp-" in svg
-    assert "piso medido de" in svg
+    assert "piso condicionado de" in svg
 
 
 def test_legenda_declara_as_origens_de_cada_tipo():
@@ -149,17 +149,46 @@ def test_legenda_declara_as_origens_de_cada_tipo():
             f"Fita sólida: {publicadas} origens com linha publicada neste par." in svg
         )
         assert (
-            f"Fita pontilhada: {so_ancoradas} origens com piso medido em outro par"
-            in svg
+            f"Fita pontilhada: {so_ancoradas} origens com medição em outro par" in svg
         )
         assert (
             f"Fita hachurada: {len(ordem) - publicadas - so_ancoradas} origens sem "
-            "piso medido." in svg
+            "piso condicionado." in svg
         )
         # A legenda não pode mais dizer que zero origens têm linha publicada sem
         # explicar que São Paulo tem linha medida no 1º turno e que ela ancora.
         if publicadas == 0:
-            assert "piso medido" in svg
+            assert "hipótese de retenção" in svg
+
+
+def test_saldo_cruzado_desconta_massas_sem_apagar_medicoes():
+    bloco = D["transferencia"]["SP"]["gov1_pres2"]
+    antes = json.dumps(bloco, sort_keys=True)
+    ida, volta, saldo = FIG.saldo_cruzado_sp(bloco)
+    assert (ida, volta, saldo) == pytest.approx((7.005, 1.785, 5.22))
+    assert json.dumps(bloco, sort_keys=True) == antes
+    assert "7,005 − Haddad → Flávio 1,785 = 5,220 pp" in svg_do_estado("SP")
+    nota = HTML.split('id="sp-saldo-cruzado"', 1)[1].split("</div>", 1)[0]
+    assert "5% dos eleitores de Haddad" in nota
+    assert "12% dos de Tarcísio" in nota
+    assert "5,88 − 1,45 = 4,43" in nota
+    assert "primeiro turno presidencial" in nota
+    assert "hipótese nossa" in nota
+    assert "_estaduais.pdf#page=4" in nota
+
+
+def test_saldo_usa_mesma_unidade_e_preserva_sinal():
+    bloco = {
+        "variantes": {
+            "ideologica": {
+                "matriz_pp": {
+                    "Tarcísio (REPUBLICANOS)": {"Lula (PT)": 1.0},
+                    "Fernando Haddad (PT)": {"Flavio Bolsonaro (PL)": 2.5},
+                }
+            }
+        }
+    }
+    assert FIG.saldo_cruzado_sp(bloco) == (1.0, 2.5, -1.5)
 
 
 def test_fita_nao_tem_espessura_minima():

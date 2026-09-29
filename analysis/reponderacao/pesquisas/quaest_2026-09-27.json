@@ -1,0 +1,157 @@
+{
+  "instituto": "Quaest",
+  "contratante": "Globo Comunicação e Participações S/A e Editora Globo S/A",
+  "metodo": "presencial, domiciliar (sorteio PPT de municípios e setores censitários, cotas no último estágio)",
+  "renda": {
+    "unidade": "salarios_minimos",
+    "ano_referencia": 2026,
+    "faixas": [
+      {
+        "rotulo": "Até 2 SM (até R$ 3.242)",
+        "max": 2
+      },
+      {
+        "rotulo": "Mais de 2 a 5 SM (R$ 3.242 a 8.105)",
+        "max": 5
+      },
+      {
+        "rotulo": "Mais de 5 SM (acima de R$ 8.105)",
+        "max": null
+      }
+    ],
+    "amostra_pct": [
+      31,
+      42,
+      27
+    ],
+    "perfil_tipo": "perfil_publicado",
+    "nota": "Perfil desta onda, p. 204, confirmado visualmente. Renda familiar em salários mínimos de 2026; referência declarada inclui PNAD anual 2025, 1ª visita (p. 2).",
+    "mes_precos": "202609"
+  },
+  "id": "quaest_2026-09-27",
+  "campo": {
+    "inicio": "2026-09-24",
+    "fim": "2026-09-27"
+  },
+  "divulgacao": "2026-09-28",
+  "registro_tse": "BR-06520/2026",
+  "n": 2004,
+  "publicado": {
+    "1t": {
+      "lula": 39,
+      "flavio": 34,
+      "outros": 12,
+      "indecisos": 5,
+      "branco_nulo": 10
+    },
+    "2t": {
+      "lula": 42,
+      "flavio": 42,
+      "branco_nulo": 13,
+      "indecisos": 3
+    }
+  },
+  "cruzamentos": {
+    "1t": {
+      "opcoes": [
+        "lula",
+        "flavio",
+        "outros",
+        "indecisos",
+        "branco_nulo"
+      ],
+      "linhas": [
+        [
+          52,
+          23,
+          8,
+          7,
+          10
+        ],
+        [
+          35,
+          36,
+          13,
+          6,
+          10
+        ],
+        [
+          30,
+          42,
+          13,
+          4,
+          11
+        ]
+      ],
+      "nota": "P. 24, coluna 28/Set. Outros agrega todas as candidaturas além de Lula e Flávio, incluindo Cury. O topline da p. 18 foi agrupado na mesma partição, sem repartir artificialmente o ajuste."
+    },
+    "2t": {
+      "opcoes": [
+        "lula",
+        "flavio",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          55,
+          29,
+          11,
+          5
+        ],
+        [
+          39,
+          44,
+          14,
+          3
+        ],
+        [
+          34,
+          52,
+          12,
+          2
+        ]
+      ],
+      "nota": "P. 37, coluna 28/Set. Branco/nulo inclui não vai votar; arredondamentos preservados."
+    }
+  },
+  "fonte": {
+    "tipo": "relatorio",
+    "pdf": "data/originals/quaest_092026_29/relatorio.pdf",
+    "url": "https://quaest.com.br/relatorios/pesquisa-de-intencao-de-voto-para-presidente-rodada-6-28-09-2026/",
+    "paginas": {
+      "metodologia": 2,
+      "perfil_renda": 204,
+      "1t_topline": 18,
+      "1t_renda": 24,
+      "2t_topline": 32,
+      "2t_renda": 37
+    },
+    "sha256": "30431a6d83a2b1bd3ddb0276d1b4673897876ed195096d1b8e4ff12b3ad0f57b",
+    "bytes": 83425558,
+    "total_paginas": 210,
+    "conferido_em": "2026-09-29",
+    "status": "Relatório completo arquivado e conferido.",
+    "nota": "PDF de 210 páginas recebido em Downloads. Transcrição visual das tabelas de renda, controlada por sexo (pp. 21, 34 e 201). Outros no 1º turno inclui Cury nesta onda.",
+    "atualizado_em": "2026-09-29"
+  },
+  "publicado_detalhado": {
+    "1t": {
+      "lula": 39,
+      "flavio": 34,
+      "caiado": 4,
+      "cury": 4,
+      "renan_santos": 3,
+      "zema": 1,
+      "samara": 0,
+      "edmilson": 0,
+      "grassi": 0,
+      "clariana": 0,
+      "rui": 0,
+      "avalanche": 0,
+      "hertz": 0,
+      "indecisos": 5,
+      "branco_nulo": 10
+    }
+  }
+}

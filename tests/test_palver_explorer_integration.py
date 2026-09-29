@@ -12,7 +12,7 @@ ASSETS = ROOT / "docs/assets"
 
 def test_all_versions_visible_but_only_unique_eligible_waves_enter_means():
     data = json.loads((ASSETS / "reponderacao_pnad.json").read_text())
-    active = {p["id"]: p for p in data["pesquisas"] if p["instituto"] == "Palver"}
+    active = {p["id"]: p for p in data["pesquisas"] if p["instituto"] == "Palver" and p["divulgacao"] <= "2026-09-24"}
     assert set(active) == {
         "palver_2026-08-09",
         "palver_2026-09-07_v2",
@@ -44,8 +44,10 @@ def test_institute_panels_show_every_version_in_both_turns():
     )
     panels = soup.select('#institutos [data-instituto="Palver"]')
     assert len(panels) == 2
+    data = json.loads((ASSETS / "reponderacao_pnad.json").read_text())
+    waves = [p for p in data["pesquisas"] if p["instituto"] == "Palver"]
     for panel in panels:
-        assert "4 ondas · 5 versões" in panel.get_text()
+        assert f"{len(waves)} ondas · {len(waves) + 1} versões" in panel.get_text()
         svg_text = panel.find("svg").get_text()
         for label in ["09/08", "07/09 v1", "07/09 v2", "18/09", "23/09"]:
             assert label in svg_text

@@ -91,7 +91,7 @@ def test_latest_comparable_mean_includes_gerp_and_poderdata(output):
     for p in sorted(output["pesquisas"], key=lambda p: p["campo"]["fim"]):
         if "2t" in p["turnos"]:
             latest[p["instituto"]] = p
-    assert latest["Gerp"]["id"] == "gerp_2026-09-16"
+    assert latest["Gerp"]["campo"]["fim"] >= "2026-09-16"
     assert latest["PoderData"]["campo"]["fim"] >= "2026-09-16"
     assert not ({"AtlasIntel", "Futura"} & latest.keys())
     avg = sum(

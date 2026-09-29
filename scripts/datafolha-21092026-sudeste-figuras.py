@@ -331,6 +331,18 @@ def celulas_do_diagrama(bloco):
     return ordem, list(destino_pct), medidas, ancoradas, saida
 
 
+def saldo_cruzado_sp(bloco):
+    """Saldo contábil de duas células estimadas, sem alterar a matriz bruta.
+
+    Subtrair percentuais condicionais (12% e 5%) seria errado: as bases são
+    diferentes. A conta usa pontos do eleitorado e não identifica pessoas.
+    """
+    matriz = bloco["variantes"]["ideologica"]["matriz_pp"]
+    ida = matriz["Tarcísio (REPUBLICANOS)"]["Lula (PT)"]
+    volta = matriz["Fernando Haddad (PT)"]["Flavio Bolsonaro (PL)"]
+    return ida, volta, round(ida - volta, 3)
+
+
 def sankey(uf, bloco, titulo, subtitulo, escala=3.6):
     """Fluxo agregado do voto de governador para o 2º turno presidencial."""
     ordem, destinos, medidas, ancoradas, celulas = celulas_do_diagrama(bloco)
@@ -391,9 +403,9 @@ def sankey(uf, bloco, titulo, subtitulo, escala=3.6):
             natureza = "linha publicada pelo instituto"
         elif celula["ancorada"]:
             natureza = (
-                "estimada com piso medido de "
-                f"{fmt(celula['piso_medido_pp'] or 0, 2)} pontos, da p. "
-                f"{celula['piso_pagina']}"
+                "estimada com piso condicionado de "
+                f"{fmt(celula['piso_medido_pp'] or 0, 2)} pontos; medição da p. "
+                f"{celula['piso_pagina']} e hipótese de retenção"
             )
         else:
             natureza = "estimada por ajuste proporcional iterativo"
@@ -452,20 +464,46 @@ def sankey(uf, bloco, titulo, subtitulo, escala=3.6):
         30,
         rodape,
         f"Fita sólida: {solidas} origens com linha publicada neste par. "
-        f"Fita pontilhada: {com_ponto} origens com piso medido em outro par da "
-        "mesma amostra. "
-        f"Fita hachurada: {len(ordem) - solidas - com_ponto} origens sem piso "
-        "medido.",
-        14,
+        f"Fita pontilhada: {com_ponto} origens com medição em outro par + hipótese de retenção.",
+        13,
     )
     corpo += text(
         30,
         rodape + 20,
-        "A largura é proporcional em toda fita, sem espessura mínima: fluxo "
-        "pequeno aparece pequeno.",
+        f"Fita hachurada: {len(ordem) - solidas - com_ponto} origens sem piso "
+        "condicionado. Toda largura é proporcional, sem espessura mínima.",
         13,
         MUTED,
     )
+    if uf == "SP":
+        ida, volta, saldo = saldo_cruzado_sp(bloco)
+        corpo += (
+            f'<rect x="30" y="{rodape + 38}" width="1040" height="100" fill="{FAIXA}"/>'
+        )
+        corpo += text(
+            46,
+            rodape + 61,
+            "SALDO DOS DOIS FLUXOS CRUZADOS · ESTIMATIVA DO 2º TURNO",
+            13,
+            MUTED,
+            weight="700",
+        )
+        corpo += text(
+            46,
+            rodape + 90,
+            f"Tarcísio → Lula {fmt(ida, 3)} − Haddad → Flávio {fmt(volta, 3)} = {fmt(saldo, 3)} pp",
+            21,
+            INK,
+            weight="700",
+        )
+        corpo += text(
+            46,
+            rodape + 116,
+            "Saldo contábil; as fitas mostram os fluxos brutos. Não é medição de transferência individual.",
+            13,
+            MUTED,
+        )
+        rodape += 140
     return svg(
         corpo,
         rodape + 44,

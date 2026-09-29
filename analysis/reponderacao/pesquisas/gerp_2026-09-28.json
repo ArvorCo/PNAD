@@ -1,0 +1,223 @@
+{
+  "instituto": "Gerp",
+  "contratante": "Gerp Mercadologia, recursos próprios",
+  "metodo": "telefônico, GerpCati com cédula estimulada lida ao entrevistado, cotas estratificadas por UF",
+  "renda": {
+    "unidade": "salarios_minimos",
+    "ano_referencia": 2026,
+    "faixas": [
+      {
+        "rotulo": "Até 1 SM (até R$ 1.621)",
+        "max": 1
+      },
+      {
+        "rotulo": "Mais de 1 a 2 SM (R$ 1.621 a 3.242)",
+        "max": 2
+      },
+      {
+        "rotulo": "Mais de 2 a 5 SM (R$ 3.242 a 8.105)",
+        "max": 5
+      },
+      {
+        "rotulo": "Mais de 5 a 10 SM (R$ 8.105 a 16.210)",
+        "max": 10
+      },
+      {
+        "rotulo": "Mais de 10 a 20 SM (R$ 16.210 a 32.420)",
+        "max": 20
+      },
+      {
+        "rotulo": "Mais de 20 SM (acima de R$ 32.420)",
+        "max": null
+      }
+    ],
+    "amostra_pct": [
+      23,
+      23,
+      33,
+      14,
+      5,
+      2
+    ],
+    "nota": "Perfil ponderado desta onda, p. 8, confirmado visualmente. As bases de campo das pp. 15 e 24 não substituem esses pesos; percentuais das tabelas explicitamente ponderados.",
+    "mes_precos": "202609"
+  },
+  "id": "gerp_2026-09-28",
+  "campo": {
+    "inicio": "2026-09-24",
+    "fim": "2026-09-28"
+  },
+  "divulgacao": "2026-09-29",
+  "registro_tse": "BR-03929/2026",
+  "n": 2400,
+  "publicado": {
+    "1t": {
+      "flavio": 42,
+      "lula": 40,
+      "cury": 5,
+      "caiado": 3,
+      "renan_santos": 3,
+      "samara": 1,
+      "zema": 1,
+      "branco_nulo": 2,
+      "indecisos": 3
+    },
+    "2t": {
+      "flavio": 50,
+      "lula": 43,
+      "branco_nulo": 5,
+      "indecisos": 1
+    }
+  },
+  "cruzamentos": {
+    "1t": {
+      "opcoes": [
+        "flavio",
+        "lula",
+        "cury",
+        "caiado",
+        "renan_santos",
+        "samara",
+        "zema",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          29,
+          46,
+          5,
+          3,
+          2,
+          0,
+          1,
+          4,
+          7
+        ],
+        [
+          43,
+          42,
+          3,
+          2,
+          3,
+          1,
+          0,
+          3,
+          2
+        ],
+        [
+          43,
+          40,
+          6,
+          4,
+          2,
+          1,
+          0,
+          2,
+          2
+        ],
+        [
+          56,
+          28,
+          7,
+          3,
+          4,
+          0,
+          0,
+          1,
+          1
+        ],
+        [
+          41,
+          39,
+          3,
+          8,
+          1,
+          0,
+          1,
+          1,
+          7
+        ],
+        [
+          52,
+          33,
+          4,
+          6,
+          2,
+          0,
+          3,
+          0,
+          1
+        ]
+      ],
+      "nota": "Extração nativa da p. 15, conferida visualmente. Arredondamentos preservados; controle independente por sexo na mesma página."
+    },
+    "2t": {
+      "opcoes": [
+        "flavio",
+        "lula",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          41,
+          49,
+          7,
+          3
+        ],
+        [
+          47,
+          46,
+          6,
+          1
+        ],
+        [
+          52,
+          43,
+          5,
+          1
+        ],
+        [
+          65,
+          30,
+          5,
+          0
+        ],
+        [
+          48,
+          43,
+          4,
+          5
+        ],
+        [
+          62,
+          33,
+          6,
+          0
+        ]
+      ],
+      "nota": "Extração nativa da p. 24, conferida visualmente. Arredondamentos preservados; controle independente por sexo na mesma página."
+    }
+  },
+  "fonte": {
+    "tipo": "relatorio",
+    "pdf": "data/originals/gerp_092026_29/relatorio.pdf",
+    "url": "https://gerp.com.br/relatorios/20260929%20Relat%C3%B3rio%20Presid%C3%AAncia%202026%20-%20DIVULGA%C3%87%C3%83O.pdf",
+    "paginas": {
+      "metodologia": 7,
+      "perfil_renda": 8,
+      "1t_topline": 13,
+      "1t_renda": 15,
+      "2t_topline": 22,
+      "2t_renda": 24
+    },
+    "sha256": "a5fa15c9a6bfee37acc8ccfc462f52c2805ac563cf79ffce9b93b0481d189f82",
+    "bytes": 769761,
+    "total_paginas": 46,
+    "conferido_em": "2026-09-29",
+    "status": "Relatório completo arquivado e conferido.",
+    "atualizado_em": "2026-09-29",
+    "nota": "Divergência documental no 2º turno: a p. 22 informa 1% de indecisos, enquanto a coluna TOTAL da p. 24 informa 2%. Preservamos o topline da p. 22 como âncora e a tabela da p. 24 no cruzamento. As candidaturas omitidas no 1º turno são zero no total publicado; não se inventam células por renda."
+  }
+}

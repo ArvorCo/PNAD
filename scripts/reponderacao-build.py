@@ -634,7 +634,7 @@ def head() -> str:
         f'<meta name="twitter:title" content="{esc(titulo, quote=True)}">'
         f'<meta name="twitter:description" content="{esc(descricao, quote=True)}">'
         '<link rel="stylesheet" href="assets/reponderacao_pnad.css"><link rel="stylesheet" href="assets/reponderacao_tip.css"><link rel="stylesheet" href="assets/reponderacao_metodologias.css">'
-        "</head>"
+        '<link rel="stylesheet" href="assets/reponderacao_validos.css"></head>'
     )
 
 
@@ -665,6 +665,7 @@ def hero() -> str:
 
 def toc() -> str:
     itens = [
+        ("projecao-validos", "Projeção de válidos"),
         ("atualizacao", "Atualização"),
         ("segundo-turno", "2º turno"),
         ("primeiro-turno", "1º turno"),
@@ -696,6 +697,9 @@ def bloco_tips(chaves: list[str] | None = None) -> str:
 def build_html() -> str:
     corpo = "".join(
         [
+            importlib.import_module("reponderacao-validos-view").section_html(
+                D, tabela
+            ),
             coverage_html(D, tabela),
             ch_segundo_turno(),
             ch_primeiro_turno(),
@@ -723,7 +727,7 @@ def build_html() -> str:
         " · uso livre com crédito e link</span></footer>"
         + bloco_tips()
         + f"<script>{SCRIPT}</script>"
-        '<script src="assets/reponderacao_tip.js" defer></script><script src="assets/reponderacao_metodologias.js" defer></script></body></html>'
+        '<script src="assets/reponderacao_tip.js" defer></script><script src="assets/reponderacao_metodologias.js" defer></script><script src="assets/reponderacao_validos.js" defer></script></body></html>'
     )
 
 

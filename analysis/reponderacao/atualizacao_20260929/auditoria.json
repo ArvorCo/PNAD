@@ -1,0 +1,377 @@
+{
+  "data": "2026-09-29",
+  "fontes": [
+    {
+      "id": "quaest_2026-09-27",
+      "fonte": {
+        "tipo": "relatorio",
+        "pdf": "data/originals/quaest_092026_29/relatorio.pdf",
+        "url": "https://quaest.com.br/relatorios/pesquisa-de-intencao-de-voto-para-presidente-rodada-6-28-09-2026/",
+        "paginas": {
+          "metodologia": 2,
+          "perfil_renda": 204,
+          "1t_topline": 18,
+          "1t_renda": 24,
+          "2t_topline": 32,
+          "2t_renda": 37
+        },
+        "sha256": "30431a6d83a2b1bd3ddb0276d1b4673897876ed195096d1b8e4ff12b3ad0f57b",
+        "bytes": 83425558,
+        "total_paginas": 210,
+        "conferido_em": "2026-09-29",
+        "status": "Relatório completo arquivado e conferido.",
+        "nota": "PDF de 210 páginas recebido em Downloads. Transcrição visual das tabelas de renda, controlada por sexo (pp. 21, 34 e 201). Outros no 1º turno inclui Cury nesta onda.",
+        "atualizado_em": "2026-09-29"
+      },
+      "ajustavel": true
+    },
+    {
+      "id": "atlas_2026-09-28",
+      "fonte": {
+        "tipo": "relatorio",
+        "pdf": "data/originals/atlas_092026_29/relatorio.pdf",
+        "url": "https://cdn1.atlasintel.org/pesquisa_atlas_bloomberg__nacional_260929_f6e4ce397d269a6f.pdf",
+        "paginas": {
+          "perfil_renda": 5,
+          "1t_topline": 14,
+          "1t_renda": "17–18",
+          "2t_topline": 20
+        },
+        "sha256": "3ca8d8ff2f26f274161281b04ebef892c7a9269e49ec1c6df7adbfce1dd59b2a",
+        "bytes": 2611276,
+        "total_paginas": 23,
+        "conferido_em": "2026-09-29",
+        "status": "Relatório completo arquivado e conferido."
+      },
+      "ajustavel": true
+    },
+    {
+      "id": "palver_2026-09-27",
+      "fonte": {
+        "tipo": "explorer",
+        "pdf": "data/originals/palver_092026_29/relatorio.pdf",
+        "url": "https://www.palver.com.br/survey/explore?wave=05_pesquisa_2026_09_29&question=lula_flavio&breakdown=inc_std",
+        "paginas": {
+          "metodologia": "17–21",
+          "1t_topline": 30,
+          "1t_renda": 31,
+          "2t_topline": 37,
+          "2t_renda": 38
+        },
+        "sha256": "b11ec801419a090d9bd7d017ac3a8df2b25fefda5841d02d1b882e47e318b8de",
+        "bytes": 33640425,
+        "total_paginas": 154,
+        "conferido_em": "2026-09-29",
+        "status": "Relatório completo arquivado e conferido.",
+        "url_pdf": "https://www.palver.com.br/api/surveys/voting-intention-2026-september-w5/report",
+        "onda_explorer": "05_pesquisa_2026_09_29",
+        "snapshot": "analysis/reponderacao/palver_explorer_20260929",
+        "nota": "Onda 5. PDF e tabelas exatas do Explorer arquivados. Perfil ponderado recuperado por sistema linear de posto completo e validado pelo n efetivo. Datas do campo conforme p. 21 do PDF."
+      },
+      "ajustavel": true
+    },
+    {
+      "id": "gerp_2026-09-28",
+      "fonte": {
+        "tipo": "relatorio",
+        "pdf": "data/originals/gerp_092026_29/relatorio.pdf",
+        "url": "https://gerp.com.br/relatorios/20260929%20Relat%C3%B3rio%20Presid%C3%AAncia%202026%20-%20DIVULGA%C3%87%C3%83O.pdf",
+        "paginas": {
+          "metodologia": 7,
+          "perfil_renda": 8,
+          "1t_topline": 13,
+          "1t_renda": 15,
+          "2t_topline": 22,
+          "2t_renda": 24
+        },
+        "sha256": "a5fa15c9a6bfee37acc8ccfc462f52c2805ac563cf79ffce9b93b0481d189f82",
+        "bytes": 769761,
+        "total_paginas": 46,
+        "conferido_em": "2026-09-29",
+        "status": "Relatório completo arquivado e conferido.",
+        "atualizado_em": "2026-09-29",
+        "nota": "Divergência documental no 2º turno: a p. 22 informa 1% de indecisos, enquanto a coluna TOTAL da p. 24 informa 2%. Preservamos o topline da p. 22 como âncora e a tabela da p. 24 no cruzamento. As candidaturas omitidas no 1º turno são zero no total publicado; não se inventam células por renda."
+      },
+      "ajustavel": true
+    },
+    {
+      "id": "vox_brasil_2026-09-28",
+      "fonte": {
+        "tipo": "relatorio",
+        "pdf": "data/originals/vox_092026_29/relatorio.pdf",
+        "url": "https://static.poder360.com.br/uploads/2026/09/pesquisa-vox-nacional-29set2026.pdf",
+        "paginas": {
+          "metodologia": 2,
+          "perfil_renda": 6,
+          "comparecimento": 7,
+          "1t_topline": 8,
+          "2t_topline": 9
+        },
+        "sha256": "c1d00c4e0887c1974e5b70204f2649a229dad5974f354305176a369ee9e6eef1",
+        "bytes": 4605313,
+        "total_paginas": 28,
+        "conferido_em": "2026-09-29",
+        "status": "Relatório completo arquivado e conferido."
+      },
+      "ajustavel": false
+    }
+  ],
+  "controles": [
+    {
+      "id": "quaest_2026-09-27",
+      "turno": "2t",
+      "renda_residuo_max_pp": 0.61,
+      "controle_independente": {
+        "particao": "sexo",
+        "pagina": 34,
+        "pesos": [
+          53,
+          47
+        ],
+        "linhas": [
+          [
+            46,
+            37
+          ],
+          [
+            38,
+            48
+          ]
+        ],
+        "recomposto": {
+          "lula": 42.24,
+          "flavio": 42.17
+        },
+        "residuo_max_pp": 0.240000000000002
+      },
+      "ajustado": {
+        "lula": 42.742,
+        "flavio": 41.256,
+        "branco_nulo": 12.903,
+        "indecisos": 3.098
+      }
+    },
+    {
+      "id": "quaest_2026-09-27",
+      "turno": "1t",
+      "renda_residuo_max_pp": 0.41,
+      "controle_independente": {
+        "particao": "sexo",
+        "pagina": 21,
+        "pesos": [
+          53,
+          47
+        ],
+        "linhas": [
+          [
+            40,
+            29
+          ],
+          [
+            37,
+            39
+          ]
+        ],
+        "recomposto": {
+          "lula": 38.59,
+          "flavio": 33.7
+        },
+        "residuo_max_pp": 0.4099999999999966
+      },
+      "ajustado": {
+        "lula": 39.784,
+        "flavio": 33.369,
+        "outros": 11.791,
+        "indecisos": 5.071,
+        "branco_nulo": 9.986
+      }
+    },
+    {
+      "id": "atlas_2026-09-28",
+      "turno": "1t",
+      "renda_residuo_max_pp": 0.067,
+      "controle_independente": {
+        "particao": "sexo",
+        "pagina": 17,
+        "pesos": [
+          47.9,
+          52.1
+        ],
+        "linhas": [
+          [
+            32.1,
+            52.4
+          ],
+          [
+            57.4,
+            32.9
+          ]
+        ],
+        "recomposto": {
+          "lula": 45.2813,
+          "flavio": 42.240500000000004
+        },
+        "residuo_max_pp": 0.040500000000001535
+      },
+      "ajustado": {
+        "lula": 45.765,
+        "flavio": 41.708,
+        "renan_santos": 5.261,
+        "cury": 1.954,
+        "caiado": 1.857,
+        "zema": 0.892,
+        "samara": 0.405,
+        "rui": 0.103,
+        "branco_nulo": 0.896,
+        "indecisos": 1.158
+      }
+    },
+    {
+      "id": "palver_2026-09-27",
+      "turno": "2t",
+      "renda_residuo_max_pp": 0.0,
+      "controle_independente": {
+        "particao": "sexo",
+        "pagina": "Explorer: sex_std",
+        "pesos": [
+          48.13309090360582,
+          51.866909096394146
+        ],
+        "linhas": [
+          [
+            36.1941478216797,
+            53.723565402900796
+          ],
+          [
+            53.8101809183916,
+            40.9901353463267
+          ]
+        ],
+        "recomposto": {
+          "lula": 45.33103969434197,
+          "flavio": 47.11912881060457
+        },
+        "residuo_max_pp": 3.552713678800501e-14
+      },
+      "ajustado": {
+        "flavio": 47.047,
+        "lula": 45.235,
+        "branco_nulo": 6.864,
+        "indecisos": 0.854
+      }
+    },
+    {
+      "id": "palver_2026-09-27",
+      "turno": "1t",
+      "renda_residuo_max_pp": 0.0,
+      "controle_independente": {
+        "particao": "sexo",
+        "pagina": "Explorer: sex_std",
+        "pesos": [
+          48.13309090360582,
+          51.866909096394146
+        ],
+        "linhas": [
+          [
+            34.9817370310444,
+            49.392256754014305
+          ],
+          [
+            52.6687455025286,
+            38.5075307204436
+          ]
+        ],
+        "recomposto": {
+          "lula": 44.15544163682065,
+          "flavio": 43.746685796790636
+        },
+        "residuo_max_pp": 4.263256414560601e-14
+      },
+      "ajustado": {
+        "lula": 43.993,
+        "flavio": 43.582,
+        "renan_santos": 8.504,
+        "cury": 1.407,
+        "caiado": 0.734,
+        "zema": 0.569,
+        "outros": 0.053,
+        "branco_nulo": 0.623,
+        "indecisos": 0.536
+      }
+    },
+    {
+      "id": "gerp_2026-09-28",
+      "turno": "2t",
+      "renda_residuo_max_pp": 0.14,
+      "controle_independente": {
+        "particao": "sexo",
+        "pagina": 24,
+        "pesos": [
+          47,
+          53
+        ],
+        "linhas": [
+          [
+            37,
+            58
+          ],
+          [
+            49,
+            43
+          ]
+        ],
+        "recomposto": {
+          "lula": 43.36,
+          "flavio": 50.05
+        },
+        "residuo_max_pp": 0.35999999999999943
+      },
+      "ajustado": {
+        "flavio": 51.482,
+        "lula": 41.97,
+        "branco_nulo": 4.786,
+        "indecisos": 0.827
+      }
+    },
+    {
+      "id": "gerp_2026-09-28",
+      "turno": "1t",
+      "renda_residuo_max_pp": 0.66,
+      "controle_independente": {
+        "particao": "sexo",
+        "pagina": 15,
+        "pesos": [
+          47,
+          53
+        ],
+        "linhas": [
+          [
+            35,
+            51
+          ],
+          [
+            44,
+            34
+          ]
+        ],
+        "recomposto": {
+          "lula": 39.77,
+          "flavio": 41.99
+        },
+        "residuo_max_pp": 0.22999999999999687
+      },
+      "ajustado": {
+        "flavio": 43.729,
+        "lula": 39.008,
+        "cury": 5.12,
+        "caiado": 3.146,
+        "renan_santos": 3.035,
+        "samara": 1.05,
+        "zema": 0.925,
+        "branco_nulo": 1.748,
+        "indecisos": 2.553
+      }
+    }
+  ],
+  "escopo": "Atualização do agregador; novos dossiês Quaest e Atlas não produzidos nesta etapa."
+}

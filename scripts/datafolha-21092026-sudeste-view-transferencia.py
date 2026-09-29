@@ -259,6 +259,49 @@ def tabela_de_sensibilidade(dados, ctx):
     )
 
 
+def nota_sp(dados, ctx):
+    """Distingue a evidência do 1º turno, a hipótese do 2º e o saldo líquido."""
+    alvo = dados["transferencia"]["SP"]["gov1_pres2"]
+    ida, volta, saldo = ctx["FIG"].saldo_cruzado_sp(alvo)
+    cruzamento = next(
+        c
+        for c in dados["cruzamentos_publicados"]
+        if c["uf"] == "SP" and c["destino_pergunta"] == "presidente, 1o turno"
+    )
+    linhas = cruzamento["linhas"]
+    tarcisio, haddad = "Tarcísio (REPUBLICANOS)", "Fernando Haddad (PT)"
+    lula, flavio = "Lula (PT)", "Flavio Bolsonaro (PL)"
+    origem = alvo["variantes"]["ideologica"]["origem_pct"]
+    medido_ida = origem[tarcisio] * linhas[tarcisio][lula] / 100
+    medido_volta = origem[haddad] * linhas[haddad][flavio] / 100
+    num = ctx["num"]
+    retencao = alvo["variantes"]["ideologica"]["retencao"]
+    return (
+        '<div id="sp-saldo-cruzado"><p><strong>Haddad → Flávio existe na '
+        "medição publicada.</strong> Na p. 4, o Datafolha informa que "
+        f"{linhas[haddad][flavio]}% dos eleitores de Haddad escolhem Flávio e "
+        f"{linhas[tarcisio][lula]}% dos de Tarcísio escolhem Lula, no "
+        "<strong>primeiro turno presidencial</strong>. "
+        f'{ctx["ref_pres"](4, "Conferir o relatório, p. 4")} '
+        "São escolhas simultâneas para cargos diferentes, não pessoas observadas "
+        "mudando de candidato. O texto não explicita o turno da pergunta de "
+        "governador; adotamos a estimulada de primeiro turno.</p>"
+        "<p><strong>Descontando o fluxo contrário:</strong> no diagrama de "
+        f"segundo turno, {num(ida, 3)} − {num(volta, 3)} = "
+        f"<strong>{num(saldo, 3)} pontos líquidos para Lula</strong>. "
+        "É o saldo contábil entre essas duas células estimadas. As fitas brutas "
+        "continuam mostrando os dois fluxos; zerar um deles e redistribuir "
+        "o outro preservaria os placares, mas mudaria a associação estimada.</p>"
+        "<p>Para o primeiro turno, a aplicação das proporções publicadas às "
+        f"bases adotadas dá {num(medido_ida)} − {num(medido_volta)} = "
+        f"{num(medido_ida - medido_volta)} pontos. O saldo de segundo turno "
+        "depende do modelo: não localizamos esse cruzamento direto de SP no "
+        f"relatório. A retenção de {num(retencao * 100, 0)}% dos votos em cada "
+        "finalista é <strong>hipótese nossa</strong>; os pisos pontilhados são "
+        "condicionados a ela, não limites medidos do segundo turno.</p></div>"
+    )
+
+
 def capitulo(dados, table, figure, ctx):
     ctx = {**ctx, "table": table}
     num = ctx["num"]
@@ -273,7 +316,8 @@ def capitulo(dados, table, figure, ctx):
     retencao = sp_conta["retencao"]
 
     h = ctx["bloco"](
-        "sudeste-transferencia", "Treze linhas medidas, e um piso que elas impõem."
+        "sudeste-transferencia",
+        "Treze linhas medidas; segundo turno com hipóteses explícitas.",
     )
     h += (
         "<p>Antes de estimar qualquer coisa, procuramos o cruzamento publicado. Ele "
@@ -295,30 +339,35 @@ def capitulo(dados, table, figure, ctx):
     )
     h += incerteza_das_linhas(dados, ctx)
     h += (
-        "<p><strong>A regra que mudou.</strong> Uma estimativa de segundo turno não "
-        "pode ficar abaixo do que o instituto mediu no primeiro turno, na mesma "
-        "entrevista. Em São Paulo o relatório mede que 12% do eleitorado de "
-        f"Tarcísio já votam em Lula no primeiro turno presidencial: "
+        "<p><strong>A hipótese que ancora o segundo turno.</strong> Usamos as "
+        "linhas medidas no primeiro turno e supomos que 98% de quem escolheu "
+        "cada finalista continuam com ele no segundo. Essa retenção não foi "
+        "medida; a sensibilidade abaixo varia o parâmetro. Em São Paulo o "
+        "relatório mede que 12% do eleitorado de Tarcísio escolhem Lula no "
+        "primeiro turno presidencial. Aplicar a retenção produz um piso de "
         f"{num(sp_conta['medido_na_direita_pp'])} pontos do eleitorado paulista, "
         f"com retenção declarada de {num(retencao, 2)}. {ref_pres(4, 'p. 4')} Quem "
-        "escolheu Lula no primeiro turno não some no segundo. A versão anterior "
-        "desta página estimava essa célula por prior, sem piso, e devolvia "
-        f"{num(ANTES_SP_TARCISIO_LULA_PP)} pontos, abaixo da própria medição do "
-        "instituto. Agora a célula sai de uma cadeia de três níveis, governador, "
+        "escolheu Lula no primeiro turno pode mudar de voto; o modelo limita "
+        "essa mudança pela hipótese declarada. A versão anterior desta página "
+        "estimava essa célula por prior, sem incorporar o cruzamento publicado, "
+        f"e devolvia {num(ANTES_SP_TARCISIO_LULA_PP)} pontos. Agora a célula "
+        "sai de uma cadeia de três níveis, governador, "
         "primeiro turno presidencial e segundo turno presidencial, com as linhas "
         "publicadas fixas no primeiro estágio, e devolve "
-        f"{num(sp_lula['valor_pp'])} pontos. O erro era nosso, e o número que o "
-        "corrige é do próprio relatório.</p>"
+        f"{num(sp_lula['valor_pp'])} pontos. Esse resultado é estimado, com "
+        "evidência do relatório e hipóteses do modelo.</p>"
     )
     h += (
         "<p>Por isso o diagrama abaixo tem três naturezas de fita: <strong>sólida "
         "onde existe linha publicada neste par</strong>, <strong>pontilhada onde a "
-        "célula tem piso medido em outro par da mesma amostra</strong> e hachurada "
+        "célula tem medição em outro par e piso condicionado à retenção</strong> e hachurada "
         "onde nada a segura além da prior declarada. Toda célula não medida carrega "
         "a faixa de Fréchet, que é o único número imune à prior, e agora também o "
-        "limite inferior que o piso medido impõe.</p>"
+        "limite inferior condicionado às hipóteses.</p>"
     )
     for uf in UFS:
+        if uf == "SP":
+            h += nota_sp(dados, ctx)
         alvo = dados["transferencia"][uf]["gov1_pres2"]
         variante = alvo["variantes"]["ideologica"]
         publicadas = len(variante["linhas_medidas"])
@@ -333,14 +382,18 @@ def capitulo(dados, table, figure, ctx):
             fig.sankey(
                 uf,
                 alvo,
-                f"{uf}: do voto de governador ao 2º turno presidencial",
+                (
+                    "SP: governador × presidente · 2º turno estimado"
+                    if uf == "SP"
+                    else f"{uf}: do voto de governador ao 2º turno presidencial"
+                ),
                 "Origem: voto estimulado para governador. Destino: 2º turno "
                 "presidencial. Mesma amostra, campo de 8 a 10/09/2026.",
             ),
             ctx["aviso_rolar"](
                 f"{NOME_UF[uf]}. {publicadas} das "
                 f"{len(variante['origem_pct'])} origens têm linha publicada neste "
-                f"par e {ancoradas} têm piso medido em outro par da mesma amostra. "
+                f"par e {ancoradas} têm medição em outro par e piso condicionado à retenção. "
                 "A largura é massa percentual agregada, proporcional em toda fita "
                 "e sem espessura mínima, e não é acompanhamento de pessoas. "
                 "Candidaturas abaixo de 3% sem linha publicada aparecem somadas em "
@@ -356,7 +409,7 @@ def capitulo(dados, table, figure, ctx):
         "instituto publicou o cruzamento com o <strong>primeiro</strong> turno "
         f"presidencial {ref_pres(4, 'p. 4')} e nenhuma linha com o segundo. Essa "
         "linha não fecha o diagrama paulista, e ancora: as duas origens grandes "
-        "saem pontilhadas, com piso medido. O carioca tem duas origens sólidas "
+        "saem pontilhadas, com piso condicionado à retenção. O carioca tem duas origens sólidas "
         "mais Garotinho ancorado pela linha da p. 12, e o mineiro tem três "
         "sólidas. O que falta em São Paulo é o par de segundo turno contra "
         "segundo turno, e é ele que decide a eleição.</p>"
@@ -438,7 +491,7 @@ def capitulo(dados, table, figure, ctx):
             "Destino",
             "Valor no diagrama, pp",
             "Fréchet, pp",
-            "Piso medido, pp",
+            "Piso condicionado, pp",
             "Natureza",
         ],
         linhas,

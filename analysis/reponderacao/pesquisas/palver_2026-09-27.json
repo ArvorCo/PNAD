@@ -1,0 +1,197 @@
+{
+  "instituto": "Palver",
+  "contratante": "Palver (iniciativa própria)",
+  "metodo": "online, amostra não probabilística recrutada por anúncios em redes sociais, calibrada por raking",
+  "renda": {
+    "unidade": "salarios_minimos",
+    "ano_referencia": 2026,
+    "faixas": [
+      {
+        "rotulo": "Até 2 SM (até R$ 3.242)",
+        "max": 2
+      },
+      {
+        "rotulo": "2 a 5 SM (R$ 3.242 a 8.105)",
+        "max": 5
+      },
+      {
+        "rotulo": "Mais de 5 SM (acima de R$ 8.105)",
+        "max": null
+      }
+    ],
+    "amostra_pct": [
+      42.12294136810619,
+      39.56309619419487,
+      18.313962437698972
+    ],
+    "nota": "Margem ponderada recuperada das tabelas exatas da onda 5; recomposição dos dois turnos e n efetivo conferidos. Contagens brutas não são os pesos de composição.",
+    "perfil_tipo": "perfil_ponderado_reconstituido",
+    "mes_precos": "202609"
+  },
+  "id": "palver_2026-09-27",
+  "campo": {
+    "inicio": "2026-09-24",
+    "fim": "2026-09-27"
+  },
+  "divulgacao": "2026-09-29",
+  "registro_tse": "BR-02990/2026",
+  "n": 5000,
+  "publicado": {
+    "1t": {
+      "lula": 44.155441636820605,
+      "flavio": 43.7466857967906,
+      "renan_santos": 8.03554748885217,
+      "cury": 1.38641487315718,
+      "caiado": 0.776201941912389,
+      "zema": 0.556072494042773,
+      "outros": 0.0520714700617193,
+      "branco_nulo": 0.694873986752037,
+      "indecisos": 0.596690311610481
+    },
+    "2t": {
+      "flavio": 47.1191288106046,
+      "lula": 45.331039694342,
+      "branco_nulo": 6.658246278597001,
+      "indecisos": 0.891585216456487
+    }
+  },
+  "cruzamentos": {
+    "1t": {
+      "opcoes": [
+        "lula",
+        "flavio",
+        "renan_santos",
+        "cury",
+        "caiado",
+        "zema",
+        "outros",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          46.600778448119904,
+          43.2715297389351,
+          4.94812491485072,
+          1.5113228530507399,
+          1.00539938534278,
+          0.360791325337526,
+          0.0835109922542573,
+          1.33056323206626,
+          0.887979110042713
+        ],
+        [
+          41.5562923878812,
+          45.4833364725078,
+          9.66691231740201,
+          1.07437744860285,
+          0.703256030767179,
+          0.7636442296650671,
+          0.0,
+          0.205636931975658,
+          0.546544181198241
+        ],
+        [
+          44.1459195375282,
+          41.0879325565233,
+          11.612571120212099,
+          1.77320583412286,
+          0.40662029650101,
+          0.556817099482036,
+          0.09224756147669301,
+          0.28964392394774297,
+          0.0350420702060205
+        ]
+      ],
+      "nota": "Extração programática das tabelas exatas do Explorer, onda 5, todas as alternativas disponíveis.",
+      "proveniencia": {
+        "total": {
+          "url": "https://www.palver.com.br/survey/explore?wave=05_pesquisa_2026_09_29&question=stimulated_1r_vote_1_h",
+          "retrieved_utc": "2026-09-29T23:00:30.377947+00:00",
+          "html_sha256": "991ec1bcce27a20ba80f722ab3b0e93c08ff0217722426fe5a9793c72a6286c7",
+          "snapshot": "data/originals/palver_explorer_20260929/05_pesquisa_2026_09_29/stimulated_1r_vote_1_h--total.html.gz"
+        },
+        "renda": {
+          "url": "https://www.palver.com.br/survey/explore?wave=05_pesquisa_2026_09_29&question=stimulated_1r_vote_1_h&breakdown=inc_std",
+          "retrieved_utc": "2026-09-29T23:00:30.384234+00:00",
+          "html_sha256": "378a799eb385287722ef1306a27db0f2ed4717754b7406b7b12ebc8e597def9b",
+          "snapshot": "data/originals/palver_explorer_20260929/05_pesquisa_2026_09_29/stimulated_1r_vote_1_h--inc_std.html.gz"
+        }
+      }
+    },
+    "2t": {
+      "opcoes": [
+        "flavio",
+        "lula",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          46.1278688592077,
+          47.3430858372006,
+          5.42698651339908,
+          1.1020587901926802
+        ],
+        [
+          49.0380143690452,
+          42.9578481639952,
+          7.189253719406789,
+          0.8148837475528401
+        ],
+        [
+          45.2537613764839,
+          45.8299761275624,
+          8.343080161090551,
+          0.5731823348631959
+        ]
+      ],
+      "nota": "Extração programática das tabelas exatas do Explorer, onda 5, todas as alternativas disponíveis.",
+      "proveniencia": {
+        "total": {
+          "url": "https://www.palver.com.br/survey/explore?wave=05_pesquisa_2026_09_29&question=lula_flavio",
+          "retrieved_utc": "2026-09-29T23:00:30.919251+00:00",
+          "html_sha256": "8ae188d712ea5f74693988920475afcac6d90dea2d16b9c03d6d8c9a125c7d51",
+          "snapshot": "data/originals/palver_explorer_20260929/05_pesquisa_2026_09_29/lula_flavio--total.html.gz"
+        },
+        "renda": {
+          "url": "https://www.palver.com.br/survey/explore?wave=05_pesquisa_2026_09_29&question=lula_flavio&breakdown=inc_std",
+          "retrieved_utc": "2026-09-29T23:00:31.304546+00:00",
+          "html_sha256": "851a0c8450e3126a03e21b6ca3793837d06bf803509e40bf3911b57bf650e281",
+          "snapshot": "data/originals/palver_explorer_20260929/05_pesquisa_2026_09_29/lula_flavio--inc_std.html.gz"
+        }
+      }
+    }
+  },
+  "fonte": {
+    "tipo": "explorer",
+    "pdf": "data/originals/palver_092026_29/relatorio.pdf",
+    "url": "https://www.palver.com.br/survey/explore?wave=05_pesquisa_2026_09_29&question=lula_flavio&breakdown=inc_std",
+    "paginas": {
+      "metodologia": "17–21",
+      "1t_topline": 30,
+      "1t_renda": 31,
+      "2t_topline": 37,
+      "2t_renda": 38
+    },
+    "sha256": "b11ec801419a090d9bd7d017ac3a8df2b25fefda5841d02d1b882e47e318b8de",
+    "bytes": 33640425,
+    "total_paginas": 154,
+    "conferido_em": "2026-09-29",
+    "status": "Relatório completo arquivado e conferido.",
+    "url_pdf": "https://www.palver.com.br/api/surveys/voting-intention-2026-september-w5/report",
+    "onda_explorer": "05_pesquisa_2026_09_29",
+    "snapshot": "analysis/reponderacao/palver_explorer_20260929",
+    "nota": "Onda 5. PDF e tabelas exatas do Explorer arquivados. Perfil ponderado recuperado por sistema linear de posto completo e validado pelo n efetivo. Datas do campo conforme p. 21 do PDF."
+  },
+  "publicado_pdf": {
+    "1t": {
+      "lula": 44,
+      "flavio": 44
+    },
+    "2t": {
+      "lula": 45,
+      "flavio": 47
+    }
+  }
+}

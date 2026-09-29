@@ -1,0 +1,35 @@
+.vf-section{background:#eeeadd;border-top:3px solid #254d3c}
+.vf-section h2{font-size:clamp(2.6rem,6vw,5.4rem);line-height:1.02;margin:16px 0 24px}
+.vf-section h2 em{color:#254d3c}
+.vf-controls{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin:28px 0 18px}
+.vf-controls[hidden]{display:none}
+.vf-controls [role=group]{display:flex;flex-wrap:wrap;gap:6px}
+.vf-controls button,.vf-controls select{font:inherit;font-size:14px;border:1px solid #7b8175;border-radius:3px;padding:12px;background:#faf8f1;color:#1d3026}
+.vf-controls button{cursor:pointer}
+.vf-controls button[aria-pressed=true]{background:#254d3c;color:#fff;border-color:#254d3c}
+.vf-controls label{display:grid;gap:5px;font-size:13px;color:#465447}
+.vf-controls select{max-width:100%}
+.vf-controls :focus-visible{outline:3px solid #8c6700;outline-offset:3px}
+#vf-state{font-size:14px;min-height:2.8em;color:#465447}
+.vf-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:20px 0}
+.vf-card{background:#fcfaf3;border:1px solid #c7cabc;padding:26px;min-width:0}
+.vf-card h3{font-size:26px;margin:8px 0}
+.vf-mode-label{font-size:13px;color:#465447;border-bottom:1px solid #d5d6cb;padding-bottom:14px;margin-bottom:20px}
+.vf-bars{display:grid;gap:16px}
+.vf-row{display:grid;grid-template-columns:106px minmax(35px,1fr) 56px;gap:10px;align-items:center;font-size:14px}
+.vf-row b{text-align:right;font-variant-numeric:tabular-nums}
+.vf-track{display:block;height:19px;background:#e8e8dc}
+.vf-bar{display:block;height:100%;background:#427760;transition:width .25s}
+.vf-lula{background:#bb3f37}.vf-flavio{background:#315ca2}
+.vf-gap{font-size:23px;font-weight:700;margin:28px 0 14px!important}
+.vf-coverage,.vf-precision{font-size:13px;line-height:1.5;color:#465447}
+.vf-precision{border-top:1px solid #d5d6cb;padding-top:12px}
+.vf-caution{border-left:4px solid #8c6700;padding:18px 22px;background:#f7f0dc;margin:24px 0;line-height:1.6}
+.vf-section details{background:#faf8f1;border:1px solid #c7cabc;padding:18px 22px;margin:12px 0;min-width:0}
+.vf-section summary{cursor:pointer;font-weight:700;font-size:16px}
+.vf-section details p,.vf-section li{line-height:1.65}
+.vf-section li{margin:12px 0}
+.vf-equation{background:#e5ebdf;border-left:3px solid #254d3c;padding:20px;font-family:monospace;line-height:1.8;overflow-x:auto}
+.vf-section .table-scroll{overflow-x:auto;max-width:100%}
+@media(max-width:760px){.vf-grid{grid-template-columns:1fr}.vf-card{padding:20px}.vf-controls{align-items:stretch}.vf-controls label{width:100%}.vf-controls button{padding:10px;font-size:12px}.vf-row{grid-template-columns:95px minmax(30px,1fr) 52px;font-size:13px;gap:7px}.vf-section details{padding:16px}}
+@media(prefers-reduced-motion:reduce){.vf-bar{transition:none}}

@@ -1,6 +1,8 @@
 """Fontes da rodada de 24/09: integridade, cobertura e contas independentes."""
 
+import copy
 import hashlib
+import importlib.util
 import json
 from pathlib import Path
 
@@ -10,6 +12,15 @@ from bs4 import BeautifulSoup
 ROOT = Path(__file__).resolve().parents[1]
 BASE = ROOT / "analysis/reponderacao"
 DATA = json.loads((ROOT / "docs/assets/reponderacao_pnad.json").read_text())
+
+
+def module(name):
+    spec = importlib.util.spec_from_file_location(name, ROOT / "scripts" / f"{name}.py")
+    obj = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(obj)
+    return obj
+
+
 AUDIT = json.loads((BASE / "atualizacao_20260924/verificacao.json").read_text())
 
 
@@ -34,7 +45,9 @@ def test_each_eligible_turn_recomposes_income_and_sex():
         assert margin["identified"]
         assert margin["rank"] == len(margin["groups"])
         assert margin["max_residual"] < 1e-10
-        assert margin["reconstructed_neff"] == pytest.approx(margin["published_neff"], abs=1e-6)
+        assert margin["reconstructed_neff"] == pytest.approx(
+            margin["published_neff"], abs=1e-6
+        )
 
 
 def test_missing_crossbreaks_and_new_unusable_waves_do_not_enter_means():
@@ -43,9 +56,16 @@ def test_missing_crossbreaks_and_new_unusable_waves_do_not_enter_means():
         assert set(polls[ident]["turnos"]) == {"1t"}
     assert polls["poderdata_2026-09-23"]["turnos"]["2t"]["opcoes"] == ["lula", "flavio"]
     skipped = {p["id"] for p in DATA["nao_reponderaveis"]}
-    assert {"futura_2026-09-23", "verita_2026-09-19", "datafolha_2026-09-23", "american_analytics_2026-09-20"} <= skipped
+    assert {
+        "futura_2026-09-23",
+        "verita_2026-09-19",
+        "datafolha_2026-09-23",
+        "american_analytics_2026-09-20",
+    } <= skipped
     for turn in ["1t", "2t"]:
-        current = DATA["agregador"]["ultimo"][turn]["cobertura_movel"]
+        current = module("reponderacao-janela").coverage(
+            [p for p in DATA["pesquisas"] if turn in p["turnos"]], ["2026-09-24"]
+        )[0]
         assert current["data"] == "2026-09-24"
         assert not skipped.intersection(current["ondas"])
         assert "nexus_2026-09-20" in current["ondas"]
@@ -70,14 +90,37 @@ def test_quaest_state_archives_have_exact_bytes_and_distinct_universes():
         assert len(payload) == p["bytes"]
         assert hashlib.sha256(payload).hexdigest() == p["sha256"]
     national_registries = {p["registro_tse"] for p in DATA["pesquisas"]}
-    assert not national_registries.intersection(p["registro_presidencial_estadual"] for p in manifest["estaduais"])
+    assert not national_registries.intersection(
+        p["registro_presidencial_estadual"] for p in manifest["estaduais"]
+    )
 
 
 def test_update_covers_both_release_days_and_pending_documents():
-    html = BeautifulSoup((ROOT / "docs/reponderacao_pnad.html").read_text(), "html.parser")
+    # Test this historical update at its own date, not the mutable latest page.
+    historical = copy.deepcopy(DATA)
+    for key in ("pesquisas", "nao_reponderaveis"):
+        historical[key] = [
+            p
+            for p in historical[key]
+            if (p.get("divulgacao") or p["campo"]["fim"]) <= "2026-09-24"
+        ]
+    fragment = module("reponderacao-cobertura").coverage_html(
+        historical, lambda headers, rows: " ".join(str(c) for row in rows for c in row)
+    )
+    html = BeautifulSoup(fragment, "html.parser")
     section = html.find(id="atualizacao")
     text = section.get_text(" ", strip=True)
-    for name in ["AtlasIntel", "Real Time Big Data", "Futura", "PoderData", "Palver", "Quaest", "Veritá", "Datafolha", "American Analytics"]:
+    for name in [
+        "AtlasIntel",
+        "Real Time Big Data",
+        "Futura",
+        "PoderData",
+        "Palver",
+        "Quaest",
+        "Veritá",
+        "Datafolha",
+        "American Analytics",
+    ]:
         assert name in text
     assert "23/09/2026" in text and "24/09/2026" in text
     assert "Substitui a fonte parcial" in text

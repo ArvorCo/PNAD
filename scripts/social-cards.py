@@ -303,6 +303,20 @@ CARDS: list[dict] = [
         "accent": "red",
     },
     {
+        "slug": "nexus_btg_28092026",
+        "eyebrow": "BTG/Nexus · 28/09/2026 · BR-07557/2026",
+        "title": "A renda muda pouco.",
+        "title_em": "A ausência exige hipóteses.",
+        "lede": "46 × 44 vira <b>45,76 × 44,20</b> na sensibilidade PNAD. Transferência publicada e cenários de comparecimento com as premissas à vista.",
+        "stats": [
+            ("5", "origens publicadas"),
+            ("54", "cenários por turno"),
+            ("145", "páginas no relatório"),
+        ],
+        "foot": "sensibilidade, não previsão eleitoral · brasil.arvor.co",
+        "accent": "amber",
+    },
+    {
         "slug": "nexus_btg_140926",
         "eyebrow": "BTG/Nexus · 14/09/2026 · BR-04076/2026",
         "title": "A renda encurta.",
