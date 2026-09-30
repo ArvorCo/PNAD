@@ -1,5 +1,6 @@
 """Cobertura documental do agregador, inclusive ondas sem ajuste identificável."""
 
+import importlib
 from html import escape
 from pathlib import Path
 
@@ -153,16 +154,25 @@ def coverage_html(data, table):
         ]
         for p in skipped.values()
     ]
-    return recent_html + (
-        '<section id="sem-cruzamento" class="chapter"><div class="wrap">'
-        "<details><summary>Ondas sem reponderação: última ficha por instituto</summary>"
-        + table(
-            [
-                "Instituto e fonte",
-                "Fim do campo",
-                "Por que esta onda não entra na média",
-            ],
-            excluded_rows,
+    profile_html = (
+        importlib.import_module("reponderacao-futura-perfil").section_html(table)
+        if any(p["id"] == "futura_2026-09-29" for p in polls)
+        else ""
+    )
+    return (
+        recent_html
+        + profile_html
+        + (
+            '<section id="sem-cruzamento" class="chapter"><div class="wrap">'
+            "<details><summary>Ondas sem reponderação: última ficha por instituto</summary>"
+            + table(
+                [
+                    "Instituto e fonte",
+                    "Fim do campo",
+                    "Por que esta onda não entra na média",
+                ],
+                excluded_rows,
+            )
+            + "</details></div></section>"
         )
-        + "</details></div></section>"
     )

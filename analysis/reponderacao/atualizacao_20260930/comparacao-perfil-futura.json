@@ -1,0 +1,104 @@
+{
+  "fonte_pnad": {
+    "source": "data/outputs/base_anual_visita1_labeled_npv.csv",
+    "rows_read": 408364,
+    "benchmark": "PNADC anual 2025, visita 1",
+    "price_month": "202604",
+    "weight": "V1032__peso_com_calibracao",
+    "min_age": 16,
+    "bin_width_brl": 10.0,
+    "ceiling_brl": 100000.0
+  },
+  "ultimo_ipca_disponivel": "202607",
+  "cortes_reais_abril2026": [
+    1607.952324733782,
+    3215.904649467564,
+    8039.76162366891,
+    16079.52324733782,
+    null
+  ],
+  "futura_renda_total_amostra": [
+    27.7,
+    23.6,
+    23.6,
+    9.9,
+    5.1
+  ],
+  "futura_renda_entre_declarantes": [
+    30.812013348164626,
+    26.25139043381535,
+    26.25139043381535,
+    11.012235817575082,
+    5.672969966629587
+  ],
+  "futura_sem_renda": 10,
+  "pnad_renda": {
+    "pessoas16_efetivo": [
+      13.440874115981307,
+      21.74617493814191,
+      39.259380817497856,
+      17.026575508526847,
+      8.526994619852077
+    ],
+    "pessoas16_habitual": [
+      12.74670299431988,
+      22.117264847575598,
+      40.4016280752949,
+      16.695706040830878,
+      8.038698041978735
+    ],
+    "domicilios_efetivo": [
+      18.62536494319088,
+      24.046276203217506,
+      35.77100870235323,
+      14.327728607751682,
+      7.229621543486701
+    ]
+  },
+  "outros_perfis_pnad16mais": {
+    "genero": {
+      "masculino": 48.088456294638505,
+      "feminino": 51.9115437053615
+    },
+    "idade": {
+      "25_34": 19.264181619705337,
+      "16_24": 16.254300358928248,
+      "60_mais": 20.938128095190795,
+      "45_59": 24.00277227695585,
+      "35_44": 19.540617649219776
+    },
+    "regiao": {
+      "norte": 8.105437856924047,
+      "nordeste": 26.427041743833414,
+      "sudeste": 42.6595026199422,
+      "sul": 14.88740384524396,
+      "centro_oeste": 7.92061393405638
+    }
+  },
+  "diferencas_demograficas_pp": {
+    "genero": {
+      "masculino": -0.5884562946385046,
+      "feminino": 0.5884562946384975
+    },
+    "idade": {
+      "25_34": 0.03581838029466411,
+      "16_24": -5.254300358928248,
+      "60_mais": 2.5618719048092053,
+      "45_59": 2.297227723044152,
+      "35_44": 0.5593823507802256
+    },
+    "regiao": {
+      "norte": -0.40543785692404644,
+      "nordeste": 1.6729582561665879,
+      "sudeste": -0.5595026199422009,
+      "sul": -0.28740384524395957,
+      "centro_oeste": -0.3206139340563805
+    }
+  },
+  "limites": [
+    "Comparação de composição, não teste estatístico nem estimativa de viés eleitoral.",
+    "A amostra Futura não é identificada como bruta ou ponderada nos prints.",
+    "Para calibração eleitoral de idade, gênero e região, a referência adequada é o TSE; PNAD 16+ não é cadastro eleitoral.",
+    "Escolaridade não comparada sem compatibilizar completas/incompletas e sem instrução; religião não está na base PNADC usada."
+  ]
+}
