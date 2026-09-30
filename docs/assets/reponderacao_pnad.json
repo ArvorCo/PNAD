@@ -1,6 +1,6 @@
 {
- "gerado_em": "2026-09-29T20:08:42",
- "referencia": "2026-09-29",
+ "gerado_em": "2026-09-30T10:50:54",
+ "referencia": "2026-09-30",
  "benchmark": {
   "source": "data/outputs/base_anual_visita1_labeled_npv.csv",
   "rows_read": 408364,
@@ -21257,8 +21257,9 @@
     "sha256": "4ac374c798b66e9c606aa08b22f83dd00af8fb1ec06c7657720042a35ad4831b",
     "bytes": 1775921,
     "total_paginas": 42,
-    "conferido_em": "2026-09-24",
-    "status": "Relatório completo arquivado e conferido."
+    "conferido_em": "2026-09-30",
+    "status": "Relatório completo arquivado e conferido.",
+    "nota": "Reconferência em 30/09: o PDF baixado do Poder360 é idêntico ao arquivado (mesmo SHA-256). Não foi localizada nova íntegra nacional nas fontes consultadas. A divulgação permanece em 24/09 e o campo em 19–23/09; não se criou nova onda."
    },
    "publicado": {
     "1t": {
@@ -21285,6 +21286,71 @@
     }
    },
    "motivo": "A p. 6 publica o perfil de renda, mas as pp. 22–24 e 26 cruzam voto por sexo, região, idade e posição política, sem renda. Não há reponderação de nenhum turno com os dados publicados nesta íntegra.",
+   "selecao_1t": null
+  },
+  {
+   "id": "meio_ideia_2026-09-28",
+   "instituto": "Meio/Ideia",
+   "contratante": "Canal Meio, em parceria com o Instituto Ideia",
+   "registro_tse": "BR-08706/2026",
+   "campo": {
+    "inicio": "2026-09-25",
+    "fim": "2026-09-28"
+   },
+   "divulgacao": "2026-09-30",
+   "n": 2000,
+   "fonte": {
+    "tipo": "relatorio",
+    "pdf": "data/originals/meio_ideia_092026_30/relatorio.pdf",
+    "url": "https://www.canalmeio.com.br/wp-content/uploads/2026/09/Pesquisa-Meio_Ideia-Setembro2.pdf",
+    "sha256": "1c3c2fa4069877ef5b02a4fb8c7777643b1605baba406b62f0f28170991c87f0",
+    "bytes": 7805880,
+    "total_paginas": 70,
+    "conferido_em": "2026-09-30",
+    "status": "Íntegra pública arquivada; gráficos conferidos visualmente.",
+    "paginas": {
+     "metodologia": [
+      2,
+      69
+     ],
+     "1t_topline": 14,
+     "2t_topline": 31,
+     "2t_genero": 33,
+     "2t_renda": 37
+    },
+    "complementos": [
+     {
+      "url": "https://www.canalmeio.com.br/2026/09/30/meio-ideia-o-primeiro-turno-mais-dificil-da-historia/",
+      "rotulo": "Divulgação de 30/09/2026"
+     }
+    ]
+   },
+   "publicado": {
+    "1t": {
+     "lula": 39.4,
+     "flavio": 38.4,
+     "cury": 6.7,
+     "renan_santos": 4.5,
+     "caiado": 4.4,
+     "zema": 3.5,
+     "samara": 0.4,
+     "clariana": 0.3,
+     "hertz": 0.3,
+     "grassi": 0.1,
+     "avalanche": 0.1,
+     "rui": 0.1,
+     "edmilson": 0.1,
+     "branco_nulo": 0.7,
+     "indecisos": 1.5
+    },
+    "2t": {
+     "lula": 48.5,
+     "flavio": 48.0,
+     "branco_nulo": 2.1,
+     "indecisos": 1.5
+    }
+   },
+   "motivo": "Íntegra de 30/09, campo 25–28/09: o voto por renda do 2º turno está na p. 37, mas faltam bases ou percentuais da amostra nas quatro faixas. A metodologia da p. 69 chama condição de atividade de nível econômico (62% ativos, 38% não ativos); isso não informa a distribuição de renda. A p. 9 descreve somente os indecisos da pergunta espontânea, não a amostra inteira. O PDF não traz voto por renda do 1º turno. Os placares ficam documentados, fora das médias comparáveis e do modelo de válidos por renda. Essa falta documental não prova erro de ponderação.",
    "selecao_1t": null
   },
   {
@@ -23316,6 +23382,28 @@
       "Quaest",
       "Real Time Big Data"
      ]
+    },
+    {
+     "data": "2026-09-30",
+     "n_institutos": 7,
+     "ondas": [
+      "atlas_2026-09-28",
+      "gerp_2026-09-28",
+      "nexus_2026-09-27",
+      "palver_2026-09-27",
+      "poderdata_2026-09-23",
+      "quaest_2026-09-27",
+      "realtime_2026-09-23"
+     ],
+     "institutos": [
+      "AtlasIntel",
+      "Gerp",
+      "Nexus",
+      "Palver",
+      "PoderData",
+      "Quaest",
+      "Real Time Big Data"
+     ]
     }
    ],
    "2t": [
@@ -25033,6 +25121,24 @@
     },
     {
      "data": "2026-09-29",
+     "n_institutos": 5,
+     "ondas": [
+      "gerp_2026-09-28",
+      "nexus_2026-09-27",
+      "palver_2026-09-27",
+      "poderdata_2026-09-23",
+      "quaest_2026-09-27"
+     ],
+     "institutos": [
+      "Gerp",
+      "Nexus",
+      "Palver",
+      "PoderData",
+      "Quaest"
+     ]
+    },
+    {
+     "data": "2026-09-30",
      "n_institutos": 5,
      "ondas": [
       "gerp_2026-09-28",
@@ -27023,6 +27129,28 @@
        "Quaest",
        "Real Time Big Data"
       ]
+     },
+     {
+      "data": "2026-09-30",
+      "n_institutos": 7,
+      "ondas": [
+       "atlas_2026-09-28",
+       "gerp_2026-09-28",
+       "nexus_2026-09-27",
+       "palver_2026-09-27",
+       "poderdata_2026-09-23",
+       "quaest_2026-09-27",
+       "realtime_2026-09-23"
+      ],
+      "institutos": [
+       "AtlasIntel",
+       "Gerp",
+       "Nexus",
+       "Palver",
+       "PoderData",
+       "Quaest",
+       "Real Time Big Data"
+      ]
      }
     ],
     "rotulos": {
@@ -28733,6 +28861,7 @@
        2.68,
        2.68,
        2.18,
+       2.4,
        2.4
       ],
       "branco_nulo": [
@@ -28884,6 +29013,7 @@
        3.21,
        3.21,
        3.54,
+       3.37,
        3.37
       ]
      },
@@ -29037,6 +29167,7 @@
        2.61,
        2.61,
        2.11,
+       2.27,
        2.27
       ],
       "branco_nulo": [
@@ -29188,6 +29319,7 @@
        3.08,
        3.08,
        3.42,
+       3.22,
        3.22
       ]
      }
@@ -30909,6 +31041,22 @@
        "Palver",
        "Quaest"
       ]
+     },
+     {
+      "data": "2026-09-30",
+      "n_institutos": 4,
+      "ondas": [
+       "gerp_2026-09-28",
+       "nexus_2026-09-27",
+       "palver_2026-09-27",
+       "quaest_2026-09-27"
+      ],
+      "institutos": [
+       "Gerp",
+       "Nexus",
+       "Palver",
+       "Quaest"
+      ]
      }
     ],
     "rotulos": {
@@ -32230,6 +32378,7 @@
        1.65,
        1.65,
        1.65,
+       1.47,
        1.47
       ],
       "branco_nulo": [
@@ -32381,6 +32530,7 @@
        9.1,
        9.1,
        9.1,
+       8.16,
        8.16
       ]
      },
@@ -32534,6 +32684,7 @@
        1.69,
        1.69,
        1.69,
+       1.44,
        1.44
       ],
       "branco_nulo": [
@@ -32685,6 +32836,7 @@
        9.17,
        9.17,
        9.19,
+       8.15,
        8.15
       ]
      }
@@ -34277,6 +34429,16 @@
      "institutos": [
       "PoderData"
      ]
+    },
+    {
+     "data": "2026-09-30",
+     "n_institutos": 1,
+     "ondas": [
+      "poderdata_2026-09-23"
+     ],
+     "institutos": [
+      "PoderData"
+     ]
     }
    ],
    "rotulos": {
@@ -35738,6 +35900,7 @@
       13.0,
       13.0,
       13.0,
+      13.0,
       13.0
      ],
      "outros_esquerda_nanicos": [
@@ -35877,6 +36040,7 @@
       3.0,
       3.0,
       3.0,
+      2.0,
       2.0,
       2.0,
       2.0,
@@ -36042,6 +36206,7 @@
       13.01,
       13.01,
       13.01,
+      13.01,
       13.01
      ],
      "outros_esquerda_nanicos": [
@@ -36188,6 +36353,7 @@
       1.67,
       1.67,
       1.67,
+      1.94,
       1.94,
       1.94,
       1.94,
@@ -36379,7 +36545,8 @@
     "2026-09-26",
     "2026-09-27",
     "2026-09-28",
-    "2026-09-29"
+    "2026-09-29",
+    "2026-09-30"
    ],
    "2t": {
     "publicado": {
@@ -36532,6 +36699,7 @@
       44.2,
       44.2,
       44.45,
+      44.27,
       44.27
      ],
      "flavio": [
@@ -36683,6 +36851,7 @@
       45.24,
       45.24,
       44.99,
+      45.82,
       45.82
      ],
      "indecisos": [
@@ -36834,6 +37003,7 @@
       1.65,
       1.65,
       1.65,
+      1.47,
       1.47
      ],
      "branco_nulo": [
@@ -36985,6 +37155,7 @@
       9.1,
       9.1,
       9.1,
+      8.16,
       8.16
      ]
     },
@@ -37138,6 +37309,7 @@
       44.13,
       44.13,
       44.4,
+      43.94,
       43.94
      ],
      "flavio": [
@@ -37289,6 +37461,7 @@
       45.38,
       45.38,
       45.07,
+      46.32,
       46.32
      ],
      "indecisos": [
@@ -37440,6 +37613,7 @@
       1.69,
       1.69,
       1.69,
+      1.44,
       1.44
      ],
      "branco_nulo": [
@@ -37591,6 +37765,7 @@
       9.17,
       9.17,
       9.19,
+      8.15,
       8.15
      ]
     }
@@ -37746,6 +37921,7 @@
       41.32,
       41.32,
       41.99,
+      41.78,
       41.78
      ],
      "flavio": [
@@ -37897,6 +38073,7 @@
       38.81,
       38.81,
       38.97,
+      39.28,
       39.28
      ],
      "outros_centro_direita": [
@@ -38048,6 +38225,7 @@
       13.0,
       13.0,
       13.0,
+      13.0,
       13.0
      ],
      "outros_esquerda_nanicos": [
@@ -38187,6 +38365,7 @@
       3.0,
       3.0,
       3.0,
+      2.0,
       2.0,
       2.0,
       2.0,
@@ -38350,6 +38529,7 @@
       2.68,
       2.68,
       2.18,
+      2.4,
       2.4
      ],
      "branco_nulo": [
@@ -38501,6 +38681,7 @@
       3.21,
       3.21,
       3.54,
+      3.37,
       3.37
      ]
     },
@@ -38654,6 +38835,7 @@
       41.02,
       41.02,
       41.72,
+      41.29,
       41.29
      ],
      "flavio": [
@@ -38805,6 +38987,7 @@
       39.17,
       39.17,
       39.31,
+      39.92,
       39.92
      ],
      "outros_centro_direita": [
@@ -38951,6 +39134,7 @@
       16.7,
       16.7,
       16.7,
+      13.01,
       13.01,
       13.01,
       13.01,
@@ -39107,6 +39291,7 @@
       1.94,
       1.94,
       1.94,
+      1.94,
       1.94
      ],
      "indecisos": [
@@ -39258,6 +39443,7 @@
       2.61,
       2.61,
       2.11,
+      2.27,
       2.27
      ],
      "branco_nulo": [
@@ -39409,6 +39595,7 @@
       3.08,
       3.08,
       3.42,
+      3.22,
       3.22
      ]
     }
@@ -39447,7 +39634,7 @@
      }
     },
     "cobertura_movel": {
-     "data": "2026-09-29",
+     "data": "2026-09-30",
      "n_institutos": 5,
      "ondas": [
       "gerp_2026-09-28",
@@ -39498,7 +39685,7 @@
      }
     },
     "cobertura_movel": {
-     "data": "2026-09-29",
+     "data": "2026-09-30",
      "n_institutos": 7,
      "ondas": [
       "atlas_2026-09-28",

@@ -98,12 +98,17 @@ def test_quaest_state_archives_have_exact_bytes_and_distinct_universes():
 def test_update_covers_both_release_days_and_pending_documents():
     # Test this historical update at its own date, not the mutable latest page.
     historical = copy.deepcopy(DATA)
+    archived_sources = {s["id"]: s for s in AUDIT["fontes"]}
     for key in ("pesquisas", "nao_reponderaveis"):
         historical[key] = [
             p
             for p in historical[key]
             if (p.get("divulgacao") or p["campo"]["fim"]) <= "2026-09-24"
         ]
+        for poll in historical[key]:
+            if poll["id"] in archived_sources:
+                # Later documentary rechecks must not move a historical fixture.
+                poll["fonte"] = copy.deepcopy(archived_sources[poll["id"]])
     fragment = module("reponderacao-cobertura").coverage_html(
         historical, lambda headers, rows: " ".join(str(c) for row in rows for c in row)
     )

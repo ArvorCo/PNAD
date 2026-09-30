@@ -1,0 +1,142 @@
+{
+  "data": "2026-09-30",
+  "fontes": [
+    {
+      "id": "meio_ideia_2026-09-28",
+      "fonte": {
+        "tipo": "relatorio",
+        "pdf": "data/originals/meio_ideia_092026_30/relatorio.pdf",
+        "url": "https://www.canalmeio.com.br/wp-content/uploads/2026/09/Pesquisa-Meio_Ideia-Setembro2.pdf",
+        "sha256": "1c3c2fa4069877ef5b02a4fb8c7777643b1605baba406b62f0f28170991c87f0",
+        "bytes": 7805880,
+        "total_paginas": 70,
+        "conferido_em": "2026-09-30",
+        "status": "Íntegra pública arquivada; gráficos conferidos visualmente.",
+        "paginas": {
+          "metodologia": [
+            2,
+            69
+          ],
+          "1t_topline": 14,
+          "2t_topline": 31,
+          "2t_genero": 33,
+          "2t_renda": 37
+        },
+        "complementos": [
+          {
+            "url": "https://www.canalmeio.com.br/2026/09/30/meio-ideia-o-primeiro-turno-mais-dificil-da-historia/",
+            "rotulo": "Divulgação de 30/09/2026"
+          }
+        ]
+      },
+      "publicado": {
+        "1t": {
+          "lula": 39.4,
+          "flavio": 38.4,
+          "cury": 6.7,
+          "renan_santos": 4.5,
+          "caiado": 4.4,
+          "zema": 3.5,
+          "samara": 0.4,
+          "clariana": 0.3,
+          "hertz": 0.3,
+          "grassi": 0.1,
+          "avalanche": 0.1,
+          "rui": 0.1,
+          "edmilson": 0.1,
+          "branco_nulo": 0.7,
+          "indecisos": 1.5
+        },
+        "2t": {
+          "lula": 48.5,
+          "flavio": 48.0,
+          "branco_nulo": 2.1,
+          "indecisos": 1.5
+        }
+      },
+      "motivo": "Íntegra de 30/09, campo 25–28/09: o voto por renda do 2º turno está na p. 37, mas faltam bases ou percentuais da amostra nas quatro faixas. A metodologia da p. 69 chama condição de atividade de nível econômico (62% ativos, 38% não ativos); isso não informa a distribuição de renda. A p. 9 descreve somente os indecisos da pergunta espontânea, não a amostra inteira. O PDF não traz voto por renda do 1º turno. Os placares ficam documentados, fora das médias comparáveis e do modelo de válidos por renda. Essa falta documental não prova erro de ponderação."
+    },
+    {
+      "id": "futura_2026-09-23",
+      "fonte": {
+        "tipo": "relatorio",
+        "pdf": "data/originals/futura_092026_24/relatorio.pdf",
+        "url": "https://static.poder360.com.br/uploads/2026/09/R_BR_Setembro_3.pdf",
+        "paginas": {
+          "metodologia": 4,
+          "perfil_renda": 6,
+          "1t_topline": 21,
+          "2t_topline": 25
+        },
+        "sha256": "4ac374c798b66e9c606aa08b22f83dd00af8fb1ec06c7657720042a35ad4831b",
+        "bytes": 1775921,
+        "total_paginas": 42,
+        "conferido_em": "2026-09-30",
+        "status": "Relatório completo arquivado e conferido.",
+        "nota": "Reconferência em 30/09: o PDF baixado do Poder360 é idêntico ao arquivado (mesmo SHA-256). Não foi localizada nova íntegra nacional nas fontes consultadas. A divulgação permanece em 24/09 e o campo em 19–23/09; não se criou nova onda."
+      },
+      "publicado": {
+        "1t": {
+          "flavio": 40.4,
+          "lula": 38.4,
+          "caiado": 5.7,
+          "cury": 5.6,
+          "renan_santos": 2.4,
+          "zema": 0.9,
+          "samara": 0.5,
+          "rui": 0.3,
+          "avalanche": 0.2,
+          "edmilson": 0.1,
+          "hertz": 0.1,
+          "clariana": 0,
+          "branco_nulo": 2.1,
+          "indecisos": 3.2
+        },
+        "2t": {
+          "lula": 43.7,
+          "flavio": 49.4,
+          "branco_nulo": 5.6,
+          "indecisos": 1.3
+        }
+      },
+      "motivo": "A p. 6 publica o perfil de renda, mas as pp. 22–24 e 26 cruzam voto por sexo, região, idade e posição política, sem renda. Não há reponderação de nenhum turno com os dados publicados nesta íntegra."
+    }
+  ],
+  "controle_auxiliar_meio": {
+    "pagina_cruzamento": 33,
+    "pagina_proporcoes_declaradas": 69,
+    "pesos_declarados": [
+      47,
+      53
+    ],
+    "linhas": [
+      [
+        46.8,
+        50.6,
+        1.8,
+        0.7
+      ],
+      [
+        49.9,
+        45.6,
+        2.4,
+        2.2
+      ]
+    ],
+    "opcoes": [
+      "lula",
+      "flavio",
+      "branco_nulo",
+      "indecisos"
+    ],
+    "recomposto": [
+      48.443,
+      47.95,
+      2.118,
+      1.495
+    ],
+    "residuo_max_pp": 0.05700000000000216,
+    "limite": "Conferência auxiliar por gênero usando alvos declarados, não bases observadas. Não identifica nem valida a composição de renda e não habilita a reponderação."
+  },
+  "efeito": "Nenhuma destas duas ondas tem ajuste por renda identificável. Não altera a composição elegível das médias ou do modelo de votos válidos."
+}

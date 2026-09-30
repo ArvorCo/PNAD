@@ -64,7 +64,9 @@ def coverage_html(data, table):
                 adjusted = "Excluído: cenário com Marçal"
             cells += [score(original), adjusted]
         rows.append(cells)
-        if p.get("fonte", {}).get("atualizado_em") == latest:
+        if p.get("fonte", {}).get("nota") and any(
+            p["fonte"].get(key) == latest for key in ("atualizado_em", "conferido_em")
+        ):
             notes.append(
                 f'<p class="note"><b>{escape(p["instituto"])}.</b> '
                 f'{escape(p["fonte"].get("nota", ""))}</p>'
