@@ -2,6 +2,7 @@
 """Registra a nova Meio/Ideia e a reconferência da Futura, sem imputar renda."""
 
 import hashlib
+import importlib
 import json
 from copy import deepcopy
 from pathlib import Path
@@ -141,9 +142,10 @@ def main():
     assert hashlib.sha256(payload).hexdigest() == futura["fonte"]["sha256"]
     futura["fonte"].update(
         conferido_em=TODAY,
-        nota="Reconferência em 30/09: o PDF baixado do Poder360 é idêntico ao arquivado (mesmo SHA-256). Não foi localizada nova íntegra nacional nas fontes consultadas. A divulgação permanece em 24/09 e o campo em 19–23/09; não se criou nova onda.",
+        nota="O PDF da onda de 24/09 foi reconferido em 30/09 e é idêntico ao arquivado. Posteriormente, a nova rodada BR-01122/2026 foi localizada na biblioteca da Futura e recebida em oito prints, arquivados em ficha própria; não foi recebida uma íntegra em PDF.",
     )
     dump(futura_path, futura)
+    new_futura, futura_data = importlib.import_module("futura-300926-prints").main()
     # P. 33: controle auxiliar com as proporções declaradas na p. 69.
     # São alvos de desenho, não bases observadas: esta conta não valida renda.
     rows = [[46.8, 50.6, 1.8, 0.7], [49.9, 45.6, 2.4, 2.2]]
@@ -159,7 +161,7 @@ def main():
                 "publicado": p["publicado"],
                 "motivo": p["motivo"],
             }
-            for p in [poll, futura]
+            for p in [poll, futura, new_futura]
         ],
         "controle_auxiliar_meio": {
             "pagina_cruzamento": 33,
@@ -176,12 +178,13 @@ def main():
             ),
             "limite": "Conferência auxiliar por gênero usando alvos declarados, não bases observadas. Não identifica nem valida a composição de renda e não habilita a reponderação.",
         },
-        "efeito": "Nenhuma destas duas ondas tem ajuste por renda identificável. Não altera a composição elegível das médias ou do modelo de votos válidos.",
+        "controles_auxiliares_futura": futura_data["controles"],
+        "efeito": "Meio/Ideia e as duas ondas documentadas da Futura não têm ajuste por renda identificável nos materiais arquivados. Não alteram a composição elegível das médias ou do modelo de votos válidos.",
     }
     dump(WORK / "auditoria.json", audit)
     dump(ROOT / "docs/assets/reponderacao_20260930.json", audit)
     print(
-        "Meio/Ideia 30/09 registrada; Futura 24/09 reconferida; ambas sem ajuste por renda."
+        "Meio/Ideia registrada; Futura anterior reconferida e nova rodada arquivada por prints; sem ajuste por renda."
     )
 
 

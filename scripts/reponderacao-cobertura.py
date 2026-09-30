@@ -39,6 +39,11 @@ def coverage_html(data, table):
         (p for p in polls if documentary_date(p) == latest),
         key=lambda p: p["instituto"],
     )
+    # Uma reconferência antiga não duplica a casa quando chega uma rodada nova.
+    latest_by_house = {}
+    for poll in sorted(recent, key=lambda p: p["campo"]["fim"]):
+        latest_by_house[poll["instituto"]] = poll
+    recent = sorted(latest_by_house.values(), key=lambda p: p["instituto"])
     rows, notes = [], []
     scenario = data["benchmark"]["cenario_principal"]
     for p in recent:
