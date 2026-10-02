@@ -31,7 +31,9 @@ def main():
             image = doc[number - 1].get_pixmap(matrix=fitz.Matrix(1.6, 1.6))
         result = subprocess.run(
             ["tesseract", "stdin", "stdout", "-l", "por", "--psm", "11"],
-            input=image.tobytes("png"), capture_output=True, check=True,
+            input=image.tobytes("png"),
+            capture_output=True,
+            check=True,
         ).stdout.decode("utf-8")
         (folder / f"p{number:03}.txt").write_text(result)
         return f"PÁGINA {number}\n{result}"
@@ -40,13 +42,15 @@ def main():
         pages = list(pool.map(page, range(1, count + 1)))
     (pdf.parent / "ocr-paginas.txt").write_text("\f".join(pages) + "\f")
     metadata = {
-        "pdf": str(pdf.relative_to(ROOT)), "paginas": count,
+        "pdf": str(pdf.relative_to(ROOT)),
+        "paginas": count,
         "sha256": hashlib.sha256(pdf.read_bytes()).hexdigest(),
         "metodo": "Tesseract por, PSM 11, PyMuPDF escala 1.6, todas as páginas",
         "limite": "OCR é localizador, não prova numérica. Validar tabelas visualmente e recompor.",
     }
     (pdf.parent / "ocr-metadados.json").write_text(
-        json.dumps(metadata, ensure_ascii=False, indent=2) + "\n")
+        json.dumps(metadata, ensure_ascii=False, indent=2) + "\n"
+    )
     print(f"OCR arquivado: {count} páginas de {pdf.name}")
 
 

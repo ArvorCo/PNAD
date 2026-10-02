@@ -120,8 +120,11 @@ def coverage_html(data, table):
     audit_file = Path(__file__).resolve().parents[1] / "docs/assets" / audit
     pending_html = ""
     if audit_file.exists():
-        pending = [p for p in json.loads(audit_file.read_text()).get("varredura", [])
-                   if p.get("pendente")]
+        pending = [
+            p
+            for p in json.loads(audit_file.read_text()).get("varredura", [])
+            if p.get("pendente")
+        ]
         if pending:
             pending_html = "<h3>Pendências desta conferência</h3>" + "".join(
                 f'<p class="note"><b>{escape(p["instituto"])}.</b> '

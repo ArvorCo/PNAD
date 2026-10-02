@@ -167,11 +167,24 @@ def serie_svg(ident: str, turno: str, compacta: bool = False) -> str:
     destaque = datafolha[-1] if datafolha and not compacta else None
     if destaque:
         x_df = px(dia(destaque["divulgacao"]))
-        cv.line(x_df, topo, x_df, base, stroke=GOLD, width=1.2,
-                stroke_dasharray="3 5", opacity="0.65")
-        cv.label(x_df, topo - 16,
-                 f'Datafolha · {curto(destaque["divulgacao"])}',
-                 anchor="middle", size=12, fill=GOLD)
+        cv.line(
+            x_df,
+            topo,
+            x_df,
+            base,
+            stroke=GOLD,
+            width=1.2,
+            stroke_dasharray="3 5",
+            opacity="0.65",
+        )
+        cv.label(
+            x_df,
+            topo - 16,
+            f'Datafolha · {curto(destaque["divulgacao"])}',
+            anchor="middle",
+            size=12,
+            fill=GOLD,
+        )
 
     raio = 4.6 if compacta else (5.8 if len(polls) <= 8 else 4.4)
     alcance = max(raio * 2.0, 9.0)
