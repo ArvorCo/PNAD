@@ -1,0 +1,124 @@
+{
+  "instituto": "Real Time Big Data",
+  "contratante": "não declarado no relatório de divulgação",
+  "metodo": "telefônico, entrevistadores humanos, com abordagem inicial por ligação e mensagem",
+  "renda": {
+    "unidade": "salarios_minimos",
+    "ano_referencia": 2026,
+    "faixas": [
+      {
+        "rotulo": "Até 2 SM (até R$ 3.242)",
+        "max": 2
+      },
+      {
+        "rotulo": "De 2 a 5 SM (R$ 3.242 a 8.105)",
+        "max": 5
+      },
+      {
+        "rotulo": "Mais do que 5 SM (acima de R$ 8.105)",
+        "max": null
+      }
+    ],
+    "nota": "Perfil desta onda, p. 3. O relatório não distingue bases brutas e ponderadas. Percentuais conferidos na íntegra, sem copiar a onda anterior.",
+    "mes_precos": "202610",
+    "amostra_pct": [
+      46,
+      33,
+      21
+    ]
+  },
+  "id": "realtime_2026-09-30",
+  "campo": {
+    "inicio": "2026-09-26",
+    "fim": "2026-09-30"
+  },
+  "divulgacao": "2026-10-01",
+  "registro_tse": "BR-09503/2026",
+  "n": 2000,
+  "publicado": {
+    "1t": {
+      "lula": 43,
+      "flavio": 39,
+      "cury": 3,
+      "renan_santos": 4,
+      "caiado": 3,
+      "zema": 1,
+      "branco_nulo": 3,
+      "indecisos": 3,
+      "outros": 1
+    },
+    "2t": {
+      "lula": 45,
+      "flavio": 46,
+      "branco_nulo": 5,
+      "indecisos": 4
+    }
+  },
+  "cruzamentos": {
+    "1t": {
+      "opcoes": [
+        "lula",
+        "flavio",
+        "cury",
+        "renan_santos",
+        "caiado",
+        "zema",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          56,
+          26,
+          6,
+          2,
+          1,
+          1,
+          4,
+          3
+        ],
+        [
+          36,
+          48,
+          3,
+          4,
+          2,
+          1,
+          2,
+          3
+        ],
+        [
+          25,
+          52,
+          1,
+          10,
+          8,
+          2,
+          1,
+          1
+        ]
+      ],
+      "nota": "P. 11, conferência visual contra o texto nativo. Outros tem 1% nacional, mas a faixa superior está sem número impresso: não entra no ajuste e não vira zero. Tabela parcial preservada sem renormalização."
+    }
+  },
+  "fonte": {
+    "tipo": "relatorio",
+    "pdf": "data/originals/realtime_102026_01/relatorio.pdf",
+    "url": "https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2026/09/Presidencial-BR-09503-2026-Out26-1.pdf",
+    "paginas": {
+      "metodologia": 2,
+      "perfil_renda": 3,
+      "1t_topline": 8,
+      "1t_renda": 11,
+      "2t_topline": 17
+    },
+    "total_paginas": 65,
+    "sha256": "ddc2e8f33d7a09a35c4dba11ef5ef3d924db29907ee608b869dbf0e09a2e3af2",
+    "bytes": 21885383,
+    "conferido_em": "2026-10-02",
+    "status": "Íntegra arquivada e conferida."
+  },
+  "sem_cruzamento": {
+    "2t": "As pp. 17–24 trazem os cenários agregados, sem voto por renda do 2º turno. Renda nas perguntas posteriores trata de definição/motivação, outro universo. Não se transfere o ajuste do 1º turno."
+  }
+}

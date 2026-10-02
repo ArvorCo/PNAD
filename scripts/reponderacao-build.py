@@ -463,9 +463,21 @@ def _painel_instituto(nome: str, turno: str) -> str:
         cobertura = f"{plural(ondas, 'onda', 'ondas')}; o instituto não cruza o 2º turno por renda"
     else:
         cobertura = plural(ondas, "onda auditada", "ondas auditadas")
+    ultimas = [p for p in PESQUISAS if p["instituto"] == nome and turno in p["turnos"]]
+    resumo = ""
+    if ultimas:
+        onda = ultimas[-1]
+        resultado = onda["turnos"][turno]
+        pub, adj = resultado["publicado"], ajustado(resultado)
+        resumo = (
+            f'<p class="note"><b>Última onda · campo até {curto(onda["campo"]["fim"])}'
+            f' · divulgação {curto(onda["divulgacao"])}.</b><br>'
+            f'Lula × Flávio: publicado <b>{br(pub["lula"], 0)} × {br(pub["flavio"], 0)}</b>; '
+            f'reponderado <b>{br(adj["lula"], 2)} × {br(adj["flavio"], 2)}</b> (%).</p>'
+        )
     return (
         f'<article class="panel reveal"><h3>{esc(nome)} <small>{TURNOS[turno]}</small></h3>'
-        f'<div class="fig">{instituto_svg(nome, turno)}</div>'
+        f'<div class="fig">{instituto_svg(nome, turno)}</div>{resumo}'
         f'<p class="note">{cobertura}. Vazado é publicado, cheio é reponderado.</p></article>'
     )
 

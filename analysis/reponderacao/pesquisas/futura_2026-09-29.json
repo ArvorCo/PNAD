@@ -1,37 +1,41 @@
 {
   "id": "futura_2026-09-29",
   "instituto": "Futura",
-  "contratante": "Futura/100% Cidades (marcas nos prints)",
+  "contratante": "Futura/100% Cidades (marcas na íntegra); contratante não individualizado na ficha",
   "registro_tse": "BR-01122/2026",
   "campo": {
     "inicio": "2026-09-25",
     "fim": "2026-09-29"
   },
   "divulgacao": "2026-09-30",
-  "n": null,
-  "metodo": "Ficha técnica não recebida nos prints.",
+  "n": 2000,
+  "metodo": "telefônico CATI",
   "fonte": {
-    "tipo": "prints",
-    "url": "https://www.futurainteligencia.com.br/pesquisas",
-    "arquivo": "data/originals/futura_092026_30/manifesto.json",
-    "paginas": [
-      7,
-      20,
-      22,
-      23,
-      24,
-      25,
-      29,
-      30
-    ],
-    "conferido_em": "2026-09-30",
-    "nota": "Nova rodada BR-01122/2026 recebida em oito prints. A biblioteca oficial informa campo de 25 a 29/09; ficha técnica ainda não recebida. Os placares vêm das pp. 22 e 29, e não da espontânea da p. 20. A nova onda substitui a de 24/09 na cobertura atual.",
+    "tipo": "relatorio",
+    "pdf": "data/originals/futura_092026_30/relatorio.pdf",
+    "url": "https://static.poder360.com.br/uploads/2026/09/futuracidadeparticipacoesBR-30set2026.pdf",
+    "paginas": {
+      "metodologia": 4,
+      "perfil_renda": 7,
+      "1t_topline": 22,
+      "1t_cruzamentos": "23–25",
+      "2t_topline": 29,
+      "2t_cruzamentos": 30
+    },
+    "total_paginas": 46,
+    "sha256": "d2745ace3da5e4e9c1c4d04e56dfc22881ac4d4793a8e77540c03bffb5cfa325",
+    "bytes": 2025153,
+    "conferido_em": "2026-10-02",
+    "status": "Íntegra arquivada e conferida.",
+    "relatorio_completo": "2026-09-30",
+    "atualizado_em": "2026-10-02",
     "complementos": [
       {
         "url": "assets/futura_20260930_prints.json",
-        "rotulo": "Transcrição integral dos oito prints e controles de recomposição"
+        "rotulo": "Transcrição histórica dos oito prints"
       }
-    ]
+    ],
+    "nota": "Íntegra de 46 páginas encontrada em 02/10, da mesma onda divulgada em 30/09. P. 4 confirma 2.000 entrevistas e campo 25–29/09. Substitui a ficha incompleta dos prints, sem criar nova onda nem entrar na média. Nenhuma tabela de voto por renda."
   },
   "renda": {
     "unidade": "salarios_minimos",
@@ -110,6 +114,6 @@
   },
   "cruzamentos": {},
   "ignorar": true,
-  "motivo": "Os prints recebidos trazem perfil de renda (p. 7), mas voto cruzado somente por gênero, região, idade e posição política (pp. 23–25 e 30). Falta voto por faixa de renda para reponderar. Dez por cento não declaram renda. A íntegra não foi recebida; não se conclui que o cruzamento esteja ausente de todo o relatório.",
-  "notas": "Data de recebimento e disponibilidade: 30/09. Campo conforme catálogo oficial; fontes preliminares citavam início em 24/09, pendente de ficha técnica. Tamanho da amostra não foi copiado de outra onda. Não há perfil de provável comparecimento nos prints."
+  "motivo": "A íntegra de 46 páginas publica o perfil de renda (p. 7), mas cruza o voto somente por gênero, região, idade e posição política (pp. 23–25 e 30). Falta voto por renda; 10% não declaram renda. A publicação não distingue perfil bruto e ponderado.",
+  "notas": "Ficha técnica agora conferida na íntegra. A data de aquisição em 02/10 não muda a divulgação de 30/09. Não há perfil de comparecimento por candidato."
 }

@@ -1,0 +1,189 @@
+{
+  "instituto": "Datafolha",
+  "contratante": "Folha de S.Paulo e TV Globo",
+  "metodo": "presencial, pontos de fluxo",
+  "renda": {
+    "unidade": "salarios_minimos",
+    "ano_referencia": 2026,
+    "faixas": [
+      {
+        "rotulo": "Até 2 SM (até R$ 3.242)",
+        "max": 2
+      },
+      {
+        "rotulo": "2 a 5 SM (R$ 3.242 a 8.105)",
+        "max": 5
+      },
+      {
+        "rotulo": "Mais de 5 SM (acima de R$ 8.105)",
+        "max": null
+      }
+    ],
+    "nota": "Bases ponderadas da intenção de voto, pp. 45 e 53: 1.209/856/344, somam 2.409; 97 dos 2.506 casos (3.87%) não aparecem no cruzamento de renda. Normalização entre renda declarada e delta ancorado no placar nacional; não identifica o voto dos ausentes. Cartão em salários mínimos de 2026. Não usa bases de motivação do voto.",
+    "mes_precos": "202610",
+    "bases": [
+      1209,
+      856,
+      344
+    ],
+    "nao_publicada_n": 97
+  },
+  "id": "datafolha_2026-10-01",
+  "campo": {
+    "inicio": "2026-09-29",
+    "fim": "2026-10-01"
+  },
+  "divulgacao": "2026-10-01",
+  "registro_tse": "BR-08039/2026",
+  "n": 2506,
+  "publicado": {
+    "1t": {
+      "lula": 42,
+      "flavio": 38,
+      "cury": 4,
+      "caiado": 3,
+      "renan_santos": 3,
+      "zema": 1,
+      "samara": 1,
+      "grassi": 1,
+      "edmilson": 0,
+      "rui": 0,
+      "hertz": 0,
+      "clariana": 0,
+      "avalanche": 0,
+      "branco_nulo": 5,
+      "indecisos": 2
+    },
+    "2t": {
+      "lula": 48,
+      "flavio": 45,
+      "branco_nulo": 6,
+      "indecisos": 1
+    }
+  },
+  "cruzamentos": {
+    "1t": {
+      "opcoes": [
+        "lula",
+        "flavio",
+        "cury",
+        "caiado",
+        "renan_santos",
+        "zema",
+        "samara",
+        "grassi",
+        "edmilson",
+        "rui",
+        "hertz",
+        "clariana",
+        "avalanche",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          50,
+          28,
+          3,
+          3,
+          3,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          6,
+          3
+        ],
+        [
+          34,
+          47,
+          5,
+          3,
+          3,
+          2,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          3,
+          1
+        ],
+        [
+          37,
+          47,
+          4,
+          3,
+          4,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          3,
+          1
+        ]
+      ],
+      "nota": "Extração automática do anexo inteiro, texto nativo. Traço explícito convertido em zero apenas na conta; nenhuma célula vazia imputada."
+    },
+    "2t": {
+      "opcoes": [
+        "lula",
+        "flavio",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          58,
+          34,
+          7,
+          1
+        ],
+        [
+          38,
+          56,
+          5,
+          1
+        ],
+        [
+          40,
+          55,
+          6,
+          0
+        ]
+      ],
+      "nota": "Extração automática do anexo inteiro, texto nativo. Traço explícito convertido em zero apenas na conta; nenhuma célula vazia imputada."
+    }
+  },
+  "fonte": {
+    "tipo": "relatorio",
+    "pdf": "data/originals/datafolha_102026_02/relatorio.pdf",
+    "url": "https://media.folha.uol.com.br/datafolha/2026/10/02/pmzl5pv3clpqn4qxot1ykftnjvnus9a8bqs-4zxigfg.pdf",
+    "paginas": {
+      "metodologia": 2,
+      "perfil_renda": 40,
+      "1t_topline": 11,
+      "1t_renda": 45,
+      "2t_topline": 18,
+      "2t_renda": 53
+    },
+    "total_paginas": 68,
+    "sha256": "c2cb775015d2c015a1249f044d1716960f2bf2d08ebd73648d80c4090fa5a17c",
+    "bytes": 1502968,
+    "conferido_em": "2026-10-02",
+    "status": "Íntegra arquivada e conferida.",
+    "relatorio_completo": "2026-10-02",
+    "nota": "Divulgação original em 01/10; íntegra de 68 páginas disponibilizada em 02/10. Extração automática das 18 tabelas do anexo, controlada por gênero e região. A chegada do PDF não cria uma segunda onda.",
+    "extracao": "analysis/reponderacao/datafolha_20261001_cruzamentos.json"
+  }
+}

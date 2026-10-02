@@ -1,0 +1,4332 @@
+{
+  "gerado_em": "2026-10-01T19:23:06",
+  "ondas": 75,
+  "nao_reponderaveis": 20,
+  "ultimo": {
+    "2t": {
+      "institutos": [
+        "Datafolha",
+        "Gerp",
+        "MDA",
+        "Nexus",
+        "Palver",
+        "PoderData",
+        "Quaest",
+        "Veritá"
+      ],
+      "media_simples": {
+        "publicado": {
+          "lula": 44.84,
+          "flavio": 45.33
+        },
+        "ajustado": {
+          "lula": 44.11,
+          "flavio": 46.1
+        }
+      },
+      "kernel": {
+        "publicado": {
+          "lula": 44.08,
+          "flavio": 45.78
+        },
+        "ajustado": {
+          "lula": 43.93,
+          "flavio": 46.0
+        }
+      },
+      "cobertura_movel": {
+        "data": "2026-10-01",
+        "n_institutos": 4,
+        "ondas": [
+          "gerp_2026-09-28",
+          "nexus_2026-09-27",
+          "palver_2026-09-27",
+          "quaest_2026-09-27"
+        ],
+        "institutos": [
+          "Gerp",
+          "Nexus",
+          "Palver",
+          "Quaest"
+        ]
+      }
+    },
+    "1t": {
+      "institutos": [
+        "AtlasIntel",
+        "Datafolha",
+        "Gerp",
+        "MDA",
+        "Nexus",
+        "Palver",
+        "PoderData",
+        "Quaest",
+        "Real Time Big Data"
+      ],
+      "media_simples": {
+        "publicado": {
+          "lula": 41.65,
+          "flavio": 37.74
+        },
+        "ajustado": {
+          "lula": 40.92,
+          "flavio": 38.54
+        }
+      },
+      "kernel": {
+        "publicado": {
+          "lula": 42.09,
+          "flavio": 39.79
+        },
+        "ajustado": {
+          "lula": 42.05,
+          "flavio": 39.93
+        }
+      },
+      "cobertura_movel": {
+        "data": "2026-10-01",
+        "n_institutos": 5,
+        "ondas": [
+          "atlas_2026-09-28",
+          "gerp_2026-09-28",
+          "nexus_2026-09-27",
+          "palver_2026-09-27",
+          "quaest_2026-09-27"
+        ],
+        "institutos": [
+          "AtlasIntel",
+          "Gerp",
+          "Nexus",
+          "Palver",
+          "Quaest"
+        ]
+      }
+    }
+  },
+  "validos": {
+    "1t": {
+      "n_houses": 5,
+      "excluded": [
+        {
+          "id": "futura_2026-09-29",
+          "instituto": "Futura",
+          "reason": "Os prints recebidos trazem perfil de renda (p. 7), mas voto cruzado somente por gênero, região, idade e posição política (pp. 23–25 e 30). Falta voto por faixa de renda para reponderar. Dez por cento não declaram renda. A íntegra não foi recebida; não se conclui que o cruzamento esteja ausente de todo o relatório."
+        },
+        {
+          "id": "meio_ideia_2026-09-28",
+          "instituto": "Meio/Ideia",
+          "reason": "Íntegra de 30/09, campo 25–28/09: o voto por renda do 2º turno está na p. 37, mas faltam bases ou percentuais da amostra nas quatro faixas. A metodologia da p. 69 chama condição de atividade de nível econômico (62% ativos, 38% não ativos); isso não informa a distribuição de renda. A p. 9 descreve somente os indecisos da pergunta espontânea, não a amostra inteira. O PDF não traz voto por renda do 1º turno. Os placares ficam documentados, fora das médias comparáveis e do modelo de válidos por renda. Essa falta documental não prova erro de ponderação."
+        },
+        {
+          "id": "vox_brasil_2026-09-28",
+          "instituto": "Vox Brasil",
+          "reason": "A íntegra de 28 páginas publica perfil econômico (p. 6) e disposição de comparecer (p. 7), mas nenhum cruzamento de voto por renda ou comparecimento por candidato. Sem esses cruzamentos, não há ajuste de renda nem nova propensão de presença identificável para o modelo."
+        }
+      ],
+      "scenarios": {
+        "central": {
+          "aggregate": {
+            "publicado": {
+              "lula": 44.64060958208894,
+              "flavio": 42.116439908931156,
+              "demais": 13.242950508979902
+            },
+            "pnad": {
+              "lula": 44.51695299396154,
+              "flavio": 42.13946358031128,
+              "demais": 13.34358342572719
+            },
+            "modelo": {
+              "lula": 44.57356508466644,
+              "flavio": 42.20635054667129,
+              "demais": 13.220084368662274
+            }
+          },
+          "polls": [
+            {
+              "id": "atlas_2026-09-28",
+              "instituto": "AtlasIntel",
+              "divulgacao": "2026-09-29",
+              "campo": {
+                "inicio": "2026-09-23",
+                "fim": "2026-09-28"
+              },
+              "published": {
+                "caiado": 1.8,
+                "cury": 2.0,
+                "flavio": 42.2,
+                "lula": 45.3,
+                "renan_santos": 5.2,
+                "rui": 0.1,
+                "samara": 0.4,
+                "zema": 0.9
+              },
+              "adjusted": {
+                "caiado": 1.857,
+                "cury": 1.954,
+                "flavio": 41.708,
+                "lula": 45.765,
+                "renan_santos": 5.261,
+                "rui": 0.103,
+                "samara": 0.405,
+                "zema": 0.892
+              },
+              "negative_mass_removed": {},
+              "undecided": 1.158,
+              "undecided_known": true,
+              "source": {
+                "tipo": "relatorio",
+                "pdf": "data/originals/atlas_092026_29/relatorio.pdf",
+                "url": "https://cdn1.atlasintel.org/pesquisa_atlas_bloomberg__nacional_260929_f6e4ce397d269a6f.pdf",
+                "paginas": {
+                  "perfil_renda": 5,
+                  "1t_topline": 14,
+                  "1t_renda": "17–18",
+                  "2t_topline": 20
+                },
+                "sha256": "3ca8d8ff2f26f274161281b04ebef892c7a9269e49ec1c6df7adbfce1dd59b2a",
+                "bytes": 2611276,
+                "total_paginas": 23,
+                "conferido_em": "2026-09-29",
+                "status": "Relatório completo arquivado e conferido."
+              },
+              "publicado": {
+                "caiado": 1.8386108273748722,
+                "cury": 2.0429009193054135,
+                "flavio": 43.105209397344225,
+                "lula": 46.27170582226762,
+                "renan_santos": 5.3115423901940755,
+                "rui": 0.10214504596527067,
+                "samara": 0.4085801838610827,
+                "zema": 0.9193054136874361
+              },
+              "pnad": {
+                "caiado": 1.8959620195007405,
+                "cury": 1.9949971923018026,
+                "flavio": 42.5830823421308,
+                "lula": 46.72520292000613,
+                "renan_santos": 5.371381898003984,
+                "rui": 0.1051610597784471,
+                "samara": 0.41349737097350564,
+                "zema": 0.9107151973046099
+              },
+              "modelo": {
+                "caiado": 1.9139866191300234,
+                "cury": 1.9632484460385868,
+                "flavio": 42.64393813716411,
+                "lula": 46.77763776093824,
+                "renan_santos": 5.281277289626396,
+                "rui": 0.10359740800561001,
+                "samara": 0.4073490314783696,
+                "zema": 0.9089653076186494
+              },
+              "allocated_undecided": {
+                "caiado": 0.01740234894288727,
+                "cury": 0.017850247320471847,
+                "flavio": 0.3877272099734645,
+                "lula": 0.42531163327037175,
+                "renan_santos": 0.04801842883311241,
+                "rui": 0.0009419283424832636,
+                "samara": 0.003703698822385649,
+                "zema": 0.008264494277054307
+              },
+              "rates": {
+                "caiado": 0.800369739639236,
+                "cury": 0.780215133620642,
+                "flavio": 0.7939654546796825,
+                "lula": 0.7937221255178483,
+                "renan_santos": 0.779532696027173,
+                "rui": 0.7810436966523822,
+                "samara": 0.7810436966523822,
+                "zema": 0.7913090277396436
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": [
+                "rui",
+                "samara"
+              ]
+            },
+            {
+              "id": "gerp_2026-09-28",
+              "instituto": "Gerp",
+              "divulgacao": "2026-09-29",
+              "campo": {
+                "inicio": "2026-09-24",
+                "fim": "2026-09-28"
+              },
+              "published": {
+                "caiado": 3.0,
+                "cury": 5.0,
+                "flavio": 42.0,
+                "lula": 40.0,
+                "renan_santos": 3.0,
+                "samara": 1.0,
+                "zema": 1.0
+              },
+              "adjusted": {
+                "caiado": 3.146,
+                "cury": 5.12,
+                "flavio": 43.729,
+                "lula": 39.008,
+                "renan_santos": 3.035,
+                "samara": 1.05,
+                "zema": 0.925
+              },
+              "negative_mass_removed": {},
+              "undecided": 2.553,
+              "undecided_known": true,
+              "source": {
+                "tipo": "relatorio",
+                "pdf": "data/originals/gerp_092026_29/relatorio.pdf",
+                "url": "https://gerp.com.br/relatorios/20260929%20Relat%C3%B3rio%20Presid%C3%AAncia%202026%20-%20DIVULGA%C3%87%C3%83O.pdf",
+                "paginas": {
+                  "metodologia": 7,
+                  "perfil_renda": 8,
+                  "1t_topline": 13,
+                  "1t_renda": 15,
+                  "2t_topline": 22,
+                  "2t_renda": 24
+                },
+                "sha256": "a5fa15c9a6bfee37acc8ccfc462f52c2805ac563cf79ffce9b93b0481d189f82",
+                "bytes": 769761,
+                "total_paginas": 46,
+                "conferido_em": "2026-09-29",
+                "status": "Relatório completo arquivado e conferido.",
+                "atualizado_em": "2026-09-29",
+                "nota": "Divergência documental no 2º turno: a p. 22 informa 1% de indecisos, enquanto a coluna TOTAL da p. 24 informa 2%. Preservamos o topline da p. 22 como âncora e a tabela da p. 24 no cruzamento. As candidaturas omitidas no 1º turno são zero no total publicado; não se inventam células por renda."
+              },
+              "publicado": {
+                "caiado": 3.1578947368421053,
+                "cury": 5.2631578947368425,
+                "flavio": 44.21052631578947,
+                "lula": 42.10526315789474,
+                "renan_santos": 3.1578947368421053,
+                "samara": 1.0526315789473684,
+                "zema": 1.0526315789473684
+              },
+              "pnad": {
+                "caiado": 3.276639621717892,
+                "cury": 5.332611208898795,
+                "flavio": 45.544874131628006,
+                "lula": 40.6278316477977,
+                "renan_santos": 3.1610302771499694,
+                "samara": 1.0936019080749484,
+                "zema": 0.9634112047326925
+              },
+              "modelo": {
+                "caiado": 3.3082589061231933,
+                "cury": 5.248490826812706,
+                "flavio": 45.61642689550372,
+                "lula": 40.679188642644334,
+                "renan_santos": 3.108444678370882,
+                "samara": 1.07749370714494,
+                "zema": 0.9616963434002288
+              },
+              "allocated_undecided": {
+                "caiado": 0.06631483923906167,
+                "cury": 0.1052072510962096,
+                "flavio": 0.9143921627889335,
+                "lula": 0.8154240438133253,
+                "renan_santos": 0.06230951536113108,
+                "samara": 0.02159861848725466,
+                "zema": 0.019277432697706997
+              },
+              "rates": {
+                "caiado": 0.800369739639236,
+                "cury": 0.780215133620642,
+                "flavio": 0.7939654546796825,
+                "lula": 0.7937221255178483,
+                "renan_santos": 0.779532696027173,
+                "samara": 0.7810436966523822,
+                "zema": 0.7913090277396436
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": [
+                "samara"
+              ]
+            },
+            {
+              "id": "nexus_2026-09-27",
+              "instituto": "Nexus",
+              "divulgacao": "2026-09-28",
+              "campo": {
+                "inicio": "2026-09-25",
+                "fim": "2026-09-27"
+              },
+              "published": {
+                "caiado": 5.0,
+                "cury": 5.0,
+                "flavio": 37.0,
+                "lula": 42.0,
+                "outros": 1.0,
+                "renan_santos": 4.0,
+                "zema": 1.0
+              },
+              "adjusted": {
+                "caiado": 4.925,
+                "cury": 5.105,
+                "flavio": 37.252,
+                "lula": 41.714,
+                "outros": 0.956,
+                "renan_santos": 4.059,
+                "zema": 1.036
+              },
+              "negative_mass_removed": {},
+              "undecided": 1.982,
+              "undecided_known": true,
+              "source": {
+                "pdf": "docs/fontes/nexus_btg_28092026.pdf",
+                "url": "https://www.nexus.fsb.com.br/wp-content/uploads/2026/09/BTG-Nexus-Eleicoes-2026-Rodada-16-28.set_.2026.pdf",
+                "tipo": "relatorio",
+                "paginas": {
+                  "metodologia": 4,
+                  "perfil_renda": 142,
+                  "1t_renda": 37,
+                  "2t_renda": 86
+                }
+              },
+              "publicado": {
+                "caiado": 5.2631578947368425,
+                "cury": 5.2631578947368425,
+                "flavio": 38.94736842105263,
+                "lula": 44.21052631578947,
+                "outros": 1.0526315789473684,
+                "renan_santos": 4.2105263157894735,
+                "zema": 1.0526315789473684
+              },
+              "pnad": {
+                "caiado": 5.181646974654644,
+                "cury": 5.3710269656064895,
+                "flavio": 39.19324123854514,
+                "lula": 43.8877607920292,
+                "outros": 1.005818174166465,
+                "renan_santos": 4.270518795964102,
+                "zema": 1.0899870590339515
+              },
+              "modelo": {
+                "caiado": 5.231935597868251,
+                "cury": 5.286589761020939,
+                "flavio": 39.2569626845044,
+                "lula": 43.945642424442916,
+                "outros": 0.9910571935950553,
+                "renan_santos": 4.199705925408785,
+                "zema": 1.088106413159641
+              },
+              "allocated_undecided": {
+                "caiado": 0.08141912965384364,
+                "cury": 0.08226965510711264,
+                "flavio": 0.6109149615542062,
+                "lula": 0.6838799697257416,
+                "outros": 0.015422784288967116,
+                "renan_santos": 0.06535562123283684,
+                "zema": 0.016933059567155337
+              },
+              "rates": {
+                "caiado": 0.800369739639236,
+                "cury": 0.780215133620642,
+                "flavio": 0.7939654546796825,
+                "lula": 0.7937221255178483,
+                "outros": 0.7810436966523822,
+                "renan_santos": 0.779532696027173,
+                "zema": 0.7913090277396436
+              },
+              "others_template_candidates": [
+                "outros"
+              ],
+              "proxy_candidates": []
+            },
+            {
+              "id": "palver_2026-09-27",
+              "instituto": "Palver",
+              "divulgacao": "2026-09-29",
+              "campo": {
+                "inicio": "2026-09-24",
+                "fim": "2026-09-27"
+              },
+              "published": {
+                "caiado": 0.776201941912389,
+                "cury": 1.38641487315718,
+                "flavio": 43.7466857967906,
+                "lula": 44.155441636820605,
+                "outros": 0.0520714700617193,
+                "renan_santos": 8.03554748885217,
+                "zema": 0.556072494042773
+              },
+              "adjusted": {
+                "caiado": 0.734,
+                "cury": 1.407,
+                "flavio": 43.582,
+                "lula": 43.993,
+                "outros": 0.053,
+                "renan_santos": 8.504,
+                "zema": 0.569
+              },
+              "negative_mass_removed": {},
+              "undecided": 0.536,
+              "undecided_known": true,
+              "source": {
+                "tipo": "explorer",
+                "pdf": "data/originals/palver_092026_29/relatorio.pdf",
+                "url": "https://www.palver.com.br/survey/explore?wave=05_pesquisa_2026_09_29&question=lula_flavio&breakdown=inc_std",
+                "paginas": {
+                  "metodologia": "17–21",
+                  "1t_topline": 30,
+                  "1t_renda": 31,
+                  "2t_topline": 37,
+                  "2t_renda": 38
+                },
+                "sha256": "b11ec801419a090d9bd7d017ac3a8df2b25fefda5841d02d1b882e47e318b8de",
+                "bytes": 33640425,
+                "total_paginas": 154,
+                "conferido_em": "2026-09-29",
+                "status": "Relatório completo arquivado e conferido.",
+                "url_pdf": "https://www.palver.com.br/api/surveys/voting-intention-2026-september-w5/report",
+                "onda_explorer": "05_pesquisa_2026_09_29",
+                "snapshot": "analysis/reponderacao/palver_explorer_20260929",
+                "nota": "Onda 5. PDF e tabelas exatas do Explorer arquivados. Perfil ponderado recuperado por sistema linear de posto completo e validado pelo n efetivo. Datas do campo conforme p. 21 do PDF."
+              },
+              "publicado": {
+                "caiado": 0.7863582645140763,
+                "cury": 1.4045556119923208,
+                "flavio": 44.319095410469465,
+                "lula": 44.733199673316406,
+                "outros": 0.052752806476554774,
+                "renan_santos": 8.140689731058997,
+                "zema": 0.5633485021721893
+              },
+              "pnad": {
+                "caiado": 0.7425992998927581,
+                "cury": 1.4234839440723577,
+                "flavio": 44.09259221788308,
+                "lula": 44.50840735719633,
+                "outros": 0.05362093037372776,
+                "renan_santos": 8.603630035814733,
+                "zema": 0.5756662147670017
+              },
+              "modelo": {
+                "caiado": 0.7500255498974074,
+                "cury": 1.4015151768084595,
+                "flavio": 44.17719129460408,
+                "lula": 44.58013743793744,
+                "outros": 0.05284945816066937,
+                "renan_santos": 8.463440098100989,
+                "zema": 0.5748409844909462
+              },
+              "allocated_undecided": {
+                "caiado": 0.0031564670762381274,
+                "cury": 0.005898247750425405,
+                "flavio": 0.1859187995144503,
+                "lula": 0.1876145900579896,
+                "outros": 0.00022241585597183394,
+                "renan_santos": 0.035618213306231404,
+                "zema": 0.002419206441522128
+              },
+              "rates": {
+                "caiado": 0.800369739639236,
+                "cury": 0.780215133620642,
+                "flavio": 0.7939654546796825,
+                "lula": 0.7937221255178483,
+                "outros": 0.7810436966523822,
+                "renan_santos": 0.779532696027173,
+                "zema": 0.7913090277396436
+              },
+              "others_template_candidates": [
+                "outros"
+              ],
+              "proxy_candidates": []
+            },
+            {
+              "id": "quaest_2026-09-27",
+              "instituto": "Quaest",
+              "divulgacao": "2026-09-28",
+              "campo": {
+                "inicio": "2026-09-24",
+                "fim": "2026-09-27"
+              },
+              "published": {
+                "flavio": 34.0,
+                "lula": 39.0,
+                "outros": 12.0
+              },
+              "adjusted": {
+                "flavio": 33.369,
+                "lula": 39.784,
+                "outros": 11.791
+              },
+              "negative_mass_removed": {},
+              "undecided": 5.071,
+              "undecided_known": true,
+              "source": {
+                "tipo": "relatorio",
+                "pdf": "data/originals/quaest_092026_29/relatorio.pdf",
+                "url": "https://quaest.com.br/relatorios/pesquisa-de-intencao-de-voto-para-presidente-rodada-6-28-09-2026/",
+                "paginas": {
+                  "metodologia": 2,
+                  "perfil_renda": 204,
+                  "1t_topline": 18,
+                  "1t_renda": 24,
+                  "2t_topline": 32,
+                  "2t_renda": 37
+                },
+                "sha256": "30431a6d83a2b1bd3ddb0276d1b4673897876ed195096d1b8e4ff12b3ad0f57b",
+                "bytes": 83425558,
+                "total_paginas": 210,
+                "conferido_em": "2026-09-29",
+                "status": "Relatório completo arquivado e conferido.",
+                "nota": "PDF de 210 páginas recebido em Downloads. Transcrição visual das tabelas de renda, controlada por sexo (pp. 21, 34 e 201). Outros no 1º turno inclui Cury nesta onda.",
+                "atualizado_em": "2026-09-29"
+              },
+              "publicado": {
+                "flavio": 40.0,
+                "lula": 45.88235294117647,
+                "outros": 14.117647058823529
+              },
+              "pnad": {
+                "flavio": 39.28352797136938,
+                "lula": 46.83556225277831,
+                "outros": 13.880909775852329
+              },
+              "modelo": {
+                "flavio": 39.337233721580105,
+                "lula": 46.88521915736925,
+                "outros": 13.777547121050649
+              },
+              "allocated_undecided": {
+                "flavio": 1.5662383105197888,
+                "lula": 1.8667664066348175,
+                "outros": 0.5485622674617082
+              },
+              "rates": {
+                "flavio": 0.7939654546796825,
+                "lula": 0.7937221255178483,
+                "outros": 0.7869773774017054
+              },
+              "others_template_candidates": [
+                "cury",
+                "caiado",
+                "renan_santos",
+                "zema",
+                "outros"
+              ],
+              "proxy_candidates": []
+            }
+          ],
+          "leave_one_out": [
+            {
+              "without": "AtlasIntel",
+              "valid": {
+                "lula": 44.02254691559848,
+                "flavio": 42.096953649048075,
+                "demais": 13.880499435353435
+              }
+            },
+            {
+              "without": "Gerp",
+              "valid": {
+                "lula": 45.54715919517196,
+                "flavio": 41.35383145946317,
+                "demais": 13.099009345364856
+              }
+            },
+            {
+              "without": "Nexus",
+              "valid": {
+                "lula": 44.73054574972231,
+                "flavio": 42.94369751221301,
+                "demais": 12.325756738064676
+              }
+            },
+            {
+              "without": "Palver",
+              "valid": {
+                "lula": 44.571921996348685,
+                "flavio": 41.713640359688085,
+                "demais": 13.714437643963226
+              }
+            },
+            {
+              "without": "Quaest",
+              "valid": {
+                "lula": 43.995651566490736,
+                "flavio": 42.92362975294408,
+                "demais": 13.08071868056518
+              }
+            }
+          ],
+          "rates": {
+            "lula": 0.7937221255178483,
+            "flavio": 0.7939654546796825,
+            "cury": 0.780215133620642,
+            "caiado": 0.800369739639236,
+            "renan_santos": 0.779532696027173,
+            "zema": 0.7913090277396436,
+            "outros": 0.7810436966523822,
+            "branco_nulo": 0.7829680495992072,
+            "indecisos": 0.7851640671694567
+          }
+        },
+        "idosos60": {
+          "aggregate": {
+            "publicado": {
+              "lula": 44.64060958208894,
+              "flavio": 42.116439908931156,
+              "demais": 13.242950508979902
+            },
+            "pnad": {
+              "lula": 44.51695299396154,
+              "flavio": 42.13946358031128,
+              "demais": 13.34358342572719
+            },
+            "modelo": {
+              "lula": 44.031131563867916,
+              "flavio": 42.343235724115395,
+              "demais": 13.625632712016692
+            }
+          },
+          "polls": [
+            {
+              "id": "atlas_2026-09-28",
+              "instituto": "AtlasIntel",
+              "divulgacao": "2026-09-29",
+              "campo": {
+                "inicio": "2026-09-23",
+                "fim": "2026-09-28"
+              },
+              "published": {
+                "caiado": 1.8,
+                "cury": 2.0,
+                "flavio": 42.2,
+                "lula": 45.3,
+                "renan_santos": 5.2,
+                "rui": 0.1,
+                "samara": 0.4,
+                "zema": 0.9
+              },
+              "adjusted": {
+                "caiado": 1.857,
+                "cury": 1.954,
+                "flavio": 41.708,
+                "lula": 45.765,
+                "renan_santos": 5.261,
+                "rui": 0.103,
+                "samara": 0.405,
+                "zema": 0.892
+              },
+              "negative_mass_removed": {},
+              "undecided": 1.158,
+              "undecided_known": true,
+              "source": {
+                "tipo": "relatorio",
+                "pdf": "data/originals/atlas_092026_29/relatorio.pdf",
+                "url": "https://cdn1.atlasintel.org/pesquisa_atlas_bloomberg__nacional_260929_f6e4ce397d269a6f.pdf",
+                "paginas": {
+                  "perfil_renda": 5,
+                  "1t_topline": 14,
+                  "1t_renda": "17–18",
+                  "2t_topline": 20
+                },
+                "sha256": "3ca8d8ff2f26f274161281b04ebef892c7a9269e49ec1c6df7adbfce1dd59b2a",
+                "bytes": 2611276,
+                "total_paginas": 23,
+                "conferido_em": "2026-09-29",
+                "status": "Relatório completo arquivado e conferido."
+              },
+              "publicado": {
+                "caiado": 1.8386108273748722,
+                "cury": 2.0429009193054135,
+                "flavio": 43.105209397344225,
+                "lula": 46.27170582226762,
+                "renan_santos": 5.3115423901940755,
+                "rui": 0.10214504596527067,
+                "samara": 0.4085801838610827,
+                "zema": 0.9193054136874361
+              },
+              "pnad": {
+                "caiado": 1.8959620195007405,
+                "cury": 1.9949971923018026,
+                "flavio": 42.5830823421308,
+                "lula": 46.72520292000613,
+                "renan_santos": 5.371381898003984,
+                "rui": 0.1051610597784471,
+                "samara": 0.41349737097350564,
+                "zema": 0.9107151973046099
+              },
+              "modelo": {
+                "caiado": 1.896243406911329,
+                "cury": 2.021347890585615,
+                "flavio": 42.79719471551214,
+                "lula": 46.22245026833707,
+                "renan_santos": 5.5951696075056585,
+                "rui": 0.09955618319393866,
+                "samara": 0.3914587785781083,
+                "zema": 0.9765791493761337
+              },
+              "allocated_undecided": {
+                "caiado": 0.016155781925597235,
+                "cury": 0.017221658146334293,
+                "flavio": 0.3646273164779782,
+                "lula": 0.39381011102280744,
+                "renan_santos": 0.047670219807291796,
+                "rui": 0.0008482075556143478,
+                "samara": 0.0033351850487748635,
+                "zema": 0.008320345221980165
+              },
+              "rates": {
+                "caiado": 0.794299331153875,
+                "cury": 0.8046713208957454,
+                "flavio": 0.7981746943114435,
+                "lula": 0.7856362499225963,
+                "renan_santos": 0.8272694199723268,
+                "rui": 0.7518531615439344,
+                "samara": 0.7518531615439344,
+                "zema": 0.8516175642333281
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": [
+                "rui",
+                "samara"
+              ]
+            },
+            {
+              "id": "gerp_2026-09-28",
+              "instituto": "Gerp",
+              "divulgacao": "2026-09-29",
+              "campo": {
+                "inicio": "2026-09-24",
+                "fim": "2026-09-28"
+              },
+              "published": {
+                "caiado": 3.0,
+                "cury": 5.0,
+                "flavio": 42.0,
+                "lula": 40.0,
+                "renan_santos": 3.0,
+                "samara": 1.0,
+                "zema": 1.0
+              },
+              "adjusted": {
+                "caiado": 3.146,
+                "cury": 5.12,
+                "flavio": 43.729,
+                "lula": 39.008,
+                "renan_santos": 3.035,
+                "samara": 1.05,
+                "zema": 0.925
+              },
+              "negative_mass_removed": {},
+              "undecided": 2.553,
+              "undecided_known": true,
+              "source": {
+                "tipo": "relatorio",
+                "pdf": "data/originals/gerp_092026_29/relatorio.pdf",
+                "url": "https://gerp.com.br/relatorios/20260929%20Relat%C3%B3rio%20Presid%C3%AAncia%202026%20-%20DIVULGA%C3%87%C3%83O.pdf",
+                "paginas": {
+                  "metodologia": 7,
+                  "perfil_renda": 8,
+                  "1t_topline": 13,
+                  "1t_renda": 15,
+                  "2t_topline": 22,
+                  "2t_renda": 24
+                },
+                "sha256": "a5fa15c9a6bfee37acc8ccfc462f52c2805ac563cf79ffce9b93b0481d189f82",
+                "bytes": 769761,
+                "total_paginas": 46,
+                "conferido_em": "2026-09-29",
+                "status": "Relatório completo arquivado e conferido.",
+                "atualizado_em": "2026-09-29",
+                "nota": "Divergência documental no 2º turno: a p. 22 informa 1% de indecisos, enquanto a coluna TOTAL da p. 24 informa 2%. Preservamos o topline da p. 22 como âncora e a tabela da p. 24 no cruzamento. As candidaturas omitidas no 1º turno são zero no total publicado; não se inventam células por renda."
+              },
+              "publicado": {
+                "caiado": 3.1578947368421053,
+                "cury": 5.2631578947368425,
+                "flavio": 44.21052631578947,
+                "lula": 42.10526315789474,
+                "renan_santos": 3.1578947368421053,
+                "samara": 1.0526315789473684,
+                "zema": 1.0526315789473684
+              },
+              "pnad": {
+                "caiado": 3.276639621717892,
+                "cury": 5.332611208898795,
+                "flavio": 45.544874131628006,
+                "lula": 40.6278316477977,
+                "renan_santos": 3.1610302771499694,
+                "samara": 1.0936019080749484,
+                "zema": 0.9634112047326925
+              },
+              "modelo": {
+                "caiado": 3.2769337012869797,
+                "cury": 5.402729494641158,
+                "flavio": 45.77119384993294,
+                "lula": 40.18832795226211,
+                "renan_santos": 3.292535043932963,
+                "samara": 1.0352543620068213,
+                "zema": 1.0330255959370274
+              },
+              "allocated_undecided": {
+                "caiado": 0.0615522324136611,
+                "cury": 0.10148208411774975,
+                "flavio": 0.8597424966502484,
+                "lula": 0.7548768232517363,
+                "renan_santos": 0.06184527998680351,
+                "samara": 0.01944568395523965,
+                "zema": 0.019403819962974637
+              },
+              "rates": {
+                "caiado": 0.794299331153875,
+                "cury": 0.8046713208957454,
+                "flavio": 0.7981746943114435,
+                "lula": 0.7856362499225963,
+                "renan_santos": 0.8272694199723268,
+                "samara": 0.7518531615439344,
+                "zema": 0.8516175642333281
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": [
+                "samara"
+              ]
+            },
+            {
+              "id": "nexus_2026-09-27",
+              "instituto": "Nexus",
+              "divulgacao": "2026-09-28",
+              "campo": {
+                "inicio": "2026-09-25",
+                "fim": "2026-09-27"
+              },
+              "published": {
+                "caiado": 5.0,
+                "cury": 5.0,
+                "flavio": 37.0,
+                "lula": 42.0,
+                "outros": 1.0,
+                "renan_santos": 4.0,
+                "zema": 1.0
+              },
+              "adjusted": {
+                "caiado": 4.925,
+                "cury": 5.105,
+                "flavio": 37.252,
+                "lula": 41.714,
+                "outros": 0.956,
+                "renan_santos": 4.059,
+                "zema": 1.036
+              },
+              "negative_mass_removed": {},
+              "undecided": 1.982,
+              "undecided_known": true,
+              "source": {
+                "pdf": "docs/fontes/nexus_btg_28092026.pdf",
+                "url": "https://www.nexus.fsb.com.br/wp-content/uploads/2026/09/BTG-Nexus-Eleicoes-2026-Rodada-16-28.set_.2026.pdf",
+                "tipo": "relatorio",
+                "paginas": {
+                  "metodologia": 4,
+                  "perfil_renda": 142,
+                  "1t_renda": 37,
+                  "2t_renda": 86
+                }
+              },
+              "publicado": {
+                "caiado": 5.2631578947368425,
+                "cury": 5.2631578947368425,
+                "flavio": 38.94736842105263,
+                "lula": 44.21052631578947,
+                "outros": 1.0526315789473684,
+                "renan_santos": 4.2105263157894735,
+                "zema": 1.0526315789473684
+              },
+              "pnad": {
+                "caiado": 5.181646974654644,
+                "cury": 5.3710269656064895,
+                "flavio": 39.19324123854514,
+                "lula": 43.8877607920292,
+                "outros": 1.005818174166465,
+                "renan_santos": 4.270518795964102,
+                "zema": 1.0899870590339515
+              },
+              "modelo": {
+                "caiado": 5.182431521563804,
+                "cury": 5.441985872102651,
+                "flavio": 39.39042706798801,
+                "lula": 43.415668376950734,
+                "outros": 0.9522129051653323,
+                "renan_santos": 4.448454601749225,
+                "zema": 1.1688196544802634
+              },
+              "allocated_undecided": {
+                "caiado": 0.07557228635709362,
+                "cury": 0.0793572115649876,
+                "flavio": 0.5744069403954114,
+                "lula": 0.6331046168802021,
+                "outros": 0.013885548905499145,
+                "renan_santos": 0.06486914175538988,
+                "zema": 0.017044195038688696
+              },
+              "rates": {
+                "caiado": 0.794299331153875,
+                "cury": 0.8046713208957454,
+                "flavio": 0.7981746943114435,
+                "lula": 0.7856362499225963,
+                "outros": 0.7518531615439344,
+                "renan_santos": 0.8272694199723268,
+                "zema": 0.8516175642333281
+              },
+              "others_template_candidates": [
+                "outros"
+              ],
+              "proxy_candidates": []
+            },
+            {
+              "id": "palver_2026-09-27",
+              "instituto": "Palver",
+              "divulgacao": "2026-09-29",
+              "campo": {
+                "inicio": "2026-09-24",
+                "fim": "2026-09-27"
+              },
+              "published": {
+                "caiado": 0.776201941912389,
+                "cury": 1.38641487315718,
+                "flavio": 43.7466857967906,
+                "lula": 44.155441636820605,
+                "outros": 0.0520714700617193,
+                "renan_santos": 8.03554748885217,
+                "zema": 0.556072494042773
+              },
+              "adjusted": {
+                "caiado": 0.734,
+                "cury": 1.407,
+                "flavio": 43.582,
+                "lula": 43.993,
+                "outros": 0.053,
+                "renan_santos": 8.504,
+                "zema": 0.569
+              },
+              "negative_mass_removed": {},
+              "undecided": 0.536,
+              "undecided_known": true,
+              "source": {
+                "tipo": "explorer",
+                "pdf": "data/originals/palver_092026_29/relatorio.pdf",
+                "url": "https://www.palver.com.br/survey/explore?wave=05_pesquisa_2026_09_29&question=lula_flavio&breakdown=inc_std",
+                "paginas": {
+                  "metodologia": "17–21",
+                  "1t_topline": 30,
+                  "1t_renda": 31,
+                  "2t_topline": 37,
+                  "2t_renda": 38
+                },
+                "sha256": "b11ec801419a090d9bd7d017ac3a8df2b25fefda5841d02d1b882e47e318b8de",
+                "bytes": 33640425,
+                "total_paginas": 154,
+                "conferido_em": "2026-09-29",
+                "status": "Relatório completo arquivado e conferido.",
+                "url_pdf": "https://www.palver.com.br/api/surveys/voting-intention-2026-september-w5/report",
+                "onda_explorer": "05_pesquisa_2026_09_29",
+                "snapshot": "analysis/reponderacao/palver_explorer_20260929",
+                "nota": "Onda 5. PDF e tabelas exatas do Explorer arquivados. Perfil ponderado recuperado por sistema linear de posto completo e validado pelo n efetivo. Datas do campo conforme p. 21 do PDF."
+              },
+              "publicado": {
+                "caiado": 0.7863582645140763,
+                "cury": 1.4045556119923208,
+                "flavio": 44.319095410469465,
+                "lula": 44.733199673316406,
+                "outros": 0.052752806476554774,
+                "renan_santos": 8.140689731058997,
+                "zema": 0.5633485021721893
+              },
+              "pnad": {
+                "caiado": 0.7425992998927581,
+                "cury": 1.4234839440723577,
+                "flavio": 44.09259221788308,
+                "lula": 44.50840735719633,
+                "outros": 0.05362093037372776,
+                "renan_santos": 8.603630035814733,
+                "zema": 0.5756662147670017
+              },
+              "modelo": {
+                "caiado": 0.7415309097587344,
+                "cury": 1.4399971164360224,
+                "flavio": 44.243972421099464,
+                "lula": 43.95963670418878,
+                "outros": 0.05068248515666289,
+                "renan_santos": 8.947860906520674,
+                "zema": 0.6163194568396597
+              },
+              "allocated_undecided": {
+                "caiado": 0.0029242829195295743,
+                "cury": 0.005678736943192002,
+                "flavio": 0.1744794332110236,
+                "lula": 0.17335813392405985,
+                "outros": 0.00019987019247945072,
+                "renan_santos": 0.035286562530182655,
+                "zema": 0.0024305021367165376
+              },
+              "rates": {
+                "caiado": 0.794299331153875,
+                "cury": 0.8046713208957454,
+                "flavio": 0.7981746943114435,
+                "lula": 0.7856362499225963,
+                "outros": 0.7518531615439344,
+                "renan_santos": 0.8272694199723268,
+                "zema": 0.8516175642333281
+              },
+              "others_template_candidates": [
+                "outros"
+              ],
+              "proxy_candidates": []
+            },
+            {
+              "id": "quaest_2026-09-27",
+              "instituto": "Quaest",
+              "divulgacao": "2026-09-28",
+              "campo": {
+                "inicio": "2026-09-24",
+                "fim": "2026-09-27"
+              },
+              "published": {
+                "flavio": 34.0,
+                "lula": 39.0,
+                "outros": 12.0
+              },
+              "adjusted": {
+                "flavio": 33.369,
+                "lula": 39.784,
+                "outros": 11.791
+              },
+              "negative_mass_removed": {},
+              "undecided": 5.071,
+              "undecided_known": true,
+              "source": {
+                "tipo": "relatorio",
+                "pdf": "data/originals/quaest_092026_29/relatorio.pdf",
+                "url": "https://quaest.com.br/relatorios/pesquisa-de-intencao-de-voto-para-presidente-rodada-6-28-09-2026/",
+                "paginas": {
+                  "metodologia": 2,
+                  "perfil_renda": 204,
+                  "1t_topline": 18,
+                  "1t_renda": 24,
+                  "2t_topline": 32,
+                  "2t_renda": 37
+                },
+                "sha256": "30431a6d83a2b1bd3ddb0276d1b4673897876ed195096d1b8e4ff12b3ad0f57b",
+                "bytes": 83425558,
+                "total_paginas": 210,
+                "conferido_em": "2026-09-29",
+                "status": "Relatório completo arquivado e conferido.",
+                "nota": "PDF de 210 páginas recebido em Downloads. Transcrição visual das tabelas de renda, controlada por sexo (pp. 21, 34 e 201). Outros no 1º turno inclui Cury nesta onda.",
+                "atualizado_em": "2026-09-29"
+              },
+              "publicado": {
+                "flavio": 40.0,
+                "lula": 45.88235294117647,
+                "outros": 14.117647058823529
+              },
+              "pnad": {
+                "flavio": 39.28352797136938,
+                "lula": 46.83556225277831,
+                "outros": 13.880909775852329
+              },
+              "modelo": {
+                "flavio": 39.513390566044414,
+                "lula": 46.369574517600874,
+                "outros": 14.117034916354712
+              },
+              "allocated_undecided": {
+                "flavio": 1.4742232185942405,
+                "lula": 1.73002373147211,
+                "outros": 0.526698933026519
+              },
+              "rates": {
+                "flavio": 0.7981746943114435,
+                "lula": 0.7856362499225963,
+                "outros": 0.8070300364576379
+              },
+              "others_template_candidates": [
+                "cury",
+                "caiado",
+                "renan_santos",
+                "zema",
+                "outros"
+              ],
+              "proxy_candidates": []
+            }
+          ],
+          "leave_one_out": [
+            {
+              "without": "AtlasIntel",
+              "valid": {
+                "lula": 43.48330188775062,
+                "flavio": 42.22974597626621,
+                "demais": 14.286952135983173
+              }
+            },
+            {
+              "without": "Gerp",
+              "valid": {
+                "lula": 44.99183246676937,
+                "flavio": 41.48624619266101,
+                "demais": 13.521921340569632
+              }
+            },
+            {
+              "without": "Nexus",
+              "valid": {
+                "lula": 44.18499736059721,
+                "flavio": 43.08143788814724,
+                "demais": 12.73356475125555
+              }
+            },
+            {
+              "without": "Palver",
+              "valid": {
+                "lula": 44.0490052787877,
+                "flavio": 41.86805154986938,
+                "demais": 14.08294317134293
+              }
+            },
+            {
+              "without": "Quaest",
+              "valid": {
+                "lula": 43.446520825434675,
+                "flavio": 43.05069701363314,
+                "demais": 13.50278216093219
+              }
+            }
+          ],
+          "rates": {
+            "lula": 0.7856362499225963,
+            "flavio": 0.7981746943114435,
+            "cury": 0.8046713208957454,
+            "caiado": 0.794299331153875,
+            "renan_santos": 0.8272694199723268,
+            "zema": 0.8516175642333281,
+            "outros": 0.7518531615439344,
+            "branco_nulo": 0.7682998262674708,
+            "indecisos": 0.7357416452559397
+          }
+        },
+        "idosos80": {
+          "aggregate": {
+            "publicado": {
+              "lula": 44.64060958208894,
+              "flavio": 42.116439908931156,
+              "demais": 13.242950508979902
+            },
+            "pnad": {
+              "lula": 44.51695299396154,
+              "flavio": 42.13946358031128,
+              "demais": 13.34358342572719
+            },
+            "modelo": {
+              "lula": 44.593452741011085,
+              "flavio": 42.201202220368216,
+              "demais": 13.205345038620692
+            }
+          },
+          "polls": [
+            {
+              "id": "atlas_2026-09-28",
+              "instituto": "AtlasIntel",
+              "divulgacao": "2026-09-29",
+              "campo": {
+                "inicio": "2026-09-23",
+                "fim": "2026-09-28"
+              },
+              "published": {
+                "caiado": 1.8,
+                "cury": 2.0,
+                "flavio": 42.2,
+                "lula": 45.3,
+                "renan_santos": 5.2,
+                "rui": 0.1,
+                "samara": 0.4,
+                "zema": 0.9
+              },
+              "adjusted": {
+                "caiado": 1.857,
+                "cury": 1.954,
+                "flavio": 41.708,
+                "lula": 45.765,
+                "renan_santos": 5.261,
+                "rui": 0.103,
+                "samara": 0.405,
+                "zema": 0.892
+              },
+              "negative_mass_removed": {},
+              "undecided": 1.158,
+              "undecided_known": true,
+              "source": {
+                "tipo": "relatorio",
+                "pdf": "data/originals/atlas_092026_29/relatorio.pdf",
+                "url": "https://cdn1.atlasintel.org/pesquisa_atlas_bloomberg__nacional_260929_f6e4ce397d269a6f.pdf",
+                "paginas": {
+                  "perfil_renda": 5,
+                  "1t_topline": 14,
+                  "1t_renda": "17–18",
+                  "2t_topline": 20
+                },
+                "sha256": "3ca8d8ff2f26f274161281b04ebef892c7a9269e49ec1c6df7adbfce1dd59b2a",
+                "bytes": 2611276,
+                "total_paginas": 23,
+                "conferido_em": "2026-09-29",
+                "status": "Relatório completo arquivado e conferido."
+              },
+              "publicado": {
+                "caiado": 1.8386108273748722,
+                "cury": 2.0429009193054135,
+                "flavio": 43.105209397344225,
+                "lula": 46.27170582226762,
+                "renan_santos": 5.3115423901940755,
+                "rui": 0.10214504596527067,
+                "samara": 0.4085801838610827,
+                "zema": 0.9193054136874361
+              },
+              "pnad": {
+                "caiado": 1.8959620195007405,
+                "cury": 1.9949971923018026,
+                "flavio": 42.5830823421308,
+                "lula": 46.72520292000613,
+                "renan_santos": 5.371381898003984,
+                "rui": 0.1051610597784471,
+                "samara": 0.41349737097350564,
+                "zema": 0.9107151973046099
+              },
+              "modelo": {
+                "caiado": 1.9146055632262873,
+                "cury": 1.9611637216902813,
+                "flavio": 42.638197896631326,
+                "lula": 46.79799463538432,
+                "renan_santos": 5.269850120885671,
+                "rui": 0.1037497002105498,
+                "samara": 0.4079478503424531,
+                "zema": 0.9064905116290948
+              },
+              "allocated_undecided": {
+                "caiado": 0.017448649739638018,
+                "cury": 0.017872954889045323,
+                "flavio": 0.38858081002022005,
+                "lula": 0.42649088281886,
+                "renan_santos": 0.04802648164501095,
+                "rui": 0.0009455170372093886,
+                "samara": 0.003717809709415558,
+                "zema": 0.008261250115176815
+              },
+              "rates": {
+                "caiado": 0.800576987267408,
+                "cury": 0.7793364355300781,
+                "flavio": 0.7938074406577063,
+                "lula": 0.7940163876915237,
+                "renan_santos": 0.777795903000235,
+                "rui": 0.78214147326537,
+                "samara": 0.78214147326537,
+                "zema": 0.7891037324050222
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": [
+                "rui",
+                "samara"
+              ]
+            },
+            {
+              "id": "gerp_2026-09-28",
+              "instituto": "Gerp",
+              "divulgacao": "2026-09-29",
+              "campo": {
+                "inicio": "2026-09-24",
+                "fim": "2026-09-28"
+              },
+              "published": {
+                "caiado": 3.0,
+                "cury": 5.0,
+                "flavio": 42.0,
+                "lula": 40.0,
+                "renan_santos": 3.0,
+                "samara": 1.0,
+                "zema": 1.0
+              },
+              "adjusted": {
+                "caiado": 3.146,
+                "cury": 5.12,
+                "flavio": 43.729,
+                "lula": 39.008,
+                "renan_santos": 3.035,
+                "samara": 1.05,
+                "zema": 0.925
+              },
+              "negative_mass_removed": {},
+              "undecided": 2.553,
+              "undecided_known": true,
+              "source": {
+                "tipo": "relatorio",
+                "pdf": "data/originals/gerp_092026_29/relatorio.pdf",
+                "url": "https://gerp.com.br/relatorios/20260929%20Relat%C3%B3rio%20Presid%C3%AAncia%202026%20-%20DIVULGA%C3%87%C3%83O.pdf",
+                "paginas": {
+                  "metodologia": 7,
+                  "perfil_renda": 8,
+                  "1t_topline": 13,
+                  "1t_renda": 15,
+                  "2t_topline": 22,
+                  "2t_renda": 24
+                },
+                "sha256": "a5fa15c9a6bfee37acc8ccfc462f52c2805ac563cf79ffce9b93b0481d189f82",
+                "bytes": 769761,
+                "total_paginas": 46,
+                "conferido_em": "2026-09-29",
+                "status": "Relatório completo arquivado e conferido.",
+                "atualizado_em": "2026-09-29",
+                "nota": "Divergência documental no 2º turno: a p. 22 informa 1% de indecisos, enquanto a coluna TOTAL da p. 24 informa 2%. Preservamos o topline da p. 22 como âncora e a tabela da p. 24 no cruzamento. As candidaturas omitidas no 1º turno são zero no total publicado; não se inventam células por renda."
+              },
+              "publicado": {
+                "caiado": 3.1578947368421053,
+                "cury": 5.2631578947368425,
+                "flavio": 44.21052631578947,
+                "lula": 42.10526315789474,
+                "renan_santos": 3.1578947368421053,
+                "samara": 1.0526315789473684,
+                "zema": 1.0526315789473684
+              },
+              "pnad": {
+                "caiado": 3.276639621717892,
+                "cury": 5.332611208898795,
+                "flavio": 45.544874131628006,
+                "lula": 40.6278316477977,
+                "renan_santos": 3.1610302771499694,
+                "samara": 1.0936019080749484,
+                "zema": 0.9634112047326925
+              },
+              "modelo": {
+                "caiado": 3.309351929295155,
+                "cury": 5.242954341198246,
+                "flavio": 45.61060628208079,
+                "lula": 40.69717687469217,
+                "renan_santos": 3.1017406404814385,
+                "samara": 1.0790852294992035,
+                "zema": 0.9590847027529923
+              },
+              "allocated_undecided": {
+                "caiado": 0.06649174304390942,
+                "cury": 0.10534182531627963,
+                "flavio": 0.9164116654196296,
+                "lula": 0.8176906793774907,
+                "renan_santos": 0.06232040171674009,
+                "samara": 0.021681060018787685,
+                "zema": 0.01927000058479081
+              },
+              "rates": {
+                "caiado": 0.800576987267408,
+                "cury": 0.7793364355300781,
+                "flavio": 0.7938074406577063,
+                "lula": 0.7940163876915237,
+                "renan_santos": 0.777795903000235,
+                "samara": 0.78214147326537,
+                "zema": 0.7891037324050222
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": [
+                "samara"
+              ]
+            },
+            {
+              "id": "nexus_2026-09-27",
+              "instituto": "Nexus",
+              "divulgacao": "2026-09-28",
+              "campo": {
+                "inicio": "2026-09-25",
+                "fim": "2026-09-27"
+              },
+              "published": {
+                "caiado": 5.0,
+                "cury": 5.0,
+                "flavio": 37.0,
+                "lula": 42.0,
+                "outros": 1.0,
+                "renan_santos": 4.0,
+                "zema": 1.0
+              },
+              "adjusted": {
+                "caiado": 4.925,
+                "cury": 5.105,
+                "flavio": 37.252,
+                "lula": 41.714,
+                "outros": 0.956,
+                "renan_santos": 4.059,
+                "zema": 1.036
+              },
+              "negative_mass_removed": {},
+              "undecided": 1.982,
+              "undecided_known": true,
+              "source": {
+                "pdf": "docs/fontes/nexus_btg_28092026.pdf",
+                "url": "https://www.nexus.fsb.com.br/wp-content/uploads/2026/09/BTG-Nexus-Eleicoes-2026-Rodada-16-28.set_.2026.pdf",
+                "tipo": "relatorio",
+                "paginas": {
+                  "metodologia": 4,
+                  "perfil_renda": 142,
+                  "1t_renda": 37,
+                  "2t_renda": 86
+                }
+              },
+              "publicado": {
+                "caiado": 5.2631578947368425,
+                "cury": 5.2631578947368425,
+                "flavio": 38.94736842105263,
+                "lula": 44.21052631578947,
+                "outros": 1.0526315789473684,
+                "renan_santos": 4.2105263157894735,
+                "zema": 1.0526315789473684
+              },
+              "pnad": {
+                "caiado": 5.181646974654644,
+                "cury": 5.3710269656064895,
+                "flavio": 39.19324123854514,
+                "lula": 43.8877607920292,
+                "outros": 1.005818174166465,
+                "renan_santos": 4.270518795964102,
+                "zema": 1.0899870590339515
+              },
+              "modelo": {
+                "caiado": 5.233662788616045,
+                "cury": 5.281011672907266,
+                "flavio": 39.251943030402366,
+                "lula": 43.965063310484965,
+                "outros": 0.9925207785109773,
+                "renan_santos": 4.190647223728997,
+                "zema": 1.0851511953493742
+              },
+              "allocated_undecided": {
+                "caiado": 0.08163630435385284,
+                "cury": 0.08237486701731318,
+                "flavio": 0.6122640485512375,
+                "lula": 0.6857807685199085,
+                "outros": 0.015481648632060802,
+                "renan_santos": 0.06536702229652704,
+                "zema": 0.016926526761750788
+              },
+              "rates": {
+                "caiado": 0.800576987267408,
+                "cury": 0.7793364355300781,
+                "flavio": 0.7938074406577063,
+                "lula": 0.7940163876915237,
+                "outros": 0.78214147326537,
+                "renan_santos": 0.777795903000235,
+                "zema": 0.7891037324050222
+              },
+              "others_template_candidates": [
+                "outros"
+              ],
+              "proxy_candidates": []
+            },
+            {
+              "id": "palver_2026-09-27",
+              "instituto": "Palver",
+              "divulgacao": "2026-09-29",
+              "campo": {
+                "inicio": "2026-09-24",
+                "fim": "2026-09-27"
+              },
+              "published": {
+                "caiado": 0.776201941912389,
+                "cury": 1.38641487315718,
+                "flavio": 43.7466857967906,
+                "lula": 44.155441636820605,
+                "outros": 0.0520714700617193,
+                "renan_santos": 8.03554748885217,
+                "zema": 0.556072494042773
+              },
+              "adjusted": {
+                "caiado": 0.734,
+                "cury": 1.407,
+                "flavio": 43.582,
+                "lula": 43.993,
+                "outros": 0.053,
+                "renan_santos": 8.504,
+                "zema": 0.569
+              },
+              "negative_mass_removed": {},
+              "undecided": 0.536,
+              "undecided_known": true,
+              "source": {
+                "tipo": "explorer",
+                "pdf": "data/originals/palver_092026_29/relatorio.pdf",
+                "url": "https://www.palver.com.br/survey/explore?wave=05_pesquisa_2026_09_29&question=lula_flavio&breakdown=inc_std",
+                "paginas": {
+                  "metodologia": "17–21",
+                  "1t_topline": 30,
+                  "1t_renda": 31,
+                  "2t_topline": 37,
+                  "2t_renda": 38
+                },
+                "sha256": "b11ec801419a090d9bd7d017ac3a8df2b25fefda5841d02d1b882e47e318b8de",
+                "bytes": 33640425,
+                "total_paginas": 154,
+                "conferido_em": "2026-09-29",
+                "status": "Relatório completo arquivado e conferido.",
+                "url_pdf": "https://www.palver.com.br/api/surveys/voting-intention-2026-september-w5/report",
+                "onda_explorer": "05_pesquisa_2026_09_29",
+                "snapshot": "analysis/reponderacao/palver_explorer_20260929",
+                "nota": "Onda 5. PDF e tabelas exatas do Explorer arquivados. Perfil ponderado recuperado por sistema linear de posto completo e validado pelo n efetivo. Datas do campo conforme p. 21 do PDF."
+              },
+              "publicado": {
+                "caiado": 0.7863582645140763,
+                "cury": 1.4045556119923208,
+                "flavio": 44.319095410469465,
+                "lula": 44.733199673316406,
+                "outros": 0.052752806476554774,
+                "renan_santos": 8.140689731058997,
+                "zema": 0.5633485021721893
+              },
+              "pnad": {
+                "caiado": 0.7425992998927581,
+                "cury": 1.4234839440723577,
+                "flavio": 44.09259221788308,
+                "lula": 44.50840735719633,
+                "outros": 0.05362093037372776,
+                "renan_santos": 8.603630035814733,
+                "zema": 0.5756662147670017
+              },
+              "modelo": {
+                "caiado": 0.7503250546346789,
+                "cury": 1.400133235741757,
+                "flavio": 44.174598232618855,
+                "lula": 44.6029240801098,
+                "outros": 0.0529311672455118,
+                "renan_santos": 8.445768812742365,
+                "zema": 0.5733194169070247
+              },
+              "allocated_undecided": {
+                "caiado": 0.003165105474754489,
+                "cury": 0.00590619937646839,
+                "flavio": 0.18634225506332935,
+                "lula": 0.188149067292907,
+                "outros": 0.0002232801986273587,
+                "renan_santos": 0.03562689122881127,
+                "zema": 0.0024184403999663617
+              },
+              "rates": {
+                "caiado": 0.800576987267408,
+                "cury": 0.7793364355300781,
+                "flavio": 0.7938074406577063,
+                "lula": 0.7940163876915237,
+                "outros": 0.78214147326537,
+                "renan_santos": 0.777795903000235,
+                "zema": 0.7891037324050222
+              },
+              "others_template_candidates": [
+                "outros"
+              ],
+              "proxy_candidates": []
+            },
+            {
+              "id": "quaest_2026-09-27",
+              "instituto": "Quaest",
+              "divulgacao": "2026-09-28",
+              "campo": {
+                "inicio": "2026-09-24",
+                "fim": "2026-09-27"
+              },
+              "published": {
+                "flavio": 34.0,
+                "lula": 39.0,
+                "outros": 12.0
+              },
+              "adjusted": {
+                "flavio": 33.369,
+                "lula": 39.784,
+                "outros": 11.791
+              },
+              "negative_mass_removed": {},
+              "undecided": 5.071,
+              "undecided_known": true,
+              "source": {
+                "tipo": "relatorio",
+                "pdf": "data/originals/quaest_092026_29/relatorio.pdf",
+                "url": "https://quaest.com.br/relatorios/pesquisa-de-intencao-de-voto-para-presidente-rodada-6-28-09-2026/",
+                "paginas": {
+                  "metodologia": 2,
+                  "perfil_renda": 204,
+                  "1t_topline": 18,
+                  "1t_renda": 24,
+                  "2t_topline": 32,
+                  "2t_renda": 37
+                },
+                "sha256": "30431a6d83a2b1bd3ddb0276d1b4673897876ed195096d1b8e4ff12b3ad0f57b",
+                "bytes": 83425558,
+                "total_paginas": 210,
+                "conferido_em": "2026-09-29",
+                "status": "Relatório completo arquivado e conferido.",
+                "nota": "PDF de 210 páginas recebido em Downloads. Transcrição visual das tabelas de renda, controlada por sexo (pp. 21, 34 e 201). Outros no 1º turno inclui Cury nesta onda.",
+                "atualizado_em": "2026-09-29"
+              },
+              "publicado": {
+                "flavio": 40.0,
+                "lula": 45.88235294117647,
+                "outros": 14.117647058823529
+              },
+              "pnad": {
+                "flavio": 39.28352797136938,
+                "lula": 46.83556225277831,
+                "outros": 13.880909775852329
+              },
+              "modelo": {
+                "flavio": 39.330665660107734,
+                "lula": 46.90410480438416,
+                "outros": 13.765229535508096
+              },
+              "allocated_undecided": {
+                "flavio": 1.5696356582219493,
+                "lula": 1.8718817539011152,
+                "outros": 0.5493523885220783
+              },
+              "rates": {
+                "flavio": 0.7938074406577063,
+                "lula": 0.7940163876915237,
+                "outros": 0.7862485886033207
+              },
+              "others_template_candidates": [
+                "cury",
+                "caiado",
+                "renan_santos",
+                "zema",
+                "outros"
+              ],
+              "proxy_candidates": []
+            }
+          ],
+          "leave_one_out": [
+            {
+              "without": "AtlasIntel",
+              "valid": {
+                "lula": 44.04231726741777,
+                "flavio": 42.09195330130244,
+                "demais": 13.865729431279783
+              }
+            },
+            {
+              "without": "Gerp",
+              "valid": {
+                "lula": 45.567521707590814,
+                "flavio": 41.34885120494007,
+                "demais": 13.08362708746911
+              }
+            },
+            {
+              "without": "Nexus",
+              "valid": {
+                "lula": 44.75055009864261,
+                "flavio": 42.938517017859674,
+                "demais": 12.310932883497701
+              }
+            },
+            {
+              "without": "Palver",
+              "valid": {
+                "lula": 44.591084906236404,
+                "flavio": 41.707853217305555,
+                "demais": 13.701061876458033
+              }
+            },
+            {
+              "without": "Quaest",
+              "valid": {
+                "lula": 44.015789725167814,
+                "flavio": 42.91883636043333,
+                "demais": 13.065373914398842
+              }
+            }
+          ],
+          "rates": {
+            "lula": 0.7940163876915237,
+            "flavio": 0.7938074406577063,
+            "cury": 0.7793364355300781,
+            "caiado": 0.800576987267408,
+            "renan_santos": 0.777795903000235,
+            "zema": 0.7891037324050222,
+            "outros": 0.78214147326537,
+            "branco_nulo": 0.7835330762677412,
+            "indecisos": 0.7869985802889259
+          }
+        },
+        "flavio95": {
+          "aggregate": {
+            "publicado": {
+              "lula": 44.64060958208894,
+              "flavio": 42.116439908931156,
+              "demais": 13.242950508979902
+            },
+            "pnad": {
+              "lula": 44.51695299396154,
+              "flavio": 42.13946358031128,
+              "demais": 13.34358342572719
+            },
+            "modelo": {
+              "lula": 45.53278045606264,
+              "flavio": 40.96373321753038,
+              "demais": 13.503486326406977
+            }
+          },
+          "polls": [
+            {
+              "id": "atlas_2026-09-28",
+              "instituto": "AtlasIntel",
+              "divulgacao": "2026-09-29",
+              "campo": {
+                "inicio": "2026-09-23",
+                "fim": "2026-09-28"
+              },
+              "published": {
+                "caiado": 1.8,
+                "cury": 2.0,
+                "flavio": 42.2,
+                "lula": 45.3,
+                "renan_santos": 5.2,
+                "rui": 0.1,
+                "samara": 0.4,
+                "zema": 0.9
+              },
+              "adjusted": {
+                "caiado": 1.857,
+                "cury": 1.954,
+                "flavio": 41.708,
+                "lula": 45.765,
+                "renan_santos": 5.261,
+                "rui": 0.103,
+                "samara": 0.405,
+                "zema": 0.892
+              },
+              "negative_mass_removed": {},
+              "undecided": 1.158,
+              "undecided_known": true,
+              "source": {
+                "tipo": "relatorio",
+                "pdf": "data/originals/atlas_092026_29/relatorio.pdf",
+                "url": "https://cdn1.atlasintel.org/pesquisa_atlas_bloomberg__nacional_260929_f6e4ce397d269a6f.pdf",
+                "paginas": {
+                  "perfil_renda": 5,
+                  "1t_topline": 14,
+                  "1t_renda": "17–18",
+                  "2t_topline": 20
+                },
+                "sha256": "3ca8d8ff2f26f274161281b04ebef892c7a9269e49ec1c6df7adbfce1dd59b2a",
+                "bytes": 2611276,
+                "total_paginas": 23,
+                "conferido_em": "2026-09-29",
+                "status": "Relatório completo arquivado e conferido."
+              },
+              "publicado": {
+                "caiado": 1.8386108273748722,
+                "cury": 2.0429009193054135,
+                "flavio": 43.105209397344225,
+                "lula": 46.27170582226762,
+                "renan_santos": 5.3115423901940755,
+                "rui": 0.10214504596527067,
+                "samara": 0.4085801838610827,
+                "zema": 0.9193054136874361
+              },
+              "pnad": {
+                "caiado": 1.8959620195007405,
+                "cury": 1.9949971923018026,
+                "flavio": 42.5830823421308,
+                "lula": 46.72520292000613,
+                "renan_santos": 5.371381898003984,
+                "rui": 0.1051610597784471,
+                "samara": 0.41349737097350564,
+                "zema": 0.9107151973046099
+              },
+              "modelo": {
+                "caiado": 1.9556856888965441,
+                "cury": 2.0060207586044854,
+                "flavio": 41.3943502867337,
+                "lula": 47.79675877307626,
+                "renan_santos": 5.396337838093852,
+                "rui": 0.1058544329507584,
+                "samara": 0.4162237412141472,
+                "zema": 0.9287684804302572
+              },
+              "allocated_undecided": {
+                "caiado": 0.01778148522075771,
+                "cury": 0.018239141736413132,
+                "flavio": 0.37636570744746095,
+                "lula": 0.4345776852328015,
+                "renan_santos": 0.04906458234013158,
+                "rui": 0.000962449664458924,
+                "samara": 0.0037843894573384874,
+                "zema": 0.008444548682868565
+              },
+              "rates": {
+                "caiado": 0.800369739639236,
+                "cury": 0.780215133620642,
+                "flavio": 0.7542671819456983,
+                "lula": 0.7937221255178483,
+                "renan_santos": 0.779532696027173,
+                "rui": 0.7810436966523822,
+                "samara": 0.7810436966523822,
+                "zema": 0.7913090277396436
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": [
+                "rui",
+                "samara"
+              ]
+            },
+            {
+              "id": "gerp_2026-09-28",
+              "instituto": "Gerp",
+              "divulgacao": "2026-09-29",
+              "campo": {
+                "inicio": "2026-09-24",
+                "fim": "2026-09-28"
+              },
+              "published": {
+                "caiado": 3.0,
+                "cury": 5.0,
+                "flavio": 42.0,
+                "lula": 40.0,
+                "renan_santos": 3.0,
+                "samara": 1.0,
+                "zema": 1.0
+              },
+              "adjusted": {
+                "caiado": 3.146,
+                "cury": 5.12,
+                "flavio": 43.729,
+                "lula": 39.008,
+                "renan_santos": 3.035,
+                "samara": 1.05,
+                "zema": 0.925
+              },
+              "negative_mass_removed": {},
+              "undecided": 2.553,
+              "undecided_known": true,
+              "source": {
+                "tipo": "relatorio",
+                "pdf": "data/originals/gerp_092026_29/relatorio.pdf",
+                "url": "https://gerp.com.br/relatorios/20260929%20Relat%C3%B3rio%20Presid%C3%AAncia%202026%20-%20DIVULGA%C3%87%C3%83O.pdf",
+                "paginas": {
+                  "metodologia": 7,
+                  "perfil_renda": 8,
+                  "1t_topline": 13,
+                  "1t_renda": 15,
+                  "2t_topline": 22,
+                  "2t_renda": 24
+                },
+                "sha256": "a5fa15c9a6bfee37acc8ccfc462f52c2805ac563cf79ffce9b93b0481d189f82",
+                "bytes": 769761,
+                "total_paginas": 46,
+                "conferido_em": "2026-09-29",
+                "status": "Relatório completo arquivado e conferido.",
+                "atualizado_em": "2026-09-29",
+                "nota": "Divergência documental no 2º turno: a p. 22 informa 1% de indecisos, enquanto a coluna TOTAL da p. 24 informa 2%. Preservamos o topline da p. 22 como âncora e a tabela da p. 24 no cruzamento. As candidaturas omitidas no 1º turno são zero no total publicado; não se inventam células por renda."
+              },
+              "publicado": {
+                "caiado": 3.1578947368421053,
+                "cury": 5.2631578947368425,
+                "flavio": 44.21052631578947,
+                "lula": 42.10526315789474,
+                "renan_santos": 3.1578947368421053,
+                "samara": 1.0526315789473684,
+                "zema": 1.0526315789473684
+              },
+              "pnad": {
+                "caiado": 3.276639621717892,
+                "cury": 5.332611208898795,
+                "flavio": 45.544874131628006,
+                "lula": 40.6278316477977,
+                "renan_santos": 3.1610302771499694,
+                "samara": 1.0936019080749484,
+                "zema": 0.9634112047326925
+              },
+              "modelo": {
+                "caiado": 3.385475555208536,
+                "cury": 5.370993595157568,
+                "flavio": 44.34708329224324,
+                "lula": 41.62866409895814,
+                "renan_santos": 3.180997549455642,
+                "samara": 1.1026430246068477,
+                "zema": 0.9841428843700266
+              },
+              "allocated_undecided": {
+                "caiado": 0.06786266539655977,
+                "cury": 0.10766284832111044,
+                "flavio": 0.8889478673519747,
+                "lula": 0.8344565059130556,
+                "renan_santos": 0.06376385497566761,
+                "samara": 0.022102742557281858,
+                "zema": 0.019727378967973223
+              },
+              "rates": {
+                "caiado": 0.800369739639236,
+                "cury": 0.780215133620642,
+                "flavio": 0.7542671819456983,
+                "lula": 0.7937221255178483,
+                "renan_santos": 0.779532696027173,
+                "samara": 0.7810436966523822,
+                "zema": 0.7913090277396436
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": [
+                "samara"
+              ]
+            },
+            {
+              "id": "nexus_2026-09-27",
+              "instituto": "Nexus",
+              "divulgacao": "2026-09-28",
+              "campo": {
+                "inicio": "2026-09-25",
+                "fim": "2026-09-27"
+              },
+              "published": {
+                "caiado": 5.0,
+                "cury": 5.0,
+                "flavio": 37.0,
+                "lula": 42.0,
+                "outros": 1.0,
+                "renan_santos": 4.0,
+                "zema": 1.0
+              },
+              "adjusted": {
+                "caiado": 4.925,
+                "cury": 5.105,
+                "flavio": 37.252,
+                "lula": 41.714,
+                "outros": 0.956,
+                "renan_santos": 4.059,
+                "zema": 1.036
+              },
+              "negative_mass_removed": {},
+              "undecided": 1.982,
+              "undecided_known": true,
+              "source": {
+                "pdf": "docs/fontes/nexus_btg_28092026.pdf",
+                "url": "https://www.nexus.fsb.com.br/wp-content/uploads/2026/09/BTG-Nexus-Eleicoes-2026-Rodada-16-28.set_.2026.pdf",
+                "tipo": "relatorio",
+                "paginas": {
+                  "metodologia": 4,
+                  "perfil_renda": 142,
+                  "1t_renda": 37,
+                  "2t_renda": 86
+                }
+              },
+              "publicado": {
+                "caiado": 5.2631578947368425,
+                "cury": 5.2631578947368425,
+                "flavio": 38.94736842105263,
+                "lula": 44.21052631578947,
+                "outros": 1.0526315789473684,
+                "renan_santos": 4.2105263157894735,
+                "zema": 1.0526315789473684
+              },
+              "pnad": {
+                "caiado": 5.181646974654644,
+                "cury": 5.3710269656064895,
+                "flavio": 39.19324123854514,
+                "lula": 43.8877607920292,
+                "outros": 1.005818174166465,
+                "renan_santos": 4.270518795964102,
+                "zema": 1.0899870590339515
+              },
+              "modelo": {
+                "caiado": 5.336686652251414,
+                "cury": 5.392435072225425,
+                "flavio": 38.04079763694026,
+                "lula": 44.82549889312375,
+                "outros": 1.010899617883573,
+                "renan_santos": 4.2837902218525405,
+                "zema": 1.1098919057230427
+              },
+              "allocated_undecided": {
+                "caiado": 0.08304926051433713,
+                "cury": 0.0839168147395287,
+                "flavio": 0.5919890596894272,
+                "lula": 0.6975722536922119,
+                "outros": 0.015731571139564363,
+                "renan_santos": 0.0666641370021815,
+                "zema": 0.017272084352612394
+              },
+              "rates": {
+                "caiado": 0.800369739639236,
+                "cury": 0.780215133620642,
+                "flavio": 0.7542671819456983,
+                "lula": 0.7937221255178483,
+                "outros": 0.7810436966523822,
+                "renan_santos": 0.779532696027173,
+                "zema": 0.7913090277396436
+              },
+              "others_template_candidates": [
+                "outros"
+              ],
+              "proxy_candidates": []
+            },
+            {
+              "id": "palver_2026-09-27",
+              "instituto": "Palver",
+              "divulgacao": "2026-09-29",
+              "campo": {
+                "inicio": "2026-09-24",
+                "fim": "2026-09-27"
+              },
+              "published": {
+                "caiado": 0.776201941912389,
+                "cury": 1.38641487315718,
+                "flavio": 43.7466857967906,
+                "lula": 44.155441636820605,
+                "outros": 0.0520714700617193,
+                "renan_santos": 8.03554748885217,
+                "zema": 0.556072494042773
+              },
+              "adjusted": {
+                "caiado": 0.734,
+                "cury": 1.407,
+                "flavio": 43.582,
+                "lula": 43.993,
+                "outros": 0.053,
+                "renan_santos": 8.504,
+                "zema": 0.569
+              },
+              "negative_mass_removed": {},
+              "undecided": 0.536,
+              "undecided_known": true,
+              "source": {
+                "tipo": "explorer",
+                "pdf": "data/originals/palver_092026_29/relatorio.pdf",
+                "url": "https://www.palver.com.br/survey/explore?wave=05_pesquisa_2026_09_29&question=lula_flavio&breakdown=inc_std",
+                "paginas": {
+                  "metodologia": "17–21",
+                  "1t_topline": 30,
+                  "1t_renda": 31,
+                  "2t_topline": 37,
+                  "2t_renda": 38
+                },
+                "sha256": "b11ec801419a090d9bd7d017ac3a8df2b25fefda5841d02d1b882e47e318b8de",
+                "bytes": 33640425,
+                "total_paginas": 154,
+                "conferido_em": "2026-09-29",
+                "status": "Relatório completo arquivado e conferido.",
+                "url_pdf": "https://www.palver.com.br/api/surveys/voting-intention-2026-september-w5/report",
+                "onda_explorer": "05_pesquisa_2026_09_29",
+                "snapshot": "analysis/reponderacao/palver_explorer_20260929",
+                "nota": "Onda 5. PDF e tabelas exatas do Explorer arquivados. Perfil ponderado recuperado por sistema linear de posto completo e validado pelo n efetivo. Datas do campo conforme p. 21 do PDF."
+              },
+              "publicado": {
+                "caiado": 0.7863582645140763,
+                "cury": 1.4045556119923208,
+                "flavio": 44.319095410469465,
+                "lula": 44.733199673316406,
+                "outros": 0.052752806476554774,
+                "renan_santos": 8.140689731058997,
+                "zema": 0.5633485021721893
+              },
+              "pnad": {
+                "caiado": 0.7425992998927581,
+                "cury": 1.4234839440723577,
+                "flavio": 44.09259221788308,
+                "lula": 44.50840735719633,
+                "outros": 0.05362093037372776,
+                "renan_santos": 8.603630035814733,
+                "zema": 0.5756662147670017
+              },
+              "modelo": {
+                "caiado": 0.7669667687267301,
+                "cury": 1.433171932109898,
+                "flavio": 42.916292358461334,
+                "lula": 45.5870922861832,
+                "outros": 0.05404319647509547,
+                "renan_santos": 8.654608240000163,
+                "zema": 0.5878252180435986
+              },
+              "allocated_undecided": {
+                "caiado": 0.003227763846692703,
+                "cury": 0.006031474552983244,
+                "flavio": 0.18061233231617593,
+                "lula": 0.19185233879359045,
+                "outros": 0.00022743967907712061,
+                "renan_santos": 0.03642274049335576,
+                "zema": 0.0024738503209536214
+              },
+              "rates": {
+                "caiado": 0.800369739639236,
+                "cury": 0.780215133620642,
+                "flavio": 0.7542671819456983,
+                "lula": 0.7937221255178483,
+                "outros": 0.7810436966523822,
+                "renan_santos": 0.779532696027173,
+                "zema": 0.7913090277396436
+              },
+              "others_template_candidates": [
+                "outros"
+              ],
+              "proxy_candidates": []
+            },
+            {
+              "id": "quaest_2026-09-27",
+              "instituto": "Quaest",
+              "divulgacao": "2026-09-28",
+              "campo": {
+                "inicio": "2026-09-24",
+                "fim": "2026-09-27"
+              },
+              "published": {
+                "flavio": 34.0,
+                "lula": 39.0,
+                "outros": 12.0
+              },
+              "adjusted": {
+                "flavio": 33.369,
+                "lula": 39.784,
+                "outros": 11.791
+              },
+              "negative_mass_removed": {},
+              "undecided": 5.071,
+              "undecided_known": true,
+              "source": {
+                "tipo": "relatorio",
+                "pdf": "data/originals/quaest_092026_29/relatorio.pdf",
+                "url": "https://quaest.com.br/relatorios/pesquisa-de-intencao-de-voto-para-presidente-rodada-6-28-09-2026/",
+                "paginas": {
+                  "metodologia": 2,
+                  "perfil_renda": 204,
+                  "1t_topline": 18,
+                  "1t_renda": 24,
+                  "2t_topline": 32,
+                  "2t_renda": 37
+                },
+                "sha256": "30431a6d83a2b1bd3ddb0276d1b4673897876ed195096d1b8e4ff12b3ad0f57b",
+                "bytes": 83425558,
+                "total_paginas": 210,
+                "conferido_em": "2026-09-29",
+                "status": "Relatório completo arquivado e conferido.",
+                "nota": "PDF de 210 páginas recebido em Downloads. Transcrição visual das tabelas de renda, controlada por sexo (pp. 21, 34 e 201). Outros no 1º turno inclui Cury nesta onda.",
+                "atualizado_em": "2026-09-29"
+              },
+              "publicado": {
+                "flavio": 40.0,
+                "lula": 45.88235294117647,
+                "outros": 14.117647058823529
+              },
+              "pnad": {
+                "flavio": 39.28352797136938,
+                "lula": 46.83556225277831,
+                "outros": 13.880909775852329
+              },
+              "modelo": {
+                "flavio": 38.12014251327338,
+                "lula": 47.82588822897186,
+                "outros": 14.05396925775475
+              },
+              "allocated_undecided": {
+                "flavio": 1.517779008797181,
+                "lula": 1.9042197758242443,
+                "outros": 0.5595681999948898
+              },
+              "rates": {
+                "flavio": 0.7542671819456983,
+                "lula": 0.7937221255178483,
+                "outros": 0.7869773774017054
+              },
+              "others_template_candidates": [
+                "cury",
+                "caiado",
+                "renan_santos",
+                "zema",
+                "outros"
+              ],
+              "proxy_candidates": []
+            }
+          ],
+          "leave_one_out": [
+            {
+              "without": "AtlasIntel",
+              "valid": {
+                "lula": 44.96678587680924,
+                "flavio": 40.85607895022955,
+                "demais": 14.177135172961213
+              }
+            },
+            {
+              "without": "Gerp",
+              "valid": {
+                "lula": 46.508809545338764,
+                "flavio": 40.117895698852166,
+                "demais": 13.373294755809068
+              }
+            },
+            {
+              "without": "Nexus",
+              "valid": {
+                "lula": 45.70960084679737,
+                "flavio": 41.69446711267791,
+                "demais": 12.595932040524724
+              }
+            },
+            {
+              "without": "Palver",
+              "valid": {
+                "lula": 45.51920249853251,
+                "flavio": 40.47559343229764,
+                "demais": 14.005204069169853
+              }
+            },
+            {
+              "without": "Quaest",
+              "valid": {
+                "lula": 44.95950351283534,
+                "flavio": 41.67463089359463,
+                "demais": 13.365865593570035
+              }
+            }
+          ],
+          "rates": {
+            "lula": 0.7937221255178483,
+            "flavio": 0.7542671819456983,
+            "cury": 0.780215133620642,
+            "caiado": 0.800369739639236,
+            "renan_santos": 0.779532696027173,
+            "zema": 0.7913090277396436,
+            "outros": 0.7810436966523822,
+            "branco_nulo": 0.7829680495992072,
+            "indecisos": 0.7851640671694567
+          }
+        },
+        "flavio105": {
+          "aggregate": {
+            "publicado": {
+              "lula": 44.64060958208894,
+              "flavio": 42.116439908931156,
+              "demais": 13.242950508979902
+            },
+            "pnad": {
+              "lula": 44.51695299396154,
+              "flavio": 42.13946358031128,
+              "demais": 13.34358342572719
+            },
+            "modelo": {
+              "lula": 43.65406692899088,
+              "flavio": 43.39755525524767,
+              "demais": 12.948377815761452
+            }
+          },
+          "polls": [
+            {
+              "id": "atlas_2026-09-28",
+              "instituto": "AtlasIntel",
+              "divulgacao": "2026-09-29",
+              "campo": {
+                "inicio": "2026-09-23",
+                "fim": "2026-09-28"
+              },
+              "published": {
+                "caiado": 1.8,
+                "cury": 2.0,
+                "flavio": 42.2,
+                "lula": 45.3,
+                "renan_santos": 5.2,
+                "rui": 0.1,
+                "samara": 0.4,
+                "zema": 0.9
+              },
+              "adjusted": {
+                "caiado": 1.857,
+                "cury": 1.954,
+                "flavio": 41.708,
+                "lula": 45.765,
+                "renan_santos": 5.261,
+                "rui": 0.103,
+                "samara": 0.405,
+                "zema": 0.892
+              },
+              "negative_mass_removed": {},
+              "undecided": 1.158,
+              "undecided_known": true,
+              "source": {
+                "tipo": "relatorio",
+                "pdf": "data/originals/atlas_092026_29/relatorio.pdf",
+                "url": "https://cdn1.atlasintel.org/pesquisa_atlas_bloomberg__nacional_260929_f6e4ce397d269a6f.pdf",
+                "paginas": {
+                  "perfil_renda": 5,
+                  "1t_topline": 14,
+                  "1t_renda": "17–18",
+                  "2t_topline": 20
+                },
+                "sha256": "3ca8d8ff2f26f274161281b04ebef892c7a9269e49ec1c6df7adbfce1dd59b2a",
+                "bytes": 2611276,
+                "total_paginas": 23,
+                "conferido_em": "2026-09-29",
+                "status": "Relatório completo arquivado e conferido."
+              },
+              "publicado": {
+                "caiado": 1.8386108273748722,
+                "cury": 2.0429009193054135,
+                "flavio": 43.105209397344225,
+                "lula": 46.27170582226762,
+                "renan_santos": 5.3115423901940755,
+                "rui": 0.10214504596527067,
+                "samara": 0.4085801838610827,
+                "zema": 0.9193054136874361
+              },
+              "pnad": {
+                "caiado": 1.8959620195007405,
+                "cury": 1.9949971923018026,
+                "flavio": 42.5830823421308,
+                "lula": 46.72520292000613,
+                "renan_santos": 5.371381898003984,
+                "rui": 0.1051610597784471,
+                "samara": 0.41349737097350564,
+                "zema": 0.9107151973046099
+              },
+              "modelo": {
+                "caiado": 1.8740286384669937,
+                "cury": 1.9222620343994132,
+                "flavio": 43.841351111693946,
+                "lula": 45.80106878891306,
+                "renan_santos": 5.171020941067956,
+                "rui": 0.1014346221300694,
+                "samara": 0.39884487342405933,
+                "zema": 0.8899889899045265
+              },
+              "allocated_undecided": {
+                "caiado": 0.017039042995185674,
+                "cury": 0.017477590672754048,
+                "flavio": 0.3986143280981356,
+                "lula": 0.41643247296270763,
+                "renan_santos": 0.04701595607201507,
+                "rui": 0.0009222638609666612,
+                "samara": 0.003626377317393183,
+                "zema": 0.008091957803072914
+              },
+              "rates": {
+                "caiado": 0.800369739639236,
+                "cury": 0.780215133620642,
+                "flavio": 0.8336637274136667,
+                "lula": 0.7937221255178483,
+                "renan_santos": 0.779532696027173,
+                "rui": 0.7810436966523822,
+                "samara": 0.7810436966523822,
+                "zema": 0.7913090277396436
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": [
+                "rui",
+                "samara"
+              ]
+            },
+            {
+              "id": "gerp_2026-09-28",
+              "instituto": "Gerp",
+              "divulgacao": "2026-09-29",
+              "campo": {
+                "inicio": "2026-09-24",
+                "fim": "2026-09-28"
+              },
+              "published": {
+                "caiado": 3.0,
+                "cury": 5.0,
+                "flavio": 42.0,
+                "lula": 40.0,
+                "renan_santos": 3.0,
+                "samara": 1.0,
+                "zema": 1.0
+              },
+              "adjusted": {
+                "caiado": 3.146,
+                "cury": 5.12,
+                "flavio": 43.729,
+                "lula": 39.008,
+                "renan_santos": 3.035,
+                "samara": 1.05,
+                "zema": 0.925
+              },
+              "negative_mass_removed": {},
+              "undecided": 2.553,
+              "undecided_known": true,
+              "source": {
+                "tipo": "relatorio",
+                "pdf": "data/originals/gerp_092026_29/relatorio.pdf",
+                "url": "https://gerp.com.br/relatorios/20260929%20Relat%C3%B3rio%20Presid%C3%AAncia%202026%20-%20DIVULGA%C3%87%C3%83O.pdf",
+                "paginas": {
+                  "metodologia": 7,
+                  "perfil_renda": 8,
+                  "1t_topline": 13,
+                  "1t_renda": 15,
+                  "2t_topline": 22,
+                  "2t_renda": 24
+                },
+                "sha256": "a5fa15c9a6bfee37acc8ccfc462f52c2805ac563cf79ffce9b93b0481d189f82",
+                "bytes": 769761,
+                "total_paginas": 46,
+                "conferido_em": "2026-09-29",
+                "status": "Relatório completo arquivado e conferido.",
+                "atualizado_em": "2026-09-29",
+                "nota": "Divergência documental no 2º turno: a p. 22 informa 1% de indecisos, enquanto a coluna TOTAL da p. 24 informa 2%. Preservamos o topline da p. 22 como âncora e a tabela da p. 24 no cruzamento. As candidaturas omitidas no 1º turno são zero no total publicado; não se inventam células por renda."
+              },
+              "publicado": {
+                "caiado": 3.1578947368421053,
+                "cury": 5.2631578947368425,
+                "flavio": 44.21052631578947,
+                "lula": 42.10526315789474,
+                "renan_santos": 3.1578947368421053,
+                "samara": 1.0526315789473684,
+                "zema": 1.0526315789473684
+              },
+              "pnad": {
+                "caiado": 3.276639621717892,
+                "cury": 5.332611208898795,
+                "flavio": 45.544874131628006,
+                "lula": 40.6278316477977,
+                "renan_santos": 3.1610302771499694,
+                "samara": 1.0936019080749484,
+                "zema": 0.9634112047326925
+              },
+              "modelo": {
+                "caiado": 3.2344860577248276,
+                "cury": 5.131451583792756,
+                "flavio": 46.82915879099522,
+                "lula": 39.772059031008496,
+                "renan_santos": 3.0391276072106654,
+                "samara": 1.0534660290934215,
+                "zema": 0.9402509001746054
+              },
+              "allocated_undecided": {
+                "caiado": 0.06483604488814484,
+                "cury": 0.10286117154023414,
+                "flavio": 0.9387016630341382,
+                "lula": 0.797240414275359,
+                "renan_santos": 0.060920038128256616,
+                "samara": 0.021116977946870962,
+                "zema": 0.018847553670619546
+              },
+              "rates": {
+                "caiado": 0.800369739639236,
+                "cury": 0.780215133620642,
+                "flavio": 0.8336637274136667,
+                "lula": 0.7937221255178483,
+                "renan_santos": 0.779532696027173,
+                "samara": 0.7810436966523822,
+                "zema": 0.7913090277396436
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": [
+                "samara"
+              ]
+            },
+            {
+              "id": "nexus_2026-09-27",
+              "instituto": "Nexus",
+              "divulgacao": "2026-09-28",
+              "campo": {
+                "inicio": "2026-09-25",
+                "fim": "2026-09-27"
+              },
+              "published": {
+                "caiado": 5.0,
+                "cury": 5.0,
+                "flavio": 37.0,
+                "lula": 42.0,
+                "outros": 1.0,
+                "renan_santos": 4.0,
+                "zema": 1.0
+              },
+              "adjusted": {
+                "caiado": 4.925,
+                "cury": 5.105,
+                "flavio": 37.252,
+                "lula": 41.714,
+                "outros": 0.956,
+                "renan_santos": 4.059,
+                "zema": 1.036
+              },
+              "negative_mass_removed": {},
+              "undecided": 1.982,
+              "undecided_known": true,
+              "source": {
+                "pdf": "docs/fontes/nexus_btg_28092026.pdf",
+                "url": "https://www.nexus.fsb.com.br/wp-content/uploads/2026/09/BTG-Nexus-Eleicoes-2026-Rodada-16-28.set_.2026.pdf",
+                "tipo": "relatorio",
+                "paginas": {
+                  "metodologia": 4,
+                  "perfil_renda": 142,
+                  "1t_renda": 37,
+                  "2t_renda": 86
+                }
+              },
+              "publicado": {
+                "caiado": 5.2631578947368425,
+                "cury": 5.2631578947368425,
+                "flavio": 38.94736842105263,
+                "lula": 44.21052631578947,
+                "outros": 1.0526315789473684,
+                "renan_santos": 4.2105263157894735,
+                "zema": 1.0526315789473684
+              },
+              "pnad": {
+                "caiado": 5.181646974654644,
+                "cury": 5.3710269656064895,
+                "flavio": 39.19324123854514,
+                "lula": 43.8877607920292,
+                "outros": 1.005818174166465,
+                "renan_santos": 4.270518795964102,
+                "zema": 1.0899870590339515
+              },
+              "modelo": {
+                "caiado": 5.131217589156457,
+                "cury": 5.1848196257342725,
+                "flavio": 40.42630386752961,
+                "lula": 43.09966152239324,
+                "outros": 0.9719787272815436,
+                "renan_santos": 4.118858978792194,
+                "zema": 1.0671596891126889
+              },
+              "allocated_undecided": {
+                "caiado": 0.07985176085574072,
+                "cury": 0.08068591316595215,
+                "flavio": 0.6291121926954113,
+                "lula": 0.6707148556947654,
+                "outros": 0.015125886115562754,
+                "renan_santos": 0.06409748494549881,
+                "zema": 0.016607087656932095
+              },
+              "rates": {
+                "caiado": 0.800369739639236,
+                "cury": 0.780215133620642,
+                "flavio": 0.8336637274136667,
+                "lula": 0.7937221255178483,
+                "outros": 0.7810436966523822,
+                "renan_santos": 0.779532696027173,
+                "zema": 0.7913090277396436
+              },
+              "others_template_candidates": [
+                "outros"
+              ],
+              "proxy_candidates": []
+            },
+            {
+              "id": "palver_2026-09-27",
+              "instituto": "Palver",
+              "divulgacao": "2026-09-29",
+              "campo": {
+                "inicio": "2026-09-24",
+                "fim": "2026-09-27"
+              },
+              "published": {
+                "caiado": 0.776201941912389,
+                "cury": 1.38641487315718,
+                "flavio": 43.7466857967906,
+                "lula": 44.155441636820605,
+                "outros": 0.0520714700617193,
+                "renan_santos": 8.03554748885217,
+                "zema": 0.556072494042773
+              },
+              "adjusted": {
+                "caiado": 0.734,
+                "cury": 1.407,
+                "flavio": 43.582,
+                "lula": 43.993,
+                "outros": 0.053,
+                "renan_santos": 8.504,
+                "zema": 0.569
+              },
+              "negative_mass_removed": {},
+              "undecided": 0.536,
+              "undecided_known": true,
+              "source": {
+                "tipo": "explorer",
+                "pdf": "data/originals/palver_092026_29/relatorio.pdf",
+                "url": "https://www.palver.com.br/survey/explore?wave=05_pesquisa_2026_09_29&question=lula_flavio&breakdown=inc_std",
+                "paginas": {
+                  "metodologia": "17–21",
+                  "1t_topline": 30,
+                  "1t_renda": 31,
+                  "2t_topline": 37,
+                  "2t_renda": 38
+                },
+                "sha256": "b11ec801419a090d9bd7d017ac3a8df2b25fefda5841d02d1b882e47e318b8de",
+                "bytes": 33640425,
+                "total_paginas": 154,
+                "conferido_em": "2026-09-29",
+                "status": "Relatório completo arquivado e conferido.",
+                "url_pdf": "https://www.palver.com.br/api/surveys/voting-intention-2026-september-w5/report",
+                "onda_explorer": "05_pesquisa_2026_09_29",
+                "snapshot": "analysis/reponderacao/palver_explorer_20260929",
+                "nota": "Onda 5. PDF e tabelas exatas do Explorer arquivados. Perfil ponderado recuperado por sistema linear de posto completo e validado pelo n efetivo. Datas do campo conforme p. 21 do PDF."
+              },
+              "publicado": {
+                "caiado": 0.7863582645140763,
+                "cury": 1.4045556119923208,
+                "flavio": 44.319095410469465,
+                "lula": 44.733199673316406,
+                "outros": 0.052752806476554774,
+                "renan_santos": 8.140689731058997,
+                "zema": 0.5633485021721893
+              },
+              "pnad": {
+                "caiado": 0.7425992998927581,
+                "cury": 1.4234839440723577,
+                "flavio": 44.09259221788308,
+                "lula": 44.50840735719633,
+                "outros": 0.05362093037372776,
+                "renan_santos": 8.603630035814733,
+                "zema": 0.5756662147670017
+              },
+              "modelo": {
+                "caiado": 0.7338165723514471,
+                "cury": 1.3712267045899889,
+                "flavio": 45.38359106722778,
+                "lula": 43.61670566307833,
+                "outros": 0.05170731616196063,
+                "renan_santos": 8.28053471503709,
+                "zema": 0.5624179615534132
+              },
+              "allocated_undecided": {
+                "caiado": 0.0030882519281404336,
+                "cury": 0.0057707793390356435,
+                "flavio": 0.19099590810573594,
+                "lula": 0.18356000728016234,
+                "outros": 0.00021760917489836102,
+                "renan_santos": 0.0348484597694527,
+                "zema": 0.002366924405403441
+              },
+              "rates": {
+                "caiado": 0.800369739639236,
+                "cury": 0.780215133620642,
+                "flavio": 0.8336637274136667,
+                "lula": 0.7937221255178483,
+                "outros": 0.7810436966523822,
+                "renan_santos": 0.779532696027173,
+                "zema": 0.7913090277396436
+              },
+              "others_template_candidates": [
+                "outros"
+              ],
+              "proxy_candidates": []
+            },
+            {
+              "id": "quaest_2026-09-27",
+              "instituto": "Quaest",
+              "divulgacao": "2026-09-28",
+              "campo": {
+                "inicio": "2026-09-24",
+                "fim": "2026-09-27"
+              },
+              "published": {
+                "flavio": 34.0,
+                "lula": 39.0,
+                "outros": 12.0
+              },
+              "adjusted": {
+                "flavio": 33.369,
+                "lula": 39.784,
+                "outros": 11.791
+              },
+              "negative_mass_removed": {},
+              "undecided": 5.071,
+              "undecided_known": true,
+              "source": {
+                "tipo": "relatorio",
+                "pdf": "data/originals/quaest_092026_29/relatorio.pdf",
+                "url": "https://quaest.com.br/relatorios/pesquisa-de-intencao-de-voto-para-presidente-rodada-6-28-09-2026/",
+                "paginas": {
+                  "metodologia": 2,
+                  "perfil_renda": 204,
+                  "1t_topline": 18,
+                  "1t_renda": 24,
+                  "2t_topline": 32,
+                  "2t_renda": 37
+                },
+                "sha256": "30431a6d83a2b1bd3ddb0276d1b4673897876ed195096d1b8e4ff12b3ad0f57b",
+                "bytes": 83425558,
+                "total_paginas": 210,
+                "conferido_em": "2026-09-29",
+                "status": "Relatório completo arquivado e conferido.",
+                "nota": "PDF de 210 páginas recebido em Downloads. Transcrição visual das tabelas de renda, controlada por sexo (pp. 21, 34 e 201). Outros no 1º turno inclui Cury nesta onda.",
+                "atualizado_em": "2026-09-29"
+              },
+              "publicado": {
+                "flavio": 40.0,
+                "lula": 45.88235294117647,
+                "outros": 14.117647058823529
+              },
+              "pnad": {
+                "flavio": 39.28352797136938,
+                "lula": 46.83556225277831,
+                "outros": 13.880909775852329
+              },
+              "modelo": {
+                "flavio": 40.5073714387918,
+                "lula": 45.98083963956128,
+                "outros": 13.511788921646907
+              },
+              "allocated_undecided": {
+                "flavio": 1.6128281275428327,
+                "lula": 1.8307579303381434,
+                "outros": 0.537980926735338
+              },
+              "rates": {
+                "flavio": 0.8336637274136667,
+                "lula": 0.7937221255178483,
+                "outros": 0.7869773774017054
+              },
+              "others_template_candidates": [
+                "cury",
+                "caiado",
+                "renan_santos",
+                "zema",
+                "outros"
+              ],
+              "proxy_candidates": []
+            }
+          ],
+          "leave_one_out": [
+            {
+              "without": "AtlasIntel",
+              "valid": {
+                "lula": 43.11731646401034,
+                "flavio": 43.2866062911361,
+                "demais": 13.59607724485356
+              }
+            },
+            {
+              "without": "Gerp",
+              "valid": {
+                "lula": 44.62456890348648,
+                "flavio": 42.53965437131078,
+                "demais": 12.835776725202745
+              }
+            },
+            {
+              "without": "Nexus",
+              "valid": {
+                "lula": 43.79266828064029,
+                "flavio": 44.140368102177185,
+                "demais": 12.066963617182527
+              }
+            },
+            {
+              "without": "Palver",
+              "valid": {
+                "lula": 43.66340724546902,
+                "flavio": 42.901046302252645,
+                "demais": 13.435546452278341
+              }
+            },
+            {
+              "without": "Quaest",
+              "valid": {
+                "lula": 43.07237375134828,
+                "flavio": 44.120101209361636,
+                "demais": 12.807525039290088
+              }
+            }
+          ],
+          "rates": {
+            "lula": 0.7937221255178483,
+            "flavio": 0.8336637274136667,
+            "cury": 0.780215133620642,
+            "caiado": 0.800369739639236,
+            "renan_santos": 0.779532696027173,
+            "zema": 0.7913090277396436,
+            "outros": 0.7810436966523822,
+            "branco_nulo": 0.7829680495992072,
+            "indecisos": 0.7851640671694567
+          }
+        }
+      }
+    },
+    "2t": {
+      "n_houses": 4,
+      "excluded": [
+        {
+          "id": "atlas_2026-09-28",
+          "instituto": "AtlasIntel",
+          "reason": "Sem cruzamento de renda deste turno na última onda"
+        },
+        {
+          "id": "futura_2026-09-29",
+          "instituto": "Futura",
+          "reason": "Os prints recebidos trazem perfil de renda (p. 7), mas voto cruzado somente por gênero, região, idade e posição política (pp. 23–25 e 30). Falta voto por faixa de renda para reponderar. Dez por cento não declaram renda. A íntegra não foi recebida; não se conclui que o cruzamento esteja ausente de todo o relatório."
+        },
+        {
+          "id": "meio_ideia_2026-09-28",
+          "instituto": "Meio/Ideia",
+          "reason": "Íntegra de 30/09, campo 25–28/09: o voto por renda do 2º turno está na p. 37, mas faltam bases ou percentuais da amostra nas quatro faixas. A metodologia da p. 69 chama condição de atividade de nível econômico (62% ativos, 38% não ativos); isso não informa a distribuição de renda. A p. 9 descreve somente os indecisos da pergunta espontânea, não a amostra inteira. O PDF não traz voto por renda do 1º turno. Os placares ficam documentados, fora das médias comparáveis e do modelo de válidos por renda. Essa falta documental não prova erro de ponderação."
+        },
+        {
+          "id": "vox_brasil_2026-09-28",
+          "instituto": "Vox Brasil",
+          "reason": "A íntegra de 28 páginas publica perfil econômico (p. 6) e disposição de comparecer (p. 7), mas nenhum cruzamento de voto por renda ou comparecimento por candidato. Sem esses cruzamentos, não há ajuste de renda nem nova propensão de presença identificável para o modelo."
+        }
+      ],
+      "scenarios": {
+        "central": {
+          "aggregate": {
+            "publicado": {
+              "lula": 49.095153655586444,
+              "flavio": 50.904846344413556
+            },
+            "pnad": {
+              "lula": 48.92002771284005,
+              "flavio": 51.079972287159954
+            },
+            "modelo": {
+              "lula": 48.91505488686701,
+              "flavio": 51.08494511313299
+            }
+          },
+          "polls": [
+            {
+              "id": "gerp_2026-09-28",
+              "instituto": "Gerp",
+              "divulgacao": "2026-09-29",
+              "campo": {
+                "inicio": "2026-09-24",
+                "fim": "2026-09-28"
+              },
+              "published": {
+                "flavio": 50.0,
+                "lula": 43.0
+              },
+              "adjusted": {
+                "flavio": 51.482,
+                "lula": 41.97
+              },
+              "negative_mass_removed": {},
+              "undecided": 0.827,
+              "undecided_known": true,
+              "source": {
+                "tipo": "relatorio",
+                "pdf": "data/originals/gerp_092026_29/relatorio.pdf",
+                "url": "https://gerp.com.br/relatorios/20260929%20Relat%C3%B3rio%20Presid%C3%AAncia%202026%20-%20DIVULGA%C3%87%C3%83O.pdf",
+                "paginas": {
+                  "metodologia": 7,
+                  "perfil_renda": 8,
+                  "1t_topline": 13,
+                  "1t_renda": 15,
+                  "2t_topline": 22,
+                  "2t_renda": 24
+                },
+                "sha256": "a5fa15c9a6bfee37acc8ccfc462f52c2805ac563cf79ffce9b93b0481d189f82",
+                "bytes": 769761,
+                "total_paginas": 46,
+                "conferido_em": "2026-09-29",
+                "status": "Relatório completo arquivado e conferido.",
+                "atualizado_em": "2026-09-29",
+                "nota": "Divergência documental no 2º turno: a p. 22 informa 1% de indecisos, enquanto a coluna TOTAL da p. 24 informa 2%. Preservamos o topline da p. 22 como âncora e a tabela da p. 24 no cruzamento. As candidaturas omitidas no 1º turno são zero no total publicado; não se inventam células por renda."
+              },
+              "publicado": {
+                "flavio": 53.763440860215056,
+                "lula": 46.236559139784944
+              },
+              "pnad": {
+                "flavio": 55.089243675897784,
+                "lula": 44.910756324102216
+              },
+              "modelo": {
+                "flavio": 55.09417895818729,
+                "lula": 44.90582104181271
+              },
+              "allocated_undecided": {
+                "flavio": 0.3625241674057566,
+                "lula": 0.2954839457215625
+              },
+              "rates": {
+                "flavio": 0.7963802451702287,
+                "lula": 0.7962213991300896
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": []
+            },
+            {
+              "id": "nexus_2026-09-27",
+              "instituto": "Nexus",
+              "divulgacao": "2026-09-28",
+              "campo": {
+                "inicio": "2026-09-25",
+                "fim": "2026-09-27"
+              },
+              "published": {
+                "flavio": 44.0,
+                "lula": 46.0
+              },
+              "adjusted": {
+                "flavio": 44.196,
+                "lula": 45.755
+              },
+              "negative_mass_removed": {},
+              "undecided": 0.982,
+              "undecided_known": true,
+              "source": {
+                "pdf": "docs/fontes/nexus_btg_28092026.pdf",
+                "url": "https://www.nexus.fsb.com.br/wp-content/uploads/2026/09/BTG-Nexus-Eleicoes-2026-Rodada-16-28.set_.2026.pdf",
+                "tipo": "relatorio",
+                "paginas": {
+                  "metodologia": 4,
+                  "perfil_renda": 142,
+                  "1t_renda": 37,
+                  "2t_renda": 86
+                }
+              },
+              "publicado": {
+                "flavio": 48.888888888888886,
+                "lula": 51.111111111111114
+              },
+              "pnad": {
+                "flavio": 49.133417082633876,
+                "lula": 50.866582917366124
+              },
+              "modelo": {
+                "flavio": 49.13840259172301,
+                "lula": 50.861597408276985
+              },
+              "allocated_undecided": {
+                "flavio": 0.38393549159835266,
+                "lula": 0.39739941419490904
+              },
+              "rates": {
+                "flavio": 0.7963802451702287,
+                "lula": 0.7962213991300896
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": []
+            },
+            {
+              "id": "palver_2026-09-27",
+              "instituto": "Palver",
+              "divulgacao": "2026-09-29",
+              "campo": {
+                "inicio": "2026-09-24",
+                "fim": "2026-09-27"
+              },
+              "published": {
+                "flavio": 47.1191288106046,
+                "lula": 45.331039694342
+              },
+              "adjusted": {
+                "flavio": 47.047,
+                "lula": 45.235
+              },
+              "negative_mass_removed": {},
+              "undecided": 0.854,
+              "undecided_known": true,
+              "source": {
+                "tipo": "explorer",
+                "pdf": "data/originals/palver_092026_29/relatorio.pdf",
+                "url": "https://www.palver.com.br/survey/explore?wave=05_pesquisa_2026_09_29&question=lula_flavio&breakdown=inc_std",
+                "paginas": {
+                  "metodologia": "17–21",
+                  "1t_topline": 30,
+                  "1t_renda": 31,
+                  "2t_topline": 37,
+                  "2t_renda": 38
+                },
+                "sha256": "b11ec801419a090d9bd7d017ac3a8df2b25fefda5841d02d1b882e47e318b8de",
+                "bytes": 33640425,
+                "total_paginas": 154,
+                "conferido_em": "2026-09-29",
+                "status": "Relatório completo arquivado e conferido.",
+                "url_pdf": "https://www.palver.com.br/api/surveys/voting-intention-2026-september-w5/report",
+                "onda_explorer": "05_pesquisa_2026_09_29",
+                "snapshot": "analysis/reponderacao/palver_explorer_20260929",
+                "nota": "Onda 5. PDF e tabelas exatas do Explorer arquivados. Perfil ponderado recuperado por sistema linear de posto completo e validado pelo n efetivo. Datas do campo conforme p. 21 do PDF."
+              },
+              "publicado": {
+                "flavio": 50.96705562855027,
+                "lula": 49.03294437144973
+              },
+              "pnad": {
+                "flavio": 50.981773260224095,
+                "lula": 49.018226739775905
+              },
+              "modelo": {
+                "flavio": 50.98675832621374,
+                "lula": 49.01324167378627
+              },
+              "allocated_undecided": {
+                "flavio": 0.34645035486296005,
+                "lula": 0.3330404898900394
+              },
+              "rates": {
+                "flavio": 0.7963802451702287,
+                "lula": 0.7962213991300896
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": []
+            },
+            {
+              "id": "quaest_2026-09-27",
+              "instituto": "Quaest",
+              "divulgacao": "2026-09-28",
+              "campo": {
+                "inicio": "2026-09-24",
+                "fim": "2026-09-27"
+              },
+              "published": {
+                "flavio": 42.0,
+                "lula": 42.0
+              },
+              "adjusted": {
+                "flavio": 41.256,
+                "lula": 42.742
+              },
+              "negative_mass_removed": {},
+              "undecided": 3.098,
+              "undecided_known": true,
+              "source": {
+                "tipo": "relatorio",
+                "pdf": "data/originals/quaest_092026_29/relatorio.pdf",
+                "url": "https://quaest.com.br/relatorios/pesquisa-de-intencao-de-voto-para-presidente-rodada-6-28-09-2026/",
+                "paginas": {
+                  "metodologia": 2,
+                  "perfil_renda": 204,
+                  "1t_topline": 18,
+                  "1t_renda": 24,
+                  "2t_topline": 32,
+                  "2t_renda": 37
+                },
+                "sha256": "30431a6d83a2b1bd3ddb0276d1b4673897876ed195096d1b8e4ff12b3ad0f57b",
+                "bytes": 83425558,
+                "total_paginas": 210,
+                "conferido_em": "2026-09-29",
+                "status": "Relatório completo arquivado e conferido.",
+                "nota": "PDF de 210 páginas recebido em Downloads. Transcrição visual das tabelas de renda, controlada por sexo (pp. 21, 34 e 201). Outros no 1º turno inclui Cury nesta onda.",
+                "atualizado_em": "2026-09-29"
+              },
+              "publicado": {
+                "flavio": 50.0,
+                "lula": 50.0
+              },
+              "pnad": {
+                "flavio": 49.115455129884054,
+                "lula": 50.88454487011596
+              },
+              "modelo": {
+                "flavio": 49.12044057640793,
+                "lula": 50.87955942359208
+              },
+              "allocated_undecided": {
+                "flavio": 1.2107916179458464,
+                "lula": 1.2541529219192498
+              },
+              "rates": {
+                "flavio": 0.7963802451702287,
+                "lula": 0.7962213991300896
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": []
+            }
+          ],
+          "leave_one_out": [
+            {
+              "without": "Gerp",
+              "valid": {
+                "lula": 50.25146616855178,
+                "flavio": 49.74853383144822
+              }
+            },
+            {
+              "without": "Nexus",
+              "valid": {
+                "lula": 48.26620737973035,
+                "flavio": 51.73379262026966
+              }
+            },
+            {
+              "without": "Palver",
+              "valid": {
+                "lula": 48.882325957893926,
+                "flavio": 51.117674042106074
+              }
+            },
+            {
+              "without": "Quaest",
+              "valid": {
+                "lula": 48.260220041291994,
+                "flavio": 51.739779958708006
+              }
+            }
+          ],
+          "rates": {
+            "lula": 0.7962213991300896,
+            "flavio": 0.7963802451702287,
+            "branco_nulo": 0.7900143357317341,
+            "indecisos": 0.7956567268770486
+          }
+        },
+        "idosos60": {
+          "aggregate": {
+            "publicado": {
+              "lula": 49.095153655586444,
+              "flavio": 50.904846344413556
+            },
+            "pnad": {
+              "lula": 48.92002771284005,
+              "flavio": 51.079972287159954
+            },
+            "modelo": {
+              "lula": 48.40458171877859,
+              "flavio": 51.59541828122141
+            }
+          },
+          "polls": [
+            {
+              "id": "gerp_2026-09-28",
+              "instituto": "Gerp",
+              "divulgacao": "2026-09-29",
+              "campo": {
+                "inicio": "2026-09-24",
+                "fim": "2026-09-28"
+              },
+              "published": {
+                "flavio": 50.0,
+                "lula": 43.0
+              },
+              "adjusted": {
+                "flavio": 51.482,
+                "lula": 41.97
+              },
+              "negative_mass_removed": {},
+              "undecided": 0.827,
+              "undecided_known": true,
+              "source": {
+                "tipo": "relatorio",
+                "pdf": "data/originals/gerp_092026_29/relatorio.pdf",
+                "url": "https://gerp.com.br/relatorios/20260929%20Relat%C3%B3rio%20Presid%C3%AAncia%202026%20-%20DIVULGA%C3%87%C3%83O.pdf",
+                "paginas": {
+                  "metodologia": 7,
+                  "perfil_renda": 8,
+                  "1t_topline": 13,
+                  "1t_renda": 15,
+                  "2t_topline": 22,
+                  "2t_renda": 24
+                },
+                "sha256": "a5fa15c9a6bfee37acc8ccfc462f52c2805ac563cf79ffce9b93b0481d189f82",
+                "bytes": 769761,
+                "total_paginas": 46,
+                "conferido_em": "2026-09-29",
+                "status": "Relatório completo arquivado e conferido.",
+                "atualizado_em": "2026-09-29",
+                "nota": "Divergência documental no 2º turno: a p. 22 informa 1% de indecisos, enquanto a coluna TOTAL da p. 24 informa 2%. Preservamos o topline da p. 22 como âncora e a tabela da p. 24 no cruzamento. As candidaturas omitidas no 1º turno são zero no total publicado; não se inventam células por renda."
+              },
+              "publicado": {
+                "flavio": 53.763440860215056,
+                "lula": 46.236559139784944
+              },
+              "pnad": {
+                "flavio": 55.089243675897784,
+                "lula": 44.910756324102216
+              },
+              "modelo": {
+                "flavio": 55.60037735769472,
+                "lula": 44.39962264230528
+              },
+              "allocated_undecided": {
+                "flavio": 0.3526060545700537,
+                "lula": 0.28157319263474145
+              },
+              "rates": {
+                "flavio": 0.8037215950422713,
+                "lula": 0.7872698477571027
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": []
+            },
+            {
+              "id": "nexus_2026-09-27",
+              "instituto": "Nexus",
+              "divulgacao": "2026-09-28",
+              "campo": {
+                "inicio": "2026-09-25",
+                "fim": "2026-09-27"
+              },
+              "published": {
+                "flavio": 44.0,
+                "lula": 46.0
+              },
+              "adjusted": {
+                "flavio": 44.196,
+                "lula": 45.755
+              },
+              "negative_mass_removed": {},
+              "undecided": 0.982,
+              "undecided_known": true,
+              "source": {
+                "pdf": "docs/fontes/nexus_btg_28092026.pdf",
+                "url": "https://www.nexus.fsb.com.br/wp-content/uploads/2026/09/BTG-Nexus-Eleicoes-2026-Rodada-16-28.set_.2026.pdf",
+                "tipo": "relatorio",
+                "paginas": {
+                  "metodologia": 4,
+                  "perfil_renda": 142,
+                  "1t_renda": 37,
+                  "2t_renda": 86
+                }
+              },
+              "publicado": {
+                "flavio": 48.888888888888886,
+                "lula": 51.111111111111114
+              },
+              "pnad": {
+                "flavio": 49.133417082633876,
+                "lula": 50.866582917366124
+              },
+              "modelo": {
+                "flavio": 49.650382575719924,
+                "lula": 50.349617424280076
+              },
+              "allocated_undecided": {
+                "flavio": 0.37388720537950104,
+                "lula": 0.37915272298217845
+              },
+              "rates": {
+                "flavio": 0.8037215950422713,
+                "lula": 0.7872698477571027
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": []
+            },
+            {
+              "id": "palver_2026-09-27",
+              "instituto": "Palver",
+              "divulgacao": "2026-09-29",
+              "campo": {
+                "inicio": "2026-09-24",
+                "fim": "2026-09-27"
+              },
+              "published": {
+                "flavio": 47.1191288106046,
+                "lula": 45.331039694342
+              },
+              "adjusted": {
+                "flavio": 47.047,
+                "lula": 45.235
+              },
+              "negative_mass_removed": {},
+              "undecided": 0.854,
+              "undecided_known": true,
+              "source": {
+                "tipo": "explorer",
+                "pdf": "data/originals/palver_092026_29/relatorio.pdf",
+                "url": "https://www.palver.com.br/survey/explore?wave=05_pesquisa_2026_09_29&question=lula_flavio&breakdown=inc_std",
+                "paginas": {
+                  "metodologia": "17–21",
+                  "1t_topline": 30,
+                  "1t_renda": 31,
+                  "2t_topline": 37,
+                  "2t_renda": 38
+                },
+                "sha256": "b11ec801419a090d9bd7d017ac3a8df2b25fefda5841d02d1b882e47e318b8de",
+                "bytes": 33640425,
+                "total_paginas": 154,
+                "conferido_em": "2026-09-29",
+                "status": "Relatório completo arquivado e conferido.",
+                "url_pdf": "https://www.palver.com.br/api/surveys/voting-intention-2026-september-w5/report",
+                "onda_explorer": "05_pesquisa_2026_09_29",
+                "snapshot": "analysis/reponderacao/palver_explorer_20260929",
+                "nota": "Onda 5. PDF e tabelas exatas do Explorer arquivados. Perfil ponderado recuperado por sistema linear de posto completo e validado pelo n efetivo. Datas do campo conforme p. 21 do PDF."
+              },
+              "publicado": {
+                "flavio": 50.96705562855027,
+                "lula": 49.03294437144973
+              },
+              "pnad": {
+                "flavio": 50.981773260224095,
+                "lula": 49.018226739775905
+              },
+              "modelo": {
+                "flavio": 51.498497153924504,
+                "lula": 48.501502846075496
+              },
+              "allocated_undecided": {
+                "flavio": 0.33725542377623974,
+                "lula": 0.31762858724298043
+              },
+              "rates": {
+                "flavio": 0.8037215950422713,
+                "lula": 0.7872698477571027
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": []
+            },
+            {
+              "id": "quaest_2026-09-27",
+              "instituto": "Quaest",
+              "divulgacao": "2026-09-28",
+              "campo": {
+                "inicio": "2026-09-24",
+                "fim": "2026-09-27"
+              },
+              "published": {
+                "flavio": 42.0,
+                "lula": 42.0
+              },
+              "adjusted": {
+                "flavio": 41.256,
+                "lula": 42.742
+              },
+              "negative_mass_removed": {},
+              "undecided": 3.098,
+              "undecided_known": true,
+              "source": {
+                "tipo": "relatorio",
+                "pdf": "data/originals/quaest_092026_29/relatorio.pdf",
+                "url": "https://quaest.com.br/relatorios/pesquisa-de-intencao-de-voto-para-presidente-rodada-6-28-09-2026/",
+                "paginas": {
+                  "metodologia": 2,
+                  "perfil_renda": 204,
+                  "1t_topline": 18,
+                  "1t_renda": 24,
+                  "2t_topline": 32,
+                  "2t_renda": 37
+                },
+                "sha256": "30431a6d83a2b1bd3ddb0276d1b4673897876ed195096d1b8e4ff12b3ad0f57b",
+                "bytes": 83425558,
+                "total_paginas": 210,
+                "conferido_em": "2026-09-29",
+                "status": "Relatório completo arquivado e conferido.",
+                "nota": "PDF de 210 páginas recebido em Downloads. Transcrição visual das tabelas de renda, controlada por sexo (pp. 21, 34 e 201). Outros no 1º turno inclui Cury nesta onda.",
+                "atualizado_em": "2026-09-29"
+              },
+              "publicado": {
+                "flavio": 50.0,
+                "lula": 50.0
+              },
+              "pnad": {
+                "flavio": 49.115455129884054,
+                "lula": 50.88454487011596
+              },
+              "modelo": {
+                "flavio": 49.63241603754651,
+                "lula": 50.367583962453494
+              },
+              "allocated_undecided": {
+                "flavio": 1.1791073500172278,
+                "lula": 1.1965725869119814
+              },
+              "rates": {
+                "flavio": 0.8037215950422713,
+                "lula": 0.7872698477571027
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": []
+            }
+          ],
+          "leave_one_out": [
+            {
+              "without": "Gerp",
+              "valid": {
+                "lula": 49.739568077603025,
+                "flavio": 50.260431922396975
+              }
+            },
+            {
+              "without": "Nexus",
+              "valid": {
+                "lula": 47.756236483611424,
+                "flavio": 52.243763516388576
+              }
+            },
+            {
+              "without": "Palver",
+              "valid": {
+                "lula": 48.37227467634629,
+                "flavio": 51.62772532365372
+              }
+            },
+            {
+              "without": "Quaest",
+              "valid": {
+                "lula": 47.75024763755362,
+                "flavio": 52.24975236244638
+              }
+            }
+          ],
+          "rates": {
+            "lula": 0.7872698477571027,
+            "flavio": 0.8037215950422713,
+            "branco_nulo": 0.8041782630818565,
+            "indecisos": 0.7668431042379629
+          }
+        },
+        "idosos80": {
+          "aggregate": {
+            "publicado": {
+              "lula": 49.095153655586444,
+              "flavio": 50.904846344413556
+            },
+            "pnad": {
+              "lula": 48.92002771284005,
+              "flavio": 51.079972287159954
+            },
+            "modelo": {
+              "lula": 48.923775794623,
+              "flavio": 51.07622420537699
+            }
+          },
+          "polls": [
+            {
+              "id": "gerp_2026-09-28",
+              "instituto": "Gerp",
+              "divulgacao": "2026-09-29",
+              "campo": {
+                "inicio": "2026-09-24",
+                "fim": "2026-09-28"
+              },
+              "published": {
+                "flavio": 50.0,
+                "lula": 43.0
+              },
+              "adjusted": {
+                "flavio": 51.482,
+                "lula": 41.97
+              },
+              "negative_mass_removed": {},
+              "undecided": 0.827,
+              "undecided_known": true,
+              "source": {
+                "tipo": "relatorio",
+                "pdf": "data/originals/gerp_092026_29/relatorio.pdf",
+                "url": "https://gerp.com.br/relatorios/20260929%20Relat%C3%B3rio%20Presid%C3%AAncia%202026%20-%20DIVULGA%C3%87%C3%83O.pdf",
+                "paginas": {
+                  "metodologia": 7,
+                  "perfil_renda": 8,
+                  "1t_topline": 13,
+                  "1t_renda": 15,
+                  "2t_topline": 22,
+                  "2t_renda": 24
+                },
+                "sha256": "a5fa15c9a6bfee37acc8ccfc462f52c2805ac563cf79ffce9b93b0481d189f82",
+                "bytes": 769761,
+                "total_paginas": 46,
+                "conferido_em": "2026-09-29",
+                "status": "Relatório completo arquivado e conferido.",
+                "atualizado_em": "2026-09-29",
+                "nota": "Divergência documental no 2º turno: a p. 22 informa 1% de indecisos, enquanto a coluna TOTAL da p. 24 informa 2%. Preservamos o topline da p. 22 como âncora e a tabela da p. 24 no cruzamento. As candidaturas omitidas no 1º turno são zero no total publicado; não se inventam células por renda."
+              },
+              "publicado": {
+                "flavio": 53.763440860215056,
+                "lula": 46.236559139784944
+              },
+              "pnad": {
+                "flavio": 55.089243675897784,
+                "lula": 44.910756324102216
+              },
+              "modelo": {
+                "flavio": 55.08552383895946,
+                "lula": 44.91447616104053
+              },
+              "allocated_undecided": {
+                "flavio": 0.3626891766828244,
+                "lula": 0.2957218747272213
+              },
+              "rates": {
+                "flavio": 0.7962543662268092,
+                "lula": 0.7963740920624234
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": []
+            },
+            {
+              "id": "nexus_2026-09-27",
+              "instituto": "Nexus",
+              "divulgacao": "2026-09-28",
+              "campo": {
+                "inicio": "2026-09-25",
+                "fim": "2026-09-27"
+              },
+              "published": {
+                "flavio": 44.0,
+                "lula": 46.0
+              },
+              "adjusted": {
+                "flavio": 44.196,
+                "lula": 45.755
+              },
+              "negative_mass_removed": {},
+              "undecided": 0.982,
+              "undecided_known": true,
+              "source": {
+                "pdf": "docs/fontes/nexus_btg_28092026.pdf",
+                "url": "https://www.nexus.fsb.com.br/wp-content/uploads/2026/09/BTG-Nexus-Eleicoes-2026-Rodada-16-28.set_.2026.pdf",
+                "tipo": "relatorio",
+                "paginas": {
+                  "metodologia": 4,
+                  "perfil_renda": 142,
+                  "1t_renda": 37,
+                  "2t_renda": 86
+                }
+              },
+              "publicado": {
+                "flavio": 48.888888888888886,
+                "lula": 51.111111111111114
+              },
+              "pnad": {
+                "flavio": 49.133417082633876,
+                "lula": 50.866582917366124
+              },
+              "modelo": {
+                "flavio": 49.12965946688124,
+                "lula": 50.87034053311875
+              },
+              "allocated_undecided": {
+                "flavio": 0.38410224367106005,
+                "lula": 0.39771112088113453
+              },
+              "rates": {
+                "flavio": 0.7962543662268092,
+                "lula": 0.7963740920624234
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": []
+            },
+            {
+              "id": "palver_2026-09-27",
+              "instituto": "Palver",
+              "divulgacao": "2026-09-29",
+              "campo": {
+                "inicio": "2026-09-24",
+                "fim": "2026-09-27"
+              },
+              "published": {
+                "flavio": 47.1191288106046,
+                "lula": 45.331039694342
+              },
+              "adjusted": {
+                "flavio": 47.047,
+                "lula": 45.235
+              },
+              "negative_mass_removed": {},
+              "undecided": 0.854,
+              "undecided_known": true,
+              "source": {
+                "tipo": "explorer",
+                "pdf": "data/originals/palver_092026_29/relatorio.pdf",
+                "url": "https://www.palver.com.br/survey/explore?wave=05_pesquisa_2026_09_29&question=lula_flavio&breakdown=inc_std",
+                "paginas": {
+                  "metodologia": "17–21",
+                  "1t_topline": 30,
+                  "1t_renda": 31,
+                  "2t_topline": 37,
+                  "2t_renda": 38
+                },
+                "sha256": "b11ec801419a090d9bd7d017ac3a8df2b25fefda5841d02d1b882e47e318b8de",
+                "bytes": 33640425,
+                "total_paginas": 154,
+                "conferido_em": "2026-09-29",
+                "status": "Relatório completo arquivado e conferido.",
+                "url_pdf": "https://www.palver.com.br/api/surveys/voting-intention-2026-september-w5/report",
+                "onda_explorer": "05_pesquisa_2026_09_29",
+                "snapshot": "analysis/reponderacao/palver_explorer_20260929",
+                "nota": "Onda 5. PDF e tabelas exatas do Explorer arquivados. Perfil ponderado recuperado por sistema linear de posto completo e validado pelo n efetivo. Datas do campo conforme p. 21 do PDF."
+              },
+              "publicado": {
+                "flavio": 50.96705562855027,
+                "lula": 49.03294437144973
+              },
+              "pnad": {
+                "flavio": 50.981773260224095,
+                "lula": 49.018226739775905
+              },
+              "modelo": {
+                "flavio": 50.97801595414384,
+                "lula": 49.021984045856165
+              },
+              "allocated_undecided": {
+                "flavio": 0.34660306743680425,
+                "lula": 0.3333038707786482
+              },
+              "rates": {
+                "flavio": 0.7962543662268092,
+                "lula": 0.7963740920624234
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": []
+            },
+            {
+              "id": "quaest_2026-09-27",
+              "instituto": "Quaest",
+              "divulgacao": "2026-09-28",
+              "campo": {
+                "inicio": "2026-09-24",
+                "fim": "2026-09-27"
+              },
+              "published": {
+                "flavio": 42.0,
+                "lula": 42.0
+              },
+              "adjusted": {
+                "flavio": 41.256,
+                "lula": 42.742
+              },
+              "negative_mass_removed": {},
+              "undecided": 3.098,
+              "undecided_known": true,
+              "source": {
+                "tipo": "relatorio",
+                "pdf": "data/originals/quaest_092026_29/relatorio.pdf",
+                "url": "https://quaest.com.br/relatorios/pesquisa-de-intencao-de-voto-para-presidente-rodada-6-28-09-2026/",
+                "paginas": {
+                  "metodologia": 2,
+                  "perfil_renda": 204,
+                  "1t_topline": 18,
+                  "1t_renda": 24,
+                  "2t_topline": 32,
+                  "2t_renda": 37
+                },
+                "sha256": "30431a6d83a2b1bd3ddb0276d1b4673897876ed195096d1b8e4ff12b3ad0f57b",
+                "bytes": 83425558,
+                "total_paginas": 210,
+                "conferido_em": "2026-09-29",
+                "status": "Relatório completo arquivado e conferido.",
+                "nota": "PDF de 210 páginas recebido em Downloads. Transcrição visual das tabelas de renda, controlada por sexo (pp. 21, 34 e 201). Outros no 1º turno inclui Cury nesta onda.",
+                "atualizado_em": "2026-09-29"
+              },
+              "publicado": {
+                "flavio": 50.0,
+                "lula": 50.0
+              },
+              "pnad": {
+                "flavio": 49.115455129884054,
+                "lula": 50.88454487011596
+              },
+              "modelo": {
+                "flavio": 49.11169756152343,
+                "lula": 50.88830243847657
+              },
+              "allocated_undecided": {
+                "flavio": 1.2113174166625142,
+                "lula": 1.255136558268951
+              },
+              "rates": {
+                "flavio": 0.7962543662268092,
+                "lula": 0.7963740920624234
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": []
+            }
+          ],
+          "leave_one_out": [
+            {
+              "without": "Gerp",
+              "valid": {
+                "lula": 50.26020900581716,
+                "flavio": 49.73979099418284
+              }
+            },
+            {
+              "without": "Nexus",
+              "valid": {
+                "lula": 48.27492088179108,
+                "flavio": 51.72507911820892
+              }
+            },
+            {
+              "without": "Palver",
+              "valid": {
+                "lula": 48.89103971087862,
+                "flavio": 51.10896028912138
+              }
+            },
+            {
+              "without": "Quaest",
+              "valid": {
+                "lula": 48.26893358000515,
+                "flavio": 51.731066419994846
+              }
+            }
+          ],
+          "rates": {
+            "lula": 0.7963740920624234,
+            "flavio": 0.7962543662268092,
+            "branco_nulo": 0.789776845092711,
+            "indecisos": 0.796143955755799
+          }
+        },
+        "flavio95": {
+          "aggregate": {
+            "publicado": {
+              "lula": 49.095153655586444,
+              "flavio": 50.904846344413556
+            },
+            "pnad": {
+              "lula": 48.92002771284005,
+              "flavio": 51.079972287159954
+            },
+            "modelo": {
+              "lula": 50.194166995918394,
+              "flavio": 49.805833004081606
+            }
+          },
+          "polls": [
+            {
+              "id": "gerp_2026-09-28",
+              "instituto": "Gerp",
+              "divulgacao": "2026-09-29",
+              "campo": {
+                "inicio": "2026-09-24",
+                "fim": "2026-09-28"
+              },
+              "published": {
+                "flavio": 50.0,
+                "lula": 43.0
+              },
+              "adjusted": {
+                "flavio": 51.482,
+                "lula": 41.97
+              },
+              "negative_mass_removed": {},
+              "undecided": 0.827,
+              "undecided_known": true,
+              "source": {
+                "tipo": "relatorio",
+                "pdf": "data/originals/gerp_092026_29/relatorio.pdf",
+                "url": "https://gerp.com.br/relatorios/20260929%20Relat%C3%B3rio%20Presid%C3%AAncia%202026%20-%20DIVULGA%C3%87%C3%83O.pdf",
+                "paginas": {
+                  "metodologia": 7,
+                  "perfil_renda": 8,
+                  "1t_topline": 13,
+                  "1t_renda": 15,
+                  "2t_topline": 22,
+                  "2t_renda": 24
+                },
+                "sha256": "a5fa15c9a6bfee37acc8ccfc462f52c2805ac563cf79ffce9b93b0481d189f82",
+                "bytes": 769761,
+                "total_paginas": 46,
+                "conferido_em": "2026-09-29",
+                "status": "Relatório completo arquivado e conferido.",
+                "atualizado_em": "2026-09-29",
+                "nota": "Divergência documental no 2º turno: a p. 22 informa 1% de indecisos, enquanto a coluna TOTAL da p. 24 informa 2%. Preservamos o topline da p. 22 como âncora e a tabela da p. 24 no cruzamento. As candidaturas omitidas no 1º turno são zero no total publicado; não se inventam células por renda."
+              },
+              "publicado": {
+                "flavio": 53.763440860215056,
+                "lula": 46.236559139784944
+              },
+              "pnad": {
+                "flavio": 55.089243675897784,
+                "lula": 44.910756324102216
+              },
+              "modelo": {
+                "flavio": 53.822112560948206,
+                "lula": 46.17788743905179
+              },
+              "allocated_undecided": {
+                "flavio": 0.35415386730755705,
+                "lula": 0.30385424581976195
+              },
+              "rates": {
+                "flavio": 0.7565612329117172,
+                "lula": 0.7962213991300896
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": []
+            },
+            {
+              "id": "nexus_2026-09-27",
+              "instituto": "Nexus",
+              "divulgacao": "2026-09-28",
+              "campo": {
+                "inicio": "2026-09-25",
+                "fim": "2026-09-27"
+              },
+              "published": {
+                "flavio": 44.0,
+                "lula": 46.0
+              },
+              "adjusted": {
+                "flavio": 44.196,
+                "lula": 45.755
+              },
+              "negative_mass_removed": {},
+              "undecided": 0.982,
+              "undecided_known": true,
+              "source": {
+                "pdf": "docs/fontes/nexus_btg_28092026.pdf",
+                "url": "https://www.nexus.fsb.com.br/wp-content/uploads/2026/09/BTG-Nexus-Eleicoes-2026-Rodada-16-28.set_.2026.pdf",
+                "tipo": "relatorio",
+                "paginas": {
+                  "metodologia": 4,
+                  "perfil_renda": 142,
+                  "1t_renda": 37,
+                  "2t_renda": 86
+                }
+              },
+              "publicado": {
+                "flavio": 48.888888888888886,
+                "lula": 51.111111111111114
+              },
+              "pnad": {
+                "flavio": 49.133417082633876,
+                "lula": 50.866582917366124
+              },
+              "modelo": {
+                "flavio": 47.8572980514387,
+                "lula": 52.1427019485613
+              },
+              "allocated_undecided": {
+                "flavio": 0.373925774645409,
+                "lula": 0.4074091311478527
+              },
+              "rates": {
+                "flavio": 0.7565612329117172,
+                "lula": 0.7962213991300896
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": []
+            },
+            {
+              "id": "palver_2026-09-27",
+              "instituto": "Palver",
+              "divulgacao": "2026-09-29",
+              "campo": {
+                "inicio": "2026-09-24",
+                "fim": "2026-09-27"
+              },
+              "published": {
+                "flavio": 47.1191288106046,
+                "lula": 45.331039694342
+              },
+              "adjusted": {
+                "flavio": 47.047,
+                "lula": 45.235
+              },
+              "negative_mass_removed": {},
+              "undecided": 0.854,
+              "undecided_known": true,
+              "source": {
+                "tipo": "explorer",
+                "pdf": "data/originals/palver_092026_29/relatorio.pdf",
+                "url": "https://www.palver.com.br/survey/explore?wave=05_pesquisa_2026_09_29&question=lula_flavio&breakdown=inc_std",
+                "paginas": {
+                  "metodologia": "17–21",
+                  "1t_topline": 30,
+                  "1t_renda": 31,
+                  "2t_topline": 37,
+                  "2t_renda": 38
+                },
+                "sha256": "b11ec801419a090d9bd7d017ac3a8df2b25fefda5841d02d1b882e47e318b8de",
+                "bytes": 33640425,
+                "total_paginas": 154,
+                "conferido_em": "2026-09-29",
+                "status": "Relatório completo arquivado e conferido.",
+                "url_pdf": "https://www.palver.com.br/api/surveys/voting-intention-2026-september-w5/report",
+                "onda_explorer": "05_pesquisa_2026_09_29",
+                "snapshot": "analysis/reponderacao/palver_explorer_20260929",
+                "nota": "Onda 5. PDF e tabelas exatas do Explorer arquivados. Perfil ponderado recuperado por sistema linear de posto completo e validado pelo n efetivo. Datas do campo conforme p. 21 do PDF."
+              },
+              "publicado": {
+                "flavio": 50.96705562855027,
+                "lula": 49.03294437144973
+              },
+              "pnad": {
+                "flavio": 50.981773260224095,
+                "lula": 49.018226739775905
+              },
+              "modelo": {
+                "flavio": 49.70455754144148,
+                "lula": 50.295442458558526
+              },
+              "allocated_undecided": {
+                "flavio": 0.3377379179190815,
+                "lula": 0.341752926833918
+              },
+              "rates": {
+                "flavio": 0.7565612329117172,
+                "lula": 0.7962213991300896
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": []
+            },
+            {
+              "id": "quaest_2026-09-27",
+              "instituto": "Quaest",
+              "divulgacao": "2026-09-28",
+              "campo": {
+                "inicio": "2026-09-24",
+                "fim": "2026-09-27"
+              },
+              "published": {
+                "flavio": 42.0,
+                "lula": 42.0
+              },
+              "adjusted": {
+                "flavio": 41.256,
+                "lula": 42.742
+              },
+              "negative_mass_removed": {},
+              "undecided": 3.098,
+              "undecided_known": true,
+              "source": {
+                "tipo": "relatorio",
+                "pdf": "data/originals/quaest_092026_29/relatorio.pdf",
+                "url": "https://quaest.com.br/relatorios/pesquisa-de-intencao-de-voto-para-presidente-rodada-6-28-09-2026/",
+                "paginas": {
+                  "metodologia": 2,
+                  "perfil_renda": 204,
+                  "1t_topline": 18,
+                  "1t_renda": 24,
+                  "2t_topline": 32,
+                  "2t_renda": 37
+                },
+                "sha256": "30431a6d83a2b1bd3ddb0276d1b4673897876ed195096d1b8e4ff12b3ad0f57b",
+                "bytes": 83425558,
+                "total_paginas": 210,
+                "conferido_em": "2026-09-29",
+                "status": "Relatório completo arquivado e conferido.",
+                "nota": "PDF de 210 páginas recebido em Downloads. Transcrição visual das tabelas de renda, controlada por sexo (pp. 21, 34 e 201). Outros no 1º turno inclui Cury nesta onda.",
+                "atualizado_em": "2026-09-29"
+              },
+              "publicado": {
+                "flavio": 50.0,
+                "lula": 50.0
+              },
+              "pnad": {
+                "flavio": 49.115455129884054,
+                "lula": 50.88454487011596
+              },
+              "modelo": {
+                "flavio": 47.839363862498026,
+                "lula": 52.16063613750197
+              },
+              "allocated_undecided": {
+                "flavio": 1.1792137874348412,
+                "lula": 1.285730752430255
+              },
+              "rates": {
+                "flavio": 0.7565612329117172,
+                "lula": 0.7962213991300896
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": []
+            }
+          ],
+          "leave_one_out": [
+            {
+              "without": "Gerp",
+              "valid": {
+                "lula": 51.53292684820727,
+                "flavio": 48.46707315179273
+              }
+            },
+            {
+              "without": "Nexus",
+              "valid": {
+                "lula": 49.54465534503743,
+                "flavio": 50.45534465496257
+              }
+            },
+            {
+              "without": "Palver",
+              "valid": {
+                "lula": 50.16040850837169,
+                "flavio": 49.83959149162831
+              }
+            },
+            {
+              "without": "Quaest",
+              "valid": {
+                "lula": 49.5386772820572,
+                "flavio": 50.4613227179428
+              }
+            }
+          ],
+          "rates": {
+            "lula": 0.7962213991300896,
+            "flavio": 0.7565612329117172,
+            "branco_nulo": 0.7900143357317341,
+            "indecisos": 0.7956567268770486
+          }
+        },
+        "flavio105": {
+          "aggregate": {
+            "publicado": {
+              "lula": 49.095153655586444,
+              "flavio": 50.904846344413556
+            },
+            "pnad": {
+              "lula": 48.92002771284005,
+              "flavio": 51.079972287159954
+            },
+            "modelo": {
+              "lula": 47.69964655880439,
+              "flavio": 52.30035344119562
+            }
+          },
+          "polls": [
+            {
+              "id": "gerp_2026-09-28",
+              "instituto": "Gerp",
+              "divulgacao": "2026-09-29",
+              "campo": {
+                "inicio": "2026-09-24",
+                "fim": "2026-09-28"
+              },
+              "published": {
+                "flavio": 50.0,
+                "lula": 43.0
+              },
+              "adjusted": {
+                "flavio": 51.482,
+                "lula": 41.97
+              },
+              "negative_mass_removed": {},
+              "undecided": 0.827,
+              "undecided_known": true,
+              "source": {
+                "tipo": "relatorio",
+                "pdf": "data/originals/gerp_092026_29/relatorio.pdf",
+                "url": "https://gerp.com.br/relatorios/20260929%20Relat%C3%B3rio%20Presid%C3%AAncia%202026%20-%20DIVULGA%C3%87%C3%83O.pdf",
+                "paginas": {
+                  "metodologia": 7,
+                  "perfil_renda": 8,
+                  "1t_topline": 13,
+                  "1t_renda": 15,
+                  "2t_topline": 22,
+                  "2t_renda": 24
+                },
+                "sha256": "a5fa15c9a6bfee37acc8ccfc462f52c2805ac563cf79ffce9b93b0481d189f82",
+                "bytes": 769761,
+                "total_paginas": 46,
+                "conferido_em": "2026-09-29",
+                "status": "Relatório completo arquivado e conferido.",
+                "atualizado_em": "2026-09-29",
+                "nota": "Divergência documental no 2º turno: a p. 22 informa 1% de indecisos, enquanto a coluna TOTAL da p. 24 informa 2%. Preservamos o topline da p. 22 como âncora e a tabela da p. 24 no cruzamento. As candidaturas omitidas no 1º turno são zero no total publicado; não se inventam células por renda."
+              },
+              "publicado": {
+                "flavio": 53.763440860215056,
+                "lula": 46.236559139784944
+              },
+              "pnad": {
+                "flavio": 55.089243675897784,
+                "lula": 44.910756324102216
+              },
+              "modelo": {
+                "flavio": 56.29804074032525,
+                "lula": 43.701959259674744
+              },
+              "allocated_undecided": {
+                "flavio": 0.37044567560306363,
+                "lula": 0.28756243752425553
+              },
+              "rates": {
+                "flavio": 0.8361992574287401,
+                "lula": 0.7962213991300896
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": []
+            },
+            {
+              "id": "nexus_2026-09-27",
+              "instituto": "Nexus",
+              "divulgacao": "2026-09-28",
+              "campo": {
+                "inicio": "2026-09-25",
+                "fim": "2026-09-27"
+              },
+              "published": {
+                "flavio": 44.0,
+                "lula": 46.0
+              },
+              "adjusted": {
+                "flavio": 44.196,
+                "lula": 45.755
+              },
+              "negative_mass_removed": {},
+              "undecided": 0.982,
+              "undecided_known": true,
+              "source": {
+                "pdf": "docs/fontes/nexus_btg_28092026.pdf",
+                "url": "https://www.nexus.fsb.com.br/wp-content/uploads/2026/09/BTG-Nexus-Eleicoes-2026-Rodada-16-28.set_.2026.pdf",
+                "tipo": "relatorio",
+                "paginas": {
+                  "metodologia": 4,
+                  "perfil_renda": 142,
+                  "1t_renda": 37,
+                  "2t_renda": 86
+                }
+              },
+              "publicado": {
+                "flavio": 48.888888888888886,
+                "lula": 51.111111111111114
+              },
+              "pnad": {
+                "flavio": 49.133417082633876,
+                "lula": 50.866582917366124
+              },
+              "modelo": {
+                "flavio": 50.35806527860888,
+                "lula": 49.64193472139111
+              },
+              "allocated_undecided": {
+                "flavio": 0.393465141903928,
+                "lula": 0.3878697638893337
+              },
+              "rates": {
+                "flavio": 0.8361992574287401,
+                "lula": 0.7962213991300896
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": []
+            },
+            {
+              "id": "palver_2026-09-27",
+              "instituto": "Palver",
+              "divulgacao": "2026-09-29",
+              "campo": {
+                "inicio": "2026-09-24",
+                "fim": "2026-09-27"
+              },
+              "published": {
+                "flavio": 47.1191288106046,
+                "lula": 45.331039694342
+              },
+              "adjusted": {
+                "flavio": 47.047,
+                "lula": 45.235
+              },
+              "negative_mass_removed": {},
+              "undecided": 0.854,
+              "undecided_known": true,
+              "source": {
+                "tipo": "explorer",
+                "pdf": "data/originals/palver_092026_29/relatorio.pdf",
+                "url": "https://www.palver.com.br/survey/explore?wave=05_pesquisa_2026_09_29&question=lula_flavio&breakdown=inc_std",
+                "paginas": {
+                  "metodologia": "17–21",
+                  "1t_topline": 30,
+                  "1t_renda": 31,
+                  "2t_topline": 37,
+                  "2t_renda": 38
+                },
+                "sha256": "b11ec801419a090d9bd7d017ac3a8df2b25fefda5841d02d1b882e47e318b8de",
+                "bytes": 33640425,
+                "total_paginas": 154,
+                "conferido_em": "2026-09-29",
+                "status": "Relatório completo arquivado e conferido.",
+                "url_pdf": "https://www.palver.com.br/api/surveys/voting-intention-2026-september-w5/report",
+                "onda_explorer": "05_pesquisa_2026_09_29",
+                "snapshot": "analysis/reponderacao/palver_explorer_20260929",
+                "nota": "Onda 5. PDF e tabelas exatas do Explorer arquivados. Perfil ponderado recuperado por sistema linear de posto completo e validado pelo n efetivo. Datas do campo conforme p. 21 do PDF."
+              },
+              "publicado": {
+                "flavio": 50.96705562855027,
+                "lula": 49.03294437144973
+              },
+              "pnad": {
+                "flavio": 50.981773260224095,
+                "lula": 49.018226739775905
+              },
+              "modelo": {
+                "flavio": 52.20520905382599,
+                "lula": 47.794790946174025
+              },
+              "allocated_undecided": {
+                "flavio": 0.35472961600491154,
+                "lula": 0.32476122874808794
+              },
+              "rates": {
+                "flavio": 0.8361992574287401,
+                "lula": 0.7962213991300896
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": []
+            },
+            {
+              "id": "quaest_2026-09-27",
+              "instituto": "Quaest",
+              "divulgacao": "2026-09-28",
+              "campo": {
+                "inicio": "2026-09-24",
+                "fim": "2026-09-27"
+              },
+              "published": {
+                "flavio": 42.0,
+                "lula": 42.0
+              },
+              "adjusted": {
+                "flavio": 41.256,
+                "lula": 42.742
+              },
+              "negative_mass_removed": {},
+              "undecided": 3.098,
+              "undecided_known": true,
+              "source": {
+                "tipo": "relatorio",
+                "pdf": "data/originals/quaest_092026_29/relatorio.pdf",
+                "url": "https://quaest.com.br/relatorios/pesquisa-de-intencao-de-voto-para-presidente-rodada-6-28-09-2026/",
+                "paginas": {
+                  "metodologia": 2,
+                  "perfil_renda": 204,
+                  "1t_topline": 18,
+                  "1t_renda": 24,
+                  "2t_topline": 32,
+                  "2t_renda": 37
+                },
+                "sha256": "30431a6d83a2b1bd3ddb0276d1b4673897876ed195096d1b8e4ff12b3ad0f57b",
+                "bytes": 83425558,
+                "total_paginas": 210,
+                "conferido_em": "2026-09-29",
+                "status": "Relatório completo arquivado e conferido.",
+                "nota": "PDF de 210 páginas recebido em Downloads. Transcrição visual das tabelas de renda, controlada por sexo (pp. 21, 34 e 201). Outros no 1º turno inclui Cury nesta onda.",
+                "atualizado_em": "2026-09-29"
+              },
+              "publicado": {
+                "flavio": 50.0,
+                "lula": 50.0
+              },
+              "pnad": {
+                "flavio": 49.115455129884054,
+                "lula": 50.88454487011596
+              },
+              "modelo": {
+                "flavio": 50.34009869202233,
+                "lula": 49.65990130797767
+              },
+              "allocated_undecided": {
+                "flavio": 1.240855514071705,
+                "lula": 1.2240890257933907
+              },
+              "rates": {
+                "flavio": 0.8361992574287401,
+                "lula": 0.7962213991300896
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": []
+            }
+          ],
+          "leave_one_out": [
+            {
+              "without": "Gerp",
+              "valid": {
+                "lula": 49.0322089918476,
+                "flavio": 50.9677910081524
+              }
+            },
+            {
+              "without": "Nexus",
+              "valid": {
+                "lula": 47.05221717127548,
+                "flavio": 52.94778282872452
+              }
+            },
+            {
+              "without": "Palver",
+              "valid": {
+                "lula": 47.66793176301451,
+                "flavio": 52.33206823698549
+              }
+            },
+            {
+              "without": "Quaest",
+              "valid": {
+                "lula": 47.046228309079964,
+                "flavio": 52.95377169092004
+              }
+            }
+          ],
+          "rates": {
+            "lula": 0.7962213991300896,
+            "flavio": 0.8361992574287401,
+            "branco_nulo": 0.7900143357317341,
+            "indecisos": 0.7956567268770486
+          }
+        }
+      }
+    }
+  }
+}

@@ -59,9 +59,11 @@ def test_missing_crossbreaks_and_new_unusable_waves_do_not_enter_means():
     assert {
         "futura_2026-09-23",
         "verita_2026-09-19",
-        "datafolha_2026-09-23",
         "american_analytics_2026-09-20",
     } <= skipped
+    # A íntegra tardia de 28/09 resolveu a pendência da Datafolha de 24/09.
+    assert set(polls["datafolha_2026-09-23"]["turnos"]) == {"1t", "2t"}
+    assert polls["datafolha_2026-09-23"]["fonte"]["relatorio_completo"] == "2026-09-28"
     for turn in ["1t", "2t"]:
         current = module("reponderacao-janela").coverage(
             [p for p in DATA["pesquisas"] if turn in p["turnos"]], ["2026-09-24"]
@@ -104,6 +106,10 @@ def test_update_covers_both_release_days_and_pending_documents():
             p
             for p in historical[key]
             if (p.get("divulgacao") or p["campo"]["fim"]) <= "2026-09-24"
+            and (p["id"] in archived_sources or max(
+                p.get("fonte", {}).get("conferido_em", ""),
+                p.get("fonte", {}).get("atualizado_em", ""),
+            ) <= "2026-09-24")
         ]
         for poll in historical[key]:
             if poll["id"] in archived_sources:

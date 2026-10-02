@@ -88,12 +88,14 @@ def section_html(table):
         + '<p class="note">Para calibração eleitoral de idade, gênero e região, a referência adequada é o TSE. '
         "PNAD 16+ representa população, não o cadastro eleitoral. Escolaridade exige harmonizar completas, incompletas e sem instrução; "
         "religião não está na base PNADC utilizada.</p></details>"
-        "<p><b>O que ainda falta:</b> os prints não identificam se o perfil é bruto ou ponderado e não trazem voto por renda. "
+        "<p><b>O que ainda falta:</b> a íntegra de 46 páginas, conferida em 02/10, confirma a ficha técnica "
+        "e os mesmos percentuais dos prints, mas não identifica se o perfil é bruto ou ponderado e não traz voto por renda. "
         "Não se pode converter esse desvio em correção do placar nem concluir que os pesos finais preservam a composição mostrada.</p>"
         '<p class="note">Régua: PNADC anual 2025, visita 1; pessoas 16+, peso V1032, rendimento domiciliar efetivo VD5001. '
         "Faixas em salários mínimos de 2026, convertidas aos preços de abril de 2026 com o IPCA disponível até julho de 2026. "
         "A comparação é descritiva, sem teste de significância; não confundir renda familiar declarada com renda domiciliar medida. "
         '<a href="assets/futura_20260930_perfil_pnad.json">Baixar cálculos completos</a> · '
-        '<a href="assets/futura_20260930_prints.json">Transcrição e fontes dos prints</a>.</p>'
+        '<a href="assets/futura_20260930_prints.json">Transcrição e fontes dos prints</a> · '
+        '<a href="https://static.poder360.com.br/uploads/2026/09/futuracidadeparticipacoesBR-30set2026.pdf">Íntegra de 46 páginas</a>.</p>'
         "</div></section>"
     )

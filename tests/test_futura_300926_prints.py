@@ -41,8 +41,10 @@ def test_nonresponse_and_unresolved_recomposition_remain_explicit():
 def test_new_wave_is_documented_without_imputed_income_votes():
     p = json.loads((ROOT/'analysis/reponderacao/pesquisas/futura_2026-09-29.json').read_text())
     assert p['ignorar'] and p['cruzamentos'] == {}
-    assert p['n'] is None
-    assert p['fonte']['tipo'] == 'prints' and 'pdf' not in p['fonte']
+    assert p['n'] == 2000
+    assert p['fonte']['tipo'] == 'relatorio' and p['fonte']['total_paginas'] == 46
+    assert p['fonte']['conferido_em'] == '2026-10-02'
+    assert p['divulgacao'] == '2026-09-30'
     assert p['renda']['amostra_pct'] == [27.7,23.6,23.6,9.9,5.1]
     html = BeautifulSoup((ROOT/'docs/reponderacao_pnad.html').read_text(),'html.parser')
     section = html.find(id='atualizacao')

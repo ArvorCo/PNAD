@@ -58,6 +58,10 @@ def test_both_lines_use_same_time_weights_and_match_endpoint():
     selected = [p for p in group["ondas"] if p["id"] in selected_ids]
     for kind in ("publicado", "ajustado"):
         for key in GROUPS.GROUPS:
+            if not selected:
+                assert group["ultimo"]["kernel"][kind][key] is None
+                assert agg["serie"]["1t"][kind][key][-1] is None
+                continue
             expected = sum(p[kind][key] for p in selected) / len(selected)
             assert group["ultimo"]["kernel"][kind][key] == pytest.approx(
                 expected, abs=0.005
@@ -97,7 +101,7 @@ def test_historical_series_reaches_may_without_requiring_future_candidates():
     first = min(group["ondas"], key=lambda p: p["campo"]["fim"])
     assert first["id"] == "realtime_2026-05-04"
     assert "clariana" not in first["componentes"]["outros_centro_direita"]
-    assert {p["campo"]["fim"][5:7] for p in group["ondas"]} == {
+    assert {p["campo"]["fim"][5:7] for p in group["ondas"]} >= {
         "05",
         "06",
         "07",

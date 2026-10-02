@@ -162,9 +162,20 @@ def serie_svg(ident: str, turno: str, compacta: bool = False) -> str:
 
         cv.add("</g>")
 
+    # Identify the latest Datafolha wave in the shared timeline without moving data.
+    datafolha = [p for p in polls if p["instituto"] == "Datafolha"]
+    destaque = datafolha[-1] if datafolha and not compacta else None
+    if destaque:
+        x_df = px(dia(destaque["divulgacao"]))
+        cv.line(x_df, topo, x_df, base, stroke=GOLD, width=1.2,
+                stroke_dasharray="3 5", opacity="0.65")
+        cv.label(x_df, topo - 16,
+                 f'Datafolha · {curto(destaque["divulgacao"])}',
+                 anchor="middle", size=12, fill=GOLD)
+
     raio = 4.6 if compacta else (5.8 if len(polls) <= 8 else 4.4)
     alcance = max(raio * 2.0, 9.0)
-    for p in polls:
+    for p in sorted(polls, key=lambda onda: onda is destaque):
         t = p["turnos"][turno]
         x = px(dia(p["divulgacao"]))
         shape = forma(p["instituto"])
@@ -175,6 +186,9 @@ def serie_svg(ident: str, turno: str, compacta: bool = False) -> str:
             cv.line(
                 x, y_pub, x, y_adj, stroke=COR[chave], width=1.3, stroke_dasharray="2 3"
             )
+            if p is destaque:
+                for y in (y_pub, y_adj):
+                    cv.circle(x, y, raio + 3, "none", stroke=GOLD, stroke_width=1.4)
             halo(cv, x, y_pub, raio + 4.5, COR[chave])
             halo(cv, x, y_adj, raio + 4.5, COR[chave])
             marcador(cv, shape, x, y_pub, raio, COR[chave], False)

@@ -1,6 +1,7 @@
 """Cobertura documental do agregador, inclusive ondas sem ajuste identificável."""
 
 import importlib
+import json
 from html import escape
 from pathlib import Path
 
@@ -116,6 +117,18 @@ def coverage_html(data, table):
         if (Path(__file__).resolve().parents[1] / "docs/assets" / audit).exists()
         else ""
     )
+    audit_file = Path(__file__).resolve().parents[1] / "docs/assets" / audit
+    pending_html = ""
+    if audit_file.exists():
+        pending = [p for p in json.loads(audit_file.read_text()).get("varredura", [])
+                   if p.get("pendente")]
+        if pending:
+            pending_html = "<h3>Pendências desta conferência</h3>" + "".join(
+                f'<p class="note"><b>{escape(p["instituto"])}.</b> '
+                f'{escape(p["status"])}. {escape(p["conclusao"])} '
+                f'<a href="{escape(p["fontes"][0], quote=True)}">Fonte consultada</a>.</p>'
+                for p in pending
+            )
     recent_html = (
         '<section id="atualizacao" class="chapter"><div class="wrap">'
         f'<p class="eyebrow">Atualização documental · {day}</p>'
@@ -136,6 +149,7 @@ def coverage_html(data, table):
         )
         + "".join(notes)
         + audit_link
+        + pending_html
         + '<p class="note">As médias publicada e reponderada usam o mesmo conjunto de pesquisas com cruzamento '
         "de renda em cada turno, usando somente cenários sem Marçal no 1º turno. Os placares sem ajuste desta tabela não entram em nenhuma das duas médias. "
         "Reponderação é sensibilidade de uma margem, não previsão nem voto corrigido.</p>"

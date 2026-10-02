@@ -2,7 +2,7 @@
   "id": "datafolha_2026-09-23",
   "instituto": "Datafolha",
   "contratante": "Folha de S.Paulo e TV Globo",
-  "metodo": "presencial",
+  "metodo": "presencial, pontos de fluxo",
   "registro_tse": "BR-00304/2026",
   "n": 2002,
   "campo": {
@@ -11,12 +11,20 @@
   },
   "divulgacao": "2026-09-24",
   "fonte": {
-    "tipo": "materia",
-    "url": "https://www.poder360.com.br/poder-eleicoes-2026/lula-e-flavio-empatam-em-2o-turno-diz-datafolha/",
-    "pdf": null,
-    "paginas": {},
-    "conferido_em": "2026-09-24",
-    "status": "Placar divulgado; relatório e cruzamentos ainda não localizados na consulta de 24/09."
+    "tipo": "relatorio",
+    "pdf": "docs/fontes/datafolha_28092026.pdf",
+    "url": "https://brasil.arvor.co/fontes/datafolha_28092026.pdf",
+    "relatorio_completo": "2026-09-28",
+    "conferido_em": "2026-10-01",
+    "paginas": {
+      "perfil_renda": 32,
+      "1t_renda": 37,
+      "2t_renda": 45
+    },
+    "nota": "Íntegra de 55 páginas, gerada em 28/09, fornecida em Downloads. Campo 22–23/09; divulgação 24/09. Extração integral do anexo arquivada.",
+    "sha256": "8a784e124ad4e61c5b0a3f5dec666252d65323bef96b2f2c6aae669fee4cd30d",
+    "bytes": 1602448,
+    "total_paginas": 55
   },
   "publicado": {
     "1t": {
@@ -27,6 +35,12 @@
       "renan_santos": 3,
       "zema": 1,
       "samara": 1,
+      "edmilson": 0,
+      "rui": 0,
+      "grassi": 0,
+      "avalanche": 0,
+      "clariana": 0,
+      "hertz": 0,
       "branco_nulo": 5,
       "indecisos": 2
     },
@@ -37,7 +51,132 @@
       "indecisos": 1
     }
   },
-  "cruzamentos": {},
-  "ignorar": true,
-  "motivo": "Divulgação de 24/09 cadastrada. A matéria não fornece perfil e voto por renda; a página do instituto consultada ainda aponta o relatório da onda anterior. Sem esses dados da mesma onda, nenhum ajuste é calculado."
+  "cruzamentos": {
+    "1t": {
+      "opcoes": [
+        "lula",
+        "flavio",
+        "cury",
+        "caiado",
+        "renan_santos",
+        "zema",
+        "samara",
+        "edmilson",
+        "rui",
+        "grassi",
+        "avalanche",
+        "clariana",
+        "hertz",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          46,
+          32,
+          3,
+          5,
+          2,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          6,
+          3
+        ],
+        [
+          34,
+          40,
+          8,
+          4,
+          3,
+          1,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          5,
+          1
+        ],
+        [
+          33,
+          43,
+          7,
+          4,
+          9,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          2,
+          0
+        ]
+      ],
+      "nota": "Extração automática do texto nativo. Traço convertido em zero apenas na conta; inteiros preservados sem normalização."
+    },
+    "2t": {
+      "opcoes": [
+        "lula",
+        "flavio",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          53,
+          40,
+          6,
+          1
+        ],
+        [
+          41,
+          51,
+          8,
+          0
+        ],
+        [
+          38,
+          52,
+          9,
+          0
+        ]
+      ],
+      "nota": "Extração automática do texto nativo. Traço convertido em zero apenas na conta; inteiros preservados sem normalização."
+    }
+  },
+  "renda": {
+    "unidade": "salarios_minimos",
+    "ano_referencia": 2026,
+    "faixas": [
+      {
+        "rotulo": "Até 2 SM (até R$ 3.242)",
+        "max": 2
+      },
+      {
+        "rotulo": "2 a 5 SM (R$ 3.242 a 8.105)",
+        "max": 5
+      },
+      {
+        "rotulo": "Mais de 5 SM (acima de R$ 8.105)",
+        "max": null
+      }
+    ],
+    "bases": [
+      1004,
+      665,
+      240
+    ],
+    "nota": "Bases ponderadas da intenção de voto, pp. 37 e 45. Somam 1909; 93 casos não aparecem no cruzamento de renda. Normalização entre renda declarada e delta ancorado no placar nacional; não identifica o voto dos casos sem renda publicada."
+  }
 }
