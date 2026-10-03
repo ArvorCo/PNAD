@@ -26,6 +26,18 @@ from senado_2026 import motor as M
 from senado_2026 import saida
 
 SAIDA = B.ROOT / "docs/assets/predicao_senado.json"
+CASAS_DECIMAIS = 6
+
+
+def arredondar(x):
+    """Arredonda floats para o JSON publicado (6 casas bastam para 20 mil sorteios)."""
+    if isinstance(x, float):
+        return round(x, CASAS_DECIMAIS)
+    if isinstance(x, dict):
+        return {k: arredondar(v) for k, v in x.items()}
+    if isinstance(x, list):
+        return [arredondar(v) for v in x]
+    return x
 
 
 def main() -> None:
@@ -57,7 +69,8 @@ def main() -> None:
     )
     args.saida.parent.mkdir(parents=True, exist_ok=True)
     args.saida.write_text(
-        json.dumps(resultado, ensure_ascii=False, indent=1) + "\n", encoding="utf-8"
+        json.dumps(arredondar(resultado), ensure_ascii=False, indent=1) + "\n",
+        encoding="utf-8",
     )
     par = resultado["parametros"]
     print(

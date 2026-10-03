@@ -497,7 +497,7 @@ def prever(
         "composicao_fecha_em_81": comp["fecha_em_81_em_todo_sorteio"],
         "sem_candidatura_tse": [{"uf": u, "nome_pesquisa": n} for u, n in sem_tse],
         "apelidos_tse": tse.via_apelido,
-        "ambiguidades_tse": tse.ambiguidades,
+        "ambiguidades_tse": tse.ambiguidades + tse.desempates(),
         "aliases": aliases,
         "retiradas": retiradas,
         "campo_inferido": [

@@ -56,6 +56,8 @@ def exemplo(data: dict) -> str:
         if e.get("cobertura") != "recente" or len(media) < 3:
             continue
         gap = (media[1].get("valor") or 0) - (media[2].get("valor") or 0)
+        if gap < 0.5:
+            continue
         if melhor is None or gap < melhor[0]:
             melhor = (gap, uf, e, media)
     if melhor is None:
@@ -77,48 +79,79 @@ def exemplo(data: dict) -> str:
 
 def _parametros(data: dict) -> str:
     p = data.get("parametros", {})
-    linhas = []
     nomes = {
-        "meia_vida_dias": "Meia-vida do peso por idade (dias)",
-        "janela_campo_minimo": "Campo mais antigo aceito na central",
-        "simulacoes": "Simulações",
-        "escala_erro_comum_pp": "Escala do erro comum ao estado (pp)",
-        "escala_erro_candidato_pp": "Escala do erro por candidatura (pp)",
+        "meia_vida_dias": ("Meia-vida do peso por idade (dias)", 1),
+        "janela_campo_minimo": ("Campo mais antigo aceito na central", None),
+        "simulacoes": ("Simulações", 0),
+        "deff": ("Efeito de desenho assumido", 1),
+        "escala_erro_pp": ("Escala do erro, candidaturas de 20% a 40% (pp)", 1),
+        "escala_erro_pp_com_deriva_7_dias": (
+            "Mesma escala, com 7 dias de deriva (pp)",
+            1,
+        ),
+        "escala_erro_comum_pp": ("Escala do erro comum ao estado (pp)", 1),
+        "escala_erro_candidato_pp": ("Escala do erro por candidatura (pp)", 1),
     }
-    for k, v in p.items():
-        if isinstance(v, (dict, list)) or k == "justificativa_erro":
+    linhas = []
+    for k, (rotulo, casas) in nomes.items():
+        if k not in p:
             continue
-        rotulo = nomes.get(k, k.replace("_", " "))
-        valor = data_br(v) if k.startswith("janela") else esc(str(v))
+        v = p[k]
+        valor = data_br(v) if casas is None else num(v, casas)
         linhas.append(f"<li><b>{esc(rotulo)}:</b> {valor}</li>")
     return '<ul class="sn-params">' + "".join(linhas) + "</ul>" if linhas else ""
+
+
+def _fmt_calibracao(cal: dict) -> str:
+    def g(k, casas=1):
+        return num(cal[k], casas) if cal.get(k) is not None else None
+
+    partes = []
+    if cal.get("n_pesquisas") and cal.get("n_estados"):
+        partes.append(
+            f"A escala foi conferida contra a urna de 2022: {num(cal['n_pesquisas'], 0)} "
+            f"pesquisas finais em {num(cal['n_estados'], 0)} estados."
+        )
+    if g("erro_medio_abs_pp") and g("rmse_pp"):
+        partes.append(
+            f"O erro médio absoluto foi {g('erro_medio_abs_pp')} pontos e a raiz do erro "
+            f"quadrático médio, {g('rmse_pp')}."
+        )
+    if g("rmse_20_40_pp"):
+        partes.append(
+            f"Entre candidaturas com 20% a 40% dos válidos, a raiz do erro quadrático "
+            f"médio foi {g('rmse_20_40_pp')} pontos."
+        )
+    if g("desvio_diferenca_2_3_pp"):
+        partes.append(
+            f"A diferença entre o segundo e o terceiro colocados errou com desvio de "
+            f"{g('desvio_diferenca_2_3_pp')} pontos: é essa diferença que decide a vaga."
+        )
+    link = (
+        f' <a href="{esc(cal["url"])}" rel="noopener">Conferir a calibração</a>.'
+        if cal.get("url")
+        else ""
+    )
+    return " ".join(partes) + link
 
 
 def _calibracao(data: dict) -> str:
     p, v = data.get("parametros", {}), data.get("validacao", {})
     cal = p.get("calibracao_2022") or v.get("calibracao_2022")
     just = p.get("justificativa_erro")
-    if cal:
-        corpo = (
-            esc(cal)
-            if isinstance(cal, str)
-            else "; ".join(
-                f"{esc(str(k).replace('_', ' '))}: {esc(str(x))}"
-                for k, x in cal.items()
-            )
-        )
+    just_txt = f"<p>{esc(just)}</p>" if just else ""
+    if isinstance(cal, dict):
         return (
             '<p class="io"><strong>Calibração de 2022:</strong> '
-            f"{corpo}{(' ' + esc(just)) if just else ''}</p>"
+            f"{_fmt_calibracao(cal)}</p>{just_txt}"
         )
     return (
         '<p class="hyp"><strong>Hipótese declarada:</strong> a escala do erro das '
-        "pesquisas de Senado não foi calibrada com a eleição de 2022."
-        f"{(' ' + esc(just)) if just else ''} "
+        "pesquisas de Senado não foi calibrada com a eleição de 2022. "
         '<strong class="iffail">Se falhar:</strong> se o erro real for maior que o '
         "declarado, as probabilidades ficam confiantes demais e os intervalos de "
         "90% ficam estreitos demais. Se for menor, ocorre o inverso. A ordem dos "
-        "nomes pouco muda; a confiança muda.</p>"
+        f"nomes pouco muda; a confiança muda.</p>{just_txt}"
     )
 
 
@@ -146,14 +179,26 @@ def como_lemos(data: dict) -> str:
 <p>Cada estado recebe uma onda por instituto. {meia_txt}{janela_txt} As casas entram com peso igual na combinação. {num(varias, 0)} dos {num(com_pesq, 0)} estados com pesquisa têm duas casas ou mais; os demais dependem de uma só.</p>
 <p class="plain">Em palavras: uma pesquisa antiga vale menos que uma nova, e uma casa não vale mais que outra só por ter feito mais perguntas. A média resume o que as casas disseram, com o tempo pesando contra quem ficou para trás.</p>
 <h3>Como os indecisos entram</h3>
-<p>Indecisos e votos em branco ou nulo ficam fora da divisão de votos válidos na proporção do voto declarado. Nenhum nome recebe todos eles. A conta tem uma sensibilidade uniforme, que espalha o efeito igualmente entre as candidaturas, para testar quanto o resultado depende dessa escolha.</p>
+<p>{esc(p.get("indecisos_regra") or "Indecisos e votos em branco ou nulo não viram voto para um nome só: os indecisos se repartem na proporção do voto declarado, com uma sensibilidade uniforme.")}</p>
 <p class="hyp"><strong>Hipótese:</strong> quem hoje não declara voto se comporta, na urna, como quem declara. <strong class="iffail">Se falhar:</strong> se os indecisos forem mais para nomes conhecidos, as candidaturas menores perdem mais do que a página mostra. Por isso nenhuma probabilidade aqui é certeza.</p>
 <h3>De onde vem a escala do erro</h3>
-<p>A probabilidade nasce de um sorteio repetido. Em cada rodada, o estado inteiro recebe um erro comum, porque as casas erram juntas, e cada candidatura recebe um erro próprio. A escala desses erros é o parâmetro que mais pesa no resultado.</p>
+<p>A probabilidade nasce de um sorteio repetido. Em cada rodada, o campo político inteiro recebe um erro comum, porque as casas erram juntas, e cada candidatura recebe um erro próprio. A escala desses erros é o parâmetro que mais pesa no resultado.</p>
+{f'<p class="plain">{esc(p["decomposicao_erro"])}</p>' if p.get("decomposicao_erro") else ""}
 {_parametros(data)}
 {_calibracao(data)}
 <div class="io sn-regra"><strong>Regra do jogo:</strong> cada estado elege {POR_ESTADO} nomes. Em cada estado, as probabilidades de eleição somam {POR_ESTADO},0. O Senado que toma posse em 2027 tem {ASSENTOS} assentos: os que continuam mais os eleitos de 2026.</div>
 """
+
+
+def _sens_item(x: dict) -> str:
+    muda = x.get("duplas_que_mudam") or []
+    ufs = ", ".join(m.get("uf", "") for m in muda)
+    resumo = (
+        f" A dupla mais provável muda em {num(len(muda), 0)} estados: {esc(ufs)}."
+        if muda
+        else " A dupla mais provável não muda em nenhum estado."
+    )
+    return f"<li><b>{esc(x.get('rotulo', ''))}.</b> {esc(x.get('descricao', ''))}{resumo}</li>"
 
 
 def limites(data: dict) -> str:
@@ -187,18 +232,23 @@ def limites(data: dict) -> str:
         if lider
         else ""
     )
+    nao_faz = "".join(
+        f"<li><b>{r}</b> {esc(p[k])}</li>"
+        for k, r in (
+            ("o_que_nao_faz", "O que o modelo não faz."),
+            ("senado_2027_regra", "Quem continua."),
+        )
+        if p.get(k)
+    )
     achado = ""
     val = data.get("validacao", {})
     sens = val.get("sensibilidades") if isinstance(val, dict) else None
     if sens:
-        itens = "".join(
-            f"<li><b>{esc(s.get('rotulo', ''))}.</b> {esc(s.get('descricao', ''))}</li>"
-            for s in sens
-        )
+        itens = "".join(_sens_item(x) for x in sens)
         achado = (
             "<h3>O que contraria a leitura principal</h3>"
-            "<p>As sensibilidades abaixo trocam uma premissa por vez. Elas ficam ao lado da central, "
-            f"com o mesmo destaque.</p><ul>{itens}</ul>"
+            "<p>As sensibilidades abaixo trocam uma premissa por vez. Elas ficam ao lado "
+            f"da central, com o mesmo destaque.</p><ul>{itens}</ul>"
         )
     contra = val.get("achado_contrario") if isinstance(val, dict) else None
     if contra:
@@ -215,6 +265,7 @@ def limites(data: dict) -> str:
 <li><b>Voto útil de última hora.</b> Quem muda de candidatura na véspera ou no dia da votação fica fora de qualquer pesquisa com campo anterior.</li>
 <li><b>Suplentes e migrações.</b> Suplência, renúncia, mudança de partido e cassação ficam fora do modelo. O hemiciclo é o Senado eleito, não o do dia da posse.</li>
 <li><b>Campo é classificação editorial.</b> A etiqueta de campo segue a classificação da casa por partido, com exceções declaradas: tucano é centro-esquerda por decisão editorial da casa. Outra classificação muda os totais por campo, não os nomes.</li>
+{nao_faz}
 </ul>
 {achado}
 <p class="plain">Em palavras: a página mostra o que as pesquisas registradas permitem dizer até {ref}. Não mostra o que ainda pode mudar, e diz onde faltam dados.</p>

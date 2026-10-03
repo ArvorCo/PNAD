@@ -144,11 +144,16 @@ def nome_exibicao(nome: str) -> str:
     )
 
 
+# Grafias que o cadastro do TSE perde (apostrofo removido no nome de urna).
+GRAFIA_URNA = {"MANUELA D ÁVILA": "MANUELA D'ÁVILA"}
+
+
 def titulo_urna(nome_urna: str) -> str:
     """Nome de urna do TSE (caixa alta) em caixa de título, partículas baixas.
 
     Sigla sem vogal (JHC, MLB) fica em caixa alta.
     """
+    nome_urna = GRAFIA_URNA.get(nome_urna, nome_urna)
     partes = []
     for i, p in enumerate(nome_urna.split()):
         baixa = p.lower()
@@ -158,7 +163,13 @@ def titulo_urna(nome_urna: str) -> str:
         elif letras and not re.search(r"[aeiouy]", letras) and not p.endswith("."):
             partes.append(p)
         else:
-            partes.append("-".join(s[:1].upper() + s[1:] for s in baixa.split("-")))
+            partes.append(
+                re.sub(
+                    r"(^|[-'])([a-zà-ú])",
+                    lambda m: m.group(1) + m.group(2).upper(),
+                    baixa,
+                )
+            )
     return " ".join(partes)
 
 
@@ -243,6 +254,35 @@ class Tse:
             and alvo in {normalizar(c["nome_urna"]), normalizar(c["nome_completo"])}
         }
         return next(iter(achados)) if len(achados) == 1 else None
+
+    def desempates(self) -> list[dict]:
+        """Nomes de urna repetidos na UF resolvidos pela tabela DESEMPATE."""
+        saida = []
+        for (uf, norma), sq in sorted(DESEMPATE.items()):
+            opcoes = [
+                c
+                for c in self.candidatos
+                if c["uf"] == uf and normalizar(c["nome_urna"]) == norma
+            ]
+            saida.append(
+                {
+                    "uf": uf,
+                    "nome": norma,
+                    "candidaturas": [
+                        {
+                            "sq_candidato": c["sq_candidato"],
+                            "tem_foto": self._tem_foto(c),
+                        }
+                        for c in opcoes
+                    ],
+                    "escolhida": sq,
+                    "regra": (
+                        "tabela DESEMPATE de scripts/senado_2026/tse.py: registro mais "
+                        "recente, com foto"
+                    ),
+                }
+            )
+        return saida
 
     def foto(self, sq: str | None) -> str | None:
         c = self.por_sq.get(sq or "")
@@ -331,7 +371,7 @@ def normalizar_onda(dados: dict, arquivo: str, n_ausente: int) -> dict:
         "branco_nulo": div(dados.get("branco_nulo")),
         "outros": div(dados.get("outros")),
         "fonte": {
-            "url": fonte.get("url"),
+            "url": fonte.get("url") or next(iter(fonte.get("materia") or []), None),
             "painel_url": fonte.get("painel_url"),
             "arquivo": fonte.get("arquivo"),
             "sha256": fonte.get("sha256"),

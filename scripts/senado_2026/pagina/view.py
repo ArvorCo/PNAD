@@ -64,7 +64,14 @@ def hero_cartoes(data: dict) -> str:
             f"<strong>{ic}</strong>"
             f"<p>{num(continuam, 0)} continuam · {num(novos)} novos esperados</p></div>"
         )
-    return '<div class="scoreboard sn-score">' + "".join(cartoes) + "</div>"
+    extra = ""
+    indef = por_grupo.get("indefinido") or por_campo.get("indefinido") or {}
+    if indef.get("esperado", 0) > 0.05:
+        extra = (
+            '<p class="hero-caption">Sem campo definido: '
+            f"{num(indef['esperado'])} assentos esperados.</p>"
+        )
+    return '<div class="scoreboard sn-score">' + "".join(cartoes) + "</div>" + extra
 
 
 # ---------------------------------------------------------------- fichas
@@ -194,7 +201,7 @@ def corpo_ficha(uf: str, e: dict, data: dict, idx: dict) -> str:
     if e.get("incerteza"):
         partes.append(f'<p class="sn-meta">Incerteza: {esc(e["incerteza"])}.</p>')
     for nota in e.get("notas", []):
-        partes.append(f'<p class="sn-meta">{esc(nota)}</p>')
+        partes.append(f'<p class="sn-meta">{datas_br(nota)}</p>')
     return "".join(partes)
 
 

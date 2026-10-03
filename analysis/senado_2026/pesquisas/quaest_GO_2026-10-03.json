@@ -17,24 +17,89 @@
     "tipo": "painel_g1",
     "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/109/?tipo_pergunta=ESTIMULADA-SEN-001&instituto=Quaest",
     "arquivo": "data/originals/senado_102026/g1/GO_quaest_ESTIMULADA-SEN-001.json",
-    "sha256": "5563b989485580dd86d00c69cea5a2a296b74be49cfb1a18a1363c6c64bc9074",
+    "sha256": "a3422171854473b5c4e79c49947a00fd428e9061cb1bb599b0d809407062b4fe",
     "pagina": null,
-    "capturado_em": "2026-10-03T22:55:30Z",
+    "capturado_em": "2026-10-03T23:37:12Z",
     "painel_url": "https://especiaisg1.globo/go/goias/eleicoes/2026/pesquisas-eleitorais/senador/1-turno/quaest/internal/"
   },
   "pergunta": {
     "codigo": "ESTIMULADA-SEN-001",
-    "tipo": "espontanea",
+    "tipo": "estimulada",
     "votos_por_eleitor": 1,
-    "soma_total": null,
-    "nota": null
+    "soma_total": 100.0,
+    "nota": "A soma fica perto de 100: o painel reporta a fração de menções, não duas escolhas por eleitor."
   },
-  "candidatos": [],
-  "indecisos": null,
-  "branco_nulo": null,
-  "observacoes": [
-    "O painel ainda não traz a estimulada nesta data: só há as perguntas extras (espontânea ou válidos). Sem candidatos para a média."
+  "candidatos": [
+    {
+      "nome": "Gracinha Caiado",
+      "partido": "UNIÃO",
+      "valor": 22.0,
+      "foto_url": "https://s2-g1.glbimg.com/4M_uSaoW8MJqeRww7OU0KU1AuiA=/200x200/smart/filters:brightness(5):contrast(5):background_color(fff)/https://i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/x/u/mgNI4DTB6sTqa6LQX1nw/gracinha-caiado.jpeg"
+    },
+    {
+      "nome": "Gustavo Gayer",
+      "partido": "PL",
+      "valor": 15.0,
+      "foto_url": "https://s2-g1.glbimg.com/46dNGqNHg-Hp5FP6Kx0gS1WiaYQ=/200x200/smart/filters:brightness(5):contrast(5):background_color(fff)/https://i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/G/q/6CmALnQteoYoMcQkR6jg/gustavo-gayer.jpeg"
+    },
+    {
+      "nome": "Dr. Zacharias Calil",
+      "partido": "MDB",
+      "valor": 13.0,
+      "foto_url": "https://s2-g1.glbimg.com/lw-PRzRo2kZa_nQwKaAyy4Z2jck=/200x200/smart/filters:brightness(5):contrast(5):background_color(fff)/https://i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/K/4/ETYrgGTBiv3p7d1ZMjJA/dr.-zacharias-calil.jpeg"
+    },
+    {
+      "nome": "Gustavo Mendanha",
+      "partido": "PRD",
+      "valor": 7.0,
+      "foto_url": "https://s2-g1.glbimg.com/Y2EmRI7r6qwIuiWAaSovNwCiSG0=/200x200/smart/filters:brightness(5):contrast(5):background_color(fff)/https://i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/h/N/wkvgaiS2ujPfuCyXQzvA/gustavo-mendanha.jpeg"
+    },
+    {
+      "nome": "Vanderlan Cardoso",
+      "partido": "PSD",
+      "valor": 7.0,
+      "foto_url": "https://s2-g1.glbimg.com/RSgR2eg496sd4cs-i-p8otw_VGg=/200x200/smart/filters:brightness(5):contrast(5):background_color(fff)/https://i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/6/M/dKA2jtSNO30YmLSmpxwg/vanderlan-cardoso.jpeg"
+    },
+    {
+      "nome": "Oséias Varão",
+      "partido": "PL",
+      "valor": 5.0,
+      "foto_url": "https://s2-g1.glbimg.com/Is2RNsx8HPUkohEwcl3yOUBZ_Zs=/200x200/smart/filters:brightness(5):contrast(5):background_color(fff)/https://i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/S/i/NMhJvpRuOnYawbIaw6rA/oseias-varao.jpeg"
+    },
+    {
+      "nome": "Isaura Lemos",
+      "partido": "PSB",
+      "valor": 3.0,
+      "foto_url": "https://s2-g1.glbimg.com/GjXDA__FL-aSc9M0mDsg5c9PG8g=/200x200/smart/filters:brightness(5):contrast(5):background_color(fff)/https://i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/m/w/PDxmAsSDuAPpXAwYHMlQ/isaura-lemos.jpeg"
+    },
+    {
+      "nome": "Cintia Dias",
+      "partido": "PSOL",
+      "valor": 1.0,
+      "foto_url": "https://s2-g1.glbimg.com/qvVUepbfxNa7NHGMu9lrBb6O1pU=/200x200/smart/filters:brightness(5):contrast(5):background_color(fff)/https://i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/w/E/EsWuwdQ0mXoBw4Dvw18A/cintia-dias.jpeg"
+    },
+    {
+      "nome": "Ernesto Roller",
+      "partido": "PSDB",
+      "valor": 1.0,
+      "foto_url": "https://s2-g1.glbimg.com/52U54QDlUXzptSSiwJX3vAgxVf4=/200x200/smart/filters:brightness(5):contrast(5):background_color(fff)/https://i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/7/U/gisJDNQEGtIi0xREUB1w/ernesto-roller.jpeg"
+    },
+    {
+      "nome": "Guilherme Darques",
+      "partido": "UP",
+      "valor": 0.0,
+      "foto_url": "https://s2-g1.glbimg.com/VgokL57kCeU7qe9StnKEwisCV90=/200x200/smart/filters:brightness(5):contrast(5):background_color(fff)/https://i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/L/G/J9gzWDSGy7P3QPl0vuAw/guilherme-darques.jpeg"
+    },
+    {
+      "nome": "Iure Castro",
+      "partido": "CID",
+      "valor": 0.0,
+      "foto_url": "https://s2-g1.glbimg.com/ux3UNG1wKatQyhXxTx_BYUNH4Gw=/200x200/smart/filters:brightness(5):contrast(5):background_color(fff)/https://i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/H/U/cUKvBBRn2Y4Erjnka0AQ/iure-castro.jpeg"
+    }
   ],
+  "indecisos": 15.0,
+  "branco_nulo": 11.0,
+  "observacoes": [],
   "espontanea": {
     "candidatos": [
       {

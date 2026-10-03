@@ -15,7 +15,18 @@ AGORA = datetime(2026, 10, 3, 23, 0, tzinfo=timezone.utc)
 SIM = 3000
 
 
-def onda(uf, casa, fim, candidatos, *, inicio=None, n=1000, ind=10.0, bn=8.0, **kw):
+def onda(
+    uf,
+    casa,
+    fim,
+    candidatos,
+    *,
+    inicio=None,
+    n: int | None = 1000,
+    ind=10.0,
+    bn=8.0,
+    **kw,
+):
     votos = kw.pop("votos_por_eleitor", 1)
     campo = None if fim is None else {"inicio": inicio or fim, "fim": fim}
     soma = sum(v for _, _, v in candidatos) + (ind or 0) + (bn or 0)
@@ -429,12 +440,19 @@ def test_erro_calibrado_usa_2022():
     assert M.erro_calibrado(cal)[0].fonte == "hipotese"
 
 
+def _datas(texto):
+    lidas = C.datas(texto)
+    return None if lidas is None else tuple(d.isoformat() for d in lidas)
+
+
 def test_datas_da_wikipedia():
-    assert C.datas("27–29 de setembro de 2022")[1].isoformat() == "2022-09-29"
-    ini, fim = C.datas("30 de setembro a 1.º de outubro de 2022")
-    assert (ini.isoformat(), fim.isoformat()) == ("2022-09-30", "2022-10-01")
-    assert C.datas("26-27/9")[0].isoformat() == "2022-09-26"
-    assert C.datas("sem data") is None
+    assert _datas("27–29 de setembro de 2022") == ("2022-09-27", "2022-09-29")
+    assert _datas("30 de setembro a 1.º de outubro de 2022") == (
+        "2022-09-30",
+        "2022-10-01",
+    )
+    assert _datas("26-27/9") == ("2022-09-26", "2022-09-27")
+    assert _datas("sem data") is None
 
 
 WIKI = """== Pesquisas de opinião ==
