@@ -124,10 +124,27 @@ def test_validos_calculados_das_contagens(saida):
     assert verita["validos_pp"]["lula"] == pytest.approx(100 * 21286 / soma)
 
 
+def _quase_igual(a, b, caminho=""):
+    """Igualdade estrutural com tolerância numérica: a soma em ponto flutuante
+    muda no último dígito entre plataformas, e isso não é diferença de conta."""
+    if isinstance(a, dict) and isinstance(b, dict):
+        assert a.keys() == b.keys(), caminho
+        for k in a:
+            _quase_igual(a[k], b[k], f"{caminho}/{k}")
+    elif isinstance(a, list) and isinstance(b, list):
+        assert len(a) == len(b), caminho
+        for i, (x, y) in enumerate(zip(a, b, strict=True)):
+            _quase_igual(x, y, f"{caminho}[{i}]")
+    elif isinstance(a, float) or isinstance(b, float):
+        assert a == pytest.approx(b, rel=1e-9, abs=1e-9), caminho
+    else:
+        assert a == b, caminho
+
+
 def test_saida_gravada_esta_em_dia(saida):
     gravada = json.loads((BASE / "erro_2022.json").read_text())
-    assert gravada["media_das_casas"] == json.loads(
-        json.dumps(saida["media_das_casas"])
+    _quase_igual(
+        gravada["media_das_casas"], json.loads(json.dumps(saida["media_das_casas"]))
     )
 
 

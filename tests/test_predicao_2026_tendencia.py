@@ -315,6 +315,10 @@ def test_state_labels_exist_and_rule_holds():
 
 
 def test_state_pairs_have_sampling_error():
+    if not migracao.TSE.exists():
+        pytest.skip(
+            "Cadastro TSE local ausente; os pares estaduais não são recalculados"
+        )
     pairs = migracao.state_pairs()
     assert len(pairs) >= 20
     for p in pairs:
