@@ -10,6 +10,7 @@ from senado_2026.pagina.comum import pct
 
 ROOT = Path(__file__).resolve().parents[1]
 FIXTURE = ROOT / "tests/fixtures/predicao_senado_exemplo.json"
+MALHA = ROOT / "data/originals/ibge_malhas/br_uf/br_uf_minima.geojson"
 
 
 def _build_module():
@@ -28,6 +29,8 @@ def data():
 
 @pytest.fixture(scope="module")
 def html(data):
+    if not MALHA.exists():
+        pytest.skip("Malha do IBGE ausente neste ambiente; o mapa não é renderizado")
     mod = _build_module()
     return mod.render(data, mod.TEMPLATE.read_text(encoding="utf-8"))
 
