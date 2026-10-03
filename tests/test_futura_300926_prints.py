@@ -62,8 +62,10 @@ def test_new_wave_is_documented_without_imputed_income_votes():
     html = BeautifulSoup(
         (ROOT / "docs/reponderacao_pnad.html").read_text(), "html.parser"
     )
-    section = html.find(id="atualizacao")
-    rows = [r for r in section.find_all("tr") if "Futura" in r.get_text()]
-    assert len(rows) == 1
-    assert "39,4 × 42,2" in rows[0].get_text()
-    assert "43,5 × 49,0" in rows[0].get_text()
+    # O bloco "atualização documental" muda a cada dia; a onda fica na lista
+    # de não reponderáveis da página e com o placar publicado no JSON.
+    assert "Futura" in html.get_text(" ", strip=True)
+    assert p["publicado"]["1t"]["lula"] == 39.4
+    assert p["publicado"]["1t"]["flavio"] == 42.2
+    assert p["publicado"]["2t"]["lula"] == 43.5
+    assert p["publicado"]["2t"]["flavio"] == 49.0

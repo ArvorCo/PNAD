@@ -252,7 +252,7 @@ def test_latest_wave_mean_uses_new_mda_wave(output):
     latest = {}
     for p in sorted(polls, key=lambda p: p["campo"]["fim"]):
         latest[p["instituto"]] = p
-    assert latest["MDA"]["id"] == "mda_2026-09-13"
+    assert latest["MDA"]["id"] == "mda_2026-10-02"
     mean = sum(
         p["turnos"]["2t"]["cenarios"][SCENARIO]["ajustado"]["lula"]
         for p in latest.values()

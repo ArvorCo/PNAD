@@ -128,6 +128,7 @@
 - Calibração do desvio do erro comum com 2018 e 2022 ficou pendente: exige arquivar as pesquisas finais daqueles anos com URL, SHA-256 e página antes de qualquer número.
 - `tests/conftest.py` coloca `scripts/` no caminho de importação; testes novos importam no topo, sem `sys.path` nem `noqa`. Lint zero agora inclui `tests/`.
 - Snapshots: cada build com código alterado grava um snapshot novo; ao fechar uma rodada, manter só o snapshot do hash publicado.
+- CNT/MDA 171ª rodada (03/10/2026, `analysis/reponderacao/pesquisas/mda_2026-10-02.json`, PDF em `data/originals/mda_102026_03/`): a íntegra sai no upload público da CNN (`admin.cnnbrasil.com.br/wp-content/uploads/sites/12/AAAA/MM/Relatorio-Pesquisa-CNT-de-Opiniao-R<rodada>-<MES><AA>.pdf`); o site da CNT e o Poder360 não a tinham na hora. Os cruzamentos são imagem: ler na renderização a 130 dpi com recorte ampliado dos rótulos da borda direita e recompor o placar por renda e por sexo antes de usar. A p. 2 passou a declarar ponderação por escolaridade e renda. Em `cdn.cnt.org.br/diretorioVirtualPrd/` há relatórios antigos (rodada 151, fev/2022): pista para arquivar as pesquisas de 2022 que a calibração do erro comum exige.
 
 ## Coding Style & Naming
 - Prefer Python (PEP 8, 4 spaces).

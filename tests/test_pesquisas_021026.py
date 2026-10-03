@@ -121,6 +121,8 @@ def test_both_models_and_public_page_use_new_waves_at_original_publication_dates
     page = BeautifulSoup(
         (ROOT / "docs/reponderacao_pnad.html").read_text(), "html.parser"
     )
-    text = page.find(id="atualizacao").get_text(" ", strip=True)
-    assert "02/10/2026" in text and "Indexa/Broadcast" in text
+    # O bloco "atualização documental" muda a cada dia de atualização; a onda
+    # do Indexa continua publicada na própria ficha da página.
+    assert page.find(id="pesquisa-indexa_2026-09-29") is not None
+    assert "Indexa/Broadcast" in page.get_text(" ", strip=True)
     assert "97 dos 2.506" in page.get_text(" ", strip=True)

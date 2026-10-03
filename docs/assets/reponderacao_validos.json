@@ -31,6 +31,11 @@
           "reason": "A íntegra de 46 páginas publica o perfil de renda (p. 7), mas cruza o voto somente por gênero, região, idade e posição política (pp. 23–25 e 30). Falta voto por renda; 10% não declaram renda. A publicação não distingue perfil bruto e ponderado."
         },
         {
+          "id": "mda_2026-10-02",
+          "instituto": "MDA",
+          "reason": "Candidatos positivos sem cruzamento: caiado, cury, renan_santos, zema"
+        },
+        {
           "id": "meio_ideia_2026-09-28",
           "instituto": "Meio/Ideia",
           "reason": "Íntegra de 30/09, campo 25–28/09: o voto por renda do 2º turno está na p. 37, mas faltam bases ou percentuais da amostra nas quatro faixas. A metodologia da p. 69 chama condição de atividade de nível econômico (62% ativos, 38% não ativos); isso não informa a distribuição de renda. A p. 9 descreve somente os indecisos da pergunta espontânea, não a amostra inteira. O PDF não traz voto por renda do 1º turno. Os placares ficam documentados, fora das médias comparáveis e do modelo de válidos por renda. Essa falta documental não prova erro de ponderação."
@@ -4150,7 +4155,7 @@
       }
     },
     "2t": {
-      "n_houses": 6,
+      "n_houses": 7,
       "excluded": [
         {
           "id": "atlas_2026-09-28",
@@ -4182,16 +4187,16 @@
         "central": {
           "aggregate": {
             "publicado": {
-              "lula": 49.76362552371165,
-              "flavio": 50.23637447628835
+              "lula": 50.1292517131182,
+              "flavio": 49.8707482868818
             },
             "pnad": {
-              "lula": 48.973322066082694,
-              "flavio": 51.02667793391731
+              "lula": 49.30559394485068,
+              "flavio": 50.69440605514933
             },
             "modelo": {
-              "lula": 48.96834537577208,
-              "flavio": 51.03165462422792
+              "lula": 49.30061626112449,
+              "flavio": 50.69938373887551
             }
           },
           "polls": [
@@ -4383,6 +4388,68 @@
               "proxy_candidates": []
             },
             {
+              "id": "mda_2026-10-02",
+              "instituto": "MDA",
+              "divulgacao": "2026-10-03",
+              "campo": {
+                "inicio": "2026-09-30",
+                "fim": "2026-10-02"
+              },
+              "published": {
+                "flavio": 43.1,
+                "lula": 47.3
+              },
+              "adjusted": {
+                "flavio": 44.063,
+                "lula": 46.414
+              },
+              "negative_mass_removed": {},
+              "undecided": 1.853,
+              "undecided_known": true,
+              "source": {
+                "tipo": "relatorio",
+                "rotulo": "Relatório CNT/MDA, 171ª rodada",
+                "pdf": "data/originals/mda_102026_03/relatorio.pdf",
+                "url": "https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2026/10/Relatorio-Pesquisa-CNT-de-Opiniao-R171-OUTUBRO26.pdf",
+                "paginas": {
+                  "metodologia": 2,
+                  "perfil_renda": 34,
+                  "1t": 6,
+                  "1t_validos": 9,
+                  "1t_renda": 7,
+                  "2t": 12,
+                  "2t_renda": 13
+                },
+                "status": "Relatório completo conferido.",
+                "nota": "Campo em três dias (30/09: 38%, 01/10: 42%, 02/10: 20%, p. 2). Diferente da 170ª rodada, a p. 2 declara ponderação para controle de escolaridade e renda familiar; a composição da p. 34 continua rotulada como distribuição das entrevistas, com 0,4% de renda NS/NR. PDF gerado em 03/10/2026 09:32 (creationDate), divulgado no mesmo dia, véspera do 1º turno.",
+                "sha256": "894f25412ca96d4644f2c1e9121b110cd1a4e7aabe3e62295e3e47c1cc3a4841",
+                "bytes": 3795866,
+                "total_paginas": 51
+              },
+              "publicado": {
+                "flavio": 47.676991150442475,
+                "lula": 52.32300884955752
+              },
+              "pnad": {
+                "flavio": 48.70077478254142,
+                "lula": 51.299225217458584
+              },
+              "modelo": {
+                "flavio": 48.70575842676103,
+                "lula": 51.29424157323897
+              },
+              "allocated_undecided": {
+                "flavio": 0.7180942820330639,
+                "lula": 0.7562576328701073
+              },
+              "rates": {
+                "flavio": 0.7963802451702287,
+                "lula": 0.7962213991300896
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": []
+            },
+            {
               "id": "nexus_2026-09-27",
               "instituto": "Nexus",
               "divulgacao": "2026-09-28",
@@ -4565,43 +4632,50 @@
             {
               "without": "Datafolha",
               "valid": {
-                "lula": 49.07999028073935,
-                "flavio": 50.92000971926065
+                "lula": 49.44903216282262,
+                "flavio": 50.55096783717738
               }
             },
             {
               "without": "Gerp",
               "valid": {
-                "lula": 49.78085024256396,
-                "flavio": 50.21914975743604
+                "lula": 50.03308213100979,
+                "flavio": 49.96691786899021
               }
             },
             {
               "without": "Indexa/Broadcast",
               "valid": {
-                "lula": 48.81406807968075,
-                "flavio": 51.18593192031925
+                "lula": 49.22743032860712,
+                "flavio": 50.77256967139288
+              }
+            },
+            {
+              "without": "MDA",
+              "valid": {
+                "lula": 48.96834537577208,
+                "flavio": 51.03165462422792
               }
             },
             {
               "without": "Nexus",
               "valid": {
-                "lula": 48.58969496927109,
-                "flavio": 51.41030503072891
+                "lula": 49.04045273659907,
+                "flavio": 50.95954726340093
               }
             },
             {
               "without": "Palver",
               "valid": {
-                "lula": 48.95936611616924,
-                "flavio": 51.04063388383076
+                "lula": 49.34851202568086,
+                "flavio": 50.65148797431914
               }
             },
             {
               "without": "Quaest",
               "valid": {
-                "lula": 48.58610256620808,
-                "flavio": 51.41389743379192
+                "lula": 49.03745906737989,
+                "flavio": 50.96254093262011
               }
             }
           ],
@@ -4615,16 +4689,16 @@
         "idosos60": {
           "aggregate": {
             "publicado": {
-              "lula": 49.76362552371165,
-              "flavio": 50.23637447628835
+              "lula": 50.1292517131182,
+              "flavio": 49.8707482868818
             },
             "pnad": {
-              "lula": 48.973322066082694,
-              "flavio": 51.02667793391731
+              "lula": 49.30559394485068,
+              "flavio": 50.69440605514933
             },
             "modelo": {
-              "lula": 48.45747027028998,
-              "flavio": 51.54252972971002
+              "lula": 48.78960413092183,
+              "flavio": 51.21039586907817
             }
           },
           "polls": [
@@ -4816,6 +4890,68 @@
               "proxy_candidates": []
             },
             {
+              "id": "mda_2026-10-02",
+              "instituto": "MDA",
+              "divulgacao": "2026-10-03",
+              "campo": {
+                "inicio": "2026-09-30",
+                "fim": "2026-10-02"
+              },
+              "published": {
+                "flavio": 43.1,
+                "lula": 47.3
+              },
+              "adjusted": {
+                "flavio": 44.063,
+                "lula": 46.414
+              },
+              "negative_mass_removed": {},
+              "undecided": 1.853,
+              "undecided_known": true,
+              "source": {
+                "tipo": "relatorio",
+                "rotulo": "Relatório CNT/MDA, 171ª rodada",
+                "pdf": "data/originals/mda_102026_03/relatorio.pdf",
+                "url": "https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2026/10/Relatorio-Pesquisa-CNT-de-Opiniao-R171-OUTUBRO26.pdf",
+                "paginas": {
+                  "metodologia": 2,
+                  "perfil_renda": 34,
+                  "1t": 6,
+                  "1t_validos": 9,
+                  "1t_renda": 7,
+                  "2t": 12,
+                  "2t_renda": 13
+                },
+                "status": "Relatório completo conferido.",
+                "nota": "Campo em três dias (30/09: 38%, 01/10: 42%, 02/10: 20%, p. 2). Diferente da 170ª rodada, a p. 2 declara ponderação para controle de escolaridade e renda familiar; a composição da p. 34 continua rotulada como distribuição das entrevistas, com 0,4% de renda NS/NR. PDF gerado em 03/10/2026 09:32 (creationDate), divulgado no mesmo dia, véspera do 1º turno.",
+                "sha256": "894f25412ca96d4644f2c1e9121b110cd1a4e7aabe3e62295e3e47c1cc3a4841",
+                "bytes": 3795866,
+                "total_paginas": 51
+              },
+              "publicado": {
+                "flavio": 47.676991150442475,
+                "lula": 52.32300884955752
+              },
+              "pnad": {
+                "flavio": 48.70077478254142,
+                "lula": 51.299225217458584
+              },
+              "modelo": {
+                "flavio": 49.21759270528707,
+                "lula": 50.782407294712925
+              },
+              "allocated_undecided": {
+                "flavio": 0.6993624392521752,
+                "lula": 0.7215978329007701
+              },
+              "rates": {
+                "flavio": 0.8037215950422713,
+                "lula": 0.7872698477571027
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": []
+            },
+            {
               "id": "nexus_2026-09-27",
               "instituto": "Nexus",
               "divulgacao": "2026-09-28",
@@ -4998,43 +5134,50 @@
             {
               "without": "Datafolha",
               "valid": {
-                "lula": 48.5692116436103,
-                "flavio": 51.4307883563897
+                "lula": 48.938077585460746,
+                "flavio": 51.06192241453926
               }
             },
             {
               "without": "Gerp",
               "valid": {
-                "lula": 49.26903979588694,
-                "flavio": 50.73096020411306
+                "lula": 49.52126771235794,
+                "flavio": 50.47873228764207
               }
             },
             {
               "without": "Indexa/Broadcast",
               "valid": {
-                "lula": 48.30341805576056,
-                "flavio": 51.69658194423945
+                "lula": 48.71658292891929,
+                "flavio": 51.28341707108072
+              }
+            },
+            {
+              "without": "MDA",
+              "valid": {
+                "lula": 48.45747027028998,
+                "flavio": 51.54252972971002
               }
             },
             {
               "without": "Nexus",
               "valid": {
-                "lula": 48.07904083949198,
-                "flavio": 51.920959160508026
+                "lula": 48.52960191536213,
+                "flavio": 51.47039808463787
               }
             },
             {
               "without": "Palver",
               "valid": {
-                "lula": 48.44866375513289,
-                "flavio": 51.551336244867116
+                "lula": 48.83762101172956,
+                "flavio": 51.16237898827044
               }
             },
             {
               "without": "Quaest",
               "valid": {
-                "lula": 48.075447531857286,
-                "flavio": 51.924552468142714
+                "lula": 48.52660749233323,
+                "flavio": 51.47339250766677
               }
             }
           ],
@@ -5048,16 +5191,16 @@
         "idosos80": {
           "aggregate": {
             "publicado": {
-              "lula": 49.76362552371165,
-              "flavio": 50.23637447628835
+              "lula": 50.1292517131182,
+              "flavio": 49.8707482868818
             },
             "pnad": {
-              "lula": 48.973322066082694,
-              "flavio": 51.02667793391731
+              "lula": 49.30559394485068,
+              "flavio": 50.69440605514933
             },
             "modelo": {
-              "lula": 48.97707305980814,
-              "flavio": 51.02292694019186
+              "lula": 49.309345682972676,
+              "flavio": 50.69065431702732
             }
           },
           "polls": [
@@ -5249,6 +5392,68 @@
               "proxy_candidates": []
             },
             {
+              "id": "mda_2026-10-02",
+              "instituto": "MDA",
+              "divulgacao": "2026-10-03",
+              "campo": {
+                "inicio": "2026-09-30",
+                "fim": "2026-10-02"
+              },
+              "published": {
+                "flavio": 43.1,
+                "lula": 47.3
+              },
+              "adjusted": {
+                "flavio": 44.063,
+                "lula": 46.414
+              },
+              "negative_mass_removed": {},
+              "undecided": 1.853,
+              "undecided_known": true,
+              "source": {
+                "tipo": "relatorio",
+                "rotulo": "Relatório CNT/MDA, 171ª rodada",
+                "pdf": "data/originals/mda_102026_03/relatorio.pdf",
+                "url": "https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2026/10/Relatorio-Pesquisa-CNT-de-Opiniao-R171-OUTUBRO26.pdf",
+                "paginas": {
+                  "metodologia": 2,
+                  "perfil_renda": 34,
+                  "1t": 6,
+                  "1t_validos": 9,
+                  "1t_renda": 7,
+                  "2t": 12,
+                  "2t_renda": 13
+                },
+                "status": "Relatório completo conferido.",
+                "nota": "Campo em três dias (30/09: 38%, 01/10: 42%, 02/10: 20%, p. 2). Diferente da 170ª rodada, a p. 2 declara ponderação para controle de escolaridade e renda familiar; a composição da p. 34 continua rotulada como distribuição das entrevistas, com 0,4% de renda NS/NR. PDF gerado em 03/10/2026 09:32 (creationDate), divulgado no mesmo dia, véspera do 1º turno.",
+                "sha256": "894f25412ca96d4644f2c1e9121b110cd1a4e7aabe3e62295e3e47c1cc3a4841",
+                "bytes": 3795866,
+                "total_paginas": 51
+              },
+              "publicado": {
+                "flavio": 47.676991150442475,
+                "lula": 52.32300884955752
+              },
+              "pnad": {
+                "flavio": 48.70077478254142,
+                "lula": 51.299225217458584
+              },
+              "modelo": {
+                "flavio": 48.69701857804007,
+                "lula": 51.30298142195993
+              },
+              "allocated_undecided": {
+                "flavio": 0.7184050796884643,
+                "lula": 0.7568496703270311
+              },
+              "rates": {
+                "flavio": 0.7962543662268092,
+                "lula": 0.7963740920624234
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": []
+            },
+            {
               "id": "nexus_2026-09-27",
               "instituto": "Nexus",
               "divulgacao": "2026-09-28",
@@ -5431,43 +5636,50 @@
             {
               "without": "Datafolha",
               "valid": {
-                "lula": 49.088716110773575,
-                "flavio": 50.91128388922643
+                "lula": 49.45776032930463,
+                "flavio": 50.54223967069537
               }
             },
             {
               "without": "Gerp",
               "valid": {
-                "lula": 49.78959243956166,
-                "flavio": 50.21040756043834
+                "lula": 50.04182393662804,
+                "flavio": 49.95817606337196
               }
             },
             {
               "without": "Indexa/Broadcast",
               "valid": {
-                "lula": 48.82279219669461,
-                "flavio": 51.17720780330539
+                "lula": 49.23615706757215,
+                "flavio": 50.76384293242784
+              }
+            },
+            {
+              "without": "MDA",
+              "valid": {
+                "lula": 48.97707305980814,
+                "flavio": 51.02292694019186
               }
             },
             {
               "without": "Nexus",
               "valid": {
-                "lula": 48.59841956514602,
-                "flavio": 51.401580434853976
+                "lula": 49.049179874615,
+                "flavio": 50.950820125384986
               }
             },
             {
               "without": "Palver",
               "valid": {
-                "lula": 48.96809086259854,
-                "flavio": 51.031909137401456
+                "lula": 49.35723928915876,
+                "flavio": 50.64276071084122
               }
             },
             {
               "without": "Quaest",
               "valid": {
-                "lula": 48.594827184074454,
-                "flavio": 51.40517281592554
+                "lula": 49.04618622372203,
+                "flavio": 50.95381377627796
               }
             }
           ],
@@ -5481,16 +5693,16 @@
         "flavio95": {
           "aggregate": {
             "publicado": {
-              "lula": 49.76362552371165,
-              "flavio": 50.23637447628835
+              "lula": 50.1292517131182,
+              "flavio": 49.8707482868818
             },
             "pnad": {
-              "lula": 48.973322066082694,
-              "flavio": 51.02667793391731
+              "lula": 49.30559394485068,
+              "flavio": 50.69440605514933
             },
             "modelo": {
-              "lula": 50.24841807792952,
-              "flavio": 49.75158192207048
+              "lula": 50.5807275051909,
+              "flavio": 49.4192724948091
             }
           },
           "polls": [
@@ -5682,6 +5894,68 @@
               "proxy_candidates": []
             },
             {
+              "id": "mda_2026-10-02",
+              "instituto": "MDA",
+              "divulgacao": "2026-10-03",
+              "campo": {
+                "inicio": "2026-09-30",
+                "fim": "2026-10-02"
+              },
+              "published": {
+                "flavio": 43.1,
+                "lula": 47.3
+              },
+              "adjusted": {
+                "flavio": 44.063,
+                "lula": 46.414
+              },
+              "negative_mass_removed": {},
+              "undecided": 1.853,
+              "undecided_known": true,
+              "source": {
+                "tipo": "relatorio",
+                "rotulo": "Relatório CNT/MDA, 171ª rodada",
+                "pdf": "data/originals/mda_102026_03/relatorio.pdf",
+                "url": "https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2026/10/Relatorio-Pesquisa-CNT-de-Opiniao-R171-OUTUBRO26.pdf",
+                "paginas": {
+                  "metodologia": 2,
+                  "perfil_renda": 34,
+                  "1t": 6,
+                  "1t_validos": 9,
+                  "1t_renda": 7,
+                  "2t": 12,
+                  "2t_renda": 13
+                },
+                "status": "Relatório completo conferido.",
+                "nota": "Campo em três dias (30/09: 38%, 01/10: 42%, 02/10: 20%, p. 2). Diferente da 170ª rodada, a p. 2 declara ponderação para controle de escolaridade e renda familiar; a composição da p. 34 continua rotulada como distribuição das entrevistas, com 0,4% de renda NS/NR. PDF gerado em 03/10/2026 09:32 (creationDate), divulgado no mesmo dia, véspera do 1º turno.",
+                "sha256": "894f25412ca96d4644f2c1e9121b110cd1a4e7aabe3e62295e3e47c1cc3a4841",
+                "bytes": 3795866,
+                "total_paginas": 51
+              },
+              "publicado": {
+                "flavio": 47.676991150442475,
+                "lula": 52.32300884955752
+              },
+              "pnad": {
+                "flavio": 48.70077478254142,
+                "lula": 51.299225217458584
+              },
+              "modelo": {
+                "flavio": 47.42541593124082,
+                "lula": 52.57458406875919
+              },
+              "allocated_undecided": {
+                "flavio": 0.6992175279330425,
+                "lula": 0.7751343869701285
+              },
+              "rates": {
+                "flavio": 0.7565612329117172,
+                "lula": 0.7962213991300896
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": []
+            },
+            {
               "id": "nexus_2026-09-27",
               "instituto": "Nexus",
               "divulgacao": "2026-09-28",
@@ -5864,43 +6138,50 @@
             {
               "without": "Datafolha",
               "valid": {
-                "lula": 50.359717503683065,
-                "flavio": 49.64028249631694
+                "lula": 50.72886193119575,
+                "flavio": 49.27113806880425
               }
             },
             {
               "without": "Gerp",
               "valid": {
-                "lula": 51.06252420570506,
-                "flavio": 48.93747579429494
+                "lula": 51.31453418288075,
+                "flavio": 48.68546581711925
               }
             },
             {
               "without": "Indexa/Broadcast",
               "valid": {
-                "lula": 50.09371778656707,
-                "flavio": 49.90628221343293
+                "lula": 50.50719550026576,
+                "flavio": 49.49280449973424
+              }
+            },
+            {
+              "without": "MDA",
+              "valid": {
+                "lula": 50.24841807792952,
+                "flavio": 49.75158192207048
               }
             },
             {
               "without": "Nexus",
               "valid": {
-                "lula": 49.86956130380317,
-                "flavio": 50.13043869619684
+                "lula": 50.320398431295835,
+                "flavio": 49.679601568704165
               }
             },
             {
               "without": "Palver",
               "valid": {
-                "lula": 50.239013201803715,
-                "flavio": 49.760986798196285
+                "lula": 50.628275012962966,
+                "flavio": 49.371724987037034
               }
             },
             {
               "without": "Quaest",
               "valid": {
-                "lula": 49.86597446601503,
-                "flavio": 50.134025533984975
+                "lula": 50.31740939980572,
+                "flavio": 49.68259060019428
               }
             }
           ],
@@ -5914,16 +6195,16 @@
         "flavio105": {
           "aggregate": {
             "publicado": {
-              "lula": 49.76362552371165,
-              "flavio": 50.23637447628835
+              "lula": 50.1292517131182,
+              "flavio": 49.8707482868818
             },
             "pnad": {
-              "lula": 48.973322066082694,
-              "flavio": 51.02667793391731
+              "lula": 49.30559394485068,
+              "flavio": 50.69440605514933
             },
             "modelo": {
-              "lula": 47.751963256423466,
-              "flavio": 52.24803674357654
+              "lula": 48.08379373227293,
+              "flavio": 51.91620626772708
             }
           },
           "polls": [
@@ -6115,6 +6396,68 @@
               "proxy_candidates": []
             },
             {
+              "id": "mda_2026-10-02",
+              "instituto": "MDA",
+              "divulgacao": "2026-10-03",
+              "campo": {
+                "inicio": "2026-09-30",
+                "fim": "2026-10-02"
+              },
+              "published": {
+                "flavio": 43.1,
+                "lula": 47.3
+              },
+              "adjusted": {
+                "flavio": 44.063,
+                "lula": 46.414
+              },
+              "negative_mass_removed": {},
+              "undecided": 1.853,
+              "undecided_known": true,
+              "source": {
+                "tipo": "relatorio",
+                "rotulo": "Relatório CNT/MDA, 171ª rodada",
+                "pdf": "data/originals/mda_102026_03/relatorio.pdf",
+                "url": "https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2026/10/Relatorio-Pesquisa-CNT-de-Opiniao-R171-OUTUBRO26.pdf",
+                "paginas": {
+                  "metodologia": 2,
+                  "perfil_renda": 34,
+                  "1t": 6,
+                  "1t_validos": 9,
+                  "1t_renda": 7,
+                  "2t": 12,
+                  "2t_renda": 13
+                },
+                "status": "Relatório completo conferido.",
+                "nota": "Campo em três dias (30/09: 38%, 01/10: 42%, 02/10: 20%, p. 2). Diferente da 170ª rodada, a p. 2 declara ponderação para controle de escolaridade e renda familiar; a composição da p. 34 continua rotulada como distribuição das entrevistas, com 0,4% de renda NS/NR. PDF gerado em 03/10/2026 09:32 (creationDate), divulgado no mesmo dia, véspera do 1º turno.",
+                "sha256": "894f25412ca96d4644f2c1e9121b110cd1a4e7aabe3e62295e3e47c1cc3a4841",
+                "bytes": 3795866,
+                "total_paginas": 51
+              },
+              "publicado": {
+                "flavio": 47.676991150442475,
+                "lula": 52.32300884955752
+              },
+              "pnad": {
+                "flavio": 48.70077478254142,
+                "lula": 51.299225217458584
+              },
+              "modelo": {
+                "flavio": 49.92522341263026,
+                "lula": 50.07477658736973
+              },
+              "allocated_undecided": {
+                "flavio": 0.7360734874038003,
+                "lula": 0.7382784274993703
+              },
+              "rates": {
+                "flavio": 0.8361992574287401,
+                "lula": 0.7962213991300896
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": []
+            },
+            {
               "id": "nexus_2026-09-27",
               "instituto": "Nexus",
               "divulgacao": "2026-09-28",
@@ -6297,43 +6640,50 @@
             {
               "without": "Datafolha",
               "valid": {
-                "lula": 47.863798749098116,
-                "flavio": 52.13620125090189
+                "lula": 48.232295055476726,
+                "flavio": 51.767704944523274
               }
             },
             {
               "without": "Gerp",
               "valid": {
-                "lula": 48.5619640557732,
-                "flavio": 51.438035944226804
+                "lula": 48.81409947770596,
+                "flavio": 51.18590052229404
               }
             },
             {
               "without": "Indexa/Broadcast",
               "valid": {
-                "lula": 47.59827440565354,
-                "flavio": 52.40172559434645
+                "lula": 48.011024769272915,
+                "flavio": 51.988975230727085
+              }
+            },
+            {
+              "without": "MDA",
+              "valid": {
+                "lula": 47.751963256423466,
+                "flavio": 52.24803674357654
               }
             },
             {
               "without": "Nexus",
               "valid": {
-                "lula": 47.37396896342993,
-                "flavio": 52.626031036570076
+                "lula": 47.824103567419904,
+                "flavio": 52.17589643258011
               }
             },
             {
               "without": "Palver",
               "valid": {
-                "lula": 47.74339771847335,
-                "flavio": 52.25660228152666
+                "lula": 48.131960863289414,
+                "flavio": 51.86803913671059
               }
             },
             {
               "without": "Quaest",
               "valid": {
-                "lula": 47.37037564611262,
-                "flavio": 52.629624353887394
+                "lula": 47.82110913632214,
+                "flavio": 52.17889086367787
               }
             }
           ],
@@ -6369,6 +6719,6 @@
   },
   "sources_sha256": {
     "nexus_btg_28092026_data.json": "99313b48fee54545d99de437946cc52cfce49be36c7587c41909cf9f192cc181",
-    "reponderacao_pnad.json": "dbf591de856cda85c029c891151306ad737f989c940efd9161c813b7636bab71"
+    "reponderacao_pnad.json": "ca2e5bf982cb001dc258a6352b664112ae1efe5c21a48b48a7812b9be819b8ad"
   }
 }
