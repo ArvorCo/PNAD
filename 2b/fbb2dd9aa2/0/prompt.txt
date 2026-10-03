@@ -1,0 +1,331 @@
+A session-scoped Stop hook is now active with condition: "agora vamos considerar todas as últiams pesquisas estaduais para senador e montar uma página chamada @docs/predicao_senado.html que vai tentar prever quem serão os 2 eleitos de cada estado e montar o senado de 2027 com um exercício matemático profundo de predição o mais avançado possível, trazendo os 2 que devem ser eleitos baseando-nos nas pesquisas estaduais mais recentes possíveis, trazendo as fotos deles dos materiais do tse de dados abertos e colocando eles num mapa com a nossa previsão a partir das estaduais. Isso precisa considerar pesquisas que sejam do dia 30 para cá o campo, no máximo 28 ou 29 para tentarmos montar um modelo preditivo e o mapa do Brasil para ver quais 2 senadores sairão pro senado de 2027 e a probabilidade de cada um de estar lá (não votos válidos, probabilidade). Use subagentes sonnet e opus 5.5 para conseguirmos otimizar os gastos disso". Briefly acknowledge the goal, then immediately start (or continue) working toward it — treat the condition itself as your directive and do not pause to ask the user what to do. The hook will block stopping until the condition holds. It auto-clears once the condition is met — do not tell the user to run `/goal clear` after success; that's only for clearing a goal early.
+
+---
+
+<task-notification>
+<task-id>a921d1670321959e7</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "TSE candidatos, fotos e Senado 2022" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>`scripts/senado-2026-tse.py` roda de ponta a ponta e gravou as quatro saídas e as fotos. `ruff check scripts tests` e `black --check scripts tests` passam limpos e os 8 testes de `tests/test_senado_2026_tse.py` passam. Não fiz commit nem toquei em `docs/*.html`.
+
+**A situação da candidatura não está disponível.** Nas 319 candidaturas ao Senado, `DS_SITUACAO_CANDIDATURA` vem como `#NE` e `DS_SIT_TOT_TURNO` como `#NULO` no consulta_cand de 03/10. Não dá para separar aptas de inaptas, então gravei `situacao_candidatura: null`. O `--todos-aptos` exportou foto de todas as 319, e o filtro passará a valer sozinho se uma versão futura do arquivo trouxer a situação.
+
+**Candidaturas por UF** (todas, pelo motivo acima):
+
+| UF | n | UF | n | UF | n |
+|---|---|---|---|---|---|
+| AC | 8 | MA | 11 | RJ | 17 |
+| AL | 7 | MG | 18 | RN | 14 |
+| AM | 9 | MS | 10 | RO | 10 |
+| AP | 9 | MT | 10 | RR | 13 |
+| BA | 10 | PA | 13 | RS | 13 |
+| CE | 8 | PB | 10 | SC | 13 |
+| DF | 13 | PE | 12 | SE | 11 |
+| ES | 11 | PI | 20 | SP | 16 |
+| GO | 11 | PR | 9 | TO | 13 |
+
+**Eleitos de 2022** (partido, campo, votos nominais; um por UF):
+
+| UF | Eleito | Partido | Campo | Votos |
+|---|---|---|---|---|
+| AC | Alan Rick | UNIÃO | centro-direita | 308.624 |
+| AL | Renan Filho | MDB | centro | 1.691.976 |
+| AM | Omar Aziz | PSD | centro | 1.568.014 |
+| AP | Davi | UNIÃO | centro-direita | 392.174 |
+| BA | Otto Alencar | PSD | centro | 8.436.666 |
+| CE | Camilo | PT | esquerda | 6.779.026 |
+| DF | Damares Alves | REPUBLICANOS | direita | 1.429.124 |
+| ES | Magno Malta | PL | direita | 1.642.378 |
+| GO | Wilder Morais | PL | direita | 1.598.044 |
+| MA | Flávio Dino | PSB | esquerda | 4.251.622 |
+| MG | Cleitinho | PSC | indefinido | 8.536.386 |
+| MS | Tereza Cristina | PP | centro-direita | 1.658.298 |
+| MT | Wellington Fagundes | PL | direita | 1.650.458 |
+| PA | Beto Faro | PT | esquerda | 3.563.164 |
+| PB | Efraim Filho | UNIÃO | centro-direita | 1.234.954 |
+| PE | Teresa Leitão | PT | esquerda | 4.122.552 |
+| PI | Wellington Dias | PT | esquerda | 1.924.388 |
+| PR | Sergio Moro | UNIÃO | centro-direita | 3.906.376 |
+| RJ | Romário | PL | direita | 4.768.662 |
+| RN | Rogério Marinho | PL | direita | 1.416.702 |
+| RO | Jaime Bagattoli | PL | direita | 586.976 |
+| RR | Dr. Hiran | PP | centro-direita | 237.520 |
+| RS | Hamilton Mourão | REPUBLICANOS | direita | 5.186.588 |
+| SC | Jorge Seif | PL | direita | 2.968.220 |
+| SE | Laércio | PP | centro-direita | 620.600 |
+| SP | Astronauta Marcos Pontes | PL | direita | 21.429.826 |
+| TO | Professora Dorinha | UNIÃO | centro-direita | 790.816 |
+
+Duas coisas para o motor tratar:
+- **Cleitinho:** `PSC` não está em `PARTIDO_CAMPO`, então o campo saiu `indefinido`. Não inventei classificação. O motor precisa de uma exceção declarada para ele.
+- **Titulares:** o arquivo registra o eleito da urna, não o titular atual. Flávio Dino deixou a cadeira do MA em 2024, então o nome de Dino ali é o eleito de 2022 e não quem a ocupa hoje.
+
+**Fotos:** 318 de 319 gravadas em `docs/img/senado/`, total de 2.515 KB. Os 27 zips baixaram sem falha. A que faltou é Gustavo Galassi (PSDB, MG, SQ `130002553354`): o zip de MG tem 1.829 jpg e não traz esse SQ. Esse candidato fica com `foto: null` em `tse_candidatos.json`.
+
+**Casamento de nomes:** as pesquisas já existentes em `analysis/senado_2026/pesquisas/` têm 299 nomes distintos; 293 casaram e 6 não. A tabela `APELIDOS` está vazia de propósito, sem adivinhação. Os 6 não casados:
+- Mailson Neto (PE), Julio César (PI), Bruno Bolsonaro Scheid (RO), Helio Bolsonaro (RR) e Nilton Santos (TO) não têm candidatura ao Senado no TSE.
+- Guto Schiavetto (SP) deu casamento ambíguo (duas candidaturas com a mesma forma normalizada).
+
+Rode o script de novo, sem `--todos-aptos`, quando a coleta de pesquisas terminar.
+
+**Eleitorado:** `eleitorado_uf_2026.json` usa o `eleitorado` por UF de `data/outputs/predicao_2026/tse.json` (perfil_eleitorado_2026), com o total nacional.
+
+Arquivos em `/Users/leonardodias/arvor/PNAD`:
+- `scripts/senado-2026-tse.py`
+- `scripts/senado_2026/tse.py` (a lógica; criei o `__init__.py` do pacote)
+- `tests/test_senado_2026_tse.py`
+- `analysis/senado_2026/tse_candidatos.json`
+- `analysis/senado_2026/senadores_2022.json`
+- `analysis/senado_2026/eleitorado_uf_2026.json`
+- `analysis/senado_2026/casamento_nomes.json`
+- `docs/img/senado/`</result>
+<usage><subagent_tokens>157660</subagent_tokens><tool_uses>10</tool_uses><duration_ms>285934</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>ae5262a3d0c65c281</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Página predicao_senado.html" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>A página está pronta e passa nas auditorias, mas só foi testada contra a fixture. O JSON real do motor ainda não existe em `docs/assets/predicao_senado.json`. Apaguei o `docs/predicao_senado.html` que o build da fixture gerou, para não deixar uma página com dados inventados.
+
+Para publicar quando o JSON chegar: `python3 scripts/senado-2026-build.py` e depois `python3 scripts/social-cards.py --only predicao_senado`. Sem o JSON, o build falha com mensagem clara.
+
+**Auditorias (contra a fixture)**
+- `pytest -q tests/test_senado_2026_build.py`: 7 passam.
+- `scripts/render-audit.py`: 0 problemas.
+- `scripts/contrast-audit.py`: 0 abaixo do mínimo WCAG AA.
+- Sem rolagem lateral a 390 px com todos os `&lt;details&gt;` abertos.
+- Sem erros de console.
+- `grep -c "—"` dá 0 na página e no `docs/index.html`.
+- `ruff check` e `black --check` estão limpos nos meus arquivos. O que sobra nos dois (um arquivo para reformatar e 9 achados do ruff) está em `scripts/senado_2026/calibracao.py`, que não é meu e não toquei.
+
+**Renderizado, na ordem pedida**
+1. **Hero:** três cartões por grupo de campo, com assentos esperados, IC90, quantos continuam e quantos são novos.
+2. **Hemiciclo:** 81 assentos em SVG, por campo e por partido (8 maiores e outros), com legenda numérica.
+3. **Mapa:** 27 UFs pintadas pelo campo dos dois eleitos prováveis, com listras quando os campos diferem, esmaecido para cobertura antiga e cinza sem pesquisa. Ao lado fica a ficha do estado selecionado. Abaixo ficam as 27 fichas em `&lt;details&gt;`, com SP aberta quando o JSON for o real. A seleção por clique e as setas do teclado ficam em `docs/assets/predicao_senado.js`. Sem JS a página continua completa.
+4. **Tabela das 27 UFs:** ordenável.
+5. **Capítulos "Como lemos", "Limites" e "Fontes":** conforme o pedido. O exemplo de "Como lemos" usa o estado com pesquisa recente e disputa mais apertada entre o segundo e o terceiro, tirado do JSON.
+6. **Rodapé** com os três links pedidos.
+
+Entregas adicionais:
+- **Card social:** `scripts/social-card-senado.py` lê o JSON, e o card foi acrescentado ao manifesto em `scripts/social-cards.py`. O PNG atual saiu sem o JSON real, então tem só o fallback "81 assentos". Regerar depois do JSON.
+- **Biblioteca:** entrada nova no `docs/index.html`, antes da predição presidencial.
+- **Teste:** `tests/test_senado_2026_build.py`.
+
+Pontos para você conferir quando o JSON real chegar:
+- **IC90 do grupo:** o cartão do hero soma `esperado` dos campos do grupo, mas o IC90 da soma não se deduz dos ICs de cada campo. Quando `por_campo` tem os cinco campos, a página mostra o IC90 de cada campo separado. Se o motor gravar `senado_2027.por_grupo` com chaves `direita`, `centro` e `esquerda` e o mesmo formato, a página usa o IC90 exato do grupo.
+- **Leitura dos três campos de probabilidade agregada:** `p_maioria_direita_mais_centro_direita` e `p_41_...` viram "somam 41 assentos ou mais". `p_54_bloco_oposicao` vira "o bloco de oposição chega a 54 assentos, dois terços do Senado". Esses rótulos são minha interpretação do nome das chaves; confirme com quem escreveu o motor.
+- **Campos opcionais lidos:** `parametros.escala_erro_*` e `justificativa_erro`, `validacao.calibracao_2022`, `validacao.sensibilidades[].rotulo/descricao` e `validacao.achado_contrario`. Se `calibracao_2022` faltar, o capítulo declara a escala do erro como hipótese não calibrada.
+- **Formato dos campos de fonte:** `fontes[].campo` precisa ser texto, com datas ISO sendo convertidas para dd/mm/aaaa. Os campos `n` e `registro_tse` de `fontes` são opcionais: quando faltam, a página mostra "–".
+- **Regras fixas no código:** 81 assentos e 2 vagas por estado ficam como constantes em `comum.py`, por serem regra institucional.
+
+Capturas desktop e 390 px em `/Users/leonardodias/arvor/PNAD/analysis/senado_2026/qa-desktop.png` e `qa-mobile.png`. São da fixture, não da previsão real; repito depois com o JSON.
+
+Arquivos principais:
+- `/Users/leonardodias/arvor/PNAD/scripts/senado-2026-build.py`
+- `/Users/leonardodias/arvor/PNAD/scripts/senado_2026/pagina/` (`comum.py`, `view.py`, `mapa.py`, `hemiciclo.py`, `texto.py`)
+- `/Users/leonardodias/arvor/PNAD/docs/predicao_senado.template.html`
+- `/Users/leonardodias/arvor/PNAD/docs/assets/predicao_senado.css` e `predicao_senado.js`
+- `/Users/leonardodias/arvor/PNAD/tests/fixtures/predicao_senado_exemplo.json`</result>
+<usage><subagent_tokens>255861</subagent_tokens><tool_uses>46</tool_uses><duration_ms>511642</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a37317e99cc7327f0</task-id>
+<tool-use-id>toolu_017WGan6sDoPuqStJJA7Jnma</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Buscar outras pesquisas de Senado" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>Entreguei a cobertura dos outros institutos: 34 ondas transcritas, e 11 UFs ficaram sem pesquisa recente de Senado de instituto algum além de Datafolha e Quaest. O script valida todos os JSONs da pasta (também os do outro agente) sem erro. `pytest -q tests/test_senado_2026_outros.py` dá 291 passed e 8 skipped, e `ruff` e `black` passam nos meus arquivos. `ruff check scripts tests` e `black --check scripts tests` inteiros falham, mas por arquivos que não toquei: `scripts/senado_2026/calibracao.py` e um terceiro, `calibracao.py` com 11 erros de ruff. Não editei nenhum `docs/*.html` e não fiz commit.
+
+## O que foi gerado
+
+- **JSONs:** 34 ondas em `analysis/senado_2026/pesquisas/` (`realtime_`, `parana_`, `atlas_`, `franca_`, `futura_`).
+- **Arquivos de origem:** PDFs, `fonte.json` (URL, bytes, SHA-256, hora da captura, páginas) e o PNG renderizado da página do Senado em `data/originals/senado_102026/&lt;instituto&gt;_&lt;UF&gt;/`.
+- **Script e testes:** `scripts/senado-2026-outros.py` e `tests/test_senado_2026_outros.py`.
+- **Cobertura:** `analysis/senado_2026/cobertura_outros.json`, gerado pelo script com `--cobertura`.
+- **Arquivo extra:** `analysis/senado_2026/referencias_nao_transcritas.json` (15 pesquisas que existem mas não transcrevi).
+
+## Convenções que adotei
+
+- **Real Time, Atlas e Futura:** a pergunta é o consolidado dos dois votos. Real Time e Atlas somam cerca de 100 (`votos_por_eleitor: 1`); a Futura soma cerca de 200 (`votos_por_eleitor: 2`).
+- **Paraná Pesquisas:** a pergunta é de resposta múltipla, até dois nomes (`votos_por_eleitor: 2`, soma de 148 a 183). A 1ª e a 2ª opção separadas entram em `perguntas_adicionais`. O relatório não traz partido, então ele fica `null`.
+- **França:** o principal é o 1º voto, soma 100. O 2º voto e a soma dos dois votos dos mais citados (lista parcial) estão em `perguntas_adicionais`. Também sem partido.
+- **Campo extra `outros`:** o item "Outros" do gráfico entra num campo `outros` fora da lista de candidatos, e a soma de coerência o conta.
+- **Atlas:** as barras são imagens, então transcrevi à mão a partir do PNG renderizado, com a página registrada. O Atlas RN não traz Senado, apesar do nome do arquivo.
+- **Real Time:** barra sem rótulo de valor foi lida como 0, e o mesmo aviso consta nas observações do JSON.
+- **Contratante:** "nao informado" quando a matéria do Poder360 não diz.
+- **Divulgação do Atlas:** a data vem da matéria ou do nome do arquivo, não do relatório.
+
+## Cobertura por UF (campo terminando em 28/09 ou depois)
+
+| UF | Pesquisa recente transcrita (fim do campo) | Anterior a 28/09, transcrita |
+|---|---|---|
+| AL | Paraná Pesquisas 29/09; Real Time 01/10 | |
+| AM | Real Time 01/10 | |
+| BA | Atlas 02/10 | Real Time 26/09; Paraná Pesquisas 23/09 |
+| CE | Atlas 28/09 | Real Time 24/09; Paraná Pesquisas 25/09 |
+| DF | Real Time 28/09; França 29/09 | |
+| ES | Real Time 29/09 | Paraná Pesquisas 22/09 |
+| MG | Real Time 02/10 | Real Time 26/09 |
+| MT | Paraná Pesquisas 29/09 | |
+| PA | Atlas 02/10; Futura 28/09 | Real Time 26/09 |
+| PB | Real Time 01/10 | |
+| PI | Atlas 28/09 | |
+| RJ | Real Time 29/09 | Paraná Pesquisas 22/09 |
+| RO | Real Time 29/09 | |
+| RS | Real Time 28/09 | |
+| SP | Real Time 28/09; Futura 01/10 | |
+| TO | Paraná Pesquisas 01/10 | |
+| AC | | Real Time 19/09 |
+| AP | | Paraná Pesquisas 27/09 |
+| PE | | França 25/09; Real Time 26/09 |
+| SC | | Paraná Pesquisas 22/09 |
+| SE | | França 26/09 |
+
+## UFs sem nenhuma pesquisa de Senado recente dos outros institutos
+
+AC, AP, GO, MA, MS, PE, PR, RN, RR, SC, SE.
+
+- **AC, AP, PE, SC e SE:** só têm pesquisa anterior a 28/09 transcrita (tabela acima).
+- **GO, MA, MS, PR, RN e RR:** só têm pesquisas pequenas anteriores a 28/09, que listei sem transcrever porque existe Quaest para esses estados. São Ranking (MA), IPR (MS), Neokemp (PR), Eficaz (RR) e Media (RN), mais as rodadas antigas do Paraná Pesquisas em GO e PR.
+- **Atlas SE:** o Atlas de SE existe (46,5% a 40,8%, divulgado em 03/10), mas só encontrei a matéria do Poder360, sem PDF e sem Senado, então não transcrevi.
+- **Atlas RN:** o PDF está arquivado na pasta temporária, mas não traz Senado.
+
+Há ainda pesquisas anteriores de AL, ES, MT, SP, RJ, MG, GO, PR e PB (Vox, Prefab, Paraná Pesquisas, Real Time) listadas em `referencias_nao_transcritas.json` com data e URL.
+
+## Pontos de atenção
+
+- **Futura PA:** o PDF que a matéria do Poder360 linka está errado (é o PDF presidencial do RS da Real Time). Usei o arquivo certo, `futura-para-presidente-1out.pdf`, e a página 45 traz o gráfico.
+- **Futura SP:** Salles ainda aparece na lista, embora tenha retirado a candidatura em 28/09, no meio do campo. Isso está nas observações do JSON. O mesmo vale para a Real Time SP e para Ronaldo Fonseca na Real Time DF (desistiu em 28/09).
+- **Paraná Pesquisas RJ:** a soma de 147,6 (menor que 150) é de resposta múltipla de fato, com mais indecisos.
+- **Real Time MG e PA (26/09):** somam 101 por arredondamento.</result>
+<usage><subagent_tokens>390542</subagent_tokens><tool_uses>91</tool_uses><duration_ms>1216302</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a34c00ca606b08bdb</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Motor probabilístico do Senado" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>O motor está pronto e rodou sobre as 131 ondas que existem hoje. Grava `docs/assets/predicao_senado.json` em 2 segundos, com 20 mil sorteios por estado e as duas sensibilidades. Com a mesma semente, duas rodadas dão saída idêntica, exceto `gerado_em`. Os 20 testes novos passam, a suíte inteira também (1000 passaram, 8 pulados), o lint está em zero e o pyright não acusa erro nos meus arquivos. Não fiz commit.
+
+## Parâmetros finais
+- Média por recência com meia-vida de 5 dias, pelo ponto médio do campo. Uma onda por casa. Entram na central as ondas com fim do campo em 28/09 ou depois. Fora a recência, todas as casas pesam igual.
+- deff de 1,5 (hipótese declarada). Onda sem n usa 804, o menor n do acervo.
+- Indecisos: em cada sorteio, 70% de chance de repartir na proporção do voto declarado e 30% de repartir igualmente entre os nomes com ao menos 1 ponto. Branco e nulo nunca viram voto válido.
+- Erro não amostral, calibrado em 2022, em variância no log das frações:
+
+| Parte | Variância |
+|---|---|
+| Campo, comum a todos os estados | 0,0631 |
+| Campo dentro do estado | 0,0490 |
+| Próprio de cada candidatura | 0,0490 |
+| Deriva por dia até 04/10 | 0,00145 |
+
+- Com isso, uma candidatura em 30% dos válidos tem desvio de **9,1 pontos** (`escala_erro_pp`). A divisão meio a meio entre "campo no estado" e "candidatura" é hipótese declarada: 2022 não a identifica, só havia 5 pares do mesmo campo.
+
+## Calibração 2022
+A Wikipédia estava acessível. Guardei o texto bruto das 27 páginas com SHA-256 e hora de acesso, e comparei com a urna do TSE.
+
+- **Cobertura:** 26 pesquisas de Datafolha, Ipec e Quaest em **19 estados**, com fim do campo de 24/09 a 01/10/2022.
+- **Erro por candidatura, em pontos dos válidos:** média absoluta 3,91; raiz do erro quadrático 5,88.
+- **Candidaturas que fizeram de 20% a 40%:** média absoluta 7,70; raiz do erro quadrático 9,09. É desse número que vem a escala de 9,1 pontos.
+- **Diferença entre 2º e 3º colocados:** média absoluta 11,09; desvio 12,02.
+- **Viés:** as candidaturas de direita ficaram em média 3,15 pontos abaixo da urna. Esse viés entra só como tamanho do erro, nas duas direções, e não desloca a central.
+
+## Resultado por UF
+Probabilidade de eleição de cada nome da dupla mais provável. "Empate" marca dupla com menos de 2 pontos de vantagem sobre a segunda.
+
+| UF | Cobertura | Dupla mais provável (p_eleito) | p da dupla | 3º colocado |
+|---|---|---|---|---|
+| AC | antiga | Gladson Camelí 0,73 + Marcio Bittar 0,54 | 0,31 | Jorge Viana 0,34 |
+| AL | recente | Marina JHC 0,71 + Arthur Lira 0,56 | 0,32 | Renan 0,53 |
+| AP | antiga | Rayssa Furlan 0,85 + Randolfe 0,54 | 0,42 | Lucas Barreto 0,50 |
+| AM | recente | Capitão Alberto Neto 0,71 + Eduardo Braga 0,44 | 0,24, empate | Wilson Lima 0,43 |
+| BA | recente | Rui Costa 0,68 + Jaques Wagner 0,56 | 0,44 | Angelo Coronel 0,40 |
+| CE | recente | Cid Gomes 0,66 + Luizianne 0,64 | 0,40 | Capitão Wagner 0,42 |
+| DF | recente | Michelle Bolsonaro 0,86 + Leila do Vôlei 0,54 | 0,41 | Bia Kicis 0,41 |
+| ES | recente | Renato Casagrande 0,92 + Sergio Meneguelli 0,33 | 0,29 | Fabiano Contarato 0,26 |
+| GO | antiga | Gracinha Caiado 0,88 + Gustavo Gayer 0,50 | 0,41 | Dr. Zacharias Calil 0,41 |
+| MA | antiga | Roseana Sarney 0,78 + Fufuca 0,58 | 0,41 | Lahesio Bonfim 0,36 |
+| MT | recente | Mauro Mendes 0,92 + Janaina Riva 0,59 | 0,51 | Zé Medeiros 0,43 |
+| MS | antiga | Capitão Contar 0,92 + Reinaldo Azambuja 0,90 | 0,83 | Soraya 0,13 |
+| MG | recente | Carlos Viana 0,57 + Domingos Sávio 0,56 | 0,24, empate | Marília Campos 0,56 |
+| PA | recente | Helder 0,75 + Delegado Éder Mauro 0,56 | 0,41 | Chicão 0,40 |
+| PB | recente | Joao Azevêdo 0,87 + Veneziano 0,72 | 0,62 | Nabor 0,21 |
+| PR | antiga | Alexandre Curi 0,71 + Deltan Dallagnol 0,40 | 0,25, empate | Filipe Barros 0,40 |
+| PE | recente | Marília Arraes 0,84 + Humberto Costa 0,77 | 0,64 | Mendonça Filho 0,24 |
+| PI | recente | Júlio César O Julim do Lula 0,84 + Marcelo Castro 0,84 | 0,70 | Ciro Nogueira 0,23 |
+| RJ | recente | Carlos Jordy 0,64 + Benedita da Silva 0,63 | 0,30, empate | Carlos Portinho 0,51 |
+| RN | antiga | Styvenson Valentim 0,86 + Zenaide Maia 0,53 | 0,44 | Coronel Hélio 0,27 |
+| RS | recente | Marcel Van Hattem 0,60 + Sanderson 0,57 | 0,40 | Manuela D'Ávila 0,43 |
+| RO | recente | Dr. Fernando Máximo 0,89 + Sílvia Cristina 0,55 | 0,46 | Bruno Scheid 0,27 |
+| RR | antiga | Teresa Surita 0,75 + Nicoletti 0,54 | 0,32, empate | Helena da Asatur 0,43 |
+| SC | antiga | Carol de Toni 0,75 + Carlos Bolsonaro 0,62 | 0,43 | Esperidião Amin 0,51 |
+| SP | recente | Guilherme Derrite 0,61 + André do Prado 0,52 | 0,31 | Marina Silva 0,44 |
+| SE | antiga | André Moura 0,63 + Rogerio Carvalho 0,43 | 0,22 | Delegado André David 0,43 |
+| TO | recente | Eduardo Gomes 0,81 + Alexandre Guimarães 0,44 | 0,30 | Gaguim 0,38 |
+
+**Senado de 2027**, em cadeiras esperadas com intervalo de 90%:
+- Direita mais centro-direita: 48,3 (38 a 59).
+- Centro: 13,4 (7 a 20).
+- Esquerda mais centro-esquerda: 19,3 (11 a 29).
+- Direita mais centro-direita chega a 41 cadeiras em 88% dos sorteios, a 49 em 49% e a 54 em 22%.
+- O número de cadeiras fecha em 81 em todos os sorteios.
+
+## Pontos que dependem de você
+1. **Candidaturas retiradas.** Salles (SP) e Ronaldo Fonseca (DF) também aparecem no TSE, então a regra "sem candidatura no TSE" não os pegava. Fiz uma tabela `RETIRADAS` em `base.py`, citando as observações das fichas como fonte. Apliquei a troca do voto deles por indeciso em **toda** onda usada, inclusive nas três com campo durante a retirada (Real Time SP, Real Time DF e Datafolha DF 30/09), não só nas posteriores. Motivo: o voto neles é nulo em 04/10, e sem a troca podiam sair eleitos no sorteio. Cada onda fica registrada em `validacao.retiradas` com a relação ao campo. Se preferir a regra literal (só ondas posteriores), é uma linha.
+2. **Estados com uma casa só.** BA, CE e PI dependem só da AtlasIntel; PB, ES e AM só da Real Time; MT e TO só da Paraná Pesquisas. As ondas mais antigas das outras casas saem da central pela regra do corte de 28/09.
+3. **Coleta pendente.** GO, MA, MS, PR, RN, RR, SC, SE, AC e AP estão com cobertura "antiga". GO depende de recolher a estimulada da Quaest de 03/10. Recoletando, basta rodar o executável de novo.
+4. **Ficha sem link.** `realtime_AC_2026-09-19.json` não tem URL nem matéria; em `fontes`, o campo `url` sai nulo.
+5. **Nomes de urna.** Os nomes vêm do nome de urna do TSE em caixa de título, com siglas mantidas (por exemplo, Marina JHC). O texto original em caixa alta fica em `nome_urna`.
+
+## Arquivos
+- /Users/leonardodias/arvor/PNAD/scripts/senado_2026/base.py
+- /Users/leonardodias/arvor/PNAD/scripts/senado_2026/calibracao.py
+- /Users/leonardodias/arvor/PNAD/scripts/senado_2026/motor.py
+- /Users/leonardodias/arvor/PNAD/scripts/senado_2026/senado.py
+- /Users/leonardodias/arvor/PNAD/scripts/senado_2026/saida.py (módulo a mais: monta o JSON e a validação)
+- /Users/leonardodias/arvor/PNAD/scripts/senado-2026-motor.py
+- /Users/leonardodias/arvor/PNAD/scripts/senado-2026-calibracao.py (executável a mais: refaz a calibração de 2022)
+- /Users/leonardodias/arvor/PNAD/tests/test_predicao_senado.py
+- /Users/leonardodias/arvor/PNAD/analysis/senado_2026/metodo.md
+- /Users/leonardodias/arvor/PNAD/analysis/senado_2026/calibracao_2022.json
+- /Users/leonardodias/arvor/PNAD/data/originals/senado_102026/wikipedia_2022/ (27 páginas da Wikipédia, 2,4 MB)
+- /Users/leonardodias/arvor/PNAD/docs/assets/predicao_senado.json</result>
+<usage><subagent_tokens>481127</subagent_tokens><tool_uses>122</tool_uses><duration_ms>2170440</duration_ms></usage>
+</task-notification>
+
+---
+
+[Image: original 1366x13540, displayed at 202x2000. Multiply coordinates by 6.76 to map to original image.]
+
+---
+
+Goal check-in: «agora vamos considerar todas as últiams pesquisas estaduais para senador e montar uma página chamada @docs/predicao_senado.html que vai tentar prever quem serão os 2 eleitos de cada estado e montar o senado de 2027 com um exercício matemático profundo de predição o mais avançado possível, trazendo os 2 que devem ser eleitos baseando-nos nas pesquisas estaduais mais recentes possíveis, trazendo as fotos deles dos materiais do tse de dados abertos e colocando eles num mapa com a nossa previsão a partir das estaduais. Isso precisa considerar pesquisas que sejam do dia 30 para cá o campo, no máximo 28 ou 29 para tentarmos montar um modelo preditivo e o mapa do Brasil para ver quais 2 senadores sairão pro senado de 2027 e a probabilidade de cada um de estar lá (não votos válidos, probabilidade). Use subagentes sonnet e opus 5.5 para conseguirmos otimizar os gastos disso» is still active, and evaluation has been deferred for 38 min because background work is still running:
+- b05jbam6n · shell · sleep 2400 &amp;&amp; python3 scripts/senado-2026-g1.py 2&gt;&amp;1 | tail -45
+Check on their progress (e.g. read their output). If they are progressing, say so briefly and keep waiting; if they are stuck or no longer needed, fix or stop them and continue toward the goal.
+
+---
+
+importantíssimo no caso do Deltan temos de colocar um conteúdo adicional falando que ele poderá ter os votos anulados se o registro dele continuar cassado, com a notícia que aconteceu agora do Floriano do TSE
+
+---
+
+outro ponto, quando clico num estado do mapa ele rola a tela, ainda que mude do lado também, então precisa fazer mudar do lado e não ficar rolando a tela para baixo
