@@ -106,10 +106,14 @@ def test_update_covers_both_release_days_and_pending_documents():
             p
             for p in historical[key]
             if (p.get("divulgacao") or p["campo"]["fim"]) <= "2026-09-24"
-            and (p["id"] in archived_sources or max(
-                p.get("fonte", {}).get("conferido_em", ""),
-                p.get("fonte", {}).get("atualizado_em", ""),
-            ) <= "2026-09-24")
+            and (
+                p["id"] in archived_sources
+                or max(
+                    p.get("fonte", {}).get("conferido_em", ""),
+                    p.get("fonte", {}).get("atualizado_em", ""),
+                )
+                <= "2026-09-24"
+            )
         ]
         for poll in historical[key]:
             if poll["id"] in archived_sources:

@@ -469,6 +469,19 @@ section, or call a relative house difference an identified electoral bias.
 Edit the template and `scripts/predicao_2026/`, then rebuild the generated page.
 Validate with `pytest -q tests/test_predicao_2026.py` and the full suite.
 
+The 3 October evening version adds an interactive state map
+(`scripts/predicao_2026/mapa.py`, `docs/assets/predicao_2026_mapa.js`), a
+simulator with one-click presets and shareable `#sim=` links
+(`scripts/predicao_2026/simulador.py`), a dynamic linear model anchor with
+house effects (`scripts/predicao_2026/dinamico.py`) and a rolling-origin
+predictive validation of every national anchor (`scripts/predicao_2026/preditiva.py`,
+output in `docs/assets/predicao_2026_validacao_preditiva.json`). The validation
+scores how well each anchor predicts the next polls, never the ballot. No anchor
+beat the recency-weighted central, so the central was kept and the DLM is an
+alternative in the simulator. `analysis/predicao_2026/avaliacao_ml.md` explains
+why supervised machine learning cannot be trained on this archive: there is
+one reference election and no archived 2018 or 2022 polls.
+
 ## Project status
 
 Production-useful for:

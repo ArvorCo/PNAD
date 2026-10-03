@@ -1,14 +1,15 @@
-from pathlib import Path
-from tempfile import TemporaryDirectory
 import csv
+from pathlib import Path
 
-import sys
+from npv_deflators import (
+    _auto_income_columns,
+    apply_deflator_to_csv,
+    build_deflators,
+    read_ipca_csv,
+)
+
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = ROOT / "scripts"
-if str(SCRIPTS) not in sys.path:
-    sys.path.insert(0, str(SCRIPTS))
-
-from npv_deflators import read_ipca_csv, build_deflators, apply_deflator_to_csv, _auto_income_columns  # type: ignore
 
 
 def test_build_deflators_from_sample():
@@ -54,7 +55,9 @@ def test_apply_deflator_streams_and_emits_columns(tmp_path: Path):
         "VD4019__rendim_habitual_qq_trabalho",
         "VD4020__rendim_efetivo_qq_trabalho",
     ]
-    apply_deflator_to_csv(inp, out, factors, cols, target_label="jul2025", min_wage=1518.0)
+    apply_deflator_to_csv(
+        inp, out, factors, cols, target_label="jul2025", min_wage=1518.0
+    )
 
     with out.open("r", encoding="utf-8") as fh:
         r = csv.DictReader(fh)

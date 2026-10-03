@@ -1,12 +1,9 @@
-import sys
 from pathlib import Path
+
+from pnadc_cli import DEFAULT_KEEP, DEFAULT_KEEP_ANUAL
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = ROOT / "scripts"
-if str(SCRIPTS) not in sys.path:
-    sys.path.insert(0, str(SCRIPTS))
-
-from pnadc_cli import DEFAULT_KEEP, DEFAULT_KEEP_ANUAL  # type: ignore
 
 
 def test_default_keep_has_no_duplicates():
@@ -55,7 +52,9 @@ def test_default_keep_includes_new_modeling_fields():
 
 def test_default_keep_includes_replicate_weights():
     cols = {c.strip() for c in DEFAULT_KEEP.split(",") if c.strip()}
-    reps = sorted(c for c in cols if c.startswith("V1028") and len(c) == 8 and c[5:].isdigit())
+    reps = sorted(
+        c for c in cols if c.startswith("V1028") and len(c) == 8 and c[5:].isdigit()
+    )
     assert len(reps) == 200
     assert reps[0] == "V1028001"
     assert reps[-1] == "V1028200"

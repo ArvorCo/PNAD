@@ -76,7 +76,9 @@ def test_empty_series_stays_missing_and_does_not_extrapolate_backwards():
     for t in ["1t", "2t"]:
         g = OUTPUT["agregador"]["nao_escolha"][t]
         for day, value in zip(
-            OUTPUT["agregador"]["serie"]["datas"], g["serie"]["ajustado"]["indecisos"]
+            OUTPUT["agregador"]["serie"]["datas"],
+            g["serie"]["ajustado"]["indecisos"],
+            strict=False,
         ):
             assert (value is not None) == bool(
                 next(c for c in g["cobertura_movel"] if c["data"] == day)["ondas"]

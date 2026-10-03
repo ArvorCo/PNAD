@@ -4,7 +4,6 @@ from pathlib import Path
 
 import pytest
 
-
 SCRIPT = Path(__file__).parents[1] / "scripts/quaest-territory-audit.py"
 SPEC = importlib.util.spec_from_file_location("quaest_territory_audit", SCRIPT)
 MODULE = importlib.util.module_from_spec(SPEC)

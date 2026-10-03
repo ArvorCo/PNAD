@@ -12,7 +12,11 @@ ASSETS = ROOT / "docs/assets"
 
 def test_all_versions_visible_but_only_unique_eligible_waves_enter_means():
     data = json.loads((ASSETS / "reponderacao_pnad.json").read_text())
-    active = {p["id"]: p for p in data["pesquisas"] if p["instituto"] == "Palver" and p["divulgacao"] <= "2026-09-24"}
+    active = {
+        p["id"]: p
+        for p in data["pesquisas"]
+        if p["instituto"] == "Palver" and p["divulgacao"] <= "2026-09-24"
+    }
     assert set(active) == {
         "palver_2026-08-09",
         "palver_2026-09-07_v2",

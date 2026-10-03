@@ -11,6 +11,7 @@ from pathlib import Path
 
 import numpy as np
 
+from . import dinamico
 from .recencia import NATIONAL_HALF_LIFE, age, decay, mean, midpoint, weights
 from .tse import ROOT, sha
 
@@ -26,6 +27,7 @@ UF_REGION = {uf: region for region, ufs in REGIONS.items() for uf in ufs.split()
 UF_REGION["ZZ"] = "Exterior"
 ELECTION = date(2026, 10, 4)
 SCENARIO = "pessoas16_efetivo"
+WINDOW_START = "2026-08-15"
 
 
 def module(name):
@@ -160,7 +162,7 @@ def house_effects(polls, today):
     }
 
 
-def national(today, half_life=NATIONAL_HALF_LIFE):
+def national(today, half_life=NATIONAL_HALF_LIFE, window_start=WINDOW_START):
     path = ROOT / "docs/assets/reponderacao_pnad.json"
     agg = read(path)
     polls, excluded = [], []
@@ -176,7 +178,7 @@ def national(today, half_life=NATIONAL_HALF_LIFE):
             or source["campo"]["fim"] > today.isoformat()
         ):
             reason = "Posterior ao corte"
-        elif source["campo"]["fim"] < "2026-08-15":
+        elif source["campo"]["fim"] < window_start:
             reason = "Anterior à janela de diagnóstico"
         elif any(
             pub.get(k, 0) > 0
@@ -237,6 +239,24 @@ def national(today, half_life=NATIONAL_HALF_LIFE):
     for p, w in zip(adjusted, weights(adjusted), strict=True):
         p["participacao_pnad_pct"] = 100 * float(w)
 
+    # Âncora dinâmica: mesma série e mesmos vetores da central, sem trocar a
+    # central. Variantes ficam registradas para auditoria, fora das âncoras.
+    dynamic = dinamico.fit(polls, today, window_start=window_start)
+    paired_series = [p for p in polls if p["pnad_vetor"] is not None]
+    dynamic["variantes"] = {
+        name: {
+            k: fitted["estado_final"][k]
+            for k in ("vetor", "validos_pct", "margem_flavio_lula_validos_pp")
+        }
+        | {
+            "n_ondas": fitted["n_ondas"],
+            "phi": fitted["parametros"]["phi_variancia_nao_amostral"],
+        }
+        for name, fitted in (
+            ("phi_1", dinamico.fit(polls, today, excess=False)),
+            ("somente_pnad", dinamico.fit(paired_series, today, "pnad_vetor")),
+        )
+    }
     return {
         "referencia_agregador": agg["referencia"],
         "sha256_agregador": sha(path),
@@ -251,7 +271,9 @@ def national(today, half_life=NATIONAL_HALF_LIFE):
             "pnad": mean(adjusted, "pnad_vetor"),
             "publicado": mean(adjusted, "publicado_vetor"),
             "todas": mean(selected, "publicado_vetor"),
+            "dinamico": dynamic["estado_final"]["vetor"],
         },
+        "dinamico": dynamic,
         "efeitos_casa": house_effects(polls, today),
         "excluidas": excluded,
     }

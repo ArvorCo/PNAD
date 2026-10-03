@@ -3,9 +3,11 @@
 from __future__ import annotations
 
 import json
+import re
 from html import escape as esc
 
-from .base import GROUPS, REGIONS, module
+from .base import GROUPS, REGIONS
+from .mapa import explorer
 
 NAMES = {
     "lula": "Lula",
@@ -28,28 +30,77 @@ def millions(x):
     return number(x / 1e6, 2) + " mi"
 
 
-def table(headers, rows, label):
+NUMERIC_CELL = re.compile(
+    r"^[+\-\u2212\u2013]?\d[\d.,]*(\s?(%|pp|mi|mil|pts?|dias?|casas?|ondas?|\u00d7))?$"
+)
+
+
+def is_numeric_cell(value):
+    text = re.sub(r"<[^>]+>", "", str(value)).strip()
+    return bool(NUMERIC_CELL.match(text))
+
+
+def numeric_columns(rows, width):
+    """Colunas em que quase todas as células são números: alinhadas à direita."""
+    columns = set()
+    for j in range(width):
+        cells = [row[j] for row in rows if j < len(row) and str(row[j]).strip()]
+        if cells and sum(map(is_numeric_cell, cells)) >= 0.8 * len(cells):
+            columns.add(j)
+    return columns
+
+
+def table(headers, rows, label, sortable=False):
+    numeric = numeric_columns(rows, len(headers))
+
+    def cls(j):
+        return ' class="num"' if j in numeric else ""
+
+    head = "".join(
+        f'<th scope="col"{cls(j)}>{esc(h)}</th>' for j, h in enumerate(headers)
+    )
+    body = "".join(
+        "<tr>" + "".join(f"<td{cls(j)}>{v}</td>" for j, v in enumerate(row)) + "</tr>"
+        for row in rows
+    )
     return (
-        '<div class="table-scroll" tabindex="0" role="region" aria-label="'
-        + esc(label)
-        + '"><table><thead><tr>'
-        + "".join(f'<th scope="col">{esc(h)}</th>' for h in headers)
-        + "</tr></thead><tbody>"
-        + "".join(
-            "<tr>" + "".join(f"<td>{v}</td>" for v in row) + "</tr>" for row in rows
-        )
-        + "</tbody></table></div>"
+        f'<div class="table-scroll" tabindex="0" role="region" aria-label="{esc(label)}">'
+        f'<table{" data-sortable" if sortable else ""}><thead><tr>{head}</tr></thead>'
+        f"<tbody>{body}</tbody></table></div>"
+    )
+
+
+def percent_bar(key, point, low, high, top):
+    """Barra de placar: a estimativa pontual e a faixa de 90% na mesma escala."""
+
+    def pct(x):
+        return f"{100 * x / top:.2f}"
+
+    label = (
+        f"{NAMES[key]}: estimativa {number(point)}%, "
+        f"faixa de 90% de {number(low)}% a {number(high)}%, escala de 0 a {top:.0f}%"
+    )
+    return (
+        f'<div class="pbar {key}" role="img" aria-label="{label}">'
+        f'<div class="pbar-fill" style="width:{pct(point)}%"></div>'
+        f'<div class="pbar-band" style="left:{pct(low)}%;width:{pct(high - low)}%"></div>'
+        "</div>"
     )
 
 
 def hero(data):
     b, uncertainty = data["central"]["brasil"], data["incerteza"]
+    quantiles = {k: uncertainty["candidatos"][k]["percentual"] for k in GROUPS[:3]}
+    top = float(max(10, -(-max(q["p95"] for q in quantiles.values()) // 10) * 10))
     cards = []
     for k in GROUPS[:3]:
-        q = uncertainty["candidatos"][k]["percentual"]
+        q = quantiles[k]
         cards.append(
-            f'<div class="candidate {k}"><span>{NAMES[k]}</span><b>{number(b["percentuais"][k])}<small>%</small></b>'
-            f'<strong>{millions(b[k])} votos</strong><p>Faixa de 90%: {number(q["p05"])}% a {number(q["p95"])}%</p></div>'
+            f'<div class="candidate {k}"><span>{NAMES[k]}</span>'
+            f'<b>{number(b["percentuais"][k])}<small>%</small></b>'
+            f"<strong>{millions(b[k])} votos</strong>"
+            f'{percent_bar(k, b["percentuais"][k], q["p05"], q["p95"], top)}'
+            f'<p>Faixa de 90%: {number(q["p05"])}% a {number(q["p95"])}%</p></div>'
         )
     return '<div class="scoreboard">' + "".join(cards) + "</div>"
 
@@ -153,26 +204,12 @@ def state_table(data):
         ],
         rows,
         "Previsão central das 27 UFs e exterior",
+        sortable=True,
     )
 
 
 def map_svg(data):
-    M = module("voto_util_mapa")
-    rows = {r["uf"]: r for r in data["central"]["ufs"] if r["uf"] != "ZZ"}
-    margins = {
-        uf: 100 * (r["flavio"] - r["lula"]) / (r["flavio"] + r["lula"] + r["outros"])
-        for uf, r in rows.items()
-    }
-    return M.choropleth(
-        margins,
-        lambda _u, v: COLORS["flavio"] if v > 0 else COLORS["lula"],
-        lambda u, _v: u,
-        lambda u, v: f"{u}: diferença Flávio menos Lula {number(v)} pp; {millions(rows[u]['lula']+rows[u]['flavio']+rows[u]['outros'])} votos válidos",
-        width=500,
-        height=500,
-        label="Cenário central por UF; cores indicam a estimativa pontual, não liderança estatisticamente identificada",
-        escuro=lambda _u, _v: True,
-    )
+    return explorer(data)
 
 
 def sensitivity(data):
@@ -471,6 +508,91 @@ def validation(data):
     )
 
 
+def dlm_table(data):
+    """Trajetória filtrada e efeitos de casa do modelo dinâmico."""
+    d = data["nacional"]["dinamico"]
+    par, final = d["parametros"], d["estado_final"]
+    summary = (
+        f"<p>{d['n_ondas']} ondas de {len(d['casas'])} casas. Variância de evolução por "
+        f"máxima verossimilhança: desvio diário de {number(par['dp_diario_nivel_pp']['lula'], 2)} pp "
+        f"no nível de Lula. Variância amostral n/deff multiplicada por "
+        f"{number(par['phi_variancia_nao_amostral'], 2)} (erro não amostral estimado). "
+        f"Estado em {esc(final['data'])}: Lula {number(final['validos_pct']['lula'], 2)}%, "
+        f"Flávio {number(final['validos_pct']['flavio'], 2)}% dos válidos; diferença F−L "
+        f"{number(final['margem_flavio_lula_validos_pp'], 2)} pp, desvio "
+        f"{number(final['dp_margem_pp'], 2)} pp.</p>"
+    )
+    path = table(
+        ["Data", "Lula", "Flávio", "Demais", "Indecisos", "Branco/nulo", "F−L válidos"],
+        [
+            [
+                esc(r["data"]),
+                *[
+                    f"{number(v)}% ± {number(e)}"
+                    for v, e in zip(r["vetor_pct"], r["dp_pp"], strict=True)
+                ],
+                f"{number(r['margem_flavio_lula_validos_pp'], 2)} ± {number(r['dp_margem_pp'], 2)}",
+            ]
+            for r in d["trajetoria"]
+            if r["ondas_acumuladas"]
+        ],
+        "Trajetória filtrada do modelo dinâmico, com um desvio padrão",
+    )
+    houses = table(
+        ["Casa", "Ondas", "Efeito L−F nos válidos", "Desvio", "Lula", "Flávio"],
+        [
+            [
+                esc(name),
+                str(h["n_ondas"]),
+                number(h["efeito_margem_lula_flavio_validos_pp"], 2) + " pp",
+                number(h["dp_margem_pp"], 2) + " pp",
+                number(h["efeito_pp"]["lula"], 2) + " pp",
+                number(h["efeito_pp"]["flavio"], 2) + " pp",
+            ]
+            for name, h in d["efeitos_casa"].items()
+        ],
+        "Efeitos de casa do modelo dinâmico, soma zero entre casas",
+    )
+    return summary + path + houses
+
+
+def predictive_table(data):
+    """Validação de origem móvel: previsão de pesquisas futuras, não da urna."""
+    v = data["validacao_preditiva"]
+
+    def rows(section):
+        return [
+            [
+                esc(m["rotulo"]),
+                str(m["n_pares"]),
+                number(m["mae_margem_pp"], 2),
+                number(m["rmse_margem_pp"], 2),
+                number(m["vies_margem_pp"], 2),
+                number(m["mae_parcelas_pp"], 2),
+            ]
+            for m in v[section]["metricas"].values()
+        ]
+
+    headers = [
+        "Âncora",
+        "Pares",
+        "MAE L−F (pp)",
+        "RMSE L−F (pp)",
+        "Viés L−F (pp)",
+        "MAE parcelas (pp)",
+    ]
+    return (
+        f"<p>{esc(v['natureza'])}</p>"
+        + table(headers, rows("origem_movel"), "Origem móvel, todas as casas")
+        + table(headers, rows("deixa_uma_casa_fora"), "Deixando a casa do alvo fora")
+        + table(
+            headers,
+            rows("com_casa_do_alvo"),
+            "Prevendo a próxima onda de uma casa conhecida",
+        )
+    )
+
+
 def minor_table(data):
     b = data["central"]["brasil"]
     return table(
@@ -509,91 +631,14 @@ def histogram(data):
 
 
 def simulator(data):
-    options = "".join(
-        f'<option value="{s["uf"]}">{s["uf"]} · {esc(s["regiao"])}</option>'
-        for s in data["estados"]
-    )
-    regions = "".join(
-        f'<label>{esc(r)}<input type="number" data-region="{esc(r)}" min="-20" max="20" step="0.5" value="0"><span>pp de comparecimento</span></label>'
-        for r in REGIONS
-    )
-    ranges = (
-        ("voto_flavio", "Reserva antecipada para Flávio", 0, 100, 1, 0, "%"),
-        ("voto_lula", "Reserva antecipada para Lula", 0, 100, 1, 0, "%"),
-        (
-            "comparecimento_pp",
-            "Mudança geral de comparecimento",
-            -15,
-            15,
-            0.5,
-            0,
-            " pp",
-        ),
-        (
-            "diferencial_pp",
-            "Diferença de comparecimento: Flávio menos Lula",
-            -15,
-            15,
-            0.5,
-            0,
-            " pp",
-        ),
-        ("branco_nulo_pp", "Mudança de brancos e nulos", -3, 10, 0.25, 0, " pp"),
-        (
-            "vies_pp",
-            "Erro comum das pesquisas: favorável a Flávio",
-            -8,
-            8,
-            0.25,
-            0,
-            " pp",
-        ),
-        (
-            "secoes_abstencao_pp",
-            "Comparecimento em seções com abstenção ≥30%",
-            -15,
-            15,
-            0.5,
-            0,
-            " pp",
-        ),
-    )
-    controls = "".join(
-        f'<label class="range-control" for="param-{k}"><span>{esc(title)}</span><output for="param-{k}" id="out-{k}">{value}{suffix}</output><input id="param-{k}" data-param="{k}" data-suffix="{suffix}" type="range" min="{lo}" max="{hi}" step="{step}" value="{value}"></label>'
-        for k, title, lo, hi, step, value, suffix in ranges
-    )
-    b = data["central"]["brasil"]
-    candidates = "".join(
-        f'<div class="sim-candidate {k}"><span>{NAMES[k]}</span><b id="sim-{k}">{number(b["percentuais"][k])}%</b><small id="sim-votos-{k}">{millions(b[k])} votos</small></div>'
-        for k in GROUPS[:3]
-    )
-    return f"""<div class="simulator" id="simulador-app">
-      <div class="controls"><h3>Sua hipótese, na mesma conta.</h3>
-      <label>Âncora nacional<select id="param-base"><option value="inclusivo">Central inclusiva, com recência</option><option value="sem_recencia">Mesmas casas centrais, peso temporal igual</option><option value="pnad">Somente casas com reponderação PNAD</option><option value="publicado">Publicadas, mesmas casas PNAD</option><option value="todas">Publicadas, todas as casas elegíveis</option><option value="casas">Central + remoção do desvio relativo das casas</option></select></label>
-      <label>Referência de comparecimento<select id="param-comparecimento_modelo"><option value="uf">Taxa estadual de 2022, central</option><option value="secoes">Seções de 2022, pesos territoriais de 2026</option></select></label>
-      {controls}
-      <label>Indecisos que chegam a voto válido<select id="param-indecisos_validos"><option value="1">100%, hipótese central</option><option value="0.75">75%</option><option value="0.5">50%</option><option value="0">0%, viram branco/nulo entre votantes</option></select></label>
-      <label>Destino dos indecisos que escolhem<select id="param-indecisos_flavio"><option value="">Proporcional às candidaturas na UF</option><option value="0.5">50% Lula, 50% Flávio</option><option value="0.6">40% Lula, 60% Flávio</option><option value="0.4">60% Lula, 40% Flávio</option></select></label>
-      <label class="check"><input type="checkbox" id="param-eleitor_provavel" checked>Usar cruzamentos de eleitor provável onde publicados</label>
-      <label class="check"><input type="checkbox" id="param-exterior" checked>Incluir exterior, com prior e incerteza própria</label>
-      <details><summary>Comparecimento por região</summary><div class="region-controls">{regions}</div></details>
-      <details><summary>Ajustar uma UF</summary><label>UF<select id="uf-select">{options}</select></label>
-      <label>Comparecimento da UF, mudança em pp<input id="uf-turnout" type="number" min="-20" max="20" step=".5" value="0"></label>
-      <label>Diferença F−L de comparecimento na UF, pp<input id="uf-differential" type="number" min="-20" max="20" step=".5" value="0"></label>
-      <label>Reserva antecipada para Lula na UF, %<input id="uf-useful-lula" type="number" min="0" max="100" step="1" placeholder="Usar o controle geral"></label>
-      <label>Reserva antecipada para Flávio na UF, %<input id="uf-useful-flavio" type="number" min="0" max="100" step="1" placeholder="Usar o controle geral"></label>
-      <p class="note">Deixe vazio para seguir o voto útil geral; zero desliga a antecipação nesta UF.</p>
-      <p id="uf-edits" class="note">Nenhuma UF alterada.</p></details>
-      <div class="actions"><button id="sim-reset" type="button">Restaurar central</button><button id="sim-export" type="button">Baixar meu cenário</button></div></div>
-      <div class="sim-result"><p class="eyebrow" id="sim-label">Previsão central</p><div class="sim-scores">{candidates}</div>
-      <p id="sim-gap" class="gap-readout">Diferença F−L: {number(b["margem_flavio_lula"],2)} pp</p>
-      <div class="mini-account"><span id="sim-attendance">{millions(b['comparecimento'])} votantes</span><span id="sim-absent">{millions(b['abstencao'])} ausentes</span><span id="sim-invalid">{millions(b['branco_nulo'])} brancos/nulos</span></div>
-      <div id="sim-region-table">{region_table(data)}</div><p class="note" id="sim-conservation">Eleitorado = votos válidos + brancos/nulos + abstenção. A conta fecha.</p>
-      <button class="primary" id="sim-montecarlo" type="button">Simular a incerteza deste cenário</button><p id="sim-uncertainty" role="status">Os intervalos do topo pertencem à previsão central. Mudou hipótese? Simule novamente.</p>
-      <p class="note">As taxas regionais e de UF são somadas à mudança geral. A mudança nas seções afeta o peso territorial dentro da UF; preferência por seção não foi medida. O diferencial por candidatura é hipótese adicional ao eleitor provável.</p></div></div>"""
+    from .simulador import render as render_simulator
+
+    return render_simulator(data, region_table(data))
 
 
 def render(data, template):
+    from .texto import values
+
     replacements = {
         "HERO": hero(data),
         "ACCOUNTING": accounting(data),
@@ -609,6 +654,8 @@ def render(data, template):
         "TURNOUT_CHECKS": turnout_checks(data),
         "ABSTENTION": abstention(data),
         "VALIDATION": validation(data),
+        "DLM_TABLE": dlm_table(data),
+        "PREDICTIVE_TABLE": predictive_table(data),
         "MINOR_TABLE": minor_table(data),
         "HISTOGRAM": histogram(data),
         "SIMULATOR": simulator(data),
@@ -641,6 +688,7 @@ def render(data, template):
             "<", "\\u003c"
         ),
     }
+    replacements.update(values(data))
     for key, value in replacements.items():
         template = template.replace("{{" + key + "}}", value)
     if "{{" in template or "—" in template:

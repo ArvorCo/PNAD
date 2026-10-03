@@ -84,7 +84,9 @@ def test_equal_house_average_normalizes_each_poll_first():
 
 def test_all_modes_and_stress_scenarios_have_complete_same_cohort():
     data = copy.deepcopy(DATA)
-    data["referencia"] = "2026-09-30"  # Cohort containing the documented PoderData wave.
+    data["referencia"] = (
+        "2026-09-30"  # Cohort containing the documented PoderData wave.
+    )
     result = M.build(data, NEXUS)
     for b, block in result["ballots"].items():
         reference = block["scenarios"]["central"]["polls"]

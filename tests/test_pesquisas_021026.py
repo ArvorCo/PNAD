@@ -29,7 +29,9 @@ def test_full_sources_and_catalogue_variants_match_their_checksums():
         payload = (ROOT / src.get("pdf", src.get("arquivo"))).read_bytes()
         assert len(payload) == src["bytes"]
         assert hashlib.sha256(payload).hexdigest() == src["sha256"]
-    catalogue = json.loads((BASE / "atualizacao_20261002/catalogo-fontes.json").read_text())
+    catalogue = json.loads(
+        (BASE / "atualizacao_20261002/catalogo-fontes.json").read_text()
+    )
     assert len(catalogue) == 14
     for src in catalogue:
         payload = (ROOT / src["arquivo"]).read_bytes()
@@ -54,8 +56,13 @@ def test_datafolha_extracts_whole_annex_and_uses_vote_bases():
         assert set(table["blocks"]) == {"bloco1", "bloco2", "bloco3"}
         assert all(b["base"]["Total"] >= 1 for b in table["blocks"].values())
     for turn in ["1t", "2t"]:
-        controls = next(c for c in AUDIT["controles"] if c["id"] == p["id"] and c["turno"] == turn)
-        assert {c["particao"] for c in controls["controles_independentes"]} == {"sexo", "regiao"}
+        controls = next(
+            c for c in AUDIT["controles"] if c["id"] == p["id"] and c["turno"] == turn
+        )
+        assert {c["particao"] for c in controls["controles_independentes"]} == {
+            "sexo",
+            "regiao",
+        }
     assert p["divulgacao"] == "2026-10-01"
     assert p["fonte"]["relatorio_completo"] == "2026-10-02"
 
@@ -82,7 +89,10 @@ def test_latest_real_time_keeps_partial_table_and_is_excluded_from_valid_vote_mo
     for turn in ["1t", "2t"]:
         block = MODEL["ballots"][turn]
         assert any(x["id"] == p["id"] for x in block["excluded"])
-        assert not any(x["instituto"] == p["instituto"] for x in block["scenarios"]["central"]["polls"])
+        assert not any(
+            x["instituto"] == p["instituto"]
+            for x in block["scenarios"]["central"]["polls"]
+        )
 
 
 def test_unidentified_income_votes_remain_outside_every_income_average():
@@ -99,14 +109,18 @@ def test_both_models_and_public_page_use_new_waves_at_original_publication_dates
     for turn in ["1t", "2t"]:
         block = MODEL["ballots"][turn]
         polls = block["scenarios"]["central"]["polls"]
-        for house, ident in [("Datafolha", "datafolha_2026-10-01"),
-                             ("Indexa/Broadcast", "indexa_2026-09-29")]:
+        for house, ident in [
+            ("Datafolha", "datafolha_2026-10-01"),
+            ("Indexa/Broadcast", "indexa_2026-09-29"),
+        ]:
             chosen = next(p for p in polls if p["instituto"] == house)
             assert chosen["id"] == ident
             assert chosen["divulgacao"] == raw(ident)["divulgacao"]
         for scenario in block["scenarios"].values():
             assert sum(scenario["aggregate"]["modelo"].values()) == pytest.approx(100)
-    page = BeautifulSoup((ROOT / "docs/reponderacao_pnad.html").read_text(), "html.parser")
+    page = BeautifulSoup(
+        (ROOT / "docs/reponderacao_pnad.html").read_text(), "html.parser"
+    )
     text = page.find(id="atualizacao").get_text(" ", strip=True)
     assert "02/10/2026" in text and "Indexa/Broadcast" in text
     assert "97 dos 2.506" in page.get_text(" ", strip=True)

@@ -1,19 +1,13 @@
-import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
-SCRIPTS = ROOT / "scripts"
-if str(SCRIPTS) not in sys.path:
-    sys.path.insert(0, str(SCRIPTS))
-
-from pnad import (  # type: ignore
+from pnad import (
     _extract_relative_hrefs,
     _group_latest_anual_by_year,
     _group_latest_by_quarter,
     _latest_local_raw,
     _latest_local_raw_anual_visit,
-    _parse_pnadc_anual_zip_name,
     _parse_pnadc_anual_visita5_zip_name,
+    _parse_pnadc_anual_zip_name,
     _parse_pnadc_zip_name,
     _select_tse_resources,
 )

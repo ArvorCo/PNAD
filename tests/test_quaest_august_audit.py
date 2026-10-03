@@ -125,7 +125,7 @@ def test_thread_posts_are_long_form(pages: dict[str, str]) -> None:
     blocks = re.findall(
         r'<div class="copy"><span class="cc">(\d+) chars</span>(.*?)</div>',
         pages["thread"],
-        re.S,
+        re.DOTALL,
     )
     assert len(blocks) == 22
     for declared, body in blocks:
@@ -144,12 +144,12 @@ def test_svg_labels_stay_inside_their_viewbox(pages: dict[str, str]) -> None:
 def _svg_overflows(html: str) -> list[tuple[int, str]]:
     found: list[tuple[int, str]] = []
     for svg in re.finditer(
-        r'<svg[^>]*viewBox="0 0 ([\d.]+) ([\d.]+)"(.*?)</svg>', html, re.S
+        r'<svg[^>]*viewBox="0 0 ([\d.]+) ([\d.]+)"(.*?)</svg>', html, re.DOTALL
     ):
         view_width, body = float(svg.group(1)), svg.group(3)
         stack: list[str] = []
         for token in re.finditer(
-            r"<g([^>]*)>|</g>|<text([^>]*)>(.*?)</text>", body, re.S
+            r"<g([^>]*)>|</g>|<text([^>]*)>(.*?)</text>", body, re.DOTALL
         ):
             raw = token.group(0)
             if raw.startswith("</g"):
@@ -162,7 +162,9 @@ def _svg_overflows(html: str) -> list[tuple[int, str]]:
             attrs = token.group(2)
             text = re.sub(r"<[^>]+>", "", token.group(3))
 
-            def attribute(name: str, default: str, scope: str = attrs) -> str:
+            def attribute(
+                name: str, default: str, scope: str = attrs, stack: list = stack
+            ) -> str:
                 direct = re.search(rf'{name}="([^"]+)"', scope)
                 if direct:
                     return direct.group(1)

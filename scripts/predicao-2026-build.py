@@ -12,7 +12,7 @@ import sys
 from datetime import date, datetime
 from zoneinfo import ZoneInfo
 
-from predicao_2026.base import ELECTION, national, read, state_polls
+from predicao_2026.base import ELECTION, WINDOW_START, national, read, state_polls
 from predicao_2026.motor import (
     DEFAULTS,
     DEFF,
@@ -22,11 +22,13 @@ from predicao_2026.motor import (
     simulate,
     territory,
 )
+from predicao_2026.preditiva import run as predictive_validation
 from predicao_2026.recencia import NATIONAL_HALF_LIFE
 from predicao_2026.tse import ROOT, sha
 from predicao_2026.view import render
 
 ASSET = ROOT / "docs/assets/predicao_2026_1T_presidente.json"
+PREDICTIVE = ROOT / "docs/assets/predicao_2026_validacao_preditiva.json"
 PAGE = ROOT / "docs/predicao_2026_1T_presidente.html"
 
 
@@ -50,12 +52,15 @@ def build(
     states, iterations = territory(polls, n, tse, today, state_half_life)
     central = scenario(states)
     mc = simulate(states, n, runs=runs)
+    predictive = predictive_validation(n["pesquisas"], window_start=WINDOW_START)
+    predictive["referencia"] = today.isoformat()
     scenarios = {
         "Central inclusiva com recência, sem voto útil adicional": {},
         "Mesmas casas centrais, peso temporal igual": {"base": "sem_recencia"},
         "Somente casas com reponderação PNAD": {"base": "pnad"},
         "Publicadas, mesmas casas": {"base": "publicado"},
         "Publicadas, todas as casas elegíveis": {"base": "todas"},
+        "Âncora dinâmica (DLM com efeitos de casa)": {"base": "dinamico"},
         "Central + desvio relativo das casas removido": {"base": "casas"},
         "Sem seleção de eleitor provável": {"eleitor_provavel": False},
         "Comparecimento por seção, pesos de 2026": {"comparecimento_modelo": "secoes"},
@@ -81,6 +86,8 @@ def build(
         ROOT / "scripts/predicao_2026/motor.py",
         ROOT / "scripts/predicao_2026/tse.py",
         ROOT / "scripts/predicao_2026/validacao.py",
+        ROOT / "scripts/predicao_2026/dinamico.py",
+        ROOT / "scripts/predicao_2026/preditiva.py",
         ROOT / "docs/assets/predicao_2026.js",
     ]
     payload = {
@@ -121,6 +128,7 @@ def build(
             label: scenario(states, params) for label, params in scenarios.items()
         },
         "validacao": validation,
+        "validacao_preditiva": predictive,
         "calibracao_iteracoes": iterations,
         "abertura_demais": {
             "casas_nacionais": [p["id"] for p in valid_sources],
@@ -174,6 +182,15 @@ def build(
     )
     text = json.dumps(payload, ensure_ascii=False, indent=1) + "\n"
     ASSET.write_text(text, encoding="utf-8")
+    PREDICTIVE.write_text(
+        json.dumps(
+            {**predictive, "hash_modelo": payload["hash_modelo"]},
+            ensure_ascii=False,
+            indent=1,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
     snapshots = ROOT / "analysis/predicao_2026/snapshots"
     snapshots.mkdir(parents=True, exist_ok=True)
     snapshot = snapshots / f"{today.isoformat()}_{payload['hash_modelo'][:12]}.json"

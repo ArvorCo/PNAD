@@ -1,14 +1,17 @@
 import csv
 import sqlite3
-import sys
 from pathlib import Path
+
+from pnad import (
+    _latest_local_raw_anual,
+    _resolve_pipeline_target_and_min_wage,
+    build_parser,
+    build_sqlite_from_csv,
+    main,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = ROOT / "scripts"
-if str(SCRIPTS) not in sys.path:
-    sys.path.insert(0, str(SCRIPTS))
-
-from pnad import build_parser, build_sqlite_from_csv, main, _latest_local_raw_anual, _resolve_pipeline_target_and_min_wage  # type: ignore
 
 
 def test_build_sqlite_from_csv(tmp_path: Path):
@@ -90,7 +93,9 @@ def test_pipeline_run_anual_parser_defaults():
     args = parser.parse_args(["pipeline-run-anual"])
     assert args.raw == "latest"
     assert args.raw_dir == "data/raw/pnadc_anual_visita5"
-    assert args.layout == "data/originals/pnadc_anual_visita5/input_PNADC_2024_visita5.txt"
+    assert (
+        args.layout == "data/originals/pnadc_anual_visita5/input_PNADC_2024_visita5.txt"
+    )
     assert args.table == "base_anual_labeled_npv"
     assert args.visit == 5
 

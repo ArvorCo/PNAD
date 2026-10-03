@@ -1,14 +1,11 @@
 import csv
 import json
-import sys
 from pathlib import Path
+
+from pnad import main
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = ROOT / "scripts"
-if str(SCRIPTS) not in sys.path:
-    sys.path.insert(0, str(SCRIPTS))
-
-from pnad import main  # type: ignore
 
 
 def _write_csv(path: Path, rows: list[dict]) -> None:
@@ -58,8 +55,16 @@ def test_dashboard_json_sm_modes(capsys, tmp_path: Path):
             },
         ],
     )
-    _write_csv(ipca, [{"date": "2025-06", "index": "100"}, {"date": "2025-07", "index": "110"}])
-    _write_csv(sm, [{"date": "2025-06", "value": "1518.00"}, {"date": "2025-07", "value": "1518.00"}])
+    _write_csv(
+        ipca, [{"date": "2025-06", "index": "100"}, {"date": "2025-07", "index": "110"}]
+    )
+    _write_csv(
+        sm,
+        [
+            {"date": "2025-06", "value": "1518.00"},
+            {"date": "2025-07", "value": "1518.00"},
+        ],
+    )
 
     rc = main(
         [
@@ -92,11 +97,15 @@ def test_dashboard_json_sm_modes(capsys, tmp_path: Path):
     assert payload["modes"]["periodo"]["sm_reference_value"] > 0
     assert "R$" in payload["modes"]["periodo"]["ranges_money"][0]["money_label"]
     assert payload["modes"]["periodo"]["national"]["avg_household_income_brl"] == 2500.0
-    assert payload["modes"]["periodo"]["national"]["median_household_income_brl"] == 1000.0
+    assert (
+        payload["modes"]["periodo"]["national"]["median_household_income_brl"] == 1000.0
+    )
     assert "age_pyramid" in payload["modes"]["periodo"]
     assert payload["modes"]["periodo"]["age_pyramid"][0]["age"] == "25-39"
     assert "insights" in payload["modes"]["periodo"]
-    assert payload["modes"]["periodo"]["insights"]["richest_uf_by_avg_sm"] == "Sao Paulo"
+    assert (
+        payload["modes"]["periodo"]["insights"]["richest_uf_by_avg_sm"] == "Sao Paulo"
+    )
     assert "R$" in payload["modes"]["periodo"]["insights"]["national_low_income_money"]
     assert "dimension_labels" in payload
     assert payload["dimension_labels"]["macro_region"] == "Macro-regiao"
@@ -104,7 +113,9 @@ def test_dashboard_json_sm_modes(capsys, tmp_path: Path):
     assert "education_by_band" in payload["modes"]["periodo"]["cross"]
 
 
-def test_dashboard_auto_discovers_trimestral_and_anual_bundle(capsys, tmp_path: Path, monkeypatch):
+def test_dashboard_auto_discovers_trimestral_and_anual_bundle(
+    capsys, tmp_path: Path, monkeypatch
+):
     out_dir = tmp_path / "data" / "outputs"
     orig_dir = tmp_path / "data" / "originals"
     tri = out_dir / "base_labeled.csv"
@@ -148,8 +159,12 @@ def test_dashboard_auto_discovers_trimestral_and_anual_bundle(capsys, tmp_path: 
             }
         ],
     )
-    _write_csv(ipca, [{"date": "2025-03", "index": "100"}, {"date": "2025-06", "index": "100"}])
-    _write_csv(sm, [{"date": "2025-03", "value": "1000"}, {"date": "2025-06", "value": "1000"}])
+    _write_csv(
+        ipca, [{"date": "2025-03", "index": "100"}, {"date": "2025-06", "index": "100"}]
+    )
+    _write_csv(
+        sm, [{"date": "2025-03", "value": "1000"}, {"date": "2025-06", "value": "1000"}]
+    )
 
     monkeypatch.chdir(tmp_path)
     rc = main(["dashboard", "--format", "json"])
@@ -159,7 +174,12 @@ def test_dashboard_auto_discovers_trimestral_and_anual_bundle(capsys, tmp_path: 
     assert set(payload["dashboards"].keys()) == {"trimestral", "anual"}
     assert payload["dashboards"]["trimestral"]["mode"] == "trimestral"
     assert payload["dashboards"]["anual"]["mode"] == "anual"
-    assert payload["summary"]["by_mode"]["anual"]["annual_lenses"]["somente_trabalho"]["mean"] == 600.0
+    assert (
+        payload["summary"]["by_mode"]["anual"]["annual_lenses"]["somente_trabalho"][
+            "mean"
+        ]
+        == 600.0
+    )
 
 
 def test_dashboard_non_applicable_buckets(capsys, tmp_path: Path):
@@ -216,8 +236,16 @@ def test_dashboard_non_applicable_buckets(capsys, tmp_path: Path):
             },
         ],
     )
-    _write_csv(ipca, [{"date": "2025-06", "index": "100"}, {"date": "2025-07", "index": "110"}])
-    _write_csv(sm, [{"date": "2025-06", "value": "1518.00"}, {"date": "2025-07", "value": "1518.00"}])
+    _write_csv(
+        ipca, [{"date": "2025-06", "index": "100"}, {"date": "2025-07", "index": "110"}]
+    )
+    _write_csv(
+        sm,
+        [
+            {"date": "2025-06", "value": "1518.00"},
+            {"date": "2025-07", "value": "1518.00"},
+        ],
+    )
 
     rc = main(
         [
@@ -287,8 +315,16 @@ def test_dashboard_includes_sampling_ci(capsys, tmp_path: Path):
             },
         ],
     )
-    _write_csv(ipca, [{"date": "2025-06", "index": "100"}, {"date": "2025-07", "index": "100"}])
-    _write_csv(sm, [{"date": "2025-06", "value": "1000.00"}, {"date": "2025-07", "value": "1000.00"}])
+    _write_csv(
+        ipca, [{"date": "2025-06", "index": "100"}, {"date": "2025-07", "index": "100"}]
+    )
+    _write_csv(
+        sm,
+        [
+            {"date": "2025-06", "value": "1000.00"},
+            {"date": "2025-07", "value": "1000.00"},
+        ],
+    )
 
     rc = main(
         [
@@ -308,9 +344,13 @@ def test_dashboard_includes_sampling_ci(capsys, tmp_path: Path):
     assert payload["sampling"]["ci_effective"] is True
     assert payload["sampling"]["replicate_weight_columns_detected"] == 2
     nat = payload["modes"]["alvo"]["national"]
-    low = [x for x in nat["bands"] if x["range"] == "0-2"][0]
+    low = next(x for x in nat["bands"] if x["range"] == "0-2")
     assert "households_pct_moe" in low
-    assert low["households_pct_ci_low"] < low["households_pct"] < low["households_pct_ci_high"]
+    assert (
+        low["households_pct_ci_low"]
+        < low["households_pct"]
+        < low["households_pct_ci_high"]
+    )
 
 
 def test_dashboard_pretty_cross_macro_region_shows_centro_oeste(capsys, tmp_path: Path):
@@ -373,8 +413,16 @@ def test_dashboard_pretty_cross_macro_region_shows_centro_oeste(capsys, tmp_path
             },
         ],
     )
-    _write_csv(ipca, [{"date": "2025-06", "index": "100"}, {"date": "2025-07", "index": "100"}])
-    _write_csv(sm, [{"date": "2025-06", "value": "1000.00"}, {"date": "2025-07", "value": "1000.00"}])
+    _write_csv(
+        ipca, [{"date": "2025-06", "index": "100"}, {"date": "2025-07", "index": "100"}]
+    )
+    _write_csv(
+        sm,
+        [
+            {"date": "2025-06", "value": "1000.00"},
+            {"date": "2025-07", "value": "1000.00"},
+        ],
+    )
 
     rc = main(
         [
@@ -392,6 +440,8 @@ def test_dashboard_pretty_cross_macro_region_shows_centro_oeste(capsys, tmp_path
     )
     assert rc == 0
     out = capsys.readouterr().out
-    assert ("Cruzamentos principais x faixas de SM" in out) or ("Cruzamentos principais × faixas de SM" in out)
+    assert ("Cruzamentos principais x faixas de SM" in out) or (
+        "Cruzamentos principais × faixas de SM" in out
+    )
     assert ("  Macro-regiao" in out) or ("  Macro-região" in out)
     assert "   - Centro-Oeste" in out

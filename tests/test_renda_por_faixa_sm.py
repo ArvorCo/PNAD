@@ -1,14 +1,11 @@
 import csv
 import json
-import sys
 from pathlib import Path
+
+from pnad import main
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = ROOT / "scripts"
-if str(SCRIPTS) not in sys.path:
-    sys.path.insert(0, str(SCRIPTS))
-
-from pnad import main  # type: ignore
 
 
 def _write_csv(path: Path, rows: list[dict]) -> None:
@@ -66,7 +63,9 @@ def test_renda_por_faixa_sm_country(capsys, tmp_path: Path):
             },
         ],
     )
-    _write_csv(ipca, [{"date": "2025-06", "index": "100"}, {"date": "2025-07", "index": "110"}])
+    _write_csv(
+        ipca, [{"date": "2025-06", "index": "100"}, {"date": "2025-07", "index": "110"}]
+    )
     _write_csv(sm, [{"date": "2025-06", "value": "1518.00"}])
 
     rc = main(
@@ -146,7 +145,9 @@ def test_renda_por_faixa_sm_group_by_uf_and_filter(capsys, tmp_path: Path):
             },
         ],
     )
-    _write_csv(ipca, [{"date": "2025-06", "index": "100"}, {"date": "2025-07", "index": "110"}])
+    _write_csv(
+        ipca, [{"date": "2025-06", "index": "100"}, {"date": "2025-07", "index": "110"}]
+    )
     _write_csv(sm, [{"date": "2025-06", "value": "1518.00"}])
 
     rc = main(
@@ -197,7 +198,9 @@ def test_renda_por_faixa_sm_requires_weight_by_default(capsys, tmp_path: Path):
             }
         ],
     )
-    _write_csv(ipca, [{"date": "2025-06", "index": "100"}, {"date": "2025-07", "index": "110"}])
+    _write_csv(
+        ipca, [{"date": "2025-06", "index": "100"}, {"date": "2025-07", "index": "110"}]
+    )
     _write_csv(sm, [{"date": "2025-06", "value": "1518.00"}])
 
     rc = main(
@@ -250,7 +253,9 @@ def test_renda_por_faixa_sm_uf_ordering(capsys, tmp_path: Path):
             },
         ],
     )
-    _write_csv(ipca, [{"date": "2025-06", "index": "100"}, {"date": "2025-07", "index": "110"}])
+    _write_csv(
+        ipca, [{"date": "2025-06", "index": "100"}, {"date": "2025-07", "index": "110"}]
+    )
     _write_csv(sm, [{"date": "2025-06", "value": "1518.00"}])
 
     rc = main(
@@ -331,7 +336,9 @@ def test_renda_por_faixa_sm_with_replicate_ci(capsys, tmp_path: Path):
             },
         ],
     )
-    _write_csv(ipca, [{"date": "2025-06", "index": "100"}, {"date": "2025-07", "index": "100"}])
+    _write_csv(
+        ipca, [{"date": "2025-06", "index": "100"}, {"date": "2025-07", "index": "100"}]
+    )
     _write_csv(sm, [{"date": "2025-06", "value": "1000.00"}])
 
     rc = main(
@@ -361,4 +368,8 @@ def test_renda_por_faixa_sm_with_replicate_ci(capsys, tmp_path: Path):
     assert abs(low["households_pct"] - 50.0) < 1e-6
     # With two replicates: rep estimates 45% and 55% -> SE=sqrt(50)=7.0711, MOE~13.8593 at 95%.
     assert abs(low["households_pct_moe"] - 13.8593) < 1e-2
-    assert low["households_pct_ci_low"] < low["households_pct"] < low["households_pct_ci_high"]
+    assert (
+        low["households_pct_ci_low"]
+        < low["households_pct"]
+        < low["households_pct_ci_high"]
+    )

@@ -51,7 +51,7 @@ def test_equal_weight_per_institute_uses_latest_release_and_never_future():
     assert before == 25
     assert (
         WINDOW.mean(
-            rows + [row("future", "B", "2026-09-22", 100)],
+            [*rows, row("future", "B", "2026-09-22", 100)],
             "publicado",
             "lula",
             date(2026, 9, 20),

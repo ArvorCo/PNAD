@@ -3,7 +3,6 @@ from pathlib import Path
 
 import numpy as np
 
-
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "scripts/nexus-btg-240826-audit.py"
 SPEC = importlib.util.spec_from_file_location("nexus_btg_240826_audit", SCRIPT)

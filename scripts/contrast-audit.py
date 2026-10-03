@@ -89,9 +89,20 @@ UNSTICK = """
     img.decoding = 'sync';
   }
   for (const el of document.querySelectorAll('*')) {
-    const pos = getComputedStyle(el).position;
-    if (pos === 'sticky' || pos === 'fixed') {
+    const cs = getComputedStyle(el);
+    if (cs.position === 'sticky' || cs.position === 'fixed') {
       el.style.setProperty('position', 'static', 'important');
+    }
+    // Tabela com `max-height` e rolagem interna esconde as linhas de baixo:
+    // o recorte do texto cai fora da caixa visivel e le o fundo que estiver
+    // por tras (o auditor acusava contraste 1,02 sobre o verde do hero).
+    // Solta a altura para que toda linha seja pintada e medida.
+    if (
+      (cs.overflowY === 'auto' || cs.overflowY === 'scroll') &&
+      cs.maxHeight !== 'none' &&
+      el.scrollHeight > el.clientHeight + 1
+    ) {
+      el.style.setProperty('max-height', 'none', 'important');
     }
   }
 }

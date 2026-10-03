@@ -1,12 +1,9 @@
-import sys
 from pathlib import Path
+
+from pnadc_cli import compile_row_expr, eval_row_expr, parse_agg
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = ROOT / "scripts"
-if str(SCRIPTS) not in sys.path:
-    sys.path.insert(0, str(SCRIPTS))
-
-from pnadc_cli import compile_row_expr, eval_row_expr, parse_agg  # type: ignore
 
 
 def test_compile_and_eval_row_expr():
@@ -25,4 +22,3 @@ def test_parse_agg_specs():
     assert b.func == "sum" and b.column == "renda"
     c = parse_agg("mean(idade)")
     assert c.func == "mean" and c.column == "idade"
-

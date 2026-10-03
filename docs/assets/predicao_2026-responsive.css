@@ -237,6 +237,77 @@
   .gap-readout {
     font-size:14px
   }
+  .sim-presets {
+    padding:16px 16px 18px
+  }
+  .preset-grid {
+    display:flex;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    padding-bottom:6px
+  }
+  .preset {
+    flex:0 0 74%;
+    scroll-snap-align:start
+  }
+  .region-controls {
+    grid-template-columns:1fr
+  }
+  .sim-head-actions {
+    width:100%
+  }
+  .sim-head-actions button {
+    flex:1 1 140px
+  }
+  .bar-row {
+    grid-template-columns:52px minmax(0,1fr);
+    gap:8px
+  }
+  .bar-axis {
+    padding-left:60px;
+    font-size:10px
+  }
+  .seg b {
+    font-size:12px;
+    padding:0 5px
+  }
+  .sim-sentence {
+    font-size:14px
+  }
+  .mc-cards {
+    grid-template-columns:1fr 1fr
+  }
+  .sim-dock {
+    grid-column:1 / -1;
+    position:sticky;
+    bottom:0;
+    z-index:4;
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:space-between;
+    gap:6px 12px;
+    padding:10px 16px;
+    background:var(--dark);
+    color:var(--white);
+    font:12px/1.4 var(--mono)
+  }
+  .sim-dock b {
+    font-size:15px
+  }
+  .sim-dock b.lula {
+    color:#f0a79c
+  }
+  .sim-dock b.flavio {
+    color:#a9c8f2
+  }
+  .sim-dock button {
+    padding:6px 10px;
+    background:var(--accent);
+    border-color:var(--accent);
+    color:var(--ink);
+    font-size:12px
+  }
   .probabilities {
     grid-template-columns:1fr
   }

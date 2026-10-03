@@ -1,15 +1,10 @@
-import sys
 from pathlib import Path
 
-import json
+from parse_pnadc import sniff_delimiter, summarize_file, write_sample_csv
 
 # Add scripts/ to import path
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = ROOT / "scripts"
-if str(SCRIPTS) not in sys.path:
-    sys.path.insert(0, str(SCRIPTS))
-
-from parse_pnadc import sniff_delimiter, summarize_file, write_sample_csv  # type: ignore
 
 
 def test_sniff_delimiter_semicolon():
@@ -41,4 +36,3 @@ def test_summarize_and_sample(tmp_path: Path):
     lines = out_path.read_text(encoding="utf-8").strip().splitlines()
     # header + 2 rows
     assert len(lines) == 3
-

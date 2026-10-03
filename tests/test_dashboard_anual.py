@@ -1,18 +1,12 @@
 import csv
 import json
-import sys
 from pathlib import Path
 
 import pytest
+from pnad import _calculate_income_composition, _detect_income_source_cols, main
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = ROOT / "scripts"
-if str(SCRIPTS) not in sys.path:
-    sys.path.insert(0, str(SCRIPTS))
-
-from pnad import _calculate_income_composition  # type: ignore
-from pnad import _detect_income_source_cols  # type: ignore
-from pnad import main  # type: ignore
 
 
 def _write_csv(path: Path, rows: list[dict]) -> None:
@@ -55,7 +49,9 @@ def test_calculate_income_composition():
         "aposentadoria_pensao": "V5004A2__aposentadoria",
         "aluguel": "V5007A2__aluguel",
     }
-    comp = _calculate_income_composition(row, "VD5001__rend_efetivo_domiciliar", source_cols)
+    comp = _calculate_income_composition(
+        row, "VD5001__rend_efetivo_domiciliar", source_cols
+    )
     assert comp["bpc_loas"] == pytest.approx(0.10, abs=1e-6)
     assert comp["bolsa_familia"] == pytest.approx(0.05, abs=1e-6)
     assert comp["aposentadoria_pensao"] == pytest.approx(0.25, abs=1e-6)
@@ -178,12 +174,18 @@ def test_dashboard_breakdown_output(capsys, tmp_path: Path):
     lenses = payload["income_lenses_national"]
     assert lenses["renda_total"]["mean"] == pytest.approx(1500.0, abs=0.01)
     assert lenses["sem_beneficios_sociais"]["mean"] == pytest.approx(1350.0, abs=0.01)
-    assert lenses["sem_transferencias_publicas"]["mean"] == pytest.approx(1025.0, abs=0.01)
+    assert lenses["sem_transferencias_publicas"]["mean"] == pytest.approx(
+        1025.0, abs=0.01
+    )
     assert lenses["somente_trabalho"]["mean"] == pytest.approx(900.0, abs=0.01)
-    assert payload["income_sources_detail"]["bpc_loas"]["recipients_pct"] == pytest.approx(50.0, abs=0.01)
+    assert payload["income_sources_detail"]["bpc_loas"][
+        "recipients_pct"
+    ] == pytest.approx(50.0, abs=0.01)
     assert "0-2" in payload["composition_by_band"]
     assert "2-5" in payload["composition_by_band"]
-    assert payload["income_lenses_by_band"]["0-2"]["somente_trabalho"]["mean"] == pytest.approx(550.0, abs=0.01)
+    assert payload["income_lenses_by_band"]["0-2"]["somente_trabalho"][
+        "mean"
+    ] == pytest.approx(550.0, abs=0.01)
 
 
 def test_dependency_ranking_ordering(capsys, tmp_path: Path):
@@ -258,4 +260,8 @@ def test_dependency_ranking_ordering(capsys, tmp_path: Path):
     assert ranking[0]["uf_code"] == "22"
     assert ranking[1]["uf_code"] == "29"
     assert ranking[2]["uf_code"] == "35"
-    assert ranking[0]["dependency_score"] >= ranking[1]["dependency_score"] >= ranking[2]["dependency_score"]
+    assert (
+        ranking[0]["dependency_score"]
+        >= ranking[1]["dependency_score"]
+        >= ranking[2]["dependency_score"]
+    )

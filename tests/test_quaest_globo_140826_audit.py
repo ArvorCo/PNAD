@@ -3,7 +3,6 @@ from pathlib import Path
 
 import pytest
 
-
 SCRIPT = Path(__file__).parents[1] / "scripts/quaest-globo-140826-audit.py"
 SPEC = importlib.util.spec_from_file_location("quaest_globo_140826_audit", SCRIPT)
 MODULE = importlib.util.module_from_spec(SPEC)
