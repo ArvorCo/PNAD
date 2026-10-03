@@ -1,0 +1,264 @@
+{
+ "id": "gerp_2026-10-02",
+ "instituto": "Gerp",
+ "contratante": "Gerp Mercadologia, recursos próprios",
+ "registro_tse": "BR-00509/2026",
+ "campo": {
+  "inicio": "2026-09-30",
+  "fim": "2026-10-02"
+ },
+ "divulgacao": "2026-10-03",
+ "n": 2400,
+ "metodo": "telefônico, GerpCati com cédula estimulada lida ao entrevistado; cotas de sexo, idade, renda e região estratificadas por UF; ponderação também por escolaridade",
+ "fonte": {
+  "tipo": "relatorio",
+  "rotulo": "Relatório Gerp, Presidência 2026, medição de 02/10",
+  "pdf": "data/originals/gerp_102026_03/relatorio.pdf",
+  "url": "https://gerp.com.br/relatorios/20261003%20Relat%C3%B3rio%20Presid%C3%AAncia%202026%20-%20DIVULGA%C3%87%C3%83O.pdf",
+  "paginas": {
+   "metodologia": 7,
+   "perfil_renda": 8,
+   "1t": 13,
+   "1t_validos": 16,
+   "1t_renda": 15,
+   "2t": 22,
+   "2t_validos": 25,
+   "2t_renda": 24
+  },
+  "sha256": "500c4a7b8261a209ce62fdf49b68d63e018d44f789a8ce487f81c74522023961",
+  "bytes": 873722,
+  "total_paginas": 54,
+  "status": "Relatório completo arquivado e conferido.",
+  "conferido_em": "2026-10-03",
+  "nota": "Manifesto público da Gerp lista o relatório com data de 03/10/2026; o creationDate do PDF é 02/10/2026 19:57. A p. 7 declara cotas de sexo, idade, renda e região por UF e ponderação também por escolaridade. Na p. 13, Zema, Edmilson Costa, Rui Costa Pimenta, Leonardo Avalanche, Hertz Dias, Wilson Grassi e Clariana Barão têm 0% no total; a p. 15 exibe 8 de 15 categorias e omite essas sete. Não se inventam células por renda para nomes omitidos."
+ },
+ "renda": {
+  "unidade": "salarios_minimos",
+  "ano_referencia": 2026,
+  "faixas": [
+   {
+    "rotulo": "Até 1 SM (até R$ 1.621)",
+    "max": 1
+   },
+   {
+    "rotulo": "Mais de 1 a 2 SM (R$ 1.621 a 3.242)",
+    "max": 2
+   },
+   {
+    "rotulo": "Mais de 2 a 5 SM (R$ 3.242 a 8.105)",
+    "max": 5
+   },
+   {
+    "rotulo": "Mais de 5 a 10 SM (R$ 8.105 a 16.210)",
+    "max": 10
+   },
+   {
+    "rotulo": "Mais de 10 a 20 SM (R$ 16.210 a 32.420)",
+    "max": 20
+   },
+   {
+    "rotulo": "Mais de 20 SM (acima de R$ 32.420)",
+    "max": null
+   }
+  ],
+  "amostra_pct": [
+   23,
+   23,
+   33,
+   14,
+   5,
+   2
+  ],
+  "perfil_tipo": "perfil_ponderado",
+  "nota": "Perfil ponderado desta onda, p. 8 (renda familiar), conferido na renderização: 23/23/33/14/5/2. As contagens n=417/549/778/397/168/91 das pp. 15 e 24 são bases de campo, não pesos; as tabelas declaram % ponderadas.",
+  "mes_precos": "202610"
+ },
+ "publicado": {
+  "1t": {
+   "flavio": 43,
+   "lula": 41,
+   "cury": 4,
+   "caiado": 3,
+   "renan_santos": 2,
+   "samara": 1,
+   "zema": 0,
+   "branco_nulo": 3,
+   "indecisos": 2
+  },
+  "2t": {
+   "flavio": 49,
+   "lula": 44,
+   "branco_nulo": 6,
+   "indecisos": 1
+  }
+ },
+ "cruzamentos": {
+  "1t": {
+   "opcoes": [
+    "flavio",
+    "lula",
+    "cury",
+    "caiado",
+    "renan_santos",
+    "samara",
+    "branco_nulo",
+    "indecisos"
+   ],
+   "linhas": [
+    [
+     37,
+     47,
+     2,
+     3,
+     0,
+     1,
+     4,
+     6
+    ],
+    [
+     34,
+     50,
+     5,
+     3,
+     2,
+     1,
+     1,
+     3
+    ],
+    [
+     49,
+     38,
+     4,
+     3,
+     2,
+     0,
+     3,
+     0
+    ],
+    [
+     50,
+     31,
+     5,
+     2,
+     4,
+     1,
+     4,
+     2
+    ],
+    [
+     54,
+     31,
+     4,
+     2,
+     2,
+     0,
+     1,
+     0
+    ],
+    [
+     61,
+     32,
+     1,
+     1,
+     2,
+     0,
+     2,
+     1
+    ]
+   ],
+   "nota": "Extração nativa da p. 15, conferida na renderização a 130 dpi. Nenhum deles entra como branco_nulo e Não sabe como indecisos. As linhas somam 100, 99, 99, 99, 94 e 100; na faixa de 10 a 20 SM (n=168) os 6 pontos restantes ficam nas sete categorias omitidas, que têm 0% no total. Arredondamentos preservados. Recomposição pelo perfil da p. 8: Flávio 43,42 e Lula 41,38 contra 43 e 41 publicados (resíduos +0,42 e +0,38)."
+  },
+  "2t": {
+   "opcoes": [
+    "flavio",
+    "lula",
+    "branco_nulo",
+    "indecisos"
+   ],
+   "linhas": [
+    [
+     40,
+     50,
+     6,
+     3
+    ],
+    [
+     39,
+     54,
+     5,
+     2
+    ],
+    [
+     54,
+     40,
+     6,
+     0
+    ],
+    [
+     60,
+     33,
+     7,
+     0
+    ],
+    [
+     62,
+     32,
+     3,
+     2
+    ],
+    [
+     67,
+     30,
+     2,
+     1
+    ]
+   ],
+   "nota": "Extração nativa da p. 24, conferida na renderização a 130 dpi. As linhas somam 99, 100, 100, 100, 99 e 100. Recomposição pelo perfil da p. 8: Flávio 48,83 e Lula 43,94 contra 49 e 44 publicados (resíduos -0,17 e -0,06)."
+  }
+ },
+ "recomposicao": {
+  "renda_p8": {
+   "1t": {
+    "flavio": 43.42,
+    "lula": 41.38,
+    "cury": 3.85,
+    "caiado": 2.77,
+    "renan_santos": 1.82,
+    "samara": 0.6,
+    "branco_nulo": 2.79,
+    "indecisos": 2.37
+   },
+   "2t": {
+    "flavio": 48.83,
+    "lula": 43.94,
+    "branco_nulo": 5.68,
+    "indecisos": 1.27
+   }
+  },
+  "sexo_p8": {
+   "pesos": [
+    47,
+    53
+   ],
+   "1t": {
+    "flavio": 43.34,
+    "lula": 41.6,
+    "cury": 4.12,
+    "caiado": 2.53,
+    "renan_santos": 1.94,
+    "samara": 0.53,
+    "branco_nulo": 2.53,
+    "indecisos": 2.47
+   },
+   "2t": {
+    "flavio": 48.4,
+    "lula": 44.13,
+    "branco_nulo": 6.0,
+    "indecisos": 1.47
+   }
+  },
+  "residuo_max_pp": 0.6,
+  "nota": "Resíduo = recomposto menos publicado. Maior resíduo absoluto em qualquer categoria: 0,47 pp por renda e 0,60 pp por sexo (Lula, 1º turno), abaixo do limite de 1,5 pp do motor."
+ },
+ "notas": "Última onda Gerp antes do 1º turno; substitui a de 24 a 28/09 (BR-03929/2026, Flávio 42 x Lula 40 e 50 x 43). Votos válidos publicados: 46 x 44 no 1º turno (p. 16, base 2.300) e 53 x 47 no 2º (p. 25, base 2.247). Controle independente por sexo (p. 15 e p. 24, masculino 47% e feminino 53% da p. 8): 1º turno recompõe Flávio 43,34 e Lula 41,60; 2º turno, 48,40 e 44,13. Sensibilidade de uma margem com a mesma fórmula e os três universos PNAD do agregador; os percentuais ajustados não são novo resultado oficial nem previsão."
+}

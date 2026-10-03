@@ -253,6 +253,7 @@ def test_latest_wave_mean_uses_new_mda_wave(output):
     for p in sorted(polls, key=lambda p: p["campo"]["fim"]):
         latest[p["instituto"]] = p
     assert latest["MDA"]["id"] == "mda_2026-10-02"
+    assert latest["Gerp"]["id"] == "gerp_2026-10-02"
     mean = sum(
         p["turnos"]["2t"]["cenarios"][SCENARIO]["ajustado"]["lula"]
         for p in latest.values()
@@ -260,3 +261,16 @@ def test_latest_wave_mean_uses_new_mda_wave(output):
     assert output["agregador"]["ultimo"]["2t"]["media_simples"]["ajustado"][
         "lula"
     ] == round(mean, 2)
+
+
+def test_new_gerp_wave_replaces_september_wave_in_window(output):
+    poll = next(p for p in output["pesquisas"] if p["id"] == "gerp_2026-10-02")
+    assert poll["registro_tse"] == "BR-00509/2026"
+    assert poll["turnos"]["1t"]["publicado"]["flavio"] == 43
+    assert poll["turnos"]["2t"]["publicado"]["lula"] == 44
+    assert poll["turnos"]["1t"]["residuo_max"] < 0.5
+    assert poll["turnos"]["2t"]["residuo_max"] < 0.5
+    for turno in ("1t", "2t"):
+        ondas = output["agregador"]["ultimo"][turno]["cobertura_movel"]["ondas"]
+        assert "gerp_2026-10-02" in ondas
+        assert "gerp_2026-09-28" not in ondas

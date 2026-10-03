@@ -155,9 +155,7 @@ def test_presets_follow_central_and_carry_measured_lambda(data):
             "voto_lula": lam["lula"],
         }
         assert all(
-            round(100 * v) == 100 * v
-            for k, v in preset["parametros"].items()
-            if k != "base"
+            round(v, 2) == v for k, v in preset["parametros"].items() if k != "base"
         )
         assert "recência sem tendência" in preset["frase"]
         assert preset["destaque"] is True
