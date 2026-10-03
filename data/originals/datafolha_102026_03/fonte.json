@@ -1,0 +1,77 @@
+{
+  "instituto": "Datafolha",
+  "contratante": "Folha de S.Paulo e TV Globo",
+  "registro_tse": "BR-01708/2026",
+  "campo": "2026-10-02 a 2026-10-03",
+  "divulgacao": "2026-10-03",
+  "n": 4006,
+  "municipios": 122,
+  "margem_pp": 2,
+  "baixado_em": "2026-10-03",
+  "relatorio_pdf": null,
+  "relatorio_pdf_status": "Íntegra em PDF não publicada até a consulta de 03/10/2026 (cerca de 19h10, horário de Brasília). A página de eleições do Datafolha (datafolha.folha.uol.com.br/eleicoes/) listava, para a Presidência, só a nota da onda de 01/10 (45 × 40 em válidos).",
+  "painel": {
+    "url": "https://especiaisg1.globo/politica/eleicoes/2026/pesquisas-eleitorais/presidente/1-turno/datafolha/internal/",
+    "arquivo": "data/originals/datafolha_102026_03/g1_painel.html",
+    "bytes": 144907,
+    "sha256": "45c88d19f2216c7ebb390f9f58eceaaf8fb526457cd89f77e6ea4b1aa32486b0",
+    "capturado_em": "2026-10-03T22:08:26Z",
+    "nota": "O seletor de perguntas do painel lista os códigos ESTIMULADA-PRE-002, ESPONTANEA-PRE-001, SEGTURNO-PRE-001 e VTSVALIDOS-PRE-003; o código de página é paginaId 100. O código VTSVALIDOS-PRE-003 devolveu 404 na API em 03/10/2026 22:08 UTC, então os votos válidos vêm só da matéria."
+  },
+  "api": [
+    {
+      "rotulo": "1º turno, estimulada",
+      "tipo_pergunta": "ESTIMULADA-PRE-002",
+      "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/100/?tipo_pergunta=ESTIMULADA-PRE-002&instituto=Datafolha",
+      "arquivo": "data/originals/datafolha_102026_03/g1_estimulada_1t.json",
+      "bytes": 163640,
+      "sha256": "9816fc64ea9ab3606b1d5864810402a69e06ec4d14c16397841d2189cfcb935d",
+      "capturado_em": "2026-10-03T22:08:31Z",
+      "http": 200
+    },
+    {
+      "rotulo": "Segundo Turno - Cenário 1 (Lula × Flávio)",
+      "tipo_pergunta": "SEGTURNO-PRE-001",
+      "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/100/?tipo_pergunta=SEGTURNO-PRE-001&instituto=Datafolha",
+      "arquivo": "data/originals/datafolha_102026_03/g1_segundo_turno.json",
+      "bytes": 51368,
+      "sha256": "f2ce4fce26e1ac3c8c5e6b3bdcced66b23edf67ab15af20a8d2141e3cca84730",
+      "capturado_em": "2026-10-03T22:08:31Z",
+      "http": 200
+    },
+    {
+      "rotulo": "Espontânea",
+      "tipo_pergunta": "ESPONTANEA-PRE-001",
+      "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/100/?tipo_pergunta=ESPONTANEA-PRE-001&instituto=Datafolha",
+      "arquivo": "data/originals/datafolha_102026_03/g1_espontanea.json",
+      "bytes": 105998,
+      "sha256": "ef04d8938e2d5344cf00a9dc9dc44c4500cc41a41c6b040dd7f405675974c86c",
+      "capturado_em": "2026-10-03T22:08:31Z",
+      "http": 200
+    }
+  ],
+  "api_sem_dados": [
+    {
+      "rotulo": "Votos Válidos",
+      "tipo_pergunta": "VTSVALIDOS-PRE-003",
+      "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/100/?tipo_pergunta=VTSVALIDOS-PRE-003&instituto=Datafolha",
+      "http": 404,
+      "capturado_em": "2026-10-03T22:08:31Z"
+    }
+  ],
+  "materias": [
+    {
+      "url": "https://www1.folha.uol.com.br/poder/2026/10/datafolha-lula-tem-45-e-flavio-bolsonaro-42-em-votos-validos-na-vespera-do-1o-turno.shtml",
+      "publicado": "2026-10-03T18:32:00-03:00",
+      "atualizado": "2026-10-03T19:05:00-03:00",
+      "arquivo": "data/originals/datafolha_102026_03/materia_folha.html",
+      "bytes": 364907,
+      "sha256": "6076b85a6dbdb52534c86055549ea5173e7d7aa46f69e0b2a6e9dd2938aa3868",
+      "texto": "data/originals/datafolha_102026_03/materia_folha.txt",
+      "texto_bytes": 5844,
+      "texto_sha256": "7c496cede35f0ecc8c942d4532d4fe59f6146341daade6af5012dcecd508c732",
+      "capturado_em": "2026-10-03T22:09:17Z"
+    }
+  ],
+  "controle_painel_contra_pdf": "Os valores do mesmo painel para a onda de 01/10 coincidem célula a célula com o PDF daquela onda (data/originals/datafolha_102026_02/relatorio.pdf, pp. 11, 18, 45 e 53): placar dos dois turnos e as três faixas de renda. A única diferença é Leonardo Avalanche, ausente do cartão do painel e com zero no PDF."
+}

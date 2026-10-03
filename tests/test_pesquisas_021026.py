@@ -110,7 +110,8 @@ def test_both_models_and_public_page_use_new_waves_at_original_publication_dates
         block = MODEL["ballots"][turn]
         polls = block["scenarios"]["central"]["polls"]
         for house, ident in [
-            ("Datafolha", "datafolha_2026-10-01"),
+            # A onda de véspera (03/10) substituiu a de 01/10 na janela.
+            ("Datafolha", "datafolha_2026-10-03"),
             ("Indexa/Broadcast", "indexa_2026-09-29"),
         ]:
             chosen = next(p for p in polls if p["instituto"] == house)

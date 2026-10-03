@@ -1,5 +1,6 @@
 """Contratos do agregador Arvor: régua PNAD, motor de reponderação e média."""
 
+import hashlib
 import importlib.util
 import json
 from datetime import date
@@ -297,3 +298,49 @@ def test_palver_wave6_replaces_wave5_in_window(output):
     ajustado = poll["turnos"]["2t"]["cenarios"][SCENARIO]["ajustado"]
     assert ajustado["flavio"] == pytest.approx(49.36, abs=0.01)
     assert ajustado["lula"] == pytest.approx(44.44, abs=0.01)
+
+
+def test_datafolha_eve_wave_from_g1_panel_replaces_october_1(output):
+    raw = json.loads((POLLS / "datafolha_2026-10-03.json").read_text())
+    assert raw["registro_tse"] == "BR-01708/2026"
+    assert raw["n"] == 4006
+    assert raw["campo"] == {"inicio": "2026-10-02", "fim": "2026-10-03"}
+    assert raw["fonte"]["tipo"] == "painel_contratante"
+    assert raw["renda"]["perfil_tipo"] == "hipotese_onda_anterior"
+    previous = json.loads((POLLS / "datafolha_2026-10-01.json").read_text())
+    assert raw["renda"]["bases"] == previous["renda"]["bases"]
+    archive = json.loads(
+        (ROOT / "data/originals/datafolha_102026_03/fonte.json").read_text()
+    )
+    for item in [*archive["api"], *archive["materias"]]:
+        payload = (ROOT / item["arquivo"]).read_bytes()
+        assert len(payload) == item["bytes"]
+        assert hashlib.sha256(payload).hexdigest() == item["sha256"]
+    assert archive["relatorio_pdf"] is None
+    assert raw["fonte"]["sha256"] == archive["api"][0]["sha256"]
+    assert raw["publicado"]["1t"]["lula"] == 42
+    assert raw["publicado"]["1t"]["flavio"] == 40
+    assert raw["publicado"]["2t"] == {
+        "lula": 47,
+        "flavio": 46,
+        "branco_nulo": 6,
+        "indecisos": 2,
+    }
+    assert raw["cruzamentos"]["2t"]["linhas"] == [
+        [55, 37, 6, 2],
+        [38, 55, 6, 1],
+        [39, 56, 5, 1],
+    ]
+    for turno in ("1t", "2t"):
+        for dim in ("renda", "sexo"):
+            assert raw["controles"][turno][dim]["residuo_max_abs"] <= 1.5
+    poll = next(p for p in output["pesquisas"] if p["id"] == "datafolha_2026-10-03")
+    assert poll["renda"]["perfil_tipo"] == "hipotese_onda_anterior"
+    for turno in ("1t", "2t"):
+        assert poll["turnos"][turno]["residuo_max"] < 1.5
+        ondas = output["agregador"]["ultimo"][turno]["cobertura_movel"]["ondas"]
+        assert "datafolha_2026-10-03" in ondas
+        assert "datafolha_2026-10-01" not in ondas
+    ajustado = poll["turnos"]["2t"]["cenarios"][SCENARIO]["ajustado"]
+    assert ajustado["flavio"] == pytest.approx(48.81, abs=0.01)
+    assert ajustado["lula"] == pytest.approx(44.56, abs=0.01)

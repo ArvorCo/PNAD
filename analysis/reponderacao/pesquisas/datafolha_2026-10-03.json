@@ -1,0 +1,312 @@
+{
+  "instituto": "Datafolha",
+  "contratante": "Folha de S.Paulo e TV Globo",
+  "metodo": "presencial, pontos de fluxo",
+  "id": "datafolha_2026-10-03",
+  "registro_tse": "BR-01708/2026",
+  "campo": {
+    "inicio": "2026-10-02",
+    "fim": "2026-10-03"
+  },
+  "divulgacao": "2026-10-03",
+  "n": 4006,
+  "renda": {
+    "unidade": "salarios_minimos",
+    "ano_referencia": 2026,
+    "faixas": [
+      {
+        "rotulo": "Até 2 SM (até R$ 3.242)",
+        "max": 2
+      },
+      {
+        "rotulo": "2 a 5 SM (R$ 3.242 a 8.105)",
+        "max": 5
+      },
+      {
+        "rotulo": "Mais de 5 SM (acima de R$ 8.105)",
+        "max": null
+      }
+    ],
+    "mes_precos": "202610",
+    "bases": [
+      1209,
+      856,
+      344
+    ],
+    "perfil_tipo": "hipotese_onda_anterior",
+    "nota": "Hipótese explícita: o painel do G1 não publica o perfil da amostra, então o perfil usado é o das bases ponderadas de renda da onda de 01/10 do próprio Datafolha (PDF de 02/10, pp. 45 e 53: 1.209/856/344). O Datafolha pondera às mesmas metas declaradas no registro entre ondas, e a matéria da Folha de 03/10 confirma a composição desta onda nas duas primeiras faixas: os 48% mais pobres e 34% da amostra entre 2 e 5 salários (01/10: 48,2% e 34,2% do total). Será substituído pelo perfil do PDF quando a íntegra sair."
+  },
+  "publicado": {
+    "1t": {
+      "lula": 42,
+      "flavio": 40,
+      "cury": 3,
+      "caiado": 4,
+      "renan_santos": 3,
+      "zema": 0,
+      "samara": 0,
+      "edmilson": 0,
+      "rui": 0,
+      "grassi": 0,
+      "clariana": 0,
+      "hertz": 0,
+      "branco_nulo": 4,
+      "indecisos": 3
+    },
+    "2t": {
+      "lula": 47,
+      "flavio": 46,
+      "branco_nulo": 6,
+      "indecisos": 2
+    }
+  },
+  "cruzamentos": {
+    "1t": {
+      "opcoes": [
+        "lula",
+        "flavio",
+        "cury",
+        "caiado",
+        "renan_santos",
+        "zema",
+        "samara",
+        "edmilson",
+        "rui",
+        "grassi",
+        "clariana",
+        "hertz",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          50,
+          32,
+          2,
+          4,
+          2,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          4,
+          4
+        ],
+        [
+          35,
+          47,
+          3,
+          4,
+          4,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          4,
+          2
+        ],
+        [
+          35,
+          49,
+          4,
+          3,
+          5,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          2,
+          1
+        ]
+      ],
+      "nota": "Painel do G1 (API pública, tipo_pergunta ESTIMULADA-PRE-002), estratos de renda 'Até 2 s.m.', 'Mais de 2 a 5 s.m' e 'Mais de 5 s.m.'. Valores arredondados ao inteiro pelo próprio painel e sem bases. O mesmo painel reproduz célula a célula o PDF da onda de 01/10."
+    },
+    "2t": {
+      "opcoes": [
+        "lula",
+        "flavio",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          55,
+          37,
+          6,
+          2
+        ],
+        [
+          38,
+          55,
+          6,
+          1
+        ],
+        [
+          39,
+          56,
+          5,
+          1
+        ]
+      ],
+      "nota": "Painel do G1 (API pública, tipo_pergunta SEGTURNO-PRE-001), estratos de renda 'Até 2 s.m.', 'Mais de 2 a 5 s.m' e 'Mais de 5 s.m.'. Valores arredondados ao inteiro pelo próprio painel e sem bases. O mesmo painel reproduz célula a célula o PDF da onda de 01/10."
+    }
+  },
+  "controles": {
+    "pesos_renda": [
+      1209.0,
+      856.0,
+      344.0
+    ],
+    "pesos_sexo_masculino_feminino": [
+      1215.0,
+      1291.0
+    ],
+    "pesos_sexo_nota": "Hipótese explícita: bases de sexo da onda de 01/10 (PDF p. 44: 1.215 homens, 1.291 mulheres).",
+    "1t": {
+      "renda": {
+        "recomposto": {
+          "lula": 42.53,
+          "flavio": 39.76,
+          "cury": 2.64,
+          "caiado": 3.86,
+          "renan_santos": 3.14,
+          "zema": 0.64,
+          "samara": 0.5,
+          "edmilson": 0.0,
+          "rui": 0.0,
+          "grassi": 0.0,
+          "clariana": 0.0,
+          "hertz": 0.0,
+          "branco_nulo": 3.71,
+          "indecisos": 2.86
+        },
+        "residuo": {
+          "lula": 0.53,
+          "flavio": -0.24,
+          "cury": -0.36,
+          "caiado": -0.14,
+          "renan_santos": 0.14,
+          "zema": 0.64,
+          "samara": 0.5,
+          "edmilson": 0.0,
+          "rui": 0.0,
+          "grassi": 0.0,
+          "clariana": 0.0,
+          "hertz": 0.0,
+          "branco_nulo": -0.29,
+          "indecisos": -0.14
+        },
+        "residuo_max_abs": 0.64
+      },
+      "sexo": {
+        "recomposto": {
+          "lula": 42.61,
+          "flavio": 39.36,
+          "cury": 2.52,
+          "caiado": 4.0,
+          "renan_santos": 2.97,
+          "zema": 0.48,
+          "samara": 0.52,
+          "edmilson": 0.0,
+          "rui": 0.0,
+          "grassi": 0.0,
+          "clariana": 0.0,
+          "hertz": 0.0,
+          "branco_nulo": 3.52,
+          "indecisos": 3.03
+        },
+        "residuo": {
+          "lula": 0.61,
+          "flavio": -0.64,
+          "cury": -0.48,
+          "caiado": 0.0,
+          "renan_santos": -0.03,
+          "zema": 0.48,
+          "samara": 0.52,
+          "edmilson": 0.0,
+          "rui": 0.0,
+          "grassi": 0.0,
+          "clariana": 0.0,
+          "hertz": 0.0,
+          "branco_nulo": -0.48,
+          "indecisos": 0.03
+        },
+        "residuo_max_abs": 0.64
+      }
+    },
+    "2t": {
+      "renda": {
+        "recomposto": {
+          "lula": 46.67,
+          "flavio": 46.11,
+          "branco_nulo": 5.86,
+          "indecisos": 1.5
+        },
+        "residuo": {
+          "lula": -0.33,
+          "flavio": 0.11,
+          "branco_nulo": -0.14,
+          "indecisos": -0.5
+        },
+        "residuo_max_abs": 0.5
+      },
+      "sexo": {
+        "recomposto": {
+          "lula": 46.61,
+          "flavio": 45.85,
+          "branco_nulo": 6.03,
+          "indecisos": 1.52
+        },
+        "residuo": {
+          "lula": -0.39,
+          "flavio": -0.15,
+          "branco_nulo": 0.03,
+          "indecisos": -0.48
+        },
+        "residuo_max_abs": 0.48
+      }
+    }
+  },
+  "fonte": {
+    "tipo": "painel_contratante",
+    "rotulo": "Painel do G1, 1º turno (API)",
+    "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/100/?tipo_pergunta=ESTIMULADA-PRE-002&instituto=Datafolha",
+    "arquivo": "data/originals/datafolha_102026_03/g1_estimulada_1t.json",
+    "sha256": "9816fc64ea9ab3606b1d5864810402a69e06ec4d14c16397841d2189cfcb935d",
+    "bytes": 163640,
+    "paginas": {
+      "1t_topline": "API ESTIMULADA-PRE-002, total",
+      "1t_renda": "API ESTIMULADA-PRE-002, estratos de renda",
+      "2t_topline": "API SEGTURNO-PRE-001, total",
+      "2t_renda": "API SEGTURNO-PRE-001, estratos de renda",
+      "perfil_renda": "não publicado; hipótese da onda de 01/10"
+    },
+    "conferido_em": "2026-10-03",
+    "status": "Íntegra em PDF não publicada até a consulta de 03/10/2026; números lidos da API pública do painel do G1, contratante. Conferir contra o PDF quando sair.",
+    "nota": "O painel do G1 reproduz célula a célula o PDF da onda de 01/10. Os valores vêm arredondados ao inteiro e sem bases; o perfil de renda é o da onda anterior, como hipótese explícita.",
+    "complementos": [
+      {
+        "rotulo": "G1: 2º turno, Lula × Flávio",
+        "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/100/?tipo_pergunta=SEGTURNO-PRE-001&instituto=Datafolha",
+        "arquivo": "data/originals/datafolha_102026_03/g1_segundo_turno.json",
+        "sha256": "f2ce4fce26e1ac3c8c5e6b3bdcced66b23edf67ab15af20a8d2141e3cca84730"
+      },
+      {
+        "rotulo": "Folha: matéria da divulgação",
+        "url": "https://www1.folha.uol.com.br/poder/2026/10/datafolha-lula-tem-45-e-flavio-bolsonaro-42-em-votos-validos-na-vespera-do-1o-turno.shtml",
+        "arquivo": "data/originals/datafolha_102026_03/materia_folha.html",
+        "sha256": "6076b85a6dbdb52534c86055549ea5173e7d7aa46f69e0b2a6e9dd2938aa3868"
+      }
+    ]
+  },
+  "notas": "PDF não publicado em 03/10/2026; todos os números de voto vêm da API do painel do G1 e os metadados (registro, campo de 02 e 03/10, 4.006 entrevistas em 122 municípios, margem de 2 pontos) da matéria da Folha. O cartão do painel não lista Leonardo Avalanche, que teve zero no PDF de 01/10. Recomposição por renda: 1º turno Lula 42.53 e Flávio 39.76 contra 42 e 40, maior resíduo 0.64 pp; 2º turno Lula 46.67 e Flávio 46.11 contra 47 e 46, maior resíduo 0.50 pp. Controle por sexo: maior resíduo 0.64 pp no 1º turno e 0.48 pp no 2º. A conta preserva o placar publicado e acrescenta apenas o delta da troca de renda."
+}

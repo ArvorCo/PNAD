@@ -152,7 +152,8 @@ def paginas_fonte(fonte: dict) -> str:
     if not itens:
         return fonte.get("localizador", "páginas não declaradas")
     return ", ".join(
-        f"p. {valor} ({PAGINAS.get(chave, chave.replace('_', ' '))})"
+        f"{'p. ' if str(valor)[:1].isdigit() else ''}{valor} "
+        f"({PAGINAS.get(chave, chave.replace('_', ' '))})"
         for chave, valor in itens.items()
     )
 
@@ -297,7 +298,8 @@ def ch_segundo_turno() -> str:
     parciais = [
         p
         for p in PESQUISAS
-        if "2t" in p["turnos"] and p["fonte"].get("tipo") == "materia"
+        if "2t" in p["turnos"]
+        and p["fonte"].get("tipo") in ("materia", "painel_contratante")
     ]
     if parciais:
         corpo += (
@@ -306,7 +308,7 @@ def ch_segundo_turno() -> str:
                 f'<a href="#pesquisa-{esc(p["id"])}">{esc(p["instituto"])} ({longo(p["divulgacao"])})</a>'
                 for p in parciais
             )
-            + ". Os votos por renda vêm da divulgação e a reponderação usa as cotas registradas, condicionada à confirmação do perfil ponderado final.</p>"
+            + ". Os votos por renda vêm da divulgação, sem o PDF, e a reponderação usa o perfil declarado na divulgação ou, quando ele falta, a hipótese registrada na ficha, condicionada à confirmação do perfil ponderado final.</p>"
         )
     return capitulo(
         1,
