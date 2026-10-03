@@ -866,6 +866,8 @@ def render(data, template):
         "GAP_LOW": number(data["incerteza"]["margem"]["p05"], 2),
         "GAP_HIGH": number(data["incerteza"]["margem"]["p95"], 2),
         "MODEL_HASH": data["hash_modelo"],
+        # Versiona a URL do card: X e WhatsApp guardam a imagem pela URL.
+        "CARD_VERSION": data["hash_modelo"][:10],
         "DATA": json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace(
             "<", "\\u003c"
         ),

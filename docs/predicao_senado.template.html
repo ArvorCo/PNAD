@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quem senta no Senado em 2027 | Arvor</title>
+  <meta name="description" content="Predição experimental do Senado: probabilidade de eleição dos dois nomes por estado, hemiciclo de {{ASSENTOS}} assentos por campo e partido, mapa e fontes de cada pesquisa.">
+  <link rel="canonical" href="https://brasil.arvor.co/predicao_senado.html">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#142d2b">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Arvor Intelligence">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:title" content="Quem senta no Senado em 2027">
+  <meta property="og:description" content="Dois nomes por estado, {{ASSENTOS}} assentos, probabilidade de eleição e a fonte de cada pesquisa. Predição experimental, com limites declarados.">
+  <meta property="og:url" content="https://brasil.arvor.co/predicao_senado.html">
+  <meta property="og:image" content="https://brasil.arvor.co/img/og/predicao_senado.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://brasil.arvor.co/img/og/predicao_senado.png">
+  <link rel="stylesheet" href="assets/predicao_2026.css">
+  <link rel="stylesheet" href="assets/predicao_2026-responsive.css">
+  <link rel="stylesheet" href="assets/predicao_2026_ux.css">
+  <link rel="stylesheet" href="assets/predicao_senado.css">
+  <script src="assets/predicao_2026_ui.js" defer></script>
+  <script src="assets/predicao_senado.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<div class="read-progress" aria-hidden="true"><div class="read-progress-bar"></div></div>
+<header class="masthead" id="topo"><div class="wrap brand-row"><a href="index.html" class="brand">ARVOR <span>Intelligence</span></a><a href="predicao_2026_1T_presidente.html">A predição presidencial ↗</a></div></header>
+<main id="conteudo" tabindex="-1">
+<section class="hero">
+  <div class="wrap"><div class="hero-top"><span class="eyebrow">Laboratório eleitoral / Senado</span><span class="edition">Eleição: {{ELECTION_DATE}}<br>Referência: {{DATE}}</span></div>
+  <div class="hero-title"><h1>Quem senta no<br><em>Senado em 2027</em></h1><div class="hero-intro"><span class="status">Predição experimental</span><p>Referência de {{DATE}}, véspera do 1º turno de {{ELECTION_DATE}}. Cada estado elege {{POR_ESTADO}} senadores: os dois mais votados. Estão em disputa {{NOVOS}} vagas. Outras {{CONTINUAM}} seguem até 2031. O Senado tem {{ASSENTOS}} assentos.</p></div></div>
+  {{HERO}}
+  <p class="hero-caption">Assentos esperados somam a probabilidade de eleição de cada candidatura, mais os mandatos que continuam. O intervalo de 90% mostra a variação das simulações, não uma garantia.</p>
+  <div class="hero-links"><a class="button light" href="#mapa">Abrir o mapa ↓</a><a href="#metodo">Como lemos</a><a href="assets/predicao_senado.json">Baixar o modelo (JSON)</a></div>
+  </div>
+</section>
+<nav class="chapter-nav" aria-label="Capítulos"><div class="wrap"><a href="#senado">O Senado</a><a href="#mapa">O mapa</a><a href="#tabela">Os 27 estados</a><a href="#metodo">Como lemos</a><a href="#limites">Limites</a><a href="#fontes">Fontes</a></div></nav>
+
+<section class="chapter wrap" id="senado">
+  <header class="chapter-head"><span class="chapter-number">01</span><div><p class="eyebrow">{{ASSENTOS}} assentos</p><h2>O hemiciclo de 2027.</h2></div></header>
+  <p class="lead">Cada assento é um mandato. Os {{CONTINUAM}} de contorno continuam. Os {{NOVOS}} cheios são o valor esperado das vagas em disputa. A ordem vai da esquerda para a direita.</p>
+  {{HEMICICLO}}
+  {{PROBABILIDADES}}
+</section>
+
+<section class="chapter wrap" id="mapa">
+  <header class="chapter-head"><span class="chapter-number">02</span><div><p class="eyebrow">Dois nomes por estado</p><h2>O mapa dos eleitos prováveis.</h2></div></header>
+  <p class="lead">A cor mostra o campo dos dois nomes com maior chance de eleição. {{COBERTURA_RECENTE}} estados têm pesquisa recente, {{COBERTURA_ANTIGA}} têm só pesquisa antiga e {{COBERTURA_SEM}} não têm pesquisa.</p>
+  {{MAPA}}
+  <h3 id="fichas-titulo">Fichas dos {{N_ESTADOS}} estados</h3>
+  <p>Cada ficha traz os dois eleitos prováveis, o terceiro e o quarto colocados, as pesquisas usadas e a cobertura. O estado em foco já vem aberto.</p>
+  {{FICHAS}}
+</section>
+
+<section class="chapter wrap" id="tabela">
+  <header class="chapter-head"><span class="chapter-number">03</span><div><p class="eyebrow">Tudo em uma tabela</p><h2>Os {{N_ESTADOS}} estados lado a lado.</h2></div></header>
+  <p class="lead">Probabilidade de eleição de cada nome, cobertura e pesquisas usadas. Clique no cabeçalho para ordenar.</p>
+  {{TABELA}}
+</section>
+
+<section class="chapter wrap" id="metodo">
+  <header class="chapter-head"><span class="chapter-number">04</span><div><p class="eyebrow">Em linguagem de aula</p><h2>Como lemos.</h2></div></header>
+  <p class="lead">A página não recalcula nada. Ela mostra o resultado de uma simulação e explica o que cada número quer dizer.</p>
+  <div class="prose">{{COMO_LEMOS}}</div>
+</section>
+
+<section class="chapter wrap" id="limites">
+  <header class="chapter-head"><span class="chapter-number">05</span><div><p class="eyebrow">O que a página não sabe</p><h2>Limites.</h2></div></header>
+  <div class="prose">{{LIMITES}}</div>
+</section>
+
+<section class="chapter wrap" id="fontes">
+  <header class="chapter-head"><span class="chapter-number">06</span><div><p class="eyebrow">A predição pode ser refeita</p><h2>Fontes.</h2></div></header>
+  <div class="downloads"><a href="assets/predicao_senado.json">Modelo e fontes · JSON</a><a href="predicao_2026_1T_presidente.html">Predição presidencial</a><a href="mapa_do_voto_util.html">Mapa do voto útil</a></div>
+  <p>{{N_FONTES}} pesquisas usadas ou consideradas, uma por linha, com registro no TSE, URL, arquivo e SHA-256.</p>
+  {{FONTES}}
+  <div class="prose"><p><b>Fotos.</b> Fotos oficiais das candidaturas, TSE, dados abertos (<code>foto_cand2026_&lt;UF&gt;_div.zip</code>). Onde a foto não existe, a página desenha um avatar neutro com as iniciais.</p>
+  <p><b>Candidaturas e Senado que continua.</b> TSE, dados abertos: <code>consulta_cand_2026.zip</code> e resultados de 2022 (<code>votacao_candidato_munzona_2022.zip</code>).</p>
+  <p><b>Malha.</b> IBGE, malha das unidades da federação, qualidade mínima, via API de malhas do IBGE.</p>
+  <p class="version">Gerado em <code>{{GERADO}}</code>.</p></div>
+</section>
+</main>
+<footer class="wrap footer"><a class="brand" href="index.html">ARVOR <span>Intelligence</span></a><p>Predição experimental, código e dados auditáveis. Referência {{DATE}}. <a href="predicao_2026_1T_presidente.html">Predição presidencial</a> · <a href="mapa_do_voto_util.html">Mapa do voto útil</a> · <a href="index.html">Biblioteca</a></p></footer>
+<a class="to-top" href="#topo" hidden aria-label="Voltar ao topo da página"><span aria-hidden="true">↑</span><span class="to-top-label">Topo</span></a>
+</body>
+</html>

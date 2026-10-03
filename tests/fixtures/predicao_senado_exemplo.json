@@ -1,0 +1,3397 @@
+{
+ "aviso_fixture": "FIXTURE: valores inventados para desenvolver a página; não são uma previsão.",
+ "gerado_em": "2026-10-03T23:40:00Z",
+ "data_referencia": "2026-10-03",
+ "eleicao": "2026-10-04",
+ "parametros": {
+  "meia_vida_dias": 7,
+  "janela_campo_minimo": "2026-09-28",
+  "simulacoes": 20000,
+  "escala_erro_comum_pp": 3.0,
+  "escala_erro_candidato_pp": 2.5,
+  "justificativa_erro": "Hipótese declarada (fixture): sem calibração histórica conferível."
+ },
+ "estados": {
+  "AC": {
+   "uf": "AC",
+   "nome": "Acre",
+   "eleitorado": 2000000,
+   "pesquisas_usadas": [
+    {
+     "arquivo": "datafolha_AC_2026-10-01.json",
+     "peso": 0.5,
+     "campo_fim": "2026-10-01"
+    },
+    {
+     "arquivo": "quaest_AC_2026-10-01.json",
+     "peso": 0.5,
+     "campo_fim": "2026-10-01"
+    }
+   ],
+   "pesquisas_descartadas": [],
+   "cobertura": "recente",
+   "media": [
+    {
+     "nome": "Exemplo AC A (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "valor": 13.5,
+     "validos": 18.0
+    },
+    {
+     "nome": "Exemplo AC B (fixture)",
+     "partido": "PT",
+     "campo": "esquerda",
+     "valor": 9.0,
+     "validos": 12.0
+    },
+    {
+     "nome": "Exemplo AC C (fixture)",
+     "partido": "MDB",
+     "campo": "centro",
+     "valor": 5.2,
+     "validos": 7.0
+    },
+    {
+     "nome": "Exemplo AC D (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "valor": 2.2,
+     "validos": 3.0
+    }
+   ],
+   "probabilidades": [
+    {
+     "nome": "Exemplo AC A (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "sq_candidato": "9000",
+     "foto": "img/senado/AC_10002533895.jpg",
+     "p_eleito": 0.9,
+     "p_primeiro": 0.45,
+     "ic90_validos": [
+      18,
+      32
+     ]
+    },
+    {
+     "nome": "Exemplo AC B (fixture)",
+     "partido": "PT",
+     "campo": "esquerda",
+     "sq_candidato": "9001",
+     "foto": "img/senado/AC_10002535804.jpg",
+     "p_eleito": 0.6,
+     "p_primeiro": 0.3,
+     "ic90_validos": [
+      15,
+      29
+     ]
+    },
+    {
+     "nome": "Exemplo AC C (fixture)",
+     "partido": "MDB",
+     "campo": "centro",
+     "sq_candidato": "9002",
+     "foto": null,
+     "p_eleito": 0.35,
+     "p_primeiro": 0.175,
+     "ic90_validos": [
+      12,
+      26
+     ]
+    },
+    {
+     "nome": "Exemplo AC D (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "sq_candidato": "9003",
+     "foto": null,
+     "p_eleito": 0.15,
+     "p_primeiro": 0.075,
+     "ic90_validos": [
+      9,
+      23
+     ]
+    }
+   ],
+   "eleitos_provaveis": [
+    "Exemplo AC A (fixture)",
+    "Exemplo AC B (fixture)"
+   ],
+   "p_dupla_mais_provavel": 0.41,
+   "incerteza": "media",
+   "notas": [
+    "Fixture: valores inventados."
+   ]
+  },
+  "AL": {
+   "uf": "AL",
+   "nome": "Alagoas",
+   "eleitorado": 3000000,
+   "pesquisas_usadas": [
+    {
+     "arquivo": "datafolha_AL_2026-10-02.json",
+     "peso": 0.5,
+     "campo_fim": "2026-10-02"
+    }
+   ],
+   "pesquisas_descartadas": [],
+   "cobertura": "recente",
+   "media": [
+    {
+     "nome": "Exemplo AL A (fixture)",
+     "partido": "PT",
+     "campo": "esquerda",
+     "valor": 13.5,
+     "validos": 18.0
+    },
+    {
+     "nome": "Exemplo AL B (fixture)",
+     "partido": "PSB",
+     "campo": "centro-esquerda",
+     "valor": 9.0,
+     "validos": 12.0
+    },
+    {
+     "nome": "Exemplo AL C (fixture)",
+     "partido": "PT",
+     "campo": "esquerda",
+     "valor": 5.2,
+     "validos": 7.0
+    },
+    {
+     "nome": "Exemplo AL D (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "valor": 2.2,
+     "validos": 3.0
+    }
+   ],
+   "probabilidades": [
+    {
+     "nome": "Exemplo AL A (fixture)",
+     "partido": "PT",
+     "campo": "esquerda",
+     "sq_candidato": "9010",
+     "foto": null,
+     "p_eleito": 0.9,
+     "p_primeiro": 0.45,
+     "ic90_validos": [
+      18,
+      32
+     ]
+    },
+    {
+     "nome": "Exemplo AL B (fixture)",
+     "partido": "PSB",
+     "campo": "centro-esquerda",
+     "sq_candidato": "9011",
+     "foto": null,
+     "p_eleito": 0.6,
+     "p_primeiro": 0.3,
+     "ic90_validos": [
+      15,
+      29
+     ]
+    },
+    {
+     "nome": "Exemplo AL C (fixture)",
+     "partido": "PT",
+     "campo": "esquerda",
+     "sq_candidato": "9012",
+     "foto": null,
+     "p_eleito": 0.35,
+     "p_primeiro": 0.175,
+     "ic90_validos": [
+      12,
+      26
+     ]
+    },
+    {
+     "nome": "Exemplo AL D (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "sq_candidato": "9013",
+     "foto": null,
+     "p_eleito": 0.15,
+     "p_primeiro": 0.075,
+     "ic90_validos": [
+      9,
+      23
+     ]
+    }
+   ],
+   "eleitos_provaveis": [
+    "Exemplo AL A (fixture)",
+    "Exemplo AL B (fixture)"
+   ],
+   "p_dupla_mais_provavel": 0.41,
+   "incerteza": "baixa",
+   "notas": [
+    "Fixture: valores inventados."
+   ]
+  },
+  "AM": {
+   "uf": "AM",
+   "nome": "Amazonas",
+   "eleitorado": 4000000,
+   "pesquisas_usadas": [
+    {
+     "arquivo": "datafolha_AM_2026-10-03.json",
+     "peso": 0.5,
+     "campo_fim": "2026-10-03"
+    }
+   ],
+   "pesquisas_descartadas": [],
+   "cobertura": "recente",
+   "media": [
+    {
+     "nome": "Exemplo AM A (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "valor": 13.5,
+     "validos": 18.0
+    },
+    {
+     "nome": "Exemplo AM B (fixture)",
+     "partido": "PT",
+     "campo": "esquerda",
+     "valor": 9.0,
+     "validos": 12.0
+    },
+    {
+     "nome": "Exemplo AM C (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "valor": 5.2,
+     "validos": 7.0
+    },
+    {
+     "nome": "Exemplo AM D (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "valor": 2.2,
+     "validos": 3.0
+    }
+   ],
+   "probabilidades": [
+    {
+     "nome": "Exemplo AM A (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "sq_candidato": "9020",
+     "foto": null,
+     "p_eleito": 0.9,
+     "p_primeiro": 0.45,
+     "ic90_validos": [
+      18,
+      32
+     ]
+    },
+    {
+     "nome": "Exemplo AM B (fixture)",
+     "partido": "PT",
+     "campo": "esquerda",
+     "sq_candidato": "9021",
+     "foto": null,
+     "p_eleito": 0.6,
+     "p_primeiro": 0.3,
+     "ic90_validos": [
+      15,
+      29
+     ]
+    },
+    {
+     "nome": "Exemplo AM C (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "sq_candidato": "9022",
+     "foto": null,
+     "p_eleito": 0.35,
+     "p_primeiro": 0.175,
+     "ic90_validos": [
+      12,
+      26
+     ]
+    },
+    {
+     "nome": "Exemplo AM D (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "sq_candidato": "9023",
+     "foto": null,
+     "p_eleito": 0.15,
+     "p_primeiro": 0.075,
+     "ic90_validos": [
+      9,
+      23
+     ]
+    }
+   ],
+   "eleitos_provaveis": [
+    "Exemplo AM A (fixture)",
+    "Exemplo AM B (fixture)"
+   ],
+   "p_dupla_mais_provavel": 0.41,
+   "incerteza": "media",
+   "notas": [
+    "Fixture: valores inventados."
+   ]
+  },
+  "AP": {
+   "uf": "AP",
+   "nome": "Amapá",
+   "eleitorado": 5000000,
+   "pesquisas_usadas": [],
+   "pesquisas_descartadas": [],
+   "cobertura": "sem_pesquisa",
+   "media": [],
+   "probabilidades": [],
+   "eleitos_provaveis": [],
+   "p_dupla_mais_provavel": null,
+   "incerteza": "alta",
+   "notas": [
+    "Fixture: valores inventados."
+   ]
+  },
+  "BA": {
+   "uf": "BA",
+   "nome": "Bahia",
+   "eleitorado": 6000000,
+   "pesquisas_usadas": [
+    {
+     "arquivo": "datafolha_BA_2026-10-02.json",
+     "peso": 0.5,
+     "campo_fim": "2026-10-02"
+    }
+   ],
+   "pesquisas_descartadas": [],
+   "cobertura": "recente",
+   "media": [
+    {
+     "nome": "Exemplo BA A (fixture)",
+     "partido": "MDB",
+     "campo": "centro",
+     "valor": 13.5,
+     "validos": 18.0
+    },
+    {
+     "nome": "Exemplo BA B (fixture)",
+     "partido": "PP",
+     "campo": "centro-direita",
+     "valor": 9.0,
+     "validos": 12.0
+    },
+    {
+     "nome": "Exemplo BA C (fixture)",
+     "partido": "PSB",
+     "campo": "centro-esquerda",
+     "valor": 5.2,
+     "validos": 7.0
+    },
+    {
+     "nome": "Exemplo BA D (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "valor": 2.2,
+     "validos": 3.0
+    }
+   ],
+   "probabilidades": [
+    {
+     "nome": "Exemplo BA A (fixture)",
+     "partido": "MDB",
+     "campo": "centro",
+     "sq_candidato": "9040",
+     "foto": null,
+     "p_eleito": 0.9,
+     "p_primeiro": 0.45,
+     "ic90_validos": [
+      18,
+      32
+     ]
+    },
+    {
+     "nome": "Exemplo BA B (fixture)",
+     "partido": "PP",
+     "campo": "centro-direita",
+     "sq_candidato": "9041",
+     "foto": null,
+     "p_eleito": 0.6,
+     "p_primeiro": 0.3,
+     "ic90_validos": [
+      15,
+      29
+     ]
+    },
+    {
+     "nome": "Exemplo BA C (fixture)",
+     "partido": "PSB",
+     "campo": "centro-esquerda",
+     "sq_candidato": "9042",
+     "foto": null,
+     "p_eleito": 0.35,
+     "p_primeiro": 0.175,
+     "ic90_validos": [
+      12,
+      26
+     ]
+    },
+    {
+     "nome": "Exemplo BA D (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "sq_candidato": "9043",
+     "foto": null,
+     "p_eleito": 0.15,
+     "p_primeiro": 0.075,
+     "ic90_validos": [
+      9,
+      23
+     ]
+    }
+   ],
+   "eleitos_provaveis": [
+    "Exemplo BA A (fixture)",
+    "Exemplo BA B (fixture)"
+   ],
+   "p_dupla_mais_provavel": 0.41,
+   "incerteza": "media",
+   "notas": [
+    "Fixture: valores inventados."
+   ]
+  },
+  "CE": {
+   "uf": "CE",
+   "nome": "Ceará",
+   "eleitorado": 7000000,
+   "pesquisas_usadas": [
+    {
+     "arquivo": "datafolha_CE_2026-10-03.json",
+     "peso": 0.5,
+     "campo_fim": "2026-10-03"
+    }
+   ],
+   "pesquisas_descartadas": [],
+   "cobertura": "recente",
+   "media": [
+    {
+     "nome": "Exemplo CE A (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "valor": 13.5,
+     "validos": 18.0
+    },
+    {
+     "nome": "Exemplo CE B (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "valor": 9.0,
+     "validos": 12.0
+    },
+    {
+     "nome": "Exemplo CE C (fixture)",
+     "partido": "PSB",
+     "campo": "centro-esquerda",
+     "valor": 5.2,
+     "validos": 7.0
+    },
+    {
+     "nome": "Exemplo CE D (fixture)",
+     "partido": "MDB",
+     "campo": "centro",
+     "valor": 2.2,
+     "validos": 3.0
+    }
+   ],
+   "probabilidades": [
+    {
+     "nome": "Exemplo CE A (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "sq_candidato": "9050",
+     "foto": null,
+     "p_eleito": 0.9,
+     "p_primeiro": 0.45,
+     "ic90_validos": [
+      18,
+      32
+     ]
+    },
+    {
+     "nome": "Exemplo CE B (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "sq_candidato": "9051",
+     "foto": null,
+     "p_eleito": 0.6,
+     "p_primeiro": 0.3,
+     "ic90_validos": [
+      15,
+      29
+     ]
+    },
+    {
+     "nome": "Exemplo CE C (fixture)",
+     "partido": "PSB",
+     "campo": "centro-esquerda",
+     "sq_candidato": "9052",
+     "foto": null,
+     "p_eleito": 0.35,
+     "p_primeiro": 0.175,
+     "ic90_validos": [
+      12,
+      26
+     ]
+    },
+    {
+     "nome": "Exemplo CE D (fixture)",
+     "partido": "MDB",
+     "campo": "centro",
+     "sq_candidato": "9053",
+     "foto": null,
+     "p_eleito": 0.15,
+     "p_primeiro": 0.075,
+     "ic90_validos": [
+      9,
+      23
+     ]
+    }
+   ],
+   "eleitos_provaveis": [
+    "Exemplo CE A (fixture)",
+    "Exemplo CE B (fixture)"
+   ],
+   "p_dupla_mais_provavel": 0.41,
+   "incerteza": "baixa",
+   "notas": [
+    "Fixture: valores inventados."
+   ]
+  },
+  "DF": {
+   "uf": "DF",
+   "nome": "Distrito Federal",
+   "eleitorado": 8000000,
+   "pesquisas_usadas": [
+    {
+     "arquivo": "datafolha_DF_2026-10-01.json",
+     "peso": 0.5,
+     "campo_fim": "2026-10-01"
+    },
+    {
+     "arquivo": "quaest_DF_2026-10-01.json",
+     "peso": 0.5,
+     "campo_fim": "2026-10-01"
+    }
+   ],
+   "pesquisas_descartadas": [],
+   "cobertura": "recente",
+   "media": [
+    {
+     "nome": "Exemplo DF A (fixture)",
+     "partido": "PP",
+     "campo": "centro-direita",
+     "valor": 13.5,
+     "validos": 18.0
+    },
+    {
+     "nome": "Exemplo DF B (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "valor": 9.0,
+     "validos": 12.0
+    },
+    {
+     "nome": "Exemplo DF C (fixture)",
+     "partido": "PP",
+     "campo": "centro-direita",
+     "valor": 5.2,
+     "validos": 7.0
+    },
+    {
+     "nome": "Exemplo DF D (fixture)",
+     "partido": "MDB",
+     "campo": "centro",
+     "valor": 2.2,
+     "validos": 3.0
+    }
+   ],
+   "probabilidades": [
+    {
+     "nome": "Exemplo DF A (fixture)",
+     "partido": "PP",
+     "campo": "centro-direita",
+     "sq_candidato": "9060",
+     "foto": null,
+     "p_eleito": 0.9,
+     "p_primeiro": 0.45,
+     "ic90_validos": [
+      18,
+      32
+     ]
+    },
+    {
+     "nome": "Exemplo DF B (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "sq_candidato": "9061",
+     "foto": null,
+     "p_eleito": 0.6,
+     "p_primeiro": 0.3,
+     "ic90_validos": [
+      15,
+      29
+     ]
+    },
+    {
+     "nome": "Exemplo DF C (fixture)",
+     "partido": "PP",
+     "campo": "centro-direita",
+     "sq_candidato": "9062",
+     "foto": null,
+     "p_eleito": 0.35,
+     "p_primeiro": 0.175,
+     "ic90_validos": [
+      12,
+      26
+     ]
+    },
+    {
+     "nome": "Exemplo DF D (fixture)",
+     "partido": "MDB",
+     "campo": "centro",
+     "sq_candidato": "9063",
+     "foto": null,
+     "p_eleito": 0.15,
+     "p_primeiro": 0.075,
+     "ic90_validos": [
+      9,
+      23
+     ]
+    }
+   ],
+   "eleitos_provaveis": [
+    "Exemplo DF A (fixture)",
+    "Exemplo DF B (fixture)"
+   ],
+   "p_dupla_mais_provavel": 0.41,
+   "incerteza": "media",
+   "notas": [
+    "Fixture: valores inventados."
+   ]
+  },
+  "ES": {
+   "uf": "ES",
+   "nome": "Espírito Santo",
+   "eleitorado": 9000000,
+   "pesquisas_usadas": [
+    {
+     "arquivo": "datafolha_ES_2026-10-02.json",
+     "peso": 0.5,
+     "campo_fim": "2026-10-02"
+    }
+   ],
+   "pesquisas_descartadas": [],
+   "cobertura": "recente",
+   "media": [
+    {
+     "nome": "Exemplo ES A (fixture)",
+     "partido": "PSB",
+     "campo": "centro-esquerda",
+     "valor": 13.5,
+     "validos": 18.0
+    },
+    {
+     "nome": "Exemplo ES B (fixture)",
+     "partido": "PSB",
+     "campo": "centro-esquerda",
+     "valor": 9.0,
+     "validos": 12.0
+    },
+    {
+     "nome": "Exemplo ES C (fixture)",
+     "partido": "PT",
+     "campo": "esquerda",
+     "valor": 5.2,
+     "validos": 7.0
+    },
+    {
+     "nome": "Exemplo ES D (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "valor": 2.2,
+     "validos": 3.0
+    }
+   ],
+   "probabilidades": [
+    {
+     "nome": "Exemplo ES A (fixture)",
+     "partido": "PSB",
+     "campo": "centro-esquerda",
+     "sq_candidato": "9070",
+     "foto": null,
+     "p_eleito": 0.9,
+     "p_primeiro": 0.45,
+     "ic90_validos": [
+      18,
+      32
+     ]
+    },
+    {
+     "nome": "Exemplo ES B (fixture)",
+     "partido": "PSB",
+     "campo": "centro-esquerda",
+     "sq_candidato": "9071",
+     "foto": null,
+     "p_eleito": 0.6,
+     "p_primeiro": 0.3,
+     "ic90_validos": [
+      15,
+      29
+     ]
+    },
+    {
+     "nome": "Exemplo ES C (fixture)",
+     "partido": "PT",
+     "campo": "esquerda",
+     "sq_candidato": "9072",
+     "foto": null,
+     "p_eleito": 0.35,
+     "p_primeiro": 0.175,
+     "ic90_validos": [
+      12,
+      26
+     ]
+    },
+    {
+     "nome": "Exemplo ES D (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "sq_candidato": "9073",
+     "foto": null,
+     "p_eleito": 0.15,
+     "p_primeiro": 0.075,
+     "ic90_validos": [
+      9,
+      23
+     ]
+    }
+   ],
+   "eleitos_provaveis": [
+    "Exemplo ES A (fixture)",
+    "Exemplo ES B (fixture)"
+   ],
+   "p_dupla_mais_provavel": 0.41,
+   "incerteza": "baixa",
+   "notas": [
+    "Fixture: valores inventados."
+   ]
+  },
+  "GO": {
+   "uf": "GO",
+   "nome": "Goiás",
+   "eleitorado": 10000000,
+   "pesquisas_usadas": [
+    {
+     "arquivo": "datafolha_GO_2026-10-03.json",
+     "peso": 0.5,
+     "campo_fim": "2026-10-03"
+    }
+   ],
+   "pesquisas_descartadas": [],
+   "cobertura": "recente",
+   "media": [
+    {
+     "nome": "Exemplo GO A (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "valor": 13.5,
+     "validos": 18.0
+    },
+    {
+     "nome": "Exemplo GO B (fixture)",
+     "partido": "PT",
+     "campo": "esquerda",
+     "valor": 9.0,
+     "validos": 12.0
+    },
+    {
+     "nome": "Exemplo GO C (fixture)",
+     "partido": "PT",
+     "campo": "esquerda",
+     "valor": 5.2,
+     "validos": 7.0
+    },
+    {
+     "nome": "Exemplo GO D (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "valor": 2.2,
+     "validos": 3.0
+    }
+   ],
+   "probabilidades": [
+    {
+     "nome": "Exemplo GO A (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "sq_candidato": "9080",
+     "foto": null,
+     "p_eleito": 0.9,
+     "p_primeiro": 0.45,
+     "ic90_validos": [
+      18,
+      32
+     ]
+    },
+    {
+     "nome": "Exemplo GO B (fixture)",
+     "partido": "PT",
+     "campo": "esquerda",
+     "sq_candidato": "9081",
+     "foto": null,
+     "p_eleito": 0.6,
+     "p_primeiro": 0.3,
+     "ic90_validos": [
+      15,
+      29
+     ]
+    },
+    {
+     "nome": "Exemplo GO C (fixture)",
+     "partido": "PT",
+     "campo": "esquerda",
+     "sq_candidato": "9082",
+     "foto": null,
+     "p_eleito": 0.35,
+     "p_primeiro": 0.175,
+     "ic90_validos": [
+      12,
+      26
+     ]
+    },
+    {
+     "nome": "Exemplo GO D (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "sq_candidato": "9083",
+     "foto": null,
+     "p_eleito": 0.15,
+     "p_primeiro": 0.075,
+     "ic90_validos": [
+      9,
+      23
+     ]
+    }
+   ],
+   "eleitos_provaveis": [
+    "Exemplo GO A (fixture)",
+    "Exemplo GO B (fixture)"
+   ],
+   "p_dupla_mais_provavel": 0.41,
+   "incerteza": "media",
+   "notas": [
+    "Fixture: valores inventados."
+   ]
+  },
+  "MA": {
+   "uf": "MA",
+   "nome": "Maranhão",
+   "eleitorado": 11000000,
+   "pesquisas_usadas": [
+    {
+     "arquivo": "datafolha_MA_2026-10-01.json",
+     "peso": 0.5,
+     "campo_fim": "2026-10-01"
+    },
+    {
+     "arquivo": "quaest_MA_2026-10-01.json",
+     "peso": 0.5,
+     "campo_fim": "2026-10-01"
+    }
+   ],
+   "pesquisas_descartadas": [],
+   "cobertura": "recente",
+   "media": [
+    {
+     "nome": "Exemplo MA A (fixture)",
+     "partido": "PT",
+     "campo": "esquerda",
+     "valor": 13.5,
+     "validos": 18.0
+    },
+    {
+     "nome": "Exemplo MA B (fixture)",
+     "partido": "PT",
+     "campo": "esquerda",
+     "valor": 9.0,
+     "validos": 12.0
+    },
+    {
+     "nome": "Exemplo MA C (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "valor": 5.2,
+     "validos": 7.0
+    },
+    {
+     "nome": "Exemplo MA D (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "valor": 2.2,
+     "validos": 3.0
+    }
+   ],
+   "probabilidades": [
+    {
+     "nome": "Exemplo MA A (fixture)",
+     "partido": "PT",
+     "campo": "esquerda",
+     "sq_candidato": "9090",
+     "foto": null,
+     "p_eleito": 0.9,
+     "p_primeiro": 0.45,
+     "ic90_validos": [
+      18,
+      32
+     ]
+    },
+    {
+     "nome": "Exemplo MA B (fixture)",
+     "partido": "PT",
+     "campo": "esquerda",
+     "sq_candidato": "9091",
+     "foto": null,
+     "p_eleito": 0.6,
+     "p_primeiro": 0.3,
+     "ic90_validos": [
+      15,
+      29
+     ]
+    },
+    {
+     "nome": "Exemplo MA C (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "sq_candidato": "9092",
+     "foto": null,
+     "p_eleito": 0.35,
+     "p_primeiro": 0.175,
+     "ic90_validos": [
+      12,
+      26
+     ]
+    },
+    {
+     "nome": "Exemplo MA D (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "sq_candidato": "9093",
+     "foto": null,
+     "p_eleito": 0.15,
+     "p_primeiro": 0.075,
+     "ic90_validos": [
+      9,
+      23
+     ]
+    }
+   ],
+   "eleitos_provaveis": [
+    "Exemplo MA A (fixture)",
+    "Exemplo MA B (fixture)"
+   ],
+   "p_dupla_mais_provavel": 0.41,
+   "incerteza": "baixa",
+   "notas": [
+    "Fixture: valores inventados."
+   ]
+  },
+  "MG": {
+   "uf": "MG",
+   "nome": "Minas Gerais",
+   "eleitorado": 12000000,
+   "pesquisas_usadas": [
+    {
+     "arquivo": "datafolha_MG_2026-10-02.json",
+     "peso": 0.5,
+     "campo_fim": "2026-10-02"
+    }
+   ],
+   "pesquisas_descartadas": [],
+   "cobertura": "recente",
+   "media": [
+    {
+     "nome": "Exemplo MG A (fixture)",
+     "partido": "PP",
+     "campo": "centro-direita",
+     "valor": 13.5,
+     "validos": 18.0
+    },
+    {
+     "nome": "Exemplo MG B (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "valor": 9.0,
+     "validos": 12.0
+    },
+    {
+     "nome": "Exemplo MG C (fixture)",
+     "partido": "PP",
+     "campo": "centro-direita",
+     "valor": 5.2,
+     "validos": 7.0
+    },
+    {
+     "nome": "Exemplo MG D (fixture)",
+     "partido": "PT",
+     "campo": "esquerda",
+     "valor": 2.2,
+     "validos": 3.0
+    }
+   ],
+   "probabilidades": [
+    {
+     "nome": "Exemplo MG A (fixture)",
+     "partido": "PP",
+     "campo": "centro-direita",
+     "sq_candidato": "9100",
+     "foto": null,
+     "p_eleito": 0.9,
+     "p_primeiro": 0.45,
+     "ic90_validos": [
+      18,
+      32
+     ]
+    },
+    {
+     "nome": "Exemplo MG B (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "sq_candidato": "9101",
+     "foto": null,
+     "p_eleito": 0.6,
+     "p_primeiro": 0.3,
+     "ic90_validos": [
+      15,
+      29
+     ]
+    },
+    {
+     "nome": "Exemplo MG C (fixture)",
+     "partido": "PP",
+     "campo": "centro-direita",
+     "sq_candidato": "9102",
+     "foto": null,
+     "p_eleito": 0.35,
+     "p_primeiro": 0.175,
+     "ic90_validos": [
+      12,
+      26
+     ]
+    },
+    {
+     "nome": "Exemplo MG D (fixture)",
+     "partido": "PT",
+     "campo": "esquerda",
+     "sq_candidato": "9103",
+     "foto": null,
+     "p_eleito": 0.15,
+     "p_primeiro": 0.075,
+     "ic90_validos": [
+      9,
+      23
+     ]
+    }
+   ],
+   "eleitos_provaveis": [
+    "Exemplo MG A (fixture)",
+    "Exemplo MG B (fixture)"
+   ],
+   "p_dupla_mais_provavel": 0.41,
+   "incerteza": "media",
+   "notas": [
+    "Fixture: valores inventados."
+   ]
+  },
+  "MS": {
+   "uf": "MS",
+   "nome": "Mato Grosso do Sul",
+   "eleitorado": 13000000,
+   "pesquisas_usadas": [
+    {
+     "arquivo": "datafolha_MS_2026-10-03.json",
+     "peso": 0.5,
+     "campo_fim": "2026-10-03"
+    }
+   ],
+   "pesquisas_descartadas": [],
+   "cobertura": "recente",
+   "media": [
+    {
+     "nome": "Exemplo MS A (fixture)",
+     "partido": "PT",
+     "campo": "esquerda",
+     "valor": 13.5,
+     "validos": 18.0
+    },
+    {
+     "nome": "Exemplo MS B (fixture)",
+     "partido": "MDB",
+     "campo": "centro",
+     "valor": 9.0,
+     "validos": 12.0
+    },
+    {
+     "nome": "Exemplo MS C (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "valor": 5.2,
+     "validos": 7.0
+    },
+    {
+     "nome": "Exemplo MS D (fixture)",
+     "partido": "PP",
+     "campo": "centro-direita",
+     "valor": 2.2,
+     "validos": 3.0
+    }
+   ],
+   "probabilidades": [
+    {
+     "nome": "Exemplo MS A (fixture)",
+     "partido": "PT",
+     "campo": "esquerda",
+     "sq_candidato": "9110",
+     "foto": null,
+     "p_eleito": 0.9,
+     "p_primeiro": 0.45,
+     "ic90_validos": [
+      18,
+      32
+     ]
+    },
+    {
+     "nome": "Exemplo MS B (fixture)",
+     "partido": "MDB",
+     "campo": "centro",
+     "sq_candidato": "9111",
+     "foto": null,
+     "p_eleito": 0.6,
+     "p_primeiro": 0.3,
+     "ic90_validos": [
+      15,
+      29
+     ]
+    },
+    {
+     "nome": "Exemplo MS C (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "sq_candidato": "9112",
+     "foto": null,
+     "p_eleito": 0.35,
+     "p_primeiro": 0.175,
+     "ic90_validos": [
+      12,
+      26
+     ]
+    },
+    {
+     "nome": "Exemplo MS D (fixture)",
+     "partido": "PP",
+     "campo": "centro-direita",
+     "sq_candidato": "9113",
+     "foto": null,
+     "p_eleito": 0.15,
+     "p_primeiro": 0.075,
+     "ic90_validos": [
+      9,
+      23
+     ]
+    }
+   ],
+   "eleitos_provaveis": [
+    "Exemplo MS A (fixture)",
+    "Exemplo MS B (fixture)"
+   ],
+   "p_dupla_mais_provavel": 0.41,
+   "incerteza": "baixa",
+   "notas": [
+    "Fixture: valores inventados."
+   ]
+  },
+  "MT": {
+   "uf": "MT",
+   "nome": "Mato Grosso",
+   "eleitorado": 14000000,
+   "pesquisas_usadas": [
+    {
+     "arquivo": "datafolha_MT_2026-10-01.json",
+     "peso": 0.5,
+     "campo_fim": "2026-10-01"
+    },
+    {
+     "arquivo": "quaest_MT_2026-10-01.json",
+     "peso": 0.5,
+     "campo_fim": "2026-10-01"
+    }
+   ],
+   "pesquisas_descartadas": [],
+   "cobertura": "recente",
+   "media": [
+    {
+     "nome": "Exemplo MT A (fixture)",
+     "partido": "PP",
+     "campo": "centro-direita",
+     "valor": 13.5,
+     "validos": 18.0
+    },
+    {
+     "nome": "Exemplo MT B (fixture)",
+     "partido": "MDB",
+     "campo": "centro",
+     "valor": 9.0,
+     "validos": 12.0
+    },
+    {
+     "nome": "Exemplo MT C (fixture)",
+     "partido": "PSB",
+     "campo": "centro-esquerda",
+     "valor": 5.2,
+     "validos": 7.0
+    },
+    {
+     "nome": "Exemplo MT D (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "valor": 2.2,
+     "validos": 3.0
+    }
+   ],
+   "probabilidades": [
+    {
+     "nome": "Exemplo MT A (fixture)",
+     "partido": "PP",
+     "campo": "centro-direita",
+     "sq_candidato": "9120",
+     "foto": null,
+     "p_eleito": 0.9,
+     "p_primeiro": 0.45,
+     "ic90_validos": [
+      18,
+      32
+     ]
+    },
+    {
+     "nome": "Exemplo MT B (fixture)",
+     "partido": "MDB",
+     "campo": "centro",
+     "sq_candidato": "9121",
+     "foto": null,
+     "p_eleito": 0.6,
+     "p_primeiro": 0.3,
+     "ic90_validos": [
+      15,
+      29
+     ]
+    },
+    {
+     "nome": "Exemplo MT C (fixture)",
+     "partido": "PSB",
+     "campo": "centro-esquerda",
+     "sq_candidato": "9122",
+     "foto": null,
+     "p_eleito": 0.35,
+     "p_primeiro": 0.175,
+     "ic90_validos": [
+      12,
+      26
+     ]
+    },
+    {
+     "nome": "Exemplo MT D (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "sq_candidato": "9123",
+     "foto": null,
+     "p_eleito": 0.15,
+     "p_primeiro": 0.075,
+     "ic90_validos": [
+      9,
+      23
+     ]
+    }
+   ],
+   "eleitos_provaveis": [
+    "Exemplo MT A (fixture)",
+    "Exemplo MT B (fixture)"
+   ],
+   "p_dupla_mais_provavel": 0.41,
+   "incerteza": "media",
+   "notas": [
+    "Fixture: valores inventados."
+   ]
+  },
+  "PA": {
+   "uf": "PA",
+   "nome": "Pará",
+   "eleitorado": 15000000,
+   "pesquisas_usadas": [
+    {
+     "arquivo": "datafolha_PA_2026-10-02.json",
+     "peso": 0.5,
+     "campo_fim": "2026-10-02"
+    }
+   ],
+   "pesquisas_descartadas": [],
+   "cobertura": "recente",
+   "media": [
+    {
+     "nome": "Exemplo PA A (fixture)",
+     "partido": "PSB",
+     "campo": "centro-esquerda",
+     "valor": 13.5,
+     "validos": 18.0
+    },
+    {
+     "nome": "Exemplo PA B (fixture)",
+     "partido": "PP",
+     "campo": "centro-direita",
+     "valor": 9.0,
+     "validos": 12.0
+    },
+    {
+     "nome": "Exemplo PA C (fixture)",
+     "partido": "PP",
+     "campo": "centro-direita",
+     "valor": 5.2,
+     "validos": 7.0
+    },
+    {
+     "nome": "Exemplo PA D (fixture)",
+     "partido": "PP",
+     "campo": "centro-direita",
+     "valor": 2.2,
+     "validos": 3.0
+    }
+   ],
+   "probabilidades": [
+    {
+     "nome": "Exemplo PA A (fixture)",
+     "partido": "PSB",
+     "campo": "centro-esquerda",
+     "sq_candidato": "9130",
+     "foto": null,
+     "p_eleito": 0.9,
+     "p_primeiro": 0.45,
+     "ic90_validos": [
+      18,
+      32
+     ]
+    },
+    {
+     "nome": "Exemplo PA B (fixture)",
+     "partido": "PP",
+     "campo": "centro-direita",
+     "sq_candidato": "9131",
+     "foto": null,
+     "p_eleito": 0.6,
+     "p_primeiro": 0.3,
+     "ic90_validos": [
+      15,
+      29
+     ]
+    },
+    {
+     "nome": "Exemplo PA C (fixture)",
+     "partido": "PP",
+     "campo": "centro-direita",
+     "sq_candidato": "9132",
+     "foto": null,
+     "p_eleito": 0.35,
+     "p_primeiro": 0.175,
+     "ic90_validos": [
+      12,
+      26
+     ]
+    },
+    {
+     "nome": "Exemplo PA D (fixture)",
+     "partido": "PP",
+     "campo": "centro-direita",
+     "sq_candidato": "9133",
+     "foto": null,
+     "p_eleito": 0.15,
+     "p_primeiro": 0.075,
+     "ic90_validos": [
+      9,
+      23
+     ]
+    }
+   ],
+   "eleitos_provaveis": [
+    "Exemplo PA A (fixture)",
+    "Exemplo PA B (fixture)"
+   ],
+   "p_dupla_mais_provavel": 0.41,
+   "incerteza": "baixa",
+   "notas": [
+    "Fixture: valores inventados."
+   ]
+  },
+  "PB": {
+   "uf": "PB",
+   "nome": "Paraíba",
+   "eleitorado": 16000000,
+   "pesquisas_usadas": [
+    {
+     "arquivo": "datafolha_PB_2026-10-03.json",
+     "peso": 0.5,
+     "campo_fim": "2026-10-03"
+    }
+   ],
+   "pesquisas_descartadas": [],
+   "cobertura": "recente",
+   "media": [
+    {
+     "nome": "Exemplo PB A (fixture)",
+     "partido": "PP",
+     "campo": "centro-direita",
+     "valor": 13.5,
+     "validos": 18.0
+    },
+    {
+     "nome": "Exemplo PB B (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "valor": 9.0,
+     "validos": 12.0
+    },
+    {
+     "nome": "Exemplo PB C (fixture)",
+     "partido": "MDB",
+     "campo": "centro",
+     "valor": 5.2,
+     "validos": 7.0
+    },
+    {
+     "nome": "Exemplo PB D (fixture)",
+     "partido": "PP",
+     "campo": "centro-direita",
+     "valor": 2.2,
+     "validos": 3.0
+    }
+   ],
+   "probabilidades": [
+    {
+     "nome": "Exemplo PB A (fixture)",
+     "partido": "PP",
+     "campo": "centro-direita",
+     "sq_candidato": "9140",
+     "foto": null,
+     "p_eleito": 0.9,
+     "p_primeiro": 0.45,
+     "ic90_validos": [
+      18,
+      32
+     ]
+    },
+    {
+     "nome": "Exemplo PB B (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "sq_candidato": "9141",
+     "foto": null,
+     "p_eleito": 0.6,
+     "p_primeiro": 0.3,
+     "ic90_validos": [
+      15,
+      29
+     ]
+    },
+    {
+     "nome": "Exemplo PB C (fixture)",
+     "partido": "MDB",
+     "campo": "centro",
+     "sq_candidato": "9142",
+     "foto": null,
+     "p_eleito": 0.35,
+     "p_primeiro": 0.175,
+     "ic90_validos": [
+      12,
+      26
+     ]
+    },
+    {
+     "nome": "Exemplo PB D (fixture)",
+     "partido": "PP",
+     "campo": "centro-direita",
+     "sq_candidato": "9143",
+     "foto": null,
+     "p_eleito": 0.15,
+     "p_primeiro": 0.075,
+     "ic90_validos": [
+      9,
+      23
+     ]
+    }
+   ],
+   "eleitos_provaveis": [
+    "Exemplo PB A (fixture)",
+    "Exemplo PB B (fixture)"
+   ],
+   "p_dupla_mais_provavel": 0.41,
+   "incerteza": "media",
+   "notas": [
+    "Fixture: valores inventados."
+   ]
+  },
+  "PE": {
+   "uf": "PE",
+   "nome": "Pernambuco",
+   "eleitorado": 17000000,
+   "pesquisas_usadas": [
+    {
+     "arquivo": "datafolha_PE_2026-10-01.json",
+     "peso": 0.5,
+     "campo_fim": "2026-10-01"
+    },
+    {
+     "arquivo": "quaest_PE_2026-10-01.json",
+     "peso": 0.5,
+     "campo_fim": "2026-10-01"
+    }
+   ],
+   "pesquisas_descartadas": [],
+   "cobertura": "recente",
+   "media": [
+    {
+     "nome": "Exemplo PE A (fixture)",
+     "partido": "PT",
+     "campo": "esquerda",
+     "valor": 13.5,
+     "validos": 18.0
+    },
+    {
+     "nome": "Exemplo PE B (fixture)",
+     "partido": "PSB",
+     "campo": "centro-esquerda",
+     "valor": 9.0,
+     "validos": 12.0
+    },
+    {
+     "nome": "Exemplo PE C (fixture)",
+     "partido": "PSB",
+     "campo": "centro-esquerda",
+     "valor": 5.2,
+     "validos": 7.0
+    },
+    {
+     "nome": "Exemplo PE D (fixture)",
+     "partido": "PSB",
+     "campo": "centro-esquerda",
+     "valor": 2.2,
+     "validos": 3.0
+    }
+   ],
+   "probabilidades": [
+    {
+     "nome": "Exemplo PE A (fixture)",
+     "partido": "PT",
+     "campo": "esquerda",
+     "sq_candidato": "9150",
+     "foto": null,
+     "p_eleito": 0.9,
+     "p_primeiro": 0.45,
+     "ic90_validos": [
+      18,
+      32
+     ]
+    },
+    {
+     "nome": "Exemplo PE B (fixture)",
+     "partido": "PSB",
+     "campo": "centro-esquerda",
+     "sq_candidato": "9151",
+     "foto": null,
+     "p_eleito": 0.6,
+     "p_primeiro": 0.3,
+     "ic90_validos": [
+      15,
+      29
+     ]
+    },
+    {
+     "nome": "Exemplo PE C (fixture)",
+     "partido": "PSB",
+     "campo": "centro-esquerda",
+     "sq_candidato": "9152",
+     "foto": null,
+     "p_eleito": 0.35,
+     "p_primeiro": 0.175,
+     "ic90_validos": [
+      12,
+      26
+     ]
+    },
+    {
+     "nome": "Exemplo PE D (fixture)",
+     "partido": "PSB",
+     "campo": "centro-esquerda",
+     "sq_candidato": "9153",
+     "foto": null,
+     "p_eleito": 0.15,
+     "p_primeiro": 0.075,
+     "ic90_validos": [
+      9,
+      23
+     ]
+    }
+   ],
+   "eleitos_provaveis": [
+    "Exemplo PE A (fixture)",
+    "Exemplo PE B (fixture)"
+   ],
+   "p_dupla_mais_provavel": 0.41,
+   "incerteza": "baixa",
+   "notas": [
+    "Fixture: valores inventados."
+   ]
+  },
+  "PI": {
+   "uf": "PI",
+   "nome": "Piauí",
+   "eleitorado": 18000000,
+   "pesquisas_usadas": [
+    {
+     "arquivo": "datafolha_PI_2026-10-02.json",
+     "peso": 0.5,
+     "campo_fim": "2026-10-02"
+    }
+   ],
+   "pesquisas_descartadas": [],
+   "cobertura": "antiga",
+   "media": [
+    {
+     "nome": "Exemplo PI A (fixture)",
+     "partido": "MDB",
+     "campo": "centro",
+     "valor": 13.5,
+     "validos": 18.0
+    },
+    {
+     "nome": "Exemplo PI B (fixture)",
+     "partido": "PT",
+     "campo": "esquerda",
+     "valor": 9.0,
+     "validos": 12.0
+    },
+    {
+     "nome": "Exemplo PI C (fixture)",
+     "partido": "PSB",
+     "campo": "centro-esquerda",
+     "valor": 5.2,
+     "validos": 7.0
+    },
+    {
+     "nome": "Exemplo PI D (fixture)",
+     "partido": "PP",
+     "campo": "centro-direita",
+     "valor": 2.2,
+     "validos": 3.0
+    }
+   ],
+   "probabilidades": [
+    {
+     "nome": "Exemplo PI A (fixture)",
+     "partido": "MDB",
+     "campo": "centro",
+     "sq_candidato": "9160",
+     "foto": null,
+     "p_eleito": 0.9,
+     "p_primeiro": 0.45,
+     "ic90_validos": [
+      18,
+      32
+     ]
+    },
+    {
+     "nome": "Exemplo PI B (fixture)",
+     "partido": "PT",
+     "campo": "esquerda",
+     "sq_candidato": "9161",
+     "foto": null,
+     "p_eleito": 0.6,
+     "p_primeiro": 0.3,
+     "ic90_validos": [
+      15,
+      29
+     ]
+    },
+    {
+     "nome": "Exemplo PI C (fixture)",
+     "partido": "PSB",
+     "campo": "centro-esquerda",
+     "sq_candidato": "9162",
+     "foto": null,
+     "p_eleito": 0.35,
+     "p_primeiro": 0.175,
+     "ic90_validos": [
+      12,
+      26
+     ]
+    },
+    {
+     "nome": "Exemplo PI D (fixture)",
+     "partido": "PP",
+     "campo": "centro-direita",
+     "sq_candidato": "9163",
+     "foto": null,
+     "p_eleito": 0.15,
+     "p_primeiro": 0.075,
+     "ic90_validos": [
+      9,
+      23
+     ]
+    }
+   ],
+   "eleitos_provaveis": [
+    "Exemplo PI A (fixture)",
+    "Exemplo PI B (fixture)"
+   ],
+   "p_dupla_mais_provavel": 0.41,
+   "incerteza": "alta",
+   "notas": [
+    "Fixture: valores inventados."
+   ]
+  },
+  "PR": {
+   "uf": "PR",
+   "nome": "Paraná",
+   "eleitorado": 19000000,
+   "pesquisas_usadas": [
+    {
+     "arquivo": "datafolha_PR_2026-10-03.json",
+     "peso": 0.5,
+     "campo_fim": "2026-10-03"
+    }
+   ],
+   "pesquisas_descartadas": [],
+   "cobertura": "recente",
+   "media": [
+    {
+     "nome": "Exemplo PR A (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "valor": 13.5,
+     "validos": 18.0
+    },
+    {
+     "nome": "Exemplo PR B (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "valor": 9.0,
+     "validos": 12.0
+    },
+    {
+     "nome": "Exemplo PR C (fixture)",
+     "partido": "PT",
+     "campo": "esquerda",
+     "valor": 5.2,
+     "validos": 7.0
+    },
+    {
+     "nome": "Exemplo PR D (fixture)",
+     "partido": "PP",
+     "campo": "centro-direita",
+     "valor": 2.2,
+     "validos": 3.0
+    }
+   ],
+   "probabilidades": [
+    {
+     "nome": "Exemplo PR A (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "sq_candidato": "9170",
+     "foto": null,
+     "p_eleito": 0.9,
+     "p_primeiro": 0.45,
+     "ic90_validos": [
+      18,
+      32
+     ]
+    },
+    {
+     "nome": "Exemplo PR B (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "sq_candidato": "9171",
+     "foto": null,
+     "p_eleito": 0.6,
+     "p_primeiro": 0.3,
+     "ic90_validos": [
+      15,
+      29
+     ]
+    },
+    {
+     "nome": "Exemplo PR C (fixture)",
+     "partido": "PT",
+     "campo": "esquerda",
+     "sq_candidato": "9172",
+     "foto": null,
+     "p_eleito": 0.35,
+     "p_primeiro": 0.175,
+     "ic90_validos": [
+      12,
+      26
+     ]
+    },
+    {
+     "nome": "Exemplo PR D (fixture)",
+     "partido": "PP",
+     "campo": "centro-direita",
+     "sq_candidato": "9173",
+     "foto": null,
+     "p_eleito": 0.15,
+     "p_primeiro": 0.075,
+     "ic90_validos": [
+      9,
+      23
+     ]
+    }
+   ],
+   "eleitos_provaveis": [
+    "Exemplo PR A (fixture)",
+    "Exemplo PR B (fixture)"
+   ],
+   "p_dupla_mais_provavel": 0.41,
+   "incerteza": "baixa",
+   "notas": [
+    "Fixture: valores inventados."
+   ]
+  },
+  "RJ": {
+   "uf": "RJ",
+   "nome": "Rio de Janeiro",
+   "eleitorado": 20000000,
+   "pesquisas_usadas": [
+    {
+     "arquivo": "datafolha_RJ_2026-10-01.json",
+     "peso": 0.5,
+     "campo_fim": "2026-10-01"
+    },
+    {
+     "arquivo": "quaest_RJ_2026-10-01.json",
+     "peso": 0.5,
+     "campo_fim": "2026-10-01"
+    }
+   ],
+   "pesquisas_descartadas": [],
+   "cobertura": "recente",
+   "media": [
+    {
+     "nome": "Exemplo RJ A (fixture)",
+     "partido": "PP",
+     "campo": "centro-direita",
+     "valor": 13.5,
+     "validos": 18.0
+    },
+    {
+     "nome": "Exemplo RJ B (fixture)",
+     "partido": "PP",
+     "campo": "centro-direita",
+     "valor": 9.0,
+     "validos": 12.0
+    },
+    {
+     "nome": "Exemplo RJ C (fixture)",
+     "partido": "PP",
+     "campo": "centro-direita",
+     "valor": 5.2,
+     "validos": 7.0
+    },
+    {
+     "nome": "Exemplo RJ D (fixture)",
+     "partido": "PP",
+     "campo": "centro-direita",
+     "valor": 2.2,
+     "validos": 3.0
+    }
+   ],
+   "probabilidades": [
+    {
+     "nome": "Exemplo RJ A (fixture)",
+     "partido": "PP",
+     "campo": "centro-direita",
+     "sq_candidato": "9180",
+     "foto": null,
+     "p_eleito": 0.9,
+     "p_primeiro": 0.45,
+     "ic90_validos": [
+      18,
+      32
+     ]
+    },
+    {
+     "nome": "Exemplo RJ B (fixture)",
+     "partido": "PP",
+     "campo": "centro-direita",
+     "sq_candidato": "9181",
+     "foto": null,
+     "p_eleito": 0.6,
+     "p_primeiro": 0.3,
+     "ic90_validos": [
+      15,
+      29
+     ]
+    },
+    {
+     "nome": "Exemplo RJ C (fixture)",
+     "partido": "PP",
+     "campo": "centro-direita",
+     "sq_candidato": "9182",
+     "foto": null,
+     "p_eleito": 0.35,
+     "p_primeiro": 0.175,
+     "ic90_validos": [
+      12,
+      26
+     ]
+    },
+    {
+     "nome": "Exemplo RJ D (fixture)",
+     "partido": "PP",
+     "campo": "centro-direita",
+     "sq_candidato": "9183",
+     "foto": null,
+     "p_eleito": 0.15,
+     "p_primeiro": 0.075,
+     "ic90_validos": [
+      9,
+      23
+     ]
+    }
+   ],
+   "eleitos_provaveis": [
+    "Exemplo RJ A (fixture)",
+    "Exemplo RJ B (fixture)"
+   ],
+   "p_dupla_mais_provavel": 0.41,
+   "incerteza": "media",
+   "notas": [
+    "Fixture: valores inventados."
+   ]
+  },
+  "RN": {
+   "uf": "RN",
+   "nome": "Rio Grande do Norte",
+   "eleitorado": 21000000,
+   "pesquisas_usadas": [
+    {
+     "arquivo": "datafolha_RN_2026-10-02.json",
+     "peso": 0.5,
+     "campo_fim": "2026-10-02"
+    }
+   ],
+   "pesquisas_descartadas": [],
+   "cobertura": "recente",
+   "media": [
+    {
+     "nome": "Exemplo RN A (fixture)",
+     "partido": "PSB",
+     "campo": "centro-esquerda",
+     "valor": 13.5,
+     "validos": 18.0
+    },
+    {
+     "nome": "Exemplo RN B (fixture)",
+     "partido": "PP",
+     "campo": "centro-direita",
+     "valor": 9.0,
+     "validos": 12.0
+    },
+    {
+     "nome": "Exemplo RN C (fixture)",
+     "partido": "PSB",
+     "campo": "centro-esquerda",
+     "valor": 5.2,
+     "validos": 7.0
+    },
+    {
+     "nome": "Exemplo RN D (fixture)",
+     "partido": "PT",
+     "campo": "esquerda",
+     "valor": 2.2,
+     "validos": 3.0
+    }
+   ],
+   "probabilidades": [
+    {
+     "nome": "Exemplo RN A (fixture)",
+     "partido": "PSB",
+     "campo": "centro-esquerda",
+     "sq_candidato": "9190",
+     "foto": null,
+     "p_eleito": 0.9,
+     "p_primeiro": 0.45,
+     "ic90_validos": [
+      18,
+      32
+     ]
+    },
+    {
+     "nome": "Exemplo RN B (fixture)",
+     "partido": "PP",
+     "campo": "centro-direita",
+     "sq_candidato": "9191",
+     "foto": null,
+     "p_eleito": 0.6,
+     "p_primeiro": 0.3,
+     "ic90_validos": [
+      15,
+      29
+     ]
+    },
+    {
+     "nome": "Exemplo RN C (fixture)",
+     "partido": "PSB",
+     "campo": "centro-esquerda",
+     "sq_candidato": "9192",
+     "foto": null,
+     "p_eleito": 0.35,
+     "p_primeiro": 0.175,
+     "ic90_validos": [
+      12,
+      26
+     ]
+    },
+    {
+     "nome": "Exemplo RN D (fixture)",
+     "partido": "PT",
+     "campo": "esquerda",
+     "sq_candidato": "9193",
+     "foto": null,
+     "p_eleito": 0.15,
+     "p_primeiro": 0.075,
+     "ic90_validos": [
+      9,
+      23
+     ]
+    }
+   ],
+   "eleitos_provaveis": [
+    "Exemplo RN A (fixture)",
+    "Exemplo RN B (fixture)"
+   ],
+   "p_dupla_mais_provavel": 0.41,
+   "incerteza": "baixa",
+   "notas": [
+    "Fixture: valores inventados."
+   ]
+  },
+  "RO": {
+   "uf": "RO",
+   "nome": "Rondônia",
+   "eleitorado": 22000000,
+   "pesquisas_usadas": [
+    {
+     "arquivo": "datafolha_RO_2026-10-03.json",
+     "peso": 0.5,
+     "campo_fim": "2026-10-03"
+    }
+   ],
+   "pesquisas_descartadas": [],
+   "cobertura": "recente",
+   "media": [
+    {
+     "nome": "Exemplo RO A (fixture)",
+     "partido": "PT",
+     "campo": "esquerda",
+     "valor": 13.5,
+     "validos": 18.0
+    },
+    {
+     "nome": "Exemplo RO B (fixture)",
+     "partido": "MDB",
+     "campo": "centro",
+     "valor": 9.0,
+     "validos": 12.0
+    },
+    {
+     "nome": "Exemplo RO C (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "valor": 5.2,
+     "validos": 7.0
+    },
+    {
+     "nome": "Exemplo RO D (fixture)",
+     "partido": "PT",
+     "campo": "esquerda",
+     "valor": 2.2,
+     "validos": 3.0
+    }
+   ],
+   "probabilidades": [
+    {
+     "nome": "Exemplo RO A (fixture)",
+     "partido": "PT",
+     "campo": "esquerda",
+     "sq_candidato": "9200",
+     "foto": null,
+     "p_eleito": 0.9,
+     "p_primeiro": 0.45,
+     "ic90_validos": [
+      18,
+      32
+     ]
+    },
+    {
+     "nome": "Exemplo RO B (fixture)",
+     "partido": "MDB",
+     "campo": "centro",
+     "sq_candidato": "9201",
+     "foto": null,
+     "p_eleito": 0.6,
+     "p_primeiro": 0.3,
+     "ic90_validos": [
+      15,
+      29
+     ]
+    },
+    {
+     "nome": "Exemplo RO C (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "sq_candidato": "9202",
+     "foto": null,
+     "p_eleito": 0.35,
+     "p_primeiro": 0.175,
+     "ic90_validos": [
+      12,
+      26
+     ]
+    },
+    {
+     "nome": "Exemplo RO D (fixture)",
+     "partido": "PT",
+     "campo": "esquerda",
+     "sq_candidato": "9203",
+     "foto": null,
+     "p_eleito": 0.15,
+     "p_primeiro": 0.075,
+     "ic90_validos": [
+      9,
+      23
+     ]
+    }
+   ],
+   "eleitos_provaveis": [
+    "Exemplo RO A (fixture)",
+    "Exemplo RO B (fixture)"
+   ],
+   "p_dupla_mais_provavel": 0.41,
+   "incerteza": "media",
+   "notas": [
+    "Fixture: valores inventados."
+   ]
+  },
+  "RR": {
+   "uf": "RR",
+   "nome": "Roraima",
+   "eleitorado": 23000000,
+   "pesquisas_usadas": [
+    {
+     "arquivo": "datafolha_RR_2026-10-01.json",
+     "peso": 0.5,
+     "campo_fim": "2026-10-01"
+    },
+    {
+     "arquivo": "quaest_RR_2026-10-01.json",
+     "peso": 0.5,
+     "campo_fim": "2026-10-01"
+    }
+   ],
+   "pesquisas_descartadas": [],
+   "cobertura": "antiga",
+   "media": [
+    {
+     "nome": "Exemplo RR A (fixture)",
+     "partido": "MDB",
+     "campo": "centro",
+     "valor": 13.5,
+     "validos": 18.0
+    },
+    {
+     "nome": "Exemplo RR B (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "valor": 9.0,
+     "validos": 12.0
+    },
+    {
+     "nome": "Exemplo RR C (fixture)",
+     "partido": "MDB",
+     "campo": "centro",
+     "valor": 5.2,
+     "validos": 7.0
+    },
+    {
+     "nome": "Exemplo RR D (fixture)",
+     "partido": "PP",
+     "campo": "centro-direita",
+     "valor": 2.2,
+     "validos": 3.0
+    }
+   ],
+   "probabilidades": [
+    {
+     "nome": "Exemplo RR A (fixture)",
+     "partido": "MDB",
+     "campo": "centro",
+     "sq_candidato": "9210",
+     "foto": null,
+     "p_eleito": 0.9,
+     "p_primeiro": 0.45,
+     "ic90_validos": [
+      18,
+      32
+     ]
+    },
+    {
+     "nome": "Exemplo RR B (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "sq_candidato": "9211",
+     "foto": null,
+     "p_eleito": 0.6,
+     "p_primeiro": 0.3,
+     "ic90_validos": [
+      15,
+      29
+     ]
+    },
+    {
+     "nome": "Exemplo RR C (fixture)",
+     "partido": "MDB",
+     "campo": "centro",
+     "sq_candidato": "9212",
+     "foto": null,
+     "p_eleito": 0.35,
+     "p_primeiro": 0.175,
+     "ic90_validos": [
+      12,
+      26
+     ]
+    },
+    {
+     "nome": "Exemplo RR D (fixture)",
+     "partido": "PP",
+     "campo": "centro-direita",
+     "sq_candidato": "9213",
+     "foto": null,
+     "p_eleito": 0.15,
+     "p_primeiro": 0.075,
+     "ic90_validos": [
+      9,
+      23
+     ]
+    }
+   ],
+   "eleitos_provaveis": [
+    "Exemplo RR A (fixture)",
+    "Exemplo RR B (fixture)"
+   ],
+   "p_dupla_mais_provavel": 0.41,
+   "incerteza": "alta",
+   "notas": [
+    "Fixture: valores inventados."
+   ]
+  },
+  "RS": {
+   "uf": "RS",
+   "nome": "Rio Grande do Sul",
+   "eleitorado": 24000000,
+   "pesquisas_usadas": [
+    {
+     "arquivo": "datafolha_RS_2026-10-02.json",
+     "peso": 0.5,
+     "campo_fim": "2026-10-02"
+    }
+   ],
+   "pesquisas_descartadas": [],
+   "cobertura": "recente",
+   "media": [
+    {
+     "nome": "Exemplo RS A (fixture)",
+     "partido": "PP",
+     "campo": "centro-direita",
+     "valor": 13.5,
+     "validos": 18.0
+    },
+    {
+     "nome": "Exemplo RS B (fixture)",
+     "partido": "MDB",
+     "campo": "centro",
+     "valor": 9.0,
+     "validos": 12.0
+    },
+    {
+     "nome": "Exemplo RS C (fixture)",
+     "partido": "PT",
+     "campo": "esquerda",
+     "valor": 5.2,
+     "validos": 7.0
+    },
+    {
+     "nome": "Exemplo RS D (fixture)",
+     "partido": "PSB",
+     "campo": "centro-esquerda",
+     "valor": 2.2,
+     "validos": 3.0
+    }
+   ],
+   "probabilidades": [
+    {
+     "nome": "Exemplo RS A (fixture)",
+     "partido": "PP",
+     "campo": "centro-direita",
+     "sq_candidato": "9220",
+     "foto": null,
+     "p_eleito": 0.9,
+     "p_primeiro": 0.45,
+     "ic90_validos": [
+      18,
+      32
+     ]
+    },
+    {
+     "nome": "Exemplo RS B (fixture)",
+     "partido": "MDB",
+     "campo": "centro",
+     "sq_candidato": "9221",
+     "foto": null,
+     "p_eleito": 0.6,
+     "p_primeiro": 0.3,
+     "ic90_validos": [
+      15,
+      29
+     ]
+    },
+    {
+     "nome": "Exemplo RS C (fixture)",
+     "partido": "PT",
+     "campo": "esquerda",
+     "sq_candidato": "9222",
+     "foto": null,
+     "p_eleito": 0.35,
+     "p_primeiro": 0.175,
+     "ic90_validos": [
+      12,
+      26
+     ]
+    },
+    {
+     "nome": "Exemplo RS D (fixture)",
+     "partido": "PSB",
+     "campo": "centro-esquerda",
+     "sq_candidato": "9223",
+     "foto": null,
+     "p_eleito": 0.15,
+     "p_primeiro": 0.075,
+     "ic90_validos": [
+      9,
+      23
+     ]
+    }
+   ],
+   "eleitos_provaveis": [
+    "Exemplo RS A (fixture)",
+    "Exemplo RS B (fixture)"
+   ],
+   "p_dupla_mais_provavel": 0.41,
+   "incerteza": "media",
+   "notas": [
+    "Fixture: valores inventados."
+   ]
+  },
+  "SC": {
+   "uf": "SC",
+   "nome": "Santa Catarina",
+   "eleitorado": 25000000,
+   "pesquisas_usadas": [
+    {
+     "arquivo": "datafolha_SC_2026-10-03.json",
+     "peso": 0.5,
+     "campo_fim": "2026-10-03"
+    }
+   ],
+   "pesquisas_descartadas": [],
+   "cobertura": "recente",
+   "media": [
+    {
+     "nome": "Exemplo SC A (fixture)",
+     "partido": "PSB",
+     "campo": "centro-esquerda",
+     "valor": 13.5,
+     "validos": 18.0
+    },
+    {
+     "nome": "Exemplo SC B (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "valor": 9.0,
+     "validos": 12.0
+    },
+    {
+     "nome": "Exemplo SC C (fixture)",
+     "partido": "PT",
+     "campo": "esquerda",
+     "valor": 5.2,
+     "validos": 7.0
+    },
+    {
+     "nome": "Exemplo SC D (fixture)",
+     "partido": "PSB",
+     "campo": "centro-esquerda",
+     "valor": 2.2,
+     "validos": 3.0
+    }
+   ],
+   "probabilidades": [
+    {
+     "nome": "Exemplo SC A (fixture)",
+     "partido": "PSB",
+     "campo": "centro-esquerda",
+     "sq_candidato": "9230",
+     "foto": null,
+     "p_eleito": 0.9,
+     "p_primeiro": 0.45,
+     "ic90_validos": [
+      18,
+      32
+     ]
+    },
+    {
+     "nome": "Exemplo SC B (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "sq_candidato": "9231",
+     "foto": null,
+     "p_eleito": 0.6,
+     "p_primeiro": 0.3,
+     "ic90_validos": [
+      15,
+      29
+     ]
+    },
+    {
+     "nome": "Exemplo SC C (fixture)",
+     "partido": "PT",
+     "campo": "esquerda",
+     "sq_candidato": "9232",
+     "foto": null,
+     "p_eleito": 0.35,
+     "p_primeiro": 0.175,
+     "ic90_validos": [
+      12,
+      26
+     ]
+    },
+    {
+     "nome": "Exemplo SC D (fixture)",
+     "partido": "PSB",
+     "campo": "centro-esquerda",
+     "sq_candidato": "9233",
+     "foto": null,
+     "p_eleito": 0.15,
+     "p_primeiro": 0.075,
+     "ic90_validos": [
+      9,
+      23
+     ]
+    }
+   ],
+   "eleitos_provaveis": [
+    "Exemplo SC A (fixture)",
+    "Exemplo SC B (fixture)"
+   ],
+   "p_dupla_mais_provavel": 0.41,
+   "incerteza": "baixa",
+   "notas": [
+    "Fixture: valores inventados."
+   ]
+  },
+  "SE": {
+   "uf": "SE",
+   "nome": "Sergipe",
+   "eleitorado": 26000000,
+   "pesquisas_usadas": [],
+   "pesquisas_descartadas": [],
+   "cobertura": "sem_pesquisa",
+   "media": [],
+   "probabilidades": [],
+   "eleitos_provaveis": [],
+   "p_dupla_mais_provavel": null,
+   "incerteza": "alta",
+   "notas": [
+    "Fixture: valores inventados."
+   ]
+  },
+  "SP": {
+   "uf": "SP",
+   "nome": "São Paulo",
+   "eleitorado": 27000000,
+   "pesquisas_usadas": [
+    {
+     "arquivo": "datafolha_SP_2026-10-02.json",
+     "peso": 0.5,
+     "campo_fim": "2026-10-02"
+    }
+   ],
+   "pesquisas_descartadas": [],
+   "cobertura": "recente",
+   "media": [
+    {
+     "nome": "Exemplo SP A (fixture)",
+     "partido": "PT",
+     "campo": "esquerda",
+     "valor": 13.5,
+     "validos": 18.0
+    },
+    {
+     "nome": "Exemplo SP B (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "valor": 9.0,
+     "validos": 12.0
+    },
+    {
+     "nome": "Exemplo SP C (fixture)",
+     "partido": "MDB",
+     "campo": "centro",
+     "valor": 5.2,
+     "validos": 7.0
+    },
+    {
+     "nome": "Exemplo SP D (fixture)",
+     "partido": "PT",
+     "campo": "esquerda",
+     "valor": 2.2,
+     "validos": 3.0
+    }
+   ],
+   "probabilidades": [
+    {
+     "nome": "Exemplo SP A (fixture)",
+     "partido": "PT",
+     "campo": "esquerda",
+     "sq_candidato": "9250",
+     "foto": null,
+     "p_eleito": 0.9,
+     "p_primeiro": 0.45,
+     "ic90_validos": [
+      18,
+      32
+     ]
+    },
+    {
+     "nome": "Exemplo SP B (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "sq_candidato": "9251",
+     "foto": null,
+     "p_eleito": 0.6,
+     "p_primeiro": 0.3,
+     "ic90_validos": [
+      15,
+      29
+     ]
+    },
+    {
+     "nome": "Exemplo SP C (fixture)",
+     "partido": "MDB",
+     "campo": "centro",
+     "sq_candidato": "9252",
+     "foto": null,
+     "p_eleito": 0.35,
+     "p_primeiro": 0.175,
+     "ic90_validos": [
+      12,
+      26
+     ]
+    },
+    {
+     "nome": "Exemplo SP D (fixture)",
+     "partido": "PT",
+     "campo": "esquerda",
+     "sq_candidato": "9253",
+     "foto": null,
+     "p_eleito": 0.15,
+     "p_primeiro": 0.075,
+     "ic90_validos": [
+      9,
+      23
+     ]
+    }
+   ],
+   "eleitos_provaveis": [
+    "Exemplo SP A (fixture)",
+    "Exemplo SP B (fixture)"
+   ],
+   "p_dupla_mais_provavel": 0.41,
+   "incerteza": "baixa",
+   "notas": [
+    "Fixture: valores inventados."
+   ]
+  },
+  "TO": {
+   "uf": "TO",
+   "nome": "Tocantins",
+   "eleitorado": 28000000,
+   "pesquisas_usadas": [
+    {
+     "arquivo": "datafolha_TO_2026-10-03.json",
+     "peso": 0.5,
+     "campo_fim": "2026-10-03"
+    }
+   ],
+   "pesquisas_descartadas": [],
+   "cobertura": "antiga",
+   "media": [
+    {
+     "nome": "Exemplo TO A (fixture)",
+     "partido": "PSB",
+     "campo": "centro-esquerda",
+     "valor": 13.5,
+     "validos": 18.0
+    },
+    {
+     "nome": "Exemplo TO B (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "valor": 9.0,
+     "validos": 12.0
+    },
+    {
+     "nome": "Exemplo TO C (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "valor": 5.2,
+     "validos": 7.0
+    },
+    {
+     "nome": "Exemplo TO D (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "valor": 2.2,
+     "validos": 3.0
+    }
+   ],
+   "probabilidades": [
+    {
+     "nome": "Exemplo TO A (fixture)",
+     "partido": "PSB",
+     "campo": "centro-esquerda",
+     "sq_candidato": "9260",
+     "foto": null,
+     "p_eleito": 0.9,
+     "p_primeiro": 0.45,
+     "ic90_validos": [
+      18,
+      32
+     ]
+    },
+    {
+     "nome": "Exemplo TO B (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "sq_candidato": "9261",
+     "foto": null,
+     "p_eleito": 0.6,
+     "p_primeiro": 0.3,
+     "ic90_validos": [
+      15,
+      29
+     ]
+    },
+    {
+     "nome": "Exemplo TO C (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "sq_candidato": "9262",
+     "foto": null,
+     "p_eleito": 0.35,
+     "p_primeiro": 0.175,
+     "ic90_validos": [
+      12,
+      26
+     ]
+    },
+    {
+     "nome": "Exemplo TO D (fixture)",
+     "partido": "PL",
+     "campo": "direita",
+     "sq_candidato": "9263",
+     "foto": null,
+     "p_eleito": 0.15,
+     "p_primeiro": 0.075,
+     "ic90_validos": [
+      9,
+      23
+     ]
+    }
+   ],
+   "eleitos_provaveis": [
+    "Exemplo TO A (fixture)",
+    "Exemplo TO B (fixture)"
+   ],
+   "p_dupla_mais_provavel": 0.41,
+   "incerteza": "alta",
+   "notas": [
+    "Fixture: valores inventados."
+   ]
+  }
+ },
+ "senado_2027": {
+  "continuam": [
+   {
+    "uf": "AC",
+    "nome": "Continua AC (fixture)",
+    "partido": "PL",
+    "campo": "direita"
+   },
+   {
+    "uf": "AL",
+    "nome": "Continua AL (fixture)",
+    "partido": "PL",
+    "campo": "direita"
+   },
+   {
+    "uf": "AM",
+    "nome": "Continua AM (fixture)",
+    "partido": "PL",
+    "campo": "direita"
+   },
+   {
+    "uf": "AP",
+    "nome": "Continua AP (fixture)",
+    "partido": "PL",
+    "campo": "direita"
+   },
+   {
+    "uf": "BA",
+    "nome": "Continua BA (fixture)",
+    "partido": "PL",
+    "campo": "direita"
+   },
+   {
+    "uf": "CE",
+    "nome": "Continua CE (fixture)",
+    "partido": "PL",
+    "campo": "direita"
+   },
+   {
+    "uf": "DF",
+    "nome": "Continua DF (fixture)",
+    "partido": "PL",
+    "campo": "direita"
+   },
+   {
+    "uf": "ES",
+    "nome": "Continua ES (fixture)",
+    "partido": "PL",
+    "campo": "direita"
+   },
+   {
+    "uf": "GO",
+    "nome": "Continua GO (fixture)",
+    "partido": "PL",
+    "campo": "direita"
+   },
+   {
+    "uf": "MA",
+    "nome": "Continua MA (fixture)",
+    "partido": "PL",
+    "campo": "direita"
+   },
+   {
+    "uf": "MG",
+    "nome": "Continua MG (fixture)",
+    "partido": "PL",
+    "campo": "direita"
+   },
+   {
+    "uf": "MS",
+    "nome": "Continua MS (fixture)",
+    "partido": "PL",
+    "campo": "direita"
+   },
+   {
+    "uf": "MT",
+    "nome": "Continua MT (fixture)",
+    "partido": "PL",
+    "campo": "direita"
+   },
+   {
+    "uf": "PA",
+    "nome": "Continua PA (fixture)",
+    "partido": "PL",
+    "campo": "direita"
+   },
+   {
+    "uf": "PB",
+    "nome": "Continua PB (fixture)",
+    "partido": "PL",
+    "campo": "direita"
+   },
+   {
+    "uf": "PE",
+    "nome": "Continua PE (fixture)",
+    "partido": "PL",
+    "campo": "direita"
+   },
+   {
+    "uf": "PI",
+    "nome": "Continua PI (fixture)",
+    "partido": "PL",
+    "campo": "direita"
+   },
+   {
+    "uf": "PR",
+    "nome": "Continua PR (fixture)",
+    "partido": "PL",
+    "campo": "direita"
+   },
+   {
+    "uf": "RJ",
+    "nome": "Continua RJ (fixture)",
+    "partido": "PL",
+    "campo": "direita"
+   },
+   {
+    "uf": "RN",
+    "nome": "Continua RN (fixture)",
+    "partido": "PL",
+    "campo": "direita"
+   },
+   {
+    "uf": "RO",
+    "nome": "Continua RO (fixture)",
+    "partido": "PL",
+    "campo": "direita"
+   },
+   {
+    "uf": "RR",
+    "nome": "Continua RR (fixture)",
+    "partido": "PL",
+    "campo": "direita"
+   },
+   {
+    "uf": "RS",
+    "nome": "Continua RS (fixture)",
+    "partido": "PL",
+    "campo": "direita"
+   },
+   {
+    "uf": "SC",
+    "nome": "Continua SC (fixture)",
+    "partido": "PL",
+    "campo": "direita"
+   },
+   {
+    "uf": "SE",
+    "nome": "Continua SE (fixture)",
+    "partido": "PL",
+    "campo": "direita"
+   },
+   {
+    "uf": "SP",
+    "nome": "Continua SP (fixture)",
+    "partido": "PL",
+    "campo": "direita"
+   },
+   {
+    "uf": "TO",
+    "nome": "Continua TO (fixture)",
+    "partido": "PL",
+    "campo": "direita"
+   }
+  ],
+  "por_campo": {
+   "esquerda": {
+    "esperado": 17.0,
+    "ic90": [
+     13,
+     21
+    ],
+    "continuam": 5,
+    "novos_esperado": 12.0
+   },
+   "centro-esquerda": {
+    "esperado": 12.6,
+    "ic90": [
+     9,
+     17
+    ],
+    "continuam": 3,
+    "novos_esperado": 9.6
+   },
+   "centro": {
+    "esperado": 11.3,
+    "ic90": [
+     7,
+     15
+    ],
+    "continuam": 4,
+    "novos_esperado": 7.3
+   },
+   "centro-direita": {
+    "esperado": 17.1,
+    "ic90": [
+     13,
+     21
+    ],
+    "continuam": 6,
+    "novos_esperado": 11.1
+   },
+   "direita": {
+    "esperado": 23.0,
+    "ic90": [
+     19,
+     27
+    ],
+    "continuam": 9,
+    "novos_esperado": 14.0
+   }
+  },
+  "por_partido": {
+   "PL": {
+    "esperado": 14.2,
+    "ic90": [
+     11,
+     18
+    ],
+    "continuam": 6,
+    "campo": "direita"
+   },
+   "PP": {
+    "esperado": 9.5,
+    "ic90": [
+     7,
+     12
+    ],
+    "continuam": 5,
+    "campo": "centro-direita"
+   },
+   "PT": {
+    "esperado": 8.1,
+    "ic90": [
+     6,
+     10
+    ],
+    "continuam": 3,
+    "campo": "esquerda"
+   },
+   "MDB": {
+    "esperado": 7.3,
+    "ic90": [
+     5,
+     9
+    ],
+    "continuam": 4,
+    "campo": "centro"
+   },
+   "PSB": {
+    "esperado": 5.0,
+    "ic90": [
+     3,
+     7
+    ],
+    "continuam": 3,
+    "campo": "centro-esquerda"
+   },
+   "PSD": {
+    "esperado": 6.0,
+    "ic90": [
+     4,
+     8
+    ],
+    "continuam": 2,
+    "campo": "centro"
+   },
+   "UNIÃO": {
+    "esperado": 5.5,
+    "ic90": [
+     3,
+     8
+    ],
+    "continuam": 2,
+    "campo": "centro-direita"
+   },
+   "REPUBLICANOS": {
+    "esperado": 4.0,
+    "ic90": [
+     2,
+     6
+    ],
+    "continuam": 2,
+    "campo": "direita"
+   },
+   "PODE": {
+    "esperado": 3.0,
+    "ic90": [
+     1,
+     5
+    ],
+    "continuam": 0,
+    "campo": "centro-direita"
+   },
+   "PSDB": {
+    "esperado": 2.4,
+    "ic90": [
+     1,
+     4
+    ],
+    "continuam": 1,
+    "campo": "centro-esquerda"
+   }
+  },
+  "p_maioria_direita_mais_centro_direita": 0.62,
+  "p_41_direita_centro_direita_centro": 0.9,
+  "p_54_bloco_oposicao": 0.08
+ },
+ "validacao": {
+  "sensibilidades": [
+   {
+    "rotulo": "Sem prior antiga (fixture)",
+    "descricao": "Fixture: o resultado se move pouco."
+   }
+  ],
+  "calibracao_2022": null
+ },
+ "fontes": [
+  {
+   "arquivo": "datafolha_AC_2026-10-01.json",
+   "instituto": "Datafolha",
+   "uf": "AC",
+   "campo": "2026-09-30 a 2026-10-01",
+   "n": 1200,
+   "registro_tse": "AC-00000/2026",
+   "url": "https://exemplo.invalid/datafolha/AC",
+   "sha256": "0000000000000000000000000000000000000000000000000000000000000009"
+  },
+  {
+   "arquivo": "quaest_AC_2026-10-01.json",
+   "instituto": "Quaest",
+   "uf": "AC",
+   "campo": "2026-09-30 a 2026-10-01",
+   "n": 1200,
+   "registro_tse": "AC-00000/2026",
+   "url": "https://exemplo.invalid/quaest/AC",
+   "sha256": "0000000000000000000000000000000000000000000000000000000000000006"
+  },
+  {
+   "arquivo": "datafolha_AL_2026-10-02.json",
+   "instituto": "Datafolha",
+   "uf": "AL",
+   "campo": "2026-09-30 a 2026-10-02",
+   "n": 1220,
+   "registro_tse": "AL-00001/2026",
+   "url": "https://exemplo.invalid/datafolha/AL",
+   "sha256": "00000000000000000000000000000000000000000000000000000000000003da"
+  },
+  {
+   "arquivo": "datafolha_AM_2026-10-03.json",
+   "instituto": "Datafolha",
+   "uf": "AM",
+   "campo": "2026-09-30 a 2026-10-03",
+   "n": 1240,
+   "registro_tse": "AM-00002/2026",
+   "url": "https://exemplo.invalid/datafolha/AM",
+   "sha256": "00000000000000000000000000000000000000000000000000000000000007ab"
+  },
+  {
+   "arquivo": "datafolha_BA_2026-10-02.json",
+   "instituto": "Datafolha",
+   "uf": "BA",
+   "campo": "2026-09-30 a 2026-10-02",
+   "n": 1280,
+   "registro_tse": "BA-00004/2026",
+   "url": "https://exemplo.invalid/datafolha/BA",
+   "sha256": "0000000000000000000000000000000000000000000000000000000000000f4d"
+  },
+  {
+   "arquivo": "datafolha_CE_2026-10-03.json",
+   "instituto": "Datafolha",
+   "uf": "CE",
+   "campo": "2026-09-30 a 2026-10-03",
+   "n": 1300,
+   "registro_tse": "CE-00005/2026",
+   "url": "https://exemplo.invalid/datafolha/CE",
+   "sha256": "000000000000000000000000000000000000000000000000000000000000131e"
+  },
+  {
+   "arquivo": "datafolha_DF_2026-10-01.json",
+   "instituto": "Datafolha",
+   "uf": "DF",
+   "campo": "2026-09-30 a 2026-10-01",
+   "n": 1320,
+   "registro_tse": "DF-00006/2026",
+   "url": "https://exemplo.invalid/datafolha/DF",
+   "sha256": "00000000000000000000000000000000000000000000000000000000000016ef"
+  },
+  {
+   "arquivo": "quaest_DF_2026-10-01.json",
+   "instituto": "Quaest",
+   "uf": "DF",
+   "campo": "2026-09-30 a 2026-10-01",
+   "n": 1320,
+   "registro_tse": "DF-00006/2026",
+   "url": "https://exemplo.invalid/quaest/DF",
+   "sha256": "00000000000000000000000000000000000000000000000000000000000016ec"
+  },
+  {
+   "arquivo": "datafolha_ES_2026-10-02.json",
+   "instituto": "Datafolha",
+   "uf": "ES",
+   "campo": "2026-09-30 a 2026-10-02",
+   "n": 1340,
+   "registro_tse": "ES-00007/2026",
+   "url": "https://exemplo.invalid/datafolha/ES",
+   "sha256": "0000000000000000000000000000000000000000000000000000000000001ac0"
+  },
+  {
+   "arquivo": "datafolha_GO_2026-10-03.json",
+   "instituto": "Datafolha",
+   "uf": "GO",
+   "campo": "2026-09-30 a 2026-10-03",
+   "n": 1360,
+   "registro_tse": "GO-00008/2026",
+   "url": "https://exemplo.invalid/datafolha/GO",
+   "sha256": "0000000000000000000000000000000000000000000000000000000000001e91"
+  },
+  {
+   "arquivo": "datafolha_MA_2026-10-01.json",
+   "instituto": "Datafolha",
+   "uf": "MA",
+   "campo": "2026-09-30 a 2026-10-01",
+   "n": 1380,
+   "registro_tse": "MA-00009/2026",
+   "url": "https://exemplo.invalid/datafolha/MA",
+   "sha256": "0000000000000000000000000000000000000000000000000000000000002262"
+  },
+  {
+   "arquivo": "quaest_MA_2026-10-01.json",
+   "instituto": "Quaest",
+   "uf": "MA",
+   "campo": "2026-09-30 a 2026-10-01",
+   "n": 1380,
+   "registro_tse": "MA-00009/2026",
+   "url": "https://exemplo.invalid/quaest/MA",
+   "sha256": "000000000000000000000000000000000000000000000000000000000000225f"
+  },
+  {
+   "arquivo": "datafolha_MG_2026-10-02.json",
+   "instituto": "Datafolha",
+   "uf": "MG",
+   "campo": "2026-09-30 a 2026-10-02",
+   "n": 1400,
+   "registro_tse": "MG-00010/2026",
+   "url": "https://exemplo.invalid/datafolha/MG",
+   "sha256": "0000000000000000000000000000000000000000000000000000000000002633"
+  },
+  {
+   "arquivo": "datafolha_MS_2026-10-03.json",
+   "instituto": "Datafolha",
+   "uf": "MS",
+   "campo": "2026-09-30 a 2026-10-03",
+   "n": 1420,
+   "registro_tse": "MS-00011/2026",
+   "url": "https://exemplo.invalid/datafolha/MS",
+   "sha256": "0000000000000000000000000000000000000000000000000000000000002a04"
+  },
+  {
+   "arquivo": "datafolha_MT_2026-10-01.json",
+   "instituto": "Datafolha",
+   "uf": "MT",
+   "campo": "2026-09-30 a 2026-10-01",
+   "n": 1440,
+   "registro_tse": "MT-00012/2026",
+   "url": "https://exemplo.invalid/datafolha/MT",
+   "sha256": "0000000000000000000000000000000000000000000000000000000000002dd5"
+  },
+  {
+   "arquivo": "quaest_MT_2026-10-01.json",
+   "instituto": "Quaest",
+   "uf": "MT",
+   "campo": "2026-09-30 a 2026-10-01",
+   "n": 1440,
+   "registro_tse": "MT-00012/2026",
+   "url": "https://exemplo.invalid/quaest/MT",
+   "sha256": "0000000000000000000000000000000000000000000000000000000000002dd2"
+  },
+  {
+   "arquivo": "datafolha_PA_2026-10-02.json",
+   "instituto": "Datafolha",
+   "uf": "PA",
+   "campo": "2026-09-30 a 2026-10-02",
+   "n": 1460,
+   "registro_tse": "PA-00013/2026",
+   "url": "https://exemplo.invalid/datafolha/PA",
+   "sha256": "00000000000000000000000000000000000000000000000000000000000031a6"
+  },
+  {
+   "arquivo": "datafolha_PB_2026-10-03.json",
+   "instituto": "Datafolha",
+   "uf": "PB",
+   "campo": "2026-09-30 a 2026-10-03",
+   "n": 1480,
+   "registro_tse": "PB-00014/2026",
+   "url": "https://exemplo.invalid/datafolha/PB",
+   "sha256": "0000000000000000000000000000000000000000000000000000000000003577"
+  },
+  {
+   "arquivo": "datafolha_PE_2026-10-01.json",
+   "instituto": "Datafolha",
+   "uf": "PE",
+   "campo": "2026-09-30 a 2026-10-01",
+   "n": 1500,
+   "registro_tse": "PE-00015/2026",
+   "url": "https://exemplo.invalid/datafolha/PE",
+   "sha256": "0000000000000000000000000000000000000000000000000000000000003948"
+  },
+  {
+   "arquivo": "quaest_PE_2026-10-01.json",
+   "instituto": "Quaest",
+   "uf": "PE",
+   "campo": "2026-09-30 a 2026-10-01",
+   "n": 1500,
+   "registro_tse": "PE-00015/2026",
+   "url": "https://exemplo.invalid/quaest/PE",
+   "sha256": "0000000000000000000000000000000000000000000000000000000000003945"
+  },
+  {
+   "arquivo": "datafolha_PI_2026-10-02.json",
+   "instituto": "Datafolha",
+   "uf": "PI",
+   "campo": "2026-09-30 a 2026-10-02",
+   "n": 1520,
+   "registro_tse": "PI-00016/2026",
+   "url": "https://exemplo.invalid/datafolha/PI",
+   "sha256": "0000000000000000000000000000000000000000000000000000000000003d19"
+  },
+  {
+   "arquivo": "datafolha_PR_2026-10-03.json",
+   "instituto": "Datafolha",
+   "uf": "PR",
+   "campo": "2026-09-30 a 2026-10-03",
+   "n": 1540,
+   "registro_tse": "PR-00017/2026",
+   "url": "https://exemplo.invalid/datafolha/PR",
+   "sha256": "00000000000000000000000000000000000000000000000000000000000040ea"
+  },
+  {
+   "arquivo": "datafolha_RJ_2026-10-01.json",
+   "instituto": "Datafolha",
+   "uf": "RJ",
+   "campo": "2026-09-30 a 2026-10-01",
+   "n": 1560,
+   "registro_tse": "RJ-00018/2026",
+   "url": "https://exemplo.invalid/datafolha/RJ",
+   "sha256": "00000000000000000000000000000000000000000000000000000000000044bb"
+  },
+  {
+   "arquivo": "quaest_RJ_2026-10-01.json",
+   "instituto": "Quaest",
+   "uf": "RJ",
+   "campo": "2026-09-30 a 2026-10-01",
+   "n": 1560,
+   "registro_tse": "RJ-00018/2026",
+   "url": "https://exemplo.invalid/quaest/RJ",
+   "sha256": "00000000000000000000000000000000000000000000000000000000000044b8"
+  },
+  {
+   "arquivo": "datafolha_RN_2026-10-02.json",
+   "instituto": "Datafolha",
+   "uf": "RN",
+   "campo": "2026-09-30 a 2026-10-02",
+   "n": 1580,
+   "registro_tse": "RN-00019/2026",
+   "url": "https://exemplo.invalid/datafolha/RN",
+   "sha256": "000000000000000000000000000000000000000000000000000000000000488c"
+  },
+  {
+   "arquivo": "datafolha_RO_2026-10-03.json",
+   "instituto": "Datafolha",
+   "uf": "RO",
+   "campo": "2026-09-30 a 2026-10-03",
+   "n": 1600,
+   "registro_tse": "RO-00020/2026",
+   "url": "https://exemplo.invalid/datafolha/RO",
+   "sha256": "0000000000000000000000000000000000000000000000000000000000004c5d"
+  },
+  {
+   "arquivo": "datafolha_RR_2026-10-01.json",
+   "instituto": "Datafolha",
+   "uf": "RR",
+   "campo": "2026-09-30 a 2026-10-01",
+   "n": 1620,
+   "registro_tse": "RR-00021/2026",
+   "url": "https://exemplo.invalid/datafolha/RR",
+   "sha256": "000000000000000000000000000000000000000000000000000000000000502e"
+  },
+  {
+   "arquivo": "quaest_RR_2026-10-01.json",
+   "instituto": "Quaest",
+   "uf": "RR",
+   "campo": "2026-09-30 a 2026-10-01",
+   "n": 1620,
+   "registro_tse": "RR-00021/2026",
+   "url": "https://exemplo.invalid/quaest/RR",
+   "sha256": "000000000000000000000000000000000000000000000000000000000000502b"
+  },
+  {
+   "arquivo": "datafolha_RS_2026-10-02.json",
+   "instituto": "Datafolha",
+   "uf": "RS",
+   "campo": "2026-09-30 a 2026-10-02",
+   "n": 1640,
+   "registro_tse": "RS-00022/2026",
+   "url": "https://exemplo.invalid/datafolha/RS",
+   "sha256": "00000000000000000000000000000000000000000000000000000000000053ff"
+  },
+  {
+   "arquivo": "datafolha_SC_2026-10-03.json",
+   "instituto": "Datafolha",
+   "uf": "SC",
+   "campo": "2026-09-30 a 2026-10-03",
+   "n": 1660,
+   "registro_tse": "SC-00023/2026",
+   "url": "https://exemplo.invalid/datafolha/SC",
+   "sha256": "00000000000000000000000000000000000000000000000000000000000057d0"
+  },
+  {
+   "arquivo": "datafolha_SP_2026-10-02.json",
+   "instituto": "Datafolha",
+   "uf": "SP",
+   "campo": "2026-09-30 a 2026-10-02",
+   "n": 1700,
+   "registro_tse": "SP-00025/2026",
+   "url": "https://exemplo.invalid/datafolha/SP",
+   "sha256": "0000000000000000000000000000000000000000000000000000000000005f72"
+  },
+  {
+   "arquivo": "datafolha_TO_2026-10-03.json",
+   "instituto": "Datafolha",
+   "uf": "TO",
+   "campo": "2026-09-30 a 2026-10-03",
+   "n": 1720,
+   "registro_tse": "TO-00026/2026",
+   "url": "https://exemplo.invalid/datafolha/TO",
+   "sha256": "0000000000000000000000000000000000000000000000000000000000006343"
+  }
+ ]
+}
