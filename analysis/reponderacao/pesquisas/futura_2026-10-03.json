@@ -1,0 +1,148 @@
+{
+  "id": "futura_2026-10-03",
+  "instituto": "Futura",
+  "contratante": "Futura/100% Cidades, recursos próprios (CNN Brasil, 03/10/2026)",
+  "registro_tse": "BR-02431/2026",
+  "campo": {
+    "inicio": "2026-10-02",
+    "fim": "2026-10-03"
+  },
+  "divulgacao": "2026-10-03",
+  "n": 2000,
+  "metodo": "telefônico CATI",
+  "fonte": {
+    "tipo": "relatorio",
+    "pdf": "data/originals/futura_102026_03/relatorio.pdf",
+    "url": "https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2026/10/Relatorio_Tracking_Nacional_1_Turno_Final_Votos_Validos-3-1.pdf",
+    "paginas": {
+      "metodologia": 2,
+      "perfil_renda": 3,
+      "1t_topline": 4,
+      "1t_validos": 5,
+      "2t_topline": 6
+    },
+    "total_paginas": 10,
+    "sha256": "b6d58bcd9282fff88e3bcafcba74ececa2aa35f1d8020d12a64c31bde5a8f83b",
+    "bytes": 1950280,
+    "conferido_em": "2026-10-03",
+    "status": "Íntegra de 10 páginas arquivada e conferida; hospedada pela CNN Brasil, ainda não publicada pelo Poder360 na consulta de 03/10.",
+    "relatorio_completo": "2026-10-03",
+    "complementos": [
+      {
+        "rotulo": "Matéria da CNN Brasil com a íntegra embutida",
+        "url": "https://www.cnnbrasil.com.br/eleicoes/futura-flavio-tem-48-das-intencoes-de-voto-no-2o-turno-lula-451/",
+        "arquivo": "data/originals/futura_102026_03/materia_cnn.html",
+        "sha256": "dc161e861cb1d48e82f69b83ee6212565b3da3daaff1a9f9ce74f8c7adb6a535"
+      },
+      {
+        "rotulo": "Matéria do Money Times",
+        "url": "https://www.moneytimes.com.br/pesquisa-futura-flavio-bolsonaro-tem-425-e-lula-405-no-primeiro-turno-gaep/",
+        "arquivo": "data/originals/futura_102026_03/materia_moneytimes.html",
+        "sha256": "51e569d2d04bae647d9eeeb7823fee5a1bfa1cfbcde76890fe32bac0776be970"
+      },
+      {
+        "rotulo": "Biblioteca da Futura: Rodada 13, campo 02 a 03/10, BR-02431/2026",
+        "url": "https://www.futurainteligencia.com.br/pesquisas",
+        "arquivo": "data/originals/futura_102026_03/site_biblioteca.png",
+        "sha256": "2cf9a56614776181ec1c1912ad4c9ba549046d3b9530331e06ebf2e2349bd754"
+      }
+    ],
+    "nota": "Relatório em formato de painel (PDFium). P. 2 confirma 2.000 entrevistas CATI, campo 02 a 03/10 e BR-02431/2026; p. 3 traz o perfil com ponderação \"PNAD aberta\"."
+  },
+  "renda": {
+    "unidade": "salarios_minimos",
+    "ano_referencia": 2026,
+    "mes_precos": "202610",
+    "faixas": [
+      {
+        "rotulo": "Até 1 SM",
+        "max": 1
+      },
+      {
+        "rotulo": "1 a 2 SM",
+        "max": 2
+      },
+      {
+        "rotulo": "2 a 5 SM",
+        "max": 5
+      },
+      {
+        "rotulo": "5 a 10 SM",
+        "max": 10
+      },
+      {
+        "rotulo": "Mais de 10 SM",
+        "max": null
+      }
+    ],
+    "amostra_pct": [
+      26.3,
+      22.2,
+      24.4,
+      9.1,
+      5.7
+    ],
+    "nao_declarada_pct": 12.4,
+    "renda_media_reais": 5661.9,
+    "nota": "P. 3: renda familiar, 87,7% nas faixas conhecidas e 12,4% NS/NR, total 100,1% por arredondamento; renda média declarada R$ 5.661,90. O painel indica ponderação \"PNAD aberta\", sem dizer se a renda é cota, alvo ou resultado. Não redistribuímos os não declarantes."
+  },
+  "publicado": {
+    "1t": {
+      "flavio": 42.5,
+      "lula": 40.5,
+      "cury": 3.9,
+      "caiado": 3.7,
+      "renan_santos": 2.6,
+      "zema": 0.8,
+      "samara": 0.4,
+      "edmilson": 0.2,
+      "rui": 0.1,
+      "clariana": 0.1,
+      "grassi": 0.1,
+      "hertz": 0.1,
+      "branco_nulo": 2.6,
+      "indecisos": 2.4
+    },
+    "2t": {
+      "flavio": 48.0,
+      "lula": 45.1,
+      "branco_nulo": 5.7,
+      "indecisos": 1.2
+    }
+  },
+  "publicado_validos": {
+    "1t": {
+      "flavio": 44.8,
+      "lula": 42.6,
+      "cury": 4.1,
+      "caiado": 3.9,
+      "renan_santos": 2.8,
+      "zema": 0.8,
+      "samara": 0.4,
+      "edmilson": 0.2,
+      "rui": 0.1,
+      "clariana": 0.1,
+      "grassi": 0.1,
+      "hertz": 0.1
+    },
+    "nota": "P. 5, votos válidos publicados pela casa (renormalização dos totais da p. 4). Não entram no motor, que parte dos votos totais."
+  },
+  "espontanea": {
+    "lula": 41.6,
+    "flavio": 39.7,
+    "cury": 2.4,
+    "renan_santos": 2.3,
+    "caiado": 1.8,
+    "zema": 0.3,
+    "jair": 0.1,
+    "edmilson": 0.0,
+    "samara": 0.0,
+    "outros": 2.4,
+    "branco_nulo": 2.6,
+    "indecisos": 6.8
+  },
+  "cruzamentos": {},
+  "ignorar": true,
+  "motivo": "A íntegra de 10 páginas (painel com \"Filtro Mestre: Sem cruzamento\") publica o perfil de renda (p. 3), mas nenhum voto por renda nem por qualquer outro recorte. Sem esse cruzamento não há reponderação; participa da central da previsão com o placar publicado.",
+  "notas": "Ficha técnica conferida na íntegra (p. 2). Cenário alternativo de 2º turno na p. 6: Caiado 44,7 × Lula 44,0, branco/nulo 9,5, NS/NR 1,8. Rejeição (p. 7): Lula 46,9, Flávio 43,1. Leonardo Avalanche não aparece no cenário estimulado da p. 4 e não foi preenchido com zero. Substitui a Futura de 25 a 29/09 (BR-01122/2026) como onda mais recente da casa."
+}

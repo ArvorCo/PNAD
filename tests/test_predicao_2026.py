@@ -392,3 +392,15 @@ def test_tse_registry_cannot_leak_into_an_earlier_cutoff(monkeypatch):
     )
     with pytest.raises(ValueError, match="Cadastro TSE posterior ao corte"):
         builder.build(date(2026, 10, 1))
+
+
+def test_futura_eve_wave_replaces_september_29_in_central(data):
+    selected = data["nacional"]["selecionadas"]
+    futura = [p for p in selected if p["instituto"] == "Futura"]
+    assert [p["id"] for p in futura] == ["futura_2026-10-03"]
+    assert futura[0]["registro"] == "BR-02431/2026"
+    assert futura[0]["pnad_vetor"] is None
+    assert futura[0]["previsao_vetor"] == futura[0]["publicado_vetor"]
+    assert futura[0]["opcoes_publicadas"]["flavio"] == 42.5
+    assert futura[0]["opcoes_publicadas"]["lula"] == 40.5
+    assert futura[0]["participacao_central_pct"] > 0

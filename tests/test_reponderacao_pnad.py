@@ -417,3 +417,48 @@ def test_quaest_eve_wave_from_g1_panel_replaces_september_27(output):
     second = poll["turnos"]["2t"]["cenarios"][SCENARIO]["ajustado"]
     assert second["flavio"] == pytest.approx(43.33, abs=0.01)
     assert second["lula"] == pytest.approx(42.73, abs=0.01)
+
+
+def test_futura_eve_wave_is_archived_and_enters_unweighted(output):
+    raw = json.loads((POLLS / "futura_2026-10-03.json").read_text())
+    assert raw["registro_tse"] == "BR-02431/2026"
+    assert raw["n"] == 2000
+    assert raw["campo"] == {"inicio": "2026-10-02", "fim": "2026-10-03"}
+    assert raw["divulgacao"] == "2026-10-03"
+    archive = json.loads(
+        (ROOT / "data/originals/futura_102026_03/fonte.json").read_text()
+    )
+    payload = (ROOT / archive["arquivo"]).read_bytes()
+    assert len(payload) == archive["bytes"] == raw["fonte"]["bytes"] == 1950280
+    assert hashlib.sha256(payload).hexdigest() == archive["sha256"]
+    assert archive["sha256"] == raw["fonte"]["sha256"]
+    assert archive["sha256"].startswith("b6d58bcd9282fff8")
+    manifest = json.loads(
+        (ROOT / "data/originals/futura_102026_03/manifesto.json").read_text()
+    )
+    for item in manifest["arquivos"] + archive["materias"] + archive["site_instituto"]:
+        blob = (ROOT / item["arquivo"]).read_bytes()
+        assert len(blob) == item["bytes"]
+        assert hashlib.sha256(blob).hexdigest() == item["sha256"]
+    text = (ROOT / "data/originals/futura_102026_03/relatorio.txt").read_text()
+    assert "BR-02431/2026" in text and "2000 entrevistas" in text
+    assert "02/out - 03/out de 2026" in text
+    # Renda só aparece como perfil; nenhuma página tem cruzamento.
+    assert text.count("Sem cruzamento") == 6
+    assert raw["ignorar"] and raw["cruzamentos"] == {}
+    assert raw["renda"]["amostra_pct"] == [26.3, 22.2, 24.4, 9.1, 5.7]
+    assert raw["renda"]["nao_declarada_pct"] == 12.4
+    first = raw["publicado"]["1t"]
+    assert (first["flavio"], first["lula"]) == (42.5, 40.5)
+    assert sum(first.values()) == pytest.approx(100)
+    assert "avalanche" not in first
+    assert raw["publicado"]["2t"] == {
+        "flavio": 48.0,
+        "lula": 45.1,
+        "branco_nulo": 5.7,
+        "indecisos": 1.2,
+    }
+    assert sum(raw["publicado_validos"]["1t"].values()) == pytest.approx(100)
+    skipped = {p["id"] for p in output["nao_reponderaveis"]}
+    assert {"futura_2026-10-03", "futura_2026-09-29"} <= skipped
+    assert "futura_2026-10-03" not in {p["id"] for p in output["pesquisas"]}
