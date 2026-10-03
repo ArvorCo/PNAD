@@ -36,7 +36,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: Fetch public PDF evidence for audit tests
-        run: git lfs pull --include="docs/fontes/**,data/originals/*_092026_24/**,data/originals/*_092026_29/**,data/originals/*_092026_30/**,data/originals/*_102026_*/**,data/originals/mda_092026_15/**,data/pesquisas/quaest/2026-09-23/**,data/originals/pesquisas_2022/**"
+        run: git lfs pull --include="docs/fontes/**,data/originals/*_092026_24/**,data/originals/*_092026_29/**,data/originals/*_092026_30/**,data/originals/*_102026_*/**,data/originals/mda_092026_15/**,data/pesquisas/quaest/2026-09-23/**,data/originals/pesquisas_2022/**,data/originals/senado_102026/**"
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
