@@ -1,0 +1,648 @@
+"""Renderização estática completa; JS acrescenta cenários, não esconde o laudo."""
+
+from __future__ import annotations
+
+import json
+from html import escape as esc
+
+from .base import GROUPS, REGIONS, module
+
+NAMES = {
+    "lula": "Lula",
+    "flavio": "Flávio Bolsonaro",
+    "outros": "Demais candidaturas",
+    "renan_santos": "Renan Santos",
+    "cury": "Augusto Cury",
+    "caiado": "Ronaldo Caiado",
+    "zema": "Romeu Zema",
+    "restantes": "Demais nomes sem abertura uniforme",
+}
+COLORS = {"lula": "#b02f21", "flavio": "#1457aa", "outros": "#0f7f5f"}
+
+
+def number(x, places=1):
+    return f"{x:,.{places}f}".replace(",", "_").replace(".", ",").replace("_", ".")
+
+
+def millions(x):
+    return number(x / 1e6, 2) + " mi"
+
+
+def table(headers, rows, label):
+    return (
+        '<div class="table-scroll" tabindex="0" role="region" aria-label="'
+        + esc(label)
+        + '"><table><thead><tr>'
+        + "".join(f'<th scope="col">{esc(h)}</th>' for h in headers)
+        + "</tr></thead><tbody>"
+        + "".join(
+            "<tr>" + "".join(f"<td>{v}</td>" for v in row) + "</tr>" for row in rows
+        )
+        + "</tbody></table></div>"
+    )
+
+
+def hero(data):
+    b, uncertainty = data["central"]["brasil"], data["incerteza"]
+    cards = []
+    for k in GROUPS[:3]:
+        q = uncertainty["candidatos"][k]["percentual"]
+        cards.append(
+            f'<div class="candidate {k}"><span>{NAMES[k]}</span><b>{number(b["percentuais"][k])}<small>%</small></b>'
+            f'<strong>{millions(b[k])} votos</strong><p>Faixa de 90%: {number(q["p05"])}% a {number(q["p95"])}%</p></div>'
+        )
+    return '<div class="scoreboard">' + "".join(cards) + "</div>"
+
+
+def accounting(data):
+    b = data["central"]["brasil"]
+    return "".join(
+        f"<div><b>{millions(b[k])}</b><span>{label}</span></div>"
+        for k, label in (
+            ("eleitorado", "eleitores aptos"),
+            ("abstencao", "abstenções esperadas"),
+            ("branco_nulo", "brancos e nulos esperados"),
+            ("validos", "votos válidos esperados"),
+        )
+    )
+
+
+def region_chart(data):
+    rows = [(name, data["central"]["regioes"][name]) for name in REGIONS]
+    parts = [
+        '<svg viewBox="0 0 980 340" role="img" aria-label="Votos válidos previstos por região, em milhões" xmlns="http://www.w3.org/2000/svg">'
+    ]
+    maximum = max(v["validos"] for _, v in rows)
+    for i, (name, v) in enumerate(rows):
+        y, x = 40 + 54 * i, 180.0
+        parts.append(
+            f'<text x="0" y="{y+21}" fill="#192e2b" font-size="17">{esc(name)}</text>'
+        )
+        for k in GROUPS[:3]:
+            w = 650 * v[k] / maximum
+            parts.append(
+                f'<rect data-region="{esc(name)}" data-candidate="{k}" x="{x:.2f}" y="{y}" width="{w:.2f}" height="32" fill="{COLORS[k]}"><title>{NAMES[k]}: {millions(v[k])} votos</title></rect>'
+            )
+            if w > 45:
+                parts.append(
+                    f'<text x="{x+w/2:.2f}" y="{y+21}" text-anchor="middle" fill="#fff" font-size="15">{number(v[k]/1e6,1)}</text>'
+                )
+            x += w
+        parts.append(
+            f'<text x="{x+12:.2f}" y="{y+21}" fill="#192e2b" font-size="15">{millions(v["validos"])}</text>'
+        )
+    parts.append(
+        '<text x="180" y="328" font-size="13" fill="#535b54">Comprimento = volume de votos, não superfície territorial. Exterior no quadro próprio.</text></svg>'
+    )
+    return "".join(parts)
+
+
+def region_table(data):
+    rows = []
+    for name, b in data["central"]["regioes"].items():
+        rows.append(
+            [
+                esc(name),
+                millions(b["eleitorado"]),
+                number(100 * b["comparecimento"] / b["eleitorado"]) + "%",
+                millions(b["validos"]),
+                *[number(b["percentuais"][k]) + "%" for k in GROUPS[:3]],
+            ]
+        )
+    return table(
+        [
+            "Região",
+            "Eleitorado",
+            "Comparecimento",
+            "Votos válidos",
+            "Lula",
+            "Flávio",
+            "Demais",
+        ],
+        rows,
+        "Previsão central por região",
+    )
+
+
+def state_table(data):
+    scenarios = {s["uf"]: s for s in data["central"]["ufs"]}
+    rows = []
+    for s in sorted(data["estados"], key=lambda s: -s["eleitorado"]):
+        b = scenarios[s["uf"]]
+        pct = {k: 100 * b[k] / sum(b[k] for k in GROUPS[:3]) for k in GROUPS[:3]}
+        rows.append(
+            [
+                f'<a href="#estado-{s["uf"]}">{s["uf"]}</a>',
+                esc(s["regiao"]),
+                millions(b["eleitorado"]),
+                number(100 * b["comparecimento"] / b["eleitorado"]) + "%",
+                *[number(pct[k]) + "%" for k in GROUPS[:3]],
+                str(len(s["pesquisas"])) if s["pesquisas"] else "Prior, sem pesquisa",
+            ]
+        )
+    return table(
+        [
+            "UF",
+            "Região",
+            "Eleitorado",
+            "Comparecimento",
+            "Lula",
+            "Flávio",
+            "Demais",
+            "Pesquisas",
+        ],
+        rows,
+        "Previsão central das 27 UFs e exterior",
+    )
+
+
+def map_svg(data):
+    M = module("voto_util_mapa")
+    rows = {r["uf"]: r for r in data["central"]["ufs"] if r["uf"] != "ZZ"}
+    margins = {
+        uf: 100 * (r["flavio"] - r["lula"]) / (r["flavio"] + r["lula"] + r["outros"])
+        for uf, r in rows.items()
+    }
+    return M.choropleth(
+        margins,
+        lambda _u, v: COLORS["flavio"] if v > 0 else COLORS["lula"],
+        lambda u, _v: u,
+        lambda u, v: f"{u}: diferença Flávio menos Lula {number(v)} pp; {millions(rows[u]['lula']+rows[u]['flavio']+rows[u]['outros'])} votos válidos",
+        width=500,
+        height=500,
+        label="Cenário central por UF; cores indicam a estimativa pontual, não liderança estatisticamente identificada",
+        escuro=lambda _u, _v: True,
+    )
+
+
+def sensitivity(data):
+    rows = []
+    for name, result in data["sensibilidades"].items():
+        b = result["brasil"]
+        rows.append(
+            [
+                esc(name),
+                *[number(b["percentuais"][k], 2) + "%" for k in GROUPS[:3]],
+                number(b["margem_flavio_lula"], 2) + " pp",
+                millions(b["validos"]),
+            ]
+        )
+    return table(
+        ["Hipótese", "Lula", "Flávio", "Demais", "Diferença F−L", "Válidos"],
+        rows,
+        "Sensibilidade às hipóteses do modelo",
+    )
+
+
+def house_table(data):
+    rows = []
+    for name, values in data["nacional"]["efeitos_casa"].items():
+        d = values["desvio_margem_pp"]
+        rows.append(
+            [
+                esc(name),
+                str(values["n_ondas"]),
+                number(d, 2) + " pp",
+                "Mais Lula" if d > 0 else "Mais Flávio",
+                "Exploratório" if values["n_ondas"] >= 3 else "Poucas ondas",
+            ]
+        )
+    return table(
+        [
+            "Casa",
+            "Ondas comparáveis",
+            "Desvio L−F nos válidos",
+            "Direção relativa",
+            "Evidência",
+        ],
+        rows,
+        "Diferenças contemporâneas entre institutos",
+    )
+
+
+def poll_table(data):
+    chosen = {p["id"] for p in data["nacional"]["pareadas"]}
+    rows = []
+    for p in data["nacional"]["selecionadas"]:
+        v = p["pnad_vetor"] if p["id"] in chosen else p["publicado_vetor"]
+        rows.append(
+            [
+                f'<a href="reponderacao_pnad.html#pesquisas">{esc(p["instituto"])}</a>',
+                esc(p["campo"]["fim"]),
+                esc(p["divulgacao"]),
+                number(p["n"], 0),
+                number(p["idade_campo_dias"], 1),
+                number(p["participacao_central_pct"], 2) + "%",
+                number(v[0] * 100) + "%",
+                number(v[1] * 100) + "%",
+                (
+                    "Central, renda transportada PNAD"
+                    if p["id"] in chosen
+                    else "Central, placar publicado; sem voto × renda"
+                ),
+            ]
+        )
+    return table(
+        [
+            "Casa",
+            "Fim do campo",
+            "Divulgação",
+            "n",
+            "Idade do campo (dias)",
+            "Peso na central",
+            "Lula",
+            "Flávio",
+            "Uso",
+        ],
+        rows,
+        "Ondas nacionais selecionadas",
+    )
+
+
+def state_details(data):
+    blocks = []
+    for s in sorted(data["estados"], key=lambda s: s["uf"]):
+        rows = []
+        for p in s["pesquisas"]:
+            source = (
+                f'<a href="{esc(p["fonte"], quote=True)}">Fonte</a>'
+                if p["fonte"] and p["fonte"].startswith("https://")
+                else "Acervo, hash no JSON"
+            )
+            rows.append(
+                [
+                    esc(p["instituto"]),
+                    esc(p["campo"]["fim"]),
+                    number(p["idade_dias"], 1),
+                    number(
+                        100
+                        * p["peso_modelo"]
+                        / (
+                            data["configuracao"]["peso_prior"]
+                            + sum(x["peso_modelo"] for x in s["pesquisas"])
+                        ),
+                        2,
+                    )
+                    + "%",
+                    str(p["n"]),
+                    esc(p["registro"] or "Não localizado"),
+                    f'p. {p["pagina"]}',
+                    source,
+                    esc(p["disponibilidade"]),
+                ]
+            )
+        t = s["tse"]
+        coverage = 100 * t["pareados_eleitores"] / t["eleitorado"]
+        blocks.append(
+            f'<details id="estado-{s["uf"]}" class="state-file"><summary><b>{s["uf"]}</b><span>{esc(s["regiao"])} · {millions(s["eleitorado"])} eleitores · {len(rows)} pesquisas</span></summary>'
+            f'<p>{number(coverage)}% dos eleitores de 2026 estão em seções com chave também encontrada em 2022. A prior territorial pesa {number(s["peso_prior"]*100)}% no pooling. '
+            f'{"Há cruzamento publicado por hábito de comparecimento." if s["sinal_comparecimento"] else "Sem cruzamento elegível por comparecimento: fator neutro, sem extrapolar de outra UF."}</p>'
+            + (
+                table(
+                    [
+                        "Casa",
+                        "Campo final",
+                        "Idade (dias)",
+                        "Peso territorial com prior",
+                        "n",
+                        "Registro",
+                        "Página",
+                        "Documento",
+                        "Disponibilidade",
+                    ],
+                    rows,
+                    f"Fontes de {s['uf']}",
+                )
+                if rows
+                else "<p>Exterior: prior histórica de 2022 com movimento nacional de 2026. Transporte entre Jair e Flávio é hipótese; nenhum eleitor individual é identificado.</p>"
+            )
+            + "</details>"
+        )
+    return "".join(blocks)
+
+
+def source_updates(data):
+    rows = [
+        [
+            esc(p["instituto"]),
+            esc(p["uf"]),
+            esc(p["status"]),
+            f'<a href="{esc(p["url"], quote=True)}">Documento localizado</a>',
+            esc(p["motivo"]),
+        ]
+        for p in data["fontes_inspecionadas"]
+    ]
+    return table(
+        ["Casa", "UF", "Situação", "Fonte", "Motivo"],
+        rows,
+        "Fontes localizadas que não entraram na atualização",
+    )
+
+
+def turnout_checks(data):
+    rows = []
+    for s in sorted(data["estados"], key=lambda x: x["uf"]):
+        p = s["sinal_comparecimento"]
+        if not p or "recomposicao_envelope_arredondamento_pct" not in p:
+            continue
+        lo, hi = p["recomposicao_envelope_arredondamento_pct"]
+        rows.append(
+            [
+                s["uf"],
+                esc(p["rodada"]),
+                f'{p["pagina_grupos"]} / {p["pagina_voto"]}',
+                number(p["cobertura_pct"], 0) + "%",
+                " / ".join(
+                    number(v, 2) for v in p["recomposicao_residuo_lula_flavio_pp"]
+                ),
+                f"{number(lo[0], 2)} a {number(hi[0], 2)}%",
+                f"{number(lo[1], 2)} a {number(hi[1], 2)}%",
+            ]
+        )
+    return table(
+        [
+            "UF",
+            "Campo",
+            "Páginas hábito / voto",
+            "Cobertura",
+            "Resíduo L / F, pp",
+            "Envelope Lula",
+            "Envelope Flávio",
+        ],
+        rows,
+        "Conferência aritmética dos cruzamentos de comparecimento",
+    )
+
+
+def abstention(data):
+    ufs = [s for s in data["estados"] if s["uf"] != "ZZ"]
+    total = sum(s["eleitorado"] for s in ufs)
+    rows = []
+    for band in ("0 a 10%", "10 a 20%", "20 a 30%", "30 a 40%", "40% ou mais"):
+        bins = [b for s in ufs for b in s["tse"]["bins"] if b["faixa"] == band]
+        e = sum(b["eleitores_2026"] for b in bins)
+        rows.append(
+            [
+                band,
+                number(sum(b["secoes"] for b in bins), 0),
+                millions(e),
+                number(100 * e / total) + "%",
+                (
+                    number(
+                        sum(
+                            b["abstencao_historica_pct"] * b["eleitores_2026"]
+                            for b in bins
+                        )
+                        / e
+                    )
+                    + "%"
+                    if e
+                    else "Sem dados"
+                ),
+            ]
+        )
+    band_table = table(
+        [
+            "Abstenção da seção em 2022",
+            "Seções pareadas",
+            "Eleitores em 2026",
+            "Peso no Brasil",
+            "Média histórica ponderada",
+        ],
+        rows,
+        "Concentração territorial da abstenção",
+    )
+    tops = sorted(
+        [r for s in ufs for r in s["tse"]["top"]],
+        key=lambda r: -r["abstencao_2022_pct"],
+    )[:20]
+    top_table = table(
+        [
+            "UF",
+            "Município",
+            "Zona / seção",
+            "Aptos 2022",
+            "Eleitores 2026",
+            "Abstenção 2022",
+        ],
+        [
+            [
+                r["uf"],
+                esc(r["municipio"]),
+                f'{r["zona"]} / {r["secao"]}',
+                number(r["aptos_2022"], 0),
+                number(r["eleitores_2026"], 0),
+                number(r["abstencao_2022_pct"]) + "%",
+            ]
+            for r in tops
+        ],
+        "Seções de maior abstenção, mínimo de 100 eleitores nos dois anos",
+    )
+    return (
+        band_table
+        + "<details><summary>Onde a abstenção foi maior: vinte seções, mínimo de 100 aptos em ambos os anos</summary>"
+        + top_table
+        + "</details>"
+    )
+
+
+def validation(data):
+    v = data["validacao"]
+    rows = [
+        [
+            u["uf"],
+            number(u["comparecimento_real_pct"]) + "%",
+            number(u["previsto_secoes_pct"]) + "%",
+            number(u["erro_secoes_pp"], 2) + " pp",
+            number(u["erro_uf_pp"], 2) + " pp",
+        ]
+        for u in v["ufs"]
+    ]
+    return table(
+        [
+            "UF",
+            "Comparecimento real 2022",
+            "Previsão usando seções 2018",
+            "Erro por seção",
+            "Erro repetindo UF 2018",
+        ],
+        rows,
+        "Validação retrospectiva de comparecimento",
+    )
+
+
+def minor_table(data):
+    b = data["central"]["brasil"]
+    return table(
+        ["Candidatura", "Votos modelados", "% dos válidos"],
+        [
+            [NAMES[k], millions(v), number(100 * v / b["validos"], 2) + "%"]
+            for k, v in b["demais"].items()
+        ],
+        "Abertura modelada das demais candidaturas",
+    )
+
+
+def histogram(data):
+    mc = data["incerteza"]
+    counts, limits = mc["distribuicao_margem"], mc["limites_histograma"]
+    lo, hi, peak = limits[0], limits[-1], max(counts)
+    parts = [
+        '<svg viewBox="0 0 800 255" role="img" aria-label="Distribuição simulada da diferença Flávio menos Lula, no cenário central" xmlns="http://www.w3.org/2000/svg">'
+    ]
+    for i, c in enumerate(counts):
+        x, h = 45 + 700 * i / len(counts), 170 * c / peak
+        color = (
+            COLORS["flavio"] if (limits[i] + limits[i + 1]) / 2 > 0 else COLORS["lula"]
+        )
+        parts.append(
+            f'<rect x="{x:.2f}" y="{200-h:.2f}" width="{700/len(counts)-2:.2f}" height="{h:.2f}" fill="{color}"/>'
+        )
+    zero = 45 + 700 * (0 - lo) / (hi - lo)
+    parts.append(
+        f'<line x1="{zero:.2f}" x2="{zero:.2f}" y1="10" y2="211" stroke="#192e2b" stroke-dasharray="4 3"/><text x="{zero:.2f}" y="230" font-size="14" text-anchor="middle" fill="#192e2b">Empate</text>'
+    )
+    parts.append(
+        '<text x="45" y="252" font-size="14" fill="#535b54">Lula à frente</text><text x="745" y="252" font-size="14" text-anchor="end" fill="#535b54">Flávio à frente</text></svg>'
+    )
+    return "".join(parts)
+
+
+def simulator(data):
+    options = "".join(
+        f'<option value="{s["uf"]}">{s["uf"]} · {esc(s["regiao"])}</option>'
+        for s in data["estados"]
+    )
+    regions = "".join(
+        f'<label>{esc(r)}<input type="number" data-region="{esc(r)}" min="-20" max="20" step="0.5" value="0"><span>pp de comparecimento</span></label>'
+        for r in REGIONS
+    )
+    ranges = (
+        ("voto_flavio", "Reserva antecipada para Flávio", 0, 100, 1, 0, "%"),
+        ("voto_lula", "Reserva antecipada para Lula", 0, 100, 1, 0, "%"),
+        (
+            "comparecimento_pp",
+            "Mudança geral de comparecimento",
+            -15,
+            15,
+            0.5,
+            0,
+            " pp",
+        ),
+        (
+            "diferencial_pp",
+            "Diferença de comparecimento: Flávio menos Lula",
+            -15,
+            15,
+            0.5,
+            0,
+            " pp",
+        ),
+        ("branco_nulo_pp", "Mudança de brancos e nulos", -3, 10, 0.25, 0, " pp"),
+        (
+            "vies_pp",
+            "Erro comum das pesquisas: favorável a Flávio",
+            -8,
+            8,
+            0.25,
+            0,
+            " pp",
+        ),
+        (
+            "secoes_abstencao_pp",
+            "Comparecimento em seções com abstenção ≥30%",
+            -15,
+            15,
+            0.5,
+            0,
+            " pp",
+        ),
+    )
+    controls = "".join(
+        f'<label class="range-control" for="param-{k}"><span>{esc(title)}</span><output for="param-{k}" id="out-{k}">{value}{suffix}</output><input id="param-{k}" data-param="{k}" data-suffix="{suffix}" type="range" min="{lo}" max="{hi}" step="{step}" value="{value}"></label>'
+        for k, title, lo, hi, step, value, suffix in ranges
+    )
+    b = data["central"]["brasil"]
+    candidates = "".join(
+        f'<div class="sim-candidate {k}"><span>{NAMES[k]}</span><b id="sim-{k}">{number(b["percentuais"][k])}%</b><small id="sim-votos-{k}">{millions(b[k])} votos</small></div>'
+        for k in GROUPS[:3]
+    )
+    return f"""<div class="simulator" id="simulador-app">
+      <div class="controls"><h3>Sua hipótese, na mesma conta.</h3>
+      <label>Âncora nacional<select id="param-base"><option value="inclusivo">Central inclusiva, com recência</option><option value="sem_recencia">Mesmas casas centrais, peso temporal igual</option><option value="pnad">Somente casas com reponderação PNAD</option><option value="publicado">Publicadas, mesmas casas PNAD</option><option value="todas">Publicadas, todas as casas elegíveis</option><option value="casas">Central + remoção do desvio relativo das casas</option></select></label>
+      <label>Referência de comparecimento<select id="param-comparecimento_modelo"><option value="uf">Taxa estadual de 2022, central</option><option value="secoes">Seções de 2022, pesos territoriais de 2026</option></select></label>
+      {controls}
+      <label>Indecisos que chegam a voto válido<select id="param-indecisos_validos"><option value="1">100%, hipótese central</option><option value="0.75">75%</option><option value="0.5">50%</option><option value="0">0%, viram branco/nulo entre votantes</option></select></label>
+      <label>Destino dos indecisos que escolhem<select id="param-indecisos_flavio"><option value="">Proporcional às candidaturas na UF</option><option value="0.5">50% Lula, 50% Flávio</option><option value="0.6">40% Lula, 60% Flávio</option><option value="0.4">60% Lula, 40% Flávio</option></select></label>
+      <label class="check"><input type="checkbox" id="param-eleitor_provavel" checked>Usar cruzamentos de eleitor provável onde publicados</label>
+      <label class="check"><input type="checkbox" id="param-exterior" checked>Incluir exterior, com prior e incerteza própria</label>
+      <details><summary>Comparecimento por região</summary><div class="region-controls">{regions}</div></details>
+      <details><summary>Ajustar uma UF</summary><label>UF<select id="uf-select">{options}</select></label>
+      <label>Comparecimento da UF, mudança em pp<input id="uf-turnout" type="number" min="-20" max="20" step=".5" value="0"></label>
+      <label>Diferença F−L de comparecimento na UF, pp<input id="uf-differential" type="number" min="-20" max="20" step=".5" value="0"></label>
+      <label>Reserva antecipada para Lula na UF, %<input id="uf-useful-lula" type="number" min="0" max="100" step="1" placeholder="Usar o controle geral"></label>
+      <label>Reserva antecipada para Flávio na UF, %<input id="uf-useful-flavio" type="number" min="0" max="100" step="1" placeholder="Usar o controle geral"></label>
+      <p class="note">Deixe vazio para seguir o voto útil geral; zero desliga a antecipação nesta UF.</p>
+      <p id="uf-edits" class="note">Nenhuma UF alterada.</p></details>
+      <div class="actions"><button id="sim-reset" type="button">Restaurar central</button><button id="sim-export" type="button">Baixar meu cenário</button></div></div>
+      <div class="sim-result"><p class="eyebrow" id="sim-label">Previsão central</p><div class="sim-scores">{candidates}</div>
+      <p id="sim-gap" class="gap-readout">Diferença F−L: {number(b["margem_flavio_lula"],2)} pp</p>
+      <div class="mini-account"><span id="sim-attendance">{millions(b['comparecimento'])} votantes</span><span id="sim-absent">{millions(b['abstencao'])} ausentes</span><span id="sim-invalid">{millions(b['branco_nulo'])} brancos/nulos</span></div>
+      <div id="sim-region-table">{region_table(data)}</div><p class="note" id="sim-conservation">Eleitorado = votos válidos + brancos/nulos + abstenção. A conta fecha.</p>
+      <button class="primary" id="sim-montecarlo" type="button">Simular a incerteza deste cenário</button><p id="sim-uncertainty" role="status">Os intervalos do topo pertencem à previsão central. Mudou hipótese? Simule novamente.</p>
+      <p class="note">As taxas regionais e de UF são somadas à mudança geral. A mudança nas seções afeta o peso territorial dentro da UF; preferência por seção não foi medida. O diferencial por candidatura é hipótese adicional ao eleitor provável.</p></div></div>"""
+
+
+def render(data, template):
+    replacements = {
+        "HERO": hero(data),
+        "ACCOUNTING": accounting(data),
+        "REGION_CHART": region_chart(data),
+        "REGION_TABLE": region_table(data),
+        "STATE_TABLE": state_table(data),
+        "MAP": map_svg(data),
+        "SENSITIVITY": sensitivity(data),
+        "HOUSE_TABLE": house_table(data),
+        "POLL_TABLE": poll_table(data),
+        "STATE_DETAILS": state_details(data),
+        "SOURCE_UPDATES": source_updates(data),
+        "TURNOUT_CHECKS": turnout_checks(data),
+        "ABSTENTION": abstention(data),
+        "VALIDATION": validation(data),
+        "MINOR_TABLE": minor_table(data),
+        "HISTOGRAM": histogram(data),
+        "SIMULATOR": simulator(data),
+        "DATE": data["referencia"],
+        "N_STATES": str(sum(len(s["pesquisas"]) for s in data["estados"])),
+        "N_HOUSES": str(len(data["nacional"]["pareadas"])),
+        "N_ALL": str(len(data["nacional"]["selecionadas"])),
+        "N_NEW_STATES": str(data["qualidade"]["n_estaduais_novas_integradas"]),
+        "N_TURNOUT": str(data["qualidade"]["n_ufs_cruzamento_comparecimento"]),
+        "HALF_NATIONAL": number(data["configuracao"]["meia_vida_nacional_dias"], 1),
+        "HALF_STATE": number(data["configuracao"]["meia_vida_estadual_dias"], 1),
+        "MATCH": number(data["qualidade"]["pareamento_eleitores_pct"]),
+        "RMSE_SECTION": number(data["validacao"]["metricas"]["rmse_ufs_secoes_pp"], 2),
+        "RMSE_UF": number(data["validacao"]["metricas"]["rmse_ufs_constante_pp"], 2),
+        "SECTIONS": number(data["qualidade"]["secoes_2022"], 0),
+        "PROFILE_DIFF": number(
+            data["qualidade"]["diferenca_locais_perfil_eleitores"], 0
+        ),
+        "LOCALS_DATE": esc(data["tse_metadata"]["locais_metadata"]["DT_GERACAO"]),
+        "PROFILE_DATE": esc(data["tse_metadata"]["perfil_metadata"]["DT_GERACAO"]),
+        "P_FLAVIO_AHEAD": number(
+            100 * data["incerteza"]["p_flavio_a_frente_de_lula"], 1
+        ),
+        "P_LULA_MAJORITY": number(100 * data["incerteza"]["p_lula_maioria"], 1),
+        "P_FLAVIO_MAJORITY": number(100 * data["incerteza"]["p_flavio_maioria"], 1),
+        "GAP_LOW": number(data["incerteza"]["margem"]["p05"], 2),
+        "GAP_HIGH": number(data["incerteza"]["margem"]["p95"], 2),
+        "MODEL_HASH": data["hash_modelo"],
+        "DATA": json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace(
+            "<", "\\u003c"
+        ),
+    }
+    for key, value in replacements.items():
+        template = template.replace("{{" + key + "}}", value)
+    if "{{" in template or "—" in template:
+        raise ValueError("Template incompleto ou travessão no texto público")
+    return template

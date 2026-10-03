@@ -16,6 +16,7 @@ Saída: docs/assets/og/<slug>.html (fonte) e docs/img/og/<slug>.png (1200x630).
 from __future__ import annotations
 
 import argparse
+import importlib
 import json
 import shutil
 import subprocess
@@ -59,6 +60,7 @@ def _agregador_counts() -> tuple[str, str]:
 _ONDAS, _INSTITUTOS = _agregador_counts()
 
 CARDS: list[dict] = [
+    importlib.import_module("social-card-predicao").card(ROOT),
     {
         "slug": "mapa_do_voto_util",
         "eyebrow": "Mapa do voto útil · 1º turno de 2026",

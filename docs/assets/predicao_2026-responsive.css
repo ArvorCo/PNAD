@@ -1,0 +1,307 @@
+@media(min-width:1250px) {
+  .hero-title h1 {
+    font-size:94px
+  }
+}
+@media(max-width:950px) {
+  .wrap {
+    width:calc(100% - 40px)
+  }
+  .hero-title {
+    gap:35px
+  }
+  .hero-intro {
+    font-size:16px
+  }
+  .simulator {
+    grid-template-columns:310px minmax(0,1fr)
+  }
+  .sim-result {
+    padding:20px
+  }
+  .sim-scores {
+    grid-template-columns:1fr
+  }
+  .sim-candidate {
+    display:grid;
+    grid-template-columns:1fr auto;
+    align-items:center
+  }
+  .sim-candidate small {
+    grid-column:1 / -1
+  }
+  .map-layout {
+    gap:35px
+  }
+  .accounting {
+    grid-template-columns:repeat(2,1fr)
+  }
+}
+@media(max-width:700px) {
+  html {
+    scroll-padding-top:66px
+  }
+  .wrap {
+    width:calc(100% - 32px)
+  }
+  .brand-row {
+    padding-block:17px
+  }
+  .brand-row>a:last-child {
+    font-size:11px
+  }
+  .brand {
+    font-size:21px
+  }
+  .brand span {
+    font-size:11px
+  }
+  .hero {
+    padding-top:25px
+  }
+  .hero-top {
+    gap:12px
+  }
+  .eyebrow {
+    font-size:10px;
+    letter-spacing:.8px
+  }
+  .edition {
+    font-size:10px
+  }
+  .hero-title {
+    grid-template-columns:1fr;
+    gap:28px;
+    margin:30px 0
+  }
+  h1 {
+    font-size:60px;
+    letter-spacing:-2px
+  }
+  .hero-intro {
+    font-size:16px
+  }
+  .hero-intro p {
+    margin-top:13px
+  }
+  .scoreboard {
+    grid-template-columns:1fr 1fr
+  }
+  .candidate {
+    padding:20px 13px
+  }
+  .candidate:first-child {
+    padding-right:13px
+  }
+  .candidate:nth-child(2) {
+    border-right:0
+  }
+  .candidate:last-child {
+    grid-column:1 / -1;
+    padding:15px 0;
+    border-top:1px solid #738775;
+    display:grid;
+    grid-template-columns:1fr auto;
+    align-items:center
+  }
+  .candidate:last-child b {
+    font-size:35px;
+    letter-spacing:-2px;
+    margin:0
+  }
+  .candidate:last-child strong {
+    font-size:14px
+  }
+  .candidate:last-child p {
+    margin-top:0;
+    font-size:10px
+  }
+  .candidate>b {
+    font-size:49px;
+    letter-spacing:-3px
+  }
+  .candidate>span {
+    font-size:12px
+  }
+  .candidate strong {
+    font-size:14px
+  }
+  .candidate p {
+    font-size:10px
+  }
+  .candidate small {
+    font-size:22px
+  }
+  .hero-caption {
+    font-size:12px
+  }
+  .hero-links {
+    gap:16px;
+    font-size:12px
+  }
+  .chapter-nav .wrap {
+    gap:22px;
+    padding-block:15px
+  }
+  .chapter-nav a {
+    font-size:11px
+  }
+  .chapter {
+    padding-top:45px;
+    padding-bottom:45px
+  }
+  .chapter-head {
+    gap:16px
+  }
+  .chapter-number {
+    font-size:27px
+  }
+  .chapter h2 {
+    font-size:34px;
+    letter-spacing:-1px
+  }
+  .lead {
+    font-size:18px
+  }
+  .prose-grid,.comparison,.map-layout {
+    grid-template-columns:1fr;
+    gap:15px
+  }
+  .prose-grid p {
+    margin:12px 0
+  }
+  .map-layout {
+    margin-top:25px
+  }
+  .map-layout svg {
+    max-width:470px;
+    margin:auto
+  }
+  .comparison article:first-child {
+    border-right:0;
+    border-bottom:1px solid var(--line)
+  }
+  .comparison article {
+    padding:22px
+  }
+  .method-step {
+    grid-template-columns:28px minmax(0,1fr);
+    gap:13px
+  }
+  .method-step h3 {
+    font-size:23px
+  }
+  .method-step p {
+    font-size:15px
+  }
+  .equation {
+    font-size:12px;
+    padding:17px
+  }
+  .accounting b {
+    font-size:25px
+  }
+  .accounting>div {
+    padding:20px 10px 20px 0
+  }
+  .simulator {
+    grid-template-columns:1fr
+  }
+  .controls {
+    border-right:0;
+    border-bottom:1px solid var(--line);
+    padding:22px
+  }
+  .sim-result {
+    position:static;
+    padding:22px
+  }
+  .sim-scores {
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:20px
+  }
+  .sim-candidate {
+    display:block
+  }
+  .sim-candidate:last-child {
+    grid-column:1 / -1;
+    border-top:1px solid var(--line);
+    padding-top:14px
+  }
+  .sim-candidate b {
+    font-size:37px
+  }
+  .sim-candidate:last-child b {
+    font-size:29px
+  }
+  .gap-readout {
+    font-size:14px
+  }
+  .probabilities {
+    grid-template-columns:1fr
+  }
+  .probabilities>div {
+    display:flex;
+    align-items:center;
+    gap:25px;
+    padding:15px 0
+  }
+  .probabilities b {
+    font-size:33px;
+    min-width:100px
+  }
+  .footer {
+    flex-direction:column;
+    align-items:flex-start;
+    gap:6px
+  }
+  .state-file summary span {
+    display:block;
+    margin-top:4px
+  }
+  th,td {
+    padding:10px 12px
+  }
+  .wide-chart svg {
+    min-width:700px
+  }
+  .prose {
+    font-size:16px
+  }
+}
+@media(prefers-reduced-motion:reduce) {
+  html {
+    scroll-behavior:auto
+  }
+}
+@media print {
+  .chapter-nav,.hero-links,.simulator,.downloads {
+    display:none
+  }
+  .hero {
+    background:white;
+    color:black
+  }
+  .hero * {
+    color:black!important
+  }
+  .wrap {
+    width:100%
+  }
+  .chapter {
+    break-inside:avoid;
+    padding:20px 0
+  }
+  details {
+    display:block
+  }
+  table {
+    font-size:10px
+  }
+  a {
+    text-decoration:none
+  }
+  svg {
+    max-height:400px
+  }
+}

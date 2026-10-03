@@ -111,6 +111,15 @@
 - For national comparisons, exclude `SG_UF='ZZ'` (exterior) unless the poll universe includes voters abroad.
 - Do not extract huge TSE CSVs to disk by default. Process the ZIP in streaming mode and persist compact summaries in SQLite/CSV.
 
+## Previsão presidencial experimental (03/10/2026)
+- `python3 scripts/predicao-2026-build.py --refresh-agregador --hoje 2026-10-04` atualiza a previsão e o card após integrar pesquisas. Fonte: `docs/predicao_2026_1T_presidente.template.html` e `scripts/predicao_2026/`; nunca editar a página gerada diretamente.
+- Preparar dados oficiais com `predicao-2026-fontes.py`, `predicao-2026-tse.py` e `predicao-2026-validar.py`. Usar eleitorado federal final de 2026; registrar datas, hashes e diferenças de totais. Snapshots preservam cada versão.
+- A retrospectiva 2018→2022 não favoreceu o modelo por seção (RMSE ponderado 1,24 contra 1,19 pp da UF). Central estadual; seções para diagnóstico e cenários. Valida apenas comparecimento, não preferências ou probabilidades de vitória.
+- Efeitos de casa são diferenças relativas a pares contemporâneos, não erros eleitorais identificados. PNAD e voto útil extra são hipóteses explícitas. Preservar eleitorado = válidos + brancos/nulos + abstenção e paridade Python/navegador. Nunca inferir voto dos ausentes pelo endereço da seção.
+
+- Recência da previsão: meia-vida nacional 3 dias e estadual 7 dias pelo ponto médio do campo; uma onda por casa/UF, com campo mais recente prioritário. CLI permite ajustar ambas. Central inclusiva usa PNAD onde há cruzamento e publicada onde falta; nunca imputar renda ausente. Agregador descritivo continua com peso igual. Transcrições estaduais novas em `analysis/predicao_2026/estaduais/`, com páginas e hashes da fonte.
+- Para cruzamentos Quaest recentes, `predicao-2026-estaduais.py` guarda conferência visual e OCR. Recomposição admite ±0,5 pp por número inteiro e preferência livre do NS/NR de hábito; envelope aritmético não é IC. Selecionar os que pretendem votar dentro do grupo irregular assume o voto do grupo agregado, pois o subconjunto não é publicado. Expor resíduos, cobertura e alternativa sem seleção; não carregar sinal de onda anterior como atual.
+
 ## Coding Style & Naming
 - Prefer Python (PEP 8, 4 spaces).
 - Script naming: `kebab-case` (new files), keep existing names for compatibility.

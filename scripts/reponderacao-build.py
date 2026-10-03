@@ -730,6 +730,7 @@ def build_html() -> str:
         "<span>Agregador de pesquisas</span></header>"
         '<main id="conteudo">'
         + hero()
+        + '<div class="wrap"><p class="note">Da intenção à urna: <a href="predicao_2026_1T_presidente.html">previsão experimental do 1º turno</a>, condicionada a este agregador, com comparecimento do TSE, incerteza e simulador de voto útil.</p></div>'
         + toc()
         + corpo
         + '</main><footer class="wrap footer"><b>ARVOR Intelligence</b>'

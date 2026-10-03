@@ -414,6 +414,61 @@ Before opening a change:
 
 ---
 
+## Presidential forecast, 4 October 2026
+
+`docs/predicao_2026_1T_presidente.html` is a generated experimental forecast.
+It consumes the PNAD aggregator and archived state polls, calibrates UF
+preferences to a common national margin, and converts them to votes using the
+final TSE electorate and historical attendance. Its browser simulator allows
+changes in tactical voting by UF, attendance, invalid votes and undecided voters.
+Probabilities are conditional on assumed errors, without full electoral calibration.
+
+Rebuild from a fresh checkout (large source ZIPs stay in ignored `data/`):
+
+```bash
+pip install -e '.[forecast]'
+python3 scripts/predicao-2026-fontes.py
+python3 scripts/predicao-2026-tse.py
+python3 scripts/predicao-2026-validar.py
+python3 scripts/predicao-2026-build.py --hoje 2026-10-03
+```
+
+After integrating new poll transcriptions, update on election morning:
+
+```bash
+python3 scripts/predicao-2026-build.py --refresh-agregador --hoje 2026-10-04
+```
+
+The command refreshes the PNAD page, forecast JSON/CSV/HTML and social card,
+and preserves an immutable snapshot in `analysis/predicao_2026/snapshots/`.
+The forecast weights national polls with a 3-day half-life and state polls with
+a 7-day half-life, measured from the midpoint of fieldwork. One latest field
+per house is retained. Its inclusive central target uses PNAD sensitivity where
+available and the published result otherwise (including Vox Brasil). The
+descriptive aggregator retains equal house weights. Override forecast decay
+with `--meia-vida-nacional` and `--meia-vida-estadual` (positive days).
+New state transcriptions with source pages belong in
+`analysis/predicao_2026/estaduais/`; newer fields replace the same house/UF.
+The 03 October update adds 25 Quaest waves, three Real Time Big Data waves
+and Paraná's Tocantins wave. `predicao-2026-estaduais.py` reproduces the Quaest
+transcriptions from the archived primary PDFs, Portuguese Tesseract OCR and
+declared visual checks. It checks rounded crossbreak compatibility, retains
+missing-habit mass and exposes the residues. The likely-voter selection assumes
+the intending-to-vote subset has the preference of its published habit group;
+it can be disabled in the simulator. Unusable or unverified located sources are
+listed in the public package, without transporting their numbers.
+It does not discover or transcribe new polls. `--skip-card` permits generation
+without Chrome. `predicao-2026-fontes.py --refresh` refreshes official source
+packages; rerun both TSE preparation commands afterward. No 2026 vote-count
+results enter the model, and post-election cutoffs are rejected.
+
+The 2018-to-2022 retrospective validates attendance only: the UF baseline
+performed better than the section baseline. Sections therefore support
+diagnostics and scenarios. Never infer an absentee's candidate from their
+section, or call a relative house difference an identified electoral bias.
+Edit the template and `scripts/predicao_2026/`, then rebuild the generated page.
+Validate with `pytest -q tests/test_predicao_2026.py` and the full suite.
+
 ## Project status
 
 Production-useful for:
