@@ -1,0 +1,342 @@
+{
+  "source": {
+    "url": "https://www.palver.com.br/survey/explore",
+    "retrieved_utc": "2026-10-03T19:23:41.698367+00:00",
+    "html_sha256": "de60839770df272b4a03cb170510c8bcc3d2e4af5e316b2ca19b023f0d0ea007",
+    "snapshot": "data/originals/palver_explorer_20261003/catalog.html.gz"
+  },
+  "waves": [
+    {
+      "id": "01_pesquisa_2026_08_10",
+      "sequence": 1,
+      "date": "2026-08-10T00:00:00.000Z",
+      "fieldEnd": "2026-08-09T00:00:00.000Z",
+      "trendEnabled": false
+    },
+    {
+      "id": "02_pesquisa_2026_09_09",
+      "sequence": 2,
+      "date": "2026-09-09T00:00:00.000Z",
+      "fieldEnd": "2026-09-07T00:00:00.000Z",
+      "trendEnabled": false
+    },
+    {
+      "id": "02_pesquisa_2026_09_21",
+      "sequence": 2,
+      "date": "2026-09-21T00:00:00.000Z",
+      "fieldEnd": "2026-09-07T00:00:00.000Z",
+      "trendEnabled": true
+    },
+    {
+      "id": "03_pesquisa_2026_09_21",
+      "sequence": 3,
+      "date": "2026-09-21T00:00:00.000Z",
+      "fieldEnd": "2026-09-20T00:00:00.000Z",
+      "trendEnabled": true
+    },
+    {
+      "id": "04_pesquisa_2026_09_24",
+      "sequence": 4,
+      "date": "2026-09-24T00:00:00.000Z",
+      "fieldEnd": "2026-09-23T00:00:00.000Z",
+      "trendEnabled": true
+    },
+    {
+      "id": "05_pesquisa_2026_09_29",
+      "sequence": 5,
+      "date": "2026-09-29T00:00:00.000Z",
+      "fieldEnd": "2026-09-27T00:00:00.000Z",
+      "trendEnabled": true
+    },
+    {
+      "id": "06_pesquisa_2026_10_03",
+      "sequence": 6,
+      "date": "2026-10-03T00:00:00.000Z",
+      "fieldEnd": "2026-10-03T00:00:00.000Z",
+      "trendEnabled": true
+    }
+  ],
+  "questions": [
+    {
+      "key": "spontaneous_vote_norm",
+      "label": "Voto espontâneo",
+      "statement": "Se a eleição para presidente fosse acontecer hoje, em quem você votaria?",
+      "section": "1º turno espontânea",
+      "note": "Estimativas derivadas de perguntas em duas etapas: decisão de voto e voto espontâneo digitado em caixa de texto. Quem disse não ter escolhido entra como indeciso; quem disse votar em branco ou não votar, como branco/nulo ou não votaria. Quem disse já ter escolhido, mas deixou a resposta em branco ou digitou uma resposta inválida ou ininteligível, aparece em Não respondeu. Candidatos citados por poucos respondentes foram agrupados em Outros.",
+      "tipo": "espontanea"
+    },
+    {
+      "key": "spontaneous_vote_norm_agrupado",
+      "label": "Voto espontâneo (agrupado)",
+      "statement": "Se a eleição para presidente fosse acontecer hoje, em quem você votaria?",
+      "section": "1º turno espontânea",
+      "note": "Mesma pergunta do gráfico anterior, agrupando em Outros todo candidato com menos de 1% das intenções de voto. Indecisos e branco/nulo ficam à parte.",
+      "tipo": "espontanea"
+    },
+    {
+      "key": "stimulated_1r_vote_1_h",
+      "label": "Cenário estimulado",
+      "statement": "Se a eleição para presidente fosse acontecer hoje e estes fossem os candidatos, em quem você votaria?",
+      "section": "1º turno estimulada",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "stimulated_1r_vote_1_h_agrupado",
+      "label": "Cenário estimulado (agrupado)",
+      "statement": "Se a eleição para presidente fosse acontecer hoje e estes fossem os candidatos, em quem você votaria?",
+      "section": "1º turno estimulada",
+      "note": "Mesma pergunta do gráfico anterior, agrupando em Outros todo candidato com menos de 1% das intenções de voto. Indecisos e branco/nulo ficam à parte.",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "lula_flavio",
+      "label": "Lula x Flávio Bolsonaro",
+      "statement": "Em um eventual 2º turno nas próximas eleições para Presidente, como você votaria se estes fossem os candidatos? (cenário 1)",
+      "section": "2º turno estimulada",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "lula_cury",
+      "label": "Lula x Augusto Cury",
+      "statement": "Em um eventual 2º turno nas próximas eleições para Presidente, como você votaria se estes fossem os candidatos? (cenário 2)",
+      "section": "2º turno estimulada",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "lula_renan",
+      "label": "Lula x Renan Santos",
+      "statement": "Em um eventual 2º turno nas próximas eleições para Presidente, como você votaria se estes fossem os candidatos? (cenário 3)",
+      "section": "2º turno estimulada",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "lula_caiado",
+      "label": "Lula x Ronaldo Caiado",
+      "statement": "Em um eventual 2º turno nas próximas eleições para Presidente, como você votaria se estes fossem os candidatos? (cenário 4)",
+      "section": "2º turno estimulada",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "lula_zema",
+      "label": "Lula x Romeu Zema",
+      "statement": "Em um eventual 2º turno nas próximas eleições para Presidente, como você votaria se estes fossem os candidatos? (cenário 5)",
+      "section": "2º turno estimulada",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "president_approval",
+      "label": "Aprovação de Lula",
+      "statement": "Você aprova ou desaprova a maneira como Lula está lidando com seu trabalho como presidente?",
+      "section": "Aprovação e Avaliação do Governo",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "government_evaluation_h",
+      "label": "Avaliação do governo",
+      "statement": "Para você, o governo Lula está fazendo um trabalho ótimo, bom, regular, ruim ou péssimo?",
+      "section": "Aprovação e Avaliação do Governo",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "receive_pbf",
+      "label": "Recebe Bolsa Família em casa",
+      "statement": "Você ou alguém na sua casa recebe dinheiro do Bolsa Família?",
+      "section": "Bolsa Família",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "ideology",
+      "label": "Espectro Ideológico",
+      "statement": "Qual é seu posicionamento ideológico?",
+      "section": "Espectro Ideológico e Identificação Política",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "identification_h",
+      "label": "Identificação Política",
+      "statement": "Qual das seguintes identidades políticas melhor descrevem o seu posicionamento?",
+      "section": "Espectro Ideológico e Identificação Política",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "neg_identification_antipetista_h",
+      "label": "Antipetismo",
+      "statement": "Em uma escala de 1 a 5, em que 1 significa “não me considero nem um pouco” e 5 significa “me considero totalmente”, o quanto você se considera: — Antipetista",
+      "section": "Espectro Ideológico e Identificação Política",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "neg_identification_antibolsonarista_h",
+      "label": "Antibolsonarismo",
+      "statement": "Em uma escala de 1 a 5, em que 1 significa “não me considero nem um pouco” e 5 significa “me considero totalmente”, o quanto você se considera: — Antibolsonarista",
+      "section": "Espectro Ideológico e Identificação Política",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "anti_cruzado",
+      "label": "Antipetismo × antibolsonarismo",
+      "statement": "Em uma escala de 1 a 5, em que 1 significa “não me considero nem um pouco” e 5 significa “me considero totalmente”, o quanto você se considera: — Antipetista / — Antibolsonarista",
+      "section": "Espectro Ideológico e Identificação Política",
+      "note": "Variável derivada do cruzamento das escalas de antipetismo e antibolsonarismo: conta como antipetista, ou antibolsonarista, quem se declarou 4 ou 5. Quem respondeu “Não sei” em uma das duas escalas não é situado num quadrante.",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "party_affiliation",
+      "label": "Filiação partidária",
+      "statement": "Atualmente, você possui filiação formal a algum partido político, registrada na Justiça Eleitoral?",
+      "section": "Espectro Ideológico e Identificação Política",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "party_affiliated",
+      "label": "Partido de filiação",
+      "statement": "A qual partido você é filiado?",
+      "section": "Espectro Ideológico e Identificação Política",
+      "note": "Base: apenas respondentes que declararam ter filiação formal a algum partido político.",
+      "tipo": "estimulada"
+    },
+    {
+      "key": "registered_voter_last_election",
+      "label": "Tinha título regular em 2022",
+      "statement": "Você possuía título de eleitor regularizado e podia votar na eleição de 2022?",
+      "section": "Participação eleitoral",
+      "tipo": "estimulada"
+    }
+  ],
+  "breakdowns": [
+    {
+      "key": "sex_std",
+      "label": "Sexo",
+      "levels": [
+        "Homem",
+        "Mulher"
+      ]
+    },
+    {
+      "key": "age_std",
+      "label": "Idade",
+      "levels": [
+        "16 a 34 anos",
+        "35 a 59 anos",
+        "60 anos ou mais"
+      ]
+    },
+    {
+      "key": "race_std",
+      "label": "Cor ou raça",
+      "levels": [
+        "Branca",
+        "Preta, Parda, Indígena ou Amarela"
+      ]
+    },
+    {
+      "key": "edu_std",
+      "label": "Escolaridade",
+      "levels": [
+        "Fundamental",
+        "Médio",
+        "Superior"
+      ]
+    },
+    {
+      "key": "inc_std",
+      "label": "Renda familiar",
+      "levels": [
+        "Até 2 salários mínimos",
+        "2 a 5 salários mínimos",
+        "Mais de 5 salários mínimos"
+      ]
+    },
+    {
+      "key": "reg_std",
+      "label": "Região",
+      "levels": [
+        "Norte",
+        "Nordeste",
+        "Centro-Oeste",
+        "Sudeste",
+        "Sul"
+      ]
+    },
+    {
+      "key": "vote_std",
+      "label": "Voto no 2º turno de 2022",
+      "levels": [
+        "Lula",
+        "Jair Bolsonaro",
+        "Branco/Nulo ou Não votei"
+      ]
+    },
+    {
+      "key": "stimulated_1r_vote_1_h",
+      "label": "Eleitor no 1º turno",
+      "levels": [
+        "Lula (PT)",
+        "Flávio Bolsonaro (PL)",
+        "Renan Santos (Missão)",
+        "Escritor Augusto Cury (Avante)",
+        "Outros candidatos",
+        "Indecisos, brancos e nulos"
+      ]
+    },
+    {
+      "key": "stimulated_2r_vote_1_h",
+      "label": "Voto no 2º turno Lula x Flávio",
+      "levels": [
+        "Lula (PT)",
+        "Flávio Bolsonaro (PL)",
+        "Indecisos, brancos e nulos"
+      ]
+    },
+    {
+      "key": "relig_std",
+      "label": "Religião",
+      "levels": [
+        "Católica",
+        "Evangélica/Protestante",
+        "Sem religião",
+        "Outra"
+      ]
+    },
+    {
+      "key": "relig_std_2",
+      "label": "Religião (evangélicos por vertente)",
+      "levels": [
+        "Católica",
+        "Protestantes Históricas",
+        "Pentecostais e Neopentecostais",
+        "Outras",
+        "Sem religião",
+        "Outra religião"
+      ]
+    },
+    {
+      "key": "receive_pbf",
+      "label": "Recebe Bolsa Família em casa",
+      "levels": [
+        "Sim",
+        "Não"
+      ]
+    },
+    {
+      "key": "ideol_std",
+      "label": "Espectro Ideológico",
+      "levels": [
+        "Esquerda",
+        "Centro ou sem posicionamento",
+        "Direita"
+      ]
+    },
+    {
+      "key": "identification_h",
+      "label": "Identificação Política",
+      "levels": [
+        "Lulista",
+        "Simpatiza com a esquerda",
+        "Independente",
+        "Simpatiza com a direita",
+        "Bolsonarista"
+      ]
+    }
+  ]
+}

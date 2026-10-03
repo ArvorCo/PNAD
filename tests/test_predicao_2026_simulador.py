@@ -1,6 +1,7 @@
 """Simulador do leitor: cenários prontos, link compartilhável e contrato do evento."""
 
 import json
+import re
 import shutil
 import subprocess
 import sys
@@ -189,7 +190,8 @@ def test_sentence_reports_change_against_central(data):
     assert edited.startswith(
         "Com Flávio antecipando 50% da reserva e comparecimento 5 pp menor no Nordeste"
     )
-    assert "passa de −" in edited
+    # The central sign moves with new polls; the sentence must carry it explicitly.
+    assert re.search(r"passa de [−+]\d+,\d{2} para [−+]\d+,\d{2} pp", edited)
     assert "—" not in central + edited
 
 

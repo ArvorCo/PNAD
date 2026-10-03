@@ -1,0 +1,184 @@
+{
+  "instituto": "PoderData",
+  "contratante": "Poder360",
+  "metodo": "telefônico (IVR/URA, discagem aleatória para celular e fixo)",
+  "renda": {
+    "unidade": "salarios_minimos",
+    "ano_referencia": 2026,
+    "faixas": [
+      {
+        "rotulo": "Até 2 SM (até R$ 3.242)",
+        "max": 2
+      },
+      {
+        "rotulo": "De 2 a 5 SM (R$ 3.242 a 8.105)",
+        "max": 5
+      },
+      {
+        "rotulo": "Mais de 5 SM (acima de R$ 8.105)",
+        "max": null
+      }
+    ],
+    "amostra_pct": [
+      46,
+      33,
+      21
+    ],
+    "nota": "Perfil da onda atual no gráfico oficial pd-perfil-amostra-2-out-2026: 46/33/21, sexo 47/53. A primeira faixa inclui desempregados e sem renda fixa (nota dos gráficos de estratificação). O PDF desta onda não estava publicado em 03/10/2026.",
+    "mes_precos": "202609"
+  },
+  "id": "poderdata_2026-10-02",
+  "campo": {
+    "inicio": "2026-09-30",
+    "fim": "2026-10-02"
+  },
+  "divulgacao": "2026-10-03",
+  "registro_tse": "BR-03519/2026",
+  "n": 4000,
+  "publicado": {
+    "1t": {
+      "lula": 42,
+      "flavio": 41,
+      "cury": 3,
+      "renan_santos": 3,
+      "caiado": 2,
+      "zema": 1,
+      "samara": 0,
+      "rui": 1,
+      "clariana": 0,
+      "avalanche": 0,
+      "hertz": 0,
+      "edmilson": 0,
+      "grassi": 0,
+      "branco_nulo": 4,
+      "indecisos": 2
+    },
+    "2t": {
+      "lula": 46,
+      "flavio": 46,
+      "branco_nulo": 7,
+      "indecisos": 1
+    }
+  },
+  "cruzamentos": {
+    "1t": {
+      "opcoes": [
+        "lula",
+        "flavio",
+        "cury",
+        "renan_santos",
+        "caiado",
+        "zema",
+        "rui"
+      ],
+      "linhas": [
+        [
+          45,
+          35,
+          4,
+          2,
+          3,
+          1,
+          1
+        ],
+        [
+          37,
+          47,
+          4,
+          3,
+          3,
+          0,
+          0
+        ],
+        [
+          42,
+          46,
+          3,
+          3,
+          2,
+          1,
+          0
+        ]
+      ],
+      "nota": "Gráfico oficial de estratificação do 1º turno (imagem -04), linhas de renda familiar; o gráfico só traz as sete candidaturas com voto e não separa branco/nulo e não sabe por faixa, então só elas são ajustadas. Leitura conferida em recorte ampliado."
+    },
+    "2t": {
+      "opcoes": [
+        "lula",
+        "flavio"
+      ],
+      "linhas": [
+        [
+          50,
+          41
+        ],
+        [
+          41,
+          53
+        ],
+        [
+          44,
+          50
+        ]
+      ],
+      "nota": "Gráfico oficial de estratificação do 2º turno (imagem -07). Branco/nulo e não sabe não são separados por renda; só Lula e Flávio são ajustados."
+    }
+  },
+  "fonte": {
+    "tipo": "materia",
+    "arquivo": "data/originals/poderdata_102026_03/materia_1t.html",
+    "url": "https://www.poder360.com.br/poderdata/na-vespera-do-1o-turno-lula-tem-45-e-flavio-43-dos-votos-validos/",
+    "sha256": "03a48d70e9b1f454b6ca6c402a503f01f91105ece9709fa0e34b2a4005df177a",
+    "bytes": 275767,
+    "paginas": {
+      "1t_topline": "imagem -01",
+      "1t_validos": "imagem -03",
+      "1t_renda": "imagem -04",
+      "2t_topline": "imagem -05",
+      "2t_validos": "imagem -06",
+      "2t_renda": "imagem -07",
+      "perfil_renda": "pd-perfil-amostra-2-out-2026"
+    },
+    "conferido_em": "2026-10-03",
+    "status": "Íntegra em PDF não publicada até a consulta de 03/10/2026; números lidos dos gráficos oficiais do PoderData publicados nas matérias do Poder360. Conferir contra o PDF quando sair.",
+    "complementos": [
+      {
+        "rotulo": "Matéria do 2º turno",
+        "url": "https://www.poder360.com.br/poderdata/lula-e-flavio-tem-46-cada-um-no-2o-turno-diz-poderdata-aya/",
+        "arquivo": "data/originals/poderdata_102026_03/materia_2t.html",
+        "sha256": "f54496840c1163d35577d81510afe76ebef6922ce425a6a3cef7b5ab8463f3e3"
+      },
+      {
+        "rotulo": "PoderData: 1º turno, placar",
+        "url": "https://static.poder360.com.br/uploads/2026/10/pd-pesquisa-eleitoral-intencao-presidente-2-out-2026-01-scaled.png",
+        "arquivo": "data/originals/poderdata_102026_03/pd-pesquisa-eleitoral-intencao-presidente-2-out-2026-01-scaled.png",
+        "sha256": "c070c11e9d85c38798fe51d55b35009d93f2376b839b8daf18e3e565ac2b6d12"
+      },
+      {
+        "rotulo": "PoderData: 1º turno por renda",
+        "url": "https://static.poder360.com.br/uploads/2026/10/pd-pesquisa-eleitoral-intencao-presidente-2-out-2026-04-scaled.png",
+        "arquivo": "data/originals/poderdata_102026_03/pd-pesquisa-eleitoral-intencao-presidente-2-out-2026-04-scaled.png",
+        "sha256": "047b51a1f84f4ddd6f455fe91eb3a2c314801308cb37af756695f67446fb39ac"
+      },
+      {
+        "rotulo": "PoderData: 2º turno, placar",
+        "url": "https://static.poder360.com.br/uploads/2026/10/pd-pesquisa-eleitoral-intencao-presidente-2-out-2026-05-scaled.png",
+        "arquivo": "data/originals/poderdata_102026_03/pd-pesquisa-eleitoral-intencao-presidente-2-out-2026-05-scaled.png",
+        "sha256": "65ae99c6dfac6be2180a49631ebd25d2ffec0b09b0c46abd311bce286d76bc12"
+      },
+      {
+        "rotulo": "PoderData: 2º turno por renda",
+        "url": "https://static.poder360.com.br/uploads/2026/10/pd-pesquisa-eleitoral-intencao-presidente-2-out-2026-07-scaled.png",
+        "arquivo": "data/originals/poderdata_102026_03/pd-pesquisa-eleitoral-intencao-presidente-2-out-2026-07-scaled.png",
+        "sha256": "22ab73417ca6ef058432a6a6ee1869777e65bb15686c9be5ba373cfd965860d1"
+      },
+      {
+        "rotulo": "PoderData: perfil dos entrevistados",
+        "url": "https://static.poder360.com.br/uploads/2026/10/pd-perfil-amostra-2-out-2026_page-0001-1-scaled.jpg",
+        "arquivo": "data/originals/poderdata_102026_03/pd-perfil-amostra-2-out-2026_page-0001-1-scaled.jpg",
+        "sha256": "fb9b1f8555646c5869b9bf4710475c4e3c71e83474e48bb27698471fe71d5cf7"
+      }
+    ]
+  },
+  "notas": "Íntegra em PDF não publicada até 03/10/2026; todos os números vêm dos gráficos oficiais do PoderData nas matérias do Poder360, com URL e SHA-256. Recomposição por renda (46/33/21): 1º turno Lula 41,73 e Flávio 41,27 contra 42 e 41 publicados; maior resíduo entre as candidaturas 0,79 pp (Cury 3,79 contra 3 e Caiado 2,79 contra 2). 2º turno Lula 45,77 e Flávio 46,85 contra 46 e 46, maior resíduo 0,85 pp. Controle por sexo (47/53): 1º turno Lula 42,30 e Flávio 40,58; 2º turno Lula 45,83 e Flávio 45,58. A conta preserva o placar publicado e acrescenta apenas o delta da troca de renda."
+}

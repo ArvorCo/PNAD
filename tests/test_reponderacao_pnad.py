@@ -274,3 +274,26 @@ def test_new_gerp_wave_replaces_september_wave_in_window(output):
         ondas = output["agregador"]["ultimo"][turno]["cobertura_movel"]["ondas"]
         assert "gerp_2026-10-02" in ondas
         assert "gerp_2026-09-28" not in ondas
+
+
+def test_palver_wave6_replaces_wave5_in_window(output):
+    poll = next(p for p in output["pesquisas"] if p["id"] == "palver_2026-10-03")
+    raw = json.loads((POLLS / "palver_2026-10-03.json").read_text())
+    assert poll["registro_tse"] == "BR-00198/2026"
+    assert raw["publicado_pdf"] == {
+        "1t": {"lula": 43, "flavio": 47},
+        "2t": {"lula": 44, "flavio": 49},
+    }
+    assert raw["renda"]["amostra_pct"] == pytest.approx(
+        [42.12294136, 39.56309619, 18.31396245], abs=1e-6
+    )
+    for turno in ("1t", "2t"):
+        assert poll["turnos"][turno]["residuo_max"] < 1e-6
+        pdf = raw["recomposicao"][turno]["pdf_inteiros_renda"]["residuo_vs_pdf_pp"]
+        assert max(abs(v) for v in pdf.values()) < 1.5
+        ondas = output["agregador"]["ultimo"][turno]["cobertura_movel"]["ondas"]
+        assert "palver_2026-10-03" in ondas
+        assert "palver_2026-09-27" not in ondas
+    ajustado = poll["turnos"]["2t"]["cenarios"][SCENARIO]["ajustado"]
+    assert ajustado["flavio"] == pytest.approx(49.36, abs=0.01)
+    assert ajustado["lula"] == pytest.approx(44.44, abs=0.01)

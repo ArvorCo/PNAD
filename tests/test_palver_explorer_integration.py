@@ -52,8 +52,11 @@ def test_institute_panels_show_every_version_in_both_turns():
     waves = [p for p in data["pesquisas"] if p["instituto"] == "Palver"]
     for panel in panels:
         assert f"{len(waves)} ondas · {len(waves) + 1} versões" in panel.get_text()
-        svg_text = panel.find("svg").get_text()
-        for label in ["09/08", "07/09 v1", "07/09 v2", "18/09", "23/09"]:
+        svg = panel.find("svg")
+        # Every version is plotted; with more than six the axis labels every other one.
+        assert len(svg.select("g.hit")) == 2 * (len(waves) + 1)
+        svg_text = svg.get_text()
+        for label in ["09/08", "07/09 v2", "23/09", "03/10"]:
             assert label in svg_text
         assert "fora das médias" in panel.get_text()
     assert "com Marçal" in panels[1].get_text()
