@@ -1,0 +1,73 @@
+{
+ "instituto": "Datafolha",
+ "uf": "SP",
+ "registro_tse": "BR-02676/2026",
+ "registro_tse_estadual": "SP-01367/2026",
+ "campo": "2026-09-28 a 2026-09-30",
+ "divulgacao": "2026-10-02",
+ "divulgacao_tipo": "matéria do Datafolha e da Folha (contratante), 02/10/2026; placares no painel do G1, sem PDF",
+ "n": 1610,
+ "municipios": 65,
+ "margem_pp": 2,
+ "metodo": "Entrevistas presenciais com eleitores de 16 anos ou mais (matéria do Datafolha).",
+ "contratante": "Folha de S.Paulo e TV Globo",
+ "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/180/?tipo_pergunta=ESTIMULADA-PRE-002&instituto=Datafolha",
+ "url_painel": "https://especiaisg1.globo/sp/sao-paulo/eleicoes/2026/pesquisas-eleitorais/presidente/1-turno/datafolha/internal/",
+ "url_materia": [
+  "https://datafolha.folha.uol.com.br/eleicoes/2026/10/tarcisio-de-freitas-tem-56-dos-validos-e-e-favorito-para-vencer-no-1o-turno-em-sao-paulo.shtml",
+  "https://www1.folha.uol.com.br/poder/2026/10/datafolha-lula-lidera-em-mg-e-flavio-no-rj-no-1o-turno-rivais-estao-empatados-em-sp.shtml"
+ ],
+ "arquivo": "data/originals/estaduais_102026_03/datafolha_SP/g1_1t.json",
+ "sha256": "55aab87dbd9a60ef1ca4a8e73512303e0af3586f5cc28a08b50f56f97a8d856e",
+ "fonte_json": "data/originals/estaduais_102026_03/datafolha_SP/fonte.json",
+ "pres_1t": {
+  "pagina": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/180/?tipo_pergunta=ESTIMULADA-PRE-002&instituto=Datafolha",
+  "valores": {
+   "Flávio": 39,
+   "Lula": 38,
+   "Cury": 5,
+   "Renan": 4,
+   "Caiado": 4,
+   "Samara": 1,
+   "Zema": 1,
+   "Pimenta": 1,
+   "Grassi": 1,
+   "Clariana": 0,
+   "Edmilson": 0,
+   "Hertz": 0,
+   "Branco/nulo": 4,
+   "Indecisos": 2
+  }
+ },
+ "controle_validos": {
+  "fonte": "https://www1.folha.uol.com.br/poder/2026/10/datafolha-lula-lidera-em-mg-e-flavio-no-rj-no-1o-turno-rivais-estao-empatados-em-sp.shtml",
+  "publicados": {
+   "Flávio": 41,
+   "Lula": 40
+  },
+  "recompostos": {
+   "Flávio": 41.49,
+   "Lula": 40.43
+  }
+ },
+ "pres_2t": {
+  "pagina": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/180/?tipo_pergunta=SEGTURNO-PRE-001&instituto=Datafolha",
+  "arquivo": "data/originals/estaduais_102026_03/datafolha_SP/g1_2t.json",
+  "sha256": "dc1d7fbc686fbeb4de0919ed3b636f2b442c775edc3331793ade4f624b055b1e",
+  "cenarios": [
+   {
+    "Flávio": 48,
+    "Lula": 45,
+    "Branco/nulo": 7,
+    "Indecisos": 1
+   }
+  ]
+ },
+ "notas": [
+  "Coluna 2026-10-02 do painel do G1 (cenário Total), em fração arredondada ao inteiro percentual; 0 é valor publicado no painel.",
+  "Leonardo Avalanche não consta do cartão do painel; a célula fica ausente, não zero.",
+  "Sem PDF estadual: campo, n, municípios e registros vêm da matéria do Datafolha, conferidos literalmente no HTML arquivado.",
+  "A matéria-resumo da Folha atribui às cinco UFs o campo de 28/09 a 01/10; a matéria do Datafolha de cada UF é a referência por ser a do instituto.",
+  "Painel sem cruzamento por hábito de comparecimento; sem comparecimento_compacto."
+ ]
+}

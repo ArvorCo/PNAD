@@ -344,3 +344,76 @@ def test_datafolha_eve_wave_from_g1_panel_replaces_october_1(output):
     ajustado = poll["turnos"]["2t"]["cenarios"][SCENARIO]["ajustado"]
     assert ajustado["flavio"] == pytest.approx(48.81, abs=0.01)
     assert ajustado["lula"] == pytest.approx(44.56, abs=0.01)
+
+
+def test_quaest_eve_wave_from_g1_panel_replaces_september_27(output):
+    raw = json.loads((POLLS / "quaest_2026-10-03.json").read_text())
+    assert raw["registro_tse"] == "BR-02197/2026"
+    assert raw["n"] == 3702
+    assert raw["campo"] == {"inicio": "2026-10-02", "fim": "2026-10-03"}
+    assert raw["fonte"]["tipo"] == "painel_contratante"
+    assert raw["renda"]["perfil_tipo"] == "hipotese_onda_anterior"
+    previous = json.loads((POLLS / "quaest_2026-09-27.json").read_text())
+    assert (
+        raw["renda"]["amostra_pct"]
+        == previous["renda"]["amostra_pct"]
+        == [
+            31,
+            42,
+            27,
+        ]
+    )
+    archive = json.loads(
+        (ROOT / "data/originals/quaest_102026_03/fonte.json").read_text()
+    )
+    for item in [archive["painel"], *archive["api"], *archive["materias"]]:
+        payload = (ROOT / item["arquivo"]).read_bytes()
+        assert len(payload) == item["bytes"]
+        assert hashlib.sha256(payload).hexdigest() == item["sha256"]
+    for item in archive["materias"]:
+        text = (ROOT / item["texto"]).read_bytes()
+        assert hashlib.sha256(text).hexdigest() == item["texto_sha256"]
+        assert "BR-02197/2026" in text.decode() and "3.702" in text.decode()
+    assert archive["relatorio_pdf"] is None
+    assert all(a["ultima_data_serie"] == "2026-10-03" for a in archive["api"])
+    assert raw["fonte"]["sha256"] == archive["api"][0]["sha256"]
+    assert "sem_cruzamento" not in raw
+    assert raw["publicado"]["1t"]["lula"] == 40
+    assert raw["publicado"]["1t"]["flavio"] == 38
+    assert sum(raw["publicado"]["1t"].values()) == 100
+    assert raw["publicado_validos"]["1t"]["lula"] == 46
+    assert raw["publicado_validos"]["1t"]["flavio"] == 45
+    assert raw["publicado"]["2t"] == {
+        "lula": 42,
+        "flavio": 44,
+        "indecisos": 1,
+        "branco_nulo": 13,
+    }
+    lines_1t = raw["cruzamentos"]["1t"]["linhas"]
+    opts = raw["cruzamentos"]["1t"]["opcoes"]
+    assert [[r[opts.index(k)] for k in ("lula", "flavio")] for r in lines_1t] == [
+        [52, 28],
+        [35, 41],
+        [34, 45],
+    ]
+    assert raw["cruzamentos"]["2t"]["linhas"] == [
+        [54, 33, 1, 12],
+        [37, 47, 2, 14],
+        [36, 53, 0, 11],
+    ]
+    for turno in ("1t", "2t"):
+        for dim in ("renda", "sexo"):
+            assert raw["controles"][turno][dim]["residuo_max_abs"] < 1.0
+    poll = next(p for p in output["pesquisas"] if p["id"] == "quaest_2026-10-03")
+    assert poll["renda"]["perfil_tipo"] == "hipotese_onda_anterior"
+    for turno in ("1t", "2t"):
+        assert poll["turnos"][turno]["residuo_max"] < 0.5
+        ondas = output["agregador"]["ultimo"][turno]["cobertura_movel"]["ondas"]
+        assert "quaest_2026-10-03" in ondas
+        assert "quaest_2026-09-27" not in ondas
+    first = poll["turnos"]["1t"]["cenarios"][SCENARIO]["ajustado"]
+    assert first["lula"] == pytest.approx(40.73, abs=0.01)
+    assert first["flavio"] == pytest.approx(37.40, abs=0.01)
+    second = poll["turnos"]["2t"]["cenarios"][SCENARIO]["ajustado"]
+    assert second["flavio"] == pytest.approx(43.33, abs=0.01)
+    assert second["lula"] == pytest.approx(42.73, abs=0.01)

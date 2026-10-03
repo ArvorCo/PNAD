@@ -56,9 +56,12 @@ def test_latest_quaest_enters_both_forecasts_at_its_actual_release():
     for ballot in ["1t", "2t"]:
         polls = result["ballots"][ballot]["scenarios"]["central"]["polls"]
         p = next(p for p in polls if p["instituto"] == "Quaest")
-        assert p["id"] == "quaest_2026-09-27"
-        assert p["divulgacao"] == "2026-09-28"
-        assert not any(p["id"] == "quaest_2026-09-20" for p in polls)
+        # The election-eve wave (G1 panel) replaces 27/09 at its own release.
+        assert p["id"] == "quaest_2026-10-03"
+        assert p["divulgacao"] == "2026-10-03"
+        assert not any(
+            p["id"] in {"quaest_2026-09-20", "quaest_2026-09-27"} for p in polls
+        )
     atlas = next(p for p in DATA["pesquisas"] if p["id"] == "atlas_2026-09-28")
     assert set(atlas["turnos"]) == {"1t"}
     assert any(p["id"] == "vox_brasil_2026-09-28" for p in DATA["nao_reponderaveis"])

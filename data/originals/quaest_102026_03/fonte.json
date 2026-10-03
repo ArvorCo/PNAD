@@ -1,0 +1,107 @@
+{
+  "instituto": "Quaest",
+  "contratante": "Globo e jornal O Globo",
+  "registro_tse": "BR-02197/2026",
+  "campo": "2026-10-02 a 2026-10-03",
+  "divulgacao": "2026-10-03",
+  "n": 3702,
+  "margem_pp": 2,
+  "nivel_confianca_pct": 95,
+  "metadados_fonte": "Matérias do G1 de 03/10/2026: 'ouviu 3.702 eleitores de 16 anos ou mais, entre os dias 2 e 3 de outubro', margem de 2 pontos, confiança de 95%, registro BR-02197/2026 (texto idêntico nas três matérias).",
+  "baixado_em": "2026-10-03",
+  "relatorio_pdf": null,
+  "relatorio_pdf_status": "Íntegra em PDF não publicada até a consulta de 2026-10-03T22:34:38Z: a lista de mídia da Quaest (wp-json/wp/v2/media, PDFs mais recentes) tinha como último relatório presidencial nacional https://quaest.com.br/wp-content/uploads/2026/09/QUAEST+6+PRESIDENCIAL+28+09.pdf.",
+  "painel": {
+    "url": "https://especiaisg1.globo/politica/eleicoes/2026/pesquisas-eleitorais/presidente/1-turno/quaest/internal/",
+    "arquivo": "data/originals/quaest_102026_03/g1_painel.html",
+    "bytes": 1983826,
+    "sha256": "ad918a9f64d6f4e37a4cdd7f7fc37f6a6ded61748ab24063cfe30369cf17fc04",
+    "capturado_em": "2026-10-03T22:34:33Z",
+    "nota": "O seletor de perguntas do painel lista ESTIMULADA-PRE-003, ESPONTANEA-PRE-001, SEGTURNO-PRE-001 (rotulado 'Segundo Turno - Cenário 1', Lula × Flávio, único cenário de 2º turno listado), VTSVALIDOS-PRE-001, APROVACAO-PRE-001 e AVALIACAO-PRE-001; paginaId 100."
+  },
+  "api": [
+    {
+      "rotulo": "1º turno, estimulada",
+      "tipo_pergunta": "ESTIMULADA-PRE-003",
+      "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/100/?tipo_pergunta=ESTIMULADA-PRE-003&instituto=Quaest",
+      "arquivo": "data/originals/quaest_102026_03/g1_estimulada_1t.json",
+      "bytes": 187806,
+      "sha256": "2b90add1fc5be55d4546dd1ec041648b36bdbc2b838e81fc1ec16e4d722cb014",
+      "capturado_em": "2026-10-03T22:34:33Z",
+      "http": 200,
+      "ultima_data_serie": "2026-10-03"
+    },
+    {
+      "rotulo": "Segundo Turno - Cenário 1 (Lula × Flávio)",
+      "tipo_pergunta": "SEGTURNO-PRE-001",
+      "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/100/?tipo_pergunta=SEGTURNO-PRE-001&instituto=Quaest",
+      "arquivo": "data/originals/quaest_102026_03/g1_segundo_turno.json",
+      "bytes": 58921,
+      "sha256": "ec9a1015e65a17d6943b354eb10debc3f8863a6cbf9fe0a68f4e2c9be5b2321f",
+      "capturado_em": "2026-10-03T22:34:33Z",
+      "http": 200,
+      "ultima_data_serie": "2026-10-03"
+    },
+    {
+      "rotulo": "Aprovação do governo",
+      "tipo_pergunta": "APROVACAO-PRE-001",
+      "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/100/?tipo_pergunta=APROVACAO-PRE-001&instituto=Quaest",
+      "arquivo": "data/originals/quaest_102026_03/g1_aprovacao.json",
+      "bytes": 45410,
+      "sha256": "0c6cedaf4ac25c8828a5cfaa3f9e0e346fe4c75dad9546ea4f69ab5a67f5ee65",
+      "capturado_em": "2026-10-03T22:34:33Z",
+      "http": 200,
+      "ultima_data_serie": "2026-10-03"
+    }
+  ],
+  "api_sem_dados": [
+    {
+      "rotulo": "Votos Válidos",
+      "tipo_pergunta": "VTSVALIDOS-PRE-001",
+      "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/100/?tipo_pergunta=VTSVALIDOS-PRE-001&instituto=Quaest",
+      "http": 404,
+      "capturado_em": "2026-10-03T22:34:33Z"
+    }
+  ],
+  "materias": [
+    {
+      "chave": "materia_1t",
+      "url": "https://g1.globo.com/politica/eleicoes/2026/pesquisa-eleitoral/noticia/2026/10/03/quaest-presidente-3-outubro.ghtml",
+      "http": 200,
+      "capturado_em": "2026-10-03T22:29:34Z",
+      "arquivo": "data/originals/quaest_102026_03/materia_1t.html",
+      "bytes": 1286996,
+      "sha256": "f6104a5c48d0d25e2822103e9b9b21d999b4032cf67989103c9d217d99031afe",
+      "texto": "data/originals/quaest_102026_03/materia_1t.txt",
+      "texto_bytes": 2706,
+      "texto_sha256": "c028ce8b2ac1a0e4bce75fa61cc475f6eff08b0611c0a929c0aa0f6e23cf4cc2",
+      "publicado": "2026-10-03T19:16:23.900-03:00"
+    },
+    {
+      "chave": "materia_2t",
+      "url": "https://g1.globo.com/politica/eleicoes/2026/pesquisa-eleitoral/noticia/2026/10/03/quaest-2o-turno-flavio-bolsonaro-44percent-lula-42percent.ghtml",
+      "http": 200,
+      "capturado_em": "2026-10-03T22:29:39Z",
+      "arquivo": "data/originals/quaest_102026_03/materia_2t.html",
+      "bytes": 1280116,
+      "sha256": "ed8d600adafb4a8db33da26fe3ab87fe0491828ce22f2c57a1d101a17541f5a2",
+      "texto": "data/originals/quaest_102026_03/materia_2t.txt",
+      "texto_bytes": 1033,
+      "texto_sha256": "59e83b307ebc890c19175fa84ad4dd3b30153d7e2f04f23404e866ba79eb369f",
+      "publicado": "2026-10-03T19:17:15.406-03:00"
+    },
+    {
+      "chave": "materia_aprovacao",
+      "url": "https://g1.globo.com/politica/eleicoes/2026/pesquisa-eleitoral/noticia/2026/10/03/quaest-desaprovacao-aprovacao-3-outubro.ghtml",
+      "http": 200,
+      "capturado_em": "2026-10-03T22:29:43Z",
+      "arquivo": "data/originals/quaest_102026_03/materia_aprovacao.html",
+      "bytes": 2024639,
+      "sha256": "43a2d9aaacea954dd89da68fe2390f2b3bea89d146dce67740bd01c3bd4c4423",
+      "texto": "data/originals/quaest_102026_03/materia_aprovacao.txt",
+      "texto_bytes": 1339,
+      "texto_sha256": "7b0833f2d365564f90f15db1554bc0e79fd0666a1fb1a613dbed486d9d63a2b0",
+      "publicado": "2026-10-03T19:18:02.903-03:00"
+    }
+  ]
+}

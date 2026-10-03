@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-10-03T19:12:10",
+ "gerado_em": "2026-10-03T19:38:29",
  "referencia": "2026-10-03",
  "benchmark": {
   "source": "data/outputs/base_anual_visita1_labeled_npv.csv",
@@ -23068,6 +23068,360 @@
     }
    },
    "arquivo": "analysis/reponderacao/pesquisas/palver_2026-10-03.json"
+  },
+  {
+   "id": "quaest_2026-10-03",
+   "instituto": "Quaest",
+   "contratante": "Globo Comunicação e Participações S/A e Editora Globo S/A",
+   "registro_tse": "BR-02197/2026",
+   "campo": {
+    "inicio": "2026-10-02",
+    "fim": "2026-10-03"
+   },
+   "divulgacao": "2026-10-03",
+   "n": 3702,
+   "metodo": "presencial, domiciliar (sorteio PPT de municípios e setores censitários, cotas no último estágio)",
+   "fonte": {
+    "tipo": "painel_contratante",
+    "rotulo": "Painel do G1 (API) e matérias do G1",
+    "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/100/?tipo_pergunta=ESTIMULADA-PRE-003&instituto=Quaest",
+    "arquivo": "data/originals/quaest_102026_03/g1_estimulada_1t.json",
+    "sha256": "2b90add1fc5be55d4546dd1ec041648b36bdbc2b838e81fc1ec16e4d722cb014",
+    "bytes": 187806,
+    "paginas": {
+     "1t_topline": "API ESTIMULADA-PRE-003, total",
+     "1t_renda": "API ESTIMULADA-PRE-003, estratos de renda",
+     "2t_topline": "API SEGTURNO-PRE-001, total",
+     "2t_renda": "API SEGTURNO-PRE-001, estratos de renda",
+     "perfil_renda": "não publicado; hipótese da onda de 27/09"
+    },
+    "conferido_em": "2026-10-03",
+    "status": "Íntegra em PDF não publicada até a consulta de 2026-10-03T22:34:38Z: a lista de mídia da Quaest (wp-json/wp/v2/media, PDFs mais recentes) tinha como último relatório presidencial nacional https://quaest.com.br/wp-content/uploads/2026/09/QUAEST+6+PRESIDENCIAL+28+09.pdf.",
+    "nota": "O painel do G1 reproduz célula a célula o PDF da onda de 27/09. Os valores vêm arredondados ao inteiro e sem bases; o perfil de renda é o da onda anterior, como hipótese explícita. Registro, campo, n e margem lidos das matérias do G1.",
+    "complementos": [
+     {
+      "rotulo": "G1: Segundo Turno - Cenário 1 (Lula × Flávio)",
+      "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/100/?tipo_pergunta=SEGTURNO-PRE-001&instituto=Quaest",
+      "arquivo": "data/originals/quaest_102026_03/g1_segundo_turno.json",
+      "sha256": "ec9a1015e65a17d6943b354eb10debc3f8863a6cbf9fe0a68f4e2c9be5b2321f"
+     },
+     {
+      "rotulo": "G1: Aprovação do governo",
+      "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/100/?tipo_pergunta=APROVACAO-PRE-001&instituto=Quaest",
+      "arquivo": "data/originals/quaest_102026_03/g1_aprovacao.json",
+      "sha256": "0c6cedaf4ac25c8828a5cfaa3f9e0e346fe4c75dad9546ea4f69ab5a67f5ee65"
+     },
+     {
+      "rotulo": "G1: matéria (1t)",
+      "url": "https://g1.globo.com/politica/eleicoes/2026/pesquisa-eleitoral/noticia/2026/10/03/quaest-presidente-3-outubro.ghtml",
+      "arquivo": "data/originals/quaest_102026_03/materia_1t.html",
+      "sha256": "f6104a5c48d0d25e2822103e9b9b21d999b4032cf67989103c9d217d99031afe"
+     },
+     {
+      "rotulo": "G1: matéria (2t)",
+      "url": "https://g1.globo.com/politica/eleicoes/2026/pesquisa-eleitoral/noticia/2026/10/03/quaest-2o-turno-flavio-bolsonaro-44percent-lula-42percent.ghtml",
+      "arquivo": "data/originals/quaest_102026_03/materia_2t.html",
+      "sha256": "ed8d600adafb4a8db33da26fe3ab87fe0491828ce22f2c57a1d101a17541f5a2"
+     },
+     {
+      "rotulo": "G1: matéria (aprovacao)",
+      "url": "https://g1.globo.com/politica/eleicoes/2026/pesquisa-eleitoral/noticia/2026/10/03/quaest-desaprovacao-aprovacao-3-outubro.ghtml",
+      "arquivo": "data/originals/quaest_102026_03/materia_aprovacao.html",
+      "sha256": "43a2d9aaacea954dd89da68fe2390f2b3bea89d146dce67740bd01c3bd4c4423"
+     }
+    ]
+   },
+   "publicado": {
+    "1t": {
+     "lula": 40,
+     "flavio": 38,
+     "cury": 3,
+     "renan_santos": 3,
+     "caiado": 3,
+     "zema": 0,
+     "samara": 0,
+     "rui": 0,
+     "grassi": 0,
+     "clariana": 0,
+     "edmilson": 0,
+     "hertz": 0,
+     "indecisos": 3,
+     "branco_nulo": 10
+    },
+    "2t": {
+     "lula": 42,
+     "flavio": 44,
+     "indecisos": 1,
+     "branco_nulo": 13
+    }
+   },
+   "renda": {
+    "unidade": "salarios_minimos",
+    "faixas": [
+     "Até 2 SM (até R$ 3.242)",
+     "Mais de 2 a 5 SM (R$ 3.242 a 8.105)",
+     "Mais de 5 SM (acima de R$ 8.105)"
+    ],
+    "cortes_brl_202604": [
+     3215.9,
+     8039.76,
+     null
+    ],
+    "amostra_pct": [
+     31.0,
+     42.0,
+     27.0
+    ],
+    "pnad_pct": {
+     "pessoas16_efetivo": [
+      35.187,
+      39.259,
+      25.554
+     ],
+     "pessoas16_habitual": [
+      34.864,
+      40.402,
+      24.734
+     ],
+     "domicilios_efetivo": [
+      42.672,
+      35.771,
+      21.557
+     ]
+    },
+    "nota": "Hipótese explícita: o painel do G1 não publica o perfil da amostra, então o perfil usado é o da onda de 27/09 da própria Quaest (PDF p. 204: 31/42/27). Será substituído pelo perfil do PDF quando a íntegra sair.",
+    "perfil_tipo": "hipotese_onda_anterior"
+   },
+   "desvio_ate_primeira_faixa": -4.187,
+   "turnos": {
+    "2t": {
+     "opcoes": [
+      "lula",
+      "flavio",
+      "indecisos",
+      "branco_nulo"
+     ],
+     "publicado": {
+      "lula": 42.0,
+      "flavio": 44.0,
+      "indecisos": 1.0,
+      "branco_nulo": 13.0
+     },
+     "recomposto": {
+      "lula": 42.0,
+      "flavio": 44.28,
+      "indecisos": 1.15,
+      "branco_nulo": 12.57
+     },
+     "residuo_max": 0.28,
+     "cenarios": {
+      "pessoas16_efetivo": {
+       "contrafactual": {
+        "lula": 42.726,
+        "flavio": 43.607,
+        "indecisos": 1.137,
+        "branco_nulo": 12.53
+       },
+       "ajustado": {
+        "lula": 42.726,
+        "flavio": 43.327,
+        "indecisos": 0.987,
+        "branco_nulo": 12.96
+       }
+      },
+      "pessoas16_habitual": {
+       "contrafactual": {
+        "lula": 42.68,
+        "flavio": 43.603,
+        "indecisos": 1.157,
+        "branco_nulo": 12.561
+       },
+       "ajustado": {
+        "lula": 42.68,
+        "flavio": 43.323,
+        "indecisos": 1.007,
+        "branco_nulo": 12.991
+       }
+      },
+      "domicilios_efetivo": {
+       "contrafactual": {
+        "lula": 44.039,
+        "flavio": 42.319,
+        "indecisos": 1.142,
+        "branco_nulo": 12.5
+       },
+       "ajustado": {
+        "lula": 44.039,
+        "flavio": 42.039,
+        "indecisos": 0.992,
+        "branco_nulo": 12.93
+       }
+      }
+     },
+     "gap_publicado": -2.0,
+     "gap_ajustado": -0.6009999999999991,
+     "margem_diferenca_95": 2.987
+    },
+    "1t": {
+     "opcoes": [
+      "lula",
+      "flavio",
+      "cury",
+      "renan_santos",
+      "caiado",
+      "zema",
+      "samara",
+      "rui",
+      "grassi",
+      "clariana",
+      "edmilson",
+      "hertz",
+      "indecisos",
+      "branco_nulo"
+     ],
+     "publicado": {
+      "lula": 40.0,
+      "flavio": 38.0,
+      "cury": 3.0,
+      "renan_santos": 3.0,
+      "caiado": 3.0,
+      "zema": 0.0,
+      "samara": 0.0,
+      "rui": 0.0,
+      "grassi": 0.0,
+      "clariana": 0.0,
+      "edmilson": 0.0,
+      "hertz": 0.0,
+      "indecisos": 3.0,
+      "branco_nulo": 10.0
+     },
+     "recomposto": {
+      "lula": 40.0,
+      "flavio": 38.05,
+      "cury": 2.69,
+      "renan_santos": 3.38,
+      "caiado": 2.96,
+      "zema": 0.0,
+      "samara": 0.31,
+      "rui": 0.0,
+      "grassi": 0.0,
+      "clariana": 0.0,
+      "edmilson": 0.0,
+      "hertz": 0.0,
+      "indecisos": 3.0,
+      "branco_nulo": 9.61
+     },
+     "residuo_max": 0.38,
+     "cenarios": {
+      "pessoas16_efetivo": {
+       "contrafactual": {
+        "lula": 40.726,
+        "flavio": 37.448,
+        "cury": 2.648,
+        "renan_santos": 3.296,
+        "caiado": 2.904,
+        "zema": 0.0,
+        "samara": 0.352,
+        "rui": 0.0,
+        "grassi": 0.0,
+        "clariana": 0.0,
+        "edmilson": 0.0,
+        "hertz": 0.0,
+        "indecisos": 3.0,
+        "branco_nulo": 9.626
+       },
+       "ajustado": {
+        "lula": 40.726,
+        "flavio": 37.398,
+        "cury": 2.958,
+        "renan_santos": 2.916,
+        "caiado": 2.944,
+        "zema": 0.0,
+        "samara": 0.042,
+        "rui": 0.0,
+        "grassi": 0.0,
+        "clariana": 0.0,
+        "edmilson": 0.0,
+        "hertz": 0.0,
+        "indecisos": 3.0,
+        "branco_nulo": 10.016
+       }
+      },
+      "pessoas16_habitual": {
+       "contrafactual": {
+        "lula": 40.68,
+        "flavio": 37.457,
+        "cury": 2.651,
+        "renan_santos": 3.303,
+        "caiado": 2.899,
+        "zema": 0.0,
+        "samara": 0.349,
+        "rui": 0.0,
+        "grassi": 0.0,
+        "clariana": 0.0,
+        "edmilson": 0.0,
+        "hertz": 0.0,
+        "indecisos": 3.0,
+        "branco_nulo": 9.662
+       },
+       "ajustado": {
+        "lula": 40.68,
+        "flavio": 37.407,
+        "cury": 2.961,
+        "renan_santos": 2.923,
+        "caiado": 2.939,
+        "zema": 0.0,
+        "samara": 0.039,
+        "rui": 0.0,
+        "grassi": 0.0,
+        "clariana": 0.0,
+        "edmilson": 0.0,
+        "hertz": 0.0,
+        "indecisos": 3.0,
+        "branco_nulo": 10.052
+       }
+      },
+      "domicilios_efetivo": {
+       "contrafactual": {
+        "lula": 42.039,
+        "flavio": 36.315,
+        "cury": 2.573,
+        "renan_santos": 3.147,
+        "caiado": 2.789,
+        "zema": 0.0,
+        "samara": 0.427,
+        "rui": 0.0,
+        "grassi": 0.0,
+        "clariana": 0.0,
+        "edmilson": 0.0,
+        "hertz": 0.0,
+        "indecisos": 3.0,
+        "branco_nulo": 9.711
+       },
+       "ajustado": {
+        "lula": 42.039,
+        "flavio": 36.265,
+        "cury": 2.883,
+        "renan_santos": 2.767,
+        "caiado": 2.829,
+        "zema": 0.0,
+        "samara": 0.117,
+        "rui": 0.0,
+        "grassi": 0.0,
+        "clariana": 0.0,
+        "edmilson": 0.0,
+        "hertz": 0.0,
+        "indecisos": 3.0,
+        "branco_nulo": 10.101
+       }
+      }
+     },
+     "gap_publicado": 2.0,
+     "gap_ajustado": 3.327999999999996,
+     "margem_diferenca_95": 2.844
+    }
+   },
+   "arquivo": "analysis/reponderacao/pesquisas/quaest_2026-10-03.json"
   }
  ],
  "nao_reponderaveis": [
@@ -26186,7 +26540,7 @@
       "nexus_2026-09-27",
       "palver_2026-10-03",
       "poderdata_2026-10-02",
-      "quaest_2026-09-27",
+      "quaest_2026-10-03",
       "realtime_2026-09-30"
      ],
      "institutos": [
@@ -28019,7 +28373,7 @@
       "nexus_2026-09-27",
       "palver_2026-10-03",
       "poderdata_2026-10-02",
-      "quaest_2026-09-27"
+      "quaest_2026-10-03"
      ],
      "institutos": [
       "Datafolha",
@@ -30104,7 +30458,7 @@
        "mda_2026-10-02",
        "nexus_2026-09-27",
        "palver_2026-10-03",
-       "quaest_2026-09-27",
+       "quaest_2026-10-03",
        "realtime_2026-09-30"
       ],
       "institutos": [
@@ -31874,6 +32228,31 @@
        "indecisos": 0.19,
        "branco_nulo": 0.426
       }
+     },
+     {
+      "id": "quaest_2026-10-03",
+      "instituto": "Quaest",
+      "campo": {
+       "inicio": "2026-10-02",
+       "fim": "2026-10-03"
+      },
+      "divulgacao": "2026-10-03",
+      "componentes": {
+       "indecisos": [
+        "indecisos"
+       ],
+       "branco_nulo": [
+        "branco_nulo"
+       ]
+      },
+      "publicado": {
+       "indecisos": 3.0,
+       "branco_nulo": 10.0
+      },
+      "ajustado": {
+       "indecisos": 3.0,
+       "branco_nulo": 10.016
+      }
      }
     ],
     "excluidas": [
@@ -32038,7 +32417,7 @@
        2.87,
        2.97,
        2.97,
-       3.12
+       2.9
       ],
       "branco_nulo": [
        null,
@@ -32350,7 +32729,7 @@
        2.68,
        2.83,
        2.83,
-       2.94
+       2.71
       ],
       "branco_nulo": [
        null,
@@ -32505,19 +32884,19 @@
        3.87,
        3.92,
        3.92,
-       4.06
+       4.07
       ]
      }
     },
     "regra": "Mesma média móvel retrospectiva de 7 dias dos candidatos: divulgações de D-6 a D, última onda elegível de cada instituto e peso igual entre casas. As duas linhas usam as mesmas ondas com ambas as categorias publicadas e cruzadas por renda; os pesos são idênticos antes e depois do ajuste. Não há preenchimento por zero nem por complemento de 100%. Branco/nulo inclui não vai votar quando essa resposta está agregada pelo instituto; parcelas separadas são somadas antes da média. Indecisos inclui não sabe conforme a codificação da fonte. Os rótulos e a oferta dessas respostas variam entre institutos. Não vai votar é declaração de intenção, não estimativa de abstenção. A cobertura difere da dos candidatos; as linhas não formam uma partição que some 100%.",
     "ultimo": {
      "publicado": {
-      "indecisos": 3.12,
+      "indecisos": 2.9,
       "branco_nulo": 4.15
      },
      "ajustado": {
-      "indecisos": 2.94,
-      "branco_nulo": 4.06
+      "indecisos": 2.71,
+      "branco_nulo": 4.07
      }
     }
    },
@@ -34309,7 +34688,7 @@
        "mda_2026-10-02",
        "nexus_2026-09-27",
        "palver_2026-10-03",
-       "quaest_2026-09-27"
+       "quaest_2026-10-03"
       ],
       "institutos": [
        "Datafolha",
@@ -35651,6 +36030,31 @@
        "indecisos": 0.525,
        "branco_nulo": 5.675
       }
+     },
+     {
+      "id": "quaest_2026-10-03",
+      "instituto": "Quaest",
+      "campo": {
+       "inicio": "2026-10-02",
+       "fim": "2026-10-03"
+      },
+      "divulgacao": "2026-10-03",
+      "componentes": {
+       "indecisos": [
+        "indecisos"
+       ],
+       "branco_nulo": [
+        "branco_nulo"
+       ]
+      },
+      "publicado": {
+       "indecisos": 1.0,
+       "branco_nulo": 13.0
+      },
+      "ajustado": {
+       "indecisos": 0.987,
+       "branco_nulo": 12.96
+      }
      }
     ],
     "excluidas": [
@@ -35825,7 +36229,7 @@
        1.82,
        1.82,
        1.82,
-       1.92
+       1.63
       ],
       "branco_nulo": [
        null,
@@ -36137,7 +36541,7 @@
        1.75,
        1.76,
        1.76,
-       1.85
+       1.55
       ],
       "branco_nulo": [
        null,
@@ -36292,19 +36696,19 @@
        8.46,
        8.18,
        8.18,
-       8.1
+       8.11
       ]
      }
     },
     "regra": "Mesma média móvel retrospectiva de 7 dias dos candidatos: divulgações de D-6 a D, última onda elegível de cada instituto e peso igual entre casas. As duas linhas usam as mesmas ondas com ambas as categorias publicadas e cruzadas por renda; os pesos são idênticos antes e depois do ajuste. Não há preenchimento por zero nem por complemento de 100%. Branco/nulo inclui não vai votar quando essa resposta está agregada pelo instituto; parcelas separadas são somadas antes da média. Indecisos inclui não sabe conforme a codificação da fonte. Os rótulos e a oferta dessas respostas variam entre institutos. Não vai votar é declaração de intenção, não estimativa de abstenção. A cobertura difere da dos candidatos; as linhas não formam uma partição que some 100%.",
     "ultimo": {
      "publicado": {
-      "indecisos": 1.92,
+      "indecisos": 1.63,
       "branco_nulo": 8.17
      },
      "ajustado": {
-      "indecisos": 1.85,
-      "branco_nulo": 8.1
+      "indecisos": 1.55,
+      "branco_nulo": 8.11
      }
     }
    }
@@ -37931,12 +38335,14 @@
     },
     {
      "data": "2026-10-03",
-     "n_institutos": 1,
+     "n_institutos": 2,
      "ondas": [
-      "datafolha_2026-10-03"
+      "datafolha_2026-10-03",
+      "quaest_2026-10-03"
      ],
      "institutos": [
-      "Datafolha"
+      "Datafolha",
+      "Quaest"
      ]
     }
    ],
@@ -39185,6 +39591,42 @@
      "fonte_grupos": {
       "nota": "Cenário contemporâneo completo, com todos os nomes individualizados por renda."
      }
+    },
+    {
+     "id": "quaest_2026-10-03",
+     "instituto": "Quaest",
+     "campo": {
+      "inicio": "2026-10-02",
+      "fim": "2026-10-03"
+     },
+     "divulgacao": "2026-10-03",
+     "componentes": {
+      "outros_centro_direita": [
+       "caiado",
+       "clariana",
+       "cury",
+       "renan_santos",
+       "zema"
+      ],
+      "outros_esquerda_nanicos": [
+       "edmilson",
+       "grassi",
+       "hertz",
+       "rui",
+       "samara"
+      ]
+     },
+     "publicado": {
+      "outros_centro_direita": 9.0,
+      "outros_esquerda_nanicos": 0.0
+     },
+     "ajustado": {
+      "outros_centro_direita": 8.818,
+      "outros_esquerda_nanicos": 0.042
+     },
+     "fonte_grupos": {
+      "nota": "Cenário contemporâneo completo, com todos os nomes individualizados por renda."
+     }
     }
    ],
    "excluidas": [
@@ -39381,7 +39823,7 @@
    ],
    "ultima_onda_por_instituto": {
     "Real Time Big Data": "realtime_2026-05-30",
-    "Quaest": "quaest_2026-09-01",
+    "Quaest": "quaest_2026-10-03",
     "Gerp": "gerp_2026-05-12",
     "AtlasIntel": "atlas_2026-07-27",
     "Datafolha": "datafolha_2026-10-03",
@@ -39543,7 +39985,7 @@
       13.0,
       11.0,
       11.0,
-      10.0
+      9.5
      ],
      "outros_esquerda_nanicos": [
       null,
@@ -39855,7 +40297,7 @@
       13.77,
       11.34,
       11.34,
-      10.53
+      9.67
      ],
      "outros_esquerda_nanicos": [
       null,
@@ -40010,29 +40452,29 @@
       1.32,
       1.77,
       1.77,
-      -0.15
+      -0.05
      ]
     }
    },
    "ultimo": {
     "kernel": {
      "publicado": {
-      "outros_centro_direita": 10.0,
+      "outros_centro_direita": 9.5,
       "outros_esquerda_nanicos": 0.0
      },
      "ajustado": {
-      "outros_centro_direita": 10.53,
-      "outros_esquerda_nanicos": -0.15
+      "outros_centro_direita": 9.67,
+      "outros_esquerda_nanicos": -0.05
      }
     },
     "media_simples": {
      "publicado": {
-      "outros_centro_direita": 14.04,
-      "outros_esquerda_nanicos": 2.47
+      "outros_centro_direita": 13.19,
+      "outros_esquerda_nanicos": 2.33
      },
      "ajustado": {
-      "outros_centro_direita": 14.61,
-      "outros_esquerda_nanicos": 2.54
+      "outros_centro_direita": 13.75,
+      "outros_esquerda_nanicos": 2.4
      }
     }
    }
@@ -40512,7 +40954,7 @@
       45.16,
       45.02,
       45.02,
-      45.2
+      45.45
      ],
      "indecisos": [
       null,
@@ -40667,7 +41109,7 @@
       1.82,
       1.82,
       1.82,
-      1.92
+      1.63
      ],
      "branco_nulo": [
       null,
@@ -41134,7 +41576,7 @@
       45.94,
       45.85,
       45.85,
-      46.08
+      46.34
      ],
      "indecisos": [
       null,
@@ -41289,7 +41731,7 @@
       1.75,
       1.76,
       1.76,
-      1.85
+      1.55
      ],
      "branco_nulo": [
       null,
@@ -41444,7 +41886,7 @@
       8.46,
       8.18,
       8.18,
-      8.1
+      8.11
      ]
     }
    },
@@ -41603,7 +42045,7 @@
       41.27,
       41.81,
       41.81,
-      41.94
+      42.04
      ],
      "flavio": [
       null,
@@ -41758,7 +42200,7 @@
       38.33,
       38.74,
       38.74,
-      39.47
+      39.87
      ],
      "outros_centro_direita": [
       null,
@@ -41913,7 +42355,7 @@
       13.0,
       11.0,
       11.0,
-      10.0
+      9.5
      ],
      "outros_esquerda_nanicos": [
       null,
@@ -42223,7 +42665,7 @@
       2.87,
       2.97,
       2.97,
-      3.12
+      2.9
      ],
      "branco_nulo": [
       null,
@@ -42535,7 +42977,7 @@
       40.6,
       41.13,
       41.13,
-      41.21
+      41.3
      ],
      "flavio": [
       null,
@@ -42690,7 +43132,7 @@
       39.12,
       39.61,
       39.61,
-      40.32
+      40.73
      ],
      "outros_centro_direita": [
       null,
@@ -42845,7 +43287,7 @@
       13.77,
       11.34,
       11.34,
-      10.53
+      9.67
      ],
      "outros_esquerda_nanicos": [
       null,
@@ -43000,7 +43442,7 @@
       1.32,
       1.77,
       1.77,
-      -0.15
+      -0.05
      ],
      "indecisos": [
       null,
@@ -43155,7 +43597,7 @@
       2.68,
       2.83,
       2.83,
-      2.94
+      2.71
      ],
      "branco_nulo": [
       null,
@@ -43310,7 +43752,7 @@
       3.87,
       3.92,
       3.92,
-      4.06
+      4.07
      ]
     }
    }
@@ -43331,21 +43773,21 @@
     "media_simples": {
      "publicado": {
       "lula": 44.75,
-      "flavio": 45.56
+      "flavio": 45.79
      },
      "ajustado": {
-      "lula": 44.06,
-      "flavio": 46.4
+      "lula": 44.05,
+      "flavio": 46.63
      }
     },
     "kernel": {
      "publicado": {
       "lula": 44.96,
-      "flavio": 45.2
+      "flavio": 45.45
      },
      "ajustado": {
       "lula": 44.26,
-      "flavio": 46.08
+      "flavio": 46.34
      }
     },
     "cobertura_movel": {
@@ -43359,7 +43801,7 @@
       "nexus_2026-09-27",
       "palver_2026-10-03",
       "poderdata_2026-10-02",
-      "quaest_2026-09-27"
+      "quaest_2026-10-03"
      ],
      "institutos": [
       "Datafolha",
@@ -43388,22 +43830,22 @@
     ],
     "media_simples": {
      "publicado": {
-      "lula": 41.94,
-      "flavio": 39.47
+      "lula": 42.04,
+      "flavio": 39.87
      },
      "ajustado": {
-      "lula": 41.21,
-      "flavio": 40.32
+      "lula": 41.3,
+      "flavio": 40.73
      }
     },
     "kernel": {
      "publicado": {
-      "lula": 41.94,
-      "flavio": 39.47
+      "lula": 42.04,
+      "flavio": 39.87
      },
      "ajustado": {
-      "lula": 41.21,
-      "flavio": 40.32
+      "lula": 41.3,
+      "flavio": 40.73
      }
     },
     "cobertura_movel": {
@@ -43418,7 +43860,7 @@
       "nexus_2026-09-27",
       "palver_2026-10-03",
       "poderdata_2026-10-02",
-      "quaest_2026-09-27",
+      "quaest_2026-10-03",
       "realtime_2026-09-30"
      ],
      "institutos": [
