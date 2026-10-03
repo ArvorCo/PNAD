@@ -1,0 +1,428 @@
+A session-scoped Stop hook is now active with condition: "sua meta e rever o trabalho que foi feito em @docs/predicao_2026_1T_presidente.html e:
+
+1) Melhorarm uito o ux e layout geral da página
+2) Evoluir nas explicações matemáticas e detalhar o que foi feito com as pesquisas com calma ampliando o texto
+3) Criar mapa do Brasil interativo mostrando as votações por estado
+4) Melhorar o sistema de predição para torná-lo ainda mais amigável e interessante de usar
+5) Explicar melhor porque pesquisas de intenção não são modelos preditivos e que esse é um modelo que se tenta usar para isso
+6) Acredito que esse modelo preditivo precisaria também de um algoritmo de machine learning por trás para chegar no resultado, não apenas proporções, mas acredito que é algo que você pode avaliar para isso
+7) Fazer isso com subagentes sonnet para texto/UX e agentes opus 5.5 xhigh para a parte matemática/código e programação com o FABLE agindo como o orquestrador desses agentes para atingir essa meta
+
+INvestigue o melhor caminho para modelos preditivos como esse para melhorar mais a nossa predição com técnicas avançadas de regressão para chegar no resutlado o mais correto possível e o mais preditivo possível
+
+Verifique o último commit realizado para compreender um pouco do trabalho feito bem como o que foi feito para isso funcionar. Bom trabalho". Briefly acknowledge the goal, then immediately start (or continue) working toward it — treat the condition itself as your directive and do not pause to ask the user what to do. The hook will block stopping until the condition holds. It auto-clears once the condition is met — do not tell the user to run `/goal clear` after success; that's only for clearing a goal early.
+
+---
+
+<task-notification>
+<task-id>aab7941e5418cb736</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Texto: explicações matemáticas e pesquisa≠previsão" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>O rascunho está em `/Users/leonardodias/arvor/PNAD/analysis/predicao_2026/texto_fase2.md`. O `grep -c "—"` devolve zero e o template não foi tocado. Não gerei a página nem rodei teste, então nenhum placeholder foi resolvido.
+
+**Palavras por seção** (sem tags HTML nem placeholders):
+
+| Seção | Palavras |
+|---|---|
+| 1. #pesquisa | ~1.120 |
+| 2. #metodo (passo 0, explicações dos passos 1 a 6, glossário de 14 verbetes) | ~2.480 |
+| 3. #incerteza (réplica em 8 passos e "faixa não é margem de erro") | ~620 |
+| 4. #validacao (o que testa e não testa, roteiro de 05/10) | ~670 |
+| 5. #aprendizado (capítulo novo) | ~1.010 |
+| Placeholders, conferência e dúvidas | ~760 |
+
+- **#pesquisa:** cobre os pontos pedidos (margem, urna, erro comum, o que um modelo declara, "lidera" contra estimativa pontual), com uma analogia por conceito. O exemplo numérico é o Datafolha 42 × 38 com n de 2.506.
+- **#aprendizado:** os números do DLM e da validação de origem móvel são placeholders `{{DLM_...}}`, e o bloco leva o comentário `&lt;!-- DEPENDE: DLM --&gt;`.
+
+**Placeholders novos.** Usei placeholders em vez de literais para tudo o que vem do JSON e muda com o corte, por exemplo `{{CENTRAL_LULA}}`, `{{CENTRAL_GAP}}`, `{{ALVO_*}}`, `{{PESO_PRIOR_*}}`, `{{SENS_*_GAP}}`, `{{N_RUNS}}` e `{{N_SECOES_2022}}`. A tabela completa, com a chave do JSON de cada um, está na seção 6 do arquivo. Os `{{DLM_...}}` dependem do outro agente.
+
+**Números derivados.** Alguns números são cálculos meus e estão com a fórmula na seção "Conferência":
+- o intervalo da diferença do Datafolha sob amostragem simples e com efeito de desenho 1,5;
+- o desvio de peso do Datafolha no passo 1 da réplica;
+- ±2,0 pp para n = 2.506;
+- ±0,9 milhão de votos nas sensibilidades de comparecimento.
+
+**Decisões para você** (também listadas na seção 8 do arquivo):
+1. **Exemplos de 03/10.** Os exemplos de pesos (Datafolha 16,5%, Atlas 5,8%, 0,5 e 0,18) estão marcados `EXEMPLO FIXO`. Se a página sair com `--hoje 2026-10-04`, os pesos mudam. Mantenho datados ou viram placeholders?
+2. **Shirani-Mehr 2018.** Escrevi que o erro total é "cerca do dobro" da margem reportada. É a conclusão do artigo, mas não conferi o texto original.
+3. **Citações.** Jackman 2005 tem link por DOI. Linzer 2013 e Heidemanns, Gelman e Morris 2020 entram só como citação, sem URL verificada.
+4. **Numeração.** O capítulo novo seria o 10 e #fontes passaria a 11. Falta também o link no `chapter-nav`.
+5. **Critérios pós-urna.** "Falha de faixa", "falha de nível" e "falha de forma" são proposta minha e comprometem a casa com uma regra pública de avaliação. Precisam da sua aprovação.
+6. **Sentença do Datafolha.** "A diferença não separa os dois com 95% de confiança" só vale com o efeito de desenho 1,5 assumido pelo modelo. Sob amostragem simples o intervalo exclui o zero por pouco. Mantenho ou troco por exemplo que não dependa do efeito de desenho?
+7. **Passo 5.** Escrevi que os indecisos se dividem na proporção das candidaturas (`indecisos_validos` = 1,0). Isso bate com o `motor.py`, mas o parágrafo atual do template diz que indecisos não alocados "viram inválidos". Convém alinhar os dois textos.</result>
+<usage><subagent_tokens>207023</subagent_tokens><tool_uses>18</tool_uses><duration_ms>336926</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a4da8860fb607ed09</task-id>
+<tool-use-id>toolu_01Uc5G7Jt4oCxyJngA6fZ4gt</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Mapa interativo do Brasil por UF" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>The interactive map is working in the `#territorio` section. Without JavaScript the static map still renders completely. The render audit and the contrast audit (desktop and 390 px) both report 0 problems, and the 48 tests pass. Nothing was committed.
+
+**Files**
+- New: `docs/assets/predicao_2026_mapa.js`, `docs/assets/predicao_2026_mapa.css`, `tests/test_predicao_2026_mapa.py`.
+- New: `scripts/predicao_2026/mapa.py`. I put the map's HTML generation in its own module rather than in `view.py`, to stay out of the way of the agents editing that file.
+- `scripts/predicao_2026/view.py`: only `map_svg` changed (it now calls the new module), plus one import.
+- Template: two lines added in `&lt;head&gt;` for the new CSS and JS. The old `map-layout` block became `{{MAP}}` followed by the original "O país soma votos" text, unchanged. No other section touched.
+- The page and JSON were regenerated with the requested command; a new snapshot was added and none were deleted.
+
+**What the page has without JavaScript**
+- 27 states coloured by the Flávio minus Lula gap. The scale is continuous, centred on zero, blue for Flávio and red for Lula.
+- A gradient legend that carries the "estimativa pontual, não liderança estatisticamente identificada" caveat.
+- The Exterior as a separate card next to the map, not a polygon.
+- Each state is a link to its existing `#estado-UF` sheet, with an accessible label and a text description of the map.
+- The 2022 first-round vote by UF (from `tse_2022_uf.json`) is embedded in the page for the swing metrics.
+
+**What JavaScript adds**
+- **Metrics:** the 11 you listed in four groups. Sequential scales get their own lightness ramp each, which reads for colour-blind users; neutral metrics use a purple ramp so they can't be confused with party colours. Electorate and abstention use a square-root scale; the swing metrics use an orange/purple diverging scale.
+- **Tooltip** on hover and on keyboard focus, with UF, value and the three-bloc score.
+- **Side panel** (below the map on mobile), opened by click, Enter or Space. It has everything you asked for, plus 2022 swing and a close button. The sheet link opens the matching `&lt;details&gt;`. The Exterior card opens the panel too.
+- **Keyboard:** Tab moves through the states, arrow keys jump to the neighbouring state, Escape hides the tooltip. A screen reader hears "Ficha de X aberta" when a panel opens.
+- **Safety:** if anything fails during setup, nothing in the static map is removed.
+
+**Event contract**
+- The map listens for `predicao:cenario` on `document`. When `central` is true it goes back to the central forecast. Otherwise it shows the reader's scenario with the "Cenário do leitor" notice and a "Voltar à central" button.
+- A toggle switches between the scenario and "Diferença para a central" (scenario minus central, per UF). It is disabled for metrics the scenario doesn't change.
+- The simulator also stores its last scenario in `window.predicaoCenario`, so the map picks it up even if the event fired before the map script loaded.
+- Tested against the other agent's live simulator: moving the `voto_flavio` control recoloured the map and showed the notice. The exterior is shown as excluded when the reader turns it off.
+
+**Checks**
+- Tests: `pytest -q tests/test_predicao_2026.py tests/test_predicao_2026_mapa.py` → 48 passed. The new tests check 27 states with `data-uf`, the controls, panel, script and styles, colours and labels matching `central.ufs`, the embedded 2022 data against the TSE file, `node --check` on both JS files, and no em dash.
+- Lint: my files pass `ruff` and `black --check`. Over the full `scripts/ docs/ tests/` command, ruff still reports 46 errors and black 26 files, none mine:
+  - most are in `tests/`, which CI doesn't lint (it checks only `scripts/ docs/`);
+  - the rest are in `dinamico.py`, `simulador.py` and `preditiva.py`, the other agents' in-progress files.
+- Audits: render audit, 0 problems. Contrast audit at 1360 and 390 px, 0 failures.
+- Layout: no horizontal page scroll at 390 px, including with the panel open. It works opened as `file://` with no console errors, and with JavaScript off the controls stay hidden and the map and legend stay visible.
+
+**Screenshots** in `/Users/leonardodias/arvor/PNAD/analysis/predicao_2026/`:
+- `qa-mapa-desktop.png`
+- `qa-mapa-desktop-cenario.png`
+- `qa-mapa-390.png`
+- `qa-mapa-390-cenario.png`
+- `qa-mapa-sem-js.png`
+
+**Limitations**
+- The contrast audit only measures the page as it loads. The tooltip and panel (dark-on-light and white-on-dark text) were not run through it.
+- The colour scale's range follows the data: ±50 pp for the central gap. States with a small gap, like MG at −0.3 pp, come out almost neutral, which is intended.
+- On screens under 520 px the legend hides its two middle tick labels so they don't overlap.</result>
+<usage><subagent_tokens>226469</subagent_tokens><tool_uses>41</tool_uses><duration_ms>630174</duration_ms></usage>
+</task-notification>
+
+---
+
+[Image: original 358x2444, displayed at 293x2000. Multiply coordinates by 1.22 to map to original image.]
+
+---
+
+<task-notification>
+<task-id>a9538309157ea1450</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Simulador: UX amigável e interessante" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>All eight deliverables are in the simulator. Tests, lint and both audits pass. Nothing is committed.
+
+**Files changed**
+- `scripts/predicao_2026/simulador.py` (new): the preset list, the help text for each control, the grouped controls and the static results panel. I put it in a separate module so my edits wouldn't collide with the other agents in `view.py`. The other agent added the `dinamico` anchor option to this file and it is kept.
+- `scripts/predicao_2026/view.py`: `simulator()` now just calls the new module. I also ran black on this file while other agents were editing it, so it may have whitespace-only changes in their code.
+- `docs/assets/predicao_2026.js`:
+  - In the engine I added one field to what `simulate()` returns (`margens`, the sorted list of simulated F−L differences), for the histogram. No results change.
+  - New pure helper `PredictionSimulator` (encode/decode the link, central check, automatic sentence, histogram SVG), exported to node as `require(...).Simulador`.
+  - The DOM block is rewritten.
+- `docs/assets/predicao_2026.css` and `-responsive.css`: simulator rules only.
+- Template, `#simulador` section only: new lead paragraph. `.sim-explanation` is cut to one paragraph because its definitions now live in the "?" buttons.
+- `tests/test_predicao_2026_simulador.py` (new).
+
+**Presets (11)**
+
+| Preset | Parameters |
+|---|---|
+| Central | `{}` |
+| Voto útil à direita | `voto_flavio: 0.5` |
+| Voto útil à esquerda | `voto_lula: 0.5` |
+| Os dois consolidam | both `0.5` |
+| Abstenção alta no Nordeste | Nordeste −5 pp |
+| Abstenção alta no Sul e Sudeste | Sudeste −5 pp, Sul −5 pp |
+| Erro comum pró-Flávio +3 pp | `vies_pp: 3` |
+| Erro comum pró-Lula −3 pp | `vies_pp: -3` |
+| Indecisos não escolhem | `indecisos_validos: 0` |
+| Comparecimento diferencial +3 Flávio | `diferencial_pp: 3` |
+| Comparecimento diferencial +3 Lula | `diferencial_pp: -3` |
+
+- I renamed "Indecisos ficam em casa" to "Indecisos não escolhem". In the engine, undecided voters with `indecisos_validos: 0` become blank/null among people who vote; they don't abstain.
+- I added the Sul/Sudeste abstention preset and the +3 Lula differential so each one-sided scenario has a mirror for the other candidate.
+
+**Link format**
+- Pattern: `#sim=vf:50;rNE:-5;SP:cp2,vf60`. Only values that differ from the central go in, with `;` between them.
+- Codes:
+  - `a`: anchor
+  - `c`: turnout reference
+  - `vf`/`vl`: reserve for Flávio/Lula, in %
+  - `cp`, `df`, `sa`, `bn`: turnout, F−L differential, high-abstention sections, blank/null, in pp
+  - `ec`: common error
+  - `iv`/`if`: undecided reaching a valid vote / undecided going to Flávio, in %
+  - `ep`/`ex`: likely voter / exterior, 0 or 1
+- Regions: `rN`, `rNE`, `rCO`, `rSE`, `rS`. The `r` prefix keeps region `SE` (Sudeste) from colliding with the UF `SE` (Sergipe); a test checks this.
+- UFs: the code followed by `cp`, `df`, `vl`, `vf`.
+- The URL updates as the reader changes controls. Opening a link restores the controls and scrolls to the simulator. Malformed values are ignored or clamped.
+
+**Contract with the map**
+- On every update the page dispatches `predicao:cenario` with `{result, params, central}`, as specified.
+- At startup it fires once, on `DOMContentLoaded`, so a map script that loads after this one still receives it.
+- The latest detail is also kept in `window.predicaoCenario`, in case the map registers late.
+
+**Results**
+- `pytest -q tests/test_predicao_2026.py tests/test_predicao_2026_simulador.py`: 49 passed. The new tests cover Python/JS parity for every preset, the direction each preset moves the gap, link round-trip and bad input, the generated sentence, and a Playwright run of the event, link restore and 390 px width. The Playwright test skips if Chromium is missing.
+- `node --check`: OK.
+- `ruff` and `black --check` on `scripts/`, `docs/` and the new test: clean.
+  - Run over all of `tests/`, ruff reports 45 errors and black would reformat 23 files, all in older files I didn't touch. CI only lints `scripts/` and `docs/`, so it isn't affected.
+- `render-audit.py`: 0 problems.
+- `contrast-audit.py` at 1280 px and at 390 px: 0 failures.
+- No sideways scroll at 390 px, even with every collapsible section open and the UF table showing.
+
+**Screenshots** (preset plus a Nordeste and SP adjustment, Monte Carlo finished):
+- `analysis/predicao_2026/qa-sim-desktop.png`
+- `analysis/predicao_2026/qa-sim-390.png`
+- `analysis/predicao_2026/qa-sim-390-dock.png`
+
+**Limitations**
+- The contrast audit only sees the page as it first loads. Monte Carlo cards, open "?" panels and the histogram reuse colours that already pass.
+- On phones, presets scroll sideways inside their own strip, and a bar pinned to the bottom of the simulator shows the score with a "Restaurar" button. At 390 px that button wraps onto a second line.
+- The section heading still reads "Faça a sua previsão." because it sits outside the parts of the template I was allowed to edit. Everywhere I wrote, the result is called a conditional reader scenario, not an official forecast.
+- The site build briefly failed while other agents were adding their placeholders. It passed on the next run and wrote a new snapshot.</result>
+<usage><subagent_tokens>254973</subagent_tokens><tool_uses>50</tool_uses><duration_ms>774024</duration_ms></usage>
+</task-notification>
+
+---
+
+[Image: original 1366x2678, displayed at 1020x2000. Multiply coordinates by 1.34 to map to original image.]
+
+---
+
+<task-notification>
+<task-id>aae4a01e5ea634c35</task-id>
+<tool-use-id>toolu_01PpqjqPtHbwHd67uRfQAfWC</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Motor: DLM bayesiano + validação preditiva + avaliação ML" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>Implementei a âncora "dinamico" (modelo dinâmico linear, DLM), a validação preditiva e a avaliação escrita. O DLM não venceu: no teste de origem móvel ele erra 0,10 pp a mais que a central, com erro-padrão de 0,14 (empate). Mantive a central em 44,0 × 43,0 e não mexi em nenhum default.
+
+**Verificação:** fiz o build rápido (`--hoje 2026-10-03 --skip-card --sorteios 300`) e rodei depois os testes dos dois arquivos: 50 passaram, incluindo os dois de paridade Python/JS. `ruff check scripts/ docs/` e `black --check scripts/ docs/` estão zerados, `node --check` passa e o HTML não tem travessão. O snapshot novo é `analysis/predicao_2026/snapshots/2026-10-03_137fa8001f16.json`.
+
+**Lint de `tests/`:** os meus dois arquivos de teste estão limpos. O `ruff check tests/` acusa 46 erros e o `black --check tests/` quer reformatar 28 arquivos, todos em testes que eu não toquei, e mesmo assim isso quebra a regra de zero lint. O CI só verifica `scripts/` e `docs/`, por isso não aparece lá. Não corrigi porque está fora do escopo.
+
+**Arquivos criados**
+- `scripts/predicao_2026/dinamico.py`: o modelo e a estimação por máxima verossimilhança.
+- `scripts/predicao_2026/preditiva.py`: origem móvel e teste deixando a casa do alvo fora.
+- `tests/test_predicao_2026_dinamico.py`: 9 testes.
+- `analysis/predicao_2026/avaliacao_ml.md`: a avaliação pedida, sem travessão.
+- `docs/assets/predicao_2026_validacao_preditiva.json`.
+
+**Arquivos alterados (edições pontuais)**
+- `scripts/predicao_2026/base.py`: constante `WINDOW_START` (padrão inalterado), `alvos["dinamico"]` e `nacional.dinamico` com variantes.
+- `scripts/predicao-2026-build.py`: cenário "Âncora dinâmica (DLM com efeitos de casa)", `validacao_preditiva` no JSON principal e no arquivo separado, e os dois módulos novos na lista de código com hash.
+- `scripts/predicao_2026/view.py`: funções `dlm_table` e `predictive_table`, registradas em `render`.
+- `scripts/predicao_2026/simulador.py`: uma tupla em `ANCHORS`. O outro agente moveu o select de âncora de `view.simulator()` para este módulo, então a opção entrou aqui.
+- `docs/assets/predicao_2026.js`: só dentro de `simulate`. O "dinamico" usa `previsao_vetor` das casas selecionadas, e o bootstrap é recentrado pelo deslocamento `alvos.dinamico − alvos.inclusivo`.
+- Template: duas linhas `&lt;details&gt;` logo depois de `{{HOUSE_TABLE}}`, com `{{DLM_TABLE}}` e `{{PREDICTIVE_TABLE}}`.
+
+**Âncora dinâmica contra a central** (`nacional.alvos`, em % do total)
+
+| Âncora | Lula | Flávio | Demais | Indecisos | Branco/nulo |
+|---|---|---|---|---|---|
+| Central | 40,41 | 39,98 | 12,55 | 3,45 | 3,61 |
+| Dinâmica | 41,19 | 39,72 | 12,26 | 3,40 | 3,42 |
+
+- **Nos válidos:** o DLM dá Lula 44,21 × Flávio 42,63, diferença F−L de −1,58 pp com desvio padrão de 2,71.
+- **No cenário completo:** depois da geografia e do eleitor provável, dá 44,72 × 42,62 (F−L −2,09), contra −0,98 da central.
+
+**Parâmetros estimados**
+- Variância de evolução: desvio diário de 0,59 pp no nível de Lula.
+- Desvio dos efeitos de casa: 3,66 pp em Lula e 5,69 pp em Flávio.
+- Esse filtro equivale, aproximadamente, a uma média exponencial com meia-vida de cerca de 2,6 dias, perto dos 3 dias da central.
+
+**Efeitos de casa** (diferença L−F nos válidos, em pp; positivo = mais Lula que a casa média)
+
+| Casa | Ondas | Efeito |
+|---|---|---|
+| MDA | 1 | +7,19 |
+| Alfa | 1 | +4,99 |
+| Quaest | 5 | +4,99 |
+| Indexa | 1 | +3,00 |
+| AtlasIntel | 3 | +0,71 |
+| Nexus | 7 | +0,55 |
+| Vox | 2 | −0,24 |
+| Meio/Ideia | 1 | −1,28 |
+| Real Time | 3 | −1,31 |
+| PoderData | 1 | −2,29 |
+| Palver | 4 | −2,37 |
+| Datafolha | 6 | −3,51 |
+| Futura | 2 | −4,27 |
+| Gerp | 1 | −6,14 |
+
+Casas com uma única onda têm desvio de cerca de 3,2 pp.
+
+**Validação preditiva.** Isto mede quanto cada âncora prevê as pesquisas seguintes, não a urna. Origens de 01/09 a 01/10, horizonte de 1 a 7 dias, 204 pares sobre 31 ondas alvo:
+
+| Âncora | MAE L−F | RMSE L−F | Viés L−F | MAE parcelas |
+|---|---|---|---|---|
+| Recência 3d / 7 dias (central) | 3,43 | 4,05 | +1,25 | 2,93 |
+| Recência 1d / 7 | 3,61 | 4,48 | +0,29 | 2,99 |
+| Recência 5d / 7 | 3,46 | 4,08 | +1,45 | 2,96 |
+| Recência 7d / 7 | 3,48 | 4,11 | +1,53 | 2,98 |
+| Peso igual / 7 | 3,57 | 4,22 | +1,73 | 3,03 |
+| Recência 3d / 14 | 3,42 | 4,03 | +1,26 | 2,99 |
+| Peso igual / 14 | 3,52 | 4,18 | +1,82 | 3,29 |
+| DLM, phi estimado | 3,53 | 4,19 | +1,83 | 3,53 |
+| DLM, phi = 1 | 3,47 | 4,14 | +1,50 | 3,29 |
+
+- **Comparações pareadas por onda:** DLM contra central dá +0,10 de MAE (erro-padrão 0,14). Meia-vida de 5 dias contra 3 dá +0,03 (0,05). Nenhuma alternativa se separa da central, e não existe ajuste de meia-vida claramente melhor.
+- **Deixando a casa do alvo fora:** central 3,76 e DLM 3,84 de MAE (diferença +0,07, erro-padrão 0,24). Empate também.
+- **Prever a próxima onda de uma casa já conhecida:** DLM com o efeito da casa erra 2,07, a última onda da mesma casa 1,92 e a central 3,19 (ganho de 1,20 pp, erro-padrão 0,38). Os efeitos de casa são reais, mas isso serve para prever a próxima pesquisa do instituto, não o nível do país.
+- **Todas as âncoras atrasaram:** o viés positivo indica que as pesquisas seguintes vieram menos favoráveis a Lula. Houve tendência em setembro, e nenhuma âncora sem termo de deriva a antecipa.
+
+**Decisões de modelagem**
+- **Escala aditiva com quatro categorias livres:** branco/nulo é o complemento. Como todas as covariâncias ficam no subespaço de soma zero, a escolha da categoria omitida não altera o resultado.
+- **Efeitos de casa somam zero:** o nível é o que a casa média mediria, com encolhimento estimado por máxima verossimilhança.
+- **Observações:** ponto médio do campo e teto n ≤ 2000, como no bootstrap atual.
+- **Janela de 15/08:** testei 01/08 e 15/07 (46 e 51 ondas) e não houve ganho.
+- **Variante só com PNAD:** fica registrada em `nacional.dinamico.variantes`, não como âncora (−1,40 de diferença nos válidos).
+- **Incerteza no simulador:** reaproveita o bootstrap das casas, recentrado no DLM, para não somar a incerteza duas vezes. O desvio padrão final do filtro fica só no JSON.
+- **O ML como ferramenta:** não há pares pesquisa→urna no acervo. O repositório tem o TSE de 2018 e 2022 por seção e por município/zona, mas nenhuma pesquisa de 2018 ou 2022, o que confirmei com ls e grep.
+
+**Precisa da sua decisão**
+1. **Desvio da observação.** Você especificou a variância de observação por n/deff. Eu também estimei um multiplicador phi de erro não amostral, e deu 2,10 (deff efetivo de 3,15). A verossimilhança sobe de 382,87 para 392,37, o que o teste de razão de verossimilhança rejeita com folga para phi = 1. Adotei o phi estimado como padrão do DLM e deixei phi = 1 registrado como variante. Na validação, phi = 1 erra um pouco menos (3,47 contra 3,53), sem separação estatística. Se preferir a especificação literal, a troca é trivial.
+2. **Calibração do erro comum (item 4).** Ficou pendente, porque não há pesquisas de 2018 e 2022 arquivadas. O roteiro do que seria preciso está na seção 8 da avaliação.
+3. **Tempo de build.** A validação acrescenta cerca de 14 s a cada build, porque reestima o DLM em cada origem.</result>
+<usage><subagent_tokens>281330</subagent_tokens><tool_uses>49</tool_uses><duration_ms>929360</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a396eee53efdc9b1f</task-id>
+<tool-use-id>toolu_01E8yNg7CD8kDRzNKKD8Kw2V</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Integrar texto ampliado no template" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>O capítulo novo e os acréscimos do rascunho estão no template, e o build de validação passa. Os 65 testes passam, `ruff check` e `black --check` não acusam nada, e `grep -c "—"` dá 0 nos dois HTML.
+
+Rodei o build com `--sorteios 300`, como pedido, então o JSON e o HTML em `docs/` estão com 300 réplicas (o padrão é 6000). Probabilidades e faixa (33,3% e −5,26 a +3,37) mudam um pouco no build final. Rode-o sem esse parâmetro antes de publicar. O snapshot dessa execução ficou em `analysis/predicao_2026/snapshots/2026-10-03_f3ac4defa7ee.json`.
+
+**Seções alteradas**
+- **Navegação e simulador:** o `chapter-nav` ganhou "Por que não ML?" (`#aprendizado`). O título da seção 03 virou "Construa o seu cenário."
+- **#pesquisa (04):** reescrita com o rascunho. A frase de 6 aplicada: os dois testes do Datafolha lado a lado, com a nota de que "lidera" depende da hipótese de desenho. Mantive o parágrafo original "uma pesquisa pode integrar um modelo preditivo".
+- **#metodo (05):** lead novo, passo 0 e, em cada passo de 1 a 6, "Entra/Sai", analogia e "Hipótese / Se falhar". O passo 5 segue a decisão 7. Glossário (com "Efeito de casa" e "Filtro de Kalman" acrescentados) no fim do capítulo.
+- **#incerteza (08):** o passo a passo de uma réplica substituiu os três parágrafos antigos. Mantive as ressalvas que não estavam na lista. Adicionei "Por que a faixa não é uma margem de erro".
+- **#validacao (09):** acrescentei "O que a retrospectiva testa e o que não testa". O parágrafo de avaliação futura foi trocado pelo roteiro pós-urna, rotulado como "regra de avaliação declarada antes da apuração, proposta da Arvor". Os critérios de falha usam {{GAP_LOW}} e {{GAP_HIGH}} da faixa da página.
+- **#aprendizado (10, novo):** segue `avaliacao_ml.md`. Troquei os trechos do rascunho que a avaliação não sustenta (ML para comparecimento por seção, MRP). Fontes: Jackman com DOI, Linzer e Heidemanns sem URL, e Jennings e Wlezien só como referência.
+- **#fontes (11):** renumerada, com as referências técnicas acrescentadas.
+- Hero, seção 01, #simulador (além do título), `{{MAP}}`, CSS e equações ficaram intactos.
+
+**Placeholders**
+- **Onde:** novo módulo `scripts/predicao_2026/texto.py` (função `values(data)`, 188 linhas, chamada por `render` em `view.py`).
+- **Cobertura:** cerca de 130 chaves, todas lidas do JSON.
+- **Chaves principais:** `EXA_*` (exemplos de peso e IC), `PRIOR_{AC,BA,SP}`, `NEFF_*`, `ONDAS_*`, `ALVO_*`, `SENS_*`, `COMP_*_MI`, `DLM_*` e `PRED_*`.
+- **Frases geradas:** `EXA_SENTENCE`, `EXA_VERDICT` e `POINT_SENTENCE` leem o sinal e os intervalos. O texto não afirma "contém o zero" nem "reprova" se os números mudarem.
+- **Sem URL:** `MODEL_HASH_WBR`, um hash com `&lt;wbr&gt;`. O hash comprido estourava o celular (390 px) e fazia o teste de rolagem lateral falhar.
+
+**Palavras visíveis:** 11.790 antes, 18.162 depois (+54%, contando todo o texto visível, tabelas incluídas).
+
+**Pendências**
+- Nenhum número do texto foi digitado. A hipótese de não haver pesquisa de 2018 e 2022 no acervo vem de `avaliacao_ml.md`, e eu não a rechecei.
+- O Datafolha é o exemplo A e a AtlasIntel o B. Se uma das duas sair da seleção, o texto cai para a onda mais nova ou mais velha, mas o parágrafo do exemplo (frase com "42% × 38%") só faz sentido para o dado atual. Vale reler depois de regerar com `--hoje 2026-10-04`.
+- Não mexi em CSS. O `&lt;details&gt;` do glossário e as listas `ol/ul` usam o estilo padrão.
+- O mapa do `#territorio` tem rótulos que passam de 390 px, mas ficam dentro de contêiner com rolagem. Não afetam o teste.
+- Não fiz commit.</result>
+<usage><subagent_tokens>277587</subagent_tokens><tool_uses>30</tool_uses><duration_ms>579799</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>abbe72fe25cd9c320</task-id>
+<tool-use-id>toolu_01PR4aByieT27y4U4Ud1qVyb</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "UX e layout geral da página" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>A página tem agora navegação por capítulos, barra de placar, ritmo de leitura, tabelas ordenáveis e impressão. Todas as auditorias e testes passam, e nada foi commitado. Todo texto de conteúdo foi preservado; só entrou microcopy de UI.
+
+## O que mudou, por item
+1. **Navegação**
+   - O capítulo atual fica destacado no menu (`aria-current="location"`), e o menu rola sozinho para mostrá-lo.
+   - O menu ganhou os links de "As casas" e "Incerteza", que faltavam.
+   - No celular é uma barra horizontal com esmaecimento na borda.
+   - O deslocamento de rolagem é medido em JS e vale para o topo do simulador também. Nos onze capítulos, o título fica sempre abaixo do menu em 1366 e 390 px.
+   - Há barra de progresso fina no topo, botão "Topo" (só ícone no celular, e escondido sobre o simulador) e skip link que de fato move o foco.
+   - Âncoras `#estado-UF` abrem o `&lt;details&gt;` antes de rolar.
+2. **Hero e placar**
+   - O placar tem barra em `div` com `display:block`, na mesma escala 0 a 50% nos três cartões, com a faixa de 90% como caixa hachurada sobre a barra.
+   - O "Como ler em 20 segundos" tem três itens montados só com as frases do antigo `hero-caption`.
+   - Em 1366×768 o placar, o "como ler" e os botões cabem na primeira tela (os botões terminam em y=748).
+3. **Ritmo de leitura**
+   - Os capítulos pesquisa, método, incerteza, validação e aprendizado ganham um sumário "Neste capítulo", montado em JS a partir dos `h3`.
+   - Os `h3` ficam bem espaçados.
+   - Entra/Sai, Hipótese com "Se falhar", analogia e exemplo viram caixas estilizadas, por classes aplicadas no template e sem mexer no texto.
+   - Há estilo para `ol`, `ul` e `blockquote` dentro de `.prose`.
+   - O glossário fica em duas colunas no desktop.
+   - As equações usam mono com fundo destacado e rolam na horizontal no celular.
+4. **Tabelas**
+   - Cabeçalho fixo, zebra, realce da linha ao passar o mouse e números à direita com `tabular-nums`. As colunas numéricas são detectadas em `view.table()`.
+   - No celular a primeira coluna também fica fixa.
+   - A tabela das 27 UFs ordena por clique no cabeçalho, com `aria-sort`; o terceiro clique restaura a ordem original.
+5. **Figuras largas**
+   - O histograma agora fica dentro de `.wide-chart`.
+   - Em 390 px, com todos os `&lt;details&gt;` abertos, a largura da página é 390 e nenhum elemento estoura.
+6. **Simulador**
+   - Os cenários prontos viram chips. O ativo fica escuro, com ✓ e anel verde-limão.
+7. **Fontes e rodapé**
+   - Os downloads viram botões (JSON e CSV escuros, com ↓; links externos com ↗).
+   - O bloco de comando tem rolagem horizontal e botão "Copiar comandos".
+   - O hash quebra linha.
+8. **Impressão**
+   - Esconde navegação, progresso, topo, simulador e controles.
+   - Preserva as cores (`print-color-adjust`).
+   - Abre os `&lt;details&gt;` antes de imprimir e fecha depois.
+9. **Acessibilidade**
+   - O foco visível ficou em `#9a6a00`, que antes (`#ba8100`) dava 2,96:1 sobre o papel.
+   - Regiões roláveis entram no teclado, o `main` recebe foco pelo skip link, e há `prefers-reduced-motion`.
+   - Sem JS a página fica completa e legível (o menu aparece e o botão de topo fica oculto).
+
+## Arquivos
+- Novos: `docs/assets/predicao_2026_ux.css`, `docs/assets/predicao_2026_ui.js` (incluído com `defer`) e `analysis/predicao_2026/qa-ux.py`.
+- Alterados: `docs/predicao_2026_1T_presidente.template.html` (classes, `id="topo"`, links do menu, "como ler"), `scripts/predicao_2026/view.py` (`percent_bar`, `table` com colunas numéricas e `sortable`), `scripts/contrast-audit.py` e `AGENTS.md` (nota sobre a camada de UX).
+- Não toquei no motor nem no mapa, e os IDs de seção ficam como estavam.
+
+## Auditorias e testes
+- **Testes e lint:** 65 testes passam nos quatro arquivos pedidos. `ruff check` está limpo e `black --check` reporta nenhum arquivo a reformatar, mas imprime um aviso de que o Python 3.10 não faz a verificação de segurança do alvo 3.13. `node --check` passa em todos os JS.
+- **Escrita:** `grep -c "—"` na página dá 0, e também 0 no CSS e no JS novos.
+- **Renderização:** `render-audit.py` dá 0 problemas.
+- **Contraste:** zero reprovações em 1366 e em 390 px.
+- **Correção no auditor de contraste:** a primeira rodada acusou 1,02:1 em linhas de tabela. Era defeito do `contrast-audit.py` (linhas escondidas em contêiner com rolagem vertical liam o fundo do hero). O auditor agora solta o `max-height` antes de medir, e isso está documentado no `AGENTS.md`.
+- **QA no navegador (`qa-ux.py`):**
+  - Zero erros de console, também abrindo por `file://`.
+  - Os onze capítulos destacam o item certo e ficam abaixo do menu.
+  - A ordenação e a restauração funcionam, e o skip link leva o foco ao `main`.
+  - A impressão esconde o menu e o simulador.
+
+Screenshots em `analysis/predicao_2026/qa-ux-{desktop,mobile}-*.png` (hero, mapa, simulador, simulador ativo, tabela, método, passo, incerteza, aprendizado, glossário, fontes), mais `qa-ux-desktop-semjs.png`. Os relatórios de contraste estão em `contrast-desktop.txt` e `contrast-mobile.txt`.
+
+## Limitações
+- O sumário interno, a ordenação, o destaque do menu e o botão de copiar dependem de JS; sem ele o conteúdo continua inteiro.
+- A barra do placar usa escala comum até 50%, definida pelo p95 mais alto arredondado para cima, e não mostra eixo (só o `aria-label`).
+- As tabelas têm `max-height` de cerca de 70vh com rolagem interna, necessária para o cabeçalho fixo.
+- O `black` imprime o aviso sobre o Python 3.10 em todas as execuções.</result>
+<usage><subagent_tokens>264644</subagent_tokens><tool_uses>63</tool_uses><duration_ms>781673</duration_ms></usage>
+</task-notification>
