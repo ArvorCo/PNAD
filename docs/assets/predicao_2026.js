@@ -2,7 +2,7 @@
 const Prediction2026 = (() => {
   "use strict";
   const keys = ["lula", "flavio", "outros"];
-  const defaults = {base:"inclusivo",voto_lula:0,voto_flavio:0,indecisos_validos:1,
+  const defaults = {base:"central_inclinacao",voto_lula:0,voto_flavio:0,indecisos_validos:1,
     indecisos_flavio:null,comparecimento_pp:0,branco_nulo_pp:0,diferencial_pp:0,
     vies_pp:0,secoes_abstencao_pp:0,eleitor_provavel:true,exterior:true,
     comparecimento_modelo:"uf",regioes:{},ufs:{}};
@@ -90,9 +90,14 @@ const Prediction2026 = (() => {
   async function simulate(data,params,progress=()=>{},isCancelled=()=>false,runs=2000) {
     const p={...defaults,...params},rng=sampler(20261003);
     const polls=["pnad","publicado"].includes(p.base)?data.nacional.pareadas:data.nacional.selecionadas;
-    const kind=["inclusivo","sem_recencia","casas","dinamico"].includes(p.base)?"previsao_vetor":p.base==="pnad"?"pnad_vetor":"publicado_vetor";
-    // Âncora dinâmica: reutiliza o bootstrap das casas centrais, recentrado no estado final do DLM.
-    const shift=p.base==="dinamico"?data.nacional.alvos.dinamico.map((v,k)=>v-data.nacional.alvos.inclusivo[k]):null;
+    // Toda âncora calculada sobre as casas centrais (dinâmica, tendência, central com inclinação) reutiliza
+    // o bootstrap da central, recentrado por alvos[base] − alvos.inclusivo. Espelho de motor.bootstrap_design.
+    const kind=p.base==="pnad"?"pnad_vetor":["publicado","todas"].includes(p.base)?"publicado_vetor":"previsao_vetor";
+    const alvos=data.nacional.alvos;
+    const shift=kind==="previsao_vetor"&&p.base!=="sem_recencia"&&alvos[p.base]?alvos[p.base].map((v,k)=>v-alvos.inclusivo[k]):null;
+    // Desvio da projeção (motor.projection_sd), somado em quadratura ao erro comum de 2 pp na diferença F−L.
+    const projection=["central_inclinacao","tendencia"].includes(p.base)?((data.nacional.incerteza_projecao_pp||{})[p.base]||0):0;
+    const commonSd=Math.hypot(2,projection);
     const temporal=norm(polls.map(poll=>p.base==="sem_recencia"?1:poll.peso_recencia));
     const domestic=data.estados.filter(s=>s.uf!=="ZZ"),exterior=data.estados.find(s=>s.uf==="ZZ");
     const weights=norm(domestic.map(s=>s.eleitorado)),regions=[...new Set(domestic.map(s=>s.regiao))].sort();
@@ -103,7 +108,7 @@ const Prediction2026 = (() => {
       const ps=polls.map(poll=>rng.dirichlet(poll[kind].map(x=>Math.max(x,1e-6)*Math.min(poll.n,2000)/1.5)));
       const target=Array.from({length:5},(_,k)=>sum(ps.map((v,h)=>hw[h]*v[k])));
       if(shift)norm(target.map((v,k)=>Math.max(v+shift[k],1e-6))).forEach((v,k)=>{target[k]=v;});
-      const common=rng.student()*Math.sqrt(3/5)*.01*sum(target.slice(0,3));
+      const common=rng.student()*Math.sqrt(3/5)*commonSd/200*sum(target.slice(0,3));
       const t=clip(common,-target[1],target[0]);target[0]-=t;target[1]+=t;
       const seeds=domestic.map(s=>rng.dirichlet(s.bases[p.base].map(x=>Math.max(x,1e-6)*Math.max(s.n_efetivo_assumido,150))));
       const q=rake(seeds,weights,target);
@@ -126,7 +131,7 @@ const Prediction2026 = (() => {
     }
     pcts.forEach(a=>a.sort((a,b)=>a-b));gaps.sort((a,b)=>a-b);
     return {runs,intervalos:Object.fromEntries(keys.map((k,i)=>[k,[quantile(pcts[i],.05),quantile(pcts[i],.5),quantile(pcts[i],.95)]])),
-      margem:[quantile(gaps,.05),quantile(gaps,.95)],margens:gaps,p_flavio_a_frente_de_lula:gaps.filter(x=>x>0).length/runs,
+      margem:[quantile(gaps,.05),quantile(gaps,.95)],margens:gaps,erro_comum_total_sd_pp:commonSd,p_flavio_a_frente_de_lula:gaps.filter(x=>x>0).length/runs,
       p_lula_maioria:pcts[0].filter(x=>x>50).length/runs,p_flavio_maioria:pcts[1].filter(x=>x>50).length/runs};
   }
   return {defaults,state,aggregate,scenario,rake,simulate};
@@ -134,15 +139,18 @@ const Prediction2026 = (() => {
 /* Utilidades puras do simulador: link do cenário, frase e histograma. Não alteram o motor. */
 const PredictionSimulator = (() => {
   "use strict";
-  const D=Prediction2026.defaults;
+  // Referência do link e da frase: a central gravada em central.parametros (configure), não os defaults crus.
+  let D={...Prediction2026.defaults};
+  function configure(central={}){D={...Prediction2026.defaults,...central};return D;}
   const SCALAR=[["base","a","text"],["comparecimento_modelo","c","text"],["voto_flavio","vf","pct"],["voto_lula","vl","pct"],
     ["comparecimento_pp","cp","num"],["diferencial_pp","df","num"],["secoes_abstencao_pp","sa","num"],["branco_nulo_pp","bn","num"],
     ["vies_pp","ec","num"],["indecisos_validos","iv","pct"],["indecisos_flavio","if","pct"],["eleitor_provavel","ep","bool"],["exterior","ex","bool"]];
   const REGIONS={"Norte":"N","Nordeste":"NE","Centro-Oeste":"CO","Sudeste":"SE","Sul":"S"};
   const UF_FIELDS=[["comparecimento_pp","cp","num"],["diferencial_pp","df","num"],["voto_lula","vl","pct"],["voto_flavio","vf","pct"]];
-  const ANCHORS={sem_recencia:"âncora nacional com peso temporal igual",pnad:"âncora só nas casas reponderadas pela PNAD",
+  const ANCHORS={central_inclinacao:"âncora com tendência de 28 dias encolhida",inclusivo:"âncora de recência sem tendência (central até 03/10 à tarde)",sem_recencia:"âncora nacional com peso temporal igual",pnad:"âncora só nas casas reponderadas pela PNAD",
     publicado:"âncora nos placares publicados das casas PNAD",todas:"âncora em todas as casas publicadas",
-    casas:"âncora sem o desvio relativo das casas",dinamico:"âncora nacional dinâmica"};
+    casas:"âncora sem o desvio relativo das casas",dinamico:"âncora nacional dinâmica",
+    tendencia:"âncora de tendência projetada a 04/10",tendencia_corte:"âncora de tendência no nível do corte"};
   const clip=(x,lo,hi)=>Math.max(lo,Math.min(hi,x));
   const short=x=>String(+Number(x).toFixed(4));
   const same=(a,b)=>a===b||(typeof a==="number"&&typeof b==="number"&&Math.abs(a-b)<1e-9);
@@ -152,7 +160,10 @@ const PredictionSimulator = (() => {
   function code(kind,x){return kind==="pct"?short(100*x):kind==="bool"?(x?"1":"0"):kind==="num"?short(x):String(x);}
   function encode(params={}) {
     const p={...D,...params},out=[];
-    for(const [k,c,kind] of SCALAR){if(same(p[k],D[k])||p[k]===null||p[k]===undefined)continue;out.push(c+":"+code(kind,p[k]));}
+    for(const [k,c,kind] of SCALAR){if(same(p[k],D[k])||p[k]===undefined)continue;
+      // Nulo só aparece quando a central tem valor: "if:p" = indecisos proporcionais.
+      if(p[k]===null){if(D[k]!==null)out.push(c+":p");continue;}
+      out.push(c+":"+code(kind,p[k]));}
     for(const [name,c] of Object.entries(REGIONS)){const v=((p.regioes||{})[name]||{}).comparecimento_pp;
       if(Number.isFinite(v)&&v!==0)out.push("r"+c+":"+short(v));}
     for(const uf of Object.keys(p.ufs||{}).sort()){const e=p.ufs[uf]||{};
@@ -168,6 +179,7 @@ const PredictionSimulator = (() => {
       const scalar=SCALAR.find(s=>s[1]===key);
       if(scalar){const [k,,kind]=scalar;
         if(kind==="text"){if(/^[a-z_]{1,24}$/.test(raw))p[k]=raw;}
+        else if(raw==="p"&&k==="indecisos_flavio")p[k]=null;
         else if(ok)p[k]=kind==="bool"?x!==0:kind==="pct"?clip(x,0,100)/100:clip(x,-100,100);
         continue;}
       const region=Object.keys(REGIONS).find(n=>"r"+REGIONS[n]===key);
@@ -206,14 +218,14 @@ const PredictionSimulator = (() => {
     if(p.vies_pp)out.push("erro comum de "+plain(Math.abs(p.vies_pp))+" pp a favor de "+(p.vies_pp>0?"Flávio":"Lula"));
     if(p.branco_nulo_pp)out.push("brancos e nulos "+more(p.branco_nulo_pp,"acima","abaixo")+" da central");
     if(p.indecisos_validos!==D.indecisos_validos)out.push(p.indecisos_validos===0?"nenhum indeciso chegando a voto válido":plain(100*p.indecisos_validos)+"% dos indecisos chegando a voto válido");
-    if(p.indecisos_flavio!==null&&p.indecisos_flavio!==undefined)out.push("indecisos que escolhem divididos "+plain(100-100*p.indecisos_flavio)+"/"+plain(100*p.indecisos_flavio)+" entre Lula e Flávio");
+    if(!same(p.indecisos_flavio,D.indecisos_flavio))out.push(p.indecisos_flavio===null||p.indecisos_flavio===undefined?"indecisos que escolhem proporcionais às candidaturas":"indecisos que escolhem divididos "+plain(100-100*p.indecisos_flavio)+"/"+plain(100*p.indecisos_flavio)+" entre Lula e Flávio");
     if(!p.eleitor_provavel)out.push("sem o ajuste de eleitor provável");
     if(!p.exterior)out.push("sem o exterior");
     const ufs=Object.keys(p.ufs||{}).sort();
     if(ufs.length)out.push("ajuste local em "+(ufs.length>4?ufs.slice(0,4).join(", ")+" e mais "+(ufs.length-4)+" UFs":list(ufs)));
     return out;
   }
-  function sentence(params,central,current) {
+  function sentence(params,central,current,note) {
     const clauses=describe(params),a=central.margem_flavio_lula,b=current.margem_flavio_lula;
     const leader=x=>Number(x.toFixed(2))>0?"Flávio":Number(x.toFixed(2))<0?"Lula":null;
     if(!clauses.length)return "Sem hipóteses do leitor: cenário central do modelo, com diferença F−L de "+signed(b)+" pp nos votos válidos.";
@@ -221,7 +233,7 @@ const PredictionSimulator = (() => {
     const before=leader(a),after=leader(b);
     s+=after===null?" Os dois empatam nos votos válidos.":after===before?" "+after+" segue à frente nos votos válidos.":" "+after+" passa à frente nos votos válidos.";
     for(const [k,n] of [["lula","Lula"],["flavio","Flávio"]])if(current.percentuais[k]>50)s+=" "+n+" supera 50% dos válidos neste cenário.";
-    return s;
+    return note?s+" "+note:s;
   }
   function histogram(values,point,bins=32) {
     const a=values.slice().sort((x,y)=>x-y),q=p=>a[Math.min(a.length-1,Math.max(0,Math.round((a.length-1)*p)))];
@@ -239,7 +251,7 @@ const PredictionSimulator = (() => {
     svg+='<text x="'+L+'" y="20" font-size="12" fill="#535b54">Lula à frente</text><text x="'+R+'" y="20" font-size="12" text-anchor="end" fill="#535b54">Flávio à frente</text>';
     return svg+"</svg>";
   }
-  return {encode,decode,isCentral,describe,sentence,ufSummary,histogram,signed};
+  return {configure,reference:()=>({...D}),encode,decode,isCentral,describe,sentence,ufSummary,histogram,signed};
 })();
 if(typeof module!=="undefined"&&module.exports){module.exports=Prediction2026;module.exports.Simulador=PredictionSimulator;}
 
@@ -248,12 +260,14 @@ if(typeof document!=="undefined") {
     "use strict";
     const $=id=>document.getElementById(id);
     const root=$("simulador-app");if(!root||!$("prediction-data"))return;
-    const data=JSON.parse($("prediction-data").textContent),S=PredictionSimulator,D=Prediction2026.defaults;
+    const data=JSON.parse($("prediction-data").textContent),S=PredictionSimulator;
+    // A central da página é a gravada no JSON (âncora e destino dos indecisos), não os defaults do motor.
+    const D=S.configure((data.central||{}).parametros||{});
     const presets=JSON.parse(($("sim-presets-data")||{textContent:"[]"}).textContent);
     const fmt=(n,d=1)=>n.toLocaleString("pt-BR",{minimumFractionDigits:d,maximumFractionDigits:d});
     const mi=n=>fmt(n/1e6,2)+" mi",K=["lula","flavio","outros"],names={lula:"Lula",flavio:"Flávio",outros:"Demais"};
     const votes=x=>{const a=Math.abs(x);return (x>0?"+":x<0?"−":"")+(a>=1e6?fmt(a/1e6,2)+" mi":fmt(a/1e3,0)+" mil");};
-    const central=Prediction2026.scenario(data.estados,{});
+    const central=Prediction2026.scenario(data.estados,D);
     const known=new Set(data.estados.map(s=>s.uf));
     let edits={},revision=0,lastResult=central,lastParams={...D},running=false,cancelled=false,view="regiao",ready=false,mcShown=false;
 
@@ -324,7 +338,8 @@ if(typeof document!=="undefined") {
         $("sim-delta-"+k).textContent=Math.abs(dp)<.005&&Math.abs(dv)<500?"Igual à central":S.signed(dp)+" pp · "+votes(dv)+" votos vs central";});
       $("sim-bars").innerHTML=bars(b);
       $("sim-gap").textContent="Diferença F−L: "+S.signed(b.margem_flavio_lula)+" pp (central: "+S.signed(c.margem_flavio_lula)+" pp)";
-      $("sim-sentence").textContent=S.sentence(p,c,b);
+      const active=presets.find(x=>S.encode(x.parametros)===code);
+      $("sim-sentence").textContent=S.sentence(p,c,b,active&&active.nota);
       $("sim-attendance").textContent=mi(b.comparecimento)+" votantes";$("sim-absent").textContent=mi(b.abstencao)+" ausentes";$("sim-invalid").textContent=mi(b.branco_nulo)+" brancos/nulos";
       $("sim-region-table").innerHTML=table(result);
       $("sim-label").textContent=isCentral?"Cenário central":"Seu cenário condicional";

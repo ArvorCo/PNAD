@@ -719,6 +719,33 @@ details details {
 .preset[aria-pressed=true]:hover {
   background: var(--dark)
 }
+.sim-consolidacao {
+  max-width: 910px;
+  margin: 0 0 26px
+}
+.sim-consolidacao p {
+  font-size: 15px
+}
+.preset.featured {
+  border-color: var(--ink);
+  border-width: 2px;
+  background: #eef3e4
+}
+.preset.featured[aria-pressed=true] {
+  background: var(--dark)
+}
+.preset-help {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 10px 0 0;
+  font-size: 13px;
+  color: var(--muted)
+}
+.sim-presets > .help-text {
+  margin: 6px 0 0;
+  max-width: 72ch
+}
 .sim-result {
   top: var(--offset)
 }

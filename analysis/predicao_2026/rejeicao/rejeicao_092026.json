@@ -1,0 +1,576 @@
+{
+ "descricao": "Rejeição declarada de Lula e Flávio Bolsonaro na última onda nacional de cada casa arquivada, com arquivo, página e SHA-256. Transcrição página a página; páginas em imagem renderizadas nesta pasta.",
+ "corte": "2026-10-03",
+ "regra": "A rejeição não subtrai voto já contado. Ela é régua de destino de quem ainda se move: disponibilidade = 1 menos rejeição.",
+ "unidade": "percentual da amostra total",
+ "casas": [
+  {
+   "instituto": "Datafolha",
+   "pesquisa": "datafolha_2026-10-01",
+   "registro_tse": "BR-08039/2026",
+   "campo": {
+    "inicio": "2026-09-29",
+    "fim": "2026-10-01"
+   },
+   "divulgacao": "2026-10-01",
+   "n": 2506,
+   "pdf": "data/originals/datafolha_102026_02/relatorio.pdf",
+   "publica": true,
+   "paginas": [
+    7,
+    17,
+    50,
+    51,
+    52
+   ],
+   "pagina_principal": 17,
+   "leitura": "texto nativo",
+   "tipo_pergunta": "cartao_multipla",
+   "comparavel": true,
+   "enunciado": "Em quais desses candidatos do cartão você não votaria de jeito nenhum no primeiro turno? E qual mais? Estimulada e múltipla.",
+   "lula": 45,
+   "flavio": 45,
+   "segmentos": [
+    {
+     "recorte": "partido de preferência",
+     "rotulo": "Nenhum/Não tem",
+     "lula": 56,
+     "flavio": 33,
+     "base_ponderada": 993,
+     "pagina": 52
+    },
+    {
+     "recorte": "partido de preferência",
+     "rotulo": "Outro partido",
+     "lula": 45,
+     "flavio": 44,
+     "base_ponderada": 384,
+     "pagina": 52
+    }
+   ],
+   "sem_corte_por_voto": "Cruzamentos da rejeição só por gênero, idade, escolaridade, renda, ocupação, cor, religião, região, natureza do município e partido (pp. 50 a 52). Não há rejeição por voto no 1º turno nem entre indecisos.",
+   "destino_declarado": {
+    "pagina": 7,
+    "pergunta": "Segunda opção entre eleitores que ainda podem mudar o voto (exceto indecisos)",
+    "hesitantes": {
+     "flavio": 23,
+     "lula": 15,
+     "branco_nulo": 9
+    },
+    "nao_alinhados_hesitantes": {
+     "flavio": 21,
+     "lula": 12,
+     "branco_nulo": 10
+    }
+   },
+   "sha256": "c2cb775015d2c015a1249f044d1716960f2bf2d08ebd73648d80c4090fa5a17c"
+  },
+  {
+   "instituto": "Nexus",
+   "pesquisa": "nexus_2026-09-27",
+   "registro_tse": "BR-07557/2026",
+   "campo": {
+    "inicio": "2026-09-25",
+    "fim": "2026-09-27"
+   },
+   "divulgacao": "2026-09-28",
+   "n": 2000,
+   "pdf": "docs/fontes/nexus_btg_28092026.pdf",
+   "publica": true,
+   "paginas": [
+    96,
+    101,
+    104
+   ],
+   "pagina_principal": 96,
+   "leitura": "texto nativo",
+   "tipo_pergunta": "grade_por_candidato",
+   "comparavel": true,
+   "enunciado": "Para cada candidato: é o único em quem votaria, poderia votar mas também em outro, não votaria nele de jeito nenhum, ou não conhece. Estimulada e única por linha.",
+   "lula": 48,
+   "flavio": 51,
+   "conjunta": {
+    "pagina": 101,
+    "nao_vota_em_nenhum_dos_dois": 7,
+    "vota_nos_dois": 5,
+    "so_lula": 44,
+    "so_flavio": 41,
+    "nao_conhece_um_ou_ambos": 3,
+    "ns_nr": 1,
+    "nota": "Vota = único em quem votaria + poderia votar. Usado como hipótese de covariância entre as duas rejeições."
+   },
+   "sem_corte_por_voto": "Perfil de rejeição só por sexo, idade, escolaridade, religião, renda, PEA, região e porte (p. 104). Não há rejeição por voto no 1º turno nem entre indecisos.",
+   "sha256": "b43fc320543a3094f2b0abfc63f07ffdbcf711637e3d74a689cf4ef173e6b409"
+  },
+  {
+   "instituto": "Quaest",
+   "pesquisa": "quaest_2026-09-27",
+   "registro_tse": "BR-06520/2026",
+   "campo": {
+    "inicio": "2026-09-24",
+    "fim": "2026-09-27"
+   },
+   "divulgacao": "2026-09-28",
+   "n": 2004,
+   "pdf": "data/originals/quaest_092026_29/relatorio.pdf",
+   "publica": true,
+   "paginas": [
+    83,
+    94
+   ],
+   "pagina_principal": 83,
+   "leitura": "imagem, renderizada a 130 dpi",
+   "renderizacao": [
+    "analysis/predicao_2026/rejeicao/quaest_p-083.png",
+    "analysis/predicao_2026/rejeicao/quaest_p-094.png"
+   ],
+   "tipo_pergunta": "grade_por_candidato",
+   "comparavel": true,
+   "enunciado": "Em relação a cada nome: não conhece, conhece e poderia votar, ou conhece mas não votaria de jeito nenhum.",
+   "lula": 54,
+   "flavio": 56,
+   "nota": "Sem categoria NS/NR para os finalistas: conhece e votaria + conhece e não votaria somam 100.",
+   "segmentos": [
+    {
+     "recorte": "identificação política",
+     "rotulo": "Independente",
+     "lula": 63,
+     "flavio": 64,
+     "margem_erro_pp": 4,
+     "pagina": 94
+    },
+    {
+     "recorte": "identificação política",
+     "rotulo": "Esquerda não lulista",
+     "lula": 11,
+     "flavio": 93,
+     "margem_erro_pp": 6,
+     "pagina": 94
+    },
+    {
+     "recorte": "identificação política",
+     "rotulo": "Direita não bolsonarista",
+     "lula": 94,
+     "flavio": 13,
+     "margem_erro_pp": 5,
+     "pagina": 94
+    }
+   ],
+   "sem_corte_por_voto": "Cruzamentos por região, sexo, idade, escolaridade, renda, religião, cor, Bolsa Família e identificação política (pp. 86 a 94). Não há rejeição por voto no 1º turno nem entre indecisos.",
+   "sha256": "30431a6d83a2b1bd3ddb0276d1b4673897876ed195096d1b8e4ff12b3ad0f57b"
+  },
+  {
+   "instituto": "Gerp",
+   "pesquisa": "gerp_2026-09-28",
+   "registro_tse": "BR-03929/2026",
+   "campo": {
+    "inicio": "2026-09-24",
+    "fim": "2026-09-28"
+   },
+   "divulgacao": "2026-09-29",
+   "n": 2400,
+   "pdf": "data/originals/gerp_092026_29/relatorio.pdf",
+   "publica": true,
+   "paginas": [
+    26,
+    27,
+    28
+   ],
+   "pagina_principal": 26,
+   "leitura": "texto nativo",
+   "tipo_pergunta": "cartao_multipla",
+   "comparavel": true,
+   "enunciado": "Em qual ou quais destes candidatos V. não votaria de jeito nenhum para Presidente? Leia as opções. Múltipla.",
+   "lula": 50,
+   "flavio": 42,
+   "sem_corte_por_voto": "Cruzamentos só por sexo, idade e renda (p. 28).",
+   "sha256": "a5fa15c9a6bfee37acc8ccfc462f52c2805ac563cf79ffce9b93b0481d189f82"
+  },
+  {
+   "instituto": "Futura",
+   "pesquisa": "futura_2026-09-29",
+   "registro_tse": "BR-01122/2026",
+   "campo": {
+    "inicio": "2026-09-25",
+    "fim": "2026-09-29"
+   },
+   "divulgacao": "2026-09-30",
+   "n": 2000,
+   "pdf": "data/originals/futura_092026_30/relatorio.pdf",
+   "publica": true,
+   "paginas": [
+    40,
+    41,
+    45
+   ],
+   "pagina_principal": 40,
+   "leitura": "texto nativo",
+   "tipo_pergunta": "cartao_multipla",
+   "comparavel": true,
+   "enunciado": "Desses candidatos, em qual você não votaria de jeito nenhum? Além desse, mais algum que não votaria em hipótese nenhuma? Estimulada.",
+   "lula": 48.9,
+   "flavio": 45.6,
+   "segmentos": [
+    {
+     "recorte": "afirmação sobre o país (p. 45)",
+     "rotulo": "Dividido/cansado",
+     "lula": 58.0,
+     "flavio": 43.2,
+     "pagina": 41
+    },
+    {
+     "recorte": "afirmação sobre o país (p. 45)",
+     "rotulo": "Não dividido",
+     "lula": 30.1,
+     "flavio": 59.6,
+     "pagina": 41
+    }
+   ],
+   "sem_corte_por_voto": "Cruzamentos por sexo, região, idade e afirmação sobre o país (pp. 41 a 43). Sem base por segmento publicada.",
+   "sha256": "d2745ace3da5e4e9c1c4d04e56dfc22881ac4d4793a8e77540c03bffb5cfa325"
+  },
+  {
+   "instituto": "Meio/Ideia",
+   "pesquisa": "meio_ideia_2026-09-28",
+   "registro_tse": "BR-08706/2026",
+   "campo": {
+    "inicio": "2026-09-25",
+    "fim": "2026-09-28"
+   },
+   "divulgacao": "2026-09-30",
+   "n": 2000,
+   "pdf": "data/originals/meio_ideia_092026_30/relatorio.pdf",
+   "publica": true,
+   "paginas": [
+    20
+   ],
+   "pagina_principal": 20,
+   "leitura": "imagem, renderizada a 130 dpi",
+   "renderizacao": [
+    "analysis/predicao_2026/rejeicao/meio_ideia_p-20.png"
+   ],
+   "tipo_pergunta": "cartao_multipla",
+   "comparavel": true,
+   "enunciado": "Em quem você não votaria de jeito nenhum para presidente? Mais algum? Algum outro? Múltipla.",
+   "lula": 47.1,
+   "flavio": 46.1,
+   "sem_corte_por_voto": "Só o total (p. 20); evolução na p. 21 e rejeição principal na p. 22.",
+   "sha256": "1c3c2fa4069877ef5b02a4fb8c7777643b1605baba406b62f0f28170991c87f0"
+  },
+  {
+   "instituto": "Palver",
+   "pesquisa": "palver_2026-09-27",
+   "registro_tse": "BR-02990/2026",
+   "campo": {
+    "inicio": "2026-09-24",
+    "fim": "2026-09-27"
+   },
+   "divulgacao": "2026-09-29",
+   "n": 5000,
+   "pdf": "data/originals/palver_092026_29/relatorio.pdf",
+   "publica": true,
+   "paginas": [
+    64,
+    66,
+    67,
+    69
+   ],
+   "pagina_principal": 64,
+   "leitura": "imagem, renderizada a 130 dpi; recorte a 260 dpi",
+   "renderizacao": [
+    "analysis/predicao_2026/rejeicao/palver_p-064.png",
+    "analysis/predicao_2026/rejeicao/palver_p-067.png",
+    "analysis/predicao_2026/rejeicao/palver_p-066.png",
+    "analysis/predicao_2026/rejeicao/palver_p-069.png",
+    "analysis/predicao_2026/rejeicao/palver_p-066_identificacao_260dpi.png",
+    "analysis/predicao_2026/rejeicao/palver_p-069_identificacao_260dpi.png"
+   ],
+   "tipo_pergunta": "grade_por_candidato",
+   "comparavel": true,
+   "enunciado": "Questões 10 e 11: conhece o candidato e qual a chance de votar nele: com certeza votaria, poderia votar, provavelmente não votaria, não votaria de jeito nenhum, não conhece ou não sabe.",
+   "lula": 51,
+   "flavio": 48,
+   "nota": "Flávio na p. 64 (Q10), Lula na p. 67 (Q11). Provavelmente não votaria (4 e 3) fica fora da rejeição.",
+   "segmentos": [
+    {
+     "recorte": "identificação política",
+     "rotulo": "Independente",
+     "lula": 57,
+     "flavio": 54,
+     "ic95_inferior": {
+      "lula": 51,
+      "flavio": 49
+     },
+     "pagina": "66 e 69"
+    }
+   ],
+   "sem_corte_por_voto": "Cruzamentos por sexo, idade, escolaridade, renda, região, Bolsa Família, religião e identificação política (pp. 65, 66, 68 e 69).",
+   "sha256": "b11ec801419a090d9bd7d017ac3a8df2b25fefda5841d02d1b882e47e318b8de"
+  },
+  {
+   "instituto": "PoderData",
+   "pesquisa": "poderdata_2026-09-23",
+   "registro_tse": "BR-01739/2026",
+   "campo": {
+    "inicio": "2026-09-20",
+    "fim": "2026-09-23"
+   },
+   "divulgacao": "2026-09-24",
+   "n": 3000,
+   "pdf": "data/originals/poderdata_092026_24/relatorio.pdf",
+   "publica": true,
+   "paginas": [
+    22,
+    23
+   ],
+   "pagina_principal": 22,
+   "leitura": "imagem, renderizada a 130 dpi",
+   "renderizacao": [
+    "analysis/predicao_2026/rejeicao/poderdata_p-22.png",
+    "analysis/predicao_2026/rejeicao/poderdata_p-23.png"
+   ],
+   "tipo_pergunta": "grade_por_candidato",
+   "comparavel": true,
+   "enunciado": "Sobre cada candidato, você diria que: é o único em que votaria, poderia votar, não votaria de jeito nenhum, não sabe.",
+   "lula": 49,
+   "flavio": 47,
+   "nota": "Divulgação fora da janela de 7 dias do corte: transcrita, fora da média.",
+   "sem_corte_por_voto": "Só o total.",
+   "sha256": "36e40595f854c2fd2d5255073475cb7fe62da95fc390aa9f3ae31628d373e9a1"
+  },
+  {
+   "instituto": "MDA",
+   "pesquisa": "mda_2026-10-02",
+   "registro_tse": "BR-04756/2026",
+   "campo": {
+    "inicio": "2026-09-30",
+    "fim": "2026-10-02"
+   },
+   "divulgacao": "2026-10-03",
+   "n": 2007,
+   "pdf": "data/originals/mda_102026_03/relatorio.pdf",
+   "publica": true,
+   "paginas": [
+    19,
+    20,
+    25
+   ],
+   "pagina_principal": 25,
+   "leitura": "texto nativo",
+   "tipo_pergunta": "escala_de_potencial",
+   "comparavel": false,
+   "enunciado": "Qual a possibilidade de você votar em X? Votaria com certeza, poderia votar, não votaria, não conhece.",
+   "lula": 47.6,
+   "flavio": 51.7,
+   "motivo_controle": "Escala de possibilidade sem o termo de jeito nenhum: não votaria é o polo de uma escala de potencial. Entra como controle.",
+   "sha256": "894f25412ca96d4644f2c1e9121b110cd1a4e7aabe3e62295e3e47c1cc3a4841"
+  },
+  {
+   "instituto": "Indexa/Broadcast",
+   "pesquisa": "indexa_2026-09-29",
+   "registro_tse": "BR-00698/2026",
+   "campo": {
+    "inicio": "2026-09-27",
+    "fim": "2026-09-29"
+   },
+   "divulgacao": "2026-09-30",
+   "n": 2000,
+   "pdf": "data/originals/indexa_092026_30/relatorio.pdf",
+   "publica": true,
+   "paginas": [
+    39,
+    46,
+    47,
+    50,
+    51
+   ],
+   "pagina_principal": 39,
+   "leitura": "imagem, renderizada a 130 dpi",
+   "renderizacao": [
+    "analysis/predicao_2026/rejeicao/indexa_p-39.png",
+    "analysis/predicao_2026/rejeicao/indexa_p-46.png",
+    "analysis/predicao_2026/rejeicao/indexa_p-47.png",
+    "analysis/predicao_2026/rejeicao/indexa_p-50.png",
+    "analysis/predicao_2026/rejeicao/indexa_p-51.png"
+   ],
+   "tipo_pergunta": "escala_de_potencial",
+   "comparavel": false,
+   "enunciado": "Sobre a possibilidade de votar no candidato: com certeza votaria, poderia votar, jamais votaria, não conhece o suficiente.",
+   "lula": 50,
+   "flavio": 51,
+   "motivo_controle": "Escala de potencial com jamais votaria: entra como controle.",
+   "segmentos": [
+    {
+     "recorte": "perfil político",
+     "rotulo": "De centro",
+     "lula": 52,
+     "flavio": 51,
+     "pagina": "46 e 50"
+    },
+    {
+     "recorte": "voto 2022 no 2º turno",
+     "rotulo": "Não votou, nulo ou branco",
+     "lula": 72,
+     "flavio": 60,
+     "pagina": "47 e 51"
+    },
+    {
+     "recorte": "voto 2022 no 2º turno",
+     "rotulo": "Não sabe ou não opinou",
+     "lula": 54,
+     "flavio": 42,
+     "pagina": "47 e 51"
+    }
+   ],
+   "sem_corte_por_voto": "Cruzamentos por região, perfil político, sexo, idade, instrução, renda, religião e voto de 2022 (pp. 46, 47, 50 e 51). Sem base por segmento publicada.",
+   "sha256": "ff9b529d8a6993614337eaaa78698d09325372f1431bd649c61882b8e4f098a7"
+  },
+  {
+   "instituto": "Vox Brasil",
+   "pesquisa": "vox_brasil_2026-10-01",
+   "registro_tse": "BR-00148/2026",
+   "campo": {
+    "inicio": "2026-09-29",
+    "fim": "2026-10-01"
+   },
+   "divulgacao": "2026-10-02",
+   "n": 2100,
+   "pdf": "data/originals/vox_102026_02/relatorio.pdf",
+   "publica": true,
+   "paginas": [
+    11
+   ],
+   "pagina_principal": 11,
+   "leitura": "texto nativo; renderizada a 130 dpi",
+   "renderizacao": [
+    "analysis/predicao_2026/rejeicao/vox_p-11.png"
+   ],
+   "tipo_pergunta": "cartao_multipla",
+   "comparavel": false,
+   "enunciado": "Rejeição de voto para presidente, respostas estimuladas e múltiplas. O relatório não imprime o enunciado.",
+   "lula": 52.8,
+   "flavio": 49.1,
+   "motivo_controle": "Enunciado não publicado: não dá para conferir o termo de jeito nenhum. Entra como controle.",
+   "sha256": "8773b252d2e72e8bd8f48c1da99d17a5c70140d836b111df68da344cab730093"
+  },
+  {
+   "instituto": "Real Time Big Data",
+   "pesquisa": "realtime_2026-09-30",
+   "registro_tse": "BR-09503/2026",
+   "campo": {
+    "inicio": "2026-09-26",
+    "fim": "2026-09-30"
+   },
+   "divulgacao": "2026-10-01",
+   "n": 2000,
+   "pdf": "data/originals/realtime_102026_01/relatorio.pdf",
+   "publica": true,
+   "paginas": [
+    30
+   ],
+   "pagina_principal": 30,
+   "leitura": "texto nativo; renderizada a 130 dpi",
+   "renderizacao": [
+    "analysis/predicao_2026/rejeicao/realtime_p-30.png"
+   ],
+   "tipo_pergunta": "cartao_multipla",
+   "comparavel": false,
+   "enunciado": "Em quais desses candidatos você não votaria? Múltipla.",
+   "lula": 49,
+   "flavio": 49,
+   "motivo_controle": "Enunciado sem o termo de jeito nenhum, e os nomes menores recebem rejeição de 23% a 43%, nível incompatível com as demais casas: entra como controle.",
+   "sha256": "ddc2e8f33d7a09a35c4dba11ef5ef3d924db29907ee608b869dbf0e09a2e3af2"
+  },
+  {
+   "instituto": "AtlasIntel",
+   "pesquisa": "atlas_2026-09-28",
+   "registro_tse": "BR-04391/2026",
+   "campo": {
+    "inicio": "2026-09-23",
+    "fim": "2026-09-28"
+   },
+   "divulgacao": "2026-09-29",
+   "n": 5005,
+   "pdf": "data/originals/atlas_092026_29/relatorio.pdf",
+   "publica": false,
+   "paginas_varridas": "1 a 23",
+   "leitura": "títulos de todas as páginas pela camada de texto; sumário na p. 2",
+   "nota": "Não publica: o sumário (p. 2) tem quatro seções (metodologia, aprovação e avaliação, 1º turno, 2º turno) e nenhuma página traz rejeição ou potencial de voto.",
+   "sha256": "3ca8d8ff2f26f274161281b04ebef892c7a9269e49ec1c6df7adbfce1dd59b2a"
+  },
+  {
+   "instituto": "Veritá",
+   "pesquisa": "verita_2026-09-19",
+   "registro_tse": "27 registros estaduais (p. 4)",
+   "campo": {
+    "inicio": "2026-09-10",
+    "fim": "2026-09-19"
+   },
+   "divulgacao": "2026-09-24",
+   "n": 40500,
+   "pdf": "data/originals/verita_092026_24/relatorio.pdf",
+   "publica": false,
+   "paginas_varridas": "1 a 27",
+   "leitura": "texto nativo de todas as páginas",
+   "nota": "Não publica: o relatório consolidado traz só intenção de 1º turno e cruzamentos demográficos.",
+   "sha256": "6c2b54c4574f4652dc353e338dc137cbd8c8bb08dec60c43caf0a3bf7c59ffdb"
+  }
+ ],
+ "matriz_nexus": {
+  "pdf": "docs/fontes/nexus_btg_28092026.pdf",
+  "pagina": 84,
+  "renderizacao": "analysis/nexus_btg_28092026/page-84.png",
+  "pergunta": "Voto estimulado no 1º turno contra voto no 2º turno, Lula contra Flávio (cenário 1)",
+  "participacao_1t": {
+   "pagina": "manifesto analysis/reponderacao/pesquisas/nexus_2026-09-27.json, publicado 1t",
+   "caiado": 5,
+   "cury": 5,
+   "renan_santos": 4,
+   "zema": 1
+  },
+  "linhas": {
+   "samara": {
+    "lula": 41,
+    "flavio": 36,
+    "branco_nulo": 24,
+    "ns_nr": 0
+   },
+   "caiado": {
+    "lula": 32,
+    "flavio": 32,
+    "branco_nulo": 35,
+    "ns_nr": 1
+   },
+   "cury": {
+    "lula": 30,
+    "flavio": 38,
+    "branco_nulo": 31,
+    "ns_nr": 0
+   },
+   "renan_santos": {
+    "lula": 13,
+    "flavio": 43,
+    "branco_nulo": 43,
+    "ns_nr": 0
+   },
+   "zema": {
+    "lula": 0,
+    "flavio": 66,
+    "branco_nulo": 13,
+    "ns_nr": 20
+   }
+  },
+  "nota": "Samara fica fora da ponderação: sua participação está somada em outros (1%) e não é publicada isoladamente.",
+  "sha256": "b43fc320543a3094f2b0abfc63f07ffdbcf711637e3d74a689cf4ef173e6b409"
+ },
+ "fora_da_varredura": [
+  {
+   "instituto": "Alfa Inteligência/TMC",
+   "motivo": "fonte arquivada é matéria em HTML, sem relatório completo"
+  },
+  {
+   "instituto": "American Analytics",
+   "motivo": "fonte arquivada é matéria de 4 páginas, sem relatório completo"
+  }
+ ]
+}

@@ -476,9 +476,18 @@ simulator with one-click presets and shareable `#sim=` links
 house effects (`scripts/predicao_2026/dinamico.py`) and a rolling-origin
 predictive validation of every national anchor (`scripts/predicao_2026/preditiva.py`,
 output in `docs/assets/predicao_2026_validacao_preditiva.json`). The validation
-scores how well each anchor predicts the next polls, never the ballot. No anchor
-beat the recency-weighted central, so the central was kept and the DLM is an
-alternative in the simulator. `analysis/predicao_2026/avaliacao_ml.md` explains
+scores how well each anchor predicts the next polls, never the ballot. The DLM
+did not beat the recency-weighted mean and stays an alternative in the
+simulator. Since the evening of 3 October the central is the recency mean
+shifted by the shrunken 28-day poll trend projected to election day
+(`central_inclinacao`), the only variant that passed the criterion declared
+before the test (paired MAE not worse and smaller absolute bias at 1 to 3 days),
+with undecided voters split by availability (1 minus stated rejection). It is a
+shrunken extrapolation of a trend measured in polls, not a measurement of the
+ballot. Consolidation scenarios start from the no-trend anchor (`inclusivo`) to
+avoid counting the same migration twice, and the Monte Carlo recentres the
+house bootstrap on the chosen anchor and adds the slope uncertainty in
+quadrature to the common error. `analysis/predicao_2026/avaliacao_ml.md` explains
 why supervised machine learning cannot be trained on this archive: there is
 one reference election and no archived 2018 or 2022 polls.
 

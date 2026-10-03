@@ -257,6 +257,136 @@ def house_table(data):
     )
 
 
+LEVEL = {
+    "pdf_do_instituto": "PDF do instituto",
+    "infografico_do_instituto": "Infográfico do instituto",
+    "materia_do_contratante": "Matéria do contratante",
+    "imprensa_concordante": "Imprensa, dois veículos",
+    "imprensa_divergente": "Imprensa divergente",
+}
+E22_GROUPS = ("lula", "bolsonaro", "tebet", "ciro")
+
+
+def pp_signed(x, places=2):
+    """Número com sinal explícito e menos tipográfico, para colunas de erro."""
+    return (("+" if x > 0 else "") + number(x, places)).replace("-", "\u2212")
+
+
+def _e22_source(house):
+    doc = house["documentos"][0]
+    title = f"Arquivado em {doc['arquivo']} (SHA-256 {doc['sha256'][:12]})"
+    level = str(house["nivel"])
+    label = LEVEL.get(level) or level
+    return (
+        f'<a href="{esc(doc["url"], quote=True)}" title="{esc(title, quote=True)}">'
+        f"{esc(label)}</a>"
+    )
+
+
+def erro_2022_table(data):
+    """Erro de cada casa no 1º turno de 2022 contra o TSE, com média e dispersão."""
+    e = data["erro_2022"]
+    media = e["media_das_casas"]
+    included = set(media["casas"])
+    houses = sorted(
+        e["por_casa"],
+        key=lambda h: (
+            h["id"] not in included,
+            -h["diferenca_lula_menos_bolsonaro"]["erro"],
+        ),
+    )
+
+    def row(h):
+        name = esc(h["casa"])
+        if h["id"] not in included:
+            name += " <small>(fora da média)</small>"
+        c = h["campo"]
+        start = f"{c['inicio'][8:10]}/{c['inicio'][5:7]}"
+        end = f"{c['fim'][8:10]}/{c['fim'][5:7]}"
+        field = start if start == end else f"{start} a {end}"
+        return [
+            name,
+            esc(h["registro"]),
+            field,
+            pp_signed(h["diferenca_lula_menos_bolsonaro"]["erro"]),
+            *[pp_signed(h["erro_pp"][k]) for k in E22_GROUPS],
+            _e22_source(h),
+        ]
+
+    rows = [row(h) for h in houses if h["id"] in included]
+    common = media["erro_comum_pp"]
+    sd = media["desvio_padrao_entre_casas_pp"]
+    rows.append(
+        [
+            f"<strong>Média das {media['n_casas']} casas (erro comum)</strong>",
+            "",
+            "",
+            "<strong>"
+            + pp_signed(media["erro_comum_diferenca_lula_menos_bolsonaro"])
+            + "</strong>",
+            *[pp_signed(common[k]) for k in E22_GROUPS],
+            "TSE, eleição 544",
+        ]
+    )
+    rows.append(
+        [
+            "Dispersão entre casas (desvio padrão)",
+            "",
+            "",
+            number(sd["diferenca_lula_menos_bolsonaro"], 2),
+            *[number(sd[k], 2) for k in E22_GROUPS],
+            "",
+        ]
+    )
+    rows += [row(h) for h in houses if h["id"] not in included]
+    return table(
+        [
+            "Casa",
+            "Registro TSE",
+            "Campo (2022)",
+            "Erro na diferença L−B",
+            "Lula",
+            "Bolsonaro",
+            "Tebet",
+            "Ciro",
+            "Fonte",
+        ],
+        rows,
+        "Erro das pesquisas no 1º turno de 2022, pontos dos válidos, pesquisa menos urna",
+    )
+
+
+def erro_2022_vs_2026(data):
+    """Erro de 2022 ao lado do desvio relativo de 2026; o segundo não é erro."""
+    lines = sorted(
+        data["erro_2022"]["comparacao_2026"]["linhas"],
+        key=lambda r: -r["erro_2022_diferenca_lula_menos_bolsonaro_pp"],
+    )
+    rows = [
+        [
+            esc(r["casa_2022"]),
+            esc(r["casa_2026"]),
+            esc(r["ligacao"]),
+            pp_signed(r["erro_2022_diferenca_lula_menos_bolsonaro_pp"]),
+            pp_signed(r["desvio_relativo_2026_lula_menos_flavio_pp"]),
+            str(r["ondas_2026"]),
+        ]
+        for r in lines
+    ]
+    return table(
+        [
+            "Casa em 2022",
+            "Casa em 2026",
+            "Ligação",
+            "Erro 2022 na diferença L−B",
+            "Desvio relativo 2026 L−F",
+            "Ondas 2026",
+        ],
+        rows,
+        "Erro de 2022 contra o TSE e desvio relativo de 2026 contra as outras casas",
+    )
+
+
 def poll_table(data):
     chosen = {p["id"] for p in data["nacional"]["pareadas"]}
     rows = []
@@ -581,9 +711,59 @@ def predictive_table(data):
         "Viés L−F (pp)",
         "MAE parcelas (pp)",
     ]
+    groups = v["origem_movel"].get("por_grupo_horizonte", {})
+    by_horizon = table(
+        [
+            "Horizonte",
+            "Âncora",
+            "Pares",
+            "MAE L−F (pp)",
+            "Viés L−F (pp)",
+            "Viés Lula (pp)",
+            "Viés Flávio (pp)",
+            "Viés terceira via (pp)",
+        ],
+        [
+            [
+                f"{esc(label)} dias",
+                esc(m["rotulo"]),
+                str(m["n_pares"]),
+                number(m["mae_margem_pp"], 2),
+                number(m["vies_margem_pp"], 2),
+                number(m["vies_lula_pp"], 2),
+                number(m["vies_flavio_pp"], 2),
+                number(m["vies_outros_pp"], 2),
+            ]
+            for label, g in groups.items()
+            for m in g["metricas"].values()
+        ],
+        "Origem móvel por horizonte, com viés por candidatura (previsto menos observado)",
+    )
+    acceleration = v.get("aceleracao")
+    accel = (
+        table(
+            headers,
+            [
+                [
+                    esc(m["rotulo"]),
+                    str(m["n_pares"]),
+                    number(m["mae_margem_pp"], 2),
+                    number(m["rmse_margem_pp"], 2),
+                    number(m["vies_margem_pp"], 2),
+                    number(m["mae_parcelas_pp"], 2),
+                ]
+                for m in acceleration["metricas"].values()
+            ],
+            "Inclinação constante contra inclinação que muda",
+        )
+        if acceleration
+        else ""
+    )
     return (
         f"<p>{esc(v['natureza'])}</p>"
         + table(headers, rows("origem_movel"), "Origem móvel, todas as casas")
+        + by_horizon
+        + accel
         + table(headers, rows("deixa_uma_casa_fora"), "Deixando a casa do alvo fora")
         + table(
             headers,
@@ -648,6 +828,8 @@ def render(data, template):
         "MAP": map_svg(data),
         "SENSITIVITY": sensitivity(data),
         "HOUSE_TABLE": house_table(data),
+        "ERRO_2022_TABLE": erro_2022_table(data),
+        "ERRO_2022_VS_2026": erro_2022_vs_2026(data),
         "POLL_TABLE": poll_table(data),
         "STATE_DETAILS": state_details(data),
         "SOURCE_UPDATES": source_updates(data),

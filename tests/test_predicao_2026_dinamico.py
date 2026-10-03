@@ -118,8 +118,8 @@ def test_published_dynamic_anchor_is_consistent(data):
         )
     assert d["trajetoria"][-1]["data"] == data["referencia"]
     assert "Âncora dinâmica (DLM com efeitos de casa)" in data["sensibilidades"]
-    # A central não muda por causa da âncora nova.
-    assert data["configuracao"]["defaults"]["base"] == "inclusivo"
+    # A âncora dinâmica não é a central; a central é a recência com tendência.
+    assert data["configuracao"]["defaults"]["base"] == "central_inclinacao"
 
 
 def test_predictive_validation_is_labelled_and_paired(data):
@@ -162,7 +162,7 @@ def test_browser_dynamic_anchor_is_recentred(data):
     script = """const fs=require('fs'), engine=require(process.argv[1]);
     const x=JSON.parse(fs.readFileSync(0,'utf8'));
     (async()=>{const out={};for(const base of ['inclusivo','dinamico'])
-      out[base]=await engine.simulate(x,{base},()=>{},()=>false,400);
+      out[base]=await engine.simulate(x,{...x.central.parametros,base},()=>{},()=>false,400);
     process.stdout.write(JSON.stringify(out));})();"""
     run = subprocess.run(
         [node, "-e", script, str(ROOT / "docs/assets/predicao_2026.js")],
@@ -174,7 +174,7 @@ def test_browser_dynamic_anchor_is_recentred(data):
     out = json.loads(run.stdout)
     sens = data["sensibilidades"]
     expected = {
-        "inclusivo": sens["Central inclusiva com recência, sem voto útil adicional"],
+        "inclusivo": sens["Recência sem tendência, indecisos por disponibilidade"],
         "dinamico": sens["Âncora dinâmica (DLM com efeitos de casa)"],
     }
     for base, result in out.items():

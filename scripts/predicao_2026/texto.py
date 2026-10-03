@@ -9,7 +9,9 @@ from math import sqrt
 
 from .view import number
 
-CENTRAL = "Central inclusiva com recência, sem voto útil adicional"
+CENTRAL = "Central: recência com tendência de 28 dias encolhida, indecisos por disponibilidade"
+SEM_TEND = "Recência sem tendência, indecisos por disponibilidade"
+PROP = "Indecisos proporcionais às candidaturas"
 SEM_EP = "Sem seleção de eleitor provável"
 F25 = "Flávio antecipa 25% da reserva"
 L25 = "Lula antecipa 25% da reserva"
@@ -21,6 +23,11 @@ Z95 = 1.96
 
 def signed(x, places=2):
     return ("+" if x > 0 else "") + number(x, places)
+
+
+def minus(x, places=2):
+    """Como signed, com o sinal de menos tipográfico usado no simulador."""
+    return signed(x, places).replace("-", "−")
 
 
 def date_br(iso):
@@ -191,8 +198,359 @@ def values(data):
         abs(sens[COMP_L]["brasil"]["lula"] - base_votes) / 1e6, 1
     )
 
+    out.update(trend_values(data))
+    out.update(learning_values(data))
     out.update(dlm_values(nat["dinamico"], central, sens))
+    out.update(consolidation_values(data))
+    out.update(rejection_values(data))
     out.update(predictive_values(data["validacao_preditiva"]))
+    out.update(error_2022_values(data))
+    return out
+
+
+def error_2022_values(data):
+    """Bloco “O erro de 2022, casa por casa”: tudo lido de erro_2022."""
+    e = data["erro_2022"]
+    media = e["media_das_casas"]
+    included = set(media["casas"])
+    houses = [h for h in e["por_casa"] if h["id"] in included]
+    gap = {h["id"]: h["diferenca_lula_menos_bolsonaro"]["erro"] for h in houses}
+    official = e["resultado_oficial"]
+    shares = official["parcelas_validos_pp"]
+    sens = {s["nome"]: s for s in e["sensibilidades_da_media"]}
+    labels = e["aplicacao_2026"]["sensibilidades"]
+    scen = data["sensibilidades"]
+    worst = max(gap.values())
+    best = min(houses, key=lambda h: abs(gap[h["id"]]))
+    other_way = sorted(
+        (h for h in houses if gap[h["id"]] < 0), key=lambda h: -gap[h["id"]]
+    )
+    common = media["erro_comum_pp"]
+    out = {
+        "E22_TSE_LULA": number(shares["lula"], 2),
+        "E22_TSE_BOLSONARO": number(shares["bolsonaro"], 2),
+        "E22_TSE_GAP": number(official["diferenca_lula_menos_bolsonaro_pp"], 2),
+        "E22_TSE_VALIDOS_MI": number(official["votos"]["validos"] / 1e6, 1),
+        "E22_TSE_DATA": (
+            official["conferencia_api_bruta"]["br"]["data_totalizacao"][:10]
+            if official.get("conferencia_api_bruta")
+            else ""
+        ),
+        "E22_MEDIA_GAP": number(
+            media["media_simples_validos_pp"]["lula"]
+            - media["media_simples_validos_pp"]["bolsonaro"],
+            2,
+        ),
+        "E22_GAP": minus(media["erro_comum_diferenca_lula_menos_bolsonaro"]),
+        "E22_MEDIANA": minus(media["mediana_dos_erros_diferenca_pp"]),
+        "E22_LULA": minus(common["lula"]),
+        "E22_BOLSONARO": minus(common["bolsonaro"]),
+        "E22_TEBET": minus(common["tebet"]),
+        "E22_CIRO": minus(common["ciro"]),
+        "E22_N_CASAS": str(media["n_casas"]),
+        "E22_N_SUBESTIMARAM": str(sum(h["erro_pp"]["bolsonaro"] < 0 for h in houses)),
+        "E22_N_GAP_ACIMA": str(media["casas_que_superestimaram_lula_menos_bolsonaro"]),
+        "E22_N_FORA_MARGEM": str(
+            sum(
+                gap[h["id"]] > 0 and h["erro_diferenca_fora_da_margem_aas"]
+                for h in houses
+            )
+        ),
+        "E22_N_ANTES": str(sum(h["campo"]["fim"] < "2022-10-01" for h in houses)),
+        "E22_DISPERSAO": number(
+            media["desvio_padrao_entre_casas_pp"]["diferenca_lula_menos_bolsonaro"], 2
+        ),
+        "E22_PIORES": _list(
+            [h["casa"] for h in houses if abs(gap[h["id"]] - worst) < 0.005]
+        ),
+        "E22_PIOR_GAP": minus(worst),
+        "E22_PIOR_PUBLICADA": number(
+            next(
+                h["diferenca_lula_menos_bolsonaro"]["pesquisa"]
+                for h in houses
+                if abs(gap[h["id"]] - worst) < 0.005
+            ),
+            0,
+        ),
+        "E22_CENTRAL_GAP": minus(data["central"]["brasil"]["margem_flavio_lula"]),
+        "E22_MELHOR": best["casa"],
+        "E22_MELHOR_GAP": minus(gap[best["id"]]),
+        "E22_CONTRA": _list(
+            [f"{h['casa']} ({minus(gap[h['id']])})" for h in other_way]
+        ),
+        "E22_SENS_PDF": minus(
+            sens["so_pdf_do_instituto"]["erro_comum_diferenca_lula_menos_bolsonaro"]
+        ),
+        "E22_SENS_PDF_N": str(sens["so_pdf_do_instituto"]["n_casas"]),
+        "E22_SENS_SEM_VERITA": minus(
+            sens["sem_verita"]["erro_comum_diferenca_lula_menos_bolsonaro"]
+        ),
+        "E22_SENS_BRASMARKET": minus(
+            sens["ampliada"]["erro_comum_diferenca_lula_menos_bolsonaro"]
+        ),
+    }
+    for tag, key in (("FLAVIO", "repeticao"), ("LULA", "invertido")):
+        b = scen[labels[key]]["brasil"]
+        out[f"E22_SENS_GAP_{tag}"] = minus(b["margem_flavio_lula"])
+        out[f"E22_SENS_{tag}_LULA"] = number(b["percentuais"]["lula"], 1)
+        out[f"E22_SENS_{tag}_FLAVIO"] = number(b["percentuais"]["flavio"], 1)
+    return out
+
+
+def consolidation_values(data):
+    """Bloco do simulador sobre a consolidação medida nas pesquisas."""
+    from .motor import scenario
+
+    cons = data["consolidacao"]
+    central = data["central"]["brasil"]
+    out = {
+        "CONS_IDADE": number(cons["idade_efetiva_ancora_dias"], 1),
+        "CONS_DATA": date_br(cons["data_efetiva_ancora"]),
+        "CONS_HORIZONTE": number(cons["horizonte_dias"], 1),
+        "CONS_RES_LULA": number(cons["reserva_nacional_pct"]["lula"], 1),
+        "CONS_RES_FLAVIO": number(cons["reserva_nacional_pct"]["flavio"], 1),
+    }
+    caps = []
+    for key in ("28", "14"):
+        fit, proj = cons["janelas"][key], cons["projecao"][key]
+        slope, se = fit["inclinacao_pp_dia"], fit["erro_padrao_pp_dia"]
+        div = fit["divisao"]
+        tag = f"CONS{key}"
+        out[f"{tag}_ONDAS"] = str(fit["n_ondas"])
+        out[f"{tag}_CASAS"] = str(fit["n_casas"])
+        for k, name in (("terceira_via", "T"), ("flavio", "F"), ("lula", "L")):
+            out[f"{tag}_{name}"] = minus(slope[k], 2)
+            out[f"{tag}_{name}_EP"] = number(se[k], 2)
+        out[f"{tag}_DIV_F"] = number(100 * proj["parte_flavio_usada"], 0)
+        out[f"{tag}_DIV_L"] = number(100 * (1 - proj["parte_flavio_usada"]), 0)
+        out[f"{tag}_DIV_EP"] = number(100 * (div["erro_padrao"] or 0), 0)
+        out[f"{tag}_MIGR"] = number(proj["migracao_total_pp"], 2)
+        out[f"{tag}_MIGR_F"] = number(proj["migracao_pp"]["flavio"], 2)
+        out[f"{tag}_MIGR_L"] = number(proj["migracao_pp"]["lula"], 2)
+        lam = proj["lambda_arredondado"]
+        out[f"{tag}_LAMBDA_F"] = number(100 * lam["flavio"], 0)
+        out[f"{tag}_LAMBDA_L"] = number(100 * lam["lula"], 0)
+        result = scenario(
+            data["estados"],
+            {
+                **data["central"]["parametros"],
+                "base": cons["ancora"],
+                "voto_flavio": lam["flavio"],
+                "voto_lula": lam["lula"],
+            },
+        )["brasil"]
+        out[f"{tag}_LULA"] = number(result["percentuais"]["lula"], 1)
+        out[f"{tag}_FLAVIO"] = number(result["percentuais"]["flavio"], 1)
+        out[f"{tag}_GAP"] = minus(result["margem_flavio_lula"], 2)
+        out[f"{tag}_DELTA"] = minus(
+            result["margem_flavio_lula"] - central["margem_flavio_lula"], 2
+        )
+        caps += [
+            f"{name} em {key} dias"
+            for k, name in (("lula", "Lula"), ("flavio", "Flávio"))
+            if proj["teto_atingido"][k]
+        ]
+    cmp_ = cons["comparacao_central"]
+    out["CONS_CMP_CENTRAL"] = minus(cmp_["central_margem_pp"], 2)
+    out["CONS_CMP_CONS"] = minus(cmp_["consolidacao_28_sobre_inclusivo_margem_pp"], 2)
+    out["CONS_CMP_DIFF"] = number(abs(cmp_["diferenca_pp"]), 2)
+    short = cons["projecao"]["14"]["parte_flavio_usada"]
+    short_se = cons["janelas"]["14"]["divisao"]["erro_padrao"] or 0
+    half = abs(short - 0.5) <= Z95 * short_se
+    out["CONS_METADE"] = (
+        "Nos últimos 14 dias, a parte de Flávio na migração não se distingue de "
+        "metade: o intervalo de 95% contém 50%."
+        if half
+        else "Nos últimos 14 dias, a parte de Flávio na migração se distingue de "
+        "metade: o intervalo de 95% não contém 50%."
+    )
+    out["CONS_TETO"] = (
+        " A migração projetada esgota a reserva medida para "
+        + " e ".join(caps)
+        + ", e o cenário usa o teto de 100%."
+        if caps
+        else ""
+    )
+    return out
+
+
+def _list(names):
+    return names[0] if len(names) < 2 else ", ".join(names[:-1]) + " e " + names[-1]
+
+
+def rejection_values(data):
+    """Bloco do simulador sobre rejeição como régua de destino."""
+    rej = data["rejeicao"]
+    sens = data["sensibilidades"]
+    central = data["central"]["brasil"]
+    media, comp = rej["media"], rej["comparacao"]
+
+    def pct(x, places=1):
+        return number(100 * x, places)
+
+    out = {
+        "REJ_N_CASAS": str(len(media["casas"])),
+        "REJ_CASAS": _list(media["casas"]),
+        "REJ_LULA": number(media["lula"], 1),
+        "REJ_FLAVIO": number(media["flavio"], 1),
+        "REJ_PARTE": pct(media["parte_flavio"]),
+        "REJ_EP": number(100 * media["erro_padrao"], 1),
+        "REJ_AMPL_LO": pct(media["amplitude_entre_casas"][0]),
+        "REJ_AMPL_HI": pct(media["amplitude_entre_casas"][1]),
+        "REJ_CARTAO": pct(rej["por_formato"]["cartao_multipla"]["parte_flavio"]),
+        "REJ_GRADE": pct(rej["por_formato"]["grade_por_candidato"]["parte_flavio"]),
+        "REJ_CONTROLES": _list(rej["controles_media"]["casas"]),
+        "REJ_CONTROLE": pct(rej["controles_media"]["parte_flavio"]),
+        "REJ_SERIE28": pct(comp["serie_28"]["parte_flavio"]),
+        "REJ_SERIE14": pct(comp["serie_14"]["parte_flavio"]),
+        "REJ_Z28": number(abs(comp["serie_28"]["z_disponibilidade_menos_serie"]), 1),
+        "REJ_NEXUS": pct(comp["nexus_p84"]["parte_flavio_entre_finalistas"]),
+        "REJ_DF": pct(
+            comp["datafolha_segunda_opcao"]["hesitantes"][
+                "parte_flavio_entre_finalistas"
+            ]
+        ),
+    }
+    picks = (
+        ("Quaest", "Independente", "entre independentes na Quaest"),
+        ("Palver", "Independente", "entre independentes na Palver"),
+        ("Datafolha", "Nenhum/Não tem", "entre quem não tem partido no Datafolha"),
+    )
+    found = []
+    for house, label, text in picks:
+        seg = next(
+            (
+                g
+                for g in rej["segmentos"]
+                if g["instituto"] == house and g["rotulo"] == label
+            ),
+            None,
+        )
+        if seg:
+            ep = (
+                f" (erro padrão de {number(100 * seg['erro_padrao'], 1)} pontos)"
+                if seg["erro_padrao"]
+                else ""
+            )
+            found.append(f"{pct(seg['parte_flavio'], 0)}% {text}{ep}")
+    out["REJ_INDEP"] = _list(found)
+    share = media["parte_flavio"]
+    measured = (
+        ("a série de 28 dias", comp["serie_28"]["parte_flavio"]),
+        ("a série de 14 dias", comp["serie_14"]["parte_flavio"]),
+        ("a matriz da Nexus", comp["nexus_p84"]["parte_flavio_entre_finalistas"]),
+        (
+            "a segunda opção do Datafolha",
+            comp["datafolha_segunda_opcao"]["hesitantes"][
+                "parte_flavio_entre_finalistas"
+            ],
+        ),
+    )
+    above = [name for name, v in measured if v > share]
+    below = [name for name, v in measured if v <= share]
+    sentence = "A divisão por disponibilidade supõe que quem se move rejeita como o eleitorado inteiro."
+    if above:
+        sentence += f" Dá menos a Flávio que {_list(above)}"
+        sentence += f" e mais que {_list(below)}." if below else "."
+    else:
+        sentence += f" Dá mais a Flávio que {_list(below)}."
+    out["REJ_FRASE"] = sentence
+    out["REJ_IND_PARTE"] = pct(data["central"]["parametros"]["indecisos_flavio"])
+    out["REJ_IND_EFEITO"] = minus(
+        central["margem_flavio_lula"] - sens[PROP]["brasil"]["margem_flavio_lula"], 2
+    )
+    for tag, label in (
+        ("IND", CENTRAL),
+        ("PROP", PROP),
+        ("CONS", "Consolidação 28 dias, divisão por disponibilidade"),
+    ):
+        b = sens[label]["brasil"]
+        out[f"REJ_{tag}_LULA"] = number(b["percentuais"]["lula"], 1)
+        out[f"REJ_{tag}_FLAVIO"] = number(b["percentuais"]["flavio"], 1)
+        out[f"REJ_{tag}_GAP"] = minus(b["margem_flavio_lula"], 2)
+        out[f"REJ_{tag}_DELTA"] = minus(
+            b["margem_flavio_lula"] - central["margem_flavio_lula"], 2
+        )
+    return out
+
+
+def trend_values(data):
+    """Passo 1: correção de tendência da central (inclinação encolhida)."""
+    nat = data["nacional"]
+    sloped = nat["tendencia"]["central_com_inclinacao"]
+    shrunk = sloped["inclinacoes_encolhidas_validos_pp_dia"]
+    raw = sloped["inclinacoes_brutas_validos_pp_dia"]
+    alvo = nat["alvos"]["inclusivo"]
+    before = 100 * (alvo[1] - alvo[0]) / sum(alvo[:3])
+    sens = data["sensibilidades"]
+    central = data["central"]["brasil"]["margem_flavio_lula"]
+    unc = data["configuracao"]["incerteza"]["projecao_inclinacao"]
+    out = {
+        "TEND_JANELA": str(sloped["janela_dias"]),
+        "TEND_DATA": date_br(sloped["data_efetiva_central"]),
+        "TEND_HORIZ": number(sloped["horizonte_dias"], 2),
+        "TEND_ALVO_ANTES": minus(before, 2),
+        "TEND_ALVO_DEPOIS": minus(sloped["margem_flavio_lula_validos_pp"], 2),
+        "TEND_ALVO_DELTA": minus(sloped["margem_flavio_lula_validos_pp"] - before, 2),
+        "TEND_SEM": minus(sens[SEM_TEND]["brasil"]["margem_flavio_lula"], 2),
+        "TEND_COM": minus(central, 2),
+        "TEND_EFEITO": minus(
+            central - sens[SEM_TEND]["brasil"]["margem_flavio_lula"], 2
+        ),
+        "TEND_DP_PROJ": number(unc["dp_margem_pp"]["central_inclinacao"], 2),
+        "TEND_DP_TOTAL": number(unc["erro_comum_total_sd_pp"], 2),
+    }
+    for k, tag in (("lula", "L"), ("flavio", "F"), ("outros", "O")):
+        out[f"TEND_{tag}"] = minus(shrunk[k], 3)
+        out[f"TEND_{tag}_BRUTA"] = minus(raw[k], 3)
+        out[f"TEND_{tag}_FATOR"] = number(100 * shrunk[k] / raw[k] if raw[k] else 0, 0)
+    return out
+
+
+def learning_values(data):
+    """Capítulo #aprendizado: a central nova e o que a validação mostrou."""
+    vp = data["validacao_preditiva"]
+    group = vp["origem_movel"]["por_grupo_horizonte"]["1-3"]
+    m = group["metricas"]
+
+    def paired(a):
+        c = next(
+            x
+            for x in group["comparacoes"]
+            if x["a"] == a and x["b"] == "recencia_3d_7d"
+        )
+        return c["margem_lula_flavio"]
+
+    out = {
+        "APR_N_PARES": str(group["n_pares"]),
+        "APR_N_ONDAS": str(group["n_ondas_alvo"]),
+    }
+    for tag, name in (
+        ("CENTRAL", "recencia_3d_7d"),
+        ("INCL", "central_inclinacao_28d"),
+        ("TEND", "tendencia"),
+    ):
+        out[f"APR_MAE_{tag}"] = number(m[name]["mae_margem_pp"], 2)
+        out[f"APR_VIES_{tag}"] = signed(m[name]["vies_margem_pp"], 2)
+    for tag, name in (("INCL", "central_inclinacao_28d"), ("TEND", "tendencia")):
+        c = paired(name)
+        out[f"APR_DIFF_{tag}"] = minus(c["diferenca_mae_pp"], 2)
+        out[f"APR_SE_{tag}"] = number(c["erro_padrao_pp"], 2)
+    split = data["nacional"]["tendencia"]["divisao_migracao"]
+    rows = {r["fonte"]: r for r in split["resumo"]}
+    for tag, key in (
+        ("SERIE", "serie_nacional_28d"),
+        ("NEXUS", "nexus_matriz_quem_pode_mudar"),
+        ("DF", "datafolha_matriz_quem_pode_mudar"),
+    ):
+        out[f"APR_MIG_{tag}"] = number(100 * rows[key]["fracao_flavio"], 0)
+    out["APR_MIG_SINTESE"] = number(100 * split["sintese"]["fracao_flavio"], 0)
+    acc = data["nacional"]["tendencia"]["aceleracao"]
+    out["APR_ACEL_P"] = number(
+        acc["quadratica_efeitos_fixos"]["28"]["categorias"]["flavio"]["p_aceleracao"],
+        2,
+    )
+    out["APR_ACEL_RV_P"] = number(acc["ultimos_28_dias"]["p_valor_mistura_chi2"], 2)
     return out
 
 

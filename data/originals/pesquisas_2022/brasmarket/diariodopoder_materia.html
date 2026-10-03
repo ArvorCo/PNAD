@@ -1,0 +1,1682 @@
+
+<!doctype html>
+<html dir="ltr" lang="pt-BR" prefix="og: https://ogp.me/ns#">
+<head>
+	<!-- 05. Google Tag Manager -->
+	<script>
+		(function(w, d, s, l, i) {
+			w[l] = w[l] || [];
+			w[l].push({'gtm.start': new Date().getTime(), event: 'gtm.js'});
+			var f = d.getElementsByTagName(s)[0],
+				j = d.createElement(s),
+				dl = l != 'dataLayer' ? '&l=' + l : '';
+			j.async = true;
+			j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+			f.parentNode.insertBefore(j, f);
+		})(window, document, 'script', 'dataLayer', 'GTM-WSL6Z3T');
+	</script>
+	<!-- 06. HTML <head> básico + meta tags principais -->
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+	<meta name="theme-color" media="(prefers-color-scheme: light)" content="white">
+    <!-- comentado após a Migração para o GTM -->
+    <!--<meta name="adopt-website-id" content="733b929d-9229-4848-b48d-730ce16e3873" />
+    <script src="https://tag.goadopt.io/injector.js?website_code=733b929d-9229-4848-b48d-730ce16e3873" class="adopt-injector"></script>
+    <script>window.adoptHideAfterConsent = true;</script>-->
+
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+
+	<link rel="profile" href="https://gmpg.org/xfn/11">
+	<meta name="theme-color" content="#ffffff">
+    <link rel="icon" href="https://diariodopoder.com.br/wp-content/themes/diariodopoder/assets/images/favicon-fundo-branco.png?v=2">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://diariodopoder.com.br/wp-content/themes/diariodopoder/assets/images/favicon-fundo-branco.png?v=2">
+
+	<meta property="fb:pages" content="1393839077498961" />
+
+	<!-- preconnect/dns-prefetch -->
+	<link rel="preconnect" href="https://tpc.googlesyndication.com">
+	<link rel="preconnect" href="https://www.googletagmanager.com">
+	<link rel="preconnect" href="https://www.google-analytics.com">
+	<link rel="preconnect" href="https://www.google.com">
+	<link rel="preconnect" href="https://googleads.g.doubleclick.net">
+	
+	<link rel="preconnect" href="https://pagead2.googlesyndication.com">
+	<link rel="preconnect" href="https://cdn.ampproject.org">
+	<link rel='dns-prefetch' href='//s.w.org' />
+
+	<link rel="alternate" type="application/rss+xml" title="Feed para Diário do Poder" href="https://diariodopoder.com.br/feed" />
+	<link rel="alternate" type="application/rss+xml" title="Feed de comentários" href="https://diariodopoder.com.br/comments/feed" />
+
+	<!-- preload de fontes -->
+	<link rel="preload" href="https://diariodopoder.com.br/wp-content/themes/diariodopoder/dist/fonts/OpenSans-Regular-webfont.woff2" as="font" type="font/woff2" crossorigin>
+	<link rel="preload" href="https://diariodopoder.com.br/wp-content/themes/diariodopoder/dist/fonts/OpenSans-Bold-webfont.woff2" as="font" type="font/woff2" crossorigin>
+	<link rel="preload" href="https://diariodopoder.com.br/wp-content/themes/diariodopoder/dist/fonts/OpenSans-Semibold-webfont.woff2" as="font" type="font/woff2" crossorigin>
+	
+
+	<!-- 08. Ads: GPT + funções -->
+	<script>
+		var googletag = googletag || {};
+		googletag.cmd = googletag.cmd || [];
+		googletag.cmd.push(function() {
+			googletag.pubads().disableInitialLoad();
+		});
+
+		let slots = {};
+		let observer_ads = new IntersectionObserver((entries, observer) => {
+			entries.forEach(entry => {
+				let id = `${entry.target.getAttribute('id')}`;
+				let id_reduced = id.slice(8);
+				if (entry.isIntersecting) {
+					slots[id_reduced].interval_id = setInterval(function() {
+						slots[id_reduced].count++;
+						if (slots[id_reduced].count == 30) {
+							slots[id_reduced].count = 0;
+							googletag.pubads().refresh([slots[id_reduced].slot])
+						}
+					}, 1000);
+				} else {
+					clearInterval(slots[id_reduced].interval_id);
+				}
+			})
+		});
+
+		function buildAds(configs) {
+			googletag.cmd.push(function() {
+				const slotId = `ddp-ads-${configs.id}`;
+				const alreadyDefined = googletag.pubads().getSlots()
+					.some(slot => slot.getSlotElementId() === slotId);
+				if (alreadyDefined) return;
+
+				slots[configs.id] = { slot: '', count: 0, interval_id: -1 };
+
+				slots[configs.id].slot = googletag.defineSlot(
+					`/21727414016/${configs.id}`, configs.size, slotId
+				).defineSizeMapping(buildSizeMap(configs.maps).build())
+				.addService(googletag.pubads());
+
+				googletag.pubads().enableAsyncRendering(true);
+				googletag.enableServices();
+				googletag.pubads().enableLazyLoad({
+					fetchMarginPercent: 300,
+					renderMarginPercent: 100,
+					mobileScaling: 2.0
+				});
+
+				googletag.display(slotId);
+				googletag.pubads().setTargeting("screensize", screen.width + 'x' + screen.height);
+				googletag.pubads().setTargeting("urldata", window.location.href.split(/\/|=|,|\.|\&/));
+				googletag.pubads().setTargeting("title", document.title);
+				googletag.pubads().refresh([slots[configs.id].slot]);
+				observer_ads.observe(document.querySelector(`#${slotId}`));
+			});
+		}
+
+		function buildSizeMap(maps) {
+			let sizemapping = googletag.sizeMapping();
+			Object.keys(maps).forEach((element) => {
+				let base = [parseInt(element), 0];
+				let sizes = maps[element];
+				sizemapping.addSize(base, sizes);
+			});
+			return sizemapping;
+		}
+	</script>
+
+	<!-- 09. CSS crítico -->
+	<style>
+		@font-face{font-family:Open Sans;src:local("sans-serif"),url(./fonts/OpenSans-Regular-webfont.eot?#iefix) format("embedded-opentype"),url(./fonts/OpenSans-Regular-webfont.woff2) format("woff2"),url(./fonts/OpenSans-Regular-webfont.woff) format("woff"),url(./fonts/OpenSans-Regular-webfont.ttf) format("truetype");font-weight:400;font-style:normal;font-display:swap}@font-face{font-family:Open Sans;src:local("sans-serif"),url(./fonts/OpenSans-Bold-webfont.eot?#iefix) format("embedded-opentype"),url(./fonts/OpenSans-Bold-webfont.woff2) format("woff2"),url(./fonts/OpenSans-Bold-webfont.woff) format("woff"),url(./fonts/OpenSans-Bold-webfont.ttf) format("truetype");font-weight:700;font-style:normal;font-display:swap}@font-face{font-family:Open Sans;src:local("sans-serif"),url(./fonts/OpenSans-Semibold-webfont.eot?#iefix) format("embedded-opentype"),url(./fonts/OpenSans-Semibold-webfont.woff2) format("woff2"),url(./fonts/OpenSans-Semibold-webfont.woff) format("woff"),url(./fonts/OpenSans-Semibold-webfont.ttf) format("truetype");font-weight:600;font-style:normal;font-display:swap}*{box-sizing:border-box}::-moz-selection{background:#b9161f;color:#fff;text-shadow:none}::selection{background:#b9161f;color:#fff;text-shadow:none}body{font-family:Open Sans,sans-serif;font-size:1rem;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;margin:0;padding:0;line-height:1.2;letter-spacing:-.6px}body.darkmode{background-color:#333}#ddp-general{position:relative}h1,h2,h3,h4,h5,h6{font-family:Open Sans,sans-serif;font-weight:700;color:#212121}.darkmode h1,.darkmode h2,.darkmode h3,.darkmode h4,.darkmode h5,.darkmode h6{color:#fff}p{font-size:1rem;line-height:1.3;font-weight:400;color:#333}.darkmode p{color:#f5f5f5}strong{color:#212121}.darkmode strong{color:#fff}button{color:#212121}.darkmode button{color:#fff}button{background-color:transparent;border:none;cursor:pointer}button:focus{outline:none}a{text-decoration:none;color:#5d5d5d;overflow-wrap:break-word}a:hover{color:#b9161f;transition:color .2s ease}a:hover h1,a:hover h2,a:hover h3{text-decoration:underline;-webkit-text-decoration-color:#b9161f;text-decoration-color:#b9161f;transition:color .2s ease-in}.darkmode a:hover h1,.darkmode a:hover h2,.darkmode a:hover h3{-webkit-text-decoration-color:#ff6d6d;text-decoration-color:#ff6d6d}.container{max-width:1320px;padding:0 15px;width:100%;margin:0 auto;box-sizing:border-box}@media(max-width:1440px){.container{width:100%}}@media(max-width:1024px){.container{overflow:hidden}}@media(max-width:810px){.container{max-width:728px;padding:0;width:100%}}@media(max-width:600px){.container{padding:0 16px}}@media(max-width:360px){.container{padding:0 12px}}@media(max-width:320px){.container{padding:0 10px}}.container .row{margin:30px 0 0}@media(max-width:810px){.container .row{margin:20px 0 0}}.container .row{overflow:hidden}.container .col-1{display:grid;grid-template-columns:1fr;grid-gap:30px}@media(max-width:1024px){.container .col-1{grid-gap:20px}}.container .col-2{display:grid;grid-template-columns:1fr 1fr;grid-gap:30px}@media(max-width:1024px){.container .col-2{grid-gap:20px}}.container .col-2-1{display:grid;grid-template-columns:2fr 1fr;grid-gap:30px}@media(max-width:1024px){.container .col-2-1{grid-template-columns:1fr;grid-gap:20px}}.container .col-3{display:grid;grid-template-columns:520px 1.2fr 1fr;grid-gap:30px}@media(max-width:1700px){.container .col-3{grid-template-columns:520px 1fr 1fr;grid-gap:30px}}@media(max-width:1024px){.container .col-3{grid-template-columns:2fr 1fr;grid-gap:20px}}@media(max-width:810px){.container .col-3{grid-template-columns:1fr 1fr;grid-gap:20px}}@media(max-width:600px){.container .col-3{grid-template-columns:1fr;grid-gap:20px}}.container .col-3 .col:last-child .card a .cardBox>h2{padding:0 30px}.container .col-3-invert{display:grid;grid-template-columns:1fr 1fr 521px;grid-gap:30px}@media(max-width:1024px){.container .col-3-invert{grid-template-columns:1fr 1fr;grid-gap:20px}}@media(max-width:600px){.container .col-3-invert{grid-template-columns:1fr;grid-gap:16px}}.container .col-3-equal{display:grid;grid-template-columns:1fr 1fr 1fr;grid-gap:30px}@media(max-width:810px){.container .col-3-equal{grid-template-columns:1fr;grid-gap:20px}}.container .col-3-2_1{display:grid;grid-template-columns:2fr 1fr 1fr;grid-gap:30px}@media(max-width:1024px){.container .col-3-2_1{grid-template-columns:1fr 1fr;grid-gap:20px}}@media(max-width:600px){.container .col-3-2_1{grid-template-columns:1fr;grid-gap:16px}}.container .col-4{display:grid;grid-template-columns:1fr 1fr 1fr 300px;grid-gap:30px}@media(max-width:1024px){.container .col-4{grid-template-columns:1fr 1fr;grid-gap:20px}}@media(max-width:810px){.container .col-4{grid-template-columns:1fr}}.container .col-4-invert{display:grid;grid-template-columns:1fr 1fr 1fr 470px;grid-gap:30px}@media(max-width:810px){.container .col-4-invert{grid-template-columns:1fr;grid-gap:20px}}.container .col-4-adRet{display:grid;grid-template-columns:1fr 1fr 1fr 336px;grid-gap:30px}@media(max-width:810px){.container .col-4-adRet{grid-template-columns:1fr;grid-gap:20px}}.ddp-flip{transform:scaleX(-1)}.block-screen{overflow:hidden;width:100vw;height:100%;position:relative}.block-screen:before{height:100%!important;position:absolute;z-index:102}div{color:#212121}.darkmode div{color:#fff}svg{fill:#212121}.darkmode svg{fill:#fff}ul.socialBar{list-style:none;display:flex;justify-content:flex-end;margin:0}@media(max-width:810px){ul.socialBar{padding-right:0;padding-left:16px;justify-content:flex-end}}ul.socialBar li{margin:0 10px}@media(max-width:1130px){ul.socialBar li{margin-right:10px}}ul.socialBar li a{border:none}ul.socialBar li a svg{width:30px;height:30px;fill:#a5070b}.darkmode ul.socialBar li a svg{fill:#ff6d6d}@media(max-width:600px){ul.socialBar li a svg{width:20px;height:20px}}ul.socialBar li a:hover svg{fill:#b9161f}.position{position:absolute;z-index:5;color:#fff;background-color:#b9161f;padding:5px;font-size:11px;font-weight:700}.visible-mobile{display:none}@media(max-width:600px){.visible-mobile{display:block}}.ddp-sticky{position:sticky!important}.header{position:relative;box-shadow:0 4px 4px rgba(0,0,0,.1019607843);z-index:2}.header .header-col{background-color:#fff;height:80px}.darkmode .header .header-col{background-color:#333}@media(max-width:810px){.header .header-col{height:52px}}.header .header-col .container-head{display:flex;align-items:center;margin:0 auto;max-width:1320px;height:80px}@media(max-width:810px){.header .header-col .container-head{height:52px;padding:0 15px}}.header .header-col .container-head .aux,.header .header-col .container-head .menu{display:flex;min-width:182px}@media(max-width:810px){.header .header-col .container-head .aux,.header .header-col .container-head .menu{min-width:30px}}.header .header-col .container-head .aux button,.header .header-col .container-head .menu button{border:none;display:flex;align-content:center;align-items:center;flex-direction:column;cursor:pointer;max-width:55px;margin:1px 10px}@media(max-width:600px){.header .header-col .container-head .aux button,.header .header-col .container-head .menu button{padding:1px 0}}.header .header-col .container-head .aux button svg,.header .header-col .container-head .menu button svg{width:40px;height:28px;fill:#ec2526}.header .header-col .container-head .aux button svg:hover,.header .header-col .container-head .menu button svg:hover{fill:#b9161f}.darkmode .header .header-col .container-head .aux button svg,.darkmode .header .header-col .container-head .menu button svg{fill:#fff}@media(max-width:600px){.header .header-col .container-head .aux button svg,.header .header-col .container-head .menu button svg{width:24px;height:20px}}.header .header-col .container-head .aux{display:flex;justify-content:flex-end;align-content:center;align-items:center}.header .header-col .container-head .aux button{border:none;display:flex;align-content:center;align-items:center;flex-direction:column;cursor:pointer;max-width:50px;margin:1px 10px}@media(max-width:810px){.header .header-col .container-head .aux button{margin:1px 2px}}.header .header-col .container-head .aux button svg{max-width:39px;height:39px;margin:1px 10px;stroke:#ec2526;fill:#ec2526;stroke-width:.5}.darkmode .header .header-col .container-head .aux button svg{stroke:#fff}@media(max-width:600px){.header .header-col .container-head .aux button svg{width:20px;height:20px}}.header .header-col .container-head .logo{display:flex;text-align:center;align-items:center;justify-content:center;color:#fff;max-width:350px;width:100%;margin:0 auto}@media(max-width:810px){.header .header-col .container-head .logo{grid-template-rows:80px;max-height:80px;max-width:170px}}@media(max-width:600px){.header .header-col .container-head .logo{max-height:45px}}.header .header-col .container-head .logo .dp{display:block;height:56px}@media(max-width:600px){.header .header-col .container-head .logo .dp{display:flex;justify-content:center;align-items:center}}.header .header-col .container-head .logo .dp img{max-width:330px;width:100%}.header .header-col .container-head .logo .dp img.light{display:block;width:100%;height:55px}@media(max-width:600px){.header .header-col .container-head .logo .dp img.light{height:36px}}.darkmode .header .header-col .container-head .logo .dp img.light{display:none}.header .header-col .container-head .logo .dp img.dark{display:none;width:100%;height:55px}@media(max-width:600px){.header .header-col .container-head .logo .dp img.dark{height:36px}}.darkmode .header .header-col .container-head .logo .dp img.dark{display:block}.header .header-col .container-head .logo .dp svg{width:100%;height:56px;margin:0 0 5px;display:block;fill:#ec2526}.header .header-col .container-head .logo .dp svg.dark{display:none}.darkmode .header .header-col .container-head .logo .dp svg.dark{display:block}.darkmode .header .header-col .container-head .logo .dp svg{fill:#fff}@media(max-width:600px){.header .header-col .container-head .logo .dp svg{height:37px;padding:0;margin:0 0 5px}}.header-unpin{position:relative;transition:height 1s ease-out}.header-pin{position:sticky!important;top:0;z-index:6;transition:height 1s ease-in}.clear{clear:both}.slide-toggle{display:none}.slidemenu{font-family:arial,sans-serif;max-width:600px;margin:.3rem;overflow:hidden;background-color:#fff}.slidemenu label{text-align:center;display:block;float:left;color:#b9161f;opacity:.2}.slidemenu label:nth-child(2),.slidemenu label:nth-child(4){width:20%}.slidemenu label:nth-child(6){width:40%}.slidemenu label:nth-child(8){width:20%}.slidemenu label:hover{cursor:pointer;color:#666}.slidemenu label span{display:block;padding:10px}.slidemenu label .icon{font-size:20px;border:2px solid #b9161f;text-align:center;height:50px;width:50px;display:block;margin:0 auto;line-height:50px;border-radius:50%}.slider{width:100%;display:block;background:#ccc;margin-top:10px}.slider,.slider .bar{height:5px;border-radius:5px}.slider .bar{width:25%;background:#b9161f}.slidemenu label,.slider .bar{transition:all .5s ease-in-out;-webkit-transition:all .5s ease-in-out;-moz-transition:all .5s ease-in-out}.slidemenu .slide-toggle:checked+label{opacity:1}.slidemenu #slide-item-1:checked~.slider .bar{margin-left:0}.slidemenu #slide-item-2:checked~.slider .bar{margin-left:18%}.slidemenu #slide-item-3:checked~.slider .bar{margin-left:47%}.slidemenu #slide-item-4:checked~.slider .bar{margin-left:80%}
+	</style>
+
+	<title>Pesquisa Brasmarket: Bolsonaro tem 45,4% e Lula 30,9% das intenções de voto - Diário do Poder</title>
+
+		<!-- All in One SEO 4.9.7.2 - aioseo.com -->
+	<meta name="description" content="Pesquisa estimulada da Brasmarket divulgada nesta sexta-feira (30) mostra o presidente Jair Bolsonaro (PL) com 45,5% e o ex-presidente Lula com 30,9% das intenções de voto. Ciro Gomes (PDT) aparece com 6,2% seguido por Simone Tebet (MDB) com 5,2%. A candidata Soraya Thronicke (União) aparece com 0,8%; e Felipe D&#039;Ávila (Novo), 0,3%; os demais registraram" />
+	<meta name="robots" content="max-image-preview:large" />
+	<meta name="author" content="Redação"/>
+	<link rel="canonical" href="https://diariodopoder.com.br/eleicoes-2022/pesquisa-brasmarket-bolsonaro-tem-454-e-lula-309-das-intencoes-de-voto" />
+	<meta name="generator" content="All in One SEO (AIOSEO) 4.9.7.2" />
+		<meta property="og:locale" content="pt_BR" />
+		<meta property="og:site_name" content="Diário do Poder - Poder, política e bastidores" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Pesquisa Brasmarket: Bolsonaro tem 45,4% e Lula 30,9% das intenções de voto - Diário do Poder" />
+		<meta property="og:description" content="Pesquisa estimulada da Brasmarket divulgada nesta sexta-feira (30) mostra o presidente Jair Bolsonaro (PL) com 45,5% e o ex-presidente Lula com 30,9% das intenções de voto. Ciro Gomes (PDT) aparece com 6,2% seguido por Simone Tebet (MDB) com 5,2%. A candidata Soraya Thronicke (União) aparece com 0,8%; e Felipe D&#039;Ávila (Novo), 0,3%; os demais registraram" />
+		<meta property="og:url" content="https://diariodopoder.com.br/eleicoes-2022/pesquisa-brasmarket-bolsonaro-tem-454-e-lula-309-das-intencoes-de-voto" />
+		<meta property="og:image" content="https://uploads.diariodopoder.com.br/2022/06/9dacaf93-lula-e-jair-bolsonaro-5-fotos-flickr.jpeg" />
+		<meta property="og:image:secure_url" content="https://uploads.diariodopoder.com.br/2022/06/9dacaf93-lula-e-jair-bolsonaro-5-fotos-flickr.jpeg" />
+		<meta property="og:image:width" content="1211" />
+		<meta property="og:image:height" content="687" />
+		<meta property="article:published_time" content="2022-09-30T22:12:18-03:00" />
+		<meta property="article:modified_time" content="2025-02-25T12:48:25-03:00" />
+		<meta property="article:publisher" content="https://www.facebook.com/diariodopoder/?locale=pt_BR" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:site" content="@diariodopoder" />
+		<meta name="twitter:title" content="Pesquisa Brasmarket: Bolsonaro tem 45,4% e Lula 30,9% das intenções de voto - Diário do Poder" />
+		<meta name="twitter:description" content="Pesquisa estimulada da Brasmarket divulgada nesta sexta-feira (30) mostra o presidente Jair Bolsonaro (PL) com 45,5% e o ex-presidente Lula com 30,9% das intenções de voto. Ciro Gomes (PDT) aparece com 6,2% seguido por Simone Tebet (MDB) com 5,2%. A candidata Soraya Thronicke (União) aparece com 0,8%; e Felipe D&#039;Ávila (Novo), 0,3%; os demais registraram" />
+		<meta name="twitter:creator" content="@diariodopoder" />
+		<meta name="twitter:image" content="https://uploads.diariodopoder.com.br/2022/06/9dacaf93-lula-e-jair-bolsonaro-5-fotos-flickr.jpeg" />
+		<script type="application/ld+json" class="aioseo-schema">
+			{"@context":"https:\/\/schema.org","@graph":[{"@type":"BlogPosting","@id":"https:\/\/diariodopoder.com.br\/eleicoes-2022\/pesquisa-brasmarket-bolsonaro-tem-454-e-lula-309-das-intencoes-de-voto#blogposting","name":"Pesquisa Brasmarket: Bolsonaro tem 45,4% e Lula 30,9% das inten\u00e7\u00f5es de voto - Di\u00e1rio do Poder","headline":"Pesquisa Brasmarket: Bolsonaro tem 45,4% e Lula 30,9% das inten\u00e7\u00f5es de voto","author":{"@id":"https:\/\/diariodopoder.com.br\/author\/redacaodp#author"},"publisher":{"@id":"https:\/\/diariodopoder.com.br\/#organization"},"image":{"@type":"ImageObject","url":"https:\/\/uploads.diariodopoder.com.br\/2022\/06\/9dacaf93-lula-e-jair-bolsonaro-5-fotos-flickr.jpeg","width":1211,"height":687,"caption":"Entre os dias 26 e 28 de setembro foram ouvidas 1.600 pessoas em 529 cidades das cinco regi\u00f5es do pa\u00eds"},"datePublished":"2022-09-30T19:12:18-03:00","dateModified":"2025-02-25T09:48:25-03:00","inLanguage":"pt-BR","mainEntityOfPage":{"@id":"https:\/\/diariodopoder.com.br\/eleicoes-2022\/pesquisa-brasmarket-bolsonaro-tem-454-e-lula-309-das-intencoes-de-voto#webpage"},"isPartOf":{"@id":"https:\/\/diariodopoder.com.br\/eleicoes-2022\/pesquisa-brasmarket-bolsonaro-tem-454-e-lula-309-das-intencoes-de-voto#webpage"},"articleSection":"Elei\u00e7\u00f5es 2022, Pesquisas"},{"@type":"BreadcrumbList","@id":"https:\/\/diariodopoder.com.br\/eleicoes-2022\/pesquisa-brasmarket-bolsonaro-tem-454-e-lula-309-das-intencoes-de-voto#breadcrumblist","itemListElement":[{"@type":"ListItem","@id":"https:\/\/diariodopoder.com.br#listItem","position":1,"name":"Home","item":"https:\/\/diariodopoder.com.br","nextItem":{"@type":"ListItem","@id":"https:\/\/diariodopoder.com.br\/eleicoes-2022#listItem","name":"Elei\u00e7\u00f5es 2022"}},{"@type":"ListItem","@id":"https:\/\/diariodopoder.com.br\/eleicoes-2022#listItem","position":2,"name":"Elei\u00e7\u00f5es 2022","item":"https:\/\/diariodopoder.com.br\/eleicoes-2022","nextItem":{"@type":"ListItem","@id":"https:\/\/diariodopoder.com.br\/eleicoes-2022\/pesquisa-brasmarket-bolsonaro-tem-454-e-lula-309-das-intencoes-de-voto#listItem","name":"Pesquisa Brasmarket: Bolsonaro tem 45,4% e Lula 30,9% das inten\u00e7\u00f5es de voto"},"previousItem":{"@type":"ListItem","@id":"https:\/\/diariodopoder.com.br#listItem","name":"Home"}},{"@type":"ListItem","@id":"https:\/\/diariodopoder.com.br\/eleicoes-2022\/pesquisa-brasmarket-bolsonaro-tem-454-e-lula-309-das-intencoes-de-voto#listItem","position":3,"name":"Pesquisa Brasmarket: Bolsonaro tem 45,4% e Lula 30,9% das inten\u00e7\u00f5es de voto","previousItem":{"@type":"ListItem","@id":"https:\/\/diariodopoder.com.br\/eleicoes-2022#listItem","name":"Elei\u00e7\u00f5es 2022"}}]},{"@type":"Organization","@id":"https:\/\/diariodopoder.com.br\/#organization","name":"Di\u00e1rio do Poder","description":"Poder, pol\u00edtica e bastidores","url":"https:\/\/diariodopoder.com.br\/","logo":{"@type":"ImageObject","url":"https:\/\/uploads.diariodopoder.com.br\/2024\/07\/cbc9bd2a-logo-diario-2024-home-red.svg","@id":"https:\/\/diariodopoder.com.br\/eleicoes-2022\/pesquisa-brasmarket-bolsonaro-tem-454-e-lula-309-das-intencoes-de-voto\/#organizationLogo"},"image":{"@id":"https:\/\/diariodopoder.com.br\/eleicoes-2022\/pesquisa-brasmarket-bolsonaro-tem-454-e-lula-309-das-intencoes-de-voto\/#organizationLogo"},"sameAs":["https:\/\/www.facebook.com\/diariodopoder\/?locale=pt_BR","https:\/\/x.com\/diariodopoder","https:\/\/www.instagram.com\/diariodopoder\/"]},{"@type":"Person","@id":"https:\/\/diariodopoder.com.br\/author\/redacaodp#author","url":"https:\/\/diariodopoder.com.br\/author\/redacaodp","name":"Reda\u00e7\u00e3o","image":{"@type":"ImageObject","@id":"https:\/\/diariodopoder.com.br\/eleicoes-2022\/pesquisa-brasmarket-bolsonaro-tem-454-e-lula-309-das-intencoes-de-voto#authorImage","url":"https:\/\/secure.gravatar.com\/avatar\/3c8f453efa68671b1b2645b56fa6142bc46ef855a63bceabe271ecdb9ebff15c?s=96&d=mm&r=g","width":96,"height":96,"caption":"Reda\u00e7\u00e3o"}},{"@type":"WebPage","@id":"https:\/\/diariodopoder.com.br\/eleicoes-2022\/pesquisa-brasmarket-bolsonaro-tem-454-e-lula-309-das-intencoes-de-voto#webpage","url":"https:\/\/diariodopoder.com.br\/eleicoes-2022\/pesquisa-brasmarket-bolsonaro-tem-454-e-lula-309-das-intencoes-de-voto","name":"Pesquisa Brasmarket: Bolsonaro tem 45,4% e Lula 30,9% das inten\u00e7\u00f5es de voto - Di\u00e1rio do Poder","description":"Pesquisa estimulada da Brasmarket divulgada nesta sexta-feira (30) mostra o presidente Jair Bolsonaro (PL) com 45,5% e o ex-presidente Lula com 30,9% das inten\u00e7\u00f5es de voto. Ciro Gomes (PDT) aparece com 6,2% seguido por Simone Tebet (MDB) com 5,2%. A candidata Soraya Thronicke (Uni\u00e3o) aparece com 0,8%; e Felipe D'\u00c1vila (Novo), 0,3%; os demais registraram","inLanguage":"pt-BR","isPartOf":{"@id":"https:\/\/diariodopoder.com.br\/#website"},"breadcrumb":{"@id":"https:\/\/diariodopoder.com.br\/eleicoes-2022\/pesquisa-brasmarket-bolsonaro-tem-454-e-lula-309-das-intencoes-de-voto#breadcrumblist"},"author":{"@id":"https:\/\/diariodopoder.com.br\/author\/redacaodp#author"},"creator":{"@id":"https:\/\/diariodopoder.com.br\/author\/redacaodp#author"},"image":{"@type":"ImageObject","url":"https:\/\/uploads.diariodopoder.com.br\/2022\/06\/9dacaf93-lula-e-jair-bolsonaro-5-fotos-flickr.jpeg","@id":"https:\/\/diariodopoder.com.br\/eleicoes-2022\/pesquisa-brasmarket-bolsonaro-tem-454-e-lula-309-das-intencoes-de-voto\/#mainImage","width":1211,"height":687,"caption":"Entre os dias 26 e 28 de setembro foram ouvidas 1.600 pessoas em 529 cidades das cinco regi\u00f5es do pa\u00eds"},"primaryImageOfPage":{"@id":"https:\/\/diariodopoder.com.br\/eleicoes-2022\/pesquisa-brasmarket-bolsonaro-tem-454-e-lula-309-das-intencoes-de-voto#mainImage"},"datePublished":"2022-09-30T19:12:18-03:00","dateModified":"2025-02-25T09:48:25-03:00"},{"@type":"WebSite","@id":"https:\/\/diariodopoder.com.br\/#website","url":"https:\/\/diariodopoder.com.br\/","name":"Di\u00e1rio do Poder","description":"Poder, pol\u00edtica e bastidores","inLanguage":"pt-BR","publisher":{"@id":"https:\/\/diariodopoder.com.br\/#organization"}}]}
+		</script>
+		<!-- All in One SEO -->
+
+<link rel="alternate" type="application/rss+xml" title="Feed para Diário do Poder &raquo;" href="https://diariodopoder.com.br/feed" />
+<style id="wp-img-auto-sizes-contain-inline-css">
+img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
+/*# sourceURL=wp-img-auto-sizes-contain-inline-css */
+</style>
+<style id="global-styles-inline-css">
+:root{--wp--preset--aspect-ratio--square: 1;--wp--preset--aspect-ratio--4-3: 4/3;--wp--preset--aspect-ratio--3-4: 3/4;--wp--preset--aspect-ratio--3-2: 3/2;--wp--preset--aspect-ratio--2-3: 2/3;--wp--preset--aspect-ratio--16-9: 16/9;--wp--preset--aspect-ratio--9-16: 9/16;--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgb(6,147,227) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgb(252,185,0) 0%,rgb(255,105,0) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgb(255,105,0) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: clamp(14px, 0.875rem + ((1vw - 3.2px) * 0.574), 20px);--wp--preset--font-size--large: clamp(22.041px, 1.378rem + ((1vw - 3.2px) * 1.335), 36px);--wp--preset--font-size--x-large: clamp(25.014px, 1.563rem + ((1vw - 3.2px) * 1.624), 42px);--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;--wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);--wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);--wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);--wp--preset--shadow--outlined: 6px 6px 0px -3px rgb(255, 255, 255), 6px 6px rgb(0, 0, 0);--wp--preset--shadow--crisp: 6px 6px 0px rgb(0, 0, 0);--wp--custom--layout--content-size: 1240px;}:root { --wp--style--global--content-size: 1240px;--wp--style--global--wide-size: 1366px; }:where(body) { margin: 0; }.wp-site-blocks > .alignleft { float: left; margin-right: 2em; }.wp-site-blocks > .alignright { float: right; margin-left: 2em; }.wp-site-blocks > .aligncenter { justify-content: center; margin-left: auto; margin-right: auto; }:where(.wp-site-blocks) > * { margin-block-start: 0; margin-block-end: 0; }:where(.wp-site-blocks) > :first-child { margin-block-start: 0; }:where(.wp-site-blocks) > :last-child { margin-block-end: 0; }:root { --wp--style--block-gap: 0; }:root :where(.is-layout-flow) > :first-child{margin-block-start: 0;}:root :where(.is-layout-flow) > :last-child{margin-block-end: 0;}:root :where(.is-layout-flow) > *{margin-block-start: 0;margin-block-end: 0;}:root :where(.is-layout-constrained) > :first-child{margin-block-start: 0;}:root :where(.is-layout-constrained) > :last-child{margin-block-end: 0;}:root :where(.is-layout-constrained) > *{margin-block-start: 0;margin-block-end: 0;}:root :where(.is-layout-flex){gap: 0;}:root :where(.is-layout-grid){gap: 0;}.is-layout-flow > .alignleft{float: left;margin-inline-start: 0;margin-inline-end: 2em;}.is-layout-flow > .alignright{float: right;margin-inline-start: 2em;margin-inline-end: 0;}.is-layout-flow > .aligncenter{margin-left: auto !important;margin-right: auto !important;}.is-layout-constrained > .alignleft{float: left;margin-inline-start: 0;margin-inline-end: 2em;}.is-layout-constrained > .alignright{float: right;margin-inline-start: 2em;margin-inline-end: 0;}.is-layout-constrained > .aligncenter{margin-left: auto !important;margin-right: auto !important;}.is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)){max-width: var(--wp--style--global--content-size);margin-left: auto !important;margin-right: auto !important;}.is-layout-constrained > .alignwide{max-width: var(--wp--style--global--wide-size);}body .is-layout-flex{display: flex;}.is-layout-flex{flex-wrap: wrap;align-items: center;}.is-layout-flex > :is(*, div){margin: 0;}body .is-layout-grid{display: grid;}.is-layout-grid > :is(*, div){margin: 0;}body{padding-top: 0px;padding-right: 0px;padding-bottom: 0px;padding-left: 0px;}a:where(:not(.wp-element-button)){text-decoration: none;}:root :where(.wp-element-button, .wp-block-button__link){background-color: #32373c;border-width: 0;color: #fff;font-family: inherit;font-size: inherit;font-style: inherit;font-weight: inherit;letter-spacing: inherit;line-height: inherit;padding-top: calc(0.667em + 2px);padding-right: calc(1.333em + 2px);padding-bottom: calc(0.667em + 2px);padding-left: calc(1.333em + 2px);text-decoration: none;text-transform: inherit;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+/*# sourceURL=global-styles-inline-css */
+</style>
+<link rel='stylesheet' id='ddp-style-css' href='https://diariodopoder.com.br/wp-content/themes/diariodopoder/dist/css.css?ver=8.1.1' media='' />
+<link rel="amphtml" href="https://diariodopoder.com.br/eleicoes-2022/pesquisa-brasmarket-bolsonaro-tem-454-e-lula-309-das-intencoes-de-voto/amp"><link rel="icon" href="https://uploads.diariodopoder.com.br/2025/12/4be4f15a-favicon-fundo-branco.png" sizes="32x32" />
+<link rel="icon" href="https://uploads.diariodopoder.com.br/2025/12/4be4f15a-favicon-fundo-branco.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://uploads.diariodopoder.com.br/2025/12/4be4f15a-favicon-fundo-branco.png" />
+<meta name="msapplication-TileImage" content="https://uploads.diariodopoder.com.br/2025/12/4be4f15a-favicon-fundo-branco.png" />
+
+	<!-- 10. SEO especial (categoria opinião) -->
+	</head>
+
+<body class="wp-singular post-template-default single single-post postid-372105 single-format-standard wp-embed-responsive wp-theme-diariodopoder wp-child-theme-diario-do-poder-child">
+	<!-- 11. Estrutura inicial do body -->
+	<div id="ddp-general" class="ddp-main-wrap">
+		<header id="ddpHeader" class="header">
+			<!-- HEADER MAIN.PHP CARREGADO --><div class="header-col">
+  <div class="container-head">
+    <div class="menu">
+      <button class="nav hamburger" aria-label="Menu de Navegação">
+        <svg>
+          <use xlink:href="https://diariodopoder.com.br/wp-content/themes/diariodopoder/dist/sprite.svg#menu"></use>
+        </svg>
+      </button>
+    </div>
+
+    <div class="logo">
+      <a class="dp" aria-label="Diário do Poder" href="https://diariodopoder.com.br/">
+        <img class="light" 
+             src="https://diariodopoder.com.br/wp-content/themes/diariodopoder/assets/images/logo-diario-2024-home-red.svg" 
+             alt="Diário do Poder">
+        <img class="dark" 
+             src="https://diariodopoder.com.br/wp-content/themes/diariodopoder/assets/images/logo-diario-2024-home-dark.svg" 
+             alt="Diário do Poder Dark">
+      </a>
+    </div>
+
+    <div class="aux">
+      <button id="search" aria-label="Botão de pesquisa">
+        <svg>
+          <use xlink:href="https://diariodopoder.com.br/wp-content/themes/diariodopoder/dist/sprite.svg#search"></use>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+		</header>
+
+		<nav>
+  <div class="main">
+    <div class="main-col">
+      <div class="container">
+        <div class="menu">
+          
+        <ul class="menu-links">
+            <li><a href="https://diariodopoder.com.br" onclick="eventoGA('clique menu', 'principal', 'Home')" title="Home">DP</a></li>
+            <li><a href="/coluna-claudio-humberto" onclick="eventoGA('clique menu', 'principal', 'CLÁUDIO HUMBERTO')" title="CLÁUDIO HUMBERTO">CLÁUDIO HUMBERTO</a></li>
+            <li><a href="/ultimas-noticias" onclick="eventoGA('clique menu', 'principal', 'ÚLTIMAS NOTÍCIAS')" title="ÚLTIMAS NOTÍCIAS">ÚLTIMAS NOTÍCIAS</a></li>
+            <li><a href="/opiniao" onclick="eventoGA('clique menu', 'principal', 'OPINIÃO')" title="OPINIÃO">OPINIÃO</a></li>
+            <li><a href="/brasil-e-regioes" onclick="eventoGA('clique menu', 'principal', 'BRASIL')" title="BRASIL">BRASIL</a></li>
+            <li><a href="/exteriores" onclick="eventoGA('clique menu', 'principal', 'INTERNACIONAL')" title="INTERNACIONAL">INTERNACIONAL</a></li>
+            <li><a href="/videos" onclick="eventoGA('clique menu', 'principal', 'VÍDEOS')" title="VÍDEOS">VÍDEOS</a></li>
+            <li><a href="/tag/esporte" onclick="eventoGA('clique menu', 'principal', 'ESPORTE')" title="ESPORTE">ESPORTE</a></li>
+            <li><a href="/diario-motor" onclick="eventoGA('clique menu', 'principal', 'DIÁRIO MOTOR')" title="DIÁRIO MOTOR">DIÁRIO MOTOR</a></li>
+          </ul>
+
+          
+<ul class="social">
+  <li>
+    <a aria-label="Facebook Diário do Poder" href="https://www.facebook.com/diariodopoder" target="_blank" rel="noopener">
+      <svg class="facebook">
+        <use xlink:href="https://diariodopoder.com.br/wp-content/themes/diariodopoder/dist/sprite.svg#facebook-negative"></use>
+      </svg>
+    </a>
+  </li>
+  <li>
+    <a aria-label="Twitter Diário do Poder" href="https://twitter.com/DiariodoPoder" target="_blank" rel="noopener">
+      <svg class="twitter">
+        <use xlink:href="https://diariodopoder.com.br/wp-content/themes/diariodopoder/dist/sprite.svg#twitter-negative"></use>
+      </svg>
+    </a>
+  </li>
+  <li>
+    <a aria-label="Instagram do Diário do Poder" href="https://www.instagram.com/diariodopoder/" target="_blank" rel="noopener">
+      <svg class="instagram">
+        <use xlink:href="https://diariodopoder.com.br/wp-content/themes/diariodopoder/dist/sprite.svg#instagram-negative"></use>
+      </svg>
+    </a>
+  </li>
+  <li>
+    <a aria-label="YouTube Diário do Poder" href="https://www.youtube.com/diariodopodertv" target="_blank" rel="noopener">
+      <svg class="youtube">
+        <use xlink:href="https://diariodopoder.com.br/wp-content/themes/diariodopoder/dist/sprite.svg#youtube-negative"></use>
+      </svg>
+    </a>
+  </li>
+  <!-- <li>
+    <a href="https://br.pinterest.com/diariodopoder/">
+      <svg class="pintrest">
+        <use xlink:href="/dist/sprite.svg#pintrest"></use>
+      </svg>
+    </a>
+  </li> -->
+  <li>
+    <a aria-label="Feed Diário do Poder" href="https://diariodopoder.com.br/feed/" title="RSS Feed" target="_blank" rel="noopener">
+      <svg class="rss">
+        <use xlink:href="https://diariodopoder.com.br/wp-content/themes/diariodopoder/dist/sprite.svg#rss"></use>
+      </svg>
+    </a>
+  </li>
+</ul>        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+		
+<!-- /22033703942/horizontal-1 -->
+<div class="ddp-ads pos-1" id="ddpAdsFixed">
+    <div class="pub-hor pos-1">
+        <div id="ddp-ads-horizontal-1"></div>
+    </div>
+</div>
+		<main id="ddp-main">
+
+  <div class="content-materia">
+
+    <!-- <div class="entry-more-read">
+      <header>
+        <h3>Mais Lidas</h3>
+      </header>
+      <!-- <div class="wrap">
+        <div class="ddp-scroll">
+                                        </div>
+      </div> --
+      <div class="carousel">
+        <div class="glide__track" data-glide-el="track">
+          <div class="glide__slides">
+                          <div class="glide__slide slide">
+        <a href="https://diariodopoder.com.br/brasil-e-regioes/lsf-brasil/relator-da-pec-que-poe-freio-a-decisoes-monocraticas-comemora-aprovacao-na-ccj">
+        <picture class="round">
+            <img src="https://uploads.diariodopoder.com.br/2023/10/37de8294-7426-432c-a632-58bda43cf62d-2-600x400.jpeg" alt="Diário do Poder">
+        </picture>
+    </a>
+        <a href="https://diariodopoder.com.br/brasil-e-regioes/lsf-brasil/relator-da-pec-que-poe-freio-a-decisoes-monocraticas-comemora-aprovacao-na-ccj" onclick='ga("send", "event", "Listagem mais lidas", "click", "Click matéria Esperidião: livre indicação para cargos milionários é fruto de decisão monocrática");'>
+        <div>
+            <h3>Esperidião: livre indicação para cargos milionários é fruto de decisão monocrática</h3>
+        </div>
+    </a>
+</div>                          <div class="glide__slide slide">
+        <a href="https://diariodopoder.com.br/brasil-e-regioes/xwk-brasil/senadores-aprovam-pec-que-esvazia-decisoes-monocraticas-do-stf">
+        <picture class="round">
+            <img src="https://uploads.diariodopoder.com.br/2023/10/f8fed456-ccjsenadopec-600x360.jpeg" alt="Diário do Poder">
+        </picture>
+    </a>
+        <a href="https://diariodopoder.com.br/brasil-e-regioes/xwk-brasil/senadores-aprovam-pec-que-esvazia-decisoes-monocraticas-do-stf" onclick='ga("send", "event", "Listagem mais lidas", "click", "Click matéria Senado reage ao STF impondo limites a decisões monocráticas");'>
+        <div>
+            <h3>Senado reage ao STF impondo limites a decisões monocráticas</h3>
+        </div>
+    </a>
+</div>                          <div class="glide__slide slide">
+        <a href="https://diariodopoder.com.br/brasil-e-regioes/ttc-brasil/prefeitos-fizeram-o-l-e-se-arrependeram-avalia-deputado">
+        <picture class="round">
+            <img src="https://uploads.diariodopoder.com.br/2023/10/056e01cf-whatsapp-image-2023-10-04-at-13.03.13-600x400.jpeg" alt="Diário do Poder">
+        </picture>
+    </a>
+        <a href="https://diariodopoder.com.br/brasil-e-regioes/ttc-brasil/prefeitos-fizeram-o-l-e-se-arrependeram-avalia-deputado" onclick='ga("send", "event", "Listagem mais lidas", "click", "Click matéria Prefeitos fizeram o L e se arrependeram, avalia deputado");'>
+        <div>
+            <h3>Prefeitos fizeram o L e se arrependeram, avalia deputado</h3>
+        </div>
+    </a>
+</div>                          <div class="glide__slide slide">
+        <a href="https://diariodopoder.com.br/justica/ttc-justica/promotor-de-sp-que-dedica-a-vida-a-combater-bandidos-cogita-sair-do-pais">
+        <picture class="round">
+            <img src="https://uploads.diariodopoder.com.br/2023/10/a76af6f2-lincoln-gakiya-04out23-by-jornal-gente-rb-bntv-600x400.jpg" alt="Diário do Poder">
+        </picture>
+    </a>
+        <a href="https://diariodopoder.com.br/justica/ttc-justica/promotor-de-sp-que-dedica-a-vida-a-combater-bandidos-cogita-sair-do-pais" onclick='ga("send", "event", "Listagem mais lidas", "click", "Click matéria Promotor de SP que dedica a vida a combater bandidos cogita sair do País");'>
+        <div>
+            <h3>Promotor de SP que dedica a vida a combater bandidos cogita sair do País</h3>
+        </div>
+    </a>
+</div>                          <div class="glide__slide slide">
+        <a href="https://diariodopoder.com.br/brasil-e-regioes/xwk-brasil/milei-acusa-lula-de-agir-em-eleicoes-na-argentina-comunistas-furiosos">
+        <picture class="round">
+            <img src="https://uploads.diariodopoder.com.br/2023/09/9a13fb91-javiermilei.jpeg" alt="Diário do Poder">
+        </picture>
+    </a>
+        <a href="https://diariodopoder.com.br/brasil-e-regioes/xwk-brasil/milei-acusa-lula-de-agir-em-eleicoes-na-argentina-comunistas-furiosos" onclick='ga("send", "event", "Listagem mais lidas", "click", "Click matéria Milei acusa Lula de agir em eleições na Argentina: 'comunistas furiosos'");'>
+        <div>
+            <h3>Milei acusa Lula de agir em eleições na Argentina: 'comunistas furiosos'</h3>
+        </div>
+    </a>
+</div>                          <div class="glide__slide slide">
+        <a href="https://diariodopoder.com.br/brasil-e-regioes/xwk-brasil/comissao-de-seguranca-aprova-convocacao-de-flavio-dino">
+        <picture class="round">
+            <img src="https://uploads.diariodopoder.com.br/2023/05/96487b87-ministro-da-justica-flavio-dino-foi-cobrado-na-camara-dos-deputados-por-acoes-contra-corrupcao-foto-lula-marques-agencia-brasil-600x400.jpg" alt="Diário do Poder">
+        </picture>
+    </a>
+        <a href="https://diariodopoder.com.br/brasil-e-regioes/xwk-brasil/comissao-de-seguranca-aprova-convocacao-de-flavio-dino" onclick='ga("send", "event", "Listagem mais lidas", "click", "Click matéria Comissão de Segurança aprova convocação de Dino");'>
+        <div>
+            <h3>Comissão de Segurança aprova convocação de Dino</h3>
+        </div>
+    </a>
+</div>                          <div class="glide__slide slide">
+        <a href="https://diariodopoder.com.br/coluna-claudio-humberto/gilmar-ataca-proposta-de-mandato-no-stf-e-revolta-senadores">
+        <picture class="round">
+            <img src="https://uploads.diariodopoder.com.br/2023/08/2b256661-gilmar-mendes-foto-carlos-moura-sco-stf-600x400.jpg" alt="Diário do Poder">
+        </picture>
+    </a>
+        <a href="https://diariodopoder.com.br/coluna-claudio-humberto/gilmar-ataca-proposta-de-mandato-no-stf-e-revolta-senadores" onclick='ga("send", "event", "Listagem mais lidas", "click", "Click matéria Gilmar ataca proposta de mandato no STF e revolta senadores");'>
+        <div>
+            <h3>Gilmar ataca proposta de mandato no STF e revolta senadores</h3>
+        </div>
+    </a>
+</div>                          <div class="glide__slide slide">
+        <a href="https://diariodopoder.com.br/brasil-e-regioes/ttc-brasil/para-vice-lider-da-oposicao-protagonismo-de-janja-e-escarnio-com-o-dinheiro-publico">
+        <picture class="round">
+            <img src="https://uploads.diariodopoder.com.br/2023/09/a96e5446-afeaf496-12bb-4388-8770-db20aa0b7d75-600x400.jpeg" alt="Diário do Poder">
+        </picture>
+    </a>
+        <a href="https://diariodopoder.com.br/brasil-e-regioes/ttc-brasil/para-vice-lider-da-oposicao-protagonismo-de-janja-e-escarnio-com-o-dinheiro-publico" onclick='ga("send", "event", "Listagem mais lidas", "click", "Click matéria Para vice-líder, protagonismo de Janja é ‘escárnio com o dinheiro público’");'>
+        <div>
+            <h3>Para vice-líder, protagonismo de Janja é ‘escárnio com o dinheiro público’</h3>
+        </div>
+    </a>
+</div>                          <div class="glide__slide slide">
+        <a href="https://diariodopoder.com.br/brasil-e-regioes/lsf-brasil/janja-e-deslumbrada-com-o-dinheiro-do-povo-afirma-bia-kicis">
+        <picture class="round">
+            <img src="https://uploads.diariodopoder.com.br/2023/10/88144286-img20231003162154233med-1-600x400.jpg" alt="Diário do Poder">
+        </picture>
+    </a>
+        <a href="https://diariodopoder.com.br/brasil-e-regioes/lsf-brasil/janja-e-deslumbrada-com-o-dinheiro-do-povo-afirma-bia-kicis" onclick='ga("send", "event", "Listagem mais lidas", "click", "Click matéria 'Janja é deslumbrada com o dinheiro do povo', afirma Bia Kicis   ");'>
+        <div>
+            <h3>'Janja é deslumbrada com o dinheiro do povo', afirma Bia Kicis   </h3>
+        </div>
+    </a>
+</div>                          <div class="glide__slide slide">
+        <a href="https://diariodopoder.com.br/brasil-e-regioes/xwk-brasil/metroviarios-decidem-acabar-greve-ilegal-em-sao-paulo">
+        <picture class="round">
+            <img src="https://uploads.diariodopoder.com.br/2020/04/metro-de-sao-paulo-600x400.jpg" alt="Diário do Poder">
+        </picture>
+    </a>
+        <a href="https://diariodopoder.com.br/brasil-e-regioes/xwk-brasil/metroviarios-decidem-acabar-greve-ilegal-em-sao-paulo" onclick='ga("send", "event", "Listagem mais lidas", "click", "Click matéria Metroviários decidem acabar greve ilegal em São Paulo");'>
+        <div>
+            <h3>Metroviários decidem acabar greve ilegal em São Paulo</h3>
+        </div>
+    </a>
+</div>                      </div>
+
+          <div class="glide__arrows" data-glide-el="controls">
+            <button class="glide__arrow glide__arrow--left prev" data-glide-dir="&lt;">
+              <svg>
+                <use xlink:href="https://diariodopoder.com.br/wp-content/themes/diariodopoder/dist/sprite.svg#back"></use>
+              </svg>
+            </button>
+            <button class="glide__arrow glide__arrow--right next" data-glide-dir="&gt;">
+              <svg class="rotate">
+                <use xlink:href="https://diariodopoder.com.br/wp-content/themes/diariodopoder/dist/sprite.svg#back"></use>
+              </svg>
+            </button>
+          </div>
+          <div class="glide__bullets" data-glide-el="controls[nav]"></div>
+        </div>
+      </div>
+    </div> -->
+
+
+    <div class="wrapper container">
+      <section class="body-content-mg">
+        <article class="article" itemprop="articleBody">
+          <div class="materia-title">
+                          <strong>Eleições 2022</strong>
+                        <h1 itemprop="headline">Pesquisa Brasmarket: Bolsonaro tem 45,4% e Lula 30,9% das intenções de voto</h1>
+                          <h2 itemprop="description">De acordo com a pesquisa, Bolsonaro teria mais intenções de voto do que a soma de todos os candidatos</h2>
+            
+            <div class="col-2">
+              <time datetime="30/09/2022 19:12">30/09/2022 19:12 | Atualizado 25/02/2025 9:48</time>
+              <div class="entry-accessibility">
+                <strong>acessibilidade: </strong>
+                <div class="button-switch">
+                  <input type="checkbox" id="switch-button" class="ddp-switch-darkmode" />
+                </div>
+                <!-- <button id="dark-mode-toggle" arial-label="Botão de acessibilidade" title="Inverter cores">
+                  <svg>
+                    <use xlink:href="/dist/sprite.svg#color-mode"></use>
+                  </svg>
+                </button> -->
+                <button id="increase-content">
+                  <span class="material-symbols-outlined">text_increase</span>
+                </button>
+                <button id="decrease-content">
+                  <span class="material-symbols-outlined">text_decrease</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- <div id="audimaWidget"></div>
+            <div id="audimaWidgetCode"></div> -->
+
+          </div>
+                    
+                      <div class="responsive-img">
+              <picture itemscope itemtype="https://schema.org/ImageObject">
+                <source srcset="https://uploads.diariodopoder.com.br/2022/06/9dacaf93-lula-e-jair-bolsonaro-5-fotos-flickr-960x640.jpeg" media="(max-width: 767px)">
+                <source srcset="https://uploads.diariodopoder.com.br/2022/06/9dacaf93-lula-e-jair-bolsonaro-5-fotos-flickr-960x640.jpeg" media="(min-width: 768px) and (max-width: 1023px)">
+                <img src="https://diariodopoder.com.br/wp-content/themes/diariodopoder/assets/images/placeholder.png" data-src="https://uploads.diariodopoder.com.br/2022/06/9dacaf93-lula-e-jair-bolsonaro-5-fotos-flickr-960x640.jpeg" alt="Presidente Jair Bolsonaro (PL) e ex-presidente Lula (PT) polarizam a dispita. Fotos: Flickr">
+              </picture>
+              <div class=" responsive-img-caption">
+                <small>Entre os dias 26 e 28 de setembro foram ouvidas 1.600 pessoas em 529 cidades das cinco regiões do país</small>
+              </div>
+            </div>
+                    <div class="entry-author">
+            <div class="autor">
+	<div class="item">
+
+					<div class="sigla 16">
+				<a href="https://diariodopoder.com.br/author/redacaodp">
+					<picture>
+						<img alt='Redação' src='https://secure.gravatar.com/avatar/3c8f453efa68671b1b2645b56fa6142bc46ef855a63bceabe271ecdb9ebff15c?s=75&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/3c8f453efa68671b1b2645b56fa6142bc46ef855a63bceabe271ecdb9ebff15c?s=150&#038;d=mm&#038;r=g 2x' class='avatar avatar-75 photo' height='75' width='75' decoding='async'/>					</picture>
+				</a>
+			</div>
+			<div>
+				<div itemprop="author" itemtype="https://schema.org/Person" itemscope class="name">Redação</div>
+				<div class="local">
+									</div>
+			</div>
+			</div>
+</div>
+            
+<ul class="socialBar">
+  <li>
+    <a aria-label="Facebook compartilhamento" target="_blank" href="https://www.facebook.com/sharer.php?u=https://diariodopoder.com.br/eleicoes-2022/pesquisa-brasmarket-bolsonaro-tem-454-e-lula-309-das-intencoes-de-voto" title="Compartilhar pelo Facebook" rel="noopener">
+      <svg>
+        <use xlink:href="https://diariodopoder.com.br/wp-content/themes/diariodopoder/dist/sprite.svg#share-facebook"></use>
+      </svg>
+    </a>
+  </li>
+  <li>
+    <a aria-label="Twitter compartilhamento" target="_blank" href="//twitter.com/intent/tweet?source=diariodopoder.com&text=Pesquisa Brasmarket: Bolsonaro tem 45,4% e Lula 30,9% das intenções de voto&url=https://diariodopoder.com.br/eleicoes-2022/pesquisa-brasmarket-bolsonaro-tem-454-e-lula-309-das-intencoes-de-voto" title="Compartilhar pelo Twitter" rel="noopener">
+      <svg>
+        <use xlink:href="https://diariodopoder.com.br/wp-content/themes/diariodopoder/dist/sprite.svg#share-twitter"></use>
+      </svg>
+    </a>
+  </li>
+  <li>
+    <a aria-label="Whatsapp compartilhamento" target="_blank" href="https://api.whatsapp.com/send?phone=&text=https://diariodopoder.com.br/eleicoes-2022/pesquisa-brasmarket-bolsonaro-tem-454-e-lula-309-das-intencoes-de-voto" title="Compartilhar pelo WhatsApp" rel="noopener">
+      <svg>
+        <use xlink:href="https://diariodopoder.com.br/wp-content/themes/diariodopoder/dist/sprite.svg#share-whatsapp"></use>
+      </svg>
+    </a>
+  </li>
+  <li>
+    <a aria-label="LinkedIn compartilhamento" target="_blank" href="https://www.linkedin.com/sharing/share-offsite/?url=https://diariodopoder.com.br/eleicoes-2022/pesquisa-brasmarket-bolsonaro-tem-454-e-lula-309-das-intencoes-de-voto" title="Compartilhar pelo LinkedIn" rel="noopener">
+      <svg>
+        <use xlink:href="https://diariodopoder.com.br/wp-content/themes/diariodopoder/dist/sprite.svg#share-linkedIn"></use>
+      </svg>
+    </a>
+  </li>
+<li>
+    <a
+        aria-label="Siga no Google News"
+        target="_blank"
+        href="https://news.google.com/publications/CAAqMQgKIitDQklTR2dnTWFoWUtGR1JwWVhKcGIyUnZjRzlrWlhJdVkyOXRMbUp5S0FBUAE?ceid=BR:pt-419&oc=3"
+        title="Siga o Diário do Poder no Google News"
+        rel="noopener noreferrer">
+
+        <svg width="30" height="30" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M1.69151 3.60223L5.73881 7.64944H0V10.3451H5.73881L7.69314 8.40423V5.69513L3.64585 1.64795L1.69151 3.60223Z" fill="#a5070b"/>
+            <path d="M7.66016 8.39052L12.3122 7.65451L16.3595 3.60729L14.4051 1.65298L10.3579 5.70019V0H7.66216L7.66016 8.39052Z" fill="#a5070b"/>
+            <path d="M1.6626 14.3908L3.61693 16.3464L7.66427 12.2969V18.0001H10.3599V12.297L7.66022 8.39062L1.6626 14.3908Z" fill="#a5070b"/>
+            <path d="M7.6457 9.59079L14.3911 16.3336L16.3462 14.3793L12.2976 10.3321H17.9998V7.63647H8.58266C7.31542 7.87757 7.33582 8.85488 7.6457 9.59079Z" fill="#a5070b"/>
+        </svg>
+
+    </a>
+</li>
+</ul>
+
+          </div>
+
+          <div class="materia-content">
+            <div class="ads-FR">
+              
+<!-- /22033703942/quadrado-1 -->
+<div class="ddp-ads">
+    <div class="pub-ret">
+       <div id="ddp-ads-quadrado-1"></div>
+    </div>
+</div>
+              
+              <!-- <div class="entry-audima">
+                <div id="ddp_audima"></div>
+              </div> -->
+            </div>
+            <p>Pesquisa estimulada da Brasmarket divulgada nesta sexta-feira (30) mostra o presidente Jair Bolsonaro (PL) com 45,5% e o ex-presidente Lula com 30,9% das intenções de voto.
+</p><p>Ciro Gomes (PDT)  aparece com 6,2% seguido por Simone Tebet (MDB) com 5,2%.
+</p><p>A candidata Soraya Thronicke (União) aparece com 0,8%; e Felipe D&#8217;Ávila (Novo), 0,3%; os demais registraram menos de 0,1%. Votos brancos e nulos chegam a 2,6% e indecisos, 8,3%.
+<div id="ddp-ads-AD-51" style="text-align: center;">
+            <script>
+            buildAds({
+                'id': 'AD-51',
+                'size': [1, 1],
+                'maps': {
+                    '992': [[970, 250], [728, 90]],
+                    '768': [728, 90],
+                    '320': [1, 1],
+                    '0': [1, 1],
+                },
+                'lazyload': false,
+                'refresh': false,
+            })
+        </script>
+    </div>
+</p><p>De acordo com a pesquisa, Bolsonaro teria mais intenções de voto do que a soma de todos os candidatos: 45,4% contra 43,8%, o que seria suficiente para vencer no primeiro turno.
+<h3><b>Pesquisa estimulada</b></h3>
+<ul>
+<li aria-level="1">Jair Bolsonaro (PL): 45,4%</li>
+<li aria-level="1">Luiz Inácio Lula da Silva (PT): 30,9%</li>
+<li aria-level="1">Ciro Gomes (PDT): 6,2%</li>
+<li aria-level="1">Simone Tebet (MDB): 5,2%</li>
+<li aria-level="1">Soraya Thronicke (União): 0,8%</li>
+<li aria-level="1">Felipe d&#8217;Ávila (Novo): 0,3%</li>
+<li aria-level="1">Padre Kelmon (PTB): 0,3%</li>
+<li aria-level="1">Leonardo Péricles (UP): menos de 0,1%</li>
+<li aria-level="1">Constituinte Eymael (DC): 0,0%</li>
+<li aria-level="1">Sofia Manzano (PCB): 0,0%</li>
+<li aria-level="1">Vera Batista (PSTU): 0,0%</li>
+<li aria-level="1">Brancos e nulos: 2,6%</li>
+<li aria-level="1">Indecisos: 8,3%</li>
+</ul>
+<h3><b>Pesquisa espontânea</b></h3>
+<ul>
+<li aria-level="1">Jair Bolsonaro (PL): 44,3%</li>
+<li aria-level="1">Luiz Inácio Lula da Silva (PT): 27,6%</li>
+<li aria-level="1">Ciro Gomes (PDT): 3,8%</li>
+<li aria-level="1">Simone Tebet (MDB): 3,2%</li>
+<li aria-level="1">Soraya Thronicke (União): 0,4%</li>
+<li aria-level="1">Felipe d&#8217;Ávila (Novo): 0,3%</li>
+<li aria-level="1">Padre Kelmon (PTB): 0,1%</li>
+<li aria-level="1">Léo Péricles (UP): menos de 0,1%</li>
+<li aria-level="1">Outros: 0,1%</li>
+<li aria-level="1">Brancos e nulos: 5,1%</li>
+<li aria-level="1">Indecisos: 15,1%</li>
+</ul>
+</p><p>Entre os dias 26 e 28 de setembro foram ouvidas 1.600 pessoas em 529 cidades das cinco regiões do país.
+</p><p>Entre os entrevistados: 53,1% mulheres e 46,9%, homens.Faixa etária: 16 a 24 anos (14,1%); de 25 a 44 anos (19,9%); de 35 a 44 anos (21%); de 45 a 49 anos (24%); de 60 ou mais anos (20,9%).
+<div class="ddp-banner ddp-banner-rectangle">
+<div class="ddp-ads">
+<div class="pub-hor pos-3">
+<div id="ddp-ads-horizontal-3"></div>
+</div>
+</div>
+</div>
+</p><p>Sobre o grau de instrução: 10,9% são analfabetos, 30% têm o ensino fundamental completo, 43,1% completaram o ensino médio e 16% têm o ensino superior.
+</p><p>Renda familiar:: 59,8% ganham até um salário mínimo; 20,3% de um a dois mínimos; 12,2% de dois a cinco mínimos; mais de cinco mínimos representam 6,4% e 1,3% não informaram.
+</p><p>O nível de confiabilidade da pesquisa é de 95% e a margem de erro é de 2,45 pontos percentuais. A pesquisa está registrada no TSE sob o número BR-08847/2022.
+</p>                      </div>
+
+                      <div class="entry-tags">
+              <strong>Tags: </strong>
+              <a href="https://diariodopoder.com.br/tag/pesquisas" rel="tag">Pesquisas</a>            </div>
+          
+          
+          <style>
+   .google-news-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    width: auto;
+    min-height: 42px;
+    padding: 10px 22px;
+
+    border: 1px solid #b9161f;
+    
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,.14);
+
+    font-size: 14px;
+    line-height: 1;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.google-news-btn span {
+    margin: 0;
+    line-height: 1;
+}
+
+.google-news-btn span:first-child {
+    color: #b9161f;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.google-news-btn span:last-child {
+    color: #b9161f;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.google-news-btn svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+@media (max-width: 600px) {
+    #listComments .col-2 {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    #listComments .col-2 .ddp-btn-load,
+    #listComments .col-2 .open-disqus {
+        flex: 1 1 calc(50% - 6px);
+        justify-content: center !important;
+    }
+
+    #listComments .col-2 .google-news-btn {
+        flex: 1 1 100%;
+        width: 100%;
+        max-width: 100%;
+
+        padding: 12px 16px;
+
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    #listComments .col-2 .google-news-btn span {
+        white-space: nowrap;
+    }
+}
+</style>
+<div id="listComments" class="comments">
+    <div class="col-2">
+        <button class="m-btn m-btn-see-more m-btn-shadow open-disqus ddp-btn-load"
+            data-url='https://diariodopoder.com.br/eleicoes-2022/pesquisa-brasmarket-bolsonaro-tem-454-e-lula-309-das-intencoes-de-voto'
+            data-identifier='372105'>
+            Ver Comentários
+        </button>
+        <a href="https://diariodopoder.com.br/reportar-erro" class="ddp-btn-load">Reportar Erro</a>
+         
+      <a class="google-news-btn" href="https://news.google.com/publications/CAAqMQgKIitDQklTR2dnTWFoWUtGR1JwWVhKcGIyUnZjRzlrWlhJdVkyOXRMbUp5S0FBUAE?ceid=BR:pt-419&oc=3" target="_blank" rel="noopener noreferrer" aria-label="Siga o Diário do Poder no Google News" title="Siga o Diário do Poder no Google News">
+      <span>Siga o DP</span>
+        <svg class="ddp-google-news-btn__icon" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M1.69151 3.60223L5.73881 7.64944H0V10.3451H5.73881L7.69314 8.40423V5.69513L3.64585 1.64795L1.69151 3.60223Z" fill="#FBBC01"/>
+        <path d="M7.66016 8.39052L12.3122 7.65451L16.3595 3.60729L14.4051 1.65298L10.3579 5.70019V0H7.66216L7.66016 8.39052Z" fill="#EB4435"/>
+        <path d="M1.6626 14.3908L3.61693 16.3464L7.66427 12.2969V18.0001H10.3599V12.297L7.66022 8.39062L1.6626 14.3908Z" fill="#38A752"/>
+        <path d="M7.6457 9.59079L14.3911 16.3336L16.3462 14.3793L12.2976 10.3321H17.9998V7.63647H8.58266C7.31542 7.87757 7.33582 8.85488 7.6457 9.59079Z" fill="#4886F4"/>
+    </svg>
+    <span>Google News</span>
+</a>
+    </div>
+    <div id="disqus_thread"></div>
+</div>
+        </article>
+        
+        <!-- <div id="ddp-truvid"></div> -->
+
+                
+<div class="col-posArticle">
+  <div class="col">
+    <!-- Outbrain -->
+     <style>
+      .OUTBRAIN {
+        width: 100%; /* ou qualquer outra largura desejada, como por exemplo, width: 500px; */
+        max-width: 1100px;
+        margin: 0 auto;
+      
+      
+      }
+    </style>
+    <script type="text/javascript">
+      setTimeout(() => {
+        var slotOutbrain = document.querySelectorAll(".outbrainDiv:last-child");
+        var countOutbrain = slotOutbrain.length - 1;
+        var outbrainDiv = document.createElement('div');
+        outbrainDiv.classList.add('OUTBRAIN');
+        outbrainDiv.setAttribute('data-src', window.location.href);
+        outbrainDiv.setAttribute('data-widget-id', 'AR_1');
+        outbrainDiv.setAttribute('data-ob-template', 'diariodopoder');
+        slotOutbrain[countOutbrain].appendChild(outbrainDiv);
+        OBR.extern.researchWidget();
+      }, 1500);
+    </script>
+    <div class='outbrainDiv'></div>
+
+    <aside>
+      <div class="OUTBRAIN" data-src="category-coluna-claudio-humberto.php" data-widget-id="AR_1"></div>
+    </aside>
+    <script type="text/javascript" async="async" src="https://widgets.outbrain.com/outbrain.js"></script>
+  </div>
+</div>
+
+      </section>
+    </div>
+  </div>
+
+</main>
+<!--#ddp-main-->
+
+<footer class="ddp-footer">
+	<div class="ddp-footerMain">
+		<div class="container">
+			<div class="col-4">
+				<div class="col">
+					<a class="mg" aria-label="Diário do Poder" href="https://diariodopoder.com.br">
+						<svg>
+							<use xlink:href="https://diariodopoder.com.br/wp-content/themes/diariodopoder/assets/images/logo-diario-2024-home-dark.svg"></use>
+						</svg>
+					</a>
+					<p>Poder, política e bastidores, sem perder o bom humor. Desde 1998.</p>
+					<h3>Siga-nos @DiariodoPoder</h3>
+					
+<ul class="social">
+  <li>
+    <a aria-label="Facebook Diário do Poder" href="https://www.facebook.com/diariodopoder" target="_blank" rel="noopener">
+      <svg class="facebook">
+        <use xlink:href="https://diariodopoder.com.br/wp-content/themes/diariodopoder/dist/sprite.svg#facebook-negative"></use>
+      </svg>
+    </a>
+  </li>
+  <li>
+    <a aria-label="Twitter Diário do Poder" href="https://twitter.com/DiariodoPoder" target="_blank" rel="noopener">
+      <svg class="twitter">
+        <use xlink:href="https://diariodopoder.com.br/wp-content/themes/diariodopoder/dist/sprite.svg#twitter-negative"></use>
+      </svg>
+    </a>
+  </li>
+  <li>
+    <a aria-label="Instagram do Diário do Poder" href="https://www.instagram.com/diariodopoder/" target="_blank" rel="noopener">
+      <svg class="instagram">
+        <use xlink:href="https://diariodopoder.com.br/wp-content/themes/diariodopoder/dist/sprite.svg#instagram-negative"></use>
+      </svg>
+    </a>
+  </li>
+  <li>
+    <a aria-label="YouTube Diário do Poder" href="https://www.youtube.com/diariodopodertv" target="_blank" rel="noopener">
+      <svg class="youtube">
+        <use xlink:href="https://diariodopoder.com.br/wp-content/themes/diariodopoder/dist/sprite.svg#youtube-negative"></use>
+      </svg>
+    </a>
+  </li>
+  <!-- <li>
+    <a href="https://br.pinterest.com/diariodopoder/">
+      <svg class="pintrest">
+        <use xlink:href="/dist/sprite.svg#pintrest"></use>
+      </svg>
+    </a>
+  </li> -->
+  <li>
+    <a aria-label="Feed Diário do Poder" href="https://diariodopoder.com.br/feed/" title="RSS Feed" target="_blank" rel="noopener">
+      <svg class="rss">
+        <use xlink:href="https://diariodopoder.com.br/wp-content/themes/diariodopoder/dist/sprite.svg#rss"></use>
+      </svg>
+    </a>
+  </li>
+</ul>
+				</div>
+				<dl class="col">
+					<dt>EDITORIAS</dt>
+					<dd><a href="/coluna-claudio-humberto">Cláudio Humberto</a></dd>
+					<dd><a href="/politica">Política</a></dd>
+					<dd><a href="/opiniao">Opinião</a></dd>
+					<dd><a href="/justica">Justiça</a></dd>
+					<dd><a href="/dinheiro">Dinheiro</a></dd>
+
+				</dl>
+				<dl class="col">
+					<dt style="height: 25px;"></dt>
+					<dd><a href="/brasil-e-regioes">Brasil e Regiões</a></dd>
+					<dd><a href="/exteriores">Internacional</a></dd>
+					<dd><a href="/diario-motor">Diário Motor</a></dd>
+					<dd><a href="/videos">Vídeos</a></dd>
+
+				</dl>
+				<dl class="col">
+					<dt>SOBRE NÓS</dt>
+					<dd><a href="/anuncie">Anuncie</a></dd>
+					<dd><a href="/sobre-o-dp">Sobre o DP</a></dd>
+					<dd><a href="/equipe">Equipe</a></dd>
+					<dd><a href="/fale-conosco">Fale Conosco</a></dd>
+					<dd><a href="/reportar-erro">Reportar Erro</a></dd>
+					<dd><a href="/politica-de-privacidade">Política de Privacidade</a></dd>
+					<dd><a href="javascript:void" onclick="window.sendAdoptCommand('open')">Controle sua Privacidade</a></dd>
+				</dl>
+			</div>
+		</div>
+	</div>
+	<div class="ddp-copyright">
+		<div class="container">
+			<strong>© 2026 Diário do Poder</strong>
+		</div>
+	</div>
+</footer>
+
+<div id="modal" style="display: none;">
+  <div id="close-box">
+    <svg>
+      <use xlink:href="https://diariodopoder.com.br/wp-content/themes/diariodopoder/dist/sprite.svg#clear"></use>
+    </svg>
+  </div>
+  <div class="modal-content">
+    <div class="modal-container">
+      <form class="search-modal-form" method="get" id="search-form" name="search" action="https://diariodopoder.com.br">
+  <div class="wrapper">
+    <div class="form-input">
+      <label class="icon" for="loremIpsum">
+        <div class="svg">
+          <svg>
+            <use xlink:href="https://diariodopoder.com.br/wp-content/themes/diariodopoder/dist/sprite.svg#search-slim"></use>
+          </svg>
+        </div>
+      </label>
+      <input class="input" name="s" type="text" placeholder="Pesquisar" />
+    </div>
+  </div>
+  <div class="submit">
+    <button class="submit-button" aria-label="Botão de pesquisar" type="submit">Pesquisar</button>
+  </div>
+</form>    </div>
+  </div>
+</div>
+<style>
+    .burger .google-news-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    margin: 22px 0 26px;
+    padding: 0;
+}
+
+.burger .google-news-item .google-news-btn {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    
+
+    width: auto !important;
+    max-width: none;
+    min-height: 42px;
+
+    padding: 10px 22px;
+
+    border: 1px solid #b9161f;
+    border-radius: 24px;
+
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,.14);
+
+    font-size: 13px;
+    line-height: 1;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.burger .google-news-item .google-news-btn span {
+    margin: 0;
+    line-height: 1;
+}
+
+.burger .google-news-item .google-news-btn span:first-child {
+    color: #b9161f;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.burger .google-news-item .google-news-btn span:last-child {
+    color: #b9161f;
+    font-size: 13px;
+    font-weight: 400;
+    text-transform: none;
+}
+
+.burger .google-news-item .google-news-btn svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+</style>
+
+<aside class="sidebar-mg">
+  <div class="close">
+    <a href="#close" aria-label="Botão de fechar" class="close-sidebar-mg">
+      <svg><use xlink:href="https://diariodopoder.com.br/wp-content/themes/diariodopoder/dist/sprite.svg#clear"></use></svg>
+    </a>
+  </div>
+  <div class="logo">
+    <a aria-label="Diário do Poder"class="cw" href="https://diariodopoder.com.br">
+      <svg><use xlink:href="https://diariodopoder.com.br/wp-content/themes/diariodopoder/assets/images/logo-diario-2024-home-red.svg"></use></svg>
+    </a>
+  </div>
+
+  <div class="options-menu">
+    <div class="button-switch">
+      <input type="checkbox" id="switch-button-offcanvas" class="ddp-switch-darkmode" />
+      <!-- <label for="switch-button" class="lbl-off"></label>
+      <label for="switch-button" class="lbl-on"></label> -->
+    </div>
+  </div>
+
+  <nav class="burger">
+    <ul>     
+      <li class="google-news-item"><a class="google-news-btn" href="https://news.google.com/publications/CAAqMQgKIitDQklTR2dnTWFoWUtGR1JwWVhKcGIyUnZjRzlrWlhJdVkyOXRMbUp5S0FBUAE?ceid=BR:pt-419&oc=3" target="_blank" rel="noopener noreferrer"> <span>Siga o DP</span>
+      <svg class="ddp-google-news-btn__icon" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"> <path d="M1.69151 3.60223L5.73881 7.64944H0V10.3451H5.73881L7.69314 8.40423V5.69513L3.64585 1.64795L1.69151 3.60223Z" fill="#FBBC01"/> <path d="M7.66016 8.39052L12.3122 7.65451L16.3595 3.60729L14.4051 1.65298L10.3579 5.70019V0H7.66216L7.66016 8.39052Z" fill="#EB4435"/> <path d="M1.6626 14.3908L3.61693 16.3464L7.66427 12.2969V18.0001H10.3599V12.297L7.66022 8.39062L1.6626 14.3908Z" fill="#38A752"/> <path d="M7.6457 9.59079L14.3911 16.3336L16.3462 14.3793L12.2976 10.3321H17.9998V7.63647H8.58266C7.31542 7.87757 7.33582 8.85488 7.6457 9.59079Z" fill="#4886F4"/></svg>
+      <span>Google News</span>
+      </a></li>
+      <li><a href="https://diariodopoder.com.br" onclick="eventoGA('clique menu', 'principal', 'Home')" title="Home">DP</a></li>
+      <li><a href="/coluna-claudio-humberto" onclick="eventoGA('clique menu', 'principal', 'CLÁUDIO HUMBERTO')" title="CLÁUDIO HUMBERTO">CLÁUDIO HUMBERTO</a></li>
+      <li><a href="/ultimas-noticias" onclick="eventoGA('clique menu', 'principal', 'ÚLTIMAS NOTÍCIAS')" title="ÚLTIMAS NOTÍCIAS">ÚLTIMAS NOTÍCIAS</a></li>
+      <li><a href="/opiniao" onclick="eventoGA('clique menu', 'principal', 'OPINIÃO')" title="OPINIÃO">OPINIÃO</a></li>
+      <li><a href="/brasil-e-regioes" onclick="eventoGA('clique menu', 'principal', 'BRASIL')" title="BRASIL">BRASIL</a></li>
+      <li><a href="/exteriores" onclick="eventoGA('clique menu', 'principal', 'INTERNACIONAL')" title="INTERNACIONAL">INTERNACIONAL</a></li>
+      <li><a href="/videos" onclick="eventoGA('clique menu', 'principal', 'VÍDEOS')" title="VÍDEOS">VÍDEOS</a></li>
+      <li><a href="/tag/esporte" onclick="eventoGA('clique menu', 'principal', 'ESPORTE')" title="ESPORTE">ESPORTE</a></li>
+      <li><a href="/diario-motor" onclick="eventoGA('clique menu', 'principal', 'DIÁRIO MOTOR')" title="DIÁRIO MOTOR">DIÁRIO MOTOR</a></li>
+    </ul>
+  </nav>
+  
+  <!-- <nav>
+    <ul>
+      <li><a href="#" title="Menu 2">Menu 2</a></li>
+    </ul>
+  </nav>
+  <nav>
+    <ul>
+      <li><a href="#" title="Menu 3">Menu 3</a></li>
+      
+    </ul>
+  </nav> -->
+
+  <nav class="aux">
+    <ul>
+      <li><a href="/anuncie">Anuncie</a></li>
+      <li><a href="/sobre-o-dp">Sobre o DP</a></li>
+      <li><a href="/equipe">Equipe</a></li>
+      <li><a href="/fale-conosco">Fale Conosco</a></li>
+      <li><a href="/reportar-erro">Reportar Erro</a></li>
+      <li><a href="/politica-de-privacidade">Política de Privacidade</a></li>
+      <li><a href="javascript:void" onclick="window.sendAdoptCommand('open')">Controle sua Privacidade</a></li>
+    </ul>
+  </nav> 
+
+  
+<ul class="social">
+  <li>
+    <a aria-label="Facebook Diário do Poder" href="https://www.facebook.com/diariodopoder" target="_blank" rel="noopener">
+      <svg class="facebook">
+        <use xlink:href="https://diariodopoder.com.br/wp-content/themes/diariodopoder/dist/sprite.svg#facebook-negative"></use>
+      </svg>
+    </a>
+  </li>
+  <li>
+    <a aria-label="Twitter Diário do Poder" href="https://twitter.com/DiariodoPoder" target="_blank" rel="noopener">
+      <svg class="twitter">
+        <use xlink:href="https://diariodopoder.com.br/wp-content/themes/diariodopoder/dist/sprite.svg#twitter-negative"></use>
+      </svg>
+    </a>
+  </li>
+  <li>
+    <a aria-label="Instagram do Diário do Poder" href="https://www.instagram.com/diariodopoder/" target="_blank" rel="noopener">
+      <svg class="instagram">
+        <use xlink:href="https://diariodopoder.com.br/wp-content/themes/diariodopoder/dist/sprite.svg#instagram-negative"></use>
+      </svg>
+    </a>
+  </li>
+  <li>
+    <a aria-label="YouTube Diário do Poder" href="https://www.youtube.com/diariodopodertv" target="_blank" rel="noopener">
+      <svg class="youtube">
+        <use xlink:href="https://diariodopoder.com.br/wp-content/themes/diariodopoder/dist/sprite.svg#youtube-negative"></use>
+      </svg>
+    </a>
+  </li>
+  <!-- <li>
+    <a href="https://br.pinterest.com/diariodopoder/">
+      <svg class="pintrest">
+        <use xlink:href="/dist/sprite.svg#pintrest"></use>
+      </svg>
+    </a>
+  </li> -->
+  <li>
+    <a aria-label="Feed Diário do Poder" href="https://diariodopoder.com.br/feed/" title="RSS Feed" target="_blank" rel="noopener">
+      <svg class="rss">
+        <use xlink:href="https://diariodopoder.com.br/wp-content/themes/diariodopoder/dist/sprite.svg#rss"></use>
+      </svg>
+    </a>
+  </li>
+</ul>
+</aside>
+<div id="modalFotos" style="display: none;">
+  <div id="modalFoto-close">
+    <svg>
+      <use xlink:href="https://diariodopoder.com.br/wp-content/themes/diariodopoder/dist/sprite.svg#clear"></use>
+    </svg>
+  </div>
+  <div class="modalFotos-content">
+    <div class="modalFotos-container"></div>
+  </div>
+</div><div class="sticky-social">
+  <ul class="socialBar">
+    <li>Compartilhe:</li>
+    <li>
+      <a aria-label="Facebook compartilhamento" target="_blank" href="https://www.facebook.com/sharer.php?u=https://diariodopoder.com.br/eleicoes-2022/pesquisa-brasmarket-bolsonaro-tem-454-e-lula-309-das-intencoes-de-voto" title="Compartilhar pelo Facebook" rel="noopener">
+        <svg>
+          <use xlink:href="https://diariodopoder.com.br/wp-content/themes/diariodopoder/dist/sprite.svg#share-facebook"></use>
+        </svg>
+      </a>
+    </li>
+    <li>
+      <a aria-label="Twitter compartilhamento" target="_blank" href="//twitter.com/intent/tweet?source=diariodopoder.com&text=Pesquisa Brasmarket: Bolsonaro tem 45,4% e Lula 30,9% das intenções de voto&url=https://diariodopoder.com.br/eleicoes-2022/pesquisa-brasmarket-bolsonaro-tem-454-e-lula-309-das-intencoes-de-voto" title="Compartilhar pelo Twitter" rel="noopener">
+        <svg>
+          <use xlink:href="https://diariodopoder.com.br/wp-content/themes/diariodopoder/dist/sprite.svg#share-twitter"></use>
+        </svg>
+      </a>
+    </li>
+    <li>
+      <a aria-label="Whatsapp compartilhamento" target="_blank" href="https://api.whatsapp.com/send?phone=&text=https://diariodopoder.com.br/eleicoes-2022/pesquisa-brasmarket-bolsonaro-tem-454-e-lula-309-das-intencoes-de-voto" title="Compartilhar pelo WhatsApp" rel="noopener">
+        <svg>
+          <use xlink:href="https://diariodopoder.com.br/wp-content/themes/diariodopoder/dist/sprite.svg#share-whatsapp"></use>
+        </svg>
+      </a>
+    </li>
+    <li>
+      <a aria-label="LinkedIn compartilhamento" target="_blank" href="https://www.linkedin.com/sharing/share-offsite/?url=https://diariodopoder.com.br/eleicoes-2022/pesquisa-brasmarket-bolsonaro-tem-454-e-lula-309-das-intencoes-de-voto" title="Compartilhar pelo LinkedIn" rel="noopener">
+        <svg>
+          <use xlink:href="https://diariodopoder.com.br/wp-content/themes/diariodopoder/dist/sprite.svg#share-linkedIn"></use>
+        </svg>
+      </a>
+    </li>
+  </ul>
+</div>
+<!-- Anchorads -->
+
+<style type="text/css">
+
+	.pub-anchor {
+		position: fixed !important;
+		left: 0;
+		bottom: 0;
+		width: 100%;
+		z-index: 1001 !important;
+		text-align: center;
+		line-height: 0;
+	}
+
+	.ddp-ads-anchor {
+		display: flex;
+		justify-content: center;
+		width: 100%;
+	}
+
+	#ddp-ads-anchor {
+		width: 320px;
+		height: 50px;
+		margin: 0 auto;
+		overflow: hidden;
+	}
+
+	#ddp-ads-anchor iframe {
+		width: 320px !important;
+		height: 50px !important;
+	}
+
+	/* Desktop e tablet */
+
+	@media (min-width: 768px) {
+
+		.pub-anchor {
+			display: none !important;
+		}
+	}
+
+</style>
+
+<div class="ddp-ads-anchor">
+
+	<div class="pub-anchor">
+
+		<div id="ddp-ads-anchor"></div>
+
+	</div>
+
+</div>
+
+<script>
+
+	function waitForAnchor() {
+
+		if (window.innerWidth >= 768) return;
+
+		if (typeof buildAds !== 'function') {
+
+			setTimeout(waitForAnchor, 300);
+
+			return;
+		}
+
+		buildAds({
+
+			id: 'anchor',
+
+			size: [320, 50],
+
+			maps: {
+				'0': [[320, 50]]
+			},
+
+			lazyload: false,
+
+			refresh: false
+
+		});
+	}
+
+	document.addEventListener(
+		'DOMContentLoaded',
+		waitForAnchor
+	);
+
+</script>
+		
+<!--#ddp-general-->
+
+<script>
+	(e=>{var t={};function o(n){var r;return(t[n]||(r=t[n]={i:n,l:!1,exports:{}},e[n].call(r.exports,r,r.exports,o),r.l=!0,r)).exports}o.m=e,o.c=t,o.d=function(e,t,n){o.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:n})},o.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},o.t=function(e,t){if(1&t&&(e=o(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var n=Object.create(null);if(o.r(n),Object.defineProperty(n,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var r in e)o.d(n,r,function(t){return e[t]}.bind(null,r));return n},o.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return o.d(t,"a",t),t},o.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},o.p="",o(o.s=97)})({97:function(e,t,o){e.exports=o(98)},98:function(e,t){function o(){document.body.classList.add("darkmode"),localStorage.setItem("darkMode","enabled"),l&&(l.checked=!0),d.checked=!0,r=localStorage.getItem("darkMode")}function n(){document.body.classList.remove("darkmode"),localStorage.setItem("darkMode",null),l&&(l.checked=!1),document.querySelector("#switch-button-offcanvas").checked=!1,r=localStorage.getItem("darkMode")}var r=localStorage.getItem("darkMode"),c=document.querySelector("#increase-content"),a=document.querySelector("#decrease-content"),l=document.querySelector("#switch-button"),d=document.querySelector("#switch-button-offcanvas");"enabled"===r?(o(),l&&(l.checked=!0),d.checked=!0):(n(),l&&(l.checked=!1),d.checked=!1),l&&l.addEventListener("click",(function(){("enabled"!==r?o:n)()})),d&&d.addEventListener("click",(function(){("enabled"!==r?o:n)()})),c&&c.addEventListener("click",(function(e){var t=document.querySelector(".materia-content");t.style.zoom?t.style.zoom=1.2<=parseFloat(t.style.zoom)?1.2:parseFloat(t.style.zoom)+.1:t.style.zoom=1.1})),a&&a.addEventListener("click",(function(e){var t=document.querySelector(".materia-content");t.style.zoom?t.style.zoom=parseFloat(t.style.zoom)<=.9?.9:parseFloat(t.style.zoom)-.1:t.style.zoom=.9}))}});</script>
+
+<script async src="https://apis.google.com/js/platform.js"></script>
+
+<script type="speculationrules">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":["/wp-*.php","/wp-admin/*","/diario-do-poder-uploads/2026/10/*","/wp-content/*","/wp-content/plugins/*","/wp-content/themes/diario-do-poder-child/*","/wp-content/themes/diariodopoder/*","/*\\?(.+)"]}},{"not":{"selector_matches":"a[rel~=\"nofollow\"]"}},{"not":{"selector_matches":".no-prefetch, .no-prefetch a"}}]},"eagerness":"conservative"}]}
+</script>
+<script>function loadScript(a){var b=document.getElementsByTagName("head")[0],c=document.createElement("script");c.type="text/javascript",c.src="https://tracker.metricool.com/app/resources/be.js",c.onreadystatechange=a,c.onload=a,b.appendChild(c)}loadScript(function(){beTracker.t({hash:'8c8998eef9afda65248a501318fe26d5'})})</script><script id="ddp-script2-js" src="https://diariodopoder.com.br/wp-content/themes/diariodopoder/dist/app.js?ver=8.1.1"></script>
+
+	<!-- <script type="text/javascript">
+		const widthScreen = screen.width;
+		if (widthScreen < 600) {
+			window.onload = function() {
+				http = function() {
+					try {
+						return new XMLHttpRequest()
+					} catch (error) {
+						console.log(error)
+					}
+					try {
+						return new ActiveXObject('Msxml2.XMLHTTP')
+					} catch (error) {
+						console.log(error)
+					}
+					try {
+						return new ActiveXObject('Microsoft.XMLHTTP')
+					} catch (error) {
+						console.log(error)
+					}
+					throw new Error('Could not create HTTP request object.')
+				}
+				var placement = document.getElementById('ddp_audima')
+				console.log(placement)
+
+				// placement.innerHTML = ''
+				var frame = document.createElement('iframe')
+				frame.border = 0
+				frame.frameBorder = 0
+				frame.width = 320
+				frame.height = 50
+				placement.appendChild(frame)
+				request = http()
+				request.open('GET', 'https://audima.co/dfp_frame_new.txt', true)
+				request.send(null)
+				request.onreadystatechange = function() {
+					if (request.readyState == 4) {
+						frame.contentWindow.document.open('text/html')
+						frame.contentWindow.document.write(request.responseText)
+						frame.contentWindow.document.close()
+					}
+				}
+			}
+		}
+	</script> -->
+
+<!-- LEGACY - DESATIVADO (carregamento via scroll removido)-->			
+
+<script>
+let pubHor1 = document.querySelector('#ddp-ads-horizontal-1');
+if(pubHor1){
+  ph1 = document.createElement("script")
+  ph1.type = "text/javascript";
+  ph1.innerHTML = `buildAds({
+    'id': 'horizontal-1',
+    'size': [970,90],
+    'maps': {
+        '992' : [[728, 90], [970, 90], [1, 1]],
+        '768' : [[468, 60], [728, 90], [1, 1]],
+        '320' : [[320, 50], [1, 1]],
+        '0' : [[320, 50], [1, 1]]
+    },
+    'lazyload': true,
+    'refresh': true
+  })`
+  pubHor1.appendChild(ph1)
+}
+
+let pubHor2 = document.querySelector('#ddp-ads-horizontal-2');
+if(pubHor2){
+  ph2 = document.createElement("script")
+  ph2.type = "text/javascript";
+  ph2.innerHTML = `buildAds({
+    'id': 'horizontal-2',
+    'size': [970, 250],
+    'maps': {
+        '992' : [[970, 250], [728, 90], [1, 1]],
+        '768' : [[468, 60], [728, 90], [1, 1]],
+        '600' : [[300, 250], [1, 1]],
+        '0' : [[300, 250], [300, 600], [1, 1]]
+    },
+    'lazyload': true,
+    'refresh': true
+  })`
+  pubHor2.appendChild(ph2)
+}
+
+let pubHor21 = document.querySelector('#ddp-ads-horizontal-2-1');
+if(pubHor21){
+  ph21 = document.createElement("script")
+  ph21.type = "text/javascript";
+  ph21.innerHTML = `buildAds({
+    'id': 'horizontal-2-1',
+    'size': [728,90],
+    'maps': {
+        '992' : [[728, 90], [970, 90], [1, 1]],
+        '768' : [[468, 60], [728, 90], [1, 1]],
+        '320' : [[320, 50], [1, 1]],
+        '0' : [[320, 50], [1, 1]]
+    },
+    'lazyload': true,
+    'refresh': true
+  })`
+  pubHor21.appendChild(ph21)
+}
+
+let pubHor3 = document.querySelector('#ddp-ads-horizontal-3');
+if(pubHor3){
+  ph3 = document.createElement("script")
+  ph3.type = "text/javascript";
+  ph3.innerHTML = `buildAds({
+    'id': 'horizontal-3',
+    'size': [[970, 250]],
+    'maps': {
+        '992' : [[970, 250], [728, 90], [1, 1]],
+        '768' : [[468, 60], [728, 90], [1, 1]],
+        '600' : [[300, 250], [1, 1]],
+        '0' : [[300, 250], [1, 1]]
+    },
+    'lazyload': true,
+    'refresh': true
+  })`
+  pubHor3.appendChild(ph3)
+}
+
+let pubHor4 = document.querySelector('#ddp-ads-horizontal-4');
+if(pubHor4){
+  ph4 = document.createElement("script")
+  ph4.type = "text/javascript";
+  ph4.innerHTML = `buildAds({
+    'id': 'horizontal-4',
+    'size': [728,90],
+    'maps': {
+        '992' : [[728, 90], [1, 1]],
+        '768' : [[468, 60], [728, 90], [1, 1]],
+        '600' : [[300, 250], [1, 1]],
+        '0' : [[300, 250], [1, 1]]
+    },
+    'lazyload': true,
+    'refresh': true
+  })`
+  pubHor4.appendChild(ph4)
+}
+
+let pubHor41 = document.querySelector('#ddp-ads-horizontal-4-1');
+if(pubHor41){
+    let ph41 = document.createElement("script");
+    ph41.type = "text/javascript";
+    ph41.innerHTML = `buildAds({
+        'id': 'horizontal-4-1',
+        'size': [728, 90],
+        'maps': {
+            '992' : [[728, 90], [1, 1]],
+            '768' : [[468, 60], [728, 90], [1, 1]],
+            '600' : [[300, 250], [1, 1]],
+            '0' : [[300, 250],[1, 1]]
+        },
+        'lazyload': true,
+        'refresh': true
+    })`;
+    pubHor41.appendChild(ph41);
+}
+
+let pubHor5 = document.querySelector('#ddp-ads-horizontal-5');
+if(pubHor5){
+  ph5 = document.createElement("script")
+  ph5.type = "text/javascript";
+  ph5.innerHTML = `buildAds({
+    'id': 'horizontal-5',
+    'size': [728, 90],
+    'maps': {
+        '992' : [[728, 90], [1, 1]],
+        '768' : [[468, 60], [728, 90], [1, 1]],
+        '600' : [[300, 250], [1, 1]],
+        '0' : [[300, 250],[1, 1]]
+    },
+    'lazyload': true,
+    'refresh': true
+  })`
+  pubHor5.appendChild(ph5)
+}
+
+let pubHor6 = document.querySelector('#ddp-ads-horizontal-6');
+if(pubHor6){
+  ph6 = document.createElement("script")
+  ph6.type = "text/javascript";
+  ph6.innerHTML = `buildAds({
+    'id': 'horizontal-6',
+    'size': [728, 90],
+    'maps': {
+        '992' : [[728, 90], [1, 1]],
+        '768' : [[468, 60], [728, 90], [1, 1]],
+        '600' : [[300, 250], [1, 1]],
+        '0' : [[300, 250],[1, 1]]
+    },
+    'lazyload': true,
+    'refresh': true
+  })`
+  pubHor6.appendChild(ph6)
+}
+
+
+let pubRet1 = document.querySelector('#ddp-ads-quadrado-1');
+if(pubRet1){
+  pr1 = document.createElement("script")
+  pr1.type = "text/javascript";
+  pr1.innerHTML = `buildAds({
+    'id': 'quadrado-1',
+    'size': [300,250],
+    'maps': {
+        '992' : [[300, 250], [1, 1]],
+        '768' : [[300, 250], [1, 1]],
+        '320' : [[300, 250], [1, 1]],
+        '0' : [[300, 250], [1, 1]]
+    },
+    'lazyload': true,
+    'refresh': true
+  })`
+  pubRet1.appendChild(pr1)
+}
+
+let pubRet2 = document.querySelector('#ddp-ads-quadrado-2');
+if(pubRet2){
+  pr2 = document.createElement("script")
+  pr2.type = "text/javascript";
+  pr2.innerHTML = `buildAds({
+    'id': 'quadrado-2',
+    'size': [300,250],
+    'maps': {
+        '992' : [[300, 250], [1, 1]],
+        '768' : [[300, 250], [1, 1]],
+        '320' : [[300, 250], [1, 1]],
+        '0' : [[300, 250], [1, 1]]
+    },
+    'lazyload': true,
+    'refresh': true
+  })`
+  pubRet2.appendChild(pr2)
+}
+
+let pubRet3 = document.querySelector('#ddp-ads-quadrado-3');
+if(pubRet3){
+  pr3 = document.createElement("script")
+  pr3.type = "text/javascript";
+  pr3.innerHTML = `buildAds({
+    'id': 'quadrado-3',
+    'size': [300,250],
+    'maps': {
+        '992' : [[300, 250], [1, 1]],
+        '768' : [[300, 250], [1, 1]],
+        '320' : [[300, 250], [1, 1]],
+        '0' : [[300, 250], [1, 1]]
+    },
+    'lazyload': true,
+    'refresh': true
+  })`
+  pubRet3.appendChild(pr3)
+}
+
+let pubRet4 = document.querySelector('#ddp-ads-quadrado-4');
+if(pubRet4){
+  pr4 = document.createElement("script")
+  pr4.type = "text/javascript";
+  pr4.innerHTML = `buildAds({
+    'id': 'quadrado-4',
+    'size': [300,250],
+    'maps': {
+        '992' : [[300, 250], [1, 1]],
+        '768' : [[300, 250], [1, 1]],
+        '320' : [[300, 250], [1, 1]],
+        '0' : [[300, 250], [1, 1]]
+    },
+    'lazyload': true,
+    'refresh': true
+  })`
+  pubRet4.appendChild(pr4)
+}
+
+let pubRet5 = document.querySelector('#ddp-ads-quadrado-5');
+if(pubRet5){
+  pr5 = document.createElement("script")
+  pr5.type = "text/javascript";
+  pr5.innerHTML = `buildAds({
+    'id': 'quadrado-5',
+    'size': [300,250],
+    'maps': {
+        '992' : [[300, 250], [1, 1]],
+        '768' : [[300, 250], [1, 1]],
+        '600' : [300, 250],
+        '0' : [300, 250],
+    },
+    'lazyload': true,
+    'refresh': true
+  })`
+  pubRet5.appendChild(pr5)
+}
+
+let pubRet6 = document.querySelector('#ddp-ads-quadrado-6');
+if(pubRet6){
+  pr6 = document.createElement("script")
+  pr6.type = "text/javascript";
+  pr6.innerHTML = `buildAds({
+    'id': 'quadrado-6',
+    'size': [300,250],
+    'maps': {
+        '992' : [[300, 250], [1, 1]],
+        '768' : [[300, 250], [1, 1]],
+        '320' : [[300, 250], [1, 1]],
+        '0' : [[300, 250], [1, 1]]
+    },
+    'lazyload': true,
+    'refresh': true
+  })`
+  pubRet6.appendChild(pr6)
+}
+
+
+let pubHal1 = document.querySelector('#ddp-ads-halfpage-1');
+if(pubHal1){
+  ph1 = document.createElement("script")
+  ph1.type = "text/javascript";
+  ph1.innerHTML = `buildAds({
+    'id': 'halfpage-1',
+    'size': [300,600],
+    'maps': {
+      '2500' : [300, 600],
+      '992' : [300, 600],
+      '768' : [300, 600],
+      '600' : [300, 250],
+      '0' : [300, 250],
+    },
+    'lazyload': true,
+    'refresh': true
+  })`
+  pubHal1.appendChild(ph1)
+}
+
+let pubHal2 = document.querySelector('#ddp-ads-halfpage-2');
+if(pubHal2){
+  ph2 = document.createElement("script")
+  ph2.type = "text/javascript";
+  ph2.innerHTML = `buildAds({
+    'id': 'halfpage-2',
+    'size': [300,600],
+    'maps': {
+      '2500' : [300, 600],
+      '992' : [300, 600],
+      '768' : [300, 600],
+      '600' : [300, 250],
+      '0' : [300, 250],
+    },
+    'lazyload': true,
+    'refresh': true
+  })`
+  pubHal2.appendChild(ph2)
+}
+
+let pubHal3 = document.querySelector('#ddp-ads-halfpage-3');
+if(pubHal3){
+  ph3 = document.createElement("script")
+  ph3.type = "text/javascript";
+  ph3.innerHTML = `buildAds({
+    'id': 'halfpage-3',
+    'size': [300,600],
+    'maps': {
+      '2500' : [300, 600],
+      '992' : [300, 600],
+      '768' : [300, 600],
+      '600' : [300, 250],
+      '0' : [300, 250],
+    },
+    'lazyload': true,
+    'refresh': true
+  })`
+  pubHal3.appendChild(ph3)
+}
+
+let pubHal4 = document.querySelector('#ddp-ads-halfpage-4');
+if(pubHal4){
+  ph4 = document.createElement("script")
+  ph4.type = "text/javascript";
+  ph4.innerHTML = `buildAds({
+    'id': 'div-gpt-ad-1686682282702-0',
+    'size': [300,600],
+    'maps': {
+      '2500' : [300, 600],
+      '992' : [300, 600],
+      '768' : [300, 600],
+      '600' : [300, 250],
+      '0' : [300, 250],
+    },
+    'lazyload': true,
+    'refresh': true
+  })`
+  pubHal4.appendChild(ph4)
+}
+
+  let pubHal41 = document.querySelector('#ddp-ads-halfpage-4-1');
+if(pubHal41){
+  ph41 = document.createElement("script")
+  ph41.type = "text/javascript";
+  ph41.innerHTML = `buildAds({
+    'id': 'halfpage-4-1',
+    'size': [300,600],
+    'maps': {
+      '2500' : [300, 600],
+      '992' : [300, 600],
+      '768' : [300, 600],
+      '600' : [300, 250],
+      '0' : [300, 250],
+    },
+    'lazyload': true,
+    'refresh': true
+  })`
+  pubHal41.appendChild(ph41)
+}
+
+let pubSeloCh = document.querySelector('#ddp-ads-div-gpt-ad-1680208364966-0');
+if( pubSeloCh ){
+  psCh1 = document.createElement("script")
+  psCh1.type = "text/javascript";
+  psCh1.innerHTML = `buildAds({
+    'id': 'div-gpt-ad-1680208364966-0',
+    'size': [120, 60],
+    'maps': {
+      '992' : [[120, 60]],
+      '768' : [[120, 60]],
+      '320' : [[120, 60]],
+      '0' : [[120, 60]]
+    },
+    'lazyload': true,
+    'refresh': true
+  })`
+  pubSeloCh.appendChild(psCh1)
+}
+
+let pubSeloCh2 = document.querySelector('#ddp-ads-div-gpt-ad-1680208135037-0');
+if( pubSeloCh2 ){
+  psCh2 = document.createElement("script")
+  psCh2.type = "text/javascript";
+  psCh2.innerHTML = `buildAds({
+    'id': 'div-gpt-ad-1680208135037-0',
+    'size': [234, 60],
+    'maps': {
+      '992' : [[234, 60]],
+      '768' : [[234, 60]],
+      '320' : [[234, 60]],
+      '0' : [[234, 60]]
+    },
+    'lazyload': true,
+    'refresh': true
+  })`
+  pubSeloCh2.appendChild(psCh2)
+}
+</script>
+
+
+<!-- Será comentado futuramente após confirmação de veracidade e origem-->
+<!-- <noscript><img height="1" width="1" src="https://www.facebook.com/tr?id=636447756532255&ev=PageView&noscript=1" /></noscript>-->
+<!-- Será comentado futuramente após a Migração para o GTM -->
+
+<!-- <script async data-cfasync="false"
+src="//autozep.adzep.com.br/config/diariodopoder.js"></script> -->
+
+<link rel="preconnect" href="https://securepubads.google.com"/>
+<link rel="preconnect" href="https://autozep.adzep.io"/>
+<script data-cfasync="false" src="https://autozep.adzep.io/configs/diariodopoder_homolog.js" async></script>
+
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a44d94d5d845a492',t:'MTc5MTA0NzY0Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
+
+<!--Cached using Nginx-Helper on 2026-10-03 14:14:08. It took 127 queries executed in 0,403 seconds.-->
+<!--Visit http://wordpress.org/extend/plugins/nginx-helper/faq/ for more details-->

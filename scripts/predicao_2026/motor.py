@@ -12,8 +12,12 @@ from .tse import ROOT
 DEFF = 1.5
 HALF_LIFE = STATE_HALF_LIFE
 POOL_STRENGTH = 350.0
+# Âncora central: recência + inclinação encolhida de 28 dias, projetada a
+# 04/10 (validada por origem móvel). O destino central dos indecisos é a
+# disponibilidade, resolvida para número no build e gravada em
+# central.parametros; aqui fica None para o motor seguir puramente numérico.
 DEFAULTS = {
-    "base": "inclusivo",
+    "base": "central_inclinacao",
     "voto_lula": 0.0,
     "voto_flavio": 0.0,
     "indecisos_validos": 1.0,
@@ -376,6 +380,23 @@ def state_scenario(s, params, *, vector=None, turnout=None):
     return result
 
 
+def undecided_mix(pi, undecided, share_flavio, valid_share):
+    """(1 − u)·π + u·v·destino, normalizado; destino proporcional ou fixo.
+
+    `pi` tem as três parcelas válidas no último eixo; `undecided` é u com a
+    forma de pi sem esse eixo (ou escalar). Espelha state_scenario.
+    """
+    u = np.asarray(undecided, float)[..., None]
+    if share_flavio is None:
+        destination = pi
+    else:
+        destination = np.broadcast_to(
+            np.array([1 - share_flavio, share_flavio, 0.0]), pi.shape
+        )
+    mixed = (1 - u) * pi + u * valid_share * destination
+    return mixed / mixed.sum(axis=-1, keepdims=True)
+
+
 def summarize(rows):
     keys = (
         "eleitorado",
@@ -421,27 +442,80 @@ def scenario(states, params=None):
     }
 
 
-def simulate(states, national, *, runs=6000, seed=20261003, common_sd_pp=2.0):
+# Parâmetros que a simulação reproduz; os demais precisam ficar no default.
+SIMULATED = ("base", "indecisos_flavio", "indecisos_validos", "eleitor_provavel")
+# Âncoras com extrapolação além do nível: recebem o desvio da projeção.
+PROJECTED = ("central_inclinacao", "tendencia")
+
+
+def bootstrap_design(national, base):
+    """Casas, vetor e pesos do bootstrap de cada âncora, e o recentramento.
+
+    Âncoras de modelo calculadas sobre as mesmas casas centrais (dinâmica,
+    tendência, central com inclinação) reutilizam o bootstrap da central e são
+    recentradas pelo deslocamento alvos[base] − alvos.inclusivo. Espelho exato
+    de Prediction2026.simulate.
+    """
+    paired = base in ("pnad", "publicado")
+    polls = national["pareadas"] if paired else national["selecionadas"]
+    kind = (
+        "pnad_vetor"
+        if base == "pnad"
+        else "publicado_vetor" if base in ("publicado", "todas") else "previsao_vetor"
+    )
+    alvos = national["alvos"]
+    shift = None
+    if kind == "previsao_vetor" and base in alvos and base != "sem_recencia":
+        shift = np.asarray(alvos[base], float) - np.asarray(alvos["inclusivo"], float)
+    return polls, kind, shift
+
+
+def projection_sd(national, base):
+    """Desvio da projeção na diferença F−L, em pp, para âncoras projetadas."""
+    if base not in PROJECTED:
+        return 0.0
+    return float(national.get("incerteza_projecao_pp", {}).get(base, 0.0))
+
+
+def simulate(
+    states, national, params=None, *, runs=6000, seed=20261003, common_sd_pp=2.0
+):
     """Distribuição preditiva condicional. Parâmetros de erro não calibrados em 2026."""
     if runs < 100 or common_sd_pp < 0:
         raise ValueError("Simulação requer ao menos 100 sorteios e erro não negativo")
+    p = {**DEFAULTS, **(params or {})}
+    unsupported = [k for k in DEFAULTS if k not in SIMULATED and p[k] != DEFAULTS[k]]
+    if unsupported:
+        raise ValueError(f"Simulação Python não reproduz: {', '.join(unsupported)}")
+    base = p["base"]
+    f = p["indecisos_flavio"]
+    if f is not None and not 0 <= f <= 1:
+        raise ValueError("Destino dos indecisos fora de [0,1]")
+    if not 0 <= p["indecisos_validos"] <= 1:
+        raise ValueError("indecisos_validos precisa estar em [0,1]")
     rng = np.random.default_rng(seed)
-    ps = national["selecionadas"]
+    ps, kind, shift = bootstrap_design(national, base)
     # Bootstrap Bayesiano por casa + multinomial com n/deff, uma onda por casa.
     sample = np.stack(
         [
-            rng.dirichlet(
-                np.maximum(p["previsao_vetor"], 1e-6) * min(p["n"], 2000) / DEFF, runs
-            )
-            for p in ps
+            rng.dirichlet(np.maximum(q[kind], 1e-6) * min(q["n"], 2000) / DEFF, runs)
+            for q in ps
         ],
         axis=1,
     )
-    house_weights = rng.dirichlet(len(ps) * temporal_weights(ps), runs)
+    house_weights = rng.dirichlet(
+        len(ps) * temporal_weights(ps, equal=base == "sem_recencia"), runs
+    )
     targets = np.einsum("rh,rhk->rk", house_weights, sample)
+    if shift is not None:
+        targets = np.maximum(targets + shift[None, :], 1e-6)
+        targets /= targets.sum(axis=1, keepdims=True)
     # Student t, df=5, escalada para o desvio padrão declarado, em pontos
     # da DIFERENÇA F-L (cada candidato recebe metade com sinal contrário).
-    shock = rng.standard_t(5, runs) * np.sqrt(3 / 5) * common_sd_pp / 200
+    # A incerteza da projeção soma-se em quadratura ao erro comum.
+    extra_sd = projection_sd(national, base)
+    total_sd = float(np.hypot(common_sd_pp, extra_sd))
+    shock = rng.standard_t(5, runs) * np.sqrt(3 / 5) * total_sd / 200
     transfer = np.clip(
         shock * targets[:, :3].sum(axis=1), -targets[:, 1], targets[:, 0]
     )
@@ -452,8 +526,7 @@ def simulate(states, national, *, runs=6000, seed=20261003, common_sd_pp=2.0):
     q = np.stack(
         [
             rng.dirichlet(
-                np.maximum(s["bases"]["inclusivo"], 1e-6)
-                * max(s["n_efetivo_assumido"], 150),
+                np.maximum(s["bases"][base], 1e-6) * max(s["n_efetivo_assumido"], 150),
                 runs,
             )
             for s in domestic
@@ -470,8 +543,10 @@ def simulate(states, national, *, runs=6000, seed=20261003, common_sd_pp=2.0):
             break
     else:
         raise ValueError("Calibração Monte Carlo não convergiu")
-    lv = np.array([s["eleitor_provavel_fatores"] for s in domestic])
-    pi = q[:, :, :3] * lv[None, :, :]
+    pi = q[:, :, :3].copy()
+    if p["eleitor_provavel"]:
+        lv = np.array([s["eleitor_provavel_fatores"] for s in domestic])
+        pi *= lv[None, :, :]
     pi /= pi.sum(axis=2, keepdims=True)
     region_order = sorted({s["regiao"] for s in domestic})
     r_idx = np.array([region_order.index(s["regiao"]) for s in domestic])
@@ -481,6 +556,9 @@ def simulate(states, national, *, runs=6000, seed=20261003, common_sd_pp=2.0):
     d = np.clip(d, -pi[:, :, 1], pi[:, :, 0])
     pi[:, :, 0] -= d
     pi[:, :, 1] += d
+    # Destino dos indecisos, na mesma ordem de state_scenario.
+    undecided = q[:, :, 3] / np.maximum(1e-9, 1 - q[:, :, 4])
+    pi = undecided_mix(pi, undecided, f, p["indecisos_validos"])
     tau = np.array([s["comparecimento"] for s in domestic])[None, :]
     tau = np.clip(
         tau
@@ -496,18 +574,23 @@ def simulate(states, national, *, runs=6000, seed=20261003, common_sd_pp=2.0):
         0,
         1,
     )
+    invalid = invalid + (1 - invalid) * undecided * (1 - p["indecisos_validos"])
     e = np.array([s["eleitorado"] for s in domestic])
     counts = e[None, :, None] * tau[:, :, None] * (1 - invalid[:, :, None]) * pi
     total = counts.sum(axis=1)
     exterior = next((s for s in states if s["uf"] == "ZZ"), None)
     if exterior:
-        ep = rng.dirichlet(
-            np.maximum(exterior["bases"]["inclusivo"][:3], 1e-6) * 60, runs
-        )
+        xb = np.asarray(exterior["bases"][base], float)
+        ep = rng.dirichlet(np.maximum(xb[:3], 1e-6) * 60, runs)
         et = np.clip(exterior["comparecimento"] + rng.normal(0, 0.05, runs), 0, 1)
-        total += (
-            ep * (exterior["eleitorado"] * et * (1 - exterior["branco_nulo"]))[:, None]
-        )
+        if p["eleitor_provavel"]:
+            ep = ep * np.asarray(exterior["eleitor_provavel_fatores"], float)
+            ep /= ep.sum(axis=1, keepdims=True)
+        xu = xb[3] / max(1e-9, 1 - xb[4])
+        ep = undecided_mix(ep, xu, f, p["indecisos_validos"])
+        xi = exterior["branco_nulo"]
+        xi = xi + (1 - xi) * xu * (1 - p["indecisos_validos"])
+        total += ep * (exterior["eleitorado"] * et * (1 - xi))[:, None]
     pct = 100 * total / total.sum(axis=1, keepdims=True)
     gap = pct[:, 1] - pct[:, 0]
 
@@ -523,7 +606,17 @@ def simulate(states, national, *, runs=6000, seed=20261003, common_sd_pp=2.0):
     return {
         "sorteios": runs,
         "seed": seed,
+        "base": base,
+        "indecisos_flavio": f,
+        "indecisos_validos": p["indecisos_validos"],
+        "recentramento_validos_pp": (
+            None
+            if shift is None
+            else dict(zip(GROUPS, (100 * shift).tolist(), strict=True))
+        ),
         "erro_comum_sd_pp": common_sd_pp,
+        "erro_projecao_sd_pp": extra_sd,
+        "erro_comum_total_sd_pp": total_sd,
         "candidatos": {
             k: {"percentual": quantiles(pct[:, i]), "votos": quantiles(total[:, i])}
             for i, k in enumerate(GROUPS[:3])

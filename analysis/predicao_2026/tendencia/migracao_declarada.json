@@ -1,0 +1,56 @@
+{
+ "descricao": "Transcrição das perguntas de migração, certeza do voto e segunda opção usadas na divisão da migração da terceira via. Cada número foi lido no texto nativo do PDF (pdftotext -layout) na página indicada; a matriz da Nexus p. 84 foi conferida também na imagem da página (analysis/nexus_btg_28092026/page-84.png), porque o rótulo zero de Lula no eleitorado de Zema não é impresso (barra ausente).",
+ "conferido_em": "2026-10-03",
+ "varredura": {
+  "metodo": "pdftotext -layout em todas as páginas, busca por 'segunda opç', 'definitiv', 'pode mudar', 'certeza', 'transfer', 'migra', 'mudar de voto', 'eleitor de', 'eleitorado de'",
+  "nexus_paginas_encontradas": {"segunda opção": [44, 45, 46, 68, 69], "pode mudar / certeza": [38, 39, 40, 41, 42, 43, 46, 47, 56, 65, 66, 67, 69], "migração": [84]},
+  "datafolha_paginas_encontradas": {"segunda opção": [7, 16, 37, 59], "pode mudar / decidido": [5, 7, 14, 15, 37, 58, 59], "eleitores de (texto)": [6, 7, 8, 30, 31]},
+  "ausencias": [
+   "Nexus 28/09: não há cruzamento da segunda opção pelo voto de 1º turno; a segunda opção (p. 44) mistura eleitores de Lula, de Flávio e da terceira via que dizem poder mudar.",
+   "Datafolha 01/10: não há cruzamento da segunda opção pelo voto de 1º turno; o anexo (pp. 59 a 61) cruza só por gênero, idade, escolaridade, renda, ocupação, cor, religião, região, natureza do município e partido.",
+   "Datafolha 01/10: a matriz 1º × 2º turno aparece só em texto corrido (p. 8) e só para Cury, Caiado e Renan Santos; Zema e Samara não têm linha."
+  ]
+ },
+ "fontes": {
+  "nexus_2026-09-27": {
+   "instituto": "Nexus",
+   "registro_tse": "BR-07557/2026",
+   "campo": {"inicio": "2026-09-25", "fim": "2026-09-27"},
+   "n": 2000,
+   "arquivo": "docs/fontes/nexus_btg_28092026.pdf",
+   "sha256": "b43fc320543a3094f2b0abfc63f07ffdbcf711637e3d74a689cf4ef173e6b409",
+   "url": "https://www.nexus.fsb.com.br/wp-content/uploads/2026/09/BTG-Nexus-Eleicoes-2026-Rodada-16-28.set_.2026.pdf",
+   "primeiro_turno": {"pagina": 20, "unidade": "% do total", "valores": {"lula": 42, "flavio": 37, "cury": 5, "caiado": 5, "renan": 4, "zema": 1, "samara": 1, "branco_nulo": 3, "ns_nr": 2}},
+   "pode_mudar_por_candidato": {"pagina": 41, "pergunta": "decisão de voto já tomada ou pode mudar, por voto de 1º turno", "valores": {"lula": 7, "flavio": 8, "renan": 24, "cury": 34, "samara": 37, "caiado": 39, "zema": 53}},
+   "pode_mudar_total": {"pagina": 38, "valor": 12, "base": "quem escolheu candidato no 1º turno"},
+   "segunda_opcao": {"pagina": 44, "base": "os 12% que podem mudar", "valores": {"lula": 18, "cury": 17, "flavio": 17, "caiado": 14, "renan": 11, "zema": 4, "samara": 2, "branco_nulo": 8, "ns_nr": 7}},
+   "pisos_tetos_1t": {"pagina": 46, "definicao": "piso exclui quem pode mudar; teto soma a segunda opção de quem pode mudar", "valores": {"lula": {"voto": 42, "piso": 39, "teto": 44}, "flavio": {"voto": 37, "piso": 34, "teto": 39}}},
+   "pisos_tetos_2t": {"pagina": 69, "valores": {"lula": {"voto": 46, "piso": 44, "teto": 48}, "flavio": {"voto": 44, "piso": 42, "teto": 45}}},
+   "matriz_2t": {"pagina": 84, "pergunta": "voto de 1º turno × voto no 2º turno Lula × Flávio (cenário 1)", "linhas": {
+     "samara": {"lula": 41, "flavio": 36, "branco_nulo": 24, "ns_nr": 0},
+     "caiado": {"lula": 32, "flavio": 32, "branco_nulo": 35, "ns_nr": 1},
+     "cury": {"lula": 30, "flavio": 38, "branco_nulo": 31, "ns_nr": 0},
+     "renan": {"lula": 13, "flavio": 43, "branco_nulo": 43, "ns_nr": 0},
+     "zema": {"lula": 0, "flavio": 66, "branco_nulo": 13, "ns_nr": 20}},
+    "nota": "Zema: sem barra vermelha na imagem; Lula = 0. Samara: sem barra cinza; NS/NR = 0."}
+  },
+  "datafolha_2026-10-01": {
+   "instituto": "Datafolha",
+   "registro_tse": "BR-08039/2026",
+   "campo": {"inicio": "2026-09-29", "fim": "2026-10-01"},
+   "n": 2506,
+   "arquivo": "data/originals/datafolha_102026_02/relatorio.pdf",
+   "sha256": "c2cb775015d2c015a1249f044d1716960f2bf2d08ebd73648d80c4090fa5a17c",
+   "url": "https://media.folha.uol.com.br/datafolha/2026/10/02/pmzl5pv3clpqn4qxot1ykftnjvnus9a8bqs-4zxigfg.pdf",
+   "primeiro_turno": {"pagina": 5, "unidade": "% do total", "valores": {"lula": 42, "flavio": 38, "cury": 4, "caiado": 3, "renan": 3, "zema": 1, "samara": 1, "branco_nulo": 5, "indecisos": 2}},
+   "decididos_por_candidato": {"pagina": 7, "pergunta": "totalmente decidido ou voto ainda pode mudar, por voto de 1º turno (texto)", "valores": {"lula": 88, "flavio": 87, "cury": 62, "caiado": 55, "renan": 61}},
+   "pode_mudar_total": {"pagina": 58, "pagina_impressa_anexo": 23, "valor": 17, "base_ponderada": 2450},
+   "segunda_opcao": {"pagina": 59, "pagina_impressa_anexo": 24, "pagina_grafico": 16, "base": "quem disse que o voto ainda pode mudar", "base_ponderada": 423, "valores": {"flavio": 23, "lula": 15, "cury": 10, "caiado": 10, "renan": 6, "zema": 5, "samara": 4, "branco_nulo": 9, "indecisos": 9}},
+   "segunda_opcao_nao_alinhados": {"pagina": 7, "base": "não alinhados ao petismo nem ao bolsonarismo que podem mudar (texto)", "valores": {"flavio": 21, "lula": 12, "branco_nulo": 10}},
+   "matriz_2t": {"pagina": 8, "pergunta": "voto de 1º turno × 2º turno Lula × Flávio (texto corrido)", "linhas": {
+     "cury": {"lula": 30, "flavio": 44, "branco_nulo": 24},
+     "caiado": {"lula": 30, "flavio": 46, "branco_nulo": 22},
+     "renan": {"lula": 28, "flavio": 54, "branco_nulo": 16}}}
+  }
+ }
+}

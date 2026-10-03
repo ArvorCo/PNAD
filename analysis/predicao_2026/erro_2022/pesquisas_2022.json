@@ -1,0 +1,601 @@
+{
+  "descricao": "Transcrição manual da última onda nacional de cada casa antes do 1º turno presidencial de 2 de outubro de 2022, cenário estimulado com a cartela oficial de candidatos. Cada número tem arquivo e página. Documentos em data/originals/pesquisas_2022/<casa>/, com fonte.json (URL, bytes, SHA-256, creationDate).",
+  "transcrito_em": "2026-10-03",
+  "criterio": {
+    "campo_fim_max": "2022-10-01",
+    "campo_fim_min_para_media": "2022-09-22",
+    "cartela": "cenário estimulado com os onze candidatos registrados; omissão de nomes sem voto é anotada, troca de cartela exclui",
+    "niveis_documentais": {
+      "pdf_do_instituto": "relatório do próprio instituto",
+      "infografico_do_instituto": "peça gráfica do próprio instituto com a ficha técnica",
+      "materia_do_contratante": "matéria do veículo que contratou a pesquisa",
+      "imprensa_concordante": "sem documento do instituto ou do contratante; duas publicações independentes concordam em todos os números usados",
+      "imprensa_divergente": "sem documento do instituto ou do contratante; as publicações divergem entre si"
+    },
+    "media_principal": "todas as casas com documento arquivado de nível pdf_do_instituto, infografico_do_instituto, materia_do_contratante ou imprensa_concordante, campo encerrado entre 22/09 e 01/10/2022 e mesma cartela",
+    "regra_validos": "usa os válidos publicados pela casa quando existem; quando a casa só publica totais, os válidos são calculados dividindo cada candidato pela soma dos candidatos publicados (exclui branco, nulo e indeciso); 'demais' é sempre 100 menos Lula, Bolsonaro, Tebet e Ciro, e por isso absorve o arredondamento"
+  },
+  "pesquisas": [
+    {
+      "id": "datafolha",
+      "casa": "Datafolha",
+      "casa_2026": "Datafolha",
+      "nivel": "materia_do_contratante",
+      "incluir": true,
+      "registro": "BR-00245/2022",
+      "campo": {
+        "inicio": "2022-09-30",
+        "fim": "2022-10-01"
+      },
+      "divulgacao": "2022-10-01",
+      "n": 12800,
+      "metodo": "presencial",
+      "totais": {
+        "lula": 48,
+        "bolsonaro": 34,
+        "tebet": 6,
+        "ciro": 5,
+        "outros_nomeados": {
+          "soraya": 1,
+          "davila": 1
+        },
+        "branco_nulo": null,
+        "indecisos": null,
+        "fonte": "datafolha/folha_20221001_materia.html e .png, parágrafo 'Aqui avaliam-se os votos totais' (Lula 48, Bolsonaro 34, Tebet 6, Ciro 5) e parágrafo sobre Soraya e D'Ávila com 1%"
+      },
+      "validos_publicados": {
+        "lula": 50,
+        "bolsonaro": 36,
+        "tebet": 6,
+        "ciro": 5,
+        "fonte": "datafolha/folha_20221001_materia.html e .png, primeiro parágrafo"
+      },
+      "notas": [
+        "O PDF nacional desta onda não foi localizado: o arquivo Datafolha.pdf da biblioteca do Poder360 de 01/10/2022 é o relatório de governador de Minas Gerais (MG-09084/2022). O documento arquivado é a matéria da Folha de S.Paulo, contratante.",
+        "O infográfico do Poder360 (datafolha/poder360_20221001_validos.png) traz Ciro 6 e Tebet 5 na coluna 30/09 a 01/10, invertido em relação à Folha (Tebet 6, Ciro 5). A Folha, contratante, prevalece; a versão em espanhol da Folha de 02/10/2022 repete Tebet 6 e Ciro 5.",
+        "A Folha não publica branco, nulo e indecisos desta onda no texto arquivado; os totais nomeados somam 95."
+      ]
+    },
+    {
+      "id": "ipec",
+      "casa": "Ipec",
+      "casa_2026": null,
+      "nivel": "imprensa_concordante",
+      "incluir": true,
+      "registro": "BR-00999/2022",
+      "campo": {
+        "inicio": "2022-09-29",
+        "fim": "2022-10-01"
+      },
+      "divulgacao": "2022-10-01",
+      "n": 3008,
+      "metodo": "presencial",
+      "totais": {
+        "lula": 47,
+        "bolsonaro": 34,
+        "tebet": 5,
+        "ciro": 5,
+        "outros_nomeados": {
+          "soraya": 1,
+          "davila": 1,
+          "vera": 0,
+          "pericles": 0,
+          "kelmon": 0,
+          "manzano": 0,
+          "eymael": 0
+        },
+        "branco_nulo": 4,
+        "indecisos": 3,
+        "fonte": "ipec/cnn_materia.html e .png, bloco 'Primeiro turno - votos totais'"
+      },
+      "validos_publicados": {
+        "lula": 51,
+        "bolsonaro": 37,
+        "tebet": 5,
+        "ciro": 5,
+        "fonte": "ipec/cnn_materia.html e ipec/poder360_validos.png (coluna 29.set-1º.out), concordantes"
+      },
+      "notas": [
+        "Sem PDF do instituto: o domínio ipecinteligencia.com.br não resolve e ipec-inteligencia.com.br devolve 403. Os números vêm de duas publicações independentes que concordam."
+      ]
+    },
+    {
+      "id": "quaest",
+      "casa": "Quaest/Genial",
+      "casa_2026": "Quaest",
+      "nivel": "pdf_do_instituto",
+      "incluir": true,
+      "registro": "BR-02444/2022",
+      "campo": {
+        "inicio": "2022-09-30",
+        "fim": "2022-10-01"
+      },
+      "divulgacao": "2022-10-01",
+      "n": 3600,
+      "metodo": "presencial",
+      "totais": null,
+      "validos_publicados": {
+        "lula": 49,
+        "bolsonaro": 38,
+        "tebet": 5,
+        "ciro": 6,
+        "fonte": "quaest/relatorio.pdf, p. 7, coluna BR (página em imagem; render em analysis/predicao_2026/erro_2022/renders/quaest_p7.png)"
+      },
+      "notas": [
+        "O relatório publica só votos válidos; votos totais, branco, nulo e indecisos não aparecem no PDF nem nas matérias arquivadas."
+      ]
+    },
+    {
+      "id": "atlas",
+      "casa": "AtlasIntel",
+      "casa_2026": "AtlasIntel",
+      "nivel": "pdf_do_instituto",
+      "incluir": true,
+      "registro": "BR-01318/2022",
+      "campo": {
+        "inicio": "2022-09-24",
+        "fim": "2022-09-28"
+      },
+      "divulgacao": "2022-09-30",
+      "n": 4500,
+      "metodo": "online, recrutamento digital aleatório",
+      "totais": {
+        "lula": 49.3,
+        "bolsonaro": 39.9,
+        "tebet": 2.5,
+        "ciro": 3.5,
+        "outros_nomeados": {
+          "soraya": 0.8,
+          "davila": 0.7,
+          "vera": 0.2,
+          "eymael": 0.1,
+          "kelmon": 0.1,
+          "pericles": 0,
+          "manzano": 0
+        },
+        "branco_nulo": null,
+        "indecisos": null,
+        "nao_escolha_agregada": 2.7,
+        "fonte": "atlas/relatorio.pdf, p. 7 (render atlas_p7.png); 'Não sei / voto branco / voto nulo' numa barra só"
+      },
+      "validos_publicados": {
+        "lula": 50.7,
+        "bolsonaro": 41.0,
+        "tebet": 2.6,
+        "ciro": 3.6,
+        "fonte": "atlas/relatorio.pdf, p. 8 (render atlas_p8.png)"
+      },
+      "notas": []
+    },
+    {
+      "id": "poderdata",
+      "casa": "PoderData",
+      "casa_2026": "PoderData",
+      "nivel": "infografico_do_instituto",
+      "incluir": true,
+      "registro": "BR-01426/2022",
+      "campo": {
+        "inicio": "2022-09-25",
+        "fim": "2022-09-27"
+      },
+      "divulgacao": "2022-09-28",
+      "n": 4500,
+      "metodo": "telefone automatizado",
+      "totais": {
+        "lula": 45,
+        "bolsonaro": 36,
+        "tebet": 4,
+        "ciro": 6,
+        "outros_nomeados": {
+          "davila": 1,
+          "soraya": 1,
+          "eymael": 0,
+          "manzano": 0,
+          "kelmon": 0,
+          "pericles": 0,
+          "vera": 0
+        },
+        "branco_nulo": 4,
+        "indecisos": 1,
+        "fonte": "poderdata/infografico_totais.png, coluna 25-27 set"
+      },
+      "validos_publicados": {
+        "lula": 48,
+        "bolsonaro": 38,
+        "tebet": 5,
+        "ciro": 6,
+        "fonte": "poderdata/infografico_validos.png, coluna 25-27 set"
+      },
+      "notas": []
+    },
+    {
+      "id": "parana_pesquisas",
+      "casa": "Paraná Pesquisas",
+      "casa_2026": null,
+      "nivel": "pdf_do_instituto",
+      "incluir": true,
+      "registro": "BR-07917/2022",
+      "campo": {
+        "inicio": "2022-09-27",
+        "fim": "2022-09-29"
+      },
+      "divulgacao": "2022-09-30",
+      "n": 2020,
+      "metodo": "telefone, entrevistador humano",
+      "totais": {
+        "lula": 43.9,
+        "bolsonaro": 37.3,
+        "tebet": 5.8,
+        "ciro": 4.9,
+        "outros_nomeados": {
+          "soraya": 0.5,
+          "davila": 0.4,
+          "kelmon": 0.1,
+          "vera": 0.1,
+          "eymael": 0.1,
+          "pericles": 0.0,
+          "manzano": 0.0
+        },
+        "branco_nulo": 3.8,
+        "indecisos": 3.1,
+        "fonte": "parana_pesquisas/relatorio.pdf, p. 8, texto nativo"
+      },
+      "validos_publicados": {
+        "lula": 47.1,
+        "bolsonaro": 40.0,
+        "tebet": 6.3,
+        "ciro": 5.2,
+        "fonte": "parana_pesquisas/relatorio.pdf, p. 8, texto nativo"
+      },
+      "notas": []
+    },
+    {
+      "id": "cnt_mda",
+      "casa": "CNT/MDA",
+      "casa_2026": "MDA",
+      "nivel": "pdf_do_instituto",
+      "incluir": true,
+      "registro": "BR-02944/2022",
+      "campo": {
+        "inicio": "2022-09-28",
+        "fim": "2022-09-30"
+      },
+      "divulgacao": "2022-10-01",
+      "n": 2002,
+      "metodo": "presencial",
+      "totais": {
+        "lula": 44.2,
+        "bolsonaro": 36.3,
+        "tebet": 4.3,
+        "ciro": 4.5,
+        "outros_nomeados": {
+          "soraya": 1.2,
+          "davila": 0.4,
+          "kelmon": 0.3,
+          "manzano": 0.2,
+          "vera": 0.1,
+          "pericles": 0.0,
+          "eymael": 0.0
+        },
+        "branco_nulo": 4.2,
+        "indecisos": 4.3,
+        "fonte": "cnt_mda/relatorio.pdf, p. 8, página em imagem (render cnt_mda_p8.png)"
+      },
+      "validos_publicados": {
+        "lula": 48.3,
+        "bolsonaro": 39.7,
+        "tebet": 4.7,
+        "ciro": 4.9,
+        "fonte": "cnt_mda/relatorio.pdf, p. 9, página em imagem (render cnt_mda_p9.png)"
+      },
+      "notas": [
+        "155ª rodada da Pesquisa CNT de Opinião."
+      ]
+    },
+    {
+      "id": "ipespe",
+      "casa": "Ipespe/Abrapel",
+      "casa_2026": null,
+      "nivel": "pdf_do_instituto",
+      "incluir": true,
+      "registro": "BR-05007/2022",
+      "campo": {
+        "inicio": "2022-09-30",
+        "fim": "2022-09-30"
+      },
+      "divulgacao": "2022-10-01",
+      "n": 1100,
+      "metodo": "telefone (CATI)",
+      "totais": {
+        "lula": 46,
+        "bolsonaro": 33,
+        "tebet": 6,
+        "ciro": 7,
+        "outros_nomeados": {
+          "soraya": 1,
+          "kelmon": 1,
+          "davila": 0,
+          "vera": 0,
+          "pericles": 0,
+          "manzano": 0
+        },
+        "branco_nulo": 3,
+        "indecisos": 1,
+        "fonte": "ipespe/relatorio.pdf, p. 8, tabela estimulada, coluna 30 SET (render ipespe_p8.png)"
+      },
+      "validos_publicados": {
+        "lula": 49,
+        "bolsonaro": 35,
+        "tebet": 7,
+        "ciro": 8,
+        "fonte": "ipespe/relatorio.pdf, p. 9 (render ipespe_p9.png)"
+      },
+      "notas": [
+        "O PDF arquivado é cópia repassada (Creator WhatsApp, Producer iLovePDF), publicada pelo Poder360."
+      ]
+    },
+    {
+      "id": "fsb_btg",
+      "casa": "FSB/BTG",
+      "casa_2026": "Nexus",
+      "nivel": "pdf_do_instituto",
+      "incluir": true,
+      "registro": "BR-08123/2022",
+      "campo": {
+        "inicio": "2022-09-23",
+        "fim": "2022-09-25"
+      },
+      "divulgacao": "2022-09-26",
+      "n": 2000,
+      "metodo": "telefone (CATI)",
+      "totais": {
+        "lula": 45,
+        "bolsonaro": 35,
+        "tebet": 4,
+        "ciro": 7,
+        "outros_nomeados": {
+          "davila": 1,
+          "soraya": 1,
+          "eymael_vera_manzano_pericles_kelmon": 1
+        },
+        "branco_nulo": 4,
+        "indecisos": 2,
+        "fonte": "fsb_btg/relatorio.pdf, p. 12 (gráfico e observação sobre os cinco nomes que somaram 1%)"
+      },
+      "validos_publicados": {
+        "lula": 48,
+        "bolsonaro": 37,
+        "tebet": 5,
+        "ciro": 8,
+        "fonte": "fsb_btg/relatorio.pdf, p. 16, último ponto da série (26set), render fsb_btg_p16.png"
+      },
+      "notas": [
+        "A ligação com a Nexus de 2026 é de grupo empresarial (FSB Holding), não de marca: o instituto, a equipe e o método podem diferir. A comparação com 2026 é só indicativa."
+      ]
+    },
+    {
+      "id": "futura",
+      "casa": "Modalmais/Futura",
+      "casa_2026": "Futura",
+      "nivel": "pdf_do_instituto",
+      "incluir": true,
+      "registro": "BR-06743/2022",
+      "campo": {
+        "inicio": "2022-09-26",
+        "fim": "2022-09-28"
+      },
+      "divulgacao": "2022-09-30",
+      "n": 2000,
+      "metodo": "telefone (CATI), amostra não probabilística por cotas",
+      "totais": {
+        "lula": 40.7,
+        "bolsonaro": 37.8,
+        "tebet": 7.2,
+        "ciro": 5.6,
+        "outros_nomeados": {
+          "soraya": 0.9,
+          "davila": 0.4,
+          "vera": 0.3,
+          "pericles": 0.3,
+          "manzano": 0.1,
+          "kelmon": 0.1,
+          "eymael": 0.0
+        },
+        "branco_nulo": 3.4,
+        "indecisos": 3.3,
+        "fonte": "futura/relatorio.pdf, p. 9, cenário 1 (render futura_p9.png)"
+      },
+      "validos_publicados": {
+        "lula": 43.6,
+        "bolsonaro": 40.5,
+        "tebet": 7.7,
+        "ciro": 6.0,
+        "fonte": "futura/relatorio.pdf, p. 10, cenário 1 (render futura_p10.png)"
+      },
+      "notas": [
+        "Arquivo nomeado 18aEdicao; o post do blog Modalmais de 30/09/2022 o apresenta como 19ª pesquisa. O registro e o campo saem da p. 3."
+      ]
+    },
+    {
+      "id": "ideia",
+      "casa": "Ideia (Exame/Ideia)",
+      "casa_2026": "Meio/Ideia",
+      "nivel": "pdf_do_instituto",
+      "incluir": true,
+      "registro": "BR-09782/2022",
+      "campo": {
+        "inicio": "2022-09-23",
+        "fim": "2022-09-28"
+      },
+      "divulgacao": "2022-09-29",
+      "n": 1500,
+      "metodo": "telefone",
+      "totais": {
+        "lula": 47,
+        "bolsonaro": 37,
+        "tebet": 5,
+        "ciro": 6,
+        "outros_nomeados": {
+          "davila": 0.4,
+          "vera": 0.2,
+          "soraya": 0.2,
+          "eymael": 0.1,
+          "manzano": 0.1,
+          "pericles": 0.1,
+          "kelmon": 0.1
+        },
+        "branco_nulo": 1,
+        "indecisos": 3,
+        "fonte": "ideia/relatorio.pdf, p. 11, texto nativo"
+      },
+      "validos_publicados": null,
+      "notas": [
+        "Sem votos válidos publicados: calculados a partir dos totais.",
+        "Em 2026 a marca é Meio/Ideia; a comparação é indicativa."
+      ]
+    },
+    {
+      "id": "verita",
+      "casa": "Instituto Veritá",
+      "casa_2026": null,
+      "nivel": "pdf_do_instituto",
+      "incluir": true,
+      "registro": "BR-05980/2022",
+      "campo": {
+        "inicio": "2022-09-24",
+        "fim": "2022-09-29"
+      },
+      "divulgacao": "2022-10-01",
+      "n": 51169,
+      "metodo": "não declarado na camada de texto",
+      "totais": {
+        "lula": 41.6,
+        "bolsonaro": 44.6,
+        "tebet": 4.2,
+        "ciro": 4.1,
+        "outros_nomeados": {
+          "davila": 1.4,
+          "soraya": 0.9,
+          "kelmon": 0.4,
+          "eymael": 0.3,
+          "pericles": 0.1
+        },
+        "branco_nulo": 1.0,
+        "indecisos": 1.4,
+        "fonte": "verita/relatorio.pdf, p. 6, texto nativo"
+      },
+      "contagens": {
+        "bolsonaro": 22821,
+        "lula": 21286,
+        "tebet": 2149,
+        "ciro": 2098,
+        "davila": 716,
+        "soraya": 461,
+        "kelmon": 205,
+        "eymael": 154,
+        "pericles": 51,
+        "ns_nr": 716,
+        "branco_nulo": 512,
+        "total": 51169,
+        "fonte": "verita/relatorio.pdf, p. 6, coluna Frequência"
+      },
+      "validos_publicados": null,
+      "notas": [
+        "Sem votos válidos publicados: calculados a partir das contagens da p. 6, que dão mais precisão que os percentuais arredondados.",
+        "A tabela não lista Vera nem Sofia Manzano (0,06% dos válidos somados na urna).",
+        "A linha TOTAL da p. 7 dá Lula 41,5, contra 41,6 na p. 6."
+      ]
+    },
+    {
+      "id": "gerp",
+      "casa": "Gerp",
+      "casa_2026": "Gerp",
+      "nivel": "pdf_do_instituto",
+      "incluir": false,
+      "motivo_exclusao": "Campo encerrado em 01/09/2022, um mês antes da urna, com cartela que ainda inclui Pablo Marçal e Roberto Jefferson. Não é onda de véspera nem tem a cartela oficial.",
+      "registro": "BR-09102/2022",
+      "campo": {
+        "inicio": "2022-08-29",
+        "fim": "2022-09-01"
+      },
+      "divulgacao": "2022-09-04",
+      "n": 2095,
+      "metodo": "telefone (CATI)",
+      "totais": {
+        "lula": 38,
+        "bolsonaro": 39,
+        "tebet": 6,
+        "ciro": 11,
+        "outros_nomeados": {
+          "davila": 1,
+          "marcal": 0,
+          "soraya": 0,
+          "vera": 0,
+          "jefferson": 0,
+          "eymael": 0,
+          "manzano": 0,
+          "pericles": 0
+        },
+        "branco_nulo": 2,
+        "indecisos": 3,
+        "fonte": "gerp/relatorio.pdf, p. 11 ('nenhum deles' 2 registrado como branco_nulo)"
+      },
+      "validos_publicados": null,
+      "notas": [
+        "Registrada para transparência; fica fora de todas as médias."
+      ]
+    },
+    {
+      "id": "brasmarket",
+      "casa": "Brasmarket",
+      "casa_2026": null,
+      "nivel": "imprensa_divergente",
+      "incluir": false,
+      "motivo_exclusao": "Sem documento do instituto ou do contratante. As três matérias arquivadas divergem (Bolsonaro 45,4 ou 45,5 no Diário do Poder; o Leiagora não cita Tebet). Entra só na média ampliada de sensibilidade.",
+      "registro": "BR-08847/2022",
+      "campo": {
+        "inicio": "2022-09-26",
+        "fim": "2022-09-28"
+      },
+      "divulgacao": "2022-09-30",
+      "n": 1600,
+      "metodo": "telefone (segundo a imprensa)",
+      "totais": {
+        "lula": 30.9,
+        "bolsonaro": 45.4,
+        "tebet": 5.2,
+        "ciro": 6.2,
+        "outros_nomeados": {
+          "soraya": 0.8,
+          "davila": 0.3,
+          "kelmon": 0.3
+        },
+        "branco_nulo": 2.6,
+        "indecisos": 8.3,
+        "fonte": "brasmarket/gazeta_materia.html, lista '1º turno (pesquisa estimulada)'"
+      },
+      "validos_publicados": null,
+      "notas": [
+        "O domínio brasmarket.com.br hoje pertence a outro negócio."
+      ]
+    }
+  ],
+  "nao_arquivadas": [
+    {
+      "casa": "Real Time Big Data",
+      "motivo": "Nenhuma pesquisa nacional de 1º turno presidencial de 2022 localizada: a biblioteca de mídia do Poder360 (buscas realtime, real time) só devolve estaduais, e as tabelas da Wikipédia em inglês e português só listam uma nacional de março de 2021. Ausência não provada."
+    },
+    {
+      "casa": "Equilíbrio Brasil",
+      "motivo": "Listada em índices secundários com campo de 20 a 22/09/2022; documento não procurado nesta rodada."
+    },
+    {
+      "casa": "Vox Populi, Datatempo, Ipri",
+      "motivo": "Não aparecem nos índices consultados para setembro de 2022; sem busca dedicada."
+    },
+    {
+      "casa": "Ipespe/XP",
+      "motivo": "A série XP/Ipespe não foi procurada nesta rodada; a onda do Ipespe arquivada é a parceria com a Abrapel (BR-05007/2022), de 30/09/2022."
+    }
+  ]
+}

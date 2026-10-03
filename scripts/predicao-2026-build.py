@@ -13,21 +13,55 @@ from datetime import date, datetime
 from zoneinfo import ZoneInfo
 
 from predicao_2026.base import ELECTION, WINDOW_START, national, read, state_polls
+from predicao_2026.consolidacao import consolidation
+from predicao_2026.erro_2022 import SENS_INVERTED, SENS_REPEAT
+from predicao_2026.erro_2022 import block as error_2022_block
+from predicao_2026.erro_2022 import shifts as error_2022_shifts
 from predicao_2026.motor import (
     DEFAULTS,
     DEFF,
     HALF_LIFE,
     POOL_STRENGTH,
+    PROJECTED,
     scenario,
     simulate,
     territory,
 )
 from predicao_2026.preditiva import run as predictive_validation
 from predicao_2026.recencia import NATIONAL_HALF_LIFE
+from predicao_2026.rejeicao import block as rejection_block
+from predicao_2026.rejeicao import resolve as resolve_rejection
 from predicao_2026.tse import ROOT, sha
 from predicao_2026.view import render
 
 ASSET = ROOT / "docs/assets/predicao_2026_1T_presidente.json"
+CENTRAL_LABEL = "Central: recência com tendência de 28 dias encolhida, indecisos por disponibilidade"
+CONS_LABEL = "Consolidação na proporção medida, 28 dias"
+
+
+def central_comparison(central, consolidated, national, cons):
+    """Central nova contra o cenário de consolidação de 28 dias sobre inclusivo."""
+    a, b = central["brasil"], consolidated["brasil"]
+    sloped = national["tendencia"]["central_com_inclinacao"]
+    return {
+        "central_margem_pp": a["margem_flavio_lula"],
+        "consolidacao_28_sobre_inclusivo_margem_pp": b["margem_flavio_lula"],
+        "diferenca_pp": a["margem_flavio_lula"] - b["margem_flavio_lula"],
+        "central_validos_pct": a["percentuais"],
+        "consolidacao_validos_pct": b["percentuais"],
+        "horizonte_dias_central": sloped["horizonte_dias"],
+        "horizonte_dias_consolidacao": cons["horizonte_dias"],
+        "nota": (
+            "Os dois prolongam a mesma tendência de 28 dias pelo mesmo horizonte "
+            "a partir da âncora inclusivo; a central encolhe cada inclinação "
+            "pelo fator b² / (b² + ep²) e desloca as três parcelas dos válidos, "
+            "enquanto o cenário de consolidação não encolhe, tira a migração só "
+            "da terceira via e a converte em fração da reserva de 2º turno de "
+            "cada finalista (λ arredondado), aplicada UF a UF."
+        ),
+    }
+
+
 PREDICTIVE = ROOT / "docs/assets/predicao_2026_validacao_preditiva.json"
 PAGE = ROOT / "docs/predicao_2026_1T_presidente.html"
 
@@ -50,18 +84,45 @@ def build(
     n = national(today, national_half_life)
     polls, excluded = state_polls(today)
     states, iterations = territory(polls, n, tse, today, state_half_life)
-    central = scenario(states)
-    mc = simulate(states, n, runs=runs)
     predictive = predictive_validation(n["pesquisas"], window_start=WINDOW_START)
+    consolidacao = consolidation(
+        n["pesquisas"], n["selecionadas"], states, today, ELECTION
+    )
+    measured = consolidacao["projecao"]["28"]["lambda_arredondado"]
+    rejeicao = rejection_block(consolidacao, today, half_life=national_half_life)
+    available = rejeicao["consolidacao_disponibilidade"]["28"]["lambda_arredondado"]
+    # Central: âncora com tendência encolhida (DEFAULTS["base"]) e indecisos
+    # por disponibilidade, resolvida para número; o motor segue numérico.
+    central_params = resolve_rejection(
+        {**DEFAULTS, "indecisos_flavio": "disponibilidade"}, rejeicao
+    )
+    central = scenario(states, central_params)
+    mc = simulate(states, n, central_params, runs=runs)
     predictive["referencia"] = today.isoformat()
+    # Testes de aceleração dentro da amostra, ao lado da comparação preditiva.
+    predictive["aceleracao"]["dentro_da_amostra"] = n["tendencia"]["aceleracao"]
+    # Erro comum de 2022 nas duas direções: medição histórica como cenário,
+    # nunca ajuste da central. Valores lidos do JSON, não digitados.
+    repeat_2022, inverted_2022 = error_2022_shifts()
+    # Toda sensibilidade parte da central e troca só o que o rótulo diz.
     scenarios = {
-        "Central inclusiva com recência, sem voto útil adicional": {},
+        CENTRAL_LABEL: {},
+        "Recência sem tendência (central anterior)": {
+            "base": "inclusivo",
+            "indecisos_flavio": None,
+        },
+        "Indecisos proporcionais às candidaturas": {"indecisos_flavio": None},
+        "Recência sem tendência, indecisos por disponibilidade": {"base": "inclusivo"},
         "Mesmas casas centrais, peso temporal igual": {"base": "sem_recencia"},
         "Somente casas com reponderação PNAD": {"base": "pnad"},
         "Publicadas, mesmas casas": {"base": "publicado"},
         "Publicadas, todas as casas elegíveis": {"base": "todas"},
         "Âncora dinâmica (DLM com efeitos de casa)": {"base": "dinamico"},
-        "Central + desvio relativo das casas removido": {"base": "casas"},
+        "Âncora de tendência projetada a 04/10": {"base": "tendencia"},
+        "Âncora de tendência, nível no corte": {"base": "tendencia_corte"},
+        "Recência sem tendência + desvio relativo das casas removido": {
+            "base": "casas"
+        },
         "Sem seleção de eleitor provável": {"eleitor_provavel": False},
         "Comparecimento por seção, pesos de 2026": {"comparecimento_modelo": "secoes"},
         "Flávio antecipa 25% da reserva": {"voto_flavio": 0.25},
@@ -69,7 +130,26 @@ def build(
         "Os dois antecipam 25% da reserva": {"voto_lula": 0.25, "voto_flavio": 0.25},
         "Comparecimento de Flávio 3 pp acima de Lula": {"diferencial_pp": 3},
         "Comparecimento de Lula 3 pp acima de Flávio": {"diferencial_pp": -3},
+        SENS_REPEAT: {"vies_pp": repeat_2022},
+        SENS_INVERTED: {"vies_pp": inverted_2022},
+        CONS_LABEL: {
+            "base": consolidacao["ancora"],
+            "voto_lula": measured["lula"],
+            "voto_flavio": measured["flavio"],
+        },
+        "Consolidação 28 dias, divisão por disponibilidade": {
+            "base": consolidacao["ancora"],
+            "voto_lula": available["lula"],
+            "voto_flavio": available["flavio"],
+        },
     }
+    sensitivities = {
+        label: scenario(states, {**central_params, **params})
+        for label, params in scenarios.items()
+    }
+    consolidacao["comparacao_central"] = central_comparison(
+        sensitivities[CENTRAL_LABEL], sensitivities[CONS_LABEL], n, consolidacao
+    )
     valid_sources = [
         p
         for p in n["selecionadas"]
@@ -88,6 +168,14 @@ def build(
         ROOT / "scripts/predicao_2026/validacao.py",
         ROOT / "scripts/predicao_2026/dinamico.py",
         ROOT / "scripts/predicao_2026/preditiva.py",
+        ROOT / "scripts/predicao_2026/tendencia.py",
+        ROOT / "scripts/predicao_2026/migracao.py",
+        ROOT / "analysis/predicao_2026/tendencia/migracao_declarada.json",
+        ROOT / "analysis/predicao_2026/tendencia/estaduais_rotulos.json",
+        ROOT / "scripts/predicao_2026/consolidacao.py",
+        ROOT / "scripts/predicao_2026/rejeicao.py",
+        ROOT / "analysis/predicao_2026/rejeicao/rejeicao_092026.json",
+        ROOT / "scripts/predicao_2026/erro_2022.py",
         ROOT / "docs/assets/predicao_2026.js",
     ]
     payload = {
@@ -97,12 +185,23 @@ def build(
         "natureza": "Previsão experimental condicional; probabilidades não calibradas historicamente",
         "configuracao": {
             "defaults": DEFAULTS,
+            "central": central_params,
+            "central_regra": "Âncora central_inclinacao (recência com meia-vida nacional e inclinação de 28 dias encolhida, projetada a 04/10) e indecisos que escolhem divididos por disponibilidade (1 − rejeição). Validada por origem móvel contra pesquisas, não contra a urna.",
             "deff_assumido": DEFF,
             "meia_vida_nacional_dias": national_half_life,
             "meia_vida_estadual_dias": state_half_life,
             "peso_prior": POOL_STRENGTH,
             "normalizacao": "truncar negativos aditivos, normalizar partições",
             "incerteza": {
+                "base": central_params["base"],
+                "indecisos_flavio": central_params["indecisos_flavio"],
+                "recentramento": "bootstrap das casas centrais deslocado por alvos[base] − alvos.inclusivo em toda âncora calculada sobre as mesmas casas",
+                "projecao_inclinacao": {
+                    "aplica_em": list(PROJECTED),
+                    "dp_margem_pp": n["incerteza_projecao_pp"],
+                    "regra": "choque comum adicional na diferença F−L, somado em quadratura ao erro comum: sd = √(erro_comum² + dp_projeção²). Central com inclinação: horizonte × dp(β_F − β_L) das inclinações brutas de 28 dias, sem encolher. Tendência: √(dp_projetado² − dp_corte²) do filtro.",
+                    "erro_comum_total_sd_pp": mc["erro_comum_total_sd_pp"],
+                },
                 "erro_comum_sd_margem_validos_pp": 2,
                 "student_df": 5,
                 "preferencia_regional_sd_pp": 1,
@@ -124,9 +223,10 @@ def build(
         ),
         "central": central,
         "incerteza": mc,
-        "sensibilidades": {
-            label: scenario(states, params) for label, params in scenarios.items()
-        },
+        "sensibilidades": sensitivities,
+        "consolidacao": consolidacao,
+        "rejeicao": rejeicao,
+        "erro_2022": error_2022_block(n["efeitos_casa"]),
         "validacao": validation,
         "validacao_preditiva": predictive,
         "calibracao_iteracoes": iterations,

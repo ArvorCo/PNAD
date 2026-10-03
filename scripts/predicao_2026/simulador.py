@@ -112,7 +112,7 @@ RESERVA = (
 )
 
 HELP = {
-    "base": "Define a média nacional que calibra as 27 UFs. A central inclusiva pondera cada casa pela recência do campo; as outras opções isolam a recência, a reponderação PNAD, os placares publicados ou o desvio relativo das casas.",
+    "base": "Define a média nacional que calibra as 27 UFs. A central pondera cada casa pela recência do campo e prolonga até 04/10 a tendência medida nas pesquisas em 28 dias, com cada inclinação encolhida pela própria incerteza; é extrapolação encolhida, não medição da urna. A recência sem tendência é a central usada até 03/10 à tarde. As outras opções isolam a recência, a reponderação PNAD, os placares publicados ou o desvio relativo das casas. As âncoras de modelo usam o filtro de Kalman com efeitos de casa: a dinâmica mede o nível no corte; a de tendência projeta nível e inclinação até 04/10.",
     "comparecimento_modelo": "Taxa de partida de cada UF: a estadual de 2022 ou a soma das seções de 2022 com os pesos territoriais de 2026. Preferência por seção não foi medida.",
     "eleitor_provavel": "Onde a pesquisa publica voto por hábito de comparecimento, os grupos são misturados pela chance declarada de votar. Sem cruzamento publicado, o fator é neutro, sem extrapolar de outra UF.",
     "exterior": "Inclui os eleitores no exterior, com prior de 2022, movimento nacional de 2026 e incerteza própria.",
@@ -124,19 +124,23 @@ HELP = {
     "vies_pp": "Move a diferença F−L de todas as UFs na mesma direção: +2 pontos transferem um ponto de Lula para Flávio. Ajustar este controle para chegar a um resultado desejado é cenário do leitor, não evidência de viés do instituto.",
     "branco_nulo_pp": "Soma pontos à taxa de brancos e nulos entre os votantes de todas as UFs.",
     "indecisos_validos": "Parcela dos indecisos que chega a voto válido. O restante vira branco ou nulo entre os votantes; o comparecimento não muda.",
-    "indecisos_flavio": "Como se dividem os indecisos que escolhem: proporcional às candidaturas na UF ou numa divisão fixa entre os dois finalistas.",
+    "indecisos_flavio": "Como se dividem os indecisos que escolhem: por disponibilidade, a hipótese central, proporcional às candidaturas na UF ou numa divisão fixa entre os dois finalistas. Disponibilidade é 1 menos a rejeição declarada (não votaria de jeito nenhum), na média temporal das casas que publicam a pergunta; a parte de Flávio é a disponibilidade dele dividida pela soma das duas. A rejeição só orienta o destino de quem ainda não escolheu e nunca retira voto já declarado.",
     "regioes": "Pontos de comparecimento por região, somados à mudança geral.",
+    "consolidacao": "Nas pesquisas nacionais recentes, a terceira via perde pontos todo dia e Lula e Flávio ganham. A inclinação vem de uma regressão nos votos válidos com efeito fixo de casa, pesos min(n, 2000), em janelas de 28 e 14 dias. O cenário parte da âncora de recência sem tendência, prolonga essa queda da data efetiva dela até a urna e divide a migração como nas pesquisas; λ é a migração de cada finalista dividida pela reserva nacional dele. Não parte da central porque a central já projeta a tendência, e somar as duas contaria a mesma migração duas vezes. É extrapolação linear de tendência medida nas pesquisas, não medição da urna.",
+    "disponibilidade": "Mesma migração projetada da consolidação medida, mas dividida pela disponibilidade dos finalistas: 1 menos a rejeição declarada, na média temporal das casas que publicam “não votaria de jeito nenhum”. É régua medida no eleitorado total, não dentro da terceira via, que nenhuma casa publica. A rejeição só orienta o destino de quem se move; voto já declarado não é retirado.",
     "uf": "Muda comparecimento, diferencial ou reserva de uma UF. Campo vazio segue o controle geral; zero desliga a antecipação naquela UF.",
 }
 
 ANCHORS = (
-    ("inclusivo", "Central inclusiva, com recência"),
+    ("central_inclinacao", "Central: recência com tendência de 28 dias encolhida"),
+    ("inclusivo", "Recência sem tendência (central até 03/10 à tarde)"),
     ("sem_recencia", "Mesmas casas centrais, peso temporal igual"),
     ("pnad", "Somente casas com reponderação PNAD"),
     ("publicado", "Publicadas, mesmas casas PNAD"),
     ("todas", "Publicadas, todas as casas elegíveis"),
     ("casas", "Central + remoção do desvio relativo das casas"),
     ("dinamico", "Âncora dinâmica: DLM com efeitos de casa"),
+    ("tendencia", "Âncora de tendência: DLM projetado a 04/10"),
 )
 
 
@@ -146,9 +150,131 @@ def _helpers():
     return view.number, view.millions, view.NAMES
 
 
-def presets_json():
+def _pct(x):
+    number, _, _ = _helpers()
+    return number(100 * x, 0)
+
+
+def _pp(x):
+    number, _, _ = _helpers()
+    return ("+" if x > 0 else "−" if x < 0 else "") + number(abs(x), 2)
+
+
+def consolidation_presets(cons):
+    """Cenários de consolidação com λ e frase lidos do bloco do JSON."""
+    out = []
+    for key in ("28", "14"):
+        fit, proj = cons["janelas"][key], cons["projecao"][key]
+        slope, lam = fit["inclinacao_pp_dia"], proj["lambda_arredondado"]
+        share = proj["parte_flavio_usada"]
+        frase = (
+            f"Parte da recência sem tendência. Terceira via {_pp(slope['terceira_via'])} "
+            f"pp/dia, Flávio {_pp(slope['flavio'])} e Lula {_pp(slope['lula'])} em "
+            f"{key} dias; {_pct(share)}% da migração para Flávio, prolongada por "
+            f"{_helpers()[0](cons['horizonte_dias'], 1)} dias até a urna."
+        )
+        nota = (
+            f"Divisão medida nas pesquisas de {key} dias: {_pct(share)}% da "
+            f"migração da terceira via para Flávio e {_pct(1 - share)}% para Lula, "
+            "prolongada por extrapolação linear a partir da âncora de recência "
+            "sem tendência."
+        )
+        out.append(
+            {
+                "id": f"consolidacao_{key}",
+                "nome": f"Consolidação na proporção medida ({key} dias)",
+                "frase": frase,
+                "nota": nota,
+                "destaque": True,
+                "parametros": {
+                    "base": cons["ancora"],
+                    "voto_flavio": lam["flavio"],
+                    "voto_lula": lam["lula"],
+                },
+            }
+        )
+    return out
+
+
+def availability_presets(cons, rej):
+    """Mesma migração projetada, dividida pela disponibilidade (1 − rejeição)."""
+    out = []
+    share = rej["media"]["parte_flavio"]
+    for key in ("28", "14"):
+        proj = rej["consolidacao_disponibilidade"][key]
+        lam = proj["lambda_arredondado"]
+        measured = cons["projecao"][key]["parte_flavio_usada"]
+        frase = (
+            f"Parte da recência sem tendência. A migração projetada de {key} dias, "
+            f"{_helpers()[0](proj['migracao_total_pp'], 2)} pp dos válidos, dividida "
+            f"pela rejeição medida: {_pct(share)}% para Flávio, contra "
+            f"{_pct(measured)}% na série."
+        )
+        nota = (
+            f"Divisão por disponibilidade: {_pct(share)}% da migração da terceira "
+            f"via para Flávio e {_pct(1 - share)}% para Lula, pela rejeição média "
+            "no eleitorado total, a partir da âncora de recência sem tendência. A "
+            "rejeição só orienta o destino de quem se move; nenhum voto já "
+            "declarado é retirado."
+        )
+        out.append(
+            {
+                "id": f"disponibilidade_{key}",
+                "nome": f"Consolidação na divisão por disponibilidade (rejeição medida, {key} dias)",
+                "frase": frase,
+                "nota": nota,
+                "destaque": True,
+                "parametros": {
+                    "base": cons["ancora"],
+                    "voto_flavio": lam["flavio"],
+                    "voto_lula": lam["lula"],
+                },
+            }
+        )
+    return out
+
+
+def presets(data=None):
+    """Central, depois a consolidação medida (se houver), depois os fixos."""
+    cons = (data or {}).get("consolidacao")
+    rej = (data or {}).get("rejeicao")
+    extra = consolidation_presets(cons) if cons else []
+    if cons and rej:
+        extra += availability_presets(cons, rej)
+    return [PRESETS[0], *extra, *PRESETS[1:]]
+
+
+def undecided_options(data):
+    """Opções do destino dos indecisos; a de disponibilidade leva o número e,
+    sendo a hipótese central, vem primeiro e selecionada."""
+    options = []
+    rej = data.get("rejeicao")
+    if rej:
+        share = rej["indecisos_flavio"]
+        options.append(
+            (
+                str(share),
+                f"Por disponibilidade: 1 − rejeição medida ({_helpers()[0](100 * share, 1)}% Flávio), central",
+            )
+        )
+    options += [
+        ("", "Proporcional às candidaturas na UF"),
+        ("0.5", "50% Lula, 50% Flávio"),
+        ("0.6", "40% Lula, 60% Flávio"),
+        ("0.4", "60% Lula, 40% Flávio"),
+    ]
+    central = (data.get("central") or {}).get("parametros", {}).get("indecisos_flavio")
+    chosen = "" if central is None else str(central)
+    return "".join(
+        f'<option value="{v}"{" selected" if v == chosen else ""}>{esc(t)}</option>'
+        for v, t in options
+    )
+
+
+def presets_json(data=None):
+    keys = ("id", "nome", "frase", "parametros", "nota")
     return json.dumps(
-        [{k: p[k] for k in ("id", "nome", "frase", "parametros")} for p in PRESETS],
+        [{k: p[k] for k in keys if k in p} for p in presets(data)],
         ensure_ascii=False,
         separators=(",", ":"),
     ).replace("<", "\\u003c")
@@ -234,12 +360,30 @@ def render(data, region_table_html):
         f'<label>{esc(r)}<input type="number" data-region="{esc(r)}" min="-20" max="20" step="0.5" value="0"><span>pp</span></label>'
         for r in REGIONS
     )
-    anchors = "".join(f'<option value="{k}">{esc(v)}</option>' for k, v in ANCHORS)
-    presets = "".join(
-        f'<button type="button" class="preset" data-preset="{p["id"]}" aria-pressed="{"true" if p["id"] == "central" else "false"}">'
-        f'<b>{esc(p["nome"])}</b><span>{esc(p["frase"])}</span></button>'
-        for p in PRESETS
+    chosen = data["central"]["parametros"]["base"]
+    anchors = "".join(
+        f'<option value="{k}"{" selected" if k == chosen else ""}>{esc(v)}</option>'
+        for k, v in ANCHORS
     )
+    ready = presets(data)
+    buttons = "".join(
+        f'<button type="button" class="preset{" featured" if p.get("destaque") else ""}" data-preset="{p["id"]}" aria-pressed="{"true" if p["id"] == "central" else "false"}">'
+        f'<b>{esc(p["nome"])}</b><span>{esc(p["frase"])}</span></button>'
+        for p in ready
+    )
+    measured = (
+        '<p class="preset-help">Consolidação na proporção medida: o que é?'
+        f'{_help("consolidacao", "Consolidação na proporção medida")}</p>'
+        f"{_help_text('consolidacao')}"
+        if any(p.get("destaque") for p in ready)
+        else ""
+    )
+    if any(p["id"].startswith("disponibilidade_") for p in ready):
+        measured += (
+            '<p class="preset-help">Divisão por disponibilidade: o que é?'
+            f'{_help("disponibilidade", "Divisão por disponibilidade")}</p>'
+            f"{_help_text('disponibilidade')}"
+        )
     candidates = "".join(
         f'<div class="sim-candidate {k}"><span>{names[k]}</span><b id="sim-{k}">{number(b["percentuais"][k])}%</b>'
         f'<small id="sim-votos-{k}">{millions(b[k])} votos</small>'
@@ -283,7 +427,7 @@ def render(data, region_table_html):
             + _select(
                 "indecisos_flavio",
                 "Destino dos indecisos que escolhem",
-                '<option value="">Proporcional às candidaturas na UF</option><option value="0.5">50% Lula, 50% Flávio</option><option value="0.6">40% Lula, 60% Flávio</option><option value="0.4">60% Lula, 40% Flávio</option>',
+                undecided_options(data),
             ),
         ),
         (
@@ -304,8 +448,8 @@ def render(data, region_table_html):
     )
     central = data["central"]["brasil"]
     return f"""<div class="simulator" id="simulador-app">
-      <div class="sim-presets"><p class="eyebrow">Cenários prontos, um clique</p><div class="preset-grid" role="group" aria-label="Cenários prontos">{presets}</div>
-      <script type="application/json" id="sim-presets-data">{presets_json()}</script></div>
+      <div class="sim-presets"><p class="eyebrow">Cenários prontos, um clique</p><div class="preset-grid" role="group" aria-label="Cenários prontos">{buttons}</div>{measured}
+      <script type="application/json" id="sim-presets-data">{presets_json(data)}</script></div>
       <div class="controls"><h3>Sua hipótese, na mesma conta.</h3>{controls}
       <div class="actions"><button id="sim-export" type="button">Baixar meu cenário (JSON)</button></div></div>
       <div class="sim-result" id="sim-result"><div class="sim-head"><p class="eyebrow" id="sim-label">Cenário central</p>

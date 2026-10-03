@@ -38,12 +38,13 @@ def node(script, payload):
     return json.loads(run.stdout)
 
 
-def test_presets_only_use_engine_parameters():
-    ids = [p["id"] for p in simulador.PRESETS]
+def test_presets_only_use_engine_parameters(data):
+    ready = simulador.presets(data)
+    ids = [p["id"] for p in ready]
     assert len(ids) == len(set(ids))
-    assert simulador.PRESETS[0]["id"] == "central"
-    assert simulador.PRESETS[0]["parametros"] == {}
-    for preset in simulador.PRESETS:
+    assert ready[0]["id"] == "central"
+    assert ready[0]["parametros"] == {}
+    for preset in ready:
         assert set(preset["parametros"]) <= set(motor.DEFAULTS)
         assert preset["nome"] and preset["frase"]
         for region in preset["parametros"].get("regioes", {}):
@@ -61,12 +62,16 @@ def test_presets_only_use_engine_parameters():
 def test_presets_match_between_python_and_browser(data):
     script = """const fs=require('fs'),engine=require(process.argv[1]);
     const x=JSON.parse(fs.readFileSync(0,'utf8'));
-    process.stdout.write(JSON.stringify(x.presets.map(p=>engine.scenario(x.states,p.parametros))));"""
-    presets = [dict(p) for p in simulador.PRESETS]
-    browser = node(script, {"states": data["estados"], "presets": presets})
-    central = motor.scenario(data["estados"])["brasil"]
+    const C=engine.Simulador.configure(x.central);
+    process.stdout.write(JSON.stringify(x.presets.map(p=>engine.scenario(x.states,{...C,...p.parametros}))));"""
+    presets = [dict(p) for p in simulador.presets(data)]
+    c = data["central"]["parametros"]
+    browser = node(
+        script, {"states": data["estados"], "presets": presets, "central": c}
+    )
+    central = motor.scenario(data["estados"], c)["brasil"]
     for preset, js in zip(presets, browser, strict=True):
-        python = motor.scenario(data["estados"], preset["parametros"])
+        python = motor.scenario(data["estados"], {**c, **preset["parametros"]})
         for left, right in [
             (python["brasil"], js["brasil"]),
             *zip(python["ufs"], js["ufs"], strict=True),
@@ -161,7 +166,7 @@ def test_decoder_ignores_garbage_and_clamps_fractions():
     first, second = out
     assert first["voto_flavio"] == 1
     assert first["voto_lula"] == 0
-    assert first["base"] == "inclusivo"
+    assert first["base"] == "central_inclinacao"
     assert first["comparecimento_pp"] == 0
     assert first["regioes"] == {}
     assert first["ufs"] == {}
@@ -188,11 +193,11 @@ def test_sentence_reports_change_against_central(data):
     assert "—" not in central + edited
 
 
-def test_page_embeds_presets_and_event_contract():
+def test_page_embeds_presets_and_event_contract(data):
     html = PAGE.read_text()
     js = JS.read_text()
     assert 'id="sim-presets-data"' in html
-    assert html.count('class="preset"') == len(simulador.PRESETS)
+    assert html.count("data-preset=") == len(simulador.presets(data))
     assert 'new CustomEvent("predicao:cenario"' in js
     assert "result:lastResult,params:lastParams,central:" in js
     assert "—" not in js

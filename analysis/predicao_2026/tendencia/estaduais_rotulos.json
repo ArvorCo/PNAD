@@ -1,0 +1,19 @@
+{
+ "descricao": "Data impressa no rótulo de cada rodada anterior das séries estaduais da Quaest, lida nos próprios arquivos de transcrição (campo pres_1t_lista.rotulos_barras ou notas de conferência). A rodada mais recente de cada arquivo usa o campo exato da ficha. Regra de conversão declarada: o rótulo é a data de divulgação, um dia após o fim de um campo de quatro dias, então o ponto médio do campo é o rótulo menos 2,5 dias. A regra é conferida nos arquivos em que rótulo e ficha coexistem (BA 24/Set e 20 a 23/09; CE 23/Set e 19 a 22/09; PE 23/Set e 19 a 22/09).",
+ "regra_ponto_medio_dias_antes_do_rotulo": 2.5,
+ "n_rodadas_anteriores": "Tamanho da amostra das rodadas anteriores não consta do arquivo; usa-se o n da ficha atual. Nas 13 UFs com rodada de agosto e de setembro em arquivos separados, o n das duas rodadas é idêntico (804 ou 900), o que sustenta a hipótese.",
+ "rotulos": {
+  "BA": {"Ago 26": "27/Ago"},
+  "CE": {"04 Set": "04/Set"},
+  "DF": {"Ago 26": "25/Ago", "08 Set": "08/Set"},
+  "GO": {"Ago 26": "27/Ago"},
+  "MG": {"Ago 26": "25/Ago", "08 Set": "08/Set"},
+  "PE": {"Ago 26": "25/Ago", "08 Set": "08/Set"},
+  "PR": {"Ago 26": "24/Ago"},
+  "RJ": {"Ago 26": "25/Ago", "08 Set": "08/Set"},
+  "RS": {"Ago 26": "24/Ago"},
+  "SC": {"Ago 26": "24/Ago"},
+  "SP": {"Ago 26": "25/Ago", "08 Set": "08/Set"},
+  "TO": {"Ago 26": "25/Ago"}
+ }
+}

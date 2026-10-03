@@ -13,6 +13,7 @@
   "alvo": "ondas com início de campo 1 a 7 dias após a origem; vetor PNAD quando há cruzamento, publicado nas demais",
   "metrica": "erro em pontos dos votos válidos; margem = Lula − Flávio",
   "dinamico": "hiperparâmetros reestimados por máxima verossimilhança em cada origem, só com a informação disponível",
+  "tendencia": "mesma reestimação; a âncora de tendência é projetada ao ponto médio do campo alvo (uso real), e a variante de nível usa o estado na origem",
   "janela_dinamico_inicio": "2026-08-15",
   "pares_comuns": "todas as âncoras avaliadas nos mesmos pares"
  },
@@ -27,7 +28,13 @@
     "rmse_margem_pp": 3.9896502585552116,
     "vies_margem_pp": 1.1591845002782049,
     "mae_parcelas_pp": 2.9545609403391113,
-    "rmse_parcelas_pp": 3.592962566249381
+    "rmse_parcelas_pp": 3.592962566249381,
+    "mae_lula_pp": 2.3670642819595256,
+    "vies_lula_pp": -1.1261064775720404,
+    "mae_flavio_pp": 2.759902817143583,
+    "vies_flavio_pp": -2.285290977850245,
+    "mae_outros_pp": 3.7367157219142255,
+    "vies_outros_pp": 3.411397455422288
    },
    "recencia_1d_7d": {
     "rotulo": "Recência, meia-vida 1 dia, janela 7",
@@ -36,7 +43,13 @@
     "rmse_margem_pp": 4.426643931928707,
     "vies_margem_pp": 0.23496119658935183,
     "mae_parcelas_pp": 3.0092925072806835,
-    "rmse_parcelas_pp": 3.7003965961534133
+    "rmse_parcelas_pp": 3.7003965961534133,
+    "mae_lula_pp": 2.7040829313120405,
+    "vies_lula_pp": -1.603409816335246,
+    "mae_flavio_pp": 2.5680540533954965,
+    "vies_flavio_pp": -1.8383710129245978,
+    "mae_outros_pp": 3.7557405371345136,
+    "vies_outros_pp": 3.441780829259842
    },
    "recencia_5d_7d": {
     "rotulo": "Recência, meia-vida 5 dias, janela 7",
@@ -45,7 +58,13 @@
     "rmse_margem_pp": 4.019963009754171,
     "vies_margem_pp": 1.3542779780815883,
     "mae_parcelas_pp": 2.984413594697647,
-    "rmse_parcelas_pp": 3.6277527901724143
+    "rmse_parcelas_pp": 3.6277527901724143,
+    "mae_lula_pp": 2.354599683334226,
+    "vies_lula_pp": -1.0458118569066777,
+    "mae_flavio_pp": 2.8201153317645957,
+    "vies_flavio_pp": -2.400089834988266,
+    "mae_outros_pp": 3.778525768994121,
+    "vies_outros_pp": 3.445901691894945
    },
    "recencia_7d_7d": {
     "rotulo": "Recência, meia-vida 7 dias, janela 7",
@@ -54,7 +73,13 @@
     "rmse_margem_pp": 4.049516434637015,
     "vies_margem_pp": 1.4340038029535536,
     "mae_parcelas_pp": 3.000421627610174,
-    "rmse_parcelas_pp": 3.6499150394630626
+    "rmse_parcelas_pp": 3.6499150394630626,
+    "mae_lula_pp": 2.353273857297142,
+    "vies_lula_pp": -1.0160654325206473,
+    "mae_flavio_pp": 2.8464583154845795,
+    "vies_flavio_pp": -2.450069235474201,
+    "mae_outros_pp": 3.8015327100487997,
+    "vies_outros_pp": 3.4661346679948517
    },
    "igual_7d": {
     "rotulo": "Peso igual, janela 7",
@@ -63,7 +88,13 @@
     "rmse_margem_pp": 4.1618012590378335,
     "vies_margem_pp": 1.6214956420796924,
     "mae_parcelas_pp": 3.0503920087470764,
-    "rmse_parcelas_pp": 3.7223275576319725
+    "rmse_parcelas_pp": 3.7223275576319725,
+    "mae_lula_pp": 2.356867401534179,
+    "vies_lula_pp": -0.9538063606562154,
+    "mae_flavio_pp": 2.9205575465127014,
+    "vies_flavio_pp": -2.5753020027359086,
+    "mae_outros_pp": 3.87375107819435,
+    "vies_outros_pp": 3.5291083633921216
    },
    "recencia_3d_14d": {
     "rotulo": "Recência, meia-vida 3 dias, janela 14",
@@ -72,7 +103,13 @@
     "rmse_margem_pp": 3.9739029810148923,
     "vies_margem_pp": 1.177358763048355,
     "mae_parcelas_pp": 3.008843342326063,
-    "rmse_parcelas_pp": 3.6538708321538347
+    "rmse_parcelas_pp": 3.6538708321538347,
+    "mae_lula_pp": 2.389184678945032,
+    "vies_lula_pp": -1.1756873297813852,
+    "mae_flavio_pp": 2.790402882287242,
+    "vies_flavio_pp": -2.3530460928297403,
+    "mae_outros_pp": 3.846942465745916,
+    "vies_outros_pp": 3.5287334226111278
    },
    "igual_14d": {
     "rotulo": "Peso igual, janela 14",
@@ -81,7 +118,13 @@
     "rmse_margem_pp": 4.113624662236927,
     "vies_margem_pp": 1.73975893436733,
     "mae_parcelas_pp": 3.307256486839346,
-    "rmse_parcelas_pp": 4.016662246793461
+    "rmse_parcelas_pp": 4.016662246793461,
+    "mae_lula_pp": 2.4301133301861104,
+    "vies_lula_pp": -1.165448274680544,
+    "mae_flavio_pp": 3.1240848679698523,
+    "vies_flavio_pp": -2.905207209047874,
+    "mae_outros_pp": 4.367571262362075,
+    "vies_outros_pp": 4.070655483728424
    },
    "dinamico": {
     "rotulo": "DLM com efeitos de casa, phi estimado",
@@ -90,7 +133,13 @@
     "rmse_margem_pp": 4.1236890672790745,
     "vies_margem_pp": 1.7559451075982504,
     "mae_parcelas_pp": 3.5353811431188165,
-    "rmse_parcelas_pp": 4.233888406403661
+    "rmse_parcelas_pp": 4.233888406403661,
+    "mae_lula_pp": 2.4120118229530605,
+    "vies_lula_pp": -1.4449656533617983,
+    "mae_flavio_pp": 3.3404154353360984,
+    "vies_flavio_pp": -3.2009107609600487,
+    "mae_outros_pp": 4.853716171067289,
+    "vies_outros_pp": 4.645876414321845
    },
    "dinamico_phi1": {
     "rotulo": "DLM com efeitos de casa, phi = 1",
@@ -99,7 +148,103 @@
     "rmse_margem_pp": 4.071580522505142,
     "vies_margem_pp": 1.4460123837090337,
     "mae_parcelas_pp": 3.304312589688284,
-    "rmse_parcelas_pp": 3.99483626584347
+    "rmse_parcelas_pp": 3.99483626584347,
+    "mae_lula_pp": 2.4280625277701957,
+    "vies_lula_pp": -1.3738337985037707,
+    "mae_flavio_pp": 3.054598727032957,
+    "vies_flavio_pp": -2.8198461822128036,
+    "mae_outros_pp": 4.430276514261698,
+    "vies_outros_pp": 4.193679980716577
+   },
+   "tendencia": {
+    "rotulo": "Tendência amortecida, projetada ao campo alvo",
+    "n_pares": 211,
+    "mae_margem_pp": 3.433547764900398,
+    "rmse_margem_pp": 4.128041077480908,
+    "vies_margem_pp": 1.7658195417890803,
+    "mae_parcelas_pp": 3.541334364412617,
+    "rmse_parcelas_pp": 4.240171358257763,
+    "mae_lula_pp": 2.4111778648994764,
+    "vies_lula_pp": -1.4455447723771007,
+    "mae_flavio_pp": 3.3491311371534085,
+    "vies_flavio_pp": -3.2113643141661803,
+    "mae_outros_pp": 4.863694091184966,
+    "vies_outros_pp": 4.6569090865432825
+   },
+   "tendencia_integrada": {
+    "rotulo": "Tendência integrada (inclinação em passeio), projetada",
+    "n_pares": 211,
+    "mae_margem_pp": 3.264022236269219,
+    "rmse_margem_pp": 3.8674043403866123,
+    "vies_margem_pp": 0.8741583077155707,
+    "mae_parcelas_pp": 3.8499851083734113,
+    "rmse_parcelas_pp": 4.982914783029521,
+    "mae_lula_pp": 2.8830974447849647,
+    "vies_lula_pp": -2.0421528929904653,
+    "mae_flavio_pp": 3.2634631475228266,
+    "vies_flavio_pp": -2.916311200706036,
+    "mae_outros_pp": 5.403394732812441,
+    "vies_outros_pp": 4.958464093696503
+   },
+   "tendencia_constante": {
+    "rotulo": "Inclinação constante, projetada",
+    "n_pares": 211,
+    "mae_margem_pp": 3.253556803717947,
+    "rmse_margem_pp": 3.850341957396767,
+    "vies_margem_pp": 0.9154022572318817,
+    "mae_parcelas_pp": 3.8732111051975915,
+    "rmse_parcelas_pp": 4.822661531794701,
+    "mae_lula_pp": 2.8647711902547175,
+    "vies_lula_pp": -2.151890312225337,
+    "mae_flavio_pp": 3.294936723081679,
+    "vies_flavio_pp": -3.0672925694572184,
+    "mae_outros_pp": 5.459925402256377,
+    "vies_outros_pp": 5.219182881682557
+   },
+   "tendencia_corte": {
+    "rotulo": "Tendência amortecida, nível na origem",
+    "n_pares": 211,
+    "mae_margem_pp": 3.433547764601263,
+    "rmse_margem_pp": 4.128041079238421,
+    "vies_margem_pp": 1.7658195502331964,
+    "mae_parcelas_pp": 3.541334363109545,
+    "rmse_parcelas_pp": 4.240171354607411,
+    "mae_lula_pp": 2.411177867075321,
+    "vies_lula_pp": -1.4455447701461115,
+    "mae_flavio_pp": 3.34913113158928,
+    "vies_flavio_pp": -3.211364320379307,
+    "mae_outros_pp": 4.863694090664036,
+    "vies_outros_pp": 4.656909090525421
+   },
+   "central_inclinacao_14d": {
+    "rotulo": "Central + inclinação encolhida de 14 dias, projetada",
+    "n_pares": 211,
+    "mae_margem_pp": 3.3829631549289263,
+    "rmse_margem_pp": 4.0148816528133695,
+    "vies_margem_pp": 1.1682074103782056,
+    "mae_parcelas_pp": 2.8914000533283097,
+    "rmse_parcelas_pp": 3.5420889888043656,
+    "mae_lula_pp": 2.3474833705604583,
+    "vies_lula_pp": -1.0425948198036687,
+    "mae_flavio_pp": 2.7175504428673376,
+    "vies_flavio_pp": -2.210802230181874,
+    "mae_outros_pp": 3.609166346557132,
+    "vies_outros_pp": 3.2533970499855447
+   },
+   "central_inclinacao_28d": {
+    "rotulo": "Central + inclinação encolhida de 28 dias, projetada",
+    "n_pares": 211,
+    "mae_margem_pp": 3.2522649652407525,
+    "rmse_margem_pp": 3.936913174861083,
+    "vies_margem_pp": 0.21412261427301152,
+    "mae_parcelas_pp": 2.819896106661013,
+    "rmse_parcelas_pp": 3.574391649376487,
+    "mae_lula_pp": 2.5313576951883454,
+    "vies_lula_pp": -1.2505804004025034,
+    "mae_flavio_pp": 2.456953150275579,
+    "vies_flavio_pp": -1.464703014675515,
+    "mae_outros_pp": 3.4713774745191133,
+    "vies_outros_pp": 2.7152834150780225
    }
   },
   "por_horizonte": {
@@ -111,7 +256,13 @@
      "rmse_margem_pp": 3.8259173468478775,
      "vies_margem_pp": 1.0132404985006767,
      "mae_parcelas_pp": 2.426309457049229,
-     "rmse_parcelas_pp": 2.9521110109104556
+     "rmse_parcelas_pp": 2.9521110109104556,
+     "mae_lula_pp": 2.0586629134366365,
+     "vies_lula_pp": -0.6143947514665449,
+     "mae_flavio_pp": 2.4250438802000724,
+     "vies_flavio_pp": -1.6276352499672215,
+     "mae_outros_pp": 2.7952215775109788,
+     "vies_outros_pp": 2.2420300014337666
     },
     "dinamico": {
      "rotulo": "DLM com efeitos de casa, phi estimado",
@@ -120,7 +271,103 @@
      "rmse_margem_pp": 3.944090720644278,
      "vies_margem_pp": 1.4792145621738635,
      "mae_parcelas_pp": 2.9777136984914443,
-     "rmse_parcelas_pp": 3.643367287707166
+     "rmse_parcelas_pp": 3.643367287707166,
+     "mae_lula_pp": 2.254724657311858,
+     "vies_lula_pp": -0.9716169736830478,
+     "mae_flavio_pp": 2.823612888171013,
+     "vies_flavio_pp": -2.4508315358569113,
+     "mae_outros_pp": 3.8548035499914635,
+     "vies_outros_pp": 3.4224485095399584
+    },
+    "tendencia": {
+     "rotulo": "Tendência amortecida, projetada ao campo alvo",
+     "n_pares": 32,
+     "mae_margem_pp": 3.3479383293720613,
+     "rmse_margem_pp": 3.947796439860396,
+     "vies_margem_pp": 1.4853317545768598,
+     "mae_parcelas_pp": 2.982497956041198,
+     "rmse_parcelas_pp": 3.6482275522774357,
+     "mae_lula_pp": 2.2543772970635634,
+     "vies_lula_pp": -0.9731962470036737,
+     "mae_flavio_pp": 2.82946139763511,
+     "vies_flavio_pp": -2.4585280015805333,
+     "mae_outros_pp": 3.86365517342492,
+     "vies_outros_pp": 3.4317242485842097
+    },
+    "tendencia_integrada": {
+     "rotulo": "Tendência integrada (inclinação em passeio), projetada",
+     "n_pares": 32,
+     "mae_margem_pp": 3.123638513406647,
+     "rmse_margem_pp": 3.6460972319288607,
+     "vies_margem_pp": 0.8392882128064804,
+     "mae_parcelas_pp": 3.002648365658095,
+     "rmse_parcelas_pp": 3.876739688425098,
+     "mae_lula_pp": 2.4925655662079245,
+     "vies_lula_pp": -1.075040244105065,
+     "mae_flavio_pp": 2.65677972022043,
+     "vies_flavio_pp": -1.9143284569115455,
+     "mae_outros_pp": 3.858599810545932,
+     "vies_outros_pp": 2.9893687010166152
+    },
+    "tendencia_constante": {
+     "rotulo": "Inclinação constante, projetada",
+     "n_pares": 32,
+     "mae_margem_pp": 3.175067855119084,
+     "rmse_margem_pp": 3.7199127168382873,
+     "vies_margem_pp": 0.9539236379521774,
+     "mae_parcelas_pp": 3.0925871350035266,
+     "rmse_parcelas_pp": 3.9085652365090167,
+     "mae_lula_pp": 2.482508030564565,
+     "vies_lula_pp": -1.3087909284197705,
+     "mae_flavio_pp": 2.7327834460758322,
+     "vies_flavio_pp": -2.262714566371948,
+     "mae_outros_pp": 4.0624699283701835,
+     "vies_outros_pp": 3.5715054947917206
+    },
+    "tendencia_corte": {
+     "rotulo": "Tendência amortecida, nível na origem",
+     "n_pares": 32,
+     "mae_margem_pp": 3.347938293748915,
+     "rmse_margem_pp": 3.9477963741824755,
+     "vies_margem_pp": 1.4853316578958442,
+     "mae_parcelas_pp": 2.982497972133126,
+     "rmse_parcelas_pp": 3.648227559952958,
+     "mae_lula_pp": 2.2543773466932513,
+     "vies_lula_pp": -0.9731963127263747,
+     "mae_flavio_pp": 2.8294613632380052,
+     "vies_flavio_pp": -2.458527970622219,
+     "mae_outros_pp": 3.8636552064681218,
+     "vies_outros_pp": 3.431724283348596
+    },
+    "central_inclinacao_14d": {
+     "rotulo": "Central + inclinação encolhida de 14 dias, projetada",
+     "n_pares": 32,
+     "mae_margem_pp": 3.290989954794225,
+     "rmse_margem_pp": 3.9762569640515553,
+     "vies_margem_pp": 1.1288508583874228,
+     "mae_parcelas_pp": 2.350443776343294,
+     "rmse_parcelas_pp": 2.889668989033435,
+     "mae_lula_pp": 2.0926719463596823,
+     "vies_lula_pp": -0.35736344282525656,
+     "mae_flavio_pp": 2.3752387688599965,
+     "vies_flavio_pp": -1.4862143012126794,
+     "mae_outros_pp": 2.583420613810203,
+     "vies_outros_pp": 1.8435777440379364
+    },
+    "central_inclinacao_28d": {
+     "rotulo": "Central + inclinação encolhida de 28 dias, projetada",
+     "n_pares": 32,
+     "mae_margem_pp": 3.1055904484974937,
+     "rmse_margem_pp": 3.7494828632541757,
+     "vies_margem_pp": 0.39506052069276887,
+     "mae_parcelas_pp": 2.2514530311550143,
+     "rmse_parcelas_pp": 2.906003940321595,
+     "mae_lula_pp": 2.1310851673936764,
+     "vies_lula_pp": -0.575000371918869,
+     "mae_flavio_pp": 2.106498970909483,
+     "vies_flavio_pp": -0.9700608926116379,
+     "mae_outros_pp": 2.5167749551618837,
+     "vies_outros_pp": 1.5450612645305124
     }
    },
    "2": {
@@ -131,7 +378,13 @@
      "rmse_margem_pp": 3.634976312053687,
      "vies_margem_pp": 1.1640476303065628,
      "mae_parcelas_pp": 2.6441121463371555,
-     "rmse_parcelas_pp": 3.2440163788663003
+     "rmse_parcelas_pp": 3.2440163788663003,
+     "mae_lula_pp": 2.1496753080118367,
+     "vies_lula_pp": -0.8508804210867291,
+     "mae_flavio_pp": 2.4547591481548636,
+     "vies_flavio_pp": -2.0149280513932917,
+     "mae_outros_pp": 3.3279019828447662,
+     "vies_outros_pp": 2.8658084724800243
     },
     "dinamico": {
      "rotulo": "DLM com efeitos de casa, phi estimado",
@@ -140,7 +393,103 @@
      "rmse_margem_pp": 4.132453118551959,
      "vies_margem_pp": 1.6326106631014252,
      "mae_parcelas_pp": 3.229782544887474,
-     "rmse_parcelas_pp": 3.897839988393458
+     "rmse_parcelas_pp": 3.897839988393458,
+     "mae_lula_pp": 2.400506756483344,
+     "vies_lula_pp": -1.2366598559949105,
+     "mae_flavio_pp": 2.981882889104165,
+     "vies_flavio_pp": -2.869270519096336,
+     "mae_outros_pp": 4.306957989074913,
+     "vies_outros_pp": 4.105930375091246
+    },
+    "tendencia": {
+     "rotulo": "Tendência amortecida, projetada ao campo alvo",
+     "n_pares": 32,
+     "mae_margem_pp": 3.504560672267029,
+     "rmse_margem_pp": 4.135221942219468,
+     "vies_margem_pp": 1.640373138549763,
+     "mae_parcelas_pp": 3.234847264895978,
+     "rmse_parcelas_pp": 3.9028373683356876,
+     "mae_lula_pp": 2.3998078728059387,
+     "vies_lula_pp": -1.2377293057482055,
+     "mae_flavio_pp": 2.988458752597202,
+     "vies_flavio_pp": -2.8781024442979684,
+     "mae_outros_pp": 4.316275169284793,
+     "vies_outros_pp": 4.115831750046176
+    },
+    "tendencia_integrada": {
+     "rotulo": "Tendência integrada (inclinação em passeio), projetada",
+     "n_pares": 32,
+     "mae_margem_pp": 3.3144919206974164,
+     "rmse_margem_pp": 3.903994371983086,
+     "vies_margem_pp": 0.9481505721043084,
+     "mae_parcelas_pp": 3.520281753960955,
+     "rmse_parcelas_pp": 4.5977445512947375,
+     "mae_lula_pp": 2.730144292946207,
+     "vies_lula_pp": -1.5862169332256457,
+     "mae_flavio_pp": 3.0492001346173767,
+     "vies_flavio_pp": -2.5343675053299544,
+     "mae_outros_pp": 4.781500834319284,
+     "vies_outros_pp": 4.120584438555604
+    },
+    "tendencia_constante": {
+     "rotulo": "Inclinação constante, projetada",
+     "n_pares": 32,
+     "mae_margem_pp": 3.3243128365700536,
+     "rmse_margem_pp": 3.9325885869336963,
+     "vies_margem_pp": 0.9855914491715976,
+     "mae_parcelas_pp": 3.4261321304215606,
+     "rmse_parcelas_pp": 4.296004144754536,
+     "mae_lula_pp": 2.646544398057503,
+     "vies_lula_pp": -1.7224240061522853,
+     "mae_flavio_pp": 2.9723964710100734,
+     "vies_flavio_pp": -2.708015455323883,
+     "mae_outros_pp": 4.659455522197106,
+     "vies_outros_pp": 4.430439461476174
+    },
+    "tendencia_corte": {
+     "rotulo": "Tendência amortecida, nível na origem",
+     "n_pares": 32,
+     "mae_margem_pp": 3.5045606881940485,
+     "rmse_margem_pp": 4.135221934116575,
+     "vies_margem_pp": 1.6403731021686148,
+     "mae_parcelas_pp": 3.2348472235268666,
+     "rmse_parcelas_pp": 3.9028373215076235,
+     "mae_lula_pp": 2.3998078576072146,
+     "vies_lula_pp": -1.2377292977062984,
+     "mae_flavio_pp": 2.9884587031126335,
+     "vies_flavio_pp": -2.878102399874913,
+     "mae_outros_pp": 4.316275109860751,
+     "vies_outros_pp": 4.115831697581212
+    },
+    "central_inclinacao_14d": {
+     "rotulo": "Central + inclinação encolhida de 14 dias, projetada",
+     "n_pares": 32,
+     "mae_margem_pp": 3.1594123578288227,
+     "rmse_margem_pp": 3.6606421071413706,
+     "vies_margem_pp": 1.20466793588517,
+     "mae_parcelas_pp": 2.531655442753998,
+     "rmse_parcelas_pp": 3.155940205349572,
+     "mae_lula_pp": 2.0569664300560753,
+     "vies_lula_pp": -0.7215479550166151,
+     "mae_flavio_pp": 2.4281425419227736,
+     "vies_flavio_pp": -1.926215890901785,
+     "mae_outros_pp": 3.1098573562831446,
+     "vies_outros_pp": 2.647763845918403
+    },
+    "central_inclinacao_28d": {
+     "rotulo": "Central + inclinação encolhida de 28 dias, projetada",
+     "n_pares": 32,
+     "mae_margem_pp": 2.9854666619253925,
+     "rmse_margem_pp": 3.606229381020544,
+     "vies_margem_pp": 0.4117962548990741,
+     "mae_parcelas_pp": 2.5517207871763485,
+     "rmse_parcelas_pp": 3.2410890955774745,
+     "mae_lula_pp": 2.2916113050657696,
+     "vies_lula_pp": -0.8923858903426569,
+     "mae_flavio_pp": 2.20502069140007,
+     "vies_flavio_pp": -1.304182145241731,
+     "mae_outros_pp": 3.158530365063207,
+     "vies_outros_pp": 2.196568035584391
     }
    },
    "3": {
@@ -151,7 +500,13 @@
      "rmse_margem_pp": 3.810321257143864,
      "vies_margem_pp": 1.3512260679721437,
      "mae_parcelas_pp": 2.8507456408308496,
-     "rmse_parcelas_pp": 3.4526514315645724
+     "rmse_parcelas_pp": 3.4526514315645724,
+     "mae_lula_pp": 2.266340423336631,
+     "vies_lula_pp": -0.9703489223040663,
+     "mae_flavio_pp": 2.7527351024468305,
+     "vies_flavio_pp": -2.32157499027621,
+     "mae_outros_pp": 3.533161396709087,
+     "vies_outros_pp": 3.291923912580279
     },
     "dinamico": {
      "rotulo": "DLM com efeitos de casa, phi estimado",
@@ -160,7 +515,103 @@
      "rmse_margem_pp": 4.022697105158538,
      "vies_margem_pp": 1.7717438791201248,
      "mae_parcelas_pp": 3.4488106242429755,
-     "rmse_parcelas_pp": 4.132296492210274
+     "rmse_parcelas_pp": 4.132296492210274,
+     "mae_lula_pp": 2.3845747148156287,
+     "vies_lula_pp": -1.382656430618844,
+     "mae_flavio_pp": 3.256556201621842,
+     "vies_flavio_pp": -3.1544003097389695,
+     "mae_outros_pp": 4.705300956291454,
+     "vies_outros_pp": 4.537056740357813
+    },
+    "tendencia": {
+     "rotulo": "Tendência amortecida, projetada ao campo alvo",
+     "n_pares": 31,
+     "mae_margem_pp": 3.36902572547273,
+     "rmse_margem_pp": 4.027344779327716,
+     "vies_margem_pp": 1.7816556203858016,
+     "mae_parcelas_pp": 3.454366612281198,
+     "rmse_parcelas_pp": 4.138322913811973,
+     "mae_lula_pp": 2.3839889684639846,
+     "vies_lula_pp": -1.3826925004804689,
+     "mae_flavio_pp": 3.2642324669099962,
+     "vies_flavio_pp": -3.164348120866271,
+     "mae_outros_pp": 4.714878401469617,
+     "vies_outros_pp": 4.547040621346742
+    },
+    "tendencia_integrada": {
+     "rotulo": "Tendência integrada (inclinação em passeio), projetada",
+     "n_pares": 31,
+     "mae_margem_pp": 3.2984234070276743,
+     "rmse_margem_pp": 3.8004982799242,
+     "vies_margem_pp": 0.9656508245826163,
+     "mae_parcelas_pp": 3.719103840922008,
+     "rmse_parcelas_pp": 4.97391820570056,
+     "mae_lula_pp": 2.7434558567527807,
+     "vies_lula_pp": -1.8622412260104577,
+     "mae_flavio_pp": 3.283750997826224,
+     "vies_flavio_pp": -2.827892050593074,
+     "mae_outros_pp": 5.130104668187021,
+     "vies_outros_pp": 4.690133276603535
+    },
+    "tendencia_constante": {
+     "rotulo": "Inclinação constante, projetada",
+     "n_pares": 31,
+     "mae_margem_pp": 3.2057041728812092,
+     "rmse_margem_pp": 3.748545648120787,
+     "vies_margem_pp": 0.9950464734062022,
+     "mae_parcelas_pp": 3.6428634370038075,
+     "rmse_parcelas_pp": 4.551120676555999,
+     "mae_lula_pp": 2.651059646163312,
+     "vies_lula_pp": -1.939896623897479,
+     "mae_flavio_pp": 3.2205994847125052,
+     "vies_flavio_pp": -2.934943097303681,
+     "mae_outros_pp": 5.056931180135607,
+     "vies_outros_pp": 4.874839721201165
+    },
+    "tendencia_corte": {
+     "rotulo": "Tendência amortecida, nível na origem",
+     "n_pares": 31,
+     "mae_margem_pp": 3.3690257468517255,
+     "rmse_margem_pp": 4.027344818201,
+     "vies_margem_pp": 1.7816556852536467,
+     "mae_parcelas_pp": 3.454366620121069,
+     "rmse_parcelas_pp": 4.138322917849251,
+     "mae_lula_pp": 2.3839889528720226,
+     "vies_lula_pp": -1.382692473622656,
+     "mae_flavio_pp": 3.2642324974204464,
+     "vies_flavio_pp": -3.1643481588763023,
+     "mae_outros_pp": 4.714878410070738,
+     "vies_outros_pp": 4.54704063249896
+    },
+    "central_inclinacao_14d": {
+     "rotulo": "Central + inclinação encolhida de 14 dias, projetada",
+     "n_pares": 31,
+     "mae_margem_pp": 3.176294393409741,
+     "rmse_margem_pp": 3.8193284801110323,
+     "vies_margem_pp": 1.3400961416412582,
+     "mae_parcelas_pp": 2.8381439761033302,
+     "rmse_parcelas_pp": 3.4480217934706388,
+     "mae_lula_pp": 2.2474379262453517,
+     "vies_lula_pp": -0.9514464252127884,
+     "mae_flavio_pp": 2.7827675258689952,
+     "vies_flavio_pp": -2.291542566854047,
+     "mae_outros_pp": 3.484226476195644,
+     "vies_outros_pp": 3.242988992066836
+    },
+    "central_inclinacao_28d": {
+     "rotulo": "Central + inclinação encolhida de 28 dias, projetada",
+     "n_pares": 31,
+     "mae_margem_pp": 3.032932099001878,
+     "rmse_margem_pp": 3.719510099192622,
+     "vies_margem_pp": 0.46857392366150713,
+     "mae_parcelas_pp": 2.6808764072884985,
+     "rmse_parcelas_pp": 3.356217036141784,
+     "mae_lula_pp": 2.3734893358313514,
+     "vies_lula_pp": -1.0133018252136845,
+     "mae_flavio_pp": 2.4598569615203836,
+     "vies_flavio_pp": -1.4818757488751915,
+     "mae_outros_pp": 3.209282924513761,
+     "vies_outros_pp": 2.4951775740888795
     }
    },
    "4": {
@@ -171,7 +622,13 @@
      "rmse_margem_pp": 4.209542290802774,
      "vies_margem_pp": 1.239676934743724,
      "mae_parcelas_pp": 3.00780567902638,
-     "rmse_parcelas_pp": 3.692962790977439
+     "rmse_parcelas_pp": 3.692962790977439,
+     "mae_lula_pp": 2.4548603991574285,
+     "vies_lula_pp": -1.1244139433943923,
+     "mae_flavio_pp": 2.8249415514143794,
+     "vies_flavio_pp": -2.364090878138116,
+     "mae_outros_pp": 3.7436150865073325,
+     "vies_outros_pp": 3.488504821532514
     },
     "dinamico": {
      "rotulo": "DLM com efeitos de casa, phi estimado",
@@ -180,7 +637,103 @@
      "rmse_margem_pp": 4.194744505987743,
      "vies_margem_pp": 1.757180029472718,
      "mae_parcelas_pp": 3.592999939829408,
-     "rmse_parcelas_pp": 4.2792055754577385
+     "rmse_parcelas_pp": 4.2792055754577385,
+     "mae_lula_pp": 2.5007991122448705,
+     "vies_lula_pp": -1.4806071644848404,
+     "mae_flavio_pp": 3.37995912564098,
+     "vies_flavio_pp": -3.2377871939575575,
+     "mae_outros_pp": 4.898241581602372,
+     "vies_outros_pp": 4.718394358442395
+    },
+    "tendencia": {
+     "rotulo": "Tendência amortecida, projetada ao campo alvo",
+     "n_pares": 29,
+     "mae_margem_pp": 3.4645755476562416,
+     "rmse_margem_pp": 4.199997388078087,
+     "vies_margem_pp": 1.769174035296969,
+     "mae_parcelas_pp": 3.599206675745314,
+     "rmse_parcelas_pp": 4.28592352738098,
+     "mae_lula_pp": 2.4996563482222403,
+     "vies_lula_pp": -1.4801451471299476,
+     "mae_flavio_pp": 3.3890864614830005,
+     "vies_flavio_pp": -3.249319182426918,
+     "mae_outros_pp": 4.908877217530704,
+     "vies_outros_pp": 4.729464329556864
+    },
+    "tendencia_integrada": {
+     "rotulo": "Tendência integrada (inclinação em passeio), projetada",
+     "n_pares": 29,
+     "mae_margem_pp": 3.3450958028419127,
+     "rmse_margem_pp": 3.884245459637416,
+     "vies_margem_pp": 0.6697466383362136,
+     "mae_parcelas_pp": 3.590529061823298,
+     "rmse_parcelas_pp": 4.589552528945773,
+     "mae_lula_pp": 2.8120487548743696,
+     "vies_lula_pp": -1.9636040917344812,
+     "mae_flavio_pp": 2.985017950451857,
+     "vies_flavio_pp": -2.633350730070695,
+     "mae_outros_pp": 4.974520480143667,
+     "vies_outros_pp": 4.596954821805178
+    },
+    "tendencia_constante": {
+     "rotulo": "Inclinação constante, projetada",
+     "n_pares": 29,
+     "mae_margem_pp": 3.3553680096237777,
+     "rmse_margem_pp": 3.9125484008988214,
+     "vies_margem_pp": 0.7828101488401543,
+     "mae_parcelas_pp": 3.782489972193806,
+     "rmse_parcelas_pp": 4.711343757155206,
+     "mae_lula_pp": 2.8898173799487306,
+     "vies_lula_pp": -2.1521377115882543,
+     "mae_flavio_pp": 3.1759174738763143,
+     "vies_flavio_pp": -2.9349478604284083,
+     "mae_outros_pp": 5.281735062756371,
+     "vies_outros_pp": 5.087085572016665
+    },
+    "tendencia_corte": {
+     "rotulo": "Tendência amortecida, nível na origem",
+     "n_pares": 29,
+     "mae_margem_pp": 3.4645755721167664,
+     "rmse_margem_pp": 4.199997430104982,
+     "vies_margem_pp": 1.7691741092879685,
+     "mae_parcelas_pp": 3.5992066815620856,
+     "rmse_parcelas_pp": 4.28592354194469,
+     "mae_lula_pp": 2.4996563559699716,
+     "vies_lula_pp": -1.4801451298119679,
+     "mae_flavio_pp": 3.389086451982946,
+     "vies_flavio_pp": -3.2493192390999366,
+     "mae_outros_pp": 4.908877236733342,
+     "vies_outros_pp": 4.729464368911907
+    },
+    "central_inclinacao_14d": {
+     "rotulo": "Central + inclinação encolhida de 14 dias, projetada",
+     "n_pares": 29,
+     "mae_margem_pp": 3.6342608809108476,
+     "rmse_margem_pp": 4.194229434318129,
+     "vies_margem_pp": 1.2091793438080545,
+     "mae_parcelas_pp": 2.9382779790114957,
+     "rmse_parcelas_pp": 3.6300706976017905,
+     "mae_lula_pp": 2.454860399157427,
+     "vies_lula_pp": -1.0726183962529203,
+     "mae_flavio_pp": 2.7426484133372373,
+     "vies_flavio_pp": -2.2817977400609744,
+     "mae_outros_pp": 3.6173251245398235,
+     "vies_outros_pp": 3.3544161363138962
+    },
+    "central_inclinacao_28d": {
+     "rotulo": "Central + inclinação encolhida de 28 dias, projetada",
+     "n_pares": 29,
+     "mae_margem_pp": 3.469150838489894,
+     "rmse_margem_pp": 4.150834311635211,
+     "vies_margem_pp": 0.13298628544774432,
+     "mae_parcelas_pp": 2.7704087148066536,
+     "rmse_parcelas_pp": 3.6384118188819246,
+     "mae_lula_pp": 2.587047511341677,
+     "vies_lula_pp": -1.2271337109460205,
+     "mae_flavio_pp": 2.4416178075632273,
+     "vies_flavio_pp": -1.360119996393765,
+     "mae_outros_pp": 3.282560825515055,
+     "vies_outros_pp": 2.5872537073397877
     }
    },
    "5": {
@@ -191,7 +744,13 @@
      "rmse_margem_pp": 4.275421210599788,
      "vies_margem_pp": 1.029991462065283,
      "mae_parcelas_pp": 3.1784749091883144,
-     "rmse_parcelas_pp": 3.8310716786831662
+     "rmse_parcelas_pp": 3.8310716786831662,
+     "mae_lula_pp": 2.6826033343966986,
+     "vies_lula_pp": -1.3720820646177208,
+     "mae_flavio_pp": 2.8341086550698917,
+     "vies_flavio_pp": -2.4020735266830036,
+     "mae_outros_pp": 4.018712738098355,
+     "vies_outros_pp": 3.7741555913007288
     },
     "dinamico": {
      "rotulo": "DLM com efeitos de casa, phi estimado",
@@ -200,7 +759,103 @@
      "rmse_margem_pp": 4.186080991746288,
      "vies_margem_pp": 1.8086417725749386,
      "mae_parcelas_pp": 3.629426231106183,
-     "rmse_parcelas_pp": 4.29655785717765
+     "rmse_parcelas_pp": 4.29655785717765,
+     "mae_lula_pp": 2.448602806152687,
+     "vies_lula_pp": -1.5241360911444721,
+     "mae_flavio_pp": 3.4315572936148473,
+     "vies_flavio_pp": -3.3327778637194108,
+     "mae_outros_pp": 5.008118593551018,
+     "vies_outros_pp": 4.856913954863879
+    },
+    "tendencia": {
+     "rotulo": "Tendência amortecida, projetada ao campo alvo",
+     "n_pares": 29,
+     "mae_margem_pp": 3.4810653234222464,
+     "rmse_margem_pp": 4.1898250007690905,
+     "vies_margem_pp": 1.8194280558479763,
+     "mae_parcelas_pp": 3.635568253256651,
+     "rmse_parcelas_pp": 4.303108055859474,
+     "mae_lula_pp": 2.4469643855216323,
+     "vies_lula_pp": -1.5246247087634148,
+     "mae_flavio_pp": 3.4417558660021776,
+     "vies_flavio_pp": -3.344052764611391,
+     "mae_outros_pp": 5.017984508246142,
+     "vies_outros_pp": 4.868677473374807
+    },
+    "tendencia_integrada": {
+     "rotulo": "Tendência integrada (inclinação em passeio), projetada",
+     "n_pares": 29,
+     "mae_margem_pp": 3.385437499915638,
+     "rmse_margem_pp": 3.93090492877313,
+     "vies_margem_pp": 0.7917820834043362,
+     "mae_parcelas_pp": 3.840960061507252,
+     "rmse_parcelas_pp": 4.874820200409388,
+     "mae_lula_pp": 2.882002133324796,
+     "vies_lula_pp": -2.2117010889221254,
+     "mae_flavio_pp": 3.103323595209688,
+     "vies_flavio_pp": -3.003483172326462,
+     "mae_outros_pp": 5.537554455987276,
+     "vies_outros_pp": 5.215184261248585
+    },
+    "tendencia_constante": {
+     "rotulo": "Inclinação constante, projetada",
+     "n_pares": 29,
+     "mae_margem_pp": 3.3931745957857835,
+     "rmse_margem_pp": 3.9525573706989685,
+     "vies_margem_pp": 0.8719337677080674,
+     "mae_parcelas_pp": 4.018277124527829,
+     "rmse_parcelas_pp": 4.981350114643681,
+     "mae_lula_pp": 2.950182202872514,
+     "vies_lula_pp": -2.3572157768010853,
+     "mae_flavio_pp": 3.3290007948245863,
+     "vies_flavio_pp": -3.229149544509153,
+     "mae_outros_pp": 5.775648375886388,
+     "vies_outros_pp": 5.586365321310241
+    },
+    "tendencia_corte": {
+     "rotulo": "Tendência amortecida, nível na origem",
+     "n_pares": 29,
+     "mae_margem_pp": 3.4810653201692188,
+     "rmse_margem_pp": 4.189825023178309,
+     "vies_margem_pp": 1.81942810481309,
+     "mae_parcelas_pp": 3.635568269706951,
+     "rmse_parcelas_pp": 4.303108075026024,
+     "mae_lula_pp": 2.4469643723042647,
+     "vies_lula_pp": -1.5246246970331585,
+     "mae_flavio_pp": 3.441755903070701,
+     "vies_flavio_pp": -3.3440528018462485,
+     "mae_outros_pp": 5.017984533745887,
+     "vies_outros_pp": 4.86867749887941
+    },
+    "central_inclinacao_14d": {
+     "rotulo": "Central + inclinação encolhida de 14 dias, projetada",
+     "n_pares": 29,
+     "mae_margem_pp": 3.6823495759214753,
+     "rmse_margem_pp": 4.26928145188674,
+     "vies_margem_pp": 0.9825687112457363,
+     "mae_parcelas_pp": 3.0593373358180544,
+     "rmse_parcelas_pp": 3.7263817312269762,
+     "mae_lula_pp": 2.653858509322104,
+     "vies_lula_pp": -1.2915416924016536,
+     "mae_flavio_pp": 2.706145532034277,
+     "vies_flavio_pp": -2.2741104036473896,
+     "mae_outros_pp": 3.81800796609778,
+     "vies_outros_pp": 3.5656520960490448
+    },
+    "central_inclinacao_28d": {
+     "rotulo": "Central + inclinação encolhida de 28 dias, projetada",
+     "n_pares": 29,
+     "mae_margem_pp": 3.6408284204138015,
+     "rmse_margem_pp": 4.2496780135039565,
+     "vies_margem_pp": -0.08576851999081274,
+     "mae_parcelas_pp": 2.9520106595337894,
+     "rmse_parcelas_pp": 3.69667977193048,
+     "mae_lula_pp": 2.763603199750084,
+     "vies_lula_pp": -1.4277229860447742,
+     "mae_flavio_pp": 2.532995395382723,
+     "vies_flavio_pp": -1.3419544660539613,
+     "mae_outros_pp": 3.559433383468561,
+     "vies_outros_pp": 2.7696774520987386
     }
    },
    "6": {
@@ -211,7 +866,13 @@
      "rmse_margem_pp": 4.340490766867089,
      "vies_margem_pp": 1.0265962718705575,
      "mae_parcelas_pp": 3.2586033056320347,
-     "rmse_parcelas_pp": 3.8900770196701973
+     "rmse_parcelas_pp": 3.8900770196701973,
+     "mae_lula_pp": 2.6271645830622203,
+     "vies_lula_pp": -1.4729535049694182,
+     "mae_flavio_pp": 2.9315849052268628,
+     "vies_flavio_pp": -2.4995497768399755,
+     "mae_outros_pp": 4.217060428607023,
+     "vies_outros_pp": 3.972503281809396
     },
     "dinamico": {
      "rotulo": "DLM com efeitos de casa, phi estimado",
@@ -220,7 +881,103 @@
      "rmse_margem_pp": 4.295792317764854,
      "vies_margem_pp": 1.8768907652827638,
      "mae_parcelas_pp": 3.8474454559364006,
-     "rmse_parcelas_pp": 4.519103835905718
+     "rmse_parcelas_pp": 4.519103835905718,
+     "mae_lula_pp": 2.4412620159750213,
+     "vies_lula_pp": -1.6991029156071,
+     "mae_flavio_pp": 3.6747731166500825,
+     "vies_flavio_pp": -3.575993680889864,
+     "mae_outros_pp": 5.426301235184097,
+     "vies_outros_pp": 5.275096596496959
+    },
+    "tendencia": {
+     "rotulo": "Tendência amortecida, projetada ao campo alvo",
+     "n_pares": 29,
+     "mae_margem_pp": 3.5211088497788126,
+     "rmse_margem_pp": 4.299871316063711,
+     "vies_margem_pp": 1.888576432411161,
+     "mae_parcelas_pp": 3.8546617992253216,
+     "rmse_parcelas_pp": 4.526848178326775,
+     "mae_lula_pp": 2.440236180554451,
+     "vies_lula_pp": -1.6998620860794469,
+     "mae_flavio_pp": 3.6861415776801234,
+     "vies_flavio_pp": -3.588438518490608,
+     "mae_outros_pp": 5.43760763944139,
+     "vies_outros_pp": 5.288300604570054
+    },
+    "tendencia_integrada": {
+     "rotulo": "Tendência integrada (inclinação em passeio), projetada",
+     "n_pares": 29,
+     "mae_margem_pp": 3.3610633813587167,
+     "rmse_margem_pp": 4.126823767657619,
+     "vies_margem_pp": 0.8319306218894803,
+     "mae_parcelas_pp": 4.247902840126822,
+     "rmse_parcelas_pp": 5.304125412055864,
+     "mae_lula_pp": 3.0390396506325614,
+     "vies_lula_pp": -2.5838950914938676,
+     "mae_flavio_pp": 3.5156651446884646,
+     "vies_flavio_pp": -3.4158257133833483,
+     "mae_outros_pp": 6.189003725059441,
+     "vies_outros_pp": 5.999720804877218
+    },
+    "tendencia_constante": {
+     "rotulo": "Inclinação constante, projetada",
+     "n_pares": 29,
+     "mae_margem_pp": 3.320811554491622,
+     "rmse_margem_pp": 4.017623223945334,
+     "vies_margem_pp": 0.8458149510807715,
+     "mae_parcelas_pp": 4.343956645328383,
+     "rmse_parcelas_pp": 5.261361545773841,
+     "mae_lula_pp": 3.0663945512966846,
+     "vies_lula_pp": -2.661570393603011,
+     "mae_flavio_pp": 3.607236591825523,
+     "vies_flavio_pp": -3.5073853446837826,
+     "mae_outros_pp": 6.35823879286294,
+     "vies_outros_pp": 6.168955738286794
+    },
+    "tendencia_corte": {
+     "rotulo": "Tendência amortecida, nível na origem",
+     "n_pares": 29,
+     "mae_margem_pp": 3.521108813603168,
+     "rmse_margem_pp": 4.299871287621269,
+     "vies_margem_pp": 1.8885764475364397,
+     "mae_parcelas_pp": 3.8546618014885063,
+     "rmse_parcelas_pp": 4.526848175289534,
+     "mae_lula_pp": 2.440236180973382,
+     "vies_lula_pp": -1.6998620785411238,
+     "mae_flavio_pp": 3.6861415840380145,
+     "vies_flavio_pp": -3.5884385260775638,
+     "mae_outros_pp": 5.437607639454124,
+     "vies_outros_pp": 5.288300604618691
+    },
+    "central_inclinacao_14d": {
+     "rotulo": "Central + inclinação encolhida de 14 dias, projetada",
+     "n_pares": 29,
+     "mae_margem_pp": 3.6737636868771806,
+     "rmse_margem_pp": 4.349262401257542,
+     "vies_margem_pp": 1.0096711119866808,
+     "mae_parcelas_pp": 3.208993432276658,
+     "rmse_parcelas_pp": 3.8473459325276167,
+     "mae_lula_pp": 2.598419757987625,
+     "vies_lula_pp": -1.4442086798948235,
+     "mae_flavio_pp": 2.885914920268391,
+     "vies_flavio_pp": -2.4538797918815045,
+     "mae_outros_pp": 4.142645618573956,
+     "vies_outros_pp": 3.89808847177633
+    },
+    "central_inclinacao_28d": {
+     "rotulo": "Central + inclinação encolhida de 28 dias, projetada",
+     "n_pares": 29,
+     "mae_margem_pp": 3.5527996497750807,
+     "rmse_margem_pp": 4.309212650744724,
+     "vies_margem_pp": -0.08846095640252875,
+     "mae_parcelas_pp": 3.2229091232996563,
+     "rmse_parcelas_pp": 3.939260467338155,
+     "mae_lula_pp": 2.8709739786421786,
+     "vies_lula_pp": -1.702718942223046,
+     "mae_flavio_pp": 2.667299350569064,
+     "vies_flavio_pp": -1.6142579858205173,
+     "mae_outros_pp": 4.1304540406877255,
+     "vies_outros_pp": 3.3169769280435677
     }
    },
    "7": {
@@ -231,7 +988,13 @@
      "rmse_margem_pp": 3.8368193999570295,
      "vies_margem_pp": 1.2908629633801967,
      "mae_parcelas_pp": 3.4097972177888516,
-     "rmse_parcelas_pp": 4.062924642803243
+     "rmse_parcelas_pp": 4.062924642803243,
+     "mae_lula_pp": 2.391481589717211,
+     "vies_lula_pp": -1.5698209923484574,
+     "mae_flavio_pp": 3.162847968774604,
+     "vies_flavio_pp": -2.860683955728655,
+     "mae_outros_pp": 4.675062094874742,
+     "vies_outros_pp": 4.4305049480771155
     },
     "dinamico": {
      "rotulo": "DLM com efeitos de casa, phi estimado",
@@ -240,8 +1003,820 @@
      "rmse_margem_pp": 4.10423288170258,
      "vies_margem_pp": 2.0056305444522584,
      "mae_parcelas_pp": 4.1167632716939595,
-     "rmse_parcelas_pp": 4.854454195946182
+     "rmse_parcelas_pp": 4.854454195946182,
+     "mae_lula_pp": 2.4729661774331047,
+     "vies_lula_pp": -1.8947933101587822,
+     "mae_flavio_pp": 3.9309018341918147,
+     "vies_flavio_pp": -3.90042385461104,
+     "mae_outros_pp": 5.946421803456958,
+     "vies_outros_pp": 5.795217164769819
+    },
+    "tendencia": {
+     "rotulo": "Tendência amortecida, projetada ao campo alvo",
+     "n_pares": 29,
+     "mae_margem_pp": 3.3525196878281633,
+     "rmse_margem_pp": 4.110714436205932,
+     "vies_margem_pp": 2.0170988042192093,
+     "mae_parcelas_pp": 4.123705990405657,
+     "rmse_parcelas_pp": 4.861458906066972,
+     "mae_lula_pp": 2.4724860524458814,
+     "vies_lula_pp": -1.8952598431517969,
+     "mae_flavio_pp": 3.9417063933769523,
+     "vies_flavio_pp": -3.912358647371006,
+     "mae_outros_pp": 5.9569255253941416,
+     "vies_outros_pp": 5.807618490522806
+    },
+    "tendencia_integrada": {
+     "rotulo": "Tendência integrada (inclinação em passeio), projetada",
+     "n_pares": 29,
+     "mae_margem_pp": 3.026934086353294,
+     "rmse_margem_pp": 3.785057121619623,
+     "vies_margem_pp": 1.062202251155455,
+     "mae_parcelas_pp": 5.159258897590829,
+     "rmse_parcelas_pp": 6.4294624677336705,
+     "mae_lula_pp": 3.5482789024565196,
+     "vies_lula_pp": -3.1719912016454312,
+     "mae_flavio_pp": 4.334030821370465,
+     "vies_flavio_pp": -4.234193452800886,
+     "mae_outros_pp": 7.5954669689455,
+     "vies_outros_pp": 7.406184654446318
+    },
+    "tendencia_constante": {
+     "rotulo": "Inclinação constante, projetada",
+     "n_pares": 29,
+     "mae_margem_pp": 3.004558739792509,
+     "rmse_margem_pp": 3.665864745882098,
+     "vies_margem_pp": 0.9559567465907984,
+     "mae_parcelas_pp": 4.949061090914498,
+     "rmse_parcelas_pp": 5.930148857570111,
+     "mae_lula_pp": 3.44375050025368,
+     "vies_lula_pp": -3.067461726022075,
+     "mae_flavio_pp": 4.123269525590738,
+     "vies_flavio_pp": -4.023418472612875,
+     "mae_outros_pp": 7.2801632468990745,
+     "vies_outros_pp": 7.090880198634947
+    },
+    "tendencia_corte": {
+     "rotulo": "Tendência amortecida, nível na origem",
+     "n_pares": 29,
+     "mae_margem_pp": 3.3525196995000957,
+     "rmse_margem_pp": 4.110714450901228,
+     "vies_margem_pp": 2.0170988050617655,
+     "mae_parcelas_pp": 4.123705975905947,
+     "rmse_parcelas_pp": 4.861458887378739,
+     "mae_lula_pp": 2.4724860520022105,
+     "vies_lula_pp": -1.8952598285682891,
+     "mae_flavio_pp": 3.941706378911235,
+     "vies_flavio_pp": -3.9123586336300544,
+     "mae_outros_pp": 5.956925496804397,
+     "vies_outros_pp": 5.807618462198343
+    },
+    "central_inclinacao_14d": {
+     "rotulo": "Central + inclinação encolhida de 14 dias, projetada",
+     "n_pares": 29,
+     "mae_margem_pp": 3.1105646663030475,
+     "rmse_margem_pp": 3.83681939995703,
+     "vies_margem_pp": 1.2908629633801973,
+     "mae_parcelas_pp": 3.4097972177888516,
+     "rmse_parcelas_pp": 4.062924642803243,
+     "mae_lula_pp": 2.3914815897172104,
+     "vies_lula_pp": -1.5698209923484574,
+     "mae_flavio_pp": 3.1628479687746047,
+     "vies_flavio_pp": -2.860683955728656,
+     "mae_outros_pp": 4.675062094874742,
+     "vies_outros_pp": 4.4305049480771155
+    },
+    "central_inclinacao_28d": {
+     "rotulo": "Central + inclinação encolhida de 28 dias, projetada",
+     "n_pares": 29,
+     "mae_margem_pp": 3.0369860935008153,
+     "rmse_margem_pp": 3.7762544649454077,
+     "vies_margem_pp": 0.2079557136752431,
+     "mae_parcelas_pp": 3.4060283193573717,
+     "rmse_parcelas_pp": 4.193604480833633,
+     "mae_lula_pp": 2.778789694930432,
+     "vies_lula_pp": -2.0391053094390967,
+     "mae_flavio_pp": 2.8474984708680804,
+     "vies_flavio_pp": -2.2470610231143398,
+     "mae_outros_pp": 4.5917967922736045,
+     "vies_outros_pp": 4.286166332553441
     }
+   }
+  },
+  "por_grupo_horizonte": {
+   "1-2": {
+    "n_pares": 64,
+    "n_ondas_alvo": 32,
+    "metricas": {
+     "recencia_3d_7d": {
+      "rotulo": "Recência, meia-vida 3 dias, janela 7 (central)",
+      "n_pares": 64,
+      "mae_margem_pp": 3.15411003401449,
+      "rmse_margem_pp": 3.7316682820223264,
+      "vies_margem_pp": 1.0886440644036197,
+      "mae_parcelas_pp": 2.5352108016931925,
+      "rmse_parcelas_pp": 3.1014997732622502,
+      "mae_lula_pp": 2.1041691107242366,
+      "vies_lula_pp": -0.732637586276637,
+      "mae_flavio_pp": 2.439901514177468,
+      "vies_flavio_pp": -1.8212816506802567,
+      "mae_outros_pp": 3.0615617801778723,
+      "vies_outros_pp": 2.5539192369568955
+     },
+     "dinamico": {
+      "rotulo": "DLM com efeitos de casa, phi estimado",
+      "n_pares": 64,
+      "mae_margem_pp": 3.4231480620776717,
+      "rmse_margem_pp": 4.039370024502714,
+      "vies_margem_pp": 1.5559126126376444,
+      "mae_parcelas_pp": 3.10374812168946,
+      "rmse_parcelas_pp": 3.772749777566343,
+      "mae_lula_pp": 2.3276157068976007,
+      "vies_lula_pp": -1.104138414838979,
+      "mae_flavio_pp": 2.902747888637589,
+      "vies_flavio_pp": -2.6600510274766234,
+      "mae_outros_pp": 4.080880769533188,
+      "vies_outros_pp": 3.764189442315602
+     },
+     "tendencia": {
+      "rotulo": "Tendência amortecida, projetada ao campo alvo",
+      "n_pares": 64,
+      "mae_margem_pp": 3.4262495008195453,
+      "rmse_margem_pp": 4.042595530224844,
+      "vies_margem_pp": 1.5628524465633116,
+      "mae_parcelas_pp": 3.108672610468588,
+      "rmse_parcelas_pp": 3.777678109426056,
+      "mae_lula_pp": 2.327092584934751,
+      "vies_lula_pp": -1.1054627763759397,
+      "mae_flavio_pp": 2.908960075116156,
+      "vies_flavio_pp": -2.668315222939251,
+      "mae_outros_pp": 4.089965171354857,
+      "vies_outros_pp": 3.773777999315193
+     },
+     "tendencia_integrada": {
+      "rotulo": "Tendência integrada (inclinação em passeio), projetada",
+      "n_pares": 64,
+      "mae_margem_pp": 3.2190652170520315,
+      "rmse_margem_pp": 3.7772474820399915,
+      "vies_margem_pp": 0.8937193924553944,
+      "mae_parcelas_pp": 3.2614650598095256,
+      "rmse_parcelas_pp": 4.2525501508371875,
+      "mae_lula_pp": 2.6113549295770655,
+      "vies_lula_pp": -1.3306285886653555,
+      "mae_flavio_pp": 2.8529899274189034,
+      "vies_flavio_pp": -2.22434798112075,
+      "mae_outros_pp": 4.320050322432608,
+      "vies_outros_pp": 3.5549765697861098
+     },
+     "tendencia_constante": {
+      "rotulo": "Inclinação constante, projetada",
+      "n_pares": 64,
+      "mae_margem_pp": 3.2496903458445687,
+      "rmse_margem_pp": 3.8277280216191154,
+      "vies_margem_pp": 0.9697575435618875,
+      "mae_parcelas_pp": 3.259359632712544,
+      "rmse_parcelas_pp": 4.10685608585174,
+      "mae_lula_pp": 2.5645262143110337,
+      "vies_lula_pp": -1.5156074672860278,
+      "mae_flavio_pp": 2.8525899585429526,
+      "vies_flavio_pp": -2.4853650108479153,
+      "mae_outros_pp": 4.360962725283645,
+      "vies_outros_pp": 4.0009724781339475
+     },
+     "tendencia_corte": {
+      "rotulo": "Tendência amortecida, nível na origem",
+      "n_pares": 64,
+      "mae_margem_pp": 3.4262494909714816,
+      "rmse_margem_pp": 4.0425954940116835,
+      "vies_margem_pp": 1.5628523800322296,
+      "mae_parcelas_pp": 3.108672597829996,
+      "rmse_parcelas_pp": 3.77767808894254,
+      "mae_lula_pp": 2.327092602150233,
+      "vies_lula_pp": -1.1054628052163364,
+      "mae_flavio_pp": 2.9089600331753194,
+      "vies_flavio_pp": -2.668315185248566,
+      "mae_outros_pp": 4.0899651581644365,
+      "vies_outros_pp": 3.7737779904649047
+     },
+     "central_inclinacao_14d": {
+      "rotulo": "Central + inclinação encolhida de 14 dias, projetada",
+      "n_pares": 64,
+      "mae_margem_pp": 3.225201156311524,
+      "rmse_margem_pp": 3.8217090470589796,
+      "vies_margem_pp": 1.1667593971362964,
+      "mae_parcelas_pp": 2.441049609548646,
+      "rmse_parcelas_pp": 3.0257350715093523,
+      "mae_lula_pp": 2.074819188207879,
+      "vies_lula_pp": -0.5394556989209358,
+      "mae_flavio_pp": 2.401690655391385,
+      "vies_flavio_pp": -1.7062150960572322,
+      "mae_outros_pp": 2.846638985046674,
+      "vies_outros_pp": 2.24567079497817
+     },
+     "central_inclinacao_28d": {
+      "rotulo": "Central + inclinação encolhida de 28 dias, projetada",
+      "n_pares": 64,
+      "mae_margem_pp": 3.045528555211443,
+      "rmse_margem_pp": 3.6785535262092184,
+      "vies_margem_pp": 0.4034283877959215,
+      "mae_parcelas_pp": 2.4015869091656814,
+      "rmse_parcelas_pp": 3.0781096006019544,
+      "mae_lula_pp": 2.211348236229723,
+      "vies_lula_pp": -0.733693131130763,
+      "mae_flavio_pp": 2.1557598311547763,
+      "vies_flavio_pp": -1.1371215189266843,
+      "mae_outros_pp": 2.8376526601125454,
+      "vies_outros_pp": 1.870814650057452
+     }
+    },
+    "comparacoes": [
+     {
+      "a": "tendencia",
+      "b": "recencia_3d_7d",
+      "n_ondas_alvo": 32,
+      "margem_lula_flavio": {
+       "diferenca_mae_pp": 0.2721394668050551,
+       "erro_padrao_pp": 0.1646312655402017
+      },
+      "lula": {
+       "diferenca_mae_pp": 0.22292347421051428,
+       "erro_padrao_pp": 0.1326749572971606
+      },
+      "flavio": {
+       "diferenca_mae_pp": 0.4690585609386879,
+       "erro_padrao_pp": 0.1474112407807744
+      },
+      "outros": {
+       "diferenca_mae_pp": 1.0284033911769845,
+       "erro_padrao_pp": 0.17078542293202237
+      },
+      "leitura": "negativo favorece a; média por onda alvo"
+     },
+     {
+      "a": "tendencia",
+      "b": "dinamico",
+      "n_ondas_alvo": 32,
+      "margem_lula_flavio": {
+       "diferenca_mae_pp": 0.00310143874187363,
+       "erro_padrao_pp": 0.0016752948951303318
+      },
+      "lula": {
+       "diferenca_mae_pp": -0.0005231219628498707,
+       "erro_padrao_pp": 0.0007277155904727922
+      },
+      "flavio": {
+       "diferenca_mae_pp": 0.006212186478567028,
+       "erro_padrao_pp": 0.0017602463601790685
+      },
+      "outros": {
+       "diferenca_mae_pp": 0.009084401821668475,
+       "erro_padrao_pp": 0.002020378281271974
+      },
+      "leitura": "negativo favorece a; média por onda alvo"
+     },
+     {
+      "a": "tendencia",
+      "b": "tendencia_corte",
+      "n_ondas_alvo": 32,
+      "margem_lula_flavio": {
+       "diferenca_mae_pp": 9.848063253770079e-09,
+       "erro_padrao_pp": 4.936778964021987e-08
+      },
+      "lula": {
+       "diferenca_mae_pp": -1.721548215094515e-08,
+       "erro_padrao_pp": 3.246089370347728e-08
+      },
+      "flavio": {
+       "diferenca_mae_pp": 4.194083658148884e-08,
+       "erro_padrao_pp": 2.9888680083310496e-08
+      },
+      "outros": {
+       "diferenca_mae_pp": 1.3190420727893226e-08,
+       "erro_padrao_pp": 3.9806652278081415e-08
+      },
+      "leitura": "negativo favorece a; média por onda alvo"
+     },
+     {
+      "a": "central_inclinacao_14d",
+      "b": "recencia_3d_7d",
+      "n_ondas_alvo": 32,
+      "margem_lula_flavio": {
+       "diferenca_mae_pp": 0.07109112229703385,
+       "erro_padrao_pp": 0.047240235479133474
+      },
+      "lula": {
+       "diferenca_mae_pp": -0.029349922516357818,
+       "erro_padrao_pp": 0.07664920970059069
+      },
+      "flavio": {
+       "diferenca_mae_pp": -0.03821085878608299,
+       "erro_padrao_pp": 0.044492089359320273
+      },
+      "outros": {
+       "diferenca_mae_pp": -0.21492279513119855,
+       "erro_padrao_pp": 0.10290797846683876
+      },
+      "leitura": "negativo favorece a; média por onda alvo"
+     },
+     {
+      "a": "central_inclinacao_28d",
+      "b": "recencia_3d_7d",
+      "n_ondas_alvo": 32,
+      "margem_lula_flavio": {
+       "diferenca_mae_pp": -0.10858147880304703,
+       "erro_padrao_pp": 0.1416377235468994
+      },
+      "lula": {
+       "diferenca_mae_pp": 0.10717912550548625,
+       "erro_padrao_pp": 0.09945502867449656
+      },
+      "flavio": {
+       "diferenca_mae_pp": -0.2841416830226918,
+       "erro_padrao_pp": 0.16660765864623675
+      },
+      "outros": {
+       "diferenca_mae_pp": -0.22390912006532707,
+       "erro_padrao_pp": 0.22974674800331032
+      },
+      "leitura": "negativo favorece a; média por onda alvo"
+     }
+    ]
+   },
+   "1-3": {
+    "n_pares": 95,
+    "n_ondas_alvo": 32,
+    "metricas": {
+     "recencia_3d_7d": {
+      "rotulo": "Recência, meia-vida 3 dias, janela 7 (central)",
+      "n_pares": 95,
+      "mae_margem_pp": 3.157717270067072,
+      "rmse_margem_pp": 3.7575149588289394,
+      "vies_margem_pp": 1.1743287181996644,
+      "mae_parcelas_pp": 2.638174801832849,
+      "rmse_parcelas_pp": 3.2202976539956873,
+      "mae_lula_pp": 2.157088170629334,
+      "vies_lula_pp": -0.8102065485592719,
+      "mae_flavio_pp": 2.5419840535074707,
+      "vies_flavio_pp": -1.984535266758936,
+      "mae_outros_pp": 3.215452181361742,
+      "vies_outros_pp": 2.7947418153182104
+     },
+     "dinamico": {
+      "rotulo": "DLM com efeitos de casa, phi estimado",
+      "n_pares": 95,
+      "mae_margem_pp": 3.4045172438775437,
+      "rmse_margem_pp": 4.0339369622528745,
+      "vies_margem_pp": 1.6263417627529801,
+      "mae_parcelas_pp": 3.216347464627975,
+      "rmse_parcelas_pp": 3.893726560114838,
+      "mae_lula_pp": 2.34620233053401,
+      "vies_lula_pp": -1.1950232410408297,
+      "mae_flavio_pp": 3.0182011276113974,
+      "vies_flavio_pp": -2.82136500379381,
+      "mae_outros_pp": 4.284638935738517,
+      "vies_outros_pp": 4.016388244834639
+     },
+     "tendencia": {
+      "rotulo": "Tendência amortecida, projetada ao campo alvo",
+      "n_pares": 95,
+      "mae_margem_pp": 3.4075764793905843,
+      "rmse_margem_pp": 4.03762530111911,
+      "vies_margem_pp": 1.6342513769685458,
+      "mae_parcelas_pp": 3.221478021586387,
+      "rmse_parcelas_pp": 3.8990305599541757,
+      "mae_lula_pp": 2.34565877324429,
+      "vies_lula_pp": -1.1959272126626808,
+      "mae_flavio_pp": 3.024891066122566,
+      "vies_flavio_pp": -2.830178589631226,
+      "mae_outros_pp": 4.293884225392305,
+      "vies_outros_pp": 4.026105802293909
+     },
+     "tendencia_integrada": {
+      "rotulo": "Tendência integrada (inclinação em passeio), projetada",
+      "n_pares": 95,
+      "mae_margem_pp": 3.244961047465136,
+      "rmse_margem_pp": 3.784850284244541,
+      "vies_margem_pp": 0.9171917545179616,
+      "mae_parcelas_pp": 3.4107998199620195,
+      "rmse_parcelas_pp": 4.500670628498367,
+      "mae_lula_pp": 2.654461547918615,
+      "vies_lula_pp": -1.50410218611481,
+      "mae_flavio_pp": 2.993554066183397,
+      "vies_flavio_pp": -2.421293940632771,
+      "mae_outros_pp": 4.584383845784048,
+      "vies_outros_pp": 3.925396126747585
+     },
+     "tendencia_constante": {
+      "rotulo": "Inclinação constante, projetada",
+      "n_pares": 95,
+      "mae_margem_pp": 3.2353369630881037,
+      "rmse_margem_pp": 3.8020708269333108,
+      "vies_margem_pp": 0.9780097206689797,
+      "mae_parcelas_pp": 3.384502979376009,
+      "rmse_parcelas_pp": 4.256925952922613,
+      "mae_lula_pp": 2.5927634394417773,
+      "vies_lula_pp": -1.6540597183908177,
+      "mae_flavio_pp": 2.972677277608806,
+      "vies_flavio_pp": -2.632069439059797,
+      "mae_outros_pp": 4.588068221077443,
+      "vies_outros_pp": 4.286129157450619
+     },
+     "tendencia_corte": {
+      "rotulo": "Tendência amortecida, nível na origem",
+      "n_pares": 95,
+      "mae_margem_pp": 3.407576479732404,
+      "rmse_margem_pp": 4.037625289345513,
+      "vies_margem_pp": 1.6342513533150078,
+      "mae_parcelas_pp": 3.221478015630241,
+      "rmse_parcelas_pp": 3.899030547982525,
+      "mae_lula_pp": 2.3456587797541855,
+      "vies_lula_pp": -1.1959272233278722,
+      "mae_flavio_pp": 3.0248910478237288,
+      "vies_flavio_pp": -2.8301785766428798,
+      "mae_outros_pp": 4.293884219312808,
+      "vies_outros_pp": 4.026105799970754
+     },
+     "central_inclinacao_14d": {
+      "rotulo": "Central + inclinação encolhida de 14 dias, projetada",
+      "n_pares": 95,
+      "mae_margem_pp": 3.2092421073646262,
+      "rmse_margem_pp": 3.820932393501606,
+      "vies_margem_pp": 1.2233219137642313,
+      "mae_parcelas_pp": 2.5706277712664902,
+      "rmse_parcelas_pp": 3.1697237754553416,
+      "mae_lula_pp": 2.1311474079885278,
+      "vies_lula_pp": -0.6738947780266983,
+      "mae_flavio_pp": 2.5260420552314473,
+      "vies_flavio_pp": -1.8972166917909297,
+      "mae_outros_pp": 3.0546938505794947,
+      "vies_outros_pp": 2.571111469817629
+     },
+     "central_inclinacao_28d": {
+      "rotulo": "Central + inclinação encolhida de 28 dias, projetada",
+      "n_pares": 95,
+      "mae_margem_pp": 3.0414181326588476,
+      "rmse_margem_pp": 3.6919682435906793,
+      "vies_margem_pp": 0.4246864047625863,
+      "mae_parcelas_pp": 2.492723482237338,
+      "rmse_parcelas_pp": 3.1715421025055166,
+      "mae_lula_pp": 2.264257437152359,
+      "vies_lula_pp": -0.8249338628841375,
+      "mae_flavio_pp": 2.254991526326711,
+      "vies_flavio_pp": -1.2496202676467236,
+      "mae_outros_pp": 2.9589214832329427,
+      "vies_outros_pp": 2.0745541305308652
+     }
+    },
+    "comparacoes": [
+     {
+      "a": "tendencia",
+      "b": "recencia_3d_7d",
+      "n_ondas_alvo": 32,
+      "margem_lula_flavio": {
+       "diferenca_mae_pp": 0.25687602932489556,
+       "erro_padrao_pp": 0.15415961310075066
+      },
+      "lula": {
+       "diferenca_mae_pp": 0.19580769395640288,
+       "erro_padrao_pp": 0.1278360838174448
+      },
+      "flavio": {
+       "diferenca_mae_pp": 0.47745857958720433,
+       "erro_padrao_pp": 0.14359338419538228
+      },
+      "outros": {
+       "diferenca_mae_pp": 1.0759815937107786,
+       "erro_padrao_pp": 0.16174413855680467
+      },
+      "leitura": "negativo favorece a; média por onda alvo"
+     },
+     {
+      "a": "tendencia",
+      "b": "dinamico",
+      "n_ondas_alvo": 32,
+      "margem_lula_flavio": {
+       "diferenca_mae_pp": 0.0029712095190466883,
+       "erro_padrao_pp": 0.0016976123159158326
+      },
+      "lula": {
+       "diferenca_mae_pp": -0.0005400122680749853,
+       "erro_padrao_pp": 0.0006990885743056949
+      },
+      "flavio": {
+       "diferenca_mae_pp": 0.00667429357562092,
+       "erro_padrao_pp": 0.0017633627807463455
+      },
+      "outros": {
+       "diferenca_mae_pp": 0.00920090944371397,
+       "erro_padrao_pp": 0.001987546412173389
+      },
+      "leitura": "negativo favorece a; média por onda alvo"
+     },
+     {
+      "a": "tendencia",
+      "b": "tendencia_corte",
+      "n_ondas_alvo": 32,
+      "margem_lula_flavio": {
+       "diferenca_mae_pp": -2.331323615637853e-09,
+       "erro_padrao_pp": 3.595809426377181e-08
+      },
+      "lula": {
+       "diferenca_mae_pp": -4.506613193733241e-09,
+       "erro_padrao_pp": 2.286913723459161e-08
+      },
+      "flavio": {
+       "diferenca_mae_pp": 2.2036760416455085e-08,
+       "erro_padrao_pp": 2.5908081815719822e-08
+      },
+      "outros": {
+       "diferenca_mae_pp": 1.1880174899392418e-08,
+       "erro_padrao_pp": 3.379859395051994e-08
+      },
+      "leitura": "negativo favorece a; média por onda alvo"
+     },
+     {
+      "a": "central_inclinacao_14d",
+      "b": "recencia_3d_7d",
+      "n_ondas_alvo": 32,
+      "margem_lula_flavio": {
+       "diferenca_mae_pp": 0.0509881202423711,
+       "erro_padrao_pp": 0.03194425155740136
+      },
+      "lula": {
+       "diferenca_mae_pp": -0.025670546363297506,
+       "erro_padrao_pp": 0.052130878146761365
+      },
+      "flavio": {
+       "diferenca_mae_pp": -0.015775935793981254,
+       "erro_padrao_pp": 0.034408665766319374
+      },
+      "outros": {
+       "diferenca_mae_pp": -0.1590837648365985,
+       "erro_padrao_pp": 0.07297826459154623
+      },
+      "leitura": "negativo favorece a; média por onda alvo"
+     },
+     {
+      "a": "central_inclinacao_28d",
+      "b": "recencia_3d_7d",
+      "n_ondas_alvo": 32,
+      "margem_lula_flavio": {
+       "diferenca_mae_pp": -0.11508768806022197,
+       "erro_padrao_pp": 0.15205069733742538
+      },
+      "lula": {
+       "diferenca_mae_pp": 0.106052919996744,
+       "erro_padrao_pp": 0.09572129394297689
+      },
+      "flavio": {
+       "diferenca_mae_pp": -0.2840030216892929,
+       "erro_padrao_pp": 0.17713790668081023
+      },
+      "outros": {
+       "diferenca_mae_pp": -0.25385850335662524,
+       "erro_padrao_pp": 0.23515616423920468
+      },
+      "leitura": "negativo favorece a; média por onda alvo"
+     }
+    ]
+   },
+   "3-7": {
+    "n_pares": 147,
+    "n_ondas_alvo": 31,
+    "metricas": {
+     "recencia_3d_7d": {
+      "rotulo": "Recência, meia-vida 3 dias, janela 7 (central)",
+      "n_pares": 147,
+      "mae_margem_pp": 3.454656632454506,
+      "rmse_margem_pp": 4.0968960836456825,
+      "vies_margem_pp": 1.189895982563738,
+      "mae_parcelas_pp": 3.1371351503618246,
+      "rmse_parcelas_pp": 3.787056299898288,
+      "mae_lula_pp": 2.481522043585774,
+      "vies_lula_pp": -1.297412661537386,
+      "mae_flavio_pp": 2.899223112312504,
+      "vies_flavio_pp": -2.487308644101124,
+      "mae_outros_pp": 4.030660295187195,
+      "vies_outros_pp": 3.784721305638514
+     },
+     "dinamico": {
+      "rotulo": "DLM com efeitos de casa, phi estimado",
+      "n_pares": 147,
+      "mae_margem_pp": 3.433150339865704,
+      "rmse_margem_pp": 4.15986539797978,
+      "vies_margem_pp": 1.8430340849960651,
+      "mae_parcelas_pp": 3.72330300278874,
+      "rmse_parcelas_pp": 4.419647777704557,
+      "mae_lula_pp": 2.448755710215301,
+      "vies_lula_pp": -1.5933530225145904,
+      "mae_flavio_pp": 3.5309645713136812,
+      "vies_flavio_pp": -3.436387107510656,
+      "mae_outros_pp": 5.1901887268372375,
+      "vies_outros_pp": 5.029740130025243
+     },
+     "tendencia": {
+      "rotulo": "Tendência amortecida, projetada ao campo alvo",
+      "n_pares": 147,
+      "mae_margem_pp": 3.4367252404185926,
+      "rmse_margem_pp": 4.164694131929327,
+      "vies_margem_pp": 1.8541861682819323,
+      "mae_parcelas_pp": 3.7297041076263437,
+      "rmse_parcelas_pp": 4.426455479604408,
+      "mae_lula_pp": 2.44778642216303,
+      "vies_lula_pp": -1.5936076822007355,
+      "mae_flavio_pp": 3.540770238992756,
+      "vies_flavio_pp": -3.4477938504826673,
+      "mae_outros_pp": 5.200555661723246,
+      "vies_outros_pp": 5.041401532683404
+     },
+     "tendencia_integrada": {
+      "rotulo": "Tendência integrada (inclinação em passeio), projetada",
+      "n_pares": 147,
+      "mae_margem_pp": 3.283595360282144,
+      "rmse_margem_pp": 3.9060061369550083,
+      "vies_margem_pp": 0.8656419170805453,
+      "mae_parcelas_pp": 4.106211524074695,
+      "rmse_parcelas_pp": 5.269359566738753,
+      "mae_lula_pp": 3.001407111270037,
+      "vies_lula_pp": -2.3519321819483365,
+      "mae_flavio_pp": 3.442172576683719,
+      "vies_flavio_pp": -3.2175740990288815,
+      "mae_outros_pp": 5.8750548842703285,
+      "vies_outros_pp": 5.569506280977219
+     },
+     "tendencia_constante": {
+      "rotulo": "Inclinação constante, projetada",
+      "n_pares": 147,
+      "mae_margem_pp": 3.2552401595267657,
+      "rmse_margem_pp": 3.8601460858265497,
+      "vies_margem_pp": 0.8917373706664369,
+      "mae_parcelas_pp": 4.140466168048224,
+      "rmse_parcelas_pp": 5.103027295841913,
+      "mae_lula_pp": 2.9954900913458453,
+      "vies_lula_pp": -2.428911414783947,
+      "mae_flavio_pp": 3.48752306954752,
+      "vies_flavio_pp": -3.3206487854503846,
+      "mae_outros_pp": 5.938385343251308,
+      "vies_outros_pp": 5.749560200234333
+     },
+     "tendencia_corte": {
+      "rotulo": "Tendência amortecida, nível na origem",
+      "n_pares": 147,
+      "mae_margem_pp": 3.436725244276815,
+      "rmse_margem_pp": 4.164694149733859,
+      "vies_margem_pp": 1.8541862093683106,
+      "mae_parcelas_pp": 3.7297041112584655,
+      "rmse_parcelas_pp": 4.426455482196193,
+      "mae_lula_pp": 2.4477864177910047,
+      "vies_lula_pp": -1.593607666442068,
+      "mae_flavio_pp": 3.540770249266108,
+      "vies_flavio_pp": -3.4477938758103783,
+      "mae_outros_pp": 5.200555666718283,
+      "vies_outros_pp": 5.041401542252448
+     },
+     "central_inclinacao_14d": {
+      "rotulo": "Central + inclinação encolhida de 14 dias, projetada",
+      "n_pares": 147,
+      "mae_margem_pp": 3.4516486509256192,
+      "rmse_margem_pp": 4.0961384803522645,
+      "vies_margem_pp": 1.1688378379120978,
+      "mae_parcelas_pp": 3.087470994837823,
+      "rmse_parcelas_pp": 3.7447147018136695,
+      "mae_lula_pp": 2.466194307094915,
+      "vies_lula_pp": -1.2616485867186,
+      "mae_flavio_pp": 2.855067629251426,
+      "vies_flavio_pp": -2.4304864246306983,
+      "mae_outros_pp": 3.9411510481671272,
+      "vies_outros_pp": 3.6921350113493
+     },
+     "central_inclinacao_28d": {
+      "rotulo": "Central + inclinação encolhida de 28 dias, projetada",
+      "n_pares": 147,
+      "mae_margem_pp": 3.3422726539609964,
+      "rmse_margem_pp": 4.044242418901133,
+      "vies_margem_pp": 0.1317037740997718,
+      "mae_parcelas_pp": 3.0020171178154427,
+      "rmse_parcelas_pp": 3.7701022264317254,
+      "mae_lula_pp": 2.670681541265569,
+      "vies_lula_pp": -1.4756197557316966,
+      "mae_flavio_pp": 2.5880849354710316,
+      "vies_flavio_pp": -1.6073235298314683,
+      "mae_outros_pp": 3.7472848767097284,
+      "vies_outros_pp": 3.082943285563169
+     }
+    },
+    "comparacoes": [
+     {
+      "a": "tendencia",
+      "b": "recencia_3d_7d",
+      "n_ondas_alvo": 31,
+      "margem_lula_flavio": {
+       "diferenca_mae_pp": -0.04552811161611749,
+       "erro_padrao_pp": 0.15002011834103104
+      },
+      "lula": {
+       "diferenca_mae_pp": -0.017244365022673944,
+       "erro_padrao_pp": 0.08946147839398175
+      },
+      "flavio": {
+       "diferenca_mae_pp": 0.5946628691703681,
+       "erro_padrao_pp": 0.1357675657020664
+      },
+      "outros": {
+       "diferenca_mae_pp": 1.1104915854892783,
+       "erro_padrao_pp": 0.16216145914149532
+      },
+      "leitura": "negativo favorece a; média por onda alvo"
+     },
+     {
+      "a": "tendencia",
+      "b": "dinamico",
+      "n_ondas_alvo": 31,
+      "margem_lula_flavio": {
+       "diferenca_mae_pp": 0.003885778235053111,
+       "erro_padrao_pp": 0.0020950272920362617
+      },
+      "lula": {
+       "diferenca_mae_pp": -0.0011175803878282595,
+       "erro_padrao_pp": 0.0007937656668548145
+      },
+      "flavio": {
+       "diferenca_mae_pp": 0.009596637274536498,
+       "erro_padrao_pp": 0.0015693933128412404
+      },
+      "outros": {
+       "diferenca_mae_pp": 0.009930615745436239,
+       "erro_padrao_pp": 0.0021240542026015998
+      },
+      "leitura": "negativo favorece a; média por onda alvo"
+     },
+     {
+      "a": "tendencia",
+      "b": "tendencia_corte",
+      "n_ondas_alvo": 31,
+      "margem_lula_flavio": {
+       "diferenca_mae_pp": 2.4615939852787217e-09,
+       "erro_padrao_pp": 1.5561321565487956e-08
+      },
+      "lula": {
+       "diferenca_mae_pp": 1.3935446058748047e-08,
+       "erro_padrao_pp": 9.802978263422254e-09
+      },
+      "flavio": {
+       "diferenca_mae_pp": 6.166642158918437e-09,
+       "erro_padrao_pp": 1.881049338820601e-08
+      },
+      "outros": {
+       "diferenca_mae_pp": 2.0961600799204637e-08,
+       "erro_padrao_pp": 2.5472060121094594e-08
+      },
+      "leitura": "negativo favorece a; média por onda alvo"
+     },
+     {
+      "a": "central_inclinacao_14d",
+      "b": "recencia_3d_7d",
+      "n_ondas_alvo": 31,
+      "margem_lula_flavio": {
+       "diferenca_mae_pp": -0.0028527308693319974,
+       "erro_padrao_pp": 0.01065757417943492
+      },
+      "lula": {
+       "diferenca_mae_pp": -0.014536627510685116,
+       "erro_padrao_pp": 0.017926481481552417
+      },
+      "flavio": {
+       "diferenca_mae_pp": -0.04187649038695789,
+       "erro_padrao_pp": 0.027758503850597433
+      },
+      "outros": {
+       "diferenca_mae_pp": -0.08488941491580693,
+       "erro_padrao_pp": 0.04264056501540044
+      },
+      "leitura": "negativo favorece a; média por onda alvo"
+     },
+     {
+      "a": "central_inclinacao_28d",
+      "b": "recencia_3d_7d",
+      "n_ondas_alvo": 31,
+      "margem_lula_flavio": {
+       "diferenca_mae_pp": -0.10658351508739396,
+       "erro_padrao_pp": 0.20640483119028719
+      },
+      "lula": {
+       "diferenca_mae_pp": 0.17939642683180562,
+       "erro_padrao_pp": 0.10673451206143392
+      },
+      "flavio": {
+       "diferenca_mae_pp": -0.2950794322302999,
+       "erro_padrao_pp": 0.20824533660257682
+      },
+      "outros": {
+       "diferenca_mae_pp": -0.26874959042701774,
+       "erro_padrao_pp": 0.27196300712027915
+      },
+      "leitura": "negativo favorece a; média por onda alvo"
+     }
+    ]
    }
   },
   "comparacoes": [
@@ -284,8 +1859,451 @@
     "a_melhor_em_ondas": 13,
     "b_melhor_em_ondas": 19,
     "leitura": "negativo favorece a; |diferença| < 2 erros-padrão não separa as âncoras"
+   },
+   {
+    "a": "tendencia",
+    "b": "recencia_3d_7d",
+    "n_ondas_alvo": 32,
+    "diferenca_mae_margem_pp": 0.06982360205908379,
+    "erro_padrao_pp": 0.14431733536364247,
+    "a_melhor_em_ondas": 15,
+    "b_melhor_em_ondas": 17,
+    "leitura": "negativo favorece a; |diferença| < 2 erros-padrão não separa as âncoras"
+   },
+   {
+    "a": "tendencia",
+    "b": "dinamico",
+    "n_ondas_alvo": 32,
+    "diferenca_mae_margem_pp": 0.0033187169055504118,
+    "erro_padrao_pp": 0.0018023162277884806,
+    "a_melhor_em_ondas": 10,
+    "b_melhor_em_ondas": 22,
+    "leitura": "negativo favorece a; |diferença| < 2 erros-padrão não separa as âncoras"
+   },
+   {
+    "a": "tendencia_corte",
+    "b": "recencia_3d_7d",
+    "n_ondas_alvo": 32,
+    "diferenca_mae_margem_pp": 0.06982360187726872,
+    "erro_padrao_pp": 0.14431734007581745,
+    "a_melhor_em_ondas": 15,
+    "b_melhor_em_ondas": 17,
+    "leitura": "negativo favorece a; |diferença| < 2 erros-padrão não separa as âncoras"
+   },
+   {
+    "a": "tendencia_integrada",
+    "b": "recencia_3d_7d",
+    "n_ondas_alvo": 32,
+    "diferenca_mae_margem_pp": -0.08480961811690171,
+    "erro_padrao_pp": 0.07228360446394382,
+    "a_melhor_em_ondas": 21,
+    "b_melhor_em_ondas": 11,
+    "leitura": "negativo favorece a; |diferença| < 2 erros-padrão não separa as âncoras"
+   },
+   {
+    "a": "tendencia_constante",
+    "b": "recencia_3d_7d",
+    "n_ondas_alvo": 32,
+    "diferenca_mae_margem_pp": -0.10113909753782568,
+    "erro_padrao_pp": 0.08774277805029804,
+    "a_melhor_em_ondas": 19,
+    "b_melhor_em_ondas": 13,
+    "leitura": "negativo favorece a; |diferença| < 2 erros-padrão não separa as âncoras"
+   },
+   {
+    "a": "central_inclinacao_14d",
+    "b": "recencia_3d_7d",
+    "n_ondas_alvo": 32,
+    "diferenca_mae_margem_pp": 0.01833776134939154,
+    "erro_padrao_pp": 0.011187345584179893,
+    "a_melhor_em_ondas": 12,
+    "b_melhor_em_ondas": 15,
+    "leitura": "negativo favorece a; |diferença| < 2 erros-padrão não separa as âncoras"
+   },
+   {
+    "a": "central_inclinacao_28d",
+    "b": "recencia_3d_7d",
+    "n_ondas_alvo": 32,
+    "diferenca_mae_margem_pp": -0.10477526554437981,
+    "erro_padrao_pp": 0.1751469124228635,
+    "a_melhor_em_ondas": 19,
+    "b_melhor_em_ondas": 13,
+    "leitura": "negativo favorece a; |diferença| < 2 erros-padrão não separa as âncoras"
+   }
+  ],
+  "comparacoes_por_parcela": [
+   {
+    "a": "tendencia",
+    "b": "recencia_3d_7d",
+    "n_ondas_alvo": 32,
+    "margem_lula_flavio": {
+     "diferenca_mae_pp": 0.06982360205908379,
+     "erro_padrao_pp": 0.14431733536364247
+    },
+    "lula": {
+     "diferenca_mae_pp": 0.057528654749573485,
+     "erro_padrao_pp": 0.08609659862044873
+    },
+    "flavio": {
+     "diferenca_mae_pp": 0.5526337619495757,
+     "erro_padrao_pp": 0.12931943114232308
+    },
+    "outros": {
+     "diferenca_mae_pp": 1.094166401361441,
+     "erro_padrao_pp": 0.13386444781075366
+    },
+    "leitura": "negativo favorece a; média por onda alvo"
+   },
+   {
+    "a": "tendencia",
+    "b": "dinamico",
+    "n_ondas_alvo": 32,
+    "margem_lula_flavio": {
+     "diferenca_mae_pp": 0.0033187169055504118,
+     "erro_padrao_pp": 0.0018023162277884806
+    },
+    "lula": {
+     "diferenca_mae_pp": -0.0008827723408793748,
+     "erro_padrao_pp": 0.0006613329061208466
+    },
+    "flavio": {
+     "diferenca_mae_pp": 0.008439910507117015,
+     "erro_padrao_pp": 0.0015012699276065686
+    },
+    "outros": {
+     "diferenca_mae_pp": 0.009531661428218517,
+     "erro_padrao_pp": 0.001878197304013606
+    },
+    "leitura": "negativo favorece a; média por onda alvo"
+   },
+   {
+    "a": "tendencia",
+    "b": "tendencia_corte",
+    "n_ondas_alvo": 32,
+    "margem_lula_flavio": {
+     "diferenca_mae_pp": 1.8181506564846239e-10,
+     "erro_padrao_pp": 1.8967712411301626e-08
+    },
+    "lula": {
+     "diferenca_mae_pp": 6.74662794942718e-09,
+     "erro_padrao_pp": 1.301136518194865e-08
+    },
+    "flavio": {
+     "diferenca_mae_pp": 2.2479154178290362e-08,
+     "erro_padrao_pp": 1.9507792386409844e-08
+    },
+    "outros": {
+     "diferenca_mae_pp": 2.6524838579535174e-08,
+     "erro_padrao_pp": 2.7280151397641273e-08
+    },
+    "leitura": "negativo favorece a; média por onda alvo"
+   },
+   {
+    "a": "central_inclinacao_14d",
+    "b": "recencia_3d_7d",
+    "n_ondas_alvo": 32,
+    "margem_lula_flavio": {
+     "diferenca_mae_pp": 0.01833776134939154,
+     "erro_padrao_pp": 0.011187345584179893
+    },
+    "lula": {
+     "diferenca_mae_pp": -0.01844451921965666,
+     "erro_padrao_pp": 0.03251884901733451
+    },
+    "flavio": {
+     "diferenca_mae_pp": -0.03989442398342777,
+     "erro_padrao_pp": 0.025033451726660706
+    },
+    "outros": {
+     "diferenca_mae_pp": -0.12014695625154814,
+     "erro_padrao_pp": 0.05360043553927587
+    },
+    "leitura": "negativo favorece a; média por onda alvo"
+   },
+   {
+    "a": "central_inclinacao_28d",
+    "b": "recencia_3d_7d",
+    "n_ondas_alvo": 32,
+    "margem_lula_flavio": {
+     "diferenca_mae_pp": -0.10477526554437981,
+     "erro_padrao_pp": 0.1751469124228635
+    },
+    "lula": {
+     "diferenca_mae_pp": 0.15475852763964726,
+     "erro_padrao_pp": 0.09212751155325746
+    },
+    "flavio": {
+     "diferenca_mae_pp": -0.2853677665587,
+     "erro_padrao_pp": 0.18804623908061285
+    },
+    "outros": {
+     "diferenca_mae_pp": -0.24993915268021738,
+     "erro_padrao_pp": 0.2450270101406345
+    },
+    "leitura": "negativo favorece a; média por onda alvo"
    }
   ]
+ },
+ "aceleracao": {
+  "nota": "Inclinação constante contra inclinação que muda (passeio integrado e amortecida), todas projetadas ao campo alvo, nos mesmos pares. Se a mudança de inclinação ajudasse a prever, as variantes com inclinação variável teriam MAE menor e viés menor em Flávio.",
+  "metricas": {
+   "tendencia_constante": {
+    "rotulo": "Inclinação constante, projetada",
+    "n_pares": 211,
+    "mae_margem_pp": 3.253556803717947,
+    "rmse_margem_pp": 3.850341957396767,
+    "vies_margem_pp": 0.9154022572318817,
+    "mae_parcelas_pp": 3.8732111051975915,
+    "rmse_parcelas_pp": 4.822661531794701,
+    "mae_lula_pp": 2.8647711902547175,
+    "vies_lula_pp": -2.151890312225337,
+    "mae_flavio_pp": 3.294936723081679,
+    "vies_flavio_pp": -3.0672925694572184,
+    "mae_outros_pp": 5.459925402256377,
+    "vies_outros_pp": 5.219182881682557
+   },
+   "tendencia_integrada": {
+    "rotulo": "Tendência integrada (inclinação em passeio), projetada",
+    "n_pares": 211,
+    "mae_margem_pp": 3.264022236269219,
+    "rmse_margem_pp": 3.8674043403866123,
+    "vies_margem_pp": 0.8741583077155707,
+    "mae_parcelas_pp": 3.8499851083734113,
+    "rmse_parcelas_pp": 4.982914783029521,
+    "mae_lula_pp": 2.8830974447849647,
+    "vies_lula_pp": -2.0421528929904653,
+    "mae_flavio_pp": 3.2634631475228266,
+    "vies_flavio_pp": -2.916311200706036,
+    "mae_outros_pp": 5.403394732812441,
+    "vies_outros_pp": 4.958464093696503
+   },
+   "tendencia": {
+    "rotulo": "Tendência amortecida, projetada ao campo alvo",
+    "n_pares": 211,
+    "mae_margem_pp": 3.433547764900398,
+    "rmse_margem_pp": 4.128041077480908,
+    "vies_margem_pp": 1.7658195417890803,
+    "mae_parcelas_pp": 3.541334364412617,
+    "rmse_parcelas_pp": 4.240171358257763,
+    "mae_lula_pp": 2.4111778648994764,
+    "vies_lula_pp": -1.4455447723771007,
+    "mae_flavio_pp": 3.3491311371534085,
+    "vies_flavio_pp": -3.2113643141661803,
+    "mae_outros_pp": 4.863694091184966,
+    "vies_outros_pp": 4.6569090865432825
+   }
+  },
+  "comparacoes": [
+   {
+    "a": "tendencia_integrada",
+    "b": "tendencia_constante",
+    "n_ondas_alvo": 32,
+    "margem_lula_flavio": {
+     "diferenca_mae_pp": 0.016329479420924005,
+     "erro_padrao_pp": 0.06688781660712907
+    },
+    "lula": {
+     "diferenca_mae_pp": 0.08623560641774725,
+     "erro_padrao_pp": 0.08786873198207651
+    },
+    "flavio": {
+     "diferenca_mae_pp": 0.09828686994254654,
+     "erro_padrao_pp": 0.1535063621445856
+    },
+    "outros": {
+     "diferenca_mae_pp": 0.14365691155835342,
+     "erro_padrao_pp": 0.22942080464904238
+    },
+    "leitura": "negativo favorece a; média por onda alvo"
+   },
+   {
+    "a": "tendencia",
+    "b": "tendencia_constante",
+    "n_ondas_alvo": 32,
+    "margem_lula_flavio": {
+     "diferenca_mae_pp": 0.1709626995969095,
+     "erro_padrao_pp": 0.14448693180986164
+    },
+    "lula": {
+     "diferenca_mae_pp": -0.49726362275177355,
+     "erro_padrao_pp": 0.14962637966723327
+    },
+    "flavio": {
+     "diferenca_mae_pp": -0.020985940060071245,
+     "erro_padrao_pp": 0.14683871156563458
+    },
+    "outros": {
+     "diferenca_mae_pp": -0.7036586536834815,
+     "erro_padrao_pp": 0.2758410781655347
+    },
+    "leitura": "negativo favorece a; média por onda alvo"
+   }
+  ],
+  "dentro_da_amostra": {
+   "janela_completa": {
+    "inicio": "2026-08-15",
+    "estatistica_rv": 7.2961890737838075,
+    "p_valor_mistura_chi2": 0.00345505110121892,
+    "nula": "inclinação constante na janela (variância de evolução da inclinação igual a zero)",
+    "leitura": "inclinação muda ao longo da janela (p < 0,05)",
+    "rv_amortecida_contra_nivel": 0.9837607024952604
+   },
+   "ultimos_28_dias": {
+    "n_ondas": 31,
+    "estatistica_rv": 0.0,
+    "p_valor_mistura_chi2": 1.0,
+    "nula": "inclinação constante na janela (variância de evolução da inclinação igual a zero)",
+    "leitura": "mudança de inclinação não identificável (p ≥ 0,05)",
+    "inclinacao_constante_validos_pp_dia": {
+     "lula": 0.11897265242168915,
+     "flavio": 0.18776758830907,
+     "outros": -0.3067402407307592
+    }
+   },
+   "quadratica_efeitos_fixos": {
+    "28": {
+     "janela_dias": 28,
+     "regra_janela": "ponto_medio",
+     "n_ondas": 31,
+     "n_casas": 14,
+     "graus_liberdade": 15,
+     "quadratica": true,
+     "categorias": {
+      "lula": {
+       "inclinacao_pp_dia": 0.12303043603105486,
+       "ep": 0.036163762913193995,
+       "ep_robusto_casa": 0.07081115919385338,
+       "aceleracao_pp_dia2": -0.0033218412516882513,
+       "ep_aceleracao": 0.008231523168563216,
+       "ep_aceleracao_robusto_casa": 0.009568086578841131,
+       "z_aceleracao": -0.4035512241980444,
+       "p_aceleracao": 0.6865427594548981
+      },
+      "flavio": {
+       "inclinacao_pp_dia": 0.22208336885145305,
+       "ep": 0.04401501968969803,
+       "ep_robusto_casa": 0.09159348727529532,
+       "aceleracao_pp_dia2": 0.013787618024944548,
+       "ep_aceleracao": 0.010018610486143022,
+       "ep_aceleracao_robusto_casa": 0.013221396330353285,
+       "z_aceleracao": 1.376200626226015,
+       "p_aceleracao": 0.1687595282851675
+      },
+      "outros": {
+       "inclinacao_pp_dia": -0.3451138048825085,
+       "ep": 0.04950816535984928,
+       "ep_robusto_casa": 0.0693747922876258,
+       "aceleracao_pp_dia2": -0.010465776773256132,
+       "ep_aceleracao": 0.011268949284145867,
+       "ep_aceleracao_robusto_casa": 0.009783008359679825,
+       "z_aceleracao": -0.9287269388975149,
+       "p_aceleracao": 0.35303061616906484
+      }
+     },
+     "fracao_flavio_do_ganho": 0.6435076363492909,
+     "fracao_flavio_dp": 0.0902425106411169,
+     "cov_inclinacao_lula_flavio": [
+      [
+       0.0013078177480417054,
+       -0.000397040634514016
+      ],
+      [
+       -0.00039704063451401596,
+       0.0019373219582845054
+      ]
+     ],
+     "nota": "Válidos = Lula + Flávio + demais. Tendência centrada no ponto médio da janela; peso min(n, 2000) por onda e variância residual estimada, que inclui o erro não amostral."
+    },
+    "14": {
+     "janela_dias": 14,
+     "regra_janela": "ponto_medio",
+     "n_ondas": 20,
+     "n_casas": 14,
+     "graus_liberdade": 4,
+     "quadratica": true,
+     "categorias": {
+      "lula": {
+       "inclinacao_pp_dia": 0.1175247436857045,
+       "ep": 0.07182066909228436,
+       "ep_robusto_casa": 0.11669983773061894,
+       "aceleracao_pp_dia2": 0.0013032852849485907,
+       "ep_aceleracao": 0.043993568906243376,
+       "ep_aceleracao_robusto_casa": 0.09288371825246808,
+       "z_aceleracao": 0.029624450058281907,
+       "p_aceleracao": 0.9763665655421256
+      },
+      "flavio": {
+       "inclinacao_pp_dia": 0.33551682943478783,
+       "ep": 0.08872820984562672,
+       "ep_robusto_casa": 0.20707890941564433,
+       "aceleracao_pp_dia2": 0.1301052200139956,
+       "ep_aceleracao": 0.05435024016213945,
+       "ep_aceleracao_robusto_casa": 0.1214700185281289,
+       "z_aceleracao": 2.3938297167751488,
+       "p_aceleracao": 0.01667348767574224
+      },
+      "outros": {
+       "inclinacao_pp_dia": -0.45304157312049237,
+       "ep": 0.10721669019017702,
+       "ep_robusto_casa": 0.21521168629333712,
+       "aceleracao_pp_dia2": -0.13140850529894424,
+       "ep_aceleracao": 0.06567531195957108,
+       "ep_aceleracao_robusto_casa": 0.1252682997102618,
+       "z_aceleracao": -2.0008813263016965,
+       "p_aceleracao": 0.04540518041517988
+      }
+     },
+     "fracao_flavio_do_ganho": 0.7405872867776591,
+     "fracao_flavio_dp": 0.1334260647891438,
+     "cov_inclinacao_lula_flavio": [
+      [
+       0.0051582085088634115,
+       -0.0007677425379683366
+      ],
+      [
+       -0.0007677425379683363,
+       0.00787269522240957
+      ]
+     ],
+     "nota": "Válidos = Lula + Flávio + demais. Tendência centrada no ponto médio da janela; peso min(n, 2000) por onda e variância residual estimada, que inclui o erro não amostral."
+    }
+   },
+   "inclinacao_por_metade_28d": {
+    "janela_dias": 28,
+    "corte_meio": "2026-09-19",
+    "n_ondas": 31,
+    "graus_liberdade": 15,
+    "categorias": {
+     "lula": {
+      "primeira_metade_pp_dia": 0.12489089261111437,
+      "ep_primeira": 0.059826570858105124,
+      "segunda_metade_pp_dia": 0.13858286597162375,
+      "ep_segunda": 0.06738902819323667,
+      "mudanca_pp_dia": 0.013691973360509382,
+      "ep_mudanca": 0.11200302878811752,
+      "p_mudanca": 0.902703835547154
+     },
+     "flavio": {
+      "primeira_metade_pp_dia": 0.1274362287408211,
+      "ep_primeira": 0.07472958360666579,
+      "segunda_metade_pp_dia": 0.2588968284585185,
+      "ep_segunda": 0.08417587610833592,
+      "mudanca_pp_dia": 0.1314605997176974,
+      "ep_mudanca": 0.13990338379702552,
+      "p_mudanca": 0.3473957075996166
+     },
+     "outros": {
+      "primeira_metade_pp_dia": -0.25232712135193347,
+      "ep_primeira": 0.08138667838236009,
+      "segunda_metade_pp_dia": -0.3974796944301384,
+      "ep_segunda": 0.09167446981159737,
+      "mudanca_pp_dia": -0.14515257307820495,
+      "ep_mudanca": 0.1523663207013609,
+      "p_mudanca": 0.34076478131718113
+     }
+    }
+   }
+  }
  },
  "com_casa_do_alvo": {
   "nota": "Prever a próxima onda de uma casa conhecida. Só pares em que a casa já tinha onda divulgada. Não é âncora nacional.",
@@ -299,7 +2317,13 @@
     "rmse_margem_pp": 3.6514120583267995,
     "vies_margem_pp": 1.204646323963933,
     "mae_parcelas_pp": 2.5315914548177316,
-    "rmse_parcelas_pp": 3.0567632978096135
+    "rmse_parcelas_pp": 3.0567632978096135,
+    "mae_lula_pp": 2.0184310322926127,
+    "vies_lula_pp": -0.9221509722946887,
+    "mae_flavio_pp": 2.4461660496491024,
+    "vies_flavio_pp": -2.126797296258622,
+    "mae_outros_pp": 3.130177282511481,
+    "vies_outros_pp": 3.048948268553315
    },
    "dinamico": {
     "rotulo": "DLM com efeitos de casa, phi estimado",
@@ -308,7 +2332,13 @@
     "rmse_margem_pp": 3.715679539901258,
     "vies_margem_pp": 1.8113505474298048,
     "mae_parcelas_pp": 3.1569747252356337,
-    "rmse_parcelas_pp": 3.7141197364767535
+    "rmse_parcelas_pp": 3.7141197364767535,
+    "mae_lula_pp": 2.083236612600519,
+    "vies_lula_pp": -1.2348636635838557,
+    "mae_flavio_pp": 3.0821658224567434,
+    "vies_flavio_pp": -3.0462142110136607,
+    "mae_outros_pp": 4.305521740649637,
+    "vies_outros_pp": 4.281077874597516
    },
    "dinamico_casa": {
     "rotulo": "DLM: nível + efeito da casa do alvo",
@@ -317,7 +2347,13 @@
     "rmse_margem_pp": 3.102187030474053,
     "vies_margem_pp": 1.4978630523027183,
     "mae_parcelas_pp": 2.85009157717656,
-    "rmse_parcelas_pp": 3.753627087758678
+    "rmse_parcelas_pp": 3.753627087758678,
+    "mae_lula_pp": 1.6973086730141829,
+    "vies_lula_pp": -1.2317664796607157,
+    "mae_flavio_pp": 2.830436554852891,
+    "vies_flavio_pp": -2.7296295319634343,
+    "mae_outros_pp": 4.022529503662606,
+    "vies_outros_pp": 3.961396011624152
    },
    "ultima_onda_mesma_casa": {
     "rotulo": "Última onda divulgada da mesma casa",
@@ -326,7 +2362,13 @@
     "rmse_margem_pp": 3.2676663542720945,
     "vies_margem_pp": 1.5738620579568585,
     "mae_parcelas_pp": 3.1107347216734196,
-    "rmse_parcelas_pp": 4.371448919475472
+    "rmse_parcelas_pp": 4.371448919475472,
+    "mae_lula_pp": 1.8116811364640661,
+    "vies_lula_pp": -1.3751842248368515,
+    "mae_flavio_pp": 3.038990069291895,
+    "vies_flavio_pp": -2.9490462827937103,
+    "mae_outros_pp": 4.481532959264297,
+    "vies_outros_pp": 4.324230507630562
    }
   },
   "comparacoes": [
@@ -363,7 +2405,13 @@
     "rmse_margem_pp": 4.4444746942283375,
     "vies_margem_pp": 1.1887840058800003,
     "mae_parcelas_pp": 2.5686785234165286,
-    "rmse_parcelas_pp": 3.1369145164335714
+    "rmse_parcelas_pp": 3.1369145164335714,
+    "mae_lula_pp": 2.282952365152211,
+    "vies_lula_pp": -0.5151898987277165,
+    "mae_flavio_pp": 2.5998165043265473,
+    "vies_flavio_pp": -1.703973904607717,
+    "mae_outros_pp": 2.8232667007708265,
+    "vies_outros_pp": 2.2191638033354337
    },
    "recencia_1d_7d": {
     "rotulo": "Recência, meia-vida 1 dia, janela 7",
@@ -372,7 +2420,13 @@
     "rmse_margem_pp": 4.67955003947048,
     "vies_margem_pp": 0.6265078400346723,
     "mae_parcelas_pp": 2.562657931937937,
-    "rmse_parcelas_pp": 3.16455473169307
+    "rmse_parcelas_pp": 3.16455473169307,
+    "mae_lula_pp": 2.439213455195289,
+    "vies_lula_pp": -0.7781351241442926,
+    "mae_flavio_pp": 2.4766155338054143,
+    "vies_flavio_pp": -1.404642964178965,
+    "mae_outros_pp": 2.7721448068131074,
+    "vies_outros_pp": 2.1827780883232584
    },
    "recencia_5d_7d": {
     "rotulo": "Recência, meia-vida 5 dias, janela 7",
@@ -381,7 +2435,13 @@
     "rmse_margem_pp": 4.450695288019851,
     "vies_margem_pp": 1.2866929577861241,
     "mae_parcelas_pp": 2.6322853229455414,
-    "rmse_parcelas_pp": 3.1783415668086152
+    "rmse_parcelas_pp": 3.1783415668086152,
+    "mae_lula_pp": 2.316880020812892,
+    "vies_lula_pp": -0.5013868352627516,
+    "mae_flavio_pp": 2.656691783553892,
+    "vies_flavio_pp": -1.7880797930488759,
+    "mae_outros_pp": 2.9232841644698384,
+    "vies_outros_pp": 2.2894666283116303
    },
    "recencia_7d_7d": {
     "rotulo": "Recência, meia-vida 7 dias, janela 7",
@@ -390,7 +2450,13 @@
     "rmse_margem_pp": 4.4629726669406615,
     "vies_margem_pp": 1.3238621806770585,
     "mae_parcelas_pp": 2.6630902473807554,
-    "rmse_parcelas_pp": 3.203831745374414
+    "rmse_parcelas_pp": 3.203831745374414,
+    "mae_lula_pp": 2.333283207045576,
+    "vies_lula_pp": -0.5022876339746362,
+    "mae_flavio_pp": 2.6834240710935133,
+    "vies_flavio_pp": -1.8261498146516948,
+    "mae_outros_pp": 2.9725634640031755,
+    "vies_outros_pp": 2.328437448626334
    },
    "igual_7d": {
     "rotulo": "Peso igual, janela 7",
@@ -399,7 +2465,13 @@
     "rmse_margem_pp": 4.523091433399496,
     "vies_margem_pp": 1.4038797763108524,
     "mae_parcelas_pp": 2.7469160571937046,
-    "rmse_parcelas_pp": 3.288480648676044
+    "rmse_parcelas_pp": 3.288480648676044,
+    "mae_lula_pp": 2.3753625055702017,
+    "vies_lula_pp": -0.5208892390909444,
+    "mae_flavio_pp": 2.7552551796161113,
+    "vies_flavio_pp": -1.9247690154017967,
+    "mae_outros_pp": 3.1101304863948016,
+    "vies_outros_pp": 2.445658254492745
    },
    "recencia_3d_14d": {
     "rotulo": "Recência, meia-vida 3 dias, janela 14",
@@ -408,7 +2480,13 @@
     "rmse_margem_pp": 4.377933387560983,
     "vies_margem_pp": 1.1654171716659816,
     "mae_parcelas_pp": 2.624093357992359,
-    "rmse_parcelas_pp": 3.1959495363701875
+    "rmse_parcelas_pp": 3.1959495363701875,
+    "mae_lula_pp": 2.32729298537535,
+    "vies_lula_pp": -0.6005667042615223,
+    "mae_flavio_pp": 2.5964699995754548,
+    "vies_flavio_pp": -1.7659838759275037,
+    "mae_outros_pp": 2.9485170890262724,
+    "vies_outros_pp": 2.3665505801890263
    },
    "igual_14d": {
     "rotulo": "Peso igual, janela 14",
@@ -417,7 +2495,13 @@
     "rmse_margem_pp": 4.510375179699205,
     "vies_margem_pp": 1.617143958893849,
     "mae_parcelas_pp": 2.928293902395173,
-    "rmse_parcelas_pp": 3.541550210807926
+    "rmse_parcelas_pp": 3.541550210807926,
+    "mae_lula_pp": 2.4175968887781423,
+    "vies_lula_pp": -0.6885194292788415,
+    "mae_flavio_pp": 2.8992165586205942,
+    "vies_flavio_pp": -2.3056633881726905,
+    "mae_outros_pp": 3.468068259786781,
+    "vies_outros_pp": 2.994182817451538
    },
    "dinamico": {
     "rotulo": "DLM com efeitos de casa, phi estimado",
@@ -426,7 +2510,13 @@
     "rmse_margem_pp": 4.378795869310892,
     "vies_margem_pp": 1.6616858960711751,
     "mae_parcelas_pp": 3.1854431346327234,
-    "rmse_parcelas_pp": 3.8718094321081664
+    "rmse_parcelas_pp": 3.8718094321081664,
+    "mae_lula_pp": 2.5147182526320986,
+    "vies_lula_pp": -0.8699297170151978,
+    "mae_flavio_pp": 2.9622821367503405,
+    "vies_flavio_pp": -2.5316156130863727,
+    "mae_outros_pp": 4.07932901451573,
+    "vies_outros_pp": 3.4015453301015737
    },
    "dinamico_phi1": {
     "rotulo": "DLM com efeitos de casa, phi = 1",
@@ -435,79 +2525,189 @@
     "rmse_margem_pp": 4.358578655592705,
     "vies_margem_pp": 1.6374815390692645,
     "mae_parcelas_pp": 2.977406465255074,
-    "rmse_parcelas_pp": 3.645436771460687
+    "rmse_parcelas_pp": 3.645436771460687,
+    "mae_lula_pp": 2.407098829548054,
+    "vies_lula_pp": -0.7420502788107923,
+    "mae_flavio_pp": 2.893689177182946,
+    "vies_flavio_pp": -2.379531817880057,
+    "mae_outros_pp": 3.6314313890342236,
+    "vies_outros_pp": 3.1215820966908496
+   },
+   "tendencia": {
+    "rotulo": "Tendência amortecida, projetada ao campo alvo",
+    "n_pares": 33,
+    "mae_margem_pp": 3.7687807095087797,
+    "rmse_margem_pp": 4.380866886758147,
+    "vies_margem_pp": 1.6670213390606785,
+    "mae_parcelas_pp": 3.1886100213884006,
+    "rmse_parcelas_pp": 3.8751024251301804,
+    "mae_lula_pp": 2.5132122165921054,
+    "vies_lula_pp": -0.8700200388348387,
+    "mae_flavio_pp": 2.967344225264384,
+    "vies_flavio_pp": -2.537041377895517,
+    "mae_outros_pp": 4.085273622308712,
+    "vies_outros_pp": 3.4070614167303583
+   },
+   "tendencia_integrada": {
+    "rotulo": "Tendência integrada (inclinação em passeio), projetada",
+    "n_pares": 33,
+    "mae_margem_pp": 3.4612847030484377,
+    "rmse_margem_pp": 3.9925943372750012,
+    "vies_margem_pp": 1.0582666662437024,
+    "mae_parcelas_pp": 3.1318941039236114,
+    "rmse_parcelas_pp": 4.1436928421600445,
+    "mae_lula_pp": 2.636310406128451,
+    "vies_lula_pp": -0.9946097114313037,
+    "mae_flavio_pp": 2.842316416685534,
+    "vies_flavio_pp": -2.0528763776750063,
+    "mae_outros_pp": 3.917055488956849,
+    "vies_outros_pp": 3.0474860891063122
+   },
+   "tendencia_constante": {
+    "rotulo": "Inclinação constante, projetada",
+    "n_pares": 33,
+    "mae_margem_pp": 3.5501560864322648,
+    "rmse_margem_pp": 4.111609426741051,
+    "vies_margem_pp": 1.1163645668127251,
+    "mae_parcelas_pp": 3.1554263418971966,
+    "rmse_parcelas_pp": 4.018002207828905,
+    "mae_lula_pp": 2.5980995427421787,
+    "vies_lula_pp": -1.1699176763060546,
+    "mae_flavio_pp": 2.8786745475561997,
+    "vies_flavio_pp": -2.28628224311878,
+    "mae_outros_pp": 3.9895049353932115,
+    "vies_outros_pp": 3.4561999194248356
+   },
+   "tendencia_corte": {
+    "rotulo": "Tendência amortecida, nível na origem",
+    "n_pares": 33,
+    "mae_margem_pp": 3.7688347076844213,
+    "rmse_margem_pp": 4.380864451907256,
+    "vies_margem_pp": 1.6669029950869072,
+    "mae_parcelas_pp": 3.1886381657404934,
+    "rmse_parcelas_pp": 3.8751115362621666,
+    "mae_lula_pp": 2.5132243673280374,
+    "vies_lula_pp": -0.8701030223640711,
+    "mae_flavio_pp": 2.9673863055211345,
+    "vies_flavio_pp": -2.5370060174509783,
+    "mae_outros_pp": 4.085303824372306,
+    "vies_outros_pp": 3.407109039815049
+   },
+   "central_inclinacao_14d": {
+    "rotulo": "Central + inclinação encolhida de 14 dias, projetada",
+    "n_pares": 33,
+    "mae_margem_pp": 3.686059452555101,
+    "rmse_margem_pp": 4.487135558435674,
+    "vies_margem_pp": 1.2591277119913296,
+    "mae_parcelas_pp": 2.489957691644683,
+    "rmse_parcelas_pp": 3.0807681460928573,
+    "mae_lula_pp": 2.2355300836935217,
+    "vies_lula_pp": -0.3073214791630038,
+    "mae_flavio_pp": 2.561014395582013,
+    "vies_flavio_pp": -1.5664491911543335,
+    "mae_outros_pp": 2.673328595658514,
+    "vies_outros_pp": 1.8737706703173382
+   },
+   "central_inclinacao_28d": {
+    "rotulo": "Central + inclinação encolhida de 28 dias, projetada",
+    "n_pares": 33,
+    "mae_margem_pp": 3.600543307627753,
+    "rmse_margem_pp": 4.412498123947592,
+    "vies_margem_pp": 0.6456966310102543,
+    "mae_parcelas_pp": 2.3958049628809195,
+    "rmse_parcelas_pp": 3.0636595261982182,
+    "mae_lula_pp": 2.344598652126669,
+    "vies_lula_pp": -0.39899545973373113,
+    "mae_flavio_pp": 2.301526531159535,
+    "vies_flavio_pp": -1.0446920907439854,
+    "mae_outros_pp": 2.541289705356555,
+    "vies_outros_pp": 1.4436875504777198
    }
   },
   "por_casa": {
    "Alfa Inteligência/TMC": {
     "n": 1,
     "recencia_3d_7d": 5.059336297838222,
-    "dinamico": 3.8762540941058674
+    "dinamico": 3.8762540941058674,
+    "tendencia": 3.8645868707437288
    },
    "AtlasIntel": {
     "n": 3,
     "recencia_3d_7d": 1.5674946985377882,
-    "dinamico": 0.6248253081484544
+    "dinamico": 0.6248253081484544,
+    "tendencia": 0.6284717845188865
    },
    "Datafolha": {
     "n": 5,
     "recencia_3d_7d": 6.567532847991498,
-    "dinamico": 5.746141381435189
+    "dinamico": 5.746141381435189,
+    "tendencia": 5.7490549429644435
    },
    "Futura": {
     "n": 2,
     "recencia_3d_7d": 4.871070201670481,
-    "dinamico": 6.299859734072474
+    "dinamico": 6.299859734072474,
+    "tendencia": 6.305003994994166
    },
    "Gerp": {
     "n": 1,
     "recencia_3d_7d": 7.605861916918634,
-    "dinamico": 8.442723554872636
+    "dinamico": 8.442723554872636,
+    "tendencia": 8.4464581243029
    },
    "Indexa/Broadcast": {
     "n": 1,
     "recencia_3d_7d": 2.914746304328361,
-    "dinamico": 1.3300165500407672
+    "dinamico": 1.3300165500407672,
+    "tendencia": 1.331527035208417
    },
    "MDA": {
     "n": 2,
     "recencia_3d_7d": 4.06594714283753,
-    "dinamico": 4.2603411096604376
+    "dinamico": 4.2603411096604376,
+    "tendencia": 4.259178824248366
    },
    "Meio/Ideia": {
     "n": 1,
     "recencia_3d_7d": 0.3825201694065399,
-    "dinamico": 1.9672492101796735
+    "dinamico": 1.9672492101796735,
+    "tendencia": 1.9657394442145488
    },
    "Nexus": {
     "n": 4,
     "recencia_3d_7d": 1.1798867217930393,
-    "dinamico": 1.322317337932292
+    "dinamico": 1.322317337932292,
+    "tendencia": 1.334495302716478
    },
    "Palver": {
     "n": 4,
     "recencia_3d_7d": 3.036871627034616,
-    "dinamico": 3.892492363922699
+    "dinamico": 3.892492363922699,
+    "tendencia": 3.8990274485939747
    },
    "PoderData": {
     "n": 1,
     "recencia_3d_7d": 3.1716463869980345,
-    "dinamico": 4.354728590730389
+    "dinamico": 4.354728590730389,
+    "tendencia": 4.366392043060777
    },
    "Quaest": {
     "n": 4,
     "recencia_3d_7d": 4.390042427274361,
-    "dinamico": 4.366295468850394
+    "dinamico": 4.366295468850394,
+    "tendencia": 4.362844928360481
    },
    "Real Time Big Data": {
     "n": 2,
     "recencia_3d_7d": 3.245737164841273,
-    "dinamico": 4.686617250748675
+    "dinamico": 4.686617250748675,
+    "tendencia": 4.693292667540732
    },
    "Vox Brasil": {
     "n": 2,
     "recencia_3d_7d": 3.1717988632895207,
-    "dinamico": 2.431926130247689
+    "dinamico": 2.431926130247689,
+    "tendencia": 2.431974067815105
    }
   },
   "comparacoes": [
@@ -520,9 +2720,73 @@
     "a_melhor_em_ondas": 12,
     "b_melhor_em_ondas": 21,
     "leitura": "negativo favorece a; |diferença| < 2 erros-padrão não separa as âncoras"
+   },
+   {
+    "a": "tendencia",
+    "b": "recencia_3d_7d",
+    "n_ondas_alvo": 33,
+    "diferenca_mae_margem_pp": 0.07755133797101212,
+    "erro_padrao_pp": 0.23256879636137398,
+    "a_melhor_em_ondas": 12,
+    "b_melhor_em_ondas": 21,
+    "leitura": "negativo favorece a; |diferença| < 2 erros-padrão não separa as âncoras"
+   },
+   {
+    "a": "tendencia",
+    "b": "dinamico",
+    "n_ondas_alvo": 33,
+    "diferenca_mae_margem_pp": 0.0033848318169391127,
+    "erro_padrao_pp": 0.0016898022770156988,
+    "a_melhor_em_ondas": 14,
+    "b_melhor_em_ondas": 19,
+    "leitura": "negativo favorece a; |diferença| < 2 erros-padrão não separa as âncoras"
+   },
+   {
+    "a": "central_inclinacao_14d",
+    "b": "recencia_3d_7d",
+    "n_ondas_alvo": 33,
+    "diferenca_mae_margem_pp": -0.005169918982665742,
+    "erro_padrao_pp": 0.07441781624130339,
+    "a_melhor_em_ondas": 5,
+    "b_melhor_em_ondas": 3,
+    "leitura": "negativo favorece a; |diferença| < 2 erros-padrão não separa as âncoras"
+   },
+   {
+    "a": "central_inclinacao_28d",
+    "b": "recencia_3d_7d",
+    "n_ondas_alvo": 33,
+    "diferenca_mae_margem_pp": -0.09068606391001396,
+    "erro_padrao_pp": 0.12382753601806218,
+    "a_melhor_em_ondas": 16,
+    "b_melhor_em_ondas": 12,
+    "leitura": "negativo favorece a; |diferença| < 2 erros-padrão não separa as âncoras"
+   }
+  ],
+  "comparacoes_por_parcela": [
+   {
+    "a": "tendencia",
+    "b": "recencia_3d_7d",
+    "n_ondas_alvo": 33,
+    "margem_lula_flavio": {
+     "diferenca_mae_pp": 0.07755133797101212,
+     "erro_padrao_pp": 0.23256879636137398
+    },
+    "lula": {
+     "diferenca_mae_pp": 0.230259851439894,
+     "erro_padrao_pp": 0.21791112011999828
+    },
+    "flavio": {
+     "diferenca_mae_pp": 0.3675277209378369,
+     "erro_padrao_pp": 0.2133417267075485
+    },
+    "outros": {
+     "diferenca_mae_pp": 1.2620069215378853,
+     "erro_padrao_pp": 0.23735659075142795
+    },
+    "leitura": "negativo favorece a; média por onda alvo"
    }
   ]
  },
  "referencia": "2026-10-03",
- "hash_modelo": "a522be9fb11abca5f5e6b23ca5813a86ff536574dc0e8360a642f15ce47d28e9"
+ "hash_modelo": "d4e65d899c15aec6c7848a550b67c4aa80bb8d45bc0a9b28415a4da6d6f52851"
 }

@@ -11,7 +11,7 @@ from pathlib import Path
 
 import numpy as np
 
-from . import dinamico
+from . import dinamico, migracao, tendencia
 from .recencia import NATIONAL_HALF_LIFE, age, decay, mean, midpoint, weights
 from .tse import ROOT, sha
 
@@ -257,6 +257,26 @@ def national(today, half_life=NATIONAL_HALF_LIFE, window_start=WINDOW_START):
             ("somente_pnad", dinamico.fit(paired_series, today, "pnad_vetor")),
         )
     }
+    # Âncora de tendência: estado projetado para o dia da eleição, com o nível
+    # no corte para comparação. Diagnóstico completo em nacional.tendencia.
+    trend = tendencia.fit(
+        polls, today, ELECTION, window_start=window_start, level_fit=dynamic
+    )
+    trend["divisao_migracao"] = migracao.estimate(polls, today)
+    trend["teto"] = migracao.ceiling(polls, today)
+    trend["central_com_inclinacao"] = sloped_central(selected, polls, today)
+    projected, at_cut = trend["estado_projetado"], trend["estado_corte"]
+    # Desvio da projeção além do nível: para a central com inclinação, o da
+    # inclinação × horizonte; para a tendência do DLM, o acréscimo de variância
+    # entre o estado no corte e o estado projetado à eleição.
+    projection_sd = {
+        "central_inclinacao": trend["central_com_inclinacao"]["dp_margem_projecao_pp"],
+        "tendencia": float(
+            np.sqrt(
+                max(0.0, projected["dp_margem_pp"] ** 2 - at_cut["dp_margem_pp"] ** 2)
+            )
+        ),
+    }
     return {
         "referencia_agregador": agg["referencia"],
         "sha256_agregador": sha(path),
@@ -272,10 +292,53 @@ def national(today, half_life=NATIONAL_HALF_LIFE, window_start=WINDOW_START):
             "publicado": mean(adjusted, "publicado_vetor"),
             "todas": mean(selected, "publicado_vetor"),
             "dinamico": dynamic["estado_final"]["vetor"],
+            "tendencia": trend["estado_projetado"]["vetor"],
+            "tendencia_corte": trend["estado_corte"]["vetor"],
+            "central_inclinacao": trend["central_com_inclinacao"]["vetor"],
         },
+        "incerteza_projecao_pp": projection_sd,
         "dinamico": dynamic,
+        "tendencia": trend,
         "efeitos_casa": house_effects(polls, today),
         "excluidas": excluded,
+    }
+
+
+def sloped_central(selected, polls, today, days=28):
+    """Central inclusiva deslocada pela inclinação encolhida de `days` dias,
+    da data efetiva da central (ponto médio ponderado) até a eleição."""
+    w = weights(selected)
+    base_vector = np.average([p["previsao_vetor"] for p in selected], axis=0, weights=w)
+    start = float(w @ [midpoint(p["campo"]) for p in selected])
+    slopes, fitted = tendencia.shrunk_slopes(polls, today, days)
+    horizon = ELECTION.toordinal() - start
+    vector = tendencia.shift_valid(base_vector, slopes, horizon)
+    valid = 100 * vector[:3] / vector[:3].sum()
+    # Incerteza da extrapolação na diferença F−L: horizonte × dp(β_F − β_L),
+    # com a covariância conjunta das inclinações brutas (sem encolher, o que
+    # é conservador). Entra no Monte Carlo como choque comum adicional.
+    if fitted is None:
+        slope_sd = 0.0
+    else:
+        c = np.asarray(fitted["cov_inclinacao_lula_flavio"], float)
+        slope_sd = float(np.sqrt(max(0.0, c[0, 0] + c[1, 1] - 2 * c[0, 1])))
+    return {
+        "janela_dias": days,
+        "ancora_de_partida": "inclusivo",
+        "data_efetiva_central": date.fromordinal(round(start)).isoformat(),
+        "horizonte_dias": horizon,
+        "dp_inclinacao_margem_pp_dia": slope_sd,
+        "dp_margem_projecao_pp": max(0.0, horizon) * slope_sd,
+        "inclinacoes_encolhidas_validos_pp_dia": dict(
+            zip(GROUPS[:3], slopes.tolist(), strict=True)
+        ),
+        "inclinacoes_brutas_validos_pp_dia": {
+            k: fitted["categorias"][k]["inclinacao_pp_dia"] for k in GROUPS[:3]
+        },
+        "vetor": vector.tolist(),
+        "validos_pct": dict(zip(GROUPS[:3], valid.tolist(), strict=True)),
+        "margem_flavio_lula_validos_pp": float(valid[1] - valid[0]),
+        "regra": "fator de encolhimento b² / (b² + ep²) em cada categoria dos válidos; massa válida, indecisos e branco/nulo da central preservados",
     }
 
 

@@ -1,0 +1,1222 @@
+{
+  "descricao": "Erro das últimas pesquisas nacionais no 1º turno presidencial de 2022, em pontos percentuais dos votos válidos, contra o resultado oficial do TSE. Descritivo; não é prognóstico nem ajuste.",
+  "gerado_por": "scripts/predicao-2026-erro-2022.py",
+  "transcricao": {
+    "arquivo": "analysis/predicao_2026/erro_2022/pesquisas_2022.json",
+    "sha256": "d7fa5c6ecd191b31a5f019dcfd20888321ca437928094f1887ac9b365261f01d"
+  },
+  "convencao_de_sinal": "erro = pesquisa menos urna; positivo superestima o candidato; na diferença Lula menos Bolsonaro, positivo superestima a vantagem de Lula",
+  "resultado_oficial": {
+    "fonte": "analysis/voto_util/tse_2022_uf.json",
+    "sha256": "edda98f268c631f3883b19e97b4757fcfb28d0174d012b8b6e92524c92c000db",
+    "fonte_original": "https://resultados.tse.jus.br/oficial/ele2022/544/dados-simplificados/br/br-c0001-e000544-r.json",
+    "abrangencia": "Brasil e exterior (total oficial da eleição 544)",
+    "votos": {
+      "aptos": 156454011,
+      "comparecimento": 123682372,
+      "abstencao": 32770982,
+      "brancos": 1964779,
+      "nulos": 3487874,
+      "validos": 118229719,
+      "lula": 57259504,
+      "bolsonaro": 51072345,
+      "tebet": 4915423,
+      "ciro": 3599287,
+      "outros": 1383160
+    },
+    "parcelas_validos_pp": {
+      "lula": 48.43071985986874,
+      "bolsonaro": 43.19755255444699,
+      "tebet": 4.15751897371929,
+      "ciro": 3.0443166324365536,
+      "demais": 1.1698919795284297
+    },
+    "comparecimento_pct_aptos": 79.05350026468801,
+    "brancos_pct_comparecimento": 1.5885683369655945,
+    "nulos_pct_comparecimento": 2.820025152816442,
+    "sem_exterior": {
+      "descricao": "soma das 27 UFs em analysis/voto_util/tse_2022_uf.json",
+      "votos": {
+        "aptos": 155758656,
+        "comparecimento": 123378340,
+        "brancos": 1959922,
+        "nulos": 3483224,
+        "validos": 117935194,
+        "lula": 57120571,
+        "bolsonaro": 50949797,
+        "tebet": 4902256,
+        "ciro": 3585946,
+        "outros": 1376624
+      },
+      "parcelas_validos_pp": {
+        "lula": 48.433863601394506,
+        "bolsonaro": 43.20152048929516,
+        "tebet": 4.156737131411341,
+        "ciro": 3.0406071999169306,
+        "demais": 1.1672715779820493
+      }
+    },
+    "conferencia_api_bruta": {
+      "br": {
+        "arquivo": "data/raw/tse_resultados/api_2022/br-c0001-e000544-r.json",
+        "sha256": "a87a25b7f7d7d5329e765c63cee49c30a160050efc4a19a0a5ad89f6e57d5d70",
+        "data_totalizacao": "04/10/2022 10:27:34"
+      },
+      "igual_ao_json_rastreado": true,
+      "zz": {
+        "arquivo": "data/raw/tse_resultados/api_2022/zz-c0001-e000544-r.json",
+        "sha256": "9ed7c954c36bac4250e5b339bc2bf4d7693484c21f307dd2ffe39f3d5f1453b0",
+        "data_totalizacao": "03/10/2022 18:37:43"
+      },
+      "ufs_mais_exterior_fecham_brasil": true
+    }
+  },
+  "por_casa": [
+    {
+      "id": "datafolha",
+      "casa": "Datafolha",
+      "casa_2026": "Datafolha",
+      "nivel": "materia_do_contratante",
+      "incluir": true,
+      "motivo_exclusao": null,
+      "registro": "BR-00245/2022",
+      "campo": {
+        "inicio": "2022-09-30",
+        "fim": "2022-10-01"
+      },
+      "n": 12800,
+      "metodo": "presencial",
+      "base_validos": "validos_publicados",
+      "validos_pp": {
+        "lula": 50.0,
+        "bolsonaro": 36.0,
+        "tebet": 6.0,
+        "ciro": 5.0,
+        "demais": 3.0
+      },
+      "erro_pp": {
+        "lula": 1.5692801401312622,
+        "bolsonaro": -7.197552554446993,
+        "tebet": 1.8424810262807103,
+        "ciro": 1.9556833675634464,
+        "demais": 1.8301080204715703
+      },
+      "diferenca_lula_menos_bolsonaro": {
+        "pesquisa": 14.0,
+        "oficial": 5.233167305421745,
+        "erro": 8.766832694578255
+      },
+      "erro_absoluto_medio_pp": 2.8790210217787964,
+      "margem_95_diferenca_aas_pp": 1.6293872942602774,
+      "erro_diferenca_fora_da_margem_aas": true,
+      "validos_calculados_dos_totais": {
+        "lula": 50.526315789473685,
+        "bolsonaro": 35.78947368421053,
+        "tebet": 6.315789473684211,
+        "ciro": 5.2631578947368425,
+        "demais": 2.10526315789474
+      },
+      "documentos": [
+        {
+          "arquivo": "data/originals/pesquisas_2022/datafolha/folha_20221001_materia.html",
+          "url": "https://www1.folha.uol.com.br/poder/2022/10/datafolha-lula-chega-ao-1o-turno-com-50-dos-votos-validos-bolsonaro-tem-36.shtml",
+          "sha256": "6570f18923abdbf6d15ecf1640ae5d5aae90ef154335891ade185525e6c81c19"
+        },
+        {
+          "arquivo": "data/originals/pesquisas_2022/datafolha/folha_20221001_materia.png",
+          "url": "https://www1.folha.uol.com.br/poder/2022/10/datafolha-lula-chega-ao-1o-turno-com-50-dos-votos-validos-bolsonaro-tem-36.shtml",
+          "sha256": "73513dfea496b820daa5401c6cf81b484133d01a2abf64acb5ff66f65923c3f2"
+        },
+        {
+          "arquivo": "data/originals/pesquisas_2022/datafolha/poder360_20221001_validos.png",
+          "url": "https://static.poder360.com.br/uploads/2022/10/datafolha-30-set-1-out-2022-1.png",
+          "sha256": "f87ec5652316ded4c1629367778bfefae4ee3c4da48bced240789a95d19fca8e"
+        }
+      ]
+    },
+    {
+      "id": "ipec",
+      "casa": "Ipec",
+      "casa_2026": null,
+      "nivel": "imprensa_concordante",
+      "incluir": true,
+      "motivo_exclusao": null,
+      "registro": "BR-00999/2022",
+      "campo": {
+        "inicio": "2022-09-29",
+        "fim": "2022-10-01"
+      },
+      "n": 3008,
+      "metodo": "presencial",
+      "base_validos": "validos_publicados",
+      "validos_pp": {
+        "lula": 51.0,
+        "bolsonaro": 37.0,
+        "tebet": 5.0,
+        "ciro": 5.0,
+        "demais": 2.0
+      },
+      "erro_pp": {
+        "lula": 2.569280140131262,
+        "bolsonaro": -6.197552554446993,
+        "tebet": 0.8424810262807103,
+        "ciro": 1.9556833675634464,
+        "demais": 0.8301080204715703
+      },
+      "diferenca_lula_menos_bolsonaro": {
+        "pesquisa": 14.0,
+        "oficial": 5.233167305421745,
+        "erro": 8.766832694578255
+      },
+      "erro_absoluto_medio_pp": 2.4790210217787965,
+      "margem_95_diferenca_aas_pp": 3.4373036690908374,
+      "erro_diferenca_fora_da_margem_aas": true,
+      "validos_calculados_dos_totais": {
+        "lula": 50.53763440860215,
+        "bolsonaro": 36.55913978494624,
+        "tebet": 5.376344086021505,
+        "ciro": 5.376344086021505,
+        "demais": 2.1505376344086073
+      },
+      "documentos": [
+        {
+          "arquivo": "data/originals/pesquisas_2022/ipec/cnn_materia.html",
+          "url": "https://www.cnnbrasil.com.br/politica/pesquisa-ipec-para-presidente-lula-tem-51-dos-votos-validos-bolsonaro-37/",
+          "sha256": "377c9c20d7741d8d458a936d9adc13310baaae44944ee37c3c7d1e800dc6c4f2"
+        },
+        {
+          "arquivo": "data/originals/pesquisas_2022/ipec/cnn_materia.png",
+          "url": "https://www.cnnbrasil.com.br/politica/pesquisa-ipec-para-presidente-lula-tem-51-dos-votos-validos-bolsonaro-37/",
+          "sha256": "6e612fcee19945c148332d59fe64b7ce91059d337f136c00b87be3712f2ef74c"
+        },
+        {
+          "arquivo": "data/originals/pesquisas_2022/ipec/poder360_validos.png",
+          "url": "https://static.poder360.com.br/2022/10/ipec-29-set-1-out-2022-1.png",
+          "sha256": "6bda054b9f8cb4d28c69d3ce63e886c7dcbcead7980cd19a5651b6c6a923dce9"
+        },
+        {
+          "arquivo": "data/originals/pesquisas_2022/ipec/poder360_materia.html",
+          "url": "https://www.poder360.com.br/pesquisas/ipec-lula-tem-51-dos-votos-validos-contra-37-de-bolsonaro/",
+          "sha256": "23bbb364d41697ccbb66d6dfc78645b1d2aff551eb1a31269ea7a65e7f14dc9f"
+        }
+      ]
+    },
+    {
+      "id": "quaest",
+      "casa": "Quaest/Genial",
+      "casa_2026": "Quaest",
+      "nivel": "pdf_do_instituto",
+      "incluir": true,
+      "motivo_exclusao": null,
+      "registro": "BR-02444/2022",
+      "campo": {
+        "inicio": "2022-09-30",
+        "fim": "2022-10-01"
+      },
+      "n": 3600,
+      "metodo": "presencial",
+      "base_validos": "validos_publicados",
+      "validos_pp": {
+        "lula": 49.0,
+        "bolsonaro": 38.0,
+        "tebet": 5.0,
+        "ciro": 6.0,
+        "demais": 2.0
+      },
+      "erro_pp": {
+        "lula": 0.5692801401312622,
+        "bolsonaro": -5.197552554446993,
+        "tebet": 0.8424810262807103,
+        "ciro": 2.9556833675634464,
+        "demais": 0.8301080204715703
+      },
+      "diferenca_lula_menos_bolsonaro": {
+        "pesquisa": 11.0,
+        "oficial": 5.233167305421745,
+        "erro": 5.766832694578255
+      },
+      "erro_absoluto_medio_pp": 2.0790210217787966,
+      "margem_95_diferenca_aas_pp": 3.025625519474118,
+      "erro_diferenca_fora_da_margem_aas": true,
+      "validos_calculados_dos_totais": null,
+      "documentos": [
+        {
+          "arquivo": "data/originals/pesquisas_2022/quaest/relatorio.pdf",
+          "url": "https://static.poder360.com.br/2022/10/quaest-eleicoes-1-out-relatorio.pdf",
+          "sha256": "290512655fc989a313ed57d1905ac5e8cdc377768384a4f909843ae216d6a464"
+        },
+        {
+          "arquivo": "data/originals/pesquisas_2022/quaest/poder360_materia.html",
+          "url": "https://www.poder360.com.br/pesquisas/lula-tem-49-dos-votos-validos-e-bolsonaro-38-diz-quaest/",
+          "sha256": "ec2a1d4fe2cc1784769861d70cd8ac1ab08cb18784aa529b9de09a47e6445380"
+        }
+      ]
+    },
+    {
+      "id": "atlas",
+      "casa": "AtlasIntel",
+      "casa_2026": "AtlasIntel",
+      "nivel": "pdf_do_instituto",
+      "incluir": true,
+      "motivo_exclusao": null,
+      "registro": "BR-01318/2022",
+      "campo": {
+        "inicio": "2022-09-24",
+        "fim": "2022-09-28"
+      },
+      "n": 4500,
+      "metodo": "online, recrutamento digital aleatório",
+      "base_validos": "validos_publicados",
+      "validos_pp": {
+        "lula": 50.7,
+        "bolsonaro": 41.0,
+        "tebet": 2.6,
+        "ciro": 3.6,
+        "demais": 2.1000000000000085
+      },
+      "erro_pp": {
+        "lula": 2.269280140131265,
+        "bolsonaro": -2.197552554446993,
+        "tebet": -1.5575189737192896,
+        "ciro": 0.5556833675634465,
+        "demais": 0.9301080204715788
+      },
+      "diferenca_lula_menos_bolsonaro": {
+        "pesquisa": 9.700000000000003,
+        "oficial": 5.233167305421745,
+        "erro": 4.466832694578258
+      },
+      "erro_absoluto_medio_pp": 1.5020286112665147,
+      "margem_95_diferenca_aas_pp": 2.82473238771567,
+      "erro_diferenca_fora_da_margem_aas": true,
+      "validos_calculados_dos_totais": {
+        "lula": 50.77239958805355,
+        "bolsonaro": 41.09165808444902,
+        "tebet": 2.5746652935118437,
+        "ciro": 3.604531410916581,
+        "demais": 1.956745623068997
+      },
+      "documentos": [
+        {
+          "arquivo": "data/originals/pesquisas_2022/atlas/relatorio.pdf",
+          "url": "https://static.poder360.com.br/2022/09/Pesquisa_Atlas_e_Arko_Eleic%CC%A7o%CC%83es_2022_Presidenciais_24_28_09_2022.pdf",
+          "sha256": "559e7eeb8809c0c2610f892f79695775d2eaa7b87c091930aa2035a0dbcf1788"
+        }
+      ]
+    },
+    {
+      "id": "poderdata",
+      "casa": "PoderData",
+      "casa_2026": "PoderData",
+      "nivel": "infografico_do_instituto",
+      "incluir": true,
+      "motivo_exclusao": null,
+      "registro": "BR-01426/2022",
+      "campo": {
+        "inicio": "2022-09-25",
+        "fim": "2022-09-27"
+      },
+      "n": 4500,
+      "metodo": "telefone automatizado",
+      "base_validos": "validos_publicados",
+      "validos_pp": {
+        "lula": 48.0,
+        "bolsonaro": 38.0,
+        "tebet": 5.0,
+        "ciro": 6.0,
+        "demais": 3.0
+      },
+      "erro_pp": {
+        "lula": -0.43071985986873784,
+        "bolsonaro": -5.197552554446993,
+        "tebet": 0.8424810262807103,
+        "ciro": 2.9556833675634464,
+        "demais": 1.8301080204715703
+      },
+      "diferenca_lula_menos_bolsonaro": {
+        "pesquisa": 10.0,
+        "oficial": 5.233167305421745,
+        "erro": 4.766832694578255
+      },
+      "erro_absoluto_medio_pp": 2.2513089657262917,
+      "margem_95_diferenca_aas_pp": 2.793250098241505,
+      "erro_diferenca_fora_da_margem_aas": true,
+      "validos_calculados_dos_totais": {
+        "lula": 48.38709677419355,
+        "bolsonaro": 38.70967741935484,
+        "tebet": 4.301075268817204,
+        "ciro": 6.451612903225806,
+        "demais": 2.1505376344086073
+      },
+      "documentos": [
+        {
+          "arquivo": "data/originals/pesquisas_2022/poderdata/infografico_totais.png",
+          "url": "https://static.poder360.com.br/2022/09/pd-intencao-presidente-27-set-2022-01.png",
+          "sha256": "383bf3bcc12abb54656f5ce8c8e8d8f4bbe15ffdbb146af93f53edaa9a7835aa"
+        },
+        {
+          "arquivo": "data/originals/pesquisas_2022/poderdata/infografico_validos.png",
+          "url": "https://static.poder360.com.br/2022/09/pd-intencao-presidente-27-set-2022-05.png",
+          "sha256": "73ec76aaf7b4cc876fded7d5cabd9ee209f60180b0e87878dd5bb3ee7dae5976"
+        },
+        {
+          "arquivo": "data/originals/pesquisas_2022/poderdata/poder360_materia.html",
+          "url": "https://www.poder360.com.br/poderdata/poderdata-lula-tem-48-dos-votos-validos-bolsonaro-38/",
+          "sha256": "323a39fee0fe93a4c237b9724bdcb81997ec904377732baf96e725d6619f84df"
+        }
+      ]
+    },
+    {
+      "id": "parana_pesquisas",
+      "casa": "Paraná Pesquisas",
+      "casa_2026": null,
+      "nivel": "pdf_do_instituto",
+      "incluir": true,
+      "motivo_exclusao": null,
+      "registro": "BR-07917/2022",
+      "campo": {
+        "inicio": "2022-09-27",
+        "fim": "2022-09-29"
+      },
+      "n": 2020,
+      "metodo": "telefone, entrevistador humano",
+      "base_validos": "validos_publicados",
+      "validos_pp": {
+        "lula": 47.1,
+        "bolsonaro": 40.0,
+        "tebet": 6.3,
+        "ciro": 5.2,
+        "demais": 1.4000000000000057
+      },
+      "erro_pp": {
+        "lula": -1.3307198598687364,
+        "bolsonaro": -3.197552554446993,
+        "tebet": 2.14248102628071,
+        "ciro": 2.1556833675634466,
+        "demais": 0.23010802047157597
+      },
+      "diferenca_lula_menos_bolsonaro": {
+        "pesquisa": 7.100000000000001,
+        "oficial": 5.233167305421745,
+        "erro": 1.8668326945782567
+      },
+      "erro_absoluto_medio_pp": 1.8113089657262926,
+      "margem_95_diferenca_aas_pp": 4.2057768960218604,
+      "erro_diferenca_fora_da_margem_aas": false,
+      "validos_calculados_dos_totais": {
+        "lula": 47.153598281417835,
+        "bolsonaro": 40.06444683136412,
+        "tebet": 6.229860365198712,
+        "ciro": 5.263157894736843,
+        "demais": 1.2889366272824674
+      },
+      "documentos": [
+        {
+          "arquivo": "data/originals/pesquisas_2022/parana_pesquisas/relatorio.pdf",
+          "url": "https://static.poder360.com.br/2022/09/parana-pesquisas-setembro.pdf",
+          "sha256": "db103a65d222ea5b7ac900406224d74c3921f811e2eafb2067170c97a6a6438f"
+        }
+      ]
+    },
+    {
+      "id": "cnt_mda",
+      "casa": "CNT/MDA",
+      "casa_2026": "MDA",
+      "nivel": "pdf_do_instituto",
+      "incluir": true,
+      "motivo_exclusao": null,
+      "registro": "BR-02944/2022",
+      "campo": {
+        "inicio": "2022-09-28",
+        "fim": "2022-09-30"
+      },
+      "n": 2002,
+      "metodo": "presencial",
+      "base_validos": "validos_publicados",
+      "validos_pp": {
+        "lula": 48.3,
+        "bolsonaro": 39.7,
+        "tebet": 4.7,
+        "ciro": 4.9,
+        "demais": 2.3999999999999915
+      },
+      "erro_pp": {
+        "lula": -0.13071985986874068,
+        "bolsonaro": -3.4975525544469903,
+        "tebet": 0.5424810262807105,
+        "ciro": 1.8556833675634468,
+        "demais": 1.2301080204715618
+      },
+      "diferenca_lula_menos_bolsonaro": {
+        "pesquisa": 8.599999999999994,
+        "oficial": 5.233167305421745,
+        "erro": 3.3668326945782496
+      },
+      "erro_absoluto_medio_pp": 1.4513089657262899,
+      "margem_95_diferenca_aas_pp": 4.277737265850867,
+      "erro_diferenca_fora_da_margem_aas": false,
+      "validos_calculados_dos_totais": {
+        "lula": 48.30601092896175,
+        "bolsonaro": 39.67213114754098,
+        "tebet": 4.699453551912568,
+        "ciro": 4.918032786885246,
+        "demais": 2.4043715846994473
+      },
+      "documentos": [
+        {
+          "arquivo": "data/originals/pesquisas_2022/cnt_mda/relatorio.pdf",
+          "url": "https://static.poder360.com.br/2022/10/pesquisa-CNT-MDA-1oout2022.pdf",
+          "sha256": "3738ee419c6fcfde21560ebf4cef6a2ce5494474200a0a6b9337db8c8d2720f4"
+        }
+      ]
+    },
+    {
+      "id": "ipespe",
+      "casa": "Ipespe/Abrapel",
+      "casa_2026": null,
+      "nivel": "pdf_do_instituto",
+      "incluir": true,
+      "motivo_exclusao": null,
+      "registro": "BR-05007/2022",
+      "campo": {
+        "inicio": "2022-09-30",
+        "fim": "2022-09-30"
+      },
+      "n": 1100,
+      "metodo": "telefone (CATI)",
+      "base_validos": "validos_publicados",
+      "validos_pp": {
+        "lula": 49.0,
+        "bolsonaro": 35.0,
+        "tebet": 7.0,
+        "ciro": 8.0,
+        "demais": 1.0
+      },
+      "erro_pp": {
+        "lula": 0.5692801401312622,
+        "bolsonaro": -8.197552554446993,
+        "tebet": 2.8424810262807103,
+        "ciro": 4.955683367563447,
+        "demais": -0.16989197952842972
+      },
+      "diferenca_lula_menos_bolsonaro": {
+        "pesquisa": 14.0,
+        "oficial": 5.233167305421745,
+        "erro": 8.766832694578255
+      },
+      "erro_absoluto_medio_pp": 3.3469778135901684,
+      "margem_95_diferenca_aas_pp": 5.520782623732383,
+      "erro_diferenca_fora_da_margem_aas": true,
+      "validos_calculados_dos_totais": {
+        "lula": 48.93617021276596,
+        "bolsonaro": 35.1063829787234,
+        "tebet": 6.382978723404255,
+        "ciro": 7.446808510638298,
+        "demais": 2.1276595744680975
+      },
+      "documentos": [
+        {
+          "arquivo": "data/originals/pesquisas_2022/ipespe/relatorio.pdf",
+          "url": "https://static.poder360.com.br/2022/10/abrapelipespe-1-out.pdf",
+          "sha256": "9ac277496a5dafabd2c40ce719fea785a223b7b868d268830f1cf6b54559d234"
+        }
+      ]
+    },
+    {
+      "id": "fsb_btg",
+      "casa": "FSB/BTG",
+      "casa_2026": "Nexus",
+      "nivel": "pdf_do_instituto",
+      "incluir": true,
+      "motivo_exclusao": null,
+      "registro": "BR-08123/2022",
+      "campo": {
+        "inicio": "2022-09-23",
+        "fim": "2022-09-25"
+      },
+      "n": 2000,
+      "metodo": "telefone (CATI)",
+      "base_validos": "validos_publicados",
+      "validos_pp": {
+        "lula": 48.0,
+        "bolsonaro": 37.0,
+        "tebet": 5.0,
+        "ciro": 8.0,
+        "demais": 2.0
+      },
+      "erro_pp": {
+        "lula": -0.43071985986873784,
+        "bolsonaro": -6.197552554446993,
+        "tebet": 0.8424810262807103,
+        "ciro": 4.955683367563447,
+        "demais": 0.8301080204715703
+      },
+      "diferenca_lula_menos_bolsonaro": {
+        "pesquisa": 11.0,
+        "oficial": 5.233167305421745,
+        "erro": 5.766832694578255
+      },
+      "erro_absoluto_medio_pp": 2.6513089657262916,
+      "margem_95_diferenca_aas_pp": 4.137759663292218,
+      "erro_diferenca_fora_da_margem_aas": true,
+      "validos_calculados_dos_totais": {
+        "lula": 47.87234042553192,
+        "bolsonaro": 37.234042553191486,
+        "tebet": 4.25531914893617,
+        "ciro": 7.446808510638298,
+        "demais": 3.191489361702139
+      },
+      "documentos": [
+        {
+          "arquivo": "data/originals/pesquisas_2022/fsb_btg/relatorio.pdf",
+          "url": "https://static.poder360.com.br/2022/09/pesquisa-fsb-26-set-2022.pdf",
+          "sha256": "016767ad4255f65b6120641acb00a6fa43cad22ca3f3c0b4b772b8f636e3af4a"
+        }
+      ]
+    },
+    {
+      "id": "futura",
+      "casa": "Modalmais/Futura",
+      "casa_2026": "Futura",
+      "nivel": "pdf_do_instituto",
+      "incluir": true,
+      "motivo_exclusao": null,
+      "registro": "BR-06743/2022",
+      "campo": {
+        "inicio": "2022-09-26",
+        "fim": "2022-09-28"
+      },
+      "n": 2000,
+      "metodo": "telefone (CATI), amostra não probabilística por cotas",
+      "base_validos": "validos_publicados",
+      "validos_pp": {
+        "lula": 43.6,
+        "bolsonaro": 40.5,
+        "tebet": 7.7,
+        "ciro": 6.0,
+        "demais": 2.200000000000003
+      },
+      "erro_pp": {
+        "lula": -4.830719859868736,
+        "bolsonaro": -2.697552554446993,
+        "tebet": 3.5424810262807105,
+        "ciro": 2.9556833675634464,
+        "demais": 1.0301080204715731
+      },
+      "diferenca_lula_menos_bolsonaro": {
+        "pesquisa": 3.1000000000000014,
+        "oficial": 5.233167305421745,
+        "erro": -2.1331673054217433
+      },
+      "erro_absoluto_medio_pp": 3.0113089657262924,
+      "margem_95_diferenca_aas_pp": 4.15632385383149,
+      "erro_diferenca_fora_da_margem_aas": false,
+      "validos_calculados_dos_totais": {
+        "lula": 43.576017130621,
+        "bolsonaro": 40.471092077087796,
+        "tebet": 7.7087794432548185,
+        "ciro": 5.995717344753748,
+        "demais": 2.248394004282659
+      },
+      "documentos": [
+        {
+          "arquivo": "data/originals/pesquisas_2022/futura/relatorio.pdf",
+          "url": "https://web.archive.org/web/20221009053230id_/https://www.modalmais.com.br/wp-content/uploads/2022/09/R_Eleicoes2022_ModalMais_202209_18aEdicao_Divulgacao-1-1.pdf",
+          "sha256": "e938cdd7ab09cf2acf370dcb91dbe805e7ead0d7488573d38ba9018e28283674"
+        },
+        {
+          "arquivo": "data/originals/pesquisas_2022/futura/blog_modalmais_wayback.html",
+          "url": "https://www.modalmais.com.br/blog/banco-modal-e-futura-inteligencia-divulgam-nova-pesquisa/",
+          "sha256": "987e8df762c33c476fbb1f48fcf9202a81bbcde89bf7be0649c5a7840427183a"
+        }
+      ]
+    },
+    {
+      "id": "ideia",
+      "casa": "Ideia (Exame/Ideia)",
+      "casa_2026": "Meio/Ideia",
+      "nivel": "pdf_do_instituto",
+      "incluir": true,
+      "motivo_exclusao": null,
+      "registro": "BR-09782/2022",
+      "campo": {
+        "inicio": "2022-09-23",
+        "fim": "2022-09-28"
+      },
+      "n": 1500,
+      "metodo": "telefone",
+      "base_validos": "calculado_dos_totais",
+      "validos_pp": {
+        "lula": 48.856548856548855,
+        "bolsonaro": 38.46153846153846,
+        "tebet": 5.197505197505198,
+        "ciro": 6.237006237006237,
+        "demais": 1.2474012474012426
+      },
+      "erro_pp": {
+        "lula": 0.4258289966801172,
+        "bolsonaro": -4.736014092908533,
+        "tebet": 1.0399862237859079,
+        "ciro": 3.1926896045696833,
+        "demais": 0.07750926787281287
+      },
+      "diferenca_lula_menos_bolsonaro": {
+        "pesquisa": 10.395010395010395,
+        "oficial": 5.233167305421745,
+        "erro": 5.1618430895886505
+      },
+      "erro_absoluto_medio_pp": 1.8944056371634108,
+      "margem_95_diferenca_aas_pp": 4.791407045751729,
+      "erro_diferenca_fora_da_margem_aas": true,
+      "validos_calculados_dos_totais": {
+        "lula": 48.856548856548855,
+        "bolsonaro": 38.46153846153846,
+        "tebet": 5.197505197505198,
+        "ciro": 6.237006237006237,
+        "demais": 1.2474012474012426
+      },
+      "documentos": [
+        {
+          "arquivo": "data/originals/pesquisas_2022/ideia/relatorio.pdf",
+          "url": "https://static.poder360.com.br/2022/09/pesquisa-exame-ideia-29set-2022.pdf",
+          "sha256": "b3673ee28197fc0876e32917b21794043e52e4563a2c9d1ae6da2a9b15e14214"
+        }
+      ]
+    },
+    {
+      "id": "verita",
+      "casa": "Instituto Veritá",
+      "casa_2026": null,
+      "nivel": "pdf_do_instituto",
+      "incluir": true,
+      "motivo_exclusao": null,
+      "registro": "BR-05980/2022",
+      "campo": {
+        "inicio": "2022-09-24",
+        "fim": "2022-09-29"
+      },
+      "n": 51169,
+      "metodo": "não declarado na camada de texto",
+      "base_validos": "calculado_das_contagens",
+      "validos_pp": {
+        "lula": 42.622294307282594,
+        "bolsonaro": 45.695921187000664,
+        "tebet": 4.303077631605294,
+        "ciro": 4.200957129412707,
+        "demais": 3.1777497446987297
+      },
+      "erro_pp": {
+        "lula": -5.808425552586144,
+        "bolsonaro": 2.498368632553671,
+        "tebet": 0.14555865788600464,
+        "ciro": 1.1566404969761535,
+        "demais": 2.0078577651703
+      },
+      "diferenca_lula_menos_bolsonaro": {
+        "pesquisa": -3.07362687971807,
+        "oficial": 5.233167305421745,
+        "erro": -8.306794185139815
+      },
+      "erro_absoluto_medio_pp": 2.3233702210344545,
+      "margem_95_diferenca_aas_pp": 0.823782304433157,
+      "erro_diferenca_fora_da_margem_aas": true,
+      "validos_calculados_dos_totais": {
+        "lula": 42.622950819672134,
+        "bolsonaro": 45.696721311475414,
+        "tebet": 4.303278688524591,
+        "ciro": 4.200819672131147,
+        "demais": 3.1762295081967267
+      },
+      "documentos": [
+        {
+          "arquivo": "data/originals/pesquisas_2022/verita/relatorio.pdf",
+          "url": "https://institutoverita.com.br/eleicoes/?jet_download=962",
+          "sha256": "dd092f72fcf729e2af3c29b97a1d06bd5eb62a2fe01740cfb2a6b1e66a300767"
+        }
+      ]
+    },
+    {
+      "id": "gerp",
+      "casa": "Gerp",
+      "casa_2026": "Gerp",
+      "nivel": "pdf_do_instituto",
+      "incluir": false,
+      "motivo_exclusao": "Campo encerrado em 01/09/2022, um mês antes da urna, com cartela que ainda inclui Pablo Marçal e Roberto Jefferson. Não é onda de véspera nem tem a cartela oficial.",
+      "registro": "BR-09102/2022",
+      "campo": {
+        "inicio": "2022-08-29",
+        "fim": "2022-09-01"
+      },
+      "n": 2095,
+      "metodo": "telefone (CATI)",
+      "base_validos": "calculado_dos_totais",
+      "validos_pp": {
+        "lula": 40.0,
+        "bolsonaro": 41.05263157894737,
+        "tebet": 6.315789473684211,
+        "ciro": 11.578947368421053,
+        "demais": 1.05263157894737
+      },
+      "erro_pp": {
+        "lula": -8.430719859868738,
+        "bolsonaro": -2.1449209754996232,
+        "tebet": 2.158270499964921,
+        "ciro": 8.5346307359845,
+        "demais": -0.1172604005810598
+      },
+      "diferenca_lula_menos_bolsonaro": {
+        "pesquisa": -1.05263157894737,
+        "oficial": 5.233167305421745,
+        "erro": -6.285798884369115
+      },
+      "erro_absoluto_medio_pp": 4.2771604943797685,
+      "margem_95_diferenca_aas_pp": 3.955015113575647,
+      "erro_diferenca_fora_da_margem_aas": true,
+      "validos_calculados_dos_totais": {
+        "lula": 40.0,
+        "bolsonaro": 41.05263157894737,
+        "tebet": 6.315789473684211,
+        "ciro": 11.578947368421053,
+        "demais": 1.05263157894737
+      },
+      "documentos": [
+        {
+          "arquivo": "data/originals/pesquisas_2022/gerp/relatorio.pdf",
+          "url": "https://gerp.com.br/relatorios/202209_5a_PRESIDENTE-2022.pdf",
+          "sha256": "b5098a108ced493f27d6a122e52b7a849dab55037cb8006d975676b3af506e33"
+        }
+      ]
+    },
+    {
+      "id": "brasmarket",
+      "casa": "Brasmarket",
+      "casa_2026": null,
+      "nivel": "imprensa_divergente",
+      "incluir": false,
+      "motivo_exclusao": "Sem documento do instituto ou do contratante. As três matérias arquivadas divergem (Bolsonaro 45,4 ou 45,5 no Diário do Poder; o Leiagora não cita Tebet). Entra só na média ampliada de sensibilidade.",
+      "registro": "BR-08847/2022",
+      "campo": {
+        "inicio": "2022-09-26",
+        "fim": "2022-09-28"
+      },
+      "n": 1600,
+      "metodo": "telefone (segundo a imprensa)",
+      "base_validos": "calculado_dos_totais",
+      "validos_pp": {
+        "lula": 34.68013468013468,
+        "bolsonaro": 50.95398428731762,
+        "tebet": 5.836139169472502,
+        "ciro": 6.958473625140291,
+        "demais": 1.571268237934916
+      },
+      "erro_pp": {
+        "lula": -13.75058517973406,
+        "bolsonaro": 7.756431732870624,
+        "tebet": 1.6786201957532123,
+        "ciro": 3.9141569927037376,
+        "demais": 0.4013762584064864
+      },
+      "diferenca_lula_menos_bolsonaro": {
+        "pesquisa": -16.27384960718294,
+        "oficial": 5.233167305421745,
+        "erro": -21.507016912604684
+      },
+      "erro_absoluto_medio_pp": 5.500234071893624,
+      "margem_95_diferenca_aas_pp": 4.728800320240411,
+      "erro_diferenca_fora_da_margem_aas": true,
+      "validos_calculados_dos_totais": {
+        "lula": 34.68013468013468,
+        "bolsonaro": 50.95398428731762,
+        "tebet": 5.836139169472502,
+        "ciro": 6.958473625140291,
+        "demais": 1.571268237934916
+      },
+      "documentos": [
+        {
+          "arquivo": "data/originals/pesquisas_2022/brasmarket/gazeta_materia.html",
+          "url": "https://www.gazetadopovo.com.br/eleicoes/2022/pesquisa-eleitoral/brasmarket-presidente-30-09-22/",
+          "sha256": "557a29b7624b23ddec1cb73510a773ad0106272aed696901a38ad3218dfce67d"
+        },
+        {
+          "arquivo": "data/originals/pesquisas_2022/brasmarket/leiagora_materia.html",
+          "url": "https://leiagora.com.br/brasmarket-bolsonaro-faz-509-dos-votos-validos-e-vence-no-1o-turno/",
+          "sha256": "aff6fd06b6eb1e12a4ec3cbb1147c84a2e19884414cc0e89b76d850577adcb73"
+        },
+        {
+          "arquivo": "data/originals/pesquisas_2022/brasmarket/leiagora_materia.png",
+          "url": "https://leiagora.com.br/brasmarket-bolsonaro-faz-509-dos-votos-validos-e-vence-no-1o-turno/",
+          "sha256": "8ce048b369ae9afbb41b98f29fee012bbf640ea1e6f76f24fd1118a97294ad88"
+        },
+        {
+          "arquivo": "data/originals/pesquisas_2022/brasmarket/diariodopoder_materia.html",
+          "url": "https://diariodopoder.com.br/eleicoes-2022/pesquisa-brasmarket-bolsonaro-tem-454-e-lula-309-das-intencoes-de-voto",
+          "sha256": "dba8a7d9bddfe36f34e2082ef3a39c1a4c62239e485cd5bb593c66f8e742455b"
+        }
+      ]
+    }
+  ],
+  "media_das_casas": {
+    "nome": "principal",
+    "regra": "todas as casas com documento arquivado de nível pdf_do_instituto, infografico_do_instituto, materia_do_contratante ou imprensa_concordante, campo encerrado entre 22/09 e 01/10/2022 e mesma cartela",
+    "casas": [
+      "datafolha",
+      "ipec",
+      "quaest",
+      "atlas",
+      "poderdata",
+      "parana_pesquisas",
+      "cnt_mda",
+      "ipespe",
+      "fsb_btg",
+      "futura",
+      "ideia",
+      "verita"
+    ],
+    "n_casas": 12,
+    "media_simples_validos_pp": {
+      "lula": 48.01490359698595,
+      "bolsonaro": 38.86312163737826,
+      "tebet": 5.316715235759207,
+      "ciro": 5.678163613868246,
+      "demais": 2.1270959160083316
+    },
+    "erro_comum_pp": {
+      "lula": -0.4158162628827853,
+      "bolsonaro": -4.33443091706873,
+      "tebet": 1.1591962620399174,
+      "ciro": 2.633846981431692,
+      "demais": 0.9572039364799019
+    },
+    "erro_comum_diferenca_lula_menos_bolsonaro": 3.9186146541859443,
+    "mediana_dos_erros_diferenca_pp": 4.964337892083453,
+    "erro_absoluto_medio_da_media_pp": 1.9000988719806053,
+    "desvio_padrao_entre_casas_pp": {
+      "lula": 2.5619724122903094,
+      "bolsonaro": 2.8226433957789325,
+      "tebet": 1.319469817900919,
+      "ciro": 1.3368818297315672,
+      "demais": 0.6960707174861914,
+      "diferenca_lula_menos_bolsonaro": 4.959032776603348
+    },
+    "casas_que_superestimaram_lula_menos_bolsonaro": 10,
+    "componente_proprio_diferenca_pp": {
+      "datafolha": 4.848218040392311,
+      "ipec": 4.848218040392311,
+      "quaest": 1.848218040392311,
+      "atlas": 0.5482180403923138,
+      "poderdata": 0.848218040392311,
+      "parana_pesquisas": -2.0517819596076876,
+      "cnt_mda": -0.5517819596076947,
+      "ipespe": 4.848218040392311,
+      "fsb_btg": 1.848218040392311,
+      "futura": -6.051781959607688,
+      "ideia": 1.2432284354027061,
+      "verita": -12.225408839325759
+    }
+  },
+  "sensibilidades_da_media": [
+    {
+      "nome": "so_pdf_do_instituto",
+      "regra": "só casas com PDF do próprio instituto",
+      "casas": [
+        "quaest",
+        "atlas",
+        "parana_pesquisas",
+        "cnt_mda",
+        "ipespe",
+        "fsb_btg",
+        "futura",
+        "ideia",
+        "verita"
+      ],
+      "n_casas": 9,
+      "media_simples_validos_pp": {
+        "lula": 47.464315907092384,
+        "bolsonaro": 39.484162183171016,
+        "tebet": 5.311175869901166,
+        "ciro": 5.793107040713216,
+        "demais": 1.94723899912222
+      },
+      "erro_comum_pp": {
+        "lula": -0.9664039527763535,
+        "bolsonaro": -3.7133903712759775,
+        "tebet": 1.153656896181876,
+        "ciro": 2.7487904082766623,
+        "demais": 0.7773470195937904
+      },
+      "erro_comum_diferenca_lula_menos_bolsonaro": 2.746986418499624,
+      "mediana_dos_erros_diferenca_pp": 4.466832694578258,
+      "erro_absoluto_medio_da_media_pp": 1.871917729620932,
+      "desvio_padrao_entre_casas_pp": {
+        "lula": 2.660375383160054,
+        "bolsonaro": 2.9949036752959697,
+        "tebet": 1.5200014511724869,
+        "ciro": 1.5214090893464864,
+        "demais": 0.6612909566360041,
+        "diferenca_lula_menos_bolsonaro": 5.128690649075974
+      },
+      "casas_que_superestimaram_lula_menos_bolsonaro": 7,
+      "componente_proprio_diferenca_pp": {
+        "quaest": 3.0198462760786313,
+        "atlas": 1.7198462760786342,
+        "parana_pesquisas": -0.8801537239213673,
+        "cnt_mda": 0.6198462760786256,
+        "ipespe": 6.019846276078631,
+        "fsb_btg": 3.0198462760786313,
+        "futura": -4.880153723921367,
+        "ideia": 2.4148566710890265,
+        "verita": -11.053780603639439
+      }
+    },
+    {
+      "nome": "sem_verita",
+      "regra": "média principal sem o Instituto Veritá, a casa mais distante das demais",
+      "casas": [
+        "datafolha",
+        "ipec",
+        "quaest",
+        "atlas",
+        "poderdata",
+        "parana_pesquisas",
+        "cnt_mda",
+        "ipespe",
+        "fsb_btg",
+        "futura",
+        "ideia"
+      ],
+      "n_casas": 11,
+      "media_simples_validos_pp": {
+        "lula": 48.505140805140805,
+        "bolsonaro": 38.24195804195804,
+        "tebet": 5.408864108864109,
+        "ciro": 5.812455112455113,
+        "demais": 2.031581931581932
+      },
+      "erro_comum_pp": {
+        "lula": 0.07442094527206677,
+        "bolsonaro": -4.95559451248895,
+        "tebet": 1.2513451351448195,
+        "ciro": 2.768138480018559,
+        "demais": 0.8616899520535024
+      },
+      "erro_comum_diferenca_lula_menos_bolsonaro": 5.030015457761017,
+      "mediana_dos_erros_diferenca_pp": 5.1618430895886505,
+      "erro_absoluto_medio_da_media_pp": 1.9822378049955798,
+      "desvio_padrao_entre_casas_pp": {
+        "lula": 2.0118855926829893,
+        "bolsonaro": 1.9159602583751427,
+        "tebet": 1.3427635625214107,
+        "ciro": 1.3145062960325975,
+        "demais": 0.642295358848738,
+        "diferenca_lula_menos_bolsonaro": 3.278171996356576
+      },
+      "casas_que_superestimaram_lula_menos_bolsonaro": 10,
+      "componente_proprio_diferenca_pp": {
+        "datafolha": 3.736817236817238,
+        "ipec": 3.736817236817238,
+        "quaest": 0.7368172368172381,
+        "atlas": -0.5631827631827591,
+        "poderdata": -0.2631827631827619,
+        "parana_pesquisas": -3.1631827631827605,
+        "cnt_mda": -1.6631827631827676,
+        "ipespe": 3.736817236817238,
+        "fsb_btg": 0.7368172368172381,
+        "futura": -7.1631827631827605,
+        "ideia": 0.13182763182763324
+      }
+    },
+    {
+      "nome": "ampliada",
+      "regra": "média principal mais a Brasmarket, que só tem imprensa divergente",
+      "casas": [
+        "datafolha",
+        "ipec",
+        "quaest",
+        "atlas",
+        "poderdata",
+        "parana_pesquisas",
+        "cnt_mda",
+        "ipespe",
+        "fsb_btg",
+        "futura",
+        "ideia",
+        "verita",
+        "brasmarket"
+      ],
+      "n_casas": 13,
+      "media_simples_validos_pp": {
+        "lula": 46.98915214184355,
+        "bolsonaro": 39.7931879950659,
+        "tebet": 5.356670922967923,
+        "ciro": 5.77664899935071,
+        "demais": 2.084339940771915
+      },
+      "erro_comum_pp": {
+        "lula": -1.4415677180251905,
+        "bolsonaro": -3.4043645593810936,
+        "tebet": 1.199151949248633,
+        "ciro": 2.732332366914157,
+        "demais": 0.9144479612434853
+      },
+      "erro_comum_diferenca_lula_menos_bolsonaro": 1.9627968413559032,
+      "mediana_dos_erros_diferenca_pp": 4.766832694578255,
+      "erro_absoluto_medio_da_media_pp": 1.9383729109625119,
+      "desvio_padrao_entre_casas_pp": {
+        "lula": 4.437892071882006,
+        "bolsonaro": 4.3068175428678055,
+        "tebet": 1.2714838407203723,
+        "ciro": 1.3283098657472237,
+        "demais": 0.6840344980598699,
+        "diferenca_lula_menos_bolsonaro": 8.501210229153095
+      },
+      "casas_que_superestimaram_lula_menos_bolsonaro": 10,
+      "componente_proprio_diferenca_pp": {
+        "datafolha": 6.804035853222352,
+        "ipec": 6.804035853222352,
+        "quaest": 3.804035853222352,
+        "atlas": 2.504035853222355,
+        "poderdata": 2.804035853222352,
+        "parana_pesquisas": -0.09596414677764642,
+        "cnt_mda": 1.4040358532223465,
+        "ipespe": 6.804035853222352,
+        "fsb_btg": 3.804035853222352,
+        "futura": -4.095964146777646,
+        "ideia": 3.1990462482327473,
+        "verita": -10.269591026495718,
+        "brasmarket": -23.469813753960587
+      }
+    }
+  ],
+  "ranking": {
+    "criterio_principal": "erro absoluto na diferença Lula menos Bolsonaro nos válidos",
+    "melhor_casa_2022": {
+      "id": "parana_pesquisas",
+      "casa": "Paraná Pesquisas",
+      "erro_diferenca_pp": 1.8668326945782567,
+      "erro_absoluto_medio_pp": 1.8113089657262926
+    },
+    "pior_casa_2022": {
+      "id": "datafolha",
+      "casa": "Datafolha",
+      "erro_diferenca_pp": 8.766832694578255,
+      "erro_absoluto_medio_pp": 2.8790210217787964
+    },
+    "criterio_alternativo": "erro absoluto médio em Lula, Bolsonaro, Tebet, Ciro e demais",
+    "melhor_casa_2022_eam": {
+      "id": "cnt_mda",
+      "casa": "CNT/MDA",
+      "erro_diferenca_pp": 3.3668326945782496,
+      "erro_absoluto_medio_pp": 1.4513089657262899
+    },
+    "pior_casa_2022_eam": {
+      "id": "ipespe",
+      "casa": "Ipespe/Abrapel",
+      "erro_diferenca_pp": 8.766832694578255,
+      "erro_absoluto_medio_pp": 3.3469778135901684
+    },
+    "ressalva": "Ranking de uma onda por casa numa eleição. Casas com campo encerrado vários dias antes da urna carregam também o movimento final do eleitor; o ranking não separa as duas coisas."
+  },
+  "comparacao_2026": {
+    "fonte_2026": "docs/assets/predicao_2026_1T_presidente.json",
+    "sha256_fonte_2026": "16f5c9d8249f34c739b61d76884e7ff62341b1e8e8f84d20dce7cdbf46577007",
+    "campo_lido": "nacional.efeitos_casa[casa].desvio_margem_pp",
+    "sinal": "positivo nas duas colunas significa mais Lula: em 2022, acima do TSE; em 2026, acima da mediana das casas pareadas por época",
+    "linhas": [
+      {
+        "casa_2022": "Datafolha",
+        "casa_2026": "Datafolha",
+        "erro_2022_diferenca_lula_menos_bolsonaro_pp": 8.766832694578255,
+        "desvio_relativo_2026_lula_menos_flavio_pp": -0.4835959629293507,
+        "ondas_2026": 5
+      },
+      {
+        "casa_2022": "Quaest/Genial",
+        "casa_2026": "Quaest",
+        "erro_2022_diferenca_lula_menos_bolsonaro_pp": 5.766832694578255,
+        "desvio_relativo_2026_lula_menos_flavio_pp": 2.6385149699877317,
+        "ondas_2026": 5
+      },
+      {
+        "casa_2022": "AtlasIntel",
+        "casa_2026": "AtlasIntel",
+        "erro_2022_diferenca_lula_menos_bolsonaro_pp": 4.466832694578258,
+        "desvio_relativo_2026_lula_menos_flavio_pp": -1.0220303349235738,
+        "ondas_2026": 3
+      },
+      {
+        "casa_2022": "PoderData",
+        "casa_2026": "PoderData",
+        "erro_2022_diferenca_lula_menos_bolsonaro_pp": 4.766832694578255,
+        "desvio_relativo_2026_lula_menos_flavio_pp": -1.5153848189136065,
+        "ondas_2026": 1
+      },
+      {
+        "casa_2022": "CNT/MDA",
+        "casa_2026": "MDA",
+        "erro_2022_diferenca_lula_menos_bolsonaro_pp": 3.3668326945782496,
+        "desvio_relativo_2026_lula_menos_flavio_pp": 4.91269182393495,
+        "ondas_2026": 2
+      },
+      {
+        "casa_2022": "FSB/BTG",
+        "casa_2026": "Nexus",
+        "erro_2022_diferenca_lula_menos_bolsonaro_pp": 5.766832694578255,
+        "desvio_relativo_2026_lula_menos_flavio_pp": -0.07659862602096279,
+        "ondas_2026": 5
+      },
+      {
+        "casa_2022": "Modalmais/Futura",
+        "casa_2026": "Futura",
+        "erro_2022_diferenca_lula_menos_bolsonaro_pp": -2.1331673054217433,
+        "desvio_relativo_2026_lula_menos_flavio_pp": -6.395420023178422,
+        "ondas_2026": 2
+      },
+      {
+        "casa_2022": "Ideia (Exame/Ideia)",
+        "casa_2026": "Meio/Ideia",
+        "erro_2022_diferenca_lula_menos_bolsonaro_pp": 5.1618430895886505,
+        "desvio_relativo_2026_lula_menos_flavio_pp": -2.6546346224875728,
+        "ondas_2026": 1
+      }
+    ],
+    "ressalva": "O desvio relativo de 2026 não é erro: mede a distância da casa às outras casas no mesmo período, não à urna, que ainda não existe. Casa que errou em 2022 pode ter mudado método, amostra, equipe ou marca (FSB/BTG para Nexus, Exame/Ideia para Meio/Ideia). A tabela serve para o leitor ver, não para corrigir ninguém."
+  },
+  "aplicacao_2026": {
+    "status": "descrição; não calculado sobre a central, que está em revisão",
+    "erro_comum_2022_diferenca_lula_menos_bolsonaro_pp": 3.9186146541859443,
+    "regra": "Sensibilidade 'se o erro comum de 2022 se repetisse': somar à diferença Flávio menos Lula nos válidos da central de 2026 o erro comum de 2022 na diferença Lula menos Bolsonaro, com o sinal dele. Se em 2022 a média das casas pôs Lula E pontos acima do que a urna deu na diferença, repetir esse erro significa que a diferença real F menos L seria E pontos maior do que a central.",
+    "deslocamentos_pp_em_flavio_menos_lula": {
+      "repeticao_de_2022": 3.9186146541859443,
+      "direcao_oposta": -3.9186146541859443
+    },
+    "como_publicar": "Mostrar as duas direções lado a lado, com o mesmo destaque, e o desvio entre casas de 2022 ao lado para lembrar que o erro de cada casa variou muito em torno da média.",
+    "ressalvas": [
+      "Uma eleição é uma observação. Não há como estimar a distribuição do erro comum com um ponto só.",
+      "2022 teve cartela, polarização, instituto, método e eleitorado diferentes de 2026; o erro pode não se repetir, pode mudar de sinal e pode mudar de tamanho.",
+      "Não é ajuste da central nem prognóstico. A decisão de qualquer ajuste é do responsável pela previsão.",
+      "9 das 12 ondas da média principal terminaram o campo antes de 1º de outubro; parte do erro pode ser movimento real de última hora, não viés de medição."
+    ]
+  },
+  "eleicao_2018": {
+    "status": "não arquivada",
+    "motivo": "As pesquisas finais de 2018 não foram arquivadas nesta rodada; nenhum número de 2018 entra sem documento."
+  },
+  "nao_arquivadas": [
+    {
+      "casa": "Real Time Big Data",
+      "motivo": "Nenhuma pesquisa nacional de 1º turno presidencial de 2022 localizada: a biblioteca de mídia do Poder360 (buscas realtime, real time) só devolve estaduais, e as tabelas da Wikipédia em inglês e português só listam uma nacional de março de 2021. Ausência não provada."
+    },
+    {
+      "casa": "Equilíbrio Brasil",
+      "motivo": "Listada em índices secundários com campo de 20 a 22/09/2022; documento não procurado nesta rodada."
+    },
+    {
+      "casa": "Vox Populi, Datatempo, Ipri",
+      "motivo": "Não aparecem nos índices consultados para setembro de 2022; sem busca dedicada."
+    },
+    {
+      "casa": "Ipespe/XP",
+      "motivo": "A série XP/Ipespe não foi procurada nesta rodada; a onda do Ipespe arquivada é a parceria com a Abrapel (BR-05007/2022), de 30/09/2022."
+    }
+  ]
+}
