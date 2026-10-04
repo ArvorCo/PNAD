@@ -1,0 +1,65 @@
+{
+ "instituto": "AtlasIntel",
+ "uf": "ES",
+ "registro_tse": "BR-02089/2026",
+ "registro_tse_estadual": "ES-01573/2026",
+ "campo": "2026-09-27 a 2026-10-02",
+ "divulgacao": "2026-10-03",
+ "divulgacao_tipo": "cartão de 03.10.2026 na página de pesquisas da AtlasIntel, com o PDF",
+ "n": 1226,
+ "margem": "±3 p.p., 95%",
+ "metodo": "Recrutamento digital aleatório (Atlas RDR)",
+ "parceiro_midia": null,
+ "url": "https://cdn1.atlasintel.org/pesquisa_atlas__eleicoes_espirito_santo_2026__261003_990b45cf157d3409.pdf",
+ "url_pdf": "https://cdn1.atlasintel.org/pesquisa_atlas__eleicoes_espirito_santo_2026__261003_990b45cf157d3409.pdf",
+ "pagina_instituto": "https://atlasintel.org/poll/brazil-espirito-santo-2026-10-03",
+ "arquivo": "data/originals/atlas_estaduais_102026_04/ES/relatorio.pdf",
+ "fonte_json": "data/originals/atlas_estaduais_102026_04/ES/fonte.json",
+ "sha256_pdf": "8787dfffbe4db89301c9fd9bf769d870862d6f6d826cada4875add6f76bb6b70",
+ "bytes": 3539342,
+ "pres_1t": {
+  "pagina": 21,
+  "valores": {
+   "Flávio": 48.8,
+   "Lula": 34.4,
+   "Renan": 6.2,
+   "Caiado": 2.9,
+   "Cury": 2.3,
+   "Branco/nulo": 2.9,
+   "Indecisos": 1.3,
+   "Zema": 0.5,
+   "Clariana": 0.4,
+   "Samara": 0.3
+  },
+  "soma": 100.0,
+  "barra_outros": 1.2,
+  "nao_pontuaram": [
+   "Grassi",
+   "Pimenta",
+   "Hertz",
+   "Edmilson"
+  ],
+  "nota": "Uma casa decimal, como impressa. 'Voto branco/nulo' = Branco/nulo e 'Não sei' = Indecisos, separados no 1º turno. A barra 'Outros' foi repartida pelo rodapé da mesma página, que imprime cada nome com o seu valor; os nomes que 'não pontuaram' ficam fora do vetor."
+ },
+ "pres_2t": {
+  "pagina": 26,
+  "cenarios": [
+   {
+    "Flávio": 51.7,
+    "Lula": 39.2,
+    "Branco/nulo": 9.1,
+    "Indecisos": null,
+    "pagina": 26,
+    "soma": 100.0
+   }
+  ],
+  "nota": "O gráfico agrega 'Branco / Nulo / Não sei' numa só barra: gravada em Branco/nulo como a casa publica; Indecisos = null (não separado)."
+ },
+ "substitui": "analysis/voto_util/outros/atlasintel_ES_20260831.json",
+ "notas": [
+  "Relatório em imagem: números lidos página a página em renderização de 200 dpi; cópias de 130 dpi em analysis/predicao_2026/atualizacao_20261004/atlas/.",
+  "registro_tse = registro nacional (BR); registro_tse_estadual = registro do estado; ambos na p. 5, com período 27/09/2026-02/10/2026.",
+  "Os cruzamentos demográficos do relatório não trazem hábito de comparecimento; sem comparecimento_compacto.",
+  "Onda final antes do 1º turno; base.state_polls mantém a mais recente por casa e UF."
+ ]
+}

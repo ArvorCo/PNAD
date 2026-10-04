@@ -176,9 +176,12 @@ def test_recent_state_sources_replace_old_waves_and_have_primary_proof(data):
     new = [
         p for p in polls if p["arquivo"].startswith("analysis/predicao_2026/estaduais/")
     ]
-    assert len(new) == data["qualidade"]["n_estaduais_novas_integradas"] == 34
+    # 34 ondas de 03/10 mais 11 estaduais finais da AtlasIntel de 04/10.
+    assert len(new) == data["qualidade"]["n_estaduais_novas_integradas"] == 45
     datafolha = sorted(p["uf"] for p in new if p["instituto"] == "Datafolha")
     assert datafolha == ["DF", "MG", "PE", "RJ", "SP"]
+    atlas = sorted(p["uf"] for p in new if p["instituto"] == "AtlasIntel")
+    assert atlas == ["AC", "BA", "CE", "ES", "GO", "MS", "MT", "PA", "PI", "RJ", "SP"]
     assert len({(p["instituto"], p["uf"]) for p in polls}) == len(polls)
     quaest = [p for p in new if p["instituto"] == "Quaest"]
     assert len(quaest) == 25

@@ -1,0 +1,65 @@
+{
+ "instituto": "AtlasIntel",
+ "uf": "CE",
+ "registro_tse": "BR-09756/2026",
+ "registro_tse_estadual": "CE-01031/2026",
+ "campo": "2026-09-27 a 2026-10-02",
+ "divulgacao": "2026-10-03",
+ "divulgacao_tipo": "cartão de 03.10.2026 na página de pesquisas da AtlasIntel, com o PDF",
+ "n": 2227,
+ "margem": "±2 p.p., 95%",
+ "metodo": "Recrutamento digital aleatório (Atlas RDR)",
+ "parceiro_midia": "Focus Poder (cabeçalho textual e logo)",
+ "url": "https://cdn1.atlasintel.org/pesquisa_atlas_focus__eleicoes_ceara_2026__261003_77dad3caef63e1c9.pdf",
+ "url_pdf": "https://cdn1.atlasintel.org/pesquisa_atlas_focus__eleicoes_ceara_2026__261003_77dad3caef63e1c9.pdf",
+ "pagina_instituto": "https://atlasintel.org/poll/brazil-ceara-pesquisa-atlasfocus-2026-10-03",
+ "arquivo": "data/originals/atlas_estaduais_102026_04/CE/relatorio.pdf",
+ "fonte_json": "data/originals/atlas_estaduais_102026_04/CE/fonte.json",
+ "sha256_pdf": "caec65cf5f8ee5d091f28c9b6dfbaba858d1e8e4baab9d9e3023b47c563a09fa",
+ "bytes": 4106935,
+ "pres_1t": {
+  "pagina": 26,
+  "valores": {
+   "Lula": 60.8,
+   "Flávio": 28.9,
+   "Cury": 3.9,
+   "Renan": 3.4,
+   "Branco/nulo": 1.1,
+   "Indecisos": 0.3,
+   "Caiado": 1.5,
+   "Zema": 0.1,
+   "Samara": 0.1
+  },
+  "soma": 100.1,
+  "barra_outros": 1.7,
+  "nao_pontuaram": [
+   "Grassi",
+   "Edmilson",
+   "Hertz",
+   "Clariana",
+   "Pimenta"
+  ],
+  "nota": "Uma casa decimal, como impressa. 'Voto branco/nulo' = Branco/nulo e 'Não sei' = Indecisos, separados no 1º turno. A barra 'Outros' foi repartida pelo rodapé da mesma página, que imprime cada nome com o seu valor; os nomes que 'não pontuaram' ficam fora do vetor."
+ },
+ "pres_2t": {
+  "pagina": 31,
+  "cenarios": [
+   {
+    "Lula": 63.2,
+    "Flávio": 31.8,
+    "Branco/nulo": 4.9,
+    "Indecisos": null,
+    "pagina": 31,
+    "soma": 99.9
+   }
+  ],
+  "nota": "O gráfico agrega 'Branco / Nulo / Não sei' numa só barra: gravada em Branco/nulo como a casa publica; Indecisos = null (não separado)."
+ },
+ "substitui": "analysis/voto_util/outros/atlasintel_CE_20260920.json",
+ "notas": [
+  "Relatório em imagem: números lidos página a página em renderização de 200 dpi; cópias de 130 dpi em analysis/predicao_2026/atualizacao_20261004/atlas/.",
+  "registro_tse = registro nacional (BR); registro_tse_estadual = registro do estado; ambos na p. 5, com período 27/09/2026-02/10/2026.",
+  "Os cruzamentos demográficos do relatório não trazem hábito de comparecimento; sem comparecimento_compacto.",
+  "Onda final antes do 1º turno; base.state_polls mantém a mais recente por casa e UF."
+ ]
+}

@@ -1,0 +1,203 @@
+{
+  "instituto": "AtlasIntel",
+  "contratante": "Bloomberg",
+  "metodo": "online (recrutamento digital aleatório, Atlas RDR)",
+  "renda": {
+    "unidade": "reais_nominais",
+    "mes_precos": "202609",
+    "faixas": [
+      {
+        "rotulo": "R$0 a R$2.000",
+        "max": 2000
+      },
+      {
+        "rotulo": "R$2.000 a R$3.000",
+        "max": 3000
+      },
+      {
+        "rotulo": "R$3.000 a R$5.000",
+        "max": 5000
+      },
+      {
+        "rotulo": "R$5.000 a R$10.000",
+        "max": 10000
+      },
+      {
+        "rotulo": "Acima de R$10.000",
+        "max": null
+      }
+    ],
+    "amostra_pct": [
+      20.0,
+      12.0,
+      24.0,
+      26.6,
+      17.4
+    ],
+    "nota": "Perfil desta onda, p. 5, renda familiar nominal. Soma 100,0%. Não reutiliza a onda anterior (19,5/11,1/26,7/25,5/17,3). Cortes nominais em preços de 09/2026, último mês com IPCA na série, como na onda anterior."
+  },
+  "id": "atlas_2026-10-02",
+  "campo": {
+    "inicio": "2026-09-27",
+    "fim": "2026-10-02"
+  },
+  "divulgacao": "2026-10-03",
+  "registro_tse": "BR-00999/2026",
+  "n": 4945,
+  "publicado": {
+    "1t": {
+      "lula": 46.7,
+      "flavio": 43.8,
+      "renan_santos": 4.6,
+      "cury": 2.1,
+      "caiado": 1.4,
+      "rui": 0.4,
+      "zema": 0.3,
+      "samara": 0.1,
+      "clariana": 0.1,
+      "branco_nulo": 0.3,
+      "indecisos": 0.3
+    },
+    "2t": {
+      "lula": 47.6,
+      "flavio": 47.4,
+      "branco_nulo": 5.0
+    }
+  },
+  "cruzamentos": {
+    "1t": {
+      "opcoes": [
+        "lula",
+        "flavio",
+        "renan_santos",
+        "cury",
+        "caiado",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          48.5,
+          41.4,
+          4.5,
+          3.8,
+          0.3,
+          1.2,
+          0.3
+        ],
+        [
+          37.5,
+          49.4,
+          6.5,
+          2.6,
+          0.1,
+          0,
+          0.5
+        ],
+        [
+          40.6,
+          52.2,
+          4.8,
+          1.1,
+          0.3,
+          0.1,
+          0.3
+        ],
+        [
+          51.8,
+          40.8,
+          3.5,
+          2.0,
+          1.3,
+          0.1,
+          0.1
+        ],
+        [
+          51.9,
+          35.4,
+          4.7,
+          1.4,
+          5.2,
+          0.3,
+          0.3
+        ]
+      ],
+      "nota": "Transcrição visual integral do bloco de renda familiar da p. 17 (renderização a 300 dpi); colunas na ordem do perfil. O cruzamento publica só sete linhas: Rui, Zema, Samara e Clariana, que somam 0,9 no topline (p. 14, rodapé de Outros), não têm linha própria e não são imputados. Por isso as colunas somam 100,0 / 96,6 / 99,4 / 99,6 / 99,2.",
+      "controle": {
+        "renda": {
+          "lula": 46.753,
+          "flavio": 43.748
+        },
+        "sexo": {
+          "pesos": {
+            "homem": 46.2,
+            "mulher": 53.8
+          },
+          "lula": [
+            44.8,
+            48.3
+          ],
+          "flavio": [
+            41.6,
+            45.7
+          ],
+          "recomposto": {
+            "lula": 46.683,
+            "flavio": 43.806
+          }
+        },
+        "regiao": {
+          "pesos": {
+            "sudeste": 45.1,
+            "nordeste": 27.7,
+            "sul": 14.5,
+            "centro_oeste": 8.2,
+            "norte": 4.4
+          },
+          "lula": [
+            44.6,
+            57.7,
+            39.2,
+            38.9,
+            38.9
+          ],
+          "flavio": [
+            47.3,
+            32.6,
+            50.3,
+            50.1,
+            44.8
+          ],
+          "recomposto": {
+            "lula": 46.729,
+            "flavio": 43.779
+          }
+        },
+        "nota": "Pesos de sexo e região do perfil da p. 5; linhas da p. 17. Região normalizada pela soma 99,9. Os três cruzamentos devolvem o placar publicado (46,7 e 43,8) com resíduo máximo de 0,06 ponto."
+      }
+    }
+  },
+  "fonte": {
+    "tipo": "relatorio",
+    "pdf": "data/originals/atlas_102026_04/relatorio.pdf",
+    "url": "https://cdn1.atlasintel.org/pesquisa_atlas_bloomberg__nacional_261003_1_2c124be0d65430b5.pdf",
+    "pagina_instituto": "https://atlasintel.org/poll/brazil-national-2026-10-03",
+    "paginas": {
+      "perfil_renda": 5,
+      "1t_topline": 14,
+      "1t_validos": 15,
+      "1t_renda": 17,
+      "2t_topline": 19,
+      "2t_validos": 20,
+      "2t_serie": 21
+    },
+    "sha256": "66fe57ab1887967ec122751dccac4b151409a6d645296706bfa8eaa2eb1161e8",
+    "bytes": 2286125,
+    "total_paginas": 22,
+    "conferido_em": "2026-10-04",
+    "status": "Relatório completo arquivado e conferido; onda final antes do 1º turno."
+  },
+  "sem_cruzamento": {
+    "2t": "As pp. 19 a 21 publicam topline, válidos e série, sem voto por renda do 2º turno. Os 5% agregam branco, nulo e não sei. Não se transporta o ajuste de renda do 1º turno."
+  }
+}

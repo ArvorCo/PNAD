@@ -1,0 +1,3 @@
+# AtlasIntel ES, onda final de 27/09 a 02/10/2026
+
+Relatório estadual da AtlasIntel (BR-02089/2026, ES-01573/2026), 1226 entrevistas por recrutamento digital aleatório, campo de 27/09 a 02/10/2026, publicado na página do instituto em 03/10/2026. PDF original em `relatorio.pdf`, texto nativo em `relatorio.txt`. O relatório é imagem: o 1º turno presidencial está na p. 21 e o 2º turno Lula contra Flávio na p. 26; renderizações em `analysis/predicao_2026/atualizacao_20261004/atlas/`. URL, bytes e SHA-256 em `fonte.json`. Ficha da previsão: `analysis/predicao_2026/estaduais/atlasintel_ES_20261002.json`.

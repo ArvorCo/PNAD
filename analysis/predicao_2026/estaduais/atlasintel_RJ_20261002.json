@@ -1,0 +1,62 @@
+{
+ "instituto": "AtlasIntel",
+ "uf": "RJ",
+ "registro_tse": "BR-02842/2026",
+ "registro_tse_estadual": "RJ-02601/2026",
+ "campo": "2026-09-27 a 2026-10-02",
+ "divulgacao": "2026-10-03",
+ "divulgacao_tipo": "cartão de 03.10.2026 na página de pesquisas da AtlasIntel, com o PDF",
+ "n": 2244,
+ "margem": "±2 p.p., 95%",
+ "metodo": "Recrutamento digital aleatório (Atlas RDR)",
+ "parceiro_midia": "Estadão (logo no cabeçalho)",
+ "url": "https://cdn1.atlasintel.org/pesquisa_atlas_estadao__eleicoes_rio_de_janeiro_2026__261003_c8af612fe782f5a9.pdf",
+ "url_pdf": "https://cdn1.atlasintel.org/pesquisa_atlas_estadao__eleicoes_rio_de_janeiro_2026__261003_c8af612fe782f5a9.pdf",
+ "pagina_instituto": "https://atlasintel.org/poll/brazil-rio-de-janeiro-pesquisa-atlasestadao-2026-10-03",
+ "arquivo": "data/originals/atlas_estaduais_102026_04/RJ/relatorio.pdf",
+ "fonte_json": "data/originals/atlas_estaduais_102026_04/RJ/fonte.json",
+ "sha256_pdf": "b7a7d3ea63ed13195ec53d223caf57caea9ed2e427c839632597ac5e8f5c7bdd",
+ "bytes": 3859120,
+ "pres_1t": {
+  "pagina": 24,
+  "valores": {
+   "Flávio": 46.6,
+   "Lula": 43.5,
+   "Renan": 4.1,
+   "Caiado": 1.9,
+   "Cury": 1.4,
+   "Branco/nulo": 1.5,
+   "Indecisos": 0.4,
+   "Samara": 0.2,
+   "Zema": 0.2,
+   "Hertz": 0.1,
+   "Pimenta": 0.1,
+   "Edmilson": 0.0
+  },
+  "soma": 100.0,
+  "barra_outros": 0.6,
+  "nao_pontuaram": [],
+  "nota": "Uma casa decimal, como impressa. 'Voto branco/nulo' = Branco/nulo e 'Não sei' = Indecisos, separados no 1º turno. A barra 'Outros' foi repartida pelo rodapé da mesma página, que imprime cada nome com o seu valor; os nomes que 'não pontuaram' ficam fora do vetor."
+ },
+ "pres_2t": {
+  "pagina": 29,
+  "cenarios": [
+   {
+    "Flávio": 48.7,
+    "Lula": 46.4,
+    "Branco/nulo": 4.9,
+    "Indecisos": null,
+    "pagina": 29,
+    "soma": 100.0
+   }
+  ],
+  "nota": "O gráfico agrega 'Branco / Nulo / Não sei' numa só barra: gravada em Branco/nulo como a casa publica; Indecisos = null (não separado)."
+ },
+ "substitui": "analysis/voto_util/outros/atlasintel_RJ_20260920.json",
+ "notas": [
+  "Relatório em imagem: números lidos página a página em renderização de 200 dpi; cópias de 130 dpi em analysis/predicao_2026/atualizacao_20261004/atlas/.",
+  "registro_tse = registro nacional (BR); registro_tse_estadual = registro do estado; ambos na p. 5, com período 27/09/2026-02/10/2026.",
+  "Os cruzamentos demográficos do relatório não trazem hábito de comparecimento; sem comparecimento_compacto.",
+  "Onda final antes do 1º turno; base.state_polls mantém a mais recente por casa e UF."
+ ]
+}

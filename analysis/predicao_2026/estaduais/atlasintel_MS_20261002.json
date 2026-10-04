@@ -1,0 +1,61 @@
+{
+ "instituto": "AtlasIntel",
+ "uf": "MS",
+ "registro_tse": "BR-07964/2026",
+ "registro_tse_estadual": "MS-05642/2026",
+ "campo": "2026-09-27 a 2026-10-02",
+ "divulgacao": "2026-10-03",
+ "divulgacao_tipo": "cartão de 03.10.2026 na página de pesquisas da AtlasIntel, com o PDF",
+ "n": 1211,
+ "margem": "±3 p.p., 95%",
+ "metodo": "Recrutamento digital aleatório (Atlas RDR)",
+ "parceiro_midia": "Estadão (cabeçalho textual da p. 5: PESQUISA ATLAS/ESTADÃO)",
+ "url": "https://cdn1.atlasintel.org/pesquisa_atlas__eleicoes_mato_grosso_do_sul_2026__261003_e4d7cb11c9340c6d.pdf",
+ "url_pdf": "https://cdn1.atlasintel.org/pesquisa_atlas__eleicoes_mato_grosso_do_sul_2026__261003_e4d7cb11c9340c6d.pdf",
+ "pagina_instituto": "https://atlasintel.org/poll/brazil-mato-grosso-do-sul-2026-10-03",
+ "arquivo": "data/originals/atlas_estaduais_102026_04/MS/relatorio.pdf",
+ "fonte_json": "data/originals/atlas_estaduais_102026_04/MS/fonte.json",
+ "sha256_pdf": "f68c1ddd34cc16a4031dd1d663d939a7ae2a2b47e83784b050e8fea297204c41",
+ "bytes": 3767268,
+ "pres_1t": {
+  "pagina": 25,
+  "valores": {
+   "Flávio": 53.2,
+   "Lula": 37.2,
+   "Cury": 4.2,
+   "Renan": 1.8,
+   "Caiado": 1.7,
+   "Zema": 0.3,
+   "Branco/nulo": 0.7,
+   "Indecisos": 0.6,
+   "Samara": 0.2,
+   "Hertz": 0.0,
+   "Pimenta": 0.0
+  },
+  "soma": 99.9,
+  "barra_outros": 0.2,
+  "nao_pontuaram": [],
+  "nota": "Uma casa decimal, como impressa. 'Voto branco/nulo' = Branco/nulo e 'Não sei' = Indecisos, separados no 1º turno. A barra 'Outros' foi repartida pelo rodapé da mesma página, que imprime cada nome com o seu valor; os nomes que 'não pontuaram' ficam fora do vetor."
+ },
+ "pres_2t": {
+  "pagina": 30,
+  "cenarios": [
+   {
+    "Flávio": 55.3,
+    "Lula": 39.3,
+    "Branco/nulo": 5.4,
+    "Indecisos": null,
+    "pagina": 30,
+    "soma": 100.0
+   }
+  ],
+  "nota": "O gráfico agrega 'Branco / Nulo / Não sei' numa só barra: gravada em Branco/nulo como a casa publica; Indecisos = null (não separado)."
+ },
+ "substitui": "analysis/voto_util/outros/atlasintel_MS_20260901.json",
+ "notas": [
+  "Relatório em imagem: números lidos página a página em renderização de 200 dpi; cópias de 130 dpi em analysis/predicao_2026/atualizacao_20261004/atlas/.",
+  "registro_tse = registro nacional (BR); registro_tse_estadual = registro do estado; ambos na p. 5, com período 27/09/2026-02/10/2026.",
+  "Os cruzamentos demográficos do relatório não trazem hábito de comparecimento; sem comparecimento_compacto.",
+  "Onda final antes do 1º turno; base.state_polls mantém a mais recente por casa e UF."
+ ]
+}
