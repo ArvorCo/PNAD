@@ -22,6 +22,44 @@
   min-width: 0;
 }
 
+/* marca da casa: disco de papel com a árvore, nome em Fraunces */
+.faixa-arvor {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: none;
+}
+
+.faixa-logo {
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 50%;
+  background: var(--paper);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.faixa-logo img {
+  width: 2.75rem;
+  height: 2.75rem;
+  display: block;
+}
+
+.faixa-arvor-nome {
+  font-family: var(--font-serif);
+  font-size: 1.625rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--on-dark);
+  white-space: nowrap;
+}
+
+.faixa-arvor-nome b {
+  font-weight: 700;
+  color: var(--accent);
+}
+
 .faixa-vivo {
   display: flex;
   align-items: center;
@@ -49,7 +87,7 @@
   font-family: var(--font-serif);
   font-size: var(--t-3);
   flex: 1 1 auto;
-  min-width: 22rem;
+  min-width: 16rem;
 }
 
 .faixa-secoes {
@@ -60,7 +98,7 @@
 }
 
 .faixa-barra {
-  width: 12rem;
+  width: 9rem;
   height: 0.625rem;
   background: var(--dark-2);
   border-radius: 0.3125rem;

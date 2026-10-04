@@ -14,12 +14,12 @@ export function criarFaixa(): Faixa {
   const el = document.createElement("header");
   el.className = "faixa";
   el.innerHTML = `
+    <div class="faixa-arvor"><span class="faixa-logo"><img src="/img/arvor.png" alt="Arvor" width="500" height="500"></span><span class="faixa-arvor-nome">Arvor <b>Intelligence</b></span></div>
     <div class="faixa-vivo"><span class="faixa-pulso"></span><span class="faixa-modo">ao vivo</span></div>
     <div class="faixa-tela corte"></div>
     <div class="faixa-secoes"><span>seções</span><span class="faixa-barra"><i></i></span><span class="faixa-pct num"></span></div>
     <div class="faixa-horas num">
       <span class="h-tse">totalização <b></b></span>
-      <span class="h-arq">arquivo <b></b></span>
       <span class="h-lido">leitura <b></b></span>
       <span class="h-atraso">atraso <b></b></span>
     </div>`;
@@ -29,7 +29,6 @@ export function criarFaixa(): Faixa {
   const barra = q<HTMLElement>(".faixa-barra > i");
   const pctEl = q(".faixa-pct");
   const tse = q(".h-tse b");
-  const arq = q(".h-arq b");
   const lido = q(".h-lido b");
   const atrasoBox = q(".h-atraso");
   const atraso = q(".h-atraso b");
@@ -46,7 +45,6 @@ export function criarFaixa(): Faixa {
       barra.style.width = `${Math.min(100, Math.max(0, p))}%`;
       pctEl.textContent = br ? pct(p, 2) : "sem dado";
       tse.textContent = hora(br?.dt_ht) || "aguardando";
-      arq.textContent = hora(br?.hg) || "aguardando";
       // Leitura = última requisição ao arquivo nacional, mudado ou não: prova que o coletor está vivo.
       lido.textContent = hora(br?.ultima_leitura_em ?? br?.lido_em) || "aguardando";
       // Atraso = leitura menos geração da última versão gravada. Antes da primeira seção
