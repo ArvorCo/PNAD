@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-10-04T03:11:56Z",
+ "gerado_em": "2026-10-04T03:12:54Z",
  "data_referencia": "2026-10-03",
  "eleicao": "2026-10-04",
  "segundo_turno_data": "2026-10-25",
@@ -63,7 +63,7 @@
   "escala_erro_pp_com_deriva_7_dias": 7.396196,
   "justificativa_erro": "Calibrado com 26 pesquisas finais de Datafolha, Ipec e Quaest para governador em 19 estados na eleição de 2022 contra a urna (TSE, cargo 3), por scripts/governador-2026-calibracao.py. Entre candidaturas que fizeram de 20% a 40% dos válidos, a raiz do erro quadrático médio foi 6,8 pontos (n = 30), com a amostragem dentro. A escala no log das frações é a variância não amostral das candidaturas com ao menos 10% dos válidos, descontadas a parte amostral (n / 1,5) e a deriva medida entre ondas seguidas da mesma casa. O efeito de campo comum entra simétrico, nas duas direções: o viés de 2022 não desloca a central.",
   "decomposicao_erro": "Logística-normal: ao log da fração válida de cada candidatura somam-se um choque do campo comum a todos os estados (variância 0,0069), um choque do campo no estado (0,0438), um choque próprio (0,0438) e a deriva de 0,00137 por dia até 04/10; depois renormaliza.",
-  "classes_regra": "decidida: favorita com 90% ou mais de chance; provável: de 70% a 90%; apertada: abaixo de 70%.",
+  "classes_regra": "decidida: quem lidera com 89% ou mais de chance; provável: de 70% a 89%; apertada: abaixo de 70%.",
   "incerteza_regra": "alta quando a cobertura não é recente ou a favorita tem menos de 60%; média de 60% a 85%; baixa acima.",
   "campo_classificacao": "Campo é classificação editorial da casa (PARTIDO_CAMPO em scripts/voto_util_base.py): tucano é centro-esquerda; PSD, MDB e Avante, centro; União, PP, Podemos, PRD, Agir e Mobiliza, centro-direita; PL, Novo, Republicanos, PRTB, DC, Democrata e Missão, direita. Partido vem do TSE quando o nome casa, senão da pesquisa.",
   "o_que_nao_faz": "Não prevê votos; não modela desistência, coligação nem comparecimento; não usa o resultado de 2022 como prior de nome; os cenários alternativos de 1º turno dos institutos ficam fora da média."

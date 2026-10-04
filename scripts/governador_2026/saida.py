@@ -21,7 +21,7 @@ from . import motor as M
 REPO = "https://github.com/ArvorCo/PNAD/blob/main/"
 # Classificação da disputa pela probabilidade de eleição da candidatura favorita.
 CLASSES = (
-    ("decidida", 0.9),
+    ("decidida", 0.89),
     ("provavel", 0.7),
     ("apertada", 0.0),
 )
@@ -516,7 +516,7 @@ def prever(
             "renormaliza."
         ),
         "classes_regra": (
-            "decidida: favorita com 90% ou mais de chance; provável: de 70% a 90%; "
+            "decidida: quem lidera com 89% ou mais de chance; provável: de 70% a 89%; "
             "apertada: abaixo de 70%."
         ),
         "incerteza_regra": (

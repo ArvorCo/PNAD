@@ -28,6 +28,8 @@ from senado_2026.pagina.comum import (
 from . import mapa as mapa_mod
 
 CARTAO_CLASSE = {"direita": "dir", "centro": "cen", "esquerda": "esq"}
+# Corte de "praticamente decidido", igual ao de saida.CLASSES.
+DECIDIDA = 0.89
 GRUPOS = (
     ("direita", "Direita e centro-direita"),
     ("centro", "Centro"),
@@ -35,8 +37,8 @@ GRUPOS = (
 )
 CLASSES = (
     ("apertada", "Ninguém sabe", "quem lidera tem menos de 70% de chance"),
-    ("provavel", "Há um nome na frente, mas está aberto", "entre 70% e 90% de chance"),
-    ("decidida", "Praticamente decidido", "90% de chance ou mais"),
+    ("provavel", "Há um nome na frente, mas está aberto", "entre 70% e 89% de chance"),
+    ("decidida", "Praticamente decidido", "89% de chance ou mais"),
 )
 fontes = sv.fontes
 foco = sv.foco
@@ -114,7 +116,7 @@ def frase(e: dict) -> str:
     seg = _segundo(e)
     p = fav.get("p_eleito") or 0
     nome = esc(fav.get("nome", ""))
-    if p >= 0.9:
+    if p >= DECIDIDA:
         return f"{nome} tem {pct(p)} de chance de governar o estado: {_chances(p)}."
     if p >= 0.7:
         outro = (
@@ -198,7 +200,7 @@ def resumo_30s(data: dict) -> str:
     if decididos:
         itens.append(
             f"<li><b>Onde já dá para saber.</b> Em {num(len(decididos), 0)} estados quem lidera tem "
-            f"90% de chance ou mais: {_lista_ufs(decididos, estados)}.</li>"
+            f"89% de chance ou mais: {_lista_ufs(decididos, estados)}.</li>"
         )
     if empates:
         itens.append(
