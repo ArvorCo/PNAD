@@ -34,54 +34,58 @@
 <main id="conteudo" tabindex="-1">
 <section class="hero">
   <div class="wrap"><div class="hero-top"><span class="eyebrow">Laboratório eleitoral / Governadores</span><span class="edition">1º turno: {{ELECTION_DATE}}<br>2º turno: {{SEGUNDO_TURNO_DATE}}<br>Referência: {{DATE}}</span></div>
-  <div class="hero-title"><h1>Quem governa<br><em>os 27 estados</em></h1><div class="hero-intro"><span class="status">Predição experimental</span><p>Referência de {{DATE}}, véspera do 1º turno de {{ELECTION_DATE}}. Cada estado elege uma pessoa para o governo: mais de 50% dos votos válidos encerra a disputa em 04/10; senão, as duas mais votadas voltam à urna em {{SEGUNDO_TURNO_DATE}}. A página estima os dois caminhos em cada um dos {{N_ESTADOS}} estados, com {{N_FONTES}} pesquisas e {{N_PARES_MEDIDOS}} pares de 2º turno medidos pelos institutos.</p></div></div>
+  <div class="hero-title"><h1>Quem governa<br><em>os 27 estados</em></h1><div class="hero-intro"><span class="status">Predição experimental</span><p>Em cada estado, uma pergunta: quem deve ganhar, e a eleição acaba amanhã ou vai ao 2º turno? A resposta vem de {{N_FONTES}} pesquisas, repetidas em simulação com o erro que as pesquisas tiveram em 2022. Referência de {{DATE}}.</p></div></div>
   {{HERO}}
-  <p class="hero-caption">Estados esperados somam a probabilidade de cada estado terminar no 1º turno, e governos esperados somam a chance de eleição de cada candidatura. O intervalo de 90% mostra a variação das simulações, não uma garantia.</p>
-  <div class="hero-links"><a class="button light" href="#corridas">As corridas apertadas ↓</a><a href="#segundos-turnos">Os segundos turnos</a><a href="#mapa">O mapa</a><a href="assets/predicao_governador.json">Baixar o modelo (JSON)</a></div>
+  <div class="hero-links"><a class="button light" href="#resumo">Em 30 segundos ↓</a><a href="#corridas">Estado por estado</a><a href="#segundos-turnos">Os segundos turnos</a><a href="#mapa">O mapa</a></div>
   </div>
 </section>
-<nav class="chapter-nav" aria-label="Capítulos"><div class="wrap"><a href="#corridas">As corridas</a><a href="#segundos-turnos">Segundos turnos</a><a href="#mapa">O mapa</a><a href="#tabela">Os 27 estados</a><a href="#metodo">Como lemos</a><a href="#limites">Limites</a><a href="#fontes">Fontes</a></div></nav>
+<nav class="chapter-nav" aria-label="Capítulos"><div class="wrap"><a href="#resumo">Em 30 segundos</a><a href="#corridas">Estado por estado</a><a href="#segundos-turnos">Segundos turnos</a><a href="#mapa">O mapa</a><a href="#tabela">Tabela</a><a href="#metodo">Como lemos</a><a href="#limites">Limites</a><a href="#fontes">Fontes</a></div></nav>
+
+<section class="chapter wrap" id="resumo">
+  <header class="chapter-head"><span class="chapter-number">01</span><div><p class="eyebrow">Para quem tem pressa</p><h2>Em 30 segundos.</h2></div></header>
+  {{RESUMO}}
+</section>
 
 <section class="chapter wrap" id="corridas">
-  <header class="chapter-head"><span class="chapter-number">01</span><div><p class="eyebrow">Da mais incerta à mais decidida</p><h2>As corridas.</h2></div></header>
-  <p class="lead">Cada linha é um estado, com a candidatura favorita e a barra que divide a chance dela entre vencer no 1º turno, vencer no 2º turno e perder. {{N_APERTADAS}} estados estão apertados, {{N_PROVAVEIS}} são prováveis e {{N_DECIDIDAS}} estão decididos.</p>
+  <header class="chapter-head"><span class="chapter-number">02</span><div><p class="eyebrow">Da mais incerta à mais decidida</p><h2>Estado por estado.</h2></div></header>
+  <p class="lead">Um cartão por estado: a favorita, a chance de governar em uma frase, e se a eleição deve acabar amanhã ou ir ao 2º turno. Os estados mais incertos vêm primeiro.</p>
   {{CORRIDAS}}
 </section>
 
 <section class="chapter wrap" id="segundos-turnos">
-  <header class="chapter-head"><span class="chapter-number">02</span><div><p class="eyebrow">Quem enfrenta quem em {{SEGUNDO_TURNO_DATE}}</p><h2>Os segundos turnos prováveis.</h2></div></header>
-  <p class="lead">Estados em que o 2º turno aparece em ao menos 20% das simulações, com o par mais frequente e o placar projetado entre os dois. Onde um instituto mediu o par, a projeção parte da medição; onde não mediu, parte de uma transferência declarada por campo. {{N_PARES_MEDIDOS}} pares foram medidos em {{N_UFS_PAR_MEDIDO}} estados.</p>
+  <header class="chapter-head"><span class="chapter-number">03</span><div><p class="eyebrow">Quem enfrenta quem em {{SEGUNDO_TURNO_DATE}}</p><h2>Os segundos turnos prováveis.</h2></div></header>
+  <p class="lead">Os estados em que o 2º turno é uma possibilidade real, com o par mais provável e o placar entre os dois. O selo diz se o placar foi medido por um instituto ou estimado pela casa.</p>
   {{SEGUNDOS_TURNOS}}
 </section>
 
 <section class="chapter wrap" id="mapa">
-  <header class="chapter-head"><span class="chapter-number">03</span><div><p class="eyebrow">Um nome por estado</p><h2>O mapa das favoritas.</h2></div></header>
-  <p class="lead">A cor mostra o campo da candidatura com maior chance de eleição; listras marcam onde o 2º turno é mais provável que a decisão no 1º. {{COBERTURA_RECENTE}} estados têm pesquisa recente, {{COBERTURA_ANTIGA}} têm só pesquisa antiga e {{COBERTURA_SEM}} não têm pesquisa.</p>
+  <header class="chapter-head"><span class="chapter-number">04</span><div><p class="eyebrow">Um nome por estado</p><h2>O mapa das favoritas.</h2></div></header>
+  <p class="lead">Toque num estado para abrir a ficha. Azul é direita, vermelho é esquerda, ocre é centro; listras avisam que o 2º turno é mais provável.</p>
   {{MAPA}}
   <h3 id="fichas-titulo">Fichas dos {{N_ESTADOS}} estados</h3>
-  <p>Cada ficha traz a favorita, a chance de decisão no 1º turno, a média do 1º turno, os pares de 2º turno e as pesquisas usadas. O estado em foco já vem aberto.</p>
+  <p>Cada ficha traz a favorita, o que as pesquisas dizem do 1º turno, os pares de 2º turno e as pesquisas usadas, com link para cada fonte.</p>
   {{FICHAS}}
 </section>
 
 <section class="chapter wrap" id="tabela">
-  <header class="chapter-head"><span class="chapter-number">04</span><div><p class="eyebrow">Tudo em uma tabela</p><h2>Os {{N_ESTADOS}} estados lado a lado.</h2></div></header>
-  <p class="lead">Favorita, chance de eleição, chance de decisão no 1º turno, par de 2º turno mais provável com a projeção, cobertura e pesquisas usadas. Clique no cabeçalho para ordenar.</p>
+  <header class="chapter-head"><span class="chapter-number">05</span><div><p class="eyebrow">Para quem gosta de tabela</p><h2>Os {{N_ESTADOS}} estados lado a lado.</h2></div></header>
+  <p class="lead">Clique no cabeçalho para ordenar.</p>
   {{TABELA}}
 </section>
 
 <section class="chapter wrap" id="metodo">
-  <header class="chapter-head"><span class="chapter-number">05</span><div><p class="eyebrow">Em linguagem de aula</p><h2>Como lemos.</h2></div></header>
-  <p class="lead">A página não recalcula nada. Ela mostra o resultado de uma simulação e explica o que cada número quer dizer.</p>
+  <header class="chapter-head"><span class="chapter-number">06</span><div><p class="eyebrow">Em linguagem de aula</p><h2>Como lemos.</h2></div></header>
+  <p class="lead">O que cada número quer dizer, sem fórmula. Os parâmetros ficam numa caixa no fim, para quem quiser conferir.</p>
   <div class="prose">{{COMO_LEMOS}}</div>
 </section>
 
 <section class="chapter wrap" id="limites">
-  <header class="chapter-head"><span class="chapter-number">06</span><div><p class="eyebrow">O que a página não sabe</p><h2>Limites.</h2></div></header>
+  <header class="chapter-head"><span class="chapter-number">07</span><div><p class="eyebrow">O que a página não sabe</p><h2>Limites.</h2></div></header>
   <div class="prose">{{LIMITES}}</div>
 </section>
 
 <section class="chapter wrap" id="fontes">
-  <header class="chapter-head"><span class="chapter-number">07</span><div><p class="eyebrow">A predição pode ser refeita</p><h2>Fontes.</h2></div></header>
+  <header class="chapter-head"><span class="chapter-number">08</span><div><p class="eyebrow">A predição pode ser refeita</p><h2>Fontes.</h2></div></header>
   <div class="downloads"><a href="assets/predicao_governador.json">Modelo e fontes · JSON</a><a href="predicao_senado.html">Predição do Senado</a><a href="predicao_2026_1T_presidente.html">Predição presidencial</a><a href="mapa_do_voto_util.html">Mapa do voto útil</a></div>
   <p>{{N_FONTES}} pesquisas usadas, uma por linha, com registro no TSE, URL, arquivo e SHA-256. Linhas marcadas como só 2º turno entraram apenas pelo par medido.</p>
   {{FONTES}}

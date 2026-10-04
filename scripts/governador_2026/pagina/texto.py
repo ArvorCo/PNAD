@@ -1,20 +1,14 @@
 """Texto da página: capítulos explicativos e valores para o template.
 
-Todo número sai do JSON. As frases não presumem gênero: falam da candidatura
-de alguém.
+Linguagem de aula primeiro; os parâmetros e as sensibilidades ficam dentro de
+caixas fechadas para quem quiser conferir. Todo número sai do JSON.
 """
 
 from __future__ import annotations
 
 from html import escape as esc
 
-from senado_2026.pagina.comum import (
-    casa_do_arquivo,
-    data_br,
-    indice_fontes,
-    num,
-    pct,
-)
+from senado_2026.pagina.comum import casa_do_arquivo, data_br, indice_fontes, num, pct
 
 
 def _por_cobertura(data: dict, cob: str) -> list[str]:
@@ -45,8 +39,7 @@ def casas_por_estado(data: dict) -> dict[str, set[str]]:
 
 
 def exemplo(data: dict) -> str:
-    """Estado com pesquisa recente em que a favorita na média não tem a vaga
-    garantida: mostra a diferença entre liderar e ser eleita."""
+    """Estado em que a favorita está perto dos 50% dos válidos."""
     melhor = None
     for uf, e in data["estados"].items():
         if e.get("cobertura") != "recente" or not e.get("media"):
@@ -61,135 +54,102 @@ def exemplo(data: dict) -> str:
         return ""
     _, uf, e, fav = melhor
     return (
-        f'<p class="example">Um caso desta página. Em {esc(e.get("nome", uf))}, a média das '
-        f"pesquisas põe a candidatura de {esc(fav['nome'])} em {num(fav['validos_central'])}% "
-        f"dos válidos, perto da linha dos 50%. O 1º turno decide em {pct(e['p_decide_1t'])} das "
-        f"simulações e a chance de eleição dessa candidatura, somando os dois turnos, é "
-        f"{pct(fav['p_eleito'])}. Estar perto de 50% na média não é vencer no 1º turno: a "
-        "probabilidade mede quanto essa posição aguenta o erro das pesquisas.</p>"
+        f'<p class="example"><b>Um exemplo desta página.</b> Em {esc(e.get("nome", uf))}, '
+        f"as pesquisas dão a {esc(fav['nome'])} cerca de {num(fav['validos_central'], 0)}% dos votos "
+        f"válidos, bem perto da linha dos 50%. Por isso a conta diz que a eleição termina amanhã em "
+        f"{pct(e['p_decide_1t'])} das simulações, e que a chance total de {esc(fav['nome'])} governar, "
+        f"somando os dois turnos, é {pct(fav['p_eleito'])}. Estar perto de 50% não é ter vencido: a "
+        "chance mede quanto essa posição aguenta o erro das pesquisas.</p>"
     )
 
 
-def _parametros(data: dict) -> str:
+def _tecnico(data: dict) -> str:
     p = data.get("parametros", {})
+    v = data.get("validacao", {})
+    cal = v.get("calibracao_2022") or {}
+    linhas = []
     nomes = {
         "meia_vida_dias": ("Meia-vida do peso por idade (dias)", 1),
         "janela_campo_minimo": ("Campo mais antigo aceito na central", None),
-        "simulacoes": ("Simulações", 0),
+        "simulacoes": ("Simulações por estado", 0),
         "deff": ("Efeito de desenho assumido", 1),
-        "escala_erro_pp": ("Escala do erro, candidatura em 30% (pp)", 1),
-        "escala_erro_pp_com_deriva_7_dias": (
-            "Mesma escala, com 7 dias de deriva (pp)",
-            1,
-        ),
+        "escala_erro_pp": ("Escala do erro, candidatura em 30% (pontos)", 1),
     }
-    linhas = []
     for k, (rotulo, casas) in nomes.items():
-        if k not in p:
-            continue
-        v = p[k]
-        valor = data_br(v) if casas is None else num(v, casas)
-        linhas.append(f"<li><b>{esc(rotulo)}:</b> {valor}</li>")
+        if k in p:
+            valor = data_br(p[k]) if casas is None else num(p[k], casas)
+            linhas.append(f"<li><b>{esc(rotulo)}:</b> {valor}</li>")
     t = p.get("transferencia") or {}
     if t:
         linhas.append(
-            f"<li><b>Transferência em par não medido:</b> {num(100 * t['fracao_valida'], 0)}% "
-            f"do voto eliminado vai a um finalista; temperatura {num(t['tau'])}; ruído extra "
-            f"{num(t['sd_logit'], 2)} no logit</li>"
+            f"<li><b>Par sem medição:</b> {num(100 * t['fracao_valida'], 0)}% do voto eliminado vai a "
+            f"um finalista, dividido por proximidade de campo (temperatura {num(t['tau'])}); ruído "
+            f"extra {num(t['sd_logit'], 2)} no logit</li>"
         )
-    return '<ul class="sn-params">' + "".join(linhas) + "</ul>" if linhas else ""
-
-
-def _calibracao(data: dict) -> str:
-    v = data.get("validacao", {})
-    cal = v.get("calibracao_2022") or {}
-    p = data.get("parametros", {})
-    just = p.get("justificativa_erro")
-    just_txt = f"<p>{esc(just)}</p>" if just else ""
+    linhas.append("<li><b>Correlação do erro entre os turnos:</b> 0,5</li>")
+    cal_txt = ""
     if cal.get("fonte") == "wikipedia_2022":
-        partes = [
-            f"A escala foi conferida contra a urna de 2022: {num(cal['n_pesquisas'], 0)} "
-            f"pesquisas finais para governador em {num(cal['n_estados'], 0)} estados."
-        ]
-        if cal.get("rmse_20_40_pp"):
-            partes.append(
-                "Entre candidaturas com 20% a 40% dos válidos, a raiz do erro quadrático "
-                f"médio foi {num(cal['rmse_20_40_pp'])} pontos."
+        cal_txt = (
+            f"<p>Calibração: {num(cal['n_pesquisas'], 0)} pesquisas finais para governador em "
+            f"{num(cal['n_estados'], 0)} estados em 2022, contra a urna. Erro médio absoluto "
+            f"{num(cal['erro_medio_abs_pp'])} pontos; raiz do erro quadrático médio entre 20% e 40% "
+            f"dos válidos, {num(cal['rmse_20_40_pp'])} pontos."
+            + (
+                f' <a href="{esc(cal["url"])}" rel="noopener">Conferir</a>.'
+                if cal.get("url")
+                else ""
             )
-        if cal.get("erro_medio_abs_pp"):
-            partes.append(
-                f"No conjunto, o erro médio absoluto foi {num(cal['erro_medio_abs_pp'])} pontos."
-            )
-        vies = cal.get("vies_medio_por_campo_pp") or {}
-        if vies.get("direita") is not None:
-            partes.append(
-                "Em 2022 as pesquisas finais ficaram, em média, "
-                f"{num(abs(vies['direita']))} pontos "
-                f"{'abaixo' if vies['direita'] < 0 else 'acima'} da urna para candidaturas de "
-                "direita. O modelo não corrige esse viés: ele entra só como tamanho do erro, "
-                "nas duas direções."
-            )
-        link = (
-            f' <a href="{esc(cal["url"])}" rel="noopener">Conferir a calibração</a>.'
-            if cal.get("url")
-            else ""
-        )
-        return (
-            '<p class="io"><strong>Calibração de 2022:</strong> '
-            + " ".join(partes)
-            + link
             + "</p>"
-            + just_txt
         )
+    just = (
+        f"<p>{esc(p['justificativa_erro'])}</p>" if p.get("justificativa_erro") else ""
+    )
+    dec = f'<p>{esc(p["decomposicao_erro"])}</p>' if p.get("decomposicao_erro") else ""
     return (
-        '<p class="hyp"><strong>Hipótese declarada:</strong> a escala do erro não foi '
-        'calibrada com a eleição de 2022. <strong class="iffail">Se falhar:</strong> se o '
-        "erro real for maior, as probabilidades ficam confiantes demais; se for menor, "
-        f"o inverso.</p>{just_txt}"
+        '<details class="gv-tec"><summary>Para quem quer os parâmetros</summary>'
+        f'<ul class="sn-params">{"".join(linhas)}</ul>{cal_txt}{just}{dec}'
+        f'<p>{esc(p.get("regra_2t_medido") or "")}</p><p>{esc(p.get("regra_2t_transferencia") or "")}</p>'
+        "</details>"
     )
 
 
 def como_lemos(data: dict) -> str:
     p = data.get("parametros", {})
     meia = p.get("meia_vida_dias")
-    janela = p.get("janela_campo_minimo")
     casas = casas_por_estado(data)
     varias = sum(1 for c in casas.values() if len(c) >= 2)
     com_pesq = sum(1 for c in casas.values() if c)
     v = data.get("validacao", {})
     n_pares = v.get("pares_2t_medidos_total") or 0
     ufs_par = v.get("ufs_com_par_medido") or []
-    meia_txt = (
-        f"O peso de cada onda cai pela metade a cada {num(meia, 0)} dias, contados do ponto médio do campo."
-        if meia is not None
-        else ""
+    cal = v.get("calibracao_2022") or {}
+    erro_txt = (
+        f"Em 2022, as pesquisas finais para governador erraram em média {num(cal['erro_medio_abs_pp'], 0)} "
+        f"pontos por candidatura, e {num(cal['rmse_20_40_pp'], 0)} pontos nas disputas de meio de tabela. "
+        "É esse tamanho de erro que a conta repete milhares de vezes."
+        if cal.get("rmse_20_40_pp")
+        else "O tamanho do erro é uma hipótese declarada nos parâmetros."
     )
-    janela_txt = (
-        f" Só entram ondas com campo a partir de {data_br(janela)}." if janela else ""
+    meia_txt = (
+        f"Uma pesquisa vale metade a cada {num(meia, 0)} dias que passam."
+        if meia is not None
+        else "Pesquisa mais nova vale mais."
     )
     return f"""
-<h3>Três perguntas, três números</h3>
-<p>A página responde a três perguntas por estado. Quem tem mais chance de ser eleita, somando os dois turnos. Qual a chance de a eleição terminar em 04/10, com mais de 50% dos votos válidos. E, se houver 2º turno, quem enfrenta quem e com que placar.</p>
-<p class="analogy">Pense num campeonato com final. Chegar à final não é ganhar o título, e ganhar na fase de grupos com folga não dispensa a final: a regra manda jogar. A probabilidade de eleição soma dois caminhos, ganhar na fase de grupos (mais de 50% no 1º turno) ou ganhar a final. Os dois são sorteados, não presumidos.</p>
+<h3>O que é "chance de governar"</h3>
+<p>Não é o percentual de votos. É quantas vezes a candidatura termina eleita quando a eleição é simulada milhares de vezes, cada vez com um erro de pesquisa diferente, do tamanho que as pesquisas erraram de verdade em 2022.</p>
+<p class="analogy">Pense numa previsão do tempo. "70% de chance de chuva" não quer dizer que vai chover 70% do dia: quer dizer que, em dez dias assim, chove em sete. Aqui é igual: "70% de chance de governar" quer dizer que, em dez eleições com pesquisas assim, a candidatura ganha em sete.</p>
 {exemplo(data)}
-<h3>Como as casas são combinadas</h3>
-<p>Cada estado recebe uma onda por instituto. {meia_txt}{janela_txt} As casas entram com peso igual na combinação. {num(varias, 0)} dos {num(com_pesq, 0)} estados com pesquisa têm duas casas ou mais; os demais dependem de uma só.</p>
-<p class="plain">Em palavras: uma pesquisa antiga vale menos que uma nova, e uma casa não vale mais que outra. A média resume o que as casas disseram, com o tempo pesando contra quem ficou para trás.</p>
-<h3>Como os indecisos entram</h3>
-<p>{esc(p.get("indecisos_regra") or "")}</p>
-<p class="hyp"><strong>Hipótese:</strong> quem hoje não declara voto se comporta, na urna, como quem declara. <strong class="iffail">Se falhar:</strong> se os indecisos forem mais para nomes conhecidos, as candidaturas menores perdem mais do que a página mostra, e a decisão no 1º turno fica mais provável do que o número diz.</p>
-<h3>Quando o 1º turno decide</h3>
-<p>{esc(p.get("regra_1t") or "")}</p>
+<h3>Os dois caminhos até o governo</h3>
+<p>O 1º turno acaba a eleição quando alguém passa de metade dos votos válidos (brancos, nulos e indecisos ficam fora da conta). Se ninguém passa, os dois mais votados voltam em {data_br(data.get("segundo_turno_data"))}. A chance de governar soma os dois caminhos: vencer já amanhã ou vencer o 2º turno.</p>
 <h3>Como o 2º turno é projetado</h3>
-<p><b>Par medido.</b> {esc(p.get("regra_2t_medido") or "")} Há {num(n_pares, 0)} pares medidos em {num(len(ufs_par), 0)} estados.</p>
-<p><b>Par não medido.</b> {esc(p.get("regra_2t_transferencia") or "")}</p>
-<p class="hyp"><strong>Hipótese:</strong> o erro das pesquisas de 2º turno anda junto com o erro do 1º turno, com correlação declarada de 0,5. <strong class="iffail">Se falhar:</strong> se os erros forem independentes, a chance da favorita num 2º turno surpresa fica maior do que a página mostra; se andarem juntos por completo, menor.</p>
-<h3>De onde vem a escala do erro</h3>
-<p>A probabilidade nasce de um sorteio repetido. Em cada rodada, o campo político inteiro recebe um erro comum, porque as casas erram juntas, e cada candidatura recebe um erro próprio. A escala desses erros é o parâmetro que mais pesa no resultado.</p>
-{f'<p class="plain">{esc(p["decomposicao_erro"])}</p>' if p.get("decomposicao_erro") else ""}
-{_parametros(data)}
-{_calibracao(data)}
-<div class="io sn-regra"><strong>Regra do jogo:</strong> cada estado elege uma pessoa para o governo. Em cada estado, as probabilidades de eleição somam 1,0. Mais de 50% dos válidos no 1º turno encerra a disputa; senão, as duas mais votadas voltam à urna em {data_br(data.get("segundo_turno_data"))}.</div>
+<p>Quando um instituto perguntou "e se fosse só entre A e B?", a página usa essa medição: {num(n_pares, 0)} pares foram medidos em {num(len(ufs_par), 0)} estados, e aparecem com o selo <span class="gv-chip gv-chip-medido">medido</span>. Quando ninguém mediu, a página estima para onde iria o voto de quem ficou de fora, puxando pela proximidade política, e avisa com o selo <span class="gv-chip gv-chip-estimado">estimado</span>.</p>
+<h3>Como as pesquisas são juntadas</h3>
+<p>Cada estado recebe a pesquisa mais recente de cada instituto. {meia_txt} Nenhuma casa vale mais que outra. {num(varias, 0)} dos {num(com_pesq, 0)} estados com pesquisa têm dois institutos ou mais; os outros dependem de um só.</p>
+<p>Quem está indeciso é repartido na proporção de quem já escolheu, com uma parte das simulações repartindo por igual. Branco e nulo nunca viram voto.</p>
+<h3>De onde vem o tamanho do erro</h3>
+<p>{erro_txt}</p>
+{_tecnico(data)}
 """
 
 
@@ -214,17 +174,16 @@ def _sens_item(x: dict) -> str:
 
 
 def achado_contrario(data: dict) -> str:
-    """O achado que mais pesa contra a leitura central, gerado dos números."""
     estados = data["estados"]
     n = data["nacional"]
     partes = []
     g = n.get("por_grupo", {})
     if g.get("direita") and g.get("esquerda"):
         partes.append(
-            f"A leitura central dá {num(g['direita']['esperado'])} governos esperados à direita e "
-            f"centro-direita e {num(g['esquerda']['esperado'])} à esquerda e centro-esquerda, mas "
-            f"a maioria dos 27 (14 ou mais) para o primeiro bloco só sai em "
-            f"{pct(g['direita'].get('p_maioria_14'))} dos sorteios."
+            f"A leitura central dá {num(g['direita']['esperado'])} governos à direita e centro-direita "
+            f"e {num(g['esquerda']['esperado'])} à esquerda e centro-esquerda, mas a maioria dos 27 "
+            f"(14 ou mais) para o primeiro bloco só sai em {pct(g['direita'].get('p_maioria_14'))} "
+            "das simulações."
         )
     apertadas = n.get("por_classe", {}).get("apertada") or []
     if apertadas:
@@ -239,72 +198,49 @@ def achado_contrario(data: dict) -> str:
     ]
     if invertidos:
         partes.append(
-            f"Em {', '.join(sorted(invertidos))}, quem lidera a média do 1º turno não é a "
+            f"Em {', '.join(sorted(invertidos))}, quem lidera as pesquisas do 1º turno não é a "
             "favorita na eleição: o 2º turno medido inverte a ordem."
         )
     return " ".join(partes)
 
 
 def limites(data: dict) -> str:
-    p = data.get("parametros", {})
-    janela = p.get("janela_campo_minimo")
     ref = data_br(data.get("data_referencia"))
     casas = casas_por_estado(data)
     unica = sorted(
         data["estados"][uf].get("nome", uf) for uf, c in casas.items() if len(c) == 1
     )
     antigos = _por_cobertura(data, "antiga")
-    sem = _por_cobertura(data, "sem_pesquisa")
     v = data.get("validacao", {})
     sem_par = sorted(
         data["estados"][uf].get("nome", uf)
         for uf, e in data["estados"].items()
         if e.get("cobertura") != "sem_pesquisa" and not e.get("pares_medidos")
     )
-    por_casa: dict[str, int] = {}
-    for c in casas.values():
-        for casa in c:
-            por_casa[casa] = por_casa.get(casa, 0) + 1
-    lider = max(por_casa.items(), key=lambda kv: kv[1], default=None)
-    campo_txt = (
-        f"A central usa pesquisas com campo de {data_br(janela)} a {ref}."
-        if janela
-        else f"A central usa as pesquisas mais recentes até {ref}."
-    )
-    casa_txt = (
-        f" A casa mais presente, {esc(lider[0])}, cobre {num(lider[1], 0)} estados."
-        if lider
-        else ""
-    )
     sens = v.get("sensibilidades") or []
-    achado = ""
+    extra = ""
     if sens:
-        itens = "".join(_sens_item(x) for x in sens)
-        achado = (
-            "<h3>O que contraria a leitura principal</h3>"
-            "<p>As sensibilidades abaixo trocam uma premissa por vez. Elas ficam ao lado "
-            f"da central, com o mesmo destaque.</p><ul>{itens}</ul>"
+        extra = (
+            '<details class="gv-tec"><summary>O que muda se uma premissa mudar</summary>'
+            f'<ul>{"".join(_sens_item(x) for x in sens)}</ul></details>'
         )
     contra = achado_contrario(data)
-    if contra:
-        achado += (
-            f'<p class="hyp"><strong>Achado contra a tese:</strong> {esc(contra)}</p>'
-        )
-    nao_faz = p.get("o_que_nao_faz")
+    contra_txt = (
+        f'<p class="hyp"><strong>O que pesa contra esta leitura:</strong> {esc(contra)}</p>'
+        if contra
+        else ""
+    )
     return f"""
-<ul class="sn-limites">
-<li><b>Campo recente.</b> {campo_txt} Mudança de opinião depois do campo não aparece.</li>
-<li><b>Uma casa em muitos estados.</b> {num(len(unica), 0)} estados dependem de uma única casa.{casa_txt} Quando a casa erra, o estado erra junto.</li>
-<li><b>Cobertura antiga.</b> Estados com pesquisa antiga e peso fraco: {_lista(antigos)}. A incerteza deles é alta.</li>
-<li><b>Sem pesquisa.</b> Estados sem pesquisa registrada: {_lista(sem)}.</li>
-<li><b>2º turno sem medição.</b> Estados em que nenhum instituto mediu par de 2º turno: {_lista(sem_par)}. Ali a projeção é transferência declarada, não medição.</li>
-<li><b>Cenários alternativos ficam fora.</b> Quando o instituto publica um cenário com dois nomes sem chamá-lo de 2º turno, ele entra no acervo como cenário alternativo e não como par medido.</li>
-<li><b>Voto útil de última hora.</b> Quem muda de candidatura na véspera ou no dia da votação fica fora de qualquer pesquisa com campo anterior.</li>
-<li><b>Campo é classificação editorial.</b> A etiqueta de campo segue a classificação da casa por partido, com exceções declaradas: tucano é centro-esquerda por decisão editorial da casa. Outra classificação muda os totais por campo, não os nomes.</li>
-{f'<li><b>O que o modelo não faz.</b> {esc(nao_faz)}</li>' if nao_faz else ''}
+<ul class="sn-limites gv-limites">
+<li><b>Pesquisa não é urna.</b> Tudo aqui parte das pesquisas publicadas até {ref}. Quem mudou de ideia depois não aparece.</li>
+<li><b>Um instituto só.</b> {num(len(unica), 0)} estados dependem de um único instituto. Se ele errou, o estado erra junto.</li>
+<li><b>Pesquisa antiga.</b> {_lista(antigos)}: sem pesquisa recente, a incerteza é alta.</li>
+<li><b>2º turno sem medição.</b> Em {_lista(sem_par)}, nenhum instituto mediu o par; o placar é estimativa.</li>
+<li><b>Campo político é rótulo da casa.</b> Tucano conta como centro-esquerda por decisão editorial. Outra régua muda as cores do mapa, não os nomes.</li>
 </ul>
-{achado}
-<p class="plain">Em palavras: a página mostra o que as pesquisas registradas permitem dizer até {ref}. Não mostra o que ainda pode mudar, e diz onde faltam dados.</p>
+{contra_txt}
+{extra}
+<p class="plain">Em palavras: a página mostra o que as pesquisas permitem dizer até {ref}, e diz onde faltam dados.</p>
 """
 
 
@@ -320,9 +256,9 @@ def values(data: dict) -> dict[str, str]:
         "SEGUNDO_TURNO_DATE": data_br(data.get("segundo_turno_data")),
         "N_ESTADOS": num(len(data["estados"]), 0),
         "N_FONTES": num(len(data.get("fontes", [])), 0),
-        "DECIDIDOS_1T": num(dec.get("esperado", 0)),
+        "DECIDIDOS_1T": num(dec.get("esperado", 0), 0),
         "DECIDIDOS_IC": f"{num(dec.get('ic90', [0, 0])[0], 0)} a {num(dec.get('ic90', [0, 0])[1], 0)}",
-        "SEGUNDO_TURNO_ESPERADO": num(seg.get("esperado", 0)),
+        "SEGUNDO_TURNO_ESPERADO": num(seg.get("esperado", 0), 0),
         "N_APERTADAS": num(len(classes.get("apertada", [])), 0),
         "N_PROVAVEIS": num(len(classes.get("provavel", [])), 0),
         "N_DECIDIDAS": num(len(classes.get("decidida", [])), 0),

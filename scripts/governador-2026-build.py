@@ -44,6 +44,7 @@ def carregar(path: Path) -> dict:
 def render(data: dict, template: str) -> str:
     trocas = {
         "HERO": view.hero_cartoes(data),
+        "RESUMO": view.resumo_30s(data),
         "CORRIDAS": view.corridas(data),
         "SEGUNDOS_TURNOS": view.segundos_turnos(data),
         "MAPA": view.mapa_secao(data),

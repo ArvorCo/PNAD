@@ -248,12 +248,24 @@ def test_pagina_tem_27_fichas_e_sem_travessao(html):
 
 
 def test_pagina_mostra_par_medido_e_corridas(html):
-    assert 'class="gv-tag gv-tag-medido"' in html
+    assert 'class="gv-chip gv-chip-medido"' in html
     assert 'id="corrida-RS"' in html
     assert 'id="par-RS"' in html
-    assert "gv-stack" in html
+    assert "gv-tiles" in html and "gv-30s" in html
 
 
 def test_barras_sao_blocos(html):
-    for m in re.finditer(r'<(\w+) class="gv-seg[^"]*" style="width:', html):
+    for m in re.finditer(
+        r'<(\w+) class="gv-(?:bar-fill|duelo-a|duelo-b)[^"]*" style="width:', html
+    ):
         assert m.group(1) == "div"
+
+
+def test_frases_em_portugues_corrente(resultado):
+    from governador_2026.pagina import view
+
+    sp = resultado["estados"]["SP"]
+    assert "chance de governar" in view.frase(sp)
+    assert view.veredito(sp)[0] == "1t"
+    assert view._chances(0.95) == "9 chances em 10"
+    assert view._chances(0.5) == "cara ou coroa"
