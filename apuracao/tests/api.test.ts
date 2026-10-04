@@ -229,7 +229,8 @@ describe("estáticos", () => {
     const i = await get("/");
     expect(i.status).toBe(200);
     expect(i.res.headers.get("content-type")).toContain("text/html");
-    expect(i.res.headers.get("cache-control")).toBe("max-age=60");
+    expect(i.res.headers.get("cache-control")).toBe("no-cache");
+    expect((await get("/fonts/archivo-latin-wght-normal.woff2")).res.headers.get("cache-control")).toBe("public, max-age=3600");
     expect((await get("/campos.json")).res.headers.get("content-type")).toContain("application/json");
     expect((await get("/fonts/archivo-latin-wght-normal.woff2")).res.headers.get("content-type")).toBe("font/woff2");
     expect((await get("/%2e%2e/package.json")).status).toBe(404);

@@ -37,10 +37,13 @@ export interface EstadoBr {
   hg: string | null; // geração do arquivo
   lido_em: string | null; // nossa leitura
   atraso_s: number | null;
+  ultima_leitura_em?: string | null; // última requisição ao arquivo, mudado ou não
+  idade_s?: number | null; // agora menos a geração do arquivo
 }
 
 export interface EstadoUf {
-  uf: string;
+  uf: string; // caixa alta depois do ingresso (o servidor manda "sp")
+  nome?: string;
   pst: number;
   st: number;
   ts: number;
@@ -53,7 +56,10 @@ export interface EstadoUf {
 
 export interface Estado {
   agora: string;
+  pronto?: boolean; // false: o banco ainda não tem snapshot
   turno: number;
+  coletor?: unknown; // meta.estado_coletor (saúde do coletor)
+  ultimo_snapshot?: { id: number; capturado_em: string } | null;
   br: EstadoBr;
   ufs: EstadoUf[];
   historico: { at: string; st: number; pst: number }[];
@@ -80,18 +86,27 @@ export interface Candidato {
   dvt: string; // destinação do voto ("Válido", "Anulado sub judice", ...)
   vap: number;
   pvapn: number; // % dos válidos, 0 a 100
+  d_vap?: number; // votos ganhos desde a versão anterior do arquivo
   vs: Vice[];
 }
 
 export interface PartidoResultado {
   sg: string;
   campo: Campo;
+  fed_sg?: string;
   tvtn: number;
+  tvtl?: number; // votos de legenda
   tvan: number;
   n_cand: number;
 }
 
 export interface Resultado {
+  ele?: number;
+  idg?: number | null;
+  snapshot_id?: number;
+  anterior_id?: number | null;
+  candidatos_normalizados?: boolean;
+  blob_url?: string;
   cargo: { cd: number; nome: string; nome_f: string; nv: number };
   tpabr: "br" | "uf" | "mu" | "zona";
   abr: string;
@@ -125,6 +140,7 @@ export interface UnidadeMapa {
   te?: number;
   pst: number;
   tf: boolean;
+  snapshot_id?: number | null;
   lider?: LiderUnidade;
   segundo?: LiderUnidade;
   margem?: number; // pontos percentuais dos válidos entre 1º e 2º
@@ -132,34 +148,59 @@ export interface UnidadeMapa {
 }
 
 export interface Mapa {
+  nivel?: string;
+  pai?: string;
+  gerado_em?: string;
   unidades: UnidadeMapa[];
 }
 
 export type NivelMapa = "uf" | "mun" | "zona";
 
 // ---------- /api/serie ----------
+export interface CandidatoSerie {
+  sqcand: string;
+  n: string;
+  nmu: string;
+  sg: string;
+  campo: Campo;
+}
+
 export interface Serie {
-  pontos: { at: string; pst: number; cand: Record<string, number> }[];
-  viradas: { at: string; de: string; para: string }[];
+  abr?: string;
+  pontos: { at: string; snapshot_id?: number; pst: number; cand: Record<string, number> }[];
+  viradas: { at: string; snapshot_id?: number; de: string; para: string }[];
+  candidatos?: CandidatoSerie[]; // os mais votados da última versão, com nome e partido
 }
 
 // ---------- /api/anomalias ----------
 export interface Anomalia {
   at: string;
+  /** Categoria do servidor; os tipos operacionais ("outro") ficam fora do telão. */
   tipo: "virada" | "regressao" | "fechou" | "atraso";
   abr: string;
   cargo: number;
   texto: string;
+  id?: number;
+  tipo_bruto?: string; // tipo gravado pelo coletor ("regressao_contagem", "municipio_finalizado")
+  severidade?: "info" | "warn" | "error";
+  uf?: string | null;
 }
 
 // ---------- /events ----------
+/**
+ * Evento ao vivo já traduzido. O servidor manda `event: snapshot` (kind resultado, ab ou
+ * config), `event: evento` (kind anomalia) e `event: estado` (batimento).
+ */
 export interface EventoSse {
-  kind: "resultado" | "estado" | "anomalia";
-  ele: number;
-  cargo: number;
+  kind: "resultado" | "ab" | "config" | "estado" | "anomalia";
+  ele: number; // 0 quando não se aplica
+  cargo: number; // 0 quando não se aplica (ab, config)
   abr: string;
   snapshot_id: number;
   at: string;
+  nivel?: string | null;
+  pst?: number | null;
+  tf?: boolean;
 }
 
 // ---------- ativos estáticos ----------

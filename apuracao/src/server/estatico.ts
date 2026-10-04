@@ -25,6 +25,16 @@ export function tipoDe(caminho: string): string {
   return TIPOS[extname(caminho).toLowerCase()] ?? "application/octet-stream";
 }
 
+/**
+ * HTML, bundle (dist/) e JSON de configuração revalidam sempre: um `bun run build:ui` durante a
+ * live chega ao OBS no próximo recarregamento. Malhas, fontes e fotos não mudam no dia.
+ */
+export function cacheDe(raiz: string, arquivo: string): string {
+  const rel = arquivo.slice(raiz.length + 1).split(sep).join("/");
+  if (/^(geo|fonts|fotos)\//.test(rel)) return "public, max-age=3600";
+  return "no-cache";
+}
+
 export function responderEstatico(publicDir: string, pathname: string): Response | null {
   const raiz = resolve(publicDir);
   let rel: string;
@@ -44,6 +54,6 @@ export function responderEstatico(publicDir: string, pathname: string): Response
     if (!existsSync(final)) return null;
   }
   return new Response(Bun.file(final), {
-    headers: { "content-type": tipoDe(final), "cache-control": "max-age=60" },
+    headers: { "content-type": tipoDe(final), "cache-control": cacheDe(raiz, final) },
   });
 }

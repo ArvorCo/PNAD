@@ -23,8 +23,16 @@ export function chaveNeed(n: Need): string {
 
 /** O evento do SSE invalida esta necessidade? */
 export function eventoAfeta(e: EventoSse, n: Need): boolean {
-  if (e.kind === "estado") return n.tipo === "estado";
+  if (e.kind === "estado" || e.kind === "config") return n.tipo === "estado";
   if (e.kind === "anomalia") return n.tipo === "anomalias";
+  if (e.kind === "ab") {
+    // Monitoramento (-ab) mudou: andamento por UF e, por garantia, os mapas abaixo dele.
+    if (n.tipo === "estado") return true;
+    if (n.tipo !== "mapa" || n.ele !== e.ele) return false;
+    return e.abr === "br" ? n.pai === "br" : n.pai.startsWith(e.abr);
+  }
+  // estado.br sai do arquivo nacional de presidente.
+  if (n.tipo === "estado") return e.abr === "br" && e.cargo === 1;
   if (n.tipo === "resultado" || n.tipo === "serie") return n.ele === e.ele && n.cargo === e.cargo && n.abr === e.abr;
   if (n.tipo === "mapa") {
     if (n.ele !== e.ele || n.cargo !== e.cargo) return false;
