@@ -1,0 +1,405 @@
+/* Telas majoritárias (F3a): palco com mapa, painel executivo, ranking, barra de válidos e duelo. */
+
+/* ---------- palco ---------- */
+.ex-palco {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 0.75rem;
+  height: 100%;
+}
+
+.ex-mapa {
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.ex-mapa > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.ex-base {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  min-height: 2.5rem;
+}
+
+.ex-legenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem 1.25rem;
+  font-size: var(--t-1);
+  color: var(--ink);
+  min-width: 0;
+}
+
+.ex-legenda li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+}
+
+.ex-legenda li > i {
+  display: block;
+  width: 1.375rem;
+  height: 1.375rem;
+  border-radius: 0.25rem;
+  box-shadow: inset 0 0 0 1px rgb(25 46 43 / 0.25);
+}
+
+.ex-legenda li.fixa {
+  color: var(--muted);
+}
+
+.ex-legenda li.gradiente > i {
+  width: 4rem;
+}
+
+.ex-rodape {
+  flex: none;
+  font-size: var(--t-1);
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* ---------- painel executivo ---------- */
+.pex {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  height: 100%;
+  min-height: 0;
+}
+
+.pex-cab {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.pex-cab[hidden],
+.pex-vazio[hidden],
+.pex-dif[hidden],
+.rk[hidden],
+.bvalidos[hidden],
+.duelo-blocos[hidden],
+.duelo-barra[hidden] {
+  display: none;
+}
+
+.pex-vazio {
+  font-family: var(--font-serif);
+  font-size: var(--t-3);
+  line-height: 1.3;
+  color: var(--ink);
+  padding: 1.5rem 0;
+}
+
+.pex-dif {
+  font-size: var(--t-2);
+  color: var(--ink);
+  padding-top: 0.25rem;
+  border-top: 1px solid var(--line);
+}
+
+.pex-tot {
+  margin-top: auto;
+  font-size: var(--t-1);
+  color: var(--muted);
+}
+
+.pex-tot.atrasado {
+  color: #a3452e;
+}
+
+/* ---------- ranking ---------- */
+.rk {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.rk-linha {
+  position: relative;
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 1fr) auto;
+  grid-template-rows: auto auto auto;
+  column-gap: 1rem;
+  row-gap: 0.125rem;
+  align-items: center;
+  padding: 0.125rem 0 0.125rem 0.75rem;
+  border-left: 0.375rem solid transparent;
+  will-change: transform;
+}
+
+.rk-linha.lider {
+  border-left-color: var(--cor);
+}
+
+.rk-foto {
+  grid-column: 1;
+  grid-row: 1 / 4;
+  align-self: center;
+  display: grid;
+  place-items: center;
+  width: 4.5rem;
+  height: 4.5rem;
+}
+
+.rk-outros-marca {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: var(--cor);
+  opacity: 0.6;
+}
+
+.rk-nome {
+  grid-column: 2;
+  grid-row: 1;
+  max-width: 18.75rem; /* 300 px */
+  font-family: var(--font-sans);
+  font-size: var(--t-4);
+  font-weight: 600;
+  line-height: 1.05;
+  color: var(--ink);
+}
+
+.rk-pct {
+  grid-column: 3;
+  grid-row: 1 / 3;
+  justify-self: end;
+  font-size: var(--t-6);
+  font-weight: 500;
+  line-height: 1;
+  color: var(--ink);
+}
+
+.rk-linhasub {
+  grid-column: 2;
+  grid-row: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  min-width: 0;
+}
+
+.rk-sub {
+  font-family: var(--font-mono);
+  font-size: var(--t-2);
+  line-height: 1.1;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.rk-chips {
+  display: inline-flex;
+  gap: 0.375rem;
+}
+
+.rk-chips .chip {
+  height: 1.875rem;
+  padding: 0 0.625rem;
+}
+
+.rk-trilho {
+  grid-column: 2;
+  grid-row: 3;
+  display: block;
+  height: 0.75rem;
+  border-radius: 0.375rem;
+  background: rgb(25 46 43 / 0.08);
+  overflow: hidden;
+}
+
+.rk-trilho > i {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--cor);
+  border-radius: 0.375rem;
+  transition: width var(--d-conta) var(--ease);
+}
+
+.rk-votos {
+  grid-column: 3;
+  grid-row: 3;
+  justify-self: end;
+  font-size: var(--t-2);
+  color: var(--muted);
+  line-height: 1;
+}
+
+.rk-linha.outros .rk-nome {
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.rk-linha.sem-voto .rk-pct,
+.rk-linha.subjudice .rk-pct,
+.rk-linha.subjudice .rk-nome {
+  color: var(--muted);
+}
+
+/* ---------- válidos, brancos, nulos ---------- */
+.bvalidos {
+  display: grid;
+  gap: 0.375rem;
+}
+
+.bvalidos-barra {
+  display: flex;
+  height: 0.875rem;
+  border-radius: 0.4375rem;
+  overflow: hidden;
+  background: var(--nao-iniciado);
+}
+
+.bvalidos-barra > i {
+  display: block;
+  height: 100%;
+  transition: width var(--d-conta) var(--ease);
+}
+
+.bv-v {
+  background: var(--ink);
+}
+
+.bv-b {
+  background: #b9b3a2;
+}
+
+.bv-n {
+  background: #8f8a7b;
+}
+
+.bvalidos-rotulos {
+  display: flex;
+  gap: 1.25rem;
+  font-size: var(--t-1);
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.bvalidos-part {
+  font-size: var(--t-1);
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.bvalidos--vazio .bvalidos-rotulos {
+  color: var(--muted);
+}
+
+/* ---------- duelo do 2º turno ---------- */
+.painel--duelo {
+  padding: 1.5rem 0;
+}
+
+.painel--duelo .pex-vazio,
+.painel--duelo .pex-dif,
+.painel--duelo .bvalidos,
+.painel--duelo .pex-tot {
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+}
+
+.duelo {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: 100%;
+}
+
+.duelo-blocos {
+  display: grid;
+  grid-template-columns: 21.75rem 21.75rem; /* 348 + 348 */
+}
+
+.duelo-bloco {
+  display: grid;
+  justify-items: center;
+  gap: 0.375rem;
+  padding: 0.5rem 0.75rem 1rem;
+  text-align: center;
+  border-top: 0.375rem solid transparent;
+  min-width: 0;
+}
+
+.duelo-bloco.lider {
+  border-top-color: var(--cor);
+}
+
+.duelo-foto {
+  margin-bottom: 0.5rem;
+}
+
+.duelo-nome {
+  max-width: 100%;
+  font-size: var(--t-5);
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.duelo-nome.longo {
+  font-size: var(--t-4);
+  line-height: 1.29; /* mesma altura de linha do nome de 44 px */
+}
+
+.duelo-sub {
+  font-family: var(--font-mono);
+  font-size: var(--t-2);
+  color: var(--muted);
+}
+
+.duelo-pct {
+  font-size: var(--t-7);
+  line-height: 1;
+  color: var(--cor);
+  letter-spacing: -0.03em;
+}
+
+.duelo-pct::after {
+  content: "%";
+  font-size: var(--t-5);
+  margin-left: 0.125rem;
+}
+
+.duelo-votos {
+  font-size: var(--t-2);
+  color: var(--muted);
+}
+
+.duelo-chips {
+  min-height: 2.25rem;
+}
+
+.duelo-barra {
+  position: relative;
+  display: flex;
+  height: 1.75rem;
+  margin: 0 1.5rem;
+  border-radius: 0.875rem;
+  overflow: hidden;
+  background: var(--nao-iniciado);
+}
+
+.duelo-barra > i {
+  display: block;
+  height: 100%;
+  transition: width var(--d-conta) var(--ease);
+}
+
+.duelo-meio {
+  position: absolute;
+  left: 50%;
+  top: -0.25rem;
+  bottom: -0.25rem;
+  width: 0.1875rem;
+  background: var(--white);
+  transform: translateX(-50%);
+}

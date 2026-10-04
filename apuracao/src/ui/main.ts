@@ -5,6 +5,9 @@ import "./styles/tokens.css";
 import "./styles/base.css";
 import "./styles/layout.css";
 import "./styles/motion.css";
+import "./styles/majoritarias.css";
+import "./styles/mapa.css";
+import "./styles/legislativas.css";
 
 import { ativo, criarApi } from "./data/api.ts";
 import type { Fonte } from "./data/api.ts";
