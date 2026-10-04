@@ -21,6 +21,7 @@ export const TITULOS: Readonly<Record<string, string>> = {
   ritmo: "Ritmo da apuração",
   mov: "Movimento da apuração",
   mun: "Município",
+  exterior: "Voto no exterior",
   espera: "Espera",
 };
 
@@ -38,6 +39,7 @@ export const ROTULOS: Readonly<Record<string, string>> = {
   ritmo: "Ritmo da apuração",
   mov: "Movimento da apuração",
   mun: "Município",
+  exterior: "Voto no exterior",
   espera: "Espera",
 };
 
@@ -45,7 +47,7 @@ export const ROTULOS: Readonly<Record<string, string>> = {
 export function tituloDaTela(id: string, s: State, uf: string | null, mun: string | null = null): string {
   const base = TITULOS[id] ?? id;
   if (id === "pres") return "Presidente, Brasil";
-  if (id === "gov" || id === "sen" || id === "ritmo" || id === "mov" || id === "espera") return base;
+  if (id === "gov" || id === "sen" || id === "ritmo" || id === "mov" || id === "exterior" || id === "espera") return base;
   if (id === "mun" && uf && mun) {
     const m = s.config?.municipios[uf]?.find(x => x.cd === mun);
     return m ? `${m.nm}, ${uf}` : base;

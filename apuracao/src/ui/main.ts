@@ -8,6 +8,7 @@ import "./styles/motion.css";
 import "./styles/majoritarias.css";
 import "./styles/mapa.css";
 import "./styles/legislativas.css";
+import "./styles/exterior.css";
 
 import { ativo, criarApi } from "./data/api.ts";
 import type { Fonte } from "./data/api.ts";
@@ -32,7 +33,7 @@ import { montarShell } from "./shell.ts";
 import { criarStore } from "./state/store.ts";
 import type { Config, EventoSse, Need, Resultado, State } from "./state/types.ts";
 import { registrarTelas } from "./views/index.ts";
-import { listar } from "./views/registry.ts";
+import { ligarPedidoDeDados, listar } from "./views/registry.ts";
 
 const VIEW_POR_CARGO: Readonly<Record<number, string>> = { 1: "pres-uf", 3: "gov-uf", 5: "sen-uf", 6: "fed-uf", 7: "est-uf", 8: "dis-df" };
 
@@ -140,6 +141,7 @@ async function iniciar(): Promise<void> {
   };
 
   const recarregar = (): void => carregador.carregarTodas(necessidades(store.get()));
+  ligarPedidoDeDados(recarregar);
 
   const tela_cheia = (): void => {
     if (document.fullscreenElement) void document.exitFullscreen();

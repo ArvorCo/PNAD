@@ -47,6 +47,18 @@ export function get(id: string): View | undefined {
 
 export const has = (id: string): boolean => telas.has(id);
 
+let pedidoDeDados: (() => void) | null = null;
+
+/** A casca liga aqui a busca das necessidades da tela atual. */
+export function ligarPedidoDeDados(f: (() => void) | null): void {
+  pedidoDeDados = f;
+}
+
+/** Tela que trocou o próprio recorte sem mudar o hash pede as necessidades de novo. */
+export function pedirDados(): void {
+  pedidoDeDados?.();
+}
+
 /** Telas registradas com rótulo curto (para o diretor e o HUD). */
 export function listar(): { id: string; titulo: string }[] {
   return [...telas.keys()].map(id => ({ id, titulo: titulos.get(id) ?? id }));

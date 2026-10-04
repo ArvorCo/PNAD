@@ -41,6 +41,9 @@ export const malhaUfs = (): Promise<ColecaoFeicoes> => buscar("/geo/br_uf.geojso
 /** Malha municipal de uma UF (sigla em qualquer caixa). */
 export const malhaMunicipios = (uf: string): Promise<ColecaoFeicoes> => buscar(`/geo/mun/${uf.toUpperCase()}.geojson`);
 
+/** Terra do mapa-múndi (países sem a Antártida), gerada por scripts/gerar-mundo.ts. */
+export const malhaMundo = (): Promise<ColecaoFeicoes> => buscar("/geo/mundo.geojson");
+
 /** Pré-carrega malhas sem esperar (para a próxima tela da playlist). */
 export function preCarregar(uf?: string | null): void {
   void malhaUfs().catch(() => undefined);

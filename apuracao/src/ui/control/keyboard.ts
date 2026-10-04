@@ -45,6 +45,7 @@ export function ligarTeclado(a: AcoesTeclado, alvo: Window = window): () => void
     else if (k === "z") a.zonas();
     else if (k === "f") a.tela_cheia();
     else if (k === "h") a.hud();
+    else if (k === "x") a.irPara({ v: "exterior", uf: null, mun: null, zonas: false, zona: null });
   };
 
   const aoTeclar = (ev: KeyboardEvent): void => {
@@ -64,7 +65,10 @@ export function ligarTeclado(a: AcoesTeclado, alvo: Window = window): () => void
     if (k === "ArrowRight") a.proxima();
     else if (k === "ArrowLeft") a.anterior();
     else if (k === " ") a.pausar();
-    else if (k === "Backspace") a.subir();
+    else if (k === "Backspace") {
+      // A tela pode tratar a subida dentro dela (exterior: da cidade para o agregado).
+      if (!a.teclaDaTela(k)) a.subir();
+    }
     else if (k === "/") a.paleta(true);
     else if (k === "Escape") a.paleta(false);
     else if (k === "ArrowUp" || k === "ArrowDown") tratou = a.teclaDaTela(k);

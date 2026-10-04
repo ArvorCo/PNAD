@@ -128,12 +128,12 @@ export interface PainelExecutivo {
   destroy(): void;
 }
 
-export function criarPainelExecutivo(o: { max: number; nvLidera?: number; casas?: 1 | 2 }): PainelExecutivo {
+export function criarPainelExecutivo(o: { max: number; nvLidera?: number; casas?: 1 | 2; fotoPx?: number }): PainelExecutivo {
   const el = document.createElement("div");
   el.className = "pex";
   const cab = document.createElement("div");
   cab.className = "pex-cab";
-  const rk = criarRanking({ max: o.max, nvLidera: o.nvLidera ?? 0, casas: o.casas ?? 1 });
+  const rk = criarRanking({ max: o.max, nvLidera: o.nvLidera ?? 0, casas: o.casas ?? 1, ...(o.fotoPx ? { fotoPx: o.fotoPx } : {}) });
   const vazioEl = document.createElement("p");
   vazioEl.className = "pex-vazio";
   const dif = document.createElement("p");
