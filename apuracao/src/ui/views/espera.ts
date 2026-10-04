@@ -4,6 +4,7 @@
 
 import { compacto, dezessete, inteiro, regressiva } from "../data/format.ts";
 import { expandirPlaylist } from "../control/rotation.ts";
+import { navegar } from "./executivo.ts";
 import type { Diff, State } from "../state/types.ts";
 import type { View } from "./registry.ts";
 import { partes, nomeUf } from "./registry.ts";
@@ -82,7 +83,9 @@ export function criarEspera(titulos: (id: string, s: State, uf: string | null) =
         recebidoEm = performance.now();
       }
       const q = (c: string): HTMLElement | null => raiz?.querySelector<HTMLElement>(c) ?? null;
-      const te = (s.config?.ufs ?? []).reduce((a, u) => a + u.te, 0);
+      // Eleitorado nacional como o TSE publica: 27 UFs mais os votantes no exterior (ZZ).
+      const teAb = (s.estado?.ufs ?? []).reduce((a, u) => a + (u.te ?? 0), 0);
+      const te = teAb > 0 ? teAb : (s.config?.ufs ?? []).reduce((a, u) => a + u.te, 0);
       const teEl = q(".e-te");
       if (teEl) {
         teEl.textContent = te > 0 ? compacto(te) : "aguardando";
@@ -90,13 +93,13 @@ export function criarEspera(titulos: (id: string, s: State, uf: string | null) =
       }
       const tsEl = q(".e-ts");
       if (tsEl) {
-        // Mesmo universo do eleitorado: soma das 27 UFs, sem o exterior (ZZ).
-        const ts = s.estado ? s.estado.ufs.filter(u => u.uf !== "ZZ").reduce((a, u) => a + u.ts, 0) : 0;
+        // Mesmo universo do eleitorado: todas as seções, inclusive as do exterior.
+        const ts = s.estado ? s.estado.ufs.reduce((a, u) => a + u.ts, 0) : 0;
         tsEl.textContent = ts > 0 ? inteiro(ts) : "aguardando";
         tsEl.classList.toggle("vazio-num", !(ts > 0));
       }
       const munEl = q(".e-mun");
-      // Mesmo universo do eleitorado (27 UFs): as cidades do exterior (ZZ) ficam fora.
+      // Municípios do Brasil; as 186 cidades do exterior não são municípios.
       const nMun = Object.entries(s.config?.municipios ?? {}).reduce((a, [uf, l]) => (uf === "ZZ" ? a : a + l.length), 0);
       if (munEl) {
         munEl.textContent = nMun > 0 ? inteiro(nMun) : "aguardando";
@@ -106,14 +109,19 @@ export function criarEspera(titulos: (id: string, s: State, uf: string | null) =
       const grade = q(".espera-grade");
       if (grade) {
         const pst = new Map((s.estado?.ufs ?? []).map(u => [u.uf.toUpperCase(), u.pst]));
-        const ufs = [...(s.config?.ufs ?? [])].map(u => u.uf.toUpperCase()).sort();
+        // 27 UFs em ordem alfabética e, por último, ZZ (eleitores no exterior).
+        const ufs = [...(s.config?.ufs ?? [])].map(u => u.uf.toUpperCase()).filter(u => u !== "ZZ").sort();
+        ufs.push("ZZ");
         if (grade.childElementCount !== ufs.length) {
           grade.replaceChildren(
             ...ufs.map(uf => {
               const sp = document.createElement("span");
               sp.dataset.uf = uf;
               sp.textContent = uf;
-              sp.title = nomeUf(s, uf);
+              sp.title = uf === "ZZ" ? "Exterior" : nomeUf(s, uf);
+              sp.setAttribute("role", "link");
+              sp.tabIndex = 0;
+              sp.addEventListener("click", () => navegar({ v: "pres-uf", uf }));
               return sp;
             }),
           );
@@ -138,6 +146,9 @@ export function criarEspera(titulos: (id: string, s: State, uf: string | null) =
             const t = document.createElement("span");
             t.className = "corte";
             t.textContent = titulos(e.v, s, e.uf);
+            li.setAttribute("role", "link");
+            li.tabIndex = 0;
+            li.addEventListener("click", () => navegar({ v: e.v, uf: e.uf ?? null }));
             li.append(o, t);
             return li;
           }),

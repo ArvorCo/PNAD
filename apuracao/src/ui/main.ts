@@ -18,6 +18,7 @@ import { preCarregar } from "./data/geo.ts";
 import { abrirCanal, ehComando } from "./control/broadcast.ts";
 import type { Comando, EspelhoTelao } from "./control/broadcast.ts";
 import { ligarTeclado } from "./control/keyboard.ts";
+import { vigiarBundle } from "./control/recarga.ts";
 import { destinoDaUf, subirNivel } from "./control/navegacao.ts";
 import type { Destino } from "./control/navegacao.ts";
 import { criarRotacao, normalizarPlaylist, PLAYLIST_PADRAO } from "./control/rotation.ts";
@@ -317,3 +318,4 @@ function relogioReplay(inicio: string, speed: number): () => string {
 }
 
 void iniciar();
+vigiarBundle(!location.hash.includes("mock=1"));

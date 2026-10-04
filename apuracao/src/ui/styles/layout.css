@@ -14,7 +14,7 @@
 .faixa {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 1.5rem;
   padding: 0 var(--respiro);
   background: var(--dark);
   color: var(--on-dark);
@@ -49,6 +49,7 @@
   font-family: var(--font-serif);
   font-size: var(--t-3);
   flex: 1 1 auto;
+  min-width: 22rem;
 }
 
 .faixa-secoes {
@@ -82,8 +83,9 @@
 
 .faixa-horas {
   display: flex;
-  gap: 1.25rem;
+  gap: 1rem;
   flex: none;
+  white-space: nowrap;
   color: var(--on-dark-muted);
 }
 
@@ -494,6 +496,7 @@
 }
 
 .espera-grade span {
+  cursor: pointer;
   display: grid;
   place-items: center;
   height: 3.25rem;
@@ -525,6 +528,7 @@
 }
 
 .espera-lista li {
+  cursor: pointer;
   display: flex;
   gap: 1rem;
   padding: 0.625rem 0;

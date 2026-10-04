@@ -47,10 +47,14 @@ export function criarFaixa(): Faixa {
       pctEl.textContent = br ? pct(p, 2) : "sem dado";
       tse.textContent = hora(br?.dt_ht) || "aguardando";
       arq.textContent = hora(br?.hg) || "aguardando";
-      lido.textContent = hora(br?.lido_em) || "aguardando";
+      // Leitura = última requisição ao arquivo nacional, mudado ou não: prova que o coletor está vivo.
+      lido.textContent = hora(br?.ultima_leitura_em ?? br?.lido_em) || "aguardando";
+      // Atraso = leitura menos geração da última versão gravada. Antes da primeira seção
+      // totalizada a última versão é a da véspera e o número não significa nada.
+      const comecou = (br?.st ?? 0) > 0;
       const a = br?.atraso_s;
-      atraso.textContent = a === null || a === undefined ? "sem dado" : duracao(a);
-      atrasoBox.classList.toggle("atrasado", (a ?? 0) > LIMITE_ATRASO_S);
+      atraso.textContent = !comecou ? "aguardando" : a === null || a === undefined ? "sem dado" : duracao(a);
+      atrasoBox.classList.toggle("atrasado", comecou && (a ?? 0) > LIMITE_ATRASO_S);
     },
   };
 }

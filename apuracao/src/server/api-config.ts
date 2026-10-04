@@ -87,6 +87,7 @@ interface UfEstado {
   pst: number;
   st: number;
   ts: number;
+  te: number; // eleitorado da UF, inclusive "zz" (exterior)
   munnr: number;
   munpt: number;
   munf: number;
@@ -153,7 +154,7 @@ function partePesada(db: Database, el: Eleicoes, arqPres: number | null, at?: st
     for (const r of abAsOf(db, abBr.id, at)) {
       if (r.tpabr === "br" || r.cdabr === "br") continue;
       const o: UfEstado = {
-        uf: r.cdabr, nome: nomeUf(r.cdabr), pst: n0(r.pst), st: n0(r.st), ts: n0(r.ts), munnr: n0(r.munnr), munpt: n0(r.munpt), munf: n0(r.munf),
+        uf: r.cdabr, nome: nomeUf(r.cdabr), pst: n0(r.pst), st: n0(r.st), ts: n0(r.ts), te: n0(r.te), munnr: n0(r.munnr), munpt: n0(r.munpt), munf: n0(r.munf),
         dt_ht: r.totalizado_em,
       };
       const f = fechou.get(r.cdabr);

@@ -47,6 +47,7 @@ export interface EstadoUf {
   pst: number;
   st: number;
   ts: number;
+  te?: number; // eleitorado, inclusive ZZ
   munnr: number;
   munpt: number;
   munf: number;

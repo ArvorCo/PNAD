@@ -53,7 +53,14 @@ export function responderEstatico(publicDir: string, pathname: string): Response
     final = join(alvo, "index.html");
     if (!existsSync(final)) return null;
   }
+  const st = statSync(final);
+  // Last-Modified e ETag permitem ao telão perceber um bundle novo e recarregar sozinho.
   return new Response(Bun.file(final), {
-    headers: { "content-type": tipoDe(final), "cache-control": cacheDe(raiz, final) },
+    headers: {
+      "content-type": tipoDe(final),
+      "cache-control": cacheDe(raiz, final),
+      "last-modified": st.mtime.toUTCString(),
+      etag: `"${st.size.toString(16)}-${Math.floor(st.mtimeMs).toString(16)}"`,
+    },
   });
 }

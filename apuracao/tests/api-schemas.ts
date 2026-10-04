@@ -20,7 +20,7 @@ export const ConfigSchema = z
 
 const UfEstado = z
   .object({
-    uf: z.string(), nome: z.string(), pst: z.number(), st: z.number(), ts: z.number(), munnr: z.number(), munpt: z.number(), munf: z.number(),
+    uf: z.string(), nome: z.string(), pst: z.number(), st: z.number(), ts: z.number(), te: z.number().optional(), munnr: z.number(), munpt: z.number(), munf: z.number(),
     dt_ht: Iso.nullable(), fechou_em: Iso.optional(),
   })
   .strict();

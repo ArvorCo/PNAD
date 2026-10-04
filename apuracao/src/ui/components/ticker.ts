@@ -8,7 +8,9 @@ const PASSO_MS = 7000;
 
 export function mensagens(s: State): string[] {
   const saida: string[] = [];
-  for (const a of s.anomalias.slice(0, 12)) if (a.texto) saida.push(a.texto);
+  // Eventos operacionais (cópia velha do CDN, drift de esquema) ficam no banco e fora do ar.
+  const noAr = s.anomalias.filter(a => a.tipo_bruto !== "idg_regressivo");
+  for (const a of noAr.slice(0, 12)) if (a.texto) saida.push(a.texto);
   const nomes = new Map((s.config?.ufs ?? []).map(u => [u.uf.toUpperCase(), u.nome]));
   const fechadas = (s.estado?.ufs ?? [])
     .filter(u => u.fechou_em)
