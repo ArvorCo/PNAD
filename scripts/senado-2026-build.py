@@ -61,9 +61,7 @@ def render(data: dict, template: str) -> str:
         arquivo = ROOT / "docs/assets" / nome
         if arquivo.exists():
             versao = hashlib.sha256(arquivo.read_bytes()).hexdigest()[:10]
-            template = template.replace(
-                f"assets/{nome}\"", f"assets/{nome}?v={versao}\""
-            )
+            template = template.replace(f'assets/{nome}"', f'assets/{nome}?v={versao}"')
     if "{{" in template or "—" in template:
         raise ValueError("Template incompleto ou travessão no texto público")
     return template
