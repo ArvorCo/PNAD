@@ -8,6 +8,12 @@ INTERVALO="${BOLETIM_INTERVALO:-600}"
 JANELA_MIN="${BOLETIM_JANELA:-10}"
 mkdir -p data/boletins
 echo $$ > data/boletins/loop.pid
+if [ "${BOLETIM_ESPERAR:-0}" = "1" ]; then
+  # Reinício no meio do ciclo: espera o próximo múltiplo do intervalo em vez de falar agora.
+  AGORA=$(date +%s); PROXIMO=$(( (AGORA / INTERVALO + 1) * INTERVALO ))
+  echo "[$(TZ=America/Sao_Paulo date +%H%M)] esperando até $(TZ=America/Sao_Paulo date -r "$PROXIMO" +%H:%M:%S)"
+  sleep $(( PROXIMO - AGORA ))
+fi
 while :; do
   H=$(TZ=America/Sao_Paulo date +%H%M)
   INICIO=$(date +%s)
@@ -34,6 +40,17 @@ $(cat "data/boletins/dados-$H.json")"
   fi
   PAL=$(wc -w < "data/boletins/$H.txt")
   echo "[$H] $PAL palavras"
+  if [ "$PAL" -gt 620 ]; then
+    # Segundo passo: enxuga sem perder estrutura nem tags (o v4 fala pausado: 760 palavras dão 4 min 45 s).
+    cp "data/boletins/$H.txt" "data/boletins/$H.longo.txt"
+    if claude -p --model opus --no-session-persistence "Reescreva o roteiro abaixo com 520 a 560 palavras, cortando repetições e detalhes menores, mantendo a ordem dos blocos, as tags de áudio entre colchetes, os números por extenso e o fecho de analista. Responda só com o roteiro.
+
+$(cat "data/boletins/$H.longo.txt")" > "data/boletins/$H.txt" 2>> "data/boletins/$H.claude.err"; then
+      echo "[$H] enxugado para $(wc -w < "data/boletins/$H.txt") palavras"
+    else
+      cp "data/boletins/$H.longo.txt" "data/boletins/$H.txt"; echo "[$H] enxugar falhou; mantido o longo"
+    fi
+  fi
   echo "$H" > data/boletins/.ultimo
   while pgrep -x afplay >/dev/null; do sleep 2; done
   echo "[$H] áudio"
