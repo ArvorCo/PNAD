@@ -1,0 +1,105 @@
+/* Escala: 1rem = min(100vw, 177.78vh)/120, então #telao (120rem × 67.5rem) cabe em 16:9 com letterbox. */
+html {
+  font-size: calc(min(100vw, 177.78vh) / 120);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: var(--dark);
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: var(--t-2);
+  line-height: 1.25;
+  font-kerning: normal;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+p,
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+.num,
+.mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+.serif {
+  font-family: var(--font-serif);
+}
+
+.corte {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+.sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.vazio {
+  display: grid;
+  place-content: center;
+  gap: 0.75rem;
+  height: 100%;
+  text-align: center;
+  color: var(--muted);
+}
+
+.vazio-titulo {
+  font-family: var(--font-serif);
+  font-size: var(--t-6);
+  color: var(--ink);
+}
+
+.vazio-nota {
+  font-size: var(--t-3);
+}
+
+.vazio--painel .vazio-nota {
+  font-size: var(--t-2);
+  max-width: 30rem;
+}

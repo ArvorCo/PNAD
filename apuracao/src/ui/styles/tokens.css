@@ -1,0 +1,57 @@
+/* Tokens do telão. Paleta da casa (docs/assets/predicao_2026.css). */
+:root {
+  --paper: #f4f0e6;
+  --white: #fffdf8;
+  --ink: #192e2b;
+  --muted: #535b54;
+  --line: #c7c9bb;
+  --dark: #142d2b;
+  --dark-2: #1d3a37;
+  --on-dark: #f4f0e6;
+  --on-dark-muted: #b9c2b4;
+  --accent: #d6e48c;
+  --lula: #b02f21;
+  --flavio: #1457aa;
+  --outros: #0f7f5f; /* 4,37:1 no papel: só texto grande, barra e mapa */
+  --outros-texto: #0b6e55; /* texto pequeno sobre papel, 5,47:1 */
+  --nao-iniciado: #d9d6cc;
+  --warn: #d9775f;
+
+  --c-esquerda: #b02f21;
+  --c-centro-esquerda: #d9775f;
+  --c-centro: #8a7a3a;
+  --c-centro-direita: #4f7fc2;
+  --c-direita: #1457aa;
+  --c-indefinido: #8a8f98;
+
+  --font-sans: "Archivo", "Archivo Variable", system-ui, sans-serif;
+  --font-serif: "Fraunces", "Fraunces Variable", Georgia, serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
+
+  /* Escala tipográfica em rem (1rem = 16 px em 1920×1080). Piso 22 px. */
+  --t-1: 1.375rem; /* 22 px, piso */
+  --t-2: 1.5rem; /* 24 px, corpo */
+  --t-3: 1.75rem; /* 28 px, faixas */
+  --t-4: 2.125rem; /* 34 px, nomes */
+  --t-5: 2.75rem; /* 44 px, título */
+  --t-6: 3.5rem; /* 56 px, percentual */
+  --t-7: 6rem; /* 96 px, herói */
+
+  /* Grade */
+  --faixa-topo: 4.5rem; /* 72 px */
+  --faixa-base: 4.25rem; /* 68 px */
+  --respiro: 1.5rem; /* 24 px */
+  --palco-w: 72rem; /* 1152 px */
+  --painel-w: 43.5rem; /* 696 px */
+  --miolo-h: 55.75rem; /* 892 px */
+  --dwell-h: 0.1875rem; /* 3 px */
+  --hud-w: 18.75rem; /* 300 px */
+  --hud-h: 2.75rem; /* 44 px */
+
+  /* Movimento */
+  --d-tela: 350ms;
+  --d-conta: 900ms;
+  --d-fill: 600ms;
+  --d-flip: 500ms;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}

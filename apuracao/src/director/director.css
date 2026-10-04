@@ -1,0 +1,188 @@
+:root {
+  --paper: #f4f0e6;
+  --white: #fffdf8;
+  --ink: #192e2b;
+  --muted: #535b54;
+  --line: #c7c9bb;
+  --dark: #142d2b;
+  --accent: #d6e48c;
+  --warn: #d9775f;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Archivo", system-ui, sans-serif;
+  font-size: 16px;
+}
+
+.dir {
+  display: grid;
+  gap: 16px;
+  padding: 16px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.dir-topo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  background: var(--dark);
+  color: var(--paper);
+  border-radius: 8px;
+  padding: 12px 16px;
+}
+
+.dir-topo h1 {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 22px;
+  margin: 0;
+}
+
+.dir-titulo {
+  font-size: 20px;
+  flex: 1 1 auto;
+}
+
+.dir-meta {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  color: #b9c2b4;
+}
+
+.dir-meta[data-rede="polling"],
+.dir-meta[data-rede="offline"] {
+  color: #f0a79c;
+}
+
+section {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px 16px;
+}
+
+section h2 {
+  font-size: 16px;
+  color: var(--muted);
+  margin: 0 0 10px;
+  font-weight: 600;
+}
+
+.grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 8px;
+}
+
+.ufs {
+  grid-template-columns: repeat(9, 1fr);
+}
+
+button {
+  font: inherit;
+  font-size: 18px;
+  min-height: 56px;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--paper);
+  color: var(--ink);
+  cursor: pointer;
+  text-align: left;
+}
+
+.ufs button {
+  text-align: center;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-weight: 600;
+  min-height: 48px;
+}
+
+button:hover {
+  border-color: var(--ink);
+}
+
+button[aria-pressed="true"] {
+  background: var(--accent);
+  border-color: var(--ink);
+}
+
+.controles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.controles label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+}
+
+input[type="search"] {
+  width: 100%;
+  font: inherit;
+  font-size: 20px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--white);
+}
+
+.achados {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.achados button {
+  width: 100%;
+  min-height: 44px;
+}
+
+.achados small {
+  color: var(--muted);
+  margin-left: 8px;
+}
+
+.playlist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+.playlist li {
+  padding: 4px 8px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+
+.playlist li.atual {
+  background: var(--accent);
+  border-color: var(--ink);
+}
+
+.aviso {
+  color: var(--muted);
+}
+
+.dir-valor {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  min-width: 3.5em;
+}
