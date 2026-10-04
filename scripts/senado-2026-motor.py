@@ -85,9 +85,20 @@ def main() -> None:
             f"{uf} {e['cobertura']:<12} {dupla or '-'}"
             + (f"  dupla {p:.2f}" if p is not None else "")
         )
+        for c in e.get("cenarios", []):
+            probs = {p["nome"]: p["p_eleito"] for p in c["probabilidades"]}
+            dupla = " + ".join(f"{n} ({probs[n]:.2f})" for n in c["eleitos_provaveis"])
+            print(
+                f"   cenário {c['chave']}: {dupla}  dupla {c['p_dupla_mais_provavel']:.2f}"
+            )
     s27 = resultado["senado_2027"]
     for g, v in s27["por_grupo"].items():
         print(f"{g}: {v['esperado']:.1f} {v['ic90']}")
+    for c in s27.get("cenarios", []):
+        grupos = ", ".join(
+            f"{g} {v['esperado']:.1f} {v['ic90']}" for g, v in c["por_grupo"].items()
+        )
+        print(f"cenário {c['chave']}: {grupos}")
     print(f"tempo: {time.time() - t0:.1f}s -> {args.saida}")
 
 

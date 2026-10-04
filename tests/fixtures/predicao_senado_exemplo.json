@@ -1870,6 +1870,76 @@
    "incerteza": "baixa",
    "notas": [
     "Fixture: valores inventados."
+   ],
+   "alertas": [
+    {
+     "titulo": "Registro de candidatura indeferido em decisão monocrática do TSE",
+     "texto": "O relator indeferiu o registro de uma candidatura ao Senado e declarou nulos os votos a ela em 04/10. A decisão ainda será submetida ao plenário. O nome e o número seguem na urna. Texto de fixture.",
+     "candidato": "Exemplo PR A (fixture)",
+     "marcador": "registro indeferido",
+     "fontes": [
+      {
+       "veiculo": "CNN Brasil",
+       "publicado_em": "2026-10-03T20:17:38-03:00",
+       "url": "https://www.cnnbrasil.com.br/eleicoes/tse-barra-candidatura-de-deltan-ao-senado-e-votos-serao-considerados-nulos/",
+       "arquivo": "data/originals/senado_102026/deltan_tse/materia_1.html",
+       "sha256": "81ed4fbb963c89bff5d7b46f1cde681d440adf61b69018ac364799a88555d867"
+      },
+      {
+       "veiculo": "Gazeta do Povo",
+       "publicado_em": "2026-10-03T20:03:00-03:00",
+       "url": "https://www.gazetadopovo.com.br/eleicoes/2026/parana-2026/ministro-do-tse-cassa-registro-de-candidatura-de-deltan-dallagnol/",
+       "arquivo": "data/originals/senado_102026/deltan_tse/materia_2.html",
+       "sha256": "1f43c4cfc69e5fd73147fb2e55bf468682847bd2ec4c45f6cf87e14bd64fef2a"
+      }
+     ]
+    }
+   ],
+   "cenarios": [
+    {
+     "chave": "votos_nulos_pr_a",
+     "rotulo": "Votos da primeira candidatura anulados",
+     "descricao": "Os votos dados a Exemplo PR A (fixture) viram nulos e saem dos válidos. Texto de fixture.",
+     "hipotese": "A decisão monocrática é mantida pelo plenário e o eleitor não troca de número.",
+     "probabilidades": [
+      {
+       "nome": "Exemplo PR A (fixture)",
+       "partido": "PL",
+       "campo": "direita",
+       "p_eleito": 0.0
+      },
+      {
+       "nome": "Exemplo PR B (fixture)",
+       "partido": "PL",
+       "campo": "direita",
+       "p_eleito": 0.8
+      },
+      {
+       "nome": "Exemplo PR C (fixture)",
+       "partido": "PT",
+       "campo": "esquerda",
+       "p_eleito": 0.7
+      },
+      {
+       "nome": "Exemplo PR D (fixture)",
+       "partido": "PP",
+       "campo": "centro-direita",
+       "p_eleito": 0.5
+      }
+     ],
+     "eleitos_provaveis": [
+      "Exemplo PR B (fixture)",
+      "Exemplo PR C (fixture)"
+     ],
+     "p_dupla_mais_provavel": 0.46,
+     "fonte": {
+      "veiculo": "CNN Brasil",
+      "publicado_em": "2026-10-03T20:17:38-03:00",
+      "url": "https://www.cnnbrasil.com.br/eleicoes/tse-barra-candidatura-de-deltan-ao-senado-e-votos-serao-considerados-nulos/",
+      "arquivo": "data/originals/senado_102026/deltan_tse/materia_1.html",
+      "sha256": "81ed4fbb963c89bff5d7b46f1cde681d440adf61b69018ac364799a88555d867"
+     }
+    }
    ]
   },
   "RJ": {
@@ -3061,7 +3131,28 @@
   },
   "p_maioria_direita_mais_centro_direita": 0.62,
   "p_41_direita_centro_direita_centro": 0.9,
-  "p_54_bloco_oposicao": 0.08
+  "p_54_bloco_oposicao": 0.08,
+  "cenarios": [
+   {
+    "chave": "votos_nulos_pr_a",
+    "rotulo": "Votos da primeira candidatura anulados",
+    "hipotese": "A decisão monocrática é mantida pelo plenário.",
+    "por_grupo": {
+     "direita": {
+      "esperado": 38.0
+     },
+     "centro": {
+      "esperado": 11.5
+     },
+     "esquerda": {
+      "esperado": 31.5
+     }
+    },
+    "p_41_direita_centro_direita_centro": 0.5,
+    "p_54_bloco_oposicao": 0.01,
+    "p_49_direita_centro_direita": 0.3
+   }
+  ]
  },
  "validacao": {
   "sensibilidades": [

@@ -11,12 +11,13 @@ motor, e falha com mensagem clara se o arquivo faltar.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import sys
 from pathlib import Path
 
 from predicao_2026.base import module
-from senado_2026.pagina import hemiciclo, texto, view
+from senado_2026.pagina import alertas, hemiciclo, texto, view
 
 ROOT = Path(__file__).resolve().parents[1]
 JSON_PADRAO = ROOT / "docs/assets/predicao_senado.json"
@@ -40,6 +41,7 @@ def carregar(path: Path) -> dict:
 def render(data: dict, template: str) -> str:
     campo_do_partido = module("voto_util_base").PARTIDO_CAMPO
     trocas = {
+        "AVISO": alertas.aviso(data),
         "HERO": view.hero_cartoes(data),
         "HEMICICLO": hemiciclo.render(data, campo_do_partido),
         "PROBABILIDADES": texto.probabilidades_bloco(data),
@@ -53,6 +55,15 @@ def render(data: dict, template: str) -> str:
     }
     for chave, valor in trocas.items():
         template = template.replace("{{" + chave + "}}", valor)
+    # Carimbo de versão nos assets próprios: o GitHub Pages e o navegador guardam
+    # JS e CSS em cache, e sem isso uma correção de interação demora a chegar.
+    for nome in ("predicao_senado.js", "predicao_senado.css"):
+        arquivo = ROOT / "docs/assets" / nome
+        if arquivo.exists():
+            versao = hashlib.sha256(arquivo.read_bytes()).hexdigest()[:10]
+            template = template.replace(
+                f"assets/{nome}\"", f"assets/{nome}?v={versao}\""
+            )
     if "{{" in template or "—" in template:
         raise ValueError("Template incompleto ou travessão no texto público")
     return template

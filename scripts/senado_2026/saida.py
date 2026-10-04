@@ -11,15 +11,12 @@ from datetime import datetime, timezone
 
 from . import base as B
 from . import calibracao as C
+from . import indeferido as I
 from . import motor as M
 from . import senado as S
 
 REPO = "https://github.com/ArvorCo/PNAD/blob/main/"
 INCERTEZA = {"baixa": 0.6, "media": 0.35}
-# Diferença entre a primeira e a segunda dupla abaixo da qual a dupla mais
-# provável é tratada como empate (cerca de 7 erros-padrão de Monte Carlo com
-# 20 mil sorteios).
-EMPATE_DUPLA = 0.02
 
 
 def br(x: float, casas: int = 1) -> str:
@@ -140,35 +137,18 @@ def estado_saida(prep: dict, resumo: dict | None, eleitorado: dict) -> dict:
             }
         )
     base["media"] = sorted(linhas, key=lambda x: -x["validos"])
-    probs = []
-    for i, c in enumerate(cands):
-        probs.append(
-            {
-                "nome": c["nome"],
-                "nome_urna": c["nome_urna"],
-                "partido": c["partido"],
-                "campo": c["campo"],
-                "sq_candidato": c["sq_candidato"],
-                "foto": c["foto"],
-                "p_eleito": resumo["p_eleito"][i],
-                "p_primeiro": resumo["p_primeiro"][i],
-                "ic90_validos": resumo["ic90"][i],
-                "validos_mediana": resumo["mediana"][i],
-                "validos_central": c["validos"],
-            }
-        )
-    base["probabilidades"] = sorted(probs, key=lambda x: (-x["p_eleito"], x["nome"]))
-    modal = resumo["duplas"][0]
-    p_por_nome = {p["nome"]: p["p_eleito"] for p in probs}
-    dupla = sorted(modal["nomes"], key=lambda n: -p_por_nome[n])
+    base["probabilidades"] = M.linhas_probabilidade(
+        cands, resumo, [c["validos"] for c in cands]
+    )
+    modal = M.dupla_modal(resumo, base["probabilidades"])
+    dupla = modal["dupla"]
     base["dupla_mais_provavel"] = dupla
     base["eleitos_provaveis"] = dupla
     base["p_dupla_mais_provavel"] = modal["p"]
-    base["duplas"] = [{"nomes": d["nomes"], "p": d["p"]} for d in resumo["duplas"]]
+    base["duplas"] = modal["duplas"]
     base["incerteza"] = _incerteza(prep["cobertura"], modal["p"])
-    segunda = resumo["duplas"][1]["p"] if len(resumo["duplas"]) > 1 else 0.0
-    base["p_segunda_dupla"] = segunda
-    base["dupla_empatada"] = modal["p"] - segunda < EMPATE_DUPLA
+    base["p_segunda_dupla"] = modal["p_segunda"]
+    base["dupla_empatada"] = modal["empatada"]
     base["soma_p_eleito"] = sum(resumo["p_eleito"])
     top2 = [p["nome"] for p in base["probabilidades"][:2]]
     notas = base["notas"]
@@ -378,11 +358,24 @@ def prever(
     deff: float = M.DEFF,
     sensibilidades: bool = True,
     agora: datetime | None = None,
+    registro_indeferido: dict | None = None,
 ) -> dict:
+    """Previsão completa. `registro_indeferido` substitui a tabela de
+    `base.REGISTRO_INDEFERIDO` (vazia: nenhum alerta nem cenário, e a saída é a
+    mesma de antes do mecanismo)."""
+    tabela = (
+        B.REGISTRO_INDEFERIDO if registro_indeferido is None else registro_indeferido
+    )
     erro, detalhe = M.erro_calibrado(cal)
     preps = [M.preparar_estado(uf, ondas, tse) for uf in B.UFS]
     kw = {"simulacoes": simulacoes, "semente": semente, "deff": deff}
-    central = M.rodar(preps, erro, mistura_uniforme=mistura_uniforme, **kw)
+    central = M.rodar(
+        preps,
+        erro,
+        mistura_uniforme=mistura_uniforme,
+        guardar=frozenset(uf for uf, _ in tabela),
+        **kw,
+    )
     fixos = S.continuam(senadores_2022)
     comp = S.composicao(
         central["campos_novos"], central["partidos_novos"], central["partidos"], fixos
@@ -391,6 +384,13 @@ def prever(
         p["uf"]: estado_saida(p, central["resumos"].get(p["uf"]), eleitorado)
         for p in preps
     }
+    indeferidos = (
+        I.aplicar(preps, central, tabela, tse, fixos, comp) if tabela else None
+    )
+    if indeferidos:
+        for uf, extra in indeferidos["estados"].items():
+            estados[uf]["alertas"] = extra["alertas"]
+            estados[uf]["cenarios"] = extra["cenarios"]
 
     sens = []
     if sensibilidades:
@@ -602,6 +602,12 @@ def prever(
             "entre candidaturas; não usa o resultado de 2022 como prior de nome."
         ),
     }
+    senado_2027 = {"continuam": fixos, **comp}
+    if indeferidos:
+        validacao["registro_indeferido"] = indeferidos["validacao"]
+        parametros["registro_indeferido_regra"] = I.REGRA
+        if indeferidos["senado_2027"]:
+            senado_2027["cenarios"] = indeferidos["senado_2027"]
     fontes = [
         {
             "arquivo": o["arquivo"],
@@ -624,7 +630,7 @@ def prever(
         "eleicao": B.ELEICAO.isoformat(),
         "parametros": parametros,
         "estados": estados,
-        "senado_2027": {"continuam": fixos, **comp},
+        "senado_2027": senado_2027,
         "validacao": validacao,
         "fontes": fontes,
     }

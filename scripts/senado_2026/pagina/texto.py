@@ -8,6 +8,7 @@ from __future__ import annotations
 
 from html import escape as esc
 
+from . import alertas as al
 from .comum import (
     ASSENTOS,
     POR_ESTADO,
@@ -265,6 +266,7 @@ def limites(data: dict) -> str:
 <li><b>Voto útil de última hora.</b> Quem muda de candidatura na véspera ou no dia da votação fica fora de qualquer pesquisa com campo anterior.</li>
 <li><b>Suplentes e migrações.</b> Suplência, renúncia, mudança de partido e cassação ficam fora do modelo. O hemiciclo é o Senado eleito, não o do dia da posse.</li>
 <li><b>Campo é classificação editorial.</b> A etiqueta de campo segue a classificação da casa por partido, com exceções declaradas: tucano é centro-esquerda por decisão editorial da casa. Outra classificação muda os totais por campo, não os nomes.</li>
+{al.limite_registro(data)}
 {nao_faz}
 </ul>
 {achado}

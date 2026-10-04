@@ -41,6 +41,10 @@ FRACAO_ESTADUAL = 0.5
 # candidatura; deriva por dia em log de 0,0015 (ordem da medida em 2022).
 DERIVA_HIPOTESE = 0.0015
 CORRIDA_REFERENCIA = (30.0, 25.0, 20.0, 10.0, 8.0, 7.0)
+# Diferença entre a primeira e a segunda dupla abaixo da qual a dupla mais
+# provável é tratada como empate (cerca de 7 erros-padrão de Monte Carlo com
+# 20 mil sorteios).
+EMPATE_DUPLA = 0.02
 
 
 @dataclass(frozen=True)
@@ -202,13 +206,43 @@ def simular_estado(
     eta -= eta.max(axis=1, keepdims=True)
     p = np.exp(eta)
     p /= p.sum(axis=1, keepdims=True)
+    return _apurar(p)
+
+
+def _apurar(p: np.ndarray) -> dict:
+    """Os dois maiores e o primeiro de cada sorteio. A última coluna de `p` é
+    'outros', que entra nos válidos e nunca é eleita."""
+    k = p.shape[1] - 1
     ranking = p[:, :k]
     if k >= 2:
         dois = np.argpartition(-ranking, 1, axis=1)[:, :2]
     else:
-        dois = np.zeros((s, 2), int)
+        dois = np.zeros((p.shape[0], 2), int)
     primeiro = ranking.argmax(axis=1)
     return {"validos": p, "eleitos": np.sort(dois, axis=1), "primeiro": primeiro}
+
+
+def sem_candidatura(
+    sorteio: dict, removido: int, receptores: list[int] | None = None
+) -> dict:
+    """Os mesmos sorteios sem a candidatura `removido` (registro indeferido).
+
+    Sem receptores, o voto dela é nulo: sai dos válidos e as frações dos demais
+    são renormalizadas, sem mudar a ordem entre eles. Com receptores (índices na
+    lista original), o voto dela migra para eles na proporção do voto de cada um
+    no mesmo sorteio; num sorteio em que a soma deles é zero, vira nulo. Os
+    índices devolvidos são os da lista sem a removida.
+    """
+    p = sorteio["validos"].copy()
+    if receptores:
+        r = np.asarray(receptores)
+        soma = p[:, r].sum(axis=1, keepdims=True)
+        positiva = soma > 0
+        ganho = np.where(positiva, p[:, [removido]] / np.where(positiva, soma, 1.0), 0)
+        p[:, r] *= 1.0 + ganho
+    resto = np.delete(p, removido, axis=1)
+    resto /= resto.sum(axis=1, keepdims=True)
+    return _apurar(resto)
 
 
 def resumir_estado(sorteio: dict, nomes: list[str], *, top_duplas: int = 5) -> dict:
@@ -237,6 +271,44 @@ def resumir_estado(sorteio: dict, nomes: list[str], *, top_duplas: int = 5) -> d
         "ic90": [[float(q[0, i]), float(q[2, i])] for i in range(k)],
         "mediana": q[1].tolist(),
         "duplas": duplas,
+    }
+
+
+def linhas_probabilidade(
+    candidatos: list[dict], resumo: dict, centrais: list[float]
+) -> list[dict]:
+    """Probabilidades por candidatura no formato publicado, da maior p_eleito
+    para a menor. `centrais` são os válidos da média central de cada uma."""
+    probs = [
+        {
+            "nome": c["nome"],
+            "nome_urna": c["nome_urna"],
+            "partido": c["partido"],
+            "campo": c["campo"],
+            "sq_candidato": c["sq_candidato"],
+            "foto": c["foto"],
+            "p_eleito": resumo["p_eleito"][i],
+            "p_primeiro": resumo["p_primeiro"][i],
+            "ic90_validos": resumo["ic90"][i],
+            "validos_mediana": resumo["mediana"][i],
+            "validos_central": centrais[i],
+        }
+        for i, c in enumerate(candidatos)
+    ]
+    return sorted(probs, key=lambda x: (-x["p_eleito"], x["nome"]))
+
+
+def dupla_modal(resumo: dict, probs: list[dict]) -> dict:
+    """Dupla mais frequente nos sorteios, ordenada pela p_eleito de cada nome."""
+    modal = resumo["duplas"][0]
+    p_por_nome = {p["nome"]: p["p_eleito"] for p in probs}
+    segunda = resumo["duplas"][1]["p"] if len(resumo["duplas"]) > 1 else 0.0
+    return {
+        "dupla": sorted(modal["nomes"], key=lambda n: -p_por_nome[n]),
+        "p": modal["p"],
+        "p_segunda": segunda,
+        "empatada": modal["p"] - segunda < EMPATE_DUPLA,
+        "duplas": [{"nomes": d["nomes"], "p": d["p"]} for d in resumo["duplas"]],
     }
 
 
@@ -303,18 +375,22 @@ def rodar(
     semente: int,
     mistura_uniforme: float,
     deff: float,
+    guardar: frozenset[str] = frozenset(),
 ) -> dict:
     """Um conjunto completo de sorteios, com números aleatórios comuns.
 
     O choque nacional por campo é o mesmo em todos os estados de um sorteio.
     Cada estado tem gerador próprio, semeado por (semente, posição da UF), para
-    que a sensibilidade compare os mesmos sorteios.
+    que a sensibilidade compare os mesmos sorteios. Os sorteios completos das
+    UFs em `guardar` voltam em `sorteios`, com os índices de campo e partido de
+    cada candidatura, para os cenários de registro indeferido.
     """
     z_nacional = np.random.default_rng([semente, 0]).standard_normal(
         (simulacoes, len(CAMPOS))
     )
     partidos: list[str] = []
     resumos: dict[str, dict] = {}
+    sorteios: dict[str, dict] = {}
     assentos: dict[str, tuple[np.ndarray, np.ndarray]] = {}
     for i, prep in enumerate(preps):
         if prep["media"] is None or len(prep["candidatos"]) < 2:
@@ -346,6 +422,12 @@ def rodar(
             campos_idx[sorteio["eleitos"]],
             p_idx[sorteio["eleitos"]],
         )
+        if prep["uf"] in guardar:
+            sorteios[prep["uf"]] = {
+                **sorteio,
+                "campos_idx": campos_idx,
+                "partidos_idx": p_idx,
+            }
     # Estados sem pesquisa: duas vagas sorteadas da distribuição de campos das
     # vagas sorteadas nos estados com pesquisa recente (hipótese neutra).
     recentes = [p["uf"] for p in preps if p["cobertura"] == "recente"]
@@ -367,12 +449,23 @@ def rodar(
             np.full((simulacoes, 2), partidos.index(rotulo_sem)),
         )
     ordem = [p["uf"] for p in preps]
-    campos_novos = np.concatenate([assentos[u][0] for u in ordem], axis=1)
-    partidos_novos = np.concatenate([assentos[u][1] for u in ordem], axis=1)
+    campos_novos, partidos_novos = empilhar(assentos, ordem)
     return {
         "resumos": resumos,
         "campos_novos": campos_novos,
         "partidos_novos": partidos_novos,
         "partidos": partidos,
         "distribuicao_sem_pesquisa": dict(zip(CAMPOS, dist.tolist(), strict=True)),
+        "assentos": assentos,
+        "ordem": ordem,
+        "sorteios": sorteios,
     }
+
+
+def empilhar(
+    assentos: dict[str, tuple[np.ndarray, np.ndarray]], ordem: list[str]
+) -> tuple[np.ndarray, np.ndarray]:
+    """Campos e partidos das 54 cadeiras por sorteio, na ordem das UFs."""
+    campos = np.concatenate([assentos[u][0] for u in ordem], axis=1)
+    partidos = np.concatenate([assentos[u][1] for u in ordem], axis=1)
+    return campos, partidos

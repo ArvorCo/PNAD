@@ -107,6 +107,30 @@ RETIRADAS: dict[tuple[str, str], tuple[date, str]] = {
     ),
 }
 
+# Registro indeferido sem decisão definitiva, com nome e número na urna:
+# (UF, nome como na pesquisa ou no TSE) -> decisão. A central mantém a
+# candidatura (a decisão ainda pode ser revista e os votos, validados). O
+# motor acrescenta ao estado um alerta lido de `fonte` e dois cenários sobre os
+# mesmos sorteios da central (`indeferido.py`): voto nulo e voto que migra no
+# mesmo grupo de campos. O nome casa pela identidade da média (chave_pessoa:
+# SQ do TSE, apelidos, nome normalizado) ou por uma das grafias das pesquisas.
+# `orgao` é opcional (padrão TSE).
+REGISTRO_INDEFERIDO: dict[tuple[str, str], dict[str, str]] = {
+    ("PR", "Deltan Dallagnol"): {
+        "decisao": (
+            "Na noite de 03/10/2026, o ministro Floriano de Azevedo Marques, "
+            "relator no TSE, indeferiu o registro de Deltan Dallagnol (Novo) ao "
+            "Senado pelo Paraná. A decisão reverte o TRE-PR, que havia deferido o "
+            "registro por 4 votos a 3, contraria o parecer da Procuradoria-Geral "
+            "Eleitoral, declara nulos os votos que a candidatura receber em 04/10 "
+            "e manda o TRE-PR mudar a situação do registro para indeferido."
+        ),
+        "data": "2026-10-03",
+        "status": "monocrática, pendente de plenário",
+        "fonte": "data/originals/senado_102026/deltan_tse/fonte.json",
+    },
+}
+
 PARTICULAS = {"da", "de", "do", "das", "dos", "e"}
 
 
@@ -496,6 +520,23 @@ def chave_pessoa(uf: str, nome: str, tse: Tse) -> tuple[str, str | None]:
         return f"sq:{sq}", sq
     norma = normalizar(nome)
     return f"nome:{APELIDOS_NOMES.get((uf, norma), norma)}", None
+
+
+def localizar_pessoa(uf: str, nome: str, pessoas: list[dict], tse: Tse) -> int | None:
+    """Posição de `nome` entre as pessoas da média do estado.
+
+    Casa pela mesma identidade da média (SQ do TSE, apelidos, nome
+    normalizado) e, sem ela, por uma das grafias vistas nas pesquisas.
+    """
+    chave, _ = chave_pessoa(uf, nome, tse)
+    norma = normalizar(nome)
+    for i, p in enumerate(pessoas):
+        if p["chave"] == chave:
+            return i
+    for i, p in enumerate(pessoas):
+        if norma in {normalizar(a) for a in p.get("aliases", [])}:
+            return i
+    return None
 
 
 def media_estado(

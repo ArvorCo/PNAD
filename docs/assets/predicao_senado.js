@@ -8,7 +8,6 @@
   const body = doc.getElementById("sn-painel-corpo");
   const title = doc.getElementById("sn-painel-titulo");
   if (!map) return;
-  const wide = window.matchMedia("(min-width: 900px)");
   const links = Array.prototype.slice.call(map.querySelectorAll("a.sn-uf"));
 
   function ficha(uf) {
@@ -22,21 +21,21 @@
     const f = ficha(uf);
     if (!f || !panel || !body || !title) return;
     const nome = f.querySelector("summary span");
-    title.textContent = (nome ? nome.textContent : uf) + " (" + uf + ")";
+    const marca = nome ? nome.querySelector(".sn-marca") : null;
+    const texto = nome ? (marca ? nome.firstChild.textContent : nome.textContent) : uf;
+    title.textContent = texto.trim() + " (" + uf + ")";
     body.innerHTML = f.querySelector(".sn-ficha-corpo").innerHTML;
   }
 
   links.forEach(function (a, i) {
+    /* O clique só troca a ficha ao lado (ou abaixo) do mapa. Não navega pela
+       âncora nem altera a URL: a navegação rolava a página até a lista de fichas. */
     a.addEventListener("click", function (event) {
+      event.preventDefault();
       const uf = a.dataset.uf;
       select(uf);
-      if (wide.matches) {
-        event.preventDefault();
-        history.replaceState(null, "", "#estado-" + uf);
-      } else {
-        const f = ficha(uf);
-        if (f) f.open = true;
-      }
+      const f = ficha(uf);
+      if (f) f.open = true;
     });
     a.addEventListener("keydown", function (event) {
       let next = null;

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from html import escape as esc
 
+from . import alertas as al
 from . import mapa as mapa_mod
 from .comum import (
     GRUPOS,
@@ -117,7 +118,7 @@ def _cand_grande(c: dict, e: dict) -> str:
         '<li class="sn-cand">'
         f"{foto(c, 64)}"
         '<div class="sn-cand-txt">'
-        f"<b>{esc(c.get('nome', ''))}</b>"
+        f"<b>{esc(c.get('nome', ''))}</b>{al.chip_candidatura(e, c.get('nome'))}"
         f'<span class="sn-meta">{sigla(c.get("partido"))} · {ROTULO[campo].lower()}</span>'
         f'<div class="sn-prob">{barra(c.get("p_eleito"), campo, "Probabilidade de eleição de " + c.get("nome", ""))}'
         f"<strong>{pct(c.get('p_eleito'))}</strong></div>"
@@ -126,13 +127,13 @@ def _cand_grande(c: dict, e: dict) -> str:
     )
 
 
-def _cand_pequeno(c: dict) -> str:
+def _cand_pequeno(c: dict, e: dict) -> str:
     campo = campo_de(c.get("campo"))
     return (
         '<li class="sn-cand sn-cand-small">'
         f"{foto(c, 36)}"
         '<div class="sn-cand-txt">'
-        f"<b>{esc(c.get('nome', ''))}</b>"
+        f"<b>{esc(c.get('nome', ''))}</b>{al.chip_candidatura(e, c.get('nome'))}"
         f'<span class="sn-meta">{sigla(c.get("partido"))} · {ROTULO[campo].lower()} · '
         f"eleição {pct(c.get('p_eleito'))}</span></div></li>"
     )
@@ -169,8 +170,9 @@ def corpo_ficha(uf: str, e: dict, data: dict, idx: dict) -> str:
         "sem_pesquisa": "sem pesquisa",
     }.get(cob, esc(cob or ""))
     partes = [
+        al.bloco_alerta(e),
         f'<p class="sn-aviso sn-cob-{esc(cob or "")}"><b>Cobertura {cobertura}.</b> '
-        f"{_cobertura_texto(e, data)}</p>"
+        f"{_cobertura_texto(e, data)}</p>",
     ]
     cands = e.get("probabilidades", [])
     if cob != "sem_pesquisa" and cands:
@@ -194,9 +196,10 @@ def corpo_ficha(uf: str, e: dict, data: dict, idx: dict) -> str:
         if resto[:2]:
             partes.append(
                 '<h4 class="sn-h">Terceiro e quarto colocados</h4><ul class="sn-cands">'
-                + "".join(_cand_pequeno(c) for c in resto[:2])
+                + "".join(_cand_pequeno(c, e) for c in resto[:2])
                 + "</ul>"
             )
+    partes.append(al.cenarios_ficha(e))
     partes.append('<h4 class="sn-h">Pesquisas usadas</h4>' + _pesquisas(e, idx))
     if e.get("incerteza"):
         partes.append(f'<p class="sn-meta">Incerteza: {esc(e["incerteza"])}.</p>')
@@ -230,7 +233,7 @@ def fichas(data: dict) -> str:
         out.append(
             f'<details class="sn-ficha" id="estado-{uf}" data-uf="{uf}"'
             f'{" open" if uf == aberto else ""}>'
-            f"<summary><b>{uf}</b><span>{esc(e.get('nome', uf))}</span>"
+            f"<summary><b>{uf}</b><span>{esc(e.get('nome', uf))}{al.chip_estado(e)}</span>"
             f"<small>{_resumo(e)}</small></summary>"
             f'<div class="sn-ficha-corpo">{corpo_ficha(uf, e, data, idx)}</div></details>'
         )
@@ -260,11 +263,11 @@ def mapa_secao(data: dict) -> str:
 # ---------------------------------------------------------------- tabela
 
 
-def _celula(c: dict | None) -> tuple[str, str]:
+def _celula(c: dict | None, e: dict) -> tuple[str, str]:
     if not c:
         return "–", "–"
     return (
-        f"{esc(c.get('nome', ''))} ({sigla(c.get('partido'))})",
+        f"{esc(c.get('nome', ''))} ({sigla(c.get('partido'))}){al.chip_candidatura(e, c.get('nome'))}",
         pct(c.get("p_eleito")),
     )
 
@@ -301,7 +304,7 @@ def tabela(data: dict) -> str:
             a = eleitos[0] if eleitos else None
             b = eleitos[1] if len(eleitos) > 1 else None
             c = rest[0] if rest else None
-        (na, pa), (nb, pb), (nc, pc) = _celula(a), _celula(b), _celula(c)
+        (na, pa), (nb, pb), (nc, pc) = _celula(a, e), _celula(b, e), _celula(c, e)
         cob = {
             "recente": "recente",
             "antiga": "antiga",
@@ -309,7 +312,7 @@ def tabela(data: dict) -> str:
         }.get(e.get("cobertura"), esc(e.get("cobertura") or ""))
         rows.append(
             [
-                f'<a href="#estado-{uf}"><b>{uf}</b></a>',
+                f'<a href="#estado-{uf}"><b>{uf}</b></a>{al.chip_estado(e)}',
                 na,
                 pa,
                 nb,
@@ -368,8 +371,17 @@ def fontes(data: dict) -> str:
             ]
         )
     return table(
-        ["Instituto", "UF", "Campo", "n", "Registro TSE", "URL", "Arquivo", "SHA-256"],
+        [
+            "Instituto",
+            "UF",
+            "Campo",
+            "n",
+            "Registro TSE",
+            "URL",
+            "Arquivo",
+            "SHA-256",
+        ],
         rows,
         "Pesquisas usadas, com registro, URL, arquivo e hash",
         {3},
-    )
+    ) + al.fontes_alertas(data)

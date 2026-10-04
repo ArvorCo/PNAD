@@ -1,5 +1,7 @@
 """Motor da predição do Senado 2027 com dados sintéticos."""
 
+import copy
+import hashlib
 import json
 from datetime import datetime, timezone
 
@@ -7,6 +9,7 @@ import numpy as np
 import pytest
 from senado_2026 import base as B
 from senado_2026 import calibracao as C
+from senado_2026 import indeferido as I
 from senado_2026 import motor as M
 from senado_2026 import saida
 from senado_2026 import senado as S
@@ -115,6 +118,7 @@ def senadores_2022():
 
 
 def prever(pasta, *, semente=M.SEMENTE, cal=None, **kw):
+    kw.setdefault("registro_indeferido", {})
     ondas = B.ler_pesquisas(pasta / "pesquisas")
     tse = B.Tse(pasta, docs=pasta)
     return saida.prever(
@@ -504,3 +508,206 @@ def test_tabela_da_wikipedia_e_pares():
     assert est["por_candidatura"]["erro_medio_absoluto"] == pytest.approx(
         (5.0 + (45.0 - 37.5)) / 2
     )
+
+
+# ------------------------------------------------------- registro indeferido
+
+
+def _fonte_indeferido(tmp_path, *, adulterar=False):
+    """fonte.json sintético com duas matérias arquivadas e seus SHA-256."""
+    pasta = tmp_path / "fonte_indeferido"
+    pasta.mkdir()
+    materias = []
+    for i, (veiculo, quando) in enumerate(
+        (
+            ("Veículo A", "2026-10-03T20:17:38-03:00"),
+            ("Veículo B", "2026-10-01T18:05:38-03:00"),
+        )
+    ):
+        arq = pasta / f"materia_{i}.html"
+        arq.write_text(f"<p>matéria {i}</p>", encoding="utf-8")
+        materias.append(
+            {
+                "arquivo": str(arq),
+                "veiculo": veiculo,
+                "publicado_em": quando,
+                "url": f"https://exemplo.invalid/{i}",
+                "titulo": f"Título {i}",
+                "sha256": hashlib.sha256(arq.read_bytes()).hexdigest(),
+            }
+        )
+    if adulterar:
+        materias[0]["sha256"] = "0" * 64
+    fonte = pasta / "fonte.json"
+    fonte.write_text(json.dumps({"fatos": [], "materias": materias}), "utf-8")
+    return str(fonte)
+
+
+def _tabela(fonte, nome="ANA DIREITA"):
+    return {
+        ("SP", nome): {
+            "decisao": "O relator indeferiu o registro de Ana Direita.",
+            "data": "2026-10-03",
+            "status": "monocrática, pendente de plenário",
+            "fonte": fonte,
+        }
+    }
+
+
+@pytest.fixture(scope="module")
+def indeferido(tmp_path_factory):
+    tmp = tmp_path_factory.mktemp("indeferido")
+    ondas = [
+        onda("SP", "datafolha", "2026-10-02", SP, inicio="2026-10-01", n=2000),
+        onda("SP", "quaest", "2026-10-03", SP, inicio="2026-10-02", n=1500),
+    ]
+    pasta = escrever(tmp, ondas)
+    tabela = _tabela(_fonte_indeferido(tmp))
+    sem = prever(pasta)
+    com = prever(pasta, registro_indeferido=tabela)
+    return sem, com
+
+
+def _probs(lista):
+    return {p["nome"]: p["p_eleito"] for p in lista}
+
+
+def test_registro_indeferido_remove_candidatura(indeferido):
+    sem, com = indeferido
+    sp = com["estados"]["SP"]
+    assert sp["probabilidades"] == sem["estados"]["SP"]["probabilidades"]
+    assert [c["chave"] for c in sp["cenarios"]] == [
+        "registro_indeferido_ana",
+        "registro_indeferido_ana_migracao",
+    ]
+    central = _probs(sp["probabilidades"])
+    nulo, migracao = sp["cenarios"]
+    for c in (nulo, migracao):
+        nomes = {p["nome"] for p in c["probabilidades"]}
+        assert "Ana Direita" not in nomes
+        assert nomes == set(central) - {"Ana Direita"}
+        assert sum(p["p_eleito"] for p in c["probabilidades"]) == pytest.approx(
+            2.0, abs=1e-9
+        )
+        assert sum(p["p_primeiro"] for p in c["probabilidades"]) == pytest.approx(
+            1.0, abs=1e-9
+        )
+        assert c["soma_p_eleito"] == pytest.approx(2.0, abs=1e-9)
+        assert c["eleitos_provaveis"] == c["dupla_mais_provavel"]
+        assert "Ana Direita" not in c["eleitos_provaveis"]
+        assert sum(p["validos_central"] for p in c["probabilidades"]) <= 100 + 1e-9
+    p_nulo, p_mig = _probs(nulo["probabilidades"]), _probs(migracao["probabilidades"])
+    # Sem a candidatura, ninguém perde vaga nos mesmos sorteios.
+    assert all(p_nulo[n] >= central[n] - 1e-12 for n in p_nulo)
+    # Na migração, o mesmo grupo (Davi Novo) ganha e os demais perdem.
+    assert migracao["receptores"] == ["Davi Novo"]
+    for n in p_mig:
+        if n in migracao["receptores"]:
+            assert p_mig[n] >= p_nulo[n] - 1e-12
+        else:
+            assert p_mig[n] <= p_nulo[n] + 1e-12
+    assert nulo["hipotese"].startswith("voto da candidatura vira nulo")
+    assert nulo["fonte"]["veiculo"] == "Veículo A"
+
+
+def test_registro_indeferido_alerta_e_fontes(indeferido):
+    _, com = indeferido
+    sp = com["estados"]["SP"]
+    (alerta,) = sp["alertas"]
+    assert alerta["titulo"] == "Registro indeferido pelo TSE em 03/10"
+    assert alerta["candidato"] == "Ana Direita"
+    assert alerta["candidato"] in _probs(sp["probabilidades"])
+    assert alerta["marcador"] == "registro indeferido"
+    for trecho in ("monocrática, pendente de plenário", "urna", "central"):
+        assert trecho in alerta["texto"]
+    assert len(alerta["fontes"]) == 2
+    for f in alerta["fontes"]:
+        assert {"veiculo", "publicado_em", "url", "arquivo", "sha256"} <= set(f)
+    (val,) = com["validacao"]["registro_indeferido"]
+    assert val["aplicado"] is True
+    assert val["p_eleito_central"] == _probs(sp["probabilidades"])["Ana Direita"]
+    assert all(m["sha256_conferido"] for m in val["materias_conferidas"])
+    assert "\u2014" not in json.dumps(com, ensure_ascii=False)
+
+
+def test_registro_indeferido_efeito_nacional(indeferido):
+    _, com = indeferido
+    s27 = com["senado_2027"]
+    nulo, migracao = s27["cenarios"]
+    assert [nulo["chave"], migracao["chave"]] == [
+        "registro_indeferido_ana",
+        "registro_indeferido_ana_migracao",
+    ]
+    for c in (nulo, migracao):
+        assert c["ufs"] == ["SP"]
+        assert c["fecha_em_81_em_todo_sorteio"] is True
+        for g in ("direita", "centro", "esquerda"):
+            assert set(c["por_grupo"][g]) == {"esperado", "ic90"}
+        assert sum(v["esperado"] for v in c["por_grupo"].values()) == pytest.approx(81)
+        for k in I.CHAVES_COMPOSICAO:
+            assert 0.0 <= c[k] <= 1.0
+    direita = s27["por_grupo"]["direita"]["esperado"]
+    assert nulo["por_grupo"]["direita"]["esperado"] <= direita
+    assert (
+        migracao["por_grupo"]["direita"]["esperado"]
+        >= nulo["por_grupo"]["direita"]["esperado"]
+    )
+
+
+def test_sem_tabela_saida_identica(indeferido):
+    sem, com = indeferido
+    for e in sem["estados"].values():
+        assert "alertas" not in e and "cenarios" not in e
+    assert "cenarios" not in sem["senado_2027"]
+    assert "registro_indeferido" not in sem["validacao"]
+    assert "registro_indeferido_regra" not in sem["parametros"]
+    limpo = copy.deepcopy(com)
+    for e in limpo["estados"].values():
+        e.pop("alertas", None)
+        e.pop("cenarios", None)
+    limpo["senado_2027"].pop("cenarios")
+    limpo["validacao"].pop("registro_indeferido")
+    limpo["parametros"].pop("registro_indeferido_regra")
+    assert limpo == sem
+
+
+def test_registro_indeferido_nao_encontrado(tmp_path):
+    pasta = escrever(tmp_path, [onda("SP", "quaest", "2026-10-02", SP)])
+    tabela = _tabela("inexistente/fonte.json", nome="Ninguém Aqui")
+    out = prever(pasta, sensibilidades=False, registro_indeferido=tabela)
+    assert "alertas" not in out["estados"]["SP"]
+    assert "cenarios" not in out["senado_2027"]
+    (val,) = out["validacao"]["registro_indeferido"]
+    assert val["aplicado"] is False
+    assert "não está nas pesquisas" in val["motivo"]
+
+
+def test_registro_indeferido_hash_divergente_para(tmp_path):
+    pasta = escrever(tmp_path, [onda("SP", "quaest", "2026-10-02", SP)])
+    tabela = _tabela(_fonte_indeferido(tmp_path, adulterar=True))
+    with pytest.raises(ValueError, match="SHA-256"):
+        prever(pasta, sensibilidades=False, registro_indeferido=tabela)
+
+
+def test_sem_candidatura_nulo_e_migracao():
+    validos = np.array([[0.40, 0.30, 0.20, 0.05, 0.05], [0.10, 0.35, 0.25, 0.20, 0.10]])
+    sorteio = {"validos": validos}
+    nulo = M.sem_candidatura(sorteio, 0)
+    assert nulo["validos"].sum(axis=1) == pytest.approx([1.0, 1.0])
+    assert nulo["eleitos"].tolist() == [[0, 1], [0, 1]]
+    mig = M.sem_candidatura(sorteio, 0, [3])
+    assert mig["validos"][:, 2] == pytest.approx([0.45, 0.30])
+    assert mig["validos"].sum(axis=1) == pytest.approx([1.0, 1.0])
+    assert mig["eleitos"].tolist() == [[0, 2], [0, 2]]
+
+
+def test_tabela_real_bem_formada():
+    for (uf, nome), entrada in B.REGISTRO_INDEFERIDO.items():
+        assert uf in B.UFS and nome
+        assert {"decisao", "data", "status", "fonte"} <= set(entrada)
+        assert "\u2014" not in json.dumps(entrada, ensure_ascii=False)
+        if not (B.ROOT / entrada["fonte"]).exists():
+            pytest.skip("fonte.json do registro indeferido ausente neste checkout")
+        fonte = I.ler_fonte(entrada)
+        assert fonte["materias"]
+        assert all(m["sha256_conferido"] is not False for m in fonte["materias"])

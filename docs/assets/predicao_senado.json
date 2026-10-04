@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-10-03T23:42:19Z",
+ "gerado_em": "2026-10-04T00:06:10Z",
  "data_referencia": "2026-10-03",
  "eleicao": "2026-10-04",
  "parametros": {
@@ -63,7 +63,8 @@
   },
   "campo_classificacao": "Campo é classificação editorial da casa (PARTIDO_CAMPO em scripts/voto_util_base.py): tucano é centro-esquerda; PSD, MDB e Avante, centro; União, PP, Podemos, PRD, Agir e Mobiliza, centro-direita; PL, Novo, Republicanos, PRTB, DC, Democrata e Missão, direita. Partido vem do TSE quando o nome casa, senão da pesquisa.",
   "senado_2027_regra": "Os 27 de 2022 são os eleitos na urna, não os titulares atuais: suplência, licença e migração partidária ficam fora do modelo. A única exceção é partido extinto (PSC, incorporado ao Podemos em 2023).",
-  "o_que_nao_faz": "Não prevê votos; não modela coligação, desistência nem transferência entre candidaturas; não usa o resultado de 2022 como prior de nome."
+  "o_que_nao_faz": "Não prevê votos; não modela coligação, desistência nem transferência entre candidaturas; não usa o resultado de 2022 como prior de nome.",
+  "registro_indeferido_regra": "Registro indeferido sem decisão definitiva (REGISTRO_INDEFERIDO em scripts/senado_2026/base.py): a central mantém a candidatura, porque o nome segue na urna e a decisão ainda pode ser revista. O estado ganha um alerta com as matérias arquivadas e dois cenários sobre os mesmos sorteios da central: no primeiro o voto da candidatura é nulo e sai dos válidos; no segundo migra para as demais candidaturas do mesmo grupo (direita e centro-direita, centro, ou esquerda e centro-esquerda), na proporção do voto de cada uma no sorteio. Em senado_2027.cenarios só as duas vagas do estado mudam; os demais estados, inclusive os sem pesquisa, ficam como na central."
  },
  "estados": {
   "AC": {
@@ -7264,7 +7265,449 @@
    "dias_ate_eleicao_ponderado": 11.0,
    "p_segunda_dupla": 0.24345,
    "dupla_empatada": true,
-   "soma_p_eleito": 2.0
+   "soma_p_eleito": 2.0,
+   "alertas": [
+    {
+     "titulo": "Registro indeferido pelo TSE em 03/10",
+     "candidato": "Deltan Dallagnol",
+     "marcador": "registro indeferido",
+     "texto": "Na noite de 03/10/2026, o ministro Floriano de Azevedo Marques, relator no TSE, indeferiu o registro de Deltan Dallagnol (Novo) ao Senado pelo Paraná. A decisão reverte o TRE-PR, que havia deferido o registro por 4 votos a 3, contraria o parecer da Procuradoria-Geral Eleitoral, declara nulos os votos que a candidatura receber em 04/10 e manda o TRE-PR mudar a situação do registro para indeferido. É decisão monocrática, pendente de plenário. O nome e o número de Deltan Dallagnol continuam na urna. Por isso a central desta página mantém a candidatura: enquanto a decisão puder ser revista, os votos ainda podem ser validados. A manutenção é hipótese declarada; os dois cenários do estado mostram o resultado com os votos anulados e com o eleitorado da candidatura migrando para candidaturas de direita e centro-direita.",
+     "data": "2026-10-03",
+     "status": "monocrática, pendente de plenário",
+     "fontes": [
+      {
+       "veiculo": "CNN Brasil",
+       "publicado_em": "2026-10-03T20:17:38-03:00",
+       "url": "https://www.cnnbrasil.com.br/eleicoes/tse-barra-candidatura-de-deltan-ao-senado-e-votos-serao-considerados-nulos/",
+       "titulo": "TSE barra candidatura de Deltan ao Senado e votos serão considerados nulos",
+       "arquivo": "data/originals/senado_102026/deltan_tse/materia_1.html",
+       "sha256": "81ed4fbb963c89bff5d7b46f1cde681d440adf61b69018ac364799a88555d867"
+      },
+      {
+       "veiculo": "Gazeta do Povo",
+       "publicado_em": "2026-10-03T20:03:00-03:00",
+       "url": "https://www.gazetadopovo.com.br/eleicoes/2026/parana-2026/ministro-do-tse-cassa-registro-de-candidatura-de-deltan-dallagnol/",
+       "titulo": "Ministro do TSE cassa registro de candidatura de Deltan Dallagnol",
+       "arquivo": "data/originals/senado_102026/deltan_tse/materia_2.html",
+       "sha256": "1f43c4cfc69e5fd73147fb2e55bf468682847bd2ec4c45f6cf87e14bd64fef2a"
+      },
+      {
+       "veiculo": "Tribuna do Paraná (Gazeta do Povo)",
+       "publicado_em": "2026-10-01T18:05:38-03:00",
+       "url": "https://www.tribunapr.com.br/eleicoes/2026/registro-candidatura-deltan-dallagnol-tse/",
+       "titulo": "Registro de candidatura de Deltan Dallagnol chega ao TSE para julgamento",
+       "arquivo": "data/originals/senado_102026/deltan_tse/materia_3.html",
+       "sha256": "66cd2b77878b08fe3555d87babbc14df0952ec2077a064d0120bad1e687beefe"
+      }
+     ],
+     "arquivo_fonte": "data/originals/senado_102026/deltan_tse/fonte.json",
+     "sha256_fonte": "3f45ea626e1cb75baccf04a6f3036d4e697beed749c15586685e04af388bed03"
+    }
+   ],
+   "cenarios": [
+    {
+     "chave": "registro_indeferido_deltan",
+     "rotulo": "Se os votos de Deltan forem anulados",
+     "descricao": "O TSE indeferiu o registro de Deltan Dallagnol em 03/10, em decisão monocrática, pendente de plenário. Se a decisão prevalecer, o voto dado à candidatura é nulo: ela sai da disputa pelas duas vagas e os válidos das demais são recalculados sem esse voto.",
+     "hipotese": "voto da candidatura vira nulo (não migra para ninguém); o restante é recalculado nos mesmos sorteios",
+     "candidatura": "Deltan Dallagnol",
+     "receptores": [],
+     "probabilidades": [
+      {
+       "nome": "Alexandre Curi",
+       "nome_urna": "ALEXANDRE CURI",
+       "partido": "REPUBLICANOS",
+       "campo": "direita",
+       "sq_candidato": "160002547963",
+       "foto": "img/senado/PR_160002547963.jpg",
+       "p_eleito": 0.81175,
+       "p_primeiro": 0.52435,
+       "ic90_validos": [
+        15.629815,
+        43.207781
+       ],
+       "validos_mediana": 27.815569,
+       "validos_central": 29.787234
+      },
+      {
+       "nome": "Filipe Barros",
+       "nome_urna": "FILIPE BARROS",
+       "partido": "PL",
+       "campo": "direita",
+       "sq_candidato": "160002547660",
+       "foto": "img/senado/PR_160002547660.jpg",
+       "p_eleito": 0.5836,
+       "p_primeiro": 0.1896,
+       "ic90_validos": [
+        12.358897,
+        35.327628
+       ],
+       "validos_mediana": 22.045934,
+       "validos_central": 23.404255
+      },
+      {
+       "nome": "Gleisi",
+       "nome_urna": "GLEISI",
+       "partido": "PT",
+       "campo": "esquerda",
+       "sq_candidato": "160002547656",
+       "foto": "img/senado/PR_160002547656.jpg",
+       "p_eleito": 0.44985,
+       "p_primeiro": 0.24015,
+       "ic90_validos": [
+        10.132549,
+        35.591769
+       ],
+       "validos_mediana": 20.307464,
+       "validos_central": 21.276596
+      },
+      {
+       "nome": "Cristina Graeml",
+       "nome_urna": "CRISTINA GRAEML",
+       "partido": "PSD",
+       "campo": "centro",
+       "sq_candidato": "160002549555",
+       "foto": "img/senado/PR_160002549555.jpg",
+       "p_eleito": 0.089,
+       "p_primeiro": 0.0334,
+       "ic90_validos": [
+        4.615884,
+        23.347656
+       ],
+       "validos_mediana": 10.928004,
+       "validos_central": 10.638298
+      },
+      {
+       "nome": "DR Rosinha",
+       "nome_urna": "DR ROSINHA",
+       "partido": "PT",
+       "campo": "esquerda",
+       "sq_candidato": "160002547658",
+       "foto": "img/senado/PR_160002547658.jpg",
+       "p_eleito": 0.0658,
+       "p_primeiro": 0.0125,
+       "ic90_validos": [
+        5.079736,
+        21.0368
+       ],
+       "validos_mediana": 10.995898,
+       "validos_central": 10.638298
+      },
+      {
+       "nome": "Joaquim do MLB",
+       "nome_urna": "JOAQUIM DO MLB",
+       "partido": "UP",
+       "campo": "esquerda",
+       "sq_candidato": "160002551043",
+       "foto": "img/senado/PR_160002551043.jpg",
+       "p_eleito": 0.0,
+       "p_primeiro": 0.0,
+       "ic90_validos": [
+        0.0,
+        0.0
+       ],
+       "validos_mediana": 0.0,
+       "validos_central": 0.0
+      },
+      {
+       "nome": "Karen Guerreiro",
+       "nome_urna": "KAREN GUERREIRO",
+       "partido": "MISSÃO",
+       "campo": "direita",
+       "sq_candidato": "160002551121",
+       "foto": "img/senado/PR_160002551121.jpg",
+       "p_eleito": 0.0,
+       "p_primeiro": 0.0,
+       "ic90_validos": [
+        0.575431,
+        4.1268
+       ],
+       "validos_mediana": 1.65969,
+       "validos_central": 2.12766
+      },
+      {
+       "nome": "Marcelo Marcelino",
+       "nome_urna": "MARCELO MARCELINO",
+       "partido": "PCO",
+       "campo": "esquerda",
+       "sq_candidato": "160002552563",
+       "foto": "img/senado/PR_160002552563.jpg",
+       "p_eleito": 0.0,
+       "p_primeiro": 0.0,
+       "ic90_validos": [
+        0.559475,
+        4.344755
+       ],
+       "validos_mediana": 1.648333,
+       "validos_central": 2.12766
+      }
+     ],
+     "eleitos_provaveis": [
+      "Alexandre Curi",
+      "Filipe Barros"
+     ],
+     "dupla_mais_provavel": [
+      "Alexandre Curi",
+      "Filipe Barros"
+     ],
+     "p_dupla_mais_provavel": 0.46915,
+     "p_segunda_dupla": 0.2825,
+     "dupla_empatada": false,
+     "duplas": [
+      {
+       "nomes": [
+        "Alexandre Curi",
+        "Filipe Barros"
+       ],
+       "p": 0.46915
+      },
+      {
+       "nomes": [
+        "Alexandre Curi",
+        "Gleisi"
+       ],
+       "p": 0.2825
+      },
+      {
+       "nomes": [
+        "Filipe Barros",
+        "Gleisi"
+       ],
+       "p": 0.0953
+      },
+      {
+       "nomes": [
+        "Alexandre Curi",
+        "Cristina Graeml"
+       ],
+       "p": 0.04605
+      },
+      {
+       "nomes": [
+        "Gleisi",
+        "DR Rosinha"
+       ],
+       "p": 0.0454
+      }
+     ],
+     "soma_p_eleito": 2.0,
+     "fonte": {
+      "veiculo": "CNN Brasil",
+      "publicado_em": "2026-10-03T20:17:38-03:00",
+      "url": "https://www.cnnbrasil.com.br/eleicoes/tse-barra-candidatura-de-deltan-ao-senado-e-votos-serao-considerados-nulos/",
+      "titulo": "TSE barra candidatura de Deltan ao Senado e votos serão considerados nulos",
+      "arquivo": "data/originals/senado_102026/deltan_tse/materia_1.html",
+      "sha256": "81ed4fbb963c89bff5d7b46f1cde681d440adf61b69018ac364799a88555d867",
+      "decisao": "Na noite de 03/10/2026, o ministro Floriano de Azevedo Marques, relator no TSE, indeferiu o registro de Deltan Dallagnol (Novo) ao Senado pelo Paraná. A decisão reverte o TRE-PR, que havia deferido o registro por 4 votos a 3, contraria o parecer da Procuradoria-Geral Eleitoral, declara nulos os votos que a candidatura receber em 04/10 e manda o TRE-PR mudar a situação do registro para indeferido.",
+      "data": "2026-10-03",
+      "status": "monocrática, pendente de plenário",
+      "fonte_json": "data/originals/senado_102026/deltan_tse/fonte.json"
+     }
+    },
+    {
+     "chave": "registro_indeferido_deltan_migracao",
+     "rotulo": "Se o eleitorado de Deltan migrar para candidaturas de direita e centro-direita",
+     "descricao": "Mesmo indeferimento, mas o eleitorado de Deltan Dallagnol troca de número: o voto vai para Alexandre Curi, Filipe Barros e Karen Guerreiro (direita e centro-direita), na proporção do voto de cada candidatura no mesmo sorteio.",
+     "hipotese": "voto da candidatura migra para as demais candidaturas de direita e centro-direita, na proporção do voto de cada uma no mesmo sorteio (regra de voto útil); nada vai para outros campos, branco ou nulo; o restante é recalculado nos mesmos sorteios",
+     "candidatura": "Deltan Dallagnol",
+     "receptores": [
+      "Alexandre Curi",
+      "Filipe Barros",
+      "Karen Guerreiro"
+     ],
+     "probabilidades": [
+      {
+       "nome": "Alexandre Curi",
+       "nome_urna": "ALEXANDRE CURI",
+       "partido": "REPUBLICANOS",
+       "campo": "direita",
+       "sq_candidato": "160002547963",
+       "foto": "img/senado/PR_160002547963.jpg",
+       "p_eleito": 0.91605,
+       "p_primeiro": 0.64245,
+       "ic90_validos": [
+        19.587282,
+        47.572681
+       ],
+       "validos_mediana": 32.490559,
+       "validos_central": 34.350133
+      },
+      {
+       "nome": "Filipe Barros",
+       "nome_urna": "FILIPE BARROS",
+       "partido": "PL",
+       "campo": "direita",
+       "sq_candidato": "160002547660",
+       "foto": "img/senado/PR_160002547660.jpg",
+       "p_eleito": 0.77915,
+       "p_primeiro": 0.2455,
+       "ic90_validos": [
+        15.166308,
+        39.27279
+       ],
+       "validos_mediana": 25.741921,
+       "validos_central": 26.98939
+      },
+      {
+       "nome": "Gleisi",
+       "nome_urna": "GLEISI",
+       "partido": "PT",
+       "campo": "esquerda",
+       "sq_candidato": "160002547656",
+       "foto": "img/senado/PR_160002547656.jpg",
+       "p_eleito": 0.24885,
+       "p_primeiro": 0.09815,
+       "ic90_validos": [
+        7.894924,
+        30.472233
+       ],
+       "validos_mediana": 16.486654,
+       "validos_central": 17.241379
+      },
+      {
+       "nome": "Cristina Graeml",
+       "nome_urna": "CRISTINA GRAEML",
+       "partido": "PSD",
+       "campo": "centro",
+       "sq_candidato": "160002549555",
+       "foto": "img/senado/PR_160002549555.jpg",
+       "p_eleito": 0.03425,
+       "p_primeiro": 0.0091,
+       "ic90_validos": [
+        3.697495,
+        19.468742
+       ],
+       "validos_mediana": 8.878754,
+       "validos_central": 8.62069
+      },
+      {
+       "nome": "DR Rosinha",
+       "nome_urna": "DR ROSINHA",
+       "partido": "PT",
+       "campo": "esquerda",
+       "sq_candidato": "160002547658",
+       "foto": "img/senado/PR_160002547658.jpg",
+       "p_eleito": 0.0217,
+       "p_primeiro": 0.0048,
+       "ic90_validos": [
+        3.962931,
+        17.798471
+       ],
+       "validos_mediana": 8.928151,
+       "validos_central": 8.62069
+      },
+      {
+       "nome": "Joaquim do MLB",
+       "nome_urna": "JOAQUIM DO MLB",
+       "partido": "UP",
+       "campo": "esquerda",
+       "sq_candidato": "160002551043",
+       "foto": "img/senado/PR_160002551043.jpg",
+       "p_eleito": 0.0,
+       "p_primeiro": 0.0,
+       "ic90_validos": [
+        0.0,
+        0.0
+       ],
+       "validos_mediana": 0.0,
+       "validos_central": 0.0
+      },
+      {
+       "nome": "Karen Guerreiro",
+       "nome_urna": "KAREN GUERREIRO",
+       "partido": "MISSÃO",
+       "campo": "direita",
+       "sq_candidato": "160002551121",
+       "foto": "img/senado/PR_160002551121.jpg",
+       "p_eleito": 0.0,
+       "p_primeiro": 0.0,
+       "ic90_validos": [
+        0.684216,
+        4.730296
+       ],
+       "validos_mediana": 1.93743,
+       "validos_central": 2.453581
+      },
+      {
+       "nome": "Marcelo Marcelino",
+       "nome_urna": "MARCELO MARCELINO",
+       "partido": "PCO",
+       "campo": "esquerda",
+       "sq_candidato": "160002552563",
+       "foto": "img/senado/PR_160002552563.jpg",
+       "p_eleito": 0.0,
+       "p_primeiro": 0.0,
+       "ic90_validos": [
+        0.442558,
+        3.615615
+       ],
+       "validos_mediana": 1.340684,
+       "validos_central": 1.724138
+      }
+     ],
+     "eleitos_provaveis": [
+      "Alexandre Curi",
+      "Filipe Barros"
+     ],
+     "dupla_mais_provavel": [
+      "Alexandre Curi",
+      "Filipe Barros"
+     ],
+     "p_dupla_mais_provavel": 0.71245,
+     "p_segunda_dupla": 0.1746,
+     "dupla_empatada": false,
+     "duplas": [
+      {
+       "nomes": [
+        "Alexandre Curi",
+        "Filipe Barros"
+       ],
+       "p": 0.71245
+      },
+      {
+       "nomes": [
+        "Alexandre Curi",
+        "Gleisi"
+       ],
+       "p": 0.1746
+      },
+      {
+       "nomes": [
+        "Filipe Barros",
+        "Gleisi"
+       ],
+       "p": 0.05725
+      },
+      {
+       "nomes": [
+        "Alexandre Curi",
+        "Cristina Graeml"
+       ],
+       "p": 0.02205
+      },
+      {
+       "nomes": [
+        "Gleisi",
+        "DR Rosinha"
+       ],
+       "p": 0.0119
+      }
+     ],
+     "soma_p_eleito": 2.0,
+     "fonte": {
+      "veiculo": "CNN Brasil",
+      "publicado_em": "2026-10-03T20:17:38-03:00",
+      "url": "https://www.cnnbrasil.com.br/eleicoes/tse-barra-candidatura-de-deltan-ao-senado-e-votos-serao-considerados-nulos/",
+      "titulo": "TSE barra candidatura de Deltan ao Senado e votos serão considerados nulos",
+      "arquivo": "data/originals/senado_102026/deltan_tse/materia_1.html",
+      "sha256": "81ed4fbb963c89bff5d7b46f1cde681d440adf61b69018ac364799a88555d867",
+      "decisao": "Na noite de 03/10/2026, o ministro Floriano de Azevedo Marques, relator no TSE, indeferiu o registro de Deltan Dallagnol (Novo) ao Senado pelo Paraná. A decisão reverte o TRE-PR, que havia deferido o registro por 4 votos a 3, contraria o parecer da Procuradoria-Geral Eleitoral, declara nulos os votos que a candidatura receber em 04/10 e manda o TRE-PR mudar a situação do registro para indeferido.",
+      "data": "2026-10-03",
+      "status": "monocrática, pendente de plenário",
+      "fonte_json": "data/originals/senado_102026/deltan_tse/fonte.json"
+     }
+    }
+   ]
   },
   "PE": {
    "uf": "PE",
@@ -14051,7 +14494,133 @@
    "maioria": 41,
    "tres_quintos": 49,
    "dois_tercos": 54
-  }
+  },
+  "cenarios": [
+   {
+    "chave": "registro_indeferido_deltan",
+    "rotulo": "Se os votos de Deltan forem anulados",
+    "hipotese": "voto da candidatura vira nulo (não migra para ninguém); o restante é recalculado nos mesmos sorteios",
+    "ufs": [
+     "PR"
+    ],
+    "candidatura": "Deltan Dallagnol",
+    "por_grupo": {
+     "direita": {
+      "esperado": 48.2669,
+      "ic90": [
+       38,
+       59
+      ]
+     },
+     "centro": {
+      "esperado": 13.36365,
+      "ic90": [
+       7,
+       20
+      ]
+     },
+     "esquerda": {
+      "esperado": 19.36945,
+      "ic90": [
+       11,
+       29
+      ]
+     },
+     "indefinido": {
+      "esperado": 0.0,
+      "ic90": [
+       0,
+       0
+      ]
+     }
+    },
+    "variacao_esperado_por_grupo": {
+     "direita": -0.11315,
+     "centro": 0.0199,
+     "esquerda": 0.09325,
+     "indefinido": 0.0
+    },
+    "p_maioria_direita_mais_centro_direita": 0.8787,
+    "p_49_direita_centro_direita": 0.48535,
+    "p_54_bloco_oposicao": 0.22265,
+    "p_41_direita_centro_direita_centro": 0.99995,
+    "p_41_esquerda_centro_esquerda": 5e-05,
+    "p_49_esquerda_centro_esquerda": 0.0,
+    "p_54_esquerda_centro_esquerda": 0.0,
+    "variacao_probabilidades": {
+     "p_maioria_direita_mais_centro_direita": -0.0034,
+     "p_49_direita_centro_direita": -0.0069,
+     "p_54_bloco_oposicao": -0.0043,
+     "p_41_direita_centro_direita_centro": 0.0,
+     "p_41_esquerda_centro_esquerda": 0.0,
+     "p_49_esquerda_centro_esquerda": 0.0,
+     "p_54_esquerda_centro_esquerda": 0.0
+    },
+    "fecha_em_81_em_todo_sorteio": true
+   },
+   {
+    "chave": "registro_indeferido_deltan_migracao",
+    "rotulo": "Se o eleitorado de Deltan migrar para candidaturas de direita e centro-direita",
+    "hipotese": "voto da candidatura migra para as demais candidaturas de direita e centro-direita, na proporção do voto de cada uma no mesmo sorteio (regra de voto útil); nada vai para outros campos, branco ou nulo; o restante é recalculado nos mesmos sorteios",
+    "ufs": [
+     "PR"
+    ],
+    "candidatura": "Deltan Dallagnol",
+    "por_grupo": {
+     "direita": {
+      "esperado": 48.56675,
+      "ic90": [
+       38,
+       59
+      ]
+     },
+     "centro": {
+      "esperado": 13.3089,
+      "ic90": [
+       7,
+       20
+      ]
+     },
+     "esquerda": {
+      "esperado": 19.12435,
+      "ic90": [
+       11,
+       29
+      ]
+     },
+     "indefinido": {
+      "esperado": 0.0,
+      "ic90": [
+       0,
+       0
+      ]
+     }
+    },
+    "variacao_esperado_por_grupo": {
+     "direita": 0.1867,
+     "centro": -0.03485,
+     "esquerda": -0.15185,
+     "indefinido": 0.0
+    },
+    "p_maioria_direita_mais_centro_direita": 0.89115,
+    "p_49_direita_centro_direita": 0.50435,
+    "p_54_bloco_oposicao": 0.2333,
+    "p_41_direita_centro_direita_centro": 0.99995,
+    "p_41_esquerda_centro_esquerda": 5e-05,
+    "p_49_esquerda_centro_esquerda": 0.0,
+    "p_54_esquerda_centro_esquerda": 0.0,
+    "variacao_probabilidades": {
+     "p_maioria_direita_mais_centro_direita": 0.00905,
+     "p_49_direita_centro_direita": 0.0121,
+     "p_54_bloco_oposicao": 0.00635,
+     "p_41_direita_centro_direita_centro": 0.0,
+     "p_41_esquerda_centro_esquerda": 0.0,
+     "p_49_esquerda_centro_esquerda": 0.0,
+     "p_54_esquerda_centro_esquerda": 0.0
+    },
+    "fecha_em_81_em_todo_sorteio": true
+   }
+  ]
  },
  "validacao": {
   "recomposicao": [
@@ -15948,7 +16517,64 @@
     "p_41_esquerda_centro_esquerda": 0.0003
    }
   ],
-  "achado_contrario": "A leitura central põe o bloco de direita e centro-direita com 48,4 cadeiras esperadas e maioria (41) em 88% dos sorteios, mas três quintos (49) só em 49% e dois terços (54) em 23%. Com o erro dobrado, a maioria cai para 79% e a dupla mais provável muda em 7 estados. Em 6 estados a dupla mais provável aparece em menos de 30% dos sorteios (AM, ES, MG, PR, RJ, SE)."
+  "achado_contrario": "A leitura central põe o bloco de direita e centro-direita com 48,4 cadeiras esperadas e maioria (41) em 88% dos sorteios, mas três quintos (49) só em 49% e dois terços (54) em 23%. Com o erro dobrado, a maioria cai para 79% e a dupla mais provável muda em 7 estados. Em 6 estados a dupla mais provável aparece em menos de 30% dos sorteios (AM, ES, MG, PR, RJ, SE).",
+  "registro_indeferido": [
+   {
+    "uf": "PR",
+    "nome_tabela": "Deltan Dallagnol",
+    "data": "2026-10-03",
+    "status": "monocrática, pendente de plenário",
+    "fonte": "data/originals/senado_102026/deltan_tse/fonte.json",
+    "aplicado": true,
+    "candidatura": "Deltan Dallagnol",
+    "sq_candidato": "160002547661",
+    "partido": "NOVO",
+    "campo": "direita",
+    "p_eleito_central": 0.4004,
+    "p_primeiro_central": 0.1515,
+    "validos_central": 18.965517,
+    "receptores_migracao": [
+     "Alexandre Curi",
+     "Filipe Barros",
+     "Karen Guerreiro"
+    ],
+    "cenarios": [
+     {
+      "chave": "registro_indeferido_deltan",
+      "eleitos_provaveis": [
+       "Alexandre Curi",
+       "Filipe Barros"
+      ],
+      "p_dupla_mais_provavel": 0.46915,
+      "soma_p_eleito": 2.0
+     },
+     {
+      "chave": "registro_indeferido_deltan_migracao",
+      "eleitos_provaveis": [
+       "Alexandre Curi",
+       "Filipe Barros"
+      ],
+      "p_dupla_mais_provavel": 0.71245,
+      "soma_p_eleito": 2.0
+     }
+    ],
+    "sha256_fonte": "3f45ea626e1cb75baccf04a6f3036d4e697beed749c15586685e04af388bed03",
+    "materias_conferidas": [
+     {
+      "arquivo": "data/originals/senado_102026/deltan_tse/materia_1.html",
+      "sha256_conferido": true
+     },
+     {
+      "arquivo": "data/originals/senado_102026/deltan_tse/materia_2.html",
+      "sha256_conferido": true
+     },
+     {
+      "arquivo": "data/originals/senado_102026/deltan_tse/materia_3.html",
+      "sha256_conferido": true
+     }
+    ]
+   }
+  ]
  },
  "fontes": [
   {

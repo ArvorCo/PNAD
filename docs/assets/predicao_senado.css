@@ -177,7 +177,8 @@
 .sn-sws .sn-sw { top: 0; border-radius: 3px }
 @media (max-width: 899px) {
   .sn-mapa { grid-template-columns: minmax(0, 1fr) }
-  .sn-painel { display: none }
+  /* Empilhado sob o mapa: o clique troca a ficha no lugar, sem rolar a página. */
+  .sn-painel { margin-top: 12px }
 }
 
 /* Fichas */
@@ -276,3 +277,51 @@ ol.sn-cands, ul.sn-cands { list-style: none; margin: 0; padding: 0; display: gri
 @media print {
   .sn-painel { display: none }
 }
+
+/* Alertas, chips e cenários (registro indeferido, votos nulos). */
+.sn-marca {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 1px 8px;
+  border: 1px solid #8a2418;
+  border-radius: 999px;
+  background: #fbe9e5;
+  color: #7a1f14;
+  font: 600 11px/1.6 var(--mono);
+  letter-spacing: .4px;
+  text-transform: uppercase;
+  vertical-align: middle;
+  white-space: nowrap
+}
+.sn-alerta {
+  margin: 8px 0 12px;
+  padding: 10px 12px;
+  background: var(--white);
+  border: 3px solid #8a2418;
+  color: var(--ink)
+}
+.sn-alerta-titulo { margin: 0 0 4px; font-size: 16px; line-height: 1.35 }
+.sn-alerta p { margin: 4px 0; font-size: 14px }
+.sn-alerta-fontes { margin: 6px 0 0; padding-left: 18px; font-size: 13px; color: var(--muted) }
+.sn-alerta-fontes li { overflow-wrap: anywhere }
+.sn-cenario {
+  margin: 10px 0;
+  padding: 8px 10px 10px;
+  border: 1px dashed var(--muted);
+  background: var(--white);
+  min-width: 0
+}
+.sn-cenario-rotulo { margin: 0 0 4px; font-size: 15px; line-height: 1.35 }
+.sn-hipotese { font-size: 14px; margin: 6px 0 }
+.sn-atualizacao {
+  margin: 14px 0 0;
+  padding: 10px 14px;
+  background: var(--white);
+  color: var(--ink);
+  border-left: 6px solid #8a2418;
+  font-size: 15px;
+  line-height: 1.5
+}
+.sn-atualizacao a { color: var(--ink); font-weight: 600; text-decoration: underline }
+.sn-limites-sub { margin-top: 6px }
+.sn-cand-txt .sn-marca { justify-self: start; margin-left: 0 }

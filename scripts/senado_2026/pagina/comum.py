@@ -183,3 +183,21 @@ def casa_do_arquivo(arquivo: str, fonte: dict | None) -> str:
     if fonte and fonte.get("instituto"):
         return fonte["instituto"]
     return arquivo.split("_")[0].capitalize()
+
+
+def datahora_br(iso: str | None) -> str:
+    """ISO com hora e deslocamento como `dd/mm/aaaa hh:mm` (hora do carimbo da fonte)."""
+    m = re.match(r"(\d{4})-(\d{2})-(\d{2})[T ](\d{2}):(\d{2})", iso or "")
+    if not m:
+        return data_br(iso)
+    a, mes, d, h, mi = m.groups()
+    return f"{d}/{mes}/{a} {h}:{mi}"
+
+
+def periodo_do_dia(iso: str | None) -> str:
+    """manhã, tarde ou noite, pela hora do carimbo; vazio se não houver hora."""
+    m = re.match(r"\d{4}-\d{2}-\d{2}[T ](\d{2}):", iso or "")
+    if not m:
+        return ""
+    h = int(m.group(1))
+    return "manhã" if h < 12 else "tarde" if h < 18 else "noite"
