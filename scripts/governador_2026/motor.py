@@ -306,6 +306,7 @@ def preparar_estado(uf: str, ondas: list[dict], tse: B.Tse) -> dict:
                 "aliases": p["aliases"],
                 "sq_candidato": p["sq_candidato"],
                 "foto": tse.foto(p["sq_candidato"]),
+                "genero": (tse_c or {}).get("genero"),
                 "partido": partido,
                 "campo": SB.campo(partido),
                 "valor": p["valor"],

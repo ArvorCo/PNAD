@@ -34,8 +34,8 @@ GRUPOS = (
     ("esquerda", "Esquerda e centro-esquerda"),
 )
 CLASSES = (
-    ("apertada", "Ninguém sabe", "a favorita tem menos de 70% de chance"),
-    ("provavel", "Tem favorita, mas está aberto", "entre 70% e 90% de chance"),
+    ("apertada", "Ninguém sabe", "quem lidera tem menos de 70% de chance"),
+    ("provavel", "Há um nome na frente, mas está aberto", "entre 70% e 90% de chance"),
     ("decidida", "Praticamente decidido", "90% de chance ou mais"),
 )
 fontes = sv.fontes
@@ -83,6 +83,17 @@ def _chances(p: float | None) -> str:
     return "cara ou coroa"
 
 
+def lidera(c: dict) -> str:
+    """'é o favorito' ou 'é a favorita' pelo gênero declarado no TSE; sem o
+    registro, 'tem a candidatura favorita', que não presume nada."""
+    g = (c.get("genero") or "").upper()
+    if g.startswith("FEM"):
+        return "é a favorita"
+    if g.startswith("MASC"):
+        return "é o favorito"
+    return "tem a candidatura favorita"
+
+
 def veredito(e: dict) -> tuple[str, str]:
     """(classe css, texto curto) sobre quando a disputa termina."""
     p1 = e.get("p_decide_1t") or 0
@@ -111,7 +122,7 @@ def frase(e: dict) -> str:
             if seg
             else ""
         )
-        return f"{nome} é a favorita, com {pct(p)}, mas a disputa ainda está aberta.{outro}"
+        return f"{nome} {lidera(fav)}, com {pct(p)}, mas a disputa ainda está aberta.{outro}"
     if seg:
         return (
             f"Empate: {nome} tem {pct(p)} e {esc(seg.get('nome', ''))} tem "
@@ -161,7 +172,7 @@ def hero_cartoes(data: dict) -> str:
         f"<span>estados devem ir ao 2º turno, em {data_br(data.get('segundo_turno_data'))}</span></div>"
         "</div>"
         '<div class="gv-tiles-wrap"><p class="gv-tiles-cap">Os 27 estados, do mais decidido ao mais incerto. '
-        "A cor é o campo da favorita, o número é a chance dela, e as listras avisam que o 2º turno é mais provável.</p>"
+        "A cor é o campo de quem lidera, o número é a chance de governar, e as listras avisam que o 2º turno é mais provável.</p>"
         f'<div class="gv-tiles">{tiles}</div></div>'
     )
 
@@ -186,7 +197,7 @@ def resumo_30s(data: dict) -> str:
     itens = []
     if decididos:
         itens.append(
-            f"<li><b>Onde já dá para saber.</b> Em {num(len(decididos), 0)} estados a favorita tem "
+            f"<li><b>Onde já dá para saber.</b> Em {num(len(decididos), 0)} estados quem lidera tem "
             f"90% de chance ou mais: {_lista_ufs(decididos, estados)}.</li>"
         )
     if empates:
@@ -196,7 +207,7 @@ def resumo_30s(data: dict) -> str:
         )
     if abertos:
         itens.append(
-            f"<li><b>Onde há favorita, mas não garantia.</b> {_lista_ufs(abertos, estados)}.</li>"
+            f"<li><b>Onde há um nome na frente, mas não garantia.</b> {_lista_ufs(abertos, estados)}.</li>"
         )
     if g.get("direita") and g.get("esquerda"):
         itens.append(
@@ -487,9 +498,9 @@ def mapa_secao(data: dict) -> str:
     return (
         '<div class="sn-mapa" id="sn-mapa">'
         '<figure class="sn-map-fig">'
-        '<h3 id="sn-map-title" class="sn-sr">Campo da candidatura favorita, por estado</h3>'
+        '<h3 id="sn-map-title" class="sn-sr">Campo de quem lidera, por estado</h3>'
         f"{mapa_mod.svg(estados)}"
-        "<figcaption>Clique ou toque num estado para ver a ficha. A cor é o campo da favorita; "
+        "<figcaption>Clique ou toque num estado para ver a ficha. A cor é o campo de quem lidera; "
         "listras marcam onde o 2º turno é mais provável que a decisão no 1º.</figcaption></figure>"
         '<aside class="sn-painel" id="sn-painel" aria-live="polite" aria-label="Ficha do estado selecionado">'
         f'<h3 id="sn-painel-titulo">{esc(e.get("nome", uf))} ({uf})</h3>'
@@ -553,7 +564,7 @@ def tabela(data: dict) -> str:
                 esc(
                     {
                         "apertada": "aberta",
-                        "provavel": "favorita",
+                        "provavel": "um nome na frente",
                         "decidida": "decidida",
                     }.get(e.get("classe") or "", "–")
                 ),
@@ -563,7 +574,7 @@ def tabela(data: dict) -> str:
         )
     headers = [
         "UF",
-        "Favorita",
+        "Quem lidera",
         "Chance de governar",
         "1º turno decide",
         "2º turno",
@@ -576,7 +587,7 @@ def tabela(data: dict) -> str:
     return table(
         headers,
         rows,
-        "Favorita, probabilidades e par de 2º turno por estado",
+        "Quem lidera, probabilidades e par de 2º turno por estado",
         {2, 3, 4, 6},
         sortable=True,
     )

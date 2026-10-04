@@ -1,4 +1,4 @@
-"""Mapa do Brasil pintado pelo campo da candidatura favorita de cada UF.
+"""Mapa do Brasil pintado pelo campo de quem lidera em cada UF.
 
 Listras brancas marcam o estado onde o 2º turno é mais provável que a decisão
 no 1º; cor esmaecida marca cobertura antiga.
@@ -115,7 +115,7 @@ def legenda() -> str:
         for c in ORDEM[:5]
     )
     return (
-        '<div class="sn-map-legenda"><p class="eyebrow">Cor = campo da candidatura favorita</p>'
+        '<div class="sn-map-legenda"><p class="eyebrow">Cor = campo de quem lidera</p>'
         f'<ul class="sn-sws">{cheios}'
         '<li><span class="sn-sw gv-sw-listra" aria-hidden="true"></span>'
         "Listras: 2º turno mais provável que a decisão no 1º</li>"

@@ -39,7 +39,7 @@ def casas_por_estado(data: dict) -> dict[str, set[str]]:
 
 
 def exemplo(data: dict) -> str:
-    """Estado em que a favorita está perto dos 50% dos válidos."""
+    """Estado em que quem lidera está perto dos 50% dos válidos."""
     melhor = None
     for uf, e in data["estados"].items():
         if e.get("cobertura") != "recente" or not e.get("media"):
@@ -137,7 +137,7 @@ def como_lemos(data: dict) -> str:
     )
     return f"""
 <h3>O que é "chance de governar"</h3>
-<p>Não é o percentual de votos. É quantas vezes a candidatura termina eleita quando a eleição é simulada milhares de vezes, cada vez com um erro de pesquisa diferente, do tamanho que as pesquisas erraram de verdade em 2022.</p>
+<p>Não é o percentual de votos. É quantas vezes a candidatura termina no governo quando a eleição é simulada milhares de vezes, cada vez com um erro de pesquisa diferente, do tamanho que as pesquisas erraram de verdade em 2022.</p>
 <p class="analogy">Pense numa previsão do tempo. "70% de chance de chuva" não quer dizer que vai chover 70% do dia: quer dizer que, em dez dias assim, chove em sete. Aqui é igual: "70% de chance de governar" quer dizer que, em dez eleições com pesquisas assim, a candidatura ganha em sete.</p>
 {exemplo(data)}
 <h3>Os dois caminhos até o governo</h3>
@@ -160,9 +160,9 @@ def _sens_item(x: dict) -> str:
         for m in muda
     )
     resumo = (
-        f" A favorita muda em {num(len(muda), 0)} estados: {esc(ufs)}."
+        f" O nome na frente muda em {num(len(muda), 0)} estados: {esc(ufs)}."
         if muda
-        else " A favorita não muda em nenhum estado."
+        else " O nome na frente não muda em nenhum estado."
     )
     dec = x.get("decididos_1t_esperado")
     dec_txt = (
@@ -188,7 +188,7 @@ def achado_contrario(data: dict) -> str:
     apertadas = n.get("por_classe", {}).get("apertada") or []
     if apertadas:
         partes.append(
-            f"Em {num(len(apertadas), 0)} estados a favorita tem menos de 70% de chance "
+            f"Em {num(len(apertadas), 0)} estados quem lidera tem menos de 70% de chance "
             f"({', '.join(apertadas)}): nesses, a página não sabe quem ganha."
         )
     invertidos = [
@@ -199,7 +199,7 @@ def achado_contrario(data: dict) -> str:
     if invertidos:
         partes.append(
             f"Em {', '.join(sorted(invertidos))}, quem lidera as pesquisas do 1º turno não é a "
-            "favorita na eleição: o 2º turno medido inverte a ordem."
+            "quem tem mais chance na eleição: o 2º turno medido inverte a ordem."
         )
     return " ".join(partes)
 
