@@ -116,7 +116,7 @@ def frase(e: dict) -> str:
     seg = _segundo(e)
     p = fav.get("p_eleito") or 0
     nome = esc(fav.get("nome", ""))
-    if p >= DECIDIDA:
+    if round(100 * p) / 100 >= DECIDIDA - 1e-9:
         return f"{nome} tem {pct(p)} de chance de governar o estado: {_chances(p)}."
     if p >= 0.7:
         outro = (

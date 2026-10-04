@@ -38,8 +38,11 @@ def _campo_txt(o: dict) -> str | None:
 
 
 def _classe(p_fav: float) -> str:
+    """Classe pelo percentual inteiro que a página imprime: 89% impresso é
+    decidido, mesmo que o valor exato seja 88,6%."""
+    inteiro = round(100 * p_fav) / 100
     for nome, piso in CLASSES:
-        if p_fav >= piso:
+        if inteiro >= piso - 1e-9:
             return nome
     return "apertada"
 
