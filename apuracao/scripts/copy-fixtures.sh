@@ -34,7 +34,6 @@ baixar sp71072-z0001-c0001-e006257-u.json "$BASE/ele2026/6257/dados/sp/sp71072-z
 baixar sp-c0003-e006259-u.json "$BASE/ele2026/6259/dados/sp/sp-c0003-e006259-u.json"
 baixar sp71072-c0007-e006259-u.json "$BASE/ele2026/6259/dados/sp/sp71072-c0007-e006259-u.json"
 baixar df-c0008-e006259-u.json "$BASE/ele2026/6259/dados/df/df-c0008-e006259-u.json"
-baixar sp-p003220-cs.json "$BASE/ele2026/arquivo-urna/3220/config/sp/sp-p003220-cs.json"
 baixar 2024/br-e000619-ab.json "$BASE/ele2024/619/dados/br/br-e000619-ab.json"
 baixar 2024/sp-e000619-ab.json "$BASE/ele2024/619/dados/sp/sp-e000619-ab.json"
 baixar 2024/sp-c0011-e000619-e.json "$BASE/ele2024/619/dados/sp/sp-c0011-e000619-e.json"
