@@ -3,7 +3,7 @@
   "checkpoint_id": "6f0ce2198185",
   "strategy": "manual-commit",
   "branch": "main",
-  "checkpoints_count": 3,
+  "checkpoints_count": 4,
   "files_touched": [
     "analysis/governador_2026/CONTRATO.md",
     "analysis/governador_2026/calibracao_2022.json",
@@ -28,9 +28,27 @@
     "apuracao/bunfig.toml",
     "apuracao/eslint.config.js",
     "apuracao/package.json",
+    "apuracao/public/campos.json",
+    "apuracao/public/cores.json",
+    "apuracao/public/playlist.json",
+    "apuracao/public/senadores_2022.json",
+    "apuracao/scripts/baixar-malhas.ts",
+    "apuracao/scripts/copiar-fontes.ts",
+    "apuracao/scripts/extrair-fotos.py",
+    "apuracao/scripts/gerar-campos.py",
+    "apuracao/src/config.ts",
+    "apuracao/src/db/linhas.ts",
     "apuracao/src/parse/drift.ts",
+    "apuracao/src/parse/normalizar.ts",
+    "apuracao/src/parse/numeros.ts",
     "apuracao/src/parse/schemas.ts",
     "apuracao/src/sql.d.ts",
+    "apuracao/src/tse/time.ts",
+    "apuracao/src/tse/urls.ts",
+    "apuracao/src/types.ts",
+    "apuracao/src/ui/state/selectors.ts",
+    "apuracao/src/ui/state/store.ts",
+    "apuracao/src/ui/state/types.ts",
     "apuracao/tests/fixtures/2024/br-e000619-ab.json",
     "apuracao/tests/fixtures/2024/sp-c0011-e000619-e.json",
     "apuracao/tests/fixtures/2024/sp-e000619-ab.json",
@@ -115,13 +133,20 @@
       "context": "/6f/0ce2198185/0/context.md",
       "content_hash": "/6f/0ce2198185/0/content_hash.txt",
       "prompt": "/6f/0ce2198185/0/prompt.txt"
+    },
+    {
+      "metadata": "/6f/0ce2198185/1/metadata.json",
+      "transcript": "/6f/0ce2198185/1/full.jsonl",
+      "context": "/6f/0ce2198185/1/context.md",
+      "content_hash": "/6f/0ce2198185/1/content_hash.txt",
+      "prompt": "/6f/0ce2198185/1/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 658,
-    "cache_creation_tokens": 265429,
-    "cache_read_tokens": 6310364,
-    "output_tokens": 64533,
-    "api_call_count": 27
+    "input_tokens": 2360,
+    "cache_creation_tokens": 716278,
+    "cache_read_tokens": 26436992,
+    "output_tokens": 217451,
+    "api_call_count": 83
   }
 }
