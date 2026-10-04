@@ -1,0 +1,1321 @@
+A session-scoped Stop hook is now active with condition: "sua meta e rever o trabalho que foi feito em @docs/predicao_2026_1T_presidente.html e:
+
+1) Melhorarm uito o ux e layout geral da página
+2) Evoluir nas explicações matemáticas e detalhar o que foi feito com as pesquisas com calma ampliando o texto
+3) Criar mapa do Brasil interativo mostrando as votações por estado
+4) Melhorar o sistema de predição para torná-lo ainda mais amigável e interessante de usar
+5) Explicar melhor porque pesquisas de intenção não são modelos preditivos e que esse é um modelo que se tenta usar para isso
+6) Acredito que esse modelo preditivo precisaria também de um algoritmo de machine learning por trás para chegar no resultado, não apenas proporções, mas acredito que é algo que você pode avaliar para isso
+7) Fazer isso com subagentes sonnet para texto/UX e agentes opus 5.5 xhigh para a parte matemática/código e programação com o FABLE agindo como o orquestrador desses agentes para atingir essa meta
+
+INvestigue o melhor caminho para modelos preditivos como esse para melhorar mais a nossa predição com técnicas avançadas de regressão para chegar no resutlado o mais correto possível e o mais preditivo possível
+
+Verifique o último commit realizado para compreender um pouco do trabalho feito bem como o que foi feito para isso funcionar. Bom trabalho". Briefly acknowledge the goal, then immediately start (or continue) working toward it — treat the condition itself as your directive and do not pause to ask the user what to do. The hook will block stopping until the condition holds. It auto-clears once the condition is met — do not tell the user to run `/goal clear` after success; that's only for clearing a goal early.
+
+---
+
+<task-notification>
+<task-id>aab7941e5418cb736</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Texto: explicações matemáticas e pesquisa≠previsão" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>O rascunho está em `/Users/leonardodias/arvor/PNAD/analysis/predicao_2026/texto_fase2.md`. O `grep -c "—"` devolve zero e o template não foi tocado. Não gerei a página nem rodei teste, então nenhum placeholder foi resolvido.
+
+**Palavras por seção** (sem tags HTML nem placeholders):
+
+| Seção | Palavras |
+|---|---|
+| 1. #pesquisa | ~1.120 |
+| 2. #metodo (passo 0, explicações dos passos 1 a 6, glossário de 14 verbetes) | ~2.480 |
+| 3. #incerteza (réplica em 8 passos e "faixa não é margem de erro") | ~620 |
+| 4. #validacao (o que testa e não testa, roteiro de 05/10) | ~670 |
+| 5. #aprendizado (capítulo novo) | ~1.010 |
+| Placeholders, conferência e dúvidas | ~760 |
+
+- **#pesquisa:** cobre os pontos pedidos (margem, urna, erro comum, o que um modelo declara, "lidera" contra estimativa pontual), com uma analogia por conceito. O exemplo numérico é o Datafolha 42 × 38 com n de 2.506.
+- **#aprendizado:** os números do DLM e da validação de origem móvel são placeholders `{{DLM_...}}`, e o bloco leva o comentário `&lt;!-- DEPENDE: DLM --&gt;`.
+
+**Placeholders novos.** Usei placeholders em vez de literais para tudo o que vem do JSON e muda com o corte, por exemplo `{{CENTRAL_LULA}}`, `{{CENTRAL_GAP}}`, `{{ALVO_*}}`, `{{PESO_PRIOR_*}}`, `{{SENS_*_GAP}}`, `{{N_RUNS}}` e `{{N_SECOES_2022}}`. A tabela completa, com a chave do JSON de cada um, está na seção 6 do arquivo. Os `{{DLM_...}}` dependem do outro agente.
+
+**Números derivados.** Alguns números são cálculos meus e estão com a fórmula na seção "Conferência":
+- o intervalo da diferença do Datafolha sob amostragem simples e com efeito de desenho 1,5;
+- o desvio de peso do Datafolha no passo 1 da réplica;
+- ±2,0 pp para n = 2.506;
+- ±0,9 milhão de votos nas sensibilidades de comparecimento.
+
+**Decisões para você** (também listadas na seção 8 do arquivo):
+1. **Exemplos de 03/10.** Os exemplos de pesos (Datafolha 16,5%, Atlas 5,8%, 0,5 e 0,18) estão marcados `EXEMPLO FIXO`. Se a página sair com `--hoje 2026-10-04`, os pesos mudam. Mantenho datados ou viram placeholders?
+2. **Shirani-Mehr 2018.** Escrevi que o erro total é "cerca do dobro" da margem reportada. É a conclusão do artigo, mas não conferi o texto original.
+3. **Citações.** Jackman 2005 tem link por DOI. Linzer 2013 e Heidemanns, Gelman e Morris 2020 entram só como citação, sem URL verificada.
+4. **Numeração.** O capítulo novo seria o 10 e #fontes passaria a 11. Falta também o link no `chapter-nav`.
+5. **Critérios pós-urna.** "Falha de faixa", "falha de nível" e "falha de forma" são proposta minha e comprometem a casa com uma regra pública de avaliação. Precisam da sua aprovação.
+6. **Sentença do Datafolha.** "A diferença não separa os dois com 95% de confiança" só vale com o efeito de desenho 1,5 assumido pelo modelo. Sob amostragem simples o intervalo exclui o zero por pouco. Mantenho ou troco por exemplo que não dependa do efeito de desenho?
+7. **Passo 5.** Escrevi que os indecisos se dividem na proporção das candidaturas (`indecisos_validos` = 1,0). Isso bate com o `motor.py`, mas o parágrafo atual do template diz que indecisos não alocados "viram inválidos". Convém alinhar os dois textos.</result>
+<usage><subagent_tokens>207023</subagent_tokens><tool_uses>18</tool_uses><duration_ms>336926</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a4da8860fb607ed09</task-id>
+<tool-use-id>toolu_01Uc5G7Jt4oCxyJngA6fZ4gt</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Mapa interativo do Brasil por UF" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>The interactive map is working in the `#territorio` section. Without JavaScript the static map still renders completely. The render audit and the contrast audit (desktop and 390 px) both report 0 problems, and the 48 tests pass. Nothing was committed.
+
+**Files**
+- New: `docs/assets/predicao_2026_mapa.js`, `docs/assets/predicao_2026_mapa.css`, `tests/test_predicao_2026_mapa.py`.
+- New: `scripts/predicao_2026/mapa.py`. I put the map's HTML generation in its own module rather than in `view.py`, to stay out of the way of the agents editing that file.
+- `scripts/predicao_2026/view.py`: only `map_svg` changed (it now calls the new module), plus one import.
+- Template: two lines added in `&lt;head&gt;` for the new CSS and JS. The old `map-layout` block became `{{MAP}}` followed by the original "O país soma votos" text, unchanged. No other section touched.
+- The page and JSON were regenerated with the requested command; a new snapshot was added and none were deleted.
+
+**What the page has without JavaScript**
+- 27 states coloured by the Flávio minus Lula gap. The scale is continuous, centred on zero, blue for Flávio and red for Lula.
+- A gradient legend that carries the "estimativa pontual, não liderança estatisticamente identificada" caveat.
+- The Exterior as a separate card next to the map, not a polygon.
+- Each state is a link to its existing `#estado-UF` sheet, with an accessible label and a text description of the map.
+- The 2022 first-round vote by UF (from `tse_2022_uf.json`) is embedded in the page for the swing metrics.
+
+**What JavaScript adds**
+- **Metrics:** the 11 you listed in four groups. Sequential scales get their own lightness ramp each, which reads for colour-blind users; neutral metrics use a purple ramp so they can't be confused with party colours. Electorate and abstention use a square-root scale; the swing metrics use an orange/purple diverging scale.
+- **Tooltip** on hover and on keyboard focus, with UF, value and the three-bloc score.
+- **Side panel** (below the map on mobile), opened by click, Enter or Space. It has everything you asked for, plus 2022 swing and a close button. The sheet link opens the matching `&lt;details&gt;`. The Exterior card opens the panel too.
+- **Keyboard:** Tab moves through the states, arrow keys jump to the neighbouring state, Escape hides the tooltip. A screen reader hears "Ficha de X aberta" when a panel opens.
+- **Safety:** if anything fails during setup, nothing in the static map is removed.
+
+**Event contract**
+- The map listens for `predicao:cenario` on `document`. When `central` is true it goes back to the central forecast. Otherwise it shows the reader's scenario with the "Cenário do leitor" notice and a "Voltar à central" button.
+- A toggle switches between the scenario and "Diferença para a central" (scenario minus central, per UF). It is disabled for metrics the scenario doesn't change.
+- The simulator also stores its last scenario in `window.predicaoCenario`, so the map picks it up even if the event fired before the map script loaded.
+- Tested against the other agent's live simulator: moving the `voto_flavio` control recoloured the map and showed the notice. The exterior is shown as excluded when the reader turns it off.
+
+**Checks**
+- Tests: `pytest -q tests/test_predicao_2026.py tests/test_predicao_2026_mapa.py` → 48 passed. The new tests check 27 states with `data-uf`, the controls, panel, script and styles, colours and labels matching `central.ufs`, the embedded 2022 data against the TSE file, `node --check` on both JS files, and no em dash.
+- Lint: my files pass `ruff` and `black --check`. Over the full `scripts/ docs/ tests/` command, ruff still reports 46 errors and black 26 files, none mine:
+  - most are in `tests/`, which CI doesn't lint (it checks only `scripts/ docs/`);
+  - the rest are in `dinamico.py`, `simulador.py` and `preditiva.py`, the other agents' in-progress files.
+- Audits: render audit, 0 problems. Contrast audit at 1360 and 390 px, 0 failures.
+- Layout: no horizontal page scroll at 390 px, including with the panel open. It works opened as `file://` with no console errors, and with JavaScript off the controls stay hidden and the map and legend stay visible.
+
+**Screenshots** in `/Users/leonardodias/arvor/PNAD/analysis/predicao_2026/`:
+- `qa-mapa-desktop.png`
+- `qa-mapa-desktop-cenario.png`
+- `qa-mapa-390.png`
+- `qa-mapa-390-cenario.png`
+- `qa-mapa-sem-js.png`
+
+**Limitations**
+- The contrast audit only measures the page as it loads. The tooltip and panel (dark-on-light and white-on-dark text) were not run through it.
+- The colour scale's range follows the data: ±50 pp for the central gap. States with a small gap, like MG at −0.3 pp, come out almost neutral, which is intended.
+- On screens under 520 px the legend hides its two middle tick labels so they don't overlap.</result>
+<usage><subagent_tokens>226469</subagent_tokens><tool_uses>41</tool_uses><duration_ms>630174</duration_ms></usage>
+</task-notification>
+
+---
+
+[Image: original 358x2444, displayed at 293x2000. Multiply coordinates by 1.22 to map to original image.]
+
+---
+
+<task-notification>
+<task-id>a9538309157ea1450</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Simulador: UX amigável e interessante" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>All eight deliverables are in the simulator. Tests, lint and both audits pass. Nothing is committed.
+
+**Files changed**
+- `scripts/predicao_2026/simulador.py` (new): the preset list, the help text for each control, the grouped controls and the static results panel. I put it in a separate module so my edits wouldn't collide with the other agents in `view.py`. The other agent added the `dinamico` anchor option to this file and it is kept.
+- `scripts/predicao_2026/view.py`: `simulator()` now just calls the new module. I also ran black on this file while other agents were editing it, so it may have whitespace-only changes in their code.
+- `docs/assets/predicao_2026.js`:
+  - In the engine I added one field to what `simulate()` returns (`margens`, the sorted list of simulated F−L differences), for the histogram. No results change.
+  - New pure helper `PredictionSimulator` (encode/decode the link, central check, automatic sentence, histogram SVG), exported to node as `require(...).Simulador`.
+  - The DOM block is rewritten.
+- `docs/assets/predicao_2026.css` and `-responsive.css`: simulator rules only.
+- Template, `#simulador` section only: new lead paragraph. `.sim-explanation` is cut to one paragraph because its definitions now live in the "?" buttons.
+- `tests/test_predicao_2026_simulador.py` (new).
+
+**Presets (11)**
+
+| Preset | Parameters |
+|---|---|
+| Central | `{}` |
+| Voto útil à direita | `voto_flavio: 0.5` |
+| Voto útil à esquerda | `voto_lula: 0.5` |
+| Os dois consolidam | both `0.5` |
+| Abstenção alta no Nordeste | Nordeste −5 pp |
+| Abstenção alta no Sul e Sudeste | Sudeste −5 pp, Sul −5 pp |
+| Erro comum pró-Flávio +3 pp | `vies_pp: 3` |
+| Erro comum pró-Lula −3 pp | `vies_pp: -3` |
+| Indecisos não escolhem | `indecisos_validos: 0` |
+| Comparecimento diferencial +3 Flávio | `diferencial_pp: 3` |
+| Comparecimento diferencial +3 Lula | `diferencial_pp: -3` |
+
+- I renamed "Indecisos ficam em casa" to "Indecisos não escolhem". In the engine, undecided voters with `indecisos_validos: 0` become blank/null among people who vote; they don't abstain.
+- I added the Sul/Sudeste abstention preset and the +3 Lula differential so each one-sided scenario has a mirror for the other candidate.
+
+**Link format**
+- Pattern: `#sim=vf:50;rNE:-5;SP:cp2,vf60`. Only values that differ from the central go in, with `;` between them.
+- Codes:
+  - `a`: anchor
+  - `c`: turnout reference
+  - `vf`/`vl`: reserve for Flávio/Lula, in %
+  - `cp`, `df`, `sa`, `bn`: turnout, F−L differential, high-abstention sections, blank/null, in pp
+  - `ec`: common error
+  - `iv`/`if`: undecided reaching a valid vote / undecided going to Flávio, in %
+  - `ep`/`ex`: likely voter / exterior, 0 or 1
+- Regions: `rN`, `rNE`, `rCO`, `rSE`, `rS`. The `r` prefix keeps region `SE` (Sudeste) from colliding with the UF `SE` (Sergipe); a test checks this.
+- UFs: the code followed by `cp`, `df`, `vl`, `vf`.
+- The URL updates as the reader changes controls. Opening a link restores the controls and scrolls to the simulator. Malformed values are ignored or clamped.
+
+**Contract with the map**
+- On every update the page dispatches `predicao:cenario` with `{result, params, central}`, as specified.
+- At startup it fires once, on `DOMContentLoaded`, so a map script that loads after this one still receives it.
+- The latest detail is also kept in `window.predicaoCenario`, in case the map registers late.
+
+**Results**
+- `pytest -q tests/test_predicao_2026.py tests/test_predicao_2026_simulador.py`: 49 passed. The new tests cover Python/JS parity for every preset, the direction each preset moves the gap, link round-trip and bad input, the generated sentence, and a Playwright run of the event, link restore and 390 px width. The Playwright test skips if Chromium is missing.
+- `node --check`: OK.
+- `ruff` and `black --check` on `scripts/`, `docs/` and the new test: clean.
+  - Run over all of `tests/`, ruff reports 45 errors and black would reformat 23 files, all in older files I didn't touch. CI only lints `scripts/` and `docs/`, so it isn't affected.
+- `render-audit.py`: 0 problems.
+- `contrast-audit.py` at 1280 px and at 390 px: 0 failures.
+- No sideways scroll at 390 px, even with every collapsible section open and the UF table showing.
+
+**Screenshots** (preset plus a Nordeste and SP adjustment, Monte Carlo finished):
+- `analysis/predicao_2026/qa-sim-desktop.png`
+- `analysis/predicao_2026/qa-sim-390.png`
+- `analysis/predicao_2026/qa-sim-390-dock.png`
+
+**Limitations**
+- The contrast audit only sees the page as it first loads. Monte Carlo cards, open "?" panels and the histogram reuse colours that already pass.
+- On phones, presets scroll sideways inside their own strip, and a bar pinned to the bottom of the simulator shows the score with a "Restaurar" button. At 390 px that button wraps onto a second line.
+- The section heading still reads "Faça a sua previsão." because it sits outside the parts of the template I was allowed to edit. Everywhere I wrote, the result is called a conditional reader scenario, not an official forecast.
+- The site build briefly failed while other agents were adding their placeholders. It passed on the next run and wrote a new snapshot.</result>
+<usage><subagent_tokens>254973</subagent_tokens><tool_uses>50</tool_uses><duration_ms>774024</duration_ms></usage>
+</task-notification>
+
+---
+
+[Image: original 1366x2678, displayed at 1020x2000. Multiply coordinates by 1.34 to map to original image.]
+
+---
+
+<task-notification>
+<task-id>aae4a01e5ea634c35</task-id>
+<tool-use-id>toolu_01PpqjqPtHbwHd67uRfQAfWC</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Motor: DLM bayesiano + validação preditiva + avaliação ML" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>Implementei a âncora "dinamico" (modelo dinâmico linear, DLM), a validação preditiva e a avaliação escrita. O DLM não venceu: no teste de origem móvel ele erra 0,10 pp a mais que a central, com erro-padrão de 0,14 (empate). Mantive a central em 44,0 × 43,0 e não mexi em nenhum default.
+
+**Verificação:** fiz o build rápido (`--hoje 2026-10-03 --skip-card --sorteios 300`) e rodei depois os testes dos dois arquivos: 50 passaram, incluindo os dois de paridade Python/JS. `ruff check scripts/ docs/` e `black --check scripts/ docs/` estão zerados, `node --check` passa e o HTML não tem travessão. O snapshot novo é `analysis/predicao_2026/snapshots/2026-10-03_137fa8001f16.json`.
+
+**Lint de `tests/`:** os meus dois arquivos de teste estão limpos. O `ruff check tests/` acusa 46 erros e o `black --check tests/` quer reformatar 28 arquivos, todos em testes que eu não toquei, e mesmo assim isso quebra a regra de zero lint. O CI só verifica `scripts/` e `docs/`, por isso não aparece lá. Não corrigi porque está fora do escopo.
+
+**Arquivos criados**
+- `scripts/predicao_2026/dinamico.py`: o modelo e a estimação por máxima verossimilhança.
+- `scripts/predicao_2026/preditiva.py`: origem móvel e teste deixando a casa do alvo fora.
+- `tests/test_predicao_2026_dinamico.py`: 9 testes.
+- `analysis/predicao_2026/avaliacao_ml.md`: a avaliação pedida, sem travessão.
+- `docs/assets/predicao_2026_validacao_preditiva.json`.
+
+**Arquivos alterados (edições pontuais)**
+- `scripts/predicao_2026/base.py`: constante `WINDOW_START` (padrão inalterado), `alvos["dinamico"]` e `nacional.dinamico` com variantes.
+- `scripts/predicao-2026-build.py`: cenário "Âncora dinâmica (DLM com efeitos de casa)", `validacao_preditiva` no JSON principal e no arquivo separado, e os dois módulos novos na lista de código com hash.
+- `scripts/predicao_2026/view.py`: funções `dlm_table` e `predictive_table`, registradas em `render`.
+- `scripts/predicao_2026/simulador.py`: uma tupla em `ANCHORS`. O outro agente moveu o select de âncora de `view.simulator()` para este módulo, então a opção entrou aqui.
+- `docs/assets/predicao_2026.js`: só dentro de `simulate`. O "dinamico" usa `previsao_vetor` das casas selecionadas, e o bootstrap é recentrado pelo deslocamento `alvos.dinamico − alvos.inclusivo`.
+- Template: duas linhas `&lt;details&gt;` logo depois de `{{HOUSE_TABLE}}`, com `{{DLM_TABLE}}` e `{{PREDICTIVE_TABLE}}`.
+
+**Âncora dinâmica contra a central** (`nacional.alvos`, em % do total)
+
+| Âncora | Lula | Flávio | Demais | Indecisos | Branco/nulo |
+|---|---|---|---|---|---|
+| Central | 40,41 | 39,98 | 12,55 | 3,45 | 3,61 |
+| Dinâmica | 41,19 | 39,72 | 12,26 | 3,40 | 3,42 |
+
+- **Nos válidos:** o DLM dá Lula 44,21 × Flávio 42,63, diferença F−L de −1,58 pp com desvio padrão de 2,71.
+- **No cenário completo:** depois da geografia e do eleitor provável, dá 44,72 × 42,62 (F−L −2,09), contra −0,98 da central.
+
+**Parâmetros estimados**
+- Variância de evolução: desvio diário de 0,59 pp no nível de Lula.
+- Desvio dos efeitos de casa: 3,66 pp em Lula e 5,69 pp em Flávio.
+- Esse filtro equivale, aproximadamente, a uma média exponencial com meia-vida de cerca de 2,6 dias, perto dos 3 dias da central.
+
+**Efeitos de casa** (diferença L−F nos válidos, em pp; positivo = mais Lula que a casa média)
+
+| Casa | Ondas | Efeito |
+|---|---|---|
+| MDA | 1 | +7,19 |
+| Alfa | 1 | +4,99 |
+| Quaest | 5 | +4,99 |
+| Indexa | 1 | +3,00 |
+| AtlasIntel | 3 | +0,71 |
+| Nexus | 7 | +0,55 |
+| Vox | 2 | −0,24 |
+| Meio/Ideia | 1 | −1,28 |
+| Real Time | 3 | −1,31 |
+| PoderData | 1 | −2,29 |
+| Palver | 4 | −2,37 |
+| Datafolha | 6 | −3,51 |
+| Futura | 2 | −4,27 |
+| Gerp | 1 | −6,14 |
+
+Casas com uma única onda têm desvio de cerca de 3,2 pp.
+
+**Validação preditiva.** Isto mede quanto cada âncora prevê as pesquisas seguintes, não a urna. Origens de 01/09 a 01/10, horizonte de 1 a 7 dias, 204 pares sobre 31 ondas alvo:
+
+| Âncora | MAE L−F | RMSE L−F | Viés L−F | MAE parcelas |
+|---|---|---|---|---|
+| Recência 3d / 7 dias (central) | 3,43 | 4,05 | +1,25 | 2,93 |
+| Recência 1d / 7 | 3,61 | 4,48 | +0,29 | 2,99 |
+| Recência 5d / 7 | 3,46 | 4,08 | +1,45 | 2,96 |
+| Recência 7d / 7 | 3,48 | 4,11 | +1,53 | 2,98 |
+| Peso igual / 7 | 3,57 | 4,22 | +1,73 | 3,03 |
+| Recência 3d / 14 | 3,42 | 4,03 | +1,26 | 2,99 |
+| Peso igual / 14 | 3,52 | 4,18 | +1,82 | 3,29 |
+| DLM, phi estimado | 3,53 | 4,19 | +1,83 | 3,53 |
+| DLM, phi = 1 | 3,47 | 4,14 | +1,50 | 3,29 |
+
+- **Comparações pareadas por onda:** DLM contra central dá +0,10 de MAE (erro-padrão 0,14). Meia-vida de 5 dias contra 3 dá +0,03 (0,05). Nenhuma alternativa se separa da central, e não existe ajuste de meia-vida claramente melhor.
+- **Deixando a casa do alvo fora:** central 3,76 e DLM 3,84 de MAE (diferença +0,07, erro-padrão 0,24). Empate também.
+- **Prever a próxima onda de uma casa já conhecida:** DLM com o efeito da casa erra 2,07, a última onda da mesma casa 1,92 e a central 3,19 (ganho de 1,20 pp, erro-padrão 0,38). Os efeitos de casa são reais, mas isso serve para prever a próxima pesquisa do instituto, não o nível do país.
+- **Todas as âncoras atrasaram:** o viés positivo indica que as pesquisas seguintes vieram menos favoráveis a Lula. Houve tendência em setembro, e nenhuma âncora sem termo de deriva a antecipa.
+
+**Decisões de modelagem**
+- **Escala aditiva com quatro categorias livres:** branco/nulo é o complemento. Como todas as covariâncias ficam no subespaço de soma zero, a escolha da categoria omitida não altera o resultado.
+- **Efeitos de casa somam zero:** o nível é o que a casa média mediria, com encolhimento estimado por máxima verossimilhança.
+- **Observações:** ponto médio do campo e teto n ≤ 2000, como no bootstrap atual.
+- **Janela de 15/08:** testei 01/08 e 15/07 (46 e 51 ondas) e não houve ganho.
+- **Variante só com PNAD:** fica registrada em `nacional.dinamico.variantes`, não como âncora (−1,40 de diferença nos válidos).
+- **Incerteza no simulador:** reaproveita o bootstrap das casas, recentrado no DLM, para não somar a incerteza duas vezes. O desvio padrão final do filtro fica só no JSON.
+- **O ML como ferramenta:** não há pares pesquisa→urna no acervo. O repositório tem o TSE de 2018 e 2022 por seção e por município/zona, mas nenhuma pesquisa de 2018 ou 2022, o que confirmei com ls e grep.
+
+**Precisa da sua decisão**
+1. **Desvio da observação.** Você especificou a variância de observação por n/deff. Eu também estimei um multiplicador phi de erro não amostral, e deu 2,10 (deff efetivo de 3,15). A verossimilhança sobe de 382,87 para 392,37, o que o teste de razão de verossimilhança rejeita com folga para phi = 1. Adotei o phi estimado como padrão do DLM e deixei phi = 1 registrado como variante. Na validação, phi = 1 erra um pouco menos (3,47 contra 3,53), sem separação estatística. Se preferir a especificação literal, a troca é trivial.
+2. **Calibração do erro comum (item 4).** Ficou pendente, porque não há pesquisas de 2018 e 2022 arquivadas. O roteiro do que seria preciso está na seção 8 da avaliação.
+3. **Tempo de build.** A validação acrescenta cerca de 14 s a cada build, porque reestima o DLM em cada origem.</result>
+<usage><subagent_tokens>281330</subagent_tokens><tool_uses>49</tool_uses><duration_ms>929360</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a396eee53efdc9b1f</task-id>
+<tool-use-id>toolu_01E8yNg7CD8kDRzNKKD8Kw2V</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Integrar texto ampliado no template" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>O capítulo novo e os acréscimos do rascunho estão no template, e o build de validação passa. Os 65 testes passam, `ruff check` e `black --check` não acusam nada, e `grep -c "—"` dá 0 nos dois HTML.
+
+Rodei o build com `--sorteios 300`, como pedido, então o JSON e o HTML em `docs/` estão com 300 réplicas (o padrão é 6000). Probabilidades e faixa (33,3% e −5,26 a +3,37) mudam um pouco no build final. Rode-o sem esse parâmetro antes de publicar. O snapshot dessa execução ficou em `analysis/predicao_2026/snapshots/2026-10-03_f3ac4defa7ee.json`.
+
+**Seções alteradas**
+- **Navegação e simulador:** o `chapter-nav` ganhou "Por que não ML?" (`#aprendizado`). O título da seção 03 virou "Construa o seu cenário."
+- **#pesquisa (04):** reescrita com o rascunho. A frase de 6 aplicada: os dois testes do Datafolha lado a lado, com a nota de que "lidera" depende da hipótese de desenho. Mantive o parágrafo original "uma pesquisa pode integrar um modelo preditivo".
+- **#metodo (05):** lead novo, passo 0 e, em cada passo de 1 a 6, "Entra/Sai", analogia e "Hipótese / Se falhar". O passo 5 segue a decisão 7. Glossário (com "Efeito de casa" e "Filtro de Kalman" acrescentados) no fim do capítulo.
+- **#incerteza (08):** o passo a passo de uma réplica substituiu os três parágrafos antigos. Mantive as ressalvas que não estavam na lista. Adicionei "Por que a faixa não é uma margem de erro".
+- **#validacao (09):** acrescentei "O que a retrospectiva testa e o que não testa". O parágrafo de avaliação futura foi trocado pelo roteiro pós-urna, rotulado como "regra de avaliação declarada antes da apuração, proposta da Arvor". Os critérios de falha usam {{GAP_LOW}} e {{GAP_HIGH}} da faixa da página.
+- **#aprendizado (10, novo):** segue `avaliacao_ml.md`. Troquei os trechos do rascunho que a avaliação não sustenta (ML para comparecimento por seção, MRP). Fontes: Jackman com DOI, Linzer e Heidemanns sem URL, e Jennings e Wlezien só como referência.
+- **#fontes (11):** renumerada, com as referências técnicas acrescentadas.
+- Hero, seção 01, #simulador (além do título), `{{MAP}}`, CSS e equações ficaram intactos.
+
+**Placeholders**
+- **Onde:** novo módulo `scripts/predicao_2026/texto.py` (função `values(data)`, 188 linhas, chamada por `render` em `view.py`).
+- **Cobertura:** cerca de 130 chaves, todas lidas do JSON.
+- **Chaves principais:** `EXA_*` (exemplos de peso e IC), `PRIOR_{AC,BA,SP}`, `NEFF_*`, `ONDAS_*`, `ALVO_*`, `SENS_*`, `COMP_*_MI`, `DLM_*` e `PRED_*`.
+- **Frases geradas:** `EXA_SENTENCE`, `EXA_VERDICT` e `POINT_SENTENCE` leem o sinal e os intervalos. O texto não afirma "contém o zero" nem "reprova" se os números mudarem.
+- **Sem URL:** `MODEL_HASH_WBR`, um hash com `&lt;wbr&gt;`. O hash comprido estourava o celular (390 px) e fazia o teste de rolagem lateral falhar.
+
+**Palavras visíveis:** 11.790 antes, 18.162 depois (+54%, contando todo o texto visível, tabelas incluídas).
+
+**Pendências**
+- Nenhum número do texto foi digitado. A hipótese de não haver pesquisa de 2018 e 2022 no acervo vem de `avaliacao_ml.md`, e eu não a rechecei.
+- O Datafolha é o exemplo A e a AtlasIntel o B. Se uma das duas sair da seleção, o texto cai para a onda mais nova ou mais velha, mas o parágrafo do exemplo (frase com "42% × 38%") só faz sentido para o dado atual. Vale reler depois de regerar com `--hoje 2026-10-04`.
+- Não mexi em CSS. O `&lt;details&gt;` do glossário e as listas `ol/ul` usam o estilo padrão.
+- O mapa do `#territorio` tem rótulos que passam de 390 px, mas ficam dentro de contêiner com rolagem. Não afetam o teste.
+- Não fiz commit.</result>
+<usage><subagent_tokens>277587</subagent_tokens><tool_uses>30</tool_uses><duration_ms>579799</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>abbe72fe25cd9c320</task-id>
+<tool-use-id>toolu_01PR4aByieT27y4U4Ud1qVyb</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "UX e layout geral da página" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>A página tem agora navegação por capítulos, barra de placar, ritmo de leitura, tabelas ordenáveis e impressão. Todas as auditorias e testes passam, e nada foi commitado. Todo texto de conteúdo foi preservado; só entrou microcopy de UI.
+
+## O que mudou, por item
+1. **Navegação**
+   - O capítulo atual fica destacado no menu (`aria-current="location"`), e o menu rola sozinho para mostrá-lo.
+   - O menu ganhou os links de "As casas" e "Incerteza", que faltavam.
+   - No celular é uma barra horizontal com esmaecimento na borda.
+   - O deslocamento de rolagem é medido em JS e vale para o topo do simulador também. Nos onze capítulos, o título fica sempre abaixo do menu em 1366 e 390 px.
+   - Há barra de progresso fina no topo, botão "Topo" (só ícone no celular, e escondido sobre o simulador) e skip link que de fato move o foco.
+   - Âncoras `#estado-UF` abrem o `&lt;details&gt;` antes de rolar.
+2. **Hero e placar**
+   - O placar tem barra em `div` com `display:block`, na mesma escala 0 a 50% nos três cartões, com a faixa de 90% como caixa hachurada sobre a barra.
+   - O "Como ler em 20 segundos" tem três itens montados só com as frases do antigo `hero-caption`.
+   - Em 1366×768 o placar, o "como ler" e os botões cabem na primeira tela (os botões terminam em y=748).
+3. **Ritmo de leitura**
+   - Os capítulos pesquisa, método, incerteza, validação e aprendizado ganham um sumário "Neste capítulo", montado em JS a partir dos `h3`.
+   - Os `h3` ficam bem espaçados.
+   - Entra/Sai, Hipótese com "Se falhar", analogia e exemplo viram caixas estilizadas, por classes aplicadas no template e sem mexer no texto.
+   - Há estilo para `ol`, `ul` e `blockquote` dentro de `.prose`.
+   - O glossário fica em duas colunas no desktop.
+   - As equações usam mono com fundo destacado e rolam na horizontal no celular.
+4. **Tabelas**
+   - Cabeçalho fixo, zebra, realce da linha ao passar o mouse e números à direita com `tabular-nums`. As colunas numéricas são detectadas em `view.table()`.
+   - No celular a primeira coluna também fica fixa.
+   - A tabela das 27 UFs ordena por clique no cabeçalho, com `aria-sort`; o terceiro clique restaura a ordem original.
+5. **Figuras largas**
+   - O histograma agora fica dentro de `.wide-chart`.
+   - Em 390 px, com todos os `&lt;details&gt;` abertos, a largura da página é 390 e nenhum elemento estoura.
+6. **Simulador**
+   - Os cenários prontos viram chips. O ativo fica escuro, com ✓ e anel verde-limão.
+7. **Fontes e rodapé**
+   - Os downloads viram botões (JSON e CSV escuros, com ↓; links externos com ↗).
+   - O bloco de comando tem rolagem horizontal e botão "Copiar comandos".
+   - O hash quebra linha.
+8. **Impressão**
+   - Esconde navegação, progresso, topo, simulador e controles.
+   - Preserva as cores (`print-color-adjust`).
+   - Abre os `&lt;details&gt;` antes de imprimir e fecha depois.
+9. **Acessibilidade**
+   - O foco visível ficou em `#9a6a00`, que antes (`#ba8100`) dava 2,96:1 sobre o papel.
+   - Regiões roláveis entram no teclado, o `main` recebe foco pelo skip link, e há `prefers-reduced-motion`.
+   - Sem JS a página fica completa e legível (o menu aparece e o botão de topo fica oculto).
+
+## Arquivos
+- Novos: `docs/assets/predicao_2026_ux.css`, `docs/assets/predicao_2026_ui.js` (incluído com `defer`) e `analysis/predicao_2026/qa-ux.py`.
+- Alterados: `docs/predicao_2026_1T_presidente.template.html` (classes, `id="topo"`, links do menu, "como ler"), `scripts/predicao_2026/view.py` (`percent_bar`, `table` com colunas numéricas e `sortable`), `scripts/contrast-audit.py` e `AGENTS.md` (nota sobre a camada de UX).
+- Não toquei no motor nem no mapa, e os IDs de seção ficam como estavam.
+
+## Auditorias e testes
+- **Testes e lint:** 65 testes passam nos quatro arquivos pedidos. `ruff check` está limpo e `black --check` reporta nenhum arquivo a reformatar, mas imprime um aviso de que o Python 3.10 não faz a verificação de segurança do alvo 3.13. `node --check` passa em todos os JS.
+- **Escrita:** `grep -c "—"` na página dá 0, e também 0 no CSS e no JS novos.
+- **Renderização:** `render-audit.py` dá 0 problemas.
+- **Contraste:** zero reprovações em 1366 e em 390 px.
+- **Correção no auditor de contraste:** a primeira rodada acusou 1,02:1 em linhas de tabela. Era defeito do `contrast-audit.py` (linhas escondidas em contêiner com rolagem vertical liam o fundo do hero). O auditor agora solta o `max-height` antes de medir, e isso está documentado no `AGENTS.md`.
+- **QA no navegador (`qa-ux.py`):**
+  - Zero erros de console, também abrindo por `file://`.
+  - Os onze capítulos destacam o item certo e ficam abaixo do menu.
+  - A ordenação e a restauração funcionam, e o skip link leva o foco ao `main`.
+  - A impressão esconde o menu e o simulador.
+
+Screenshots em `analysis/predicao_2026/qa-ux-{desktop,mobile}-*.png` (hero, mapa, simulador, simulador ativo, tabela, método, passo, incerteza, aprendizado, glossário, fontes), mais `qa-ux-desktop-semjs.png`. Os relatórios de contraste estão em `contrast-desktop.txt` e `contrast-mobile.txt`.
+
+## Limitações
+- O sumário interno, a ordenação, o destaque do menu e o botão de copiar dependem de JS; sem ele o conteúdo continua inteiro.
+- A barra do placar usa escala comum até 50%, definida pelo p95 mais alto arredondado para cima, e não mostra eixo (só o `aria-label`).
+- As tabelas têm `max-height` de cerca de 70vh com rolagem interna, necessária para o cabeçalho fixo.
+- O `black` imprime o aviso sobre o Python 3.10 em todas as execuções.</result>
+<usage><subagent_tokens>264644</subagent_tokens><tool_uses>63</tool_uses><duration_ms>781673</duration_ms></usage>
+</task-notification>
+
+---
+
+Agora precisamos atualizar esta página e a reponderacao_pnad.html para acrescentar a pesquisa CNT MDA que acabou de sair para incluir nessa análise e atualizar os dados, porque a nova pesquisa foi surpreendente nos resultados e no crescimento detectado do Flávio
+
+---
+
+Notei que muitas pesquisas na reta final estão subindo o Flávio e existe uma aceleração nesse movimento nas pesquisas com queda de votos em terceira via e aumento do voto no Flávio. Talvez o nosso modelos pudesse levar em conta essa aceleração do Flávio e o teto do Lula para chegar numa votação maior no Flávio. Não sei o quanto isso pode ser relevante, mas seria uma maneira de medir essa aceleração constante para tentar prever o resultado de amanhã de forma mais precisa no core. O que você acha dessa ideia? Factível?
+
+---
+
+Gostei da ideia, fazer o 1 primeiro e o 2 vamos testando matematicamente a hipótese para ter mais clareza disso. A nexus possui uma série de perguntas que podem ajudar no 1 também, assim como o DataFolha também pode mostrar isso, sem falar que as estaduais podem mostrar acelerações diferentes em cada estado… enfim, precisa ir fundo para usar essa aceleração como nosso modelo principal de predição para os ajustes de cenários partirem disso já corrigido. Vai ser interessante pq vai medir o Lula também e pode chegar numa predição melhor imagino
+
+---
+
+<task-notification>
+<task-id>a6d60ea8ea0861384</task-id>
+<tool-use-id>toolu_01XrzWRZ7451WtWhwtmsA61t</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Preset: consolidação na proporção medida" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>Os dois cenários de consolidação já estão no simulador, logo depois de "Central", e a página foi regerada. Rodei o build rápido (`--hoje 2026-10-03 --skip-card --sorteios 300`) e passaram os 62 testes, o `node --check`, o `ruff check`, o `black --check` (rodado com `--target-version py310`, porque o black do ambiente roda em Python 3.10) e o grep de travessão (devolve 0). Nada foi commitado.
+
+**Números medidos**, nos votos válidos dos placares publicados, com efeito fixo de casa e peso min(n, 2000):
+
+| Janela | Ondas / casas | Terceira via (pp/dia) | Flávio | Lula | Parte de Flávio na migração |
+|---|---|---|---|---|---|
+| 28 dias | 31 / 14 | −0,320 (ep 0,040) | +0,191 (0,033) | +0,130 (0,025) | 59,5% (ep 6,4 pp) |
+| 14 dias | 21 / 14 | −0,275 (0,115) | +0,134 (0,113) | +0,141 (0,053) | 48,7% (ep 24,6 pp) |
+
+Os números da medição se reproduzem com `publicado_vetor`, então a regressão usa os placares publicados e não os reponderados pela PNAD. Na janela de 14 dias, o intervalo de 95% da parte de Flávio contém 50%; a página diz isso numa frase gerada a partir do próprio dado.
+
+- **Âncora e horizonte:** a média central tem idade efetiva de 4,68 dias (data efetiva 28/09), o que dá 5,68 dias até a urna.
+- **Reserva nacional:** 8,03% dos válidos para Flávio e 4,97% para Lula.
+- **Migração projetada (28 dias):** 1,82 pp, sendo 1,08 para Flávio e 0,74 para Lula. λ fica em Flávio 13% e Lula 15%.
+- **Migração projetada (14 dias):** 1,56 pp, sendo 0,76 para Flávio e 0,80 para Lula. λ fica em Flávio 9% e Lula 16%.
+- Nenhum dos dois atingiu o teto de 100% da reserva.
+
+**Resultado dos presets**, contra a central de Lula 44,53%, Flávio 43,04% e F−L −1,48:
+
+| Cenário | Lula | Flávio | F−L | Variação contra a central |
+|---|---|---|---|---|
+| Consolidação 28 dias | 45,27% | 44,09% | −1,18 | +0,30 |
+| Consolidação 14 dias | 45,3% | 43,8% | −1,55 | −0,07 |
+
+O cenário de 28 dias também entrou na tabela de sensibilidades.
+
+**Como ficou na página:**
+- Os dois botões novos aparecem com destaque visual, e um "?" abaixo da grade explica o cenário.
+- Ao clicar num deles, a frase do resultado termina com a divisão medida, por exemplo "Divisão medida nas pesquisas de 28 dias: 60% da migração da terceira via para Flávio e 40% para Lula…".
+- O link compartilhável fica `#sim=vf:13;vl:15`.
+- O bloco de texto antes do simulador traz os avisos pedidos, diz que Lula também sobe e trata o caso em que o teto da reserva é atingido.
+
+**Pontos que valem saber:**
+- A lista `PRESETS` em `simulador.py` continua só com os cenários fixos. Os dois novos são montados por uma função nova, `presets(data)`, a partir do JSON, e o JS os lê do JSON embutido na página. Ajustei três testes em `tests/test_predicao_2026_simulador.py` para usar `presets(data)`.
+- Cada build cria um snapshot novo. Ficaram dois arquivos sem versionar em `analysis/predicao_2026/snapshots/` (`2026-10-03_7bd81a59b26d.json` e `2026-10-03_b44474bb90a2.json`) e não apaguei nenhum.
+- Neste ambiente o numpy imprime avisos falsos de `matmul` (os valores saem finitos e corretos). Na covariância, troquei a inversão da matriz normal por uma decomposição QR, que é numericamente melhor, mas os avisos continuam aparecendo no build.
+
+**Arquivos novos:**
+- `/Users/leonardodias/arvor/PNAD/scripts/predicao_2026/consolidacao.py`
+- `/Users/leonardodias/arvor/PNAD/tests/test_predicao_2026_consolidacao.py` (11 testes)
+
+**Arquivos alterados, com edições pontuais:**
+- `/Users/leonardodias/arvor/PNAD/scripts/predicao-2026-build.py`: import, chave `consolidacao`, linha de sensibilidade e hash do código
+- `/Users/leonardodias/arvor/PNAD/scripts/predicao_2026/simulador.py`
+- `/Users/leonardodias/arvor/PNAD/scripts/predicao_2026/texto.py`
+- `/Users/leonardodias/arvor/PNAD/docs/assets/predicao_2026.js`: `sentence` ganhou o argumento opcional da nota
+- `/Users/leonardodias/arvor/PNAD/docs/assets/predicao_2026_ux.css`
+- `/Users/leonardodias/arvor/PNAD/docs/predicao_2026_1T_presidente.template.html`
+- `/Users/leonardodias/arvor/PNAD/tests/test_predicao_2026_simulador.py`
+- Regerados pelo build: o HTML da página, o JSON, o CSV e o JSON de validação preditiva</result>
+<usage><subagent_tokens>222248</subagent_tokens><tool_uses>41</tool_uses><duration_ms>387221</duration_ms></usage>
+</task-notification>
+
+---
+
+Outra coisa que me dei conta agora é colocar no modelo a rejeição de Lula que tem estado mais alta que a do Flávio e pode fazer com que o número dele diminua mais considerando isso num modelo preditivo. Talvez tenhamos que rever isso no modelo se já não estamos usando rejeição como algo que pode reduzir votos no final
+
+---
+
+Ok
+
+---
+
+<task-notification>
+<task-id>a5447baab3754ef3c</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "DLM com tendência: validação e fontes" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>I built the trend anchor, the validation, the three-source split and the memo. **Recommendation: do not make the trend model (DLM) the central; it fails both of your criteria.** The central is unchanged (`inclusivo`). Build, tests, `node --check` and lint on my files are clean; two lint findings remain in the other agent's new file (end of this report).
+
+**Anchors** (national target in valid votes; full scenario = the model's sensitivity run with likely voter and state calibration)
+
+| Anchor | L × F, valid votes | F−L | Full scenario L × F | F−L |
+|---|---|---|---|---|
+| Central | 44.02 × 43.05 | −0.96 | 44.53 × 43.04 | −1.48 |
+| DLM (level) | 44.00 × 43.44 | −0.55 | 44.50 × 43.42 | −1.08 |
+| Trend, level at cut (03/10) | 44.07 × 43.57 | −0.50 | 44.57 × 43.54 | −1.03 |
+| Trend projected to 04/10 | 44.07 × 43.62 | −0.45 | 44.57 × 43.59 | −0.98 |
+| Central + shrunk 28-day slope | 44.75 × 44.10 | −0.65 | 45.23 × 44.05 | −1.17 |
+
+- **Model chosen:** damped trend (the slope decays toward zero), declared before validation. With all data to 03/10 it fits κ = 0.48/day (slope half-life 1.45 days). Log-likelihood 403.19 against 402.70 for the level DLM, with 2 more parameters, so AIC prefers the level DLM.
+- **Projection uncertainty:** the projection moves the F−L margin by 0.24 pp (−0.69 at the last poll, 01/10, to −0.45 on 04/10). Its standard deviation grows from 1.86 to 2.74 pp.
+
+**Slopes and the acceleration test** (pp/day in valid votes)
+
+| | Lula | Flávio | Third way |
+|---|---|---|---|
+| 28-day linear (31 waves) | +0.131 (0.029) | +0.188 (0.037) | −0.319 (0.041) |
+| Quadratic term, 28 days (p) | 0.69 | +0.014, p 0.17 | 0.35 |
+| First half → second half of window | 0.125 → 0.139 (p 0.90) | 0.127 → 0.259 (p 0.35) | p 0.34 |
+
+- **Does the slope change?** Since 15/08, yes (likelihood-ratio 7.30, p 0.003): the third way was rising in late August. Within the last 28 days, no (statistic 0): a constant slope fits.
+- **Flávio's acceleration is not identifiable.** Only the 14-day window gives p 0.017, with 4 degrees of freedom; it becomes about 0.28 with standard errors clustered by pollster.
+- **Your 50/50 in 14 days comes from the window rule.** Flávio's share of the gain is 0.69 if a wave enters by field midpoint, 0.52 by field end and 0.50 by release date.
+
+**Rolling-origin validation** (211 pairs; trend anchors projected to the target poll's field midpoint)
+
+| Anchor | MAE L−F, all | Bias, all | MAE 1–3 days | Bias 1–3 | Paired vs central, 1–3 days (se) |
+|---|---|---|---|---|---|
+| Central | 3.36 | +1.16 | 3.16 | +1.17 | |
+| Trend (damped) | 3.43 | +1.77 | 3.41 | +1.63 | +0.26 (0.15) |
+| Central + 28-day slope | 3.25 | +0.21 | 3.04 | +0.42 | −0.12 (0.15) |
+| Constant / integrated slope | 3.25 / 3.26 | +0.92 / +0.87 | 3.24 / 3.24 | | |
+
+- **By candidate (bias, 1–3 days):** central Lula −0.81, Flávio −1.98, third way +2.79; central + 28-day slope −0.82, −1.25, +2.07. The undamped trend models extrapolated the late-August third-way rise into early September.
+- **Leave one pollster out:** trend +0.08 (0.23), central + 28-day slope −0.09 (0.12).
+- **Why the DLM trend fails:** at every September origin, maximum likelihood picked a degenerate fit where the slope vanishes within hours. So the trend anchor reduces to the level DLM.
+
+**Split of the third-way migration** (Flávio's share of the joint gain)
+
+| Source | Share | sd |
+|---|---|---|
+| National series, 28 days | 0.59 | 0.08 |
+| Nexus 28/09, 1st × 2nd-round matrix (pp. 20, 41, 84) | 0.61 | 0.04 |
+| Datafolha 01/10, matrix in text (pp. 5, 7, 8) | 0.62 | 0.04 |
+| State pairs, September (14 pairs, 7 UFs) | 0.80 | 0.20 |
+| State pairs, all (38 pairs, 25 UFs) | 0.88 | 0.24 |
+| Synthesis (inverse variance) | 0.61 | 0.03, sampling only |
+
+- **Northeast vs South/Southeast:** in September pairs 0.79 against 0.82, p 0.95. No regional difference.
+- **Second choice exists but can't be used.** Nexus p. 44 and Datafolha p. 59 publish it. I scanned both PDFs with pdftotext; neither crosses it by first-round vote, so it is a mix of everyone's voters and stays out of the synthesis.
+
+**Lula's ceiling:** not binding by tomorrow, but his room is half of Flávio's.
+- **No slowdown:** his slope does not decline (curvature p 0.69), and his second-round vote still rises 0.061/day.
+- **Reserve** (2nd-round vote minus 1st-round vote in the same poll, at the cut): Lula 3.2 pp, Flávio 6.0 pp.
+- **Nexus p. 46 ceilings:** Lula 44 against 42 voting; Flávio 39 against 37.
+
+**Recommendation:**
+- **The DLM trend anchor fails both criteria:** its 1–3-day MAE is worse than the central's (+0.26) and its bias is larger (1.63 against 1.17).
+- **Central + shrunk 28-day slope is the only variant that passes, and only on point estimates.** MAE −0.12 ± 0.15, bias 0.42 against 1.17. It is not significant and was the best of four variants tested. If you want to correct the level for trend, this is the defensible version. It moves F−L in the full scenario by +0.31 pp toward Flávio.
+
+**Files**
+- **New:**
+  - `scripts/predicao_2026/tendencia.py`
+  - `scripts/predicao_2026/migracao.py`
+  - `analysis/predicao_2026/tendencia/migracao_declarada.json`
+  - `analysis/predicao_2026/tendencia/estaduais_rotulos.json`
+  - `analysis/predicao_2026/tendencia_avaliacao.md`
+  - `tests/test_predicao_2026_tendencia.py`
+- **Edited:**
+  - `base.py`: new targets `tendencia`, `tendencia_corte` and `central_inclinacao`, plus the `nacional.tendencia` diagnostics block.
+  - `preditiva.py`, `view.py`, `predicao-2026-build.py`: three new sensitivity scenarios and acceleration inside the validation.
+  - `simulador.py`: one `ANCHORS` entry and one help sentence only.
+  - `docs/assets/predicao_2026.js`: `simulate()` only.
+- **Rebuilt:** JSON, CSV, page and validation; new snapshots were written and none deleted.
+
+**Tests and lint**
+- `pytest` on the three suites: 83 passed.
+- `node --check`: OK.
+- `ruff`/`black` on scripts, docs and tests: clean except `scripts/predicao_2026/rejeicao.py` (other agent's new file: one import-order error and one reformat). I left it alone.
+- **Build time:** validation now takes about 3 minutes, because the trend model is re-estimated from several starting points at every origin.</result>
+<usage><subagent_tokens>440910</subagent_tokens><tool_uses>103</tool_uses><duration_ms>1988531</duration_ms></usage>
+</task-notification>
+
+---
+
+mas como estamos modelando indecisos que podem ir para Flávio na reta final
+
+---
+
+<task-notification>
+<task-id>a0d961d9bba3a83a9</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Rejeição como destino por disponibilidade" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>O mecanismo de rejeição está pronto e não mexe na central. A rejeição agora decide só para onde vão os indecisos e a migração da terceira via, e nunca tira voto já contado. Os 72 testes dos quatro arquivos passam, `ruff` e `black` estão limpos em `scripts/`, `docs/` e `tests/`, `node --check` passa e a página tem zero travessão. Nada foi commitado.
+
+## Rejeição por casa (última onda arquivada)
+
+| Casa | Campo | Formato | Página do PDF | Lula | Flávio | Parte de Flávio | Situação |
+|---|---|---|---|---|---|---|---|
+| Datafolha | 29/09 a 01/10 | cartão, múltipla | 17 (cruzamentos 50 a 52) | 45 | 45 | 50,0 | na média |
+| Nexus | 25 a 27/09 | grade por candidato | 96 (rejeição conjunta na 101) | 48 | 51 | 48,5 | na média |
+| Quaest | 24 a 27/09 | grade (imagem) | 83 e 94 | 54 | 56 | 48,9 | na média |
+| Gerp | 24 a 28/09 | cartão, múltipla | 26 | 50 | 42 | 53,7 | na média |
+| Futura | 25 a 29/09 | cartão, múltipla | 40 | 48,9 | 45,6 | 51,6 | na média |
+| Meio/Ideia | 25 a 28/09 | cartão (imagem) | 20 | 47,1 | 46,1 | 50,5 | na média |
+| Palver | 24 a 27/09 | grade (imagem) | 64 e 67 | 51 | 48 | 51,5 | na média |
+| PoderData | 20 a 23/09 | grade (imagem) | 22 e 23 | 49 | 47 | 51,0 | fora: divulgada há mais de 7 dias |
+| MDA | 30/09 a 02/10 | escala de potencial | 25 | 47,6 | 51,7 | 48,0 | controle |
+| Indexa | 27 a 29/09 | escala de potencial ("jamais votaria") | 39 | 50 | 51 | 49,5 | controle |
+| Vox | 29/09 a 01/10 | cartão, enunciado não impresso | 11 | 52,8 | 49,1 | 51,9 | controle |
+| Real Time | 26 a 30/09 | cartão, sem "de jeito nenhum" | 30 | 49 | 49 | 50,0 | controle |
+| AtlasIntel | 23 a 28/09 | | 1 a 23 varridas | | | | não publica |
+| Veritá | 10 a 19/09 | | 1 a 27 varridas | | | | não publica |
+
+O SHA-256 de cada PDF foi recalculado e confere com os manifestos. Real Time entrou como controle porque o enunciado não diz "de jeito nenhum" e os nomes menores aparecem com rejeição de 23% a 43%, fora do padrão das outras casas.
+
+**Nenhuma casa publica rejeição dentro do eleitorado de terceira via nem entre indecisos.** Afirmo isso depois de varrer os cruzamentos de todos os PDFs. Os recortes mais próximos de quem ainda se move:
+- Independentes na Quaest: parte de Flávio 49% (erro padrão de 2,4 pontos).
+- Independentes na Palver: 52% (2,7 pontos).
+- Sem partido no Datafolha: 60% (1,6 ponto).
+- Centro e quem não votou em 2022, na Indexa, e "dividido/cansado", na Futura: transcritos, mas sem base publicada, portanto sem erro padrão.
+
+## Média e comparação
+
+- **Média temporal das 7 casas comparáveis** (meia-vida de 3 dias, uma onda por casa): rejeição de 48,3% para Lula e 47,0% para Flávio. Pela disponibilidade, **50,6% vai para Flávio**, com erro padrão amostral de 0,5 ponto (efeito de desenho 1,5) e intervalo de 49,7% a 51,5%.
+- **A dispersão entre casas é bem maior que a amostral:** a parte de Flávio vai de 48,5% a 53,7%. Só a pergunta de cartão dá 51,0%; só a grade, 49,6%; os controles, 49,7%.
+- **Os destinos medidos pendem mais para Flávio que a disponibilidade:**
+  - série de 28 dias: 59,5% (1,4 erro padrão acima);
+  - matriz da Nexus, p. 84, ponderada por Caiado, Cury, Renan e Zema: 61,9%;
+  - segunda opção dos hesitantes no Datafolha, p. 7: 60,5%.
+- **Só a série de 14 dias fica abaixo:** 48,7%. Portanto a divisão por disponibilidade favorece menos Flávio que três das quatro réguas medidas.
+
+## Efeito dos cenários novos (votos válidos)
+
+| Cenário | Lula | Flávio | F−L | Diferença contra a central |
+|---|---|---|---|---|
+| Central | 44,53 | 43,04 | −1,48 | |
+| Consolidação de 28 dias, divisão da série | 45,27 | 44,09 | −1,18 | +0,30 |
+| Indecisos por disponibilidade | 44,73 | 43,31 | −1,42 | +0,07 |
+| Consolidação de 28 dias, divisão por disponibilidade (λ Flávio 0,11, Lula 0,18) | 45,42 | 43,93 | −1,49 | −0,01 |
+
+## Decisões que tomei e convém conferir
+
+- **Paridade Python e navegador:** o motor continua só com números. O texto "disponibilidade" é trocado pela fração antes do motor, no Python por `rejeicao.resolve` e no navegador pelo valor da opção do seletor (0,5061). O link do cenário devolve o mesmo valor, e um teste confere isso nos dois motores.
+- **Erro padrão:** como a rejeição conjunta quase nunca é publicada, usei o limite inferior de Fréchet para a covariância entre as duas rejeições. É a escolha conservadora, que dá o maior erro padrão. A Nexus publica a conjunta (7% rejeitam os dois, p. 101) e ela está registrada no JSON.
+- **Janela:** apliquei a mesma regra da central, divulgação nos últimos 7 dias. Por isso a PoderData ficou fora da média, embora transcrita.
+
+## Arquivos
+
+- **Novos:**
+  - `analysis/predicao_2026/rejeicao/rejeicao_092026.json`: transcrições, mais a matriz da Nexus e a segunda opção do Datafolha.
+  - 17 renderizações em PNG na mesma pasta, das páginas em imagem.
+  - `scripts/predicao_2026/rejeicao.py`
+  - `tests/test_predicao_2026_rejeicao.py`: 10 testes.
+- **Editados com mudanças pontuais:**
+  - `scripts/predicao-2026-build.py`: chave `rejeicao` no payload, os dois cenários novos e o hash do código.
+  - `scripts/predicao_2026/simulador.py`: presets `disponibilidade_28` e `disponibilidade_14`, a opção nova no seletor e a ajuda.
+  - `scripts/predicao_2026/texto.py`: os valores `{{REJ_...}}`.
+  - `docs/predicao_2026_1T_presidente.template.html`: o bloco "Rejeição: teto, não fluxo", logo depois da consolidação em #simulador.
+- **Gerados pelo build:** `docs/predicao_2026_1T_presidente.html`, `docs/assets/predicao_2026_1T_presidente.json` e o novo snapshot `analysis/predicao_2026/snapshots/2026-10-03_18695a8ab0a1.json`. Nenhum snapshot foi apagado.
+
+O build rápido com 300 sorteios levou cerca de 3 minutos.</result>
+<usage><subagent_tokens>363884</subagent_tokens><tool_uses>94</tool_uses><duration_ms>1025745</duration_ms></usage>
+</task-notification>
+
+---
+
+Outra coisa interessante de analisar é o erro médio das casas de pesquisa no 1T de 2022, o que pode gerar algum cálculo interessante para rever o viés delas também pode ser algo intrigante de se analisar para colocar no relatório não como prognóstico, mas como uma estimativa de erro médio, isso é válido?
+
+---
+
+<task-notification>
+<task-id>aab3970be2a21e324</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Troca da central: tendência e disponibilidade" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>The central is now `central_inclinacao` with undecided voters split by availability, on both engines and in the Monte Carlo. Full suite passes (617), lint and the render audit are clean. Nothing is committed. The JSON and page are from the quick build (300 draws); for publication run the full build without `--sorteios 300`, plus the social card.
+
+**Old vs new central** (Monte Carlo rerun with 6,000 draws on the same code for both)
+
+| | Old (recency, no trend, proportional undecided) | New (`central_inclinacao` + availability) |
+|---|---|---|
+| Lula | 44.53% (90%: 42.43 to 46.63) | 45.40% (90%: 43.30 to 47.47) |
+| Flávio | 43.04% (40.96 to 45.15) | 44.28% (42.24 to 46.30) |
+| Others | 12.43% (11.04 to 13.96) | 10.32% (8.92 to 11.86) |
+| F−L | −1.48 pp | −1.12 pp |
+| 90% range of F−L | −5.43 to +2.43 | −4.95 to +2.69 |
+| P(Flávio ahead) | 27.0% | 31.6% |
+
+The trend alone moves the gap by +0.30 (−1.42 to −1.12, both with availability).
+
+**Two numbers differ from your brief.** I kept the JSON values, so the page is consistent with the data:
+- **Availability effect:** on the new base it is +0.05 (−1.17 to −1.12). The +0.07 you cited is the effect on the no-trend anchor (−1.48 to −1.42).
+- **Migration split:** the JSON gives Nexus 61% and Datafolha 62%, not 62% and 60%. Series 59% and synthesis 61% match.
+
+**Monte Carlo recentring and projection uncertainty**
+- **Recentring:** in Python and JS, every anchor computed on the central houses reuses their bootstrap, shifted by `alvos[base] − alvos.inclusivo`. That covers `central_inclinacao`, `dinamico`, `tendencia` and `tendencia_corte`. Python used to be fixed on `inclusivo`.
+- **Undecided split:** the central destination for undecided voters now enters the draws in both engines. Python rejects parameters it does not reproduce, such as `voto_flavio`.
+- **Projection uncertainty:** for the central it is horizon × sd(β_F − β_L) = 5.68 × 0.053 = 0.30 pp; for `tendencia` it is the variance the filter adds from the cut-off to election day, 1.23 pp. It is added in quadrature to the 2 pp common error, giving a total sd of 2.02 for the central.
+- **Documentation:** the rule is in `configuracao.incerteza.projecao_inclinacao`, with the values in `nacional.incerteza_projecao_pp`.
+
+**Consolidation presets**
+- **Starting point:** all consolidation presets and sensitivities now start from `inclusivo`. The horizon is measured from that anchor's effective date: 28/09, 5.68 days.
+- **28 days, measured split:** λ is Lula 0.15, Flávio 0.13. Result: Lula 45.44, Flávio 44.32, F−L −1.13, which is 0.01 from the central. The JSON (`consolidacao.comparacao_central`) explains why they match: the central shrinks each slope, while the preset does not shrink and divides the migration by the reserve.
+- **28 days, availability split:** λ is Lula 0.18, Flávio 0.11. F−L is −1.43.
+- **14 days:** F−L is −1.48.
+
+**Other changes**
+- The engine default for undecided voters stays `None`. The build resolves availability to a number and saves the full central parameters in `central.parametros` and `configuracao.central`.
+- The simulator compares against that saved central for the share link, the sentence and the "is this the central?" check. The proportional option is now encoded as `if:p` in the link.
+- I removed two sensitivity rows that became identical to the central. I added "Recência sem tendência, indecisos por disponibilidade" so the trend effect can be seen on its own.
+- I also corrected two page passages that still said the central splits undecided voters proportionally (chapter 1 and step 5).
+
+**Files**
+- Code: `scripts/predicao_2026/{motor,base,tendencia,consolidacao,simulador,texto}.py`, `scripts/predicao-2026-build.py`, `docs/assets/predicao_2026.js`
+- Page: `docs/predicao_2026_1T_presidente.template.html`, plus the regenerated HTML, JSON, CSV and predictive-validation JSON
+- Docs: `AGENTS.md`, `README.md`, and a decision note added to `analysis/predicao_2026/tendencia_avaliacao.md`
+- Tests: new `tests/test_predicao_2026_central.py` (7 tests). I updated the consolidation, rejection, dynamic, trend and simulator tests to the new central; no tolerance was loosened.
+- Snapshots: two new files in `analysis/predicao_2026/snapshots/`. `2026-10-03_d00a1439cdee.json` is from an intermediate build; `2026-10-03_3f29b4a5b121.json` is the current one. I deleted nothing.
+
+**Checks**
+- `pytest -q tests/`: 617 passed.
+- `node --check`: OK.
+- `ruff check` and `black --check`: clean.
+- Em dashes in the HTML and the template: 0 and 0.
+- `render-audit.py` on the server at port 4173 (serving the current page): 0 problems.</result>
+<usage><subagent_tokens>340065</subagent_tokens><tool_uses>60</tool_uses><duration_ms>1128690</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>add4113e3c449f6ea</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Erro das pesquisas no 1T de 2022" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>I archived 12 houses for the main average and computed their 2022 errors. On average they overstated Lula's lead over Bolsonaro by **+3.92 pp** of valid votes (median +4.96). Lint is zero on the script and the test, and the 23 tests pass. Nothing is committed and no existing file was edited except `.gitignore`.
+
+**Official result** (TSE files already in the repo, not typed by hand): Lula 48.43, Bolsonaro 43.20, Tebet 4.16, Ciro 3.04, others 1.17. The script checks the tracked file `analysis/voto_util/tse_2022_uf.json` against the raw TSE file `br-c0001-e000544-r.json`, and also checks that the 27 states plus voters abroad add up to the national total. Both checks pass.
+
+**Error per house** (poll minus result, pp of valid votes; positive on the gap means Lula's lead was overstated)
+
+| House | TSE registration | Field dates | Gap L−B | Lula | Bolsonaro | Tebet | Ciro | Source |
+|---|---|---|---:|---:|---:|---:|---:|---|
+| Datafolha | BR-00245/2022 | 30/09–01/10 | +8.77 | +1.57 | −7.20 | +1.84 | +1.96 | Folha article (contractor) |
+| Ipec | BR-00999/2022 | 29/09–01/10 | +8.77 | +2.57 | −6.20 | +0.84 | +1.96 | CNN and Poder360, which agree |
+| Quaest/Genial | BR-02444/2022 | 30/09–01/10 | +5.77 | +0.57 | −5.20 | +0.84 | +2.96 | PDF p. 7 |
+| AtlasIntel | BR-01318/2022 | 24–28/09 | +4.47 | +2.27 | −2.20 | −1.56 | +0.56 | PDF pp. 7–8 |
+| PoderData | BR-01426/2022 | 25–27/09 | +4.77 | −0.43 | −5.20 | +0.84 | +2.96 | its own infographics |
+| Paraná Pesquisas | BR-07917/2022 | 27–29/09 | +1.87 | −1.33 | −3.20 | +2.14 | +2.16 | PDF p. 8 |
+| CNT/MDA | BR-02944/2022 | 28–30/09 | +3.37 | −0.13 | −3.50 | +0.54 | +1.86 | PDF pp. 8–9 |
+| Ipespe/Abrapel | BR-05007/2022 | 30/09 | +8.77 | +0.57 | −8.20 | +2.84 | +4.96 | PDF pp. 8–9 |
+| FSB/BTG | BR-08123/2022 | 23–25/09 | +5.77 | −0.43 | −6.20 | +0.84 | +4.96 | PDF pp. 12, 16 |
+| Modalmais/Futura | BR-06743/2022 | 26–28/09 | −2.13 | −4.83 | −2.70 | +3.54 | +2.96 | PDF via Wayback, pp. 9–10 |
+| Ideia | BR-09782/2022 | 23–28/09 | +5.16 | +0.43 | −4.74 | +1.04 | +3.19 | PDF p. 11, valid votes worked out from totals |
+| Instituto Veritá | BR-05980/2022 | 24–29/09 | −8.31 | −5.81 | +2.50 | +0.15 | +1.16 | PDF p. 6, valid votes worked out from raw counts |
+
+**Common error of the 12-house average**
+- Lula −0.42, Bolsonaro −4.33, Tebet +1.16, Ciro +2.63, gap **+3.92**.
+- The error sat in Bolsonaro, not Lula: 11 of the 12 houses underestimated him.
+- Spread between houses on the gap is 4.96, larger than the common error itself.
+- **The direction holds under other inclusion rules; the size moves:**
+  - only houses with their own PDF: +2.75;
+  - without Veritá: +5.03;
+  - adding Brasmarket: +1.96.
+- **Best and worst houses:**
+  - Best on the gap: Paraná Pesquisas (+1.87).
+  - Worst: Datafolha, Ipec and Ipespe tied at +8.77, all three published a whole-number gap of 14.
+  - The script names only Datafolha as "worst" because it picks the first in reading order; the page should cite all three.
+
+**Comparison with 2026:** the output lines up each house's 2022 error next to its 2026 house effect (read-only from the forecast JSON). It carries the caveat that the 2026 figure measures distance from other houses, not error. Two of the pairings are group or brand links rather than the same institute: FSB/BTG to Nexus, and Exame/Ideia to Meio/Ideia.
+
+**The 2026 sensitivity is described, not computed** on the central estimate, which is still changing. If 2022's common error repeated, Flávio minus Lula in valid votes would be 3.92 pp larger than the central; the opposite direction is −3.92. Both caveats are stated: this rests on one election, and none of it adjusts the central estimate.
+
+**Gaps in the documents**
+- **Datafolha:** the national PDF was not found. The file the Poder360 uploaded as "Datafolha.pdf" on 01/10/2022 is actually the Minas Gerais governor report. The numbers come from the Folha article (the contractor). Poder360's chart for the same wave swaps Tebet and Ciro; I followed the Folha.
+- **Ipec:** I found no document from the institute or from its contractor, TV Globo. The old institute site no longer resolves and the new one returns 403. The numbers come from two outlets (CNN and Poder360) that agree on every figure.
+- **Quaest:** publishes valid votes only.
+
+**Left out of the averages**
+- **Gerp:** fieldwork ended 01/09 and its ballot still listed Marçal and Jefferson. It is archived but excluded.
+- **Brasmarket:** only press coverage exists, and the three articles disagree. It appears only in the widened sensitivity average.
+
+**Not archived:**
+- Real Time Big Data: no 2022 national first-round poll found.
+- Not searched: Equilíbrio Brasil, XP/Ipespe, Vox Populi, Datatempo and Ipri.
+- The optional 2018 calculation was not done, because the 2018 polls were not archived.
+
+**CI:** the PDFs are stored in Git LFS, and `.github/workflows/ci.yml` does not pull `data/originals/pesquisas_2022/**`. Until that path is added, the PDF hash check is skipped in CI and only runs locally. I did not edit the workflow because it was out of scope.
+
+Files are in `/Users/leonardodias/arvor/PNAD`:
+- `.gitignore` (added `!data/originals/pesquisas_2022/`)
+- `data/originals/pesquisas_2022/&lt;house&gt;/` (documents, `README.md`, `fonte.json`), 14 house folders plus `poder360_indice/`, about 44 MB
+- `analysis/predicao_2026/erro_2022/pesquisas_2022.json`
+- `analysis/predicao_2026/erro_2022/erro_2022.json`
+- `analysis/predicao_2026/erro_2022/memorando.md`
+- `analysis/predicao_2026/erro_2022/renders/` (15 PNGs of the cited pages)
+- `scripts/predicao-2026-erro-2022.py`
+- `tests/test_predicao_2026_erro_2022.py`</result>
+<usage><subagent_tokens>336842</subagent_tokens><tool_uses>106</tool_uses><duration_ms>1153511</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>ab982720bbbfb3abf</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Integrar erro de 2022 na página" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>Everything is done and nothing is committed. The two 2022 sensitivities shift F−L by exactly ±3,92 pp from the central (−1,12), and the central and defaults are unchanged.
+
+**The two sensitivities (quick build, 300 draws)**
+
+| Scenario | Lula | Flávio | F−L |
+|---|---|---|---|
+| Central | 45,40% | 44,28% | −1,12 |
+| 2022 common error repeats (polls overstating Lula), `vies_pp = +3,92` | 43,44% | 46,24% | +2,80 |
+| 2022 common error with the sign inverted, `vies_pp = −3,92` | 47,36% | 42,32% | −5,04 |
+
+Both values are read from `aplicacao_2026` in `erro_2022.json`, not typed in.
+
+**Files**
+- **New `scripts/predicao_2026/erro_2022.py`:** builds the `erro_2022` block of the payload, with source file, memo and transcription hashes, plus each document's URL and SHA-256. It re-pairs 2022 with 2026 from the current build's house effects instead of the stale 2026 values stored in the 2022 JSON. FSB/BTG to Nexus is marked as same group, Exame/Ideia to Meio/Ideia as brand. I added it to the build's list of hashed code files.
+- **`scripts/predicao-2026-build.py`:** writes the payload key and the two new sensitivities.
+- **`scripts/predicao_2026/view.py`:**
+  - `erro_2022_table` lists the 12 houses sorted by error on the gap, then a mean row and a dispersion row. Gerp and Brasmarket follow, marked "fora da média".
+  - The source column links to the original URL; the link's tooltip gives the archived path and the start of the hash. I linked to the URL because `data/originals` isn't served by GitHub Pages.
+  - `erro_2022_vs_2026` shows 8 houses with the "ligação" column.
+  - `{{ERRO_2022_TABLE}}` and `{{ERRO_2022_VS_2026}}` are registered in `render`.
+- **`scripts/predicao_2026/texto.py`:** `error_2022_values` fills every `E22_*` placeholder, including the worst three (Datafolha, Ipec and Ipespe/Abrapel) and the houses that erred the other way.
+- **Template:** the block sits in #casas after the house-effects table and before the sensitivities, with the paragraphs you listed and the "2022 contra 2026" table. In #aprendizado I added the requested sentence under a heading renamed "Calibrar o erro comum: o primeiro ponto", saying 2018 is still missing.
+- **Text I changed beyond the brief:** it now contradicted the new block, so I updated it.
+  - #aprendizado said "zero pairs" and "no 2022 polls in the archive". It now says one pair.
+  - The #casas paragraph now says the archive has 2022 and no 2018, and still gives no house a score.
+- **`.github/workflows/ci.yml`:** `data/originals/pesquisas_2022/**` added to `git lfs pull --include`.
+- **Pyright fixes:**
+  - `scripts/predicao-2026-erro-2022.py`: the docstring access no longer assumes it can be `None`, and line 82 had a dict-key type error, which I also fixed.
+  - `tests/test_predicao_2026_erro_2022.py`: the test now uses `importlib.import_module("predicao-2026-erro-2022")` through `conftest.py` instead of `spec_from_file_location`.
+- **Tests:** three new ones check the payload block (hash, links between houses), the ±3,92 shift with tolerance 0,05 plus that the central keeps `vies_pp = 0`, and the rendered block.
+- **`AGENTS.md`:** 3 lines in the second-version forecast section. I also fixed line 125, which still said no 2022 polls were archived.
+
+**Checks**
+- Quick build ran and wrote a new snapshot, `analysis/predicao_2026/snapshots/2026-10-03_7775a1136796.json`. No snapshot was deleted.
+- `pytest -q tests/`: 643 passed.
+- `ruff check` and `black --check` on `scripts/ docs/ tests/`: clean.
+- `node --check docs/assets/predicao_2026.js`: OK.
+- Em dash count is 0 in both the page and the template.
+- `render-audit.py` on `http://localhost:4173/predicao_2026_1T_presidente.html`: 0 problems.
+- Pyright: 0 errors in the files I touched. 39 errors remain in `scripts/predicao_2026/tse.py`, `base.py`, `motor.py` and `preditiva.py`, which I didn't change.</result>
+<usage><subagent_tokens>220796</subagent_tokens><tool_uses>45</tool_uses><duration_ms>794205</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a74c7eb1ccf595c19</task-id>
+<tool-use-id>toolu_01Lwz8JNSqfkJkNJJaYfMEfh</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Integrar Gerp nova no agregador e previsão" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>A onda nova da Gerp já está no agregador e na previsão. Os dois builds rodaram até o fim e a central agora usa a Gerp de 02/10 no lugar da de 28/09. Testes, lint e as duas auditorias de renderização estão limpos, e não fiz commit.
+
+**Documento**
+- **Registro e campo:** BR-00509/2026, campo de 30/09 a 02/10/2026, 2.400 entrevistas por telefone (GerpCati).
+- **Divulgação:** o manifesto da Gerp lista o relatório em 03/10, mas o PDF foi gerado em 02/10 às 19:57. Registrei 03/10 como divulgação e anotei a diferença na ficha.
+- **PDF:** 54 páginas, 873.722 bytes, SHA-256 `500c4a7b8261a209ce62fdf49b68d63e018d44f789a8ce487f81c74522023961`.
+- **Páginas usadas:** metodologia p. 7, perfil de renda ponderado p. 8 (23/23/33/14/5/2), 1º turno p. 13 (válidos p. 16), 1º turno por renda p. 15, 2º turno p. 22 (válidos p. 25), 2º turno por renda p. 24.
+- **Leitura:** o PDF tem texto nativo. Extraí as tabelas pelo texto e conferi nas renderizações a 130 dpi das pp. 7, 8, 13, 15, 16, 22, 24 e 25.
+- **Nomes omitidos na tabela por renda:** a p. 15 mostra só 8 das 15 categorias. Zema e os outros seis nomes omitidos têm 0% no total. Na faixa de 10 a 20 SM a coluna soma 94, então 6 pontos dessa faixa estão nessas categorias omitidas. Não criei células para eles.
+
+**Placares** (Flávio × Lula, votos totais; recomposto pelo perfil da p. 8; reponderado no cenário PNAD de pessoas 16+, rendimento efetivo)
+
+| | Publicado | Recomposto | Reponderado |
+|---|---|---|---|
+| 1º turno | 43 × 41 (válidos 46 × 44) | 43,42 × 41,38 | 44,46 × 39,67 |
+| 2º turno | 49 × 44 (válidos 53 × 47) | 48,83 × 43,94 | 50,84 × 42,53 |
+
+- **Resíduos por renda:** no máximo 0,42 pp no 1º turno e 0,17 pp no 2º, em Flávio e Lula. Somando as candidaturas menores, o maior é 0,47 pp.
+- **Resíduos pelo controle independente por sexo (47/53):** 1º turno 43,34 × 41,60, 2º turno 48,40 × 44,13; o maior é 0,60 pp. Tudo abaixo do limite de 1,5 pp do motor.
+- **Diferença no 2º turno:** a vantagem de Flávio vai de 5 pontos publicados para 8,3 reponderados.
+
+**Efeito na previsão (central, votos válidos)**
+
+| | Antes | Depois |
+|---|---|---|
+| Lula | 45,40 | 45,18 |
+| Flávio | 44,28 | 44,67 |
+| Flávio menos Lula | −1,12 | −0,52 |
+| Faixa de 90% da diferença | −4,95 a +2,69 | −4,51 a +3,39 |
+| Chance de Flávio à frente | 31,6% | 41,0% |
+
+O snapshot novo é `analysis/predicao_2026/snapshots/2026-10-03_b932cc3c77a9.json`; não apaguei os anteriores.
+
+**Efeito no agregador (média de 7 dias, publicado → reponderado)**
+- **1º turno:** Lula 42,06 → 41,33 e Flávio 38,77 → 39,64. Antes estava em Lula 41,95 → 41,25 e Flávio 38,66 → 39,56.
+- **2º turno:** Lula 45,09 → 44,34 e Flávio 44,60 → 45,50. Antes estava em Lula 44,95 → 44,26 e Flávio 44,75 → 45,59.
+
+**Arquivos**
+- `data/originals/gerp_102026_03/` com `relatorio.pdf`, `relatorio.txt`, `fonte.json` e `README.md`.
+- Renderizações em `analysis/predicao_2026/atualizacao_20261003/gerp/`.
+- Ficha `analysis/reponderacao/pesquisas/gerp_2026-10-02.json`, com o bloco de recomposição e os resíduos.
+- Linha `!data/originals/gerp_102026_03/` no `.gitignore`. O CI já cobria `*_102026_*`, então não mexi nele.
+- Template da previsão (`docs/predicao_2026_1T_presidente.template.html`): editei antes do build. Acrescentei a frase da Gerp depois da frase da MDA e troquei "É a onda mais recente do acervo" por "CNT/MDA e Gerp são as ondas mais recentes do acervo", porque as duas têm o mesmo campo.
+- Regerados: `docs/reponderacao_pnad.html`, a capa `docs/index.html`, `docs/predicao_2026_1T_presidente.html`, os JSON e CSV correspondentes e o card social.
+
+**Testes, lint e auditorias**
+- **Suíte inteira:** 644 testes passando. `test_predicao_2026_erro_2022.py` e `test_predicao_2026_tendencia.py` passaram e não foram tocados.
+- **Uma falha que os dados novos revelaram:** em `tests/test_predicao_2026_consolidacao.py`, `test_presets_follow_central_and_carry_measured_lambda` testava duas casas decimais com `round(100 * v) == 100 * v`. Com o novo valor 0,14 isso falha, porque `100 * 0,14` dá 14,000000000000002 em ponto flutuante. Troquei por `round(v, 2) == v`, que testa a mesma coisa. Vale você olhar, porque essa alteração saiu do escopo combinado.
+- **Teste novo:** em `tests/test_reponderacao_pnad.py` acrescentei a verificação de que a última onda da Gerp é a de 02/10 e um teste de que ela substitui a de 28/09 na janela, com resíduo abaixo de 0,5 pp. O arquivo mudou no disco depois da minha edição e não reli o estado atual. O último pytest completo (644 passando) rodou depois dessa edição.
+- **Lint e auditorias:** ruff e black limpos (black só reformatou o teste que alterei). Nenhum travessão nas três páginas. `render-audit` sem problemas na previsão e no agregador.</result>
+<usage><subagent_tokens>189993</subagent_tokens><tool_uses>38</tool_uses><duration_ms>555557</duration_ms></usage>
+</task-notification>
+
+---
+
+estou fazendo um post para divulgar, o texto está assim: "
+
+<pasted_content id="b76e">
+Pesquisas de intenção de votos NÃO SÃO prognósticos de resultados eleitorais. 
+
+O que poderia ser prognóstico? Modelagem estatística com algoritmos como o Montecarlo, utilizando tanto pesquisas estaduais quanto nacionais e muita matemática.
+
+Dito isso, fizemos isso com várias pesquisas, incluindo a GERP que acaba de sair. O resultado por enquanto dá um empate absoluto nos nossos modelos que consideram comparecimento, PNAD, pesquisas estaduais e nacionais, rejeição e outras probabilidades eleitorais.
+
+Fizemos o exercício também de calcular o "erro" das pesquisas de 1o turno de 2022. Lembrando que pesquisas NÃO SÃO prognósticos, mas isso serve para entendermos as diferenças entre o último resultado da pesquisa e o resultado final, considerando que há mudanças ocorrendo de última hora sobretudo entre indecisos.
+
+
+Ainda falta o resultado da Quaest  e do Datafolha a ser publicado hoje para atualizar a previsão. Mas, por enquanto, empate no prognóstico.
+
+Veja nesse link o relatório completo da predição. Criamos também um sistema para você montar a sua previsão de acordo com variáveis possíveis, permitindo que você compartilhe o seu cenário.
+</pasted_content id="b76e">
+
+" Corrija o texto de acordo com o que fizemos, deixe-o claro e menos técnico para convidar as pessoas
+
+---
+
+ok, saiu a nova da palver, vamos atualizar com subagents
+
+---
+
+<task-notification>
+<task-id>ad0ea4037ce4d8449</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Integrar PoderData nova (documental)" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>PoderData/Aya's new wave is integrated, but **the full PDF report isn't published yet**. I didn't register the wave as `ignorar: true` (your fallback for a missing PDF), because PoderData's own official charts in the Poder360 articles carry everything the engine needs: income crosstabs for both rounds and the sample's income profile. That's the same basis as the 17/09 wave's 2nd round. If you'd rather keep the literal rule, setting `"ignorar": true` in the ficha is a one-line change.
+
+**Wave details**
+- **Registration:** BR-03519/2026. Field 30/09 to 02/10. Released 03/10 at 07h30 (Brasília time). n = 4,000 phone interviews (automated call system) in 786 municipalities across all 27 states, margin 1.5 pp.
+- **Missing PDF:** the 03/10 article lists the PDF reports only up to the 20 to 23/09 wave. Poder360's media library has no October PoderData PDF. Every filename variant I tried returned 404.
+- **Where the numbers come from (PoderData charts, the source for every number):**
+  - 1st-round result: chart -01
+  - 1st round by income: chart -04
+  - 2nd-round result: chart -05
+  - 2nd round by income: chart -07
+  - income profile 46/33/21 and sex split 47/53: the sample-profile chart (`pd-perfil-amostra`)
+  - I checked the income rows in enlarged crops.
+
+**Published, recomposed and reweighted (from `calcular`, main scenario: people 16+, effective income)**
+
+| | Published (Lula × Flávio) | Recomposed by income | Reweighted to PNAD |
+|---|---|---|---|
+| 1st round | 42 × 41 (blank/null 4, undecided 2) | 41.73 × 41.27 | Flávio 42.25 × Lula 41.36 |
+| 2nd round | 46 × 46 (blank/null 7, undecided 1) | 45.77 × 46.85 | Flávio 47.16 × Lula 45.16 |
+
+- **Residuals by income:** largest is 0.79 pp in the 1st round (Cury 3.79 vs 3 published, Caiado 2.79 vs 2) and 0.85 pp in the 2nd round (Flávio). Both are under the 1.5 pp limit.
+- **Check by sex:** 1st round 42.30 × 40.58, 2nd round 45.83 × 45.58.
+- **Candidates adjusted:** only the seven 1st-round candidates and the two 2nd-round finalists. The charts don't break blank/null or undecided down by income, so I didn't invent those.
+
+**Files**
+- `/Users/leonardodias/arvor/PNAD/analysis/reponderacao/pesquisas/poderdata_2026-10-02.json`: the new ficha, source type `materia`. Its source fields record the URL and SHA-256 of each article and chart; its notes record the residuals.
+- `/Users/leonardodias/arvor/PNAD/data/originals/poderdata_102026_03/`: both articles (`materia_1t`, `materia_2t`, as `.html` and `.txt`), six result charts, the profile chart, `fonte.json` (URLs, bytes, SHA-256, a record of the PDF search) and `README.md`. There is no `relatorio.pdf` yet.
+- `/Users/leonardodias/arvor/PNAD/analysis/predicao_2026/atualizacao_20261003/poderdata/`: enlarged crops of the income rows.
+- `.gitignore`: added `!data/originals/poderdata_102026_03/`.
+
+**Tests and lint:** `tests/test_reponderacao_pnad.py` doesn't pin the latest PoderData wave, so I left it alone. pytest passes (20 tests). ruff and black are clean. The ficha and the template contain zero "—". I made no commit and ran no builds.
+
+**Sentence added to the template** (in #fontes, at the end of the "Na atualização de 03/10" paragraph, after the Palver text):
+&gt; Também em 03/10 entrou a &lt;strong&gt;PoderData/Aya&lt;/strong&gt; (campo de 30/09 a 02/10, 4.000 entrevistas por telefone, BR-03519/2026). O PDF ainda não estava publicado; o cruzamento por renda dos dois turnos e o perfil da amostra (46/33/21) vêm dos gráficos oficiais da casa nas matérias do Poder360: publicada em Lula 42 × Flávio 41 nos votos totais do 1º turno e 46 × 46 no 2º, e transportada à régua PNAD para Flávio 42,3 × Lula 41,4 e Flávio 47,2 × Lula 45,2. Ela substitui a PoderData de 20 a 23/09.
+
+The paragraph's recency sentence, which you or the other agent own, says CNT/MDA and Gerp closed field on 02/10. PoderData also closed on 02/10, so you may want to add it there.
+
+When the PDF comes out, it should be archived as `relatorio.pdf` and the numbers checked against the charts.</result>
+<usage><subagent_tokens>203831</subagent_tokens><tool_uses>37</tool_uses><duration_ms>314280</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>ad9df2f2d3019c84e</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Integrar Palver nova (onda 6)" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>Integrei a onda 6 da Palver ao agregador e à previsão. Testes, lint e auditorias passam. Um ponto antes de tudo: outro processo integrou a PoderData de 02/10 no meio da minha rodada. Os números finais publicados incluem as duas pesquisas. Detalhes no fim.
+
+**A onda**
+- **Identificação:** onda 6 da Palver, slug `voting-intention-2026-october-w6`, onda do Explorer `06_pesquisa_2026_10_03`. Há uma única versão no catálogo, então nada fica com `ignorar`.
+- **Registro e campo:** BR-00198/2026, campo de 30/09 a 03/10 (p. 20), divulgação em 03/10, n = 5.000, n efetivo 1.656.
+- **Páginas usadas:** metodologia 16–18, amostra 20, 1º turno 29 (placar) e 30 (renda), 2º turno 34 e 35.
+- **Divergência documental registrada:** a p. 18 dá efeito dos pesos desiguais de 3,92; a p. 20 dá 3,02. O n efetivo de 1.656 corresponde a 3,02.
+- **Perfil de renda recuperado:** 42,12 / 39,56 / 18,31, idêntico ao das ondas 4 e 5, porque a renda entra no raking. As contagens brutas (1.595 / 2.127 / 1.278) não foram usadas como pesos.
+
+**Placares (Flávio × Lula)**
+
+| | Publicado no PDF | Exato do Explorer (= recomposto) | Reponderado (pessoas 16+) |
+|---|---|---|---|
+| 1º turno | 47 × 43 | 46,54 × 43,00 | 46,20 × 42,97 |
+| 2º turno | 49 × 44 | 49,48 × 44,39 | 49,36 × 44,44 |
+
+**Resíduos**
+- Renda, sexo e região recompõem o placar exato com resíduo de cerca de 1e-14. É uma prova circular, porque as margens saem das próprias tabelas. A prova independente é o n efetivo reconstituído (1.655,77), igual ao publicado.
+- Prova documental: as colunas de renda inteiras das pp. 30 e 35, lidas na imagem, coincidem com o Explorer arredondado. Pesadas pelo perfil, recompõem o PDF com resíduo máximo de 0,73 pp (Flávio, 1º turno), abaixo do limite de 1,5 pp.
+
+**Efeito na previsão (votos válidos)**
+
+| | Lula | Flávio | F−L | Faixa 5–95% | P(Flávio à frente) |
+|---|---|---|---|---|---|
+| Antes | 45,18 | 44,67 | −0,52 | −4,51 a +3,39 | 41,0% |
+| Só com a Palver | 44,91 | 45,04 | +0,13 | −3,97 a +4,12 | 53,5% |
+| Final, Palver e PoderData | 44,96 | 45,15 | +0,19 | −3,72 a +4,02 | 53,3% |
+
+A Palver de 27/09 saiu da central e da janela de 7 dias.
+
+**Efeito no agregador (média de 7 dias, reponderada, Lula × Flávio)**
+
+| | Antes | Só com a Palver | Final |
+|---|---|---|---|
+| 1º turno | 41,21 × 39,72 | 41,10 × 39,98 | 41,23 × 40,16 |
+| 2º turno | 44,09 × 46,12 | 44,00 × 46,38 | 44,13 × 46,33 |
+
+**O processo paralelo (PoderData)**
+- Às 16:27 apareceram a ficha `poderdata_2026-10-02.json`, a pasta `data/originals/poderdata_102026_03/`, uma linha no `.gitignore` e uma frase da PoderData no template, logo depois da minha.
+- Esse processo recalculou o agregador depois do meu build, então a página e a previsão ficaram desatualizadas em relação ao JSON.
+- Como não havia mais nenhum processo rodando, refiz `calcular`, o build da reponderação e o da previsão. O hash do agregador na previsão agora bate com o JSON atual.
+- O snapshot intermediário `REDACTED.json` (só com a Palver) foi mantido; o final é `2026-10-03_4c48bd466d0c.json`.
+- Se esse processo ainda pretende rodar o build, convém garantir que não rode ao mesmo tempo que outro.
+
+**Arquivos**
+- **Script novo:** `scripts/palver-031026-onda6.py`, que gera a ficha, o `fonte.json` e as recomposições. O `palver-explorer-extract.py` não precisou de ajuste: usei as funções dele com caminhos novos, só para a onda 6, dois turnos por total, renda, sexo e região.
+- **Arquivo do PDF:** `data/originals/palver_102026_03/` com `relatorio.pdf` (SHA-256 fb11e317…, 75 páginas, creationDate 03/10 15:44), `relatorio.txt`, `fonte.json` e `README.md`.
+- **Snapshot do Explorer:** `analysis/reponderacao/palver_explorer_20261003/` (com `margens.json`) e o HTML bruto em `data/originals/palver_explorer_20261003/`. As duas pastas entraram no `.gitignore`.
+- **Renderizações conferidas:** `analysis/predicao_2026/atualizacao_20261003/palver/`, pp. 20, 29, 30, 34 e 35.
+- **Ficha:** `analysis/reponderacao/pesquisas/palver_2026-10-03.json`.
+- **Template:** em `docs/predicao_2026_1T_presidente.template.html` acrescentei a frase da Palver. A frase sobre CNT/MDA e Gerp virou: a Palver tem o campo mais recente e forma com elas o grupo de maior peso.
+- **Regenerados:** as páginas `docs/predicao_2026_1T_presidente.html`, `docs/reponderacao_pnad.html` e `docs/index.html` (capa), além dos `docs/assets` e do card social.
+- **Integrate:** `palver-explorer-integrate.py` rodou sem mudar nada. Ele cobre só as ondas 1 a 3, e o histórico (`docs/assets/palver_explorer_historico.json`) não foi alterado, como nas ondas 4 e 5. A página acrescenta as ondas novas sozinha.
+
+**Testes e auditorias**
+- `pytest -q tests/`: 645 passaram. Ruff e black limpos; zero travessão nas três páginas; `render-audit` sem problemas nas duas páginas.
+- Mudanças nos testes:
+  - **Teste novo:** `test_palver_wave6_replaces_wave5_in_window`.
+  - **`test_palver_explorer_integration`:** com 7 versões o gráfico passou a rotular o eixo de dois em dois (regra que já existia), então o teste agora confere que as 7 versões estão desenhadas, em vez de exigir o rótulo de cada uma.
+  - **`test_predicao_2026_simulador`:** exigia que a diferença central fosse negativa. Agora aceita qualquer sinal.
+
+Não fiz commit.</result>
+<usage><subagent_tokens>243357</subagent_tokens><tool_uses>80</tool_uses><duration_ms>1004480</duration_ms></usage>
+</task-notification>
+
+---
+
+atualizou também a reponderacao_pnad?
+
+---
+
+saiu o Datafolha, mas sem relatório completo ainda, porém com esses números aqui: https://g1.globo.com/politica/eleicoes/2026/pesquisa-eleitoral/presidente-1-turno-datafolha/
+
+---
+
+parece que estão saindo estaduais da quaest e do datafolha, mas não sei se conseguimos pegar os resultados dessas também
+
+---
+
+<task-notification>
+<task-id>a5384a8558724c360</task-id>
+<tool-use-id>toolu_01XgvVJp1iCBauhE7c9XcfJp</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Integrar Quaest nacional de véspera (documental)" finished</summary>
+<note>This agent stopped with background work of its own still running. It may resume on its own when that work completes or reports, and the same task-id notifies again if it does; the result below may be interim.</note>
+<result>The monitor will notify on the next poll result.</result>
+<usage><subagent_tokens>217082</subagent_tokens><tool_uses>49</tool_uses><duration_ms>329173</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>acd81b87b28f5cf44</task-id>
+<tool-use-id>toolu_01DENmYR6Nurcvt5hDW9v1rS</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Estaduais de véspera: Datafolha e Quaest via G1" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>Five Datafolha state polls from the eve of the vote are now in the forecast's state layer: SP, MG, RJ, PE and DF. No new state Quaest wave exists. The national central did not move. The full test suite has 2 failures, both caused by a parallel session working on a 03/10 Quaest national wave, not by this change (details under Checks).
+
+**What I checked.** I opened the G1 panel page for both pollsters in all 27 UFs and queried its API for the 1st and 2nd round.
+- **Datafolha** has a panel page for SP, MG, RJ, PE, DF and PI. The first five have a new column dated 2026-10-02, the release date. PI stops at 17/09, which is already in the archive.
+- **Quaest**'s latest state column is 29/09 (SP, RJ, PE, MG, DF), identical cell by cell to the PDF waves already archived. Its PDF list ends at 30/09.
+- **No state Datafolha PDF exists.** The institute's articles link none, so for all five the 1st and 2nd round come from the G1 panel and the registration, fieldwork dates and n come from the institute's own article on datafolha.folha.uol.com.br.
+
+| UF | Field | n | Registration | 1st round (total votes) | 2nd round |
+|---|---|---|---|---|---|
+| SP | 28 to 30/09 | 1,610 | SP-01367 / BR-02676/2026 | Flávio 39 × Lula 38 | Flávio 48 × Lula 45 |
+| MG | 28/09 to 01/10 | 1,204 | MG-09729 / BR-03604/2026 | Lula 42 × Flávio 36 | Lula 48 × Flávio 44 |
+| RJ | 29/09 to 01/10 | 1,204 | RJ-02070 / BR-01272/2026 | Flávio 45 × Lula 38 | Flávio 51 × Lula 42 |
+| PE | 28/09 to 01/10 | 1,204 | PE-06822 / BR-00950/2026 | Lula 61 × Flávio 25 | Lula 65 × Flávio 29 |
+| DF | 28 to 30/09 | 910 | DF-00905 / BR-09530/2026 | Flávio 44 × Lula 35 | Flávio 51 × Lula 39 |
+
+All five were released 02/10. Every round sums to 100. Valid votes recomputed from the panel match those printed in the Folha article (17h34 on 02/10) within rounding; the largest gap is Flávio in MG, 39.1 against 38 published.
+
+**Replaced waves: none.** These are the first Datafolha waves in the archive for these five UFs, so nothing from the same pollster and UF is superseded. Each UF now carries one Datafolha line next to its Quaest, AtlasIntel and Real Time polls. The state count rose from 29 to 34.
+
+**Effect** (valid votes, before → after):
+
+| | Lula | Flávio |
+|---|---|---|
+| SP | 38.28 → 38.72 | 50.26 → 49.23 |
+| MG | 44.36 → 44.39 | 45.59 → 45.28 |
+| RJ | 38.45 → 38.58 | 52.26 → 52.57 |
+| PE | 63.18 → 63.24 | 31.30 → 31.15 |
+| DF | 35.31 → 35.34 | 51.30 → 51.23 |
+| **National** | 44.90 → 44.90 | 45.41 → 45.41 |
+
+The national gap is +0.50, with a 90% band of −3.39 to +4.29 (was −3.42 to +4.25). It stays fixed because the national level is calibrated to the national polls.
+
+**Not integrated, with reasons:**
+- Datafolha also released new state waves on 03/10 for SP (SP-09337 and BR-07025/2026, n 2,520) and PE (PE-02404/2026, n 1,650). The Folha published only the governor race, and the panel has no presidential column for them.
+- Fieldwork dates conflict. The Folha summary article gives 28/09 to 01/10 for all five UFs, but the institute's own articles give different dates for SP, DF and RJ. I used the institute's dates and recorded the discrepancy in each file.
+- The panel shows a Quaest SE wave dated 24/09 that is not in the archive. It is older than the eve window, so I left it out.
+
+**Checks**
+- **Tests:** 661 passed, 2 failed (`test_pesquisas_290926::test_latest_quaest_enters_both_forecasts_at_its_actual_release` and `test_reponderacao_grupos::test_page_has_gray_and_black_lines_and_explicit_coverage`). Both come from files that session added or changed (`scripts/quaest-031026-g1.py`, `analysis/reponderacao/pesquisas/quaest_2026-10-03.json`, the reponderação JSONs and their tests). I left all of that untouched. When it rebuilds the forecast, the five Datafolha files will be picked up automatically.
+- **New tests:** 16 pass. They cover source hashes, field dates, registration and n, and entry into the forecast JSON. I also updated the state-wave count in `tests/test_predicao_2026.py` from 29 to 34, with an explicit Datafolha check.
+- **Lint:** `ruff check` and `black --check` are clean on `scripts/`, `docs/` and `tests/`.
+- **Dashes:** zero in the forecast page, its template, the social card and all new files.
+- **Render audit:** 0 problems at `http://localhost:4173/predicao_2026_1T_presidente.html`.
+
+The full build ran with `--hoje 2026-10-03` and wrote the new snapshot `2026-10-03_f3f178ab05de.json`. No snapshot was deleted and nothing was committed.
+
+Files are in /Users/leonardodias/arvor/PNAD:
+- `scripts/predicao-2026-estaduais-vespera.py` (new; `--capturar` downloads and archives, a plain run only transcribes from the archive and checks hashes)
+- `data/originals/estaduais_102026_03/datafolha_{SP,MG,RJ,PE,DF}/` (panel page, 1st and 2nd round API responses, institute article, `fonte.json`, README)
+- `data/originals/estaduais_102026_03/comum/` (Folha summary article, `fonte.json`, README listing the sources checked but not integrated)
+- `analysis/predicao_2026/estaduais/datafolha_{SP_20260930,MG_20261001,RJ_20261001,PE_20261001,DF_20260930}.json`
+- `tests/test_predicao_2026_estaduais_vespera.py` (new)
+- `.gitignore` (added `!data/originals/estaduais_102026_03/`)
+- `docs/predicao_2026_1T_presidente.template.html` (the #fontes paragraph now names the five eve-of-vote Datafolha waves and their source)
+- `tests/test_predicao_2026.py` (count 29 → 34)
+- Regenerated forecast page and assets</result>
+<usage><subagent_tokens>231757</subagent_tokens><tool_uses>50</tool_uses><duration_ms>894091</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a5384a8558724c360</task-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Integrar Quaest nacional de véspera (documental)" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>The Quaest eve wave is integrated into the aggregator with income crosstabs for both rounds. The 1º turno series in the G1 panel API updated at 22:34 UTC, so the ficha did not need `ignorar`. The Quaest PDF was still not published at 22:37 UTC; the last national one is `QUAEST+6+PRESIDENCIAL+28+09.pdf`. Nothing is committed, and I did not run either build script.
+
+**Survey details (same text in all three G1 matérias):** registration BR-02197/2026, field 02 and 03/10, n 3.702, margin 2 pp at 95% confidence, commissioned by Globo and O Globo.
+
+**API codes (paginaId 100):** the panel lists only one 2º turno scenario, "Segundo Turno - Cenário 1", which is Lula × Flávio.
+- `ESTIMULADA-PRE-003`: 1º turno, votos totais, three income bands.
+- `SEGTURNO-PRE-001`: 2º turno, Lula × Flávio.
+- `APROVACAO-PRE-001`: government approval.
+- `VTSVALIDOS-PRE-001`: returned 404, so votos válidos come from the matéria.
+
+**Check against the previous wave:** the panel's 28/09 column matches the 27/09 PDF cell by cell (pp. 18, 24, 32, 37). The panel's 03/10 totals match the matéria totals; the script checks both.
+
+**Results** (recomposto and reponderado use the 31/42/27 profile; reponderado is `pessoas16_efetivo`):
+
+| | Publicado (totais) | Recomposto | Reponderado (PNAD) |
+|---|---|---|---|
+| 1º turno | Lula 40 × Flávio 38 | 40,00 × 38,05 | Lula 40,73 × Flávio 37,40 |
+| 2º turno | Flávio 44 × Lula 42 | Flávio 44,28 × Lula 42,00 | Flávio 43,33 × Lula 42,73 |
+
+- **Votos válidos (G1):** Lula 46, Flávio 45, Cury 3, Renan 3, Caiado 3. The matéria says Quaest computes these with a likely-voter turnout model, not by renormalising the totals (38/87 would give Flávio 44, not 45). I recorded them in `publicado_validos` and kept them out of the engine.
+- **Income profile:** 31/42/27, the 27/09 wave's published profile (PDF p. 204), marked `hipotese_onda_anterior` with a note that the PDF profile will replace it.
+- **Sex weights:** 47 men / 53 women, also from the 27/09 wave (PDF p. 201) and also stated as a hypothesis.
+
+**Residuals (all under the 1,5 pp limit):**
+
+| | By income | By sex | Engine |
+|---|---|---|---|
+| 1º turno | 0,39 | 0,47 | 0,38 |
+| 2º turno | 0,43 | 0,94 | 0,28 |
+
+The published score was kept as the anchor; no renormalisation. Zeros in the panel are its own rounding to integers, not imputed values.
+
+**Window:** `quaest_2026-10-03` replaces `quaest_2026-09-27` in the 7-day window for both rounds.
+
+**Files:**
+- `/Users/leonardodias/arvor/PNAD/data/originals/quaest_102026_03/`: `fonte.json` (URLs, bytes, SHA-256, capture times, PDF status) and `README.md`; the panel HTML; the three API JSONs; the three matérias as HTML and text.
+- `/Users/leonardodias/arvor/PNAD/.gitignore`: added `!data/originals/quaest_102026_03/` next to the Datafolha line.
+- `/Users/leonardodias/arvor/PNAD/scripts/quaest-031026-g1.py`: new script that generates the ficha.
+- `/Users/leonardodias/arvor/PNAD/analysis/reponderacao/pesquisas/quaest_2026-10-03.json`: the ficha.
+- `/Users/leonardodias/arvor/PNAD/docs/assets/reponderacao_pnad.json`: rewritten by `calcular --hoje 2026-10-03`.
+- `/Users/leonardodias/arvor/PNAD/docs/predicao_2026_1T_presidente.template.html`: edited.
+
+**Inserted in the template** (right after "Ela substitui a Datafolha de 29/09 a 01/10."):
+&gt; Também na noite de 03/10 entrou a &lt;strong&gt;Quaest de véspera&lt;/strong&gt; (campo de 02 a 03/10, 3.702 entrevistas, BR-02197/2026). O PDF ainda não estava publicado; os dois turnos e o cruzamento por renda vêm da API do painel do G1, contratante da pesquisa, que reproduz célula a célula o PDF da onda de 27/09, e o perfil de renda é o daquela onda (31/42/27), como hipótese explícita até a íntegra sair: publicada em Lula 40 × Flávio 38 nos votos totais do 1º turno e Flávio 44 × Lula 42 no 2º, e transportada à régua PNAD para Lula 40,7 × Flávio 37,4 e Flávio 43,3 × Lula 42,7. Os 46 × 45 dos votos válidos divulgados pelo G1 saem do modelo de eleitor provável da Quaest e não entram no motor. Ela substitui a Quaest de 24 a 27/09.
+
+I also changed "Palver e Datafolha têm o campo mais recente…" to "Palver, Datafolha e Quaest têm o campo mais recente…".
+
+**Tests and lint:**
+- Added a test for the new wave in `tests/test_reponderacao_pnad.py`, covering hashes, scores, income rows, residuals, adjusted values and the window replacement.
+- Updated `tests/test_pesquisas_290926.py`, because the latest Quaest is now 03/10.
+- `pytest -q tests/test_reponderacao_pnad.py tests/test_pesquisas_021026.py tests/test_pesquisas_290926.py`: 36 passed.
+- Full suite: 662 passed, 1 failed. The failure is `tests/test_reponderacao_grupos.py::test_page_has_gray_and_black_lines_and_explicit_coverage`, which checks the page HTML against `reponderacao_pnad.json` and will pass once the other agent runs `reponderacao-build.py`.
+- ruff and black are clean on `scripts/`, `docs/` and `tests/`.
+- No "—" in the ficha, the template, the README or the script.</result>
+<usage><subagent_tokens>231043</subagent_tokens><tool_uses>60</tool_uses><duration_ms>620858</duration_ms></usage>
+</task-notification>
+
+---
+
+tem que atualizar o social card do link com os números mais atuais
+
+---
+
+saiu a pesquisa futura, vamos trazer ela para o modelo e para a reponderação também
+
+---
+
+<task-notification>
+<task-id>a327141e8f541adca</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Integrar Futura de véspera" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>A Futura de véspera entrou no agregador e na previsão. Ela não publica voto por renda, então participa da central com o placar publicado, sem reponderação. Nada foi commitado.
+
+**Onde estava a íntegra.** O Poder360 não tinha publicado o PDF até as 20h30 de 03/10. A API de mídia não tem PDF nacional da Futura de outubro, e o resumo do Poder360 do dia ainda aponta para a íntegra de 30/09. As variantes de nome que você sugeriu devolvem 404. O relatório estava embutido na [matéria da CNN Brasil](https://www.cnnbrasil.com.br/eleicoes/futura-flavio-tem-48-das-intencoes-de-voto-no-2o-turno-lula-451/), servido pelo próprio servidor da CNN. A biblioteca da Futura lista a mesma rodada, mas só libera o PDF mediante pedido por e-mail; arquivei a captura da página. A [matéria do Money Times](https://www.moneytimes.com.br/pesquisa-futura-flavio-bolsonaro-tem-425-e-lula-405-no-primeiro-turno-gaep/) também ficou arquivada.
+
+**A pesquisa**
+- **Ficha:** Rodada 13, registro BR-02431/2026, campo de 02 a 03/10, 2.000 entrevistas por telefone (CATI), margem de 2,2 pontos, divulgada em 03/10. Segundo a CNN, foi feita com recursos do próprio instituto.
+- **Documento:** PDF de 10 páginas, 1.950.280 bytes, SHA-256 `b6d58bcd…a8f83b`, creationDate `D:20261003214852` (sem fuso).
+- **Páginas:** p. 2 metodologia, p. 3 perfil, p. 4 espontânea e estimulada, p. 5 votos válidos, p. 6 segundos turnos, p. 7 rejeição, p. 8 afirmações, p. 9 voto útil.
+- **1º turno (p. 4), votos totais:**
+  - Flávio 42,5 × Lula 40,5.
+  - Cury 3,9, Caiado 3,7, Renan Santos 2,6, Zema 0,8, Samara 0,4, Edmilson 0,2; Rui, Clariana, Grassi e Hertz 0,1 cada.
+  - Branco/nulo 2,6 e indecisos 2,4. Soma 100.
+  - Leonardo Avalanche não aparece no cenário e não foi preenchido com zero.
+- **Votos válidos (p. 5):** Flávio 44,8 × Lula 42,6.
+- **2º turno (p. 6):** Flávio 48,0 × Lula 45,1, branco/nulo 5,7 e indecisos 1,2. O cenário alternativo Caiado 44,7 × Lula 44,0 ficou registrado nas notas da ficha.
+- **Voto por renda: não há.** Varri as dez páginas por "renda" e "salário". "Renda Familiar" aparece só como perfil da amostra (p. 3: 26,3/22,2/24,4/9,1/5,7, com 12,4% sem resposta) e como rodapé repetido nas pp. 4 a 9. Todas essas páginas exibem "Filtro Mestre: Sem cruzamento", ou seja, não há cruzamento por nenhuma variável.
+
+**Efeito na central** (antes, com a Futura de 25 a 29/09 → depois)
+
+| | Antes | Depois |
+|---|---|---|
+| Lula | 45,15 | 45,02 |
+| Flávio | 45,29 | 45,24 |
+| F−L | +0,14 | +0,22 |
+| Faixa de 90% | −3,78 a +4,01 | −3,79 a +3,98 |
+| P(Flávio à frente) | 52,3% | 53,9% |
+
+A onda nova substituiu a de 29/09 na janela. Com o campo encerrado em 03/10, a participação da Futura na central subiu de 3,9% para 12,7%. Continuam 13 casas.
+
+**Efeito no agregador.** A Futura de 03/10 entra em "não reponderáveis", com o motivo, e não entra em nenhuma média por renda. A capa foi regenerada sem mudar, como esperado para uma onda sem cruzamento.
+
+**Arquivos**
+- `data/originals/futura_102026_03/`: o PDF e seu texto, as páginas 2 a 9 renderizadas, as duas matérias, a página da biblioteca da Futura, `fonte.json`, `manifesto.json` e `README.md`.
+- `analysis/reponderacao/pesquisas/futura_2026-10-03.json`, com `ignorar: true` e o motivo.
+- `.gitignore`: acrescentei `!data/originals/futura_102026_03/`.
+- `docs/predicao_2026_1T_presidente.template.html`: frase da Futura no parágrafo de 03/10, e ela entrou no grupo de campo encerrado em 03/10.
+- Regenerados: as páginas `docs/predicao_2026_1T_presidente.html` e `docs/reponderacao_pnad.html`, seus JSON e CSV, o card social e um snapshot novo (`2026-10-03_7008d094cd44.json`). Nenhum snapshot foi apagado.
+
+**Testes e verificações**
+- **Testes novos:**
+  - Em `tests/test_reponderacao_pnad.py`: hashes de todo o arquivo, ficha técnica, placares, ausência de cruzamento e o status da Futura no agregador.
+  - Em `tests/test_predicao_2026.py`: a Futura de 03/10 substitui a de 29/09 na central, com o placar publicado.
+- **Testes antigos:** os testes que citam a Futura de 29/09 conferem fatos daquela própria ficha, que segue válida, e não precisaram de mudança.
+- **Resultado da suíte inteira:** 1005 passaram e 5 foram pulados.
+- **Lint:** ruff e black sem pendências.
+- **Travessão:** zero em `predicao_2026_1T_presidente.html`, `reponderacao_pnad.html` e `index.html`.
+- **Auditoria de renderização:** zero problemas nas duas páginas, servidas em `localhost:4173`.
+
+**Mudanças que não são minhas.** O `git status` mostra edições do Senado que eu não fiz: dezenas de fichas em `analysis/senado_2026/`, `scripts/senado_2026/`, `AGENTS.md`, `docs/predicao_senado.html` e outros. Não toquei nelas. Confira antes de commitar, porque você disse que ninguém mais estava editando.</result>
+<usage><subagent_tokens>238217</subagent_tokens><tool_uses>61</tool_uses><duration_ms>809498</duration_ms></usage>
+</task-notification>
