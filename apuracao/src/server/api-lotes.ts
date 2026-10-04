@@ -10,6 +10,8 @@ import type { Contexto } from "./contexto.ts";
 import { ErroHttp } from "./http.ts";
 import type { Params } from "./http.ts";
 import { ordenarCand } from "./api-resultado.ts";
+import type { PontoSoma } from "./nacional-serie.ts";
+import { gradeSomaCache, somaNacionalAtiva } from "./nacional-serie.ts";
 
 export interface CandLoteOut {
   sqcand: string;
@@ -113,6 +115,36 @@ export function lotesArquivo(db: Database, arquivoId: number, sqcands: readonly 
   return out;
 }
 
+/** Lotes da soma das UFs: cada ponto da grade com mudança é um lote; `at` é o instante da grade. */
+export function lotesSoma(grade: readonly PontoSoma[], sqcands: readonly number[]): LoteOut[] {
+  const out: LoteOut[] = [];
+  let ant: LoteOut | null = null;
+  for (const g of grade) {
+    const cand: LoteOut["cand"] = {};
+    for (const sq of sqcands) {
+      const k = String(sq);
+      const vap = g.vap.get(sq) ?? 0;
+      cand[k] = { vap, d_vap: vap - (ant?.cand[k]?.vap ?? 0) };
+    }
+    const lote: LoteOut = {
+      snapshot_id: g.snapshot_id,
+      at: new Date(g.t).toISOString(),
+      capturado_em: g.capturado_em,
+      st: g.st,
+      d_st: g.st - (ant?.st ?? 0),
+      pst: g.ts > 0 ? (100 * g.st) / g.ts : 0,
+      vv: g.vv,
+      d_vv: g.vv - (ant?.vv ?? 0),
+      tv: g.tv,
+      d_tv: g.tv - (ant?.tv ?? 0),
+      cand,
+    };
+    out.push(lote);
+    ant = lote;
+  }
+  return out;
+}
+
 export function lotes(_ctx: Contexto, db: Database, p: Params): unknown {
   const ele = p.exigirInt("ele");
   const cargo = p.exigirInt("cargo");
@@ -121,8 +153,9 @@ export function lotes(_ctx: Contexto, db: Database, p: Params): unknown {
   if (!arq) throw new ErroHttp(404, `arquivo desconhecido: ${abrTexto(a)}`);
   const at = p.at();
   const top = p.limite("top", 12, 100);
-  const ult = ultimoSnapshotComCandidatos(db, arq.id, at);
-  const ordem = ult === null ? [] : ordenarCand(candidatosDe(db, ult, a.uf).rows);
+  const soma = somaNacionalAtiva(db, ele, cargo, a, at);
+  const ult = soma ? null : ultimoSnapshotComCandidatos(db, arq.id, at);
+  const ordem = soma ? ordenarCand(soma.cand) : ult === null ? [] : ordenarCand(candidatosDe(db, ult, a.uf).rows);
   const escolhidos = ordem.filter((c, i) => i < top || (c.vap ?? 0) > 0);
   const candidatos: CandLoteOut[] = escolhidos.map((c) => ({
     sqcand: String(c.sqcand),
@@ -130,10 +163,7 @@ export function lotes(_ctx: Contexto, db: Database, p: Params): unknown {
     nmu: c.nome_urna ?? "",
     sg: c.sigla ?? "",
   }));
-  return {
-    abr: abrTexto(a),
-    candidatos,
-    lotes: lotesArquivo(db, arq.id, escolhidos.map((c) => c.sqcand), at),
-    fonte: "tse",
-  };
+  const sqcands = escolhidos.map((c) => c.sqcand);
+  if (soma) return { abr: abrTexto(a), candidatos, lotes: lotesSoma(gradeSomaCache(db, ele, cargo, at), sqcands), fonte: "soma_ufs" };
+  return { abr: abrTexto(a), candidatos, lotes: lotesArquivo(db, arq.id, sqcands, at), fonte: "tse" };
 }

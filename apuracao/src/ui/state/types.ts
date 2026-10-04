@@ -185,6 +185,7 @@ export interface Serie {
   pontos: { at: string; snapshot_id?: number; pst: number; cand: Record<string, number> }[];
   viradas: { at: string; snapshot_id?: number; de: string; para: string }[];
   candidatos?: CandidatoSerie[]; // os mais votados da última versão, com nome e partido
+  fonte?: FonteNacional; // soma_ufs: pontos numa grade de 60 s pela soma das 28 UFs
 }
 
 // ---------- /api/lotes ----------
@@ -214,6 +215,7 @@ export interface Lotes {
   abr: string;
   candidatos: CandidatoLotes[]; // ordem: votos na última versão
   lotes: Lote[];
+  fonte?: FonteNacional; // soma_ufs: lotes numa grade de 60 s pela soma das 28 UFs
 }
 
 // ---------- /api/anomalias ----------

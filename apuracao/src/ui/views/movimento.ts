@@ -3,7 +3,7 @@
 // com círculo e hora. Painel: sparklines de SP, MG, RJ, BA, RS e PR e as maiores viradas
 // registradas em /api/anomalias.
 
-import { chipAndamento, trocarChips } from "../components/chip.ts";
+import { chip, chipAndamento, trocarChips } from "../components/chip.ts";
 import { criarLinhas, dominioAuto, ticksRedondos } from "../components/linhas.ts";
 import type { Linhas, Marcador, SerieLinha, Tick } from "../components/linhas.ts";
 import { corCandidato } from "../data/cores.ts";
@@ -93,7 +93,8 @@ export function criarMovimento(): View {
     update(s: State) {
       if (!raiz) return;
       const p = partes(raiz);
-      trocarChips(p.chips, [chipAndamento(s.estado?.br.pst ?? 0, false)]);
+      const fonte = s.series[chaveSerie(ELE, CARGO, "br")]?.fonte;
+      trocarChips(p.chips, [chipAndamento(s.estado?.br.pst ?? 0, false), fonte === "soma_ufs" ? chip("soma das 27 UFs e exterior", "aviso") : null]);
       const r = s.resultados[chaveResultado(ELE, CARGO, "br")];
       const serie = s.series[chaveSerie(ELE, CARGO, "br")];
       const sig = [r?.lido_em, serie?.pontos.length, serie?.pontos[serie.pontos.length - 1]?.at, s.anomalias.length, s.cores, ...UFS_SPARK.map(uf => s.series[chaveSerie(ELE, CARGO, uf.toLowerCase())]?.pontos.length)].join("|");

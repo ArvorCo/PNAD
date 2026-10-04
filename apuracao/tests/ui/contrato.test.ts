@@ -103,6 +103,9 @@ describe("eventos do /events", () => {
     expect(eventoAfeta(ev({ abr: "zz" }), { tipo: "estado" })).toBe(true);
     expect(eventoAfeta(ev({ abr: "sp", cargo: 3, ele: 6259 }), { tipo: "resultado", ele: 6257, cargo: 1, abr: "br" })).toBe(false);
     expect(eventoAfeta(ev({ abr: "sp71072" }), { tipo: "resultado", ele: 6257, cargo: 1, abr: "br" })).toBe(false);
-    expect(eventoAfeta(ev({ abr: "sp" }), { tipo: "serie", ele: 6257, cargo: 1, abr: "br" })).toBe(false);
+    expect(eventoAfeta(ev({ abr: "sp" }), { tipo: "serie", ele: 6257, cargo: 1, abr: "br" })).toBe(true);
+    expect(eventoAfeta(ev({ abr: "zz" }), { tipo: "lotes", ele: 6257, cargo: 1, abr: "br" })).toBe(true);
+    expect(eventoAfeta(ev({ abr: "sp", cargo: 3, ele: 6259 }), { tipo: "lotes", ele: 6257, cargo: 1, abr: "br" })).toBe(false);
+    expect(eventoAfeta(ev({ abr: "sp" }), { tipo: "serie", ele: 6257, cargo: 1, abr: "rj" })).toBe(false);
   });
 });

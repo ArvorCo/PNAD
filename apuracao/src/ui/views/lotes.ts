@@ -4,7 +4,7 @@
 // ou toque numa barra: contorno lime e ficha. Teclas "," e "." (e ↓/↑) andam a seleção.
 
 import { lotesDesde } from "../components/acumulado.ts";
-import { chipAndamento, trocarChips } from "../components/chip.ts";
+import { chip, chipAndamento, trocarChips } from "../components/chip.ts";
 import { agrupar, liderDoBloco, OUTROS, participacao } from "../components/lotes.ts";
 import type { Bloco, GraficoLotes } from "../components/lotes.ts";
 import { criarGraficoLotes } from "../components/lotes.ts";
@@ -47,7 +47,8 @@ export function latenciaS(b: Bloco): number | null {
   return Number.isFinite(g) && Number.isFinite(l) ? Math.max(0, (l - g) / 1000) : null;
 }
 
-export function fichaDoBloco(b: Bloco, info: readonly InfoCand[]): ConteudoFicha {
+/** `soma`: lotes da soma das 28 UFs (arquivo nacional do TSE parado); a hora é a da grade. */
+export function fichaDoBloco(b: Bloco, info: readonly InfoCand[], soma = false): ConteudoFicha {
   const lat = latenciaS(b);
   const linhas = info.filter(c => (b.d_cand[c.sqcand] ?? 0) !== 0).slice(0, LISTA).map(c => linhaDoBloco(b, c));
   return {
@@ -58,8 +59,9 @@ export function fichaDoBloco(b: Bloco, info: readonly InfoCand[]): ConteudoFicha
       { rotulo: "votos válidos", valor: comSinalInteiro(b.d_vv) },
     ],
     linhas,
-    notas:
-      lat === null
+    notas: soma
+      ? [`soma das UFs às ${hora(b.ultimo.at)}`]
+      : lat === null
         ? []
         : [`arquivo gerado às ${hora(b.ultimo.at)}, lido ${lat < 60 ? `${Math.round(lat)} s` : duracao(lat)} depois`],
   };
@@ -74,6 +76,7 @@ export function criarLotesView(): View {
   let info: InfoCand[] = [];
   let selecao: number | null = null;
   let sobPonteiro = -1;
+  let soma = false;
 
   const mostrar = (i: number, clientX?: number): void => {
     if (!grafico || !ficha) return;
@@ -84,7 +87,7 @@ export function criarLotesView(): View {
       ficha.esconder();
       return;
     }
-    ficha.mostrar(fichaDoBloco(b, info), clientX ?? ancora.x, ancora.y);
+    ficha.mostrar(fichaDoBloco(b, info, soma), clientX ?? ancora.x, ancora.y);
   };
 
   const ler = (i: number, clientX: number): void => {
@@ -123,10 +126,15 @@ export function criarLotesView(): View {
     update(s: State) {
       if (!raiz) return;
       const p = partes(raiz);
-      trocarChips(p.chips, [chipAndamento(s.estado?.br.pst ?? 0, false)]);
       const dados = s.lotes[chaveLotes(ELE, CARGO, "br")];
+      soma = dados?.fonte === "soma_ufs";
+      const sub = raiz.querySelector(".lt-sub");
+      if (sub) sub.textContent = soma
+        ? "votos válidos e seções que a soma das UFs acrescentou a cada minuto desde as 17:00"
+        : "votos válidos e seções que cada atualização do arquivo nacional acrescentou desde as 17:00";
+      trocarChips(p.chips, [chipAndamento(s.estado?.br.pst ?? 0, false), soma ? chip("soma das 27 UFs e exterior", "aviso") : null]);
       const desde = inicioDoEixo(s);
-      const sig = [dados?.lotes.length, dados?.lotes[dados.lotes.length - 1]?.snapshot_id, s.cores, desde].join("|");
+      const sig = [dados?.lotes.length, dados?.lotes[dados.lotes.length - 1]?.snapshot_id, dados?.fonte, s.cores, desde].join("|");
       if (sig === assinatura) return;
       assinatura = sig;
       info = infoDosLotes(dados, s.cores);

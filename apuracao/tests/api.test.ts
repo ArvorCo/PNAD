@@ -372,7 +372,83 @@ describe("agregado nacional pela soma das UFs", () => {
     expect(antes.s.st).toBe(200_000);
     const sid = ResultadoSchema.parse(await pegar(`/api/resultado?ele=6257&cargo=1&abr=br&snapshot_id=${sd.id("presBr4")}`));
     expect(sid.fonte).toBe("tse");
-    expect(SerieSchema.parse(await pegar("/api/serie?ele=6257&cargo=1&abr=br")).fonte).toBe("tse");
-    expect(LotesSchema.parse(await pegar("/api/lotes?ele=6257&cargo=1&abr=br")).fonte).toBe("tse");
+    expect(SerieSchema.parse(await pegar("/api/serie?ele=6257&cargo=1&abr=br")).fonte).toBe("soma_ufs");
+    expect(LotesSchema.parse(await pegar("/api/lotes?ele=6257&cargo=1&abr=br")).fonte).toBe("soma_ufs");
+    expect(SerieSchema.parse(await pegar(`/api/serie?ele=6257&cargo=1&abr=br&at=${iso(seg(650))}`)).fonte).toBe("tse");
+    expect(LotesSchema.parse(await pegar(`/api/lotes?ele=6257&cargo=1&abr=br&at=${iso(seg(650))}`)).fonte).toBe("tse");
+  });
+});
+
+describe("série e lotes nacionais pela soma das UFs", () => {
+  let sd: Semeado;
+  let srvSoma: Servidor;
+  let ufs: string[] = [];
+  const voto = (rodada: number, i: number): Record<string, number> => ({ 13: 100_000 * rodada + i, 22: 90_000 * rodada + 2 * i });
+
+  beforeAll(() => {
+    sd = semear();
+    ufs = sd.db
+      .query<{ uf: string }, []>("SELECT uf FROM arquivo WHERE tipo = 'u' AND eleicao_cd = 6257 AND cargo_cd = 1 AND nivel = 'uf' ORDER BY uf")
+      .all()
+      .map((u) => u.uf);
+    // Rodada 1: as 28 UFs entre seg(700) e seg(727). Rodada 2: entre seg(800) e seg(935), uma a cada 5 s,
+    // para a grade de 60 s pegar a rodada pela metade. O arquivo nacional parou em st 200.000.
+    ufs.forEach((uf, i) => {
+      const corpo = versaoU("sp-c0001-e006257-u.json", { st: 10_000 + i, votos: voto(1, i), idg: 1_300_000 + i, ger: seg(700) + i * 1000, tot: seg(690), cdabr: uf });
+      sd.seq.processar(chave(keyU(6257, 1, "uf", uf)), corpo, iso(seg(700) + i * 1000 + 500));
+    });
+    ufs.forEach((uf, i) => {
+      const corpo = versaoU("sp-c0001-e006257-u.json", { st: 15_000 + i, votos: voto(2, i), idg: 1_400_000 + i, ger: seg(800) + i * 5000, tot: seg(790), cdabr: uf });
+      sd.seq.processar(chave(keyU(6257, 1, "uf", uf)), corpo, iso(seg(800) + i * 5000 + 500));
+    });
+    sd.seq.processar(CHAVES.abBr, versaoAb("br-e006257-ab.json", 1_400_100, seg(940), { br: { st: 450_000, tot: seg(930) } }), iso(seg(945)));
+    sd.fechar();
+    srvSoma = criarServidor({ dbPath: sd.path, port: 0, log: false });
+  });
+
+  afterAll(async () => {
+    await srvSoma.parar();
+    sd.limpar();
+  });
+
+  const pegar = async (caminho: string): Promise<unknown> => (await fetch(`${srvSoma.url}${caminho}`)).json();
+
+  test("série e lotes nacionais pela soma das UFs quando o arquivo do TSE atrasa", async () => {
+    const r = ResultadoSchema.parse(await pegar("/api/resultado?ele=6257&cargo=1&abr=br"));
+    expect(r.fonte).toBe("soma_ufs");
+    const serie = SerieSchema.parse(await pegar("/api/serie?ele=6257&cargo=1&abr=br"));
+    const lotes = LotesSchema.parse(await pegar("/api/lotes?ele=6257&cargo=1&abr=br"));
+    expect(serie.fonte).toBe("soma_ufs");
+    expect(lotes.fonte).toBe("soma_ufs");
+    // Grade: seg(780) (rodada 1 inteira), seg(840) e seg(900) (rodada 2 pela metade), seg(935) (última geração).
+    const instantes = [780, 840, 900, 935].map((x) => iso(seg(x)));
+    expect(serie.pontos.map((p) => p.at)).toEqual(instantes);
+    expect(lotes.lotes.map((l) => l.at)).toEqual(instantes);
+    const ult = lotes.lotes[lotes.lotes.length - 1];
+    expect(ult?.st).toBe(r.s.st);
+    expect(ult?.vv).toBe(r.v.vv);
+    expect(ult?.tv).toBe(r.v.tv);
+    expect(ult?.snapshot_id).toBe(r.snapshot_id);
+    expect(ult?.pst).toBeCloseTo(r.s.pst, 9);
+    expect(ult?.capturado_em).toBe(iso(seg(935) + 500));
+    for (const c of r.cand.filter((x) => x.vap > 0)) expect(ult?.cand[c.sqcand]?.vap).toBe(c.vap);
+    expect(ult?.cand[String(SQ.lula)]?.vap).toBe(28 * 200_000 + (27 * 28) / 2);
+    // seg(840): UFs 0 a 8 já na rodada 2 (geradas até seg(840)), as outras 19 ainda na 1.
+    const meio = lotes.lotes[1];
+    expect(meio?.st).toBe(ufs.reduce((a, _u, i) => a + (i <= 8 ? 15_000 : 10_000) + i, 0));
+    const primeiro = lotes.lotes[0];
+    expect(primeiro?.d_st).toBe(primeiro?.st ?? -1);
+    const somaD = (f: (l: (typeof lotes.lotes)[number]) => number): number => lotes.lotes.reduce((a, l) => a + f(l), 0);
+    expect(somaD((l) => l.d_st)).toBe(r.s.st);
+    expect(somaD((l) => l.d_vv)).toBe(r.v.vv);
+    expect(somaD((l) => l.d_tv)).toBe(r.v.tv);
+    expect(somaD((l) => l.cand[String(SQ.flavio)]?.d_vap ?? 0)).toBe(r.cand.find((c) => c.sqcand === String(SQ.flavio))?.vap ?? -1);
+    const pl = serie.pontos[serie.pontos.length - 1];
+    const lula = r.cand.find((c) => c.sqcand === String(SQ.lula));
+    expect(pl?.cand[String(SQ.lula)]).toBeCloseTo(lula?.pvapn ?? -1, 9);
+    expect(serie.candidatos[0]?.sqcand).toBe(String(SQ.lula));
+    expect(lotes.candidatos.map((c) => c.n).slice(0, 2)).toEqual(["13", "22"]);
+    const antes = LotesSchema.parse(await pegar(`/api/lotes?ele=6257&cargo=1&abr=br&at=${iso(seg(650))}`));
+    expect(antes.fonte).toBe("tse");
   });
 });

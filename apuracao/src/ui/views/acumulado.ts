@@ -5,7 +5,7 @@
 
 import { criarAcumulado, ganhoDesde, lotesDesde, tetoRedondo, ticksVotos } from "../components/acumulado.ts";
 import type { GraficoAcumulado, SerieVotos } from "../components/acumulado.ts";
-import { chipAndamento, trocarChips } from "../components/chip.ts";
+import { chip, chipAndamento, trocarChips } from "../components/chip.ts";
 import { criarContador } from "../components/contador.ts";
 import type { Contador } from "../components/contador.ts";
 import type { Tick } from "../components/linhas.ts";
@@ -130,15 +130,15 @@ export function criarAcumuladoView(): View {
     update(s: State) {
       if (!raiz) return;
       const p = partes(raiz);
-      trocarChips(p.chips, [chipAndamento(s.estado?.br.pst ?? 0, false)]);
       const dados = s.lotes[chaveLotes(ELE, CARGO, "br")];
+      trocarChips(p.chips, [chipAndamento(s.estado?.br.pst ?? 0, false), dados?.fonte === "soma_ufs" ? chip("soma das 27 UFs e exterior", "aviso") : null]);
       const desde = inicioDoEixo(s);
-      const sig = [dados?.lotes.length, dados?.lotes[dados.lotes.length - 1]?.snapshot_id, s.cores, desde, s.estado?.agora.slice(0, 15)].join("|");
+      const sig = [dados?.lotes.length, dados?.lotes[dados.lotes.length - 1]?.snapshot_id, dados?.fonte, s.cores, desde, s.estado?.agora.slice(0, 15)].join("|");
       if (sig === assinatura) return;
       assinatura = sig;
       info = infoDosLotes(dados, s.cores);
       visiveis = lotesDesde(dados?.lotes ?? [], desde).filter(l => l.st > 0 || l.vv > 0);
-      desenharGrafico(raiz, grafico, visiveis, info, desde);
+      desenharGrafico(raiz, grafico, visiveis, info, desde, dados?.fonte === "soma_ufs");
       const agora = Date.parse(s.estado?.agora ?? "");
       desenharPainel(raiz, linhas, visiveis, info, Number.isFinite(agora) ? agora : Date.now());
     },
@@ -154,7 +154,7 @@ export function criarAcumuladoView(): View {
   };
 }
 
-function desenharGrafico(raiz: HTMLElement, g: GraficoAcumulado | null, lotes: Lote[], info: InfoCand[], desde: number): void {
+function desenharGrafico(raiz: HTMLElement, g: GraficoAcumulado | null, lotes: Lote[], info: InfoCand[], desde: number, soma: boolean): void {
   const nota = raiz.querySelector<HTMLElement>(".ac-nota");
   if (!g || !nota) return;
   const ult = lotes[lotes.length - 1];
@@ -183,7 +183,7 @@ function desenharGrafico(raiz: HTMLElement, g: GraficoAcumulado | null, lotes: L
   });
   const fora = info.length - nasLinhas.length;
   nota.textContent =
-    `${lotes.length} ${lotes.length === 1 ? "atualização" : "atualizações"} do arquivo nacional; linha cinza: votos válidos` +
+    `${lotes.length} ${lotes.length === 1 ? "atualização" : "atualizações"} ${soma ? "da soma das UFs, minuto a minuto" : "do arquivo nacional"}; linha cinza: votos válidos` +
     (fora > 0 ? `; candidaturas abaixo de ${PISO_LINHA}% dos válidos ficam fora do gráfico` : "");
 }
 

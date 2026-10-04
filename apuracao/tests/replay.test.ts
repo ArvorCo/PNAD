@@ -16,6 +16,7 @@ afterAll(() => {
 });
 
 describe("replay", () => {
+  // Lê 59 mil fixtures: sob carga (coletor, servidor e TTS rodando) passa de 5 s.
   test("fixtures: registro inteiro, zero parse_error, ausentes como nao_existe", () => {
     const out = join(dir, "fixtures.sqlite");
     const r = replayFixtures(FIXTURES, out, new Date(seg(0)));
@@ -33,7 +34,7 @@ describe("replay", () => {
     } finally {
       db.close();
     }
-  });
+  }, 30_000);
 
   test("outro banco: mesma sequência de versões, ritmo pelo speed, filtro from", async () => {
     const s = semear();
@@ -62,5 +63,5 @@ describe("replay", () => {
     } finally {
       s.limpar();
     }
-  });
+  }, 30_000);
 });

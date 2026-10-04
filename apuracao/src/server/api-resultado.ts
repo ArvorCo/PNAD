@@ -11,6 +11,7 @@ import type { Campo, Contexto } from "./contexto.ts";
 import { ErroHttp } from "./http.ts";
 import type { SomaUfs } from "./nacional.ts";
 import { somaSeDefasado } from "./nacional.ts";
+import { gradeSomaCache, somaNacionalAtiva } from "./nacional-serie.ts";
 import type { Params } from "./http.ts";
 
 const n0 = (v: number | null | undefined): number => v ?? 0;
@@ -243,12 +244,39 @@ export function serie(ctx: Contexto, db: Database, p: Params): unknown {
   const a = parseAbr(p.exigirTexto("abr"));
   const arq = arquivoPorChave(db, chaveU(ele, cargo, a));
   if (!arq) throw new ErroHttp(404, `arquivo desconhecido: ${abrTexto(a)}`);
-  const { pontos, ultimo } = serieArquivo(db, arq.id, a.uf, p.limite("top", 12, 100), p.at());
+  const top = p.limite("top", 12, 100);
+  const soma = somaNacionalAtiva(db, ele, cargo, a, p.at());
+  if (soma) return serieSoma(ctx, db, ele, cargo, top, soma, p.at());
+  const { pontos, ultimo } = serieArquivo(db, arq.id, a.uf, top, p.at());
   return {
     abr: abrTexto(a),
     pontos: pontos.map(({ at, snapshot_id, pst, cand }) => ({ at, snapshot_id, pst, cand })),
     viradas: viradasDe(pontos),
     fonte: "tse",
+    candidatos: ultimo.map((c) => {
+      const o = candOut(ctx, c);
+      return { sqcand: o.sqcand, n: o.n, nmu: o.nmu, sg: o.sg, campo: o.campo };
+    }),
+  };
+}
+
+/** Série nacional pela soma das 28 UFs numa grade de 60 s (arquivo nacional do TSE defasado). */
+function serieSoma(ctx: Contexto, db: Database, ele: number, cargo: number, top: number, soma: SomaUfs, at?: string): unknown {
+  const ultimo = ordenarCand(soma.cand).slice(0, top);
+  const pontos: PontoSerieOut[] = gradeSomaCache(db, ele, cargo, at).map((g) => {
+    const pt: PontoSerieOut = { at: new Date(g.t).toISOString(), snapshot_id: g.snapshot_id, pst: g.ts > 0 ? (100 * g.st) / g.ts : 0, cand: {}, vap: {} };
+    for (const c of ultimo) {
+      const vap = g.vap.get(c.sqcand) ?? 0;
+      pt.cand[String(c.sqcand)] = g.vv > 0 ? (100 * vap) / g.vv : 0;
+      pt.vap[String(c.sqcand)] = vap;
+    }
+    return pt;
+  });
+  return {
+    abr: "br",
+    pontos: pontos.map(({ at: em, snapshot_id, pst, cand }) => ({ at: em, snapshot_id, pst, cand })),
+    viradas: viradasDe(pontos),
+    fonte: "soma_ufs",
     candidatos: ultimo.map((c) => {
       const o = candOut(ctx, c);
       return { sqcand: o.sqcand, n: o.n, nmu: o.nmu, sg: o.sg, campo: o.campo };
