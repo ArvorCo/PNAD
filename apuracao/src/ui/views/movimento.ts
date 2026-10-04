@@ -119,7 +119,8 @@ const corDe = (info: Map<string, InfoCand>, sq: string): string => info.get(sq)?
 function desenharPrincipal(raiz: HTMLElement, grafico: Linhas | null, serie: Serie | undefined, info: Map<string, InfoCand>): void {
   const nota = raiz.querySelector<HTMLElement>(".mv-nota");
   if (!grafico || !nota) return;
-  const pontos = serie?.pontos ?? [];
+  // Só leituras com seção totalizada: o snapshot zerado da véspera abriria o eixo em 17:00 de ontem.
+  const pontos = (serie?.pontos ?? []).filter(q => q.pst > 0);
   if (!serie || pontos.length === 0) {
     grafico.update([], { dominioX: [0, 1], dominioY: [30, 60] });
     nota.textContent = "nenhuma leitura com seções totalizadas ainda; a linha começa na primeira";
@@ -171,7 +172,7 @@ function desenharSpark(raiz: HTMLElement, s: State, uf: string, g: Linhas | unde
     cab.title = nomeUf(s, uf);
   }
   const serie = s.series[chaveSerie(ELE, CARGO, uf.toLowerCase())];
-  const pontos = serie?.pontos ?? [];
+  const pontos = (serie?.pontos ?? []).filter(q => q.pst > 0);
   if (!serie || pontos.length === 0) {
     margem.textContent = "aguardando seções";
     margem.style.color = "";
