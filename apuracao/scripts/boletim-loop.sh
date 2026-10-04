@@ -39,6 +39,11 @@ $(cat "data/boletins/dados-$H.json")"
   echo "[$H] áudio"
   scripts/boletim-falar.sh "data/boletins/$H.txt" > "data/boletins/$H.log" 2>&1 || echo "[$H] falha no áudio: $(tail -2 "data/boletins/$H.log")"
   echo "[$H] fim ($(( $(date +%s) - INICIO )) s)"
-  GASTO=$(( $(date +%s) - INICIO ))
-  [ "$GASTO" -lt "$INTERVALO" ] && sleep $(( INTERVALO - GASTO ))
+  # Alinha ao relógio: próximo ciclo no próximo múltiplo de INTERVALO (18:40, 18:50...),
+  # contado a partir do início deste ciclo, nunca menos de 30 s depois do fim do áudio.
+  AGORA=$(date +%s)
+  PROXIMO=$(( (INICIO / INTERVALO + 1) * INTERVALO ))
+  while [ "$PROXIMO" -lt $(( AGORA + 30 )) ]; do PROXIMO=$(( PROXIMO + INTERVALO )); done
+  echo "[$H] próximo às $(TZ=America/Sao_Paulo date -r "$PROXIMO" +%H:%M:%S)"
+  sleep $(( PROXIMO - AGORA ))
 done
