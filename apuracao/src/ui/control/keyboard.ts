@@ -72,6 +72,7 @@ export function ligarTeclado(a: AcoesTeclado, alvo: Window = window): () => void
     else if (k === "/") a.paleta(true);
     else if (k === "Escape") a.paleta(false);
     else if (k === "ArrowUp" || k === "ArrowDown") tratou = a.teclaDaTela(k);
+    else if (k === "," || k === ".") tratou = a.teclaDaTela(k);
     else if (/^[0-9]$/.test(k)) {
       const d = destinoDoDigito(k, a.ufAtual());
       if (d) a.irPara(d);

@@ -1,0 +1,463 @@
+/* Telas "acumulado" e "lotes": votos absolutos por lote, barras por atualização e a
+   ficha de leitura no estilo da casa (docs/assets/reponderacao_tip.css). Piso de 22 px. */
+
+/* ---------- comum ---------- */
+.ac,
+.lt {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 0.75rem;
+  height: 100%;
+}
+
+.ac-sub,
+.ac-nota,
+.lt-sub,
+.lt-legenda {
+  font-size: var(--t-2);
+  color: var(--muted);
+}
+
+.ac-nota--vazio,
+.lt-legenda--vazio {
+  font-size: var(--t-3);
+  color: var(--ink);
+}
+
+.ac-grafico,
+.lt-grafico {
+  position: relative;
+  min-height: 0;
+  touch-action: none;
+}
+
+/* ---------- acumulado: gráfico ---------- */
+.ac-alvo {
+  fill: transparent;
+  pointer-events: all;
+  cursor: crosshair;
+}
+
+.ac-leitura-linha {
+  stroke: var(--ink);
+  stroke-width: 2;
+  stroke-dasharray: 4 6;
+  pointer-events: none;
+}
+
+.ac-leitura-ponto {
+  fill: var(--white);
+  stroke-width: 4;
+  pointer-events: none;
+}
+
+.ac-ponto {
+  pointer-events: none;
+}
+
+.ac-pulso {
+  fill: none;
+  stroke-width: 3;
+  pointer-events: none;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ac-pulso 2.4s ease-out infinite;
+}
+
+@keyframes ac-pulso {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  80%,
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+
+/* ---------- acumulado: painel ---------- */
+.ac-painel {
+  display: grid;
+  align-content: start;
+  gap: 1.25rem;
+  height: 100%;
+}
+
+.ac-tab {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: var(--t-2);
+}
+
+.ac-tab thead th {
+  font-size: var(--t-1);
+  font-weight: 500;
+  color: var(--muted);
+  text-align: right;
+  padding: 0 0 0.5rem;
+  border-bottom: 2px solid var(--ink);
+}
+
+.ac-tab thead th:first-child {
+  text-align: left;
+  width: 31%;
+}
+
+.ac-tab thead th:nth-child(2) {
+  width: 21%;
+}
+
+.ac-tab thead th:nth-child(3) {
+  width: 13%;
+}
+
+.ac-tab thead th:nth-child(4),
+.ac-tab thead th:nth-child(5) {
+  width: 17.5%;
+}
+
+.ac-tab tbody th {
+  text-align: left;
+  font-size: var(--t-1);
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ac-tab tbody th,
+.ac-tab tbody td {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.ac-tab tbody td {
+  padding-left: 0.5rem;
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: var(--t-1);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.ac-cor {
+  display: inline-block;
+  width: 0.875rem;
+  height: 0.875rem;
+  margin-right: 0.5rem;
+  border-radius: 0.125rem;
+  vertical-align: -0.05em;
+}
+
+.ac-ultimo {
+  font-family: var(--font-mono);
+  font-size: var(--t-1);
+  color: var(--ink);
+}
+
+/* ---------- lotes: gráfico ---------- */
+.lt-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  cursor: pointer;
+}
+
+.lt-grade {
+  stroke: var(--line);
+  stroke-width: 1;
+}
+
+.lt-zero,
+.lt-base {
+  stroke: var(--ink);
+  stroke-width: 2;
+}
+
+.lt-marca-x {
+  stroke: var(--ink);
+  stroke-width: 2;
+}
+
+.lt-tick,
+.lt-eixo-st,
+.lt-eixo-v {
+  fill: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 22px;
+  dominant-baseline: middle;
+}
+
+.lt-tick--y {
+  text-anchor: end;
+}
+
+.lt-tick--x {
+  text-anchor: middle;
+}
+
+.lt-tick--st {
+  text-anchor: start;
+  fill: var(--ink);
+}
+
+.lt-eixo-st {
+  text-anchor: end;
+  fill: var(--ink);
+}
+
+.lt-eixo-v {
+  text-anchor: start;
+}
+
+.lt-seg--neg {
+  fill: var(--warn);
+}
+
+.lt-escada {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+.lt-contorno {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 6;
+  filter: drop-shadow(0 0 1.5px var(--ink));
+  pointer-events: none;
+}
+
+/* ---------- lotes: painel ---------- */
+.lt-painel {
+  display: grid;
+  align-content: start;
+  gap: 1.5rem;
+  height: 100%;
+}
+
+.lt-painel h2 {
+  font-family: var(--font-serif);
+  font-size: var(--t-3);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.lt-lista-cab {
+  display: grid;
+  grid-template-columns: 7rem 5.5rem 7rem minmax(0, 1fr);
+  gap: 0.75rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 2px solid var(--ink);
+  font-size: var(--t-1);
+  color: var(--muted);
+}
+
+.lt-lista-cab span:nth-child(2),
+.lt-lista-cab span:nth-child(3) {
+  text-align: right;
+}
+
+.lt-lista li {
+  display: grid;
+  grid-template-columns: 7rem 5.5rem 7rem minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: baseline;
+  padding: 0.375rem 0;
+  border-bottom: 1px solid var(--line);
+  font-size: var(--t-1);
+}
+
+.lt-lista b,
+.lt-n {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.lt-lista b {
+  font-weight: 600;
+}
+
+.lt-n {
+  text-align: right;
+}
+
+.lt-lider {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.lt-lider i,
+.lt-bloco-leg i {
+  display: inline-block;
+  width: 0.875rem;
+  height: 0.875rem;
+  margin-right: 0.5rem;
+  border-radius: 0.125rem;
+  vertical-align: -0.05em;
+}
+
+.lt-lista li.lt-vazio {
+  display: block;
+  border-bottom: 0;
+  font-size: var(--t-2);
+  color: var(--muted);
+}
+
+.lt-bloco {
+  display: flex;
+  height: 3rem;
+  border-radius: 0.25rem;
+  overflow: hidden;
+  background: var(--nao-iniciado);
+}
+
+.lt-bloco > i {
+  display: block;
+  height: 100%;
+  transition: width var(--d-fill) var(--ease);
+}
+
+.lt-bloco-leg {
+  display: grid;
+  gap: 0.25rem;
+  margin-top: 0.75rem;
+}
+
+.lt-bloco-leg li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: baseline;
+  font-size: var(--t-1);
+}
+
+.lt-bloco-leg span {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.lt-bloco-leg b {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* ---------- ficha de leitura ---------- */
+.ficha {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 50;
+  width: max-content;
+  min-width: 24rem;
+  max-width: 48rem;
+  padding: 1rem 1.25rem;
+  background: #192e2b;
+  color: #f4f0e7;
+  border: 1px solid #0f1f1d;
+  box-shadow: 0 0.625rem 1.875rem rgba(15, 31, 29, 0.34);
+  font-size: var(--t-1);
+  line-height: 1.35;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+
+.ficha.on {
+  opacity: 1;
+}
+
+.ficha-cab {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.ficha-cab b {
+  font-family: var(--font-mono);
+  font-size: var(--t-2);
+  font-weight: 700;
+}
+
+.ficha-cab span,
+.ficha-fatos dt,
+.ficha-extra,
+.ficha-nota {
+  font-family: var(--font-mono);
+  color: #b9c6bd;
+}
+
+.ficha-fatos {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: space-between;
+  gap: 0.125rem 1.5rem;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #3d554f;
+}
+
+.ficha-fatos dd {
+  margin: 0;
+  font-family: var(--font-mono);
+  text-align: right;
+  color: #fffdf8;
+}
+
+.ficha-tab {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ficha-tab th,
+.ficha-tab td {
+  padding: 0.125rem 0;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.ficha-tab th {
+  text-align: left;
+  padding-right: 1rem;
+}
+
+.ficha-tab td {
+  font-family: var(--font-mono);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  padding-left: 1rem;
+}
+
+.ficha-cor {
+  display: inline-block;
+  width: 0.75rem;
+  height: 0.75rem;
+  margin-right: 0.5rem;
+  border-radius: 0.125rem;
+  outline: 1px solid rgba(244, 240, 231, 0.5);
+}
+
+.ficha-nota {
+  margin-top: 0.5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ac-pulso {
+    animation: none;
+    display: none;
+  }
+
+  .ficha,
+  .lt-bloco > i {
+    transition: none;
+  }
+}

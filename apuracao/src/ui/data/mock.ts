@@ -18,6 +18,8 @@ import type {
   Estado,
   EventoSse,
   LiderUnidade,
+  Lote,
+  Lotes,
   Mapa,
   PartidoResultado,
   Resultado,
@@ -507,6 +509,51 @@ export function criarMock(o: OpcoesMock): Fonte & { agoraSimulado(): number } {
     return { pontos, viradas };
   };
 
+  // Lotes: o TSE publica uma versão nova do arquivo em intervalos irregulares; aqui, numa
+  // grade de 1 minuto simulado com ~25% dos minutos sem versão nova. Cache próprio (os
+  // instantes passados não mudam), para o mock não refazer a noite inteira a cada evento.
+  const lotesCache = new Map<string, Bruto>();
+  const lotes = (q: ConsultaResultado, t = agora()): Lotes => {
+    const e = lerAbr(q.abr);
+    const cands = candidatos(q.cargo, e.uf ?? "BR");
+    const lista: Lote[] = [];
+    let ant: Lote | null = null;
+    for (let k = 1, s = DEZESSETE + MIN; s <= t; k++, s += MIN) {
+      if (aleatorio(`lote${k}`) < 0.25) continue;
+      const ck = `${q.cargo}:${q.abr}:${s}`;
+      let b = lotesCache.get(ck);
+      if (!b) {
+        b = brutoEscopo(q.cargo, e, s);
+        if (lotesCache.size > 20_000) lotesCache.clear();
+        lotesCache.set(ck, b);
+      }
+      if (b.st === 0) continue;
+      const cand: Lote["cand"] = {};
+      cands.forEach((c, i) => {
+        const vap = b.vap[i] ?? 0;
+        cand[c.sqcand] = { vap, d_vap: vap - (ant?.cand[c.sqcand]?.vap ?? 0) };
+      });
+      const lote: Lote = {
+        snapshot_id: k,
+        at: new Date(s - 9_000).toISOString(),
+        capturado_em: new Date(s).toISOString(),
+        st: b.st,
+        d_st: b.st - (ant?.st ?? 0),
+        pst: b.ts > 0 ? (100 * b.st) / b.ts : 0,
+        vv: b.vv,
+        d_vv: b.vv - (ant?.vv ?? 0),
+        tv: b.c,
+        d_tv: b.c - (ant?.tv ?? 0),
+        cand,
+      };
+      lista.push(lote);
+      ant = lote;
+    }
+    const final = lista[lista.length - 1]?.cand ?? {};
+    const ordem = [...cands].sort((a, z) => (final[z.sqcand]?.vap ?? 0) - (final[a.sqcand]?.vap ?? 0));
+    return { abr: q.abr, candidatos: ordem.map(c => ({ sqcand: c.sqcand, n: c.n, nmu: c.nmu, sg: c.sg })), lotes: lista };
+  };
+
   // Anomalias: viradas de MG e AM, regressão da BA, fechamento de cada UF.
   const fechamentoUf = (uf: string): number => Math.max(...(munPorUf.get(uf) ?? []).map(u => u.fecha), DEZESSETE);
   const viradasCache = new Map<string, number | null>();
@@ -653,6 +700,7 @@ export function criarMock(o: OpcoesMock): Fonte & { agoraSimulado(): number } {
     resultado: q => atrasar(() => resultado(q)),
     mapa: q => atrasar(() => mapa(q)),
     serie: q => atrasar(() => serie(q)),
+    lotes: q => atrasar(() => lotes(q)),
     anomalias: () => atrasar(() => anomalias()),
     auditoria: caminho => Promise.resolve({ mock: true, caminho }),
     eventos,

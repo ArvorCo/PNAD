@@ -173,6 +173,35 @@ export interface Serie {
   candidatos?: CandidatoSerie[]; // os mais votados da última versão, com nome e partido
 }
 
+// ---------- /api/lotes ----------
+export interface CandidatoLotes {
+  sqcand: string;
+  n: string;
+  nmu: string;
+  sg: string;
+}
+
+/** Uma versão não regressiva do arquivo e o que ela acrescentou à anterior (d = valor no primeiro lote). */
+export interface Lote {
+  snapshot_id: number;
+  at: string; // geração do arquivo
+  capturado_em: string; // nossa leitura
+  st: number;
+  d_st: number;
+  pst: number;
+  vv: number;
+  d_vv: number;
+  tv: number;
+  d_tv: number;
+  cand: Record<string, { vap: number; d_vap: number }>;
+}
+
+export interface Lotes {
+  abr: string;
+  candidatos: CandidatoLotes[]; // ordem: votos na última versão
+  lotes: Lote[];
+}
+
 // ---------- /api/anomalias ----------
 export interface Anomalia {
   at: string;
@@ -274,6 +303,7 @@ export interface State {
   resultados: Record<string, Resultado>; // chave chaveResultado()
   mapas: Record<string, Mapa>; // chave chaveMapa()
   series: Record<string, Serie>; // chave chaveSerie()
+  lotes: Record<string, Lotes>; // chave chaveLotes()
   anomalias: Anomalia[];
   campos: Campos;
   cores: Cores;
@@ -296,6 +326,7 @@ export const chaveResultado = (ele: number, cargo: number, abr: string): string 
 export const chaveMapa = (ele: number, cargo: number, nivel: NivelMapa, pai: string): string =>
   `${ele}:${cargo}:${nivel}:${pai}`;
 export const chaveSerie = (ele: number, cargo: number, abr: string): string => `${ele}:${cargo}:${abr}`;
+export const chaveLotes = chaveSerie;
 
 /** Abrangência no formato do TSE: "br", "sp", "sp71072", "sp71072-z0248". */
 export function abrDe(uf?: string | null, mun?: string | null, zona?: string | null): string {
@@ -311,5 +342,6 @@ export type Need =
   | { tipo: "resultado"; ele: number; cargo: number; abr: string }
   | { tipo: "mapa"; ele: number; cargo: number; nivel: NivelMapa; pai: string }
   | { tipo: "serie"; ele: number; cargo: number; abr: string }
+  | { tipo: "lotes"; ele: number; cargo: number; abr: string }
   | { tipo: "estado" }
   | { tipo: "anomalias" };

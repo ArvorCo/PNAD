@@ -9,6 +9,7 @@ import "./styles/majoritarias.css";
 import "./styles/mapa.css";
 import "./styles/legislativas.css";
 import "./styles/exterior.css";
+import "./styles/evolucao.css";
 
 import { ativo, criarApi } from "./data/api.ts";
 import type { Fonte } from "./data/api.ts";
@@ -44,6 +45,7 @@ function estadoInicial(h: UiHash): State {
     resultados: {},
     mapas: {},
     series: {},
+    lotes: {},
     anomalias: [],
     campos: normalizarCampos(null),
     cores: CORES_PADRAO,

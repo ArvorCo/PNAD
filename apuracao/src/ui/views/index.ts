@@ -22,6 +22,8 @@ export const TITULOS: Readonly<Record<string, string>> = {
   mov: "Movimento da apuração",
   mun: "Município",
   exterior: "Voto no exterior",
+  acumulado: "Votos acumulados",
+  lotes: "O que chegou em cada atualização",
   espera: "Espera",
 };
 
@@ -40,6 +42,8 @@ export const ROTULOS: Readonly<Record<string, string>> = {
   mov: "Movimento da apuração",
   mun: "Município",
   exterior: "Voto no exterior",
+  acumulado: "Votos acumulados",
+  lotes: "O que chegou em cada atualização",
   espera: "Espera",
 };
 

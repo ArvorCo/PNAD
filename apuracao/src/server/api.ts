@@ -3,6 +3,7 @@ import type { Database } from "bun:sqlite";
 import { andamento, blob, fetches, fim, latencia, snapshots, velocidade } from "./api-auditoria.ts";
 import { anomalias } from "./api-anomalias.ts";
 import { config, estado } from "./api-config.ts";
+import { lotes } from "./api-lotes.ts";
 import { mapa } from "./api-mapa.ts";
 import { resultado, serie } from "./api-resultado.ts";
 import type { Contexto } from "./contexto.ts";
@@ -14,6 +15,7 @@ const COM_BANCO: Readonly<Record<string, Rota>> = {
   "/api/resultado": resultado,
   "/api/mapa": mapa,
   "/api/serie": serie,
+  "/api/lotes": lotes,
   "/api/anomalias": anomalias,
   "/api/snapshots": snapshots,
   "/api/latencia": latencia,

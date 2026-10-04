@@ -113,6 +113,22 @@ export const SerieSchema = z
   })
   .strict();
 
+export const LotesSchema = z
+  .object({
+    abr: z.string(),
+    candidatos: z.array(z.object({ sqcand: z.string(), n: z.string(), nmu: z.string(), sg: z.string() }).strict()),
+    lotes: z.array(
+      z
+        .object({
+          snapshot_id: z.number().int(), at: Iso, capturado_em: Iso, st: z.number(), d_st: z.number(), pst: z.number(),
+          vv: z.number(), d_vv: z.number(), tv: z.number(), d_tv: z.number(),
+          cand: z.record(z.object({ vap: z.number(), d_vap: z.number() }).strict()),
+        })
+        .strict(),
+    ),
+  })
+  .strict();
+
 export const AnomaliasSchema = z.array(
   z
     .object({

@@ -159,7 +159,10 @@ export function criarPainelExecutivo(o: { max: number; nvLidera?: number; casas?
       barra.update(r);
       barra.el.hidden = parado;
       const quando = hora(r?.dt_ht ?? null);
-      const atraso = s.estado?.br.atraso_s;
+      // Atraso só faz sentido depois da primeira seção totalizada no país; antes, a última
+      // versão gravada é a da véspera e a conta devolve horas.
+      const comecou = (s.estado?.br.st ?? 0) > 0;
+      const atraso = comecou ? s.estado?.br.atraso_s : null;
       const atrasoTxt = atraso === null || atraso === undefined ? "" : ` (atraso ${duracao(atraso)})`;
       tot.textContent = quando ? `totalização TSE ${quando}${atrasoTxt}` : "o TSE ainda não totalizou seções deste recorte";
       tot.classList.toggle("atrasado", (atraso ?? 0) > LIMITE_ATRASO_S);

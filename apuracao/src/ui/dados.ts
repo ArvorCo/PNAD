@@ -4,7 +4,7 @@
 import type { Fonte } from "./data/api.ts";
 import type { Store } from "./state/store.ts";
 import type { EventoSse, Need } from "./state/types.ts";
-import { chaveMapa, chaveResultado, chaveSerie } from "./state/types.ts";
+import { chaveLotes, chaveMapa, chaveResultado, chaveSerie } from "./state/types.ts";
 
 export function chaveNeed(n: Need): string {
   switch (n.tipo) {
@@ -14,6 +14,8 @@ export function chaveNeed(n: Need): string {
       return `mapas.${chaveMapa(n.ele, n.cargo, n.nivel, n.pai)}`;
     case "serie":
       return `series.${chaveSerie(n.ele, n.cargo, n.abr)}`;
+    case "lotes":
+      return `lotes.${chaveLotes(n.ele, n.cargo, n.abr)}`;
     case "estado":
       return "estado";
     case "anomalias":
@@ -33,7 +35,7 @@ export function eventoAfeta(e: EventoSse, n: Need): boolean {
   }
   // estado.br sai do arquivo nacional de presidente.
   if (n.tipo === "estado") return e.abr === "br" && e.cargo === 1;
-  if (n.tipo === "resultado" || n.tipo === "serie") return n.ele === e.ele && n.cargo === e.cargo && n.abr === e.abr;
+  if (n.tipo === "resultado" || n.tipo === "serie" || n.tipo === "lotes") return n.ele === e.ele && n.cargo === e.cargo && n.abr === e.abr;
   if (n.tipo === "mapa") {
     if (n.ele !== e.ele || n.cargo !== e.cargo) return false;
     // Mapa de UFs muda com qualquer UF; mapa de municípios ou zonas, com abrangências abaixo do pai.
@@ -63,6 +65,8 @@ export function criarCarregador(store: Store, fonteInicial: Fonte, aoErro: (n: N
         return fonte.mapa({ ele: n.ele, cargo: n.cargo, nivel: n.nivel, pai: n.pai });
       case "serie":
         return fonte.serie({ ele: n.ele, cargo: n.cargo, abr: n.abr });
+      case "lotes":
+        return fonte.lotes({ ele: n.ele, cargo: n.cargo, abr: n.abr });
       case "estado":
         return fonte.estado();
       case "anomalias":

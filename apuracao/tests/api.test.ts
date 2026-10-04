@@ -7,7 +7,7 @@ import type { Servidor } from "../src/server/main.ts";
 import type { Semeado } from "./server-helpers.ts";
 import { SQ, iso, seg, semear } from "./server-helpers.ts";
 import {
-  AnomaliasSchema, ConfigSchema, EstadoSchema, MapaSchema, ResultadoSchema, SerieSchema,
+  AnomaliasSchema, ConfigSchema, EstadoSchema, LotesSchema, MapaSchema, ResultadoSchema, SerieSchema,
 } from "./api-schemas.ts";
 
 let s: Semeado;
@@ -160,6 +160,34 @@ describe("séries e anomalias", () => {
     expect(r.pontos.length).toBe(5);
     expect(r.viradas).toEqual([{ at: iso(seg(350)), snapshot_id: s.id("presBr3"), de: String(SQ.lula), para: String(SQ.flavio) }]);
     expect(Object.keys(r.pontos[1]?.cand ?? {}).length).toBe(3);
+  });
+
+  test("/api/lotes: deltas por versão não regressiva, candidaturas com voto e top", async () => {
+    const t0 = performance.now();
+    const r = LotesSchema.parse((await get("/api/lotes?ele=6257&cargo=1&abr=br&top=3")).body);
+    expect(performance.now() - t0).toBeLessThan(200);
+    expect(r.abr).toBe("br");
+    expect(r.candidatos.map((c) => c.n)).toEqual(["22", "13", "14"]);
+    expect(r.lotes.map((l) => l.snapshot_id)).toEqual(["presBr0", "presBr1", "presBr2", "presBr3", "presBr4"].map((k) => s.id(k)));
+    expect(r.lotes.some((l) => l.snapshot_id === s.id("presBrRegressivo"))).toBe(false);
+    const [l0, l1, , l3, l4] = r.lotes;
+    expect(l0?.d_st).toBe(l0?.st ?? -1);
+    expect(l0?.d_vv).toBe(l0?.vv ?? -1);
+    expect(l1?.at).toBe(iso(seg(120) - 10_000));
+    expect(l1?.capturado_em).toBe(iso(seg(120)));
+    expect(l4?.st).toBe(200_000);
+    expect(l4?.d_st).toBe(50_000);
+    expect(l4?.vv).toBe(28_000_000);
+    expect(l4?.d_vv).toBe(28_000_000 - 23_400_000);
+    expect(l4?.d_tv).toBe((l4?.tv ?? 0) - (l3?.tv ?? 0));
+    expect(l4?.cand[String(SQ.lula)]).toEqual({ vap: 13_000_000, d_vap: 2_000_000 });
+    expect(l4?.cand[String(SQ.flavio)]).toEqual({ vap: 14_000_000, d_vap: 2_500_000 });
+    const soma = r.lotes.reduce((acc, l) => acc + (l.cand[String(SQ.flavio)]?.d_vap ?? 0), 0);
+    expect(soma).toBe(14_000_000);
+    const cedo = LotesSchema.parse((await get(`/api/lotes?ele=6257&cargo=1&abr=br&at=${iso(seg(250))}`)).body);
+    expect(cedo.lotes.length).toBe(3);
+    expect(LotesSchema.parse((await get("/api/lotes?ele=6257&cargo=1&abr=ac")).body)).toEqual({ abr: "ac", candidatos: [], lotes: [] });
+    expect((await get("/api/lotes?ele=6257&cargo=1")).status).toBe(400);
   });
 
   test("/api/anomalias: gravadas, derivadas e filtros", async () => {

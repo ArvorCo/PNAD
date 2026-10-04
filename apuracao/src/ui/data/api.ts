@@ -1,6 +1,6 @@
 // Cliente dos endpoints de "Contratos de API". O mock implementa a mesma interface.
 
-import type { Anomalia, Config, ConfigUf, Estado, EstadoBr, EstadoUf, EventoSse, Mapa, NivelMapa, Resultado, Serie } from "../state/types.ts";
+import type { Anomalia, Config, ConfigUf, Estado, EstadoBr, EstadoUf, EventoSse, Lotes, Mapa, NivelMapa, Resultado, Serie } from "../state/types.ts";
 
 export interface ConsultaResultado {
   ele: number;
@@ -23,6 +23,8 @@ export interface Fonte {
   resultado(q: ConsultaResultado): Promise<Resultado>;
   mapa(q: ConsultaMapa): Promise<Mapa>;
   serie(q: ConsultaResultado): Promise<Serie>;
+  /** O que cada versão do arquivo acrescentou (seções, válidos, votos por candidatura). */
+  lotes(q: ConsultaResultado): Promise<Lotes>;
   anomalias(): Promise<Anomalia[]>;
   /** Endpoints de auditoria (JSON livre, lido direto das views do servidor). */
   auditoria(caminho: string, params?: Record<string, string | number>): Promise<unknown>;
@@ -166,6 +168,7 @@ export function criarApi(base = "", relogio: Relogio = () => null): Fonte {
     resultado: q => obter<Resultado>(montarUrl(base, "/api/resultado", { ele: q.ele, cargo: q.cargo, abr: q.abr }, at())),
     mapa: q => obter<Mapa>(montarUrl(base, "/api/mapa", { ele: q.ele, cargo: q.cargo, nivel: q.nivel, pai: q.pai }, at())),
     serie: q => obter<Serie>(montarUrl(base, "/api/serie", { ele: q.ele, cargo: q.cargo, abr: q.abr }, at())),
+    lotes: q => obter<Lotes>(montarUrl(base, "/api/lotes", { ele: q.ele, cargo: q.cargo, abr: q.abr }, at())),
     anomalias: () => obter<unknown>(montarUrl(base, "/api/anomalias", {}, at())).then(normalizarAnomalias),
     auditoria: (caminho, params = {}) => obter<unknown>(montarUrl(base, caminho, params, at())),
   };
