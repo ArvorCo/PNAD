@@ -61,6 +61,7 @@ const CAMPOS_VALIDOS: ReadonlySet<string> = new Set(["esquerda", "centro-esquerd
 /** Partido → campo a partir de public/campos.json; relê quando o mtime muda (checagem a cada 2 s). */
 export class Campos {
   private mapa = new Map<string, Campo>();
+  private excecoes = new Map<string, Campo>();
   private mtime = -1;
   private checadoEm = 0;
 
@@ -78,16 +79,29 @@ export class Campos {
     }
     if (mt === this.mtime) return;
     try {
-      const bruto = JSON.parse(readFileSync(this.path, "utf8")) as { partidos?: Record<string, unknown> };
+      const bruto = JSON.parse(readFileSync(this.path, "utf8")) as { partidos?: Record<string, unknown>; excecoes?: Record<string, unknown> };
       const novo = new Map<string, Campo>();
       for (const [sg, c] of Object.entries(bruto.partidos ?? {})) {
         if (typeof c === "string" && CAMPOS_VALIDOS.has(c)) novo.set(sg.toUpperCase(), c as Campo);
       }
+      // Exceções por candidatura (sqcand), declaradas em scripts/gerar-campos.py.
+      const exc = new Map<string, Campo>();
+      for (const [sq, c] of Object.entries(bruto.excecoes ?? {})) {
+        if (typeof c === "string" && CAMPOS_VALIDOS.has(c)) exc.set(sq, c as Campo);
+      }
       this.mapa = novo;
+      this.excecoes = exc;
       this.mtime = mt;
     } catch {
       // arquivo sendo regravado: mantém o mapa anterior e tenta de novo
     }
+  }
+
+  /** Campo de uma candidatura: exceção declarada por sqcand ou, na falta, o campo do partido/federação. */
+  campoCandidato(sqcand: string | number | null | undefined, ...siglas: (string | null | undefined)[]): Campo {
+    if (Date.now() - this.checadoEm > 2000) this.recarregar();
+    const e = sqcand !== null && sqcand !== undefined ? this.excecoes.get(String(sqcand)) : undefined;
+    return e ?? this.campo(...siglas);
   }
 
   campo(...siglas: (string | null | undefined)[]): Campo {

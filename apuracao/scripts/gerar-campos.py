@@ -38,6 +38,16 @@ ALIAS_TSE = {
 # sp-092026-camada2.py) o agrupam com AGIR e MOBILIZA, que são centro-direita.
 EXTRA = {"PMB": ("centro-direita", "agrupado com AGIR e MOBILIZA nos atlas")}
 
+# Exceções por candidatura (SQ_CANDIDATO do TSE), quando a sigla não descreve o campo.
+# Decisão editorial do Leonardo na noite de 04/10/2026.
+EXCECOES_CANDIDATO = {
+    "20002553711": (
+        "centro-direita",
+        "Marina JHC, Senado AL, PSDB; grupo do prefeito JHC",
+    ),
+    "20002553350": ("centro-direita", "JHC, governo AL, PSDB; ex-PL, mesmo grupo"),
+}
+
 # Federações registradas em 2026, na grafia do TSE.
 FEDERACOES = (
     "PT/PC do B/PV",
@@ -132,7 +142,14 @@ def main() -> None:
         if campo not in campos:
             raise SystemExit(f"campo sem cor: {campo}")
 
-    saida = {"campos": campos, "partidos": dict(sorted(partidos.items()))}
+    for sq, (campo, _) in EXCECOES_CANDIDATO.items():
+        if campo not in campos:
+            raise SystemExit(f"exceção {sq} com campo sem cor: {campo}")
+    saida = {
+        "campos": campos,
+        "partidos": dict(sorted(partidos.items())),
+        "excecoes": {sq: c for sq, (c, _) in EXCECOES_CANDIDATO.items()},
+    }
     SAIDA.parent.mkdir(parents=True, exist_ok=True)
     SAIDA.write_text(
         json.dumps(saida, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"

@@ -57,7 +57,7 @@ function candMapa(ctx: Contexto, r: CandMapaRow): CandMapa {
     n: r.numero === null ? "" : String(r.numero),
     nmu: r.nome_urna ?? "",
     sg: r.sigla ?? "",
-    campo: ctx.campos.campo(r.sigla, r.fed_sigla),
+    campo: ctx.campos.campoCandidato(r.sqcand, r.sigla, r.fed_sigla),
     vap: r.vap ?? 0,
     pvapn: r.pvapn ?? 0,
   };

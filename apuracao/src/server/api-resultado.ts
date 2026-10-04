@@ -60,7 +60,7 @@ export function candOut(ctx: Contexto, c: CandRow, anterior?: Map<number, number
     nm: c.nome ?? "",
     nmu: c.nome_urna ?? "",
     sg: c.sigla ?? "",
-    campo: ctx.campos.campo(c.sigla, c.fed_sigla),
+    campo: ctx.campos.campoCandidato(c.sqcand, c.sigla, c.fed_sigla),
     e: c.eleito === 1,
     st: c.st ?? "",
     dvt: c.dvt ?? "",
