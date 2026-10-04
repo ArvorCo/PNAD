@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-10-04T00:06:10Z",
+ "gerado_em": "2026-10-04T04:30:00Z",
  "data_referencia": "2026-10-03",
  "eleicao": "2026-10-04",
  "parametros": {
@@ -52,11 +52,11 @@
   "estados_sem_pesquisa": {
    "ufs": [],
    "distribuicao_campos": {
-    "direita": 0.327867,
-    "centro-direita": 0.168614,
-    "centro": 0.189779,
-    "centro-esquerda": 0.037867,
-    "esquerda": 0.275874,
+    "direita": 0.382821,
+    "centro-direita": 0.151001,
+    "centro": 0.154197,
+    "centro-esquerda": 0.035411,
+    "esquerda": 0.276569,
     "indefinido": 0.0
    },
    "regra": "Hipótese neutra: cada vaga de estado sem pesquisa é sorteada da distribuição de campos das vagas sorteadas nos estados com cobertura recente."
@@ -73,45 +73,24 @@
    "eleitorado": 613742,
    "pesquisas_usadas": [
     {
-     "arquivo": "quaest_AC_2026-09-24.json",
-     "instituto": "Quaest",
-     "casa": "quaest",
-     "peso": 0.666667,
-     "campo_inicio": "2026-09-21",
-     "campo_fim": "2026-09-24",
-     "campo": "2026-09-21 a 2026-09-24",
+     "arquivo": "atlas_AC_2026-10-02.json",
+     "instituto": "AtlasIntel",
+     "casa": "atlas",
+     "peso": 1.0,
+     "campo_inicio": "2026-09-27",
+     "campo_fim": "2026-10-02",
+     "campo": "2026-09-27 a 2026-10-02",
      "campo_inferido": false,
      "regra_campo": null,
-     "divulgacao": "2026-09-25",
-     "dias_ate_eleicao": 10,
-     "n": 804,
-     "n_usado": 804,
+     "divulgacao": "2026-10-03",
+     "dias_ate_eleicao": 2,
+     "n": 836,
+     "n_usado": 836,
      "n_assumido": false,
      "votos_por_eleitor": 1,
-     "registro_tse": "AC-08968/2026",
-     "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/101/?tipo_pergunta=ESTIMULADA-SEN-001&instituto=Quaest",
-     "pagina": null,
-     "retiradas": []
-    },
-    {
-     "arquivo": "realtime_AC_2026-09-19.json",
-     "instituto": "Real Time Big Data",
-     "casa": "realtime",
-     "peso": 0.333333,
-     "campo_inicio": "2026-09-16",
-     "campo_fim": "2026-09-19",
-     "campo": "2026-09-16 a 2026-09-19",
-     "campo_inferido": false,
-     "regra_campo": null,
-     "divulgacao": "2026-09-21",
-     "dias_ate_eleicao": 15,
-     "n": 1600,
-     "n_usado": 1600,
-     "n_assumido": false,
-     "votos_por_eleitor": 1,
-     "registro_tse": "AC-01699/2026",
-     "url": null,
-     "pagina": 28,
+     "registro_tse": "AC-00679/2026",
+     "url": "https://cdn1.atlasintel.org/pesquisa_atlas__eleicoes_acre_2026_261003_3c685f199202964d.pdf",
+     "pagina": 19,
      "retiradas": []
     }
    ],
@@ -119,29 +98,18 @@
     {
      "arquivo": "quaest_AC_2026-08-27.json",
      "motivo": "onda anterior da mesma casa"
+    },
+    {
+     "arquivo": "quaest_AC_2026-09-24.json",
+     "motivo": "campo anterior a 28/09 (ou sem campo e divulgada antes de 30/09) e o estado tem onda recente"
+    },
+    {
+     "arquivo": "realtime_AC_2026-09-19.json",
+     "motivo": "campo anterior a 28/09 (ou sem campo e divulgada antes de 30/09) e o estado tem onda recente"
     }
    ],
-   "cobertura": "antiga",
+   "cobertura": "recente",
    "media": [
-    {
-     "nome": "Gladson Camelí",
-     "nome_urna": "GLADSON CAMELÍ",
-     "nome_pesquisa": "Gladson Camelí",
-     "aliases": [
-      "Gladson Camelí"
-     ],
-     "partido": "PP",
-     "campo": "centro-direita",
-     "sq_candidato": "10002548046",
-     "foto": "img/senado/AC_10002548046.jpg",
-     "valor": 20.629678,
-     "validos": 25.680098,
-     "validos_uniforme": 23.844298,
-     "validos_por_pesquisa": {
-      "quaest_AC_2026-09-24.json": 25.333333,
-      "realtime_AC_2026-09-19.json": 26.373626
-     }
-    },
     {
      "nome": "Marcio Bittar",
      "nome_urna": "MARCIO BITTAR",
@@ -153,12 +121,11 @@
      "campo": "direita",
      "sq_candidato": "10002548050",
      "foto": "img/senado/AC_10002548050.jpg",
-     "valor": 16.176524,
-     "validos": 20.136752,
-     "validos_uniforme": 19.073062,
+     "valor": 23.023023,
+     "validos": 24.651661,
+     "validos_uniforme": 24.334551,
      "validos_por_pesquisa": {
-      "quaest_AC_2026-09-24.json": 18.666667,
-      "realtime_AC_2026-09-19.json": 23.076923
+      "atlas_AC_2026-10-02.json": 24.651661
      }
     },
     {
@@ -172,12 +139,11 @@
      "campo": "direita",
      "sq_candidato": "10002533895",
      "foto": "img/senado/AC_10002533895.jpg",
-     "valor": 13.696882,
-     "validos": 17.050061,
-     "validos_uniforme": 16.416303,
+     "valor": 17.817818,
+     "validos": 19.078242,
+     "validos_uniforme": 18.906576,
      "validos_por_pesquisa": {
-      "quaest_AC_2026-09-24.json": 17.333333,
-      "realtime_AC_2026-09-19.json": 16.483516
+      "atlas_AC_2026-10-02.json": 19.078242
      }
     },
     {
@@ -191,12 +157,29 @@
      "campo": "esquerda",
      "sq_candidato": "10002536441",
      "foto": "img/senado/AC_10002536441.jpg",
-     "valor": 12.982808,
-     "validos": 16.161172,
-     "validos_uniforme": 15.651223,
+     "valor": 16.316316,
+     "validos": 17.470525,
+     "validos_uniforme": 17.340814,
      "validos_por_pesquisa": {
-      "quaest_AC_2026-09-24.json": 16.0,
-      "realtime_AC_2026-09-19.json": 16.483516
+      "atlas_AC_2026-10-02.json": 17.470525
+     }
+    },
+    {
+     "nome": "Gladson Camelí",
+     "nome_urna": "GLADSON CAMELÍ",
+     "nome_pesquisa": "Gladson Cameli",
+     "aliases": [
+      "Gladson Cameli"
+     ],
+     "partido": "PP",
+     "campo": "centro-direita",
+     "sq_candidato": "10002548046",
+     "foto": "img/senado/AC_10002548046.jpg",
+     "valor": 11.411411,
+     "validos": 12.21865,
+     "validos_uniforme": 12.225992,
+     "validos_por_pesquisa": {
+      "atlas_AC_2026-10-02.json": 12.21865
      }
     },
     {
@@ -210,12 +193,11 @@
      "campo": "centro",
      "sq_candidato": "10002535804",
      "foto": "img/senado/AC_10002535804.jpg",
-     "valor": 7.183899,
-     "validos": 8.942613,
-     "validos_uniforme": 9.438106,
+     "valor": 10.21021,
+     "validos": 10.932476,
+     "validos_uniforme": 10.973382,
      "validos_por_pesquisa": {
-      "quaest_AC_2026-09-24.json": 10.666667,
-      "realtime_AC_2026-09-19.json": 5.494505
+      "atlas_AC_2026-10-02.json": 10.932476
      }
     },
     {
@@ -229,71 +211,51 @@
      "campo": "centro-esquerda",
      "sq_candidato": "10002544274",
      "foto": "img/senado/AC_10002544274.jpg",
-     "valor": 6.050012,
-     "validos": 7.531136,
-     "validos_uniforme": 8.223227,
+     "valor": 8.808809,
+     "validos": 9.43194,
+     "validos_uniforme": 9.512004,
      "validos_por_pesquisa": {
-      "quaest_AC_2026-09-24.json": 8.0,
-      "realtime_AC_2026-09-19.json": 6.593407
+      "atlas_AC_2026-10-02.json": 9.43194
      }
     },
     {
      "nome": "Professor Inacio Moreira",
      "nome_urna": "PROFESSOR INACIO MOREIRA",
-     "nome_pesquisa": "Professor Inácio Moreira",
+     "nome_pesquisa": "Professor Inacio Moreira",
      "aliases": [
-      "Professor Inacio Moreira",
-      "Professor Inácio Moreira"
+      "Professor Inacio Moreira"
      ],
      "partido": "PSOL",
      "campo": "esquerda",
      "sq_candidato": "10002544110",
      "foto": "img/senado/AC_10002544110.jpg",
-     "valor": 1.891119,
-     "validos": 2.35409,
-     "validos_uniforme": 3.767271,
+     "valor": 3.403403,
+     "validos": 3.644159,
+     "validos_uniforme": 3.875261,
      "validos_por_pesquisa": {
-      "quaest_AC_2026-09-24.json": 1.333333,
-      "realtime_AC_2026-09-19.json": 4.395604
+      "atlas_AC_2026-10-02.json": 3.644159
      }
     },
     {
      "nome": "Dr. Junior Feitosa",
      "nome_urna": "DR. JUNIOR FEITOSA",
-     "nome_pesquisa": "Dr. Junior Feitosa",
+     "nome_pesquisa": "Dr. Júnior Feitosa",
      "aliases": [
-      "Dr. Junior Feitosa"
+      "Dr. Júnior Feitosa"
      ],
      "partido": "DC",
      "campo": "direita",
      "sq_candidato": "10002536710",
      "foto": "img/senado/AC_10002536710.jpg",
-     "valor": 1.722409,
-     "validos": 2.144078,
-     "validos_uniforme": 3.58651,
+     "valor": 2.402402,
+     "validos": 2.572347,
+     "validos_uniforme": 2.83142,
      "validos_por_pesquisa": {
-      "quaest_AC_2026-09-24.json": 2.666667,
-      "realtime_AC_2026-09-19.json": 1.098901
+      "atlas_AC_2026-10-02.json": 2.572347
      }
     }
    ],
    "probabilidades": [
-    {
-     "nome": "Gladson Camelí",
-     "nome_urna": "GLADSON CAMELÍ",
-     "partido": "PP",
-     "campo": "centro-direita",
-     "sq_candidato": "10002548046",
-     "foto": "img/senado/AC_10002548046.jpg",
-     "p_eleito": 0.72925,
-     "p_primeiro": 0.5215,
-     "ic90_validos": [
-      12.339872,
-      41.184413
-     ],
-     "validos_mediana": 23.901365,
-     "validos_central": 25.680098
-    },
     {
      "nome": "Marcio Bittar",
      "nome_urna": "MARCIO BITTAR",
@@ -301,30 +263,14 @@
      "campo": "direita",
      "sq_candidato": "10002548050",
      "foto": "img/senado/AC_10002548050.jpg",
-     "p_eleito": 0.5371,
-     "p_primeiro": 0.22765,
+     "p_eleito": 0.8029,
+     "p_primeiro": 0.5279,
      "ic90_validos": [
-      10.36038,
-      31.046031
+      13.748611,
+      36.205009
      ],
-     "validos_mediana": 18.831763,
-     "validos_central": 20.136752
-    },
-    {
-     "nome": "Jorge Viana",
-     "nome_urna": "JORGE VIANA",
-     "partido": "PT",
-     "campo": "esquerda",
-     "sq_candidato": "10002536441",
-     "foto": "img/senado/AC_10002536441.jpg",
-     "p_eleito": 0.34445,
-     "p_primeiro": 0.1313,
-     "ic90_validos": [
-      7.472638,
-      28.15477
-     ],
-     "validos_mediana": 15.280924,
-     "validos_central": 16.161172
+     "validos_mediana": 23.495111,
+     "validos_central": 24.651661
     },
     {
      "nome": "Mara Rocha",
@@ -333,14 +279,46 @@
      "campo": "direita",
      "sq_candidato": "10002533895",
      "foto": "img/senado/AC_10002533895.jpg",
-     "p_eleito": 0.317,
-     "p_primeiro": 0.1013,
+     "p_eleito": 0.5091,
+     "p_primeiro": 0.14645,
      "ic90_validos": [
-      8.736368,
-      26.918324
+      10.567865,
+      28.838024
      ],
-     "validos_mediana": 15.965144,
-     "validos_central": 17.050061
+     "validos_mediana": 18.151688,
+     "validos_central": 19.078242
+    },
+    {
+     "nome": "Jorge Viana",
+     "nome_urna": "JORGE VIANA",
+     "partido": "PT",
+     "campo": "esquerda",
+     "sq_candidato": "10002536441",
+     "foto": "img/senado/AC_10002536441.jpg",
+     "p_eleito": 0.39475,
+     "p_primeiro": 0.2109,
+     "ic90_validos": [
+      8.439402,
+      29.836506
+     ],
+     "validos_mediana": 16.623657,
+     "validos_central": 17.470525
+    },
+    {
+     "nome": "Gladson Camelí",
+     "nome_urna": "GLADSON CAMELÍ",
+     "partido": "PP",
+     "campo": "centro-direita",
+     "sq_candidato": "10002548046",
+     "foto": "img/senado/AC_10002548046.jpg",
+     "p_eleito": 0.1445,
+     "p_primeiro": 0.0588,
+     "ic90_validos": [
+      5.580929,
+      22.545686
+     ],
+     "validos_mediana": 11.524244,
+     "validos_central": 12.21865
     },
     {
      "nome": "Petecão",
@@ -349,14 +327,14 @@
      "campo": "centro",
      "sq_candidato": "10002535804",
      "foto": "img/senado/AC_10002535804.jpg",
-     "p_eleito": 0.04845,
-     "p_primeiro": 0.0125,
+     "p_eleito": 0.0951,
+     "p_primeiro": 0.0378,
      "ic90_validos": [
-      3.969805,
-      17.284003
+      4.968996,
+      20.327935
      ],
-     "validos_mediana": 8.523781,
-     "validos_central": 8.942613
+     "validos_mediana": 10.335528,
+     "validos_central": 10.932476
     },
     {
      "nome": "Eduardo Velloso",
@@ -365,14 +343,14 @@
      "campo": "centro-esquerda",
      "sq_candidato": "10002544274",
      "foto": "img/senado/AC_10002544274.jpg",
-     "p_eleito": 0.0237,
-     "p_primeiro": 0.00575,
+     "p_eleito": 0.05325,
+     "p_primeiro": 0.01815,
      "ic90_validos": [
-      3.352457,
-      14.979557
+      4.182427,
+      17.843563
      ],
-     "validos_mediana": 7.257626,
-     "validos_central": 7.531136
+     "validos_mediana": 8.852129,
+     "validos_central": 9.43194
     },
     {
      "nome": "Professor Inacio Moreira",
@@ -381,14 +359,14 @@
      "campo": "esquerda",
      "sq_candidato": "10002544110",
      "foto": "img/senado/AC_10002544110.jpg",
-     "p_eleito": 5e-05,
+     "p_eleito": 0.0004,
      "p_primeiro": 0.0,
      "ic90_validos": [
-      1.098591,
-      5.703069
+      1.580435,
+      6.996541
      ],
-     "validos_mediana": 2.517611,
-     "validos_central": 2.35409
+     "validos_mediana": 3.455141,
+     "validos_central": 3.644159
     },
     {
      "nome": "Dr. Junior Feitosa",
@@ -400,68 +378,66 @@
      "p_eleito": 0.0,
      "p_primeiro": 0.0,
      "ic90_validos": [
-      0.99702,
-      4.964424
+      1.198917,
+      4.689848
      ],
-     "validos_mediana": 2.293133,
-     "validos_central": 2.144078
+     "validos_mediana": 2.443805,
+     "validos_central": 2.572347
     }
    ],
    "eleitos_provaveis": [
-    "Gladson Camelí",
-    "Marcio Bittar"
+    "Marcio Bittar",
+    "Mara Rocha"
    ],
    "dupla_mais_provavel": [
-    "Gladson Camelí",
-    "Marcio Bittar"
+    "Marcio Bittar",
+    "Mara Rocha"
    ],
-   "p_dupla_mais_provavel": 0.3107,
+   "p_dupla_mais_provavel": 0.41505,
    "duplas": [
     {
      "nomes": [
-      "Gladson Camelí",
-      "Marcio Bittar"
-     ],
-     "p": 0.3107
-    },
-    {
-     "nomes": [
-      "Gladson Camelí",
-      "Jorge Viana"
-     ],
-     "p": 0.2328
-    },
-    {
-     "nomes": [
       "Marcio Bittar",
       "Mara Rocha"
      ],
-     "p": 0.1429
-    },
-    {
-     "nomes": [
-      "Gladson Camelí",
-      "Mara Rocha"
-     ],
-     "p": 0.14095
+     "p": 0.41505
     },
     {
      "nomes": [
       "Marcio Bittar",
       "Jorge Viana"
+     ],
+     "p": 0.24615
+    },
+    {
+     "nomes": [
+      "Marcio Bittar",
+      "Gladson Camelí"
      ],
      "p": 0.0723
+    },
+    {
+     "nomes": [
+      "Mara Rocha",
+      "Jorge Viana"
+     ],
+     "p": 0.06225
+    },
+    {
+     "nomes": [
+      "Marcio Bittar",
+      "Petecão"
+     ],
+     "p": 0.0435
     }
    ],
-   "incerteza": "alta",
-   "notas": [
-    "Nenhuma onda com campo a partir de 28/09: a média usa a onda mais recente de cada casa como prior fraca, com a deriva dos dias extras."
-   ],
-   "indecisos": 13.0,
-   "branco_nulo": 6.666667,
+   "incerteza": "media",
+   "notas": [],
+   "indecisos": 2.502503,
+   "branco_nulo": 4.104104,
    "outros_validos": 0.0,
-   "dias_ate_eleicao_ponderado": 11.666667,
-   "p_segunda_dupla": 0.2328,
+   "dias_ate_eleicao_ponderado": 2.0,
+   "p_segunda_dupla": 0.24615,
    "dupla_empatada": false,
    "soma_p_eleito": 2.0
   },
@@ -1948,28 +1924,32 @@
    "eleitorado": 6996545,
    "pesquisas_usadas": [
     {
-     "arquivo": "atlas_CE_2026-09-28.json",
+     "arquivo": "atlas_CE_2026-10-02.json",
      "instituto": "AtlasIntel",
      "casa": "atlas",
      "peso": 1.0,
-     "campo_inicio": "2026-09-23",
-     "campo_fim": "2026-09-28",
-     "campo": "2026-09-23 a 2026-09-28",
+     "campo_inicio": "2026-09-27",
+     "campo_fim": "2026-10-02",
+     "campo": "2026-09-27 a 2026-10-02",
      "campo_inferido": false,
      "regra_campo": null,
-     "divulgacao": "2026-09-30",
-     "dias_ate_eleicao": 6,
-     "n": 1808,
-     "n_usado": 1808,
+     "divulgacao": "2026-10-03",
+     "dias_ate_eleicao": 2,
+     "n": 2227,
+     "n_usado": 2227,
      "n_assumido": false,
      "votos_por_eleitor": 1,
-     "registro_tse": "CE-01709/2026",
-     "url": "https://static.poder360.com.br/uploads/2026/09/Pesquisa-Atlas_Focus-Eleicoes-Ceara-2026-260928.pdf",
+     "registro_tse": "CE-01031/2026",
+     "url": "https://cdn1.atlasintel.org/pesquisa_atlas_focus__eleicoes_ceara_2026__261003_77dad3caef63e1c9.pdf",
      "pagina": 18,
      "retiradas": []
     }
    ],
    "pesquisas_descartadas": [
+    {
+     "arquivo": "atlas_CE_2026-09-28.json",
+     "motivo": "onda anterior da mesma casa"
+    },
     {
      "arquivo": "quaest_CE_2026-09-04.json",
      "motivo": "onda anterior da mesma casa"
@@ -2000,11 +1980,11 @@
      "campo": "esquerda",
      "sq_candidato": "60002542479",
      "foto": "img/senado/CE_60002542479.jpg",
-     "valor": 26.273726,
-     "validos": 28.03838,
-     "validos_uniforme": 27.993697,
+     "valor": 29.3,
+     "validos": 30.712788,
+     "validos_uniforme": 30.635988,
      "validos_por_pesquisa": {
-      "atlas_CE_2026-09-28.json": 28.03838
+      "atlas_CE_2026-10-02.json": 30.712788
      }
     },
     {
@@ -2018,11 +1998,11 @@
      "campo": "esquerda",
      "sq_candidato": "60002542476",
      "foto": "img/senado/CE_60002542476.jpg",
-     "valor": 25.674326,
-     "validos": 27.398721,
-     "validos_uniforme": 27.363445,
+     "valor": 27.5,
+     "validos": 28.825996,
+     "validos_uniforme": 28.77456,
      "validos_por_pesquisa": {
-      "atlas_CE_2026-09-28.json": 27.398721
+      "atlas_CE_2026-10-02.json": 28.825996
      }
     },
     {
@@ -2036,11 +2016,11 @@
      "campo": "centro-direita",
      "sq_candidato": "60002540753",
      "foto": "img/senado/CE_60002540753.jpg",
-     "valor": 21.678322,
-     "validos": 23.134328,
-     "validos_uniforme": 23.161765,
+     "valor": 20.2,
+     "validos": 21.174004,
+     "validos_uniforme": 21.22544,
      "validos_por_pesquisa": {
-      "atlas_CE_2026-09-28.json": 23.134328
+      "atlas_CE_2026-10-02.json": 21.174004
      }
     },
     {
@@ -2054,29 +2034,11 @@
      "campo": "direita",
      "sq_candidato": "60002540754",
      "foto": "img/senado/CE_60002540754.jpg",
-     "valor": 18.481518,
-     "validos": 19.722814,
-     "validos_uniforme": 19.80042,
+     "valor": 17.2,
+     "validos": 18.02935,
+     "validos_uniforme": 18.123061,
      "validos_por_pesquisa": {
-      "atlas_CE_2026-09-28.json": 19.722814
-     }
-    },
-    {
-     "nome": "Catarina Matos",
-     "nome_urna": "CATARINA MATOS",
-     "nome_pesquisa": "Catarina Matos",
-     "aliases": [
-      "Catarina Matos"
-     ],
-     "partido": "UP",
-     "campo": "esquerda",
-     "sq_candidato": "60002533959",
-     "foto": "img/senado/CE_60002533959.jpg",
-     "valor": 0.999001,
-     "validos": 1.066098,
-     "validos_uniforme": 1.05042,
-     "validos_por_pesquisa": {
-      "atlas_CE_2026-09-28.json": 1.066098
+      "atlas_CE_2026-10-02.json": 18.02935
      }
     }
    ],
@@ -2088,14 +2050,14 @@
      "campo": "esquerda",
      "sq_candidato": "60002542479",
      "foto": "img/senado/CE_60002542479.jpg",
-     "p_eleito": 0.66055,
-     "p_primeiro": 0.32535,
+     "p_eleito": 0.781,
+     "p_primeiro": 0.428,
      "ic90_validos": [
-      16.207433,
-      40.530988
+      18.523795,
+      43.078376
      ],
-     "validos_mediana": 27.004264,
-     "validos_central": 28.03838
+     "validos_mediana": 29.763237,
+     "validos_central": 30.712788
     },
     {
      "nome": "Luizianne",
@@ -2104,14 +2066,14 @@
      "campo": "esquerda",
      "sq_candidato": "60002542476",
      "foto": "img/senado/CE_60002542476.jpg",
-     "p_eleito": 0.6369,
-     "p_primeiro": 0.29515,
+     "p_eleito": 0.70145,
+     "p_primeiro": 0.30175,
      "ic90_validos": [
-      15.724501,
-      39.662259
+      17.420662,
+      40.714301
      ],
-     "validos_mediana": 26.442062,
-     "validos_central": 27.398721
+     "validos_mediana": 27.809472,
+     "validos_central": 28.825996
     },
     {
      "nome": "Capitão Wagner",
@@ -2120,14 +2082,14 @@
      "campo": "centro-direita",
      "sq_candidato": "60002540753",
      "foto": "img/senado/CE_60002540753.jpg",
-     "p_eleito": 0.4219,
-     "p_primeiro": 0.2418,
+     "p_eleito": 0.31675,
+     "p_primeiro": 0.1741,
      "ic90_validos": [
-      11.006258,
-      40.309037
+      10.036894,
+      37.108274
      ],
-     "validos_mediana": 22.548497,
-     "validos_central": 23.134328
+     "validos_mediana": 20.539873,
+     "validos_central": 21.174004
     },
     {
      "nome": "Alcides Fernandes",
@@ -2136,30 +2098,14 @@
      "campo": "direita",
      "sq_candidato": "60002540754",
      "foto": "img/senado/CE_60002540754.jpg",
-     "p_eleito": 0.28065,
-     "p_primeiro": 0.1377,
+     "p_eleito": 0.2008,
+     "p_primeiro": 0.09615,
      "ic90_validos": [
-      9.22463,
-      35.307218
+      8.359352,
+      32.688775
      ],
-     "validos_mediana": 19.031951,
-     "validos_central": 19.722814
-    },
-    {
-     "nome": "Catarina Matos",
-     "nome_urna": "CATARINA MATOS",
-     "partido": "UP",
-     "campo": "esquerda",
-     "sq_candidato": "60002533959",
-     "foto": "img/senado/CE_60002533959.jpg",
-     "p_eleito": 0.0,
-     "p_primeiro": 0.0,
-     "ic90_validos": [
-      0.458284,
-      1.949265
-     ],
-     "validos_mediana": 0.973667,
-     "validos_central": 1.066098
+     "validos_mediana": 17.495464,
+     "validos_central": 18.02935
     }
    ],
    "eleitos_provaveis": [
@@ -2170,51 +2116,51 @@
     "Cid Gomes",
     "Luizianne"
    ],
-   "p_dupla_mais_provavel": 0.40485,
+   "p_dupla_mais_provavel": 0.5424,
    "duplas": [
     {
      "nomes": [
       "Cid Gomes",
       "Luizianne"
      ],
-     "p": 0.40485
+     "p": 0.5424
     },
     {
      "nomes": [
       "Cid Gomes",
       "Capitão Wagner"
      ],
-     "p": 0.16635
+     "p": 0.15465
     },
     {
      "nomes": [
       "Luizianne",
       "Capitão Wagner"
      ],
-     "p": 0.14815
-    },
-    {
-     "nomes": [
-      "Capitão Wagner",
-      "Alcides Fernandes"
-     ],
-     "p": 0.1074
+     "p": 0.10215
     },
     {
      "nomes": [
       "Cid Gomes",
       "Alcides Fernandes"
      ],
-     "p": 0.08935
+     "p": 0.08395
+    },
+    {
+     "nomes": [
+      "Capitão Wagner",
+      "Alcides Fernandes"
+     ],
+     "p": 0.05995
     }
    ],
    "incerteza": "media",
    "notas": [],
-   "indecisos": 1.398601,
-   "branco_nulo": 4.895105,
-   "outros_validos": 0.639659,
-   "dias_ate_eleicao_ponderado": 6.0,
-   "p_segunda_dupla": 0.16635,
+   "indecisos": 1.3,
+   "branco_nulo": 3.3,
+   "outros_validos": 1.257862,
+   "dias_ate_eleicao_ponderado": 2.0,
+   "p_segunda_dupla": 0.15465,
    "dupla_empatada": false,
    "soma_p_eleito": 2.0
   },
@@ -2846,10 +2792,31 @@
    "eleitorado": 2991650,
    "pesquisas_usadas": [
     {
+     "arquivo": "atlas_ES_2026-10-02.json",
+     "instituto": "AtlasIntel",
+     "casa": "atlas",
+     "peso": 0.585786,
+     "campo_inicio": "2026-09-27",
+     "campo_fim": "2026-10-02",
+     "campo": "2026-09-27 a 2026-10-02",
+     "campo_inferido": false,
+     "regra_campo": null,
+     "divulgacao": "2026-10-03",
+     "dias_ate_eleicao": 2,
+     "n": 1226,
+     "n_usado": 1226,
+     "n_assumido": false,
+     "votos_por_eleitor": 1,
+     "registro_tse": "ES-01573/2026",
+     "url": "https://cdn1.atlasintel.org/pesquisa_atlas__eleicoes_espirito_santo_2026__261003_990b45cf157d3409.pdf",
+     "pagina": 18,
+     "retiradas": []
+    },
+    {
      "arquivo": "realtime_ES_2026-09-29.json",
      "instituto": "Real Time Big Data",
      "casa": "realtime",
-     "peso": 1.0,
+     "peso": 0.414214,
      "campo_inicio": "2026-09-25",
      "campo_fim": "2026-09-29",
      "campo": "2026-09-25 a 2026-09-29",
@@ -2894,29 +2861,12 @@
      "campo": "esquerda",
      "sq_candidato": "80002551370",
      "foto": "img/senado/ES_80002551370.jpg",
-     "valor": 28.0,
-     "validos": 29.473684,
-     "validos_uniforme": 28.911565,
+     "valor": 25.832988,
+     "validos": 26.959291,
+     "validos_uniforme": 26.677506,
      "validos_por_pesquisa": {
+      "atlas_ES_2026-10-02.json": 25.181347,
       "realtime_ES_2026-09-29.json": 29.473684
-     }
-    },
-    {
-     "nome": "Sergio Meneguelli",
-     "nome_urna": "SERGIO MENEGUELLI",
-     "nome_pesquisa": "Sergio Meneguelli",
-     "aliases": [
-      "Sergio Meneguelli"
-     ],
-     "partido": "PSD",
-     "campo": "centro",
-     "sq_candidato": "80002552692",
-     "foto": "img/senado/ES_80002552692.jpg",
-     "valor": 13.0,
-     "validos": 13.684211,
-     "validos_uniforme": 13.605442,
-     "validos_por_pesquisa": {
-      "realtime_ES_2026-09-29.json": 13.684211
      }
     },
     {
@@ -2930,10 +2880,11 @@
      "campo": "direita",
      "sq_candidato": "80002553265",
      "foto": "img/senado/ES_80002553265.jpg",
-     "valor": 12.0,
-     "validos": 12.631579,
-     "validos_uniforme": 12.585034,
+     "valor": 17.635865,
+     "validos": 18.404778,
+     "validos_uniforme": 18.313195,
      "validos_por_pesquisa": {
+      "atlas_ES_2026-10-02.json": 22.487047,
       "realtime_ES_2026-09-29.json": 12.631579
      }
     },
@@ -2948,10 +2899,11 @@
      "campo": "esquerda",
      "sq_candidato": "80002550187",
      "foto": "img/senado/ES_80002550187.jpg",
-     "valor": 12.0,
-     "validos": 12.631579,
-     "validos_uniforme": 12.585034,
+     "valor": 14.494836,
+     "validos": 15.126802,
+     "validos_uniforme": 15.108102,
      "validos_por_pesquisa": {
+      "atlas_ES_2026-10-02.json": 16.891192,
       "realtime_ES_2026-09-29.json": 12.631579
      }
     },
@@ -2966,11 +2918,31 @@
      "campo": "direita",
      "sq_candidato": "80002553269",
      "foto": "img/senado/ES_80002553269.jpg",
-     "valor": 12.0,
-     "validos": 12.631579,
-     "validos_uniforme": 12.585034,
+     "valor": 13.389659,
+     "validos": 13.97344,
+     "validos_uniforme": 13.980384,
      "validos_por_pesquisa": {
+      "atlas_ES_2026-10-02.json": 14.92228,
       "realtime_ES_2026-09-29.json": 12.631579
+     }
+    },
+    {
+     "nome": "Sergio Meneguelli",
+     "nome_urna": "SERGIO MENEGUELLI",
+     "nome_pesquisa": "Sergio Meneguelli",
+     "aliases": [
+      "Sergio Meneguelli"
+     ],
+     "partido": "PSD",
+     "campo": "centro",
+     "sq_candidato": "80002552692",
+     "foto": "img/senado/ES_80002552692.jpg",
+     "valor": 7.583567,
+     "validos": 7.914206,
+     "validos_uniforme": 8.055871,
+     "validos_por_pesquisa": {
+      "atlas_ES_2026-10-02.json": 3.834197,
+      "realtime_ES_2026-09-29.json": 13.684211
      }
     },
     {
@@ -2984,10 +2956,11 @@
      "campo": "centro",
      "sq_candidato": "80002551368",
      "foto": "img/senado/ES_80002551368.jpg",
-     "valor": 9.0,
-     "validos": 9.473684,
-     "validos_uniforme": 9.52381,
+     "valor": 7.308386,
+     "validos": 7.627027,
+     "validos_uniforme": 7.775077,
      "validos_por_pesquisa": {
+      "atlas_ES_2026-10-02.json": 6.321244,
       "realtime_ES_2026-09-29.json": 9.473684
      }
     },
@@ -3002,10 +2975,11 @@
      "campo": "centro",
      "sq_candidato": "80002538202",
      "foto": "img/senado/ES_80002538202.jpg",
-     "valor": 4.0,
-     "validos": 4.210526,
-     "validos_uniforme": 4.421769,
+     "valor": 4.754056,
+     "validos": 4.96133,
+     "validos_uniforme": 5.168649,
      "validos_por_pesquisa": {
+      "atlas_ES_2026-10-02.json": 5.492228,
       "realtime_ES_2026-09-29.json": 4.210526
      }
     },
@@ -3020,10 +2994,11 @@
      "campo": "direita",
      "sq_candidato": "80002530022",
      "foto": "img/senado/ES_80002530022.jpg",
-     "valor": 2.0,
-     "validos": 2.105263,
-     "validos_uniforme": 2.380952,
+     "valor": 0.835597,
+     "validos": 0.872029,
+     "validos_uniforme": 0.85264,
      "validos_por_pesquisa": {
+      "atlas_ES_2026-10-02.json": 0.0,
       "realtime_ES_2026-09-29.json": 2.105263
      }
     },
@@ -3038,10 +3013,11 @@
      "campo": "direita",
      "sq_candidato": "80002552373",
      "foto": "img/senado/ES_80002552373.jpg",
-     "valor": 2.0,
-     "validos": 2.105263,
-     "validos_uniforme": 2.380952,
+     "valor": 0.835597,
+     "validos": 0.872029,
+     "validos_uniforme": 0.85264,
      "validos_por_pesquisa": {
+      "atlas_ES_2026-10-02.json": 0.0,
       "realtime_ES_2026-09-29.json": 2.105263
      }
     },
@@ -3056,10 +3032,11 @@
      "campo": "esquerda",
      "sq_candidato": "80002549404",
      "foto": "img/senado/ES_80002549404.jpg",
-     "valor": 1.0,
-     "validos": 1.052632,
-     "validos_uniforme": 1.020408,
+     "valor": 0.417799,
+     "validos": 0.436014,
+     "validos_uniforme": 0.42632,
      "validos_por_pesquisa": {
+      "atlas_ES_2026-10-02.json": 0.0,
       "realtime_ES_2026-09-29.json": 1.052632
      }
     },
@@ -3078,6 +3055,7 @@
      "validos": 0.0,
      "validos_uniforme": 0.0,
      "validos_por_pesquisa": {
+      "atlas_ES_2026-10-02.json": 0.0,
       "realtime_ES_2026-09-29.json": 0.0
      }
     }
@@ -3090,46 +3068,14 @@
      "campo": "esquerda",
      "sq_candidato": "80002551370",
      "foto": "img/senado/ES_80002551370.jpg",
-     "p_eleito": 0.9227,
-     "p_primeiro": 0.8166,
+     "p_eleito": 0.87165,
+     "p_primeiro": 0.6989,
      "ic90_validos": [
-      15.896399,
-      43.786638
+      14.859285,
+      40.182125
      ],
-     "validos_mediana": 28.168595,
-     "validos_central": 29.473684
-    },
-    {
-     "nome": "Sergio Meneguelli",
-     "nome_urna": "SERGIO MENEGUELLI",
-     "partido": "PSD",
-     "campo": "centro",
-     "sq_candidato": "80002552692",
-     "foto": "img/senado/ES_80002552692.jpg",
-     "p_eleito": 0.329,
-     "p_primeiro": 0.0774,
-     "ic90_validos": [
-      6.59998,
-      23.313119
-     ],
-     "validos_mediana": 13.171755,
-     "validos_central": 13.684211
-    },
-    {
-     "nome": "Fabiano Contarato",
-     "nome_urna": "FABIANO CONTARATO",
-     "partido": "PT",
-     "campo": "esquerda",
-     "sq_candidato": "80002550187",
-     "foto": "img/senado/ES_80002550187.jpg",
-     "p_eleito": 0.2596,
-     "p_primeiro": 0.00405,
-     "ic90_validos": [
-      6.607551,
-      20.165871
-     ],
-     "validos_mediana": 12.061076,
-     "validos_central": 12.631579
+     "validos_mediana": 25.94213,
+     "validos_central": 26.959291
     },
     {
      "nome": "Evair de Melo",
@@ -3138,14 +3084,30 @@
      "campo": "direita",
      "sq_candidato": "80002553265",
      "foto": "img/senado/ES_80002553265.jpg",
-     "p_eleito": 0.21965,
-     "p_primeiro": 0.04715,
+     "p_eleito": 0.54085,
+     "p_primeiro": 0.21855,
      "ic90_validos": [
-      6.124436,
-      21.449353
+      9.357602,
+      29.660158
      ],
-     "validos_mediana": 12.021212,
-     "validos_central": 12.631579
+     "validos_mediana": 17.614998,
+     "validos_central": 18.404778
+    },
+    {
+     "nome": "Fabiano Contarato",
+     "nome_urna": "FABIANO CONTARATO",
+     "partido": "PT",
+     "campo": "esquerda",
+     "sq_candidato": "80002550187",
+     "foto": "img/senado/ES_80002550187.jpg",
+     "p_eleito": 0.3359,
+     "p_primeiro": 0.0269,
+     "ic90_validos": [
+      8.09964,
+      23.808288
+     ],
+     "validos_mediana": 14.50123,
+     "validos_central": 15.126802
     },
     {
      "nome": "Maguinha Malta",
@@ -3154,14 +3116,30 @@
      "campo": "direita",
      "sq_candidato": "80002553269",
      "foto": "img/senado/ES_80002553269.jpg",
-     "p_eleito": 0.21355,
-     "p_primeiro": 0.0464,
+     "p_eleito": 0.19715,
+     "p_primeiro": 0.04605,
      "ic90_validos": [
-      6.157176,
-      21.468763
+      7.036333,
+      22.826894
      ],
-     "validos_mediana": 12.060409,
-     "validos_central": 12.631579
+     "validos_mediana": 13.384042,
+     "validos_central": 13.97344
+    },
+    {
+     "nome": "Sergio Meneguelli",
+     "nome_urna": "SERGIO MENEGUELLI",
+     "partido": "PSD",
+     "campo": "centro",
+     "sq_candidato": "80002552692",
+     "foto": "img/senado/ES_80002552692.jpg",
+     "p_eleito": 0.0287,
+     "p_primeiro": 0.00465,
+     "ic90_validos": [
+      3.796996,
+      14.362954
+     ],
+     "validos_mediana": 7.63852,
+     "validos_central": 7.914206
     },
     {
      "nome": "Rose de Freitas",
@@ -3170,14 +3148,14 @@
      "campo": "centro",
      "sq_candidato": "80002551368",
      "foto": "img/senado/ES_80002551368.jpg",
-     "p_eleito": 0.05545,
-     "p_primeiro": 0.0084,
+     "p_eleito": 0.0247,
+     "p_primeiro": 0.00465,
      "ic90_validos": [
-      4.53603,
-      16.544717
+      3.586665,
+      13.803029
      ],
-     "validos_mediana": 9.079867,
-     "validos_central": 9.473684
+     "validos_mediana": 7.338647,
+     "validos_central": 7.627027
     },
     {
      "nome": "Marcos do Val",
@@ -3186,14 +3164,14 @@
      "campo": "centro",
      "sq_candidato": "80002538202",
      "foto": "img/senado/ES_80002538202.jpg",
-     "p_eleito": 5e-05,
-     "p_primeiro": 0.0,
+     "p_eleito": 0.00105,
+     "p_primeiro": 0.0003,
      "ic90_validos": [
-      1.965136,
-      7.774145
+      2.329501,
+      9.224709
      ],
-     "validos_mediana": 4.042822,
-     "validos_central": 4.210526
+     "validos_mediana": 4.787463,
+     "validos_central": 4.96133
     },
     {
      "nome": "Callegari",
@@ -3221,11 +3199,11 @@
      "p_eleito": 0.0,
      "p_primeiro": 0.0,
      "ic90_validos": [
-      0.961305,
-      4.0647
+      0.387613,
+      1.589424
      ],
-     "validos_mediana": 2.03915,
-     "validos_central": 2.105263
+     "validos_mediana": 0.805777,
+     "validos_central": 0.872029
     },
     {
      "nome": "Professor Fabian",
@@ -3237,11 +3215,11 @@
      "p_eleito": 0.0,
      "p_primeiro": 0.0,
      "ic90_validos": [
-      0.427211,
-      1.988652
+      0.177695,
+      0.82855
      ],
-     "validos_mediana": 0.953626,
-     "validos_central": 1.052632
+     "validos_mediana": 0.394424,
+     "validos_central": 0.436014
     },
     {
      "nome": "Rodney Miranda",
@@ -3253,66 +3231,68 @@
      "p_eleito": 0.0,
      "p_primeiro": 0.0,
      "ic90_validos": [
-      0.941229,
-      4.08548
+      0.386321,
+      1.58907
      ],
-     "validos_mediana": 2.035687,
-     "validos_central": 2.105263
+     "validos_mediana": 0.806303,
+     "validos_central": 0.872029
     }
    ],
    "eleitos_provaveis": [
     "Renato Casagrande",
-    "Sergio Meneguelli"
+    "Evair de Melo"
    ],
    "dupla_mais_provavel": [
     "Renato Casagrande",
-    "Sergio Meneguelli"
+    "Evair de Melo"
    ],
-   "p_dupla_mais_provavel": 0.28775,
+   "p_dupla_mais_provavel": 0.419,
    "duplas": [
     {
      "nomes": [
       "Renato Casagrande",
-      "Sergio Meneguelli"
+      "Evair de Melo"
      ],
-     "p": 0.28775
+     "p": 0.419
     },
     {
      "nomes": [
       "Renato Casagrande",
       "Fabiano Contarato"
      ],
-     "p": 0.25755
+     "p": 0.3232
     },
     {
      "nomes": [
-      "Renato Casagrande",
-      "Evair de Melo"
+      "Evair de Melo",
+      "Maguinha Malta"
      ],
-     "p": 0.17265
+     "p": 0.104
     },
     {
      "nomes": [
       "Renato Casagrande",
       "Maguinha Malta"
      ],
-     "p": 0.16735
+     "p": 0.0893
     },
     {
      "nomes": [
       "Renato Casagrande",
-      "Rose de Freitas"
+      "Sergio Meneguelli"
      ],
-     "p": 0.03735
+     "p": 0.02175
     }
    ],
-   "incerteza": "alta",
-   "notas": [],
-   "indecisos": 3.0,
-   "branco_nulo": 2.0,
-   "outros_validos": 0.0,
-   "dias_ate_eleicao_ponderado": 5.0,
-   "p_segunda_dupla": 0.25755,
+   "incerteza": "media",
+   "notas": [
+    "atlas_ES_2026-10-02.json não lista Leonardo Monjardim, Rodney Miranda, Professor Fabian, Callegari: contado como zero nessa onda."
+   ],
+   "indecisos": 2.178963,
+   "branco_nulo": 1.99883,
+   "outros_validos": 2.853053,
+   "dias_ate_eleicao_ponderado": 3.242641,
+   "p_segunda_dupla": 0.3232,
    "dupla_empatada": false,
    "soma_p_eleito": 2.0
   },
@@ -3322,10 +3302,31 @@
    "eleitorado": 5080590,
    "pesquisas_usadas": [
     {
+     "arquivo": "atlas_GO_2026-10-02.json",
+     "instituto": "AtlasIntel",
+     "casa": "atlas",
+     "peso": 0.397501,
+     "campo_inicio": "2026-09-27",
+     "campo_fim": "2026-10-02",
+     "campo": "2026-09-27 a 2026-10-02",
+     "campo_inferido": false,
+     "regra_campo": null,
+     "divulgacao": "2026-10-03",
+     "dias_ate_eleicao": 2,
+     "n": 1198,
+     "n_usado": 1198,
+     "n_assumido": false,
+     "votos_por_eleitor": 1,
+     "registro_tse": "GO-03367/2026",
+     "url": "https://cdn1.atlasintel.org/pesquisa_atlas__eleicoes_goias_2026__261003_48680e1775c298f2.pdf",
+     "pagina": 18,
+     "retiradas": []
+    },
+    {
      "arquivo": "quaest_GO_2026-10-03.json",
      "instituto": "Quaest",
      "casa": "quaest",
-     "peso": 1.0,
+     "peso": 0.602499,
      "campo_inicio": "2026-10-02",
      "campo_fim": "2026-10-03",
      "campo": "2026-10-02 a 2026-10-03",
@@ -3366,10 +3367,11 @@
      "campo": "centro-direita",
      "sq_candidato": "90002540997",
      "foto": "img/senado/GO_90002540997.jpg",
-     "valor": 22.0,
-     "validos": 29.72973,
-     "validos_uniforme": 27.126806,
+     "valor": 19.83237,
+     "validos": 24.559013,
+     "validos_uniforme": 23.137859,
      "validos_por_pesquisa": {
+      "atlas_GO_2026-10-02.json": 16.721672,
       "quaest_GO_2026-10-03.json": 29.72973
      }
     },
@@ -3384,10 +3386,11 @@
      "campo": "direita",
      "sq_candidato": "90002543556",
      "foto": "img/senado/GO_90002543556.jpg",
-     "valor": 15.0,
-     "validos": 20.27027,
-     "validos_uniforme": 19.261637,
+     "valor": 17.489999,
+     "validos": 21.658386,
+     "validos_uniforme": 20.579071,
      "validos_por_pesquisa": {
+      "atlas_GO_2026-10-02.json": 23.762376,
       "quaest_GO_2026-10-03.json": 20.27027
      }
     },
@@ -3402,10 +3405,11 @@
      "campo": "centro",
      "sq_candidato": "90002546974",
      "foto": "img/senado/GO_90002546974.jpg",
-     "valor": 13.0,
-     "validos": 17.567568,
-     "validos_uniforme": 17.014446,
+     "valor": 13.03214,
+     "validos": 16.138086,
+     "validos_uniforme": 15.709338,
      "validos_por_pesquisa": {
+      "atlas_GO_2026-10-02.json": 13.971397,
       "quaest_GO_2026-10-03.json": 17.567568
      }
     },
@@ -3420,10 +3424,11 @@
      "campo": "centro-direita",
      "sq_candidato": "90002540998",
      "foto": "img/senado/GO_90002540998.jpg",
-     "valor": 7.0,
-     "validos": 9.459459,
-     "validos_uniforme": 10.272873,
+     "valor": 7.81593,
+     "validos": 9.678698,
+     "validos_uniforme": 10.011188,
      "validos_por_pesquisa": {
+      "atlas_GO_2026-10-02.json": 10.011001,
       "quaest_GO_2026-10-03.json": 9.459459
      }
     },
@@ -3438,10 +3443,11 @@
      "campo": "centro",
      "sq_candidato": "90002543215",
      "foto": "img/senado/GO_90002543215.jpg",
-     "valor": 7.0,
-     "validos": 9.459459,
-     "validos_uniforme": 10.272873,
+     "valor": 7.250917,
+     "validos": 8.979026,
+     "validos_uniforme": 9.393973,
      "validos_por_pesquisa": {
+      "atlas_GO_2026-10-02.json": 8.250825,
       "quaest_GO_2026-10-03.json": 9.459459
      }
     },
@@ -3456,10 +3462,11 @@
      "campo": "direita",
      "sq_candidato": "90002543560",
      "foto": "img/senado/GO_90002543560.jpg",
-     "valor": 5.0,
-     "validos": 6.756757,
-     "validos_uniforme": 8.025682,
+     "valor": 7.136591,
+     "validos": 8.837453,
+     "validos_uniforme": 9.269084,
      "validos_por_pesquisa": {
+      "atlas_GO_2026-10-02.json": 11.991199,
       "quaest_GO_2026-10-03.json": 6.756757
      }
     },
@@ -3474,10 +3481,11 @@
      "campo": "esquerda",
      "sq_candidato": "90002541455",
      "foto": "img/senado/GO_90002541455.jpg",
-     "valor": 3.0,
-     "validos": 4.054054,
-     "validos_uniforme": 5.778491,
+     "valor": 4.091263,
+     "validos": 5.066333,
+     "validos_uniforme": 5.94239,
      "validos_por_pesquisa": {
+      "atlas_GO_2026-10-02.json": 6.60066,
       "quaest_GO_2026-10-03.json": 4.054054
      }
     },
@@ -3492,10 +3500,11 @@
      "campo": "esquerda",
      "sq_candidato": "90002541454",
      "foto": "img/senado/GO_90002541454.jpg",
-     "valor": 1.0,
-     "validos": 1.351351,
-     "validos_uniforme": 1.123596,
+     "valor": 3.058792,
+     "validos": 3.787793,
+     "validos_uniforme": 4.814526,
      "validos_por_pesquisa": {
+      "atlas_GO_2026-10-02.json": 7.480748,
       "quaest_GO_2026-10-03.json": 1.351351
      }
     },
@@ -3510,10 +3519,11 @@
      "campo": "centro-esquerda",
      "sq_candidato": "90002545243",
      "foto": "img/senado/GO_90002545243.jpg",
-     "valor": 1.0,
-     "validos": 1.351351,
-     "validos_uniforme": 1.123596,
+     "valor": 0.657489,
+     "validos": 0.814188,
+     "validos_uniforme": 0.718236,
      "validos_por_pesquisa": {
+      "atlas_GO_2026-10-02.json": 0.0,
       "quaest_GO_2026-10-03.json": 1.351351
      }
     },
@@ -3532,6 +3542,7 @@
      "validos": 0.0,
      "validos_uniforme": 0.0,
      "validos_por_pesquisa": {
+      "atlas_GO_2026-10-02.json": 0.0,
       "quaest_GO_2026-10-03.json": 0.0
      }
     },
@@ -3550,6 +3561,7 @@
      "validos": 0.0,
      "validos_uniforme": 0.0,
      "validos_por_pesquisa": {
+      "atlas_GO_2026-10-02.json": 0.0,
       "quaest_GO_2026-10-03.json": 0.0
      }
     }
@@ -3562,14 +3574,14 @@
      "campo": "centro-direita",
      "sq_candidato": "90002540997",
      "foto": "img/senado/GO_90002540997.jpg",
-     "p_eleito": 0.8891,
-     "p_primeiro": 0.65275,
+     "p_eleito": 0.8122,
+     "p_primeiro": 0.50915,
      "ic90_validos": [
-      15.583115,
-      43.42071
+      12.742125,
+      37.495759
      ],
-     "validos_mediana": 27.880684,
-     "validos_central": 29.72973
+     "validos_mediana": 23.202671,
+     "validos_central": 24.559013
     },
     {
      "nome": "Gustavo Gayer",
@@ -3578,14 +3590,14 @@
      "campo": "direita",
      "sq_candidato": "90002543556",
      "foto": "img/senado/GO_90002543556.jpg",
-     "p_eleito": 0.60015,
-     "p_primeiro": 0.21325,
+     "p_eleito": 0.70475,
+     "p_primeiro": 0.3536,
      "ic90_validos": [
-      10.144741,
-      32.881415
+      10.994391,
+      33.922164
      ],
-     "validos_mediana": 19.118674,
-     "validos_central": 20.27027
+     "validos_mediana": 20.449842,
+     "validos_central": 21.658386
     },
     {
      "nome": "Dr. Zacharias Calil",
@@ -3594,14 +3606,14 @@
      "campo": "centro",
      "sq_candidato": "90002546974",
      "foto": "img/senado/GO_90002546974.jpg",
-     "p_eleito": 0.43265,
-     "p_primeiro": 0.1305,
+     "p_eleito": 0.3829,
+     "p_primeiro": 0.1316,
      "ic90_validos": [
-      8.757604,
-      28.761245
+      8.041399,
+      26.717161
      ],
-     "validos_mediana": 16.682831,
-     "validos_central": 17.567568
+     "validos_mediana": 15.281058,
+     "validos_central": 16.138086
     },
     {
      "nome": "Gustavo Mendanha",
@@ -3610,14 +3622,14 @@
      "campo": "centro-direita",
      "sq_candidato": "90002540998",
      "foto": "img/senado/GO_90002540998.jpg",
-     "p_eleito": 0.04755,
-     "p_primeiro": 0.0002,
+     "p_eleito": 0.0487,
+     "p_primeiro": 0.00105,
      "ic90_validos": [
-      5.002348,
-      15.76754
+      5.025673,
+      16.072682
      ],
-     "validos_mediana": 9.217326,
-     "validos_central": 9.459459
+     "validos_mediana": 9.2914,
+     "validos_central": 9.678698
     },
     {
      "nome": "Vanderlan Cardoso",
@@ -3626,14 +3638,14 @@
      "campo": "centro",
      "sq_candidato": "90002543215",
      "foto": "img/senado/GO_90002543215.jpg",
-     "p_eleito": 0.02355,
-     "p_primeiro": 0.00305,
+     "p_eleito": 0.02455,
+     "p_primeiro": 0.00325,
      "ic90_validos": [
-      4.747794,
-      16.625462
+      4.510426,
+      15.633399
      ],
-     "validos_mediana": 9.238573,
-     "validos_central": 9.459459
+     "validos_mediana": 8.685221,
+     "validos_central": 8.979026
     },
     {
      "nome": "Oséias Varão",
@@ -3642,14 +3654,14 @@
      "campo": "direita",
      "sq_candidato": "90002543560",
      "foto": "img/senado/GO_90002543560.jpg",
-     "p_eleito": 0.0056,
-     "p_primeiro": 5e-05,
+     "p_eleito": 0.02305,
+     "p_primeiro": 0.0007,
      "ic90_validos": [
-      3.3928,
-      12.627186
+      4.493819,
+      14.919161
      ],
-     "validos_mediana": 6.774093,
-     "validos_central": 6.756757
+     "validos_mediana": 8.47366,
+     "validos_central": 8.837453
     },
     {
      "nome": "Isaura Lemos",
@@ -3658,14 +3670,14 @@
      "campo": "esquerda",
      "sq_candidato": "90002541455",
      "foto": "img/senado/GO_90002541455.jpg",
-     "p_eleito": 0.0014,
-     "p_primeiro": 0.0002,
+     "p_eleito": 0.0034,
+     "p_primeiro": 0.00065,
      "ic90_validos": [
-      1.889931,
-      9.179671
+      2.426527,
+      10.205511
      ],
-     "validos_mediana": 4.266909,
-     "validos_central": 4.054054
+     "validos_mediana": 4.997828,
+     "validos_central": 5.066333
     },
     {
      "nome": "Cintia Dias",
@@ -3674,14 +3686,14 @@
      "campo": "esquerda",
      "sq_candidato": "90002541454",
      "foto": "img/senado/GO_90002541454.jpg",
-     "p_eleito": 0.0,
+     "p_eleito": 0.00045,
      "p_primeiro": 0.0,
      "ic90_validos": [
-      0.485632,
-      2.732015
+      1.793541,
+      7.917089
      ],
-     "validos_mediana": 1.170817,
-     "validos_central": 1.351351
+     "validos_mediana": 3.818444,
+     "validos_central": 3.787793
     },
     {
      "nome": "Ernesto Roller",
@@ -3693,11 +3705,11 @@
      "p_eleito": 0.0,
      "p_primeiro": 0.0,
      "ic90_validos": [
-      0.476422,
-      2.775204
+      0.293004,
+      1.682071
      ],
-     "validos_mediana": 1.156945,
-     "validos_central": 1.351351
+     "validos_mediana": 0.713561,
+     "validos_central": 0.814188
     },
     {
      "nome": "Guilherme Darques",
@@ -3740,51 +3752,53 @@
     "Gracinha Caiado",
     "Gustavo Gayer"
    ],
-   "p_dupla_mais_provavel": 0.503,
+   "p_dupla_mais_provavel": 0.53205,
    "duplas": [
     {
      "nomes": [
-      "Gracinha Caiado",
-      "Gustavo Gayer"
+      "Gustavo Gayer",
+      "Gracinha Caiado"
      ],
-     "p": 0.503
+     "p": 0.53205
     },
     {
      "nomes": [
       "Gracinha Caiado",
       "Dr. Zacharias Calil"
      ],
-     "p": 0.32875
+     "p": 0.2231
     },
     {
      "nomes": [
       "Gustavo Gayer",
       "Dr. Zacharias Calil"
      ],
-     "p": 0.09015
+     "p": 0.1448
     },
     {
      "nomes": [
       "Gracinha Caiado",
       "Gustavo Mendanha"
      ],
-     "p": 0.04715
+     "p": 0.0471
     },
     {
      "nomes": [
-      "Dr. Zacharias Calil",
-      "Vanderlan Cardoso"
+      "Gustavo Gayer",
+      "Oséias Varão"
      ],
-     "p": 0.0135
+     "p": 0.02145
     }
    ],
    "incerteza": "media",
-   "notas": [],
-   "indecisos": 15.0,
-   "branco_nulo": 11.0,
-   "outros_validos": 0.0,
-   "dias_ate_eleicao_ponderado": 1.0,
-   "p_segunda_dupla": 0.32875,
+   "notas": [
+    "atlas_GO_2026-10-02.json não lista Ernesto Roller, Guilherme Darques, Iure Castro: contado como zero nessa onda."
+   ],
+   "indecisos": 10.78824,
+   "branco_nulo": 8.457824,
+   "outros_validos": 0.481024,
+   "dias_ate_eleicao_ponderado": 1.397501,
+   "p_segunda_dupla": 0.2231,
    "dupla_empatada": false,
    "soma_p_eleito": 2.0
   },
@@ -4264,10 +4278,31 @@
    "eleitorado": 2637801,
    "pesquisas_usadas": [
     {
+     "arquivo": "atlas_MT_2026-10-02.json",
+     "instituto": "AtlasIntel",
+     "casa": "atlas",
+     "peso": 0.5518,
+     "campo_inicio": "2026-09-27",
+     "campo_fim": "2026-10-02",
+     "campo": "2026-09-27 a 2026-10-02",
+     "campo_inferido": false,
+     "regra_campo": null,
+     "divulgacao": "2026-10-03",
+     "dias_ate_eleicao": 2,
+     "n": 1194,
+     "n_usado": 1194,
+     "n_assumido": false,
+     "votos_por_eleitor": 1,
+     "registro_tse": "MT-00323/2026",
+     "url": "https://cdn1.atlasintel.org/pesquisa_atlas__eleicoes_mato_grosso_2026__261003_6c9e24b8c820dd44.pdf",
+     "pagina": 17,
+     "retiradas": []
+    },
+    {
      "arquivo": "parana_MT_2026-09-29.json",
      "instituto": "Paraná Pesquisas",
      "casa": "parana",
-     "peso": 1.0,
+     "peso": 0.4482,
      "campo_inicio": "2026-09-27",
      "campo_fim": "2026-09-29",
      "campo": "2026-09-27 a 2026-09-29",
@@ -4308,29 +4343,12 @@
      "campo": "centro-direita",
      "sq_candidato": "110002551966",
      "foto": "img/senado/MT_110002551966.jpg",
-     "valor": 32.542976,
-     "validos": 34.291068,
-     "validos_uniforme": 33.759902,
+     "valor": 28.563934,
+     "validos": 30.064566,
+     "validos_uniforme": 29.699069,
      "validos_por_pesquisa": {
+      "atlas_MT_2026-10-02.json": 26.631579,
       "parana_MT_2026-09-29.json": 34.291068
-     }
-    },
-    {
-     "nome": "Janaina Riva",
-     "nome_urna": "JANAINA RIVA",
-     "nome_pesquisa": "Janaina Riva",
-     "aliases": [
-      "Janaina Riva"
-     ],
-     "partido": "MDB",
-     "campo": "centro",
-     "sq_candidato": "110002552698",
-     "foto": "img/senado/MT_110002552698.jpg",
-     "valor": 19.739182,
-     "validos": 20.7995,
-     "validos_uniforme": 20.597197,
-     "validos_por_pesquisa": {
-      "parana_MT_2026-09-29.json": 20.7995
      }
     },
     {
@@ -4344,11 +4362,32 @@
      "campo": "direita",
      "sq_candidato": "110002552693",
      "foto": "img/senado/MT_110002552693.jpg",
-     "valor": 17.368109,
-     "validos": 18.301062,
-     "validos_uniforme": 18.159659,
+     "valor": 22.582697,
+     "validos": 23.7691,
+     "validos_uniforme": 23.575344,
      "validos_por_pesquisa": {
+      "atlas_MT_2026-10-02.json": 28.210526,
       "parana_MT_2026-09-29.json": 18.301062
+     }
+    },
+    {
+     "nome": "Janaina Riva",
+     "nome_urna": "JANAINA RIVA",
+     "nome_pesquisa": "Janaína Riva",
+     "aliases": [
+      "Janaina Riva",
+      "Janaína Riva"
+     ],
+     "partido": "MDB",
+     "campo": "centro",
+     "sq_candidato": "110002552698",
+     "foto": "img/senado/MT_110002552698.jpg",
+     "valor": 14.485901,
+     "validos": 15.24693,
+     "validos_uniforme": 15.285661,
+     "validos_por_pesquisa": {
+      "atlas_MT_2026-10-02.json": 10.736842,
+      "parana_MT_2026-09-29.json": 20.7995
      }
     },
     {
@@ -4362,10 +4401,11 @@
      "campo": "centro",
      "sq_candidato": "110002544986",
      "foto": "img/senado/MT_110002544986.jpg",
-     "valor": 10.669828,
-     "validos": 11.242973,
-     "validos_uniforme": 11.273614,
+     "valor": 12.513481,
+     "validos": 13.170888,
+     "validos_uniforme": 13.266254,
      "validos_por_pesquisa": {
+      "atlas_MT_2026-10-02.json": 14.736842,
       "parana_MT_2026-09-29.json": 11.242973
      }
     },
@@ -4380,10 +4420,11 @@
      "campo": "esquerda",
      "sq_candidato": "110002544988",
      "foto": "img/senado/MT_110002544988.jpg",
-     "valor": 8.358032,
-     "validos": 8.806996,
-     "validos_uniforme": 8.897014,
+     "valor": 8.882478,
+     "validos": 9.349127,
+     "validos_uniforme": 9.54875,
      "validos_por_pesquisa": {
+      "atlas_MT_2026-10-02.json": 9.789474,
       "parana_MT_2026-09-29.json": 8.806996
      }
     },
@@ -4398,10 +4439,11 @@
      "campo": "centro",
      "sq_candidato": "110002540403",
      "foto": "img/senado/MT_110002540403.jpg",
-     "valor": 2.548903,
-     "validos": 2.685821,
-     "validos_uniforme": 2.925046,
+     "valor": 5.172204,
+     "validos": 5.44393,
+     "validos_uniforme": 5.750088,
      "validos_por_pesquisa": {
+      "atlas_MT_2026-10-02.json": 7.684211,
       "parana_MT_2026-09-29.json": 2.685821
      }
     },
@@ -4416,10 +4458,11 @@
      "campo": "direita",
      "sq_candidato": "110002548042",
      "foto": "img/senado/MT_110002548042.jpg",
-     "valor": 1.956135,
-     "validos": 2.061212,
-     "validos_uniforme": 2.315661,
+     "valor": 0.877724,
+     "validos": 0.923836,
+     "validos_uniforme": 0.898634,
      "validos_por_pesquisa": {
+      "atlas_MT_2026-10-02.json": 0.0,
       "parana_MT_2026-09-29.json": 2.061212
      }
     },
@@ -4434,10 +4477,11 @@
      "campo": "centro-direita",
      "sq_candidato": "110002553701",
      "foto": "img/senado/MT_110002553701.jpg",
-     "valor": 1.422644,
-     "validos": 1.499063,
-     "validos_uniforme": 1.767215,
+     "valor": 0.638345,
+     "validos": 0.671881,
+     "validos_uniforme": 0.653552,
      "validos_por_pesquisa": {
+      "atlas_MT_2026-10-02.json": 0.0,
       "parana_MT_2026-09-29.json": 1.499063
      }
     },
@@ -4452,10 +4496,11 @@
      "campo": "centro-direita",
      "sq_candidato": "110002551967",
      "foto": "img/senado/MT_110002551967.jpg",
-     "valor": 0.237107,
-     "validos": 0.249844,
-     "validos_uniforme": 0.243754,
+     "valor": 0.106391,
+     "validos": 0.11198,
+     "validos_uniforme": 0.108925,
      "validos_por_pesquisa": {
+      "atlas_MT_2026-10-02.json": 0.0,
       "parana_MT_2026-09-29.json": 0.249844
      }
     },
@@ -4470,10 +4515,11 @@
      "campo": "centro-direita",
      "sq_candidato": "110002553706",
      "foto": "img/senado/MT_110002553706.jpg",
-     "valor": 0.059277,
-     "validos": 0.062461,
-     "validos_uniforme": 0.060938,
+     "valor": 0.026598,
+     "validos": 0.027995,
+     "validos_uniforme": 0.027231,
      "validos_por_pesquisa": {
+      "atlas_MT_2026-10-02.json": 0.0,
       "parana_MT_2026-09-29.json": 0.062461
      }
     }
@@ -4486,30 +4532,14 @@
      "campo": "centro-direita",
      "sq_candidato": "110002551966",
      "foto": "img/senado/MT_110002551966.jpg",
-     "p_eleito": 0.91685,
-     "p_primeiro": 0.7263,
+     "p_eleito": 0.87915,
+     "p_primeiro": 0.6066,
      "ic90_validos": [
-      18.229409,
-      51.792741
+      15.546089,
+      46.704441
      ],
-     "validos_mediana": 33.019285,
-     "validos_central": 34.291068
-    },
-    {
-     "nome": "Janaina Riva",
-     "nome_urna": "JANAINA RIVA",
-     "partido": "MDB",
-     "campo": "centro",
-     "sq_candidato": "110002552698",
-     "foto": "img/senado/MT_110002552698.jpg",
-     "p_eleito": 0.5855,
-     "p_primeiro": 0.1643,
-     "ic90_validos": [
-      10.639322,
-      33.098267
-     ],
-     "validos_mediana": 19.835857,
-     "validos_central": 20.7995
+     "validos_mediana": 28.848007,
+     "validos_central": 30.064566
     },
     {
      "nome": "Zé Medeiros",
@@ -4518,14 +4548,30 @@
      "campo": "direita",
      "sq_candidato": "110002552693",
      "foto": "img/senado/MT_110002552693.jpg",
-     "p_eleito": 0.43325,
-     "p_primeiro": 0.10275,
+     "p_eleito": 0.74725,
+     "p_primeiro": 0.30935,
      "ic90_validos": [
-      8.750516,
-      31.46015
+      11.912382,
+      38.717355
      ],
-     "validos_mediana": 17.462488,
-     "validos_central": 18.301062
+     "validos_mediana": 22.79018,
+     "validos_central": 23.7691
+    },
+    {
+     "nome": "Janaina Riva",
+     "nome_urna": "JANAINA RIVA",
+     "partido": "MDB",
+     "campo": "centro",
+     "sq_candidato": "110002552698",
+     "foto": "img/senado/MT_110002552698.jpg",
+     "p_eleito": 0.22325,
+     "p_primeiro": 0.0552,
+     "ic90_validos": [
+      7.922108,
+      24.612129
+     ],
+     "validos_mediana": 14.639619,
+     "validos_central": 15.24693
     },
     {
      "nome": "Fávaro",
@@ -4534,14 +4580,14 @@
      "campo": "centro",
      "sq_candidato": "110002544986",
      "foto": "img/senado/MT_110002544986.jpg",
-     "p_eleito": 0.03395,
-     "p_primeiro": 0.00345,
+     "p_eleito": 0.11095,
+     "p_primeiro": 0.0233,
      "ic90_validos": [
-      5.593188,
-      18.781337
+      6.741759,
+      21.652686
      ],
-     "validos_mediana": 10.682888,
-     "validos_central": 11.242973
+     "validos_mediana": 12.619716,
+     "validos_central": 13.170888
     },
     {
      "nome": "Pedro Taques",
@@ -4550,14 +4596,30 @@
      "campo": "esquerda",
      "sq_candidato": "110002544988",
      "foto": "img/senado/MT_110002544988.jpg",
-     "p_eleito": 0.03045,
-     "p_primeiro": 0.0032,
+     "p_eleito": 0.0393,
+     "p_primeiro": 0.00555,
      "ic90_validos": [
-      3.916274,
-      16.54695
+      4.284331,
+      17.592623
      ],
-     "validos_mediana": 8.370067,
-     "validos_central": 8.806996
+     "validos_mediana": 8.921241,
+     "validos_central": 9.349127
+    },
+    {
+     "nome": "Galvan",
+     "nome_urna": "GALVAN",
+     "partido": "AVANTE",
+     "campo": "centro",
+     "sq_candidato": "110002540403",
+     "foto": "img/senado/MT_110002540403.jpg",
+     "p_eleito": 0.0001,
+     "p_primeiro": 0.0,
+     "ic90_validos": [
+      2.728452,
+      9.261499
+     ],
+     "validos_mediana": 5.236379,
+     "validos_central": 5.44393
     },
     {
      "nome": "Beny Godoy",
@@ -4569,11 +4631,11 @@
      "p_eleito": 0.0,
      "p_primeiro": 0.0,
      "ic90_validos": [
-      0.000309,
-      0.236461
+      0.00015,
+      0.11112
      ],
-     "validos_mediana": 0.027678,
-     "validos_central": 0.062461
+     "validos_mediana": 0.012884,
+     "validos_central": 0.027995
     },
     {
      "nome": "Coronel Darwin",
@@ -4585,27 +4647,11 @@
      "p_eleito": 0.0,
      "p_primeiro": 0.0,
      "ic90_validos": [
-      0.872373,
-      4.194266
+      0.385288,
+      1.76558
      ],
-     "validos_mediana": 1.979436,
-     "validos_central": 2.061212
-    },
-    {
-     "nome": "Galvan",
-     "nome_urna": "GALVAN",
-     "partido": "AVANTE",
-     "campo": "centro",
-     "sq_candidato": "110002540403",
-     "foto": "img/senado/MT_110002540403.jpg",
-     "p_eleito": 0.0,
-     "p_primeiro": 0.0,
-     "ic90_validos": [
-      1.251353,
-      4.990984
-     ],
-     "validos_mediana": 2.564751,
-     "validos_central": 2.685821
+     "validos_mediana": 0.846219,
+     "validos_central": 0.923836
     },
     {
      "nome": "Margareth Buzetti",
@@ -4617,11 +4663,11 @@
      "p_eleito": 0.0,
      "p_primeiro": 0.0,
      "ic90_validos": [
-      0.040662,
-      0.643584
+      0.017943,
+      0.291246
      ],
-     "validos_mediana": 0.194524,
-     "validos_central": 0.249844
+     "validos_mediana": 0.087477,
+     "validos_central": 0.11198
     },
     {
      "nome": "Professor Nelson Ferreira",
@@ -4633,66 +4679,68 @@
      "p_eleito": 0.0,
      "p_primeiro": 0.0,
      "ic90_validos": [
-      0.660739,
-      2.990319
+      0.274752,
+      1.283265
      ],
-     "validos_mediana": 1.453816,
-     "validos_central": 1.499063
+     "validos_mediana": 0.609841,
+     "validos_central": 0.671881
     }
    ],
    "eleitos_provaveis": [
     "Mauro Mendes",
-    "Janaina Riva"
+    "Zé Medeiros"
    ],
    "dupla_mais_provavel": [
     "Mauro Mendes",
-    "Janaina Riva"
+    "Zé Medeiros"
    ],
-   "p_dupla_mais_provavel": 0.505,
+   "p_dupla_mais_provavel": 0.6516,
    "duplas": [
+    {
+     "nomes": [
+      "Zé Medeiros",
+      "Mauro Mendes"
+     ],
+     "p": 0.6516
+    },
     {
      "nomes": [
       "Mauro Mendes",
       "Janaina Riva"
      ],
-     "p": 0.505
+     "p": 0.13815
     },
     {
      "nomes": [
       "Mauro Mendes",
-      "Zé Medeiros"
+      "Fávaro"
      ],
-     "p": 0.3699
+     "p": 0.0616
     },
     {
      "nomes": [
-      "Janaina Riva",
-      "Zé Medeiros"
+      "Zé Medeiros",
+      "Janaina Riva"
      ],
-     "p": 0.06075
+     "p": 0.06045
     },
     {
      "nomes": [
       "Mauro Mendes",
       "Pedro Taques"
      ],
-     "p": 0.0261
-    },
-    {
-     "nomes": [
-      "Janaina Riva",
-      "Fávaro"
-     ],
-     "p": 0.0172
+     "p": 0.0278
     }
    ],
-   "incerteza": "media",
-   "notas": [],
-   "indecisos": 2.371073,
-   "branco_nulo": 2.726734,
-   "outros_validos": 0.0,
-   "dias_ate_eleicao_ponderado": 5.0,
-   "p_segunda_dupla": 0.3699,
+   "incerteza": "baixa",
+   "notas": [
+    "atlas_MT_2026-10-02.json não lista Coronel Darwin, Professor Nelson Ferreira, Margareth Buzetti, Beny Godoy: contado como zero nessa onda."
+   ],
+   "indecisos": 2.664536,
+   "branco_nulo": 2.326827,
+   "outros_validos": 1.219767,
+   "dias_ate_eleicao_ponderado": 3.344601,
+   "p_segunda_dupla": 0.13815,
    "dupla_empatada": false,
    "soma_p_eleito": 2.0
   },
@@ -4702,24 +4750,24 @@
    "eleitorado": 2024430,
    "pesquisas_usadas": [
     {
-     "arquivo": "quaest_MS_2026-09-24.json",
-     "instituto": "Quaest",
-     "casa": "quaest",
+     "arquivo": "atlas_MS_2026-10-02.json",
+     "instituto": "AtlasIntel",
+     "casa": "atlas",
      "peso": 1.0,
-     "campo_inicio": "2026-09-21",
-     "campo_fim": "2026-09-24",
-     "campo": "2026-09-21 a 2026-09-24",
+     "campo_inicio": "2026-09-27",
+     "campo_fim": "2026-10-02",
+     "campo": "2026-09-27 a 2026-10-02",
      "campo_inferido": false,
      "regra_campo": null,
-     "divulgacao": "2026-09-25",
-     "dias_ate_eleicao": 10,
-     "n": 804,
-     "n_usado": 804,
+     "divulgacao": "2026-10-03",
+     "dias_ate_eleicao": 2,
+     "n": 1211,
+     "n_usado": 1211,
      "n_assumido": false,
      "votos_por_eleitor": 1,
-     "registro_tse": "MS-09580/2026",
-     "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/112/?tipo_pergunta=ESTIMULADA-SEN-001&instituto=Quaest",
-     "pagina": null,
+     "registro_tse": "MS-05642/2026",
+     "url": "https://cdn1.atlasintel.org/pesquisa_atlas__eleicoes_mato_grosso_do_sul_2026__261003_e4d7cb11c9340c6d.pdf",
+     "pagina": 18,
      "retiradas": []
     }
    ],
@@ -4727,9 +4775,13 @@
     {
      "arquivo": "quaest_MS_2026-08-25.json",
      "motivo": "onda anterior da mesma casa"
+    },
+    {
+     "arquivo": "quaest_MS_2026-09-24.json",
+     "motivo": "campo anterior a 28/09 (ou sem campo e divulgada antes de 30/09) e o estado tem onda recente"
     }
    ],
-   "cobertura": "antiga",
+   "cobertura": "recente",
    "media": [
     {
      "nome": "Capitão Contar",
@@ -4742,11 +4794,11 @@
      "campo": "direita",
      "sq_candidato": "120002535769",
      "foto": "img/senado/MS_120002535769.jpg",
-     "valor": 23.0,
-     "validos": 32.857143,
-     "validos_uniforme": 28.409091,
+     "valor": 27.755511,
+     "validos": 29.312169,
+     "validos_uniforme": 29.10031,
      "validos_por_pesquisa": {
-      "quaest_MS_2026-09-24.json": 32.857143
+      "atlas_MS_2026-10-02.json": 29.312169
      }
     },
     {
@@ -4760,11 +4812,11 @@
      "campo": "direita",
      "sq_candidato": "120002535764",
      "foto": "img/senado/MS_120002535764.jpg",
-     "valor": 22.0,
-     "validos": 31.428571,
-     "validos_uniforme": 27.272727,
+     "valor": 24.048096,
+     "validos": 25.396825,
+     "validos_uniforme": 25.274043,
      "validos_por_pesquisa": {
-      "quaest_MS_2026-09-24.json": 31.428571
+      "atlas_MS_2026-10-02.json": 25.396825
      }
     },
     {
@@ -4778,11 +4830,11 @@
      "campo": "esquerda",
      "sq_candidato": "120002547434",
      "foto": "img/senado/MS_120002547434.jpg",
-     "valor": 10.0,
-     "validos": 14.285714,
-     "validos_uniforme": 13.636364,
+     "valor": 17.635271,
+     "validos": 18.624339,
+     "validos_uniforme": 18.655636,
      "validos_por_pesquisa": {
-      "quaest_MS_2026-09-24.json": 14.285714
+      "atlas_MS_2026-10-02.json": 18.624339
      }
     },
     {
@@ -4796,29 +4848,11 @@
      "campo": "esquerda",
      "sq_candidato": "120002547435",
      "foto": "img/senado/MS_120002547435.jpg",
-     "valor": 8.0,
-     "validos": 11.428571,
-     "validos_uniforme": 11.363636,
+     "valor": 17.234469,
+     "validos": 18.201058,
+     "validos_uniforme": 18.241986,
      "validos_por_pesquisa": {
-      "quaest_MS_2026-09-24.json": 11.428571
-     }
-    },
-    {
-     "nome": "Beto do Movimento",
-     "nome_urna": "BETO DO MOVIMENTO",
-     "nome_pesquisa": "Beto Do Movimento",
-     "aliases": [
-      "Beto Do Movimento"
-     ],
-     "partido": "PSOL",
-     "campo": "esquerda",
-     "sq_candidato": "120002532721",
-     "foto": "img/senado/MS_120002532721.jpg",
-     "valor": 2.0,
-     "validos": 2.857143,
-     "validos_uniforme": 4.545455,
-     "validos_por_pesquisa": {
-      "quaest_MS_2026-09-24.json": 2.857143
+      "atlas_MS_2026-10-02.json": 18.201058
      }
     },
     {
@@ -4832,83 +4866,11 @@
      "campo": "direita",
      "sq_candidato": "120002552115",
      "foto": "img/senado/MS_120002552115.jpg",
-     "valor": 2.0,
-     "validos": 2.857143,
-     "validos_uniforme": 4.545455,
+     "valor": 4.90982,
+     "validos": 5.185185,
+     "validos_uniforme": 5.522234,
      "validos_por_pesquisa": {
-      "quaest_MS_2026-09-24.json": 2.857143
-     }
-    },
-    {
-     "nome": "Daniel Junior",
-     "nome_urna": "DANIEL JUNIOR",
-     "nome_pesquisa": "Daniel Junior",
-     "aliases": [
-      "Daniel Junior"
-     ],
-     "partido": "AGIR",
-     "campo": "centro-direita",
-     "sq_candidato": "120002534952",
-     "foto": "img/senado/MS_120002534952.jpg",
-     "valor": 1.0,
-     "validos": 1.428571,
-     "validos_uniforme": 3.409091,
-     "validos_por_pesquisa": {
-      "quaest_MS_2026-09-24.json": 1.428571
-     }
-    },
-    {
-     "nome": "Luiz Lemes",
-     "nome_urna": "LUIZ LEMES",
-     "nome_pesquisa": "Luiz Lemes",
-     "aliases": [
-      "Luiz Lemes"
-     ],
-     "partido": "DC",
-     "campo": "direita",
-     "sq_candidato": "120002551909",
-     "foto": "img/senado/MS_120002551909.jpg",
-     "valor": 1.0,
-     "validos": 1.428571,
-     "validos_uniforme": 3.409091,
-     "validos_por_pesquisa": {
-      "quaest_MS_2026-09-24.json": 1.428571
-     }
-    },
-    {
-     "nome": "Valderi Garcia",
-     "nome_urna": "VALDERI GARCIA",
-     "nome_pesquisa": "Valderi Garcia",
-     "aliases": [
-      "Valderi Garcia"
-     ],
-     "partido": "PCO",
-     "campo": "esquerda",
-     "sq_candidato": "120002552196",
-     "foto": "img/senado/MS_120002552196.jpg",
-     "valor": 1.0,
-     "validos": 1.428571,
-     "validos_uniforme": 3.409091,
-     "validos_por_pesquisa": {
-      "quaest_MS_2026-09-24.json": 1.428571
-     }
-    },
-    {
-     "nome": "Valter da Comagran",
-     "nome_urna": "VALTER DA COMAGRAN",
-     "nome_pesquisa": "Valter Da Comagran",
-     "aliases": [
-      "Valter Da Comagran"
-     ],
-     "partido": "PRD",
-     "campo": "centro-direita",
-     "sq_candidato": "120002552183",
-     "foto": "img/senado/MS_120002552183.jpg",
-     "valor": 0.0,
-     "validos": 0.0,
-     "validos_uniforme": 0.0,
-     "validos_por_pesquisa": {
-      "quaest_MS_2026-09-24.json": 0.0
+      "atlas_MS_2026-10-02.json": 5.185185
      }
     }
    ],
@@ -4920,14 +4882,14 @@
      "campo": "direita",
      "sq_candidato": "120002535769",
      "foto": "img/senado/MS_120002535769.jpg",
-     "p_eleito": 0.918,
-     "p_primeiro": 0.51165,
+     "p_eleito": 0.7952,
+     "p_primeiro": 0.5124,
      "ic90_validos": [
-      18.58002,
-      45.019077
+      17.360631,
+      41.512694
      ],
-     "validos_mediana": 30.50733,
-     "validos_central": 32.857143
+     "validos_mediana": 28.451185,
+     "validos_central": 29.312169
     },
     {
      "nome": "Reinaldo Azambuja",
@@ -4936,14 +4898,14 @@
      "campo": "direita",
      "sq_candidato": "120002535764",
      "foto": "img/senado/MS_120002535764.jpg",
-     "p_eleito": 0.89905,
-     "p_primeiro": 0.4205,
+     "p_eleito": 0.67085,
+     "p_primeiro": 0.2524,
      "ic90_validos": [
-      17.514773,
-      43.182885
+      14.964433,
+      36.914432
      ],
-     "validos_mediana": 29.064047,
-     "validos_central": 31.428571
+     "validos_mediana": 24.653622,
+     "validos_central": 25.396825
     },
     {
      "nome": "Soraya",
@@ -4952,14 +4914,14 @@
      "campo": "esquerda",
      "sq_candidato": "120002547434",
      "foto": "img/senado/MS_120002547434.jpg",
-     "p_eleito": 0.1309,
-     "p_primeiro": 0.05205,
+     "p_eleito": 0.2769,
+     "p_primeiro": 0.12645,
      "ic90_validos": [
-      6.420043,
-      25.608783
+      9.282992,
+      30.92596
      ],
-     "validos_mediana": 13.696075,
-     "validos_central": 14.285714
+     "validos_mediana": 18.193521,
+     "validos_central": 18.624339
     },
     {
      "nome": "Vander Loubet",
@@ -4968,62 +4930,14 @@
      "campo": "esquerda",
      "sq_candidato": "120002547435",
      "foto": "img/senado/MS_120002547435.jpg",
-     "p_eleito": 0.052,
-     "p_primeiro": 0.0158,
+     "p_eleito": 0.257,
+     "p_primeiro": 0.10875,
      "ic90_validos": [
-      5.161124,
-      20.879262
+      9.108059,
+      30.425954
      ],
-     "validos_mediana": 10.98329,
-     "validos_central": 11.428571
-    },
-    {
-     "nome": "Beto do Movimento",
-     "nome_urna": "BETO DO MOVIMENTO",
-     "partido": "PSOL",
-     "campo": "esquerda",
-     "sq_candidato": "120002532721",
-     "foto": "img/senado/MS_120002532721.jpg",
-     "p_eleito": 5e-05,
-     "p_primeiro": 0.0,
-     "ic90_validos": [
-      1.174181,
-      7.065541
-     ],
-     "validos_mediana": 3.116209,
-     "validos_central": 2.857143
-    },
-    {
-     "nome": "Daniel Junior",
-     "nome_urna": "DANIEL JUNIOR",
-     "partido": "AGIR",
-     "campo": "centro-direita",
-     "sq_candidato": "120002534952",
-     "foto": "img/senado/MS_120002534952.jpg",
-     "p_eleito": 0.0,
-     "p_primeiro": 0.0,
-     "ic90_validos": [
-      0.457845,
-      5.520983
-     ],
-     "validos_mediana": 1.706023,
-     "validos_central": 1.428571
-    },
-    {
-     "nome": "Luiz Lemes",
-     "nome_urna": "LUIZ LEMES",
-     "partido": "DC",
-     "campo": "direita",
-     "sq_candidato": "120002551909",
-     "foto": "img/senado/MS_120002551909.jpg",
-     "p_eleito": 0.0,
-     "p_primeiro": 0.0,
-     "ic90_validos": [
-      0.538876,
-      4.60018
-     ],
-     "validos_mediana": 1.686195,
-     "validos_central": 1.428571
+     "validos_mediana": 17.862279,
+     "validos_central": 18.201058
     },
     {
      "nome": "Roberto Oshiro",
@@ -5032,46 +4946,14 @@
      "campo": "direita",
      "sq_candidato": "120002552115",
      "foto": "img/senado/MS_120002552115.jpg",
-     "p_eleito": 0.0,
+     "p_eleito": 5e-05,
      "p_primeiro": 0.0,
      "ic90_validos": [
-      1.340179,
-      6.297048
+      2.82509,
+      8.588182
      ],
-     "validos_mediana": 3.08809,
-     "validos_central": 2.857143
-    },
-    {
-     "nome": "Valderi Garcia",
-     "nome_urna": "VALDERI GARCIA",
-     "partido": "PCO",
-     "campo": "esquerda",
-     "sq_candidato": "120002552196",
-     "foto": "img/senado/MS_120002552196.jpg",
-     "p_eleito": 0.0,
-     "p_primeiro": 0.0,
-     "ic90_validos": [
-      0.494784,
-      5.035906
-     ],
-     "validos_mediana": 1.709508,
-     "validos_central": 1.428571
-    },
-    {
-     "nome": "Valter da Comagran",
-     "nome_urna": "VALTER DA COMAGRAN",
-     "partido": "PRD",
-     "campo": "centro-direita",
-     "sq_candidato": "120002552183",
-     "foto": "img/senado/MS_120002552183.jpg",
-     "p_eleito": 0.0,
-     "p_primeiro": 0.0,
-     "ic90_validos": [
-      0.0,
-      0.0
-     ],
-     "validos_mediana": 0.0,
-     "validos_central": 0.0
+     "validos_mediana": 5.058589,
+     "validos_central": 5.185185
     }
    ],
    "eleitos_provaveis": [
@@ -5082,53 +4964,51 @@
     "Capitão Contar",
     "Reinaldo Azambuja"
    ],
-   "p_dupla_mais_provavel": 0.8337,
+   "p_dupla_mais_provavel": 0.5751,
    "duplas": [
     {
      "nomes": [
       "Capitão Contar",
       "Reinaldo Azambuja"
      ],
-     "p": 0.8337
+     "p": 0.5751
     },
     {
      "nomes": [
       "Capitão Contar",
       "Soraya"
      ],
-     "p": 0.06385
-    },
-    {
-     "nomes": [
-      "Reinaldo Azambuja",
-      "Soraya"
-     ],
-     "p": 0.0504
-    },
-    {
-     "nomes": [
-      "Capitão Contar",
-      "Vander Loubet"
-     ],
-     "p": 0.02045
+     "p": 0.11715
     },
     {
      "nomes": [
       "Soraya",
       "Vander Loubet"
      ],
-     "p": 0.0166
+     "p": 0.10905
+    },
+    {
+     "nomes": [
+      "Capitão Contar",
+      "Vander Loubet"
+     ],
+     "p": 0.10295
+    },
+    {
+     "nomes": [
+      "Reinaldo Azambuja",
+      "Soraya"
+     ],
+     "p": 0.0507
     }
    ],
-   "incerteza": "alta",
-   "notas": [
-    "Nenhuma onda com campo a partir de 28/09: a média usa a onda mais recente de cada casa como prior fraca, com a deriva dos dias extras."
-   ],
-   "indecisos": 18.0,
-   "branco_nulo": 12.0,
-   "outros_validos": 0.0,
-   "dias_ate_eleicao_ponderado": 10.0,
-   "p_segunda_dupla": 0.06385,
+   "incerteza": "media",
+   "notas": [],
+   "indecisos": 2.204409,
+   "branco_nulo": 3.106212,
+   "outros_validos": 3.280423,
+   "dias_ate_eleicao_ponderado": 2.0,
+   "p_segunda_dupla": 0.11715,
    "dupla_empatada": false,
    "soma_p_eleito": 2.0
   },
@@ -8287,28 +8167,32 @@
    "eleitorado": 2704758,
    "pesquisas_usadas": [
     {
-     "arquivo": "atlas_PI_2026-09-28.json",
+     "arquivo": "atlas_PI_2026-10-02.json",
      "instituto": "AtlasIntel",
      "casa": "atlas",
      "peso": 1.0,
-     "campo_inicio": "2026-09-23",
-     "campo_fim": "2026-09-28",
-     "campo": "2026-09-23 a 2026-09-28",
+     "campo_inicio": "2026-09-27",
+     "campo_fim": "2026-10-02",
+     "campo": "2026-09-27 a 2026-10-02",
      "campo_inferido": false,
      "regra_campo": null,
-     "divulgacao": "2026-09-29",
-     "dias_ate_eleicao": 6,
-     "n": 1218,
-     "n_usado": 1218,
+     "divulgacao": "2026-10-03",
+     "dias_ate_eleicao": 2,
+     "n": 1230,
+     "n_usado": 1230,
      "n_assumido": false,
      "votos_por_eleitor": 1,
-     "registro_tse": "PI-07497/2026",
-     "url": "https://static.poder360.com.br/uploads/2026/09/pesquisa-atlasintel-geral-PI-29set2026.pdf",
+     "registro_tse": "PI-03386/2026",
+     "url": "https://cdn1.atlasintel.org/pesquisa_atlas_meionorte__piaui__eleicoes_2026_261003_8d805ba05c5d32d1.pdf",
      "pagina": 12,
      "retiradas": []
     }
    ],
    "pesquisas_descartadas": [
+    {
+     "arquivo": "atlas_PI_2026-09-28.json",
+     "motivo": "onda anterior da mesma casa"
+    },
     {
      "arquivo": "datafolha_PI_2026-08-22.json",
      "motivo": "onda anterior da mesma casa"
@@ -8331,11 +8215,11 @@
      "campo": "centro",
      "sq_candidato": "180002533967",
      "foto": "img/senado/PI_180002533967.jpg",
-     "valor": 26.753507,
-     "validos": 30.831409,
-     "validos_uniforme": 29.716312,
+     "valor": 28.128128,
+     "validos": 32.712456,
+     "validos_uniforme": 32.123656,
      "validos_por_pesquisa": {
-      "atlas_PI_2026-09-28.json": 30.831409
+      "atlas_PI_2026-10-02.json": 32.712456
      }
     },
     {
@@ -8349,11 +8233,11 @@
      "campo": "centro",
      "sq_candidato": "180002533964",
      "foto": "img/senado/PI_180002533964.jpg",
-     "valor": 26.653307,
-     "validos": 30.715935,
-     "validos_uniforme": 29.609929,
+     "valor": 24.224224,
+     "validos": 28.172293,
+     "validos_uniforme": 27.930108,
      "validos_por_pesquisa": {
-      "atlas_PI_2026-09-28.json": 30.715935
+      "atlas_PI_2026-10-02.json": 28.172293
      }
     },
     {
@@ -8367,11 +8251,11 @@
      "campo": "centro-direita",
      "sq_candidato": "180002540446",
      "foto": "img/senado/PI_180002540446.jpg",
-     "valor": 15.631263,
-     "validos": 18.013857,
-     "validos_uniforme": 17.907801,
+     "valor": 16.416416,
+     "validos": 19.091967,
+     "validos_uniforme": 19.543011,
      "validos_por_pesquisa": {
-      "atlas_PI_2026-09-28.json": 18.013857
+      "atlas_PI_2026-10-02.json": 19.091967
      }
     },
     {
@@ -8385,67 +8269,15 @@
      "campo": "direita",
      "sq_candidato": "180002540449",
      "foto": "img/senado/PI_180002540449.jpg",
-     "valor": 11.322645,
-     "validos": 13.048499,
-     "validos_uniforme": 13.333333,
+     "valor": 11.911912,
+     "validos": 13.853318,
+     "validos_uniforme": 14.704301,
      "validos_por_pesquisa": {
-      "atlas_PI_2026-09-28.json": 13.048499
-     }
-    },
-    {
-     "nome": "Antônio José Lira",
-     "nome_urna": "ANTÔNIO JOSÉ LIRA",
-     "nome_pesquisa": "Antônio José Lira",
-     "aliases": [
-      "Antônio José Lira"
-     ],
-     "partido": "AVANTE",
-     "campo": "centro",
-     "sq_candidato": "180002549936",
-     "foto": "img/senado/PI_180002549936.jpg",
-     "valor": 2.104208,
-     "validos": 2.424942,
-     "validos_uniforme": 3.546099,
-     "validos_por_pesquisa": {
-      "atlas_PI_2026-09-28.json": 2.424942
-     }
-    },
-    {
-     "nome": "Maria Madalena Nunes",
-     "nome_urna": "MARIA MADALENA NUNES",
-     "nome_pesquisa": "Maria Madalena Nunes",
-     "aliases": [
-      "Maria Madalena Nunes"
-     ],
-     "partido": "PSOL",
-     "campo": "esquerda",
-     "sq_candidato": "180002550977",
-     "foto": "img/senado/PI_180002550977.jpg",
-     "valor": 1.202405,
-     "validos": 1.385681,
-     "validos_uniforme": 2.588652,
-     "validos_por_pesquisa": {
-      "atlas_PI_2026-09-28.json": 1.385681
+      "atlas_PI_2026-10-02.json": 13.853318
      }
     }
    ],
    "probabilidades": [
-    {
-     "nome": "Júlio César O Julim do Lula",
-     "nome_urna": "JÚLIO CÉSAR O JULIM DO LULA",
-     "partido": "PSD",
-     "campo": "centro",
-     "sq_candidato": "180002533964",
-     "foto": "img/senado/PI_180002533964.jpg",
-     "p_eleito": 0.84355,
-     "p_primeiro": 0.4214,
-     "ic90_validos": [
-      18.50885,
-      42.384062
-     ],
-     "validos_mediana": 29.416961,
-     "validos_central": 30.715935
-    },
     {
      "nome": "Marcelo Castro",
      "nome_urna": "MARCELO CASTRO",
@@ -8453,14 +8285,30 @@
      "campo": "centro",
      "sq_candidato": "180002533967",
      "foto": "img/senado/PI_180002533967.jpg",
-     "p_eleito": 0.84305,
-     "p_primeiro": 0.43065,
+     "p_eleito": 0.87615,
+     "p_primeiro": 0.55605,
      "ic90_validos": [
-      18.562193,
-      42.41906
+      19.927693,
+      44.8317
      ],
-     "validos_mediana": 29.438401,
-     "validos_central": 30.831409
+     "validos_mediana": 31.545329,
+     "validos_central": 32.712456
+    },
+    {
+     "nome": "Júlio César O Julim do Lula",
+     "nome_urna": "JÚLIO CÉSAR O JULIM DO LULA",
+     "partido": "PSD",
+     "campo": "centro",
+     "sq_candidato": "180002533964",
+     "foto": "img/senado/PI_180002533964.jpg",
+     "p_eleito": 0.75045,
+     "p_primeiro": 0.2698,
+     "ic90_validos": [
+      17.027923,
+      39.615648
+     ],
+     "validos_mediana": 27.241802,
+     "validos_central": 28.172293
     },
     {
      "nome": "Ciro Nogueira",
@@ -8469,14 +8317,14 @@
      "campo": "centro-direita",
      "sq_candidato": "180002540446",
      "foto": "img/senado/PI_180002540446.jpg",
-     "p_eleito": 0.23145,
-     "p_primeiro": 0.11665,
+     "p_eleito": 0.2737,
+     "p_primeiro": 0.1355,
      "ic90_validos": [
-      8.29189,
-      33.208985
+      9.115056,
+      34.396662
      ],
-     "validos_mediana": 17.450296,
-     "validos_central": 18.013857
+     "validos_mediana": 18.710472,
+     "validos_central": 19.091967
     },
     {
      "nome": "Tiago Junqueira",
@@ -8485,101 +8333,69 @@
      "campo": "direita",
      "sq_candidato": "180002540449",
      "foto": "img/senado/PI_180002540449.jpg",
-     "p_eleito": 0.08195,
-     "p_primeiro": 0.0313,
+     "p_eleito": 0.0997,
+     "p_primeiro": 0.03865,
      "ic90_validos": [
-      5.773456,
-      24.86068
+      6.413226,
+      26.361689
      ],
-     "validos_mediana": 12.579469,
-     "validos_central": 13.048499
-    },
-    {
-     "nome": "Antônio José Lira",
-     "nome_urna": "ANTÔNIO JOSÉ LIRA",
-     "partido": "AVANTE",
-     "campo": "centro",
-     "sq_candidato": "180002549936",
-     "foto": "img/senado/PI_180002549936.jpg",
-     "p_eleito": 0.0,
-     "p_primeiro": 0.0,
-     "ic90_validos": [
-      1.258212,
-      4.938441
-     ],
-     "validos_mediana": 2.554087,
-     "validos_central": 2.424942
-    },
-    {
-     "nome": "Maria Madalena Nunes",
-     "nome_urna": "MARIA MADALENA NUNES",
-     "partido": "PSOL",
-     "campo": "esquerda",
-     "sq_candidato": "180002550977",
-     "foto": "img/senado/PI_180002550977.jpg",
-     "p_eleito": 0.0,
-     "p_primeiro": 0.0,
-     "ic90_validos": [
-      0.526279,
-      4.248076
-     ],
-     "validos_mediana": 1.538718,
-     "validos_central": 1.385681
+     "validos_mediana": 13.461788,
+     "validos_central": 13.853318
     }
    ],
    "eleitos_provaveis": [
-    "Júlio César O Julim do Lula",
-    "Marcelo Castro"
+    "Marcelo Castro",
+    "Júlio César O Julim do Lula"
    ],
    "dupla_mais_provavel": [
-    "Júlio César O Julim do Lula",
-    "Marcelo Castro"
+    "Marcelo Castro",
+    "Júlio César O Julim do Lula"
    ],
-   "p_dupla_mais_provavel": 0.70475,
+   "p_dupla_mais_provavel": 0.6507,
    "duplas": [
     {
      "nomes": [
       "Marcelo Castro",
       "Júlio César O Julim do Lula"
      ],
-     "p": 0.70475
-    },
-    {
-     "nomes": [
-      "Júlio César O Julim do Lula",
-      "Ciro Nogueira"
-     ],
-     "p": 0.1074
+     "p": 0.6507
     },
     {
      "nomes": [
       "Marcelo Castro",
       "Ciro Nogueira"
      ],
-     "p": 0.1059
+     "p": 0.17135
+    },
+    {
+     "nomes": [
+      "Júlio César O Julim do Lula",
+      "Ciro Nogueira"
+     ],
+     "p": 0.07825
     },
     {
      "nomes": [
       "Marcelo Castro",
       "Tiago Junqueira"
      ],
-     "p": 0.0324
+     "p": 0.0541
     },
     {
      "nomes": [
-      "Júlio César O Julim do Lula",
+      "Ciro Nogueira",
       "Tiago Junqueira"
      ],
-     "p": 0.0314
+     "p": 0.0241
     }
    ],
    "incerteza": "baixa",
    "notas": [],
-   "indecisos": 7.41483,
-   "branco_nulo": 5.811623,
-   "outros_validos": 3.579677,
-   "dias_ate_eleicao_ponderado": 6.0,
-   "p_segunda_dupla": 0.1074,
+   "indecisos": 7.107107,
+   "branco_nulo": 6.906907,
+   "outros_validos": 6.169965,
+   "dias_ate_eleicao_ponderado": 2.0,
+   "p_segunda_dupla": 0.17135,
    "dupla_empatada": false,
    "soma_p_eleito": 2.0
   },
@@ -8589,10 +8405,31 @@
    "eleitorado": 12857648,
    "pesquisas_usadas": [
     {
+     "arquivo": "atlas_RJ_2026-10-02.json",
+     "instituto": "AtlasIntel",
+     "casa": "atlas",
+     "peso": 0.236808,
+     "campo_inicio": "2026-09-27",
+     "campo_fim": "2026-10-02",
+     "campo": "2026-09-27 a 2026-10-02",
+     "campo_inferido": false,
+     "regra_campo": null,
+     "divulgacao": "2026-10-03",
+     "dias_ate_eleicao": 2,
+     "n": 2244,
+     "n_usado": 2244,
+     "n_assumido": false,
+     "votos_por_eleitor": 1,
+     "registro_tse": "RJ-02601/2026",
+     "url": "https://cdn1.atlasintel.org/pesquisa_atlas_estadao__eleicoes_rio_de_janeiro_2026__261003_c8af612fe782f5a9.pdf",
+     "pagina": 17,
+     "retiradas": []
+    },
+    {
      "arquivo": "datafolha_RJ_2026-10-01.json",
      "instituto": "Datafolha",
      "casa": "datafolha",
-     "peso": 0.310287,
+     "peso": 0.236808,
      "campo_inicio": "2026-09-28",
      "campo_fim": "2026-10-01",
      "campo": "2026-09-28 a 2026-10-01",
@@ -8613,7 +8450,7 @@
      "arquivo": "quaest_RJ_2026-10-03.json",
      "instituto": "Quaest",
      "casa": "quaest",
-     "peso": 0.470307,
+     "peso": 0.358934,
      "campo_inicio": "2026-10-02",
      "campo_fim": "2026-10-03",
      "campo": "2026-10-02 a 2026-10-03",
@@ -8634,7 +8471,7 @@
      "arquivo": "realtime_RJ_2026-09-29.json",
      "instituto": "Real Time Big Data",
      "casa": "realtime",
-     "peso": 0.219406,
+     "peso": 0.167449,
      "campo_inicio": "2026-09-25",
      "campo_fim": "2026-09-29",
      "campo": "2026-09-25 a 2026-09-29",
@@ -8700,10 +8537,11 @@
      "campo": "esquerda",
      "sq_candidato": "190002548141",
      "foto": "img/senado/RJ_190002548141.jpg",
-     "valor": 16.767275,
-     "validos": 21.739899,
-     "validos_uniforme": 21.018519,
+     "valor": 17.919211,
+     "validos": 22.154664,
+     "validos_uniforme": 21.38377,
      "validos_por_pesquisa": {
+      "atlas_RJ_2026-10-02.json": 23.491379,
       "datafolha_RJ_2026-10-01.json": 25.675676,
       "quaest_RJ_2026-10-03.json": 21.052632,
       "realtime_RJ_2026-09-29.json": 17.647059
@@ -8720,10 +8558,11 @@
      "campo": "direita",
      "sq_candidato": "190002542888",
      "foto": "img/senado/RJ_190002542888.jpg",
-     "valor": 15.901419,
-     "validos": 20.617258,
-     "validos_uniforme": 20.004522,
+     "valor": 17.473895,
+     "validos": 21.604092,
+     "validos_uniforme": 20.877159,
      "validos_por_pesquisa": {
+      "atlas_RJ_2026-10-02.json": 24.784483,
       "datafolha_RJ_2026-10-01.json": 17.567568,
       "quaest_RJ_2026-10-03.json": 22.368421,
       "realtime_RJ_2026-09-29.json": 21.176471
@@ -8740,10 +8579,11 @@
      "campo": "direita",
      "sq_candidato": "190002535142",
      "foto": "img/senado/RJ_190002535142.jpg",
-     "valor": 14.627807,
-     "validos": 18.965934,
-     "validos_uniforme": 18.513005,
+     "valor": 16.08304,
+     "validos": 19.884488,
+     "validos_uniforme": 19.294861,
      "validos_por_pesquisa": {
+      "atlas_RJ_2026-10-02.json": 22.844828,
       "datafolha_RJ_2026-10-01.json": 17.567568,
       "quaest_RJ_2026-10-03.json": 21.052632,
       "realtime_RJ_2026-09-29.json": 16.470588
@@ -8760,13 +8600,37 @@
      "campo": "centro",
      "sq_candidato": "190002548145",
      "foto": "img/senado/RJ_190002548145.jpg",
-     "valor": 9.748975,
-     "validos": 12.640201,
-     "validos_uniforme": 12.799445,
+     "valor": 9.866602,
+     "validos": 12.19871,
+     "validos_uniforme": 12.222767,
      "validos_por_pesquisa": {
+      "atlas_RJ_2026-10-02.json": 10.775862,
       "datafolha_RJ_2026-10-01.json": 10.810811,
       "quaest_RJ_2026-10-03.json": 13.157895,
       "realtime_RJ_2026-09-29.json": 14.117647
+     }
+    },
+    {
+     "nome": "Monica Benicio",
+     "nome_urna": "MONICA BENICIO",
+     "nome_pesquisa": "Mônica Benício",
+     "aliases": [
+      "Monica Benicio",
+      "Mônica Benicio",
+      "Mônica Benício"
+     ],
+     "partido": "PSOL",
+     "campo": "esquerda",
+     "sq_candidato": "190002536164",
+     "foto": "img/senado/RJ_190002536164.jpg",
+     "valor": 7.772684,
+     "validos": 9.609866,
+     "validos_uniforme": 9.840634,
+     "validos_por_pesquisa": {
+      "atlas_RJ_2026-10-02.json": 12.5,
+      "datafolha_RJ_2026-10-01.json": 9.459459,
+      "quaest_RJ_2026-10-03.json": 7.894737,
+      "realtime_RJ_2026-09-29.json": 9.411765
      }
     },
     {
@@ -8780,34 +8644,14 @@
      "campo": "direita",
      "sq_candidato": "190002550184",
      "foto": "img/senado/RJ_190002550184.jpg",
-     "valor": 7.903336,
-     "validos": 10.247206,
-     "validos_uniforme": 10.638033,
+     "valor": 6.738263,
+     "validos": 8.330945,
+     "validos_uniforme": 8.66383,
      "validos_por_pesquisa": {
+      "atlas_RJ_2026-10-02.json": 2.155172,
       "datafolha_RJ_2026-10-01.json": 6.756757,
       "quaest_RJ_2026-10-03.json": 11.842105,
       "realtime_RJ_2026-09-29.json": 11.764706
-     }
-    },
-    {
-     "nome": "Monica Benicio",
-     "nome_urna": "MONICA BENICIO",
-     "nome_pesquisa": "Mônica Benício",
-     "aliases": [
-      "Monica Benicio",
-      "Mônica Benício"
-     ],
-     "partido": "PSOL",
-     "campo": "esquerda",
-     "sq_candidato": "190002536164",
-     "foto": "img/senado/RJ_190002536164.jpg",
-     "valor": 6.720126,
-     "validos": 8.713095,
-     "validos_uniforme": 9.252386,
-     "validos_por_pesquisa": {
-      "datafolha_RJ_2026-10-01.json": 9.459459,
-      "quaest_RJ_2026-10-03.json": 7.894737,
-      "realtime_RJ_2026-09-29.json": 9.411765
      }
     },
     {
@@ -8821,10 +8665,11 @@
      "campo": "direita",
      "sq_candidato": "190002550182",
      "foto": "img/senado/RJ_190002550182.jpg",
-     "valor": 1.721324,
-     "validos": 2.231813,
-     "validos_uniforme": 3.39833,
+     "valor": 1.377669,
+     "validos": 1.703301,
+     "validos_uniforme": 2.565383,
      "validos_por_pesquisa": {
+      "atlas_RJ_2026-10-02.json": 0.0,
       "datafolha_RJ_2026-10-01.json": 2.702703,
       "quaest_RJ_2026-10-03.json": 1.315789,
       "realtime_RJ_2026-09-29.json": 3.529412
@@ -8841,10 +8686,11 @@
      "campo": "direita",
      "sq_candidato": "190002543961",
      "foto": "img/senado/RJ_190002543961.jpg",
-     "valor": 0.920647,
-     "validos": 1.193681,
-     "validos_uniforme": 1.078162,
+     "valor": 1.128998,
+     "validos": 1.395852,
+     "validos_uniforme": 2.282483,
      "validos_por_pesquisa": {
+      "atlas_RJ_2026-10-02.json": 2.047414,
       "datafolha_RJ_2026-10-01.json": 1.351351,
       "quaest_RJ_2026-10-03.json": 0.0,
       "realtime_RJ_2026-09-29.json": 3.529412
@@ -8861,10 +8707,11 @@
      "campo": "centro-direita",
      "sq_candidato": "190002545553",
      "foto": "img/senado/RJ_190002545553.jpg",
-     "valor": 0.845878,
-     "validos": 1.096738,
-     "validos_uniforme": 0.990601,
+     "valor": 0.677002,
+     "validos": 0.837021,
+     "validos_uniforme": 0.770188,
      "validos_por_pesquisa": {
+      "atlas_RJ_2026-10-02.json": 0.0,
       "datafolha_RJ_2026-10-01.json": 2.702703,
       "quaest_RJ_2026-10-03.json": 0.0,
       "realtime_RJ_2026-09-29.json": 1.176471
@@ -8881,10 +8728,11 @@
      "campo": "esquerda",
      "sq_candidato": "190002548589",
      "foto": "img/senado/RJ_190002548589.jpg",
-     "valor": 0.800677,
-     "validos": 1.038132,
-     "validos_uniforme": 0.937666,
+     "valor": 0.640825,
+     "validos": 0.792293,
+     "validos_uniforme": 0.729031,
      "validos_por_pesquisa": {
+      "atlas_RJ_2026-10-02.json": 0.0,
       "datafolha_RJ_2026-10-01.json": 1.351351,
       "quaest_RJ_2026-10-03.json": 1.315789,
       "realtime_RJ_2026-09-29.json": 0.0
@@ -8901,10 +8749,11 @@
      "campo": "direita",
      "sq_candidato": "190002552083",
      "foto": "img/senado/RJ_190002552083.jpg",
-     "valor": 0.323398,
-     "validos": 0.419307,
-     "validos_uniforme": 0.378728,
+     "valor": 0.258833,
+     "validos": 0.320011,
+     "validos_uniforme": 0.294459,
      "validos_por_pesquisa": {
+      "atlas_RJ_2026-10-02.json": 0.0,
       "datafolha_RJ_2026-10-01.json": 1.351351,
       "quaest_RJ_2026-10-03.json": 0.0,
       "realtime_RJ_2026-09-29.json": 0.0
@@ -8921,10 +8770,11 @@
      "campo": "esquerda",
      "sq_candidato": "190002552521",
      "foto": "img/senado/RJ_190002552521.jpg",
-     "valor": 0.323398,
-     "validos": 0.419307,
-     "validos_uniforme": 0.378728,
+     "valor": 0.258833,
+     "validos": 0.320011,
+     "validos_uniforme": 0.294459,
      "validos_por_pesquisa": {
+      "atlas_RJ_2026-10-02.json": 0.0,
       "datafolha_RJ_2026-10-01.json": 1.351351,
       "quaest_RJ_2026-10-03.json": 0.0,
       "realtime_RJ_2026-09-29.json": 0.0
@@ -8941,10 +8791,11 @@
      "campo": "esquerda",
      "sq_candidato": "190002539827",
      "foto": "img/senado/RJ_190002539827.jpg",
-     "valor": 0.323398,
-     "validos": 0.419307,
-     "validos_uniforme": 0.378728,
+     "valor": 0.258833,
+     "validos": 0.320011,
+     "validos_uniforme": 0.294459,
      "validos_por_pesquisa": {
+      "atlas_RJ_2026-10-02.json": 0.0,
       "datafolha_RJ_2026-10-01.json": 1.351351,
       "quaest_RJ_2026-10-03.json": 0.0,
       "realtime_RJ_2026-09-29.json": 0.0
@@ -8961,10 +8812,11 @@
      "campo": "direita",
      "sq_candidato": "190002550190",
      "foto": "img/senado/RJ_190002550190.jpg",
-     "valor": 0.199083,
-     "validos": 0.258125,
-     "validos_uniforme": 0.233145,
+     "valor": 0.159337,
+     "validos": 0.196999,
+     "validos_uniforme": 0.181269,
      "validos_por_pesquisa": {
+      "atlas_RJ_2026-10-02.json": 0.0,
       "datafolha_RJ_2026-10-01.json": 0.0,
       "quaest_RJ_2026-10-03.json": 0.0,
       "realtime_RJ_2026-09-29.json": 1.176471
@@ -8985,6 +8837,7 @@
      "validos": 0.0,
      "validos_uniforme": 0.0,
      "validos_por_pesquisa": {
+      "atlas_RJ_2026-10-02.json": 0.0,
       "datafolha_RJ_2026-10-01.json": 0.0,
       "quaest_RJ_2026-10-03.json": 0.0,
       "realtime_RJ_2026-09-29.json": 0.0
@@ -8999,14 +8852,14 @@
      "campo": "direita",
      "sq_candidato": "190002542888",
      "foto": "img/senado/RJ_190002542888.jpg",
-     "p_eleito": 0.6389,
-     "p_primeiro": 0.3027,
+     "p_eleito": 0.66235,
+     "p_primeiro": 0.32025,
      "ic90_validos": [
-      11.650356,
-      29.821036
+      12.33456,
+      31.187957
      ],
-     "validos_mediana": 19.772264,
-     "validos_central": 20.617258
+     "validos_mediana": 20.686235,
+     "validos_central": 21.604092
     },
     {
      "nome": "Benedita da Silva",
@@ -9015,14 +8868,14 @@
      "campo": "esquerda",
      "sq_candidato": "190002548141",
      "foto": "img/senado/RJ_190002548141.jpg",
-     "p_eleito": 0.62595,
-     "p_primeiro": 0.43685,
+     "p_eleito": 0.6089,
+     "p_primeiro": 0.41975,
      "ic90_validos": [
-      10.949829,
-      34.849701
+      11.117984,
+      35.581215
      ],
-     "validos_mediana": 20.886437,
-     "validos_central": 21.739899
+     "validos_mediana": 21.106644,
+     "validos_central": 22.154664
     },
     {
      "nome": "Carlos Portinho",
@@ -9031,14 +8884,14 @@
      "campo": "direita",
      "sq_candidato": "190002535142",
      "foto": "img/senado/RJ_190002535142.jpg",
-     "p_eleito": 0.50715,
-     "p_primeiro": 0.1914,
+     "p_eleito": 0.53635,
+     "p_primeiro": 0.2069,
      "ic90_validos": [
-      10.875245,
-      27.826372
+      11.299286,
+      29.179313
      ],
-     "validos_mediana": 18.181611,
-     "validos_central": 18.965934
+     "validos_mediana": 19.075025,
+     "validos_central": 19.884488
     },
     {
      "nome": "Pedro Paulo",
@@ -9047,14 +8900,14 @@
      "campo": "centro",
      "sq_candidato": "190002548145",
      "foto": "img/senado/RJ_190002548145.jpg",
-     "p_eleito": 0.18145,
-     "p_primeiro": 0.0671,
+     "p_eleito": 0.14615,
+     "p_primeiro": 0.0508,
      "ic90_validos": [
-      5.959805,
-      23.402538
+      5.626359,
+      22.682431
      ],
-     "validos_mediana": 12.187401,
-     "validos_central": 12.640201
+     "validos_mediana": 11.691708,
+     "validos_central": 12.19871
     },
     {
      "nome": "Monica Benicio",
@@ -9063,14 +8916,14 @@
      "campo": "esquerda",
      "sq_candidato": "190002536164",
      "foto": "img/senado/RJ_190002536164.jpg",
-     "p_eleito": 0.0345,
-     "p_primeiro": 0.00035,
+     "p_eleito": 0.0449,
+     "p_primeiro": 0.00225,
      "ic90_validos": [
-      4.373143,
-      15.068013
+      4.787451,
+      16.269116
      ],
-     "validos_mediana": 8.549674,
-     "validos_central": 8.713095
+     "validos_mediana": 9.260961,
+     "validos_central": 9.609866
     },
     {
      "nome": "Marcelo Crivella",
@@ -9079,14 +8932,14 @@
      "campo": "direita",
      "sq_candidato": "190002550184",
      "foto": "img/senado/RJ_190002550184.jpg",
-     "p_eleito": 0.01205,
-     "p_primeiro": 0.0016,
+     "p_eleito": 0.00135,
+     "p_primeiro": 5e-05,
      "ic90_validos": [
-      5.886572,
-      15.732498
+      4.699526,
+      12.968705
      ],
-     "validos_mediana": 9.911677,
-     "validos_central": 10.247206
+     "validos_mediana": 8.05773,
+     "validos_central": 8.330945
     },
     {
      "nome": "Helio Secco",
@@ -9098,11 +8951,11 @@
      "p_eleito": 0.0,
      "p_primeiro": 0.0,
      "ic90_validos": [
-      0.600971,
-      1.94335
+      0.788368,
+      3.01388
      ],
-     "validos_mediana": 1.094589,
-     "validos_central": 1.193681
+     "validos_mediana": 1.517384,
+     "validos_central": 1.395852
     },
     {
      "nome": "Luciano Mattos",
@@ -9114,11 +8967,11 @@
      "p_eleito": 0.0,
      "p_primeiro": 0.0,
      "ic90_validos": [
-      0.160466,
-      0.776799
+      0.1214,
+      0.605732
      ],
-     "validos_mediana": 0.369064,
-     "validos_central": 0.419307
+     "validos_mediana": 0.281533,
+     "validos_central": 0.320011
     },
     {
      "nome": "Luiz Eugenio",
@@ -9130,11 +8983,11 @@
      "p_eleito": 0.0,
      "p_primeiro": 0.0,
      "ic90_validos": [
-      0.147599,
-      0.840084
+      0.113475,
+      0.642414
      ],
-     "validos_mediana": 0.368164,
-     "validos_central": 0.419307
+     "validos_mediana": 0.281431,
+     "validos_central": 0.320011
     },
     {
      "nome": "Marcos Dias",
@@ -9146,11 +8999,11 @@
      "p_eleito": 0.0,
      "p_primeiro": 0.0,
      "ic90_validos": [
-      0.428822,
-      2.28444
+      0.329006,
+      1.761224
      ],
-     "validos_mediana": 0.988155,
-     "validos_central": 1.096738
+     "validos_mediana": 0.760454,
+     "validos_central": 0.837021
     },
     {
      "nome": "Michelly Xavier",
@@ -9162,11 +9015,11 @@
      "p_eleito": 0.0,
      "p_primeiro": 0.0,
      "ic90_validos": [
-      0.452107,
-      1.850236
+      0.346759,
+      1.442578
      ],
-     "validos_mediana": 0.946709,
-     "validos_central": 1.038132
+     "validos_mediana": 0.721761,
+     "validos_central": 0.792293
     },
     {
      "nome": "Paula Falcão",
@@ -9178,11 +9031,11 @@
      "p_eleito": 0.0,
      "p_primeiro": 0.0,
      "ic90_validos": [
-      0.146756,
-      0.843582
+      0.112125,
+      0.642553
      ],
-     "validos_mediana": 0.367394,
-     "validos_central": 0.419307
+     "validos_mediana": 0.282546,
+     "validos_central": 0.320011
     },
     {
      "nome": "Vinicius Benevides",
@@ -9210,11 +9063,11 @@
      "p_eleito": 0.0,
      "p_primeiro": 0.0,
      "ic90_validos": [
-      1.262466,
-      4.456507
+      0.974154,
+      3.390948
      ],
-     "validos_mediana": 2.39197,
-     "validos_central": 2.231813
+     "validos_mediana": 1.817961,
+     "validos_central": 1.703301
     },
     {
      "nome": "Ó Clemente",
@@ -9226,69 +9079,71 @@
      "p_eleito": 0.0,
      "p_primeiro": 0.0,
      "ic90_validos": [
-      0.112962,
-      0.448293
+      0.086419,
+      0.347224
      ],
-     "validos_mediana": 0.231473,
-     "validos_central": 0.258125
+     "validos_mediana": 0.177261,
+     "validos_central": 0.196999
     }
    ],
    "eleitos_provaveis": [
     "Carlos Jordy",
-    "Benedita da Silva"
+    "Carlos Portinho"
    ],
    "dupla_mais_provavel": [
     "Carlos Jordy",
-    "Benedita da Silva"
+    "Carlos Portinho"
    ],
-   "p_dupla_mais_provavel": 0.29675,
+   "p_dupla_mais_provavel": 0.3259,
    "duplas": [
     {
      "nomes": [
-      "Benedita da Silva",
-      "Carlos Jordy"
+      "Carlos Jordy",
+      "Carlos Portinho"
      ],
-     "p": 0.29675
+     "p": 0.3259
     },
     {
      "nomes": [
       "Carlos Jordy",
-      "Carlos Portinho"
+      "Benedita da Silva"
      ],
-     "p": 0.29215
+     "p": 0.29625
     },
     {
      "nomes": [
       "Benedita da Silva",
       "Carlos Portinho"
      ],
-     "p": 0.1834
+     "p": 0.1857
     },
     {
      "nomes": [
       "Benedita da Silva",
       "Pedro Paulo"
      ],
-     "p": 0.1102
+     "p": 0.08315
     },
     {
      "nomes": [
-      "Carlos Jordy",
-      "Pedro Paulo"
+      "Benedita da Silva",
+      "Monica Benicio"
      ],
-     "p": 0.044
+     "p": 0.04355
     }
    ],
    "incerteza": "alta",
    "notas": [
+    "Os dois nomes de maior probabilidade individual não formam a dupla mais frequente nos sorteios (Carlos Jordy e Benedita da Silva).",
+    "atlas_RJ_2026-10-02.json não lista Marcos Dias, Waguinho, Luciano Mattos, Luiz Eugenio, Michelly Xavier, Paula Falcão, Vinicius Benevides, Ó Clemente: contado como zero nessa onda.",
     "realtime_RJ_2026-09-29.json não lista Luciano Mattos, Luiz Eugenio, Michelly Xavier, Paula Falcão, Vinicius Benevides: contado como zero nessa onda."
    ],
-   "indecisos": 8.263668,
-   "branco_nulo": 14.609591,
-   "outros_validos": 0.0,
-   "dias_ate_eleicao_ponderado": 2.498198,
-   "p_segunda_dupla": 0.29215,
-   "dupla_empatada": true,
+   "indecisos": 7.018611,
+   "branco_nulo": 12.099049,
+   "outros_validos": 0.331736,
+   "dias_ate_eleicao_ponderado": 2.38022,
+   "p_segunda_dupla": 0.29625,
+   "dupla_empatada": false,
    "soma_p_eleito": 2.0
   },
   "RN": {
@@ -11966,10 +11821,31 @@
    "eleitorado": 34122892,
    "pesquisas_usadas": [
     {
+     "arquivo": "atlas_SP_2026-10-02.json",
+     "instituto": "AtlasIntel",
+     "casa": "atlas",
+     "peso": 0.174863,
+     "campo_inicio": "2026-09-27",
+     "campo_fim": "2026-10-02",
+     "campo": "2026-09-27 a 2026-10-02",
+     "campo_inferido": false,
+     "regra_campo": null,
+     "divulgacao": "2026-10-03",
+     "dias_ate_eleicao": 2,
+     "n": 2243,
+     "n_usado": 2243,
+     "n_assumido": false,
+     "votos_por_eleitor": 1,
+     "registro_tse": "SP-06906/2026",
+     "url": "https://cdn1.atlasintel.org/pesquisa_atlas_estadao__eleicoes_sao_paulo_2026__261003_7480fedfda9e694f.pdf",
+     "pagina": 18,
+     "retiradas": []
+    },
+    {
      "arquivo": "datafolha_SP_2026-10-03.json",
      "instituto": "Datafolha",
      "casa": "datafolha",
-     "peso": 0.321209,
+     "peso": 0.265042,
      "campo_inicio": "2026-10-02",
      "campo_fim": "2026-10-03",
      "campo": "2026-10-02 a 2026-10-03",
@@ -11997,7 +11873,7 @@
      "arquivo": "futura_SP_2026-10-01.json",
      "instituto": "Futura Inteligência",
      "casa": "futura",
-     "peso": 0.227129,
+     "peso": 0.187413,
      "campo_inicio": "2026-09-29",
      "campo_fim": "2026-10-01",
      "campo": "2026-09-29 a 2026-10-01",
@@ -12025,7 +11901,7 @@
      "arquivo": "quaest_SP_2026-10-03.json",
      "instituto": "Quaest",
      "casa": "quaest",
-     "peso": 0.321209,
+     "peso": 0.265042,
      "campo_inicio": "2026-10-02",
      "campo_fim": "2026-10-03",
      "campo": "2026-10-02 a 2026-10-03",
@@ -12053,7 +11929,7 @@
      "arquivo": "realtime_SP_2026-09-28.json",
      "instituto": "Real Time Big Data",
      "casa": "realtime",
-     "peso": 0.130452,
+     "peso": 0.10764,
      "campo_inicio": "2026-09-24",
      "campo_fim": "2026-09-28",
      "campo": "2026-09-24 a 2026-09-28",
@@ -12125,10 +12001,11 @@
      "campo": "centro-direita",
      "sq_candidato": "250002541312",
      "foto": "img/senado/SP_250002541312.jpg",
-     "valor": 19.11403,
-     "validos": 24.921709,
-     "validos_uniforme": 23.590912,
+     "valor": 20.118732,
+     "validos": 25.098652,
+     "validos_uniforme": 24.223903,
      "validos_por_pesquisa": {
+      "atlas_SP_2026-10-02.json": 25.93361,
       "datafolha_SP_2026-10-03.json": 23.188406,
       "futura_SP_2026-10-01.json": 25.904762,
       "quaest_SP_2026-10-03.json": 25.316456,
@@ -12147,35 +12024,15 @@
      "campo": "direita",
      "sq_candidato": "250002541308",
      "foto": "img/senado/SP_250002541308.jpg",
-     "valor": 17.364431,
-     "validos": 22.640506,
-     "validos_uniforme": 21.595138,
+     "valor": 18.362719,
+     "validos": 22.907979,
+     "validos_uniforme": 22.260494,
      "validos_por_pesquisa": {
+      "atlas_SP_2026-10-02.json": 24.170124,
       "datafolha_SP_2026-10-03.json": 23.188406,
       "futura_SP_2026-10-01.json": 20.825397,
       "quaest_SP_2026-10-03.json": 22.78481,
       "realtime_SP_2026-09-28.json": 24.096386
-     }
-    },
-    {
-     "nome": "Marina Silva",
-     "nome_urna": "MARINA SILVA",
-     "nome_pesquisa": "Marina Silva",
-     "aliases": [
-      "Marina Silva"
-     ],
-     "partido": "REDE",
-     "campo": "esquerda",
-     "sq_candidato": "250002551501",
-     "foto": "img/senado/SP_250002551501.jpg",
-     "valor": 16.468881,
-     "validos": 21.472848,
-     "validos_uniforme": 20.57358,
-     "validos_por_pesquisa": {
-      "datafolha_SP_2026-10-03.json": 21.73913,
-      "futura_SP_2026-10-01.json": 22.984127,
-      "quaest_SP_2026-10-03.json": 21.518987,
-      "realtime_SP_2026-09-28.json": 18.072289
      }
     },
     {
@@ -12189,14 +12046,37 @@
      "campo": "esquerda",
      "sq_candidato": "250002551502",
      "foto": "img/senado/SP_250002551502.jpg",
-     "valor": 16.396054,
-     "validos": 21.377893,
-     "validos_uniforme": 20.490505,
+     "valor": 17.251339,
+     "validos": 21.521503,
+     "validos_uniforme": 21.017854,
      "validos_por_pesquisa": {
+      "atlas_SP_2026-10-02.json": 22.19917,
       "datafolha_SP_2026-10-03.json": 20.289855,
       "futura_SP_2026-10-01.json": 22.539683,
       "quaest_SP_2026-10-03.json": 21.518987,
       "realtime_SP_2026-09-28.json": 21.686747
+     }
+    },
+    {
+     "nome": "Marina Silva",
+     "nome_urna": "MARINA SILVA",
+     "nome_pesquisa": "Marina Silva",
+     "aliases": [
+      "Marina Silva"
+     ],
+     "partido": "REDE",
+     "campo": "esquerda",
+     "sq_candidato": "250002551501",
+     "foto": "img/senado/SP_250002551501.jpg",
+     "valor": 17.212364,
+     "validos": 21.47288,
+     "validos_uniforme": 20.974275,
+     "validos_por_pesquisa": {
+      "atlas_SP_2026-10-02.json": 21.473029,
+      "datafolha_SP_2026-10-03.json": 21.73913,
+      "futura_SP_2026-10-01.json": 22.984127,
+      "quaest_SP_2026-10-03.json": 21.518987,
+      "realtime_SP_2026-09-28.json": 18.072289
      }
     },
     {
@@ -12210,35 +12090,15 @@
      "campo": "centro-direita",
      "sq_candidato": "250002544673",
      "foto": "img/senado/SP_250002544673.jpg",
-     "valor": 1.652997,
-     "validos": 2.15525,
-     "validos_uniforme": 3.673038,
+     "valor": 1.425523,
+     "validos": 1.778378,
+     "validos_uniforme": 3.322915,
      "validos_por_pesquisa": {
+      "atlas_SP_2026-10-02.json": 0.0,
       "datafolha_SP_2026-10-03.json": 2.898551,
       "futura_SP_2026-10-01.json": 1.52381,
       "quaest_SP_2026-10-03.json": 1.265823,
       "realtime_SP_2026-09-28.json": 3.614458
-     }
-    },
-    {
-     "nome": "Soninha Francine",
-     "nome_urna": "SONINHA FRANCINE",
-     "nome_pesquisa": "Soninha Francine",
-     "aliases": [
-      "Soninha Francine"
-     ],
-     "partido": "CIDADANIA",
-     "campo": "centro-esquerda",
-     "sq_candidato": "250002552369",
-     "foto": "img/senado/SP_250002552369.jpg",
-     "valor": 1.142235,
-     "validos": 1.489296,
-     "validos_uniforme": 3.090409,
-     "validos_por_pesquisa": {
-      "datafolha_SP_2026-10-03.json": 1.449275,
-      "futura_SP_2026-10-01.json": 1.333333,
-      "quaest_SP_2026-10-03.json": 1.265823,
-      "realtime_SP_2026-09-28.json": 2.409639
      }
     },
     {
@@ -12252,12 +12112,35 @@
      "campo": "direita",
      "sq_candidato": "250002554075",
      "foto": "img/senado/SP_250002554075.jpg",
-     "valor": 1.109054,
-     "validos": 1.446033,
-     "validos_uniforme": 3.052559,
+     "valor": 1.319938,
+     "validos": 1.646658,
+     "validos_uniforme": 3.204859,
      "validos_por_pesquisa": {
+      "atlas_SP_2026-10-02.json": 2.593361,
       "datafolha_SP_2026-10-03.json": 1.449275,
       "futura_SP_2026-10-01.json": 1.142857,
+      "quaest_SP_2026-10-03.json": 1.265823,
+      "realtime_SP_2026-09-28.json": 2.409639
+     }
+    },
+    {
+     "nome": "Soninha Francine",
+     "nome_urna": "SONINHA FRANCINE",
+     "nome_pesquisa": "Soninha Francine",
+     "aliases": [
+      "Soninha Francine"
+     ],
+     "partido": "CIDADANIA",
+     "campo": "centro-esquerda",
+     "sq_candidato": "250002552369",
+     "foto": "img/senado/SP_250002552369.jpg",
+     "valor": 0.985048,
+     "validos": 1.228874,
+     "validos_uniforme": 1.101388,
+     "validos_por_pesquisa": {
+      "atlas_SP_2026-10-02.json": 0.0,
+      "datafolha_SP_2026-10-03.json": 1.449275,
+      "futura_SP_2026-10-01.json": 1.333333,
       "quaest_SP_2026-10-03.json": 1.265823,
       "realtime_SP_2026-09-28.json": 2.409639
      }
@@ -12274,10 +12157,11 @@
      "campo": "esquerda",
      "sq_candidato": "250002541362",
      "foto": "img/senado/SP_250002541362.jpg",
-     "valor": 0.923267,
-     "validos": 1.203796,
-     "validos_uniforme": 1.053175,
+     "valor": 0.796214,
+     "validos": 0.993298,
+     "validos_uniforme": 0.890251,
      "validos_por_pesquisa": {
+      "atlas_SP_2026-10-02.json": 0.0,
       "datafolha_SP_2026-10-03.json": 1.449275,
       "futura_SP_2026-10-01.json": 1.460317,
       "quaest_SP_2026-10-03.json": 1.265823,
@@ -12296,10 +12180,11 @@
      "campo": "esquerda",
      "sq_candidato": "250002544516",
      "foto": "img/senado/SP_250002544516.jpg",
-     "valor": 0.823725,
-     "validos": 1.074008,
-     "validos_uniforme": 0.939626,
+     "valor": 0.710369,
+     "validos": 0.886204,
+     "validos_uniforme": 0.794268,
      "validos_por_pesquisa": {
+      "atlas_SP_2026-10-02.json": 0.0,
       "datafolha_SP_2026-10-03.json": 1.449275,
       "futura_SP_2026-10-01.json": 0.888889,
       "quaest_SP_2026-10-03.json": 1.265823,
@@ -12317,10 +12202,11 @@
      "campo": "centro-direita",
      "sq_candidato": "250002553252",
      "foto": "img/senado/SP_250002553252.jpg",
-     "valor": 0.757363,
-     "validos": 0.987483,
-     "validos_uniforme": 0.863927,
+     "valor": 0.65314,
+     "validos": 0.814809,
+     "validos_uniforme": 0.730279,
      "validos_por_pesquisa": {
+      "atlas_SP_2026-10-02.json": 0.0,
       "datafolha_SP_2026-10-03.json": 1.449275,
       "futura_SP_2026-10-01.json": 0.507937,
       "quaest_SP_2026-10-03.json": 1.265823,
@@ -12339,10 +12225,11 @@
      "campo": "esquerda",
      "sq_candidato": "250002544514",
      "foto": "img/senado/SP_250002544514.jpg",
-     "valor": 0.735242,
-     "validos": 0.958641,
-     "validos_uniforme": 0.838694,
+     "valor": 0.634063,
+     "validos": 0.79101,
+     "validos_uniforme": 0.70895,
      "validos_por_pesquisa": {
+      "atlas_SP_2026-10-02.json": 0.0,
       "datafolha_SP_2026-10-03.json": 1.449275,
       "futura_SP_2026-10-01.json": 0.380952,
       "quaest_SP_2026-10-03.json": 1.265823,
@@ -12360,10 +12247,11 @@
      "campo": "esquerda",
      "sq_candidato": "250002552153",
      "foto": "img/senado/SP_250002552153.jpg",
-     "valor": 0.033181,
-     "validos": 0.043263,
-     "validos_uniforme": 0.03785,
+     "valor": 0.028615,
+     "validos": 0.035698,
+     "validos_uniforme": 0.031994,
      "validos_por_pesquisa": {
+      "atlas_SP_2026-10-02.json": 0.0,
       "datafolha_SP_2026-10-03.json": 0.0,
       "futura_SP_2026-10-01.json": 0.190476,
       "quaest_SP_2026-10-03.json": 0.0,
@@ -12381,10 +12269,11 @@
      "campo": "esquerda",
      "sq_candidato": "250002541365",
      "foto": "img/senado/SP_250002541365.jpg",
-     "valor": 0.033181,
-     "validos": 0.043263,
-     "validos_uniforme": 0.03785,
+     "valor": 0.028615,
+     "validos": 0.035698,
+     "validos_uniforme": 0.031994,
      "validos_por_pesquisa": {
+      "atlas_SP_2026-10-02.json": 0.0,
       "datafolha_SP_2026-10-03.json": 0.0,
       "futura_SP_2026-10-01.json": 0.190476,
       "quaest_SP_2026-10-03.json": 0.0,
@@ -12402,10 +12291,11 @@
      "campo": "esquerda",
      "sq_candidato": "250002552955",
      "foto": "img/senado/SP_250002552955.jpg",
-     "valor": 0.022121,
-     "validos": 0.028842,
-     "validos_uniforme": 0.025233,
+     "valor": 0.019077,
+     "validos": 0.023798,
+     "validos_uniforme": 0.02133,
      "validos_por_pesquisa": {
+      "atlas_SP_2026-10-02.json": 0.0,
       "datafolha_SP_2026-10-03.json": 0.0,
       "futura_SP_2026-10-01.json": 0.126984,
       "quaest_SP_2026-10-03.json": 0.0,
@@ -12421,14 +12311,14 @@
      "campo": "centro-direita",
      "sq_candidato": "250002541312",
      "foto": "img/senado/SP_250002541312.jpg",
-     "p_eleito": 0.60545,
-     "p_primeiro": 0.3695,
+     "p_eleito": 0.60725,
+     "p_primeiro": 0.3787,
      "ic90_validos": [
-      12.448524,
-      39.685464
+      12.603071,
+      40.372225
      ],
-     "validos_mediana": 23.669378,
-     "validos_central": 24.921709
+     "validos_mediana": 24.064871,
+     "validos_central": 25.098652
     },
     {
      "nome": "André do Prado",
@@ -12437,30 +12327,14 @@
      "campo": "direita",
      "sq_candidato": "250002541308",
      "foto": "img/senado/SP_250002541308.jpg",
-     "p_eleito": 0.5175,
-     "p_primeiro": 0.28245,
+     "p_eleito": 0.52835,
+     "p_primeiro": 0.2803,
      "ic90_validos": [
-      11.043992,
-      37.210915
+      11.390479,
+      37.995319
      ],
-     "validos_mediana": 21.522575,
-     "validos_central": 22.640506
-    },
-    {
-     "nome": "Marina Silva",
-     "nome_urna": "MARINA SILVA",
-     "partido": "REDE",
-     "campo": "esquerda",
-     "sq_candidato": "250002551501",
-     "foto": "img/senado/SP_250002551501.jpg",
-     "p_eleito": 0.4404,
-     "p_primeiro": 0.1761,
-     "ic90_validos": [
-      11.838918,
-      31.914811
-     ],
-     "validos_mediana": 20.4432,
-     "validos_central": 21.472848
+     "validos_mediana": 21.965419,
+     "validos_central": 22.907979
     },
     {
      "nome": "Simone Tebet",
@@ -12469,14 +12343,30 @@
      "campo": "esquerda",
      "sq_candidato": "250002551502",
      "foto": "img/senado/SP_250002551502.jpg",
-     "p_eleito": 0.43665,
-     "p_primeiro": 0.17195,
+     "p_eleito": 0.4349,
+     "p_primeiro": 0.1704,
      "ic90_validos": [
-      11.693332,
-      31.972213
+      11.853713,
+      32.073216
      ],
-     "validos_mediana": 20.415893,
-     "validos_central": 21.377893
+     "validos_mediana": 20.540877,
+     "validos_central": 21.521503
+    },
+    {
+     "nome": "Marina Silva",
+     "nome_urna": "MARINA SILVA",
+     "partido": "REDE",
+     "campo": "esquerda",
+     "sq_candidato": "250002551501",
+     "foto": "img/senado/SP_250002551501.jpg",
+     "p_eleito": 0.4295,
+     "p_primeiro": 0.1706,
+     "ic90_validos": [
+      11.792015,
+      32.238835
+     ],
+     "validos_mediana": 20.448861,
+     "validos_central": 21.47288
     },
     {
      "nome": "Dra Eliana Ferreira",
@@ -12488,11 +12378,11 @@
      "p_eleito": 0.0,
      "p_primeiro": 0.0,
      "ic90_validos": [
-      0.578072,
-      1.956404
+      0.48278,
+      1.615258
      ],
-     "validos_mediana": 1.09497,
-     "validos_central": 1.203796
+     "validos_mediana": 0.906859,
+     "validos_central": 0.993298
     },
     {
      "nome": "Ednelson Cesaretti",
@@ -12504,11 +12394,11 @@
      "p_eleito": 0.0,
      "p_primeiro": 0.0,
      "ic90_validos": [
-      0.001516,
-      0.083816
+      0.001277,
+      0.070796
      ],
-     "validos_mediana": 0.018332,
-     "validos_central": 0.028842
+     "validos_mediana": 0.015064,
+     "validos_central": 0.023798
     },
     {
      "nome": "Geraldo Rufino",
@@ -12520,11 +12410,11 @@
      "p_eleito": 0.0,
      "p_primeiro": 0.0,
      "ic90_validos": [
-      1.106484,
-      5.14923
+      0.921217,
+      4.619781
      ],
-     "validos_mediana": 2.370216,
-     "validos_central": 2.15525
+     "validos_mediana": 1.993568,
+     "validos_central": 1.778378
     },
     {
      "nome": "Guto Schiavetto",
@@ -12536,11 +12426,11 @@
      "p_eleito": 0.0,
      "p_primeiro": 0.0,
      "ic90_validos": [
-      0.733265,
-      4.310009
+      0.836153,
+      4.520621
      ],
-     "validos_mediana": 1.660767,
-     "validos_central": 1.446033
+     "validos_mediana": 1.872051,
+     "validos_central": 1.646658
     },
     {
      "nome": "Marcio Alves",
@@ -12552,11 +12442,11 @@
      "p_eleito": 0.0,
      "p_primeiro": 0.0,
      "ic90_validos": [
-      0.451738,
-      1.570995
+      0.380744,
+      1.32099
      ],
-     "validos_mediana": 0.866728,
-     "validos_central": 0.958641
+     "validos_mediana": 0.71967,
+     "validos_central": 0.79101
     },
     {
      "nome": "Maíra de Souza",
@@ -12568,11 +12458,11 @@
      "p_eleito": 0.0,
      "p_primeiro": 0.0,
      "ic90_validos": [
-      0.516301,
-      1.755374
+      0.426749,
+      1.453411
      ],
-     "validos_mediana": 0.973511,
-     "validos_central": 1.074008
+     "validos_mediana": 0.809489,
+     "validos_central": 0.886204
     },
     {
      "nome": "Petter Maahs",
@@ -12584,11 +12474,11 @@
      "p_eleito": 0.0,
      "p_primeiro": 0.0,
      "ic90_validos": [
-      0.004835,
-      0.115145
+      0.003889,
+      0.095103
      ],
-     "validos_mediana": 0.031196,
-     "validos_central": 0.043263
+     "validos_mediana": 0.02613,
+     "validos_central": 0.035698
     },
     {
      "nome": "Soninha Francine",
@@ -12600,11 +12490,11 @@
      "p_eleito": 0.0,
      "p_primeiro": 0.0,
      "ic90_validos": [
-      0.69774,
-      4.652132
+      0.511072,
+      2.462608
      ],
-     "validos_mediana": 1.701798,
-     "validos_central": 1.489296
+     "validos_mediana": 1.115206,
+     "validos_central": 1.228874
     },
     {
      "nome": "Weller Gonçalves",
@@ -12616,11 +12506,11 @@
      "p_eleito": 0.0,
      "p_primeiro": 0.0,
      "ic90_validos": [
-      0.004694,
-      0.115482
+      0.00392,
+      0.093733
      ],
-     "validos_mediana": 0.031174,
-     "validos_central": 0.043263
+     "validos_mediana": 0.026137,
+     "validos_central": 0.035698
     },
     {
      "nome": "William Teixeira",
@@ -12632,11 +12522,11 @@
      "p_eleito": 0.0,
      "p_primeiro": 0.0,
      "ic90_validos": [
-      0.436522,
-      1.736293
+      0.361657,
+      1.473315
      ],
-     "validos_mediana": 0.895083,
-     "validos_central": 0.987483
+     "validos_mediana": 0.742472,
+     "validos_central": 0.814809
     }
    ],
    "eleitos_provaveis": [
@@ -12647,42 +12537,42 @@
     "Guilherme Derrite",
     "André do Prado"
    ],
-   "p_dupla_mais_provavel": 0.3053,
+   "p_dupla_mais_provavel": 0.3126,
    "duplas": [
     {
      "nomes": [
-      "André do Prado",
-      "Guilherme Derrite"
+      "Guilherme Derrite",
+      "André do Prado"
      ],
-     "p": 0.3053
+     "p": 0.3126
     },
     {
      "nomes": [
-      "Marina Silva",
-      "Simone Tebet"
+      "Simone Tebet",
+      "Marina Silva"
      ],
-     "p": 0.18235
+     "p": 0.177
     },
     {
      "nomes": [
       "Guilherme Derrite",
       "Simone Tebet"
      ],
-     "p": 0.1512
+     "p": 0.14885
     },
     {
      "nomes": [
       "Guilherme Derrite",
       "Marina Silva"
      ],
-     "p": 0.14895
+     "p": 0.1458
     },
     {
      "nomes": [
       "André do Prado",
-      "Marina Silva"
+      "Simone Tebet"
      ],
-     "p": 0.1091
+     "p": 0.10905
     }
    ],
    "incerteza": "alta",
@@ -12691,13 +12581,14 @@
     "futura_SP_2026-10-01.json: Salles retirou a candidatura em 2026-09-28; o voto medido passou a indeciso.",
     "quaest_SP_2026-10-03.json: Salles retirou a candidatura em 2026-09-28; o voto medido passou a indeciso.",
     "realtime_SP_2026-09-28.json: Salles retirou a candidatura em 2026-09-28; o voto medido passou a indeciso.",
+    "atlas_SP_2026-10-02.json não lista Geraldo Rufino, Dra Eliana Ferreira, Marcio Alves, Maíra de Souza, Soninha Francine, William Teixeira, Ednelson Cesaretti, Petter Maahs, Weller Gonçalves: contado como zero nessa onda.",
     "realtime_SP_2026-09-28.json não lista Dra Eliana Ferreira, Marcio Alves, Maíra de Souza, William Teixeira, Ednelson Cesaretti, Petter Maahs, Weller Gonçalves: contado como zero nessa onda."
    ],
-   "indecisos": 10.968835,
-   "branco_nulo": 12.334859,
-   "outros_validos": 0.157171,
-   "dias_ate_eleicao_ponderado": 2.106517,
-   "p_segunda_dupla": 0.18235,
+   "indecisos": 9.278346,
+   "branco_nulo": 10.563038,
+   "outros_validos": 0.764562,
+   "dias_ate_eleicao_ponderado": 2.087891,
+   "p_segunda_dupla": 0.177,
    "dupla_empatada": false,
    "soma_p_eleito": 2.0
   },
@@ -14027,49 +13918,49 @@
   ],
   "por_campo": {
    "direita": {
-    "esperado": 30.08305,
+    "esperado": 30.92155,
     "ic90": [
-     19,
-     41
+     20,
+     42
     ],
     "continuam": 11,
-    "novos_esperado": 19.08305
+    "novos_esperado": 19.92155
    },
    "centro-direita": {
-    "esperado": 18.297,
+    "esperado": 17.5377,
     "ic90": [
-     12,
+     11,
      24
     ],
     "continuam": 8,
-    "novos_esperado": 10.297
+    "novos_esperado": 9.5377
    },
    "centro": {
-    "esperado": 13.34375,
+    "esperado": 12.63115,
     "ic90": [
-     7,
-     20
+     6,
+     19
     ],
     "continuam": 3,
-    "novos_esperado": 10.34375
+    "novos_esperado": 9.63115
    },
    "centro-esquerda": {
-    "esperado": 1.3869,
+    "esperado": 1.41645,
     "ic90": [
      0,
      3
     ],
     "continuam": 0,
-    "novos_esperado": 1.3869
+    "novos_esperado": 1.41645
    },
    "esquerda": {
-    "esperado": 17.8893,
+    "esperado": 18.49315,
     "ic90": [
-     9,
-     27
+     10,
+     28
     ],
     "continuam": 5,
-    "novos_esperado": 12.8893
+    "novos_esperado": 13.49315
    },
    "indefinido": {
     "esperado": 0.0,
@@ -14087,38 +13978,38 @@
      "direita",
      "centro-direita"
     ],
-    "esperado": 48.38005,
+    "esperado": 48.45925,
     "ic90": [
-     38,
+     37,
      59
     ],
     "continuam": 19,
-    "novos_esperado": 29.38005
+    "novos_esperado": 29.45925
    },
    "centro": {
     "campos": [
      "centro"
     ],
-    "esperado": 13.34375,
+    "esperado": 12.63115,
     "ic90": [
-     7,
-     20
+     6,
+     19
     ],
     "continuam": 3,
-    "novos_esperado": 10.34375
+    "novos_esperado": 9.63115
    },
    "esquerda": {
     "campos": [
      "esquerda",
      "centro-esquerda"
     ],
-    "esperado": 19.2762,
+    "esperado": 19.9096,
     "ic90": [
      11,
-     29
+     30
     ],
     "continuam": 5,
-    "novos_esperado": 14.2762
+    "novos_esperado": 14.9096
    },
    "indefinido": {
     "campos": [
@@ -14135,76 +14026,76 @@
   },
   "por_partido": {
    "PL": {
-    "esperado": 22.71905,
+    "esperado": 23.0549,
     "ic90": [
      15,
      31
     ],
     "continuam": 8,
-    "novos_esperado": 14.71905
+    "novos_esperado": 15.0549
    },
    "PT": {
-    "esperado": 10.31785,
+    "esperado": 10.6324,
     "ic90": [
      5,
-     16
+     17
     ],
     "continuam": 4,
-    "novos_esperado": 6.31785
+    "novos_esperado": 6.6324
    },
    "UNIÃO": {
-    "esperado": 9.306,
+    "esperado": 9.08625,
     "ic90": [
      6,
      12
     ],
     "continuam": 5,
-    "novos_esperado": 4.306
+    "novos_esperado": 4.08625
    },
    "MDB": {
-    "esperado": 7.7716,
+    "esperado": 7.36195,
     "ic90": [
      3,
-     12
+     11
     ],
     "continuam": 1,
-    "novos_esperado": 6.7716
+    "novos_esperado": 6.36195
    },
-   "PP": {
-    "esperado": 6.96095,
+   "REPUBLICANOS": {
+    "esperado": 6.5084,
     "ic90": [
      4,
      10
     ],
     "continuam": 3,
-    "novos_esperado": 3.96095
+    "novos_esperado": 3.5084
    },
-   "REPUBLICANOS": {
-    "esperado": 6.0058,
+   "PP": {
+    "esperado": 6.42025,
     "ic90": [
      3,
-     9
+     10
     ],
     "continuam": 3,
-    "novos_esperado": 3.0058
+    "novos_esperado": 3.42025
    },
    "PSD": {
-    "esperado": 5.5721,
+    "esperado": 5.26805,
     "ic90": [
      3,
      9
     ],
     "continuam": 2,
-    "novos_esperado": 3.5721
+    "novos_esperado": 3.26805
    },
    "PSB": {
-    "esperado": 4.33325,
+    "esperado": 4.55775,
     "ic90": [
      2,
-     6
+     7
     ],
     "continuam": 1,
-    "novos_esperado": 3.33325
+    "novos_esperado": 3.55775
    },
    "PODEMOS": {
     "esperado": 1.98005,
@@ -14234,49 +14125,49 @@
     "novos_esperado": 1.3632
    },
    "NOVO": {
-    "esperado": 1.3582,
+    "esperado": 1.35825,
     "ic90": [
      0,
      3
     ],
     "continuam": 0,
-    "novos_esperado": 1.3582
+    "novos_esperado": 1.35825
    },
    "REDE": {
-    "esperado": 1.07735,
+    "esperado": 1.131,
     "ic90": [
      0,
      2
     ],
     "continuam": 0,
-    "novos_esperado": 1.07735
+    "novos_esperado": 1.131
    },
    "PSOL": {
-    "esperado": 0.4785,
+    "esperado": 0.48965,
     "ic90": [
      0,
      1
     ],
     "continuam": 0,
-    "novos_esperado": 0.4785
-   },
-   "PRD": {
-    "esperado": 0.04755,
-    "ic90": [
-     0,
-     0
-    ],
-    "continuam": 0,
-    "novos_esperado": 0.04755
+    "novos_esperado": 0.48965
    },
    "SOLIDARIEDADE": {
-    "esperado": 0.0237,
+    "esperado": 0.05325,
+    "ic90": [
+     0,
+     1
+    ],
+    "continuam": 0,
+    "novos_esperado": 0.05325
+   },
+   "PRD": {
+    "esperado": 0.0487,
     "ic90": [
      0,
      0
     ],
     "continuam": 0,
-    "novos_esperado": 0.0237
+    "novos_esperado": 0.0487
    },
    "MOBILIZA": {
     "esperado": 0.00245,
@@ -14288,13 +14179,13 @@
     "novos_esperado": 0.00245
    },
    "AVANTE": {
-    "esperado": 5e-05,
+    "esperado": 0.00115,
     "ic90": [
      0,
      0
     ],
     "continuam": 0,
-    "novos_esperado": 5e-05
+    "novos_esperado": 0.00115
    },
    "PCB": {
     "esperado": 5e-05,
@@ -14315,11 +14206,11 @@
     "novos_esperado": 5e-05
    }
   },
-  "p_maioria_direita_mais_centro_direita": 0.8821,
-  "p_49_direita_centro_direita": 0.49225,
-  "p_54_bloco_oposicao": 0.22695,
-  "p_41_direita_centro_direita_centro": 0.99995,
-  "p_41_esquerda_centro_esquerda": 5e-05,
+  "p_maioria_direita_mais_centro_direita": 0.87195,
+  "p_49_direita_centro_direita": 0.50485,
+  "p_54_bloco_oposicao": 0.2423,
+  "p_41_direita_centro_direita_centro": 0.9999,
+  "p_41_esquerda_centro_esquerda": 0.0001,
   "p_49_esquerda_centro_esquerda": 0.0,
   "p_54_esquerda_centro_esquerda": 0.0,
   "distribuicao_direita_centro_direita": [
@@ -14347,52 +14238,52 @@
    0,
    0,
    0,
+   1,
    0,
-   0,
-   2,
    3,
-   8,
-   10,
-   15,
-   25,
-   52,
-   74,
-   101,
-   164,
-   216,
-   283,
-   368,
-   501,
-   536,
-   690,
-   807,
-   916,
-   927,
-   1023,
-   1116,
-   1177,
-   1141,
-   1138,
-   1061,
+   4,
+   11,
+   16,
+   22,
+   35,
+   73,
+   91,
+   144,
+   161,
+   257,
+   304,
+   404,
+   463,
+   572,
+   657,
+   740,
+   865,
+   944,
+   932,
+   1013,
+   1136,
+   1055,
+   1123,
    1104,
-   1015,
-   988,
-   837,
-   783,
-   670,
-   581,
-   448,
-   367,
-   274,
-   212,
-   137,
-   96,
-   63,
-   34,
-   18,
-   14,
-   3,
-   2,
+   1090,
+   1012,
+   922,
+   884,
+   819,
+   669,
+   600,
+   488,
+   399,
+   329,
+   226,
+   163,
+   115,
+   70,
+   41,
+   27,
+   9,
+   6,
+   1,
    0,
    0,
    0,
@@ -14412,43 +14303,43 @@
    0,
    0,
    0,
-   7,
-   22,
-   72,
-   177,
-   253,
-   422,
-   588,
-   709,
-   909,
-   1038,
-   1210,
-   1223,
-   1365,
-   1356,
-   1368,
-   1285,
-   1221,
-   1103,
-   1042,
-   968,
-   801,
-   721,
-   552,
-   456,
-   358,
-   254,
-   178,
-   109,
-   78,
-   68,
-   40,
-   20,
-   11,
-   8,
    2,
-   5,
-   1,
+   32,
+   78,
+   136,
+   249,
+   364,
+   514,
+   692,
+   856,
+   896,
+   1041,
+   1159,
+   1279,
+   1290,
+   1266,
+   1245,
+   1185,
+   1199,
+   1072,
+   991,
+   860,
+   734,
+   689,
+   526,
+   490,
+   349,
+   242,
+   186,
+   144,
+   102,
+   54,
+   25,
+   26,
+   15,
+   7,
+   3,
+   2,
    0,
    0,
    0,
@@ -14506,24 +14397,24 @@
     "candidatura": "Deltan Dallagnol",
     "por_grupo": {
      "direita": {
-      "esperado": 48.2669,
+      "esperado": 48.3461,
       "ic90": [
-       38,
+       37,
        59
       ]
      },
      "centro": {
-      "esperado": 13.36365,
+      "esperado": 12.65105,
       "ic90": [
-       7,
-       20
+       6,
+       19
       ]
      },
      "esquerda": {
-      "esperado": 19.36945,
+      "esperado": 20.00285,
       "ic90": [
        11,
-       29
+       30
       ]
      },
      "indefinido": {
@@ -14540,17 +14431,17 @@
      "esquerda": 0.09325,
      "indefinido": 0.0
     },
-    "p_maioria_direita_mais_centro_direita": 0.8787,
-    "p_49_direita_centro_direita": 0.48535,
-    "p_54_bloco_oposicao": 0.22265,
-    "p_41_direita_centro_direita_centro": 0.99995,
-    "p_41_esquerda_centro_esquerda": 5e-05,
+    "p_maioria_direita_mais_centro_direita": 0.86825,
+    "p_49_direita_centro_direita": 0.49755,
+    "p_54_bloco_oposicao": 0.23665,
+    "p_41_direita_centro_direita_centro": 0.9999,
+    "p_41_esquerda_centro_esquerda": 0.0001,
     "p_49_esquerda_centro_esquerda": 0.0,
     "p_54_esquerda_centro_esquerda": 0.0,
     "variacao_probabilidades": {
-     "p_maioria_direita_mais_centro_direita": -0.0034,
-     "p_49_direita_centro_direita": -0.0069,
-     "p_54_bloco_oposicao": -0.0043,
+     "p_maioria_direita_mais_centro_direita": -0.0037,
+     "p_49_direita_centro_direita": -0.0073,
+     "p_54_bloco_oposicao": -0.00565,
      "p_41_direita_centro_direita_centro": 0.0,
      "p_41_esquerda_centro_esquerda": 0.0,
      "p_49_esquerda_centro_esquerda": 0.0,
@@ -14568,24 +14459,24 @@
     "candidatura": "Deltan Dallagnol",
     "por_grupo": {
      "direita": {
-      "esperado": 48.56675,
+      "esperado": 48.64595,
       "ic90": [
-       38,
-       59
+       37,
+       60
       ]
      },
      "centro": {
-      "esperado": 13.3089,
+      "esperado": 12.5963,
       "ic90": [
-       7,
-       20
+       6,
+       19
       ]
      },
      "esquerda": {
-      "esperado": 19.12435,
+      "esperado": 19.75775,
       "ic90": [
        11,
-       29
+       30
       ]
      },
      "indefinido": {
@@ -14602,17 +14493,17 @@
      "esquerda": -0.15185,
      "indefinido": 0.0
     },
-    "p_maioria_direita_mais_centro_direita": 0.89115,
-    "p_49_direita_centro_direita": 0.50435,
-    "p_54_bloco_oposicao": 0.2333,
-    "p_41_direita_centro_direita_centro": 0.99995,
-    "p_41_esquerda_centro_esquerda": 5e-05,
+    "p_maioria_direita_mais_centro_direita": 0.87945,
+    "p_49_direita_centro_direita": 0.51485,
+    "p_54_bloco_oposicao": 0.2472,
+    "p_41_direita_centro_direita_centro": 0.9999,
+    "p_41_esquerda_centro_esquerda": 0.0001,
     "p_49_esquerda_centro_esquerda": 0.0,
     "p_54_esquerda_centro_esquerda": 0.0,
     "variacao_probabilidades": {
-     "p_maioria_direita_mais_centro_direita": 0.00905,
-     "p_49_direita_centro_direita": 0.0121,
-     "p_54_bloco_oposicao": 0.00635,
+     "p_maioria_direita_mais_centro_direita": 0.0075,
+     "p_49_direita_centro_direita": 0.01,
+     "p_54_bloco_oposicao": 0.0049,
      "p_41_direita_centro_direita_centro": 0.0,
      "p_41_esquerda_centro_esquerda": 0.0,
      "p_49_esquerda_centro_esquerda": 0.0,
@@ -14624,6 +14515,14 @@
  },
  "validacao": {
   "recomposicao": [
+   {
+    "arquivo": "atlas_AC_2026-10-02.json",
+    "soma_recomposta": 99.9,
+    "soma_total": 99.9,
+    "diferenca": 0.0,
+    "votos_por_eleitor": 1,
+    "fechamento_em_100": -0.1
+   },
    {
     "arquivo": "atlas_BA_2026-10-02.json",
     "soma_recomposta": 99.9,
@@ -14641,6 +14540,46 @@
     "fechamento_em_100": 0.1
    },
    {
+    "arquivo": "atlas_CE_2026-10-02.json",
+    "soma_recomposta": 100.0,
+    "soma_total": 100.0,
+    "diferenca": 0.0,
+    "votos_por_eleitor": 1,
+    "fechamento_em_100": 0.0
+   },
+   {
+    "arquivo": "atlas_ES_2026-10-02.json",
+    "soma_recomposta": 100.1,
+    "soma_total": 100.1,
+    "diferenca": 0.0,
+    "votos_por_eleitor": 1,
+    "fechamento_em_100": 0.1
+   },
+   {
+    "arquivo": "atlas_GO_2026-10-02.json",
+    "soma_recomposta": 99.9,
+    "soma_total": 99.9,
+    "diferenca": -0.0,
+    "votos_por_eleitor": 1,
+    "fechamento_em_100": -0.1
+   },
+   {
+    "arquivo": "atlas_MS_2026-10-02.json",
+    "soma_recomposta": 99.8,
+    "soma_total": 99.8,
+    "diferenca": 0.0,
+    "votos_por_eleitor": 1,
+    "fechamento_em_100": -0.2
+   },
+   {
+    "arquivo": "atlas_MT_2026-10-02.json",
+    "soma_recomposta": 99.9,
+    "soma_total": 99.9,
+    "diferenca": -0.0,
+    "votos_por_eleitor": 1,
+    "fechamento_em_100": -0.1
+   },
+   {
     "arquivo": "atlas_PA_2026-10-02.json",
     "soma_recomposta": 100.1,
     "soma_total": 100.1,
@@ -14655,6 +14594,30 @@
     "diferenca": -0.0,
     "votos_por_eleitor": 1,
     "fechamento_em_100": -0.2
+   },
+   {
+    "arquivo": "atlas_PI_2026-10-02.json",
+    "soma_recomposta": 99.9,
+    "soma_total": 99.9,
+    "diferenca": -0.0,
+    "votos_por_eleitor": 1,
+    "fechamento_em_100": -0.1
+   },
+   {
+    "arquivo": "atlas_RJ_2026-10-02.json",
+    "soma_recomposta": 99.8,
+    "soma_total": 99.8,
+    "diferenca": 0.0,
+    "votos_por_eleitor": 1,
+    "fechamento_em_100": -0.2
+   },
+   {
+    "arquivo": "atlas_SP_2026-10-02.json",
+    "soma_recomposta": 99.9,
+    "soma_total": 99.9,
+    "diferenca": -0.0,
+    "votos_por_eleitor": 1,
+    "fechamento_em_100": -0.1
    },
    {
     "arquivo": "datafolha_DF_2026-08-21.json",
@@ -15711,6 +15674,32 @@
     }
    },
    {
+    "uf": "ES",
+    "duplas_por_pesquisa": {
+     "atlas_ES_2026-10-02.json": [
+      "Evair de Melo",
+      "Renato Casagrande"
+     ],
+     "realtime_ES_2026-09-29.json": [
+      "Renato Casagrande",
+      "Sergio Meneguelli"
+     ]
+    }
+   },
+   {
+    "uf": "MT",
+    "duplas_por_pesquisa": {
+     "atlas_MT_2026-10-02.json": [
+      "Mauro Mendes",
+      "Zé Medeiros"
+     ],
+     "parana_MT_2026-09-29.json": [
+      "Janaina Riva",
+      "Mauro Mendes"
+     ]
+    }
+   },
+   {
     "uf": "MG",
     "duplas_por_pesquisa": {
      "datafolha_MG_2026-10-03.json": [
@@ -15730,6 +15719,10 @@
    {
     "uf": "SP",
     "duplas_por_pesquisa": {
+     "atlas_SP_2026-10-02.json": [
+      "André do Prado",
+      "Guilherme Derrite"
+     ],
      "datafolha_SP_2026-10-03.json": [
       "André do Prado",
       "Guilherme Derrite"
@@ -15849,14 +15842,6 @@
   ],
   "aliases": [
    {
-    "uf": "AC",
-    "nome": "Professor Inacio Moreira",
-    "variantes": [
-     "Professor Inacio Moreira",
-     "Professor Inácio Moreira"
-    ]
-   },
-   {
     "uf": "AL",
     "nome": "Dr. Wanderley",
     "variantes": [
@@ -15882,6 +15867,14 @@
     ]
    },
    {
+    "uf": "MT",
+    "nome": "Janaina Riva",
+    "variantes": [
+     "Janaina Riva",
+     "Janaína Riva"
+    ]
+   },
+   {
     "uf": "PE",
     "nome": "Mailson da Silva Neto",
     "variantes": [
@@ -15902,6 +15895,7 @@
     "nome": "Monica Benicio",
     "variantes": [
      "Monica Benicio",
+     "Mônica Benicio",
      "Mônica Benício"
     ]
    },
@@ -16322,43 +16316,17 @@
     "descricao": "Desvios do erro não amostral e da deriva multiplicados por 2.",
     "duplas_que_mudam": [
      {
-      "uf": "AC",
-      "central": [
-       "Gladson Camelí",
-       "Marcio Bittar"
-      ],
-      "p_central": 0.3107,
-      "sensibilidade": [
-       "Gladson Camelí",
-       "Jorge Viana"
-      ],
-      "p_sensibilidade": 0.1805
-     },
-     {
       "uf": "ES",
       "central": [
        "Renato Casagrande",
-       "Sergio Meneguelli"
+       "Evair de Melo"
       ],
-      "p_central": 0.28775,
+      "p_central": 0.419,
       "sensibilidade": [
        "Renato Casagrande",
        "Fabiano Contarato"
       ],
-      "p_sensibilidade": 0.24715
-     },
-     {
-      "uf": "MT",
-      "central": [
-       "Mauro Mendes",
-       "Janaina Riva"
-      ],
-      "p_central": 0.505,
-      "sensibilidade": [
-       "Mauro Mendes",
-       "Zé Medeiros"
-      ],
-      "p_sensibilidade": 0.2983
+      "p_sensibilidade": 0.28895
      },
      {
       "uf": "PR",
@@ -16372,19 +16340,6 @@
        "Filipe Barros"
       ],
       "p_sensibilidade": 0.1802
-     },
-     {
-      "uf": "RJ",
-      "central": [
-       "Benedita da Silva",
-       "Carlos Jordy"
-      ],
-      "p_central": 0.29675,
-      "sensibilidade": [
-       "Carlos Jordy",
-       "Carlos Portinho"
-      ],
-      "p_sensibilidade": 0.2325
      },
      {
       "uf": "RR",
@@ -16414,33 +16369,33 @@
      }
     ],
     "por_campo": {
-     "direita": 29.5813,
-     "centro-direita": 17.8801,
-     "centro": 13.3226,
-     "centro-esquerda": 1.47415,
-     "esquerda": 18.74185,
+     "direita": 29.95825,
+     "centro-direita": 17.3741,
+     "centro": 12.9334,
+     "centro-esquerda": 1.50765,
+     "esquerda": 19.2266,
      "indefinido": 0.0
     },
     "por_grupo": {
      "direita": {
-      "esperado": 47.4614,
+      "esperado": 47.33235,
       "ic90": [
-       34,
+       33,
        61
       ]
      },
      "centro": {
-      "esperado": 13.3226,
+      "esperado": 12.9334,
       "ic90": [
        5,
-       23
+       22
       ]
      },
      "esquerda": {
-      "esperado": 20.216,
+      "esperado": 20.73425,
       "ic90": [
        9,
-       33
+       34
       ]
      },
      "indefinido": {
@@ -16451,57 +16406,43 @@
       ]
      }
     },
-    "p_maioria_direita_mais_centro_direita": 0.7869,
-    "p_41_direita_centro_direita_centro": 0.99565,
-    "p_41_esquerda_centro_esquerda": 0.00435
+    "p_maioria_direita_mais_centro_direita": 0.7743,
+    "p_41_direita_centro_direita_centro": 0.9938,
+    "p_41_esquerda_centro_esquerda": 0.0062
    },
    {
     "chave": "indecisos_uniformes",
     "rotulo": "Indecisos 100% uniformes",
     "descricao": "Todo sorteio reparte os indecisos igualmente entre os nomes com ao menos 1 ponto.",
-    "duplas_que_mudam": [
-     {
-      "uf": "RJ",
-      "central": [
-       "Benedita da Silva",
-       "Carlos Jordy"
-      ],
-      "p_central": 0.29675,
-      "sensibilidade": [
-       "Carlos Jordy",
-       "Carlos Portinho"
-      ],
-      "p_sensibilidade": 0.2886
-     }
-    ],
+    "duplas_que_mudam": [],
     "por_campo": {
-     "direita": 29.92225,
-     "centro-direita": 18.22115,
-     "centro": 13.3599,
-     "centro-esquerda": 1.4067,
-     "esquerda": 18.09,
+     "direita": 30.79795,
+     "centro-direita": 17.47935,
+     "centro": 12.6334,
+     "centro-esquerda": 1.4287,
+     "esquerda": 18.6606,
      "indefinido": 0.0
     },
     "por_grupo": {
      "direita": {
-      "esperado": 48.1434,
+      "esperado": 48.2773,
       "ic90": [
        37,
-       59
+       60
       ]
      },
      "centro": {
-      "esperado": 13.3599,
+      "esperado": 12.6334,
       "ic90": [
-       7,
+       6,
        20
       ]
      },
      "esquerda": {
-      "esperado": 19.4967,
+      "esperado": 20.0893,
       "ic90": [
        11,
-       30
+       31
       ]
      },
      "indefinido": {
@@ -16512,12 +16453,12 @@
       ]
      }
     },
-    "p_maioria_direita_mais_centro_direita": 0.86405,
-    "p_41_direita_centro_direita_centro": 0.9997,
-    "p_41_esquerda_centro_esquerda": 0.0003
+    "p_maioria_direita_mais_centro_direita": 0.85905,
+    "p_41_direita_centro_direita_centro": 0.99965,
+    "p_41_esquerda_centro_esquerda": 0.00035
    }
   ],
-  "achado_contrario": "A leitura central põe o bloco de direita e centro-direita com 48,4 cadeiras esperadas e maioria (41) em 88% dos sorteios, mas três quintos (49) só em 49% e dois terços (54) em 23%. Com o erro dobrado, a maioria cai para 79% e a dupla mais provável muda em 7 estados. Em 6 estados a dupla mais provável aparece em menos de 30% dos sorteios (AM, ES, MG, PR, RJ, SE).",
+  "achado_contrario": "A leitura central põe o bloco de direita e centro-direita com 48,5 cadeiras esperadas e maioria (41) em 87% dos sorteios, mas três quintos (49) só em 50% e dois terços (54) em 24%. Com o erro dobrado, a maioria cai para 77% e a dupla mais provável muda em 4 estados. Em 4 estados a dupla mais provável aparece em menos de 30% dos sorteios (AM, MG, PR, SE).",
   "registro_indeferido": [
    {
     "uf": "PR",
@@ -16578,30 +16519,17 @@
  },
  "fontes": [
   {
-   "arquivo": "quaest_AC_2026-09-24.json",
-   "instituto": "Quaest",
+   "arquivo": "atlas_AC_2026-10-02.json",
+   "instituto": "AtlasIntel",
    "uf": "AC",
-   "campo": "2026-09-21 a 2026-09-24",
+   "campo": "2026-09-27 a 2026-10-02",
    "campo_inferido": false,
-   "n": 804,
-   "registro_tse": "AC-08968/2026",
-   "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/101/?tipo_pergunta=ESTIMULADA-SEN-001&instituto=Quaest",
-   "pagina": null,
-   "arquivo_bruto": "data/originals/senado_102026/g1/AC_quaest_ESTIMULADA-SEN-001.json",
-   "sha256": "8a9cfd2c237c074ef8c2aa946ddfb7ff8f55b3b32667bffd0c05bc99582b36db"
-  },
-  {
-   "arquivo": "realtime_AC_2026-09-19.json",
-   "instituto": "Real Time Big Data",
-   "uf": "AC",
-   "campo": "2026-09-16 a 2026-09-19",
-   "campo_inferido": false,
-   "n": 1600,
-   "registro_tse": "AC-01699/2026",
-   "url": null,
-   "pagina": 28,
-   "arquivo_bruto": "data/originals/senado_102026/realtime_AC_20260919/relatorio.pdf",
-   "sha256": "bca28363e7cb83bff9d8cb066560f23802ee9e2e3253af4e478b02a703bc8c74"
+   "n": 836,
+   "registro_tse": "AC-00679/2026",
+   "url": "https://cdn1.atlasintel.org/pesquisa_atlas__eleicoes_acre_2026_261003_3c685f199202964d.pdf",
+   "pagina": 19,
+   "arquivo_bruto": "data/originals/atlas_estaduais_102026_04/AC/relatorio.pdf",
+   "sha256": "0196dc9cd80a4b7223aa5b71f6cdbf9bbcc290c6e5fbcb74f5e442b391ed9f29"
   },
   {
    "arquivo": "parana_AL_2026-09-29.json",
@@ -16682,17 +16610,17 @@
    "sha256": "51ee9b3170b7533fdbcf23d93c9c8746f36ff139655744675168aeff0cdd8682"
   },
   {
-   "arquivo": "atlas_CE_2026-09-28.json",
+   "arquivo": "atlas_CE_2026-10-02.json",
    "instituto": "AtlasIntel",
    "uf": "CE",
-   "campo": "2026-09-23 a 2026-09-28",
+   "campo": "2026-09-27 a 2026-10-02",
    "campo_inferido": false,
-   "n": 1808,
-   "registro_tse": "CE-01709/2026",
-   "url": "https://static.poder360.com.br/uploads/2026/09/Pesquisa-Atlas_Focus-Eleicoes-Ceara-2026-260928.pdf",
+   "n": 2227,
+   "registro_tse": "CE-01031/2026",
+   "url": "https://cdn1.atlasintel.org/pesquisa_atlas_focus__eleicoes_ceara_2026__261003_77dad3caef63e1c9.pdf",
    "pagina": 18,
-   "arquivo_bruto": "data/originals/senado_102026/atlas_CE/relatorio.pdf",
-   "sha256": "4430a4bf5848ca7e887d940073ffb751c29c52ce35d37224a0c5dbac3cfdab4e"
+   "arquivo_bruto": "data/originals/atlas_estaduais_102026_04/CE/relatorio.pdf",
+   "sha256": "caec65cf5f8ee5d091f28c9b6dfbaba858d1e8e4baab9d9e3023b47c563a09fa"
   },
   {
    "arquivo": "datafolha_DF_2026-10-03.json",
@@ -16747,6 +16675,19 @@
    "sha256": "d89748277146c073a0f54ad02e7c12b548bb51e7e3143cb429aa02fd95fc7383"
   },
   {
+   "arquivo": "atlas_ES_2026-10-02.json",
+   "instituto": "AtlasIntel",
+   "uf": "ES",
+   "campo": "2026-09-27 a 2026-10-02",
+   "campo_inferido": false,
+   "n": 1226,
+   "registro_tse": "ES-01573/2026",
+   "url": "https://cdn1.atlasintel.org/pesquisa_atlas__eleicoes_espirito_santo_2026__261003_990b45cf157d3409.pdf",
+   "pagina": 18,
+   "arquivo_bruto": "data/originals/atlas_estaduais_102026_04/ES/relatorio.pdf",
+   "sha256": "8787dfffbe4db89301c9fd9bf769d870862d6f6d826cada4875add6f76bb6b70"
+  },
+  {
    "arquivo": "realtime_ES_2026-09-29.json",
    "instituto": "Real Time Big Data",
    "uf": "ES",
@@ -16758,6 +16699,19 @@
    "pagina": 30,
    "arquivo_bruto": "data/originals/senado_102026/realtime_ES/relatorio.pdf",
    "sha256": "e103faf1bc1afe6b5997972b0d511275f8668e1f4fee21a600f763f3613cf1e1"
+  },
+  {
+   "arquivo": "atlas_GO_2026-10-02.json",
+   "instituto": "AtlasIntel",
+   "uf": "GO",
+   "campo": "2026-09-27 a 2026-10-02",
+   "campo_inferido": false,
+   "n": 1198,
+   "registro_tse": "GO-03367/2026",
+   "url": "https://cdn1.atlasintel.org/pesquisa_atlas__eleicoes_goias_2026__261003_48680e1775c298f2.pdf",
+   "pagina": 18,
+   "arquivo_bruto": "data/originals/atlas_estaduais_102026_04/GO/relatorio.pdf",
+   "sha256": "7c151e69e66f7a99d1f9005e27016dc623ab2b54d19696610a923f6fc63b69a8"
   },
   {
    "arquivo": "quaest_GO_2026-10-03.json",
@@ -16825,17 +16779,30 @@
    "sha256": "4af15574ba7e50d447e68d6054fcb849835602fb636cab2b6bc8254b36c5cdf2"
   },
   {
-   "arquivo": "quaest_MS_2026-09-24.json",
-   "instituto": "Quaest",
+   "arquivo": "atlas_MS_2026-10-02.json",
+   "instituto": "AtlasIntel",
    "uf": "MS",
-   "campo": "2026-09-21 a 2026-09-24",
+   "campo": "2026-09-27 a 2026-10-02",
    "campo_inferido": false,
-   "n": 804,
-   "registro_tse": "MS-09580/2026",
-   "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/112/?tipo_pergunta=ESTIMULADA-SEN-001&instituto=Quaest",
-   "pagina": null,
-   "arquivo_bruto": "data/originals/senado_102026/g1/MS_quaest_ESTIMULADA-SEN-001.json",
-   "sha256": "1aabd5efeba29b04fb4bd03e4ac53c93e983b6d5174c9a42ae6178f8b332dd18"
+   "n": 1211,
+   "registro_tse": "MS-05642/2026",
+   "url": "https://cdn1.atlasintel.org/pesquisa_atlas__eleicoes_mato_grosso_do_sul_2026__261003_e4d7cb11c9340c6d.pdf",
+   "pagina": 18,
+   "arquivo_bruto": "data/originals/atlas_estaduais_102026_04/MS/relatorio.pdf",
+   "sha256": "f68c1ddd34cc16a4031dd1d663d939a7ae2a2b47e83784b050e8fea297204c41"
+  },
+  {
+   "arquivo": "atlas_MT_2026-10-02.json",
+   "instituto": "AtlasIntel",
+   "uf": "MT",
+   "campo": "2026-09-27 a 2026-10-02",
+   "campo_inferido": false,
+   "n": 1194,
+   "registro_tse": "MT-00323/2026",
+   "url": "https://cdn1.atlasintel.org/pesquisa_atlas__eleicoes_mato_grosso_2026__261003_6c9e24b8c820dd44.pdf",
+   "pagina": 17,
+   "arquivo_bruto": "data/originals/atlas_estaduais_102026_04/MT/relatorio.pdf",
+   "sha256": "d6fc0ec601b766432978e75473cec8d35731b564e0e3d895dfded97ce8e14ed0"
   },
   {
    "arquivo": "parana_MT_2026-09-29.json",
@@ -16916,17 +16883,17 @@
    "sha256": "2d074dd3d6eea8e47f500cd305ed473cebf7c89d355e7e10485b397b8b5264b7"
   },
   {
-   "arquivo": "atlas_PI_2026-09-28.json",
+   "arquivo": "atlas_PI_2026-10-02.json",
    "instituto": "AtlasIntel",
    "uf": "PI",
-   "campo": "2026-09-23 a 2026-09-28",
+   "campo": "2026-09-27 a 2026-10-02",
    "campo_inferido": false,
-   "n": 1218,
-   "registro_tse": "PI-07497/2026",
-   "url": "https://static.poder360.com.br/uploads/2026/09/pesquisa-atlasintel-geral-PI-29set2026.pdf",
+   "n": 1230,
+   "registro_tse": "PI-03386/2026",
+   "url": "https://cdn1.atlasintel.org/pesquisa_atlas_meionorte__piaui__eleicoes_2026_261003_8d805ba05c5d32d1.pdf",
    "pagina": 12,
-   "arquivo_bruto": "data/originals/senado_102026/atlas_PI/relatorio.pdf",
-   "sha256": "ca5725c76334dee8c68c3e62407dc06d8ef61d10b58a1f5cfcc3e9d57132e0df"
+   "arquivo_bruto": "data/originals/atlas_estaduais_102026_04/PI/relatorio.pdf",
+   "sha256": "29ec8d5aef92210af80bf6db5e2f818a6ae63c24f0f1fdc6fe723f6a9137527b"
   },
   {
    "arquivo": "quaest_PR_2026-09-23.json",
@@ -16940,6 +16907,19 @@
    "pagina": null,
    "arquivo_bruto": "data/originals/senado_102026/g1/PR_quaest_ESTIMULADA-SEN-001.json",
    "sha256": "fe7482e1228d7bb7e76866d26d245cf56faecfc402057301f33a646469387fb3"
+  },
+  {
+   "arquivo": "atlas_RJ_2026-10-02.json",
+   "instituto": "AtlasIntel",
+   "uf": "RJ",
+   "campo": "2026-09-27 a 2026-10-02",
+   "campo_inferido": false,
+   "n": 2244,
+   "registro_tse": "RJ-02601/2026",
+   "url": "https://cdn1.atlasintel.org/pesquisa_atlas_estadao__eleicoes_rio_de_janeiro_2026__261003_c8af612fe782f5a9.pdf",
+   "pagina": 17,
+   "arquivo_bruto": "data/originals/atlas_estaduais_102026_04/RJ/relatorio.pdf",
+   "sha256": "b7a7d3ea63ed13195ec53d223caf57caea9ed2e427c839632597ac5e8f5c7bdd"
   },
   {
    "arquivo": "datafolha_RJ_2026-10-01.json",
@@ -17096,6 +17076,19 @@
    "pagina": null,
    "arquivo_bruto": "data/originals/senado_102026/g1/SE_quaest_ESTIMULADA-SEN-001.json",
    "sha256": "fd1fdbf59dabb1e1e1a167f1723dba29ef776f864a0ed94ec2eb48b58a17811d"
+  },
+  {
+   "arquivo": "atlas_SP_2026-10-02.json",
+   "instituto": "AtlasIntel",
+   "uf": "SP",
+   "campo": "2026-09-27 a 2026-10-02",
+   "campo_inferido": false,
+   "n": 2243,
+   "registro_tse": "SP-06906/2026",
+   "url": "https://cdn1.atlasintel.org/pesquisa_atlas_estadao__eleicoes_sao_paulo_2026__261003_7480fedfda9e694f.pdf",
+   "pagina": 18,
+   "arquivo_bruto": "data/originals/atlas_estaduais_102026_04/SP/relatorio.pdf",
+   "sha256": "9edcf78cb2500ca3fdcdd11ae6c7b93e8933dc4dd78a6b637e3e1c14afbb5e23"
   },
   {
    "arquivo": "datafolha_SP_2026-10-03.json",

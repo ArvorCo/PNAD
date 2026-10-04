@@ -1,0 +1,103 @@
+{
+  "instituto": "AtlasIntel",
+  "instituto_slug": "atlas",
+  "uf": "MS",
+  "cargo": "governador",
+  "registro_tse": "MS-05642/2026",
+  "campo": {
+    "inicio": "2026-09-27",
+    "fim": "2026-10-02"
+  },
+  "divulgacao": "2026-10-03",
+  "n": 1211,
+  "margem_pp": 3.0,
+  "metodo": "online",
+  "contratante": "Estadão",
+  "fonte": {
+    "tipo": "pdf",
+    "url": "https://cdn1.atlasintel.org/pesquisa_atlas__eleicoes_mato_grosso_do_sul_2026__261003_e4d7cb11c9340c6d.pdf",
+    "arquivo": "data/originals/atlas_estaduais_102026_04/MS/relatorio.pdf",
+    "sha256": "f68c1ddd34cc16a4031dd1d663d939a7ae2a2b47e83784b050e8fea297204c41",
+    "pagina": 8,
+    "imagem": "data/originals/atlas_estaduais_102026_04/MS/governador_p8.png",
+    "capturado_em": null,
+    "materia": [
+      "https://atlasintel.org/poll/brazil-mato-grosso-do-sul-2026-10-03"
+    ]
+  },
+  "pergunta": {
+    "codigo": "ESTIMULADA-1",
+    "tipo": "estimulada",
+    "cenario": "Cenário único",
+    "votos_por_eleitor": 1,
+    "soma_total": 100.1,
+    "nota": null
+  },
+  "candidatos": [
+    {
+      "nome": "Eduardo Riedel",
+      "partido": "PP",
+      "valor": 50.5,
+      "foto_url": null
+    },
+    {
+      "nome": "Fábio Trad",
+      "partido": "PT",
+      "valor": 30.1,
+      "foto_url": null
+    },
+    {
+      "nome": "João Henrique Catan",
+      "partido": "NOVO",
+      "valor": 10.1,
+      "foto_url": null
+    },
+    {
+      "nome": "Delcídio Amaral",
+      "partido": "PRD",
+      "valor": 1.3,
+      "foto_url": null
+    },
+    {
+      "nome": "Economista Renato Gomes",
+      "partido": "DC",
+      "valor": 0.9,
+      "foto_url": null
+    }
+  ],
+  "indecisos": 2.7,
+  "branco_nulo": 3.9,
+  "outros": 0.6,
+  "segundo_turno": [
+    {
+      "codigo": "SEGTURNO-1",
+      "pagina": 13,
+      "candidatos": [
+        {
+          "nome": "Eduardo Riedel",
+          "partido": "PP",
+          "valor": 59.8
+        },
+        {
+          "nome": "Fábio Trad",
+          "partido": "PT",
+          "valor": 31.3
+        }
+      ],
+      "indecisos": 2.2,
+      "branco_nulo": 6.8,
+      "soma_total": 100.1
+    }
+  ],
+  "observacoes": [
+    "Números impressos como imagem; transcrição manual da página renderizada a 130 dpi. Base: total de entrevistados.",
+    "Registro estadual MS-05642/2026 lido na p. 5 do PDF; o relatório também cita BR-07964/2026 (presidente).",
+    "Perfil da amostra (p. 5): 1.211 respondentes, recrutamento digital aleatório (Atlas RDR), margem de 3 p.p., coleta 27/09/2026-02/10/2026.",
+    "Divulgação 03/10/2026 vem do cartão da página do instituto (fonte.json), não do PDF. capturado_em nulo: o fonte.json registra só o dia do download (2026-10-04).",
+    "Contratante inferido do cabeçalho 'PESQUISA ATLAS/ESTADÃO' (pp. 2, 4 e 5); o relatório não declara contratante em texto.",
+    "Outros no rodapé: Lucien Rezende (PSOL) 0,4%; Daniel Lemes (PCO) 0,1%; Jeferson Bezerra (Agir) 0,1%. Somam 0,6, igual à barra Outros.",
+    "Um único par de 2º turno (Riedel × Trad), com 'Voto branco/nulo' e 'Não sei' separados; a p. 14 traz o par em votos válidos.",
+    "O título da p. 10 (série temporal) diz 'Governador de Mato Grosso', sem 'do Sul'; erro de digitação do instituto, não usado.",
+    "Imagem dos pares de 2º turno: data/originals/atlas_estaduais_102026_04/MS/governador_p13.png."
+  ]
+}

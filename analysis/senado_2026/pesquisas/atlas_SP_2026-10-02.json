@@ -1,0 +1,80 @@
+{
+  "instituto": "AtlasIntel",
+  "instituto_slug": "atlas",
+  "uf": "SP",
+  "cargo": "senador",
+  "registro_tse": "SP-06906/2026",
+  "campo": {
+    "inicio": "2026-09-27",
+    "fim": "2026-10-02"
+  },
+  "divulgacao": "2026-10-03",
+  "n": 2243,
+  "margem_pp": 2.0,
+  "metodo": "online",
+  "contratante": "Estadão",
+  "fonte": {
+    "tipo": "pdf",
+    "url": "https://cdn1.atlasintel.org/pesquisa_atlas_estadao__eleicoes_sao_paulo_2026__261003_7480fedfda9e694f.pdf",
+    "arquivo": "data/originals/atlas_estaduais_102026_04/SP/relatorio.pdf",
+    "sha256": "9edcf78cb2500ca3fdcdd11ae6c7b93e8933dc4dd78a6b637e3e1c14afbb5e23",
+    "pagina": 18,
+    "imagem": "data/originals/atlas_estaduais_102026_04/SP/senado_p18.png",
+    "capturado_em": null,
+    "materia": [
+      "https://atlasintel.org/poll/brazil-sao-paulo-pesquisa-atlasestadao-2026-10-03"
+    ]
+  },
+  "pergunta": {
+    "codigo": "CONSOLIDADO-1O-E-2O-VOTO",
+    "tipo": "estimulada",
+    "votos_por_eleitor": 1,
+    "soma_total": 99.9,
+    "nota": "Consolidado de 1º e 2º votos; a soma fica em 100% (fração de menções, não duas escolhas por eleitor). Valores lidos da imagem do gráfico na página indicada."
+  },
+  "candidatos": [
+    {
+      "nome": "Guilherme Derrite",
+      "partido": "PP",
+      "valor": 25.0,
+      "foto_url": null
+    },
+    {
+      "nome": "André do Prado",
+      "partido": "PL",
+      "valor": 23.3,
+      "foto_url": null
+    },
+    {
+      "nome": "Simone Tebet",
+      "partido": "PSB",
+      "valor": 21.4,
+      "foto_url": null
+    },
+    {
+      "nome": "Marina Silva",
+      "partido": "REDE",
+      "valor": 20.7,
+      "foto_url": null
+    },
+    {
+      "nome": "Guto Schiavetto",
+      "partido": "MISSÃO",
+      "valor": 2.5,
+      "foto_url": null
+    }
+  ],
+  "indecisos": 1.3,
+  "branco_nulo": 2.2,
+  "outros": 3.5,
+  "observacoes": [
+    "Números impressos como imagem; transcrição manual da página renderizada a 130 dpi. Base: total de entrevistados.",
+    "Registro estadual SP-06906/2026 lido do Perfil da amostra (p. 5); o relatório também cita BR-08300/2026 (presidente).",
+    "Perfil da amostra (p. 5): 2.243 respondentes. recrutamento digital aleatório (Atlas RDR). margem ±2 p.p.. coleta 27/09/2026-02/10/2026.",
+    "Divulgação 03/10/2026 pelo cartão da página do instituto (fonte.json), não impressa no relatório.",
+    "Contratante pela marca impressa no cabeçalho (Estadão).",
+    "capturado_em nulo: fonte.json registra só o dia do download (04/10/2026).",
+    "Outros no rodapé (p. 18): Salles (Novo) 1,1%; Maíra de Souza (UP) 0,6%; Soninha Francine (Cidadania) 0,5%; Ednelson Cesaretti (PCO) 0,4%; Petter Maahs (PCB) 0,3%; Dra. Eliana Ferreira (PSTU) 0,2%; Geraldo Rufino (Podemos) 0,2%; Marcio Alves (UP) 0,1%; Weller Gonçalves (PSTU) 0,1%; William Teixeira (Agir) 0%.",
+    "Ricardo Salles retirou a candidatura em 28/09, no meio do campo (27/09 a 02/10). O relatório ainda o imprime como 'Salles (Novo)' com 1,1% dentro de 'Outros'; transcrito como impresso. O tratamento da retirada (RETIRADAS em scripts/senado_2026/base.py) cabe ao motor."
+  ]
+}
