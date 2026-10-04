@@ -1,0 +1,109 @@
+{
+  "instituto": "Paraná Pesquisas",
+  "instituto_slug": "parana",
+  "uf": "MT",
+  "cargo": "governador",
+  "registro_tse": "MT-02094/2026",
+  "campo": {
+    "inicio": "2026-09-27",
+    "fim": "2026-09-29"
+  },
+  "divulgacao": "2026-09-30",
+  "n": 1352,
+  "margem_pp": 2.7,
+  "metodo": "presencial",
+  "contratante": "nao informado",
+  "fonte": {
+    "tipo": "pdf",
+    "url": "https://paranapesquisas.com.br/wp-content/uploads/2026/09/MT_Set26-3.pdf",
+    "arquivo": "data/originals/senado_102026/parana_MT/relatorio.pdf",
+    "sha256": "ceb456522483393cabf3ff7063f4d1d236f20fc6e559bb96ba27016fa460dc8e",
+    "pagina": 8,
+    "imagem": "data/originals/senado_102026/parana_MT/governador_p8.png",
+    "capturado_em": "2026-10-03T23:01:20Z",
+    "materia": []
+  },
+  "pergunta": {
+    "codigo": "ESTIMULADA-CENARIO-1",
+    "tipo": "estimulada",
+    "cenario": "Cenário 1",
+    "votos_por_eleitor": 1,
+    "soma_total": 99.8,
+    "nota": "Página titulada 'ESTIMULADA – Cenário 1', com todos os nomes do cartão."
+  },
+  "candidatos": [
+    {
+      "nome": "Otaviano Pivetta",
+      "partido": null,
+      "valor": 46.4,
+      "foto_url": null
+    },
+    {
+      "nome": "Wellington Fagundes",
+      "partido": null,
+      "valor": 27.1,
+      "foto_url": null
+    },
+    {
+      "nome": "Doutora Natasha",
+      "partido": null,
+      "valor": 15.5,
+      "foto_url": null
+    },
+    {
+      "nome": "Rafaell Milas",
+      "partido": null,
+      "valor": 0.4,
+      "foto_url": null
+    },
+    {
+      "nome": "Sargento Laudicério",
+      "partido": null,
+      "valor": 0.4,
+      "foto_url": null
+    },
+    {
+      "nome": "Mauricio Coelho",
+      "partido": null,
+      "valor": 0.1,
+      "foto_url": null
+    }
+  ],
+  "indecisos": 4.7,
+  "branco_nulo": 5.2,
+  "outros": null,
+  "cenarios_alternativos": [
+    {
+      "cenario": "Cenário 2",
+      "pagina": 12,
+      "candidatos": [
+        {
+          "nome": "Otaviano Pivetta",
+          "partido": null,
+          "valor": 53.1,
+          "foto_url": null
+        },
+        {
+          "nome": "Wellington Fagundes",
+          "partido": null,
+          "valor": 34.6,
+          "foto_url": null
+        }
+      ],
+      "indecisos": 4.1,
+      "branco_nulo": 8.1,
+      "soma_total": 99.9,
+      "nota": "Cenário estimulado de 1º turno com apenas os dois primeiros colocados; funciona como confronto direto, mas o instituto o rotula 'ESTIMULADA – Cenário 2', não '2º turno'."
+    }
+  ],
+  "segundo_turno": [],
+  "observacoes": [
+    "Paraná Pesquisas não imprime partido nas páginas de intenção de voto; partido fica null até o casamento com o TSE.",
+    "Indecisos = 'Não sabe/ Não opinou'; branco_nulo = 'Nenhum/ Branco/ Nulo', impressos separadamente.",
+    "Campo, amostra, margem e método lidos na p. 3 (Metodologia); registro TSE na capa e no cabeçalho de cada página (MT-02094/2026, 'para os cargos de Governador e Senador').",
+    "divulgacao = data do relatório impressa na p. 3 ('Curitiba, 30/09/2026'); a data efetiva de publicação não consta do PDF.",
+    "O relatório não declara contratante.",
+    "Cenário 2 (p. 12) tem só Otaviano Pivetta e Wellington Fagundes: confronto direto rotulado como cenário de 1º turno, mantido em cenarios_alternativos e fora de segundo_turno. Se o motor quiser usá-lo como par de 2º turno, é decisão declarada.",
+    "O relatório não traz pergunta de 2º turno para governador."
+  ]
+}

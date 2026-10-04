@@ -323,8 +323,16 @@ def _data(texto: str | None) -> date | None:
         return None
 
 
-def normalizar_onda(dados: dict, arquivo: str, n_ausente: int) -> dict:
-    """Uma onda no formato interno: valores divididos por votos por eleitor."""
+def normalizar_onda(
+    dados: dict,
+    arquivo: str,
+    n_ausente: int,
+    retiradas_tabela: dict[tuple[str, str], tuple[date, str]] | None = None,
+) -> dict:
+    """Uma onda no formato interno: valores divididos por votos por eleitor.
+
+    `retiradas_tabela` substitui RETIRADAS (do Senado) para outro cargo."""
+    tabela = RETIRADAS if retiradas_tabela is None else retiradas_tabela
     pergunta = dados.get("pergunta") or {}
     votos = pergunta.get("votos_por_eleitor") or 1
     divulgacao = _data(dados.get("divulgacao"))
@@ -348,7 +356,7 @@ def normalizar_onda(dados: dict, arquivo: str, n_ausente: int) -> dict:
     indecisos = div(dados.get("indecisos"))
     for c in dados.get("candidatos") or []:
         v = div(c.get("valor"))
-        retirada = RETIRADAS.get((uf, normalizar(c["nome"])))
+        retirada = tabela.get((uf, normalizar(c["nome"])))
         if retirada:
             # Voto em candidatura retirada vira indeciso nesta onda.
             retiradas.append(

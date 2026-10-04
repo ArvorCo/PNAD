@@ -136,8 +136,13 @@ def sha256(caminho: Path) -> str:
 # ------------------------------------------------------------------ urna 2022
 
 
-def urna_2022(zip_path: Path = URNA_ZIP) -> dict[str, list[dict]]:
-    """Votos nominais e válidos por candidatura a senador, por UF, 1º turno."""
+FILTRO_CARGO = {"5": b';5;"Senador";', "3": b';3;"Governador";'}
+
+
+def urna_2022(zip_path: Path = URNA_ZIP, cargo: str = "5") -> dict[str, list[dict]]:
+    """Votos nominais e válidos por candidatura ao cargo (5 senador, 3
+    governador), por UF, 1º turno."""
+    filtro = FILTRO_CARGO[cargo]
     saida: dict[str, list[dict]] = {}
     with zipfile.ZipFile(zip_path) as z:
         for membro in sorted(z.namelist()):
@@ -150,8 +155,8 @@ def urna_2022(zip_path: Path = URNA_ZIP) -> dict[str, list[dict]]:
                 cab = next(csv.reader([f.readline().decode("latin-1")], delimiter=";"))
                 idx = {k: i for i, k in enumerate(cab)}
                 for linha in f:
-                    # Filtro em bytes antes do csv: só as linhas de Senador.
-                    if b';5;"Senador";' not in linha:
+                    # Filtro em bytes antes do csv: só as linhas do cargo.
+                    if filtro not in linha:
                         continue
                     r = next(csv.reader([linha.decode("latin-1")], delimiter=";"))
                     if r[idx["NR_TURNO"]] != "1":
@@ -217,8 +222,11 @@ def baixar_wiki(uf: str, destino: Path = WIKI_DIR) -> dict:
     }
 
 
-def secao_senado(texto: str, *, modelo: bool = False) -> str | None:
-    """Primeira tabela de pesquisa de senador na seção de pesquisas."""
+def secao_senado(
+    texto: str, *, modelo: bool = False, padrao: str = "senad"
+) -> str | None:
+    """Primeira tabela de pesquisa do cargo (título com `padrao`) na seção de
+    pesquisas."""
     if modelo:
         bloco = texto
     else:
@@ -229,13 +237,24 @@ def secao_senado(texto: str, *, modelo: bool = False) -> str | None:
         fim = re.search(r"^==[^=]", resto, re.MULTILINE)
         resto = resto[: fim.start()] if fim else resto
         s = re.search(
-            r"^(=+)[^=\n]*senad[^=\n]*=+\s*$", resto, re.MULTILINE | re.IGNORECASE
+            rf"^(=+)[^=\n]*{padrao}[^=\n]*=+\s*$", resto, re.MULTILINE | re.IGNORECASE
         )
         if not s:
             return None
         nivel = len(s.group(1))
         bloco = resto[s.end() :]
-        prox = re.search(rf"^={{1,{nivel}}}[^=]", bloco, re.MULTILINE)
+        # O bloco vai até o próximo título de nível igual ou superior, exceto
+        # os subtítulos de turno ("Primeiro turno"), que ficam dentro dele.
+        prox = next(
+            (
+                m
+                for m in re.finditer(
+                    rf"^(={{1,{nivel}}})([^=\n]*)=+\s*$", bloco, re.MULTILINE
+                )
+                if "turno" not in m.group(2).lower()
+            ),
+            None,
+        )
         bloco = bloco[: prox.start()] if prox else bloco
     ini = bloco.find("{|")
     if ini < 0:
@@ -473,9 +492,11 @@ def slug_casa(nome: str) -> str:
     return re.sub(r"[^a-z0-9]+", "", t)
 
 
-def pesquisas_wiki(texto: str, *, modelo: bool = False) -> list[dict]:
-    """Linhas de pesquisa de senador de uma página, já em números."""
-    tab = secao_senado(texto, modelo=modelo)
+def pesquisas_wiki(
+    texto: str, *, modelo: bool = False, padrao: str = "senad"
+) -> list[dict]:
+    """Linhas de pesquisa do cargo de uma página, já em números."""
+    tab = secao_senado(texto, modelo=modelo, padrao=padrao)
     if not tab:
         return []
     grade = tabela(tab)
@@ -864,11 +885,21 @@ def _fracoes(p: dict) -> dict[str, tuple[float, float]]:
     }
 
 
-def calibrar(urna: dict, paginas: dict[str, str], campo_de, fontes: dict) -> dict:
-    """Junta tudo: pares, estatísticas, variâncias e deriva."""
+def calibrar(
+    urna: dict,
+    paginas: dict[str, str],
+    campo_de,
+    fontes: dict,
+    *,
+    padrao: str = "senad",
+    modelos: frozenset[str] = frozenset({"SP"}),
+    cargo: str = "5",
+) -> dict:
+    """Junta tudo: pares, estatísticas, variâncias e deriva. `modelos` são as
+    UFs cujo arquivo é a predefinição com a tabela, sem seções."""
     todas, principais, por_uf, linhas_uf = [], [], {}, {}
     for uf, texto in sorted(paginas.items()):
-        linhas = pesquisas_wiki(texto, modelo=uf == "SP")
+        linhas = pesquisas_wiki(texto, modelo=uf in modelos, padrao=padrao)
         linhas_uf[uf] = linhas
         pares = pares_estado(uf, linhas, urna.get(uf, []))
         por_uf[uf] = {
@@ -894,7 +925,7 @@ def calibrar(urna: dict, paginas: dict[str, str], campo_de, fontes: dict) -> dic
         "fontes_wikipedia": [fontes[uf] for uf in sorted(fontes)],
         "fonte_urna": {
             "arquivo": str(URNA_ZIP.relative_to(ROOT)),
-            "regra": "cargo 5, 1º turno, soma de QT_VOTOS_NOMINAIS_VALIDOS por SQ",
+            "regra": f"cargo {cargo}, 1º turno, soma de QT_VOTOS_NOMINAIS_VALIDOS por SQ",
         },
         "janela": {
             "campo_fim_minimo": CORTE_2022.isoformat(),

@@ -1,0 +1,109 @@
+{
+  "instituto": "Paraná Pesquisas",
+  "instituto_slug": "parana",
+  "uf": "BA",
+  "cargo": "governador",
+  "registro_tse": "BA-00759/2026",
+  "campo": {
+    "inicio": "2026-09-21",
+    "fim": "2026-09-23"
+  },
+  "divulgacao": "2026-09-24",
+  "n": 1400,
+  "margem_pp": 2.7,
+  "metodo": "presencial",
+  "contratante": "nao informado",
+  "fonte": {
+    "tipo": "pdf",
+    "url": "https://paranapesquisas.com.br/wp-content/uploads/2026/09/BA_Set26.pdf",
+    "arquivo": "data/originals/senado_102026/parana_BA_20260923/relatorio.pdf",
+    "sha256": "b7e5653864f57ffb972eb4f0568c198aae382150ed26f357e65350a2d9fe1f67",
+    "pagina": 8,
+    "imagem": "data/originals/senado_102026/parana_BA_20260923/governador_p8.png",
+    "capturado_em": "2026-10-03T23:06:08Z",
+    "materia": []
+  },
+  "pergunta": {
+    "codigo": "ESTIMULADA-CENARIO-1",
+    "tipo": "estimulada",
+    "cenario": "Cenário 1",
+    "votos_por_eleitor": 1,
+    "soma_total": 100.0,
+    "nota": "Página titulada 'ESTIMULADA – Cenário 1', com todos os nomes do cartão."
+  },
+  "candidatos": [
+    {
+      "nome": "ACM Neto",
+      "partido": null,
+      "valor": 46.7,
+      "foto_url": null
+    },
+    {
+      "nome": "Jerônimo Rodrigues",
+      "partido": null,
+      "valor": 42.0,
+      "foto_url": null
+    },
+    {
+      "nome": "Ronaldo Mansur",
+      "partido": null,
+      "valor": 0.8,
+      "foto_url": null
+    },
+    {
+      "nome": "Aroldo Felix",
+      "partido": null,
+      "valor": 0.6,
+      "foto_url": null
+    },
+    {
+      "nome": "Ariel Capistrano",
+      "partido": null,
+      "valor": 0.3,
+      "foto_url": null
+    },
+    {
+      "nome": "Maria Bona",
+      "partido": null,
+      "valor": 0.3,
+      "foto_url": null
+    }
+  ],
+  "indecisos": 4.1,
+  "branco_nulo": 5.2,
+  "outros": null,
+  "cenarios_alternativos": [
+    {
+      "cenario": "Cenário 2",
+      "pagina": 11,
+      "candidatos": [
+        {
+          "nome": "ACM Neto",
+          "partido": null,
+          "valor": 48.4,
+          "foto_url": null
+        },
+        {
+          "nome": "Jerônimo Rodrigues",
+          "partido": null,
+          "valor": 44.2,
+          "foto_url": null
+        }
+      ],
+      "indecisos": 3.1,
+      "branco_nulo": 4.4,
+      "soma_total": 100.1,
+      "nota": "Cenário estimulado de 1º turno com apenas os dois primeiros colocados; funciona como confronto direto, mas o instituto o rotula 'ESTIMULADA – Cenário 2', não '2º turno'."
+    }
+  ],
+  "segundo_turno": [],
+  "observacoes": [
+    "Paraná Pesquisas não imprime partido nas páginas de intenção de voto; partido fica null até o casamento com o TSE.",
+    "Indecisos = 'Não sabe/ Não opinou'; branco_nulo = 'Nenhum/ Branco/ Nulo', impressos separadamente.",
+    "Campo, amostra, margem e método lidos na p. 3 (Metodologia); registro TSE na capa e no cabeçalho de cada página (BA-00759/2026, 'para os cargos de Governador e Senador').",
+    "divulgacao = data do relatório impressa na p. 3 ('Curitiba, 24/09/2026'); a data efetiva de publicação não consta do PDF.",
+    "O relatório não declara contratante.",
+    "Cenário 2 (p. 11) tem só ACM Neto e Jerônimo Rodrigues: confronto direto rotulado como cenário de 1º turno, mantido em cenarios_alternativos e fora de segundo_turno. Se o motor quiser usá-lo como par de 2º turno, é decisão declarada.",
+    "O relatório não traz pergunta de 2º turno para governador."
+  ]
+}

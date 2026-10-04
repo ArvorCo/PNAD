@@ -62,6 +62,7 @@ _ONDAS, _INSTITUTOS = _agregador_counts()
 CARDS: list[dict] = [
     importlib.import_module("social-card-predicao").card(ROOT),
     importlib.import_module("social-card-senado").card(ROOT),
+    importlib.import_module("social-card-governador").card(ROOT),
     {
         "slug": "mapa_do_voto_util",
         "eyebrow": "Mapa do voto útil · 1º turno de 2026",

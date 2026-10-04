@@ -1,0 +1,121 @@
+{
+  "instituto": "Paraná Pesquisas",
+  "instituto_slug": "parana",
+  "uf": "CE",
+  "cargo": "governador",
+  "registro_tse": "CE-03967/2026",
+  "campo": {
+    "inicio": "2026-09-23",
+    "fim": "2026-09-25"
+  },
+  "divulgacao": "2026-09-26",
+  "n": 1352,
+  "margem_pp": 2.7,
+  "metodo": "presencial",
+  "contratante": "nao informado",
+  "fonte": {
+    "tipo": "pdf",
+    "url": "https://paranapesquisas.com.br/wp-content/uploads/2026/09/CE_Set26-1.pdf",
+    "arquivo": "data/originals/senado_102026/parana_CE_20260925/relatorio.pdf",
+    "sha256": "c543b92dcc3706b4a8e4f82254ba360368d11ad22e7e52669649677d1edbaef5",
+    "pagina": 8,
+    "imagem": "data/originals/senado_102026/parana_CE_20260925/governador_p8.png",
+    "capturado_em": "2026-10-03T23:06:08Z",
+    "materia": []
+  },
+  "pergunta": {
+    "codigo": "ESTIMULADA-CENARIO-1",
+    "tipo": "estimulada",
+    "cenario": "Cenário 1",
+    "votos_por_eleitor": 1,
+    "soma_total": 100.0,
+    "nota": "Página titulada 'ESTIMULADA – Cenário 1', com todos os nomes do cartão."
+  },
+  "candidatos": [
+    {
+      "nome": "Ciro Gomes",
+      "partido": null,
+      "valor": 46.0,
+      "foto_url": null
+    },
+    {
+      "nome": "Elmano de Freitas",
+      "partido": null,
+      "valor": 42.2,
+      "foto_url": null
+    },
+    {
+      "nome": "Delegado Huggo",
+      "partido": null,
+      "valor": 1.1,
+      "foto_url": null
+    },
+    {
+      "nome": "Zé Batista",
+      "partido": null,
+      "valor": 0.4,
+      "foto_url": null
+    },
+    {
+      "nome": "Vera Lúcia",
+      "partido": null,
+      "valor": 0.4,
+      "foto_url": null
+    },
+    {
+      "nome": "Danilo Soares",
+      "partido": null,
+      "valor": 0.3,
+      "foto_url": null
+    },
+    {
+      "nome": "Ieri Braga",
+      "partido": null,
+      "valor": 0.1,
+      "foto_url": null
+    },
+    {
+      "nome": "Serley Leal",
+      "partido": null,
+      "valor": 0.1,
+      "foto_url": null
+    }
+  ],
+  "indecisos": 4.5,
+  "branco_nulo": 4.9,
+  "outros": null,
+  "cenarios_alternativos": [
+    {
+      "cenario": "Cenário 2",
+      "pagina": 12,
+      "candidatos": [
+        {
+          "nome": "Ciro Gomes",
+          "partido": null,
+          "valor": 48.7,
+          "foto_url": null
+        },
+        {
+          "nome": "Elmano de Freitas",
+          "partido": null,
+          "valor": 44.3,
+          "foto_url": null
+        }
+      ],
+      "indecisos": 2.4,
+      "branco_nulo": 4.6,
+      "soma_total": 100.0,
+      "nota": "Cenário estimulado de 1º turno com apenas os dois primeiros colocados; funciona como confronto direto, mas o instituto o rotula 'ESTIMULADA – Cenário 2', não '2º turno'."
+    }
+  ],
+  "segundo_turno": [],
+  "observacoes": [
+    "Paraná Pesquisas não imprime partido nas páginas de intenção de voto; partido fica null até o casamento com o TSE.",
+    "Indecisos = 'Não sabe/ Não opinou'; branco_nulo = 'Nenhum/ Branco/ Nulo', impressos separadamente.",
+    "Campo, amostra, margem e método lidos na p. 3 (Metodologia); registro TSE na capa e no cabeçalho de cada página (CE-03967/2026, 'para os cargos de Governador e Senador').",
+    "divulgacao = data do relatório impressa na p. 3 ('Curitiba, 26/09/2026'); a data efetiva de publicação não consta do PDF.",
+    "O relatório não declara contratante.",
+    "Cenário 2 (p. 12) tem só Ciro Gomes e Elmano de Freitas: confronto direto rotulado como cenário de 1º turno, mantido em cenarios_alternativos e fora de segundo_turno. Se o motor quiser usá-lo como par de 2º turno, é decisão declarada.",
+    "O relatório não traz pergunta de 2º turno para governador."
+  ]
+}

@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
-"""Coleta as series de intencao de voto para senador (1o turno) do painel do G1.
+"""Coleta as series de intencao de voto para senador ou governador do painel do G1.
 
 Para cada UF e instituto: baixa a pagina do painel e a API de graficos de cada
-pergunta (estimulada, espontanea, votos validos), guarda o bruto com SHA-256 e
-grava um JSON por onda em analysis/senado_2026/pesquisas/ no esquema da secao 1
-de analysis/senado_2026/CONTRATO.md.
+pergunta (estimulada, espontanea, votos validos e, para governador, segundo
+turno), guarda o bruto com SHA-256 e grava um JSON por onda em
+analysis/<cargo>_2026/pesquisas/ no esquema da secao 1 do CONTRATO.md do cargo.
 
 Uso:
-    python3 scripts/senado-2026-g1.py                 # todas as UFs, com rede
+    python3 scripts/senado-2026-g1.py                 # senador, todas as UFs, com rede
     python3 scripts/senado-2026-g1.py --uf SP BA      # so algumas UFs
     python3 scripts/senado-2026-g1.py --skip-download # reprocessa o que ja esta salvo
+    python3 scripts/senado-2026-g1.py --cargo governador
 """
 
 from __future__ import annotations
@@ -29,9 +30,16 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+# Cargo em coleta. `configurar()` troca o cargo e as pastas; o padrao e senador.
+CARGO = "senador"
+PREFIXO = "SEN"
 RAW_DIR = ROOT / "data/originals/senado_102026/g1"
 OUT_DIR = ROOT / "analysis/senado_2026/pesquisas"
 COBERTURA = ROOT / "analysis/senado_2026/cobertura_g1.json"
+CARGOS = {
+    "senador": ("SEN", "senado_102026", "senado_2026"),
+    "governador": ("GOV", "governador_102026", "governador_2026"),
+}
 
 HOST = "https://especiaisg1.globo"
 USER_AGENT = (
@@ -96,8 +104,24 @@ TIPOS = {
     "ESTIMULADA": "estimulada",
     "ESPONTANEA": "espontanea",
     "VTSVALIDOS": "validos",
+    "SEGTURNO": "segundo_turno",
 }
-CODIGO_RE = re.compile(r"\b(ESPONTANEA|ESTIMULADA|VTSVALIDOS)-SEN-(\d+)\b")
+CODIGO_RE = re.compile(r"\b(ESPONTANEA|ESTIMULADA|VTSVALIDOS|SEGTURNO)-SEN-(\d+)\b")
+
+
+def configurar(cargo: str) -> None:
+    """Aponta a coleta para um cargo: codigos do painel e pastas de saida."""
+    global CARGO, PREFIXO, RAW_DIR, OUT_DIR, COBERTURA, CODIGO_RE
+    if cargo not in CARGOS:
+        raise ValueError(f"cargo desconhecido: {cargo}")
+    PREFIXO, originais, analise = CARGOS[cargo]
+    CARGO = cargo
+    RAW_DIR = ROOT / "data/originals" / originais / "g1"
+    OUT_DIR = ROOT / "analysis" / analise / "pesquisas"
+    COBERTURA = ROOT / "analysis" / analise / "cobertura_g1.json"
+    CODIGO_RE = re.compile(
+        rf"\b(ESPONTANEA|ESTIMULADA|VTSVALIDOS|SEGTURNO)-{PREFIXO}-(\d+)\b"
+    )
 
 
 # ---------------------------------------------------------------- utilitarios
@@ -150,7 +174,7 @@ def baixar(url: str, tentativas: int = 3) -> tuple[int, bytes]:
 def url_base_uf(uf: str) -> str:
     return (
         f"{HOST}/{uf.lower()}/{UFS[uf]}/eleicoes/2026/pesquisas-eleitorais/"
-        "senador/1-turno"
+        f"{CARGO}/1-turno"
     )
 
 
@@ -169,9 +193,9 @@ def url_api(pagina_id: str, codigo: str, instituto: str) -> str:
 
 
 def parse_institutos(pagina: str) -> list[str]:
-    """Nomes dos institutos nos seletores da pagina de senador."""
+    """Nomes dos institutos nos seletores da pagina do cargo."""
     achados = re.findall(
-        r'data-url="[^"]*/senador/1-turno/([^"/]+)"',
+        rf'data-url="[^"]*/{CARGO}/1-turno/([^"/]+)"',
         pagina,
     )
     vistos: list[str] = []
@@ -193,10 +217,10 @@ def parse_config(pagina: str) -> dict[str, str]:
 
 
 def parse_codigos(pagina: str) -> list[str]:
-    """Todos os codigos de pergunta de senador, na ordem em que aparecem."""
+    """Todos os codigos de pergunta do cargo, na ordem em que aparecem."""
     vistos: list[str] = []
     for tipo, numero in CODIGO_RE.findall(pagina):
-        codigo = f"{tipo}-SEN-{numero}"
+        codigo = f"{tipo}-{PREFIXO}-{numero}"
         if codigo not in vistos:
             vistos.append(codigo)
     return vistos
@@ -430,7 +454,8 @@ def montar_onda(
     com_metodologia: bool,
     disclaimer: str | None,
 ) -> dict:
-    """Monta o JSON de uma onda. `estimulada` = (valores por data, opcoes, cenario)."""
+    """Monta o JSON de uma onda. `estimulada` = (valores por data, opcoes, cenario);
+    `extras` = {codigo da pergunta: (valores por data, opcoes)}."""
     por_data, opcoes, _ = estimulada
     tem_estimulada = data in por_data
     bloco = bloco_resposta(por_data.get(data, {}), opcoes)
@@ -456,7 +481,7 @@ def montar_onda(
         "instituto": instituto,
         "instituto_slug": slug_instituto(instituto),
         "uf": uf,
-        "cargo": "senador",
+        "cargo": CARGO,
         "registro_tse": metodologia.get("registro_tse") if com_metodologia else None,
         "campo": campo,
         "divulgacao": data,
@@ -488,15 +513,26 @@ def montar_onda(
         "branco_nulo": bloco["branco_nulo"],
         "observacoes": observacoes,
     }
-    for tipo, (valores, opcoes_extra) in extras.items():
-        if data in valores:
-            extra = bloco_resposta(valores[data], opcoes_extra)
-            onda[tipo] = {
-                "candidatos": extra["candidatos"],
-                "indecisos": extra["indecisos"],
-                "branco_nulo": extra["branco_nulo"],
-                "soma_total": soma_bloco(extra),
-            }
+    if CARGO == "governador":
+        onda["segundo_turno"] = []
+    for codigo, (valores, opcoes_extra) in extras.items():
+        if data not in valores:
+            continue
+        extra = bloco_resposta(valores[data], opcoes_extra)
+        bloco_extra = {
+            "candidatos": extra["candidatos"],
+            "indecisos": extra["indecisos"],
+            "branco_nulo": extra["branco_nulo"],
+            "soma_total": soma_bloco(extra),
+        }
+        tipo = tipo_do_codigo(codigo)
+        if tipo == "segundo_turno":
+            # Um codigo por par medido; a lista guarda todos os pares da data.
+            onda.setdefault("segundo_turno", []).append(
+                {"codigo": codigo, "pagina": None, **bloco_extra}
+            )
+        else:
+            onda[tipo] = bloco_extra
     return onda
 
 
@@ -551,7 +587,7 @@ def coletar_uf(uf: str, fonte: dict) -> list[str]:
     """Baixa painel e APIs de todos os institutos da UF. Devolve os slugs salvos."""
     status, base = baixar(url_base_uf(uf) + "/")
     if status != 200:
-        print(f"{uf}: pagina base {status}, sem painel de senador")
+        print(f"{uf}: pagina base {status}, sem painel de {CARGO}")
         return []
     nomes = parse_institutos(base.decode("utf-8", "replace"))
     if not nomes:
@@ -631,9 +667,7 @@ def processar_instituto(uf: str, slug: str, fonte: dict, usados: set[str]) -> di
     por_data, opcoes, cenario = series[principal]
     metodologia = parse_metodologia(parse_metodologia_texto(texto), uf)
     extras = {
-        tipo_do_codigo(c): (v[0], v[1])
-        for c, v in series.items()
-        if not c.startswith("ESTIMULADA")
+        c: (v[0], v[1]) for c, v in series.items() if not c.startswith("ESTIMULADA")
     }
     registro_fonte = fonte["arquivos"].get(f"{uf}_{slug}_{principal}.json", {})
     datas = sorted(set(por_data).union(*(set(v[0]) for v in extras.values())))
@@ -739,7 +773,11 @@ def main(argv: list[str] | None = None) -> int:
     analisador.add_argument(
         "--skip-download", action="store_true", help="reprocessa o bruto salvo"
     )
+    analisador.add_argument(
+        "--cargo", choices=sorted(CARGOS), default="senador", help="cargo do painel"
+    )
     args = analisador.parse_args(argv)
+    configurar(args.cargo)
     ufs = [u.upper() for u in args.uf] if args.uf else list(UFS)
     invalidas = [u for u in ufs if u not in UFS]
     if invalidas:
@@ -778,7 +816,7 @@ def main(argv: list[str] | None = None) -> int:
     )
     print(tabela(cobertura))
     sem = [uf for uf, item in cobertura.items() if not item["tem_pesquisa"]]
-    print("\nUFs sem pesquisa de Senado no painel:", ", ".join(sem) or "nenhuma")
+    print(f"\nUFs sem pesquisa de {CARGO} no painel:", ", ".join(sem) or "nenhuma")
     return 0
 
 

@@ -1,0 +1,143 @@
+{
+  "instituto": "Real Time Big Data",
+  "instituto_slug": "realtime",
+  "uf": "AC",
+  "cargo": "governador",
+  "registro_tse": "AC-01699/2026",
+  "campo": {
+    "inicio": "2026-09-16",
+    "fim": "2026-09-19"
+  },
+  "divulgacao": "2026-09-21",
+  "n": 1600,
+  "margem_pp": 2.0,
+  "metodo": "nao informado",
+  "contratante": "nao informado",
+  "fonte": {
+    "tipo": "pdf",
+    "url": null,
+    "arquivo": "data/originals/senado_102026/realtime_AC_20260919/relatorio.pdf",
+    "sha256": "bca28363e7cb83bff9d8cb066560f23802ee9e2e3253af4e478b02a703bc8c74",
+    "pagina": 7,
+    "imagem": "data/originals/senado_102026/realtime_AC_20260919/governador_p-07.png",
+    "capturado_em": "2026-10-03T23:04:29Z",
+    "materia": []
+  },
+  "pergunta": {
+    "codigo": "ESTIMULADA-CENARIO-1",
+    "tipo": "estimulada",
+    "cenario": "Cenário 1",
+    "votos_por_eleitor": 1,
+    "soma_total": 100.0,
+    "nota": null
+  },
+  "candidatos": [
+    {
+      "nome": "Mailza Assis",
+      "partido": "PP",
+      "valor": 36.0,
+      "foto_url": null
+    },
+    {
+      "nome": "Alan Rick",
+      "partido": "REPUBLICANOS",
+      "valor": 33.0,
+      "foto_url": null
+    },
+    {
+      "nome": "Tião Bocalom",
+      "partido": "PSDB",
+      "valor": 15.0,
+      "foto_url": null
+    },
+    {
+      "nome": "Thor Dantas",
+      "partido": "PSB",
+      "valor": 9.0,
+      "foto_url": null
+    },
+    {
+      "nome": "Dr. Luisinho",
+      "partido": "AGIR",
+      "valor": 0.0,
+      "foto_url": null
+    },
+    {
+      "nome": "Eudo Raffael",
+      "partido": "PCB",
+      "valor": 0.0,
+      "foto_url": null
+    }
+  ],
+  "indecisos": 3.0,
+  "branco_nulo": 4.0,
+  "outros": null,
+  "cenarios_alternativos": [],
+  "segundo_turno": [
+    {
+      "codigo": "SEGTURNO-CENARIO-1",
+      "pagina": 16,
+      "candidatos": [
+        {
+          "nome": "Alan Rick",
+          "partido": "REPUBLICANOS",
+          "valor": 42.0
+        },
+        {
+          "nome": "Mailza Assis",
+          "partido": "PP",
+          "valor": 45.0
+        }
+      ],
+      "indecisos": 6.0,
+      "branco_nulo": 7.0,
+      "soma_total": 100.0
+    },
+    {
+      "codigo": "SEGTURNO-CENARIO-2",
+      "pagina": 17,
+      "candidatos": [
+        {
+          "nome": "Alan Rick",
+          "partido": "REPUBLICANOS",
+          "valor": 54.0
+        },
+        {
+          "nome": "Tião Bocalom",
+          "partido": "PSDB",
+          "valor": 29.0
+        }
+      ],
+      "indecisos": 10.0,
+      "branco_nulo": 9.0,
+      "soma_total": 102.0
+    },
+    {
+      "codigo": "SEGTURNO-CENARIO-3",
+      "pagina": 18,
+      "candidatos": [
+        {
+          "nome": "Tião Bocalom",
+          "partido": "PSDB",
+          "valor": 28.0
+        },
+        {
+          "nome": "Mailza Assis",
+          "partido": "PP",
+          "valor": 53.0
+        }
+      ],
+      "indecisos": 10.0,
+      "branco_nulo": 9.0,
+      "soma_total": 100.0
+    }
+  ],
+  "observacoes": [
+    "Barra sem rótulo de valor impressa na p. 7 (conferida na imagem): Dr. Luisinho (Agir), Eudo Raffael (PCB); gravado 0 (arredondamento abaixo de 0,5%).",
+    "2º turno, Cenário 02 (p. 17): impresso 54 + 29 + 9 + 10 = 102, arredondamento do instituto; gravado como impresso.",
+    "Nas páginas de 2º turno o nome sai em maiúsculas e com acento (MAÍLZA ASSIS); usado o nome do 1º turno (Mailza Assis) para casar as candidaturas.",
+    "Metodologia (p. 2) informa apenas entrevistas, universo, margem, confiança e datas de campo; não declara o modo de coleta (telefônico ou presencial) nem o contratante: 'nao informado'.",
+    "Valores em % do total de entrevistados, como impressos; o relatório também traz votos válidos, não usados aqui.",
+    "fonte.json não registra URL do PDF nem matéria; url fica null."
+  ]
+}

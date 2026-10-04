@@ -1,0 +1,100 @@
+/* Página da predição de governador. Carrega depois de predicao_senado.css e
+   reaproveita as peças sn-* (fichas, mapa, barras, fotos). Aqui ficam só o
+   quadro das corridas, os cartões de 2º turno e o placar de duas linhas. */
+.gv-score-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-bottom: 0 }
+.gv-score-2 .candidate.sn-card:last-child { display: block; border-right: 0 }
+.gv-card-1t > b { color: #e6d98f }
+.gv-card-2t > b { color: #ffffff }
+.scoreboard.gv-score + .scoreboard.gv-score { margin-top: 0; border-top: 1px solid #738775 }
+@media (max-width: 700px) {
+  .scoreboard.gv-score-2 { grid-template-columns: 1fr }
+  .scoreboard.gv-score-2 .candidate.sn-card { padding: 16px 0; border-right: 0; border-top: 1px solid #738775; display: block }
+  .scoreboard.gv-score-2 .candidate.sn-card:first-child { border-top: 0 }
+}
+
+/* Quadro das corridas */
+.gv-legenda {
+  list-style: none; padding: 0; margin: 18px 0 6px;
+  display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: 14px
+}
+.gv-legenda li { display: flex; gap: 8px; align-items: center }
+.gv-sw { display: inline-block; width: 22px; height: 12px; flex: none }
+.gv-sw-1t { background: var(--c-direita) }
+.gv-sw-2t { background: repeating-linear-gradient(45deg, var(--c-direita) 0 4px, #fffdf8 4px 7px) }
+.gv-sw-outro { background: #d4d6d9 }
+.gv-bloco { margin: 22px 0 8px }
+.gv-bloco h3 { margin: 0 0 8px; font-size: 22px; display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline }
+.gv-bloco h3 small { font: 500 13px/1.5 var(--mono); color: var(--muted); letter-spacing: .3px }
+.gv-board { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px }
+.gv-row {
+  display: grid;
+  grid-template-columns: 2.6em 44px minmax(0, 1.1fr) minmax(0, 1.4fr);
+  grid-template-areas: "uf foto cand prob" "uf foto par par";
+  gap: 4px 12px; align-items: center;
+  background: var(--white); border: 1px solid var(--line); padding: 10px 14px; min-width: 0
+}
+.gv-row-sem { grid-template-columns: 2.6em minmax(0, 1fr); grid-template-areas: "uf cand" }
+.gv-uf { grid-area: uf; font: 700 15px var(--mono); color: var(--ink); text-decoration: none }
+.gv-uf:hover, .gv-uf:focus-visible { text-decoration: underline }
+.gv-row .sn-foto { grid-area: foto }
+.gv-cand { grid-area: cand; min-width: 0; display: grid; gap: 2px }
+.gv-nome { font-weight: 700; overflow-wrap: anywhere }
+.gv-prob { grid-area: prob; min-width: 0; display: grid; grid-template-columns: 4.2em minmax(0, 1fr); grid-template-areas: "p bar" "p meta"; gap: 2px 10px; align-items: center }
+.gv-p { grid-area: p; font: 600 26px/1 var(--mono); letter-spacing: -1px }
+.gv-prob .sn-meta { grid-area: meta }
+.gv-stack { grid-area: bar; display: flex; height: 14px; background: #d4d6d9; overflow: hidden }
+.gv-seg { display: block; height: 100%; flex: none }
+.gv-seg-2t { background-image: repeating-linear-gradient(45deg, transparent 0 4px, #fffdf8 4px 7px) }
+.gv-seg-outro { background: #d4d6d9 }
+.gv-par { grid-area: par; font-size: 14px; line-height: 1.45; color: var(--muted); overflow-wrap: anywhere }
+.gv-par b { color: var(--ink) }
+.gv-tag {
+  display: inline-block; margin-left: 6px; padding: 0 7px; border-radius: 999px;
+  font: 600 10.5px/1.7 var(--mono); letter-spacing: .4px; text-transform: uppercase; vertical-align: middle;
+  border: 1px solid #535b54; color: #192e2b; background: #fffdf8
+}
+.gv-tag-medido { border-color: #345b47; background: #eef3de }
+.gv-tag-estimado { border-color: #b4851a; background: #fbf4de }
+.gv-tag-antiga { border-color: #8a2418; background: #fbe9e5; color: #7a1f14 }
+@media (max-width: 720px) {
+  .gv-row { grid-template-columns: 2.6em 44px minmax(0, 1fr); grid-template-areas: "uf foto cand" "prob prob prob" "par par par" }
+  .gv-prob { grid-template-columns: 3.6em minmax(0, 1fr) }
+  .gv-p { font-size: 22px }
+}
+
+/* Cartões de 2º turno */
+.gv-pares { list-style: none; margin: 20px 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px }
+.gv-par-card { background: var(--white); border: 1px solid var(--line); border-top: 4px solid var(--ink); padding: 12px 14px 10px; min-width: 0 }
+.gv-par-head { display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: center; font-size: 14px; color: var(--muted); margin-bottom: 10px }
+.gv-par-head .gv-uf { font-size: 16px }
+.gv-par-corpo { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.4fr) minmax(0, .8fr); gap: 10px; align-items: start }
+.gv-par-lado { display: grid; justify-items: start; gap: 4px; min-width: 0; font-size: 14px }
+.gv-par-lado b { overflow-wrap: anywhere; line-height: 1.25 }
+.gv-par-lado-b { justify-items: end; text-align: right }
+.gv-par-meio { min-width: 0; display: grid; gap: 6px; justify-items: center; text-align: center }
+.gv-placar { display: flex; gap: 10px; align-items: baseline; font: 600 34px/1 var(--mono); letter-spacing: -1.5px }
+.gv-placar span { font-size: 18px; color: var(--muted); letter-spacing: 0 }
+.gv-c-esquerda { color: var(--c-esquerda) }
+.gv-c-centro-esquerda { color: #b5533c }
+.gv-c-centro { color: #6f6230 }
+.gv-c-centro-direita { color: #2f5f9e }
+.gv-c-direita { color: var(--c-direita) }
+.gv-c-indefinido { color: var(--c-indefinido) }
+.gv-duelo { display: flex; width: 100%; height: 14px; background: #d4d6d9; overflow: hidden }
+.gv-duelo-a, .gv-duelo-b { display: block; height: 100%; flex: none }
+.gv-duelo-b { opacity: .72 }
+.gv-par-fonte { margin: 10px 0 0 }
+.gv-ficha-pares { margin: 0; padding-left: 18px; font-size: 14px; line-height: 1.5; display: grid; gap: 6px }
+.gv-decisao { margin: 10px 0 0; font-size: 15px }
+.gv-sw-listra { border-radius: 2px; background: repeating-linear-gradient(45deg, var(--c-direita) 0 5px, #fffdf8 5px 8px) }
+@media (max-width: 899px) {
+  .gv-pares { grid-template-columns: minmax(0, 1fr) }
+}
+@media (max-width: 480px) {
+  .gv-par-corpo { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-areas: "a b" "meio meio" }
+  .gv-par-lado { grid-area: a }
+  .gv-par-lado-b { grid-area: b }
+  .gv-par-meio { grid-area: meio }
+}
+#tabela td:nth-child(2), #tabela td:nth-child(6) { min-width: 11em }
+#tabela td:nth-child(10) { min-width: 11em }

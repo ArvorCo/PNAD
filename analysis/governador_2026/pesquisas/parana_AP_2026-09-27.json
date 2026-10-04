@@ -1,0 +1,103 @@
+{
+  "instituto": "Paraná Pesquisas",
+  "instituto_slug": "parana",
+  "uf": "AP",
+  "cargo": "governador",
+  "registro_tse": "AP-03035/2026",
+  "campo": {
+    "inicio": "2026-09-25",
+    "fim": "2026-09-27"
+  },
+  "divulgacao": "2026-09-28",
+  "n": 1000,
+  "margem_pp": 3.2,
+  "metodo": "presencial",
+  "contratante": "nao informado",
+  "fonte": {
+    "tipo": "pdf",
+    "url": "https://paranapesquisas.com.br/wp-content/uploads/2026/09/AP_Set26.pdf",
+    "arquivo": "data/originals/senado_102026/parana_AP_20260927/relatorio.pdf",
+    "sha256": "07514485d0aa1e66af0037b33cb7a787dac4813f92bf16b0d21cdd8fb1e94586",
+    "pagina": 8,
+    "imagem": "data/originals/senado_102026/parana_AP_20260927/governador_p8.png",
+    "capturado_em": "2026-10-03T23:06:08Z",
+    "materia": []
+  },
+  "pergunta": {
+    "codigo": "ESTIMULADA-CENARIO-1",
+    "tipo": "estimulada",
+    "cenario": "Cenário 1",
+    "votos_por_eleitor": 1,
+    "soma_total": 100.0,
+    "nota": "Página titulada 'ESTIMULADA – Cenário 1', com todos os nomes do cartão."
+  },
+  "candidatos": [
+    {
+      "nome": "Dr. Furlan",
+      "partido": null,
+      "valor": 55.7,
+      "foto_url": null
+    },
+    {
+      "nome": "Clécio",
+      "partido": null,
+      "valor": 37.4,
+      "foto_url": null
+    },
+    {
+      "nome": "Delegado Marcos",
+      "partido": null,
+      "valor": 0.5,
+      "foto_url": null
+    },
+    {
+      "nome": "Carlos Cley",
+      "partido": null,
+      "valor": 0.4,
+      "foto_url": null
+    },
+    {
+      "nome": "Jairo Palheta",
+      "partido": null,
+      "valor": 0.1,
+      "foto_url": null
+    }
+  ],
+  "indecisos": 2.7,
+  "branco_nulo": 3.2,
+  "outros": null,
+  "cenarios_alternativos": [
+    {
+      "cenario": "Cenário 2",
+      "pagina": 12,
+      "candidatos": [
+        {
+          "nome": "Dr. Furlan",
+          "partido": null,
+          "valor": 56.5,
+          "foto_url": null
+        },
+        {
+          "nome": "Clécio",
+          "partido": null,
+          "valor": 38.1,
+          "foto_url": null
+        }
+      ],
+      "indecisos": 2.3,
+      "branco_nulo": 3.1,
+      "soma_total": 100.0,
+      "nota": "Cenário estimulado de 1º turno com apenas os dois primeiros colocados; funciona como confronto direto, mas o instituto o rotula 'ESTIMULADA – Cenário 2', não '2º turno'."
+    }
+  ],
+  "segundo_turno": [],
+  "observacoes": [
+    "Paraná Pesquisas não imprime partido nas páginas de intenção de voto; partido fica null até o casamento com o TSE.",
+    "Indecisos = 'Não sabe/ Não opinou'; branco_nulo = 'Nenhum/ Branco/ Nulo', impressos separadamente.",
+    "Campo, amostra, margem e método lidos na p. 3 (Metodologia); registro TSE na capa e no cabeçalho de cada página (AP-03035/2026, 'para os cargos de Governador e Senador').",
+    "divulgacao = data do relatório impressa na p. 3 ('Curitiba, 28/09/2026'); a data efetiva de publicação não consta do PDF.",
+    "O relatório não declara contratante.",
+    "Cenário 2 (p. 12) tem só Dr. Furlan e Clécio: confronto direto rotulado como cenário de 1º turno, mantido em cenarios_alternativos e fora de segundo_turno. Se o motor quiser usá-lo como par de 2º turno, é decisão declarada.",
+    "O relatório não traz pergunta de 2º turno para governador."
+  ]
+}

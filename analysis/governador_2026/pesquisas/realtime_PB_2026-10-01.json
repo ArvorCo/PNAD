@@ -1,0 +1,129 @@
+{
+  "instituto": "Real Time Big Data",
+  "instituto_slug": "realtime",
+  "uf": "PB",
+  "cargo": "governador",
+  "registro_tse": "PB-01003/2026",
+  "campo": {
+    "inicio": "2026-09-28",
+    "fim": "2026-10-01"
+  },
+  "divulgacao": "2026-10-02",
+  "n": 1600,
+  "margem_pp": 2.0,
+  "metodo": "nao informado",
+  "contratante": "nao informado",
+  "fonte": {
+    "tipo": "pdf",
+    "url": "https://static.poder360.com.br/uploads/2026/10/Real-Time-bigdata-Governo-PA.pdf",
+    "arquivo": "data/originals/senado_102026/realtime_PB/relatorio.pdf",
+    "sha256": "9fc0d81c5220ffdc7d5e3cc28fcef8338a0ebe4cbe3f58805385f395c8ae4cda",
+    "bytes": 7601322,
+    "pagina": 9,
+    "imagem": "data/originals/senado_102026/realtime_PB/governador_p9.png",
+    "capturado_em": "2026-10-03T23:01:20Z",
+    "materia": [
+      "https://www.poder360.com.br/poder-eleicoes-2026/lucas-ribeiro-lidera-o-2o-turno-na-paraiba-diz-pesquisa/"
+    ]
+  },
+  "pergunta": {
+    "codigo": "ESTIMULADA-GOV-001",
+    "tipo": "estimulada",
+    "cenario": null,
+    "votos_por_eleitor": 1,
+    "soma_total": 100.0,
+    "texto": "Em outubro teremos eleições, se a eleição para governador fosse hoje, e os nomes fossem estes, em quem o(a) sr.(a) votaria para governador da Paraíba?",
+    "nota": null
+  },
+  "candidatos": [
+    {
+      "nome": "Lucas Ribeiro",
+      "partido": "PP",
+      "valor": 45.0,
+      "foto_url": null
+    },
+    {
+      "nome": "Efraim Filho",
+      "partido": "PL",
+      "valor": 24.0,
+      "foto_url": null
+    },
+    {
+      "nome": "Cícero Lucena",
+      "partido": "MDB",
+      "valor": 18.0,
+      "foto_url": null
+    }
+  ],
+  "indecisos": 5.0,
+  "branco_nulo": 7.0,
+  "outros": 1.0,
+  "cenarios_alternativos": [],
+  "segundo_turno": [
+    {
+      "codigo": "SEGTURNO-CENARIO-01",
+      "pagina": 19,
+      "candidatos": [
+        {
+          "nome": "LUCAS RIBEIRO",
+          "partido": "PP",
+          "valor": 50.0
+        },
+        {
+          "nome": "CÍCERO LUCENA",
+          "partido": "MDB",
+          "valor": 28.0
+        }
+      ],
+      "indecisos": 10.0,
+      "branco_nulo": 12.0,
+      "soma_total": 100.0
+    },
+    {
+      "codigo": "SEGTURNO-CENARIO-02",
+      "pagina": 20,
+      "candidatos": [
+        {
+          "nome": "LUCAS RIBEIRO",
+          "partido": "PP",
+          "valor": 52.0
+        },
+        {
+          "nome": "EFRAIM FILHO",
+          "partido": "PL",
+          "valor": 30.0
+        }
+      ],
+      "indecisos": 9.0,
+      "branco_nulo": 9.0,
+      "soma_total": 100.0
+    },
+    {
+      "codigo": "SEGTURNO-CENARIO-03",
+      "pagina": 21,
+      "candidatos": [
+        {
+          "nome": "CÍCERO LUCENA",
+          "partido": "MDB",
+          "valor": 35.0
+        },
+        {
+          "nome": "EFRAIM FILHO",
+          "partido": "PL",
+          "valor": 37.0
+        }
+      ],
+      "indecisos": 16.0,
+      "branco_nulo": 12.0,
+      "soma_total": 100.0
+    }
+  ],
+  "observacoes": [
+    "Método de coleta não informado no relatório: a página de metodologia (p. 2) traz só entrevistas, universo, margem, confiança e data de campo.",
+    "Contratante não informado no relatório.",
+    "indecisos = 'NS / NR'; branco_nulo = 'Nulo/Branco', como impressos.",
+    "Discrepância de origem: a URL do PDF no Poder360 (fonte.json da pasta realtime_PB) diz 'Real-Time-bigdata-Governo-PA.pdf', mas o PDF cobre a Paraíba: capa 'PESQUISA ESTADUAL PARAÍBA', registro PB-01003/2026, universo 'eleitores do estado da Paraíba'. Arquivo nomeado pela UF real (PB).",
+    "'Outros 1%' na p. 9 soma Pedro Coutinho (DC), Yuri Ezequiel (UP) e Camilo Duarte (PCO), conforme nota impressa.",
+    "No 2º turno (pp. 19 a 21) os nomes estão impressos em maiúsculas; gravados como impressos."
+  ]
+}

@@ -125,8 +125,8 @@ def linha_candidato(row: dict, campo_de) -> dict:
     }
 
 
-def ler_candidatos(zip_path: Path, campo_de) -> list[dict]:
-    """Candidaturas a senador (CD_CARGO 5) de todas as UFs, ordenadas."""
+def ler_candidatos(zip_path: Path, campo_de, cargo: str = "5") -> list[dict]:
+    """Candidaturas ao cargo (CD_CARGO: 5 senador, 3 governador), ordenadas."""
     saida = []
     with zipfile.ZipFile(zip_path) as z:
         for membro in sorted(z.namelist()):
@@ -137,7 +137,7 @@ def ler_candidatos(zip_path: Path, campo_de) -> list[dict]:
                 saida.extend(
                     linha_candidato(r, campo_de)
                     for r in ler_csv(f)
-                    if r["CD_CARGO"] == "5"
+                    if r["CD_CARGO"] == cargo
                 )
     saida.sort(key=lambda c: (c["uf"], c["nome_urna"], c["sq_candidato"]))
     return saida
@@ -184,13 +184,19 @@ def ler_eleitos_2022(zip_path: Path, campo_de) -> list[dict]:
 
 
 def casar_nomes(
-    candidatos: list[dict], citados: list[tuple[str, str]]
+    candidatos: list[dict],
+    citados: list[tuple[str, str]],
+    apelidos: dict[tuple[str, str], str] | None = None,
+    desempate: dict[tuple[str, str], str] | None = None,
 ) -> tuple[list[dict], list[dict]]:
     """Casa (UF, nome da pesquisa) com a candidatura do TSE, sem adivinhar.
 
     Ordem: apelido declarado, nome de urna, nome completo. Nome ambiguo na UF
-    (duas candidaturas com a mesma forma normalizada) nao casa.
+    (duas candidaturas com a mesma forma normalizada) nao casa. As tabelas
+    padrao sao as do Senado; outro cargo passa as suas.
     """
+    apelidos = APELIDOS if apelidos is None else apelidos
+    desempate = DESEMPATE if desempate is None else desempate
     indice: dict[tuple[str, str], set[str]] = defaultdict(set)
     por_sq = {c["sq_candidato"]: c for c in candidatos}
     for c in candidatos:
@@ -203,10 +209,10 @@ def casar_nomes(
             continue
         vistos.add((uf, nome))
         norma = normalizar(nome)
-        alvo = APELIDOS.get((uf, norma), norma)
+        alvo = apelidos.get((uf, norma), norma)
         achados = indice.get((uf, alvo), set())
-        if len(achados) > 1 and DESEMPATE.get((uf, alvo)) in achados:
-            achados = {DESEMPATE[(uf, alvo)]}
+        if len(achados) > 1 and desempate.get((uf, alvo)) in achados:
+            achados = {desempate[(uf, alvo)]}
         if len(achados) == 1:
             sq = next(iter(achados))
             casados.append(
@@ -215,7 +221,7 @@ def casar_nomes(
                     "nome_pesquisa": nome,
                     "sq_candidato": sq,
                     "nome_urna": por_sq[sq]["nome_urna"],
-                    "via_apelido": (uf, norma) in APELIDOS,
+                    "via_apelido": (uf, norma) in apelidos,
                 }
             )
         else:
