@@ -52,7 +52,12 @@ export function montarUrl(base: string, caminho: string, params: Record<string, 
 
 async function obter<T>(url: string, sinal?: AbortSignal): Promise<T> {
   const r = await fetch(url, { cache: "no-store", signal: sinal ?? null, headers: { accept: "application/json" } });
-  if (!r.ok) throw new ErroApi(r.status, url);
+  if (!r.ok) {
+    // Corpo não lido deixa a requisição aberta no Chromium; ao longo da noite os 404 de
+    // arquivo ainda sem versão se acumulariam no OBS.
+    await r.body?.cancel().catch(() => undefined);
+    throw new ErroApi(r.status, url);
+  }
   return (await r.json()) as T;
 }
 

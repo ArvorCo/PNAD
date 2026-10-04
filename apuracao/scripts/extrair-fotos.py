@@ -131,6 +131,13 @@ def main() -> None:
     parser.add_argument("--forcar", action="store_true", help="refaz todas as fotos")
     args = parser.parse_args()
 
+    if not CONSULTA.exists():
+        raise SystemExit(
+            f"falta {CONSULTA}: baixe o pacote do TSE em https://cdn.tse.jus.br/"
+            "estatistica/sead/odsele/consulta_cand/consulta_cand_2026.zip para o"
+            " repositório PNAD (data/ fica fora do git). Os zips de fotos por UF"
+            f" ficam em {FOTOS_ZIP} e vêm de `python3 scripts/senado-2026-tse.py`."
+        )
     url = baixar_br()
     print(f"zip BR: {'baixado de ' + url if url else 'já presente'}")
     gravadas, puladas, vistas = extrair(args.forcar)

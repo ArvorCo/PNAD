@@ -2,6 +2,7 @@ import { describe, expect, test } from "bun:test";
 import {
   normalizarAb, normalizarCm, normalizarE, normalizarEleC, normalizarU, politicaPara,
 } from "../src/parse/normalizar.ts";
+import { lerConfig } from "../src/config.ts";
 import { lerAb, lerCm, lerE, lerEleC, lerU } from "./helpers.ts";
 
 const sempre = { uf: "sp", politicaCandidatos: "sempre", primeiro: false } as const;
@@ -135,6 +136,12 @@ describe("configuração e -e", () => {
     expect(n.eleicoes[2]?.cdt2).toBeNull();
     expect(n.cargos.filter((c) => c.eleicao_cd === 6259).map((c) => c.cd)).toEqual([3, 5, 6, 7, 8]);
     expect(n.cargos.filter((c) => c.proporcional === 1).map((c) => c.cd)).toEqual([6, 7, 8]);
+  });
+  test("2º turno em pleito próprio (2024: 452 e 453): APURACAO_PLEITO troca o filtro", () => {
+    expect(lerConfig({}).pleito).toBe(3220);
+    expect(lerConfig({ APURACAO_PLEITO: "453" }).pleito).toBe(453);
+    const n = normalizarEleC(lerEleC("ele-c.json"), lerConfig({ APURACAO_PLEITO: "453" }).pleito);
+    expect(n.eleicoes.map((e) => [e.cd, e.turno])).toEqual([[620, 2]]);
   });
   test("cm: municípios e zonas", () => {
     const n = normalizarCm(lerCm("mun-e006257-cm.json"));

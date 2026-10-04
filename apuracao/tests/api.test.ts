@@ -1,5 +1,6 @@
 // Contrato da API do servidor: cada endpoint validado por um esquema zod estrito (documenta o formato).
 import { afterAll, beforeAll, describe, expect, test } from "bun:test";
+import { mkdirSync, writeFileSync } from "node:fs";
 import { z } from "zod";
 import { criarServidor } from "../src/server/main.ts";
 import type { Servidor } from "../src/server/main.ts";
@@ -230,11 +231,24 @@ describe("estáticos", () => {
     expect(i.status).toBe(200);
     expect(i.res.headers.get("content-type")).toContain("text/html");
     expect(i.res.headers.get("cache-control")).toBe("no-cache");
-    expect((await get("/fonts/archivo-latin-wght-normal.woff2")).res.headers.get("cache-control")).toBe("public, max-age=3600");
     expect((await get("/campos.json")).res.headers.get("content-type")).toContain("application/json");
-    expect((await get("/fonts/archivo-latin-wght-normal.woff2")).res.headers.get("content-type")).toBe("font/woff2");
     expect((await get("/%2e%2e/package.json")).status).toBe(404);
     expect((await get("/nao-existe.css")).status).toBe(404);
+  });
+
+  test("fontes com cache longo (public/ próprio: fonts/ é gerado por bun run assets e fica fora do git)", async () => {
+    const pub = `${s.dir}/public-fontes`;
+    mkdirSync(`${pub}/fonts`, { recursive: true });
+    writeFileSync(`${pub}/fonts/teste.woff2`, new Uint8Array([0x77, 0x4f, 0x46, 0x32]));
+    const proprio = criarServidor({ dbPath: s.path, publicDir: pub, port: 0, log: false });
+    try {
+      const r = await fetch(`${proprio.url}/fonts/teste.woff2`);
+      expect(r.status).toBe(200);
+      expect(r.headers.get("cache-control")).toBe("public, max-age=3600");
+      expect(r.headers.get("content-type")).toBe("font/woff2");
+    } finally {
+      await proprio.parar();
+    }
   });
 });
 

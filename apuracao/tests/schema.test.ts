@@ -1,8 +1,9 @@
 import { afterAll, describe, expect, test } from "bun:test";
-import { mkdtempSync, rmSync } from "node:fs";
+import { Database } from "bun:sqlite";
+import { existsSync, mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { SCHEMA_VERSION, abrirEscrita, abrirLeitura, aplicarEsquema } from "../src/db/abrir.ts";
+import { SCHEMA_VERSION, abrirEscrita, abrirLeitura, aplicarEsquema, fecharEscrita } from "../src/db/abrir.ts";
 import { lerMeta } from "../src/db/leitura.ts";
 
 const dir = mkdtempSync(join(tmpdir(), "apuracao-schema-"));
@@ -66,6 +67,24 @@ describe("esquema", () => {
     expect(() => r.run("INSERT INTO meta (chave, valor) VALUES ('x', 'y')")).toThrow();
     r.close();
     w.close();
+  });
+
+  test("leitor abre banco WAL fechado pelo coletor (sem -shm) e continua somente leitura", () => {
+    const path = join(dir, "c.sqlite");
+    fecharEscrita(abrirEscrita(path));
+    // o SQLite do macOS mantém o -shm; o sqlite3 do preflight (quick_check) o apaga ao sair
+    for (const x of ["-wal", "-shm"]) rmSync(`${path}${x}`, { force: true });
+    expect(() => new Database(path, { readonly: true }).query("SELECT 1 FROM sqlite_master").get()).toThrow();
+    const r = abrirLeitura(path);
+    expect(lerMeta(r, "schema_version")).toBe(String(SCHEMA_VERSION));
+    expect(() => r.run("INSERT INTO meta (chave, valor) VALUES ('x', 'y')")).toThrow();
+    const w = abrirEscrita(path);
+    w.run("INSERT INTO meta (chave, valor) VALUES ('depois', '1')");
+    expect(lerMeta(r, "depois")).toBe("1");
+    w.close();
+    r.close();
+    expect(() => abrirLeitura(join(dir, "nao-existe.sqlite"))).toThrow();
+    expect(existsSync(join(dir, "nao-existe.sqlite"))).toBe(false);
   });
 
   test("chave estrangeira ativa", () => {

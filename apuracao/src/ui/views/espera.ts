@@ -90,11 +90,14 @@ export function criarEspera(titulos: (id: string, s: State, uf: string | null) =
       }
       const tsEl = q(".e-ts");
       if (tsEl) {
-        tsEl.textContent = s.estado ? inteiro(s.estado.br.ts) : "aguardando";
-        tsEl.classList.toggle("vazio-num", !s.estado);
+        // Mesmo universo do eleitorado: soma das 27 UFs, sem o exterior (ZZ).
+        const ts = s.estado ? s.estado.ufs.filter(u => u.uf !== "ZZ").reduce((a, u) => a + u.ts, 0) : 0;
+        tsEl.textContent = ts > 0 ? inteiro(ts) : "aguardando";
+        tsEl.classList.toggle("vazio-num", !(ts > 0));
       }
       const munEl = q(".e-mun");
-      const nMun = Object.values(s.config?.municipios ?? {}).reduce((a, l) => a + l.length, 0);
+      // Mesmo universo do eleitorado (27 UFs): as cidades do exterior (ZZ) ficam fora.
+      const nMun = Object.entries(s.config?.municipios ?? {}).reduce((a, [uf, l]) => (uf === "ZZ" ? a : a + l.length), 0);
       if (munEl) {
         munEl.textContent = nMun > 0 ? inteiro(nMun) : "aguardando";
         munEl.classList.toggle("vazio-num", !(nMun > 0));

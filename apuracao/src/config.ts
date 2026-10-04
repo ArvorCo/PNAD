@@ -109,7 +109,7 @@ export function lerConfig(env: Env = process.env): Config {
   return {
     baseUrl: env.APURACAO_BASE_URL ?? BASE_URL,
     ciclo: CICLO,
-    pleito: PLEITO,
+    pleito: inteiro(env.APURACAO_PLEITO, PLEITO),
     eleicoes: listaEleicoes(env.APURACAO_ELEICOES),
     dbPath: env.APURACAO_DB ?? "data/apuracao.sqlite",
     concurrency: inteiro(env.APURACAO_CONCURRENCY, 32),

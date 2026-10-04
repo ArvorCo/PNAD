@@ -3,7 +3,7 @@
 
 import { hierarchy, treemap, treemapSquarify } from "d3-hierarchy";
 import { NAO_INICIADO, textoSobre } from "../data/cores.ts";
-import { pct } from "../data/format.ts";
+import { nomeProprio, pct } from "../data/format.ts";
 import type { UnidadeMapa } from "../state/types.ts";
 import type { Mapa, MapaOpcoes } from "./mapa.ts";
 
@@ -126,7 +126,7 @@ export function criarZonas(container: HTMLElement, opcoes: MapaOpcoes): Mapa {
     const r = opcoes.rotulo?.(u);
     if (r) return r;
     if (!u.lider) return u.pst > 0 ? "" : "sem seções";
-    const longo = `${u.lider.nmu} ${pct(u.lider.pvapn)}`;
+    const longo = `${nomeProprio(u.lider.nmu)} ${pct(u.lider.pvapn)}`;
     return longo.length * FONTE_PCT * 0.6 <= espaco ? longo : pct(u.lider.pvapn);
   };
 

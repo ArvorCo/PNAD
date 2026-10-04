@@ -1,6 +1,6 @@
 // Abertura do SQLite: escritor único (WAL + esquema) e leitores somente leitura.
 import { Database } from "bun:sqlite";
-import { mkdirSync } from "node:fs";
+import { existsSync, mkdirSync } from "node:fs";
 import { dirname } from "node:path";
 import schemaSql from "./schema.sql" with { type: "text" };
 
@@ -38,7 +38,18 @@ export function abrirEscrita(path: string): Database {
 
 /** Abre o banco para leitura (servidor, replay). Nunca escreve. */
 export function abrirLeitura(path: string): Database {
-  const db = new Database(path, { readonly: true, strict: true });
+  let db: Database | null = null;
+  try {
+    db = new Database(path, { readonly: true, strict: true });
+    db.query("SELECT 1 FROM sqlite_master LIMIT 1").get();
+  } catch (e) {
+    db?.close();
+    // Banco em WAL sem o -shm (coletor parado depois do checkpoint final): a conexão
+    // readonly não consegue criar o -shm e o SQLite recusa a abertura. Abre sem criar
+    // o banco e trava a escrita por query_only; só o -shm e o -wal vazios aparecem.
+    if (existsSync(`${path}-shm`) || !existsSync(path)) throw e;
+    db = new Database(path, { readwrite: true, create: false, strict: true });
+  }
   db.run("PRAGMA busy_timeout = 5000");
   db.run("PRAGMA query_only = 1");
   db.run("PRAGMA mmap_size = 1073741824");

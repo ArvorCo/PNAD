@@ -127,6 +127,15 @@ export interface CmMinimo {
  * Todas as linhas de `arquivo` (tiers 0 a 4) a partir dos cm de cada eleição,
  * mais o ele-c e os próprios cm.
  */
+/**
+ * Arquivos que o desenho do TSE gera mas que não existem em 2026: a eleição
+ * municipal 6261 (só Fernando de Noronha) não publica o resultado no nível da
+ * UF, apenas `mu` e `zona`; a varredura de 03/10 recebeu 404 nele a cada 30 s.
+ */
+export function existeNoTse(k: FileKey): boolean {
+  return !(k.tipo === "u" && k.nivel === "uf" && k.ele === 6261);
+}
+
 export function* registroDeArquivos(
   cmPorEleicao: ReadonlyMap<number, CmMinimo>,
   urls: Urls = padrao,
@@ -152,7 +161,8 @@ export function* registroDeArquivos(
       const cargos = cargosDe(ele, uf);
       yield linha(keyAb(ele, uf), 1);
       for (const cargo of cargos) {
-        yield linha(keyU(ele, cargo, "uf", uf), 0);
+        const kUf = keyU(ele, cargo, "uf", uf);
+        if (existeNoTse(kUf)) yield linha(kUf, 0);
         yield linha(keyE(ele, cargo, uf), 4, true);
       }
       for (const mu of abr.mu) {

@@ -6,7 +6,7 @@ import { EstadoArquivos } from "../src/collector/estado-arquivos.ts";
 import type { FileState } from "../src/collector/estado-arquivos.ts";
 import { processar } from "../src/collector/processar.ts";
 import { abrirEscrita, fecharEscrita } from "../src/db/abrir.ts";
-import { chave, keyAb, keyU } from "../src/tse/urls.ts";
+import { chave, existeNoTse, keyAb, keyU, urlDe } from "../src/tse/urls.ts";
 import { arquivo, jobDe, montar, ok, resultado } from "./coletor-util.ts";
 import { bytes } from "./helpers.ts";
 
@@ -68,6 +68,21 @@ describe("estado dos arquivos", () => {
     expect(est.porId.size).toBe(m.estado.porId.size);
     expect(est.doMunicipio(6257, "sp", "71072").length).toBe(1);
     expect(est.zonasDoMunicipio(6257, "sp", "71072").length).toBe(57);
+    db.close();
+  });
+
+  test("linha antiga de arquivo inexistente no TSE fica no banco e fora do estado", () => {
+    const path = join(dir, "b.sqlite");
+    const db = abrirEscrita(path);
+    const k = keyU(6261, 25, "uf", "pe");
+    expect(existeNoTse(k)).toBe(false);
+    db.run(
+      "INSERT INTO arquivo (chave, url, tipo, eleicao_cd, cargo_cd, nivel, uf, tier) VALUES (?, ?, 'u', 6261, 25, 'uf', 'pe', 0)",
+      [chave(k), urlDe(k)],
+    );
+    const est = EstadoArquivos.carregarDoBanco(db);
+    expect(est.porChave.has(chave(k))).toBe(false);
+    expect(db.query("SELECT COUNT(*) AS n FROM arquivo").get()).toEqual({ n: 1 });
     db.close();
   });
 });

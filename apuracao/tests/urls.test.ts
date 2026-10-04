@@ -106,6 +106,10 @@ describe("registroDeArquivos", () => {
     const mu = de(6261, "u", "mu");
     expect(mu.map((a) => a.chave)).toEqual(["u:6261:25:mu:pe:30015:"]);
     expect(de(6261, "u", "zona").map((a) => a.chave)).toEqual(["u:6261:25:zona:pe:30015:0004"]);
+    expect(de(6261, "u", "uf")).toEqual([]);
+    expect(de(6261, "e", "uf").map((a) => a.chave)).toEqual(["e:6261:25:uf:pe::"]);
+    expect(de(6261, "ab", "br").length).toBe(1);
+    expect(de(6261, "ab", "uf").map((a) => a.uf)).toEqual(["pe"]);
   });
   test("tiers", () => {
     expect(contar((a) => a.tipo === "ele-c")).toBe(1);
@@ -114,6 +118,7 @@ describe("registroDeArquivos", () => {
     expect(contar((a) => a.tier === 2)).toBe(5757 + 5571 * 4 + 1);
     expect(contar((a) => a.tier === 3)).toBe(6292 + 6106 * 4 + 1);
     expect(contar((a) => a.tipo === "e")).toBe(28 + 27 * 4 + 1);
+    expect(contar((a) => a.tipo === "u" && a.nivel === "uf")).toBe(28 + 27 * 4);
     expect(linhas.filter((a) => a.tier === 2).every((a) => a.tipo === "u" && a.nivel === "mu")).toBe(true);
   });
 });

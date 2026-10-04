@@ -405,13 +405,17 @@
   color: var(--muted);
 }
 
+/* 18 linhas (LINHAS em proporcional.ts) dividem a altura disponível: com 2.625rem fixos
+   a 18ª saía cortada pelo rodapé em 1920 × 1080. */
 .pr-lista {
+  display: grid;
+  grid-template-rows: repeat(18, minmax(0, 2.625rem));
   min-height: 0;
   overflow: hidden;
 }
 
 .pr-linha {
-  height: 2.625rem;
+  min-height: 0;
   border-bottom: 1px solid var(--line);
 }
 

@@ -10,6 +10,7 @@ import { intBR } from "../parse/numeros.ts";
 import { parseCorpo } from "../parse/schemas.ts";
 import type { AbFile } from "../parse/schemas.ts";
 import type { ClasseFetch, FetchResult, FileKey, Tier } from "../types.ts";
+import { existeNoTse } from "../tse/urls.ts";
 import { isoDe, msDe } from "./relogio.ts";
 
 /** Contagens que as anomalias comparam. */
@@ -165,7 +166,11 @@ export class EstadoArquivos {
   /** Reconstrói tudo de `arquivo`, `totais`, `voto_candidato`, `municipio` e do último blob de cada -ab. */
   static carregarDoBanco(db: Database): EstadoArquivos {
     const est = new EstadoArquivos();
-    for (const a of todosArquivos(db)) est.adicionar(estadoDeLinha(a));
+    for (const a of todosArquivos(db)) {
+      const fs = estadoDeLinha(a);
+      // Linha antiga de um arquivo que o TSE não publica: fica no banco (auditoria), fora da fila.
+      if (existeNoTse(fs.key)) est.adicionar(fs);
+    }
 
     type LinhaT = Partial<LinhaTotais> & { arquivo_id: number };
     for (const t of db

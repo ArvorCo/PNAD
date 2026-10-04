@@ -155,6 +155,18 @@ SELECT classe, COUNT(*), SUM(bytes) FROM fetch GROUP BY classe;
 - **Recuperação**: coletor cai, o laço reinicia e o estado volta do banco; 403, pausa automática, e à mão `APURACAO_UA=... APURACAO_CONCURRENCY=8`; disco, `APURACAO_SWEEP_MIN=0` e `APURACAO_ZONAS=final`; suspeita de corrupção, parar o coletor, `.backup`, `integrity_check`; servidor travado, reiniciar só ele (o telão segura o último snapshot e reconecta sozinho).
 - **Depois**: `PRAGMA wal_checkpoint(TRUNCATE)`, cópia do banco, `bun run backfill`, `VACUUM` numa cópia para o relatório.
 
+### O que fazer se
+
+| Sintoma | Onde aparece | Ação |
+|---|---|---|
+| 403 ou 429 do TSE | `/api/estado` (`coletor.taxas_60s.negado` e `.limite`, `coletor.pausa_global_ate`), log `data/logs/collect-*.log` | a pausa é automática; se repetir, parar o coletor e religar com `APURACAO_UA="<UA de navegador atual>" APURACAO_CONCURRENCY=8 scripts/start-collect.sh` |
+| fila T2 acima de 5.000 por mais de 5 min | `/api/estado` (`coletor.fila`) | `APURACAO_MIN_INTERVALO_MU=600` em `meta.ajustes` (a quente) ou na partida |
+| disco abaixo de 40 GiB ou banco perto de 10 GB | `df -h`, `/api/estado` (`coletor.db_mb`, `coletor.wal_mb`) | `APURACAO_SWEEP_MIN=0` e `APURACAO_ZONAS=final`; WAL acima de 300 MB: conferir se algum leitor ficou preso (reiniciar o servidor libera o checkpoint) |
+| telão parado ou servidor sem resposta | HUD do telão (`rede`), `curl -s 127.0.0.1:4180/api/estado` | reiniciar só o servidor (`pkill -f "src/server/main.ts"`; o `start-serve.sh` religa em 2 s). O coletor continua gravando e o telão segura o último dado e reconecta sozinho |
+| coletor caiu | log com `"t":"reinicio"` | o laço do `start-collect.sh` religa e o estado volta do banco; se cair em ciclo, ler o último erro do log antes de qualquer outra coisa |
+| suspeita de banco corrompido | erro de SQLite no log | parar o coletor, `sqlite3 data/apuracao.sqlite ".backup data/copia.sqlite"`, `PRAGMA integrity_check` na cópia; religar só com resultado `ok` |
+| Mac dormiu ou sem rede | lacuna no log `fetch` | `pmset -g` e Wi-Fi; o coletor retoma sozinho, e a lacuna fica registrada como prova |
+
 OBS: browser source 1920 × 1080 em `http://127.0.0.1:4180/#v=pres&auto=1&hud=0`, "atualizar navegador quando a cena ficar ativa" desligado. Diretor no segundo monitor, no mesmo Chrome do teste (o OBS tem o próprio Chromium: para comandar o OBS pelo diretor, abra o diretor como dock personalizado do OBS com a mesma URL).
 
 ## Ajustes
@@ -175,10 +187,11 @@ Por variável de ambiente na partida ou, a quente, em `meta.ajustes` (JSON com o
 | `APURACAO_SEM_CONDICIONAL` | vazio | `1` desliga `If-None-Match` |
 | `APURACAO_BASE_URL` | TSE oficial | troca a base (testes) |
 | `APURACAO_TURNO` | detectado | `2` força o telão no 2º turno |
+| `APURACAO_PLEITO` | `3220` | pleito filtrado no `ele-c.json` (em 2024 o 2º turno veio em pleito próprio: 452 e 453) |
 
 ## 2º turno (25/10)
 
-1. Banco separado: `APURACAO_ELEICOES=6258,6260 APURACAO_DB=data/apuracao-2t.sqlite scripts/start-collect.sh`.
+1. Banco separado: `APURACAO_ELEICOES=6258,6260 APURACAO_DB=data/apuracao-2t.sqlite scripts/start-collect.sh`. Se o `ele-c.json` trouxer 6258/6260 num pleito novo (como 452 e 453 em 2024), acrescente `APURACAO_PLEITO=<cd desse pleito>` para gravar as linhas de `eleicao` e `cargo`; sem ele o coletor segue pelo `APURACAO_ELEICOES` e só avisa no log.
 2. Servidor no mesmo banco: `APURACAO_DB=data/apuracao-2t.sqlite scripts/start-serve.sh`. O turno é detectado pelos arquivos de 6258/6260 (ou `APURACAO_TURNO=2`).
 3. O telão troca sozinho pelo `turno` de `/api/config`: `pres` vira duelo com barra bipartida e mapa divergente.
 4. Antes, `bun run sweep` com as mesmas variáveis para conferir que os arquivos existem.
@@ -186,6 +199,6 @@ Por variável de ambiente na partida ou, a quente, em `meta.ajustes` (JSON com o
 ## Verificação
 
 - `bun run check` sem erro.
-- `bun run scripts/semear-ensaio.ts && APURACAO_DB=data/ensaio.sqlite bun run serve`, depois `bun run qa/i1.ts`: presidente, SP por município, zonas da capital, governador e senado, diretor, atualização ao vivo pelo SSE, zero requisição fora de 127.0.0.1.
+- `bun run scripts/semear-ensaio.ts && APURACAO_DB=data/ensaio.sqlite bun run serve`, depois `bun run qa/i1.ts` (`qa/` é bancada local, fora do git e do lint; `qa/i2.ts` percorre todas as telas, a espera num banco vazio na porta 4181 e a rotação por 90 s): presidente, SP por município, zonas da capital, governador e senado, diretor, atualização ao vivo pelo SSE, zero requisição fora de 127.0.0.1.
 - Contraste: `python3 ../scripts/contrast-audit.py --width 1920 "http://127.0.0.1:4180/#v=pres&auto=0&hud=0&replay=2026-10-04T23:00:00-03:00,1"` (o replay troca o SSE por sondagem, porque a auditoria espera a rede ficar ociosa; uma URL por execução).
 - `grep -rn $'\u2014' src public README.md` vazio (nenhum travessão em texto do telão).
