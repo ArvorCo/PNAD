@@ -15,3 +15,126 @@ tá bizarro o texto "Eduardo Paes é a favorita"...
 ---
 
 baixamos pesquisas estaduais da atlas, pode atualizar nossas predições com os dados novos
+
+---
+
+<task-notification>
+<task-id>a9cfbab76d55244ad</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Transcribe Atlas AC, CE, ES" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>I created all six JSONs (governor and senate for AC, CE and ES). Every sum closes within ±0.3, no em dash appears in any of them, and no existing file was touched.
+
+| UF | Race | Page | Leader | 2nd-round pairs measured | Sum | Doubts |
+|---|---|---|---|---|---|---|
+| AC | Governor | 8 | Alan Rick (REPUBLICANOS) 41.9 | 3 on p. 13: Rick 47.8 × Mailza 41.5; Rick 50.6 × Bocalom 28.4; Mailza 48.5 × Bocalom 27.9 | 99.8 (2T 100.0 each) | In the 2T the chart merges "Branco / Nulo / Não sei" into one bar, so that value is in `branco_nulo` and `indecisos` is null, with a note. The 2T labels print no party, so I copied it from the 1T. Margin printed as "3 p.p." without ±. |
+| AC | Senate | 19 | Marcio Bittar (PL) 23.0 | n/a | 99.9 | Consolidated 1st and 2nd vote that sums to 100, so `votos_por_eleitor` is 1, same as BA. |
+| CE | Governor | 8 | Elmano de Freitas (PT) 48.7 × Ciro Gomes (PSDB) 48.4 | 1 on p. 13: Ciro 49.6 × Elmano 48.3 | 99.9 (2T 100.0) | `outros` 0.5, broken down in the p. 8 footnote and copied to observacoes. The leader flips between rounds. |
+| CE | Senate | 18 | Cid Gomes (PSB) 29.3 | n/a | 100.0 | Consolidated, `votos_por_eleitor` 1. `outros` 1.2, named in the footnote. |
+| ES | Governor | 8 | Lorenzo Pazolini (REPUBLICANOS) 44.1 | 1 on p. 13: Pazolini 46.5 × Ferraço 41.4 | 100.0 (2T 99.9) | None. |
+| ES | Senate | 18 | Renato Casagrande (PSB) 24.3 | n/a | 100.1 | The report publishes only the 1st vote: no consolidated, no 2nd vote, no valid-votes page. It is not comparable to the consolidated mentions in AC and CE. `outros` is 4.7 with no names given. Code `1O-VOTO`, `votos_por_eleitor` 1. |
+
+- **Registration:** each state number was read from the PDF's p. 5: AC-00679/2026, CE-01031/2026, ES-01573/2026. They match `registro_tse_estadual` in `fonte.json`.
+- **Sample and margin:** n is 836 / 2,227 / 1,226. The margin is 3 / 2 / 3.
+- **Publication date:** `divulgacao` is 2026-10-03, taken from the institute's page card. It is not printed in the report.
+- **Download date:** `capturado_em` is the PDF download date (2026-10-04), with no time recorded.
+- **Contratante:** not stated in any report, so all three are "nao informado". The CE report carries a "Focus Poder" logo, which I noted in observacoes.
+- **Matéria:** this field is an empty list in all six files.
+
+Rendered PNGs, named like the BA example: `data/originals/atlas_estaduais_102026_04/{AC,CE,ES}/governador_p8.png`, `governador_p13.png`, and `senado_p19.png` (AC) or `senado_p18.png` (CE, ES).
+
+`git status` also lists untracked PNGs for GO, MS, MT, PI, RJ and SP in the same folder. I didn't create those; they are probably from a parallel session. I didn't touch them, and I didn't touch `analysis/predicao_2026/`.
+
+Files:
+- `/Users/leonardodias/arvor/PNAD/analysis/governador_2026/pesquisas/atlas_AC_2026-10-02.json`
+- `/Users/leonardodias/arvor/PNAD/analysis/governador_2026/pesquisas/atlas_CE_2026-10-02.json`
+- `/Users/leonardodias/arvor/PNAD/analysis/governador_2026/pesquisas/atlas_ES_2026-10-02.json`
+- `/Users/leonardodias/arvor/PNAD/analysis/senado_2026/pesquisas/atlas_AC_2026-10-02.json`
+- `/Users/leonardodias/arvor/PNAD/analysis/senado_2026/pesquisas/atlas_CE_2026-10-02.json`
+- `/Users/leonardodias/arvor/PNAD/analysis/senado_2026/pesquisas/atlas_ES_2026-10-02.json`</result>
+<usage><subagent_tokens>187306</subagent_tokens><tool_uses>16</tool_uses><duration_ms>99149</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a516200256a455130</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Transcribe Atlas GO, MS, MT" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>I've created all six files (governor and senate for GO, MS and MT), transcribed by hand from the page images. Every sum closes within ±0.3. Nothing else was edited, and `analysis/predicao_2026/` was not touched.
+
+| UF | Race | Page | Leader | 2nd-round pairs | Sum | Doubts |
+|---|---|---|---|---|---|---|
+| GO | Governor | 8 | Daniel Vilela (MDB) 46.4 | 3 (p13): Vilela 57.5 × Wilder 30.5; Vilela 69.9 × Marconi 20.3; Vilela 68.8 × Bueno 15.8 | 100.0 (pairs 100.0) | Atlas prints blank, null and don't-know as one bar in all three pairs, so the value is in `branco_nulo` with `indecisos` null and a note. |
+| GO | Senate | 18 | Gustavo Gayer (PL) 21.6 | none | 99.9 | The "Outros" footnote lists Oséias Varão (PL) at 0.1%, but he also has his own bar at 10.9%. The footnote's parts add up to the 1.1 Outros bar, so it is probably a wrong name in the footnote. I kept his own bar and noted it. |
+| MS | Governor | 8 | Eduardo Riedel (PP) 50.5 | 1 (p13): Riedel 59.8 × Fábio Trad 31.3, blank/null 6.8, don't know 2.2 | 100.1 (pair 100.1) | `contratante` "Estadão" comes only from the "ATLAS/ESTADÃO" page header, which the note says. The p.10 title says "Mato Grosso" instead of "Mato Grosso do Sul" (Atlas typo). |
+| MS | Senate | 18 | Capitão Contar (PL) 27.7 | none | 99.8 | Reinaldo Azambuja is printed as (PL) and recorded that way. |
+| MT | Governor | 8 | Otaviano Pivetta (REPUBLICANOS) 52.2 | 3 (p13): Pivetta 56.2 × Fagundes 26.2; Pivetta 61.2 × Natasha 28.2; Fagundes 43.6 × Natasha 32.7 | 100.0 (pairs 100.1 each) | Same merged blank/null/don't-know bar as GO. |
+| MT | Senate | 17 | Zé Medeiros (PL) 26.8 | none | 99.9 | Some values are printed with no decimal ("14%", "2%"); recorded as 14.0 and 2.0. |
+
+Notes that apply to all six:
+- **Registration:** the state numbers come from p.5 of each PDF (GO-03367/2026, MS-05642/2026, MT-00323/2026). They match `registro_tse_estadual` in `fonte.json`.
+- **Sample and margin:** n is 1,198 / 1,211 / 1,194, with a ±3 pp margin and online method.
+- **Release date:** 03/10 is taken from `fonte.json` (the institute's page), because the PDF doesn't print it.
+- **Capture time:** `capturado_em` is null because `fonte.json` records only the download day.
+- **Senate:** the question is the consolidated 1st and 2nd vote, and the bars sum to about 100. So `votos_por_eleitor` is 1, as in the BA file. The "Outros" value is in `outros`, with the footnote breakdown in `observacoes`.
+
+**Rendered images:** I renamed my PNGs to `governador_p8.png`, `governador_p13.png` and `senado_p18.png` (`senado_p17.png` for MT), to match how the other sessions named theirs. They sit in each state folder under `data/originals/atlas_estaduais_102026_04/`.
+
+Files are in `/Users/leonardodias/arvor/PNAD/analysis/`:
+- `governador_2026/pesquisas/atlas_GO_2026-10-02.json`
+- `governador_2026/pesquisas/atlas_MS_2026-10-02.json`
+- `governador_2026/pesquisas/atlas_MT_2026-10-02.json`
+- `senado_2026/pesquisas/atlas_GO_2026-10-02.json`
+- `senado_2026/pesquisas/atlas_MS_2026-10-02.json`
+- `senado_2026/pesquisas/atlas_MT_2026-10-02.json`</result>
+<usage><subagent_tokens>190287</subagent_tokens><tool_uses>16</tool_uses><duration_ms>107607</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a4a7f5a3e0d7d2c8c</task-id>
+<tool-use-id>toolu_01Ng3Q23Xg2JpYXGsA3YS7zy</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Transcribe Atlas PI, RJ, SP" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>I created all six files: one governor and one senate JSON for each of PI, RJ and SP. Every sum closes within ±0.3, and none of the values are unclear in the renders.
+
+| UF | Race | Page | Leader | 2nd-round pairs | Sum | Doubts |
+|---|---|---|---|---|---|---|
+| PI | Governor | 7 | Rafael Fonteles (PT) 65.1 | none in report | 99.8 | No governor second round printed (p. 9 is a time series, p. 10 is crosstabs). The party printed as "Democrata" is saved as DEMOCRATA, the sigla the repo already uses; it is printed separately from DC. |
+| PI | Senate | 12 | Marcelo Castro (MDB) 28.1 | n/a | 99.9 | "Outros" 5.3 versus 5.2 from the footnote (rounding). The p. 16 question text says "Senador por Pernambuco", a typo in the report. |
+| RJ | Governor | 8 | Eduardo Paes (PSD) 46.4 | Paes 51.3 × Douglas Ruas 42.0 (p. 13) | 99.9 / 100.0 | none |
+| RJ | Senate | 17 | Carlos Jordy (PL) 23.0 | n/a | 99.8 | none |
+| SP | Governor | 8 | Tarcísio (REPUBLICANOS) 55.6 | Tarcísio 55.5 × Haddad 41.5 (p. 13) | 100.0 / 100.0 | Name saved as printed ("Tarcísio"), same as the 09-20 file. |
+| SP | Senate | 18 | Guilherme Derrite (PP) 25.0 | n/a | 99.9 | Salles still appears as "Salles (Novo)" with 1.1% inside "Outros". He withdrew on 28/09, and the file has a note saying so. |
+
+- **Shared fields:**
+  - State registrations come from p. 5: PI-03386, RJ-02601, SP-06906.
+  - Sample sizes are 1,230, 2,244 and 2,243.
+  - Margin of error is ±3 in PI and ±2 in RJ and SP.
+  - Field period is 27/09 to 02/10, method is online, and release date is 03/10 (from fonte.json).
+  - Contratante is taken from the logo in the page header: Meio Norte for PI, Estadão for RJ and SP.
+- **Governor:** I followed the older-wave files for the same states (PI 09-28, SP 09-20), which list each small candidate separately using the footnote numbers. So `outros` is null, and in all three states the footnote values add up exactly to the printed "Outros" bar.
+- **Senate:** I followed the BA format. The main candidates are listed, "Outros" goes in `outros`, and the full footnote breakdown is in `observacoes`. All three are "Consolidado de 1º e 2º votos" questions that sum to about 100, so `votos_por_eleitor` is 1.
+- **capturado_em:** null in all six files, because fonte.json only records the download date (04/10). There is a note saying so.
+- **Renders:** the PNGs are saved as `governador_pN.png` / `senado_pN.png` in each state folder, and I deleted the extra pages I only rendered to check them.
+
+No other files were changed, and older waves and `analysis/predicao_2026/` were not touched.
+
+Files are in /Users/leonardodias/arvor/PNAD/analysis:
+- governador_2026/pesquisas/atlas_PI_2026-10-02.json
+- governador_2026/pesquisas/atlas_RJ_2026-10-02.json
+- governador_2026/pesquisas/atlas_SP_2026-10-02.json
+- senado_2026/pesquisas/atlas_PI_2026-10-02.json
+- senado_2026/pesquisas/atlas_RJ_2026-10-02.json
+- senado_2026/pesquisas/atlas_SP_2026-10-02.json</result>
+<usage><subagent_tokens>198568</subagent_tokens><tool_uses>23</tool_uses><duration_ms>119886</duration_ms></usage>
+</task-notification>
