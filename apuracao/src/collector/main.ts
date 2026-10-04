@@ -82,7 +82,10 @@ async function main(): Promise<void> {
   await ag.rodar();
 }
 
+/** Código 3 = já existe um coletor vivo; o laço de reinício do start-collect.sh para em vez de insistir. */
+export const SAIDA_DUPLICADO = 3;
+
 main().catch((err: unknown) => {
   log({ t: "fatal", erro: err instanceof Error ? `${err.message}\n${err.stack ?? ""}` : String(err) });
-  process.exit(1);
+  process.exit(err instanceof Error && err.message.startsWith("outro coletor rodando") ? SAIDA_DUPLICADO : 1);
 });
