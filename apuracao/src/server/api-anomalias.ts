@@ -58,7 +58,12 @@ function detalheDe(s: string | null): unknown {
   }
 }
 
-function montar(r: Omit<AnomaliaOut, "texto" | "categoria" | "abr" | "cargo">, muns: ReadonlyMap<string, MunicipioInfo>): AnomaliaOut {
+function montar(r0: Omit<AnomaliaOut, "texto" | "categoria" | "abr" | "cargo">, muns: ReadonlyMap<string, MunicipioInfo>): AnomaliaOut {
+  // O coletor grava o município de alguns eventos (municipio_finalizado) só no detalhe,
+  // com nivel "uf"; sem este ajuste o texto diria que a UF inteira terminou.
+  const det = r0.detalhe !== null && typeof r0.detalhe === "object" ? (r0.detalhe as { municipio?: unknown }) : {};
+  const munDet = typeof det.municipio === "string" && det.municipio !== "" ? det.municipio : null;
+  const r = r0.municipio_cd === null && munDet !== null ? { ...r0, municipio_cd: munDet, nivel: "mu" } : r0;
   const nivel = r.nivel === "mu" || r.nivel === "zona" || r.nivel === "uf" || r.nivel === "br" ? r.nivel : null;
   return {
     ...r,

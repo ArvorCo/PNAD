@@ -106,7 +106,11 @@ describe("playlist", () => {
   test("formato de public/playlist.json: view e lista de destaque", () => {
     const pl = normalizarPlaylist({ itens: [{ view: "pres", dwell: 40 }, { view: "pres-uf", uf: "$destaque", dwell: 25 }], destaque: ["rj", "SP", "AC"] });
     const e = expandirPlaylist(pl, estado({ SP: 10, RJ: 50, AC: 1 }), AMOSTRA_CONFIG, null);
-    expect(e.map(x => `${x.v}${x.uf ? `:${x.uf}` : ""}`)).toEqual(["pres", "pres-uf:RJ", "pres-uf:SP"]);
+    // RJ e SP passam pelo corte de 5%; AC entra como complemento (mais adiantada, pst ≥ 1)
+    // porque o destaque rendeu menos de 4 UFs. Abaixo de 1% ninguém entra como complemento.
+    expect(e.map(x => `${x.v}${x.uf ? `:${x.uf}` : ""}`)).toEqual(["pres", "pres-uf:RJ", "pres-uf:SP", "pres-uf:AC"]);
+    const e2 = expandirPlaylist(pl, estado({ SP: 10, RJ: 50, AC: 0.5 }), AMOSTRA_CONFIG, null);
+    expect(e2.map(x => x.uf).filter(Boolean)).toEqual(["RJ", "SP"]);
     expect(e[0]?.dwellMs).toBe(40_000);
   });
 });

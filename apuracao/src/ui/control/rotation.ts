@@ -61,7 +61,20 @@ export function expandirPlaylist(pl: Playlist, estado: Estado | null, config: Co
     const dwellMs = 1000 * (dwellFixo ?? it.dwell ?? pl.dwell);
     if (it.v === "espera") continue;
     if (it.uf === "$destaque") {
+      // Destaque com pelo menos 5% apurado; se sobrarem menos de 4 (começo da noite, quando
+      // SP, RJ e o Nordeste ainda estão em zero), completa com as UFs mais adiantadas.
+      const minimo = Math.min(4, it.max ?? 4);
       const escolhidas = ufs.filter(u => (pst.get(u) ?? 0) >= 5).slice(0, it.max ?? ufs.length);
+      if (escolhidas.length < minimo) {
+        const adiantadas = [...pst.entries()]
+          .filter(([u, p]) => u !== "ZZ" && p >= 1 && !escolhidas.includes(u))
+          .sort((a, b) => b[1] - a[1])
+          .map(([u]) => u);
+        for (const u of adiantadas) {
+          if (escolhidas.length >= minimo) break;
+          escolhidas.push(u);
+        }
+      }
       for (const uf of escolhidas) saida.push({ v: it.v, uf, mun: null, dwellMs });
       continue;
     }
