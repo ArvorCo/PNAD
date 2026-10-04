@@ -2,7 +2,7 @@
 
 import { pct } from "../data/format.ts";
 
-export type TipoChip = "parcial" | "encerrada" | "subjudice" | "eleito" | "segundo" | "primeiro" | "atraso" | "neutro";
+export type TipoChip = "parcial" | "encerrada" | "subjudice" | "eleito" | "segundo" | "primeiro" | "atraso" | "aviso" | "neutro";
 
 export function chip(texto: string, tipo: TipoChip = "neutro"): HTMLSpanElement {
   const s = document.createElement("span");

@@ -98,5 +98,11 @@ describe("eventos do /events", () => {
     expect(eventoAfeta(ev({}), { tipo: "estado" })).toBe(true);
     expect(eventoAfeta(ev({ abr: "sp71072-z0001" }), { tipo: "mapa", ele: 6257, cargo: 1, nivel: "zona", pai: "sp71072" })).toBe(true);
     expect(eventoAfeta(ev({ abr: "sp" }), { tipo: "mapa", ele: 6257, cargo: 1, nivel: "uf", pai: "br" })).toBe(true);
+    // arquivo nacional parado: a soma das UFs depende de cada UF de presidente
+    expect(eventoAfeta(ev({ abr: "sp" }), { tipo: "resultado", ele: 6257, cargo: 1, abr: "br" })).toBe(true);
+    expect(eventoAfeta(ev({ abr: "zz" }), { tipo: "estado" })).toBe(true);
+    expect(eventoAfeta(ev({ abr: "sp", cargo: 3, ele: 6259 }), { tipo: "resultado", ele: 6257, cargo: 1, abr: "br" })).toBe(false);
+    expect(eventoAfeta(ev({ abr: "sp71072" }), { tipo: "resultado", ele: 6257, cargo: 1, abr: "br" })).toBe(false);
+    expect(eventoAfeta(ev({ abr: "sp" }), { tipo: "serie", ele: 6257, cargo: 1, abr: "br" })).toBe(false);
   });
 });

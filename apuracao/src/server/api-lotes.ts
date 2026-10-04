@@ -134,5 +134,6 @@ export function lotes(_ctx: Contexto, db: Database, p: Params): unknown {
     abr: abrTexto(a),
     candidatos,
     lotes: lotesArquivo(db, arq.id, escolhidos.map((c) => c.sqcand), at),
+    fonte: "tse",
   };
 }

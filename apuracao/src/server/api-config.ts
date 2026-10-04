@@ -7,6 +7,7 @@ import { CacheCurto } from "./cache.ts";
 import { FIM, abAsOf, fechamentosAb, ultimaLeitura, ultimoSnapshot } from "./consultas.ts";
 import type { Contexto } from "./contexto.ts";
 import type { Params } from "./http.ts";
+import { somaSeDefasado } from "./nacional.ts";
 
 const n0 = (v: number | null | undefined): number => v ?? 0;
 const segundos = (a: string | null, b: string | null): number | null => {
@@ -125,13 +126,24 @@ export function estado(ctx: Contexto, db: Database | null, p: Params): unknown {
   const chavePres = chave(keyU(el.federal, 1, "br"));
   const pres = ultimoSnapshotPorChave(db, chavePres, at);
   const arqPres = arquivoPorChave(db, chavePres);
+  const soma = pres ? somaSeDefasado(db, el.federal, 1, pres, at) : null;
   const br = pres
-    ? {
-        ts: n0(pres.ts), st: n0(pres.st), pst: n0(pres.pst), dt_ht: pres.totalizado_em, hg: pres.gerado_em, lido_em: pres.capturado_em,
-        atraso_s: segundos(pres.capturado_em, pres.gerado_em),
-        ultima_leitura_em: arqPres ? ultimaLeitura(db, arqPres.id, at) : null,
-        idade_s: segundos(agora, pres.gerado_em),
-      }
+    ? soma
+      ? {
+          ts: soma.totais.ts, st: soma.totais.st, pst: soma.totais.pst, dt_ht: soma.dt_ht, hg: soma.dg_hg, lido_em: soma.lido_em,
+          atraso_s: segundos(soma.lido_em, soma.dg_hg),
+          ultima_leitura_em: arqPres ? ultimaLeitura(db, arqPres.id, at) : null,
+          idade_s: segundos(agora, soma.dg_hg),
+          fonte: "soma_ufs" as const,
+          nacional_tse: soma.nacional_tse,
+        }
+      : {
+          ts: n0(pres.ts), st: n0(pres.st), pst: n0(pres.pst), dt_ht: pres.totalizado_em, hg: pres.gerado_em, lido_em: pres.capturado_em,
+          atraso_s: segundos(pres.capturado_em, pres.gerado_em),
+          ultima_leitura_em: arqPres ? ultimaLeitura(db, arqPres.id, at) : null,
+          idade_s: segundos(agora, pres.gerado_em),
+          fonte: "tse" as const,
+        }
     : null;
   const pesada = cacheEstado.obter(`${db.filename}|${at ?? ""}`, maxSnapshotId(db), () => partePesada(db, el, arqPres?.id ?? null, at));
   return {

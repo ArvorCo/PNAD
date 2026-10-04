@@ -2,7 +2,7 @@
 // painel executivo. No 2º turno vira duelo: dois blocos de 348 px, barra bipartida e
 // mapa divergente pela margem (vermelho, papel, azul).
 
-import { chipSituacao } from "../components/chip.ts";
+import { chip, chipSituacao } from "../components/chip.ts";
 import { criarBarraValidos } from "../components/barraValidos.ts";
 import { criarContador } from "../components/contador.ts";
 import type { Contador } from "../components/contador.ts";
@@ -28,6 +28,7 @@ import {
   legendaDosLideres,
   lembrarCargo,
   navegar,
+  sufixoNacionalParado,
   textoDiferenca,
 } from "./executivo.ts";
 import type { ItemLegenda, Palco, PainelExecutivo } from "./executivo.ts";
@@ -160,7 +161,7 @@ function criarPainelDuelo(): PainelDuelo {
       const quando = hora(r?.dt_ht ?? null);
       const atraso = s.estado?.br.atraso_s;
       tot.textContent = quando
-        ? `totalização TSE ${quando}${atraso === null || atraso === undefined ? "" : ` (atraso ${duracao(atraso)})`}`
+        ? `totalização TSE ${quando}${atraso === null || atraso === undefined ? "" : ` (atraso ${duracao(atraso)})`}${sufixoNacionalParado(r)}`
         : "o TSE ainda não totalizou seções do 2º turno";
       tot.classList.toggle("atrasado", (atraso ?? 0) > 180);
     },
@@ -181,6 +182,8 @@ export function criarPresidente(): View {
   let painel: PainelExecutivo | null = null;
   let duelo: PainelDuelo | null = null;
   let modoDuelo: boolean | null = null;
+  // Com a soma das UFs a linha da totalização ganha uma segunda linha: o ranking cede uma posição.
+  let modoSoma: boolean | null = null;
   const mapa = criarMapaVivo();
   let cores: Map<string, string> = new Map();
   let ultimoR: Resultado | null | undefined;
@@ -211,8 +214,12 @@ export function criarPresidente(): View {
       ultimoState = s;
       const p = partes(raiz);
       const duel = ehDuelo(s);
-      if (duel !== modoDuelo) {
+      const ele = eleicaoDe(s, 1);
+      const r = s.resultados[chaveResultado(ele, 1, "br")] ?? null;
+      const soma = r?.fonte === "soma_ufs";
+      if (duel !== modoDuelo || (!duel && soma !== modoSoma)) {
         modoDuelo = duel;
+        modoSoma = soma;
         painel?.destroy();
         duelo?.destroy();
         painel = null;
@@ -222,20 +229,20 @@ export function criarPresidente(): View {
           duelo = criarPainelDuelo();
           p.painel.replaceChildren(duelo.el);
         } else {
-          painel = criarPainelExecutivo({ max: 7, casas: 1 });
+          painel = criarPainelExecutivo({ max: soma ? 6 : 7, casas: 1 });
           p.painel.replaceChildren(painel.el);
         }
         ultimoR = undefined;
         mapa.destroy();
       }
 
-      const ele = eleicaoDe(s, 1);
-      const r = s.resultados[chaveResultado(ele, 1, "br")] ?? null;
       if (r !== ultimoR) {
         cores = r ? coresPresidente(r.cand, s.cores) : new Map();
         ultimoR = r;
       }
-      definirChips(p.chips, r ? [chipDeAndamento(r.s, r.tf)] : []);
+      const chipsTopo = r ? [chipDeAndamento(r.s, r.tf)] : [];
+      if (r?.fonte === "soma_ufs") chipsTopo.push(chip("soma das 27 UFs e exterior", "aviso"));
+      definirChips(p.chips, chipsTopo);
 
       if (duelo) duelo.update(s, r, cores);
       else painel?.update(s, r, cores, r ? "a totalização nacional ainda não começou" : "aguardando o primeiro arquivo nacional no servidor");

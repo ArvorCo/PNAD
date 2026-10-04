@@ -4,6 +4,9 @@ import { z } from "zod";
 export const Iso = z.string().regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/);
 export const Campo = z.enum(["esquerda", "centro-esquerda", "centro", "centro-direita", "direita", "indefinido"]);
 
+export const Fonte = z.enum(["tse", "soma_ufs"]);
+const NacionalTse = z.object({ hg: Iso.nullable(), st: z.number(), pst: z.number() }).strict();
+
 export const ConfigSchema = z
   .object({
     turno: z.number().int(),
@@ -36,7 +39,7 @@ export const EstadoSchema = z
     br: z
       .object({
         ts: z.number(), st: z.number(), pst: z.number(), dt_ht: Iso.nullable(), hg: Iso.nullable(), lido_em: Iso, atraso_s: z.number().nullable(),
-        ultima_leitura_em: Iso.nullable(), idade_s: z.number().nullable(),
+        ultima_leitura_em: Iso.nullable(), idade_s: z.number().nullable(), fonte: Fonte.optional(), nacional_tse: NacionalTse.optional(),
       })
       .strict()
       .nullable(),
@@ -82,6 +85,9 @@ export const ResultadoSchema = z
     ),
     candidatos_normalizados: z.boolean(),
     blob_url: z.string(),
+    fonte: Fonte.optional(),
+    nacional_tse: NacionalTse.optional(),
+    ufs_usadas: z.number().int().optional(),
   })
   .strict();
 
@@ -110,6 +116,7 @@ export const SerieSchema = z
     pontos: z.array(z.object({ at: Iso, snapshot_id: z.number(), pst: z.number(), cand: z.record(z.number()) }).strict()),
     viradas: z.array(z.object({ at: Iso, snapshot_id: z.number(), de: z.string(), para: z.string() }).strict()),
     candidatos: z.array(z.object({ sqcand: z.string(), n: z.string(), nmu: z.string(), sg: z.string(), campo: Campo }).strict()),
+    fonte: Fonte.optional(),
   })
   .strict();
 
@@ -126,6 +133,7 @@ export const LotesSchema = z
         })
         .strict(),
     ),
+    fonte: Fonte.optional(),
   })
   .strict();
 

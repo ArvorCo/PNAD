@@ -39,6 +39,17 @@ export interface EstadoBr {
   atraso_s: number | null;
   ultima_leitura_em?: string | null; // última requisição ao arquivo, mudado ou não
   idade_s?: number | null; // agora menos a geração do arquivo
+  fonte?: FonteNacional; // soma_ufs: arquivo nacional do TSE parado, números somados das UFs
+  nacional_tse?: NacionalTse;
+}
+
+export type FonteNacional = "tse" | "soma_ufs";
+
+/** Números do arquivo nacional do TSE quando ele está parado e a tela usa a soma das UFs. */
+export interface NacionalTse {
+  hg: string | null;
+  st: number;
+  pst: number;
 }
 
 export interface EstadoUf {
@@ -121,6 +132,9 @@ export interface Resultado {
   v: { tv: number; vv: number; vvc: number; vnom: number; van: number; vb: number; vn: number; pvb: number; pvn: number; pvan: number };
   cand: Candidato[];
   partidos: PartidoResultado[];
+  fonte?: FonteNacional;
+  nacional_tse?: NacionalTse;
+  ufs_usadas?: number;
 }
 
 // ---------- /api/mapa ----------

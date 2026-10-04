@@ -33,8 +33,11 @@ export function eventoAfeta(e: EventoSse, n: Need): boolean {
     if (n.tipo !== "mapa" || n.ele !== e.ele) return false;
     return e.abr === "br" ? n.pai === "br" : n.pai.startsWith(e.abr);
   }
-  // estado.br sai do arquivo nacional de presidente.
-  if (n.tipo === "estado") return e.abr === "br" && e.cargo === 1;
+  // estado.br sai do arquivo nacional de presidente ou, com ele parado, da soma das UFs:
+  // qualquer UF de presidente também invalida estado e o resultado nacional.
+  const ufPres = e.cargo === 1 && e.abr.length === 2 && e.abr !== "br";
+  if (n.tipo === "estado") return e.cargo === 1 && (e.abr === "br" || ufPres);
+  if (n.tipo === "resultado" && n.abr === "br" && n.cargo === 1 && n.ele === e.ele && ufPres) return true;
   if (n.tipo === "resultado" || n.tipo === "serie" || n.tipo === "lotes") return n.ele === e.ele && n.cargo === e.cargo && n.abr === e.abr;
   if (n.tipo === "mapa") {
     if (n.ele !== e.ele || n.cargo !== e.cargo) return false;

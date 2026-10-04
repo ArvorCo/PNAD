@@ -8,7 +8,7 @@ const JANELA_MIN = Number(process.argv[2] ?? "10");
 
 type Num = number;
 interface Cand { sqcand: string; n: string; nmu: string; sg: string; vap: Num; pvapn: Num }
-interface Resultado { s: { ts: Num; st: Num; pst: Num }; e: { te: Num; c: Num; a: Num; pc: Num; pa: Num }; v: { vv: Num; vb: Num; vn: Num; pvb: Num; pvn: Num; tv: Num }; dt_ht: string | null; cand: Cand[] }
+interface Resultado { s: { ts: Num; st: Num; pst: Num }; e: { te: Num; c: Num; a: Num; pc: Num; pa: Num }; v: { vv: Num; vb: Num; vn: Num; pvb: Num; pvn: Num; tv: Num }; dt_ht: string | null; cand: Cand[]; fonte?: "tse" | "soma_ufs"; nacional_tse?: { hg: string | null; st: Num; pst: Num } }
 interface Lote { at: string; st: Num; d_st: Num; pst: Num; vv: Num; d_vv: Num; cand: Record<string, { vap: Num; d_vap: Num }> }
 interface Lotes { candidatos: { sqcand: string; nmu: string }[]; lotes: Lote[] }
 interface Unidade { cd: string; nm: string; pst: Num; tf: boolean; te?: Num; lider?: { nmu: string; sg: string; pvapn: Num; campo?: string }; segundo?: { nmu: string; pvapn: Num }; margem?: Num }
@@ -75,6 +75,10 @@ const saida = {
     pst: r1(estado.br.pst), st: estado.br.st, ts: estado.br.ts,
     totalizacao_tse: brt(estado.br.dt_ht), atraso_leitura_s: estado.br.atraso_s !== null ? Math.round(estado.br.atraso_s) : null,
     validos: br.v.vv, total_votos: br.v.tv, brancos_pct: br.v.tv > 0 ? r1((100 * br.v.vb) / br.v.tv) : 0, nulos_pct: br.v.tv > 0 ? r1((100 * (br.v.tv - br.v.vv - br.v.vb)) / br.v.tv) : 0, comparecimento_pct: r1(br.e.pc), abstencao_pct: r1(br.e.pa),
+    fonte_nacional: br.fonte ?? "tse",
+    nacional_tse: br.fonte === "soma_ufs" && br.nacional_tse
+      ? { nota: `arquivo nacional de presidente do TSE atrasado: gerado às ${brt(br.nacional_tse.hg)} com ${r1(br.nacional_tse.pst)}% das seções; o placar nacional aqui é a soma das 27 UFs e do exterior; os ganhos da janela ainda vêm do arquivo do TSE`, gerado_brt: brt(br.nacional_tse.hg), st: br.nacional_tse.st, pst: r1(br.nacional_tse.pst) }
+      : null,
     candidatos: janela, pct_no_inicio_da_janela: pctAntes,
     diferenca_1_2_pp: janela.length >= 2 ? r1((janela[0]?.pct ?? 0) - (janela[1]?.pct ?? 0)) : null,
     diferenca_1_2_votos: janela.length >= 2 ? (janela[0]?.vap ?? 0) - (janela[1]?.vap ?? 0) : null,

@@ -5,10 +5,12 @@ import type { SnapshotLido } from "../db/leitura.ts";
 import type { Abr } from "./abr.ts";
 import { abrTexto, chaveU, nomeCargo, nomeUf, parseAbr, titulo } from "./abr.ts";
 import { candidatosDe, votosDoSnapshot } from "./candidatos.ts";
-import type { CandRow } from "./consultas.ts";
+import type { CandRow, PartidoRow } from "./consultas.ts";
 import { anteriorId, partidosSql, serieCandidatos } from "./consultas.ts";
 import type { Campo, Contexto } from "./contexto.ts";
 import { ErroHttp } from "./http.ts";
+import type { SomaUfs } from "./nacional.ts";
+import { somaSeDefasado } from "./nacional.ts";
 import type { Params } from "./http.ts";
 
 const n0 = (v: number | null | undefined): number => v ?? 0;
@@ -96,20 +98,10 @@ function snapshotPedido(db: Database, chave: string, p: Params): SnapshotLido {
   return s;
 }
 
-export function resultado(ctx: Contexto, db: Database, p: Params): unknown {
-  const ele = p.exigirInt("ele");
-  const cargo = p.exigirInt("cargo");
-  const a = parseAbr(p.exigirTexto("abr"));
-  const chave = chaveU(ele, cargo, a);
-  const s = snapshotPedido(db, chave, p);
-  const sid = s.snapshot_id;
-  const ant = anteriorId(db, s.arquivo_id, sid);
-  const { rows, normalizados } = candidatosDe(db, sid, a.uf);
-  const votosAnt = ant === null ? undefined : votosDoSnapshot(db, ant, a.uf);
-  const cand = ordenarCand(rows).map((c) => candOut(ctx, c, votosAnt));
+function partidosOut(ctx: Contexto, rows: PartidoRow[], cand: CandOut[]): unknown[] {
   const nCand = new Map<string, number>();
   for (const c of cand) nCand.set(c.sg, (nCand.get(c.sg) ?? 0) + 1);
-  const partidos = partidosSql(db, sid)
+  return rows
     .map((pr) => {
       const sg = pr.sigla ?? "";
       const o: { sg: string; campo: Campo; fed_sg?: string; tvtn: number; tvtl: number; tvan: number; n_cand: number } = {
@@ -119,6 +111,55 @@ export function resultado(ctx: Contexto, db: Database, p: Params): unknown {
       return o;
     })
     .sort((x, y) => y.tvtn + y.tvtl - (x.tvtn + x.tvtl));
+}
+
+/** Resposta montada da soma das UFs (arquivo nacional do TSE defasado). */
+function resultadoSoma(ctx: Contexto, db: Database, ele: number, cargo: number, a: Abr, s: SnapshotLido, soma: SomaUfs): unknown {
+  const cand = ordenarCand(soma.cand).map((c) => candOut(ctx, c));
+  const t = soma.totais;
+  const nomes = nomeCargo(cargo);
+  return {
+    ele,
+    cargo: { cd: cargo, nome: nomes.nome, nome_f: nomes.nome_f, nv: n0(s.vagas) },
+    tpabr: a.nivel,
+    abr: abrTexto(a),
+    nome_escopo: nomeEscopo(db, a),
+    dg_hg: soma.dg_hg,
+    dt_ht: soma.dt_ht,
+    lido_em: soma.lido_em,
+    tf: soma.tf,
+    idg: null,
+    snapshot_id: soma.snapshot_id,
+    anterior_id: null,
+    s: { ts: t.ts, st: t.st, pst: t.pst },
+    e: { te: t.te, c: t.comparecimento, a: t.abstencao, pc: t.pc, pa: t.pa },
+    v: { tv: t.tv, vv: t.vv, vvc: t.vvc, vnom: t.vnom, van: t.van, vb: t.vb, vn: t.vn, pvb: t.pvb, pvn: t.pvn, pvan: t.pvan },
+    cand,
+    partidos: partidosOut(ctx, soma.partidos, cand),
+    candidatos_normalizados: true,
+    blob_url: `/api/blob/${s.snapshot_id}`,
+    fonte: "soma_ufs",
+    nacional_tse: soma.nacional_tse,
+    ufs_usadas: soma.ufs_usadas,
+  };
+}
+
+export function resultado(ctx: Contexto, db: Database, p: Params): unknown {
+  const ele = p.exigirInt("ele");
+  const cargo = p.exigirInt("cargo");
+  const a = parseAbr(p.exigirTexto("abr"));
+  const chave = chaveU(ele, cargo, a);
+  const s = snapshotPedido(db, chave, p);
+  if (a.nivel === "br" && p.int("snapshot_id") === undefined) {
+    const soma = somaSeDefasado(db, ele, cargo, s, p.at());
+    if (soma) return resultadoSoma(ctx, db, ele, cargo, a, s, soma);
+  }
+  const sid = s.snapshot_id;
+  const ant = anteriorId(db, s.arquivo_id, sid);
+  const { rows, normalizados } = candidatosDe(db, sid, a.uf);
+  const votosAnt = ant === null ? undefined : votosDoSnapshot(db, ant, a.uf);
+  const cand = ordenarCand(rows).map((c) => candOut(ctx, c, votosAnt));
+  const partidos = partidosOut(ctx, partidosSql(db, sid), cand);
   const nomes = nomeCargo(cargo);
   return {
     ele,
@@ -143,6 +184,7 @@ export function resultado(ctx: Contexto, db: Database, p: Params): unknown {
     partidos,
     candidatos_normalizados: normalizados,
     blob_url: `/api/blob/${sid}`,
+    fonte: "tse",
   };
 }
 
@@ -206,6 +248,7 @@ export function serie(ctx: Contexto, db: Database, p: Params): unknown {
     abr: abrTexto(a),
     pontos: pontos.map(({ at, snapshot_id, pst, cand }) => ({ at, snapshot_id, pst, cand })),
     viradas: viradasDe(pontos),
+    fonte: "tse",
     candidatos: ultimo.map((c) => {
       const o = candOut(ctx, c);
       return { sqcand: o.sqcand, n: o.n, nmu: o.nmu, sg: o.sg, campo: o.campo };

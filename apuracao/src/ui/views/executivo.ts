@@ -119,6 +119,15 @@ export function definirChips(alvo: HTMLElement, itens: { texto: string; tipo: Ti
 
 const LIMITE_ATRASO_S = 180;
 
+/** "; arquivo nacional do TSE atrasado (HH:MM com X%)" quando o resultado vem da soma das UFs. */
+export function sufixoNacionalParado(r: Resultado | null | undefined): string {
+  if (r?.fonte !== "soma_ufs") return "";
+  const desde = hora(r.nacional_tse?.hg ?? null);
+  const pst = r?.nacional_tse?.pst;
+  const txtPct = pst !== undefined && pst !== null ? ` com ${pct(pst, 1)}` : "";
+  return desde ? `; arquivo nacional do TSE atrasado (${desde}${txtPct})` : "; arquivo nacional do TSE atrasado";
+}
+
 // ---------- painel executivo ----------
 
 export interface PainelExecutivo {
@@ -164,7 +173,7 @@ export function criarPainelExecutivo(o: { max: number; nvLidera?: number; casas?
       const comecou = (s.estado?.br.st ?? 0) > 0;
       const atraso = comecou ? s.estado?.br.atraso_s : null;
       const atrasoTxt = atraso === null || atraso === undefined ? "" : ` (atraso ${duracao(atraso)})`;
-      tot.textContent = quando ? `totalização TSE ${quando}${atrasoTxt}` : "o TSE ainda não totalizou seções deste recorte";
+      tot.textContent = quando ? `totalização TSE ${quando}${atrasoTxt}${sufixoNacionalParado(r)}` : "o TSE ainda não totalizou seções deste recorte";
       tot.classList.toggle("atrasado", (atraso ?? 0) > LIMITE_ATRASO_S);
     },
     destroy() {

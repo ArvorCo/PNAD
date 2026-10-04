@@ -5,7 +5,8 @@ import { z } from "zod";
 import { criarServidor } from "../src/server/main.ts";
 import type { Servidor } from "../src/server/main.ts";
 import type { Semeado } from "./server-helpers.ts";
-import { SQ, iso, seg, semear } from "./server-helpers.ts";
+import { CHAVES, SQ, iso, seg, semear, versaoAb, versaoU } from "./server-helpers.ts";
+import { chave, keyU } from "../src/tse/urls.ts";
 import {
   AnomaliasSchema, ConfigSchema, EstadoSchema, LotesSchema, MapaSchema, ResultadoSchema, SerieSchema,
 } from "./api-schemas.ts";
@@ -85,6 +86,15 @@ describe("/api/resultado", () => {
     expect(r.candidatos_normalizados).toBe(true);
     expect(r.partidos.find((p) => p.sg === "PT")).toMatchObject({ campo: "esquerda", tvtn: 13_000_000, n_cand: 1 });
     expect(r.blob_url).toBe(`/api/blob/${r.snapshot_id}`);
+    expect(r.fonte).toBe("tse");
+    expect(r.nacional_tse).toBeUndefined();
+  });
+
+  test("arquivo nacional do TSE em dia: fonte tse no resultado e no estado", async () => {
+    const r = ResultadoSchema.parse((await get("/api/resultado?ele=6257&cargo=1&abr=br")).body);
+    expect(r.fonte).toBe("tse");
+    expect(r.s.st).toBe(200_000);
+    expect(EstadoSchema.parse((await get("/api/estado")).body).br?.fonte).toBe("tse");
   });
 
   test("at e snapshot_id escolhem a versão", async () => {
@@ -186,7 +196,7 @@ describe("séries e anomalias", () => {
     expect(soma).toBe(14_000_000);
     const cedo = LotesSchema.parse((await get(`/api/lotes?ele=6257&cargo=1&abr=br&at=${iso(seg(250))}`)).body);
     expect(cedo.lotes.length).toBe(3);
-    expect(LotesSchema.parse((await get("/api/lotes?ele=6257&cargo=1&abr=ac")).body)).toEqual({ abr: "ac", candidatos: [], lotes: [] });
+    expect(LotesSchema.parse((await get("/api/lotes?ele=6257&cargo=1&abr=ac")).body)).toEqual({ abr: "ac", candidatos: [], lotes: [], fonte: "tse" });
     expect((await get("/api/lotes?ele=6257&cargo=1")).status).toBe(400);
   });
 
@@ -292,5 +302,77 @@ describe("banco ausente", () => {
     } finally {
       await vazio.parar();
     }
+  });
+});
+
+describe("agregado nacional pela soma das UFs", () => {
+  let sd: Semeado;
+  let srvSoma: Servidor;
+  let ufs: string[] = [];
+
+  beforeAll(() => {
+    sd = semear();
+    ufs = sd.db
+      .query<{ uf: string }, []>("SELECT uf FROM arquivo WHERE tipo = 'u' AND eleicao_cd = 6257 AND cargo_cd = 1 AND nivel = 'uf' ORDER BY uf")
+      .all()
+      .map((u) => u.uf);
+    // As 28 UFs andam depois da última versão do arquivo nacional (st 200.000, gerado em seg(470)).
+    ufs.forEach((uf, i) => {
+      const corpo = versaoU("sp-c0001-e006257-u.json", { st: 10_000 + i, votos: { 13: 100_000 + i, 22: 90_000 + 2 * i }, idg: 1_300_000 + i, ger: seg(700) + i * 1000, tot: seg(690), cdabr: uf });
+      sd.seq.processar(chave(keyU(6257, 1, "uf", uf)), corpo, iso(seg(700) + i * 1000 + 500));
+    });
+    sd.seq.processar(CHAVES.abBr, versaoAb("br-e006257-ab.json", 1_300_100, seg(760), { br: { st: 300_000, tot: seg(750) } }), iso(seg(765)));
+    sd.fechar();
+    srvSoma = criarServidor({ dbPath: sd.path, port: 0, log: false });
+  });
+
+  afterAll(async () => {
+    await srvSoma.parar();
+    sd.limpar();
+  });
+
+  const pegar = async (caminho: string): Promise<unknown> => (await fetch(`${srvSoma.url}${caminho}`)).json();
+
+  test("arquivo nacional parado: resultado br é a soma das 28 UFs", async () => {
+    expect(ufs.length).toBe(28);
+    const r = ResultadoSchema.parse(await pegar("/api/resultado?ele=6257&cargo=1&abr=br"));
+    expect(r.fonte).toBe("soma_ufs");
+    expect(r.ufs_usadas).toBe(28);
+    expect(r.nacional_tse).toMatchObject({ hg: iso(seg(480) - 10_000), st: 200_000 });
+    expect(r.nacional_tse?.pst).toBeCloseTo((200_000 / 499_248) * 100, 3);
+    const porUf = await Promise.all(ufs.map(async (uf) => ResultadoSchema.parse(await pegar(`/api/resultado?ele=6257&cargo=1&abr=${uf}`))));
+    const soma = (f: (x: (typeof porUf)[number]) => number): number => porUf.reduce((a, x) => a + f(x), 0);
+    const vap = (x: (typeof porUf)[number], sq: number): number => x.cand.find((c) => c.sqcand === String(sq))?.vap ?? 0;
+    expect(r.s.st).toBe(soma((x) => x.s.st));
+    expect(r.s.ts).toBe(soma((x) => x.s.ts));
+    expect(r.s.pst).toBeCloseTo((100 * r.s.st) / r.s.ts, 9);
+    expect(r.v.vv).toBe(soma((x) => x.v.vv));
+    expect(r.v.tv).toBe(soma((x) => x.v.tv));
+    expect(r.e.c).toBe(soma((x) => x.e.c));
+    const lula = r.cand.find((c) => c.sqcand === String(SQ.lula));
+    const flavio = r.cand.find((c) => c.sqcand === String(SQ.flavio));
+    expect(lula?.vap).toBe(soma((x) => vap(x, SQ.lula)));
+    expect(flavio?.vap).toBe(soma((x) => vap(x, SQ.flavio)));
+    expect(lula?.vap).toBe(28 * 100_000 + (27 * 28) / 2);
+    expect(lula?.pvapn).toBeCloseTo((100 * (lula?.vap ?? 0)) / r.v.vv, 9);
+    expect(r.cand[0]?.sqcand).toBe(String(SQ.lula));
+    expect(r.partidos.find((p) => p.sg === "PT")?.tvtn).toBe(lula?.vap ?? -1);
+    expect(r.dg_hg).toBe(iso(seg(700) + 27_000));
+    expect(r.dt_ht).toBe(iso(seg(690)));
+    expect(r.snapshot_id).toBe(Math.max(...porUf.map((x) => x.snapshot_id)));
+  });
+
+  test("estado br segue a soma; at antes das UFs e snapshot_id explícito voltam ao arquivo do TSE", async () => {
+    const e = EstadoSchema.parse(await pegar("/api/estado"));
+    expect(e.br?.fonte).toBe("soma_ufs");
+    expect(e.br?.st).toBe(28 * 10_000 + (27 * 28) / 2);
+    expect(e.br?.nacional_tse?.st).toBe(200_000);
+    const antes = ResultadoSchema.parse(await pegar(`/api/resultado?ele=6257&cargo=1&abr=br&at=${iso(seg(650))}`));
+    expect(antes.fonte).toBe("tse");
+    expect(antes.s.st).toBe(200_000);
+    const sid = ResultadoSchema.parse(await pegar(`/api/resultado?ele=6257&cargo=1&abr=br&snapshot_id=${sd.id("presBr4")}`));
+    expect(sid.fonte).toBe("tse");
+    expect(SerieSchema.parse(await pegar("/api/serie?ele=6257&cargo=1&abr=br")).fonte).toBe("tse");
+    expect(LotesSchema.parse(await pegar("/api/lotes?ele=6257&cargo=1&abr=br")).fonte).toBe("tse");
   });
 });
