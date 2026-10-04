@@ -1,0 +1,130 @@
+/* Mapa do telão: malha IBGE (UF e município) e cartograma de zonas. Vídeo: sem hover. */
+.mapa {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.mapa__unidade,
+.mapa__tile-rect {
+  stroke: var(--white);
+  stroke-width: 1px;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+  transition: fill var(--d-fill, 600ms) var(--ease, ease);
+}
+
+.mapa--mun .mapa__unidade {
+  stroke-width: 0.6px;
+}
+
+.mapa--clicavel .mapa__unidade,
+.mapa--clicavel .mapa__tile {
+  cursor: pointer;
+}
+
+/* Destaque: contorno lime de 4 px com fio de tinta de 1 px no meio, numa camada própria. */
+.mapa__realce {
+  pointer-events: none;
+}
+
+.mapa__realce-lime,
+.mapa__realce-tinta {
+  fill: none;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.mapa__realce-lime {
+  stroke: var(--accent);
+  stroke-width: 5px;
+}
+
+.mapa__realce-tinta {
+  stroke: var(--ink);
+  stroke-width: 1px;
+}
+
+.mapa__rotulos {
+  pointer-events: none;
+}
+
+.mapa__sigla {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 24px;
+  fill: var(--ink);
+  paint-order: stroke;
+  stroke: #ffffff;
+  stroke-width: 3px;
+  stroke-linejoin: round;
+}
+
+.mapa__sigla--claro {
+  fill: #ffffff;
+  stroke: #0d2238;
+}
+
+.mapa__sigla--fora {
+  stroke: none;
+}
+
+.mapa__caixa {
+  fill: #ffffff;
+  stroke: var(--muted);
+  stroke-width: 0.75px;
+}
+
+.mapa__guia {
+  stroke: var(--muted);
+  stroke-width: 1px;
+}
+
+.mapa__ponto {
+  fill: var(--ink);
+  stroke: #ffffff;
+  stroke-width: 1.5px;
+}
+
+.mapa__nome {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 22px;
+  fill: var(--ink);
+}
+
+.mapa__aviso {
+  font-family: var(--font-sans);
+  font-size: 24px;
+  fill: var(--muted);
+}
+
+.mapa__zona-nome,
+.mapa__zona-num {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 24px;
+}
+
+.mapa__zona-num {
+  font-size: 22px;
+}
+
+.mapa__zona-pct {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 22px;
+}
+
+.mapa__zona-nota {
+  font-family: var(--font-sans);
+  font-size: 24px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mapa__unidade,
+  .mapa__tile-rect {
+    transition: none;
+  }
+}
