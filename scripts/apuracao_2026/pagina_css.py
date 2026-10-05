@@ -98,6 +98,22 @@ figure img{display:block;max-width:100%;height:auto}
 .galeria img{display:block;width:100%;height:auto;border:1px solid var(--line)}
 .pendente{border:2px dashed var(--gold);background:#efe8d4;padding:40px 28px;margin:40px 0}
 .pendente-bloco{border:2px dashed var(--gold);background:#efe8d4;padding:18px 22px;margin:24px 0;font:600 15px var(--sans)}
+.selo-contrario{background:#6b4a92}
+aside.analogy{border-left-color:var(--teal)}aside.hyp{border-left-color:var(--gold)}
+ul.achados{list-style:none;padding:0}ul.achados li{margin:0 0 12px}
+#fig-clusters_secoes{display:grid;grid-template-columns:minmax(0,1fr) 300px;column-gap:20px;align-items:start}
+#fig-clusters_secoes>*{grid-column:1/-1}
+#fig-clusters_secoes>.chart-scroll{grid-column:1}
+#fig-clusters_secoes>.cl-painel{grid-column:2}
+.cl-painel h4,.fig-nota h4{margin:4px 0 8px;font:700 15px/1.4 var(--sans)}
+.cl-painel ol{list-style:none;padding:0;margin:0}
+.cl-painel li{margin:0 0 12px;padding-bottom:10px;border-bottom:1px solid var(--line);font:13.5px/1.5 var(--sans)}
+.cl-painel li b{display:inline;font-size:14px}
+.cl-painel li span:not(.sw){display:block;color:var(--ink)}
+.cl-painel .sw{display:inline-block;width:12px;height:12px;margin-right:6px;vertical-align:-1px;border:1px solid #9a9c94}
+.cl-painel .cl-anom{font:700 11px/1 var(--sans);font-style:normal;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);margin-left:6px}
+.fig-nota{margin:14px 4px 0}.fig-nota p{font-size:15px}
+@media(max-width:999px){#fig-clusters_secoes{display:block}}
 code,.hash{font:12.5px/1.7 var(--mono);overflow-wrap:anywhere}
 pre{padding:18px;background:var(--card);overflow-x:auto;font:13px/1.7 var(--mono)}
 .fontes li{font-size:15px}

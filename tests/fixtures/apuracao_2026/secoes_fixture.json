@@ -1,0 +1,11095 @@
+{
+ "titulo": "Análise por seção eleitoral, 1º turno de 2026 (fixture de teste)",
+ "gerado_em": "2026-10-05T12:00:00Z",
+ "versao_contrato": "1.0",
+ "aviso": "Seção atípica não é seção irregular: o percentual extremo exige explicação documental, não suspeita.",
+ "fontes": [
+  {
+   "chave": "bu",
+   "caminho": "apuracao/data/secoes_2026.sqlite",
+   "descricao": "boletins de urna"
+  }
+ ],
+ "cobertura": {
+  "parcial": true,
+  "carimbo_log": "2026-10-05T09:15:24Z",
+  "restantes_log": 482439,
+  "secoes_cs": 517179,
+  "secoes_principais_cs": 499248,
+  "secoes_agregadas_cs": 17931,
+  "secoes_com_bu": 35234,
+  "secoes_validas": 5305,
+  "excluidas": [
+   {
+    "codigo": "zona_divergente",
+    "motivo": "soma das seções diferente do arquivo de zona",
+    "secoes": 116,
+    "aptos": 40745
+   },
+   {
+    "codigo": "sem_bu",
+    "motivo": "seção principal sem boletim",
+    "secoes": 128,
+    "aptos": 30100
+   }
+  ],
+  "ufs_completas": [
+   "AC",
+   "AP",
+   "MA",
+   "BA",
+   "SP",
+   "SC",
+   "GO"
+  ],
+  "ufs_incompletas": [
+   {
+    "uf": "PI",
+    "coletadas": 6155,
+    "total": 7246
+   }
+  ],
+  "por_uf": [
+   {
+    "uf": "AC",
+    "secoes_cs": 2411,
+    "agregadas": 141,
+    "com_bu": 2270,
+    "validas": 2270,
+    "zonas": 23,
+    "zonas_ok": 23,
+    "zonas_divergentes": 0,
+    "zonas_sem_conferencia": 0
+   },
+   {
+    "uf": "AP",
+    "secoes_cs": 2411,
+    "agregadas": 141,
+    "com_bu": 2270,
+    "validas": 2270,
+    "zonas": 23,
+    "zonas_ok": 23,
+    "zonas_divergentes": 0,
+    "zonas_sem_conferencia": 0
+   },
+   {
+    "uf": "MA",
+    "secoes_cs": 2411,
+    "agregadas": 141,
+    "com_bu": 2270,
+    "validas": 2270,
+    "zonas": 23,
+    "zonas_ok": 23,
+    "zonas_divergentes": 0,
+    "zonas_sem_conferencia": 0
+   },
+   {
+    "uf": "BA",
+    "secoes_cs": 2411,
+    "agregadas": 141,
+    "com_bu": 2270,
+    "validas": 2270,
+    "zonas": 23,
+    "zonas_ok": 23,
+    "zonas_divergentes": 0,
+    "zonas_sem_conferencia": 0
+   },
+   {
+    "uf": "SP",
+    "secoes_cs": 2411,
+    "agregadas": 141,
+    "com_bu": 2270,
+    "validas": 2270,
+    "zonas": 23,
+    "zonas_ok": 23,
+    "zonas_divergentes": 0,
+    "zonas_sem_conferencia": 0
+   },
+   {
+    "uf": "SC",
+    "secoes_cs": 2411,
+    "agregadas": 141,
+    "com_bu": 2270,
+    "validas": 2270,
+    "zonas": 23,
+    "zonas_ok": 23,
+    "zonas_divergentes": 0,
+    "zonas_sem_conferencia": 0
+   },
+   {
+    "uf": "GO",
+    "secoes_cs": 2411,
+    "agregadas": 141,
+    "com_bu": 2270,
+    "validas": 2270,
+    "zonas": 23,
+    "zonas_ok": 23,
+    "zonas_divergentes": 0,
+    "zonas_sem_conferencia": 0
+   },
+   {
+    "uf": "PI",
+    "secoes_cs": 2411,
+    "agregadas": 141,
+    "com_bu": 2270,
+    "validas": 2270,
+    "zonas": 23,
+    "zonas_ok": 23,
+    "zonas_divergentes": 0,
+    "zonas_sem_conferencia": 0
+   }
+  ],
+  "totais_validos": {
+   "aptos": 9000000,
+   "comparecimento": 7200000,
+   "validos": 6800000,
+   "lula": 3100000,
+   "flavio": 3000000,
+   "brancos": 150000,
+   "nulos": 250000,
+   "lula_pct": 45.59,
+   "flavio_pct": 44.12
+  }
+ },
+ "candidatos": [
+  {
+   "numero": 13,
+   "chave": "lula",
+   "nome": "LULA",
+   "cor": "#b02f21"
+  },
+  {
+   "numero": 22,
+   "chave": "flavio",
+   "nome": "FLÁVIO BOLSONARO",
+   "cor": "#1457aa"
+  },
+  {
+   "numero": 70,
+   "chave": "n70",
+   "nome": "AUGUSTO CURY",
+   "cor": null
+  }
+ ],
+ "extremos": {
+  "definicao": "% dos válidos de presidente por seção",
+  "limiares": [
+   90,
+   95,
+   100
+  ],
+  "corte_tamanho": 100,
+  "resumo": [
+   {
+    "candidato": "lula",
+    "limiar": 90,
+    "secoes": 120,
+    "secoes_100mais": 60,
+    "aptos": 31200,
+    "votantes": 24000,
+    "validos": 22800,
+    "votos_candidato": 21600,
+    "pct_das_secoes": 2.26
+   },
+   {
+    "candidato": "lula",
+    "limiar": 95,
+    "secoes": 40,
+    "secoes_100mais": 20,
+    "aptos": 10400,
+    "votantes": 8000,
+    "validos": 7600,
+    "votos_candidato": 7200,
+    "pct_das_secoes": 0.75
+   },
+   {
+    "candidato": "lula",
+    "limiar": 100,
+    "secoes": 6,
+    "secoes_100mais": 3,
+    "aptos": 1560,
+    "votantes": 1200,
+    "validos": 1140,
+    "votos_candidato": 1080,
+    "pct_das_secoes": 0.11
+   },
+   {
+    "candidato": "flavio",
+    "limiar": 90,
+    "secoes": 40,
+    "secoes_100mais": 20,
+    "aptos": 10400,
+    "votantes": 8000,
+    "validos": 7600,
+    "votos_candidato": 7200,
+    "pct_das_secoes": 0.75
+   },
+   {
+    "candidato": "flavio",
+    "limiar": 95,
+    "secoes": 13,
+    "secoes_100mais": 6,
+    "aptos": 3380,
+    "votantes": 2600,
+    "validos": 2470,
+    "votos_candidato": 2340,
+    "pct_das_secoes": 0.25
+   },
+   {
+    "candidato": "flavio",
+    "limiar": 100,
+    "secoes": 2,
+    "secoes_100mais": 1,
+    "aptos": 520,
+    "votantes": 400,
+    "validos": 380,
+    "votos_candidato": 360,
+    "pct_das_secoes": 0.04
+   }
+  ],
+  "por_uf": [
+   {
+    "uf": "AC",
+    "regiao": "Norte",
+    "candidato": "lula",
+    "limiar": 90,
+    "secoes": 10,
+    "secoes_100mais": 5,
+    "aptos": 2600,
+    "pct_das_secoes_uf": 0.5
+   },
+   {
+    "uf": "AC",
+    "regiao": "Norte",
+    "candidato": "flavio",
+    "limiar": 90,
+    "secoes": 10,
+    "secoes_100mais": 5,
+    "aptos": 2600,
+    "pct_das_secoes_uf": 0.5
+   },
+   {
+    "uf": "AP",
+    "regiao": "Norte",
+    "candidato": "lula",
+    "limiar": 90,
+    "secoes": 11,
+    "secoes_100mais": 5,
+    "aptos": 2600,
+    "pct_das_secoes_uf": 0.5
+   },
+   {
+    "uf": "AP",
+    "regiao": "Norte",
+    "candidato": "flavio",
+    "limiar": 90,
+    "secoes": 11,
+    "secoes_100mais": 5,
+    "aptos": 2600,
+    "pct_das_secoes_uf": 0.5
+   },
+   {
+    "uf": "MA",
+    "regiao": "Nordeste",
+    "candidato": "lula",
+    "limiar": 90,
+    "secoes": 12,
+    "secoes_100mais": 5,
+    "aptos": 2600,
+    "pct_das_secoes_uf": 0.5
+   },
+   {
+    "uf": "MA",
+    "regiao": "Nordeste",
+    "candidato": "flavio",
+    "limiar": 90,
+    "secoes": 12,
+    "secoes_100mais": 5,
+    "aptos": 2600,
+    "pct_das_secoes_uf": 0.5
+   },
+   {
+    "uf": "BA",
+    "regiao": "Nordeste",
+    "candidato": "lula",
+    "limiar": 90,
+    "secoes": 13,
+    "secoes_100mais": 5,
+    "aptos": 2600,
+    "pct_das_secoes_uf": 0.5
+   },
+   {
+    "uf": "BA",
+    "regiao": "Nordeste",
+    "candidato": "flavio",
+    "limiar": 90,
+    "secoes": 13,
+    "secoes_100mais": 5,
+    "aptos": 2600,
+    "pct_das_secoes_uf": 0.5
+   },
+   {
+    "uf": "SP",
+    "regiao": "Sudeste",
+    "candidato": "lula",
+    "limiar": 90,
+    "secoes": 14,
+    "secoes_100mais": 5,
+    "aptos": 2600,
+    "pct_das_secoes_uf": 0.5
+   },
+   {
+    "uf": "SP",
+    "regiao": "Sudeste",
+    "candidato": "flavio",
+    "limiar": 90,
+    "secoes": 14,
+    "secoes_100mais": 5,
+    "aptos": 2600,
+    "pct_das_secoes_uf": 0.5
+   },
+   {
+    "uf": "SC",
+    "regiao": "Sul",
+    "candidato": "lula",
+    "limiar": 90,
+    "secoes": 15,
+    "secoes_100mais": 5,
+    "aptos": 2600,
+    "pct_das_secoes_uf": 0.5
+   },
+   {
+    "uf": "SC",
+    "regiao": "Sul",
+    "candidato": "flavio",
+    "limiar": 90,
+    "secoes": 15,
+    "secoes_100mais": 5,
+    "aptos": 2600,
+    "pct_das_secoes_uf": 0.5
+   },
+   {
+    "uf": "GO",
+    "regiao": "Centro-Oeste",
+    "candidato": "lula",
+    "limiar": 90,
+    "secoes": 16,
+    "secoes_100mais": 5,
+    "aptos": 2600,
+    "pct_das_secoes_uf": 0.5
+   },
+   {
+    "uf": "GO",
+    "regiao": "Centro-Oeste",
+    "candidato": "flavio",
+    "limiar": 90,
+    "secoes": 16,
+    "secoes_100mais": 5,
+    "aptos": 2600,
+    "pct_das_secoes_uf": 0.5
+   },
+   {
+    "uf": "PI",
+    "regiao": "Nordeste",
+    "candidato": "lula",
+    "limiar": 90,
+    "secoes": 17,
+    "secoes_100mais": 5,
+    "aptos": 2600,
+    "pct_das_secoes_uf": 0.5
+   },
+   {
+    "uf": "PI",
+    "regiao": "Nordeste",
+    "candidato": "flavio",
+    "limiar": 90,
+    "secoes": 17,
+    "secoes_100mais": 5,
+    "aptos": 2600,
+    "pct_das_secoes_uf": 0.5
+   }
+  ],
+  "por_municipio": [
+   {
+    "uf": "AC",
+    "municipio": "TARAUACA",
+    "mun_tse": "07307",
+    "ibge": "2102408",
+    "candidato": "lula",
+    "secoes_90": 12,
+    "secoes_total": 40,
+    "aptos_90": 3000,
+    "mun_pct": 80.5
+   },
+   {
+    "uf": "AC",
+    "municipio": "TARAUACA",
+    "mun_tse": "07307",
+    "ibge": "2102408",
+    "candidato": "flavio",
+    "secoes_90": 12,
+    "secoes_total": 40,
+    "aptos_90": 3000,
+    "mun_pct": 80.5
+   },
+   {
+    "uf": "AP",
+    "municipio": "OIAPOQUE",
+    "mun_tse": "07307",
+    "ibge": "2102408",
+    "candidato": "lula",
+    "secoes_90": 11,
+    "secoes_total": 40,
+    "aptos_90": 3000,
+    "mun_pct": 80.5
+   },
+   {
+    "uf": "AP",
+    "municipio": "OIAPOQUE",
+    "mun_tse": "07307",
+    "ibge": "2102408",
+    "candidato": "flavio",
+    "secoes_90": 11,
+    "secoes_total": 40,
+    "aptos_90": 3000,
+    "mun_pct": 80.5
+   },
+   {
+    "uf": "MA",
+    "municipio": "CAJARI",
+    "mun_tse": "07307",
+    "ibge": "2102408",
+    "candidato": "lula",
+    "secoes_90": 10,
+    "secoes_total": 40,
+    "aptos_90": 3000,
+    "mun_pct": 80.5
+   },
+   {
+    "uf": "MA",
+    "municipio": "CAJARI",
+    "mun_tse": "07307",
+    "ibge": "2102408",
+    "candidato": "flavio",
+    "secoes_90": 10,
+    "secoes_total": 40,
+    "aptos_90": 3000,
+    "mun_pct": 80.5
+   },
+   {
+    "uf": "BA",
+    "municipio": "UAUA",
+    "mun_tse": "07307",
+    "ibge": "2102408",
+    "candidato": "lula",
+    "secoes_90": 9,
+    "secoes_total": 40,
+    "aptos_90": 3000,
+    "mun_pct": 80.5
+   },
+   {
+    "uf": "BA",
+    "municipio": "UAUA",
+    "mun_tse": "07307",
+    "ibge": "2102408",
+    "candidato": "flavio",
+    "secoes_90": 9,
+    "secoes_total": 40,
+    "aptos_90": 3000,
+    "mun_pct": 80.5
+   },
+   {
+    "uf": "SP",
+    "municipio": "REGISTRO",
+    "mun_tse": "07307",
+    "ibge": "2102408",
+    "candidato": "lula",
+    "secoes_90": 8,
+    "secoes_total": 40,
+    "aptos_90": 3000,
+    "mun_pct": 80.5
+   },
+   {
+    "uf": "SP",
+    "municipio": "REGISTRO",
+    "mun_tse": "07307",
+    "ibge": "2102408",
+    "candidato": "flavio",
+    "secoes_90": 8,
+    "secoes_total": 40,
+    "aptos_90": 3000,
+    "mun_pct": 80.5
+   },
+   {
+    "uf": "SC",
+    "municipio": "POMERODE",
+    "mun_tse": "07307",
+    "ibge": "2102408",
+    "candidato": "lula",
+    "secoes_90": 7,
+    "secoes_total": 40,
+    "aptos_90": 3000,
+    "mun_pct": 80.5
+   },
+   {
+    "uf": "SC",
+    "municipio": "POMERODE",
+    "mun_tse": "07307",
+    "ibge": "2102408",
+    "candidato": "flavio",
+    "secoes_90": 7,
+    "secoes_total": 40,
+    "aptos_90": 3000,
+    "mun_pct": 80.5
+   },
+   {
+    "uf": "GO",
+    "municipio": "RIO VERDE",
+    "mun_tse": "07307",
+    "ibge": "2102408",
+    "candidato": "lula",
+    "secoes_90": 6,
+    "secoes_total": 40,
+    "aptos_90": 3000,
+    "mun_pct": 80.5
+   },
+   {
+    "uf": "GO",
+    "municipio": "RIO VERDE",
+    "mun_tse": "07307",
+    "ibge": "2102408",
+    "candidato": "flavio",
+    "secoes_90": 6,
+    "secoes_total": 40,
+    "aptos_90": 3000,
+    "mun_pct": 80.5
+   },
+   {
+    "uf": "PI",
+    "municipio": "PICOS",
+    "mun_tse": "07307",
+    "ibge": "2102408",
+    "candidato": "lula",
+    "secoes_90": 5,
+    "secoes_total": 40,
+    "aptos_90": 3000,
+    "mun_pct": 80.5
+   },
+   {
+    "uf": "PI",
+    "municipio": "PICOS",
+    "mun_tse": "07307",
+    "ibge": "2102408",
+    "candidato": "flavio",
+    "secoes_90": 5,
+    "secoes_total": 40,
+    "aptos_90": 3000,
+    "mun_pct": 80.5
+   }
+  ],
+  "tamanho": {
+   "faixas": [
+    {
+     "rotulo": "1–49",
+     "min": 1,
+     "max": 49
+    },
+    {
+     "rotulo": "50–99",
+     "min": 50,
+     "max": 99
+    },
+    {
+     "rotulo": "100–199",
+     "min": 100,
+     "max": 199
+    },
+    {
+     "rotulo": "200–299",
+     "min": 200,
+     "max": 299
+    },
+    {
+     "rotulo": "300–399",
+     "min": 300,
+     "max": 399
+    },
+    {
+     "rotulo": "400+",
+     "min": 400,
+     "max": null
+    }
+   ],
+   "linhas": [
+    {
+     "faixa": "1–49",
+     "todas": 80,
+     "lula_90": 12,
+     "flavio_90": 6,
+     "lula_90_pct": 15.0,
+     "flavio_90_pct": 7.5
+    },
+    {
+     "faixa": "50–99",
+     "todas": 300,
+     "lula_90": 30,
+     "flavio_90": 10,
+     "lula_90_pct": 10.0,
+     "flavio_90_pct": 3.33
+    },
+    {
+     "faixa": "100–199",
+     "todas": 900,
+     "lula_90": 40,
+     "flavio_90": 12,
+     "lula_90_pct": 4.44,
+     "flavio_90_pct": 1.33
+    },
+    {
+     "faixa": "200–299",
+     "todas": 1100,
+     "lula_90": 25,
+     "flavio_90": 8,
+     "lula_90_pct": 2.27,
+     "flavio_90_pct": 0.73
+    },
+    {
+     "faixa": "300–399",
+     "todas": 500,
+     "lula_90": 10,
+     "flavio_90": 3,
+     "lula_90_pct": 2.0,
+     "flavio_90_pct": 0.6
+    },
+    {
+     "faixa": "400+",
+     "todas": 120,
+     "lula_90": 3,
+     "flavio_90": 1,
+     "lula_90_pct": 2.5,
+     "flavio_90_pct": 0.83
+    }
+   ]
+  },
+  "histograma": {
+   "bins_pct": [
+    0.0,
+    2.5,
+    5.0,
+    7.5,
+    10.0,
+    12.5,
+    15.0,
+    17.5,
+    20.0,
+    22.5,
+    25.0,
+    27.5,
+    30.0,
+    32.5,
+    35.0,
+    37.5,
+    40.0,
+    42.5,
+    45.0,
+    47.5,
+    50.0,
+    52.5,
+    55.0,
+    57.5,
+    60.0,
+    62.5,
+    65.0,
+    67.5,
+    70.0,
+    72.5,
+    75.0,
+    77.5,
+    80.0,
+    82.5,
+    85.0,
+    87.5,
+    90.0,
+    92.5,
+    95.0,
+    97.5,
+    100.0
+   ],
+   "lula": [
+    3,
+    5,
+    8,
+    14,
+    21,
+    32,
+    47,
+    66,
+    91,
+    121,
+    155,
+    193,
+    233,
+    273,
+    309,
+    340,
+    362,
+    373,
+    373,
+    362,
+    340,
+    309,
+    273,
+    233,
+    193,
+    155,
+    121,
+    91,
+    66,
+    47,
+    32,
+    21,
+    14,
+    8,
+    5,
+    3,
+    4,
+    3,
+    3,
+    3
+   ],
+   "flavio": [
+    2,
+    4,
+    7,
+    12,
+    20,
+    31,
+    48,
+    70,
+    99,
+    134,
+    174,
+    218,
+    262,
+    303,
+    338,
+    362,
+    374,
+    371,
+    354,
+    325,
+    287,
+    244,
+    200,
+    157,
+    119,
+    87,
+    61,
+    41,
+    26,
+    16,
+    10,
+    5,
+    3,
+    1,
+    0,
+    0,
+    3,
+    3,
+    3,
+    531
+   ],
+   "lula_100mais": [
+    2,
+    3,
+    5,
+    9,
+    14,
+    21,
+    31,
+    44,
+    60,
+    80,
+    103,
+    128,
+    155,
+    182,
+    206,
+    226,
+    241,
+    248,
+    248,
+    241,
+    226,
+    206,
+    182,
+    155,
+    128,
+    103,
+    80,
+    60,
+    44,
+    31,
+    21,
+    14,
+    9,
+    5,
+    3,
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "flavio_100mais": [
+    1,
+    2,
+    4,
+    8,
+    13,
+    20,
+    32,
+    46,
+    66,
+    89,
+    116,
+    145,
+    174,
+    202,
+    225,
+    241,
+    249,
+    247,
+    236,
+    216,
+    191,
+    162,
+    133,
+    104,
+    79,
+    58,
+    40,
+    27,
+    17,
+    10,
+    6,
+    3,
+    2,
+    0,
+    0,
+    0,
+    2,
+    2,
+    2,
+    354
+   ]
+  },
+  "excesso": {
+   "definicao": "% da seção menos % da zona sem a própria seção",
+   "lula": {
+    "secoes": 120,
+    "zona_pct_mediana": 78.2,
+    "mun_pct_mediana": 79.0,
+    "excesso_zona_pp_mediana": 12.4,
+    "excesso_mun_pp_mediana": 11.1,
+    "faixas_zona": [
+     {
+      "rotulo": "zona ≥ 80%",
+      "min_pct": 80,
+      "max_pct": null,
+      "secoes": 60
+     },
+     {
+      "rotulo": "60 a 80%",
+      "min_pct": 60,
+      "max_pct": 80,
+      "secoes": 30
+     },
+     {
+      "rotulo": "40 a 60%",
+      "min_pct": 40,
+      "max_pct": 60,
+      "secoes": 20
+     },
+     {
+      "rotulo": "< 40%",
+      "min_pct": null,
+      "max_pct": 40,
+      "secoes": 10
+     }
+    ],
+    "acima_zona_10pp": 40,
+    "acima_zona_20pp": 15
+   },
+   "flavio": {
+    "secoes": 40,
+    "zona_pct_mediana": 78.2,
+    "mun_pct_mediana": 79.0,
+    "excesso_zona_pp_mediana": 12.4,
+    "excesso_mun_pp_mediana": 11.1,
+    "faixas_zona": [
+     {
+      "rotulo": "zona ≥ 80%",
+      "min_pct": 80,
+      "max_pct": null,
+      "secoes": 20
+     },
+     {
+      "rotulo": "60 a 80%",
+      "min_pct": 60,
+      "max_pct": 80,
+      "secoes": 10
+     },
+     {
+      "rotulo": "40 a 60%",
+      "min_pct": 40,
+      "max_pct": 60,
+      "secoes": 6
+     },
+     {
+      "rotulo": "< 40%",
+      "min_pct": null,
+      "max_pct": 40,
+      "secoes": 4
+     }
+    ],
+    "acima_zona_10pp": 13,
+    "acima_zona_20pp": 5
+   }
+  },
+  "tipo_local": {
+   "regras": [
+    {
+     "tipo": "aldeia",
+     "campo": "local",
+     "palavras": [
+      "ALDEIA",
+      "INDIGENA"
+     ]
+    }
+   ],
+   "linhas": [
+    {
+     "tipo": "escola",
+     "todas": 2500,
+     "lula_90": 90,
+     "flavio_90": 30,
+     "lula_90_pct_do_tipo": 3.6,
+     "flavio_90_pct_do_tipo": 1.2
+    },
+    {
+     "tipo": "aldeia",
+     "todas": 40,
+     "lula_90": 15,
+     "flavio_90": 0,
+     "lula_90_pct_do_tipo": 37.5,
+     "flavio_90_pct_do_tipo": 0.0
+    },
+    {
+     "tipo": "presídio",
+     "todas": 20,
+     "lula_90": 8,
+     "flavio_90": 0,
+     "lula_90_pct_do_tipo": 40.0,
+     "flavio_90_pct_do_tipo": 0.0
+    },
+    {
+     "tipo": "outro",
+     "todas": 440,
+     "lula_90": 7,
+     "flavio_90": 10,
+     "lula_90_pct_do_tipo": 1.59,
+     "flavio_90_pct_do_tipo": 2.27
+    }
+   ],
+   "aviso": "tipo inferido por palavra-chave no nome do local"
+  },
+  "modelo_urna": [
+   {
+    "modelo": "UE2010",
+    "todas": 500,
+    "lula_90": 20,
+    "flavio_90": 5,
+    "lula_90_pct_do_modelo": 4.0,
+    "flavio_90_pct_do_modelo": 1.0
+   },
+   {
+    "modelo": "UE2011",
+    "todas": 500,
+    "lula_90": 19,
+    "flavio_90": 6,
+    "lula_90_pct_do_modelo": 3.8,
+    "flavio_90_pct_do_modelo": 1.2
+   },
+   {
+    "modelo": "UE2013",
+    "todas": 500,
+    "lula_90": 18,
+    "flavio_90": 7,
+    "lula_90_pct_do_modelo": 3.6,
+    "flavio_90_pct_do_modelo": 1.4
+   },
+   {
+    "modelo": "UE2015",
+    "todas": 500,
+    "lula_90": 17,
+    "flavio_90": 8,
+    "lula_90_pct_do_modelo": 3.4,
+    "flavio_90_pct_do_modelo": 1.6
+   },
+   {
+    "modelo": "UE2020",
+    "todas": 500,
+    "lula_90": 16,
+    "flavio_90": 9,
+    "lula_90_pct_do_modelo": 3.2,
+    "flavio_90_pct_do_modelo": 1.8
+   },
+   {
+    "modelo": "UE2022",
+    "todas": 500,
+    "lula_90": 15,
+    "flavio_90": 10,
+    "lula_90_pct_do_modelo": 3.0,
+    "flavio_90_pct_do_modelo": 2.0
+   }
+  ],
+  "cruzamento_anomalias": {
+   "top_zonas": 50,
+   "zonas_top_com_secao_90": 9,
+   "secoes_90_no_top": 31,
+   "taxa_lula_90_top_pct": 4.1,
+   "taxa_lula_90_demais_pct": 1.2,
+   "taxa_flavio_90_top_pct": 0.8,
+   "taxa_flavio_90_demais_pct": 0.4,
+   "lista": [
+    {
+     "posicao": 1,
+     "uf": "MA",
+     "municipio": "CAJARI",
+     "zona": 20,
+     "escore": 88.1,
+     "secoes": 120,
+     "lula_90": 14,
+     "flavio_90": 0
+    }
+   ]
+  },
+  "amostras": {
+   "lula": [
+    {
+     "uf": "AC",
+     "regiao": "Norte",
+     "municipio": "TARAUACA",
+     "mun_tse": "10000",
+     "ibge": "2100000",
+     "zona": 10,
+     "secao": 40,
+     "local": "U.E. ESCOLA NUMERO 0",
+     "bairro": "POVOADO 0",
+     "tipo_local_tse": "Convencional",
+     "tipo_local_inferido": "escola",
+     "lat": -8.949,
+     "lon": -71.495,
+     "modelo_urna": "UE2015",
+     "tipo_urna": 1,
+     "tipo_arquivo": 1,
+     "aptos": 240,
+     "comparecimento": 190,
+     "validos": 180,
+     "lula": 167,
+     "flavio": 7,
+     "outros": 6,
+     "brancos": 3,
+     "nulos": 7,
+     "lula_pct": 93,
+     "flavio_pct": 4.0,
+     "zona_lula_pct": 81,
+     "zona_flavio_pct": 14.0,
+     "mun_lula_pct": 83,
+     "mun_flavio_pct": 12.0,
+     "abertura_brasilia": "2026-10-04 08:00:01",
+     "encerramento_brasilia": "2026-10-04 17:04:12",
+     "recebido_tse": "2026-10-04 18:55:55",
+     "explicacao": "seção rural de povoado (inferido pelo nome do local)"
+    },
+    {
+     "uf": "AP",
+     "regiao": "Norte",
+     "municipio": "OIAPOQUE",
+     "mun_tse": "10001",
+     "ibge": "2100001",
+     "zona": 11,
+     "secao": 41,
+     "local": "U.E. ESCOLA NUMERO 1",
+     "bairro": "POVOADO 1",
+     "tipo_local_tse": "Convencional",
+     "tipo_local_inferido": "escola",
+     "lat": 0.871,
+     "lon": -52.204,
+     "modelo_urna": "UE2022",
+     "tipo_urna": 1,
+     "tipo_arquivo": 1,
+     "aptos": 241,
+     "comparecimento": 191,
+     "validos": 181,
+     "lula": 170,
+     "flavio": 7,
+     "outros": 4,
+     "brancos": 3,
+     "nulos": 7,
+     "lula_pct": 94,
+     "flavio_pct": 4.0,
+     "zona_lula_pct": 82,
+     "zona_flavio_pct": 14.0,
+     "mun_lula_pct": 84,
+     "mun_flavio_pct": 12.0,
+     "abertura_brasilia": "2026-10-04 08:00:01",
+     "encerramento_brasilia": "2026-10-04 17:04:12",
+     "recebido_tse": "2026-10-04 18:55:55",
+     "explicacao": "seção rural de povoado (inferido pelo nome do local)"
+    },
+    {
+     "uf": "MA",
+     "regiao": "Nordeste",
+     "municipio": "CAJARI",
+     "mun_tse": "10002",
+     "ibge": "2100002",
+     "zona": 12,
+     "secao": 42,
+     "local": "U.E. ESCOLA NUMERO 2",
+     "bairro": "POVOADO 2",
+     "tipo_local_tse": "Convencional",
+     "tipo_local_inferido": "escola",
+     "lat": -4.409,
+     "lon": -44.013,
+     "modelo_urna": "UE2022",
+     "tipo_urna": 1,
+     "tipo_arquivo": 1,
+     "aptos": 242,
+     "comparecimento": 192,
+     "validos": 182,
+     "lula": 173,
+     "flavio": 7,
+     "outros": 2,
+     "brancos": 3,
+     "nulos": 7,
+     "lula_pct": 95,
+     "flavio_pct": 4.0,
+     "zona_lula_pct": 83,
+     "zona_flavio_pct": 14.0,
+     "mun_lula_pct": 85,
+     "mun_flavio_pct": 12.0,
+     "abertura_brasilia": "2026-10-04 08:00:01",
+     "encerramento_brasilia": "2026-10-04 17:04:12",
+     "recebido_tse": "2026-10-04 18:55:55",
+     "explicacao": "seção rural de povoado (inferido pelo nome do local)"
+    },
+    {
+     "uf": "BA",
+     "regiao": "Nordeste",
+     "municipio": "UAUA",
+     "mun_tse": "10003",
+     "ibge": "2100003",
+     "zona": 13,
+     "secao": 43,
+     "local": "U.E. ESCOLA NUMERO 3",
+     "bairro": "POVOADO 3",
+     "tipo_local_tse": "Convencional",
+     "tipo_local_inferido": "escola",
+     "lat": -12.793,
+     "lon": -41.507,
+     "modelo_urna": "UE2015",
+     "tipo_urna": 1,
+     "tipo_arquivo": 1,
+     "aptos": 243,
+     "comparecimento": 193,
+     "validos": 183,
+     "lula": 176,
+     "flavio": 7,
+     "outros": 0,
+     "brancos": 3,
+     "nulos": 7,
+     "lula_pct": 96,
+     "flavio_pct": 4.0,
+     "zona_lula_pct": 84,
+     "zona_flavio_pct": 14.0,
+     "mun_lula_pct": 86,
+     "mun_flavio_pct": 12.0,
+     "abertura_brasilia": "2026-10-04 08:00:01",
+     "encerramento_brasilia": "2026-10-04 17:04:12",
+     "recebido_tse": "2026-10-04 18:55:55",
+     "explicacao": "seção rural de povoado (inferido pelo nome do local)"
+    },
+    {
+     "uf": "SP",
+     "regiao": "Sudeste",
+     "municipio": "REGISTRO",
+     "mun_tse": "10004",
+     "ibge": "2100004",
+     "zona": 14,
+     "secao": 44,
+     "local": "U.E. ESCOLA NUMERO 4",
+     "bairro": "POVOADO 4",
+     "tipo_local_tse": "Convencional",
+     "tipo_local_inferido": "escola",
+     "lat": -22.801,
+     "lon": -49.07,
+     "modelo_urna": "UE2015",
+     "tipo_urna": 1,
+     "tipo_arquivo": 1,
+     "aptos": 244,
+     "comparecimento": 194,
+     "validos": 184,
+     "lula": 178,
+     "flavio": 7,
+     "outros": -1,
+     "brancos": 3,
+     "nulos": 7,
+     "lula_pct": 97,
+     "flavio_pct": 4.0,
+     "zona_lula_pct": 85,
+     "zona_flavio_pct": 14.0,
+     "mun_lula_pct": 87,
+     "mun_flavio_pct": 12.0,
+     "abertura_brasilia": "2026-10-04 08:00:01",
+     "encerramento_brasilia": "2026-10-04 17:04:12",
+     "recebido_tse": "2026-10-04 18:55:55",
+     "explicacao": "seção rural de povoado (inferido pelo nome do local)"
+    }
+   ],
+   "flavio": [
+    {
+     "uf": "BA",
+     "regiao": "Nordeste",
+     "municipio": "UAUA",
+     "mun_tse": "10010",
+     "ibge": "2100010",
+     "zona": 20,
+     "secao": 50,
+     "local": "U.E. ESCOLA NUMERO 10",
+     "bairro": "POVOADO 10",
+     "tipo_local_tse": "Convencional",
+     "tipo_local_inferido": "escola",
+     "lat": -12.037,
+     "lon": -41.954,
+     "modelo_urna": "UE2015",
+     "tipo_urna": 1,
+     "tipo_arquivo": 1,
+     "aptos": 250,
+     "comparecimento": 200,
+     "validos": 190,
+     "lula": 11,
+     "flavio": 173,
+     "outros": 6,
+     "brancos": 3,
+     "nulos": 7,
+     "lula_pct": 6.0,
+     "flavio_pct": 91,
+     "zona_lula_pct": 5,
+     "zona_flavio_pct": 95,
+     "mun_lula_pct": 5,
+     "mun_flavio_pct": 95,
+     "abertura_brasilia": "2026-10-04 08:00:01",
+     "encerramento_brasilia": "2026-10-04 17:04:12",
+     "recebido_tse": "2026-10-04 18:55:55",
+     "explicacao": "seção rural de povoado (inferido pelo nome do local)"
+    },
+    {
+     "uf": "SP",
+     "regiao": "Sudeste",
+     "municipio": "REGISTRO",
+     "mun_tse": "10011",
+     "ibge": "2100011",
+     "zona": 21,
+     "secao": 51,
+     "local": "U.E. ESCOLA NUMERO 11",
+     "bairro": "POVOADO 11",
+     "tipo_local_tse": "Convencional",
+     "tipo_local_inferido": "escola",
+     "lat": -23.47,
+     "lon": -48.962,
+     "modelo_urna": "UE2015",
+     "tipo_urna": 1,
+     "tipo_arquivo": 1,
+     "aptos": 251,
+     "comparecimento": 201,
+     "validos": 191,
+     "lula": 11,
+     "flavio": 176,
+     "outros": 4,
+     "brancos": 3,
+     "nulos": 7,
+     "lula_pct": 6.0,
+     "flavio_pct": 92,
+     "zona_lula_pct": 5,
+     "zona_flavio_pct": 95,
+     "mun_lula_pct": 5,
+     "mun_flavio_pct": 95,
+     "abertura_brasilia": "2026-10-04 08:00:01",
+     "encerramento_brasilia": "2026-10-04 17:04:12",
+     "recebido_tse": "2026-10-04 18:55:55",
+     "explicacao": "seção rural de povoado (inferido pelo nome do local)"
+    },
+    {
+     "uf": "SC",
+     "regiao": "Sul",
+     "municipio": "POMERODE",
+     "mun_tse": "10012",
+     "ibge": "2100012",
+     "zona": 22,
+     "secao": 52,
+     "local": "U.E. ESCOLA NUMERO 12",
+     "bairro": "POVOADO 12",
+     "tipo_local_tse": "Convencional",
+     "tipo_local_inferido": "escola",
+     "lat": -27.807,
+     "lon": -51.404,
+     "modelo_urna": "UE2022",
+     "tipo_urna": 1,
+     "tipo_arquivo": 1,
+     "aptos": 252,
+     "comparecimento": 202,
+     "validos": 192,
+     "lula": 12,
+     "flavio": 179,
+     "outros": 1,
+     "brancos": 3,
+     "nulos": 7,
+     "lula_pct": 6.0,
+     "flavio_pct": 93,
+     "zona_lula_pct": 5,
+     "zona_flavio_pct": 95,
+     "mun_lula_pct": 5,
+     "mun_flavio_pct": 95,
+     "abertura_brasilia": "2026-10-04 08:00:01",
+     "encerramento_brasilia": "2026-10-04 17:04:12",
+     "recebido_tse": "2026-10-04 18:55:55",
+     "explicacao": "seção rural de povoado (inferido pelo nome do local)"
+    },
+    {
+     "uf": "GO",
+     "regiao": "Centro-Oeste",
+     "municipio": "RIO VERDE",
+     "mun_tse": "10013",
+     "ibge": "2100013",
+     "zona": 23,
+     "secao": 53,
+     "local": "U.E. ESCOLA NUMERO 13",
+     "bairro": "POVOADO 13",
+     "tipo_local_tse": "Convencional",
+     "tipo_local_inferido": "escola",
+     "lat": -15.096,
+     "lon": -49.966,
+     "modelo_urna": "UE2020",
+     "tipo_urna": 1,
+     "tipo_arquivo": 1,
+     "aptos": 253,
+     "comparecimento": 203,
+     "validos": 193,
+     "lula": 12,
+     "flavio": 181,
+     "outros": 0,
+     "brancos": 3,
+     "nulos": 7,
+     "lula_pct": 6.0,
+     "flavio_pct": 94,
+     "zona_lula_pct": 5,
+     "zona_flavio_pct": 95,
+     "mun_lula_pct": 5,
+     "mun_flavio_pct": 95,
+     "abertura_brasilia": "2026-10-04 08:00:01",
+     "encerramento_brasilia": "2026-10-04 17:04:12",
+     "recebido_tse": "2026-10-04 18:55:55",
+     "explicacao": "seção rural de povoado (inferido pelo nome do local)"
+    },
+    {
+     "uf": "PI",
+     "regiao": "Nordeste",
+     "municipio": "PICOS",
+     "mun_tse": "10014",
+     "ibge": "2100014",
+     "zona": 24,
+     "secao": 54,
+     "local": "U.E. ESCOLA NUMERO 14",
+     "bairro": "POVOADO 14",
+     "tipo_local_tse": "Convencional",
+     "tipo_local_inferido": "escola",
+     "lat": -6.624,
+     "lon": -42.194,
+     "modelo_urna": "UE2022",
+     "tipo_urna": 1,
+     "tipo_arquivo": 1,
+     "aptos": 254,
+     "comparecimento": 204,
+     "validos": 194,
+     "lula": 12,
+     "flavio": 177,
+     "outros": 5,
+     "brancos": 3,
+     "nulos": 7,
+     "lula_pct": 6.0,
+     "flavio_pct": 91,
+     "zona_lula_pct": 5,
+     "zona_flavio_pct": 95,
+     "mun_lula_pct": 5,
+     "mun_flavio_pct": 95,
+     "abertura_brasilia": "2026-10-04 08:00:01",
+     "encerramento_brasilia": "2026-10-04 17:04:12",
+     "recebido_tse": "2026-10-04 18:55:55",
+     "explicacao": "seção rural de povoado (inferido pelo nome do local)"
+    }
+   ]
+  },
+  "secoes_100pct": {
+   "lula": [
+    {
+     "uf": "MA",
+     "regiao": "Nordeste",
+     "municipio": "CAJARI",
+     "mun_tse": "10030",
+     "ibge": "2100030",
+     "zona": 40,
+     "secao": 70,
+     "local": "U.E. ESCOLA NUMERO 30",
+     "bairro": "POVOADO 30",
+     "tipo_local_tse": "Convencional",
+     "tipo_local_inferido": "escola",
+     "lat": -4.936,
+     "lon": -45.338,
+     "modelo_urna": "UE2020",
+     "tipo_urna": 1,
+     "tipo_arquivo": 1,
+     "aptos": 270,
+     "comparecimento": 220,
+     "validos": 210,
+     "lula": 210,
+     "flavio": 0,
+     "outros": 0,
+     "brancos": 3,
+     "nulos": 7,
+     "lula_pct": 100.0,
+     "flavio_pct": 0.0,
+     "zona_lula_pct": 88.0,
+     "zona_flavio_pct": 10.0,
+     "mun_lula_pct": 90.0,
+     "mun_flavio_pct": 8.0,
+     "abertura_brasilia": "2026-10-04 08:00:01",
+     "encerramento_brasilia": "2026-10-04 17:04:12",
+     "recebido_tse": "2026-10-04 18:55:55",
+     "explicacao": "seção rural de povoado (inferido pelo nome do local)"
+    }
+   ],
+   "flavio": []
+  },
+  "mapa": {
+   "colunas": [
+    "lat",
+    "lon",
+    "lula_90",
+    "flavio_90",
+    "secoes"
+   ],
+   "pontos": [
+    [
+     -7.656,
+     -70.816,
+     2,
+     0,
+     2
+    ],
+    [
+     -9.403,
+     -71.826,
+     0,
+     1,
+     2
+    ],
+    [
+     -9.199,
+     -71.79,
+     0,
+     1,
+     1
+    ],
+    [
+     -10.323,
+     -70.304,
+     3,
+     0,
+     4
+    ],
+    [
+     -10.351,
+     -71.337,
+     0,
+     2,
+     3
+    ],
+    [
+     -9.243,
+     -70.378,
+     2,
+     0,
+     4
+    ],
+    [
+     -10.191,
+     -70.286,
+     1,
+     0,
+     2
+    ],
+    [
+     -10.208,
+     -69.864,
+     2,
+     0,
+     2
+    ],
+    [
+     -9.011,
+     -70.405,
+     1,
+     0,
+     3
+    ],
+    [
+     -8.743,
+     -70.64,
+     3,
+     0,
+     5
+    ],
+    [
+     -8.117,
+     -69.903,
+     1,
+     0,
+     2
+    ],
+    [
+     -8.924,
+     -69.375,
+     0,
+     2,
+     5
+    ],
+    [
+     0.827,
+     -52.78,
+     2,
+     0,
+     5
+    ],
+    [
+     1.271,
+     -52.544,
+     1,
+     0,
+     4
+    ],
+    [
+     -0.882,
+     -50.995,
+     3,
+     0,
+     5
+    ],
+    [
+     1.086,
+     -51.217,
+     2,
+     0,
+     5
+    ],
+    [
+     1.834,
+     -51.578,
+     0,
+     1,
+     1
+    ],
+    [
+     0.941,
+     -50.021,
+     0,
+     2,
+     5
+    ],
+    [
+     1.15,
+     -50.339,
+     2,
+     0,
+     4
+    ],
+    [
+     0.066,
+     -51.167,
+     0,
+     2,
+     5
+    ],
+    [
+     1.305,
+     -52.612,
+     0,
+     1,
+     2
+    ],
+    [
+     0.173,
+     -50.386,
+     3,
+     0,
+     3
+    ],
+    [
+     0.348,
+     -51.352,
+     1,
+     0,
+     2
+    ],
+    [
+     1.592,
+     -52.165,
+     3,
+     0,
+     6
+    ],
+    [
+     -3.952,
+     -45.359,
+     2,
+     0,
+     3
+    ],
+    [
+     -5.751,
+     -46.046,
+     1,
+     0,
+     2
+    ],
+    [
+     -3.507,
+     -45.953,
+     0,
+     2,
+     4
+    ],
+    [
+     -4.743,
+     -45.392,
+     0,
+     1,
+     3
+    ],
+    [
+     -3.929,
+     -44.954,
+     1,
+     0,
+     1
+    ],
+    [
+     -3.301,
+     -44.16,
+     3,
+     0,
+     6
+    ],
+    [
+     -4.803,
+     -46.189,
+     3,
+     0,
+     6
+    ],
+    [
+     -5.798,
+     -45.874,
+     0,
+     1,
+     2
+    ],
+    [
+     -4.198,
+     -46.193,
+     0,
+     2,
+     3
+    ],
+    [
+     -4.159,
+     -46.289,
+     0,
+     2,
+     3
+    ],
+    [
+     -5.554,
+     -45.743,
+     3,
+     0,
+     5
+    ],
+    [
+     -4.578,
+     -46.154,
+     2,
+     0,
+     5
+    ],
+    [
+     -12.559,
+     -42.064,
+     3,
+     0,
+     4
+    ],
+    [
+     -11.779,
+     -41.564,
+     0,
+     2,
+     3
+    ],
+    [
+     -11.147,
+     -41.415,
+     0,
+     1,
+     2
+    ],
+    [
+     -11.064,
+     -40.41,
+     0,
+     2,
+     4
+    ],
+    [
+     -11.275,
+     -41.933,
+     2,
+     0,
+     3
+    ],
+    [
+     -12.091,
+     -41.16,
+     2,
+     0,
+     3
+    ],
+    [
+     -11.545,
+     -40.78,
+     1,
+     0,
+     2
+    ],
+    [
+     -12.447,
+     -41.933,
+     1,
+     0,
+     1
+    ],
+    [
+     -12.583,
+     -42.419,
+     0,
+     2,
+     4
+    ],
+    [
+     -11.574,
+     -40.831,
+     3,
+     0,
+     5
+    ],
+    [
+     -13.758,
+     -42.694,
+     2,
+     0,
+     5
+    ],
+    [
+     -12.987,
+     -41.552,
+     1,
+     0,
+     1
+    ],
+    [
+     -21.272,
+     -48.968,
+     3,
+     0,
+     3
+    ],
+    [
+     -21.653,
+     -47.75,
+     0,
+     2,
+     5
+    ],
+    [
+     -22.698,
+     -48.092,
+     1,
+     0,
+     1
+    ],
+    [
+     -22.611,
+     -47.77,
+     3,
+     0,
+     3
+    ],
+    [
+     -23.49,
+     -49.619,
+     1,
+     0,
+     2
+    ],
+    [
+     -21.58,
+     -49.561,
+     3,
+     0,
+     6
+    ],
+    [
+     -23.532,
+     -48.355,
+     2,
+     0,
+     2
+    ],
+    [
+     -22.42,
+     -47.199,
+     0,
+     1,
+     4
+    ],
+    [
+     -21.522,
+     -49.367,
+     1,
+     0,
+     3
+    ],
+    [
+     -23.121,
+     -49.278,
+     1,
+     0,
+     3
+    ],
+    [
+     -22.367,
+     -47.497,
+     2,
+     0,
+     2
+    ],
+    [
+     -21.307,
+     -48.013,
+     2,
+     0,
+     5
+    ],
+    [
+     -27.105,
+     -50.429,
+     1,
+     0,
+     1
+    ],
+    [
+     -26.37,
+     -50.174,
+     3,
+     0,
+     4
+    ],
+    [
+     -28.275,
+     -50.143,
+     1,
+     0,
+     1
+    ],
+    [
+     -26.653,
+     -50.408,
+     0,
+     2,
+     5
+    ],
+    [
+     -27.955,
+     -51.169,
+     0,
+     1,
+     1
+    ],
+    [
+     -27.015,
+     -49.72,
+     3,
+     0,
+     3
+    ],
+    [
+     -27.723,
+     -49.08,
+     3,
+     0,
+     4
+    ],
+    [
+     -27.343,
+     -50.4,
+     2,
+     0,
+     5
+    ],
+    [
+     -26.602,
+     -49.37,
+     1,
+     0,
+     3
+    ],
+    [
+     -26.18,
+     -51.589,
+     1,
+     0,
+     1
+    ],
+    [
+     -27.374,
+     -51.782,
+     3,
+     0,
+     4
+    ],
+    [
+     -28.481,
+     -49.992,
+     3,
+     0,
+     3
+    ],
+    [
+     -14.681,
+     -49.07,
+     1,
+     0,
+     3
+    ],
+    [
+     -16.741,
+     -50.588,
+     1,
+     0,
+     4
+    ],
+    [
+     -15.26,
+     -50.718,
+     1,
+     0,
+     4
+    ],
+    [
+     -14.53,
+     -48.503,
+     1,
+     0,
+     2
+    ],
+    [
+     -14.518,
+     -49.789,
+     3,
+     0,
+     6
+    ],
+    [
+     -16.43,
+     -50.723,
+     1,
+     0,
+     3
+    ],
+    [
+     -15.838,
+     -49.679,
+     0,
+     2,
+     2
+    ],
+    [
+     -16.506,
+     -49.128,
+     3,
+     0,
+     3
+    ],
+    [
+     -14.585,
+     -50.686,
+     0,
+     1,
+     3
+    ],
+    [
+     -17.381,
+     -48.663,
+     2,
+     0,
+     4
+    ],
+    [
+     -15.041,
+     -48.451,
+     1,
+     0,
+     3
+    ],
+    [
+     -17.052,
+     -48.242,
+     3,
+     0,
+     6
+    ],
+    [
+     -8.232,
+     -43.827,
+     2,
+     0,
+     3
+    ],
+    [
+     -5.814,
+     -43.193,
+     3,
+     0,
+     3
+    ],
+    [
+     -8.249,
+     -41.431,
+     0,
+     2,
+     2
+    ],
+    [
+     -5.912,
+     -42.639,
+     2,
+     0,
+     4
+    ],
+    [
+     -5.72,
+     -43.196,
+     3,
+     0,
+     4
+    ],
+    [
+     -5.686,
+     -41.092,
+     0,
+     1,
+     3
+    ],
+    [
+     -7.895,
+     -43.064,
+     0,
+     1,
+     3
+    ],
+    [
+     -7.63,
+     -42.5,
+     1,
+     0,
+     2
+    ],
+    [
+     -7.459,
+     -43.946,
+     2,
+     0,
+     4
+    ],
+    [
+     -8.445,
+     -42.483,
+     0,
+     1,
+     2
+    ],
+    [
+     -7.763,
+     -42.659,
+     3,
+     0,
+     6
+    ],
+    [
+     -6.862,
+     -41.334,
+     3,
+     0,
+     5
+    ]
+   ],
+   "n_locais": 96,
+   "n_sem_coordenada": 3
+  },
+  "comparacao_2022": {
+   "disponivel": false,
+   "motivo": "o TSE não publica voto por candidato por seção de 2022 nos arquivos que temos"
+  }
+ },
+ "clusters": {
+  "k": 4,
+  "features": [
+   "lula",
+   "flavio",
+   "n70",
+   "brancos",
+   "nulos",
+   "abstencao"
+  ],
+  "base": "votos de cada componente / aptos da seção (eleição federal)",
+  "transformacao": "clr",
+  "zero": 0.0001,
+  "ajuste": {
+   "secoes_ajuste": 10000,
+   "secoes_atribuidas": 5305,
+   "amostra_estratificada": true,
+   "covariancia": "full",
+   "n_init": 10,
+   "random_state": 20261005,
+   "convergiu": true,
+   "iteracoes": 87,
+   "loglik_media": 12.3
+  },
+  "bic": [
+   {
+    "k": 3,
+    "bic": -120000.0,
+    "loglik_media": 11.9
+   },
+   {
+    "k": 4,
+    "bic": -125000.0,
+    "loglik_media": 12.3
+   },
+   {
+    "k": 5,
+    "bic": -127000.0,
+    "loglik_media": 12.5
+   }
+  ],
+  "componentes": [
+   {
+    "id": 0,
+    "rotulo": "Lula alto, Nordeste",
+    "secoes": 1000,
+    "pct_secoes": 10.0,
+    "aptos": 300000,
+    "aptos_medio": 300.0,
+    "votantes_medio": 240.0,
+    "centro_pct_eleitorado": {
+     "lula": 50.0,
+     "flavio": 20.0,
+     "n70": 2.0,
+     "brancos": 1.5,
+     "nulos": 2.5,
+     "abstencao": 18.0
+    },
+    "centro_pct_validos": {
+     "lula": 70.0,
+     "flavio": 25.0,
+     "outros": 5.0
+    },
+    "peso": 0.1,
+    "dispersao_logdet": -20.0,
+    "dispersao_traco": 4.0,
+    "loglik_media": 15.0,
+    "loglik_p05": 5.0,
+    "mahalanobis_mediana": 3.5,
+    "ufs_top": [
+     {
+      "uf": "BA",
+      "secoes": 300,
+      "pct_do_cluster": 30.0
+     },
+     {
+      "uf": "AP",
+      "secoes": 250,
+      "pct_do_cluster": 25.0
+     },
+     {
+      "uf": "MA",
+      "secoes": 200,
+      "pct_do_cluster": 20.0
+     }
+    ],
+    "regioes": [
+     {
+      "regiao": "Nordeste",
+      "pct_do_cluster": 55.0
+     },
+     {
+      "regiao": "Centro-Oeste",
+      "pct_do_cluster": 30.0
+     },
+     {
+      "regiao": "Sul",
+      "pct_do_cluster": 15.0
+     }
+    ],
+    "modelo_urna": [
+     {
+      "modelo": "UE2020",
+      "pct_do_cluster": 60.0
+     },
+     {
+      "modelo": "UE2015",
+      "pct_do_cluster": 40.0
+     }
+    ]
+   },
+   {
+    "id": 1,
+    "rotulo": "Flávio alto, Sul e Centro-Oeste",
+    "secoes": 2000,
+    "pct_secoes": 20.0,
+    "aptos": 600000,
+    "aptos_medio": 300.0,
+    "votantes_medio": 240.0,
+    "centro_pct_eleitorado": {
+     "lula": 40.0,
+     "flavio": 28.0,
+     "n70": 2.0,
+     "brancos": 1.5,
+     "nulos": 2.5,
+     "abstencao": 18.0
+    },
+    "centro_pct_validos": {
+     "lula": 55.0,
+     "flavio": 39.0,
+     "outros": 6.0
+    },
+    "peso": 0.2,
+    "dispersao_logdet": -17.0,
+    "dispersao_traco": 5.0,
+    "loglik_media": 12.0,
+    "loglik_p05": 2.0,
+    "mahalanobis_mediana": 3.8,
+    "ufs_top": [
+     {
+      "uf": "SC",
+      "secoes": 300,
+      "pct_do_cluster": 30.0
+     },
+     {
+      "uf": "AC",
+      "secoes": 250,
+      "pct_do_cluster": 25.0
+     },
+     {
+      "uf": "AP",
+      "secoes": 200,
+      "pct_do_cluster": 20.0
+     }
+    ],
+    "regioes": [
+     {
+      "regiao": "Norte",
+      "pct_do_cluster": 55.0
+     },
+     {
+      "regiao": "Centro-Oeste",
+      "pct_do_cluster": 30.0
+     },
+     {
+      "regiao": "Sudeste",
+      "pct_do_cluster": 15.0
+     }
+    ],
+    "modelo_urna": [
+     {
+      "modelo": "UE2020",
+      "pct_do_cluster": 60.0
+     },
+     {
+      "modelo": "UE2015",
+      "pct_do_cluster": 40.0
+     }
+    ]
+   },
+   {
+    "id": 2,
+    "rotulo": "Disputa equilibrada, Sudeste",
+    "secoes": 3000,
+    "pct_secoes": 30.0,
+    "aptos": 900000,
+    "aptos_medio": 300.0,
+    "votantes_medio": 240.0,
+    "centro_pct_eleitorado": {
+     "lula": 30.0,
+     "flavio": 36.0,
+     "n70": 2.0,
+     "brancos": 1.5,
+     "nulos": 2.5,
+     "abstencao": 18.0
+    },
+    "centro_pct_validos": {
+     "lula": 40.0,
+     "flavio": 53.0,
+     "outros": 7.0
+    },
+    "peso": 0.3,
+    "dispersao_logdet": -14.0,
+    "dispersao_traco": 6.0,
+    "loglik_media": 9.0,
+    "loglik_p05": -1.0,
+    "mahalanobis_mediana": 4.1,
+    "ufs_top": [
+     {
+      "uf": "SP",
+      "secoes": 300,
+      "pct_do_cluster": 30.0
+     },
+     {
+      "uf": "BA",
+      "secoes": 250,
+      "pct_do_cluster": 25.0
+     },
+     {
+      "uf": "AP",
+      "secoes": 200,
+      "pct_do_cluster": 20.0
+     }
+    ],
+    "regioes": [
+     {
+      "regiao": "Norte",
+      "pct_do_cluster": 55.0
+     },
+     {
+      "regiao": "Centro-Oeste",
+      "pct_do_cluster": 30.0
+     },
+     {
+      "regiao": "Sudeste",
+      "pct_do_cluster": 15.0
+     }
+    ],
+    "modelo_urna": [
+     {
+      "modelo": "UE2020",
+      "pct_do_cluster": 60.0
+     },
+     {
+      "modelo": "UE2015",
+      "pct_do_cluster": 40.0
+     }
+    ]
+   },
+   {
+    "id": 3,
+    "rotulo": "Abstenção alta, Norte e exterior",
+    "secoes": 4000,
+    "pct_secoes": 40.0,
+    "aptos": 1200000,
+    "aptos_medio": 300.0,
+    "votantes_medio": 240.0,
+    "centro_pct_eleitorado": {
+     "lula": 20.0,
+     "flavio": 44.0,
+     "n70": 2.0,
+     "brancos": 1.5,
+     "nulos": 2.5,
+     "abstencao": 23.0
+    },
+    "centro_pct_validos": {
+     "lula": 25.0,
+     "flavio": 67.0,
+     "outros": 8.0
+    },
+    "peso": 0.4,
+    "dispersao_logdet": -11.0,
+    "dispersao_traco": 7.0,
+    "loglik_media": 6.0,
+    "loglik_p05": -4.0,
+    "mahalanobis_mediana": 4.4,
+    "ufs_top": [
+     {
+      "uf": "GO",
+      "secoes": 300,
+      "pct_do_cluster": 30.0
+     },
+     {
+      "uf": "PI",
+      "secoes": 250,
+      "pct_do_cluster": 25.0
+     },
+     {
+      "uf": "SP",
+      "secoes": 200,
+      "pct_do_cluster": 20.0
+     }
+    ],
+    "regioes": [
+     {
+      "regiao": "Sudeste",
+      "pct_do_cluster": 55.0
+     },
+     {
+      "regiao": "Nordeste",
+      "pct_do_cluster": 30.0
+     },
+     {
+      "regiao": "Centro-Oeste",
+      "pct_do_cluster": 15.0
+     }
+    ],
+    "modelo_urna": [
+     {
+      "modelo": "UE2020",
+      "pct_do_cluster": 60.0
+     },
+     {
+      "modelo": "UE2015",
+      "pct_do_cluster": 40.0
+     }
+    ]
+   }
+  ],
+  "mais_anomalo": {
+   "id": 3,
+   "criterio": "menor log-verossimilhança média e maior dispersão",
+   "amostras": [
+    {
+     "uf": "AC",
+     "regiao": "Norte",
+     "municipio": "TARAUACA",
+     "mun_tse": "10020",
+     "ibge": "2100020",
+     "zona": 30,
+     "secao": 60,
+     "local": "U.E. ESCOLA NUMERO 20",
+     "bairro": "POVOADO 20",
+     "tipo_local_tse": "Convencional",
+     "tipo_local_inferido": "escola",
+     "lat": -8.035,
+     "lon": -69.752,
+     "modelo_urna": "UE2022",
+     "tipo_urna": 1,
+     "tipo_arquivo": 1,
+     "aptos": 260,
+     "comparecimento": 210,
+     "validos": 200,
+     "lula": 120,
+     "flavio": 40,
+     "outros": 40,
+     "brancos": 3,
+     "nulos": 7,
+     "lula_pct": 60.0,
+     "flavio_pct": 20.0,
+     "zona_lula_pct": 48.0,
+     "zona_flavio_pct": 30.0,
+     "mun_lula_pct": 50.0,
+     "mun_flavio_pct": 28.0,
+     "abertura_brasilia": "2026-10-04 08:00:01",
+     "encerramento_brasilia": "2026-10-04 17:04:12",
+     "recebido_tse": "2026-10-04 18:55:55",
+     "explicacao": "aldeia ou terra indígena (inferido pelo nome do local)",
+     "loglik": -30.5,
+     "mahalanobis": 9.1
+    },
+    {
+     "uf": "AP",
+     "regiao": "Norte",
+     "municipio": "OIAPOQUE",
+     "mun_tse": "10021",
+     "ibge": "2100021",
+     "zona": 31,
+     "secao": 61,
+     "local": "U.E. ESCOLA NUMERO 21",
+     "bairro": "POVOADO 21",
+     "tipo_local_tse": "Convencional",
+     "tipo_local_inferido": "escola",
+     "lat": 0.037,
+     "lon": -51.656,
+     "modelo_urna": "UE2022",
+     "tipo_urna": 1,
+     "tipo_arquivo": 1,
+     "aptos": 261,
+     "comparecimento": 211,
+     "validos": 201,
+     "lula": 121,
+     "flavio": 40,
+     "outros": 40,
+     "brancos": 3,
+     "nulos": 7,
+     "lula_pct": 60.0,
+     "flavio_pct": 20.0,
+     "zona_lula_pct": 48.0,
+     "zona_flavio_pct": 30.0,
+     "mun_lula_pct": 50.0,
+     "mun_flavio_pct": 28.0,
+     "abertura_brasilia": "2026-10-04 08:00:01",
+     "encerramento_brasilia": "2026-10-04 17:04:12",
+     "recebido_tse": "2026-10-04 18:55:55",
+     "explicacao": "aldeia ou terra indígena (inferido pelo nome do local)",
+     "loglik": -29.5,
+     "mahalanobis": 9.0
+    },
+    {
+     "uf": "MA",
+     "regiao": "Nordeste",
+     "municipio": "CAJARI",
+     "mun_tse": "10022",
+     "ibge": "2100022",
+     "zona": 32,
+     "secao": 62,
+     "local": "U.E. ESCOLA NUMERO 22",
+     "bairro": "POVOADO 22",
+     "tipo_local_tse": "Convencional",
+     "tipo_local_inferido": "escola",
+     "lat": -4.662,
+     "lon": -44.054,
+     "modelo_urna": "UE2020",
+     "tipo_urna": 1,
+     "tipo_arquivo": 1,
+     "aptos": 262,
+     "comparecimento": 212,
+     "validos": 202,
+     "lula": 121,
+     "flavio": 40,
+     "outros": 41,
+     "brancos": 3,
+     "nulos": 7,
+     "lula_pct": 60.0,
+     "flavio_pct": 20.0,
+     "zona_lula_pct": 48.0,
+     "zona_flavio_pct": 30.0,
+     "mun_lula_pct": 50.0,
+     "mun_flavio_pct": 28.0,
+     "abertura_brasilia": "2026-10-04 08:00:01",
+     "encerramento_brasilia": "2026-10-04 17:04:12",
+     "recebido_tse": "2026-10-04 18:55:55",
+     "explicacao": "aldeia ou terra indígena (inferido pelo nome do local)",
+     "loglik": -28.5,
+     "mahalanobis": 8.9
+    },
+    {
+     "uf": "BA",
+     "regiao": "Nordeste",
+     "municipio": "UAUA",
+     "mun_tse": "10023",
+     "ibge": "2100023",
+     "zona": 33,
+     "secao": 63,
+     "local": "U.E. ESCOLA NUMERO 23",
+     "bairro": "POVOADO 23",
+     "tipo_local_tse": "Convencional",
+     "tipo_local_inferido": "escola",
+     "lat": -11.978,
+     "lon": -40.737,
+     "modelo_urna": "UE2015",
+     "tipo_urna": 1,
+     "tipo_arquivo": 1,
+     "aptos": 263,
+     "comparecimento": 213,
+     "validos": 203,
+     "lula": 122,
+     "flavio": 41,
+     "outros": 40,
+     "brancos": 3,
+     "nulos": 7,
+     "lula_pct": 60.0,
+     "flavio_pct": 20.0,
+     "zona_lula_pct": 48.0,
+     "zona_flavio_pct": 30.0,
+     "mun_lula_pct": 50.0,
+     "mun_flavio_pct": 28.0,
+     "abertura_brasilia": "2026-10-04 08:00:01",
+     "encerramento_brasilia": "2026-10-04 17:04:12",
+     "recebido_tse": "2026-10-04 18:55:55",
+     "explicacao": "aldeia ou terra indígena (inferido pelo nome do local)",
+     "loglik": -27.5,
+     "mahalanobis": 8.799999999999999
+    },
+    {
+     "uf": "SP",
+     "regiao": "Sudeste",
+     "municipio": "REGISTRO",
+     "mun_tse": "10024",
+     "ibge": "2100024",
+     "zona": 34,
+     "secao": 64,
+     "local": "U.E. ESCOLA NUMERO 24",
+     "bairro": "POVOADO 24",
+     "tipo_local_tse": "Convencional",
+     "tipo_local_inferido": "escola",
+     "lat": -21.704,
+     "lon": -48.23,
+     "modelo_urna": "UE2015",
+     "tipo_urna": 1,
+     "tipo_arquivo": 1,
+     "aptos": 264,
+     "comparecimento": 214,
+     "validos": 204,
+     "lula": 122,
+     "flavio": 41,
+     "outros": 41,
+     "brancos": 3,
+     "nulos": 7,
+     "lula_pct": 60.0,
+     "flavio_pct": 20.0,
+     "zona_lula_pct": 48.0,
+     "zona_flavio_pct": 30.0,
+     "mun_lula_pct": 50.0,
+     "mun_flavio_pct": 28.0,
+     "abertura_brasilia": "2026-10-04 08:00:01",
+     "encerramento_brasilia": "2026-10-04 17:04:12",
+     "recebido_tse": "2026-10-04 18:55:55",
+     "explicacao": "aldeia ou terra indígena (inferido pelo nome do local)",
+     "loglik": -26.5,
+     "mahalanobis": 8.7
+    },
+    {
+     "uf": "SC",
+     "regiao": "Sul",
+     "municipio": "POMERODE",
+     "mun_tse": "10025",
+     "ibge": "2100025",
+     "zona": 35,
+     "secao": 65,
+     "local": "U.E. ESCOLA NUMERO 25",
+     "bairro": "POVOADO 25",
+     "tipo_local_tse": "Convencional",
+     "tipo_local_inferido": "escola",
+     "lat": -26.984,
+     "lon": -49.647,
+     "modelo_urna": "UE2020",
+     "tipo_urna": 1,
+     "tipo_arquivo": 1,
+     "aptos": 265,
+     "comparecimento": 215,
+     "validos": 205,
+     "lula": 123,
+     "flavio": 41,
+     "outros": 41,
+     "brancos": 3,
+     "nulos": 7,
+     "lula_pct": 60.0,
+     "flavio_pct": 20.0,
+     "zona_lula_pct": 48.0,
+     "zona_flavio_pct": 30.0,
+     "mun_lula_pct": 50.0,
+     "mun_flavio_pct": 28.0,
+     "abertura_brasilia": "2026-10-04 08:00:01",
+     "encerramento_brasilia": "2026-10-04 17:04:12",
+     "recebido_tse": "2026-10-04 18:55:55",
+     "explicacao": "aldeia ou terra indígena (inferido pelo nome do local)",
+     "loglik": -25.5,
+     "mahalanobis": 8.6
+    },
+    {
+     "uf": "GO",
+     "regiao": "Centro-Oeste",
+     "municipio": "RIO VERDE",
+     "mun_tse": "10026",
+     "ibge": "2100026",
+     "zona": 36,
+     "secao": 66,
+     "local": "U.E. ESCOLA NUMERO 26",
+     "bairro": "POVOADO 26",
+     "tipo_local_tse": "Convencional",
+     "tipo_local_inferido": "escola",
+     "lat": -15.613,
+     "lon": -49.04,
+     "modelo_urna": "UE2015",
+     "tipo_urna": 1,
+     "tipo_arquivo": 1,
+     "aptos": 266,
+     "comparecimento": 216,
+     "validos": 206,
+     "lula": 124,
+     "flavio": 41,
+     "outros": 41,
+     "brancos": 3,
+     "nulos": 7,
+     "lula_pct": 60.0,
+     "flavio_pct": 20.0,
+     "zona_lula_pct": 48.0,
+     "zona_flavio_pct": 30.0,
+     "mun_lula_pct": 50.0,
+     "mun_flavio_pct": 28.0,
+     "abertura_brasilia": "2026-10-04 08:00:01",
+     "encerramento_brasilia": "2026-10-04 17:04:12",
+     "recebido_tse": "2026-10-04 18:55:55",
+     "explicacao": "aldeia ou terra indígena (inferido pelo nome do local)",
+     "loglik": -24.5,
+     "mahalanobis": 8.5
+    },
+    {
+     "uf": "PI",
+     "regiao": "Nordeste",
+     "municipio": "PICOS",
+     "mun_tse": "10027",
+     "ibge": "2100027",
+     "zona": 37,
+     "secao": 67,
+     "local": "U.E. ESCOLA NUMERO 27",
+     "bairro": "POVOADO 27",
+     "tipo_local_tse": "Convencional",
+     "tipo_local_inferido": "escola",
+     "lat": -6.349,
+     "lon": -42.173,
+     "modelo_urna": "UE2015",
+     "tipo_urna": 1,
+     "tipo_arquivo": 1,
+     "aptos": 267,
+     "comparecimento": 217,
+     "validos": 207,
+     "lula": 124,
+     "flavio": 41,
+     "outros": 42,
+     "brancos": 3,
+     "nulos": 7,
+     "lula_pct": 60.0,
+     "flavio_pct": 20.0,
+     "zona_lula_pct": 48.0,
+     "zona_flavio_pct": 30.0,
+     "mun_lula_pct": 50.0,
+     "mun_flavio_pct": 28.0,
+     "abertura_brasilia": "2026-10-04 08:00:01",
+     "encerramento_brasilia": "2026-10-04 17:04:12",
+     "recebido_tse": "2026-10-04 18:55:55",
+     "explicacao": "aldeia ou terra indígena (inferido pelo nome do local)",
+     "loglik": -23.5,
+     "mahalanobis": 8.4
+    },
+    {
+     "uf": "AC",
+     "regiao": "Norte",
+     "municipio": "TARAUACA",
+     "mun_tse": "10028",
+     "ibge": "2100028",
+     "zona": 38,
+     "secao": 68,
+     "local": "U.E. ESCOLA NUMERO 28",
+     "bairro": "POVOADO 28",
+     "tipo_local_tse": "Convencional",
+     "tipo_local_inferido": "escola",
+     "lat": -8.314,
+     "lon": -69.932,
+     "modelo_urna": "UE2022",
+     "tipo_urna": 1,
+     "tipo_arquivo": 1,
+     "aptos": 268,
+     "comparecimento": 218,
+     "validos": 208,
+     "lula": 125,
+     "flavio": 42,
+     "outros": 41,
+     "brancos": 3,
+     "nulos": 7,
+     "lula_pct": 60.0,
+     "flavio_pct": 20.0,
+     "zona_lula_pct": 48.0,
+     "zona_flavio_pct": 30.0,
+     "mun_lula_pct": 50.0,
+     "mun_flavio_pct": 28.0,
+     "abertura_brasilia": "2026-10-04 08:00:01",
+     "encerramento_brasilia": "2026-10-04 17:04:12",
+     "recebido_tse": "2026-10-04 18:55:55",
+     "explicacao": "aldeia ou terra indígena (inferido pelo nome do local)",
+     "loglik": -22.5,
+     "mahalanobis": 8.299999999999999
+    },
+    {
+     "uf": "AP",
+     "regiao": "Norte",
+     "municipio": "OIAPOQUE",
+     "mun_tse": "10029",
+     "ibge": "2100029",
+     "zona": 39,
+     "secao": 69,
+     "local": "U.E. ESCOLA NUMERO 29",
+     "bairro": "POVOADO 29",
+     "tipo_local_tse": "Convencional",
+     "tipo_local_inferido": "escola",
+     "lat": -0.401,
+     "lon": -51.112,
+     "modelo_urna": "UE2020",
+     "tipo_urna": 1,
+     "tipo_arquivo": 1,
+     "aptos": 269,
+     "comparecimento": 219,
+     "validos": 209,
+     "lula": 125,
+     "flavio": 42,
+     "outros": 42,
+     "brancos": 3,
+     "nulos": 7,
+     "lula_pct": 60.0,
+     "flavio_pct": 20.0,
+     "zona_lula_pct": 48.0,
+     "zona_flavio_pct": 30.0,
+     "mun_lula_pct": 50.0,
+     "mun_flavio_pct": 28.0,
+     "abertura_brasilia": "2026-10-04 08:00:01",
+     "encerramento_brasilia": "2026-10-04 17:04:12",
+     "recebido_tse": "2026-10-04 18:55:55",
+     "explicacao": "aldeia ou terra indígena (inferido pelo nome do local)",
+     "loglik": -21.5,
+     "mahalanobis": 8.2
+    },
+    {
+     "uf": "MA",
+     "regiao": "Nordeste",
+     "municipio": "CAJARI",
+     "mun_tse": "10030",
+     "ibge": "2100030",
+     "zona": 40,
+     "secao": 70,
+     "local": "U.E. ESCOLA NUMERO 30",
+     "bairro": "POVOADO 30",
+     "tipo_local_tse": "Convencional",
+     "tipo_local_inferido": "escola",
+     "lat": -4.13,
+     "lon": -45.115,
+     "modelo_urna": "UE2022",
+     "tipo_urna": 1,
+     "tipo_arquivo": 1,
+     "aptos": 270,
+     "comparecimento": 220,
+     "validos": 210,
+     "lula": 126,
+     "flavio": 42,
+     "outros": 42,
+     "brancos": 3,
+     "nulos": 7,
+     "lula_pct": 60.0,
+     "flavio_pct": 20.0,
+     "zona_lula_pct": 48.0,
+     "zona_flavio_pct": 30.0,
+     "mun_lula_pct": 50.0,
+     "mun_flavio_pct": 28.0,
+     "abertura_brasilia": "2026-10-04 08:00:01",
+     "encerramento_brasilia": "2026-10-04 17:04:12",
+     "recebido_tse": "2026-10-04 18:55:55",
+     "explicacao": "aldeia ou terra indígena (inferido pelo nome do local)",
+     "loglik": -20.5,
+     "mahalanobis": 8.1
+    },
+    {
+     "uf": "BA",
+     "regiao": "Nordeste",
+     "municipio": "UAUA",
+     "mun_tse": "10031",
+     "ibge": "2100031",
+     "zona": 41,
+     "secao": 71,
+     "local": "U.E. ESCOLA NUMERO 31",
+     "bairro": "POVOADO 31",
+     "tipo_local_tse": "Convencional",
+     "tipo_local_inferido": "escola",
+     "lat": -12.869,
+     "lon": -40.557,
+     "modelo_urna": "UE2015",
+     "tipo_urna": 1,
+     "tipo_arquivo": 1,
+     "aptos": 271,
+     "comparecimento": 221,
+     "validos": 211,
+     "lula": 127,
+     "flavio": 42,
+     "outros": 42,
+     "brancos": 3,
+     "nulos": 7,
+     "lula_pct": 60.0,
+     "flavio_pct": 20.0,
+     "zona_lula_pct": 48.0,
+     "zona_flavio_pct": 30.0,
+     "mun_lula_pct": 50.0,
+     "mun_flavio_pct": 28.0,
+     "abertura_brasilia": "2026-10-04 08:00:01",
+     "encerramento_brasilia": "2026-10-04 17:04:12",
+     "recebido_tse": "2026-10-04 18:55:55",
+     "explicacao": "aldeia ou terra indígena (inferido pelo nome do local)",
+     "loglik": -19.5,
+     "mahalanobis": 8.0
+    },
+    {
+     "uf": "SP",
+     "regiao": "Sudeste",
+     "municipio": "REGISTRO",
+     "mun_tse": "10032",
+     "ibge": "2100032",
+     "zona": 42,
+     "secao": 72,
+     "local": "U.E. ESCOLA NUMERO 32",
+     "bairro": "POVOADO 32",
+     "tipo_local_tse": "Convencional",
+     "tipo_local_inferido": "escola",
+     "lat": -22.553,
+     "lon": -48.205,
+     "modelo_urna": "UE2020",
+     "tipo_urna": 1,
+     "tipo_arquivo": 1,
+     "aptos": 272,
+     "comparecimento": 222,
+     "validos": 212,
+     "lula": 127,
+     "flavio": 42,
+     "outros": 43,
+     "brancos": 3,
+     "nulos": 7,
+     "lula_pct": 60.0,
+     "flavio_pct": 20.0,
+     "zona_lula_pct": 48.0,
+     "zona_flavio_pct": 30.0,
+     "mun_lula_pct": 50.0,
+     "mun_flavio_pct": 28.0,
+     "abertura_brasilia": "2026-10-04 08:00:01",
+     "encerramento_brasilia": "2026-10-04 17:04:12",
+     "recebido_tse": "2026-10-04 18:55:55",
+     "explicacao": "aldeia ou terra indígena (inferido pelo nome do local)",
+     "loglik": -18.5,
+     "mahalanobis": 7.8999999999999995
+    },
+    {
+     "uf": "SC",
+     "regiao": "Sul",
+     "municipio": "POMERODE",
+     "mun_tse": "10033",
+     "ibge": "2100033",
+     "zona": 43,
+     "secao": 73,
+     "local": "U.E. ESCOLA NUMERO 33",
+     "bairro": "POVOADO 33",
+     "tipo_local_tse": "Convencional",
+     "tipo_local_inferido": "escola",
+     "lat": -27.18,
+     "lon": -50.315,
+     "modelo_urna": "UE2020",
+     "tipo_urna": 1,
+     "tipo_arquivo": 1,
+     "aptos": 273,
+     "comparecimento": 223,
+     "validos": 213,
+     "lula": 128,
+     "flavio": 43,
+     "outros": 42,
+     "brancos": 3,
+     "nulos": 7,
+     "lula_pct": 60.0,
+     "flavio_pct": 20.0,
+     "zona_lula_pct": 48.0,
+     "zona_flavio_pct": 30.0,
+     "mun_lula_pct": 50.0,
+     "mun_flavio_pct": 28.0,
+     "abertura_brasilia": "2026-10-04 08:00:01",
+     "encerramento_brasilia": "2026-10-04 17:04:12",
+     "recebido_tse": "2026-10-04 18:55:55",
+     "explicacao": "aldeia ou terra indígena (inferido pelo nome do local)",
+     "loglik": -17.5,
+     "mahalanobis": 7.8
+    },
+    {
+     "uf": "GO",
+     "regiao": "Centro-Oeste",
+     "municipio": "RIO VERDE",
+     "mun_tse": "10034",
+     "ibge": "2100034",
+     "zona": 44,
+     "secao": 74,
+     "local": "U.E. ESCOLA NUMERO 34",
+     "bairro": "POVOADO 34",
+     "tipo_local_tse": "Convencional",
+     "tipo_local_inferido": "escola",
+     "lat": -16.531,
+     "lon": -49.241,
+     "modelo_urna": "UE2022",
+     "tipo_urna": 1,
+     "tipo_arquivo": 1,
+     "aptos": 274,
+     "comparecimento": 224,
+     "validos": 214,
+     "lula": 128,
+     "flavio": 43,
+     "outros": 43,
+     "brancos": 3,
+     "nulos": 7,
+     "lula_pct": 60.0,
+     "flavio_pct": 20.0,
+     "zona_lula_pct": 48.0,
+     "zona_flavio_pct": 30.0,
+     "mun_lula_pct": 50.0,
+     "mun_flavio_pct": 28.0,
+     "abertura_brasilia": "2026-10-04 08:00:01",
+     "encerramento_brasilia": "2026-10-04 17:04:12",
+     "recebido_tse": "2026-10-04 18:55:55",
+     "explicacao": "aldeia ou terra indígena (inferido pelo nome do local)",
+     "loglik": -16.5,
+     "mahalanobis": 7.699999999999999
+    },
+    {
+     "uf": "PI",
+     "regiao": "Nordeste",
+     "municipio": "PICOS",
+     "mun_tse": "10035",
+     "ibge": "2100035",
+     "zona": 45,
+     "secao": 75,
+     "local": "U.E. ESCOLA NUMERO 35",
+     "bairro": "POVOADO 35",
+     "tipo_local_tse": "Convencional",
+     "tipo_local_inferido": "escola",
+     "lat": -6.261,
+     "lon": -42.79,
+     "modelo_urna": "UE2015",
+     "tipo_urna": 1,
+     "tipo_arquivo": 1,
+     "aptos": 275,
+     "comparecimento": 225,
+     "validos": 215,
+     "lula": 129,
+     "flavio": 43,
+     "outros": 43,
+     "brancos": 3,
+     "nulos": 7,
+     "lula_pct": 60.0,
+     "flavio_pct": 20.0,
+     "zona_lula_pct": 48.0,
+     "zona_flavio_pct": 30.0,
+     "mun_lula_pct": 50.0,
+     "mun_flavio_pct": 28.0,
+     "abertura_brasilia": "2026-10-04 08:00:01",
+     "encerramento_brasilia": "2026-10-04 17:04:12",
+     "recebido_tse": "2026-10-04 18:55:55",
+     "explicacao": "aldeia ou terra indígena (inferido pelo nome do local)",
+     "loglik": -15.5,
+     "mahalanobis": 7.6
+    },
+    {
+     "uf": "AC",
+     "regiao": "Norte",
+     "municipio": "TARAUACA",
+     "mun_tse": "10036",
+     "ibge": "2100036",
+     "zona": 46,
+     "secao": 76,
+     "local": "U.E. ESCOLA NUMERO 36",
+     "bairro": "POVOADO 36",
+     "tipo_local_tse": "Convencional",
+     "tipo_local_inferido": "escola",
+     "lat": -9.213,
+     "lon": -70.447,
+     "modelo_urna": "UE2022",
+     "tipo_urna": 1,
+     "tipo_arquivo": 1,
+     "aptos": 276,
+     "comparecimento": 226,
+     "validos": 216,
+     "lula": 130,
+     "flavio": 43,
+     "outros": 43,
+     "brancos": 3,
+     "nulos": 7,
+     "lula_pct": 60.0,
+     "flavio_pct": 20.0,
+     "zona_lula_pct": 48.0,
+     "zona_flavio_pct": 30.0,
+     "mun_lula_pct": 50.0,
+     "mun_flavio_pct": 28.0,
+     "abertura_brasilia": "2026-10-04 08:00:01",
+     "encerramento_brasilia": "2026-10-04 17:04:12",
+     "recebido_tse": "2026-10-04 18:55:55",
+     "explicacao": "aldeia ou terra indígena (inferido pelo nome do local)",
+     "loglik": -14.5,
+     "mahalanobis": 7.5
+    },
+    {
+     "uf": "AP",
+     "regiao": "Norte",
+     "municipio": "OIAPOQUE",
+     "mun_tse": "10037",
+     "ibge": "2100037",
+     "zona": 47,
+     "secao": 77,
+     "local": "U.E. ESCOLA NUMERO 37",
+     "bairro": "POVOADO 37",
+     "tipo_local_tse": "Convencional",
+     "tipo_local_inferido": "escola",
+     "lat": 0.819,
+     "lon": -50.848,
+     "modelo_urna": "UE2015",
+     "tipo_urna": 1,
+     "tipo_arquivo": 1,
+     "aptos": 277,
+     "comparecimento": 227,
+     "validos": 217,
+     "lula": 130,
+     "flavio": 43,
+     "outros": 44,
+     "brancos": 3,
+     "nulos": 7,
+     "lula_pct": 60.0,
+     "flavio_pct": 20.0,
+     "zona_lula_pct": 48.0,
+     "zona_flavio_pct": 30.0,
+     "mun_lula_pct": 50.0,
+     "mun_flavio_pct": 28.0,
+     "abertura_brasilia": "2026-10-04 08:00:01",
+     "encerramento_brasilia": "2026-10-04 17:04:12",
+     "recebido_tse": "2026-10-04 18:55:55",
+     "explicacao": "aldeia ou terra indígena (inferido pelo nome do local)",
+     "loglik": -13.5,
+     "mahalanobis": 7.3999999999999995
+    },
+    {
+     "uf": "MA",
+     "regiao": "Nordeste",
+     "municipio": "CAJARI",
+     "mun_tse": "10038",
+     "ibge": "2100038",
+     "zona": 48,
+     "secao": 78,
+     "local": "U.E. ESCOLA NUMERO 38",
+     "bairro": "POVOADO 38",
+     "tipo_local_tse": "Convencional",
+     "tipo_local_inferido": "escola",
+     "lat": -4.242,
+     "lon": -44.914,
+     "modelo_urna": "UE2015",
+     "tipo_urna": 1,
+     "tipo_arquivo": 1,
+     "aptos": 278,
+     "comparecimento": 228,
+     "validos": 218,
+     "lula": 131,
+     "flavio": 44,
+     "outros": 43,
+     "brancos": 3,
+     "nulos": 7,
+     "lula_pct": 60.0,
+     "flavio_pct": 20.0,
+     "zona_lula_pct": 48.0,
+     "zona_flavio_pct": 30.0,
+     "mun_lula_pct": 50.0,
+     "mun_flavio_pct": 28.0,
+     "abertura_brasilia": "2026-10-04 08:00:01",
+     "encerramento_brasilia": "2026-10-04 17:04:12",
+     "recebido_tse": "2026-10-04 18:55:55",
+     "explicacao": "aldeia ou terra indígena (inferido pelo nome do local)",
+     "loglik": -12.5,
+     "mahalanobis": 7.3
+    },
+    {
+     "uf": "BA",
+     "regiao": "Nordeste",
+     "municipio": "UAUA",
+     "mun_tse": "10039",
+     "ibge": "2100039",
+     "zona": 49,
+     "secao": 79,
+     "local": "U.E. ESCOLA NUMERO 39",
+     "bairro": "POVOADO 39",
+     "tipo_local_tse": "Convencional",
+     "tipo_local_inferido": "escola",
+     "lat": -11.652,
+     "lon": -40.969,
+     "modelo_urna": "UE2020",
+     "tipo_urna": 1,
+     "tipo_arquivo": 1,
+     "aptos": 279,
+     "comparecimento": 229,
+     "validos": 219,
+     "lula": 131,
+     "flavio": 44,
+     "outros": 44,
+     "brancos": 3,
+     "nulos": 7,
+     "lula_pct": 60.0,
+     "flavio_pct": 20.0,
+     "zona_lula_pct": 48.0,
+     "zona_flavio_pct": 30.0,
+     "mun_lula_pct": 50.0,
+     "mun_flavio_pct": 28.0,
+     "abertura_brasilia": "2026-10-04 08:00:01",
+     "encerramento_brasilia": "2026-10-04 17:04:12",
+     "recebido_tse": "2026-10-04 18:55:55",
+     "explicacao": "aldeia ou terra indígena (inferido pelo nome do local)",
+     "loglik": -11.5,
+     "mahalanobis": 7.199999999999999
+    }
+   ]
+  },
+  "menos_provaveis": [
+   {
+    "uf": "AC",
+    "regiao": "Norte",
+    "municipio": "TARAUACA",
+    "mun_tse": "10040",
+    "ibge": "2100040",
+    "zona": 50,
+    "secao": 80,
+    "local": "U.E. ESCOLA NUMERO 40",
+    "bairro": "POVOADO 40",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": -8.373,
+    "lon": -71.023,
+    "modelo_urna": "UE2015",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 280,
+    "comparecimento": 230,
+    "validos": 220,
+    "lula": 110,
+    "flavio": 66,
+    "outros": 44,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 0,
+    "loglik": -50.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "AP",
+    "regiao": "Norte",
+    "municipio": "OIAPOQUE",
+    "mun_tse": "10041",
+    "ibge": "2100041",
+    "zona": 51,
+    "secao": 81,
+    "local": "U.E. ESCOLA NUMERO 41",
+    "bairro": "POVOADO 41",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": -0.195,
+    "lon": -51.176,
+    "modelo_urna": "UE2015",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 281,
+    "comparecimento": 231,
+    "validos": 221,
+    "lula": 110,
+    "flavio": 66,
+    "outros": 45,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 1,
+    "loglik": -49.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "MA",
+    "regiao": "Nordeste",
+    "municipio": "CAJARI",
+    "mun_tse": "10042",
+    "ibge": "2100042",
+    "zona": 52,
+    "secao": 82,
+    "local": "U.E. ESCOLA NUMERO 42",
+    "bairro": "POVOADO 42",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": -4.219,
+    "lon": -44.345,
+    "modelo_urna": "UE2022",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 282,
+    "comparecimento": 232,
+    "validos": 222,
+    "lula": 111,
+    "flavio": 67,
+    "outros": 44,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 2,
+    "loglik": -48.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "BA",
+    "regiao": "Nordeste",
+    "municipio": "UAUA",
+    "mun_tse": "10043",
+    "ibge": "2100043",
+    "zona": 53,
+    "secao": 83,
+    "local": "U.E. ESCOLA NUMERO 43",
+    "bairro": "POVOADO 43",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": -11.764,
+    "lon": -42.413,
+    "modelo_urna": "UE2020",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 283,
+    "comparecimento": 233,
+    "validos": 223,
+    "lula": 112,
+    "flavio": 67,
+    "outros": 44,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 3,
+    "loglik": -47.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "SP",
+    "regiao": "Sudeste",
+    "municipio": "REGISTRO",
+    "mun_tse": "10044",
+    "ibge": "2100044",
+    "zona": 54,
+    "secao": 84,
+    "local": "U.E. ESCOLA NUMERO 44",
+    "bairro": "POVOADO 44",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": -22.776,
+    "lon": -47.773,
+    "modelo_urna": "UE2020",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 284,
+    "comparecimento": 234,
+    "validos": 224,
+    "lula": 112,
+    "flavio": 67,
+    "outros": 45,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 0,
+    "loglik": -46.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "SC",
+    "regiao": "Sul",
+    "municipio": "POMERODE",
+    "mun_tse": "10045",
+    "ibge": "2100045",
+    "zona": 55,
+    "secao": 85,
+    "local": "U.E. ESCOLA NUMERO 45",
+    "bairro": "POVOADO 45",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": -27.954,
+    "lon": -51.192,
+    "modelo_urna": "UE2020",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 285,
+    "comparecimento": 235,
+    "validos": 225,
+    "lula": 112,
+    "flavio": 68,
+    "outros": 45,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 1,
+    "loglik": -45.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "GO",
+    "regiao": "Centro-Oeste",
+    "municipio": "RIO VERDE",
+    "mun_tse": "10046",
+    "ibge": "2100046",
+    "zona": 56,
+    "secao": 86,
+    "local": "U.E. ESCOLA NUMERO 46",
+    "bairro": "POVOADO 46",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": -16.25,
+    "lon": -49.77,
+    "modelo_urna": "UE2022",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 286,
+    "comparecimento": 236,
+    "validos": 226,
+    "lula": 113,
+    "flavio": 68,
+    "outros": 45,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 2,
+    "loglik": -44.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "PI",
+    "regiao": "Nordeste",
+    "municipio": "PICOS",
+    "mun_tse": "10047",
+    "ibge": "2100047",
+    "zona": 57,
+    "secao": 87,
+    "local": "U.E. ESCOLA NUMERO 47",
+    "bairro": "POVOADO 47",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": -6.394,
+    "lon": -42.457,
+    "modelo_urna": "UE2020",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 287,
+    "comparecimento": 237,
+    "validos": 227,
+    "lula": 114,
+    "flavio": 68,
+    "outros": 45,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 3,
+    "loglik": -43.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "AC",
+    "regiao": "Norte",
+    "municipio": "TARAUACA",
+    "mun_tse": "10048",
+    "ibge": "2100048",
+    "zona": 58,
+    "secao": 88,
+    "local": "U.E. ESCOLA NUMERO 48",
+    "bairro": "POVOADO 48",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": -8.676,
+    "lon": -70.95,
+    "modelo_urna": "UE2020",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 288,
+    "comparecimento": 238,
+    "validos": 228,
+    "lula": 114,
+    "flavio": 68,
+    "outros": 46,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 0,
+    "loglik": -42.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "AP",
+    "regiao": "Norte",
+    "municipio": "OIAPOQUE",
+    "mun_tse": "10049",
+    "ibge": "2100049",
+    "zona": 59,
+    "secao": 89,
+    "local": "U.E. ESCOLA NUMERO 49",
+    "bairro": "POVOADO 49",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": 1.494,
+    "lon": -51.11,
+    "modelo_urna": "UE2020",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 289,
+    "comparecimento": 239,
+    "validos": 229,
+    "lula": 114,
+    "flavio": 69,
+    "outros": 46,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 1,
+    "loglik": -41.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "MA",
+    "regiao": "Nordeste",
+    "municipio": "CAJARI",
+    "mun_tse": "10050",
+    "ibge": "2100050",
+    "zona": 60,
+    "secao": 90,
+    "local": "U.E. ESCOLA NUMERO 50",
+    "bairro": "POVOADO 50",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": -4.231,
+    "lon": -44.539,
+    "modelo_urna": "UE2015",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 290,
+    "comparecimento": 240,
+    "validos": 230,
+    "lula": 115,
+    "flavio": 69,
+    "outros": 46,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 2,
+    "loglik": -40.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "BA",
+    "regiao": "Nordeste",
+    "municipio": "UAUA",
+    "mun_tse": "10051",
+    "ibge": "2100051",
+    "zona": 61,
+    "secao": 91,
+    "local": "U.E. ESCOLA NUMERO 51",
+    "bairro": "POVOADO 51",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": -11.982,
+    "lon": -42.2,
+    "modelo_urna": "UE2022",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 291,
+    "comparecimento": 241,
+    "validos": 231,
+    "lula": 116,
+    "flavio": 69,
+    "outros": 46,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 3,
+    "loglik": -39.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "SP",
+    "regiao": "Sudeste",
+    "municipio": "REGISTRO",
+    "mun_tse": "10052",
+    "ibge": "2100052",
+    "zona": 62,
+    "secao": 92,
+    "local": "U.E. ESCOLA NUMERO 52",
+    "bairro": "POVOADO 52",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": -23.239,
+    "lon": -48.522,
+    "modelo_urna": "UE2022",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 292,
+    "comparecimento": 242,
+    "validos": 232,
+    "lula": 116,
+    "flavio": 70,
+    "outros": 46,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 0,
+    "loglik": -38.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "SC",
+    "regiao": "Sul",
+    "municipio": "POMERODE",
+    "mun_tse": "10053",
+    "ibge": "2100053",
+    "zona": 63,
+    "secao": 93,
+    "local": "U.E. ESCOLA NUMERO 53",
+    "bairro": "POVOADO 53",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": -27.725,
+    "lon": -50.758,
+    "modelo_urna": "UE2020",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 293,
+    "comparecimento": 243,
+    "validos": 233,
+    "lula": 116,
+    "flavio": 70,
+    "outros": 47,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 1,
+    "loglik": -37.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "GO",
+    "regiao": "Centro-Oeste",
+    "municipio": "RIO VERDE",
+    "mun_tse": "10054",
+    "ibge": "2100054",
+    "zona": 64,
+    "secao": 94,
+    "local": "U.E. ESCOLA NUMERO 54",
+    "bairro": "POVOADO 54",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": -15.397,
+    "lon": -49.994,
+    "modelo_urna": "UE2022",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 294,
+    "comparecimento": 244,
+    "validos": 234,
+    "lula": 117,
+    "flavio": 70,
+    "outros": 47,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 2,
+    "loglik": -36.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "PI",
+    "regiao": "Nordeste",
+    "municipio": "PICOS",
+    "mun_tse": "10055",
+    "ibge": "2100055",
+    "zona": 65,
+    "secao": 95,
+    "local": "U.E. ESCOLA NUMERO 55",
+    "bairro": "POVOADO 55",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": -7.598,
+    "lon": -42.359,
+    "modelo_urna": "UE2015",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 295,
+    "comparecimento": 245,
+    "validos": 235,
+    "lula": 118,
+    "flavio": 70,
+    "outros": 47,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 3,
+    "loglik": -35.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "AC",
+    "regiao": "Norte",
+    "municipio": "TARAUACA",
+    "mun_tse": "10056",
+    "ibge": "2100056",
+    "zona": 66,
+    "secao": 96,
+    "local": "U.E. ESCOLA NUMERO 56",
+    "bairro": "POVOADO 56",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": -8.819,
+    "lon": -70.887,
+    "modelo_urna": "UE2022",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 296,
+    "comparecimento": 246,
+    "validos": 236,
+    "lula": 118,
+    "flavio": 71,
+    "outros": 47,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 0,
+    "loglik": -34.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "AP",
+    "regiao": "Norte",
+    "municipio": "OIAPOQUE",
+    "mun_tse": "10057",
+    "ibge": "2100057",
+    "zona": 67,
+    "secao": 97,
+    "local": "U.E. ESCOLA NUMERO 57",
+    "bairro": "POVOADO 57",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": 0.049,
+    "lon": -51.852,
+    "modelo_urna": "UE2015",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 297,
+    "comparecimento": 247,
+    "validos": 237,
+    "lula": 118,
+    "flavio": 71,
+    "outros": 48,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 1,
+    "loglik": -33.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "MA",
+    "regiao": "Nordeste",
+    "municipio": "CAJARI",
+    "mun_tse": "10058",
+    "ibge": "2100058",
+    "zona": 68,
+    "secao": 98,
+    "local": "U.E. ESCOLA NUMERO 58",
+    "bairro": "POVOADO 58",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": -4.969,
+    "lon": -45.124,
+    "modelo_urna": "UE2022",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 298,
+    "comparecimento": 248,
+    "validos": 238,
+    "lula": 119,
+    "flavio": 71,
+    "outros": 48,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 2,
+    "loglik": -32.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "BA",
+    "regiao": "Nordeste",
+    "municipio": "UAUA",
+    "mun_tse": "10059",
+    "ibge": "2100059",
+    "zona": 69,
+    "secao": 99,
+    "local": "U.E. ESCOLA NUMERO 59",
+    "bairro": "POVOADO 59",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": -12.228,
+    "lon": -40.782,
+    "modelo_urna": "UE2015",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 299,
+    "comparecimento": 249,
+    "validos": 239,
+    "lula": 120,
+    "flavio": 72,
+    "outros": 47,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 3,
+    "loglik": -31.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "SP",
+    "regiao": "Sudeste",
+    "municipio": "REGISTRO",
+    "mun_tse": "10060",
+    "ibge": "2100060",
+    "zona": 70,
+    "secao": 100,
+    "local": "U.E. ESCOLA NUMERO 60",
+    "bairro": "POVOADO 60",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": -23.243,
+    "lon": -47.583,
+    "modelo_urna": "UE2020",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 300,
+    "comparecimento": 250,
+    "validos": 240,
+    "lula": 120,
+    "flavio": 72,
+    "outros": 48,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 0,
+    "loglik": -30.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "SC",
+    "regiao": "Sul",
+    "municipio": "POMERODE",
+    "mun_tse": "10061",
+    "ibge": "2100061",
+    "zona": 71,
+    "secao": 101,
+    "local": "U.E. ESCOLA NUMERO 61",
+    "bairro": "POVOADO 61",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": -26.964,
+    "lon": -50.757,
+    "modelo_urna": "UE2015",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 301,
+    "comparecimento": 251,
+    "validos": 241,
+    "lula": 120,
+    "flavio": 72,
+    "outros": 49,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 1,
+    "loglik": -29.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "GO",
+    "regiao": "Centro-Oeste",
+    "municipio": "RIO VERDE",
+    "mun_tse": "10062",
+    "ibge": "2100062",
+    "zona": 72,
+    "secao": 102,
+    "local": "U.E. ESCOLA NUMERO 62",
+    "bairro": "POVOADO 62",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": -15.565,
+    "lon": -49.749,
+    "modelo_urna": "UE2015",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 302,
+    "comparecimento": 252,
+    "validos": 242,
+    "lula": 121,
+    "flavio": 73,
+    "outros": 48,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 2,
+    "loglik": -28.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "PI",
+    "regiao": "Nordeste",
+    "municipio": "PICOS",
+    "mun_tse": "10063",
+    "ibge": "2100063",
+    "zona": 73,
+    "secao": 103,
+    "local": "U.E. ESCOLA NUMERO 63",
+    "bairro": "POVOADO 63",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": -6.575,
+    "lon": -42.91,
+    "modelo_urna": "UE2020",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 303,
+    "comparecimento": 253,
+    "validos": 243,
+    "lula": 122,
+    "flavio": 73,
+    "outros": 48,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 3,
+    "loglik": -27.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "AC",
+    "regiao": "Norte",
+    "municipio": "TARAUACA",
+    "mun_tse": "10064",
+    "ibge": "2100064",
+    "zona": 74,
+    "secao": 104,
+    "local": "U.E. ESCOLA NUMERO 64",
+    "bairro": "POVOADO 64",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": -9.138,
+    "lon": -70.285,
+    "modelo_urna": "UE2020",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 304,
+    "comparecimento": 254,
+    "validos": 244,
+    "lula": 122,
+    "flavio": 73,
+    "outros": 49,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 0,
+    "loglik": -26.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "AP",
+    "regiao": "Norte",
+    "municipio": "OIAPOQUE",
+    "mun_tse": "10065",
+    "ibge": "2100065",
+    "zona": 75,
+    "secao": 105,
+    "local": "U.E. ESCOLA NUMERO 65",
+    "bairro": "POVOADO 65",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": 0.205,
+    "lon": -51.729,
+    "modelo_urna": "UE2022",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 305,
+    "comparecimento": 255,
+    "validos": 245,
+    "lula": 122,
+    "flavio": 74,
+    "outros": 49,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 1,
+    "loglik": -25.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "MA",
+    "regiao": "Nordeste",
+    "municipio": "CAJARI",
+    "mun_tse": "10066",
+    "ibge": "2100066",
+    "zona": 76,
+    "secao": 106,
+    "local": "U.E. ESCOLA NUMERO 66",
+    "bairro": "POVOADO 66",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": -5.241,
+    "lon": -44.763,
+    "modelo_urna": "UE2022",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 306,
+    "comparecimento": 256,
+    "validos": 246,
+    "lula": 123,
+    "flavio": 74,
+    "outros": 49,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 2,
+    "loglik": -24.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "BA",
+    "regiao": "Nordeste",
+    "municipio": "UAUA",
+    "mun_tse": "10067",
+    "ibge": "2100067",
+    "zona": 77,
+    "secao": 107,
+    "local": "U.E. ESCOLA NUMERO 67",
+    "bairro": "POVOADO 67",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": -12.34,
+    "lon": -42.373,
+    "modelo_urna": "UE2015",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 307,
+    "comparecimento": 257,
+    "validos": 247,
+    "lula": 124,
+    "flavio": 74,
+    "outros": 49,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 3,
+    "loglik": -23.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "SP",
+    "regiao": "Sudeste",
+    "municipio": "REGISTRO",
+    "mun_tse": "10068",
+    "ibge": "2100068",
+    "zona": 78,
+    "secao": 108,
+    "local": "U.E. ESCOLA NUMERO 68",
+    "bairro": "POVOADO 68",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": -22.841,
+    "lon": -49.358,
+    "modelo_urna": "UE2020",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 308,
+    "comparecimento": 258,
+    "validos": 248,
+    "lula": 124,
+    "flavio": 74,
+    "outros": 50,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 0,
+    "loglik": -22.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "SC",
+    "regiao": "Sul",
+    "municipio": "POMERODE",
+    "mun_tse": "10069",
+    "ibge": "2100069",
+    "zona": 79,
+    "secao": 109,
+    "local": "U.E. ESCOLA NUMERO 69",
+    "bairro": "POVOADO 69",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": -27.441,
+    "lon": -50.448,
+    "modelo_urna": "UE2020",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 309,
+    "comparecimento": 259,
+    "validos": 249,
+    "lula": 124,
+    "flavio": 75,
+    "outros": 50,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 1,
+    "loglik": -21.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "GO",
+    "regiao": "Centro-Oeste",
+    "municipio": "RIO VERDE",
+    "mun_tse": "10070",
+    "ibge": "2100070",
+    "zona": 80,
+    "secao": 110,
+    "local": "U.E. ESCOLA NUMERO 70",
+    "bairro": "POVOADO 70",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": -15.129,
+    "lon": -49.214,
+    "modelo_urna": "UE2015",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 310,
+    "comparecimento": 260,
+    "validos": 250,
+    "lula": 125,
+    "flavio": 75,
+    "outros": 50,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 2,
+    "loglik": -20.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "PI",
+    "regiao": "Nordeste",
+    "municipio": "PICOS",
+    "mun_tse": "10071",
+    "ibge": "2100071",
+    "zona": 81,
+    "secao": 111,
+    "local": "U.E. ESCOLA NUMERO 71",
+    "bairro": "POVOADO 71",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": -7.784,
+    "lon": -42.373,
+    "modelo_urna": "UE2020",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 311,
+    "comparecimento": 261,
+    "validos": 251,
+    "lula": 126,
+    "flavio": 75,
+    "outros": 50,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 3,
+    "loglik": -19.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "AC",
+    "regiao": "Norte",
+    "municipio": "TARAUACA",
+    "mun_tse": "10072",
+    "ibge": "2100072",
+    "zona": 82,
+    "secao": 112,
+    "local": "U.E. ESCOLA NUMERO 72",
+    "bairro": "POVOADO 72",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": -8.598,
+    "lon": -70.628,
+    "modelo_urna": "UE2020",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 312,
+    "comparecimento": 262,
+    "validos": 252,
+    "lula": 126,
+    "flavio": 76,
+    "outros": 50,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 0,
+    "loglik": -18.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "AP",
+    "regiao": "Norte",
+    "municipio": "OIAPOQUE",
+    "mun_tse": "10073",
+    "ibge": "2100073",
+    "zona": 83,
+    "secao": 113,
+    "local": "U.E. ESCOLA NUMERO 73",
+    "bairro": "POVOADO 73",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": -0.148,
+    "lon": -52.37,
+    "modelo_urna": "UE2020",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 313,
+    "comparecimento": 263,
+    "validos": 253,
+    "lula": 126,
+    "flavio": 76,
+    "outros": 51,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 1,
+    "loglik": -17.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "MA",
+    "regiao": "Nordeste",
+    "municipio": "CAJARI",
+    "mun_tse": "10074",
+    "ibge": "2100074",
+    "zona": 84,
+    "secao": 114,
+    "local": "U.E. ESCOLA NUMERO 74",
+    "bairro": "POVOADO 74",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": -4.517,
+    "lon": -44.976,
+    "modelo_urna": "UE2015",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 314,
+    "comparecimento": 264,
+    "validos": 254,
+    "lula": 127,
+    "flavio": 76,
+    "outros": 51,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 2,
+    "loglik": -16.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "BA",
+    "regiao": "Nordeste",
+    "municipio": "UAUA",
+    "mun_tse": "10075",
+    "ibge": "2100075",
+    "zona": 85,
+    "secao": 115,
+    "local": "U.E. ESCOLA NUMERO 75",
+    "bairro": "POVOADO 75",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": -12.159,
+    "lon": -41.019,
+    "modelo_urna": "UE2020",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 315,
+    "comparecimento": 265,
+    "validos": 255,
+    "lula": 128,
+    "flavio": 76,
+    "outros": 51,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 3,
+    "loglik": -15.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "SP",
+    "regiao": "Sudeste",
+    "municipio": "REGISTRO",
+    "mun_tse": "10076",
+    "ibge": "2100076",
+    "zona": 86,
+    "secao": 116,
+    "local": "U.E. ESCOLA NUMERO 76",
+    "bairro": "POVOADO 76",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": -22.417,
+    "lon": -47.648,
+    "modelo_urna": "UE2020",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 316,
+    "comparecimento": 266,
+    "validos": 256,
+    "lula": 128,
+    "flavio": 77,
+    "outros": 51,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 0,
+    "loglik": -14.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "SC",
+    "regiao": "Sul",
+    "municipio": "POMERODE",
+    "mun_tse": "10077",
+    "ibge": "2100077",
+    "zona": 87,
+    "secao": 117,
+    "local": "U.E. ESCOLA NUMERO 77",
+    "bairro": "POVOADO 77",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": -27.092,
+    "lon": -49.962,
+    "modelo_urna": "UE2020",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 317,
+    "comparecimento": 267,
+    "validos": 257,
+    "lula": 128,
+    "flavio": 77,
+    "outros": 52,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 1,
+    "loglik": -13.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "GO",
+    "regiao": "Centro-Oeste",
+    "municipio": "RIO VERDE",
+    "mun_tse": "10078",
+    "ibge": "2100078",
+    "zona": 88,
+    "secao": 118,
+    "local": "U.E. ESCOLA NUMERO 78",
+    "bairro": "POVOADO 78",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": -16.764,
+    "lon": -50.059,
+    "modelo_urna": "UE2015",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 318,
+    "comparecimento": 268,
+    "validos": 258,
+    "lula": 129,
+    "flavio": 77,
+    "outros": 52,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 2,
+    "loglik": -12.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "PI",
+    "regiao": "Nordeste",
+    "municipio": "PICOS",
+    "mun_tse": "10079",
+    "ibge": "2100079",
+    "zona": 89,
+    "secao": 119,
+    "local": "U.E. ESCOLA NUMERO 79",
+    "bairro": "POVOADO 79",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": -6.858,
+    "lon": -43.469,
+    "modelo_urna": "UE2020",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 319,
+    "comparecimento": 269,
+    "validos": 259,
+    "lula": 130,
+    "flavio": 78,
+    "outros": 51,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 3,
+    "loglik": -11.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "AC",
+    "regiao": "Norte",
+    "municipio": "TARAUACA",
+    "mun_tse": "10080",
+    "ibge": "2100080",
+    "zona": 90,
+    "secao": 120,
+    "local": "U.E. ESCOLA NUMERO 80",
+    "bairro": "POVOADO 80",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": -9.823,
+    "lon": -69.993,
+    "modelo_urna": "UE2022",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 320,
+    "comparecimento": 270,
+    "validos": 260,
+    "lula": 130,
+    "flavio": 78,
+    "outros": 52,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 0,
+    "loglik": -10.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "AP",
+    "regiao": "Norte",
+    "municipio": "OIAPOQUE",
+    "mun_tse": "10081",
+    "ibge": "2100081",
+    "zona": 91,
+    "secao": 121,
+    "local": "U.E. ESCOLA NUMERO 81",
+    "bairro": "POVOADO 81",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": 0.409,
+    "lon": -50.852,
+    "modelo_urna": "UE2015",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 321,
+    "comparecimento": 271,
+    "validos": 261,
+    "lula": 130,
+    "flavio": 78,
+    "outros": 53,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 1,
+    "loglik": -9.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "MA",
+    "regiao": "Nordeste",
+    "municipio": "CAJARI",
+    "mun_tse": "10082",
+    "ibge": "2100082",
+    "zona": 92,
+    "secao": 122,
+    "local": "U.E. ESCOLA NUMERO 82",
+    "bairro": "POVOADO 82",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": -4.078,
+    "lon": -45.034,
+    "modelo_urna": "UE2015",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 322,
+    "comparecimento": 272,
+    "validos": 262,
+    "lula": 131,
+    "flavio": 79,
+    "outros": 52,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 2,
+    "loglik": -8.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "BA",
+    "regiao": "Nordeste",
+    "municipio": "UAUA",
+    "mun_tse": "10083",
+    "ibge": "2100083",
+    "zona": 93,
+    "secao": 123,
+    "local": "U.E. ESCOLA NUMERO 83",
+    "bairro": "POVOADO 83",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": -12.399,
+    "lon": -41.004,
+    "modelo_urna": "UE2022",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 323,
+    "comparecimento": 273,
+    "validos": 263,
+    "lula": 132,
+    "flavio": 79,
+    "outros": 52,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 3,
+    "loglik": -7.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "SP",
+    "regiao": "Sudeste",
+    "municipio": "REGISTRO",
+    "mun_tse": "10084",
+    "ibge": "2100084",
+    "zona": 94,
+    "secao": 124,
+    "local": "U.E. ESCOLA NUMERO 84",
+    "bairro": "POVOADO 84",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": -23.22,
+    "lon": -48.686,
+    "modelo_urna": "UE2015",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 324,
+    "comparecimento": 274,
+    "validos": 264,
+    "lula": 132,
+    "flavio": 79,
+    "outros": 53,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 0,
+    "loglik": -6.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "SC",
+    "regiao": "Sul",
+    "municipio": "POMERODE",
+    "mun_tse": "10085",
+    "ibge": "2100085",
+    "zona": 95,
+    "secao": 125,
+    "local": "U.E. ESCOLA NUMERO 85",
+    "bairro": "POVOADO 85",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": -26.456,
+    "lon": -51.209,
+    "modelo_urna": "UE2020",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 325,
+    "comparecimento": 275,
+    "validos": 265,
+    "lula": 132,
+    "flavio": 80,
+    "outros": 53,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 1,
+    "loglik": -5.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "GO",
+    "regiao": "Centro-Oeste",
+    "municipio": "RIO VERDE",
+    "mun_tse": "10086",
+    "ibge": "2100086",
+    "zona": 96,
+    "secao": 126,
+    "local": "U.E. ESCOLA NUMERO 86",
+    "bairro": "POVOADO 86",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": -16.619,
+    "lon": -48.536,
+    "modelo_urna": "UE2015",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 326,
+    "comparecimento": 276,
+    "validos": 266,
+    "lula": 133,
+    "flavio": 80,
+    "outros": 53,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 2,
+    "loglik": -4.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "PI",
+    "regiao": "Nordeste",
+    "municipio": "PICOS",
+    "mun_tse": "10087",
+    "ibge": "2100087",
+    "zona": 97,
+    "secao": 127,
+    "local": "U.E. ESCOLA NUMERO 87",
+    "bairro": "POVOADO 87",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": -6.023,
+    "lon": -42.951,
+    "modelo_urna": "UE2020",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 327,
+    "comparecimento": 277,
+    "validos": 267,
+    "lula": 134,
+    "flavio": 80,
+    "outros": 53,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 3,
+    "loglik": -3.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "AC",
+    "regiao": "Norte",
+    "municipio": "TARAUACA",
+    "mun_tse": "10088",
+    "ibge": "2100088",
+    "zona": 98,
+    "secao": 128,
+    "local": "U.E. ESCOLA NUMERO 88",
+    "bairro": "POVOADO 88",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": -9.827,
+    "lon": -70.733,
+    "modelo_urna": "UE2022",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 328,
+    "comparecimento": 278,
+    "validos": 268,
+    "lula": 134,
+    "flavio": 80,
+    "outros": 54,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 0,
+    "loglik": -2.0,
+    "mahalanobis": 12.0
+   },
+   {
+    "uf": "AP",
+    "regiao": "Norte",
+    "municipio": "OIAPOQUE",
+    "mun_tse": "10089",
+    "ibge": "2100089",
+    "zona": 99,
+    "secao": 129,
+    "local": "U.E. ESCOLA NUMERO 89",
+    "bairro": "POVOADO 89",
+    "tipo_local_tse": "Convencional",
+    "tipo_local_inferido": "escola",
+    "lat": 1.218,
+    "lon": -51.389,
+    "modelo_urna": "UE2022",
+    "tipo_urna": 1,
+    "tipo_arquivo": 1,
+    "aptos": 329,
+    "comparecimento": 279,
+    "validos": 269,
+    "lula": 134,
+    "flavio": 81,
+    "outros": 54,
+    "brancos": 3,
+    "nulos": 7,
+    "lula_pct": 50.0,
+    "flavio_pct": 30.0,
+    "zona_lula_pct": 38.0,
+    "zona_flavio_pct": 40.0,
+    "mun_lula_pct": 40.0,
+    "mun_flavio_pct": 38.0,
+    "abertura_brasilia": "2026-10-04 08:00:01",
+    "encerramento_brasilia": "2026-10-04 17:04:12",
+    "recebido_tse": "2026-10-04 18:55:55",
+    "explicacao": "seção rural de povoado (inferido pelo nome do local)",
+    "cluster": 1,
+    "loglik": -1.0,
+    "mahalanobis": 12.0
+   }
+  ],
+  "cluster_regiao": [
+   {
+    "cluster": 0,
+    "regiao": "Norte",
+    "secoes": 22,
+    "pct_do_cluster": 2.26,
+    "pct_da_regiao": 0.57
+   },
+   {
+    "cluster": 0,
+    "regiao": "Nordeste",
+    "secoes": 15,
+    "pct_do_cluster": 1.53,
+    "pct_da_regiao": 0.38
+   },
+   {
+    "cluster": 0,
+    "regiao": "Centro-Oeste",
+    "secoes": 522,
+    "pct_do_cluster": 52.27,
+    "pct_da_regiao": 13.07
+   },
+   {
+    "cluster": 0,
+    "regiao": "Sudeste",
+    "secoes": 178,
+    "pct_do_cluster": 17.82,
+    "pct_da_regiao": 4.46
+   },
+   {
+    "cluster": 0,
+    "regiao": "Sul",
+    "secoes": 261,
+    "pct_do_cluster": 26.11,
+    "pct_da_regiao": 6.53
+   },
+   {
+    "cluster": 1,
+    "regiao": "Norte",
+    "secoes": 270,
+    "pct_do_cluster": 13.54,
+    "pct_da_regiao": 3.38
+   },
+   {
+    "cluster": 1,
+    "regiao": "Nordeste",
+    "secoes": 353,
+    "pct_do_cluster": 17.67,
+    "pct_da_regiao": 4.42
+   },
+   {
+    "cluster": 1,
+    "regiao": "Centro-Oeste",
+    "secoes": 231,
+    "pct_do_cluster": 11.57,
+    "pct_da_regiao": 2.89
+   },
+   {
+    "cluster": 1,
+    "regiao": "Sudeste",
+    "secoes": 730,
+    "pct_do_cluster": 36.52,
+    "pct_da_regiao": 9.13
+   },
+   {
+    "cluster": 1,
+    "regiao": "Sul",
+    "secoes": 414,
+    "pct_do_cluster": 20.7,
+    "pct_da_regiao": 5.18
+   },
+   {
+    "cluster": 2,
+    "regiao": "Norte",
+    "secoes": 744,
+    "pct_do_cluster": 24.83,
+    "pct_da_regiao": 6.21
+   },
+   {
+    "cluster": 2,
+    "regiao": "Nordeste",
+    "secoes": 600,
+    "pct_do_cluster": 20.01,
+    "pct_da_regiao": 5.0
+   },
+   {
+    "cluster": 2,
+    "regiao": "Centro-Oeste",
+    "secoes": 362,
+    "pct_do_cluster": 12.08,
+    "pct_da_regiao": 3.02
+   },
+   {
+    "cluster": 2,
+    "regiao": "Sudeste",
+    "secoes": 708,
+    "pct_do_cluster": 23.63,
+    "pct_da_regiao": 5.91
+   },
+   {
+    "cluster": 2,
+    "regiao": "Sul",
+    "secoes": 583,
+    "pct_do_cluster": 19.46,
+    "pct_da_regiao": 4.87
+   },
+   {
+    "cluster": 3,
+    "regiao": "Norte",
+    "secoes": 2573,
+    "pct_do_cluster": 64.34,
+    "pct_da_regiao": 16.08
+   },
+   {
+    "cluster": 3,
+    "regiao": "Nordeste",
+    "secoes": 368,
+    "pct_do_cluster": 9.2,
+    "pct_da_regiao": 2.3
+   },
+   {
+    "cluster": 3,
+    "regiao": "Centro-Oeste",
+    "secoes": 809,
+    "pct_do_cluster": 20.23,
+    "pct_da_regiao": 5.06
+   },
+   {
+    "cluster": 3,
+    "regiao": "Sudeste",
+    "secoes": 238,
+    "pct_do_cluster": 5.96,
+    "pct_da_regiao": 1.49
+   },
+   {
+    "cluster": 3,
+    "regiao": "Sul",
+    "secoes": 10,
+    "pct_do_cluster": 0.27,
+    "pct_da_regiao": 0.07
+   }
+  ],
+  "cluster_uf": [
+   {
+    "cluster": 0,
+    "uf": "AC",
+    "secoes": 100,
+    "pct_do_cluster": 12.5
+   },
+   {
+    "cluster": 0,
+    "uf": "AP",
+    "secoes": 100,
+    "pct_do_cluster": 12.5
+   },
+   {
+    "cluster": 0,
+    "uf": "MA",
+    "secoes": 100,
+    "pct_do_cluster": 12.5
+   },
+   {
+    "cluster": 0,
+    "uf": "BA",
+    "secoes": 100,
+    "pct_do_cluster": 12.5
+   },
+   {
+    "cluster": 0,
+    "uf": "SP",
+    "secoes": 100,
+    "pct_do_cluster": 12.5
+   },
+   {
+    "cluster": 0,
+    "uf": "SC",
+    "secoes": 100,
+    "pct_do_cluster": 12.5
+   },
+   {
+    "cluster": 0,
+    "uf": "GO",
+    "secoes": 100,
+    "pct_do_cluster": 12.5
+   },
+   {
+    "cluster": 0,
+    "uf": "PI",
+    "secoes": 100,
+    "pct_do_cluster": 12.5
+   },
+   {
+    "cluster": 1,
+    "uf": "AC",
+    "secoes": 100,
+    "pct_do_cluster": 12.5
+   },
+   {
+    "cluster": 1,
+    "uf": "AP",
+    "secoes": 100,
+    "pct_do_cluster": 12.5
+   },
+   {
+    "cluster": 1,
+    "uf": "MA",
+    "secoes": 100,
+    "pct_do_cluster": 12.5
+   },
+   {
+    "cluster": 1,
+    "uf": "BA",
+    "secoes": 100,
+    "pct_do_cluster": 12.5
+   },
+   {
+    "cluster": 1,
+    "uf": "SP",
+    "secoes": 100,
+    "pct_do_cluster": 12.5
+   },
+   {
+    "cluster": 1,
+    "uf": "SC",
+    "secoes": 100,
+    "pct_do_cluster": 12.5
+   },
+   {
+    "cluster": 1,
+    "uf": "GO",
+    "secoes": 100,
+    "pct_do_cluster": 12.5
+   },
+   {
+    "cluster": 1,
+    "uf": "PI",
+    "secoes": 100,
+    "pct_do_cluster": 12.5
+   },
+   {
+    "cluster": 2,
+    "uf": "AC",
+    "secoes": 100,
+    "pct_do_cluster": 12.5
+   },
+   {
+    "cluster": 2,
+    "uf": "AP",
+    "secoes": 100,
+    "pct_do_cluster": 12.5
+   },
+   {
+    "cluster": 2,
+    "uf": "MA",
+    "secoes": 100,
+    "pct_do_cluster": 12.5
+   },
+   {
+    "cluster": 2,
+    "uf": "BA",
+    "secoes": 100,
+    "pct_do_cluster": 12.5
+   },
+   {
+    "cluster": 2,
+    "uf": "SP",
+    "secoes": 100,
+    "pct_do_cluster": 12.5
+   },
+   {
+    "cluster": 2,
+    "uf": "SC",
+    "secoes": 100,
+    "pct_do_cluster": 12.5
+   },
+   {
+    "cluster": 2,
+    "uf": "GO",
+    "secoes": 100,
+    "pct_do_cluster": 12.5
+   },
+   {
+    "cluster": 2,
+    "uf": "PI",
+    "secoes": 100,
+    "pct_do_cluster": 12.5
+   },
+   {
+    "cluster": 3,
+    "uf": "AC",
+    "secoes": 100,
+    "pct_do_cluster": 12.5
+   },
+   {
+    "cluster": 3,
+    "uf": "AP",
+    "secoes": 100,
+    "pct_do_cluster": 12.5
+   },
+   {
+    "cluster": 3,
+    "uf": "MA",
+    "secoes": 100,
+    "pct_do_cluster": 12.5
+   },
+   {
+    "cluster": 3,
+    "uf": "BA",
+    "secoes": 100,
+    "pct_do_cluster": 12.5
+   },
+   {
+    "cluster": 3,
+    "uf": "SP",
+    "secoes": 100,
+    "pct_do_cluster": 12.5
+   },
+   {
+    "cluster": 3,
+    "uf": "SC",
+    "secoes": 100,
+    "pct_do_cluster": 12.5
+   },
+   {
+    "cluster": 3,
+    "uf": "GO",
+    "secoes": 100,
+    "pct_do_cluster": 12.5
+   },
+   {
+    "cluster": 3,
+    "uf": "PI",
+    "secoes": 100,
+    "pct_do_cluster": 12.5
+   }
+  ],
+  "pca": {
+   "variancia_explicada": [
+    0.41,
+    0.22
+   ],
+   "cargas": [
+    {
+     "feature": "lula",
+     "pc1": 0.3,
+     "pc2": -0.2
+    },
+    {
+     "feature": "flavio",
+     "pc1": 0.3,
+     "pc2": -0.2
+    },
+    {
+     "feature": "abstencao",
+     "pc1": 0.3,
+     "pc2": -0.2
+    }
+   ],
+   "centros": [
+    {
+     "cluster": 0,
+     "x": -2.0,
+     "y": 1.0
+    },
+    {
+     "cluster": 1,
+     "x": 2.0,
+     "y": 1.2
+    },
+    {
+     "cluster": 2,
+     "x": 0.5,
+     "y": -1.5
+    },
+    {
+     "cluster": 3,
+     "x": -0.5,
+     "y": -0.4
+    }
+   ],
+   "colunas": [
+    "x",
+    "y",
+    "cluster",
+    "top200",
+    "uf"
+   ],
+   "pontos": [
+    [
+     0.869,
+     -1.41,
+     2,
+     0,
+     "SP"
+    ],
+    [
+     0.071,
+     -0.389,
+     3,
+     0,
+     "SC"
+    ],
+    [
+     0.554,
+     -0.202,
+     2,
+     0,
+     "SP"
+    ],
+    [
+     1.983,
+     1.218,
+     1,
+     0,
+     "GO"
+    ],
+    [
+     -2.7,
+     1.094,
+     0,
+     0,
+     "BA"
+    ],
+    [
+     1.94,
+     1.199,
+     1,
+     0,
+     "SP"
+    ],
+    [
+     -1.507,
+     1.522,
+     0,
+     0,
+     "GO"
+    ],
+    [
+     -2.26,
+     1.671,
+     0,
+     0,
+     "AP"
+    ],
+    [
+     1.478,
+     0.537,
+     1,
+     0,
+     "GO"
+    ],
+    [
+     0.372,
+     -2.074,
+     2,
+     0,
+     "SP"
+    ],
+    [
+     3.097,
+     1.458,
+     1,
+     0,
+     "GO"
+    ],
+    [
+     2.847,
+     0.752,
+     1,
+     0,
+     "AC"
+    ],
+    [
+     2.151,
+     1.275,
+     1,
+     0,
+     "SC"
+    ],
+    [
+     -2.47,
+     1.383,
+     0,
+     0,
+     "AC"
+    ],
+    [
+     -2.636,
+     0.462,
+     0,
+     0,
+     "PI"
+    ],
+    [
+     1.572,
+     -1.481,
+     2,
+     0,
+     "AP"
+    ],
+    [
+     -2.018,
+     0.434,
+     0,
+     0,
+     "AP"
+    ],
+    [
+     0.596,
+     -0.663,
+     2,
+     0,
+     "BA"
+    ],
+    [
+     -1.089,
+     -0.381,
+     3,
+     0,
+     "PI"
+    ],
+    [
+     0.588,
+     -2.189,
+     2,
+     0,
+     "BA"
+    ],
+    [
+     -2.436,
+     0.737,
+     0,
+     0,
+     "SP"
+    ],
+    [
+     2.212,
+     1.214,
+     1,
+     0,
+     "SP"
+    ],
+    [
+     -2.32,
+     0.299,
+     0,
+     0,
+     "SP"
+    ],
+    [
+     -0.156,
+     -1.377,
+     2,
+     0,
+     "AP"
+    ],
+    [
+     1.904,
+     1.396,
+     1,
+     0,
+     "PI"
+    ],
+    [
+     -2.059,
+     1.193,
+     0,
+     0,
+     "PI"
+    ],
+    [
+     -0.513,
+     -0.773,
+     2,
+     0,
+     "BA"
+    ],
+    [
+     -2.289,
+     0.865,
+     0,
+     0,
+     "SP"
+    ],
+    [
+     1.248,
+     -0.814,
+     2,
+     0,
+     "SP"
+    ],
+    [
+     -2.126,
+     0.653,
+     0,
+     0,
+     "PI"
+    ],
+    [
+     -0.45,
+     -0.393,
+     3,
+     0,
+     "PI"
+    ],
+    [
+     -1.301,
+     0.051,
+     3,
+     0,
+     "GO"
+    ],
+    [
+     0.283,
+     -1.322,
+     2,
+     0,
+     "SC"
+    ],
+    [
+     -2.246,
+     1.405,
+     0,
+     0,
+     "GO"
+    ],
+    [
+     -1.632,
+     0.878,
+     0,
+     0,
+     "AC"
+    ],
+    [
+     0.496,
+     -1.317,
+     2,
+     0,
+     "GO"
+    ],
+    [
+     -2.406,
+     1.406,
+     0,
+     0,
+     "SP"
+    ],
+    [
+     -2.037,
+     1.16,
+     0,
+     0,
+     "SP"
+    ],
+    [
+     2.002,
+     1.593,
+     1,
+     0,
+     "SC"
+    ],
+    [
+     2.153,
+     0.332,
+     1,
+     0,
+     "GO"
+    ],
+    [
+     -1.678,
+     0.347,
+     0,
+     0,
+     "BA"
+    ],
+    [
+     -1.073,
+     1.248,
+     0,
+     0,
+     "PI"
+    ],
+    [
+     1.697,
+     0.876,
+     1,
+     0,
+     "AC"
+    ],
+    [
+     2.297,
+     1.655,
+     1,
+     0,
+     "SP"
+    ],
+    [
+     0.465,
+     -0.681,
+     2,
+     0,
+     "SP"
+    ],
+    [
+     -0.783,
+     -0.751,
+     3,
+     0,
+     "GO"
+    ],
+    [
+     -1.823,
+     1.258,
+     0,
+     0,
+     "BA"
+    ],
+    [
+     -1.126,
+     -0.571,
+     3,
+     0,
+     "SC"
+    ],
+    [
+     -1.179,
+     -0.123,
+     3,
+     0,
+     "BA"
+    ],
+    [
+     -1.652,
+     1.567,
+     0,
+     0,
+     "SC"
+    ],
+    [
+     1.261,
+     1.87,
+     1,
+     0,
+     "BA"
+    ],
+    [
+     -2.001,
+     0.484,
+     0,
+     0,
+     "GO"
+    ],
+    [
+     1.61,
+     1.517,
+     1,
+     0,
+     "AC"
+    ],
+    [
+     -0.77,
+     0.89,
+     3,
+     0,
+     "MA"
+    ],
+    [
+     3.068,
+     1.786,
+     1,
+     0,
+     "GO"
+    ],
+    [
+     -0.889,
+     -0.822,
+     3,
+     0,
+     "SP"
+    ],
+    [
+     -1.56,
+     1.377,
+     0,
+     0,
+     "PI"
+    ],
+    [
+     0.098,
+     -0.399,
+     3,
+     0,
+     "PI"
+    ],
+    [
+     -0.497,
+     -0.16,
+     3,
+     0,
+     "MA"
+    ],
+    [
+     1.101,
+     1.094,
+     1,
+     0,
+     "PI"
+    ],
+    [
+     -2.162,
+     0.955,
+     0,
+     0,
+     "MA"
+    ],
+    [
+     1.849,
+     1.142,
+     1,
+     0,
+     "SP"
+    ],
+    [
+     1.485,
+     0.763,
+     1,
+     0,
+     "GO"
+    ],
+    [
+     -1.589,
+     1.247,
+     0,
+     0,
+     "BA"
+    ],
+    [
+     -0.572,
+     0.482,
+     3,
+     0,
+     "AC"
+    ],
+    [
+     -3.956,
+     0.609,
+     0,
+     0,
+     "SP"
+    ],
+    [
+     -0.266,
+     -2.318,
+     2,
+     0,
+     "PI"
+    ],
+    [
+     1.86,
+     1.165,
+     1,
+     0,
+     "GO"
+    ],
+    [
+     0.871,
+     -1.388,
+     2,
+     0,
+     "GO"
+    ],
+    [
+     -2.041,
+     1.741,
+     0,
+     0,
+     "SC"
+    ],
+    [
+     1.075,
+     1.234,
+     1,
+     0,
+     "GO"
+    ],
+    [
+     0.336,
+     -1.803,
+     2,
+     0,
+     "SP"
+    ],
+    [
+     -1.559,
+     2.271,
+     0,
+     0,
+     "SP"
+    ],
+    [
+     2.051,
+     1.551,
+     1,
+     0,
+     "SP"
+    ],
+    [
+     -1.33,
+     0.826,
+     0,
+     0,
+     "MA"
+    ],
+    [
+     0.688,
+     1.303,
+     1,
+     0,
+     "AC"
+    ],
+    [
+     2.177,
+     1.121,
+     1,
+     0,
+     "AC"
+    ],
+    [
+     1.186,
+     1.599,
+     1,
+     0,
+     "MA"
+    ],
+    [
+     -1.4,
+     -0.155,
+     3,
+     0,
+     "SC"
+    ],
+    [
+     -0.61,
+     0.982,
+     0,
+     0,
+     "SC"
+    ],
+    [
+     2.554,
+     2.277,
+     1,
+     0,
+     "PI"
+    ],
+    [
+     -2.365,
+     1.744,
+     0,
+     0,
+     "SC"
+    ],
+    [
+     0.23,
+     -1.415,
+     2,
+     0,
+     "AP"
+    ],
+    [
+     1.048,
+     -1.246,
+     2,
+     0,
+     "AP"
+    ],
+    [
+     1.251,
+     1.785,
+     1,
+     0,
+     "SP"
+    ],
+    [
+     0.299,
+     0.009,
+     3,
+     0,
+     "BA"
+    ],
+    [
+     -0.13,
+     -1.64,
+     2,
+     0,
+     "SC"
+    ],
+    [
+     0.446,
+     -2.065,
+     2,
+     0,
+     "GO"
+    ],
+    [
+     2.388,
+     0.411,
+     1,
+     0,
+     "AC"
+    ],
+    [
+     -0.289,
+     -0.361,
+     3,
+     0,
+     "AC"
+    ],
+    [
+     0.573,
+     -1.331,
+     2,
+     0,
+     "SC"
+    ],
+    [
+     0.289,
+     -0.255,
+     2,
+     0,
+     "AC"
+    ],
+    [
+     0.479,
+     -2.265,
+     2,
+     0,
+     "SP"
+    ],
+    [
+     1.507,
+     -1.48,
+     2,
+     0,
+     "AP"
+    ],
+    [
+     -1.869,
+     0.788,
+     0,
+     0,
+     "PI"
+    ],
+    [
+     -0.171,
+     -1.472,
+     3,
+     0,
+     "PI"
+    ],
+    [
+     2.343,
+     1.061,
+     1,
+     0,
+     "SP"
+    ],
+    [
+     1.582,
+     0.922,
+     1,
+     0,
+     "SC"
+    ],
+    [
+     -1.177,
+     0.266,
+     3,
+     0,
+     "AP"
+    ],
+    [
+     1.725,
+     1.386,
+     1,
+     0,
+     "GO"
+    ],
+    [
+     -2.406,
+     0.537,
+     0,
+     0,
+     "SC"
+    ],
+    [
+     3.235,
+     1.072,
+     1,
+     0,
+     "AP"
+    ],
+    [
+     0.209,
+     -1.741,
+     2,
+     0,
+     "GO"
+    ],
+    [
+     1.101,
+     -0.497,
+     3,
+     0,
+     "MA"
+    ],
+    [
+     2.448,
+     1.612,
+     1,
+     0,
+     "BA"
+    ],
+    [
+     -1.907,
+     0.59,
+     0,
+     0,
+     "SP"
+    ],
+    [
+     -0.186,
+     -0.914,
+     2,
+     0,
+     "BA"
+    ],
+    [
+     -0.493,
+     -0.025,
+     3,
+     0,
+     "MA"
+    ],
+    [
+     1.089,
+     -1.937,
+     2,
+     0,
+     "SC"
+    ],
+    [
+     -3.49,
+     1.95,
+     0,
+     0,
+     "BA"
+    ],
+    [
+     -3.051,
+     -0.26,
+     0,
+     0,
+     "AP"
+    ],
+    [
+     -3.096,
+     1.146,
+     0,
+     0,
+     "PI"
+    ],
+    [
+     0.984,
+     -1.395,
+     2,
+     0,
+     "AP"
+    ],
+    [
+     -1.402,
+     2.248,
+     0,
+     0,
+     "BA"
+    ],
+    [
+     -2.836,
+     1.721,
+     0,
+     0,
+     "PI"
+    ],
+    [
+     0.639,
+     -2.23,
+     2,
+     0,
+     "AC"
+    ],
+    [
+     -2.613,
+     0.402,
+     0,
+     0,
+     "SC"
+    ],
+    [
+     2.532,
+     1.306,
+     1,
+     0,
+     "AC"
+    ],
+    [
+     2.168,
+     1.2,
+     1,
+     0,
+     "BA"
+    ],
+    [
+     -1.742,
+     0.534,
+     0,
+     0,
+     "SC"
+    ],
+    [
+     1.825,
+     1.061,
+     1,
+     0,
+     "AC"
+    ],
+    [
+     -0.707,
+     -0.454,
+     3,
+     0,
+     "AP"
+    ],
+    [
+     -0.679,
+     -0.648,
+     3,
+     0,
+     "AP"
+    ],
+    [
+     1.618,
+     1.438,
+     1,
+     0,
+     "SP"
+    ],
+    [
+     0.331,
+     -1.42,
+     2,
+     0,
+     "SC"
+    ],
+    [
+     -1.538,
+     0.101,
+     3,
+     0,
+     "SC"
+    ],
+    [
+     1.527,
+     1.523,
+     1,
+     0,
+     "AC"
+    ],
+    [
+     0.013,
+     -0.704,
+     3,
+     0,
+     "AP"
+    ],
+    [
+     -1.005,
+     -0.624,
+     3,
+     0,
+     "MA"
+    ],
+    [
+     2.757,
+     1.259,
+     1,
+     0,
+     "GO"
+    ],
+    [
+     -3.232,
+     0.494,
+     0,
+     0,
+     "MA"
+    ],
+    [
+     1.794,
+     1.443,
+     1,
+     0,
+     "MA"
+    ],
+    [
+     -1.46,
+     1.367,
+     0,
+     0,
+     "BA"
+    ],
+    [
+     1.505,
+     -0.645,
+     2,
+     0,
+     "PI"
+    ],
+    [
+     1.793,
+     -1.124,
+     2,
+     0,
+     "GO"
+    ],
+    [
+     -1.312,
+     0.606,
+     0,
+     0,
+     "MA"
+    ],
+    [
+     1.4,
+     0.724,
+     1,
+     0,
+     "BA"
+    ],
+    [
+     -0.328,
+     -0.08,
+     3,
+     0,
+     "GO"
+    ],
+    [
+     1.771,
+     1.371,
+     1,
+     0,
+     "BA"
+    ],
+    [
+     2.746,
+     1.364,
+     1,
+     0,
+     "AC"
+    ],
+    [
+     1.1,
+     -1.044,
+     2,
+     0,
+     "SP"
+    ],
+    [
+     -0.662,
+     -0.046,
+     3,
+     0,
+     "GO"
+    ],
+    [
+     -0.109,
+     -1.324,
+     2,
+     0,
+     "AC"
+    ],
+    [
+     -2.511,
+     0.606,
+     0,
+     0,
+     "BA"
+    ],
+    [
+     -0.411,
+     -1.267,
+     3,
+     0,
+     "PI"
+    ],
+    [
+     2.225,
+     0.73,
+     1,
+     0,
+     "AP"
+    ],
+    [
+     1.639,
+     1.57,
+     1,
+     0,
+     "PI"
+    ],
+    [
+     -1.693,
+     1.067,
+     0,
+     0,
+     "SC"
+    ],
+    [
+     -1.33,
+     1.198,
+     0,
+     0,
+     "GO"
+    ],
+    [
+     2.219,
+     1.23,
+     1,
+     0,
+     "AP"
+    ],
+    [
+     2.846,
+     1.966,
+     1,
+     0,
+     "SP"
+    ],
+    [
+     1.625,
+     0.464,
+     1,
+     0,
+     "BA"
+    ],
+    [
+     -1.589,
+     0.405,
+     0,
+     0,
+     "SP"
+    ],
+    [
+     1.63,
+     1.817,
+     1,
+     0,
+     "PI"
+    ],
+    [
+     1.959,
+     2.491,
+     1,
+     0,
+     "PI"
+    ],
+    [
+     1.305,
+     0.822,
+     1,
+     0,
+     "BA"
+    ],
+    [
+     0.222,
+     -1.261,
+     2,
+     0,
+     "GO"
+    ],
+    [
+     1.683,
+     0.895,
+     1,
+     0,
+     "SC"
+    ],
+    [
+     0.014,
+     0.365,
+     3,
+     0,
+     "AP"
+    ],
+    [
+     -2.371,
+     0.643,
+     0,
+     0,
+     "PI"
+    ],
+    [
+     -2.009,
+     1.619,
+     0,
+     0,
+     "GO"
+    ],
+    [
+     0.331,
+     0.019,
+     2,
+     0,
+     "MA"
+    ],
+    [
+     0.38,
+     -1.32,
+     2,
+     0,
+     "BA"
+    ],
+    [
+     0.869,
+     0.365,
+     1,
+     0,
+     "SP"
+    ],
+    [
+     -0.075,
+     -0.291,
+     2,
+     0,
+     "SC"
+    ],
+    [
+     -2.008,
+     0.646,
+     0,
+     0,
+     "SP"
+    ],
+    [
+     -0.996,
+     -0.165,
+     3,
+     0,
+     "AC"
+    ],
+    [
+     1.176,
+     1.25,
+     1,
+     0,
+     "AC"
+    ],
+    [
+     -1.268,
+     1.217,
+     0,
+     0,
+     "SP"
+    ],
+    [
+     -2.734,
+     0.911,
+     0,
+     0,
+     "GO"
+    ],
+    [
+     0.156,
+     -1.679,
+     2,
+     0,
+     "PI"
+    ],
+    [
+     2.934,
+     2.08,
+     1,
+     0,
+     "BA"
+    ],
+    [
+     1.793,
+     1.255,
+     1,
+     0,
+     "MA"
+    ],
+    [
+     0.116,
+     -1.274,
+     2,
+     0,
+     "AC"
+    ],
+    [
+     -2.473,
+     0.492,
+     0,
+     0,
+     "SC"
+    ],
+    [
+     -1.081,
+     -0.761,
+     3,
+     0,
+     "PI"
+    ],
+    [
+     2.009,
+     1.212,
+     1,
+     0,
+     "AC"
+    ],
+    [
+     -2.367,
+     1.205,
+     0,
+     0,
+     "AC"
+    ],
+    [
+     -1.243,
+     1.049,
+     0,
+     0,
+     "BA"
+    ],
+    [
+     1.38,
+     1.514,
+     1,
+     0,
+     "GO"
+    ],
+    [
+     1.783,
+     1.19,
+     1,
+     0,
+     "AC"
+    ],
+    [
+     -0.515,
+     -0.455,
+     3,
+     0,
+     "GO"
+    ],
+    [
+     0.266,
+     -0.046,
+     3,
+     0,
+     "MA"
+    ],
+    [
+     2.467,
+     1.192,
+     1,
+     0,
+     "AC"
+    ],
+    [
+     -2.511,
+     1.715,
+     0,
+     0,
+     "SP"
+    ],
+    [
+     -2.076,
+     1.632,
+     0,
+     0,
+     "GO"
+    ],
+    [
+     0.11,
+     -0.398,
+     2,
+     0,
+     "BA"
+    ],
+    [
+     -1.923,
+     0.94,
+     0,
+     0,
+     "SP"
+    ],
+    [
+     2.22,
+     0.918,
+     1,
+     0,
+     "MA"
+    ],
+    [
+     0.712,
+     -1.037,
+     2,
+     0,
+     "BA"
+    ],
+    [
+     0.208,
+     -0.787,
+     3,
+     0,
+     "PI"
+    ],
+    [
+     -0.004,
+     -1.054,
+     3,
+     0,
+     "AC"
+    ],
+    [
+     -0.079,
+     -0.5,
+     3,
+     0,
+     "SP"
+    ],
+    [
+     1.382,
+     1.618,
+     1,
+     0,
+     "MA"
+    ],
+    [
+     2.286,
+     1.25,
+     1,
+     0,
+     "MA"
+    ],
+    [
+     1.423,
+     -1.61,
+     2,
+     0,
+     "AC"
+    ],
+    [
+     -1.444,
+     1.549,
+     0,
+     0,
+     "AC"
+    ],
+    [
+     -2.018,
+     0.816,
+     0,
+     0,
+     "SC"
+    ],
+    [
+     2.457,
+     0.357,
+     1,
+     0,
+     "AP"
+    ],
+    [
+     -0.182,
+     -0.188,
+     3,
+     0,
+     "AP"
+    ],
+    [
+     -0.863,
+     1.208,
+     0,
+     0,
+     "AP"
+    ],
+    [
+     0.183,
+     -1.462,
+     2,
+     0,
+     "BA"
+    ],
+    [
+     0.235,
+     -1.024,
+     2,
+     0,
+     "AC"
+    ],
+    [
+     0.479,
+     -1.093,
+     2,
+     0,
+     "SC"
+    ],
+    [
+     0.598,
+     -2.174,
+     2,
+     0,
+     "PI"
+    ],
+    [
+     0.389,
+     -1.585,
+     2,
+     0,
+     "GO"
+    ],
+    [
+     -2.952,
+     1.335,
+     0,
+     0,
+     "SC"
+    ],
+    [
+     -0.71,
+     -0.996,
+     3,
+     0,
+     "BA"
+    ],
+    [
+     -2.44,
+     0.814,
+     0,
+     0,
+     "GO"
+    ],
+    [
+     -2.489,
+     0.939,
+     0,
+     0,
+     "AC"
+    ],
+    [
+     -2.155,
+     1.183,
+     0,
+     0,
+     "MA"
+    ],
+    [
+     -1.759,
+     -1.09,
+     3,
+     0,
+     "SP"
+    ],
+    [
+     1.912,
+     1.54,
+     1,
+     0,
+     "BA"
+    ],
+    [
+     0.216,
+     0.62,
+     3,
+     0,
+     "AP"
+    ],
+    [
+     -0.281,
+     -1.151,
+     3,
+     0,
+     "AP"
+    ],
+    [
+     0.126,
+     -1.101,
+     2,
+     0,
+     "GO"
+    ],
+    [
+     -2.763,
+     1.339,
+     0,
+     0,
+     "SC"
+    ],
+    [
+     1.792,
+     1.699,
+     1,
+     0,
+     "MA"
+    ],
+    [
+     0.342,
+     -0.478,
+     3,
+     0,
+     "PI"
+    ],
+    [
+     1.014,
+     1.035,
+     1,
+     0,
+     "AC"
+    ],
+    [
+     -0.135,
+     -1.798,
+     2,
+     0,
+     "PI"
+    ],
+    [
+     0.812,
+     -1.03,
+     2,
+     0,
+     "SP"
+    ],
+    [
+     2.469,
+     1.596,
+     1,
+     0,
+     "BA"
+    ],
+    [
+     1.89,
+     2.033,
+     1,
+     0,
+     "MA"
+    ],
+    [
+     2.95,
+     1.073,
+     1,
+     0,
+     "SC"
+    ],
+    [
+     2.13,
+     2.444,
+     1,
+     0,
+     "SP"
+    ],
+    [
+     -1.551,
+     1.629,
+     0,
+     0,
+     "BA"
+    ],
+    [
+     -0.302,
+     -0.17,
+     3,
+     0,
+     "SP"
+    ],
+    [
+     0.136,
+     -1.369,
+     2,
+     0,
+     "AP"
+    ],
+    [
+     0.661,
+     -1.023,
+     2,
+     0,
+     "AC"
+    ],
+    [
+     -2.855,
+     1.524,
+     0,
+     0,
+     "BA"
+    ],
+    [
+     0.177,
+     -1.437,
+     2,
+     0,
+     "GO"
+    ],
+    [
+     -2.075,
+     -0.09,
+     0,
+     0,
+     "GO"
+    ],
+    [
+     0.005,
+     -1.011,
+     3,
+     0,
+     "BA"
+    ],
+    [
+     1.584,
+     0.773,
+     1,
+     0,
+     "SC"
+    ],
+    [
+     0.311,
+     -1.664,
+     2,
+     0,
+     "GO"
+    ],
+    [
+     2.192,
+     0.426,
+     1,
+     0,
+     "MA"
+    ],
+    [
+     0.903,
+     -1.966,
+     2,
+     0,
+     "AC"
+    ],
+    [
+     -1.377,
+     -0.484,
+     3,
+     0,
+     "MA"
+    ],
+    [
+     0.605,
+     -1.988,
+     2,
+     0,
+     "PI"
+    ],
+    [
+     -1.27,
+     1.149,
+     0,
+     0,
+     "MA"
+    ],
+    [
+     1.725,
+     1.172,
+     1,
+     0,
+     "PI"
+    ],
+    [
+     1.853,
+     0.614,
+     1,
+     0,
+     "SC"
+    ],
+    [
+     -0.733,
+     -0.851,
+     2,
+     0,
+     "BA"
+    ],
+    [
+     1.206,
+     1.73,
+     1,
+     0,
+     "AP"
+    ],
+    [
+     0.203,
+     -1.79,
+     2,
+     0,
+     "GO"
+    ],
+    [
+     -0.28,
+     -0.325,
+     3,
+     0,
+     "GO"
+    ],
+    [
+     0.247,
+     -1.616,
+     2,
+     0,
+     "SP"
+    ],
+    [
+     0.183,
+     -0.625,
+     3,
+     0,
+     "BA"
+    ],
+    [
+     -0.85,
+     -0.329,
+     3,
+     0,
+     "AP"
+    ],
+    [
+     1.243,
+     1.324,
+     1,
+     0,
+     "BA"
+    ],
+    [
+     1.483,
+     1.769,
+     1,
+     0,
+     "GO"
+    ],
+    [
+     0.513,
+     -0.42,
+     3,
+     0,
+     "MA"
+    ],
+    [
+     -1.216,
+     0.371,
+     3,
+     0,
+     "SP"
+    ],
+    [
+     -1.155,
+     -1.717,
+     3,
+     0,
+     "MA"
+    ],
+    [
+     0.46,
+     -0.386,
+     3,
+     0,
+     "SP"
+    ],
+    [
+     0.516,
+     -1.076,
+     2,
+     0,
+     "PI"
+    ],
+    [
+     -1.27,
+     -0.091,
+     3,
+     0,
+     "SC"
+    ],
+    [
+     3.062,
+     0.775,
+     1,
+     0,
+     "AC"
+    ],
+    [
+     -1.387,
+     0.041,
+     0,
+     0,
+     "MA"
+    ],
+    [
+     0.43,
+     -1.565,
+     2,
+     0,
+     "AC"
+    ],
+    [
+     2.837,
+     0.982,
+     1,
+     0,
+     "SP"
+    ],
+    [
+     -3.037,
+     0.536,
+     0,
+     0,
+     "MA"
+    ],
+    [
+     -0.697,
+     -0.163,
+     3,
+     0,
+     "GO"
+    ],
+    [
+     1.293,
+     0.715,
+     1,
+     0,
+     "AP"
+    ],
+    [
+     0.799,
+     -0.773,
+     2,
+     0,
+     "AP"
+    ],
+    [
+     -0.642,
+     -0.619,
+     3,
+     0,
+     "AP"
+    ],
+    [
+     -0.482,
+     -1.044,
+     2,
+     0,
+     "PI"
+    ],
+    [
+     -1.146,
+     -0.602,
+     3,
+     0,
+     "MA"
+    ],
+    [
+     -0.492,
+     -0.1,
+     3,
+     0,
+     "AC"
+    ],
+    [
+     2.364,
+     0.727,
+     1,
+     0,
+     "PI"
+    ],
+    [
+     0.813,
+     -1.908,
+     2,
+     0,
+     "GO"
+    ],
+    [
+     -1.76,
+     1.428,
+     0,
+     0,
+     "AC"
+    ],
+    [
+     -2.702,
+     0.518,
+     0,
+     0,
+     "SC"
+    ],
+    [
+     -2.689,
+     0.962,
+     0,
+     0,
+     "MA"
+    ],
+    [
+     -1.858,
+     1.505,
+     0,
+     0,
+     "MA"
+    ],
+    [
+     1.23,
+     -1.09,
+     2,
+     0,
+     "SC"
+    ],
+    [
+     -0.364,
+     -1.025,
+     3,
+     0,
+     "BA"
+    ],
+    [
+     -0.077,
+     -1.293,
+     2,
+     0,
+     "AC"
+    ],
+    [
+     0.2,
+     -0.596,
+     2,
+     0,
+     "GO"
+    ],
+    [
+     0.022,
+     -1.509,
+     2,
+     0,
+     "SC"
+    ],
+    [
+     1.4,
+     0.469,
+     1,
+     0,
+     "SC"
+    ],
+    [
+     1.793,
+     1.585,
+     1,
+     0,
+     "AP"
+    ],
+    [
+     -2.614,
+     1.377,
+     0,
+     0,
+     "GO"
+    ],
+    [
+     -2.231,
+     1.143,
+     0,
+     0,
+     "AC"
+    ],
+    [
+     2.298,
+     0.689,
+     1,
+     0,
+     "AC"
+    ],
+    [
+     -1.126,
+     -0.87,
+     3,
+     0,
+     "AP"
+    ],
+    [
+     2.824,
+     1.374,
+     1,
+     0,
+     "MA"
+    ],
+    [
+     -2.625,
+     0.136,
+     0,
+     0,
+     "GO"
+    ],
+    [
+     -1.248,
+     0.625,
+     0,
+     0,
+     "SC"
+    ],
+    [
+     2.175,
+     0.574,
+     1,
+     0,
+     "SP"
+    ],
+    [
+     0.563,
+     -1.379,
+     2,
+     0,
+     "AC"
+    ],
+    [
+     -1.221,
+     -0.666,
+     3,
+     0,
+     "AC"
+    ],
+    [
+     -0.655,
+     -0.458,
+     3,
+     0,
+     "AP"
+    ],
+    [
+     -1.696,
+     -0.91,
+     3,
+     0,
+     "PI"
+    ],
+    [
+     -1.409,
+     1.044,
+     0,
+     0,
+     "MA"
+    ],
+    [
+     -0.406,
+     -1.026,
+     3,
+     0,
+     "AP"
+    ],
+    [
+     -0.419,
+     -0.121,
+     3,
+     0,
+     "AC"
+    ],
+    [
+     0.41,
+     -0.377,
+     3,
+     0,
+     "AP"
+    ],
+    [
+     -1.94,
+     1.249,
+     0,
+     0,
+     "PI"
+    ],
+    [
+     -2.124,
+     1.64,
+     0,
+     0,
+     "PI"
+    ],
+    [
+     2.507,
+     0.977,
+     1,
+     0,
+     "MA"
+    ],
+    [
+     -2.205,
+     1.615,
+     0,
+     0,
+     "PI"
+    ],
+    [
+     -1.111,
+     -1.319,
+     3,
+     0,
+     "AC"
+    ],
+    [
+     -1.897,
+     1.006,
+     0,
+     0,
+     "AP"
+    ],
+    [
+     -0.863,
+     0.35,
+     3,
+     0,
+     "MA"
+    ],
+    [
+     -0.905,
+     -0.676,
+     3,
+     0,
+     "PI"
+    ],
+    [
+     -0.649,
+     -0.651,
+     3,
+     0,
+     "AP"
+    ],
+    [
+     0.844,
+     -1.585,
+     2,
+     0,
+     "GO"
+    ],
+    [
+     -1.294,
+     0.178,
+     3,
+     0,
+     "SP"
+    ],
+    [
+     0.444,
+     -1.329,
+     2,
+     0,
+     "SC"
+    ],
+    [
+     -1.602,
+     0.409,
+     0,
+     0,
+     "SP"
+    ],
+    [
+     -0.054,
+     -0.456,
+     3,
+     0,
+     "GO"
+    ],
+    [
+     -1.525,
+     -1.035,
+     3,
+     0,
+     "PI"
+    ],
+    [
+     0.301,
+     -1.908,
+     2,
+     0,
+     "SP"
+    ],
+    [
+     0.243,
+     0.54,
+     3,
+     0,
+     "AC"
+    ],
+    [
+     1.048,
+     -2.292,
+     2,
+     0,
+     "MA"
+    ],
+    [
+     1.559,
+     -1.638,
+     2,
+     0,
+     "PI"
+    ],
+    [
+     -0.23,
+     -1.634,
+     2,
+     0,
+     "PI"
+    ],
+    [
+     -0.194,
+     0.393,
+     3,
+     0,
+     "BA"
+    ],
+    [
+     -0.207,
+     -1.968,
+     2,
+     0,
+     "PI"
+    ],
+    [
+     2.713,
+     0.902,
+     1,
+     0,
+     "AC"
+    ],
+    [
+     -0.749,
+     -0.346,
+     3,
+     0,
+     "SC"
+    ],
+    [
+     -1.915,
+     1.654,
+     0,
+     0,
+     "SP"
+    ],
+    [
+     -0.292,
+     -1.402,
+     2,
+     0,
+     "BA"
+    ],
+    [
+     2.134,
+     1.495,
+     1,
+     0,
+     "SP"
+    ],
+    [
+     0.001,
+     -1.722,
+     2,
+     0,
+     "MA"
+    ],
+    [
+     3.974,
+     1.673,
+     1,
+     0,
+     "SC"
+    ],
+    [
+     -2.463,
+     1.403,
+     0,
+     0,
+     "AP"
+    ],
+    [
+     1.94,
+     1.314,
+     1,
+     0,
+     "SP"
+    ],
+    [
+     -1.663,
+     1.189,
+     0,
+     0,
+     "PI"
+    ],
+    [
+     1.924,
+     2.067,
+     1,
+     0,
+     "GO"
+    ],
+    [
+     -1.033,
+     0.718,
+     0,
+     0,
+     "MA"
+    ],
+    [
+     0.803,
+     -1.878,
+     2,
+     0,
+     "MA"
+    ],
+    [
+     -0.332,
+     -0.319,
+     3,
+     0,
+     "SC"
+    ],
+    [
+     -1.656,
+     -0.32,
+     3,
+     0,
+     "AP"
+    ],
+    [
+     0.329,
+     -0.768,
+     3,
+     0,
+     "AP"
+    ],
+    [
+     0.317,
+     -1.169,
+     2,
+     0,
+     "AP"
+    ],
+    [
+     -0.02,
+     0.488,
+     3,
+     0,
+     "SC"
+    ],
+    [
+     2.424,
+     1.182,
+     1,
+     0,
+     "AC"
+    ],
+    [
+     0.696,
+     -1.563,
+     2,
+     0,
+     "AC"
+    ],
+    [
+     -2.036,
+     1.599,
+     0,
+     0,
+     "PI"
+    ],
+    [
+     -1.578,
+     1.259,
+     0,
+     0,
+     "AC"
+    ],
+    [
+     1.776,
+     0.822,
+     1,
+     0,
+     "PI"
+    ],
+    [
+     -2.569,
+     1.088,
+     0,
+     0,
+     "GO"
+    ],
+    [
+     -2.415,
+     1.346,
+     0,
+     0,
+     "PI"
+    ],
+    [
+     2.471,
+     0.163,
+     1,
+     0,
+     "AC"
+    ],
+    [
+     -0.581,
+     -0.722,
+     3,
+     0,
+     "AC"
+    ],
+    [
+     2.381,
+     1.045,
+     1,
+     0,
+     "SC"
+    ],
+    [
+     2.267,
+     -0.039,
+     1,
+     0,
+     "GO"
+    ],
+    [
+     -2.456,
+     0.604,
+     0,
+     0,
+     "SC"
+    ],
+    [
+     0.803,
+     -2.011,
+     2,
+     0,
+     "SC"
+    ],
+    [
+     1.518,
+     1.91,
+     1,
+     0,
+     "MA"
+    ],
+    [
+     -0.817,
+     -0.492,
+     3,
+     0,
+     "MA"
+    ],
+    [
+     0.107,
+     -1.315,
+     2,
+     0,
+     "AC"
+    ],
+    [
+     0.046,
+     -1.681,
+     2,
+     0,
+     "MA"
+    ],
+    [
+     -0.024,
+     -1.475,
+     2,
+     0,
+     "PI"
+    ],
+    [
+     -1.589,
+     1.493,
+     0,
+     0,
+     "BA"
+    ],
+    [
+     -0.346,
+     -0.617,
+     3,
+     0,
+     "BA"
+    ],
+    [
+     0.075,
+     -1.339,
+     2,
+     0,
+     "BA"
+    ],
+    [
+     2.406,
+     1.438,
+     1,
+     0,
+     "MA"
+    ],
+    [
+     -1.178,
+     -0.205,
+     0,
+     0,
+     "MA"
+    ],
+    [
+     -2.668,
+     1.212,
+     0,
+     0,
+     "MA"
+    ],
+    [
+     0.634,
+     -0.389,
+     3,
+     0,
+     "SP"
+    ],
+    [
+     1.89,
+     1.311,
+     1,
+     0,
+     "GO"
+    ],
+    [
+     1.936,
+     1.511,
+     1,
+     0,
+     "MA"
+    ],
+    [
+     1.905,
+     0.879,
+     1,
+     0,
+     "AP"
+    ],
+    [
+     -1.254,
+     0.481,
+     0,
+     0,
+     "SP"
+    ],
+    [
+     2.225,
+     1.862,
+     1,
+     0,
+     "BA"
+    ],
+    [
+     0.565,
+     -1.324,
+     2,
+     0,
+     "GO"
+    ],
+    [
+     -2.551,
+     0.947,
+     0,
+     0,
+     "SP"
+    ],
+    [
+     0.019,
+     -0.124,
+     3,
+     0,
+     "PI"
+    ],
+    [
+     2.328,
+     0.917,
+     1,
+     0,
+     "MA"
+    ],
+    [
+     1.409,
+     -1.322,
+     2,
+     0,
+     "AC"
+    ],
+    [
+     -0.147,
+     -1.567,
+     2,
+     0,
+     "AP"
+    ],
+    [
+     -2.279,
+     1.294,
+     0,
+     0,
+     "SC"
+    ],
+    [
+     -1.638,
+     -0.893,
+     3,
+     0,
+     "SP"
+    ],
+    [
+     -1.328,
+     0.834,
+     0,
+     0,
+     "AC"
+    ],
+    [
+     3.557,
+     1.37,
+     1,
+     0,
+     "BA"
+    ],
+    [
+     2.256,
+     1.576,
+     1,
+     0,
+     "AC"
+    ],
+    [
+     -1.236,
+     1.441,
+     0,
+     0,
+     "BA"
+    ],
+    [
+     1.307,
+     -1.425,
+     2,
+     0,
+     "PI"
+    ],
+    [
+     1.918,
+     0.977,
+     1,
+     0,
+     "AP"
+    ],
+    [
+     2.295,
+     1.272,
+     1,
+     0,
+     "PI"
+    ],
+    [
+     0.735,
+     -1.338,
+     2,
+     0,
+     "MA"
+    ],
+    [
+     2.218,
+     0.984,
+     1,
+     0,
+     "PI"
+    ],
+    [
+     0.075,
+     0.403,
+     3,
+     0,
+     "GO"
+    ],
+    [
+     -1.168,
+     -0.789,
+     3,
+     0,
+     "AC"
+    ],
+    [
+     -0.307,
+     -0.43,
+     3,
+     0,
+     "SC"
+    ],
+    [
+     -0.43,
+     -0.942,
+     2,
+     0,
+     "GO"
+    ],
+    [
+     0.963,
+     -2.39,
+     2,
+     0,
+     "AC"
+    ],
+    [
+     -1.001,
+     -1.637,
+     2,
+     0,
+     "SC"
+    ],
+    [
+     2.608,
+     0.664,
+     1,
+     0,
+     "AC"
+    ],
+    [
+     0.799,
+     -1.296,
+     2,
+     0,
+     "SC"
+    ],
+    [
+     -0.228,
+     0.308,
+     3,
+     0,
+     "BA"
+    ],
+    [
+     1.47,
+     1.44,
+     1,
+     0,
+     "PI"
+    ],
+    [
+     -1.547,
+     0.033,
+     0,
+     0,
+     "AC"
+    ],
+    [
+     -1.445,
+     0.479,
+     0,
+     0,
+     "SP"
+    ],
+    [
+     -2.33,
+     0.738,
+     0,
+     0,
+     "AC"
+    ],
+    [
+     -0.486,
+     -0.259,
+     3,
+     0,
+     "AP"
+    ],
+    [
+     0.291,
+     -1.253,
+     2,
+     0,
+     "AC"
+    ],
+    [
+     1.191,
+     -1.162,
+     2,
+     0,
+     "MA"
+    ],
+    [
+     -0.273,
+     -0.214,
+     3,
+     0,
+     "SP"
+    ],
+    [
+     -0.925,
+     -0.587,
+     3,
+     0,
+     "AP"
+    ],
+    [
+     0.94,
+     -2.08,
+     2,
+     0,
+     "BA"
+    ],
+    [
+     -0.215,
+     0.35,
+     3,
+     0,
+     "PI"
+    ],
+    [
+     -0.012,
+     -1.866,
+     2,
+     0,
+     "SP"
+    ],
+    [
+     -1.979,
+     1.353,
+     0,
+     0,
+     "GO"
+    ],
+    [
+     0.058,
+     -0.365,
+     3,
+     0,
+     "BA"
+    ],
+    [
+     -0.154,
+     -1.703,
+     2,
+     0,
+     "SP"
+    ],
+    [
+     1.709,
+     2.025,
+     1,
+     0,
+     "MA"
+    ],
+    [
+     -2.436,
+     0.714,
+     0,
+     0,
+     "AC"
+    ],
+    [
+     -0.216,
+     -0.803,
+     3,
+     0,
+     "AP"
+    ],
+    [
+     2.901,
+     1.149,
+     1,
+     0,
+     "MA"
+    ],
+    [
+     -0.791,
+     -0.002,
+     3,
+     0,
+     "BA"
+    ],
+    [
+     0.813,
+     -2.044,
+     2,
+     0,
+     "PI"
+    ],
+    [
+     0.705,
+     -2.266,
+     2,
+     0,
+     "MA"
+    ],
+    [
+     -0.462,
+     -0.434,
+     3,
+     0,
+     "AP"
+    ],
+    [
+     -2.01,
+     0.545,
+     3,
+     0,
+     "MA"
+    ],
+    [
+     -0.215,
+     -0.727,
+     3,
+     0,
+     "AP"
+    ],
+    [
+     0.05,
+     -1.017,
+     3,
+     0,
+     "SP"
+    ],
+    [
+     0.341,
+     -1.02,
+     2,
+     0,
+     "GO"
+    ],
+    [
+     1.492,
+     -1.465,
+     2,
+     0,
+     "PI"
+    ],
+    [
+     -0.859,
+     -0.29,
+     3,
+     0,
+     "SP"
+    ],
+    [
+     1.463,
+     1.391,
+     1,
+     0,
+     "BA"
+    ],
+    [
+     -1.766,
+     0.597,
+     0,
+     0,
+     "BA"
+    ],
+    [
+     0.679,
+     -0.994,
+     2,
+     0,
+     "AC"
+    ],
+    [
+     -1.26,
+     1.189,
+     0,
+     0,
+     "PI"
+    ],
+    [
+     1.407,
+     -1.914,
+     2,
+     0,
+     "GO"
+    ],
+    [
+     -0.934,
+     -0.099,
+     3,
+     0,
+     "SC"
+    ],
+    [
+     0.354,
+     -0.642,
+     3,
+     0,
+     "BA"
+    ],
+    [
+     -2.596,
+     1.317,
+     0,
+     0,
+     "MA"
+    ],
+    [
+     2.676,
+     1.072,
+     1,
+     0,
+     "PI"
+    ],
+    [
+     0.143,
+     -2.273,
+     2,
+     0,
+     "AP"
+    ],
+    [
+     1.627,
+     1.563,
+     1,
+     0,
+     "AP"
+    ],
+    [
+     0.211,
+     -1.519,
+     2,
+     0,
+     "SP"
+    ],
+    [
+     1.283,
+     -2.874,
+     2,
+     0,
+     "GO"
+    ],
+    [
+     0.908,
+     1.061,
+     1,
+     0,
+     "BA"
+    ],
+    [
+     1.82,
+     1.292,
+     1,
+     0,
+     "AP"
+    ],
+    [
+     -0.267,
+     -1.8,
+     2,
+     0,
+     "AC"
+    ],
+    [
+     -0.455,
+     -0.397,
+     3,
+     0,
+     "AC"
+    ],
+    [
+     0.281,
+     -1.363,
+     2,
+     0,
+     "AC"
+    ],
+    [
+     -1.768,
+     1.554,
+     0,
+     0,
+     "SP"
+    ],
+    [
+     1.449,
+     0.968,
+     1,
+     0,
+     "AP"
+    ],
+    [
+     2.56,
+     1.903,
+     1,
+     0,
+     "AP"
+    ],
+    [
+     -1.703,
+     1.18,
+     0,
+     0,
+     "PI"
+    ],
+    [
+     -1.325,
+     -0.991,
+     3,
+     0,
+     "AC"
+    ],
+    [
+     -2.315,
+     0.397,
+     0,
+     0,
+     "MA"
+    ],
+    [
+     1.778,
+     1.442,
+     1,
+     0,
+     "SP"
+    ],
+    [
+     -1.076,
+     0.061,
+     0,
+     0,
+     "AP"
+    ],
+    [
+     0.801,
+     -0.847,
+     2,
+     0,
+     "AC"
+    ],
+    [
+     -1.887,
+     1.493,
+     0,
+     0,
+     "AC"
+    ],
+    [
+     -0.083,
+     -0.276,
+     3,
+     0,
+     "BA"
+    ],
+    [
+     -1.57,
+     1.56,
+     0,
+     0,
+     "MA"
+    ],
+    [
+     1.704,
+     -1.461,
+     2,
+     0,
+     "PI"
+    ],
+    [
+     0.102,
+     -1.313,
+     2,
+     0,
+     "PI"
+    ],
+    [
+     -1.974,
+     1.496,
+     0,
+     0,
+     "BA"
+    ],
+    [
+     -0.945,
+     0.551,
+     3,
+     0,
+     "PI"
+    ],
+    [
+     -1.881,
+     0.64,
+     0,
+     0,
+     "MA"
+    ],
+    [
+     1.757,
+     1.45,
+     1,
+     0,
+     "SP"
+    ],
+    [
+     -0.775,
+     -0.493,
+     3,
+     0,
+     "GO"
+    ],
+    [
+     0.319,
+     -1.395,
+     2,
+     0,
+     "AP"
+    ],
+    [
+     -0.244,
+     -0.813,
+     3,
+     0,
+     "BA"
+    ],
+    [
+     -0.323,
+     -0.019,
+     3,
+     0,
+     "BA"
+    ],
+    [
+     0.365,
+     -0.239,
+     3,
+     0,
+     "SC"
+    ],
+    [
+     2.016,
+     1.463,
+     1,
+     0,
+     "BA"
+    ],
+    [
+     -0.514,
+     -1.745,
+     2,
+     0,
+     "PI"
+    ],
+    [
+     0.06,
+     -1.174,
+     3,
+     0,
+     "MA"
+    ],
+    [
+     -0.079,
+     -0.861,
+     2,
+     0,
+     "GO"
+    ],
+    [
+     1.8,
+     1.744,
+     1,
+     0,
+     "BA"
+    ],
+    [
+     2.567,
+     0.617,
+     1,
+     0,
+     "SP"
+    ],
+    [
+     -0.99,
+     -0.65,
+     3,
+     0,
+     "BA"
+    ],
+    [
+     -0.823,
+     -0.617,
+     3,
+     0,
+     "AP"
+    ],
+    [
+     -2.459,
+     0.895,
+     0,
+     0,
+     "GO"
+    ],
+    [
+     -2.427,
+     0.459,
+     0,
+     0,
+     "SP"
+    ],
+    [
+     -2.196,
+     1.135,
+     0,
+     0,
+     "MA"
+    ],
+    [
+     1.618,
+     1.865,
+     1,
+     0,
+     "AP"
+    ],
+    [
+     -2.526,
+     0.82,
+     0,
+     0,
+     "SP"
+    ],
+    [
+     2.474,
+     1.374,
+     1,
+     0,
+     "BA"
+    ],
+    [
+     1.169,
+     -0.934,
+     2,
+     0,
+     "SP"
+    ],
+    [
+     -0.579,
+     -0.876,
+     2,
+     0,
+     "MA"
+    ],
+    [
+     0.756,
+     -1.072,
+     2,
+     0,
+     "SC"
+    ],
+    [
+     0.424,
+     -0.277,
+     3,
+     0,
+     "PI"
+    ],
+    [
+     2.607,
+     1.2,
+     1,
+     0,
+     "AP"
+    ],
+    [
+     1.877,
+     1.584,
+     1,
+     0,
+     "BA"
+    ],
+    [
+     -2.679,
+     1.386,
+     0,
+     0,
+     "GO"
+    ],
+    [
+     2.015,
+     0.909,
+     1,
+     0,
+     "AC"
+    ],
+    [
+     -0.482,
+     -2.366,
+     2,
+     0,
+     "BA"
+    ],
+    [
+     -0.596,
+     -0.775,
+     3,
+     0,
+     "GO"
+    ],
+    [
+     0.769,
+     -1.596,
+     2,
+     0,
+     "SP"
+    ],
+    [
+     -1.437,
+     0.531,
+     0,
+     0,
+     "AC"
+    ],
+    [
+     1.931,
+     1.075,
+     1,
+     0,
+     "SC"
+    ],
+    [
+     2.094,
+     0.746,
+     1,
+     0,
+     "AP"
+    ],
+    [
+     -0.704,
+     -0.87,
+     3,
+     0,
+     "BA"
+    ],
+    [
+     -0.048,
+     -1.579,
+     2,
+     0,
+     "GO"
+    ],
+    [
+     0.333,
+     -0.726,
+     3,
+     0,
+     "PI"
+    ],
+    [
+     -2.181,
+     0.696,
+     0,
+     0,
+     "MA"
+    ],
+    [
+     -0.487,
+     -0.549,
+     3,
+     0,
+     "SP"
+    ],
+    [
+     0.482,
+     0.82,
+     1,
+     0,
+     "BA"
+    ],
+    [
+     0.5,
+     -1.325,
+     2,
+     0,
+     "SC"
+    ],
+    [
+     0.158,
+     -1.323,
+     2,
+     0,
+     "SP"
+    ],
+    [
+     2.615,
+     1.793,
+     1,
+     0,
+     "PI"
+    ],
+    [
+     1.982,
+     1.148,
+     1,
+     0,
+     "PI"
+    ],
+    [
+     2.514,
+     1.017,
+     1,
+     0,
+     "SP"
+    ],
+    [
+     2.249,
+     1.017,
+     1,
+     0,
+     "BA"
+    ],
+    [
+     0.293,
+     -1.682,
+     2,
+     0,
+     "GO"
+    ],
+    [
+     1.846,
+     0.94,
+     1,
+     0,
+     "PI"
+    ],
+    [
+     -0.356,
+     -0.615,
+     3,
+     0,
+     "SP"
+    ],
+    [
+     -2.261,
+     1.261,
+     0,
+     0,
+     "AC"
+    ],
+    [
+     0.403,
+     -1.272,
+     2,
+     0,
+     "SP"
+    ],
+    [
+     -0.154,
+     -0.469,
+     3,
+     0,
+     "PI"
+    ],
+    [
+     -0.95,
+     -0.574,
+     3,
+     0,
+     "AP"
+    ],
+    [
+     -0.137,
+     1.106,
+     0,
+     0,
+     "PI"
+    ],
+    [
+     -2.009,
+     0.551,
+     0,
+     0,
+     "SP"
+    ],
+    [
+     -2.921,
+     0.009,
+     0,
+     0,
+     "PI"
+    ],
+    [
+     2.112,
+     0.769,
+     1,
+     0,
+     "SC"
+    ],
+    [
+     -2.519,
+     0.446,
+     0,
+     0,
+     "SP"
+    ],
+    [
+     2.878,
+     1.591,
+     1,
+     0,
+     "AC"
+    ],
+    [
+     -0.232,
+     -0.755,
+     3,
+     0,
+     "MA"
+    ],
+    [
+     2.766,
+     1.677,
+     1,
+     0,
+     "SP"
+    ],
+    [
+     -0.129,
+     -1.004,
+     2,
+     0,
+     "SC"
+    ],
+    [
+     0.54,
+     -1.231,
+     2,
+     0,
+     "SC"
+    ],
+    [
+     0.512,
+     -1.355,
+     2,
+     0,
+     "GO"
+    ],
+    [
+     -1.341,
+     0.802,
+     0,
+     0,
+     "PI"
+    ],
+    [
+     2.815,
+     1.181,
+     1,
+     0,
+     "AP"
+    ],
+    [
+     1.864,
+     0.923,
+     1,
+     0,
+     "PI"
+    ],
+    [
+     -0.355,
+     -0.324,
+     3,
+     0,
+     "PI"
+    ],
+    [
+     -0.151,
+     0.346,
+     3,
+     0,
+     "AC"
+    ],
+    [
+     -1.363,
+     0.173,
+     0,
+     0,
+     "GO"
+    ],
+    [
+     1.817,
+     1.92,
+     1,
+     0,
+     "GO"
+    ],
+    [
+     0.574,
+     -1.474,
+     2,
+     0,
+     "MA"
+    ],
+    [
+     1.96,
+     1.232,
+     1,
+     0,
+     "SC"
+    ],
+    [
+     1.264,
+     1.322,
+     1,
+     0,
+     "PI"
+    ],
+    [
+     0.792,
+     -0.596,
+     3,
+     0,
+     "MA"
+    ],
+    [
+     0.311,
+     -0.565,
+     3,
+     0,
+     "AC"
+    ],
+    [
+     0.11,
+     -1.766,
+     2,
+     0,
+     "GO"
+    ],
+    [
+     -0.36,
+     -1.413,
+     2,
+     0,
+     "SP"
+    ],
+    [
+     -0.335,
+     -1.635,
+     2,
+     0,
+     "BA"
+    ],
+    [
+     1.717,
+     0.709,
+     1,
+     0,
+     "AP"
+    ],
+    [
+     1.691,
+     0.792,
+     1,
+     0,
+     "GO"
+    ],
+    [
+     -0.26,
+     -1.621,
+     2,
+     0,
+     "GO"
+    ],
+    [
+     0.785,
+     -1.292,
+     2,
+     0,
+     "BA"
+    ],
+    [
+     -1.795,
+     1.937,
+     0,
+     0,
+     "AP"
+    ],
+    [
+     1.552,
+     1.127,
+     1,
+     0,
+     "PI"
+    ],
+    [
+     1.594,
+     1.081,
+     1,
+     0,
+     "AP"
+    ],
+    [
+     -1.461,
+     0.394,
+     0,
+     0,
+     "PI"
+    ],
+    [
+     2.496,
+     0.722,
+     1,
+     0,
+     "AP"
+    ],
+    [
+     -2.884,
+     1.189,
+     0,
+     0,
+     "MA"
+    ],
+    [
+     1.044,
+     0.867,
+     1,
+     0,
+     "MA"
+    ],
+    [
+     0.534,
+     -1.67,
+     2,
+     0,
+     "BA"
+    ],
+    [
+     -2.073,
+     1.063,
+     0,
+     0,
+     "BA"
+    ],
+    [
+     -0.79,
+     0.346,
+     3,
+     0,
+     "GO"
+    ],
+    [
+     -2.881,
+     0.3,
+     0,
+     0,
+     "AP"
+    ],
+    [
+     0.989,
+     -0.78,
+     2,
+     0,
+     "SC"
+    ],
+    [
+     -1.86,
+     0.772,
+     0,
+     0,
+     "SC"
+    ],
+    [
+     0.468,
+     -1.647,
+     2,
+     0,
+     "SC"
+    ],
+    [
+     -2.329,
+     1.351,
+     0,
+     0,
+     "AP"
+    ],
+    [
+     -1.197,
+     0.661,
+     0,
+     0,
+     "SP"
+    ],
+    [
+     0.728,
+     -0.99,
+     2,
+     0,
+     "PI"
+    ],
+    [
+     -1.822,
+     0.441,
+     0,
+     0,
+     "AP"
+    ],
+    [
+     0.802,
+     -0.916,
+     2,
+     0,
+     "SP"
+    ],
+    [
+     -0.088,
+     -0.971,
+     3,
+     0,
+     "SP"
+    ],
+    [
+     0.595,
+     -1.526,
+     2,
+     0,
+     "SC"
+    ],
+    [
+     1.312,
+     1.246,
+     1,
+     0,
+     "AC"
+    ],
+    [
+     -1.255,
+     1.314,
+     0,
+     0,
+     "GO"
+    ],
+    [
+     0.403,
+     -0.556,
+     3,
+     0,
+     "PI"
+    ],
+    [
+     -0.303,
+     0.848,
+     3,
+     0,
+     "AP"
+    ],
+    [
+     0.3,
+     -1.193,
+     2,
+     0,
+     "MA"
+    ],
+    [
+     -1.733,
+     1.898,
+     0,
+     0,
+     "PI"
+    ],
+    [
+     -0.026,
+     -1.731,
+     2,
+     0,
+     "SC"
+    ],
+    [
+     1.289,
+     -1.475,
+     2,
+     0,
+     "SC"
+    ],
+    [
+     2.66,
+     1.271,
+     1,
+     0,
+     "AC"
+    ],
+    [
+     1.952,
+     0.924,
+     1,
+     0,
+     "GO"
+    ],
+    [
+     2.204,
+     -0.901,
+     2,
+     0,
+     "SC"
+    ],
+    [
+     2.158,
+     1.194,
+     1,
+     0,
+     "AP"
+    ],
+    [
+     2.129,
+     0.5,
+     1,
+     0,
+     "AP"
+    ],
+    [
+     0.777,
+     -2.357,
+     2,
+     0,
+     "BA"
+    ],
+    [
+     1.786,
+     0.813,
+     1,
+     0,
+     "SC"
+    ],
+    [
+     -0.351,
+     -1.54,
+     2,
+     0,
+     "SC"
+    ],
+    [
+     -0.974,
+     0.273,
+     3,
+     0,
+     "SC"
+    ],
+    [
+     -1.771,
+     -0.425,
+     3,
+     0,
+     "BA"
+    ],
+    [
+     0.737,
+     -1.225,
+     2,
+     0,
+     "PI"
+    ],
+    [
+     -1.233,
+     -0.182,
+     3,
+     0,
+     "SP"
+    ],
+    [
+     1.714,
+     1.055,
+     1,
+     0,
+     "SP"
+    ],
+    [
+     0.389,
+     -2.126,
+     2,
+     0,
+     "SC"
+    ],
+    [
+     -1.301,
+     0.686,
+     0,
+     0,
+     "AP"
+    ],
+    [
+     1.813,
+     1.64,
+     1,
+     0,
+     "PI"
+    ],
+    [
+     1.403,
+     -1.641,
+     2,
+     0,
+     "AP"
+    ],
+    [
+     -0.657,
+     -0.119,
+     3,
+     0,
+     "SP"
+    ],
+    [
+     -1.955,
+     0.299,
+     0,
+     0,
+     "BA"
+    ],
+    [
+     -1.88,
+     1.495,
+     0,
+     0,
+     "BA"
+    ],
+    [
+     1.07,
+     -2.045,
+     2,
+     0,
+     "BA"
+    ],
+    [
+     1.844,
+     -0.078,
+     1,
+     0,
+     "AC"
+    ],
+    [
+     -1.011,
+     1.41,
+     0,
+     0,
+     "SC"
+    ],
+    [
+     2.476,
+     1.213,
+     1,
+     0,
+     "AC"
+    ],
+    [
+     0.867,
+     -1.661,
+     2,
+     0,
+     "SC"
+    ],
+    [
+     -2.363,
+     0.59,
+     0,
+     0,
+     "SC"
+    ],
+    [
+     2.581,
+     1.383,
+     1,
+     0,
+     "AC"
+    ],
+    [
+     -2.38,
+     0.678,
+     0,
+     0,
+     "PI"
+    ],
+    [
+     -0.53,
+     0.157,
+     3,
+     0,
+     "AC"
+    ],
+    [
+     3.402,
+     0.385,
+     0,
+     1,
+     "SC"
+    ],
+    [
+     -0.679,
+     1.261,
+     0,
+     1,
+     "SC"
+    ],
+    [
+     -3.252,
+     -2.063,
+     1,
+     1,
+     "MA"
+    ],
+    [
+     -1.137,
+     -0.83,
+     0,
+     1,
+     "SC"
+    ],
+    [
+     1.259,
+     0.609,
+     1,
+     1,
+     "SC"
+    ],
+    [
+     1.929,
+     -1.453,
+     1,
+     1,
+     "PI"
+    ],
+    [
+     2.208,
+     -1.144,
+     0,
+     1,
+     "PI"
+    ],
+    [
+     -1.109,
+     0.178,
+     2,
+     1,
+     "SP"
+    ],
+    [
+     -1.977,
+     0.349,
+     1,
+     1,
+     "AP"
+    ],
+    [
+     -2.795,
+     0.773,
+     2,
+     1,
+     "GO"
+    ],
+    [
+     3.496,
+     0.748,
+     0,
+     1,
+     "AP"
+    ],
+    [
+     0.346,
+     -1.77,
+     0,
+     1,
+     "MA"
+    ],
+    [
+     3.518,
+     -0.806,
+     2,
+     1,
+     "MA"
+    ],
+    [
+     2.967,
+     2.134,
+     1,
+     1,
+     "MA"
+    ],
+    [
+     -1.193,
+     1.258,
+     0,
+     1,
+     "PI"
+    ],
+    [
+     -2.295,
+     2.474,
+     3,
+     1,
+     "GO"
+    ],
+    [
+     -2.303,
+     1.739,
+     3,
+     1,
+     "AC"
+    ],
+    [
+     1.28,
+     -2.907,
+     0,
+     1,
+     "GO"
+    ],
+    [
+     -3.52,
+     0.385,
+     2,
+     1,
+     "GO"
+    ],
+    [
+     3.56,
+     0.763,
+     3,
+     1,
+     "BA"
+    ]
+   ],
+   "n_pontos": 620
+  },
+  "interpretacao": [
+   "Os grupos seguem a geografia: três dos quatro têm mais da metade das seções numa só região.",
+   "O grupo mais atípico reúne seções pequenas com abstenção alta."
+  ]
+ },
+ "urna": {
+  "modelos": [
+   "UE2010",
+   "UE2011",
+   "UE2013",
+   "UE2015",
+   "UE2020",
+   "UE2022"
+  ],
+  "por_uf": [
+   {
+    "uf": "AC",
+    "regiao": "Norte",
+    "modelo": "UE2010",
+    "secoes": 216,
+    "pct_da_uf": 27.08
+   },
+   {
+    "uf": "AC",
+    "regiao": "Norte",
+    "modelo": "UE2011",
+    "secoes": 62,
+    "pct_da_uf": 7.75
+   },
+   {
+    "uf": "AC",
+    "regiao": "Norte",
+    "modelo": "UE2013",
+    "secoes": 79,
+    "pct_da_uf": 9.93
+   },
+   {
+    "uf": "AC",
+    "regiao": "Norte",
+    "modelo": "UE2015",
+    "secoes": 151,
+    "pct_da_uf": 18.95
+   },
+   {
+    "uf": "AC",
+    "regiao": "Norte",
+    "modelo": "UE2020",
+    "secoes": 237,
+    "pct_da_uf": 29.71
+   },
+   {
+    "uf": "AC",
+    "regiao": "Norte",
+    "modelo": "UE2022",
+    "secoes": 52,
+    "pct_da_uf": 6.58
+   },
+   {
+    "uf": "AP",
+    "regiao": "Norte",
+    "modelo": "UE2010",
+    "secoes": 12,
+    "pct_da_uf": 1.61
+   },
+   {
+    "uf": "AP",
+    "regiao": "Norte",
+    "modelo": "UE2011",
+    "secoes": 193,
+    "pct_da_uf": 24.13
+   },
+   {
+    "uf": "AP",
+    "regiao": "Norte",
+    "modelo": "UE2013",
+    "secoes": 210,
+    "pct_da_uf": 26.27
+   },
+   {
+    "uf": "AP",
+    "regiao": "Norte",
+    "modelo": "UE2015",
+    "secoes": 181,
+    "pct_da_uf": 22.69
+   },
+   {
+    "uf": "AP",
+    "regiao": "Norte",
+    "modelo": "UE2020",
+    "secoes": 11,
+    "pct_da_uf": 1.43
+   },
+   {
+    "uf": "AP",
+    "regiao": "Norte",
+    "modelo": "UE2022",
+    "secoes": 191,
+    "pct_da_uf": 23.88
+   },
+   {
+    "uf": "MA",
+    "regiao": "Nordeste",
+    "modelo": "UE2010",
+    "secoes": 102,
+    "pct_da_uf": 12.76
+   },
+   {
+    "uf": "MA",
+    "regiao": "Nordeste",
+    "modelo": "UE2011",
+    "secoes": 101,
+    "pct_da_uf": 12.64
+   },
+   {
+    "uf": "MA",
+    "regiao": "Nordeste",
+    "modelo": "UE2013",
+    "secoes": 32,
+    "pct_da_uf": 4.06
+   },
+   {
+    "uf": "MA",
+    "regiao": "Nordeste",
+    "modelo": "UE2015",
+    "secoes": 217,
+    "pct_da_uf": 27.21
+   },
+   {
+    "uf": "MA",
+    "regiao": "Nordeste",
+    "modelo": "UE2020",
+    "secoes": 159,
+    "pct_da_uf": 19.92
+   },
+   {
+    "uf": "MA",
+    "regiao": "Nordeste",
+    "modelo": "UE2022",
+    "secoes": 187,
+    "pct_da_uf": 23.4
+   },
+   {
+    "uf": "BA",
+    "regiao": "Nordeste",
+    "modelo": "UE2010",
+    "secoes": 51,
+    "pct_da_uf": 6.45
+   },
+   {
+    "uf": "BA",
+    "regiao": "Nordeste",
+    "modelo": "UE2011",
+    "secoes": 310,
+    "pct_da_uf": 38.76
+   },
+   {
+    "uf": "BA",
+    "regiao": "Nordeste",
+    "modelo": "UE2013",
+    "secoes": 45,
+    "pct_da_uf": 5.66
+   },
+   {
+    "uf": "BA",
+    "regiao": "Nordeste",
+    "modelo": "UE2015",
+    "secoes": 102,
+    "pct_da_uf": 12.85
+   },
+   {
+    "uf": "BA",
+    "regiao": "Nordeste",
+    "modelo": "UE2020",
+    "secoes": 170,
+    "pct_da_uf": 21.34
+   },
+   {
+    "uf": "BA",
+    "regiao": "Nordeste",
+    "modelo": "UE2022",
+    "secoes": 119,
+    "pct_da_uf": 14.93
+   },
+   {
+    "uf": "SP",
+    "regiao": "Sudeste",
+    "modelo": "UE2010",
+    "secoes": 180,
+    "pct_da_uf": 22.53
+   },
+   {
+    "uf": "SP",
+    "regiao": "Sudeste",
+    "modelo": "UE2011",
+    "secoes": 111,
+    "pct_da_uf": 13.93
+   },
+   {
+    "uf": "SP",
+    "regiao": "Sudeste",
+    "modelo": "UE2013",
+    "secoes": 95,
+    "pct_da_uf": 11.91
+   },
+   {
+    "uf": "SP",
+    "regiao": "Sudeste",
+    "modelo": "UE2015",
+    "secoes": 99,
+    "pct_da_uf": 12.42
+   },
+   {
+    "uf": "SP",
+    "regiao": "Sudeste",
+    "modelo": "UE2020",
+    "secoes": 154,
+    "pct_da_uf": 19.26
+   },
+   {
+    "uf": "SP",
+    "regiao": "Sudeste",
+    "modelo": "UE2022",
+    "secoes": 159,
+    "pct_da_uf": 19.95
+   },
+   {
+    "uf": "SC",
+    "regiao": "Sul",
+    "modelo": "UE2010",
+    "secoes": 104,
+    "pct_da_uf": 13.04
+   },
+   {
+    "uf": "SC",
+    "regiao": "Sul",
+    "modelo": "UE2011",
+    "secoes": 88,
+    "pct_da_uf": 11.04
+   },
+   {
+    "uf": "SC",
+    "regiao": "Sul",
+    "modelo": "UE2013",
+    "secoes": 235,
+    "pct_da_uf": 29.43
+   },
+   {
+    "uf": "SC",
+    "regiao": "Sul",
+    "modelo": "UE2015",
+    "secoes": 153,
+    "pct_da_uf": 19.24
+   },
+   {
+    "uf": "SC",
+    "regiao": "Sul",
+    "modelo": "UE2020",
+    "secoes": 52,
+    "pct_da_uf": 6.62
+   },
+   {
+    "uf": "SC",
+    "regiao": "Sul",
+    "modelo": "UE2022",
+    "secoes": 165,
+    "pct_da_uf": 20.63
+   },
+   {
+    "uf": "GO",
+    "regiao": "Centro-Oeste",
+    "modelo": "UE2010",
+    "secoes": 4,
+    "pct_da_uf": 0.56
+   },
+   {
+    "uf": "GO",
+    "regiao": "Centro-Oeste",
+    "modelo": "UE2011",
+    "secoes": 39,
+    "pct_da_uf": 4.91
+   },
+   {
+    "uf": "GO",
+    "regiao": "Centro-Oeste",
+    "modelo": "UE2013",
+    "secoes": 173,
+    "pct_da_uf": 21.67
+   },
+   {
+    "uf": "GO",
+    "regiao": "Centro-Oeste",
+    "modelo": "UE2015",
+    "secoes": 167,
+    "pct_da_uf": 20.93
+   },
+   {
+    "uf": "GO",
+    "regiao": "Centro-Oeste",
+    "modelo": "UE2020",
+    "secoes": 203,
+    "pct_da_uf": 25.42
+   },
+   {
+    "uf": "GO",
+    "regiao": "Centro-Oeste",
+    "modelo": "UE2022",
+    "secoes": 212,
+    "pct_da_uf": 26.52
+   },
+   {
+    "uf": "PI",
+    "regiao": "Nordeste",
+    "modelo": "UE2010",
+    "secoes": 12,
+    "pct_da_uf": 1.59
+   },
+   {
+    "uf": "PI",
+    "regiao": "Nordeste",
+    "modelo": "UE2011",
+    "secoes": 234,
+    "pct_da_uf": 29.36
+   },
+   {
+    "uf": "PI",
+    "regiao": "Nordeste",
+    "modelo": "UE2013",
+    "secoes": 16,
+    "pct_da_uf": 2.12
+   },
+   {
+    "uf": "PI",
+    "regiao": "Nordeste",
+    "modelo": "UE2015",
+    "secoes": 28,
+    "pct_da_uf": 3.62
+   },
+   {
+    "uf": "PI",
+    "regiao": "Nordeste",
+    "modelo": "UE2020",
+    "secoes": 251,
+    "pct_da_uf": 31.43
+   },
+   {
+    "uf": "PI",
+    "regiao": "Nordeste",
+    "modelo": "UE2022",
+    "secoes": 254,
+    "pct_da_uf": 31.87
+   }
+  ],
+  "fonte_modelo": [
+   {
+    "modelo_fonte": "log da urna",
+    "secoes": 5305
+   }
+  ],
+  "bruto": [
+   {
+    "modelo": "UE2010",
+    "secoes": 500,
+    "votantes": 100000,
+    "validos": 95000,
+    "flavio_pct": 40.0,
+    "lula_pct": 50.0,
+    "abstencao_pct": 20.0,
+    "brancos_pct": 2.0,
+    "nulos_pct": 3.0
+   },
+   {
+    "modelo": "UE2011",
+    "secoes": 500,
+    "votantes": 100000,
+    "validos": 95000,
+    "flavio_pct": 41.0,
+    "lula_pct": 49.0,
+    "abstencao_pct": 20.0,
+    "brancos_pct": 2.0,
+    "nulos_pct": 3.0
+   },
+   {
+    "modelo": "UE2013",
+    "secoes": 500,
+    "votantes": 100000,
+    "validos": 95000,
+    "flavio_pct": 42.0,
+    "lula_pct": 48.0,
+    "abstencao_pct": 20.0,
+    "brancos_pct": 2.0,
+    "nulos_pct": 3.0
+   },
+   {
+    "modelo": "UE2015",
+    "secoes": 500,
+    "votantes": 100000,
+    "validos": 95000,
+    "flavio_pct": 43.0,
+    "lula_pct": 47.0,
+    "abstencao_pct": 20.0,
+    "brancos_pct": 2.0,
+    "nulos_pct": 3.0
+   },
+   {
+    "modelo": "UE2020",
+    "secoes": 500,
+    "votantes": 100000,
+    "validos": 95000,
+    "flavio_pct": 44.0,
+    "lula_pct": 46.0,
+    "abstencao_pct": 20.0,
+    "brancos_pct": 2.0,
+    "nulos_pct": 3.0
+   },
+   {
+    "modelo": "UE2022",
+    "secoes": 500,
+    "votantes": 100000,
+    "validos": 95000,
+    "flavio_pct": 45.0,
+    "lula_pct": 45.0,
+    "abstencao_pct": 20.0,
+    "brancos_pct": 2.0,
+    "nulos_pct": 3.0
+   }
+  ],
+  "dentro_zona": {
+   "definicao": "diferença dentro da mesma zona, ponderada pelos votantes",
+   "minimo_secoes_por_modelo": 20,
+   "bootstrap": 2000,
+   "semente": 20261005,
+   "pares": [
+    {
+     "a": "UE2015",
+     "b": "UE2020",
+     "unidades": 132,
+     "secoes_a": 2069,
+     "secoes_b": 2477,
+     "votantes_a": 746142,
+     "votantes_b": 103645,
+     "flavio_pp": {
+      "estimativa": 0.28,
+      "ic95": [
+       -0.22,
+       0.78
+      ],
+      "bruto": -3.65
+     },
+     "lula_pp": {
+      "estimativa": -0.52,
+      "ic95": [
+       -1.02,
+       -0.02
+      ],
+      "bruto": 3.09
+     },
+     "abstencao_pp": {
+      "estimativa": 0.39,
+      "ic95": [
+       -0.11,
+       0.89
+      ],
+      "bruto": -3.33
+     },
+     "brancos_pp": {
+      "estimativa": -0.34,
+      "ic95": [
+       -0.84,
+       0.16
+      ],
+      "bruto": -0.83
+     },
+     "nulos_pp": {
+      "estimativa": -0.36,
+      "ic95": [
+       -0.86,
+       0.14
+      ],
+      "bruto": -2.69
+     }
+    },
+    {
+     "a": "UE2020",
+     "b": "UE2022",
+     "unidades": 333,
+     "secoes_a": 2701,
+     "secoes_b": 2062,
+     "votantes_a": 475726,
+     "votantes_b": 813161,
+     "flavio_pp": {
+      "estimativa": -0.07,
+      "ic95": [
+       -0.57,
+       0.43
+      ],
+      "bruto": 2.95
+     },
+     "lula_pp": {
+      "estimativa": -0.53,
+      "ic95": [
+       -1.03,
+       -0.03
+      ],
+      "bruto": -1.06
+     },
+     "abstencao_pp": {
+      "estimativa": 0.17,
+      "ic95": [
+       -0.33,
+       0.67
+      ],
+      "bruto": -3.44
+     },
+     "brancos_pp": {
+      "estimativa": 0.44,
+      "ic95": [
+       -0.06,
+       0.94
+      ],
+      "bruto": -2.98
+     },
+     "nulos_pp": {
+      "estimativa": 0.12,
+      "ic95": [
+       -0.38,
+       0.62
+      ],
+      "bruto": -2.44
+     }
+    },
+    {
+     "a": "UE2013",
+     "b": "UE2020",
+     "unidades": 399,
+     "secoes_a": 2498,
+     "secoes_b": 872,
+     "votantes_a": 572418,
+     "votantes_b": 281531,
+     "flavio_pp": {
+      "estimativa": 0.21,
+      "ic95": [
+       -0.29,
+       0.71
+      ],
+      "bruto": 1.61
+     },
+     "lula_pp": {
+      "estimativa": -0.25,
+      "ic95": [
+       -0.75,
+       0.25
+      ],
+      "bruto": -2.56
+     },
+     "abstencao_pp": {
+      "estimativa": 0.41,
+      "ic95": [
+       -0.09,
+       0.91
+      ],
+      "bruto": -2.42
+     },
+     "brancos_pp": {
+      "estimativa": 0.5,
+      "ic95": [
+       0.0,
+       1.0
+      ],
+      "bruto": -1.84
+     },
+     "nulos_pp": {
+      "estimativa": -0.48,
+      "ic95": [
+       -0.98,
+       0.02
+      ],
+      "bruto": -3.72
+     }
+    }
+   ]
+  },
+  "dentro_local": {
+   "definicao": "diferença dentro do mesmo local de votação",
+   "minimo_secoes_por_modelo": 1,
+   "bootstrap": 2000,
+   "semente": 20261005,
+   "pares": [
+    {
+     "a": "UE2015",
+     "b": "UE2020",
+     "unidades": 76,
+     "secoes_a": 406,
+     "secoes_b": 1898,
+     "votantes_a": 284639,
+     "votantes_b": 740886,
+     "flavio_pp": {
+      "estimativa": 0.4,
+      "ic95": [
+       -0.1,
+       0.9
+      ],
+      "bruto": 2.05
+     },
+     "lula_pp": {
+      "estimativa": -0.07,
+      "ic95": [
+       -0.57,
+       0.43
+      ],
+      "bruto": -0.67
+     },
+     "abstencao_pp": {
+      "estimativa": 0.44,
+      "ic95": [
+       -0.06,
+       0.94
+      ],
+      "bruto": 3.83
+     },
+     "brancos_pp": {
+      "estimativa": -0.44,
+      "ic95": [
+       -0.94,
+       0.06
+      ],
+      "bruto": -3.16
+     },
+     "nulos_pp": {
+      "estimativa": -0.06,
+      "ic95": [
+       -0.56,
+       0.44
+      ],
+      "bruto": 2.01
+     }
+    },
+    {
+     "a": "UE2020",
+     "b": "UE2022",
+     "unidades": 328,
+     "secoes_a": 1505,
+     "secoes_b": 2496,
+     "votantes_a": 804301,
+     "votantes_b": 211468,
+     "flavio_pp": {
+      "estimativa": -0.23,
+      "ic95": [
+       -0.73,
+       0.27
+      ],
+      "bruto": -2.17
+     },
+     "lula_pp": {
+      "estimativa": 0.06,
+      "ic95": [
+       -0.44,
+       0.56
+      ],
+      "bruto": -2.22
+     },
+     "abstencao_pp": {
+      "estimativa": 0.53,
+      "ic95": [
+       0.03,
+       1.03
+      ],
+      "bruto": 1.85
+     },
+     "brancos_pp": {
+      "estimativa": -0.32,
+      "ic95": [
+       -0.82,
+       0.18
+      ],
+      "bruto": 3.47
+     },
+     "nulos_pp": {
+      "estimativa": -0.21,
+      "ic95": [
+       -0.71,
+       0.29
+      ],
+      "bruto": -2.96
+     }
+    }
+   ]
+  },
+  "registro": {
+   "municipio": "REGISTRO",
+   "uf": "SP",
+   "mun_tse": "69531",
+   "ibge": "3542602",
+   "disponivel_2026": true,
+   "zonas_2026": [
+    {
+     "zona": 135,
+     "secoes": 90,
+     "modelos": [
+      {
+       "modelo": "UE2020",
+       "secoes": 50,
+       "votantes": 9000,
+       "flavio_pct": 55.1,
+       "lula_pct": 35.2,
+       "abstencao_pct": 21.0,
+       "brancos_pct": 2.1,
+       "nulos_pct": 3.2
+      },
+      {
+       "modelo": "UE2022",
+       "secoes": 40,
+       "votantes": 7000,
+       "flavio_pct": 54.8,
+       "lula_pct": 35.9,
+       "abstencao_pct": 20.5,
+       "brancos_pct": 2.0,
+       "nulos_pct": 3.0
+      }
+     ]
+    }
+   ],
+   "dentro_zona_2026": {
+    "pares": [
+     {
+      "a": "UE2020",
+      "b": "UE2022",
+      "unidades": 179,
+      "secoes_a": 1114,
+      "secoes_b": 2882,
+      "votantes_a": 622228,
+      "votantes_b": 777913,
+      "flavio_pp": {
+       "estimativa": -0.49,
+       "ic95": [
+        -0.99,
+        0.01
+       ],
+       "bruto": -0.77
+      },
+      "lula_pp": {
+       "estimativa": 0.27,
+       "ic95": [
+        -0.23,
+        0.77
+       ],
+       "bruto": -0.29
+      },
+      "abstencao_pp": {
+       "estimativa": 0.21,
+       "ic95": [
+        -0.29,
+        0.71
+       ],
+       "bruto": -2.88
+      },
+      "brancos_pp": {
+       "estimativa": 0.39,
+       "ic95": [
+        -0.11,
+        0.89
+       ],
+       "bruto": -2.63
+      },
+      "nulos_pp": {
+       "estimativa": 0.51,
+       "ic95": [
+        0.01,
+        1.01
+       ],
+       "bruto": 4.48
+      }
+     }
+    ]
+   },
+   "ano_2022": {
+    "disponivel": false,
+    "fonte": "detalhe_votacao_secao_2022.zip",
+    "motivo": "o arquivo de 2022 traz só totais por seção, sem o modelo da urna",
+    "zonas": []
+   },
+   "leitura": "Em Registro, as duas gerações de urna votaram igual dentro da zona."
+  },
+  "interpretacao": [
+   "Dentro da mesma zona, o modelo de urna não move o voto: as diferenças ficam abaixo de meio ponto.",
+   "A diferença bruta reflete onde cada modelo foi instalado."
+  ]
+ },
+ "outras": {
+  "comparecimento": {
+   "acima_100": 0,
+   "igual_100": 3,
+   "abstencao_zero": 3,
+   "amostras": [
+    {
+     "uf": "AP",
+     "regiao": "Norte",
+     "municipio": "OIAPOQUE",
+     "mun_tse": "10050",
+     "ibge": "2100050",
+     "zona": 60,
+     "secao": 90,
+     "local": "U.E. ESCOLA NUMERO 50",
+     "bairro": "POVOADO 50",
+     "tipo_local_tse": "Convencional",
+     "tipo_local_inferido": "escola",
+     "lat": 1.379,
+     "lon": -51.447,
+     "modelo_urna": "UE2020",
+     "tipo_urna": 1,
+     "tipo_arquivo": 1,
+     "aptos": 290,
+     "comparecimento": 240,
+     "validos": 230,
+     "lula": 161,
+     "flavio": 58,
+     "outros": 11,
+     "brancos": 3,
+     "nulos": 7,
+     "lula_pct": 70.0,
+     "flavio_pct": 25.0,
+     "zona_lula_pct": 58.0,
+     "zona_flavio_pct": 35.0,
+     "mun_lula_pct": 60.0,
+     "mun_flavio_pct": 33.0,
+     "abertura_brasilia": "2026-10-04 08:00:01",
+     "encerramento_brasilia": "2026-10-04 17:04:12",
+     "recebido_tse": "2026-10-04 18:55:55",
+     "explicacao": "seção rural de povoado (inferido pelo nome do local)"
+    }
+   ]
+  },
+  "zero_votos": {
+   "minimo_votantes": 200,
+   "lula": {
+    "secoes": 0,
+    "por_uf": [],
+    "amostras": []
+   },
+   "flavio": {
+    "secoes": 2,
+    "por_uf": [
+     {
+      "uf": "MA",
+      "secoes": 2
+     }
+    ],
+    "amostras": [
+     {
+      "uf": "MA",
+      "regiao": "Nordeste",
+      "municipio": "CAJARI",
+      "mun_tse": "10051",
+      "ibge": "2100051",
+      "zona": 61,
+      "secao": 91,
+      "local": "U.E. ESCOLA NUMERO 51",
+      "bairro": "POVOADO 51",
+      "tipo_local_tse": "Convencional",
+      "tipo_local_inferido": "escola",
+      "lat": -4.52,
+      "lon": -45.964,
+      "modelo_urna": "UE2020",
+      "tipo_urna": 1,
+      "tipo_arquivo": 1,
+      "aptos": 291,
+      "comparecimento": 241,
+      "validos": 231,
+      "lula": 224,
+      "flavio": 0,
+      "outros": 7,
+      "brancos": 3,
+      "nulos": 7,
+      "lula_pct": 97.0,
+      "flavio_pct": 0.0,
+      "zona_lula_pct": 85.0,
+      "zona_flavio_pct": 10.0,
+      "mun_lula_pct": 87.0,
+      "mun_flavio_pct": 8.0,
+      "abertura_brasilia": "2026-10-04 08:00:01",
+      "encerramento_brasilia": "2026-10-04 17:04:12",
+      "recebido_tse": "2026-10-04 18:55:55",
+      "explicacao": "seção rural de povoado (inferido pelo nome do local)"
+     }
+    ]
+   }
+  },
+  "tipo_arquivo": [
+   {
+    "descricao": "BU da urna",
+    "secoes": 6144,
+    "votantes": 3373995,
+    "flavio_pct": 45.1,
+    "lula_pct": 46.3,
+    "dif_zona_flavio_pp": -0.06,
+    "dif_zona_lula_pp": 1.46,
+    "tipo_arquivo": 1
+   },
+   {
+    "descricao": "recuperado da mídia",
+    "secoes": 39225,
+    "votantes": 1493675,
+    "flavio_pct": 45.1,
+    "lula_pct": 46.3,
+    "dif_zona_flavio_pp": -1.19,
+    "dif_zona_lula_pp": -0.12,
+    "tipo_arquivo": 2
+   }
+  ],
+  "tipo_urna": [
+   {
+    "descricao": "seção",
+    "secoes": 14938,
+    "votantes": 5040885,
+    "flavio_pct": 45.1,
+    "lula_pct": 46.3,
+    "dif_zona_flavio_pp": -1.87,
+    "dif_zona_lula_pp": 0.4,
+    "tipo_urna": 1
+   },
+   {
+    "descricao": "contingência",
+    "secoes": 136,
+    "votantes": 5786371,
+    "flavio_pct": 45.1,
+    "lula_pct": 46.3,
+    "dif_zona_flavio_pp": -1.22,
+    "dif_zona_lula_pp": -1.39,
+    "tipo_urna": 3
+   },
+   {
+    "descricao": "reserva de seção",
+    "secoes": 19712,
+    "votantes": 849795,
+    "flavio_pct": 45.1,
+    "lula_pct": 46.3,
+    "dif_zona_flavio_pp": -1.31,
+    "dif_zona_lula_pp": -0.6,
+    "tipo_urna": 4
+   }
+  ],
+  "cargas": [
+   {
+    "descricao": "1 carga",
+    "secoes": 31575,
+    "votantes": 4160622,
+    "flavio_pct": 45.1,
+    "lula_pct": 46.3,
+    "dif_zona_flavio_pp": -0.68,
+    "dif_zona_lula_pp": -0.54,
+    "n_cargas": 1
+   },
+   {
+    "descricao": "2 cargas",
+    "secoes": 7235,
+    "votantes": 5013507,
+    "flavio_pct": 45.1,
+    "lula_pct": 46.3,
+    "dif_zona_flavio_pp": 1.24,
+    "dif_zona_lula_pp": 0.89,
+    "n_cargas": 2
+   },
+   {
+    "descricao": "3 ou mais",
+    "secoes": 29867,
+    "votantes": 1615053,
+    "flavio_pct": 45.1,
+    "lula_pct": 46.3,
+    "dif_zona_flavio_pp": 0.99,
+    "dif_zona_lula_pp": -1.55,
+    "n_cargas": 3
+   }
+  ],
+  "horarios": {
+   "fuso": "hora de Brasília",
+   "abertura": {
+    "antes_0730": 2,
+    "depois_0900": 5,
+    "depois_1000": 1,
+    "amostras": []
+   },
+   "encerramento": {
+    "depois_1800": 40,
+    "depois_1900": 6,
+    "depois_2000": 0,
+    "amostras": []
+   },
+   "histograma_encerramento": [
+    {
+     "hora": 16,
+     "secoes": 120
+    },
+    {
+     "hora": 17,
+     "secoes": 2500
+    },
+    {
+     "hora": 18,
+     "secoes": 300
+    },
+    {
+     "hora": 19,
+     "secoes": 6
+    }
+   ]
+  },
+  "recebimento": {
+   "por_hora": [
+    {
+     "hora": "2026-10-04 17",
+     "secoes": 400,
+     "validos": 80000,
+     "lula_pct": 44.0,
+     "flavio_pct": 48.0
+    },
+    {
+     "hora": "2026-10-04 18",
+     "secoes": 1500,
+     "validos": 300000,
+     "lula_pct": 45.0,
+     "flavio_pct": 47.0
+    },
+    {
+     "hora": "2026-10-04 19",
+     "secoes": 900,
+     "validos": 180000,
+     "lula_pct": 46.5,
+     "flavio_pct": 45.5
+    },
+    {
+     "hora": "2026-10-04 20",
+     "secoes": 100,
+     "validos": 20000,
+     "lula_pct": 52.0,
+     "flavio_pct": 40.0
+    },
+    {
+     "hora": "2026-10-04 21",
+     "secoes": 20,
+     "validos": 4000,
+     "lula_pct": 60.0,
+     "flavio_pct": 32.0
+    },
+    {
+     "hora": "2026-10-05 00",
+     "secoes": 5,
+     "validos": 900,
+     "lula_pct": 87.0,
+     "flavio_pct": 9.0
+    }
+   ],
+   "depois_0000": {
+    "secoes": 5,
+    "validos": 900,
+    "lula_pct": 87.0,
+    "flavio_pct": 9.0,
+    "municipios": [
+     {
+      "uf": "AM",
+      "municipio": "SAO GABRIEL DA CACHOEIRA",
+      "secoes": 5,
+      "lula_pct": 87.0
+     }
+    ]
+   },
+   "depois_0100": {
+    "secoes": 0,
+    "validos": 0,
+    "lula_pct": null,
+    "flavio_pct": null,
+    "municipios": []
+   },
+   "amostras": []
+  },
+  "ultimo_digito": [
+   {
+    "uf": "BA",
+    "candidato": "lula",
+    "n": 2000,
+    "chi2": 8.1,
+    "gl": 9,
+    "p": 0.52,
+    "frequencias": [
+     0.1,
+     0.1,
+     0.1,
+     0.1,
+     0.1,
+     0.1,
+     0.1,
+     0.1,
+     0.1,
+     0.1
+    ]
+   }
+  ],
+  "benford2": [
+   {
+    "uf": "BA",
+    "candidato": "lula",
+    "n": 2000,
+    "chi2": 11.2,
+    "gl": 9,
+    "p": 0.26,
+    "observado": [
+     0.12,
+     0.12,
+     0.12,
+     0.12,
+     0.12,
+     0.12,
+     0.12,
+     0.12,
+     0.12,
+     0.12
+    ],
+    "esperado": [
+     0.12,
+     0.12,
+     0.12,
+     0.12,
+     0.12,
+     0.12,
+     0.12,
+     0.12,
+     0.12,
+     0.12
+    ]
+   }
+  ],
+  "aviso_benford": "Benford em eleição é teste fraco (Deckert, Myagkov e Ordeshook, 2011)."
+ },
+ "achados": {
+  "verificado": [
+   "Fixture: 120 seções com Lula ≥ 90%."
+  ],
+  "inferido": [
+   "Fixture: seções pequenas."
+  ],
+  "juizo": [
+   "Fixture: juízo."
+  ],
+  "hipotese": [
+   "Fixture: hipótese."
+  ],
+  "contrario": [
+   "Fixture: contrário."
+  ]
+ },
+ "limites": [
+  "Fixture: cobertura parcial.",
+  "Fixture: tipo de local inferido."
+ ]
+}

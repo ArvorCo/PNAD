@@ -101,3 +101,47 @@ def test_formato_brasileiro():
     assert C.inteiro(2224965) == "2.224.965"
     assert C.sinal(-3.27, 2) == "−3,27"
     assert C.milhoes(2224965) == "2,22 milhões"
+
+
+H3_SECOES = [
+    "Da zona para a seção",
+    "Seções acima de 90%",
+    "Quatro grupos de seções",
+    "Modelo de urna",
+    "O que mais a seção mostra",
+    "O que a seção prova e o que não prova",
+]
+
+
+def _capitulo_anomalias(html: str) -> str:
+    ini = html.index('<section id="anomalias"')
+    return html[ini : html.index("</section>", ini)]
+
+
+def test_capitulo_12_ganha_parte_por_secao(tmp_path):
+    for origem in C.DADOS.glob("*.json"):
+        shutil.copy(origem, tmp_path / origem.name)
+    if not (tmp_path / "secoes.json").exists():
+        shutil.copy(
+            ROOT / "tests/fixtures/apuracao_2026/secoes_fixture.json",
+            tmp_path / "secoes.json",
+        )
+    saida = tmp_path / "secoes.html"
+    _, estado = build.construir(tmp_path, saida)
+    cap = _capitulo_anomalias(saida.read_text(encoding="utf-8"))
+    assert estado["anomalias"] is True
+    for h3 in H3_SECOES:
+        assert f"<h3>{h3}</h3>" in cap, h3
+    assert 'id="fig-clusters_secoes"' in cap and 'id="fig-modelo_urna_zona"' in cap
+    assert "—" not in cap and "fraude" not in cap.split("Da zona para a seção")[1]
+
+
+def test_capitulo_12_sem_secoes_mantem_a_zona(tmp_path):
+    for origem in C.DADOS.glob("*.json"):
+        if origem.name != "secoes.json":
+            shutil.copy(origem, tmp_path / origem.name)
+    saida = tmp_path / "sem_secoes.html"
+    _, estado = build.construir(tmp_path, saida)
+    cap = _capitulo_anomalias(saida.read_text(encoding="utf-8"))
+    assert estado["anomalias"] is True
+    assert "Da zona para a seção" not in cap and 'id="fig-mapa_anomalias"' in cap

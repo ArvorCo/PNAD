@@ -28,13 +28,14 @@ from .pagina_interativo import interativo_html
 TITULO = "Apuração do 1º turno de 2026"
 DESCRICAO = (
     "O resultado, a noite minuto a minuto, a falha do TSE com três camadas de fonte, Câmara, Senado, "
-    "assembleias, governadores, pesquisas contra a urna, voto útil, anomalias por zona e o caminho do 2º turno."
+    "assembleias, governadores, pesquisas contra a urna, voto útil, anomalias por zona e por seção e o caminho do 2º turno."
 )
 
 SCRIPTS = [
     "scripts/apuracao-2026-dados.py",
     "scripts/apuracao-2026-pesquisas.py",
     "scripts/apuracao-2026-anomalias.py",
+    "scripts/apuracao-2026-secoes.py",
     "scripts/apuracao-2026-estrategia.py",
     "scripts/apuracao-2026-comparacao.py",
     "scripts/apuracao-2026-build.py",
@@ -52,6 +53,7 @@ JSONS = [
     "pesquisas_vs_urna.json",
     "voto_util.json",
     "anomalias.json",
+    "secoes.json",
     "contexto_seguranca.json",
     "estrategia_2t.json",
     "comparacao_2022.json",
@@ -275,6 +277,7 @@ def r_fontes(d: Dados, cap: Capitulo) -> str:
         "python3 scripts/apuracao-2026-dados.py\n"
         "python3 scripts/apuracao-2026-pesquisas.py\n"
         "python3 scripts/apuracao-2026-anomalias.py\n"
+        "python3 scripts/apuracao-2026-secoes.py\n"
         "python3 scripts/apuracao-2026-estrategia.py\n"
         "python3 scripts/apuracao-2026-comparacao.py\n"
         "python3 scripts/apuracao-2026-build.py\n"

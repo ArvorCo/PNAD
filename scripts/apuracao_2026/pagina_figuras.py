@@ -16,6 +16,8 @@ from . import (
     pagina_fig_noite,
     pagina_fig_pesquisas,
     pagina_fig_regioes,
+    pagina_fig_secoes,
+    pagina_fig_secoes_b,
 )
 from .pagina_fig_base import FIGURAS
 from .pagina_figuras_prim import (
@@ -47,6 +49,8 @@ MODULOS_CATALOGO = (
     pagina_fig_noite,
     pagina_fig_pesquisas,
     pagina_fig_regioes,
+    pagina_fig_secoes,
+    pagina_fig_secoes_b,
 )
 
 __all__ = [

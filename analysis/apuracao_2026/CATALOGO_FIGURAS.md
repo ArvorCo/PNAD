@@ -35,6 +35,14 @@ Regra: o texto chama `figura_catalogo("nome", dados, **opcoes)` (acessor em `scr
 | `reserva_vs_urna` | 11 | reserva medida × revelada por UF | ficha |
 | `mapa_anomalias` | 12 | 50 zonas mais atípicas no mapa, raio pelo score | ficha com features e explicação |
 | `anomalias_features` | 12 | barras das features normalizadas das 25 primeiras (heatmap) | ficha |
+| `secoes_90` | 12 | histograma espelhado de seções por faixa de % dos válidos (Lula acima, Flávio abaixo, raiz quadrada, faixa ≥ 90 sombreada) + mapa dos locais de votação com seção ≥ 90% (cor pelo dominante, raio pelas seções; agrupa em células de 0,25° acima de 6 mil pontos) | ficha por faixa e por local; alternância todas / só ≥ 100 votantes |
+| `secoes_excesso` | 12 | barras por candidato: seções ≥ 90% pela faixa de voto da própria zona, e as que ficam 10 e 20 pp acima dela | ficha por barra |
+| `secoes_tamanho_tipo` | 12 | barras agrupadas: parcela de seções ≥ 90% por faixa de votantes, com a média do país tracejada | ficha; alternância votantes / tipo de local / modelo de urna |
+| `clusters_secoes` | 12 | dispersão PCA da amostra de seções por grupo da mistura gaussiana (k = 4), centros rotulados, 200 menos prováveis com contorno, nuvem do grupo mais atípico em dourado; painel HTML dos grupos e tabela das 20 amostras | ficha por ponto; alternância cor por grupo / por região |
+| `clusters_regiao` | 12 | empilhadas 100%: composição regional de cada grupo | ficha por segmento |
+| `modelo_urna_uf` | 12 | empilhadas 100% por UF dos modelos de urna, UFs por região, um matiz do mais velho ao mais novo | ficha por segmento |
+| `modelo_urna_zona` | 12 | por par de modelos, diferença (novo menos velho) em Flávio, Lula, abstenção, brancos e nulos: ponto com IC95 e losango vazado da diferença bruta; caso Registro abaixo | ficha com unidades, seções e votantes; alternância dentro da zona / do prédio |
+| `secoes_outras` | 12 | seis painéis: recebimento por hora com Lula %, hora de encerramento, tipo de arquivo, tipo de urna, cargas e condições raras | ficha por elemento; painel vazio diz "nenhuma seção nesta condição" |
 | `transferencia_cenarios` | 13 | barras dos seis cenários de 2º turno | ficha |
 | `estoque_uf` | 13 | barras do estoque de 2022 por UF | ficha |
 | `movimentos_2t` | 13 | barras dos dez movimentos por votos esperados | ficha com regra |

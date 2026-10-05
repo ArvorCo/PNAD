@@ -5,6 +5,7 @@ from __future__ import annotations
 from html import escape
 
 from . import pagina_texto_b as T
+from . import pagina_texto_c as TC
 from .pagina_comum import Capitulo, Dados, checar, num, secao, sinal, tabela
 from .pagina_texto import fig
 
@@ -135,9 +136,15 @@ def r_anomalias(d: Dados, cap: Capitulo) -> str:
     h += (
         "<details><summary>Limites da triagem</summary><ul>"
         + "".join(f"<li>{escape(x)}</li>" for x in A["limites"])
-        + "</ul></details></section>"
+        + "</ul></details>"
     )
-    return h
+    S = d.get("secoes.json")
+    if S is None:
+        d.aviso("secoes.json ausente: capítulo 12 só com a análise por zona")
+    else:
+        checar(d, "secoes.json", TC.CHAVES)
+        h += TC.bloco(S, lambda nome: fig(nome, d))
+    return h + "</section>"
 
 
 # ------------------------------------------------------------------ 13
