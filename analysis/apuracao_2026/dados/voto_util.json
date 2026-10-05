@@ -1,0 +1,4482 @@
+{
+ "descricao": "Voto útil medido contra a urna: terceira via nas pesquisas finais, reserva de 2º turno revelada no 1º e decomposição do erro. Estimativa sob hipóteses declaradas, não medição.",
+ "gerado_por": "scripts/apuracao-2026-pesquisas.py",
+ "fontes": [
+  {
+   "arquivo": "apuracao/data/boletins/final.json",
+   "sha256": "a63792d3d86f6584d84ab1c503cc17abbf8abbddc86b66692214b49421e0c09a",
+   "ultimo_commit": null
+  },
+  {
+   "arquivo": "docs/assets/reponderacao_pnad.json",
+   "sha256": "82774c6e350cbc7adbec6ccf06046859373aba8a6b922962c4c6ef36c6ade028",
+   "ultimo_commit": "1688f00 2026-10-04T01:25:43-03:00"
+  },
+  {
+   "arquivo": "docs/assets/predicao_2026_1T_presidente.json",
+   "sha256": "b0e9261020a48b16e3103ec8e4f77bc93ee69b5245e1bea82dd9382997d6bacc",
+   "ultimo_commit": "1688f00 2026-10-04T01:25:43-03:00"
+  },
+  {
+   "arquivo": "docs/assets/voto_util_092026.json",
+   "sha256": "02aa932fa5d4b9fd6d24d859e0642ed291abc2c6d3637af86f432aca70a0c4fb",
+   "ultimo_commit": "a8ac522 2026-09-28T10:44:42-03:00"
+  }
+ ],
+ "urna_validos": {
+  "flavio": 47.027772,
+  "lula": 45.162768,
+  "cury": 2.890651,
+  "renan_santos": 2.242975,
+  "caiado": 2.18368,
+  "zema": 0.273668,
+  "samara": 0.103026,
+  "hertz": 0.03613,
+  "clariana": 0.033565,
+  "edmilson": 0.019022,
+  "grassi": 0.01415,
+  "rui": 0.012593
+ },
+ "terceira_via": {
+  "urna_validos": 7.80946,
+  "por_onda": [
+   {
+    "id": "atlas_2026-10-02",
+    "instituto": "AtlasIntel",
+    "publicado_validos": 9.045226,
+    "reponderado_validos": 9.0131,
+    "nao_escolha_pct_total": 0.6
+   },
+   {
+    "id": "vox_brasil_2026-10-01",
+    "instituto": "Vox Brasil",
+    "publicado_validos": 9.131403,
+    "reponderado_validos": null,
+    "nao_escolha_pct_total": 10.2
+   },
+   {
+    "id": "palver_2026-10-03",
+    "instituto": "Palver",
+    "publicado_validos": 9.8709,
+    "reponderado_validos": 10.283138,
+    "nao_escolha_pct_total": 0.657319
+   },
+   {
+    "id": "mda_2026-10-02",
+    "instituto": "MDA",
+    "publicado_validos": 9.988901,
+    "reponderado_validos": 10.101301,
+    "nao_escolha_pct_total": 9.7
+   },
+   {
+    "id": "quaest_2026-10-03",
+    "instituto": "Quaest",
+    "publicado_validos": 10.344828,
+    "reponderado_validos": 10.185781,
+    "nao_escolha_pct_total": 13.0
+   },
+   {
+    "id": "gerp_2026-10-02",
+    "instituto": "Gerp",
+    "publicado_validos": 10.638298,
+    "reponderado_validos": 10.93267,
+    "nao_escolha_pct_total": 5.0
+   },
+   {
+    "id": "poderdata_2026-10-02",
+    "instituto": "PoderData",
+    "publicado_validos": 10.752688,
+    "reponderado_validos": 10.533918,
+    "nao_escolha_pct_total": 6.0
+   },
+   {
+    "id": "datafolha_2026-10-03",
+    "instituto": "Datafolha",
+    "publicado_validos": 10.869565,
+    "reponderado_validos": 11.384015,
+    "nao_escolha_pct_total": 7.0
+   },
+   {
+    "id": "futura_2026-10-03",
+    "instituto": "Futura",
+    "publicado_validos": 12.631579,
+    "reponderado_validos": null,
+    "nao_escolha_pct_total": 5.0
+   },
+   {
+    "id": "realtime_2026-09-30",
+    "instituto": "Real Time Big Data",
+    "publicado_validos": 12.765957,
+    "reponderado_validos": 13.242725,
+    "nao_escolha_pct_total": 6.0
+   },
+   {
+    "id": "indexa_2026-09-29",
+    "instituto": "Indexa/Broadcast",
+    "publicado_validos": 14.117647,
+    "reponderado_validos": 14.14867,
+    "nao_escolha_pct_total": 15.0
+   },
+   {
+    "id": "nexus_2026-09-27",
+    "instituto": "Nexus",
+    "publicado_validos": 16.842105,
+    "reponderado_validos": 16.918998,
+    "nao_escolha_pct_total": 5.0
+   },
+   {
+    "id": "meio_ideia_2026-09-28",
+    "instituto": "Meio/Ideia",
+    "publicado_validos": 20.854527,
+    "reponderado_validos": null,
+    "nao_escolha_pct_total": 2.2
+   }
+  ],
+  "media_publicado_todas": 12.142587,
+  "n_publicado_todas": 13,
+  "media_publicado_reponderaveis": 11.523612,
+  "media_reponderado": 11.674432,
+  "n_reponderaveis": 10,
+  "ondas_abaixo_da_urna": [],
+  "central_casa": 9.628114,
+  "central_casa_p05": 8.666017,
+  "serie_agregador_7d_validos": [
+   {
+    "data": "2026-08-15",
+    "publicado": 16.627868,
+    "ajustado": 16.650028
+   },
+   {
+    "data": "2026-08-16",
+    "publicado": 16.627868,
+    "ajustado": 16.650028
+   },
+   {
+    "data": "2026-08-17",
+    "publicado": 16.993316,
+    "ajustado": 16.971958
+   },
+   {
+    "data": "2026-08-18",
+    "publicado": 16.853933,
+    "ajustado": 16.821697
+   },
+   {
+    "data": "2026-08-19",
+    "publicado": 16.853933,
+    "ajustado": 16.821697
+   },
+   {
+    "data": "2026-08-20",
+    "publicado": 15.116279,
+    "ajustado": 14.840289
+   },
+   {
+    "data": "2026-08-21",
+    "publicado": 19.459459,
+    "ajustado": 20.038639
+   },
+   {
+    "data": "2026-08-22",
+    "publicado": 19.459459,
+    "ajustado": 20.038639
+   },
+   {
+    "data": "2026-08-23",
+    "publicado": 19.459459,
+    "ajustado": 20.038639
+   },
+   {
+    "data": "2026-08-24",
+    "publicado": 19.354839,
+    "ajustado": 19.94232
+   },
+   {
+    "data": "2026-08-25",
+    "publicado": 19.354839,
+    "ajustado": 19.94232
+   },
+   {
+    "data": "2026-08-26",
+    "publicado": 19.354839,
+    "ajustado": 19.94232
+   },
+   {
+    "data": "2026-08-27",
+    "publicado": 19.354839,
+    "ajustado": 19.94232
+   },
+   {
+    "data": "2026-08-28",
+    "publicado": null,
+    "ajustado": null
+   },
+   {
+    "data": "2026-08-29",
+    "publicado": null,
+    "ajustado": null
+   },
+   {
+    "data": "2026-08-30",
+    "publicado": null,
+    "ajustado": null
+   },
+   {
+    "data": "2026-08-31",
+    "publicado": null,
+    "ajustado": null
+   },
+   {
+    "data": "2026-09-01",
+    "publicado": null,
+    "ajustado": null
+   },
+   {
+    "data": "2026-09-02",
+    "publicado": 18.896894,
+    "ajustado": 18.83851
+   },
+   {
+    "data": "2026-09-03",
+    "publicado": 20.630372,
+    "ajustado": 21.083992
+   },
+   {
+    "data": "2026-09-04",
+    "publicado": 20.630372,
+    "ajustado": 21.083992
+   },
+   {
+    "data": "2026-09-05",
+    "publicado": 20.630372,
+    "ajustado": 21.083992
+   },
+   {
+    "data": "2026-09-06",
+    "publicado": 20.630372,
+    "ajustado": 21.083992
+   },
+   {
+    "data": "2026-09-07",
+    "publicado": 20.930233,
+    "ajustado": 21.407795
+   },
+   {
+    "data": "2026-09-08",
+    "publicado": 20.454545,
+    "ajustado": 20.807418
+   },
+   {
+    "data": "2026-09-09",
+    "publicado": 22.222222,
+    "ajustado": 23.035498
+   },
+   {
+    "data": "2026-09-10",
+    "publicado": null,
+    "ajustado": null
+   },
+   {
+    "data": "2026-09-11",
+    "publicado": 21.111111,
+    "ajustado": 21.474359
+   },
+   {
+    "data": "2026-09-12",
+    "publicado": 21.111111,
+    "ajustado": 21.474359
+   },
+   {
+    "data": "2026-09-13",
+    "publicado": 21.111111,
+    "ajustado": 21.474359
+   },
+   {
+    "data": "2026-09-14",
+    "publicado": 20.57836,
+    "ajustado": 20.928479
+   },
+   {
+    "data": "2026-09-15",
+    "publicado": 20.57836,
+    "ajustado": 20.928479
+   },
+   {
+    "data": "2026-09-16",
+    "publicado": 20.57836,
+    "ajustado": 20.928479
+   },
+   {
+    "data": "2026-09-17",
+    "publicado": 18.144946,
+    "ajustado": 19.34295
+   },
+   {
+    "data": "2026-09-18",
+    "publicado": 18.144946,
+    "ajustado": 19.34295
+   },
+   {
+    "data": "2026-09-19",
+    "publicado": 18.144946,
+    "ajustado": 19.34295
+   },
+   {
+    "data": "2026-09-20",
+    "publicado": 18.144946,
+    "ajustado": 19.34295
+   },
+   {
+    "data": "2026-09-21",
+    "publicado": 17.840277,
+    "ajustado": 19.05404
+   },
+   {
+    "data": "2026-09-22",
+    "publicado": 17.840277,
+    "ajustado": 19.05404
+   },
+   {
+    "data": "2026-09-23",
+    "publicado": 17.713869,
+    "ajustado": 18.91085
+   },
+   {
+    "data": "2026-09-24",
+    "publicado": 15.42061,
+    "ajustado": 15.948003
+   },
+   {
+    "data": "2026-09-25",
+    "publicado": 15.42061,
+    "ajustado": 15.948003
+   },
+   {
+    "data": "2026-09-26",
+    "publicado": 15.42061,
+    "ajustado": 15.948003
+   },
+   {
+    "data": "2026-09-27",
+    "publicado": 15.42061,
+    "ajustado": 15.948003
+   },
+   {
+    "data": "2026-09-28",
+    "publicado": 15.30343,
+    "ajustado": 15.827565
+   },
+   {
+    "data": "2026-09-29",
+    "publicado": 15.274413,
+    "ajustado": 15.784519
+   },
+   {
+    "data": "2026-09-30",
+    "publicado": 15.409139,
+    "ajustado": 15.916043
+   },
+   {
+    "data": "2026-10-01",
+    "publicado": 13.896312,
+    "ajustado": 13.9691
+   },
+   {
+    "data": "2026-10-02",
+    "publicado": 13.896312,
+    "ajustado": 13.9691
+   },
+   {
+    "data": "2026-10-03",
+    "publicado": 10.35874,
+    "ajustado": 10.46107
+   },
+   {
+    "data": "2026-10-04",
+    "publicado": 10.35874,
+    "ajustado": 10.46107
+   }
+  ],
+  "nota_serie": "terceira via em parcela dos válidos da média móvel de 7 dias do agregador (docs/assets/reponderacao_pnad.json, agregador.serie)"
+ },
+ "terceiros_por_candidato": {
+  "urna_validos": {
+   "flavio": 47.027772,
+   "lula": 45.162768,
+   "cury": 2.890651,
+   "renan_santos": 2.242975,
+   "caiado": 2.18368,
+   "zema": 0.273668,
+   "demais": 0.218486
+  },
+  "publicado": {
+   "n_ondas": 13,
+   "media_validos": {
+    "caiado": 3.382101,
+    "cury": 3.579706,
+    "demais": 0.656022,
+    "flavio": 43.088286,
+    "lula": 44.769127,
+    "renan_santos": 3.622365,
+    "zema": 0.902393
+   },
+   "queda_pp": {
+    "cury": 0.689055,
+    "renan_santos": 1.37939,
+    "caiado": 1.19842,
+    "zema": 0.628725,
+    "demais": 0.437536
+   },
+   "queda_relativa": {
+    "cury": 0.192489,
+    "renan_santos": 0.380798,
+    "caiado": 0.354342,
+    "zema": 0.696731,
+    "demais": 0.666954
+   },
+   "fatia_da_queda": {
+    "cury": 0.15902,
+    "renan_santos": 0.318336,
+    "caiado": 0.276572,
+    "zema": 0.145097,
+    "demais": 0.100975
+   }
+  },
+  "reponderado": {
+   "n_ondas": 10,
+   "media_validos": {
+    "caiado": 3.172196,
+    "cury": 3.423595,
+    "demais": 0.574928,
+    "flavio": 43.879874,
+    "lula": 44.445695,
+    "renan_santos": 3.914043,
+    "zema": 0.589669
+   },
+   "queda_pp": {
+    "cury": 0.532944,
+    "renan_santos": 1.671068,
+    "caiado": 0.988516,
+    "zema": 0.316001,
+    "demais": 0.356443
+   },
+   "queda_relativa": {
+    "cury": 0.155668,
+    "renan_santos": 0.426942,
+    "caiado": 0.311619,
+    "zema": 0.535896,
+    "demais": 0.619978
+   },
+   "fatia_da_queda": {
+    "cury": 0.137891,
+    "renan_santos": 0.432362,
+    "caiado": 0.255763,
+    "zema": 0.08176,
+    "demais": 0.092224
+   }
+  }
+ },
+ "reserva_nacional": {
+  "regra": "reserva = 2º turno menos 1º turno do mesmo finalista na mesma pesquisa, em pontos dos entrevistados; λ e θ = fração dessa reserva que a urna revelou no 1º turno, pela contabilidade de scripts/voto_util_modelo.py (parte da reserva sai da terceira via, o resto de indecisos e branco/nulo, pela regra fracao_terceira)",
+  "por_onda": [
+   {
+    "id": "atlas_2026-10-02",
+    "instituto": "AtlasIntel",
+    "entrada": {
+     "F": 43.8,
+     "L": 46.7,
+     "T": 9.0,
+     "F2": 47.4,
+     "L2": 47.6,
+     "fT_flavio": 0.968082,
+     "fT_lula": 0.957361
+    },
+    "ganho_validos_flavio_pp": 3.007672,
+    "ganho_validos_lula_pp": -1.771905,
+    "ganho_flavio_pp_entrevistados": 3.002541,
+    "ganho_lula_pp_entrevistados": -1.753532,
+    "reserva_flavio_pp": 3.6,
+    "reserva_lula_pp": 0.9,
+    "lambda_flavio": 0.834039,
+    "theta_lula": -1.948368,
+    "terceira_via_restante_pp": 7.772058,
+    "consistente": true
+   },
+   {
+    "id": "datafolha_2026-10-03",
+    "instituto": "Datafolha",
+    "entrada": {
+     "F": 40.0,
+     "L": 42.0,
+     "T": 10.0,
+     "F2": 46.0,
+     "L2": 47.0,
+     "fT_flavio": 0.756737,
+     "fT_lula": 0.699803
+    },
+    "ganho_validos_flavio_pp": 3.549511,
+    "ganho_validos_lula_pp": -0.489406,
+    "ganho_flavio_pp_entrevistados": 3.678897,
+    "ganho_lula_pp_entrevistados": -0.053299,
+    "reserva_flavio_pp": 6.0,
+    "reserva_lula_pp": 5.0,
+    "lambda_flavio": 0.613149,
+    "theta_lula": -0.01066,
+    "terceira_via_restante_pp": 7.253343,
+    "consistente": true
+   },
+   {
+    "id": "futura_2026-10-03",
+    "instituto": "Futura",
+    "entrada": {
+     "F": 42.5,
+     "L": 40.5,
+     "T": 12.0,
+     "F2": 48.0,
+     "L2": 45.1,
+     "fT_flavio": 0.831985,
+     "fT_lula": 0.786215
+    },
+    "ganho_validos_flavio_pp": 2.29093,
+    "ganho_validos_lula_pp": 2.531189,
+    "ganho_flavio_pp_entrevistados": 2.678209,
+    "ganho_lula_pp_entrevistados": 2.886554,
+    "reserva_flavio_pp": 5.5,
+    "reserva_lula_pp": 4.6,
+    "lambda_flavio": 0.486947,
+    "theta_lula": 0.627512,
+    "terceira_via_restante_pp": 7.50232,
+    "consistente": true
+   },
+   {
+    "id": "gerp_2026-10-02",
+    "instituto": "Gerp",
+    "entrada": {
+     "F": 43.0,
+     "L": 41.0,
+     "T": 10.0,
+     "F2": 49.0,
+     "L2": 44.0,
+     "fT_flavio": 0.817961,
+     "fT_lula": 0.771987
+    },
+    "ganho_validos_flavio_pp": 1.283092,
+    "ganho_validos_lula_pp": 1.545747,
+    "ganho_flavio_pp_entrevistados": 1.525373,
+    "ganho_lula_pp_entrevistados": 1.759608,
+    "reserva_flavio_pp": 6.0,
+    "reserva_lula_pp": 3.0,
+    "lambda_flavio": 0.254229,
+    "theta_lula": 0.586536,
+    "terceira_via_restante_pp": 7.39391,
+    "consistente": true
+   },
+   {
+    "id": "indexa_2026-09-29",
+    "instituto": "Indexa/Broadcast",
+    "entrada": {
+     "F": 34.0,
+     "L": 39.0,
+     "T": 12.0,
+     "F2": 42.0,
+     "L2": 43.0,
+     "fT_flavio": 0.625942,
+     "fT_lula": 0.554674
+    },
+    "ganho_validos_flavio_pp": 7.027772,
+    "ganho_validos_lula_pp": -0.719585,
+    "ganho_flavio_pp_entrevistados": 7.454792,
+    "ganho_lula_pp_entrevistados": 0.810798,
+    "reserva_flavio_pp": 8.0,
+    "reserva_lula_pp": 4.0,
+    "lambda_flavio": 0.931849,
+    "theta_lula": 0.202699,
+    "terceira_via_restante_pp": 6.884007,
+    "consistente": true
+   },
+   {
+    "id": "mda_2026-10-02",
+    "instituto": "MDA",
+    "entrada": {
+     "F": 38.0,
+     "L": 43.1,
+     "T": 9.0,
+     "F2": 43.1,
+     "L2": 47.3,
+     "fT_flavio": 0.655831,
+     "fT_lula": 0.585774
+    },
+    "ganho_validos_flavio_pp": 4.852412,
+    "ganho_validos_lula_pp": -2.67297,
+    "ganho_flavio_pp_entrevistados": 4.738321,
+    "ganho_lula_pp_entrevistados": -2.056575,
+    "reserva_flavio_pp": 5.1,
+    "reserva_lula_pp": 4.2,
+    "lambda_flavio": 0.929083,
+    "theta_lula": -0.489661,
+    "terceira_via_restante_pp": 7.097151,
+    "consistente": true
+   },
+   {
+    "id": "meio_ideia_2026-09-28",
+    "instituto": "Meio/Ideia",
+    "entrada": {
+     "F": 38.4,
+     "L": 39.4,
+     "T": 20.5,
+     "F2": 48.0,
+     "L2": 48.5,
+     "fT_flavio": 0.940978,
+     "fT_lula": 0.920141
+    },
+    "ganho_validos_flavio_pp": 7.963683,
+    "ganho_validos_lula_pp": 5.081384,
+    "ganho_flavio_pp_entrevistados": 8.260783,
+    "ganho_lula_pp_entrevistados": 5.410333,
+    "reserva_flavio_pp": 9.6,
+    "reserva_lula_pp": 9.1,
+    "lambda_flavio": 0.860498,
+    "theta_lula": 0.594542,
+    "terceira_via_restante_pp": 7.748517,
+    "consistente": true
+   },
+   {
+    "id": "nexus_2026-09-27",
+    "instituto": "Nexus",
+    "entrada": {
+     "F": 37.0,
+     "L": 42.0,
+     "T": 16.0,
+     "F2": 44.0,
+     "L2": 46.0,
+     "fT_flavio": 0.87789,
+     "fT_lula": 0.844167
+    },
+    "ganho_validos_flavio_pp": 8.080404,
+    "ganho_validos_lula_pp": 0.952242,
+    "ganho_flavio_pp_entrevistados": 8.257809,
+    "ganho_lula_pp_entrevistados": 1.462997,
+    "reserva_flavio_pp": 7.0,
+    "reserva_lula_pp": 4.0,
+    "lambda_flavio": 1.179687,
+    "theta_lula": 0.365749,
+    "terceira_via_restante_pp": 7.515539,
+    "consistente": true
+   },
+   {
+    "id": "palver_2026-10-03",
+    "instituto": "Palver",
+    "entrada": {
+     "F": 46.539801,
+     "L": 42.996863,
+     "T": 9.806017,
+     "F2": 49.47897,
+     "L2": 44.39285,
+     "fT_flavio": 0.973431,
+     "fT_lula": 0.965605
+    },
+    "ganho_validos_flavio_pp": 0.180032,
+    "ganho_validos_lula_pp": 1.881408,
+    "ganho_flavio_pp_entrevistados": 0.212252,
+    "ganho_lula_pp_entrevistados": 1.90112,
+    "reserva_flavio_pp": 2.939168,
+    "reserva_lula_pp": 1.395987,
+    "lambda_flavio": 0.072215,
+    "theta_lula": 1.361847,
+    "terceira_via_restante_pp": 7.763674,
+    "consistente": true
+   },
+   {
+    "id": "poderdata_2026-10-02",
+    "instituto": "PoderData",
+    "entrada": {
+     "F": 41.0,
+     "L": 42.0,
+     "T": 10.0,
+     "F2": 46.0,
+     "L2": 46.0,
+     "fT_flavio": 0.801745,
+     "fT_lula": 0.755579
+    },
+    "ganho_validos_flavio_pp": 2.941751,
+    "ganho_validos_lula_pp": 0.001478,
+    "ganho_flavio_pp_entrevistados": 3.056321,
+    "ganho_lula_pp_entrevistados": 0.309157,
+    "reserva_flavio_pp": 5.0,
+    "reserva_lula_pp": 4.0,
+    "lambda_flavio": 0.611264,
+    "theta_lula": 0.077289,
+    "terceira_via_restante_pp": 7.316019,
+    "consistente": true
+   },
+   {
+    "id": "quaest_2026-10-03",
+    "instituto": "Quaest",
+    "entrada": {
+     "F": 38.0,
+     "L": 40.0,
+     "T": 9.0,
+     "F2": 44.0,
+     "L2": 42.0,
+     "fT_flavio": 0.657015,
+     "fT_lula": 0.600901
+    },
+    "ganho_validos_flavio_pp": 3.349611,
+    "ganho_validos_lula_pp": -0.814244,
+    "ganho_flavio_pp_entrevistados": 3.426105,
+    "ganho_lula_pp_entrevistados": -0.216751,
+    "reserva_flavio_pp": 6.0,
+    "reserva_lula_pp": 2.0,
+    "lambda_flavio": 0.571018,
+    "theta_lula": -0.108375,
+    "terceira_via_restante_pp": 6.879244,
+    "consistente": true
+   },
+   {
+    "id": "realtime_2026-09-30",
+    "instituto": "Real Time Big Data",
+    "entrada": {
+     "F": 39.0,
+     "L": 43.0,
+     "T": 12.0,
+     "F2": 46.0,
+     "L2": 45.0,
+     "fT_flavio": 0.801745,
+     "fT_lula": 0.749605
+    },
+    "ganho_validos_flavio_pp": 5.538411,
+    "ganho_validos_lula_pp": -0.581913,
+    "ganho_flavio_pp_entrevistados": 5.736521,
+    "ganho_lula_pp_entrevistados": -0.037618,
+    "reserva_flavio_pp": 7.0,
+    "reserva_lula_pp": 2.0,
+    "lambda_flavio": 0.819503,
+    "theta_lula": -0.018809,
+    "terceira_via_restante_pp": 7.428973,
+    "consistente": true
+   },
+   {
+    "id": "vox_brasil_2026-10-01",
+    "instituto": "Vox Brasil",
+    "entrada": {
+     "F": 41.2,
+     "L": 40.4,
+     "T": 8.2,
+     "F2": 48.2,
+     "L2": 45.2,
+     "fT_flavio": 0.578109,
+     "fT_lula": 0.497449
+    },
+    "ganho_validos_flavio_pp": 1.14804,
+    "ganho_validos_lula_pp": 0.173904,
+    "ganho_flavio_pp_entrevistados": 1.451129,
+    "ganho_lula_pp_entrevistados": 0.559691,
+    "reserva_flavio_pp": 7.0,
+    "reserva_lula_pp": 4.8,
+    "lambda_flavio": 0.207304,
+    "theta_lula": 0.116602,
+    "terceira_via_restante_pp": 7.082672,
+    "consistente": true
+   }
+  ],
+  "lambda_flavio": {
+   "mediana": 0.613149,
+   "media": 0.643907,
+   "min": 0.072215,
+   "max": 1.179687,
+   "n": 13
+  },
+  "theta_lula": {
+   "mediana": 0.116602,
+   "media": 0.104377,
+   "min": -1.948368,
+   "max": 1.361847,
+   "n": 13
+  },
+  "reserva_media_flavio_pp": 6.056859,
+  "reserva_media_lula_pp": 3.768922,
+  "ganho_medio_validos_flavio_pp": 3.939486,
+  "ganho_medio_validos_lula_pp": 0.393641
+ },
+ "modelo_voto_util": {
+  "fonte": {
+   "arquivo": "docs/assets/voto_util_092026.json",
+   "sha256": "02aa932fa5d4b9fd6d24d859e0642ed291abc2c6d3637af86f432aca70a0c4fb",
+   "ultimo_commit": "a8ac522 2026-09-28T10:44:42-03:00"
+  },
+  "gerado_em": "2026-09-26",
+  "urna_sem_exterior": {
+   "flavio": 47.037612,
+   "lula": 45.156084
+  },
+  "calibrado": {
+   "lambda_flavio": 0.816749,
+   "theta_lula": 0.408873,
+   "lambda_so_direita_para_flavio_da_urna": 0.779423,
+   "lambda_dois_lados_para_margem_da_urna": null,
+   "hoje_eleitor_provavel": [
+    41.293854,
+    44.201995
+   ],
+   "cenarios_por_distancia": [
+    {
+     "nome": "Três quartos do voto útil",
+     "lam": 0.75,
+     "theta": 0.0,
+     "flavio_validos": 46.83,
+     "lula_validos": 43.56,
+     "terceira_via_validos": 9.61,
+     "erro_diferenca_lula_menos_flavio": -1.388472,
+     "distancia_pp": 1.60953
+    },
+    {
+     "nome": "Os dois lados consolidam",
+     "lam": 1.0,
+     "theta": 1.0,
+     "flavio_validos": 47.95,
+     "lula_validos": 47.33,
+     "terceira_via_validos": 4.73,
+     "erro_diferenca_lula_menos_flavio": 1.261528,
+     "distancia_pp": 2.357618
+    },
+    {
+     "nome": "Voto útil completo",
+     "lam": 1.0,
+     "theta": 0.0,
+     "flavio_validos": 48.63,
+     "lula_validos": 43.36,
+     "terceira_via_validos": 8.01,
+     "erro_diferenca_lula_menos_flavio": -3.388472,
+     "distancia_pp": 2.400337
+    },
+    {
+     "nome": "Metade do voto útil",
+     "lam": 0.5,
+     "theta": 0.0,
+     "flavio_validos": 45.0,
+     "lula_validos": 43.77,
+     "terceira_via_validos": 11.23,
+     "erro_diferenca_lula_menos_flavio": 0.651528,
+     "distancia_pp": 2.464365
+    },
+    {
+     "nome": "Lula consolida e a direita faz metade",
+     "lam": 0.5,
+     "theta": 1.0,
+     "flavio_validos": 44.37,
+     "lula_validos": 47.79,
+     "terceira_via_validos": 7.84,
+     "erro_diferenca_lula_menos_flavio": 5.301528,
+     "distancia_pp": 3.748822
+    },
+    {
+     "nome": "Um quarto do voto útil",
+     "lam": 0.25,
+     "theta": 0.0,
+     "flavio_validos": 43.15,
+     "lula_validos": 43.99,
+     "terceira_via_validos": 12.86,
+     "erro_diferenca_lula_menos_flavio": 2.721528,
+     "distancia_pp": 4.058729
+    },
+    {
+     "nome": "Hoje, eleitor provável",
+     "lam": 0.0,
+     "theta": 0.0,
+     "flavio_validos": 41.29,
+     "lula_validos": 44.2,
+     "terceira_via_validos": 14.5,
+     "erro_diferenca_lula_menos_flavio": 4.791528,
+     "distancia_pp": 5.826589
+    },
+    {
+     "nome": "Hoje, todos os entrevistados",
+     "lam": 0.0,
+     "theta": 0.0,
+     "flavio_validos": 41.15,
+     "lula_validos": 43.88,
+     "terceira_via_validos": 14.97,
+     "erro_diferenca_lula_menos_flavio": 4.611528,
+     "distancia_pp": 6.024315
+    },
+    {
+     "nome": "Só Lula consolida",
+     "lam": 0.0,
+     "theta": 1.0,
+     "flavio_validos": 40.71,
+     "lula_validos": 48.25,
+     "terceira_via_validos": 11.04,
+     "erro_diferenca_lula_menos_flavio": 9.421528,
+     "distancia_pp": 7.043507
+    }
+   ]
+  },
+  "bruto": {
+   "lambda_flavio": 1.029978,
+   "theta_lula": 0.178529,
+   "lambda_so_direita_para_flavio_da_urna": null,
+   "lambda_dois_lados_para_margem_da_urna": null,
+   "hoje_eleitor_provavel": [
+    39.465223,
+    45.239682
+   ],
+   "cenarios_por_distancia": [
+    {
+     "nome": "Voto útil completo",
+     "lam": 1.0,
+     "theta": 0.0,
+     "flavio_validos": 46.94,
+     "lula_validos": 44.36,
+     "terceira_via_validos": 8.7,
+     "erro_diferenca_lula_menos_flavio": -0.698472,
+     "distancia_pp": 0.802046
+    },
+    {
+     "nome": "Três quartos do voto útil",
+     "lam": 0.75,
+     "theta": 0.0,
+     "flavio_validos": 45.1,
+     "lula_validos": 44.57,
+     "terceira_via_validos": 10.33,
+     "erro_diferenca_lula_menos_flavio": 1.351528,
+     "distancia_pp": 2.024311
+    },
+    {
+     "nome": "Metade do voto útil",
+     "lam": 0.5,
+     "theta": 0.0,
+     "flavio_validos": 43.24,
+     "lula_validos": 44.79,
+     "terceira_via_validos": 11.97,
+     "erro_diferenca_lula_menos_flavio": 3.431528,
+     "distancia_pp": 3.815216
+    },
+    {
+     "nome": "Os dois lados consolidam",
+     "lam": 1.0,
+     "theta": 1.0,
+     "flavio_validos": 46.26,
+     "lula_validos": 48.93,
+     "terceira_via_validos": 4.81,
+     "erro_diferenca_lula_menos_flavio": 4.551528,
+     "distancia_pp": 3.853196
+    },
+    {
+     "nome": "Um quarto do voto útil",
+     "lam": 0.25,
+     "theta": 0.0,
+     "flavio_validos": 41.36,
+     "lula_validos": 45.01,
+     "terceira_via_validos": 13.63,
+     "erro_diferenca_lula_menos_flavio": 5.531528,
+     "distancia_pp": 5.679491
+    },
+    {
+     "nome": "Lula consolida e a direita faz metade",
+     "lam": 0.5,
+     "theta": 1.0,
+     "flavio_validos": 42.61,
+     "lula_validos": 49.41,
+     "terceira_via_validos": 7.99,
+     "erro_diferenca_lula_menos_flavio": 8.681528,
+     "distancia_pp": 6.139996
+    },
+    {
+     "nome": "Hoje, eleitor provável",
+     "lam": 0.0,
+     "theta": 0.0,
+     "flavio_validos": 39.47,
+     "lula_validos": 45.24,
+     "terceira_via_validos": 15.3,
+     "erro_diferenca_lula_menos_flavio": 7.651528,
+     "distancia_pp": 7.568077
+    },
+    {
+     "nome": "Hoje, todos os entrevistados",
+     "lam": 0.0,
+     "theta": 0.0,
+     "flavio_validos": 39.31,
+     "lula_validos": 44.93,
+     "terceira_via_validos": 15.76,
+     "erro_diferenca_lula_menos_flavio": 7.501528,
+     "distancia_pp": 7.730919
+    },
+    {
+     "nome": "Só Lula consolida",
+     "lam": 0.0,
+     "theta": 1.0,
+     "flavio_validos": 38.88,
+     "lula_validos": 49.89,
+     "terceira_via_validos": 11.23,
+     "erro_diferenca_lula_menos_flavio": 12.891528,
+     "distancia_pp": 9.43168
+    }
+   ]
+  }
+ },
+ "reserva_ufs": [
+  {
+   "uf": "AC",
+   "reserva_flavio_pp_media_casas": 8.35,
+   "reserva_flavio_eleitores": 39786,
+   "flavio_validos_urna": 64.555308,
+   "lula_validos_urna": 28.731564,
+   "ganho_flavio_sobre_pesquisa_pp": 9.473388,
+   "ganho_lula_sobre_pesquisa_pp": -3.836049,
+   "ganho_flavio_sobre_central_pp": 0.792779,
+   "ganho_lula_sobre_central_pp": 0.426428,
+   "lambda_flavio_media_casas": 1.199029,
+   "theta_lula_media_casas": -0.844325,
+   "casas": [
+    {
+     "casa": "quaest",
+     "campo": "23 a 26/08/2026",
+     "flavio_validos_pesquisa": 53.83809,
+     "lula_validos_pesquisa": 33.814793,
+     "ganho_flavio_pp_entrevistados": 11.402907,
+     "ganho_lula_pp_entrevistados": -3.383832,
+     "reserva_flavio_pp": 8.06,
+     "reserva_lula_pp": 3.19,
+     "lambda_flavio": 1.414753,
+     "theta_lula": -1.060762,
+     "terceira_via_restante_pp": 5.992225,
+     "consistente": true
+    },
+    {
+     "casa": "realtime",
+     "campo": "2026-09-16 a 2026-09-19",
+     "flavio_validos_pesquisa": 56.32575,
+     "lula_validos_pesquisa": 31.320434,
+     "ganho_flavio_pp_entrevistados": 8.48592,
+     "ganho_lula_pp_entrevistados": -2.103426,
+     "reserva_flavio_pp": 8.63,
+     "reserva_lula_pp": 3.35,
+     "lambda_flavio": 0.983305,
+     "theta_lula": -0.627888,
+     "terceira_via_restante_pp": 6.391861,
+     "consistente": true
+    }
+   ],
+   "estimado": false
+  },
+  {
+   "uf": "AL",
+   "reserva_flavio_pp_media_casas": 4.48,
+   "reserva_flavio_eleitores": 84871,
+   "flavio_validos_urna": 40.449491,
+   "lula_validos_urna": 54.729951,
+   "ganho_flavio_sobre_pesquisa_pp": 3.274573,
+   "ganho_lula_sobre_pesquisa_pp": 1.765599,
+   "ganho_flavio_sobre_central_pp": -0.105168,
+   "ganho_lula_sobre_central_pp": 3.090147,
+   "lambda_flavio_media_casas": 0.746677,
+   "theta_lula_media_casas": 0.698961,
+   "casas": [
+    {
+     "casa": "quaest",
+     "campo": "20 a 23/08/2026",
+     "flavio_validos_pesquisa": 38.621011,
+     "lula_validos_pesquisa": 56.056371,
+     "ganho_flavio_pp_entrevistados": 1.772071,
+     "ganho_lula_pp_entrevistados": -0.865362,
+     "reserva_flavio_pp": 4.67,
+     "reserva_lula_pp": 3.35,
+     "lambda_flavio": 0.379459,
+     "theta_lula": -0.258317,
+     "terceira_via_restante_pp": 4.16302,
+     "consistente": true
+    },
+    {
+     "casa": "realtime",
+     "campo": "2026-09-21 a 2026-09-24",
+     "flavio_validos_pesquisa": 34.94635,
+     "lula_validos_pesquisa": 53.871239,
+     "ganho_flavio_pp_entrevistados": 5.752712,
+     "ganho_lula_pp_entrevistados": 1.521803,
+     "reserva_flavio_pp": 5.39,
+     "reserva_lula_pp": 2.6,
+     "lambda_flavio": 1.067293,
+     "theta_lula": 0.585309,
+     "terceira_via_restante_pp": 4.644563,
+     "consistente": true
+    },
+    {
+     "casa": "atlas",
+     "campo": "2026-09-04 a 2026-09-09",
+     "flavio_validos_pesquisa": 37.957395,
+     "lula_validos_pesquisa": 48.965447,
+     "ganho_flavio_pp_entrevistados": 2.673354,
+     "ganho_lula_pp_entrevistados": 5.964534,
+     "reserva_flavio_pp": 3.37,
+     "reserva_lula_pp": 3.37,
+     "lambda_flavio": 0.79328,
+     "theta_lula": 1.769891,
+     "terceira_via_restante_pp": 4.756664,
+     "consistente": true
+    }
+   ],
+   "estimado": false
+  },
+  {
+   "uf": "AM",
+   "reserva_flavio_pp_media_casas": 6.39,
+   "reserva_flavio_eleitores": 142989,
+   "flavio_validos_urna": 44.996345,
+   "lula_validos_urna": 48.231705,
+   "ganho_flavio_sobre_pesquisa_pp": 2.881644,
+   "ganho_lula_sobre_pesquisa_pp": 4.267773,
+   "ganho_flavio_sobre_central_pp": -1.370874,
+   "ganho_lula_sobre_central_pp": 2.724655,
+   "lambda_flavio_media_casas": 0.526383,
+   "theta_lula_media_casas": 1.843042,
+   "casas": [
+    {
+     "casa": "quaest",
+     "campo": "21 a 24/08/2026",
+     "flavio_validos_pesquisa": 42.312507,
+     "lula_validos_pesquisa": 47.911688,
+     "ganho_flavio_pp_entrevistados": 3.433132,
+     "ganho_lula_pp_entrevistados": 1.433327,
+     "reserva_flavio_pp": 5.63,
+     "reserva_lula_pp": 3.39,
+     "lambda_flavio": 0.609792,
+     "theta_lula": 0.42281,
+     "terceira_via_restante_pp": 6.112277,
+     "consistente": true
+    },
+    {
+     "casa": "atlas",
+     "campo": "2026-08-29 a 2026-09-03",
+     "flavio_validos_pesquisa": 41.916894,
+     "lula_validos_pesquisa": 40.016176,
+     "ganho_flavio_pp_entrevistados": 3.167261,
+     "ganho_lula_pp_entrevistados": 8.256083,
+     "reserva_flavio_pp": 7.15,
+     "reserva_lula_pp": 2.53,
+     "lambda_flavio": 0.442974,
+     "theta_lula": 3.263274,
+     "terceira_via_restante_pp": 6.716404,
+     "consistente": true
+    }
+   ],
+   "estimado": false
+  },
+  {
+   "uf": "AP",
+   "reserva_flavio_pp_media_casas": 9.82,
+   "reserva_flavio_eleitores": 45664,
+   "flavio_validos_urna": 45.665128,
+   "lula_validos_urna": 45.71353,
+   "ganho_flavio_sobre_pesquisa_pp": 5.26808,
+   "ganho_lula_sobre_pesquisa_pp": 2.356509,
+   "ganho_flavio_sobre_central_pp": 0.367365,
+   "ganho_lula_sobre_central_pp": 3.251861,
+   "lambda_flavio_media_casas": 0.478793,
+   "theta_lula_media_casas": 0.31636,
+   "casas": [
+    {
+     "casa": "quaest",
+     "campo": "21 a 24/08/2026",
+     "flavio_validos_pesquisa": 43.811881,
+     "lula_validos_pesquisa": 47.241867,
+     "ganho_flavio_pp_entrevistados": 1.621467,
+     "ganho_lula_pp_entrevistados": -1.247416,
+     "reserva_flavio_pp": 6.26,
+     "reserva_lula_pp": 3.65,
+     "lambda_flavio": 0.25902,
+     "theta_lula": -0.341758,
+     "terceira_via_restante_pp": 7.323631,
+     "consistente": true
+    },
+    {
+     "casa": "realtime",
+     "campo": "2026-09-03 a 2026-09-07",
+     "flavio_validos_pesquisa": 36.982215,
+     "lula_validos_pesquisa": 39.472174,
+     "ganho_flavio_pp_entrevistados": 9.346813,
+     "ganho_lula_pp_entrevistados": 7.220881,
+     "reserva_flavio_pp": 13.38,
+     "reserva_lula_pp": 7.41,
+     "lambda_flavio": 0.698566,
+     "theta_lula": 0.974478,
+     "terceira_via_restante_pp": 7.849489,
+     "consistente": true
+    }
+   ],
+   "estimado": false
+  },
+  {
+   "uf": "BA",
+   "reserva_flavio_pp_media_casas": 4.96,
+   "reserva_flavio_eleitores": 441399,
+   "flavio_validos_urna": 28.533901,
+   "lula_validos_urna": 66.174982,
+   "ganho_flavio_sobre_pesquisa_pp": 3.334234,
+   "ganho_lula_sobre_pesquisa_pp": 5.40143,
+   "ganho_flavio_sobre_central_pp": -1.490074,
+   "ganho_lula_sobre_central_pp": 3.662486,
+   "lambda_flavio_media_casas": 0.777411,
+   "theta_lula_media_casas": 1.167123,
+   "casas": [
+    {
+     "casa": "quaest",
+     "campo": "20 a 23/09/2026",
+     "flavio_validos_pesquisa": 25.335121,
+     "lula_validos_pesquisa": 66.197498,
+     "ganho_flavio_pp_entrevistados": 3.470109,
+     "ganho_lula_pp_entrevistados": 1.38656,
+     "reserva_flavio_pp": 4.0,
+     "reserva_lula_pp": 4.0,
+     "lambda_flavio": 0.867527,
+     "theta_lula": 0.34664,
+     "terceira_via_restante_pp": 4.849084,
+     "consistente": true
+    },
+    {
+     "casa": "realtime",
+     "campo": "2026-09-04 a 2026-09-08",
+     "flavio_validos_pesquisa": 25.055833,
+     "lula_validos_pesquisa": 59.523556,
+     "ganho_flavio_pp_entrevistados": 3.802731,
+     "ganho_lula_pp_entrevistados": 7.488838,
+     "reserva_flavio_pp": 6.12,
+     "reserva_lula_pp": 6.29,
+     "lambda_flavio": 0.621361,
+     "theta_lula": 1.190594,
+     "terceira_via_restante_pp": 5.073944,
+     "consistente": true
+    },
+    {
+     "casa": "atlas",
+     "campo": "2026-08-28 a 2026-09-02",
+     "flavio_validos_pesquisa": 25.208048,
+     "lula_validos_pesquisa": 56.5996,
+     "ganho_flavio_pp_entrevistados": 4.005887,
+     "ganho_lula_pp_entrevistados": 11.058085,
+     "reserva_flavio_pp": 4.75,
+     "reserva_lula_pp": 5.63,
+     "lambda_flavio": 0.843345,
+     "theta_lula": 1.964136,
+     "terceira_via_restante_pp": 5.180226,
+     "consistente": true
+    }
+   ],
+   "estimado": false
+  },
+  {
+   "uf": "CE",
+   "reserva_flavio_pp_media_casas": 4.26,
+   "reserva_flavio_eleitores": 246380,
+   "flavio_validos_urna": 31.27284,
+   "lula_validos_urna": 63.285524,
+   "ganho_flavio_sobre_pesquisa_pp": 3.678415,
+   "ganho_lula_sobre_pesquisa_pp": 1.637404,
+   "ganho_flavio_sobre_central_pp": 1.815253,
+   "ganho_lula_sobre_central_pp": 1.450991,
+   "lambda_flavio_media_casas": 0.951866,
+   "theta_lula_media_casas": 1.468379,
+   "casas": [
+    {
+     "casa": "quaest",
+     "campo": "19 a 22/09/2026",
+     "flavio_validos_pesquisa": 25.754113,
+     "lula_validos_pesquisa": 64.122486,
+     "ganho_flavio_pp_entrevistados": 5.717251,
+     "ganho_lula_pp_entrevistados": 1.063004,
+     "reserva_flavio_pp": 4.0,
+     "reserva_lula_pp": 4.0,
+     "lambda_flavio": 1.429313,
+     "theta_lula": 0.265751,
+     "terceira_via_restante_pp": 4.916908,
+     "consistente": true
+    },
+    {
+     "casa": "realtime",
+     "campo": "2026-09-14 a 2026-09-17",
+     "flavio_validos_pesquisa": 23.595033,
+     "lula_validos_pesquisa": 62.944643,
+     "ganho_flavio_pp_entrevistados": 7.715676,
+     "ganho_lula_pp_entrevistados": 1.174293,
+     "reserva_flavio_pp": 4.12,
+     "reserva_lula_pp": 5.31,
+     "lambda_flavio": 1.872737,
+     "theta_lula": 0.221147,
+     "terceira_via_restante_pp": 5.243764,
+     "consistente": true
+    },
+    {
+     "casa": "atlas",
+     "campo": "2026-09-15 a 2026-09-20",
+     "flavio_validos_pesquisa": 33.43413,
+     "lula_validos_pesquisa": 57.87723,
+     "ganho_flavio_pp_entrevistados": -2.084933,
+     "ganho_lula_pp_entrevistados": 5.485534,
+     "reserva_flavio_pp": 4.67,
+     "reserva_lula_pp": 1.4,
+     "lambda_flavio": -0.446453,
+     "theta_lula": 3.918239,
+     "terceira_via_restante_pp": 5.408963,
+     "consistente": true
+    }
+   ],
+   "estimado": false
+  },
+  {
+   "uf": "DF",
+   "reserva_flavio_pp_media_casas": 11.5,
+   "reserva_flavio_eleitores": 213737,
+   "flavio_validos_urna": 51.309335,
+   "lula_validos_urna": 38.110557,
+   "ganho_flavio_sobre_pesquisa_pp": 11.660103,
+   "ganho_lula_sobre_pesquisa_pp": 0.615313,
+   "ganho_flavio_sobre_central_pp": 0.541548,
+   "ganho_lula_sobre_central_pp": 2.591256,
+   "lambda_flavio_media_casas": 1.142761,
+   "theta_lula_media_casas": 0.226499,
+   "casas": [
+    {
+     "casa": "quaest",
+     "campo": "19 a 22/09/2026",
+     "flavio_validos_pesquisa": 39.726189,
+     "lula_validos_pesquisa": 38.286321,
+     "ganho_flavio_pp_entrevistados": 11.85525,
+     "ganho_lula_pp_entrevistados": 1.366938,
+     "reserva_flavio_pp": 16.0,
+     "reserva_lula_pp": 6.0,
+     "lambda_flavio": 0.740953,
+     "theta_lula": 0.227823,
+     "terceira_via_restante_pp": 9.385354,
+     "consistente": true
+    },
+    {
+     "casa": "realtime",
+     "campo": "2026-09-04 a 2026-09-08",
+     "flavio_validos_pesquisa": 35.916174,
+     "lula_validos_pesquisa": 36.743686,
+     "ganho_flavio_pp_entrevistados": 15.336421,
+     "ganho_lula_pp_entrevistados": 2.024352,
+     "reserva_flavio_pp": 13.24,
+     "reserva_lula_pp": 6.25,
+     "lambda_flavio": 1.15834,
+     "theta_lula": 0.323896,
+     "terceira_via_restante_pp": 10.053691,
+     "consistente": true
+    },
+    {
+     "casa": "atlas",
+     "campo": "2026-08-27 a 2026-09-01",
+     "flavio_validos_pesquisa": 43.305333,
+     "lula_validos_pesquisa": 37.455723,
+     "ganho_flavio_pp_entrevistados": 8.057772,
+     "ganho_lula_pp_entrevistados": 0.757726,
+     "reserva_flavio_pp": 5.27,
+     "reserva_lula_pp": 5.93,
+     "lambda_flavio": 1.528989,
+     "theta_lula": 0.127778,
+     "terceira_via_restante_pp": 10.484933,
+     "consistente": true
+    }
+   ],
+   "estimado": false
+  },
+  {
+   "uf": "ES",
+   "reserva_flavio_pp_media_casas": 8.79,
+   "reserva_flavio_eleitores": 208239,
+   "flavio_validos_urna": 54.782375,
+   "lula_validos_urna": 37.760931,
+   "ganho_flavio_sobre_pesquisa_pp": 9.267275,
+   "ganho_lula_sobre_pesquisa_pp": -0.740222,
+   "ganho_flavio_sobre_central_pp": 2.335175,
+   "ganho_lula_sobre_central_pp": 0.980007,
+   "lambda_flavio_media_casas": 1.06461,
+   "theta_lula_media_casas": 0.071623,
+   "casas": [
+    {
+     "casa": "quaest",
+     "campo": "23 a 26/08/2026",
+     "flavio_validos_pesquisa": 48.54449,
+     "lula_validos_pesquisa": 40.141426,
+     "ganho_flavio_pp_entrevistados": 6.911262,
+     "ganho_lula_pp_entrevistados": -0.904293,
+     "reserva_flavio_pp": 7.42,
+     "reserva_lula_pp": 3.56,
+     "lambda_flavio": 0.931437,
+     "theta_lula": -0.254015,
+     "terceira_via_restante_pp": 6.547295,
+     "consistente": true
+    },
+    {
+     "casa": "realtime",
+     "campo": "2026-09-21 a 2026-09-24",
+     "flavio_validos_pesquisa": 42.970036,
+     "lula_validos_pesquisa": 41.016354,
+     "ganho_flavio_pp_entrevistados": 11.600778,
+     "ganho_lula_pp_entrevistados": -2.388008,
+     "reserva_flavio_pp": 9.46,
+     "reserva_lula_pp": 4.44,
+     "lambda_flavio": 1.226298,
+     "theta_lula": -0.53784,
+     "terceira_via_restante_pp": 6.907934,
+     "consistente": true
+    },
+    {
+     "casa": "atlas",
+     "campo": "2026-08-26 a 2026-08-31",
+     "flavio_validos_pesquisa": 45.030774,
+     "lula_validos_pesquisa": 34.345677,
+     "ganho_flavio_pp_entrevistados": 9.822186,
+     "ganho_lula_pp_entrevistados": 3.493334,
+     "reserva_flavio_pp": 9.48,
+     "reserva_lula_pp": 3.47,
+     "lambda_flavio": 1.036096,
+     "theta_lula": 1.006725,
+     "terceira_via_restante_pp": 7.41175,
+     "consistente": true
+    }
+   ],
+   "estimado": false
+  },
+  {
+   "uf": "GO",
+   "reserva_flavio_pp_media_casas": 19.93,
+   "reserva_flavio_eleitores": 792602,
+   "flavio_validos_urna": 53.604568,
+   "lula_validos_urna": 31.058907,
+   "ganho_flavio_sobre_pesquisa_pp": 17.404238,
+   "ganho_lula_sobre_pesquisa_pp": 2.348292,
+   "ganho_flavio_sobre_central_pp": 3.896012,
+   "ganho_lula_sobre_central_pp": -2.327001,
+   "lambda_flavio_media_casas": 0.882926,
+   "theta_lula_media_casas": 0.440605,
+   "casas": [
+    {
+     "casa": "quaest",
+     "campo": "20 a 23/09/2026",
+     "flavio_validos_pesquisa": 38.133851,
+     "lula_validos_pesquisa": 31.281407,
+     "ganho_flavio_pp_entrevistados": 15.657004,
+     "ganho_lula_pp_entrevistados": 1.028219,
+     "reserva_flavio_pp": 16.0,
+     "reserva_lula_pp": 5.0,
+     "lambda_flavio": 0.978563,
+     "theta_lula": 0.205644,
+     "terceira_via_restante_pp": 14.032583,
+     "consistente": true
+    },
+    {
+     "casa": "realtime",
+     "campo": "2026-09-17 a 2026-09-21",
+     "flavio_validos_pesquisa": 31.151428,
+     "lula_validos_pesquisa": 27.048758,
+     "ganho_flavio_pp_entrevistados": 22.211389,
+     "ganho_lula_pp_entrevistados": 4.139158,
+     "reserva_flavio_pp": 27.17,
+     "reserva_lula_pp": 7.15,
+     "lambda_flavio": 0.817497,
+     "theta_lula": 0.578903,
+     "terceira_via_restante_pp": 15.000872,
+     "consistente": true
+    },
+    {
+     "casa": "atlas",
+     "campo": "2026-08-27 a 2026-09-01",
+     "flavio_validos_pesquisa": 39.315714,
+     "lula_validos_pesquisa": 27.80168,
+     "ganho_flavio_pp_entrevistados": 14.163634,
+     "ganho_lula_pp_entrevistados": 3.304194,
+     "reserva_flavio_pp": 16.61,
+     "reserva_lula_pp": 6.15,
+     "lambda_flavio": 0.852717,
+     "theta_lula": 0.537267,
+     "terceira_via_restante_pp": 15.032986,
+     "consistente": true
+    }
+   ],
+   "estimado": false
+  },
+  {
+   "uf": "MA",
+   "reserva_flavio_pp_media_casas": 4.05,
+   "reserva_flavio_eleitores": 163466,
+   "flavio_validos_urna": 30.895371,
+   "lula_validos_urna": 63.990526,
+   "ganho_flavio_sobre_pesquisa_pp": 4.453737,
+   "ganho_lula_sobre_pesquisa_pp": -2.54519,
+   "ganho_flavio_sobre_central_pp": 2.090072,
+   "ganho_lula_sobre_central_pp": -0.360247,
+   "lambda_flavio_media_casas": 1.093619,
+   "theta_lula_media_casas": -0.798828,
+   "casas": [
+    {
+     "casa": "quaest",
+     "campo": "20 a 23/08/2026",
+     "flavio_validos_pesquisa": 26.532409,
+     "lula_validos_pesquisa": 68.438429,
+     "ganho_flavio_pp_entrevistados": 3.686399,
+     "ganho_lula_pp_entrevistados": -4.618067,
+     "reserva_flavio_pp": 2.8,
+     "reserva_lula_pp": 2.94,
+     "lambda_flavio": 1.316571,
+     "theta_lula": -1.570771,
+     "terceira_via_restante_pp": 4.601131,
+     "consistente": true
+    },
+    {
+     "casa": "realtime",
+     "campo": "2026-09-05 a 2026-09-09",
+     "flavio_validos_pesquisa": 26.350859,
+     "lula_validos_pesquisa": 64.633004,
+     "ganho_flavio_pp_entrevistados": 4.614531,
+     "ganho_lula_pp_entrevistados": -0.10028,
+     "reserva_flavio_pp": 5.3,
+     "reserva_lula_pp": 3.73,
+     "lambda_flavio": 0.870666,
+     "theta_lula": -0.026885,
+     "terceira_via_restante_pp": 4.953401,
+     "consistente": true
+    }
+   ],
+   "estimado": false
+  },
+  {
+   "uf": "MG",
+   "reserva_flavio_pp_media_casas": 8.89,
+   "reserva_flavio_eleitores": 1131246,
+   "flavio_validos_urna": 48.241772,
+   "lula_validos_urna": 43.326939,
+   "ganho_flavio_sobre_pesquisa_pp": 8.521658,
+   "ganho_lula_sobre_pesquisa_pp": -1.997625,
+   "ganho_flavio_sobre_central_pp": 3.356116,
+   "ganho_lula_sobre_central_pp": -1.261795,
+   "lambda_flavio_media_casas": 0.973142,
+   "theta_lula_media_casas": -0.701512,
+   "casas": [
+    {
+     "casa": "quaest",
+     "campo": "19 a 22/09/2026",
+     "flavio_validos_pesquisa": 38.697651,
+     "lula_validos_pesquisa": 45.383373,
+     "ganho_flavio_pp_entrevistados": 10.181452,
+     "ganho_lula_pp_entrevistados": 0.591655,
+     "reserva_flavio_pp": 9.99,
+     "reserva_lula_pp": 4.99,
+     "lambda_flavio": 1.019164,
+     "theta_lula": 0.118568,
+     "terceira_via_restante_pp": 7.221814,
+     "consistente": true
+    },
+    {
+     "casa": "realtime",
+     "campo": "2026-09-16 a 2026-09-19",
+     "flavio_validos_pesquisa": 36.701353,
+     "lula_validos_pesquisa": 41.144641,
+     "ganho_flavio_pp_entrevistados": 11.69629,
+     "ganho_lula_pp_entrevistados": 2.641402,
+     "reserva_flavio_pp": 11.86,
+     "reserva_lula_pp": 6.97,
+     "lambda_flavio": 0.986196,
+     "theta_lula": 0.378967,
+     "terceira_via_restante_pp": 8.208371,
+     "consistente": true
+    },
+    {
+     "casa": "atlas",
+     "campo": "2026-09-15 a 2026-09-20",
+     "flavio_validos_pesquisa": 43.761338,
+     "lula_validos_pesquisa": 49.445676,
+     "ganho_flavio_pp_entrevistados": 4.396654,
+     "ganho_lula_pp_entrevistados": -6.114868,
+     "reserva_flavio_pp": 4.81,
+     "reserva_lula_pp": 2.35,
+     "lambda_flavio": 0.914065,
+     "theta_lula": -2.602072,
+     "terceira_via_restante_pp": 8.356991,
+     "consistente": true
+    }
+   ],
+   "estimado": false
+  },
+  {
+   "uf": "MS",
+   "reserva_flavio_pp_media_casas": 10.0,
+   "reserva_flavio_eleitores": 157727,
+   "flavio_validos_urna": 58.603227,
+   "lula_validos_urna": 34.681784,
+   "ganho_flavio_sobre_pesquisa_pp": 12.730556,
+   "ganho_lula_sobre_pesquisa_pp": -0.697383,
+   "ganho_flavio_sobre_central_pp": 3.078145,
+   "ganho_lula_sobre_central_pp": -1.349541,
+   "lambda_flavio_media_casas": 1.333786,
+   "theta_lula_media_casas": 0.091313,
+   "casas": [
+    {
+     "casa": "quaest",
+     "campo": "21 a 24/08/2026",
+     "flavio_validos_pesquisa": 44.346374,
+     "lula_validos_pesquisa": 37.022901,
+     "ganho_flavio_pp_entrevistados": 15.232169,
+     "ganho_lula_pp_entrevistados": -0.022125,
+     "reserva_flavio_pp": 9.38,
+     "reserva_lula_pp": 4.54,
+     "lambda_flavio": 1.623899,
+     "theta_lula": -0.004873,
+     "terceira_via_restante_pp": 6.005593,
+     "consistente": true
+    },
+    {
+     "casa": "realtime",
+     "campo": "2026-09-05 a 2026-09-09",
+     "flavio_validos_pesquisa": 45.816945,
+     "lula_validos_pesquisa": 35.526735,
+     "ganho_flavio_pp_entrevistados": 12.92049,
+     "ganho_lula_pp_entrevistados": -0.266697,
+     "reserva_flavio_pp": 9.51,
+     "reserva_lula_pp": 5.39,
+     "lambda_flavio": 1.358621,
+     "theta_lula": -0.04948,
+     "terceira_via_restante_pp": 6.419049,
+     "consistente": true
+    },
+    {
+     "casa": "atlas",
+     "campo": "2026-08-27 a 2026-09-01",
+     "flavio_validos_pesquisa": 47.454694,
+     "lula_validos_pesquisa": 33.587864,
+     "ganho_flavio_pp_entrevistados": 11.309095,
+     "ganho_lula_pp_entrevistados": 1.28691,
+     "reserva_flavio_pp": 11.1,
+     "reserva_lula_pp": 3.92,
+     "lambda_flavio": 1.018837,
+     "theta_lula": 0.328293,
+     "terceira_via_restante_pp": 6.636598,
+     "consistente": true
+    }
+   ],
+   "estimado": false
+  },
+  {
+   "uf": "MT",
+   "reserva_flavio_pp_media_casas": 8.28,
+   "reserva_flavio_eleitores": 167424,
+   "flavio_validos_urna": 65.147686,
+   "lula_validos_urna": 29.181985,
+   "ganho_flavio_sobre_pesquisa_pp": 14.574546,
+   "ganho_lula_sobre_pesquisa_pp": -4.327171,
+   "ganho_flavio_sobre_central_pp": 1.768039,
+   "ganho_lula_sobre_central_pp": -0.208751,
+   "lambda_flavio_media_casas": 1.779055,
+   "theta_lula_media_casas": -0.873586,
+   "casas": [
+    {
+     "casa": "quaest",
+     "campo": "21 a 24/08/2026",
+     "flavio_validos_pesquisa": 54.363343,
+     "lula_validos_pesquisa": 34.584389,
+     "ganho_flavio_pp_entrevistados": 11.647429,
+     "ganho_lula_pp_entrevistados": -3.671167,
+     "reserva_flavio_pp": 7.42,
+     "reserva_lula_pp": 2.96,
+     "lambda_flavio": 1.569734,
+     "theta_lula": -1.240259,
+     "terceira_via_restante_pp": 5.123708,
+     "consistente": true
+    },
+    {
+     "casa": "realtime",
+     "campo": "2026-08-29 a 2026-09-02",
+     "flavio_validos_pesquisa": 43.25689,
+     "lula_validos_pesquisa": 34.115296,
+     "ganho_flavio_pp_entrevistados": 21.788509,
+     "ganho_lula_pp_entrevistados": -4.251023,
+     "reserva_flavio_pp": 11.49,
+     "reserva_lula_pp": 5.38,
+     "lambda_flavio": 1.896302,
+     "theta_lula": -0.790153,
+     "terceira_via_restante_pp": 5.475436,
+     "consistente": true
+    },
+    {
+     "casa": "atlas",
+     "campo": "2026-09-04 a 2026-09-09",
+     "flavio_validos_pesquisa": 54.099185,
+     "lula_validos_pesquisa": 31.827784,
+     "ganho_flavio_pp_entrevistados": 11.095791,
+     "ganho_lula_pp_entrevistados": -2.579806,
+     "reserva_flavio_pp": 5.93,
+     "reserva_lula_pp": 4.37,
+     "lambda_flavio": 1.871128,
+     "theta_lula": -0.590345,
+     "terceira_via_restante_pp": 5.646664,
+     "consistente": true
+    }
+   ],
+   "estimado": false
+  },
+  {
+   "uf": "PA",
+   "reserva_flavio_pp_media_casas": 5.55,
+   "reserva_flavio_eleitores": 273773,
+   "flavio_validos_urna": 44.496822,
+   "lula_validos_urna": 49.910573,
+   "ganho_flavio_sobre_pesquisa_pp": 6.130798,
+   "ganho_lula_sobre_pesquisa_pp": 2.273044,
+   "ganho_flavio_sobre_central_pp": 1.614196,
+   "ganho_lula_sobre_central_pp": 0.242463,
+   "lambda_flavio_media_casas": 1.395895,
+   "theta_lula_media_casas": 1.128368,
+   "casas": [
+    {
+     "casa": "quaest",
+     "campo": "25 a 28/08/2026",
+     "flavio_validos_pesquisa": 38.613861,
+     "lula_validos_pesquisa": 47.862551,
+     "ganho_flavio_pp_entrevistados": 7.740937,
+     "ganho_lula_pp_entrevistados": 4.775974,
+     "reserva_flavio_pp": 6.7,
+     "reserva_lula_pp": 4.3,
+     "lambda_flavio": 1.155364,
+     "theta_lula": 1.110692,
+     "terceira_via_restante_pp": 5.139398,
+     "consistente": true
+    },
+    {
+     "casa": "realtime",
+     "campo": "2026-09-10 a 2026-09-14",
+     "flavio_validos_pesquisa": 38.118187,
+     "lula_validos_pesquisa": 47.412507,
+     "ganho_flavio_pp_entrevistados": 7.183915,
+     "ganho_lula_pp_entrevistados": 3.999698,
+     "reserva_flavio_pp": 4.39,
+     "reserva_lula_pp": 3.49,
+     "lambda_flavio": 1.636427,
+     "theta_lula": 1.146045,
+     "terceira_via_restante_pp": 5.078186,
+     "consistente": true
+    }
+   ],
+   "estimado": false
+  },
+  {
+   "uf": "PB",
+   "reserva_flavio_pp_media_casas": 4.98,
+   "reserva_flavio_eleitores": 133920,
+   "flavio_validos_urna": 33.073217,
+   "lula_validos_urna": 61.30796,
+   "ganho_flavio_sobre_pesquisa_pp": 3.657319,
+   "ganho_lula_sobre_pesquisa_pp": 2.674492,
+   "ganho_flavio_sobre_central_pp": 0.880175,
+   "ganho_lula_sobre_central_pp": 1.010938,
+   "lambda_flavio_media_casas": 0.768133,
+   "theta_lula_media_casas": 0.687301,
+   "casas": [
+    {
+     "casa": "quaest",
+     "campo": "21 a 24/08/2026",
+     "flavio_validos_pesquisa": 29.260338,
+     "lula_validos_pesquisa": 63.075131,
+     "ganho_flavio_pp_entrevistados": 3.75393,
+     "ganho_lula_pp_entrevistados": -0.626276,
+     "reserva_flavio_pp": 4.39,
+     "reserva_lula_pp": 4.13,
+     "lambda_flavio": 0.855109,
+     "theta_lula": -0.151641,
+     "terceira_via_restante_pp": 4.905404,
+     "consistente": true
+    },
+    {
+     "casa": "atlas",
+     "campo": "2026-08-28 a 2026-09-02",
+     "flavio_validos_pesquisa": 29.571458,
+     "lula_validos_pesquisa": 54.191804,
+     "ganho_flavio_pp_entrevistados": 3.800857,
+     "ganho_lula_pp_entrevistados": 7.646474,
+     "reserva_flavio_pp": 5.58,
+     "reserva_lula_pp": 5.01,
+     "lambda_flavio": 0.681157,
+     "theta_lula": 1.526242,
+     "terceira_via_restante_pp": 5.475714,
+     "consistente": true
+    }
+   ],
+   "estimado": false
+  },
+  {
+   "uf": "PE",
+   "reserva_flavio_pp_media_casas": 6.11,
+   "reserva_flavio_eleitores": 361190,
+   "flavio_validos_urna": 31.030847,
+   "lula_validos_urna": 63.452244,
+   "ganho_flavio_sobre_pesquisa_pp": 3.507477,
+   "ganho_lula_sobre_pesquisa_pp": 2.178946,
+   "ganho_flavio_sobre_central_pp": 0.043589,
+   "ganho_lula_sobre_central_pp": 0.178839,
+   "lambda_flavio_media_casas": 0.663166,
+   "theta_lula_media_casas": 1.031441,
+   "casas": [
+    {
+     "casa": "quaest",
+     "campo": "19 a 22/09/2026",
+     "flavio_validos_pesquisa": 25.482718,
+     "lula_validos_pesquisa": 65.160906,
+     "ganho_flavio_pp_entrevistados": 5.772809,
+     "ganho_lula_pp_entrevistados": 0.852386,
+     "reserva_flavio_pp": 4.0,
+     "reserva_lula_pp": 4.0,
+     "lambda_flavio": 1.443202,
+     "theta_lula": 0.213097,
+     "terceira_via_restante_pp": 4.827441,
+     "consistente": true
+    },
+    {
+     "casa": "realtime",
+     "campo": "2026-09-10 a 2026-09-14",
+     "flavio_validos_pesquisa": 26.189732,
+     "lula_validos_pesquisa": 58.481724,
+     "ganho_flavio_pp_entrevistados": 5.101103,
+     "ganho_lula_pp_entrevistados": 5.697816,
+     "reserva_flavio_pp": 11.23,
+     "reserva_lula_pp": 3.51,
+     "lambda_flavio": 0.454239,
+     "theta_lula": 1.623309,
+     "terceira_via_restante_pp": 5.37828,
+     "consistente": true
+    },
+    {
+     "casa": "atlas",
+     "campo": "2026-09-15 a 2026-09-20",
+     "flavio_validos_pesquisa": 30.897661,
+     "lula_validos_pesquisa": 60.177265,
+     "ganho_flavio_pp_entrevistados": 0.285378,
+     "ganho_lula_pp_entrevistados": 3.497006,
+     "reserva_flavio_pp": 3.1,
+     "reserva_lula_pp": 2.78,
+     "lambda_flavio": 0.092058,
+     "theta_lula": 1.257916,
+     "terceira_via_restante_pp": 5.380818,
+     "consistente": true
+    }
+   ],
+   "estimado": false
+  },
+  {
+   "uf": "PI",
+   "reserva_flavio_pp_media_casas": 5.31,
+   "reserva_flavio_eleitores": 118386,
+   "flavio_validos_urna": 24.088215,
+   "lula_validos_urna": 70.989296,
+   "ganho_flavio_sobre_pesquisa_pp": 3.429658,
+   "ganho_lula_sobre_pesquisa_pp": 7.587451,
+   "ganho_flavio_sobre_central_pp": -2.991698,
+   "ganho_lula_sobre_central_pp": 3.59294,
+   "lambda_flavio_media_casas": 0.685671,
+   "theta_lula_media_casas": 0.962655,
+   "casas": [
+    {
+     "casa": "atlas",
+     "campo": "2026-08-28 a 2026-09-02",
+     "flavio_validos_pesquisa": 20.658557,
+     "lula_validos_pesquisa": 63.401846,
+     "ganho_flavio_pp_entrevistados": 3.640915,
+     "ganho_lula_pp_entrevistados": 8.326963,
+     "reserva_flavio_pp": 5.31,
+     "reserva_lula_pp": 8.65,
+     "lambda_flavio": 0.685671,
+     "theta_lula": 0.962655,
+     "terceira_via_restante_pp": 4.769776,
+     "consistente": true
+    }
+   ],
+   "estimado": false
+  },
+  {
+   "uf": "PR",
+   "reserva_flavio_pp_media_casas": 9.98,
+   "reserva_flavio_eleitores": 691674,
+   "flavio_validos_urna": 59.911912,
+   "lula_validos_urna": 31.200018,
+   "ganho_flavio_sobre_pesquisa_pp": 7.454498,
+   "ganho_lula_sobre_pesquisa_pp": -1.25463,
+   "ganho_flavio_sobre_central_pp": 1.499921,
+   "ganho_lula_sobre_central_pp": -0.373551,
+   "lambda_flavio_media_casas": 0.872565,
+   "theta_lula_media_casas": -0.305116,
+   "casas": [
+    {
+     "casa": "quaest",
+     "campo": "20 a 23/09/2026",
+     "flavio_validos_pesquisa": 50.188955,
+     "lula_validos_pesquisa": 31.354383,
+     "ganho_flavio_pp_entrevistados": 11.380402,
+     "ganho_lula_pp_entrevistados": 1.646402,
+     "reserva_flavio_pp": 10.99,
+     "reserva_lula_pp": 5.0,
+     "lambda_flavio": 1.035523,
+     "theta_lula": 0.32928,
+     "terceira_via_restante_pp": 7.795973,
+     "consistente": true
+    },
+    {
+     "casa": "realtime",
+     "campo": "2026-09-11 a 2026-09-15",
+     "flavio_validos_pesquisa": 51.78106,
+     "lula_validos_pesquisa": 31.950478,
+     "ganho_flavio_pp_entrevistados": 8.403444,
+     "ganho_lula_pp_entrevistados": -0.213714,
+     "reserva_flavio_pp": 14.48,
+     "reserva_lula_pp": 0.3,
+     "lambda_flavio": 0.580348,
+     "theta_lula": -0.712378,
+     "terceira_via_restante_pp": 8.320108,
+     "consistente": true
+    },
+    {
+     "casa": "atlas",
+     "campo": "2026-09-11 a 2026-09-16",
+     "flavio_validos_pesquisa": 55.402228,
+     "lula_validos_pesquisa": 34.059082,
+     "ganho_flavio_pp_entrevistados": 4.468126,
+     "ganho_lula_pp_entrevistados": -2.767702,
+     "reserva_flavio_pp": 4.46,
+     "reserva_lula_pp": 5.2,
+     "lambda_flavio": 1.001822,
+     "theta_lula": -0.53225,
+     "terceira_via_restante_pp": 8.703551,
+     "consistente": true
+    }
+   ],
+   "estimado": false
+  },
+  {
+   "uf": "RJ",
+   "reserva_flavio_pp_media_casas": 6.64,
+   "reserva_flavio_eleitores": 659915,
+   "flavio_validos_urna": 53.009637,
+   "lula_validos_urna": 39.414506,
+   "ganho_flavio_sobre_pesquisa_pp": 8.635263,
+   "ganho_lula_sobre_pesquisa_pp": -0.169275,
+   "ganho_flavio_sobre_central_pp": 0.930111,
+   "ganho_lula_sobre_central_pp": 0.018691,
+   "lambda_flavio_media_casas": 1.427513,
+   "theta_lula_media_casas": -0.02707,
+   "casas": [
+    {
+     "casa": "quaest",
+     "campo": "19 a 22/09/2026",
+     "flavio_validos_pesquisa": 47.43445,
+     "lula_validos_pesquisa": 38.991344,
+     "ganho_flavio_pp_entrevistados": 7.043497,
+     "ganho_lula_pp_entrevistados": 2.270133,
+     "reserva_flavio_pp": 7.0,
+     "reserva_lula_pp": 5.99,
+     "lambda_flavio": 1.006214,
+     "theta_lula": 0.378987,
+     "terceira_via_restante_pp": 6.410224,
+     "consistente": true
+    },
+    {
+     "casa": "realtime",
+     "campo": "2026-09-09 a 2026-09-12",
+     "flavio_validos_pesquisa": 42.646121,
+     "lula_validos_pesquisa": 35.600425,
+     "ganho_flavio_pp_entrevistados": 10.837266,
+     "ganho_lula_pp_entrevistados": 4.395932,
+     "reserva_flavio_pp": 7.68,
+     "reserva_lula_pp": 8.57,
+     "lambda_flavio": 1.411102,
+     "theta_lula": 0.512944,
+     "terceira_via_restante_pp": 7.283971,
+     "consistente": true
+    },
+    {
+     "casa": "atlas",
+     "campo": "2026-09-15 a 2026-09-20",
+     "flavio_validos_pesquisa": 43.042553,
+     "lula_validos_pesquisa": 44.159574,
+     "ganho_flavio_pp_entrevistados": 9.792416,
+     "ganho_lula_pp_entrevistados": -4.145583,
+     "reserva_flavio_pp": 5.25,
+     "reserva_lula_pp": 4.26,
+     "lambda_flavio": 1.865222,
+     "theta_lula": -0.973142,
+     "terceira_via_restante_pp": 7.181809,
+     "consistente": true
+    }
+   ],
+   "estimado": false
+  },
+  {
+   "uf": "RN",
+   "reserva_flavio_pp_media_casas": 3.47,
+   "reserva_flavio_eleitores": 75669,
+   "flavio_validos_urna": 34.77454,
+   "lula_validos_urna": 59.75019,
+   "ganho_flavio_sobre_pesquisa_pp": 6.389131,
+   "ganho_lula_sobre_pesquisa_pp": -3.58338,
+   "ganho_flavio_sobre_central_pp": 1.617445,
+   "ganho_lula_sobre_central_pp": 0.274864,
+   "lambda_flavio_media_casas": 1.673827,
+   "theta_lula_media_casas": -0.887155,
+   "casas": [
+    {
+     "casa": "quaest",
+     "campo": "20 a 23/08/2026",
+     "flavio_validos_pesquisa": 27.760507,
+     "lula_validos_pesquisa": 66.977547,
+     "ganho_flavio_pp_entrevistados": 5.645677,
+     "ganho_lula_pp_entrevistados": -7.043304,
+     "reserva_flavio_pp": 3.63,
+     "reserva_lula_pp": 3.67,
+     "lambda_flavio": 1.555283,
+     "theta_lula": -1.919156,
+     "terceira_via_restante_pp": 4.685047,
+     "consistente": true
+    },
+    {
+     "casa": "realtime",
+     "campo": "2026-09-05 a 2026-09-09",
+     "flavio_validos_pesquisa": 29.010311,
+     "lula_validos_pesquisa": 59.689593,
+     "ganho_flavio_pp_entrevistados": 5.950674,
+     "ganho_lula_pp_entrevistados": 0.964676,
+     "reserva_flavio_pp": 3.32,
+     "reserva_lula_pp": 6.66,
+     "lambda_flavio": 1.792372,
+     "theta_lula": 0.144846,
+     "terceira_via_restante_pp": 5.233761,
+     "consistente": true
+    }
+   ],
+   "estimado": false
+  },
+  {
+   "uf": "RO",
+   "reserva_flavio_pp_media_casas": 7.26,
+   "reserva_flavio_eleitores": 69403,
+   "flavio_validos_urna": 67.453327,
+   "lula_validos_urna": 25.893773,
+   "ganho_flavio_sobre_pesquisa_pp": 11.421003,
+   "ganho_lula_sobre_pesquisa_pp": -7.147429,
+   "ganho_flavio_sobre_central_pp": 0.702017,
+   "ganho_lula_sobre_central_pp": 0.182775,
+   "lambda_flavio_media_casas": 1.569102,
+   "theta_lula_media_casas": -2.094087,
+   "casas": [
+    {
+     "casa": "quaest",
+     "campo": "21 a 24/08/2026",
+     "flavio_validos_pesquisa": 56.032324,
+     "lula_validos_pesquisa": 33.041202,
+     "ganho_flavio_pp_entrevistados": 11.391677,
+     "ganho_lula_pp_entrevistados": -5.758739,
+     "reserva_flavio_pp": 7.26,
+     "reserva_lula_pp": 2.75,
+     "lambda_flavio": 1.569102,
+     "theta_lula": -2.094087,
+     "terceira_via_restante_pp": 5.979097,
+     "consistente": true
+    }
+   ],
+   "estimado": false
+  },
+  {
+   "uf": "RR",
+   "reserva_flavio_pp_media_casas": 7.58,
+   "reserva_flavio_eleitores": 25367,
+   "flavio_validos_urna": 71.056843,
+   "lula_validos_urna": 22.860127,
+   "ganho_flavio_sobre_pesquisa_pp": 8.106643,
+   "ganho_lula_sobre_pesquisa_pp": 1.161981,
+   "ganho_flavio_sobre_central_pp": 0.7609,
+   "ganho_lula_sobre_central_pp": 1.683623,
+   "lambda_flavio_media_casas": 1.198284,
+   "theta_lula_media_casas": 0.319513,
+   "casas": [
+    {
+     "casa": "quaest",
+     "campo": "23 a 26/08/2026",
+     "flavio_validos_pesquisa": 63.313077,
+     "lula_validos_pesquisa": 23.621427,
+     "ganho_flavio_pp_entrevistados": 9.402934,
+     "ganho_lula_pp_entrevistados": 0.13482,
+     "reserva_flavio_pp": 8.47,
+     "reserva_lula_pp": 2.35,
+     "lambda_flavio": 1.110146,
+     "theta_lula": 0.05737,
+     "terceira_via_restante_pp": 5.621269,
+     "consistente": true
+    },
+    {
+     "casa": "realtime",
+     "campo": "2026-09-05 a 2026-09-09",
+     "flavio_validos_pesquisa": 65.780802,
+     "lula_validos_pesquisa": 19.761879,
+     "ganho_flavio_pp_entrevistados": 6.494204,
+     "ganho_lula_pp_entrevistados": 3.407079,
+     "reserva_flavio_pp": 5.73,
+     "reserva_lula_pp": 5.22,
+     "lambda_flavio": 1.133369,
+     "theta_lula": 0.652697,
+     "terceira_via_restante_pp": 5.853375,
+     "consistente": true
+    },
+    {
+     "casa": "atlas",
+     "campo": "2026-09-04 a 2026-09-09",
+     "flavio_validos_pesquisa": 59.756721,
+     "lula_validos_pesquisa": 21.711132,
+     "ganho_flavio_pp_entrevistados": 11.553928,
+     "ganho_lula_pp_entrevistados": 1.284604,
+     "reserva_flavio_pp": 8.55,
+     "reserva_lula_pp": 5.17,
+     "lambda_flavio": 1.351337,
+     "theta_lula": 0.248473,
+     "terceira_via_restante_pp": 5.993748,
+     "consistente": true
+    }
+   ],
+   "estimado": false
+  },
+  {
+   "uf": "RS",
+   "reserva_flavio_pp_media_casas": 9.72,
+   "reserva_flavio_eleitores": 664575,
+   "flavio_validos_urna": 55.640003,
+   "lula_validos_urna": 35.726959,
+   "ganho_flavio_sobre_pesquisa_pp": 10.930121,
+   "ganho_lula_sobre_pesquisa_pp": -3.223373,
+   "ganho_flavio_sobre_central_pp": 4.04194,
+   "ganho_lula_sobre_central_pp": -2.26039,
+   "lambda_flavio_media_casas": 1.223046,
+   "theta_lula_media_casas": -0.620306,
+   "casas": [
+    {
+     "casa": "quaest",
+     "campo": "20 a 23/09/2026",
+     "flavio_validos_pesquisa": 47.103896,
+     "lula_validos_pesquisa": 40.493506,
+     "ganho_flavio_pp_entrevistados": 8.344511,
+     "ganho_lula_pp_entrevistados": -2.532611,
+     "reserva_flavio_pp": 11.0,
+     "reserva_lula_pp": 4.0,
+     "lambda_flavio": 0.758592,
+     "theta_lula": -0.633153,
+     "terceira_via_restante_pp": 6.922335,
+     "consistente": true
+    },
+    {
+     "casa": "realtime",
+     "campo": "2026-09-05 a 2026-09-09",
+     "flavio_validos_pesquisa": 44.151293,
+     "lula_validos_pesquisa": 39.977327,
+     "ganho_flavio_pp_entrevistados": 11.401487,
+     "ganho_lula_pp_entrevistados": -3.961041,
+     "reserva_flavio_pp": 11.43,
+     "reserva_lula_pp": 3.39,
+     "lambda_flavio": 0.997505,
+     "theta_lula": -1.168449,
+     "terceira_via_restante_pp": 8.416046,
+     "consistente": true
+    },
+    {
+     "casa": "atlas",
+     "campo": "2026-09-15 a 2026-09-20",
+     "flavio_validos_pesquisa": 42.874457,
+     "lula_validos_pesquisa": 36.380164,
+     "ganho_flavio_pp_entrevistados": 12.855629,
+     "ganho_lula_pp_entrevistados": -0.507746,
+     "reserva_flavio_pp": 6.72,
+     "reserva_lula_pp": 8.56,
+     "lambda_flavio": 1.91304,
+     "theta_lula": -0.059316,
+     "terceira_via_restante_pp": 8.581157,
+     "consistente": true
+    }
+   ],
+   "estimado": false
+  },
+  {
+   "uf": "SC",
+   "reserva_flavio_pp_media_casas": 11.51,
+   "reserva_flavio_eleitores": 537591,
+   "flavio_validos_urna": 66.653825,
+   "lula_validos_urna": 25.043186,
+   "ganho_flavio_sobre_pesquisa_pp": 12.61676,
+   "ganho_lula_sobre_pesquisa_pp": -2.179362,
+   "ganho_flavio_sobre_central_pp": 3.484746,
+   "ganho_lula_sobre_central_pp": -2.256735,
+   "lambda_flavio_media_casas": 1.104001,
+   "theta_lula_media_casas": -0.847626,
+   "casas": [
+    {
+     "casa": "quaest",
+     "campo": "20 a 23/09/2026",
+     "flavio_validos_pesquisa": 58.835831,
+     "lula_validos_pesquisa": 27.791333,
+     "ganho_flavio_pp_entrevistados": 8.669325,
+     "ganho_lula_pp_entrevistados": -1.636291,
+     "reserva_flavio_pp": 10.0,
+     "reserva_lula_pp": 1.0,
+     "lambda_flavio": 0.866933,
+     "theta_lula": -1.636291,
+     "terceira_via_restante_pp": 7.388094,
+     "consistente": true
+    },
+    {
+     "casa": "realtime",
+     "campo": "2026-09-12 a 2026-09-16",
+     "flavio_validos_pesquisa": 54.227405,
+     "lula_validos_pesquisa": 27.738442,
+     "ganho_flavio_pp_entrevistados": 12.560861,
+     "ganho_lula_pp_entrevistados": -2.353125,
+     "reserva_flavio_pp": 10.56,
+     "reserva_lula_pp": 4.28,
+     "lambda_flavio": 1.189475,
+     "theta_lula": -0.549796,
+     "terceira_via_restante_pp": 8.052237,
+     "consistente": true
+    },
+    {
+     "casa": "atlas",
+     "campo": "2026-09-04 a 2026-09-09",
+     "flavio_validos_pesquisa": 49.047958,
+     "lula_validos_pesquisa": 26.137868,
+     "ganho_flavio_pp_entrevistados": 17.54066,
+     "ganho_lula_pp_entrevistados": -0.98118,
+     "reserva_flavio_pp": 13.97,
+     "reserva_lula_pp": 2.75,
+     "lambda_flavio": 1.255595,
+     "theta_lula": -0.356793,
+     "terceira_via_restante_pp": 8.185501,
+     "consistente": true
+    }
+   ],
+   "estimado": false
+  },
+  {
+   "uf": "SE",
+   "reserva_flavio_pp_media_casas": 2.31,
+   "reserva_flavio_eleitores": 32824,
+   "flavio_validos_urna": 30.628957,
+   "lula_validos_urna": 62.748974,
+   "ganho_flavio_sobre_pesquisa_pp": 3.244533,
+   "ganho_lula_sobre_pesquisa_pp": 2.232523,
+   "ganho_flavio_sobre_central_pp": -1.388986,
+   "ganho_lula_sobre_central_pp": 3.587745,
+   "lambda_flavio_media_casas": 1.480022,
+   "theta_lula_media_casas": 0.589436,
+   "casas": [
+    {
+     "casa": "realtime",
+     "campo": "2026-09-17 a 2026-09-21",
+     "flavio_validos_pesquisa": 27.384423,
+     "lula_validos_pesquisa": 60.516451,
+     "ganho_flavio_pp_entrevistados": 3.41885,
+     "ganho_lula_pp_entrevistados": 2.764456,
+     "reserva_flavio_pp": 2.31,
+     "reserva_lula_pp": 4.69,
+     "lambda_flavio": 1.480022,
+     "theta_lula": 0.589436,
+     "terceira_via_restante_pp": 6.425301,
+     "consistente": true
+    }
+   ],
+   "estimado": false
+  },
+  {
+   "uf": "SP",
+   "reserva_flavio_pp_media_casas": 7.53,
+   "reserva_flavio_eleitores": 2012293,
+   "flavio_validos_urna": 51.931238,
+   "lula_validos_urna": 38.20051,
+   "ganho_flavio_sobre_pesquisa_pp": 7.718823,
+   "ganho_lula_sobre_pesquisa_pp": -0.985048,
+   "ganho_flavio_sobre_central_pp": 3.128175,
+   "ganho_lula_sobre_central_pp": -1.212098,
+   "lambda_flavio_media_casas": 1.140734,
+   "theta_lula_media_casas": -0.151202,
+   "casas": [
+    {
+     "casa": "quaest",
+     "campo": "19 a 22/09/2026",
+     "flavio_validos_pesquisa": 42.709104,
+     "lula_validos_pesquisa": 39.106834,
+     "ganho_flavio_pp_entrevistados": 9.804324,
+     "ganho_lula_pp_entrevistados": 0.97844,
+     "reserva_flavio_pp": 8.0,
+     "reserva_lula_pp": 5.01,
+     "lambda_flavio": 1.225541,
+     "theta_lula": 0.195297,
+     "terceira_via_restante_pp": 8.441748,
+     "consistente": true
+    },
+    {
+     "casa": "realtime",
+     "campo": "2026-09-16 a 2026-09-19",
+     "flavio_validos_pesquisa": 43.780566,
+     "lula_validos_pesquisa": 37.561131,
+     "ganho_flavio_pp_entrevistados": 8.392757,
+     "ganho_lula_pp_entrevistados": 1.135616,
+     "reserva_flavio_pp": 10.44,
+     "reserva_lula_pp": 10.38,
+     "lambda_flavio": 0.803904,
+     "theta_lula": 0.109404,
+     "terceira_via_restante_pp": 9.420081,
+     "consistente": true
+    },
+    {
+     "casa": "atlas",
+     "campo": "2026-09-15 a 2026-09-20",
+     "flavio_validos_pesquisa": 46.147574,
+     "lula_validos_pesquisa": 40.888708,
+     "ganho_flavio_pp_entrevistados": 5.76601,
+     "ganho_lula_pp_entrevistados": -2.570662,
+     "reserva_flavio_pp": 4.14,
+     "reserva_lula_pp": 3.39,
+     "lambda_flavio": 1.392756,
+     "theta_lula": -0.758307,
+     "terceira_via_restante_pp": 9.700036,
+     "consistente": true
+    }
+   ],
+   "estimado": false
+  },
+  {
+   "uf": "TO",
+   "reserva_flavio_pp_media_casas": 8.64,
+   "reserva_flavio_eleitores": 83197,
+   "flavio_validos_urna": 50.44038,
+   "lula_validos_urna": 43.420958,
+   "ganho_flavio_sobre_pesquisa_pp": 8.814454,
+   "ganho_lula_sobre_pesquisa_pp": 0.075849,
+   "ganho_flavio_sobre_central_pp": 1.397058,
+   "ganho_lula_sobre_central_pp": 1.719788,
+   "lambda_flavio_media_casas": 1.101687,
+   "theta_lula_media_casas": 2.066499,
+   "casas": [
+    {
+     "casa": "quaest",
+     "campo": "19 a 22/09/2026",
+     "flavio_validos_pesquisa": 40.706127,
+     "lula_validos_pesquisa": 43.602169,
+     "ganho_flavio_pp_entrevistados": 10.828698,
+     "ganho_lula_pp_entrevistados": 1.902084,
+     "reserva_flavio_pp": 9.0,
+     "reserva_lula_pp": 7.0,
+     "lambda_flavio": 1.203189,
+     "theta_lula": 0.271726,
+     "terceira_via_restante_pp": 5.611491,
+     "consistente": true
+    },
+    {
+     "casa": "realtime",
+     "campo": "2026-09-21 a 2026-09-24",
+     "flavio_validos_pesquisa": 42.545725,
+     "lula_validos_pesquisa": 43.088048,
+     "ganho_flavio_pp_entrevistados": 8.271534,
+     "ganho_lula_pp_entrevistados": 1.042543,
+     "reserva_flavio_pp": 8.27,
+     "reserva_lula_pp": 0.27,
+     "lambda_flavio": 1.000186,
+     "theta_lula": 3.861272,
+     "terceira_via_restante_pp": 5.875928,
+     "consistente": true
+    }
+   ],
+   "estimado": false
+  }
+ ],
+ "decomposicao": {
+  "variantes": {
+   "nexus_renormalizada": "principal: linhas da Nexus (p. 79) renormalizadas entre Flávio e Lula",
+   "nexus_com_vazamento": "linhas da Nexus; a parte que iria a branco, nulo ou indeciso sai dos válidos",
+   "datafolha_caiado": "como a principal, com a linha de Caiado do Datafolha (Flávio 42, Lula 27)",
+   "proporcional": "sem matriz: cada ponto da terceira via vai a Flávio e Lula na proporção do placar"
+  },
+  "hipotese_demais": "candidaturas menores e 'outros' repartidas meio a meio (sem linha publicada)",
+  "agregados": {
+   "ultimas_ondas_publicado": {
+    "nexus_renormalizada": {
+     "queda_terceiros_pp": {
+      "caiado": 1.19842,
+      "cury": 0.689055,
+      "demais": 0.437536,
+      "renan_santos": 1.37939,
+      "zema": 0.628725
+     },
+     "queda_terceira_via_pp": 4.333127,
+     "ganho_flavio_pp": 3.939486,
+     "ganho_lula_pp": 0.393641,
+     "explicado_flavio_pp": 2.895385,
+     "explicado_lula_pp": 1.437742,
+     "residuo_flavio_pp": 1.044102,
+     "residuo_lula_pp": -1.044102,
+     "erro_diferenca_lula_menos_flavio_pp": 3.545846,
+     "explicado_diferenca_pp": 1.457642,
+     "residuo_diferenca_pp": 2.088203,
+     "fracao_explicada_diferenca": 0.411085
+    },
+    "nexus_com_vazamento": {
+     "queda_terceiros_pp": {
+      "caiado": 1.19842,
+      "cury": 0.689055,
+      "demais": 0.437536,
+      "renan_santos": 1.37939,
+      "zema": 0.628725
+     },
+     "queda_terceira_via_pp": 4.333127,
+     "ganho_flavio_pp": 3.939486,
+     "ganho_lula_pp": 0.393641,
+     "explicado_flavio_pp": 2.637873,
+     "explicado_lula_pp": 1.695254,
+     "residuo_flavio_pp": 1.301613,
+     "residuo_lula_pp": -1.301613,
+     "erro_diferenca_lula_menos_flavio_pp": 3.545846,
+     "explicado_diferenca_pp": 0.94262,
+     "residuo_diferenca_pp": 2.603226,
+     "fracao_explicada_diferenca": 0.265838
+    },
+    "datafolha_caiado": {
+     "queda_terceiros_pp": {
+      "caiado": 1.19842,
+      "cury": 0.689055,
+      "demais": 0.437536,
+      "renan_santos": 1.37939,
+      "zema": 0.628725
+     },
+     "queda_terceira_via_pp": 4.333127,
+     "ganho_flavio_pp": 3.939486,
+     "ganho_lula_pp": 0.393641,
+     "explicado_flavio_pp": 3.080121,
+     "explicado_lula_pp": 1.253005,
+     "residuo_flavio_pp": 0.859365,
+     "residuo_lula_pp": -0.859365,
+     "erro_diferenca_lula_menos_flavio_pp": 3.545846,
+     "explicado_diferenca_pp": 1.827116,
+     "residuo_diferenca_pp": 1.71873,
+     "fracao_explicada_diferenca": 0.515284
+    },
+    "proporcional": {
+     "queda_terceiros_pp": {
+      "caiado": 1.19842,
+      "cury": 0.689055,
+      "demais": 0.437536,
+      "renan_santos": 1.37939,
+      "zema": 0.628725
+     },
+     "queda_terceira_via_pp": 4.333127,
+     "ganho_flavio_pp": 3.939486,
+     "ganho_lula_pp": 0.393641,
+     "explicado_flavio_pp": 2.129299,
+     "explicado_lula_pp": 2.203828,
+     "residuo_flavio_pp": 1.810187,
+     "residuo_lula_pp": -1.810187,
+     "erro_diferenca_lula_menos_flavio_pp": 3.545846,
+     "explicado_diferenca_pp": -0.074528,
+     "residuo_diferenca_pp": 3.620374,
+     "fracao_explicada_diferenca": -0.021019
+    }
+   },
+   "agregador_publicado": {
+    "nexus_renormalizada": {
+     "queda_terceiros_pp": {
+      "caiado": 1.008484,
+      "cury": 0.537223,
+      "demais": 0.364387,
+      "renan_santos": 1.489644,
+      "zema": 0.314413
+     },
+     "queda_terceira_via_pp": 3.714152,
+     "ganho_flavio_pp": 3.981067,
+     "ganho_lula_pp": -0.266915,
+     "explicado_flavio_pp": 2.521108,
+     "explicado_lula_pp": 1.193044,
+     "residuo_flavio_pp": 1.459959,
+     "residuo_lula_pp": -1.459959,
+     "erro_diferenca_lula_menos_flavio_pp": 4.247982,
+     "explicado_diferenca_pp": 1.328065,
+     "residuo_diferenca_pp": 2.919917,
+     "fracao_explicada_diferenca": 0.312634
+    },
+    "nexus_com_vazamento": {
+     "queda_terceiros_pp": {
+      "caiado": 1.008484,
+      "cury": 0.537223,
+      "demais": 0.364387,
+      "renan_santos": 1.489644,
+      "zema": 0.314413
+     },
+     "queda_terceira_via_pp": 3.714152,
+     "ganho_flavio_pp": 3.981067,
+     "ganho_lula_pp": -0.266915,
+     "explicado_flavio_pp": 2.275157,
+     "explicado_lula_pp": 1.438995,
+     "residuo_flavio_pp": 1.70591,
+     "residuo_lula_pp": -1.70591,
+     "erro_diferenca_lula_menos_flavio_pp": 4.247982,
+     "explicado_diferenca_pp": 0.836161,
+     "residuo_diferenca_pp": 3.41182,
+     "fracao_explicada_diferenca": 0.196837
+    },
+    "datafolha_caiado": {
+     "queda_terceiros_pp": {
+      "caiado": 1.008484,
+      "cury": 0.537223,
+      "demais": 0.364387,
+      "renan_santos": 1.489644,
+      "zema": 0.314413
+     },
+     "queda_terceira_via_pp": 3.714152,
+     "ganho_flavio_pp": 3.981067,
+     "ganho_lula_pp": -0.266915,
+     "explicado_flavio_pp": 2.676566,
+     "explicado_lula_pp": 1.037586,
+     "residuo_flavio_pp": 1.3045,
+     "residuo_lula_pp": -1.3045,
+     "erro_diferenca_lula_menos_flavio_pp": 4.247982,
+     "explicado_diferenca_pp": 1.638981,
+     "residuo_diferenca_pp": 2.609001,
+     "fracao_explicada_diferenca": 0.385826
+    },
+    "proporcional": {
+     "queda_terceiros_pp": {
+      "caiado": 1.008484,
+      "cury": 0.537223,
+      "demais": 0.364387,
+      "renan_santos": 1.489644,
+      "zema": 0.314413
+     },
+     "queda_terceira_via_pp": 3.714152,
+     "ganho_flavio_pp": 3.981067,
+     "ganho_lula_pp": -0.266915,
+     "explicado_flavio_pp": 1.811966,
+     "explicado_lula_pp": 1.902186,
+     "residuo_flavio_pp": 2.169101,
+     "residuo_lula_pp": -2.169101,
+     "erro_diferenca_lula_menos_flavio_pp": 4.247982,
+     "explicado_diferenca_pp": -0.090221,
+     "residuo_diferenca_pp": 4.338203,
+     "fracao_explicada_diferenca": -0.021239
+    }
+   },
+   "agregador_reponderado": {
+    "nexus_renormalizada": {
+     "queda_terceiros_pp": {
+      "caiado": 0.988516,
+      "cury": 0.532944,
+      "demais": 0.356443,
+      "renan_santos": 1.671068,
+      "zema": 0.316001
+     },
+     "queda_terceira_via_pp": 3.864972,
+     "ganho_flavio_pp": 3.147899,
+     "ganho_lula_pp": 0.717073,
+     "explicado_flavio_pp": 2.665562,
+     "explicado_lula_pp": 1.19941,
+     "residuo_flavio_pp": 0.482336,
+     "residuo_lula_pp": -0.482336,
+     "erro_diferenca_lula_menos_flavio_pp": 2.430826,
+     "explicado_diferenca_pp": 1.466153,
+     "residuo_diferenca_pp": 0.964673,
+     "fracao_explicada_diferenca": 0.60315
+    },
+    "nexus_com_vazamento": {
+     "queda_terceiros_pp": {
+      "caiado": 0.988516,
+      "cury": 0.532944,
+      "demais": 0.356443,
+      "renan_santos": 1.671068,
+      "zema": 0.316001
+     },
+     "queda_terceira_via_pp": 3.864972,
+     "ganho_flavio_pp": 3.147899,
+     "ganho_lula_pp": 0.717073,
+     "explicado_flavio_pp": 2.405522,
+     "explicado_lula_pp": 1.45945,
+     "residuo_flavio_pp": 0.742377,
+     "residuo_lula_pp": -0.742377,
+     "erro_diferenca_lula_menos_flavio_pp": 2.430826,
+     "explicado_diferenca_pp": 0.946072,
+     "residuo_diferenca_pp": 1.484754,
+     "fracao_explicada_diferenca": 0.389198
+    },
+    "datafolha_caiado": {
+     "queda_terceiros_pp": {
+      "caiado": 0.988516,
+      "cury": 0.532944,
+      "demais": 0.356443,
+      "renan_santos": 1.671068,
+      "zema": 0.316001
+     },
+     "queda_terceira_via_pp": 3.864972,
+     "ganho_flavio_pp": 3.147899,
+     "ganho_lula_pp": 0.717073,
+     "explicado_flavio_pp": 2.817942,
+     "explicado_lula_pp": 1.04703,
+     "residuo_flavio_pp": 0.329957,
+     "residuo_lula_pp": -0.329957,
+     "erro_diferenca_lula_menos_flavio_pp": 2.430826,
+     "explicado_diferenca_pp": 1.770912,
+     "residuo_diferenca_pp": 0.659913,
+     "fracao_explicada_diferenca": 0.728523
+    },
+    "proporcional": {
+     "queda_terceiros_pp": {
+      "caiado": 0.988516,
+      "cury": 0.532944,
+      "demais": 0.356443,
+      "renan_santos": 1.671068,
+      "zema": 0.316001
+     },
+     "queda_terceira_via_pp": 3.864972,
+     "ganho_flavio_pp": 3.147899,
+     "ganho_lula_pp": 0.717073,
+     "explicado_flavio_pp": 1.921248,
+     "explicado_lula_pp": 1.943724,
+     "residuo_flavio_pp": 1.226651,
+     "residuo_lula_pp": -1.226651,
+     "erro_diferenca_lula_menos_flavio_pp": 2.430826,
+     "explicado_diferenca_pp": -0.022476,
+     "residuo_diferenca_pp": 2.453302,
+     "fracao_explicada_diferenca": -0.009246
+    }
+   },
+   "central_casa": {
+    "nexus_renormalizada": {
+     "queda_terceiros_pp": {
+      "cury": -0.107046,
+      "renan_santos": 0.909925,
+      "caiado": 0.518149,
+      "zema": 0.244897,
+      "demais": 0.252731
+     },
+     "queda_terceira_via_pp": 1.818655,
+     "ganho_flavio_pp": 1.771007,
+     "ganho_lula_pp": 0.047648,
+     "explicado_flavio_pp": 1.295102,
+     "explicado_lula_pp": 0.523553,
+     "residuo_flavio_pp": 0.475905,
+     "residuo_lula_pp": -0.475905,
+     "erro_diferenca_lula_menos_flavio_pp": 1.723359,
+     "explicado_diferenca_pp": 0.771549,
+     "residuo_diferenca_pp": 0.95181,
+     "fracao_explicada_diferenca": 0.447701
+    },
+    "nexus_com_vazamento": {
+     "queda_terceiros_pp": {
+      "cury": -0.107046,
+      "renan_santos": 0.909925,
+      "caiado": 0.518149,
+      "zema": 0.244897,
+      "demais": 0.252731
+     },
+     "queda_terceira_via_pp": 1.818655,
+     "ganho_flavio_pp": 1.771007,
+     "ganho_lula_pp": 0.047648,
+     "explicado_flavio_pp": 1.158476,
+     "explicado_lula_pp": 0.660179,
+     "residuo_flavio_pp": 0.612531,
+     "residuo_lula_pp": -0.612531,
+     "erro_diferenca_lula_menos_flavio_pp": 1.723359,
+     "explicado_diferenca_pp": 0.498297,
+     "residuo_diferenca_pp": 1.225063,
+     "fracao_explicada_diferenca": 0.289143
+    },
+    "datafolha_caiado": {
+     "queda_terceiros_pp": {
+      "cury": -0.107046,
+      "renan_santos": 0.909925,
+      "caiado": 0.518149,
+      "zema": 0.244897,
+      "demais": 0.252731
+     },
+     "queda_terceira_via_pp": 1.818655,
+     "ganho_flavio_pp": 1.771007,
+     "ganho_lula_pp": 0.047648,
+     "explicado_flavio_pp": 1.374975,
+     "explicado_lula_pp": 0.44368,
+     "residuo_flavio_pp": 0.396033,
+     "residuo_lula_pp": -0.396033,
+     "erro_diferenca_lula_menos_flavio_pp": 1.723359,
+     "explicado_diferenca_pp": 0.931294,
+     "residuo_diferenca_pp": 0.792065,
+     "fracao_explicada_diferenca": 0.540395
+    },
+    "proporcional": {
+     "queda_terceiros_pp": {
+      "cury": -0.107046,
+      "renan_santos": 0.909925,
+      "caiado": 0.518149,
+      "zema": 0.244897,
+      "demais": 0.252731
+     },
+     "queda_terceira_via_pp": 1.818655,
+     "ganho_flavio_pp": 1.771007,
+     "ganho_lula_pp": 0.047648,
+     "explicado_flavio_pp": 0.910555,
+     "explicado_lula_pp": 0.9081,
+     "residuo_flavio_pp": 0.860453,
+     "residuo_lula_pp": -0.860453,
+     "erro_diferenca_lula_menos_flavio_pp": 1.723359,
+     "explicado_diferenca_pp": 0.002454,
+     "residuo_diferenca_pp": 1.720905,
+     "fracao_explicada_diferenca": 0.001424
+    }
+   }
+  },
+  "por_onda": [
+   {
+    "id": "atlas_2026-10-02",
+    "instituto": "AtlasIntel",
+    "nexus_renormalizada": {
+     "queda_terceiros_pp": {
+      "cury": -0.780098,
+      "renan_santos": 2.38014,
+      "caiado": -0.776645,
+      "zema": 0.02784,
+      "demais": 0.38453
+     },
+     "queda_terceira_via_pp": 1.235766,
+     "ganho_flavio_pp": 3.007672,
+     "ganho_lula_pp": -1.771905,
+     "explicado_flavio_pp": 1.480838,
+     "explicado_lula_pp": -0.245072,
+     "residuo_flavio_pp": 1.526834,
+     "residuo_lula_pp": -1.526834,
+     "erro_diferenca_lula_menos_flavio_pp": 4.779577,
+     "explicado_diferenca_pp": 1.72591,
+     "residuo_diferenca_pp": 3.053668,
+     "fracao_explicada_diferenca": 0.361101
+    },
+    "nexus_com_vazamento": {
+     "queda_terceiros_pp": {
+      "cury": -0.780098,
+      "renan_santos": 2.38014,
+      "caiado": -0.776645,
+      "zema": 0.02784,
+      "demais": 0.38453
+     },
+     "queda_terceira_via_pp": 1.235766,
+     "ganho_flavio_pp": 3.007672,
+     "ganho_lula_pp": -1.771905,
+     "explicado_flavio_pp": 1.151383,
+     "explicado_lula_pp": 0.084383,
+     "residuo_flavio_pp": 1.856289,
+     "residuo_lula_pp": -1.856289,
+     "erro_diferenca_lula_menos_flavio_pp": 4.779577,
+     "explicado_diferenca_pp": 1.066999,
+     "residuo_diferenca_pp": 3.712578,
+     "fracao_explicada_diferenca": 0.223241
+    },
+    "datafolha_caiado": {
+     "queda_terceiros_pp": {
+      "cury": -0.780098,
+      "renan_santos": 2.38014,
+      "caiado": -0.776645,
+      "zema": 0.02784,
+      "demais": 0.38453
+     },
+     "queda_terceira_via_pp": 1.235766,
+     "ganho_flavio_pp": 3.007672,
+     "ganho_lula_pp": -1.771905,
+     "explicado_flavio_pp": 1.361118,
+     "explicado_lula_pp": -0.125352,
+     "residuo_flavio_pp": 1.646554,
+     "residuo_lula_pp": -1.646554,
+     "erro_diferenca_lula_menos_flavio_pp": 4.779577,
+     "explicado_diferenca_pp": 1.48647,
+     "residuo_diferenca_pp": 3.293108,
+     "fracao_explicada_diferenca": 0.311004
+    },
+    "proporcional": {
+     "queda_terceiros_pp": {
+      "cury": -0.780098,
+      "renan_santos": 2.38014,
+      "caiado": -0.776645,
+      "zema": 0.02784,
+      "demais": 0.38453
+     },
+     "queda_terceira_via_pp": 1.235766,
+     "ganho_flavio_pp": 3.007672,
+     "ganho_lula_pp": -1.771905,
+     "explicado_flavio_pp": 0.604245,
+     "explicado_lula_pp": 0.631522,
+     "residuo_flavio_pp": 2.403427,
+     "residuo_lula_pp": -2.403427,
+     "erro_diferenca_lula_menos_flavio_pp": 4.779577,
+     "explicado_diferenca_pp": -0.027277,
+     "residuo_diferenca_pp": 4.806855,
+     "fracao_explicada_diferenca": -0.005707
+    }
+   },
+   {
+    "id": "datafolha_2026-10-03",
+    "instituto": "Datafolha",
+    "nexus_renormalizada": {
+     "queda_terceiros_pp": {
+      "cury": 0.370219,
+      "renan_santos": 1.017894,
+      "caiado": 2.164146,
+      "zema": -0.273668,
+      "demais": -0.218486
+     },
+     "queda_terceira_via_pp": 3.060105,
+     "ganho_flavio_pp": 3.549511,
+     "ganho_lula_pp": -0.489406,
+     "explicado_flavio_pp": 1.760992,
+     "explicado_lula_pp": 1.299114,
+     "residuo_flavio_pp": 1.78852,
+     "residuo_lula_pp": -1.78852,
+     "erro_diferenca_lula_menos_flavio_pp": 4.038917,
+     "explicado_diferenca_pp": 0.461878,
+     "residuo_diferenca_pp": 3.577039,
+     "fracao_explicada_diferenca": 0.114357
+    },
+    "nexus_com_vazamento": {
+     "queda_terceiros_pp": {
+      "cury": 0.370219,
+      "renan_santos": 1.017894,
+      "caiado": 2.164146,
+      "zema": -0.273668,
+      "demais": -0.218486
+     },
+     "queda_terceira_via_pp": 3.060105,
+     "ganho_flavio_pp": 3.549511,
+     "ganho_lula_pp": -0.489406,
+     "explicado_flavio_pp": 1.656678,
+     "explicado_lula_pp": 1.403427,
+     "residuo_flavio_pp": 1.892833,
+     "residuo_lula_pp": -1.892833,
+     "erro_diferenca_lula_menos_flavio_pp": 4.038917,
+     "explicado_diferenca_pp": 0.253252,
+     "residuo_diferenca_pp": 3.785666,
+     "fracao_explicada_diferenca": 0.062703
+    },
+    "datafolha_caiado": {
+     "queda_terceiros_pp": {
+      "cury": 0.370219,
+      "renan_santos": 1.017894,
+      "caiado": 2.164146,
+      "zema": -0.273668,
+      "demais": -0.218486
+     },
+     "queda_terceira_via_pp": 3.060105,
+     "ganho_flavio_pp": 3.549511,
+     "ganho_lula_pp": -0.489406,
+     "explicado_flavio_pp": 2.094595,
+     "explicado_lula_pp": 0.96551,
+     "residuo_flavio_pp": 1.454916,
+     "residuo_lula_pp": -1.454916,
+     "erro_diferenca_lula_menos_flavio_pp": 4.038917,
+     "explicado_diferenca_pp": 1.129085,
+     "residuo_diferenca_pp": 2.909832,
+     "fracao_explicada_diferenca": 0.279551
+    },
+    "proporcional": {
+     "queda_terceiros_pp": {
+      "cury": 0.370219,
+      "renan_santos": 1.017894,
+      "caiado": 2.164146,
+      "zema": -0.273668,
+      "demais": -0.218486
+     },
+     "queda_terceira_via_pp": 3.060105,
+     "ganho_flavio_pp": 3.549511,
+     "ganho_lula_pp": -0.489406,
+     "explicado_flavio_pp": 1.49007,
+     "explicado_lula_pp": 1.570036,
+     "residuo_flavio_pp": 2.059442,
+     "residuo_lula_pp": -2.059442,
+     "erro_diferenca_lula_menos_flavio_pp": 4.038917,
+     "explicado_diferenca_pp": -0.079966,
+     "residuo_diferenca_pp": 4.118883,
+     "fracao_explicada_diferenca": -0.019799
+    }
+   },
+   {
+    "id": "futura_2026-10-03",
+    "instituto": "Futura",
+    "nexus_renormalizada": {
+     "queda_terceiros_pp": {
+      "cury": 1.214613,
+      "renan_santos": 0.493867,
+      "caiado": 1.711056,
+      "zema": 0.568437,
+      "demais": 0.834146
+     },
+     "queda_terceira_via_pp": 4.822119,
+     "ganho_flavio_pp": 2.29093,
+     "ganho_lula_pp": 2.531189,
+     "explicado_flavio_pp": 2.814964,
+     "explicado_lula_pp": 2.007155,
+     "residuo_flavio_pp": -0.524034,
+     "residuo_lula_pp": 0.524034,
+     "erro_diferenca_lula_menos_flavio_pp": -0.240259,
+     "explicado_diferenca_pp": 0.80781,
+     "residuo_diferenca_pp": -1.048068,
+     "fracao_explicada_diferenca": -3.362249
+    },
+    "nexus_com_vazamento": {
+     "queda_terceiros_pp": {
+      "cury": 1.214613,
+      "renan_santos": 0.493867,
+      "caiado": 1.711056,
+      "zema": 0.568437,
+      "demais": 0.834146
+     },
+     "queda_terceira_via_pp": 4.822119,
+     "ganho_flavio_pp": 2.29093,
+     "ganho_lula_pp": 2.531189,
+     "explicado_flavio_pp": 2.706605,
+     "explicado_lula_pp": 2.115514,
+     "residuo_flavio_pp": -0.415675,
+     "residuo_lula_pp": 0.415675,
+     "erro_diferenca_lula_menos_flavio_pp": -0.240259,
+     "explicado_diferenca_pp": 0.591091,
+     "residuo_diferenca_pp": -0.83135,
+     "fracao_explicada_diferenca": -2.460227
+    },
+    "datafolha_caiado": {
+     "queda_terceiros_pp": {
+      "cury": 1.214613,
+      "renan_santos": 0.493867,
+      "caiado": 1.711056,
+      "zema": 0.568437,
+      "demais": 0.834146
+     },
+     "queda_terceira_via_pp": 4.822119,
+     "ganho_flavio_pp": 2.29093,
+     "ganho_lula_pp": 2.531189,
+     "explicado_flavio_pp": 3.078724,
+     "explicado_lula_pp": 1.743395,
+     "residuo_flavio_pp": -0.787794,
+     "residuo_lula_pp": 0.787794,
+     "erro_diferenca_lula_menos_flavio_pp": -0.240259,
+     "explicado_diferenca_pp": 1.335329,
+     "residuo_diferenca_pp": -1.575588,
+     "fracao_explicada_diferenca": -5.557879
+    },
+    "proporcional": {
+     "queda_terceiros_pp": {
+      "cury": 1.214613,
+      "renan_santos": 0.493867,
+      "caiado": 1.711056,
+      "zema": 0.568437,
+      "demais": 0.834146
+     },
+     "queda_terceira_via_pp": 4.822119,
+     "ganho_flavio_pp": 2.29093,
+     "ganho_lula_pp": 2.531189,
+     "explicado_flavio_pp": 2.459107,
+     "explicado_lula_pp": 2.363012,
+     "residuo_flavio_pp": -0.168177,
+     "residuo_lula_pp": 0.168177,
+     "erro_diferenca_lula_menos_flavio_pp": -0.240259,
+     "explicado_diferenca_pp": 0.096096,
+     "residuo_diferenca_pp": -0.336354,
+     "fracao_explicada_diferenca": -0.399968
+    }
+   },
+   {
+    "id": "gerp_2026-10-02",
+    "instituto": "Gerp",
+    "nexus_renormalizada": {
+     "queda_terceiros_pp": {
+      "cury": 1.364669,
+      "renan_santos": -0.115316,
+      "caiado": 1.007809,
+      "zema": -0.273668,
+      "demais": 0.845344
+     },
+     "queda_terceira_via_pp": 2.828838,
+     "ganho_flavio_pp": 1.283092,
+     "ganho_lula_pp": 1.545747,
+     "explicado_flavio_pp": 1.367035,
+     "explicado_lula_pp": 1.461803,
+     "residuo_flavio_pp": -0.083943,
+     "residuo_lula_pp": 0.083943,
+     "erro_diferenca_lula_menos_flavio_pp": -0.262655,
+     "explicado_diferenca_pp": -0.094769,
+     "residuo_diferenca_pp": -0.167887,
+     "fracao_explicada_diferenca": 0.36081
+    },
+    "nexus_com_vazamento": {
+     "queda_terceiros_pp": {
+      "cury": 1.364669,
+      "renan_santos": -0.115316,
+      "caiado": 1.007809,
+      "zema": -0.273668,
+      "demais": 0.845344
+     },
+     "queda_terceira_via_pp": 2.828838,
+     "ganho_flavio_pp": 1.283092,
+     "ganho_lula_pp": 1.545747,
+     "explicado_flavio_pp": 1.397312,
+     "explicado_lula_pp": 1.431526,
+     "residuo_flavio_pp": -0.114221,
+     "residuo_lula_pp": 0.114221,
+     "erro_diferenca_lula_menos_flavio_pp": -0.262655,
+     "explicado_diferenca_pp": -0.034213,
+     "residuo_diferenca_pp": -0.228442,
+     "fracao_explicada_diferenca": 0.13026
+    },
+    "datafolha_caiado": {
+     "queda_terceiros_pp": {
+      "cury": 1.364669,
+      "renan_santos": -0.115316,
+      "caiado": 1.007809,
+      "zema": -0.273668,
+      "demais": 0.845344
+     },
+     "queda_terceira_via_pp": 2.828838,
+     "ganho_flavio_pp": 1.283092,
+     "ganho_lula_pp": 1.545747,
+     "explicado_flavio_pp": 1.522389,
+     "explicado_lula_pp": 1.306449,
+     "residuo_flavio_pp": -0.239297,
+     "residuo_lula_pp": 0.239297,
+     "erro_diferenca_lula_menos_flavio_pp": -0.262655,
+     "explicado_diferenca_pp": 0.215939,
+     "residuo_diferenca_pp": -0.478594,
+     "fracao_explicada_diferenca": -0.82214
+    },
+    "proporcional": {
+     "queda_terceiros_pp": {
+      "cury": 1.364669,
+      "renan_santos": -0.115316,
+      "caiado": 1.007809,
+      "zema": -0.273668,
+      "demais": 0.845344
+     },
+     "queda_terceira_via_pp": 2.828838,
+     "ganho_flavio_pp": 1.283092,
+     "ganho_lula_pp": 1.545747,
+     "explicado_flavio_pp": 1.438032,
+     "explicado_lula_pp": 1.390806,
+     "residuo_flavio_pp": -0.154941,
+     "residuo_lula_pp": 0.154941,
+     "erro_diferenca_lula_menos_flavio_pp": -0.262655,
+     "explicado_diferenca_pp": 0.047226,
+     "residuo_diferenca_pp": -0.309881,
+     "fracao_explicada_diferenca": -0.179802
+    }
+   },
+   {
+    "id": "indexa_2026-09-29",
+    "instituto": "Indexa/Broadcast",
+    "nexus_renormalizada": {
+     "queda_terceiros_pp": {
+      "cury": 1.815232,
+      "renan_santos": 1.286437,
+      "caiado": 2.522202,
+      "zema": 0.902803,
+      "demais": -0.218486
+     },
+     "queda_terceira_via_pp": 6.308187,
+     "ganho_flavio_pp": 7.027772,
+     "ganho_lula_pp": -0.719585,
+     "explicado_flavio_pp": 3.981968,
+     "explicado_lula_pp": 2.326219,
+     "residuo_flavio_pp": 3.045804,
+     "residuo_lula_pp": -3.045804,
+     "erro_diferenca_lula_menos_flavio_pp": 7.747357,
+     "explicado_diferenca_pp": 1.655749,
+     "residuo_diferenca_pp": 6.091608,
+     "fracao_explicada_diferenca": 0.213718
+    },
+    "nexus_com_vazamento": {
+     "queda_terceiros_pp": {
+      "cury": 1.815232,
+      "renan_santos": 1.286437,
+      "caiado": 2.522202,
+      "zema": 0.902803,
+      "demais": -0.218486
+     },
+     "queda_terceira_via_pp": 6.308187,
+     "ganho_flavio_pp": 7.027772,
+     "ganho_lula_pp": -0.719585,
+     "explicado_flavio_pp": 3.647782,
+     "explicado_lula_pp": 2.660405,
+     "residuo_flavio_pp": 3.37999,
+     "residuo_lula_pp": -3.37999,
+     "erro_diferenca_lula_menos_flavio_pp": 7.747357,
+     "explicado_diferenca_pp": 0.987377,
+     "residuo_diferenca_pp": 6.75998,
+     "fracao_explicada_diferenca": 0.127447
+    },
+    "datafolha_caiado": {
+     "queda_terceiros_pp": {
+      "cury": 1.815232,
+      "renan_santos": 1.286437,
+      "caiado": 2.522202,
+      "zema": 0.902803,
+      "demais": -0.218486
+     },
+     "queda_terceira_via_pp": 6.308187,
+     "ganho_flavio_pp": 7.027772,
+     "ganho_lula_pp": -0.719585,
+     "explicado_flavio_pp": 4.370766,
+     "explicado_lula_pp": 1.937421,
+     "residuo_flavio_pp": 2.657006,
+     "residuo_lula_pp": -2.657006,
+     "erro_diferenca_lula_menos_flavio_pp": 7.747357,
+     "explicado_diferenca_pp": 2.433345,
+     "residuo_diferenca_pp": 5.314012,
+     "fracao_explicada_diferenca": 0.314087
+    },
+    "proporcional": {
+     "queda_terceiros_pp": {
+      "cury": 1.815232,
+      "renan_santos": 1.286437,
+      "caiado": 2.522202,
+      "zema": 0.902803,
+      "demais": -0.218486
+     },
+     "queda_terceira_via_pp": 6.308187,
+     "ganho_flavio_pp": 7.027772,
+     "ganho_lula_pp": -0.719585,
+     "explicado_flavio_pp": 2.930577,
+     "explicado_lula_pp": 3.37761,
+     "residuo_flavio_pp": 4.097195,
+     "residuo_lula_pp": -4.097195,
+     "erro_diferenca_lula_menos_flavio_pp": 7.747357,
+     "explicado_diferenca_pp": -0.447032,
+     "residuo_diferenca_pp": 8.19439,
+     "fracao_explicada_diferenca": -0.057701
+    }
+   },
+   {
+    "id": "mda_2026-10-02",
+    "instituto": "MDA",
+    "nexus_renormalizada": {
+     "queda_terceiros_pp": {
+      "cury": 0.660959,
+      "renan_santos": -0.578158,
+      "caiado": 1.145953,
+      "zema": 0.614234,
+      "demais": 0.336453
+     },
+     "queda_terceira_via_pp": 2.179441,
+     "ganho_flavio_pp": 4.852412,
+     "ganho_lula_pp": -2.67297,
+     "explicado_flavio_pp": 1.079559,
+     "explicado_lula_pp": 1.099882,
+     "residuo_flavio_pp": 3.772852,
+     "residuo_lula_pp": -3.772852,
+     "erro_diferenca_lula_menos_flavio_pp": 7.525382,
+     "explicado_diferenca_pp": -0.020322,
+     "residuo_diferenca_pp": 7.545704,
+     "fracao_explicada_diferenca": -0.002701
+    },
+    "nexus_com_vazamento": {
+     "queda_terceiros_pp": {
+      "cury": 0.660959,
+      "renan_santos": -0.578158,
+      "caiado": 1.145953,
+      "zema": 0.614234,
+      "demais": 0.336453
+     },
+     "queda_terceira_via_pp": 2.179441,
+     "ganho_flavio_pp": 4.852412,
+     "ganho_lula_pp": -2.67297,
+     "explicado_flavio_pp": 1.088076,
+     "explicado_lula_pp": 1.091366,
+     "residuo_flavio_pp": 3.764336,
+     "residuo_lula_pp": -3.764336,
+     "erro_diferenca_lula_menos_flavio_pp": 7.525382,
+     "explicado_diferenca_pp": -0.00329,
+     "residuo_diferenca_pp": 7.528671,
+     "fracao_explicada_diferenca": -0.000437
+    },
+    "datafolha_caiado": {
+     "queda_terceiros_pp": {
+      "cury": 0.660959,
+      "renan_santos": -0.578158,
+      "caiado": 1.145953,
+      "zema": 0.614234,
+      "demais": 0.336453
+     },
+     "queda_terceira_via_pp": 2.179441,
+     "ganho_flavio_pp": 4.852412,
+     "ganho_lula_pp": -2.67297,
+     "explicado_flavio_pp": 1.256208,
+     "explicado_lula_pp": 0.923233,
+     "residuo_flavio_pp": 3.596203,
+     "residuo_lula_pp": -3.596203,
+     "erro_diferenca_lula_menos_flavio_pp": 7.525382,
+     "explicado_diferenca_pp": 0.332975,
+     "residuo_diferenca_pp": 7.192406,
+     "fracao_explicada_diferenca": 0.044247
+    },
+    "proporcional": {
+     "queda_terceiros_pp": {
+      "cury": 0.660959,
+      "renan_santos": -0.578158,
+      "caiado": 1.145953,
+      "zema": 0.614234,
+      "demais": 0.336453
+     },
+     "queda_terceira_via_pp": 2.179441,
+     "ganho_flavio_pp": 4.852412,
+     "ganho_lula_pp": -2.67297,
+     "explicado_flavio_pp": 1.031772,
+     "explicado_lula_pp": 1.147669,
+     "residuo_flavio_pp": 3.820639,
+     "residuo_lula_pp": -3.820639,
+     "erro_diferenca_lula_menos_flavio_pp": 7.525382,
+     "explicado_diferenca_pp": -0.115897,
+     "residuo_diferenca_pp": 7.641279,
+     "fracao_explicada_diferenca": -0.015401
+    }
+   },
+   {
+    "id": "meio_ideia_2026-09-28",
+    "instituto": "Meio/Ideia",
+    "nexus_renormalizada": {
+     "queda_terceiros_pp": {
+      "cury": 3.925219,
+      "renan_santos": 2.334848,
+      "caiado": 2.292413,
+      "zema": 3.286861,
+      "demais": 1.205726
+     },
+     "queda_terceira_via_pp": 13.045067,
+     "ganho_flavio_pp": 7.963683,
+     "ganho_lula_pp": 5.081384,
+     "explicado_flavio_pp": 8.715175,
+     "explicado_lula_pp": 4.329892,
+     "residuo_flavio_pp": -0.751492,
+     "residuo_lula_pp": 0.751492,
+     "erro_diferenca_lula_menos_flavio_pp": 2.882298,
+     "explicado_diferenca_pp": 4.385283,
+     "residuo_diferenca_pp": -1.502984,
+     "fracao_explicada_diferenca": 1.521453
+    },
+    "nexus_com_vazamento": {
+     "queda_terceiros_pp": {
+      "cury": 3.925219,
+      "renan_santos": 2.334848,
+      "caiado": 2.292413,
+      "zema": 3.286861,
+      "demais": 1.205726
+     },
+     "queda_terceira_via_pp": 13.045067,
+     "ganho_flavio_pp": 7.963683,
+     "ganho_lula_pp": 5.081384,
+     "explicado_flavio_pp": 8.011072,
+     "explicado_lula_pp": 5.033995,
+     "residuo_flavio_pp": -0.047389,
+     "residuo_lula_pp": 0.047389,
+     "erro_diferenca_lula_menos_flavio_pp": 2.882298,
+     "explicado_diferenca_pp": 2.977077,
+     "residuo_diferenca_pp": -0.094779,
+     "fracao_explicada_diferenca": 1.032883
+    },
+    "datafolha_caiado": {
+     "queda_terceiros_pp": {
+      "cury": 3.925219,
+      "renan_santos": 2.334848,
+      "caiado": 2.292413,
+      "zema": 3.286861,
+      "demais": 1.205726
+     },
+     "queda_terceira_via_pp": 13.045067,
+     "ganho_flavio_pp": 7.963683,
+     "ganho_lula_pp": 5.081384,
+     "explicado_flavio_pp": 9.068551,
+     "explicado_lula_pp": 3.976516,
+     "residuo_flavio_pp": -1.104868,
+     "residuo_lula_pp": 1.104868,
+     "erro_diferenca_lula_menos_flavio_pp": 2.882298,
+     "explicado_diferenca_pp": 5.092035,
+     "residuo_diferenca_pp": -2.209736,
+     "fracao_explicada_diferenca": 1.766658
+    },
+    "proporcional": {
+     "queda_terceiros_pp": {
+      "cury": 3.925219,
+      "renan_santos": 2.334848,
+      "caiado": 2.292413,
+      "zema": 3.286861,
+      "demais": 1.205726
+     },
+     "queda_terceira_via_pp": 13.045067,
+     "ganho_flavio_pp": 7.963683,
+     "ganho_lula_pp": 5.081384,
+     "explicado_flavio_pp": 6.446445,
+     "explicado_lula_pp": 6.598622,
+     "residuo_flavio_pp": 1.517238,
+     "residuo_lula_pp": -1.517238,
+     "erro_diferenca_lula_menos_flavio_pp": 2.882298,
+     "explicado_diferenca_pp": -0.152177,
+     "residuo_diferenca_pp": 3.034475,
+     "fracao_explicada_diferenca": -0.052797
+    }
+   },
+   {
+    "id": "nexus_2026-09-27",
+    "instituto": "Nexus",
+    "nexus_renormalizada": {
+     "queda_terceiros_pp": {
+      "cury": 2.372507,
+      "renan_santos": 1.967551,
+      "caiado": 3.079477,
+      "zema": 0.778964,
+      "demais": 0.834146
+     },
+     "queda_terceira_via_pp": 9.032646,
+     "ganho_flavio_pp": 8.080404,
+     "ganho_lula_pp": 0.952242,
+     "explicado_flavio_pp": 5.58744,
+     "explicado_lula_pp": 3.445205,
+     "residuo_flavio_pp": 2.492964,
+     "residuo_lula_pp": -2.492964,
+     "erro_diferenca_lula_menos_flavio_pp": 7.128162,
+     "explicado_diferenca_pp": 2.142235,
+     "residuo_diferenca_pp": 4.985928,
+     "fracao_explicada_diferenca": 0.300531
+    },
+    "nexus_com_vazamento": {
+     "queda_terceiros_pp": {
+      "cury": 2.372507,
+      "renan_santos": 1.967551,
+      "caiado": 3.079477,
+      "zema": 0.778964,
+      "demais": 0.834146
+     },
+     "queda_terceira_via_pp": 9.032646,
+     "ganho_flavio_pp": 8.080404,
+     "ganho_lula_pp": 0.952242,
+     "explicado_flavio_pp": 5.154352,
+     "explicado_lula_pp": 3.878294,
+     "residuo_flavio_pp": 2.926052,
+     "residuo_lula_pp": -2.926052,
+     "erro_diferenca_lula_menos_flavio_pp": 7.128162,
+     "explicado_diferenca_pp": 1.276058,
+     "residuo_diferenca_pp": 5.852104,
+     "fracao_explicada_diferenca": 0.179016
+    },
+    "datafolha_caiado": {
+     "queda_terceiros_pp": {
+      "cury": 2.372507,
+      "renan_santos": 1.967551,
+      "caiado": 3.079477,
+      "zema": 0.778964,
+      "demais": 0.834146
+     },
+     "queda_terceira_via_pp": 9.032646,
+     "ganho_flavio_pp": 8.080404,
+     "ganho_lula_pp": 0.952242,
+     "explicado_flavio_pp": 6.062142,
+     "explicado_lula_pp": 2.970503,
+     "residuo_flavio_pp": 2.018262,
+     "residuo_lula_pp": -2.018262,
+     "erro_diferenca_lula_menos_flavio_pp": 7.128162,
+     "explicado_diferenca_pp": 3.091639,
+     "residuo_diferenca_pp": 4.036523,
+     "fracao_explicada_diferenca": 0.433722
+    },
+    "proporcional": {
+     "queda_terceiros_pp": {
+      "cury": 2.372507,
+      "renan_santos": 1.967551,
+      "caiado": 3.079477,
+      "zema": 0.778964,
+      "demais": 0.834146
+     },
+     "queda_terceira_via_pp": 9.032646,
+     "ganho_flavio_pp": 8.080404,
+     "ganho_lula_pp": 0.952242,
+     "explicado_flavio_pp": 4.256877,
+     "explicado_lula_pp": 4.775769,
+     "residuo_flavio_pp": 3.823527,
+     "residuo_lula_pp": -3.823527,
+     "erro_diferenca_lula_menos_flavio_pp": 7.128162,
+     "explicado_diferenca_pp": -0.518892,
+     "residuo_diferenca_pp": 7.647055,
+     "fracao_explicada_diferenca": -0.072795
+    }
+   },
+   {
+    "id": "palver_2026-10-03",
+    "instituto": "Palver",
+    "nexus_renormalizada": {
+     "queda_terceiros_pp": {
+      "cury": -1.624872,
+      "renan_santos": 4.73742,
+      "caiado": -1.297361,
+      "zema": 0.049529,
+      "demais": 0.196725
+     },
+     "queda_terceira_via_pp": 2.06144,
+     "ganho_flavio_pp": 0.180032,
+     "ganho_lula_pp": 1.881408,
+     "explicado_flavio_pp": 2.728341,
+     "explicado_lula_pp": -0.666901,
+     "residuo_flavio_pp": -2.548309,
+     "residuo_lula_pp": 2.548309,
+     "erro_diferenca_lula_menos_flavio_pp": -1.701376,
+     "explicado_diferenca_pp": 3.395242,
+     "residuo_diferenca_pp": -5.096618,
+     "fracao_explicada_diferenca": -1.995586
+    },
+    "nexus_com_vazamento": {
+     "queda_terceiros_pp": {
+      "cury": -1.624872,
+      "renan_santos": 4.73742,
+      "caiado": -1.297361,
+      "zema": 0.049529,
+      "demais": 0.196725
+     },
+     "queda_terceira_via_pp": 2.06144,
+     "ganho_flavio_pp": 0.180032,
+     "ganho_lula_pp": 1.881408,
+     "explicado_flavio_pp": 2.11009,
+     "explicado_lula_pp": -0.04865,
+     "residuo_flavio_pp": -1.930058,
+     "residuo_lula_pp": 1.930058,
+     "erro_diferenca_lula_menos_flavio_pp": -1.701376,
+     "explicado_diferenca_pp": 2.15874,
+     "residuo_diferenca_pp": -3.860116,
+     "fracao_explicada_diferenca": -1.26882
+    },
+    "datafolha_caiado": {
+     "queda_terceiros_pp": {
+      "cury": -1.624872,
+      "renan_santos": 4.73742,
+      "caiado": -1.297361,
+      "zema": 0.049529,
+      "demais": 0.196725
+     },
+     "queda_terceira_via_pp": 2.06144,
+     "ganho_flavio_pp": 0.180032,
+     "ganho_lula_pp": 1.881408,
+     "explicado_flavio_pp": 2.528353,
+     "explicado_lula_pp": -0.466912,
+     "residuo_flavio_pp": -2.348321,
+     "residuo_lula_pp": 2.348321,
+     "erro_diferenca_lula_menos_flavio_pp": -1.701376,
+     "explicado_diferenca_pp": 2.995265,
+     "residuo_diferenca_pp": -4.696641,
+     "fracao_explicada_diferenca": -1.760496
+    },
+    "proporcional": {
+     "queda_terceiros_pp": {
+      "cury": -1.624872,
+      "renan_santos": 4.73742,
+      "caiado": -1.297361,
+      "zema": 0.049529,
+      "demais": 0.196725
+     },
+     "queda_terceira_via_pp": 2.06144,
+     "ganho_flavio_pp": 0.180032,
+     "ganho_lula_pp": 1.881408,
+     "explicado_flavio_pp": 1.067613,
+     "explicado_lula_pp": 0.993827,
+     "residuo_flavio_pp": -0.887581,
+     "residuo_lula_pp": 0.887581,
+     "erro_diferenca_lula_menos_flavio_pp": -1.701376,
+     "explicado_diferenca_pp": 0.073786,
+     "residuo_diferenca_pp": -1.775162,
+     "fracao_explicada_diferenca": -0.043369
+    }
+   },
+   {
+    "id": "poderdata_2026-10-02",
+    "instituto": "PoderData",
+    "nexus_renormalizada": {
+     "queda_terceiros_pp": {
+      "cury": 0.335156,
+      "renan_santos": 0.982831,
+      "caiado": -0.033143,
+      "zema": 0.801601,
+      "demais": 0.856783
+     },
+     "queda_terceira_via_pp": 2.943228,
+     "ganho_flavio_pp": 2.941751,
+     "ganho_lula_pp": 0.001478,
+     "explicado_flavio_pp": 2.129453,
+     "explicado_lula_pp": 0.813775,
+     "residuo_flavio_pp": 0.812298,
+     "residuo_lula_pp": -0.812298,
+     "erro_diferenca_lula_menos_flavio_pp": 2.940273,
+     "explicado_diferenca_pp": 1.315678,
+     "residuo_diferenca_pp": 1.624595,
+     "fracao_explicada_diferenca": 0.447468
+    },
+    "nexus_com_vazamento": {
+     "queda_terceiros_pp": {
+      "cury": 0.335156,
+      "renan_santos": 0.982831,
+      "caiado": -0.033143,
+      "zema": 0.801601,
+      "demais": 0.856783
+     },
+     "queda_terceira_via_pp": 2.943228,
+     "ganho_flavio_pp": 2.941751,
+     "ganho_lula_pp": 0.001478,
+     "explicado_flavio_pp": 1.908405,
+     "explicado_lula_pp": 1.034824,
+     "residuo_flavio_pp": 1.033346,
+     "residuo_lula_pp": -1.033346,
+     "erro_diferenca_lula_menos_flavio_pp": 2.940273,
+     "explicado_diferenca_pp": 0.873581,
+     "residuo_diferenca_pp": 2.066693,
+     "fracao_explicada_diferenca": 0.297109
+    },
+    "datafolha_caiado": {
+     "queda_terceiros_pp": {
+      "cury": 0.335156,
+      "renan_santos": 0.982831,
+      "caiado": -0.033143,
+      "zema": 0.801601,
+      "demais": 0.856783
+     },
+     "queda_terceira_via_pp": 2.943228,
+     "ganho_flavio_pp": 2.941751,
+     "ganho_lula_pp": 0.001478,
+     "explicado_flavio_pp": 2.124344,
+     "explicado_lula_pp": 0.818884,
+     "residuo_flavio_pp": 0.817406,
+     "residuo_lula_pp": -0.817406,
+     "erro_diferenca_lula_menos_flavio_pp": 2.940273,
+     "explicado_diferenca_pp": 1.30546,
+     "residuo_diferenca_pp": 1.634813,
+     "fracao_explicada_diferenca": 0.443993
+    },
+    "proporcional": {
+     "queda_terceiros_pp": {
+      "cury": 0.335156,
+      "renan_santos": 0.982831,
+      "caiado": -0.033143,
+      "zema": 0.801601,
+      "demais": 0.856783
+     },
+     "queda_terceira_via_pp": 2.943228,
+     "ganho_flavio_pp": 2.941751,
+     "ganho_lula_pp": 0.001478,
+     "explicado_flavio_pp": 1.459045,
+     "explicado_lula_pp": 1.484183,
+     "residuo_flavio_pp": 1.482706,
+     "residuo_lula_pp": -1.482706,
+     "erro_diferenca_lula_menos_flavio_pp": 2.940273,
+     "explicado_diferenca_pp": -0.025138,
+     "residuo_diferenca_pp": 2.965411,
+     "fracao_explicada_diferenca": -0.00855
+    }
+   },
+   {
+    "id": "quaest_2026-10-03",
+    "instituto": "Quaest",
+    "nexus_renormalizada": {
+     "queda_terceiros_pp": {
+      "cury": 0.557625,
+      "renan_santos": 1.205301,
+      "caiado": 1.264595,
+      "zema": -0.273668,
+      "demais": -0.218486
+     },
+     "queda_terceira_via_pp": 2.535368,
+     "ganho_flavio_pp": 3.349611,
+     "ganho_lula_pp": -0.814244,
+     "explicado_flavio_pp": 1.627517,
+     "explicado_lula_pp": 0.907851,
+     "residuo_flavio_pp": 1.722095,
+     "residuo_lula_pp": -1.722095,
+     "erro_diferenca_lula_menos_flavio_pp": 4.163855,
+     "explicado_diferenca_pp": 0.719666,
+     "residuo_diferenca_pp": 3.444189,
+     "fracao_explicada_diferenca": 0.172836
+    },
+    "nexus_com_vazamento": {
+     "queda_terceiros_pp": {
+      "cury": 0.557625,
+      "renan_santos": 1.205301,
+      "caiado": 1.264595,
+      "zema": -0.273668,
+      "demais": -0.218486
+     },
+     "queda_terceira_via_pp": 2.535368,
+     "ganho_flavio_pp": 3.349611,
+     "ganho_lula_pp": -0.814244,
+     "explicado_flavio_pp": 1.481016,
+     "explicado_lula_pp": 1.054352,
+     "residuo_flavio_pp": 1.868596,
+     "residuo_lula_pp": -1.868596,
+     "erro_diferenca_lula_menos_flavio_pp": 4.163855,
+     "explicado_diferenca_pp": 0.426663,
+     "residuo_diferenca_pp": 3.737192,
+     "fracao_explicada_diferenca": 0.102468
+    },
+    "datafolha_caiado": {
+     "queda_terceiros_pp": {
+      "cury": 0.557625,
+      "renan_santos": 1.205301,
+      "caiado": 1.264595,
+      "zema": -0.273668,
+      "demais": -0.218486
+     },
+     "queda_terceira_via_pp": 2.535368,
+     "ganho_flavio_pp": 3.349611,
+     "ganho_lula_pp": -0.814244,
+     "explicado_flavio_pp": 1.822454,
+     "explicado_lula_pp": 0.712913,
+     "residuo_flavio_pp": 1.527157,
+     "residuo_lula_pp": -1.527157,
+     "erro_diferenca_lula_menos_flavio_pp": 4.163855,
+     "explicado_diferenca_pp": 1.109541,
+     "residuo_diferenca_pp": 3.054314,
+     "fracao_explicada_diferenca": 0.26647
+    },
+    "proporcional": {
+     "queda_terceiros_pp": {
+      "cury": 0.557625,
+      "renan_santos": 1.205301,
+      "caiado": 1.264595,
+      "zema": -0.273668,
+      "demais": -0.218486
+     },
+     "queda_terceira_via_pp": 2.535368,
+     "ganho_flavio_pp": 3.349611,
+     "ganho_lula_pp": -0.814244,
+     "explicado_flavio_pp": 1.232378,
+     "explicado_lula_pp": 1.30299,
+     "residuo_flavio_pp": 2.117233,
+     "residuo_lula_pp": -2.117233,
+     "erro_diferenca_lula_menos_flavio_pp": 4.163855,
+     "explicado_diferenca_pp": -0.070612,
+     "residuo_diferenca_pp": 4.234467,
+     "fracao_explicada_diferenca": -0.016958
+    }
+   },
+   {
+    "id": "realtime_2026-09-30",
+    "instituto": "Real Time Big Data",
+    "nexus_renormalizada": {
+     "queda_terceiros_pp": {
+      "cury": 0.300839,
+      "renan_santos": 2.012344,
+      "caiado": 1.007809,
+      "zema": 0.790162,
+      "demais": 0.845344
+     },
+     "queda_terceira_via_pp": 4.956498,
+     "ganho_flavio_pp": 5.538411,
+     "ganho_lula_pp": -0.581913,
+     "explicado_flavio_pp": 3.467939,
+     "explicado_lula_pp": 1.488559,
+     "residuo_flavio_pp": 2.070472,
+     "residuo_lula_pp": -2.070472,
+     "erro_diferenca_lula_menos_flavio_pp": 6.120324,
+     "explicado_diferenca_pp": 1.97938,
+     "residuo_diferenca_pp": 4.140944,
+     "fracao_explicada_diferenca": 0.323411
+    },
+    "nexus_com_vazamento": {
+     "queda_terceiros_pp": {
+      "cury": 0.300839,
+      "renan_santos": 2.012344,
+      "caiado": 1.007809,
+      "zema": 0.790162,
+      "demais": 0.845344
+     },
+     "queda_terceira_via_pp": 4.956498,
+     "ganho_flavio_pp": 5.538411,
+     "ganho_lula_pp": -0.581913,
+     "explicado_flavio_pp": 3.093539,
+     "explicado_lula_pp": 1.862959,
+     "residuo_flavio_pp": 2.444872,
+     "residuo_lula_pp": -2.444872,
+     "erro_diferenca_lula_menos_flavio_pp": 6.120324,
+     "explicado_diferenca_pp": 1.23058,
+     "residuo_diferenca_pp": 4.889744,
+     "fracao_explicada_diferenca": 0.201064
+    },
+    "datafolha_caiado": {
+     "queda_terceiros_pp": {
+      "cury": 0.300839,
+      "renan_santos": 2.012344,
+      "caiado": 1.007809,
+      "zema": 0.790162,
+      "demais": 0.845344
+     },
+     "queda_terceira_via_pp": 4.956498,
+     "ganho_flavio_pp": 5.538411,
+     "ganho_lula_pp": -0.581913,
+     "explicado_flavio_pp": 3.623293,
+     "explicado_lula_pp": 1.333205,
+     "residuo_flavio_pp": 1.915118,
+     "residuo_lula_pp": -1.915118,
+     "erro_diferenca_lula_menos_flavio_pp": 6.120324,
+     "explicado_diferenca_pp": 2.290088,
+     "residuo_diferenca_pp": 3.830236,
+     "fracao_explicada_diferenca": 0.374178
+    },
+    "proporcional": {
+     "queda_terceiros_pp": {
+      "cury": 0.300839,
+      "renan_santos": 2.012344,
+      "caiado": 1.007809,
+      "zema": 0.790162,
+      "demais": 0.845344
+     },
+     "queda_terceira_via_pp": 4.956498,
+     "ganho_flavio_pp": 5.538411,
+     "ganho_lula_pp": -0.581913,
+     "explicado_flavio_pp": 2.377977,
+     "explicado_lula_pp": 2.578521,
+     "residuo_flavio_pp": 3.160434,
+     "residuo_lula_pp": -3.160434,
+     "erro_diferenca_lula_menos_flavio_pp": 6.120324,
+     "explicado_diferenca_pp": -0.200544,
+     "residuo_diferenca_pp": 6.320868,
+     "fracao_explicada_diferenca": -0.032767
+    }
+   },
+   {
+    "id": "vox_brasil_2026-10-01",
+    "instituto": "Vox Brasil",
+    "nexus_renormalizada": {
+     "queda_terceiros_pp": {
+      "cury": -1.554348,
+      "renan_santos": 0.206914,
+      "caiado": 1.491152,
+      "zema": 1.173994,
+      "demais": 0.004232
+     },
+     "queda_terceira_via_pp": 1.321943,
+     "ganho_flavio_pp": 1.14804,
+     "ganho_lula_pp": 0.173904,
+     "explicado_flavio_pp": 0.898777,
+     "explicado_lula_pp": 0.423166,
+     "residuo_flavio_pp": 0.249262,
+     "residuo_lula_pp": -0.249262,
+     "erro_diferenca_lula_menos_flavio_pp": 0.974136,
+     "explicado_diferenca_pp": 0.475611,
+     "residuo_diferenca_pp": 0.498524,
+     "fracao_explicada_diferenca": 0.488239
+    },
+    "nexus_com_vazamento": {
+     "queda_terceiros_pp": {
+      "cury": -1.554348,
+      "renan_santos": 0.206914,
+      "caiado": 1.491152,
+      "zema": 1.173994,
+      "demais": 0.004232
+     },
+     "queda_terceira_via_pp": 1.321943,
+     "ganho_flavio_pp": 1.14804,
+     "ganho_lula_pp": 0.173904,
+     "explicado_flavio_pp": 0.824931,
+     "explicado_lula_pp": 0.497012,
+     "residuo_flavio_pp": 0.323109,
+     "residuo_lula_pp": -0.323109,
+     "erro_diferenca_lula_menos_flavio_pp": 0.974136,
+     "explicado_diferenca_pp": 0.327918,
+     "residuo_diferenca_pp": 0.646217,
+     "fracao_explicada_diferenca": 0.336625
+    },
+    "datafolha_caiado": {
+     "queda_terceiros_pp": {
+      "cury": -1.554348,
+      "renan_santos": 0.206914,
+      "caiado": 1.491152,
+      "zema": 1.173994,
+      "demais": 0.004232
+     },
+     "queda_terceira_via_pp": 1.321943,
+     "ganho_flavio_pp": 1.14804,
+     "ganho_lula_pp": 0.173904,
+     "explicado_flavio_pp": 1.128639,
+     "explicado_lula_pp": 0.193305,
+     "residuo_flavio_pp": 0.019401,
+     "residuo_lula_pp": -0.019401,
+     "erro_diferenca_lula_menos_flavio_pp": 0.974136,
+     "explicado_diferenca_pp": 0.935334,
+     "residuo_diferenca_pp": 0.038801,
+     "fracao_explicada_diferenca": 0.960168
+    },
+    "proporcional": {
+     "queda_terceiros_pp": {
+      "cury": -1.554348,
+      "renan_santos": 0.206914,
+      "caiado": 1.491152,
+      "zema": 1.173994,
+      "demais": 0.004232
+     },
+     "queda_terceira_via_pp": 1.321943,
+     "ganho_flavio_pp": 1.14804,
+     "ganho_lula_pp": 0.173904,
+     "explicado_flavio_pp": 0.667431,
+     "explicado_lula_pp": 0.654512,
+     "residuo_flavio_pp": 0.480609,
+     "residuo_lula_pp": -0.480609,
+     "erro_diferenca_lula_menos_flavio_pp": 0.974136,
+     "explicado_diferenca_pp": 0.012919,
+     "residuo_diferenca_pp": 0.961217,
+     "fracao_explicada_diferenca": 0.013262
+    }
+   }
+  ],
+  "por_uf_central": [
+   {
+    "uf": "AC",
+    "regiao": "Norte",
+    "queda_terceiros_pp": {
+     "cury": -0.044453,
+     "renan_santos": -0.032343,
+     "caiado": 0.815295,
+     "zema": 0.12111,
+     "demais": 0.359599
+    },
+    "queda_terceira_via_pp": 1.219207,
+    "ganho_flavio_pp": 0.792779,
+    "ganho_lula_pp": 0.426428,
+    "explicado_flavio_pp": 0.594899,
+    "explicado_lula_pp": 0.624308,
+    "residuo_flavio_pp": 0.19788,
+    "residuo_lula_pp": -0.19788,
+    "erro_diferenca_lula_menos_flavio_pp": 0.366351,
+    "explicado_diferenca_pp": -0.029409,
+    "residuo_diferenca_pp": 0.39576,
+    "fracao_explicada_diferenca": -0.080276
+   },
+   {
+    "uf": "AL",
+    "regiao": "Nordeste",
+    "queda_terceiros_pp": {
+     "cury": 0.307964,
+     "renan_santos": 0.841564,
+     "caiado": 1.193301,
+     "zema": 0.248287,
+     "demais": 0.393863
+    },
+    "queda_terceira_via_pp": 2.984979,
+    "ganho_flavio_pp": -0.105168,
+    "ganho_lula_pp": 3.090147,
+    "explicado_flavio_pp": 1.862281,
+    "explicado_lula_pp": 1.122698,
+    "residuo_flavio_pp": -1.967449,
+    "residuo_lula_pp": 1.967449,
+    "erro_diferenca_lula_menos_flavio_pp": -3.195315,
+    "explicado_diferenca_pp": 0.739583,
+    "residuo_diferenca_pp": -3.934898,
+    "fracao_explicada_diferenca": -0.231458
+   },
+   {
+    "uf": "AM",
+    "regiao": "Norte",
+    "queda_terceiros_pp": {
+     "cury": -0.41543,
+     "renan_santos": 0.638875,
+     "caiado": 0.556705,
+     "zema": 0.070636,
+     "demais": 0.502995
+    },
+    "queda_terceira_via_pp": 1.353781,
+    "ganho_flavio_pp": -1.370874,
+    "ganho_lula_pp": 2.724655,
+    "explicado_flavio_pp": 0.874431,
+    "explicado_lula_pp": 0.47935,
+    "residuo_flavio_pp": -2.245305,
+    "residuo_lula_pp": 2.245305,
+    "erro_diferenca_lula_menos_flavio_pp": -4.095529,
+    "explicado_diferenca_pp": 0.395081,
+    "residuo_diferenca_pp": -4.49061,
+    "fracao_explicada_diferenca": -0.096466
+   },
+   {
+    "uf": "AP",
+    "regiao": "Norte",
+    "queda_terceiros_pp": {
+     "cury": -0.442426,
+     "renan_santos": 1.040051,
+     "caiado": 1.771155,
+     "zema": 0.257124,
+     "demais": 0.993322
+    },
+    "queda_terceira_via_pp": 3.619226,
+    "ganho_flavio_pp": 0.367365,
+    "ganho_lula_pp": 3.251861,
+    "explicado_flavio_pp": 2.159411,
+    "explicado_lula_pp": 1.459815,
+    "residuo_flavio_pp": -1.792046,
+    "residuo_lula_pp": 1.792046,
+    "erro_diferenca_lula_menos_flavio_pp": -2.884496,
+    "explicado_diferenca_pp": 0.699595,
+    "residuo_diferenca_pp": -3.584092,
+    "fracao_explicada_diferenca": -0.242536
+   },
+   {
+    "uf": "BA",
+    "regiao": "Nordeste",
+    "queda_terceiros_pp": {
+     "cury": -0.050913,
+     "renan_santos": 0.533087,
+     "caiado": 1.44138,
+     "zema": 0.010257,
+     "demais": 0.2386
+    },
+    "queda_terceira_via_pp": 2.172411,
+    "ganho_flavio_pp": -1.490074,
+    "ganho_lula_pp": 3.662486,
+    "explicado_flavio_pp": 1.219056,
+    "explicado_lula_pp": 0.953355,
+    "residuo_flavio_pp": -2.709131,
+    "residuo_lula_pp": 2.709131,
+    "erro_diferenca_lula_menos_flavio_pp": -5.15256,
+    "explicado_diferenca_pp": 0.265702,
+    "residuo_diferenca_pp": -5.418262,
+    "fracao_explicada_diferenca": -0.051567
+   },
+   {
+    "uf": "CE",
+    "regiao": "Nordeste",
+    "queda_terceiros_pp": {
+     "cury": 0.852446,
+     "renan_santos": 1.239953,
+     "caiado": 0.956069,
+     "zema": 0.109096,
+     "demais": 0.10868
+    },
+    "queda_terceira_via_pp": 3.266244,
+    "ganho_flavio_pp": 1.815253,
+    "ganho_lula_pp": 1.450991,
+    "explicado_flavio_pp": 2.170134,
+    "explicado_lula_pp": 1.096111,
+    "residuo_flavio_pp": -0.35488,
+    "residuo_lula_pp": 0.35488,
+    "erro_diferenca_lula_menos_flavio_pp": 0.364262,
+    "explicado_diferenca_pp": 1.074023,
+    "residuo_diferenca_pp": -0.709761,
+    "fracao_explicada_diferenca": 2.948488
+   },
+   {
+    "uf": "DF",
+    "regiao": "Centro-Oeste",
+    "queda_terceiros_pp": {
+     "cury": 0.568215,
+     "renan_santos": 0.602587,
+     "caiado": 1.654895,
+     "zema": 0.085558,
+     "demais": 0.221549
+    },
+    "queda_terceira_via_pp": 3.132804,
+    "ganho_flavio_pp": 0.541548,
+    "ganho_lula_pp": 2.591256,
+    "explicado_flavio_pp": 1.798231,
+    "explicado_lula_pp": 1.334573,
+    "residuo_flavio_pp": -1.256683,
+    "residuo_lula_pp": 1.256683,
+    "erro_diferenca_lula_menos_flavio_pp": -2.049709,
+    "explicado_diferenca_pp": 0.463658,
+    "residuo_diferenca_pp": -2.513366,
+    "fracao_explicada_diferenca": -0.226207
+   },
+   {
+    "uf": "ES",
+    "regiao": "Sudeste",
+    "queda_terceiros_pp": {
+     "cury": -0.3468,
+     "renan_santos": 1.790915,
+     "caiado": 1.341463,
+     "zema": 0.203306,
+     "demais": 0.326297
+    },
+    "queda_terceira_via_pp": 3.315181,
+    "ganho_flavio_pp": 2.335175,
+    "ganho_lula_pp": 0.980007,
+    "explicado_flavio_pp": 2.300348,
+    "explicado_lula_pp": 1.014834,
+    "residuo_flavio_pp": 0.034827,
+    "residuo_lula_pp": -0.034827,
+    "erro_diferenca_lula_menos_flavio_pp": 1.355168,
+    "explicado_diferenca_pp": 1.285514,
+    "residuo_diferenca_pp": 0.069654,
+    "fracao_explicada_diferenca": 0.948601
+   },
+   {
+    "uf": "GO",
+    "regiao": "Centro-Oeste",
+    "queda_terceiros_pp": {
+     "cury": 1.386174,
+     "renan_santos": 1.891297,
+     "caiado": -2.411746,
+     "zema": 0.319055,
+     "demais": 0.384231
+    },
+    "queda_terceira_via_pp": 1.569011,
+    "ganho_flavio_pp": 3.896012,
+    "ganho_lula_pp": -2.327001,
+    "explicado_flavio_pp": 1.836412,
+    "explicado_lula_pp": -0.267401,
+    "residuo_flavio_pp": 2.0596,
+    "residuo_lula_pp": -2.0596,
+    "erro_diferenca_lula_menos_flavio_pp": 6.223012,
+    "explicado_diferenca_pp": 2.103812,
+    "residuo_diferenca_pp": 4.1192,
+    "fracao_explicada_diferenca": 0.33807
+   },
+   {
+    "uf": "MA",
+    "regiao": "Nordeste",
+    "queda_terceiros_pp": {
+     "cury": 0.159934,
+     "renan_santos": 0.812119,
+     "caiado": 0.429847,
+     "zema": 0.237035,
+     "demais": 0.090891
+    },
+    "queda_terceira_via_pp": 1.729825,
+    "ganho_flavio_pp": 2.090072,
+    "ganho_lula_pp": -0.360247,
+    "explicado_flavio_pp": 1.240767,
+    "explicado_lula_pp": 0.489058,
+    "residuo_flavio_pp": 0.849305,
+    "residuo_lula_pp": -0.849305,
+    "erro_diferenca_lula_menos_flavio_pp": 2.45032,
+    "explicado_diferenca_pp": 0.751709,
+    "residuo_diferenca_pp": 1.698611,
+    "fracao_explicada_diferenca": 0.30678
+   },
+   {
+    "uf": "MG",
+    "regiao": "Sudeste",
+    "queda_terceiros_pp": {
+     "cury": -0.567516,
+     "renan_santos": 1.026282,
+     "caiado": 0.776865,
+     "zema": 0.78884,
+     "demais": 0.069849
+    },
+    "queda_terceira_via_pp": 2.094321,
+    "ganho_flavio_pp": 3.356116,
+    "ganho_lula_pp": -1.261795,
+    "explicado_flavio_pp": 1.595011,
+    "explicado_lula_pp": 0.49931,
+    "residuo_flavio_pp": 1.761105,
+    "residuo_lula_pp": -1.761105,
+    "erro_diferenca_lula_menos_flavio_pp": 4.617911,
+    "explicado_diferenca_pp": 1.095701,
+    "residuo_diferenca_pp": 3.52221,
+    "fracao_explicada_diferenca": 0.237272
+   },
+   {
+    "uf": "MS",
+    "regiao": "Centro-Oeste",
+    "queda_terceiros_pp": {
+     "cury": 0.497382,
+     "renan_santos": 0.194943,
+     "caiado": 0.842287,
+     "zema": 0.035615,
+     "demais": 0.158378
+    },
+    "queda_terceira_via_pp": 1.728604,
+    "ganho_flavio_pp": 3.078145,
+    "ganho_lula_pp": -1.349541,
+    "explicado_flavio_pp": 0.957547,
+    "explicado_lula_pp": 0.771058,
+    "residuo_flavio_pp": 2.120599,
+    "residuo_lula_pp": -2.120599,
+    "erro_diferenca_lula_menos_flavio_pp": 4.427687,
+    "explicado_diferenca_pp": 0.186489,
+    "residuo_diferenca_pp": 4.241197,
+    "fracao_explicada_diferenca": 0.042119
+   },
+   {
+    "uf": "MT",
+    "regiao": "Centro-Oeste",
+    "queda_terceiros_pp": {
+     "cury": 0.602527,
+     "renan_santos": 0.761704,
+     "caiado": -0.009152,
+     "zema": 0.157709,
+     "demais": 0.046499
+    },
+    "queda_terceira_via_pp": 1.559288,
+    "ganho_flavio_pp": 1.768039,
+    "ganho_lula_pp": -0.208751,
+    "explicado_flavio_pp": 1.173074,
+    "explicado_lula_pp": 0.386214,
+    "residuo_flavio_pp": 0.594965,
+    "residuo_lula_pp": -0.594965,
+    "erro_diferenca_lula_menos_flavio_pp": 1.97679,
+    "explicado_diferenca_pp": 0.78686,
+    "residuo_diferenca_pp": 1.18993,
+    "fracao_explicada_diferenca": 0.398049
+   },
+   {
+    "uf": "PA",
+    "regiao": "Norte",
+    "queda_terceiros_pp": {
+     "cury": 1.267518,
+     "renan_santos": 0.0225,
+     "caiado": 0.48544,
+     "zema": 0.112428,
+     "demais": -0.031226
+    },
+    "queda_terceira_via_pp": 1.85666,
+    "ganho_flavio_pp": 1.614196,
+    "ganho_lula_pp": 0.242463,
+    "explicado_flavio_pp": 1.070517,
+    "explicado_lula_pp": 0.786143,
+    "residuo_flavio_pp": 0.54368,
+    "residuo_lula_pp": -0.54368,
+    "erro_diferenca_lula_menos_flavio_pp": 1.371733,
+    "explicado_diferenca_pp": 0.284374,
+    "residuo_diferenca_pp": 1.087359,
+    "fracao_explicada_diferenca": 0.20731
+   },
+   {
+    "uf": "PB",
+    "regiao": "Nordeste",
+    "queda_terceiros_pp": {
+     "cury": -0.223257,
+     "renan_santos": 0.466289,
+     "caiado": 1.380974,
+     "zema": 0.129263,
+     "demais": 0.137844
+    },
+    "queda_terceira_via_pp": 1.891113,
+    "ganho_flavio_pp": 0.880175,
+    "ganho_lula_pp": 1.010938,
+    "explicado_flavio_pp": 1.077817,
+    "explicado_lula_pp": 0.813296,
+    "residuo_flavio_pp": -0.197642,
+    "residuo_lula_pp": 0.197642,
+    "erro_diferenca_lula_menos_flavio_pp": -0.130763,
+    "explicado_diferenca_pp": 0.264521,
+    "residuo_diferenca_pp": -0.395284,
+    "fracao_explicada_diferenca": -2.022903
+   },
+   {
+    "uf": "PE",
+    "regiao": "Nordeste",
+    "queda_terceiros_pp": {
+     "cury": -0.351804,
+     "renan_santos": 0.644965,
+     "caiado": -0.080742,
+     "zema": -0.036254,
+     "demais": 0.046263
+    },
+    "queda_terceira_via_pp": 0.222428,
+    "ganho_flavio_pp": 0.043589,
+    "ganho_lula_pp": 0.178839,
+    "explicado_flavio_pp": 0.311886,
+    "explicado_lula_pp": -0.089458,
+    "residuo_flavio_pp": -0.268297,
+    "residuo_lula_pp": 0.268297,
+    "erro_diferenca_lula_menos_flavio_pp": -0.13525,
+    "explicado_diferenca_pp": 0.401344,
+    "residuo_diferenca_pp": -0.536595,
+    "fracao_explicada_diferenca": -2.967423
+   },
+   {
+    "uf": "PI",
+    "regiao": "Nordeste",
+    "queda_terceiros_pp": {
+     "cury": -0.643866,
+     "renan_santos": 0.738932,
+     "caiado": 0.424664,
+     "zema": 0.04345,
+     "demais": 0.038062
+    },
+    "queda_terceira_via_pp": 0.601242,
+    "ganho_flavio_pp": -2.991698,
+    "ganho_lula_pp": 3.59294,
+    "explicado_flavio_pp": 0.511391,
+    "explicado_lula_pp": 0.089851,
+    "residuo_flavio_pp": -3.503089,
+    "residuo_lula_pp": 3.503089,
+    "erro_diferenca_lula_menos_flavio_pp": -6.584637,
+    "explicado_diferenca_pp": 0.42154,
+    "residuo_diferenca_pp": -7.006178,
+    "fracao_explicada_diferenca": -0.064019
+   },
+   {
+    "uf": "PR",
+    "regiao": "Sul",
+    "queda_terceiros_pp": {
+     "cury": -0.18618,
+     "renan_santos": 0.446167,
+     "caiado": -0.098491,
+     "zema": 0.634506,
+     "demais": 0.330367
+    },
+    "queda_terceira_via_pp": 1.12637,
+    "ganho_flavio_pp": 1.499921,
+    "ganho_lula_pp": -0.373551,
+    "explicado_flavio_pp": 0.920052,
+    "explicado_lula_pp": 0.206317,
+    "residuo_flavio_pp": 0.579868,
+    "residuo_lula_pp": -0.579868,
+    "erro_diferenca_lula_menos_flavio_pp": 1.873471,
+    "explicado_diferenca_pp": 0.713735,
+    "residuo_diferenca_pp": 1.159737,
+    "fracao_explicada_diferenca": 0.380969
+   },
+   {
+    "uf": "RJ",
+    "regiao": "Sudeste",
+    "queda_terceiros_pp": {
+     "cury": -0.347573,
+     "renan_santos": 0.917364,
+     "caiado": -0.10674,
+     "zema": 0.157713,
+     "demais": 0.328039
+    },
+    "queda_terceira_via_pp": 0.948802,
+    "ganho_flavio_pp": 0.930111,
+    "ganho_lula_pp": 0.018691,
+    "explicado_flavio_pp": 0.840766,
+    "explicado_lula_pp": 0.108036,
+    "residuo_flavio_pp": 0.089345,
+    "residuo_lula_pp": -0.089345,
+    "erro_diferenca_lula_menos_flavio_pp": 0.911419,
+    "explicado_diferenca_pp": 0.73273,
+    "residuo_diferenca_pp": 0.178689,
+    "fracao_explicada_diferenca": 0.803944
+   },
+   {
+    "uf": "RN",
+    "regiao": "Nordeste",
+    "queda_terceiros_pp": {
+     "cury": -0.159798,
+     "renan_santos": 0.518661,
+     "caiado": 1.309685,
+     "zema": 0.120127,
+     "demais": 0.103635
+    },
+    "queda_terceira_via_pp": 1.892309,
+    "ganho_flavio_pp": 1.617445,
+    "ganho_lula_pp": 0.274864,
+    "explicado_flavio_pp": 1.104379,
+    "explicado_lula_pp": 0.78793,
+    "residuo_flavio_pp": 0.513066,
+    "residuo_lula_pp": -0.513066,
+    "erro_diferenca_lula_menos_flavio_pp": 1.342581,
+    "explicado_diferenca_pp": 0.316449,
+    "residuo_diferenca_pp": 1.026132,
+    "fracao_explicada_diferenca": 0.235702
+   },
+   {
+    "uf": "RO",
+    "regiao": "Norte",
+    "queda_terceiros_pp": {
+     "cury": -0.430147,
+     "renan_santos": 0.288418,
+     "caiado": 0.651913,
+     "zema": 0.066332,
+     "demais": 0.308277
+    },
+    "queda_terceira_via_pp": 0.884792,
+    "ganho_flavio_pp": 0.702017,
+    "ganho_lula_pp": 0.182775,
+    "explicado_flavio_pp": 0.50142,
+    "explicado_lula_pp": 0.383372,
+    "residuo_flavio_pp": 0.200597,
+    "residuo_lula_pp": -0.200597,
+    "erro_diferenca_lula_menos_flavio_pp": 0.519242,
+    "explicado_diferenca_pp": 0.118048,
+    "residuo_diferenca_pp": 0.401194,
+    "fracao_explicada_diferenca": 0.227347
+   },
+   {
+    "uf": "RR",
+    "regiao": "Norte",
+    "queda_terceiros_pp": {
+     "cury": 0.104701,
+     "renan_santos": 0.713318,
+     "caiado": 1.416439,
+     "zema": 0.110936,
+     "demais": 0.099129
+    },
+    "queda_terceira_via_pp": 2.444522,
+    "ganho_flavio_pp": 0.7609,
+    "ganho_lula_pp": 1.683623,
+    "explicado_flavio_pp": 1.470714,
+    "explicado_lula_pp": 0.973809,
+    "residuo_flavio_pp": -0.709814,
+    "residuo_lula_pp": 0.709814,
+    "erro_diferenca_lula_menos_flavio_pp": -0.922723,
+    "explicado_diferenca_pp": 0.496905,
+    "residuo_diferenca_pp": -1.419628,
+    "fracao_explicada_diferenca": -0.53852
+   },
+   {
+    "uf": "RS",
+    "regiao": "Sul",
+    "queda_terceiros_pp": {
+     "cury": 0.360534,
+     "renan_santos": 0.661525,
+     "caiado": 0.421553,
+     "zema": 0.18293,
+     "demais": 0.155009
+    },
+    "queda_terceira_via_pp": 1.78155,
+    "ganho_flavio_pp": 4.04194,
+    "ganho_lula_pp": -2.26039,
+    "explicado_flavio_pp": 1.212226,
+    "explicado_lula_pp": 0.569325,
+    "residuo_flavio_pp": 2.829714,
+    "residuo_lula_pp": -2.829714,
+    "erro_diferenca_lula_menos_flavio_pp": 6.30233,
+    "explicado_diferenca_pp": 0.642901,
+    "residuo_diferenca_pp": 5.659429,
+    "fracao_explicada_diferenca": 0.10201
+   },
+   {
+    "uf": "SC",
+    "regiao": "Sul",
+    "queda_terceiros_pp": {
+     "cury": -0.087744,
+     "renan_santos": 0.114341,
+     "caiado": 0.990472,
+     "zema": 0.135416,
+     "demais": 0.075526
+    },
+    "queda_terceira_via_pp": 1.228011,
+    "ganho_flavio_pp": 3.484746,
+    "ganho_lula_pp": -2.256735,
+    "explicado_flavio_pp": 0.64682,
+    "explicado_lula_pp": 0.581191,
+    "residuo_flavio_pp": 2.837927,
+    "residuo_lula_pp": -2.837927,
+    "erro_diferenca_lula_menos_flavio_pp": 5.741482,
+    "explicado_diferenca_pp": 0.065629,
+    "residuo_diferenca_pp": 5.675853,
+    "fracao_explicada_diferenca": 0.011431
+   },
+   {
+    "uf": "SE",
+    "regiao": "Nordeste",
+    "queda_terceiros_pp": {
+     "cury": -0.405533,
+     "renan_santos": 1.501144,
+     "caiado": 0.382128,
+     "zema": 0.333053,
+     "demais": 0.387967
+    },
+    "queda_terceira_via_pp": 2.198759,
+    "ganho_flavio_pp": -1.388986,
+    "ganho_lula_pp": 3.587745,
+    "explicado_flavio_pp": 1.71297,
+    "explicado_lula_pp": 0.485789,
+    "residuo_flavio_pp": -3.101956,
+    "residuo_lula_pp": 3.101956,
+    "erro_diferenca_lula_menos_flavio_pp": -4.97673,
+    "explicado_diferenca_pp": 1.227181,
+    "residuo_diferenca_pp": -6.203911,
+    "fracao_explicada_diferenca": -0.246584
+   },
+   {
+    "uf": "SP",
+    "regiao": "Sudeste",
+    "queda_terceiros_pp": {
+     "cury": -0.685304,
+     "renan_santos": 1.412251,
+     "caiado": 0.463634,
+     "zema": 0.231529,
+     "demais": 0.493968
+    },
+    "queda_terceira_via_pp": 1.916077,
+    "ganho_flavio_pp": 3.128175,
+    "ganho_lula_pp": -1.212098,
+    "explicado_flavio_pp": 1.475693,
+    "explicado_lula_pp": 0.440384,
+    "residuo_flavio_pp": 1.652482,
+    "residuo_lula_pp": -1.652482,
+    "erro_diferenca_lula_menos_flavio_pp": 4.340273,
+    "explicado_diferenca_pp": 1.035309,
+    "residuo_diferenca_pp": 3.304964,
+    "fracao_explicada_diferenca": 0.238535
+   },
+   {
+    "uf": "TO",
+    "regiao": "Norte",
+    "queda_terceiros_pp": {
+     "cury": 0.078801,
+     "renan_santos": 0.786632,
+     "caiado": 1.666459,
+     "zema": 0.198216,
+     "demais": 0.386739
+    },
+    "queda_terceira_via_pp": 3.116846,
+    "ganho_flavio_pp": 1.397058,
+    "ganho_lula_pp": 1.719788,
+    "explicado_flavio_pp": 1.848435,
+    "explicado_lula_pp": 1.268411,
+    "residuo_flavio_pp": -0.451377,
+    "residuo_lula_pp": 0.451377,
+    "erro_diferenca_lula_menos_flavio_pp": -0.322731,
+    "explicado_diferenca_pp": 0.580024,
+    "residuo_diferenca_pp": -0.902754,
+    "fracao_explicada_diferenca": -1.797238
+   },
+   {
+    "uf": "ZZ",
+    "regiao": "Exterior",
+    "queda_terceiros_pp": {
+     "cury": 1.24972,
+     "renan_santos": 2.170941,
+     "caiado": 2.650195,
+     "zema": -0.215454,
+     "demais": -0.265728
+    },
+    "queda_terceira_via_pp": 5.589674,
+    "ganho_flavio_pp": 1.436987,
+    "ganho_lula_pp": 4.152687,
+    "explicado_flavio_pp": 3.537868,
+    "explicado_lula_pp": 2.051806,
+    "residuo_flavio_pp": -2.100881,
+    "residuo_lula_pp": 2.100881,
+    "erro_diferenca_lula_menos_flavio_pp": -2.7157,
+    "explicado_diferenca_pp": 1.486061,
+    "residuo_diferenca_pp": -4.201762,
+    "fracao_explicada_diferenca": -0.547211
+   }
+  ]
+ },
+ "matriz_transferencia": {
+  "fonte": "Nexus/BTG, 18 a 20/09/2026, p. 79",
+  "linhas": {
+   "Cury": {
+    "Lula": 30,
+    "Flávio": 44,
+    "Branco/nulo": 23,
+    "Indecisos": 2
+   },
+   "Caiado": {
+    "Lula": 36,
+    "Flávio": 30,
+    "Branco/nulo": 26,
+    "Indecisos": 7
+   },
+   "Renan": {
+    "Lula": 8,
+    "Flávio": 56,
+    "Branco/nulo": 37,
+    "Indecisos": 0
+   },
+   "Zema": {
+    "Lula": 13,
+    "Flávio": 59,
+    "Branco/nulo": 29,
+    "Indecisos": 0
+   },
+   "Samara": {
+    "Lula": 58,
+    "Flávio": 6,
+    "Branco/nulo": 36,
+    "Indecisos": 0
+   }
+  },
+  "terceira_flavio": 0.4044,
+  "terceira_lula": 0.2844,
+  "indecisos_flavio": 0.3,
+  "indecisos_lula": 0.3,
+  "branco_flavio": 0.1,
+  "branco_lula": 0.08,
+  "hipotese": "indecisos e branco/nulo sem linha publicada"
+ }
+}

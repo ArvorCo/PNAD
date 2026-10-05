@@ -1,0 +1,1350 @@
+{
+  "meta": {
+    "gerado_em": "2026-10-05T06:59:03Z",
+    "banco": "apuracao/data/apuracao.sqlite",
+    "versao_nacional_snapshot_id": 513491,
+    "versao_nacional_gerada_em": "2026-10-05T05:59:31.000Z",
+    "final_json_gerado_em": "2026-10-05T06:29:53.765Z",
+    "script": "scripts/apuracao-2026-dados.py",
+    "regra_de_versao": "versão vigente de cada arquivo = última gerada pelo TSE (gerado_em), não a última sem a marca regressivo do coletor",
+    "arquivo": "senado.json"
+  },
+  "fonte": "apuracao/data/boletins/final.json (senado) e apuracao/public/senadores_2022.json",
+  "n_ufs_tse": 26,
+  "n_ufs_provisorio": 1,
+  "eleitos_2026": [
+    {
+      "uf": "AC",
+      "vaga": 1,
+      "fonte": "tse",
+      "nome": "MARCIO BITTAR",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 223972,
+      "pct": 25.59,
+      "st": "Eleito"
+    },
+    {
+      "uf": "AC",
+      "vaga": 2,
+      "fonte": "tse",
+      "nome": "MARA ROCHA",
+      "partido": "REPUBLICANOS",
+      "campo": "direita",
+      "votos": 157104,
+      "pct": 17.95,
+      "st": "Eleito"
+    },
+    {
+      "uf": "AL",
+      "vaga": 1,
+      "fonte": "tse",
+      "nome": "ARTHUR LIRA",
+      "partido": "PP",
+      "campo": "centro-direita",
+      "votos": 948703,
+      "pct": 28.87,
+      "st": "Eleito"
+    },
+    {
+      "uf": "AL",
+      "vaga": 2,
+      "fonte": "tse",
+      "nome": "MARINA JHC",
+      "partido": "PSDB",
+      "campo": "centro-direita",
+      "votos": 926860,
+      "pct": 28.2,
+      "st": "Eleito"
+    },
+    {
+      "uf": "AM",
+      "vaga": 1,
+      "fonte": "provisorio",
+      "nome": "EDUARDO BRAGA",
+      "partido": "MDB",
+      "campo": "centro",
+      "votos": 1240471,
+      "pct": 32.29,
+      "st": null
+    },
+    {
+      "uf": "AM",
+      "vaga": 2,
+      "fonte": "provisorio",
+      "nome": "PLINIO VALÉRIO",
+      "partido": "PSDB",
+      "campo": "centro-esquerda",
+      "votos": 948793,
+      "pct": 24.7,
+      "st": null
+    },
+    {
+      "uf": "AP",
+      "vaga": 1,
+      "fonte": "tse",
+      "nome": "RAYSSA FURLAN",
+      "partido": "PODE",
+      "campo": "centro-direita",
+      "votos": 264799,
+      "pct": 29.98,
+      "st": "Eleito"
+    },
+    {
+      "uf": "AP",
+      "vaga": 2,
+      "fonte": "tse",
+      "nome": "LUCAS BARRETO",
+      "partido": "PSD",
+      "campo": "centro",
+      "votos": 213948,
+      "pct": 24.22,
+      "st": "Eleito"
+    },
+    {
+      "uf": "BA",
+      "vaga": 1,
+      "fonte": "tse",
+      "nome": "RUI COSTA",
+      "partido": "PT",
+      "campo": "esquerda",
+      "votos": 4335196,
+      "pct": 30.07,
+      "st": "Eleito"
+    },
+    {
+      "uf": "BA",
+      "vaga": 2,
+      "fonte": "tse",
+      "nome": "JAQUES WAGNER",
+      "partido": "PT",
+      "campo": "esquerda",
+      "votos": 3986690,
+      "pct": 27.65,
+      "st": "Eleito"
+    },
+    {
+      "uf": "CE",
+      "vaga": 1,
+      "fonte": "tse",
+      "nome": "CID GOMES",
+      "partido": "PSB",
+      "campo": "esquerda",
+      "votos": 3033562,
+      "pct": 31.22,
+      "st": "Eleito"
+    },
+    {
+      "uf": "CE",
+      "vaga": 2,
+      "fonte": "tse",
+      "nome": "LUIZIANNE",
+      "partido": "REDE",
+      "campo": "esquerda",
+      "votos": 2822806,
+      "pct": 29.05,
+      "st": "Eleito"
+    },
+    {
+      "uf": "DF",
+      "vaga": 1,
+      "fonte": "tse",
+      "nome": "MICHELLE BOLSONARO",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 938496,
+      "pct": 29.05,
+      "st": "Eleito"
+    },
+    {
+      "uf": "DF",
+      "vaga": 2,
+      "fonte": "tse",
+      "nome": "BIA KICIS",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 886616,
+      "pct": 27.44,
+      "st": "Eleito"
+    },
+    {
+      "uf": "ES",
+      "vaga": 1,
+      "fonte": "tse",
+      "nome": "RENATO CASAGRANDE",
+      "partido": "PSB",
+      "campo": "esquerda",
+      "votos": 995361,
+      "pct": 24.7,
+      "st": "Eleito"
+    },
+    {
+      "uf": "ES",
+      "vaga": 2,
+      "fonte": "tse",
+      "nome": "EVAIR DE MELO",
+      "partido": "REPUBLICANOS",
+      "campo": "direita",
+      "votos": 982978,
+      "pct": 24.39,
+      "st": "Eleito"
+    },
+    {
+      "uf": "GO",
+      "vaga": 1,
+      "fonte": "tse",
+      "nome": "GUSTAVO GAYER",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 1639247,
+      "pct": 24.53,
+      "st": "Eleito"
+    },
+    {
+      "uf": "GO",
+      "vaga": 2,
+      "fonte": "tse",
+      "nome": "GRACINHA CAIADO",
+      "partido": "UNIÃO",
+      "campo": "centro-direita",
+      "votos": 1458522,
+      "pct": 21.83,
+      "st": "Eleito"
+    },
+    {
+      "uf": "MA",
+      "vaga": 1,
+      "fonte": "tse",
+      "nome": "FUFUCA",
+      "partido": "PP",
+      "campo": "centro-direita",
+      "votos": 1530187,
+      "pct": 21.43,
+      "st": "Eleito"
+    },
+    {
+      "uf": "MA",
+      "vaga": 2,
+      "fonte": "tse",
+      "nome": "LAHESIO BONFIM",
+      "partido": "NOVO",
+      "campo": "direita",
+      "votos": 1471859,
+      "pct": 20.61,
+      "st": "Eleito"
+    },
+    {
+      "uf": "MG",
+      "vaga": 1,
+      "fonte": "tse",
+      "nome": "DOMINGOS SÁVIO",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 4968829,
+      "pct": 24.21,
+      "st": "Eleito"
+    },
+    {
+      "uf": "MG",
+      "vaga": 2,
+      "fonte": "tse",
+      "nome": "MARÍLIA CAMPOS",
+      "partido": "PT",
+      "campo": "esquerda",
+      "votos": 3990864,
+      "pct": 19.44,
+      "st": "Eleito"
+    },
+    {
+      "uf": "MS",
+      "vaga": 1,
+      "fonte": "tse",
+      "nome": "REINALDO AZAMBUJA",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 903554,
+      "pct": 34.64,
+      "st": "Eleito"
+    },
+    {
+      "uf": "MS",
+      "vaga": 2,
+      "fonte": "tse",
+      "nome": "CAPITÃO CONTAR",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 856045,
+      "pct": 32.82,
+      "st": "Eleito"
+    },
+    {
+      "uf": "MT",
+      "vaga": 1,
+      "fonte": "tse",
+      "nome": "MAURO MENDES",
+      "partido": "UNIÃO",
+      "campo": "centro-direita",
+      "votos": 1187352,
+      "pct": 33.21,
+      "st": "Eleito"
+    },
+    {
+      "uf": "MT",
+      "vaga": 2,
+      "fonte": "tse",
+      "nome": "ZÉ MEDEIROS",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 977777,
+      "pct": 27.35,
+      "st": "Eleito"
+    },
+    {
+      "uf": "PA",
+      "vaga": 1,
+      "fonte": "tse",
+      "nome": "HELDER",
+      "partido": "MDB",
+      "campo": "centro",
+      "votos": 2342070,
+      "pct": 26.1,
+      "st": "Eleito"
+    },
+    {
+      "uf": "PA",
+      "vaga": 2,
+      "fonte": "tse",
+      "nome": "CHICÃO",
+      "partido": "UNIÃO",
+      "campo": "centro-direita",
+      "votos": 2014409,
+      "pct": 22.45,
+      "st": "Eleito"
+    },
+    {
+      "uf": "PB",
+      "vaga": 1,
+      "fonte": "tse",
+      "nome": "JOAO AZEVÊDO",
+      "partido": "PSB",
+      "campo": "esquerda",
+      "votos": 1391994,
+      "pct": 32.5,
+      "st": "Eleito"
+    },
+    {
+      "uf": "PB",
+      "vaga": 2,
+      "fonte": "tse",
+      "nome": "VENEZIANO",
+      "partido": "MDB",
+      "campo": "centro",
+      "votos": 974550,
+      "pct": 22.76,
+      "st": "Eleito"
+    },
+    {
+      "uf": "PE",
+      "vaga": 1,
+      "fonte": "tse",
+      "nome": "HUMBERTO COSTA",
+      "partido": "PT",
+      "campo": "esquerda",
+      "votos": 2531389,
+      "pct": 27.19,
+      "st": "Eleito"
+    },
+    {
+      "uf": "PE",
+      "vaga": 2,
+      "fonte": "tse",
+      "nome": "MARÍLIA ARRAES",
+      "partido": "PDT",
+      "campo": "esquerda",
+      "votos": 2325127,
+      "pct": 24.97,
+      "st": "Eleito"
+    },
+    {
+      "uf": "PI",
+      "vaga": 1,
+      "fonte": "tse",
+      "nome": "MARCELO CASTRO",
+      "partido": "MDB",
+      "campo": "centro",
+      "votos": 1307833,
+      "pct": 35.67,
+      "st": "Eleito"
+    },
+    {
+      "uf": "PI",
+      "vaga": 2,
+      "fonte": "tse",
+      "nome": "JÚLIO CÉSAR O JULIM DO LULA",
+      "partido": "PSD",
+      "campo": "centro",
+      "votos": 989146,
+      "pct": 26.98,
+      "st": "Eleito"
+    },
+    {
+      "uf": "PR",
+      "vaga": 1,
+      "fonte": "tse",
+      "nome": "FILIPE BARROS",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 3148583,
+      "pct": 27.25,
+      "st": "Eleito"
+    },
+    {
+      "uf": "PR",
+      "vaga": 2,
+      "fonte": "tse",
+      "nome": "DELTAN DALLAGNOL",
+      "partido": "NOVO",
+      "campo": "direita",
+      "votos": 2904594,
+      "pct": 25.14,
+      "st": "Eleito"
+    },
+    {
+      "uf": "RJ",
+      "vaga": 1,
+      "fonte": "tse",
+      "nome": "CARLOS PORTINHO",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 4264932,
+      "pct": 26.77,
+      "st": "Eleito"
+    },
+    {
+      "uf": "RJ",
+      "vaga": 2,
+      "fonte": "tse",
+      "nome": "CARLOS JORDY",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 3912405,
+      "pct": 24.56,
+      "st": "Eleito"
+    },
+    {
+      "uf": "RN",
+      "vaga": 1,
+      "fonte": "tse",
+      "nome": "STYVENSON VALENTIM",
+      "partido": "PODE",
+      "campo": "centro-direita",
+      "votos": 1055000,
+      "pct": 29.25,
+      "st": "Eleito"
+    },
+    {
+      "uf": "RN",
+      "vaga": 2,
+      "fonte": "tse",
+      "nome": "SAMANDA DE LULA",
+      "partido": "PT",
+      "campo": "esquerda",
+      "votos": 635924,
+      "pct": 17.63,
+      "st": "Eleito"
+    },
+    {
+      "uf": "RO",
+      "vaga": 1,
+      "fonte": "tse",
+      "nome": "DR. FERNANDO MÁXIMO",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 570799,
+      "pct": 31.97,
+      "st": "Eleito"
+    },
+    {
+      "uf": "RO",
+      "vaga": 2,
+      "fonte": "tse",
+      "nome": "BRUNO SCHEID",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 474226,
+      "pct": 26.56,
+      "st": "Eleito"
+    },
+    {
+      "uf": "RR",
+      "vaga": 1,
+      "fonte": "tse",
+      "nome": "NICOLETTI",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 138269,
+      "pct": 22.68,
+      "st": "Eleito"
+    },
+    {
+      "uf": "RR",
+      "vaga": 2,
+      "fonte": "tse",
+      "nome": "TERESA SURITA",
+      "partido": "MDB",
+      "campo": "centro",
+      "votos": 117270,
+      "pct": 19.24,
+      "st": "Eleito"
+    },
+    {
+      "uf": "RS",
+      "vaga": 1,
+      "fonte": "tse",
+      "nome": "SANDERSON",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 3453316,
+      "pct": 30.11,
+      "st": "Eleito"
+    },
+    {
+      "uf": "RS",
+      "vaga": 2,
+      "fonte": "tse",
+      "nome": "MARCEL VAN HATTEM",
+      "partido": "NOVO",
+      "campo": "direita",
+      "votos": 3449053,
+      "pct": 30.08,
+      "st": "Eleito"
+    },
+    {
+      "uf": "SC",
+      "vaga": 1,
+      "fonte": "tse",
+      "nome": "CAROL DE TONI",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 2694918,
+      "pct": 33.46,
+      "st": "Eleito"
+    },
+    {
+      "uf": "SC",
+      "vaga": 2,
+      "fonte": "tse",
+      "nome": "CARLOS BOLSONARO",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 2041840,
+      "pct": 25.35,
+      "st": "Eleito"
+    },
+    {
+      "uf": "SE",
+      "vaga": 1,
+      "fonte": "tse",
+      "nome": "ROGERIO CARVALHO",
+      "partido": "PT",
+      "campo": "esquerda",
+      "votos": 511142,
+      "pct": 21.91,
+      "st": "Eleito"
+    },
+    {
+      "uf": "SE",
+      "vaga": 2,
+      "fonte": "tse",
+      "nome": "DELEGADO ALESSANDRO",
+      "partido": "MDB",
+      "campo": "centro",
+      "votos": 399775,
+      "pct": 17.13,
+      "st": "Eleito"
+    },
+    {
+      "uf": "SP",
+      "vaga": 1,
+      "fonte": "tse",
+      "nome": "GUILHERME DERRITE",
+      "partido": "PP",
+      "campo": "centro-direita",
+      "votos": 13273880,
+      "pct": 30.59,
+      "st": "Eleito"
+    },
+    {
+      "uf": "SP",
+      "vaga": 2,
+      "fonte": "tse",
+      "nome": "ANDRÉ DO PRADO",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 12703089,
+      "pct": 29.28,
+      "st": "Eleito"
+    },
+    {
+      "uf": "TO",
+      "vaga": 1,
+      "fonte": "tse",
+      "nome": "EDUARDO GOMES",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 450191,
+      "pct": 27.22,
+      "st": "Eleito"
+    },
+    {
+      "uf": "TO",
+      "vaga": 2,
+      "fonte": "tse",
+      "nome": "ALEXANDRE GUIMARÃES",
+      "partido": "MDB",
+      "campo": "centro",
+      "votos": 316786,
+      "pct": 19.16,
+      "st": "Eleito"
+    }
+  ],
+  "eleitos_2026_por_partido": {
+    "PL": 19,
+    "MDB": 7,
+    "PT": 6,
+    "PP": 3,
+    "PSB": 3,
+    "UNIÃO": 3,
+    "NOVO": 3,
+    "REPUBLICANOS": 2,
+    "PSDB": 2,
+    "PODE": 2,
+    "PSD": 2,
+    "REDE": 1,
+    "PDT": 1
+  },
+  "eleitos_2026_por_campo": {
+    "direita": 24,
+    "esquerda": 11,
+    "centro-direita": 9,
+    "centro": 9,
+    "centro-esquerda": 1
+  },
+  "disputas": [
+    {
+      "uf": "AC",
+      "fonte": "tse",
+      "terceiro": {
+        "nome": "JORGE VIANA",
+        "partido": "PT",
+        "campo": "esquerda",
+        "votos": 124063,
+        "pct": 14.17,
+        "st": "Não eleito"
+      },
+      "margem_2a_vaga_pp": 3.77,
+      "margem_2a_vaga_votos": 33041
+    },
+    {
+      "uf": "AL",
+      "fonte": "tse",
+      "terceiro": {
+        "nome": "RENAN",
+        "partido": "MDB",
+        "campo": "centro",
+        "votos": 731045,
+        "pct": 22.24,
+        "st": "Não eleito"
+      },
+      "margem_2a_vaga_pp": 5.96,
+      "margem_2a_vaga_votos": 195815
+    },
+    {
+      "uf": "AM",
+      "fonte": "provisorio",
+      "terceiro": {
+        "nome": "CAPITÃO ALBERTO NETO",
+        "partido": "PL",
+        "campo": "direita",
+        "votos": 909155,
+        "pct": 23.66,
+        "st": null
+      },
+      "margem_2a_vaga_pp": 1.03,
+      "margem_2a_vaga_votos": 39638
+    },
+    {
+      "uf": "AP",
+      "fonte": "tse",
+      "terceiro": {
+        "nome": "RANDOLFE",
+        "partido": "PT",
+        "campo": "esquerda",
+        "votos": 163857,
+        "pct": 18.55,
+        "st": "Não eleito"
+      },
+      "margem_2a_vaga_pp": 5.67,
+      "margem_2a_vaga_votos": 50091
+    },
+    {
+      "uf": "BA",
+      "fonte": "tse",
+      "terceiro": {
+        "nome": "ANGELO CORONEL",
+        "partido": "REPUBLICANOS",
+        "campo": "direita",
+        "votos": 2898885,
+        "pct": 20.11,
+        "st": "Não eleito"
+      },
+      "margem_2a_vaga_pp": 7.54,
+      "margem_2a_vaga_votos": 1087805
+    },
+    {
+      "uf": "CE",
+      "fonte": "tse",
+      "terceiro": {
+        "nome": "CAPITÃO WAGNER",
+        "partido": "UNIÃO",
+        "campo": "centro-direita",
+        "votos": 2011388,
+        "pct": 20.7,
+        "st": "Não eleito"
+      },
+      "margem_2a_vaga_pp": 8.35,
+      "margem_2a_vaga_votos": 811418
+    },
+    {
+      "uf": "DF",
+      "fonte": "tse",
+      "terceiro": {
+        "nome": "LEILA DO VÔLEI",
+        "partido": "PDT",
+        "campo": "esquerda",
+        "votos": 686340,
+        "pct": 21.25,
+        "st": "Não eleito"
+      },
+      "margem_2a_vaga_pp": 6.2,
+      "margem_2a_vaga_votos": 200276
+    },
+    {
+      "uf": "ES",
+      "fonte": "tse",
+      "terceiro": {
+        "nome": "MAGUINHA MALTA",
+        "partido": "PL",
+        "campo": "direita",
+        "votos": 761722,
+        "pct": 18.9,
+        "st": "Não eleito"
+      },
+      "margem_2a_vaga_pp": 5.49,
+      "margem_2a_vaga_votos": 221256
+    },
+    {
+      "uf": "GO",
+      "fonte": "tse",
+      "terceiro": {
+        "nome": "DR. ZACHARIAS CALIL",
+        "partido": "MDB",
+        "campo": "centro",
+        "votos": 998319,
+        "pct": 14.94,
+        "st": "Não eleito"
+      },
+      "margem_2a_vaga_pp": 6.89,
+      "margem_2a_vaga_votos": 460203
+    },
+    {
+      "uf": "MA",
+      "fonte": "tse",
+      "terceiro": {
+        "nome": "ROSEANA SARNEY",
+        "partido": "MDB",
+        "campo": "centro",
+        "votos": 1171634,
+        "pct": 16.41,
+        "st": "Não eleito"
+      },
+      "margem_2a_vaga_pp": 4.2,
+      "margem_2a_vaga_votos": 300225
+    },
+    {
+      "uf": "MG",
+      "fonte": "tse",
+      "terceiro": {
+        "nome": "CARLOS VIANA",
+        "partido": "PSD",
+        "campo": "centro",
+        "votos": 3583487,
+        "pct": 17.46,
+        "st": "Não eleito"
+      },
+      "margem_2a_vaga_pp": 1.98,
+      "margem_2a_vaga_votos": 407377
+    },
+    {
+      "uf": "MS",
+      "fonte": "tse",
+      "terceiro": {
+        "nome": "VANDER LOUBET",
+        "partido": "PT",
+        "campo": "esquerda",
+        "votos": 361920,
+        "pct": 13.88,
+        "st": "Não eleito"
+      },
+      "margem_2a_vaga_pp": 18.95,
+      "margem_2a_vaga_votos": 494125
+    },
+    {
+      "uf": "MT",
+      "fonte": "tse",
+      "terceiro": {
+        "nome": "JANAINA RIVA",
+        "partido": "MDB",
+        "campo": "centro",
+        "votos": 519434,
+        "pct": 14.53,
+        "st": "Não eleito"
+      },
+      "margem_2a_vaga_pp": 12.82,
+      "margem_2a_vaga_votos": 458343
+    },
+    {
+      "uf": "PA",
+      "fonte": "tse",
+      "terceiro": {
+        "nome": "DELEGADO ÉDER MAURO",
+        "partido": "PL",
+        "campo": "direita",
+        "votos": 1997768,
+        "pct": 22.26,
+        "st": "Não eleito"
+      },
+      "margem_2a_vaga_pp": 0.19,
+      "margem_2a_vaga_votos": 16641
+    },
+    {
+      "uf": "PB",
+      "fonte": "tse",
+      "terceiro": {
+        "nome": "NABOR",
+        "partido": "REPUBLICANOS",
+        "campo": "direita",
+        "votos": 895398,
+        "pct": 20.91,
+        "st": "Não eleito"
+      },
+      "margem_2a_vaga_pp": 1.85,
+      "margem_2a_vaga_votos": 79152
+    },
+    {
+      "uf": "PE",
+      "fonte": "tse",
+      "terceiro": {
+        "nome": "MENDONÇA FILHO",
+        "partido": "PL",
+        "campo": "direita",
+        "votos": 1728587,
+        "pct": 18.57,
+        "st": "Não eleito"
+      },
+      "margem_2a_vaga_pp": 6.41,
+      "margem_2a_vaga_votos": 596540
+    },
+    {
+      "uf": "PI",
+      "fonte": "tse",
+      "terceiro": {
+        "nome": "CIRO NOGUEIRA",
+        "partido": "PP",
+        "campo": "centro-direita",
+        "votos": 904961,
+        "pct": 24.68,
+        "st": "Não eleito"
+      },
+      "margem_2a_vaga_pp": 2.3,
+      "margem_2a_vaga_votos": 84185
+    },
+    {
+      "uf": "PR",
+      "fonte": "tse",
+      "terceiro": {
+        "nome": "ALEXANDRE CURI",
+        "partido": "REPUBLICANOS",
+        "campo": "direita",
+        "votos": 1947135,
+        "pct": 16.85,
+        "st": "Não eleito"
+      },
+      "margem_2a_vaga_pp": 8.29,
+      "margem_2a_vaga_votos": 957459
+    },
+    {
+      "uf": "RJ",
+      "fonte": "tse",
+      "terceiro": {
+        "nome": "BENEDITA DA SILVA",
+        "partido": "PT",
+        "campo": "esquerda",
+        "votos": 3220765,
+        "pct": 20.22,
+        "st": "Não eleito"
+      },
+      "margem_2a_vaga_pp": 4.34,
+      "margem_2a_vaga_votos": 691640
+    },
+    {
+      "uf": "RN",
+      "fonte": "tse",
+      "terceiro": {
+        "nome": "ZENAIDE MAIA",
+        "partido": "PSD",
+        "campo": "centro",
+        "votos": 630159,
+        "pct": 17.47,
+        "st": "Não eleito"
+      },
+      "margem_2a_vaga_pp": 0.16,
+      "margem_2a_vaga_votos": 5765
+    },
+    {
+      "uf": "RO",
+      "fonte": "tse",
+      "terceiro": {
+        "nome": "SÍLVIA CRISTINA",
+        "partido": "PP",
+        "campo": "centro-direita",
+        "votos": 304061,
+        "pct": 17.03,
+        "st": "Não eleito"
+      },
+      "margem_2a_vaga_pp": 9.53,
+      "margem_2a_vaga_votos": 170165
+    },
+    {
+      "uf": "RR",
+      "fonte": "tse",
+      "terceiro": {
+        "nome": "HELENA DA ASATUR",
+        "partido": "PSD",
+        "campo": "centro",
+        "votos": 106652,
+        "pct": 17.5,
+        "st": "Não eleito"
+      },
+      "margem_2a_vaga_pp": 1.74,
+      "margem_2a_vaga_votos": 10618
+    },
+    {
+      "uf": "RS",
+      "fonte": "tse",
+      "terceiro": {
+        "nome": "MANUELA D'ÁVILA",
+        "partido": "PSOL",
+        "campo": "esquerda",
+        "votos": 1957697,
+        "pct": 17.07,
+        "st": "Não eleito"
+      },
+      "margem_2a_vaga_pp": 13,
+      "margem_2a_vaga_votos": 1491356
+    },
+    {
+      "uf": "SC",
+      "fonte": "tse",
+      "terceiro": {
+        "nome": "ESPERIDIÃO AMIN",
+        "partido": "PP",
+        "campo": "centro-direita",
+        "votos": 1233034,
+        "pct": 15.31,
+        "st": "Não eleito"
+      },
+      "margem_2a_vaga_pp": 10.04,
+      "margem_2a_vaga_votos": 808806
+    },
+    {
+      "uf": "SE",
+      "fonte": "tse",
+      "terceiro": {
+        "nome": "DELEGADO ANDRÉ DAVID",
+        "partido": "REPUBLICANOS",
+        "campo": "direita",
+        "votos": 378710,
+        "pct": 16.23,
+        "st": "Não eleito"
+      },
+      "margem_2a_vaga_pp": 0.9,
+      "margem_2a_vaga_votos": 21065
+    },
+    {
+      "uf": "SP",
+      "fonte": "tse",
+      "terceiro": {
+        "nome": "SIMONE TEBET",
+        "partido": "PSB",
+        "campo": "esquerda",
+        "votos": 8342968,
+        "pct": 19.23,
+        "st": "Não eleito"
+      },
+      "margem_2a_vaga_pp": 10.05,
+      "margem_2a_vaga_votos": 4360121
+    },
+    {
+      "uf": "TO",
+      "fonte": "tse",
+      "terceiro": {
+        "nome": "ELI BORGES",
+        "partido": "REPUBLICANOS",
+        "campo": "direita",
+        "votos": 271829,
+        "pct": 16.44,
+        "st": "Não eleito"
+      },
+      "margem_2a_vaga_pp": 2.72,
+      "margem_2a_vaga_votos": 44957
+    }
+  ],
+  "continuam_eleitos_2022": [
+    {
+      "uf": "AC",
+      "sq_candidato": "10001714547",
+      "nome": "ALAN RICK",
+      "nome_completo": "ALAN RICK MIRANDA",
+      "partido": "UNIÃO",
+      "campo": "centro-direita",
+      "votos": 308624,
+      "situacao": "ELEITO"
+    },
+    {
+      "uf": "AL",
+      "sq_candidato": "20001698127",
+      "nome": "RENAN FILHO",
+      "nome_completo": "JOSÉ RENAN VASCONCELOS CALHEIROS FILHO",
+      "partido": "MDB",
+      "campo": "centro",
+      "votos": 1691976,
+      "situacao": "ELEITO"
+    },
+    {
+      "uf": "AM",
+      "sq_candidato": "40001618514",
+      "nome": "OMAR AZIZ",
+      "nome_completo": "OMAR JOSÉ ABDEL AZIZ",
+      "partido": "PSD",
+      "campo": "centro",
+      "votos": 1568014,
+      "situacao": "ELEITO"
+    },
+    {
+      "uf": "AP",
+      "sq_candidato": "30001607748",
+      "nome": "DAVI",
+      "nome_completo": "DAVID SAMUEL ALCOLUMBRE TOBELEM",
+      "partido": "UNIÃO",
+      "campo": "centro-direita",
+      "votos": 392174,
+      "situacao": "ELEITO"
+    },
+    {
+      "uf": "BA",
+      "sq_candidato": "50001605790",
+      "nome": "OTTO ALENCAR",
+      "nome_completo": "OTTO ROBERTO MENDONCA DE ALENCAR",
+      "partido": "PSD",
+      "campo": "centro",
+      "votos": 8436666,
+      "situacao": "ELEITO"
+    },
+    {
+      "uf": "CE",
+      "sq_candidato": "60001633582",
+      "nome": "CAMILO",
+      "nome_completo": "CAMILO SOBREIRA DE SANTANA",
+      "partido": "PT",
+      "campo": "esquerda",
+      "votos": 6779026,
+      "situacao": "ELEITO"
+    },
+    {
+      "uf": "DF",
+      "sq_candidato": "70001677309",
+      "nome": "DAMARES ALVES",
+      "nome_completo": "DAMARES REGINA ALVES",
+      "partido": "REPUBLICANOS",
+      "campo": "direita",
+      "votos": 1429124,
+      "situacao": "ELEITO"
+    },
+    {
+      "uf": "ES",
+      "sq_candidato": "80001720164",
+      "nome": "MAGNO MALTA",
+      "nome_completo": "MAGNO PEREIRA MALTA",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 1642378,
+      "situacao": "ELEITO"
+    },
+    {
+      "uf": "GO",
+      "sq_candidato": "90001652051",
+      "nome": "WILDER MORAIS",
+      "nome_completo": "WILDER PEDRO DE MORAIS",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 1598044,
+      "situacao": "ELEITO"
+    },
+    {
+      "uf": "MA",
+      "sq_candidato": "100001607043",
+      "nome": "FLÁVIO DINO",
+      "nome_completo": "FLÁVIO DINO DE CASTRO E COSTA",
+      "partido": "PSB",
+      "campo": "esquerda",
+      "votos": 4251622,
+      "situacao": "ELEITO"
+    },
+    {
+      "uf": "MG",
+      "sq_candidato": "130001671677",
+      "nome": "CLEITINHO",
+      "nome_completo": "CLEITON GONTIJO DE AZEVEDO",
+      "partido": "PSC",
+      "campo": "indefinido",
+      "votos": 8536386,
+      "situacao": "ELEITO"
+    },
+    {
+      "uf": "MS",
+      "sq_candidato": "120001651640",
+      "nome": "TEREZA CRISTINA",
+      "nome_completo": "TEREZA CRISTINA CORREA DA COSTA DIAS",
+      "partido": "PP",
+      "campo": "centro-direita",
+      "votos": 1658298,
+      "situacao": "ELEITO"
+    },
+    {
+      "uf": "MT",
+      "sq_candidato": "110001676176",
+      "nome": "WELLINGTON FAGUNDES",
+      "nome_completo": "WELLINGTON ANTÔNIO FAGUNDES",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 1650458,
+      "situacao": "ELEITO"
+    },
+    {
+      "uf": "PA",
+      "sq_candidato": "140001611661",
+      "nome": "BETO FARO",
+      "nome_completo": "JOSÉ ROBERTO OLIVEIRA FARO",
+      "partido": "PT",
+      "campo": "esquerda",
+      "votos": 3563164,
+      "situacao": "ELEITO"
+    },
+    {
+      "uf": "PB",
+      "sq_candidato": "150001621390",
+      "nome": "EFRAIM FILHO",
+      "nome_completo": "EFRAIM DE ARAÚJO MORAIS FILHO",
+      "partido": "UNIÃO",
+      "campo": "centro-direita",
+      "votos": 1234954,
+      "situacao": "ELEITO"
+    },
+    {
+      "uf": "PE",
+      "sq_candidato": "170001618130",
+      "nome": "TERESA LEITÃO",
+      "nome_completo": "MARIA TERESA LEITÃO DE MELO",
+      "partido": "PT",
+      "campo": "esquerda",
+      "votos": 4122552,
+      "situacao": "ELEITO"
+    },
+    {
+      "uf": "PI",
+      "sq_candidato": "180001605662",
+      "nome": "WELLINGTON DIAS",
+      "nome_completo": "JOSE WELLINGTON BARROSO DE ARAUJO DIAS",
+      "partido": "PT",
+      "campo": "esquerda",
+      "votos": 1924388,
+      "situacao": "ELEITO"
+    },
+    {
+      "uf": "PR",
+      "sq_candidato": "160001621846",
+      "nome": "SERGIO MORO",
+      "nome_completo": "SERGIO FERNANDO MORO",
+      "partido": "UNIÃO",
+      "campo": "centro-direita",
+      "votos": 3906376,
+      "situacao": "ELEITO"
+    },
+    {
+      "uf": "RJ",
+      "sq_candidato": "190001612455",
+      "nome": "ROMÁRIO",
+      "nome_completo": "ROMÁRIO DE SOUZA FARIA",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 4768662,
+      "situacao": "ELEITO"
+    },
+    {
+      "uf": "RN",
+      "sq_candidato": "200001603037",
+      "nome": "ROGÉRIO MARINHO",
+      "nome_completo": "ROGÉRIO SIMONETTI MARINHO",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 1416702,
+      "situacao": "ELEITO"
+    },
+    {
+      "uf": "RO",
+      "sq_candidato": "220001713729",
+      "nome": "JAIME BAGATTOLI",
+      "nome_completo": "JAIME MAXIMINO BAGATTOLI",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 586976,
+      "situacao": "ELEITO"
+    },
+    {
+      "uf": "RR",
+      "sq_candidato": "230001604259",
+      "nome": "DR. HIRAN",
+      "nome_completo": "HIRAN MANUEL GONÇALVES DA SILVA",
+      "partido": "PP",
+      "campo": "centro-direita",
+      "votos": 237520,
+      "situacao": "ELEITO"
+    },
+    {
+      "uf": "RS",
+      "sq_candidato": "210001610438",
+      "nome": "HAMILTON MOURÃO",
+      "nome_completo": "ANTONIO HAMILTON MARTINS MOURÃO",
+      "partido": "REPUBLICANOS",
+      "campo": "direita",
+      "votos": 5186588,
+      "situacao": "ELEITO"
+    },
+    {
+      "uf": "SC",
+      "sq_candidato": "240001611131",
+      "nome": "JORGE SEIF",
+      "nome_completo": "JORGE SEIF JUNIOR",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 2968220,
+      "situacao": "ELEITO"
+    },
+    {
+      "uf": "SE",
+      "sq_candidato": "260001635426",
+      "nome": "LAÉRCIO",
+      "nome_completo": "LAERCIO JOSE DE OLIVEIRA",
+      "partido": "PP",
+      "campo": "centro-direita",
+      "votos": 620600,
+      "situacao": "ELEITO"
+    },
+    {
+      "uf": "SP",
+      "sq_candidato": "250001612472",
+      "nome": "ASTRONAUTA MARCOS PONTES",
+      "nome_completo": "MARCOS CESAR PONTES",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 21429826,
+      "situacao": "ELEITO"
+    },
+    {
+      "uf": "TO",
+      "sq_candidato": "270001649254",
+      "nome": "PROFESSORA DORINHA",
+      "nome_completo": "MARIA AUXILIADORA SEABRA REZENDE",
+      "partido": "UNIÃO",
+      "campo": "centro-direita",
+      "votos": 790816,
+      "situacao": "ELEITO"
+    }
+  ],
+  "senado_2027": {
+    "total": 81,
+    "continuam": 27,
+    "novos": 54,
+    "por_campo": {
+      "esquerda": 16,
+      "centro-esquerda": 1,
+      "centro": 12,
+      "centro-direita": 17,
+      "direita": 35,
+      "indefinido": 0
+    },
+    "por_bloco": {
+      "direita + centro-direita": 52,
+      "esquerda + centro-esquerda": 17,
+      "centro": 12,
+      "indefinido": 0
+    },
+    "continuam_por_campo": {
+      "esquerda": 5,
+      "centro-esquerda": 0,
+      "centro": 3,
+      "centro-direita": 8,
+      "direita": 11,
+      "indefinido": 0
+    },
+    "novos_por_campo": {
+      "esquerda": 11,
+      "centro-esquerda": 1,
+      "centro": 9,
+      "centro-direita": 9,
+      "direita": 24,
+      "indefinido": 0
+    },
+    "por_partido": {
+      "PL": 27,
+      "PT": 10,
+      "MDB": 8,
+      "UNIÃO": 8,
+      "PP": 6,
+      "REPUBLICANOS": 5,
+      "PSB": 4,
+      "PSD": 4,
+      "NOVO": 3,
+      "PODE": 2,
+      "PSDB": 2,
+      "PDT": 1,
+      "REDE": 1
+    },
+    "nota": "27 eleitos em 2022 (eleitos da urna, não titulares atuais; Cleitinho como direita e Republicanos por exceção declarada) mais 54 eleitos em 2026"
+  },
+  "comparacao_2023": {
+    "disponivel": false,
+    "nota": "analysis/senado_2026/ guarda só os 27 eleitos em 2022 (senadores_2022.json); não há a composição de 2023 com os 54 eleitos em 2018, então a comparação fica de fora"
+  },
+  "conferencia_versoes": [
+    {
+      "cargo": "governador",
+      "uf": "AL",
+      "secoes_no_boletim": 7097,
+      "secoes_na_ultima_versao": 7101,
+      "secoes_total": 7101,
+      "ultima_versao_gerada_brt": "2026-10-04 22:54:50"
+    }
+  ]
+}

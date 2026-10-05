@@ -1,0 +1,7367 @@
+{
+ "titulo": "O caminho do 2º turno",
+ "gerado_por": "scripts/apuracao-2026-estrategia.py",
+ "gerado_em": "2026-10-05T07:04:56+00:00",
+ "corte_captura": "última versão gravada",
+ "fontes": {
+  "banco": "apuracao/data/apuracao.sqlite",
+  "classificacao_campo": "apuracao/public/campos.json",
+  "resultado_2022_uf": "data/raw/tse_resultados/api_2022",
+  "resultado_2022_municipio": "data/outputs/estaduais2026/municipios.csv",
+  "governador_2022": "data/raw/tse_resultados/votacao_candidato_munzona_2022.zip",
+  "matriz_nexus": "docs/assets/voto_util_092026.json",
+  "matriz_datafolha": "docs/assets/datafolha_21092026_data.json",
+  "linhas_governador_datafolha": "docs/assets/datafolha_21092026_sudeste.json",
+  "congresso": "apuracao/data/boletins/final.json",
+  "central_da_casa": "docs/assets/predicao_2026_1T_presidente.json",
+  "erro_2022": "analysis/predicao_2026/erro_2022/erro_2022.json"
+ },
+ "aritmetica": {
+  "primeiro_turno": {
+   "eleitores": 158745502,
+   "comparecimento": 125275835,
+   "comparecimento_pct": 78.92,
+   "abstencao": 33469244,
+   "abstencao_pct": 21.08,
+   "validos": 119300788,
+   "brancos": 2300798,
+   "nulos": 3674249,
+   "brancos_nulos_pct_comparecimento": 4.77,
+   "flavio": 56104503,
+   "flavio_pct": 47.03,
+   "lula": 53879538,
+   "lula_pct": 45.16,
+   "diferenca_votos": 2224965,
+   "diferenca_pp": 1.87,
+   "terceiros": [
+    {
+     "nome": "ESCRITOR AUGUSTO CURY",
+     "numero": 70,
+     "partido": "AVANTE",
+     "campo": "centro",
+     "votos": 3448569,
+     "pct": 2.89,
+     "linha": "Cury",
+     "linha_propria": true
+    },
+    {
+     "nome": "RENAN SANTOS",
+     "numero": 14,
+     "partido": "MISSÃO",
+     "campo": "direita",
+     "votos": 2675887,
+     "pct": 2.24,
+     "linha": "Renan",
+     "linha_propria": true
+    },
+    {
+     "nome": "RONALDO CAIADO",
+     "numero": 55,
+     "partido": "PSD",
+     "campo": "centro",
+     "votos": 2605148,
+     "pct": 2.18,
+     "linha": "Caiado",
+     "linha_propria": true
+    },
+    {
+     "nome": "ZEMA",
+     "numero": 30,
+     "partido": "NOVO",
+     "campo": "direita",
+     "votos": 326488,
+     "pct": 0.27,
+     "linha": "Zema",
+     "linha_propria": true
+    },
+    {
+     "nome": "SAMARA",
+     "numero": 80,
+     "partido": "UP",
+     "campo": "esquerda",
+     "votos": 122911,
+     "pct": 0.1,
+     "linha": "Samara",
+     "linha_propria": true
+    },
+    {
+     "nome": "HERTZ DIAS",
+     "numero": 16,
+     "partido": "PSTU",
+     "campo": "esquerda",
+     "votos": 43103,
+     "pct": 0.04,
+     "linha": "Samara",
+     "linha_propria": false
+    },
+    {
+     "nome": "CLARIANA BARAO",
+     "numero": 27,
+     "partido": "DC",
+     "campo": "direita",
+     "votos": 40043,
+     "pct": 0.03,
+     "linha": "Zema",
+     "linha_propria": false
+    },
+    {
+     "nome": "EDMILSON COSTA",
+     "numero": 21,
+     "partido": "PCB",
+     "campo": "esquerda",
+     "votos": 22693,
+     "pct": 0.02,
+     "linha": "Samara",
+     "linha_propria": false
+    },
+    {
+     "nome": "VETERINÁRIO WILSON GRASSI",
+     "numero": 35,
+     "partido": "DEMOCRATA",
+     "campo": "direita",
+     "votos": 16881,
+     "pct": 0.01,
+     "linha": "Zema",
+     "linha_propria": false
+    },
+    {
+     "nome": "RUI COSTA PIMENTA",
+     "numero": 29,
+     "partido": "PCO",
+     "campo": "esquerda",
+     "votos": 15024,
+     "pct": 0.01,
+     "linha": "Samara",
+     "linha_propria": false
+    }
+   ],
+   "terceiros_total": 9316747,
+   "terceiros_pct": 7.81,
+   "snapshot_id": 513491,
+   "capturado_em": "2026-10-05T06:00:56.694Z",
+   "gerado_em_tse": "2026-10-05T05:59:31.000Z",
+   "secoes_totalizadas": 499248,
+   "secoes": 499248
+  },
+  "matrizes": {
+   "nexus": {
+    "fonte": "Nexus/BTG, 18 a 20/09/2026, p. 79",
+    "arquivo": "docs/assets/voto_util_092026.json → nacional.transferencia",
+    "linhas_publicadas": {
+     "Cury": {
+      "Lula": 30,
+      "Flávio": 44,
+      "Branco/nulo": 23,
+      "Indecisos": 2
+     },
+     "Caiado": {
+      "Lula": 36,
+      "Flávio": 30,
+      "Branco/nulo": 26,
+      "Indecisos": 7
+     },
+     "Renan": {
+      "Lula": 8,
+      "Flávio": 56,
+      "Branco/nulo": 37,
+      "Indecisos": 0
+     },
+     "Zema": {
+      "Lula": 13,
+      "Flávio": 59,
+      "Branco/nulo": 29,
+      "Indecisos": 0
+     },
+     "Samara": {
+      "Lula": 58,
+      "Flávio": 6,
+      "Branco/nulo": 36,
+      "Indecisos": 0
+     }
+    },
+    "linhas": {
+     "Cury": {
+      "flavio": 0.4444444444444444,
+      "lula": 0.30303030303030304,
+      "fora": 0.25252525252525254
+     },
+     "Caiado": {
+      "flavio": 0.30303030303030304,
+      "lula": 0.36363636363636365,
+      "fora": 0.33333333333333337
+     },
+     "Renan": {
+      "flavio": 0.5544554455445545,
+      "lula": 0.07920792079207921,
+      "fora": 0.3663366336633663
+     },
+     "Zema": {
+      "flavio": 0.5841584158415841,
+      "lula": 0.12871287128712872,
+      "fora": 0.28712871287128716
+     },
+     "Samara": {
+      "flavio": 0.06,
+      "lula": 0.58,
+      "fora": 0.36
+     }
+    }
+   },
+   "datafolha": {
+    "fonte": "Datafolha, BR-04029/2026, campo 15/09/2026 a 17/09/2026, p. 7",
+    "nota": "linhas medidas para Cury e Caiado; as demais vêm da Nexus",
+    "arquivo": "docs/assets/datafolha_21092026_data.json → transfer",
+    "linhas_publicadas": {
+     "Cury": {
+      "Lula": 32.0,
+      "Flávio": 44.0,
+      "Não escolha": 24.0
+     },
+     "Caiado": {
+      "Lula": 27.0,
+      "Flávio": 42.0,
+      "Não escolha": 31.0
+     }
+    },
+    "linhas": {
+     "Cury": {
+      "flavio": 0.44,
+      "lula": 0.32,
+      "fora": 0.24000000000000005
+     },
+     "Caiado": {
+      "flavio": 0.42,
+      "lula": 0.27,
+      "fora": 0.31000000000000005
+     },
+     "Renan": {
+      "flavio": 0.5544554455445545,
+      "lula": 0.07920792079207921,
+      "fora": 0.3663366336633663
+     },
+     "Zema": {
+      "flavio": 0.5841584158415841,
+      "lula": 0.12871287128712872,
+      "fora": 0.28712871287128716
+     },
+     "Samara": {
+      "flavio": 0.06,
+      "lula": 0.58,
+      "fora": 0.36
+     }
+    }
+   }
+  },
+  "hipoteses": {
+   "fica_fora": "Só o medido: a parcela da linha que não escolhe Lula nem Flávio (branco, nulo e indecisos) não vira voto válido no 2º turno.",
+   "proporcional": "A parcela sem escolha vota na mesma proporção Flávio:Lula que a própria linha mediu.",
+   "meio_a_meio": "A parcela sem escolha divide-se meio a meio entre Flávio e Lula."
+  },
+  "projecoes": [
+   {
+    "hipotese": "fica_fora",
+    "flavio": 60146496,
+    "lula": 56251351,
+    "validos": 116397847,
+    "flavio_pct": 51.67,
+    "lula_pct": 48.33,
+    "margem_votos": 3895146,
+    "margem_pp": 3.35,
+    "ganho_flavio": 4041993,
+    "ganho_lula": 2371813,
+    "detalhe": [
+     {
+      "origem": "ESCRITOR AUGUSTO CURY",
+      "votos_1t": 3448569,
+      "para_flavio": 1532697,
+      "para_lula": 1045021,
+      "fora": 870851,
+      "saldo_flavio": 487676
+     },
+     {
+      "origem": "RENAN SANTOS",
+      "votos_1t": 2675887,
+      "para_flavio": 1483660,
+      "para_lula": 211951,
+      "fora": 980275,
+      "saldo_flavio": 1271709
+     },
+     {
+      "origem": "RONALDO CAIADO",
+      "votos_1t": 2605148,
+      "para_flavio": 789439,
+      "para_lula": 947327,
+      "fora": 868383,
+      "saldo_flavio": -157888
+     },
+     {
+      "origem": "ZEMA",
+      "votos_1t": 326488,
+      "para_flavio": 190721,
+      "para_lula": 42023,
+      "fora": 93744,
+      "saldo_flavio": 148698
+     },
+     {
+      "origem": "SAMARA",
+      "votos_1t": 122911,
+      "para_flavio": 7375,
+      "para_lula": 71288,
+      "fora": 44248,
+      "saldo_flavio": -63914
+     },
+     {
+      "origem": "HERTZ DIAS",
+      "votos_1t": 43103,
+      "para_flavio": 2586,
+      "para_lula": 25000,
+      "fora": 15517,
+      "saldo_flavio": -22414
+     },
+     {
+      "origem": "CLARIANA BARAO",
+      "votos_1t": 40043,
+      "para_flavio": 23391,
+      "para_lula": 5154,
+      "fora": 11497,
+      "saldo_flavio": 18237
+     },
+     {
+      "origem": "EDMILSON COSTA",
+      "votos_1t": 22693,
+      "para_flavio": 1362,
+      "para_lula": 13162,
+      "fora": 8169,
+      "saldo_flavio": -11800
+     },
+     {
+      "origem": "VETERINÁRIO WILSON GRASSI",
+      "votos_1t": 16881,
+      "para_flavio": 9861,
+      "para_lula": 2173,
+      "fora": 4847,
+      "saldo_flavio": 7688
+     },
+     {
+      "origem": "RUI COSTA PIMENTA",
+      "votos_1t": 15024,
+      "para_flavio": 901,
+      "para_lula": 8714,
+      "fora": 5409,
+      "saldo_flavio": -7812
+     }
+    ],
+    "matriz": "nexus"
+   },
+   {
+    "hipotese": "proporcional",
+    "flavio": 62013847,
+    "lula": 57286941,
+    "validos": 119300788,
+    "flavio_pct": 51.98,
+    "lula_pct": 48.02,
+    "margem_votos": 4726907,
+    "margem_pp": 3.96,
+    "ganho_flavio": 5909344,
+    "ganho_lula": 3407403,
+    "detalhe": [
+     {
+      "origem": "ESCRITOR AUGUSTO CURY",
+      "votos_1t": 3448569,
+      "para_flavio": 2050500,
+      "para_lula": 1398069,
+      "fora": 0,
+      "saldo_flavio": 652432
+     },
+     {
+      "origem": "RENAN SANTOS",
+      "votos_1t": 2675887,
+      "para_flavio": 2341401,
+      "para_lula": 334486,
+      "fora": 0,
+      "saldo_flavio": 2006915
+     },
+     {
+      "origem": "RONALDO CAIADO",
+      "votos_1t": 2605148,
+      "para_flavio": 1184158,
+      "para_lula": 1420990,
+      "fora": 0,
+      "saldo_flavio": -236832
+     },
+     {
+      "origem": "ZEMA",
+      "votos_1t": 326488,
+      "para_flavio": 267539,
+      "para_lula": 58949,
+      "fora": 0,
+      "saldo_flavio": 208590
+     },
+     {
+      "origem": "SAMARA",
+      "votos_1t": 122911,
+      "para_flavio": 11523,
+      "para_lula": 111388,
+      "fora": 0,
+      "saldo_flavio": -99865
+     },
+     {
+      "origem": "HERTZ DIAS",
+      "votos_1t": 43103,
+      "para_flavio": 4041,
+      "para_lula": 39062,
+      "fora": 0,
+      "saldo_flavio": -35021
+     },
+     {
+      "origem": "CLARIANA BARAO",
+      "votos_1t": 40043,
+      "para_flavio": 32813,
+      "para_lula": 7230,
+      "fora": 0,
+      "saldo_flavio": 25583
+     },
+     {
+      "origem": "EDMILSON COSTA",
+      "votos_1t": 22693,
+      "para_flavio": 2127,
+      "para_lula": 20566,
+      "fora": 0,
+      "saldo_flavio": -18438
+     },
+     {
+      "origem": "VETERINÁRIO WILSON GRASSI",
+      "votos_1t": 16881,
+      "para_flavio": 13833,
+      "para_lula": 3048,
+      "fora": 0,
+      "saldo_flavio": 10785
+     },
+     {
+      "origem": "RUI COSTA PIMENTA",
+      "votos_1t": 15024,
+      "para_flavio": 1408,
+      "para_lula": 13616,
+      "fora": 0,
+      "saldo_flavio": -12207
+     }
+    ],
+    "matriz": "nexus"
+   },
+   {
+    "hipotese": "meio_a_meio",
+    "flavio": 61597967,
+    "lula": 57702821,
+    "validos": 119300788,
+    "flavio_pct": 51.63,
+    "lula_pct": 48.37,
+    "margem_votos": 3895146,
+    "margem_pp": 3.26,
+    "ganho_flavio": 5493464,
+    "ganho_lula": 3823283,
+    "detalhe": [
+     {
+      "origem": "ESCRITOR AUGUSTO CURY",
+      "votos_1t": 3448569,
+      "para_flavio": 1968123,
+      "para_lula": 1480446,
+      "fora": 0,
+      "saldo_flavio": 487676
+     },
+     {
+      "origem": "RENAN SANTOS",
+      "votos_1t": 2675887,
+      "para_flavio": 1973798,
+      "para_lula": 702089,
+      "fora": 0,
+      "saldo_flavio": 1271709
+     },
+     {
+      "origem": "RONALDO CAIADO",
+      "votos_1t": 2605148,
+      "para_flavio": 1223630,
+      "para_lula": 1381518,
+      "fora": 0,
+      "saldo_flavio": -157888
+     },
+     {
+      "origem": "ZEMA",
+      "votos_1t": 326488,
+      "para_flavio": 237593,
+      "para_lula": 88895,
+      "fora": 0,
+      "saldo_flavio": 148698
+     },
+     {
+      "origem": "SAMARA",
+      "votos_1t": 122911,
+      "para_flavio": 29499,
+      "para_lula": 93412,
+      "fora": 0,
+      "saldo_flavio": -63914
+     },
+     {
+      "origem": "HERTZ DIAS",
+      "votos_1t": 43103,
+      "para_flavio": 10345,
+      "para_lula": 32758,
+      "fora": 0,
+      "saldo_flavio": -22414
+     },
+     {
+      "origem": "CLARIANA BARAO",
+      "votos_1t": 40043,
+      "para_flavio": 29140,
+      "para_lula": 10903,
+      "fora": 0,
+      "saldo_flavio": 18237
+     },
+     {
+      "origem": "EDMILSON COSTA",
+      "votos_1t": 22693,
+      "para_flavio": 5446,
+      "para_lula": 17247,
+      "fora": 0,
+      "saldo_flavio": -11800
+     },
+     {
+      "origem": "VETERINÁRIO WILSON GRASSI",
+      "votos_1t": 16881,
+      "para_flavio": 12285,
+      "para_lula": 4596,
+      "fora": 0,
+      "saldo_flavio": 7688
+     },
+     {
+      "origem": "RUI COSTA PIMENTA",
+      "votos_1t": 15024,
+      "para_flavio": 3606,
+      "para_lula": 11418,
+      "fora": 0,
+      "saldo_flavio": -7812
+     }
+    ],
+    "matriz": "nexus"
+   },
+   {
+    "hipotese": "fica_fora",
+    "flavio": 60435893,
+    "lula": 56065936,
+    "validos": 116501828,
+    "flavio_pct": 51.88,
+    "lula_pct": 48.12,
+    "margem_votos": 4369957,
+    "margem_pp": 3.75,
+    "ganho_flavio": 4331390,
+    "ganho_lula": 2186398,
+    "detalhe": [
+     {
+      "origem": "ESCRITOR AUGUSTO CURY",
+      "votos_1t": 3448569,
+      "para_flavio": 1517370,
+      "para_lula": 1103542,
+      "fora": 827657,
+      "saldo_flavio": 413828
+     },
+     {
+      "origem": "RENAN SANTOS",
+      "votos_1t": 2675887,
+      "para_flavio": 1483660,
+      "para_lula": 211951,
+      "fora": 980275,
+      "saldo_flavio": 1271709
+     },
+     {
+      "origem": "RONALDO CAIADO",
+      "votos_1t": 2605148,
+      "para_flavio": 1094162,
+      "para_lula": 703390,
+      "fora": 807596,
+      "saldo_flavio": 390772
+     },
+     {
+      "origem": "ZEMA",
+      "votos_1t": 326488,
+      "para_flavio": 190721,
+      "para_lula": 42023,
+      "fora": 93744,
+      "saldo_flavio": 148698
+     },
+     {
+      "origem": "SAMARA",
+      "votos_1t": 122911,
+      "para_flavio": 7375,
+      "para_lula": 71288,
+      "fora": 44248,
+      "saldo_flavio": -63914
+     },
+     {
+      "origem": "HERTZ DIAS",
+      "votos_1t": 43103,
+      "para_flavio": 2586,
+      "para_lula": 25000,
+      "fora": 15517,
+      "saldo_flavio": -22414
+     },
+     {
+      "origem": "CLARIANA BARAO",
+      "votos_1t": 40043,
+      "para_flavio": 23391,
+      "para_lula": 5154,
+      "fora": 11497,
+      "saldo_flavio": 18237
+     },
+     {
+      "origem": "EDMILSON COSTA",
+      "votos_1t": 22693,
+      "para_flavio": 1362,
+      "para_lula": 13162,
+      "fora": 8169,
+      "saldo_flavio": -11800
+     },
+     {
+      "origem": "VETERINÁRIO WILSON GRASSI",
+      "votos_1t": 16881,
+      "para_flavio": 9861,
+      "para_lula": 2173,
+      "fora": 4847,
+      "saldo_flavio": 7688
+     },
+     {
+      "origem": "RUI COSTA PIMENTA",
+      "votos_1t": 15024,
+      "para_flavio": 901,
+      "para_lula": 8714,
+      "fora": 5409,
+      "saldo_flavio": -7812
+     }
+    ],
+    "matriz": "datafolha"
+   },
+   {
+    "hipotese": "proporcional",
+    "flavio": 62361471,
+    "lula": 56939317,
+    "validos": 119300788,
+    "flavio_pct": 52.27,
+    "lula_pct": 47.73,
+    "margem_votos": 5422154,
+    "margem_pp": 4.54,
+    "ganho_flavio": 6256968,
+    "ganho_lula": 3059779,
+    "detalhe": [
+     {
+      "origem": "ESCRITOR AUGUSTO CURY",
+      "votos_1t": 3448569,
+      "para_flavio": 1996540,
+      "para_lula": 1452029,
+      "fora": 0,
+      "saldo_flavio": 544511
+     },
+     {
+      "origem": "RENAN SANTOS",
+      "votos_1t": 2675887,
+      "para_flavio": 2341401,
+      "para_lula": 334486,
+      "fora": 0,
+      "saldo_flavio": 2006915
+     },
+     {
+      "origem": "RONALDO CAIADO",
+      "votos_1t": 2605148,
+      "para_flavio": 1585742,
+      "para_lula": 1019406,
+      "fora": 0,
+      "saldo_flavio": 566337
+     },
+     {
+      "origem": "ZEMA",
+      "votos_1t": 326488,
+      "para_flavio": 267539,
+      "para_lula": 58949,
+      "fora": 0,
+      "saldo_flavio": 208590
+     },
+     {
+      "origem": "SAMARA",
+      "votos_1t": 122911,
+      "para_flavio": 11523,
+      "para_lula": 111388,
+      "fora": 0,
+      "saldo_flavio": -99865
+     },
+     {
+      "origem": "HERTZ DIAS",
+      "votos_1t": 43103,
+      "para_flavio": 4041,
+      "para_lula": 39062,
+      "fora": 0,
+      "saldo_flavio": -35021
+     },
+     {
+      "origem": "CLARIANA BARAO",
+      "votos_1t": 40043,
+      "para_flavio": 32813,
+      "para_lula": 7230,
+      "fora": 0,
+      "saldo_flavio": 25583
+     },
+     {
+      "origem": "EDMILSON COSTA",
+      "votos_1t": 22693,
+      "para_flavio": 2127,
+      "para_lula": 20566,
+      "fora": 0,
+      "saldo_flavio": -18438
+     },
+     {
+      "origem": "VETERINÁRIO WILSON GRASSI",
+      "votos_1t": 16881,
+      "para_flavio": 13833,
+      "para_lula": 3048,
+      "fora": 0,
+      "saldo_flavio": 10785
+     },
+     {
+      "origem": "RUI COSTA PIMENTA",
+      "votos_1t": 15024,
+      "para_flavio": 1408,
+      "para_lula": 13616,
+      "fora": 0,
+      "saldo_flavio": -12207
+     }
+    ],
+    "matriz": "datafolha"
+   },
+   {
+    "hipotese": "meio_a_meio",
+    "flavio": 61835373,
+    "lula": 57465415,
+    "validos": 119300788,
+    "flavio_pct": 51.83,
+    "lula_pct": 48.17,
+    "margem_votos": 4369957,
+    "margem_pp": 3.66,
+    "ganho_flavio": 5730870,
+    "ganho_lula": 3585877,
+    "detalhe": [
+     {
+      "origem": "ESCRITOR AUGUSTO CURY",
+      "votos_1t": 3448569,
+      "para_flavio": 1931199,
+      "para_lula": 1517370,
+      "fora": 0,
+      "saldo_flavio": 413828
+     },
+     {
+      "origem": "RENAN SANTOS",
+      "votos_1t": 2675887,
+      "para_flavio": 1973798,
+      "para_lula": 702089,
+      "fora": 0,
+      "saldo_flavio": 1271709
+     },
+     {
+      "origem": "RONALDO CAIADO",
+      "votos_1t": 2605148,
+      "para_flavio": 1497960,
+      "para_lula": 1107188,
+      "fora": 0,
+      "saldo_flavio": 390772
+     },
+     {
+      "origem": "ZEMA",
+      "votos_1t": 326488,
+      "para_flavio": 237593,
+      "para_lula": 88895,
+      "fora": 0,
+      "saldo_flavio": 148698
+     },
+     {
+      "origem": "SAMARA",
+      "votos_1t": 122911,
+      "para_flavio": 29499,
+      "para_lula": 93412,
+      "fora": 0,
+      "saldo_flavio": -63914
+     },
+     {
+      "origem": "HERTZ DIAS",
+      "votos_1t": 43103,
+      "para_flavio": 10345,
+      "para_lula": 32758,
+      "fora": 0,
+      "saldo_flavio": -22414
+     },
+     {
+      "origem": "CLARIANA BARAO",
+      "votos_1t": 40043,
+      "para_flavio": 29140,
+      "para_lula": 10903,
+      "fora": 0,
+      "saldo_flavio": 18237
+     },
+     {
+      "origem": "EDMILSON COSTA",
+      "votos_1t": 22693,
+      "para_flavio": 5446,
+      "para_lula": 17247,
+      "fora": 0,
+      "saldo_flavio": -11800
+     },
+     {
+      "origem": "VETERINÁRIO WILSON GRASSI",
+      "votos_1t": 16881,
+      "para_flavio": 12285,
+      "para_lula": 4596,
+      "fora": 0,
+      "saldo_flavio": 7688
+     },
+     {
+      "origem": "RUI COSTA PIMENTA",
+      "votos_1t": 15024,
+      "para_flavio": 3606,
+      "para_lula": 11418,
+      "fora": 0,
+      "saldo_flavio": -7812
+     }
+    ],
+    "matriz": "datafolha"
+   }
+  ],
+  "equilibrio": {
+   "diferenca_1t": 2224965,
+   "lula_precisa_se_todos_votarem_pct": 61.94,
+   "lula_precisa_entre_quem_escolhe_pct": 67.35,
+   "terceiros_que_escolhem_nexus": 6413806,
+   "terceiros_que_escolhem_nexus_pct": 68.84,
+   "lula_medido_entre_quem_escolhe_pct": 36.98,
+   "saldo_que_lula_precisa_tirar_votos": 2224965,
+   "saldo_que_lula_precisa_pct_terceiros": 23.88,
+   "eleitores_novos_para_empatar": [
+    {
+     "matriz": "nexus",
+     "hipotese": "fica_fora",
+     "lula_55": 38951460,
+     "lula_60": 19475730,
+     "lula_65": 12983820,
+     "lula_70": 9737865
+    },
+    {
+     "matriz": "nexus",
+     "hipotese": "proporcional",
+     "lula_55": 47269070,
+     "lula_60": 23634535,
+     "lula_65": 15756357,
+     "lula_70": 11817268
+    },
+    {
+     "matriz": "nexus",
+     "hipotese": "meio_a_meio",
+     "lula_55": 38951460,
+     "lula_60": 19475730,
+     "lula_65": 12983820,
+     "lula_70": 9737865
+    },
+    {
+     "matriz": "datafolha",
+     "hipotese": "fica_fora",
+     "lula_55": 43699570,
+     "lula_60": 21849785,
+     "lula_65": 14566523,
+     "lula_70": 10924893
+    },
+    {
+     "matriz": "datafolha",
+     "hipotese": "proporcional",
+     "lula_55": 54221540,
+     "lula_60": 27110770,
+     "lula_65": 18073847,
+     "lula_70": 13555385
+    },
+    {
+     "matriz": "datafolha",
+     "hipotese": "meio_a_meio",
+     "lula_55": 43699570,
+     "lula_60": 21849785,
+     "lula_65": 14566523,
+     "lula_70": 10924893
+    }
+   ],
+   "abstencao_1t": 33469244,
+   "nao_escolha_toda_para_lula": {
+    "nexus": {
+     "nao_escolha_votos": 2902940,
+     "margem_flavio_se_toda_for_lula": 992206
+    },
+    "datafolha": {
+     "nao_escolha_votos": 2798959,
+     "margem_flavio_se_toda_for_lula": 1570998
+    }
+   },
+   "base_flavio_trocando_para_lula_pct": 3.47,
+   "base_flavio_abstendo_pct": 6.94
+  },
+  "analogo_2022": {
+   "nacional": {
+    "taxa_flavio": 0.7208,
+    "taxa_lula": 0.3118,
+    "flavio": 62819661,
+    "lula": 56784819,
+    "flavio_pct": 52.52,
+    "margem_votos": 6034842
+   },
+   "por_uf": {
+    "flavio": 62966276,
+    "lula": 56753004,
+    "flavio_pct": 52.59,
+    "margem_votos": 6213272,
+    "ufs": [
+     {
+      "uf": "SP",
+      "taxa_flavio": 0.6755,
+      "taxa_lula": 0.3519,
+      "saldo_flavio": 794430
+     },
+     {
+      "uf": "MG",
+      "taxa_flavio": 0.9254,
+      "taxa_lula": 0.3984,
+      "saldo_flavio": 532075
+     },
+     {
+      "uf": "PR",
+      "taxa_flavio": 0.9236,
+      "taxa_lula": 0.249,
+      "saldo_flavio": 394796
+     },
+     {
+      "uf": "RS",
+      "taxa_flavio": 0.833,
+      "taxa_lula": 0.1453,
+      "saldo_flavio": 381287
+     },
+     {
+      "uf": "GO",
+      "taxa_flavio": 0.89,
+      "taxa_lula": 0.2851,
+      "saldo_flavio": 355144
+     },
+     {
+      "uf": "SC",
+      "taxa_flavio": 0.9884,
+      "taxa_lula": 0.2034,
+      "saldo_flavio": 293354
+     },
+     {
+      "uf": "RJ",
+      "taxa_flavio": 0.7358,
+      "taxa_lula": 0.3971,
+      "saldo_flavio": 240392
+     },
+     {
+      "uf": "MT",
+      "taxa_flavio": 1.0714,
+      "taxa_lula": 0.1791,
+      "saldo_flavio": 100851
+     },
+     {
+      "uf": "PE",
+      "taxa_flavio": 0.639,
+      "taxa_lula": 0.3144,
+      "saldo_flavio": 100296
+     },
+     {
+      "uf": "PA",
+      "taxa_flavio": 0.5383,
+      "taxa_lula": 0.1859,
+      "saldo_flavio": 95836
+     },
+     {
+      "uf": "ES",
+      "taxa_flavio": 0.7457,
+      "taxa_lula": 0.1797,
+      "saldo_flavio": 95019
+     },
+     {
+      "uf": "AM",
+      "taxa_flavio": 0.5201,
+      "taxa_lula": -0.0937,
+      "saldo_flavio": 90227
+     },
+     {
+      "uf": "BA",
+      "taxa_flavio": 0.616,
+      "taxa_lula": 0.4474,
+      "saldo_flavio": 76367
+     },
+     {
+      "uf": "MS",
+      "taxa_flavio": 0.6942,
+      "taxa_lula": 0.0902,
+      "saldo_flavio": 60445
+     },
+     {
+      "uf": "RO",
+      "taxa_flavio": 0.8629,
+      "taxa_lula": 0.0192,
+      "saldo_flavio": 54339
+     },
+     {
+      "uf": "DF",
+      "taxa_flavio": 0.6461,
+      "taxa_lula": 0.3936,
+      "saldo_flavio": 47365
+     },
+     {
+      "uf": "AL",
+      "taxa_flavio": 0.5159,
+      "taxa_lula": 0.0208,
+      "saldo_flavio": 43406
+     },
+     {
+      "uf": "TO",
+      "taxa_flavio": 0.6721,
+      "taxa_lula": 0.006,
+      "saldo_flavio": 38046
+     },
+     {
+      "uf": "PB",
+      "taxa_flavio": 0.5695,
+      "taxa_lula": 0.3152,
+      "saldo_flavio": 35925
+     },
+     {
+      "uf": "MA",
+      "taxa_flavio": 0.5089,
+      "taxa_lula": 0.3343,
+      "saldo_flavio": 35796
+     },
+     {
+      "uf": "RN",
+      "taxa_flavio": 0.7366,
+      "taxa_lula": 0.5202,
+      "saldo_flavio": 24548
+     },
+     {
+      "uf": "PI",
+      "taxa_flavio": 0.5036,
+      "taxa_lula": 0.2793,
+      "saldo_flavio": 23693
+     },
+     {
+      "uf": "CE",
+      "taxa_flavio": 0.5425,
+      "taxa_lula": 0.4852,
+      "saldo_flavio": 17521
+     },
+     {
+      "uf": "AP",
+      "taxa_flavio": 0.2741,
+      "taxa_lula": -0.1583,
+      "saldo_flavio": 17328
+     },
+     {
+      "uf": "AC",
+      "taxa_flavio": 0.3351,
+      "taxa_lula": -0.2053,
+      "saldo_flavio": 17017
+     },
+     {
+      "uf": "SE",
+      "taxa_flavio": 0.4662,
+      "taxa_lula": 0.3758,
+      "saldo_flavio": 8172
+     },
+     {
+      "uf": "ZZ",
+      "taxa_flavio": 0.6874,
+      "taxa_lula": 0.4228,
+      "saldo_flavio": 7831
+     },
+     {
+      "uf": "RR",
+      "taxa_flavio": 0.2693,
+      "taxa_lula": -0.0741,
+      "saldo_flavio": 6801
+     }
+    ]
+   },
+   "entre_turnos_2022": {
+    "comparecimento_1t": 123682372,
+    "comparecimento_2t": 124252796,
+    "variacao_votos": 570424,
+    "variacao_pp": 0.36,
+    "ganho_bolsonaro": 7134009,
+    "ganho_lula": 3086495,
+    "brancos_nulos_1t": 5452653,
+    "brancos_nulos_2t": 5700443,
+    "terceiros_1t": 9897870,
+    "diferenca_1t": 6187159,
+    "diferenca_2t": 2139645,
+    "arquivos": [
+     "data/raw/tse_resultados/api_2022/br-c0001-e000544-r.json",
+     "data/raw/tse_resultados/api_2022/br-c0001-e000545-r.json"
+    ]
+   }
+  }
+ },
+ "geografia": {
+  "metodo_estoque": "Estoque de Flávio = votos de Bolsonaro no 2º turno de 2022 × max(0; 1 − parcela de Flávio nos válidos do 1º turno de 2026 ÷ parcela de Bolsonaro nos válidos do 2º turno de 2022), por UF e por município. Mede, na escala do voto de 2022, a distância de parcela que falta. Não identifica eleitor; onde Flávio já passou de Bolsonaro o estoque é zero e o excedente não compensa outro lugar, por isso a soma municipal é maior que a estadual. O mesmo cálculo com Lula de 2022 dá o estoque de Lula.",
+  "ufs": [
+   {
+    "uf": "AC",
+    "regiao": "Norte",
+    "eleitores_2026": 613742,
+    "comparecimento_2026_pct": 79.57,
+    "comparecimento_2022_1t_pct": 77.57,
+    "comparecimento_2022_2t_pct": 71.59,
+    "validos_2026": 469066,
+    "flavio": 302807,
+    "flavio_pct": 64.56,
+    "lula": 134770,
+    "lula_pct": 28.73,
+    "terceiros": 31489,
+    "terceiros_pct": 6.71,
+    "margem_votos": 168037,
+    "margem_pp": 35.82,
+    "bolsonaro_2022_1t": 275582,
+    "bolsonaro_2022_1t_pct": 62.5,
+    "bolsonaro_2022_2t": 287750,
+    "bolsonaro_2022_2t_pct": 70.3,
+    "lula_2022_1t": 129022,
+    "lula_2022_1t_pct": 29.26,
+    "lula_2022_2t": 121566,
+    "lula_2022_2t_pct": 29.7,
+    "flavio_menos_bolsonaro_1t_pp": 2.05,
+    "flavio_menos_bolsonaro_2t_pp": -5.74,
+    "flavio_menos_bolsonaro_2t_votos": 15057,
+    "lula_menos_lula_2022_1t_pp": -0.53,
+    "lula_menos_lula_2022_1t_votos": 5748,
+    "lula_menos_lula_2022_2t_pp": -0.97,
+    "ja_supera_bolsonaro_2t": false,
+    "estoque_flavio": 23515,
+    "estoque_lula": 3963,
+    "deficit_votos_flavio": 0
+   },
+   {
+    "uf": "AL",
+    "regiao": "Nordeste",
+    "eleitores_2026": 2442126,
+    "comparecimento_2026_pct": 79.37,
+    "comparecimento_2022_1t_pct": 77.63,
+    "comparecimento_2022_2t_pct": 76.75,
+    "validos_2026": 1818856,
+    "flavio": 735718,
+    "flavio_pct": 40.45,
+    "lula": 995459,
+    "lula_pct": 54.73,
+    "terceiros": 87679,
+    "terceiros_pct": 4.82,
+    "margem_votos": -259741,
+    "margem_pp": -14.28,
+    "bolsonaro_2022_1t": 621515,
+    "bolsonaro_2022_1t_pct": 36.05,
+    "bolsonaro_2022_2t": 687827,
+    "bolsonaro_2022_2t_pct": 41.32,
+    "lula_2022_1t": 974156,
+    "lula_2022_1t_pct": 56.5,
+    "lula_2022_2t": 976831,
+    "lula_2022_2t_pct": 58.68,
+    "flavio_menos_bolsonaro_1t_pp": 4.4,
+    "flavio_menos_bolsonaro_2t_pp": -0.87,
+    "flavio_menos_bolsonaro_2t_votos": 47891,
+    "lula_menos_lula_2022_1t_pp": -1.77,
+    "lula_menos_lula_2022_1t_votos": 21303,
+    "lula_menos_lula_2022_2t_pp": -3.95,
+    "ja_supera_bolsonaro_2t": false,
+    "estoque_flavio": 14481,
+    "estoque_lula": 65764,
+    "deficit_votos_flavio": 0
+   },
+   {
+    "uf": "AM",
+    "regiao": "Norte",
+    "eleitores_2026": 2798611,
+    "comparecimento_2026_pct": 79.84,
+    "comparecimento_2022_1t_pct": 79.86,
+    "comparecimento_2022_2t_pct": 78.12,
+    "validos_2026": 2170763,
+    "flavio": 976764,
+    "flavio_pct": 45.0,
+    "lula": 1046996,
+    "lula_pct": 48.23,
+    "terceiros": 147003,
+    "terceiros_pct": 6.77,
+    "margem_votos": -70232,
+    "margem_pp": -3.24,
+    "bolsonaro_2022_1t": 880198,
+    "bolsonaro_2022_1t_pct": 42.8,
+    "bolsonaro_2022_2t": 961741,
+    "bolsonaro_2022_2t_pct": 48.9,
+    "lula_2022_1t": 1019684,
+    "lula_2022_1t_pct": 49.58,
+    "lula_2022_2t": 1004991,
+    "lula_2022_2t_pct": 51.1,
+    "flavio_menos_bolsonaro_1t_pp": 2.2,
+    "flavio_menos_bolsonaro_2t_pp": -3.9,
+    "flavio_menos_bolsonaro_2t_votos": 15023,
+    "lula_menos_lula_2022_1t_pp": -1.35,
+    "lula_menos_lula_2022_1t_votos": 27312,
+    "lula_menos_lula_2022_2t_pp": -2.87,
+    "ja_supera_bolsonaro_2t": false,
+    "estoque_flavio": 76783,
+    "estoque_lula": 56403,
+    "deficit_votos_flavio": 0
+   },
+   {
+    "uf": "AP",
+    "regiao": "Norte",
+    "eleitores_2026": 576988,
+    "comparecimento_2026_pct": 82.59,
+    "comparecimento_2022_1t_pct": 80.49,
+    "comparecimento_2022_2t_pct": 72.83,
+    "validos_2026": 464858,
+    "flavio": 212278,
+    "flavio_pct": 45.67,
+    "lula": 212503,
+    "lula_pct": 45.71,
+    "terceiros": 40077,
+    "terceiros_pct": 8.62,
+    "margem_votos": -225,
+    "margem_pp": -0.05,
+    "bolsonaro_2022_1t": 187621,
+    "bolsonaro_2022_1t_pct": 43.41,
+    "bolsonaro_2022_2t": 200547,
+    "bolsonaro_2022_2t_pct": 51.36,
+    "lula_2022_1t": 197382,
+    "lula_2022_1t_pct": 45.67,
+    "lula_2022_2t": 189918,
+    "lula_2022_2t_pct": 48.64,
+    "flavio_menos_bolsonaro_1t_pp": 2.25,
+    "flavio_menos_bolsonaro_2t_pp": -5.7,
+    "flavio_menos_bolsonaro_2t_votos": 11731,
+    "lula_menos_lula_2022_1t_pp": 0.04,
+    "lula_menos_lula_2022_1t_votos": 15121,
+    "lula_menos_lula_2022_2t_pp": -2.93,
+    "ja_supera_bolsonaro_2t": false,
+    "estoque_flavio": 22241,
+    "estoque_lula": 11423,
+    "deficit_votos_flavio": 0
+   },
+   {
+    "uf": "BA",
+    "regiao": "Nordeste",
+    "eleitores_2026": 11312752,
+    "comparecimento_2026_pct": 80.03,
+    "comparecimento_2022_1t_pct": 78.65,
+    "comparecimento_2022_2t_pct": 79.52,
+    "validos_2026": 8560291,
+    "flavio": 2442585,
+    "flavio_pct": 28.53,
+    "lula": 5664771,
+    "lula_pct": 66.17,
+    "terceiros": 452935,
+    "terceiros_pct": 5.29,
+    "margem_votos": -3222186,
+    "margem_pp": -37.64,
+    "bolsonaro_2022_1t": 2047599,
+    "bolsonaro_2022_1t_pct": 24.31,
+    "bolsonaro_2022_2t": 2357028,
+    "bolsonaro_2022_2t_pct": 27.88,
+    "lula_2022_1t": 5873081,
+    "lula_2022_1t_pct": 69.73,
+    "lula_2022_2t": 6097815,
+    "lula_2022_2t_pct": 72.12,
+    "flavio_menos_bolsonaro_1t_pp": 4.22,
+    "flavio_menos_bolsonaro_2t_pp": 0.66,
+    "flavio_menos_bolsonaro_2t_votos": 85557,
+    "lula_menos_lula_2022_1t_pp": -3.55,
+    "lula_menos_lula_2022_1t_votos": -208310,
+    "lula_menos_lula_2022_2t_pp": -5.95,
+    "ja_supera_bolsonaro_2t": true,
+    "estoque_flavio": 0,
+    "estoque_lula": 502824,
+    "deficit_votos_flavio": 0
+   },
+   {
+    "uf": "CE",
+    "regiao": "Nordeste",
+    "eleitores_2026": 6996545,
+    "comparecimento_2026_pct": 84.48,
+    "comparecimento_2022_1t_pct": 82.55,
+    "comparecimento_2022_2t_pct": 82.86,
+    "validos_2026": 5617814,
+    "flavio": 1756850,
+    "flavio_pct": 31.27,
+    "lula": 3555263,
+    "lula_pct": 63.29,
+    "terceiros": 305701,
+    "terceiros_pct": 5.44,
+    "margem_votos": -1798413,
+    "margem_pp": -32.01,
+    "bolsonaro_2022_1t": 1377827,
+    "bolsonaro_2022_1t_pct": 25.38,
+    "bolsonaro_2022_2t": 1634477,
+    "bolsonaro_2022_2t_pct": 30.03,
+    "lula_2022_1t": 3578355,
+    "lula_2022_1t_pct": 65.91,
+    "lula_2022_2t": 3807891,
+    "lula_2022_2t_pct": 69.97,
+    "flavio_menos_bolsonaro_1t_pp": 5.9,
+    "flavio_menos_bolsonaro_2t_pp": 1.24,
+    "flavio_menos_bolsonaro_2t_votos": 122373,
+    "lula_menos_lula_2022_1t_pp": -2.62,
+    "lula_menos_lula_2022_1t_votos": -23092,
+    "lula_menos_lula_2022_2t_pp": -6.68,
+    "ja_supera_bolsonaro_2t": true,
+    "estoque_flavio": 0,
+    "estoque_lula": 363660,
+    "deficit_votos_flavio": 0
+   },
+   {
+    "uf": "DF",
+    "regiao": "Centro-Sul",
+    "eleitores_2026": 2258320,
+    "comparecimento_2026_pct": 81.1,
+    "comparecimento_2022_1t_pct": 82.46,
+    "comparecimento_2022_2t_pct": 83.28,
+    "validos_2026": 1772808,
+    "flavio": 909616,
+    "flavio_pct": 51.31,
+    "lula": 675627,
+    "lula_pct": 38.11,
+    "terceiros": 187565,
+    "terceiros_pct": 10.58,
+    "margem_votos": 233989,
+    "margem_pp": 13.2,
+    "bolsonaro_2022_1t": 910397,
+    "bolsonaro_2022_1t_pct": 51.65,
+    "bolsonaro_2022_2t": 1041331,
+    "bolsonaro_2022_2t_pct": 58.81,
+    "lula_2022_1t": 649534,
+    "lula_2022_1t_pct": 36.85,
+    "lula_2022_2t": 729295,
+    "lula_2022_2t_pct": 41.19,
+    "flavio_menos_bolsonaro_1t_pp": -0.34,
+    "flavio_menos_bolsonaro_2t_pp": -7.5,
+    "flavio_menos_bolsonaro_2t_votos": -131715,
+    "lula_menos_lula_2022_1t_pp": 1.26,
+    "lula_menos_lula_2022_1t_votos": 26093,
+    "lula_menos_lula_2022_2t_pp": -3.08,
+    "ja_supera_bolsonaro_2t": false,
+    "estoque_flavio": 132835,
+    "estoque_lula": 54500,
+    "deficit_votos_flavio": 131715
+   },
+   {
+    "uf": "ES",
+    "regiao": "Centro-Sul",
+    "eleitores_2026": 2991650,
+    "comparecimento_2026_pct": 78.63,
+    "comparecimento_2022_1t_pct": 79.25,
+    "comparecimento_2022_2t_pct": 79.47,
+    "validos_2026": 2251078,
+    "flavio": 1233194,
+    "flavio_pct": 54.78,
+    "lula": 850028,
+    "lula_pct": 37.76,
+    "terceiros": 167856,
+    "terceiros_pct": 7.46,
+    "margem_votos": 383166,
+    "margem_pp": 17.02,
+    "bolsonaro_2022_1t": 1160030,
+    "bolsonaro_2022_1t_pct": 52.23,
+    "bolsonaro_2022_2t": 1282145,
+    "bolsonaro_2022_2t_pct": 58.04,
+    "lula_2022_1t": 897348,
+    "lula_2022_1t_pct": 40.4,
+    "lula_2022_2t": 926767,
+    "lula_2022_2t_pct": 41.96,
+    "flavio_menos_bolsonaro_1t_pp": 2.56,
+    "flavio_menos_bolsonaro_2t_pp": -3.26,
+    "flavio_menos_bolsonaro_2t_votos": -48951,
+    "lula_menos_lula_2022_1t_pp": -2.64,
+    "lula_menos_lula_2022_1t_votos": -47320,
+    "lula_menos_lula_2022_2t_pp": -4.19,
+    "ja_supera_bolsonaro_2t": false,
+    "estoque_flavio": 72051,
+    "estoque_lula": 92661,
+    "deficit_votos_flavio": 48951
+   },
+   {
+    "uf": "GO",
+    "regiao": "Centro-Sul",
+    "eleitores_2026": 5080590,
+    "comparecimento_2026_pct": 78.17,
+    "comparecimento_2022_1t_pct": 78.28,
+    "comparecimento_2022_2t_pct": 79.26,
+    "validos_2026": 3827823,
+    "flavio": 2051888,
+    "flavio_pct": 53.6,
+    "lula": 1188880,
+    "lula_pct": 31.06,
+    "terceiros": 587055,
+    "terceiros_pct": 15.34,
+    "margem_votos": 863008,
+    "margem_pp": 22.55,
+    "bolsonaro_2022_1t": 1920203,
+    "bolsonaro_2022_1t_pct": 52.16,
+    "bolsonaro_2022_2t": 2193041,
+    "bolsonaro_2022_2t_pct": 58.71,
+    "lula_2022_1t": 1454723,
+    "lula_2022_1t_pct": 39.51,
+    "lula_2022_2t": 1542115,
+    "lula_2022_2t_pct": 41.29,
+    "flavio_menos_bolsonaro_1t_pp": 1.45,
+    "flavio_menos_bolsonaro_2t_pp": -5.11,
+    "flavio_menos_bolsonaro_2t_votos": -141153,
+    "lula_menos_lula_2022_1t_pp": -8.46,
+    "lula_menos_lula_2022_1t_votos": -265843,
+    "lula_menos_lula_2022_2t_pp": -10.23,
+    "ja_supera_bolsonaro_2t": false,
+    "estoque_flavio": 190827,
+    "estoque_lula": 382016,
+    "deficit_votos_flavio": 141153
+   },
+   {
+    "uf": "MA",
+    "regiao": "Nordeste",
+    "eleitores_2026": 5183115,
+    "comparecimento_2026_pct": 80.27,
+    "comparecimento_2022_1t_pct": 77.8,
+    "comparecimento_2022_2t_pct": 76.49,
+    "validos_2026": 4010439,
+    "flavio": 1239040,
+    "flavio_pct": 30.9,
+    "lula": 2566301,
+    "lula_pct": 63.99,
+    "terceiros": 205098,
+    "terceiros_pct": 5.11,
+    "margem_votos": -1327261,
+    "margem_pp": -33.1,
+    "bolsonaro_2022_1t": 983861,
+    "bolsonaro_2022_1t_pct": 26.02,
+    "bolsonaro_2022_2t": 1082749,
+    "bolsonaro_2022_2t_pct": 28.86,
+    "lula_2022_1t": 2603454,
+    "lula_2022_1t_pct": 68.84,
+    "lula_2022_2t": 2668425,
+    "lula_2022_2t_pct": 71.14,
+    "flavio_menos_bolsonaro_1t_pp": 4.88,
+    "flavio_menos_bolsonaro_2t_pp": 2.03,
+    "flavio_menos_bolsonaro_2t_votos": 156291,
+    "lula_menos_lula_2022_1t_pp": -4.85,
+    "lula_menos_lula_2022_1t_votos": -37153,
+    "lula_menos_lula_2022_2t_pp": -7.15,
+    "ja_supera_bolsonaro_2t": true,
+    "estoque_flavio": 0,
+    "estoque_lula": 268029,
+    "deficit_votos_flavio": 0
+   },
+   {
+    "uf": "MG",
+    "regiao": "Centro-Sul",
+    "eleitores_2026": 16372372,
+    "comparecimento_2026_pct": 77.19,
+    "comparecimento_2022_1t_pct": 77.72,
+    "comparecimento_2022_2t_pct": 79.01,
+    "validos_2026": 11976235,
+    "flavio": 5777548,
+    "flavio_pct": 48.24,
+    "lula": 5188936,
+    "lula_pct": 43.33,
+    "terceiros": 1009751,
+    "terceiros_pct": 8.43,
+    "margem_votos": 588612,
+    "margem_pp": 4.91,
+    "bolsonaro_2022_1t": 5239264,
+    "bolsonaro_2022_1t_pct": 43.6,
+    "bolsonaro_2022_2t": 6141310,
+    "bolsonaro_2022_2t_pct": 49.8,
+    "lula_2022_1t": 5802571,
+    "lula_2022_1t_pct": 48.29,
+    "lula_2022_2t": 6190960,
+    "lula_2022_2t_pct": 50.2,
+    "flavio_menos_bolsonaro_1t_pp": 4.64,
+    "flavio_menos_bolsonaro_2t_pp": -1.56,
+    "flavio_menos_bolsonaro_2t_votos": -363762,
+    "lula_menos_lula_2022_1t_pp": -4.96,
+    "lula_menos_lula_2022_1t_votos": -613635,
+    "lula_menos_lula_2022_2t_pp": -6.87,
+    "ja_supera_bolsonaro_2t": false,
+    "estoque_flavio": 192004,
+    "estoque_lula": 847765,
+    "deficit_votos_flavio": 363762
+   },
+   {
+    "uf": "MS",
+    "regiao": "Centro-Sul",
+    "eleitores_2026": 2024430,
+    "comparecimento_2026_pct": 76.13,
+    "comparecimento_2022_1t_pct": 77.92,
+    "comparecimento_2022_2t_pct": 77.65,
+    "validos_2026": 1490278,
+    "flavio": 873351,
+    "flavio_pct": 58.6,
+    "lula": 516855,
+    "lula_pct": 34.68,
+    "terceiros": 100072,
+    "terceiros_pct": 6.71,
+    "margem_votos": 356496,
+    "margem_pp": 23.92,
+    "bolsonaro_2022_1t": 794206,
+    "bolsonaro_2022_1t_pct": 52.7,
+    "bolsonaro_2022_2t": 880606,
+    "bolsonaro_2022_2t_pct": 59.49,
+    "lula_2022_1t": 588323,
+    "lula_2022_1t_pct": 39.04,
+    "lula_2022_2t": 599547,
+    "lula_2022_2t_pct": 40.51,
+    "flavio_menos_bolsonaro_1t_pp": 5.9,
+    "flavio_menos_bolsonaro_2t_pp": -0.89,
+    "flavio_menos_bolsonaro_2t_votos": -7255,
+    "lula_menos_lula_2022_1t_pp": -4.36,
+    "lula_menos_lula_2022_1t_votos": -71468,
+    "lula_menos_lula_2022_2t_pp": -5.82,
+    "ja_supera_bolsonaro_2t": false,
+    "estoque_flavio": 13189,
+    "estoque_lula": 86204,
+    "deficit_votos_flavio": 7255
+   },
+   {
+    "uf": "MT",
+    "regiao": "Centro-Sul",
+    "eleitores_2026": 2637801,
+    "comparecimento_2026_pct": 77.8,
+    "comparecimento_2022_1t_pct": 76.62,
+    "comparecimento_2022_2t_pct": 77.47,
+    "validos_2026": 1993288,
+    "flavio": 1298581,
+    "flavio_pct": 65.15,
+    "lula": 581681,
+    "lula_pct": 29.18,
+    "terceiros": 113026,
+    "terceiros_pct": 5.67,
+    "margem_votos": 716900,
+    "margem_pp": 35.97,
+    "bolsonaro_2022_1t": 1102866,
+    "bolsonaro_2022_1t_pct": 59.84,
+    "bolsonaro_2022_2t": 1216730,
+    "bolsonaro_2022_2t_pct": 65.08,
+    "lula_2022_1t": 633748,
+    "lula_2022_1t_pct": 34.39,
+    "lula_2022_2t": 652786,
+    "lula_2022_2t_pct": 34.92,
+    "flavio_menos_bolsonaro_1t_pp": 5.3,
+    "flavio_menos_bolsonaro_2t_pp": 0.07,
+    "flavio_menos_bolsonaro_2t_votos": 81851,
+    "lula_menos_lula_2022_1t_pp": -5.21,
+    "lula_menos_lula_2022_1t_votos": -52067,
+    "lula_menos_lula_2022_2t_pp": -5.74,
+    "ja_supera_bolsonaro_2t": true,
+    "estoque_flavio": 0,
+    "estoque_lula": 107224,
+    "deficit_votos_flavio": 0
+   },
+   {
+    "uf": "PA",
+    "regiao": "Norte",
+    "eleitores_2026": 6262397,
+    "comparecimento_2026_pct": 80.9,
+    "comparecimento_2022_1t_pct": 78.78,
+    "comparecimento_2022_2t_pct": 77.35,
+    "validos_2026": 4863172,
+    "flavio": 2163957,
+    "flavio_pct": 44.5,
+    "lula": 2427237,
+    "lula_pct": 49.91,
+    "terceiros": 271978,
+    "terceiros_pct": 5.59,
+    "margem_votos": -263280,
+    "margem_pp": -5.41,
+    "bolsonaro_2022_1t": 1884673,
+    "bolsonaro_2022_1t_pct": 40.27,
+    "bolsonaro_2022_2t": 2073895,
+    "bolsonaro_2022_2t_pct": 45.25,
+    "lula_2022_1t": 2443730,
+    "lula_2022_1t_pct": 52.22,
+    "lula_2022_2t": 2509084,
+    "lula_2022_2t_pct": 54.75,
+    "flavio_menos_bolsonaro_1t_pp": 4.23,
+    "flavio_menos_bolsonaro_2t_pp": -0.76,
+    "flavio_menos_bolsonaro_2t_votos": 90062,
+    "lula_menos_lula_2022_1t_pp": -2.31,
+    "lula_menos_lula_2022_1t_votos": -16493,
+    "lula_menos_lula_2022_2t_pp": -4.84,
+    "ja_supera_bolsonaro_2t": false,
+    "estoque_flavio": 34615,
+    "estoque_lula": 221693,
+    "deficit_votos_flavio": 0
+   },
+   {
+    "uf": "PB",
+    "regiao": "Nordeste",
+    "eleitores_2026": 3248531,
+    "comparecimento_2026_pct": 82.62,
+    "comparecimento_2022_1t_pct": 82.71,
+    "comparecimento_2022_2t_pct": 83.26,
+    "validos_2026": 2513747,
+    "flavio": 831377,
+    "flavio_pct": 33.07,
+    "lula": 1541127,
+    "lula_pct": 61.31,
+    "terceiros": 141243,
+    "terceiros_pct": 5.62,
+    "margem_votos": -709750,
+    "margem_pp": -28.23,
+    "bolsonaro_2022_1t": 717416,
+    "bolsonaro_2022_1t_pct": 29.62,
+    "bolsonaro_2022_2t": 802502,
+    "bolsonaro_2022_2t_pct": 33.38,
+    "lula_2022_1t": 1554868,
+    "lula_2022_1t_pct": 64.21,
+    "lula_2022_2t": 1601953,
+    "lula_2022_2t_pct": 66.62,
+    "flavio_menos_bolsonaro_1t_pp": 3.45,
+    "flavio_menos_bolsonaro_2t_pp": -0.3,
+    "flavio_menos_bolsonaro_2t_votos": 28875,
+    "lula_menos_lula_2022_1t_pp": -2.9,
+    "lula_menos_lula_2022_1t_votos": -13741,
+    "lula_menos_lula_2022_2t_pp": -5.32,
+    "ja_supera_bolsonaro_2t": false,
+    "estoque_flavio": 7271,
+    "estoque_lula": 127831,
+    "deficit_votos_flavio": 0
+   },
+   {
+    "uf": "PE",
+    "regiao": "Nordeste",
+    "eleitores_2026": 7223450,
+    "comparecimento_2026_pct": 81.83,
+    "comparecimento_2022_1t_pct": 81.8,
+    "comparecimento_2022_2t_pct": 82.69,
+    "validos_2026": 5601017,
+    "flavio": 1738043,
+    "flavio_pct": 31.03,
+    "lula": 3553971,
+    "lula_pct": 63.45,
+    "terceiros": 309003,
+    "terceiros_pct": 5.52,
+    "margem_votos": -1815928,
+    "margem_pp": -32.42,
+    "bolsonaro_2022_1t": 1630938,
+    "bolsonaro_2022_1t_pct": 29.91,
+    "bolsonaro_2022_2t": 1798832,
+    "bolsonaro_2022_2t_pct": 33.07,
+    "lula_2022_1t": 3558322,
+    "lula_2022_1t_pct": 65.27,
+    "lula_2022_2t": 3640933,
+    "lula_2022_2t_pct": 66.93,
+    "flavio_menos_bolsonaro_1t_pp": 1.12,
+    "flavio_menos_bolsonaro_2t_pp": -2.04,
+    "flavio_menos_bolsonaro_2t_votos": -60789,
+    "lula_menos_lula_2022_1t_pp": -1.81,
+    "lula_menos_lula_2022_1t_votos": -4351,
+    "lula_menos_lula_2022_2t_pp": -3.48,
+    "ja_supera_bolsonaro_2t": false,
+    "estoque_flavio": 110827,
+    "estoque_lula": 189280,
+    "deficit_votos_flavio": 60789
+   },
+   {
+    "uf": "PI",
+    "regiao": "Nordeste",
+    "eleitores_2026": 2704758,
+    "comparecimento_2026_pct": 82.85,
+    "comparecimento_2022_1t_pct": 82.31,
+    "comparecimento_2022_2t_pct": 81.26,
+    "validos_2026": 2146394,
+    "flavio": 517028,
+    "flavio_pct": 24.09,
+    "lula": 1523710,
+    "lula_pct": 70.99,
+    "terceiros": 105656,
+    "terceiros_pct": 4.92,
+    "margem_votos": -1006682,
+    "margem_pp": -46.9,
+    "bolsonaro_2022_1t": 406897,
+    "bolsonaro_2022_1t_pct": 19.9,
+    "bolsonaro_2022_2t": 467065,
+    "bolsonaro_2022_2t_pct": 23.14,
+    "lula_2022_1t": 1518008,
+    "lula_2022_1t_pct": 74.25,
+    "lula_2022_2t": 1551383,
+    "lula_2022_2t_pct": 76.86,
+    "flavio_menos_bolsonaro_1t_pp": 4.19,
+    "flavio_menos_bolsonaro_2t_pp": 0.95,
+    "flavio_menos_bolsonaro_2t_votos": 49963,
+    "lula_menos_lula_2022_1t_pp": -3.26,
+    "lula_menos_lula_2022_1t_votos": 5702,
+    "lula_menos_lula_2022_2t_pp": -5.87,
+    "ja_supera_bolsonaro_2t": true,
+    "estoque_flavio": 0,
+    "estoque_lula": 118501,
+    "deficit_votos_flavio": 0
+   },
+   {
+    "uf": "PR",
+    "regiao": "Centro-Sul",
+    "eleitores_2026": 8613657,
+    "comparecimento_2026_pct": 79.43,
+    "comparecimento_2022_1t_pct": 80.52,
+    "comparecimento_2022_2t_pct": 81.37,
+    "validos_2026": 6585243,
+    "flavio": 3945345,
+    "flavio_pct": 59.91,
+    "lula": 2054597,
+    "lula_pct": 31.2,
+    "terceiros": 585301,
+    "terceiros_pct": 8.89,
+    "margem_votos": 1890748,
+    "margem_pp": 28.71,
+    "bolsonaro_2022_1t": 3628612,
+    "bolsonaro_2022_1t_pct": 55.26,
+    "bolsonaro_2022_2t": 4159343,
+    "bolsonaro_2022_2t_pct": 62.4,
+    "lula_2022_1t": 2363492,
+    "lula_2022_1t_pct": 35.99,
+    "lula_2022_2t": 2506605,
+    "lula_2022_2t_pct": 37.6,
+    "flavio_menos_bolsonaro_1t_pp": 4.65,
+    "flavio_menos_bolsonaro_2t_pp": -2.48,
+    "flavio_menos_bolsonaro_2t_votos": -213998,
+    "lula_menos_lula_2022_1t_pp": -4.79,
+    "lula_menos_lula_2022_1t_votos": -308895,
+    "lula_menos_lula_2022_2t_pp": -6.4,
+    "ja_supera_bolsonaro_2t": false,
+    "estoque_flavio": 165646,
+    "estoque_lula": 426828,
+    "deficit_votos_flavio": 213998
+   },
+   {
+    "uf": "RJ",
+    "regiao": "Centro-Sul",
+    "eleitores_2026": 12857648,
+    "comparecimento_2026_pct": 76.68,
+    "comparecimento_2022_1t_pct": 77.26,
+    "comparecimento_2022_2t_pct": 77.76,
+    "validos_2026": 9369700,
+    "flavio": 4966844,
+    "flavio_pct": 53.01,
+    "lula": 3693021,
+    "lula_pct": 39.41,
+    "terceiros": 709835,
+    "terceiros_pct": 7.58,
+    "margem_votos": 1273823,
+    "margem_pp": 13.6,
+    "bolsonaro_2022_1t": 4831246,
+    "bolsonaro_2022_1t_pct": 51.09,
+    "bolsonaro_2022_2t": 5403894,
+    "bolsonaro_2022_2t_pct": 56.53,
+    "lula_2022_1t": 3847143,
+    "lula_2022_1t_pct": 40.68,
+    "lula_2022_2t": 4156217,
+    "lula_2022_2t_pct": 43.47,
+    "flavio_menos_bolsonaro_1t_pp": 1.92,
+    "flavio_menos_bolsonaro_2t_pp": -3.52,
+    "flavio_menos_bolsonaro_2t_votos": -437050,
+    "lula_menos_lula_2022_1t_pp": -1.27,
+    "lula_menos_lula_2022_1t_votos": -154122,
+    "lula_menos_lula_2022_2t_pp": -4.06,
+    "ja_supera_bolsonaro_2t": false,
+    "estoque_flavio": 336114,
+    "estoque_lula": 388146,
+    "deficit_votos_flavio": 437050
+   },
+   {
+    "uf": "RN",
+    "regiao": "Nordeste",
+    "eleitores_2026": 2659825,
+    "comparecimento_2026_pct": 81.62,
+    "comparecimento_2022_1t_pct": 81.83,
+    "comparecimento_2022_2t_pct": 82.56,
+    "validos_2026": 2071898,
+    "flavio": 720493,
+    "flavio_pct": 34.77,
+    "lula": 1237963,
+    "lula_pct": 59.75,
+    "terceiros": 113442,
+    "terceiros_pct": 5.48,
+    "margem_votos": -517470,
+    "margem_pp": -24.98,
+    "bolsonaro_2022_1t": 622731,
+    "bolsonaro_2022_1t_pct": 31.02,
+    "bolsonaro_2022_2t": 711381,
+    "bolsonaro_2022_2t_pct": 34.9,
+    "lula_2022_1t": 1264179,
+    "lula_2022_1t_pct": 62.98,
+    "lula_2022_2t": 1326785,
+    "lula_2022_2t_pct": 65.1,
+    "flavio_menos_bolsonaro_1t_pp": 3.75,
+    "flavio_menos_bolsonaro_2t_pp": -0.13,
+    "flavio_menos_bolsonaro_2t_votos": 9112,
+    "lula_menos_lula_2022_1t_pp": -3.23,
+    "lula_menos_lula_2022_1t_votos": -26216,
+    "lula_menos_lula_2022_2t_pp": -5.35,
+    "ja_supera_bolsonaro_2t": false,
+    "estoque_flavio": 2618,
+    "estoque_lula": 108977,
+    "deficit_votos_flavio": 0
+   },
+   {
+    "uf": "RO",
+    "regiao": "Norte",
+    "eleitores_2026": 1265893,
+    "comparecimento_2026_pct": 78.29,
+    "comparecimento_2022_1t_pct": 75.35,
+    "comparecimento_2022_2t_pct": 75.32,
+    "validos_2026": 968059,
+    "flavio": 652988,
+    "flavio_pct": 67.45,
+    "lula": 250667,
+    "lula_pct": 25.89,
+    "terceiros": 64404,
+    "terceiros_pct": 6.65,
+    "margem_votos": 402321,
+    "margem_pp": 41.56,
+    "bolsonaro_2022_1t": 581306,
+    "bolsonaro_2022_1t_pct": 64.36,
+    "bolsonaro_2022_2t": 633236,
+    "bolsonaro_2022_2t_pct": 70.66,
+    "lula_2022_1t": 261749,
+    "lula_2022_1t_pct": 28.98,
+    "lula_2022_2t": 262904,
+    "lula_2022_2t_pct": 29.34,
+    "flavio_menos_bolsonaro_1t_pp": 3.1,
+    "flavio_menos_bolsonaro_2t_pp": -3.21,
+    "flavio_menos_bolsonaro_2t_votos": 19752,
+    "lula_menos_lula_2022_1t_pp": -3.09,
+    "lula_menos_lula_2022_1t_votos": -11082,
+    "lula_menos_lula_2022_2t_pp": -3.44,
+    "ja_supera_bolsonaro_2t": false,
+    "estoque_flavio": 28760,
+    "estoque_lula": 30860,
+    "deficit_votos_flavio": 0
+   },
+   {
+    "uf": "RR",
+    "regiao": "Norte",
+    "eleitores_2026": 401521,
+    "comparecimento_2026_pct": 82.88,
+    "comparecimento_2022_1t_pct": 83.3,
+    "comparecimento_2022_2t_pct": 78.08,
+    "validos_2026": 325545,
+    "flavio": 231322,
+    "flavio_pct": 71.06,
+    "lula": 74420,
+    "lula_pct": 22.86,
+    "terceiros": 19803,
+    "terceiros_pct": 6.08,
+    "margem_votos": 156902,
+    "margem_pp": 48.2,
+    "bolsonaro_2022_1t": 207587,
+    "bolsonaro_2022_1t_pct": 69.57,
+    "bolsonaro_2022_2t": 213518,
+    "bolsonaro_2022_2t_pct": 76.08,
+    "lula_2022_1t": 68760,
+    "lula_2022_1t_pct": 23.05,
+    "lula_2022_2t": 67128,
+    "lula_2022_2t_pct": 23.92,
+    "flavio_menos_bolsonaro_1t_pp": 1.48,
+    "flavio_menos_bolsonaro_2t_pp": -5.02,
+    "flavio_menos_bolsonaro_2t_votos": 17804,
+    "lula_menos_lula_2022_1t_pp": -0.19,
+    "lula_menos_lula_2022_1t_votos": 5660,
+    "lula_menos_lula_2022_2t_pp": -1.06,
+    "ja_supera_bolsonaro_2t": false,
+    "estoque_flavio": 14100,
+    "estoque_lula": 2972,
+    "deficit_votos_flavio": 0
+   },
+   {
+    "uf": "RS",
+    "regiao": "Centro-Sul",
+    "eleitores_2026": 8522545,
+    "comparecimento_2026_pct": 78.65,
+    "comparecimento_2022_1t_pct": 80.22,
+    "comparecimento_2022_2t_pct": 80.69,
+    "validos_2026": 6423046,
+    "flavio": 3573783,
+    "flavio_pct": 55.64,
+    "lula": 2294759,
+    "lula_pct": 35.73,
+    "terceiros": 554504,
+    "terceiros_pct": 8.63,
+    "margem_votos": 1279024,
+    "margem_pp": 19.91,
+    "bolsonaro_2022_1t": 3245023,
+    "bolsonaro_2022_1t_pct": 48.89,
+    "bolsonaro_2022_2t": 3733185,
+    "bolsonaro_2022_2t_pct": 56.35,
+    "lula_2022_1t": 2806672,
+    "lula_2022_1t_pct": 42.28,
+    "lula_2022_2t": 2891851,
+    "lula_2022_2t_pct": 43.65,
+    "flavio_menos_bolsonaro_1t_pp": 6.75,
+    "flavio_menos_bolsonaro_2t_pp": -0.71,
+    "flavio_menos_bolsonaro_2t_votos": -159402,
+    "lula_menos_lula_2022_1t_pp": -6.56,
+    "lula_menos_lula_2022_1t_votos": -511913,
+    "lula_menos_lula_2022_2t_pp": -7.92,
+    "ja_supera_bolsonaro_2t": false,
+    "estoque_flavio": 47015,
+    "estoque_lula": 524927,
+    "deficit_votos_flavio": 159402
+   },
+   {
+    "uf": "SC",
+    "regiao": "Centro-Sul",
+    "eleitores_2026": 5734651,
+    "comparecimento_2026_pct": 81.05,
+    "comparecimento_2022_1t_pct": 81.57,
+    "comparecimento_2022_2t_pct": 82.58,
+    "validos_2026": 4500897,
+    "flavio": 3000020,
+    "flavio_pct": 66.65,
+    "lula": 1127168,
+    "lula_pct": 25.04,
+    "terceiros": 373709,
+    "terceiros_pct": 8.3,
+    "margem_votos": 1872852,
+    "margem_pp": 41.61,
+    "bolsonaro_2022_1t": 2694406,
+    "bolsonaro_2022_1t_pct": 62.21,
+    "bolsonaro_2022_2t": 3047630,
+    "bolsonaro_2022_2t_pct": 69.27,
+    "lula_2022_1t": 1279216,
+    "lula_2022_1t_pct": 29.54,
+    "lula_2022_2t": 1351918,
+    "lula_2022_2t_pct": 30.73,
+    "flavio_menos_bolsonaro_1t_pp": 4.44,
+    "flavio_menos_bolsonaro_2t_pp": -2.62,
+    "flavio_menos_bolsonaro_2t_votos": -47610,
+    "lula_menos_lula_2022_1t_pp": -4.49,
+    "lula_menos_lula_2022_1t_votos": -152048,
+    "lula_menos_lula_2022_2t_pp": -5.69,
+    "ja_supera_bolsonaro_2t": false,
+    "estoque_flavio": 115163,
+    "estoque_lula": 250131,
+    "deficit_votos_flavio": 47610
+   },
+   {
+    "uf": "SE",
+    "regiao": "Nordeste",
+    "eleitores_2026": 1740135,
+    "comparecimento_2026_pct": 82.7,
+    "comparecimento_2022_1t_pct": 81.65,
+    "comparecimento_2022_2t_pct": 81.11,
+    "validos_2026": 1364196,
+    "flavio": 417839,
+    "flavio_pct": 30.63,
+    "lula": 856019,
+    "lula_pct": 62.75,
+    "terceiros": 90338,
+    "terceiros_pct": 6.62,
+    "margem_votos": -438180,
+    "margem_pp": -32.12,
+    "bolsonaro_2022_1t": 378610,
+    "bolsonaro_2022_1t_pct": 29.16,
+    "bolsonaro_2022_2t": 421086,
+    "bolsonaro_2022_2t_pct": 32.79,
+    "lula_2022_1t": 828716,
+    "lula_2022_1t_pct": 63.82,
+    "lula_2022_2t": 862951,
+    "lula_2022_2t_pct": 67.21,
+    "flavio_menos_bolsonaro_1t_pp": 1.47,
+    "flavio_menos_bolsonaro_2t_pp": -2.16,
+    "flavio_menos_bolsonaro_2t_votos": -3247,
+    "lula_menos_lula_2022_1t_pp": -1.08,
+    "lula_menos_lula_2022_1t_votos": 27303,
+    "lula_menos_lula_2022_2t_pp": -4.46,
+    "ja_supera_bolsonaro_2t": false,
+    "estoque_flavio": 27799,
+    "estoque_lula": 57231,
+    "deficit_votos_flavio": 3247
+   },
+   {
+    "uf": "SP",
+    "regiao": "Centro-Sul",
+    "eleitores_2026": 34122892,
+    "comparecimento_2026_pct": 77.46,
+    "comparecimento_2022_1t_pct": 78.39,
+    "comparecimento_2022_2t_pct": 78.94,
+    "validos_2026": 24882948,
+    "flavio": 12922023,
+    "flavio_pct": 51.93,
+    "lula": 9505413,
+    "lula_pct": 38.2,
+    "terceiros": 2455512,
+    "terceiros_pct": 9.87,
+    "margem_votos": 3416610,
+    "margem_pp": 13.73,
+    "bolsonaro_2022_1t": 12239989,
+    "bolsonaro_2022_1t_pct": 47.71,
+    "bolsonaro_2022_2t": 14216587,
+    "bolsonaro_2022_2t_pct": 55.24,
+    "lula_2022_1t": 10490032,
+    "lula_2022_1t_pct": 40.89,
+    "lula_2022_2t": 11519882,
+    "lula_2022_2t_pct": 44.76,
+    "flavio_menos_bolsonaro_1t_pp": 4.22,
+    "flavio_menos_bolsonaro_2t_pp": -3.31,
+    "flavio_menos_bolsonaro_2t_votos": -1294564,
+    "lula_menos_lula_2022_1t_pp": -2.69,
+    "lula_menos_lula_2022_1t_votos": -984619,
+    "lula_menos_lula_2022_2t_pp": -6.56,
+    "ja_supera_bolsonaro_2t": false,
+    "estoque_flavio": 851320,
+    "estoque_lula": 1688420,
+    "deficit_votos_flavio": 1294564
+   },
+   {
+    "uf": "TO",
+    "regiao": "Norte",
+    "eleitores_2026": 1182023,
+    "comparecimento_2026_pct": 81.66,
+    "comparecimento_2022_1t_pct": 81.46,
+    "comparecimento_2022_2t_pct": 79.62,
+    "validos_2026": 930447,
+    "flavio": 469321,
+    "flavio_pct": 50.44,
+    "lula": 404009,
+    "lula_pct": 43.42,
+    "terceiros": 57117,
+    "terceiros_pct": 6.14,
+    "margem_votos": 65312,
+    "margem_pp": 7.02,
+    "bolsonaro_2022_1t": 379194,
+    "bolsonaro_2022_1t_pct": 44.0,
+    "bolsonaro_2022_2t": 411654,
+    "bolsonaro_2022_2t_pct": 48.64,
+    "lula_2022_1t": 434303,
+    "lula_2022_1t_pct": 50.4,
+    "lula_2022_2t": 434593,
+    "lula_2022_2t_pct": 51.36,
+    "flavio_menos_bolsonaro_1t_pp": 6.44,
+    "flavio_menos_bolsonaro_2t_pp": 1.8,
+    "flavio_menos_bolsonaro_2t_votos": 57667,
+    "lula_menos_lula_2022_1t_pp": -6.97,
+    "lula_menos_lula_2022_1t_votos": -30294,
+    "lula_menos_lula_2022_2t_pp": -7.93,
+    "ja_supera_bolsonaro_2t": true,
+    "estoque_flavio": 0,
+    "estoque_lula": 67144,
+    "deficit_votos_flavio": 0
+   }
+  ],
+  "exterior": {
+   "uf": "ZZ",
+   "regiao": "Exterior",
+   "eleitores_2026": 916534,
+   "comparecimento_2026_pct": 37.29,
+   "comparecimento_2022_1t_pct": 43.72,
+   "comparecimento_2022_2t_pct": 44.59,
+   "validos_2026": 330882,
+   "flavio": 143900,
+   "flavio_pct": 43.49,
+   "lula": 157387,
+   "lula_pct": 47.57,
+   "terceiros": 29595,
+   "terceiros_pct": 8.94,
+   "margem_votos": -13487,
+   "margem_pp": -4.08,
+   "bolsonaro_2022_1t": 122548,
+   "bolsonaro_2022_1t_pct": 41.61,
+   "bolsonaro_2022_2t": 145264,
+   "bolsonaro_2022_2t_pct": 48.72,
+   "lula_2022_1t": 138933,
+   "lula_2022_1t_pct": 47.17,
+   "lula_2022_2t": 152905,
+   "lula_2022_2t_pct": 51.28,
+   "flavio_menos_bolsonaro_1t_pp": 1.88,
+   "flavio_menos_bolsonaro_2t_pp": -5.23,
+   "flavio_menos_bolsonaro_2t_votos": -1364,
+   "lula_menos_lula_2022_1t_pp": 0.39,
+   "lula_menos_lula_2022_1t_votos": 18454,
+   "lula_menos_lula_2022_2t_pp": -3.72,
+   "ja_supera_bolsonaro_2t": false,
+   "estoque_flavio": 15591,
+   "estoque_lula": 11078,
+   "deficit_votos_flavio": 1364
+  },
+  "regioes": {
+   "Nordeste": {
+    "uf": "Nordeste",
+    "regiao": "Nordeste",
+    "eleitores_2026": 43511237,
+    "comparecimento_2026_pct": 81.61,
+    "comparecimento_2022_1t_pct": 80.47,
+    "comparecimento_2022_2t_pct": 80.69,
+    "validos_2026": 33704652,
+    "flavio": 10398973,
+    "flavio_pct": 30.85,
+    "lula": 21494584,
+    "lula_pct": 63.77,
+    "terceiros": 1811095,
+    "terceiros_pct": 5.37,
+    "margem_votos": -11095611,
+    "margem_pp": -32.92,
+    "bolsonaro_2022_1t": 8787394,
+    "bolsonaro_2022_1t_pct": 26.97,
+    "bolsonaro_2022_2t": 9962947,
+    "bolsonaro_2022_2t_pct": 30.66,
+    "lula_2022_1t": 21753139,
+    "lula_2022_1t_pct": 66.76,
+    "lula_2022_2t": 22534967,
+    "lula_2022_2t_pct": 69.34,
+    "flavio_menos_bolsonaro_1t_pp": 3.88,
+    "flavio_menos_bolsonaro_2t_pp": 0.2,
+    "flavio_menos_bolsonaro_2t_votos": 436026,
+    "lula_menos_lula_2022_1t_pp": -2.99,
+    "lula_menos_lula_2022_1t_votos": -258555,
+    "lula_menos_lula_2022_2t_pp": -5.57,
+    "ja_supera_bolsonaro_2t": true,
+    "estoque_flavio": 0,
+    "estoque_lula": 1809960,
+    "deficit_votos_flavio": 0,
+    "ufs": [
+     "AL",
+     "BA",
+     "CE",
+     "MA",
+     "PB",
+     "PE",
+     "PI",
+     "RN",
+     "SE"
+    ],
+    "estoque_flavio_soma_ufs": 162996,
+    "estoque_lula_soma_ufs": 1802097
+   },
+   "Norte": {
+    "uf": "Norte",
+    "regiao": "Norte",
+    "eleitores_2026": 13101175,
+    "comparecimento_2026_pct": 80.57,
+    "comparecimento_2022_1t_pct": 79.06,
+    "comparecimento_2022_2t_pct": 77.06,
+    "validos_2026": 10191910,
+    "flavio": 5009437,
+    "flavio_pct": 49.15,
+    "lula": 4550602,
+    "lula_pct": 44.65,
+    "terceiros": 631871,
+    "terceiros_pct": 6.2,
+    "margem_votos": 458835,
+    "margem_pp": 4.5,
+    "bolsonaro_2022_1t": 4396161,
+    "bolsonaro_2022_1t_pct": 45.45,
+    "bolsonaro_2022_2t": 4782341,
+    "bolsonaro_2022_2t_pct": 51.03,
+    "lula_2022_1t": 4554630,
+    "lula_2022_1t_pct": 47.09,
+    "lula_2022_2t": 4590184,
+    "lula_2022_2t_pct": 48.97,
+    "flavio_menos_bolsonaro_1t_pp": 3.7,
+    "flavio_menos_bolsonaro_2t_pp": -1.87,
+    "flavio_menos_bolsonaro_2t_votos": 227096,
+    "lula_menos_lula_2022_1t_pp": -2.44,
+    "lula_menos_lula_2022_1t_votos": -4028,
+    "lula_menos_lula_2022_2t_pp": -4.33,
+    "ja_supera_bolsonaro_2t": false,
+    "estoque_flavio": 175641,
+    "estoque_lula": 405431,
+    "deficit_votos_flavio": 0,
+    "ufs": [
+     "AC",
+     "AM",
+     "AP",
+     "PA",
+     "RO",
+     "RR",
+     "TO"
+    ],
+    "estoque_flavio_soma_ufs": 200014,
+    "estoque_lula_soma_ufs": 394458
+   },
+   "Centro-Sul": {
+    "uf": "Centro-Sul",
+    "regiao": "Centro-Sul",
+    "eleitores_2026": 101216556,
+    "comparecimento_2026_pct": 77.92,
+    "comparecimento_2022_1t_pct": 78.7,
+    "comparecimento_2022_2t_pct": 79.42,
+    "validos_2026": 75073344,
+    "flavio": 40552193,
+    "flavio_pct": 54.02,
+    "lula": 27676965,
+    "lula_pct": 36.87,
+    "terceiros": 6844186,
+    "terceiros_pct": 9.12,
+    "margem_votos": 12875228,
+    "margem_pp": 17.15,
+    "bolsonaro_2022_1t": 37766242,
+    "bolsonaro_2022_1t_pct": 49.9,
+    "bolsonaro_2022_2t": 43315802,
+    "bolsonaro_2022_2t_pct": 56.71,
+    "lula_2022_1t": 30812802,
+    "lula_2022_1t_pct": 40.71,
+    "lula_2022_2t": 33067943,
+    "lula_2022_2t_pct": 43.29,
+    "flavio_menos_bolsonaro_1t_pp": 4.11,
+    "flavio_menos_bolsonaro_2t_pp": -2.69,
+    "flavio_menos_bolsonaro_2t_votos": -2763609,
+    "lula_menos_lula_2022_1t_pp": -3.85,
+    "lula_menos_lula_2022_1t_votos": -3135837,
+    "lula_menos_lula_2022_2t_pp": -6.43,
+    "ja_supera_bolsonaro_2t": false,
+    "estoque_flavio": 2055773,
+    "estoque_lula": 4907878,
+    "deficit_votos_flavio": 2763609,
+    "ufs": [
+     "DF",
+     "ES",
+     "GO",
+     "MG",
+     "MS",
+     "MT",
+     "PR",
+     "RJ",
+     "RS",
+     "SC",
+     "SP"
+    ],
+    "estoque_flavio_soma_ufs": 2116164,
+    "estoque_lula_soma_ufs": 4848822
+   }
+  },
+  "brasil_sem_exterior": {
+   "uf": "Brasil sem exterior",
+   "regiao": "Brasil sem exterior",
+   "eleitores_2026": 157828968,
+   "comparecimento_2026_pct": 79.16,
+   "comparecimento_2022_1t_pct": 79.21,
+   "comparecimento_2022_2t_pct": 79.57,
+   "validos_2026": 118969906,
+   "flavio": 55960603,
+   "flavio_pct": 47.04,
+   "lula": 53722151,
+   "lula_pct": 45.16,
+   "terceiros": 9287152,
+   "terceiros_pct": 7.81,
+   "margem_votos": 2238452,
+   "margem_pp": 1.88,
+   "bolsonaro_2022_1t": 50949797,
+   "bolsonaro_2022_1t_pct": 43.2,
+   "bolsonaro_2022_2t": 58061090,
+   "bolsonaro_2022_2t_pct": 49.1,
+   "lula_2022_1t": 57120571,
+   "lula_2022_1t_pct": 48.43,
+   "lula_2022_2t": 60193094,
+   "lula_2022_2t_pct": 50.9,
+   "flavio_menos_bolsonaro_1t_pp": 3.84,
+   "flavio_menos_bolsonaro_2t_pp": -2.06,
+   "flavio_menos_bolsonaro_2t_votos": -2100487,
+   "lula_menos_lula_2022_1t_pp": -3.28,
+   "lula_menos_lula_2022_1t_votos": -3398420,
+   "lula_menos_lula_2022_2t_pp": -5.75,
+   "ja_supera_bolsonaro_2t": false,
+   "estoque_flavio": 2437146,
+   "estoque_lula": 6794135,
+   "deficit_votos_flavio": 2100487,
+   "ufs": [
+    "AC",
+    "AL",
+    "AM",
+    "AP",
+    "BA",
+    "CE",
+    "DF",
+    "ES",
+    "GO",
+    "MA",
+    "MG",
+    "MS",
+    "MT",
+    "PA",
+    "PB",
+    "PE",
+    "PI",
+    "PR",
+    "RJ",
+    "RN",
+    "RO",
+    "RR",
+    "RS",
+    "SC",
+    "SE",
+    "SP",
+    "TO"
+   ]
+  },
+  "ja_supera_bolsonaro_2t": [
+   "MA",
+   "TO",
+   "CE",
+   "PI",
+   "BA",
+   "MT"
+  ],
+  "abaixo_de_bolsonaro_2t": [
+   "DF",
+   "AC",
+   "AP",
+   "GO",
+   "RR",
+   "AM",
+   "RJ",
+   "SP",
+   "ES",
+   "RO",
+   "SC",
+   "PR",
+   "SE",
+   "PE",
+   "MG",
+   "MS",
+   "AL",
+   "PA",
+   "RS",
+   "PB",
+   "RN"
+  ],
+  "estoque": {
+   "total_ufs": 2479174,
+   "total_lula_ufs": 7045377,
+   "top_ufs": [
+    {
+     "uf": "SP",
+     "regiao": "Centro-Sul",
+     "estoque_flavio": 851320,
+     "flavio_pct": 51.93,
+     "bolsonaro_2022_2t_pct": 55.24,
+     "bolsonaro_2022_2t": 14216587,
+     "flavio_menos_bolsonaro_2t_votos": -1294564
+    },
+    {
+     "uf": "RJ",
+     "regiao": "Centro-Sul",
+     "estoque_flavio": 336114,
+     "flavio_pct": 53.01,
+     "bolsonaro_2022_2t_pct": 56.53,
+     "bolsonaro_2022_2t": 5403894,
+     "flavio_menos_bolsonaro_2t_votos": -437050
+    },
+    {
+     "uf": "MG",
+     "regiao": "Centro-Sul",
+     "estoque_flavio": 192004,
+     "flavio_pct": 48.24,
+     "bolsonaro_2022_2t_pct": 49.8,
+     "bolsonaro_2022_2t": 6141310,
+     "flavio_menos_bolsonaro_2t_votos": -363762
+    },
+    {
+     "uf": "GO",
+     "regiao": "Centro-Sul",
+     "estoque_flavio": 190827,
+     "flavio_pct": 53.6,
+     "bolsonaro_2022_2t_pct": 58.71,
+     "bolsonaro_2022_2t": 2193041,
+     "flavio_menos_bolsonaro_2t_votos": -141153
+    },
+    {
+     "uf": "PR",
+     "regiao": "Centro-Sul",
+     "estoque_flavio": 165646,
+     "flavio_pct": 59.91,
+     "bolsonaro_2022_2t_pct": 62.4,
+     "bolsonaro_2022_2t": 4159343,
+     "flavio_menos_bolsonaro_2t_votos": -213998
+    },
+    {
+     "uf": "DF",
+     "regiao": "Centro-Sul",
+     "estoque_flavio": 132835,
+     "flavio_pct": 51.31,
+     "bolsonaro_2022_2t_pct": 58.81,
+     "bolsonaro_2022_2t": 1041331,
+     "flavio_menos_bolsonaro_2t_votos": -131715
+    },
+    {
+     "uf": "SC",
+     "regiao": "Centro-Sul",
+     "estoque_flavio": 115163,
+     "flavio_pct": 66.65,
+     "bolsonaro_2022_2t_pct": 69.27,
+     "bolsonaro_2022_2t": 3047630,
+     "flavio_menos_bolsonaro_2t_votos": -47610
+    },
+    {
+     "uf": "PE",
+     "regiao": "Nordeste",
+     "estoque_flavio": 110827,
+     "flavio_pct": 31.03,
+     "bolsonaro_2022_2t_pct": 33.07,
+     "bolsonaro_2022_2t": 1798832,
+     "flavio_menos_bolsonaro_2t_votos": -60789
+    },
+    {
+     "uf": "AM",
+     "regiao": "Norte",
+     "estoque_flavio": 76783,
+     "flavio_pct": 45.0,
+     "bolsonaro_2022_2t_pct": 48.9,
+     "bolsonaro_2022_2t": 961741,
+     "flavio_menos_bolsonaro_2t_votos": 15023
+    },
+    {
+     "uf": "ES",
+     "regiao": "Centro-Sul",
+     "estoque_flavio": 72051,
+     "flavio_pct": 54.78,
+     "bolsonaro_2022_2t_pct": 58.04,
+     "bolsonaro_2022_2t": 1282145,
+     "flavio_menos_bolsonaro_2t_votos": -48951
+    }
+   ],
+   "top5_ufs_parcela_pct": 70.02,
+   "total_municipios": 3076825,
+   "capitais": 1367091,
+   "capitais_pct": 44.43,
+   "municipios_com_estoque": 1831,
+   "municipios_comparados": 5570,
+   "top_municipios": [
+    {
+     "uf": "SP",
+     "municipio": "SÃO PAULO",
+     "capital": true,
+     "flavio": 2760747,
+     "flavio_pct": 42.13,
+     "lula": 3052349,
+     "lula_pct": 46.58,
+     "bolsonaro_2022_1t_pct": 37.99,
+     "bolsonaro_2022_2t": 3191484,
+     "bolsonaro_2022_2t_pct": 46.46,
+     "lula_2022_1t": 3276512,
+     "lula_2022_1t_pct": 47.54,
+     "estoque_flavio": 297358
+    },
+    {
+     "uf": "RJ",
+     "municipio": "RIO DE JANEIRO",
+     "capital": true,
+     "flavio": 1662354,
+     "flavio_pct": 47.88,
+     "lula": 1524517,
+     "lula_pct": 43.91,
+     "bolsonaro_2022_1t_pct": 47.0,
+     "bolsonaro_2022_2t": 1929209,
+     "bolsonaro_2022_2t_pct": 52.66,
+     "lula_2022_1t": 1568485,
+     "lula_2022_1t_pct": 43.47,
+     "estoque_flavio": 175167
+    },
+    {
+     "uf": "DF",
+     "municipio": "BRASÍLIA",
+     "capital": true,
+     "flavio": 909616,
+     "flavio_pct": 51.31,
+     "lula": 675627,
+     "lula_pct": 38.11,
+     "bolsonaro_2022_1t_pct": 51.65,
+     "bolsonaro_2022_2t": 1041331,
+     "bolsonaro_2022_2t_pct": 58.81,
+     "lula_2022_1t": 649534,
+     "lula_2022_1t_pct": 36.85,
+     "estoque_flavio": 132835
+    },
+    {
+     "uf": "MG",
+     "municipio": "BELO HORIZONTE",
+     "capital": true,
+     "flavio": 690960,
+     "flavio_pct": 48.3,
+     "lula": 592037,
+     "lula_pct": 41.39,
+     "bolsonaro_2022_1t_pct": 46.6,
+     "bolsonaro_2022_2t": 834548,
+     "bolsonaro_2022_2t_pct": 54.25,
+     "lula_2022_1t": 638002,
+     "lula_2022_1t_pct": 42.53,
+     "estoque_flavio": 91511
+    },
+    {
+     "uf": "PR",
+     "municipio": "CURITIBA",
+     "capital": true,
+     "flavio": 628721,
+     "flavio_pct": 57.5,
+     "lula": 332099,
+     "lula_pct": 30.37,
+     "bolsonaro_2022_1t_pct": 55.26,
+     "bolsonaro_2022_2t": 720322,
+     "bolsonaro_2022_2t_pct": 64.78,
+     "lula_2022_1t": 348166,
+     "lula_2022_1t_pct": 31.42,
+     "estoque_flavio": 80927
+    },
+    {
+     "uf": "AM",
+     "municipio": "MANAUS",
+     "capital": true,
+     "flavio": 641864,
+     "flavio_pct": 54.28,
+     "lula": 439027,
+     "lula_pct": 37.13,
+     "bolsonaro_2022_1t_pct": 53.55,
+     "bolsonaro_2022_2t": 692580,
+     "bolsonaro_2022_2t_pct": 61.28,
+     "lula_2022_1t": 430562,
+     "lula_2022_1t_pct": 37.02,
+     "estoque_flavio": 79086
+    },
+    {
+     "uf": "GO",
+     "municipio": "GOIÂNIA",
+     "capital": true,
+     "flavio": 432608,
+     "flavio_pct": 54.68,
+     "lula": 223219,
+     "lula_pct": 28.22,
+     "bolsonaro_2022_1t_pct": 56.09,
+     "bolsonaro_2022_2t": 513018,
+     "bolsonaro_2022_2t_pct": 63.95,
+     "lula_2022_1t": 262845,
+     "lula_2022_1t_pct": 33.08,
+     "estoque_flavio": 74343
+    },
+    {
+     "uf": "PE",
+     "municipio": "RECIFE",
+     "capital": true,
+     "flavio": 377268,
+     "flavio_pct": 38.37,
+     "lula": 543548,
+     "lula_pct": 55.29,
+     "bolsonaro_2022_1t_pct": 39.22,
+     "bolsonaro_2022_2t": 433317,
+     "bolsonaro_2022_2t_pct": 43.68,
+     "lula_2022_1t": 538562,
+     "lula_2022_1t_pct": 54.03,
+     "estoque_flavio": 52646
+    },
+    {
+     "uf": "PA",
+     "municipio": "BELÉM",
+     "capital": true,
+     "flavio": 361377,
+     "flavio_pct": 43.74,
+     "lula": 396570,
+     "lula_pct": 48.0,
+     "bolsonaro_2022_1t_pct": 43.21,
+     "bolsonaro_2022_2t": 427051,
+     "bolsonaro_2022_2t_pct": 49.72,
+     "lula_2022_1t": 392207,
+     "lula_2022_1t_pct": 45.74,
+     "estoque_flavio": 51375
+    },
+    {
+     "uf": "RS",
+     "municipio": "PORTO ALEGRE",
+     "capital": true,
+     "flavio": 325139,
+     "flavio_pct": 41.86,
+     "lula": 377252,
+     "lula_pct": 48.57,
+     "bolsonaro_2022_1t_pct": 39.11,
+     "bolsonaro_2022_2t": 380499,
+     "bolsonaro_2022_2t_pct": 46.5,
+     "lula_2022_1t": 412553,
+     "lula_2022_1t_pct": 49.83,
+     "estoque_flavio": 37981
+    },
+    {
+     "uf": "CE",
+     "municipio": "FORTALEZA",
+     "capital": true,
+     "flavio": 586251,
+     "flavio_pct": 39.34,
+     "lula": 797002,
+     "lula_pct": 53.48,
+     "bolsonaro_2022_1t_pct": 35.17,
+     "bolsonaro_2022_2t": 633009,
+     "bolsonaro_2022_2t_pct": 41.82,
+     "lula_2022_1t": 802009,
+     "lula_2022_1t_pct": 53.2,
+     "estoque_flavio": 37634
+    },
+    {
+     "uf": "BA",
+     "municipio": "SALVADOR",
+     "capital": true,
+     "flavio": 391188,
+     "flavio_pct": 27.03,
+     "lula": 944358,
+     "lula_pct": 65.26,
+     "bolsonaro_2022_1t_pct": 24.07,
+     "bolsonaro_2022_2t": 451131,
+     "bolsonaro_2022_2t_pct": 29.27,
+     "lula_2022_1t": 1022728,
+     "lula_2022_1t_pct": 66.99,
+     "estoque_flavio": 34527
+    },
+    {
+     "uf": "SP",
+     "municipio": "GUARULHOS",
+     "capital": false,
+     "flavio": 351178,
+     "flavio_pct": 49.22,
+     "lula": 286898,
+     "lula_pct": 40.21,
+     "bolsonaro_2022_1t_pct": 45.46,
+     "bolsonaro_2022_2t": 391234,
+     "bolsonaro_2022_2t_pct": 53.67,
+     "lula_2022_1t": 311756,
+     "lula_2022_1t_pct": 42.79,
+     "estoque_flavio": 32449
+    },
+    {
+     "uf": "SP",
+     "municipio": "CAMPINAS",
+     "capital": false,
+     "flavio": 329733,
+     "flavio_pct": 52.07,
+     "lula": 241972,
+     "lula_pct": 38.21,
+     "bolsonaro_2022_1t_pct": 49.07,
+     "bolsonaro_2022_2t": 368251,
+     "bolsonaro_2022_2t_pct": 56.22,
+     "lula_2022_1t": 259973,
+     "lula_2022_1t_pct": 39.78,
+     "estoque_flavio": 27161
+    },
+    {
+     "uf": "PR",
+     "municipio": "LONDRINA",
+     "capital": false,
+     "flavio": 195008,
+     "flavio_pct": 65.15,
+     "lula": 72432,
+     "lula_pct": 24.2,
+     "bolsonaro_2022_1t_pct": 64.33,
+     "bolsonaro_2022_2t": 225349,
+     "bolsonaro_2022_2t_pct": 72.86,
+     "lula_2022_1t": 74610,
+     "lula_2022_1t_pct": 24.47,
+     "estoque_flavio": 23862
+    },
+    {
+     "uf": "SC",
+     "municipio": "JOINVILLE",
+     "capital": false,
+     "flavio": 246309,
+     "flavio_pct": 69.8,
+     "lula": 72919,
+     "lula_pct": 20.66,
+     "bolsonaro_2022_1t_pct": 68.98,
+     "bolsonaro_2022_2t": 268079,
+     "bolsonaro_2022_2t_pct": 76.6,
+     "lula_2022_1t": 74282,
+     "lula_2022_1t_pct": 21.43,
+     "estoque_flavio": 23797
+    },
+    {
+     "uf": "AL",
+     "municipio": "MACEIÓ",
+     "capital": true,
+     "flavio": 259789,
+     "flavio_pct": 52.36,
+     "lula": 203850,
+     "lula_pct": 41.09,
+     "bolsonaro_2022_1t_pct": 49.59,
+     "bolsonaro_2022_2t": 273549,
+     "bolsonaro_2022_2t_pct": 57.18,
+     "lula_2022_1t": 195714,
+     "lula_2022_1t_pct": 40.43,
+     "estoque_flavio": 23018
+    },
+    {
+     "uf": "SP",
+     "municipio": "SÃO JOSÉ DOS CAMPOS",
+     "capital": false,
+     "flavio": 240721,
+     "flavio_pct": 57.35,
+     "lula": 136451,
+     "lula_pct": 32.51,
+     "bolsonaro_2022_1t_pct": 54.6,
+     "bolsonaro_2022_2t": 267615,
+     "bolsonaro_2022_2t_pct": 62.58,
+     "lula_2022_1t": 143732,
+     "lula_2022_1t_pct": 33.58,
+     "estoque_flavio": 22367
+    },
+    {
+     "uf": "SP",
+     "municipio": "SANTO ANDRÉ",
+     "capital": false,
+     "flavio": 195045,
+     "flavio_pct": 47.21,
+     "lula": 170225,
+     "lula_pct": 41.2,
+     "bolsonaro_2022_1t_pct": 43.42,
+     "bolsonaro_2022_2t": 225767,
+     "bolsonaro_2022_2t_pct": 52.13,
+     "lula_2022_1t": 185501,
+     "lula_2022_1t_pct": 42.66,
+     "estoque_flavio": 21302
+    },
+    {
+     "uf": "SP",
+     "municipio": "SÃO BERNARDO DO CAMPO",
+     "capital": false,
+     "flavio": 192478,
+     "flavio_pct": 41.83,
+     "lula": 215232,
+     "lula_pct": 46.77,
+     "bolsonaro_2022_1t_pct": 38.02,
+     "bolsonaro_2022_2t": 224929,
+     "bolsonaro_2022_2t_pct": 46.17,
+     "lula_2022_1t": 240348,
+     "lula_2022_1t_pct": 49.17,
+     "estoque_flavio": 21157
+    }
+   ],
+   "top20_municipios_parcela_pct": 43.57,
+   "fora_da_conta": {
+    "sem_2022": [
+     {
+      "uf": "MT",
+      "municipio": "BOA ESPERANÇA DO NORTE",
+      "codigo_tse": "73709"
+     }
+    ],
+    "arquivos_incompletos": 42
+   }
+  },
+  "nordeste": {
+   "capitais_x_interior": {
+    "capitais": {
+     "flavio": 2529176,
+     "lula": 3736840,
+     "validos": 6763172,
+     "bolsonaro_2022_1t": 2394790,
+     "lula_2022_1t": 3825198,
+     "validos_2022_1t": 6854029,
+     "bolsonaro_2022_2t": 2779970,
+     "lula_2022_2t": 4082091,
+     "estoque_flavio": 224346,
+     "municipios": 9,
+     "flavio_pct": 37.4,
+     "lula_pct": 55.25,
+     "bolsonaro_2022_1t_pct": 34.94,
+     "lula_2022_1t_pct": 55.81,
+     "bolsonaro_2022_2t_pct": 40.51,
+     "lula_2022_2t_pct": 59.49,
+     "terceiros_2026": 497156,
+     "terceiros_2022_1t": 634041,
+     "flavio_menos_bolsonaro_1t_pp": 2.46,
+     "lula_menos_lula_2022_1t_pp": -0.56,
+     "lula_menos_lula_2022_1t_votos": -88358,
+     "flavio_menos_bolsonaro_1t_votos": 134386,
+     "saldo_bolsonaro_entre_turnos_2022": 128287,
+     "taxa_saldo_2022_por_terceiro": 0.2023,
+     "saldo_analogo_2026": 100591
+    },
+    "interior": {
+     "flavio": 7865657,
+     "lula": 17746416,
+     "validos": 26925396,
+     "bolsonaro_2022_1t": 6392604,
+     "lula_2022_1t": 17927941,
+     "validos_2022_1t": 25727884,
+     "bolsonaro_2022_2t": 7182977,
+     "lula_2022_2t": 18452876,
+     "estoque_flavio": 154450,
+     "municipios": 1785,
+     "flavio_pct": 29.21,
+     "lula_pct": 65.91,
+     "bolsonaro_2022_1t_pct": 24.85,
+     "lula_2022_1t_pct": 69.68,
+     "bolsonaro_2022_2t_pct": 28.02,
+     "lula_2022_2t_pct": 71.98,
+     "terceiros_2026": 1313323,
+     "terceiros_2022_1t": 1407339,
+     "flavio_menos_bolsonaro_1t_pp": 4.36,
+     "lula_menos_lula_2022_1t_pp": -3.77,
+     "lula_menos_lula_2022_1t_votos": -181525,
+     "flavio_menos_bolsonaro_1t_votos": 1473053,
+     "saldo_bolsonaro_entre_turnos_2022": 265438,
+     "taxa_saldo_2022_por_terceiro": 0.1886,
+     "saldo_analogo_2026": 247706
+    }
+   },
+   "capitais": [
+    {
+     "uf": "PE",
+     "municipio": "RECIFE",
+     "capital": true,
+     "flavio": 377268,
+     "flavio_pct": 38.37,
+     "lula": 543548,
+     "lula_pct": 55.29,
+     "bolsonaro_2022_1t_pct": 39.22,
+     "bolsonaro_2022_2t": 433317,
+     "bolsonaro_2022_2t_pct": 43.68,
+     "lula_2022_1t": 538562,
+     "lula_2022_1t_pct": 54.03,
+     "estoque_flavio": 52646
+    },
+    {
+     "uf": "CE",
+     "municipio": "FORTALEZA",
+     "capital": true,
+     "flavio": 586251,
+     "flavio_pct": 39.34,
+     "lula": 797002,
+     "lula_pct": 53.48,
+     "bolsonaro_2022_1t_pct": 35.17,
+     "bolsonaro_2022_2t": 633009,
+     "bolsonaro_2022_2t_pct": 41.82,
+     "lula_2022_1t": 802009,
+     "lula_2022_1t_pct": 53.2,
+     "estoque_flavio": 37634
+    },
+    {
+     "uf": "BA",
+     "municipio": "SALVADOR",
+     "capital": true,
+     "flavio": 391188,
+     "flavio_pct": 27.03,
+     "lula": 944358,
+     "lula_pct": 65.26,
+     "bolsonaro_2022_1t_pct": 24.07,
+     "bolsonaro_2022_2t": 451131,
+     "bolsonaro_2022_2t_pct": 29.27,
+     "lula_2022_1t": 1022728,
+     "lula_2022_1t_pct": 66.99,
+     "estoque_flavio": 34527
+    },
+    {
+     "uf": "AL",
+     "municipio": "MACEIÓ",
+     "capital": true,
+     "flavio": 259789,
+     "flavio_pct": 52.36,
+     "lula": 203850,
+     "lula_pct": 41.09,
+     "bolsonaro_2022_1t_pct": 49.59,
+     "bolsonaro_2022_2t": 273549,
+     "bolsonaro_2022_2t_pct": 57.18,
+     "lula_2022_1t": 195714,
+     "lula_2022_1t_pct": 40.43,
+     "estoque_flavio": 23018
+    },
+    {
+     "uf": "PB",
+     "municipio": "JOÃO PESSOA",
+     "capital": true,
+     "flavio": 215086,
+     "flavio_pct": 45.67,
+     "lula": 219023,
+     "lula_pct": 46.5,
+     "bolsonaro_2022_1t_pct": 44.48,
+     "bolsonaro_2022_2t": 228326,
+     "bolsonaro_2022_2t_pct": 49.9,
+     "lula_2022_1t": 217243,
+     "lula_2022_1t_pct": 47.38,
+     "estoque_flavio": 19356
+    },
+    {
+     "uf": "SE",
+     "municipio": "ARACAJU",
+     "capital": true,
+     "flavio": 125252,
+     "flavio_pct": 37.31,
+     "lula": 181481,
+     "lula_pct": 54.07,
+     "bolsonaro_2022_1t_pct": 37.08,
+     "bolsonaro_2022_2t": 142489,
+     "bolsonaro_2022_2t_pct": 42.74,
+     "lula_2022_1t": 176981,
+     "lula_2022_1t_pct": 52.56,
+     "estoque_flavio": 18098
+    },
+    {
+     "uf": "MA",
+     "municipio": "SÃO LUÍS",
+     "capital": true,
+     "flavio": 229253,
+     "flavio_pct": 37.02,
+     "lula": 337598,
+     "lula_pct": 54.51,
+     "bolsonaro_2022_1t_pct": 34.4,
+     "bolsonaro_2022_2t": 238285,
+     "bolsonaro_2022_2t_pct": 39.62,
+     "lula_2022_1t": 345123,
+     "lula_2022_1t_pct": 56.5,
+     "estoque_flavio": 15660
+    },
+    {
+     "uf": "RN",
+     "municipio": "NATAL",
+     "capital": true,
+     "flavio": 192739,
+     "flavio_pct": 44.17,
+     "lula": 213790,
+     "lula_pct": 48.99,
+     "bolsonaro_2022_1t_pct": 42.01,
+     "bolsonaro_2022_2t": 219306,
+     "bolsonaro_2022_2t_pct": 47.04,
+     "lula_2022_1t": 225529,
+     "lula_2022_1t_pct": 50.15,
+     "estoque_flavio": 13401
+    },
+    {
+     "uf": "PI",
+     "municipio": "TERESINA",
+     "capital": true,
+     "flavio": 152350,
+     "flavio_pct": 31.46,
+     "lula": 296190,
+     "lula_pct": 61.17,
+     "bolsonaro_2022_1t_pct": 28.63,
+     "bolsonaro_2022_2t": 160558,
+     "bolsonaro_2022_2t_pct": 33.56,
+     "lula_2022_1t": 301309,
+     "lula_2022_1t_pct": 62.37,
+     "estoque_flavio": 10006
+    }
+   ],
+   "ufs_queda_lula": [
+    {
+     "uf": "MA",
+     "lula_pct": 63.99,
+     "lula_2022_1t_pct": 68.84,
+     "lula_menos_lula_2022_1t_pp": -4.85,
+     "lula_menos_lula_2022_1t_votos": -37153,
+     "flavio_pct": 30.9,
+     "bolsonaro_2022_1t_pct": 26.02,
+     "flavio_menos_bolsonaro_1t_pp": 4.88,
+     "ja_supera_bolsonaro_2t": true
+    },
+    {
+     "uf": "BA",
+     "lula_pct": 66.17,
+     "lula_2022_1t_pct": 69.73,
+     "lula_menos_lula_2022_1t_pp": -3.55,
+     "lula_menos_lula_2022_1t_votos": -208310,
+     "flavio_pct": 28.53,
+     "bolsonaro_2022_1t_pct": 24.31,
+     "flavio_menos_bolsonaro_1t_pp": 4.22,
+     "ja_supera_bolsonaro_2t": true
+    },
+    {
+     "uf": "PI",
+     "lula_pct": 70.99,
+     "lula_2022_1t_pct": 74.25,
+     "lula_menos_lula_2022_1t_pp": -3.26,
+     "lula_menos_lula_2022_1t_votos": 5702,
+     "flavio_pct": 24.09,
+     "bolsonaro_2022_1t_pct": 19.9,
+     "flavio_menos_bolsonaro_1t_pp": 4.19,
+     "ja_supera_bolsonaro_2t": true
+    },
+    {
+     "uf": "RN",
+     "lula_pct": 59.75,
+     "lula_2022_1t_pct": 62.98,
+     "lula_menos_lula_2022_1t_pp": -3.23,
+     "lula_menos_lula_2022_1t_votos": -26216,
+     "flavio_pct": 34.77,
+     "bolsonaro_2022_1t_pct": 31.02,
+     "flavio_menos_bolsonaro_1t_pp": 3.75,
+     "ja_supera_bolsonaro_2t": false
+    },
+    {
+     "uf": "PB",
+     "lula_pct": 61.31,
+     "lula_2022_1t_pct": 64.21,
+     "lula_menos_lula_2022_1t_pp": -2.9,
+     "lula_menos_lula_2022_1t_votos": -13741,
+     "flavio_pct": 33.07,
+     "bolsonaro_2022_1t_pct": 29.62,
+     "flavio_menos_bolsonaro_1t_pp": 3.45,
+     "ja_supera_bolsonaro_2t": false
+    },
+    {
+     "uf": "CE",
+     "lula_pct": 63.29,
+     "lula_2022_1t_pct": 65.91,
+     "lula_menos_lula_2022_1t_pp": -2.62,
+     "lula_menos_lula_2022_1t_votos": -23092,
+     "flavio_pct": 31.27,
+     "bolsonaro_2022_1t_pct": 25.38,
+     "flavio_menos_bolsonaro_1t_pp": 5.9,
+     "ja_supera_bolsonaro_2t": true
+    },
+    {
+     "uf": "PE",
+     "lula_pct": 63.45,
+     "lula_2022_1t_pct": 65.27,
+     "lula_menos_lula_2022_1t_pp": -1.81,
+     "lula_menos_lula_2022_1t_votos": -4351,
+     "flavio_pct": 31.03,
+     "bolsonaro_2022_1t_pct": 29.91,
+     "flavio_menos_bolsonaro_1t_pp": 1.12,
+     "ja_supera_bolsonaro_2t": false
+    },
+    {
+     "uf": "AL",
+     "lula_pct": 54.73,
+     "lula_2022_1t_pct": 56.5,
+     "lula_menos_lula_2022_1t_pp": -1.77,
+     "lula_menos_lula_2022_1t_votos": 21303,
+     "flavio_pct": 40.45,
+     "bolsonaro_2022_1t_pct": 36.05,
+     "flavio_menos_bolsonaro_1t_pp": 4.4,
+     "ja_supera_bolsonaro_2t": false
+    },
+    {
+     "uf": "SE",
+     "lula_pct": 62.75,
+     "lula_2022_1t_pct": 63.82,
+     "lula_menos_lula_2022_1t_pp": -1.08,
+     "lula_menos_lula_2022_1t_votos": 27303,
+     "flavio_pct": 30.63,
+     "bolsonaro_2022_1t_pct": 29.16,
+     "flavio_menos_bolsonaro_1t_pp": 1.47,
+     "ja_supera_bolsonaro_2t": false
+    }
+   ],
+   "municipios_queda_lula_votos": [
+    {
+     "uf": "BA",
+     "municipio": "SALVADOR",
+     "capital": true,
+     "lula": 944358,
+     "lula_2022_1t": 1022728,
+     "variacao_votos": -78370,
+     "lula_pct": 65.26,
+     "lula_2022_1t_pct": 66.99
+    },
+    {
+     "uf": "BA",
+     "municipio": "FEIRA DE SANTANA",
+     "capital": false,
+     "lula": 194272,
+     "lula_2022_1t": 211813,
+     "variacao_votos": -17541,
+     "lula_pct": 57.13,
+     "lula_2022_1t_pct": 61.7
+    },
+    {
+     "uf": "RN",
+     "municipio": "NATAL",
+     "capital": true,
+     "lula": 213790,
+     "lula_2022_1t": 225529,
+     "variacao_votos": -11739,
+     "lula_pct": 48.99,
+     "lula_2022_1t_pct": 50.15
+    },
+    {
+     "uf": "MA",
+     "municipio": "SÃO LUÍS",
+     "capital": true,
+     "lula": 337598,
+     "lula_2022_1t": 345123,
+     "variacao_votos": -7525,
+     "lula_pct": 54.51,
+     "lula_2022_1t_pct": 56.5
+    },
+    {
+     "uf": "PI",
+     "municipio": "TERESINA",
+     "capital": true,
+     "lula": 296190,
+     "lula_2022_1t": 301309,
+     "variacao_votos": -5119,
+     "lula_pct": 61.17,
+     "lula_2022_1t_pct": 62.37
+    },
+    {
+     "uf": "CE",
+     "municipio": "FORTALEZA",
+     "capital": true,
+     "lula": 797002,
+     "lula_2022_1t": 802009,
+     "variacao_votos": -5007,
+     "lula_pct": 53.48,
+     "lula_2022_1t_pct": 53.2
+    },
+    {
+     "uf": "BA",
+     "municipio": "BARREIRAS",
+     "capital": false,
+     "lula": 43434,
+     "lula_2022_1t": 47952,
+     "variacao_votos": -4518,
+     "lula_pct": 50.65,
+     "lula_2022_1t_pct": 58.05
+    },
+    {
+     "uf": "BA",
+     "municipio": "LAURO DE FREITAS",
+     "capital": false,
+     "lula": 70481,
+     "lula_2022_1t": 74506,
+     "variacao_votos": -4025,
+     "lula_pct": 59.06,
+     "lula_2022_1t_pct": 63.41
+    },
+    {
+     "uf": "MA",
+     "municipio": "BALSAS",
+     "capital": false,
+     "lula": 21256,
+     "lula_2022_1t": 25262,
+     "variacao_votos": -4006,
+     "lula_pct": 38.38,
+     "lula_2022_1t_pct": 51.65
+    },
+    {
+     "uf": "BA",
+     "municipio": "VITÓRIA DA CONQUISTA",
+     "capital": false,
+     "lula": 108011,
+     "lula_2022_1t": 111892,
+     "variacao_votos": -3881,
+     "lula_pct": 52.85,
+     "lula_2022_1t_pct": 55.4
+    }
+   ],
+   "municipios_ganho_flavio_votos": [
+    {
+     "uf": "CE",
+     "municipio": "FORTALEZA",
+     "capital": true,
+     "flavio": 586251,
+     "bolsonaro_2022_1t": 530162,
+     "variacao_votos": 56089,
+     "flavio_pct": 39.34,
+     "bolsonaro_2022_1t_pct": 35.17
+    },
+    {
+     "uf": "BA",
+     "municipio": "SALVADOR",
+     "capital": true,
+     "flavio": 391188,
+     "bolsonaro_2022_1t": 367452,
+     "variacao_votos": 23736,
+     "flavio_pct": 27.03,
+     "bolsonaro_2022_1t_pct": 24.07
+    },
+    {
+     "uf": "AL",
+     "municipio": "MACEIÓ",
+     "capital": true,
+     "flavio": 259789,
+     "bolsonaro_2022_1t": 240053,
+     "variacao_votos": 19736,
+     "flavio_pct": 52.36,
+     "bolsonaro_2022_1t_pct": 49.59
+    },
+    {
+     "uf": "MA",
+     "municipio": "SÃO LUÍS",
+     "capital": true,
+     "flavio": 229253,
+     "bolsonaro_2022_1t": 210140,
+     "variacao_votos": 19113,
+     "flavio_pct": 37.02,
+     "bolsonaro_2022_1t_pct": 34.4
+    },
+    {
+     "uf": "BA",
+     "municipio": "FEIRA DE SANTANA",
+     "capital": false,
+     "flavio": 121727,
+     "bolsonaro_2022_1t": 107271,
+     "variacao_votos": 14456,
+     "flavio_pct": 35.8,
+     "bolsonaro_2022_1t_pct": 31.25
+    },
+    {
+     "uf": "PI",
+     "municipio": "TERESINA",
+     "capital": true,
+     "flavio": 152350,
+     "bolsonaro_2022_1t": 138320,
+     "variacao_votos": 14030,
+     "flavio_pct": 31.46,
+     "bolsonaro_2022_1t_pct": 28.63
+    },
+    {
+     "uf": "CE",
+     "municipio": "CAUCAIA",
+     "capital": false,
+     "flavio": 76282,
+     "bolsonaro_2022_1t": 63209,
+     "variacao_votos": 13073,
+     "flavio_pct": 37.42,
+     "bolsonaro_2022_1t_pct": 32.45
+    },
+    {
+     "uf": "CE",
+     "municipio": "JUAZEIRO DO NORTE",
+     "capital": false,
+     "flavio": 42438,
+     "bolsonaro_2022_1t": 29937,
+     "variacao_votos": 12501,
+     "flavio_pct": 26.23,
+     "bolsonaro_2022_1t_pct": 19.91
+    },
+    {
+     "uf": "PE",
+     "municipio": "PETROLINA",
+     "capital": false,
+     "flavio": 63545,
+     "bolsonaro_2022_1t": 52261,
+     "variacao_votos": 11284,
+     "flavio_pct": 32.77,
+     "bolsonaro_2022_1t_pct": 28.42
+    },
+    {
+     "uf": "PB",
+     "municipio": "JOÃO PESSOA",
+     "capital": true,
+     "flavio": 215086,
+     "bolsonaro_2022_1t": 203971,
+     "variacao_votos": 11115,
+     "flavio_pct": 45.67,
+     "bolsonaro_2022_1t_pct": 44.48
+    }
+   ]
+  },
+  "terceiros_por_regiao": {
+   "Renan": {
+    "votos": {
+     "Nordeste": 529395,
+     "Norte": 177691,
+     "Centro-Sul": 1960221,
+     "Exterior": 8580
+    },
+    "pct": {
+     "Nordeste": 19.78,
+     "Norte": 6.64,
+     "Centro-Sul": 73.25,
+     "Exterior": 0.32
+    }
+   },
+   "Zema": {
+    "votos": {
+     "Nordeste": 28647,
+     "Norte": 8009,
+     "Centro-Sul": 286503,
+     "Exterior": 3329
+    },
+    "pct": {
+     "Nordeste": 8.77,
+     "Norte": 2.45,
+     "Centro-Sul": 87.75,
+     "Exterior": 1.02
+    }
+   },
+   "Caiado": {
+    "votos": {
+     "Nordeste": 390036,
+     "Norte": 137956,
+     "Centro-Sul": 2072448,
+     "Exterior": 4708
+    },
+    "pct": {
+     "Nordeste": 14.97,
+     "Norte": 5.3,
+     "Centro-Sul": 79.55,
+     "Exterior": 0.18
+    }
+   },
+   "Cury": {
+    "votos": {
+     "Nordeste": 818977,
+     "Norte": 291576,
+     "Centro-Sul": 2328282,
+     "Exterior": 9734
+    },
+    "pct": {
+     "Nordeste": 23.75,
+     "Norte": 8.45,
+     "Centro-Sul": 67.51,
+     "Exterior": 0.28
+    }
+   },
+   "Samara": {
+    "votos": {
+     "Nordeste": 18439,
+     "Norte": 8031,
+     "Centro-Sul": 95388,
+     "Exterior": 1053
+    },
+    "pct": {
+     "Nordeste": 15.0,
+     "Norte": 6.53,
+     "Centro-Sul": 77.61,
+     "Exterior": 0.86
+    }
+   }
+  }
+ },
+ "governadores": {
+  "nota": "Vão = votos do governador eleito menos votos de Flávio na mesma UF e na mesma urna. Teto endereçável, nunca transferência certa: parte do eleitorado do governador vota Lula por escolha medida.",
+  "aliados": [
+   {
+    "uf": "SP",
+    "governador": "TARCÍSIO",
+    "partido": "REPUBLICANOS",
+    "campo": "direita",
+    "st_tse": "Eleito",
+    "alinhado_lula": false,
+    "nota_alinhamento": null,
+    "governador_votos": 14491874,
+    "governador_pct": 62.65,
+    "validos_governador": 23130513,
+    "flavio_votos": 12922023,
+    "flavio_pct": 51.93,
+    "lula_votos": 9505413,
+    "lula_pct": 38.2,
+    "validos_presidente": 24882948,
+    "flavio_venceu_uf": true,
+    "vao_pp": 10.72,
+    "vao_votos": 1569851,
+    "municipios_governador_acima": 644,
+    "soma_vao_municipal_positivo": 1573850,
+    "top_municipios": [
+     {
+      "municipio": "SÃO PAULO",
+      "capital": true,
+      "governador": 3233696,
+      "flavio": 2760747,
+      "vao_votos": 472949,
+      "governador_pct": 52.76,
+      "flavio_pct": 42.13
+     },
+     {
+      "municipio": "GUARULHOS",
+      "capital": false,
+      "governador": 394365,
+      "flavio": 351178,
+      "vao_votos": 43187,
+      "governador_pct": 60.84,
+      "flavio_pct": 49.22
+     },
+     {
+      "municipio": "CAMPINAS",
+      "capital": false,
+      "governador": 367121,
+      "flavio": 329733,
+      "vao_votos": 37388,
+      "governador_pct": 61.94,
+      "flavio_pct": 52.07
+     },
+     {
+      "municipio": "SÃO BERNARDO DO CAMPO",
+      "capital": false,
+      "governador": 226482,
+      "flavio": 192478,
+      "vao_votos": 34004,
+      "governador_pct": 53.28,
+      "flavio_pct": 41.83
+     },
+     {
+      "municipio": "SÃO JOSÉ DOS CAMPOS",
+      "capital": false,
+      "governador": 273010,
+      "flavio": 240721,
+      "vao_votos": 32289,
+      "governador_pct": 68.78,
+      "flavio_pct": 57.35
+     }
+    ]
+   },
+   {
+    "uf": "PB",
+    "governador": "LUCAS RIBEIRO",
+    "partido": "PP",
+    "campo": "centro-direita",
+    "st_tse": "Eleito",
+    "alinhado_lula": true,
+    "nota_alinhamento": "vice de João Azevêdo (PSB), aliado de Lula",
+    "governador_votos": 1470252,
+    "governador_pct": 64.3,
+    "validos_governador": 2286622,
+    "flavio_votos": 831377,
+    "flavio_pct": 33.07,
+    "lula_votos": 1541127,
+    "lula_pct": 61.31,
+    "validos_presidente": 2513747,
+    "flavio_venceu_uf": false,
+    "vao_pp": 31.22,
+    "vao_votos": 638875,
+    "municipios_governador_acima": 222,
+    "soma_vao_municipal_positivo": 648771,
+    "top_municipios": [
+     {
+      "municipio": "CAMPINA GRANDE",
+      "capital": false,
+      "governador": 136341,
+      "flavio": 108991,
+      "vao_votos": 27350,
+      "governador_pct": 60.91,
+      "flavio_pct": 44.41
+     },
+     {
+      "municipio": "CAJAZEIRAS",
+      "capital": false,
+      "governador": 28307,
+      "flavio": 7508,
+      "vao_votos": 20799,
+      "governador_pct": 84.09,
+      "flavio_pct": 19.92
+     },
+     {
+      "municipio": "PATOS",
+      "capital": false,
+      "governador": 32930,
+      "flavio": 17681,
+      "vao_votos": 15249,
+      "governador_pct": 70.24,
+      "flavio_pct": 33.79
+     },
+     {
+      "municipio": "SOUSA",
+      "capital": false,
+      "governador": 26463,
+      "flavio": 11592,
+      "vao_votos": 14871,
+      "governador_pct": 75.19,
+      "flavio_pct": 30.09
+     },
+     {
+      "municipio": "MONTEIRO",
+      "capital": false,
+      "governador": 15785,
+      "flavio": 4647,
+      "vao_votos": 11138,
+      "governador_pct": 85.7,
+      "flavio_pct": 22.23
+     }
+    ]
+   },
+   {
+    "uf": "MG",
+    "governador": "CLEITINHO AZEVEDO",
+    "partido": "REPUBLICANOS",
+    "campo": "direita",
+    "st_tse": "Eleito",
+    "alinhado_lula": false,
+    "nota_alinhamento": null,
+    "governador_votos": 6321590,
+    "governador_pct": 55.4,
+    "validos_governador": 11411835,
+    "flavio_votos": 5777548,
+    "flavio_pct": 48.24,
+    "lula_votos": 5188936,
+    "lula_pct": 43.33,
+    "validos_presidente": 11976235,
+    "flavio_venceu_uf": true,
+    "vao_pp": 7.15,
+    "vao_votos": 544042,
+    "municipios_governador_acima": 774,
+    "soma_vao_municipal_positivo": 760621,
+    "top_municipios": [
+     {
+      "municipio": "DIVINÓPOLIS",
+      "capital": false,
+      "governador": 94198,
+      "flavio": 71478,
+      "vao_votos": 22720,
+      "governador_pct": 72.76,
+      "flavio_pct": 53.99
+     },
+     {
+      "municipio": "PATOS DE MINAS",
+      "capital": false,
+      "governador": 67990,
+      "flavio": 54527,
+      "vao_votos": 13463,
+      "governador_pct": 80.22,
+      "flavio_pct": 62.95
+     },
+     {
+      "municipio": "MINAS NOVAS",
+      "capital": false,
+      "governador": 9742,
+      "flavio": 3576,
+      "vao_votos": 6166,
+      "governador_pct": 71.26,
+      "flavio_pct": 26.14
+     },
+     {
+      "municipio": "ITUIUTABA",
+      "capital": false,
+      "governador": 31023,
+      "flavio": 25059,
+      "vao_votos": 5964,
+      "governador_pct": 59.46,
+      "flavio_pct": 45.34
+     },
+     {
+      "municipio": "PARACATU",
+      "capital": false,
+      "governador": 36089,
+      "flavio": 30159,
+      "vao_votos": 5930,
+      "governador_pct": 75.13,
+      "flavio_pct": 60.15
+     }
+    ]
+   },
+   {
+    "uf": "PA",
+    "governador": "DR. DANIEL",
+    "partido": "PODE",
+    "campo": "centro-direita",
+    "st_tse": "Eleito",
+    "alinhado_lula": false,
+    "nota_alinhamento": null,
+    "governador_votos": 2345721,
+    "governador_pct": 51.36,
+    "validos_governador": 4566828,
+    "flavio_votos": 2163957,
+    "flavio_pct": 44.5,
+    "lula_votos": 2427237,
+    "lula_pct": 49.91,
+    "validos_presidente": 4863172,
+    "flavio_venceu_uf": false,
+    "vao_pp": 6.87,
+    "vao_votos": 181764,
+    "municipios_governador_acima": 89,
+    "soma_vao_municipal_positivo": 232631,
+    "top_municipios": [
+     {
+      "municipio": "ANANINDEUA",
+      "capital": false,
+      "governador": 188972,
+      "flavio": 130954,
+      "vao_votos": 58018,
+      "governador_pct": 68.57,
+      "flavio_pct": 46.17
+     },
+     {
+      "municipio": "BELÉM",
+      "capital": true,
+      "governador": 375822,
+      "flavio": 361377,
+      "vao_votos": 14445,
+      "governador_pct": 47.65,
+      "flavio_pct": 43.74
+     },
+     {
+      "municipio": "ABAETETUBA",
+      "capital": false,
+      "governador": 33598,
+      "flavio": 24765,
+      "vao_votos": 8833,
+      "governador_pct": 34.47,
+      "flavio_pct": 24.07
+     },
+     {
+      "municipio": "CAMETÁ",
+      "capital": false,
+      "governador": 26042,
+      "flavio": 19380,
+      "vao_votos": 6662,
+      "governador_pct": 30.73,
+      "flavio_pct": 21.7
+     },
+     {
+      "municipio": "MARITUBA",
+      "capital": false,
+      "governador": 36879,
+      "flavio": 30495,
+      "vao_votos": 6384,
+      "governador_pct": 53.99,
+      "flavio_pct": 42.52
+     }
+    ]
+   },
+   {
+    "uf": "AL",
+    "governador": "JHC",
+    "partido": "PSDB",
+    "campo": "centro-direita",
+    "st_tse": null,
+    "alinhado_lula": false,
+    "nota_alinhamento": null,
+    "governador_votos": 891857,
+    "governador_pct": 52.2,
+    "validos_governador": 1708580,
+    "flavio_votos": 735718,
+    "flavio_pct": 40.45,
+    "lula_votos": 995459,
+    "lula_pct": 54.73,
+    "validos_presidente": 1818856,
+    "flavio_venceu_uf": false,
+    "vao_pp": 11.75,
+    "vao_votos": 156139,
+    "municipios_governador_acima": 86,
+    "soma_vao_municipal_positivo": 164358,
+    "top_municipios": [
+     {
+      "municipio": "MACEIÓ",
+      "capital": true,
+      "governador": 324632,
+      "flavio": 259789,
+      "vao_votos": 64843,
+      "governador_pct": 68.49,
+      "flavio_pct": 52.36
+     },
+     {
+      "municipio": "GIRAU DO PONCIANO",
+      "capital": false,
+      "governador": 9884,
+      "flavio": 4370,
+      "vao_votos": 5514,
+      "governador_pct": 51.69,
+      "flavio_pct": 21.12
+     },
+     {
+      "municipio": "SANTANA DO IPANEMA",
+      "capital": false,
+      "governador": 12223,
+      "flavio": 7218,
+      "vao_votos": 5005,
+      "governador_pct": 51.02,
+      "flavio_pct": 29.04
+     },
+     {
+      "municipio": "CRAÍBAS",
+      "capital": false,
+      "governador": 7847,
+      "flavio": 4159,
+      "vao_votos": 3688,
+      "governador_pct": 51.02,
+      "flavio_pct": 25.37
+     },
+     {
+      "municipio": "SÃO MIGUEL DOS CAMPOS",
+      "capital": false,
+      "governador": 19038,
+      "flavio": 15362,
+      "vao_votos": 3676,
+      "governador_pct": 63.64,
+      "flavio_pct": 48.22
+     }
+    ]
+   },
+   {
+    "uf": "MS",
+    "governador": "EDUARDO RIEDEL",
+    "partido": "PP",
+    "campo": "centro-direita",
+    "st_tse": "Eleito",
+    "alinhado_lula": false,
+    "nota_alinhamento": null,
+    "governador_votos": 914323,
+    "governador_pct": 67.07,
+    "validos_governador": 1363298,
+    "flavio_votos": 873351,
+    "flavio_pct": 58.6,
+    "lula_votos": 516855,
+    "lula_pct": 34.68,
+    "validos_presidente": 1490278,
+    "flavio_venceu_uf": true,
+    "vao_pp": 8.46,
+    "vao_votos": 40972,
+    "municipios_governador_acima": 65,
+    "soma_vao_municipal_positivo": 58475,
+    "top_municipios": [
+     {
+      "municipio": "CORUMBÁ",
+      "capital": false,
+      "governador": 29988,
+      "flavio": 24513,
+      "vao_votos": 5475,
+      "governador_pct": 65.95,
+      "flavio_pct": 49.38
+     },
+     {
+      "municipio": "MIRANDA",
+      "capital": false,
+      "governador": 8709,
+      "flavio": 5937,
+      "vao_votos": 2772,
+      "governador_pct": 64.81,
+      "flavio_pct": 42.04
+     },
+     {
+      "municipio": "AQUIDAUANA",
+      "capital": false,
+      "governador": 15407,
+      "flavio": 12723,
+      "vao_votos": 2684,
+      "governador_pct": 65.25,
+      "flavio_pct": 50.63
+     },
+     {
+      "municipio": "JAPORÃ",
+      "capital": false,
+      "governador": 3782,
+      "flavio": 1452,
+      "vao_votos": 2330,
+      "governador_pct": 79.74,
+      "flavio_pct": 29.84
+     },
+     {
+      "municipio": "DOURADOS",
+      "capital": false,
+      "governador": 81673,
+      "flavio": 79483,
+      "vao_votos": 2190,
+      "governador_pct": 69.47,
+      "flavio_pct": 61.7
+     }
+    ]
+   },
+   {
+    "uf": "RR",
+    "governador": "ARTHUR HENRIQUE",
+    "partido": "PL",
+    "campo": "direita",
+    "st_tse": "Eleito",
+    "alinhado_lula": false,
+    "nota_alinhamento": null,
+    "governador_votos": 220809,
+    "governador_pct": 69.13,
+    "validos_governador": 319413,
+    "flavio_votos": 231322,
+    "flavio_pct": 71.06,
+    "lula_votos": 74420,
+    "lula_pct": 22.86,
+    "validos_presidente": 325545,
+    "flavio_venceu_uf": true,
+    "vao_pp": -1.93,
+    "vao_votos": -10513,
+    "municipios_governador_acima": 2,
+    "soma_vao_municipal_positivo": 301,
+    "top_municipios": [
+     {
+      "municipio": "UIRAMUTÃ",
+      "capital": false,
+      "governador": 2591,
+      "flavio": 2327,
+      "vao_votos": 264,
+      "governador_pct": 34.15,
+      "flavio_pct": 29.85
+     },
+     {
+      "municipio": "PACARAIMA",
+      "capital": false,
+      "governador": 4656,
+      "flavio": 4619,
+      "vao_votos": 37,
+      "governador_pct": 59.67,
+      "flavio_pct": 58.17
+     },
+     {
+      "municipio": "SÃO JOÃO DA BALIZA",
+      "capital": false,
+      "governador": 3198,
+      "flavio": 3319,
+      "vao_votos": -121,
+      "governador_pct": 69.1,
+      "flavio_pct": 70.18
+     },
+     {
+      "municipio": "IRACEMA",
+      "capital": false,
+      "governador": 4180,
+      "flavio": 4384,
+      "vao_votos": -204,
+      "governador_pct": 70.88,
+      "flavio_pct": 73.27
+     },
+     {
+      "municipio": "BONFIM",
+      "capital": false,
+      "governador": 6219,
+      "flavio": 6564,
+      "vao_votos": -345,
+      "governador_pct": 64.21,
+      "flavio_pct": 66.36
+     }
+    ]
+   },
+   {
+    "uf": "SC",
+    "governador": "JORGINHO MELLO",
+    "partido": "PL",
+    "campo": "direita",
+    "st_tse": "Eleito",
+    "alinhado_lula": false,
+    "nota_alinhamento": null,
+    "governador_votos": 2942386,
+    "governador_pct": 68.98,
+    "validos_governador": 4265641,
+    "flavio_votos": 3000020,
+    "flavio_pct": 66.65,
+    "lula_votos": 1127168,
+    "lula_pct": 25.04,
+    "validos_presidente": 4500897,
+    "flavio_venceu_uf": true,
+    "vao_pp": 2.32,
+    "vao_votos": -57634,
+    "municipios_governador_acima": 134,
+    "soma_vao_municipal_positivo": 72729,
+    "top_municipios": [
+     {
+      "municipio": "JOINVILLE",
+      "capital": false,
+      "governador": 257528,
+      "flavio": 246309,
+      "vao_votos": 11219,
+      "governador_pct": 76.68,
+      "flavio_pct": 69.8
+     },
+     {
+      "municipio": "FLORIANÓPOLIS",
+      "capital": true,
+      "governador": 168064,
+      "flavio": 158954,
+      "vao_votos": 9110,
+      "governador_pct": 54.71,
+      "flavio_pct": 48.63
+     },
+     {
+      "municipio": "ITAJAÍ",
+      "capital": false,
+      "governador": 105490,
+      "flavio": 98583,
+      "vao_votos": 6907,
+      "governador_pct": 77.87,
+      "flavio_pct": 68.56
+     },
+     {
+      "municipio": "LAGES",
+      "capital": false,
+      "governador": 68229,
+      "flavio": 62339,
+      "vao_votos": 5890,
+      "governador_pct": 75.57,
+      "flavio_pct": 65.33
+     },
+     {
+      "municipio": "BLUMENAU",
+      "capital": false,
+      "governador": 147302,
+      "flavio": 145080,
+      "vao_votos": 2222,
+      "governador_pct": 73.79,
+      "flavio_pct": 68.83
+     }
+    ]
+   },
+   {
+    "uf": "RS",
+    "governador": "ZUCCO",
+    "partido": "PL",
+    "campo": "direita",
+    "st_tse": "Eleito",
+    "alinhado_lula": false,
+    "nota_alinhamento": null,
+    "governador_votos": 3516048,
+    "governador_pct": 58.05,
+    "validos_governador": 6057443,
+    "flavio_votos": 3573783,
+    "flavio_pct": 55.64,
+    "lula_votos": 2294759,
+    "lula_pct": 35.73,
+    "validos_presidente": 6423046,
+    "flavio_venceu_uf": true,
+    "vao_pp": 2.41,
+    "vao_votos": -57735,
+    "municipios_governador_acima": 95,
+    "soma_vao_municipal_positivo": 25452,
+    "top_municipios": [
+     {
+      "municipio": "PELOTAS",
+      "capital": false,
+      "governador": 79621,
+      "flavio": 77399,
+      "vao_votos": 2222,
+      "governador_pct": 47.12,
+      "flavio_pct": 42.09
+     },
+     {
+      "municipio": "CAXIAS DO SUL",
+      "capital": false,
+      "governador": 169000,
+      "flavio": 166880,
+      "vao_votos": 2120,
+      "governador_pct": 67.36,
+      "flavio_pct": 62.7
+     },
+     {
+      "municipio": "SÃO LEOPOLDO",
+      "capital": false,
+      "governador": 64702,
+      "flavio": 63155,
+      "vao_votos": 1547,
+      "governador_pct": 57.47,
+      "flavio_pct": 52.84
+     },
+     {
+      "municipio": "NOVO HAMBURGO",
+      "capital": false,
+      "governador": 85730,
+      "flavio": 84471,
+      "vao_votos": 1259,
+      "governador_pct": 68.1,
+      "flavio_pct": 63.86
+     },
+     {
+      "municipio": "CANOAS",
+      "capital": false,
+      "governador": 96280,
+      "flavio": 95134,
+      "vao_votos": 1146,
+      "governador_pct": 55.69,
+      "flavio_pct": 51.28
+     }
+    ]
+   },
+   {
+    "uf": "RO",
+    "governador": "MARCOS ROGÉRIO",
+    "partido": "PL",
+    "campo": "direita",
+    "st_tse": "Eleito",
+    "alinhado_lula": false,
+    "nota_alinhamento": null,
+    "governador_votos": 537370,
+    "governador_pct": 56.86,
+    "validos_governador": 945058,
+    "flavio_votos": 652988,
+    "flavio_pct": 67.45,
+    "lula_votos": 250667,
+    "lula_pct": 25.89,
+    "validos_presidente": 968059,
+    "flavio_venceu_uf": true,
+    "vao_pp": -10.59,
+    "vao_votos": -115618,
+    "municipios_governador_acima": 0,
+    "soma_vao_municipal_positivo": 0,
+    "top_municipios": [
+     {
+      "municipio": "NOVA UNIÃO",
+      "capital": false,
+      "governador": 2395,
+      "flavio": 2424,
+      "vao_votos": -29,
+      "governador_pct": 57.0,
+      "flavio_pct": 56.72
+     },
+     {
+      "municipio": "CACAULÂNDIA",
+      "capital": false,
+      "governador": 2229,
+      "flavio": 2278,
+      "vao_votos": -49,
+      "governador_pct": 74.77,
+      "flavio_pct": 75.11
+     },
+     {
+      "municipio": "VALE DO PARAÍSO",
+      "capital": false,
+      "governador": 2683,
+      "flavio": 2755,
+      "vao_votos": -72,
+      "governador_pct": 62.61,
+      "flavio_pct": 63.73
+     },
+     {
+      "municipio": "CUJUBIM",
+      "capital": false,
+      "governador": 6530,
+      "flavio": 6631,
+      "vao_votos": -101,
+      "governador_pct": 78.37,
+      "flavio_pct": 78.45
+     },
+     {
+      "municipio": "RIO CRESPO",
+      "capital": false,
+      "governador": 1825,
+      "flavio": 1981,
+      "vao_votos": -156,
+      "governador_pct": 70.06,
+      "flavio_pct": 75.35
+     }
+    ]
+   },
+   {
+    "uf": "MT",
+    "governador": "OTAVIANO PIVETTA",
+    "partido": "REPUBLICANOS",
+    "campo": "direita",
+    "st_tse": "Eleito",
+    "alinhado_lula": false,
+    "nota_alinhamento": null,
+    "governador_votos": 1128099,
+    "governador_pct": 60.77,
+    "validos_governador": 1856293,
+    "flavio_votos": 1298581,
+    "flavio_pct": 65.15,
+    "lula_votos": 581681,
+    "lula_pct": 29.18,
+    "validos_presidente": 1993288,
+    "flavio_venceu_uf": true,
+    "vao_pp": -4.38,
+    "vao_votos": -170482,
+    "municipios_governador_acima": 45,
+    "soma_vao_municipal_positivo": 17909,
+    "top_municipios": [
+     {
+      "municipio": "BARÃO DE MELGAÇO",
+      "capital": false,
+      "governador": 3514,
+      "flavio": 2064,
+      "vao_votos": 1450,
+      "governador_pct": 68.01,
+      "flavio_pct": 37.64
+     },
+     {
+      "municipio": "ROSÁRIO OESTE",
+      "capital": false,
+      "governador": 6551,
+      "flavio": 5223,
+      "vao_votos": 1328,
+      "governador_pct": 70.46,
+      "flavio_pct": 52.99
+     },
+     {
+      "municipio": "NOSSA SENHORA DO LIVRAMENTO",
+      "capital": false,
+      "governador": 5037,
+      "flavio": 3739,
+      "vao_votos": 1298,
+      "governador_pct": 50.49,
+      "flavio_pct": 34.69
+     },
+     {
+      "municipio": "ALTO PARAGUAI",
+      "capital": false,
+      "governador": 3089,
+      "flavio": 1956,
+      "vao_votos": 1133,
+      "governador_pct": 73.16,
+      "flavio_pct": 42.76
+     },
+     {
+      "municipio": "BARRA DO BUGRES",
+      "capital": false,
+      "governador": 9878,
+      "flavio": 8893,
+      "vao_votos": 985,
+      "governador_pct": 64.59,
+      "flavio_pct": 52.63
+     }
+    ]
+   }
+  ],
+  "linhas_datafolha": [
+   {
+    "origem": "Tarcísio (REPUBLICANOS)",
+    "pagina": 4,
+    "pdf": "datafolha_21092026_estaduais.pdf",
+    "destino_pergunta": "presidente, 1o turno",
+    "Flávio": 59,
+    "Lula": 12,
+    "Escritor Augusto Cury (AVANTE)": 8,
+    "uf": "SP",
+    "turno": "1t"
+   },
+   {
+    "origem": "Cleitinho Azevedo (REPUBLICANOS)",
+    "pagina": 20,
+    "pdf": "datafolha_21092026_estaduais.pdf",
+    "destino_pergunta": "presidente, 1o turno",
+    "Flávio": 60,
+    "Lula": 19,
+    "uf": "MG",
+    "turno": "1t"
+   },
+   {
+    "origem": "Cleitinho Azevedo (REPUBLICANOS)",
+    "pagina": 21,
+    "pdf": "datafolha_21092026_estaduais.pdf",
+    "destino_pergunta": "presidente, 2o turno",
+    "Flávio": 71,
+    "Lula": 25,
+    "uf": "MG",
+    "turno": "2t"
+   },
+   {
+    "origem": "Douglas Ruas (PL)",
+    "pagina": 12,
+    "pdf": "datafolha_21092026_estaduais.pdf",
+    "destino_pergunta": "presidente, 1o turno",
+    "Flávio": 82,
+    "Lula": 3,
+    "uf": "RJ",
+    "turno": "1t"
+   },
+   {
+    "origem": "Douglas Ruas (PL)",
+    "pagina": 13,
+    "pdf": "datafolha_21092026_estaduais.pdf",
+    "destino_pergunta": "presidente, 2o turno",
+    "Flávio": 91,
+    "Lula": 7,
+    "uf": "RJ",
+    "turno": "2t"
+   },
+   {
+    "origem": "Eduardo Paes (PSD)",
+    "pagina": 12,
+    "pdf": "datafolha_21092026_estaduais.pdf",
+    "destino_pergunta": "presidente, 1o turno",
+    "Lula": 56,
+    "Flávio": 23,
+    "uf": "RJ",
+    "turno": "1t"
+   },
+   {
+    "origem": "Eduardo Paes (PSD)",
+    "pagina": 13,
+    "pdf": "datafolha_21092026_estaduais.pdf",
+    "destino_pergunta": "presidente, 2o turno",
+    "Lula": 64,
+    "Flávio": 28,
+    "uf": "RJ",
+    "turno": "2t"
+   }
+  ],
+  "consolidacao_medida": [
+   {
+    "uf": "MG",
+    "origem": "Cleitinho Azevedo (REPUBLICANOS)",
+    "linha_1t": {
+     "Flávio": 60,
+     "Lula": 19
+    },
+    "linha_2t": {
+     "Flávio": 71,
+     "Lula": 25
+    },
+    "paginas": [
+     20,
+     21
+    ],
+    "saldo_flavio_pontos": 5.0,
+    "votos_governador_urna": 6321590,
+    "saldo_aplicado_a_urna": 316080,
+    "lula_1t_aplicado_a_urna": 1201102,
+    "lula_2t_aplicado_a_urna": 1580398
+   },
+   {
+    "uf": "RJ",
+    "origem": "Douglas Ruas (PL)",
+    "linha_1t": {
+     "Flávio": 82,
+     "Lula": 3
+    },
+    "linha_2t": {
+     "Flávio": 91,
+     "Lula": 7
+    },
+    "paginas": [
+     12,
+     13
+    ],
+    "saldo_flavio_pontos": 5.0,
+    "votos_governador_urna": 4271199,
+    "saldo_aplicado_a_urna": 213560,
+    "lula_1t_aplicado_a_urna": 128136,
+    "lula_2t_aplicado_a_urna": 298984
+   },
+   {
+    "uf": "RJ",
+    "origem": "Eduardo Paes (PSD)",
+    "linha_1t": {
+     "Flávio": 23,
+     "Lula": 56
+    },
+    "linha_2t": {
+     "Flávio": 28,
+     "Lula": 64
+    },
+    "paginas": [
+     12,
+     13
+    ],
+    "saldo_flavio_pontos": -3.0,
+    "votos_governador_urna": 3706984,
+    "saldo_aplicado_a_urna": -111210,
+    "lula_1t_aplicado_a_urna": 2075911,
+    "lula_2t_aplicado_a_urna": 2372470
+   }
+  ],
+  "segundo_turno_estadual": [
+   {
+    "uf": "AC",
+    "par": [
+     {
+      "nome": "MAILZA ASSIS",
+      "partido": "PP",
+      "campo": "centro-direita",
+      "votos": 218760,
+      "pct": 49.76,
+      "st_tse": "2º turno",
+      "alinhado_lula": false,
+      "lado": "flavio"
+     },
+     {
+      "nome": "ALAN RICK",
+      "partido": "REPUBLICANOS",
+      "campo": "direita",
+      "votos": 141859,
+      "pct": 32.27,
+      "st_tse": "2º turno",
+      "alinhado_lula": false,
+      "lado": "flavio"
+     }
+    ],
+    "tipo": "flavio",
+    "eleitores": 613742,
+    "abstencao_pct": 20.43,
+    "flavio_pct": 64.56,
+    "lula_pct": 28.73,
+    "margem_flavio_votos": 168037
+   },
+   {
+    "uf": "AM",
+    "par": [
+     {
+      "nome": "OMAR AZIZ",
+      "partido": "PSD",
+      "campo": "centro",
+      "votos": 841846,
+      "pct": 40.63,
+      "st_tse": null,
+      "alinhado_lula": true,
+      "lado": "lula"
+     },
+     {
+      "nome": "PROFESSORA MARIA DO CARMO",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 507335,
+      "pct": 24.49,
+      "st_tse": null,
+      "alinhado_lula": false,
+      "lado": "flavio"
+     }
+    ],
+    "tipo": "flavio+lula",
+    "eleitores": 2798611,
+    "abstencao_pct": 20.16,
+    "flavio_pct": 45.0,
+    "lula_pct": 48.23,
+    "margem_flavio_votos": -70232
+   },
+   {
+    "uf": "DF",
+    "par": [
+     {
+      "nome": "CELINA LEÃO",
+      "partido": "PP",
+      "campo": "centro-direita",
+      "votos": 825530,
+      "pct": 49.93,
+      "st_tse": "2º turno",
+      "alinhado_lula": false,
+      "lado": "flavio"
+     },
+     {
+      "nome": "LEANDRO GRASS",
+      "partido": "PT",
+      "campo": "esquerda",
+      "votos": 569930,
+      "pct": 34.47,
+      "st_tse": "2º turno",
+      "alinhado_lula": false,
+      "lado": "lula"
+     }
+    ],
+    "tipo": "flavio+lula",
+    "eleitores": 2258320,
+    "abstencao_pct": 18.9,
+    "flavio_pct": 51.31,
+    "lula_pct": 38.11,
+    "margem_flavio_votos": 233989
+   },
+   {
+    "uf": "ES",
+    "par": [
+     {
+      "nome": "LORENZO PAZOLINI",
+      "partido": "REPUBLICANOS",
+      "campo": "direita",
+      "votos": 1048633,
+      "pct": 49.65,
+      "st_tse": "2º turno",
+      "alinhado_lula": false,
+      "lado": "flavio"
+     },
+     {
+      "nome": "RICARDO FERRAÇO",
+      "partido": "MDB",
+      "campo": "centro",
+      "votos": 719397,
+      "pct": 34.06,
+      "st_tse": "2º turno",
+      "alinhado_lula": true,
+      "lado": "lula"
+     }
+    ],
+    "tipo": "flavio+lula",
+    "eleitores": 2991650,
+    "abstencao_pct": 21.37,
+    "flavio_pct": 54.78,
+    "lula_pct": 37.76,
+    "margem_flavio_votos": 383166
+   },
+   {
+    "uf": "RJ",
+    "par": [
+     {
+      "nome": "DOUGLAS RUAS",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 4271199,
+      "pct": 49.27,
+      "st_tse": "2º turno",
+      "alinhado_lula": false,
+      "lado": "flavio"
+     },
+     {
+      "nome": "EDUARDO PAES",
+      "partido": "PSD",
+      "campo": "centro",
+      "votos": 3706984,
+      "pct": 42.76,
+      "st_tse": "2º turno",
+      "alinhado_lula": true,
+      "lado": "lula"
+     }
+    ],
+    "tipo": "flavio+lula",
+    "eleitores": 12857648,
+    "abstencao_pct": 23.32,
+    "flavio_pct": 53.01,
+    "lula_pct": 39.41,
+    "margem_flavio_votos": 1273823
+   },
+   {
+    "uf": "RN",
+    "par": [
+     {
+      "nome": "ALLYSON",
+      "partido": "UNIÃO",
+      "campo": "centro-direita",
+      "votos": 733809,
+      "pct": 36.94,
+      "st_tse": "2º turno",
+      "alinhado_lula": false,
+      "lado": "flavio"
+     },
+     {
+      "nome": "CADU DE LULA",
+      "partido": "PT",
+      "campo": "esquerda",
+      "votos": 718300,
+      "pct": 36.16,
+      "st_tse": "2º turno",
+      "alinhado_lula": false,
+      "lado": "lula"
+     }
+    ],
+    "tipo": "flavio+lula",
+    "eleitores": 2659825,
+    "abstencao_pct": 18.38,
+    "flavio_pct": 34.77,
+    "lula_pct": 59.75,
+    "margem_flavio_votos": -517470
+   },
+   {
+    "uf": "TO",
+    "par": [
+     {
+      "nome": "PROFESSORA DORINHA",
+      "partido": "UNIÃO",
+      "campo": "centro-direita",
+      "votos": 386260,
+      "pct": 45.52,
+      "st_tse": "2º turno",
+      "alinhado_lula": false,
+      "lado": "flavio"
+     },
+     {
+      "nome": "VICENTINHO JÚNIOR",
+      "partido": "PSDB",
+      "campo": "centro-esquerda",
+      "votos": 372848,
+      "pct": 43.94,
+      "st_tse": "2º turno",
+      "alinhado_lula": false,
+      "lado": "lula"
+     }
+    ],
+    "tipo": "flavio+lula",
+    "eleitores": 1182023,
+    "abstencao_pct": 18.34,
+    "flavio_pct": 50.44,
+    "lula_pct": 43.42,
+    "margem_flavio_votos": 65312
+   }
+  ],
+  "campo_linhas": "08–10/09/2026",
+  "paginas_linhas": {
+   "MG": [
+    20,
+    21
+   ],
+   "RJ": [
+    12,
+    13
+   ],
+   "SP": [
+    4
+   ]
+  },
+  "arquivo_linhas": "docs/assets/datafolha_21092026_sudeste.json"
+ },
+ "congresso": {
+  "fonte": "apuracao/data/boletins/final.json",
+  "fonte_gerado_em": "2026-10-05T06:29:53.765Z",
+  "camara": {
+   "vagas": 513,
+   "blocos": {
+    "direita + centro-direita": 292,
+    "esquerda + centro-esquerda": 137,
+    "centro": 84,
+    "indefinido": 0
+   },
+   "por_campo": {
+    "esquerda": 124,
+    "centro-esquerda": 13,
+    "centro": 84,
+    "centro-direita": 119,
+    "direita": 173,
+    "indefinido": 0
+   },
+   "por_partido": {
+    "PL": 121,
+    "PT": 70,
+    "UNIÃO": 46,
+    "PSD": 43,
+    "PP": 41,
+    "REPUBLICANOS": 41,
+    "MDB": 36,
+    "PODE": 27,
+    "PSB": 15,
+    "PSOL": 14,
+    "PCDOB": 11,
+    "PSDB": 11,
+    "NOVO": 10,
+    "PV": 7,
+    "PDT": 6,
+    "AVANTE": 5,
+    "PRD": 5,
+    "SOLIDARIEDADE": 2,
+    "MISSÃO": 1,
+    "REDE": 1
+   },
+   "ufs_provisorias": [
+    "AM",
+    "MG",
+    "SP"
+   ],
+   "maioria_absoluta": 257,
+   "tres_quintos": 308
+  },
+  "senado_2027": {
+   "total": 81,
+   "por_bloco": {
+    "direita + centro-direita": 52,
+    "esquerda + centro-esquerda": 17,
+    "centro": 12,
+    "indefinido": 0
+   },
+   "por_partido": {
+    "PL": 27,
+    "PT": 10,
+    "MDB": 8,
+    "UNIÃO": 8,
+    "PP": 6,
+    "REPUBLICANOS": 5,
+    "PSB": 4,
+    "PSD": 4,
+    "NOVO": 3,
+    "PODE": 2,
+    "PSDB": 2,
+    "PDT": 1,
+    "REDE": 1
+   },
+   "pl_eleitos_2026": 19,
+   "maioria_absoluta": 41,
+   "tres_quintos": 49
+  },
+  "deputados_federais_top3": [
+   {
+    "uf": "AC",
+    "top3": [
+     {
+      "nome": "SOCORRO NERI",
+      "partido": "PP",
+      "campo": "centro-direita",
+      "votos": 39587,
+      "pct_validos_uf": 8.45,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     },
+     {
+      "nome": "DR. FÁBIO RUEDA",
+      "partido": "UNIÃO",
+      "campo": "centro-direita",
+      "votos": 33203,
+      "pct_validos_uf": 7.09,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     },
+     {
+      "nome": "CORONEL ULYSSES",
+      "partido": "UNIÃO",
+      "campo": "centro-direita",
+      "votos": 33155,
+      "pct_validos_uf": 7.08,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     }
+    ],
+    "ancora_direita": {
+     "nome": "SOCORRO NERI",
+     "partido": "PP",
+     "votos": 39587,
+     "pct_validos_uf": 8.45
+    }
+   },
+   {
+    "uf": "AL",
+    "top3": [
+     {
+      "nome": "ALVINHO LIRA",
+      "partido": "PP",
+      "campo": "centro-direita",
+      "votos": 172628,
+      "pct_validos_uf": 9.6,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     },
+     {
+      "nome": "DELEGADO FABIO COSTA",
+      "partido": "PP",
+      "campo": "centro-direita",
+      "votos": 165649,
+      "pct_validos_uf": 9.21,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     },
+     {
+      "nome": "LUCIANO AMARAL",
+      "partido": "PSD",
+      "campo": "centro",
+      "votos": 155915,
+      "pct_validos_uf": 8.67,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     }
+    ],
+    "ancora_direita": {
+     "nome": "ALVINHO LIRA",
+     "partido": "PP",
+     "votos": 172628,
+     "pct_validos_uf": 9.6
+    }
+   },
+   {
+    "uf": "AM",
+    "top3": [
+     {
+      "nome": "SARGENTO SALAZAR",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 212948,
+      "pct_validos_uf": 10.04,
+      "st_tse": null,
+      "situacao": "eleito na alocação provisória"
+     },
+     {
+      "nome": "SIDNEY LEITE",
+      "partido": "PSD",
+      "campo": "centro",
+      "votos": 138498,
+      "pct_validos_uf": 6.53,
+      "st_tse": null,
+      "situacao": "eleito na alocação provisória"
+     },
+     {
+      "nome": "ADAIL FILHO",
+      "partido": "MDB",
+      "campo": "centro",
+      "votos": 137148,
+      "pct_validos_uf": 6.47,
+      "st_tse": null,
+      "situacao": "eleito na alocação provisória"
+     }
+    ],
+    "ancora_direita": {
+     "nome": "SARGENTO SALAZAR",
+     "partido": "PL",
+     "votos": 212948,
+     "pct_validos_uf": 10.04
+    }
+   },
+   {
+    "uf": "AP",
+    "top3": [
+     {
+      "nome": "FELIPE SHOW",
+      "partido": "UNIÃO",
+      "campo": "centro-direita",
+      "votos": 34587,
+      "pct_validos_uf": 7.51,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     },
+     {
+      "nome": "JOSENILDO",
+      "partido": "PDT",
+      "campo": "esquerda",
+      "votos": 26453,
+      "pct_validos_uf": 5.74,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     },
+     {
+      "nome": "ALINE GURGEL",
+      "partido": "UNIÃO",
+      "campo": "centro-direita",
+      "votos": 25501,
+      "pct_validos_uf": 5.54,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     }
+    ],
+    "ancora_direita": {
+     "nome": "FELIPE SHOW",
+     "partido": "UNIÃO",
+     "votos": 34587,
+     "pct_validos_uf": 7.51
+    }
+   },
+   {
+    "uf": "BA",
+    "top3": [
+     {
+      "nome": "PASTOR SARGENTO ISIDÓRIO",
+      "partido": "AVANTE",
+      "campo": "centro",
+      "votos": 248147,
+      "pct_validos_uf": 3.0,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     },
+     {
+      "nome": "ANTONIO BRITO",
+      "partido": "PSD",
+      "campo": "centro",
+      "votos": 205815,
+      "pct_validos_uf": 2.49,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     },
+     {
+      "nome": "NETO CARLETTO",
+      "partido": "AVANTE",
+      "campo": "centro",
+      "votos": 197240,
+      "pct_validos_uf": 2.38,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     }
+    ],
+    "ancora_direita": {
+     "nome": "SANDRO FILHO",
+     "partido": "PP",
+     "votos": 167394,
+     "pct_validos_uf": 2.02
+    }
+   },
+   {
+    "uf": "CE",
+    "top3": [
+     {
+      "nome": "ANDRÉ FERNANDES",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 684372,
+      "pct_validos_uf": 12.39,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     },
+     {
+      "nome": "TAINAH MARINHO",
+      "partido": "PSB",
+      "campo": "esquerda",
+      "votos": 265585,
+      "pct_validos_uf": 4.81,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     },
+     {
+      "nome": "YURY DO PAREDÃO",
+      "partido": "MDB",
+      "campo": "centro",
+      "votos": 261291,
+      "pct_validos_uf": 4.73,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     }
+    ],
+    "ancora_direita": {
+     "nome": "ANDRÉ FERNANDES",
+     "partido": "PL",
+     "votos": 684372,
+     "pct_validos_uf": 12.39
+    }
+   },
+   {
+    "uf": "DF",
+    "top3": [
+     {
+      "nome": "FÁBIO FELIX",
+      "partido": "PSOL",
+      "campo": "esquerda",
+      "votos": 224224,
+      "pct_validos_uf": 13.41,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     },
+     {
+      "nome": "RAFAEL PRUDENTE",
+      "partido": "MDB",
+      "campo": "centro",
+      "votos": 119427,
+      "pct_validos_uf": 7.14,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     },
+     {
+      "nome": "ALBERTO FRAGA",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 118579,
+      "pct_validos_uf": 7.09,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     }
+    ],
+    "ancora_direita": {
+     "nome": "ALBERTO FRAGA",
+     "partido": "PL",
+     "votos": 118579,
+     "pct_validos_uf": 7.09
+    }
+   },
+   {
+    "uf": "ES",
+    "top3": [
+     {
+      "nome": "LUCAS POLESE",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 419735,
+      "pct_validos_uf": 19.66,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     },
+     {
+      "nome": "JACK ROCHA",
+      "partido": "PT",
+      "campo": "esquerda",
+      "votos": 142187,
+      "pct_validos_uf": 6.66,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     },
+     {
+      "nome": "DR. BRUNO RESENDE",
+      "partido": "UNIÃO",
+      "campo": "centro-direita",
+      "votos": 110675,
+      "pct_validos_uf": 5.18,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     }
+    ],
+    "ancora_direita": {
+     "nome": "LUCAS POLESE",
+     "partido": "PL",
+     "votos": 419735,
+     "pct_validos_uf": 19.66
+    }
+   },
+   {
+    "uf": "GO",
+    "top3": [
+     {
+      "nome": "BRUNO PEIXOTO",
+      "partido": "UNIÃO",
+      "campo": "centro-direita",
+      "votos": 207899,
+      "pct_validos_uf": 5.76,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     },
+     {
+      "nome": "DELEGADA ADRIANA ACCORSI",
+      "partido": "PT",
+      "campo": "esquerda",
+      "votos": 177103,
+      "pct_validos_uf": 4.91,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     },
+     {
+      "nome": "FRED RODRIGUES",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 152380,
+      "pct_validos_uf": 4.22,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     }
+    ],
+    "ancora_direita": {
+     "nome": "BRUNO PEIXOTO",
+     "partido": "UNIÃO",
+     "votos": 207899,
+     "pct_validos_uf": 5.76
+    }
+   },
+   {
+    "uf": "MA",
+    "top3": [
+     {
+      "nome": "PEDRO LUCAS FERNANDES",
+      "partido": "UNIÃO",
+      "campo": "centro-direita",
+      "votos": 188853,
+      "pct_validos_uf": 4.75,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     },
+     {
+      "nome": "IRACEMA VALE",
+      "partido": "MDB",
+      "campo": "centro",
+      "votos": 179351,
+      "pct_validos_uf": 4.52,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     },
+     {
+      "nome": "VINICIUS FERRO",
+      "partido": "MDB",
+      "campo": "centro",
+      "votos": 166880,
+      "pct_validos_uf": 4.2,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     }
+    ],
+    "ancora_direita": {
+     "nome": "PEDRO LUCAS FERNANDES",
+     "partido": "UNIÃO",
+     "votos": 188853,
+     "pct_validos_uf": 4.75
+    }
+   },
+   {
+    "uf": "MG",
+    "top3": [
+     {
+      "nome": "NIKOLAS FERREIRA",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 3119318,
+      "pct_validos_uf": 27.19,
+      "st_tse": null,
+      "situacao": "eleito na alocação provisória"
+     },
+     {
+      "nome": "ANA ELISA",
+      "partido": "PT",
+      "campo": "esquerda",
+      "votos": 524219,
+      "pct_validos_uf": 4.57,
+      "st_tse": null,
+      "situacao": "eleito na alocação provisória"
+     },
+     {
+      "nome": "DUDA SALABERT",
+      "partido": "PSOL",
+      "campo": "esquerda",
+      "votos": 229535,
+      "pct_validos_uf": 2.0,
+      "st_tse": null,
+      "situacao": "eleito na alocação provisória"
+     }
+    ],
+    "ancora_direita": {
+     "nome": "NIKOLAS FERREIRA",
+     "partido": "PL",
+     "votos": 3119318,
+     "pct_validos_uf": 27.19
+    }
+   },
+   {
+    "uf": "MS",
+    "top3": [
+     {
+      "nome": "CAMILA JARA",
+      "partido": "PT",
+      "campo": "esquerda",
+      "votos": 154157,
+      "pct_validos_uf": 10.85,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     },
+     {
+      "nome": "MARCOS POLLON",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 140129,
+      "pct_validos_uf": 9.86,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     },
+     {
+      "nome": "ROSE MODESTO",
+      "partido": "UNIÃO",
+      "campo": "centro-direita",
+      "votos": 124409,
+      "pct_validos_uf": 8.76,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     }
+    ],
+    "ancora_direita": {
+     "nome": "MARCOS POLLON",
+     "partido": "PL",
+     "votos": 140129,
+     "pct_validos_uf": 9.86
+    }
+   },
+   {
+    "uf": "MT",
+    "top3": [
+     {
+      "nome": "CORONEL FERNANDA",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 205064,
+      "pct_validos_uf": 10.77,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     },
+     {
+      "nome": "PROFESSORA ROSA NEIDE",
+      "partido": "PT",
+      "campo": "esquerda",
+      "votos": 140351,
+      "pct_validos_uf": 7.37,
+      "st_tse": "Eleito por média",
+      "situacao": "Eleito por média"
+     },
+     {
+      "nome": "FÁBIO GARCIA",
+      "partido": "UNIÃO",
+      "campo": "centro-direita",
+      "votos": 139777,
+      "pct_validos_uf": 7.34,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     }
+    ],
+    "ancora_direita": {
+     "nome": "CORONEL FERNANDA",
+     "partido": "PL",
+     "votos": 205064,
+     "pct_validos_uf": 10.77
+    }
+   },
+   {
+    "uf": "PA",
+    "top3": [
+     {
+      "nome": "DELEGADO CAVEIRA",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 414927,
+      "pct_validos_uf": 8.58,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     },
+     {
+      "nome": "JADER FILHO",
+      "partido": "MDB",
+      "campo": "centro",
+      "votos": 326617,
+      "pct_validos_uf": 6.76,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     },
+     {
+      "nome": "DRA. ALESSANDRA HABER",
+      "partido": "PODE",
+      "campo": "centro-direita",
+      "votos": 272856,
+      "pct_validos_uf": 5.65,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     }
+    ],
+    "ancora_direita": {
+     "nome": "DELEGADO CAVEIRA",
+     "partido": "PL",
+     "votos": 414927,
+     "pct_validos_uf": 8.58
+    }
+   },
+   {
+    "uf": "PB",
+    "top3": [
+     {
+      "nome": "CABO GILBERTO SILVA",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 267142,
+      "pct_validos_uf": 11.11,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     },
+     {
+      "nome": "AGUINALDO RIBEIRO",
+      "partido": "PP",
+      "campo": "centro-direita",
+      "votos": 180720,
+      "pct_validos_uf": 7.52,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     },
+     {
+      "nome": "RICARDO COUTINHO",
+      "partido": "PT",
+      "campo": "esquerda",
+      "votos": 163277,
+      "pct_validos_uf": 6.79,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     }
+    ],
+    "ancora_direita": {
+     "nome": "CABO GILBERTO SILVA",
+     "partido": "PL",
+     "votos": 267142,
+     "pct_validos_uf": 11.11
+    }
+   },
+   {
+    "uf": "PE",
+    "top3": [
+     {
+      "nome": "PEDRO CAMPOS",
+      "partido": "PSB",
+      "campo": "esquerda",
+      "votos": 261555,
+      "pct_validos_uf": 4.97,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     },
+     {
+      "nome": "JONES MANOEL",
+      "partido": "PSOL",
+      "campo": "esquerda",
+      "votos": 249077,
+      "pct_validos_uf": 4.73,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     },
+     {
+      "nome": "ANDERSON FERREIRA",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 185429,
+      "pct_validos_uf": 3.52,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     }
+    ],
+    "ancora_direita": {
+     "nome": "ANDERSON FERREIRA",
+     "partido": "PL",
+     "votos": 185429,
+     "pct_validos_uf": 3.52
+    }
+   },
+   {
+    "uf": "PI",
+    "top3": [
+     {
+      "nome": "GEORGIANO",
+      "partido": "PSD",
+      "campo": "centro",
+      "votos": 234254,
+      "pct_validos_uf": 11.08,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     },
+     {
+      "nome": "DELEGADO CHARLES",
+      "partido": "PV",
+      "campo": "esquerda",
+      "votos": 184763,
+      "pct_validos_uf": 8.74,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     },
+     {
+      "nome": "CASTRO NETO",
+      "partido": "MDB",
+      "campo": "centro",
+      "votos": 168080,
+      "pct_validos_uf": 7.95,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     }
+    ],
+    "ancora_direita": {
+     "nome": "JADYEL",
+     "partido": "REPUBLICANOS",
+     "votos": 123893,
+     "pct_validos_uf": 5.86
+    }
+   },
+   {
+    "uf": "PR",
+    "top3": [
+     {
+      "nome": "JEFFREY CHIQUINI",
+      "partido": "NOVO",
+      "campo": "direita",
+      "votos": 425399,
+      "pct_validos_uf": 6.81,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     },
+     {
+      "nome": "GUILHERME KILTER",
+      "partido": "NOVO",
+      "campo": "direita",
+      "votos": 269832,
+      "pct_validos_uf": 4.32,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     },
+     {
+      "nome": "SARGENTO FAHUR",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 242643,
+      "pct_validos_uf": 3.88,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     }
+    ],
+    "ancora_direita": {
+     "nome": "JEFFREY CHIQUINI",
+     "partido": "NOVO",
+     "votos": 425399,
+     "pct_validos_uf": 6.81
+    }
+   },
+   {
+    "uf": "RJ",
+    "top3": [
+     {
+      "nome": "DR. LUIZINHO",
+      "partido": "PP",
+      "campo": "centro-direita",
+      "votos": 213904,
+      "pct_validos_uf": 2.41,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     },
+     {
+      "nome": "RICK AZEVEDO",
+      "partido": "PSOL",
+      "campo": "esquerda",
+      "votos": 191371,
+      "pct_validos_uf": 2.16,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     },
+     {
+      "nome": "LINDBERGH",
+      "partido": "PT",
+      "campo": "esquerda",
+      "votos": 181768,
+      "pct_validos_uf": 2.05,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     }
+    ],
+    "ancora_direita": {
+     "nome": "DR. LUIZINHO",
+     "partido": "PP",
+     "votos": 213904,
+     "pct_validos_uf": 2.41
+    }
+   },
+   {
+    "uf": "RN",
+    "top3": [
+     {
+      "nome": "NATÁLIA BONAVIDES",
+      "partido": "PT",
+      "campo": "esquerda",
+      "votos": 215509,
+      "pct_validos_uf": 10.95,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     },
+     {
+      "nome": "NINA",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 185248,
+      "pct_validos_uf": 9.41,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     },
+     {
+      "nome": "BENES LEOCÁDIO",
+      "partido": "UNIÃO",
+      "campo": "centro-direita",
+      "votos": 171396,
+      "pct_validos_uf": 8.71,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     }
+    ],
+    "ancora_direita": {
+     "nome": "NINA",
+     "partido": "PL",
+     "votos": 185248,
+     "pct_validos_uf": 9.41
+    }
+   },
+   {
+    "uf": "RO",
+    "top3": [
+     {
+      "nome": "LUCIO MOSQUINI",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 158421,
+      "pct_validos_uf": 16.93,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     },
+     {
+      "nome": "CORONEL CHRISÓSTOMO",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 51487,
+      "pct_validos_uf": 5.5,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     },
+     {
+      "nome": "THIAGO FLORES",
+      "partido": "UNIÃO",
+      "campo": "centro-direita",
+      "votos": 43143,
+      "pct_validos_uf": 4.61,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     }
+    ],
+    "ancora_direita": {
+     "nome": "LUCIO MOSQUINI",
+     "partido": "PL",
+     "votos": 158421,
+     "pct_validos_uf": 16.93
+    }
+   },
+   {
+    "uf": "RR",
+    "top3": [
+     {
+      "nome": "MARCOS JORGE",
+      "partido": "REPUBLICANOS",
+      "campo": "direita",
+      "votos": 22027,
+      "pct_validos_uf": 6.91,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     },
+     {
+      "nome": "ÍTALO OTÁVIO",
+      "partido": "REPUBLICANOS",
+      "campo": "direita",
+      "votos": 20184,
+      "pct_validos_uf": 6.33,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     },
+     {
+      "nome": "RODRIGO MESQUITA",
+      "partido": "PODE",
+      "campo": "centro-direita",
+      "votos": 19962,
+      "pct_validos_uf": 6.26,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     }
+    ],
+    "ancora_direita": {
+     "nome": "MARCOS JORGE",
+     "partido": "REPUBLICANOS",
+     "votos": 22027,
+     "pct_validos_uf": 6.91
+    }
+   },
+   {
+    "uf": "RS",
+    "top3": [
+     {
+      "nome": "MAURÍCIO MARCON",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 379834,
+      "pct_validos_uf": 6.22,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     },
+     {
+      "nome": "FERNANDA MELCHIONNA",
+      "partido": "PSOL",
+      "campo": "esquerda",
+      "votos": 280262,
+      "pct_validos_uf": 4.59,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     },
+     {
+      "nome": "GIOVANI CHERINI",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 234171,
+      "pct_validos_uf": 3.83,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     }
+    ],
+    "ancora_direita": {
+     "nome": "MAURÍCIO MARCON",
+     "partido": "PL",
+     "votos": 379834,
+     "pct_validos_uf": 6.22
+    }
+   },
+   {
+    "uf": "SC",
+    "top3": [
+     {
+      "nome": "JULIA ZANATTA",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 560223,
+      "pct_validos_uf": 13.15,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     },
+     {
+      "nome": "ANA PAULA LIMA",
+      "partido": "PT",
+      "campo": "esquerda",
+      "votos": 201377,
+      "pct_validos_uf": 4.73,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     },
+     {
+      "nome": "PROFESSOR PEDRO UCZAI",
+      "partido": "PT",
+      "campo": "esquerda",
+      "votos": 164389,
+      "pct_validos_uf": 3.86,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     }
+    ],
+    "ancora_direita": {
+     "nome": "JULIA ZANATTA",
+     "partido": "PL",
+     "votos": 560223,
+     "pct_validos_uf": 13.15
+    }
+   },
+   {
+    "uf": "SE",
+    "top3": [
+     {
+      "nome": "YANDRA MOURA",
+      "partido": "UNIÃO",
+      "campo": "centro-direita",
+      "votos": 115903,
+      "pct_validos_uf": 8.94,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     },
+     {
+      "nome": "CLAUDIO MITIDIERI",
+      "partido": "PSB",
+      "campo": "esquerda",
+      "votos": 105865,
+      "pct_validos_uf": 8.16,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     },
+     {
+      "nome": "JOAO DANIEL",
+      "partido": "PT",
+      "campo": "esquerda",
+      "votos": 88900,
+      "pct_validos_uf": 6.86,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     }
+    ],
+    "ancora_direita": {
+     "nome": "YANDRA MOURA",
+     "partido": "UNIÃO",
+     "votos": 115903,
+     "pct_validos_uf": 8.94
+    }
+   },
+   {
+    "uf": "SP",
+    "top3": [
+     {
+      "nome": "LUCAS PAVANATO",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 3038438,
+      "pct_validos_uf": 12.82,
+      "st_tse": null,
+      "situacao": "eleito na alocação provisória"
+     },
+     {
+      "nome": "ERIKA HILTON",
+      "partido": "PSOL",
+      "campo": "esquerda",
+      "votos": 1596472,
+      "pct_validos_uf": 6.73,
+      "st_tse": null,
+      "situacao": "eleito na alocação provisória"
+     },
+     {
+      "nome": "SÂMIA BOMFIM",
+      "partido": "PSOL",
+      "campo": "esquerda",
+      "votos": 583107,
+      "pct_validos_uf": 2.46,
+      "st_tse": null,
+      "situacao": "eleito na alocação provisória"
+     }
+    ],
+    "ancora_direita": {
+     "nome": "LUCAS PAVANATO",
+     "partido": "PL",
+     "votos": 3038438,
+     "pct_validos_uf": 12.82
+    }
+   },
+   {
+    "uf": "TO",
+    "top3": [
+     {
+      "nome": "PROFESSORA JANAD VALCARI",
+      "partido": "PP",
+      "campo": "centro-direita",
+      "votos": 99026,
+      "pct_validos_uf": 10.92,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     },
+     {
+      "nome": "JAIR FARIAS",
+      "partido": "UNIÃO",
+      "campo": "centro-direita",
+      "votos": 93869,
+      "pct_validos_uf": 10.35,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     },
+     {
+      "nome": "LUCAS CAMPELO",
+      "partido": "REPUBLICANOS",
+      "campo": "direita",
+      "votos": 85376,
+      "pct_validos_uf": 9.41,
+      "st_tse": "Eleito por QP",
+      "situacao": "Eleito por QP"
+     }
+    ],
+    "ancora_direita": {
+     "nome": "PROFESSORA JANAD VALCARI",
+     "partido": "PP",
+     "votos": 99026,
+     "pct_validos_uf": 10.92
+    }
+   }
+  ],
+  "senadores_eleitos_2026": [
+   {
+    "uf": "AC",
+    "eleitos": [
+     {
+      "nome": "MARCIO BITTAR",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 223972,
+      "pct": 25.59
+     },
+     {
+      "nome": "MARA ROCHA",
+      "partido": "REPUBLICANOS",
+      "campo": "direita",
+      "votos": 157104,
+      "pct": 17.95
+     }
+    ],
+    "fonte": "tse"
+   },
+   {
+    "uf": "AL",
+    "eleitos": [
+     {
+      "nome": "ARTHUR LIRA",
+      "partido": "PP",
+      "campo": "centro-direita",
+      "votos": 948703,
+      "pct": 28.87
+     },
+     {
+      "nome": "MARINA JHC",
+      "partido": "PSDB",
+      "campo": "centro-direita",
+      "votos": 926860,
+      "pct": 28.2
+     }
+    ],
+    "fonte": "tse"
+   },
+   {
+    "uf": "AM",
+    "eleitos": [
+     {
+      "nome": "EDUARDO BRAGA",
+      "partido": "MDB",
+      "campo": "centro",
+      "votos": 1240471,
+      "pct": 32.29
+     },
+     {
+      "nome": "PLINIO VALÉRIO",
+      "partido": "PSDB",
+      "campo": "centro-esquerda",
+      "votos": 948793,
+      "pct": 24.7
+     }
+    ],
+    "fonte": "provisorio"
+   },
+   {
+    "uf": "AP",
+    "eleitos": [
+     {
+      "nome": "RAYSSA FURLAN",
+      "partido": "PODE",
+      "campo": "centro-direita",
+      "votos": 264799,
+      "pct": 29.98
+     },
+     {
+      "nome": "LUCAS BARRETO",
+      "partido": "PSD",
+      "campo": "centro",
+      "votos": 213948,
+      "pct": 24.22
+     }
+    ],
+    "fonte": "tse"
+   },
+   {
+    "uf": "BA",
+    "eleitos": [
+     {
+      "nome": "RUI COSTA",
+      "partido": "PT",
+      "campo": "esquerda",
+      "votos": 4335196,
+      "pct": 30.07
+     },
+     {
+      "nome": "JAQUES WAGNER",
+      "partido": "PT",
+      "campo": "esquerda",
+      "votos": 3986690,
+      "pct": 27.65
+     }
+    ],
+    "fonte": "tse"
+   },
+   {
+    "uf": "CE",
+    "eleitos": [
+     {
+      "nome": "CID GOMES",
+      "partido": "PSB",
+      "campo": "esquerda",
+      "votos": 3033562,
+      "pct": 31.22
+     },
+     {
+      "nome": "LUIZIANNE",
+      "partido": "REDE",
+      "campo": "esquerda",
+      "votos": 2822806,
+      "pct": 29.05
+     }
+    ],
+    "fonte": "tse"
+   },
+   {
+    "uf": "DF",
+    "eleitos": [
+     {
+      "nome": "MICHELLE BOLSONARO",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 938496,
+      "pct": 29.05
+     },
+     {
+      "nome": "BIA KICIS",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 886616,
+      "pct": 27.44
+     }
+    ],
+    "fonte": "tse"
+   },
+   {
+    "uf": "ES",
+    "eleitos": [
+     {
+      "nome": "RENATO CASAGRANDE",
+      "partido": "PSB",
+      "campo": "esquerda",
+      "votos": 995361,
+      "pct": 24.7
+     },
+     {
+      "nome": "EVAIR DE MELO",
+      "partido": "REPUBLICANOS",
+      "campo": "direita",
+      "votos": 982978,
+      "pct": 24.39
+     }
+    ],
+    "fonte": "tse"
+   },
+   {
+    "uf": "GO",
+    "eleitos": [
+     {
+      "nome": "GUSTAVO GAYER",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 1639247,
+      "pct": 24.53
+     },
+     {
+      "nome": "GRACINHA CAIADO",
+      "partido": "UNIÃO",
+      "campo": "centro-direita",
+      "votos": 1458522,
+      "pct": 21.83
+     }
+    ],
+    "fonte": "tse"
+   },
+   {
+    "uf": "MA",
+    "eleitos": [
+     {
+      "nome": "FUFUCA",
+      "partido": "PP",
+      "campo": "centro-direita",
+      "votos": 1530187,
+      "pct": 21.43
+     },
+     {
+      "nome": "LAHESIO BONFIM",
+      "partido": "NOVO",
+      "campo": "direita",
+      "votos": 1471859,
+      "pct": 20.61
+     }
+    ],
+    "fonte": "tse"
+   },
+   {
+    "uf": "MG",
+    "eleitos": [
+     {
+      "nome": "DOMINGOS SÁVIO",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 4968829,
+      "pct": 24.21
+     },
+     {
+      "nome": "MARÍLIA CAMPOS",
+      "partido": "PT",
+      "campo": "esquerda",
+      "votos": 3990864,
+      "pct": 19.44
+     }
+    ],
+    "fonte": "tse"
+   },
+   {
+    "uf": "MS",
+    "eleitos": [
+     {
+      "nome": "REINALDO AZAMBUJA",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 903554,
+      "pct": 34.64
+     },
+     {
+      "nome": "CAPITÃO CONTAR",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 856045,
+      "pct": 32.82
+     }
+    ],
+    "fonte": "tse"
+   },
+   {
+    "uf": "MT",
+    "eleitos": [
+     {
+      "nome": "MAURO MENDES",
+      "partido": "UNIÃO",
+      "campo": "centro-direita",
+      "votos": 1187352,
+      "pct": 33.21
+     },
+     {
+      "nome": "ZÉ MEDEIROS",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 977777,
+      "pct": 27.35
+     }
+    ],
+    "fonte": "tse"
+   },
+   {
+    "uf": "PA",
+    "eleitos": [
+     {
+      "nome": "HELDER",
+      "partido": "MDB",
+      "campo": "centro",
+      "votos": 2342070,
+      "pct": 26.1
+     },
+     {
+      "nome": "CHICÃO",
+      "partido": "UNIÃO",
+      "campo": "centro-direita",
+      "votos": 2014409,
+      "pct": 22.45
+     }
+    ],
+    "fonte": "tse"
+   },
+   {
+    "uf": "PB",
+    "eleitos": [
+     {
+      "nome": "JOAO AZEVÊDO",
+      "partido": "PSB",
+      "campo": "esquerda",
+      "votos": 1391994,
+      "pct": 32.5
+     },
+     {
+      "nome": "VENEZIANO",
+      "partido": "MDB",
+      "campo": "centro",
+      "votos": 974550,
+      "pct": 22.76
+     }
+    ],
+    "fonte": "tse"
+   },
+   {
+    "uf": "PE",
+    "eleitos": [
+     {
+      "nome": "HUMBERTO COSTA",
+      "partido": "PT",
+      "campo": "esquerda",
+      "votos": 2531389,
+      "pct": 27.19
+     },
+     {
+      "nome": "MARÍLIA ARRAES",
+      "partido": "PDT",
+      "campo": "esquerda",
+      "votos": 2325127,
+      "pct": 24.97
+     }
+    ],
+    "fonte": "tse"
+   },
+   {
+    "uf": "PI",
+    "eleitos": [
+     {
+      "nome": "MARCELO CASTRO",
+      "partido": "MDB",
+      "campo": "centro",
+      "votos": 1307833,
+      "pct": 35.67
+     },
+     {
+      "nome": "JÚLIO CÉSAR O JULIM DO LULA",
+      "partido": "PSD",
+      "campo": "centro",
+      "votos": 989146,
+      "pct": 26.98
+     }
+    ],
+    "fonte": "tse"
+   },
+   {
+    "uf": "PR",
+    "eleitos": [
+     {
+      "nome": "FILIPE BARROS",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 3148583,
+      "pct": 27.25
+     },
+     {
+      "nome": "DELTAN DALLAGNOL",
+      "partido": "NOVO",
+      "campo": "direita",
+      "votos": 2904594,
+      "pct": 25.14
+     }
+    ],
+    "fonte": "tse"
+   },
+   {
+    "uf": "RJ",
+    "eleitos": [
+     {
+      "nome": "CARLOS PORTINHO",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 4264932,
+      "pct": 26.77
+     },
+     {
+      "nome": "CARLOS JORDY",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 3912405,
+      "pct": 24.56
+     }
+    ],
+    "fonte": "tse"
+   },
+   {
+    "uf": "RN",
+    "eleitos": [
+     {
+      "nome": "STYVENSON VALENTIM",
+      "partido": "PODE",
+      "campo": "centro-direita",
+      "votos": 1055000,
+      "pct": 29.25
+     },
+     {
+      "nome": "SAMANDA DE LULA",
+      "partido": "PT",
+      "campo": "esquerda",
+      "votos": 635924,
+      "pct": 17.63
+     }
+    ],
+    "fonte": "tse"
+   },
+   {
+    "uf": "RO",
+    "eleitos": [
+     {
+      "nome": "DR. FERNANDO MÁXIMO",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 570799,
+      "pct": 31.97
+     },
+     {
+      "nome": "BRUNO SCHEID",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 474226,
+      "pct": 26.56
+     }
+    ],
+    "fonte": "tse"
+   },
+   {
+    "uf": "RR",
+    "eleitos": [
+     {
+      "nome": "NICOLETTI",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 138269,
+      "pct": 22.68
+     },
+     {
+      "nome": "TERESA SURITA",
+      "partido": "MDB",
+      "campo": "centro",
+      "votos": 117270,
+      "pct": 19.24
+     }
+    ],
+    "fonte": "tse"
+   },
+   {
+    "uf": "RS",
+    "eleitos": [
+     {
+      "nome": "SANDERSON",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 3453316,
+      "pct": 30.11
+     },
+     {
+      "nome": "MARCEL VAN HATTEM",
+      "partido": "NOVO",
+      "campo": "direita",
+      "votos": 3449053,
+      "pct": 30.08
+     }
+    ],
+    "fonte": "tse"
+   },
+   {
+    "uf": "SC",
+    "eleitos": [
+     {
+      "nome": "CAROL DE TONI",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 2694918,
+      "pct": 33.46
+     },
+     {
+      "nome": "CARLOS BOLSONARO",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 2041840,
+      "pct": 25.35
+     }
+    ],
+    "fonte": "tse"
+   },
+   {
+    "uf": "SE",
+    "eleitos": [
+     {
+      "nome": "ROGERIO CARVALHO",
+      "partido": "PT",
+      "campo": "esquerda",
+      "votos": 511142,
+      "pct": 21.91
+     },
+     {
+      "nome": "DELEGADO ALESSANDRO",
+      "partido": "MDB",
+      "campo": "centro",
+      "votos": 399775,
+      "pct": 17.13
+     }
+    ],
+    "fonte": "tse"
+   },
+   {
+    "uf": "SP",
+    "eleitos": [
+     {
+      "nome": "GUILHERME DERRITE",
+      "partido": "PP",
+      "campo": "centro-direita",
+      "votos": 13273880,
+      "pct": 30.59
+     },
+     {
+      "nome": "ANDRÉ DO PRADO",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 12703089,
+      "pct": 29.28
+     }
+    ],
+    "fonte": "tse"
+   },
+   {
+    "uf": "TO",
+    "eleitos": [
+     {
+      "nome": "EDUARDO GOMES",
+      "partido": "PL",
+      "campo": "direita",
+      "votos": 450191,
+      "pct": 27.22
+     },
+     {
+      "nome": "ALEXANDRE GUIMARÃES",
+      "partido": "MDB",
+      "campo": "centro",
+      "votos": 316786,
+      "pct": 19.16
+     }
+    ],
+    "fonte": "tse"
+   }
+  ]
+ },
+ "riscos": {
+  "piores_ufs_pp_contra_2t_2022": [
+   {
+    "uf": "DF",
+    "flavio_pct": 51.31,
+    "bolsonaro_2022_2t_pct": 58.81,
+    "flavio_menos_bolsonaro_2t_pp": -7.5,
+    "terceiros_pct": 10.58
+   },
+   {
+    "uf": "AC",
+    "flavio_pct": 64.56,
+    "bolsonaro_2022_2t_pct": 70.3,
+    "flavio_menos_bolsonaro_2t_pp": -5.74,
+    "terceiros_pct": 6.71
+   },
+   {
+    "uf": "AP",
+    "flavio_pct": 45.67,
+    "bolsonaro_2022_2t_pct": 51.36,
+    "flavio_menos_bolsonaro_2t_pp": -5.7,
+    "terceiros_pct": 8.62
+   },
+   {
+    "uf": "GO",
+    "flavio_pct": 53.6,
+    "bolsonaro_2022_2t_pct": 58.71,
+    "flavio_menos_bolsonaro_2t_pp": -5.11,
+    "terceiros_pct": 15.34
+   },
+   {
+    "uf": "RR",
+    "flavio_pct": 71.06,
+    "bolsonaro_2022_2t_pct": 76.08,
+    "flavio_menos_bolsonaro_2t_pp": -5.02,
+    "terceiros_pct": 6.08
+   },
+   {
+    "uf": "AM",
+    "flavio_pct": 45.0,
+    "bolsonaro_2022_2t_pct": 48.9,
+    "flavio_menos_bolsonaro_2t_pp": -3.9,
+    "terceiros_pct": 6.77
+   }
+  ],
+  "piores_ufs_votos_contra_2t_2022": [
+   {
+    "uf": "SP",
+    "flavio": 12922023,
+    "bolsonaro_2022_2t": 14216587,
+    "flavio_menos_bolsonaro_2t_votos": -1294564
+   },
+   {
+    "uf": "RJ",
+    "flavio": 4966844,
+    "bolsonaro_2022_2t": 5403894,
+    "flavio_menos_bolsonaro_2t_votos": -437050
+   },
+   {
+    "uf": "MG",
+    "flavio": 5777548,
+    "bolsonaro_2022_2t": 6141310,
+    "flavio_menos_bolsonaro_2t_votos": -363762
+   },
+   {
+    "uf": "PR",
+    "flavio": 3945345,
+    "bolsonaro_2022_2t": 4159343,
+    "flavio_menos_bolsonaro_2t_votos": -213998
+   },
+   {
+    "uf": "RS",
+    "flavio": 3573783,
+    "bolsonaro_2022_2t": 3733185,
+    "flavio_menos_bolsonaro_2t_votos": -159402
+   },
+   {
+    "uf": "GO",
+    "flavio": 2051888,
+    "bolsonaro_2022_2t": 2193041,
+    "flavio_menos_bolsonaro_2t_votos": -141153
+   }
+  ],
+  "piores_ufs_contra_1t_2022": [
+   {
+    "uf": "DF",
+    "flavio_pct": 51.31,
+    "bolsonaro_2022_1t_pct": 51.65,
+    "flavio_menos_bolsonaro_1t_pp": -0.34
+   },
+   {
+    "uf": "PE",
+    "flavio_pct": 31.03,
+    "bolsonaro_2022_1t_pct": 29.91,
+    "flavio_menos_bolsonaro_1t_pp": 1.12
+   },
+   {
+    "uf": "GO",
+    "flavio_pct": 53.6,
+    "bolsonaro_2022_1t_pct": 52.16,
+    "flavio_menos_bolsonaro_1t_pp": 1.45
+   },
+   {
+    "uf": "SE",
+    "flavio_pct": 30.63,
+    "bolsonaro_2022_1t_pct": 29.16,
+    "flavio_menos_bolsonaro_1t_pp": 1.47
+   },
+   {
+    "uf": "RR",
+    "flavio_pct": 71.06,
+    "bolsonaro_2022_1t_pct": 69.57,
+    "flavio_menos_bolsonaro_1t_pp": 1.48
+   }
+  ],
+  "municipios_abaixo_de_bolsonaro_1t_votos": [
+   {
+    "uf": "RJ",
+    "municipio": "RIO DE JANEIRO",
+    "flavio": 1662354,
+    "bolsonaro_2022_1t": 1695777,
+    "variacao_votos": -33423,
+    "flavio_pct": 47.88,
+    "bolsonaro_2022_1t_pct": 47.0
+   },
+   {
+    "uf": "PE",
+    "municipio": "RECIFE",
+    "flavio": 377268,
+    "bolsonaro_2022_1t": 390904,
+    "variacao_votos": -13636,
+    "flavio_pct": 38.37,
+    "bolsonaro_2022_1t_pct": 39.22
+   },
+   {
+    "uf": "GO",
+    "municipio": "GOIÂNIA",
+    "flavio": 432608,
+    "bolsonaro_2022_1t": 445715,
+    "variacao_votos": -13107,
+    "flavio_pct": 54.68,
+    "bolsonaro_2022_1t_pct": 56.09
+   },
+   {
+    "uf": "PA",
+    "municipio": "BELÉM",
+    "flavio": 361377,
+    "bolsonaro_2022_1t": 370564,
+    "variacao_votos": -9187,
+    "flavio_pct": 43.74,
+    "bolsonaro_2022_1t_pct": 43.21
+   },
+   {
+    "uf": "MG",
+    "municipio": "BELO HORIZONTE",
+    "flavio": 690960,
+    "bolsonaro_2022_1t": 699105,
+    "variacao_votos": -8145,
+    "flavio_pct": 48.3,
+    "bolsonaro_2022_1t_pct": 46.6
+   },
+   {
+    "uf": "SP",
+    "municipio": "SÃO VICENTE",
+    "flavio": 87214,
+    "bolsonaro_2022_1t": 90072,
+    "variacao_votos": -2858,
+    "flavio_pct": 49.0,
+    "bolsonaro_2022_1t_pct": 47.08
+   },
+   {
+    "uf": "PE",
+    "municipio": "OLINDA",
+    "flavio": 89168,
+    "bolsonaro_2022_1t": 91876,
+    "variacao_votos": -2708,
+    "flavio_pct": 36.66,
+    "bolsonaro_2022_1t_pct": 37.19
+   },
+   {
+    "uf": "RJ",
+    "municipio": "SÃO JOÃO DE MERITI",
+    "flavio": 147563,
+    "bolsonaro_2022_1t": 149764,
+    "variacao_votos": -2201,
+    "flavio_pct": 56.48,
+    "bolsonaro_2022_1t_pct": 54.3
+   },
+   {
+    "uf": "RJ",
+    "municipio": "PETRÓPOLIS",
+    "flavio": 95783,
+    "bolsonaro_2022_1t": 97310,
+    "variacao_votos": -1527,
+    "flavio_pct": 55.88,
+    "bolsonaro_2022_1t_pct": 55.23
+   },
+   {
+    "uf": "SP",
+    "municipio": "ARAÇATUBA",
+    "flavio": 70541,
+    "bolsonaro_2022_1t": 71740,
+    "variacao_votos": -1199,
+    "flavio_pct": 65.32,
+    "bolsonaro_2022_1t_pct": 62.92
+   }
+  ],
+  "municipio_grande_minimo_validos": 100000,
+  "municipios_grandes_abaixo_de_bolsonaro_1t_pp": [
+   {
+    "uf": "GO",
+    "municipio": "LUZIÂNIA",
+    "validos": 102630,
+    "flavio_pct": 51.35,
+    "bolsonaro_2022_1t_pct": 53.89,
+    "diferenca_pp": -2.54,
+    "caiado_pct": 14.91,
+    "terceiros_pct": 17.43
+   },
+   {
+    "uf": "GO",
+    "municipio": "GOIÂNIA",
+    "validos": 791095,
+    "flavio_pct": 54.68,
+    "bolsonaro_2022_1t_pct": 56.09,
+    "diferenca_pp": -1.41,
+    "caiado_pct": 13.52,
+    "terceiros_pct": 17.1
+   },
+   {
+    "uf": "PE",
+    "municipio": "RECIFE",
+    "validos": 983138,
+    "flavio_pct": 38.37,
+    "bolsonaro_2022_1t_pct": 39.22,
+    "diferenca_pp": -0.85,
+    "caiado_pct": 1.58,
+    "terceiros_pct": 6.34
+   },
+   {
+    "uf": "PE",
+    "municipio": "CABO DE SANTO AGOSTINHO",
+    "validos": 134037,
+    "flavio_pct": 28.09,
+    "bolsonaro_2022_1t_pct": 28.72,
+    "diferenca_pp": -0.63,
+    "caiado_pct": 1.27,
+    "terceiros_pct": 5.97
+   },
+   {
+    "uf": "PE",
+    "municipio": "OLINDA",
+    "validos": 243207,
+    "flavio_pct": 36.66,
+    "bolsonaro_2022_1t_pct": 37.19,
+    "diferenca_pp": -0.53,
+    "caiado_pct": 1.49,
+    "terceiros_pct": 6.1
+   },
+   {
+    "uf": "PE",
+    "municipio": "JABOATÃO DOS GUARARAPES",
+    "validos": 372048,
+    "flavio_pct": 39.66,
+    "bolsonaro_2022_1t_pct": 40.12,
+    "diferenca_pp": -0.46,
+    "caiado_pct": 1.43,
+    "terceiros_pct": 6.59
+   },
+   {
+    "uf": "PE",
+    "municipio": "PAULISTA",
+    "validos": 189472,
+    "flavio_pct": 37.35,
+    "bolsonaro_2022_1t_pct": 37.78,
+    "diferenca_pp": -0.43,
+    "caiado_pct": 1.39,
+    "terceiros_pct": 6.58
+   },
+   {
+    "uf": "DF",
+    "municipio": "BRASÍLIA",
+    "validos": 1772808,
+    "flavio_pct": 51.31,
+    "bolsonaro_2022_1t_pct": 51.65,
+    "diferenca_pp": -0.34,
+    "caiado_pct": 4.8,
+    "terceiros_pct": 10.58
+   },
+   {
+    "uf": "AC",
+    "municipio": "RIO BRANCO",
+    "validos": 206854,
+    "flavio_pct": 63.76,
+    "bolsonaro_2022_1t_pct": 64.03,
+    "diferenca_pp": -0.27,
+    "caiado_pct": 2.49,
+    "terceiros_pct": 8.96
+   },
+   {
+    "uf": "PE",
+    "municipio": "CAMARAGIBE",
+    "validos": 101980,
+    "flavio_pct": 39.54,
+    "bolsonaro_2022_1t_pct": 39.74,
+    "diferenca_pp": -0.2,
+    "caiado_pct": 1.56,
+    "terceiros_pct": 6.56
+   }
+  ],
+  "governador_direita_eleito_flavio_perdeu": [
+   {
+    "uf": "AL",
+    "governador": "JHC",
+    "partido": "PSDB",
+    "campo": "centro-direita",
+    "governador_pct": 52.2,
+    "flavio_pct": 40.45,
+    "lula_pct": 54.73,
+    "lula_menos_flavio_votos": 259741
+   },
+   {
+    "uf": "PA",
+    "governador": "DR. DANIEL",
+    "partido": "PODE",
+    "campo": "centro-direita",
+    "governador_pct": 51.36,
+    "flavio_pct": 44.5,
+    "lula_pct": 49.91,
+    "lula_menos_flavio_votos": 263280
+   },
+   {
+    "uf": "PB",
+    "governador": "LUCAS RIBEIRO",
+    "partido": "PP",
+    "campo": "centro-direita",
+    "governador_pct": 64.3,
+    "flavio_pct": 33.07,
+    "lula_pct": 61.31,
+    "lula_menos_flavio_votos": 709750
+   }
+  ],
+  "estoque_lula_maior": {
+   "estoque_flavio": 2479174,
+   "estoque_lula": 7045377,
+   "razao": 2.84,
+   "lula_2022_2t_pct": 50.9,
+   "lula_2026_pct": 45.16,
+   "bolsonaro_2022_2t_pct": 49.1,
+   "flavio_2026_pct": 47.04
+  },
+  "comparecimento": {
+   "nota": "Variação de 2022 = comparecimento do 2º turno menos o do 1º, mesmo eleitorado apto. Valor de 1 ponto em 2026 = saldo Flávio menos Lula se 1% do eleitorado apto a mais comparecer e votar como a própria UF votou no 1º turno (hipótese, não medição; o eleitor que falta não é o eleitor médio da UF).",
+   "por_uf_2022": [
+    {
+     "comparecimento_1t": 442842,
+     "comparecimento_2t": 400683,
+     "variacao_votos": -42159,
+     "variacao_pp": -7.66,
+     "ganho_bolsonaro": 12926,
+     "ganho_lula": -7464,
+     "uf": "AP",
+     "regiao": "Norte",
+     "governador_2t_2022": false,
+     "lula_2022_2t_pct": 48.64
+    },
+    {
+     "comparecimento_1t": 455903,
+     "comparecimento_2t": 420760,
+     "variacao_votos": -35143,
+     "variacao_pp": -5.98,
+     "ganho_bolsonaro": 12168,
+     "ganho_lula": -7456,
+     "uf": "AC",
+     "regiao": "Norte",
+     "governador_2t_2022": false,
+     "lula_2022_2t_pct": 29.7
+    },
+    {
+     "comparecimento_1t": 305404,
+     "comparecimento_2t": 286269,
+     "variacao_votos": -19135,
+     "variacao_pp": -5.22,
+     "ganho_bolsonaro": 5931,
+     "ganho_lula": -1632,
+     "uf": "RR",
+     "regiao": "Norte",
+     "governador_2t_2022": false,
+     "lula_2022_2t_pct": 23.92
+    },
+    {
+     "comparecimento_1t": 891449,
+     "comparecimento_2t": 871238,
+     "variacao_votos": -20211,
+     "variacao_pp": -1.84,
+     "ganho_bolsonaro": 32460,
+     "ganho_lula": 290,
+     "uf": "TO",
+     "regiao": "Norte",
+     "governador_2t_2022": false,
+     "lula_2022_2t_pct": 51.36
+    },
+    {
+     "comparecimento_1t": 2113771,
+     "comparecimento_2t": 2067875,
+     "variacao_votos": -45896,
+     "variacao_pp": -1.74,
+     "ganho_bolsonaro": 81543,
+     "ganho_lula": -14693,
+     "uf": "AM",
+     "regiao": "Norte",
+     "governador_2t_2022": true,
+     "lula_2022_2t_pct": 51.1
+    },
+    {
+     "comparecimento_1t": 4789311,
+     "comparecimento_2t": 4701740,
+     "variacao_votos": -87571,
+     "variacao_pp": -1.44,
+     "ganho_bolsonaro": 189222,
+     "ganho_lula": 65354,
+     "uf": "PA",
+     "regiao": "Norte",
+     "governador_2t_2022": false,
+     "lula_2022_2t_pct": 54.75
+    },
+    {
+     "comparecimento_1t": 3920435,
+     "comparecimento_2t": 3854804,
+     "variacao_votos": -65631,
+     "variacao_pp": -1.3,
+     "ganho_bolsonaro": 98888,
+     "ganho_lula": 64971,
+     "uf": "MA",
+     "regiao": "Nordeste",
+     "governador_2t_2022": false,
+     "lula_2022_2t_pct": 71.14
+    },
+    {
+     "comparecimento_1t": 2115645,
+     "comparecimento_2t": 2088530,
+     "variacao_votos": -27115,
+     "variacao_pp": -1.05,
+     "ganho_bolsonaro": 60168,
+     "ganho_lula": 33375,
+     "uf": "PI",
+     "regiao": "Nordeste",
+     "governador_2t_2022": false,
+     "lula_2022_2t_pct": 76.86
+    },
+    {
+     "comparecimento_1t": 1805971,
+     "comparecimento_2t": 1784988,
+     "variacao_votos": -20983,
+     "variacao_pp": -0.88,
+     "ganho_bolsonaro": 66312,
+     "ganho_lula": 2675,
+     "uf": "AL",
+     "regiao": "Nordeste",
+     "governador_2t_2022": true,
+     "lula_2022_2t_pct": 58.68
+    },
+    {
+     "comparecimento_1t": 1364724,
+     "comparecimento_2t": 1355467,
+     "variacao_votos": -9257,
+     "variacao_pp": -0.55,
+     "ganho_bolsonaro": 42476,
+     "ganho_lula": 34235,
+     "uf": "SE",
+     "regiao": "Nordeste",
+     "governador_2t_2022": true,
+     "lula_2022_2t_pct": 67.21
+    },
+    {
+     "comparecimento_1t": 1555149,
+     "comparecimento_2t": 1549873,
+     "variacao_votos": -5276,
+     "variacao_pp": -0.27,
+     "ganho_bolsonaro": 86400,
+     "ganho_lula": 11224,
+     "uf": "MS",
+     "regiao": "Centro-Sul",
+     "governador_2t_2022": true,
+     "lula_2022_2t_pct": 40.51
+    },
+    {
+     "comparecimento_1t": 926827,
+     "comparecimento_2t": 926517,
+     "variacao_votos": -310,
+     "variacao_pp": -0.04,
+     "ganho_bolsonaro": 51930,
+     "ganho_lula": 1155,
+     "uf": "RO",
+     "regiao": "Norte",
+     "governador_2t_2022": true,
+     "lula_2022_2t_pct": 29.34
+    },
+    {
+     "comparecimento_1t": 2315889,
+     "comparecimento_2t": 2322269,
+     "variacao_votos": 6380,
+     "variacao_pp": 0.22,
+     "ganho_bolsonaro": 122115,
+     "ganho_lula": 29419,
+     "uf": "ES",
+     "regiao": "Centro-Sul",
+     "governador_2t_2022": true,
+     "lula_2022_2t_pct": 41.96
+    },
+    {
+     "comparecimento_1t": 5628610,
+     "comparecimento_2t": 5649398,
+     "variacao_votos": 20788,
+     "variacao_pp": 0.31,
+     "ganho_bolsonaro": 256650,
+     "ganho_lula": 229536,
+     "uf": "CE",
+     "regiao": "Nordeste",
+     "governador_2t_2022": false,
+     "lula_2022_2t_pct": 69.97
+    },
+    {
+     "comparecimento_1t": 6890016,
+     "comparecimento_2t": 6930852,
+     "variacao_votos": 40836,
+     "variacao_pp": 0.47,
+     "ganho_bolsonaro": 488162,
+     "ganho_lula": 85179,
+     "uf": "RS",
+     "regiao": "Centro-Sul",
+     "governador_2t_2022": true,
+     "lula_2022_2t_pct": 43.65
+    },
+    {
+     "comparecimento_1t": 9909463,
+     "comparecimento_2t": 9973822,
+     "variacao_votos": 64359,
+     "variacao_pp": 0.5,
+     "ganho_bolsonaro": 572648,
+     "ganho_lula": 309074,
+     "uf": "RJ",
+     "regiao": "Centro-Sul",
+     "governador_2t_2022": false,
+     "lula_2022_2t_pct": 43.47
+    },
+    {
+     "comparecimento_1t": 2557479,
+     "comparecimento_2t": 2574215,
+     "variacao_votos": 16736,
+     "variacao_pp": 0.55,
+     "ganho_bolsonaro": 85086,
+     "ganho_lula": 47085,
+     "uf": "PB",
+     "regiao": "Nordeste",
+     "governador_2t_2022": true,
+     "lula_2022_2t_pct": 66.62
+    },
+    {
+     "comparecimento_1t": 27189714,
+     "comparecimento_2t": 27380491,
+     "variacao_votos": 190777,
+     "variacao_pp": 0.55,
+     "ganho_bolsonaro": 1976598,
+     "ganho_lula": 1029850,
+     "uf": "SP",
+     "regiao": "Centro-Sul",
+     "governador_2t_2022": true,
+     "lula_2022_2t_pct": 44.76
+    },
+    {
+     "comparecimento_1t": 2090604,
+     "comparecimento_2t": 2108799,
+     "variacao_votos": 18195,
+     "variacao_pp": 0.72,
+     "ganho_bolsonaro": 88650,
+     "ganho_lula": 62606,
+     "uf": "RN",
+     "regiao": "Nordeste",
+     "governador_2t_2022": false,
+     "lula_2022_2t_pct": 65.1
+    },
+    {
+     "comparecimento_1t": 1819900,
+     "comparecimento_2t": 1838492,
+     "variacao_votos": 18592,
+     "variacao_pp": 0.82,
+     "ganho_bolsonaro": 130934,
+     "ganho_lula": 79761,
+     "uf": "DF",
+     "regiao": "Centro-Sul",
+     "governador_2t_2022": false,
+     "lula_2022_2t_pct": 41.19
+    },
+    {
+     "comparecimento_1t": 1892180,
+     "comparecimento_2t": 1913231,
+     "variacao_votos": 21051,
+     "variacao_pp": 0.85,
+     "ganho_bolsonaro": 113864,
+     "ganho_lula": 19038,
+     "uf": "MT",
+     "regiao": "Centro-Sul",
+     "governador_2t_2022": false,
+     "lula_2022_2t_pct": 34.92
+    },
+    {
+     "comparecimento_1t": 6828543,
+     "comparecimento_2t": 6900420,
+     "variacao_votos": 71877,
+     "variacao_pp": 0.85,
+     "ganho_bolsonaro": 530731,
+     "ganho_lula": 143113,
+     "uf": "PR",
+     "regiao": "Centro-Sul",
+     "governador_2t_2022": false,
+     "lula_2022_2t_pct": 37.6
+    },
+    {
+     "comparecimento_1t": 8874841,
+     "comparecimento_2t": 8971728,
+     "variacao_votos": 96887,
+     "variacao_pp": 0.86,
+     "ganho_bolsonaro": 309429,
+     "ganho_lula": 224734,
+     "uf": "BA",
+     "regiao": "Nordeste",
+     "governador_2t_2022": true,
+     "lula_2022_2t_pct": 72.12
+    },
+    {
+     "comparecimento_1t": 5738371,
+     "comparecimento_2t": 5800735,
+     "variacao_votos": 62364,
+     "variacao_pp": 0.89,
+     "ganho_bolsonaro": 167894,
+     "ganho_lula": 82611,
+     "uf": "PE",
+     "regiao": "Nordeste",
+     "governador_2t_2022": true,
+     "lula_2022_2t_pct": 66.93
+    },
+    {
+     "comparecimento_1t": 3812597,
+     "comparecimento_2t": 3860351,
+     "variacao_votos": 47754,
+     "variacao_pp": 0.98,
+     "ganho_bolsonaro": 272838,
+     "ganho_lula": 87392,
+     "uf": "GO",
+     "regiao": "Centro-Sul",
+     "governador_2t_2022": false,
+     "lula_2022_2t_pct": 41.29
+    },
+    {
+     "comparecimento_1t": 4487474,
+     "comparecimento_2t": 4542817,
+     "variacao_votos": 55343,
+     "variacao_pp": 1.01,
+     "ganho_bolsonaro": 353224,
+     "ganho_lula": 72702,
+     "uf": "SC",
+     "regiao": "Centro-Sul",
+     "governador_2t_2022": true,
+     "lula_2022_2t_pct": 30.73
+    },
+    {
+     "comparecimento_1t": 12655228,
+     "comparecimento_2t": 12866284,
+     "variacao_votos": 211056,
+     "variacao_pp": 1.29,
+     "ganho_bolsonaro": 902046,
+     "ganho_lula": 388389,
+     "uf": "MG",
+     "regiao": "Centro-Sul",
+     "governador_2t_2022": false,
+     "lula_2022_2t_pct": 50.2
+    }
+   ],
+   "grupos_2022": {
+    "com_2t_governador_2022": {
+     "ufs": [
+      "AL",
+      "AM",
+      "BA",
+      "ES",
+      "MS",
+      "PB",
+      "PE",
+      "RO",
+      "RS",
+      "SC",
+      "SE",
+      "SP"
+     ],
+     "variacao_votos": 387601,
+     "variacao_pp": 0.47
+    },
+    "sem_2t_governador_2022": {
+     "ufs": [
+      "AC",
+      "AP",
+      "CE",
+      "DF",
+      "GO",
+      "MA",
+      "MG",
+      "MT",
+      "PA",
+      "PI",
+      "PR",
+      "RJ",
+      "RN",
+      "RR",
+      "TO"
+     ],
+     "variacao_votos": 176707,
+     "variacao_pp": 0.24
+    }
+   },
+   "regioes": {
+    "Nordeste": {
+     "variacao_2022_votos": 91984,
+     "variacao_2022_pp": 0.22,
+     "comparecimento_2026_pct": 81.61,
+     "comparecimento_2022_1t_pct": 80.47,
+     "diferenca_2026_menos_2022_1t_pp": 1.14,
+     "valor_1pp_2026": -135929
+    },
+    "Norte": {
+     "variacao_2022_votos": -250425,
+     "variacao_2022_pp": -1.99,
+     "comparecimento_2026_pct": 80.57,
+     "comparecimento_2022_1t_pct": 79.06,
+     "diferenca_2026_menos_2022_1t_pp": 1.51,
+     "valor_1pp_2026": 5807
+    },
+    "Centro-Sul": {
+     "variacao_2022_votos": 722749,
+     "variacao_2022_pp": 0.72,
+     "comparecimento_2026_pct": 77.92,
+     "comparecimento_2022_1t_pct": 78.7,
+     "diferenca_2026_menos_2022_1t_pp": -0.78,
+     "valor_1pp_2026": 164214
+    }
+   },
+   "correlacao_variacao_2022_x_lula_2t_2022": 0.204,
+   "valor_1pp_ufs_flavio": {
+    "saldo_flavio": 174158,
+    "ufs": [
+     {
+      "uf": "SP",
+      "saldo_flavio": 44107
+     },
+     {
+      "uf": "PR",
+      "saldo_flavio": 23805
+     },
+     {
+      "uf": "SC",
+      "saldo_flavio": 23106
+     },
+     {
+      "uf": "RJ",
+      "saldo_flavio": 16611
+     },
+     {
+      "uf": "RS",
+      "saldo_flavio": 16262
+     },
+     {
+      "uf": "GO",
+      "saldo_flavio": 11040
+     },
+     {
+      "uf": "MT",
+      "saldo_flavio": 9215
+     },
+     {
+      "uf": "MG",
+      "saldo_flavio": 7626
+     },
+     {
+      "uf": "RO",
+      "saldo_flavio": 5139
+     },
+     {
+      "uf": "ES",
+      "saldo_flavio": 4873
+     },
+     {
+      "uf": "MS",
+      "saldo_flavio": 4683
+     },
+     {
+      "uf": "DF",
+      "saldo_flavio": 2885
+     },
+     {
+      "uf": "AC",
+      "saldo_flavio": 2112
+     },
+     {
+      "uf": "RR",
+      "saldo_flavio": 1893
+     },
+     {
+      "uf": "TO",
+      "saldo_flavio": 800
+     }
+    ]
+   },
+   "valor_1pp_ufs_lula": {
+    "saldo_flavio": -140066,
+    "ufs": [
+     {
+      "uf": "BA",
+      "saldo_flavio": -40262
+     },
+     {
+      "uf": "PE",
+      "saldo_flavio": -22191
+     },
+     {
+      "uf": "CE",
+      "saldo_flavio": -21289
+     },
+     {
+      "uf": "MA",
+      "saldo_flavio": -16536
+     },
+     {
+      "uf": "PI",
+      "saldo_flavio": -12151
+     },
+     {
+      "uf": "PB",
+      "saldo_flavio": -8590
+     },
+     {
+      "uf": "RN",
+      "saldo_flavio": -6340
+     },
+     {
+      "uf": "SE",
+      "saldo_flavio": -5298
+     },
+     {
+      "uf": "AL",
+      "saldo_flavio": -3272
+     },
+     {
+      "uf": "PA",
+      "saldo_flavio": -3254
+     },
+     {
+      "uf": "AM",
+      "saldo_flavio": -880
+     },
+     {
+      "uf": "AP",
+      "saldo_flavio": -3
+     }
+    ]
+   },
+   "ufs_flavio": [
+    "AC",
+    "DF",
+    "ES",
+    "GO",
+    "MG",
+    "MS",
+    "MT",
+    "PR",
+    "RJ",
+    "RO",
+    "RR",
+    "RS",
+    "SC",
+    "SP",
+    "TO"
+   ],
+   "ufs_lula": [
+    "AL",
+    "AM",
+    "AP",
+    "BA",
+    "CE",
+    "MA",
+    "PA",
+    "PB",
+    "PE",
+    "PI",
+    "RN",
+    "SE"
+   ]
+  },
+  "exterior": {
+   "flavio_pct": 43.49,
+   "lula_pct": 47.57,
+   "margem_votos": -13487,
+   "validos": 330882,
+   "eleitores": 916534,
+   "comparecimento_2026_pct": 37.29,
+   "comparecimento_2022_1t_pct": 43.72,
+   "comparecimento_2022_2t_pct": 44.59,
+   "bolsonaro_2022_2t_pct": 48.72,
+   "lula_2022_2t_margem_votos": 7641
+  },
+  "transferencia": {
+   "margem_min": 3895146,
+   "margem_max": 5422154,
+   "caiado_nexus": {
+    "Lula": 36,
+    "Flávio": 30,
+    "Branco/nulo": 26,
+    "Indecisos": 7
+   },
+   "caiado_datafolha": {
+    "Lula": 27.0,
+    "Flávio": 42.0,
+    "Não escolha": 31.0
+   },
+   "cury_nexus": {
+    "Lula": 30,
+    "Flávio": 44,
+    "Branco/nulo": 23,
+    "Indecisos": 2
+   },
+   "cury_datafolha": {
+    "Lula": 32.0,
+    "Flávio": 44.0,
+    "Não escolha": 24.0
+   },
+   "central_casa_margem_pp": 0.14,
+   "urna_margem_pp": 1.87,
+   "central_casa_menos_urna_pp": -1.73,
+   "erro_comum_2022_casas": 12,
+   "erro_comum_2022_pp": 3.92
+  },
+  "base": {
+   "trocar_para_lula_pct": 3.47,
+   "abster_pct": 6.94
+  }
+ },
+ "movimentos": [
+  {
+   "id": "renan",
+   "titulo": "Colher o eleitor de Renan Santos",
+   "alvo": "2.675.887 votos de Renan Santos (Missão)",
+   "votos_esperados": 1271709,
+   "regra": "votos de Renan × (Flávio − Lula) da linha Nexus normalizada (Flávio 56 × Lula 8, soma 101)",
+   "onde": [
+    {
+     "uf": "SP",
+     "votos": 804310,
+     "pct": 3.23
+    },
+    {
+     "uf": "MG",
+     "votos": 247209,
+     "pct": 2.06
+    },
+    {
+     "uf": "RJ",
+     "votos": 211843,
+     "pct": 2.26
+    },
+    {
+     "uf": "PR",
+     "votos": 177434,
+     "pct": 2.69
+    },
+    {
+     "uf": "RS",
+     "votos": 167558,
+     "pct": 2.61
+    }
+   ],
+   "rotulo": "inferência sobre medição publicada (Nexus, p. 79)",
+   "ordem": 1
+  },
+  {
+   "id": "nao_escolha",
+   "titulo": "Converter a não escolha da terceira via",
+   "alvo": "parcela das linhas da Nexus em branco, nulo ou indecisa",
+   "votos_esperados": 831761,
+   "regra": "margem com a não escolha votando na proporção da própria linha menos margem só com o medido",
+   "teto": 2902940,
+   "rotulo": "hipótese declarada sobre medição publicada",
+   "ordem": 2
+  },
+  {
+   "id": "sp_tarcisio",
+   "titulo": "Agenda conjunta com Tarcísio em São Paulo",
+   "alvo": "14.491.874 votos de Tarcísio; vão de 1.569.851 votos sobre Flávio",
+   "votos_esperados": 724594,
+   "regra": "votos de Tarcísio × média do saldo entre as perguntas de 1º e 2º turno medido no eleitorado do governador aliado em MG (+5 pontos) e no RJ (+5 pontos); a transcrição da casa do relatório de SP (p. 4) só tem a linha de 1º turno, então a taxa é transportada",
+   "teto": 1569851,
+   "linha_medida_1t": {
+    "Flávio": 59,
+    "Lula": 12
+   },
+   "onde": [
+    {
+     "municipio": "SÃO PAULO",
+     "capital": true,
+     "governador": 3233696,
+     "flavio": 2760747,
+     "vao_votos": 472949,
+     "governador_pct": 52.76,
+     "flavio_pct": 42.13
+    },
+    {
+     "municipio": "GUARULHOS",
+     "capital": false,
+     "governador": 394365,
+     "flavio": 351178,
+     "vao_votos": 43187,
+     "governador_pct": 60.84,
+     "flavio_pct": 49.22
+    },
+    {
+     "municipio": "CAMPINAS",
+     "capital": false,
+     "governador": 367121,
+     "flavio": 329733,
+     "vao_votos": 37388,
+     "governador_pct": 61.94,
+     "flavio_pct": 52.07
+    },
+    {
+     "municipio": "SÃO BERNARDO DO CAMPO",
+     "capital": false,
+     "governador": 226482,
+     "flavio": 192478,
+     "vao_votos": 34004,
+     "governador_pct": 53.28,
+     "flavio_pct": 41.83
+    },
+    {
+     "municipio": "SÃO JOSÉ DOS CAMPOS",
+     "capital": false,
+     "governador": 273010,
+     "flavio": 240721,
+     "vao_votos": 32289,
+     "governador_pct": 68.78,
+     "flavio_pct": 57.35
+    }
+   ],
+   "rotulo": "hipótese (taxa medida em MG e RJ aplicada a SP)",
+   "ordem": 3
+  },
+  {
+   "id": "cury",
+   "titulo": "Disputar o eleitor de Augusto Cury",
+   "alvo": "3.448.569 votos de Cury (Avante)",
+   "votos_esperados": 450752,
+   "regra": "média das linhas Nexus (Flávio 44 × Lula 30, soma 99) e Datafolha (Flávio 44 × Lula 32, soma 100) aplicadas aos votos de Cury",
+   "faixa": [
+    413828,
+    487676
+   ],
+   "onde": [
+    {
+     "uf": "SP",
+     "votos": 892368,
+     "pct": 3.59
+    },
+    {
+     "uf": "MG",
+     "votos": 409737,
+     "pct": 3.42
+    },
+    {
+     "uf": "RJ",
+     "votos": 247397,
+     "pct": 2.64
+    },
+    {
+     "uf": "PR",
+     "votos": 205095,
+     "pct": 3.11
+    },
+    {
+     "uf": "BA",
+     "votos": 195451,
+     "pct": 2.28
+    }
+   ],
+   "rotulo": "inferência sobre duas medições publicadas",
+   "ordem": 4
+  },
+  {
+   "id": "ne_interior",
+   "titulo": "Nordeste: interior antes das capitais",
+   "alvo": "1.810.479 votos de terceira via no Nordeste, 1.313.323 no interior",
+   "votos_esperados": 348297,
+   "regra": "saldo líquido de Bolsonaro entre turnos em 2022 por voto de terceira via, aplicado ao voto de terceira via de 2026, separado em interior e capitais",
+   "partes": {
+    "interior": 247706,
+    "capitais": 100591
+   },
+   "rotulo": "analogia histórica (uma eleição)",
+   "ordem": 5
+  },
+  {
+   "id": "mg_cleitinho",
+   "titulo": "Agenda conjunta com Cleitinho em Minas",
+   "alvo": "6.321.590 votos de Cleitinho",
+   "votos_esperados": 316080,
+   "regra": "votos de Cleitinho × saldo entre as perguntas de 1º e 2º turno no eleitorado dele (Datafolha pp. 20–21: Flávio 60 → 71, Lula 19 → 25)",
+   "teto": 544042,
+   "onde": [
+    {
+     "municipio": "DIVINÓPOLIS",
+     "capital": false,
+     "governador": 94198,
+     "flavio": 71478,
+     "vao_votos": 22720,
+     "governador_pct": 72.76,
+     "flavio_pct": 53.99
+    },
+    {
+     "municipio": "PATOS DE MINAS",
+     "capital": false,
+     "governador": 67990,
+     "flavio": 54527,
+     "vao_votos": 13463,
+     "governador_pct": 80.22,
+     "flavio_pct": 62.95
+    },
+    {
+     "municipio": "MINAS NOVAS",
+     "capital": false,
+     "governador": 9742,
+     "flavio": 3576,
+     "vao_votos": 6166,
+     "governador_pct": 71.26,
+     "flavio_pct": 26.14
+    },
+    {
+     "municipio": "ITUIUTABA",
+     "capital": false,
+     "governador": 31023,
+     "flavio": 25059,
+     "vao_votos": 5964,
+     "governador_pct": 59.46,
+     "flavio_pct": 45.34
+    },
+    {
+     "municipio": "PARACATU",
+     "capital": false,
+     "governador": 36089,
+     "flavio": 30159,
+     "vao_votos": 5930,
+     "governador_pct": 75.13,
+     "flavio_pct": 60.15
+    }
+   ],
+   "rotulo": "inferência sobre medição publicada",
+   "ordem": 6
+  },
+  {
+   "id": "rj_ruas",
+   "titulo": "Casar o 2º turno de Douglas Ruas com o de Flávio no Rio",
+   "alvo": "4.271.199 votos de Douglas Ruas",
+   "votos_esperados": 213560,
+   "regra": "votos de Ruas × saldo entre as perguntas de 1º e 2º turno no eleitorado dele (Datafolha pp. 12–13: Flávio 82 → 91, Lula 3 → 7)",
+   "contraprova": -111210,
+   "rotulo": "inferência sobre medição publicada",
+   "ordem": 7
+  },
+  {
+   "id": "direita_menor",
+   "titulo": "Fechar Zema e as candidaturas menores da direita",
+   "alvo": "383.412 votos",
+   "votos_esperados": 174623,
+   "regra": "linha de Zema na Nexus (Flávio 59 × Lula 13, soma 101) aplicada a Zema, DC e Democrata",
+   "rotulo": "inferência sobre medição publicada",
+   "ordem": 8
+  },
+  {
+   "id": "comparecimento",
+   "titulo": "Um ponto a mais de comparecimento nas 15 UFs de Flávio",
+   "alvo": "eleitor apto que faltou no 1º turno nas UFs que Flávio venceu",
+   "votos_esperados": 174158,
+   "regra": "1% do eleitorado apto a mais, votando como a própria UF votou no 1º turno",
+   "contraprova": -140066,
+   "onde": [
+    {
+     "uf": "SP",
+     "saldo_flavio": 44107
+    },
+    {
+     "uf": "PR",
+     "saldo_flavio": 23805
+    },
+    {
+     "uf": "SC",
+     "saldo_flavio": 23106
+    },
+    {
+     "uf": "RJ",
+     "saldo_flavio": 16611
+    },
+    {
+     "uf": "RS",
+     "saldo_flavio": 16262
+    }
+   ],
+   "rotulo": "hipótese declarada",
+   "ordem": 9
+  },
+  {
+   "id": "caiado_go",
+   "titulo": "Disputar o eleitor de Caiado com Daniel Vilela em Goiás",
+   "alvo": "2.605.148 votos de Caiado, 472.041 em Goiás",
+   "votos_esperados": 116442,
+   "regra": "média das linhas Nexus (Flávio 30 × Lula 36, soma 99) e Datafolha (Flávio 42 × Lula 27, soma 100) aplicadas aos votos de Caiado",
+   "faixa": [
+    -157888,
+    390772
+   ],
+   "governador_go": {
+    "nome": "DANIEL VILELA",
+    "partido": "MDB",
+    "campo": "centro",
+    "votos": 2148218,
+    "nota": "vice e sucessor de Ronaldo Caiado"
+   },
+   "onde": [
+    {
+     "uf": "SP",
+     "votos": 579571,
+     "pct": 2.33
+    },
+    {
+     "uf": "GO",
+     "votos": 472041,
+     "pct": 12.33
+    },
+    {
+     "uf": "MG",
+     "votos": 230423,
+     "pct": 1.92
+    },
+    {
+     "uf": "RJ",
+     "votos": 199844,
+     "pct": 2.13
+    },
+    {
+     "uf": "PR",
+     "votos": 171294,
+     "pct": 2.6
+    }
+   ],
+   "rotulo": "inferência sobre duas medições que discordam",
+   "ordem": 10
+  }
+ ]
+}

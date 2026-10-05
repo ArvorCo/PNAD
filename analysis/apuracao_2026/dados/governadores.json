@@ -1,0 +1,1233 @@
+{
+  "meta": {
+    "gerado_em": "2026-10-05T06:59:03Z",
+    "banco": "apuracao/data/apuracao.sqlite",
+    "versao_nacional_snapshot_id": 513491,
+    "versao_nacional_gerada_em": "2026-10-05T05:59:31.000Z",
+    "final_json_gerado_em": "2026-10-05T06:29:53.765Z",
+    "script": "scripts/apuracao-2026-dados.py",
+    "regra_de_versao": "versão vigente de cada arquivo = última gerada pelo TSE (gerado_em), não a última sem a marca regressivo do coletor",
+    "arquivo": "governadores.json"
+  },
+  "fonte": "apuracao/data/boletins/final.json (governadores e fatos)",
+  "n_eleitos_1t": 20,
+  "n_segundo_turno": 7,
+  "n_tse": 25,
+  "n_provisorio": 2,
+  "eleitos_1t_por_campo": {
+    "esquerda": 3,
+    "centro-esquerda": 0,
+    "centro": 5,
+    "centro-direita": 4,
+    "direita": 8,
+    "indefinido": 0
+  },
+  "segundo_turno_candidatos_por_campo": {
+    "esquerda": 2,
+    "centro-esquerda": 1,
+    "centro": 3,
+    "centro-direita": 4,
+    "direita": 4,
+    "indefinido": 0
+  },
+  "segundo_turno_pares": {
+    "centro x direita + centro-direita": 3,
+    "direita + centro-direita x esquerda + centro-esquerda": 3,
+    "direita + centro-direita x direita + centro-direita": 1
+  },
+  "ufs": [
+    {
+      "uf": "AC",
+      "fonte": "tse",
+      "pst": 100,
+      "decisao": "segundo_turno",
+      "candidatos": [
+        {
+          "nome": "MAILZA ASSIS",
+          "partido": "PP",
+          "campo": "centro-direita",
+          "votos": 218760,
+          "pct": 49.76,
+          "st": "2º turno"
+        },
+        {
+          "nome": "ALAN RICK",
+          "partido": "REPUBLICANOS",
+          "campo": "direita",
+          "votos": 141859,
+          "pct": 32.27,
+          "st": "2º turno"
+        }
+      ],
+      "terceiro": {
+        "nome": "TIÃO BOCALOM",
+        "partido": "PSDB",
+        "campo": "centro-esquerda",
+        "votos": 44946,
+        "pct": 10.22,
+        "st": "Não eleito"
+      }
+    },
+    {
+      "uf": "AL",
+      "fonte": "provisorio",
+      "pst": 99.94,
+      "decisao": "eleito",
+      "candidatos": [
+        {
+          "nome": "JHC",
+          "partido": "PSDB",
+          "campo": "centro-direita",
+          "votos": 891857,
+          "pct": 52.2,
+          "st": null
+        }
+      ],
+      "terceiro": null
+    },
+    {
+      "uf": "AM",
+      "fonte": "provisorio",
+      "pst": 100,
+      "decisao": "segundo_turno",
+      "candidatos": [
+        {
+          "nome": "OMAR AZIZ",
+          "partido": "PSD",
+          "campo": "centro",
+          "votos": 841846,
+          "pct": 40.63,
+          "st": null
+        },
+        {
+          "nome": "PROFESSORA MARIA DO CARMO",
+          "partido": "PL",
+          "campo": "direita",
+          "votos": 507335,
+          "pct": 24.49,
+          "st": null
+        }
+      ],
+      "terceiro": {
+        "nome": "ROBERTO CIDADE",
+        "partido": "UNIÃO",
+        "campo": "centro-direita",
+        "votos": 453896,
+        "pct": 21.91,
+        "st": null
+      }
+    },
+    {
+      "uf": "AP",
+      "fonte": "tse",
+      "pst": 100,
+      "decisao": "eleito",
+      "candidatos": [
+        {
+          "nome": "DR. FURLAN",
+          "partido": "PSD",
+          "campo": "centro",
+          "votos": 281595,
+          "pct": 62.75,
+          "st": "Eleito"
+        }
+      ],
+      "terceiro": null
+    },
+    {
+      "uf": "BA",
+      "fonte": "tse",
+      "pst": 100,
+      "decisao": "eleito",
+      "candidatos": [
+        {
+          "nome": "JERÔNIMO RODRIGUES",
+          "partido": "PT",
+          "campo": "esquerda",
+          "votos": 4626509,
+          "pct": 55.8,
+          "st": "Eleito"
+        }
+      ],
+      "terceiro": null
+    },
+    {
+      "uf": "CE",
+      "fonte": "tse",
+      "pst": 100,
+      "decisao": "eleito",
+      "candidatos": [
+        {
+          "nome": "ELMANO DE FREITAS",
+          "partido": "PT",
+          "campo": "esquerda",
+          "votos": 2875573,
+          "pct": 53.19,
+          "st": "Eleito"
+        }
+      ],
+      "terceiro": null
+    },
+    {
+      "uf": "DF",
+      "fonte": "tse",
+      "pst": 100,
+      "decisao": "segundo_turno",
+      "candidatos": [
+        {
+          "nome": "CELINA LEÃO",
+          "partido": "PP",
+          "campo": "centro-direita",
+          "votos": 825530,
+          "pct": 49.93,
+          "st": "2º turno"
+        },
+        {
+          "nome": "LEANDRO GRASS",
+          "partido": "PT",
+          "campo": "esquerda",
+          "votos": 569930,
+          "pct": 34.47,
+          "st": "2º turno"
+        }
+      ],
+      "terceiro": {
+        "nome": "PAULA BELMONTE",
+        "partido": "PSDB",
+        "campo": "centro-esquerda",
+        "votos": 140765,
+        "pct": 8.51,
+        "st": "Não eleito"
+      }
+    },
+    {
+      "uf": "ES",
+      "fonte": "tse",
+      "pst": 100,
+      "decisao": "segundo_turno",
+      "candidatos": [
+        {
+          "nome": "LORENZO PAZOLINI",
+          "partido": "REPUBLICANOS",
+          "campo": "direita",
+          "votos": 1048633,
+          "pct": 49.65,
+          "st": "2º turno"
+        },
+        {
+          "nome": "RICARDO FERRAÇO",
+          "partido": "MDB",
+          "campo": "centro",
+          "votos": 719397,
+          "pct": 34.06,
+          "st": "2º turno"
+        }
+      ],
+      "terceiro": {
+        "nome": "HELDER SALOMÃO",
+        "partido": "PT",
+        "campo": "esquerda",
+        "votos": 323483,
+        "pct": 15.32,
+        "st": "Não eleito"
+      }
+    },
+    {
+      "uf": "GO",
+      "fonte": "tse",
+      "pst": 100,
+      "decisao": "eleito",
+      "candidatos": [
+        {
+          "nome": "DANIEL VILELA",
+          "partido": "MDB",
+          "campo": "centro",
+          "votos": 2148218,
+          "pct": 59.17,
+          "st": "Eleito"
+        }
+      ],
+      "terceiro": null
+    },
+    {
+      "uf": "MA",
+      "fonte": "tse",
+      "pst": 100,
+      "decisao": "eleito",
+      "candidatos": [
+        {
+          "nome": "EDUARDO BRAIDE",
+          "partido": "PSD",
+          "campo": "centro",
+          "votos": 2104122,
+          "pct": 54.02,
+          "st": "Eleito"
+        }
+      ],
+      "terceiro": null
+    },
+    {
+      "uf": "MG",
+      "fonte": "tse",
+      "pst": 100,
+      "decisao": "eleito",
+      "candidatos": [
+        {
+          "nome": "CLEITINHO AZEVEDO",
+          "partido": "REPUBLICANOS",
+          "campo": "direita",
+          "votos": 6321590,
+          "pct": 55.4,
+          "st": "Eleito"
+        }
+      ],
+      "terceiro": null
+    },
+    {
+      "uf": "MS",
+      "fonte": "tse",
+      "pst": 100,
+      "decisao": "eleito",
+      "candidatos": [
+        {
+          "nome": "EDUARDO RIEDEL",
+          "partido": "PP",
+          "campo": "centro-direita",
+          "votos": 914323,
+          "pct": 67.07,
+          "st": "Eleito"
+        }
+      ],
+      "terceiro": null
+    },
+    {
+      "uf": "MT",
+      "fonte": "tse",
+      "pst": 100,
+      "decisao": "eleito",
+      "candidatos": [
+        {
+          "nome": "OTAVIANO PIVETTA",
+          "partido": "REPUBLICANOS",
+          "campo": "direita",
+          "votos": 1128099,
+          "pct": 60.77,
+          "st": "Eleito"
+        }
+      ],
+      "terceiro": null
+    },
+    {
+      "uf": "PA",
+      "fonte": "tse",
+      "pst": 100,
+      "decisao": "eleito",
+      "candidatos": [
+        {
+          "nome": "DR. DANIEL",
+          "partido": "PODE",
+          "campo": "centro-direita",
+          "votos": 2345721,
+          "pct": 51.36,
+          "st": "Eleito"
+        }
+      ],
+      "terceiro": null
+    },
+    {
+      "uf": "PB",
+      "fonte": "tse",
+      "pst": 100,
+      "decisao": "eleito",
+      "candidatos": [
+        {
+          "nome": "LUCAS RIBEIRO",
+          "partido": "PP",
+          "campo": "centro-direita",
+          "votos": 1470252,
+          "pct": 64.3,
+          "st": "Eleito"
+        }
+      ],
+      "terceiro": null
+    },
+    {
+      "uf": "PE",
+      "fonte": "tse",
+      "pst": 100,
+      "decisao": "eleito",
+      "candidatos": [
+        {
+          "nome": "RAQUEL LYRA",
+          "partido": "PSD",
+          "campo": "centro",
+          "votos": 2805438,
+          "pct": 53.27,
+          "st": "Eleito"
+        }
+      ],
+      "terceiro": null
+    },
+    {
+      "uf": "PI",
+      "fonte": "tse",
+      "pst": 100,
+      "decisao": "eleito",
+      "candidatos": [
+        {
+          "nome": "RAFAEL FONTELES",
+          "partido": "PT",
+          "campo": "esquerda",
+          "votos": 1436697,
+          "pct": 70.9,
+          "st": "Eleito"
+        }
+      ],
+      "terceiro": null
+    },
+    {
+      "uf": "PR",
+      "fonte": "tse",
+      "pst": 100,
+      "decisao": "eleito",
+      "candidatos": [
+        {
+          "nome": "SERGIO MORO",
+          "partido": "PL",
+          "campo": "direita",
+          "votos": 3127911,
+          "pct": 50.1,
+          "st": "Eleito"
+        }
+      ],
+      "terceiro": null
+    },
+    {
+      "uf": "RJ",
+      "fonte": "tse",
+      "pst": 100,
+      "decisao": "segundo_turno",
+      "candidatos": [
+        {
+          "nome": "DOUGLAS RUAS",
+          "partido": "PL",
+          "campo": "direita",
+          "votos": 4271199,
+          "pct": 49.27,
+          "st": "2º turno"
+        },
+        {
+          "nome": "EDUARDO PAES",
+          "partido": "PSD",
+          "campo": "centro",
+          "votos": 3706984,
+          "pct": 42.76,
+          "st": "2º turno"
+        }
+      ],
+      "terceiro": {
+        "nome": "WILLIAM SIRI",
+        "partido": "PSOL",
+        "campo": "esquerda",
+        "votos": 235347,
+        "pct": 2.71,
+        "st": "Não eleito"
+      }
+    },
+    {
+      "uf": "RN",
+      "fonte": "tse",
+      "pst": 100,
+      "decisao": "segundo_turno",
+      "candidatos": [
+        {
+          "nome": "ALLYSON",
+          "partido": "UNIÃO",
+          "campo": "centro-direita",
+          "votos": 733809,
+          "pct": 36.94,
+          "st": "2º turno"
+        },
+        {
+          "nome": "CADU DE LULA",
+          "partido": "PT",
+          "campo": "esquerda",
+          "votos": 718300,
+          "pct": 36.16,
+          "st": "2º turno"
+        }
+      ],
+      "terceiro": {
+        "nome": "ÁLVARO DIAS",
+        "partido": "PL",
+        "campo": "direita",
+        "votos": 530580,
+        "pct": 26.71,
+        "st": "Não eleito"
+      }
+    },
+    {
+      "uf": "RO",
+      "fonte": "tse",
+      "pst": 100,
+      "decisao": "eleito",
+      "candidatos": [
+        {
+          "nome": "MARCOS ROGÉRIO",
+          "partido": "PL",
+          "campo": "direita",
+          "votos": 537370,
+          "pct": 56.86,
+          "st": "Eleito"
+        }
+      ],
+      "terceiro": null
+    },
+    {
+      "uf": "RR",
+      "fonte": "tse",
+      "pst": 100,
+      "decisao": "eleito",
+      "candidatos": [
+        {
+          "nome": "ARTHUR HENRIQUE",
+          "partido": "PL",
+          "campo": "direita",
+          "votos": 220809,
+          "pct": 69.13,
+          "st": "Eleito"
+        }
+      ],
+      "terceiro": null
+    },
+    {
+      "uf": "RS",
+      "fonte": "tse",
+      "pst": 100,
+      "decisao": "eleito",
+      "candidatos": [
+        {
+          "nome": "ZUCCO",
+          "partido": "PL",
+          "campo": "direita",
+          "votos": 3516048,
+          "pct": 58.05,
+          "st": "Eleito"
+        }
+      ],
+      "terceiro": null
+    },
+    {
+      "uf": "SC",
+      "fonte": "tse",
+      "pst": 100,
+      "decisao": "eleito",
+      "candidatos": [
+        {
+          "nome": "JORGINHO MELLO",
+          "partido": "PL",
+          "campo": "direita",
+          "votos": 2942386,
+          "pct": 68.98,
+          "st": "Eleito"
+        }
+      ],
+      "terceiro": null
+    },
+    {
+      "uf": "SE",
+      "fonte": "tse",
+      "pst": 100,
+      "decisao": "eleito",
+      "candidatos": [
+        {
+          "nome": "FÁBIO",
+          "partido": "PSD",
+          "campo": "centro",
+          "votos": 727291,
+          "pct": 59.27,
+          "st": "Eleito"
+        }
+      ],
+      "terceiro": null
+    },
+    {
+      "uf": "SP",
+      "fonte": "tse",
+      "pst": 100,
+      "decisao": "eleito",
+      "candidatos": [
+        {
+          "nome": "TARCÍSIO",
+          "partido": "REPUBLICANOS",
+          "campo": "direita",
+          "votos": 14491874,
+          "pct": 62.65,
+          "st": "Eleito"
+        }
+      ],
+      "terceiro": null
+    },
+    {
+      "uf": "TO",
+      "fonte": "tse",
+      "pst": 100,
+      "decisao": "segundo_turno",
+      "candidatos": [
+        {
+          "nome": "PROFESSORA DORINHA",
+          "partido": "UNIÃO",
+          "campo": "centro-direita",
+          "votos": 386260,
+          "pct": 45.52,
+          "st": "2º turno"
+        },
+        {
+          "nome": "VICENTINHO JÚNIOR",
+          "partido": "PSDB",
+          "campo": "centro-esquerda",
+          "votos": 372848,
+          "pct": 43.94,
+          "st": "2º turno"
+        }
+      ],
+      "terceiro": {
+        "nome": "LAUREZ MOREIRA",
+        "partido": "PSD",
+        "campo": "centro",
+        "votos": 69967,
+        "pct": 8.24,
+        "st": "Não eleito"
+      }
+    }
+  ],
+  "vao_estadual": {
+    "nota": "candidatura ao governo (eleita ou no par do 2º turno) menos o finalista presidencial do mesmo bloco na mesma UF, em pontos dos válidos; mesma urna, cargos diferentes; não é transferência",
+    "lista": [
+      {
+        "uf": "pb",
+        "governador": "LUCAS RIBEIRO",
+        "partido": "PP",
+        "campo": "centro-direita",
+        "pct_governador": 64.3,
+        "presidenciavel": "FLAVIO BOLSONARO",
+        "pct_presidenciavel": 33.07,
+        "vao_pp": 31.22
+      },
+      {
+        "uf": "al",
+        "governador": "JHC",
+        "partido": "PSDB",
+        "campo": "centro-direita",
+        "pct_governador": 52.2,
+        "presidenciavel": "FLAVIO BOLSONARO",
+        "pct_presidenciavel": 40.45,
+        "vao_pp": 11.75
+      },
+      {
+        "uf": "sp",
+        "governador": "TARCÍSIO",
+        "partido": "REPUBLICANOS",
+        "campo": "direita",
+        "pct_governador": 62.65,
+        "presidenciavel": "FLAVIO BOLSONARO",
+        "pct_presidenciavel": 51.93,
+        "vao_pp": 10.72
+      },
+      {
+        "uf": "ms",
+        "governador": "EDUARDO RIEDEL",
+        "partido": "PP",
+        "campo": "centro-direita",
+        "pct_governador": 67.07,
+        "presidenciavel": "FLAVIO BOLSONARO",
+        "pct_presidenciavel": 58.6,
+        "vao_pp": 8.46
+      },
+      {
+        "uf": "mg",
+        "governador": "CLEITINHO AZEVEDO",
+        "partido": "REPUBLICANOS",
+        "campo": "direita",
+        "pct_governador": 55.4,
+        "presidenciavel": "FLAVIO BOLSONARO",
+        "pct_presidenciavel": 48.24,
+        "vao_pp": 7.15
+      },
+      {
+        "uf": "pa",
+        "governador": "DR. DANIEL",
+        "partido": "PODE",
+        "campo": "centro-direita",
+        "pct_governador": 51.36,
+        "presidenciavel": "FLAVIO BOLSONARO",
+        "pct_presidenciavel": 44.5,
+        "vao_pp": 6.87
+      },
+      {
+        "uf": "rs",
+        "governador": "ZUCCO",
+        "partido": "PL",
+        "campo": "direita",
+        "pct_governador": 58.05,
+        "presidenciavel": "FLAVIO BOLSONARO",
+        "pct_presidenciavel": 55.64,
+        "vao_pp": 2.41
+      },
+      {
+        "uf": "sc",
+        "governador": "JORGINHO MELLO",
+        "partido": "PL",
+        "campo": "direita",
+        "pct_governador": 68.98,
+        "presidenciavel": "FLAVIO BOLSONARO",
+        "pct_presidenciavel": 66.65,
+        "vao_pp": 2.32
+      },
+      {
+        "uf": "rn",
+        "governador": "ALLYSON",
+        "partido": "UNIÃO",
+        "campo": "centro-direita",
+        "pct_governador": 36.94,
+        "presidenciavel": "FLAVIO BOLSONARO",
+        "pct_presidenciavel": 34.77,
+        "vao_pp": 2.16
+      },
+      {
+        "uf": "to",
+        "governador": "VICENTINHO JÚNIOR",
+        "partido": "PSDB",
+        "campo": "centro-esquerda",
+        "pct_governador": 43.94,
+        "presidenciavel": "LULA",
+        "pct_presidenciavel": 43.42,
+        "vao_pp": 0.51
+      },
+      {
+        "uf": "pi",
+        "governador": "RAFAEL FONTELES",
+        "partido": "PT",
+        "campo": "esquerda",
+        "pct_governador": 70.9,
+        "presidenciavel": "LULA",
+        "pct_presidenciavel": 70.99,
+        "vao_pp": -0.09
+      },
+      {
+        "uf": "df",
+        "governador": "CELINA LEÃO",
+        "partido": "PP",
+        "campo": "centro-direita",
+        "pct_governador": 49.93,
+        "presidenciavel": "FLAVIO BOLSONARO",
+        "pct_presidenciavel": 51.31,
+        "vao_pp": -1.38
+      },
+      {
+        "uf": "rr",
+        "governador": "ARTHUR HENRIQUE",
+        "partido": "PL",
+        "campo": "direita",
+        "pct_governador": 69.13,
+        "presidenciavel": "FLAVIO BOLSONARO",
+        "pct_presidenciavel": 71.06,
+        "vao_pp": -1.93
+      },
+      {
+        "uf": "df",
+        "governador": "LEANDRO GRASS",
+        "partido": "PT",
+        "campo": "esquerda",
+        "pct_governador": 34.47,
+        "presidenciavel": "LULA",
+        "pct_presidenciavel": 38.11,
+        "vao_pp": -3.64
+      },
+      {
+        "uf": "rj",
+        "governador": "DOUGLAS RUAS",
+        "partido": "PL",
+        "campo": "direita",
+        "pct_governador": 49.27,
+        "presidenciavel": "FLAVIO BOLSONARO",
+        "pct_presidenciavel": 53.01,
+        "vao_pp": -3.74
+      },
+      {
+        "uf": "mt",
+        "governador": "OTAVIANO PIVETTA",
+        "partido": "REPUBLICANOS",
+        "campo": "direita",
+        "pct_governador": 60.77,
+        "presidenciavel": "FLAVIO BOLSONARO",
+        "pct_presidenciavel": 65.15,
+        "vao_pp": -4.38
+      },
+      {
+        "uf": "to",
+        "governador": "PROFESSORA DORINHA",
+        "partido": "UNIÃO",
+        "campo": "centro-direita",
+        "pct_governador": 45.52,
+        "presidenciavel": "FLAVIO BOLSONARO",
+        "pct_presidenciavel": 50.44,
+        "vao_pp": -4.92
+      },
+      {
+        "uf": "es",
+        "governador": "LORENZO PAZOLINI",
+        "partido": "REPUBLICANOS",
+        "campo": "direita",
+        "pct_governador": 49.65,
+        "presidenciavel": "FLAVIO BOLSONARO",
+        "pct_presidenciavel": 54.78,
+        "vao_pp": -5.14
+      },
+      {
+        "uf": "pr",
+        "governador": "SERGIO MORO",
+        "partido": "PL",
+        "campo": "direita",
+        "pct_governador": 50.1,
+        "presidenciavel": "FLAVIO BOLSONARO",
+        "pct_presidenciavel": 59.91,
+        "vao_pp": -9.82
+      },
+      {
+        "uf": "ce",
+        "governador": "ELMANO DE FREITAS",
+        "partido": "PT",
+        "campo": "esquerda",
+        "pct_governador": 53.19,
+        "presidenciavel": "LULA",
+        "pct_presidenciavel": 63.29,
+        "vao_pp": -10.09
+      },
+      {
+        "uf": "ba",
+        "governador": "JERÔNIMO RODRIGUES",
+        "partido": "PT",
+        "campo": "esquerda",
+        "pct_governador": 55.8,
+        "presidenciavel": "LULA",
+        "pct_presidenciavel": 66.17,
+        "vao_pp": -10.37
+      },
+      {
+        "uf": "ro",
+        "governador": "MARCOS ROGÉRIO",
+        "partido": "PL",
+        "campo": "direita",
+        "pct_governador": 56.86,
+        "presidenciavel": "FLAVIO BOLSONARO",
+        "pct_presidenciavel": 67.45,
+        "vao_pp": -10.59
+      },
+      {
+        "uf": "ac",
+        "governador": "MAILZA ASSIS",
+        "partido": "PP",
+        "campo": "centro-direita",
+        "pct_governador": 49.76,
+        "presidenciavel": "FLAVIO BOLSONARO",
+        "pct_presidenciavel": 64.56,
+        "vao_pp": -14.8
+      },
+      {
+        "uf": "am",
+        "governador": "PROFESSORA MARIA DO CARMO",
+        "partido": "PL",
+        "campo": "direita",
+        "pct_governador": 24.49,
+        "presidenciavel": "FLAVIO BOLSONARO",
+        "pct_presidenciavel": 45,
+        "vao_pp": -20.51
+      },
+      {
+        "uf": "rn",
+        "governador": "CADU DE LULA",
+        "partido": "PT",
+        "campo": "esquerda",
+        "pct_governador": 36.16,
+        "presidenciavel": "LULA",
+        "pct_presidenciavel": 59.75,
+        "vao_pp": -23.59
+      },
+      {
+        "uf": "ac",
+        "governador": "ALAN RICK",
+        "partido": "REPUBLICANOS",
+        "campo": "direita",
+        "pct_governador": 32.27,
+        "presidenciavel": "FLAVIO BOLSONARO",
+        "pct_presidenciavel": 64.56,
+        "vao_pp": -32.29
+      }
+    ]
+  },
+  "governador_x_presidente": {
+    "ufs_campo_difere": 14,
+    "ufs_bloco_difere": 10,
+    "nota": "governador eleito ou líder do 1º turno contra o presidenciável que liderou a UF",
+    "ufs": [
+      {
+        "uf": "AC",
+        "governador": "MAILZA ASSIS",
+        "campo_governador": "centro-direita",
+        "presidenciavel_lider": "FLAVIO BOLSONARO",
+        "campo_presidenciavel": "direita",
+        "campo_difere": true,
+        "bloco_difere": false
+      },
+      {
+        "uf": "AL",
+        "governador": "JHC",
+        "campo_governador": "centro-direita",
+        "presidenciavel_lider": "LULA",
+        "campo_presidenciavel": "esquerda",
+        "campo_difere": true,
+        "bloco_difere": true
+      },
+      {
+        "uf": "AM",
+        "governador": "OMAR AZIZ",
+        "campo_governador": "centro",
+        "presidenciavel_lider": "LULA",
+        "campo_presidenciavel": "esquerda",
+        "campo_difere": true,
+        "bloco_difere": true
+      },
+      {
+        "uf": "AP",
+        "governador": "DR. FURLAN",
+        "campo_governador": "centro",
+        "presidenciavel_lider": "LULA",
+        "campo_presidenciavel": "esquerda",
+        "campo_difere": true,
+        "bloco_difere": true
+      },
+      {
+        "uf": "BA",
+        "governador": "JERÔNIMO RODRIGUES",
+        "campo_governador": "esquerda",
+        "presidenciavel_lider": "LULA",
+        "campo_presidenciavel": "esquerda",
+        "campo_difere": false,
+        "bloco_difere": false
+      },
+      {
+        "uf": "CE",
+        "governador": "ELMANO DE FREITAS",
+        "campo_governador": "esquerda",
+        "presidenciavel_lider": "LULA",
+        "campo_presidenciavel": "esquerda",
+        "campo_difere": false,
+        "bloco_difere": false
+      },
+      {
+        "uf": "DF",
+        "governador": "CELINA LEÃO",
+        "campo_governador": "centro-direita",
+        "presidenciavel_lider": "FLAVIO BOLSONARO",
+        "campo_presidenciavel": "direita",
+        "campo_difere": true,
+        "bloco_difere": false
+      },
+      {
+        "uf": "ES",
+        "governador": "LORENZO PAZOLINI",
+        "campo_governador": "direita",
+        "presidenciavel_lider": "FLAVIO BOLSONARO",
+        "campo_presidenciavel": "direita",
+        "campo_difere": false,
+        "bloco_difere": false
+      },
+      {
+        "uf": "GO",
+        "governador": "DANIEL VILELA",
+        "campo_governador": "centro",
+        "presidenciavel_lider": "FLAVIO BOLSONARO",
+        "campo_presidenciavel": "direita",
+        "campo_difere": true,
+        "bloco_difere": true
+      },
+      {
+        "uf": "MA",
+        "governador": "EDUARDO BRAIDE",
+        "campo_governador": "centro",
+        "presidenciavel_lider": "LULA",
+        "campo_presidenciavel": "esquerda",
+        "campo_difere": true,
+        "bloco_difere": true
+      },
+      {
+        "uf": "MG",
+        "governador": "CLEITINHO AZEVEDO",
+        "campo_governador": "direita",
+        "presidenciavel_lider": "FLAVIO BOLSONARO",
+        "campo_presidenciavel": "direita",
+        "campo_difere": false,
+        "bloco_difere": false
+      },
+      {
+        "uf": "MS",
+        "governador": "EDUARDO RIEDEL",
+        "campo_governador": "centro-direita",
+        "presidenciavel_lider": "FLAVIO BOLSONARO",
+        "campo_presidenciavel": "direita",
+        "campo_difere": true,
+        "bloco_difere": false
+      },
+      {
+        "uf": "MT",
+        "governador": "OTAVIANO PIVETTA",
+        "campo_governador": "direita",
+        "presidenciavel_lider": "FLAVIO BOLSONARO",
+        "campo_presidenciavel": "direita",
+        "campo_difere": false,
+        "bloco_difere": false
+      },
+      {
+        "uf": "PA",
+        "governador": "DR. DANIEL",
+        "campo_governador": "centro-direita",
+        "presidenciavel_lider": "LULA",
+        "campo_presidenciavel": "esquerda",
+        "campo_difere": true,
+        "bloco_difere": true
+      },
+      {
+        "uf": "PB",
+        "governador": "LUCAS RIBEIRO",
+        "campo_governador": "centro-direita",
+        "presidenciavel_lider": "LULA",
+        "campo_presidenciavel": "esquerda",
+        "campo_difere": true,
+        "bloco_difere": true
+      },
+      {
+        "uf": "PE",
+        "governador": "RAQUEL LYRA",
+        "campo_governador": "centro",
+        "presidenciavel_lider": "LULA",
+        "campo_presidenciavel": "esquerda",
+        "campo_difere": true,
+        "bloco_difere": true
+      },
+      {
+        "uf": "PI",
+        "governador": "RAFAEL FONTELES",
+        "campo_governador": "esquerda",
+        "presidenciavel_lider": "LULA",
+        "campo_presidenciavel": "esquerda",
+        "campo_difere": false,
+        "bloco_difere": false
+      },
+      {
+        "uf": "PR",
+        "governador": "SERGIO MORO",
+        "campo_governador": "direita",
+        "presidenciavel_lider": "FLAVIO BOLSONARO",
+        "campo_presidenciavel": "direita",
+        "campo_difere": false,
+        "bloco_difere": false
+      },
+      {
+        "uf": "RJ",
+        "governador": "DOUGLAS RUAS",
+        "campo_governador": "direita",
+        "presidenciavel_lider": "FLAVIO BOLSONARO",
+        "campo_presidenciavel": "direita",
+        "campo_difere": false,
+        "bloco_difere": false
+      },
+      {
+        "uf": "RN",
+        "governador": "ALLYSON",
+        "campo_governador": "centro-direita",
+        "presidenciavel_lider": "LULA",
+        "campo_presidenciavel": "esquerda",
+        "campo_difere": true,
+        "bloco_difere": true
+      },
+      {
+        "uf": "RO",
+        "governador": "MARCOS ROGÉRIO",
+        "campo_governador": "direita",
+        "presidenciavel_lider": "FLAVIO BOLSONARO",
+        "campo_presidenciavel": "direita",
+        "campo_difere": false,
+        "bloco_difere": false
+      },
+      {
+        "uf": "RR",
+        "governador": "ARTHUR HENRIQUE",
+        "campo_governador": "direita",
+        "presidenciavel_lider": "FLAVIO BOLSONARO",
+        "campo_presidenciavel": "direita",
+        "campo_difere": false,
+        "bloco_difere": false
+      },
+      {
+        "uf": "RS",
+        "governador": "ZUCCO",
+        "campo_governador": "direita",
+        "presidenciavel_lider": "FLAVIO BOLSONARO",
+        "campo_presidenciavel": "direita",
+        "campo_difere": false,
+        "bloco_difere": false
+      },
+      {
+        "uf": "SC",
+        "governador": "JORGINHO MELLO",
+        "campo_governador": "direita",
+        "presidenciavel_lider": "FLAVIO BOLSONARO",
+        "campo_presidenciavel": "direita",
+        "campo_difere": false,
+        "bloco_difere": false
+      },
+      {
+        "uf": "SE",
+        "governador": "FÁBIO",
+        "campo_governador": "centro",
+        "presidenciavel_lider": "LULA",
+        "campo_presidenciavel": "esquerda",
+        "campo_difere": true,
+        "bloco_difere": true
+      },
+      {
+        "uf": "SP",
+        "governador": "TARCÍSIO",
+        "campo_governador": "direita",
+        "presidenciavel_lider": "FLAVIO BOLSONARO",
+        "campo_presidenciavel": "direita",
+        "campo_difere": false,
+        "bloco_difere": false
+      },
+      {
+        "uf": "TO",
+        "governador": "PROFESSORA DORINHA",
+        "campo_governador": "centro-direita",
+        "presidenciavel_lider": "FLAVIO BOLSONARO",
+        "campo_presidenciavel": "direita",
+        "campo_difere": true,
+        "bloco_difere": false
+      }
+    ]
+  },
+  "mais_perto_de_50": [
+    {
+      "uf": "DF",
+      "decisao": "segundo_turno",
+      "lider": {
+        "nome": "CELINA LEÃO",
+        "partido": "PP",
+        "campo": "centro-direita",
+        "votos": 825530,
+        "pct": 49.93,
+        "st": "2º turno"
+      },
+      "distancia_50_pp": 0.07
+    },
+    {
+      "uf": "PR",
+      "decisao": "eleito",
+      "lider": {
+        "nome": "SERGIO MORO",
+        "partido": "PL",
+        "campo": "direita",
+        "votos": 3127911,
+        "pct": 50.1,
+        "st": "Eleito"
+      },
+      "distancia_50_pp": 0.1
+    },
+    {
+      "uf": "AC",
+      "decisao": "segundo_turno",
+      "lider": {
+        "nome": "MAILZA ASSIS",
+        "partido": "PP",
+        "campo": "centro-direita",
+        "votos": 218760,
+        "pct": 49.76,
+        "st": "2º turno"
+      },
+      "distancia_50_pp": 0.24
+    }
+  ],
+  "vaga_2t_mais_apertada": [
+    {
+      "uf": "AM",
+      "segundo": {
+        "nome": "PROFESSORA MARIA DO CARMO",
+        "partido": "PL",
+        "campo": "direita",
+        "votos": 507335,
+        "pct": 24.49,
+        "st": null
+      },
+      "terceiro": {
+        "nome": "ROBERTO CIDADE",
+        "partido": "UNIÃO",
+        "campo": "centro-direita",
+        "votos": 453896,
+        "pct": 21.91,
+        "st": null
+      },
+      "margem_pp": 2.58
+    },
+    {
+      "uf": "RN",
+      "segundo": {
+        "nome": "CADU DE LULA",
+        "partido": "PT",
+        "campo": "esquerda",
+        "votos": 718300,
+        "pct": 36.16,
+        "st": "2º turno"
+      },
+      "terceiro": {
+        "nome": "ÁLVARO DIAS",
+        "partido": "PL",
+        "campo": "direita",
+        "votos": 530580,
+        "pct": 26.71,
+        "st": "Não eleito"
+      },
+      "margem_pp": 9.45
+    },
+    {
+      "uf": "ES",
+      "segundo": {
+        "nome": "RICARDO FERRAÇO",
+        "partido": "MDB",
+        "campo": "centro",
+        "votos": 719397,
+        "pct": 34.06,
+        "st": "2º turno"
+      },
+      "terceiro": {
+        "nome": "HELDER SALOMÃO",
+        "partido": "PT",
+        "campo": "esquerda",
+        "votos": 323483,
+        "pct": 15.32,
+        "st": "Não eleito"
+      },
+      "margem_pp": 18.74
+    }
+  ],
+  "rotulo_obrigatorio_vao": "teto endereçável, nunca transferência certa",
+  "conferencia_versoes": [
+    {
+      "cargo": "governador",
+      "uf": "AL",
+      "secoes_no_boletim": 7097,
+      "secoes_na_ultima_versao": 7101,
+      "secoes_total": 7101,
+      "ultima_versao_gerada_brt": "2026-10-04 22:54:50"
+    }
+  ]
+}
