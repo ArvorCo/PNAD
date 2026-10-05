@@ -10,11 +10,15 @@ from __future__ import annotations
 
 import json
 from collections import Counter
+from datetime import datetime, timezone
+from pathlib import Path
 from typing import Any
 
+from . import coligacoes as COL
 from .banco import Banco
-from .contexto import ELE_EST, FINAL_JSON, SENADORES_2022
+from .contexto import BANCO, ELE_EST, ELE_FED, FINAL_JSON, SENADORES_2022
 from .dados import bloco_de, brt, campo_de, pct, versoes_genuinas
+from .vao_governadores import vao_completo
 
 CARGOS = {3: "governador", 5: "senador", 6: "deputado_federal", 7: "deputado_estadual"}
 
@@ -189,19 +193,88 @@ def senado(final: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def governadores(final: dict[str, Any]) -> dict[str, Any]:
+def pct_precisos(banco: Banco) -> dict[str, dict]:
+    """Parcelas dos válidos sem arredondar, na versão vigente de cada arquivo de UF.
+
+    `governador`: (UF, nome de urna) -> `pvapn` do TSE, a parcela que o tribunal
+    divulga (base: válidos mais os anulados sub judice, como em `final.json`);
+    `presidente`: UF -> % de Flávio (22) e de Lula (13) nos válidos de presidente.
+    """
+    gov: dict[tuple[str, str], float] = {}
+    for uf, par in _vigentes_uf(banco, 3).items():
+        for c in banco.candidaturas(par["vigente"]["id"]):
+            if c["pvapn"] is not None:
+                gov[(uf.upper(), c["nome_urna"])] = c["pvapn"]
+    numero = {str(c["sqcand"]): int(c["numero"]) for c in banco.candidatos(ELE_FED, 1)}
+    arqs = banco.arquivos(
+        "tipo = 'u' AND eleicao_cd = ? AND cargo_cd = 1 AND nivel = 'uf'", (ELE_FED,)
+    )
+    snaps = banco.snapshots([a["id"] for a in arqs])
+    vigentes = {}
+    for a in arqs:
+        versoes = versoes_genuinas(snaps.get(a["id"], []))
+        if versoes and a["uf"] != "zz":
+            vigentes[a["uf"].upper()] = banco.completar_totais(versoes[-1])
+    votos = banco.votos(list(vigentes.values()))
+    pres: dict[str, dict[str, float]] = {}
+    for uf, vig in vigentes.items():
+        por_numero = {numero.get(sq): v for sq, v in votos[vig["id"]].items()}
+        pres[uf] = {
+            "flavio": 100 * por_numero.get(22, 0) / vig["vv"],
+            "lula": 100 * por_numero.get(13, 0) / vig["vv"],
+        }
+    banco.esquecer_documentos()
+    return {"governador": gov, "presidente": pres}
+
+
+def coligacoes_governador() -> dict[tuple[str, str], dict]:
+    """Coligações de governador do TSE por (UF, nome de urna); vazio sem o arquivo."""
+    cands = COL.ler(3)
+    if not cands:
+        print(f"aviso: {COL.FONTE} ausente; vão estadual sem conferência de coligação")
+    return COL.por_nome(cands)
+
+
+def governadores(
+    final: dict[str, Any],
+    coligacoes: dict[tuple[str, str], dict] | None = None,
+    precisos: dict[str, dict] | None = None,
+) -> dict[str, Any]:
     gov = final["governadores"]
     fatos = final["fatos"]
+    if coligacoes is None:
+        coligacoes = coligacoes_governador()
+    if precisos is None and BANCO.exists():
+        banco = Banco(BANCO)
+        precisos = pct_precisos(banco)
+        banco.fechar()
     return {
         "fonte": "apuracao/data/boletins/final.json (governadores e fatos)",
         **{k: gov[k] for k in gov if k != "ufs"},
         "ufs": gov["ufs"],
-        "vao_estadual": fatos["vao_estadual"],
+        "vao_estadual": vao_completo(final, coligacoes, precisos),
         "governador_x_presidente": fatos["governador_x_presidente"],
         "mais_perto_de_50": fatos["governadores_mais_perto_de_50"],
         "vaga_2t_mais_apertada": fatos["governadores_vaga_2t_mais_apertada"],
         "rotulo_obrigatorio_vao": "teto endereçável, nunca transferência certa",
     }
+
+
+def regravar_vao(caminho: Path, final: dict[str, Any]) -> dict[str, Any]:
+    """Refaz só `vao_estadual` de um governadores.json já gerado, sem tocar o resto."""
+    atual = json.loads(caminho.read_text(encoding="utf-8"))
+    banco = Banco(BANCO)
+    precisos = pct_precisos(banco)
+    banco.fechar()
+    atual["vao_estadual"] = vao_completo(final, coligacoes_governador(), precisos)
+    atual["meta"]["vao_estadual_regerado_em"] = datetime.now(timezone.utc).strftime(
+        "%Y-%m-%dT%H:%M:%SZ"
+    )
+    texto = json.dumps(atual, ensure_ascii=False, indent=2)
+    if chr(0x2014) in texto:
+        raise RuntimeError(f"{caminho.name}: travessão no texto gerado")
+    caminho.write_text(texto + "\n", encoding="utf-8")
+    return atual
 
 
 def assembleias(final: dict[str, Any]) -> dict[str, Any]:

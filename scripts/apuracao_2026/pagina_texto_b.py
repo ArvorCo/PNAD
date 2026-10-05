@@ -185,23 +185,74 @@ def governadores_a(G: dict) -> str:
 
 
 def governadores_b(G: dict) -> str:
-    vao = sorted(G["vao_estadual"]["lista"], key=lambda v: -v["vao_pp"])
-    pos = [v for v in vao if v["vao_pp"] > 0][:3]
-    neg = [v for v in vao if v["vao_pp"] < 0][-3:]
+    V = G["vao_estadual"]
+    vao = sorted(V["lista"], key=lambda v: -v["vao_pp"])
+    com_lado_todos = [v for v in vao if v.get("comparacao") != "sem apoio declarado"]
+    pos = [v for v in com_lado_todos if v["vao_pp"] > 0][:3]
+    neg = [v for v in com_lado_todos if v["vao_pp"] < 0][-3:]
+    nome_fin = {"FLAVIO BOLSONARO": "Flávio", "LULA": "Lula"}
 
     def f(v):
         return (
             f"{v['uf'].upper()} {nome_proprio(v['governador'])} {sinal(v['vao_pp'], 1)}"
         )
 
-    return p(
-        "O vão compara, na mesma urna, a candidatura ao governo com o presidenciável do mesmo bloco. Maiores positivos: "
+    texto = p(
+        f"O vão compara, na mesma urna, a candidatura ao governo com o finalista presidencial do lado dela, nas "
+        f"{V.get('n_ufs', len({v['uf'] for v in vao}))} UFs. Maiores positivos, entre as candidaturas com lado definido: "
         + lista([f(v) for v in pos])
         + ". Negativos mais fundos: "
         + lista([f(v) for v in neg])
         + ". É <strong>teto endereçável, nunca transferência certa</strong>.",
         "inferencia",
     )
+    centro = V.get("centro", [])
+    if not centro:
+        return texto
+    com_lado = [c for c in centro if c["comparacao"] != "sem apoio declarado"]
+    sem = [c for c in centro if c["comparacao"] == "sem apoio declarado"]
+
+    def fc(c, chave):
+        return f"{c['uf']} {nome_proprio(c['governador'])} {sinal(c[chave], 1)}"
+
+    partes = [
+        "O centro não tem finalista. Cada candidatura do centro entra contra o finalista que a coligação "
+        "registrada no TSE apoiou, numa tabela declarada no script: "
+        + lista(
+            [
+                fc(
+                    c,
+                    "vao_lula_pp" if c["comparado_com"] == "LULA" else "vao_flavio_pp",
+                )
+                + f" contra {nome_fin[c['comparado_com']]}"
+                for c in com_lado
+            ]
+        )
+        + "."
+    ]
+    if sem:
+        partes.append(
+            " Sem PT nem PL na coligação e sem alinhamento declarado, "
+            + lista(
+                [
+                    f"{fc(c, 'vao_flavio_pp')} contra Flávio ({sinal(c['vao_lula_pp'], 1)} contra Lula)"
+                    for c in sem
+                ]
+            )
+            + " entram contra Flávio, marcados como sem apoio declarado."
+        )
+    excecoes = [
+        v
+        for v in vao
+        if v["campo"] != "centro" and v.get("comparacao") not in (None, "mesmo bloco")
+    ]
+    for v in excecoes:
+        partes.append(
+            f" {nome_proprio(v['governador'])} ({escape(v['partido'])}-{v['uf'].upper()}) é de "
+            f"{ROTULO_CAMPO.get(v['campo'], v['campo']).lower()}, mas a coligação registrada tem o PT e não tem o PL: "
+            f"entra contra Lula, {sinal(v['vao_lula_pp'], 1)}; contra Flávio seria {sinal(v['vao_flavio_pp'], 1)}."
+        )
+    return texto + p("".join(partes), "inferencia")
 
 
 def governadores_c(G: dict) -> str:

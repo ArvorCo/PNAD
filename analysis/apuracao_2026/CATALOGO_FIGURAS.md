@@ -27,7 +27,7 @@ Regra: o texto chama `figura_catalogo("nome", dados, **opcoes)` (acessor em `scr
 | `hemiciclo_senado` | 7 | 81 (27 contorno + 54 novos) por campo | ficha por assento; alternância 2023 / 2027 |
 | `senado_segundas_vagas` | 7 | distância entre 2º e 3º por UF | ficha |
 | `assembleias_campo` | 8 | empilhadas por campo nas 11 casas, 2022 × 2026 | ficha |
-| `vao_estadual` | 9 | barras com sinal: governador do campo menos presidenciável | ficha com os dois % e votos |
+| `vao_estadual` | 9 | barras com sinal nas 27 UFs: candidatura ao governo menos o finalista do lado dela; centro contra o finalista que a coligação apoiou (`COMPARACAO_CENTRO`), hachura quando sem apoio declarado | ficha com as duas diferenças (contra Flávio e contra Lula), a comparação e a evidência |
 | `governadores_mapa` | 9 | coroplético: eleito 1º turno (campo) ou 2º turno (hachura clara) | ficha |
 | `pesquisas_erro` | 10 | pontos por instituto com seta publicado → reponderado, contra a urna | ficha; alternância diferença / Flávio / Lula |
 | `pesquisas_serie` | 10 | série do agregador (publicado e reponderado) e a urna como ponto final | ficha por dia |

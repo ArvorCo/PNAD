@@ -14,6 +14,7 @@ Uso:
     (cd apuracao && bun run scripts/final-2026.ts)   # regera final.json antes
     python3 scripts/apuracao-2026-dados.py
     python3 scripts/apuracao-2026-dados.py --regerar-final
+    python3 scripts/apuracao-2026-dados.py --so-vao-governadores
 """
 
 from __future__ import annotations
@@ -54,8 +55,20 @@ def main() -> None:
         action="store_true",
         help="roda `bun run scripts/final-2026.ts` em apuracao/ antes de ler final.json",
     )
+    parser.add_argument(
+        "--so-vao-governadores",
+        action="store_true",
+        help="refaz só `vao_estadual` em governadores.json (final.json e coligações do TSE), sem o banco",
+    )
     args = parser.parse_args()
     inicio = time.time()
+    if args.so_vao_governadores:
+        g = casas.regravar_vao(SAIDA / "governadores.json", casas.ler_final())
+        v = g["vao_estadual"]
+        print(
+            f"governadores.json: vao_estadual com {v['n_candidaturas']} candidaturas em {v['n_ufs']} UFs"
+        )
+        return
     if args.regerar_final:
         subprocess.run(
             ["bun", "run", "scripts/final-2026.ts"],

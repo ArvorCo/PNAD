@@ -767,26 +767,34 @@ def assembleias_campo(d, **_op) -> str:
 @registra("vao_estadual")
 def vao_estadual(d, **_op) -> str:
     G = dado(d, "governadores")
-    lista = sorted(G["vao_estadual"]["lista"], key=lambda x: -x["vao_pp"])
+    V = G["vao_estadual"]
+    lista = sorted(V["lista"], key=lambda x: -x["vao_pp"])
     try:
         aliados = {
             a["uf"]: a for a in dado(d, "estrategia_2t")["governadores"]["aliados"]
         }
     except KeyError:
         aliados = {}
-    esq, topo, passo = 330, 60, 28
+    esq, topo, passo = 430, 60, 28
     base = topo + passo * len(lista)
-    h = base + 66
+    h = base + 92
     vmax = math.ceil(max(abs(x["vao_pp"]) for x in lista) / 10) * 10
     X = escala(-vmax, vmax, esq, W - 60)
     x0 = X(0)
+    hachura = (
+        '<defs><pattern id="vao-sem-apoio" width="7" height="7" patternUnits="userSpaceOnUse" '
+        'patternTransform="rotate(45)"><rect width="7" height="7" fill="#efe9d8"/>'
+        f'<rect width="3" height="7" fill="{cor_campo("centro")}"/></pattern></defs>'
+    )
     out = [
         svg_abre(
             W,
             h,
-            "Vão estadual: governador menos o presidenciável do mesmo campo",
-            "Barras em pontos dos válidos; positivo, o governador teve parcela maior que o presidenciável do campo na mesma UF.",
+            "Vão estadual: governador menos o finalista presidencial do lado dele",
+            "Barras em pontos dos válidos; positivo, a candidatura ao governo teve parcela maior que o finalista "
+            "comparado na mesma UF. Centro contra o finalista que a coligação apoiou; hachura, sem apoio declarado.",
         ),
+        hachura,
         t(x0 + 8, 30, "governador à frente →", 13, MUTED),
         t(x0 - 8, 30, "← presidenciável à frente", 13, MUTED, "end"),
     ]
@@ -809,12 +817,15 @@ def vao_estadual(d, **_op) -> str:
         y = topo + i * passo
         uf = x["uf"].upper()
         v = x["vao_pp"]
-        cor = cor_campo(x["campo"])
+        sem_apoio = x.get("comparacao") == "sem apoio declarado"
+        cor = "url(#vao-sem-apoio)" if sem_apoio else cor_campo(x["campo"])
         xa, xb = sorted((x0, X(v)))
-        rot = f"{uf} · {nome_bonito(x['governador'])} ({x['partido']})"
+        contra = "Flávio" if x.get("finalista", "flavio") == "flavio" else "Lula"
+        rot = f"{uf} · {nome_bonito(x['governador'])} ({x['partido']}) × {contra}"
+        extra = f' stroke="{cor_campo("centro")}" stroke-width="1"' if sem_apoio else ""
         corpo = (
             t(esq - 12, y + 19, rot, 13.5, INK, "end")
-            + r(xa, y + 5, xb - xa, passo - 10, cor)
+            + r(xa, y + 5, xb - xa, passo - 10, cor, extra)
             + t(
                 X(v) + (6 if v >= 0 else -6),
                 y + 19,
@@ -827,8 +838,11 @@ def vao_estadual(d, **_op) -> str:
         )
         linhas = [
             ("Governador", f"{pct(x['pct_governador'])}"),
-            (nome_bonito(x["presidenciavel"]), pct(x["pct_presidenciavel"])),
-            ("Vão", pp(v)),
+            ("Flávio", pct(x.get("pct_flavio"))),
+            ("Lula", pct(x.get("pct_lula"))),
+            ("Contra Flávio", pp(x.get("vao_flavio_pp"))),
+            ("Contra Lula", pp(x.get("vao_lula_pp"))),
+            ("Comparado com", f"{contra} ({x.get('comparacao', 'mesmo bloco')})"),
             ("Campo", campo_nome(x["campo"])),
         ]
         al = aliados.get(uf)
@@ -844,15 +858,37 @@ def vao_estadual(d, **_op) -> str:
                 f"{NOME_UF[uf]}: {nome_bonito(x['governador'])}",
                 "teto endereçável, não transferência",
                 linhas,
+                (
+                    x.get("evidencia", "")
+                    if x.get("evidencia") != "regra do bloco"
+                    else ""
+                ),
             )
         )
         out.append(hit(area(0, y, W, passo) + corpo, k))
     out.append(
         legenda([(campo_nome(c), cor_campo(c)) for c in CAMPOS], esq, base + 52, 13)
+        + r(
+            esq,
+            base + 67,
+            13,
+            13,
+            "url(#vao-sem-apoio)",
+            f' stroke="{cor_campo("centro")}"',
+        )
+        + t(esq + 18, base + 78, "centro sem apoio declarado, comparado com Flávio", 13)
     )
     out.append("</svg>")
+    centro = V.get("centro", [])
+    contra_lula = [c["uf"] for c in centro if c["comparado_com"] == "LULA"]
+    contra_fl = [c["uf"] for c in centro if c["comparacao"] == "coligação com o PL"]
+    sem = [c["uf"] for c in centro if c["comparacao"] == "sem apoio declarado"]
     legenda_ = (
-        "Parcela do candidato ao governo (eleito ou no 2º turno) menos a do finalista presidencial do mesmo campo, "
-        f"na mesma UF e na mesma urna. Cor: campo do governador. {G['rotulo_obrigatorio_vao'].capitalize()}. Fonte: governadores.json."
+        f"Parcela da candidatura ao governo (eleita ou no 2º turno, {V.get('n_ufs', 27)} UFs) menos a do finalista "
+        "presidencial do lado dela, na mesma UF e na mesma urna. Direita e centro-direita contra Flávio; esquerda e "
+        "centro-esquerda contra Lula. Centro contra o finalista que a coligação registrada no TSE apoiou: Lula em "
+        f"{', '.join(contra_lula)}; Flávio em {', '.join(contra_fl)}. Sem PT nem PL na coligação e sem alinhamento "
+        f"declarado ({', '.join(sem)}): comparado com Flávio, em hachura. A ficha traz as duas diferenças. "
+        f"Cor: campo do governador. {G['rotulo_obrigatorio_vao'].capitalize()}. Fonte: governadores.json."
     )
-    return figura_html("vao_estadual", "".join(out), legenda_, tips, minw=820)
+    return figura_html("vao_estadual", "".join(out), legenda_, tips, minw=860)
