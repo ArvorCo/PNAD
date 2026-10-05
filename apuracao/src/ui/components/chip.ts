@@ -21,8 +21,10 @@ export function chipAndamento(pst: number, tf: boolean): HTMLSpanElement {
 /** Chip pela situação do TSE (nunca projetada). Devolve null quando não há situação. */
 export function chipSituacao(st: string, e: boolean, dvt: string): HTMLSpanElement | null {
   if (dvt && !/^v[aá]lido/i.test(dvt)) return chip("sub judice", "subjudice");
-  if (e || /^eleit/i.test(st)) return chip("eleito", "eleito");
+  // Nos arquivos finais o TSE marca e="s" também em quem vai ao 2º turno (visto em 04/10/2026,
+  // Douglas Ruas e Celina Leão); por isso o texto st decide, e a flag só vale sem texto.
   if (/2.?\s*turno/i.test(st)) return chip("2º turno", "segundo");
+  if (/^eleit/i.test(st) || (e && st.trim() === "")) return chip("eleito", "eleito");
   return null;
 }
 

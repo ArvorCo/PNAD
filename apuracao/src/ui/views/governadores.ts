@@ -52,7 +52,9 @@ export function corGovernador(u: UnidadeMapa, campos: Campos): string {
   return f === 1 ? cor : mix(PAPEL, cor, f);
 }
 
-export const eleitoPeloTse = (c: Pick<Candidato, "e" | "st">): boolean => c.e || /^eleit/i.test(c.st);
+/** Eleito pelo TSE: só pelo texto st ("Eleito", "Eleito por QP"...). A flag e vem marcada também
+ *  em quem vai ao 2º turno nos arquivos finais, então sozinha ela não prova eleição. */
+export const eleitoPeloTse = (c: Pick<Candidato, "e" | "st">): boolean => /^eleit/i.test(c.st) || (c.e && c.st.trim() === "");
 export const segundoTurnoTse = (c: Pick<Candidato, "st">): boolean => /2.?\s*turno/i.test(c.st);
 
 const unidadesDe = (s: State): UnidadeMapa[] => (s.mapas[chaveMapa(ELE, CARGO, "uf", "br")] as Mapa | undefined)?.unidades ?? [];

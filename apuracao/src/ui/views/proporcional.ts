@@ -31,7 +31,7 @@ export interface OpcoesProporcional {
 const NOME_CARGO: Readonly<Record<number, string>> = { 6: "deputado federal", 7: "deputado estadual", 8: "deputado distrital" };
 
 const valido = (c: Candidato): boolean => !c.dvt || /^v[aá]lido/i.test(c.dvt);
-const eleito = (c: Candidato): boolean => c.e || /^eleit/i.test(c.st);
+const eleito = (c: Candidato): boolean => /^eleit/i.test(c.st) || (c.e && c.st.trim() === "");
 
 export interface Preparado {
   ordem: Candidato[];
