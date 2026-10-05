@@ -229,3 +229,40 @@ def ler_tudo() -> dict[str, Any]:
     ):
         fontes[nome.removesuffix(".json")] = ler_json(nome)
     return fontes
+
+
+# ---------------------------------------------------------------- retrovisão
+
+PESQUISAS_2022 = ROOT / "data/originals/pesquisas_2022"
+TRANSCRICAO_2022 = ROOT / "analysis/predicao_2026/erro_2022/pesquisas_2022.json"
+CHAVES_2T = ("segundo_turno", "2t", "transferencia", "migracao", "cruzamento")
+TERMOS_2T = ("2º turno", "segundo turno", "migração", "transferência")
+
+
+def retrovisao() -> dict:
+    """Procura no acervo pesquisa de 2º turno de 2022 com o cruzamento pelo voto de 1º turno.
+
+    Varre os README de ``data/originals/pesquisas_2022/<casa>/`` e as chaves da
+    transcrição ``pesquisas_2022.json``. Sem esse documento, a matriz de 2022 não
+    pode ser comparada com a conversão da urna de 2022.
+    """
+    achados = []
+    casas = sorted(p.name for p in PESQUISAS_2022.iterdir() if p.is_dir())
+    for casa in casas:
+        leia = PESQUISAS_2022 / casa / "README.md"
+        texto = leia.read_text(encoding="utf-8").lower() if leia.exists() else ""
+        if any(t in texto for t in TERMOS_2T):
+            achados.append({"casa": casa, "arquivo": relativo(leia)})
+    trans = json.loads(TRANSCRICAO_2022.read_text(encoding="utf-8"))
+    for p in trans["pesquisas"]:
+        chaves = " ".join(json.dumps(p, ensure_ascii=False).lower().split('"'))
+        if any(f" {k} " in f" {chaves} " for k in CHAVES_2T):
+            achados.append({"casa": p["casa"], "arquivo": relativo(TRANSCRICAO_2022)})
+    return {
+        "disponivel": bool(achados),
+        "achados": achados,
+        "procurado_em": [relativo(PESQUISAS_2022), relativo(TRANSCRICAO_2022)],
+        "casas_no_acervo": len(casas),
+        "pesquisas_transcritas": len(trans["pesquisas"]),
+        "o_que_ha": trans["descricao"].split(",")[0],
+    }

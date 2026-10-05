@@ -211,6 +211,7 @@ def municipios(fontes: dict, mat: dict, locais: dict) -> tuple[list[dict], list[
             "flavio": fl,
             "lula": lu,
             **por_grupo,
+            "direita_menor": sum(vn.get(n, 0) for n in T.DIREITA_MENOR),
             "estoque": estoque,
             "estoque_pct": T.pct(estoque, vv),
             "margem_pp": margem,

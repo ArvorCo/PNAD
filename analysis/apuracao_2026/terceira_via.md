@@ -12,7 +12,7 @@ Rótulos: **Verificado** é número da urna. **Inferência** é conta sobre medi
 2. **Verificado.** 63,34% desse voto está em municípios onde Flávio venceu; 48,87% onde venceu com folga e 20,67% onde Lula venceu com folga.
 3. **Inferência.** Pela matriz Nexus aplicada município a município, o estoque dá a Flávio saldo de 1,66 milhão de votos. Os 100 municípios prioritários guardam 4,40 milhões de votos e saldo de 809 mil votos, 36,36% da diferença do 1º turno (2,22 milhões de votos); a parte que a matriz manda para branco, nulo ou indecisão nesses 100 é de 1,38 milhão de votos.
 4. **Verificado.** Em 3.663 municípios um nome do lado de Flávio (governador ou Senado) teve mais votos que ele, somando 7,06 milhões de votos acima dele; 54,85% desse vão está no Nordeste. Sem os governadores que não declararam apoio a Flávio, o vão é de 5,31 milhões de votos.
-5. **Analogia.** Em 2022, cada voto de terceira via do 1º turno rendeu a Bolsonaro saldo de 0,59 entre os turnos onde Flávio venceu com folga em 2026, e de 0,19 onde Lula venceu com folga.
+5. **Analogia.** Em 2022, pela razão simples, cada voto de terceira via do 1º turno rendeu a Bolsonaro saldo de 0,59 entre os turnos onde Flávio venceu com folga em 2026, e de 0,19 onde Lula venceu com folga. A regressão com efeito fixo de UF, que separa a mobilização da base, dá +0,15 e −0,12 (seção 6).
 6. **Inferência.** O branco e nulo de presidente subiu 0,67 ponto entre os turnos de 2022 nas 12 UFs com 2º turno de governador e caiu 0,38 ponto nas outras 15. Em 2026 há 2º turno de governador em AC, AM, DF, ES, RJ, RN e TO: pela mesma taxa, 132 mil votos em risco de virar branco ou nulo; 49,54% dos votantes dessas UFs estão no Rio de Janeiro.
 
 ## Regras
@@ -33,7 +33,7 @@ Rótulos: **Verificado** é número da urna. **Inferência** é conta sobre medi
 | Flávio perdeu apertado | 364 | 1.484.650 | 15,99% | 289.657 |
 | Flávio perdeu com folga | 2.301 | 1.919.658 | 20,67% | 359.087 |
 
-| Região | Terceira via | Parcela do país | Onde Flávio venceu | Renan + Zema | Caiado | Saldo por voto (Nexus) | Vão local positivo | Saldo por voto em 2022 |
+| Região | Terceira via | Parcela do país | Onde Flávio venceu | Renan + Zema | Caiado | Saldo por voto (Nexus) | Vão local positivo | Razão simples de 2022 |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | Norte | 631.871 | 6,80% | 63,38% | 29,39% | 21,83% | 0,184 | 404.369 | 0,485 |
 | Nordeste | 1.811.095 | 19,50% | 4,65% | 30,81% | 21,54% | 0,190 | 3.874.584 | 0,193 |
@@ -218,10 +218,161 @@ Municípios com 20 mil votantes ou mais onde o branco e nulo mais cresceu em 202
 
 **Analogia.** A terceira via de 2022 era outra (Simone Tebet e Ciro Gomes). O acervo da casa (`data/originals/pesquisas_2022/`) só tem as últimas ondas de 1º turno; não há pesquisa de 2º turno de 2022 com o cruzamento pelo voto em Tebet ou Ciro, e não usamos nenhuma.
 
+## 6. Pesquisa contra urna: duas réguas para o mesmo estoque
+
+**Régua da urna de 2022.** Regressão ecológica município a município da variação do saldo Bolsonaro menos Lula entre os turnos de 2022 sobre os votantes do 1º turno, explicada pela parcela da terceira via e pela parcela de brancos e nulos do 1º turno, com efeito fixo de UF, ponderada pelos votantes; inclinação da terceira via por classe de margem de Flávio em 2026 (aplicação) e por região (sensibilidade); intervalos por bootstrap de municípios. Bootstrap de 1.000 reamostragens, semente 20261005.
+
+| Grupo | Municípios | Bolsonaro por voto | Lula por voto | Saldo por voto | IC 95% do saldo | Razão simples | Nexus sobre 2026 | Datafolha sobre 2026 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Flávio venceu com folga | 2.429 | 0,554 | 0,404 | +0,150 | +0,083 a +0,228 | +0,589 | +0,168 | +0,230 |
+| Flávio venceu apertado | 476 | 0,472 | 0,437 | +0,034 | −0,030 a +0,119 | +0,378 | +0,187 | +0,234 |
+| Flávio perdeu apertado | 364 | 0,427 | 0,455 | −0,028 | −0,082 a +0,073 | +0,259 | +0,195 | +0,237 |
+| Flávio perdeu com folga | 2.301 | 0,332 | 0,456 | −0,124 | −0,239 a −0,029 | +0,188 | +0,187 | +0,224 |
+| Norte | 450 | 0,681 | 0,695 | −0,014 | −0,178 a +0,145 | +0,485 | +0,184 | +0,221 |
+| Nordeste | 1.794 | 0,600 | 0,449 | +0,151 | −0,068 a +0,314 | +0,193 | +0,190 | +0,225 |
+| Centro-Oeste | 467 | 0,396 | 0,405 | −0,009 | −0,111 a +0,129 | +0,549 | +0,070 | +0,197 |
+| Sudeste | 1.668 | 0,317 | 0,440 | −0,123 | −0,206 a +0,095 | +0,375 | +0,195 | +0,237 |
+| Sul | 1.191 | 0,352 | 0,387 | −0,035 | −0,180 a +0,148 | +0,706 | +0,192 | +0,241 |
+| Brasil, inclinação única | 5.570 | 0,427 | 0,452 | −0,025 | −0,108 a +0,100 | +0,409 | +0,179 | +0,230 |
+
+**Inferência.** A razão simples credita à terceira via todo o movimento entre os turnos. Sem efeito fixo de UF, a regressão dá +0,198 por voto de terceira via e uma constante de 3,39 pontos dos votantes a favor de Bolsonaro que não depende da terceira via. Por região, as inclinações de Bolsonaro e de Lula somam mais de um voto por voto de terceira via em Norte e Nordeste: a regressão ali capta algo além da terceira via, como comparecimento que anda junto com ela. A aplicação a 2026 usa a classe de margem.
+
+**Inferência. Totais de 2026.** Nexus +1.664.014; Datafolha em Cury e Caiado +2.138.043; urna de 2022 por classe +448.181 (IC 95%: −167.003 a +1.145.029); urna por região −331.945; razão simples +3.927.301.
+
+| Região | Terceira via | Nexus | Datafolha | Urna de 2022 | Nexus menos urna |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Norte | 631.871 | +116.594 | +139.404 | +32.618 | +83.976 |
+| Nordeste | 1.811.095 | +343.642 | +408.248 | −189.686 | +533.328 |
+| Centro-Oeste | 987.718 | +68.848 | +194.219 | +136.605 | −67.757 |
+| Sudeste | 4.342.954 | +844.685 | +1.031.021 | +285.499 | +559.186 |
+| Sul | 1.513.514 | +290.246 | +365.150 | +183.146 | +107.100 |
+
+**Inferência. Ranking.** 60 dos 100 primeiros pelo saldo da pesquisa também estão nos 100 primeiros pela urna (robustos, 2.264.186 votos de terceira via); 40 só pela pesquisa e 40 só pela urna. Motivo dominante das divergências: só pesquisa, classe 29, só pesquisa, composicao 11, só urna, classe 32, só urna, composicao 8. A combinação ordena pelo piso (o menor saldo das duas) e mostra o teto.
+
+| Nº | Município | Terceira via | Nexus | Datafolha | Urna | Piso | Teto | Nº pesquisa | Nº urna | Situação |
+| ---: | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| 1 | Brasília (DF) | 187.565 | +24.262 | +41.194 | +28.154 | +24.262 | +28.154 | 5 | 1 | robusto |
+| 2 | Curitiba (PR) | 132.614 | +25.901 | +32.593 | +19.905 | +19.905 | +25.901 | 4 | 3 | robusto |
+| 3 | Manaus (AM) | 101.648 | +18.404 | +21.062 | +15.257 | +15.257 | +18.404 | 7 | 4 | robusto |
+| 4 | Rio de Janeiro (RJ) | 285.003 | +50.386 | +65.803 | +9.747 | +9.747 | +50.386 | 2 | 5 | robusto |
+| 5 | Campinas (SP) | 61.515 | +12.484 | +14.959 | +9.233 | +9.233 | +12.484 | 12 | 6 | robusto |
+| 6 | Campo Grande (MS) | 44.160 | +8.729 | +10.605 | +6.628 | +6.628 | +8.729 | 20 | 8 | robusto |
+| 7 | São José dos Campos (SP) | 42.545 | +9.098 | +10.587 | +6.386 | +6.386 | +9.098 | 17 | 9 | robusto |
+| 8 | Sorocaba (SP) | 41.856 | +8.852 | +10.274 | +6.283 | +6.283 | +8.852 | 19 | 10 | robusto |
+| 9 | Uberlândia (MG) | 39.249 | +7.463 | +9.770 | +5.891 | +5.891 | +7.463 | 24 | 11 | robusto |
+| 10 | Contagem (MG) | 37.047 | +7.683 | +8.989 | +5.561 | +5.561 | +7.683 | 22 | 12 | robusto |
+| 11 | Ribeirão Preto (SP) | 36.766 | +7.136 | +8.600 | +5.519 | +5.519 | +7.136 | 26 | 13 | robusto |
+| 12 | São Gonçalo (RJ) | 34.139 | +6.031 | +7.698 | +5.124 | +5.124 | +6.031 | 31 | 14 | robusto |
+| 13 | Duque de Caxias (RJ) | 34.032 | +5.931 | +7.670 | +5.108 | +5.108 | +5.931 | 32 | 15 | robusto |
+| 14 | Joinville (SC) | 33.641 | +8.394 | +9.385 | +5.050 | +5.050 | +8.394 | 21 | 16 | robusto |
+| 15 | Belo Horizonte (MG) | 147.491 | +30.156 | +35.986 | +5.044 | +5.044 | +30.156 | 3 | 17 | robusto |
+| 16 | Maceió (AL) | 32.477 | +6.276 | +7.390 | +4.875 | +4.875 | +6.276 | 28 | 19 | robusto |
+| 17 | Londrina (PR) | 31.887 | +5.396 | +7.143 | +4.786 | +4.786 | +5.396 | 37 | 20 | robusto |
+| 18 | Nova Iguaçu (RJ) | 30.898 | +5.602 | +7.061 | +4.638 | +4.638 | +5.602 | 35 | 21 | robusto |
+| 19 | Cuiabá (MT) | 29.772 | +5.212 | +6.743 | +4.469 | +4.469 | +5.212 | 40 | 22 | robusto |
+| 20 | Jundiaí (SP) | 29.388 | +6.227 | +7.298 | +4.411 | +4.411 | +6.227 | 29 | 23 | robusto |
+| 21 | Santos (SP) | 28.191 | +5.671 | +6.933 | +4.231 | +4.231 | +5.671 | 34 | 24 | robusto |
+| 22 | Caxias do Sul (RS) | 27.774 | +5.480 | +6.777 | +4.169 | +4.169 | +5.480 | 36 | 25 | robusto |
+| 23 | Mogi das Cruzes (SP) | 27.343 | +5.346 | +6.563 | +4.104 | +4.104 | +5.346 | 38 | 26 | robusto |
+| 24 | Porto Velho (RO) | 25.457 | +4.740 | +5.802 | +3.821 | +3.821 | +4.740 | 49 | 27 | robusto |
+| 25 | Ponta Grossa (PR) | 24.348 | +3.846 | +5.406 | +3.655 | +3.655 | +3.846 | 59 | 28 | robusto |
+| 26 | Vila Velha (ES) | 24.247 | +5.133 | +6.041 | +3.639 | +3.639 | +5.133 | 41 | 29 | robusto |
+| 27 | Maringá (PR) | 23.394 | +4.709 | +5.729 | +3.511 | +3.511 | +4.709 | 50 | 30 | robusto |
+| 28 | São José do Rio Preto (SP) | 22.968 | +4.504 | +5.498 | +3.447 | +3.447 | +4.504 | 54 | 31 | robusto |
+| 29 | Blumenau (SC) | 21.753 | +5.294 | +6.006 | +3.265 | +3.265 | +5.294 | 39 | 32 | robusto |
+| 30 | Piracicaba (SP) | 20.562 | +4.195 | +5.051 | +3.086 | +3.086 | +4.195 | 55 | 33 | robusto |
+| 31 | Campos dos Goytacazes (RJ) | 20.200 | +3.098 | +4.228 | +3.032 | +3.032 | +3.098 | 85 | 34 | robusto |
+| 32 | Canoas (RS) | 19.615 | +4.147 | +4.895 | +2.944 | +2.944 | +4.147 | 56 | 35 | robusto |
+| 33 | Taubaté (SP) | 19.427 | +3.801 | +4.750 | +2.916 | +2.916 | +3.801 | 60 | 36 | robusto |
+| 34 | Bauru (SP) | 19.289 | +3.603 | +4.533 | +2.895 | +2.895 | +3.603 | 64 | 37 | robusto |
+| 35 | São José dos Pinhais (PR) | 19.120 | +3.683 | +4.627 | +2.870 | +2.870 | +3.683 | 61 | 38 | robusto |
+| 36 | Rio Branco (AC) | 18.536 | +3.117 | +4.034 | +2.782 | +2.782 | +3.117 | 83 | 39 | robusto |
+| 37 | Uberaba (MG) | 18.247 | +3.581 | +4.555 | +2.739 | +2.739 | +3.581 | 69 | 40 | robusto |
+| 38 | Petrópolis (RJ) | 18.060 | +3.153 | +4.068 | +2.711 | +2.711 | +3.153 | 81 | 41 | robusto |
+| 39 | Franca (SP) | 17.786 | +3.602 | +4.392 | +2.670 | +2.670 | +3.602 | 65 | 43 | robusto |
+| 40 | São João de Meriti (RJ) | 17.681 | +2.986 | +3.950 | +2.654 | +2.654 | +2.986 | 88 | 44 | robusto |
+| 41 | Praia Grande (SP) | 17.332 | +3.460 | +4.199 | +2.602 | +2.602 | +3.460 | 75 | 45 | robusto |
+| 42 | Guarulhos (SP) | 75.393 | +15.137 | +17.945 | +2.578 | +2.578 | +15.137 | 9 | 46 | robusto |
+| 43 | Cariacica (ES) | 17.046 | +3.507 | +4.156 | +2.559 | +2.559 | +3.507 | 73 | 47 | robusto |
+| 44 | Guarujá (SP) | 16.887 | +3.168 | +3.817 | +2.535 | +2.535 | +3.168 | 79 | 48 | robusto |
+| 45 | Belford Roxo (RJ) | 16.224 | +2.796 | +3.610 | +2.435 | +2.435 | +2.796 | 93 | 49 | robusto |
+| 46 | Cascavel (PR) | 16.209 | +3.452 | +4.150 | +2.433 | +2.433 | +3.452 | 77 | 50 | robusto |
+| 47 | São José (SC) | 15.576 | +3.561 | +4.012 | +2.338 | +2.338 | +3.561 | 72 | 51 | robusto |
+| 48 | Indaiatuba (SP) | 15.560 | +3.327 | +3.866 | +2.336 | +2.336 | +3.327 | 78 | 52 | robusto |
+| 49 | Gravataí (RS) | 14.762 | +2.822 | +3.504 | +2.216 | +2.216 | +2.822 | 91 | 53 | robusto |
+| 50 | Palmas (TO) | 14.750 | +2.561 | +3.350 | +2.214 | +2.214 | +2.561 | 102 | 54 | só urna |
+| 51 | São Caetano do Sul (SP) | 14.650 | +3.153 | +3.748 | +2.199 | +2.199 | +3.153 | 80 | 55 | robusto |
+| 52 | Boa Vista (RR) | 14.422 | +3.140 | +3.542 | +2.165 | +2.165 | +3.140 | 82 | 56 | robusto |
+| 53 | Limeira (SP) | 13.567 | +2.861 | +3.376 | +2.036 | +2.036 | +2.861 | 89 | 58 | robusto |
+| 54 | Sete Lagoas (MG) | 13.531 | +2.734 | +3.294 | +2.031 | +2.031 | +2.734 | 96 | 59 | robusto |
+| 55 | Colombo (PR) | 13.316 | +2.429 | +3.158 | +1.999 | +1.999 | +2.429 | 115 | 60 | só urna |
+| 56 | Jacareí (SP) | 12.371 | +2.465 | +2.966 | +1.857 | +1.857 | +2.465 | 111 | 62 | só urna |
+| 57 | Sumaré (SP) | 12.256 | +2.662 | +3.045 | +1.840 | +1.840 | +2.662 | 99 | 63 | robusto |
+| 58 | Santarém (PA) | 12.197 | +2.443 | +2.794 | +1.831 | +1.831 | +2.443 | 114 | 64 | só urna |
+| 59 | Foz do Iguaçu (PR) | 12.139 | +2.665 | +3.192 | +1.822 | +1.822 | +2.665 | 98 | 65 | robusto |
+| 60 | Imperatriz (MA) | 12.017 | +2.384 | +2.937 | +1.804 | +1.804 | +2.384 | 119 | 66 | só urna |
+| 61 | Itajaí (SC) | 11.995 | +2.819 | +3.164 | +1.800 | +1.800 | +2.819 | 92 | 67 | robusto |
+| 62 | Americana (SP) | 11.967 | +2.569 | +2.958 | +1.796 | +1.796 | +2.569 | 100 | 68 | robusto |
+| 63 | Palhoça (SC) | 11.853 | +2.795 | +3.111 | +1.779 | +1.779 | +2.795 | 94 | 69 | robusto |
+| 64 | Hortolândia (SP) | 11.725 | +2.552 | +2.889 | +1.760 | +1.760 | +2.552 | 105 | 70 | só urna |
+| 65 | Goiânia (GO) | 135.268 | +1.729 | +23.991 | +20.304 | +1.729 | +20.304 | 155 | 2 | só urna |
+| 66 | Divinópolis (MG) | 11.518 | +2.546 | +2.915 | +1.729 | +1.729 | +2.546 | 106 | 71 | só urna |
+| 67 | Novo Hamburgo (RS) | 11.437 | +2.451 | +2.917 | +1.717 | +1.717 | +2.451 | 112 | 73 | só urna |
+| 68 | Criciúma (SC) | 11.107 | +2.469 | +2.943 | +1.667 | +1.667 | +2.469 | 110 | 75 | só urna |
+| 69 | Santo André (SP) | 47.873 | +9.940 | +11.676 | +1.637 | +1.637 | +9.940 | 15 | 76 | robusto |
+| 70 | Várzea Grande (MT) | 10.772 | +1.921 | +2.520 | +1.617 | +1.617 | +1.921 | 139 | 77 | só urna |
+| 71 | Osasco (SP) | 47.253 | +9.608 | +11.445 | +1.616 | +1.616 | +9.608 | 16 | 78 | robusto |
+| 72 | Chapecó (SC) | 10.709 | +2.243 | +2.729 | +1.607 | +1.607 | +2.243 | 121 | 79 | só urna |
+| 73 | São Leopoldo (RS) | 10.606 | +2.272 | +2.666 | +1.592 | +1.592 | +2.272 | 120 | 80 | só urna |
+| 74 | Parauapebas (PA) | 10.509 | +2.227 | +2.415 | +1.577 | +1.577 | +2.227 | 123 | 81 | só urna |
+| 75 | Macaé (RJ) | 10.414 | +1.888 | +2.264 | +1.563 | +1.563 | +1.888 | 141 | 82 | só urna |
+| 76 | Nova Friburgo (RJ) | 10.399 | +1.844 | +2.351 | +1.561 | +1.561 | +1.844 | 146 | 83 | só urna |
+| 77 | Magé (RJ) | 10.285 | +1.717 | +2.257 | +1.544 | +1.544 | +1.717 | 156 | 84 | só urna |
+| 78 | Bragança Paulista (SP) | 10.099 | +2.081 | +2.493 | +1.516 | +1.516 | +2.081 | 129 | 85 | só urna |
+| 79 | Passo Fundo (RS) | 10.063 | +1.988 | +2.500 | +1.510 | +1.510 | +1.988 | 132 | 86 | só urna |
+| 80 | Rio Claro (SP) | 9.745 | +1.948 | +2.337 | +1.463 | +1.463 | +1.948 | 136 | 87 | só urna |
+| 81 | Marília (SP) | 9.733 | +1.880 | +2.333 | +1.461 | +1.461 | +1.880 | 143 | 88 | só urna |
+| 82 | Atibaia (SP) | 9.653 | +1.973 | +2.386 | +1.449 | +1.449 | +1.973 | 134 | 89 | só urna |
+| 83 | Santana de Parnaíba (SP) | 9.632 | +2.205 | +2.534 | +1.446 | +1.446 | +2.205 | 125 | 90 | só urna |
+| 84 | Ipatinga (MG) | 9.541 | +2.241 | +2.441 | +1.432 | +1.432 | +2.241 | 122 | 91 | só urna |
+| 85 | Santa Bárbara D'oeste (SP) | 9.465 | +1.935 | +2.270 | +1.421 | +1.421 | +1.935 | 137 | 92 | só urna |
+| 86 | Araucária (PR) | 9.359 | +1.742 | +2.187 | +1.405 | +1.405 | +1.742 | 153 | 93 | só urna |
+| 87 | Itaboraí (RJ) | 9.341 | +1.613 | +2.118 | +1.402 | +1.402 | +1.613 | 163 | 94 | só urna |
+| 88 | Itu (SP) | 9.283 | +1.821 | +2.233 | +1.393 | +1.393 | +1.821 | 147 | 96 | só urna |
+| 89 | Presidente Prudente (SP) | 9.245 | +1.764 | +2.263 | +1.388 | +1.388 | +1.764 | 151 | 97 | só urna |
+| 90 | Jaraguá do Sul (SC) | 9.162 | +2.145 | +2.419 | +1.375 | +1.375 | +2.145 | 127 | 98 | só urna |
+| 91 | Pindamonhangaba (SP) | 8.989 | +1.637 | +2.077 | +1.349 | +1.349 | +1.637 | 162 | 99 | só urna |
+| 92 | Dourados (MS) | 8.872 | +1.884 | +2.172 | +1.332 | +1.332 | +1.884 | 142 | 100 | só urna |
+| 93 | Cabo Frio (RJ) | 8.817 | +1.602 | +1.950 | +1.323 | +1.323 | +1.602 | 166 | 101 | fora |
+| 94 | Poços de Caldas (MG) | 8.783 | +2.024 | +2.327 | +1.318 | +1.318 | +2.024 | 131 | 102 | fora |
+| 95 | Araçatuba (SP) | 8.761 | +1.644 | +2.041 | +1.315 | +1.315 | +1.644 | 160 | 103 | fora |
+| 96 | Governador Valadares (MG) | 8.738 | +2.146 | +2.386 | +1.312 | +1.312 | +2.146 | 126 | 104 | fora |
+| 97 | Botucatu (SP) | 8.738 | +1.579 | +1.968 | +1.312 | +1.312 | +1.579 | 170 | 105 | fora |
+| 98 | Rondonópolis (MT) | 8.669 | +1.503 | +2.049 | +1.301 | +1.301 | +1.503 | 177 | 106 | fora |
+| 99 | Pinhais (PR) | 8.651 | +1.747 | +2.169 | +1.299 | +1.299 | +1.747 | 152 | 107 | fora |
+| 100 | Guarapuava (PR) | 8.377 | +1.574 | +2.003 | +1.257 | +1.257 | +1.574 | 171 | 108 | fora |
+
+**Os movimentos do capítulo pelas duas réguas.**
+
+| Movimento | Régua do capítulo | Urna de 2022 | Nota |
+| ---: | ---: | --- | --- |
+| 1. Colher o eleitor de Renan Santos | +1.271.709 | +121.401 | mesmo sinal |
+| 2. Converter a não escolha da terceira via | +831.761 | não se aplica | a urna não separa quem não escolheu |
+| 3. Agenda conjunta com Tarcísio em São Paulo | +724.594 | não se aplica | agenda com governador: a régua mede terceira via, não palanque |
+| 4. Disputar o eleitor de Augusto Cury | +450.752 | +123.942 | mesmo sinal |
+| 5. Nordeste: interior antes das capitais | +348.297 | −189.686 | a regra do capítulo já é analogia de 2022 (razão simples); aqui, a regressão |
+| 6. Agenda conjunta com Cleitinho em Minas | +316.080 | não se aplica | agenda com governador: a régua mede terceira via, não palanque |
+| 7. Casar o 2º turno de Douglas Ruas com o de Flávio no Rio | +213.560 | não se aplica | agenda com governador: a régua mede terceira via, não palanque |
+| 8. Fechar Zema e as candidaturas menores da direita | +174.623 | +23.122 | mesmo sinal |
+| 9. Um ponto a mais de comparecimento nas 15 UFs de Flávio | +174.158 | não se aplica | eleitor novo: a régua mede terceira via, não comparecimento |
+| 10. Disputar o eleitor de Caiado com Daniel Vilela em Goiás | +116.442 | +170.826 | mesmo sinal |
+
+**Retrovisão.** Não há no acervo pesquisa de 2º turno de 2022 com o cruzamento pelo voto de 1º turno (15 pastas em `data/originals/pesquisas_2022/`, 14 pesquisas transcritas em `analysis/predicao_2026/erro_2022/pesquisas_2022.json`, todas da última onda antes do 1º turno). Para o teste é preciso arquivar as primeiras ondas nacionais de 2º turno de outubro de 2022 que tenham cruzado o voto de 2º turno pelo voto em Tebet e Ciro, com URL, SHA-256 e página.
+
 ## Limites
 
 - A matriz é nacional e aplicada localmente: o eleitor de Cury em Salvador vota, na conta, como o de Cury em Joinville.
 - Vão local é mesma urna e cargos diferentes: não diz quem votou em quem, e o governador sem apoio declarado a Flávio é teto, não palanque.
 - O teto soma parcelas que podem contar o mesmo eleitor.
-- 2022 é uma eleição, com outra terceira via e outro desenho de 2º turno estadual.
+- 2022 é uma eleição, com outra terceira via e outro desenho de 2º turno estadual; a régua da urna é inferência ecológica, de agregado para agregado.
 - Nada aqui é previsão do 2º turno. Os pesos do índice são juízo editorial.

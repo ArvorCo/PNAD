@@ -80,6 +80,39 @@ def regras(mat: dict) -> dict[str, Any]:
     }
 
 
+def regras_reguas() -> dict[str, str]:
+    """Regras das duas réguas, gravadas no JSON."""
+    return {
+        "pesquisa": (
+            "linha publicada de cada candidatura (Nexus, p. 79; Datafolha, p. 7, para Cury e Caiado), "
+            "normalizada e aplicada aos votos de cada candidatura no município; só a parte medida vira voto"
+        ),
+        "urna": (
+            "regressão ecológica município a município da variação do saldo Bolsonaro menos Lula entre os turnos "
+            "de 2022 sobre os votantes do 1º turno, explicada pela parcela da terceira via e pela parcela de "
+            "brancos e nulos do 1º turno, com efeito fixo de UF, ponderada pelos votantes; inclinação da terceira "
+            "via por classe de margem de Flávio em 2026 (aplicação) e por região (sensibilidade); intervalos por "
+            "bootstrap de municípios"
+        ),
+        "razao_simples": (
+            "ganho de Bolsonaro menos ganho de Lula entre os turnos de 2022 dividido pelos votos de terceira via "
+            "do 1º turno, por classe; credita à terceira via todo o movimento entre os turnos, inclusive "
+            "comparecimento e mobilização da base"
+        ),
+        "combinacao": "ordem pelo piso (o menor saldo das duas réguas); o teto é o maior",
+        "robusto": "município nos 100 primeiros pelas duas réguas",
+        "limite_ecologico": (
+            "inferência de agregado para agregado: diz quanto o saldo cresceu a mais onde havia mais terceira "
+            "via, na mesma UF, e não como votou o eleitor de cada candidatura"
+        ),
+        "outra_terceira_via": (
+            "a terceira via de 2022 era Simone Tebet (MDB) e Ciro Gomes (PDT), centro e esquerda pela "
+            "classificação da casa; a de 2026 tem Augusto Cury (Avante) e Ronaldo Caiado (PSD), de centro, e "
+            "Renan Santos (Missão) e Zema (Novo), de direita"
+        ),
+    }
+
+
 # ---------------------------------------------------------------- frases
 
 
@@ -253,6 +286,180 @@ def juizo_regional(D: dict) -> dict[str, str]:
     }
 
 
+def _vt(x: float | None) -> str:
+    return "s/d" if x is None else sinal_votos(round(x))
+
+
+def secao_reguas(D: dict) -> list[str]:
+    """Seção 6 do memorando: pesquisa contra urna."""
+    R, conv = D["reguas"], D["conversao_2022"]
+    m = R["modelos"]
+    gc, gr, un = (
+        m["classe"]["grupos"],
+        m["regiao"]["grupos"],
+        m["unico"]["grupos"]["todos"],
+    )
+    T_ = R["totais"]
+    br = T_["brasil"]
+    rk = R["rankings"]
+    rv = R["retrovisao"]
+
+    def ic(g: dict) -> str:
+        a, b = g["saldo_ic95"]
+        return f"{sinal(a, 3)} a {sinal(b, 3)}"
+
+    linhas = [
+        "## 6. Pesquisa contra urna: duas réguas para o mesmo estoque",
+        "",
+        f"**Régua da urna de 2022.** {R['regras']['urna'][0].upper()}{R['regras']['urna'][1:]}. Bootstrap de {milhar(m['classe']['n_boot'])} reamostragens, semente {m['classe']['semente']}.",
+        "",
+        tabela(
+            [
+                "Grupo",
+                "Municípios",
+                "Bolsonaro por voto",
+                "Lula por voto",
+                "Saldo por voto",
+                "IC 95% do saldo",
+                "Razão simples",
+                "Nexus sobre 2026",
+                "Datafolha sobre 2026",
+            ],
+            [
+                [
+                    CLASSE_CURTA[c],
+                    milhar(gc[c]["municipios"]),
+                    dec(gc[c]["bolsonaro"], 3),
+                    dec(gc[c]["lula"], 3),
+                    sinal(gc[c]["saldo"], 3),
+                    ic(gc[c]),
+                    sinal(conv["por_classe"][c]["saldo"], 3),
+                    sinal(T_["classes"][c]["pv_nexus"], 3),
+                    sinal(T_["classes"][c]["pv_datafolha"], 3),
+                ]
+                for c in T.CLASSES
+            ]
+            + [
+                [
+                    r,
+                    milhar(gr[r]["municipios"]),
+                    dec(gr[r]["bolsonaro"], 3),
+                    dec(gr[r]["lula"], 3),
+                    sinal(gr[r]["saldo"], 3),
+                    ic(gr[r]),
+                    sinal(conv["por_regiao"][r]["saldo"], 3),
+                    sinal(T_["regioes"][r]["pv_nexus"], 3),
+                    sinal(T_["regioes"][r]["pv_datafolha"], 3),
+                ]
+                for r in ("Norte", "Nordeste", "Centro-Oeste", "Sudeste", "Sul")
+            ]
+            + [
+                [
+                    "Brasil, inclinação única",
+                    milhar(un["municipios"]),
+                    dec(un["bolsonaro"], 3),
+                    dec(un["lula"], 3),
+                    sinal(un["saldo"], 3),
+                    ic(un),
+                    sinal(conv["brasil"]["saldo"], 3),
+                    sinal(br["pv_nexus"], 3),
+                    sinal(br["pv_datafolha"], 3),
+                ]
+            ],
+        ),
+        "",
+        f"**Inferência.** A razão simples credita à terceira via todo o movimento entre os turnos. Sem efeito fixo de UF, a regressão dá {sinal(m['sem_efeito_fixo']['saldo_terceira_via'], 3)} por voto de terceira via e uma constante de {dec(100 * m['sem_efeito_fixo']['constante'], 2)} pontos dos votantes a favor de Bolsonaro que não depende da terceira via. Por região, as inclinações de Bolsonaro e de Lula somam mais de um voto por voto de terceira via em {lista_e([r for r, g in gr.items() if g['fora'] is not None and g['fora'] < 0])}: a regressão ali capta algo além da terceira via, como comparecimento que anda junto com ela. A aplicação a 2026 usa a classe de margem.",
+        "",
+        f"**Inferência. Totais de 2026.** Nexus {_vt(br['nexus'])}; Datafolha em Cury e Caiado {_vt(br['datafolha'])}; urna de 2022 por classe {_vt(br['urna'])} (IC 95%: {_vt(br['urna_ic95'][0])} a {_vt(br['urna_ic95'][1])}); urna por região {_vt(br['urna_regiao'])}; razão simples {_vt(br['razao_simples'])}.",
+        "",
+        tabela(
+            [
+                "Região",
+                "Terceira via",
+                "Nexus",
+                "Datafolha",
+                "Urna de 2022",
+                "Nexus menos urna",
+            ],
+            [
+                [
+                    r,
+                    milhar(x["estoque"]),
+                    _vt(x["nexus"]),
+                    _vt(x["datafolha"]),
+                    _vt(x["urna"]),
+                    _vt(x["diferenca_nexus_urna"]),
+                ]
+                for r, x in T_["regioes"].items()
+            ],
+        ),
+        "",
+        f"**Inferência. Ranking.** {rk['robustos']} dos 100 primeiros pelo saldo da pesquisa também estão nos 100 primeiros pela urna (robustos, {milhar(rk['robustos_estoque'])} votos de terceira via); {rk['so_pesquisa']} só pela pesquisa e {rk['so_urna']} só pela urna. Motivo dominante das divergências: "
+        + ", ".join(
+            f"{k.replace('so_', 'só ').replace(':', ', ')} {v}"
+            for k, v in rk["motivos_divergencia"].items()
+        )
+        + ". A combinação ordena pelo piso (o menor saldo das duas) e mostra o teto.",
+        "",
+        tabela(
+            [
+                "Nº",
+                "Município",
+                "Terceira via",
+                "Nexus",
+                "Datafolha",
+                "Urna",
+                "Piso",
+                "Teto",
+                "Nº pesquisa",
+                "Nº urna",
+                "Situação",
+            ],
+            [
+                [
+                    str(i),
+                    f"{nome(x['nome'])} ({x['uf']})",
+                    milhar(x["estoque"]),
+                    _vt(x["nexus"]),
+                    _vt(x["datafolha"]),
+                    _vt(x["urna"]),
+                    _vt(x["piso"]),
+                    _vt(x["teto"]),
+                    milhar(x["posicao"]["pesquisa"]),
+                    milhar(x["posicao"]["urna"]),
+                    x["situacao"].replace("so_", "só "),
+                ]
+                for i, x in enumerate(rk["top"]["combinacao"], start=1)
+            ],
+        ),
+        "",
+        "**Os movimentos do capítulo pelas duas réguas.**",
+        "",
+        tabela(
+            ["Movimento", "Régua do capítulo", "Urna de 2022", "Nota"],
+            [
+                [
+                    f"{mv['ordem']}. {mv['titulo']}",
+                    _vt(mv["pesquisa"]),
+                    _vt(mv["urna"]) if mv["urna"] is not None else "não se aplica",
+                    mv.get("nota", "")
+                    or ("mesmo sinal" if mv["concordam"] else "sinal oposto"),
+                ]
+                for mv in R["movimentos"]
+            ],
+        ),
+        "",
+        "**Retrovisão.** "
+        + (
+            "O acervo tem cruzamento de 2º turno de 2022; o teste ainda não foi feito."
+            if rv["disponivel"]
+            else f"Não há no acervo pesquisa de 2º turno de 2022 com o cruzamento pelo voto de 1º turno ({rv['casas_no_acervo']} pastas em `{rv['procurado_em'][0]}/`, {rv['pesquisas_transcritas']} pesquisas transcritas em `{rv['procurado_em'][1]}`, todas da última onda antes do 1º turno). Para o teste é preciso arquivar as primeiras ondas nacionais de 2º turno de outubro de 2022 que tenham cruzado o voto de 2º turno pelo voto em Tebet e Ciro, com URL, SHA-256 e página."
+        ),
+        "",
+    ]
+    return linhas
+
+
 def _linha_top(x: dict) -> list[str]:
     lider_ = (
         lider(x["local_lider"])
@@ -316,7 +523,7 @@ def memorando(D: dict) -> str:
         f"2. **Verificado.** {pc(nac['onde_flavio_venceu_parcela'])} desse voto está em municípios onde Flávio venceu; {pc(nac['por_classe']['venceu_folga']['estoque_parcela'])} onde venceu com folga e {pc(nac['por_classe']['perdeu_folga']['estoque_parcela'])} onde Lula venceu com folga.",
         f"3. **Inferência.** Pela matriz Nexus aplicada município a município, o estoque dá a Flávio saldo de {mil(nac['saldo'])}. Os 100 municípios prioritários guardam {mil(soma['estoque'])} e saldo de {mil(soma['saldo'])}, {pc(soma['saldo_sobre_diferenca_pct'])} da diferença do 1º turno ({mil(pr['diferenca_nacional'])}); a parte que a matriz manda para branco, nulo ou indecisão nesses 100 é de {mil(soma['fora'])}.",
         f"4. **Verificado.** Em {milhar(nac['municipios_vao_positivo'])} municípios um nome do lado de Flávio (governador ou Senado) teve mais votos que ele, somando {mil(nac['vao_positivo'])} acima dele; {pc(100 * ag['regioes']['Nordeste']['vao_positivo'] / nac['vao_positivo'])} desse vão está no Nordeste. Sem os governadores que não declararam apoio a Flávio, o vão é de {mil(nac['vao_positivo_sem_governador_sem_apoio'])}.",
-        f"5. **Analogia.** Em 2022, cada voto de terceira via do 1º turno rendeu a Bolsonaro saldo de {dec(conv['por_classe']['venceu_folga']['saldo'], 2)} entre os turnos onde Flávio venceu com folga em 2026, e de {dec(conv['por_classe']['perdeu_folga']['saldo'], 2)} onde Lula venceu com folga.",
+        f"5. **Analogia.** Em 2022, pela razão simples, cada voto de terceira via do 1º turno rendeu a Bolsonaro saldo de {dec(conv['por_classe']['venceu_folga']['saldo'], 2)} entre os turnos onde Flávio venceu com folga em 2026, e de {dec(conv['por_classe']['perdeu_folga']['saldo'], 2)} onde Lula venceu com folga. A regressão com efeito fixo de UF, que separa a mobilização da base, dá {sinal(D['reguas']['modelos']['classe']['grupos']['venceu_folga']['saldo'], 2)} e {sinal(D['reguas']['modelos']['classe']['grupos']['perdeu_folga']['saldo'], 2)} (seção 6).",
         f"6. **Inferência.** O branco e nulo de presidente subiu {dec(cg['delta_pp'], 2)} ponto entre os turnos de 2022 nas {len(cg['ufs'])} UFs com 2º turno de governador e caiu {dec(abs(sg['delta_pp']), 2)} ponto nas outras {len(sg['ufs'])}. Em 2026 há 2º turno de governador em {lista_e(nu['risco_2026']['ufs'])}: pela mesma taxa, {mil(nu['risco_2026']['votos'])} em risco de virar branco ou nulo; {pc(parcela_rio(nu))} dos votantes dessas UFs estão no Rio de Janeiro.",
         "",
         "## Regras",
@@ -362,7 +569,7 @@ def memorando(D: dict) -> str:
                 "Caiado",
                 "Saldo por voto (Nexus)",
                 "Vão local positivo",
-                "Saldo por voto em 2022",
+                "Razão simples de 2022",
             ],
             [
                 [
@@ -478,12 +685,13 @@ def memorando(D: dict) -> str:
         "",
         "**Analogia.** A terceira via de 2022 era outra (Simone Tebet e Ciro Gomes). O acervo da casa (`data/originals/pesquisas_2022/`) só tem as últimas ondas de 1º turno; não há pesquisa de 2º turno de 2022 com o cruzamento pelo voto em Tebet ou Ciro, e não usamos nenhuma.",
         "",
+        *secao_reguas(D),
         "## Limites",
         "",
         "- A matriz é nacional e aplicada localmente: o eleitor de Cury em Salvador vota, na conta, como o de Cury em Joinville.",
         "- Vão local é mesma urna e cargos diferentes: não diz quem votou em quem, e o governador sem apoio declarado a Flávio é teto, não palanque.",
         "- O teto soma parcelas que podem contar o mesmo eleitor.",
-        "- 2022 é uma eleição, com outra terceira via e outro desenho de 2º turno estadual.",
+        "- 2022 é uma eleição, com outra terceira via e outro desenho de 2º turno estadual; a régua da urna é inferência ecológica, de agregado para agregado.",
         "- Nada aqui é previsão do 2º turno. Os pesos do índice são juízo editorial.",
         "",
     ]

@@ -27,6 +27,8 @@ from typing import Any
 from apuracao_2026 import terceira_via as T
 from apuracao_2026 import terceira_via_agregados as A
 from apuracao_2026 import terceira_via_leitura as L
+from apuracao_2026 import terceira_via_regua as RU
+from apuracao_2026 import terceira_via_reguas as RG
 from apuracao_2026 import terceira_via_secoes as S
 from apuracao_2026 import terceira_via_texto as X
 from apuracao_2026.dados import iso_z
@@ -70,8 +72,18 @@ COLUNAS = (
     "fator",
     "prioridade",
     "posicao",
+    "saldo_urna",
+    "regua_motivo",
 )
-INTEIROS = {"para_flavio", "para_lula", "fora", "saldo", "saldo_df", "prioridade"}
+INTEIROS = {
+    "para_flavio",
+    "para_lula",
+    "fora",
+    "saldo",
+    "saldo_df",
+    "prioridade",
+    "saldo_urna",
+}
 
 
 def _celula(chave: str, v: Any) -> Any:
@@ -157,6 +169,34 @@ def conferencia(
     }
 
 
+def _publico(modelo: dict) -> dict:
+    return {k: v for k, v in modelo.items() if not k.startswith("_")}
+
+
+def montar_reguas(brasil: list[dict], conv: dict, fontes: dict) -> dict[str, Any]:
+    """Régua da urna de 2022 (regressão ecológica), aplicação a 2026 e as duas réguas lado a lado."""
+    amostra = RU.amostra(brasil)
+    classe = RU.modelo(amostra, "classe", T.CLASSES)
+    regiao = RU.modelo(amostra, "regiao", RU.REGIOES)
+    unico = RU.modelo(amostra, None, [])
+    RU.aplicar(brasil, classe, regiao, conv["por_classe"])
+    nac = RG.preparar(brasil)
+    return {
+        "regras": X.regras_reguas(),
+        "modelos": {
+            "classe": _publico(classe),
+            "regiao": _publico(regiao),
+            "unico": _publico(unico),
+            "sem_efeito_fixo": RU.sem_efeito_fixo(amostra),
+        },
+        "media_nacional_por_voto": {k: round(v, 4) for k, v in nac.items()},
+        "totais": RG.totais(brasil, RU.total_ic(brasil, classe)),
+        "rankings": RG.rankings(brasil),
+        "movimentos": RG.movimentos(brasil, fontes["estrategia_2t"]),
+        "retrovisao": L.retrovisao(),
+    }
+
+
 def montar(fontes: dict) -> dict[str, Any]:
     mat = S.matrizes(fontes)
     locais = S.direita_local(fontes)
@@ -167,6 +207,8 @@ def montar(fontes: dict) -> dict[str, Any]:
         "diferenca_votos"
     ]
     nulo = A.nulo_2022(brasil, fontes["api22"], ag)
+    conv = A.conversao_2022(brasil)
+    reguas = montar_reguas(brasil, conv, fontes)
     return {
         "meta": {
             "gerado_em": iso_z(datetime.now(timezone.utc)),
@@ -191,7 +233,8 @@ def montar(fontes: dict) -> dict[str, Any]:
         | {"linhas_nexus": mat["nexus"], "linhas_datafolha": mat["datafolha"]},
         "direita_local": locais,
         "agregados": ag,
-        "conversao_2022": A.conversao_2022(brasil),
+        "conversao_2022": conv,
+        "reguas": reguas,
         "prioridade": A.prioridade(brasil, diferenca),
         "teto": A.teto(brasil),
         "riscos": A.riscos(brasil, ag, nulo),

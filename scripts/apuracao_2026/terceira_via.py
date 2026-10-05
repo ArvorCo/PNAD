@@ -28,6 +28,9 @@ from collections.abc import Iterable, Mapping, Sequence
 # a própria linha da matriz na conta de votos esperados.
 GRUPO_POR_NUMERO = {14: "renan", 30: "zema", 70: "cury", 55: "caiado"}
 GRUPOS = ("renan", "zema", "cury", "caiado", "outros")
+# Candidaturas menores de direita (DC e Democrata), somadas a Zema no movimento 8
+# do capítulo 13; ficam dentro de "outros" na decomposição.
+DIREITA_MENOR = (27, 35)
 NUM_FLAVIO = 22
 NUM_LULA = 13
 
@@ -297,3 +300,47 @@ def conversao(
         "lula": ganho_lula_lado / terceira_via,
         "saldo": (ganho_flavio_lado - ganho_lula_lado) / terceira_via,
     }
+
+
+# ---------------------------------------------------------------- duas réguas
+
+
+def decompor(
+    pv_pesquisa: float, pv_pesquisa_nac: float, pv_urna: float, pv_urna_nac: float
+) -> dict[str, float]:
+    """Diferença pesquisa menos urna, por voto, em três parcelas que somam exato.
+
+    - ``composicao``: quanto a linha da pesquisa rende ali acima da média do país,
+      porque o estoque local tem mais ou menos Renan, Zema, Cury ou Caiado;
+    - ``nivel``: a distância entre as duas réguas no país, igual em todo lugar;
+    - ``classe``: quanto a urna de 2022 converteu ali abaixo da média do país,
+      pela classe de margem do município.
+    """
+    return {
+        "composicao": pv_pesquisa - pv_pesquisa_nac,
+        "nivel": pv_pesquisa_nac - pv_urna_nac,
+        "classe": pv_urna_nac - pv_urna,
+        "total": pv_pesquisa - pv_urna,
+    }
+
+
+def motivo(partes: Mapping[str, float]) -> str:
+    """A parcela local que mais pesa na diferença: ``composicao`` ou ``classe``."""
+    return (
+        "composicao" if abs(partes["composicao"]) >= abs(partes["classe"]) else "classe"
+    )
+
+
+def piso_teto(*valores: float) -> tuple[float, float]:
+    return min(valores), max(valores)
+
+
+def situacao(em_pesquisa: bool, em_urna: bool) -> str:
+    """Robusto quando as duas réguas põem o município na lista; senão, qual delas."""
+    if em_pesquisa and em_urna:
+        return "robusto"
+    if em_pesquisa:
+        return "so_pesquisa"
+    if em_urna:
+        return "so_urna"
+    return "fora"
