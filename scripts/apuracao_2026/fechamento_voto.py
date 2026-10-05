@@ -253,6 +253,8 @@ def correlacao_lula(v: pd.DataFrame) -> dict[str, Any]:
         por_faixa.append(lin_f)
         inclinacao.append(lin_i)
 
+    controles_lula = _modelo(v, "lula_pct", mc, nc, True)
+
     def sobra(cand: str, chave: str, lista: list[dict[str, Any]]) -> float | None:
         try:
             b = lista[0][cand]["coeficientes"][chave]["estimativa"]
@@ -281,6 +283,7 @@ def correlacao_lula(v: pd.DataFrame) -> dict[str, Any]:
         },
         "peso": "votantes (comparecimento) da seção",
         "bruta": bruta,
+        "controles_lula": controles_lula,
         "por_faixa": por_faixa,
         "inclinacao": inclinacao,
         "sobrevive_pct": {

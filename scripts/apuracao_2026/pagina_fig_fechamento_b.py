@@ -13,7 +13,7 @@ from __future__ import annotations
 
 from html import escape
 
-from .pagina_comum import inteiro, num
+from .pagina_comum import inteiro, num, sinal
 from .pagina_fig_base import (
     FLAVIO,
     GRADE,
@@ -271,7 +271,7 @@ def _painel_spearman(L: dict, px: float, py: float, larg: float, tips: Tips) -> 
             a, b = sorted((X(0), X(v)))
             barra = r(a, y + 2, b - a, 11, LULA)
         out.append(hit(barra + area(px, y, larg, passo), k))
-        out.append(t(px + larg, y + 11, num(v, 2), 13, INK, "end", mono=True))
+        out.append(t(px + larg, y + 11, sinal(v, 2), 13, INK, "end", mono=True))
         y += passo
     return "".join(out)
 

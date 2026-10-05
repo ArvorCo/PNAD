@@ -68,7 +68,7 @@ def abertura(F: dict) -> str:
         "A votação vai das 8h às 17h de Brasília no país inteiro"
         + (
             " (Res. TSE nº 23.751/2026, citada pelo Poder360 em 04/10; o artigo não foi conferido "
-            "porque o site do TSE recusou as ferramentas)"
+            "porque o site do TSE recusou o acesso automatizado)"
             if lei
             else ""
         )
@@ -111,21 +111,21 @@ def regioes(F: dict) -> str:
     h = p(
         f"Metade das urnas encerrou até as <strong>{hora(e.get('mediana'))}</strong> de Brasília; "
         f"{pct(e.get('depois_1800_pct'))} encerraram às 18h ou depois e {pct(e.get('depois_1900_pct'))} "
-        "às 19h ou depois. Por região, a parcela das 18h em diante vai de "
+        "às 19h ou depois. Por região, a parcela das 18h em diante: "
         + lista(
             [
                 f"{g['chave']} {pct((g.get('encerramento_2026') or {}).get('depois_1800_pct'))}"
                 for g in ordem
             ]
         )
-        + ". Nas UFs, de "
+        + ". Nas UFs, as maiores são "
         + lista(
             [
                 f"{NOME_UF.get(g['chave'], g['chave'])} {pct(g['encerramento_2026']['depois_1800_pct'])}"
                 for g in ufs[:3]
             ]
         )
-        + " a "
+        + "; as menores, "
         + lista(
             [
                 f"{NOME_UF.get(g['chave'], g['chave'])} {pct(g['encerramento_2026']['depois_1800_pct'])}"
@@ -273,14 +273,13 @@ def voto_lula(F: dict) -> str:
         f"com tamanho da seção e tipo de local, <strong>{pts(ic.get('estimativa'), 2)}</strong> ({_ic(ic, 2)}), e "
         f"Flávio {pts(ff.get('estimativa'), 2)}. Sobra {pct(sob.get('lula_inclinacao'), 0)} da inclinação bruta. "
         f"Para as seções que encerraram depois das 19h: {pts(fb.get('estimativa'))} sem controle, "
-        f"{pts(fz.get('estimativa'))} dentro da zona e {pts(fc.get('estimativa'))} com tamanho e tipo. O controle "
-        "de tamanho não reduz a diferença: dentro da zona, a seção grande vota um pouco menos em Lula, e tirar "
-        "o tamanho deixa a parte tardia mais nítida.",
+        f"{pts(fz.get('estimativa'))} dentro da zona e {pts(fc.get('estimativa'))} com tamanho e tipo."
+        + _frase_tamanho(L),
         "inferencia",
     )
     if sp:
-        maiores = lista([f"{x['uf']} {num(x['rho_lula'], 2)}" for x in sp[:3]])
-        menores = lista([f"{x['uf']} {num(x['rho_lula'], 2)}" for x in sp[-2:]])
+        maiores = lista([f"{x['uf']} {sinal(x['rho_lula'], 2)}" for x in sp[:3]])
+        menores = lista([f"{x['uf']} {sinal(x['rho_lula'], 2)}" for x in sp[-2:]])
         h += p(
             f"Seção a seção, dentro de cada UF, a correlação de postos entre a hora de encerramento e a parte de "
             f"Lula é pequena: as maiores são {maiores}; as menores, {menores}. Correlação dentro da "
@@ -290,6 +289,20 @@ def voto_lula(F: dict) -> str:
         )
     h += conferencia(F)
     return h
+
+
+def _frase_tamanho(L: dict) -> str:
+    """Por que o controle de tamanho não reduz a diferença (número do JSON)."""
+    c = ((L.get("controles_lula") or {}).get("coeficientes") or {}).get(
+        "aptos até 199"
+    ) or {}
+    if c.get("estimativa") is None:
+        return ""
+    return (
+        " O controle de tamanho não reduz a diferença porque, dentro da zona, a seção pequena "
+        f"vota mais em Lula: com até 199 aptos, {pts(c['estimativa'])} sobre a de 300 a 349. Como a "
+        "seção tardia é a grande, tirar o tamanho deixa a parte tardia mais nítida."
+    )
 
 
 def conferencia(F: dict) -> str:
@@ -376,7 +389,7 @@ def juizo_e_hipotese(F: dict) -> str:
     h += (
         '<aside class="hyp"><b>Hipótese, não achado</b>'
         "Mesário que vota no lugar do ausente (o pianista), compra de voto e boca de urna na fila depois das 17h "
-        "são explicações possíveis do atraso que este capítulo não mostra e não descarta. Cada uma tem prova "
+        "são hipóteses que o boletim não testa: este capítulo não as mostra e não as descarta. Cada uma tem prova "
         "própria: o log da urna, em que uma sequência de habilitações por ano de nascimento a poucos segundos uma "
         "da outra no fim do dia é a assinatura do pianista; a ata da mesa, com as ocorrências, os fiscais presentes "
         "e as senhas entregues às 17h; e, para compra de voto e boca de urna, boletim de ocorrência e representação "

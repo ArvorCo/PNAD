@@ -223,11 +223,18 @@ def frase_lacuna(d: Mapping[str, Any]) -> str:
     if not a:
         return ""
     corte = (d["persistencia"].get("decil") or {}).get("corte_2026_min")
+    ini, fim = a.get("ultimo_antes_min") or 0, a.get("primeiro_depois_min") or 0
     efeito = ""
-    if corte is not None and corte <= (a.get("ultimo_antes_min") or 0):
+    if corte is not None and corte <= ini:
         efeito = (
             f" O corte do décimo mais tardio de 2026 ({_h(corte)}) cai antes do buraco: "
             "quem ficou preso nele continua no décimo."
+        )
+    elif corte is not None and corte < fim:
+        efeito = (
+            f" O corte do décimo mais tardio de 2026 ({_h(corte)}) cai dentro do buraco: "
+            f"um município cuja mediana real ficou entre {_h(ini)} e {_h(corte)} aparece "
+            f"acima do corte, uma margem de {_p(corte - ini, 0)} minutos na régua."
         )
     return (
         f"A régua de chegada de 2026 tem um buraco: nenhum boletim registrado como recebido "
@@ -290,12 +297,13 @@ def achados(d: Mapping[str, Any]) -> dict[str, list[str]]:
             f"mesma zona, a seção com 350 votantes ou mais tem {_p(top)} pontos a mais de "
             "chance de fechar às 18h ou depois do que a de 200 a 249.",
             "Onde a eleição termina tarde nos dois anos, termina tarde mais por distância "
-            f"do que por fila: nos {_n(pdec.get('persistentes'))} municípios persistentes a "
+            f"do que por fila: nos {_n(pdec.get('persistentes'))} municípios que ficaram entre "
+            "os 10% mais tardios do país nos dois anos, a "
             f"votação terminou, na mediana, às {_h(pdec.get('encerramento_mediana_persistentes'))} "
             f"e a mídia levou {_d(pdec.get('transmissao_mediana_persistentes'))} até o TSE; no "
             f"conjunto, {_h(pdec.get('encerramento_mediana_todos'))} e "
             f"{_d(pdec.get('transmissao_mediana_todos'))}. Dos "
-            f"{_n(loc.get('persistentes'))} locais de votação persistentes, "
+            f"{_n(loc.get('persistentes'))} locais de votação na mesma situação, "
             f"{_p(rur.get('pct_dos_persistentes'))}% ficam em zona rural, assentamento ou "
             f"quilombo pelo nome e endereço, contra {_p(rur.get('pct_dos_locais'))}% dos "
             "locais comparados.",

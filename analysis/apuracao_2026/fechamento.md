@@ -1,10 +1,10 @@
 # Onde a votação termina tarde: encerramento e recebimento por seção, 2022 e 2026
 
-Gerado em 2026-10-05T18:55:02Z por `scripts/apuracao-2026-fechamento.py`. Dados em `analysis/apuracao_2026/dados/fechamento.json`.
+Gerado em 2026-10-05T19:00:50Z por `scripts/apuracao-2026-fechamento.py`. Dados em `analysis/apuracao_2026/dados/fechamento.json`.
 
 > Seção que fecha tarde é seção que pede explicação, não indício de irregularidade. O boletim de urna mostra quando a votação terminou e quantos votaram; não mostra por quê. O que separa fila, identificação lenta e irregularidade é documento: a ata da mesa e o log da urna.
 
-**Coleta parcial.** UFs completas em 2026: AC, AL, AM, AP, CE, DF, ES, GO, MA, MS, MT, PA, PB, PI, RN, RO, RR, SC, SE, TO. Em coleta: PE. Sem boletim ainda: BA, MG, PR, RJ, RS, SP. As comparações entre anos usam só as UFs completas. Rodada final: rodar de novo este script e o build da página.
+**Coleta parcial.** UFs completas em 2026: AC, AL, AM, AP, CE, DF, ES, GO, MA, MS, MT, PA, PB, PE, PI, RN, RO, RR, SC, SE, TO. Em coleta: RS. Sem boletim ainda: BA, MG, PR, RJ, SP. As comparações entre anos usam só as UFs completas. Rodada final: rodar de novo este script e o build da página.
 
 ## Definições
 
@@ -15,8 +15,8 @@ Gerado em 2026-10-05T18:55:02Z por `scripts/apuracao-2026-fechamento.py`. Dados 
 - **tardia**: seção com encerramento às 18h de Brasília ou depois.
 - **exterior**: fora das contas: vota na hora local da cidade.
 
-- Seções de 2026 com boletim (Brasil, sem exterior): 211.567; com voto conferido: 210.137; com relógio ou fuso inconsistente (sem encerramento): 30.
-- Seções de 2022 (Brasil): 471.010; nas UFs completas de 2026: 177.970.
+- Seções de 2026 com boletim (Brasil, sem exterior): 216.698; com voto conferido: 215.146; com relógio ou fuso inconsistente (sem encerramento): 30.
+- Seções de 2022 (Brasil): 471.010; nas UFs completas de 2026: 198.542.
 
 ## 1. Quando a votação termina
 
@@ -24,9 +24,9 @@ Encerramento (2026, último voto, hora de Brasília):
 
 | grupo | seções | mediana | p90 | p99 | % 17:30+ | % 18:00+ | % 19:00+ |
 |---|---|---|---|---|---|---|---|
-| Brasil | 192.879 | 17:06 | 18:05 | 19:26 | 22,9 | 11,4 | 2,2 |
+| Brasil | 214.297 | 17:07 | 18:11 | 19:30 | 25,6 | 13,2 | 2,5 |
 | Norte | 43.768 | 17:08 | 18:13 | 19:38 | 27,2 | 13,9 | 2,9 |
-| Nordeste | 83.922 | 17:10 | 18:22 | 19:38 | 31,7 | 16,9 | 3,4 |
+| Nordeste | 105.340 | 17:13 | 18:27 | 19:41 | 35,4 | 19,4 | 3,9 |
 | Centro-Oeste | 38.019 | 17:04 | 17:32 | 18:29 | 10,7 | 3,5 | 0,3 |
 | Sudeste | 9.844 | 17:03 | 17:23 | 18:14 | 7,7 | 2,0 | 0,1 |
 | Sul | 17.326 | 17:02 | 17:14 | 18:00 | 4,7 | 1,0 | 0,0 |
@@ -35,9 +35,9 @@ Recebimento no TSE, 2026:
 
 | grupo | seções | mediana | p90 | p99 | % 17:30+ | % 18:00+ | % 19:00+ |
 |---|---|---|---|---|---|---|---|
-| Brasil | 192.909 | 18:38 | 20:12 | 21:28 | 96,7 | 79,2 | 34,9 |
+| Brasil | 214.327 | 18:40 | 20:17 | 21:27 | 97,0 | 80,6 | 37,0 |
 | Norte | 43.769 | 18:31 | 20:02 | 21:56 | 93,4 | 72,1 | 31,3 |
-| Nordeste | 83.922 | 18:57 | 20:48 | 21:39 | 98,5 | 87,0 | 47,4 |
+| Nordeste | 105.340 | 18:59 | 20:47 | 21:35 | 98,7 | 88,2 | 49,0 |
 | Centro-Oeste | 38.048 | 18:21 | 19:14 | 20:50 | 95,2 | 67,8 | 17,9 |
 | Sudeste | 9.844 | 18:17 | 19:00 | 19:28 | 99,2 | 70,3 | 9,9 |
 | Sul | 17.326 | 18:46 | 19:25 | 20:59 | 98,5 | 89,7 | 35,0 |
@@ -46,9 +46,9 @@ Recebimento no TSE, 2022 (mesmas UFs):
 
 | grupo | seções | mediana | p90 | p99 | % 17:30+ | % 18:00+ | % 19:00+ |
 |---|---|---|---|---|---|---|---|
-| Brasil | 177.970 | 19:26 | 20:31 | 22:30 | 98,8 | 94,9 | 66,3 |
+| Brasil | 198.542 | 19:31 | 20:36 | 22:29 | 98,9 | 95,4 | 68,7 |
 | Norte | 38.975 | 19:17 | 20:26 | 22:06 | 97,3 | 91,6 | 60,5 |
-| Nordeste | 77.582 | 19:50 | 21:11 | 23:05 | 99,8 | 98,7 | 81,4 |
+| Nordeste | 98.154 | 19:53 | 21:04 | 22:54 | 99,9 | 99,0 | 83,2 |
 | Centro-Oeste | 35.932 | 18:50 | 20:00 | 20:47 | 97,3 | 88,4 | 42,4 |
 | Sudeste | 9.239 | 18:37 | 19:16 | 20:01 | 99,7 | 93,3 | 20,3 |
 | Sul | 16.242 | 19:41 | 20:20 | 21:00 | 99,9 | 99,9 | 87,2 |
@@ -72,14 +72,14 @@ Por UF (encerramento 2026 | recebimento 2026 | recebimento 2022, % depois das 18
 | MT | sim | 6,2 | 17:07 | 18:25 | 19:07 |
 | PA | sim | 17,6 | 17:13 | 18:43 | 19:33 |
 | PB | sim | 10,2 | 17:07 | 18:15 | 19:30 |
-| PE | não | 28,6 | 17:29 | 19:05 | 19:58 |
+| PE | sim | 29,0 | 17:30 | 19:05 | 19:58 |
 | PI | sim | 9,0 | 17:05 | 18:39 | 19:30 |
 | PR | não | n/d | n/d | n/d | 19:04 |
 | RJ | não | n/d | n/d | n/d | 20:00 |
 | RN | sim | 21,6 | 17:17 | 18:54 | 19:32 |
 | RO | sim | 0,3 | 17:04 | 18:19 | 19:10 |
 | RR | sim | 1,2 | 17:04 | 18:40 | 19:14 |
-| RS | não | n/d | n/d | n/d | 19:08 |
+| RS | não | 0,8 | 17:02 | 18:35 | 19:08 |
 | SC | sim | 1,0 | 17:02 | 18:46 | 19:41 |
 | SE | sim | 7,9 | 17:04 | 18:42 | 19:18 |
 | SP | não | n/d | n/d | n/d | 19:35 |
@@ -89,32 +89,32 @@ Por tamanho (aptos da seção), UFs completas:
 
 | faixa | seções 2026 | votantes médios | % enc. 18h+ | % das tardias | % rec. 19h+ 2026 | % rec. 19h+ 2022 |
 |---|---|---|---|---|---|---|
-| até 199 | 11.281 | 128,0 | 0,2 | 0,1 | 36,5 | 69,1 |
-| 200 a 249 | 24.134 | 184,7 | 0,5 | 0,6 | 25,2 | 57,9 |
-| 250 a 299 | 45.314 | 224,2 | 3,7 | 7,7 | 25,7 | 57,3 |
-| 300 a 349 | 64.397 | 263,5 | 12,5 | 36,5 | 35,1 | 64,2 |
-| 350 a 399 | 44.371 | 299,8 | 23,3 | 47,0 | 46,8 | 73,3 |
-| 400 ou mais | 3.412 | 341,9 | 52,7 | 8,2 | 61,6 | 85,3 |
+| até 199 | 11.660 | 128,0 | 0,2 | 0,1 | 36,3 | 69,5 |
+| 200 a 249 | 25.725 | 184,8 | 0,5 | 0,5 | 24,8 | 59,4 |
+| 250 a 299 | 48.444 | 224,4 | 3,7 | 6,3 | 25,6 | 58,8 |
+| 300 a 349 | 69.594 | 263,9 | 12,9 | 31,9 | 35,9 | 66,0 |
+| 350 a 399 | 55.169 | 301,9 | 27,7 | 54,2 | 52,3 | 77,2 |
+| 400 ou mais | 3.735 | 341,0 | 52,9 | 7,0 | 62,6 | 86,0 |
 
 Por tipo de local inferido, UFs completas:
 
 | tipo | seções 2026 | % enc. 18h+ | % das tardias | rec. 2026 mediana | rec. 2022 mediana |
 |---|---|---|---|---|---|
-| aldeia ou terra indígena | 1.104 | 22,8 | 1,1 | 18:38 | 19:44 |
-| zona rural, assentamento ou quilombo | 31.954 | 16,6 | 24,2 | 19:01 | 19:59 |
-| unidade prisional ou socioeducativa | 149 | 0,7 | 0,0 | 18:19 | 18:50 |
-| escola fora de zona rural | 121.801 | 9,6 | 53,2 | 18:34 | 19:22 |
-| outro local | 37.901 | 12,4 | 21,4 | 18:37 | 19:24 |
+| aldeia ou terra indígena | 1.189 | 24,2 | 1,0 | 18:42 | 19:48 |
+| zona rural, assentamento ou quilombo | 34.278 | 17,7 | 21,5 | 19:02 | 19:59 |
+| unidade prisional ou socioeducativa | 160 | 0,6 | 0,0 | 18:19 | 18:48 |
+| escola fora de zona rural | 138.137 | 11,9 | 58,2 | 18:37 | 19:28 |
+| outro local | 40.563 | 13,4 | 19,3 | 18:39 | 19:26 |
 
 Tipo de local é inferência por palavra-chave no nome, bairro e endereço do local de votação, na ordem das regras: a primeira que casa decide. Escola num povoado conta como zona rural. Em 2022 o arquivo não tem bairro, só nome e endereço.
 
 ## 2. Persistência (régua de recebimento)
 
-- Critério: cobertura de 2026 de ao menos 95% das seções principais e 3 seções ou mais nos dois anos. Municípios comparados: 2.634.
-- Mediana das medianas municipais: 19:38 em 2022 e 18:41 em 2026.
-- Correlação 2022 × 2026 da mediana municipal: Pearson 0,477, Spearman 0,538 (IC 95% 0,508 a 0,568); dentro da UF, Pearson 0,351 e Spearman 0,386.
-- Décimo mais tardio nos dois anos (corte de 2022: 20:36; de 2026: 19:35): 77 municípios, contra 26,3 esperados por acaso (2,92 vezes).
-- p90 de recebimento às 19h ou depois: 1.711 municípios em 2026, 2.419 em 2022, 1.686 nos dois. O corte de hora fixo quase não separa nada em 2022, quando o recebimento inteiro foi mais tarde; por isso a persistência usa o décimo de cada ano.
+- Critério: cobertura de 2026 de ao menos 95% das seções principais e 3 seções ou mais nos dois anos. Municípios comparados: 2.734.
+- Mediana das medianas municipais: 19:39 em 2022 e 18:41 em 2026.
+- Correlação 2022 × 2026 da mediana municipal: Pearson 0,480, Spearman 0,543 (IC 95% 0,514 a 0,570); dentro da UF, Pearson 0,355 e Spearman 0,392.
+- Décimo mais tardio nos dois anos (corte de 2022: 20:35; de 2026: 19:32): 77 municípios, contra 27,3 esperados por acaso (2,82 vezes).
+- p90 de recebimento às 19h ou depois: 1.764 municípios em 2026, 2.513 em 2022, 1.739 nos dois. O corte de hora fixo quase não separa nada em 2022, quando o recebimento inteiro foi mais tarde; por isso a persistência usa o décimo de cada ano.
 
 | UF | município | eleitorado | mediana 2022 | mediana 2026 | último voto (mediana) | transporte (mediana) | % rural |
 |---|---|---|---|---|---|---|---|
@@ -135,21 +135,21 @@ Tipo de local é inferência por palavra-chave no nome, bairro e endereço do lo
 | AL | MESSIAS | 14.073 | 21:47 | 20:48 | 17:58 | 2h04 | 0 |
 | AL | SÃO BRÁS | 7.353 | 21:22 | 20:57 | 17:20 | 3h36 | 56 |
 | PA | SANTO ANTÔNIO DO TAUÁ | 26.159 | 21:44 | 20:46 | 18:03 | 2h17 | 58 |
-| PI | VILA NOVA DO PIAUÍ | 3.001 | 22:13 | 20:30 | 17:07 | 3h21 | 33 |
 | AL | PARIPUEIRA | 12.721 | 21:26 | 20:51 | 18:22 | 1h51 | 0 |
+| PI | VILA NOVA DO PIAUÍ | 3.001 | 22:13 | 20:30 | 17:07 | 3h21 | 33 |
 | PI | MARCOLÂNDIA | 8.736 | 23:50 | 20:09 | 17:04 | 3h05 | 12 |
-| PI | CURRAIS | 6.287 | 21:56 | 20:18 | 17:11 | 2h00 | 64 |
 | AL | GIRAU DO PONCIANO | 28.504 | 20:56 | 21:39 | 18:20 | 2h39 | 59 |
+| PI | CURRAIS | 6.287 | 21:56 | 20:18 | 17:11 | 2h00 | 64 |
 | PI | SÃO MIGUEL DA BAIXA GRANDE | 2.835 | 21:04 | 20:52 | 17:04 | 3h49 | 9 |
 | CE | UBAJARA | 27.963 | 20:52 | 21:02 | 17:42 | 3h09 | 35 |
 | MA | SANTO AMARO DO MARANHÃO | 13.330 | 20:55 | 20:54 | 17:56 | 2h04 | 71 |
 | CE | HIDROLÂNDIA | 16.000 | 20:48 | 20:58 | 17:06 | 3h40 | 20 |
 | AL | OLHO D'ÁGUA DO CASADO | 7.631 | 20:48 | 20:56 | 19:03 | 1h48 | 0 |
+| GO | CORUMBAÍBA | 7.145 | 20:58 | 20:47 | 17:06 | 3h40 | 61 |
 | CE | GROAÍRAS | 9.842 | 20:42 | 21:01 | 17:22 | 3h42 | 21 |
 | AL | IGREJA NOVA | 17.729 | 20:43 | 20:59 | 17:35 | 1h38 | 58 |
-| GO | CORUMBAÍBA | 7.145 | 20:58 | 20:47 | 17:06 | 3h40 | 61 |
 
-Locais de votação casados entre os anos: 31.190; Spearman 0,535; persistentes 963 contra 311,9 esperados; 2.217 seções de 2026 dentro deles.
+Locais de votação casados entre os anos: 32.175; Spearman 0,535; persistentes 996 contra 321,7 esperados; 2.330 seções de 2026 dentro deles.
 
 ## 3. Encerramento tardio e voto
 
@@ -158,16 +158,16 @@ Bruta, por faixa de encerramento (% dos válidos, Brasil das UFs completas):
 | faixa | seções | votantes | Lula | Flávio |
 |---|---|---|---|---|
 | até 17:00 | 0 | 0 | n/d | n/d |
-| 17:00 a 17:30 | 147.700 | 34.743.995 | 44,72 | 47,80 |
-| 17:30 a 18:00 | 22.005 | 6.094.244 | 53,07 | 40,53 |
-| 18:00 a 19:00 | 17.674 | 5.061.551 | 57,79 | 36,66 |
-| depois de 19:00 | 4.199 | 1.237.254 | 65,01 | 30,74 |
+| 17:00 a 17:30 | 158.394 | 37.452.795 | 45,95 | 46,70 |
+| 17:30 a 18:00 | 26.525 | 7.431.217 | 54,74 | 39,00 |
+| 18:00 a 19:00 | 22.662 | 6.564.156 | 59,46 | 35,05 |
+| depois de 19:00 | 5.415 | 1.599.938 | 66,71 | 28,97 |
 
 Inclinação (pontos por hora de atraso no encerramento):
 
-- bruta, sem controle: Lula +9,95 (IC 95% de +9,03 a +10,85); Flávio −8,48 (IC 95% de −9,29 a −7,66).
-- dentro da zona: Lula +2,35 (IC 95% de +2,15 a +2,57); Flávio −1,98 (IC 95% de −2,18 a −1,79).
-- dentro da zona, com tamanho e tipo de local: Lula +2,85 (IC 95% de +2,65 a +3,05); Flávio −2,36 (IC 95% de −2,55 a −2,18).
+- bruta, sem controle: Lula +10,22 (IC 95% de +9,41 a +11,06); Flávio −8,81 (IC 95% de −9,58 a −8,07).
+- dentro da zona: Lula +2,16 (IC 95% de +1,99 a +2,36); Flávio −1,82 (IC 95% de −2,00 a −1,66).
+- dentro da zona, com tamanho e tipo de local: Lula +2,76 (IC 95% de +2,58 a +2,95); Flávio −2,29 (IC 95% de −2,46 a −2,12).
 
 Spearman seção a seção dentro da UF (hora de encerramento × % de Lula):
 
@@ -175,6 +175,7 @@ Spearman seção a seção dentro da UF (hora de encerramento × % de Lula):
 - ES: 0,202 (9.844 seções)
 - MS: 0,177 (7.106 seções)
 - RO: 0,138 (4.698 seções)
+- PE: 0,134 (21.418 seções)
 - PI: 0,130 (10.225 seções)
 - PA: 0,116 (20.827 seções)
 - SE: 0,114 (5.923 seções)
@@ -194,17 +195,17 @@ Spearman seção a seção dentro da UF (hora de encerramento × % de Lula):
 
 Estimador do modelo de urna (seção tardia menos as demais da zona):
 
-- encerrou às 18h ou depois, contra as demais da mesma zona (2026; 1.839 unidades, 21.824 seções tardias): Lula, % dos válidos +3,51 (de +3,14 a +3,89); Flávio, % dos válidos (Bolsonaro em 2022) −2,96 (de −3,33 a −2,60); comparecimento, % dos aptos −0,42 (de −0,58 a −0,28); votantes por seção +40,01 (de +38,65 a +41,45); votantes por hora de urna aberta +0,70 (de +0,57 a +0,84); habilitados por ano de nascimento, % dos votantes +0,76 (de +0,64 a +0,88); sem biometria cadastrada, % dos votantes −0,20 (de −0,43 a +0,04).
-- o mesmo, dentro da zona e da mesma faixa de eleitorado apto (2026; 3.073 unidades, 20.753 seções tardias): Lula, % dos válidos +4,40 (de +4,07 a +4,74); Flávio, % dos válidos (Bolsonaro em 2022) −3,70 (de −4,02 a −3,40); comparecimento, % dos aptos +0,24 (de +0,10 a +0,37); votantes por seção +6,14 (de +5,59 a +6,68); votantes por hora de urna aberta −2,43 (de −2,49 a −2,37); habilitados por ano de nascimento, % dos votantes +1,18 (de +1,06 a +1,32); sem biometria cadastrada, % dos votantes −0,27 (de −0,46 a −0,07).
-- encerrou às 19h ou depois, contra as demais da mesma zona (2026; 972 unidades, 4.199 seções tardias): Lula, % dos válidos +5,11 (de +4,50 a +5,70); Flávio, % dos válidos (Bolsonaro em 2022) −4,28 (de −4,82 a −3,72); comparecimento, % dos aptos −0,90 (de −1,19 a −0,62); votantes por seção +43,79 (de +41,79 a +46,00); votantes por hora de urna aberta −0,68 (de −0,87 a −0,48); habilitados por ano de nascimento, % dos votantes +1,38 (de +0,95 a +1,94); sem biometria cadastrada, % dos votantes −0,35 (de −0,58 a −0,11).
-- chegou ao TSE no décimo mais tardio de 2026, contra as demais da zona (2026; 1.016 unidades, 18.216 seções tardias): Lula, % dos válidos +4,04 (de +3,43 a +4,68); Flávio, % dos válidos (Bolsonaro em 2022) −3,43 (de −4,01 a −2,89); comparecimento, % dos aptos −0,31 (de −0,51 a −0,10); votantes por seção +19,77 (de +17,67 a +22,12).
-- chegou ao TSE no décimo mais tardio de 2022, contra as demais da zona (2022; 919 unidades, 13.745 seções tardias): Lula, % dos válidos +4,14 (de +3,39 a +4,93); Flávio, % dos válidos (Bolsonaro em 2022) −3,51 (de −4,22 a −2,84); comparecimento, % dos aptos −0,61 (de −0,95 a −0,30); votantes por seção +18,57 (de +14,78 a +22,29).
+- encerrou às 18h ou depois, contra as demais da mesma zona (2026; 2.047 unidades, 28.028 seções tardias): Lula, % dos válidos +3,28 (de +2,95 a +3,62); Flávio, % dos válidos (Bolsonaro em 2022) −2,76 (de −3,08 a −2,45); comparecimento, % dos aptos −0,50 (de −0,63 a −0,37); votantes por seção +39,74 (de +38,48 a +41,00); votantes por hora de urna aberta +0,68 (de +0,56 a +0,79); habilitados por ano de nascimento, % dos votantes +0,69 (de +0,58 a +0,81); sem biometria cadastrada, % dos votantes −0,18 (de −0,39 a +0,01).
+- o mesmo, dentro da zona e da mesma faixa de eleitorado apto (2026; 3.503 unidades, 26.676 seções tardias): Lula, % dos válidos +4,16 (de +3,88 a +4,46); Flávio, % dos válidos (Bolsonaro em 2022) −3,50 (de −3,77 a −3,22); comparecimento, % dos aptos +0,14 (de +0,03 a +0,26); votantes por seção +5,77 (de +5,27 a +6,23); votantes por hora de urna aberta −2,45 (de −2,50 a −2,40); habilitados por ano de nascimento, % dos votantes +1,13 (de +1,03 a +1,25); sem biometria cadastrada, % dos votantes −0,29 (de −0,46 a −0,12).
+- encerrou às 19h ou depois, contra as demais da mesma zona (2026; 1.148 unidades, 5.415 seções tardias): Lula, % dos válidos +4,77 (de +4,26 a +5,29); Flávio, % dos válidos (Bolsonaro em 2022) −3,97 (de −4,45 a −3,51); comparecimento, % dos aptos −0,94 (de −1,21 a −0,67); votantes por seção +41,66 (de +39,78 a +43,54); votantes por hora de urna aberta −0,82 (de −1,00 a −0,64); habilitados por ano de nascimento, % dos votantes +1,33 (de +0,95 a +1,77); sem biometria cadastrada, % dos votantes −0,69 (de −1,11 a −0,34).
+- chegou ao TSE no décimo mais tardio de 2026, contra as demais da zona (2026; 1.150 unidades, 20.389 seções tardias): Lula, % dos válidos +3,69 (de +3,16 a +4,25); Flávio, % dos válidos (Bolsonaro em 2022) −3,15 (de −3,67 a −2,68); comparecimento, % dos aptos −0,29 (de −0,47 a −0,09); votantes por seção +19,28 (de +17,04 a +21,48).
+- chegou ao TSE no décimo mais tardio de 2022, contra as demais da zona (2022; 1.007 unidades, 15.565 seções tardias): Lula, % dos válidos +3,79 (de +3,11 a +4,47); Flávio, % dos válidos (Bolsonaro em 2022) −3,15 (de −3,78 a −2,54); comparecimento, % dos aptos −0,64 (de −0,95 a −0,37); votantes por seção +19,27 (de +16,03 a +22,72).
 
 ### Conferência com a análise por seção
 
 - Publicado em `secoes.json` (2026-10-05T16:58:37Z, 76.315 seções válidas): 1.199 seções depois das 19h, Lula +2,73 e Flávio −2,22 contra o resto da zona.
 - Base atual, mesmas UFs completas da rodada publicada: 1.094 seções; fórmula da análise por seção +2,74; a mesma fórmula contra só as não tardias +3,11; estimador deste capítulo +4,74 (IC 95% de +3,49 a +6,06).
-- Base atual, todas as UFs com boletim: 5.253 seções; fórmula da análise por seção +3,45; a mesma fórmula contra só as não tardias +3,86; estimador deste capítulo +4,82 (IC 95% de +4,28 a +5,35).
+- Base atual, todas as UFs com boletim: 5.415 seções; fórmula da análise por seção +3,41; a mesma fórmula contra só as não tardias +3,82; estimador deste capítulo +4,77 (IC 95% de +4,26 a +5,29).
 
 A análise por seção compara cada seção tardia com o resto da própria zona, inclusive as outras seções tardias, e pondera pelos válidos da seção. O estimador deste capítulo compara o agregado das seções tardias com o das demais na mesma zona, pondera pelos votantes das duas partes e deixa fora a zona sem os dois grupos. Os dois medem a mesma coisa por caminhos diferentes; a diferença entre eles é de método e de base, não de dado.
 
@@ -212,29 +213,29 @@ A análise por seção compara cada seção tardia com o resto da própria zona,
 
 ### Achado contrário
 
-- O atraso é, antes de tudo, tamanho de seção: com 400 aptos ou mais, 52,7% das seções encerraram às 18h ou depois; com até 199, 0,2%. Dentro da mesma zona, a seção com 350 votantes ou mais tem 49,8 pontos a mais de chance de fechar às 18h ou depois do que a de 200 a 249.
-- Onde a eleição termina tarde nos dois anos, termina tarde mais por distância do que por fila: nos 77 municípios persistentes a votação terminou, na mediana, às 17:36 e a mídia levou 2h25 até o TSE; no conjunto, 17:06 e 1h19. Dos 963 locais de votação persistentes, 71,9% ficam em zona rural, assentamento ou quilombo pelo nome e endereço, contra 35,5% dos locais comparados.
-- A seção que chega tarde ao TSE vota mais em Lula do que o resto da própria zona nos dois anos, e por margem parecida: +4,1 pontos em 2022 e +4,0 em 2026 (décimo mais tardio de cada ano). O padrão não nasceu em 2026.
+- O atraso é, antes de tudo, tamanho de seção: com 400 aptos ou mais, 52,9% das seções encerraram às 18h ou depois; com até 199, 0,2%. Dentro da mesma zona, a seção com 350 votantes ou mais tem 50,6 pontos a mais de chance de fechar às 18h ou depois do que a de 200 a 249.
+- Onde a eleição termina tarde nos dois anos, termina tarde mais por distância do que por fila: nos 77 municípios que ficaram entre os 10% mais tardios do país nos dois anos, a votação terminou, na mediana, às 17:36 e a mídia levou 2h25 até o TSE; no conjunto, 17:06 e 1h19. Dos 996 locais de votação na mesma situação, 71,2% ficam em zona rural, assentamento ou quilombo pelo nome e endereço, contra 34,8% dos locais comparados.
+- A seção que chega tarde ao TSE vota mais em Lula do que o resto da própria zona nos dois anos, e por margem parecida: +3,8 pontos em 2022 e +3,7 em 2026 (décimo mais tardio de cada ano). O padrão não nasceu em 2026.
 
 ### Verificado
 
-- Nas 20 UFs completas, metade das urnas encerrou a votação até as 17:06 de Brasília; 11,4% encerraram às 18h ou depois e 2,2% às 19h ou depois.
+- Nas 21 UFs completas, metade das urnas encerrou a votação até as 17:07 de Brasília; 13,2% encerraram às 18h ou depois e 2,5% às 19h ou depois.
 - Nenhuma urna encerrou antes das 17h de Brasília (0 seções nessa faixa), coerente com a regra: às 17h quem está na fila recebe senha e vota depois.
-- O boletim chegou ao TSE, na mediana, às 18:38 em 2026 e às 19:26 em 2022, nas mesmas UFs; depois das 19h chegaram 34,9% das seções em 2026 e 66,3% em 2022.
-- As UFs com maior parcela de seções encerradas às 18h ou depois: AL 33,0%; AM 23,7%; RN 21,6%; CE 18,5%; MA 17,9%; as de menor: RR 1,2%; SC 1,0%; RO 0,3%.
-- A régua de chegada de 2026 tem um buraco: nenhum boletim registrado como recebido entre 19:32 e 19:59 (27,5 minutos) e 8.507 nos cinco minutos seguintes. É a pausa geral do TSE da noite; nesse trecho a hora de chegada mede o tribunal, não a seção. Em 2022, o maior buraco foi de 7,4 minutos.
-- Da hora de recebimento de 2026, a fila (17h até o último voto) responde por 6 min na mediana e o caminho da mídia até o TSE por 1h19.
+- O boletim chegou ao TSE, na mediana, às 18:40 em 2026 e às 19:31 em 2022, nas mesmas UFs; depois das 19h chegaram 37,0% das seções em 2026 e 68,7% em 2022.
+- As UFs com maior parcela de seções encerradas às 18h ou depois: AL 33,0%; PE 29,0%; AM 23,7%; RN 21,6%; CE 18,5%; as de menor: RR 1,2%; SC 1,0%; RO 0,3%.
+- A régua de chegada de 2026 tem um buraco: nenhum boletim registrado como recebido entre 19:32 e 19:59 (27,5 minutos) e 8.822 nos cinco minutos seguintes. É a pausa geral do TSE da noite; nesse trecho a hora de chegada mede o tribunal, não a seção. Em 2022, o maior buraco foi de 7,4 minutos. O corte do décimo mais tardio de 2026 (19:32) cai antes do buraco: quem ficou preso nele continua no décimo.
+- Da hora de recebimento de 2026, a fila (17h até o último voto) responde por 7 min na mediana e o caminho da mídia até o TSE por 1h19.
 
 ### Inferido
 
-- Sem controle, cada hora de atraso no encerramento vem com +9,95 pontos de Lula nos válidos. Dentro da mesma zona, +2,35 (IC 95% de +2,15 a +2,57); dentro da zona com tamanho e tipo de local, +2,85 (IC 95% de +2,65 a +3,05). Sobra 28,6% da correlação bruta.
-- Seções que encerraram depois das 19h: +20,1 pontos de Lula sem controle, +5,4 dentro da zona e +5,5 com tamanho e tipo, contra as que encerraram entre 17:00 e 17:30.
-- A seção tardia tem mais eleitor habilitado por ano de nascimento (biometria que não reconheceu): +0,76 ponto dentro da zona e +1,18 dentro da zona e da faixa de tamanho. Com o mesmo tamanho, ela processou 2,4 votantes por hora a menos: votação mais lenta, não só mais gente.
-- O atraso persiste no lugar: a correlação de postos entre a mediana municipal de recebimento de 2022 e a de 2026 é 0,54 (IC 95% de 0,51 a 0,57), 0,39 dentro da UF; 77 municípios ficaram no décimo mais tardio nos dois anos, 2,9 vezes o esperado por acaso.
+- Sem controle, cada hora de atraso no encerramento vem com +10,22 pontos de Lula nos válidos. Dentro da mesma zona, +2,16 (IC 95% de +1,99 a +2,36); dentro da zona com tamanho e tipo de local, +2,76 (IC 95% de +2,58 a +2,95). Sobra 27,0% da correlação bruta.
+- Seções que encerraram depois das 19h: +20,6 pontos de Lula sem controle, +4,9 dentro da zona e +5,4 com tamanho e tipo, contra as que encerraram entre 17:00 e 17:30.
+- A seção tardia tem mais eleitor habilitado por ano de nascimento (biometria que não reconheceu): +0,69 ponto dentro da zona e +1,13 dentro da zona e da faixa de tamanho. Com o mesmo tamanho, ela processou 2,4 votantes por hora a menos: votação mais lenta, não só mais gente.
+- O atraso persiste no lugar: a correlação de postos entre a mediana municipal de recebimento de 2022 e a de 2026 é 0,54 (IC 95% de 0,51 a 0,57), 0,39 dentro da UF; 77 municípios ficaram no décimo mais tardio nos dois anos, 2,8 vezes o esperado por acaso.
 
 ### Juízo editorial
 
-- A providência barata é pôr fiscal de partido nas seções que historicamente fecham tarde: é ali que a fila depois das 17h, o mesário e a boca de urna ficam sem testemunha. A lei permite que um fiscal cubra todas as seções do mesmo local (Lei 9.504, art. 65, § 1º); os 963 locais persistentes somam 2.217 seções.
+- A providência barata é pôr fiscal de partido nas seções que historicamente fecham tarde: é ali que a fila depois das 17h, o mesário e a boca de urna ficam sem testemunha. A lei permite que um fiscal cubra todas as seções do mesmo local (Lei 9.504, art. 65, § 1º); os 996 locais persistentes somam 2.330 seções.
 - O número que importa é o que sobra dentro da zona, com tamanho e tipo de local controlados. Ele existe e é positivo para Lula; ele não diz por quê.
 
 ### Hipótese
