@@ -136,8 +136,11 @@ function desenharPalco(raiz: HTMLElement, e: Estado, grafico: Linhas | null): vo
     }
   }
   if (!grafico) return;
+  // 17:00 do dia da eleição: âncora no primeiro ponto do histórico, não em "hoje" (meia-noite).
+  const primeiro = pts[0]?.x;
   const agora = Date.parse(e.agora);
-  const x0 = dezessete(new Date(Number.isFinite(agora) ? agora : Date.now())).getTime();
+  const ancora = primeiro !== undefined && Number.isFinite(primeiro) ? primeiro : Number.isFinite(agora) ? agora : Date.now();
+  const x0 = dezessete(new Date(ancora)).getTime();
   const prev = r?.previsao ?? null;
   const fimDados = pts[pts.length - 1]?.x ?? x0 + 60 * MIN;
   const x1 = Math.max(x0 + 60 * MIN, fimDados, prev !== null && prev - fimDados < 6 * 60 * MIN ? prev : fimDados) + 10 * MIN;

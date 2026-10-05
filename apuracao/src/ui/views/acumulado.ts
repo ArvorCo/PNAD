@@ -40,9 +40,20 @@ export function infoDosLotes(l: Lotes | undefined, cores: Cores): InfoCand[] {
 }
 
 /** Início do eixo: 17:00 do dia de `agora` (Brasília). */
-export function inicioDoEixo(s: State): number {
+/**
+ * Início do eixo: 17:00 do dia da eleição. Ancorado no primeiro lote com seções (ou no
+ * primeiro ponto do histórico), nunca em "hoje": depois da meia-noite "hoje" vira o dia
+ * seguinte e todos os lotes ficariam antes do início do eixo (visto em 05/10/2026, 00:05).
+ */
+export function inicioDoEixo(s: State, referencia?: string | null): number {
+  const lotes = s.lotes[chaveLotes(ELE, CARGO, "br")]?.lotes ?? [];
+  const primeiro = lotes.find(l => l.st > 0)?.at ?? s.estado?.historico?.find(h => h.st > 0)?.at ?? referencia ?? null;
+  const base = Date.parse(primeiro ?? "");
   const agora = Date.parse(s.estado?.agora ?? "");
-  return dezessete(new Date(Number.isFinite(agora) ? agora : Date.now())).getTime();
+  const ancora = Number.isFinite(base) ? base : Number.isFinite(agora) ? agora : Date.now();
+  const inicio = dezessete(new Date(ancora)).getTime();
+  // Lote anterior às 17:00 do seu próprio dia (fuso): recua um dia.
+  return Number.isFinite(base) && base < inicio ? inicio - 24 * 60 * 60 * 1000 : inicio;
 }
 
 const pctDe = (v: number, vv: number): number => (vv > 0 ? (100 * v) / vv : 0);
