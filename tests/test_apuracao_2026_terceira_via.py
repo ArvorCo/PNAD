@@ -13,11 +13,16 @@ import json
 import math
 from pathlib import Path
 
+import numpy as np
 import pytest
 from apuracao_2026 import estrategia as E
+from apuracao_2026 import pagina_texto_reguas as PR
 from apuracao_2026 import pagina_texto_terceira_via as PT
 from apuracao_2026 import terceira_via as T
 from apuracao_2026 import terceira_via_agregados as A
+from apuracao_2026 import terceira_via_leitura as L
+from apuracao_2026 import terceira_via_regua as RU
+from apuracao_2026 import terceira_via_reguas as RG
 from apuracao_2026 import terceira_via_secoes as S
 from apuracao_2026 import terceira_via_texto as X
 
@@ -490,3 +495,245 @@ def test_textos_do_arquivo_sem_travessao(tv):
         "nulo_2022_municipios",
     ):
         assert f"<figure>{nome}</figure>" in html
+
+
+# ---------------------------------------------------------------- duas réguas
+
+
+def _sintetico(
+    ruido: float = 0.0, n_por_uf: int = 60, semente: int = 7
+) -> tuple[list[dict], dict]:
+    """Municípios em três UFs com inclinações conhecidas por classe e efeito fixo de UF."""
+    rng = np.random.default_rng(semente)
+    verdade_b = {
+        "venceu_folga": 0.6,
+        "venceu_apertado": 0.5,
+        "perdeu_apertado": 0.4,
+        "perdeu_folga": 0.3,
+    }
+    verdade_l = {
+        "venceu_folga": 0.3,
+        "venceu_apertado": 0.4,
+        "perdeu_apertado": 0.45,
+        "perdeu_folga": 0.5,
+    }
+    a_uf = {"AA": (0.02, 0.01), "BB": (-0.01, 0.0), "CC": (0.03, -0.02)}
+    linhas = []
+    for uf, (ab, al) in a_uf.items():
+        for i in range(n_por_uf):
+            classe = T.CLASSES[i % 4]
+            V = float(rng.integers(2_000, 200_000))
+            x_tv = rng.uniform(0.02, 0.2)
+            x_bn = rng.uniform(0.02, 0.08)
+            yb = ab + verdade_b[classe] * x_tv - 0.1 * x_bn + ruido * rng.normal()
+            yl = al + verdade_l[classe] * x_tv + 0.05 * x_bn + ruido * rng.normal()
+            linhas.append(
+                {
+                    "cd": f"{uf}{i:03d}",
+                    "uf": uf,
+                    "regiao": "Sudeste" if uf != "CC" else "Sul",
+                    "classe": classe,
+                    "comp22_1t": V,
+                    "tv22": x_tv * V,
+                    "bn22_1t": x_bn * V,
+                    "ganho_b22": yb * V,
+                    "ganho_l22": yl * V,
+                    "estoque": int(x_tv * V),
+                }
+            )
+    return linhas, {c: verdade_b[c] - verdade_l[c] for c in T.CLASSES}
+
+
+def test_regua_recupera_inclinacoes_com_efeito_fixo():
+    linhas, saldo = _sintetico()
+    m = RU.modelo(linhas, "classe", T.CLASSES, n_boot=20)
+    for c in T.CLASSES:
+        g = m["grupos"][c]
+        assert g["saldo"] == pytest.approx(saldo[c], abs=1e-9)
+        assert g["saldo_ic95"][0] == pytest.approx(saldo[c], abs=1e-9)
+        assert g["saldo"] == pytest.approx(g["bolsonaro"] - g["lula"], abs=1e-4)
+    assert m["brancos_nulos"]["saldo"] == pytest.approx(-0.15, abs=1e-9)
+
+
+def test_regua_com_ruido_intervalo_contem_o_ponto_e_e_reproduzivel():
+    linhas, _ = _sintetico(ruido=0.01)
+    a = RU.modelo(linhas, "classe", T.CLASSES, n_boot=80)
+    b = RU.modelo(linhas, "classe", T.CLASSES, n_boot=80)
+    for c in T.CLASSES:
+        lo, hi = a["grupos"][c]["saldo_ic95"]
+        assert lo <= a["grupos"][c]["saldo"] <= hi
+        assert a["grupos"][c]["saldo_ic95"] == b["grupos"][c]["saldo_ic95"]
+    unico = RU.modelo(linhas, None, [], n_boot=20)
+    assert list(unico["grupos"]) == ["todos"]
+
+
+def test_regua_sem_efeito_fixo_tem_constante():
+    linhas, _ = _sintetico()
+    sfe = RU.sem_efeito_fixo(linhas)
+    assert set(sfe) == {"saldo_terceira_via", "saldo_brancos_nulos", "constante"}
+
+
+def test_aplicar_e_total_ic():
+    linhas, _ = _sintetico(ruido=0.01)
+    classe = RU.modelo(linhas, "classe", T.CLASSES, n_boot=50)
+    for m in linhas:
+        m["regiao"] = "Sudeste"
+    regiao = RU.modelo(linhas, "regiao", ["Sudeste"], n_boot=10)
+    razao = {c: {"saldo": 0.5} for c in T.CLASSES}
+    RU.aplicar(linhas, classe, regiao, razao)
+    for m in linhas:
+        assert m["saldo_urna"] == pytest.approx(
+            m["estoque"] * classe["grupos"][m["classe"]]["saldo"]
+        )
+        assert m["saldo_razao"] == pytest.approx(0.5 * m["estoque"])
+    lo, hi = RU.total_ic(linhas, classe)
+    total = sum(m["saldo_urna"] for m in linhas)
+    assert lo <= total + 1 and total - 1 <= hi
+
+
+def test_decompor_motivo_piso_situacao():
+    d = T.decompor(0.25, 0.18, -0.12, 0.05)
+    assert d["composicao"] + d["nivel"] + d["classe"] == pytest.approx(d["total"])
+    assert d["total"] == pytest.approx(0.37)
+    assert T.motivo(d) == "classe"
+    assert T.motivo(T.decompor(0.02, 0.18, 0.15, 0.05)) == "composicao"
+    assert T.piso_teto(5, -3) == (-3, 5)
+    assert [
+        T.situacao(*x)
+        for x in ((True, True), (True, False), (False, True), (False, False))
+    ] == [
+        "robusto",
+        "so_pesquisa",
+        "so_urna",
+        "fora",
+    ]
+
+
+def _com_reguas(brasil):
+    for m, urna in zip(brasil, (-0.05, 0.1, -0.2, 0.3, 0.25, 0.0), strict=True):
+        m.update(
+            {
+                "pv_urna": urna,
+                "saldo_urna": m["estoque"] * urna,
+                "saldo_urna_regiao": m["estoque"] * 0.01,
+                "saldo_razao": m["estoque"] * 0.4,
+                "para_flavio_urna": m["estoque"] * 0.5,
+                "para_lula_urna": m["estoque"] * (0.5 - urna),
+                "direita_menor": 3,
+            }
+        )
+    return brasil
+
+
+def test_reguas_rankings_e_totais(brasil, monkeypatch):
+    brasil = _com_reguas(brasil)
+    monkeypatch.setattr(RG, "N_TOP", 3)
+    nac = RG.preparar(brasil)
+    assert nac["pv_urna"] == pytest.approx(
+        sum(m["saldo_urna"] for m in brasil) / sum(m["estoque"] for m in brasil)
+    )
+    rk = RG.rankings(brasil)
+    pesq = [x["cd"] for x in rk["top"]["pesquisa"]]
+    urna = [x["cd"] for x in rk["top"]["urna"]]
+    assert pesq == ["00001", "00002", "00003"]
+    assert urna == ["00004", "00002", "00005"]
+    assert rk["robustos"] == 1 and rk["so_pesquisa"] == 2 and rk["so_urna"] == 2
+    assert {x["situacao"] for x in rk["divergentes"]} == {"so_pesquisa", "so_urna"}
+    comb = rk["top"]["combinacao"]
+    assert [x["piso"] for x in comb] == sorted((x["piso"] for x in comb), reverse=True)
+    assert all(x["piso"] <= x["teto"] for x in comb)
+    tot = RG.totais(brasil, [0, 1])
+    assert sum(r["urna"] for r in tot["regioes"].values()) == pytest.approx(
+        tot["brasil"]["urna"], abs=3
+    )
+
+
+def test_movimentos_pelas_duas_reguas(brasil):
+    brasil = _com_reguas(brasil)
+    RG.preparar(brasil)
+    estrategia = {
+        "movimentos": [
+            {"id": "renan", "ordem": 1, "titulo": "Renan", "votos_esperados": 100},
+            {
+                "id": "sp_tarcisio",
+                "ordem": 3,
+                "titulo": "Tarcísio",
+                "votos_esperados": 50,
+            },
+            {
+                "id": "ne_interior",
+                "ordem": 5,
+                "titulo": "Nordeste",
+                "votos_esperados": 40,
+            },
+        ]
+    }
+    mv = RG.movimentos(brasil, estrategia)
+    renan = mv[0]
+    assert renan["urna"] == round(sum(m["renan"] * m["pv_urna"] for m in brasil))
+    assert mv[1]["urna"] is None and "governador" in mv[1]["nota"]
+    assert mv[2]["urna"] == round(
+        sum(m["saldo_urna"] for m in brasil if m["regiao"] == "Nordeste")
+    )
+    assert mv[2]["concordam"] is False
+
+
+def test_retrovisao_procura_no_acervo(tmp_path, monkeypatch):
+    pasta = tmp_path / "pesquisas_2022"
+    (pasta / "casa_a").mkdir(parents=True)
+    (pasta / "casa_a" / "README.md").write_text(
+        "Última onda do 1º turno.", encoding="utf-8"
+    )
+    trans = tmp_path / "pesquisas_2022.json"
+    trans.write_text(
+        json.dumps(
+            {
+                "descricao": "Transcrição, teste",
+                "pesquisas": [{"casa": "A", "totais": {}}],
+            }
+        ),
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(L, "ROOT", tmp_path)
+    monkeypatch.setattr(L, "PESQUISAS_2022", pasta)
+    monkeypatch.setattr(L, "TRANSCRICAO_2022", trans)
+    rv = L.retrovisao()
+    assert rv["disponivel"] is False and rv["casas_no_acervo"] == 1
+    (pasta / "casa_b").mkdir()
+    (pasta / "casa_b" / "README.md").write_text(
+        "Primeira onda do 2º turno, com migração.", encoding="utf-8"
+    )
+    rv = L.retrovisao()
+    assert rv["disponivel"] is True and rv["achados"][0]["casa"] == "casa_b"
+
+
+def test_arquivo_reguas(tv):
+    R = tv["reguas"]
+    m = R["modelos"]["classe"]["grupos"]
+    for g in m.values():
+        lo, hi = g["saldo_ic95"]
+        assert lo <= g["saldo"] <= hi
+    T_ = R["totais"]
+    br = T_["brasil"]
+    assert sum(c["urna"] for c in T_["classes"].values()) == pytest.approx(
+        br["urna"], abs=4
+    )
+    assert br["urna_ic95"][0] <= br["urna"] <= br["urna_ic95"][1]
+    assert br["nexus"] == tv["agregados"]["brasil"]["saldo"]
+    rk = R["rankings"]
+    assert rk["robustos"] + rk["so_pesquisa"] == 100
+    assert len(rk["top"]["combinacao"]) == 100
+    assert {mv["id"] for mv in R["movimentos"]} >= {
+        "renan",
+        "cury",
+        "caiado_go",
+        "direita_menor",
+    }
+    assert R["retrovisao"]["disponivel"] in (True, False)
+    html = PR.bloco(tv, lambda nome: f"<figure>{nome}</figure>")
+    assert TRAVESSAO not in html
+    assert "<h3>Pesquisa contra urna: duas réguas para o mesmo estoque</h3>" in html
+    assert (
+        "<figure>conversao_2022_classes</figure>" in html
+        and "<figure>reguas_divergencia_mapa</figure>" in html
+    )
