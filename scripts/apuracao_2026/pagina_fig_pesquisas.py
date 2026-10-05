@@ -20,6 +20,7 @@ from .pagina_fig_base import (
     NOME_CAND,
     OUTROS,
     OUTROS_TXT,
+    PAPER,
     Tips,
     W,
     area,
@@ -891,6 +892,7 @@ def reserva_vs_urna(d, **_op) -> str:
         out.append(
             hit(
                 f'<circle cx="{x:.1f}" cy="{y:.1f}" r="7" fill="{FLAVIO}" fill-opacity="0.8" stroke="#ffffff" stroke-width="1.5"/>'
+                + r(x + 8, y - 8, 9 * len(u["uf"]) + 6, 17, PAPER, ' rx="2"')
                 + t(x + 10, y + 5, u["uf"], 13, INK, weight="700"),
                 k,
             )
