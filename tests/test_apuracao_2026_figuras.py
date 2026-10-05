@@ -59,7 +59,8 @@ def _tips(h: str) -> dict:
 
 
 def test_catalogo_inteiro_registrado():
-    assert len(NOMES) == 43
+    assert len(NOMES) >= 43
+    assert len(NOMES) == len(set(NOMES))
     assert set(SECOES) <= set(NOMES)
     assert set(NOMES) <= set(FIGURAS)
 

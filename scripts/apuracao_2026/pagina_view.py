@@ -38,6 +38,7 @@ SCRIPTS = [
     "scripts/apuracao-2026-secoes.py",
     "scripts/apuracao-2026-estrategia.py",
     "scripts/apuracao-2026-comparacao.py",
+    "scripts/apuracao-2026-arquitetura.py",
     "scripts/apuracao-2026-build.py",
 ]
 JSONS = [
@@ -57,6 +58,7 @@ JSONS = [
     "contexto_seguranca.json",
     "estrategia_2t.json",
     "comparacao_2022.json",
+    "arquitetura.json",
 ]
 
 

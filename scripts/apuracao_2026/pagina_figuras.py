@@ -10,6 +10,7 @@ por `pagina_comum.figura_catalogo(nome, dados)`.
 from __future__ import annotations
 
 from . import (
+    pagina_fig_arquitetura,
     pagina_fig_congresso,
     pagina_fig_estrategia,
     pagina_fig_mapas,
@@ -43,6 +44,7 @@ from .pagina_figuras_prim import (
 
 # Os módulos do catálogo registram as figuras em FIGURAS ao serem importados.
 MODULOS_CATALOGO = (
+    pagina_fig_arquitetura,
     pagina_fig_congresso,
     pagina_fig_estrategia,
     pagina_fig_mapas,

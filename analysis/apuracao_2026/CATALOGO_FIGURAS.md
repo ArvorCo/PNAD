@@ -11,6 +11,8 @@ Regra: o texto chama `figura_catalogo("nome", dados, **opcoes)` (acessor em `scr
 | `mapa_hora_100` | 2 | coroplético da hora em que cada UF fechou | ficha: hora, última seção, seções tardias |
 | `divergencia_nacional` | 2 e 3 | nacional × soma das UFs × monitoramento, 18:40 a 20:10 | ficha por minuto: as três contagens e a diferença |
 | `latencia_hora` | 3 e 14 | p50/p95 da latência de leitura por hora | ficha por hora |
+| `volume_noite` | 3 | barras por minuto, 17h a 21h30: boletins recebidos em 2026 (carimbo `dr_hr` da coleta seção a seção, extrapolado ao país), recebidos em 2022 (país inteiro) e versões de arquivo publicadas em 2026; paradas do nacional sombreadas, pausa geral hachurada, ritmo do arquivo nacional em degraus dourados | ficha por minuto; alternância recebidas 2026 / 2022 / publicadas |
+| `arquitetura_totalizacao` | 3 | dois painéis de caixas e setas: o caminho do boletim como os documentos do TSE descrevem (hipótese do autor tracejada) e o desenho com log de eventos, consumidores idempotentes, totais incrementais, publicação assíncrona e auditoria; abaixo de 720 px, versão empilhada em HTML | ficha por caixa com a frase e a fonte |
 | `regioes_2022_2026` | 4 | barras divergentes por UF (swing de Flávio e de Lula), agrupadas por região | ficha: 2022, 2026, votos; alternância 1T 2022 / 2T 2022 |
 | `dispersao_municipios` | 4 | município: Bolsonaro 2022 × Flávio 2026 (ponto por município, área = eleitorado, cor por região) | ficha por município; filtro por região |
 | `mapa_swing_uf` | 4 | mapas municipais de SP, MG, BA, PE com o swing (um por aba) | ficha por município; abas |

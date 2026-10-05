@@ -10,6 +10,7 @@ from html import escape
 
 from . import pagina_comparacao as CMP
 from . import pagina_texto as T
+from . import pagina_texto_arquitetura as TA
 from .pagina_comum import (
     Capitulo,
     Dados,
@@ -145,7 +146,8 @@ def r_falha(d: Dados, cap: Capitulo) -> str:
     )
     h += T.falha_a(L, par) + fig("divergencia_nacional", d)
     h += T.falha_correcao(L) + fig("latencia_hora", d)
-    h += T.falha_b(par, L) + T.falha_juizo(par) + "</section>"
+    h += T.falha_b(par, L) + T.falha_juizo(par)
+    h += TA.bloco(d) + "</section>"
     return h
 
 
