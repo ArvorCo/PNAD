@@ -38,7 +38,9 @@ def _par(
 
 
 def _pp(x: float | None) -> str:
-    return "sem resto de zona para comparar" if x is None else f"{num(x, 2)} ponto"
+    if x is None:
+        return "sem resto de zona para comparar"
+    return f"{num(x, 2)} {'ponto' if abs(x) < 2 else 'pontos'}"
 
 
 def _ic(m: Mapping[str, Any] | None) -> str:
@@ -488,6 +490,17 @@ def memorando(d: Mapping[str, Any]) -> str:
         f"{_n(h['encerramento']['depois_1900'])}, depois das 20h em "
         f"{_n(h['encerramento']['depois_2000'])}."
     )
+    rotulos = {
+        "encerramento_depois_19h": "Seções que encerraram depois das 19h",
+        "abertura_depois_9h": "Seções que abriram depois das 9h",
+    }
+    for g in h.get("voto_vs_zona", []):
+        w(
+            f"- {rotulos.get(g['grupo'], g['grupo'])}: {_n(g['secoes'])} seções; Lula "
+            f"{_pp(g['dif_zona_lula_pp'])} e Flávio {_pp(g['dif_zona_flavio_pp'])} "
+            "em relação ao resto da própria zona (fila longa costuma ser de seção "
+            "grande e de bairro populoso; hipótese a conferir com a ata)."
+        )
     rb = ou["recebimento"]
     for chave, rot in (("depois_0000", "meia-noite"), ("depois_0100", "1h")):
         b = rb[chave]
