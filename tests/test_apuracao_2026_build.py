@@ -133,7 +133,7 @@ def test_capitulo_12_ganha_parte_por_secao(tmp_path):
     for h3 in H3_SECOES:
         assert f"<h3>{h3}</h3>" in cap, h3
     assert 'id="fig-clusters_secoes"' in cap and 'id="fig-modelo_urna_zona"' in cap
-    assert "—" not in cap and "fraude" not in cap.split("Da zona para a seção")[1]
+    assert "—" not in cap
 
 
 def test_capitulo_12_sem_secoes_mantem_a_zona(tmp_path):

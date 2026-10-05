@@ -490,7 +490,11 @@ def _vazio(px: float, py: float) -> str:
     )
 
 
-def _hora_rot(h: str) -> str:
+def _hora_rot(h) -> str:
+    """'2026-10-04 17' vira '17h'; '2026-10-05 00' vira '00h (05/10)'; inteiro 17 vira '17h'."""
+    h = str(h)
+    if len(h) <= 2:
+        return f"{int(h):02d}h"
     hh = h[-2:]
     return f"{hh}h" + (" (05/10)" if h[:10].endswith("-05") else "")
 
@@ -577,7 +581,7 @@ def _painel_encerramento(OD: dict, px: float, py: float, tips: Tips) -> str:
         bx = px + i * bw
         k = tips.add(
             ficha(
-                f"Encerradas às {x['hora']}h",
+                f"Encerradas às {_hora_rot(x['hora'])}",
                 "hora de Brasília",
                 [
                     ("Seções", inteiro(x["secoes"])),
@@ -596,7 +600,15 @@ def _painel_encerramento(OD: dict, px: float, py: float, tips: Tips) -> str:
         )
         if len(hist) <= 14 or i % 2 == 0:
             out.append(
-                t(bx + bw / 2, y1 + 18, f"{x['hora']}h", 13, MUTED, "middle", mono=True)
+                t(
+                    bx + bw / 2,
+                    y1 + 18,
+                    _hora_rot(x["hora"])[:3],
+                    13,
+                    MUTED,
+                    "middle",
+                    mono=True,
+                )
             )
     out.append(ln(px, y1, px + PW, y1, INK))
     return "".join(out)
