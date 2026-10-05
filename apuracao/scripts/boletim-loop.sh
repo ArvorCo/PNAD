@@ -22,18 +22,28 @@ while :; do
     echo "[$H] falha no resumo: $(tail -1 "data/boletins/dados-$H.err")"; sleep 60; continue
   fi
   ANTERIOR=$(ls data/boletins/*.txt 2>/dev/null | grep -v ESTILO | tail -1)
+  # Bancadas por espectro (Câmara, Senado 2027, assembleias, governadores): TSE onde fechou, provisório no resto.
+  if bun run scripts/final-2026.ts > /dev/null 2> "data/boletins/final-$H.err"; then
+    python3 scripts/boletim-bancadas.py > "data/boletins/bancadas-$H.json" 2>> "data/boletins/final-$H.err" || echo "[$H] extrato de bancadas falhou"
+  else
+    echo "[$H] avaliação final falhou: $(tail -1 "data/boletins/final-$H.err")"
+  fi
+  BANCADAS=$( [ -s "data/boletins/bancadas-$H.json" ] && cat "data/boletins/bancadas-$H.json" || echo "{}" )
   PROMPT="Você é o analista de dados da Arvor Intelligence na noite da apuração do 1º turno de 2026, falando ao vivo na voz do Leonardo Dias. Escreva o roteiro do boletim das $H para o ElevenLabs seguindo EXATAMENTE o guia abaixo. Responda só com o roteiro, sem título, sem comentários, sem markdown.
 
 GUIA DE ESTILO:
 $(cat data/boletins/ESTILO.md)
 
-ESTRUTURA OBRIGATÓRIA (500 a 600 palavras): hora e percentual de seções totalizadas; placar nacional dos cinco primeiros com percentual e votos, diferença entre 1º e 2º em pontos e votos, brancos, nulos e comparecimento; os últimos $JANELA_MIN minutos (atualizações, seções e votos que chegaram, quem levou qual fatia do bloco, se a diferença abriu ou fechou contra o início da janela, último lote); ritmo em seções por minuto e previsão simples de fim rotulada como projeção simples; mapa (UFs mais adiantadas e atrasadas, quem lidera onde e por quanto, disputas apertadas, viradas); governadores (quem o TSE já marcou eleito no 1º turno, quem está acima de 50% com apuração parcial, quem vai ao 2º turno); VÃO ESTADUAL obrigatório (bloco vao_estadual.lista: o governador do campo contra o presidenciável do mesmo campo na mesma UF, começando pelos maiores, como Tarcísio contra Flávio em SP e Cleitinho contra Flávio em MG, e os de esquerda contra Lula; dizer os dois percentuais e a diferença, chamar de teto que o governador pode puxar no 2º turno, nunca de transferência certa); Senado nas UFs com mais de 15% apurado (CADA UF ELEGE DOIS: dizer os dois prováveis eleitos e, quando a segunda vaga está apertada, quem ameaça e por quantos pontos; nunca descrever os dois primeiros como adversários entre si); exterior; auditoria (regressões, fechamentos, atraso de leitura); ressalva do que ainda falta entrar e uma leitura final de analista sobre a tendência do bloco. Não repita frases do boletim anterior.
+ESTRUTURA OBRIGATÓRIA (500 a 600 palavras): hora e percentual de seções totalizadas; placar nacional dos cinco primeiros com percentual e votos, diferença entre 1º e 2º em pontos e votos, brancos, nulos e comparecimento; os últimos $JANELA_MIN minutos (atualizações, seções e votos que chegaram, quem levou qual fatia do bloco, se a diferença abriu ou fechou contra o início da janela, último lote); ritmo em seções por minuto e previsão simples de fim rotulada como projeção simples; mapa (UFs mais adiantadas e atrasadas, quem lidera onde e por quanto, disputas apertadas, viradas); governadores (quem o TSE já marcou eleito no 1º turno, quem está acima de 50% com apuração parcial, quem vai ao 2º turno); BANCADAS obrigatório (JSON BANCADAS: Câmara dos Deputados por espectro e por partido, com os blocos direita mais centro-direita, esquerda mais centro-esquerda e centro, dizendo quantas UFs já estão fechadas pelo TSE e quantas são provisórias; Senado de 2027 por espectro, com os 27 que continuam e os 54 novos; assembleias de SP, MG, RJ, BA, RS e PR por espectro; o que esses tamanhos significam para governabilidade e para o segundo turno, sem falar de puxar voto, transferência ou vão estadual); Senado nas UFs com mais de 15% apurado (CADA UF ELEGE DOIS: dizer os dois prováveis eleitos e, quando a segunda vaga está apertada, quem ameaça e por quantos pontos; nunca descrever os dois primeiros como adversários entre si); exterior; fechamentos de UF; NÃO falar de atraso de leitura, de arquivo atrasado nem de CDN (a apuração está acima de 99%: o assunto é resultado); leitura final de analista sobre o quadro que se consolida (segundo turno presidencial, quem foi eleito governador no primeiro turno e quem vai ao segundo, bancadas que se desenham). Não repita frases do boletim anterior.
 
 BOLETIM ANTERIOR (para não repetir):
 $( [ -n "$ANTERIOR" ] && cat "$ANTERIOR" | head -60 )
 
 DADOS (JSON):
-$(cat "data/boletins/dados-$H.json")"
+$(cat "data/boletins/dados-$H.json")
+
+BANCADAS (JSON):
+$BANCADAS"
   echo "[$H] roteiro"
   if ! claude -p --model opus --no-session-persistence "$PROMPT" > "data/boletins/$H.txt" 2> "data/boletins/$H.claude.err"; then
     echo "[$H] falha no roteiro: $(tail -2 "data/boletins/$H.claude.err")"; sleep 60; continue

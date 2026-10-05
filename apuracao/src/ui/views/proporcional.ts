@@ -52,7 +52,8 @@ export function agremiacoes(r: Resultado): AgremiacaoEntrada[] {
   const votos = new Map<string, number>();
   for (const p of r.partidos) {
     const id = deSigla.get(p.sg) ?? p.sg;
-    votos.set(id, (votos.get(id) ?? 0) + p.tvtn + p.tvan);
+    // Nominais mais legenda; tvan inclui nominais e sub judice, somar com ele contaria duas vezes.
+    votos.set(id, (votos.get(id) ?? 0) + p.tvtn + (p.tvtl ?? 0));
   }
   const cands = new Map<string, number[]>();
   for (const c of r.cand) {
