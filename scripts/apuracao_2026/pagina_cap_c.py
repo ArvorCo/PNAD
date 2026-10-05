@@ -6,6 +6,7 @@ from html import escape
 
 from . import pagina_texto_b as T
 from . import pagina_texto_c as TC
+from . import pagina_texto_fechamento as TF
 from .pagina_comum import Capitulo, Dados, checar, num, secao, sinal, tabela
 from .pagina_texto import fig
 
@@ -144,6 +145,12 @@ def r_anomalias(d: Dados, cap: Capitulo) -> str:
     else:
         checar(d, "secoes.json", TC.CHAVES)
         h += TC.bloco(S, lambda nome: fig(nome, d))
+    F = d.get("fechamento.json")
+    if F is None:
+        d.aviso("fechamento.json ausente: capítulo 12 sem o fechamento das seções")
+    else:
+        checar(d, "fechamento.json", TF.CHAVES)
+        h += TF.bloco(F, lambda nome: fig(nome, d))
     return h + "</section>"
 
 

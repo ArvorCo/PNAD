@@ -36,6 +36,7 @@ SCRIPTS = [
     "scripts/apuracao-2026-pesquisas.py",
     "scripts/apuracao-2026-anomalias.py",
     "scripts/apuracao-2026-secoes.py",
+    "scripts/apuracao-2026-fechamento.py",
     "scripts/apuracao-2026-estrategia.py",
     "scripts/apuracao-2026-comparacao.py",
     "scripts/apuracao-2026-noite-regioes.py",
@@ -57,6 +58,7 @@ JSONS = [
     "voto_util.json",
     "anomalias.json",
     "secoes.json",
+    "fechamento.json",
     "contexto_seguranca.json",
     "estrategia_2t.json",
     "comparacao_2022.json",
@@ -285,6 +287,7 @@ def r_fontes(d: Dados, cap: Capitulo) -> str:
         "python3 scripts/apuracao-2026-pesquisas.py\n"
         "python3 scripts/apuracao-2026-anomalias.py\n"
         "python3 scripts/apuracao-2026-secoes.py\n"
+        "python3 scripts/apuracao-2026-fechamento.py\n"
         "python3 scripts/apuracao-2026-estrategia.py\n"
         "python3 scripts/apuracao-2026-comparacao.py\n"
         "python3 scripts/apuracao-2026-noite-regioes.py\n"
