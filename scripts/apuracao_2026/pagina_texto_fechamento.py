@@ -380,7 +380,7 @@ def juizo_e_hipotese(F: dict) -> str:
         '<aside class="juizo"><b>Juízo editorial</b>'
         "A providência barata é pôr fiscal de partido nas seções que historicamente fecham tarde. É ali que a "
         "fila depois das 17h, o mesário e a boca de urna ficam sem testemunha. A lei dá o instrumento: até dois "
-        "fiscais por partido em cada seção, e um mesmo fiscal pode cobrir todas as seções do local (Lei 9.504, "
+        "fiscais por partido em cada seção, e um mesmo fiscal pode cobrir mais de uma seção do mesmo local (Lei 9.504, "
         "art. 65, §§ 1º e 4º); o fiscal pode protestar e impugnar, inclusive a identidade do eleitor (Código "
         "Eleitoral, art. 132), e pedir cópia do boletim até uma hora depois da emissão (Lei 9.504, art. 68, § 1º). "
         f"Os {inteiro(loc.get('persistentes'))} locais que chegaram no décimo mais tardio nos dois anos somam "

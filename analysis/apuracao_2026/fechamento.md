@@ -1,6 +1,6 @@
 # Onde a votação termina tarde: encerramento e recebimento por seção, 2022 e 2026
 
-Gerado em 2026-10-05T19:00:50Z por `scripts/apuracao-2026-fechamento.py`. Dados em `analysis/apuracao_2026/dados/fechamento.json`.
+Gerado em 2026-10-05T19:02:29Z por `scripts/apuracao-2026-fechamento.py`. Dados em `analysis/apuracao_2026/dados/fechamento.json`.
 
 > Seção que fecha tarde é seção que pede explicação, não indício de irregularidade. O boletim de urna mostra quando a votação terminou e quantos votaram; não mostra por quê. O que separa fila, identificação lenta e irregularidade é documento: a ata da mesa e o log da urna.
 
@@ -15,7 +15,7 @@ Gerado em 2026-10-05T19:00:50Z por `scripts/apuracao-2026-fechamento.py`. Dados 
 - **tardia**: seção com encerramento às 18h de Brasília ou depois.
 - **exterior**: fora das contas: vota na hora local da cidade.
 
-- Seções de 2026 com boletim (Brasil, sem exterior): 216.698; com voto conferido: 215.146; com relógio ou fuso inconsistente (sem encerramento): 30.
+- Seções de 2026 com boletim (Brasil, sem exterior): 218.163; com voto conferido: 216.759; com relógio ou fuso inconsistente (sem encerramento): 30.
 - Seções de 2022 (Brasil): 471.010; nas UFs completas de 2026: 198.542.
 
 ## 1. Quando a votação termina
@@ -79,7 +79,7 @@ Por UF (encerramento 2026 | recebimento 2026 | recebimento 2022, % depois das 18
 | RN | sim | 21,6 | 17:17 | 18:54 | 19:32 |
 | RO | sim | 0,3 | 17:04 | 18:19 | 19:10 |
 | RR | sim | 1,2 | 17:04 | 18:40 | 19:14 |
-| RS | não | 0,8 | 17:02 | 18:35 | 19:08 |
+| RS | não | 0,9 | 17:02 | 18:33 | 19:08 |
 | SC | sim | 1,0 | 17:02 | 18:46 | 19:41 |
 | SE | sim | 7,9 | 17:04 | 18:42 | 19:18 |
 | SP | não | n/d | n/d | n/d | 19:35 |
@@ -110,11 +110,11 @@ Tipo de local é inferência por palavra-chave no nome, bairro e endereço do lo
 
 ## 2. Persistência (régua de recebimento)
 
-- Critério: cobertura de 2026 de ao menos 95% das seções principais e 3 seções ou mais nos dois anos. Municípios comparados: 2.734.
-- Mediana das medianas municipais: 19:39 em 2022 e 18:41 em 2026.
-- Correlação 2022 × 2026 da mediana municipal: Pearson 0,480, Spearman 0,543 (IC 95% 0,514 a 0,570); dentro da UF, Pearson 0,355 e Spearman 0,392.
-- Décimo mais tardio nos dois anos (corte de 2022: 20:35; de 2026: 19:32): 77 municípios, contra 27,3 esperados por acaso (2,82 vezes).
-- p90 de recebimento às 19h ou depois: 1.764 municípios em 2026, 2.513 em 2022, 1.739 nos dois. O corte de hora fixo quase não separa nada em 2022, quando o recebimento inteiro foi mais tarde; por isso a persistência usa o décimo de cada ano.
+- Critério: cobertura de 2026 de ao menos 95% das seções principais e 3 seções ou mais nos dois anos. Municípios comparados: 2.770.
+- Mediana das medianas municipais: 19:38 em 2022 e 18:41 em 2026.
+- Correlação 2022 × 2026 da mediana municipal: Pearson 0,478, Spearman 0,541 (IC 95% 0,512 a 0,568); dentro da UF, Pearson 0,354 e Spearman 0,392.
+- Décimo mais tardio nos dois anos (corte de 2022: 20:35; de 2026: 19:31): 77 municípios, contra 27,7 esperados por acaso (2,78 vezes).
+- p90 de recebimento às 19h ou depois: 1.780 municípios em 2026, 2.546 em 2022, 1.754 nos dois. O corte de hora fixo quase não separa nada em 2022, quando o recebimento inteiro foi mais tarde; por isso a persistência usa o décimo de cada ano.
 
 | UF | município | eleitorado | mediana 2022 | mediana 2026 | último voto (mediana) | transporte (mediana) | % rural |
 |---|---|---|---|---|---|---|---|
@@ -138,8 +138,8 @@ Tipo de local é inferência por palavra-chave no nome, bairro e endereço do lo
 | AL | PARIPUEIRA | 12.721 | 21:26 | 20:51 | 18:22 | 1h51 | 0 |
 | PI | VILA NOVA DO PIAUÍ | 3.001 | 22:13 | 20:30 | 17:07 | 3h21 | 33 |
 | PI | MARCOLÂNDIA | 8.736 | 23:50 | 20:09 | 17:04 | 3h05 | 12 |
-| AL | GIRAU DO PONCIANO | 28.504 | 20:56 | 21:39 | 18:20 | 2h39 | 59 |
 | PI | CURRAIS | 6.287 | 21:56 | 20:18 | 17:11 | 2h00 | 64 |
+| AL | GIRAU DO PONCIANO | 28.504 | 20:56 | 21:39 | 18:20 | 2h39 | 59 |
 | PI | SÃO MIGUEL DA BAIXA GRANDE | 2.835 | 21:04 | 20:52 | 17:04 | 3h49 | 9 |
 | CE | UBAJARA | 27.963 | 20:52 | 21:02 | 17:42 | 3h09 | 35 |
 | MA | SANTO AMARO DO MARANHÃO | 13.330 | 20:55 | 20:54 | 17:56 | 2h04 | 71 |
@@ -149,7 +149,7 @@ Tipo de local é inferência por palavra-chave no nome, bairro e endereço do lo
 | CE | GROAÍRAS | 9.842 | 20:42 | 21:01 | 17:22 | 3h42 | 21 |
 | AL | IGREJA NOVA | 17.729 | 20:43 | 20:59 | 17:35 | 1h38 | 58 |
 
-Locais de votação casados entre os anos: 32.175; Spearman 0,535; persistentes 996 contra 321,7 esperados; 2.330 seções de 2026 dentro deles.
+Locais de votação casados entre os anos: 32.611; Spearman 0,535; persistentes 1.020 contra 326,1 esperados; 2.391 seções de 2026 dentro deles.
 
 ## 3. Encerramento tardio e voto
 
@@ -205,7 +205,7 @@ Estimador do modelo de urna (seção tardia menos as demais da zona):
 
 - Publicado em `secoes.json` (2026-10-05T16:58:37Z, 76.315 seções válidas): 1.199 seções depois das 19h, Lula +2,73 e Flávio −2,22 contra o resto da zona.
 - Base atual, mesmas UFs completas da rodada publicada: 1.094 seções; fórmula da análise por seção +2,74; a mesma fórmula contra só as não tardias +3,11; estimador deste capítulo +4,74 (IC 95% de +3,49 a +6,06).
-- Base atual, todas as UFs com boletim: 5.415 seções; fórmula da análise por seção +3,41; a mesma fórmula contra só as não tardias +3,82; estimador deste capítulo +4,77 (IC 95% de +4,26 a +5,29).
+- Base atual, todas as UFs com boletim: 5.417 seções; fórmula da análise por seção +3,41; a mesma fórmula contra só as não tardias +3,81; estimador deste capítulo +4,74 (IC 95% de +4,25 a +5,28).
 
 A análise por seção compara cada seção tardia com o resto da própria zona, inclusive as outras seções tardias, e pondera pelos válidos da seção. O estimador deste capítulo compara o agregado das seções tardias com o das demais na mesma zona, pondera pelos votantes das duas partes e deixa fora a zona sem os dois grupos. Os dois medem a mesma coisa por caminhos diferentes; a diferença entre eles é de método e de base, não de dado.
 
@@ -214,7 +214,7 @@ A análise por seção compara cada seção tardia com o resto da própria zona,
 ### Achado contrário
 
 - O atraso é, antes de tudo, tamanho de seção: com 400 aptos ou mais, 52,9% das seções encerraram às 18h ou depois; com até 199, 0,2%. Dentro da mesma zona, a seção com 350 votantes ou mais tem 50,6 pontos a mais de chance de fechar às 18h ou depois do que a de 200 a 249.
-- Onde a eleição termina tarde nos dois anos, termina tarde mais por distância do que por fila: nos 77 municípios que ficaram entre os 10% mais tardios do país nos dois anos, a votação terminou, na mediana, às 17:36 e a mídia levou 2h25 até o TSE; no conjunto, 17:06 e 1h19. Dos 996 locais de votação na mesma situação, 71,2% ficam em zona rural, assentamento ou quilombo pelo nome e endereço, contra 34,8% dos locais comparados.
+- Onde a eleição termina tarde nos dois anos, termina tarde mais por distância do que por fila: nos 77 municípios que ficaram entre os 10% mais tardios do país nos dois anos, a votação terminou, na mediana, às 17:36 e a mídia levou 2h25 até o TSE; no conjunto, 17:06 e 1h20. Dos 1.020 locais de votação na mesma situação, 71,5% ficam em zona rural, assentamento ou quilombo pelo nome e endereço, contra 34,4% dos locais comparados.
 - A seção que chega tarde ao TSE vota mais em Lula do que o resto da própria zona nos dois anos, e por margem parecida: +3,8 pontos em 2022 e +3,7 em 2026 (décimo mais tardio de cada ano). O padrão não nasceu em 2026.
 
 ### Verificado
@@ -223,7 +223,7 @@ A análise por seção compara cada seção tardia com o resto da própria zona,
 - Nenhuma urna encerrou antes das 17h de Brasília (0 seções nessa faixa), coerente com a regra: às 17h quem está na fila recebe senha e vota depois.
 - O boletim chegou ao TSE, na mediana, às 18:40 em 2026 e às 19:31 em 2022, nas mesmas UFs; depois das 19h chegaram 37,0% das seções em 2026 e 68,7% em 2022.
 - As UFs com maior parcela de seções encerradas às 18h ou depois: AL 33,0%; PE 29,0%; AM 23,7%; RN 21,6%; CE 18,5%; as de menor: RR 1,2%; SC 1,0%; RO 0,3%.
-- A régua de chegada de 2026 tem um buraco: nenhum boletim registrado como recebido entre 19:32 e 19:59 (27,5 minutos) e 8.822 nos cinco minutos seguintes. É a pausa geral do TSE da noite; nesse trecho a hora de chegada mede o tribunal, não a seção. Em 2022, o maior buraco foi de 7,4 minutos. O corte do décimo mais tardio de 2026 (19:32) cai antes do buraco: quem ficou preso nele continua no décimo.
+- A régua de chegada de 2026 tem um buraco: nenhum boletim registrado como recebido entre 19:32 e 19:59 (27,5 minutos) e 8.825 nos cinco minutos seguintes. É a pausa geral do TSE da noite; nesse trecho a hora de chegada mede o tribunal, não a seção. Em 2022, o maior buraco foi de 7,4 minutos. O corte do décimo mais tardio de 2026 (19:31) cai antes do buraco: quem ficou preso nele continua no décimo.
 - Da hora de recebimento de 2026, a fila (17h até o último voto) responde por 7 min na mediana e o caminho da mídia até o TSE por 1h19.
 
 ### Inferido
@@ -235,7 +235,7 @@ A análise por seção compara cada seção tardia com o resto da própria zona,
 
 ### Juízo editorial
 
-- A providência barata é pôr fiscal de partido nas seções que historicamente fecham tarde: é ali que a fila depois das 17h, o mesário e a boca de urna ficam sem testemunha. A lei permite que um fiscal cubra todas as seções do mesmo local (Lei 9.504, art. 65, § 1º); os 996 locais persistentes somam 2.330 seções.
+- A providência barata é pôr fiscal de partido nas seções que historicamente fecham tarde: é ali que a fila depois das 17h, o mesário e a boca de urna ficam sem testemunha. A lei permite que um mesmo fiscal cubra mais de uma seção do mesmo local de votação (Lei 9.504, art. 65, § 1º); os 1.020 locais persistentes somam 2.391 seções.
 - O número que importa é o que sobra dentro da zona, com tamanho e tipo de local controlados. Ele existe e é positivo para Lula; ele não diz por quê.
 
 ### Hipótese

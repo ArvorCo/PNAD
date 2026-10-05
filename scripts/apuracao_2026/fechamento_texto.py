@@ -368,7 +368,7 @@ def achados(d: Mapping[str, Any]) -> dict[str, list[str]]:
         "juizo": [
             "A providência barata é pôr fiscal de partido nas seções que historicamente "
             "fecham tarde: é ali que a fila depois das 17h, o mesário e a boca de urna ficam "
-            "sem testemunha. A lei permite que um fiscal cubra todas as seções do mesmo local "
+            "sem testemunha. A lei permite que um mesmo fiscal cubra mais de uma seção do mesmo local de votação "
             f"(Lei 9.504, art. 65, § 1º); os {_n(loc.get('persistentes'))} locais persistentes "
             f"somam {_n(loc.get('secoes_2026_nos_persistentes'))} seções.",
             "O número que importa é o que sobra dentro da zona, com tamanho e tipo de local "
