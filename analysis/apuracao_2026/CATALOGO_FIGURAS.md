@@ -59,4 +59,9 @@ Regra: o texto chama `figura_catalogo("nome", dados, **opcoes)` (acessor em `scr
 | `transferencia_cenarios` | 13 | barras dos seis cenários de 2º turno | ficha |
 | `estoque_uf` | 13 | barras do estoque de 2022 por UF | ficha |
 | `movimentos_2t` | 13 | barras dos dez movimentos por votos esperados | ficha com regra |
+| `terceira_via_mapa` | 13 | bolha por município no centroide da malha do IBGE (área pelos votos de terceira via, cor pela classe de margem de Flávio), contorno das UFs, maiores cidades rotuladas | ficha por município (vizinho mais próximo): votos por candidatura, margem, saldo pela matriz Nexus, nome da direita local acima de Flávio, posição no índice; filtro por região |
+| `terceira_via_classes` | 13 | barras empilhadas por UF: votos de terceira via por classe de margem de Flávio no município, na ordem dos votos onde Flávio venceu | ficha por UF; alternância votos / parcela da UF |
+| `terceira_via_teto_uf` | 13 | uma aba por UF: bolhas do teto endereçável local (terceira via mais o vão positivo da direita local), cor pela origem do teto, e tabela dos 10 maiores tetos da UF | ficha dos 40 maiores de cada UF; abas |
+| `terceira_via_prioridade` | 13 | barras empilhadas por candidatura dos 30 primeiros do índice de prioridade (São Paulo cortada no eixo) e tabela ordenável dos 100 com rolagem interna | ficha por município; alternância votos / composição; ordenação por coluna |
+| `nulo_2022_municipios` | 13 | dispersão: variação de branco e nulo do 1º para o 2º turno de 2022 contra a terceira via de 2022, ponto por município, área pelo eleitorado, duas retas ponderadas (UFs com e sem 2º turno de governador) | ficha por ponto (vizinho mais próximo); alternância cor por região / por 2º turno estadual |
 | `auditoria_coletor` | 14 | versões gravadas por hora e classes de leitura | ficha |

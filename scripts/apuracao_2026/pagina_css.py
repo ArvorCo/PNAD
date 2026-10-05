@@ -140,6 +140,13 @@ td,th{padding:8px}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.js figure.reveal{opacity:1;transform:none;transition:none}}
 @media print{nav.cap,.skip{display:none}.js figure.reveal{opacity:1;transform:none}.chart-scroll svg{min-width:0}details{break-inside:avoid}}
+aside.io{border-left-color:var(--teal)}
+.tv-tab{max-height:560px;overflow:auto}.tv-tab thead th{position:sticky;top:0;z-index:1;background:var(--paper)}
+.tv-tab td,.tv-tab th{white-space:nowrap}.tv-tab caption{text-align:left;font:13.5px/1.5 var(--sans);color:var(--muted);padding:8px 0}
+table[data-ordena] .ord{font:inherit;background:none;border:0;padding:0;margin:0;color:inherit;cursor:pointer;text-align:inherit}
+table[data-ordena] th[aria-sort="ascending"] .ord::after{content:" ▲"}table[data-ordena] th[aria-sort="descending"] .ord::after{content:" ▼"}
+.tv-uf>p{font-size:15px;margin:14px 4px 0}
+.tv-nowrap td,.tv-nowrap th{white-space:nowrap}
 """
 
 JS_HEAD = "<script>document.documentElement.classList.add('js')</script>"
