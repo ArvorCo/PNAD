@@ -568,6 +568,32 @@ def hora_iso(seg: float) -> str:
     return datetime.fromtimestamp(seg, tz=timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
+def composicao(
+    pontos: Sequence[tuple[float, dict]],
+    totais: Mapping[str, Mapping[str, int]],
+    horas: Sequence[str],
+) -> dict[str, dict[str, Any]]:
+    """Peso de cada região nos válidos já apurados, em minutos escolhidos, e no fim."""
+    vv_fim = sum(v["vv"] for v in totais.values())
+    saida: dict[str, dict[str, Any]] = {}
+    for t, estado in pontos:
+        hora = hora_de(t)[:16]
+        if hora not in horas:
+            continue
+        vv = sum(v["vv"] for v in estado.values())
+        if not vv:
+            continue
+        saida[hora] = {
+            r: {
+                "apurado_pct": pct(estado[r]["vv"], vv, 2),
+                "final_pct": pct(totais[r]["vv"], vv_fim, 2),
+                "secoes_pct": pct(estado[r]["st"], totais[r]["ts"], 2),
+            }
+            for r in REGIOES_NOITE
+        }
+    return saida
+
+
 def depois_de(pontos: Sequence[tuple[float, dict]], hora_iso: str) -> dict[str, int]:
     """O que entrou na soma das UFs depois de um instante, até o fim da grade."""
     corte = _seg(hora_iso)
@@ -617,7 +643,8 @@ def montar(
         "contribuicao_final": contribuicao_final(totais),
         "marcos": marcos,
         "lideranca": lideranca(nac),
-        "decomposicao": decomposicao(nac),
+        "decomposicao": (dec := decomposicao(nac)),
+        "composicao_apurada": composicao(pontos, totais, [dec["pico_brt"], *marcas]),
         "nordeste": nordeste_no_fluxo(pontos, totais, lts, marcas),
         "lacuna_da_soma": _lacuna_ativa(series, marcos),
         "depois_da_meia_noite": depois_de(pontos, meia_noite.isoformat()),

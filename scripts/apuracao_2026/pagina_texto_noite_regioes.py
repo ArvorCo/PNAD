@@ -22,6 +22,7 @@ from .pagina_comum import (
 from .pagina_texto import fig, lista
 
 NOITE = "noite_regioes.json"
+REGIOES_CINCO = ("Norte", "Nordeste", "Centro-Oeste", "Sudeste", "Sul")
 LENTIDAO = "lentidao_ufs.json"
 MIN_LOTE = 10_000
 
@@ -116,10 +117,13 @@ def _chegada(N: dict) -> str:
         if na_pausa
         else ""
     )
+    ordem = sorted(REGIOES_CINCO, key=lambda r: m[r]["90"])
+    passos = [f"o {ordem[0]} passou de 90% das seções às {hora(m[ordem[0]]['90'])}"]
+    passos += [f"o {r} às {hora(m[r]['90'])}" for r in ordem[1:-1]]
+    ultimo = f"o {ordem[-1]}, por último, às {hora(m[ordem[-1]]['90'])}"
+    frase = lista([*passos, ultimo])
     return p(
-        f"O Centro-Sul chegou primeiro. O Sul passou de 90% das seções às {hora(m['Sul']['90'])}, o "
-        f"Centro-Oeste às {hora(m['Centro-Oeste']['90'])}, o Norte às {hora(m['Norte']['90'])} e o Sudeste "
-        f"às {hora(m['Sudeste']['90'])}; o Nordeste, só às {hora(m['Nordeste']['90'])}. Às "
+        f"{frase[0].upper()}{frase[1:]}. Às "
         f"{hora(falta['hora_brt'])} o Nordeste já era a maior parte do que faltava apurar: "
         f"{num(falta['parcela_nordeste_pct'], 1)}% dos {_validos(falta['faltavam_validos'])} ainda fora da conta."
         + frase_pausa,
@@ -174,9 +178,37 @@ def _saldo(N: dict) -> str:
     )
 
 
+def _pesos(N: dict, hora_: str, regioes: list[str]) -> str:
+    comp = N["composicao_apurada"][hora_]
+    return lista(
+        [
+            f"o {r}, com {num(comp[r]['apurado_pct'], 1)}% ({num(comp[r]['final_pct'], 1)}% no fim)"
+            for r in regioes
+        ]
+    )
+
+
 def _decomposicao(N: dict) -> str:
     dec = N["decomposicao"]
     pico = dec["pico_brt"][:16]
+    comp = N["composicao_apurada"][pico]
+    acima = [r for r in REGIOES_CINCO if comp[r]["apurado_pct"] > comp[r]["final_pct"]]
+    abaixo = [r for r in REGIOES_CINCO if r not in acima]
+    tarde = N["composicao_apurada"].get(N["lacuna_da_soma"]["de_brt"][:16])
+    frase_tarde = ""
+    if tarde:
+        atras = [
+            r
+            for r in REGIOES_CINCO
+            if tarde[r]["final_pct"] - tarde[r]["apurado_pct"] >= 2
+        ]
+        if atras:
+            verbo = "seguia" if len(atras) == 1 else "seguiam"
+            frase_tarde = (
+                f" Às {hora(N['lacuna_da_soma']['de_brt'])}, só "
+                + _pesos(N, N["lacuna_da_soma"]["de_brt"][:16], atras)
+                + f", {verbo} bem abaixo do próprio peso."
+            )
     sudeste = {
         x["hora_brt"]: x for x in _linhas(N["minutos"]) if x["regiao"] == "Sudeste"
     }
@@ -189,7 +221,9 @@ def _decomposicao(N: dict) -> str:
         f"A maior parte da queda vem da ordem das regiões. Com cada região no peso final dos válidos, a vantagem "
         f"das {hora(pico)} seria {_pontos(dec['pico_peso_final_pp'])}, não {_pontos(dec['pico_pp'])}: "
         f"{_pontos(dec['entre_regioes_pp'])} ({num(dec['entre_regioes_pct_da_queda'], 1)}%) da queda até o fim "
-        f"são o Centro-Sul adiantado. Os outros {_pontos(dec['dentro_das_regioes_pp'])} são a ordem dentro de "
+        f"são a mistura da hora: nos válidos já apurados, {_pesos(N, pico, acima)}, pesavam acima do próprio "
+        f"tamanho; {_pesos(N, pico, abaixo)}, abaixo.{frase_tarde} Os outros "
+        f"{_pontos(dec['dentro_das_regioes_pp'])} são a ordem dentro de "
         f"cada região: no Sudeste, a vantagem de Flávio entre as seções já apuradas foi de "
         f"{_pontos(margem(se_pico), 1)} às {hora(pico)} para {_pontos(margem(se_fim), 1)} no fim.",
         "inferencia",
