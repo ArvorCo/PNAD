@@ -1,67 +1,65 @@
 # Análise por seção (boletins de urna), presidente, 1º turno de 2026
 
-Gerado em 2026-10-05T16:58:37Z por `scripts/apuracao-2026-secoes.py`. Dados em `analysis/apuracao_2026/dados/secoes.json` (contrato em `analysis/apuracao_2026/CONTRATO_SECOES.md`).
+Gerado em 2026-10-05T23:15:15Z por `scripts/apuracao-2026-secoes.py`. Dados em `analysis/apuracao_2026/dados/secoes.json` (contrato em `analysis/apuracao_2026/CONTRATO_SECOES.md`).
 
 > Seção atípica é seção que pede explicação, não indício de irregularidade. O que resolve cada caso é documento: ata da mesa, log da urna e plano de alocação das urnas do TRE.
-
-**Coleta parcial.** 76.315 seções válidas de 499.248 seções principais do país; UFs completas: AC, AL, AP, DF, ES, MS, MT, RN, RO, RR, SE, TO. Os números mudam quando a coleta terminar.
 
 ## Cobertura
 
 - Seções no cadastro do TSE (cs): 517.179, das quais 17.931 agregadas (sem boletim próprio).
-- Boletins lidos: 77.672; válidos para a análise: 76.315.
-- Fora: 421.576 seções, seção principal sem boletim de urna no banco (ainda não coletada ou sem arquivo).
-- Fora: 1.143 seções, soma das seções diferente do arquivo de zona do TSE.
-- Fora: 158 seções, soma das seções diferente do arquivo de zona do TSE, que congelou com menos seções totalizadas do que as existentes (st < ts).
-- Fora: 56 seções, zona ainda não conferida contra o arquivo de zona do TSE.
-- Nas seções válidas: Flávio 48,71% e Lula 44,67% dos válidos, 17.835.097 válidos.
+- Boletins lidos: 499.187; válidos para a análise: 497.890.
+- Fora: 61 seções, seção principal sem boletim de urna no banco (ainda não coletada ou sem arquivo).
+- Fora: 1.297 seções, soma das seções diferente do arquivo de zona do TSE.
+- Nas seções válidas: Flávio 47,03% e Lula 45,17% dos válidos, 118.978.615 válidos.
+- Conferência com o resultado nacional do TSE: soma de todos os boletins menos o arquivo nacional do TSE: comparecimento -5.507; flavio -2.369; lula -2.252.
 
 ## A. Seções com 90% ou mais para um candidato
 
-Quem espera achar seções novas de 90% encontra as velhas: 128 de 164 seções casadas de Lula já estavam acima de 90% em 2022.
+Quem espera achar seções novas de 90% encontra as velhas: 2.021 de 2.441 seções casadas de Lula já estavam acima de 90% em 2022.
 
 | candidato | limiar | seções | com 100+ votantes | aptos | % das seções |
 |---|---|---|---|---|---|
-| Lula | 90% | 321 | 296 | 79.123 | 0,42 |
-| Lula | 95% | 125 | 111 | 28.092 | 0,16 |
-| Lula | 100% | 10 | 4 | 1.170 | 0,01 |
-| Flávio | 90% | 31 | 28 | 8.150 | 0,04 |
-| Flávio | 95% | 2 | 1 | 451 | 0,00 |
-| Flávio | 100% | 0 | 0 | 0 | 0,00 |
+| Lula | 90% | 3.686 | 3.281 | 873.711 | 0,74 |
+| Lula | 95% | 851 | 716 | 191.500 | 0,17 |
+| Lula | 100% | 38 | 14 | 4.577 | 0,01 |
+| Flávio | 90% | 186 | 151 | 42.580 | 0,04 |
+| Flávio | 95% | 22 | 13 | 3.832 | 0,00 |
+| Flávio | 100% | 2 | 0 | 192 | 0,00 |
 
 Por tamanho (votantes da seção):
 
 | faixa | seções | Lula ≥ 90% | % | Flávio ≥ 90% | % |
 |---|---|---|---|---|---|
-| 1–49 | 71 | 7 | 9,86 | 1 | 1,41 |
-| 50–99 | 431 | 18 | 4,18 | 2 | 0,46 |
-| 100–199 | 13.054 | 136 | 1,04 | 6 | 0,05 |
-| 200–299 | 53.245 | 153 | 0,29 | 17 | 0,03 |
-| 300–399 | 9.466 | 7 | 0,07 | 5 | 0,05 |
-| 400+ | 48 | 0 | 0,00 | 0 | 0,00 |
+| 1–49 | 599 | 59 | 9,85 | 5 | 0,83 |
+| 50–99 | 4.337 | 346 | 7,98 | 30 | 0,69 |
+| 100–199 | 71.724 | 1.548 | 2,16 | 70 | 0,10 |
+| 200–299 | 342.349 | 1.557 | 0,45 | 68 | 0,02 |
+| 300–399 | 78.655 | 174 | 0,22 | 13 | 0,02 |
+| 400+ | 225 | 2 | 0,89 | 0 | 0,00 |
 
-- Lula: 321 seções em 90% ou mais; o resto da zona dá 54,8% a Lula (mediana) e o excesso da seção sobre a zona é 40,1 pontos (mediana); 247 seções ficam 20 pontos ou mais acima da própria zona.
-- Flávio: 31 seções em 90% ou mais; o resto da zona dá 74,1% a Flávio (mediana) e o excesso da seção sobre a zona é 17,4 pontos (mediana); 10 seções ficam 20 pontos ou mais acima da própria zona.
+- Lula: 3.686 seções em 90% ou mais; o resto da zona dá 76,3% a Lula (mediana) e o excesso da seção sobre a zona é 17,1 pontos (mediana); 1.332 seções ficam 20 pontos ou mais acima da própria zona.
+- Flávio: 186 seções em 90% ou mais; o resto da zona dá 70,7% a Flávio (mediana) e o excesso da seção sobre a zona é 21,1 pontos (mediana); 104 seções ficam 20 pontos ou mais acima da própria zona.
 
 Por tipo de local (inferência por palavra-chave; regras no JSON):
 
 | tipo | seções | Lula ≥ 90% | % do tipo | Flávio ≥ 90% | % do tipo |
 |---|---|---|---|---|---|
-| escola ou universidade | 55.057 | 27 | 0,05 | 19 | 0,03 |
-| outro | 12.771 | 5 | 0,04 | 2 | 0,02 |
-| zona rural | 7.285 | 52 | 0,71 | 9 | 0,12 |
-| aldeia ou terra indígena | 531 | 222 | 41,81 | 1 | 0,19 |
-| assentamento | 423 | 6 | 1,42 | 0 | 0,00 |
-| quilombo | 113 | 6 | 5,31 | 0 | 0,00 |
-| unidade prisional ou socioeducativa | 66 | 3 | 4,55 | 0 | 0,00 |
-| voto em trânsito | 52 | 0 | 0,00 | 0 | 0,00 |
-| exterior | 17 | 0 | 0,00 | 0 | 0,00 |
+| escola ou universidade | 311.906 | 229 | 0,07 | 48 | 0,02 |
+| outro | 119.996 | 85 | 0,07 | 43 | 0,04 |
+| zona rural | 61.296 | 2.659 | 4,34 | 78 | 0,13 |
+| aldeia ou terra indígena | 1.428 | 565 | 39,57 | 3 | 0,21 |
+| exterior | 1.309 | 6 | 0,46 | 7 | 0,53 |
+| assentamento | 1.039 | 56 | 5,39 | 4 | 0,38 |
+| quilombo | 436 | 62 | 14,22 | 0 | 0,00 |
+| unidade prisional ou socioeducativa | 293 | 24 | 8,19 | 3 | 1,02 |
+| voto em trânsito | 152 | 0 | 0,00 | 0 | 0,00 |
+| hospital ou unidade de saúde | 34 | 0 | 0,00 | 0 | 0,00 |
 
-Cruzamento com as 50 zonas mais atípicas de `anomalias.json`: 14 estão na base, 3 têm ao menos uma seção de 90%. Taxa de seções com Lula em 90% ou mais: 2,59% nessas zonas e 0,40% nas demais; Flávio: 0,00% e 0,04%.
+Cruzamento com as 50 zonas mais atípicas de `anomalias.json`: 50 estão na base, 4 têm ao menos uma seção de 90%. Taxa de seções com Lula em 90% ou mais: 0,63% nessas zonas e 0,74% nas demais; Flávio: 0,00% e 0,04%.
 
-Mesma seção em 2022 (mesma UF, município, zona e número de seção, e mesmo nome do local de votação nos dois cadastros (sem acento e sem espaços repetidos)): 49.237 de 76.315 seções casadas.
-- Lula em 90% ou mais em 2026, casadas: 164; Lula já tinha 90% ou mais no 1º turno de 2022 em 128 e no 2º turno em 152; mediana de 2022 93,3% (1º turno); variação mediana 0,8 pontos.
-- Flávio em 90% ou mais em 2026, casadas: 12; Bolsonaro já tinha 90% ou mais no 1º turno de 2022 em 1 e no 2º turno em 6; mediana de 2022 84,7% (1º turno); variação mediana 6,1 pontos.
+Mesma seção em 2022 (mesma UF, município, zona e número de seção, e mesmo nome do local de votação nos dois cadastros (sem acento e sem espaços repetidos)): 356.245 de 497.889 seções casadas.
+- Lula em 90% ou mais em 2026, casadas: 2.441; Lula já tinha 90% ou mais no 1º turno de 2022 em 2.021 e no 2º turno em 2.286; mediana de 2022 93,3% (1º turno); variação mediana -0,3 pontos.
+- Flávio em 90% ou mais em 2026, casadas: 124; Bolsonaro já tinha 90% ou mais no 1º turno de 2022 em 27 e no 2º turno em 61; mediana de 2022 85,6% (1º turno); variação mediana 6,2 pontos.
 
 Amostras (as de maior excesso sobre a zona, 100 votantes ou mais):
 
@@ -71,143 +69,150 @@ Amostras (as de maior excesso sobre a zona, 100 votantes ou mais):
 - CONFRESA (MT), zona 28, seção 158, ESCOLA ESTADUAL TAPI'ITAWA: Lula 119, Flávio 1 de 120 válidos (133 aptos, 120 votantes, UE2022); Lula 99,2% na seção e 21,9% na zona. Aldeia ou terra indígena (inferido pelo cadastro do local).
 - QUERÊNCIA (MT), zona 53, seção 163, AUDITÓRIO-SEDE DA ALDEIA KHIKATXI: Lula 247, Flávio 3 de 255 válidos (313 aptos, 259 votantes, UE2022); Lula 96,9% na seção e 21,4% na zona. Aldeia ou terra indígena (inferido pelo cadastro do local).
 - ALTO ALEGRE (RR), zona 3, seção 226, POSTO DE SAÚDE DA SESAI - SIKAMABIU: Lula 235, Flávio 3 de 238 válidos (304 aptos, 238 votantes, UE2022); Lula 98,7% na seção e 23,9% na zona. Aldeia ou terra indígena (inferido pelo cadastro do local).
-- CRUZEIRO DO SUL (AC), zona 4, seção 457, ESCOLA TAMÃKÃYÃ: Lula 151, Flávio 0 de 151 válidos (208 aptos, 155 votantes, UE2022); Lula 100,0% na seção e 24,9% na zona. Aldeia ou terra indígena (inferido pelo cadastro do local).
-- JI-PARANÁ (RO), zona 30, seção 125, IKOLEN - POSTO INDÍGENA: Lula 225, Flávio 5 de 231 válidos (263 aptos, 233 votantes, UE2022); Lula 97,4% na seção e 22,5% na zona. Aldeia ou terra indígena (inferido pelo cadastro do local).
+- SÃO FÉLIX DO XINGU (PA), zona 53, seção 218, EM INDIGENA CAPITÃO BEP NOX: Lula 214, Flávio 1 de 216 válidos (318 aptos, 221 votantes, UE2022); Lula 99,1% na seção e 23,6% na zona. Aldeia ou terra indígena (inferido pelo cadastro do local).
+- SÃO FÉLIX DO XINGU (PA), zona 53, seção 217, EM INDIGENA KUBENHIKANHTI: Lula 130, Flávio 1 de 131 válidos (203 aptos, 132 votantes, UE2022); Lula 99,2% na seção e 23,6% na zona. Aldeia ou terra indígena (inferido pelo cadastro do local).
+- ITAPIPOCA (CE), zona 17, seção 554, SALÃO COMUNITÁRIO DO SÍTIO SÃO JOSÉ: Lula 10, Flávio 150 de 163 válidos (186 aptos, 168 votantes, UE2020); Flávio 92,0% na seção e 24,8% na zona. Sem regra estrutural acionada: comparar com ata e log da seção.
 - UIRAMUTÃ (RR), zona 7, seção 56, ESCOLA MUNICIPAL INDÍGENA TANCREDO NEVES: Lula 25, Flávio 293 de 318 válidos (366 aptos, 321 votantes, UE2022); Flávio 92,1% na seção e 29,9% na zona. Aldeia ou terra indígena (inferido pelo cadastro do local).
-- XAPURI (AC), zona 2, seção 36, ESCOLA ESTADUAL BÁRBARA VIEIRA DE SANTANA - SGAL SÃO JOSÉ: Lula 7, Flávio 113 de 125 válidos (154 aptos, 132 votantes, UE2022); Flávio 90,4% na seção e 61,8% na zona. Zona rural (inferido pelo cadastro do local).
-- PORTO VELHO (RO), zona 6, seção 568, MORADORES DA LINHA 8 - ASSOCIAÇÃO - DISTRITO UNIAO BANDEIRANTE: Lula 15, Flávio 212 de 230 válidos (266 aptos, 233 votantes, UE2020); Flávio 92,2% na seção e 63,3% na zona. Sem regra estrutural acionada: comparar com ata e log da seção.
-- PORTO VELHO (RO), zona 6, seção 540, MORADORES DA LINHA 8 - ASSOCIAÇÃO - DISTRITO UNIAO BANDEIRANTE: Lula 20, Flávio 209 de 231 válidos (268 aptos, 233 votantes, UE2022); Flávio 90,5% na seção e 63,3% na zona. Sem regra estrutural acionada: comparar com ata e log da seção.
-- PORTO VELHO (RO), zona 6, seção 542, CÉSAR FREITAS CASSOL -ESCOLA ESTADUAL - DISTRITO UNIÃO BANDEIRANTE: Lula 16, Flávio 188 de 208 válidos (295 aptos, 212 votantes, UE2020); Flávio 90,4% na seção e 63,3% na zona. Sem regra estrutural acionada: comparar com ata e log da seção.
-- ALTA FLORESTA D'OESTE (RO), zona 17, seção 88, IZIDORO STÉDILE - ESCOLA MUNICIPAL - DISTR IZIDOLÂNDIA: Lula 9, Flávio 120 de 129 válidos (177 aptos, 129 votantes, UE2022); Flávio 93,0% na seção e 70,1% na zona. Sem regra estrutural acionada: comparar com ata e log da seção.
-- BRASILÉIA (AC), zona 6, seção 128, ESCOLA VALDOMIRO FERREIRA BARROSO - KM 19: Lula 14, Flávio 190 de 211 válidos (264 aptos, 222 votantes, UE2022); Flávio 90,0% na seção e 69,6% na zona. Zona rural (inferido pelo cadastro do local).
-- JUÍNA (MT), zona 35, seção 335, ESCOLA MUNICIPAL OSVALDO CRUZ: Lula 5, Flávio 92 de 101 válidos (134 aptos, 105 votantes, UE2022); Flávio 91,1% na seção e 71,4% na zona. Zona rural (inferido pelo cadastro do local).
+- URUÇUÍ (PI), zona 14, seção 54, UNIDADE ESCOLAR DA PAZ - NOVA SANTA ROSA: Lula 9, Flávio 157 de 170 válidos (221 aptos, 173 votantes, UE2020); Flávio 92,3% na seção e 35,0% na zona. Zona rural (inferido pelo cadastro do local).
+- LÁBREA (AM), zona 12, seção 116, E. M. JULIO RODRIGUES COUTINHO: Lula 3, Flávio 123 de 130 válidos (174 aptos, 130 votantes, UE2020); Flávio 94,6% na seção e 38,6% na zona. Assentamento (inferido pelo cadastro do local).
+- PORTEL (PA), zona 44, seção 187, EMEF PAULO DE TARSO: Lula 15, Flávio 162 de 178 válidos (221 aptos, 182 votantes, UE2022); Flávio 91,0% na seção e 35,1% na zona. Zona rural (inferido pelo cadastro do local).
+- LÁBREA (AM), zona 12, seção 111, E. M. JULIO RODRIGUES COUTINHO: Lula 15, Flávio 274 de 292 válidos (361 aptos, 295 votantes, UE2020); Flávio 93,8% na seção e 38,6% na zona. Assentamento (inferido pelo cadastro do local).
+- MANICORÉ (AM), zona 16, seção 116, E. E. SANTO ANTONIO DO MATUPI: Lula 15, Flávio 238 de 257 válidos (327 aptos, 260 votantes, UE2022); Flávio 92,6% na seção e 38,1% na zona. Zona rural (inferido pelo cadastro do local); urna de reserva (seção).
+- MANICORÉ (AM), zona 16, seção 121, E. E. SANTO ANTONIO DO MATUPI: Lula 13, Flávio 213 de 230 válidos (323 aptos, 233 votantes, UE2022); Flávio 92,6% na seção e 38,1% na zona. Zona rural (inferido pelo cadastro do local).
 
 ## B. Mistura gaussiana (k = 4)
 
-- Na especificação pedida, os quatro grupos não são geografia (V de Cramér entre grupo e região 0,09): separam as seções pelo padrão de zeros. 44,5% das células são zero e viram 0,0001; no log, uma candidatura sem voto fica a 3 ou 4 unidades de uma com um voto, e a mistura usa esse degrau para separar grupos (a parte que mais distingue os grupos é `n55`, com 99 pontos de diferença na proporção de zeros entre eles).
-- Na versão com nanicas somadas, o V de Cramér entre grupo e região é 0,15; o padrão de zeros ainda separa os grupos (`n14`, 100 pontos).
-- Na versão com cinco partes, o V de Cramér entre grupo e região é 0,42.
-- Grupo 0: Lula 60% dos válidos, abstenção 20%, Nordeste 58% das seções; 1.155 seções.
-- Grupo 1: Flávio 48% dos válidos, abstenção 20%, Nordeste 40% das seções; 60.439 seções.
-- Grupo 2: Flávio 50% dos válidos, abstenção 20%, Nordeste 37% das seções; 10.034 seções.
-- Grupo 3: Flávio 52% dos válidos, abstenção 19%, Centro-Oeste 46% das seções; 4.687 seções.
-- O grupo de menor densidade e maior dispersão é o 3 (Flávio 52% dos válidos, abstenção 19%, Centro-Oeste 46% das seções); as 20 seções menos prováveis dele vêm com o que provavelmente as explica.
+- Na especificação pedida, os quatro grupos não são geografia (V de Cramér entre grupo e região 0,23): separam as seções pelo padrão de zeros. 42,7% das células são zero e viram 0,0001; no log, uma candidatura sem voto fica a 3 ou 4 unidades de uma com um voto, e a mistura usa esse degrau para separar grupos (a parte que mais distingue os grupos é `n14`, com 100 pontos de diferença na proporção de zeros entre eles).
+- Na versão com nanicas somadas, o V de Cramér entre grupo e região é 0,25; o padrão de zeros ainda separa os grupos (`n55`, 100 pontos).
+- Na versão com cinco partes, o V de Cramér entre grupo e região é 0,50.
+- Grupo 0: Lula 62% dos válidos, abstenção 21%, Nordeste 50% das seções; 30.101 seções.
+- Grupo 1: Lula 48% dos válidos, abstenção 20%, Nordeste 37% das seções; 263.152 seções.
+- Grupo 2: Flávio 48% dos válidos, abstenção 22%, Sudeste 52% das seções; 56.057 seções.
+- Grupo 3: Flávio 52% dos válidos, abstenção 21%, Sudeste 60% das seções; 148.580 seções.
+- O grupo de menor densidade e maior dispersão é o 2 (Flávio 48% dos válidos, abstenção 22%, Sudeste 52% das seções); as 20 seções menos prováveis dele vêm com o que provavelmente as explica.
 
-Método: log-razão centrada (CLR) das 15 frações, com zero trocado por 0,0001 antes do log; a mistura é ajustada nas 14 coordenadas ortonormais do subespaço de soma zero (ILR), rotação que preserva Mahalanobis e densidade relativa. Covariância completa, 10 inicializações, semente 20261005, ajuste sobre 76.315 seções (o país inteiro, sem amostra).
+Método: log-razão centrada (CLR) das 15 frações, com zero trocado por 0,0001 antes do log; a mistura é ajustada nas 14 coordenadas ortonormais do subespaço de soma zero (ILR), rotação que preserva Mahalanobis e densidade relativa. Covariância completa, 10 inicializações, semente 20261005, ajuste sobre 497.890 seções (o país inteiro, sem amostra).
 
 BIC (menor é melhor; com os degraus de zeros, a comparação entre k é instável e serve só de contraste):
 
-- k = 3: BIC 526.879,9, log-verossimilhança média -3,426
-- k = 4: BIC -920.969,9, log-verossimilhança média 6,069
-- k = 5: BIC -538.615,7, log-verossimilhança média 3,573
+- k = 3: BIC 11.458.693,1, log-verossimilhança média -11,502
+- k = 4: BIC 4.398.113,0, log-verossimilhança média -4,410
+- k = 5: BIC -571.433,0, log-verossimilhança média 0,582
 
 | grupo | rótulo | seções | aptos médios | log-veross. média | log det Σ |
 |---|---|---|---|---|---|
-| 0 | Lula 60% dos válidos, abstenção 20%, Nordeste 58% das seções | 1.155 | 276 | -10,09 | -25,9 |
-| 1 | Flávio 48% dos válidos, abstenção 20%, Nordeste 40% das seções | 60.439 | 302 | 12,34 | -60,9 |
-| 2 | Flávio 50% dos válidos, abstenção 20%, Nordeste 37% das seções | 10.034 | 318 | -17,45 | -8,9 |
-| 3 | Flávio 52% dos válidos, abstenção 19%, Centro-Oeste 46% das seções | 4.687 | 331 | -20,40 | -4,5 |
+| 0 | Lula 62% dos válidos, abstenção 21%, Nordeste 50% das seções | 30.101 | 250 | -5,32 | -32,7 |
+| 1 | Lula 48% dos válidos, abstenção 20%, Nordeste 37% das seções | 263.152 | 312 | -0,32 | -38,4 |
+| 2 | Flávio 48% dos válidos, abstenção 22%, Sudeste 52% das seções | 56.057 | 342 | -20,52 | -3,0 |
+| 3 | Flávio 52% dos válidos, abstenção 21%, Sudeste 60% das seções | 148.580 | 333 | -5,39 | -30,4 |
 
 Versão densa (mesma mistura (k = 4, mesma semente) sobre cinco partes quase sem zeros: Lula, Flávio, as outras dez candidaturas somadas, brancos e nulos somados, abstenção):
 
 | grupo | rótulo | seções | aptos médios | log-veross. média | log det Σ |
 |---|---|---|---|---|---|
-| 0 | Lula 65% dos válidos, abstenção 19%, Nordeste 89% das seções | 23.216 | 301 | -2,44 | -8,4 |
-| 1 | Lula 60% dos válidos, abstenção 19%, Norte 37% das seções | 1.369 | 234 | -10,63 | 2,0 |
-| 2 | Flávio 53% dos válidos, abstenção 19%, Centro-Oeste 38% das seções | 33.198 | 318 | -1,10 | -10,0 |
-| 3 | Flávio 64% dos válidos, abstenção 23%, Centro-Oeste 48% das seções | 18.532 | 293 | -3,02 | -7,3 |
+| 0 | Lula 64% dos válidos, abstenção 18%, Nordeste 79% das seções | 131.494 | 306 | -2,53 | -8,0 |
+| 1 | Lula 63% dos válidos, abstenção 28%, Nordeste 36% das seções | 6.294 | 298 | -11,63 | 3,3 |
+| 2 | Lula 48% dos válidos, abstenção 22%, Nordeste 32% das seções | 58.489 | 293 | -4,54 | -5,7 |
+| 3 | Flávio 54% dos válidos, abstenção 22%, Sudeste 58% das seções | 301.613 | 328 | -1,40 | -9,2 |
 
-Grupo mais anômalo na versão pedida: 3. Critério: soma dos postos de menor log-verossimilhança média e de maior dispersão (log-determinante da covariância); empate decidido pela menor log-verossimilhança média. Amostras: as 20 seções de menor log-verossimilhança dentro do componente.
+Grupo mais anômalo na versão pedida: 2. Critério: soma dos postos de menor log-verossimilhança média e de maior dispersão (log-determinante da covariância); empate decidido pela menor log-verossimilhança média. Amostras: as 20 seções de menor log-verossimilhança dentro do componente.
 
+- CIUDAD GUAYANA (ZZ), zona 1, seção 91, EMBAIXADA EM CARACAS: Lula 0, Flávio 0 de 0 válidos (72 aptos, 0 votantes, sem modelo). Exterior (inferido pelo cadastro do local); seção minúscula (0 votantes); urna de contingência; sistema de apuração (5).
+- BAIÃO (PA), zona 35, seção 238, EMEF DE NOVO TESOURO: Lula 39, Flávio 10 de 49 válidos (51 aptos, 51 votantes, UE2020). Zona rural (inferido pelo cadastro do local); seção pequena (51 votantes).
+- VITÓRIA DA CONQUISTA (BA), zona 41, seção 400, CASE PROFESSOR WANDERLINO NOGUEIRA NETO: Lula 36, Flávio 17 de 53 válidos (53 aptos, 53 votantes, UE2020). Unidade prisional ou socioeducativa (inferido pelo cadastro do local); seção pequena (53 votantes); 53 de 53 aptos em trânsito.
+- ARAÇATUBA (SP), zona 299, seção 229, UI/UIP-ARAÇÁ: Lula 19, Flávio 12 de 32 válidos (34 aptos, 34 votantes, UE2022). Unidade prisional ou socioeducativa (inferido pelo cadastro do local); seção minúscula (34 votantes); 34 de 34 aptos em trânsito.
+- SÃO FÉLIX DO XINGU (PA), zona 53, seção 266, UNIDADE DE CUSTÓDIA E REINSERÇÃO DE SÃO FÉLIX DO XINGU (UCRSFX): Lula 6, Flávio 13 de 20 válidos (21 aptos, 21 votantes, UE2022). Unidade prisional ou socioeducativa (inferido pelo cadastro do local); seção minúscula (21 votantes); 21 de 21 aptos em trânsito.
+- ARAGUARI (MG), zona 16, seção 347, CEM ROSA MAMERI RADE: Lula 4, Flávio 33 de 37 válidos (37 aptos, 37 votantes, UE2020). Zona rural (inferido pelo cadastro do local); seção minúscula (37 votantes).
+- OCARA (CE), zona 67, seção 275, IGREJA BATISTA SHALON JERUSALEM: Lula 51, Flávio 25 de 79 válidos (83 aptos, 83 votantes, UE2022). Seção pequena (83 votantes); a zona inteira vota assim (Lula 68,5% na zona).
+- CONGONHAS (MG), zona 85, seção 151, CENTRO MUNICIPAL DE EDUCAÇÃO INFANTIL ROSA CORDEIRO DE FREITAS: Lula 24, Flávio 18 de 43 válidos (46 aptos, 46 votantes, UE2015). Seção minúscula (46 votantes).
+- UIRAMUTÃ (RR), zona 7, seção 124, ESCOLA ESTADUAL INDÍGENA TUXAUA CRETÁCIO: Lula 51, Flávio 0 de 51 válidos (52 aptos, 52 votantes, UE2022). Aldeia ou terra indígena (inferido pelo cadastro do local); seção pequena (52 votantes).
+- SANTANA DO ACARAÚ (CE), zona 44, seção 193, ASSOCIAÇÃO COMUNITÁRIA DOS MORADORES DE CHOCALHO E DE CHINELO: Lula 53, Flávio 13 de 67 válidos (69 aptos, 69 votantes, UE2015). Zona rural (inferido pelo cadastro do local); seção pequena (69 votantes).
+- CAPANEMA (PA), zona 25, seção 364, OLGA COSTA PEREIRA-EMEF- BAIRRO SANTA LUZIA: Lula 48, Flávio 17 de 70 válidos (73 aptos, 73 votantes, UE2022). Seção pequena (73 votantes).
+- SALVATERRA (PA), zona 3, seção 153, EMEIF SIRICARI: Lula 89, Flávio 26 de 117 válidos (120 aptos, 120 votantes, UE2022). Quilombo (inferido pelo cadastro do local).
+- SANTO ESTEVÃO (BA), zona 143, seção 230, ESCOLA MUNICIPAL FRANCELINO PEREIRA DE ASSIS: Lula 138, Flávio 9 de 155 válidos (168 aptos, 168 votantes, UE2015). Zona rural (inferido pelo cadastro do local).
+- POTIM (SP), zona 190, seção 154, PENITENCIÁRIA I DE POTIM: Lula 17, Flávio 3 de 22 válidos (24 aptos, 24 votantes, UE2015). Unidade prisional ou socioeducativa (inferido pelo cadastro do local); seção minúscula (24 votantes); 24 de 24 aptos em trânsito.
+- MILHÃ (CE), zona 55, seção 163, E. E. I. E. F. IDELZUITE MONTEIRO DE OLIVEIRA: Lula 52, Flávio 15 de 69 válidos (73 aptos, 73 votantes, UE2015). Zona rural (inferido pelo cadastro do local); seção pequena (73 votantes); a zona inteira vota assim (Lula 76,1% na zona).
+- DEPUTADO IRAPUAN PINHEIRO (CE), zona 55, seção 160, E.M.T.I. SÃO CAETANO: Lula 98, Flávio 20 de 122 válidos (127 aptos, 127 votantes, UE2015). Zona rural (inferido pelo cadastro do local); a zona inteira vota assim (Lula 76,4% na zona).
 - MAZAGÃO (AP), zona 5, seção 33, ESCOLA MUNICIPAL BARRO ALTO: Lula 43, Flávio 0 de 47 válidos (67 aptos, 49 votantes, UE2020). Zona rural (inferido pelo cadastro do local); seção minúscula (49 votantes).
-- PEIXOTO DE AZEVEDO (MT), zona 33, seção 255, ESCOLA ESTADUAL INDIGENA METUKTIRE: Lula 156, Flávio 0 de 159 válidos (231 aptos, 159 votantes, UE2020). Aldeia ou terra indígena (inferido pelo cadastro do local).
-- FORMOSO DO ARAGUAIA (TO), zona 15, seção 72, ALDEIA SÃO JOÃO: Lula 126, Flávio 0 de 127 válidos (159 aptos, 132 votantes, UE2020). Aldeia ou terra indígena (inferido pelo cadastro do local).
-- TOCANTINÓPOLIS (TO), zona 9, seção 184, ESCOLA ESTADUAL INDÍGENA KUNITIK: Lula 59, Flávio 0 de 60 válidos (62 aptos, 60 votantes, UE2022). Aldeia ou terra indígena (inferido pelo cadastro do local); seção pequena (60 votantes).
-- CONFRESA (MT), zona 28, seção 200, ESCOLA ESTADUAL TAPI'ITAWA: Lula 296, Flávio 0 de 297 válidos (315 aptos, 297 votantes, UE2022). Aldeia ou terra indígena (inferido pelo cadastro do local).
-- NÍSIA FLORESTA (RN), zona 67, seção 123, ESC MUN ANA CARDOSO BARROS: Lula 166, Flávio 64 de 240 válidos (254 aptos, 250 votantes, UE2020). Sem regra estrutural acionada: comparar com ata e log da seção.
-- MARACAJU (MS), zona 16, seção 81, EM PROFESSORA IRMA DE LIMA MATOS (NOVO): Lula 52, Flávio 209 de 270 válidos (306 aptos, 272 votantes, UE2015). Sem regra estrutural acionada: comparar com ata e log da seção.
-- AMAMBAI (MS), zona 1, seção 191, EM POLO INDIGENA MBO'EROY GUARANI KAIOWA: Lula 144, Flávio 16 de 162 válidos (293 aptos, 169 votantes, UE2020). Aldeia ou terra indígena (inferido pelo cadastro do local).
-- MARCELÂNDIA (MT), zona 32, seção 279, ESCOLA ESTADUAL INDÍGENA KAMADU: Lula 184, Flávio 2 de 190 válidos (231 aptos, 190 votantes, UE2020). Aldeia ou terra indígena (inferido pelo cadastro do local).
-- PARANATINGA (MT), zona 57, seção 31, ESCOLA MUNICIPAL CEREMECE SEREPSE -MARECHAL RONDON: Lula 186, Flávio 3 de 194 válidos (295 aptos, 196 votantes, UE2020). Aldeia ou terra indígena (inferido pelo cadastro do local).
-- AMÃ (ZZ), zona 1, seção 1931, EMBAIXADA DO BRASIL EM AMÃ: Lula 352, Flávio 31 de 405 válidos (744 aptos, 430 votantes, UE2015). Exterior (inferido pelo cadastro do local); a zona inteira vota assim (Lula 86,2% na zona).
-- ALAGOA GRANDE (PB), zona 9, seção 171, ESCOLA MUNICIPAL FIRMO SANTINO DA SILVA: Lula 118, Flávio 13 de 139 válidos (151 aptos, 149 votantes, UE2020). Quilombo (inferido pelo cadastro do local).
-- CAARAPÓ (MS), zona 28, seção 70, EMPG NHANDEJARA: Lula 128, Flávio 14 de 143 válidos (289 aptos, 153 votantes, UE2020). Aldeia ou terra indígena (inferido pelo cadastro do local).
-- AMAMBAI (MS), zona 1, seção 158, EE INDÍGENA MBO'EROY GUARANI KAIOWÁ: Lula 147, Flávio 8 de 162 válidos (331 aptos, 167 votantes, UE2020). Aldeia ou terra indígena (inferido pelo cadastro do local).
-- PEDRA BRANCA DO AMAPARI (AP), zona 11, seção 32, ESCOLA ESTADUAL DAS ALDEIAS WAIÃPI: Lula 225, Flávio 12 de 239 válidos (301 aptos, 245 votantes, UE2020). Aldeia ou terra indígena (inferido pelo cadastro do local).
-- ABU DHABI (ZZ), zona 1, seção 1981, TWO SEASONS HOTEL: Lula 56, Flávio 89 de 169 válidos (393 aptos, 175 votantes, UE2015). Exterior (inferido pelo cadastro do local); a zona inteira vota assim (Flávio 48,6% na zona).
-- TOBIAS BARRETO (SE), zona 23, seção 146, CENTRO COMUNITÁRIO ANTÔNIO JOSÉ FONTES: Lula 196, Flávio 36 de 242 válidos (259 aptos, 250 votantes, UE2020). Zona rural (inferido pelo cadastro do local).
-- PARANATINGA (MT), zona 57, seção 84, ESCOLA MUNICIPAL CEREMECE SEREPSE -MARECHAL RONDON: Lula 212, Flávio 7 de 224 válidos (269 aptos, 224 votantes, UE2020). Aldeia ou terra indígena (inferido pelo cadastro do local).
-- AMAMBAI (MS), zona 1, seção 130, EM POLO INDIGENA MBO'EROY GUARANI KAIOWA: Lula 150, Flávio 5 de 158 válidos (300 aptos, 161 votantes, UE2020). Aldeia ou terra indígena (inferido pelo cadastro do local).
-- ABIDJÃ (ZZ), zona 1, seção 1, CHANCELARIA DA EMBAIXADA DO BRASIL EM ABIDJÃ: Lula 24, Flávio 13 de 44 válidos (91 aptos, 44 votantes, sem modelo). Exterior (inferido pelo cadastro do local); seção minúscula (44 votantes); urna de contingência; sistema de apuração (5); a zona inteira vota assim (Lula 54,5% na zona).
+- JACAREACANGA (PA), zona 102, seção 44, EMEF GETÚLIO VARGAS: Lula 0, Flávio 49 de 49 válidos (99 aptos, 50 votantes, UE2022). Zona rural (inferido pelo cadastro do local); seção pequena (50 votantes).
+- ITAPETININGA (SP), zona 52, seção 386, FUNDAÇÃO CASA: Lula 0, Flávio 13 de 14 válidos (23 aptos, 15 votantes, UE2013). Unidade prisional ou socioeducativa (inferido pelo cadastro do local); seção minúscula (15 votantes); 23 de 23 aptos em trânsito.
+- ITACARAMBI (MG), zona 148, seção 376, ASSOCIAÇÃO INDÍGENA XAKRIABÁ DAS ALDEIAS VARGEM GRANDE/ CARAÍBAS: Lula 106, Flávio 0 de 109 válidos (125 aptos, 109 votantes, UE2020). Aldeia ou terra indígena (inferido pelo cadastro do local).
 
 Grupo mais anômalo na versão densa: 1.
 
-- UIRAMUTÃ (RR), zona 7, seção 124, ESCOLA ESTADUAL INDÍGENA TUXAUA CRETÁCIO: Lula 51, Flávio 0 de 51 válidos (52 aptos, 52 votantes, UE2022). Aldeia ou terra indígena (inferido pelo cadastro do local); seção pequena (52 votantes).
-- MAZAGÃO (AP), zona 5, seção 33, ESCOLA MUNICIPAL BARRO ALTO: Lula 43, Flávio 0 de 47 válidos (67 aptos, 49 votantes, UE2020). Zona rural (inferido pelo cadastro do local); seção minúscula (49 votantes).
-- PEIXOTO DE AZEVEDO (MT), zona 33, seção 255, ESCOLA ESTADUAL INDIGENA METUKTIRE: Lula 156, Flávio 0 de 159 válidos (231 aptos, 159 votantes, UE2020). Aldeia ou terra indígena (inferido pelo cadastro do local).
-- ARACRUZ (ES), zona 20, seção 232, ASSOCIAÇÃO DA ALDEIA INDÍGENA NOVA ESPERANÇA (ALDEIA NOVA ESPERANÇA): Lula 33, Flávio 0 de 33 válidos (56 aptos, 33 votantes, UE2020). Aldeia ou terra indígena (inferido pelo cadastro do local); seção minúscula (33 votantes).
-- TOCANTINÓPOLIS (TO), zona 9, seção 184, ESCOLA ESTADUAL INDÍGENA KUNITIK: Lula 59, Flávio 0 de 60 válidos (62 aptos, 60 votantes, UE2022). Aldeia ou terra indígena (inferido pelo cadastro do local); seção pequena (60 votantes).
-- FORMOSO DO ARAGUAIA (TO), zona 15, seção 72, ALDEIA SÃO JOÃO: Lula 126, Flávio 0 de 127 válidos (159 aptos, 132 votantes, UE2020). Aldeia ou terra indígena (inferido pelo cadastro do local).
-- PORTO VELHO (RO), zona 6, seção 516, KYOWÃ - ESCOLA ESTADUAL - ALDEIA KARITIANA: Lula 100, Flávio 0 de 102 válidos (115 aptos, 104 votantes, UE2020). Aldeia ou terra indígena (inferido pelo cadastro do local).
-- GOIATINS (TO), zona 32, seção 60, ESCOLA INDIGENA TXUARET: Lula 106, Flávio 0 de 107 válidos (130 aptos, 112 votantes, UE2022). Aldeia ou terra indígena (inferido pelo cadastro do local).
-- UIRAMUTÃ (RR), zona 7, seção 61, IGREJA INDIGENA CORAÇÃO DO MUNDO: Lula 185, Flávio 0 de 185 válidos (212 aptos, 185 votantes, UE2022). Aldeia ou terra indígena (inferido pelo cadastro do local).
-- CONFRESA (MT), zona 28, seção 200, ESCOLA ESTADUAL TAPI'ITAWA: Lula 296, Flávio 0 de 297 válidos (315 aptos, 297 votantes, UE2022). Aldeia ou terra indígena (inferido pelo cadastro do local).
+- CIUDAD GUAYANA (ZZ), zona 1, seção 91, EMBAIXADA EM CARACAS: Lula 0, Flávio 0 de 0 válidos (72 aptos, 0 votantes, sem modelo). Exterior (inferido pelo cadastro do local); seção minúscula (0 votantes); urna de contingência; sistema de apuração (5).
+- POTIM (SP), zona 190, seção 154, PENITENCIÁRIA I DE POTIM: Lula 17, Flávio 3 de 22 válidos (24 aptos, 24 votantes, UE2015). Unidade prisional ou socioeducativa (inferido pelo cadastro do local); seção minúscula (24 votantes); 24 de 24 aptos em trânsito.
+- SÃO FÉLIX DO XINGU (PA), zona 53, seção 266, UNIDADE DE CUSTÓDIA E REINSERÇÃO DE SÃO FÉLIX DO XINGU (UCRSFX): Lula 6, Flávio 13 de 20 válidos (21 aptos, 21 votantes, UE2022). Unidade prisional ou socioeducativa (inferido pelo cadastro do local); seção minúscula (21 votantes); 21 de 21 aptos em trânsito.
+- CAPANEMA (PA), zona 25, seção 364, OLGA COSTA PEREIRA-EMEF- BAIRRO SANTA LUZIA: Lula 48, Flávio 17 de 70 válidos (73 aptos, 73 votantes, UE2022). Seção pequena (73 votantes).
+- ARAÇATUBA (SP), zona 299, seção 229, UI/UIP-ARAÇÁ: Lula 19, Flávio 12 de 32 válidos (34 aptos, 34 votantes, UE2022). Unidade prisional ou socioeducativa (inferido pelo cadastro do local); seção minúscula (34 votantes); 34 de 34 aptos em trânsito.
+- CONGONHAS (MG), zona 85, seção 151, CENTRO MUNICIPAL DE EDUCAÇÃO INFANTIL ROSA CORDEIRO DE FREITAS: Lula 24, Flávio 18 de 43 válidos (46 aptos, 46 votantes, UE2015). Seção minúscula (46 votantes).
+- OCARA (CE), zona 67, seção 275, IGREJA BATISTA SHALON JERUSALEM: Lula 51, Flávio 25 de 79 válidos (83 aptos, 83 votantes, UE2022). Seção pequena (83 votantes); a zona inteira vota assim (Lula 68,5% na zona).
+- MILHÃ (CE), zona 55, seção 163, E. E. I. E. F. IDELZUITE MONTEIRO DE OLIVEIRA: Lula 52, Flávio 15 de 69 válidos (73 aptos, 73 votantes, UE2015). Zona rural (inferido pelo cadastro do local); seção pequena (73 votantes); a zona inteira vota assim (Lula 76,1% na zona).
+- DEPUTADO IRAPUAN PINHEIRO (CE), zona 55, seção 160, E.M.T.I. SÃO CAETANO: Lula 98, Flávio 20 de 122 válidos (127 aptos, 127 votantes, UE2015). Zona rural (inferido pelo cadastro do local); a zona inteira vota assim (Lula 76,4% na zona).
+- SANTO ESTEVÃO (BA), zona 143, seção 230, ESCOLA MUNICIPAL FRANCELINO PEREIRA DE ASSIS: Lula 138, Flávio 9 de 155 válidos (168 aptos, 168 votantes, UE2015). Zona rural (inferido pelo cadastro do local).
 
-Estabilidade (índice de Rand ajustado contra a versão pedida): outra semente 0,184; nanicas somadas 0,104; versão densa -0,010.
+Estabilidade (índice de Rand ajustado contra a versão pedida): outra semente 0,563; nanicas somadas 0,262; versão densa 0,031.
 
 ## C. Modelo de urna
 
-- O modelo da urna não move o voto de forma separável de zero dentro da zona: na mesma zona, a urna mais nova dá a Flávio 0,00 ponto em relação à mais velha (IC 95% de -0,70 a 0,69, contém o zero); sem o controle, -1,34; 79 zonas.
-- No mesmo prédio, a urna mais nova dá a Flávio 0,13 ponto em relação à mais velha (IC 95% de -0,01 a 0,28, contém o zero); sem o controle, -1,74; 2.318 locais.
+- Dentro da zona há diferença entre modelos separável de zero, o que não é efeito da urna enquanto a alocação dos modelos dentro da zona não for aleatória: na mesma zona, a urna mais nova dá a Flávio -0,73 ponto em relação à mais velha (IC 95% de -1,03 a -0,44, não contém o zero); sem o controle, -1,42; 531 zonas.
+- No mesmo prédio, a urna mais nova dá a Flávio 0,11 ponto em relação à mais velha (IC 95% de 0,02 a 0,20, não contém o zero); sem o controle, -0,52; 7.899 locais.
 - Em 2022, na mesma zona, a UE2020 dá a Bolsonaro 1,41 ponto em relação à UE2015 (IC 95% de 0,84 a 2,00, não contém o zero); sem o controle, 1,32; 264 zonas.
 - Em 2022, no mesmo prédio, a UE2020 dá a Bolsonaro 0,85 ponto em relação à UE2015 (IC 95% de -0,15 a 2,04, contém o zero); sem o controle, 2,29; 85 locais.
-- Nas mesmas seções de 2022 para 2026, agrupadas pelo modelo de 2022, a urna mais nova dá a Flávio, sobre Bolsonaro, -0,18 ponto em relação à mais velha (IC 95% de -0,85 a 0,49, contém o zero); sem o controle, -0,49; 22 zonas.
+- Nas mesmas seções de 2022 para 2026, agrupadas pelo modelo de 2022, a urna mais nova dá a Flávio, sobre Bolsonaro, -0,14 ponto em relação à mais velha (IC 95% de -0,26 a -0,03, não contém o zero); sem o controle, -0,34; 379 zonas.
 
 Bruto (soma dos votos por modelo, sem controle):
 
 | modelo | seções | Flávio % | Lula % | abstenção % | brancos % | nulos % |
 |---|---|---|---|---|---|---|
-| UE2013 | 1.939 | 44,79 | 47,85 | 19,78 | 1,84 | 3,29 |
-| UE2015 | 10.927 | 47,15 | 45,33 | 20,20 | 1,64 | 2,79 |
-| UE2020 | 32.457 | 49,26 | 44,17 | 19,86 | 1,43 | 2,69 |
-| UE2022 | 30.987 | 48,99 | 44,75 | 20,09 | 1,41 | 2,80 |
-| sem modelo | 5 | 26,09 | 60,87 | 52,58 | 0,00 | 0,00 |
+| UE2013 | 11.913 | 45,00 | 47,12 | 28,38 | 1,86 | 2,72 |
+| UE2015 | 87.960 | 46,84 | 45,29 | 21,46 | 1,90 | 2,90 |
+| UE2020 | 199.838 | 47,33 | 45,00 | 20,95 | 1,82 | 2,96 |
+| UE2022 | 198.148 | 46,93 | 45,17 | 20,56 | 1,82 | 2,93 |
+| sem modelo | 31 | 42,89 | 48,48 | 54,04 | 1,56 | 2,97 |
 
 Dentro da zona (Diferença (modelo b menos modelo a) dentro do par município e zona com ao menos 20 seções de cada modelo, média ponderada pelos votantes das seções comparadas; IC por bootstrap de zonas.):
 
 | a → b | unidades | seções a/b | Flávio pp | Lula pp | nulos pp | bruto Flávio |
 |---|---|---|---|---|---|---|
-| UE2013 → UE2015 | 13 | 1.243/2.269 | 0,36 (IC 95% de -1,36 a 2,03) | -0,64 (IC 95% de -2,38 a 1,17) | -0,12 (IC 95% de -0,31 a 0,08) | 2,44 |
-| UE2013 → UE2022 | 4 | 87/377 | -4,70 (IC 95% de -6,89 a -2,65) | 5,00 (IC 95% de 2,76 a 7,26) | 0,12 (IC 95% de -0,27 a 0,50) | -4,76 |
-| UE2015 → UE2022 | 6 | 1.304/495 | -0,47 (IC 95% de -2,97 a 2,50) | 0,77 (IC 95% de -2,19 a 3,20) | 0,10 (IC 95% de -0,05 a 0,23) | -0,75 |
-| UE2020 → UE2022 | 64 | 5.091/5.053 | -0,34 (IC 95% de -0,89 a 0,13) | 0,33 (IC 95% de -0,12 a 0,83) | -0,06 (IC 95% de -0,14 a 0,02) | -1,01 |
-| mais velha → mais nova | 79 | 6.764/6.943 | 0,00 (IC 95% de -0,70 a 0,69) | -0,06 (IC 95% de -0,77 a 0,62) | -0,07 (IC 95% de -0,15 a 0,01) | -1,34 |
+| UE2013 → UE2015 | 99 | 4.371/13.019 | -1,16 (IC 95% de -2,03 a -0,37) | 1,44 (IC 95% de 0,59 a 2,37) | 0,04 (IC 95% de -0,05 a 0,13) | -1,79 |
+| UE2013 → UE2020 | 1 | 22/210 | -6,26 (IC 95% de -6,26 a -6,26) | 9,71 (IC 95% de 9,71 a 9,71) | 1,01 (IC 95% de 1,01 a 1,01) | -6,26 |
+| UE2013 → UE2022 | 5 | 109/561 | -5,72 (IC 95% de -7,61 a -3,36) | 7,17 (IC 95% de 3,69 a 10,21) | 0,41 (IC 95% de -0,17 a 0,83) | -7,07 |
+| UE2015 → UE2020 | 284 | 19.225/35.308 | -0,62 (IC 95% de -1,01 a -0,23) | 0,72 (IC 95% de 0,28 a 1,17) | 0,15 (IC 95% de 0,09 a 0,21) | -0,87 |
+| UE2015 → UE2022 | 287 | 19.091/34.099 | -0,79 (IC 95% de -1,16 a -0,41) | 0,96 (IC 95% de 0,53 a 1,39) | 0,20 (IC 95% de 0,15 a 0,26) | -1,41 |
+| UE2020 → UE2022 | 384 | 41.124/40.815 | -0,20 (IC 95% de -0,46 a 0,08) | 0,27 (IC 95% de -0,05 a 0,57) | 0,04 (IC 95% de -0,00 a 0,08) | -0,29 |
+| mais velha → mais nova | 531 | 32.920/56.847 | -0,73 (IC 95% de -1,03 a -0,44) | 0,90 (IC 95% de 0,57 a 1,23) | 0,13 (IC 95% de 0,09 a 0,17) | -1,42 |
 
 Dentro do mesmo local (Diferença (modelo b menos modelo a) dentro do mesmo local de votação (mesmo prédio), com ao menos uma seção de cada modelo; IC por bootstrap de locais.):
 
 | a → b | unidades | seções a/b | Flávio pp | Lula pp | nulos pp | bruto Flávio |
 |---|---|---|---|---|---|---|
-| UE2013 → UE2015 | 283 | 771/1.678 | 0,14 (IC 95% de -0,30 a 0,55) | -0,17 (IC 95% de -0,61 a 0,28) | 0,01 (IC 95% de -0,15 a 0,17) | -2,29 |
-| UE2013 → UE2022 | 2 | 10/9 | 2,97 (IC 95% de 1,29 a 3,79) | -1,55 (IC 95% de -2,55 a 0,50) | -0,93 (IC 95% de -1,38 a 0,00) | 0,92 |
-| UE2015 → UE2022 | 1 | 2/14 | 1,72 (IC 95% de 1,72 a 1,72) | -2,24 (IC 95% de -2,24 a -2,24) | 0,01 (IC 95% de 0,01 a 0,01) | 1,72 |
-| UE2020 → UE2022 | 2.032 | 6.573/6.781 | 0,12 (IC 95% de -0,03 a 0,28) | -0,13 (IC 95% de -0,29 a 0,02) | -0,08 (IC 95% de -0,13 a -0,02) | -1,09 |
-| mais velha → mais nova | 2.318 | 7.356/8.482 | 0,13 (IC 95% de -0,01 a 0,28) | -0,14 (IC 95% de -0,28 a 0,00) | -0,06 (IC 95% de -0,12 a -0,01) | -1,74 |
+| UE2013 → UE2015 | 2.630 | 5.486/15.884 | 0,23 (IC 95% de 0,06 a 0,38) | -0,20 (IC 95% de -0,34 a -0,04) | -0,00 (IC 95% de -0,05 a 0,05) | -0,35 |
+| UE2013 → UE2020 | 15 | 22/49 | 5,01 (IC 95% de 1,53 a 9,12) | -5,27 (IC 95% de -9,49 a -2,35) | -1,17 (IC 95% de -3,19 a 0,13) | 2,21 |
+| UE2013 → UE2022 | 17 | 40/91 | 1,69 (IC 95% de -0,31 a 3,83) | -2,05 (IC 95% de -3,38 a -0,84) | -0,25 (IC 95% de -0,72 a 0,30) | 5,30 |
+| UE2015 → UE2020 | 68 | 258/383 | 0,79 (IC 95% de -0,03 a 1,65) | -0,37 (IC 95% de -1,21 a 0,50) | 0,15 (IC 95% de -0,19 a 0,49) | -0,32 |
+| UE2015 → UE2022 | 70 | 270/383 | 0,74 (IC 95% de -0,29 a 1,78) | -0,66 (IC 95% de -1,83 a 0,42) | -0,09 (IC 95% de -0,33 a 0,17) | 0,05 |
+| UE2020 → UE2022 | 5.194 | 22.156/21.377 | 0,03 (IC 95% de -0,07 a 0,13) | -0,03 (IC 95% de -0,13 a 0,06) | -0,01 (IC 95% de -0,04 a 0,02) | -0,30 |
+| mais velha → mais nova | 7.899 | 27.882/37.764 | 0,11 (IC 95% de 0,02 a 0,20) | -0,10 (IC 95% de -0,19 a -0,02) | -0,01 (IC 95% de -0,03 a 0,02) | -0,52 |
 
 Variação contra a mesma seção em 2022 (Diferença entre modelos, dentro do par município e zona, da variação de cada seção contra ela mesma em 2022 (Flávio 2026 menos Bolsonaro 1º turno 2022; Lula 2026 menos Lula 2022, em % dos válidos). A linha de base de 2022 da mesma seção tira o perfil político do lugar; só seções casadas pelo número e pelo nome do local.):
 
-- UE2013 → UE2015: 6 zonas; Flávio menos Bolsonaro 0,30 (IC 95% de -0,15 a 0,71); Lula -0,55 (IC 95% de -1,16 a 0,11)
-- UE2013 → UE2022: 1 zonas; Flávio menos Bolsonaro -0,58 (IC 95% de -0,58 a -0,58); Lula 0,43 (IC 95% de 0,43 a 0,43)
-- UE2015 → UE2022: 6 zonas; Flávio menos Bolsonaro 0,60 (IC 95% de -0,05 a 1,21); Lula -0,66 (IC 95% de -1,29 a -0,05)
-- UE2020 → UE2022: 34 zonas; Flávio menos Bolsonaro 0,10 (IC 95% de -0,08 a 0,32); Lula -0,21 (IC 95% de -0,48 a 0,01)
-- mais velha → mais nova: 45 zonas; Flávio menos Bolsonaro 0,24 (IC 95% de 0,04 a 0,46); Lula -0,37 (IC 95% de -0,63 a -0,14)
+- UE2013 → UE2015: 62 zonas; Flávio menos Bolsonaro 0,16 (IC 95% de -0,08 a 0,39); Lula -0,48 (IC 95% de -0,88 a -0,12)
+- UE2013 → UE2020: 1 zonas; Flávio menos Bolsonaro -0,08 (IC 95% de -0,08 a -0,08); Lula -2,56 (IC 95% de -2,56 a -2,56)
+- UE2013 → UE2022: 2 zonas; Flávio menos Bolsonaro -0,29 (IC 95% de -0,58 a -0,16); Lula -2,19 (IC 95% de -3,38 a 0,43)
+- UE2015 → UE2020: 259 zonas; Flávio menos Bolsonaro 0,18 (IC 95% de 0,06 a 0,29); Lula -0,38 (IC 95% de -0,58 a -0,15)
+- UE2015 → UE2022: 260 zonas; Flávio menos Bolsonaro 0,30 (IC 95% de 0,20 a 0,41); Lula -0,53 (IC 95% de -0,73 a -0,34)
+- UE2020 → UE2022: 328 zonas; Flávio menos Bolsonaro 0,08 (IC 95% de -0,00 a 0,15); Lula -0,16 (IC 95% de -0,30 a -0,03)
+- mais velha → mais nova: 443 zonas; Flávio menos Bolsonaro 0,22 (IC 95% de 0,14 a 0,31); Lula -0,46 (IC 95% de -0,62 a -0,31)
 
-Troca de urna entre 2022 e 2026 (mesma seção; rótulo = modelo de 2022; 49.020 seções casadas). Variação de cada seção de 2022 para 2026 (Flávio 2026 menos Bolsonaro 1º turno 2022, em % dos válidos), comparada entre seções agrupadas pelo modelo da urna de 2022 dentro do par município e zona. Diferença b menos a: se a urna velha (a) de 2022 tivesse tirado voto de Bolsonaro, a diferença seria negativa.
+Troca de urna entre 2022 e 2026 (mesma seção; rótulo = modelo de 2022; 354.932 seções casadas). Variação de cada seção de 2022 para 2026 (Flávio 2026 menos Bolsonaro 1º turno 2022, em % dos válidos), comparada entre seções agrupadas pelo modelo da urna de 2022 dentro do par município e zona. Diferença b menos a: se a urna velha (a) de 2022 tivesse tirado voto de Bolsonaro, a diferença seria negativa.
 
-- UE2009 → UE2020: 2 zonas; variação de Flávio sobre Bolsonaro 0,62 (IC 95% de -1,40 a 1,68)
-- UE2010 → UE2020: 2 zonas; variação de Flávio sobre Bolsonaro 1,25 (IC 95% de 1,09 a 1,97)
-- UE2013 → UE2020: 1 zonas; variação de Flávio sobre Bolsonaro -0,56 (IC 95% de -0,56 a -0,56)
-- UE2015 → UE2020: 6 zonas; variação de Flávio sobre Bolsonaro -0,47 (IC 95% de -2,28 a 0,65)
-- mais velha → mais nova: 22 zonas; variação de Flávio sobre Bolsonaro -0,18 (IC 95% de -0,85 a 0,49)
+- UE2009 → UE2020: 149 zonas; variação de Flávio sobre Bolsonaro -0,19 (IC 95% de -0,35 a -0,02)
+- UE2010 → UE2020: 248 zonas; variação de Flávio sobre Bolsonaro -0,26 (IC 95% de -0,37 a -0,14)
+- UE2011 → UE2020: 122 zonas; variação de Flávio sobre Bolsonaro -0,22 (IC 95% de -0,41 a -0,04)
+- UE2013 → UE2020: 11 zonas; variação de Flávio sobre Bolsonaro 0,02 (IC 95% de -0,41 a 0,37)
+- UE2015 → UE2020: 241 zonas; variação de Flávio sobre Bolsonaro -0,42 (IC 95% de -0,56 a -0,29)
+- mais velha → mais nova: 379 zonas; variação de Flávio sobre Bolsonaro -0,14 (IC 95% de -0,26 a -0,03)
 
 2022, mesmo estimador (Bolsonaro e Lula, 1º turno):
 
@@ -226,7 +231,20 @@ Troca de urna entre 2022 e 2026 (mesma seção; rótulo = modelo de 2022; 49.020
 
 ### Registro (SP)
 
-2026: seções de Registro ainda não coletadas.
+2026: 155 seções.
+- zona 172, UE2013: 2 seções, Flávio 61,70%, Lula 31,61%, nulos 2,60%
+- zona 172, UE2015: 38 seções, Flávio 63,82%, Lula 27,58%, nulos 2,07%
+- zona 172, UE2020: 45 seções, Flávio 55,75%, Lula 37,36%, nulos 2,36%
+- zona 172, UE2022: 70 seções, Flávio 58,69%, Lula 33,52%, nulos 2,32%
+- mesmo local, UE2013 → UE2015: 2 locais, Flávio 0,13 (IC 95% de -5,33 a 3,55)
+- mesmo local, UE2020 → UE2022: 2 locais, Flávio -0,85 (IC 95% de -1,14 a -0,10)
+- mesmo local, mais velha → mais nova: 4 locais, Flávio -0,44 (IC 95% de -3,40 a 2,15)
+- mesmas seções, modelo de 2022 UE2009: 2 seções; Bolsonaro 56,25% em 2022, Flávio 58,04% em 2026 (modelos de 2026: UE2020 1, UE2022 1)
+- mesmas seções, modelo de 2022 UE2010: 35 seções; Bolsonaro 52,54% em 2022, Flávio 56,20% em 2026 (modelos de 2026: UE2020 21, UE2022 11, UE2015 3)
+- mesmas seções, modelo de 2022 UE2011: 4 seções; Bolsonaro 54,42% em 2022, Flávio 54,96% em 2026 (modelos de 2026: UE2022 4)
+- mesmas seções, modelo de 2022 UE2013: 7 seções; Bolsonaro 55,02% em 2022, Flávio 57,41% em 2026 (modelos de 2026: UE2020 7)
+- mesmas seções, modelo de 2022 UE2015: 32 seções; Bolsonaro 57,95% em 2022, Flávio 59,52% em 2026 (modelos de 2026: UE2022 17, UE2020 15)
+- mesmas seções, modelo de 2022 UE2020: 74 seções; Bolsonaro 58,86% em 2022, Flávio 60,88% em 2026 (modelos de 2026: UE2022 37, UE2015 35, UE2013 2)
 
 2022 (1º turno): 154 seções.
 - zona 172, UE2009: 2 seções, Bolsonaro 56,25%, Lula 34,79%, nulos 1,79%
@@ -242,43 +260,68 @@ Troca de urna entre 2022 e 2026 (mesma seção; rótulo = modelo de 2022; 49.020
 
 ## D. Outras anomalias de seção
 
-- Comparecimento acima de 100%: 0; igual a 100% (abstenção zero): 1, das quais 0 com 100 aptos ou mais.
-- Zero voto em Lula com 200 votantes ou mais: 0 de 62.759 seções.
-- Zero voto em Flávio com 200 votantes ou mais: 1 de 62.759 seções.
+- Comparecimento acima de 100%: 0; igual a 100% (abstenção zero): 15, das quais 3 com 100 aptos ou mais.
+- Zero voto em Lula com 200 votantes ou mais: 0 de 421.229 seções.
+- Zero voto em Flávio com 200 votantes ou mais: 17 de 421.229 seções.
+  - TABATINGA (AM), zona 36, seção 96, E. M. INDÍGENA AITCHA: Lula 340, Flávio 0 de 342 válidos (388 aptos, 346 votantes, UE2022). Aldeia ou terra indígena (inferido pelo cadastro do local).
+  - SANTO ANTÔNIO DO IÇÁ (AM), zona 47, seção 10, E. E. D. PEDRO I: Lula 318, Flávio 0 de 319 válidos (364 aptos, 321 votantes, UE2022). Aldeia ou terra indígena (inferido pelo cadastro do local).
   - CONFRESA (MT), zona 28, seção 200, ESCOLA ESTADUAL TAPI'ITAWA: Lula 296, Flávio 0 de 297 válidos (315 aptos, 297 votantes, UE2022). Aldeia ou terra indígena (inferido pelo cadastro do local).
-- Tipo de arquivo 1 (votação na urna (normal)): 76.294 seções; Flávio 48,71%, diferença média para o resto da zona 0,00 ponto.
-- Tipo de arquivo 2 (votação recuperada (RED)): 16 seções; Flávio 46,43%, diferença média para o resto da zona 0,01 ponto.
-- Tipo de arquivo 5 (sistema de apuração (5)): 5 seções; Flávio 26,09%, diferença média para o resto da zona sem resto de zona para comparar.
-- Urna de seção: 75.886 seções; diferença média de Flávio para o resto da zona 0,00 ponto.
-- Urna de contingência: 5 seções; diferença média de Flávio para o resto da zona sem resto de zona para comparar.
-- Urna de reserva (seção): 424 seções; diferença média de Flávio para o resto da zona -0,22 ponto.
-- Horários (Brasília): abertura depois das 9h em 32 seções, depois das 10h em 1; encerramento depois das 18h em 6.903, depois das 19h em 1.199, depois das 20h em 128.
-- Seções que encerraram depois das 19h: 1.199 seções; Lula 2,73 pontos e Flávio -2,22 pontos em relação ao resto da própria zona (fila longa costuma ser de seção grande e de bairro populoso; hipótese a conferir com a ata).
-- Seções que abriram depois das 9h: 32 seções; Lula 7,56 pontos e Flávio -7,39 pontos em relação ao resto da própria zona (fila longa costuma ser de seção grande e de bairro populoso; hipótese a conferir com a ata).
-- Boletins recebidos pelo TSE depois de meia-noite de 05/10: 0 seções, 0 válidos, Lula n/d%; diferença média de Lula para o resto da zona sem resto de zona para comparar.
-- Boletins recebidos pelo TSE depois de 1h de 05/10: 0 seções, 0 válidos, Lula n/d%; diferença média de Lula para o resto da zona sem resto de zona para comparar.
-- Benford do segundo dígito, Brasil, Lula: n = 76.279, qui-quadrado 667,2 com 9 graus de liberdade. Testes de dígito (último dígito e Benford do segundo dígito) são curiosidade metodológica: contagens de votos não seguem Benford por construção, e o teste rejeita ou aceita por motivos que nada têm a ver com fraude (Deckert, Myagkov e Ordeshook, 2011, Political Analysis 19(3)).
+  - SANTO ANTÔNIO DO IÇÁ (AM), zona 47, seção 63, E. M. INDÍGENA BELA VISTA: Lula 284, Flávio 0 de 289 válidos (319 aptos, 290 votantes, UE2022). Aldeia ou terra indígena (inferido pelo cadastro do local).
+  - MONTES ALTOS (MA), zona 103, seção 28, ESCOLA MUNICIPAL SAO JOSE: Lula 281, Flávio 0 de 281 válidos (318 aptos, 283 votantes, UE2020). Aldeia ou terra indígena (inferido pelo cadastro do local).
+- Tipo de arquivo 1 (votação na urna (normal)): 497.809 seções; Flávio 47,03%, diferença média para o resto da zona 0,00 ponto.
+- Tipo de arquivo 2 (votação recuperada (RED)): 50 seções; Flávio 45,17%, diferença média para o resto da zona 0,53 ponto.
+- Tipo de arquivo 4 (sistema de apuração (4)): 2 seções; Flávio 46,72%, diferença média para o resto da zona -3,69 pontos.
+- Tipo de arquivo 5 (sistema de apuração (5)): 29 seções; Flávio 40,31%, diferença média para o resto da zona sem resto de zona para comparar.
+- Urna de seção: 494.829 seções; diferença média de Flávio para o resto da zona 0,00 ponto.
+- Urna de contingência: 31 seções; diferença média de Flávio para o resto da zona -3,69 pontos.
+- Urna de reserva (seção): 3.030 seções; diferença média de Flávio para o resto da zona 0,01 ponto.
+- Horários (Brasília): abertura depois das 9h em 213 seções, depois das 10h em 22; encerramento depois das 18h em 43.003, depois das 19h em 8.366, depois das 20h em 1.342.
+- Seções que encerraram depois das 19h: 8.366 seções; Lula 3,43 pontos e Flávio -2,84 pontos em relação ao resto da própria zona (fila longa costuma ser de seção grande e de bairro populoso; hipótese a conferir com a ata).
+- Seções que abriram depois das 9h: 213 seções; Lula 3,57 pontos e Flávio -3,15 pontos em relação ao resto da própria zona (fila longa costuma ser de seção grande e de bairro populoso; hipótese a conferir com a ata).
+- Boletins recebidos pelo TSE depois de meia-noite de 05/10: 340 seções, 75.465 válidos, Lula 65,17%; diferença média de Lula para o resto da zona 1,24 ponto.
+  - CAPANEMA (PA): 101 seções, Lula 53,7%
+  - CABO DE SANTO AGOSTINHO (PE): 51 seções, Lula 68,3%
+  - VIANA (MA): 34 seções, Lula 59,6%
+  - OEIRAS DO PARÁ (PA): 33 seções, Lula 75,4%
+  - GURUPÁ (PA): 28 seções, Lula 70,6%
+  - AFUÁ (PA): 24 seções, Lula 63,8%
+  - JURUTI (PA): 23 seções, Lula 74,2%
+  - CAJARI (MA): 11 seções, Lula 88,8%
+  - MOJU (PA): 10 seções, Lula 72,7%
+  - PAULISTA (PE): 7 seções, Lula 53,9%
+- Boletins recebidos pelo TSE depois de 1h de 05/10: 332 seções, 73.153 válidos, Lula 64,56%; diferença média de Lula para o resto da zona 0,94 ponto.
+  - CAPANEMA (PA): 101 seções, Lula 53,7%
+  - CABO DE SANTO AGOSTINHO (PE): 51 seções, Lula 68,3%
+  - VIANA (MA): 34 seções, Lula 59,6%
+  - OEIRAS DO PARÁ (PA): 33 seções, Lula 75,4%
+  - GURUPÁ (PA): 28 seções, Lula 70,6%
+  - AFUÁ (PA): 24 seções, Lula 63,8%
+  - JURUTI (PA): 23 seções, Lula 74,2%
+  - CAJARI (MA): 11 seções, Lula 88,8%
+  - MOJU (PA): 10 seções, Lula 72,7%
+  - PAULISTA (PE): 7 seções, Lula 53,9%
+- Benford do segundo dígito, Brasil, Lula: n = 497.574, qui-quadrado 5.640,6 com 9 graus de liberdade. Testes de dígito (último dígito e Benford do segundo dígito) são curiosidade metodológica: contagens de votos não seguem Benford por construção, e o teste rejeita ou aceita por motivos que nada têm a ver com fraude (Deckert, Myagkov e Ordeshook, 2011, Political Analysis 19(3)).
 
 ## Verificado (dado do TSE, conta direta)
 
-- Base: 76.315 boletins de urna de seção, todos em zonas cuja soma das seções confere com o arquivo de zona do TSE (coleta parcial).
-- Seções com Lula em 90% ou mais dos válidos: 321 (0,42% das seções), 79.123 eleitores aptos; com Flávio: 31 (0,04%), 8.150 aptos.
-- Comparecimento acima de 100% dos aptos: 0 seções; igual a 100%: 1.
-- Seções com 200 votantes ou mais e nenhum voto em Lula: 0; nenhum voto em Flávio: 1.
-- Das 164 seções com Lula em 90% ou mais que existem com o mesmo número e o mesmo local em 2022, 128 já davam 90% ou mais a ele no 1º turno de 2022 e 161 davam 80% ou mais; mediana de 2022: 93,3%.
+- Base: 497.890 boletins de urna de seção, todos em zonas cuja soma das seções confere com o arquivo de zona do TSE.
+- Seções com Lula em 90% ou mais dos válidos: 3.686 (0,74% das seções), 873.711 eleitores aptos; com Flávio: 186 (0,04%), 42.580 aptos.
+- Comparecimento acima de 100% dos aptos: 0 seções; igual a 100%: 15.
+- Seções com 200 votantes ou mais e nenhum voto em Lula: 0; nenhum voto em Flávio: 17.
+- Das 2.441 seções com Lula em 90% ou mais que existem com o mesmo número e o mesmo local em 2022, 2.021 já davam 90% ou mais a ele no 1º turno de 2022 e 2.425 davam 80% ou mais; mediana de 2022: 93,3%.
 
 ## Inferido (leitura dos números)
 
-- As seções de 90% de Lula são, em boa parte, enclaves dentro de zonas que votam menos nele: mediana de 54,8% no resto da zona; o excesso típico da seção sobre a zona é de 40,1 pontos.
-- Locais com nome de aldeia ou escola indígena: 531 seções, 222 delas com Lula em 90% ou mais (41,8% do tipo, contra 0,42% no total).
-- Na especificação pedida, os quatro grupos não são geografia (V de Cramér entre grupo e região 0,09): separam as seções pelo padrão de zeros. 44,5% das células são zero e viram 0,0001; no log, uma candidatura sem voto fica a 3 ou 4 unidades de uma com um voto, e a mistura usa esse degrau para separar grupos (a parte que mais distingue os grupos é `n55`, com 99 pontos de diferença na proporção de zeros entre eles).
-- Na versão com nanicas somadas, o V de Cramér entre grupo e região é 0,15; o padrão de zeros ainda separa os grupos (`n14`, 100 pontos).
-- Na versão com cinco partes, o V de Cramér entre grupo e região é 0,42.
-- O modelo da urna não move o voto de forma separável de zero dentro da zona: na mesma zona, a urna mais nova dá a Flávio 0,00 ponto em relação à mais velha (IC 95% de -0,70 a 0,69, contém o zero); sem o controle, -1,34; 79 zonas.
-- No mesmo prédio, a urna mais nova dá a Flávio 0,13 ponto em relação à mais velha (IC 95% de -0,01 a 0,28, contém o zero); sem o controle, -1,74; 2.318 locais.
+- As seções de 90% de Lula estão em zonas que já votam muito nele: mediana de 76,3% no resto da zona; o excesso típico da seção sobre a zona é de 17,1 pontos.
+- Locais com nome de aldeia ou escola indígena: 1.428 seções, 565 delas com Lula em 90% ou mais (39,6% do tipo, contra 0,74% no total).
+- Na especificação pedida, os quatro grupos não são geografia (V de Cramér entre grupo e região 0,23): separam as seções pelo padrão de zeros. 42,7% das células são zero e viram 0,0001; no log, uma candidatura sem voto fica a 3 ou 4 unidades de uma com um voto, e a mistura usa esse degrau para separar grupos (a parte que mais distingue os grupos é `n14`, com 100 pontos de diferença na proporção de zeros entre eles).
+- Na versão com nanicas somadas, o V de Cramér entre grupo e região é 0,25; o padrão de zeros ainda separa os grupos (`n55`, 100 pontos).
+- Na versão com cinco partes, o V de Cramér entre grupo e região é 0,50.
+- Dentro da zona há diferença entre modelos separável de zero, o que não é efeito da urna enquanto a alocação dos modelos dentro da zona não for aleatória: na mesma zona, a urna mais nova dá a Flávio -0,73 ponto em relação à mais velha (IC 95% de -1,03 a -0,44, não contém o zero); sem o controle, -1,42; 531 zonas.
+- No mesmo prédio, a urna mais nova dá a Flávio 0,11 ponto em relação à mais velha (IC 95% de 0,02 a 0,20, não contém o zero); sem o controle, -0,52; 7.899 locais.
 - Em 2022, na mesma zona, a UE2020 dá a Bolsonaro 1,41 ponto em relação à UE2015 (IC 95% de 0,84 a 2,00, não contém o zero); sem o controle, 1,32; 264 zonas.
 - Em 2022, no mesmo prédio, a UE2020 dá a Bolsonaro 0,85 ponto em relação à UE2015 (IC 95% de -0,15 a 2,04, contém o zero); sem o controle, 2,29; 85 locais.
-- Nas mesmas seções de 2022 para 2026, agrupadas pelo modelo de 2022, a urna mais nova dá a Flávio, sobre Bolsonaro, -0,18 ponto em relação à mais velha (IC 95% de -0,85 a 0,49, contém o zero); sem o controle, -0,49; 22 zonas.
+- Nas mesmas seções de 2022 para 2026, agrupadas pelo modelo de 2022, a urna mais nova dá a Flávio, sobre Bolsonaro, -0,14 ponto em relação à mais velha (IC 95% de -0,26 a -0,03, não contém o zero); sem o controle, -0,34; 379 zonas.
 
 ## Juízo editorial
 
@@ -291,9 +334,9 @@ Troca de urna entre 2022 e 2026 (mesma seção; rótulo = modelo de 2022; 49.020
 
 ## O achado que contraria a tese
 
-- Quem espera achar seções novas de 90% encontra as velhas: 128 de 164 seções casadas de Lula já estavam acima de 90% em 2022.
-- Na especificação pedida, os quatro grupos não são geografia (V de Cramér entre grupo e região 0,09): separam as seções pelo padrão de zeros. 44,5% das células são zero e viram 0,0001; no log, uma candidatura sem voto fica a 3 ou 4 unidades de uma com um voto, e a mistura usa esse degrau para separar grupos (a parte que mais distingue os grupos é `n55`, com 99 pontos de diferença na proporção de zeros entre eles).
-- O modelo da urna não move o voto de forma separável de zero dentro da zona: na mesma zona, a urna mais nova dá a Flávio 0,00 ponto em relação à mais velha (IC 95% de -0,70 a 0,69, contém o zero); sem o controle, -1,34; 79 zonas.
+- Quem espera achar seções novas de 90% encontra as velhas: 2.021 de 2.441 seções casadas de Lula já estavam acima de 90% em 2022.
+- Na especificação pedida, os quatro grupos não são geografia (V de Cramér entre grupo e região 0,23): separam as seções pelo padrão de zeros. 42,7% das células são zero e viram 0,0001; no log, uma candidatura sem voto fica a 3 ou 4 unidades de uma com um voto, e a mistura usa esse degrau para separar grupos (a parte que mais distingue os grupos é `n14`, com 100 pontos de diferença na proporção de zeros entre eles).
+- Dentro da zona há diferença entre modelos separável de zero, o que não é efeito da urna enquanto a alocação dos modelos dentro da zona não for aleatória: na mesma zona, a urna mais nova dá a Flávio -0,73 ponto em relação à mais velha (IC 95% de -1,03 a -0,44, não contém o zero); sem o controle, -1,42; 531 zonas.
 
 ## Limites
 
