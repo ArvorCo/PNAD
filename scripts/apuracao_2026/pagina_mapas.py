@@ -16,7 +16,7 @@ from html import escape
 import voto_util_mapa as VM
 
 from .pagina_comum import FLAVIO, INK, LULA, MUTED, PAPER, ROOT, num
-from .pagina_figuras import abre, legenda_linha, rect, txt
+from .pagina_figuras_prim import abre, legenda_linha, rect, txt
 
 AZUIS = ["#c9d8ef", "#8fb0dd", "#4f7fc2", "#1457aa"]
 VERMELHOS = ["#f0c9c0", "#e0907f", "#c85a46", "#b02f21"]

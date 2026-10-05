@@ -23,6 +23,7 @@ from .pagina_comum import (
     secao,
 )
 from .pagina_css import CSS, FONTES, JS, JS_HEAD
+from .pagina_interativo import interativo_html
 
 TITULO = "Apuração do 1º turno de 2026"
 DESCRICAO = (
@@ -305,6 +306,6 @@ def pagina(d: Dados) -> tuple[str, dict]:
         + '<footer class="wrap">Arvor · dossiê da apuração do 1º turno de 2026 · '
         '<a href="index.html">Biblioteca</a> · <a href="predicao_2026_1T_presidente.html">Previsão</a> · '
         '<a href="reponderacao_pnad.html">Agregador</a></footer>'
-        + f"<script>{JS}</script></body></html>"
+        + f"<script>{JS}</script>{interativo_html()}</body></html>"
     )
     return h.replace("<section ", "\n<section "), estado
