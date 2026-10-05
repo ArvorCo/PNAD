@@ -96,7 +96,9 @@ describe("geometria e eixos", () => {
 
   test("rótulos de hora sem colisão", () => {
     expect(indicesDeHora(10, 120)).toEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
-    expect(indicesDeHora(300, 3.4)).toEqual(Array.from({ length: 10 }, (_, i) => i * 33));
+    // O último lote sempre recebe rótulo; o anterior (297) sai porque ficaria colado nele.
+    expect(indicesDeHora(300, 3.4)).toEqual([...Array.from({ length: 9 }, (_, i) => i * 33), 299]);
+    expect(indicesDeHora(195, 5).at(-1)).toBe(194);
     expect(indicesDeHora(0, 10)).toEqual([]);
   });
 });

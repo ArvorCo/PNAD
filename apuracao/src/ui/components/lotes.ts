@@ -138,11 +138,19 @@ export function liderDoBloco(b: Bloco, ordem: readonly string[]): string | null 
 }
 
 /** Índices das barras que recebem rótulo de hora, sem colidir (`minPx` entre rótulos). */
+/** Índices das barras que recebem rótulo de hora: a primeira, uma a cada `minPx`, e sempre a última
+ *  (o rótulo anterior sai se ficar colado nela), para o eixo terminar no último lote. */
 export function indicesDeHora(n: number, passoPx: number, minPx = 110): number[] {
   if (n <= 0) return [];
   const cada = Math.max(1, Math.ceil(minPx / Math.max(1, passoPx)));
   const out: number[] = [];
   for (let i = 0; i < n; i += cada) out.push(i);
+  const ultimo = n - 1;
+  if (out[out.length - 1] !== ultimo) {
+    const anterior = out[out.length - 1] ?? 0;
+    if (out.length > 1 && (ultimo - anterior) * passoPx < minPx * 0.7) out.pop();
+    out.push(ultimo);
+  }
   return out;
 }
 
