@@ -149,7 +149,8 @@ JS = """
       if(e.isIntersecting&&links[e.target.id]){
         if(atual){atual.removeAttribute('aria-current');}
         atual=links[e.target.id];atual.setAttribute('aria-current','true');
-        atual.scrollIntoView({block:'nearest',inline:'nearest'});
+        var faixa=atual.closest('nav');
+        if(faixa){faixa.scrollTo({left:atual.offsetLeft-faixa.clientWidth/2+atual.offsetWidth/2,behavior:'smooth'});}
       }});},{rootMargin:'-40% 0px -55% 0px'});
     document.querySelectorAll('main section[id]').forEach(function(s){ob.observe(s)});
   }
