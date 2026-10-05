@@ -7,6 +7,7 @@ from html import escape
 from . import pagina_texto_b as T
 from . import pagina_texto_c as TC
 from . import pagina_texto_fechamento as TF
+from . import pagina_texto_terceira_via as TV
 from .pagina_comum import Capitulo, Dados, checar, num, secao, sinal, tabela
 from .pagina_texto import fig
 
@@ -195,6 +196,14 @@ def r_segundo_turno(d: Dados, cap: Capitulo) -> str:
             for m in mov
         ],
     )
+    TVJ = d.get("terceira_via.json")
+    if TVJ is None:
+        d.aviso(
+            "terceira_via.json ausente: capítulo 13 sem o voto da terceira via por cidade"
+        )
+    else:
+        checar(d, "terceira_via.json", TV.CHAVES)
+        h += TV.bloco(TVJ, lambda nome: fig(nome, d))
     h += T.segundo_turno_riscos(E) + "</section>"
     return h
 
