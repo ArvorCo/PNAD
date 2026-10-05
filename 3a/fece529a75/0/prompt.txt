@@ -1,0 +1,21 @@
+No repositório /Users/leonardodias/arvor/PNAD (git main, commit direto), a página docs/apuracao_1o_turno_2026.html, gerada por `python3 scripts/apuracao-2026-build.py` a partir de scripts/apuracao_2026/pagina_*.py, pesa 9,3 MB. Os maiores blocos são as figuras `terceira_via_mapa` (761 KB), `reguas_divergencia_mapa` (790 KB), `nulo_2022_municipios` (540 KB), `senado_carregadores_mapa` (520 KB) e `clusters_secoes` (366 KB), quase tudo JSON de ficha por município embutido em `<script type="application/json" class="tips">` e SVG inline. Implemente carregamento sob demanda que preserve as regras da casa: a página precisa continuar funcionando aberta do disco (`file://`), sem rede, então não use fetch de arquivos separados; em vez disso, mantenha o SVG e os dados na própria página, mas dentro de `<template>` (não parseado nem renderizado até ser clonado) e clone no DOM quando a figura entrar na janela (IntersectionObserver com margem de 1.000 px) ou quando a âncora do capítulo for aberta; sem JavaScript, um `<noscript>` ou um fallback por `<details open>` deve mostrar a figura. Meça antes e depois o tempo de carregamento e o uso de memória com Playwright (scripts/render-audit.py e scripts/contrast-audit.py precisam continuar zerados: ajuste os auditores para forçar a materialização dos templates antes de medir, como já fazem com `<details>`). Regras: sem travessão "—", pt-BR, ruff e black zerados, pytest -q tests/test_apuracao_2026_*.py verde, CATALOGO_FIGURAS.md atualizado com a nota de carregamento sob demanda, commit com mensagem imperativa e a linha final `Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>`.
+
+---
+
+<task-notification>
+<task-id>bq3qjl4dj</task-id>
+<tool-use-id>toolu_014du16YZcmZboVh5Nq5nppP</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Background command "Run the full test suite" completed (exit code 0)</summary>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>bszxcy6gk</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Background command "Wait for the full test suite to finish and print its tail" completed (exit code 0)</summary>
+</task-notification>
