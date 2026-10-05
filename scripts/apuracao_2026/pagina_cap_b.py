@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from . import pagina_comparacao as CMP
 from . import pagina_texto_b as T
+from . import pagina_texto_senado_flavio as TSF
 from .pagina_comum import Capitulo, Dados, checar, secao
 from .pagina_texto import fig
 
@@ -61,7 +62,9 @@ def r_senado(d: Dados, cap: Capitulo) -> str:
     )
     h += T.senado_a(S) + fig("hemiciclo_senado", d)
     h += T.senado_b(S) + CMP.senado(d) + fig("senado_segundas_vagas", d)
-    h += T.senado_c(S) + "</section>"
+    h += T.senado_c(S)
+    h += TSF.capitulo(d)
+    h += "</section>"
     return h
 
 

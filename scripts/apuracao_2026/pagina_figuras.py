@@ -19,6 +19,7 @@ from . import (
     pagina_fig_regioes,
     pagina_fig_secoes,
     pagina_fig_secoes_b,
+    pagina_fig_senado_flavio,
 )
 from .pagina_fig_base import FIGURAS
 from .pagina_figuras_prim import (
@@ -53,6 +54,7 @@ MODULOS_CATALOGO = (
     pagina_fig_regioes,
     pagina_fig_secoes,
     pagina_fig_secoes_b,
+    pagina_fig_senado_flavio,
 )
 
 __all__ = [

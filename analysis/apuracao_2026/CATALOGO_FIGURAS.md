@@ -26,6 +26,9 @@ Regra: o texto chama `figura_catalogo("nome", dados, **opcoes)` (acessor em `scr
 | `camara_por_uf` | 6 | pequenos múltiplos ou empilhadas por UF (campo) | ficha |
 | `hemiciclo_senado` | 7 | 81 (27 contorno + 54 novos) por campo | ficha por assento; alternância 2023 / 2027 |
 | `senado_segundas_vagas` | 7 | distância entre 2º e 3º por UF | ficha |
+| `senado_pl_x_flavio_uf` | 7 | barras divergentes por UF, duas por linha: soma do PL e soma do bloco aliado (direita e centro-direita fora dos alinhados a Lula) na base de votos do Senado menos a parcela de Flávio nos válidos de presidente; linha do país no topo; nomes lançados por bloco à direita | ficha por UF: Flávio, cada bloco com nomes, % da base, diferença e votos por voto de Flávio |
+| `senado_vao_candidatos` | 7 | barras divergentes, cor do campo: a candidatura mais votada do bloco aliado em cada UF (eleita em negrito) menos Flávio, no formato de `vao_estadual` | ficha com as duas réguas e os votos; alternância base de votos / eleitores alcançados |
+| `senado_carregadores_mapa` | 7 | mapa municipal do índice dos carregadores (100 = rende como Flávio) para os eleitos do bloco nas 4 maiores UFs com eleito de direita, uma aba por candidatura; abaixo, os 10 municípios de maior e de menor índice | ficha por município com o índice de cada eleito da UF; abas |
 | `assembleias_campo` | 8 | empilhadas por campo nas 11 casas, 2022 × 2026 | ficha |
 | `vao_estadual` | 9 | barras com sinal nas 27 UFs: candidatura ao governo menos o finalista do lado dela; centro contra o finalista que a coligação apoiou (`COMPARACAO_CENTRO`), hachura quando sem apoio declarado | ficha com as duas diferenças (contra Flávio e contra Lula), a comparação e a evidência |
 | `governadores_mapa` | 9 | coroplético: eleito 1º turno (campo) ou 2º turno (hachura clara) | ficha |
