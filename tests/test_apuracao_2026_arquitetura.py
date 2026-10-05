@@ -243,3 +243,34 @@ def test_bloco_de_texto(tmp_path):
 
 def test_bloco_sem_dado_some(tmp_path):
     assert TA.bloco(Dados(pasta=tmp_path)) == ""
+
+
+def test_desaceleracao_antes_da_lacuna():
+    serie = [[f"19:{m:02d}", 1500 if m < 22 else 500] for m in range(32)]
+    serie += [["19:59", 1800], ["20:00", 2000]]
+    lac = {"de": "2026-10-04 19:31:50", "ate": "2026-10-04 19:59:22"}
+    d = A.desaceleracao(serie, lac)
+    assert d["janela"] == ["19:22", "19:31"] and d["base"] == ["19:02", "19:21"]
+    assert d["media_janela"] == 500 and d["media_base"] == 1500
+    assert d["razao"] == 0.333
+    assert d["retomada"] == [["19:59", 1800], ["20:00", 2000]]
+
+
+def test_figura_e_texto_marcam_desaceleracao(tmp_path):
+    fx = _fixture()
+    fx["recebimento_2026"]["desaceleracao"] = {
+        "janela": ["17:02", "17:03"],
+        "media_janela": 2.0,
+        "base": ["17:00", "17:01"],
+        "media_base": 6.0,
+        "min_base": 5,
+        "max_base": 7,
+        "retomada": [["17:06", 9], ["17:07", 8]],
+        "razao": 0.333,
+    }
+    h = FIGURAS["volume_noite"](
+        {"arquitetura": fx, "linha_do_tempo": _linha_do_tempo()}
+    )
+    assert "ritmo a 33%" in h and "#efe8d6" in h
+    (tmp_path / "arquitetura.json").write_text(json.dumps(fx), encoding="utf-8")
+    assert "cai a cerca de um terço" in TA.bloco(Dados(pasta=tmp_path))

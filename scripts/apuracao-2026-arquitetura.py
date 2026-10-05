@@ -74,6 +74,8 @@ def main() -> None:
     serie26 = A.por_minuto(rec, A.INICIO, A.FIM)
     lac26 = A.lacunas(rec, A.INICIO.replace(minute=10), A.FIM)
     pico_amostra = max(n for _, n in serie26)
+    pausa_rec = max(lac26, key=lambda z: z["minutos"])
+    desacel = A.desaceleracao(serie26, pausa_rec)
 
     s22 = A.ler_2022(ZIP_2022)
     serie22 = A.por_minuto(s22["recebimentos"], A.INICIO_2022, A.FIM_2022)
@@ -146,6 +148,13 @@ def main() -> None:
             "linhas": [[m, n, round(n * fator)] for m, n in serie26],
             "pico_amostra_por_minuto": pico_amostra,
             "lacunas": lac26,
+            "desaceleracao": {
+                **desacel,
+                "nota": (
+                    "Medido na coleta parcial (amostra, sem extrapolação). O carimbo pode ser "
+                    "aplicado por um componente posterior ao recebimento."
+                ),
+            },
         },
         "recebimento_2022": {
             "colunas": ["minuto", "secoes"],

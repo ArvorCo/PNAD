@@ -46,6 +46,7 @@ TEAL = "#0b6650"
 BRANCO = "#ffffff"
 TRACO_HIP = "#7d5b00"
 COR_2022 = "#6b4a92"
+DESACEL = "#efe8d6"  # mais claro que a sombra das paradas
 
 # Natureza de cada caixa: documentada (há documento público), hipótese (do autor,
 # sem documento) e proposta (o desenho recomendado).
@@ -394,6 +395,30 @@ def volume_noite(d, **_op) -> str:
         HACHURA,
         sombras(L, X, topo, base),
     ]
+    des = A["recebimento_2026"].get("desaceleracao")
+    if des:
+        a, b = minutos(des["janela"][0]), minutos(des["janela"][1]) + 1
+        out.append(
+            r(
+                X(a),
+                topo + 44,
+                X(b) - X(a),
+                base - topo - 44,
+                DESACEL,
+                f' stroke="{GOLD}" stroke-width="1.2" stroke-dasharray="4 3"',
+            )
+        )
+        out.append(
+            '<g data-alt-show="r26" pointer-events="none">'
+            + chip(
+                X(a) - 6,
+                topo + 108,
+                f"{des['janela'][0]} a {des['janela'][1]}: ritmo a {num(des['razao'] * 100, 0)}%",
+                13,
+                "end",
+            )
+            + "</g>"
+        )
     g26 = [
         eixo_y(
             Yr, ticks(0, teto_rec, 5), esq, dir_, lambda v: f"{num(v / 1000, 0)} mil"
@@ -504,7 +529,13 @@ def volume_noite(d, **_op) -> str:
         f"{num(am['fator_extrapolacao'], 2)}: ordem de grandeza, não o minuto exato do país. O traço dourado é o ritmo "
         f"do arquivo nacional entre versões (pico de {inteiro(pico['secoes_por_minuto'])} seções por minuto). Em 2022, "
         f"país inteiro, o pico foi de {inteiro(A['recebimento_2022']['pico']['secoes'])} por minuto. "
-        "Fonte: arquitetura.json e linha_do_tempo.json."
+        + (
+            f"Faixa clara tracejada, dentro da terceira parada do nacional: de {des['janela'][0]} a {des['janela'][1]} os carimbos caem a "
+            f"{num(des['razao'] * 100, 0)}% do ritmo dos vinte minutos anteriores, antes da pausa geral. "
+            if des
+            else ""
+        )
+        + "Fonte: arquitetura.json e linha_do_tempo.json."
     )
     return figura_html(
         "volume_noite", "".join(out), legenda_, tips, controles=ctl, minw=900, dim=False

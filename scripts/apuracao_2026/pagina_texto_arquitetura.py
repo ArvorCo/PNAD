@@ -110,6 +110,23 @@ def carimbo(A: dict) -> str:
     )
 
 
+def desaceleracao(A: dict) -> str:
+    des = A["recebimento_2026"].get("desaceleracao")
+    if not des:
+        return ""
+    r1, r2 = des["retomada"]
+    return p(
+        f"A parada geral não veio de repente. De {des['janela'][0]} a {des['janela'][1]}, os carimbos caem para cerca "
+        f"de {inteiro(des['media_janela'])} por minuto, contra {inteiro(des['min_base'])} a "
+        f"{inteiro(des['max_base'])} por minuto (média de {inteiro(des['media_base'])}) entre {des['base'][0]} e "
+        f"{des['base'][1]}: o ritmo cai a cerca de um terço antes de zerar. Na volta, {inteiro(r1[1])} às {r1[0]} e "
+        f"{inteiro(r2[1])} às {r2[0]}, acima do ritmo anterior. Medido na coleta parcial, sem extrapolação; vale a "
+        "mesma ressalva do carimbo, que pode ser aplicado por um componente posterior ao recebimento. Desacelerar antes "
+        "de travar é o comportamento de fila perto da saturação.",
+        "verificado",
+    )
+
+
 def carimbo_leitura() -> str:
     return p(
         "Duas leituras cabem nesse fato. Ou a recepção parou de registrar boletins, e então o problema estava antes da "
@@ -288,7 +305,13 @@ def bloco(d: Dados) -> str:
     checar(d, ARQ, CHAVES)
     h = '<h3 id="arquitetura">Onde um sistema como esse engasga</h3>'
     h += documentos(A) + sem_prova_2026(A) + hipotese_autor()
-    h += carimbo(A) + carimbo_leitura() + volume(A) + volume_leitura(A)
+    h += (
+        carimbo(A)
+        + desaceleracao(A)
+        + carimbo_leitura()
+        + volume(A)
+        + volume_leitura(A)
+    )
     h += _fig("volume_noite", d)
     h += mecanismo(A) + ANALOGIA
     h += '<h3 id="arquitetura-ideal">O desenho que não engasga</h3>'

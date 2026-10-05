@@ -20,6 +20,8 @@ Leonardo Dias: a centralização importa os boletins num Oracle Exadata, e a imp
 
 O carimbo de recebimento publicado no `aux` de cada seção (`dr_hr`, hora de Brasília: AC e DF começam no mesmo 17:08) **some em três janelas que coincidem com as paradas do arquivo nacional**: 18:00:55 a 18:08:47 (7,9 min), 18:49:46 a 18:54:03 (4,3 min) e **19:31:50 a 19:59:22 (27,5 min)**, a pausa geral. Volta em rajada às 19:59. Amostra: 190.223 seções de 20 UFs (38,1% do país; faltam BA, MG, PE, PR, RJ, RS e SP).
 
+Desaceleração antes da pausa geral (verificado na coleta parcial, sem extrapolação; confirmado pelo coordenador em 197.481 seções): de 19:22 a 19:31 os carimbos caem para cerca de 586 por minuto, contra 914 a 2.066 (média 1.595) de 19:02 a 19:21, ou 37% do ritmo anterior; na volta, 1.775 às 19:59 e 2.033 às 20:00, acima do ritmo anterior. O sistema desacelerou a um terço antes de parar e retomou acima da taxa anterior, o comportamento de fila perto da saturação. Mesma ressalva: o carimbo pode ser de um componente posterior ao recebimento. Na figura `volume_noite`, faixa em tom mais claro que a das paradas. Números em `dados/arquitetura.json`, `recebimento_2026.desaceleracao`.
+
 Leitura (inferência): ou a recepção parou de registrar, ou o carimbo é aplicado por um componente posterior que parou junto com a divulgação. Os arquivos públicos não separam. Em qualquer caso a parada não foi só de vitrine.
 
 ## Dimensionamento (verificado na amostra; extrapolação declarada)

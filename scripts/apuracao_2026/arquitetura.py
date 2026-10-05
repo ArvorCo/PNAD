@@ -86,6 +86,34 @@ def lacunas(
     return out
 
 
+def desaceleracao(
+    serie: Sequence[Sequence],
+    lacuna: Mapping[str, Any],
+    antes: int = 10,
+    base: int = 20,
+) -> dict:
+    """Ritmo nos `antes` minutos que precedem a lacuna, contra os `base` minutos anteriores,
+    e os dois primeiros minutos cheios depois dela. `serie` é [[HH:MM, n], ...]."""
+    idx = {m: i for i, (m, _n) in enumerate(serie)}
+    ini = lacuna["de"][11:16]
+    fim = lacuna["ate"][11:16]
+    i0 = idx[ini]
+    janela = serie[max(0, i0 - antes + 1) : i0 + 1]
+    anterior = serie[max(0, i0 - antes - base + 1) : max(0, i0 - antes + 1)]
+    depois = serie[idx[fim] : idx[fim] + 2]
+    media = statistics.fmean
+    return {
+        "janela": [janela[0][0], janela[-1][0]],
+        "media_janela": round(media(n for _, n in janela), 1),
+        "base": [anterior[0][0], anterior[-1][0]],
+        "media_base": round(media(n for _, n in anterior), 1),
+        "min_base": min(n for _, n in anterior),
+        "max_base": max(n for _, n in anterior),
+        "retomada": [[m, n] for m, n in depois],
+        "razao": round(media(n for _, n in janela) / media(n for _, n in anterior), 3),
+    }
+
+
 def quantis(valores: Sequence[float], qs: Sequence[float]) -> list[float]:
     v = sorted(valores)
     if not v:
