@@ -7,12 +7,22 @@ SVG com `<title>` e `<desc>`, fichas em `<script type="application/json"
 class="tips">` e legenda. O SVG é desenhado inteiro em Python; o JavaScript de
 `pagina_interativo` só acrescenta a ficha, o realce e as alternâncias, e a figura
 continua completa quando o script não roda.
+
+Carregamento sob demanda: figura cujo corpo (controles, SVG, tabelas e fichas)
+passa de `ADIAR_ACIMA` bytes sai da página dentro de `<noscript class="fig-src">`.
+Com script ligado o navegador trata esse bloco como texto cru, sem montar DOM nem
+pintar nada; `pagina_interativo` lê o texto e o materializa quando a figura se
+aproxima da janela, quando a âncora do capítulo é aberta, quando um `<details>`
+que a contém abre ou antes de imprimir. Sem script, o próprio navegador parseia o
+`<noscript>` e a figura aparece inteira. Uma cópia só serve aos dois casos, e a
+página continua funcionando aberta do disco, sem rede.
 """
 
 from __future__ import annotations
 
 import json
 import math
+import re
 from collections.abc import Callable
 from html import escape
 
@@ -31,6 +41,7 @@ from .pagina_comum import (
     num,
 )
 
+ADIAR_ACIMA = 150_000
 FONTE = "Archivo, Helvetica, Arial, sans-serif"
 MONO = "IBM Plex Mono, ui-monospace, monospace"
 W = 1100
@@ -258,16 +269,35 @@ def figura_html(
     minw: int = 760,
     dim: bool = True,
     apos: str = "",
+    adiar: bool | None = None,
 ) -> str:
-    """`modo`: 'scroll' (rolagem interna abaixo de `minw`), 'fit' (até 760 px) ou 'full'."""
+    """`modo`: 'scroll' (rolagem interna abaixo de `minw`), 'fit' (até 760 px) ou 'full'.
+
+    `adiar`: None decide pelo tamanho do corpo (`ADIAR_ACIMA`); True e False forçam.
+    """
     cls = {"scroll": "chart-scroll", "fit": "chart-fit", "full": "chart-full"}[modo]
     estilo = f' style="--minw:{minw}px"' if modo == "scroll" else ""
     dimattr = " data-dim" if dim else ""
-    return (
-        f'<figure class="reveal fig-i" id="fig-{nome}" data-fig="{nome}"{dimattr}>'
-        f'{controles}<div class="{cls}" tabindex="0"{estilo}>{svg}</div>{apos}{tips.script()}'
+    corpo = f'{controles}<div class="{cls}" tabindex="0"{estilo}>{svg}</div>{apos}{tips.script()}'
+    rodape = (
         f'<figcaption>{legenda} <span class="dica">ficha ao passar o ponteiro ou tocar</span>'
         "</figcaption></figure>"
+    )
+    if adiar is None:
+        adiar = len(corpo.encode("utf-8")) >= ADIAR_ACIMA
+    if not adiar:
+        return (
+            f'<figure class="reveal fig-i" id="fig-{nome}" data-fig="{nome}"{dimattr}>'
+            f"{corpo}{rodape}"
+        )
+    if "</noscript" in corpo.lower():
+        raise ValueError(f"figura {nome}: corpo contém o fechamento do noscript")
+    vb = re.search(r'viewBox="0 0 ([\d.]+) ([\d.]+)"', svg)
+    razao = f"{float(vb.group(1)):.0f}/{float(vb.group(2)):.0f}" if vb else "11/6"
+    return (
+        f'<figure class="reveal fig-i fig-adiada" id="fig-{nome}" data-fig="{nome}"{dimattr} data-adiada>'
+        f'<div class="fig-espera" style="--ar:{razao}" aria-hidden="true">figura carregada ao chegar aqui</div>'
+        f'<noscript class="fig-src">{corpo}</noscript>{rodape}'
     )
 
 

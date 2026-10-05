@@ -42,6 +42,16 @@ SONDA = """
     }
   }
 
+  // Figura adiada (corpo em <noscript class="fig-src">, materializado pelo
+  // script da pagina ao rolar ou ao imprimir): o auditor dispara `beforeprint`
+  // antes desta sonda. Se ainda sobrou bloco cru, o proprio script da pagina
+  // falhou em materializar, e isso e defeito de renderizacao.
+  for (const el of document.querySelectorAll('noscript.fig-src')) {
+    const fig = el.closest('figure');
+    problemas.push({tipo: 'figura adiada nao materializada', tag: fig && fig.id ? '#' + fig.id : 'noscript',
+                    classe: fig ? fig.className : '', style: ''});
+  }
+
   const alvo = /(chart|map|scatter|table-body|legend|readout)$/;
   // <defs>, <pattern>, <linearGradient> e afins definem pintura e nao ocupam
   // area por desenho. Medir altura neles produz falso positivo.
@@ -72,6 +82,10 @@ def audit(page, url: str) -> list[dict]:
         "document.querySelectorAll('.reveal').forEach(e => e.classList.add('visible'))"
     )
     page.wait_for_timeout(400)
+    # Materializa toda figura adiada pelo gatilho que a pagina ja tem para
+    # impressao; a sonda acusa o que sobrar cru.
+    page.evaluate("window.dispatchEvent(new Event('beforeprint'))")
+    page.wait_for_timeout(600)
     problemas = page.evaluate(SONDA)
     for texto in erros:
         problemas.append(

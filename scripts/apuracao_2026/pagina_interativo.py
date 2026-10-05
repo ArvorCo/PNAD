@@ -8,6 +8,14 @@ contorno lima. Toque mostra, toque fora esconde. Botões `data-alt` trocam a sé
 (elementos `data-alt-show`, preenchimentos `data-af` e traços `data-as`) sem recarregar; botões
 `data-filtro` apagam os grupos `data-g` de outra região. Sem JavaScript, cada
 figura continua inteira na alternância padrão. Funciona em `file://`.
+
+Figura adiada (`figure[data-adiada]`, ver `pagina_fig_base.figura_html`): o corpo
+fica em `<noscript class="fig-src">`, texto cru para o navegador com script. O
+script o parseia num `<template>` e o insere no lugar da espera quando a figura
+chega a 1.000 px da janela (IntersectionObserver), quando a âncora do capítulo ou
+da figura é aberta (`hashchange` e na carga), quando um `<details>` que a contém
+abre, ou antes de imprimir (`beforeprint`, que os auditores também disparam).
+Navegador sem IntersectionObserver materializa tudo na carga.
 """
 
 from __future__ import annotations
@@ -55,6 +63,9 @@ opacity:0;transition:opacity .12s ease}
 letter-spacing:.08em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
 .dica::before{content:"";inline-size:8px;block-size:8px;border:2px solid var(--muted);border-radius:50%}
 html:not(.js) .dica{display:none}
+.fig-espera{display:grid;place-items:center;aspect-ratio:var(--ar,11/6);max-height:70vh;border:1px dashed var(--line);color:var(--muted);font:600 11.5px/1.4 var(--mono);letter-spacing:.1em;text-transform:uppercase}
+html:not(.js) .fig-espera{display:none}
+@media print{.fig-espera{display:none}}
 @media(max-width:719px){.fig-ctl button{padding:8px 10px;font-size:13px}.fig-tip{max-width:calc(100% - 12px)}}
 @media print{.fig-ctl,.fig-tip,.dica{display:none}}
 """
@@ -187,7 +198,41 @@ function monta(fig){
     fecha();
   });});
 }
-q(document,'figure[data-fig]').forEach(monta);
+function materializa(fig){
+  var src=fig.querySelector('noscript.fig-src');
+  if(!src){return;}
+  var tpl=document.createElement('template');
+  tpl.innerHTML=src.textContent;
+  fig.insertBefore(tpl.content,src);
+  fig.removeChild(src);
+  var espera=fig.querySelector('.fig-espera');
+  if(espera){fig.removeChild(espera);}
+  fig.removeAttribute('data-adiada');fig.classList.remove('fig-adiada');
+  monta(fig);
+}
+function materializaTodas(raiz){q(raiz||document,'figure[data-adiada]').forEach(materializa);}
+function porAncora(){
+  var id=location.hash.slice(1);if(!id){return;}
+  var alvo=document.getElementById(id);if(!alvo){return;}
+  var fig=alvo.closest('figure[data-adiada]');
+  if(fig){materializa(fig);}
+  materializaTodas(alvo.closest('section')||alvo);
+}
+q(document,'figure[data-fig]:not([data-adiada])').forEach(monta);
+var adiadas=q(document,'figure[data-adiada]');
+if(adiadas.length){
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){
+      if(e.isIntersecting){io.unobserve(e.target);materializa(e.target);}});},
+      {rootMargin:'1000px 0px 1000px 0px'});
+    adiadas.forEach(function(f){io.observe(f);});
+  }else{materializaTodas();}
+  porAncora();
+  window.addEventListener('hashchange',porAncora);
+  document.addEventListener('toggle',function(ev){
+    if(ev.target&&ev.target.open){materializaTodas(ev.target);}},true);
+  window.addEventListener('beforeprint',function(){materializaTodas();});
+}
 })();
 """
 

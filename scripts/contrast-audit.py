@@ -108,6 +108,25 @@ UNSTICK = """
 }
 """
 
+# Figura adiada guarda o corpo em `<noscript class="fig-src">`, que o navegador
+# com script trata como texto cru: nada e pintado ate o script da pagina
+# materializar o bloco. Assim como o auditor pula `<details>` fechado, aqui ele
+# forca a materializacao antes de coletar o texto: dispara `beforeprint`, que e
+# o gatilho da propria pagina, e parseia por conta propria o que sobrar.
+MATERIALIZE = """
+() => {
+  window.dispatchEvent(new Event('beforeprint'));
+  let restantes = 0;
+  for (const src of document.querySelectorAll('noscript.fig-src')) {
+    restantes++;
+    const tpl = document.createElement('template');
+    tpl.innerHTML = src.textContent;
+    src.parentNode.replaceChild(tpl.content, src);
+  }
+  return restantes;
+}
+"""
+
 # O acervo tem três convenções de revelação ao rolar: `.reveal.in`,
 # `.reveal.visible` e `.rv.in`. Marcar as classes reproduz o estado de quem
 # rolou a página inteira; a folha injetada é a rede de segurança para qualquer
@@ -273,6 +292,10 @@ def audit_page(page, url: str) -> list[dict]:
 
     page.goto(url, wait_until="networkidle")
     page.wait_for_timeout(1200)
+    restantes = page.evaluate(MATERIALIZE)
+    if restantes:
+        print(f"aviso: {restantes} figura(s) adiada(s) materializada(s) pelo auditor")
+    page.wait_for_timeout(600)
     page.evaluate(REVEAL)
     page.wait_for_timeout(600)
     items = page.evaluate(COLLECT)
