@@ -11,6 +11,7 @@ from html import escape
 from . import pagina_comparacao as CMP
 from . import pagina_texto as T
 from . import pagina_texto_arquitetura as TA
+from . import pagina_texto_noite_regioes as TNR
 from .pagina_comum import (
     Capitulo,
     Dados,
@@ -83,7 +84,8 @@ def r_noite(d: Dados, cap: Capitulo) -> str:
     h += T.noite_a(L, linhas) + fig("acumulado_noite", d)
     h += T.noite_b(par) + fig("lotes_noite", d)
     h += T.noite_c(linhas) + fig("mapa_hora_100", d)
-    h += T.noite_d(L) + "</section>"
+    h += T.noite_d(L)
+    h += TNR.noite_por_regiao(d) + "</section>"
     return h
 
 
@@ -147,6 +149,7 @@ def r_falha(d: Dados, cap: Capitulo) -> str:
     h += T.falha_a(L, par) + fig("divergencia_nacional", d)
     h += T.falha_correcao(L) + fig("latencia_hora", d)
     h += T.falha_b(par, L) + T.falha_juizo(par)
+    h += TNR.estados_lentos(d)
     h += TA.bloco(d) + "</section>"
     return h
 

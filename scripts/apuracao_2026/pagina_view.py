@@ -38,6 +38,7 @@ SCRIPTS = [
     "scripts/apuracao-2026-secoes.py",
     "scripts/apuracao-2026-estrategia.py",
     "scripts/apuracao-2026-comparacao.py",
+    "scripts/apuracao-2026-noite-regioes.py",
     "scripts/apuracao-2026-senado-x-flavio.py",
     "scripts/apuracao-2026-arquitetura.py",
     "scripts/apuracao-2026-build.py",
@@ -59,6 +60,8 @@ JSONS = [
     "contexto_seguranca.json",
     "estrategia_2t.json",
     "comparacao_2022.json",
+    "noite_regioes.json",
+    "lentidao_ufs.json",
     "senado_x_flavio.json",
     "arquitetura.json",
 ]
@@ -284,6 +287,7 @@ def r_fontes(d: Dados, cap: Capitulo) -> str:
         "python3 scripts/apuracao-2026-secoes.py\n"
         "python3 scripts/apuracao-2026-estrategia.py\n"
         "python3 scripts/apuracao-2026-comparacao.py\n"
+        "python3 scripts/apuracao-2026-noite-regioes.py\n"
         "python3 scripts/apuracao-2026-senado-x-flavio.py\n"
         "python3 scripts/apuracao-2026-build.py\n"
         f"python3 scripts/social-cards.py --only {SLUG}</pre></details>"

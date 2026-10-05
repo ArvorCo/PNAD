@@ -143,6 +143,13 @@ def montar_ufs(
                     "completa": completa,
                     **cont,
                 },
+                "primeira_secao": {
+                    "2026_totalizado": next((m for m, st in p26 if st > 0), None),
+                    "2022_recebido": min(s22["recebimento"].get(uf, []), default=None),
+                    "2022_totalizado": min(
+                        s22["totalizacao"].get(uf, []), default=None
+                    ),
+                },
                 "cauda_min": {
                     "2026": _cauda(m26),
                     "2022": _cauda(m22t),

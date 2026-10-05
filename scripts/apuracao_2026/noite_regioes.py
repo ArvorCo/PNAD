@@ -560,6 +560,10 @@ def _lacuna_ativa(series, marcos) -> dict[str, Any]:
     return {**lac, "janela": [hora_de(inicio), fim]}
 
 
+def _iso_brt(hora: str) -> str:
+    return datetime.fromisoformat(hora).replace(tzinfo=BRT).isoformat()
+
+
 def hora_iso(seg: float) -> str:
     return datetime.fromtimestamp(seg, tz=timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
@@ -617,6 +621,10 @@ def montar(
         "nordeste": nordeste_no_fluxo(pontos, totais, lts, marcas),
         "lacuna_da_soma": _lacuna_ativa(series, marcos),
         "depois_da_meia_noite": depois_de(pontos, meia_noite.isoformat()),
+        "depois_dos_99": {
+            "desde_brt": marcos["Brasil"]["99"],
+            **depois_de(pontos, _iso_brt(marcos["Brasil"]["99"])),
+        },
         "painel_nacional": painel_nacional(nacional, series),
         "lotes_5min": lts,
         "minutos": reg,
