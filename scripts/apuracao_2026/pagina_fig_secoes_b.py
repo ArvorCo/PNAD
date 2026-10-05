@@ -255,7 +255,7 @@ METRICAS = [
 
 def _limite(U: dict, chave: str) -> float:
     vals = [0.5]
-    for est in ("dentro_zona", "dentro_local"):
+    for est in ("dentro_zona", "dentro_local", "zona_2022"):
         for par in (U.get(est) or {}).get("pares", []):
             m = par.get(chave) or {}
             for v in [m.get("estimativa"), m.get("bruto"), *(m.get("ic95") or [])]:
@@ -266,13 +266,19 @@ def _limite(U: dict, chave: str) -> float:
 
 def _painel_estimador(U: dict, est: str, tips: Tips, topo: float) -> str:
     pares = (U.get(est) or {}).get("pares", [])
-    nome_est = "dentro da zona" if est == "dentro_zona" else "dentro do mesmo local"
+    nome_est = {
+        "dentro_zona": "dentro da zona",
+        "dentro_local": "dentro do mesmo local",
+        "zona_2022": "dentro da zona, 1º turno de 2022",
+    }.get(est, est)
     out = []
     if not pares:
         out.append(t(560, topo + 40, VAZIO, 14, MUTED, "middle"))
         return "".join(out)
     lx, larg, gap = 180, 168, 14
     for j, (chave, nome, base, cor) in enumerate(METRICAS):
+        if est == "zona_2022" and chave == "flavio_pp":
+            nome = "Bolsonaro"
         px = lx + j * (larg + gap)
         lim = _limite(U, chave)
         X = escala(-lim, lim, px + 6, px + larg - 6)
@@ -411,7 +417,7 @@ def _registro(U: dict) -> str:
                 "Modelo",
                 "Seções",
                 "Votantes",
-                "Direita %",
+                "Bolsonaro %",
                 "Lula %",
                 "Abstenção %",
             ],
@@ -429,7 +435,29 @@ def _registro(U: dict) -> str:
 def modelo_urna_zona(d, **_op) -> str:
     S = secoes(d)
     U = S["urna"]
+    todos22 = ((U.get("ano_2022") or {}).get("dentro_zona") or {}).get("pares", [])
+    n26 = max(
+        len((U.get("dentro_zona") or {}).get("pares", [])),
+        len((U.get("dentro_local") or {}).get("pares", [])),
+        1,
+    )
+    # 2022 tem muitos pares; mostra os de mais zonas, no máximo o número de linhas de 2026 (ou 6)
+    p22 = sorted(todos22, key=lambda x: -(x.get("unidades") or 0))[: max(n26, 6)]
+    U22 = (
+        {
+            "zona_2022": {
+                "pares": [
+                    {**x, "flavio_pp": x.get("bolsonaro_pp", x.get("flavio_pp"))}
+                    for x in p22
+                ]
+            }
+        }
+        if p22
+        else None
+    )
+    U = {**U, **(U22 or {})}
     n = max(
+        len(p22),
         len((U.get("dentro_zona") or {}).get("pares", [])),
         len((U.get("dentro_local") or {}).get("pares", [])),
         1,
@@ -448,10 +476,16 @@ def modelo_urna_zona(d, **_op) -> str:
         ),
         f'<g data-alt-show="dentro_zona">{_painel_estimador(U, "dentro_zona", tips, topo)}</g>',
         f'<g data-alt-show="dentro_local" display="none">{_painel_estimador(U, "dentro_local", tips, topo)}</g>',
+        (
+            f'<g data-alt-show="zona_2022" display="none">{_painel_estimador(U, "zona_2022", tips, topo)}</g>'
+            if U22
+            else ""
+        ),
         "</svg>",
     ]
     ctl = botoes(
-        [("dentro_zona", "Dentro da zona"), ("dentro_local", "Dentro do mesmo prédio")],
+        [("dentro_zona", "Dentro da zona"), ("dentro_local", "Dentro do mesmo prédio")]
+        + ([("zona_2022", "2022, dentro da zona")] if U22 else []),
         "dentro_zona",
         "Comparação",
     )
@@ -466,7 +500,13 @@ def modelo_urna_zona(d, **_op) -> str:
         f"{escape((U.get('interpretacao') or [''])[0])} Diferença = modelo mais novo menos o mais velho, em pontos. "
         f"Intervalo por bootstrap de {inteiro(dz.get('bootstrap'))} reamostras de zonas (ou de locais), com ao menos "
         f"{dz.get('minimo_secoes_por_modelo', 's/d')} seções de cada modelo na zona. A distância entre o losango e o ponto é "
-        f"o que a geografia inflava. {nota_cobertura(S)} Fonte: secoes.json."
+        f"o que a geografia inflava."
+        + (
+            f" Em 2022, Bolsonaro no lugar de Flávio, com os {len(p22)} pares de mais zonas entre {len(todos22)}."
+            if todos22
+            else ""
+        )
+        + f" {nota_cobertura(S)} Fonte: secoes.json."
     )
     return figura_html(
         "modelo_urna_zona",
@@ -568,7 +608,7 @@ def _painel_encerramento(OD: dict, px: float, py: float, tips: Tips) -> str:
     hist = H.get("histograma_encerramento") or []
     out = [
         t(px, py + 18, "Hora de encerramento da urna", 14, INK, weight="700"),
-        t(px, py + 36, escape(H.get("fuso", "")), 13, MUTED),
+        t(px, py + 36, "hora de Brasília", 13, MUTED),
     ]
     if not hist:
         return "".join(out) + _vazio(px, py)

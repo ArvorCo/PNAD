@@ -79,7 +79,9 @@ def extremos_contagem(S: dict) -> str:
             continue
         t90 = lim[0]
         resto = ", ".join(
-            f"{x['limiar']}% ou mais em {inteiro(x['secoes'])}" for x in lim[1:] if x
+            f"{x['limiar']}%{'' if x['limiar'] >= 100 else ' ou mais'} em {inteiro(x['secoes'])}"
+            for x in lim[1:]
+            if x
         )
         partes.append(
             f"{NOME[c]} teve 90% dos válidos ou mais em <strong>{inteiro(t90['secoes'])}</strong> seções "
@@ -126,9 +128,12 @@ def extremos_onde(S: dict) -> str:
     return p(". ".join(frases) + ".", "verificado") if frases else ""
 
 
-def _faixa_alta(X: dict) -> dict | None:
-    fx = [f for f in X["faixas_zona"] if f.get("min_pct") is not None]
-    return max(fx, key=lambda f: f["min_pct"]) if fx else None
+def _faixa_alta(X: dict, corte: float = 80) -> dict | None:
+    """Soma das faixas cuja zona já dá `corte`% ou mais ao candidato."""
+    fx = [f for f in X["faixas_zona"] if (f.get("min_pct") or 0) >= corte]
+    if not fx:
+        return None
+    return {"min_pct": corte, "secoes": sum(f["secoes"] or 0 for f in fx)}
 
 
 def extremos_excesso(S: dict) -> str:
@@ -207,8 +212,9 @@ def extremos_amostras(S: dict) -> str:
     for c in ("lula", "flavio"):
         n = len(cem.get(c) or [])
         tot = (R.get((c, 100)) or {}).get("secoes")
+        n20 = cem.get(f"{c}_total", n)
         frase_cem.append(
-            f"{NOME[c]} teve 100% dos válidos em {inteiro(tot)} seções, {n if n < 60 else 'ao menos 60'} delas com 20 válidos ou mais"
+            f"{NOME[c]} teve 100% dos válidos em {inteiro(tot)} seções, {inteiro(n20)} delas com 20 válidos ou mais"
         )
     return (
         "<p>Três amostras de cada lado, as que mais passam a própria zona entre as de "
@@ -219,7 +225,55 @@ def extremos_amostras(S: dict) -> str:
     )
 
 
+def _verbo(n: int, um: str, varios: str) -> str:
+    return um if n == 1 else varios
+
+
+def extremos_2022(S: dict) -> str:
+    """A mesma seção em 2022, quando o coletor casou número e local nos dois cadastros."""
+    C = S["extremos"].get("comparacao_2022") or {}
+    if not C.get("disponivel"):
+        motivo = C.get("motivo")
+        return (
+            p(f"Comparação com 2022 na mesma seção: {escape(motivo)}.", "verificado")
+            if motivo
+            else ""
+        )
+    frases = [
+        f"A mesma seção existe em 2022 para {inteiro(C['secoes_casadas'])} das {inteiro(C['secoes_2026'])} seções desta base "
+        f"(critério: {escape(C.get('criterio_mesma_secao', ''))})"
+    ]
+    for c, rival in (("lula", "Lula"), ("flavio", "Bolsonaro")):
+        x = C.get(c) or {}
+        if not x.get("secoes_90_2026_casadas"):
+            continue
+        novas = x["novas_abaixo_70_em_2022"]
+        frases.append(
+            f"das {inteiro(x['secoes_90_2026_casadas'])} com {NOME[c]} em 90% ou mais, {inteiro(x['tambem_90_em_2022_1t'])} já "
+            f"{_verbo(x['tambem_90_em_2022_1t'], 'dava', 'davam')} 90% ou mais a {rival} no 1º turno de 2022 e "
+            f"{inteiro(x['acima_80_em_2022_1t'])} {_verbo(x['acima_80_em_2022_1t'], 'dava', 'davam')} 80% ou mais (mediana de "
+            f"{pct(x['pct_2022_1t_mediana'])}); "
+            + (
+                "nenhuma estava abaixo de 70%"
+                if not novas
+                else f"{inteiro(novas)} {_verbo(novas, 'estava', 'estavam')} abaixo de 70%"
+            )
+        )
+    return p("; ".join(frases) + ".", "verificado")
+
+
 def extremos_contrario(S: dict) -> str:
+    C22 = S["extremos"].get("comparacao_2022") or {}
+    x22 = C22.get("lula") or {}
+    if C22.get("disponivel") and x22.get("secoes_90_2026_casadas"):
+        parte = 100 * x22["acima_80_em_2022_1t"] / x22["secoes_90_2026_casadas"]
+        return p(
+            "<strong>O achado que contraria a leitura apressada:</strong> a zona engana, a própria seção não. Contra o resto da "
+            f"zona, a seção de 90% parece destoar ({pts(S['extremos']['excesso']['lula'].get('excesso_zona_pp_mediana'))} na "
+            f"mediana); contra ela mesma em 2022, {pct(parte)} das de Lula já davam 80% ou mais a ele. É o lugar de sempre, "
+            "não um voto novo.",
+            "inferencia",
+        )
     X = S["extremos"]["excesso"]["lula"]
     n = X["secoes"] or 0
     alta = _faixa_alta(X)
@@ -262,8 +316,7 @@ def clusters_a(S: dict) -> str:
     comps = C["componentes"]
     desc = lista(
         [
-            f"grupo {c['id'] + 1}, {escape(c['rotulo'])} ({inteiro(c['secoes'])} seções, Lula {pct(c['centro_pct_validos']['lula'])} "
-            f"e Flávio {pct(c['centro_pct_validos']['flavio'])} dos válidos, abstenção {pct(c['centro_pct_eleitorado']['abstencao'])})"
+            f"grupo {c['id'] + 1} ({escape(c['rotulo'])}; {inteiro(c['secoes'])} seções)"
             for c in comps
         ]
     )
@@ -297,13 +350,13 @@ def clusters_b(S: dict) -> str:
     expl = Counter(
         a.get("explicacao") or "sem explicação declarada" for a in ma["amostras"]
     )
-    comuns = lista([f"{escape(e)} ({n})" for e, n in expl.most_common(3)])
+    comuns = "; ".join(f"{escape(e)}: {n}" for e, n in expl.most_common(3))
     mp = Counter(
         a.get("explicacao") or "sem explicação declarada"
         for a in C.get("menos_provaveis") or []
     )
     h = p(
-        f"O grupo mais atípico é o {ma['id'] + 1}, {escape(comp['rotulo'])}: {escape(ma['criterio'])}. A log-verossimilhança média "
+        f"O grupo mais atípico é o {ma['id'] + 1} ({escape(comp['rotulo'])}). Critério: {escape(ma['criterio'].rstrip('.'))}. A log-verossimilhança média "
         f"dele é {num(comp['loglik_media'], 1)}, contra {num(ll_out, 1)} nos outros três, e a distância de Mahalanobis mediana, "
         f"{num(comp['mahalanobis_mediana'], 1)}. Nas {len(ma['amostras'])} amostras da tabela, as explicações mais frequentes são {comuns}.",
         "inferencia",
@@ -312,7 +365,7 @@ def clusters_b(S: dict) -> str:
         e, n = mp.most_common(1)[0]
         h += p(
             f"Entre as {len(C['menos_provaveis'])} seções menos prováveis do país inteiro, a explicação mais comum é "
-            f"{escape(e)} ({n}). A explicação é regra declarada pelo nome do local, não verificação.",
+            f"{escape(e)}, em {n}. A explicação é regra declarada pelo nome do local, não verificação.",
             "inferencia",
         )
     return h
@@ -323,16 +376,19 @@ def clusters_b(S: dict) -> str:
 
 def _maior(pares: list[dict], chave: str) -> dict | None:
     ok = [x for x in pares if (x.get(chave) or {}).get("estimativa") is not None]
-    return max(ok, key=lambda x: abs(x[chave]["estimativa"])) if ok else None
+    return max(ok, key=lambda x: x.get("unidades") or 0) if ok else None
+
+
+def _fora_do_zero(x: dict) -> bool:
+    for c in ("flavio_pp", "lula_pp"):
+        ic = (x.get(c) or {}).get("ic95") or [None, None]
+        if ic[0] is not None and ic[1] is not None and (ic[0] > 0 or ic[1] < 0):
+            return True
+    return False
 
 
 def _ha_efeito(pares: list[dict]) -> bool:
-    for x in pares:
-        for c in ("flavio_pp", "lula_pp"):
-            ic = (x.get(c) or {}).get("ic95") or [None, None]
-            if ic[0] is not None and ic[1] is not None and (ic[0] > 0 or ic[1] < 0):
-                return True
-    return False
+    return any(_fora_do_zero(x) for x in pares)
 
 
 def urna_a(S: dict) -> str:
@@ -366,29 +422,64 @@ def urna_b(S: dict) -> str:
         ("dentro_local", "dentro do mesmo prédio"),
     ):
         pares = (U.get(est) or {}).get("pares", [])
-        m = _maior(pares, "flavio_pp")
-        if not m:
+        ok = [
+            x for x in pares if (x.get("flavio_pp") or {}).get("estimativa") is not None
+        ]
+        if not ok:
             continue
+        m = max(ok, key=lambda x: x.get("unidades") or 0)
         f = m["flavio_pp"]
         lu = m.get("lula_pp") or {}
+        fora = [x for x in ok if _fora_do_zero(x)]
         h += p(
-            f"{onde.capitalize()}, a maior diferença para Flávio entre pares de modelos é {m['b']} menos {m['a']}: "
-            f"{pts(f['estimativa'], 2)} (intervalo de 95% de {sinal(f['ic95'][0], 2)} a {sinal(f['ic95'][1], 2)}), contra "
-            f"{pts(f['bruto'], 2)} sem controle, em {inteiro(m['unidades'])} unidades. Para Lula, no mesmo par, "
-            f"{pts(lu.get('estimativa'), 2)}.",
+            f"{onde.capitalize()}, no par com mais unidades ({m['b']} contra {m['a']}, {inteiro(m['unidades'])} unidades), Flávio "
+            f"varia {pts(f['estimativa'], 2)} (intervalo de 95% de {sinal(f['ic95'][0], 2)} a {sinal(f['ic95'][1], 2)}), contra "
+            f"{pts(f['bruto'], 2)} sem controle; Lula, {pts(lu.get('estimativa'), 2)}. "
+            + (
+                "Pares com intervalo que exclui o zero para Flávio ou Lula: "
+                + lista(
+                    [
+                        f"{x['b']} contra {x['a']} ({inteiro(x['unidades'])} unidades, Flávio {pts(x['flavio_pp']['estimativa'], 2)})"
+                        for x in fora
+                    ]
+                )
+                + ". Com tão poucas unidades, o intervalo de bootstrap é frágil."
+                if fora
+                else "Nenhum par tem intervalo que exclua o zero."
+            ),
             "verificado",
         )
     R = U.get("registro") or {}
     if R:
         a22 = R.get("ano_2022") or {}
+        nome = f"{nome_bonito(R.get('municipio', ''))} ({R.get('uf', '')})"
+        f26 = (
+            escape(R["leitura"])
+            if R.get("leitura")
+            else (
+                "os boletins de 2026 do município entram na tabela quando a coleta chegar ao estado."
+                if not R.get("disponivel_2026")
+                else ""
+            )
+        )
+        f22 = (
+            f" Para 2022: {escape(a22.get('motivo') or '')}."
+            if not a22.get("disponivel")
+            else f" Para 2022, a tabela abaixo da figura traz as {inteiro(a22.get('secoes'))} seções do município por modelo."
+        )
         h += p(
-            f"O caso {nome_bonito(R.get('municipio', ''))} ({R.get('uf', '')}), seção por seção e modelo por modelo: "
-            f"{escape(R.get('leitura') or 'sem leitura')}"
-            + (
-                f" Para 2022: {escape(a22.get('motivo') or '')}."
-                if not a22.get("disponivel")
-                else " A tabela ao lado traz 2022 com a mesma conta."
-            ),
+            f"O caso {nome}, seção por seção e modelo por modelo: {f26}{f22}",
+            "verificado",
+        )
+    A22 = U.get("ano_2022") or {}
+    p22 = (A22.get("dentro_zona") or {}).get("pares", [])
+    m22 = _maior(p22, "bolsonaro_pp")
+    if m22:
+        b = m22["bolsonaro_pp"]
+        h += p(
+            f"O mesmo estimador sobre o 1º turno de 2022, no par com mais zonas ({m22['b']} contra {m22['a']}), dá a Bolsonaro "
+            f"{pts(b['estimativa'], 2)} (intervalo de {sinal(b['ic95'][0], 2)} a "
+            f"{sinal(b['ic95'][1], 2)}), contra {pts(b['bruto'], 2)} sem controle, em {inteiro(m22['unidades'])} zonas.",
             "verificado",
         )
     efeito = _ha_efeito((U.get("dentro_zona") or {}).get("pares", []))
@@ -426,7 +517,11 @@ def outras_a(S: dict) -> str:
         f2 += (
             " (Flávio: " + lista([f"{x['uf']} {x['secoes']}" for x in zl_uf[:4]]) + ")"
         )
-    cont = [x for x in OD.get("tipo_urna") or [] if x.get("tipo_urna") != 1]
+    cont = [
+        x
+        for x in OD.get("tipo_urna") or []
+        if x.get("tipo_urna") != 1 and x.get("dif_zona_lula_pp") is not None
+    ]
     f3 = ""
     if cont:
         f3 = "Urnas de contingência e reserva: " + lista(
@@ -459,7 +554,7 @@ def outras_b(S: dict) -> str:
     d1 = rc.get("depois_0100") or {}
     enc, ab = H.get("encerramento") or {}, H.get("abertura") or {}
     h = p(
-        f"Pela hora gravada na urna ({escape(H.get('fuso', ''))}), {inteiro(ab.get('antes_0730'))} seções abriram antes das 7h30 e "
+        f"{escape(H.get('fuso', ''))} Em hora de Brasília, {inteiro(ab.get('antes_0730'))} seções abriram antes das 7h30 e "
         f"{inteiro(ab.get('depois_0900'))} depois das 9h; {inteiro(enc.get('depois_1800'))} encerraram depois das 18h e "
         f"{inteiro(enc.get('depois_1900'))} depois das 19h.",
         "verificado",
@@ -498,7 +593,8 @@ def outras_b(S: dict) -> str:
     if frase:
         h += p(
             "; ".join(frase)
-            + f" (com tantos testes, cerca de 1 em 20 cai abaixo por acaso). {escape(OD.get('aviso_benford', ''))}",
+            + f". Sem nenhum desvio real, o acaso sozinho poria cerca de {max(1, round(len(ud or bf) / 20))} de cada "
+            f"{len(ud or bf)} abaixo desse corte. {escape(OD.get('aviso_benford', ''))}",
             "inferencia",
         )
     return h
@@ -543,7 +639,7 @@ def bloco(S: dict, fig: Callable[[str], str]) -> str:
     h += extremos_contagem(S) + extremos_onde(S)
     h += fig("secoes_excesso") + extremos_excesso(S)
     h += fig("secoes_tamanho_tipo") + extremos_perfil(S) + extremos_cruzamento(S)
-    h += extremos_amostras(S) + extremos_contrario(S)
+    h += extremos_2022(S) + extremos_amostras(S) + extremos_contrario(S)
     h += "<h3>Quatro grupos de seções</h3>" + ANALOGIA + fig("clusters_secoes")
     h += clusters_a(S) + fig("clusters_regiao") + clusters_b(S)
     h += "<h3>Modelo de urna</h3>" + fig("modelo_urna_uf") + urna_a(S)

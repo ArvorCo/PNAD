@@ -453,7 +453,8 @@ def secoes_excesso(d, **_op) -> str:
     X = S["extremos"]["excesso"]
     tips = Tips()
     total = S["cobertura"]["secoes_validas"] or 1
-    w, h = 1100, 360
+    nf = max(len(X["lula"]["faixas_zona"]), len(X["flavio"]["faixas_zona"]))
+    w, h = 1100, 104 + 34 * (nf + 2) + 50
     out = [
         svg_abre(
             w,
@@ -469,7 +470,7 @@ def secoes_excesso(d, **_op) -> str:
     legenda = (
         "90% numa zona que já dá 85% ao candidato é rotina; 90% numa zona de 50% exige explicação documental. As barras "
         "de cima contam as seções pelo voto do candidato no resto da zona; as douradas, as que ficam 10 ou 20 pontos acima "
-        f"dele. {escape(X.get('definicao', ''))}. {nota_cobertura(S)} Fonte: secoes.json."
+        f"dele. {escape(X.get('definicao', '').rstrip('.'))}. {nota_cobertura(S)} Fonte: secoes.json."
     )
     return figura_html("secoes_excesso", "".join(out), legenda, tips, minw=860)
 
@@ -698,7 +699,7 @@ def _tabela_anomalo(S: dict) -> str:
         ],
         linhas,
         f"Amostras do grupo mais atípico ({escape(rotulo_cluster(S, C['mais_anomalo']['id']))}): "
-        f"{escape(C['mais_anomalo'].get('criterio', ''))}. Percentuais dos válidos.",
+        f"{escape(C['mais_anomalo'].get('criterio', '').rstrip('.'))}. Percentuais dos válidos.",
     )
 
 
@@ -816,9 +817,9 @@ def clusters_secoes(d, **_op) -> str:
         out.append(
             f'<g pointer-events="none">{ln(cx - 8, cy, cx + 8, cy, INK, 3)}{ln(cx, cy - 8, cx, cy + 8, INK, 3)}'
             + (
-                chip(cx - 10, cy - 10 - 22 * (i % 2), rotulo_cluster(S, k), 13, "end")
-                if cx > x1 - 280
-                else chip(cx + 10, cy - 10 - 22 * (i % 2), rotulo_cluster(S, k), 13)
+                chip(cx - 10, cy - 10 - 22 * (i % 2), f"Grupo {k + 1}", 13, "end")
+                if cx > x1 - 120
+                else chip(cx + 10, cy - 10 - 22 * (i % 2), f"Grupo {k + 1}", 13)
             )
             + "</g>"
         )
