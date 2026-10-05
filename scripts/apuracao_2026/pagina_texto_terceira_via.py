@@ -11,6 +11,7 @@ from __future__ import annotations
 from collections.abc import Callable
 from html import escape
 
+from . import pagina_texto_reguas as PR
 from . import terceira_via_texto as X
 from .pagina_comum import NOME_UF, inteiro, num, p, rotulo, tabela
 from .pagina_fig_base import nome_bonito
@@ -151,12 +152,13 @@ def _estoque(D: dict, fig: Callable[[str], str]) -> str:
             "Renan + Zema",
             "Caiado",
             "Saldo por voto, matriz Nexus",
-            "Saldo por voto em 2022",
+            "Razão simples de 2022",
             "Direita local acima de Flávio",
         ],
         linhas,
-        "Saldo por voto: votos para Flávio menos votos para Lula por voto de terceira via. Pela matriz, hipótese; em 2022, "
-        "o que cada voto de terceira via do 1º turno rendeu entre os turnos no mesmo território (analogia).",
+        "Saldo por voto: votos para Flávio menos votos para Lula por voto de terceira via. Pela matriz, hipótese; razão "
+        "simples de 2022: todo o ganho entre os turnos dividido pela terceira via do 1º turno, no mesmo território "
+        "(analogia; a regressão que separa a mobilização da base está em Pesquisa contra urna).",
     )
     return h
 
@@ -325,6 +327,17 @@ def _regioes(D: dict) -> str:
     return h
 
 
+def _regressao(D: dict) -> str:
+    """Os mesmos dois grupos pela régua da urna (regressão), quando ela existe no JSON."""
+    if "reguas" not in D:
+        return ""
+    g = D["reguas"]["modelos"]["classe"]["grupos"]
+    return (
+        f"; a regressão, que separa a mobilização da base, dá {sp(g['perdeu_folga']['saldo'], 2)} e "
+        f"{sp(g['venceu_folga']['saldo'], 2)}"
+    )
+
+
 def _contrario(D: dict) -> str:
     ri, co = D["riscos"], D["contrario"]
     conv = D["conversao_2022"]["por_classe"]
@@ -341,7 +354,8 @@ def _contrario(D: dict) -> str:
         f"{num(D['agregados']['brasil']['saldo_por_voto'], 3)}), porque a matriz não "
         f"sabe onde o eleitor mora. A urna de 2022 sabe: nesses municípios, cada voto de terceira via do 1º turno rendeu saldo "
         f"de {num(conv['perdeu_folga']['saldo'], 2)} a Bolsonaro entre os turnos, contra {num(conv['venceu_folga']['saldo'], 2)} "
-        f"onde Flávio venceu com folga em 2026 (analogia de uma eleição). O trabalho ali rende menos por voto. Nas nove capitais do Nordeste Lula fez "
+        f"onde Flávio venceu com folga em 2026 (razão simples, analogia de uma eleição){_regressao(D)}. O trabalho ali rende "
+        "menos por voto. Nas nove capitais do Nordeste Lula fez "
         f"{num(-nc['margem_pp'], 2)} pontos sobre Flávio, e a terceira via soma {mi(nc['estoque'])}, com {mi(nc['caiado'])} de "
         "Caiado, cuja linha Nexus dá mais a Lula que a Flávio.</p>"
     )
@@ -456,6 +470,7 @@ def bloco(D: dict, fig: Callable[[str], str]) -> str:
         + _prioridade(D, fig)
         + _regioes(D)
         + _contrario(D)
+        + (PR.bloco(D, fig) if "reguas" in D else "")
         + _nulo(D, fig)
         + _limites()
     )
