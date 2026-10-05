@@ -617,6 +617,22 @@ def _elipse(
     return mx, my, 2 * math.sqrt(l1), 2 * math.sqrt(l2), ang
 
 
+def _larg_chip(texto: str, size: float = 13) -> float:
+    """Largura da caixa de `chip` (mesma conta de `pagina_fig_base.chip`)."""
+    return 0.53 * size * len(texto) + 12
+
+
+def _colide(
+    a: tuple[float, float, float, float], b: tuple[float, float, float, float]
+) -> bool:
+    return not (
+        a[0] + a[2] + 4 <= b[0]
+        or b[0] + b[2] + 4 <= a[0]
+        or a[1] + a[3] + 3 <= b[1]
+        or b[1] + b[3] + 3 <= a[1]
+    )
+
+
 def _casa_menos_provaveis(C: dict, pontos: list[dict]) -> dict[int, dict]:
     """Índice do ponto top200 para o registro de `menos_provaveis`, quando dá para casar."""
     mp = C.get("menos_provaveis") or []
@@ -811,22 +827,44 @@ def clusters_secoes(d, **_op) -> str:
             f'<circle cx="{x:.1f}" cy="{y:.1f}" r="4.5" fill="{CLUSTER_COR[k % 4]}" '
             f'data-af="regiao>{COR_REGIAO.get(reg, MUTED)}" stroke="{INK}" stroke-width="1.3"/>'
         )
-    for i, c in enumerate(P["centros"]):
+    caixas: list[tuple[float, float, float, float]] = []
+    if el:
+        ecx, ecy, erx, ery, eang = el
+        a = math.radians(eang)
+        meia_alt = math.hypot(erx * math.sin(a), max(ery, 6) * math.cos(a))
+        rot_el = "grupo mais atípico"
+        larg_el = _larg_chip(rot_el)
+        topo_el = ecy - meia_alt
+        # acima da elipse; se não couber no quadro, dentro dela, junto à borda superior
+        y_el = topo_el - 8 if topo_el - 8 - 21 >= y0 else topo_el + 28
+        x_el = min(max(ecx - larg_el / 2, x0 + 4), x1 - larg_el - 4)
+        caixas.append((x_el, y_el - 15, larg_el, 21))
+        rot_el_svg = f'<g pointer-events="none">{chip(x_el, y_el, rot_el, 13)}</g>'
+    else:
+        rot_el_svg = ""
+    for c in sorted(P["centros"], key=lambda c: Y(c["y"])):
         cx, cy = X(c["x"]), Y(c["y"])
         k = int(c["cluster"])
-        out.append(
-            f'<g pointer-events="none">{ln(cx - 8, cy, cx + 8, cy, INK, 3)}{ln(cx, cy - 8, cx, cy + 8, INK, 3)}'
-            + (
-                chip(cx - 10, cy - 10 - 22 * (i % 2), f"Grupo {k + 1}", 13, "end")
-                if cx > x1 - 120
-                else chip(cx + 10, cy - 10 - 22 * (i % 2), f"Grupo {k + 1}", 13)
-            )
-            + "</g>"
+        texto = f"Grupo {k + 1}"
+        larg = _larg_chip(texto)
+        bx = cx - 12 - larg if cx > x1 - 120 else cx + 12
+        by = cy - 12
+        passo = -26
+        while any(_colide((bx, by - 15, larg, 21), cx_) for cx_ in caixas):
+            by += passo
+            if by - 15 < y0:
+                by, passo = cy + 30, 26
+        caixas.append((bx, by - 15, larg, 21))
+        guia = (
+            ln(cx, cy, bx + (larg if bx < cx else 0), by - 4, INK, 0.8)
+            if abs(by - (cy - 12)) > 1
+            else ""
         )
-    if el:
         out.append(
-            f'<g pointer-events="none">{chip(el[0] - el[2] * 0.3, el[1] + max(el[3], 6) + 22, "grupo mais atípico", 13)}</g>'
+            f'<g pointer-events="none">{guia}{ln(cx - 8, cy, cx + 8, cy, INK, 3)}{ln(cx, cy - 8, cx, cy + 8, INK, 3)}'
+            f"{chip(bx, by, texto, 13)}</g>"
         )
+    out.append(rot_el_svg)
     out.append(
         f'<circle class="near-halo" cx="0" cy="0" r="8" fill="none" stroke="{LIMA}" stroke-width="3" display="none"/>'
     )
