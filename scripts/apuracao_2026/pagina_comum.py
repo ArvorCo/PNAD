@@ -351,3 +351,17 @@ def p(texto: str, tipo: str | None = None) -> str:
 def cartao(valor: str, legenda: str, cor: str = "") -> str:
     estilo = f' style="color:{cor}"' if cor else ""
     return f"<div><b{estilo}>{valor}</b><span>{legenda}</span></div>"
+
+
+def figura_catalogo(nome: str, dados: dict, **op) -> str:
+    """Figura do catálogo (analysis/apuracao_2026/CATALOGO_FIGURAS.md) pelo nome.
+
+    Procura `FIGURAS[nome]` em `pagina_figuras`; se ainda não existe, devolve um bloco
+    marcado como pendente, para o texto poder ser escrito antes da figura.
+    """
+    from . import pagina_figuras
+
+    fn = getattr(pagina_figuras, "FIGURAS", {}).get(nome)
+    if fn is None:
+        return f'<figure class="pendente"><figcaption>figura em preparação: {escape(nome)}</figcaption></figure>'
+    return fn(dados, **op)
