@@ -37,6 +37,10 @@ def _par(
     return next((p for p in pares if p["a"] == a and p["b"] == b), None)
 
 
+def _pp(x: float | None) -> str:
+    return "sem resto de zona para comparar" if x is None else f"{num(x, 2)} ponto"
+
+
 def _ic(m: Mapping[str, Any] | None) -> str:
     if not m:
         return "n/d"
@@ -88,10 +92,16 @@ def achados(d: Mapping[str, Any]) -> dict[str, list[str]]:
         )
     inferido = []
     exc = ex["excesso"]["lula"]
+    zm = exc["zona_pct_mediana"] or 0.0
+    onde = (
+        "estão em zonas que já votam muito nele"
+        if zm >= 70
+        else "são, em boa parte, enclaves dentro de zonas que votam menos nele"
+    )
     inferido.append(
-        "As seções de 90% de Lula estão em zonas que já votam muito nele: mediana "
-        f"de {_p(exc['zona_pct_mediana'])}% no resto da zona; o excesso típico "
-        f"sobre a zona é de {_p(exc['excesso_zona_pp_mediana'])} pontos."
+        f"As seções de 90% de Lula {onde}: mediana de {_p(zm)}% no resto da zona; "
+        f"o excesso típico da seção sobre a zona é de "
+        f"{_p(exc['excesso_zona_pp_mediana'])} pontos."
     )
     tl = {r["tipo"]: r for r in ex["tipo_local"]["linhas"]}
     ald = tl.get("aldeia ou terra indígena")
@@ -406,6 +416,21 @@ def memorando(d: Mapping[str, Any]) -> str:
                 f"{_ic(p.get('lula_var_pp'))}"
             )
         w("")
+    tr = ur.get("troca_2022_2026")
+    if tr:
+        w(
+            "Troca de urna entre 2022 e 2026 (mesma seção; rótulo = modelo de 2022; "
+            f"{_n(tr['secoes_casadas'])} seções casadas). {tr['definicao']}"
+        )
+        w("")
+        for p in tr["pares"]:
+            if p["b"] not in ("UE2020", "mais nova"):
+                continue
+            w(
+                f"- {p['a']} → {p['b']}: {_n(p['unidades'])} zonas; variação de "
+                f"Flávio sobre Bolsonaro {_ic(p.get('flavio_var_pp'))}"
+            )
+        w("")
     a22 = ur.get("ano_2022")
     if a22:
         w("2022, mesmo estimador (Bolsonaro e Lula, 1º turno):")
@@ -447,13 +472,12 @@ def memorando(d: Mapping[str, Any]) -> str:
         w(
             f"- Tipo de arquivo {r['tipo_arquivo']} ({r['descricao']}): "
             f"{_n(r['secoes'])} seções; Flávio {_p(r['flavio_pct'], 2)}%, diferença "
-            f"média para o resto da zona {_p(r['dif_zona_flavio_pp'], 2)} ponto."
+            f"média para o resto da zona {_pp(r['dif_zona_flavio_pp'])}."
         )
     for r in ou["tipo_urna"]:
         w(
             f"- {r['descricao'].capitalize()}: {_n(r['secoes'])} seções; diferença "
-            f"média de Flávio para o resto da zona {_p(r['dif_zona_flavio_pp'], 2)} "
-            "ponto."
+            f"média de Flávio para o resto da zona {_pp(r['dif_zona_flavio_pp'])}."
         )
     h = ou["horarios"]
     w(
@@ -471,7 +495,7 @@ def memorando(d: Mapping[str, Any]) -> str:
             f"- Boletins recebidos pelo TSE depois de {rot} de 05/10: "
             f"{_n(b['secoes'])} seções, {_n(b['validos'])} válidos, Lula "
             f"{_p(b['lula_pct'], 2)}%; diferença média de Lula para o resto da "
-            f"zona {_p(b['dif_zona_lula_pp'], 2)} ponto."
+            f"zona {_pp(b['dif_zona_lula_pp'])}."
         )
         for m in b["municipios"][:10]:
             w(
@@ -559,6 +583,14 @@ def _registro_texto(r: Mapping[str, Any]) -> str:
                 )
     else:
         partes.append("2026: seções de Registro ainda não coletadas.")
+    for m in r.get("mesmas_secoes", []):
+        partes.append(
+            f"- mesmas seções, modelo de 2022 {m['modelo_2022']}: {_n(m['secoes'])} "
+            f"seções; Bolsonaro {_p(m['bolsonaro_2022_pct'], 2)}% em 2022, Flávio "
+            f"{_p(m['flavio_2026_pct'], 2)}% em 2026 (modelos de 2026: "
+            + ", ".join(f"{k} {v}" for k, v in m["modelos_2026"].items())
+            + ")"
+        )
     a22 = r.get("ano_2022", {})
     if a22.get("disponivel"):
         partes.append("")

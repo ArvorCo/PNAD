@@ -330,6 +330,7 @@ def urna(base: Base, s22: pd.DataFrame | None) -> dict[str, Any]:
             "seções casadas pelo número e pelo nome do local.",
         )
         saida["dentro_zona_variacao"]["secoes_casadas"] = len(casado)
+        saida["troca_2022_2026"] = troca_de_urna(casado)
         d22 = base_2022(s22)
         saida["ano_2022"] = {
             "fonte": (
@@ -357,6 +358,40 @@ def urna(base: Base, s22: pd.DataFrame | None) -> dict[str, Any]:
         }
     saida["interpretacao"] = interpretar(saida)
     return saida
+
+
+def troca_de_urna(casado: pd.DataFrame) -> dict[str, Any]:
+    """A mesma seção com urna velha em 2022 e nova em 2026, contra a que já era nova.
+
+    Se a urna velha de 2022 tivesse tirado voto de Bolsonaro, as seções que a
+    trocaram teriam, de 2022 para 2026, um ganho de Flávio maior que o das seções
+    que já tinham a UE2020 em 2022, dentro da mesma zona. O rótulo de cada seção é
+    o modelo de 2022; a métrica é a variação da própria seção.
+    """
+    d = casado.dropna(subset=["modelo_2022"]).copy()
+    d["modelo_urna_2026"] = d["modelo_urna"]
+    d["modelo_urna"] = d["modelo_2022"]
+    est = estimador(
+        d,
+        ["uf", "mun", "zona"],
+        MIN_ZONA,
+        METRICAS_VARIACAO,
+        "Variação de cada seção de 2022 para 2026 (Flávio 2026 menos Bolsonaro 1º "
+        "turno 2022, em % dos válidos), comparada entre seções agrupadas pelo "
+        "modelo da urna de 2022 dentro do par município e zona. Diferença b menos "
+        "a: se a urna velha (a) de 2022 tivesse tirado voto de Bolsonaro, a "
+        "diferença seria negativa.",
+    )
+    est["secoes_casadas"] = len(d)
+    est["modelos_2026_das_velhas"] = [
+        {"modelo_2022": str(m22), "modelo_2026": str(m26), "secoes": int(n)}
+        for (m22, m26), n in d.groupby(
+            [d["modelo_2022"], d["modelo_urna_2026"].fillna("sem modelo")]
+        )
+        .size()
+        .items()
+    ]
+    return est
 
 
 def _registro(df: pd.DataFrame, s22: pd.DataFrame | None) -> dict[str, Any]:
@@ -406,6 +441,7 @@ def _registro(df: pd.DataFrame, s22: pd.DataFrame | None) -> dict[str, Any]:
             "comparada entre modelos de 2026 dentro da zona.",
         )
         saida["variacao_2026"]["secoes_casadas"] = len(rc)
+        saida["mesmas_secoes"] = _mesmas_secoes(rc)
     if s22 is None:
         saida["ano_2022"] = {
             "disponivel": False,
@@ -440,52 +476,118 @@ def _registro(df: pd.DataFrame, s22: pd.DataFrame | None) -> dict[str, Any]:
     return saida
 
 
-def _frase_par(p: Mapping[str, Any], chave: str, nome: str) -> str:
-    m = p.get(chave)
-    if not m:
-        return ""
+def _mesmas_secoes(rc: pd.DataFrame) -> list[dict[str, Any]]:
+    """Registro: as seções agrupadas pelo modelo de 2022, com o voto de 2022 e 2026."""
+    out = []
+    for m22, g in rc.groupby(rc["modelo_2022"].fillna("sem modelo")):
+        out.append(
+            {
+                "modelo_2022": str(m22),
+                "secoes": len(g),
+                "bolsonaro_2022_pct": pct(
+                    int(g["bolsonaro_1t"].sum()), int(g["nominais_1t"].sum())
+                ),
+                "lula_2022_pct": pct(
+                    int(g["lula_1t"].sum()), int(g["nominais_1t"].sum())
+                ),
+                "flavio_2026_pct": pct(
+                    int(g[f"v{FLAVIO}"].sum()), int(g["validos"].sum())
+                ),
+                "lula_2026_pct": pct(int(g[f"v{LULA}"].sum()), int(g["validos"].sum())),
+                "modelos_2026": {
+                    str(k): int(v)
+                    for k, v in g["modelo_urna"]
+                    .fillna("sem modelo")
+                    .value_counts()
+                    .items()
+                },
+            }
+        )
+    return out
+
+
+def _ic_txt(m: Mapping[str, Any]) -> tuple[str, bool]:
     lo, hi = m["ic95"]
     cruza = lo is not None and hi is not None and lo <= 0 <= hi
+    txt = f"IC 95% de {num(lo, 2)} a {num(hi, 2)}"
+    return txt + (", contém o zero" if cruza else ", não contém o zero"), cruza
+
+
+def _frase(
+    p: Mapping[str, Any] | None, chave: str, onde: str, quem: str, unidade: str
+) -> str | None:
+    """Frase do par `mais velha` → `mais nova` (ou de um par nomeado)."""
+    if not p or not p.get(chave):
+        return None
+    m = p[chave]
+    ic, _ = _ic_txt(m)
+    if p["a"] == "mais velha":
+        par = "a urna mais nova dá a {q} {e} ponto em relação à mais velha"
+    else:
+        par = f"a {p['b']} dá a {{q}} {{e}} ponto em relação à {p['a']}"
+    corpo = par.format(q=quem, e=num(m["estimativa"], 2))
     return (
-        f"{nome}: {num(m['estimativa'], 2)} ponto no modelo {p['b']} contra o "
-        f"{p['a']} dentro da mesma unidade (IC 95% de {num(lo, 2)} a {num(hi, 2)}"
-        f"{', contém o zero' if cruza else ', não contém o zero'}); "
-        f"sem o controle, {num(m['bruto'], 2)}"
+        f"{onde}, {corpo} ({ic}); sem o controle, {num(m['bruto'], 2)}; "
+        f"{num(p['unidades'], 0)} {unidade}."
     )
 
 
+def _mais(pares: Sequence[Mapping[str, Any]]) -> Mapping[str, Any] | None:
+    return next((p for p in pares if p["a"] == "mais velha"), None)
+
+
 def interpretar(u: Mapping[str, Any]) -> list[str]:
-    frases = []
-    pares = u["dentro_zona"]["pares"]
-    nv = next((p for p in pares if p["a"] == "mais velha"), None)
+    frases: list[str] = []
+    nv = _mais(u["dentro_zona"]["pares"])
     if nv and nv.get("flavio_pp"):
-        f = nv["flavio_pp"]
-        lo, hi = f["ic95"]
-        if lo <= 0 <= hi:
-            frases.append(
-                "Dentro da mesma zona, o modelo da urna não move o voto de forma "
-                f"separável de zero: a urna mais nova da zona dá a Flávio "
-                f"{num(f['estimativa'], 2)} ponto em relação à mais velha (IC 95% "
-                f"de {num(lo, 2)} a {num(hi, 2)}), contra {num(f['bruto'], 2)} na "
-                f"comparação bruta, em {num(nv['unidades'], 0)} zonas."
-            )
-        else:
-            frases.append(
-                "Dentro da mesma zona, a urna mais nova dá a Flávio "
-                f"{num(f['estimativa'], 2)} ponto em relação à mais velha (IC 95% "
-                f"de {num(lo, 2)} a {num(hi, 2)}, não contém o zero), contra "
-                f"{num(f['bruto'], 2)} na comparação bruta, em "
-                f"{num(nv['unidades'], 0)} zonas. Diferença separável de zero não "
-                "é efeito da urna: a alocação dos modelos dentro da zona não é "
-                "aleatória (escolas centrais e periféricas, locais grandes e "
-                "pequenos), e só o plano de alocação de urnas do TRE resolve."
-            )
-    loc = u["dentro_local"]["pares"]
-    nvl = next((p for p in loc if p["a"] == "mais velha"), None)
-    if nvl and nvl.get("flavio_pp"):
-        frases.append(
-            "No mesmo prédio, "
-            + _frase_par(nvl, "flavio_pp", "Flávio")
-            + f", em {num(nvl['unidades'], 0)} locais."
+        _, cruza = _ic_txt(nv["flavio_pp"])
+        abre = (
+            "O modelo da urna não move o voto de forma separável de zero dentro da "
+            "zona"
+            if cruza
+            else "Dentro da zona há diferença entre modelos separável de zero, o que "
+            "não é efeito da urna enquanto a alocação dos modelos dentro da zona "
+            "não for aleatória"
         )
+        frases.append(
+            abre
+            + ": "
+            + (_frase(nv, "flavio_pp", "na mesma zona", "Flávio", "zonas") or "")
+        )
+    f = _frase(
+        _mais(u["dentro_local"]["pares"]),
+        "flavio_pp",
+        "No mesmo prédio",
+        "Flávio",
+        "locais",
+    )
+    if f:
+        frases.append(f)
+    a22 = u.get("ano_2022")
+    if a22:
+        p = _par_nomeado(a22["dentro_zona"]["pares"], "UE2015", "UE2020")
+        f = _frase(p, "bolsonaro_pp", "Em 2022, na mesma zona", "Bolsonaro", "zonas")
+        if f:
+            frases.append(f)
+        p = _par_nomeado(a22["dentro_local"]["pares"], "UE2015", "UE2020")
+        f = _frase(p, "bolsonaro_pp", "Em 2022, no mesmo prédio", "Bolsonaro", "locais")
+        if f:
+            frases.append(f)
+    tr = u.get("troca_2022_2026")
+    if tr:
+        f = _frase(
+            _mais(tr["pares"]),
+            "flavio_var_pp",
+            "Nas mesmas seções de 2022 para 2026, agrupadas pelo modelo de 2022",
+            "Flávio, sobre Bolsonaro,",
+            "zonas",
+        )
+        if f:
+            frases.append(f)
     return frases
+
+
+def _par_nomeado(
+    pares: Sequence[Mapping[str, Any]], a: str, b: str
+) -> Mapping[str, Any] | None:
+    return next((p for p in pares if p["a"] == a and p["b"] == b), None)

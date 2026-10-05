@@ -207,3 +207,36 @@ comparecimento.
 ## Mudanças
 
 Toda mudança de chave já publicada fica registrada aqui, com data e motivo.
+
+- 05/10/2026, acréscimos (nenhuma chave publicada mudou):
+  - `clusters.componentes[].zeros_pct` (dict feature → % de seções do grupo com zero
+    nessa parte), `clusters.features`, `clusters.zeros_substituidos_pct`,
+    `clusters.cramer_v_regiao`, `clusters.cramer_v_uf`, `clusters.sensibilidade`
+    (`ari_principal_vs_outra_semente`, `ari_principal_vs_nanicos_somados`,
+    `ari_principal_vs_densa`). `cluster_uf` usa a chave `uf` e `pct_da_uf`.
+  - `clusters.variantes.nanicos_somados` e `clusters.variantes.densa`: mesma
+    estrutura do bloco principal (`features`, `ajuste`, `componentes`,
+    `mais_anomalo`, `menos_provaveis`, `cluster_regiao`, `cluster_uf`, `pca` com até
+    4 mil pontos) e `descricao`. A densa (Lula, Flávio, terceiros, brancos e nulos,
+    abstenção) é a leitura política; a principal é a especificação pedida.
+  - Cada `SecaoRef` em listas de clusters ganha `loglik`, `mahalanobis`, `cluster`;
+    nas amostras de `extremos`, `excesso_zona_pp` e `excesso_mun_pp`.
+  - `urna.dentro_zona_variacao` (Estimador com `flavio_var_pp` e `lula_var_pp`:
+    variação da mesma seção contra 2022) e `urna.troca_2022_2026` (Estimador cujo
+    rótulo é o modelo de 2022 da seção; mais `modelos_2026_das_velhas`).
+  - `urna.ano_2022` (`bruto`, `dentro_zona`, `dentro_local` com `bolsonaro_pp` no
+    lugar de `flavio_pp`). Todo Estimador traz também o par
+    `mais velha` → `mais nova` (o modelo mais novo contra o mais velho de cada unidade).
+  - `urna.registro`: `dentro_local_2026`, `variacao_2026`, `mesmas_secoes` (por modelo
+    de 2022: voto de 2022 e de 2026 nas mesmas seções), `ano_2022.dentro_local`.
+  - `extremos.secoes_base`, `extremos.secoes_sem_validos`,
+    `extremos.secoes_100pct.lula_total` e `flavio_total`;
+    `extremos.comparacao_2022` com `secoes_casadas`,
+    `secoes_90_em_2022_entre_casadas` e, por candidato, `secoes_90_2026_casadas`,
+    `tambem_90_em_2022_1t`, `tambem_90_em_2022_2t`, `acima_80_em_2022_1t`,
+    `pct_2022_1t_mediana`, `pct_2022_2t_mediana`, `variacao_pp_mediana`.
+  - `outras.amostras_nao_padrao`, `outras.horarios.voto_vs_zona`,
+    `outras.recebimento.depois_2200`, `outras.comparecimento.acima_98` e
+    `igual_100_por_tamanho`.
+  - `cobertura.confere_nacional` (só sem `--parcial`): soma de todos os boletins
+    contra o arquivo nacional do TSE.
