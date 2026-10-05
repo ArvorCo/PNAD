@@ -147,6 +147,7 @@ table[data-ordena] .ord{font:inherit;background:none;border:0;padding:0;margin:0
 table[data-ordena] th[aria-sort="ascending"] .ord::after{content:" ▲"}table[data-ordena] th[aria-sort="descending"] .ord::after{content:" ▼"}
 .tv-uf>p{font-size:15px;margin:14px 4px 0}
 .tv-nowrap td,.tv-nowrap th{white-space:nowrap}
+.tv-sub{padding-left:24px!important;font-weight:400}
 """
 
 JS_HEAD = "<script>document.documentElement.classList.add('js')</script>"
