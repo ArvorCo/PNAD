@@ -63,7 +63,46 @@ const maisAtrasadas = [...ufs].sort((a, b) => a.pst - b.pst).slice(0, 5);
 const porUf = mapaUf.unidades.filter((u) => u.cd !== "zz").map((u) => ({ uf: u.cd.toUpperCase(), pst: r1(u.pst), lider: u.lider?.nmu, pct: u.lider ? r1(u.lider.pvapn) : null, segundo: u.segundo?.nmu, margem: u.margem !== undefined ? r1(u.margem) : null }));
 const apertadas = porUf.filter((u) => u.margem !== null && u.pst >= 5).sort((a, b) => (a.margem ?? 99) - (b.margem ?? 99)).slice(0, 5);
 const governadores = mapaGov.unidades.map((u) => ({ uf: u.cd.toUpperCase(), pst: r1(u.pst), lider: u.lider?.nmu, sg: u.lider?.sg, pct: u.lider ? r1(u.lider.pvapn) : null, decidido_1t: u.pst >= 100 && (u.lider?.pvapn ?? 0) > 50 }));
-const senado = mapaSen.unidades.map((u) => ({ uf: u.cd.toUpperCase(), pst: r1(u.pst), lideres: (u as { top?: { nmu: string; sg: string; pvapn: Num }[] }).top?.slice(0, 2).map((t) => `${t.nmu} (${t.sg}) ${r1(t.pvapn)}%`) ?? [] }));
+// Senado: duas vagas por UF; os dois mais votados são eleitos (não disputam entre si).
+const senado = mapaSen.unidades.map((u) => {
+  const top = (u as { top?: { nmu: string; sg: string; pvapn: Num; campo?: string }[] }).top ?? [];
+  const f = (t: { nmu: string; sg: string; pvapn: Num; campo?: string }): string => `${t.nmu} (${t.sg}, ${t.campo ?? "campo indefinido"}) ${r1(t.pvapn)}%`;
+  const segundo = top[1]?.pvapn ?? 0;
+  const terceiro = top[2]?.pvapn ?? 0;
+  return {
+    uf: u.cd.toUpperCase(), pst: r1(u.pst), vagas: 2,
+    eleitos_provaveis: top.slice(0, 2).map(f),
+    ameaca_segunda_vaga: top[2] ? `${f(top[2])} (${r1(segundo - terceiro)} pontos atrás da 2ª vaga)` : null,
+    segunda_vaga_apertada: top.length >= 3 && segundo - terceiro < 3,
+  };
+});
+
+// Vão estadual: governador do mesmo campo versus o presidenciável na mesma UF (quem puxa voto no 2º turno).
+const DIREITA = new Set(["direita", "centro-direita"]);
+const ESQUERDA = new Set(["esquerda", "centro-esquerda"]);
+const presPorUf = await Promise.all(
+  mapaGov.unidades.map(async (u) => {
+    const r = await j<Resultado>(`/api/resultado?ele=6257&cargo=1&abr=${u.cd}`).catch(() => null);
+    const pct = (nome: string): Num | null => {
+      const c = r?.cand.find((x) => x.nmu.toUpperCase().includes(nome));
+      return c ? r1(c.pvapn) : null;
+    };
+    return { uf: u.cd.toUpperCase(), flavio: pct("FLAVIO"), lula: pct("LULA") };
+  }),
+);
+const vaoEstadual = mapaGov.unidades.flatMap((u) => {
+  const pres = presPorUf.find((p) => p.uf === u.cd.toUpperCase());
+  if (!u.lider || !pres || u.pst < 20) return [];
+  const campo = u.lider.campo ?? "";
+  const base = DIREITA.has(campo) ? pres.flavio : ESQUERDA.has(campo) ? pres.lula : null;
+  const presidenciavel = DIREITA.has(campo) ? "Flávio" : ESQUERDA.has(campo) ? "Lula" : null;
+  if (base === null || presidenciavel === null) return [];
+  return [{
+    uf: u.cd.toUpperCase(), pst: r1(u.pst), governador: u.lider.nmu, sg: u.lider.sg, campo, pct_gov: r1(u.lider.pvapn),
+    presidenciavel, pct_presidenciavel: base, vao_pp: r1(u.lider.pvapn - base),
+    decidido_1t: u.pst >= 100 && u.lider.pvapn > 50,
+  }];
+}).sort((a, b) => b.vao_pp - a.vao_pp);
 const viradas = anomalias.filter((a) => a.tipo === "virada" && Date.parse(a.at) >= corte).map((a) => `${brt(a.at)} ${a.texto}`);
 const regressoes = anomalias.filter((a) => a.tipo === "regressao" && a.tipo_bruto !== "idg_regressivo" && Date.parse(a.at) >= corte).map((a) => `${brt(a.at)} ${a.texto}`);
 const fechamentos = anomalias.filter((a) => a.tipo === "fechou" && Date.parse(a.at) >= corte).map((a) => a.texto);
@@ -88,6 +127,7 @@ const saida = {
   ufs: { mais_adiantadas: maisAdiantadas, mais_atrasadas: maisAtrasadas, disputas_apertadas: apertadas, por_uf: porUf },
   governadores: { decididos_1t: governadores.filter((g) => g.decidido_1t), lideres: governadores },
   senado,
+  vao_estadual: { nota: "governador do campo menos o presidenciável do mesmo campo, na mesma UF e na mesma apuração; positivo = o governador rende mais que o presidenciável ali (teto para puxar voto no 2º turno)", lista: vaoEstadual },
   exterior: zz ? { pst: r1(zz.s.pst), lider: zz.cand[0]?.nmu, pct: r1(zz.cand[0]?.pvapn ?? 0), segundo: zz.cand[1]?.nmu, pct2: r1(zz.cand[1]?.pvapn ?? 0) } : null,
   viradas, regressoes, fechamentos_uf: fechamentos,
   coletor: estado.coletor ? { taxas_60s: estado.coletor.taxas_60s, fila: estado.coletor.fila } : null,
