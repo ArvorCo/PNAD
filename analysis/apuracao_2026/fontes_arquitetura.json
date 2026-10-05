@@ -1,0 +1,249 @@
+{
+  "meta": {
+    "consultado_em": "2026-10-05",
+    "nota": "Fontes do capítulo de arquitetura (capítulo 3 do dossiê da apuração). Cada item diz o que o documento prova; inferência e hipótese ficam no memorando analysis/apuracao_2026/arquitetura.md. tse.jus.br devolve 403 ou 429 a curl e WebFetch; as páginas do TSE marcadas 'navegador' foram lidas no navegador embutido, e o PDF da nota técnica de 2020 teve o texto extraído e o SHA-256 calculado dentro do navegador (o arquivo não pôde ser gravado em disco). data/originals/ é ignorado pelo git; os resumos ficam em data/originals/apuracao_2026/arquitetura/ e aqui."
+  },
+  "fontes": [
+    {
+      "id": "tse_nota_tecnica_2020",
+      "titulo": "Nota técnica sobre o atraso da totalização dos votos em 15/11",
+      "veiculo": "TSE (documento oficial, PDF de 5 páginas)",
+      "data": "2020-11-17",
+      "url": "https://www.tse.jus.br/comunicacao/noticias/arquivos/nota-tecnica-eleicoes-2020-1o-turno",
+      "tipo": "documento_oficial",
+      "como_lido": "navegador embutido; texto extraído do PDF no próprio navegador",
+      "bytes": 356605,
+      "sha256": "abdcbc4eb97d918b47166ce72ab3b31ae5e9c39358e25b5f7279538e8c2cfd13",
+      "prova": [
+        "Em 2020, pela primeira vez, o TSE centralizou a totalização de todo o país em equipamento fornecido pela Oracle; antes, cada TRE totalizava o seu estado (seção 1).",
+        "A centralização atendeu recomendação de peritos da Polícia Federal após o TPS de 2017-2018 (seção 1).",
+        "TSE e os 27 TREs usam o sistema de banco de dados Oracle há mais de uma década (seção 2).",
+        "Contrato TSE nº 22/2020, por inexigibilidade (art. 25, I, Lei 8.666/93), assinado em março de 2020 (seção 2).",
+        "O contrato disponibiliza um servidor principal Exadata X8 Full Rack, com oito nós de processamento, e um Exadata X8 Half Rack, com quatro (seção 5).",
+        "Na totalização, as tabelas do banco passaram a receber mais de um milhão de linhas por minuto a partir das 17h (seção 6).",
+        "A lentidão de 2020 foi atribuída ao otimizador do banco: o plano de execução gerado com tabelas vazias ficou inadequado com o banco cheio; o sistema de totalização foi temporariamente paralisado para gerar um plano novo (seção 6).",
+        "Só dois dos cinco testes de totalização planejados foram feitos no equipamento novo (seção 4)."
+      ],
+      "nao_prova": "Que o mesmo equipamento, o mesmo banco ou o mesmo desenho estivessem em uso em 2026; nada sobre o sistema de divulgação."
+    },
+    {
+      "id": "tse_noticia_nota_2020",
+      "titulo": "TSE divulga nota técnica sobre o atraso da totalização dos votos no primeiro turno",
+      "veiculo": "TSE (notícia)",
+      "data": "2020-11-17T21:26",
+      "url": "https://www.tse.jus.br/comunicacao/noticias/2020/Novembro/tse-divulga-nota-tecnica-sobre-o-atraso-da-totalizacao-dos-votos-no-primeiro-turno",
+      "tipo": "documento_oficial",
+      "como_lido": "navegador embutido",
+      "prova": [
+        "Atraso de aproximadamente duas horas e trinta minutos na divulgação de 2020, ocasionado por recurso de inteligência artificial de um otimizador do banco de dados Oracle."
+      ]
+    },
+    {
+      "id": "em_bbc_2020",
+      "titulo": "TSE contratou sem licitação o 'supercomputador' que atrasou apuração no domingo",
+      "veiculo": "Estado de Minas (reprodução de BBC News Brasil)",
+      "data": "2020-11-17",
+      "url": "https://www.em.com.br/app/noticia/politica/2020/11/17/interna_politica,1205965/tse-contratou-sem-licitacao-o-supercomputador-que-atrasou-apuracao-n.shtml",
+      "tipo": "imprensa",
+      "como_lido": "WebFetch",
+      "prova": [
+        "Contrato de R$ 26,2 milhões com a Oracle do Brasil Sistemas, publicado no DOU em 25/03/2020; equipamento Exadata X8, descrito como servidor de banco de dados."
+      ]
+    },
+    {
+      "id": "poder360_cloud_oracle_2020",
+      "titulo": "TSE diz que comprou “cloud Oracle” porque só a Oracle vende o “cloud Oracle”",
+      "veiculo": "Poder360",
+      "data": "2020-11-18",
+      "url": "https://www.poder360.com.br/brasil/tse-diz-que-comprou-cloud-oracle-porque-so-a-oracle-vende-o-cloud-oracle/",
+      "tipo": "imprensa",
+      "como_lido": "WebFetch",
+      "prova": [
+        "Objeto: Oracle Gen 2 Exadata Cloud at Customer Infrastructure X8 (Full Rack e Half Rack de reserva), nuvem privada instalada no TSE para a totalização."
+      ]
+    },
+    {
+      "id": "poder360_assistencia_2020",
+      "titulo": "Empresa dos EUA responsável por apuração deixa TSE sem assistência técnica",
+      "veiculo": "Poder360",
+      "data": "2020-11-16",
+      "url": "https://www.poder360.com.br/eleicoes/empresa-dos-eua-responsavel-por-apuracao-deixa-tse-sem-assistencia-tecnica/",
+      "tipo": "imprensa",
+      "como_lido": "WebFetch",
+      "prova": [
+        "Equipamento Exadata Cloud at Customer Infrastructure; um dos oito nós falhou em 15/11/2020."
+      ]
+    },
+    {
+      "id": "aosfatos_sala_cofre_2020",
+      "titulo": "É falso que TSE não controle supercomputador responsável por somar votos",
+      "veiculo": "Aos Fatos",
+      "data": "2020-11-28",
+      "url": "https://www.aosfatos.org/noticias/e-falso-que-tse-nao-controle-supercomputador-responsavel-por-somar-votos/",
+      "tipo": "imprensa",
+      "como_lido": "WebFetch",
+      "prova": [
+        "O equipamento fica numa sala-cofre do TSE e é operado pela equipe do tribunal; a Oracle fornece servidores, software de banco de dados, suporte e atualização (modelo Cloud at Customer)."
+      ]
+    },
+    {
+      "id": "tse_contratacoes_tic",
+      "titulo": "Contratações de Soluções de Tecnologia da Informação e Comunicação (TIC)",
+      "veiculo": "TSE (portal de transparência)",
+      "data": "consultado em 2026-10-05",
+      "url": "https://www.tse.jus.br/transparencia-e-prestacao-de-contas/informacoes-exigidas-por-lei/contratacoes-de-solucoes-de-tic",
+      "tipo": "documento_oficial",
+      "como_lido": "navegador embutido (lista); ETP, TR e contrato do item não lidos: HTTP 429",
+      "prova": [
+        "A aba 2022 e 2023 lista o item 32, 'Expansão contrato Oracle Cloud At Customer. Serviços ACS', com ETP, TR e contrato.",
+        "A aba 2025 lista suporte Premier 24x7 com manutenção corretiva para os hardwares e sistemas operacionais Oracle."
+      ],
+      "nao_prova": "Que a totalização de 2026 rodou nesse equipamento; o ETP da expansão não foi lido.",
+      "anexos_nao_lidos": [
+        "https://www.tse.jus.br/transparencia-e-prestacao-de-contas/informacoes-exigidas-por-lei/arquivos-contratos-tic/contratacoes-de-solucoes-de-tic-25-etp",
+        "https://www.tse.jus.br/transparencia-e-prestacao-de-contas/informacoes-exigidas-por-lei/arquivos-contratos-tic/contratacoes-de-solucoes-de-tic-25-contrato"
+      ]
+    },
+    {
+      "id": "res_23673_2021",
+      "titulo": "Resolução nº 23.673, de 14 de dezembro de 2021 (fiscalização e auditoria dos sistemas eleitorais)",
+      "veiculo": "TSE (norma)",
+      "data": "2021-12-14",
+      "url": "https://www.tse.jus.br/legislacao/compilada/res/2021/resolucao-no-23-673-14-de-dezembro-de-2021",
+      "tipo": "documento_oficial",
+      "como_lido": "trecho devolvido pelo buscador; a página respondeu 429 ao navegador e ao WebFetch",
+      "prova": [
+        "Define o Receptor de Arquivos de Urna (RecArquivos), que recebe os pacotes do Transportador de Arquivos e os põe à disposição do Sistema de Gerenciamento da Totalização (Sistot), conjunto de programas que acompanha os recebimentos e gerencia as totalizações."
+      ],
+      "nao_prova": "Banco de dados, filas internas, sistema de divulgação."
+    },
+    {
+      "id": "cnn_caminho_voto_2026",
+      "titulo": "Eleições 2026: entenda o caminho do voto até a divulgação do resultado",
+      "veiculo": "CNN Brasil (Renan Soares)",
+      "data": "2026-10-04",
+      "url": "https://www.cnnbrasil.com.br/eleicoes/eleicoes-2026-entenda-o-caminho-do-voto-ate-a-divulgacao-do-resultado/",
+      "tipo": "imprensa",
+      "como_lido": "WebFetch",
+      "prova": [
+        "Mídia de resultado assinada e cifrada; transmissão por computadores da Justiça Eleitoral (JE-Connect) em rede privativa; verificação de assinatura no TSE; verificações de estrutura e consistência antes de incorporar ao Sistot; divulgação no portal."
+      ]
+    },
+    {
+      "id": "conjur_fila_2022",
+      "titulo": "Não há virada na apuração, apenas atraso na totalização de regiões",
+      "veiculo": "Consultor Jurídico",
+      "data": "2022-10-29",
+      "url": "https://conjur.com.br/2022-out-29/nao-virada-apuracao-apenas-atraso-totalizacao-algumas-regioes/",
+      "tipo": "imprensa",
+      "como_lido": "WebFetch",
+      "prova": [
+        "Julio Valente (TSE): os boletins entram no CPD 'em uma estrutura semelhante a uma fila de banco'; 30 segundos de atraso na conexão podem pôr mais de 50 mil boletins na frente."
+      ]
+    },
+    {
+      "id": "tse_encerramento_2026",
+      "titulo": "Presidente do TSE conclui 1º turno das Eleições 2026 e projeta mesma tranquilidade para segunda fase do pleito",
+      "veiculo": "TSE (notícia)",
+      "data": "2026-10-04T23:56",
+      "url": "https://www.tse.jus.br/comunicacao/noticias/2026/Outubro/presidente-do-tse-conclui-1o-turno-das-eleicoes-2026-e-projeta-mesma-tranquilidade-para-segunda-fase-do-pleito",
+      "tipo": "documento_oficial",
+      "como_lido": "navegador embutido",
+      "prova": [
+        "Segundo o presidente do TSE, houve congestionamento no sistema responsável pela divulgação; a dificuldade ficou restrita à conversão dos dados pelo programa de divulgação e não afetou a totalização.",
+        "Os protocolos de segurança exigem checar todos os sistemas numa ordem específica, o que demanda tempo."
+      ],
+      "nao_prova": "Causa do fluxo acima do normal, componente que congestionou, banco de dados usado."
+    },
+    {
+      "id": "agencia_brasil_2026",
+      "titulo": "Congestionamento no sistema de dados gerou atraso na apuração, diz TSE",
+      "veiculo": "Agência Brasil",
+      "data": "2026-10-04T22:14",
+      "url": "https://agenciabrasil.ebc.com.br/justica/noticia/2026-10/congestionamento-no-sistema-de-dados-gerou-atraso-na-apuracao-diz-tse",
+      "tipo": "imprensa",
+      "como_lido": "WebFetch",
+      "prova": [
+        "Nunes Marques: 'O que a nossa TI constatou foi um fluxo [de dados] superior ao normal, e esse congestionamento gerou um atraso'; um protocolo foi acionado para garantir a segurança do sistema."
+      ]
+    },
+    {
+      "id": "cnn_congestionamento_2026",
+      "titulo": "TSE registrou congestionamento no sistema de divulgação, diz Nunes Marques",
+      "veiculo": "CNN Brasil (Fernanda Fonseca e Janaína Camelo)",
+      "data": "2026-10-04T21:58",
+      "url": "https://www.cnnbrasil.com.br/eleicoes/tse-registrou-congestionamento-no-sistema-de-divulgacao-diz-nunes-marques/",
+      "tipo": "imprensa",
+      "como_lido": "WebFetch",
+      "prova": [
+        "Para escoar as informações foi necessário isolar temporariamente outros sistemas e depois restabelecer as conexões."
+      ]
+    },
+    {
+      "id": "sbt_2026",
+      "titulo": "TSE atribui atraso na apuração a congestionamento de dados",
+      "veiculo": "SBT News (Caio Barcellos)",
+      "data": "2026-10-05T01:33",
+      "url": "https://sbtnews.sbt.com.br/noticia/eleicoes/tse-atribui-atraso-na-apuracao-a-congestionamento-de-dados",
+      "tipo": "imprensa",
+      "como_lido": "WebFetch",
+      "prova": [
+        "Quase 50 minutos sem atualização do painel; a equipe técnica isolou outros sistemas para deixar o fluxo passar."
+      ]
+    },
+    {
+      "id": "uber_kafka_2020",
+      "titulo": "Disaster Recovery for Multi-Region Kafka at Uber",
+      "veiculo": "Uber Engineering Blog (Yupeng Fu e Mingmin Chen)",
+      "data": "2020-12-21",
+      "url": "https://www.uber.com/us/en/blog/kafka/",
+      "tipo": "engenharia",
+      "como_lido": "WebFetch",
+      "prova": [
+        "Kafka é a espinha dorsal de eventos da Uber, com trilhões de mensagens e petabytes por dia, levando eventos dos aplicativos a sistemas de streaming, changelogs de banco e o data lake."
+      ]
+    },
+    {
+      "id": "uber_sigmod_2021",
+      "titulo": "Real-time Data Infrastructure at Uber",
+      "veiculo": "SIGMOD 2021 (Yupeng Fu e Chinmay Soman), arXiv 2104.00087",
+      "data": "2021-03-31",
+      "url": "https://arxiv.org/abs/2104.00087",
+      "tipo": "engenharia",
+      "como_lido": "WebFetch (resumo)",
+      "prova": [
+        "Descrição da infraestrutura de tempo real da Uber, com petabytes coletados continuamente."
+      ]
+    },
+    {
+      "id": "uber_cassandra_2023",
+      "titulo": "How Uber Optimized Cassandra Operations At Scale",
+      "veiculo": "Uber Engineering Blog (Runtian Liu, Gopal Mor, Jaydeepkumar Chovatia)",
+      "data": "2023-07-20",
+      "url": "https://www.uber.com/us/en/blog/how-uber-optimized-cassandra-operations-at-scale/",
+      "tipo": "engenharia",
+      "como_lido": "WebFetch",
+      "prova": [
+        "Centenas de clusters Cassandra, de 6 a 450 nós, dezenas de milhões de consultas por segundo e petabytes de dados."
+      ]
+    },
+    {
+      "id": "highscalability_uber_2016",
+      "titulo": "How Uber Manages a Million Writes Per Second Using Mesos and Cassandra Across Multiple Datacenters",
+      "veiculo": "High Scalability (resumo da palestra de Abhishek Verma, Cassandra Summit 2016)",
+      "data": "2016-09-28",
+      "url": "https://highscalability.com/blog/2016/9/28/how-uber-manages-a-million-writes-per-second-using-mesos-and.html",
+      "tipo": "engenharia",
+      "como_lido": "WebFetch",
+      "prova": [
+        "Os maiores clusters Cassandra da Uber passavam de um milhão de escritas por segundo, com dados de localização enviados a cada 30 segundos pelos aplicativos."
+      ],
+      "nao_prova": "É resumo de terceiro sobre uma palestra; o texto original da Uber sobre o mesmo número não foi localizado."
+    }
+  ],
+  "buscas_sem_achado": [
+    "Documento público que diga qual banco de dados e qual equipamento rodaram a totalização e a divulgação em 2026.",
+    "Relatório técnico do incidente de 04/10/2026.",
+    "Registro de parada comparável do arquivo nacional em 2022 ou 2024 (buscas por atraso, lentidão e instabilidade no 1º turno desses anos devolveram só matérias de 2026 e de 2020). Ausência no buscador não prova ausência de fato."
+  ]
+}
