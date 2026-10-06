@@ -48,6 +48,10 @@ FIM_NOITE = 24 * 60
 # (#0f7f5f e #b0562a ficam em 4,4:1 com letra de 13 px).
 COR_REGIAO_TXT = dict(COR_REGIAO, Norte="#0b6650", Nordeste="#9a4520")
 LINHA_LULA = "#7a1c12"  # parcela de Lula no lote: vinho, distinto da barra do Nordeste
+LINHA_FLAVIO = (
+    "#0b2f66"  # parcela de Flávio: azul-marinho, mais escuro que a barra do Sudeste
+)
+LINHA_OUTROS = "#2b2b2b"  # terceiros somados: grafite tracejado
 MAIS_RAPIDO = "#0f7f5f"
 MAIS_LENTO = "#7d5b00"
 UF_2022 = "#8a8d86"
@@ -126,26 +130,38 @@ def noite_regioes_lotes(d, **_op) -> str:
     out.append(f'<g data-alt-show="validos">{"".join(gv)}</g>')
     out.append(f'<g data-alt-show="secoes" display="none">{"".join(gs)}</g>')
     out.append(ln(esq, Yp(50), dir_, Yp(50), INK, 1, ' stroke-dasharray="5 4"'))
-    trechos: list[list[tuple[float, float]]] = [[]]
-    for x in lts:
-        if x["vv"] >= minimo and x["pct_lula"] is not None:
-            trechos[-1].append((X(minutos(x["de_brt"]) + 2.5), Yp(x["pct_lula"])))
-        elif trechos[-1]:
-            trechos.append([])
-    pts = [pt for tr in trechos for pt in tr]
-    for tr in trechos:
-        trilha = " ".join(f"{a:.1f},{b:.1f}" for a, b in tr)
-        out.append(
-            f'<polyline points="{trilha}" fill="none" stroke="#ffffff" stroke-width="5"/>'
-            f'<polyline points="{trilha}" fill="none" stroke="{LINHA_LULA}" stroke-width="2.4"/>'
-        )
-    out.extend(
-        f'<circle cx="{a:.1f}" cy="{b:.1f}" r="2.6" fill="{LINHA_LULA}"/>'
-        for a, b in pts
+
+    def pct_outros(x: dict) -> float | None:
+        if x["pct_lula"] is None or x["pct_flavio"] is None:
+            return None
+        return max(0.0, 100 - x["pct_lula"] - x["pct_flavio"])
+
+    series = (
+        (lambda x: x["pct_flavio"], LINHA_FLAVIO, ""),
+        (lambda x: x["pct_lula"], LINHA_LULA, ""),
+        (pct_outros, LINHA_OUTROS, ' stroke-dasharray="6 4"'),
     )
+    for valor, cor, extra in series:
+        trechos: list[list[tuple[float, float]]] = [[]]
+        for x in lts:
+            v = valor(x)
+            if x["vv"] >= minimo and v is not None:
+                trechos[-1].append((X(minutos(x["de_brt"]) + 2.5), Yp(v)))
+            elif trechos[-1]:
+                trechos.append([])
+        pts = [pt for tr in trechos for pt in tr]
+        for tr in trechos:
+            trilha = " ".join(f"{a:.1f},{b:.1f}" for a, b in tr)
+            out.append(
+                f'<polyline points="{trilha}" fill="none" stroke="#ffffff" stroke-width="5"/>'
+                f'<polyline points="{trilha}" fill="none" stroke="{cor}" stroke-width="2.4"{extra}/>'
+            )
+        out.extend(
+            f'<circle cx="{a:.1f}" cy="{b:.1f}" r="2.6" fill="{cor}"/>' for a, b in pts
+        )
     for v in (0, 25, 50, 75, 100):
-        out.append(t(dir_ + 8, Yp(v) + 5, f"{v}%", 13, LINHA_LULA, mono=True))
-    out.append(t(dir_ + 8, topo - 16, "Lula", 13, LINHA_LULA, weight="700"))
+        out.append(t(dir_ + 8, Yp(v) + 5, f"{v}%", 13, INK, mono=True))
+    out.append(t(dir_ + 8, topo - 16, "% do lote", 13, INK, weight="700"))
     out.append(ln(esq, base, dir_, base, INK, 1.2))
     out.append(eixo_x_horas(X, INI_NOITE, fim, base))
     if tarde:
@@ -199,12 +215,21 @@ def noite_regioes_lotes(d, **_op) -> str:
                 inteiro(x["vv"]),
                 f"{num(x['pct_lula'], 1)}%" if x["pct_lula"] is not None else "s/d",
                 f"{num(x['pct_flavio'], 1)}%" if x["pct_flavio"] is not None else "s/d",
+                f"{num(pct_outros(x), 1)}%" if pct_outros(x) is not None else "s/d",
                 *cel,
             ]
         )
         out.append(hit(area(X(a), topo, X(a + 5) - X(a), base - topo), f"r{i}"))
     tips.tabela(
-        ["Lote", "Seções", "Válidos", "Lula no lote", "Flávio no lote", *REG],
+        [
+            "Lote",
+            "Seções",
+            "Válidos",
+            "Lula no lote",
+            "Flávio no lote",
+            "Terceiros no lote",
+            *REG,
+        ],
         linhas,
         sub=1,
         nota="soma dos 28 arquivos de UF pela hora de geração do TSE",
@@ -217,13 +242,17 @@ def noite_regioes_lotes(d, **_op) -> str:
     )
     leg = legenda_html(
         [(reg, COR_REGIAO[reg]) for reg in REG]
-        + [("Lula no lote (eixo da direita)", LINHA_LULA)],
+        + [
+            ("Flávio no lote (eixo da direita)", LINHA_FLAVIO),
+            ("Lula no lote", LINHA_LULA),
+            ("Terceiros somados no lote (tracejado)", LINHA_OUTROS),
+        ],
         "Região",
     )
     falta = ne["maior_do_que_faltava"]
     legenda_ = (
         "Cada barra soma o que os 28 arquivos de UF de presidente acrescentaram em 5 minutos, pela hora "
-        f"em que o TSE gerou cada versão; a linha é a parcela de Lula nos válidos do lote (lotes com pelo "
+        f"em que o TSE gerou cada versão; as linhas são as parcelas de Flávio, de Lula e dos terceiros somados nos válidos do lote (lotes com pelo "
         f"menos {num(minimo / 1000, 0)} mil válidos). A partir das {falta['hora_brt'][11:16]} o Nordeste já era a maior "
         f"parte do que faltava apurar ({num(falta['parcela_nordeste_pct'], 1)}%). Hachura: nenhum arquivo de UF "
         f"gerado de {lac['de_brt'][11:16]} a {lac['ate_brt'][11:16]}. Fonte: noite_regioes.json."
