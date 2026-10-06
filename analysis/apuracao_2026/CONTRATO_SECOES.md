@@ -141,7 +141,7 @@ arquivo de zona; o motivo diz se o arquivo de zona congelou incompleto), `tipo_a
 
 `Componente`:
 ```json
-{"id": 0, "rotulo": "sem voto nas cinco candidaturas menos votadas; Lula 50% dos válidos; Nordeste 40% das seções",
+{"id": 0, "rotulo": "sem voto nas cinco candidaturas menos votadas; Flávio 47% dos válidos; Sudeste 37% das seções",
  "secoes": 0, "pct_secoes": 0.0, "aptos": 0,
  "aptos_medio": 0.0, "votantes_medio": 0.0,
  "centro_pct_eleitorado": {"lula": 0.0, "flavio": 0.0, "n70": 0.0, "brancos": 0.0, "nulos": 0.0, "abstencao": 0.0},
