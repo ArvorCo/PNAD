@@ -204,7 +204,11 @@ def test_rolagem_abre_no_zero(dados, nome):
 
 def test_pista_de_rolagem():
     js = interativo_html()
-    assert ".chart-scroll.mais-d{" in js and "mask-image" in js
+    # sombra por dentro da borda, sob o conteúdo: não esmaece texto nenhum
+    assert ".chart-scroll.mais-d{box-shadow:inset" in js and "mask-image" not in js
+    # a pista fica fora do gráfico, acima dele, e a espera adiada recebe a mesma
+    assert "c.parentNode.insertBefore(dica,c)" in js
+    assert "classList.contains('fig-espera-c')" in js
     assert "role para o lado" in js
 
 

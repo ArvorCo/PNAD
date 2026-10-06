@@ -69,12 +69,12 @@ html:not(.js) .dica{display:none}
 .chart-fit>.fig-espera{max-width:760px;margin:auto}
 html:not(.js) .fig-espera-c{display:none}
 @media print{.fig-espera-c{display:none}}
-.chart-scroll.mais-d{-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 56px),rgba(0,0,0,.18));mask-image:linear-gradient(to right,#000 calc(100% - 56px),rgba(0,0,0,.18))}
-.chart-scroll.mais-e{-webkit-mask-image:linear-gradient(to right,rgba(0,0,0,.18),#000 40px);mask-image:linear-gradient(to right,rgba(0,0,0,.18),#000 40px)}
-.chart-scroll.mais-e.mais-d{-webkit-mask-image:linear-gradient(to right,rgba(0,0,0,.18),#000 40px,#000 calc(100% - 56px),rgba(0,0,0,.18));mask-image:linear-gradient(to right,rgba(0,0,0,.18),#000 40px,#000 calc(100% - 56px),rgba(0,0,0,.18))}
-.rola-dica{position:absolute;z-index:4;right:14px;padding:5px 9px;background:var(--ink);color:var(--paper);font:600 11.5px/1.2 var(--mono);letter-spacing:.06em;text-transform:uppercase;border-radius:2px;pointer-events:none;transition:opacity .2s ease}
+.chart-scroll.mais-d{box-shadow:inset -16px 0 12px -12px rgba(25,46,43,.5)}
+.chart-scroll.mais-e{box-shadow:inset 16px 0 12px -12px rgba(25,46,43,.5)}
+.chart-scroll.mais-e.mais-d{box-shadow:inset -16px 0 12px -12px rgba(25,46,43,.5),inset 16px 0 12px -12px rgba(25,46,43,.5)}
+.rola-dica{display:block;margin:0 0 6px;text-align:right;font:600 11.5px/1.4 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);transition:opacity .2s ease}
 .rola-dica.fora{opacity:0}
-@media print{.rola-dica{display:none}.chart-scroll{-webkit-mask-image:none!important;mask-image:none!important}}
+@media print{.rola-dica{display:none}.chart-scroll{box-shadow:none!important}}
 @media(max-width:719px){.fig-ctl button{padding:8px 10px;font-size:13px}.fig-tip{max-width:calc(100% - 12px)}.fig-i .so-largo{display:none}}
 @media print{.fig-ctl,.fig-tip,.dica{display:none}}
 """
@@ -221,7 +221,11 @@ function materializa(fig){
   fig.insertBefore(tpl.content,src);
   fig.removeChild(src);
   var espera=fig.querySelector('.fig-espera-c');
-  if(espera){fig.removeChild(espera);}
+  if(espera){
+    var d0=espera.previousElementSibling;
+    if(d0&&d0.classList.contains('rola-dica')){fig.removeChild(d0);}
+    fig.removeChild(espera);
+  }
   fig.removeAttribute('data-adiada');fig.classList.remove('fig-adiada');
   monta(fig);prepara(fig);
   if(antes!==null&&Math.abs(topoDoc(ancora.alvo)-antes)>1){ancora.alvo.scrollIntoView({block:'start',behavior:'instant'});}
@@ -283,37 +287,41 @@ document.addEventListener('click',function(ev){
   ls.forEach(function(l){corpo.appendChild(l);});
 });
 // Rolagem interna: abre mostrando a faixa `data-foco` (zero do eixo e maior
-// barra), esmaece a borda que ainda tem conteúdo e põe a pista "role para o
-// lado", que some na primeira rolagem.
+// barra), sombreia por dentro a borda que ainda tem conteúdo e põe, acima do
+// gráfico e fora dele, a pista "role para o lado", que esmaece na primeira
+// rolagem sem mudar a altura. A espera de uma figura adiada tem a mesma largura
+// mínima, então recebe a mesma pista e a altura não muda quando o gráfico chega.
 function rolagem(c){
-  if(c.getAttribute('data-rola')){return;}
-  var svg=null;q(c,'svg').forEach(function(s){if(!svg&&s.getBoundingClientRect().width>0){svg=s;}});
-  if(!svg||c.scrollWidth<=c.clientWidth+2){return;}
+  if(c.getAttribute('data-rola')||c.scrollWidth<=c.clientWidth+2){return;}
+  var espera=c.classList.contains('fig-espera-c'),svg=null;
+  if(!espera){
+    q(c,'svg').forEach(function(s){if(!svg&&s.getBoundingClientRect().width>0){svg=s;}});
+    if(!svg){return;}
+  }
   c.setAttribute('data-rola','1');
   var f=(c.getAttribute('data-foco')||'').split(' ');
-  if(f.length>=2&&svg.viewBox&&svg.viewBox.baseVal&&svg.viewBox.baseVal.width){
+  if(svg&&f.length>=2&&svg.viewBox&&svg.viewBox.baseVal&&svg.viewBox.baseVal.width){
     var s=svg.getBoundingClientRect().width/svg.viewBox.baseVal.width,pad=12,cw=c.clientWidth;
     var x0=+f[0]*s,x1=+f[1]*s,z=(f.length>2?+f[2]:+f[0])*s,lo=x1+pad-cw,hi=x0-pad;
     // cabe: a menor rolagem que mostra a faixa inteira; não cabe: o zero, com a
     // barra crescendo para o lado visível
     c.scrollLeft=Math.max(0,lo<=hi?lo:(Math.abs(z-x1)<2?z+pad-cw:z-pad));
   }
-  var fig=c.closest('figure'),dica=null;
+  var dica=document.createElement('span');
+  dica.className='rola-dica';dica.setAttribute('aria-hidden','true');
+  dica.textContent=c.scrollLeft>2?'← role para o lado →':'role para o lado →';
+  c.parentNode.insertBefore(dica,c);
+  if(espera){return;}
   function marca(){
     var max=c.scrollWidth-c.clientWidth;
     c.classList.toggle('mais-e',c.scrollLeft>2);
     c.classList.toggle('mais-d',c.scrollLeft<max-2);
   }
   marca();
-  if(fig){
-    dica=document.createElement('span');dica.className='rola-dica';dica.setAttribute('aria-hidden','true');
-    dica.textContent=c.scrollLeft>2?'← role para o lado →':'role para o lado →';
-    dica.style.top=(c.offsetTop+6)+'px';fig.appendChild(dica);
-  }
   var x=c.scrollLeft;
   c.addEventListener('scroll',function(){
     marca();
-    if(dica&&Math.abs(c.scrollLeft-x)>4){dica.classList.add('fora');}
+    if(Math.abs(c.scrollLeft-x)>4){dica.classList.add('fora');}
   },{passive:true});
 }
 q(document,'figure[data-fig]:not([data-adiada])').forEach(monta);

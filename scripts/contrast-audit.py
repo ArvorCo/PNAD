@@ -43,6 +43,15 @@ COLLECT = """
     }
     const box = el.getBoundingClientRect();
     if (box.width < 4 || box.height < 4) return;
+    // Texto que a rolagem interna de um gráfico largo deixa fora da área
+    // visível do contêiner não é pintado: medir ali lê o papel ao lado e
+    // inventa reprovação. Fica de fora quando não sobra nem 4 px visíveis.
+    for (let up = el.parentElement; up && up !== document.body; up = up.parentElement) {
+      const ox = getComputedStyle(up).overflowX;
+      if (ox === 'visible') continue;
+      const r = up.getBoundingClientRect();
+      if (box.left >= r.right - 4 || box.right <= r.left + 4) return;
+    }
     if (box.top + window.scrollY < 0 || box.left < 0) return;
     if (box.right > document.documentElement.scrollWidth) return;
     const svg = el.namespaceURI === 'http://www.w3.org/2000/svg';
