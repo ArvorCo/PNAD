@@ -437,7 +437,7 @@ def anomalias_a(A: dict) -> str:
     ]
     return p(
         f"A triagem comparou cada uma das {inteiro(r['n_zonas'])} zonas com a própria UF e com 2022, por quatro leituras (z robusto, "
-        f"Mahalanobis, Isolation Forest e LOF). <strong>Nenhuma das {len(topo)} zonas mais atípicas aponta fraude.</strong> "
+        f"Mahalanobis, Isolation Forest e LOF). <strong>Nenhuma das {len(topo)} zonas mais atípicas aponta irregularidade.</strong> "
         f"{len(topo) - len(local)} têm explicação comum provável; {len(local)} ficam como hipótese de política local, a conferir "
         f"seção por seção. {r['pequenas_ate_30_secoes']['topo']} têm até 30 seções.",
         "inferencia",
@@ -449,7 +449,7 @@ def anomalias_b(A: dict) -> str:
     return p(
         f"As {td['n']} zonas que fecharam bem depois da própria UF votaram como as demais em relação à região: o resíduo da "
         f"margem foi {sinal(td['residuo_medio_pp_tardias'], 2)} ponto nelas e {sinal(td['residuo_medio_pp_demais'], 2)} nas outras "
-        f"(correlação atraso e resíduo {num(td['correlacao_atraso_residuo'], 3)}). O movimento extra é efeito do estado, não da demora.",
+        f"(correlação entre atraso e resíduo {sinal(td['correlacao_atraso_residuo'], 3)}). O movimento extra é efeito do estado, não da demora.",
         "verificado",
     )
 

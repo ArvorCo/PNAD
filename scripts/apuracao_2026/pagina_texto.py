@@ -186,7 +186,7 @@ def teses(d: Dados) -> str:
         itens.append(
             (
                 "inferencia",
-                f"Nenhuma das {len(AN['topo'])} zonas mais atípicas aponta fraude; das {inteiro(c22['secoes_90_2026_casadas'])} "
+                f"Nenhuma das {len(AN['topo'])} zonas mais atípicas aponta irregularidade; das {inteiro(c22['secoes_90_2026_casadas'])} "
                 f"seções de Lula acima de 90% que existem em 2022, {inteiro(c22['tambem_90_em_2022_1t'])} já davam 90% a ele, "
                 f"e o modelo de urna move menos de {num(rg['limiar_pp'], 0)} ponto, com sinal que troca conforme o controle. "
                 f"O que sobra pede documento: ata, log da urna e plano de alocação do TRE ({_cap('anomalias', 12)}).",

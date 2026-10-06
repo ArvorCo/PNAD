@@ -8,7 +8,7 @@ from . import pagina_texto_b as T
 from . import pagina_texto_c as TC
 from . import pagina_texto_fechamento as TF
 from . import pagina_texto_terceira_via as TV
-from .pagina_comum import Capitulo, Dados, checar, num, secao, sinal, tabela
+from .pagina_comum import Capitulo, Dados, checar, limites, num, secao, sinal, tabela
 from .pagina_texto import fig
 
 IMG = "img/apuracao_2026"
@@ -123,7 +123,7 @@ def r_anomalias(d: Dados, cap: Capitulo) -> str:
     h = secao(
         cap,
         "Anomalias por zona.<br><em>Triagem, não acusação.</em>",
-        escape(A.get("aviso", "")),
+        "Escore alto quer dizer zona ou seção atípica dentro da própria UF, que pede explicação documental.",
     )
     h += T.anomalias_a(A) + fig("mapa_anomalias", d)
     h += T.anomalias_b(A) + fig("anomalias_features", d)
@@ -135,23 +135,29 @@ def r_anomalias(d: Dados, cap: Capitulo) -> str:
         else None
     )
     h += T.anomalias_c(A, n_itens, n_of)
-    h += (
-        "<details><summary>Limites da triagem</summary><ul>"
-        + "".join(f"<li>{escape(x)}</li>" for x in A["limites"])
-        + "</ul></details>"
-    )
+    lim = [
+        escape(x).replace("não é fraude", "não é irregularidade")
+        for x in A["limites"]
+        if not x.startswith("Zona pequena")
+    ]
     S = d.get("secoes.json")
     if S is None:
         d.aviso("secoes.json ausente: capítulo 12 só com a análise por zona")
     else:
         checar(d, "secoes.json", TC.CHAVES)
         h += TC.bloco(S, lambda nome: fig(nome, d))
+        lim += TC.limites_secao(S)
     F = d.get("fechamento.json")
     if F is None:
         d.aviso("fechamento.json ausente: capítulo 12 sem o fechamento das seções")
     else:
         checar(d, "fechamento.json", TF.CHAVES)
         h += TF.bloco(F, lambda nome: fig(nome, d))
+        lim += TF.limites_fechamento(F)
+    h += limites(
+        lim,
+        "Os limites da noite (capítulos 2 e 3) valem aqui para as horas de chegada.",
+    )
     return h + "</section>"
 
 

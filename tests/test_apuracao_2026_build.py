@@ -109,7 +109,6 @@ H3_SECOES = [
     "Três grupos de seções",
     "Modelo de urna",
     "O que mais a seção mostra",
-    "O que a seção prova e o que não prova",
 ]
 
 
@@ -133,6 +132,7 @@ def test_capitulo_12_ganha_parte_por_secao(tmp_path):
     for h3 in H3_SECOES:
         assert f"<h3>{h3}</h3>" in cap, h3
     assert 'id="fig-clusters_secoes"' in cap and 'id="fig-modelo_urna_zona"' in cap
+    assert 'id="fig-urna_reguas"' in cap and 'class="limites"' in cap
     assert "—" not in cap
 
 

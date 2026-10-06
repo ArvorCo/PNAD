@@ -384,7 +384,7 @@ def test_bloco_de_texto_figura_antes_do_paragrafo():
     assert "—" not in h and "fraude" not in h.lower()
     pos = [h.index(f'id="fig-{n}"') for n in NOMES]
     assert pos == sorted(pos)
-    assert "Juízo editorial" in h and "Hipótese, não achado" in h
+    assert "Juízo editorial" in h and "Hipótese" in h and "Não é achado" in h
     assert "fiscal de partido" in h and "art. 65" in h
     assert h.index("Achado contrário") < h.index('id="fig-fechamento_regioes"')
     # todo parágrafo com selo vem depois da primeira figura ou é abertura
