@@ -466,10 +466,14 @@ def test_texto_voto_por_modelo_sinais_e_frase_responsavel():
 def test_clusters_secoes_caixa_falha_e_barras_do_eleitorado():
     S = _fixture()
     h = FIGURAS["clusters_secoes"]({"secoes": S})
-    q = S["clusters"]["variantes"]["quinze_partes"]
+    var = S["clusters"]["variantes"]
     assert "O que não deu certo" in h
+    assert "1. 15 partes em log-razão." in h and "2. Cinco partes em log-razão." in h
+    assert "3. Proporções do eleitorado, sem log" in h
+    q = var["quinze_partes"]
     assert f"{C.num(q['zeros_substituidos_pct'], 1)}% das células eram zero" in h
-    assert f"V de Cramér agora: {C.num(S['clusters']['cramer_v_regiao'], 2)}" in h
+    assert f"V de Cramér: {C.num(var['cinco_partes_clr']['cramer_v_regiao'], 2)}" in h
+    assert f"V de Cramér {C.num(S['clusters']['cramer_v_regiao'], 2)}" in h
     n = len(S["clusters"]["componentes"])
     assert h.count('class="cl-barra"') == n
     # segmentos `display:block` e sem `width`: não viram área zero no auditor
