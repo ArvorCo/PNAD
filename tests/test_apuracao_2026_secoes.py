@@ -661,3 +661,29 @@ def test_memorando_sem_registro_e_com_k(dados):
     m = st.memorando(dados)
     assert "Registro (SP)" not in m
     assert f"## B. Mistura gaussiana (k = {dados['clusters']['k']})" in m
+
+
+def test_voto_por_uf_modelo_soma_e_ordena():
+    df = pd.DataFrame(
+        {
+            "uf": ["sp", "sp", "sp", "ac"],
+            "regiao": ["Sudeste", "Sudeste", "Sudeste", "Norte"],
+            "modelo_urna": ["UE2022", "UE2013", "UE2022", None],
+            "votantes": [100, 80, 120, 50],
+            "validos": [90, 70, 110, 40],
+            "v13": [30, 40, 50, 10],
+            "v22": [60, 30, 60, 30],
+            "abstencao": [20, 20, 30, 10],
+            "aptos": [120, 100, 150, 60],
+        }
+    )
+    out = su.voto_por_uf_modelo(df)
+    assert [(x["uf"], x["modelo"]) for x in out] == [
+        ("AC", "sem modelo"),
+        ("SP", "UE2013"),
+        ("SP", "UE2022"),
+    ]
+    sp22 = out[2]
+    assert sp22["secoes"] == 2 and sp22["validos"] == 200
+    assert sp22["flavio"] == 120 and sp22["flavio_pct"] == 60.0
+    assert sp22["lula_pct"] == 40.0 and sp22["abstencao_pct"] == 18.52

@@ -16,6 +16,10 @@ Atípico não é irregularidade. Uso:
 
     python3 scripts/apuracao-2026-secoes.py --parcial
     python3 scripts/apuracao-2026-secoes.py
+    python3 scripts/apuracao-2026-secoes.py --so-urna
+
+``--so-urna`` recarrega o JSON existente e refaz só o bloco ``urna`` (e os
+achados e o memorando que dependem dele), sem refazer a mistura gaussiana.
 """
 
 from __future__ import annotations
@@ -100,6 +104,11 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--saida-json", type=Path, default=SAIDA_JSON)
     ap.add_argument("--saida-md", type=Path, default=SAIDA_MD)
     ap.add_argument("--sem-2022", action="store_true", help="não lê os dados de 2022")
+    ap.add_argument(
+        "--so-urna",
+        action="store_true",
+        help="refaz só o bloco urna sobre o JSON existente",
+    )
     a = ap.parse_args(argv)
 
     base = secoes_base.montar(a.secoes_db, a.locais_db, a.apuracao_db, a.log)
@@ -119,6 +128,11 @@ def main(argv: list[str] | None = None) -> int:
     s22 = None
     if not a.sem_2022:
         s22 = secoes_2022.presidente_2022(ZIP_VOTOS_2022, ZIP_DETALHE_2022, CACHE_2022)
+    if a.so_urna:
+        dados = json.loads(a.saida_json.read_text(encoding="utf-8"))
+        dados["urna"] = secoes_urna.urna(base, s22)
+        dados["gerado_em"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        return grava(dados, a, cob)
     anomalias = json.loads(ANOMALIAS.read_text(encoding="utf-8"))
 
     dados: dict[str, Any] = {
@@ -173,6 +187,10 @@ def main(argv: list[str] | None = None) -> int:
         "outras": secoes_extremos.outras(base),
         "limites": secoes_texto.LIMITES,
     }
+    return grava(dados, a, cob)
+
+
+def grava(dados: dict[str, Any], a: argparse.Namespace, cob: dict[str, Any]) -> int:
     dados["achados"] = secoes_texto.achados(dados)
     texto = json.dumps(dados, ensure_ascii=False, separators=(",", ":"))
     if secoes_texto.PROIBIDO in texto:

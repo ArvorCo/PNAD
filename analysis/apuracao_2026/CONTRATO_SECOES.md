@@ -172,6 +172,7 @@ padrão.
 | `por_uf` | lista | figura `modelo_urna_uf`: `{uf, regiao, modelo, secoes, pct_da_uf}` |
 | `fonte_modelo` | lista | `{modelo_fonte, secoes}` (de onde veio o modelo: log da urna) |
 | `bruto` | lista | `{modelo, secoes, votantes, validos, flavio_pct, lula_pct, abstencao_pct, brancos_pct, nulos_pct}` (soma de votos / soma da base) |
+| `voto_por_uf_modelo` | lista | figuras `voto_por_modelo_nacional` e `voto_por_modelo_uf`: `{uf, regiao, modelo, secoes, votantes, validos, lula, flavio, lula_pct, flavio_pct, abstencao_pct}` por UF e modelo, mesma regra de `bruto` (seções válidas; sem modelo vira "sem modelo"; exterior com `uf` ZZ) |
 | `dentro_zona` | Estimador | figura `modelo_urna_zona` |
 | `dentro_local` | Estimador | mesmo prédio |
 | `reguas` | objeto | `{itens: [{estimador, metrica, regua, unidade, unidades, estimativa, ic95, bruto}], max_abs_pp, positivas, negativas, limiar_pp, leitura}`: as quatro réguas nacionais da urna mais nova contra a mais velha para Flávio (zona, prédio, linha de base da seção em 2022, troca de urna entre as eleições); `leitura` sai do tamanho máximo e de o sinal mudar entre elas |
@@ -263,3 +264,4 @@ Toda mudança de chave já publicada fica registrada aqui, com data e motivo.
   quatro estimadores nacionais e o bloco de 2022; acréscimo `urna.reguas`, que junta as
   quatro réguas e escreve a leitura.
 - 06/10/2026: `clusters.k` passa de 3 para 5 (escolha do autor; coincide com o k preferido pelo BIC); `componentes`, `mais_anomalo`, `cluster_regiao`, `cluster_uf` e `pca` seguem o mesmo esquema com cinco grupos; paleta da figura com cinco cores.
+- 06/10/2026, acréscimo: `urna.voto_por_uf_modelo` (voto por UF e modelo de urna, somas e parcelas), para as figuras `voto_por_modelo_nacional` e `voto_por_modelo_uf`. Nenhuma chave publicada mudou. `scripts/apuracao-2026-secoes.py --so-urna` refaz só o bloco `urna` (e achados e memorando) sobre o JSON existente, sem refazer a mistura gaussiana.

@@ -245,6 +245,39 @@ def _por_uf(df: pd.DataFrame) -> list[dict[str, Any]]:
     return out
 
 
+def voto_por_uf_modelo(df: pd.DataFrame) -> list[dict[str, Any]]:
+    """Voto por UF e modelo de urna: soma de votos sobre soma da base, por célula.
+
+    Mesma regra de `_bruto` (só as seções válidas de `base.secoes`), aberta por
+    UF; seção sem modelo fica como "sem modelo".
+    """
+    d = df.assign(_m=df["modelo_urna"].fillna("sem modelo"))
+    cols = ["votantes", "validos", f"v{LULA}", f"v{FLAVIO}", "abstencao", "aptos"]
+    g = d.groupby(["uf", "_m"])[cols].sum()
+    n = d.groupby(["uf", "_m"]).size()
+    reg = d.groupby("uf")["regiao"].first()
+    ordem = {m: i for i, m in enumerate(ordenar_modelos(sorted(d["_m"].unique())))}
+    out = []
+    for uf, m in sorted(g.index, key=lambda k: (str(k[0]), ordem[k[1]])):
+        x = g.loc[(uf, m)]
+        out.append(
+            {
+                "uf": str(uf).upper(),
+                "regiao": reg[uf],
+                "modelo": m,
+                "secoes": int(n[(uf, m)]),
+                "votantes": int(x["votantes"]),
+                "validos": int(x["validos"]),
+                "lula": int(x[f"v{LULA}"]),
+                "flavio": int(x[f"v{FLAVIO}"]),
+                "lula_pct": pct(int(x[f"v{LULA}"]), int(x["validos"])),
+                "flavio_pct": pct(int(x[f"v{FLAVIO}"]), int(x["validos"])),
+                "abstencao_pct": pct(int(x["abstencao"]), int(x["aptos"])),
+            }
+        )
+    return out
+
+
 def base_2022(s22: pd.DataFrame) -> pd.DataFrame:
     """Seções de 2022 no formato das métricas (Bolsonaro na coluna v22)."""
     d = s22.dropna(subset=["aptos_2022"]).copy()
@@ -292,6 +325,7 @@ def urna(base: Base, s22: pd.DataFrame | None) -> dict[str, Any]:
         ],
         "por_uf": _por_uf(df),
         "bruto": _bruto(df, METRICAS_2026),
+        "voto_por_uf_modelo": voto_por_uf_modelo(df),
         "dentro_zona": zona,
         "dentro_local": local,
     }
