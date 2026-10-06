@@ -1,4 +1,4 @@
-"""Frases curtas dos capítulos 06 a 14 do dossiê da apuração, geradas dos números."""
+"""Frases curtas dos capítulos 06 a 15 do dossiê da apuração, geradas dos números."""
 
 from __future__ import annotations
 

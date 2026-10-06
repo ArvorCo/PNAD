@@ -202,7 +202,7 @@ def teses(d: Dados) -> str:
                 f"Nas duas réguas, a terceira via rende saldo a Flávio no 2º turno: {_sinal_mil(br['nexus'])} pela matriz "
                 f"Nexus e {_sinal_mil(br['urna'])} pela urna de 2022 (intervalo de 95% de {_sinal_mil(lo)} a {_sinal_mil(hi)}), sem desfazer "
                 f"os {_votos_curto(n['diferenca_votos'])}. O risco é a base: se {pct(eq['base_flavio_trocando_para_lula_pct'])} "
-                f"dela trocar de lado, a margem central some ({_cap('segundo-turno', 13)}).",
+                f"dela trocar de lado, a margem central some ({_cap('segundo-turno', 14)}).",
             )
         )
     lis = "".join(f"<li>{rotulo(t)} {x}</li>" for t, x in itens)

@@ -146,3 +146,11 @@ def test_capitulo_12_sem_secoes_mantem_a_zona(tmp_path):
     cap = _capitulo_anomalias(saida.read_text(encoding="utf-8"))
     assert estado["anomalias"] is True
     assert "Da zona para a seção" not in cap and 'id="fig-mapa_anomalias"' in cap
+
+
+def test_remissoes_de_capitulo_batem_com_a_numeracao(pagina):
+    numero = {c.ident: int(c.numero) for c in capitulos()}
+    achados = re.findall(r'<a href="#([a-z-]+)">cap\. (\d+)</a>', pagina[0])
+    assert achados
+    for ident, n in achados:
+        assert numero[ident] == int(n), (ident, n)
