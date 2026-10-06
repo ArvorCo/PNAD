@@ -111,7 +111,7 @@ def hemiciclo_camara(d, **_op) -> str:
         key=lambda e: (_ci(e["campo"]), -tam[e["partido"]], e["partido"], -e["votos"])
     )
     n = len(deps)
-    cx, cy, r1, r0 = W / 2, 560, 520, 190
+    cx, cy, r1, r0 = W / 2, 568, 520, 190
     seats = posicoes(n, cx, cy, r1, r0, 12)
     raio = 8.6
     h = cy + 120
@@ -294,7 +294,10 @@ def _barra_campos(
     tips: Tips,
     titulo: str,
     absolutos: dict | None = None,
+    depois: list[str] | None = None,
 ) -> str:
+    """Barra 100% por campo. Com `depois`, os números vão para essa lista, para
+    serem desenhados por cima das linhas de referência, com contorno na cor da barra."""
     out, x = [], esq
     tot = sum(valores.get(c, 0) for c in CAMPOS) or 1
     for c in CAMPOS:
@@ -305,7 +308,7 @@ def _barra_campos(
         cor = cor_campo(c)
         corpo = r(x, y, w, alt, cor, f' stroke="{PAPER}" stroke-width="1"')
         if w > 44:
-            corpo += t(
+            rot = t(
                 x + w / 2,
                 y + alt / 2 + 5,
                 fmt(v),
@@ -314,7 +317,12 @@ def _barra_campos(
                 "middle",
                 "700",
                 mono=True,
+                extra=_contorno(cor) if depois is not None else "",
             )
+            if depois is not None:
+                depois.append(rot)
+            else:
+                corpo += rot
         linhas = [("Parcela", pct(100 * v / tot, 1))]
         if absolutos:
             linhas.insert(0, ("Total", inteiro(absolutos.get(c, 0))))
@@ -322,6 +330,13 @@ def _barra_campos(
         out.append(hit(corpo, k))
         x += w
     return "".join(out)
+
+
+def _contorno(cor: str) -> str:
+    """Contorno na cor da barra: a linha tracejada que passa por cima some atrás do número."""
+    return (
+        f' paint-order="stroke" stroke="{cor}" stroke-width="5" stroke-linejoin="round"'
+    )
 
 
 def _pct1(v: float) -> str:
@@ -357,6 +372,7 @@ def votos_x_cadeiras(d, **_op) -> str:
         legenda([(campo_nome(c), cor_campo(c)) for c in CAMPOS], esq, 24),
     ]
     tips = Tips()
+    numeros: list[str] = []
     for i, (rot, vals, abs_) in enumerate(linhas_):
         y = topo + i * passo
         out.append(
@@ -373,7 +389,16 @@ def votos_x_cadeiras(d, **_op) -> str:
         cad = "Cadeiras" in rot
         out.append(
             _barra_campos(
-                y, esq, larg, vals, 36, inteiro if cad else _pct1, tips, rot, abs_
+                y,
+                esq,
+                larg,
+                vals,
+                36,
+                inteiro if cad else _pct1,
+                tips,
+                rot,
+                abs_,
+                numeros,
             )
         )
     for k_, rot, yy, anc in (
@@ -393,6 +418,7 @@ def votos_x_cadeiras(d, **_op) -> str:
             )
         )
         out.append(t(x + (6 if anc == "start" else -6), yy, rot, 13, INK, anc, "700"))
+    out.append(f'<g pointer-events="none">{"".join(numeros)}</g>')
     out.append("</svg>")
     b26 = C["por_bloco_2026"]
     legenda_ = (
@@ -428,6 +454,7 @@ def camara_por_uf(d, **_op) -> str:
         t(esq + larg + 16, topo - 10, "vagas", 13, MUTED),
     ]
     tips = Tips()
+    numeros: list[str] = []
     for i, u in enumerate(ufs):
         y = topo + i * passo
         x = esq
@@ -442,7 +469,7 @@ def camara_por_uf(d, **_op) -> str:
                 r(x, y + 2, w, passo - 6, cor, f' stroke="{PAPER}" stroke-width="1"')
             )
             if w > 22:
-                corpo.append(
+                numeros.append(
                     t(
                         x + w / 2,
                         y + passo / 2 + 4,
@@ -452,6 +479,7 @@ def camara_por_uf(d, **_op) -> str:
                         "middle",
                         "700",
                         mono=True,
+                        extra=_contorno(cor),
                     )
                 )
             x += w
@@ -491,6 +519,7 @@ def camara_por_uf(d, **_op) -> str:
             ' stroke-dasharray="3 3"',
         )
     )
+    out.append(f'<g pointer-events="none">{"".join(numeros)}</g>')
     out.append("</svg>")
     legenda_ = (
         "Cadeiras por campo em cada UF, ordenadas pela parcela da direita e centro-direita; a linha marca metade das vagas. "
@@ -633,7 +662,7 @@ def senado_segundas_vagas(d, **_op) -> str:
     S = dado(d, "senado")
     seg = {e["uf"]: e for e in S["eleitos_2026"] if e["vaga"] == 2}
     disp = sorted(S["disputas"], key=lambda x: x["margem_2a_vaga_pp"])
-    esq, topo, passo = 70, 50, 30
+    esq, topo, passo = 70, 60, 30
     h = topo + passo * len(disp) + 40
     vmax = math.ceil(max(x["margem_2a_vaga_pp"] for x in disp) / 2) * 2
     X = escala(0, vmax, esq, W - 470)
@@ -644,7 +673,9 @@ def senado_segundas_vagas(d, **_op) -> str:
             "Senado: distância entre o 2º eleito e o 3º colocado, por UF",
             "Barras em pontos percentuais dos votos, da disputa mais apertada para a mais folgada; cor do campo do 2º eleito.",
         ),
-        t(X(vmax) + 16, 30, "2º eleito × 3º colocado", 13, MUTED),
+        # cabeçalho dos nomes na linha da tabela, abaixo da legenda; a coluna de
+        # nomes começa depois do maior rótulo de valor
+        t(X(vmax) + 60, topo - 8, "2º eleito × 3º colocado", 13, MUTED),
     ]
     for v in ticks(0, vmax, 6):
         out.append(ln(X(v), topo - 6, X(v), h - 34, GRADE))
@@ -667,7 +698,7 @@ def senado_segundas_vagas(d, **_op) -> str:
                 mono=True,
             )
             + t(
-                X(vmax) + 16,
+                X(vmax) + 60,
                 y + 19,
                 f"{nome_bonito(e.get('nome', '?'))} × {nome_bonito(te['nome'])}",
                 13,
@@ -708,7 +739,14 @@ def senado_segundas_vagas(d, **_op) -> str:
         f"A segunda vaga mais apertada foi em {NOME_UF[a['uf']]}: {num(a['margem_2a_vaga_pp'], 2)} ponto, "
         f"{inteiro(a['margem_2a_vaga_votos'])} votos. Cor: campo do 2º eleito. Fonte: senado.json."
     )
-    return figura_html("senado_segundas_vagas", "".join(out), legenda_, tips, minw=820)
+    return figura_html(
+        "senado_segundas_vagas",
+        "".join(out),
+        legenda_,
+        tips,
+        minw=820,
+        foco=(esq - 40, X(vmax) + 60, esq),
+    )
 
 
 # ------------------------------------------------------------------ assembleias
@@ -731,6 +769,7 @@ def assembleias_campo(d, **_op) -> str:
         legenda([(campo_nome(c), cor_campo(c)) for c in CAMPOS], esq, 24),
     ]
     tips = Tips()
+    numeros: list[str] = []
     y = topo
     for c in casas:
         out.append(t(esq - 12, y + bar + 8, NOME_UF[c["uf"]], 14, INK, "end", "700"))
@@ -740,7 +779,16 @@ def assembleias_campo(d, **_op) -> str:
             out.append(t(esq + larg + 12, yy + 16, ano, 13, MUTED, mono=True))
             out.append(
                 _barra_campos(
-                    yy, esq, larg, vals, bar, inteiro, tips, f"{c['uf']}, {ano}", vals
+                    yy,
+                    esq,
+                    larg,
+                    vals,
+                    bar,
+                    inteiro,
+                    tips,
+                    f"{c['uf']}, {ano}",
+                    vals,
+                    numeros,
                 )
             )
         b22, b26 = c["por_bloco_2022"], c["por_bloco_2026"]
@@ -751,6 +799,7 @@ def assembleias_campo(d, **_op) -> str:
             f'{b26["direita + centro-direita"]} em 2026, de {c["vagas"]}</title></g>'
         )
         y += 2 * bar + 6 + gap
+    out.append(f'<g pointer-events="none">{"".join(numeros)}</g>')
     out.append("</svg>")
     o = A["onze_casas"]
     legenda_ = (
@@ -891,4 +940,12 @@ def vao_estadual(d, **_op) -> str:
         f"declarado ({', '.join(sem)}): comparado com Flávio, em hachura. A ficha traz as duas diferenças. "
         f"Cor: campo do governador. {G['rotulo_obrigatorio_vao'].capitalize()}. Fonte: governadores.json."
     )
-    return figura_html("vao_estadual", "".join(out), legenda_, tips, minw=860)
+    xs = [X(x["vao_pp"]) for x in lista]
+    return figura_html(
+        "vao_estadual",
+        "".join(out),
+        legenda_,
+        tips,
+        minw=860,
+        foco=(min([*xs, x0]) - 40, max([*xs, x0]) + 40, x0),
+    )
