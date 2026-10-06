@@ -8,6 +8,10 @@ Estimador: em cada unidade (zona ou local) com os dois modelos, a diferença ent
 o percentual agregado das seções do modelo novo e o das seções do modelo velho;
 a média dessas diferenças, ponderada pelos votantes das seções comparadas;
 intervalo de 95% por bootstrap de unidades (2.000 reamostras).
+
+`reguas` junta as quatro réguas nacionais (zona, prédio, linha de base da seção
+em 2022 e troca de urna entre as eleições) e escreve a leitura a partir do
+tamanho máximo e de o sinal mudar ou não entre elas.
 """
 
 from __future__ import annotations
@@ -28,7 +32,6 @@ BOOT = 2000
 SEMENTE = 20261005
 MIN_ZONA = 20
 MIN_LOCAL = 1
-REGISTRO = {"uf": "sp", "mun": "69531", "nome": "REGISTRO", "ibge": "3542602"}
 
 # métrica: (numerador, denominador) ou, para variação contra 2022,
 # (numerador 2026, denominador 2026, numerador 2022, denominador 2022)
@@ -242,28 +245,6 @@ def _por_uf(df: pd.DataFrame) -> list[dict[str, Any]]:
     return out
 
 
-def _por_zona(
-    df: pd.DataFrame, metricas: Mapping[str, Metrica]
-) -> list[dict[str, Any]]:
-    out = []
-    for zona, gz in df.groupby("zona"):
-        linhas = []
-        for m in ordenar_modelos(sorted(gz["modelo_urna"].dropna().unique())):
-            g = gz[gz["modelo_urna"] == m]
-            linha: dict[str, Any] = {
-                "modelo": m,
-                "secoes": len(g),
-                "votantes": int(g["votantes"].sum()),
-            }
-            for nome, (nu, de, *_) in metricas.items():
-                linha[nome.replace("_pp", "_pct")] = pct(
-                    int(g[nu].sum()), int(g[de].sum())
-                )
-            linhas.append(linha)
-        out.append({"zona": int(zona), "secoes": len(gz), "modelos": linhas})
-    return out
-
-
 def base_2022(s22: pd.DataFrame) -> pd.DataFrame:
     """Seções de 2022 no formato das métricas (Bolsonaro na coluna v22)."""
     d = s22.dropna(subset=["aptos_2022"]).copy()
@@ -313,7 +294,6 @@ def urna(base: Base, s22: pd.DataFrame | None) -> dict[str, Any]:
         "bruto": _bruto(df, METRICAS_2026),
         "dentro_zona": zona,
         "dentro_local": local,
-        "registro": _registro(df, s22),
     }
     if s22 is not None:
         casado = casar(df, s22)
@@ -356,6 +336,7 @@ def urna(base: Base, s22: pd.DataFrame | None) -> dict[str, Any]:
                 "Mesmo estimador de 2026 dentro do local, sobre 2022.",
             ),
         }
+    saida["reguas"] = reguas(saida)
     saida["interpretacao"] = interpretar(saida)
     return saida
 
@@ -392,118 +373,6 @@ def troca_de_urna(casado: pd.DataFrame) -> dict[str, Any]:
         .items()
     ]
     return est
-
-
-def _registro(df: pd.DataFrame, s22: pd.DataFrame | None) -> dict[str, Any]:
-    r = df[(df["uf"] == REGISTRO["uf"]) & (df["mun"] == REGISTRO["mun"])]
-    saida: dict[str, Any] = {
-        "municipio": REGISTRO["nome"],
-        "uf": "SP",
-        "mun_tse": REGISTRO["mun"],
-        "ibge": REGISTRO["ibge"],
-        "disponivel_2026": not r.empty,
-        "secoes_2026": len(r),
-        "zonas_2026": _por_zona(r, METRICAS_2026) if not r.empty else [],
-        "dentro_zona_2026": (
-            estimador(
-                r,
-                ["uf", "mun", "zona"],
-                1,
-                METRICAS_2026,
-                "Diferença dentro da zona em Registro, com ao menos uma seção de "
-                "cada modelo.",
-            )
-            if not r.empty
-            else None
-        ),
-        "dentro_local_2026": (
-            estimador(
-                r,
-                ["uf", "mun", "zona", "local_nr"],
-                1,
-                METRICAS_2026,
-                "Diferença dentro do mesmo local de votação em Registro; IC por "
-                "bootstrap de locais.",
-            )
-            if not r.empty
-            else None
-        ),
-    }
-    if s22 is not None and not r.empty:
-        rc = casar(r, s22)
-        rc = rc[rc["mesma_secao"]]
-        saida["variacao_2026"] = estimador(
-            rc,
-            ["uf", "mun", "zona"],
-            1,
-            METRICAS_VARIACAO,
-            "Variação de cada seção de Registro contra ela mesma em 2022, "
-            "comparada entre modelos de 2026 dentro da zona.",
-        )
-        saida["variacao_2026"]["secoes_casadas"] = len(rc)
-        saida["mesmas_secoes"] = _mesmas_secoes(rc)
-    if s22 is None:
-        saida["ano_2022"] = {
-            "disponivel": False,
-            "motivo": "votacao_secao_2022_BR.zip ausente",
-        }
-        return saida
-    d22 = base_2022(s22)
-    r22 = d22[(d22["uf"] == REGISTRO["uf"]) & (d22["mun"] == REGISTRO["mun"])]
-    saida["ano_2022"] = {
-        "disponivel": not r22.empty,
-        "fonte": "TSE, votacao_secao_2022_BR e detalhe_votacao_secao_2022",
-        "secoes": len(r22),
-        "zonas": _por_zona(r22, METRICAS_2022),
-        "dentro_zona": estimador(
-            r22,
-            ["uf", "mun", "zona"],
-            1,
-            METRICAS_2022,
-            "Diferença dentro da zona em Registro em 2022 (Bolsonaro e Lula, 1º "
-            "turno), com ao menos uma seção de cada modelo; uma zona só, então o "
-            "intervalo por bootstrap de zonas é degenerado.",
-        ),
-        "dentro_local": estimador(
-            r22,
-            ["uf", "mun", "zona", "local_nr"],
-            1,
-            METRICAS_2022,
-            "Diferença dentro do mesmo local de votação em Registro em 2022; IC por "
-            "bootstrap de locais.",
-        ),
-    }
-    return saida
-
-
-def _mesmas_secoes(rc: pd.DataFrame) -> list[dict[str, Any]]:
-    """Registro: as seções agrupadas pelo modelo de 2022, com o voto de 2022 e 2026."""
-    out = []
-    for m22, g in rc.groupby(rc["modelo_2022"].fillna("sem modelo")):
-        out.append(
-            {
-                "modelo_2022": str(m22),
-                "secoes": len(g),
-                "bolsonaro_2022_pct": pct(
-                    int(g["bolsonaro_1t"].sum()), int(g["nominais_1t"].sum())
-                ),
-                "lula_2022_pct": pct(
-                    int(g["lula_1t"].sum()), int(g["nominais_1t"].sum())
-                ),
-                "flavio_2026_pct": pct(
-                    int(g[f"v{FLAVIO}"].sum()), int(g["validos"].sum())
-                ),
-                "lula_2026_pct": pct(int(g[f"v{LULA}"].sum()), int(g["validos"].sum())),
-                "modelos_2026": {
-                    str(k): int(v)
-                    for k, v in g["modelo_urna"]
-                    .fillna("sem modelo")
-                    .value_counts()
-                    .items()
-                },
-            }
-        )
-    return out
 
 
 def _ic_txt(m: Mapping[str, Any]) -> tuple[str, bool]:
@@ -563,6 +432,17 @@ def interpretar(u: Mapping[str, Any]) -> list[str]:
     )
     if f:
         frases.append(f)
+    var = u.get("dentro_zona_variacao")
+    if var:
+        f = _frase(
+            _mais(var["pares"]),
+            "flavio_var_pp",
+            "Com a linha de base da própria seção em 2022, na mesma zona",
+            "Flávio, sobre Bolsonaro,",
+            "zonas",
+        )
+        if f:
+            frases.append(f)
     a22 = u.get("ano_2022")
     if a22:
         p = _par_nomeado(a22["dentro_zona"]["pares"], "UE2015", "UE2020")
@@ -584,6 +464,9 @@ def interpretar(u: Mapping[str, Any]) -> list[str]:
         )
         if f:
             frases.append(f)
+    leitura = (u.get("reguas") or {}).get("leitura")
+    if leitura:
+        frases.append(leitura)
     return frases
 
 
@@ -591,3 +474,115 @@ def _par_nomeado(
     pares: Sequence[Mapping[str, Any]], a: str, b: str
 ) -> Mapping[str, Any] | None:
     return next((p for p in pares if p["a"] == a and p["b"] == b), None)
+
+
+# ---------------------------------------------------------------- as quatro réguas
+
+REGUAS: tuple[tuple[str, str, str, str], ...] = (
+    ("dentro_zona", "flavio_pp", "dentro da zona", "zonas"),
+    ("dentro_local", "flavio_pp", "no mesmo prédio", "locais"),
+    (
+        "dentro_zona_variacao",
+        "flavio_var_pp",
+        "com a linha de base da própria seção em 2022",
+        "zonas",
+    ),
+    (
+        "troca_2022_2026",
+        "flavio_var_pp",
+        "nas mesmas seções, pelo modelo da urna de 2022",
+        "zonas",
+    ),
+)
+POR_EXTENSO = {1: "uma", 2: "duas", 3: "três", 4: "quatro"}
+LIMIAR_PONTO = 1.0
+LIMIAR_TXT = "um ponto"
+
+
+def _sinal(x: float) -> str:
+    """Sinal explícito, com o menos tipográfico (U+2212), duas casas."""
+    if round(x, 2) == 0:
+        return num(0.0, 2)
+    return ("+" if x > 0 else "\u2212") + num(abs(x), 2)
+
+
+def reguas(u: Mapping[str, Any]) -> dict[str, Any]:
+    """As réguas nacionais da urna mais nova contra a mais velha, para Flávio.
+
+    Cada régua controla o lugar de um jeito (zona, prédio, linha de base da
+    seção em 2022, troca de urna entre as eleições). A leitura sai dos números:
+    tamanho máximo em módulo e se o sinal muda entre as réguas.
+    """
+    itens = []
+    for est, chave, nome, unidade in REGUAS:
+        par = _mais((u.get(est) or {}).get("pares", []))
+        m = (par or {}).get(chave)
+        if not m or m.get("estimativa") is None:
+            continue
+        itens.append(
+            {
+                "estimador": est,
+                "metrica": chave,
+                "regua": nome,
+                "unidade": unidade,
+                "unidades": par["unidades"],
+                "estimativa": m["estimativa"],
+                "ic95": m["ic95"],
+                "bruto": m["bruto"],
+            }
+        )
+    if not itens:
+        return {"itens": [], "max_abs_pp": None, "positivas": 0, "negativas": 0}
+    est = [i["estimativa"] for i in itens]
+    pos = sum(e > 0 for e in est)
+    neg = sum(e < 0 for e in est)
+    maximo = max(abs(e) for e in est)
+    saida: dict[str, Any] = {
+        "itens": itens,
+        "max_abs_pp": r2(maximo, 3),
+        "positivas": pos,
+        "negativas": neg,
+        "limiar_pp": LIMIAR_PONTO,
+    }
+    saida["leitura"] = _leitura_reguas(itens, maximo, pos, neg)
+    return saida
+
+
+def _leitura_reguas(
+    itens: Sequence[Mapping[str, Any]], maximo: float, pos: int, neg: int
+) -> str:
+    n = len(itens)
+    qtas = POR_EXTENSO.get(n, num(n, 0))
+    lista = "; ".join(f"{_sinal(i['estimativa'])} {i['regua']}" for i in itens)
+    lo = min(i["estimativa"] for i in itens)
+    hi = max(i["estimativa"] for i in itens)
+    abre = (
+        f"As {qtas} réguas da urna mais nova contra a mais velha dão a Flávio de "
+        f"{_sinal(lo)} a {_sinal(hi)} ponto ({lista})."
+    )
+    if n == 1:
+        return abre.replace(f"As {qtas} réguas", "A régua").replace(" dão ", " dá ")
+    abaixo = maximo < LIMIAR_PONTO
+    mista = pos > 0 and neg > 0
+    tamanho = (
+        f" Todas ficam abaixo de {LIMIAR_TXT}"
+        if abaixo
+        else f" A maior chega a {num(maximo, 2)} pontos em módulo"
+    )
+    if mista:
+        return (
+            abre
+            + tamanho
+            + " e o sinal muda conforme o controle: um efeito do equipamento "
+            "tenderia a aparecer com o mesmo sinal nas réguas que controlam o lugar. "
+            "A leitura é a alocação dos modelos dentro da zona, não efeito da "
+            "máquina; o plano de alocação de urnas do TRE é o documento que resolve."
+        )
+    lado = "a favor" if pos else "contra"
+    return (
+        abre
+        + tamanho
+        + f" e todas apontam {lado} de Flávio. O sinal estável não separa efeito "
+        "do equipamento de alocação dos modelos dentro da zona; só o plano de "
+        "alocação de urnas do TRE separa as duas coisas."
+    )

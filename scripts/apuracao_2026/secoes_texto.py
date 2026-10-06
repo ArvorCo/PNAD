@@ -450,8 +450,18 @@ def memorando(d: Mapping[str, Any]) -> str:
                     f"{_p((p.get('bolsonaro_pp') or {}).get('bruto'), 2)}"
                 )
         w("")
-    w(_registro_texto(ur["registro"]))
-    w("")
+    rg = ur.get("reguas") or {}
+    if rg.get("itens"):
+        w("As réguas nacionais (urna mais nova contra a mais velha, Flávio):")
+        w("")
+        for i in rg["itens"]:
+            w(
+                f"- {i['regua'].capitalize()}: {_ic(i)}; sem controle "
+                f"{_p(i['bruto'], 2)}; {_n(i['unidades'])} {i['unidade']}."
+            )
+        w("")
+        w(rg.get("leitura", ""))
+        w("")
 
     # ---------------- D
     w("## D. Outras anomalias de seção")
@@ -574,50 +584,3 @@ def _linha_secao(s: Mapping[str, Any], nome: str | None) -> str:
         )
     exp = s["explicacao"] or ""
     return base + f". {exp[:1].upper()}{exp[1:]}."
-
-
-def _registro_texto(r: Mapping[str, Any]) -> str:
-    partes = ["### Registro (SP)", ""]
-    if r.get("disponivel_2026"):
-        partes.append(f"2026: {_n(r['secoes_2026'])} seções.")
-        for z in r["zonas_2026"]:
-            for m in z["modelos"]:
-                partes.append(
-                    f"- zona {z['zona']}, {m['modelo']}: {_n(m['secoes'])} seções, "
-                    f"Flávio {_p(m['flavio_pct'], 2)}%, Lula {_p(m['lula_pct'], 2)}%, "
-                    f"nulos {_p(m['nulos_pct'], 2)}%"
-                )
-        loc = r.get("dentro_local_2026")
-        if loc:
-            for p in loc["pares"]:
-                partes.append(
-                    f"- mesmo local, {p['a']} → {p['b']}: {_n(p['unidades'])} locais, "
-                    f"Flávio {_ic(p.get('flavio_pp'))}"
-                )
-    else:
-        partes.append("2026: seções de Registro ainda não coletadas.")
-    for m in r.get("mesmas_secoes", []):
-        partes.append(
-            f"- mesmas seções, modelo de 2022 {m['modelo_2022']}: {_n(m['secoes'])} "
-            f"seções; Bolsonaro {_p(m['bolsonaro_2022_pct'], 2)}% em 2022, Flávio "
-            f"{_p(m['flavio_2026_pct'], 2)}% em 2026 (modelos de 2026: "
-            + ", ".join(f"{k} {v}" for k, v in m["modelos_2026"].items())
-            + ")"
-        )
-    a22 = r.get("ano_2022", {})
-    if a22.get("disponivel"):
-        partes.append("")
-        partes.append(f"2022 (1º turno): {_n(a22['secoes'])} seções.")
-        for z in a22["zonas"]:
-            for m in z["modelos"]:
-                partes.append(
-                    f"- zona {z['zona']}, {m['modelo']}: {_n(m['secoes'])} seções, "
-                    f"Bolsonaro {_p(m['bolsonaro_pct'], 2)}%, Lula "
-                    f"{_p(m['lula_pct'], 2)}%, nulos {_p(m['nulos_pct'], 2)}%"
-                )
-        for p in a22["dentro_local"]["pares"]:
-            partes.append(
-                f"- mesmo local em 2022, {p['a']} → {p['b']}: {_n(p['unidades'])} "
-                f"locais, Bolsonaro {_ic(p.get('bolsonaro_pp'))}"
-            )
-    return "\n".join(partes)

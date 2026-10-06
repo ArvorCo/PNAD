@@ -374,6 +374,9 @@ def clusters_b(S: dict) -> str:
 # ------------------------------------------------------------------ urna
 
 
+POUCAS = 30
+
+
 def _maior(pares: list[dict], chave: str) -> dict | None:
     ok = [x for x in pares if (x.get(chave) or {}).get("estimativa") is not None]
     return max(ok, key=lambda x: x.get("unidades") or 0) if ok else None
@@ -443,32 +446,23 @@ def urna_b(S: dict) -> str:
                         for x in fora
                     ]
                 )
-                + ". Com tão poucas unidades, o intervalo de bootstrap é frágil."
+                + "."
+                + (
+                    f" Com menos de {POUCAS} unidades, o intervalo de bootstrap é frágil: "
+                    + lista(
+                        [
+                            f"{x['b']} contra {x['a']}"
+                            for x in fora
+                            if (x.get("unidades") or 0) < POUCAS
+                        ]
+                    )
+                    + "."
+                    if any((x.get("unidades") or 0) < POUCAS for x in fora)
+                    else ""
+                )
                 if fora
                 else "Nenhum par tem intervalo que exclua o zero."
             ),
-            "verificado",
-        )
-    R = U.get("registro") or {}
-    if R:
-        a22 = R.get("ano_2022") or {}
-        nome = f"{nome_bonito(R.get('municipio', ''))} ({R.get('uf', '')})"
-        f26 = (
-            escape(R["leitura"])
-            if R.get("leitura")
-            else (
-                "os boletins de 2026 do município entram na tabela quando a coleta chegar ao estado."
-                if not R.get("disponivel_2026")
-                else ""
-            )
-        )
-        f22 = (
-            f" Para 2022: {escape(a22.get('motivo') or '')}."
-            if not a22.get("disponivel")
-            else f" Para 2022, a tabela abaixo da figura traz as {inteiro(a22.get('secoes'))} seções do município por modelo."
-        )
-        h += p(
-            f"O caso {nome}, seção por seção e modelo por modelo: {f26}{f22}",
             "verificado",
         )
     A22 = U.get("ano_2022") or {}
@@ -482,6 +476,7 @@ def urna_b(S: dict) -> str:
             f"{sinal(b['ic95'][1], 2)}), contra {pts(b['bruto'], 2)} sem controle, em {inteiro(m22['unidades'])} zonas.",
             "verificado",
         )
+    h += _reguas(U)
     efeito = _ha_efeito((U.get("dentro_zona") or {}).get("pares", []))
     h += (
         '<aside class="hyp"><b>Hipótese</b>'
@@ -496,6 +491,33 @@ def urna_b(S: dict) -> str:
         )
         + "O documento que resolve é o plano de alocação de urnas do TRE de cada estado, com a lista de seções por modelo.</aside>"
     )
+    return h
+
+
+def _reguas(U: dict) -> str:
+    """As réguas nacionais lado a lado e a leitura que sai delas."""
+    rg = U.get("reguas") or {}
+    itens = rg.get("itens") or []
+    if not itens:
+        return ""
+    desc = lista(
+        [
+            f"{escape(i['regua'])}, {pts(i['estimativa'], 2)} (intervalo de {sinal(i['ic95'][0], 2)} a "
+            f"{sinal(i['ic95'][1], 2)}; {inteiro(i['unidades'])} {escape(i['unidade'])})"
+            for i in itens
+        ]
+    )
+    h = p(
+        (
+            "A mesma pergunta, a urna mais nova contra a mais velha, medida de quatro jeitos que controlam o lugar de "
+            f"formas diferentes: {desc}."
+            if len(itens) == 4
+            else f"As réguas para Flávio: {desc}."
+        ),
+        "verificado",
+    )
+    if rg.get("leitura"):
+        h += p(escape(rg["leitura"]), "inferencia")
     return h
 
 

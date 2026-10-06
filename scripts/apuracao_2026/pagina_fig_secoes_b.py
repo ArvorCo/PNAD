@@ -2,7 +2,7 @@
 
 `clusters_regiao` (grupo × região), `modelo_urna_uf` (modelos por UF),
 `modelo_urna_zona` (diferença entre modelos dentro da zona e do prédio, com
-intervalo, contra a diferença bruta; caso Registro abaixo) e `secoes_outras`
+intervalo, contra a diferença bruta) e `secoes_outras`
 (recebimento, horários, arquivo, tipo de urna, cargas e contagens raras).
 Lista vazia vira a frase "nenhuma seção nesta condição" dentro do painel.
 """
@@ -11,7 +11,7 @@ from __future__ import annotations
 
 from html import escape
 
-from .pagina_comum import NOME_UF, inteiro, num, tabela
+from .pagina_comum import NOME_UF, inteiro, num
 from .pagina_fig_base import (
     COR_REGIAO,
     FLAVIO,
@@ -30,7 +30,6 @@ from .pagina_fig_base import (
     hit,
     legenda_html,
     ln,
-    nome_bonito,
     pct,
     pp,
     r,
@@ -355,82 +354,6 @@ def _painel_estimador(U: dict, est: str, tips: Tips, topo: float) -> str:
     return "".join(out)
 
 
-def _registro(U: dict) -> str:
-    R = U.get("registro") or {}
-    if not R:
-        return ""
-    nome = f"{nome_bonito(R.get('municipio', ''))} ({R.get('uf', '')})"
-    h = f'<div class="fig-nota"><h4>O caso {escape(nome)}</h4>'
-    if R.get("disponivel_2026"):
-        linhas = []
-        for z in R.get("zonas_2026", []):
-            for m in z.get("modelos", []):
-                linhas.append(
-                    [
-                        str(z["zona"]),
-                        escape(m["modelo"]),
-                        inteiro(m.get("secoes")),
-                        inteiro(m.get("votantes")),
-                        num(m.get("flavio_pct"), 1),
-                        num(m.get("lula_pct"), 1),
-                        num(m.get("abstencao_pct"), 1),
-                        num(m.get("brancos_pct"), 1),
-                        num(m.get("nulos_pct"), 1),
-                    ]
-                )
-        h += tabela(
-            [
-                "Zona",
-                "Modelo",
-                "Seções",
-                "Votantes",
-                "Flávio %",
-                "Lula %",
-                "Abstenção %",
-                "Brancos %",
-                "Nulos %",
-            ],
-            linhas,
-            "2026, por zona e modelo de urna. Flávio e Lula em % dos válidos; abstenção em % dos aptos; brancos e nulos em % do comparecimento.",
-        )
-    else:
-        h += "<p>Os boletins de 2026 do município ainda não estão na coleta.</p>"
-    a22 = R.get("ano_2022") or {}
-    if a22.get("disponivel") and a22.get("zonas"):
-        linhas = []
-        for z in a22["zonas"]:
-            for m in z.get("modelos", []):
-                linhas.append(
-                    [
-                        str(z["zona"]),
-                        escape(m["modelo"]),
-                        inteiro(m.get("secoes")),
-                        inteiro(m.get("votantes")),
-                        num(m.get("flavio_pct", m.get("bolsonaro_pct")), 1),
-                        num(m.get("lula_pct"), 1),
-                        num(m.get("abstencao_pct"), 1),
-                    ]
-                )
-        h += tabela(
-            [
-                "Zona",
-                "Modelo",
-                "Seções",
-                "Votantes",
-                "Bolsonaro %",
-                "Lula %",
-                "Abstenção %",
-            ],
-            linhas,
-            f"2022. Fonte: {escape(a22.get('fonte', ''))}.",
-        )
-    elif a22:
-        h += f"<p>2022: {escape(a22.get('motivo', 'sem dado'))}.</p>"
-    if R.get("leitura"):
-        h += f"<p>{escape(R['leitura'])}</p>"
-    return h + "</div>"
-
-
 @registra("modelo_urna_zona")
 def modelo_urna_zona(d, **_op) -> str:
     S = secoes(d)
@@ -515,7 +438,7 @@ def modelo_urna_zona(d, **_op) -> str:
         tips,
         controles=ctl,
         minw=900,
-        apos=leg + _registro(U),
+        apos=leg,
     )
 
 

@@ -198,6 +198,54 @@ def test_variacao_contra_2022_usa_quatro_colunas():
     assert r["flavio_var_pp"]["estimativa"] == pytest.approx(0.0, abs=1e-9)
 
 
+def _urna_reguas(estimativas):
+    nomes = ["dentro_zona", "dentro_local", "dentro_zona_variacao", "troca_2022_2026"]
+    chaves = ["flavio_pp", "flavio_pp", "flavio_var_pp", "flavio_var_pp"]
+    u = {}
+    for est, ch, e in zip(nomes, chaves, estimativas, strict=True):
+        u[est] = {
+            "pares": [
+                {
+                    "a": "mais velha",
+                    "b": "mais nova",
+                    "unidades": 100,
+                    ch: {"estimativa": e, "ic95": [e - 0.1, e + 0.1], "bruto": 2 * e},
+                }
+            ]
+        }
+    return u
+
+
+def test_reguas_com_sinal_que_muda_leem_alocacao():
+    u = _urna_reguas([-0.735, 0.11, 0.224, -0.143])
+    r = su.reguas(u)
+    assert [i["estimador"] for i in r["itens"]] == [
+        "dentro_zona",
+        "dentro_local",
+        "dentro_zona_variacao",
+        "troca_2022_2026",
+    ]
+    assert r["max_abs_pp"] == pytest.approx(0.735)
+    assert r["positivas"] == 2 and r["negativas"] == 2
+    assert r["leitura"].startswith("As quatro réguas")
+    assert "abaixo de um ponto" in r["leitura"]
+    assert "não efeito da máquina" in r["leitura"]
+    assert "\u2212" in r["leitura"] and "-0," not in r["leitura"]
+
+
+def test_reguas_com_mesmo_sinal_nao_concluem_alocacao():
+    r = su.reguas(_urna_reguas([1.4, 0.8, 0.6, 1.1]))
+    assert "todas apontam a favor de Flávio" in r["leitura"]
+    assert "chega a 1,40 pontos" in r["leitura"]
+    assert "não efeito da máquina" not in r["leitura"]
+    assert su.reguas({})["itens"] == []
+
+
+def test_urna_nao_tem_mais_registro():
+    assert not hasattr(su, "REGISTRO")
+    assert not hasattr(su, "_registro")
+
+
 def test_ordenar_modelos():
     assert su.ordenar_modelos(["UE2022", "UE2009", "UE2015"]) == [
         "UE2009",
