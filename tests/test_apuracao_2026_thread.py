@@ -114,3 +114,13 @@ def test_pagina_publicada_em_dia(html):
 def test_botao_de_copiar_funciona_sem_clipboard(html):
     assert "execCommand('copy')" in html
     assert len(re.findall(r'data-copy="', html)) >= 20
+
+
+def test_post_dos_grupos_conta_as_duas_tentativas(posts):
+    v = valores()
+    p = next(x for x in posts if x["tag_f"] == "Os grupos de seções")
+    for chave in ("cl_zeros15", "cl_v15", "cl_zeros", "cl_partidas", "cl_nomax"):
+        assert v[chave] in p["corpo"], chave
+    if v["cl_art_lista"]:
+        assert "artefato: " in p["svg"]
+    assert "Antes:" in p["svg"] and "Agora:" in p["svg"]

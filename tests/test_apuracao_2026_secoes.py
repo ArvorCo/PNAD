@@ -99,30 +99,165 @@ def test_ajustar_melhor_fica_com_a_maior_verossimilhanca():
     centros = [np.array([0.6, 0.2, 0.1, 0.1]), np.array([0.2, 0.6, 0.1, 0.1])]
     fr = np.vstack([rng.dirichlet(200 * c, size=200) for c in centros])
     _, x = sc.coordenadas(fr)
-    aj = sc.ajustar_melhor(x, 2, sementes=(1, 2, 3), n_init=1)
+    aj = sc.ajustar_melhor(x, 2, sementes=(1, 2, 3), n_init=1, inits=sc.INITS)
     lls = [r["loglik_media"] for r in aj.log]
-    assert [r["semente"] for r in aj.log] == [1, 2, 3]
+    assert [(r["semente"], r["init"]) for r in aj.log] == [
+        (s, i) for i in sc.INITS for s in (1, 2, 3)
+    ]
     assert aj.gm.score(x) == pytest.approx(max(lls), abs=1e-4)
-    assert aj.semente in (1, 2, 3) and aj.semente_segundo in (1, 2, 3)
-    assert aj.semente != aj.semente_segundo
-    assert len(aj.todos) == 3
+    assert aj.semente in (1, 2, 3) and aj.init in sc.INITS
+    assert len(aj.todos) == 6
 
 
-def test_k_principal_e_tres_com_bic_de_tres_a_cinco():
+def test_k_principal_e_cinco_com_bic_de_tres_a_cinco():
     assert sc.K == 5
     assert sc.K_TABELA == (3, 4, 5)
     assert sc.ESCOLHA_K["k"] == sc.K and sc.ESCOLHA_K["anterior"] == 3
-    assert len(sc.SEMENTES) == sc.N_SEMENTES == 8
+    assert len(sc.SEMENTES) == sc.N_SEMENTES == 16
+    assert len(sc.SEMENTES_15) == 8 and sc.SEMENTES[:8] == sc.SEMENTES_15
+    assert sc.INITS == ("kmeans", "k-means++")
+    assert sc.PARTES == ("lula", "flavio", "brancos", "nulos", "abstencao")
+
+
+def _df_cinco() -> pd.DataFrame:
+    return pd.DataFrame(
+        {
+            "aptos": [100, 200, 50],
+            "comparecimento": [80, 150, 50],
+            "v13": [40, 60, 0],
+            "v22": [30, 70, 40],
+            "brancos": [2, 0, 3],
+            "nulos": [3, 5, 2],
+            "validos": [75, 145, 45],
+        }
+    )
+
+
+def test_matriz_cinco_deixa_terceiros_de_fora_e_fecha():
+    df = _df_cinco()
+    el, fora = sc.matriz_cinco(df)
+    # Lula, Flávio, brancos, nulos, abstenção / aptos
+    assert el[0].tolist() == pytest.approx([0.40, 0.30, 0.02, 0.03, 0.20])
+    # o que falta para 1 é o voto em terceiros / aptos
+    terceiros = (df["validos"] - df["v13"] - df["v22"]) / df["aptos"]
+    assert fora == pytest.approx(terceiros.to_numpy())
+    fe = sc.fechar(el)
+    assert fe.sum(axis=1) == pytest.approx(np.ones(3))
+    comp = sc.composicao_cinco(df)
+    assert comp.chaves == list(sc.PARTES)
+    assert comp.unidades.tolist() == pytest.approx([95, 185, 45])
+    with pytest.raises(ValueError):
+        sc.fechar(np.zeros((1, 5)))
+
+
+def test_fechar_nao_muda_a_clr_sem_zeros():
+    rng = np.random.default_rng(5)
+    el = rng.dirichlet(np.ones(6), size=50)[:, :5]  # tira uma parte: soma < 1
+    assert np.allclose(sb.clr(el), sb.clr(sc.fechar(el)))
+
+
+def test_projecao_ilr_igual_a_pca_na_clr():
+    from sklearn.decomposition import PCA
+
+    rng = np.random.default_rng(9)
+    fr = rng.dirichlet(np.array([8.0, 6.0, 1.0, 1.5, 4.0]), size=400)
+    z, x = sc.coordenadas(fr)
+    pca, p, cargas = sc.projecao(x)
+    ref = PCA(n_components=2).fit(z)
+    pz = ref.transform(z)
+    for j in range(2):
+        sinal = np.sign(p[:, j] @ pz[:, j])
+        assert np.allclose(p[:, j], sinal * pz[:, j])
+        assert np.allclose(cargas[j], sinal * ref.components_[j])
+    assert pca.explained_variance_ratio_ == pytest.approx(ref.explained_variance_ratio_)
+
+
+def test_degrau_log_usa_as_unidades_da_composicao():
+    d = sc.degrau_log(np.array([100.0, 100.0, 100.0]))
+    # zero vira 0,0001 e um voto em 100 é 0,01: log(100)
+    assert d["mediana"] == pytest.approx(round(math.log(100), 2))
+
+
+def test_convergencia_em_grupos_separados():
+    from apuracao_2026 import secoes_clusters_diag as cd
+
+    rng = np.random.default_rng(13)
+    centros = [np.array([0.6, 0.2, 0.1, 0.1]), np.array([0.2, 0.6, 0.1, 0.1])]
+    fr = np.vstack([rng.dirichlet(300 * c, size=300) for c in centros])
+    _, x = sc.coordenadas(fr)
+    aj = sc.ajustar_melhor(x, 2, sementes=(1, 2, 3), n_init=2, inits=sc.INITS)
+    diag, gm = cd.convergencia(x, aj)
+    ap = diag["apertado"]
+    assert ap["tol"] == 1e-6 and ap["max_iter"] == 2000
+    assert ap["iteracoes"] >= ap["iteracoes_padrao"]
+    assert ap["diferenca_loglik"] == pytest.approx(0.0, abs=1e-3)
+    assert ap["ari_padrao_apertado"] == pytest.approx(1.0)
+    assert not ap["adotado"] and gm is aj.gm
+    rot = gm.predict(x)
+    from sklearn.metrics import adjusted_rand_score
+
+    diag["ajustes"] = [
+        {**linha, "ari_com_escolhida": adjusted_rand_score(rot, g.predict(x))}
+        for linha, (_, _, g) in zip(aj.log, aj.todos, strict=True)
+    ]
+    cd.resumir(diag)
+    assert diag["total"] == 6 and diag["no_maximo"] == 6
+    assert diag["por_init"] == {
+        "kmeans": {"total": 3, "no_maximo": 3},
+        "k-means++": {"total": 3, "no_maximo": 3},
+    }
+    assert diag["todas_convergiram"] and diag["particao_estavel"]
+    assert diag["ari_medio_demais"] is None
+    assert diag["frase"].startswith("O EM convergiu nas 6 partidas")
+    assert "6 de 6 partidas chegaram ao mesmo máximo" in diag["frase"]
+    assert "estável" in diag["frase"] and "—" not in diag["frase"]
+
+
+def test_resumir_conta_o_maximo_a_um_milesimo():
+    from apuracao_2026 import secoes_clusters_diag as cd
+
+    diag = {
+        "inits": ["kmeans"],
+        "criterio_padrao": {"tol": 1e-4, "max_iter": 500},
+        "sementes": 3,
+        "partidas_internas": 10,
+        "tolerancia_maximo": 1e-3,
+        "apertado": {
+            "tol": 1e-6,
+            "max_iter": 2000,
+            "iteracoes": 40,
+            "iteracoes_padrao": 20,
+            "diferenca_loglik": 0.0,
+            "ari_padrao_apertado": 1.0,
+            "adotado": False,
+        },
+        "ajustes": [
+            {"semente": 1, "init": "kmeans", "loglik_media": -2.0, "convergiu": True,
+             "iteracoes": 10, "ari_com_escolhida": 1.0},
+            {"semente": 2, "init": "kmeans", "loglik_media": -2.0005, "convergiu": True,
+             "iteracoes": 12, "ari_com_escolhida": 0.98},
+            {"semente": 3, "init": "kmeans", "loglik_media": -2.5, "convergiu": False,
+             "iteracoes": 500, "ari_com_escolhida": 0.4},
+        ],
+    }  # fmt: skip
+    cd.resumir(diag)
+    assert diag["no_maximo"] == 2 and diag["total"] == 3
+    assert diag["ari_medio_no_maximo"] == 0.99 and diag["ari_medio_demais"] == 0.4
+    assert diag["particao_estavel"] and not diag["todas_convergiram"]
+    assert diag["frase"].startswith("O EM não convergiu em 1 das 3 partidas")
 
 
 def test_separacao_acha_o_corte():
     score = np.array([-3.0, -2.5, -2.0, 1.0, 1.5, 2.0])
     zero = np.array([True, True, True, False, False, False])
-    acerto, corte = sc.separacao(score, zero)
+    res = sc.separacao(score, zero)
+    assert res is not None
+    acerto, corte = res
     assert acerto == pytest.approx(100.0)
     assert -2.0 <= corte < 1.0
     # o lado não importa: zeros à direita dão o mesmo acerto
-    assert sc.separacao(-score, zero)[0] == pytest.approx(100.0)
+    inverso = sc.separacao(-score, zero)
+    assert inverso is not None and inverso[0] == pytest.approx(100.0)
     assert sc.separacao(score, np.zeros(6, dtype=bool)) is None
 
 
@@ -220,6 +355,113 @@ def test_rotulo_sem_padrao_usa_abstencao():
         "sem voto nas cinco candidaturas menos votadas; Lula 62% dos válidos; "
         "Nordeste 50% das seções"
     )
+
+
+def test_rotulo_perfil_em_desvios_da_media_nacional():
+    from apuracao_2026 import secoes_clusters_perfil as sp
+
+    ref = {
+        "lula": {"media_pct": 35.0, "dp_pct": 10.0},
+        "flavio": {"media_pct": 35.0, "dp_pct": 10.0},
+        "brancos": {"media_pct": 1.5, "dp_pct": 1.0},
+        "nulos": {"media_pct": 2.3, "dp_pct": 1.0},
+        "abstencao": {"media_pct": 20.0, "dp_pct": 5.0},
+        "terceiros": {"media_pct": 6.0, "dp_pct": 3.0},
+    }
+    c = {
+        "centro_pct_eleitorado": {
+            "lula": 55.0,  # +2 dp: muito alto
+            "flavio": 25.0,  # −1 dp: muito baixo
+            "brancos": 0.0,  # −1,5 dp, mas é o artefato do grupo
+            "nulos": 2.0,  # −0,3 dp
+            "abstencao": 24.0,  # +0,8 dp
+        },
+        "terceiros_pct_eleitorado": 6.5,
+        "regioes": [
+            {"regiao": "Nordeste", "pct_do_cluster": 78.4},
+            {"regiao": "Norte", "pct_do_cluster": 12.0},
+        ],
+        "padrao_zeros": [],
+    }
+    assert sp.rotulo_perfil(c, ref, {}) == (
+        "Lula muito alto, brancos muito baixos, Flávio muito baixo; "
+        "Nordeste 78% das seções"
+    )
+    c["regioes"][0]["pct_do_cluster"] = 45.0
+    c["padrao_zeros"] = [
+        {"tipo": "sem", "conjunto": None, "m": None, "partes": ["brancos"]},
+        {"tipo": "com", "conjunto": None, "m": None, "partes": ["nulos"]},
+    ]
+    c["artefato"] = sp.artefato(c, {})
+    assert c["artefato"] == "sem voto branco"
+    assert sp.rotulo_perfil(c, ref, {}) == (
+        "sem voto branco; Lula muito alto, Flávio muito baixo, abstenção alta; "
+        "Nordeste 45% e Norte 12% das seções"
+    )
+    perto = dict(c, centro_pct_eleitorado={k: v["media_pct"] for k, v in ref.items()})
+    perto |= {"terceiros_pct_eleitorado": 6.0, "padrao_zeros": [], "artefato": None}
+    assert sp.rotulo_perfil(perto, ref, {}).startswith("perto da média nacional; ")
+
+
+def test_empates_definem_grupo():
+    from apuracao_2026 import secoes_clusters_perfil as sp
+
+    cont = np.array([[10, 5, 3, 3, 4]] * 40 + [[10, 5, 2, 6, 4]] * 60)
+    rot = np.array([0] * 40 + [1] * 60)
+    pads = sp.padroes_empate(cont, rot, 2, list(sc.PARTES))
+    assert pads[1] == []
+    assert pads[0][0]["partes"] == ["brancos", "nulos"]
+    assert pads[0][0]["pct_grupo"] == 100.0 and pads[0][0]["pct_outro"] == 0.0
+    c = {"padrao_zeros": [], "padrao_empates": pads[0]}
+    assert sp.artefato(c, {}) == "mesmo número de brancos e de nulos"
+    pares = sp.empates_por_par(cont, list(sc.PARTES))
+    bn = next(x for x in pares if x["partes"] == ["brancos", "nulos"])
+    assert bn["secoes"] == 40 and bn["pct_secoes"] == 40.0
+
+
+def test_referencia_media_e_desvio_entre_secoes():
+    from apuracao_2026 import secoes_clusters_perfil as sp
+
+    comp = sc.composicao_cinco(_df_cinco())
+    ref = sp.referencia(comp)
+    assert set(ref) == {*sc.PARTES, "terceiros"}
+    assert ref["lula"]["media_pct"] == pytest.approx(
+        100 * (0.4 + 0.3 + 0.0) / 3, abs=1e-3
+    )
+    assert ref["terceiros"]["media_pct"] == pytest.approx(
+        100 * (0.05 + 0.075 + 0.1) / 3, abs=1e-3
+    )
+
+
+def test_diagnostico_zeros_da_versao_de_quinze_partes():
+    c = {
+        "features": [f"p{i}" for i in range(15)],
+        "cramer_v_regiao": 0.207,
+        "zeros_substituidos_pct": 42.66,
+        "degrau_log": {"aptos_mediana": 327, "mediana": 3.42, "p10": 3.2, "p90": 3.8},
+        "componentes": [
+            {
+                "id": i,
+                "padrao_zeros": [
+                    {
+                        "tipo": "sem",
+                        "conjunto": None,
+                        "m": None,
+                        "partes": ["p1"],
+                        "pct_grupo": 100.0,
+                        "outro_grupo": 1 - i,
+                        "pct_outro": 0.0,
+                    }
+                ],
+            }
+            for i in range(2)
+        ],
+    }
+    f = sl.diagnostico_zeros(c, {"p1": "Zema"})
+    assert f.startswith("Com as 15 partes, os dois grupos não são geografia")
+    assert "42,7% das células são zero" in f and "3,4 unidades de log" in f
+    c["cramer_v_regiao"] = 0.45
+    assert "acompanham a geografia" in sl.diagnostico_zeros(c, {})
 
 
 def test_cramer_associacao_perfeita_e_nula():
@@ -637,7 +879,7 @@ def test_json_figuras(dados):
     assert len(dados["clusters"]["componentes"]) == dados["clusters"]["k"]
     assert [b["k"] for b in dados["clusters"]["bic"]] == [3, 4, 5]
     assert dados["clusters"]["escolha_k"]["k"] == sc.K
-    assert len(dados["clusters"]["ajuste"]["sementes"]) == 8
+    assert len(dados["clusters"]["ajuste"]["sementes"]) == 32
     assert "registro" not in dados["urna"]
     assert len(dados["urna"]["reguas"]["itens"]) == 4
     assert dados["urna"]["interpretacao"][-1] == dados["urna"]["reguas"]["leitura"]
@@ -647,6 +889,41 @@ def test_json_figuras(dados):
             assert lo <= hi
     mapa = dados["extremos"]["mapa"]
     assert mapa["colunas"] == ["lat", "lon", "lula_90", "flavio_90", "secoes"]
+
+
+def test_json_clusters_cinco_partes(dados):
+    cl = dados["clusters"]
+    assert cl["features"] == list(sc.PARTES)
+    for c in cl["componentes"]:
+        soma = sum(c["centro_pct_eleitorado"].values()) + c["terceiros_pct_eleitorado"]
+        assert soma == pytest.approx(100.0, abs=0.01)
+        assert set(c) >= {"artefato", "padrao_empates", "padrao_zeros", "rotulo"}
+    assert set(cl["leitura"]) == {"geografia", "artefatos", "perfis", "geometria"}
+    assert set(cl["referencia_nacional"]) == {*sc.PARTES, "terceiros"}
+    assert len(cl["empates_por_par"]) == 10
+    assert cl["pca"]["base"].startswith("dois componentes principais das 4")
+    dg = cl["ajuste"]["diagnostico_convergencia"]
+    assert dg["total"] == len(cl["ajuste"]["sementes"]) == 32
+    assert dg["sementes"] == sc.N_SEMENTES and dg["inits"] == list(sc.INITS)
+    assert 1 <= dg["no_maximo"] <= dg["total"]
+    assert dg["apertado"]["tol"] == 1e-6 and dg["apertado"]["max_iter"] == 2000
+    adotado = dg["apertado"]["adotado"]
+    assert (cl["ajuste"]["tol"] == 1e-6) == adotado
+    assert dg["frase"] in cl["estabilidade"]
+
+
+def test_json_quinze_partes_so_agregados(dados):
+    q = dados["clusters"]["variantes"]["quinze_partes"]
+    assert len(q["features"]) == 15
+    assert not {"pca", "mais_anomalo", "menos_provaveis", "componentes"} & set(q)
+    assert q["ajuste"]["sementes"] == 8
+    assert [b["k"] for b in q["bic"]] == [3, 4, 5]
+    assert q["diagnostico"].startswith("Com as 15 partes")
+    assert len(q["grupos"]) == sc.K
+    mv = dados["clusters"]["variantes"]["meio_voto"]
+    assert len(mv["grupos"]) == sc.K
+    sen = dados["clusters"]["sensibilidade"]
+    assert set(sen) == {"ari_principal_vs_quinze_partes", "ari_principal_vs_meio_voto"}
 
 
 def test_json_sem_travessao(dados):

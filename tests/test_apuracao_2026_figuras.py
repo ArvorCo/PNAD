@@ -461,3 +461,21 @@ def test_texto_voto_por_modelo_sinais_e_frase_responsavel():
     assert "Diferença bruta não é efeito da máquina" in h
     assert "Os extremos vão para os dois lados" in h
     assert "—" not in h
+
+
+def test_clusters_secoes_caixa_falha_e_barras_do_eleitorado():
+    S = _fixture()
+    h = FIGURAS["clusters_secoes"]({"secoes": S})
+    q = S["clusters"]["variantes"]["quinze_partes"]
+    assert "O que não deu certo" in h
+    assert f"{C.num(q['zeros_substituidos_pct'], 1)}% das células eram zero" in h
+    assert f"V de Cramér agora: {C.num(S['clusters']['cramer_v_regiao'], 2)}" in h
+    n = len(S["clusters"]["componentes"])
+    assert h.count('class="cl-barra"') == n
+    # segmentos `display:block` e sem `width`: não viram área zero no auditor
+    assert "#fig-clusters_secoes .cl-barra>span{display:block;height:100%}" in h
+    barras = re.findall(r'<div class="cl-barra"[^>]*>(.*?)</div>', h)
+    assert all("width" not in b for b in barras)
+    assert "terceiros (fora do modelo)" in h
+    del S["clusters"]["variantes"]
+    assert "O que não deu certo" not in FIGURAS["clusters_secoes"]({"secoes": S})
