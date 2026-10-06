@@ -11,7 +11,6 @@ from . import pagina_cap_a as A
 from . import pagina_cap_b as B
 from . import pagina_cap_c as C
 from .pagina_comum import (
-    MEMOS,
     ROOT,
     SLUG,
     URL,
@@ -242,7 +241,7 @@ def r_fontes(d: Dados, cap: Capitulo) -> str:
     h = secao(
         cap,
         "Fontes<br><em>e reprodução.</em>",
-        "Todos os arquivos que alimentam a página, com hash e data de geração.",
+        "Cada número da página sai de um destes arquivos, com hash e data de geração.",
     )
     linhas = []
     for nome in JSONS:
@@ -250,53 +249,33 @@ def r_fontes(d: Dados, cap: Capitulo) -> str:
         f = d.fontes.get(nome)
         if f:
             linhas.append(
-                f"<li><code>analysis/apuracao_2026/dados/{nome}</code> · gerado em {escape(f.gerado_em or 's/d')}"
+                f"<li><code>{nome}</code> · {escape(f.gerado_em or 's/d')}"
                 f'<br><span class="hash">SHA-256 {f.sha256}</span></li>'
             )
         else:
-            linhas.append(
-                f"<li><code>analysis/apuracao_2026/dados/{nome}</code> · ainda não disponível</li>"
-            )
-    h += '<h3>Dados</h3><ol class="fontes">' + "".join(linhas) + "</ol>"
-    memos = sorted(x.name for x in MEMOS.glob("*.md")) + sorted(
-        f"dados/{x.name}" for x in (MEMOS / "dados").glob("*.md")
-    )
+            linhas.append(f"<li><code>{nome}</code> · ainda não disponível</li>")
     h += (
-        '<h3>Memorandos</h3><ul class="fontes">'
-        + "".join(f"<li><code>analysis/apuracao_2026/{m}</code></li>" for m in memos)
-        + "</ul>"
+        "<h3>Dados</h3><p>Em <code>analysis/apuracao_2026/dados/</code>; memorandos de método em "
+        '<code>analysis/apuracao_2026/*.md</code>.</p><ol class="fontes">'
+        + "".join(linhas)
+        + "</ol>"
     )
     final = ROOT / "apuracao/data/boletins/final.json"
     if final.exists():
         sha = hashlib.sha256(final.read_bytes()).hexdigest()
-        h += f'<h3>Boletim final</h3><p><code>apuracao/data/boletins/final.json</code><br><span class="hash">SHA-256 {sha}</span></p>'
+        h += f'<p>Boletim final: <code>apuracao/data/boletins/final.json</code><br><span class="hash">SHA-256 {sha}</span></p>'
     h += (
         '<h3>Fontes primárias</h3><ul class="fontes">'
-        "<li>Arquivos públicos de resultado do TSE, lidos pelo coletor da casa e guardados em <code>apuracao/data/apuracao.sqlite</code> "
-        "(cada versão com hora de geração, hora de leitura e SHA-256; método em <code>apuracao/README.md</code>).</li>"
+        "<li>Arquivos públicos de resultado do TSE, guardados pelo coletor da casa em <code>apuracao/data/apuracao.sqlite</code> "
+        "com hora de geração, hora de leitura e SHA-256 (<code>apuracao/README.md</code>).</li>"
         "<li>Resultados de 2022 por município e zona: <code>data/raw/tse_resultados/</code>.</li>"
-        "<li>Matérias da noite: <code>noticias_noite.json</code>, com veículo, hora e URL de cada item.</li>"
-        "<li>Malhas: IBGE (<code>data/originals/ibge_malhas/</code>, <code>apuracao/public/geo/</code>).</li></ul>"
-    )
-    h += (
-        '<h3>Scripts</h3><ul class="fontes">'
-        + "".join(f"<li><code>{s}</code></li>" for s in SCRIPTS)
-        + "</ul>"
+        "<li>Matérias da noite: <code>noticias_noite.json</code>, com veículo, hora e URL.</li>"
+        "<li>Malhas do IBGE: <code>data/originals/ibge_malhas/</code> e <code>apuracao/public/geo/</code>.</li></ul>"
     )
     h += (
         "<details><summary>Reproduzir no repositório</summary><pre>"
-        "python3 scripts/apuracao-2026-dados.py\n"
-        "python3 scripts/apuracao-2026-pesquisas.py\n"
-        "python3 scripts/apuracao-2026-anomalias.py\n"
-        "python3 scripts/apuracao-2026-secoes.py\n"
-        "python3 scripts/apuracao-2026-fechamento.py\n"
-        "python3 scripts/apuracao-2026-estrategia.py\n"
-        "python3 scripts/apuracao-2026-comparacao.py\n"
-        "python3 scripts/apuracao-2026-noite-regioes.py\n"
-        "python3 scripts/apuracao-2026-senado-x-flavio.py\n"
-        "python3 scripts/apuracao-2026-terceira-via.py\n"
-        "python3 scripts/apuracao-2026-build.py\n"
-        f"python3 scripts/social-cards.py --only {SLUG}</pre></details>"
+        + "".join(f"python3 {x}\n" for x in SCRIPTS)
+        + f"python3 scripts/social-cards.py --only {SLUG}</pre></details>"
     )
     agora = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     h += f'<p class="meta">Página gerada em {agora}.</p></section>'
