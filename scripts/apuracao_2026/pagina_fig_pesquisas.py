@@ -14,6 +14,7 @@ from .pagina_fig_base import (
     COR_CAND,
     FLAVIO,
     GRADE,
+    HALO,
     INK,
     LULA,
     MUTED,
@@ -34,6 +35,7 @@ from .pagina_fig_base import (
     ln,
     nome_bonito,
     pct,
+    posiciona_siglas,
     pp,
     r,
     registra,
@@ -93,14 +95,21 @@ def pesquisas_erro(d, **_op) -> str:
     }
     esq, topo, passo = 250, 100, 30
     extra = 3
-    h = topo + passo * (len(ondas) + extra) + 24 + 44
+    h = topo + passo * (len(ondas) + extra) + 24 + 50
     vmax = 0.0
     for p in ondas:
         for _, f in modos.values():
             vmax = max(vmax, abs(f(p["publicado"])))
             if p.get("reponderado"):
                 vmax = max(vmax, abs(f(p["reponderado"])))
-    vmax = math.ceil((vmax + 1) / 2) * 2
+    # o eixo cobre também a margem de 95% da diferença, até 14 pontos; o que
+    # passar disso leva a ponta de seta de corte
+    marg = max(
+        abs(p["publicado"]["diferenca_lula_menos_flavio"]["erro"])
+        + p["margem_95_diferenca_aas_pp"]
+        for p in ondas
+    )
+    vmax = min(max(math.ceil((vmax + 1) / 2) * 2, math.ceil(marg / 2) * 2), 14)
     X = escala(-vmax, vmax, esq, W - 60)
     x0 = X(0)
     base = topo + passo * (len(ondas) + extra) + 24
@@ -119,6 +128,9 @@ def pesquisas_erro(d, **_op) -> str:
     for v in ticks(-vmax, vmax, 8):
         out.append(ln(X(v), topo - 8, X(v), base, GRADE))
         out.append(t(X(v), base + 20, _sn(v, 0), 13, MUTED, "middle", mono=True))
+    out.append(
+        t(W - 60, base + 40, "erro em pontos percentuais dos válidos", 13, MUTED, "end")
+    )
     out.append(ln(x0, topo - 14, x0, base, INK, 2))
     out.append(t(x0, topo - 20, "urna", 14, INK, "middle", "700"))
     ref = P["referencia_2022"]["erro_comum_diferenca_lula_menos_bolsonaro"]
@@ -177,6 +189,12 @@ def pesquisas_erro(d, **_op) -> str:
                 g.append(
                     ln(X(lo_), y, X(hi_), y, "#c9c1ab", 5, ' stroke-linecap="round"')
                 )
+                for corte, lado in ((a + m > vmax, 1), (a - m < -vmax, -1)):
+                    if corte:
+                        xc = X(lado * vmax)
+                        g.append(
+                            f'<path d="M{xc:.1f} {y - 7:.1f}l{8 * lado} 7l{-8 * lado} 7z" fill="{MUTED}"/>'
+                        )
             if b is not None and abs(X(b) - X(a)) > 7:
                 g.append(
                     f'<line x1="{X(a):.1f}" y1="{y:.1f}" x2="{X(b):.1f}" y2="{y:.1f}" stroke="{INK}" stroke-width="1.4" marker-end="url(#pe-seta)"/>'
@@ -194,6 +212,7 @@ def pesquisas_erro(d, **_op) -> str:
                     13,
                     INK,
                     mono=True,
+                    extra=HALO,
                 )
             )
             mostra = "" if modo == "dif" else ' display="none"'
@@ -260,6 +279,8 @@ def pesquisas_erro(d, **_op) -> str:
         f"na diferença; erro médio {pp(res['media'])} (2022: {pp(ref)}). A seta vai do publicado ao reponderado por renda. "
         "Proximidade da urna numa eleição não é prova de método. Fonte: pesquisas_vs_urna.json."
     )
+    f_dif = modos["dif"][1]
+    xs = [X(f_dif(b)) for _, _, pub, rep, _ in linhas_ for b in (pub, rep) if b]
     return figura_html(
         "pesquisas_erro",
         "".join(out),
@@ -268,6 +289,7 @@ def pesquisas_erro(d, **_op) -> str:
         controles=ctl,
         minw=860,
         dim=False,
+        foco=(min([*xs, x0]) - 14, max(xs) + 60, x0),
     )
 
 
@@ -461,7 +483,7 @@ def central_casa_ufs(d, **_op) -> str:
     )
     esq, topo, passo = 200, 60, 28
     base = topo + passo * len(linhas_)
-    h = base + 52
+    h = base + 54
     vmax = (
         math.ceil(max(abs(x["erro_diferenca_lula_menos_flavio"]) for x in linhas_) / 2)
         * 2
@@ -482,6 +504,16 @@ def central_casa_ufs(d, **_op) -> str:
         out.append(ln(X(v), topo - 6, X(v), base, GRADE))
         out.append(t(X(v), base + 20, _sn(v, 0), 13, MUTED, "middle", mono=True))
     out.append(ln(x0, topo - 6, x0, base, INK, 1.6))
+    out.append(
+        t(
+            W - 160,
+            base + 44,
+            "erro em pontos percentuais dos válidos",
+            13,
+            MUTED,
+            "end",
+        )
+    )
     tips = Tips()
     for i, x in enumerate(linhas_):
         y = topo + i * passo
@@ -501,7 +533,10 @@ def central_casa_ufs(d, **_op) -> str:
             )
         )
         if not x["acertou_lider"]:
-            corpo += t(W - 150, y + 19, "líder errado", 13, "#b02f21", weight="700")
+            # encostado na barra: depois do número se ela cresce para a direita,
+            # do outro lado do zero se cresce para a esquerda
+            xm = X(v) + 6 + 7.9 * len(_sn(v)) + 8 if v >= 0 else x0 + 8
+            corpo += t(xm, y + 19, "líder errado", 13, "#b02f21", weight="700")
         pv, e = x["validos"], x["erro_pp"]
         k = tips.add(
             ficha(
@@ -535,7 +570,15 @@ def central_casa_ufs(d, **_op) -> str:
         f"Previsão central da casa (04/10) contra a urna, por UF. No país o erro na diferença foi {pp(c['erro_diferenca_lula_menos_flavio'])}. "
         "Fonte: pesquisas_vs_urna.json (previsao_casa.ufs)."
     )
-    return figura_html("central_casa_ufs", "".join(out), legenda_, tips, minw=820)
+    xs = [X(x["erro_diferenca_lula_menos_flavio"]) for x in linhas_]
+    return figura_html(
+        "central_casa_ufs",
+        "".join(out),
+        legenda_,
+        tips,
+        minw=820,
+        foco=(min([*xs, x0]) - 50, max([*xs, x0]) + 60, x0),
+    )
 
 
 # ------------------------------------------------------------------ Senado: calibração
@@ -868,10 +911,24 @@ def reserva_vs_urna(d, **_op) -> str:
         )
     )
     tips = Tips()
-    for u in ufs:
-        x, y = X(u["reserva_flavio_pp_media_casas"]), Y(
-            u["ganho_flavio_sobre_pesquisa_pp"]
+    pos = [
+        (
+            X(u["reserva_flavio_pp_media_casas"]),
+            Y(u["ganho_flavio_sobre_pesquisa_pp"]),
+            u["uf"],
         )
+        for u in ufs
+    ]
+    siglas = posiciona_siglas(
+        pos, (esq + 2, topo + 2, esq + lado_w - 2, topo + lado_h - 2)
+    )
+    # pontos primeiro, rótulos por cima: nenhuma sigla fica sob outro ponto
+    for x, y, _ in pos:
+        out.append(
+            f'<circle cx="{x:.1f}" cy="{y:.1f}" r="7" fill="{FLAVIO}" fill-opacity="0.8" '
+            'stroke="#ffffff" stroke-width="1.5" pointer-events="none"/>'
+        )
+    for u, (x, y, _), (sx, sy, sw, sh, fio) in zip(ufs, pos, siglas, strict=True):
         casas = ", ".join(c["casa"] for c in u.get("casas", []))
         k = tips.add(
             ficha(
@@ -889,11 +946,24 @@ def reserva_vs_urna(d, **_op) -> str:
                 ],
             )
         )
+        ligacao = ""
+        if fio:
+            nx = min(max(x, sx), sx + sw)
+            ny = min(max(y, sy), sy + sh)
+            ligacao = ln(x, y, nx, ny, INK, 0.8)
         out.append(
             hit(
-                f'<circle cx="{x:.1f}" cy="{y:.1f}" r="7" fill="{FLAVIO}" fill-opacity="0.8" stroke="#ffffff" stroke-width="1.5"/>'
-                + r(x + 8, y - 8, 9 * len(u["uf"]) + 6, 17, PAPER, ' rx="2"')
-                + t(x + 10, y + 5, u["uf"], 13, INK, weight="700"),
+                f'<circle cx="{x:.1f}" cy="{y:.1f}" r="9" fill="transparent"/>'
+                + ligacao
+                + r(
+                    sx,
+                    sy,
+                    sw,
+                    sh,
+                    PAPER,
+                    f' rx="2" stroke="{MUTED}" stroke-width="0.5"',
+                )
+                + t(sx + 3, sy + sh - 4, u["uf"], 13, INK, weight="700"),
                 k,
             )
         )

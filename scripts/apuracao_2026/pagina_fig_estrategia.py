@@ -185,7 +185,8 @@ def transferencia_cenarios(d, **_op) -> str:
     proj = E["aritmetica"]["projecoes"]
     esq, topo, passo = 330, 70, 46
     h = topo + passo * len(proj) + 50
-    lo, hi = 40, 60
+    # barra 100% começa no zero: a diferença entre as cores é a diferença real
+    lo, hi = 0, 100
     X = escala(lo, hi, esq, W - 60)
     out = [
         svg_abre(
@@ -272,9 +273,11 @@ def estoque_uf(d, **_op) -> str:
     h = topo + passo * len(ufs) + 50
     vmax = max(max(u["estoque_flavio"], u["estoque_lula"]) for u in ufs)
     vmax = math.ceil(vmax / 200000) * 200000
-    meio = esq + (W - esq - 40) / 2
-    XL = escala(0, vmax, meio, esq)
-    XF = escala(0, vmax, meio, W - 40)
+    # folga de 84 de cada lado para o rótulo de valor, que nunca encosta no nome
+    ini, fim = esq + 84, W - 100
+    meio = (ini + fim) / 2
+    XL = escala(0, vmax, meio, ini)
+    XF = escala(0, vmax, meio, fim)
     out = [
         svg_abre(
             W,
@@ -286,7 +289,7 @@ def estoque_uf(d, **_op) -> str:
         t(meio - 8, 30, "← estoque de Lula", 14, LULA, "end", "700"),
     ]
     for v in ticks(0, vmax, 4):
-        for X in (XL, XF):
+        for X in (XL, XF) if v else (XF,):
             out.append(ln(X(v), topo - 6, X(v), h - 34, GRADE))
             out.append(
                 t(
@@ -322,6 +325,16 @@ def estoque_uf(d, **_op) -> str:
                 INK,
                 mono=True,
             )
+        if u["estoque_lula"]:
+            corpo += t(
+                XL(u["estoque_lula"]) - 6,
+                y + 18,
+                inteiro(u["estoque_lula"]),
+                13,
+                INK,
+                "end",
+                mono=True,
+            )
         k = tips.add(
             ficha(
                 f"{NOME_UF[u['uf']]} ({u['uf']})",
@@ -353,7 +366,15 @@ def estoque_uf(d, **_op) -> str:
         f"{inteiro(est['total_ufs'])} para Flávio e {inteiro(est['total_lula_ufs'])} para Lula. Não identifica eleitor; "
         "onde o candidato já passou de 2022 o estoque é zero. Fonte: estrategia_2t.json."
     )
-    return figura_html("estoque_uf", "".join(out), legenda_, tips, minw=820)
+    x_lula = XL(max(u["estoque_lula"] for u in ufs)) - 74
+    return figura_html(
+        "estoque_uf",
+        "".join(out),
+        legenda_,
+        tips,
+        minw=820,
+        foco=(x_lula, meio + 4, meio + 4),
+    )
 
 
 ANALOGIA = "#6b4a92"
