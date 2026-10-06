@@ -1,6 +1,6 @@
 # Análise por seção (boletins de urna), presidente, 1º turno de 2026
 
-Gerado em 2026-10-06T05:43:06Z por `scripts/apuracao-2026-secoes.py`. Dados em `analysis/apuracao_2026/dados/secoes.json` (contrato em `analysis/apuracao_2026/CONTRATO_SECOES.md`).
+Gerado em 2026-10-06T06:25:20Z por `scripts/apuracao-2026-secoes.py`. Dados em `analysis/apuracao_2026/dados/secoes.json` (contrato em `analysis/apuracao_2026/CONTRATO_SECOES.md`).
 
 > Seção atípica é seção que pede explicação, não indício de irregularidade. O que resolve cada caso é documento: ata da mesa, log da urna e plano de alocação das urnas do TRE.
 
@@ -80,115 +80,124 @@ Amostras (as de maior excesso sobre a zona, 100 votantes ou mais):
 - MANICORÉ (AM), zona 16, seção 116, E. E. SANTO ANTONIO DO MATUPI: Lula 15, Flávio 238 de 257 válidos (327 aptos, 260 votantes, UE2022); Flávio 92,6% na seção e 38,1% na zona. Zona rural (inferido pelo cadastro do local); urna de reserva (seção).
 - MANICORÉ (AM), zona 16, seção 121, E. E. SANTO ANTONIO DO MATUPI: Lula 13, Flávio 213 de 230 válidos (323 aptos, 233 votantes, UE2022); Flávio 92,6% na seção e 38,1% na zona. Zona rural (inferido pelo cadastro do local).
 
-## B. Mistura gaussiana (k = 5), cinco partes
+## B. Mistura gaussiana (k = 5), cinco proporções do eleitorado
 
-- Com as cinco partes, a associação entre grupo e região sobe pouco (V de Cramér de 0,24, contra 0,21 com as 15 partes; 0,26 com a UF) e fica abaixo de 0,3: cada grupo ainda mistura regiões.
-- Cinco partes não bastaram: três dos cinco grupos são artefatos da contagem inteira, não perfil de seção: o 1 (sem voto branco; 24.891 seções), o 3 (mesmo número de brancos e de nulos; 44.447 seções) e o 4 (sem voto nulo; 5.202 seções). Brancos e nulos são poucos votos por seção (mediana de 4 brancos e 7 nulos); no logaritmo, o zero vira um degrau de 3,5 unidades até o primeiro voto e o empate vira uma razão exata de 1, e a mistura gasta um componente em cada padrão. 1,34% das células são zero (5,31% das seções sem voto branco e 1,35% das seções sem voto nulo), e 8,93% das seções têm o mesmo número de brancos e de nulos.
-- Os outros dois, com 85,0% das seções, são perfis de voto: o 2 (Lula 52,1% e Flávio 40,9% dos válidos; Nordeste 46% das seções) e o 5 (Lula 37,8% e Flávio 53,4% dos válidos; Sudeste 59% das seções). É a divisão que o mapa por zona já mostra: o grupo em que Lula lidera tem 46% das seções no Nordeste, e o grupo em que Flávio lidera, 59% no Sudeste. Nessa parte, a mistura não acrescenta ao mapa.
-- No espaço das log-razões, uma parte pequena pesa tanto quanto uma grande: passar de 4 para 8 brancos afasta a seção tanto quanto passar de 101 para 202 votos em Lula. Por isso o primeiro eixo da projeção é o voto branco (carga 0,89), não a disputa entre os finalistas.
-- Grupo 1: sem voto branco; terceiros baixos, Lula alto, Flávio baixo; Nordeste 34% e Norte 28% das seções; 24.891 seções (5,0%). Centro: Lula 51,7% e Flávio 42,3% dos válidos; abstenção 20,6%, brancos 0,0%, nulos 2,1% e terceiros 4,5% do eleitorado.
-- Grupo 2: Lula alto, brancos baixos, Flávio baixo; Nordeste 46% e Sudeste 28% das seções; 225.669 seções (45,3%). Centro: Lula 52,1% e Flávio 40,9% dos válidos; abstenção 20,4%, brancos 1,1%, nulos 2,7% e terceiros 5,2% do eleitorado.
-- Grupo 3: mesmo número de brancos e de nulos; perto da média nacional; Sudeste 40% e Nordeste 21% das seções; 44.447 seções (8,9%). Centro: Lula 41,3% e Flávio 50,6% dos válidos; abstenção 20,9%, brancos 1,5%, nulos 1,5% e terceiros 6,0% do eleitorado.
-- Grupo 4: sem voto nulo; Flávio alto, Lula baixo; Sul 36% e Sudeste 18% das seções; 5.202 seções (1,0%). Centro: Lula 36,4% e Flávio 56,2% dos válidos; abstenção 20,8%, brancos 1,3%, nulos 0,0% e terceiros 5,6% do eleitorado.
-- Grupo 5: brancos altos, Lula baixo, Flávio alto; Sudeste 59% das seções; 197.681 seções (39,7%). Centro: Lula 37,8% e Flávio 53,4% dos válidos; abstenção 21,3%, brancos 2,0%, nulos 2,2% e terceiros 6,5% do eleitorado.
-- O grupo de menor densidade e maior dispersão é o 4 (sem voto nulo; Flávio alto, Lula baixo; Sul 36% e Sudeste 18% das seções); as 20 seções menos prováveis dele vêm com o que provavelmente as explica.
-- Com zero trocado por meio voto, e não por 0,0001, o V de Cramér entre grupo e região é 0,39 e o índice de Rand ajustado contra a partição principal, 0,20.
-- Na projeção, o componente 1 (54,5% da variância) opõe brancos (carga 0,89) a Lula (−0,28); o componente 2 (27,5% da variância) opõe nulos (carga 0,79) a Flávio (−0,54). Os centros dos grupos se afastam mais no componente 1 (variância ponderada dos centros 1,01, contra 0,25 no outro). Um corte no componente 1 separa as seções sem voto branco (5,3% do total) com acerto balanceado de 100,0%. Um corte no componente 2 separa as seções sem voto nulo (1,3% do total) com acerto balanceado de 99,7%.
-- O EM convergiu nas 32 partidas (16 sementes, inicializações kmeans e k-means++, 10 partidas internas cada; critério do sklearn: variação da log-verossimilhança média abaixo de 0,0001, de 19 a 77 iterações). Refeita com tolerância 0,000001 e até 2.000 iterações, a melhor partida foi de 51 para 105 iterações e a log-verossimilhança média subiu 0,000688 por seção, mas a partição mudou (índice de Rand ajustado de 0,79 entre as duas): pelo critério declarado, o padrão parava cedo, e o ajuste publicado é o apertado. 2 de 32 partidas chegaram ao mesmo máximo, a 0,001 por seção (kmeans: 2 de 16; k-means++: 0 de 16). A partição escolhida é instável: índice de Rand ajustado médio de 0,78 contra as partidas que chegam ao máximo e de 0,18 contra as demais. O V de Cramér entre grupo e região fica entre 0,21 e 0,41 em todas as partidas.
+- Com as cinco proporções do eleitorado, sem log, os cinco grupos acompanham a geografia: V de Cramér entre grupo e região de 0,41, contra 0,21 com as 15 partes em log-razão e 0,24 com as cinco partes em log-razão, e de 0,45 com a UF.
+- Nenhum grupo é artefato da contagem inteira: 1,34% das células são zero (5,31% das seções sem voto branco e 1,35% das seções sem voto nulo), sem troca por número nenhum, e nenhum padrão de zeros ou de empate cobre 95% das seções de um grupo.
+- Quanto da variação entre seções cada um explica (R²): Lula, 63% pelo grupo e 83% pela zona, que o grupo eleva a 86%; Flávio, 53% pelo grupo e 79% pela zona, que o grupo eleva a 81%; abstenção, 15% pelo grupo e 49% pela zona, que o grupo eleva a 53%; brancos, 32% pelo grupo e 31% pela zona, que o grupo eleva a 48%; nulos, 29% pelo grupo e 36% pela zona, que o grupo eleva a 46%. Na disputa entre os finalistas, a mistura não acrescenta ao mapa por zona: sabendo a zona, o grupo soma 2 pontos ao R² de Lula e 2 ao de Flávio. O que a mistura acrescenta está em brancos (+16 pontos) e nulos (+11 pontos), que variam dentro da zona.
+- Grupo 1: Lula muito alto, Flávio muito baixo, terceiros baixos; Nordeste 72% das seções; 122.721 seções (24,6%). Centro: Lula 66,0% e Flávio 29,2% dos válidos; abstenção 20,0%, brancos 1,0%, nulos 2,5% e terceiros 3,6% do eleitorado.
+- Grupo 2: nulos muito altos, brancos muito altos, Flávio baixo; Nordeste 45% e Sudeste 44% das seções; 81.015 seções (16,3%). Centro: Lula 53,0% e Flávio 39,2% dos válidos; abstenção 18,5%, brancos 2,4%, nulos 3,8% e terceiros 5,7% do eleitorado.
+- Grupo 3: abstenção muito alta, nulos muito baixos, Flávio baixo; Sudeste 41% e Nordeste 19% das seções; 7.355 seções (1,5%). Centro: Lula 53,3% e Flávio 37,8% dos válidos; abstenção 34,6%, brancos 0,6%, nulos 1,0% e terceiros 5,6% do eleitorado.
+- Grupo 4: terceiros altos, brancos baixos, nulos baixos; Sudeste 38% e Centro-Oeste 21% das seções; 94.896 seções (19,1%). Centro: Lula 38,3% e Flávio 50,9% dos válidos; abstenção 19,2%, brancos 0,9%, nulos 1,8% e terceiros 8,3% do eleitorado.
+- Grupo 5: Lula baixo, Flávio alto, abstenção alta; Sudeste 57% das seções; 191.903 seções (38,5%). Centro: Lula 32,3% e Flávio 59,6% dos válidos; abstenção 22,6%, brancos 1,6%, nulos 1,9% e terceiros 5,9% do eleitorado.
+- O grupo de menor densidade e maior dispersão é o 3 (abstenção muito alta, nulos muito baixos, Flávio baixo; Sudeste 41% e Nordeste 19% das seções); as 20 seções menos prováveis dele vêm com o que provavelmente as explica.
+- Na projeção, o componente 1 (41,2% da variância) opõe Lula (carga 0,65) a Flávio (−0,65); o componente 2 (23,2% da variância) opõe brancos (carga 0,80) a Lula (−0,20). Os centros dos grupos se afastam mais no componente 1 (variância ponderada dos centros 1,26, contra 0,52 no outro).
+- O EM convergiu nas 32 partidas (16 sementes, inicializações kmeans e k-means++, uma partida cada, na amostra estratificada por UF de 150.000 seções; critério do sklearn: variação da log-verossimilhança média abaixo de 0,000001, de 115 a 417 iterações). A melhor partida foi refinada na base inteira, a partir dos parâmetros da amostra (índice de Rand ajustado de 0,96 entre as duas partições). Continuado a partir do ajuste escolhido, com tolerância 0,00000001 e até 5.000 iterações a mais, o EM rodou 66 iterações e a log-verossimilhança média subiu 0,000011 por seção, mas a partição mudou (índice de Rand ajustado de 0,98 entre as duas): pelo critério declarado, o ajuste anterior parava cedo, e o publicado é o apertado. 20 de 32 partidas chegaram ao mesmo máximo, a 0,001 por seção (kmeans: 12 de 16; k-means++: 8 de 16). A partição é estável no essencial: índice de Rand ajustado médio, contra a melhor delas, de 0,93 entre as partidas que chegam ao máximo, de 0,59 a 1,00; de 0,31 entre as demais. O V de Cramér entre grupo e região fica entre 0,41 e 0,46 em todas as partidas.
 
-Escolha de k (juízo editorial): k = 5, escolha do autor, mantida quando a mistura passou de 15 para cinco partes (06/10/2026; antes de 06/10, k = 3). O BIC prefere k = 5. A escolha das cinco partes também é do autor.
+Escolha de k (juízo editorial): k = 5, escolha do autor, mantida nas três tentativas (15 partes em log-razão, cinco partes em log-razão e cinco proporções cruas) (06/10/2026; antes de 06/10, k = 3). O BIC prefere k = 5. A escolha das cinco variáveis também é do autor.
 
-Partes: votos de Lula, de Flávio, brancos, nulos e abstenções da seção, divididos pelos aptos da eleição federal e renormalizados para somar 1 (composição fechada sobre as cinco partes; o voto em terceiros fica fora). Método: log-razão centrada (CLR) das cinco partes fechadas, com zero trocado por 0,0001 antes do log; a mistura é ajustada nas quatro coordenadas ortonormais do subespaço de soma zero (ILR), rotação que preserva Mahalanobis e densidade relativa.
+Variáveis: votos de Lula, de Flávio, brancos, nulos e abstenções da seção, cada um dividido pelos aptos da eleição federal (proporções cruas, sem log; o voto em terceiros fica implícito, como o que falta para 100%). Método: cada uma das cinco proporções do eleitorado menos a média entre seções, dividida pelo desvio-padrão entre seções (`padronizacao`); sem log e sem troca de zero; a mistura é ajustada nessas cinco coordenadas.
 
-Zeros: 1,34% das células; 31.688 seções com ao menos uma parte zerada.
-
-| parte | seções com zero | % das seções |
+| parte | média % | desvio-padrão % |
 |---|---|---|
-| lula | 9 | 0,00 |
-| flavio | 82 | 0,02 |
-| brancos | 26.460 | 5,31 |
-| nulos | 6.713 | 1,35 |
-| abstencao | 15 | 0,00 |
+| lula | 34,49 | 13,95 |
+| flavio | 35,19 | 12,89 |
+| brancos | 1,43 | 0,93 |
+| nulos | 2,32 | 1,29 |
+| abstencao | 20,81 | 5,98 |
+
+Zeros: 1,34% das células, sem troca; 31.688 seções com ao menos uma parte zerada.
 
 Convergência e máximos locais:
 
-O EM convergiu nas 32 partidas (16 sementes, inicializações kmeans e k-means++, 10 partidas internas cada; critério do sklearn: variação da log-verossimilhança média abaixo de 0,0001, de 19 a 77 iterações). Refeita com tolerância 0,000001 e até 2.000 iterações, a melhor partida foi de 51 para 105 iterações e a log-verossimilhança média subiu 0,000688 por seção, mas a partição mudou (índice de Rand ajustado de 0,79 entre as duas): pelo critério declarado, o padrão parava cedo, e o ajuste publicado é o apertado. 2 de 32 partidas chegaram ao mesmo máximo, a 0,001 por seção (kmeans: 2 de 16; k-means++: 0 de 16). A partição escolhida é instável: índice de Rand ajustado médio de 0,78 contra as partidas que chegam ao máximo e de 0,18 contra as demais.
+O EM convergiu nas 32 partidas (16 sementes, inicializações kmeans e k-means++, uma partida cada, na amostra estratificada por UF de 150.000 seções; critério do sklearn: variação da log-verossimilhança média abaixo de 0,000001, de 115 a 417 iterações). A melhor partida foi refinada na base inteira, a partir dos parâmetros da amostra (índice de Rand ajustado de 0,96 entre as duas partições). Continuado a partir do ajuste escolhido, com tolerância 0,00000001 e até 5.000 iterações a mais, o EM rodou 66 iterações e a log-verossimilhança média subiu 0,000011 por seção, mas a partição mudou (índice de Rand ajustado de 0,98 entre as duas): pelo critério declarado, o ajuste anterior parava cedo, e o publicado é o apertado. 20 de 32 partidas chegaram ao mesmo máximo, a 0,001 por seção (kmeans: 12 de 16; k-means++: 8 de 16). A partição é estável no essencial: índice de Rand ajustado médio, contra a melhor delas, de 0,93 entre as partidas que chegam ao máximo, de 0,59 a 1,00; de 0,31 entre as demais.
 
-| semente | inicialização | log-veross. média | convergiu | iterações | ARI com a escolhida | V de Cramér (região) |
+| semente | inicialização | log-veross. média (amostra) | convergiu | iterações | ARI com a melhor | V de Cramér (região) |
 |---|---|---|---|---|---|---|
-| 20261005 | kmeans | -2,7911 | sim | 33 | 0,136 | 0,284 |
-| 20261006 | kmeans | -2,7911 | sim | 33 | 0,136 | 0,284 |
-| 20261007 | kmeans | -2,7911 | sim | 33 | 0,136 | 0,284 |
-| 20261008 | kmeans | -2,7911 | sim | 34 | 0,135 | 0,283 |
-| 20261009 | kmeans | -2,5972 | sim | 19 | 0,489 | 0,313 |
-| 20261010 | kmeans | -2,7911 | sim | 33 | 0,136 | 0,284 |
-| 20261011 | kmeans | -2,7911 | sim | 33 | 0,136 | 0,284 |
-| 20261012 | kmeans | -2,7911 | sim | 33 | 0,136 | 0,284 |
-| 20261013 | kmeans | -2,7911 | sim | 34 | 0,135 | 0,283 |
-| 20261014 | kmeans | -2,7911 | sim | 33 | 0,136 | 0,284 |
-| 20261015 | kmeans | -2,7911 | sim | 33 | 0,136 | 0,284 |
-| 20261016 | kmeans | -2,5875 | sim | 48 | 0,774 | 0,248 |
-| 20261017 | kmeans | -2,5874 | sim | 51 | 0,787 | 0,248 |
-| 20261018 | kmeans | -2,7911 | sim | 34 | 0,135 | 0,283 |
-| 20261019 | kmeans | -2,7776 | sim | 59 | 0,184 | 0,215 |
-| 20261020 | kmeans | -2,7911 | sim | 33 | 0,136 | 0,284 |
-| 20261005 | k-means++ | -2,7803 | sim | 67 | 0,174 | 0,378 |
-| 20261006 | k-means++ | -2,7803 | sim | 37 | 0,187 | 0,395 |
-| 20261007 | k-means++ | -2,7802 | sim | 40 | 0,214 | 0,396 |
-| 20261008 | k-means++ | -2,7799 | sim | 33 | 0,186 | 0,388 |
-| 20261009 | k-means++ | -2,7827 | sim | 25 | 0,117 | 0,299 |
-| 20261010 | k-means++ | -2,7797 | sim | 24 | 0,182 | 0,387 |
-| 20261011 | k-means++ | -2,7801 | sim | 38 | 0,179 | 0,387 |
-| 20261012 | k-means++ | -2,7804 | sim | 61 | 0,230 | 0,407 |
-| 20261013 | k-means++ | -2,7902 | sim | 53 | 0,130 | 0,267 |
-| 20261014 | k-means++ | -2,7799 | sim | 29 | 0,180 | 0,387 |
-| 20261015 | k-means++ | -2,7795 | sim | 29 | 0,191 | 0,389 |
-| 20261016 | k-means++ | -2,7623 | sim | 43 | 0,216 | 0,265 |
-| 20261017 | k-means++ | -2,5980 | sim | 24 | 0,441 | 0,313 |
-| 20261018 | k-means++ | -2,7623 | sim | 47 | 0,161 | 0,243 |
-| 20261019 | k-means++ | -2,7776 | sim | 77 | 0,184 | 0,215 |
-| 20261020 | k-means++ | -2,7795 | sim | 28 | 0,179 | 0,383 |
+| 20261005 | kmeans | -4,8817 | sim | 259 | 0,963 | 0,413 |
+| 20261006 | kmeans | -4,8817 | sim | 263 | 0,963 | 0,413 |
+| 20261007 | kmeans | -4,8817 | sim | 259 | 0,963 | 0,413 |
+| 20261008 | kmeans | -4,8859 | sim | 295 | 0,230 | 0,437 |
+| 20261009 | kmeans | -4,8817 | sim | 264 | 0,964 | 0,413 |
+| 20261010 | kmeans | -4,8817 | sim | 260 | 0,964 | 0,413 |
+| 20261011 | kmeans | -4,8859 | sim | 270 | 0,230 | 0,437 |
+| 20261012 | kmeans | -4,8859 | sim | 276 | 0,230 | 0,437 |
+| 20261013 | kmeans | -4,8817 | sim | 259 | 0,964 | 0,413 |
+| 20261014 | kmeans | -4,8817 | sim | 261 | 0,964 | 0,413 |
+| 20261015 | kmeans | -4,8817 | sim | 261 | 0,964 | 0,413 |
+| 20261016 | kmeans | -4,8817 | sim | 261 | 0,964 | 0,413 |
+| 20261017 | kmeans | -4,8817 | sim | 264 | 0,964 | 0,413 |
+| 20261018 | kmeans | -4,8859 | sim | 297 | 0,230 | 0,437 |
+| 20261019 | kmeans | -4,8817 | sim | 260 | 0,964 | 0,413 |
+| 20261020 | kmeans | -4,8817 | sim | 260 | 0,963 | 0,413 |
+| 20261005 | k-means++ | -4,8826 | sim | 133 | 0,838 | 0,413 |
+| 20261006 | k-means++ | -4,8869 | sim | 189 | 0,388 | 0,422 |
+| 20261007 | k-means++ | -4,8908 | sim | 115 | 0,344 | 0,462 |
+| 20261008 | k-means++ | -4,8826 | sim | 225 | 0,589 | 0,415 |
+| 20261009 | k-means++ | -4,8817 | sim | 337 | 0,964 | 0,413 |
+| 20261010 | k-means++ | -4,8817 | sim | 243 | 1,000 | 0,414 |
+| 20261011 | k-means++ | -4,8817 | sim | 140 | 0,972 | 0,413 |
+| 20261012 | k-means++ | -4,8871 | sim | 141 | 0,536 | 0,431 |
+| 20261013 | k-means++ | -4,8859 | sim | 417 | 0,230 | 0,437 |
+| 20261014 | k-means++ | -4,8898 | sim | 149 | 0,386 | 0,451 |
+| 20261015 | k-means++ | -4,8818 | sim | 199 | 0,825 | 0,427 |
+| 20261016 | k-means++ | -4,8866 | sim | 129 | 0,447 | 0,418 |
+| 20261017 | k-means++ | -4,8859 | sim | 267 | 0,227 | 0,438 |
+| 20261018 | k-means++ | -4,8859 | sim | 325 | 0,230 | 0,437 |
+| 20261019 | k-means++ | -4,8826 | sim | 115 | 0,835 | 0,410 |
+| 20261020 | k-means++ | -4,8817 | sim | 160 | 0,966 | 0,413 |
 
-BIC (menor é melhor; cada k com o melhor ajuste das mesmas sementes, inicialização kmeans; k = 5 com as duas inicializações):
+BIC na base inteira (menor é melhor):
 
-- k = 3: BIC 2.877.935,4, log-verossimilhança média -2,8896
-- k = 4: BIC 2.804.984,5, log-verossimilhança média -2,8161
-- k = 5: BIC 2.576.776,2, log-verossimilhança média -2,5867
+- k = 3: BIC 4.944.903,8, log-verossimilhança média -4,9650
+- k = 4: BIC 4.899.503,2, log-verossimilhança média -4,9192
+- k = 5: BIC 4.862.932,9, log-verossimilhança média -4,8822
 
 | grupo | rótulo | seções | Lula % válidos | Flávio % válidos | abstenção % | brancos % | nulos % | terceiros % | log-veross. média | log det Σ |
 |---|---|---|---|---|---|---|---|---|---|---|
-| 1 | sem voto branco; terceiros baixos, Lula alto, Flávio baixo; Nordeste 34% e Norte 28% das seções | 24.891 | 51,7 | 42,3 | 20,6 | 0,00 | 2,07 | 4,5 | -4,96 | -7,4 |
-| 2 | Lula alto, brancos baixos, Flávio baixo; Nordeste 46% e Sudeste 28% das seções | 225.669 | 52,1 | 40,9 | 20,4 | 1,08 | 2,67 | 5,2 | -3,20 | -6,0 |
-| 3 | mesmo número de brancos e de nulos; perto da média nacional; Sudeste 40% e Nordeste 21% das seções | 44.447 | 41,3 | 50,6 | 20,9 | 1,50 | 1,50 | 6,0 | 0,75 | -16,6 |
-| 4 | sem voto nulo; Flávio alto, Lula baixo; Sul 36% e Sudeste 18% das seções | 5.202 | 36,4 | 56,2 | 20,8 | 1,28 | 0,00 | 5,6 | -6,75 | -7,0 |
-| 5 | brancos altos, Lula baixo, Flávio alto; Sudeste 59% das seções | 197.681 | 37,8 | 53,4 | 21,3 | 2,00 | 2,18 | 6,5 | -2,23 | -7,7 |
+| 1 | Lula muito alto, Flávio muito baixo, terceiros baixos; Nordeste 72% das seções | 122.721 | 66,0 | 29,2 | 20,0 | 1,01 | 2,46 | 3,6 | -4,79 | -6,3 |
+| 2 | nulos muito altos, brancos muito altos, Flávio baixo; Nordeste 45% e Sudeste 44% das seções | 81.015 | 53,0 | 39,2 | 18,5 | 2,44 | 3,75 | 5,7 | -6,32 | -4,1 |
+| 3 | abstenção muito alta, nulos muito baixos, Flávio baixo; Sudeste 41% e Nordeste 19% das seções | 7.355 | 53,3 | 37,8 | 34,6 | 0,64 | 1,01 | 5,6 | -7,57 | -5,8 |
+| 4 | terceiros altos, brancos baixos, nulos baixos; Sudeste 38% e Centro-Oeste 21% das seções | 94.896 | 38,3 | 50,9 | 19,2 | 0,91 | 1,75 | 8,3 | -4,63 | -6,8 |
+| 5 | Lula baixo, Flávio alto, abstenção alta; Sudeste 57% das seções | 191.903 | 32,3 | 59,6 | 22,6 | 1,57 | 1,94 | 5,9 | -4,35 | -6,6 |
 
-V de Cramér entre grupo e região: 0,238; entre grupo e UF: 0,256.
+V de Cramér entre grupo e região: 0,414; entre grupo e UF: 0,451.
 
-Grupo mais anômalo: 4. Critério: soma dos postos de menor log-verossimilhança média e de maior dispersão (log-determinante da covariância); empate decidido pela menor log-verossimilhança média. Amostras: as 20 seções de menor log-verossimilhança dentro do componente.
+R² (%) entre seções:
 
-- POTIM (SP), zona 190, seção 154, PENITENCIÁRIA I DE POTIM: Lula 17, Flávio 3 de 22 válidos (24 aptos, 24 votantes, UE2015). Unidade prisional ou socioeducativa (inferido pelo cadastro do local); seção minúscula (24 votantes); 24 de 24 aptos em trânsito.
-- BAIÃO (PA), zona 35, seção 238, EMEF DE NOVO TESOURO: Lula 39, Flávio 10 de 49 válidos (51 aptos, 51 votantes, UE2020). Zona rural (inferido pelo cadastro do local); seção pequena (51 votantes).
-- SÃO FÉLIX DO XINGU (PA), zona 53, seção 266, UNIDADE DE CUSTÓDIA E REINSERÇÃO DE SÃO FÉLIX DO XINGU (UCRSFX): Lula 6, Flávio 13 de 20 válidos (21 aptos, 21 votantes, UE2022). Unidade prisional ou socioeducativa (inferido pelo cadastro do local); seção minúscula (21 votantes); 21 de 21 aptos em trânsito.
-- ARAÇATUBA (SP), zona 299, seção 229, UI/UIP-ARAÇÁ: Lula 19, Flávio 12 de 32 válidos (34 aptos, 34 votantes, UE2022). Unidade prisional ou socioeducativa (inferido pelo cadastro do local); seção minúscula (34 votantes); 34 de 34 aptos em trânsito.
-- MADRI (ZZ), zona 1, seção 1063, COLÉGIO BLANCA DE CASTILLA: Lula 43, Flávio 9 de 57 válidos (797 aptos, 58 votantes, UE2015). Exterior (inferido pelo cadastro do local); seção pequena (58 votantes).
-- PORTO SEGURO (BA), zona 121, seção 259, ESCOLA INDÍGENA PATAXÓ BOCA DA MATA: Lula 320, Flávio 1 de 322 válidos (365 aptos, 323 votantes, UE2020). Aldeia ou terra indígena (inferido pelo cadastro do local).
-- SÃO GABRIEL DA CACHOEIRA (AM), zona 19, seção 23, E. E. DE PARI-CACHOEIRA (YE PARÃ MAHSÃ BUERI WI): Lula 318, Flávio 2 de 323 válidos (429 aptos, 324 votantes, UE2022). Aldeia ou terra indígena (inferido pelo cadastro do local).
-- UIRAMUTÃ (RR), zona 7, seção 108, ESCOLA ESTADUAL JOAQUIM JONES JOSÉ INGARICÓ: Lula 131, Flávio 1 de 132 válidos (146 aptos, 133 votantes, UE2022). Sem regra estrutural acionada: comparar com ata e log da seção.
-- ATALAIA DO NORTE (AM), zona 42, seção 28, POLO BASE DE SAÚDE - ALDEIA SÃO SEBASTIÃO: Lula 126, Flávio 1 de 133 válidos (185 aptos, 134 votantes, UE2022). Aldeia ou terra indígena (inferido pelo cadastro do local).
-- PARIS (ZZ), zona 1, seção 810, ESPACE VINCI: Lula 123, Flávio 12 de 147 válidos (791 aptos, 148 votantes, UE2013). Exterior (inferido pelo cadastro do local).
-- WELLINGTON (ZZ), zona 1, seção 1691, EMBAIXADA DO BRASIL EM WELLINGTON: Lula 50, Flávio 22 de 83 válidos (699 aptos, 85 votantes, UE2013). Exterior (inferido pelo cadastro do local); seção pequena (85 votantes).
-- SÃO LUÍS (MA), zona 10, seção 844, PENITENCIÁRIA DE PEDRINHAS - TRIAGEM (ANT. CCPJ ANIL): Lula 150, Flávio 4 de 158 válidos (354 aptos, 163 votantes, UE2015). Unidade prisional ou socioeducativa (inferido pelo cadastro do local); 354 de 354 aptos em trânsito.
-- BOSTON (ZZ), zona 1, seção 3466, ST TARCISUS PARISH: Lula 12, Flávio 51 de 71 válidos (398 aptos, 73 votantes, UE2013). Exterior (inferido pelo cadastro do local); seção pequena (73 votantes); a zona inteira vota assim (Flávio 69,8% na zona).
-- BOSTON (ZZ), zona 1, seção 1225, ST TARCISUS PARISH: Lula 26, Flávio 103 de 133 válidos (781 aptos, 134 votantes, UE2013). Exterior (inferido pelo cadastro do local).
-- PARANATINGA (MT), zona 57, seção 31, ESCOLA MUNICIPAL CEREMECE SEREPSE -MARECHAL RONDON: Lula 186, Flávio 3 de 194 válidos (295 aptos, 196 votantes, UE2020). Aldeia ou terra indígena (inferido pelo cadastro do local).
-- BARCELONA (ZZ), zona 1, seção 1570, SEMINARI CONCILIAR DE BARCELONA: Lula 110, Flávio 27 de 151 válidos (797 aptos, 152 votantes, UE2015). Exterior (inferido pelo cadastro do local); a zona inteira vota assim (Lula 73,2% na zona).
-- LISBOA (ZZ), zona 1, seção 3457, UNIVERSIDADE DE LISBOA (REITORIA, FAC. DIREITO, FAC. LETRAS): Lula 45, Flávio 56 de 119 válidos (769 aptos, 121 votantes, UE2013). Exterior (inferido pelo cadastro do local).
-- SÃO GABRIEL DA CACHOEIRA (AM), zona 19, seção 12, E. E. DE TARACUÁ: Lula 183, Flávio 3 de 187 válidos (268 aptos, 188 votantes, UE2022). Aldeia ou terra indígena (inferido pelo cadastro do local).
-- WASHINGTON (ZZ), zona 1, seção 461, CAPITAL HILTON (HOTEL): Lula 53, Flávio 33 de 94 válidos (600 aptos, 95 votantes, UE2013). Exterior (inferido pelo cadastro do local); seção pequena (95 votantes); a zona inteira vota assim (Lula 51,4% na zona).
-- BARCELONA (ZZ), zona 1, seção 1566, SEMINARI CONCILIAR DE BARCELONA: Lula 113, Flávio 27 de 148 válidos (795 aptos, 153 votantes, UE2013). Exterior (inferido pelo cadastro do local); a zona inteira vota assim (Lula 73,2% na zona).
+| parte | região | zona | grupo | zona + grupo |
+|---|---|---|---|---|
+| lula | 54,3 | 83,5 | 63,0 | 85,9 |
+| flavio | 39,3 | 79,2 | 52,8 | 81,4 |
+| brancos | 10,7 | 31,4 | 32,1 | 47,8 |
+| nulos | 13,5 | 35,8 | 28,8 | 46,4 |
+| abstencao | 22,4 | 49,4 | 15,4 | 53,2 |
+| terceiros | 22,4 | 62,4 | 33,2 | 67,0 |
 
-### O que não deu certo: a versão de 15 partes
+Grupo mais anômalo: 3. Critério: soma dos postos de menor log-verossimilhança média e de maior dispersão (log-determinante da covariância); empate decidido pela menor log-verossimilhança média. Amostras: as 20 seções de menor log-verossimilhança dentro do componente.
+
+- RIO BRANCO (ZZ), zona 1, seção 384, VICE-CONSULADO DO BRASIL EM RIO BRANCO: Lula 7, Flávio 9 de 21 válidos (58 aptos, 23 votantes, sem modelo). Exterior (inferido pelo cadastro do local); seção minúscula (23 votantes); urna de contingência; sistema de apuração (5); a zona inteira vota assim (Flávio 42,9% na zona).
+- ÁGUAS BELAS (PE), zona 64, seção 139, UNIDADE BÁSICA DE SAÚDE - JOSÉ WELLINGTON: Lula 71, Flávio 13 de 90 válidos (257 aptos, 103 votantes, UE2015). Zona rural (inferido pelo cadastro do local).
+- SANTA VITÓRIA DO PALMAR (RS), zona 43, seção 21, EMEF BRASILINO PATELLA: Lula 18, Flávio 34 de 56 válidos (120 aptos, 60 votantes, UE2022). Seção pequena (60 votantes).
+- MELGAÇO (PA), zona 99, seção 17, EMEF BONIFÁCIO DO CARMO: Lula 36, Flávio 76 de 114 válidos (272 aptos, 124 votantes, UE2022). Zona rural (inferido pelo cadastro do local).
+- TÓQUIO (ZZ), zona 1, seção 1818, OIZUMI BUNKAMURA: Lula 48, Flávio 237 de 330 válidos (774 aptos, 362 votantes, UE2013). Exterior (inferido pelo cadastro do local); a zona inteira vota assim (Flávio 67,9% na zona).
+- PRUDENTÓPOLIS (PR), zona 30, seção 179, LAR DOS IDOSOS SÃO VICENTE DE PAULO: Lula 5, Flávio 14 de 21 válidos (59 aptos, 23 votantes, UE2022). Seção minúscula (23 votantes); a zona inteira vota assim (Flávio 71,4% na zona).
+- MUMBAI (ZZ), zona 1, seção 1340, CONSULADO-GERAL DO BRASIL EM MUMBAI, ÍNDIA: Lula 5, Flávio 1 de 11 válidos (55 aptos, 11 votantes, sem modelo). Exterior (inferido pelo cadastro do local); seção minúscula (11 votantes); urna de contingência; sistema de apuração (5); a zona inteira vota assim (Lula 45,5% na zona).
+- MAZAGÃO (AP), zona 5, seção 77, ESCOLA MUNICIPAL SÃO JOSÉ DO MARACÁ: Lula 80, Flávio 11 de 110 válidos (125 aptos, 111 votantes, UE2020). Zona rural (inferido pelo cadastro do local).
+- PETROLINA (PE), zona 145, seção 480, ESCOLA MUNICIPAL PROFESSOR WALTER GIL: Lula 32, Flávio 11 de 52 válidos (57 aptos, 52 votantes, UE2022). Seção pequena (52 votantes); a zona inteira vota assim (Lula 63,2% na zona).
+- NIQUELÂNDIA (GO), zona 41, seção 107, ESCOLA MUNICIPAL MULTIGRADUADA DOM BOSCO - UE-MUN: Lula 23, Flávio 56 de 105 válidos (190 aptos, 105 votantes, UE2015). Zona rural (inferido pelo cadastro do local).
+- GUARULHOS (SP), zona 185, seção 373, FUNDAÇÃO CASA GUAYI: Lula 11, Flávio 1 de 13 válidos (41 aptos, 14 votantes, UE2015). Unidade prisional ou socioeducativa (inferido pelo cadastro do local); seção minúscula (14 votantes); 41 de 41 aptos em trânsito.
+- BEIRUTE (ZZ), zona 1, seção 1366, VALE DO BEKAA (CONSULADO HONORÁRIO DO BRASIL): Lula 259, Flávio 45 de 320 válidos (786 aptos, 347 votantes, UE2013). Exterior (inferido pelo cadastro do local).
+- CASTELO DO PIAUÍ (PI), zona 34, seção 109, UNIDADE ESCOLAR FRANCISCA DE MORAIS: Lula 46, Flávio 10 de 70 válidos (100 aptos, 70 votantes, UE2020). Zona rural (inferido pelo cadastro do local); seção pequena (70 votantes); a zona inteira vota assim (Lula 69,3% na zona).
+- CACHOEIRO DE ITAPEMIRIM (ES), zona 48, seção 319, IASES - COMPLEXO DE CACHOEIRO DE ITAPEMIRIM (UNIP SUL E UNIS SUL): Lula 6, Flávio 14 de 26 válidos (44 aptos, 26 votantes, UE2020). Unidade prisional ou socioeducativa (inferido pelo cadastro do local); seção minúscula (26 votantes); 44 de 44 aptos em trânsito.
+- TÓQUIO (ZZ), zona 1, seção 1790, ARIAKE CENTRAL TOWER: Lula 70, Flávio 141 de 243 válidos (797 aptos, 274 votantes, UE2015). Exterior (inferido pelo cadastro do local); urna de reserva (seção).
+- CARAGUATATUBA (SP), zona 206, seção 340, CIDE TINGA - EMEF MARIA APARECIDA DE CARVALHO: Lula 36, Flávio 37 de 77 válidos (167 aptos, 84 votantes, UE2022). Seção pequena (84 votantes).
+- TERESINA (PI), zona 98, seção 427, COLÉGIO SÃO JUDAS TADEU: Lula 53, Flávio 34 de 105 válidos (110 aptos, 106 votantes, UE2022). Sem regra estrutural acionada: comparar com ata e log da seção.
+- JENIPAPO DE MINAS (MG), zona 177, seção 143, ESCOLA MUNICIPAL MESTRA CANDIDA: Lula 130, Flávio 23 de 157 válidos (384 aptos, 172 votantes, UE2020). Zona rural (inferido pelo cadastro do local).
+- FLORIANÓPOLIS (SC), zona 13, seção 614, UFSC - CENTRO TECNOLÓGICO - CTC: Lula 209, Flávio 70 de 341 válidos (384 aptos, 348 votantes, UE2022). Sem regra estrutural acionada: comparar com ata e log da seção.
+- TRINDADE (GO), zona 49, seção 286, ESCOLA SAO VICENTE DE PAULO - JD SALVADOR LC-PTC: Lula 41, Flávio 65 de 143 válidos (270 aptos, 147 votantes, UE2013). A zona inteira vota assim (Flávio 49,2% na zona).
+
+### O que não deu certo (1): 15 partes em log-razão
 
 A mesma mistura (k = 5) sobre 15 partes: as 12 candidaturas, brancos, nulos e abstenção, divididos pelos aptos; abandonada em 06/10/2026: os grupos saíram do padrão de zeros das candidaturas nanicas, não da geografia nem do perfil de voto.
 
@@ -208,17 +217,24 @@ A mesma mistura (k = 5) sobre 15 partes: as 12 candidaturas, brancos, nulos e ab
 - k = 4: BIC 423.201,8, log-verossimilhança média -0,4187
 - k = 5: BIC -6.378.213,9, log-verossimilhança média 6,4131
 
-### Sensibilidade: a mesma mistura (k = 5, 8 sementes) com zero trocado por meio voto, e não por 0,0001, antes de fechar a composição
+### O que não deu certo (2): cinco partes em log-razão
 
-V de Cramér entre grupo e região 0,392; entre grupo e UF 0,416.
+A mesma mistura (k = 5) sobre a log-razão centrada de lula, flávio, brancos, nulos e abstenção, com zero trocado por 0,0001; abandonada em 06/10/2026: na escala do log, brancos e nulos, poucos votos por seção, dominaram a mistura: zero e empate viraram grupos.
 
-- Grupo 1: Lula muito alto, Flávio baixo, terceiros baixos; Nordeste 84% das seções; 97.785 seções.
-- Grupo 2: nulos baixos, Lula alto, Flávio baixo; Nordeste 42% e Sudeste 17% das seções; 29.874 seções.
-- Grupo 3: brancos muito baixos, terceiros baixos; Nordeste 32% e Norte 23% das seções; 52.498 seções.
-- Grupo 4: brancos altos, Lula baixo, nulos altos; Sudeste 68% das seções; 181.827 seções.
-- Grupo 5: nulos baixos, Flávio alto, Lula baixo; Sudeste 40% e Sul 26% das seções; 135.906 seções.
+- Com as cinco partes em log-razão, brancos e nulos dominaram pela escala do log: com mediana de 4 brancos e 7 nulos por seção, dobrar os brancos pesa tanto quanto dobrar o voto em Lula. O primeiro eixo da projeção era o voto branco (carga 0,89, 54,5% da variância), não a disputa entre os finalistas. Três dos cinco grupos eram artefatos da contagem: sem voto branco, com 24.891 seções; mesmo número de brancos e de nulos, com 44.447 seções; sem voto nulo, com 5.202 seções. V de Cramér entre grupo e região: 0,24. Só 2 de 32 partidas chegaram ao mesmo máximo.
+- O EM convergiu nas 32 partidas (16 sementes, inicializações kmeans e k-means++, 10 partidas internas cada; critério do sklearn: variação da log-verossimilhança média abaixo de 0,0001, de 19 a 77 iterações). Refeita com tolerância 0,000001 e até 2.000 iterações, a melhor partida foi de 51 para 105 iterações e a log-verossimilhança média subiu 0,000688 por seção, mas a partição mudou (índice de Rand ajustado de 0,79 entre as duas): pelo critério declarado, o padrão parava cedo, e o ajuste publicado é o apertado. 2 de 32 partidas chegaram ao mesmo máximo, a 0,001 por seção (kmeans: 2 de 16; k-means++: 0 de 16). A partição escolhida é instável: índice de Rand ajustado médio de 0,78 contra as partidas que chegam ao máximo e de 0,18 contra as demais.
 
-Índice de Rand ajustado contra a partição principal: versão de 15 partes 0,018; zero trocado por meio voto 0,204.
+| grupo | rótulo | seções |
+|---|---|---|
+| 1 | sem voto branco; terceiros baixos, Lula alto, Flávio baixo; Nordeste 34% e Norte 28% das seções | 24.891 |
+| 2 | Lula alto, brancos baixos, Flávio baixo; Nordeste 46% e Sudeste 28% das seções | 225.669 |
+| 3 | mesmo número de brancos e de nulos; perto da média nacional; Sudeste 40% e Nordeste 21% das seções | 44.447 |
+| 4 | sem voto nulo; Flávio alto, Lula baixo; Sul 36% e Sudeste 18% das seções | 5.202 |
+| 5 | brancos altos, Lula baixo, Flávio alto; Sudeste 59% das seções | 197.681 |
+
+- k = 3: BIC 2.877.935,4, log-verossimilhança média -2,8896
+- k = 4: BIC 2.804.984,5, log-verossimilhança média -2,8161
+- k = 5: BIC 2.576.776,2, log-verossimilhança média -2,5867
 
 ## C. Modelo de urna
 
@@ -358,16 +374,17 @@ As quatro réguas da urna mais nova contra a mais velha dão a Flávio de −0,7
 - Comparecimento acima de 100% dos aptos: 0 seções; igual a 100%: 15.
 - Seções com 200 votantes ou mais e nenhum voto em Lula: 0; nenhum voto em Flávio: 17.
 - Das 2.441 seções com Lula em 90% ou mais que existem com o mesmo número e o mesmo local em 2022, 2.021 já davam 90% ou mais a ele no 1º turno de 2022 e 2.425 davam 80% ou mais; mediana de 2022: 93,3%.
-- O EM convergiu nas 32 partidas (16 sementes, inicializações kmeans e k-means++, 10 partidas internas cada; critério do sklearn: variação da log-verossimilhança média abaixo de 0,0001, de 19 a 77 iterações). Refeita com tolerância 0,000001 e até 2.000 iterações, a melhor partida foi de 51 para 105 iterações e a log-verossimilhança média subiu 0,000688 por seção, mas a partição mudou (índice de Rand ajustado de 0,79 entre as duas): pelo critério declarado, o padrão parava cedo, e o ajuste publicado é o apertado. 2 de 32 partidas chegaram ao mesmo máximo, a 0,001 por seção (kmeans: 2 de 16; k-means++: 0 de 16). A partição escolhida é instável: índice de Rand ajustado médio de 0,78 contra as partidas que chegam ao máximo e de 0,18 contra as demais.
+- O EM convergiu nas 32 partidas (16 sementes, inicializações kmeans e k-means++, uma partida cada, na amostra estratificada por UF de 150.000 seções; critério do sklearn: variação da log-verossimilhança média abaixo de 0,000001, de 115 a 417 iterações). A melhor partida foi refinada na base inteira, a partir dos parâmetros da amostra (índice de Rand ajustado de 0,96 entre as duas partições). Continuado a partir do ajuste escolhido, com tolerância 0,00000001 e até 5.000 iterações a mais, o EM rodou 66 iterações e a log-verossimilhança média subiu 0,000011 por seção, mas a partição mudou (índice de Rand ajustado de 0,98 entre as duas): pelo critério declarado, o ajuste anterior parava cedo, e o publicado é o apertado. 20 de 32 partidas chegaram ao mesmo máximo, a 0,001 por seção (kmeans: 12 de 16; k-means++: 8 de 16). A partição é estável no essencial: índice de Rand ajustado médio, contra a melhor delas, de 0,93 entre as partidas que chegam ao máximo, de 0,59 a 1,00; de 0,31 entre as demais.
 
 ## Inferido (leitura dos números)
 
 - As seções de 90% de Lula estão em zonas que já votam muito nele: mediana de 76,3% no resto da zona; o excesso típico da seção sobre a zona é de 17,1 pontos.
 - Locais com nome de aldeia ou escola indígena: 1.428 seções, 565 delas com Lula em 90% ou mais (39,6% do tipo, contra 0,74% no total).
 - Com as 15 partes, os cinco grupos não são geografia (V de Cramér entre grupo e região 0,21): separam as seções pelo padrão de zeros. 42,7% das células são zero e viram 0,0001; na seção mediana, de 327 aptos, um voto fica a 3,4 unidades de log do zero (de 3,2 a 3,8 entre o primeiro e o último décimo das seções), e a mistura usa esse degrau para separar grupos. O padrão que define cada grupo: grupo 1, sem voto nas cinco candidaturas menos votadas (100,0% das seções do grupo, contra 0,0% no grupo 2); grupo 2, sem voto em Romeu Zema (100,0% das seções do grupo, contra 0,0% no grupo 5); grupo 3, com voto em ao menos uma das sete candidaturas menos votadas (98,8% das seções do grupo, contra 15,1% no grupo 1); grupo 4, com voto em Samara (100,0% das seções do grupo, contra 0,0% no grupo 2); grupo 5, sem voto nas três candidaturas menos votadas (95,2% das seções do grupo, contra 48,2% no grupo 3).
-- Com as cinco partes, a associação entre grupo e região sobe pouco (V de Cramér de 0,24, contra 0,21 com as 15 partes; 0,26 com a UF) e fica abaixo de 0,3: cada grupo ainda mistura regiões.
-- Cinco partes não bastaram: três dos cinco grupos são artefatos da contagem inteira, não perfil de seção: o 1 (sem voto branco; 24.891 seções), o 3 (mesmo número de brancos e de nulos; 44.447 seções) e o 4 (sem voto nulo; 5.202 seções). Brancos e nulos são poucos votos por seção (mediana de 4 brancos e 7 nulos); no logaritmo, o zero vira um degrau de 3,5 unidades até o primeiro voto e o empate vira uma razão exata de 1, e a mistura gasta um componente em cada padrão. 1,34% das células são zero (5,31% das seções sem voto branco e 1,35% das seções sem voto nulo), e 8,93% das seções têm o mesmo número de brancos e de nulos.
-- Na projeção, o componente 1 (54,5% da variância) opõe brancos (carga 0,89) a Lula (−0,28); o componente 2 (27,5% da variância) opõe nulos (carga 0,79) a Flávio (−0,54). Os centros dos grupos se afastam mais no componente 1 (variância ponderada dos centros 1,01, contra 0,25 no outro). Um corte no componente 1 separa as seções sem voto branco (5,3% do total) com acerto balanceado de 100,0%. Um corte no componente 2 separa as seções sem voto nulo (1,3% do total) com acerto balanceado de 99,7%.
+- Com as cinco partes em log-razão, brancos e nulos dominaram pela escala do log: com mediana de 4 brancos e 7 nulos por seção, dobrar os brancos pesa tanto quanto dobrar o voto em Lula. O primeiro eixo da projeção era o voto branco (carga 0,89, 54,5% da variância), não a disputa entre os finalistas. Três dos cinco grupos eram artefatos da contagem: sem voto branco, com 24.891 seções; mesmo número de brancos e de nulos, com 44.447 seções; sem voto nulo, com 5.202 seções. V de Cramér entre grupo e região: 0,24. Só 2 de 32 partidas chegaram ao mesmo máximo.
+- Com as cinco proporções do eleitorado, sem log, os cinco grupos acompanham a geografia: V de Cramér entre grupo e região de 0,41, contra 0,21 com as 15 partes em log-razão e 0,24 com as cinco partes em log-razão, e de 0,45 com a UF.
+- Quanto da variação entre seções cada um explica (R²): Lula, 63% pelo grupo e 83% pela zona, que o grupo eleva a 86%; Flávio, 53% pelo grupo e 79% pela zona, que o grupo eleva a 81%; abstenção, 15% pelo grupo e 49% pela zona, que o grupo eleva a 53%; brancos, 32% pelo grupo e 31% pela zona, que o grupo eleva a 48%; nulos, 29% pelo grupo e 36% pela zona, que o grupo eleva a 46%. Na disputa entre os finalistas, a mistura não acrescenta ao mapa por zona: sabendo a zona, o grupo soma 2 pontos ao R² de Lula e 2 ao de Flávio. O que a mistura acrescenta está em brancos (+16 pontos) e nulos (+11 pontos), que variam dentro da zona.
+- Na projeção, o componente 1 (41,2% da variância) opõe Lula (carga 0,65) a Flávio (−0,65); o componente 2 (23,2% da variância) opõe brancos (carga 0,80) a Lula (−0,20). Os centros dos grupos se afastam mais no componente 1 (variância ponderada dos centros 1,26, contra 0,52 no outro).
 - Dentro da zona há diferença entre modelos separável de zero, o que não é efeito da urna enquanto a alocação dos modelos dentro da zona não for aleatória: na mesma zona, a urna mais nova dá a Flávio −0,73 ponto em relação à mais velha (IC 95% de −1,03 a −0,44, não contém o zero); sem o controle, −1,42; 531 zonas.
 - No mesmo prédio, a urna mais nova dá a Flávio 0,11 ponto em relação à mais velha (IC 95% de 0,02 a 0,20, não contém o zero); sem o controle, −0,52; 7.899 locais.
 - Com a linha de base da própria seção em 2022, na mesma zona, a urna mais nova dá a Flávio, sobre Bolsonaro, 0,22 ponto em relação à mais velha (IC 95% de 0,14 a 0,31, não contém o zero); sem o controle, 0,39; 443 zonas.
@@ -388,7 +405,7 @@ As quatro réguas da urna mais nova contra a mais velha dão a Flávio de −0,7
 ## O achado que contraria a tese
 
 - Quem espera achar seções novas de 90% encontra as velhas: 2.021 de 2.441 seções casadas de Lula já estavam acima de 90% em 2022.
-- Cinco partes não bastaram: três dos cinco grupos são artefatos da contagem inteira, não perfil de seção: o 1 (sem voto branco; 24.891 seções), o 3 (mesmo número de brancos e de nulos; 44.447 seções) e o 4 (sem voto nulo; 5.202 seções). Brancos e nulos são poucos votos por seção (mediana de 4 brancos e 7 nulos); no logaritmo, o zero vira um degrau de 3,5 unidades até o primeiro voto e o empate vira uma razão exata de 1, e a mistura gasta um componente em cada padrão. 1,34% das células são zero (5,31% das seções sem voto branco e 1,35% das seções sem voto nulo), e 8,93% das seções têm o mesmo número de brancos e de nulos.
+- Quanto da variação entre seções cada um explica (R²): Lula, 63% pelo grupo e 83% pela zona, que o grupo eleva a 86%; Flávio, 53% pelo grupo e 79% pela zona, que o grupo eleva a 81%; abstenção, 15% pelo grupo e 49% pela zona, que o grupo eleva a 53%; brancos, 32% pelo grupo e 31% pela zona, que o grupo eleva a 48%; nulos, 29% pelo grupo e 36% pela zona, que o grupo eleva a 46%. Na disputa entre os finalistas, a mistura não acrescenta ao mapa por zona: sabendo a zona, o grupo soma 2 pontos ao R² de Lula e 2 ao de Flávio. O que a mistura acrescenta está em brancos (+16 pontos) e nulos (+11 pontos), que variam dentro da zona.
 - Dentro da zona há diferença entre modelos separável de zero, o que não é efeito da urna enquanto a alocação dos modelos dentro da zona não for aleatória: na mesma zona, a urna mais nova dá a Flávio −0,73 ponto em relação à mais velha (IC 95% de −1,03 a −0,44, não contém o zero); sem o controle, −1,42; 531 zonas.
 
 ## Limites
@@ -399,7 +416,7 @@ As quatro réguas da urna mais nova contra a mais velha dão a Flávio de −0,7
 - O modelo da urna vem do log da própria urna; urna de reserva ou contingência aparece com o modelo da urna que gravou o boletim.
 - A comparação com 2022 casa a seção pelo número e pelo nome do local; seção renumerada ou local trocado fica de fora.
 - Seções pequenas inflam percentuais: 100% de 30 válidos não é o mesmo que 100% de 300. Por isso os cortes por tamanho e o corte de 100 votantes.
-- A mistura gaussiana usa só Lula, Flávio, brancos, nulos e abstenção, em composição fechada: o voto em terceiros fica fora das partes, e o zero continua trocado por 0,0001. A versão com as 15 partes foi abandonada porque separava as seções pelo padrão de zeros das candidaturas nanicas.
+- A mistura gaussiana usa as proporções do eleitorado de Lula, Flávio, brancos, nulos e abstenção, padronizadas e sem log; o voto em terceiros fica implícito. As duas tentativas em log-razão foram abandonadas: com 15 partes, os grupos eram o padrão de zeros das nanicas; com cinco, o zero e o empate de brancos e nulos.
 - Benford e último dígito são curiosidade metodológica, não teste de fraude.
 
 ## Reprodução
