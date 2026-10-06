@@ -16,7 +16,8 @@ script o parseia num `<template>` e o insere no lugar da espera quando a figura
 chega a 1.000 px da janela (IntersectionObserver), quando a âncora do capítulo ou
 da figura é aberta (`hashchange` e na carga), quando um `<details>` que a contém
 abre, ou antes de imprimir (`beforeprint`, que os auditores também disparam).
-Navegador sem IntersectionObserver materializa tudo na carga.
+Navegador sem IntersectionObserver materializa tudo na carga. Ao materializar, a
+figura recebe o evento `fig:pronta` (o mapa navegável do capítulo 13 se monta nele).
 """
 
 from __future__ import annotations
@@ -144,7 +145,8 @@ function monta(fig){
     if(!svgNear.contains(ev.target))return false;
     var m=svgNear.getScreenCTM();if(!m)return false;
     var pt=svgNear.createSVGPoint();pt.x=ev.clientX;pt.y=ev.clientY;
-    var p=pt.matrixTransform(m.inverse()),best=-1,bd=196;
+    var p=pt.matrixTransform(m.inverse()),best=-1,bd=196,u=1;
+    if(svgNear.classList.contains('fz-svg')){u=svgNear.viewBox.baseVal.width/(svgNear.getBoundingClientRect().width||1);bd=196*u*u;}
     for(var i=0;i<rows.xy.length;i++){
       if(filtro!==''&&rows.g&&String(rows.g[i])!==filtro)continue;
       var dx=rows.xy[i][0]-p.x,dy=rows.xy[i][1]-p.y,dd=dx*dx+dy*dy;
@@ -153,7 +155,7 @@ function monta(fig){
     if(best<0)return false;
     var xy=rows.xy[best];
     halo.setAttribute('cx',xy[0]);halo.setAttribute('cy',xy[1]);
-    halo.setAttribute('r',Math.max(6,(xy[2]||4)+3));halo.removeAttribute('display');
+    halo.setAttribute('r',Math.max(6,(xy[2]||4)+3)*u);halo.removeAttribute('display');
     abre(halo,'r'+best,ev.clientX,ev.clientY);
     return true;
   }
@@ -228,6 +230,7 @@ function materializa(fig){
   }
   fig.removeAttribute('data-adiada');fig.classList.remove('fig-adiada');
   monta(fig);prepara(fig);
+  fig.dispatchEvent(new CustomEvent('fig:pronta',{bubbles:true}));
   if(antes!==null&&Math.abs(topoDoc(ancora.alvo)-antes)>1){ancora.alvo.scrollIntoView({block:'start',behavior:'instant'});}
 }
 function materializaTodas(raiz){q(raiz||document,'figure[data-adiada]').forEach(materializa);}
