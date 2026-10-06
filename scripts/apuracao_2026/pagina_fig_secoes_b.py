@@ -9,6 +9,8 @@ Lista vazia vira a frase "nenhuma seção nesta condição" dentro do painel.
 
 from __future__ import annotations
 
+from collections.abc import Callable
+from datetime import datetime, timedelta
 from html import escape
 
 from .pagina_comum import NOME_UF, inteiro, num
@@ -37,9 +39,12 @@ from .pagina_fig_base import (
     sobre,
     svg_abre,
     t,
+    ticks,
 )
 from .pagina_fig_secoes import (
+    CLUSTER_COR,
     OURO,
+    larg_texto,
     nota_cobertura,
     regiao_da_uf,
     rotulo_cluster,
@@ -65,6 +70,23 @@ def _rampa(n: int) -> list[str]:
 # ------------------------------------------------------------------ 5 clusters_regiao
 
 
+ESTILO_CL_REGIAO = (
+    "<style>#fig-clusters_regiao .clr-g{margin:0 0 18px}"
+    "#fig-clusters_regiao .clr-g h4{display:flex;align-items:center;gap:8px;margin:0 0 6px;"
+    "font:700 15px/1.4 var(--sans)}"
+    "#fig-clusters_regiao .clr-g h4 span{font:400 13px/1.4 var(--sans);color:var(--muted)}"
+    "#fig-clusters_regiao .clr-g .sw{display:inline-block;width:12px;height:12px;"
+    "border:1px solid #9a9c94;flex:none}"
+    "#fig-clusters_regiao .clr-barra{display:flex;height:26px;border:1px solid var(--line)}"
+    "#fig-clusters_regiao .clr-barra>span{display:block;height:100%}"
+    "#fig-clusters_regiao .clr-g ul{list-style:none;display:flex;flex-wrap:wrap;gap:2px 14px;"
+    "padding:0;margin:6px 0 0;font:13px/1.5 var(--sans)}"
+    "#fig-clusters_regiao .clr-g li{margin:0}"
+    "#fig-clusters_regiao .clr-g li i{display:inline-block;width:10px;height:10px;"
+    "margin-right:5px;vertical-align:-1px}</style>"
+)
+
+
 @registra("clusters_regiao")
 def clusters_regiao(d, **_op) -> str:
     S = secoes(d)
@@ -72,9 +94,15 @@ def clusters_regiao(d, **_op) -> str:
     linhas = C["cluster_regiao"]
     ids = sorted({x["cluster"] for x in linhas})
     regs = [*REGIOES, "Exterior"]
+    nomes = {k: f"Grupo {k + 1}" for k in ids}
+    descr = {k: rotulo_cluster(S, k) for k in ids}
+    n_sec = {c["id"]: c["secoes"] for c in C["componentes"]}
     w = 1100
     h = 40 + 52 * len(ids) + 20
-    x0, x1 = 330, 1080
+    xs, tam = 20, 14
+    # margem esquerda reservada pelo maior rótulo de linha (quadrado + texto + folga)
+    x0 = xs + 20 + max(larg_texto(n, tam, True) for n in nomes.values()) + 24
+    x1 = 1080
     out = [
         svg_abre(
             w,
@@ -82,30 +110,35 @@ def clusters_regiao(d, **_op) -> str:
             "Composição regional de cada grupo de seções",
             "Uma barra por grupo da mistura gaussiana, dividida pela região das seções que o compõem.",
         ),
-        t(20, 26, "Grupo", 13, MUTED, weight="600"),
+        t(xs, 26, "Grupo", 13, MUTED, weight="600"),
         t(x0, 26, "Parte das seções do grupo, por região", 13, MUTED, weight="600"),
     ]
     tips = Tips()
+    estreito = [ESTILO_CL_REGIAO]
     y = 40
     for k in ids:
-        out.append(t(20, y + 27, rotulo_cluster(S, k), 14, INK, weight="600"))
+        cor_g = CLUSTER_COR[k % len(CLUSTER_COR)]
+        out.append(r(xs, y + 16, 13, 13, cor_g, f' stroke="{INK}" stroke-width="0.6"'))
+        out.append(t(xs + 20, y + 28, nomes[k], tam, INK, weight="700"))
         cx = float(x0)
         partes = sorted(
             (x for x in linhas if x["cluster"] == k),
             key=lambda x: regs.index(x["regiao"]) if x["regiao"] in regs else 9,
         )
+        segs, itens = [], []
         for x in partes:
             larg = (x1 - x0) * (x["pct_do_cluster"] or 0) / 100
             cor = COR_REGIAO.get(x["regiao"], MUTED)
             chave = tips.add(
                 ficha(
-                    f"{rotulo_cluster(S, k)}: {x['regiao']}",
+                    f"{nomes[k]}: {x['regiao']}",
                     "",
                     [
                         ("Seções", inteiro(x["secoes"])),
                         ("Parte do grupo", pct(x["pct_do_cluster"], 1)),
                         ("Parte das seções da região", pct(x["pct_da_regiao"], 1)),
                     ],
+                    descr[k],
                 )
             )
             out.append(
@@ -114,28 +147,46 @@ def clusters_regiao(d, **_op) -> str:
                     chave,
                 )
             )
-            if larg > 96:
+            rot = f"{x['regiao']} {num(x['pct_do_cluster'], 0)}%"
+            if larg >= larg_texto(rot, 13, True) + 12:
                 out.append(
                     t(
                         cx + 6,
                         y + 28,
-                        f"{x['regiao']} {num(x['pct_do_cluster'], 0)}%",
+                        rot,
                         13,
                         sobre(cor),
                         weight="600",
                         extra=' pointer-events="none"',
                     )
                 )
+            segs.append(
+                f'<span class="hit" data-k="{chave}" style="width:{x["pct_do_cluster"] or 0:.2f}%;'
+                f'background:{cor}"></span>'
+            )
+            itens.append(f'<li><i style="background:{cor}"></i>{escape(rot)}</li>')
             cx += larg
+        estreito.append(
+            f'<div class="clr-g"><h4><i class="sw" style="background:{cor_g}"></i>'
+            f"{escape(nomes[k])}<span>{inteiro(n_sec.get(k))} seções</span></h4>"
+            f'<div class="clr-barra">{"".join(segs)}</div><ul>{"".join(itens)}</ul></div>'
+        )
         y += 52
     out.append("</svg>")
+    corpo = (
+        f'<div class="fig-larga">{"".join(out)}</div>'
+        f'<div class="fig-estreita">{"".join(estreito)}</div>'
+    )
     presentes = [rg for rg in regs if any(x["regiao"] == rg for x in linhas)]
-    leg = legenda_html([(rg, COR_REGIAO[rg]) for rg in presentes], "Região")
+    leg = legenda_html(
+        [(rg, COR_REGIAO[rg]) for rg in presentes], "Região (cor da barra)"
+    ) + legenda_html(
+        [(descr[k], CLUSTER_COR[k % len(CLUSTER_COR)]) for k in ids],
+        "Grupos (a cor do quadrado é a da projeção acima)",
+    )
     interp = (C.get("interpretacao") or [""])[0]
     legenda = f"{escape(interp)} Cada barra soma 100% das seções do grupo. {nota_cobertura(S)} Fonte: secoes.json."
-    return figura_html(
-        "clusters_regiao", "".join(out), legenda, tips, minw=820, apos=leg
-    )
+    return figura_html("clusters_regiao", corpo, legenda, tips, minw=640, apos=leg)
 
 
 # ------------------------------------------------------------------ 6 modelo_urna_uf
@@ -462,22 +513,81 @@ def _hora_rot(h) -> str:
     return f"{hh}h" + (" (05/10)" if h[:10].endswith("-05") else "")
 
 
+def _qtd(v: float) -> str:
+    """Rótulo curto de contagem para eixo: '200 mil', '1,2 mi', '40'."""
+    if v >= 1_000_000:
+        return f"{num(v / 1_000_000, 1)} mi"
+    if v >= 1_000:
+        return f"{num(v / 1_000, 0)} mil"
+    return inteiro(v)
+
+
+def _eixo_qtd(
+    ax0: float, ax1: float, y0: float, y1: float, vmax: float
+) -> tuple[str, Callable[[float], float]]:
+    """Eixo esquerdo de seções com três valores e grade leve; devolve a escala."""
+    marcas = ticks(0, vmax, 3)
+    topo = max(marcas[-1], vmax)
+    Y = escala(0, topo, y1, y0)
+    out = []
+    for v in marcas:
+        out.append(ln(ax0, Y(v), ax1, Y(v), GRADE, 0.8))
+        out.append(t(ax0 - 6, Y(v) + 4, _qtd(v), 13, MUTED, "end", mono=True))
+    return "".join(out), Y
+
+
+def _horas(rotulos: list[str]) -> tuple[list[int], int]:
+    """Posição contínua de cada hora (horas desde a primeira) e o total de casas."""
+
+    def h(x: str) -> datetime:
+        x = str(x)
+        return (
+            datetime.strptime(x, "%Y-%m-%d %H")
+            if len(x) > 2
+            else datetime(2026, 10, 4, int(x))
+        )
+
+    t0 = h(rotulos[0])
+    pos = [round((h(x) - t0).total_seconds() / 3600) for x in rotulos]
+    return pos, pos[-1] + 1
+
+
+def _rotulo_hora(t0: str, i: int) -> str:
+    base = (
+        datetime.strptime(str(t0), "%Y-%m-%d %H")
+        if len(str(t0)) > 2
+        else datetime(2026, 10, 4, int(t0))
+    )
+    return f"{(base + timedelta(hours=i)).hour:02d}h"
+
+
 def _painel_recebimento(OD: dict, px: float, py: float, tips: Tips) -> str:
     rec = OD["recebimento"]["por_hora"]
     out = [
         t(px, py + 18, "Seções recebidas por hora", 14, INK, weight="700"),
-        t(px, py + 36, "barras: seções; pontos: Lula, % dos válidos", 13, MUTED),
+        t(
+            px,
+            py + 36,
+            "barras: seções (eixo à esquerda); linha: Lula, % dos válidos (à direita)",
+            13,
+            MUTED,
+        ),
     ]
     if not rec:
         return "".join(out) + _vazio(px, py)
-    vmax = max(x["secoes"] for x in rec) or 1
+    ax0, ax1 = px + 62, px + PW - 38
     y0, y1 = py + 60, py + PH - 30
-    bw = PW / len(rec)
-    Y = escala(0, vmax, y1, y0)
+    eixo, Y = _eixo_qtd(ax0, ax1, y0, y1, max(x["secoes"] for x in rec) or 1)
+    out.append(eixo)
     Yp = escala(0, 100, y1, y0)
-    pts = []
-    for i, x in enumerate(rec):
-        bx = px + i * bw
+    for v in (0, 50, 100):
+        out.append(t(ax1 + 5, Yp(v) + 4, f"{v}%", 13, LULA, mono=True))
+    pos, casas = _horas([x["hora"] for x in rec])
+    bw = (ax1 - ax0) / casas
+    trechos: list[list[tuple[float, float]]] = []
+    anterior = None
+    for i, x in zip(pos, rec, strict=True):
+        bx = ax0 + i * bw
         k = tips.add(
             ficha(
                 f"Recebidas às {_hora_rot(x['hora'])}",
@@ -498,31 +608,37 @@ def _painel_recebimento(OD: dict, px: float, py: float, tips: Tips) -> str:
             )
         )
         if x.get("lula_pct") is not None:
-            pts.append((bx + bw / 2, Yp(x["lula_pct"])))
-        if len(rec) <= 12 or i % 2 == 0:
-            out.append(
-                t(
-                    bx + bw / 2,
-                    y1 + 18,
-                    _hora_rot(x["hora"])[:3],
-                    13,
-                    MUTED,
-                    "middle",
-                    mono=True,
-                )
-            )
-    if pts:
+            # hora sem boletim interrompe a linha: não se liga o que não existe
+            if anterior is None or i != anterior + 1:
+                trechos.append([])
+            trechos[-1].append((bx + bw / 2, Yp(x["lula_pct"])))
+            anterior = i
+    passo = max(1, -(-casas // 8))
+    for i in range(0, casas, passo):
         out.append(
-            f'<polyline points="{" ".join(f"{a:.1f},{b:.1f}" for a, b in pts)}" fill="none" stroke="{LULA}" '
-            'stroke-width="1.8" pointer-events="none"/>'
+            t(
+                ax0 + (i + 0.5) * bw,
+                y1 + 18,
+                _rotulo_hora(rec[0]["hora"], i),
+                13,
+                MUTED,
+                "middle",
+                mono=True,
+            )
         )
+    for tr in trechos:
+        if len(tr) > 1:
+            out.append(
+                f'<polyline points="{" ".join(f"{a:.1f},{b:.1f}" for a, b in tr)}" fill="none" stroke="{LULA}" '
+                'stroke-width="1.8" pointer-events="none"/>'
+            )
         out.append(
             "".join(
                 f'<circle cx="{a:.1f}" cy="{b:.1f}" r="3" fill="{LULA}" pointer-events="none"/>'
-                for a, b in pts
+                for a, b in tr
             )
         )
-    out.append(ln(px, y1, px + PW, y1, INK))
+    out.append(ln(ax0, y1, ax1, y1, INK))
     return "".join(out)
 
 
@@ -531,17 +647,19 @@ def _painel_encerramento(OD: dict, px: float, py: float, tips: Tips) -> str:
     hist = H.get("histograma_encerramento") or []
     out = [
         t(px, py + 18, "Hora de encerramento da urna", 14, INK, weight="700"),
-        t(px, py + 36, "hora de Brasília", 13, MUTED),
+        t(px, py + 36, "seções por hora, hora de Brasília", 13, MUTED),
     ]
     if not hist:
         return "".join(out) + _vazio(px, py)
-    vmax = max(x["secoes"] for x in hist) or 1
+    ax0, ax1 = px + 62, px + PW - 10
     y0, y1 = py + 60, py + PH - 30
-    bw = PW / len(hist)
-    Y = escala(0, vmax, y1, y0)
+    eixo, Y = _eixo_qtd(ax0, ax1, y0, y1, max(x["secoes"] for x in hist) or 1)
+    out.append(eixo)
+    pos, casas = _horas([x["hora"] for x in hist])
+    bw = (ax1 - ax0) / casas
     enc = H.get("encerramento") or {}
-    for i, x in enumerate(hist):
-        bx = px + i * bw
+    for i, x in zip(pos, hist, strict=True):
+        bx = ax0 + i * bw
         k = tips.add(
             ficha(
                 f"Encerradas às {_hora_rot(x['hora'])}",
@@ -561,19 +679,20 @@ def _painel_encerramento(OD: dict, px: float, py: float, tips: Tips) -> str:
                 k,
             )
         )
-        if len(hist) <= 14 or i % 2 == 0:
-            out.append(
-                t(
-                    bx + bw / 2,
-                    y1 + 18,
-                    _hora_rot(x["hora"])[:3],
-                    13,
-                    MUTED,
-                    "middle",
-                    mono=True,
-                )
+    passo = max(1, -(-casas // 8))
+    for i in range(0, casas, passo):
+        out.append(
+            t(
+                ax0 + (i + 0.5) * bw,
+                y1 + 18,
+                _rotulo_hora(hist[0]["hora"], i),
+                13,
+                MUTED,
+                "middle",
+                mono=True,
             )
-    out.append(ln(px, y1, px + PW, y1, INK))
+        )
+    out.append(ln(ax0, y1, ax1, y1, INK))
     return "".join(out)
 
 

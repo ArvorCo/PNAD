@@ -490,6 +490,15 @@ def secoes_excesso(d, **_op) -> str:
 # ------------------------------------------------------------------ 3 secoes_tamanho_tipo
 
 
+BARRA_X1 = 900
+BARRA_ROT_X = 30
+
+
+def _altura_barras(n: int) -> float:
+    """Altura de uma aba: cabeçalho, 46 px por grupo e espaço para as médias."""
+    return 52 + 46 * n + 64
+
+
 def _grupo_barras(
     linhas: list[dict],
     chave_rot: str,
@@ -498,8 +507,9 @@ def _grupo_barras(
     tips: Tips,
     titulo_ficha: str,
     medias: tuple[float | None, float | None],
+    x0: float,
 ) -> str:
-    x0, x1 = 250, 900
+    x1 = BARRA_X1
     vmax = max(
         [
             *(ln_[k_l] or 0 for ln_ in linhas),
@@ -515,7 +525,7 @@ def _grupo_barras(
         out.append(t(X(v), 32, f"{num(v, 1)}%", 13, MUTED, "middle", mono=True))
     y = 52
     for L in linhas:
-        out.append(t(30, y + 26, str(L[chave_rot]), 14, INK, weight="600"))
+        out.append(t(BARRA_ROT_X, y + 26, str(L[chave_rot]), 14, INK, weight="600"))
         k = tips.add(
             ficha(
                 f"{titulo_ficha} {L[chave_rot]}",
@@ -548,6 +558,26 @@ def _grupo_barras(
     return "".join(out)
 
 
+ABAS_TAMANHO = (
+    ("tamanho", "Por votantes", "faixa", "lula_90_pct", "flavio_90_pct", "Seções com votantes na faixa"),
+    ("tipo", "Por tipo de local", "tipo", "lula_90_pct_do_tipo", "flavio_90_pct_do_tipo", "Local do tipo"),
+    ("modelo", "Por modelo de urna", "modelo", "lula_90_pct_do_modelo", "flavio_90_pct_do_modelo", "Urna"),
+)  # fmt: skip
+
+
+def _estilo_altura_abas(nome: str, w: float, alturas: dict[str, float]) -> str:
+    """Altura própria por aba sem trocar o viewBox: o SVG usa a altura da maior aba
+    com `preserveAspectRatio="xMidYMin slice"`, e o CSS dá a cada aba a proporção
+    dela pelo botão ativo (`aria-pressed`), cortando só o vazio de baixo. Funciona
+    sem script, porque a aba padrão já vem com `aria-pressed="true"`."""
+    regras = "".join(
+        f'#fig-{nome}:has(button[data-alt="{aba}"][aria-pressed="true"]) svg.fig'
+        f"{{aspect-ratio:{w:.0f}/{h:.0f}}}"
+        for aba, h in alturas.items()
+    )
+    return f"<style>{regras}</style>"
+
+
 @registra("secoes_tamanho_tipo")
 def secoes_tamanho_tipo(d, **_op) -> str:
     S = secoes(d)
@@ -558,43 +588,45 @@ def secoes_tamanho_tipo(d, **_op) -> str:
         (res.get(("flavio", 90)) or {}).get("pct_das_secoes"),
     )
     tips = Tips()
-    tam = E["tamanho"]["linhas"]
-    tipo = E["tipo_local"]["linhas"]
-    mod = E["modelo_urna"]
-    n = max(len(tam), len(tipo), len(mod))
-    w, h = 1100, 52 + 46 * n + 64
+    dados = {
+        "tamanho": E["tamanho"]["linhas"],
+        "tipo": E["tipo_local"]["linhas"],
+        "modelo": E["modelo_urna"],
+    }
+    # margem esquerda reservada pelo maior rótulo de todas as abas
+    rotulos = [str(L[rot]) for aba, _, rot, *_ in ABAS_TAMANHO for L in dados[aba]]
+    x0 = BARRA_ROT_X + max(larg_texto(s, 14, True) for s in rotulos) + 20
+    alturas = {aba: _altura_barras(len(dados[aba])) for aba, *_ in ABAS_TAMANHO}
+    w, h = 1100, max(alturas.values())
     out = [
         svg_abre(
             w,
             h,
             "Parcela de seções com 90% ou mais por tamanho, tipo de local e modelo de urna",
             "Em cada grupo, a parte das seções em que Lula ou Flávio passou de 90% dos válidos; linhas tracejadas, a média do país.",
-        ),
-        f'<g data-alt-show="tamanho">{_grupo_barras(tam, "faixa", "lula_90_pct", "flavio_90_pct", tips, "Seções com votantes na faixa", medias)}</g>',
-        f'<g data-alt-show="tipo" display="none">{_grupo_barras(tipo, "tipo", "lula_90_pct_do_tipo", "flavio_90_pct_do_tipo", tips, "Local do tipo", medias)}</g>',
-        f'<g data-alt-show="modelo" display="none">{_grupo_barras(mod, "modelo", "lula_90_pct_do_modelo", "flavio_90_pct_do_modelo", tips, "Urna", medias)}</g>',
-        "</svg>",
+            ' preserveAspectRatio="xMidYMin slice"',
+        )
     ]
+    for i, (aba, _, rot, k_l, k_f, tit) in enumerate(ABAS_TAMANHO):
+        oculto = "" if i == 0 else ' display="none"'
+        corpo = _grupo_barras(dados[aba], rot, k_l, k_f, tips, tit, medias, x0)
+        out.append(f'<g data-alt-show="{aba}"{oculto}>{corpo}</g>')
+    out.append("</svg>")
     ctl = botoes(
-        [
-            ("tamanho", "Por votantes"),
-            ("tipo", "Por tipo de local"),
-            ("modelo", "Por modelo de urna"),
-        ],
-        "tamanho",
-        "Agrupar",
+        [(aba, nome) for aba, nome, *_ in ABAS_TAMANHO], ABAS_TAMANHO[0][0], "Agrupar"
     )
+    aviso = (E["tipo_local"].get("aviso") or "").strip()
     legenda = (
         "Parte das seções de cada grupo em que Lula (vermelho) ou Flávio (azul) teve 90% dos válidos ou mais; a linha "
-        "tracejada é a parte no total. Seção pequena produz percentual extremo com poucos eleitores. O tipo de local é "
-        f"inferido pelo nome ({escape(E['tipo_local'].get('aviso', ''))}). {nota_cobertura(S)} Fonte: secoes.json."
+        "tracejada é a parte no total. Seção pequena produz percentual extremo com poucos eleitores. "
+        f"{escape(aviso)}{'' if not aviso or aviso.endswith('.') else '.'} {nota_cobertura(S)} Fonte: secoes.json."
     )
     leg = legenda_html(
         [("Lula com 90% ou mais", LULA), ("Flávio com 90% ou mais", FLAVIO)]
     )
     return figura_html(
         "secoes_tamanho_tipo",
-        "".join(out),
+        _estilo_altura_abas("secoes_tamanho_tipo", w, alturas) + "".join(out),
         legenda,
         tips,
         controles=ctl,

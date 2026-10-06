@@ -3,6 +3,7 @@
 import importlib.util
 import json
 import re
+from itertools import pairwise
 from pathlib import Path
 
 import pytest
@@ -73,7 +74,8 @@ def test_contrato_da_figura(html, nome):
     h = html[nome]
     assert re.match(ABERTURA.format(nome=nome), h)
     assert "pendente" not in h[:80]
-    assert h.count("<svg") == 1
+    # versão empilhada de celular (`larga_estreita`) é o segundo e último SVG
+    assert 1 <= h.count("<svg") <= 1 + h.count('class="fig-estreita"')
     assert "<title>" in h and "<desc>" in h
     assert "<figcaption>" in h
     assert "—" not in h
@@ -247,3 +249,117 @@ def test_clusters_alterna_por_regiao():
     assert 'data-as="regiao>' in h and 'data-af="regiao>' in h
     assert 'data-alt="regiao"' in h
     assert h.count("<tr>") >= 21  # cabeçalho e as 20 amostras do grupo mais atípico
+
+
+def test_clusters_secoes_tres_cores():
+    h = FIGURAS["clusters_secoes"]({"secoes": _fixture()})
+    assert "Três grupos de seções" in h
+    assert "Os três grupos" in h
+    tracos = set(re.findall(r'<path d="[^"]*" stroke="(#[0-9a-f]{6})" data-as=', h))
+    assert tracos <= {"#1457aa", "#b02f21", "#7d5b00"}
+    assert len(tracos) == 3
+
+
+def test_clusters_regiao_rotulo_curto_e_margem_reservada():
+    S = _fixture()
+    h = FIGURAS["clusters_regiao"]({"secoes": S})
+    svg = h[h.index("<svg") : h.index("</svg>")]
+    textos = re.findall(r"<text ([^>]*)>([^<]*)</text>", svg)
+    linhas = [(a, s) for a, s in textos if s.startswith("Grupo ")]
+    ids = sorted(c["id"] for c in S["clusters"]["componentes"])
+    assert [s for _, s in linhas] == [f"Grupo {k + 1}" for k in ids]
+    barras = re.findall(
+        r'<rect x="([0-9.]+)" y="[0-9.]+" width="[0-9.]+" height="34\.0"', svg
+    )
+    x0 = min(float(x) for x in barras)
+    for attrs, s in linhas:
+        x = float(re.search(r'x="([0-9.]+)"', attrs).group(1))
+        assert x + 0.6 * 14 * len(s) < x0, s
+    # a descrição longa sai do SVG e vai para a ficha e a legenda
+    for c in S["clusters"]["componentes"]:
+        assert c["rotulo"] not in svg
+        assert c["rotulo"] in h.split("</svg>", 1)[1]
+    assert 'class="fig-larga"' in h and 'class="fig-estreita"' in h
+    estreita = h.split('class="fig-estreita"', 1)[1]
+    assert estreita.count('class="clr-g"') == len(ids)
+    assert "<svg" not in estreita
+
+
+def test_clusters_regiao_texto_cabe_no_segmento():
+    h = FIGURAS["clusters_regiao"]({"secoes": _fixture()})
+    svg = h[h.index("<svg") : h.index("</svg>")]
+    segs = [
+        (float(x), float(y), float(w))
+        for x, y, w in re.findall(
+            r'<rect x="([0-9.]+)" y="([0-9.]+)" width="([0-9.]+)" height="34\.0"', svg
+        )
+    ]
+    achados = re.findall(
+        r'<text x="([0-9.]+)" y="([0-9.]+)" font-size="13"[^>]*pointer-events="none">([^<]*)</text>',
+        svg,
+    )
+    assert achados
+    for x, y, s in achados:
+        xt, yt = float(x), float(y)
+        seg = next(
+            sg
+            for sg in segs
+            if abs(sg[0] - (xt - 6)) < 0.2 and abs(sg[1] - (yt - 22)) < 0.2
+        )
+        assert 6 + 0.6 * 13 * len(s) <= seg[2], s
+
+
+def test_modelo_urna_zona_sem_registro():
+    h = FIGURAS["modelo_urna_zona"]({"secoes": _fixture()})
+    assert "Registro" not in h
+
+
+def test_secoes_outras_horas_continuas_e_eixos():
+    S = _fixture()
+    h = FIGURAS["secoes_outras"]({"secoes": S})
+    svg = h[h.index("<svg") : h.index("</svg>")]
+    rec = S["outras"]["recebimento"]["por_hora"]
+    if rec:
+        # eixo direito da linha de Lula com três valores
+        for v in ("0%", "50%", "100%"):
+            assert re.search(rf'fill="#b02f21"[^>]*>{v}</text>', svg), v
+        # rótulos de hora em passo constante, sem salto escondido
+        horas = [
+            int(x[:2])
+            for x in re.findall(
+                r">(\d\dh)</text>", svg[: svg.index("Hora de encerramento")]
+            )
+        ]
+        passos = {(b - a) % 24 for a, b in pairwise(horas)}
+        assert len(passos) == 1, horas
+    assert " mil</text>" in svg or re.search(r">\d+</text>", svg)
+
+
+def test_secoes_tamanho_tipo_altura_por_aba_e_margem():
+    S = _fixture()
+    h = FIGURAS["secoes_tamanho_tipo"]({"secoes": S})
+    assert 'preserveAspectRatio="xMidYMin slice"' in h
+    E = S["extremos"]
+    for aba, n in (
+        ("tamanho", len(E["tamanho"]["linhas"])),
+        ("tipo", len(E["tipo_local"]["linhas"])),
+        ("modelo", len(E["modelo_urna"])),
+    ):
+        assert (
+            f':has(button[data-alt="{aba}"][aria-pressed="true"]) svg.fig'
+            f"{{aspect-ratio:1100/{52 + 46 * n + 64}}}"
+        ) in h
+    svg = h[h.index("<svg") : h.index("</svg>")]
+    x0 = min(
+        float(x)
+        for x in re.findall(
+            r'<rect x="([0-9.]+)" y="[0-9.]+" width="[0-9.]+" height="16\.0"', svg
+        )
+    )
+    for s in re.findall(r'<text x="30\.0"[^>]*font-weight="600">([^<]*)</text>', svg):
+        assert 30 + 0.6 * 14 * len(s) < x0, s
+    legenda = h.split("<figcaption>", 1)[1]
+    assert "inferido pelo nome (" not in legenda
+    aviso = E["tipo_local"].get("aviso") or ""
+    if aviso:
+        assert legenda.count(aviso[:40]) == 1
