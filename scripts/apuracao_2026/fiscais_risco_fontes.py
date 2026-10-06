@@ -85,6 +85,8 @@ class Fonte:
     cobertura_municipios: int | None = None
     paginas: list[str] = field(default_factory=list)
     caminho_repo: str | None = None
+    proxy: bool = False
+    positivos_locais: int | None = None
 
     @property
     def caminho(self) -> Path:
@@ -109,6 +111,7 @@ class Fonte:
             "regra": self.regra,
             "cobertura_locais": self.cobertura_locais,
             "cobertura_municipios": self.cobertura_municipios,
+            "positivos_locais": self.positivos_locais,
         }
 
 
@@ -193,20 +196,7 @@ def registro() -> list[Fonte]:
             "Censo Demográfico 2022, arquivo de 19/09/2025",
             "proxy declarado só para local sem terra indígena da FUNAI até 2 km: "
             "localidade indígena (ponto) a até 2 km do local",
-        ),
-        Fonte(
-            "ibge_lcpi_2022",
-            "terra_indigena",
-            "Localidades com concentração de pessoas indígenas, Censo 2022 "
-            "(LCPI, pontos, CSV)",
-            "IBGE",
-            f"{LOCALIDADES}/localidades_indigenas_2022/Arquivos_vetoriais/LCPI/csv/BR/"
-            "BR_LCPIs_CD2022_20250919.csv",
-            "ibge_localidades_indigenas_2022/BR_LCPIs_CD2022_20250919.csv",
-            LICENCA_IBGE,
-            "Censo Demográfico 2022, arquivo de 19/09/2025",
-            "lida para conferência; não marca terra indígena, porque LCPI é "
-            "concentração de pessoas indígenas fora de terra indígena",
+            proxy=True,
         ),
         Fonte(
             "ibge_localidades_indigenas_dicionario",
@@ -243,6 +233,7 @@ def registro() -> list[Fonte]:
             "Censo Demográfico 2022, arquivo de 25/07/2024",
             "proxy declarado (o INCRA exige login gov.br): localidade quilombola "
             "(ponto) a até 2 km do local",
+            proxy=True,
         ),
         Fonte(
             "ibge_localidades_quilombolas_dicionario",
@@ -460,7 +451,7 @@ def baixar(fonte: Fonte, *, sem_download: bool, timeout: int = 3000) -> Fonte:
             fonte.bytes = fonte.caminho.stat().st_size
             fonte.sha256 = sha256_arquivo(fonte.caminho)
             fonte.paginas = info.get("paginas", [])
-            fonte.status = "ok"
+            fonte.status = "proxy" if fonte.proxy else "ok"
             if info.get("sha256") and info["sha256"] != fonte.sha256:
                 fonte.motivo = "arquivo local difere do SHA-256 gravado no download"
         else:
@@ -488,7 +479,7 @@ def baixar(fonte: Fonte, *, sem_download: bool, timeout: int = 3000) -> Fonte:
     fonte.baixado_em = agora_utc()
     fonte.bytes = fonte.caminho.stat().st_size
     fonte.sha256 = sha256_arquivo(fonte.caminho)
-    fonte.status = "ok"
+    fonte.status = "proxy" if fonte.proxy else "ok"
     meta.write_text(
         json.dumps(
             {

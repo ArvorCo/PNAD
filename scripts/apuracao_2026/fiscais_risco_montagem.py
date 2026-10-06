@@ -162,6 +162,9 @@ def camadas_locais(ent: Entradas, locais: list[cam.Local]) -> dict[str, Any]:
         tis = [
             (p.get("terrai_nome"), g) for p, g in cam.ler_geojson(ent.arquivos[F_FUNAI])
         ]
+        if len(tis) >= 10_000:
+            raise ValueError("WFS da FUNAI no teto de maxFeatures: resposta truncada")
+        out["n_tis"] = len(tis)
         out["funai"] = cam.vizinho_poligono(validos, tis, RAIO_TI_KM)
     out["li"] = {}
     if ent.tem(F_LI):
@@ -375,6 +378,9 @@ def municipios(
         crime_so_uf=so_uf,
         ibge_sem_taxa=0,
         fbsp=notas_fbsp,
+        fronteira_sem_municipio_tse=sorted(
+            set(front or {}) - {ib for ib in tse_ibge.values() if ib}
+        ),
     )
 
     taxa_tse: dict[str, float | None] = {}

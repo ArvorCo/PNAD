@@ -140,14 +140,15 @@ def coberturas_por_fonte(
         mont.F_FRONT: [r for r in br if r["fronteira"] != ""],
     }
     for f in lista:
-        if f.status != "ok":
+        if f.status not in ("ok", "proxy"):
             continue
         if f.chave in por_chave:
             rows = por_chave[f.chave]
             f.cobertura_locais = len(rows)
             f.cobertura_municipios = n_mun(rows)
-            if f.chave in ent.positivos_fonte:
+            if f.chave in ent.avaliados_fonte:
                 f.cobertura_locais = ent.avaliados_fonte[f.chave]
+                f.positivos_locais = ent.positivos_fonte[f.chave]
         elif f.chave.startswith("ipea_"):
             f.cobertura_municipios = sum(
                 1 for m in muns_br if m["homicidios_taxa_100mil"]
@@ -187,19 +188,23 @@ def limites(
         "agrupamento indígena, localidade indígena do IBGE até 2 km e palavra no "
         "nome do local (ALDEIA, INDIGENA, TERRA INDIG) entram como proxy declarado "
         "em ti_fonte; um local positivo só pelo nome é inferência, não medição. "
-        "LCPI (concentração de pessoas indígenas fora de terra indígena) não marca "
-        "o campo.",
+        "ALDEIA no nome só conta fora de setor urbano, porque também é topônimo "
+        "(São Pedro da Aldeia). A base de LCPI do IBGE (concentração de pessoas "
+        "indígenas fora de terra indígena) não foi usada.",
         "Quilombo: o INCRA exige login gov.br para exportar os polígonos e o "
         "acervo fundiário não devolveu a camada; o campo usa o proxy do IBGE "
         "(localidade quilombola do Censo 2022 até 2 km, setor de agrupamento "
-        "quilombola) e a palavra QUILOMBO no nome do local. Localidade é ponto, "
-        "não território: o raio de 2 km pode alcançar escola urbana vizinha.",
+        "quilombola) e a palavra QUILOMBOLA no nome do local (QUILOMBO só fora de "
+        "setor urbano). Localidade é ponto, não território: o raio de 2 km alcança "
+        "escola urbana vizinha, e quilombo_dist_km permite apertar o raio.",
         "Favela e comunidade urbana: setor com código de favela e comunidade urbana "
         "(CD_FCU) na malha do Censo 2022. Local na borda de uma comunidade pode "
         "cair em setor vizinho sem o código.",
-        "Prisional: tipo oficial do TSE (Preso provisório), palavra no nome do "
-        "local e setor do tipo unidade prisional; a palavra no nome é inferência "
-        "declarada em prisional_fonte.",
+        "Prisional: tipo oficial do TSE (Preso provisório), expressão institucional "
+        "no nome do local (unidade prisional, centro socioeducativo, presídio "
+        "regional e afins; nunca a palavra solta, que também é nome de gente) e "
+        "setor do tipo unidade prisional; o nome é inferência declarada em "
+        "prisional_fonte.",
         "Garimpo: só a ANM, permissões de lavra garimpeira ativas (fase LAVRA "
         "GARIMPEIRA) e reservas garimpeiras. Garimpo sem título, que é justamente o "
         "ilegal, não aparece nessa base; zero quer dizer nenhum título da ANM a até "
@@ -231,6 +236,12 @@ def limites(
         "o acesso por estrada fica para o capítulo, não para esta camada.",
         f"Polígonos de garimpo lidos: {lay.get('n_poligonos_garimpo')}.",
         "O exterior (UF ZZ) fica com todos os campos vazios.",
+        "O servidor da FUNAI não envia o certificado intermediário da cadeia TLS; "
+        "o intermediário (Sectigo Public Server Authentication CA OV R36) é baixado "
+        "do endereço indicado no próprio certificado e a cadeia é verificada contra "
+        "as raízes confiáveis, sem desligar a verificação. O WFS só responde com "
+        f"maxFeatures, e a resposta ({lay.get('n_tis')} terras) fica abaixo do "
+        "teto de 10.000.",
     ]
 
 
@@ -271,7 +282,9 @@ def main() -> None:
             "citado; casamento do nome pelo cadastro do TSE",
         ),
     ]
-    arquivos = {f.chave: (f.caminho if f.status == "ok" else None) for f in lista}
+    arquivos = {
+        f.chave: (f.caminho if f.status in ("ok", "proxy") else None) for f in lista
+    }
     ent = mont.Entradas(LOCAIS_DB, APURACAO_DB, CONTEXTO, arquivos)
 
     tse_ibge = cam.mapa_tse_ibge(APURACAO_DB)
