@@ -15,6 +15,7 @@ from .pagina_fig_base import (
     COR_CAND,
     FLAVIO,
     GRADE,
+    HALO,
     INK,
     LULA,
     MUTED,
@@ -32,6 +33,7 @@ from .pagina_fig_base import (
     ficha,
     figura_html,
     hit,
+    larga_estreita,
     legenda,
     ln,
     minutos,
@@ -62,6 +64,26 @@ def paradas(L: dict) -> list[dict]:
 
 def versoes(L: dict) -> list[dict]:
     return [v for v in tabela_linhas(L["nacional"]["versoes"]) if (v["st"] or 0) > 0]
+
+
+CORTE_NOITE = 22 * 60
+"""Fim do eixo das figuras da noite: depois das 22h o arquivo só andou de 99,76% a 100%."""
+
+
+def corta_noite(vs: list[dict]) -> tuple[list[dict], str]:
+    """Versões até as 22h e a nota sobre o que ficou depois, para pôr no desenho."""
+    vis = [v for v in vs if minutos(v["gerado_brt"]) <= CORTE_NOITE]
+    tarde = vs[len(vis) :]
+    if not tarde:
+        return vis, ""
+    ult = tarde[-1]["gerado_brt"]
+    dia = " do dia 5" if ult[8:10] == "05" else ""
+    nota = (
+        f"Eixo cortado às 22h: depois, {len(tarde)} versões levaram as seções de "
+        f"{num(vis[-1]['pst'], 2)}% a {num(tarde[-1]['pst'], 2)}% "
+        f"(+{inteiro(sum(v['d_vv'] or 0 for v in tarde))} válidos), a última às {ult[11:16]}{dia}."
+    )
+    return vis, nota
 
 
 def sombras(L: dict, X, topo: float, base: float, rotulo: bool = True) -> str:
@@ -134,35 +156,9 @@ def placar_candidatos(d, **_op) -> str:
     cands = sorted(n["candidaturas"], key=lambda c: -c["votos"])
     top, resto = cands[:6], cands[6:]
     lider = top[0]
-    esq, topo, passo = 270, 46, 50
-    h = topo + passo * len(top) + 56
-    X = escala(0, 52, esq, W - 220)
     tips = Tips()
-    out = [
-        svg_abre(
-            W,
-            h,
-            "Presidente, 1º turno de 2026: os seis mais votados",
-            f"{NOME_CAND['flavio']} {pct(n['pct']['flavio'])} e Lula {pct(n['pct']['lula'])} dos válidos; "
-            "ninguém chegou a 50%.",
-        )
-    ]
-    for v in ticks(0, 50, 5):
-        out.append(ln(X(v), topo - 8, X(v), h - 46, GRADE))
-        out.append(t(X(v), h - 24, f"{num(v, 0)}%", 13, MUTED, "middle", mono=True))
-    out.append(ln(X(50), topo - 14, X(50), h - 46, INK, 1.5, ' stroke-dasharray="6 4"'))
-    out.append(
-        t(
-            X(50) + 8,
-            topo - 18,
-            "50% dos válidos: vitória no 1º turno",
-            13,
-            INK,
-            weight="600",
-        )
-    )
+    itens = []
     for i, c in enumerate(top):
-        y = topo + i * passo
         chave = (
             c["chave"]
             if c["chave"] != "outros"
@@ -170,7 +166,6 @@ def placar_candidatos(d, **_op) -> str:
         )
         nome = NOME_CAND.get(chave) if chave != "outros" else nome_bonito(c["nome"])
         cor = COR_CAND.get(chave, "#8fb8aa")
-        larg = X(c["pct_validos"]) - esq
         dif_v = lider["votos"] - c["votos"]
         k = tips.add(
             ficha(
@@ -194,18 +189,59 @@ def placar_candidatos(d, **_op) -> str:
                 ],
             )
         )
+        itens.append((f"{nome} ({c['partido']})", cor, c, k))
+    soma_resto = sum(c["votos"] for c in resto)
+    rodape_svg = (
+        f"Outros {len(resto)} candidatos somam {inteiro(soma_resto)} votos "
+        f"({pct(100 * soma_resto / n['validos'])})."
+    )
+    titulo = "Presidente, 1º turno de 2026: os seis mais votados"
+    desc = (
+        f"{NOME_CAND['flavio']} {pct(n['pct']['flavio'])} e Lula {pct(n['pct']['lula'])} dos válidos; "
+        "ninguém chegou a 50%."
+    )
+    larga = _placar_largo(itens, titulo, desc, rodape_svg)
+    estreita = _placar_estreito(itens, titulo, desc, len(resto), soma_resto, n)
+    legenda_ = (
+        f"Votos e parcela dos válidos ({inteiro(n['validos'])} válidos, 100% das seções). "
+        f"Diferença entre os dois primeiros: {inteiro(n['diferenca_votos'])} votos ({num(n['diferenca_pp'], 2)} ponto). "
+        "Fonte: arquivo nacional final do TSE (presidente.json)."
+    )
+    return figura_html(
+        "placar_candidatos",
+        larga_estreita(larga, estreita),
+        legenda_,
+        tips,
+        modo="full",
+    )
+
+
+def _placar_largo(itens: list, titulo: str, desc: str, rodape_svg: str) -> str:
+    esq, topo, passo = 270, 46, 50
+    h = topo + passo * len(itens) + 56
+    X = escala(0, 52, esq, W - 220)
+    out = [svg_abre(W, h, titulo, desc)]
+    for v in ticks(0, 50, 5):
+        out.append(ln(X(v), topo - 8, X(v), h - 46, GRADE))
+        out.append(t(X(v), h - 24, f"{num(v, 0)}%", 13, MUTED, "middle", mono=True))
+    out.append(ln(X(50), topo - 14, X(50), h - 46, INK, 1.5, ' stroke-dasharray="6 4"'))
+    out.append(
+        t(
+            X(50) + 8,
+            topo - 18,
+            "50% dos válidos: vitória no 1º turno",
+            13,
+            INK,
+            weight="600",
+        )
+    )
+    for i, (nome, cor, c, k) in enumerate(itens):
+        y = topo + i * passo
+        larg = X(c["pct_validos"]) - esq
         corpo = (
             area(0, y, W, passo)
             + r(esq, y + 9, larg, passo - 18, cor)
-            + t(
-                esq - 12,
-                y + passo / 2 + 5,
-                f"{nome} ({c['partido']})",
-                15,
-                INK,
-                "end",
-                "600",
-            )
+            + t(esq - 12, y + passo / 2 + 5, nome, 15, INK, "end", "600")
             + t(
                 esq + larg + 10,
                 y + passo / 2 + 5,
@@ -213,26 +249,52 @@ def placar_candidatos(d, **_op) -> str:
                 14,
                 INK,
                 mono=True,
+                extra=HALO,
             )
         )
         out.append(hit(corpo, k, foco=True))
-    soma_resto = sum(c["votos"] for c in resto)
+    out.append(t(esq, h - 4, rodape_svg, 13, MUTED))
+    out.append("</svg>")
+    return "".join(out)
+
+
+def _placar_estreito(
+    itens: list, titulo: str, desc: str, n_resto: int, soma_resto: int, n: dict
+) -> str:
+    """Versão de celular: nome e número numa linha, barra embaixo, eixo de 0 a 52%."""
+    w, esq, topo, passo = 360, 4, 54, 58
+    h = topo + passo * len(itens) + 64
+    X = escala(0, 52, esq, w - 8)
+    out = [svg_abre(w, h, titulo, desc)]
+    for v in ticks(0, 50, 5):
+        out.append(ln(X(v), topo - 6, X(v), h - 60, GRADE))
+        anc = "start" if v == 0 else "middle"
+        out.append(t(X(v), h - 42, f"{num(v, 0)}%", 13, MUTED, anc, mono=True))
+    out.append(ln(X(50), topo - 12, X(50), h - 60, INK, 1.5, ' stroke-dasharray="6 4"'))
+    out.append(t(X(50), topo - 18, "50%: vitória no 1º turno", 13, INK, "end", "600"))
+    for i, (nome, cor, c, k) in enumerate(itens):
+        y = topo + i * passo
+        larg = X(c["pct_validos"]) - esq
+        corpo = (
+            area(0, y, w, passo)
+            + t(esq, y + 16, nome, 15, INK, weight="600", extra=HALO)
+            + t(w - 4, y + 16, pct(c["pct_validos"]), 15, INK, "end", "700", True, HALO)
+            + r(esq, y + 24, larg, 14, cor)
+            + t(esq, y + 53, f"{inteiro(c['votos'])} votos", 13, MUTED, mono=True)
+        )
+        out.append(hit(corpo, k))
+    out.append(t(esq, h - 20, f"Outros {n_resto} candidatos somam", 13, MUTED))
     out.append(
         t(
             esq,
             h - 4,
-            f"Outros {len(resto)} candidatos somam {inteiro(soma_resto)} votos ({pct(100 * soma_resto / n['validos'])}).",
+            f"{inteiro(soma_resto)} votos ({pct(100 * soma_resto / n['validos'])}).",
             13,
             MUTED,
         )
     )
     out.append("</svg>")
-    legenda_ = (
-        f"Votos e parcela dos válidos ({inteiro(n['validos'])} válidos, 100% das seções). "
-        f"Diferença entre os dois primeiros: {inteiro(n['diferenca_votos'])} votos ({num(n['diferenca_pp'], 2)} ponto). "
-        "Fonte: arquivo nacional final do TSE (presidente.json)."
-    )
-    return figura_html("placar_candidatos", "".join(out), legenda_, tips, minw=720)
+    return "".join(out)
 
 
 # ------------------------------------------------------------------ 02 acumulado
@@ -241,12 +303,13 @@ def placar_candidatos(d, **_op) -> str:
 @registra("acumulado_noite")
 def acumulado_noite(d, **_op) -> str:
     L = dado(d, "linha_do_tempo")
-    vs = versoes(L)
-    ini, fim = 17 * 60, minutos(vs[-1]["gerado_brt"]) + 10
+    todas = versoes(L)
+    vs, nota_corte = corta_noite(todas)
+    ini, fim = 17 * 60, CORTE_NOITE
     esq, topo, base, dir_ = 70, 64, 420, W - 170
-    h = base + 50
+    h = base + 62
     X = escala(ini, fim, esq, dir_)
-    vmax = max(v["flavio"] for v in vs) / 1e6
+    vmax = max(v["flavio"] for v in todas) / 1e6
     Y = escala(0, math.ceil(vmax / 10) * 10, base, topo)
     out = [
         svg_abre(
@@ -284,10 +347,12 @@ def acumulado_noite(d, **_op) -> str:
     finais = []
     for nome, cor, f in series:
         pts = [(minutos(v["gerado_brt"]), f(v) / 1e6) for v in vs]
+        pts.append((fim, pts[-1][1]))
         out.append(
             f'<path d="{degraus(pts, X, Y)}" fill="none" stroke="{cor}" stroke-width="2.6"/>'
         )
-        finais.append([Y(pts[-1][1]), nome, cor, pts[-1][1]])
+        final = f(todas[-1]) / 1e6
+        finais.append([Y(final), nome, cor, final])
     finais.sort()
     for i in range(1, len(finais)):
         finais[i][0] = max(finais[i][0], finais[i - 1][0] + 20)
@@ -322,6 +387,7 @@ def acumulado_noite(d, **_op) -> str:
         linhas,
         sub=1,
     )
+    out.append(t(W - 4, h - 4, nota_corte, 13, MUTED, "end"))
     out.append("</svg>")
     par = paradas(L)
     lac = L["pausa_geral"]["lacunas"][0]
@@ -343,10 +409,10 @@ def acumulado_noite(d, **_op) -> str:
 @registra("lotes_noite")
 def lotes_noite(d, **_op) -> str:
     L = dado(d, "linha_do_tempo")
-    vs = versoes(L)
-    ini, fim = 17 * 60, minutos(vs[-1]["gerado_brt"]) + 10
+    vs, nota_corte = corta_noite(versoes(L))
+    ini, fim = 17 * 60, CORTE_NOITE
     esq, topo, base, dir_ = 80, 50, 400, W - 80
-    h = base + 50
+    h = base + 62
     X = escala(ini, fim, esq, dir_)
     vmax = max((v["d_vv"] or 0) for v in vs) / 1e6
     smax = max((v["d_st"] or 0) for v in vs)
@@ -452,6 +518,7 @@ def lotes_noite(d, **_op) -> str:
         linhas,
         sub=1,
     )
+    out.append(t(W - 4, h - 4, nota_corte, 13, MUTED, "end"))
     out.append("</svg>")
     ctl = botoes(
         [("validos", "Válidos por versão"), ("secoes", "Seções por versão")],
@@ -653,20 +720,25 @@ def latencia_hora(d, **_op) -> str:
                 f'<circle cx="{x:.1f}" cy="{y:.1f}" r="4" fill="{cor}"/>'
                 for x, y in pts
             )
-            finais.append([pts[-1][1], nome, cor])
+            finais.append([pts[-1][1], pts[-1][0], nome, cor])
+        # cada nome no fim da própria linha; só afasta na vertical os que
+        # terminam na mesma hora
         finais.sort()
         for i in range(1, len(finais)):
-            finais[i][0] = max(finais[i][0], finais[i - 1][0] + 20)
+            for j in range(i):
+                if abs(finais[i][1] - finais[j][1]) < 1:
+                    finais[i][0] = max(finais[i][0], finais[j][0] + 20)
         g.extend(
             t(
-                dir_ + 10,
+                x + 10,
                 y + 5,
                 nome,
                 14,
                 OUTROS_TXT if cor == OUTROS else cor,
                 weight="700",
+                extra=HALO,
             )
-            for y, nome, cor in finais
+            for y, x, nome, cor in finais
         )
         mostra = "" if rot == "p50" else ' display="none"'
         out.append(f'<g data-alt-show="{rot}"{mostra}>{"".join(g)}</g>')
@@ -713,7 +785,8 @@ def latencia_hora(d, **_op) -> str:
     out.append("</svg>")
     ctl = botoes([("p50", "Mediana"), ("p95", "Percentil 95")], "p50", "Latência")
     legenda_ = (
-        "Segundos entre a hora em que o TSE gerou cada versão e a hora em que o coletor a leu, por hora e nível do arquivo. "
+        "Tempo entre a hora em que o TSE gerou cada versão e a hora em que o coletor a leu, por hora e nível do arquivo, "
+        "em escala logarítmica de 30 segundos a 1 hora (a ficha dá os valores em segundos). "
         "Inclui o intervalo de sondagem; mede o atraso total de quem acompanhava, não só o do tribunal. Fonte: linha_do_tempo.json."
     )
     return figura_html(

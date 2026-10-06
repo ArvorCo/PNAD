@@ -79,13 +79,16 @@ def _sinal_mi(v: float) -> str:
 @registra("noite_regioes_lotes")
 def noite_regioes_lotes(d, **_op) -> str:
     N = dado(d, "noite_regioes")
-    lts = [x for x in N["lotes_5min"] if INI_NOITE <= minutos(x["de_brt"]) < FIM_NOITE]
+    # eixo até as 22h: depois disso os lotes somam pouco e só alongam o desenho
+    fim = 22 * 60
+    lts = [x for x in N["lotes_5min"] if INI_NOITE <= minutos(x["de_brt"]) < fim]
+    tarde = [x for x in N["lotes_5min"] if minutos(x["de_brt"]) >= fim and x["vv"]]
     lac = N["lacuna_da_soma"]
     ne = N["nordeste"]
     minimo = ne["lote_minimo_validos"]
     esq, topo, base, dir_ = 80, 56, 430, W - 80
-    h = base + 52
-    X = escala(INI_NOITE, FIM_NOITE, esq, dir_)
+    h = base + 64
+    X = escala(INI_NOITE, fim, esq, dir_)
     larg = X(INI_NOITE + 5) - X(INI_NOITE) - 1.6
     vmax = math.ceil(max(x["vv"] for x in lts) / 2e6) * 2
     smax = math.ceil(max(x["st"] for x in lts) / 10000) * 10000
@@ -144,18 +147,33 @@ def noite_regioes_lotes(d, **_op) -> str:
         out.append(t(dir_ + 8, Yp(v) + 5, f"{v}%", 13, LINHA_LULA, mono=True))
     out.append(t(dir_ + 8, topo - 16, "Lula", 13, LINHA_LULA, weight="700"))
     out.append(ln(esq, base, dir_, base, INK, 1.2))
-    out.append(eixo_x_horas(X, INI_NOITE, FIM_NOITE, base))
+    out.append(eixo_x_horas(X, INI_NOITE, fim, base))
+    if tarde:
+        out.append(
+            t(
+                W - 4,
+                h - 4,
+                f"Eixo cortado às 22h: depois, {len(tarde)} lotes com válidos somaram "
+                f"{inteiro(sum(x['vv'] for x in tarde))}, o último às {tarde[-1]['de_brt'][11:16]}.",
+                13,
+                MUTED,
+                "end",
+            )
+        )
     desde = ne["maior_regiao_do_lote_desde"]
     if desde:
         xm = X(minutos(desde["de_brt"]))
         out.append(ln(xm, topo, xm, base, INK, 1.2, ' stroke-dasharray="2 3"'))
+        txt = f"{desde['de_brt'][11:16]}: o Nordeste passa a ser a maior região de todo lote"
+        cabe = xm + 8 + 0.53 * 13 * len(txt) + 12 <= dir_
         out.append(
             '<g pointer-events="none">'
             + chip(
-                xm + 8,
-                topo + 36,
-                f"{desde['de_brt'][11:16]}: o Nordeste passa a ser a maior região de todo lote",
+                xm + 8 if cabe else xm - 8,
+                topo - 14,
+                txt,
                 13,
+                "start" if cabe else "end",
             )
             + "</g>"
         )
@@ -557,7 +575,19 @@ def lentidao_ufs_2022_2026(d, **_op) -> str:
         controles=ctl,
         minw=860,
         apos=leg,
+        foco=_foco_99(ufs, X),
     )
+
+
+def _foco_99(ufs: list[dict], X) -> tuple[float, float]:
+    """Faixa dos marcos de 99% nos dois anos: o que a rolagem mostra ao abrir no celular."""
+    xs = [
+        X(_x_marco(u["marcos"][ano]["99"]))
+        for u in ufs
+        for ano in ("2022_totalizado", "2026_totalizado")
+        if u["marcos"][ano].get("99") is not None
+    ]
+    return (min(xs) - 10, max(xs) + 10)
 
 
 def _paineis(T: dict) -> list[dict]:
@@ -623,6 +653,13 @@ def lentidao_marcos(d, **_op) -> str:
             ln(X(grade[0]), Y(0), X(grade[-1]), Y(0), INK, 1),
         ]
         g.extend(ln(X(m), Y(0), X(m), Y(0) + 4, MUTED) for m in (60, 180, 300, 420))
+        if i == 0:
+            # o primeiro painel (país) leva a escala; os demais repetem a mesma
+            g.extend(
+                t(X(m), Y(0) + 17, rot, 13, MUTED, "middle", mono=True)
+                for m, rot in ((60, "18h"), (180, "20h"), (300, "22h"), (420, "0h"))
+            )
+            g.append(t(X(grade[-1]), Y(50) - 4, "50%", 13, MUTED, "end", mono=True))
         for serie, cor, esp, tr in (
             (p["c22"], UF_2022, 2.2, ' stroke-dasharray="5 3"'),
             (p["c26"], INK, 2.4, ""),
@@ -653,7 +690,7 @@ def lentidao_marcos(d, **_op) -> str:
             ("2022, primeira totalização (tracejada)", UF_2022),
             ("pausa do TSE em 2026", PAUSA_CSS),
         ],
-        "Cada painel: 17h a 01h, 0 a 100% das seções",
+        "Cada painel: 17h a 01h, 0 a 100% das seções (escala no primeiro)",
     )
     legenda_ = (
         "Parcela das seções totalizadas, de 5 em 5 minutos desde as 17h, em 2026 (arquivo da UF, hora de geração) "
