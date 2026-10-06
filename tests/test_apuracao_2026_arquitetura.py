@@ -236,7 +236,7 @@ def test_bloco_de_texto(tmp_path):
     h = TA.bloco(Dados(pasta=tmp_path))
     assert "Onde um sistema como esse engasga" in h
     assert "O desenho que não engasga" in h
-    assert "Hipótese do autor" in h and 'class="analogy"' in h
+    assert "selo-hipotese" in h and "Do autor (Leonardo Dias)" in h
     assert "a causa é hipótese até o TSE publicar o relatório" in h
     assert "—" not in h
 
