@@ -80,6 +80,9 @@ tbody th{font-weight:600}
 tbody tr:hover{background:#ebe4d4}
 aside{padding:22px 26px;margin:28px 0;background:var(--card);border-left:4px solid var(--gold);max-width:960px}
 aside b{display:block;margin-bottom:4px}
+aside p{margin:0}aside p+p,aside p+ul,aside p+ol{margin-top:8px}
+ol.teses{padding-left:1.3em;max-width:960px}ol.teses li{margin:0 0 12px}ol.teses a{white-space:nowrap}
+details.limites ul{margin:8px 0 0}details.limites p{margin:8px 0 0;color:var(--muted)}
 aside.juizo{border-left-color:var(--ink)}
 details{border:1px solid var(--line);padding:12px 18px;margin:14px 0;max-width:1000px}
 summary{cursor:pointer;font:600 15px var(--sans);padding:6px 0}

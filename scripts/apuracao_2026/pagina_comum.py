@@ -332,20 +332,48 @@ def tabela(cabecalho: list[str], linhas: list[list], legenda: str = "") -> str:
     )
 
 
+SELOS = {
+    "verificado": "Verificado",
+    "inferencia": "Inferência",
+    "hipotese": "Hipótese",
+    "juizo": "Juízo editorial",
+    "relato": "Relato da imprensa",
+    "contrario": "Achado contrário",
+}
+CAIXA_DO_SELO = {"juizo": "juizo", "hipotese": "hyp", "contrario": "hyp"}
+
+
 def rotulo(tipo: str) -> str:
-    """Selo de natureza do enunciado: verificado, inferência, hipótese, juízo."""
-    classes = {
-        "verificado": "Verificado",
-        "inferencia": "Inferência",
-        "hipotese": "Hipótese",
-        "juizo": "Juízo editorial",
-        "relato": "Relato da imprensa",
-    }
-    return f'<span class="selo selo-{tipo}">{classes[tipo]}</span>'
+    """Selo de natureza do enunciado. O único formato de rótulo da página."""
+    return f'<span class="selo selo-{tipo}">{SELOS[tipo]}</span>'
 
 
 def p(texto: str, tipo: str | None = None) -> str:
     return f"<p>{rotulo(tipo) + ' ' if tipo else ''}{texto}</p>"
+
+
+def nota(tipo: str, texto: str, titulo: str = "") -> str:
+    """Caixa de destaque com o mesmo selo dos parágrafos (juízo, hipótese, achado contrário).
+
+    `texto` que começa por uma lista (`<ul>`, `<ol>`) vem depois da linha do selo.
+    """
+    tit = f"<strong>{titulo}</strong> " if titulo else ""
+    css = CAIXA_DO_SELO.get(tipo, "juizo")
+    if texto.lstrip().startswith(("<ul", "<ol")):
+        return f'<aside class="{css}"><p>{rotulo(tipo)} {tit}</p>{texto}</aside>'
+    return f'<aside class="{css}"><p>{rotulo(tipo)} {tit}{texto}</p></aside>'
+
+
+def caixa(classe: str, titulo: str, corpo: str) -> str:
+    """Caixa de leitura sem selo: `io` (como ler), `analogy` (linguagem de casa)."""
+    return f'<aside class="{classe}"><b>{titulo}</b>{corpo}</aside>'
+
+
+def limites(itens: list[str], remete: str = "") -> str:
+    """Lista curta de limites, sempre no fim do capítulo."""
+    lis = "".join(f"<li>{i}</li>" for i in itens if i)
+    rem = f"<p>{remete}</p>" if remete else ""
+    return f'<details class="limites"><summary>Limites do capítulo</summary><ul>{lis}</ul>{rem}</details>'
 
 
 def cartao(valor: str, legenda: str, cor: str = "") -> str:
