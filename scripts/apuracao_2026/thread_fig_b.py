@@ -458,18 +458,28 @@ def _curto(artefato: str) -> str:
     return artefato.replace("sem voto ", "sem ")
 
 
+def _perfil(rotulo: str, limite: int = 26) -> str:
+    """As duas primeiras marcas do rótulo, ou só a primeira se não couber."""
+    partes = rotulo.split("; ")
+    perfil = (partes[1] if len(partes) > 2 else partes[0]).split(", ")
+    dois = ", ".join(perfil[:2])
+    return dois if len(dois) <= limite else perfil[0]
+
+
 def fig_grupos() -> str:
-    """Cinco grupos da mistura de cinco partes: o eleitorado de cada um em barra de
-    100%, com tamanho e região; no rodapé, a versão de 15 partes que não deu certo."""
+    """Cinco grupos da mistura publicada: o eleitorado de cada um em barra de 100%,
+    com tamanho, região e marca do perfil; no rodapé, as três tentativas."""
     c = dado("secoes")["clusters"]
     comp = c["componentes"]
-    q = (c.get("variantes") or {}).get("quinze_partes") or {}
-    x0, x1, y0 = 250, 990, 50
-    passo = min(84, int((H - y0 - 130) / max(1, len(comp))))
+    var = c.get("variantes") or {}
+    q = var.get("quinze_partes") or {}
+    c5 = var.get("cinco_partes_clr") or {}
+    x0, x1, y0 = 250, 990, 46
+    passo = min(80, int((H - y0 - 160) / max(1, len(comp))))
     out = [
         t(
             0,
-            24,
+            22,
             "Eleitorado de cada grupo de seções, em % dos aptos (média das seções do grupo)",
             16,
             MUTED,
@@ -479,11 +489,11 @@ def fig_grupos() -> str:
     for i, g in enumerate(comp):
         y = y0 + i * passo
         reg = (g.get("regioes") or [{}])[0]
-        out.append(t(0, y + 22, f"Grupo {i + 1}", 20, INK, 700))
+        out.append(t(0, y + 20, f"Grupo {i + 1}", 19, INK, 700))
         out.append(
             t(
                 0,
-                y + 43,
+                y + 40,
                 f"{num(g['secoes'])} seções · {reg.get('regiao', '')} "
                 f"{num(reg.get('pct_do_cluster') or 0)}%",
                 14,
@@ -491,10 +501,12 @@ def fig_grupos() -> str:
                 600,
             )
         )
-        if g.get("artefato"):
-            out.append(
-                t(0, y + 63, f"artefato: {_curto(g['artefato'])}", 14, GOLD, 700)
-            )
+        marca = (
+            f"artefato: {_curto(g['artefato'])}"
+            if g.get("artefato")
+            else _perfil(g["rotulo"])
+        )
+        out.append(t(0, y + 59, marca, 14, GOLD, 700))
         ce = dict(g["centro_pct_eleitorado"])
         ce["terceiros"] = g.get("terceiros_pct_eleitorado") or 0.0
         total = sum(ce.get(k) or 0.0 for k, *_ in PARTES_GRUPO) or 1.0
@@ -506,33 +518,41 @@ def fig_grupos() -> str:
             if w >= 0.62 * 18 * len(rot) + 12:
                 out.append(t(xx + w / 2, y + 37, rot, 18, cor_txt, 700, "middle", MONO))
             xx += w
-    y = y0 + len(comp) * passo + 14
+    y = y0 + len(comp) * passo + 8
     out.append(legenda([(n, cor) for _, n, cor, _ in PARTES_GRUPO[:3]], 0, y + 4, 15))
-    out.append(legenda([(n, cor) for _, n, cor, _ in PARTES_GRUPO[3:]], 0, y + 30, 15))
-    out.append(
-        t(
-            0,
-            y + 66,
-            f"Antes: 15 partes, {num(q.get('zeros_substituidos_pct') or 0, 1)}% das células em zero, "
-            f"V de Cramér com a região {num(q.get('cramer_v_regiao') or 0, 2)}: grupos de zeros.",
-            15,
-            MUTED,
-            600,
+    out.append(legenda([(n, cor) for _, n, cor, _ in PARTES_GRUPO[3:]], 0, y + 28, 15))
+    linhas = []
+    if q:
+        linhas.append(
+            (
+                f"1ª tentativa: {len(q.get('features') or [])} partes em log-razão, "
+                f"{num(q.get('zeros_substituidos_pct') or 0, 1)}% de células zero; "
+                f"V de Cramér {num(q.get('cramer_v_regiao') or 0, 2)}: grupos de zeros.",
+                MUTED,
+                600,
+            )
         )
-    )
-    n_art = sum(1 for g in comp if g.get("artefato"))
-    out.append(
-        t(
-            0,
-            y + 90,
-            f"Agora: cinco partes, {num(c['zeros_substituidos_pct'], 1)}% das células em zero, "
-            f"V de Cramér {num(c['cramer_v_regiao'], 2)}; "
-            f"{extenso(n_art)} dos {extenso(len(comp))} grupos ainda são artefatos da contagem.",
-            15,
+    if c5:
+        n5 = sum(1 for g in c5.get("grupos") or [] if g.get("artefato"))
+        linhas.append(
+            (
+                "2ª tentativa: cinco partes em log-razão; V de Cramér "
+                f"{num(c5.get('cramer_v_regiao') or 0, 2)}: {extenso(n5)} grupos de "
+                "zero ou empate em brancos e nulos.",
+                MUTED,
+                600,
+            )
+        )
+    linhas.append(
+        (
+            "Publicada: cinco proporções do eleitorado, sem log; V de Cramér "
+            f"{num(c['cramer_v_regiao'], 2)}, e {num(c['cramer_v_uf'], 2)} com a UF.",
             INK,
             700,
         )
     )
+    for n, (texto, cor, peso) in enumerate(linhas):
+        out.append(t(0, y + 58 + 22 * n, texto, 15, cor, peso))
     return svg(
         "".join(out), "Eleitorado dos cinco grupos de seções da mistura gaussiana"
     )

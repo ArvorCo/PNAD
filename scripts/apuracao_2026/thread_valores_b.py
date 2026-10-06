@@ -96,61 +96,61 @@ def v_secoes() -> dict:
     }
 
 
-def _lider(g: dict) -> str:
-    cv = g["centro_pct_validos"]
-    return "lula" if (cv["lula"] or 0) >= (cv["flavio"] or 0) else "flavio"
+def _perfil_curto(rotulo: str, limite: int = 26) -> str:
+    """As duas primeiras marcas do rótulo, ou só a primeira se não couber."""
+    perfil = rotulo.split("; ")[0].split(", ")
+    dois = ", ".join(perfil[:2])
+    return dois if len(dois) <= limite else perfil[0]
+
+
+def _ganho(e: dict, k: str) -> float:
+    return (e[k]["zona_mais_grupo"] or 0.0) - (e[k]["zona"] or 0.0)
 
 
 def v_clusters() -> dict:
     c = dado("secoes")["clusters"]
     comp = c["componentes"]
     q = c["variantes"]["quinze_partes"]
+    c5 = c["variantes"]["cinco_partes_clr"]
     dg = c["ajuste"]["diagnostico_convergencia"]
-    med = c["mediana_votos_por_secao"]
-    nuv = [s["feature"] for s in q["nuvens"]["separacao"]]
-    art = [g for g in comp if g.get("artefato")]
-    perfis = [g for g in comp if not g.get("artefato")]
-    v = {
+    e = c["explicacao_variancia"]
+    med = c5["mediana_votos_por_secao"]
+    art5 = [g for g in c5["grupos"] if g.get("artefato")]
+    anom = comp[c["mais_anomalo"]["id"]]
+    zz = next((u for u in anom["ufs_top"] if u["uf"] == "ZZ"), None)
+    grupos = []
+    for g in comp:
+        reg = (g.get("regioes") or [{}])[0]
+        grupos.append(
+            f"{_perfil_curto(g['rotulo'])}, com {num(g['secoes'])} seções e "
+            f"{pct(reg.get('pct_do_cluster') or 0, 0)} delas no {reg.get('regiao', '')}"
+        )
+    return {
         "cl_k": str(c["k"]),
         "cl_k_ext": extenso(c["k"]),
-        "cl_v": num(c["cramer_v_regiao"], 2),
-        "cl_vuf": num(c["cramer_v_uf"], 2),
-        "cl_zeros": pct(c["zeros_substituidos_pct"], 1),
         "cl_n15": str(len(q["features"])),
-        "cl_v15": num(q["cramer_v_regiao"], 2),
         "cl_zeros15": pct(q["zeros_substituidos_pct"], 1),
-        "cl_deg15": num(q["degrau_log"]["mediana"], 1),
-        "cl_nuvem1": NOME_NUMERO.get(nuv[0], nuv[0]),
-        "cl_nuvem2": NOME_NUMERO.get(nuv[1], nuv[1]),
-        "cl_partidas": str(dg["total"]),
-        "cl_nomax": str(dg["no_maximo"]),
-        "cl_v_mv": num(c["variantes"]["meio_voto"]["cramer_v_regiao"], 2),
+        "cl_v15": num(q["cramer_v_regiao"], 2),
         "cl_med_brancos": num(med["brancos"]),
         "cl_med_nulos": num(med["nulos"]),
-        "cl_dobro_brancos": num(2 * med["brancos"]),
-        "cl_med_lula": num(med["lula"]),
-        "cl_dobro_lula": num(2 * med["lula"]),
-        "cl_art_n": extenso(len(art)).capitalize(),
-        "cl_art_lista": "; ".join(
-            f"o grupo {g['id'] + 1}, {g['artefato']}, com {num(g['secoes'])} seções"
-            for g in art
-        ),
-        "cl_perfis_n": extenso(len(perfis)),
-        "cl_perfis_pct": pct(sum(g["pct_secoes"] for g in perfis), 0),
+        "cl_v5": num(c5["cramer_v_regiao"], 2),
+        "cl_art5_n": extenso(len(art5)).capitalize(),
+        "cl_v": num(c["cramer_v_regiao"], 2),
+        "cl_vuf": num(c["cramer_v_uf"], 2),
+        "cl_grupos": "; ".join(grupos),
+        "cl_partidas": str(dg["total"]),
+        "cl_nomax": str(dg["no_maximo"]),
+        "cl_amostra": num((dg.get("amostra") or 0) / 1000) + " mil",
+        "cl_anom": str(anom["id"] + 1),
+        "cl_anom_abst": pct(anom["centro_pct_eleitorado"]["abstencao"], 0),
+        "cl_anom_secoes": num(anom["secoes"]),
+        "cl_anom_zz": pct(zz["pct_do_cluster"], 0) if zz else pct(0, 0),
+        "cl_ganho_lula": num(_ganho(e, "lula")),
+        "cl_ganho_flavio": num(_ganho(e, "flavio")),
+        "cl_ganho_brancos": num(_ganho(e, "brancos")),
+        "cl_ganho_nulos": num(_ganho(e, "nulos")),
+        "cl_r2_zona_lula": pct(e["lula"]["zona"], 0),
     }
-    for lado in ("lula", "flavio"):
-        g = max(
-            (x for x in perfis if _lider(x) == lado),
-            key=lambda x: x["centro_pct_validos"][lado],
-        )
-        reg = (g.get("regioes") or [{}])[0]
-        v |= {
-            f"cl_{lado}_lula": pct(g["centro_pct_validos"]["lula"], 0),
-            f"cl_{lado}_flavio": pct(g["centro_pct_validos"]["flavio"], 0),
-            f"cl_{lado}_reg": reg.get("regiao", ""),
-            f"cl_{lado}_reg_pct": pct(reg.get("pct_do_cluster") or 0, 0),
-        }
-    return v
 
 
 def v_urna() -> dict:
