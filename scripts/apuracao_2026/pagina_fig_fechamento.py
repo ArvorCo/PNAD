@@ -137,7 +137,9 @@ def _painel_curvas(g: dict, grade: list[int], px: float, py: float, tips: Tips) 
     for m in (30, 60, 120):
         out.append(ln(X(m), y0, X(m), y1, "#cbc5b5", 0.8, ' stroke-dasharray="2 3"'))
     for m in range(0, XMAX + 1, 60):
-        out.append(t(X(m), y1 + 18, f"{17 + m // 60}h", 13, MUTED, "middle", mono=True))
+        # o "17h" do canto alinha à esquerda para não encostar no "0%"
+        anc = "start" if m == 0 else "middle"
+        out.append(t(X(m), y1 + 18, f"{17 + m // 60}h", 13, MUTED, anc, mono=True))
     for chave, _nome, cor, tra in SERIES:
         rr = g.get(chave) or {}
         cur = rr.get("acumulada")
