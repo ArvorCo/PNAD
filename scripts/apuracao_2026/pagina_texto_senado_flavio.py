@@ -15,7 +15,6 @@ from .pagina_comum import (
     Dados,
     bloco_pendente,
     checar,
-    inteiro,
     limites,
     milhoes,
     nome_proprio,
@@ -180,21 +179,7 @@ def melhores(S: dict) -> str:
 def carregadores(S: dict) -> str:
     C = S["carregadores"]["candidatos"]
     mapa = S["mapa"]["ufs"]
-    frases = []
-    for uf in mapa:
-        cs = sorted(
-            (c for c in C if c["uf"] == uf), key=lambda c: -c["municipios_acima_de_100"]
-        )
-        primeiro, resto = cs[0], cs[1:]
-        frase = (
-            f"{em_uf(uf)[0].upper()}{em_uf(uf)[1:]}, {nome_proprio(primeiro['nome'])} "
-            f"({escape(primeiro['partido'])}) rende acima de Flávio em "
-            f"{inteiro(primeiro['municipios_acima_de_100'])} de {inteiro(primeiro['municipios'])} municípios"
-        )
-        for c in resto:
-            frase += f"; {nome_proprio(c['nome'])} ({escape(c['partido'])}), em {inteiro(c['municipios_acima_de_100'])}"
-        frases.append(frase)
-    texto = ". ".join(frases) + ". "
+    texto = ""
     alerta = next(
         (
             c
@@ -209,27 +194,11 @@ def carregadores(S: dict) -> str:
     if alerta:
         m = alerta["maiores"][0]
         texto += (
-            f"O índice mais alto de {nome_proprio(alerta['nome'])} está em {nome_proprio(m['nome'])} "
-            f"({num(m['indice'], 1)}), onde Flávio teve {pct(m['pct_flavio'])} contra {pct(alerta['flavio_pct_uf'])} "
-            "no estado. "
+            f"Índice alto pode ser Flávio fraco, não senador forte: o maior de {nome_proprio(alerta['nome'])} está em "
+            f"{nome_proprio(m['nome'])} ({num(m['indice'], 1)}), onde Flávio teve {pct(m['pct_flavio'])} contra "
+            f"{pct(alerta['flavio_pct_uf'])} no estado."
         )
-    topo = sorted(
-        (c for c in C if c["maiores"] and c["uf"] not in mapa),
-        key=lambda c: -c["maiores"][0]["indice"],
-    )[:3]
-    if topo:
-        texto += (
-            "Fora dos mapas, os índices mais altos do país são de "
-            + lista(
-                [
-                    f"{nome_proprio(c['nome'])} ({escape(c['partido'])}-{c['uf']}) em "
-                    f"{nome_proprio(c['maiores'][0]['nome'])}, {num(c['maiores'][0]['indice'], 1)}"
-                    for c in topo
-                ]
-            )
-            + f", todos em municípios com {inteiro(S['carregadores']['min_votantes'])} votantes ou mais."
-        )
-    return p(texto, "verificado")
+    return p(texto, "verificado") if texto else ""
 
 
 def capitulo(d: Dados) -> str:

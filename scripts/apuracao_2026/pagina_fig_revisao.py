@@ -394,11 +394,10 @@ def marcos_falha(d, **_op) -> str:
     estreita = _falha_svg(faixas, extra, keys, ESTREITA)
     dv = extra["divergencia"]
     legenda_ = (
-        "Preto: arquivo nacional de presidente sem versão nova, com seções represadas. Dourado: nenhum arquivo de "
-        "resultado de nenhum cargo em nenhum nível. Verde: nenhum boletim com carimbo de recebimento nas seções "
-        "coletadas; verde claro, carimbos a cerca de um terço do ritmo anterior. Azul: país a 50%, 90% e 99% das "
-        f"seções. Às {dv['hora_brt']} a soma das UFs tinha {inteiro(dv['secoes'])} seções a mais que o nacional. "
-        "Fonte: linha_do_tempo.json, arquitetura.json e lentidao_ufs.json."
+        "Preto: arquivo nacional parado com seções represadas. Dourado: nenhum arquivo de resultado gerado. Verde: "
+        "nenhum boletim com carimbo de recebimento (claro: carimbos a um terço do ritmo). Azul: país a 50%, 90% e 99% "
+        f"das seções. Às {dv['hora_brt']} a soma das UFs tinha {inteiro(dv['secoes'])} seções a mais que o nacional. "
+        "Fonte: linha_do_tempo.json, arquitetura.json, lentidao_ufs.json."
     )
     return figura_html(
         "marcos_falha", larga_estreita(larga, estreita), legenda_, tips, modo="full"
@@ -579,8 +578,8 @@ def urna_reguas(d, **_op) -> str:
         titulo, desc, linhas, keys, ESTREITA, lo, hi, 0.5, fmt, (-lim, lim)
     )
     legenda_ = (
-        "Ponto azul e traço: estimativa e intervalo de 95% por bootstrap. Losango vazado: a mesma diferença sem "
-        f"controle. Faixa clara: menos de {num(lim, 0)} ponto para cada lado. "
+        "Ponto e traço: estimativa e intervalo de 95% por bootstrap. Losango: sem controle. Faixa clara: menos de "
+        f"{num(lim, 0)} ponto. "
         f"{str(EXT.get(rg['positivas'], rg['positivas'])).capitalize()} réguas dão sinal positivo e {EXT.get(rg['negativas'], rg['negativas'])}, "
         "negativo; a maior em módulo é "
         f"{num(rg['max_abs_pp'], 2)} ponto. Fonte: secoes.json (urna.reguas)."
@@ -659,11 +658,9 @@ def terceira_via_reguas_totais(d, **_op) -> str:
         barras=True,
     )
     legenda_ = (
-        "Votos de terceira via do 1º turno que viram saldo para Flávio (positivo) ou Lula (negativo) no 2º turno, com "
-        "as bases do 1º turno fixas. Pesquisa: a linha de cada candidatura aplicada a cada município. Urna de 2022: o "
-        "que a terceira via rendeu a Bolsonaro entre os turnos de 2022, por regressão com efeito fixo de UF, com "
-        "intervalo de 95%. Razão simples: todo o ganho entre os turnos creditado à terceira via. A linha tracejada é o "
-        "saldo que Lula precisaria para empatar. Fonte: terceira_via.json (reguas.totais)."
+        "Saldo da terceira via para Flávio (positivo) ou Lula (negativo) no 2º turno, bases do 1º turno fixas. Urna de "
+        "2022: regressão com efeito fixo de UF e intervalo de 95%. Razão simples: todo o ganho entre os turnos creditado "
+        "à terceira via. Tracejado: o saldo de que Lula precisaria para empatar. Fonte: terceira_via.json."
     )
     return figura_html(
         "terceira_via_reguas_totais",

@@ -82,7 +82,7 @@ def r_noite(d: Dados, cap: Capitulo) -> str:
     h += limites(
         [
             "A hora é a de geração de cada versão pelo TSE, não a de leitura pelo coletor.",
-            "A noite por região soma os 28 arquivos de UF de presidente, não o arquivo nacional.",
+            "A noite por região soma os arquivos de UF de presidente, não o arquivo nacional.",
             "Voto de seção já totalizada não muda: toda variação da vantagem é mistura do que entrou.",
         ]
     )
@@ -152,6 +152,5 @@ def r_exterior(d: Dados, cap: Capitulo) -> str:
         f"{E['total']['cidades']} cidades, {E['total']['paises']} países, comparecimento de {num(E['total']['pct_comparecimento'], 2)}%.",
     )
     h += T.exterior_a(E, P) + fig("mapa_mundi_exterior", d)
-    h += T.exterior_b(E) + fig("exterior_continentes", d)
-    h += T.exterior_c(E) + "</section>"
+    h += T.exterior_b(E) + fig("exterior_continentes", d) + "</section>"
     return h

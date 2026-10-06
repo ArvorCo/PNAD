@@ -114,10 +114,9 @@ def _chegada(N: dict) -> str:
     lac = N["lacuna_da_soma"]
     na_pausa = ne["o_que_faltava"].get(lac["de_brt"][:16])
     ordem = sorted(REGIOES_CINCO, key=lambda r: m[r]["90"])
-    meio = lista([f"{r} {hora(m[r]['90'])}" for r in ordem[1:-1]])
     frase = (
         f"O {ordem[0]} passou de 90% das seções às {hora(m[ordem[0]]['90'])} e o {ordem[-1]}, por último, às "
-        f"{hora(m[ordem[-1]]['90'])} ({meio}). Às {hora(falta['hora_brt'])} o Nordeste já era "
+        f"{hora(m[ordem[-1]]['90'])}. Às {hora(falta['hora_brt'])} o Nordeste já era "
         f"{num(falta['parcela_nordeste_pct'], 1)}% dos {_validos(falta['faltavam_validos'])} que faltavam"
     )
     if na_pausa:
@@ -205,9 +204,9 @@ def painel(d: Dados) -> str:
         return x["pct_flavio"] - x["pct_lula"]
 
     return p(
-        f"Quem olhava o painel viu a vantagem encolher em degraus. A versão das {hora(a['gerado_brt'], True)} mostrava "
-        f"{num(a['pst'], 2)}% das seções e Flávio {_pontos(dif(a))} à frente, retrato da soma das UFs das "
-        f"{hora(a['soma_ufs_alcancou_brt'])}, e ficou até {hora(b['gerado_brt'])}, quando as UFs já tinham "
+        f"No painel, a vantagem encolheu em degraus. A versão das {hora(a['gerado_brt'], True)} mostrava "
+        f"{num(a['pst'], 2)}% das seções e Flávio {_pontos(dif(a))} à frente (a soma das UFs das "
+        f"{hora(a['soma_ufs_alcancou_brt'])}) até {hora(b['gerado_brt'])}, quando as UFs já tinham "
         f"{inteiro(a['soma_ufs_a_frente_antes_da_proxima'])} seções a mais. A das {hora(b['gerado_brt'], True)} trouxe o "
         f"retrato das {hora(b['soma_ufs_alcancou_brt'])} ({num(b['pst'], 2)}%, {_pontos(dif(b))}) e ficou até "
         f"{hora(depois['gerado_brt'], True)}, já com {num(b['idade_do_retrato_antes_da_proxima_min'], 1)} minutos e "
@@ -277,7 +276,7 @@ def _mais_rapida(T: dict) -> str:
         f"A apuração de 2026 foi mais rápida que a de 2022: o país passou de 50%, 90% e 99% das seções às {a['50']}, "
         f"{a['90']} e {a['99']} (em 2022, {b['50']}, {b['90']} e {b['99']}), e {quantas} chegaram aos 99% mais cedo. A "
         f"lentidão é dos mesmos estados: {len(c['lentas_nos_dois'])} UFs ficaram acima da mediana do 99% nos dois anos "
-        f"({_nomes(c['lentas_nos_dois'])}), e a ordem tem correlação de postos de {num(res['spearman_ufs'], 2)}. Fuso não "
+        f"({lista(c['lentas_nos_dois'])}), e a ordem tem correlação de postos de {num(res['spearman_ufs'], 2)}. Fuso não "
         f"explica: as {EXT.get(len(f['ufs_fora_de_brasilia']), len(f['ufs_fora_de_brasilia']))} UFs fora da hora de Brasília chegaram aos 99% em mediana às {_hm(f['mediana_2026_fora'])}, "
         f"antes das demais ({_hm(f['mediana_2026_brasilia'])}), e {fuso}.",
         "verificado",
@@ -359,7 +358,7 @@ def _pausa(T: dict) -> str:
         f"{num(at['mediana_s'], 0)} segundos depois do recebimento, e {num(at['ate_60s_pct'], 1)}% em até um minuto. Na "
         f"pausa de 2026, nenhum boletim das {len(rec['ufs'])} UFs tem carimbo de recebimento de {l26['de_hora']} a "
         f"{l26['ate_hora']} ({num(l26['minutos'], 1)} minutos), contra no máximo {num(l22['minutos'] * 60, 0)} segundos "
-        f"em 2022 no mesmo relógio, e os arquivos de UF ficam sem versão nova de {ger['de']} a {ger['ate']}. O tempo é do "
+        f"em 2022 no mesmo relógio. O tempo é do "
         f"tribunal, não dos estados: {frase99}{frase90}.",
         "verificado",
     )

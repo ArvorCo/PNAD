@@ -12,7 +12,6 @@ from html import escape
 
 from .pagina_comum import (
     Dados,
-    caixa,
     checar,
     figura_catalogo,
     inteiro,
@@ -69,13 +68,10 @@ def documentos(A: dict) -> str:
         f"tribunal ({_fonte(A, 'tse_nota_tecnica_2020', 'nota técnica do TSE, 17/11/2020')}; "
         f"{_fonte(A, 'aosfatos_sala_cofre_2020', 'Aos Fatos, 28/11/2020')}). A nota diz que as tabelas recebiam mais de "
         f"{milhoes(v['linhas_por_minuto_nota_tse_2020'], 0)} de linhas por minuto a partir das 17h e que a lentidão daquela noite "
-        "veio do otimizador do banco: o plano de execução feito com as tabelas vazias não servia com elas cheias. O "
-        "portal de transparência lista depois a expansão do contrato Oracle Cloud at Customer e suporte Oracle em 2025 "
-        f"({_fonte(A, 'tse_contratacoes_tic', 'TSE, contratações de TIC')}). Nenhum documento lido diz em que banco e "
-        "equipamento rodaram a totalização e a divulgação de 2026; o anexo técnico não abriu (o portal respondeu “muitas "
-        "requisições”). O tribunal disse que o congestionamento ficou na divulgação, na “conversão dos dados”, e que a "
-        f"totalização não foi afetada ({_fonte(A, 'tse_encerramento_2026', 'TSE, 04/10/2026')}; "
-        f"{_fonte(A, 'cnn_congestionamento_2026', 'CNN Brasil, 04/10/2026')}). Não há relatório técnico.",
+        "veio do otimizador do banco, com plano de execução feito para tabelas vazias. Contratos posteriores ampliam o "
+        f"Oracle ({_fonte(A, 'tse_contratacoes_tic', 'TSE, contratações de TIC')}), mas nenhum documento lido diz em que "
+        "banco rodaram a totalização e a divulgação de 2026. O tribunal pôs o congestionamento na “conversão dos "
+        f"dados” da divulgação ({_fonte(A, 'tse_encerramento_2026', 'TSE, 04/10/2026')}); não há relatório técnico.",
         "verificado",
     )
 
@@ -165,21 +161,11 @@ def volume(A: dict) -> str:
 
 def mecanismo(A: dict) -> str:
     return p(
-        "Um banco relacional engasga com pouco volume de quatro jeitos: índices (cada índice é mais uma escrita por "
-        "linha), totais atualizados no lugar (todas as transações disputam a trava da linha do país), soma recalculada a "
-        "cada lote (o custo cresce com o total) e publicação no mesmo caminho da carga. E fila não cresce em linha reta: "
-        "perto da capacidade a espera explode, e entre 18h e 20h chega o país inteiro.",
+        "Banco relacional engasga com pouco volume quando cada lote atualiza índices e totais no lugar (todas as "
+        "transações disputam a linha do país), recalcula a soma ou publica no mesmo caminho da carga. Perto da "
+        "capacidade a fila não cresce em linha reta: a espera explode.",
         "inferencia",
     )
-
-
-ANALOGIA = caixa(
-    "analogy",
-    "Em linguagem de casa",
-    "Um caixa de padaria anota cada venda e soma a fita no fim. Outro, a cada venda, reconta a gaveta e pendura um "
-    "cartaz novo com o total. Com a fila dobrando o quarteirão, o segundo para de atender e o cartaz fica parado numa "
-    "hora antiga. Ninguém roubou nada; o método não aguenta a hora do rush.",
-)
 
 
 # ------------------------------------------------------------------ não engasga
@@ -197,11 +183,9 @@ def desenho(A: dict) -> str:
         "recalcular nada.</li>"
         "<li>Publicar por fotografia assíncrona e assinada, a cada meio minuto, com o número do último evento incluído: "
         "se a vitrine atrasa, a soma segue.</li>"
-        "<li>Ensaiar com o volume real. Em 2020 só dois de cinco testes rodaram no equipamento novo, e a nota técnica "
-        "admite que a calibragem teria evitado o atraso.</li>"
-        f"<li>Banco distribuído só por disponibilidade entre centros de dados: a noite inteira cabe em "
-        f"{num(v['linhas_voto_total'] / 1e6, 0)} milhões de linhas. Fila, totais incrementais e publicação assíncrona "
-        "rodam sobre um banco relacional comum, Oracle inclusive.</li></ol>",
+        "<li>Ensaiar com o volume real: em 2020 só dois de cinco testes rodaram no equipamento novo.</li>"
+        f"<li>Banco comum, Oracle inclusive: a noite cabe em {num(v['linhas_voto_total'] / 1e6, 0)} milhões de linhas; "
+        "banco distribuído só por disponibilidade.</li></ol>",
         "Recomendação ao TSE.",
     )
 
@@ -209,14 +193,11 @@ def desenho(A: dict) -> str:
 def uber(A: dict) -> str:
     v = A["volume"]
     return p(
-        "É o padrão de quem tem volume muito maior. A Uber usa o Kafka como espinha dorsal de eventos, com trilhões de "
-        f"mensagens por dia ({_fonte(A, 'uber_kafka_2020', 'Uber Engineering, 2020')}; "
-        f"{_fonte(A, 'uber_sigmod_2021', 'SIGMOD 2021')}), e já passava de um milhão de escritas por segundo no Cassandra "
-        f"em 2016 ({_fonte(A, 'highscalability_uber_2016', 'High Scalability')}; "
-        f"{_fonte(A, 'uber_cassandra_2023', 'Uber Engineering, 2023')}), cerca de "
-        f"{num(1e6 / v['pico_linhas_por_segundo'], 0)} vezes o pico de linhas de voto de 2026. O TSE já tem fila: em 2022 "
-        f"a TI descreveu a chegada dos boletins como “uma fila de banco” ({_fonte(A, 'conjur_fila_2022', 'ConJur')}). O "
-        "ponto é o que vem depois dela.",
+        "É o padrão de quem tem volume muito maior: a Uber leva trilhões de mensagens por dia no Kafka "
+        f"({_fonte(A, 'uber_kafka_2020', 'Uber Engineering, 2020')}) e já passava de um milhão de escritas por segundo "
+        f"em 2016 ({_fonte(A, 'highscalability_uber_2016', 'High Scalability')}), cerca de "
+        f"{num(1e6 / v['pico_linhas_por_segundo'], 0)} vezes o pico de linhas de voto de 2026. O TSE já tem fila "
+        f"(“uma fila de banco”, disse a TI em 2022, {_fonte(A, 'conjur_fila_2022', 'ConJur')}); o ponto é o que vem depois.",
         "verificado",
     )
 
@@ -242,7 +223,7 @@ def bloco(d: Dados) -> str:
     checar(d, ARQ, CHAVES)
     h = '<h3 id="arquitetura">Onde um sistema como esse engasga</h3>'
     h += documentos(A) + hipotese_autor() + carimbo(A)
-    h += volume(A) + _fig("volume_noite", d) + mecanismo(A) + ANALOGIA
+    h += volume(A) + _fig("volume_noite", d) + mecanismo(A)
     h += '<h3 id="arquitetura-ideal">O desenho que não engasga</h3>'
     h += desenho(A) + uber(A) + _fig("arquitetura_totalizacao", d) + publicar(A)
     return h

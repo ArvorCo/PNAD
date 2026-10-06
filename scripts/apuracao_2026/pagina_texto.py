@@ -16,7 +16,6 @@ from .pagina_comum import (
     hora,
     inteiro,
     milhoes,
-    nome_proprio,
     nota,
     num,
     p,
@@ -308,7 +307,7 @@ def falha_camadas(
         else ""
     )
     h = p(
-        f"Três fontes, três relógios. No banco, às {d['hora_brt']} a soma dos 28 arquivos de UF tinha "
+        f"Três fontes, três relógios. No banco, às {d['hora_brt']} a soma dos arquivos de UF tinha "
         f"{inteiro(d['secoes'])} seções a mais que o nacional ({num(d['pp_do_total'], 2)}% do total). O aplicativo "
         f"oficial {falha_app_curta(L, linhas, hora_app)}.{tse}",
         "verificado",
@@ -439,14 +438,3 @@ def exterior_b(E: dict) -> str:
         else ""
     )
     return p("Maiores colégios: " + lista(lider) + "." + extra, "verificado")
-
-
-def exterior_c(E: dict) -> str:
-    hl = E["hora_local"]
-    w = hl["mais_adiantadas"][0]
-    return p(
-        f"O TSE imprime a hora de totalização no relógio local: {nome_proprio(w['nome'])} aparece totalizada em "
-        f"{escape(w['totalizacao_impressa'])}, num arquivo gerado às {hora(w['primeira_versao_totalizada_gerada_brt'], True)} de 04/10 "
-        f"em Brasília. É fuso, não erro de contagem.",
-        "verificado",
-    )
