@@ -194,6 +194,13 @@ html:not(.js) .fz-ctl,html:not(.js) .fz-zoom,html:not(.js) .fz-res{display:none}
 .fs-terr{font-size:14px;border-left:3px solid #5b2a86;padding-left:8px}
 .fs-cob{margin:4px 0;padding-left:18px;font:14px/1.5 var(--sans)}
 #fiscais .fontes li,.fs-cob li{overflow-wrap:anywhere}
+.fs-cens{margin:12px 0}
+.fs-cen{border-left:4px solid var(--line);padding:4px 0 4px 14px;margin:14px 0}
+.fs-cen h4{margin:0 0 6px;font:700 17px/1.3 var(--sans)}
+.fs-cen p{margin:0 0 8px}
+.fs-casos-lista li{margin:0 0 10px;overflow-wrap:anywhere}
+.fs-casos td,.fs-casos th{font-size:14.5px;vertical-align:top}
+.fs-casos td:nth-child(4){min-width:240px}
 """
 
 JS = r"""
