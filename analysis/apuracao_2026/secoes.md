@@ -1,6 +1,6 @@
 # Análise por seção (boletins de urna), presidente, 1º turno de 2026
 
-Gerado em 2026-10-06T06:25:20Z por `scripts/apuracao-2026-secoes.py`. Dados em `analysis/apuracao_2026/dados/secoes.json` (contrato em `analysis/apuracao_2026/CONTRATO_SECOES.md`).
+Gerado em 2026-10-06T23:38:00Z por `scripts/apuracao-2026-secoes.py`. Dados em `analysis/apuracao_2026/dados/secoes.json` (contrato em `analysis/apuracao_2026/CONTRATO_SECOES.md`).
 
 > Seção atípica é seção que pede explicação, não indício de irregularidade. O que resolve cada caso é documento: ata da mesa, log da urna e plano de alocação das urnas do TRE.
 

@@ -12,6 +12,11 @@ intervalo de 95% por bootstrap de unidades (2.000 reamostras).
 `reguas` junta as quatro réguas nacionais (zona, prédio, linha de base da seção
 em 2022 e troca de urna entre as eleições) e escreve a leitura a partir do
 tamanho máximo e de o sinal mudar ou não entre elas.
+
+`voto_por_uf_total` e `voto_por_pais_modelo` são a comparação bruta das figuras
+de barras simples: o total de cada UF e, no exterior, cada país por modelo, com
+o país tirado da tabela de cidades do exterior (código TSE da cidade para o
+código ISO do país).
 """
 
 from __future__ import annotations
@@ -24,6 +29,7 @@ from typing import Any
 import numpy as np
 import pandas as pd
 
+from .dados import continente, pais_nome
 from .secoes_2022 import casar
 from .secoes_base import FLAVIO, LULA, Base, num, pct, r2
 
@@ -32,6 +38,9 @@ BOOT = 2000
 SEMENTE = 20261005
 MIN_ZONA = 20
 MIN_LOCAL = 1
+EXTERIOR = "zz"
+TIPOS_CEDULA = (3, 4, 5)
+"""Tipos de arquivo do boletim com cédula (Sistema de Apuração, `bu.asn1`)."""
 
 # métrica: (numerador, denominador) ou, para variação contra 2022,
 # (numerador 2026, denominador 2026, numerador 2022, denominador 2022)
@@ -278,6 +287,106 @@ def voto_por_uf_modelo(df: pd.DataFrame) -> list[dict[str, Any]]:
     return out
 
 
+COLS_VOTO = ["votantes", "validos", f"v{LULA}", f"v{FLAVIO}", "abstencao", "aptos"]
+
+
+def _celula(x: Mapping[str, Any], secoes: int) -> dict[str, Any]:
+    """Somas de uma célula e as parcelas (mesma regra de `voto_por_uf_modelo`)."""
+    return {
+        "secoes": int(secoes),
+        "votantes": int(x["votantes"]),
+        "validos": int(x["validos"]),
+        "lula": int(x[f"v{LULA}"]),
+        "flavio": int(x[f"v{FLAVIO}"]),
+        "lula_pct": pct(int(x[f"v{LULA}"]), int(x["validos"])),
+        "flavio_pct": pct(int(x[f"v{FLAVIO}"]), int(x["validos"])),
+        "abstencao_pct": pct(int(x["abstencao"]), int(x["aptos"])),
+    }
+
+
+def voto_por_uf_total(df: pd.DataFrame) -> list[dict[str, Any]]:
+    """Total de cada UF em todas as seções válidas, com e sem modelo."""
+    g = df.groupby("uf")[COLS_VOTO].sum()
+    n = df.groupby("uf").size()
+    reg = df.groupby("uf")["regiao"].first()
+    return [
+        {"uf": str(uf).upper(), "regiao": reg[uf], **_celula(g.loc[uf], n[uf])}
+        for uf in sorted(g.index, key=str)
+    ]
+
+
+def voto_por_pais_modelo(
+    df: pd.DataFrame, cidades: Mapping[str, Mapping[str, Any]] | None, fonte: str
+) -> dict[str, Any] | None:
+    """Exterior: voto por país e modelo de urna, com o total do país.
+
+    `cidades` liga o código TSE da cidade do exterior (`mun`) ao código ISO do
+    país (`pais`) e ao nome da cidade (`nm`); nome e continente do país vêm de
+    `dados.PAISES`. Seção cuja cidade não está na tabela fica em `sem_pais`,
+    nunca num país adivinhado. `secoes_cedula`: seções cujo boletim é do Sistema
+    de Apuração com cédula (tipo de arquivo 3, 4 ou 5).
+    """
+    if cidades is None:
+        return None
+    ext = df[df["uf"].astype(str).str.lower() == EXTERIOR]
+    if ext.empty:
+        return None
+    d = ext.assign(
+        _p=ext["mun"].map(lambda m: (cidades.get(str(m)) or {}).get("pais")),
+        _m=ext["modelo_urna"].fillna("sem modelo"),
+        _ced=ext["tipo_arquivo"].isin(TIPOS_CEDULA).astype(int),
+    )
+    sem = d[d["_p"].isna()]
+    d = d[d["_p"].notna()]
+    ordem = {m: i for i, m in enumerate(ordenar_modelos(sorted(d["_m"].unique())))}
+    paises = []
+    for p, g in d.groupby("_p"):
+        somas = g.groupby("_m")[[*COLS_VOTO, "_ced"]].sum()
+        n = g.groupby("_m").size()
+        modelos = [
+            {
+                "modelo": m,
+                **_celula(somas.loc[m], n[m]),
+                "secoes_cedula": int(somas.loc[m, "_ced"]),
+            }
+            for m in sorted(somas.index, key=lambda m: ordem[m])
+        ]
+        cid = (
+            g.groupby("mun")[["votantes"]]
+            .sum()
+            .join(g.groupby("mun").size().rename("n"))
+        )
+        paises.append(
+            {
+                "pais": str(p),
+                "pais_nome": pais_nome(str(p)),
+                "continente": continente(str(p)),
+                "total": _celula(g[COLS_VOTO].sum(), len(g)),
+                "modelos": modelos,
+                "cidades": [
+                    {
+                        "mun_tse": str(m),
+                        "nome": str(cidades[str(m)].get("nm") or m),
+                        "secoes": int(c["n"]),
+                        "votantes": int(c["votantes"]),
+                    }
+                    for m, c in cid.sort_values("votantes", ascending=False).iterrows()
+                ],
+            }
+        )
+    paises.sort(key=lambda x: (-x["total"]["votantes"], x["pais"]))
+    na_tabela = {str(c.get("pais")) for c in cidades.values() if c.get("pais")}
+    return {
+        "fonte": fonte,
+        "paises_na_tabela": len(na_tabela),
+        "paises_com_secao": len(paises),
+        "secoes": len(d),
+        "votantes": int(d["votantes"].sum()),
+        "sem_pais": {"secoes": len(sem), "votantes": int(sem["votantes"].sum())},
+        "paises": paises,
+    }
+
+
 def base_2022(s22: pd.DataFrame) -> pd.DataFrame:
     """Seções de 2022 no formato das métricas (Bolsonaro na coluna v22)."""
     d = s22.dropna(subset=["aptos_2022"]).copy()
@@ -296,7 +405,12 @@ def base_2022(s22: pd.DataFrame) -> pd.DataFrame:
     return d
 
 
-def urna(base: Base, s22: pd.DataFrame | None) -> dict[str, Any]:
+def urna(
+    base: Base,
+    s22: pd.DataFrame | None,
+    cidades_exterior: Mapping[str, Mapping[str, Any]] | None = None,
+    fonte_exterior: str = "",
+) -> dict[str, Any]:
     df = base.secoes
     modelos = ordenar_modelos(sorted(df["modelo_urna"].dropna().unique()))
     zona = estimador(
@@ -326,6 +440,10 @@ def urna(base: Base, s22: pd.DataFrame | None) -> dict[str, Any]:
         "por_uf": _por_uf(df),
         "bruto": _bruto(df, METRICAS_2026),
         "voto_por_uf_modelo": voto_por_uf_modelo(df),
+        "voto_por_uf_total": voto_por_uf_total(df),
+        "voto_por_pais_modelo": voto_por_pais_modelo(
+            df, cidades_exterior, fonte_exterior
+        ),
         "dentro_zona": zona,
         "dentro_local": local,
     }

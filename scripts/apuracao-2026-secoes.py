@@ -57,6 +57,7 @@ DB_APURACAO = ROOT / "apuracao/data/apuracao.sqlite"
 LOG = ROOT / "apuracao/data/logs/secoes-20261005.log"
 FINAL = ROOT / "apuracao/data/boletins/final.json"
 ANOMALIAS = ROOT / "analysis/apuracao_2026/dados/anomalias.json"
+EXTERIOR_CIDADES = ROOT / "apuracao/public/exterior_cidades.json"
 ZIP_VOTOS_2022 = (
     ROOT / "data/raw/tse_resultados/votacao_secao_2022/votacao_secao_2022_BR.zip"
 )
@@ -77,6 +78,29 @@ def rel(p: Path) -> str:
         return str(p.relative_to(ROOT))
     except ValueError:
         return str(p)
+
+
+FONTE_EXTERIOR = {
+    "chave": "exterior_cidades",
+    "caminho": "apuracao/public/exterior_cidades.json",
+    "descricao": (
+        "cidades do exterior: código TSE da cidade, nome e código ISO do país; nome "
+        "e continente do país em scripts/apuracao_2026/dados.py (PAISES)"
+    ),
+}
+
+
+def cidades_exterior() -> dict[str, dict[str, Any]] | None:
+    """Tabela de cidades do exterior por código TSE; ausente vira None."""
+    if not EXTERIOR_CIDADES.exists():
+        return None
+    linhas = json.loads(EXTERIOR_CIDADES.read_text(encoding="utf-8"))
+    return {str(c["cd"]): c for c in linhas}
+
+
+def bloco_urna(base: secoes_base.Base, s22: Any) -> dict[str, Any]:
+    fonte = f"{FONTE_EXTERIOR['caminho']}; {FONTE_EXTERIOR['descricao']}"
+    return secoes_urna.urna(base, s22, cidades_exterior(), fonte)
 
 
 def confere_nacional(base: secoes_base.Base, final: Path) -> dict[str, Any] | None:
@@ -170,7 +194,9 @@ def main(argv: list[str] | None = None) -> int:
         s22 = secoes_2022.presidente_2022(ZIP_VOTOS_2022, ZIP_DETALHE_2022, CACHE_2022)
     if a.so_urna:
         dados = json.loads(a.saida_json.read_text(encoding="utf-8"))
-        dados["urna"] = secoes_urna.urna(base, s22)
+        dados["urna"] = bloco_urna(base, s22)
+        if not any(f.get("chave") == "exterior_cidades" for f in dados["fontes"]):
+            dados["fontes"].append(FONTE_EXTERIOR)
         dados["gerado_em"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
         return grava(dados, a, cob)
     anomalias = json.loads(ANOMALIAS.read_text(encoding="utf-8"))
@@ -215,6 +241,7 @@ def main(argv: list[str] | None = None) -> int:
                 "caminho": rel(ANOMALIAS),
                 "descricao": "triagem por zona já publicada (50 zonas mais atípicas)",
             },
+            FONTE_EXTERIOR,
         ],
         "cobertura": cob,
         "candidatos": [
@@ -223,7 +250,7 @@ def main(argv: list[str] | None = None) -> int:
         ],
         "extremos": secoes_extremos.extremos(base, anomalias["topo"], s22),
         "clusters": secoes_clusters.clusters(base),
-        "urna": secoes_urna.urna(base, s22),
+        "urna": bloco_urna(base, s22),
         "outras": secoes_extremos.outras(base),
         "limites": secoes_texto.LIMITES,
     }

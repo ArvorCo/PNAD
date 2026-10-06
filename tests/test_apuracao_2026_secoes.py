@@ -1133,3 +1133,73 @@ def test_voto_por_uf_modelo_soma_e_ordena():
     assert sp22["secoes"] == 2 and sp22["validos"] == 200
     assert sp22["flavio"] == 120 and sp22["flavio_pct"] == 60.0
     assert sp22["lula_pct"] == 40.0 and sp22["abstencao_pct"] == 18.52
+
+
+def _df_exterior() -> pd.DataFrame:
+    return pd.DataFrame(
+        {
+            "uf": ["zz", "zz", "zz", "zz", "sp"],
+            "regiao": ["Exterior", "Exterior", "Exterior", "Exterior", "Sudeste"],
+            "mun": ["29416", "30112", "30112", "99999", "71072"],
+            "modelo_urna": ["UE2013", "UE2015", None, "UE2013", "UE2022"],
+            "tipo_arquivo": [1, 1, 5, 1, 1],
+            "votantes": [100, 80, 20, 10, 300],
+            "validos": [90, 70, 18, 9, 280],
+            "v13": [30, 40, 9, 3, 100],
+            "v22": [60, 20, 7, 6, 150],
+            "abstencao": [200, 100, 30, 5, 50],
+            "aptos": [300, 180, 50, 15, 350],
+        }
+    )
+
+
+def test_voto_por_pais_modelo_liga_cidade_a_pais_sem_adivinhar():
+    cidades = {
+        "29416": {"cd": "29416", "nm": "BOSTON", "pais": "US"},
+        "30112": {"cd": "30112", "nm": "MIAMI", "pais": "US"},
+        "11111": {"cd": "11111", "nm": "LISBOA", "pais": "PT"},
+    }
+    out = su.voto_por_pais_modelo(_df_exterior(), cidades, "tabela")
+    assert out["paises_na_tabela"] == 2 and out["paises_com_secao"] == 1
+    # a seção da cidade 99999 não está na tabela: fica fora, declarada
+    assert out["sem_pais"] == {"secoes": 1, "votantes": 10}
+    assert out["secoes"] == 3 and out["votantes"] == 200
+    (us,) = out["paises"]
+    assert us["pais_nome"] == "Estados Unidos"
+    assert us["continente"] == "América do Norte"
+    assert [m["modelo"] for m in us["modelos"]] == ["UE2013", "UE2015", "sem modelo"]
+    assert us["total"]["validos"] == 178 and us["total"]["flavio"] == 87
+    assert us["total"]["flavio_pct"] == 48.88
+    sem = us["modelos"][2]
+    assert sem["secoes_cedula"] == 1 and sem["lula_pct"] == 50.0
+    assert [c["nome"] for c in us["cidades"]] == ["BOSTON", "MIAMI"]
+    assert us["cidades"][1]["secoes"] == 2
+
+
+def test_voto_por_pais_modelo_sem_tabela_e_sem_exterior():
+    df = _df_exterior()
+    assert su.voto_por_pais_modelo(df, None, "x") is None
+    assert su.voto_por_pais_modelo(df[df["uf"] == "sp"], {}, "x") is None
+
+
+def test_voto_por_uf_total_soma_com_e_sem_modelo():
+    out = {x["uf"]: x for x in su.voto_por_uf_total(_df_exterior())}
+    assert set(out) == {"SP", "ZZ"}
+    zz = out["ZZ"]
+    assert zz["secoes"] == 4 and zz["validos"] == 187 and zz["lula"] == 82
+    assert zz["abstencao_pct"] == round(100 * 335 / 545, 2)
+    assert out["SP"]["regiao"] == "Sudeste"
+
+
+def test_json_exterior_por_pais_fecha_com_o_total(dados):
+    u = dados["urna"]
+    ext = u.get("voto_por_pais_modelo")
+    if ext is None:
+        pytest.skip("secoes.json sem a tabela de cidades do exterior")
+    zz = next(x for x in u["voto_por_uf_total"] if x["uf"] == "ZZ")
+    assert ext["votantes"] + ext["sem_pais"]["votantes"] == zz["votantes"]
+    for p in ext["paises"]:
+        t = p["total"]
+        assert sum(m["votantes"] for m in p["modelos"]) == t["votantes"]
+        assert sum(m["flavio"] for m in p["modelos"]) == t["flavio"]
+        assert sum(c["secoes"] for c in p["cidades"]) == t["secoes"]
