@@ -13,9 +13,10 @@ from collections import Counter
 from collections.abc import Callable
 from html import escape
 
-from .pagina_comum import inteiro, milhoes, nota, num, p, sinal, tabela
+from .pagina_comum import NOME_UF, inteiro, milhoes, nota, num, p, sinal, tabela
 from .pagina_fig_base import nome_bonito
 from .pagina_fig_secoes import grupos_extenso, local_ref
+from .pagina_fig_urna_voto import modelos_ordenados, por_uf, referencia_nacional
 from .pagina_texto import lista
 
 
@@ -361,17 +362,99 @@ def urna_a(S: dict) -> str:
         tot[x["modelo"]] += x["secoes"]
     soma = sum(tot.values()) or 1
     dist = lista([f"{m} {pct(100 * tot[m] / soma)}" for m in U["modelos"] if tot[m]])
-    bruto = {b["modelo"]: b for b in U["bruto"]}
-    velho, novo = U["modelos"][0], U["modelos"][-1]
     frase = f"Seções por modelo: {dist}."
-    if velho in bruto and novo in bruto:
-        bv, bn = bruto[velho], bruto[novo]
-        frase += (
-            f" Sem controle, Flávio tem {pct(bn['flavio_pct'])} dos válidos nas {novo} e {pct(bv['flavio_pct'])} nas "
-            f"{velho}; Lula, {pct(bn['lula_pct'])} e {pct(bv['lula_pct'])}. A diferença bruta engana: urna nova vai "
-            "primeiro para capital e cidade grande, que já votam diferente."
-        )
     return p(frase, "verificado")
+
+
+def urna_voto_nacional(S: dict) -> str:
+    U = S["urna"]
+    B = {b["modelo"]: b for b in U["bruto"]}
+    mods = [m for m in modelos_ordenados(U) if m in B]
+    if len(mods) < 2:
+        return ""
+    ref = referencia_nacional(U)
+    velho, novo = mods[0], mods[-1]
+    bv, bn = B[velho], B[novo]
+    longe = max(mods, key=lambda m: abs(B[m]["flavio_pct"] - ref["flavio_pct"]))
+    resto = [m for m in mods if m != longe]
+    faixa = (
+        min(B[m]["flavio_pct"] for m in resto),
+        max(B[m]["flavio_pct"] for m in resto),
+    )
+    h = p(
+        f"Sem controle, Flávio tem {pct(bv['flavio_pct'])} dos válidos nas {velho} e {pct(bn['flavio_pct'])} nas "
+        f"{novo}; Lula, {pct(bv['lula_pct'])} e {pct(bn['lula_pct'])}. No país, {pct(ref['flavio_pct'])} e "
+        f"{pct(ref['lula_pct'])}. O modelo que mais se afasta do país é a {longe}, com "
+        f"{inteiro(B[longe]['secoes'])} seções e Flávio {pts(B[longe]['flavio_pct'] - ref['flavio_pct'])} contra o país; "
+        f"nos outros modelos Flávio fica entre {pct(faixa[0])} e {pct(faixa[1])}. A abstenção vai de "
+        f"{pct(bv['abstencao_pct'])} dos aptos nas {velho} a {pct(bn['abstencao_pct'])} nas {novo}.",
+        "verificado",
+    )
+    frase = (
+        "Diferença bruta não é efeito da máquina. Urna nova vai primeiro para capital e cidade grande, e a urna "
+        "velha que sobra fica onde o eleitorado é outro"
+    )
+    if bv["abstencao_pct"] > bn["abstencao_pct"]:
+        frase += (
+            ": a abstenção mais alta das urnas antigas é sinal desse lugar, não de um equipamento que afaste "
+            "eleitor"
+        )
+    return h + p(frase + ".", "inferencia")
+
+
+def urna_voto_uf(S: dict) -> str:
+    P = por_uf(S["urna"])
+    difs = {u: o["dif"] for u, o in P.items() if o["dif"]}
+    if not difs:
+        return ""
+    mais = sorted(difs, key=lambda u: -difs[u]["flavio"])
+    pos = [u for u in mais if round(difs[u]["flavio"], 1) > 0]
+    neg = [u for u in mais if round(difs[u]["flavio"], 1) < 0]
+    grandes = [u for u in mais if abs(difs[u]["flavio"]) >= 10]
+
+    def caso(u: str) -> str:
+        x = difs[u]
+        return (
+            f"{NOME_UF.get(u, u)} ({x['novo']} contra {x['velho']}, Flávio "
+            f"{pts(x['flavio'])}; Lula {pts(x['lula'])})"
+        )
+
+    frase = (
+        f"Dentro da UF, a urna mais nova dá mais a Flávio que a mais velha em {len(pos)} das {len(difs)} UFs "
+        f"e menos em {len(neg)}"
+        + (
+            f"; em {len(difs) - len(pos) - len(neg)}, empata na primeira casa. "
+            if len(pos) + len(neg) < len(difs)
+            else ". "
+        )
+    )
+    if pos and neg:
+        frase += (
+            f"Os extremos vão para os dois lados: {caso(mais[0])} e {caso(mais[-1])}. "
+        )
+    frase += f"Em {len(grandes)} UFs a diferença passa de 10 pontos."
+    h = p(frase, "verificado")
+    if not (pos and neg):
+        return h + p("Diferença bruta não é efeito da máquina.", "inferencia")
+    rg = S["urna"].get("reguas") or {}
+    mx, lim = rg.get("max_abs_pp"), rg.get("limiar_pp")
+    controle = ""
+    if mx is not None:
+        controle = (
+            " A UF é controle grosso demais; nas réguas abaixo, que comparam dentro da zona e do prédio, a "
+            + (
+                "diferença fica abaixo de um ponto."
+                if lim is not None and mx < lim
+                else f"diferença chega a {num(mx, 1)} pontos em módulo."
+            )
+        )
+    return h + p(
+        "A diferença entre modelos dentro da UF não é pequena, mas troca de sinal de um estado para o outro "
+        "e quase se anula no país. Um equipamento que mudasse voto empurraria para o mesmo lado em toda parte. "
+        "O que muda de sinal é o lugar: em cada UF o modelo novo foi para um pedaço diferente do território, e "
+        f"ali o voto já era outro.{controle} Diferença bruta não é efeito da máquina.",
+        "inferencia",
+    )
 
 
 def urna_reguas(S: dict) -> str:
@@ -557,6 +640,8 @@ def bloco(S: dict, fig: Callable[[str], str]) -> str:
     h += f"<h3>{grupos_extenso(k).capitalize()} grupos de seções</h3>"
     h += fig("clusters_secoes") + clusters_a(S) + fig("clusters_regiao") + clusters_b(S)
     h += "<h3>Modelo de urna</h3>" + fig("modelo_urna_uf") + urna_a(S)
+    h += fig("voto_por_modelo_nacional") + urna_voto_nacional(S)
+    h += fig("voto_por_modelo_uf") + urna_voto_uf(S)
     h += fig("urna_reguas") + urna_reguas(S)
     h += fig("modelo_urna_zona") + urna_pares(S)
     h += (

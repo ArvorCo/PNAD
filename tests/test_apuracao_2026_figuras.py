@@ -398,3 +398,66 @@ def test_elipse_cov_e_topo():
     # girada 90 graus, o topo fica a um semieixo maior acima do centro
     x, y = topo_elipse(0, 0, 4.0, 2.0, 90.0)
     assert abs(x) < 1e-9 and abs(y + 4.0) < 1e-9
+
+
+@pytest.mark.parametrize("nome", ["voto_por_modelo_nacional", "voto_por_modelo_uf"])
+def test_voto_por_modelo_sobre_a_fixture(nome):
+    h = FIGURAS[nome]({"secoes": _fixture()})
+    assert re.match(ABERTURA.format(nome=nome), h)
+    assert h.count("<svg") == 2 and h.count('class="fig-estreita"') == 1
+    assert nome in NOMES
+
+
+def test_voto_por_modelo_nacional_series_e_frase():
+    S = _fixture()
+    h = FIGURAS["voto_por_modelo_nacional"]({"secoes": S})
+    for k in ("cand", "abstencao_pct", "brancos_pct", "nulos_pct"):
+        assert f'data-alt="{k}"' in h
+        assert f'data-alt-show="{k}"' in h
+    assert "Comparação bruta: mistura o modelo com a geografia" in h
+    tips = _tips(h)
+    n = len(S["urna"]["bruto"])
+    # uma ficha por modelo e série (Flávio, Lula, abstenção, brancos, nulos)
+    assert len(tips) == 5 * n
+    assert "UE2010: Flávio" in json.dumps(tips, ensure_ascii=False)
+    assert 'class="fig-estreita"' in h
+
+
+def test_voto_por_modelo_uf_omite_celulas_pequenas():
+    from apuracao_2026.pagina_fig_urna_voto import MINIMO_SECOES, por_uf
+
+    S = _fixture()
+    U = S["urna"]
+    P = por_uf(U)
+    assert len(P) == len({x["uf"] for x in U["voto_por_uf_modelo"]})
+    pequenas = [x for x in U["voto_por_uf_modelo"] if x["secoes"] < MINIMO_SECOES]
+    assert pequenas
+    assert sum(len(o["omitidas"]) for o in P.values()) == len(pequenas)
+    h = FIGURAS["voto_por_modelo_uf"]({"secoes": S})
+    assert len(_tips(h)) == len(U["voto_por_uf_modelo"]) - len(pequenas)
+    assert f"Fora dos painéis: {len(pequenas)} combinações" in h
+    assert 'data-alt="flavio"' in h and 'data-alt="lula"' in h
+    # um painel por UF em cada versão (larga e empilhada)
+    assert h.count('font-weight="700">AC</text>') == 2
+    # a parcela da UF soma todas as seções, inclusive as omitidas do painel
+    o = P["AC"]
+    xs = [x for x in U["voto_por_uf_modelo"] if x["uf"] == "AC"]
+    assert o["flavio_pct"] == pytest.approx(
+        100 * sum(x["flavio"] for x in xs) / sum(x["validos"] for x in xs)
+    )
+
+
+def test_voto_por_modelo_uf_sem_chave_fica_pendente():
+    S = _fixture()
+    del S["urna"]["voto_por_uf_modelo"]
+    assert 'class="pendente"' in FIGURAS["voto_por_modelo_uf"]({"secoes": S})
+
+
+def test_texto_voto_por_modelo_sinais_e_frase_responsavel():
+    from apuracao_2026 import pagina_texto_c as T
+
+    S = _fixture()
+    h = T.urna_voto_nacional(S) + T.urna_voto_uf(S)
+    assert "Diferença bruta não é efeito da máquina" in h
+    assert "Os extremos vão para os dois lados" in h
+    assert "—" not in h

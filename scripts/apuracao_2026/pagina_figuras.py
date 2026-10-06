@@ -15,9 +15,9 @@ from . import (
     pagina_fig_estrategia,
     pagina_fig_fechamento,
     pagina_fig_fechamento_b,
+    pagina_fig_janela,
     pagina_fig_mapas,
     pagina_fig_noite,
-    pagina_fig_janela,
     pagina_fig_noite_regioes,
     pagina_fig_pesquisas,
     pagina_fig_regioes,
@@ -29,6 +29,7 @@ from . import (
     pagina_fig_senado_flavio,
     pagina_fig_terceira_via,
     pagina_fig_terceira_via_b,
+    pagina_fig_urna_voto,
 )
 from .pagina_fig_base import FIGURAS
 from .pagina_figuras_prim import (
@@ -73,6 +74,7 @@ MODULOS_CATALOGO = (
     pagina_fig_senado_flavio,
     pagina_fig_terceira_via,
     pagina_fig_terceira_via_b,
+    pagina_fig_urna_voto,
 )
 
 __all__ = [
