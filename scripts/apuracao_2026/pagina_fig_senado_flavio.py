@@ -19,6 +19,7 @@ from .pagina_comum import NOME_UF, inteiro, num, tabela
 from .pagina_fig_base import (
     FLAVIO,
     GRADE,
+    HALO,
     INK,
     MUTED,
     PAPER,
@@ -177,7 +178,7 @@ def senado_pl_x_flavio_uf(d, **_op) -> str:
             (("pl", COR_PL, ""), ("aliados", COR_BLOCO, f' stroke="{COR_PL}"'))
         ):
             b = x[chave]
-            yy = y + 5 + j * 13
+            yy = y + 3 + j * 16
             v = b["div_pp"]
             if v is None:
                 corpo.append(t(x0 + 6, yy + 10, "sem nome do PL", 13, MUTED))
@@ -193,6 +194,7 @@ def senado_pl_x_flavio_uf(d, **_op) -> str:
                     INK,
                     "start" if v >= 0 else "end",
                     mono=True,
+                    extra=HALO,
                 )
             )
         corpo.append(
@@ -236,7 +238,15 @@ def senado_pl_x_flavio_uf(d, **_op) -> str:
         "à direita mostra quantos nomes cada um lançou. Bloco aliado: direita e centro-direita, sem as candidaturas "
         "aliadas de Lula listadas no texto. Fonte: senado_x_flavio.json."
     )
-    return figura_html("senado_pl_x_flavio_uf", "".join(out), legenda_, tips, minw=820)
+    xs = [X(v) for v in vals]
+    return figura_html(
+        "senado_pl_x_flavio_uf",
+        "".join(out),
+        legenda_,
+        tips,
+        minw=820,
+        foco=(min([*xs, x0]) - 50, max([*xs, x0]) + 50, x0),
+    )
 
 
 # ------------------------------------------------------------------ melhor candidatura
@@ -278,11 +288,20 @@ def senado_vao_candidatos(d, **_op) -> str:
         lo, hi = _limites([u["melhor"][campo_v] for u in lista])
         X = escala(lo, hi, esq, W - 60)
         x0 = X(0)
+        # o cabeçalho da direita nunca sai da viewBox: se não cabe depois do
+        # zero, encosta na margem e empurra o da esquerda
+        dir_txt, esq_txt = "Senado à frente de Flávio →", "← Flávio à frente"
+        larg_dir = 0.53 * 13 * len(dir_txt)
+        xd = min(x0 + 8, W - 8 - larg_dir)
+        xe = min(x0 - 8, xd - 16)
         g = [
-            t(x0 + 8, 30, "Senado à frente de Flávio →", 13, MUTED),
-            t(x0 - 8, 30, "← Flávio à frente", 13, MUTED, "end"),
+            t(xd, 30, dir_txt, 13, MUTED),
+            t(xe, 30, esq_txt, 13, MUTED, "end"),
             _eixo(X, lo, hi, topo, base),
         ]
+        if chave == "base":
+            xs = [X(u["melhor"][campo_v]) for u in lista]
+            foco = (min([*xs, x0]) - 50, max([*xs, x0]) + 50, x0)
         for i, u in enumerate(lista):
             m, fl = u["melhor"], u["flavio"]
             y = topo + i * passo
@@ -357,7 +376,13 @@ def senado_vao_candidatos(d, **_op) -> str:
         "Fonte: senado_x_flavio.json."
     )
     return figura_html(
-        "senado_vao_candidatos", "".join(out), legenda_, tips, controles=ctl, minw=820
+        "senado_vao_candidatos",
+        "".join(out),
+        legenda_,
+        tips,
+        controles=ctl,
+        minw=820,
+        foco=foco,
     )
 
 
