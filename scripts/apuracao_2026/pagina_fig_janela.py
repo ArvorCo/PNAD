@@ -192,7 +192,7 @@ def janela_parada_uf(d, **_op) -> str:
     out.append("</svg>")
     # conferência: o nacional reproduz a soma das UFs?
     conf = [
-        '<table class="compacta"><thead><tr><th>Versão do nacional</th><th class="num">Seções</th>'
+        '<div class="table-scroll"><table class="compacta"><thead><tr><th>Versão do nacional</th><th class="num">Seções</th>'
         '<th>Soma das UFs alcançou</th><th class="num">Seções na soma</th><th class="num">Resíduo Flávio</th>'
         '<th class="num">Resíduo Lula</th><th class="num">UFs à frente antes da próxima</th></tr></thead><tbody>'
     ]
@@ -203,7 +203,7 @@ def janela_parada_uf(d, **_op) -> str:
             f"<td class=\"num\">{num(p['residuo_pp_flavio'] or 0, 3)} pp</td><td class=\"num\">{num(p['residuo_pp_lula'] or 0, 3)} pp</td>"
             f"<td class=\"num\">{inteiro(p['soma_ufs_a_frente_antes_da_proxima'] or 0)}</td></tr>"
         )
-    conf.append("</tbody></table>")
+    conf.append("</tbody></table></div>")
     total_vv = sum(g["vv"] for g in por.values())
     total_st = sum(g["st"] for g in por.values())
     p1 = next((p for p in nac if p["gerado_brt"].endswith("19:14:08")), None)

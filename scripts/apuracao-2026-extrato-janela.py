@@ -180,7 +180,7 @@ def main() -> None:
     tot = {
         k: sum(x[k] or 0 for x in linhas)
         for k in linhas[0]
-        if k not in ("uf",) and not k.startswith("arquivo")
+        if k != "uf" and not k.startswith("arquivo")
     }
     md = [
         "# Janela 19:14:08 a 20:04:39 de 04/10/2026, por UF",
