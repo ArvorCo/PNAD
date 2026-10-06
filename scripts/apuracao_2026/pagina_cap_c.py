@@ -7,8 +7,19 @@ from html import escape
 from . import pagina_texto_b as T
 from . import pagina_texto_c as TC
 from . import pagina_texto_fechamento as TF
+from . import pagina_texto_reguas as PR
 from . import pagina_texto_terceira_via as TV
-from .pagina_comum import Capitulo, Dados, checar, limites, num, secao, sinal, tabela
+from .pagina_comum import (
+    Capitulo,
+    Dados,
+    checar,
+    limites,
+    nota,
+    num,
+    secao,
+    sinal,
+    tabela,
+)
 from .pagina_texto import fig
 
 IMG = "img/apuracao_2026"
@@ -27,6 +38,7 @@ def tabela_pesquisas(PV: dict) -> str:
         key=lambda x: abs(x["publicado"]["diferenca_lula_menos_flavio"]["erro"]),
     )
     linhas = []
+    fins = [x["campo"]["fim"] for x in pes]
     for x in pes:
         pub = x["publicado"]
         rep_err = (
@@ -54,7 +66,8 @@ def tabela_pesquisas(PV: dict) -> str:
             "Margem 95% da diferença",
         ],
         linhas,
-        "Pesquisas nacionais com campo encerrado de 25/09 a 03/10, nos válidos pela regra da casa. Ordem: menor erro absoluto "
+        f"Pesquisas nacionais com campo encerrado de {dm(min(fins))} a {dm(max(fins))}, nos válidos pela regra da casa. "
+        "Ordem: menor erro absoluto "
         "na diferença. ● última onda do instituto.",
     )
 
@@ -138,7 +151,7 @@ def r_anomalias(d: Dados, cap: Capitulo) -> str:
     lim = [
         escape(x).replace("não é fraude", "não é irregularidade")
         for x in A["limites"]
-        if not x.startswith("Zona pequena")
+        if not x.startswith(("Zona pequena", "Explicação provável"))
     ]
     S = d.get("secoes.json")
     if S is None:
@@ -164,6 +177,46 @@ def r_anomalias(d: Dados, cap: Capitulo) -> str:
 # ------------------------------------------------------------------ 13
 
 
+def _tabela_movimentos(E: dict, TVJ: dict | None) -> str:
+    mov = sorted(E["movimentos"], key=lambda m: m.get("ordem", 99))
+    urna = PR.movimentos_urna(TVJ["reguas"]) if TVJ and "reguas" in TVJ else {}
+    linhas = []
+    for m in mov:
+        u = urna.get(m.get("ordem"))
+        if u is None:
+            esperado, pela_urna, duas = "", "", ""
+        else:
+            esperado = PR.pv(u["pesquisa"], 0)
+            if u["urna"] is None:
+                pela_urna, duas = "não se aplica", escape(u.get("nota", ""))
+            else:
+                pela_urna = PR.pv(u["urna"], 0)
+                duas = "mesmo sinal" if u["concordam"] else "sinal oposto"
+        linhas.append(
+            [
+                f"{m.get('ordem', '')}. {escape(m['titulo'])}",
+                escape(m.get("regra", "")),
+                escape(m.get("rotulo", "")),
+                esperado,
+                pela_urna,
+                duas,
+            ]
+        )
+    return tabela(
+        [
+            "Movimento",
+            "Regra",
+            "Natureza",
+            "Votos esperados",
+            "Pela urna de 2022",
+            "As duas réguas",
+        ],
+        linhas,
+        "Os dez movimentos, com a régua do capítulo e, quando ela se aplica, a da urna de 2022. Eles se sobrepõem e "
+        "não se somam.",
+    )
+
+
 def r_segundo_turno(d: Dados, cap: Capitulo) -> str:
     E = d.get("estrategia_2t.json")
     checar(
@@ -177,6 +230,7 @@ def r_segundo_turno(d: Dados, cap: Capitulo) -> str:
             "riscos",
         ],
     )
+    TVJ = d.get("terceira_via.json")
     h = secao(
         cap,
         "O caminho do 2º turno.<br><em>Juízo editorial declarado.</em>",
@@ -184,25 +238,13 @@ def r_segundo_turno(d: Dados, cap: Capitulo) -> str:
     )
     h += T.segundo_turno_a(E) + fig("transferencia_cenarios", d)
     h += T.segundo_turno_b(E) + T.segundo_turno_c(E) + fig("estoque_uf", d)
-    h += T.segundo_turno_d(E)
-    h += (
-        '<aside class="juizo"><b>Juízo editorial</b>A ordem dos dez movimentos é da casa. O número de cada um sai da regra '
-        "escrita ao lado, sobre medição publicada ou analogia declarada; nenhum é previsão, e eles não se somam.</aside>"
+    h += T.segundo_turno_d(E) + T.segundo_turno_riscos(E)
+    h += nota(
+        "juizo",
+        "A ordem dos dez movimentos é da casa. O número de cada um sai da regra escrita na tabela, sobre medição "
+        "publicada ou analogia declarada; nenhum é previsão.",
     )
-    h += fig("movimentos_2t", d)
-    mov = sorted(E["movimentos"], key=lambda m: m.get("ordem", 99))
-    h += tabela(
-        ["Movimento", "Regra", "Natureza"],
-        [
-            [
-                escape(m["titulo"]),
-                escape(m.get("regra", "")),
-                escape(m.get("rotulo", "")),
-            ]
-            for m in mov
-        ],
-    )
-    TVJ = d.get("terceira_via.json")
+    h += fig("movimentos_2t", d) + _tabela_movimentos(E, TVJ)
     if TVJ is None:
         d.aviso(
             "terceira_via.json ausente: capítulo 13 sem o voto da terceira via por cidade"
@@ -210,8 +252,11 @@ def r_segundo_turno(d: Dados, cap: Capitulo) -> str:
     else:
         checar(d, "terceira_via.json", TV.CHAVES)
         h += TV.bloco(TVJ, lambda nome: fig(nome, d))
-    h += T.segundo_turno_riscos(E) + "</section>"
-    return h
+    h += limites(
+        TV.LIMITES,
+        "Os limites das pesquisas (capítulos 10 e 11) valem para as matrizes de transferência.",
+    )
+    return h + "</section>"
 
 
 # ------------------------------------------------------------------ 14
@@ -261,7 +306,7 @@ def r_auditoria(d: Dados, cap: Capitulo) -> str:
     h += T.auditoria_a(P) + fig("auditoria_coletor", d)
     h += T.auditoria_b(L)
     erros = [
-        "Ao vivo dissemos que os arquivos municipais seguiam atualizando na parada. Nenhum arquivo de resultado foi gerado na pausa geral.",
+        "Os arquivos municipais não seguiam atualizando na pausa geral, como dissemos ao vivo (capítulo 3).",
         "A regra do coletor para cópia antiga comparava o contador de versão do TSE, que não cresce dentro do arquivo. A página usa a hora de geração.",
         "A hora de 100% de algumas UFs saiu atrasada no telão pela mesma regra; as horas desta página são as da hora de geração.",
     ]
@@ -277,5 +322,12 @@ def r_auditoria(d: Dados, cap: Capitulo) -> str:
             f'<figure><img src="{IMG}/{arq}" alt="{escape(alt)}" loading="lazy" width="1600" height="{alt_px}">'
             f"<figcaption>{escape(leg)} Print do acompanhamento.</figcaption></figure>"
         )
-    h += f'<details><summary>Prints do telão</summary><div class="galeria">{figs}</div></details></section>'
-    return h
+    h += f'<details><summary>Prints do telão</summary><div class="galeria">{figs}</div></details>'
+    h += limites(
+        [
+            "Os proporcionais por município guardam só o primeiro e o último retrato da noite.",
+            "Os boletins por seção do capítulo 12 vêm de outra coleta, feita depois da noite, e não do telão.",
+            "Campo é classificação editorial (tucano é centro-esquerda).",
+        ]
+    )
+    return h + "</section>"

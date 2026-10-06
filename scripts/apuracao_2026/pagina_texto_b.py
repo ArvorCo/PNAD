@@ -191,7 +191,6 @@ def governadores_b(G: dict) -> str:
     com_lado_todos = [v for v in vao if v.get("comparacao") != "sem apoio declarado"]
     pos = [v for v in com_lado_todos if v["vao_pp"] > 0][:3]
     neg = [v for v in com_lado_todos if v["vao_pp"] < 0][-3:]
-    nome_fin = {"FLAVIO BOLSONARO": "Flávio", "LULA": "Lula"}
 
     def f(v):
         return (
@@ -210,29 +209,15 @@ def governadores_b(G: dict) -> str:
     centro = V.get("centro", [])
     if not centro:
         return texto
-    com_lado = [c for c in centro if c["comparacao"] != "sem apoio declarado"]
     sem = [c for c in centro if c["comparacao"] == "sem apoio declarado"]
 
     def fc(c, chave):
         return f"{c['uf']} {nome_proprio(c['governador'])} {sinal(c[chave], 1)}"
 
-    partes = [
-        "O centro entra contra o finalista que a coligação apoiou: "
-        + lista(
-            [
-                fc(
-                    c,
-                    "vao_lula_pp" if c["comparado_com"] == "LULA" else "vao_flavio_pp",
-                )
-                + f" contra {nome_fin[c['comparado_com']]}"
-                for c in com_lado
-            ]
-        )
-        + "."
-    ]
+    partes = []
     if sem:
         partes.append(
-            " Sem apoio declarado, "
+            "Do centro sem apoio declarado, "
             + lista(
                 [
                     f"{fc(c, 'vao_flavio_pp')} contra Flávio ({sinal(c['vao_lula_pp'], 1)} contra Lula)"
@@ -276,22 +261,6 @@ def governadores_c(G: dict) -> str:
         f"venceu ali; em {gx['ufs_bloco_difere']}, de bloco diferente.{ptxt}",
         "verificado",
     )
-
-
-def governadores_datafolha(E: dict | None) -> str:
-    if not E:
-        return ""
-    g = E.get("governadores", {})
-    n = len(g.get("linhas_datafolha", []))
-    sg = g.get("segundo_turno_estadual", [])
-    partes = []
-    if n:
-        partes.append(
-            f"O Datafolha de setembro publicou {n} linhas medidas de governador contra presidente, em texto corrido"
-        )
-    if sg:
-        partes.append(f"os 2º turnos estaduais são em {lista([x['uf'] for x in sg])}")
-    return p("; ".join(partes) + ".", "verificado") if partes else ""
 
 
 # ------------------------------------------------------------------ 10 Pesquisas
@@ -350,12 +319,13 @@ def pesquisas_reponderacao(PV: dict) -> str:
 def pesquisas_central(PV: dict) -> str:
     cc = PV["previsao_casa"]["central"]
     mc = PV["previsao_casa"]["monte_carlo"]
+    tv = mc["intervalos_90_validos"]["terceira_via"]
     return p(
         f"A central da casa deu Flávio {num(cc['validos']['flavio'], 2)} e Lula {num(cc['validos']['lula'], 2)}; o erro na "
         f"diferença foi {sinal(cc['erro_diferenca_lula_menos_flavio'], 2)}, menor que o da média das pesquisas. A casa dava "
         f"{num(100 * mc['p_flavio_a_frente_de_lula'], 0)}% de chance de Flávio à frente: disse empate, não previu o vencedor. "
         f"A urna caiu no percentil {num(100 * mc['margem_flavio_menos_lula']['percentil_urna'], 0)}. O ponto fraco foi a "
-        "consolidação: a terceira via ficou abaixo do percentil 5.",
+        f"consolidação: a terceira via teve {pct(tv['urna'])}, abaixo do percentil 5 do Monte Carlo ({pct(tv['p05'])}).",
         "verificado",
     )
 
@@ -501,11 +471,11 @@ def segundo_turno_c(E: dict) -> str:
     eq = E["aritmetica"]["equilibrio"]
     ri = E["riscos"]["estoque_lula_maior"]
     return p(
-        f"<strong>O achado contra a tese:</strong> o risco está na base e no comparecimento. Se {pct(eq['base_flavio_trocando_para_lula_pct'])} "
+        f"O risco está na base e no comparecimento. Se {pct(eq['base_flavio_trocando_para_lula_pct'])} "
         f"da base de Flávio trocar de lado, ou {pct(eq['base_flavio_abstendo_pct'])} deixar de votar, a margem central some. O estoque "
         f"de 2022 que Lula não reconquistou ({milhoes(ri['estoque_lula'])}) é {num(ri['razao'], 2)} vezes o de Flávio "
         f"({milhoes(ri['estoque_flavio'])}).",
-        "inferencia",
+        "contrario",
     )
 
 
@@ -579,9 +549,9 @@ def auditoria_b(L: dict) -> str:
     p50 = sorted(x["p50_s"] for x in lat)
     mediana = p50[len(p50) // 2] if p50 else None
     return p(
-        f"A latência mediana do arquivo nacional na noite foi de {num(mediana, 0)} segundos (figura do capítulo 3). Inclui o "
-        "intervalo de sondagem: é teto da demora de publicação, não medida dela. Limites: a casa não tem boletim de urna por seção, os "
-        "proporcionais por município guardam só o primeiro e o último retrato, e a classificação de campo é editorial (tucano é centro-esquerda)."
+        f"A latência mediana do arquivo nacional na noite foi de {num(mediana, 0)} segundos (capítulo 3), teto da demora "
+        "de publicação, porque inclui o intervalo de sondagem.",
+        "verificado",
     )
 
 

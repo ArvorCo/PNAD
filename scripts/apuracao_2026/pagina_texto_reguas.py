@@ -10,7 +10,7 @@ from __future__ import annotations
 from collections.abc import Callable
 from html import escape
 
-from .pagina_comum import NOME_UF, inteiro, num, p, tabela
+from .pagina_comum import NOME_UF, inteiro, nota, num, p, tabela
 from .pagina_fig_base import nome_bonito
 
 CLASSES = ("venceu_folga", "venceu_apertado", "perdeu_apertado", "perdeu_folga")
@@ -60,19 +60,10 @@ def _nomes(xs: list[dict], n: int = 3) -> str:
 
 
 def _intro() -> str:
-    return (
-        "<h3>Pesquisa contra urna: duas réguas para o mesmo estoque</h3>"
-        + p(
-            "Até aqui, o voto de terceira via virou voto de 2º turno por uma régua só: a das pesquisas de setembro, que "
-            "perguntaram ao eleitor de cada candidatura em quem votaria entre Flávio e Lula. Há uma segunda régua, a da "
-            "urna de 2022: quanto o saldo de Bolsonaro sobre Lula cresceu entre os turnos onde havia mais voto de terceira "
-            "via, município a município. A pesquisa sabe o nome e não sabe o lugar. A urna sabe o lugar, não sabe o nome "
-            "e é de outra eleição."
-        )
-        + '<aside class="analogy"><b>Em linguagem de casa</b>Uma padaria quer saber quanto pão vende amanhã. Uma régua '
-        "é perguntar aos fregueses: cada um diz o que pretende levar. A outra é olhar o caixa do mesmo dia no ano passado, "
-        "rua por rua: não diz quem comprou, mas diz quanto saiu de verdade em cada rua. Quando as duas batem, dá para assar "
-        "sem medo. Quando não batem, a diferença é o tamanho da aposta.</aside>"
+    return "<h3>Pesquisa contra urna: duas réguas para o mesmo estoque</h3>" + p(
+        "A matriz das pesquisas de setembro sabe o nome do eleitor de terceira via e não sabe onde ele mora. A urna de "
+        "2022 sabe o lugar, município a município, não sabe o nome e é de outra eleição. Quando as duas batem, a aposta "
+        "é segura; quando divergem, a distância é o tamanho dela."
     )
 
 
@@ -80,29 +71,20 @@ def _coeficientes(R: dict, conv: dict) -> str:
     gc = R["modelos"]["classe"]["grupos"]
     un = R["modelos"]["unico"]["grupos"]["todos"]
     sfe = R["modelos"]["sem_efeito_fixo"]
-    rc = conv["por_classe"]
 
     def ic(g: dict) -> str:
         a, b = g["saldo_ic95"]
         return f"{pv(a)} a {pv(b)}"
 
     h = p(
-        "Na urna de 2022, dentro da mesma UF, cada voto de terceira via do 1º turno somou ao saldo de Bolsonaro sobre Lula "
-        f"{pv(gc['venceu_folga']['saldo'])} nos municípios onde Flávio venceu com folga em 2026 (intervalo de 95%: "
-        f"{ic(gc['venceu_folga'])}), {pv(gc['venceu_apertado']['saldo'])} onde venceu apertado, "
-        f"{pv(gc['perdeu_apertado']['saldo'])} onde perdeu apertado e {pv(gc['perdeu_folga']['saldo'])} onde perdeu com "
-        f"folga ({ic(gc['perdeu_folga'])}). No país, com uma inclinação só, {pv(un['saldo'])} ({ic(un)}): a terceira via de "
-        f"2022 dividiu-se quase ao meio, {num(un['bolsonaro'], 2)} para Bolsonaro e {num(un['lula'], 2)} para Lula por voto.",
-        "inferencia",
-    )
-    h += p(
-        f"A razão simples dá muito mais: {pv(rc['venceu_folga']['saldo'])}, {pv(rc['venceu_apertado']['saldo'])}, "
-        f"{pv(rc['perdeu_apertado']['saldo'])} e {pv(rc['perdeu_folga']['saldo'])} nas mesmas classes, "
-        f"{pv(conv['brasil']['saldo'])} no país. Ela divide todo o ganho entre os turnos pela terceira via e põe na conta "
-        "dela o que veio de outro lugar: gente que não tinha votado e voltou, base que se mobilizou. Sem o efeito fixo de "
-        f"UF, a regressão dá {pv(sfe['saldo_terceira_via'])} por voto de terceira via e uma parcela de "
-        f"{num(100 * sfe['constante'], 2)} pontos dos votantes a favor de Bolsonaro que não depende da terceira via. É essa "
-        "parcela que a razão simples atribui à terceira via.",
+        "Na urna de 2022, dentro da mesma UF, cada voto de terceira via do 1º turno somou ao saldo de Bolsonaro "
+        f"{pv(gc['venceu_folga']['saldo'])} onde Flávio venceu com folga em 2026 ({ic(gc['venceu_folga'])}), "
+        f"{pv(gc['venceu_apertado']['saldo'])} onde venceu apertado, {pv(gc['perdeu_apertado']['saldo'])} onde perdeu "
+        f"apertado e {pv(gc['perdeu_folga']['saldo'])} onde perdeu com folga ({ic(gc['perdeu_folga'])}). No país, "
+        f"{pv(un['saldo'])} ({ic(un)}): a terceira via de 2022 dividiu-se quase ao meio, {num(un['bolsonaro'], 2)} para "
+        f"Bolsonaro e {num(un['lula'], 2)} para Lula. A razão simples dá mais ({pv(conv['brasil']['saldo'])} no país) porque "
+        "credita à terceira via a base que se mobilizou: sem efeito fixo de UF, sobra uma parcela de "
+        f"{num(100 * sfe['constante'], 2)} pontos a favor de Bolsonaro que não depende dela.",
         "inferencia",
     )
     fora_neg = [
@@ -119,58 +101,35 @@ def _coeficientes(R: dict, conv: dict) -> str:
                 for r in fora_neg
             ]
         )
-        aviso_regiao = (
-            f" Por região, as duas inclinações somam mais de um voto por voto de terceira via em {detalhe}: ali a "
-            "regressão capta algo além da terceira via, como comparecimento que anda junto com ela. Por isso a régua "
-            "aplicada a 2026 usa a classe de margem, e a região fica como sensibilidade."
-        )
-    h += (
-        '<aside class="hyp"><b>Limite ecológico</b>'
-        "A régua da urna é inferência de agregado para agregado: diz quanto o saldo cresceu a mais onde havia mais "
-        "terceira via, na mesma UF, e não como votou o eleitor de Tebet ou de Ciro. E a terceira via de 2022 era outra: "
-        "Simone Tebet (MDB) e Ciro Gomes (PDT), centro e esquerda pela classificação da casa; a de 2026 tem Augusto Cury "
-        f"(Avante) e Ronaldo Caiado (PSD), de centro, e Renan Santos (Missão) e Zema (Novo), de direita.{aviso_regiao}</aside>"
+        aviso_regiao = f" Em {detalhe} as duas inclinações somam mais de um voto por voto; por isso a régua usa a classe de margem."
+    h += nota(
+        "hipotese",
+        "A régua da urna é inferência de agregado para agregado, não o voto do eleitor de Tebet ou de Ciro. E a terceira "
+        "via de 2022 (Tebet e Ciro, centro e esquerda) não é a de 2026, que tem Renan Santos e Zema, de direita."
+        + aviso_regiao,
+        "Limite ecológico.",
     )
     return h
 
 
-def _totais(R: dict, diferenca: int) -> str:
+def _totais(R: dict, diferenca: int, direita_pct: float) -> str:
     T = R["totais"]
     br, cl, rg = T["brasil"], T["classes"], T["regioes"]
-    a, b = br["urna_ic95"]
+    a, _b = br["urna_ic95"]
     pior = min(a, br["urna_regiao"], br["urna"], br["nexus"], br["datafolha"])
     fecho = (
-        f"Com as bases do 1º turno fixas, nenhuma das réguas, nem o limite inferior do intervalo da urna, desfaz a "
-        f"diferença de {votos(diferenca, False)} do 1º turno."
+        f"Com as bases do 1º turno fixas, nenhuma régua, nem o limite inferior da urna, desfaz os "
+        f"{votos(diferenca, False)} do 1º turno."
         if pior > -diferenca
-        else f"No pior caso ({votos(pior)}), a terceira via desfaria a diferença de {votos(diferenca, False)} do 1º turno."
+        else f"No pior caso ({votos(pior)}), a terceira via desfaria os {votos(diferenca, False)} do 1º turno."
     )
-    h = p(
-        f"Aplicadas ao estoque de 2026, as réguas dão a Flávio saldo de {votos(br['nexus'])} pela matriz Nexus, "
-        f"{votos(br['datafolha'])} com as linhas do Datafolha para Cury e Caiado e {votos(br['urna'])} pela urna de 2022 "
-        f"(intervalo de 95%: {votos(a)} a {votos(b)}). Pela região em vez da classe, a urna dá {votos(br['urna_regiao'])}; "
-        f"pela razão simples, {votos(br['razao_simples'])}, o teto que credita tudo à terceira via. {fecho}",
-        "inferencia",
-    )
-    h += p(
-        f"Onde Flávio venceu com folga as duas réguas quase coincidem: a Nexus dá {pv(cl['venceu_folga']['pv_nexus'])} por "
-        f"voto e a urna de 2022, {pv(cl['venceu_folga']['pv_urna'])}. Onde Flávio perdeu, a pesquisa promete "
-        f"{pv(cl['perdeu_apertado']['pv_nexus'])} e {pv(cl['perdeu_folga']['pv_nexus'])}, e a urna entregou "
-        f"{pv(cl['perdeu_apertado']['pv_urna'])} e {pv(cl['perdeu_folga']['pv_urna'])}. No Centro-Oeste é a urna que "
-        f"rende mais ({pv(rg['Centro-Oeste']['pv_urna'])} contra {pv(rg['Centro-Oeste']['pv_nexus'])} da Nexus): o estoque "
-        "ali é de Caiado, cuja linha Nexus dá mais a Lula, e fica onde Flávio venceu com folga.",
-        "inferencia",
-    )
-    return h
-
-
-def _por_que(direita_pct: float) -> str:
     return p(
-        "Por que divergem: a pesquisa aplica a mesma linha no país inteiro, como se o eleitor de Cury em Salvador votasse "
-        "como o de Cury em Joinville. A urna de 2022 mostra que o lugar puxa: onde a direita já ganhava, a terceira via "
-        "foi mais para Bolsonaro; onde perdia, foi mais para Lula. E a urna não sabe o nome: em 2022 a terceira via era de "
-        f"centro e de esquerda; em 2026, Renan e Zema, de direita, somam {num(direita_pct, 2)}% dela. Por isso a urna "
-        "tende a pesar contra Flávio onde ele perdeu, e a pesquisa tende a ignorar o lugar.",
+        f"{fecho} Onde Flávio venceu com folga as réguas quase coincidem ({pv(cl['venceu_folga']['pv_nexus'])} por voto "
+        f"pela Nexus, {pv(cl['venceu_folga']['pv_urna'])} pela urna); onde perdeu, a pesquisa promete "
+        f"{pv(cl['perdeu_apertado']['pv_nexus'])} e {pv(cl['perdeu_folga']['pv_nexus'])} e a urna entregou "
+        f"{pv(cl['perdeu_apertado']['pv_urna'])} e {pv(cl['perdeu_folga']['pv_urna'])}. A pesquisa ignora o lugar; a urna ignora o "
+        f"nome: em 2026, Renan e Zema somam {num(direita_pct, 2)}% da terceira via. No Centro-Oeste, onde o estoque é "
+        f"de Caiado, a urna rende mais ({pv(rg['Centro-Oeste']['pv_urna'])} contra {pv(rg['Centro-Oeste']['pv_nexus'])}).",
         "inferencia",
     )
 
@@ -181,41 +140,25 @@ def _rankings(R: dict) -> str:
     so_p = [x for x in rk["divergentes"] if x["situacao"] == "so_pesquisa"]
     so_u = [x for x in rk["divergentes"] if x["situacao"] == "so_urna"]
     extremo = max(so_p, key=lambda x: x["teto"] - x["piso"], default=None)
-    h = p(
-        f"Ordenando os municípios pelo saldo esperado, {rk['robustos']} dos 100 primeiros pela pesquisa também estão "
-        f"entre os 100 primeiros pela urna de 2022: são os robustos, com {votos(rk['robustos_estoque'], False)} de "
-        f"terceira via. Dos {rk['so_pesquisa']} que só a pesquisa põe na lista, a classe de margem explica "
-        f"{mot.get('so_pesquisa:classe', 0)} "
-        f"e a composição por nome {mot.get('so_pesquisa:composicao', 0)}; os maiores são "
-        f"{_cidades(so_p)}. Dos {rk['so_urna']} que só a urna põe, a classe explica {mot.get('so_urna:classe', 0)} e a "
-        f"composição {mot.get('so_urna:composicao', 0)}; os maiores são {_cidades(so_u)}.",
-        "inferencia",
+    texto = (
+        f"Dos 100 primeiros municípios pela pesquisa, {rk['robustos']} também estão entre os 100 primeiros pela urna de "
+        f"2022: são os robustos, com {votos(rk['robustos_estoque'], False)} de terceira via. Só a pesquisa põe "
+        f"{rk['so_pesquisa']} na lista ({_cidades(so_p)} à frente) e só a urna, {rk['so_urna']} ({_cidades(so_u)}); "
+        f"a classe de margem explica {mot.get('so_pesquisa:classe', 0) + mot.get('so_urna:classe', 0)} dessas "
+        "divergências e a composição por nome, o resto."
     )
     if extremo:
-        lado = "perdeu" if extremo["classe"].startswith("perdeu") else "venceu"
-        folga = (
-            "com folga"
-            if extremo["classe"].endswith("folga")
-            else "por menos de 10 pontos"
-        )
-        efeito = (
-            "não deu saldo a Bolsonaro"
-            if extremo["pv_urna"] <= 0
-            else "deu menos saldo a Bolsonaro que a pesquisa promete"
-        )
         sai = extremo["posicao"]["combinacao"] > len(rk["top"]["combinacao"])
-        h += p(
-            f"{nome_bonito(extremo['nome'])} é o caso de maior distância entre as réguas: pela Nexus, "
-            f"{votos(extremo['nexus'])}; pela urna de 2022, {votos(extremo['urna'])}, porque o município está na "
-            f"classe em que Flávio {lado} {folga}, e ali a terceira via de 2022 {efeito}."
+        texto += (
+            f" A maior distância é {nome_bonito(extremo['nome'])}: {votos(extremo['nexus'])} pela Nexus, "
+            f"{votos(extremo['urna'])} pela urna de 2022"
             + (
-                " Na lista combinada, que ordena pelo piso das duas réguas, ele sai."
+                "; na lista combinada, que ordena pelo piso das duas, ele sai."
                 if sai
-                else ""
-            ),
-            "inferencia",
+                else "."
+            )
         )
-    return h
+    return p(texto, "inferencia")
 
 
 def _tabela_100(R: dict) -> str:
@@ -304,38 +247,9 @@ def _por_uf(R: dict) -> str:
     return f"<details><summary>Os 10 primeiros de cada UF pelas duas réguas</summary>{tab}</details>"
 
 
-def _movimentos(R: dict) -> str:
-    linhas = []
-    for mv in R["movimentos"]:
-        if mv["urna"] is None:
-            urna, por, conc = "não se aplica", "", escape(mv.get("nota", ""))
-        else:
-            urna = pv(mv["urna"], 0)
-            por = pv(mv.get("pv_urna"), 3) if mv.get("pv_urna") is not None else ""
-            conc = "mesmo sinal" if mv["concordam"] else "sinal oposto"
-            if mv.get("nota"):
-                conc += f"; {escape(mv['nota'])}"
-        linhas.append(
-            [
-                f"{mv['ordem']}. {escape(mv['titulo'])}",
-                pv(mv["pesquisa"], 0),
-                urna,
-                por,
-                conc,
-            ]
-        )
-    return tabela(
-        [
-            "Movimento do capítulo",
-            "Votos esperados (régua do capítulo)",
-            "Pela urna de 2022",
-            "Por voto (urna)",
-            "As duas réguas",
-        ],
-        linhas,
-        "Os dez movimentos com a segunda régua ao lado. A urna de 2022 só se aplica aos movimentos sobre o voto de "
-        "terceira via; nos demais, a régua do capítulo é a única.",
-    )
+def movimentos_urna(R: dict) -> dict[int, dict]:
+    """A segunda régua de cada movimento do capítulo, pela ordem."""
+    return {mv["ordem"]: mv for mv in R["movimentos"]}
 
 
 def _retrovisao(R: dict) -> str:
@@ -347,13 +261,9 @@ def _retrovisao(R: dict) -> str:
             "verificado",
         )
     return p(
-        "O teste de retrovisão compararia a matriz das pesquisas de 2022 (o voto de 2º turno do eleitor de Tebet e de "
-        "Ciro) com o que a urna de 2022 entregou, por região: é ele que diria quanto confiar na matriz de 2026. O acervo "
-        f"não tem esse documento: são {rv['casas_no_acervo']} pastas em {escape(rv['procurado_em'][0])}/ e "
-        f"{rv['pesquisas_transcritas']} pesquisas transcritas, todas da última onda antes do 1º turno. Para fazer o teste é "
-        "preciso arquivar as primeiras ondas nacionais de 2º turno de outubro de 2022 que tenham cruzado o voto de 2º "
-        "turno pelo voto em Tebet e Ciro (e, se houver, o mesmo cruzamento por região), com URL, SHA-256 e página, no "
-        "formato de pesquisas_2022.json.",
+        "Falta o teste que diria quanto confiar na matriz: o 2º turno do eleitor de Tebet e de Ciro nas pesquisas de "
+        f"outubro de 2022 contra a urna. O acervo não tem esse cruzamento ({rv['pesquisas_transcritas']} pesquisas em "
+        f"{escape(rv['procurado_em'][0])}/, todas da última onda do 1º turno).",
         "verificado",
     )
 
@@ -362,16 +272,18 @@ def _juizo(R: dict) -> str:
     rk = R["rankings"]
     so_p = [x for x in rk["divergentes"] if x["situacao"] == "so_pesquisa"]
     so_u = [x for x in rk["divergentes"] if x["situacao"] == "so_urna"]
-    return (
-        '<aside class="juizo"><b>Juízo editorial: como usar as duas réguas</b><ul>'
-        f"<li>Comece pelos {rk['robustos']} robustos: as duas réguas concordam que ali a terceira via rende saldo a Flávio.</li>"
-        f"<li>Onde só a pesquisa promete, como em {escape(_nomes(so_p))}, a urna de 2022 diz que a terceira via se dividiu ou foi "
-        "para Lula. Ali o argumento é o palanque local, não a conversão; meça antes de gastar.</li>"
-        f"<li>Onde só a urna entrega, como em {escape(_nomes(so_u))}, a conversão aconteceu em 2022 sem depender do nome; o risco "
-        "é a linha de Caiado, que as duas pesquisas medem com sinais opostos.</li>"
-        "<li>Hipótese: a urna de 2022 é piso provável, porque a terceira via de então era de centro e de esquerda, e a "
-        "pesquisa é teto provável, porque ignora o lugar. A distância entre os dois é o tamanho da aposta, não o "
-        "resultado.</li></ul></aside>"
+    return nota(
+        "juizo",
+        "<ul>"
+        f"<li>Comece pelos {rk['robustos']} robustos: as duas réguas dizem que ali a terceira via rende a Flávio.</li>"
+        f"<li>Onde só a pesquisa promete ({escape(_nomes(so_p))}), o argumento é o palanque local; meça antes de gastar.</li>"
+        f"<li>Onde só a urna entrega ({escape(_nomes(so_u))}), o risco é a linha de Caiado, que as pesquisas medem com "
+        "sinais opostos.</li></ul>",
+        "Como usar as duas réguas.",
+    ) + p(
+        "A urna de 2022 é piso provável, porque a terceira via de então era de centro e de esquerda, e a pesquisa é teto "
+        "provável, porque ignora o lugar. A distância entre os dois é o tamanho da aposta.",
+        "hipotese",
     )
 
 
@@ -382,13 +294,16 @@ def bloco(D: dict, fig: Callable[[str], str]) -> str:
         _intro()
         + fig("conversao_2022_classes")
         + _coeficientes(R, conv)
-        + _totais(R, D["prioridade"]["diferenca_nacional"])
-        + _por_que(D["agregados"]["brasil"]["renan_zema_pct"])
+        + fig("terceira_via_reguas_totais")
+        + _totais(
+            R,
+            D["prioridade"]["diferenca_nacional"],
+            D["agregados"]["brasil"]["renan_zema_pct"],
+        )
         + fig("reguas_divergencia_mapa")
         + _rankings(R)
         + _tabela_100(R)
         + _por_uf(R)
-        + _movimentos(R)
         + _retrovisao(R)
         + _juizo(R)
     )
