@@ -375,10 +375,17 @@ def troca_de_urna(casado: pd.DataFrame) -> dict[str, Any]:
     return est
 
 
+def _menos(x: float | None, casas: int = 2) -> str:
+    """Número com o menos tipográfico (U+2212) quando negativo, sem sinal de mais."""
+    if x is None:
+        return "n/d"
+    return ("\u2212" if round(x, casas) < 0 else "") + num(abs(x), casas)
+
+
 def _ic_txt(m: Mapping[str, Any]) -> tuple[str, bool]:
     lo, hi = m["ic95"]
     cruza = lo is not None and hi is not None and lo <= 0 <= hi
-    txt = f"IC 95% de {num(lo, 2)} a {num(hi, 2)}"
+    txt = f"IC 95% de {_menos(lo)} a {_menos(hi)}"
     return txt + (", contém o zero" if cruza else ", não contém o zero"), cruza
 
 
@@ -394,9 +401,9 @@ def _frase(
         par = "a urna mais nova dá a {q} {e} ponto em relação à mais velha"
     else:
         par = f"a {p['b']} dá a {{q}} {{e}} ponto em relação à {p['a']}"
-    corpo = par.format(q=quem, e=num(m["estimativa"], 2))
+    corpo = par.format(q=quem, e=_menos(m["estimativa"]))
     return (
-        f"{onde}, {corpo} ({ic}); sem o controle, {num(m['bruto'], 2)}; "
+        f"{onde}, {corpo} ({ic}); sem o controle, {_menos(m['bruto'])}; "
         f"{num(p['unidades'], 0)} {unidade}."
     )
 
