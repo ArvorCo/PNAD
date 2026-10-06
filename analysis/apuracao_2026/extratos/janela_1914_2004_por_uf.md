@@ -8,11 +8,11 @@ Fonte: arquivos públicos do TSE em `resultados.tse.jus.br/oficial/ele2026/6257/
 
 O arquivo nacional não traz divisão por UF. A divisão vem dos 28 arquivos de UF (`<uf>-c0001-e006257-u.json`, 27 UFs e exterior), que o TSE gera em instantes próprios. Três leituras, declaradas:
 
-1. **Retrato do nacional** (`st_retrato_nacional_1914`): a versão de cada arquivo de UF gerada até 19:08:00. instante em que a soma das UFs (322.739) fica mais perto da contagem do arquivo nacional de 19:14:08 (323.539). O arquivo nacional de 19:14:08 era o retrato de cerca de 19:08:00.
+1. **Retrato do nacional** (`st_retrato_nacional_1914`): a versão de cada arquivo de UF gerada até 19:08:00, instante em que a soma das UFs (322.739) fica mais perto da contagem do arquivo nacional de 19:14:08 (323.539). O arquivo nacional de 19:14:08 era o retrato de cerca de 19:08:00.
 2. **Arquivo de UF no mesmo instante** (`st_arquivo_uf_1914`): a versão de cada UF gerada até 19:14:08; a soma (353.630) já estava 30.091 seções à frente do nacional.
 3. **Monitoramento** (`st_monitoramento_*`): contagem por UF do arquivo `br-e006257-ab.json` gerado às 19:13:57 e às 20:05:03, que continuou sendo gerado durante a parada do arquivo de resultado.
 
-Às 20:04:39 a soma das UFs (424.493) e o nacional (424.153) quase coincidem.
+Às 20:04:39 a soma das UFs (424.493) e o nacional (424.153) quase coincidem. O monitoramento somava 349.247 seções às 19:13:57 e 374.635 às 20:05:03: depois da parada, ficou atrás dos arquivos de UF.
 
 | UF | seções | retrato 19:14 | UF 19:14 | 20:04 | Δ retrato | Δ Lula | Δ Flávio |
 |---|---:|---:|---:|---:|---:|---:|---:|

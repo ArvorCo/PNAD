@@ -126,7 +126,7 @@ def retrato(
 
 def n(x: int) -> str:
     """Inteiro com ponto de milhar."""
-    return f"{n(x)}".replace(",", ".")
+    return f"{x:,}".replace(",", ".")
 
 
 def brt(iso: str) -> str:
