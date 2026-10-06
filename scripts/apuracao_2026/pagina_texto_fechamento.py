@@ -64,9 +64,7 @@ def abertura(F: dict) -> str:
             if lei
             else ""
         )
-        + ", e às 17h quem está na fila recebe senha e vota depois (Código Eleitoral, art. 153). O boletim de 2026 "
-        "grava a hora em que a urna encerrou; o de 2022, não. A régua que existe nos dois anos é a chegada do boletim "
-        "ao TSE, que soma a fila e o caminho da mídia."
+        + ", e às 17h quem está na fila recebe senha e vota depois (Código Eleitoral, art. 153)."
     )
     h = p(regra, "verificado")
     if c.get("parcial"):
@@ -98,7 +96,6 @@ def regioes(F: dict) -> str:
     ordem = FT.regioes_ordem(F, "encerramento_2026")
     ufs = FT.ufs_ordem(F)
     esc = FT.tipo(F, "escola fora de zona rural")
-    rur = FT.tipo(F, "zona rural, assentamento ou quilombo")
     ald = FT.tipo(F, "aldeia ou terra indígena")
 
     def tarde(x: dict) -> str:
@@ -109,17 +106,12 @@ def regioes(F: dict) -> str:
         f"{pct(e.get('depois_1800_pct'))} às 18h ou depois e {pct(e.get('depois_1900_pct'))} às 19h ou depois. Às 18h "
         "ou depois, por região: "
         + lista([f"{g['chave']} {tarde(g)}" for g in ordem])
-        + "; nas UFs, de "
-        + lista([f"{NOME_UF.get(g['chave'], g['chave'])} {tarde(g)}" for g in ufs[:3]])
-        + " a "
-        + lista([f"{NOME_UF.get(g['chave'], g['chave'])} {tarde(g)}" for g in ufs[-2:]])
-        + f". O boletim chegou ao TSE, na mediana, às {hora(a.get('mediana'))} em 2026 e às {hora(b.get('mediana'))} em "
+        + f"; no topo, {NOME_UF.get(ufs[0]['chave'], ufs[0]['chave'])} {tarde(ufs[0])}. O boletim chegou ao TSE, na mediana, às {hora(a.get('mediana'))} em 2026 e às {hora(b.get('mediana'))} em "
         f"2022, e depois das 19h chegaram {pct(a.get('depois_1900_pct'))} das seções em 2026 e "
         f"{pct(b.get('depois_1900_pct'))} em 2022; da chegada de 2026, a fila pesa {duracao(dec.get('fila_mediana_min'))} "
-        f"na mediana e a mídia até o TSE, {duracao(dec.get('transmissao_mediana_min'))}. Pelo nome do local, aldeia fecha "
-        f"tarde em {tarde(ald)} das seções e é {pct(ald.get('pct_das_tardias_2026'))} das tardias; zona rural, "
-        f"{tarde(rur)} e {pct(rur.get('pct_das_tardias_2026'))}; escola fora de zona rural, {tarde(esc)} e "
-        f"{pct(esc.get('pct_das_tardias_2026'))}.",
+        f"na mediana e a mídia até o TSE, {duracao(dec.get('transmissao_mediana_min'))}. Aldeia fecha tarde em "
+        f"{tarde(ald)} das seções, mas é só {pct(ald.get('pct_das_tardias_2026'))} das tardias; escola fora de zona rural "
+        f"é {pct(esc.get('pct_das_tardias_2026'))}.",
         "verificado",
     )
 
@@ -203,8 +195,7 @@ def voto_lula(F: dict) -> str:
         f"Sem controle, a relação é forte: nas seções que encerraram de 17:00 a 17:30, Lula teve {pct(f1.get('lula_pct'))} "
         f"e Flávio {pct(f1.get('flavio_pct'))} ({inteiro(f1.get('secoes'))} seções); depois das 19h, Lula "
         f"{pct(f4.get('lula_pct'))} e Flávio {pct(f4.get('flavio_pct'))} ({inteiro(f4.get('secoes'))} seções), e cada hora "
-        f"de atraso vem com {pts(ib.get('estimativa'))} de Lula. É o esperado: seção grande, rural e indígena fecha tarde "
-        "e vota em Lula.",
+        f"de atraso vem com {pts(ib.get('estimativa'))} de Lula.",
         "verificado",
     )
     frase_uf = ""
@@ -217,12 +208,10 @@ def voto_lula(F: dict) -> str:
         f"de Lula ({_ic(iz, 2)}); com tamanho e tipo de local, <strong>{pts(ic.get('estimativa'), 2)}</strong> "
         f"({_ic(ic, 2)}) e Flávio {pts(ff.get('estimativa'), 2)}: sobra {pct(sob.get('lula_inclinacao'), 0)} da inclinação "
         f"bruta. Depois das 19h, {pts(fb.get('estimativa'))} sem controle, {pts(fz.get('estimativa'))} dentro da zona e "
-        f"{pts(fc.get('estimativa'))} com tamanho e tipo."
-        + _frase_tamanho(L)
-        + frase_uf,
+        f"{pts(fc.get('estimativa'))} com tamanho e tipo." + frase_uf,
         "inferencia",
     )
-    return h + conferencia(F)
+    return h
 
 
 def _frase_tamanho(L: dict) -> str:
@@ -283,19 +272,18 @@ def juizo_e_hipotese(F: dict) -> str:
     h = nota(
         "juizo",
         "A providência barata é pôr fiscal de partido nas seções que historicamente fecham tarde, onde a fila depois "
-        "das 17h fica sem testemunha. A lei dá o instrumento: até dois fiscais por partido em cada seção, um mesmo "
-        "fiscal para várias do mesmo local (Lei 9.504, art. 65, §§ 1º e 4º), impugnação da identidade do eleitor "
-        "(Código Eleitoral, art. 132) e cópia do boletim até uma hora depois da emissão (Lei 9.504, art. 68, § 1º). Os "
+        "das 17h fica sem testemunha. A lei permite dois fiscais por partido em cada seção e um fiscal para várias do "
+        "mesmo local (Lei 9.504, art. 65, §§ 1º e 4º), impugnar a identidade do eleitor (Código Eleitoral, art. 132) e "
+        "pedir cópia do boletim (Lei 9.504, art. 68, § 1º). Os "
         f"{inteiro(loc.get('persistentes'))} locais do décimo mais tardio nos dois anos somam "
         f"{inteiro(loc.get('secoes_2026_nos_persistentes'))} seções: é uma lista curta.",
     )
     h += nota(
         "hipotese",
         "Mesário que vota no lugar do ausente (o pianista), compra de voto e boca de urna na fila são hipóteses que o "
-        "boletim não testa: este capítulo não as mostra nem as descarta. A prova de cada uma é outra: o log da urna "
-        "(habilitações por ano de nascimento a segundos uma da outra no fim do dia), a ata da mesa e, para compra de "
-        "voto e boca de urna, boletim de ocorrência e representação ao juiz eleitoral (Lei 9.504, art. 39, § 5º, II, e "
-        "art. 41-A). Sem esses documentos, hora tardia é só hora tardia.",
+        "boletim não testa nem descarta. A prova é o log da urna (habilitações por ano de nascimento a segundos uma da "
+        "outra no fim do dia), a ata da mesa e, para compra de voto e boca de urna, a representação ao juiz eleitoral "
+        "(Lei 9.504, art. 39, § 5º, II, e art. 41-A). Sem documento, hora tardia é só hora tardia.",
         "Não é achado.",
     )
     return h
@@ -348,8 +336,7 @@ def amostras(F: dict) -> str:
 
 def rodape(F: dict) -> str:
     leis = "".join(
-        f"<li>{escape(x['norma'])}, {escape(x['dispositivo'])}: {escape(x['conteudo'])}. "
-        f"<em>Conferido {escape(x['como_conferido'])}.</em></li>"
+        f"<li>{escape(x['norma'])}, {escape(x['dispositivo'])}. <em>Conferido {escape(x['como_conferido'])}.</em></li>"
         for x in F["fontes_legais"]
     )
     return f"<details><summary>Normas citadas e como foram conferidas</summary><ul>{leis}</ul></details>"
@@ -357,7 +344,12 @@ def rodape(F: dict) -> str:
 
 def limites_fechamento(F: dict) -> list[str]:
     """Limites do fechamento que seguem valendo; os de coleta em andamento saem quando ela termina."""
-    ignora = ("Tipo de local", "A hora de recebimento de 2026 atravessa")
+    ignora = (
+        "Tipo de local",
+        "A hora de recebimento de 2026 atravessa",
+        "A hora de encerramento depende",
+        "O log da urna de cada seção",
+    )
     if not F["cobertura"].get("parcial"):
         ignora += ("A coleta dos boletins",)
     return [escape(x) for x in F["limites"] if not x.startswith(ignora)]

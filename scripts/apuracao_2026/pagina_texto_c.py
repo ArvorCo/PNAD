@@ -13,7 +13,7 @@ from collections import Counter
 from collections.abc import Callable
 from html import escape
 
-from .pagina_comum import caixa, inteiro, milhoes, nota, num, p, sinal, tabela
+from .pagina_comum import inteiro, milhoes, nota, num, p, sinal, tabela
 from .pagina_fig_base import nome_bonito
 from .pagina_fig_secoes import grupos_extenso, local_ref
 from .pagina_texto import lista
@@ -100,20 +100,10 @@ def extremos_contagem(S: dict) -> str:
             (x for x in E["por_uf"] if x["candidato"] == c and x["limiar"] == 90),
             key=lambda x: -x["secoes"],
         )[:3]
-        mun = sorted(
-            (x for x in E["por_municipio"] if x["candidato"] == c),
-            key=lambda x: -x["secoes_90"],
-        )[:1]
         if ufs:
             onde.append(
                 f"as de {NOME[c]}, em "
                 + lista([f"{x['uf']} ({inteiro(x['secoes'])})" for x in ufs])
-                + (
-                    f", com o topo em {nome_bonito(mun[0]['municipio'])} ({mun[0]['uf']}, {inteiro(mun[0]['secoes_90'])} "
-                    f"de {inteiro(mun[0]['secoes_total'])} seções)"
-                    if mun
-                    else ""
-                )
             )
     frase = ". ".join(partes) + "."
     if onde:
@@ -184,8 +174,7 @@ def extremos_perfil(S: dict) -> str:
         )
     frases.append(
         f"das {X['top_zonas']} zonas mais atípicas da triagem, só {X['zonas_top_com_secao_90']} têm seção de 90% ou "
-        f"mais ({inteiro(X['secoes_90_no_top'])} seções), e nelas a taxa de Lula é {pct(X['taxa_lula_90_top_pct'])} contra "
-        f"{pct(X['taxa_lula_90_demais_pct'])} no resto do país"
+        f"mais ({inteiro(X['secoes_90_no_top'])} seções)"
     )
     texto = "; ".join(frases) + "."
     return p(texto[0].upper() + texto[1:], "inferencia")
@@ -256,16 +245,6 @@ def extremos_amostras(S: dict) -> str:
 # ------------------------------------------------------------------ clusters
 
 
-def analogia(k: int) -> str:
-    n = grupos_extenso(k)
-    return caixa(
-        "analogy",
-        "Em linguagem de casa",
-        f"Pense em {n} sacos de feijão despejados no mesmo chão. A mistura gaussiana procura os {n} montes que melhor "
-        "explicam como os grãos se espalharam; grão longe de todos os montes é a seção pouco provável, que pede um olhar.",
-    )
-
-
 def clusters_a(S: dict) -> str:
     C = S["clusters"]
     comps = C["componentes"]
@@ -279,11 +258,21 @@ def clusters_a(S: dict) -> str:
     )
     h += p(
         f"Os grupos não são geografia (V de Cramér entre grupo e região de {num(C['cramer_v_regiao'], 2)}): separam as "
-        "seções pelo padrão de zeros, como mostra a figura seguinte. "
-        + " ".join(proj[:2]),
+        "seções pelo padrão de zeros, como mostra a figura seguinte. " + _nuvens(proj),
         "inferencia",
     )
     return h + escolha_k(C)
+
+
+def _nuvens(proj: list[str]) -> str:
+    """A frase das nuvens da projeção, com os nomes das partes no lugar de "nessas partes"."""
+    if len(proj) < 2:
+        return ""
+    nomes = re.findall(r"carga em ([^()]+?) \(", proj[0])
+    frase = proj[1]
+    if len(nomes) == 2:
+        frase = frase.replace("nessas partes", f"em {nomes[0]} e em {nomes[1]}")
+    return frase
 
 
 def escolha_k(C: dict) -> str:
@@ -341,10 +330,7 @@ def clusters_b(S: dict) -> str:
     frase_mp = ""
     if mp:
         e, n = mp.most_common(1)[0]
-        frase_mp = (
-            f" Entre as {len(C['menos_provaveis'])} seções menos prováveis do país, a explicação mais comum é "
-            f"{escape(e)}, em {inteiro(n)}."
-        )
+        frase_mp = f" No país, {escape(e)} explica {inteiro(n)} das {len(C['menos_provaveis'])} menos prováveis."
     return p(
         f"O grupo mais atípico é o {ma['id'] + 1}: log-verossimilhança média {menos(comp['loglik_media'], 1)}, contra "
         f"{menos(ll_out, 1)} nos outros, e Mahalanobis mediana {num(comp['mahalanobis_mediana'], 1)}. Nas "
@@ -390,7 +376,12 @@ def urna_a(S: dict) -> str:
 
 def urna_reguas(S: dict) -> str:
     rg = S["urna"].get("reguas") or {}
-    h = p(escape(rg["leitura"]), "inferencia") if rg.get("leitura") else ""
+    leitura = _frases(rg.get("leitura") or "")
+    h = (
+        p(" ".join(escape(x) for x in leitura[1:]), "inferencia")
+        if len(leitura) > 1
+        else ""
+    )
     return h + nota(
         "hipotese", escape((S.get("achados") or {}).get("hipotese", [""])[0])
     )
@@ -509,11 +500,10 @@ def outras_b(S: dict) -> str:
     rc = OD["recebimento"]
     d0 = rc.get("depois_0000") or {}
     d1 = rc.get("depois_0100") or {}
-    enc, ab = H.get("encerramento") or {}, H.get("abertura") or {}
+    ab = H.get("abertura") or {}
     frase = (
         f"Em hora de Brasília, {inteiro(ab.get('antes_0730'))} seções abriram antes das 7h30 e "
-        f"{inteiro(ab.get('depois_0900'))} depois das 9h; {inteiro(enc.get('depois_1800'))} encerraram depois das 18h e "
-        f"{inteiro(enc.get('depois_1900'))} depois das 19h."
+        f"{inteiro(ab.get('depois_0900'))} depois das 9h."
     )
     if d0.get("secoes"):
         muns = lista(
@@ -546,9 +536,8 @@ def outras_b(S: dict) -> str:
             )
         h += p(
             "; ".join(frase)
-            + f". Só o acaso poria cerca de {max(1, round(len(ud or bf) / 20))} de cada {len(ud or bf)} abaixo do corte, "
-            "e contagem de votos não segue Benford por construção: o teste é curiosidade metodológica "
-            "(Deckert, Myagkov e Ordeshook, 2011, Political Analysis).",
+            + f". O acaso poria cerca de {max(1, round(len(ud or bf) / 20))} de cada {len(ud or bf)} abaixo do corte, e "
+            "voto não segue Benford por construção (Deckert, Myagkov e Ordeshook, 2011): curiosidade, não teste.",
             "inferencia",
         )
     return h
@@ -565,7 +554,7 @@ def bloco(S: dict, fig: Callable[[str], str]) -> str:
     h += fig("secoes_tamanho_tipo") + extremos_perfil(S)
     h += extremos_2022(S) + extremos_amostras(S)
     k = S["clusters"]["k"]
-    h += f"<h3>{grupos_extenso(k).capitalize()} grupos de seções</h3>" + analogia(k)
+    h += f"<h3>{grupos_extenso(k).capitalize()} grupos de seções</h3>"
     h += fig("clusters_secoes") + clusters_a(S) + fig("clusters_regiao") + clusters_b(S)
     h += "<h3>Modelo de urna</h3>" + fig("modelo_urna_uf") + urna_a(S)
     h += fig("urna_reguas") + urna_reguas(S)
@@ -576,20 +565,12 @@ def bloco(S: dict, fig: Callable[[str], str]) -> str:
         + outras_tabela(S)
         + outras_b(S)
     )
-    juizo = (S.get("achados") or {}).get("juizo") or []
-    if juizo:
-        h += nota("juizo", " ".join(escape(x) for x in juizo))
     return h
 
 
 def limites_secao(S: dict) -> list[str]:
     """Limites da análise por seção que valem para o leitor (os de método ficam no memorando)."""
-    chaves = (
-        "Tipo de local",
-        "O modelo da urna",
-        "A comparação com 2022",
-        "A mistura gaussiana",
-    )
+    chaves = ("Tipo de local", "A comparação com 2022", "A mistura gaussiana")
     return [escape(x) for x in S.get("limites") or [] if x.startswith(chaves)]
 
 
