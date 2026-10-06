@@ -66,7 +66,7 @@ exterior fica em hora local e `abertura_brasilia` é `null`. `recebido_tse` é o
 | `cobertura` | objeto | ver 1 |
 | `candidatos` | lista de `{numero, chave, nome, cor}` | os 12 da lista do TSE; `chave` = `lula`, `flavio` ou `n<numero>`; `cor` hex ou `null` |
 | `extremos` | objeto | pergunta A (seções acima de 90%), ver 2 |
-| `clusters` | objeto | pergunta B (mistura gaussiana k = 3), ver 3 |
+| `clusters` | objeto | pergunta B (mistura gaussiana k = 5 sobre cinco partes), ver 3 |
 | `urna` | objeto | pergunta C (modelo de urna), ver 4 |
 | `outras` | objeto | pergunta D (outras anomalias de seção), ver 5 |
 | `achados` | `{verificado, inferido, juizo, hipotese, contrario}` | cada um lista de str |
@@ -117,52 +117,115 @@ arquivo de zona; o motivo diz se o arquivo de zona congelou incompleto), `tipo_a
 
 ## 3. `clusters` (pergunta B)
 
+Modelo principal desde 06/10/2026: cinco partes por seção (Lula, Flávio, brancos, nulos,
+abstenção), cada uma dividida pelos aptos da eleição federal e renormalizada para somar 1
+(composição fechada). O voto nas outras dez candidaturas fica fora das partes: é exatamente o
+que falta para o eleitorado inteiro (`1 − soma das cinco frações do eleitorado`, porque
+comparecimento = válidos + brancos + nulos) e sai ao lado de cada centro em
+`terceiros_pct_eleitorado`. A versão de 15 partes (05/10/2026) ficou só como registro do que
+não deu certo, em `variantes.quinze_partes`.
+
 | chave | tipo | conteúdo |
 |---|---|---|
-| `k` | int | 3 (escolha do autor desde 05/10/2026; antes 4) |
+| `k` | int | 5 (escolha do autor) |
 | `escolha_k` | objeto | `{k, anterior, data, motivo, bic_prefere}`: o k é juízo editorial, o BIC fica ao lado |
-| `features` | lista str | chaves das 15 componentes: 12 candidatos, `brancos`, `nulos`, `abstencao` |
-| `base` | str | "votos de cada componente / aptos da seção (eleição federal)" |
-| `transformacao` | str | "clr" (log-razão centrada); zeros substituídos por 0,0001 antes do log |
+| `features` | lista str | `["lula", "flavio", "brancos", "nulos", "abstencao"]` |
+| `base` | str | descrição das partes e do fechamento |
+| `transformacao` | str | "clr" (log-razão centrada das cinco partes fechadas); zeros substituídos por 0,0001 antes do log; a mistura é ajustada nas quatro coordenadas ILR |
 | `zero` | float | 0.0001 |
-| `ajuste` | objeto | `{secoes_ajuste, secoes_atribuidas, amostra_estratificada: bool, covariancia: "full", n_init: 10, random_state, sementes: [{semente, loglik_media, convergiu, iteracoes, cramer_v_regiao, ari_com_escolhida}], inicializacoes, sementes_no_maximo, convergiu: bool, iteracoes, loglik_media}`; `random_state` é a semente escolhida (a de maior log-verossimilhança entre 8 sementes de 10 inicializações) |
-| `bic` | lista | `{k, bic, loglik_media, loglik_sementes}` para k = 3, 4, 5, cada um com o melhor ajuste das mesmas sementes |
+| `referencia_nacional` | objeto | `{parte: {media_pct, dp_pct}}` para as cinco partes e `terceiros`: média e desvio-padrão entre seções, em % do eleitorado; régua dos rótulos |
+| `mediana_votos_por_secao` | objeto | `{parte: f}`: mediana, entre seções, dos votos (e abstenções) de cada parte |
+| `empates_por_par` | lista | `{partes: [a, b], secoes, pct_secoes}` para os dez pares de partes: seções com o mesmo número de votos nas duas |
+| `zeros_substituidos_pct` | float | % das células (seção × parte) iguais a zero |
+| `zeros_por_parte` | objeto | `{parte: {secoes, pct_secoes}}`: seções com a parte zerada |
+| `secoes_com_zero` | int | seções com ao menos uma parte zerada |
+| `degrau_log` | objeto | `{aptos_mediana, mediana, p10, p90}`: distância, em unidades de log, entre zero (0,0001) e um voto; a base é o total das cinco partes da seção (aptos menos o voto em terceiros) |
+| `ajuste` | objeto | `{secoes_ajuste, secoes_atribuidas, amostra_estratificada: bool, covariancia: "full", n_init: 10, inits: ["kmeans", "k-means++"], random_state, init, sementes: [{semente, init, loglik_media, convergiu, iteracoes, cramer_v_regiao, ari_com_escolhida}], inicializacoes, sementes_no_maximo, max_iter, tol, reg_covar, convergiu: bool, iteracoes, loglik_media, segundos, diagnostico_convergencia}`; `random_state` e `init` identificam a partida escolhida (a de maior log-verossimilhança entre 16 sementes × 2 inicializações, dez partidas internas cada); `max_iter` e `tol` são os do ajuste adotado |
+| `ajuste.diagnostico_convergencia` | objeto | ver abaixo |
+| `bic` | lista | `{k, bic, loglik_media, loglik_sementes}` para k = 3, 4, 5; k = 3 e 4 com as 16 sementes e a inicialização `kmeans`, k = 5 com o ajuste adotado |
 | `componentes` | lista de Componente | ordem do `id` (0 a k − 1, do mais lulista ao menos); no texto e nas figuras o grupo aparece como `id + 1` |
-| `menos_votadas` | lista str | candidaturas fora Lula e Flávio, da menos para a mais votada (base dos padrões de zeros) |
-| `degrau_log` | objeto | `{aptos_mediana, mediana, p10, p90}`: distância, em unidades de log, entre zero (0,0001) e um voto na seção |
-| `mais_anomalo` | objeto | `{id, criterio, amostras: [SecaoRef + {loglik, mahalanobis}]}` (20 amostras) |
+| `menos_votadas` | lista str | vazia no modelo de cinco partes (só existe com candidaturas nanicas) |
+| `mais_anomalo` | objeto | `{id, criterio, amostras: [SecaoRef + {loglik, mahalanobis, cluster}]}` (20 amostras) |
 | `menos_provaveis` | lista | as 50 seções de menor log-verossimilhança: `SecaoRef + {cluster, loglik, mahalanobis}` |
 | `cluster_regiao` | lista | `{cluster, regiao, secoes, pct_do_cluster, pct_da_regiao}` |
-| `cluster_uf` | lista | `{cluster, uf, secoes, pct_do_cluster}` |
-| `pca` | objeto | figura `clusters_secoes`: `{variancia_explicada: [f, f], cargas: [{feature, pc1, pc2}], separacao: [{componente, feature, carga, zeros_pct, acerto_balanceado_pct, corte}], centros: [{cluster, x, y}], elipses: [{cluster, x, y, cov: [[f, f], [f, f]]}], colunas: ["x", "y", "cluster", "top200", "uf"], pontos: [[x, y, cluster, 0/1, "UF"]], n_pontos}` (amostra estratificada por cluster de até 8 mil, mais as 200 menos prováveis com `top200 = 1`); `separacao` mede, para a parte de maior carga em cada componente, o melhor corte no eixo entre seções com e sem voto nela |
-| `leitura_projecao` | str | compara as nuvens visíveis na projeção com a divisão da mistura |
-| `estabilidade` | str | quanto a log-verossimilhança e a partição mudam entre sementes, e o V de Cramér em todas |
-| `interpretacao` | lista str | primeira frase diz se os clusters são geografia |
+| `cluster_uf` | lista | `{cluster, uf, secoes, pct_do_cluster, pct_da_uf}` |
+| `cramer_v_regiao`, `cramer_v_uf` | float | V de Cramér entre grupo e região, e entre grupo e UF |
+| `pca` | objeto | figura `clusters_secoes`: `{base, variancia_explicada: [f, f], cargas: [{feature, pc1, pc2}], separacao: [{componente, feature, carga, zeros_pct, acerto_balanceado_pct, corte}], centros: [{cluster, x, y}], elipses: [{cluster, x, y, cov: [[f, f], [f, f]]}], colunas: ["x", "y", "cluster", "top200", "uf"], pontos: [[x, y, cluster, 0/1, "UF"]], n_pontos}`; dois componentes principais das quatro coordenadas ILR (os mesmos escores da PCA na CLR), com as cargas reescritas nas cinco partes; amostra estratificada por cluster de até 8 mil, mais as 200 menos prováveis com `top200 = 1` |
+| `variantes.quinze_partes` | objeto | registro da versão abandonada, só agregados: `{descricao, abandonada_em, motivo, k, features (15), zeros_substituidos_pct, secoes_com_zero, degrau_log, bic, cramer_v_regiao, cramer_v_uf, ajuste: {sementes, n_init, random_state, sementes_no_maximo, loglik_sementes: [min, max], ari_outras_sementes: [min, max], cramer_v_sementes: [min, max]}, grupos: [Grupo], nuvens: {variancia_explicada, separacao}, diagnostico, leitura_projecao, estabilidade}`; sem amostras e sem pontos da projeção; oito sementes e inicialização `kmeans`, como na versão publicada em 05/10 |
+| `variantes.meio_voto` | objeto | sensibilidade com zero trocado por meio voto antes do fechamento: `{descricao, k, cramer_v_regiao, cramer_v_uf, ajuste: {sementes, sementes_no_maximo, loglik_sementes}, grupos: [Grupo]}` (oito sementes, `kmeans`) |
+| `sensibilidade` | objeto | `{ari_principal_vs_quinze_partes, ari_principal_vs_meio_voto}` (índice de Rand ajustado contra a partição principal) |
+| `leitura` | objeto | `{geografia, artefatos, perfis, geometria}`: as frases de leitura com nome (`perfis` e `geometria` podem ser `null`), para o texto escolher cada uma |
+| `leitura_projecao` | str | o que cada eixo da projeção opõe e em qual eixo os centros se afastam |
+| `estabilidade` | str | a frase do diagnóstico de convergência e o V de Cramér em todas as partidas |
+| `interpretacao` | lista str | as frases de `leitura` que existem, na ordem (geografia, artefatos, perfis, geometria); depois um item por grupo, o mais atípico e a sensibilidade de meio voto |
+
+`Grupo` (nas variantes): `{id, rotulo, secoes, pct_secoes, regiao, regiao_pct, centro_pct_validos}`.
+
+`diagnostico_convergencia`:
+```json
+{"criterio_padrao": {"tol": 0.0001, "max_iter": 500}, "sementes": 16,
+ "inits": ["kmeans", "k-means++"], "partidas_internas": 10,
+ "escolhida": {"semente": 0, "init": "kmeans"},
+ "apertado": {"tol": 1e-06, "max_iter": 2000, "convergiu": true, "iteracoes": 0,
+              "iteracoes_padrao": 0, "loglik_media_padrao": 0.0, "loglik_media_apertado": 0.0,
+              "diferenca_loglik": 0.0, "ari_padrao_apertado": 1.0, "adotado": false, "regra": "..."},
+ "tolerancia_maximo": 0.001, "ajustes": ["= ajuste.sementes"], "total": 32, "no_maximo": 0,
+ "por_init": {"kmeans": {"total": 16, "no_maximo": 0}, "k-means++": {"total": 16, "no_maximo": 0}},
+ "todas_convergiram": true, "iteracoes": [0, 0], "loglik_media": [0.0, 0.0],
+ "ari_medio_no_maximo": 0.0, "ari_medio_demais": 0.0, "particao_estavel": true,
+ "frase": "O EM convergiu nas 32 partidas (...); N de M partidas chegaram ao mesmo máximo (...). A partição escolhida é estável: ..."}
+```
+O reajuste apertado refaz a partida escolhida (mesma semente, mesma inicialização, mesmas dez
+partidas internas) com `tol` 1e-6 e até 2.000 iterações; é adotado se a log-verossimilhança
+média subir mais que 0,001 por seção ou se o índice de Rand ajustado entre as duas partições
+ficar abaixo de 0,99. `convergiu` é o `converged_` do sklearn, que se refere à melhor das dez
+partidas internas de cada ajuste. `ari_medio_no_maximo` e `ari_medio_demais` são médias do
+índice de Rand ajustado contra a partição adotada, entre as partidas que chegam ao máximo (a
+0,001 por seção) e entre as demais (`null` se não houver).
 
 `Componente`:
 ```json
-{"id": 0, "rotulo": "sem voto nas cinco candidaturas menos votadas; Flávio 47% dos válidos; Sudeste 37% das seções",
+{"id": 0, "rotulo": "Lula alto, Flávio baixo, abstenção alta; Nordeste 78% das seções",
  "secoes": 0, "pct_secoes": 0.0, "aptos": 0,
  "aptos_medio": 0.0, "votantes_medio": 0.0,
- "centro_pct_eleitorado": {"lula": 0.0, "flavio": 0.0, "n70": 0.0, "brancos": 0.0, "nulos": 0.0, "abstencao": 0.0},
+ "centro_pct_eleitorado": {"lula": 0.0, "flavio": 0.0, "brancos": 0.0, "nulos": 0.0, "abstencao": 0.0},
+ "zeros_pct": {"lula": 0.0, "flavio": 0.0, "brancos": 0.0, "nulos": 0.0, "abstencao": 0.0},
  "centro_pct_validos": {"lula": 0.0, "flavio": 0.0, "outros": 0.0},
+ "terceiros_pct_eleitorado": 0.0,
  "peso": 0.0, "dispersao_logdet": 0.0, "dispersao_traco": 0.0,
  "loglik_media": 0.0, "loglik_p05": 0.0, "mahalanobis_mediana": 0.0,
  "ufs_top": [{"uf": "BA", "secoes": 0, "pct_do_cluster": 0.0}],
- "regioes": [{"regiao": "Nordeste", "pct_do_cluster": 0.0}],
- "modelo_urna": [{"modelo": "UE2020", "pct_do_cluster": 0.0}]}
+ "regioes": [{"regiao": "Nordeste", "secoes": 0, "pct_do_cluster": 0.0}],
+ "modelo_urna": [{"modelo": "UE2020", "pct_do_cluster": 0.0}],
+ "padrao_zeros": [], "padrao_empates": [], "artefato": null}
 ```
-O centro em `% do eleitorado` é a média das frações observadas das seções do componente (não a
-destransformação do centro em CLR, que distorce componentes raros); `centro_pct_validos` é a soma
-dos votos do componente dividida pelos válidos do componente.
+O centro em `% do eleitorado` é a média das frações do eleitorado das seções do componente
+(não a destransformação do centro em CLR, que distorce componentes raros), e as cinco partes
+mais `terceiros_pct_eleitorado` somam 100; `centro_pct_validos` é a soma dos votos do
+componente dividida pelos válidos do componente.
+
+`rotulo` (gerado dos números): compara o centro de cada parte, e dos terceiros, com
+`referencia_nacional` em desvios-padrão entre seções; um quarto de desvio ou mais vira "alto"
+ou "baixo" (um desvio ou mais, "muito alto" ou "muito baixo"), no máximo três partes, das mais
+distantes para as menos; sem nenhuma, "perto da média nacional". Fecha com a região dominante
+(a primeira, se tiver ao menos 50% das seções do grupo; senão as duas primeiras). Quando o
+grupo é artefato da contagem inteira, o rótulo abre por `artefato` e as partes dele saem dos
+qualificadores.
+
+`artefato` (str ou `null`): ausência de voto numa parte em todo o grupo (`padrao_zeros` com
+`tipo` "sem"; ter voto, `tipo` "com", é o estado comum e não entra) ou o mesmo número de votos
+em duas partes (`padrao_empates`, por exemplo "mesmo número de brancos e de nulos").
+`padrao_empates` (lista): `{partes: [a, b], pct_grupo, outro_grupo, pct_outro, pct_por_grupo}`,
+com a mesma regra do padrão de zeros (cobre ao menos 95% das seções do grupo e difere em ao
+menos 30 pontos de algum outro grupo). Os grupos de `variantes.meio_voto` usam as mesmas
+regras.
 
 `padrao_zeros` (lista, em cada Componente): o padrão de zeros que define o grupo, gerado dos
 números. Item: `{tipo: "sem"|"com"|"parcial_sem"|"parcial_com", conjunto: "menos_votadas"|null, m,
 partes: [chaves], pct_grupo, outro_grupo, pct_outro, pct_por_grupo: [f]}`. Um padrão vale quando
 cobre ao menos 95% das seções do grupo e difere em ao menos 30 pontos de algum outro grupo; testa
 nenhum voto nas m candidaturas menos votadas (maior m), algum voto nelas (menor m) e cada parte
-sozinha; `parcial_*` entra só quando outro grupo ficaria sem distinção. `rotulo` começa por esse
-padrão.
+sozinha; `parcial_*` entra só quando outro grupo ficaria sem distinção.
 
 ## 4. `urna` (pergunta C)
 
@@ -265,3 +328,41 @@ Toda mudança de chave já publicada fica registrada aqui, com data e motivo.
   quatro réguas e escreve a leitura.
 - 06/10/2026: `clusters.k` passa de 3 para 5 (escolha do autor; coincide com o k preferido pelo BIC); `componentes`, `mais_anomalo`, `cluster_regiao`, `cluster_uf` e `pca` seguem o mesmo esquema com cinco grupos; paleta da figura com cinco cores.
 - 06/10/2026, acréscimo: `urna.voto_por_uf_modelo` (voto por UF e modelo de urna, somas e parcelas), para as figuras `voto_por_modelo_nacional` e `voto_por_modelo_uf`. Nenhuma chave publicada mudou. `scripts/apuracao-2026-secoes.py --so-urna` refaz só o bloco `urna` (e achados e memorando) sobre o JSON existente, sem refazer a mistura gaussiana.
+- 06/10/2026, mistura de cinco partes no lugar da de 15 (pedido do autor). Motivo: com as 12
+  candidaturas, brancos, nulos e abstenção, 42,7% das células eram zero; o zero trocado por
+  0,0001 cria um degrau de 3 a 4 unidades de log até o primeiro voto, e a mistura passou a
+  separar as seções pelo padrão de zeros das candidaturas nanicas (quem tem ou não tem voto em
+  Zema, Samara e nas menos votadas), não pela geografia (V de Cramér com a região de 0,21).
+  Mudanças de chave:
+  - `clusters.features` passa a `["lula", "flavio", "brancos", "nulos", "abstencao"]`; `base`
+    e `transformacao_detalhe` descrevem a composição fechada sobre as cinco partes; o voto em
+    terceiros fica fora e sai em `componentes[].terceiros_pct_eleitorado` (acréscimo).
+  - `componentes[].rotulo` passa a ser o rótulo de perfil (partes acima ou abaixo da média
+    nacional e região dominante), com a régua em `referencia_nacional` (acréscimo).
+  - Acréscimos: `zeros_por_parte`, `secoes_com_zero`, `mediana_votos_por_secao`,
+    `empates_por_par`, `leitura`, `componentes[].padrao_empates`, `componentes[].artefato`,
+    `ajuste.inits`, `ajuste.init`, `ajuste.diagnostico_convergencia`, `pca.base`; cada linha
+    de `ajuste.sementes` ganha `init`.
+  - `degrau_log` usa como base o total das cinco partes (aptos menos o voto em terceiros).
+  - O ajuste principal passa de 8 sementes a 16 sementes × 2 inicializações (`kmeans` e
+    `k-means++`), pedido de 06/10/2026 para provar que o EM vai até a convergência e que o
+    máximo escolhido não é um máximo local pobre; a tabela `bic` usa as 16 sementes.
+  - A PCA da figura passa a ser feita nas coordenadas ILR, com as cargas reescritas nas partes
+    (os escores são os mesmos da PCA na CLR).
+  - Removidas: `variantes.nanicos_somados`, `variantes.densa` e as chaves de `sensibilidade`
+    `ari_principal_vs_outra_semente`, `outra_semente`, `outra_semente_criterio`,
+    `ari_principal_vs_nanicos_somados` e `ari_principal_vs_densa` (eram sensibilidades da
+    versão de 15 partes; a outra semente foi substituída pelo diagnóstico de convergência).
+  - Acréscimos: `variantes.quinze_partes` (só agregados da versão abandonada),
+    `variantes.meio_voto` (zero trocado por meio voto) e `sensibilidade` com
+    `ari_principal_vs_quinze_partes` e `ari_principal_vs_meio_voto`.
+  - `interpretacao` muda de estrutura: a primeira frase compara a geografia com a versão de 15
+    partes e a segunda diz quantos grupos ainda são definidos por zero.
+  - `scripts/apuracao-2026-secoes.py --so-clusters` refaz só o bloco `clusters` (e achados,
+    limites e memorando) sobre o JSON existente; `--so-textos` não lê banco nenhum e refaz só
+    os rótulos e as frases do bloco a partir dos números gravados (revisão editorial).
+  - Resultado registrado na própria rodada: com cinco partes, três dos cinco grupos ainda são
+    artefatos da contagem inteira de brancos e nulos (seção sem voto branco, seção sem voto
+    nulo, seção com o mesmo número de brancos e de nulos); os outros dois repetem a divisão
+    regional do mapa. O texto e a thread dizem isso, e `variantes.meio_voto` mostra o efeito
+    de trocar o zero por meio voto.
