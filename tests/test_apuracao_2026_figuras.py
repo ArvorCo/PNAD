@@ -283,6 +283,8 @@ def test_clusters_regiao_rotulo_curto_e_margem_reservada():
     estreita = h.split('class="fig-estreita"', 1)[1]
     assert estreita.count('class="clr-g"') == len(ids)
     assert "<svg" not in estreita
+    # sem `width` em estilo: escondida na tela larga, não vira área zero no auditor
+    assert "width:" not in estreita.split("</style>", 1)[1]
 
 
 def test_clusters_regiao_texto_cabe_no_segmento():

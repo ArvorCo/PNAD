@@ -161,7 +161,7 @@ def clusters_regiao(d, **_op) -> str:
                     )
                 )
             segs.append(
-                f'<span class="hit" data-k="{chave}" style="width:{x["pct_do_cluster"] or 0:.2f}%;'
+                f'<span class="hit" data-k="{chave}" style="flex:{x["pct_do_cluster"] or 0:.2f} 1 0;'
                 f'background:{cor}"></span>'
             )
             itens.append(f'<li><i style="background:{cor}"></i>{escape(rot)}</li>')
