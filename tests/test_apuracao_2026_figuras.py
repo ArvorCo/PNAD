@@ -386,7 +386,7 @@ def test_clusters_secoes_elipse_do_proprio_grupo():
 
 
 def test_elipse_cov_e_topo():
-    from apuracao_2026.pagina_fig_secoes import elipse_cov, topo_elipse
+    from apuracao_2026.pagina_fig_secoes_c import elipse_cov, topo_elipse
 
     cx, cy, rx, ry, ang = elipse_cov(10, 20, 4.0, 1.0, 0.0)
     assert (rx, ry, ang) == (4.0, 2.0, 0.0)
