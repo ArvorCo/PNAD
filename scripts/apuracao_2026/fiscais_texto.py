@@ -172,7 +172,8 @@ def achados(d: Mapping[str, Any]) -> dict[str, list[str]]:
     top = d["prioridade_pl"]["geral"]["municipios"][:5]
     if top:
         juizo.append(
-            "Pela pontuação somada, os cinco municípios que pedem mais fiscal são "
+            "Pela ordem de prioridade (seções de nível alta, depois média, depois "
+            "pontuação somada), os cinco municípios que pedem mais fiscal são "
             + "; ".join(
                 f"{m['municipio']} ({m['uf']}), {num(m['secoes'], 0)} seções"
                 for m in top

@@ -529,7 +529,7 @@ def codigos_explicacao(df: pd.DataFrame) -> pd.Series:
 
 def frase_explicacao(codigos: Sequence[str]) -> str:
     if not codigos:
-        return "sem explicação comum acionada: exige explicação documental (ata e log da urna)"
+        return "sem explicação comum: exige explicação documental"
     return (
         "; ".join(ROTULO_EXPLICACAO.get(c, c) for c in codigos) + " (regra declarada)"
     )

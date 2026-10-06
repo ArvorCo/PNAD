@@ -325,6 +325,11 @@ cada camada) ficam em `meta.fontes_risco`; base que não pôde ser baixada fica 
   `"cadastro_local"` (palavras do endereço e do bairro quando a malha não cobre o ponto).
 - `homicidios_municipio.fonte` e `acesso.fonte` trazem a `chave` de `meta.fontes_risco`
   (`ipea_atlas_taxa_homicidios`, `osrm`).
+- Compactação (o JSON passava de 60 MB): `*_nome`, `*_dist_km` e `*_fonte` de terra
+  indígena, quilombo, favela e unidade prisional só aparecem quando a camada é `true`; a
+  bandeira (`true`, `false` ou `null`) aparece sempre. Em `acesso` e em
+  `fronteira_ou_garimpo`, chave de valor nulo sai (as bandeiras `fronteira` e `garimpo`
+  ficam, mesmo nulas). Leia com `.get`.
 - `favela_comunidade`: ponto dentro de polígono de Favelas e Comunidades Urbanas 2022 (IBGE)
   ou de setor desse tipo.
 - `homicidios_municipio`: taxa por 100 mil do município, ano e quintil nacional (5 = maior).

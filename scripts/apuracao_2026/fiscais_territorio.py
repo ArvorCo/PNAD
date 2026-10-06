@@ -264,7 +264,6 @@ def acesso(
             "sede_km_estrada": None,
             "sede_min": None,
             "aeroporto": aero["nome"] if aero else None,
-            "aeroporto_municipio": aero["municipio"] if aero else None,
             "aeroporto_km_reta": round(d_aero, 1) if d_aero is not None else None,
             "aeroporto_km_estrada": None,
             "aeroporto_min": None,
@@ -316,7 +315,7 @@ def nivel_risco(r: Mapping[str, Any]) -> tuple[str | None, list[str]]:
         cobertas += 1
         if co["status"] == "mapeamento público":
             pts += PONTOS["crime_organizado"]
-            motivos.append("mapeamento público cita o município ou a área (ver fontes)")
+            motivos.append("mapeamento público de crime organizado")
     h = r.get("homicidios_municipio") or {}
     if h.get("quintil") is not None:
         cobertas += 1
@@ -500,11 +499,46 @@ def risco_local(
         },
         "acesso": dict(ac) if ac else None,
     }
+    compactar(out)
     nivel, motivos = nivel_risco(out)
     out["nivel_risco_fiscal"] = nivel
     out["motivos_risco"] = motivos
     out["validar"] = VALIDAR
     return out
+
+
+DETALHES = {
+    "terra_indigena": (
+        "terra_indigena_nome",
+        "terra_indigena_dist_km",
+        "terra_indigena_fonte",
+    ),
+    "quilombo": ("quilombo_nome", "quilombo_dist_km", "quilombo_fonte"),
+    "favela_comunidade": ("favela_comunidade_nome", "favela_comunidade_fonte"),
+    "unidade_prisional_ou_socioeducativa": ("unidade_prisional_fonte",),
+}
+
+
+def compactar(r: dict[str, Any]) -> None:
+    """Tira os detalhes de camada negativa ou sem base e os nulos do acesso.
+
+    Nome, distância e fonte de terra indígena, quilombo, favela e unidade prisional só
+    existem quando a camada é positiva; a bandeira (`true`, `false` ou `null`) fica
+    sempre. No acesso e na fronteira, chave nula sai. Poupa um terço do JSON.
+    """
+    for flag, chaves in DETALHES.items():
+        if r.get(flag) is not True:
+            for k in chaves:
+                r.pop(k, None)
+    for bloco in ("acesso", "fronteira_ou_garimpo"):
+        b = r.get(bloco)
+        if isinstance(b, dict):
+            for k in [
+                k
+                for k, v in b.items()
+                if v is None and k != "garimpo" and k != "fronteira"
+            ]:
+                b.pop(k)
 
 
 FONTE_HOMICIDIO = "ipea_atlas_taxa_homicidios"
@@ -683,6 +717,10 @@ def _cobertura(
         camada = f.get("camada")
         func = CAMADA_CAMPO.get(str(camada))
         if func is None:
+            continue
+        if f.get("status") == "falhou":
+            f["cobertura_locais"] = None
+            f["cobertura_secoes"] = None
             continue
         com = [k for k, r in por_local.items() if func(r) is not None]
         f["cobertura_locais"] = len(com)
