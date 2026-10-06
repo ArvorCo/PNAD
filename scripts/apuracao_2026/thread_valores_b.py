@@ -3,6 +3,7 @@ lentidão, fontes e o 2º turno."""
 
 from __future__ import annotations
 
+from .secoes_clusters_leitura import extenso
 from .thread_base import (
     ROOT,
     dado,
@@ -95,21 +96,61 @@ def v_secoes() -> dict:
     }
 
 
+def _lider(g: dict) -> str:
+    cv = g["centro_pct_validos"]
+    return "lula" if (cv["lula"] or 0) >= (cv["flavio"] or 0) else "flavio"
+
+
 def v_clusters() -> dict:
     c = dado("secoes")["clusters"]
     comp = c["componentes"]
-    return {
+    q = c["variantes"]["quinze_partes"]
+    dg = c["ajuste"]["diagnostico_convergencia"]
+    med = c["mediana_votos_por_secao"]
+    nuv = [s["feature"] for s in q["nuvens"]["separacao"]]
+    art = [g for g in comp if g.get("artefato")]
+    perfis = [g for g in comp if not g.get("artefato")]
+    v = {
         "cl_k": str(c["k"]),
-        "cl_bic": str(c["escolha_k"]["bic_prefere"]),
+        "cl_k_ext": extenso(c["k"]),
         "cl_v": num(c["cramer_v_regiao"], 2),
+        "cl_vuf": num(c["cramer_v_uf"], 2),
         "cl_zeros": pct(c["zeros_substituidos_pct"], 1),
-        "cl_g1": num(comp[0]["secoes"]),
-        "cl_g2": num(comp[1]["secoes"]),
-        "cl_g3": num(comp[2]["secoes"]),
-        "cl_g1_pct": pct(comp[0]["pct_secoes"], 1),
-        "cl_g2_pct": pct(comp[1]["pct_secoes"], 1),
-        "cl_g3_pct": pct(comp[2]["pct_secoes"], 1),
+        "cl_n15": str(len(q["features"])),
+        "cl_v15": num(q["cramer_v_regiao"], 2),
+        "cl_zeros15": pct(q["zeros_substituidos_pct"], 1),
+        "cl_deg15": num(q["degrau_log"]["mediana"], 1),
+        "cl_nuvem1": NOME_NUMERO.get(nuv[0], nuv[0]),
+        "cl_nuvem2": NOME_NUMERO.get(nuv[1], nuv[1]),
+        "cl_partidas": str(dg["total"]),
+        "cl_nomax": str(dg["no_maximo"]),
+        "cl_v_mv": num(c["variantes"]["meio_voto"]["cramer_v_regiao"], 2),
+        "cl_med_brancos": num(med["brancos"]),
+        "cl_med_nulos": num(med["nulos"]),
+        "cl_dobro_brancos": num(2 * med["brancos"]),
+        "cl_med_lula": num(med["lula"]),
+        "cl_dobro_lula": num(2 * med["lula"]),
+        "cl_art_n": extenso(len(art)).capitalize(),
+        "cl_art_lista": "; ".join(
+            f"o grupo {g['id'] + 1}, {g['artefato']}, com {num(g['secoes'])} seções"
+            for g in art
+        ),
+        "cl_perfis_n": extenso(len(perfis)),
+        "cl_perfis_pct": pct(sum(g["pct_secoes"] for g in perfis), 0),
     }
+    for lado in ("lula", "flavio"):
+        g = max(
+            (x for x in perfis if _lider(x) == lado),
+            key=lambda x: x["centro_pct_validos"][lado],
+        )
+        reg = (g.get("regioes") or [{}])[0]
+        v |= {
+            f"cl_{lado}_lula": pct(g["centro_pct_validos"]["lula"], 0),
+            f"cl_{lado}_flavio": pct(g["centro_pct_validos"]["flavio"], 0),
+            f"cl_{lado}_reg": reg.get("regiao", ""),
+            f"cl_{lado}_reg_pct": pct(reg.get("pct_do_cluster") or 0, 0),
+        }
+    return v
 
 
 def v_urna() -> dict:

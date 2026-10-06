@@ -7,6 +7,7 @@ import math
 
 import voto_util_mapa as VM
 
+from .secoes_clusters_leitura import extenso
 from .thread_base import (
     CAMPO,
     CAMPOS,
@@ -39,7 +40,6 @@ from .thread_base import (
     svg,
     t,
 )
-from .thread_valores_b import NOME_NUMERO
 
 # ------------------------------------------------------------------ 9 assembleias
 
@@ -439,84 +439,103 @@ def fig_secoes90() -> str:
 
 # ------------------------------------------------------------------ 15 grupos
 
+PARTES_GRUPO = [  # (chave do centro, nome, cor da barra, cor do texto dentro)
+    ("lula", "Lula", LULA, WHITE),
+    ("flavio", "Flávio", FLAVIO, WHITE),
+    ("terceiros", "terceiros, fora do modelo", OUTROS, WHITE),
+    ("brancos", "brancos", GRID, INK),
+    ("nulos", "nulos", CINZA, WHITE),
+    ("abstencao", "abstenção", GOLD_FILL, INK),
+]
+
+
+def _curto(artefato: str) -> str:
+    """'sem voto branco' → 'sem branco'; 'mesmo número de brancos e de nulos' →
+    'brancos = nulos'."""
+    if artefato.startswith("mesmo número de "):
+        a, b = artefato.removeprefix("mesmo número de ").split(" e de ", 1)
+        return f"{a} = {b}"
+    return artefato.replace("sem voto ", "sem ")
+
 
 def fig_grupos() -> str:
+    """Cinco grupos da mistura de cinco partes: o eleitorado de cada um em barra de
+    100%, com tamanho e região; no rodapé, a versão de 15 partes que não deu certo."""
     c = dado("secoes")["clusters"]
     comp = c["componentes"]
-    cols = ["n70", "n14", "n55", "n30", "n80", "n16", "n27", "n21", "n35", "n29"]
-    x0, y0 = 220, 90
-    # a altura da linha cabe no SVG padrão com qualquer k (3 a 6 grupos)
-    cw, ch = 75, min(110, int((H - y0 - 90) / max(1, len(comp))))
+    q = (c.get("variantes") or {}).get("quinze_partes") or {}
+    x0, x1, y0 = 250, 990, 50
+    passo = min(84, int((H - y0 - 130) / max(1, len(comp))))
     out = [
         t(
-            x0,
-            30,
-            "Parcela de seções sem nenhum voto na candidatura, por grupo",
+            0,
+            24,
+            "Eleitorado de cada grupo de seções, em % dos aptos (média das seções do grupo)",
             16,
             MUTED,
             600,
         )
     ]
-    for j, k in enumerate(cols):
-        x = x0 + j * cw + cw / 2
-        out.append(
-            f'<text x="{x:.1f}" y="{y0 - 12}" font-size="15" fill="{INK}" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-weight="600" text-anchor="start" transform="rotate(-35 {x:.1f} {y0 - 12})">{NOME_NUMERO[k]}</text>'
-        )
     for i, g in enumerate(comp):
-        y = y0 + i * ch
-        out.append(t(x0 - 14, y + ch / 2 - 4, f"Grupo {i + 1}", 20, INK, 700, "end"))
+        y = y0 + i * passo
+        reg = (g.get("regioes") or [{}])[0]
+        out.append(t(0, y + 22, f"Grupo {i + 1}", 20, INK, 700))
         out.append(
             t(
-                x0 - 14,
-                y + ch / 2 + 20,
-                f"{num(g['secoes'])} seções",
+                0,
+                y + 43,
+                f"{num(g['secoes'])} seções · {reg.get('regiao', '')} "
+                f"{num(reg.get('pct_do_cluster') or 0)}%",
                 14,
                 MUTED,
                 600,
-                "end",
-                MONO,
             )
         )
-        for j, k in enumerate(cols):
-            v = g["zeros_pct"][k]
-            x = x0 + j * cw
-            claro = v < 55
-            cor = _escala(v)
-            out.append(r(x + 2, y + 2, cw - 4, ch - 4, cor, 3))
+        if g.get("artefato"):
             out.append(
-                t(
-                    x + cw / 2,
-                    y + ch / 2 + 7,
-                    num(v, 0),
-                    20,
-                    INK if claro else WHITE,
-                    700,
-                    "middle",
-                    MONO,
-                )
+                t(0, y + 63, f"artefato: {_curto(g['artefato'])}", 14, GOLD, 700)
             )
-    y = y0 + len(comp) * ch + 40
+        ce = dict(g["centro_pct_eleitorado"])
+        ce["terceiros"] = g.get("terceiros_pct_eleitorado") or 0.0
+        total = sum(ce.get(k) or 0.0 for k, *_ in PARTES_GRUPO) or 1.0
+        xx = float(x0)
+        for k, _, cor, cor_txt in PARTES_GRUPO:
+            w = (x1 - x0) * (ce.get(k) or 0.0) / total
+            out.append(r(xx, y + 8, w, 44, cor))
+            rot = num(ce.get(k) or 0.0)
+            if w >= 0.62 * 18 * len(rot) + 12:
+                out.append(t(xx + w / 2, y + 37, rot, 18, cor_txt, 700, "middle", MONO))
+            xx += w
+    y = y0 + len(comp) * passo + 14
+    out.append(legenda([(n, cor) for _, n, cor, _ in PARTES_GRUPO[:3]], 0, y + 4, 15))
+    out.append(legenda([(n, cor) for _, n, cor, _ in PARTES_GRUPO[3:]], 0, y + 30, 15))
     out.append(
         t(
             0,
-            y,
-            f"Grupo e região quase não se associam (V de Cramér {num(c['cramer_v_regiao'], 2)}): o que separa é o padrão de zeros.",
-            16,
-            INK,
+            y + 66,
+            f"Antes: 15 partes, {num(q.get('zeros_substituidos_pct') or 0, 1)}% das células em zero, "
+            f"V de Cramér com a região {num(q.get('cramer_v_regiao') or 0, 2)}: grupos de zeros.",
+            15,
+            MUTED,
             600,
         )
     )
+    n_art = sum(1 for g in comp if g.get("artefato"))
     out.append(
         t(
             0,
-            y + 28,
-            f"{num(c['zeros_substituidos_pct'], 1)}% das células da matriz são zero.",
-            16,
-            MUTED,
-            500,
+            y + 90,
+            f"Agora: cinco partes, {num(c['zeros_substituidos_pct'], 1)}% das células em zero, "
+            f"V de Cramér {num(c['cramer_v_regiao'], 2)}; "
+            f"{extenso(n_art)} dos {extenso(len(comp))} grupos ainda são artefatos da contagem.",
+            15,
+            INK,
+            700,
         )
     )
-    return svg("".join(out), "Padrão de zeros por grupo da mistura gaussiana")
+    return svg(
+        "".join(out), "Eleitorado dos cinco grupos de seções da mistura gaussiana"
+    )
 
 
 def _texto(cor: str) -> str:
@@ -527,16 +546,6 @@ def _texto(cor: str) -> str:
 def _int(v: float) -> str:
     k = round(v)
     return num(k, 0) if k >= 0 else "−" + num(-k, 0)
-
-
-def _escala(v: float) -> str:
-    """De papel a tinta: 0 a 100% de seções com zero."""
-    a = (0xF4, 0xF0, 0xE6)
-    b = (0x19, 0x2E, 0x2B)
-    f = max(0.0, min(1.0, v / 100))
-    return "#" + "".join(
-        f"{round(x + (y - x) * f):02x}" for x, y in zip(a, b, strict=True)
-    )
 
 
 # ------------------------------------------------------------------ 16 urna
