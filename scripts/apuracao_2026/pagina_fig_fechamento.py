@@ -334,8 +334,13 @@ SMAX = 360
 MAPA_X, MAPA_W = 560, 520
 
 
+MAPA_TAMBEM_2022 = "#2f2f2f"
+"""Cinza-carvão: no mapa, p90 tardio também em 2022. Não é verde para não se
+confundir com o Norte da dispersão ao lado."""
+
+
 def _cor_mapa(p22: float | None) -> str:
-    return "#0d3f35" if (p22 or 0) >= 120 else "#d9775f"
+    return MAPA_TAMBEM_2022 if (p22 or 0) >= 120 else "#d9775f"
 
 
 @registra("fechamento_persistencia")
@@ -484,14 +489,17 @@ def fechamento_persistencia(d, **_op) -> str:
         nota="hora de Brasília; décimo mais tardio = percentil 90 ou mais",
     )
     p19 = P.get("p90_depois_19h") or {}
+    # uma legenda por painel: as cores do mapa não se misturam às das regiões
     leg = legenda_html(
-        [
-            ("décimo mais tardio nos dois anos", OURO_CLARO),
-            ("mapa: p90 às 19h ou depois também em 2022", "#0d3f35"),
-            ("mapa: só em 2026", "#d9775f"),
-        ]
+        [("décimo mais tardio nos dois anos", OURO_CLARO)]
         + [(rg, COR_REGIAO[rg]) for rg in REGIOES],
-        "Pontos da dispersão pela região; área pelo eleitorado",
+        "À esquerda, dispersão: cor pela região, área pelo eleitorado",
+    ) + legenda_html(
+        [
+            ("p90 às 19h ou depois também em 2022", MAPA_TAMBEM_2022),
+            ("só em 2026", "#d9775f"),
+        ],
+        "À direita, mapa: municípios com p90 de chegada às 19h ou depois em 2026",
     )
     legenda = (
         f"{inteiro(P.get('municipios'))} municípios comparados. Correlação de postos entre os anos "

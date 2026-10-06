@@ -75,7 +75,7 @@ html:not(.js) .fig-espera-c{display:none}
 .rola-dica{position:absolute;z-index:4;right:14px;padding:5px 9px;background:var(--ink);color:var(--paper);font:600 11.5px/1.2 var(--mono);letter-spacing:.06em;text-transform:uppercase;border-radius:2px;pointer-events:none;transition:opacity .2s ease}
 .rola-dica.fora{opacity:0}
 @media print{.rola-dica{display:none}.chart-scroll{-webkit-mask-image:none!important;mask-image:none!important}}
-@media(max-width:719px){.fig-ctl button{padding:8px 10px;font-size:13px}.fig-tip{max-width:calc(100% - 12px)}}
+@media(max-width:719px){.fig-ctl button{padding:8px 10px;font-size:13px}.fig-tip{max-width:calc(100% - 12px)}.fig-i .so-largo{display:none}}
 @media print{.fig-ctl,.fig-tip,.dica{display:none}}
 """
 

@@ -533,8 +533,10 @@ def mapa_mundi_exterior(d, **_op) -> str:
         if any(abs(x - a) < 110 and abs(y - b) < 22 for a, b in usados):
             continue
         usados.append((x, y))
+        # o mapa-múndi encolhe a um terço no celular: o rótulo some abaixo de 720 px
+        # (a ficha continua dando o nome ao tocar)
         out.append(
-            f'<g pointer-events="none">{chip(x + 10, y - 8, nome_bonito(c["nome"]), 13)}</g>'
+            f'<g class="so-largo" pointer-events="none">{chip(x + 10, y - 8, nome_bonito(c["nome"]), 13)}</g>'
         )
     out.append("</svg>")
     T = E["total"]

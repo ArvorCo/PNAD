@@ -564,6 +564,7 @@ def divergencia_nacional(d, **_op) -> str:
         HACHURA,
         sombras(L, X, topo, base, rotulo=False),
         eixo_y(Y, ticks(ymin, ymax, 5), esq, dir_, lambda v: f"{num(v, 0)}%"),
+        t(esq - 60, topo - 20, "% das seções do país", 13, MUTED),
         ln(esq, base, dir_, base, INK, 1.2),
         eixo_x_horas(X, ini, fim, base, 10),
     ]
