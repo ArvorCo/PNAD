@@ -448,6 +448,9 @@ def clusters_secoes(d, **_op) -> str:
         rot_el_svg = f'<g pointer-events="none">{chip(x_el, y_el, rot_el, 13)}</g>'
     else:
         rot_el_svg = ""
+    guias, cruzes, chips = [], [], []
+    # a cruz de cada centro também é obstáculo: nenhum rótulo cobre o centro de outro grupo
+    caixas += [(X(c["x"]) - 8, Y(c["y"]) - 8, 16, 16) for c in P["centros"]]
     for c in sorted(P["centros"], key=lambda c: Y(c["y"])):
         cx, cy = X(c["x"]), Y(c["y"])
         k = int(c["cluster"])
@@ -466,10 +469,15 @@ def clusters_secoes(d, **_op) -> str:
             if abs(by - (cy - 12)) > 1
             else ""
         )
-        out.append(
-            f'<g pointer-events="none">{guia}{ln(cx - 8, cy, cx + 8, cy, INK, 3)}{ln(cx, cy - 8, cx, cy + 8, INK, 3)}'
-            f"{chip(bx, by, texto, 13)}</g>"
+        guias.append(guia)
+        cruzes.append(
+            ln(cx - 8, cy, cx + 8, cy, INK, 3) + ln(cx, cy - 8, cx, cy + 8, INK, 3)
         )
+        chips.append(chip(bx, by, texto, 13))
+    # guias por baixo de todos os rótulos: nenhuma linha atravessa o rótulo de outro grupo
+    out.append(
+        f'<g pointer-events="none">{"".join(guias)}{"".join(cruzes)}{"".join(chips)}</g>'
+    )
     out.append(rot_el_svg)
     out.append(
         f'<circle class="near-halo" cx="0" cy="0" r="8" fill="none" stroke="{LIMA}" stroke-width="3" display="none"/>'
