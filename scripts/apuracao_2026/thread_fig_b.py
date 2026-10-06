@@ -24,6 +24,7 @@ from .thread_base import (
     PAPER2,
     ROT_CAMPO,
     WHITE,
+    H,
     W,
     circ,
     dado,
@@ -444,7 +445,8 @@ def fig_grupos() -> str:
     comp = c["componentes"]
     cols = ["n70", "n14", "n55", "n30", "n80", "n16", "n27", "n21", "n35", "n29"]
     x0, y0 = 220, 90
-    cw, ch = 75, 110
+    # a altura da linha cabe no SVG padrão com qualquer k (3 a 6 grupos)
+    cw, ch = 75, min(110, int((H - y0 - 90) / max(1, len(comp))))
     out = [
         t(
             x0,
@@ -493,7 +495,7 @@ def fig_grupos() -> str:
                     MONO,
                 )
             )
-    y = y0 + 3 * ch + 40
+    y = y0 + len(comp) * ch + 40
     out.append(
         t(
             0,

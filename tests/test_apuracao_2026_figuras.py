@@ -251,13 +251,17 @@ def test_clusters_alterna_por_regiao():
     assert h.count("<tr>") >= 21  # cabeçalho e as 20 amostras do grupo mais atípico
 
 
-def test_clusters_secoes_tres_cores():
-    h = FIGURAS["clusters_secoes"]({"secoes": _fixture()})
-    assert "Três grupos de seções" in h
-    assert "Os três grupos" in h
+def test_clusters_secoes_cores_por_grupo():
+    from apuracao_2026.pagina_fig_secoes import CLUSTER_COR, EXTENSO
+
+    fx = _fixture()
+    n = len(fx["clusters"]["componentes"])
+    h = FIGURAS["clusters_secoes"]({"secoes": fx})
+    assert f"{EXTENSO[n].capitalize()} grupos de seções" in h
+    assert f"Os {EXTENSO[n]} grupos" in h
     tracos = set(re.findall(r'<path d="[^"]*" stroke="(#[0-9a-f]{6})" data-as=', h))
-    assert tracos <= {"#1457aa", "#b02f21", "#7d5b00"}
-    assert len(tracos) == 3
+    assert tracos <= set(CLUSTER_COR)
+    assert len(tracos) == n
 
 
 def test_clusters_regiao_rotulo_curto_e_margem_reservada():

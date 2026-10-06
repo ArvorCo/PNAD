@@ -49,7 +49,7 @@ from .pagina_fig_base import (
 from .pagina_fig_mapas import MH, MW, paths_uf
 
 OURO = "#7d5b00"
-CLUSTER_COR = ["#1457aa", "#b02f21", "#7d5b00"]
+CLUSTER_COR = ["#1457aa", "#b02f21", "#7d5b00", "#0f7f5f", "#6b4a92"]
 EXTENSO = {2: "dois", 3: "três", 4: "quatro", 5: "cinco", 6: "seis"}
 NOME = {"lula": "Lula", "flavio": "Flávio"}
 COR = {"lula": LULA, "flavio": FLAVIO}

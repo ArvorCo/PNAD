@@ -106,7 +106,7 @@ def test_formato_brasileiro():
 H3_SECOES = [
     "Da zona para a seção",
     "Seções acima de 90%",
-    "Três grupos de seções",
+    "Cinco grupos de seções",
     "Modelo de urna",
     "O que mais a seção mostra",
 ]

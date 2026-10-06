@@ -278,7 +278,7 @@ def clusters_secoes(d, **_op) -> str:
     if el:
         cx, cy, rx, ry, ang = el
         # por cima dos pontos, em cinza tracejado e quase sem preenchimento: não se
-        # confunde com nenhuma das três cores de grupo
+        # confunde com nenhuma das cores de grupo
         elipse_svg = (
             f'<ellipse cx="{cx:.1f}" cy="{cy:.1f}" rx="{rx:.1f}" ry="{max(ry, 6):.1f}" '
             f'transform="rotate({ang:.1f} {cx:.1f} {cy:.1f})" fill="{CINZA_ELIPSE}" '

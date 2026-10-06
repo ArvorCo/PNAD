@@ -1,4 +1,4 @@
-"""Pergunta B: mistura gaussiana (k = 3) sobre a composição do eleitorado da seção.
+"""Pergunta B: mistura gaussiana (k = 5) sobre a composição do eleitorado da seção.
 
 Atributos por seção: votos de cada uma das 12 candidaturas a presidente, brancos,
 nulos e abstenção, todos divididos pelos aptos da eleição federal. As 15 frações
@@ -9,9 +9,9 @@ covariância completa; por isso a mistura é ajustada nas 14 coordenadas
 ortonormais desse subespaço (log-razão isométrica, ILR). A troca é uma rotação:
 distâncias de Mahalanobis e a densidade relativa entre seções não mudam.
 
-k = 3 é escolha do autor (05/10/2026, antes 4), pela leitura visual da projeção
-em dois componentes principais. O BIC de k = 3, 4 e 5 continua na tabela de
-comparação, ao lado da escolha, e o texto diz qual k o BIC prefere.
+k = 5 é escolha do autor (06/10/2026; antes 3, e antes disso 4): é o k que o BIC
+prefere entre 3, 4 e 5. A tabela de comparação continua no JSON, ao lado da
+escolha, e o texto diz qual k o BIC prefere.
 
 A verossimilhança tem muitos máximos locais: com quase metade das células em
 zero, cada padrão exato de zeros é um subespaço onde um componente pode se
@@ -59,16 +59,13 @@ from .secoes_clusters_leitura import (
 SEMENTE = 20261005
 N_SEMENTES = 8
 SEMENTES = tuple(SEMENTE + i for i in range(N_SEMENTES))
-K = 3
+K = 5
 K_TABELA = (3, 4, 5)
 ESCOLHA_K = {
     "k": K,
-    "anterior": 4,
-    "data": "05/10/2026",
-    "motivo": (
-        "escolha do autor pela leitura visual da projeção em dois componentes "
-        "principais"
-    ),
+    "anterior": 3,
+    "data": "06/10/2026",
+    "motivo": ("escolha do autor; coincide com o k que o BIC prefere entre 3, 4 e 5"),
 }
 N_INIT = 10
 MAX_PONTOS = 8000

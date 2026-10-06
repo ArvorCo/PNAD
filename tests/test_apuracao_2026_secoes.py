@@ -109,9 +109,9 @@ def test_ajustar_melhor_fica_com_a_maior_verossimilhanca():
 
 
 def test_k_principal_e_tres_com_bic_de_tres_a_cinco():
-    assert sc.K == 3
+    assert sc.K == 5
     assert sc.K_TABELA == (3, 4, 5)
-    assert sc.ESCOLHA_K["k"] == 3 and sc.ESCOLHA_K["anterior"] == 4
+    assert sc.ESCOLHA_K["k"] == sc.K and sc.ESCOLHA_K["anterior"] == 3
     assert len(sc.SEMENTES) == sc.N_SEMENTES == 8
 
 
@@ -633,10 +633,10 @@ def test_json_figuras(dados):
     assert pca["colunas"] == ["x", "y", "cluster", "top200", "uf"]
     assert all(len(p) == 5 for p in pca["pontos"])
     assert sum(p[3] for p in pca["pontos"]) == 200
-    assert dados["clusters"]["k"] == 3
+    assert dados["clusters"]["k"] == sc.K
     assert len(dados["clusters"]["componentes"]) == dados["clusters"]["k"]
     assert [b["k"] for b in dados["clusters"]["bic"]] == [3, 4, 5]
-    assert dados["clusters"]["escolha_k"]["k"] == 3
+    assert dados["clusters"]["escolha_k"]["k"] == sc.K
     assert len(dados["clusters"]["ajuste"]["sementes"]) == 8
     assert "registro" not in dados["urna"]
     assert len(dados["urna"]["reguas"]["itens"]) == 4
