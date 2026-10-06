@@ -279,9 +279,10 @@ def modelo_urna_uf(d, **_op) -> str:
             cx += larg
         y += 26
     out.append("</svg>")
-    leg = legenda_html(
-        [(m, cores[m]) for m in modelos], "Modelo de urna, do mais velho ao mais novo"
-    )
+    itens_leg = [(m, cores[m]) for m in modelos]
+    if any(x["modelo"] not in cores for xs in por.values() for x in xs):
+        itens_leg.append(("sem modelo (boletim de papel, sem log da urna)", MUTED))
+    leg = legenda_html(itens_leg, "Modelo de urna, do mais velho ao mais novo")
     fontes = "; ".join(
         f"{escape(f['modelo_fonte'])}: {inteiro(f['secoes'])} seções"
         for f in U.get("fonte_modelo", [])
