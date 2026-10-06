@@ -107,3 +107,38 @@ def card_thread(root):
         "accent": "blue",
         "thread": True,
     }
+
+
+def card_fiscais_thread(root):
+    """Card da thread dos fiscais (capítulo 13): números de fiscais.json."""
+    caminho = root / "analysis/apuracao_2026/dados/fiscais.json"
+    stats = []
+    if caminho.exists():
+        F = json.loads(caminho.read_text(encoding="utf-8"))
+        R = F["resumo"]
+        stats = [
+            (_num(R["secoes_sinalizadas"], 0), "seções atípicas, com endereço"),
+            (
+                _num(R["fiscais"]["um_por_local"]["todos"], 0),
+                "locais de votação, um fiscal em cada",
+            ),
+            (
+                _num(R["por_nivel"]["alta"]["secoes"], 0),
+                "seções no nível alta, onde ir primeiro",
+            ),
+        ]
+    return {
+        "slug": "fiscais_thread",
+        "eyebrow": "Thread · onde colocar fiscal no 2º turno",
+        "title": "Prioridade, não acusação.",
+        "title_em": "O fiscal vê o que a urna não mostra.",
+        "lede": (
+            "A lista de seções atípicas, os cenários clássicos de manipulação do voto e "
+            "o que já aconteceu no Brasil, com data e tribunal. <b>No fim, o kit do "
+            "fiscal: o que levar, o que conferir e a quem reportar.</b>"
+        ),
+        "stats": stats,
+        "foot": "atipicidade estatística não é irregularidade · cenário é hipótese de risco",
+        "accent": "blue",
+        "thread": True,
+    }
