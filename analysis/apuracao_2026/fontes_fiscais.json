@@ -1,0 +1,1769 @@
+{
+ "titulo": "Cenários de risco e casos documentados do capítulo 13 (onde colocar fiscal)",
+ "gerado_em": "2026-10-06T21:00:00-03:00",
+ "consultado_em": "2026-10-06",
+ "regras": [
+  "Cenário é hipótese de risco: um tipo de coisa que a fiscalização existe para impedir, nunca descrição da eleição de 2026.",
+  "Caso é passado verificado: data, instância, resultado e ao menos uma fonte lida, com o texto bruto e o SHA-256 em data/originals/apuracao_2026/fiscais/ quando o arquivo foi salvo.",
+  "Nenhum caso de 2026 entra; os itens de 2026 encontrados ficam em fora_por_regra.",
+  "Investigação, denúncia, condenação e absolvição são registradas como tais."
+ ],
+ "cenarios": [
+  {
+   "id": "pianista",
+   "familia": "mesa",
+   "nome": "Mesário pianista",
+   "o_que_e": "Integrante da mesa vota no lugar de eleitor que não compareceu, liberando a urna em nome de quem está no caderno e não veio.",
+   "como_aparece": "Votos de ausentes registrados em sequência, quase sempre perto do fim do dia, com liberação da urna sem a digital do eleitor.",
+   "sinal": "parcial",
+   "criterios": [
+    "c",
+    "a",
+    "e"
+   ],
+   "sinal_texto": "Comparecimento perto de 100% ou muito acima da zona (critério c), voto concentrado num candidato (a) ou seção improvável pela mistura (e). O log de cada urna registra a hora de cada voto e cada liberação sem biometria, mas este capítulo não lê o log de todas as seções.",
+   "confere": "Confere o número de votantes da ata contra o caderno de votação e contra o boletim; observa e anota as liberações sem biometria; anota a hora dos últimos votos; se o comparecimento destoa da zona, pede o log da urna ao TRE.",
+   "confere_curto": "caderno × boletim, liberação sem digital, hora dos últimos votos",
+   "base_legal": [
+    "ce_309",
+    "l9504_65",
+    "l9504_68",
+    "ce_132"
+   ],
+   "rotulo": "hipotese de risco"
+  },
+  {
+   "id": "mesario",
+   "familia": "mesa",
+   "nome": "Mesário mal-intencionado",
+   "o_que_e": "Mesário que orienta o voto, constrange o eleitor, entra na cabine a pretexto de ajudar ou atrasa a fila de propósito.",
+   "como_aparece": "Comentário sobre candidato na mesa, acompanhamento indevido até a cabine, recusa seletiva de documento, demora calculada em horário de pico.",
+   "sinal": "nenhum",
+   "criterios": [],
+   "sinal_texto": "Não deixa número no boletim. Só quem está na sala vê.",
+   "confere": "Fica na seção, registra na ata cada ocorrência com hora e nome, impugna na hora e comunica o juiz eleitoral da zona.",
+   "confere_curto": "presença na sala, ocorrência na ata, impugnação na hora",
+   "base_legal": [
+    "ce_132",
+    "ce_301",
+    "ce_297"
+   ],
+   "rotulo": "hipotese de risco"
+  },
+  {
+   "id": "contingencia",
+   "familia": "mesa",
+   "nome": "Urna de contingência e substituição de urna",
+   "o_que_e": "A urna falha e é trocada por uma de reserva, ou os dados são recuperados de outra mídia. É procedimento previsto; o risco está numa troca sem registro ou sem testemunha.",
+   "como_aparece": "Troca de urna sem ata, sem hora, sem número da urna nova e sem conferência de lacres.",
+   "sinal": "deixa",
+   "criterios": [
+    "f",
+    "h"
+   ],
+   "sinal_texto": "Aparece no próprio boletim: tipo de urna, tipo de arquivo e número de cargas mostram urna de reserva ou recuperação (critério f); seção sem arquivo publicado entra em h.",
+   "confere": "Exige na ata a hora e o motivo da troca, o número da urna nova, o estado dos lacres e a assinatura dos presentes; fotografa o boletim impresso da urna que terminou a votação.",
+   "confere_curto": "hora, motivo, número da urna e lacres na ata",
+   "base_legal": [
+    "res_23751_contingencia",
+    "l9504_65",
+    "l9504_68"
+   ],
+   "rotulo": "hipotese de risco"
+  },
+  {
+   "id": "zeresima",
+   "familia": "mesa",
+   "nome": "Recusa da zerésima ou do boletim impresso",
+   "o_que_e": "A mesa não imprime ou não mostra a zerésima, o papel que prova a urna vazia antes do primeiro voto, ou se recusa a entregar a via do boletim de urna ao fiscal.",
+   "como_aparece": "Zerésima impressa sem testemunha, boletim afixado tarde ou não entregue ao partido que pediu.",
+   "sinal": "parcial",
+   "criterios": [
+    "h"
+   ],
+   "sinal_texto": "A recusa em si não deixa número. O que aparece é seção sem boletim publicado ou zona congelada (critério h), que o fiscal resolve pedindo o arquivo.",
+   "confere": "Chega antes da abertura, assiste à impressão da zerésima e a assina; pede a via do boletim impresso no fim do dia, fotografa o QR code e compara com o boletim publicado pelo TSE.",
+   "confere_curto": "zerésima assinada, via do boletim, QR code fotografado",
+   "base_legal": [
+    "l9504_65",
+    "l9504_68",
+    "res_23751_zeresima",
+    "res_23751_bu"
+   ],
+   "rotulo": "hipotese de risco"
+  },
+  {
+   "id": "filas",
+   "familia": "mesa",
+   "nome": "Filas artificiais e horário de fechamento",
+   "o_que_e": "Lentidão provocada para desanimar o eleitor de um lugar, ou fila fechada antes da hora; no outro sentido, votação aceita depois do encerramento.",
+   "como_aparece": "Mesa que trabalha devagar só em certos horários, senhas distribuídas fora da regra, porta fechada com gente do lado de fora.",
+   "sinal": "deixa",
+   "criterios": [
+    "d",
+    "g"
+   ],
+   "sinal_texto": "O horário de encerramento e o de recebimento estão no boletim: encerramento tardio com voto diferente da zona (critério d) e boletim recebido de madrugada (g).",
+   "confere": "Anota a hora em que a fila foi fechada e quantas pessoas estavam nela; confere que todos os que estavam na fila no horário de encerramento votaram; registra lentidão provocada na ata.",
+   "confere_curto": "hora do fechamento, quem estava na fila, lentidão na ata",
+   "base_legal": [
+    "res_23751_senhas"
+   ],
+   "rotulo": "hipotese de risco"
+  },
+  {
+   "id": "boca_urna",
+   "familia": "entorno",
+   "nome": "Boca de urna e propaganda no dia",
+   "o_que_e": "Aliciamento e propaganda no dia da eleição: distribuição de material, arregimentação de eleitor, uso de alto-falante, derramamento de santinhos e abordagem na fila e no entorno da seção.",
+   "como_aparece": "Cabos eleitorais com material na porta do local, santinhos espalhados na calçada na madrugada, carro de som, abordagem do eleitor na fila.",
+   "sinal": "nenhum",
+   "criterios": [],
+   "sinal_texto": "Praticamente nenhum. O voto aliciado na porta é igual a qualquer outro na urna: é o cenário que só o fiscal e a Justiça Eleitoral veem no dia. O derramamento de santinhos na véspera ou no dia é tratado como propaganda irregular na resolução de propaganda do TSE; o artigo exato não foi conferido na íntegra compilada.",
+   "confere": "Não confronta. Fotografa e filma de fora da seção; anota hora, local, placa e quem distribui; aciona o juiz eleitoral, o MPE e a polícia de plantão e pede a apreensão do material; se ocorrer dentro da seção, registra na ata.",
+   "confere_curto": "filma de fora, anota hora e placa, aciona juiz, MPE e polícia",
+   "base_legal": [
+    "l9504_39_p5",
+    "l9504_39a",
+    "res_23755"
+   ],
+   "rotulo": "hipotese de risco"
+  },
+  {
+   "id": "compra",
+   "familia": "entorno",
+   "nome": "Compra de votos",
+   "o_que_e": "Dinheiro, bem, emprego ou vantagem oferecido ao eleitor em troca do voto. É ao mesmo tempo crime e captação ilícita de sufrágio, que leva à cassação.",
+   "como_aparece": "Distribuição de dinheiro, cesta, combustível ou material de construção na véspera ou no dia; pedido de foto do voto; promessa de cargo.",
+   "sinal": "nenhum",
+   "criterios": [],
+   "sinal_texto": "O voto comprado é igual a qualquer outro na urna. Uma seção que mudou muito desde 2022 (critério j) não prova compra; a prova é testemunha, vídeo, dinheiro apreendido.",
+   "confere": "Fora da seção: registra quem oferece, o que, onde e a que horas; fotografa e filma de longe; faz boletim de ocorrência e leva ao MPE e ao juiz eleitoral; usa o canal de denúncia do TSE.",
+   "confere_curto": "quem, o que, onde e hora; boletim de ocorrência; MPE",
+   "base_legal": [
+    "l9504_41a",
+    "ce_299"
+   ],
+   "rotulo": "hipotese de risco"
+  },
+  {
+   "id": "cabresto",
+   "familia": "entorno",
+   "nome": "Voto de cabresto e coronelismo",
+   "o_que_e": "Controle do voto de um grupo por patrão, chefe político ou dono de terra, com promessa, ameaça ou dependência econômica.",
+   "como_aparece": "Eleitores levados juntos, com a cola na mão, sob vigilância de quem os trouxe; pedido de comprovação do voto.",
+   "sinal": "parcial",
+   "criterios": [
+    "a",
+    "i",
+    "j"
+   ],
+   "sinal_texto": "Concentração extrema num candidato (critério a), zona entre as mais atípicas (i), variação fora da faixa da UF desde 2022 (j). Sinal fraco: comunidade que vota em bloco por convicção produz o mesmo número.",
+   "confere": "Observa quem acompanha o eleitor até a porta, quem cobra foto do voto e quem vigia a fila; registra e comunica o juiz eleitoral e o MPE.",
+   "confere_curto": "quem acompanha, quem vigia, quem cobra comprovante",
+   "base_legal": [
+    "ce_301",
+    "ce_299"
+   ],
+   "rotulo": "hipotese de risco"
+  },
+  {
+   "id": "transporte",
+   "familia": "entorno",
+   "nome": "Transporte irregular de eleitores",
+   "o_que_e": "Ônibus, vans e carros fretados por candidato, partido ou cabo eleitoral para levar eleitores no dia, quase sempre com alimentação e com o voto como condição. Só a Justiça Eleitoral pode organizar transporte gratuito em zona rural. Transporte coletivo gratuito oferecido pelo poder público e o programa do TSE para eleitor com deficiência ou mobilidade reduzida são legais e não entram aqui.",
+   "como_aparece": "Vans e ônibus fretados por cabos eleitorais, carona condicionada ao voto, alimentação em curral, concentração de eleitores em sítio ou galpão antes da votação.",
+   "sinal": "parcial",
+   "criterios": [
+    "c"
+   ],
+   "sinal_texto": "Comparecimento acima do padrão da zona em seção rural e abstenção anormalmente baixa (critério c). A chegada em bloco aparece na hora dos votos do log da urna, que este capítulo não lê. Quase sempre não deixa sinal, e só o fiscal vê.",
+   "confere": "Anota placas, horários e motoristas dos veículos e quem paga; filma de fora da seção; registra boletim de ocorrência e comunica o juiz eleitoral e o MPE no mesmo dia; usa o canal de denúncia do TSE.",
+   "confere_curto": "placa, hora e quem paga; filmagem de fora; juiz e MPE no dia",
+   "base_legal": [
+    "l6091_5",
+    "l6091_8_10",
+    "l6091_11",
+    "res_23753",
+    "ce_302"
+   ],
+   "rotulo": "hipotese de risco"
+  },
+  {
+   "id": "medo",
+   "familia": "territorio",
+   "nome": "Voto amedrontado em área de facção ou milícia",
+   "o_que_e": "Grupo armado que domina o território decide quem faz campanha, quem entra e, por ameaça, em quem a comunidade vota: o curral eleitoral armado.",
+   "como_aparece": "Candidato de fora impedido de entrar, propaganda de um só nome, eleitor avisado de que o resultado da seção será conferido.",
+   "sinal": "parcial",
+   "criterios": [
+    "a",
+    "i",
+    "j"
+   ],
+   "sinal_texto": "Votação concentrada em área dominada aparece como concentração extrema (a, i, j), e só se lê junto com o contexto do território, que o capítulo mostra sem somar à pontuação. O medo em si não tem número.",
+   "confere": "Não entra em área de risco sem validar com a PM e o TRE local; registra relato de eleitor sem expor o eleitor; a Justiça Eleitoral pode requisitar Força Federal ao TSE.",
+   "confere_curto": "validar com a PM e o TRE local; relato protegido; Força Federal",
+   "base_legal": [
+    "ce_301",
+    "ce_23_xiv"
+   ],
+   "rotulo": "hipotese de risco"
+  },
+  {
+   "id": "abstencao",
+   "familia": "territorio",
+   "nome": "Abstenção induzida",
+   "o_que_e": "Impedir o eleitor de chegar: transporte público cortado, estrada bloqueada, fiscalização de trânsito dirigida, ameaça para ficar em casa.",
+   "como_aparece": "Ônibus que não saem, barreiras em rodovias com fila de veículos de eleitores, recado para não sair de casa.",
+   "sinal": "parcial",
+   "criterios": [
+    "j"
+   ],
+   "sinal_texto": "Abstenção acima do padrão da zona aparece só indiretamente, como variação fora da faixa desde 2022 (critério j). Os critérios da lista não medem abstenção isolada, por isso o sinal é fraco.",
+   "confere": "Registra relatos com hora e lugar, foto da barreira ou do ponto de ônibus vazio, e comunica o juiz eleitoral na hora: o remédio é no mesmo dia.",
+   "confere_curto": "hora e lugar do bloqueio; juiz eleitoral no mesmo dia",
+   "base_legal": [
+    "ce_297",
+    "ce_301"
+   ],
+   "rotulo": "hipotese de risco"
+  },
+  {
+   "id": "cadastro",
+   "familia": "cadastro",
+   "nome": "Fraude no cadastro",
+   "o_que_e": "Eleitores fantasmas, títulos transferidos em massa para um município pequeno, eleitores inscritos em seção errada para votar onde não moram.",
+   "como_aparece": "Caderno com nomes desconhecidos na comunidade, salto de eleitorado de um ano para outro, transferências concentradas antes do fechamento do cadastro.",
+   "sinal": "parcial",
+   "criterios": [
+    "c",
+    "j"
+   ],
+   "sinal_texto": "Se aparecer, aparece como comparecimento total (critério c) ou seção que mudou muito desde 2022 (j). O caminho é a revisão do eleitorado antes da eleição, não o dia da votação.",
+   "confere": "Anota nomes desconhecidos no caderno e pede ao juiz eleitoral revisão do eleitorado e conferência das transferências recentes.",
+   "confere_curto": "nomes estranhos no caderno; pedido de revisão do eleitorado",
+   "base_legal": [
+    "ce_289"
+   ],
+   "rotulo": "hipotese de risco"
+  },
+  {
+   "id": "apuracao_papel",
+   "familia": "cadastro",
+   "nome": "Votação em cédula e apuração manual",
+   "o_que_e": "Quando a urna falha e não há substituta, a seção passa a votar em cédula, e os votos são contados à mão pela junta. Foi esse o ambiente das fraudes de apuração anteriores à urna eletrônica.",
+   "como_aparece": "Urna de lona sem lacre, contagem sem testemunha, mapa de apuração digitado com número diferente da contagem.",
+   "sinal": "deixa",
+   "criterios": [
+    "f",
+    "h"
+   ],
+   "sinal_texto": "O arquivo publicado muda de tipo (critério f) ou chega tarde (h). A seção que votou em cédula fica identificada.",
+   "confere": "Acompanha a urna de lona lacrada até a junta, assiste à contagem e à digitação e confere o mapa de apuração contra a contagem.",
+   "confere_curto": "lacre da urna de lona, contagem e digitação na junta",
+   "base_legal": [
+    "res_23751_contingencia",
+    "ce_132"
+   ],
+   "fontes": [
+    "mpf_me_explica_fraudes"
+   ],
+   "rotulo": "hipotese de risco"
+  },
+  {
+   "id": "presidio_transito",
+   "familia": "cadastro",
+   "nome": "Seções especiais: presídio, hospital, trânsito e aldeia",
+   "o_que_e": "Seções instaladas em unidade prisional, unidade de internação, hospital, aldeia ou para voto em trânsito, com eleitorado pequeno e acesso restrito.",
+   "como_aparece": "Mesa com pouca gente de fora, acesso que depende de autorização, eleitorado que muda de uma eleição para outra.",
+   "sinal": "deixa",
+   "criterios": [
+    "b",
+    "c"
+   ],
+   "sinal_texto": "Aqui o dado mostra o contrário de um sinal: presídio, aldeia, trânsito e seção minúscula são explicação comum, que o capítulo identifica pelo cadastro e rebaixa de nível. Zero voto num candidato (b) ou comparecimento total (c) são esperados nelas.",
+   "confere": "Pede credenciamento prévio e autorização de acesso; confere ata e boletim como em qualquer seção.",
+   "confere_curto": "credencial prévia; ata e boletim como em qualquer seção",
+   "base_legal": [
+    "res_23751_transito_presos"
+   ],
+   "fontes": [
+    "migalhas_preso_pode_votar",
+    "monitormercantil_presos_2016"
+   ],
+   "rotulo": "hipotese de risco"
+  }
+ ],
+ "casos": [
+  {
+   "id": "proconsult_rj_1982",
+   "ano": 1982,
+   "data": "1982-11-15",
+   "titulo": "Caso Proconsult na totalização do governo do RJ",
+   "local": "RJ",
+   "instancia": "TRE-RJ / PF / imprensa",
+   "cenario": "apuracao_papel",
+   "resultado": "Em 27/11/1982 o TRE-RJ pediu inquérito à PF e aprovou auditoria técnica na Proconsult; a divulgação de boletins foi suspensa em 29/11 e retomada em 05/12. Auditoria do Serpro divulgada em 16/12/1982 apontou totalização mal planejada e desorganizada; os juízes do TRE concluíram que os erros não foram intencionais. Brizola (PDT) foi eleito governador. Não há condenação registrada nas fontes lidas.",
+   "resumo": "Na eleição de 15/11/1982 o TRE-RJ contratou a Proconsult para a totalização eletrônica dos mapas das juntas. Apurações paralelas (Jornal do Brasil, PDT/Sysin) divergiram do ritmo e da composição dos resultados oficiais, e o JB relatou em 27/11 pressão da empresa para adotar um 'fator delta' de brancos e nulos. A versão da Globo, parte citada no caso, nega participação.",
+   "fontes": [
+    "memoriaglobo_proconsult",
+    "wiki_proconsult"
+   ],
+   "prioridade": 3,
+   "resultado_curto": "Auditoria do Serpro apontou totalização desorganizada; o TRE-RJ concluiu que os erros não foram intencionais e Brizola foi eleito",
+   "rotulo": "verificado"
+  },
+  {
+   "id": "rj_1994_proporcional_anulada",
+   "ano": 1994,
+   "data": "1994-10-20",
+   "titulo": "TRE-RJ anula a eleição proporcional de 1994 por fraude na apuração manual; TSE reverte em 1996",
+   "local": "RJ",
+   "instancia": "TRE-RJ / TSE",
+   "cenario": "apuracao_papel",
+   "resultado": "O TRE-RJ anulou a votação do 1º turno de 1994 para deputados e convocou nova eleição em 20/10/1994, realizada em 15/11/1994 junto com o 2º turno. Segundo nota do TSE ao Aos Fatos, o plenário do TSE reverteu a anulação em 1996 por não haver prova de fraude que atingisse mais de 50% dos votos válidos, e os eleitos na primeira votação tomaram posse.",
+   "resumo": "O MP Eleitoral pediu a anulação apontando irregularidades na apuração em cédula de papel e mapas. Segundo nota do TSE, o TRE-RJ entendeu que o índice de votos em branco poderia ser evidência de fraude; o Jornal do Brasil de 17/11/1994 relatou cédulas falsas na 24ª Zona Eleitoral. O caso é citado pelo MPF como motivação para a urna eletrônica de 1996.",
+   "fontes": [
+    "wiki_eleicao_rj_1994",
+    "aosfatos_fraude_1994",
+    "poder360_fraude_1994",
+    "mpf_me_explica_fraudes"
+   ],
+   "prioridade": 1,
+   "fonte_thread": "aosfatos_fraude_1994",
+   "resultado_curto": "O TRE-RJ anulou a votação para deputados e convocou nova eleição; o TSE reverteu a anulação em 1996",
+   "rotulo": "verificado"
+  },
+  {
+   "id": "prf_blitze_2t_2022",
+   "ano": 2022,
+   "data": "2022-10-30",
+   "titulo": "Blitze da PRF no 2º turno de 2022, concentradas no Nordeste",
+   "local": "Brasil",
+   "instancia": "TSE / PF / STF",
+   "cenario": "abstencao",
+   "resultado": "Moraes, presidente do TSE, proibiu às 23h de 29/10/2022 operações contra transporte público de eleitores; às 2h43 de 30/10 o diretor-geral Silvinei Vasques manteve as operações pelo ofício-circular 14/2022. Moraes declarou em 30/10 que nenhum ônibus voltou à origem e manteve o horário da votação. PF indiciou Vasques, Anderson Torres e 4 policiais por violência política (art. 359-P do CP) em agosto de 2024. Em 16/12/2025 a 1ª Turma do STF condenou Vasques a 24 anos e 6 meses no núcleo 2 da trama golpista, considerando comprovado o uso da PRF para dificultar o deslocamento de eleitores; em 22/01/2026 Moraes arquivou o inquérito específico das blitze em relação a Vasques, Torres e Marília Alencar por já terem sido condenados pelo mesmo fato, e em relação a dois policiais por falta de indícios. Vasques foi preso no Paraguai em 26/12/2025 após romper a tornozeleira.",
+   "resumo": "Caso de impedimento do eleitor, oposto ao transporte irregular. Relatório da PRF à CGU, segundo a Jovem Pan, registrou 2.185 ônibus parados no Nordeste entre 28 e 30/10/2022 contra 893 no Centro-Oeste, 571 no Sudeste, 310 no Norte e 32 no Sul; a Pública contou 560 ônibus vistoriados até 14h55 de 30/10 contra 297 em todo o 1º turno.",
+   "fontes": [
+    "apublica_drible_prf",
+    "poder360_moraes_prf",
+    "jovempan_relatorio_prf",
+    "poder360_pf_indicia",
+    "migalhas_nucleo2",
+    "poder360_silvinei_condenado",
+    "folhavitoria_arquiva_blitzes",
+    "cnn_pf_prf_2024"
+   ],
+   "prioridade": 1,
+   "fonte_thread": "migalhas_nucleo2",
+   "resultado_curto": "Operações mantidas depois da ordem do TSE que as proibia; o ex-diretor-geral da PRF foi condenado pela 1ª Turma do STF em 16/12/2025, no processo da trama golpista, com o uso da PRF para dificultar o deslocamento de eleitores entre os fatos provados",
+   "rotulo": "verificado"
+  },
+  {
+   "id": "cpi_milicias_alerj_2008",
+   "ano": 2008,
+   "data": "2008-12-16",
+   "titulo": "CPI das Milícias da ALERJ e a proposta de tipificar o curral eleitoral",
+   "local": "RJ / Zona Oeste e Baixada",
+   "instancia": "ALERJ",
+   "cenario": "medo",
+   "resultado": "A CPI, presidida por Marcelo Freixo, encerrou os trabalhos em 16/12/2008 com relatório entregue ao MP, ao Ministério da Justiça e à Câmara. O número de indiciados diverge entre fontes: 255 segundo a Câmara dos Deputados, 225 segundo o Brasil de Fato (relatório de 282 páginas, 58 propostas). Entre as propostas, a tipificação do crime de curral eleitoral.",
+   "resumo": "A comissão investigou o domínio territorial de milícias, incluindo vereadores e candidatos citados, como Nadinho de Rio das Pedras, Cristiano Girão e Jerominho. Em 2008 Carminha Jerominho foi eleita vereadora enquanto presa, segundo o verbete da Wikipédia que cita o UOL.",
+   "fontes": [
+    "camara_cpi_milicias",
+    "brasildefato_milicia",
+    "wiki_milicia"
+   ],
+   "prioridade": 2,
+   "resultado_curto": "Relatório final com centenas de indiciados e a proposta de tipificar o curral eleitoral",
+   "rotulo": "verificado"
+  },
+  {
+   "id": "operacao_guanabara_2008",
+   "ano": 2008,
+   "data": "2008-10-05",
+   "titulo": "Força Federal no Rio em 2008 contra coação de milícias e tráfico",
+   "local": "RJ / capital e região metropolitana",
+   "instancia": "TSE / TRE-RJ",
+   "cenario": "medo",
+   "resultado": "Em 28/07/2008 o TRE-RJ adiou o pedido de tropas; em 31/07 reunião no TSE descartou de início a Força Nacional. As tropas federais atuaram no Rio na Operação Guanabara a partir de setembro; em 05/10/2008 o presidente do TSE, Ayres Britto, informou custo de cerca de R$ 32 milhões só no Rio, atuação em 27 comunidades e 469 municípios com força federal no país, sem incidente grave.",
+   "resumo": "Investigações das forças de segurança relatavam coação de eleitores e cerceamento de campanhas por milícias e tráfico. O caso marca o uso da requisição de força federal (Código Eleitoral, art. 23, XIV) para garantir o voto livre em território dominado.",
+   "fontes": [
+    "cfoco_trerj_adia_2008",
+    "cfoco_insegur_rio_2008",
+    "cfoco_eleicoes_2008_custo",
+    "planalto_ce"
+   ],
+   "prioridade": 3,
+   "resultado_curto": "Tropas federais em 27 comunidades do Rio",
+   "rotulo": "verificado"
+  },
+  {
+   "id": "operacao_solon_pf_2020",
+   "ano": 2020,
+   "data": "2020-11-12",
+   "titulo": "Operação Sólon: PF investiga milícia com candidatos na Zona Oeste",
+   "local": "Rio de Janeiro / Zona Oeste",
+   "instancia": "PF / 16ª Zona Eleitoral",
+   "cenario": "medo",
+   "resultado": "Em 12/11/2020, três dias antes do 1º turno municipal, a PF cumpriu 12 mandados de busca e apreensão expedidos pela 16ª Zona Eleitoral, por organização criminosa e lavagem conexas a crimes eleitorais. Não houve mandados de prisão por causa da vedação do Código Eleitoral no período. Desfecho processual não localizado nas fontes lidas.",
+   "resumo": "A PF apurou que integrantes de uma das maiores milícias do Rio buscavam cargos no Legislativo e no Executivo em 2020 para retomar poder na Zona Oeste. Relatórios de inteligência financeira indicaram movimentações atípicas em empresas ligadas aos investigados.",
+   "fontes": [
+    "agazeta_operacao_solon"
+   ],
+   "prioridade": 4,
+   "rotulo": "verificado"
+  },
+  {
+   "id": "trerj_locais_votacao_milicia_2024",
+   "ano": 2024,
+   "data": "2024-09-27",
+   "titulo": "TRE-RJ muda 53 locais de votação por segurança e recebe Força Federal",
+   "local": "RJ / 10 municípios",
+   "instancia": "TRE-RJ / TSE",
+   "cenario": "medo",
+   "resultado": "Em janeiro de 2024 o presidente do TRE-RJ anunciou estudo para retirar cerca de 50 seções de áreas de milícia na Zona Oeste. Em setembro o TRE-RJ alterou 53 locais de votação (171 mil eleitores em 10 municípios) e mapeou 93 locais em áreas sensíveis. Em 24/09/2024 o TSE aprovou por unanimidade 53 processos de Força Federal para 12 estados, incluindo RJ, e em 03/10/2024 mais 11 municípios.",
+   "resumo": "O presidente do TRE-RJ, Henrique Figueira, descreveu currais eleitorais de milicianos e relatou denúncia que, segundo a inteligência do tribunal, buscava transferir uma seção para área sob controle paramilitar. MPRJ e TRE-RJ se reuniram em 26/03/2024 para ações contra infiltração de crime organizado em candidaturas.",
+   "fontes": [
+    "poder360_trerj_50_secoes",
+    "sbt_promotores_milicias",
+    "agbrasil_trerj_53_locais",
+    "agbrasil_forca_federal_2024",
+    "agbrasil_forca_federal_2024_out"
+   ],
+   "prioridade": 3,
+   "resultado_curto": "53 locais de votação trocados por segurança e Força Federal aprovada pelo TSE",
+   "rotulo": "verificado"
+  },
+  {
+   "id": "santa_quiteria_ce_faccao_2024",
+   "ano": 2024,
+   "data": "2026-03-17",
+   "titulo": "Prefeito e vice de Santa Quitéria (CE) cassados por uso de facção",
+   "local": "CE / Santa Quitéria",
+   "instancia": "TRE-CE / TSE",
+   "cenario": "medo",
+   "resultado": "O TRE-CE cassou prefeito e vice por abuso de poder político e econômico nas eleições de 2024; em 17/03/2026 o TSE negou os recursos, mantendo a cassação e a inelegibilidade por oito anos. Relator: ministro André Mendonça.",
+   "resumo": "Segundo a ação do MP Eleitoral, integrantes do Comando Vermelho picharam ameaças de morte a apoiadores da chapa adversária, ameaçaram eleitores de expulsão da cidade e intimidaram servidores do cartório eleitoral. Um integrante da facção se deslocou do Rio de Janeiro ao Ceará para executar as ações.",
+   "fontes": [
+    "mpf_santa_quiteria",
+    "diariodonordeste_faccoes_2024"
+   ],
+   "prioridade": 1,
+   "resultado_curto": "Prefeito e vice cassados pelo TRE-CE por uso de facção na campanha; o TSE manteve a cassação em 17/03/2026",
+   "rotulo": "verificado"
+  },
+  {
+   "id": "sobral_ce_pedagio_faccao_2024",
+   "ano": 2024,
+   "data": "2026-08-11",
+   "titulo": "Sobral (CE): 'pedágio' de facção a candidatos e ameaças à campanha",
+   "local": "CE / Sobral",
+   "instancia": "MPCE / Justiça Criminal",
+   "cenario": "medo",
+   "resultado": "Em 11/08/2026 a Operação Omertá prendeu três vereadores de Sobral, afastados do mandato, em investigação sobre cobrança de 'pedágio' de R$ 30 mil a R$ 60 mil a candidatos em 2024. No caso das ameaças à candidata Izolda Cela, oito pessoas foram presas e uma foi condenada a mais de 8 anos de prisão.",
+   "resumo": "Segundo o Diário do Nordeste, um 'salve' do Comando Vermelho proibiu a campanha de Izolda Cela em bairros de Sobral, inclusive o uso de camisas e adesivos. O mesmo levantamento cita investigações em Fortaleza, Caucaia, Potiretama, Choró, Iguatu, Canindé e Morada Nova.",
+   "fontes": [
+    "diariodonordeste_faccoes_2024"
+   ],
+   "prioridade": 4,
+   "rotulo": "verificado"
+  },
+  {
+   "id": "mendazes_pe_domicilio_2024",
+   "ano": 2024,
+   "data": "2026-09-22",
+   "titulo": "Operação Mendazes: transferência fraudulenta de domicílio na Mata Sul (PE)",
+   "local": "PE / Mata Sul",
+   "instancia": "PF / TRE-PE",
+   "cenario": "cadastro",
+   "resultado": "Em 22/09/2026 a PF cumpriu 12 mandados de busca e apreensão expedidos pelo TRE-PE, em investigação sobre falsificação de comprovantes de residência e transferências fraudulentas para as eleições municipais de 2024. Fase de investigação; sem denúncia nas fontes lidas.",
+   "resumo": "O esquema teria captado eleitores de outros municípios para transferir o título sem vínculo com a localidade. A PF apura também atuação coordenada para inserir e ratificar dados no sistema eleitoral.",
+   "fontes": [
+    "pf_mendazes_pe"
+   ],
+   "prioridade": 3,
+   "resultado_curto": "Busca e apreensão pela PF; ainda em investigação",
+   "rotulo": "verificado"
+  },
+  {
+   "id": "albertina_mg_revisao_negada",
+   "ano": 2025,
+   "data": "2025-10-14",
+   "titulo": "TRE-MG nega correição em Albertina, com 1,3 eleitor por habitante",
+   "local": "MG / Albertina",
+   "instancia": "TRE-MG",
+   "cenario": "cadastro",
+   "resultado": "Decisão unânime do TRE-MG publicada em 14/10/2025 indeferiu pedido de correição do eleitorado: 3.688 eleitores aptos contra 2.952 habitantes no Censo 2022. O tribunal entendeu que a diferença não basta sem indício concreto e que correição ou revisão segue critérios técnicos do TSE.",
+   "resumo": "Caso de contraste: mais eleitores que habitantes não prova fraude, porque domicílio eleitoral admite vínculo afetivo, patrimonial ou político. A revisão do eleitorado exige fraude provada em proporção comprometedora (Código Eleitoral, art. 71, § 4º).",
+   "fontes": [
+    "ofator_albertina",
+    "planalto_ce"
+   ],
+   "prioridade": 5,
+   "rotulo": "verificado"
+  },
+  {
+   "id": "pescaria_brava_2016",
+   "ano": 2016,
+   "data": "2026-05-23",
+   "titulo": "Mesário vota por cinco ausentes, um morto",
+   "local": "SC / Pescaria Brava",
+   "instancia": "TSE",
+   "cenario": "pianista",
+   "resultado": "Condenado pelo art. 309 do CE a 2 anos e 8 meses de reclusão, substituída por restritivas de direitos (sentença noticiada em 27/10/2023). TRE-SC afastou danos morais coletivos; o TSE, em decisão monocrática do Min. Antonio Carlos Ferreira (processo 0600109-92.2021.6.24.0020), restabeleceu R$ 10 mil, noticiado em 23/05/2026.",
+   "resumo": "Presidente de mesa, sozinho na sala perto do fim da votação, assinou e votou no lugar de cinco eleitores ausentes, um falecido em 2009. A perícia apontou assinaturas do mesmo punho. A votação da seção foi anulada; a eleição de prefeito tinha sido decidida por um voto e a diferença passou a 76.",
+   "fontes": [
+    "conjur_pescaria_brava_2026",
+    "oestemais_pescaria_brava_2023"
+   ],
+   "prioridade": 1,
+   "resultado_curto": "Presidente de mesa condenado pelo art. 309 do Código Eleitoral; votou por cinco ausentes, um deles morto",
+   "rotulo": "verificado"
+  },
+  {
+   "id": "doppelganger_macapa_2024",
+   "ano": 2024,
+   "data": "2026-05-08",
+   "titulo": "Operação Doppelgänger: votos sem biometria",
+   "local": "AP / Macapá (Lontra da Pedreira)",
+   "instancia": "PF",
+   "cenario": "pianista",
+   "resultado": "Investigação em curso; busca e apreensão na casa de uma mesária em 08/05/2026. Sem denúncia nem condenação noticiadas.",
+   "resumo": "A Justiça Eleitoral enviou à PF indícios em uma seção rural: eleitores que constam ao mesmo tempo como votantes e como autores de justificativa no 1º turno de 2024, e número atípico de votos sem biometria. A PF apura voto em lugar de outrem e falsidade ideológica eleitoral.",
+   "fontes": [
+    "metropoles_doppelganger_2026"
+   ],
+   "prioridade": 2,
+   "resultado_curto": "A PF investiga votos sem biometria numa seção rural; sem denúncia até agora",
+   "rotulo": "verificado"
+  },
+  {
+   "id": "itumbiara_2018",
+   "ano": 2018,
+   "data": "2018-10-07",
+   "titulo": "Presidente de seção conduz dedos de idosa",
+   "local": "GO / Itumbiara",
+   "instancia": "imprensa",
+   "cenario": "mesario",
+   "resultado": "Preso em flagrante, pagou fiança de R$ 2.862 e foi liberado para responder pelo art. 309 do CE; negou o crime. Desfecho judicial não localizado.",
+   "resumo": "Segundo o delegado, o presidente da seção entrou na cabine sem pedido de uma eleitora de 73 anos, segurou os dedos dela e a fez votar em três candidatos de sua escolha; ela reagiu e escolheu os outros três sozinha.",
+   "fontes": [
+    "ohoje_itumbiara_2018"
+   ],
+   "prioridade": 3,
+   "resultado_curto": "Presidente de seção preso em flagrante por conduzir o voto de uma eleitora idosa",
+   "rotulo": "verificado"
+  },
+  {
+   "id": "paulista_pe_2020",
+   "ano": 2020,
+   "data": "2020-11-29",
+   "titulo": "Mesária detida por induzir eleitores",
+   "local": "PE / Paulista",
+   "instancia": "imprensa",
+   "cenario": "mesario",
+   "resultado": "Detida a pedido do MPPE, assinou termo circunstanciado e responde em liberdade. Desfecho não localizado.",
+   "resumo": "Mesária de 51 anos foi flagrada induzindo eleitores a votar em um candidato na seção 99 da Escola Estadual Maria Alves Machado, no 2º turno municipal. Outras pessoas foram presas no mesmo local por aglomeração e boca de urna.",
+   "fontes": [
+    "dol_paulista_2020"
+   ],
+   "prioridade": 4,
+   "rotulo": "verificado"
+  },
+  {
+   "id": "cassio_cunha_lima_2008",
+   "ano": 2008,
+   "data": "2008-11-20",
+   "titulo": "TSE cassa governador da Paraíba",
+   "local": "PB",
+   "instancia": "TSE",
+   "cenario": "compra",
+   "resultado": "TSE negou recurso por unanimidade em 20/11/2008 e manteve a cassação do TRE-PB por abuso de poder econômico e político; a matéria lida não cita o art. 41-A.",
+   "resumo": "Acusação de distribuir cerca de R$ 3,5 milhões em cheques a eleitores por programa assistencial da Fundação Ação Comunitária em 2006. A defesa sustentou previsão em lei estadual e critérios técnicos. Fundamento lido: abuso de poder, não captação ilícita de sufrágio.",
+   "fontes": [
+    "cef_cassio_2008"
+   ],
+   "prioridade": 3,
+   "resultado_curto": "Governador cassado por abuso de poder com distribuição de cheques a eleitores",
+   "rotulo": "verificado"
+  },
+  {
+   "id": "jackson_lago_2009",
+   "ano": 2009,
+   "data": "2009-03-04",
+   "titulo": "TSE cassa governador do Maranhão",
+   "local": "MA",
+   "instancia": "TSE",
+   "cenario": "compra",
+   "resultado": "Cassação por 5 a 2 em 04/03/2009, com execução após os embargos; Roseana Sarney, segunda colocada, assumiria.",
+   "resumo": "Segundo a Conjur, a maioria viu compra de votos em Imperatriz e abuso de poder político em Codó. O relator Eros Grau citou um motorista de vereador preso no dia do 1º turno com R$ 17 mil, santinhos e tabelas de pagamento por boca de urna e por votos, e afirmou que basta a compra, sem exame de potencialidade.",
+   "fontes": [
+    "conjur_lago_2009",
+    "migalhas_lago_2009"
+   ],
+   "prioridade": 1,
+   "resultado_curto": "Governador cassado pelo TSE; a maioria viu compra de votos em Imperatriz",
+   "rotulo": "verificado"
+  },
+  {
+   "id": "marcelo_miranda_2009",
+   "ano": 2009,
+   "data": "2009-06-26",
+   "titulo": "TSE cassa governador do Tocantins",
+   "local": "TO",
+   "instancia": "TSE",
+   "cenario": "compra",
+   "resultado": "Cassação unânime em 26/06/2009 no RCED nº 698 (rel. Min. Felix Fischer); acórdão publicado no DJE em 11/08/2009.",
+   "resumo": "A acusação reunia abuso de poder econômico, compra de votos, conduta vedada e uso indevido dos meios de comunicação em 2006. O relator votou pela cassação pela distribuição de mais de 80 mil óculos e pela doação de lotes em período vedado. A matéria não isola o art. 41-A como fundamento.",
+   "fontes": [
+    "cef_miranda_2009",
+    "conexaoto_miranda_2009"
+   ],
+   "prioridade": 4,
+   "rotulo": "verificado"
+  },
+  {
+   "id": "hornung_reserva_2004",
+   "ano": 2004,
+   "data": "2004-10-03",
+   "titulo": "Pena mínima de 4 anos por transporte",
+   "local": "PR / Reserva",
+   "instancia": "TSE",
+   "cenario": "transporte",
+   "resultado": "Condenado em 1ª instância (art. 11, III, c/c art. 5º da Lei 6.091) a 4 anos e 100 dias-multa; TRE-PR reduziu para 2 anos e 9 meses pela menoridade; o Min. Cezar Peluso (AG 8.998) restabeleceu a pena mínima de 4 anos. Data da decisão não localizada.",
+   "resumo": "O filho do prefeito transportou três eleitoras em carro da família no dia da eleição municipal de 2004, segundo a denúncia para aliciá-las em favor do candidato a prefeito. A atenuante não pode levar a pena abaixo do mínimo legal.",
+   "fontes": [
+    "sedep_hornung"
+   ],
+   "prioridade": 1,
+   "resultado_curto": "Condenação pelo transporte irregular de eleitoras com pena mínima de quatro anos restabelecida no TSE",
+   "rotulo": "verificado"
+  },
+  {
+   "id": "anchieta_sc_2012",
+   "ano": 2012,
+   "data": "2014-06-04",
+   "titulo": "Fiscal absolvido por transportar eleitor",
+   "local": "SC / Anchieta",
+   "instancia": "TRE-SC",
+   "cenario": "transporte",
+   "resultado": "Absolvição mantida por unanimidade (Acórdão 29.296, sessão de 04/06/2014).",
+   "resumo": "Fiscal de partido foi flagrado em 07/10/2012 levando um eleitor à seção em carro da companheira. O TRE-SC exigiu dolo específico de aliciamento ou de impedir, embaraçar ou fraudar o voto; sem essa prova, o simples transporte não configurou o crime.",
+   "fontes": [
+    "tresc_ac_29296"
+   ],
+   "prioridade": 2,
+   "resultado_curto": "Fiscal de partido absolvido pelo TRE-SC: sem prova de aliciamento, levar um eleitor não configurou o crime",
+   "rotulo": "verificado"
+  },
+  {
+   "id": "mj_1t_2022",
+   "ano": 2022,
+   "data": "2022-10-03",
+   "titulo": "Balanço do 1º turno de 2022",
+   "local": "Nacional",
+   "instancia": "MJ",
+   "cenario": "boca_urna",
+   "resultado": "Balanço do MJSP divulgado em 03/10/2022: 1.378 crimes eleitorais e 352 prisões; parcial das 17h do dia 02/10 era 939 crimes e 307 prisões.",
+   "resumo": "Boca de urna foi o crime mais registrado, com 456 ocorrências em 26 estados e no DF; compra de votos 95; violação ou tentativa de violar sigilo 80; transporte irregular 57. R$ 137 mil apreendidos.",
+   "fontes": [
+    "jp_crimes_1t_2022",
+    "abr_crimes_parcial_1t_2022"
+   ],
+   "prioridade": 3,
+   "rotulo": "verificado"
+  },
+  {
+   "id": "mj_2t_2022",
+   "ano": 2022,
+   "data": "2022-10-30",
+   "titulo": "Balanço do 2º turno de 2022",
+   "local": "Nacional",
+   "instancia": "MJ",
+   "cenario": "boca_urna",
+   "resultado": "Até 17h30 de 30/10/2022: 308 crimes eleitorais e 39 prisões, segundo o MJSP.",
+   "resumo": "Cinco ocorrências de compra de votos e corrupção eleitoral (SC 2, AM 1, MA 1, PR 1). Número parcial; o balanço final não foi lido.",
+   "fontes": [
+    "opovo_crimes_2t_2022"
+   ],
+   "prioridade": 5,
+   "rotulo": "verificado"
+  },
+  {
+   "id": "mj_1t_2024",
+   "ano": 2024,
+   "data": "2024-10-11",
+   "titulo": "Balanço do 1º turno de 2024",
+   "local": "Nacional",
+   "instancia": "MJ",
+   "cenario": "boca_urna",
+   "resultado": "Balanço do MJSP divulgado na sexta-feira seguinte ao 1º turno e noticiado pelo A Tarde em 13/10/2024: cerca de 3 mil crimes eleitorais no domingo 06/10, 536 presos, 23 deles candidatos, e 53 veículos apreendidos por transporte irregular. Parcial da noite do dia 06, pela Agência Brasil: 515 prisões.",
+   "resumo": "No final, 1.170 ocorrências de boca de urna, 498 de compra de votos e corrupção eleitoral, 384 de propaganda irregular, 269 de violação de sigilo e 83 de desobediência; R$ 638 mil apreendidos. No parcial, boca de urna 1.057 e compra de votos 423.",
+   "fontes": [
+    "atarde_mj_final_1t_2024",
+    "sbt_crimes_1t_2024",
+    "abr_crimes_parcial_1t_2024"
+   ],
+   "prioridade": 1,
+   "fonte_thread": "atarde_mj_final_1t_2024",
+   "resultado_curto": "Balanço do Ministério da Justiça: cerca de 3 mil crimes eleitorais no dia, 1.170 ocorrências de boca de urna, 536 presos e 53 veículos apreendidos por transporte irregular",
+   "rotulo": "verificado"
+  },
+  {
+   "id": "mj_2t_2024",
+   "ano": 2024,
+   "data": "2024-10-27",
+   "titulo": "Balanço do 2º turno de 2024",
+   "local": "Nacional",
+   "instancia": "MJ",
+   "cenario": "boca_urna",
+   "resultado": "102 crimes eleitorais e 42 presos no 2º turno, segundo o MJSP (Folhapress, 28/10/2024).",
+   "resumo": "O texto lido não detalha a quantidade de boca de urna no 2º turno.",
+   "fontes": [
+    "diariopara_2t_2024"
+   ],
+   "prioridade": 5,
+   "rotulo": "verificado"
+  },
+  {
+   "id": "urnas_1t_2022",
+   "ano": 2022,
+   "data": "2022-10-02",
+   "titulo": "Urnas trocadas e 5 seções em cédula",
+   "local": "Nacional",
+   "instancia": "TSE",
+   "cenario": "contingencia",
+   "resultado": "Balanço das 22h30: menos de 1% das 472.075 urnas substituídas (63.185 de contingência) e cinco seções com votação manual: AM 2, BA 1, RS 1, SP 1.",
+   "resumo": "É o único caso documentado nesta pesquisa de votação em cédula nos pleitos recentes. O número absoluto final de substituições do 1º turno de 2022 não foi lido em fonte salva.",
+   "fontes": [
+    "cnn_urnas_1t_2022"
+   ],
+   "prioridade": 2,
+   "resultado_curto": "Menos de 1% das urnas substituídas e cinco seções votaram em cédula",
+   "rotulo": "verificado"
+  },
+  {
+   "id": "urnas_2024",
+   "ano": 2024,
+   "data": "2024-10-27",
+   "titulo": "Urnas trocadas em 2024",
+   "local": "Nacional",
+   "instancia": "TSE",
+   "cenario": "contingencia",
+   "resultado": "1º turno: 3.218 de 478.026 urnas substituídas (0,61%). 2º turno: 171 de 97.392 (0,12%), com 45.034 de contingência e nenhuma seção com votação manual.",
+   "resumo": "Números do TSE relatados pelo Poder360 na noite do 2º turno; Tocantins não teve troca no 2º turno.",
+   "fontes": [
+    "p360_urnas_2t_2024"
+   ],
+   "prioridade": 4,
+   "rotulo": "verificado"
+  }
+ ],
+ "base_legal": [
+  {
+   "id": "ce_299",
+   "norma": "Código Eleitoral",
+   "dispositivo": "art. 299",
+   "conteudo": "Dar, oferecer, prometer, solicitar ou receber dinheiro, dádiva ou qualquer vantagem para obter ou dar voto ou conseguir abstenção, ainda que a oferta não seja aceita. Pena: reclusão até 4 anos e 5 a 15 dias-multa",
+   "fonte": "planalto_ce"
+  },
+  {
+   "id": "ce_301",
+   "norma": "Código Eleitoral",
+   "dispositivo": "art. 301",
+   "conteudo": "Usar de violência ou grave ameaça para coagir alguém a votar ou não votar em candidato ou partido, ainda que o fim não seja alcançado. Pena: reclusão até 4 anos e 5 a 15 dias-multa",
+   "fonte": "planalto_ce"
+  },
+  {
+   "id": "ce_302",
+   "norma": "Código Eleitoral",
+   "dispositivo": "art. 302 (redação do Decreto-Lei nº 1.064/1969)",
+   "conteudo": "Promover, no dia da eleição, com o fim de impedir, embaraçar ou fraudar o voto, a concentração de eleitores, sob qualquer forma, inclusive o fornecimento gratuito de alimento e transporte coletivo. Pena: reclusão de 4 a 6 anos e 200 a 300 dias-multa",
+   "fonte": "planalto_ce",
+   "pena": "reclusão de quatro a seis anos e multa"
+  },
+  {
+   "id": "ce_309",
+   "norma": "Código Eleitoral",
+   "dispositivo": "art. 309",
+   "conteudo": "Votar ou tentar votar mais de uma vez, ou em lugar de outrem. Pena: reclusão até 3 anos",
+   "fonte": "planalto_ce"
+  },
+  {
+   "id": "ce_310",
+   "norma": "Código Eleitoral",
+   "dispositivo": "art. 310",
+   "conteudo": "Praticar, ou permitir membro da mesa receptora que seja praticada, irregularidade que determine a anulação de votação, salvo o caso do art. 311. Pena: detenção até 6 meses ou 90 a 120 dias-multa. Não trata de sigilo do voto",
+   "fonte": "planalto_ce",
+   "uso": "referência"
+  },
+  {
+   "id": "ce_312",
+   "norma": "Código Eleitoral",
+   "dispositivo": "art. 312",
+   "conteudo": "Violar ou tentar violar o sigilo do voto. Pena: detenção até 2 anos",
+   "fonte": "planalto_ce",
+   "uso": "referência"
+  },
+  {
+   "id": "ce_289",
+   "norma": "Código Eleitoral",
+   "dispositivo": "art. 289",
+   "conteudo": "Inscrever-se fraudulentamente eleitor. Pena: reclusão até 5 anos e 5 a 15 dias-multa",
+   "fonte": "planalto_ce"
+  },
+  {
+   "id": "ce_290",
+   "norma": "Código Eleitoral",
+   "dispositivo": "art. 290",
+   "conteudo": "Induzir alguém a se inscrever eleitor com infração de dispositivo do Código. Pena: reclusão até 2 anos e 15 a 30 dias-multa",
+   "fonte": "planalto_ce",
+   "uso": "referência"
+  },
+  {
+   "id": "ce_297",
+   "norma": "Código Eleitoral",
+   "dispositivo": "art. 297",
+   "conteudo": "Impedir ou embaraçar o exercício do sufrágio. Pena: detenção até 6 meses e 60 a 100 dias-multa",
+   "fonte": "planalto_ce"
+  },
+  {
+   "id": "ce_132",
+   "norma": "Código Eleitoral",
+   "dispositivo": "art. 132",
+   "conteudo": "Pelas mesas receptoras serão admitidos a fiscalizar a votação, formular protestos e fazer impugnações, inclusive sobre a identidade do eleitor, os candidatos registrados, os delegados e os fiscais dos partidos",
+   "fonte": "planalto_ce"
+  },
+  {
+   "id": "ce_23_xiv",
+   "norma": "Código Eleitoral",
+   "dispositivo": "art. 23, XIV",
+   "conteudo": "Compete privativamente ao TSE requisitar a força federal necessária ao cumprimento da lei, de suas decisões ou das decisões dos TREs que o solicitarem, e para garantir a votação e a apuração",
+   "fonte": "planalto_ce"
+  },
+  {
+   "id": "l9504_39_p5",
+   "norma": "Lei nº 9.504/1997",
+   "dispositivo": "art. 39, § 5º, I a III",
+   "conteudo": "Crimes no dia da eleição, com detenção de 6 meses a 1 ano, alternativa de prestação de serviços à comunidade pelo mesmo período e multa de 5.000 a 15.000 UFIR: I, uso de alto-falantes e amplificadores ou promoção de comício ou carreata; II, arregimentação de eleitor ou propaganda de boca de urna (redação da Lei nº 11.300/2006); III, divulgação de qualquer espécie de propaganda de partidos ou candidatos (redação da Lei nº 12.034/2009); IV, publicação de novos conteúdos ou impulsionamento nas aplicações de internet do art. 57-B",
+   "fonte": "planalto_9504",
+   "pena": "detenção de seis meses a um ano e multa"
+  },
+  {
+   "id": "l9504_39a",
+   "norma": "Lei nº 9.504/1997",
+   "dispositivo": "art. 39-A",
+   "conteudo": "É permitida no dia da eleição a manifestação individual e silenciosa da preferência do eleitor, exclusivamente por bandeiras, broches, dísticos e adesivos. É vedada, até o fim da votação, a aglomeração de pessoas com vestuário padronizado ou esses instrumentos de modo a caracterizar manifestação coletiva. Mesários, escrutinadores e servidores não podem usar vestuário ou objeto de propaganda no recinto; fiscais só podem ter nome e sigla do partido no crachá, vedada a padronização do vestuário",
+   "fonte": "planalto_9504"
+  },
+  {
+   "id": "l9504_41a",
+   "norma": "Lei nº 9.504/1997",
+   "dispositivo": "art. 41-A",
+   "conteudo": "Captação ilícita de sufrágio: o candidato doar, oferecer, prometer ou entregar ao eleitor bem ou vantagem pessoal, inclusive emprego ou função pública, para obter o voto, do registro até o dia da eleição. Sanção: multa de 1.000 a 50.000 UFIR e cassação do registro ou do diploma, pelo rito do art. 22 da LC 64/1990. Dispensa pedido explícito de votos (§ 1º) e alcança violência ou grave ameaça para obter voto (§ 2º)",
+   "fonte": "planalto_9504"
+  },
+  {
+   "id": "l9504_65",
+   "norma": "Lei nº 9.504/1997",
+   "dispositivo": "art. 65",
+   "conteudo": "Fiscais e delegados não podem ser menores de 18 anos nem integrantes de mesa receptora; o fiscal pode atuar em mais de uma seção no mesmo local; credenciais expedidas exclusivamente pelos partidos ou coligações; máximo de 2 fiscais por partido ou coligação por seção (§ 4º, Lei nº 12.891/2013)",
+   "fonte": "planalto_9504"
+  },
+  {
+   "id": "l9504_66",
+   "norma": "Lei nº 9.504/1997",
+   "dispositivo": "art. 66 (redação da Lei nº 10.408/2002)",
+   "conteudo": "Partidos e coligações podem fiscalizar todas as fases da votação e da apuração e o processamento eletrônico da totalização; os programas das urnas são apresentados para análise em forma de programas-fonte e executáveis (§ 1º)",
+   "fonte": "planalto_9504",
+   "uso": "referência"
+  },
+  {
+   "id": "l9504_67",
+   "norma": "Lei nº 9.504/1997",
+   "dispositivo": "art. 67",
+   "conteudo": "Os órgãos de processamento eletrônico devem fornecer aos partidos ou coligações cópias dos dados do processamento parcial de cada dia",
+   "fonte": "planalto_9504",
+   "uso": "referência"
+  },
+  {
+   "id": "l9504_68",
+   "norma": "Lei nº 9.504/1997",
+   "dispositivo": "art. 68, § 1º",
+   "conteudo": "O boletim de urna contém nomes e números dos votados; o presidente da mesa é obrigado a entregar cópia aos partidos e coligações que a requeiram até uma hora após a expedição; descumprir é crime, com detenção de 1 a 3 meses, alternativa de serviço à comunidade, e multa de 1.000 a 5.000 UFIR",
+   "fonte": "planalto_9504"
+  },
+  {
+   "id": "l6091_1_4",
+   "norma": "Lei nº 6.091/1974",
+   "dispositivo": "arts. 1º a 4º",
+   "conteudo": "Veículos e embarcações públicos ficam à disposição da Justiça Eleitoral para transporte gratuito de eleitores de zonas rurais no dia da eleição (art. 1º); se insuficientes, a Justiça Eleitoral requisita veículos particulares (art. 2º); órgãos públicos informam frota até 50 dias antes (art. 3º); quadro de percursos e horários divulgado 15 dias antes, transporte só dentro do município e quando a mesa distar ao menos 2 km da zona rural (art. 4º, § 1º)",
+   "fonte": "planalto_6091"
+  },
+  {
+   "id": "l6091_5",
+   "norma": "Lei nº 6.091/1974",
+   "dispositivo": "art. 5º",
+   "conteudo": "Nenhum veículo ou embarcação pode transportar eleitores do dia anterior ao posterior à eleição, salvo: I, a serviço da Justiça Eleitoral; II, coletivos de linhas regulares e não fretados; III, uso individual do proprietário para o próprio voto e o da família; IV, serviço normal, sem finalidade eleitoral, de veículos de aluguel não requisitados",
+   "fonte": "planalto_6091"
+  },
+  {
+   "id": "l6091_8_10",
+   "norma": "Lei nº 6.091/1974",
+   "dispositivo": "arts. 8º e 10",
+   "conteudo": "Só a Justiça Eleitoral pode, quando imprescindível, fornecer refeições a eleitores da zona rural (art. 8º). É vedado a candidatos, órgãos partidários ou qualquer pessoa fornecer transporte ou refeições aos eleitores da zona urbana (art. 10)",
+   "fonte": "planalto_6091"
+  },
+  {
+   "id": "l6091_11",
+   "norma": "Lei nº 6.091/1974",
+   "dispositivo": "art. 11, III",
+   "conteudo": "Descumprir as proibições dos arts. 5º, 8º e 10 (transporte e refeição a eleitores fora da Justiça Eleitoral) é crime, punido com reclusão de 4 a 6 anos e 200 a 300 dias-multa, com remissão ao art. 302 do Código Eleitoral. O inciso V trata de outra conduta: uso de veículo público em campanha",
+   "fonte": "planalto_6091",
+   "pena": "reclusão de quatro a seis anos e multa"
+  },
+  {
+   "id": "res_23751_geral",
+   "norma": "Resolução TSE nº 23.751/2026",
+   "dispositivo": "ementa e art. 2º",
+   "conteudo": "Dispõe sobre os atos gerais do processo eleitoral para as Eleições 2026 (Instrução nº 0600281-87.2026.6.00.0000, rel. Min. Nunes Marques, publicada no DJE de 04/03/2026). Primeiro turno em 4 de outubro e segundo em 25 de outubro de 2026. É a norma nova para 2026; a de 2024 não foi conferida aqui",
+   "fonte": "dje_res_23751",
+   "uso": "referência"
+  },
+  {
+   "id": "res_23751_zeresima",
+   "norma": "Resolução TSE nº 23.751/2026",
+   "dispositivo": "arts. 121 e 122",
+   "conteudo": "Antes da votação a mesa verifica urna, lacres, cadernos, teclado e presença de fiscais; ausência de fiscais vai para a ata sem impedir o início (art. 121, par. único). O presidente emite a Zerésima, assinada pelos mesários e, se quiserem, pelos fiscais; o Resumo da Zerésima é afixado em local visível; as 2 primeiras pessoas da fila são convidadas a acompanhar, com registro em ata da participação ou recusa (art. 122, §§ 1º e 2º)",
+   "fonte": "dje_res_23751"
+  },
+  {
+   "id": "res_23751_bu",
+   "norma": "Resolução TSE nº 23.751/2026",
+   "dispositivo": "art. 127, III, V, IX, XV, XVII, XVIII e par. único",
+   "conteudo": "Ao final, o presidente emite as vias do BU, assina-as com mesários e fiscais, afixa uma cópia assinada na seção, entrega uma via obrigatória e as adicionais a partidos, federações, coligações, imprensa e MP que as requeiram no encerramento, remete 2 vias e a Zerésima à Junta, guarda uma via para conferência com o resultado publicado pelo TSE e reserva 2 vias opcionais para os 2 últimos eleitores que acompanharem o encerramento",
+   "fonte": "dje_res_23751"
+  },
+  {
+   "id": "res_23751_senhas",
+   "norma": "Resolução TSE nº 23.751/2026",
+   "dispositivo": "art. 128, IV, e art. 160, §§ 1º a 3º",
+   "conteudo": "O recebimento de votos termina às 17h, horário de Brasília, desde que não haja eleitores na fila. Havendo fila, os mesários distribuem senhas às 17h começando pelo último da fila, e a votação segue em ordem decrescente das senhas até o último eleitor (CE, arts. 144 e 153). As 2 últimas pessoas a votar são convidadas a acompanhar o encerramento e recebem o BU",
+   "fonte": "dje_res_23751"
+  },
+  {
+   "id": "res_23751_contingencia",
+   "norma": "Resolução TSE nº 23.751/2026",
+   "dispositivo": "arts. 147 a 154",
+   "conteudo": "Falha: desligar e religar na presença dos fiscais; persistindo, a equipe do juiz reposiciona a mídia, substitui a urna por uma de contingência ou troca a mídia (art. 147); lacres rompidos são repostos e assinados, inclusive por fiscais presentes. Se a contingência falhar, vota-se por cédulas até o encerramento (art. 151) e não se volta à urna eletrônica na mesma seção (art. 153). Ocorrências vão para a ata (art. 152); é proibida manutenção na seção, salvo bateria e impressora (art. 154)",
+   "fonte": "dje_res_23751"
+  },
+  {
+   "id": "res_23751_transito_presos",
+   "norma": "Resolução TSE nº 23.751/2026",
+   "dispositivo": "arts. 30 a 42 (transferência temporária, inclusive de presos provisórios), 43 a 46 (voto em trânsito) e 47 a 49 (seções em estabelecimentos penais e de internação)",
+   "conteudo": "Voto em trânsito habilitado pelo autoatendimento, em capitais e municípios com mais de 100 mil eleitores; fora da UF de domicílio só para Presidente. Seções em estabelecimentos penais e unidades de internação para presos provisórios e adolescentes custodiados, que podem pedir transferência temporária",
+   "fonte": "dje_res_23751"
+  },
+  {
+   "id": "res_23753",
+   "norma": "Resolução TSE nº 23.753/2026",
+   "dispositivo": "art. 1º e considerandos",
+   "conteudo": "Institui para as Eleições 2026 o Programa Seu Voto Importa: transporte especial individual gratuito, por convênios dos TREs, a eleitores com deficiência ou mobilidade reduzida sem meios próprios. Os considerandos registram que esse transporte não substitui a obrigação do poder público de ofertar transporte coletivo urbano e intermunicipal gratuito nos dias de votação, conforme o STF na ADPF nº 1.013/DF. Não é norma específica sobre transporte rural; a regra rural segue a Lei nº 6.091/1974",
+   "fonte": "dje_res_23753"
+  },
+  {
+   "id": "res_23755",
+   "norma": "Resolução TSE nº 23.755/2026",
+   "dispositivo": "ementa",
+   "conteudo": "Altera a Resolução nº 23.610/2019, que dispõe sobre propaganda eleitoral; vale para 2026. O texto dos artigos sobre o dia da eleição e sobre derrame de santinhos (art. 19, § 7º, segundo buscador) não foi lido no compilado do TSE, que bloqueou o acesso",
+   "fonte": "dje_res_23755"
+  }
+ ],
+ "fontes": [
+  {
+   "id": "abr_crimes_parcial_1t_2022",
+   "url": "https://agenciabrasil.ebc.com.br/politica/noticia/2022-10/brasil-teve-939-registros-de-crimes-eleitorais-e-307-prisoes",
+   "titulo": "Brasil teve 939 registros de crimes eleitorais e 307 prisões",
+   "veiculo": "Agência Brasil",
+   "data": "2022-10-02",
+   "como_conferido": "curl, texto bruto lido no arquivo salvo",
+   "arquivo": "data/originals/apuracao_2026/fiscais/abr_crimes_1t_2022.html",
+   "sha256": "add9a1f61f1f6806986bed5c76fcaf1cb1edf3629663426a25b0954a31af8b64",
+   "bytes": 97333
+  },
+  {
+   "id": "abr_crimes_parcial_1t_2024",
+   "url": "https://www.canalrural.com.br/politica/eleicoes/primeiro-turno-teve-515-prisoes-por-crimes-eleitorais/",
+   "titulo": "Primeiro turno teve 515 prisões por crimes eleitorais (texto da Agência Brasil)",
+   "veiculo": "Canal Rural / Agência Brasil",
+   "data": "2024-10-06",
+   "como_conferido": "curl, texto bruto lido no arquivo salvo",
+   "arquivo": "data/originals/apuracao_2026/fiscais/abr_canalrural_515_1t_2024.html",
+   "sha256": "d56afa94eb84385d9ff839569055959975a9b9478caaf0bba3704cb46fc25a5a",
+   "bytes": 239873
+  },
+  {
+   "id": "agazeta_operacao_solon",
+   "url": "https://www.agazeta.com.br/brasil/pf-investiga-acao-de-milicias-nas-eleicoes-do-rio-1120",
+   "titulo": "PF investiga ação de milícias nas eleições do Rio",
+   "veiculo": "A Gazeta (ES)",
+   "data": "2020-11-12",
+   "como_conferido": "curl + leitura do texto extraído",
+   "arquivo": "data/originals/apuracao_2026/fiscais/a_agazeta_pf_milicias_eleicoes_rio.html",
+   "sha256": "f559216f5150648dfb249eb40057e7848fe2cdd8c6042f3e932124777fc645fa",
+   "bytes": 449165
+  },
+  {
+   "id": "agbrasil_forca_federal_2024",
+   "url": "https://agenciabrasil.ebc.com.br/justica/noticia/2024-09/tse-aprova-uso-das-forca-federal-nas-eleicoes-em-cidades-de-12-estados",
+   "titulo": "TSE aprova uso da força federal nas eleições em cidades de 12 estados",
+   "veiculo": "Agência Brasil",
+   "data": "2024-09-24",
+   "como_conferido": "curl + leitura do texto extraído",
+   "arquivo": "data/originals/apuracao_2026/fiscais/a_agbrasil_forca_federal_2024_12uf.html",
+   "sha256": "64d00d19bb32aec3b74ebf73d970c8001b8d67f21cba7f1accc9b20ae7cac175",
+   "bytes": 95430
+  },
+  {
+   "id": "agbrasil_forca_federal_2024_out",
+   "url": "https://agenciabrasil.ebc.com.br/justica/noticia/2024-10/eleicoes-2024-tse-aprova-tropas-federais-para-novos-municipios",
+   "titulo": "Eleições 2024: TSE aprova tropas federais para 11 novos municípios",
+   "veiculo": "Agência Brasil",
+   "data": "2024-10-03",
+   "como_conferido": "curl + leitura do texto extraído",
+   "arquivo": "data/originals/apuracao_2026/fiscais/a_agbrasil_forca_federal_2024_out.html",
+   "sha256": "eb90f2e4f6e35e7f6af38053fe40989de67b5bbaea164286ffa18976a795be40",
+   "bytes": 97000
+  },
+  {
+   "id": "agbrasil_trerj_53_locais",
+   "url": "https://agenciabrasil.ebc.com.br/justica/noticia/2024-09/tre-rj-avalia-trocar-mais-40-locais-de-votacao-por-seguranca-em-2026",
+   "titulo": "TRE-RJ avalia trocar mais 40 locais de votação por segurança em 2026",
+   "veiculo": "Agência Brasil",
+   "data": "2024-09-27",
+   "como_conferido": "curl + leitura do texto extraído",
+   "arquivo": "data/originals/apuracao_2026/fiscais/a_agbrasil_trerj_40_locais.html",
+   "sha256": "4f5e2f390c54d7eb3b33e716ddd3fe41eaf126b9a58f9325b0789c4d12d52036",
+   "bytes": 96796
+  },
+  {
+   "id": "aosfatos_fraude_1994",
+   "url": "https://www.aosfatos.org/noticias/posts-omitem-informacoes-ao-relacionar-bolsonaro-fraude-em-cedulas-eleitorais-em-1994/",
+   "titulo": "Posts omitem informações ao relacionar Bolsonaro a fraude em cédulas eleitorais em 1994",
+   "veiculo": "Aos Fatos",
+   "data": "2021-01-14",
+   "como_conferido": "curl + leitura do texto extraído",
+   "arquivo": "data/originals/apuracao_2026/fiscais/a_aosfatos_fraude_1994.html",
+   "sha256": "50635cf84024c436f433ee04f4bc38d23baca2586fbd28e3a86ae47207fe6830",
+   "bytes": 211240,
+   "nota": "traz nota do TSE sobre a anulação pelo TRE-RJ e a reversão pelo TSE em 1996"
+  },
+  {
+   "id": "apublica_drible_prf",
+   "url": "https://apublica.org/2022/10/o-drible-da-prf-a-ordem-de-moraes/",
+   "titulo": "O drible da PRF à ordem de Moraes",
+   "veiculo": "Agência Pública",
+   "data": "2022-10-30",
+   "como_conferido": "curl + leitura do texto extraído",
+   "arquivo": "data/originals/apuracao_2026/fiscais/a_apublica_drible_prf.html",
+   "sha256": "33a7ba36100fce6e9f9e3816edcce2fe0b2e616f4038d027ae2ce8de314eb6d8",
+   "bytes": 169720
+  },
+  {
+   "id": "atarde_mj_final_1t_2024",
+   "url": "https://atarde.com.br/eleicoes/ministerio-da-justica-registrou-3-mil-crimes-eleitorais-no-1-turno-1291099",
+   "titulo": "Ministério da Justiça registrou 3 mil crimes eleitorais no 1º turno",
+   "veiculo": "A Tarde",
+   "data": "2024-10-13",
+   "como_conferido": "curl, texto bruto lido no arquivo salvo",
+   "arquivo": "data/originals/apuracao_2026/fiscais/atarde_mj_3mil_2024.html",
+   "sha256": "0ac134097bb0e6bfa7f0ac5ebfb9e1b05a25284b9beb8e71550f25d5135afc1e",
+   "bytes": 52223
+  },
+  {
+   "id": "brasildefato_milicia",
+   "url": "https://www.brasildefato.com.br/2020/02/01/intervencao-militar-nao-controlou-o-avanco-da-milicia-no-rio-de-janeiro/",
+   "titulo": "Intervenção militar não controlou o avanço da milícia no Rio de Janeiro",
+   "veiculo": "Brasil de Fato",
+   "data": "2020-02-01",
+   "como_conferido": "curl + leitura do texto extraído",
+   "arquivo": "data/originals/apuracao_2026/fiscais/a_brasildefato_milicia_2020.html",
+   "sha256": "b3a287316be4d94c9bbee27b5749b12463e74fa4c2ea54ed5a91c59f6c048e7c",
+   "bytes": 185950,
+   "nota": "informa relatório de 282 páginas, 225 indiciados e 58 propostas"
+  },
+  {
+   "id": "camara_cpi_milicias",
+   "url": "https://www2.camara.leg.br/atividade-legislativa/comissoes/comissoes-permanentes/cspcco/noticias/comissao-de-seguranca-recebe-relatorio-da-cpi-das",
+   "titulo": "Comissão de Segurança recebe relatório da CPI das Milícias no Rio",
+   "veiculo": "Câmara dos Deputados",
+   "data": "2008-12-17",
+   "como_conferido": "curl + leitura do texto extraído",
+   "arquivo": "data/originals/apuracao_2026/fiscais/a_camara_relatorio_cpi_milicias.html",
+   "sha256": "447f589c6b68e1d98dc8e64dca91139aad28df2cc6b951e317bae4b7238d8b52",
+   "bytes": 46920,
+   "nota": "informa 255 indiciados; Brasil de Fato informa 225"
+  },
+  {
+   "id": "cef_cassio_2008",
+   "url": "https://www.congressoemfoco.com.br/noticia/74910/tse-cassa-mandato-de-governador-da-paraiba",
+   "titulo": "TSE cassa mandato de governador da Paraíba",
+   "veiculo": "Congresso em Foco",
+   "data": "2008-11-20",
+   "como_conferido": "curl, texto bruto lido no arquivo salvo",
+   "arquivo": "data/originals/apuracao_2026/fiscais/cef_cassio_2008.html",
+   "sha256": "5c28d94d31a24a22d94aa986b132f86d483e5408de3f640ffacff86fe20bbd80",
+   "bytes": 174026
+  },
+  {
+   "id": "cef_miranda_2009",
+   "url": "https://www.congressoemfoco.com.br/noticia/73327/tse-cassa-mandato-do-governador-de-tocantins",
+   "titulo": "TSE cassa mandato do governador de Tocantins",
+   "veiculo": "Congresso em Foco",
+   "data": "2009-06-26",
+   "como_conferido": "curl, texto bruto lido no arquivo salvo",
+   "arquivo": "data/originals/apuracao_2026/fiscais/cef_miranda_2009.html",
+   "sha256": "411cbf0853a8f0b81c549a13b58e312f4fd4f6fc59641927941f2461707a2ab1",
+   "bytes": 173030
+  },
+  {
+   "id": "cfoco_eleicoes_2008_custo",
+   "url": "https://www.congressoemfoco.com.br/noticia/83826/eleicoes-de-2008-custaram-r-462-milhoes",
+   "titulo": "Eleições de 2008 custaram R$ 462 milhões",
+   "veiculo": "Congresso em Foco",
+   "data": "2008-10-05",
+   "como_conferido": "curl + leitura do texto extraído",
+   "arquivo": "data/originals/apuracao_2026/fiscais/a_cfoco_eleicoes_2008_custo.html",
+   "sha256": "496dc942d08703a1244ff9f37020028a7291fc1f15a5dff439ca105f8d595b46",
+   "bytes": 170463
+  },
+  {
+   "id": "cfoco_insegur_rio_2008",
+   "url": "https://www.congressoemfoco.com.br/noticia/79718/justica-eleitoral-reavalia-no-dia-5-inseguranca-no-rio",
+   "titulo": "Justiça Eleitoral reavalia, no dia 5, insegurança no Rio",
+   "veiculo": "Congresso em Foco",
+   "data": "2008-08-01",
+   "como_conferido": "curl + leitura do texto extraído",
+   "arquivo": "data/originals/apuracao_2026/fiscais/a_cfoco_insegur_rio_2008.html",
+   "sha256": "6958f9486e13139dd05842f785d911235c8e549d8c8d5314ec58c549a489c41b",
+   "bytes": 173229
+  },
+  {
+   "id": "cfoco_trerj_adia_2008",
+   "url": "https://www.congressoemfoco.com.br/noticia/79790/eleicoes-tre-rj-adia-decisao-sobre-intervencao-militar",
+   "titulo": "Eleições: TRE-RJ adia decisão sobre intervenção militar",
+   "veiculo": "Congresso em Foco",
+   "data": "2008-07-28",
+   "como_conferido": "curl + leitura do texto extraído",
+   "arquivo": "data/originals/apuracao_2026/fiscais/a_cfoco_trerj_adia_2008.html",
+   "sha256": "3180ef173877361756c06b431e2cf306d901b0e0949c440e0af8c6a136c18c38",
+   "bytes": 171256
+  },
+  {
+   "id": "cnn_pf_prf_2024",
+   "url": "https://www.cnnbrasil.com.br/blogs/debora-bergamasco/eleicoes/investigacao-da-pf-conclui-que-blitze-da-prf-impactaram-eleicoes-em-2022/",
+   "titulo": "Investigação da PF conclui que blitze da PRF impactaram eleições em 2022",
+   "veiculo": "CNN Brasil (blog Débora Bergamasco)",
+   "data": "2024-07-30",
+   "como_conferido": "curl, texto bruto lido no arquivo salvo",
+   "arquivo": "data/originals/apuracao_2026/fiscais/cnn_pf_blitze_prf_2022.html",
+   "sha256": "c62d063f398ec07863e2aff5c8e77ce187dab175a80e3294b6c8fc0c73a78748",
+   "bytes": 400801
+  },
+  {
+   "id": "cnn_urnas_1t_2022",
+   "url": "https://www.cnnbrasil.com.br/politica/primeiro-turno-teve-209-de-abstencoes-e-menos-de-1-de-urnas-substituidas/",
+   "titulo": "Primeiro turno teve 20,9% de abstenções e menos de 1% de urnas substituídas",
+   "veiculo": "CNN Brasil",
+   "data": "2022-10-02",
+   "como_conferido": "curl, texto bruto lido no arquivo salvo",
+   "arquivo": "data/originals/apuracao_2026/fiscais/cnn_urnas_1t_2022.html",
+   "sha256": "8bd460879e62dbabec986eca116ce217ff253486e0f06e7d890a1f787edb35df",
+   "bytes": 396502
+  },
+  {
+   "id": "conexaoto_miranda_2009",
+   "url": "https://conexaoto.com.br/2009/08/11/publicado-acordao-da-cassacao-de-marcelo-miranda-e-sidnei",
+   "titulo": "Publicado acórdão da cassação de Marcelo Miranda e Sidnei",
+   "veiculo": "Conexão Tocantins",
+   "data": "2009-08-11",
+   "como_conferido": "curl, texto bruto lido no arquivo salvo",
+   "arquivo": "data/originals/apuracao_2026/fiscais/conexaoto_miranda_acordao_2009.html",
+   "sha256": "f969da68fc248d220a6851a6fbf2267e31ec19ea9cd3ef8f1a0c4b988d74b64a",
+   "bytes": 176930
+  },
+  {
+   "id": "conjur_lago_2009",
+   "url": "https://www.conjur.com.br/2009-mar-04/tse-cassa-mandato-governador-maranhao-jackson-lago/",
+   "titulo": "TSE cassa mandato do governador do Maranhão, Jackson Lago",
+   "veiculo": "Consultor Jurídico",
+   "data": "2009-03-04",
+   "como_conferido": "curl, texto bruto lido no arquivo salvo",
+   "arquivo": "data/originals/apuracao_2026/fiscais/conjur_lago_2009.html",
+   "sha256": "9c87b9d4504dbf66c6a86a15b2335137dc85af697a1f3b566314651463a83a2e",
+   "bytes": 149093
+  },
+  {
+   "id": "conjur_pescaria_brava_2026",
+   "url": "https://conjur.com.br/2026-mai-23/mesario-que-fraudou-eleicao-tera-de-pagar-por-danos-morais-coletivos-2/",
+   "titulo": "Mesário que fraudou eleição terá de pagar por danos morais coletivos",
+   "veiculo": "Consultor Jurídico",
+   "data": "2026-05-23",
+   "como_conferido": "curl, texto bruto lido no arquivo salvo",
+   "arquivo": "data/originals/apuracao_2026/fiscais/conjur_mesario_pescaria_brava_2026.html",
+   "sha256": "235e7ee729ed22615d64dcaf02bcd2e78bba7feee40076afcd5fb09169acfc1f",
+   "bytes": 144545
+  },
+  {
+   "id": "diariodonordeste_faccoes_2024",
+   "url": "https://diariodonordeste.verdesmares.com.br/pontopoder/ameacas-pedagios-e-prisoes-o-que-se-sabe-sobre-a-interferencia-de-faccoes-nas-eleicoes-de-2024-1.3784247",
+   "titulo": "Ameaças, 'pedágios' e prisões: o que se sabe sobre a interferência de facções nas eleições de 2024",
+   "veiculo": "Diário do Nordeste",
+   "data": "2026-08-17",
+   "como_conferido": "curl + leitura do texto extraído",
+   "arquivo": "data/originals/apuracao_2026/fiscais/a_diariodonordeste_faccoes_2024.html",
+   "sha256": "cd9761832c7e52a1ef8862749bb634dcd117472a001c00d06effd9dc7942dd99",
+   "bytes": 210155
+  },
+  {
+   "id": "diariopara_2t_2024",
+   "url": "https://diariodopara.com.br/eleicoes-2024/segundo-turno-teve-102-crimes-eleitorais-diz-ministerio-42-foram-presos",
+   "titulo": "Segundo turno teve 102 crimes eleitorais, diz ministério; 42 foram presos (Folhapress)",
+   "veiculo": "Diário do Pará / Folhapress",
+   "data": "2024-10-28",
+   "como_conferido": "curl, texto bruto lido no arquivo salvo",
+   "arquivo": "data/originals/apuracao_2026/fiscais/diariopara_2t_2024.html",
+   "sha256": "06a9ffdd0e29bf4311287526cc54c5aa133e363d673505b4b4a9cbe0a593618f",
+   "bytes": 347898
+  },
+  {
+   "id": "dje_res_23751",
+   "url": "https://static.poder360.com.br/2026/03/Atos-gerais-da-eleicao-TSE-.pdf",
+   "titulo": "Resolução TSE nº 23.751 (atos gerais do processo eleitoral, Eleições 2026), DJE/TSE n. 30, 03/03/2026",
+   "veiculo": "DJE/TSE via Poder360",
+   "data": "2026-03-03",
+   "como_conferido": "curl do PDF e pdftotext; texto do DJE lido. O portal tse.jus.br devolveu bloqueio (88 bytes) ao curl e HTTP 429 ao WebFetch",
+   "arquivo": "data/originals/apuracao_2026/fiscais/p360_atos_gerais_2026.pdf",
+   "sha256": "355af2af0791c11ffb5879065d50649311b3f06d5d6d11b477f2c7333d35413c",
+   "bytes": 423575
+  },
+  {
+   "id": "dje_res_23753",
+   "url": "https://static.poder360.com.br/2026/03/Transporte-de-eleitores-especiais-TSE.pdf",
+   "titulo": "Resolução TSE nº 23.753 (Programa Seu Voto Importa, transporte especial), DJE/TSE n. 30, 03/03/2026",
+   "veiculo": "DJE/TSE via Poder360",
+   "data": "2026-03-03",
+   "como_conferido": "curl do PDF e pdftotext",
+   "arquivo": "data/originals/apuracao_2026/fiscais/p360_transporte_eleitores_2026.pdf",
+   "sha256": "c5843d89afa9e1fb149726627d78976a7378633bb160b991afacf207ba1756bc",
+   "bytes": 86788
+  },
+  {
+   "id": "dje_res_23755",
+   "url": "https://static.poder360.com.br/2026/03/Propaganda-eleitoral-TSE-.pdf",
+   "titulo": "Resolução TSE nº 23.755, que altera a Res. 23.610/2019 (propaganda eleitoral)",
+   "veiculo": "DJE/TSE via Poder360",
+   "data": "2026-03-03",
+   "como_conferido": "curl do PDF e pdftotext; só a ementa e o cabeçalho foram conferidos",
+   "arquivo": "data/originals/apuracao_2026/fiscais/p360_propaganda_2026.pdf",
+   "sha256": "a969e95c313a8951c1fccff3788c08afd66bdff44420565756920a31cccd01c6",
+   "bytes": 90883
+  },
+  {
+   "id": "dol_paulista_2020",
+   "url": "https://dol.com.br/noticias/brasil/617833/mesaria-e-presa-por-induzir-votos-de-eleitores",
+   "titulo": "Mesária é presa por induzir votos de eleitores (com informações do Metrópoles)",
+   "veiculo": "DOL",
+   "data": "2020-11-29",
+   "como_conferido": "curl, texto bruto lido no arquivo salvo",
+   "arquivo": "data/originals/apuracao_2026/fiscais/dol_mesaria_induzir.html",
+   "sha256": "7100e40415287fe5ab56d3e25fdd011ca0227984c1d8e3025c8793e9c92cf090",
+   "bytes": 95172
+  },
+  {
+   "id": "folhavitoria_arquiva_blitzes",
+   "url": "https://www.folhavitoria.com.br/politica/moraes-arquiva-investigacao-sobre-blitzes-que-teriam-dificultado-voto-no-2o-turno-de-2022/",
+   "titulo": "Moraes arquiva investigação sobre blitzes que teriam dificultado voto no 2º turno de 2022",
+   "veiculo": "Folha Vitória (cita G1)",
+   "data": "2026-01-22",
+   "como_conferido": "curl + leitura do texto extraído",
+   "arquivo": "data/originals/apuracao_2026/fiscais/a_folhavitoria_moraes_arquiva_blitzes.html",
+   "sha256": "963cb4ee5b3be0381aacea741c214841bd475ef56e2cd954ead160a3ba593101",
+   "bytes": 367459
+  },
+  {
+   "id": "jovempan_relatorio_prf",
+   "url": "https://jovempan.com.br/brasil/relatorio-da-prf-confirma-que-operacoes-no-segundo-turno-se-concentraram-no-nordeste/",
+   "titulo": "Relatório da PRF confirma que operações no segundo turno se concentraram no Nordeste",
+   "veiculo": "Jovem Pan",
+   "data": "2023-04-21",
+   "como_conferido": "curl + leitura do texto extraído",
+   "arquivo": "data/originals/apuracao_2026/fiscais/a_jovempan_relatorio_prf_nordeste.html",
+   "sha256": "bb0ca7489e689a76641c0220cb67ea145d06678ce025330b3603bc2193eb7a75",
+   "bytes": 203871,
+   "nota": "números do relatório da PRF enviado à CGU, relatados pelo veículo; o relatório em si não foi lido"
+  },
+  {
+   "id": "jp_crimes_1t_2022",
+   "url": "https://jovempan.com.br/?p=75666",
+   "titulo": "Operação Eleições 2022 registra 1.378 crimes eleitorais no primeiro turno",
+   "veiculo": "Jovem Pan",
+   "data": "2022-10-03",
+   "como_conferido": "curl, texto bruto lido no arquivo salvo",
+   "arquivo": "data/originals/apuracao_2026/fiscais/jp_crimes_1t_2022.html",
+   "sha256": "c81387bed37ef5b7a5db8a2b97c5a6d865e6dd55b8d35b45e41d064094b91c0b",
+   "bytes": 202770
+  },
+  {
+   "id": "memoriaglobo_proconsult",
+   "url": "https://memoriaglobo.globo.com/acusacoes-falsas/proconsult/",
+   "titulo": "Proconsult",
+   "veiculo": "Memória Globo (Grupo Globo)",
+   "data": "2026-10-06",
+   "como_conferido": "curl + leitura do texto extraído; página sem data de publicação, vale a data de acesso",
+   "arquivo": "data/originals/apuracao_2026/fiscais/a_memoriaglobo_proconsult.html",
+   "sha256": "9febb109a2f0f5d611b4e96749590a40f29b36063f8bcb63ef4d8704e151854b",
+   "bytes": 1202143,
+   "nota": "página institucional do Grupo Globo, parte citada no caso; sem data de publicação na página"
+  },
+  {
+   "id": "metropoles_doppelganger_2026",
+   "url": "https://www.metropoles.com/colunas/mirelle-pinheiro/policia-federal-investiga-votos-fantasmas-em-eleicao-de-macapa",
+   "titulo": "Polícia Federal investiga votos fantasmas em eleição de Macapá",
+   "veiculo": "Metrópoles",
+   "data": "2026-05-08",
+   "como_conferido": "curl, texto bruto lido no arquivo salvo. A nota da PF (gov.br/pf) exigiu autenticação e não foi lida",
+   "arquivo": "data/originals/apuracao_2026/fiscais/metropoles_doppelganger_2026.html",
+   "sha256": "15bf865b15ea4970b862b64d9490ddc2bac7bc37e0f68e7f0954ba141677beb6",
+   "bytes": 196855
+  },
+  {
+   "id": "migalhas_lago_2009",
+   "url": "https://www.migalhas.com.br/quentes/79329/mandato-do-governador-jackson-lago-e-cassado-pelo-tse",
+   "titulo": "Mandato do governador Jackson Lago é cassado pelo TSE",
+   "veiculo": "Migalhas",
+   "data": "2009-03-04",
+   "como_conferido": "curl, texto bruto lido no arquivo salvo; data pela matéria correlata da Conjur, não conferida no cabeçalho do Migalhas",
+   "arquivo": "data/originals/apuracao_2026/fiscais/migalhas_lago_2009.html",
+   "sha256": "71870d3cafe47f42cb15e8a33a7bb22ff94b57abdfa82ecbced629b99554cca2",
+   "bytes": 222375
+  },
+  {
+   "id": "migalhas_nucleo2",
+   "url": "https://www.migalhas.com.br/quentes/446559/por-unanimidade-1-turma-do-stf-condena-nucleo-2-da-trama-golpista",
+   "titulo": "Por unanimidade, 1ª turma do STF condena núcleo 2 da trama golpista",
+   "veiculo": "Migalhas",
+   "data": "2025-12-16",
+   "como_conferido": "curl + leitura do texto extraído",
+   "arquivo": "data/originals/apuracao_2026/fiscais/a_migalhas_nucleo2.html",
+   "sha256": "ce9b59a3f941295beacff0bcad1fb2ebb26d70c680bf86a9d8f4e160ca0c44fa",
+   "bytes": 229496
+  },
+  {
+   "id": "migalhas_preso_pode_votar",
+   "url": "https://www.migalhas.com.br/depeso/375182/o-preso-pode-votar",
+   "titulo": "O preso pode votar?",
+   "veiculo": "Migalhas (artigo de opinião)",
+   "data": "2022-10-13",
+   "como_conferido": "curl + leitura do texto extraído",
+   "arquivo": "data/originals/apuracao_2026/fiscais/a_migalhas_preso_pode_votar.html",
+   "sha256": "bc618a5c4d0c267c4fb8fa123482dbfc2305ff339b582b814c519c8837e8c7f8",
+   "bytes": 188342,
+   "nota": "artigo de autor convidado; cita dados do TSE e do TRE-SP"
+  },
+  {
+   "id": "monitormercantil_presos_2016",
+   "url": "https://monitormercantil.com.br/quase-6-mil-presos-provisorios-e-menores-infratores-votarao-nas-eleicoes/",
+   "titulo": "Quase 6 mil presos provisórios e menores infratores votarão nas eleições",
+   "veiculo": "Monitor Mercantil",
+   "data": "2016-09-22",
+   "como_conferido": "curl + leitura do texto extraído",
+   "arquivo": "data/originals/apuracao_2026/fiscais/a_monitormercantil_6mil_presos.html",
+   "sha256": "dce4bb5680f5cadf00805f02dbbf5e4bd995bed27e8d1a5e78c8a83a0fd098db",
+   "bytes": 300383,
+   "nota": "refere-se às eleições municipais de 2016"
+  },
+  {
+   "id": "mpf_me_explica_fraudes",
+   "url": "https://www.mpf.mp.br/o-mpf/unidades/procuradoria-geral-da-republica-pgr/noticias/me-explica-mpf-quais-fraudes-eleitorais-a-urna-eletronica-eliminou",
+   "titulo": "Me explica, MPF: quais fraudes eleitorais a urna eletrônica eliminou?",
+   "veiculo": "MPF",
+   "data": "2026-05-11",
+   "como_conferido": "curl + leitura do texto extraído",
+   "arquivo": "data/originals/apuracao_2026/fiscais/a_mpf_me_explica_fraudes.html",
+   "sha256": "06de9efd31078775337977855fc3334b9bc78e99a6486efa191bc1e8c940d7db",
+   "bytes": 242474
+  },
+  {
+   "id": "mpf_santa_quiteria",
+   "url": "https://www.mpf.mp.br/o-mpf/unidades/pr-ce/prefeito-e-vice-de-santa-quiteria-ce-sao-cassados-por-envolvimento-com-faccao-criminosa-nas-eleicoes-2024",
+   "titulo": "Prefeito e vice de Santa Quitéria (CE) são cassados por envolvimento com facção criminosa nas Eleições 2024",
+   "veiculo": "MPF (Procuradoria Regional Eleitoral no Ceará)",
+   "data": "2026-03-18",
+   "como_conferido": "curl + leitura do texto extraído",
+   "arquivo": "data/originals/apuracao_2026/fiscais/a_mpf_santa_quiteria_cassacao.html",
+   "sha256": "f090e883e4c7b8a6b02f8502c8930c7ca48b08c1ec7b11b8ffe49b3b34f18f8e",
+   "bytes": 234996
+  },
+  {
+   "id": "oestemais_pescaria_brava_2023",
+   "url": "https://www.oestemais.com/justica/2023/10/27/mesario-e-condenado-por-fraudar-votos-em-eleicoes-municipais-de-2016-em-sc/",
+   "titulo": "Mesário é condenado por fraudar votos em eleições municipais de 2016 em SC",
+   "veiculo": "Oeste Mais",
+   "data": "2023-10-27",
+   "como_conferido": "curl, texto bruto lido no arquivo salvo",
+   "arquivo": "data/originals/apuracao_2026/fiscais/oestemais_mesario_sc_2023.html",
+   "sha256": "ff6e1059d1441b1b282d9950854ec53fa561334947c51b89bf688eacdb3e72ed",
+   "bytes": 51279
+  },
+  {
+   "id": "ofator_albertina",
+   "url": "https://ofator.com.br/informacao/justica-eleitoral-negou-varredura-dados-cidade-mineira-mais-eleitores-que-habitantes/",
+   "titulo": "Por que a Justiça Eleitoral negou varredura nos dados de cidade mineira com mais eleitores que habitantes",
+   "veiculo": "O Fator",
+   "data": "2025-10-14",
+   "como_conferido": "curl + leitura do texto extraído",
+   "arquivo": "data/originals/apuracao_2026/fiscais/a_ofator_albertina_revisao.html",
+   "sha256": "a47bdca03b0686ebcd1acecc909d943dabb67049b4260947d52a668fc9d4a843",
+   "bytes": 376531
+  },
+  {
+   "id": "ohoje_itumbiara_2018",
+   "url": "https://ohoje.com/2018/10/08/denuncias-sao-100-vezes-mais-nestas-eleicoes/",
+   "titulo": "Denúncias são 100 vezes mais nestas eleições",
+   "veiculo": "O Hoje",
+   "data": "2018-10-08",
+   "como_conferido": "curl, texto bruto lido no arquivo salvo",
+   "arquivo": "data/originals/apuracao_2026/fiscais/ohoje_itumbiara_2018.html",
+   "sha256": "102d074fd09d8093402b0f22d5f30d9087055ccb84b503c5a45353f93c3e3da5",
+   "bytes": 98024
+  },
+  {
+   "id": "opovo_crimes_2t_2022",
+   "url": "https://www.opovo.com.br/eleicoes-2022/2022/10/30/segundo-turno-das-eleicoes-registra-308-crimes-eleitorais.html",
+   "titulo": "Segundo turno das eleições registra 308 crimes eleitorais (texto da Agência Brasil)",
+   "veiculo": "O Povo / Agência Brasil",
+   "data": "2022-10-30",
+   "como_conferido": "curl, texto bruto lido no arquivo salvo",
+   "arquivo": "data/originals/apuracao_2026/fiscais/opovo_crimes_2t_2022.html",
+   "sha256": "bb62e3d5c6956a1a910d9ce09de1b0601f1138f835e0134e1cb1515196d1b2f7",
+   "bytes": 67823
+  },
+  {
+   "id": "p360_urnas_2t_2024",
+   "url": "https://www.poder360.com.br/poder-eleicoes/171-urnas-eletronicas-foram-substituidas-no-2o-turno-diz-tse/",
+   "titulo": "171 urnas eletrônicas foram substituídas no 2º turno, diz TSE",
+   "veiculo": "Poder360",
+   "data": "2024-10-27",
+   "como_conferido": "curl, texto bruto lido no arquivo salvo",
+   "arquivo": "data/originals/apuracao_2026/fiscais/p360_urnas_2t_2024.html",
+   "sha256": "6a10f3066d15dd32f169ebb1a91f828591d23a42dea714410326116d05aa51ef",
+   "bytes": 253988
+  },
+  {
+   "id": "pf_mendazes_pe",
+   "url": "https://www.gov.br/pf/pt-br/assuntos/noticias/2026/09/pf-apura-fraudes-em-domicilios-eleitorais-em-pernambuco",
+   "titulo": "PF apura fraudes em domicílios eleitorais em Pernambuco",
+   "veiculo": "Polícia Federal",
+   "data": "2026-09-22",
+   "como_conferido": "curl + leitura do texto extraído",
+   "arquivo": "data/originals/apuracao_2026/fiscais/a_pf_pernambuco_domicilio_2026.html",
+   "sha256": "20ce893665554e2446ed80fbf52b3f64f0650e46b9aa21ea77f1548f38b0ea90",
+   "bytes": 111886
+  },
+  {
+   "id": "planalto_6091",
+   "url": "https://www.planalto.gov.br/ccivil_03/leis/l6091.htm",
+   "titulo": "Lei nº 6.091, de 15 de agosto de 1974",
+   "veiculo": "Planalto",
+   "data": "2026-10-06",
+   "como_conferido": "curl, texto bruto lido no arquivo salvo (latin-1); página sem data de publicação, vale a data de acesso",
+   "arquivo": "data/originals/apuracao_2026/fiscais/lei_6091.html",
+   "sha256": "67eda17f14cddaf544121921814aeb41f9b5e60a730b7606a202bd1e86b8a301",
+   "bytes": 43593
+  },
+  {
+   "id": "planalto_9504",
+   "url": "https://www.planalto.gov.br/ccivil_03/leis/l9504.htm",
+   "titulo": "Lei nº 9.504, de 30 de setembro de 1997, texto compilado",
+   "veiculo": "Planalto",
+   "data": "2026-10-06",
+   "como_conferido": "curl, texto bruto lido no arquivo salvo (latin-1); página sem data de publicação, vale a data de acesso",
+   "arquivo": "data/originals/apuracao_2026/fiscais/lei_9504.html",
+   "sha256": "3164caa590b465ed46d1a34c72ff66c648f2cb64d732152039d4503f83e381b0",
+   "bytes": 609835
+  },
+  {
+   "id": "planalto_ce",
+   "url": "https://www.planalto.gov.br/ccivil_03/leis/l4737compilado.htm",
+   "titulo": "Lei nº 4.737, de 15 de julho de 1965 (Código Eleitoral), texto compilado",
+   "veiculo": "Planalto",
+   "data": "2026-10-06",
+   "como_conferido": "curl, texto bruto lido no arquivo salvo (latin-1); página sem data de publicação, vale a data de acesso",
+   "arquivo": "data/originals/apuracao_2026/fiscais/ce_4737.html",
+   "sha256": "fb8af4e8b25197c5f2b85093456324857464cde332bc4afdac5c57621f41cdc8",
+   "bytes": 447168
+  },
+  {
+   "id": "poder360_fraude_1994",
+   "url": "https://www.poder360.com.br/eleicoes/post-engana-ao-dizer-que-bolsonaro-se-beneficiou-de-fraude-eleitoral-em-1994/",
+   "titulo": "Post engana ao dizer que Bolsonaro se beneficiou de fraude eleitoral em 1994",
+   "veiculo": "Poder360 (Projeto Comprova)",
+   "data": "2020-11-27",
+   "como_conferido": "curl + leitura do texto extraído",
+   "arquivo": "data/originals/apuracao_2026/fiscais/a_poder360_fraude_1994.html",
+   "sha256": "336aaf3aaad02c6ec951bd1f4ba3c937930772b3cf5914a5588ea845f9c58b55",
+   "bytes": 251730
+  },
+  {
+   "id": "poder360_moraes_prf",
+   "url": "https://www.poder360.com.br/justica/operacoes-da-prf-nao-causaram-prejuizo-ao-eleitor-diz-moraes/",
+   "titulo": "Operações da PRF não causaram prejuízo ao eleitor, diz Moraes",
+   "veiculo": "Poder360",
+   "data": "2022-10-30",
+   "como_conferido": "curl + leitura do texto extraído",
+   "arquivo": "data/originals/apuracao_2026/fiscais/a_poder360_moraes_prf_sem_prejuizo.html",
+   "sha256": "8970acffad592d4c3f007624f3066076e7d32618ec9b0856b7186e5a3d155a5a",
+   "bytes": 255133
+  },
+  {
+   "id": "poder360_pf_indicia",
+   "url": "https://www.poder360.com.br/poder-justica/pf-quer-ouvir-vasques-e-torres-mesmo-apos-indicia-los-ao-stf/",
+   "titulo": "PF quer ouvir Vasques e Torres mesmo após indiciá-los ao STF",
+   "veiculo": "Poder360",
+   "data": "2024-08-22",
+   "como_conferido": "curl + leitura do texto extraído",
+   "arquivo": "data/originals/apuracao_2026/fiscais/a_poder360_pf_indicia_vasques_torres.html",
+   "sha256": "7fc0aa5b5a2e7690d4b8e1fa4a9c9e87e7502a1ad562c5cf92f69220272e89a8",
+   "bytes": 252540
+  },
+  {
+   "id": "poder360_silvinei_condenado",
+   "url": "https://www.poder360.com.br/poder-justica/silvinei-foi-condenado-por-tentar-impedir-votos-no-nordeste-relembre/",
+   "titulo": "Silvinei foi condenado por tentar impedir votos no Nordeste; relembre",
+   "veiculo": "Poder360",
+   "data": "2025-12-26",
+   "como_conferido": "curl + leitura do texto extraído",
+   "arquivo": "data/originals/apuracao_2026/fiscais/a_poder360_silvinei_condenado.html",
+   "sha256": "64d4197cd60b2beb573dcaa5085bb2e1fe7632df828b13d2df5a76075d37eff8",
+   "bytes": 250786,
+   "nota": "o texto diz 'condenado em setembro'; Migalhas data o julgamento do núcleo 2 em 16/12/2025; prevalece a data da Migalhas"
+  },
+  {
+   "id": "poder360_trerj_50_secoes",
+   "url": "https://www.poder360.com.br/justica/tre-rj-quer-tirar-50-zonas-eleitorais-de-locais-onde-ha-milicias/",
+   "titulo": "TRE-RJ quer tirar 50 zonas eleitorais de locais onde há milícias",
+   "veiculo": "Poder360",
+   "data": "2024-01-26",
+   "como_conferido": "curl + leitura do texto extraído",
+   "arquivo": "data/originals/apuracao_2026/fiscais/a_poder360_trerj_50_zonas.html",
+   "sha256": "59a837c23316c7de0de703919665d065efe1fe3fb2602f64b224cec68dd588a6",
+   "bytes": 247963,
+   "nota": "o título fala em zonas, o corpo em seções"
+  },
+  {
+   "id": "sbt_crimes_1t_2024",
+   "url": "https://sbtnews.sbt.com.br/noticia/eleicoes/boca-de-urna-e-compra-de-votos-foram-principais-crimes-do-1-turno-das-eleicoes-em-2024",
+   "titulo": "Boca de urna e compra de votos foram principais crimes do 1º turno das eleições em 2024",
+   "veiculo": "SBT News",
+   "data": "2024-10-06",
+   "como_conferido": "curl, texto bruto lido no arquivo salvo",
+   "arquivo": "data/originals/apuracao_2026/fiscais/sbt_crimes_1t_2024.html",
+   "sha256": "89faa95396fb783a5f49519bd4e2b9fc1a164f37b0dafd0c17079471f35f198a",
+   "bytes": 209921
+  },
+  {
+   "id": "sbt_promotores_milicias",
+   "url": "https://sbtnews.sbt.com.br/noticia/brasil/promotores-e-juizes-querem-frear-interferencias-de-milicias-e-faccoes-nas-eleicoes-do-rio-de-janeiro",
+   "titulo": "Promotores e juízes querem frear interferências de milícias e facções nas eleições do Rio de Janeiro",
+   "veiculo": "SBT News",
+   "data": "2024-03-27",
+   "como_conferido": "curl + leitura do texto extraído",
+   "arquivo": "data/originals/apuracao_2026/fiscais/a_sbt_promotores_milicias_2024.html",
+   "sha256": "51fb07ed8907d5e8911bf2e2271a906f5917432ccf9ac4d944aad038c189ff1c",
+   "bytes": 221988
+  },
+  {
+   "id": "sedep_hornung",
+   "url": "https://www.sedep.com.br/noticias/transporte-de-eleitor-atenuante-no-reduz-pena-abaixo-do-previsto-em-lei/",
+   "titulo": "Transporte de eleitor: atenuante não reduz pena abaixo do previsto em lei (republica Revista Consultor Jurídico)",
+   "veiculo": "SEDEP / Conjur",
+   "data": "2026-10-06",
+   "como_conferido": "curl, texto bruto lido no arquivo salvo; republicação sem data; decisão monocrática no AG 8.998, eleição de 2004; página sem data de publicação, vale a data de acesso",
+   "arquivo": "data/originals/apuracao_2026/fiscais/sedep_transporte_atenuante.html",
+   "sha256": "fbc83c7c7d3cdf0dd1757a38e2065953b59ef0e48c9ac0250dc7f46ecd1f3233",
+   "bytes": 144136
+  },
+  {
+   "id": "tresc_ac_29296",
+   "url": "https://ejesc.tre-sc.jus.br/site/fileadmin/arquivos/legjurisp/acordaos/2014/29296_.pdf",
+   "titulo": "TRE-SC, Acórdão n. 29.296, Recurso Criminal n. 210-07.2012.6.24.0082 (Anchieta)",
+   "veiculo": "TRE-SC",
+   "data": "2014-06-04",
+   "como_conferido": "curl do PDF e pdftotext (OCR com ruído); sessão de 04.06.2014",
+   "arquivo": "data/originals/apuracao_2026/fiscais/tresc_acordao_29296_2014.pdf",
+   "sha256": "54cc9ecb5d8b4108f4986ac73f7356470673577c782a2358a2579b383b62e66d",
+   "bytes": 268039
+  },
+  {
+   "id": "wiki_eleicao_rj_1994",
+   "url": "https://pt.wikipedia.org/wiki/Elei%C3%A7%C3%B5es_estaduais_no_Rio_de_Janeiro_em_1994",
+   "titulo": "Eleições estaduais no Rio de Janeiro em 1994",
+   "veiculo": "Wikipédia",
+   "data": "2026-07-01",
+   "como_conferido": "curl + leitura do texto extraído",
+   "arquivo": "data/originals/apuracao_2026/fiscais/a_wiki_eleicao_rj_1994.html",
+   "sha256": "37bcc31f4295855ab62499bd42364624a813697a12fcf70833e1bb0b0c24423b",
+   "bytes": 399346,
+   "nota": "data é a da última edição da página"
+  },
+  {
+   "id": "wiki_milicia",
+   "url": "https://pt.wikipedia.org/wiki/CPI_das_Mil%C3%ADcias",
+   "titulo": "Milícia (criminalidade no Brasil)",
+   "veiculo": "Wikipédia",
+   "data": "2026-08-06",
+   "como_conferido": "curl + leitura do texto extraído",
+   "arquivo": "data/originals/apuracao_2026/fiscais/a_wiki_milicia_brasil.html",
+   "sha256": "18ff620470d08f8e7b3190282b44792b61b6ae120eba80898f4b752a8a5ec402",
+   "bytes": 297328,
+   "nota": "URL redireciona para o verbete Milícia (criminalidade no Brasil)"
+  },
+  {
+   "id": "wiki_proconsult",
+   "url": "https://pt.wikipedia.org/wiki/Caso_Proconsult",
+   "titulo": "Caso Proconsult",
+   "veiculo": "Wikipédia",
+   "data": "2025-12-10",
+   "como_conferido": "curl + leitura do texto extraído",
+   "arquivo": "data/originals/apuracao_2026/fiscais/a_wiki_proconsult.html",
+   "sha256": "1fd652e3a951126d2cd005f853fde198d97202d9122f94fa6ab24a0e34bcf314",
+   "bytes": 75305,
+   "nota": "data é a da última edição da página"
+  }
+ ],
+ "procurados_sem_fonte": [
+  {
+   "tema": "Resolução TSE 21.843/2004 (Força Federal)",
+   "o_que_procurou": "texto da resolução no portal do TSE e em TREs",
+   "nota": "Número e data (22/06/2004, regula a requisição do art. 23, XIV, do Código Eleitoral) aparecem no resultado de busca da página oficial do TSE, mas tse.jus.br e TREs devolveram HTTP 429/403 durante toda a sessão; página não lida. A base legal citada nos casos é o art. 23, XIV, lido no Planalto."
+  },
+  {
+   "tema": "Força Federal 2026, número de municípios por UF",
+   "o_que_procurou": "notícia do TSE 'Falta 1 dia: 136 municípios de 12 estados terão apoio de forças federais no 1º turno das Eleições 2026'",
+   "nota": "Título visto no buscador; página bloqueada por 429. Número de municípios do RJ em 2026 não conferido."
+  },
+  {
+   "tema": "Força Federal RJ 2018, 2020 e 2022",
+   "o_que_procurou": "decisões do TSE com número de locais no RJ",
+   "nota": "Sem fonte lida com número e data. Fontes do TRE-PA citam requisições de 2022 com base na Res. 21.843, mas foram bloqueadas."
+  },
+  {
+   "tema": "Outras fraudes em urna de lona com decisão judicial",
+   "o_que_procurou": "casos documentados dos anos 1980 e 1990 além do RJ 1994",
+   "nota": "Só relatos de memória (Pentecoste-CE, 1988, Diário do Nordeste) sem decisão judicial; não incluído como caso."
+  },
+  {
+   "tema": "Operações da PF sobre domicílio eleitoral em 2024 (Sinais-PI, Divino das Laranjeiras-MG, Annotata-MT)",
+   "o_que_procurou": "notícias em gov.br/pf de 2024",
+   "nota": "Páginas de 2024 em gov.br/pf exigem autenticação (curl e WebFetch); só foram usadas as de 2026."
+  },
+  {
+   "tema": "Facções nas eleições do Amazonas em 2024",
+   "o_que_procurou": "decisão ou operação datada",
+   "nota": "Não localizado em fonte lida."
+  },
+  {
+   "tema": "Voto em trânsito com problema documentado",
+   "o_que_procurou": "caso concreto com data",
+   "nota": "Não localizado. Base normativa não conferida em fonte lida."
+  },
+  {
+   "tema": "Número da resolução TSE de 2010 sobre voto do preso",
+   "o_que_procurou": "resolução que instituiu seções em presídios",
+   "nota": "A fonte lida diz apenas 'resolução do TSE' de março de 2010; o número não foi conferido."
+  },
+  {
+   "tema": "Relatório final da CPI das Milícias (PDF)",
+   "o_que_procurou": "íntegra no site da ALERJ",
+   "nota": "Não localizado; número de indiciados diverge entre Câmara (255) e Brasil de Fato (225)."
+  },
+  {
+   "tema": "Resolução TSE de força federal",
+   "o_que_procurou": "Texto e número da resolução sobre requisição de força federal (provável Res. 21.843/2004) e eventual ato de 2026",
+   "nota": "Não lido: tse.jus.br bloqueou curl e devolveu HTTP 429 ao WebFetch. Só o art. 23, XIV, do CE foi conferido."
+  },
+  {
+   "tema": "Res. 23.610/2019 compilada, art. 19 § 7º e dia da eleição",
+   "o_que_procurou": "Texto do derrame de santinhos e dos artigos sobre o dia do pleito, com a alteração de 2026",
+   "nota": "O buscador resume o art. 19, § 7º (derrame, mesmo na véspera, é propaganda irregular com multa do art. 37, § 1º, da Lei 9.504), mas o texto não foi lido. Confirmar no compilado do TSE antes de publicar."
+  },
+  {
+   "tema": "Decisões sobre derrame de santinhos",
+   "o_que_procurou": "Acórdãos de TRE ou TSE com multa ou cassação por derrame no dia da eleição",
+   "nota": "Achados apenas links de TRE-RJ (0606316) e TRE-PR, bloqueados ao curl. Nenhum lido."
+  },
+  {
+   "tema": "Res. 23.736/2024",
+   "o_que_procurou": "Confirmar que era a resolução de atos gerais de 2024",
+   "nota": "Não conferido. Para 2026 vale a Res. 23.751/2026, conferida no DJE."
+  },
+  {
+   "tema": "Zerésima, boletim, filas: impugnação concreta",
+   "o_que_procurou": "Caso de partido que impugnou zerésima, recusa de entrega de BU ou fechamento antes da fila",
+   "nota": "Nada localizado com fonte. A regra de senhas às 17h está no art. 160 da Res. 23.751."
+  },
+  {
+   "tema": "Urnas do 2º turno de 2022",
+   "o_que_procurou": "Número de substituições e votação manual no 2º turno de 2022",
+   "nota": "Não salvo em fonte lida."
+  },
+  {
+   "tema": "Prefeitos cassados por 41-A em 2020 e 2024 e balanço de cassações",
+   "o_que_procurou": "Casos recentes e estatística do TSE",
+   "nota": "Os Temas Selecionados do TSE e os portais dos TREs bloquearam o acesso. Nenhum caso recente lido."
+  },
+  {
+   "tema": "Condenação recente pelo art. 11, III, da Lei 6.091",
+   "o_que_procurou": "Acórdão de TRE após 2018 (TRE-PB, Malta)",
+   "nota": "Informativo do TRE-PB citado pelo buscador, bloqueado ao curl. Não usado."
+  }
+ ],
+ "fora_por_regra": [
+  {
+   "id": "tipologia_fraude_urna_lona",
+   "motivo": "texto institucional, não caso; vira referência do cenário de apuração em papel"
+  },
+  {
+   "id": "voto_preso_provisorio",
+   "motivo": "informação de procedimento, não caso; vira referência do cenário de seções especiais"
+  },
+  {
+   "id": "trerj_66_locais_2026",
+   "motivo": "medida preventiva para a eleição de 2026; nada desta eleição entra como caso"
+  },
+  {
+   "id": "eleitor_de_papel_go_2026",
+   "motivo": "transferências para a eleição de 2026; fora pela mesma regra"
+  },
+  {
+   "id": "mesaria_salvador_2026",
+   "motivo": "flagrante no 1º turno de 2026; fora pela mesma regra"
+  },
+  {
+   "id": "onibus_rr_am_2026",
+   "motivo": "flagrante no 1º turno de 2026; fora pela mesma regra"
+  },
+  {
+   "id": "mj_1t_2026",
+   "motivo": "balanço do 1º turno de 2026; fora pela mesma regra"
+  },
+  {
+   "id": "urnas_1t_2026",
+   "motivo": "balanço do 1º turno de 2026; fora pela mesma regra"
+  }
+ ]
+}
