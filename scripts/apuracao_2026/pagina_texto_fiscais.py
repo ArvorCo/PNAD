@@ -275,7 +275,18 @@ def territorio(F: dict, fig: Callable[[str], str], d_aviso) -> str:
         "verificado",
     )
     regra = F["meta"].get("risco_regra") or {}
-    if regra.get("cortes"):
+    if regra.get("texto"):
+        h += p(
+            "O nível de risco é "
+            + escape(regra["texto"]).rstrip(".")
+            + ". "
+            + escape(regra.get("natureza") or "A regra é escolha da casa, não medição.")
+            .capitalize()
+            .rstrip(".")
+            + ".",
+            "juizo",
+        )
+    elif regra.get("cortes"):
         pts_ = ", ".join(
             f"{escape(k)} {v}" for k, v in (regra.get("pontos") or {}).items()
         )
@@ -364,6 +375,7 @@ def locais(F: dict, fig: Callable[[str], str]) -> str:
 
 def sem_arquivo(F: dict) -> str:
     sa, zc = F.get("sem_arquivo") or [], F.get("zonas_congeladas") or []
+    nomes = {x["mun_tse"]: x["municipio"] for x in F["secoes"] if x.get("mun_tse")}
     h = "<h3>Seções sem arquivo e zonas congeladas</h3>"
     ex = lista(
         [
@@ -379,7 +391,8 @@ def sem_arquivo(F: dict) -> str:
             ": "
             + lista(
                 [
-                    f"{nome_bonito(z['municipio'])} ({z['uf']}), zona {z['zona']}, {num(z.get('horas_parada'), 1)} horas"
+                    f"{nome_bonito(z.get('municipio') or nomes.get(z.get('mun_tse'), 'município ' + str(z.get('mun_tse'))))} "
+                    f"({z['uf']}), zona {z['zona']}, {num(z.get('horas_parada'), 1)} horas"
                     for z in zc[:5]
                 ]
             )

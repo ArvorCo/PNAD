@@ -357,7 +357,7 @@ def test_fiscais_texto_na_viewbox_e_sem_noscript_orfao(nome):
             assert x0 >= -2 and x1 <= vw + 2 and y0 >= -2 and y1 <= vh + 2, (nome, tx)
     if nome.startswith("fiscais_mapa"):
         assert re.search(
-            r"<(circle|path)[^>]*(stroke-linecap=\"round\"|class=\"hit\")", h
+            r"<(circle|path)[^>]*(stroke-linecap=\"round\"|class=\"hit[ \"])", h
         )
     if nome in ("fiscais_locais", "fiscais_municipios"):
         assert "<table data-ordena" in h

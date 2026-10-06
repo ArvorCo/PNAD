@@ -67,6 +67,8 @@ def _pontos(F: dict) -> list[dict]:
             continue
         i = p.get("local")
         x = loc[i] if isinstance(i, int) and 0 <= i < len(loc) else {}
+        if x.get("uf") == "ZZ":
+            continue  # exterior: fora do mapa do Brasil, fica na lista de locais
         p["l"] = x
         out.append(p)
     return out
@@ -192,18 +194,14 @@ def fiscais_mapa_navegavel(d, **_op) -> str:
         grupos=grupos,
     )
     # dados do painel e da busca: coordenada, links e o índice da ficha
+    # dados do painel e da busca: coordenada no viewBox e lat/lon para os links;
+    # nome, endereço e o resto saem das fichas (`_rows`), sem cópia
     dados = {
-        "campos": ["x", "y", "links", *CAMPOS_FICHA],
-        "busca": 4,
-        "pontos": [],
+        "pontos": [
+            [round(x, 1), round(y, 1), p["lat"], p["lon"]]
+            for p, (x, y) in zip(pts, xy, strict=True)
+        ]
     }
-    for p, (x, y) in zip(pts, xy, strict=True):
-        lm = p["l"].get("link_mapa") or {}
-        osm = lm.get("osm") or (
-            f"https://www.openstreetmap.org/?mlat={p['lat']}&mlon={p['lon']}#map=17/{p['lat']}/{p['lon']}"
-        )
-        goo = lm.get("google") or f"https://www.google.com/maps?q={p['lat']},{p['lon']}"
-        dados["pontos"].append([round(x, 2), round(y, 2), [osm, goo], *_linha_ficha(p)])
     bloco = json.dumps(dados, ensure_ascii=False, separators=(",", ":")).replace(
         "</", "<\\/"
     )
@@ -291,8 +289,8 @@ def fiscais_mapa_navegavel(d, **_op) -> str:
     )
     M = F["mapa"]
     legenda = (
-        f"{inteiro(len(pts))} locais de votação com coordenada ({inteiro(M.get('n_sem_coordenada'))} sem coordenada no "
-        "cadastro ficam só na lista). Roda do mouse ou pinça para aproximar, arrastar para mover, duplo clique para "
+        f"{inteiro(len(pts))} locais de votação no Brasil com coordenada ({inteiro(M.get('n_sem_coordenada'))} sem "
+        "coordenada no cadastro e os do exterior ficam só na lista). Roda do mouse ou pinça para aproximar, arrastar para mover, duplo clique para "
         "centrar; os botões +, − e BR e as setas do teclado fazem o mesmo. A malha municipal do IBGE e os nomes de "
         "município entram ao aproximar, sem rede. Só os links do OpenStreetMap e do Google Maps, no painel, abrem "
         "páginas externas e precisam de internet. Fonte: fiscais.json, mapa e por_local."
@@ -306,7 +304,6 @@ def fiscais_mapa_navegavel(d, **_op) -> str:
         modo="full",
         dim=False,
         apos=apos,
-        adiar=False,
     )
     return fig.replace(
         ' data-fig="fiscais_mapa_navegavel"',
@@ -385,15 +382,28 @@ def fiscais_mapa_uf(d, **_op) -> str:
         for p in da_uf:
             x, y = proj(p["lon"], p["lat"])
             k = f"r{len(linhas)}"
-            linhas.append(_linha_ficha(p))
+            lf = _linha_ficha(p)
+            linhas.append([lf[0], lf[1], lf[4], lf[5], lf[6]])
             g.append(
-                f'<circle class="hit" data-k="{k}" cx="{x:.1f}" cy="{y:.1f}" r="{raio(p["n_secoes"]):.1f}" '
-                f'fill="{COR_NIVEL[p["nivel"]]}" fill-opacity="0.85" stroke="{PAPER}" stroke-width="0.8"/>'
+                f'<circle class="hit fu-{p["nivel"]}" data-k="{k}" cx="{x:.0f}" cy="{y:.0f}" '
+                f'r="{raio(p["n_secoes"]):g}"/>'
             )
         g.append("</g>")
         out.append("".join(g))
     out.append("</svg>")
-    tips.tabela(CAMPOS_FICHA, linhas, sub=1)
+    tips.tabela(
+        ["Local", "Município", "Seções sinalizadas", "Critérios", "Nível"],
+        linhas,
+        sub=1,
+        nota="endereço e links no mapa navegável e na lista de locais",
+    )
+    estilo = (
+        "".join(
+            f"#fig-fiscais_mapa_uf .fu-{n}{{fill:{COR_NIVEL[n]};fill-opacity:.85;stroke:{PAPER};stroke-width:.8}}"
+            for n in NIVEIS
+        )
+        + "#fig-fiscais_mapa_uf circle.hit.on{stroke:#a4d42b;stroke-width:3px}"
+    )
     ctl = botoes([(u, u) for u in ufs], ufs[0], "UF", "tab")
     leg = legenda_html([(ROT_NIVEL[n], COR_NIVEL[n]) for n in NIVEIS], "Nível do local")
     legenda = (
@@ -408,7 +418,7 @@ def fiscais_mapa_uf(d, **_op) -> str:
         controles=ctl,
         modo="fit",
         dim=False,
-        apos=leg,
+        apos=f"<style>{estilo}</style>" + leg,
     )
 
 

@@ -79,9 +79,9 @@ def _card(s: dict, F: dict) -> str:
         votos = (
             '<dl class="fs-num">'
             f"<div><dt>Lula</dt><dd>{inteiro(s['lula'])} · {pct(s.get('lula_pct'), 1)}"
-            f"<small>zona {pp(s.get('excesso_zona_lula_pp'), 1)}</small></dd></div>"
+            f"<small>{pp(s.get('excesso_zona_lula_pp'), 1)} sobre o resto da zona</small></dd></div>"
             f"<div><dt>Flávio</dt><dd>{inteiro(s['flavio'])} · {pct(s.get('flavio_pct'), 1)}"
-            f"<small>zona {pp(s.get('excesso_zona_flavio_pp'), 1)}</small></dd></div>"
+            f"<small>{pp(s.get('excesso_zona_flavio_pp'), 1)} sobre o resto da zona</small></dd></div>"
             f"<div><dt>Aptos e votantes</dt><dd>{inteiro(s['aptos'])} · {inteiro(s.get('votantes'))}</dd></div>"
             f"<div><dt>Modelo de urna</dt><dd>{escape(s.get('modelo_urna') or 's/d')}</dd></div>"
             f"<div><dt>Encerramento</dt><dd>{_hora(s.get('encerramento_brasilia'))}</dd></div>"
@@ -451,7 +451,8 @@ def fiscais_risco(d, **_op) -> str:
     out.append("</svg>")
     cob = "".join(f"<li>{fonte_risco_html(f, len(F['secoes']))}</li>" for f in fontes)
     apos = _legenda_niveis() + (
-        f'<div class="fig-leg"><b class="leg-tit">Cobertura de cada base</b><ul class="fs-cob">{cob}</ul></div>'
+        f'<details class="fig-leg"><summary>Cobertura de cada base ({len(fontes)} arquivos)</summary>'
+        f'<ul class="fs-cob">{cob}</ul></details>'
         if cob
         else ""
     )

@@ -538,7 +538,9 @@ def test_fiscais_mapa_navegavel_pontos_malha_e_links():
     F = _fiscais()
     h = FIGURAS["fiscais_mapa_navegavel"](_d_fiscais(F))
     assert 'class="fig fz-svg"' in h and 'data-near="1"' in h
-    assert "noscript" not in h  # o mapa navegável nunca é adiado
+    # adiado ou não, a busca e os blocos de malha ficam fora do noscript
+    corpo = h.split("<noscript", 1)[0] + h.split("</noscript>")[-1]
+    assert "fz-busca" in corpo and 'class="fz-mun"' in corpo
     rows = _tips(h)["_rows"]
     com_coord = [p for p in F["mapa"]["pontos"] if p[0] is not None]
     assert len(rows["linhas"]) == len(rows["xy"]) == len(com_coord)
@@ -548,9 +550,9 @@ def test_fiscais_mapa_navegavel_pontos_malha_e_links():
         ).group(1)
     )
     assert len(dados_fz["pontos"]) == len(com_coord)
-    for pt in dados_fz["pontos"]:
-        assert pt[2][0].startswith("https://www.openstreetmap.org/")
-        assert pt[2][1].startswith("https://www.google.com/maps")
+    for pt, linha in zip(dados_fz["pontos"], rows["linhas"], strict=True):
+        assert len(pt) == 4 and -35 < pt[2] < 6 and -75 < pt[3] < -30
+        assert linha[0] and "(" in linha[1]
     ufs = {x["uf"] for x in F["por_local"] if x.get("lat") is not None}
     malhas = set(re.findall(r'class="fz-mun" data-uf="([A-Z]{2})"', h))
     assert malhas == ufs - {"ZZ"}
@@ -630,3 +632,20 @@ def test_fiscais_risco_desconhecido_nao_e_zero():
     assert "Seções sem base nesta camada" in h
     cards = FIGURAS["fiscais_secoes_amostra"](_d_fiscais(F))
     assert "Acesso: sede a" in cards and "validar com a PM e o TRE local" in cards
+
+
+def test_fiscais_mapa_navegavel_adiado_monta_no_evento():
+    F = _fiscais()
+    F["por_local"] = F["por_local"] * 40
+    F["mapa"]["pontos"] = [
+        [*pt[:5], i, *pt[6:]] for i, pt in enumerate(F["mapa"]["pontos"] * 40)
+    ]
+    h = FIGURAS["fiscais_mapa_navegavel"](_d_fiscais(F))
+    assert " data-adiada" in h and " data-fz-fig" in h
+    corpo = _corpo_adiado(h)
+    assert "fz-svg" in corpo and 'class="tips"' in corpo
+    assert 'class="fz-mun"' not in corpo and "fz-dados" not in corpo
+    from apuracao_2026 import pagina_fig_fiscais_nav as NAV
+
+    assert "fig:pronta" in NAV.js()
+    assert "fig.dispatchEvent(new CustomEvent('fig:pronta'" in interativo_html()

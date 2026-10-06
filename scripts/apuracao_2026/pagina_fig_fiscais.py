@@ -135,13 +135,14 @@ def fonte_risco_html(f: dict, total_secoes: int) -> str:
         nome = f'<a href="{escape(f["url"])}">{nome}</a>'
     org = f" ({escape(f['orgao'])})" if f.get("orgao") else ""
     data = f.get("baixado_em") or f.get("data")
-    h = nome + org + (f", baixada em {escape(str(data)[:10])}" if data else "")
     st = f.get("status")
     if st == "falhou":
         return (
-            h
-            + f"; não baixada ({escape(f.get('motivo') or 'sem motivo')}): campo desconhecido em todas as seções"
+            nome
+            + org
+            + f": não baixada ({escape(f.get('motivo') or 'sem motivo')}): campo desconhecido em todas as seções"
         )
+    h = nome + org + (f", baixada em {escape(str(data)[:10])}" if data else "")
     if st == "proxy":
         h += "; proxy declarado" + (
             f" ({escape(f['regra'])})" if f.get("regra") else ""
@@ -779,15 +780,15 @@ def fiscais_locais(d, **_op) -> str:
         "Local",
         "Endereço",
         "Bairro",
-        "Seções",
-        "Seções sinalizadas",
+        "Sinalizadas",
+        "Zona e números das seções",
         "Critérios",
         "Nível",
     ]
     if risco:
         cab.append("Risco")
     cab.append("Mapa")
-    numericas = {"Seções"}
+    numericas = {"Sinalizadas"}
     th = "".join(
         f'<th scope="col"{NUMC if c in numericas else ""}>{escape(c)}</th>' for c in cab
     )
@@ -798,8 +799,11 @@ def fiscais_locais(d, **_op) -> str:
             f"<th scope=\"row\">{escape(nome_bonito(x['local']))}</th>"
             f"<td>{escape(nome_bonito(x.get('endereco') or ''))}</td>"
             f"<td>{escape(nome_bonito(x.get('bairro') or ''))}</td>"
-            + _celula(x["secoes"])
-            + f"<td>{escape(', '.join(str(s) for s in x.get('lista_secoes', [])))}<br><small>zona {x['zona']}</small></td>"
+            + _celula(
+                x["secoes"],
+                f"{inteiro(x['secoes'])} de {inteiro(x.get('secoes_local'))}",
+            )
+            + f"<td>zona {x['zona']}: {escape(', '.join(str(s) for s in x.get('lista_secoes', [])))}</td>"
             + f"<td>{escape(criterios_txt(x.get('criterios')))}</td>"
             + f'<td data-v="{NIVEIS.index(x["nivel"])}"><span class="fs-chip fs-nivel-{x["nivel"]}">{nivel_txt(x["nivel"])}</span></td>'
         )

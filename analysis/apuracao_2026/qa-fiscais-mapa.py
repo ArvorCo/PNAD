@@ -54,6 +54,7 @@ def main() -> int:
         page.wait_for_timeout(600)
         fig = page.locator(FIG)
         fig.scroll_into_view_if_needed()
+        page.wait_for_selector(f"{FIG} svg.fz-svg[data-fz]", timeout=15000)
         svg = page.locator(f"{FIG} svg.fz-svg")
         checa(svg.count() == 1, "mapa navegável presente", falhas)
         n = page.eval_on_selector(
@@ -91,12 +92,12 @@ def main() -> int:
         fig.screenshot(path=str(SAIDA / "qa-fig-fiscais_mapa-zoom.png"))
         page.click(f"{FIG} [data-fz='brasil']")
         checa(abs(vb(page)[2] - v0[2]) < 0.5, "botão BR volta ao Brasil", falhas)
-        # busca pelo primeiro município do mapa
+        # busca pelo município do último ponto do mapa
         alvo = page.eval_on_selector(
-            f"{FIG} script.fz-dados",
-            "s => {const d=JSON.parse(s.textContent);return d.pontos[d.pontos.length-1]}",
+            f"{FIG} script.tips",
+            "s => {const d=JSON.parse(s.textContent)._rows.linhas;return d[d.length-1]}",
         )
-        mun = alvo[4].split(" (")[0]
+        mun = alvo[1].split(" (")[0]
         page.fill(f"{FIG} .fz-busca input", mun)
         page.press(f"{FIG} .fz-busca input", "Enter")
         page.wait_for_timeout(250)
@@ -198,8 +199,8 @@ def main() -> int:
         cel.wait_for_timeout(300)
         larg = cel.evaluate("[document.documentElement.scrollWidth, window.innerWidth]")
         checa(
-            larg[0] <= larg[1],
-            f"390 px sem rolagem lateral ({larg[0]} de {larg[1]})",
+            larg[0] <= 390 and larg[1] <= 390,
+            f"390 px sem rolagem lateral (documento {larg[0]} px, janela {larg[1]} px)",
             falhas,
         )
         sec = cel.locator("#fiscais")

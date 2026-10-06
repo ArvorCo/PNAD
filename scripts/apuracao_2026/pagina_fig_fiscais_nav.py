@@ -193,6 +193,7 @@ html:not(.js) .fz-ctl,html:not(.js) .fz-zoom,html:not(.js) .fz-res{display:none}
 .fs-cr{margin:0 0 6px;padding-left:18px;font-size:14px}
 .fs-terr{font-size:14px;border-left:3px solid #5b2a86;padding-left:8px}
 .fs-cob{margin:4px 0;padding-left:18px;font:14px/1.5 var(--sans)}
+#fiscais .fontes li,.fs-cob li{overflow-wrap:anywhere}
 """
 
 JS = r"""
@@ -210,7 +211,12 @@ function inicia(fig){
   var dados=null;
   q(fig,'script.fz-dados').forEach(function(n){try{dados=JSON.parse(n.textContent);}catch(e){}});
   if(!dados){return;}
-  var P=dados.pontos,campos=dados.campos;
+  var P=dados.pontos,rows=null;
+  q(fig,'script.tips').forEach(function(n){try{var t=JSON.parse(n.textContent);if(t._rows){rows=t._rows;}}catch(e){}});
+  if(!rows){return;}
+  var L=rows.linhas,campos=rows.campos;
+  function osm(s){return 'https://www.openstreetmap.org/?mlat='+s[2]+'&mlon='+s[3]+'#map=17/'+s[2]+'/'+s[3];}
+  function goo(s){return 'https://www.google.com/maps?q='+s[2]+','+s[3];}
   var gMun=svg.querySelector('.fz-mun-g'),gRot=svg.querySelector('.fz-rot'),sel=svg.querySelector('.fz-sel');
   var malhas={},carregadas={};
   q(fig,'script.fz-mun').forEach(function(n){malhas[n.getAttribute('data-uf')]=n;});
@@ -333,10 +339,10 @@ function inicia(fig){
   function mostra(i){
     var s=P[i];if(!s||!painel){return;}
     sel.setAttribute('data-i',i);marca(s);
-    var h='<h4>'+esc(s[3])+'</h4>';
-    for(var j=4;j<campos.length;j++){if(s[j]===''||s[j]==null){continue;}h+='<p><b>'+esc(campos[j])+':</b> '+esc(s[j])+'</p>';}
-    h+='<p class="fz-links"><a href="'+esc(s[2][0])+'" target="_blank" rel="noopener">Abrir no OpenStreetMap ↗</a>'+
-      '<a href="'+esc(s[2][1])+'" target="_blank" rel="noopener">Abrir no Google Maps ↗</a></p>';
+    var l=L[i]||[],h='<h4>'+esc(l[0]||'')+'</h4>';
+    for(var j=1;j<campos.length;j++){if(l[j]===''||l[j]==null){continue;}h+='<p><b>'+esc(campos[j])+':</b> '+esc(l[j])+'</p>';}
+    h+='<p class="fz-links"><a href="'+esc(osm(s))+'" target="_blank" rel="noopener">Abrir no OpenStreetMap ↗</a>'+
+      '<a href="'+esc(goo(s))+'" target="_blank" rel="noopener">Abrir no Google Maps ↗</a></p>';
     painel.innerHTML=h;
   }
   function escolhe(cx,cy){var i=maisPerto(cx,cy,14);if(i>=0){mostra(i);}}
@@ -357,7 +363,7 @@ function inicia(fig){
     if(mv){vb.x+=mv[0];vb.y+=mv[1];aplica();ev.preventDefault();}
   });
   var busca=fig.querySelector('.fz-busca input'),res=fig.querySelector('.fz-res');
-  var indice=P.map(function(s){return sem(s[3]+' '+s[dados.busca]);});
+  var indice=L.map(function(l){return sem(l[0]+' '+l[1]);});
   function procura(texto,ir){
     var t=sem(texto).trim();res.innerHTML='';
     if(t.length<2){return;}
@@ -366,7 +372,7 @@ function inicia(fig){
     if(!achou.length){res.innerHTML='<li>nenhum local com esse nome</li>';return;}
     achou.forEach(function(i){
       var li=document.createElement('li'),b=document.createElement('button');b.type='button';
-      b.textContent=P[i][3]+' · '+P[i][dados.busca];
+      b.textContent=L[i][0]+' · '+L[i][1];
       b.addEventListener('click',function(){centra(P[i][0],P[i][1],Math.max(zoom(),14));mostra(i);});
       li.appendChild(b);res.appendChild(li);
     });
