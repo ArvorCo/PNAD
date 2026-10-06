@@ -1,10 +1,13 @@
-"""Leitura dos grupos da mistura gaussiana: padrão de zeros, rótulos e frases.
+"""Leitura dos grupos da mistura gaussiana pelo padrão de zeros.
 
-Tudo sai dos números do bloco ajustado em `secoes_clusters`: o padrão de zeros
-que define cada grupo (testado contra os outros grupos), o rótulo curto, a
-comparação entre as nuvens visíveis na projeção e a divisão da mistura, a
-estabilidade entre sementes e as frases de `interpretacao`, cuja primeira diz se
-os grupos são geografia.
+Serve à versão de 15 partes (as 12 candidaturas, brancos, nulos e abstenção),
+abandonada em 06/10/2026 e guardada só como registro em
+`clusters.variantes.quinze_partes`, e ao padrão de zeros que ainda pode definir
+um grupo no modelo de cinco partes. Tudo sai dos números do bloco ajustado em
+`secoes_clusters`: o padrão de zeros que define cada grupo (testado contra os
+outros grupos), o rótulo curto, a comparação entre as nuvens visíveis na
+projeção e a divisão da mistura, a estabilidade entre sementes e a frase de
+diagnóstico, que diz se os grupos são geografia.
 """
 
 from __future__ import annotations
@@ -39,23 +42,11 @@ NOMES_PARTES = {
     "brancos": "brancos",
     "nulos": "nulos",
     "abstencao": "abstenção",
-    "demais": "candidaturas nanicas somadas",
-    "terceiros": "as outras dez candidaturas somadas",
-    "brancos_nulos": "brancos e nulos",
 }
 FRASE_PARTE = {  # (sem, com) para as partes que não são uma candidatura
     "brancos": ("sem voto branco", "com voto branco"),
     "nulos": ("sem voto nulo", "com voto nulo"),
     "abstencao": ("sem abstenção", "com abstenção"),
-    "brancos_nulos": ("sem branco nem nulo", "com branco ou nulo"),
-    "demais": (
-        "sem voto nas candidaturas nanicas",
-        "com voto nas candidaturas nanicas",
-    ),
-    "terceiros": (
-        "sem voto nas outras dez candidaturas",
-        "com voto nas outras dez candidaturas",
-    ),
 }
 
 
@@ -168,7 +159,7 @@ def padroes_zeros(
     """
     grupos = [rot == c for c in range(k)]
     pref = [
-        _parcelas(zero[:, list(menos[:m])].all(axis=1), grupos)
+        _parcelas(np.asarray(zero[:, list(menos[:m])].all(axis=1)), grupos)
         for m in range(1, len(menos) + 1)
     ]
     sing = [_parcelas(zero[:, i], grupos) for i in range(len(chaves))]
@@ -180,7 +171,7 @@ def padroes_zeros(
         if prefixo:
             itens.append(prefixo)
             usados |= set(menos[: prefixo["m"]])
-        simples = []
+        simples: list[tuple[float, str, int, np.ndarray, int]] = []
         for i in range(len(chaves)):
             if i in usados:
                 continue
@@ -415,12 +406,17 @@ def _def_grupo(cc: Mapping[str, Any], nomes: Mapping[str, str]) -> str | None:
     )
 
 
-def interpretar(c: Mapping[str, Any], nomes: Mapping[str, str]) -> list[str]:
-    """Frases geradas dos números; a primeira diz se os grupos são geografia."""
+def diagnostico_zeros(c: Mapping[str, Any], nomes: Mapping[str, str]) -> str:
+    """Por que os grupos da versão de muitas partes não servem: a frase sai dos números.
+
+    Diz se os grupos são geografia (V de Cramér entre grupo e região) e, quando
+    não são e quase todos têm padrão de zeros, quanto da matriz é zero, o degrau
+    entre 0,0001 e um voto e o padrão que define cada grupo.
+    """
     comps = c["componentes"]
-    k = c["k"]
+    k = len(comps)
+    n = len(c["features"])
     v = c["cramer_v_regiao"] or 0.0
-    frases = []
     por_zeros = sum(
         1
         for cc in comps
@@ -429,8 +425,8 @@ def interpretar(c: Mapping[str, Any], nomes: Mapping[str, str]) -> list[str]:
     deg = c.get("degrau_log") or {}
     if v < LIMIAR_GEOGRAFIA and por_zeros >= k - 1:
         defs = [d for d in (_def_grupo(cc, nomes) for cc in comps) if d]
-        frases.append(
-            f"Na especificação pedida, os {extenso(k)} grupos não são geografia (V de "
+        return (
+            f"Com as {n} partes, os {extenso(k)} grupos não são geografia (V de "
             f"Cramér entre grupo e região {num(v, 2)}): separam as seções pelo padrão "
             f"de zeros. {num(c['zeros_substituidos_pct'], 1)}% das células são zero e "
             "viram 0,0001; na seção mediana, de "
@@ -440,49 +436,12 @@ def interpretar(c: Mapping[str, Any], nomes: Mapping[str, str]) -> list[str]:
             "primeiro e o último décimo das seções), e a mistura usa esse degrau para "
             "separar grupos. O padrão que define cada grupo: " + "; ".join(defs) + "."
         )
-    elif v >= LIMIAR_GEOGRAFIA:
-        zeros = (
-            f"; o padrão de zeros também pesa em {extenso(por_zeros)} deles"
-            if por_zeros
-            else ""
+    if v >= LIMIAR_GEOGRAFIA:
+        return (
+            f"Com as {n} partes, os {extenso(k)} grupos acompanham a geografia (V de "
+            f"Cramér entre grupo e região {num(v, 2)})."
         )
-        frases.append(
-            f"Os {extenso(k)} grupos acompanham a geografia (V de Cramér entre grupo "
-            f"e região {num(v, 2)}){zeros}."
-        )
-    else:
-        frases.append(
-            "Os grupos não se reduzem à região (V de Cramér entre grupo e região "
-            f"{num(v, 2)}); o que os separa precisa ser lido nos centros."
-        )
-    for nome, rot in (
-        ("nanicos_somados", "nanicas somadas"),
-        ("densa", "cinco partes"),
-    ):
-        var = (c.get("variantes") or {}).get(nome)
-        if not var:
-            continue
-        vv = var["cramer_v_regiao"] or 0.0
-        am = amplitude_zeros(var["componentes"], var["features"])
-        fm = max(am, key=lambda f: am[f])
-        motivo = (
-            f"; o padrão de zeros ainda separa os grupos ({nomes.get(fm, fm)}, "
-            f"{num(am[fm], 0)} pontos de diferença na proporção de zeros)"
-            if am[fm] >= LIMIAR_ZEROS
-            else ""
-        )
-        frases.append(
-            f"Na versão com {rot}, o V de Cramér entre grupo e região é "
-            f"{num(vv, 2)}{motivo}."
-        )
-    for cc in comps:
-        frases.append(
-            f"Grupo {cc['id'] + 1}: {cc['rotulo']}; {num(cc['secoes'], 0)} seções."
-        )
-    a = comps[c["mais_anomalo"]["id"]]
-    frases.append(
-        f"O grupo de menor densidade e maior dispersão é o {a['id'] + 1} "
-        f"({a['rotulo']}); as 20 seções menos prováveis dele vêm com o que "
-        "provavelmente as explica."
+    return (
+        f"Com as {n} partes, os grupos não se reduzem à região (V de Cramér entre "
+        f"grupo e região {num(v, 2)}); o que os separa precisa ser lido nos centros."
     )
-    return frases

@@ -1,32 +1,33 @@
 """Pergunta B: mistura gaussiana (k = 5) sobre a composição do eleitorado da seção.
 
-Atributos por seção: votos de cada uma das 12 candidaturas a presidente, brancos,
-nulos e abstenção, todos divididos pelos aptos da eleição federal. As 15 frações
-somam 1, então o espaço é composicional: aplica-se a log-razão centrada (CLR),
-com zeros trocados por 0,0001 antes do log, como pedido. A CLR de 15 partes vive
-num subespaço de 14 dimensões (cada linha soma zero), o que tornaria singular a
-covariância completa; por isso a mistura é ajustada nas 14 coordenadas
-ortonormais desse subespaço (log-razão isométrica, ILR). A troca é uma rotação:
-distâncias de Mahalanobis e a densidade relativa entre seções não mudam.
+Modelo principal (06/10/2026): cinco partes por seção, Lula, Flávio, brancos,
+nulos e abstenção, todas divididas pelos aptos da eleição federal. O voto nas
+outras dez candidaturas fica fora das partes, a pedido do autor: a composição é
+fechada sobre as cinco (renormalizadas para somar 1), e o que falta para o
+eleitorado inteiro é exatamente o voto em terceiros, publicado ao lado de cada
+centro. Transformação: log-razão centrada (CLR) das cinco partes fechadas, com
+zero trocado por 0,0001 antes do log; a mistura é ajustada nas quatro
+coordenadas ortonormais do subespaço de soma zero (log-razão isométrica, ILR),
+rotação que preserva distâncias de Mahalanobis e densidade relativa.
 
-k = 5 é escolha do autor (06/10/2026; antes 3, e antes disso 4): é o k que o BIC
-prefere entre 3, 4 e 5. A tabela de comparação continua no JSON, ao lado da
-escolha, e o texto diz qual k o BIC prefere.
+A primeira versão (05/10/2026) usava 15 partes: as 12 candidaturas, brancos,
+nulos e abstenção. Com 42,7% das células em zero, o degrau entre 0,0001 e um
+voto definiu os grupos pelo padrão de zeros das candidaturas nanicas, não pela
+geografia nem pelo perfil político. Ela continua ajustada, com as mesmas oito
+sementes de antes, mas o JSON guarda só os agregados (`variantes.quinze_partes`),
+para o texto explicar por que foi abandonada.
 
-A verossimilhança tem muitos máximos locais: com quase metade das células em
-zero, cada padrão exato de zeros é um subespaço onde um componente pode se
-encaixar com variância quase nula. Uma semente só (10 inicializações) pode parar
-longe do melhor ajuste; por isso cada k é ajustado com várias sementes, fica o de
-maior log-verossimilhança e o JSON guarda a de cada semente.
-
-A especificação pedida é o modelo principal. Como quase metade das células é
-zero (candidaturas nanicas sem voto na seção), a mesma mistura é refeita com as
-candidaturas de menos de 1% dos válidos somadas numa parte só e com cinco partes
-quase sem zeros; as versões saem no JSON com a mesma estrutura.
+k = 5 é escolha do autor; a tabela do BIC (k = 3, 4 e 5) fica ao lado. O ajuste
+principal usa 16 sementes e duas inicializações do sklearn (`kmeans` e
+`k-means++`), dez partidas internas cada; fica o de maior log-verossimilhança, e
+`ajuste.diagnostico_convergencia` mostra se o EM foi até a convergência
+(reajuste da melhor partida com tolerância 1e-6) e quantas partidas chegam ao
+mesmo máximo (`secoes_clusters_diag`).
 
 O numpy ligado ao Accelerate (macOS) emite avisos falsos de divisão por zero em
 produtos de matriz; os avisos são silenciados e todo resultado é conferido como
-finito.
+finito. Nos processos paralelos, a biblioteca de álgebra linear roda com uma
+linha de execução por processo, para não disputar os núcleos.
 """
 
 from __future__ import annotations
@@ -34,8 +35,9 @@ from __future__ import annotations
 import os
 import time
 import warnings
-from collections.abc import Mapping, Sequence
+from collections.abc import Iterator, Mapping, Sequence
 from concurrent.futures import ProcessPoolExecutor
+from contextlib import contextmanager
 from typing import Any, NamedTuple
 
 import numpy as np
@@ -46,43 +48,65 @@ from sklearn.metrics import adjusted_rand_score
 from sklearn.mixture import GaussianMixture
 
 from .secoes_base import FLAVIO, LULA, ZERO, Base, amostras, clr, pct, r2
+from .secoes_clusters_diag import convergencia, frase, resumir
 from .secoes_clusters_leitura import (
     NOMES_PARTES,
+    diagnostico_zeros,
     estabilidade,
-    interpretar,
     leitura_projecao,
     menos_votadas,
     padroes_zeros,
     rotulo,
 )
+from .secoes_clusters_perfil import (
+    artefato,
+    contagens,
+    empates_por_par,
+    padroes_empate,
+    referencia,
+    resumo_grupos,
+    rotulo_perfil,
+    textos,
+)
 
 SEMENTE = 20261005
-N_SEMENTES = 8
+N_SEMENTES = 16
 SEMENTES = tuple(SEMENTE + i for i in range(N_SEMENTES))
+SEMENTES_15 = SEMENTES[:8]  # as oito da versão de 15 partes publicada em 05/10
+INITS = ("kmeans", "k-means++")
 K = 5
 K_TABELA = (3, 4, 5)
 ESCOLHA_K = {
     "k": K,
     "anterior": 3,
     "data": "06/10/2026",
-    "motivo": ("escolha do autor; coincide com o k que o BIC prefere entre 3, 4 e 5"),
+    "motivo": (
+        "escolha do autor, mantida quando a mistura passou de 15 para cinco partes"
+    ),
 }
+PARTES = ("lula", "flavio", "brancos", "nulos", "abstencao")
 N_INIT = 10
+TOL = 1e-4
+MAX_ITER = 500
 MAX_PONTOS = 8000
 TOP_FIGURA = 200
-LIMIAR_NANICO = 0.01
 EMPATE_LOGLIK = 1e-3
-MIN_PARALELO = 50_000  # seções; abaixo disso as sementes rodam em série
-MAX_PROCESSOS = 8
+MIN_PARALELO = 50_000  # seções; abaixo disso as partidas rodam em série
+MAX_PROCESSOS = 16
+VARS_THREADS = (
+    "VECLIB_MAXIMUM_THREADS",
+    "OMP_NUM_THREADS",
+    "OPENBLAS_NUM_THREADS",
+    "MKL_NUM_THREADS",
+)
 
 
 class Ajuste(NamedTuple):
     gm: GaussianMixture
     semente: int
+    init: str
     log: list[dict[str, Any]]
-    segundo: GaussianMixture | None
-    semente_segundo: int | None
-    todos: list[tuple[int, GaussianMixture]]
+    todos: list[tuple[int, str, GaussianMixture]]
 
 
 def ilr_base(d: int) -> np.ndarray:
@@ -101,6 +125,24 @@ def matriz_fracoes(df: pd.DataFrame, vcols: Sequence[str]) -> np.ndarray:
     return np.column_stack(partes) / apt[:, None]
 
 
+def matriz_cinco(df: pd.DataFrame) -> tuple[np.ndarray, np.ndarray]:
+    """Lula, Flávio, brancos, nulos e abstenção / aptos, e o que falta (terceiros).
+
+    O que falta para 1 é o voto nas outras dez candidaturas dividido pelos aptos,
+    porque comparecimento = válidos + brancos + nulos.
+    """
+    fr = matriz_fracoes(df, [f"v{LULA}", f"v{FLAVIO}"])
+    return fr, np.clip(1.0 - fr.sum(axis=1), 0.0, None)
+
+
+def fechar(fr: np.ndarray) -> np.ndarray:
+    """Renormaliza cada linha para somar 1 (fechamento da composição)."""
+    soma = fr.sum(axis=1, keepdims=True)
+    if not (soma > 0).all():
+        raise ValueError("seção sem nenhuma das partes da composição")
+    return fr / soma
+
+
 def coordenadas(fr: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
     """CLR (com zero → 0,0001) e as coordenadas ILR correspondentes."""
     z = clr(fr, ZERO)
@@ -113,15 +155,22 @@ def coordenadas(fr: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
 
 
 def ajustar(
-    x: np.ndarray, k: int, n_init: int = N_INIT, semente: int = SEMENTE
+    x: np.ndarray,
+    k: int,
+    n_init: int = N_INIT,
+    semente: int = SEMENTE,
+    init: str = "kmeans",
+    tol: float = TOL,
+    max_iter: int = MAX_ITER,
 ) -> GaussianMixture:
     gm = GaussianMixture(
         n_components=k,
         covariance_type="full",
         n_init=n_init,
+        init_params=init,
         random_state=semente,
-        max_iter=500,
-        tol=1e-4,
+        max_iter=max_iter,
+        tol=tol,
         reg_covar=1e-6,
     )
     with warnings.catch_warnings():
@@ -130,54 +179,87 @@ def ajustar(
     return gm
 
 
-def _ajuste_semente(
-    args: tuple[np.ndarray, int, int, int],
-) -> tuple[float, int, GaussianMixture]:
-    """Um ajuste e a log-verossimilhança média (função de módulo: vai ao processo)."""
-    x, k, n_init, s = args
-    gm = ajustar(x, k, n_init=n_init, semente=s)
+def loglik(gm: GaussianMixture, x: np.ndarray) -> float:
     with warnings.catch_warnings():
         warnings.filterwarnings("ignore", category=RuntimeWarning)
         ll = float(gm.score(x))
     if not np.isfinite(ll):
-        raise ValueError(f"log-verossimilhança não finita (k = {k}, semente {s})")
-    return ll, s, gm
+        raise ValueError("log-verossimilhança não finita")
+    return ll
+
+
+def prever(gm: GaussianMixture, x: np.ndarray) -> np.ndarray:
+    with warnings.catch_warnings():
+        warnings.filterwarnings("ignore", category=RuntimeWarning)
+        return gm.predict(x)
+
+
+def _ajuste_partida(
+    args: tuple[np.ndarray, int, int, int, str, float, int],
+) -> tuple[float, int, str, GaussianMixture]:
+    """Um ajuste e a log-verossimilhança média (função de módulo: vai ao processo)."""
+    x, k, n_init, s, init, tol, max_iter = args
+    gm = ajustar(x, k, n_init=n_init, semente=s, init=init, tol=tol, max_iter=max_iter)
+    return loglik(gm, x), s, init, gm
+
+
+@contextmanager
+def uma_thread() -> Iterator[None]:
+    """Processos filhos com uma linha de execução de álgebra linear cada."""
+    antes = {v: os.environ.get(v) for v in VARS_THREADS}
+    os.environ.update(dict.fromkeys(VARS_THREADS, "1"))
+    try:
+        yield
+    finally:
+        for v, val in antes.items():
+            if val is None:
+                os.environ.pop(v, None)
+            else:
+                os.environ[v] = val
+
+
+def rodar(
+    tarefas: Sequence[tuple[np.ndarray, int, int, int, str, float, int]],
+) -> list[tuple[float, int, str, GaussianMixture]]:
+    """Roda as partidas; com a base inteira, em processos separados.
+
+    Cada partida tem o próprio `random_state`, então o resultado não depende da
+    ordem nem do paralelismo.
+    """
+    if len(tarefas) > 1 and len(tarefas[0][0]) >= MIN_PARALELO:
+        n = min(len(tarefas), os.cpu_count() or 1, MAX_PROCESSOS)
+        with uma_thread(), ProcessPoolExecutor(max_workers=n) as ex:
+            return list(ex.map(_ajuste_partida, tarefas))
+    return [_ajuste_partida(t) for t in tarefas]
 
 
 def ajustar_melhor(
-    x: np.ndarray, k: int, sementes: Sequence[int] = SEMENTES, n_init: int = N_INIT
+    x: np.ndarray,
+    k: int,
+    sementes: Sequence[int] = SEMENTES,
+    n_init: int = N_INIT,
+    inits: Sequence[str] = ("kmeans",),
 ) -> Ajuste:
-    """Um ajuste por semente; fica o de maior log-verossimilhança média.
-
-    O segundo melhor (outra semente) serve para medir a estabilidade da partição.
-    Com a base inteira, as sementes rodam em processos separados; cada uma tem o
-    próprio `random_state`, então o resultado é o mesmo da execução em série.
-    """
-    tarefas = [(x, k, n_init, s) for s in sementes]
-    if len(sementes) > 1 and len(x) >= MIN_PARALELO:
-        n = min(len(sementes), os.cpu_count() or 1, MAX_PROCESSOS)
-        with ProcessPoolExecutor(max_workers=n) as ex:
-            ajustes = list(ex.map(_ajuste_semente, tarefas))
-    else:
-        ajustes = [_ajuste_semente(t) for t in tarefas]
-    ordem = sorted(ajustes, key=lambda a: (-a[0], a[1]))
+    """Um ajuste por semente e por inicialização; fica o de maior
+    log-verossimilhança média (empate: a primeira inicialização, a menor semente)."""
+    tarefas = [(x, k, n_init, s, i, TOL, MAX_ITER) for i in inits for s in sementes]
+    ajustes = rodar(tarefas)
+    ordem = sorted(
+        ajustes, key=lambda a: (-round(a[0], 9), list(inits).index(a[2]), a[1])
+    )
     log = [
         {
             "semente": s,
+            "init": i,
             "loglik_media": r2(ll, 4),
             "convergiu": bool(gm.converged_),
             "iteracoes": int(gm.n_iter_),
         }
-        for ll, s, gm in ajustes
+        for ll, s, i, gm in ajustes
     ]
-    seg = ordem[1] if len(ordem) > 1 else None
+    melhor = ordem[0]
     return Ajuste(
-        ordem[0][2],
-        ordem[0][1],
-        log,
-        seg[2] if seg else None,
-        seg[1] if seg else None,
-        [(sm, g) for _, sm, g in ajustes],
+        melhor[3], melhor[1], melhor[2], log, [(s, i, g) for _, s, i, g in ajustes]
     )
 
 
@@ -185,13 +267,15 @@ def mahalanobis_proprio(
     gm: GaussianMixture, x: np.ndarray, rotulos: np.ndarray
 ) -> np.ndarray:
     d2 = np.full(len(x), np.nan)
+    medias = np.asarray(gm.means_)
+    prec = np.asarray(gm.precisions_cholesky_)
     for c in range(gm.n_components):
         sel = rotulos == c
         if not sel.any():
             continue
         with warnings.catch_warnings():
             warnings.filterwarnings("ignore", category=RuntimeWarning)
-            y = (x[sel] - gm.means_[c]) @ gm.precisions_cholesky_[c]
+            y = (x[sel] - medias[c]) @ prec[c]
         d2[sel] = (y**2).sum(axis=1)
     return np.sqrt(d2)
 
@@ -248,57 +332,71 @@ def separacao(score: np.ndarray, zero: np.ndarray) -> tuple[float, float] | None
 # ---------------------------------------------------------------- bloco
 
 
+class Composicao(NamedTuple):
+    """O que entra na mistura e o que descreve os centros."""
+
+    fr: np.ndarray  # composição modelada (cada linha soma 1)
+    chaves: list[str]
+    eleitorado: np.ndarray  # as mesmas partes, divididas pelos aptos
+    fora: np.ndarray | None  # fração do eleitorado fora das partes (terceiros)
+    unidades: np.ndarray  # votos (e abstenções) somados nas partes
+
+
 def bloco(
     df: pd.DataFrame,
-    fr: np.ndarray,
-    chaves: Sequence[str],
+    comp: Composicao,
     nomes: Mapping[str, str],
+    sementes: Sequence[int] = SEMENTES,
+    inits: Sequence[str] = INITS,
     contraste: bool = True,
+    diagnostico: bool = True,
     max_pontos: int = MAX_PONTOS,
 ) -> dict[str, Any]:
     """Ajusta k = K e descreve componentes, anômalos, cruzamentos e PCA."""
-    z, x = coordenadas(fr)
+    fr, chaves = comp.fr, comp.chaves
+    _, x = coordenadas(fr)
     t0 = time.time()
-    aj = ajustar_melhor(x, K)
-    gm = aj.gm
+    aj = ajustar_melhor(x, K, sementes=sementes, inits=inits)
+    diag, gm = convergencia(x, aj) if diagnostico else (None, aj.gm)
     seg = time.time() - t0
+    bruto = prever(gm, x)
     with warnings.catch_warnings():
         warnings.filterwarnings("ignore", category=RuntimeWarning)
-        bruto = gm.predict(x)
-        ll = gm.score_samples(x)
-        rot2 = aj.segundo.predict(x) if aj.segundo is not None else None
+        ll = np.asarray(gm.score_samples(x), dtype=float)
     if not np.isfinite(ll).all():
         raise ValueError("log-verossimilhança não finita")
     mapa = ordem_estavel(bruto, df["lula_pct"].to_numpy(dtype=float), K)
     rot = mapa[bruto]
     maha = mahalanobis_proprio(gm, x, bruto)
     inv = np.argsort(mapa)
-    covs = gm.covariances_[inv]
-    pesos = gm.weights_[inv]
+    covs = np.asarray(gm.covariances_)[inv]
+    pesos = np.asarray(gm.weights_)[inv]
 
     bic = [_linha_bic(K, gm, x, aj.log)]
     if contraste:
         for kc in K_TABELA:
             if kc == K:
                 continue
-            outro = ajustar_melhor(x, kc)
+            outro = ajustar_melhor(x, kc, sementes=sementes, inits=inits[:1])
             bic.append(_linha_bic(kc, outro.gm, x, outro.log))
         bic.sort(key=lambda r: r["k"])
 
     df = df.assign(_cl=rot, _ll=ll, _maha=maha)
-    comps = [_componente(df, fr, chaves, rot, c, covs[c], pesos[c]) for c in range(K)]
+    comps = [_componente(df, comp, rot, c, covs[c], pesos[c]) for c in range(K)]
     zero = fr <= 0
-    ordem_votos = menos_votadas(fr, df["aptos"].to_numpy(dtype=float), chaves)
+    ordem_votos = menos_votadas(fr, comp.unidades, chaves)
     padroes = padroes_zeros(zero, rot, K, chaves, ordem_votos)
     for cc, pz in zip(comps, padroes, strict=True):
         cc["padrao_zeros"] = pz
         cc["rotulo"] = rotulo(cc, nomes)
-    for linha, (_, g) in zip(aj.log, aj.todos, strict=True):
-        with warnings.catch_warnings():
-            warnings.filterwarnings("ignore", category=RuntimeWarning)
-            rs = g.predict(x)
+    particoes = {(s, i): prever(g, x) for s, i, g in aj.todos}
+    for linha in aj.log:
+        rs = particoes[(linha["semente"], linha["init"])]
         linha["cramer_v_regiao"] = r2(cramer(pd.Series(rs), df["regiao"]), 3)
         linha["ari_com_escolhida"] = r2(adjusted_rand_score(bruto, rs), 3)
+    if diag is not None:
+        diag["ajustes"] = aj.log
+        resumir(diag)
     anom = escolher_anomalo(
         [cc["loglik_media"] for cc in comps], [cc["dispersao_logdet"] for cc in comps]
     )
@@ -307,28 +405,41 @@ def bloco(
     menos = df.sort_values("_ll").head(50)
     lls = [r["loglik_media"] for r in aj.log]
     maximo = max(lls)
+    ajuste = {
+        "secoes_ajuste": len(df),
+        "secoes_atribuidas": len(df),
+        "amostra_estratificada": False,
+        "covariancia": "full",
+        "n_init": N_INIT,
+        "inits": list(inits),
+        "random_state": aj.semente,
+        "init": aj.init,
+        "sementes": aj.log,
+        "inicializacoes": N_INIT * len(aj.log),
+        "sementes_no_maximo": sum(v >= maximo - EMPATE_LOGLIK for v in lls),
+        "max_iter": int(gm.max_iter),
+        "tol": float(gm.tol),
+        "reg_covar": 1e-6,
+        "convergiu": bool(gm.converged_),
+        "iteracoes": int(gm.n_iter_),
+        "loglik_media": r2(ll.mean(), 4),
+        "segundos": r2(seg, 1),
+    }
+    if diag is not None:
+        ajuste["diagnostico_convergencia"] = diag
     return {
         "features": list(chaves),
-        "zeros_substituidos_pct": r2(100 * float((fr <= 0).mean()), 2),
-        "degrau_log": degrau_log(df["aptos"].to_numpy(dtype=float)),
-        "ajuste": {
-            "secoes_ajuste": len(df),
-            "secoes_atribuidas": len(df),
-            "amostra_estratificada": False,
-            "covariancia": "full",
-            "n_init": N_INIT,
-            "random_state": aj.semente,
-            "sementes": aj.log,
-            "inicializacoes": N_INIT * len(aj.log),
-            "sementes_no_maximo": sum(v >= maximo - EMPATE_LOGLIK for v in lls),
-            "max_iter": 500,
-            "tol": 1e-4,
-            "reg_covar": 1e-6,
-            "convergiu": bool(gm.converged_),
-            "iteracoes": int(gm.n_iter_),
-            "loglik_media": r2(ll.mean(), 4),
-            "segundos": r2(seg, 1),
+        "zeros_substituidos_pct": r2(100 * float(zero.mean()), 2),
+        "zeros_por_parte": {
+            k: {
+                "secoes": int(zero[:, i].sum()),
+                "pct_secoes": r2(100 * float(zero[:, i].mean()), 2),
+            }
+            for i, k in enumerate(chaves)
         },
+        "secoes_com_zero": int(zero.any(axis=1).sum()),
+        "degrau_log": degrau_log(comp.unidades),
+        "ajuste": ajuste,
         "bic": bic,
         "componentes": comps,
         "menos_votadas": [chaves[i] for i in ordem_votos],
@@ -347,11 +458,8 @@ def bloco(
         "cluster_uf": _cruzar(df, "uf", "uf"),
         "cramer_v_regiao": r2(cramer(df["_cl"], df["regiao"]), 3),
         "cramer_v_uf": r2(cramer(df["_cl"], df["uf"]), 3),
-        "pca": _pca(df, z, fr, chaves, rot, ll, max_pontos),
+        "pca": _pca(df, x, fr, chaves, rot, ll, max_pontos),
         "_rot": rot,
-        "_rot2": rot2,
-        "_semente2": aj.semente_segundo,
-        "_x": x,
     }
 
 
@@ -368,12 +476,17 @@ def _linha_bic(
         }
 
 
-def degrau_log(aptos: np.ndarray) -> dict[str, Any]:
-    """Distância, em unidades de log, entre zero (0,0001) e um voto na seção."""
-    d = np.log(1.0 / (aptos * ZERO))
+def degrau_log(unidades: np.ndarray) -> dict[str, Any]:
+    """Distância, em unidades de log, entre zero (0,0001) e um voto na seção.
+
+    `unidades` é o total da composição em votos (e abstenções): os aptos na
+    versão de 15 partes, os aptos menos o voto em terceiros na de cinco.
+    """
+    u = np.clip(np.asarray(unidades, dtype=float), 1.0, None)
+    d = np.log(1.0 / (u * ZERO))
     return {
-        "aptos_mediana": r2(np.median(aptos), 0),
-        "mediana": r2(np.log(1.0 / (np.median(aptos) * ZERO)), 2),
+        "aptos_mediana": r2(np.median(u), 0),
+        "mediana": r2(np.log(1.0 / (np.median(u) * ZERO)), 2),
         "p10": r2(np.percentile(d, 10), 2),
         "p90": r2(np.percentile(d, 90), 2),
     }
@@ -381,8 +494,7 @@ def degrau_log(aptos: np.ndarray) -> dict[str, Any]:
 
 def _componente(
     df: pd.DataFrame,
-    fr: np.ndarray,
-    chaves: Sequence[str],
+    comp: Composicao,
     rot: np.ndarray,
     c: int,
     cov: np.ndarray,
@@ -393,7 +505,7 @@ def _componente(
     n = int(sel.sum())
     val = int(g["validos"].sum())
     sinal, logdet = np.linalg.slogdet(cov)
-    return {
+    saida = {
         "id": c,
         "secoes": n,
         "pct_secoes": pct(n, len(df)),
@@ -401,11 +513,12 @@ def _componente(
         "aptos_medio": r2(g["aptos"].mean(), 1),
         "votantes_medio": r2(g["votantes"].mean(), 1),
         "centro_pct_eleitorado": {
-            k: r2(100 * fr[sel, i].mean(), 3) for i, k in enumerate(chaves)
+            k: r2(100 * comp.eleitorado[sel, i].mean(), 3)
+            for i, k in enumerate(comp.chaves)
         },
         "zeros_pct": {
-            k: r2(100 * float((fr[sel, i] <= 0).mean()), 1)
-            for i, k in enumerate(chaves)
+            k: r2(100 * float((comp.fr[sel, i] <= 0).mean()), 1)
+            for i, k in enumerate(comp.chaves)
         },
         "centro_pct_validos": {
             "lula": pct(int(g[f"v{LULA}"].sum()), val),
@@ -414,6 +527,10 @@ def _componente(
                 int((g["validos"] - g[f"v{LULA}"] - g[f"v{FLAVIO}"]).sum()), val
             ),
         },
+    }
+    if comp.fora is not None:
+        saida["terceiros_pct_eleitorado"] = r2(100 * comp.fora[sel].mean(), 3)
+    return saida | {
         "peso": r2(peso, 4),
         "dispersao_logdet": r2(logdet if sinal > 0 else float("nan"), 3),
         "dispersao_traco": r2(np.trace(cov), 3),
@@ -447,10 +564,11 @@ def _refs(df: pd.DataFrame, extra: Sequence[str]) -> list[dict[str, Any]]:
 
 def _cruzar(df: pd.DataFrame, col: str, nome: str) -> list[dict[str, Any]]:
     tab = pd.crosstab(df["_cl"], df[col])
+    vals = tab.to_numpy(dtype=np.int64)
     out = []
-    for c in tab.index:
-        for r in tab.columns:
-            n = int(tab.loc[c, r])
+    for ci, c in enumerate(tab.index):
+        for ri, r in enumerate(tab.columns):
+            n = int(vals[ci, ri])
             if n == 0:
                 continue
             out.append(
@@ -458,8 +576,8 @@ def _cruzar(df: pd.DataFrame, col: str, nome: str) -> list[dict[str, Any]]:
                     "cluster": int(c),
                     nome: str(r).upper() if nome == "uf" else r,
                     "secoes": n,
-                    "pct_do_cluster": pct(n, int(tab.loc[c].sum())),
-                    f"pct_da_{nome}": pct(n, int(tab[r].sum())),
+                    "pct_do_cluster": pct(n, int(vals[ci].sum())),
+                    f"pct_da_{nome}": pct(n, int(vals[:, ri].sum())),
                 }
             )
     return out
@@ -476,19 +594,31 @@ def cramer(a: pd.Series, b: pd.Series) -> float:
     return float(np.sqrt(chi2 / (n * (min(r, k) - 1))))
 
 
+def projecao(x: np.ndarray) -> tuple[PCA, np.ndarray, np.ndarray]:
+    """Dois componentes principais das coordenadas ILR.
+
+    Devolve o ajuste, os escores e as cargas reescritas nas partes (CLR): como a
+    base ILR é ortonormal, a PCA nas coordenadas ILR e a PCA na CLR dão os mesmos
+    escores e as mesmas variâncias, e a carga de cada parte é `V @ componente`.
+    """
+    pca = PCA(n_components=2, random_state=SEMENTE)
+    with warnings.catch_warnings():
+        warnings.filterwarnings("ignore", category=RuntimeWarning)
+        p = pca.fit_transform(x)
+    cargas = pca.components_ @ ilr_base(x.shape[1] + 1).T
+    return pca, p, cargas
+
+
 def _pca(
     df: pd.DataFrame,
-    z: np.ndarray,
+    x: np.ndarray,
     fr: np.ndarray,
     chaves: Sequence[str],
     rot: np.ndarray,
     ll: np.ndarray,
     max_pontos: int = MAX_PONTOS,
 ) -> dict[str, Any]:
-    pca = PCA(n_components=2, random_state=SEMENTE)
-    with warnings.catch_warnings():
-        warnings.filterwarnings("ignore", category=RuntimeWarning)
-        p = pca.fit_transform(z)
+    pca, p, cargas = projecao(x)
     rng = np.random.default_rng(SEMENTE)
     n = len(df)
     top = np.argsort(ll)[:TOP_FIGURA]
@@ -505,27 +635,26 @@ def _pca(
     ]
     sep = []
     for j in range(2):
-        i = int(np.argmax(np.abs(pca.components_[j])))
+        i = int(np.argmax(np.abs(cargas[j])))
         s = separacao(p[:, j], fr[:, i] <= 0)
         sep.append(
             {
                 "componente": j + 1,
                 "feature": chaves[i],
-                "carga": r2(pca.components_[j, i], 4),
+                "carga": r2(cargas[j, i], 4),
                 "zeros_pct": r2(100 * float((fr[:, i] <= 0).mean()), 1),
                 "acerto_balanceado_pct": r2(s[0], 1) if s else None,
                 "corte": r2(s[1], 3) if s else None,
             }
         )
     return {
-        "base": "componentes principais da CLR (equivale à PCA nas coordenadas ILR)",
+        "base": (
+            f"dois componentes principais das {x.shape[1]} coordenadas ILR; as cargas "
+            f"são lidas nas {len(chaves)} partes (CLR), com os mesmos escores"
+        ),
         "variancia_explicada": [r2(v, 4) for v in pca.explained_variance_ratio_],
         "cargas": [
-            {
-                "feature": k,
-                "pc1": r2(pca.components_[0, i], 4),
-                "pc2": r2(pca.components_[1, i], 4),
-            }
+            {"feature": k, "pc1": r2(cargas[0, i], 4), "pc2": r2(cargas[1, i], 4)}
             for i, k in enumerate(chaves)
         ],
         "separacao": sep,
@@ -561,50 +690,130 @@ def _elipse_plano(q: np.ndarray, c: int) -> dict[str, Any]:
 # ---------------------------------------------------------------- principal
 
 
-def _variantes(
-    df: pd.DataFrame, fr: np.ndarray, cands: Sequence[Any]
-) -> dict[str, tuple[str, np.ndarray, list[str]]]:
-    """Duas versões com menos zeros: nanicas somadas e composição densa."""
-    total = {c.chave: float(df[f"v{c.numero}"].sum()) for c in cands}
-    validos = sum(total.values())
-    grandes = [
-        i for i, c in enumerate(cands) if total[c.chave] >= LIMIAR_NANICO * validos
-    ]
-    pequenos = [i for i in range(len(cands)) if i not in grandes]
-    nc = len(cands)
-    branco, nulo, abst = fr[:, nc], fr[:, nc + 1], fr[:, nc + 2]
-    ag = np.column_stack(
-        [fr[:, grandes], fr[:, pequenos].sum(axis=1), branco, nulo, abst]
+def composicao_cinco(df: pd.DataFrame) -> Composicao:
+    el, fora = matriz_cinco(df)
+    apt = df["aptos"].to_numpy(dtype=float)
+    return Composicao(fechar(el), list(PARTES), el, fora, apt * el.sum(axis=1))
+
+
+def composicao_quinze(df: pd.DataFrame, cands: Sequence[Any]) -> Composicao:
+    fr = matriz_fracoes(df, [f"v{c.numero}" for c in cands])
+    chaves = [c.chave for c in cands] + ["brancos", "nulos", "abstencao"]
+    return Composicao(fr, chaves, fr, None, df["aptos"].to_numpy(dtype=float))
+
+
+def _faixa(v: Sequence[float]) -> list[float | None]:
+    return [r2(min(v), 3), r2(max(v), 3)] if v else [None, None]
+
+
+def quinze_partes(
+    df: pd.DataFrame, comp: Composicao, nomes: Mapping[str, str]
+) -> dict[str, Any]:
+    """A versão de 15 partes (05/10/2026), só com os agregados.
+
+    Mesmas oito sementes e mesma inicialização da versão publicada; sem
+    amostras e sem os pontos da projeção, que não servem mais a figura nenhuma.
+    """
+    b = bloco(
+        df,
+        comp,
+        nomes,
+        sementes=SEMENTES_15,
+        inits=INITS[:1],
+        diagnostico=False,
+        max_pontos=0,
     )
-    chaves_ag = [cands[i].chave for i in grandes]
-    chaves_ag += ["demais", "brancos", "nulos", "abstencao"]
-    i_lula = next(i for i, c in enumerate(cands) if c.numero == LULA)
-    i_flavio = next(i for i, c in enumerate(cands) if c.numero == FLAVIO)
-    outros = [i for i in range(nc) if i not in (i_lula, i_flavio)]
-    densa = np.column_stack(
-        [
-            fr[:, i_lula],
-            fr[:, i_flavio],
-            fr[:, outros].sum(axis=1),
-            branco + nulo,
-            abst,
-        ]
-    )
+    aj = b["ajuste"]
+    sm = aj["sementes"]
+    outras = [s for s in sm if s["semente"] != aj["random_state"]]
     return {
-        "nanicos_somados": (
-            f"mesma mistura (k = {K}, mesmas sementes) com as {len(pequenos)} "
-            "candidaturas de menos de 1% dos válidos somadas na parte `demais`; "
-            f"{len(grandes)} candidaturas ficam separadas",
-            ag,
-            chaves_ag,
+        "descricao": (
+            f"a mesma mistura (k = {K}) sobre {len(comp.chaves)} partes: as 12 "
+            "candidaturas, brancos, nulos e abstenção, divididos pelos aptos"
         ),
-        "densa": (
-            f"mesma mistura (k = {K}, mesmas sementes) sobre cinco partes quase sem "
-            "zeros: Lula, Flávio, as outras dez candidaturas somadas, brancos e "
-            "nulos somados, abstenção",
-            densa,
-            ["lula", "flavio", "terceiros", "brancos_nulos", "abstencao"],
+        "abandonada_em": "06/10/2026",
+        "motivo": (
+            "os grupos saíram do padrão de zeros das candidaturas nanicas, não da "
+            "geografia nem do perfil de voto"
         ),
+        "k": K,
+        "features": b["features"],
+        "zeros_substituidos_pct": b["zeros_substituidos_pct"],
+        "secoes_com_zero": b["secoes_com_zero"],
+        "degrau_log": b["degrau_log"],
+        "bic": b["bic"],
+        "cramer_v_regiao": b["cramer_v_regiao"],
+        "cramer_v_uf": b["cramer_v_uf"],
+        "ajuste": {
+            "sementes": len(sm),
+            "n_init": aj["n_init"],
+            "random_state": aj["random_state"],
+            "sementes_no_maximo": aj["sementes_no_maximo"],
+            "loglik_sementes": _faixa([s["loglik_media"] for s in sm]),
+            "ari_outras_sementes": _faixa([s["ari_com_escolhida"] for s in outras]),
+            "cramer_v_sementes": _faixa([s["cramer_v_regiao"] for s in sm]),
+        },
+        "grupos": resumo_grupos(b["componentes"]),
+        "nuvens": {
+            "variancia_explicada": b["pca"]["variancia_explicada"],
+            "separacao": b["pca"]["separacao"],
+        },
+        "diagnostico": diagnostico_zeros(b, nomes),
+        "leitura_projecao": leitura_projecao({**b, "k": K}, nomes),
+        "estabilidade": estabilidade(b),
+        "_rot": b["_rot"],
+    }
+
+
+def meio_voto(
+    df: pd.DataFrame,
+    comp: Composicao,
+    nomes: Mapping[str, str],
+    ref: Mapping[str, Any],
+    cont: np.ndarray,
+) -> dict[str, Any]:
+    """Sensibilidade: zero trocado por meio voto antes do fechamento.
+
+    Meio voto é a metade do menor valor observável (um voto), a regra de
+    substituição multiplicativa usual em dados composicionais. O degrau entre
+    zero e um voto cai de cerca de 3,5 para 0,7 unidade de log.
+    """
+    cont = comp.eleitorado * df["aptos"].to_numpy(dtype=float)[:, None]
+    cont = np.where(cont > 0, cont, 0.5)
+    mv = Composicao(
+        fechar(cont), comp.chaves, comp.eleitorado, comp.fora, comp.unidades
+    )
+    b = bloco(
+        df,
+        mv,
+        nomes,
+        sementes=SEMENTES_15,
+        inits=INITS[:1],
+        contraste=False,
+        diagnostico=False,
+        max_pontos=0,
+    )
+    empates = padroes_empate(cont, b["_rot"], K, comp.chaves)
+    for cc, pe in zip(b["componentes"], empates, strict=True):
+        cc["padrao_empates"] = pe
+        cc["artefato"] = artefato(cc, nomes) or None
+        cc["rotulo"] = rotulo_perfil(cc, ref, nomes)
+    aj = b["ajuste"]
+    return {
+        "descricao": (
+            f"a mesma mistura (k = {K}, {len(SEMENTES_15)} sementes) com zero trocado "
+            "por meio voto, e não por 0,0001, antes de fechar a composição"
+        ),
+        "k": K,
+        "cramer_v_regiao": b["cramer_v_regiao"],
+        "cramer_v_uf": b["cramer_v_uf"],
+        "ajuste": {
+            "sementes": len(aj["sementes"]),
+            "sementes_no_maximo": aj["sementes_no_maximo"],
+            "loglik_sementes": _faixa([s["loglik_media"] for s in aj["sementes"]]),
+        },
+        "grupos": resumo_grupos(b["componentes"]),
+        "_rot": b["_rot"],
     }
 
 
@@ -612,52 +821,67 @@ def clusters(base: Base) -> dict[str, Any]:
     df = base.secoes
     df = df[df["aptos"] > 0].reset_index(drop=True)
     cands = base.candidatos
-    vcols = [f"v{c.numero}" for c in cands]
-    chaves = [c.chave for c in cands] + ["brancos", "nulos", "abstencao"]
     nomes = {c.chave: c.nome for c in cands} | NOMES_PARTES
-    fr = matriz_fracoes(df, vcols)
-    principal = bloco(df, fr, chaves, nomes)
-    rot, rot2 = principal.pop("_rot"), principal.pop("_rot2")
-    semente2 = principal.pop("_semente2")
-    principal.pop("_x")
+    comp = composicao_cinco(df)
+    cont = contagens(comp)
+    principal = bloco(df, comp, nomes)
+    rot = principal.pop("_rot")
+    for cc, pe in zip(
+        principal["componentes"],
+        padroes_empate(cont, rot, K, comp.chaves),
+        strict=True,
+    ):
+        cc["padrao_empates"] = pe
+    ref = referencia(comp)
 
-    variantes: dict[str, Any] = {}
-    sens: dict[str, Any] = {}
-    for nome, (desc, frv, chv) in _variantes(df, fr, cands).items():
-        b = bloco(df, frv, chv, nomes, contraste=False, max_pontos=4000)
-        sens[f"ari_principal_vs_{nome}"] = r2(
-            adjusted_rand_score(rot, b.pop("_rot")), 3
-        )
-        for chave in ("_rot2", "_semente2", "_x"):
-            b.pop(chave)
-        variantes[nome] = {"descricao": desc, **b}
-
-    if rot2 is not None:
-        sens["ari_principal_vs_outra_semente"] = r2(adjusted_rand_score(rot, rot2), 3)
-        sens["outra_semente"] = semente2
-        sens["outra_semente_criterio"] = (
-            "a semente de segunda maior log-verossimilhança entre as "
-            f"{len(SEMENTES)} ajustadas"
-        )
+    q = quinze_partes(df, composicao_quinze(df, cands), nomes)
+    rot15 = q.pop("_rot")
+    mv = meio_voto(df, comp, nomes, ref, cont)
+    rot_mv = mv.pop("_rot")
+    sens = {
+        "ari_principal_vs_quinze_partes": r2(adjusted_rand_score(rot, rot15), 3),
+        "ari_principal_vs_meio_voto": r2(adjusted_rand_score(rot, rot_mv), 3),
+    }
     bic = principal["bic"]
     melhor = min(bic, key=lambda b: b["bic"])["k"] if bic else None
     saida = {
         "k": K,
         "escolha_k": {**ESCOLHA_K, "bic_prefere": melhor},
-        "base": "votos de cada componente / aptos da seção (eleição federal)",
+        "base": (
+            "votos de Lula, de Flávio, brancos, nulos e abstenções da seção, divididos "
+            "pelos aptos da eleição federal e renormalizados para somar 1 (composição "
+            "fechada sobre as cinco partes; o voto em terceiros fica fora)"
+        ),
         "transformacao": "clr",
         "transformacao_detalhe": (
-            "log-razão centrada (CLR) das 15 frações, com zero trocado por 0,0001 "
-            "antes do log; a mistura é ajustada nas 14 coordenadas ortonormais do "
-            "subespaço de soma zero (ILR), rotação que preserva Mahalanobis e "
-            "densidade relativa"
+            "log-razão centrada (CLR) das cinco partes fechadas, com zero trocado por "
+            "0,0001 antes do log; a mistura é ajustada nas quatro coordenadas "
+            "ortonormais do subespaço de soma zero (ILR), rotação que preserva "
+            "Mahalanobis e densidade relativa"
         ),
         "zero": ZERO,
+        "referencia_nacional": ref,
+        "mediana_votos_por_secao": {
+            k: r2(float(np.median(cont[:, i])), 1) for i, k in enumerate(comp.chaves)
+        },
+        "empates_por_par": empates_por_par(cont, comp.chaves),
         **principal,
-        "variantes": variantes,
+        "variantes": {"quinze_partes": q, "meio_voto": mv},
         "sensibilidade": sens,
     }
-    saida["leitura_projecao"] = leitura_projecao(saida, nomes)
-    saida["estabilidade"] = estabilidade(saida)
-    saida["interpretacao"] = interpretar(saida, nomes)
+    textos(saida, nomes)
     return saida
+
+
+def refazer_textos(cl: dict[str, Any], candidatos: Sequence[Mapping[str, Any]]) -> None:
+    """Refaz rótulos e frases do bloco `clusters` a partir dos números gravados.
+
+    Não reajusta nada: serve para revisão editorial do texto gerado sem rodar a
+    mistura de novo. A frase de diagnóstico da versão de 15 partes fica como
+    está, porque depende de campos que o registro não guarda.
+    """
+    nomes = {c["chave"]: c["nome"] for c in candidatos} | NOMES_PARTES
+    dg = (cl.get("ajuste") or {}).get("diagnostico_convergencia")
+    if dg:
+        dg["frase"] = frase(dg)
+    textos(cl, nomes)

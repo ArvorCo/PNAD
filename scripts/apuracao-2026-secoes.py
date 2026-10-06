@@ -17,9 +17,16 @@ Atípico não é irregularidade. Uso:
     python3 scripts/apuracao-2026-secoes.py --parcial
     python3 scripts/apuracao-2026-secoes.py
     python3 scripts/apuracao-2026-secoes.py --so-urna
+    python3 scripts/apuracao-2026-secoes.py --so-clusters
+    python3 scripts/apuracao-2026-secoes.py --so-textos
 
 ``--so-urna`` recarrega o JSON existente e refaz só o bloco ``urna`` (e os
 achados e o memorando que dependem dele), sem refazer a mistura gaussiana.
+``--so-clusters`` faz o mesmo com o bloco ``clusters`` (a mistura gaussiana de
+cinco partes e o registro da versão de 15 partes), sem ler os dados de 2022 nem
+refazer os extremos e o modelo de urna. ``--so-textos`` não lê banco nenhum:
+refaz só os rótulos e as frases do bloco ``clusters`` a partir dos números já
+gravados (revisão editorial), e os achados e o memorando.
 """
 
 from __future__ import annotations
@@ -95,7 +102,7 @@ def confere_nacional(base: secoes_base.Base, final: Path) -> dict[str, Any] | No
 
 
 def main(argv: list[str] | None = None) -> int:
-    ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
+    ap = argparse.ArgumentParser(description=(__doc__ or "").split("\n\n")[0])
     ap.add_argument("--parcial", action="store_true", help="roda com a coleta parcial")
     ap.add_argument("--secoes-db", type=Path, default=DB_SECOES)
     ap.add_argument("--locais-db", type=Path, default=DB_LOCAIS)
@@ -109,7 +116,25 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="refaz só o bloco urna sobre o JSON existente",
     )
+    ap.add_argument(
+        "--so-clusters",
+        action="store_true",
+        help="refaz só o bloco clusters sobre o JSON existente",
+    )
+    ap.add_argument(
+        "--so-textos",
+        action="store_true",
+        help="refaz só rótulos e frases do bloco clusters, sem ler os bancos",
+    )
     a = ap.parse_args(argv)
+    if a.so_urna + a.so_clusters + a.so_textos > 1:
+        ap.error("use só uma entre --so-urna, --so-clusters e --so-textos")
+    if a.so_textos:
+        dados = json.loads(a.saida_json.read_text(encoding="utf-8"))
+        secoes_clusters.refazer_textos(dados["clusters"], dados["candidatos"])
+        dados["limites"] = secoes_texto.LIMITES
+        dados["gerado_em"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        return grava(dados, a, dados["cobertura"])
 
     base = secoes_base.montar(a.secoes_db, a.locais_db, a.apuracao_db, a.log)
     cob = base.cobertura
@@ -125,6 +150,12 @@ def main(argv: list[str] | None = None) -> int:
     if completa:
         cob["confere_nacional"] = confere_nacional(base, FINAL)
 
+    if a.so_clusters:
+        dados = json.loads(a.saida_json.read_text(encoding="utf-8"))
+        dados["clusters"] = secoes_clusters.clusters(base)
+        dados["limites"] = secoes_texto.LIMITES
+        dados["gerado_em"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        return grava(dados, a, cob)
     s22 = None
     if not a.sem_2022:
         s22 = secoes_2022.presidente_2022(ZIP_VOTOS_2022, ZIP_DETALHE_2022, CACHE_2022)
