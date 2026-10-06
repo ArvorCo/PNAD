@@ -50,7 +50,7 @@ capítulo 12). A mistura gaussiana (critério e) cobre só as válidas do capít
 |---|---|---|
 | `titulo` | str | |
 | `gerado_em` | str ISO 8601 UTC | |
-| `versao_contrato` | str | `"1.0"` |
+| `versao_contrato` | str | `"1.1"` |
 | `aviso` | str | as três frases do rótulo, num parágrafo |
 | `rotulos` | `{atipico, prioridade, resolve}` | as três frases, separadas |
 | `meta` | objeto | ver 1 |
@@ -85,6 +85,11 @@ capítulo 12). A mistura gaussiana (critério e) cobre só as válidas do capít
   "base_legal": [{"norma": "...", "dispositivo": "...", "conteudo": "...", "fonte": "analysis/apuracao_2026/dados/fechamento.json"}],
   "universo": {"secoes_validas_cap12": 0, "secoes_zona_divergente_integras": 0,
                "secoes_sem_arquivo": 20, "secoes_universo": 0, "secoes_na_mistura": 0},
+  "fontes_risco": [{"chave": "setores_2022", "camada": "rural_urbano", "nome": "...", "orgao": "IBGE",
+                    "url": "...", "baixado_em": "...", "bytes": 0, "sha256": "...", "status": "ok|proxy|falhou",
+                    "motivo": null, "regra": "...", "cobertura_secoes": 0, "cobertura_locais": 0}],
+  "risco_regra": {"pontos": {"crime_organizado": 2, "homicidios_q5": 2, "homicidios_q4": 1, "...": 1},
+                  "cortes": {"alto": 4, "medio": 2}, "frase": "validar com a PM e o TRE local"},
   "exportaveis": [{"formato": "csv|xlsx", "caminho": "docs/assets/fiscais_2026.csv",
                    "conteudo": "...", "linhas": 0, "colunas": ["..."], "separador": ";",
                    "decimal": ",", "codificacao": "utf-8-sig", "bytes": 0, "sha256": "..."}]
@@ -147,6 +152,7 @@ capítulo 12). A mistura gaussiana (critério e) cobre só as válidas do capít
   "enclave_2022": false, "sem_boletim": false,
   "o_que_conferir": "...",
   "contexto": ["ctx-057"],
+  "risco": {"...": "ver 11"},
   "link_mapa": {"osm": "https://www.openstreetmap.org/?mlat=-3.32123&mlon=-45.01234#map=17/-3.32123/-45.01234",
                 "google": "https://www.google.com/maps?q=-3.32123,-45.01234"}
 }
@@ -257,8 +263,8 @@ enxerga). `um_por_local` conta locais; `um_por_secao` conta seções.
 ## 9. `mapa`
 
 ```json
-{"colunas": ["lat", "lon", "nivel", "n_secoes", "pontuacao", "local"],
- "pontos": [[-3.32123, -45.01234, "alta", 3, 12, 0]],
+{"colunas": ["lat", "lon", "nivel", "n_secoes", "pontuacao", "local", "risco"],
+ "pontos": [[-3.32123, -45.01234, "alta", 3, 12, 0, "medio"]],
  "n_locais": 0, "n_sem_coordenada": 0,
  "tiles": "https://tile.openstreetmap.org/{z}/{x}/{y}.png", "zoom_detalhe": 17}
 ```
@@ -274,14 +280,62 @@ secoes_faltando, secoes_identificadas, conferem: bool}`: arquivos de zona de pre
 ou mais antes da versão completa. `secoes_identificadas` = boletins da zona recebidos depois
 da última versão incompleta; `conferem` diz se bate com `secoes_faltando` (ts menos st).
 
+## 11. `risco` (versão 1.1): risco e contexto do território
+
+Cada `SecaoFiscal` e cada `Local` trazem `risco`, com fonte pública e data em cada camada,
+nunca por impressão. Onde a base não cobre, o campo é `null`, nunca zero nem `false`. As
+bases, a URL, a data do download, o SHA-256 e a cobertura (quantas seções e locais receberam
+cada camada) ficam em `meta.fontes_risco`; base que não pôde ser baixada fica com `status`
+"falhou" e o motivo, e o campo correspondente fica `null` em todas as seções.
+
+```json
+{
+  "rural_urbano": "urbana", "rural_urbano_fonte": "malha_setores_2022", "setor_cd": "210240805000012",
+  "setor_situacao": "...", "setor_tipo": "...",
+  "terra_indigena": false, "terra_indigena_nome": null, "terra_indigena_dist_km": null, "terra_indigena_fonte": "...",
+  "quilombo": false, "quilombo_nome": null, "quilombo_dist_km": null, "quilombo_fonte": "...",
+  "favela_comunidade": false, "favela_comunidade_nome": null, "favela_comunidade_fonte": "...",
+  "unidade_prisional_ou_socioeducativa": false, "unidade_prisional_fonte": null,
+  "homicidios_municipio": {"taxa_100mil": 31.2, "ano": 2023, "quintil": 4, "fonte": "..."},
+  "crime_organizado": {"status": "sem mapeamento público", "fontes": []},
+  "fronteira_ou_garimpo": {"fronteira": false, "cidade_gemea": false, "garimpo": null, "fonte": "..."},
+  "acesso": {"sede_km_estrada": 12.4, "sede_min": 18.0, "sede_km_reta": 9.8,
+             "aeroporto": "...", "aeroporto_km_estrada": 85.2, "aeroporto_km_reta": 70.1, "fonte": "..."},
+  "nivel_risco_fiscal": "medio", "motivos_risco": ["homicídios no 4º quintil nacional (2023)"],
+  "validar": "validar com a PM e o TRE local"
+}
+```
+
+- `terra_indigena` e `quilombo`: ponto do local dentro ou a até 2 km do polígono (distância 0
+  dentro). `*_fonte` diz se veio da base oficial (FUNAI, INCRA, IBGE) ou de proxy declarado
+  (setor do Censo, nome do local, cadastro do TSE).
+- `favela_comunidade`: ponto dentro de polígono de Favelas e Comunidades Urbanas 2022 (IBGE)
+  ou de setor desse tipo.
+- `homicidios_municipio`: taxa por 100 mil do município, ano e quintil nacional (5 = maior).
+- `crime_organizado.status`: "mapeamento público" só quando há fonte pública documentada (mapa
+  público, relatório ou matéria com veículo, data e link) que cita o município ou a área; caso
+  contrário, "sem mapeamento público". Nunca nomeia facção, milícia ou grupo.
+- `fronteira_ou_garimpo`: município na faixa de fronteira de 150 km (IBGE), cidade-gêmea, e
+  garimpo pela base pública declarada em `meta.fontes_risco` (`null` sem base).
+- `acesso`: distância e tempo por estrada (OSRM, com cache) da sede municipal ao local e do
+  local ao aeroporto público mais próximo, para o fiscal planejar; calculado para os locais de
+  nível alta e média (os demais trazem só a distância em linha reta); `null` sem coordenada.
+- `nivel_risco_fiscal`: "alto", "medio" ou "baixo" pela regra de pontos declarada em
+  `meta.risco_regra` (juízo editorial, não medição); `null` quando nenhuma camada cobre o
+  local. `motivos_risco` lista o que somou ponto. `validar` traz sempre a frase "validar com a
+  PM e o TRE local".
+- `mapa.colunas` ganha `"risco"` (nível de risco fiscal do local) depois de `"local"`.
+
 ## Exportáveis (`meta.exportaveis`)
 
 - `docs/assets/fiscais_2026.csv`: uma linha por seção de `secoes`, mesma ordem; `;` como
   separador, vírgula decimal, UTF-8 com BOM (abre direto no Excel em português).
 - `docs/assets/fiscais_2026_por_local.csv`: uma linha por local de `por_local`.
-- `docs/assets/fiscais_2026.xlsx`: abas "Leia-me", "Seções" (mesmas linhas de `secoes`),
-  "Locais", "Municípios", "UFs" e "Critérios"; cabeçalho congelado e em negrito, filtro
-  automático, links clicáveis, nível com cor de fundo.
+- `docs/assets/fiscais_2026.xlsx`: abas "Leia-me", "Seções" (mesmas linhas de `secoes`, com
+  as colunas de risco), "Locais", "Municípios", "UFs", "Critérios" e "Riscos" (legenda, regra
+  e fontes de cada camada); cabeçalho congelado e em negrito, filtro automático, links
+  clicáveis, nível com cor de fundo (alta vermelho claro, média amarelo claro, baixa cinza) e
+  nível de risco fiscal com cor de fundo própria.
 
 Cada um com `linhas`, `bytes` e `sha256`, para o capítulo linkar o download.
 
@@ -290,3 +344,7 @@ Cada um com `linhas`, `bytes` e `sha256`, para o capítulo linkar o download.
 Toda mudança de chave já publicada fica registrada aqui, com data e motivo.
 
 - 06/10/2026, versão 1.0.
+- 06/10/2026, versão 1.1 (pedido do autor): acréscimo de `risco` em `SecaoFiscal` e em
+  `Local` (seção 11), `meta.fontes_risco`, `meta.risco_regra`, coluna `risco` em
+  `mapa.colunas`, colunas de risco nos CSVs e aba "Riscos" no Excel. Nenhuma chave da 1.0
+  mudou.
