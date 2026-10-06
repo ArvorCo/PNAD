@@ -472,7 +472,10 @@ def fontes(F: dict) -> str:
     return h
 
 
-def capitulo(F: dict, fig: Callable[[str], str], d_aviso) -> str:
+def capitulo(
+    F: dict, fig: Callable[[str], str], d_aviso, depois_rankings: str = ""
+) -> str:
+    """`depois_rankings`: bloco inserido depois dos locais (cenários de risco e casos)."""
     h = abertura(F)
     h += como_ler(F)
     h += criterios(F, fig)
@@ -484,6 +487,7 @@ def capitulo(F: dict, fig: Callable[[str], str], d_aviso) -> str:
     h += listas_pl(F, fig)
     h += amostra(F, fig)
     h += locais(F, fig)
+    h += depois_rankings
     h += sem_arquivo(F)
     h += achados(F)
     h += tse(F)

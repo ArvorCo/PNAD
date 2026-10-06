@@ -185,7 +185,12 @@ def test_capitulo_13_fiscais(pagina_fiscais):
     for nome in ("fiscais_mapa_navegavel", "fiscais_criterios", "fiscais_locais"):
         assert f'id="fig-{nome}"' in cap
     assert "Atipicidade" in cap and "não é irregularidade" in cap
-    assert "—" not in cap and "fraude" not in cap.lower()
+    # o bloco de cenários e casos documentados cita fraudes do passado com fonte;
+    # fora dele, a palavra não aparece no capítulo
+    ini = cap.find("<h3>Os cenários que o fiscal existe para impedir</h3>")
+    fim = cap.find("Frase responsável.", ini)
+    fora = cap if ini < 0 else cap[:ini] + cap[fim:]
+    assert "—" not in cap and "fraude" not in fora.lower()
     assert cap.count('class="limites"') == 1
     # o script do mapa navegável vai uma vez só, no fim da página
     assert html.count("function inicia(fig)") == 1

@@ -8,6 +8,7 @@ from . import pagina_texto_b as T
 from . import pagina_texto_c as TC
 from . import pagina_texto_fechamento as TF
 from . import pagina_texto_fiscais as TFI
+from . import pagina_texto_fiscais_b as TFB
 from . import pagina_texto_reguas as PR
 from . import pagina_texto_terceira_via as TV
 from .pagina_comum import (
@@ -190,7 +191,11 @@ def r_fiscais(d: Dados, cap: Capitulo) -> str:
         f"{inteiro(total)} seções atípicas, com endereço, para o PL pôr fiscal de partido no 2º turno. "
         "Atipicidade não é irregularidade; a lista diz onde conferir primeiro.",
     )
-    h += TFI.capitulo(F, lambda nome: fig(nome, d), d.aviso)
+
+    def figura(nome: str) -> str:
+        return fig(nome, d)
+
+    h += TFI.capitulo(F, figura, d.aviso, TFB.bloco(F, figura, d.aviso))
     return h + "</section>"
 
 
