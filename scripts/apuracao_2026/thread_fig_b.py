@@ -266,7 +266,9 @@ def fig_voto_util() -> str:
                 yb += 20
             usados_a.append(ya)
             usados_b.append(yb)
-            o.append(t(xa - 14, ya, f"{nome} {num(a, 1)}", 15, _texto(cor), 700, "end", MONO))
+            o.append(
+                t(xa - 14, ya, f"{nome} {num(a, 1)}", 15, _texto(cor), 700, "end", MONO)
+            )
             o.append(t(xb + 14, yb, num(b, 1), 15, _texto(cor), 700, "start", MONO))
         return "".join(o)
 

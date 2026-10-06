@@ -45,11 +45,11 @@ Rótulos: **Verificado** é número da urna. **Inferência** é conta sobre medi
 
 ## 2. Leitura por região
 
-**Nordeste.** O Nordeste guarda 1,81 milhão de votos de terceira via, 19,50% do país, e Flávio venceu em municípios que somam só 4,65% desse estoque. Ali o estoque é menor e o vão é maior: em 1.382 municípios um nome do lado de Flávio teve mais votos que ele, somando 3,87 milhões de votos acima dele. Os maiores vãos são de governadores eleitos que não declararam apoio a Flávio, e por isso são teto, não palanque: Raquel Lyra (PE, governo: 1,07 milhão de votos) e Eduardo Braide (MA, governo: 864 mil votos). Sem eles, o vão cai para 2,26 milhões de votos, puxado por Angelo Coronel (BA, Senado: 479 mil votos), Ciro Nogueira (PI, Senado: 403 mil votos) e Styvenson Valentim (RN, Senado: 299 mil votos). Na Paraíba nenhum nome do bloco passou Flávio: o vão de Lucas Ribeiro é de um aliado de Lula. Em 2022, cada voto de terceira via do Nordeste rendeu a Bolsonaro saldo de 0,19 entre os turnos, o menor das cinco regiões.
+**Nordeste.** O Nordeste guarda 1,81 milhão de votos de terceira via, 19,50% do país, e Flávio venceu em municípios que somam só 4,65% desse estoque. Ali o estoque é menor e o vão é maior: em 1.382 municípios um nome do lado de Flávio teve mais votos que ele, somando 3,87 milhões de votos acima dele. Os maiores vãos são de governadores eleitos que não declararam apoio a Flávio, e por isso são teto, não palanque: Raquel Lyra (PE, governo: 1,07 milhão de votos) e Eduardo Braide (MA, governo: 864 mil votos). Sem eles, o vão cai para 2,26 milhões de votos, puxado por Angelo Coronel (BA, Senado: 479 mil votos), Ciro Nogueira (PI, Senado: 403 mil votos) e Styvenson Valentim (RN, Senado: 299 mil votos). Na Paraíba nenhum nome do bloco passou Flávio: o vão de Lucas Ribeiro é de um aliado de Lula. Em 2022, pela razão simples, cada voto de terceira via do Nordeste rendeu a Bolsonaro saldo de 0,19 entre os turnos, o menor das cinco regiões; a regressão com efeito fixo de UF (seção 6) dá menos, porque separa a mobilização da base.
 
-**Sul.** No Sul o estoque é de 1,51 milhão de votos, e 89,85% dele está onde Flávio venceu. Renan e Zema somam 35,06% desse estoque, contra 32,20% no país. Pela matriz, cada voto rende 0,19 de saldo a Flávio; em 2022 rendeu 0,71, o maior das cinco regiões. A direita local quase não passa Flávio ali (113 mil votos acima dele).
+**Sul.** No Sul o estoque é de 1,51 milhão de votos, e 89,85% dele está onde Flávio venceu. Renan e Zema somam 35,06% desse estoque, contra 32,20% no país. Pela matriz, cada voto rende 0,19 de saldo a Flávio; em 2022, pela razão simples, rendeu 0,71, o maior das cinco regiões (a regressão da seção 6 dá menos). A direita local quase não passa Flávio ali (113 mil votos acima dele).
 
-**Centro-Oeste.** No Centro-Oeste o estoque é de 988 mil votos, 97,59% onde Flávio venceu, mas é de Caiado: 62,11% do estoque, e Renan e Zema somam só 18,09%. Em Goiás, com 472 mil votos de Caiado, a matriz Nexus dá saldo de 4.538 votos a Flávio e a do Datafolha, 103 mil votos. Em 2022 o Centro-Oeste converteu 0,55 por voto de terceira via, o segundo maior das cinco regiões.
+**Centro-Oeste.** No Centro-Oeste o estoque é de 988 mil votos, 97,59% onde Flávio venceu, mas é de Caiado: 62,11% do estoque, e Renan e Zema somam só 18,09%. Em Goiás, com 472 mil votos de Caiado, a matriz Nexus dá saldo de 4.538 votos a Flávio e a do Datafolha, 103 mil votos. Em 2022, pela razão simples, o Centro-Oeste converteu 0,55 por voto de terceira via, o segundo maior das cinco regiões.
 
 **Sudeste.** O Sudeste tem o maior volume: 4,34 milhões de votos, 46,76% do país, 70,79% onde Flávio venceu. A direita local passa Flávio em 1.449 municípios, com 2,37 milhões de votos acima dele; São Paulo responde por 1,57 milhão de votos e Minas por 763 mil votos; 97,25% do vão da região vem de Tarcísio e Cleitinho. Em 2022 cada voto de terceira via rendeu 0,38.
 
@@ -57,11 +57,11 @@ Rótulos: **Verificado** é número da urna. **Inferência** é conta sobre medi
 
 **Juízo editorial, o que fazer em cada região.**
 
-- **Nordeste:** palanque local antes de militância de rua. O estoque é pequeno (1,81 milhão de votos) e converteu pouco em 2022 (0,19 por voto), mas o vão dos nomes do bloco (Angelo Coronel, Ciro Nogueira e Styvenson Valentim) mostra eleitor que vota na direita local e não vota em Flávio.
-- **Sul:** militância sobre o eleitor de terceira via, com o maior rendimento de 2022 (0,71 por voto) e quase nenhum vão local a explorar.
+- **Nordeste:** palanque local antes de militância de rua. O estoque é pequeno (1,81 milhão de votos) e converteu pouco em 2022 (0,19 por voto pela razão simples), mas o vão dos nomes do bloco (Angelo Coronel, Ciro Nogueira e Styvenson Valentim) mostra eleitor que vota na direita local e não vota em Flávio.
+- **Sul:** militância sobre o eleitor de terceira via, com o maior rendimento de 2022 pela razão simples (0,71 por voto) e quase nenhum vão local a explorar.
 - **Centro-Oeste:** o eleitor de Caiado decide. Antes de gastar ali, medir a linha dele em Goiás: as duas medições nacionais discordam de lado.
 - **Sudeste:** o volume está ali (4,34 milhões de votos), e a conversão depende de Tarcísio e Cleitinho subirem no palanque nas cidades grandes.
-- **Norte:** estoque pequeno (632 mil votos) com rendimento alto em 2022 (0,49 por voto), concentrado em poucas cidades: Manaus, Belém e Ananindeua lideram o índice da região.
+- **Norte:** estoque pequeno (632 mil votos) com rendimento alto em 2022 pela razão simples (0,49 por voto), concentrado em poucas cidades: Manaus, Belém e Ananindeua lideram o índice da região.
 
 ## 3. Os 100 municípios prioritários
 

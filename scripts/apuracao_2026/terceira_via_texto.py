@@ -201,15 +201,16 @@ def leituras_regionais(D: dict) -> dict[str, str]:
         f"{lista_e([_quem(x, perfil) for x in sem_apoio])}. Sem eles, o vão cai para "
         f"{mil(ne['vao_positivo_sem_governador_sem_apoio'])}, puxado por "
         f"{lista_e([_quem(x, perfil) for x in bloco[:3]])}. Na Paraíba nenhum nome do bloco passou Flávio: o vão de "
-        f"Lucas Ribeiro é de um aliado de Lula. Em 2022, cada voto de terceira via do Nordeste rendeu a Bolsonaro "
-        f"saldo de {dec(conv['Nordeste']['saldo'], 2)} entre os turnos, {posicao_regiao(conv, 'Nordeste')}."
+        f"Lucas Ribeiro é de um aliado de Lula. Em 2022, pela razão simples, cada voto de terceira via do Nordeste rendeu a Bolsonaro "
+        f"saldo de {dec(conv['Nordeste']['saldo'], 2)} entre os turnos, {posicao_regiao(conv, 'Nordeste')}; a regressão "
+        f"com efeito fixo de UF (seção 6) dá menos, porque separa a mobilização da base."
     )
     sul = reg["Sul"]
     saida["Sul"] = (
         f"No Sul o estoque é de {mil(sul['estoque'])}, e {pc(sul['onde_flavio_venceu_parcela'])} dele está onde "
         f"Flávio venceu. Renan e Zema somam {pc(sul['renan_zema_pct'])} desse estoque, contra {pc(nac['renan_zema_pct'])} "
-        f"no país. Pela matriz, cada voto rende {dec(sul['saldo_por_voto'], 2)} de saldo a Flávio; em 2022 rendeu "
-        f"{dec(conv['Sul']['saldo'], 2)}, {posicao_regiao(conv, 'Sul')}. A direita local quase não passa Flávio ali "
+        f"no país. Pela matriz, cada voto rende {dec(sul['saldo_por_voto'], 2)} de saldo a Flávio; em 2022, pela razão simples, rendeu "
+        f"{dec(conv['Sul']['saldo'], 2)}, {posicao_regiao(conv, 'Sul')} (a regressão da seção 6 dá menos). A direita local quase não passa Flávio ali "
         f"({mil(sul['vao_positivo'])} acima dele)."
     )
     co = reg["Centro-Oeste"]
@@ -219,7 +220,7 @@ def leituras_regionais(D: dict) -> dict[str, str]:
         f"venceu, mas é de Caiado: {pc(co['por_grupo_pct']['caiado'])} do estoque, e Renan e Zema somam só "
         f"{pc(co['renan_zema_pct'])}. Em Goiás, com "
         f"{mil(go.get('caiado', 0))} de Caiado, a matriz Nexus dá saldo de {mil(go.get('saldo', 0))} a Flávio e a "
-        f"do Datafolha, {mil(go.get('saldo_df', 0))}. Em 2022 o Centro-Oeste converteu {dec(conv['Centro-Oeste']['saldo'], 2)} "
+        f"do Datafolha, {mil(go.get('saldo_df', 0))}. Em 2022, pela razão simples, o Centro-Oeste converteu {dec(conv['Centro-Oeste']['saldo'], 2)} "
         f"por voto de terceira via, {posicao_regiao(conv, 'Centro-Oeste')}."
     )
     se = reg["Sudeste"]
@@ -262,12 +263,12 @@ def juizo_regional(D: dict) -> dict[str, str]:
     return {
         "Nordeste": (
             f"palanque local antes de militância de rua. O estoque é pequeno ({mil(reg['Nordeste']['estoque'])}) e "
-            f"converteu pouco em 2022 ({dec(conv['Nordeste']['saldo'], 2)} por voto), mas o vão dos nomes do bloco "
+            f"converteu pouco em 2022 ({dec(conv['Nordeste']['saldo'], 2)} por voto pela razão simples), mas o vão dos nomes do bloco "
             f"({lista_e([lider(x['nome']) for x in ne_bloco[:3]])}) mostra eleitor que vota na direita local e não vota "
             "em Flávio."
         ),
         "Sul": (
-            f"militância sobre o eleitor de terceira via, com o maior rendimento de 2022 ({dec(conv['Sul']['saldo'], 2)} "
+            f"militância sobre o eleitor de terceira via, com o maior rendimento de 2022 pela razão simples ({dec(conv['Sul']['saldo'], 2)} "
             "por voto) e quase nenhum vão local a explorar."
         ),
         "Centro-Oeste": (
@@ -279,7 +280,7 @@ def juizo_regional(D: dict) -> dict[str, str]:
             "no palanque nas cidades grandes."
         ),
         "Norte": (
-            f"estoque pequeno ({mil(reg['Norte']['estoque'])}) com rendimento alto em 2022 "
+            f"estoque pequeno ({mil(reg['Norte']['estoque'])}) com rendimento alto em 2022 pela razão simples "
             f"({dec(conv['Norte']['saldo'], 2)} por voto), concentrado em poucas cidades: "
             f"{lista_e([nome(x['nome']) for x in D['prioridade']['por_regiao']['Norte'][:3]])} lideram o índice da região."
         ),
