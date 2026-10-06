@@ -85,6 +85,9 @@ capítulo 12). A mistura gaussiana (critério e) cobre só as válidas do capít
   "base_legal": [{"norma": "...", "dispositivo": "...", "conteudo": "...", "fonte": "analysis/apuracao_2026/dados/fechamento.json"}],
   "universo": {"secoes_validas_cap12": 0, "secoes_zona_divergente_integras": 0,
                "secoes_sem_arquivo": 20, "secoes_universo": 0, "secoes_na_mistura": 0},
+  "mistura": {"secoes": 0, "iteracoes": [19, 66], "loglik_media": 0.0,
+              "conferencia": {"referencia": "secoes.json, clusters.menos_provaveis",
+                              "comparadas": 50, "iguais": 50, "maior_diferenca_loglik": 0.0}},
   "fontes_risco": [{"chave": "setores_2022", "camada": "rural_urbano", "nome": "...", "orgao": "IBGE",
                     "url": "...", "baixado_em": "...", "bytes": 0, "sha256": "...", "status": "ok|proxy|falhou",
                     "motivo": null, "regra": "...", "cobertura_secoes": 0, "cobertura_locais": 0}],
@@ -225,7 +228,10 @@ as seções do local (sinalizadas ou não).
 }
 ```
 
-- `geral`: os 200 locais e os 100 municípios de maior pontuação somada.
+- `geral`: os 200 primeiros locais pelo nível do local (o mais alto entre as seções) e
+  depois pela pontuação somada; os 100 primeiros municípios por seções de nível alta,
+  depois média, depois pontuação somada. Pela pontuação bruta, os locais do topo são
+  aldeias que votam em bloco e têm explicação comum; o nível vem antes por isso.
 - `protege_flavio`: só seções sinalizadas em municípios onde Flávio venceu ou perdeu por até
   5 pp dos válidos (universo); `indice` = soma de pontuação × aptos da seção, por local e por
   município; 200 locais e 100 municípios.
@@ -274,11 +280,14 @@ e links saem de lá). Coordenadas com 5 casas.
 
 ## 10. `zonas_congeladas`
 
-`{uf, municipio, mun_tse, zona, ultima_incompleta_utc, primeira_completa_utc, horas_parada,
-secoes_faltando, secoes_identificadas, conferem: bool}`: arquivos de zona de presidente cuja
-última versão incompleta (gerada depois das 17h de Brasília de 04/10) ficou publicada 6 horas
-ou mais antes da versão completa. `secoes_identificadas` = boletins da zona recebidos depois
-da última versão incompleta; `conferem` diz se bate com `secoes_faltando` (ts menos st).
+`{uf, mun_tse, zona, ultima_incompleta_utc, ultima_incompleta_brasilia,
+primeira_completa_utc, horas_parada, secoes_faltando, secoes_identificadas, intervalo_s,
+conferem: bool, secoes: [int]}`: arquivos de zona de presidente cuja última versão
+incompleta (gerada depois das 17h de Brasília de 04/10) ficou publicada 6 horas ou mais antes
+da versão completa. As seções que faltavam (`secoes`) são as k de recebimento mais recente
+(`dr/hr`, Brasília) até a geração da versão parada, k = `secoes_faltando` (ts menos st);
+`intervalo_s` é o intervalo entre a k-ésima e a seguinte, e `conferem` exige 30 segundos ou
+mais (o lote do último minuto se separa das anteriores).
 
 ## 11. `risco` (versão 1.1): risco e contexto do território
 
@@ -297,7 +306,7 @@ cada camada) ficam em `meta.fontes_risco`; base que não pôde ser baixada fica 
   "favela_comunidade": false, "favela_comunidade_nome": null, "favela_comunidade_fonte": "...",
   "unidade_prisional_ou_socioeducativa": false, "unidade_prisional_fonte": null,
   "homicidios_municipio": {"taxa_100mil": 31.2, "ano": 2023, "quintil": 4, "fonte": "..."},
-  "crime_organizado": {"status": "sem mapeamento público", "fontes": []},
+  "crime_organizado": {"status": "mapeamento público", "fontes": ["fbsp-cartografias-amazonia-2025"]},
   "fronteira_ou_garimpo": {"fronteira": false, "cidade_gemea": false, "garimpo": null, "fonte": "..."},
   "acesso": {"sede_km_estrada": 12.4, "sede_min": 18.0, "sede_km_reta": 9.8,
              "aeroporto": "...", "aeroporto_km_estrada": 85.2, "aeroporto_km_reta": 70.1, "fonte": "..."},
@@ -308,13 +317,25 @@ cada camada) ficam em `meta.fontes_risco`; base que não pôde ser baixada fica 
 
 - `terra_indigena` e `quilombo`: ponto do local dentro ou a até 2 km do polígono (distância 0
   dentro). `*_fonte` diz se veio da base oficial (FUNAI, INCRA, IBGE) ou de proxy declarado
-  (setor do Censo, nome do local, cadastro do TSE).
+  (setor do Censo, nome do local, cadastro do TSE). Regra estrita para o proxy por ponto:
+  o positivo que vem só da distância até um ponto de localidade do IBGE (sem limite
+  desenhado) vale a até 0,5 km e em setor rural; o resto vira `false`. O INCRA não
+  publicou polígono de quilombo acessível nesta rodada: quilombo é só proxy.
+- `rural_urbano_fonte`: `"setor_censitario_2022"` (malha de setores do Censo 2022) ou
+  `"cadastro_local"` (palavras do endereço e do bairro quando a malha não cobre o ponto).
+- `homicidios_municipio.fonte` e `acesso.fonte` trazem a `chave` de `meta.fontes_risco`
+  (`ipea_atlas_taxa_homicidios`, `osrm`).
 - `favela_comunidade`: ponto dentro de polígono de Favelas e Comunidades Urbanas 2022 (IBGE)
   ou de setor desse tipo.
 - `homicidios_municipio`: taxa por 100 mil do município, ano e quintil nacional (5 = maior).
+- `crime_organizado.fontes`: identificadores curtos (`fbsp-...`, `ctx-NNN`); a referência
+  completa (veículo ou relatório, data e link) fica em `meta.referencias_crime` (id →
+  referência), para não repetir o mesmo texto em milhares de seções.
 - `crime_organizado.status`: "mapeamento público" só quando há fonte pública documentada (mapa
   público, relatório ou matéria com veículo, data e link) que cita o município ou a área; caso
-  contrário, "sem mapeamento público". Nunca nomeia facção, milícia ou grupo.
+  contrário, "sem mapeamento público". Nunca nomeia facção, milícia ou grupo. Das matérias
+  de `contexto_seguranca.json`, só as de tema facção ou milícia contam aqui; coerção eleitoral
+  e violência no dia ficam no campo `contexto` da seção.
 - `fronteira_ou_garimpo`: município na faixa de fronteira de 150 km (IBGE), cidade-gêmea, e
   garimpo pela base pública declarada em `meta.fontes_risco` (`null` sem base).
 - `acesso`: distância e tempo por estrada (OSRM, com cache) da sede municipal ao local e do
@@ -344,6 +365,11 @@ Cada um com `linhas`, `bytes` e `sha256`, para o capítulo linkar o download.
 Toda mudança de chave já publicada fica registrada aqui, com data e motivo.
 
 - 06/10/2026, versão 1.0.
+- 06/10/2026, ajustes da 1.1 antes da primeira publicação: `crime_organizado.fontes` com ids
+  e `meta.referencias_crime`; só matérias de facção ou milícia contam como mapeamento;
+  regra estrita do proxy por ponto em terra indígena e quilombo; ordem de
+  `prioridade_pl.geral` pelo nível; `zonas_congeladas` com `secoes`, `intervalo_s` e
+  `ultima_incompleta_brasilia`; `meta.mistura`.
 - 06/10/2026, versão 1.1 (pedido do autor): acréscimo de `risco` em `SecaoFiscal` e em
   `Local` (seção 11), `meta.fontes_risco`, `meta.risco_regra`, coluna `risco` em
   `mapa.colunas`, colunas de risco nos CSVs e aba "Riscos" no Excel. Nenhuma chave da 1.0
