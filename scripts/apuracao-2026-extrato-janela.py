@@ -126,7 +126,7 @@ def retrato(
 
 def n(x: int) -> str:
     """Inteiro com ponto de milhar."""
-    return f"{x:,}".replace(",", ".")
+    return f"{n(x)}".replace(",", ".")
 
 
 def brt(iso: str) -> str:
@@ -187,41 +187,27 @@ def main() -> None:
         "",
         "Fonte: arquivos públicos do TSE em `resultados.tse.jus.br/oficial/ele2026/6257/dados/`, lidos e guardados versão a versão pelo coletor da casa (`apuracao/`), com a hora de geração que o próprio TSE grava em cada arquivo (`dg`/`hg`). Horas em Brasília.",
         "",
-        f"- Arquivo nacional `br-c0001-e006257-u.json` gerado às {brt(n1['gerado_em'])} (lido às {brt(n1['lido_em'])}): {n1['st']:,} seções totalizadas de {n1['ts']:,}.".replace(
-            ",", "."
-        ),
-        f"- Arquivo nacional gerado às {brt(n2['gerado_em'])} (lido às {brt(n2['lido_em'])}): {n2['st']:,} seções.".replace(
-            ",", "."
-        ),
-        f"- Diferença: {n2['st'] - n1['st']:,} seções.".replace(",", "."),
+        f"- Arquivo nacional `br-c0001-e006257-u.json` gerado às {brt(n1['gerado_em'])} (lido às {brt(n1['lido_em'])}): {n(n1['st'])} seções totalizadas de {n(n1['ts'])}.",
+        f"- Arquivo nacional gerado às {brt(n2['gerado_em'])} (lido às {brt(n2['lido_em'])}): {n(n2['st'])} seções.",
+        f"- Diferença: {n(n2['st'] - n1['st'])} seções.",
         "",
         "O arquivo nacional não traz divisão por UF. A divisão vem dos 28 arquivos de UF (`<uf>-c0001-e006257-u.json`, 27 UFs e exterior), que o TSE gera em instantes próprios. Três leituras, declaradas:",
         "",
-        f"1. **Retrato do nacional** (`st_retrato_nacional_1914`): a versão de cada arquivo de UF gerada até {brt(t_retrato)}, instante em que a soma das UFs ({tot['st_retrato_nacional_1914']:,}) fica mais perto da contagem do arquivo nacional de 19:14:08 ({n1['st']:,}). O arquivo nacional de 19:14:08 era o retrato de cerca de {brt(t_retrato)}.".replace(
-            ",", "."
-        ),
-        f"2. **Arquivo de UF no mesmo instante** (`st_arquivo_uf_1914`): a versão de cada UF gerada até 19:14:08; a soma ({tot['st_arquivo_uf_1914']:,}) já estava {tot['st_arquivo_uf_1914'] - n1['st']:,} seções à frente do nacional.".replace(
-            ",", "."
-        ),
+        f"1. **Retrato do nacional** (`st_retrato_nacional_1914`): a versão de cada arquivo de UF gerada até {brt(t_retrato)}, instante em que a soma das UFs ({n(tot['st_retrato_nacional_1914'])}) fica mais perto da contagem do arquivo nacional de 19:14:08 ({n(n1['st'])}). O arquivo nacional de 19:14:08 era o retrato de cerca de {brt(t_retrato)}.",
+        f"2. **Arquivo de UF no mesmo instante** (`st_arquivo_uf_1914`): a versão de cada UF gerada até 19:14:08; a soma ({n(tot['st_arquivo_uf_1914'])}) já estava {n(tot['st_arquivo_uf_1914'] - n1['st'])} seções à frente do nacional.",
         f"3. **Monitoramento** (`st_monitoramento_*`): contagem por UF do arquivo `br-e006257-ab.json` gerado às {brt(AB_1)} e às {brt(AB_2)}, que continuou sendo gerado durante a parada do arquivo de resultado.",
         "",
-        f"Às 20:04:39 a soma das UFs ({tot['st_arquivo_uf_2004']:,}) e o nacional ({n2['st']:,}) quase coincidem.".replace(
-            ",", "."
-        ),
+        f"Às 20:04:39 a soma das UFs ({n(tot['st_arquivo_uf_2004'])}) e o nacional ({n(n2['st'])}) quase coincidem. O monitoramento somava {n(tot['st_monitoramento_1913'])} seções às {brt(AB_1)} e {n(tot['st_monitoramento_2005'])} às {brt(AB_2)}: depois da parada, ficou atrás dos arquivos de UF.",
         "",
         "| UF | seções | retrato 19:14 | UF 19:14 | 20:04 | Δ retrato | Δ Lula | Δ Flávio |",
         "|---|---:|---:|---:|---:|---:|---:|---:|",
     ]
     for x in sorted(linhas, key=lambda x: -x["delta_st_retrato"]):
         md.append(
-            f"| {x['uf']} | {x['secoes_total']:,} | {x['st_retrato_nacional_1914']:,} | {x['st_arquivo_uf_1914']:,} | {x['st_arquivo_uf_2004']:,} | {x['delta_st_retrato']:,} | {x['delta_lula']:,} | {x['delta_flavio']:,} |".replace(
-                ",", "."
-            )
+            f"| {x['uf']} | {n(x['secoes_total'])} | {n(x['st_retrato_nacional_1914'])} | {n(x['st_arquivo_uf_1914'])} | {n(x['st_arquivo_uf_2004'])} | {n(x['delta_st_retrato'])} | {n(x['delta_lula'])} | {n(x['delta_flavio'])} |"
         )
     md.append(
-        f"| **Total** | {tot['secoes_total']:,} | {tot['st_retrato_nacional_1914']:,} | {tot['st_arquivo_uf_1914']:,} | {tot['st_arquivo_uf_2004']:,} | {tot['delta_st_retrato']:,} | {tot['delta_lula']:,} | {tot['delta_flavio']:,} |".replace(
-            ",", "."
-        )
+        f"| **Total** | {n(tot['secoes_total'])} | {n(tot['st_retrato_nacional_1914'])} | {n(tot['st_arquivo_uf_1914'])} | {n(tot['st_arquivo_uf_2004'])} | {n(tot['delta_st_retrato'])} | {n(tot['delta_lula'])} | {n(tot['delta_flavio'])} |"
     )
     md += [
         "",
