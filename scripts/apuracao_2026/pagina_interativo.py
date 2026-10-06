@@ -5,7 +5,8 @@ Cada `figure[data-fig]` lê as próprias fichas em `script.tips` (HTML por chave
 ou tabela compacta `_rows`), põe a ficha dentro da caixa da figura (nunca fora
 dela, virando para a esquerda perto da borda direita) e realça o elemento com
 contorno lima. Toque mostra, toque fora esconde. Botões `data-alt` trocam a série
-(elementos `data-alt-show`, preenchimentos `data-af` e traços `data-as`) sem recarregar; botões
+(elementos `data-alt-show`, preenchimentos `data-af`, traços `data-as` e o
+viewBox `data-alt-vb`, para cada aba ter a própria altura) sem recarregar; botões
 `data-filtro` apagam os grupos `data-g` de outra região. Sem JavaScript, cada
 figura continua inteira na alternância padrão. Funciona em `file://`.
 
@@ -183,6 +184,9 @@ function monta(fig){
       var ok=(' '+e.getAttribute('data-alt-show')+' ').indexOf(' '+k+' ')>=0;
       if(e.namespaceURI===NS){if(ok){e.removeAttribute('display');}else{e.setAttribute('display','none');}}
       else{e.hidden=!ok;}
+    });
+    q(fig,'svg[data-alt-vb]').forEach(function(e){
+      e.getAttribute('data-alt-vb').split('|').forEach(function(par){var p=par.split('>');if(p[0]===k){e.setAttribute('viewBox',p[1]);}});
     });
     q(fig,'[data-af]').forEach(function(e){
       if(!e.hasAttribute('data-f0')){e.setAttribute('data-f0',e.getAttribute('fill')||'');}

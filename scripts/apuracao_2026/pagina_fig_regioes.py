@@ -13,6 +13,7 @@ from .pagina_fig_base import (
     COR_REGIAO,
     FLAVIO,
     GRADE,
+    HALO,
     INK,
     LIMA,
     LULA,
@@ -29,6 +30,7 @@ from .pagina_fig_base import (
     ficha,
     figura_html,
     hit,
+    larga_estreita,
     legenda,
     ln,
     nome_bonito,
@@ -36,6 +38,7 @@ from .pagina_fig_base import (
     pp,
     r,
     registra,
+    rotulos_com_fio,
     sobre,
     svg_abre,
     t,
@@ -68,7 +71,6 @@ def _ufs_por_regiao(P: dict) -> list[tuple[str, list[dict]]]:
 @registra("regioes_2022_2026")
 def regioes_2022_2026(d, **_op) -> str:
     P = dado(d, "presidente")
-    esq, topo, passo = 210, 70, 30
     linhas_ = []
     for reg, ufs in _ufs_por_regiao(P):
         linhas_.append(("regiao", reg, P["regioes"][reg]))
@@ -76,7 +78,6 @@ def regioes_2022_2026(d, **_op) -> str:
             ufs, key=lambda u: -u["comparacao"]["flavio_vs_bolsonaro_1t"]["pp"]
         ):
             linhas_.append(("uf", u["uf"], u))
-    h = topo + passo * len(linhas_) + 40
     vals = [
         abs(x["comparacao"][k]["pp"])
         for _, _, x in linhas_
@@ -88,112 +89,12 @@ def regioes_2022_2026(d, **_op) -> str:
         )
     ]
     vmax = math.ceil(max(vals) / 2) * 2
-    X = escala(-vmax, vmax, esq, W - 80)
-    x0 = X(0)
-    out = [
-        svg_abre(
-            W,
-            h,
-            "Swing por UF: Flávio contra Bolsonaro e Lula contra Lula de 2022",
-            "Barras divergentes por UF, agrupadas por região, em pontos percentuais dos válidos.",
-        ),
-        legenda(
-            [("Flávio 2026 − Bolsonaro 2022", FLAVIO), ("Lula 2026 − Lula 2022", LULA)],
-            esq,
-            24,
-        ),
-    ]
-    for v in ticks(-vmax, vmax, 8):
-        out.append(ln(X(v), topo - 10, X(v), h - 34, GRADE))
-        out.append(
-            t(
-                X(v),
-                h - 14,
-                f"{'+' if v > 0 else '−' if v < 0 else ''}{num(abs(v), 0)}",
-                13,
-                MUTED,
-                "middle",
-                mono=True,
-            )
-        )
-    out.append(ln(x0, topo - 10, x0, h - 34, INK, 1.4))
-    out.append(t(x0 - 8, topo - 18, "← perdeu", 13, MUTED, "end"))
-    out.append(t(x0 + 8, topo - 18, "ganhou →", 13, MUTED))
     tips = Tips()
-    for i, (tipo, rot, x) in enumerate(linhas_):
-        y = topo + i * passo
-        c = x["comparacao"]
-        if tipo == "regiao":
-            out.append(r(esq - 200, y + 1, W - 70 - esq + 200, passo - 2, "#ebe4d4"))
-        nome = rot if tipo == "regiao" else f"{NOME_UF[rot]}"
-        out.append(
-            t(
-                esq - 12,
-                y + 20,
-                nome,
-                14 if tipo == "uf" else 15,
-                INK,
-                "end",
-                "700" if tipo == "regiao" else None,
-            )
-        )
-        grupos = []
-        for turno in ("1t", "2t"):
-            g = []
-            for j, (chave, cor) in enumerate(
-                (
-                    (f"flavio_vs_bolsonaro_{turno}", FLAVIO),
-                    (f"lula_vs_lula_{turno}", LULA),
-                )
-            ):
-                v = c[chave]["pp"]
-                yy = y + 4 + j * 11
-                xa, xb = sorted((x0, X(v)))
-                g.append(r(xa, yy, xb - xa, 10, cor))
-                g.append(
-                    t(
-                        X(v) + (6 if v >= 0 else -6),
-                        yy + 10,
-                        pp(v, 1)[:-3],
-                        13,
-                        INK,
-                        "start" if v >= 0 else "end",
-                        mono=True,
-                    )
-                )
-            mostra = "" if turno == "1t" else ' display="none"'
-            grupos.append(f'<g data-alt-show="{turno}"{mostra}>{"".join(g)}</g>')
-        r22 = x["r2022"] if tipo == "uf" else None
-        linhas_tip = []
-        for turno, rot_t in (("1t", "1º turno"), ("2t", "2º turno")):
-            f_, l_ = c[f"flavio_vs_bolsonaro_{turno}"], c[f"lula_vs_lula_{turno}"]
-            linhas_tip.append(
-                (
-                    f"Flávio × Bolsonaro {rot_t}",
-                    f"{pct(f_['pct_a'], 1)} × {pct(f_['pct_b'], 1)} ({pp(f_['pp'], 1)}, {('+' if f_['votos'] >= 0 else '−')}{inteiro(abs(f_['votos']))})",
-                )
-            )
-            linhas_tip.append(
-                (
-                    f"Lula 2026 × Lula {rot_t}",
-                    f"{pct(l_['pct_a'], 1)} × {pct(l_['pct_b'], 1)} ({pp(l_['pp'], 1)}, {('+' if l_['votos'] >= 0 else '−')}{inteiro(abs(l_['votos']))})",
-                )
-            )
-        linhas_tip.append(
-            ("Virada da margem (1º t.)", pp(c["virada_margem_vs_1t_pp"], 2))
-        )
-        if r22:
-            linhas_tip.append(
-                (
-                    "Comparecimento 2026 × 2022",
-                    f"{pct(x['pct_comparecimento'], 1)} × {pct(r22['t1']['pct_comparecimento'], 1)}",
-                )
-            )
-        k = tips.add(ficha(nome, "região" if tipo == "regiao" else rot, linhas_tip))
-        out.append(
-            hit(area(esq - 200, y, W - 70 - esq + 200, passo) + "".join(grupos), k)
-        )
-    out.append("</svg>")
+    chaves = [tips.add(_ficha_swing(tipo, rot, x)) for tipo, rot, x in linhas_]
+    titulo = "Swing por UF: Flávio contra Bolsonaro e Lula contra Lula de 2022"
+    desc = "Barras divergentes por UF, agrupadas por região, em pontos percentuais dos válidos."
+    larga = _swing_svg(linhas_, chaves, vmax, titulo, desc, estreita=False)
+    estreita = _swing_svg(linhas_, chaves, vmax, titulo, desc, estreita=True)
     ctl = botoes(
         [("1t", "Contra o 1º turno de 2022"), ("2t", "Contra o 2º turno de 2022")],
         "1t",
@@ -203,11 +104,172 @@ def regioes_2022_2026(d, **_op) -> str:
     legenda_ = (
         f"No país, Flávio fez {pp(n['flavio_vs_bolsonaro_1t']['pp'])} sobre Bolsonaro no 1º turno de 2022 e Lula "
         f"{pp(n['lula_vs_lula_1t']['pp'])}; a margem andou {pp(n['virada_margem_vs_1t_pp'])} para Flávio. "
-        "Contra o 2º turno de 2022 os dois ficam abaixo, porque o 1º turno de 2026 ainda tem terceira via. Fonte: presidente.json."
+        "Contra o 2º turno de 2022 os dois ficam abaixo, porque o 1º turno de 2026 ainda tem terceira via. "
+        "Eixo em pontos percentuais dos válidos. Fonte: presidente.json."
     )
     return figura_html(
-        "regioes_2022_2026", "".join(out), legenda_, tips, controles=ctl, minw=820
+        "regioes_2022_2026",
+        larga_estreita(larga, estreita),
+        legenda_,
+        tips,
+        controles=ctl,
+        modo="full",
     )
+
+
+def _ficha_swing(tipo: str, rot: str, x: dict) -> str:
+    c = x["comparacao"]
+    nome = rot if tipo == "regiao" else f"{NOME_UF[rot]}"
+    r22 = x["r2022"] if tipo == "uf" else None
+    linhas_tip = []
+    for turno, rot_t in (("1t", "1º turno"), ("2t", "2º turno")):
+        f_, l_ = c[f"flavio_vs_bolsonaro_{turno}"], c[f"lula_vs_lula_{turno}"]
+        linhas_tip.append(
+            (
+                f"Flávio × Bolsonaro {rot_t}",
+                f"{pct(f_['pct_a'], 1)} × {pct(f_['pct_b'], 1)} ({pp(f_['pp'], 1)}, {('+' if f_['votos'] >= 0 else '−')}{inteiro(abs(f_['votos']))})",
+            )
+        )
+        linhas_tip.append(
+            (
+                f"Lula 2026 × Lula {rot_t}",
+                f"{pct(l_['pct_a'], 1)} × {pct(l_['pct_b'], 1)} ({pp(l_['pp'], 1)}, {('+' if l_['votos'] >= 0 else '−')}{inteiro(abs(l_['votos']))})",
+            )
+        )
+    linhas_tip.append(("Virada da margem (1º t.)", pp(c["virada_margem_vs_1t_pp"], 2)))
+    if r22:
+        linhas_tip.append(
+            (
+                "Comparecimento 2026 × 2022",
+                f"{pct(x['pct_comparecimento'], 1)} × {pct(r22['t1']['pct_comparecimento'], 1)}",
+            )
+        )
+    return ficha(nome, "região" if tipo == "regiao" else rot, linhas_tip)
+
+
+def _swing_svg(
+    linhas_: list,
+    chaves: list[str],
+    vmax: float,
+    titulo: str,
+    desc: str,
+    estreita: bool,
+) -> str:
+    """Barras divergentes do swing. A versão estreita usa a sigla e cabe em 360."""
+    if estreita:
+        w, esq, topo, passo, folga = 360, 34, 96, 36, 40
+    else:
+        w, esq, topo, passo, folga = W, 210, 70, 36, 46
+    # na versão estreita a linha da região ganha uma faixa de título acima das barras
+    extra_reg = 20 if estreita else 0
+    ys, acc = [], topo
+    for tipo, _, _ in linhas_:
+        ys.append(acc)
+        acc += passo + (extra_reg if tipo == "regiao" else 0)
+    h = acc + 44
+    X = escala(-vmax, vmax, esq + folga, w - folga - (0 if estreita else 40))
+    x0 = X(0)
+    out = [svg_abre(w, h, titulo, desc)]
+    if estreita:
+        out.append(legenda([("Flávio 2026 − Bolsonaro 2022", FLAVIO)], 4, 20, 13))
+        out.append(legenda([("Lula 2026 − Lula 2022", LULA)], 4, 42, 13))
+    else:
+        out.append(
+            legenda(
+                [
+                    ("Flávio 2026 − Bolsonaro 2022", FLAVIO),
+                    ("Lula 2026 − Lula 2022", LULA),
+                ],
+                esq,
+                24,
+            )
+        )
+    for v in ticks(-vmax, vmax, 4 if estreita else 8):
+        out.append(ln(X(v), topo - 10, X(v), h - 38, GRADE))
+        out.append(
+            t(
+                X(v),
+                h - 20,
+                f"{'+' if v > 0 else '−' if v < 0 else ''}{num(abs(v), 0)}",
+                13,
+                MUTED,
+                "middle",
+                mono=True,
+            )
+        )
+    out.append(t(w - 4, h - 2, "pontos percentuais dos válidos", 13, MUTED, "end"))
+    out.append(ln(x0, topo - 10, x0, h - 38, INK, 1.4))
+    out.append(t(x0 - 8, topo - 18, "← perdeu", 13, MUTED, "end"))
+    out.append(t(x0 + 8, topo - 18, "ganhou →", 13, MUTED))
+    for i, (tipo, rot, x) in enumerate(linhas_):
+        y = ys[i]
+        c = x["comparacao"]
+        alto = passo + (extra_reg if tipo == "regiao" else 0)
+        if tipo == "regiao":
+            out.append(
+                r(
+                    0 if estreita else 10,
+                    y + 1,
+                    w if estreita else w - 20,
+                    alto - 2,
+                    "#ebe4d4",
+                )
+            )
+            if estreita:
+                out.append(t(4, y + 17, rot, 14, INK, weight="700"))
+                y += extra_reg
+        if estreita:
+            nome = rot if tipo == "uf" else ""
+        else:
+            nome = rot if tipo == "regiao" else f"{NOME_UF[rot]}"
+        grupos = []
+        for turno in ("1t", "2t"):
+            g = []
+            pares = (
+                (f"flavio_vs_bolsonaro_{turno}", FLAVIO),
+                (f"lula_vs_lula_{turno}", LULA),
+            )
+            for j, (chave, cor) in enumerate(pares):
+                v = c[chave]["pp"]
+                yy = y + 5 + j * 15
+                xa, xb = sorted((x0, X(v)))
+                g.append(r(xa, yy, xb - xa, 12, cor))
+                g.append(
+                    t(
+                        X(v) + (6 if v >= 0 else -6),
+                        yy + 11,
+                        pp(v, 1)[:-3],
+                        13,
+                        INK,
+                        "start" if v >= 0 else "end",
+                        mono=True,
+                        extra=HALO,
+                    )
+                )
+            mostra = "" if turno == "1t" else ' display="none"'
+            grupos.append(f'<g data-alt-show="{turno}"{mostra}>{"".join(g)}</g>')
+        if nome:
+            out.append(
+                t(
+                    esq - 10,
+                    y + 22,
+                    nome,
+                    14 if tipo == "uf" else 15,
+                    INK,
+                    "end",
+                    "700" if tipo == "regiao" else None,
+                )
+            )
+        largura_area = w if estreita else w - 20
+        out.append(
+            hit(
+                area(0 if estreita else 10, ys[i], largura_area, alto)
+                + "".join(grupos),
+                chaves[i],
+            )
+        )
+    out.append("</svg>")
+    return "".join(out)
 
 
 # ------------------------------------------------------------------ dispersão
@@ -294,15 +356,20 @@ def dispersao_municipios(d, **_op) -> str:
             f'<path data-g="{gi}" d="{"".join(segs)}" stroke="{COR_REGIAO[reg]}" stroke-width="{2 * raio}" '
             'stroke-linecap="round" stroke-opacity="0.55" fill="none"/>'
         )
-    usados: list[tuple[float, float]] = []
+    pontos = []
     for m in sorted(mun, key=lambda m: -m["eleitores"])[:6]:
-        x, y = X(m["pct_bolsonaro_2022_1t"]), Y(m["pct_flavio"])
-        if any(abs(y - b) < 30 and abs(x - a) < 140 for a, b in usados):
-            continue
-        usados.append((x, y))
-        out.append(
-            f'<g pointer-events="none">{chip(x + 18, y + 24, nome_bonito(m["nome"]), 13)}</g>'
+        raio = round((1.6 + 13 * math.sqrt(m["eleitores"] / emax)) * 2) / 2
+        pontos.append(
+            (
+                X(m["pct_bolsonaro_2022_1t"]),
+                Y(m["pct_flavio"]),
+                raio,
+                nome_bonito(m["nome"]),
+            )
         )
+    out.append(
+        rotulos_com_fio(pontos, (esq + 4, topo + 4, esq + lado - 4, topo + lado - 4))
+    )
     lx = esq + lado + 40
     out.append(t(lx, topo + 10, "Região", 14, INK, weight="700"))
     for i, reg in enumerate(REGIOES):
@@ -377,7 +444,7 @@ def capitais_interior(d, **_op) -> str:
         s["n"] += 1
     esq, topo, passo = 230, 70, 44
     linhas_ = [(reg, cap) for reg in REGIOES for cap in (True, False)]
-    h = topo + passo * len(linhas_) + len(REGIOES) * 10 + 40
+    h = topo + passo * len(linhas_) + len(REGIOES) * 10 + 48
     margens = []
     for k in linhas_:
         s = soma[k]
@@ -395,22 +462,20 @@ def capitais_interior(d, **_op) -> str:
             "Capitais e interior por região: margem de 2022 e de 2026",
             "Margem da direita sobre Lula, em pontos dos válidos; barra clara 2022 (Bolsonaro), escura 2026 (Flávio).",
         ),
-        legenda(
-            [
-                ("1º turno de 2022 (Bolsonaro − Lula)", "#b9bcc2"),
-                ("2026 (Flávio − Lula)", INK),
-            ],
-            esq,
-            24,
-        ),
+        r(esq, 13, 13, 13, AZUL_CLARO),
+        r(esq + 15, 13, 13, 13, VERMELHO_CLARO),
+        t(esq + 34, 24, "tom claro: 1º turno de 2022 (Bolsonaro − Lula)", 14),
+        r(esq + 380, 13, 13, 13, FLAVIO),
+        r(esq + 395, 13, 13, 13, LULA),
+        t(esq + 414, 24, "tom escuro: 2026 (Flávio − Lula)", 14),
         t(esq, 48, "Azul: direita à frente; vermelho: Lula à frente.", 13, MUTED),
     ]
     for v in ticks(-vmax, vmax, 8):
-        out.append(ln(X(v), topo - 6, X(v), h - 34, GRADE))
+        out.append(ln(X(v), topo - 6, X(v), h - 42, GRADE))
         out.append(
             t(
                 X(v),
-                h - 14,
+                h - 22,
                 f"{'+' if v > 0 else '−' if v < 0 else ''}{num(abs(v), 0)}",
                 13,
                 MUTED,
@@ -418,7 +483,10 @@ def capitais_interior(d, **_op) -> str:
                 mono=True,
             )
         )
-    out.append(ln(x0, topo - 6, x0, h - 34, INK, 1.4))
+    out.append(ln(x0, topo - 6, x0, h - 42, INK, 1.4))
+    out.append(
+        t(W - 90, h - 3, "margem em pontos percentuais dos válidos", 13, MUTED, "end")
+    )
     tips = Tips()
     y = topo
     for i, (reg, cap) in enumerate(linhas_):
@@ -477,7 +545,11 @@ def capitais_interior(d, **_op) -> str:
         "Margem da direita sobre Lula em capitais e no interior de cada região, somando os municípios com arquivo "
         "completo e base de 2022. Fonte: presidente.json (municípios)."
     )
-    return figura_html("capitais_interior", "".join(out), legenda_, tips, minw=820)
+    maior = max(margens, key=abs)
+    foco = (min(x0, X(maior)) - 40, max(x0, X(maior)) + 40, x0)
+    return figura_html(
+        "capitais_interior", "".join(out), legenda_, tips, minw=820, foco=foco
+    )
 
 
 # ------------------------------------------------------------------ comparecimento
@@ -588,7 +660,14 @@ def comparecimento_regioes(d, **_op) -> str:
         f"({pp(reg['Sul']['comparacao']['comparecimento_vs_1t_pp'])}) e no Sudeste "
         f"({pp(reg['Sudeste']['comparacao']['comparecimento_vs_1t_pp'])}). Fonte: presidente.json."
     )
-    return figura_html("comparecimento_regioes", "".join(out), legenda_, tips, minw=820)
+    return figura_html(
+        "comparecimento_regioes",
+        "".join(out),
+        legenda_,
+        tips,
+        minw=820,
+        foco=(esq - 6, W - 90, esq - 6),
+    )
 
 
 # ------------------------------------------------------------------ exterior
@@ -629,14 +708,20 @@ def exterior_continentes(d, **_op) -> str:
     esq, topo, passo, larg = 240, 60, 40, 600
     conts = sorted(E["continentes"], key=lambda c: -c["validos"])
     paises = sorted(E["paises"], key=lambda c: -c["validos"])[:12]
-    n = max(len(conts), len(paises))
-    h = topo + passo * n + 30
+    # cada aba tem a própria altura: o viewBox troca junto com a série
+    alturas = {
+        "continente": topo + passo * len(conts) + 30,
+        "pais": topo + passo * len(paises) + 30,
+    }
+    h = alturas["continente"]
+    vb = "|".join(f"{k}>0 0 {W} {v}" for k, v in alturas.items())
     out = [
         svg_abre(
             W,
             h,
             "Exterior: voto por continente e pelos 12 países com mais válidos",
             "Barras 100% com Flávio, Lula e os demais; à direita, válidos e comparecimento.",
+            f' data-alt-vb="{vb}"',
         ),
         legenda([("Flávio", FLAVIO), ("Lula", LULA), ("Demais", OUTROS)], esq, 24),
         t(esq + larg + 20, 24, "válidos · comparecimento", 13, MUTED),
@@ -705,19 +790,19 @@ def exterior_continentes(d, **_op) -> str:
                 )
             )
             g.append(hit(area(0, y - 6, W, passo) + corpo, k))
+        g.append(
+            ln(
+                esq + larg / 2,
+                topo - 8,
+                esq + larg / 2,
+                topo + passo * len(lista) - 6,
+                INK,
+                1,
+                ' stroke-dasharray="3 3" pointer-events="none"',
+            )
+        )
         mostra = "" if modo == "continente" else ' display="none"'
         out.append(f'<g data-alt-show="{modo}"{mostra}>{"".join(g)}</g>')
-    out.append(
-        ln(
-            esq + larg / 2,
-            topo - 8,
-            esq + larg / 2,
-            topo + passo * n - 6,
-            INK,
-            1,
-            ' stroke-dasharray="3 3"',
-        )
-    )
     out.append("</svg>")
     ctl = botoes(
         [("continente", "Por continente"), ("pais", "Por país (12 maiores)")],
