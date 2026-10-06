@@ -308,6 +308,7 @@ def v_camara() -> dict:
         "cam_cd": num(pc["centro-direita"]),
         "cam_esq": num(pc["esquerda"]),
         "cam_delta_direita": sinal(cp["delta_campo"]["direita"], 0),
+        "cam_ganho_direita": num(cp["delta_campo"]["direita"]),
         "cam_delta_bloco_d": sinal(cp["delta_bloco"]["direita + centro-direita"], 0),
         "cam_delta_bloco_e": sinal(cp["delta_bloco"]["esquerda + centro-esquerda"], 0),
         "cam_bloco_d_22": num(cp["por_bloco_2022"]["direita + centro-direita"]),

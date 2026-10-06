@@ -118,13 +118,13 @@ POSTS_A: list[dict] = [
     {
         "tag": "A Câmara",
         "tom": "flavio",
-        "titulo": "A direita ganhou {cam_delta_direita} cadeiras. O bloco ainda não chega a três quintos.",
+        "titulo": "A direita ganhou {cam_ganho_direita} cadeiras. O bloco ainda não chega a três quintos.",
         "metrica": "{cam_bloco_d}",
         "metrica_rot": "de {cam_vagas} deputados são de direita ou centro-direita",
         "fig": A.fig_camara,
         "fonte": "TSE e alocação pelo quociente; camara.json e comparacao_2022.json",
         "texto": [
-            "A Câmara eleita tem {cam_bloco_d} deputados de direita e centro-direita, {cam_bloco_e} de esquerda e centro-esquerda e {cam_centro} de centro, pela classificação de campo da casa. Em 2022 o bloco da direita tinha {cam_bloco_d_22}: andou {cam_delta_bloco_d}. A esquerda e a centro-esquerda andaram {cam_delta_bloco_e}. Só a direita, sem a centro-direita, ganhou {cam_delta_direita} cadeiras e chegou a {cam_direita}.",
+            "A Câmara eleita tem {cam_bloco_d} deputados de direita e centro-direita, {cam_bloco_e} de esquerda e centro-esquerda e {cam_centro} de centro, pela classificação de campo da casa. Em 2022 o bloco da direita tinha {cam_bloco_d_22}: andou {cam_delta_bloco_d}. A esquerda e a centro-esquerda andaram {cam_delta_bloco_e}. Só a direita, sem a centro-direita, ganhou {cam_ganho_direita} cadeiras e chegou a {cam_direita}.",
             "O número tem dois marcos. A maioria absoluta é de {cam_maioria} deputados, e o bloco passa dela com folga. Os três quintos de uma emenda constitucional são {cam_tres_quintos}, e o bloco fica abaixo. O PL terá {cam_pl} deputados, a maior bancada; o PT, {cam_pt}.",
             "Depois de PL e PT vêm União com {cam_uniao}, PSD com {cam_psd}, Republicanos e PP com {cam_rep} cada, e MDB com {cam_mdb}. É nesse meio que se decide votação apertada. O centro, com {cam_centro} cadeiras pela classificação da casa, fica menor do que em 2022 e perde o poder de veto que tinha sobre qualquer maioria.",
             "Votos e cadeiras andaram juntos. A direita teve {cam_votos_d} dos votos para a Câmara e ficou com {cam_cadeiras_d} das cadeiras; a esquerda teve {cam_votos_e} dos votos. O deputado mais votado do país foi {cam_top_nome}, com {cam_top_votos} de votos, {cam_top_pct} dos válidos de Minas Gerais.",
