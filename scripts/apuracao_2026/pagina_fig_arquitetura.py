@@ -201,9 +201,25 @@ def _caixa(
         f'<rect x="{x:.1f}" y="{y:.1f}" width="{w:.1f}" height="{h:.1f}" rx="4" '
         f'fill="{fundo}" stroke="{cor}" stroke-width="2"{tracejado}/>'
         + t(x + 14, y + 25, tit, 16, INK, weight="700")
-        + t(x + 14, y + 46, sub, 13.5, MUTED)
+        + "".join(
+            t(x + 14, y + 46 + 17 * i, linha, 13.5, MUTED)
+            for i, linha in enumerate(_quebra(sub, w - 28))
+        )
     )
     return hit(corpo, k, foco=True)
+
+
+def _quebra(s: str, largura: float, size: float = 13.5) -> list[str]:
+    """Quebra o subtítulo da caixa em linhas que cabem com 14 px de folga de cada lado."""
+    cabe = max(int(largura / (0.5 * size)), 8)
+    linhas, atual = [], ""
+    for p in s.split():
+        if atual and len(atual) + 1 + len(p) > cabe:
+            linhas.append(atual)
+            atual = p
+        else:
+            atual = f"{atual} {p}".strip()
+    return [*linhas, atual] if atual else linhas
 
 
 def _seta(x1, y1, x2, y2, cor=INK) -> str:
@@ -272,7 +288,13 @@ ESTILO_EMPILHADO = (
 def arquitetura_totalizacao(d, **_op) -> str:
     A = dado(d, "arquitetura")
     vol = A["volume"]
-    larg, h_caixa, gap = 380, 58, 26
+    larg, gap = 380, 26
+    # caixa mais alta quando algum subtítulo precisa de duas linhas
+    linhas_sub = max(
+        [len(_quebra(it[3], larg - 28)) for it in HOJE]
+        + [len(_quebra(it[3], larg - 60 - 28)) for it in IDEAL]
+    )
+    h_caixa = 58 + 17 * (linhas_sub - 1)
     h = 120 + len(HOJE) * (h_caixa + gap) + 40
     xa, xb = 40, 600
     out = [
@@ -408,15 +430,12 @@ def volume_noite(d, **_op) -> str:
                 f' stroke="{GOLD}" stroke-width="1.2" stroke-dasharray="4 3"',
             )
         )
+        # o rótulo encosta na borda direita da própria faixa, logo abaixo do
+        # rótulo da lacuna, na área sem barras da pausa
+        txt = f"← {des['janela'][0]} a {des['janela'][1]}: ritmo a {num(des['razao'] * 100, 0)}%"
         out.append(
             '<g data-alt-show="r26" pointer-events="none">'
-            + chip(
-                X(a) - 6,
-                topo + 108,
-                f"{des['janela'][0]} a {des['janela'][1]}: ritmo a {num(des['razao'] * 100, 0)}%",
-                13,
-                "end",
-            )
+            + chip(X(b) + 8, topo + 98, txt, 13)
             + "</g>"
         )
     g26 = [
@@ -523,10 +542,16 @@ def volume_noite(d, **_op) -> str:
     )
     am = A["amostra"]
     pico = A["nacional"]["pico_sustentado"]
+    if am["ufs_ausentes"]:
+        cobertura = (
+            f"em {len(am['ufs_cobertas'])} UFs ({num(am['fracao_do_pais'] * 100, 1)}% das seções; "
+            f"faltam {', '.join(am['ufs_ausentes'])})"
+        )
+    else:
+        cobertura = f"nas {len(am['ufs_cobertas'])} UFs ({num(am['fracao_do_pais'] * 100, 1)}% das seções têm o carimbo)"
     legenda_ = (
-        f"Recebimento pelo carimbo publicado no arquivo de cada seção, em {len(am['ufs_cobertas'])} UFs "
-        f"({num(am['fracao_do_pais'] * 100, 1)}% das seções; faltam {', '.join(am['ufs_ausentes'])}), multiplicado por "
-        f"{num(am['fator_extrapolacao'], 2)}: ordem de grandeza, não o minuto exato do país. O traço dourado é o ritmo "
+        f"Recebimento pelo carimbo publicado no arquivo de cada seção, {cobertura}, multiplicado por "
+        f"{num(am['fator_extrapolacao'], 3)} para fechar o país: ordem de grandeza, não o minuto exato. O traço dourado é o ritmo "
         f"do arquivo nacional entre versões (pico de {inteiro(pico['secoes_por_minuto'])} seções por minuto). Em 2022, "
         f"país inteiro, o pico foi de {inteiro(A['recebimento_2022']['pico']['secoes'])} por minuto. "
         + (
