@@ -17,7 +17,14 @@ from .pagina_comum import NOME_UF, inteiro, milhoes, nota, num, p, sinal, tabela
 from .pagina_fig_base import nome_bonito
 from .pagina_fig_secoes import grupos_extenso, local_ref
 from .pagina_fig_urna_voto import modelos_ordenados, por_uf, referencia_nacional
+from .pagina_fig_urna_voto_b import (
+    MINIMO_VOTANTES_PAIS,
+    extremos,
+    linhas_exterior,
+    linhas_uf,
+)
 from .pagina_texto import lista
+from .pagina_texto_senado_flavio import em_uf
 
 
 def pct(x: float | None, casas: int = 1) -> str:
@@ -427,6 +434,129 @@ def urna_a(S: dict) -> str:
     return p(frase, "verificado")
 
 
+def _secoes_n(n: int) -> str:
+    return "uma seção" if n == 1 else f"{inteiro(n)} seções"
+
+
+def _empates(e: dict) -> str:
+    n = e["linhas"] - e["positivas"] - e["negativas"]
+    return f"; em {n}, empata na primeira casa" if n else ""
+
+
+def urna_voto_simples(S: dict) -> str:
+    """Antes de `voto_modelo_uf_simples`: a urna mais nova contra a UF inteira, nas pontas."""
+    U = S["urna"]
+    if not U.get("voto_por_uf_total"):
+        return ""
+    modelos, linhas = linhas_uf(U)
+    e = extremos(modelos, linhas)
+    if not e:
+        return ""
+
+    def caso(x: dict) -> str:
+        c, t = x["celula"], x["total"]
+        return (
+            f"{em_uf(x['id'])}, onde a {x['modelo']} ({_secoes_n(c['secoes'])}) tem "
+            f"{pct(c['flavio_pct'])} para ele, ante {pct(t['flavio_pct'])} da UF inteira: "
+            f"{pts(x['dif_flavio'])}"
+        )
+
+    n = e["linhas"]
+    quais = (
+        f"Nas {n} UFs, todas com dois modelos ou mais,"
+        if n == len(linhas)
+        else f"Nas {n} UFs com dois modelos ou mais,"
+    )
+    h = p(
+        "A figura seguinte põe Flávio e Lula lado a lado em cada modelo de urna de cada UF, na mesma régua: "
+        "cada barra é 100% dos válidos, Flávio pela esquerda e Lula pela direita, e a última barra da linha é "
+        f"a UF inteira. {quais} a urna mais nova da UF dá a Flávio mais que a UF inteira em "
+        f"{e['positivas']} e menos em {e['negativas']}{_empates(e)}. A maior diferença a favor dele fica "
+        f"{caso(e['mais'])}. A maior contra fica {caso(e['menos'])}.",
+        "verificado",
+    )
+    return h + p(
+        "Diferença bruta não é efeito da máquina. Em cada UF o modelo novo foi para um pedaço do território, e "
+        "o eleitorado desse pedaço já votava de outro jeito: as barras mostram onde está cada modelo, não o "
+        "que ele faz com o voto.",
+        "inferencia",
+    )
+
+
+def _cidades(lista: list[str]) -> str:
+    return lista_nomes([nome_bonito(c) for c in lista])
+
+
+def lista_nomes(nomes: list[str]) -> str:
+    if len(nomes) < 2:
+        return "".join(nomes)
+    return ", ".join(nomes[:-1]) + " e " + nomes[-1]
+
+
+def urna_voto_exterior(S: dict) -> str:
+    """Antes de `voto_modelo_exterior`: cobertura, a UE2013 e os extremos por país."""
+    U = S["urna"]
+    if not U.get("voto_por_pais_modelo"):
+        return ""
+    modelos, linhas, R = linhas_exterior(U)
+    mod = R["secoes_modelo"]
+    pred = max((m for m in modelos if m != "sem modelo"), key=lambda m: mod[m])
+    frase = (
+        f"No exterior, {R['paises']} países tiveram seção com voto. Os {R['grandes']} com ao menos "
+        f"{inteiro(MINIMO_VOTANTES_PAIS)} votantes somam {pct(R['pct_grandes'])} dos "
+        f"{inteiro(R['votantes'])} votantes e têm linha própria; os outros {R['pequenos']} vão juntos na "
+        f"última linha. A {pred} predomina: {inteiro(mod[pred])} das {inteiro(R['secoes'])} seções."
+    )
+    if R["papel_secoes"]:
+        frase += (
+            f" As {_secoes_n(R['papel_secoes'])} de papel ({inteiro(R['papel_votantes'])} votantes) "
+            + (
+                "foram de votação em cédula"
+                if R["papel_cedula"] == R["papel_secoes"]
+                else f"incluem {inteiro(R['papel_cedula'])} de votação em cédula"
+            )
+            + ", sem log de urna."
+        )
+    h = p(frase, "verificado")
+    e = extremos(modelos, linhas)
+    if not e:
+        return h
+
+    def onde(lin_id: str, modelo: str) -> tuple[list[str], list[str]]:
+        lin = next(x for x in linhas if x.id == lin_id)
+        com = [c["nome"] for c in lin.extra["cidades"] if modelo in c["modelos"]]
+        outras = [
+            c["nome"]
+            for c in lin.extra["cidades"]
+            if any(m != modelo and m != "sem modelo" for m in c["modelos"])
+        ]
+        return com, outras
+
+    def caso(x: dict) -> str:
+        c, t = x["celula"], x["total"]
+        com, outras = onde(x["id"], x["modelo"])
+        lugar = f"cidades com a {x['modelo']}: {_cidades(com)}"
+        if outras:
+            lugar += f"; com o outro modelo: {_cidades(outras)}"
+        return (
+            f"{x['nome']}, com {pct(c['flavio_pct'])} para ele na {x['modelo']} e "
+            f"{pct(t['flavio_pct'])} no país inteiro ({pts(x['dif_flavio'])}; "
+            f"{_secoes_n(c['secoes'])} e {inteiro(c['votantes'])} votantes; {lugar})"
+        )
+
+    h += p(
+        f"Nos {e['linhas']} desses países que têm dois modelos, a urna mais nova dá a Flávio mais que o país "
+        f"inteiro em {e['positivas']} e menos em {e['negativas']}{_empates(e)}. A maior diferença a favor "
+        f"dele: {caso(e['mais'])}. A maior contra: {caso(e['menos'])}.",
+        "verificado",
+    )
+    return h + p(
+        "Fora do Brasil o modelo vem com a cidade do consulado, e cidade diferente é eleitorado diferente. "
+        "Diferença bruta não é efeito da máquina.",
+        "inferencia",
+    )
+
+
 def urna_voto_nacional(S: dict) -> str:
     U = S["urna"]
     B = {b["modelo"]: b for b in U["bruto"]}
@@ -703,6 +833,8 @@ def bloco(S: dict, fig: Callable[[str], str]) -> str:
     h += clusters_leitura(S) + fig("clusters_regiao") + clusters_b(S)
     h += escolha_k(S["clusters"])
     h += "<h3>Modelo de urna</h3>" + fig("modelo_urna_uf") + urna_a(S)
+    h += urna_voto_simples(S) + fig("voto_modelo_uf_simples")
+    h += urna_voto_exterior(S) + fig("voto_modelo_exterior")
     h += fig("voto_por_modelo_nacional") + urna_voto_nacional(S)
     h += fig("voto_por_modelo_uf") + urna_voto_uf(S)
     h += fig("urna_reguas") + urna_reguas(S)

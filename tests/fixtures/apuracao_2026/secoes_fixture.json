@@ -12775,7 +12775,414 @@
     "flavio_pct": 57.5,
     "abstencao_pct": 22.5
    }
-  ]
+  ],
+  "voto_por_uf_total": [
+   {
+    "uf": "AC",
+    "regiao": "Norte",
+    "secoes": 797,
+    "aptos": 252822,
+    "votantes": 199250,
+    "validos": 191280,
+    "lula": 92848,
+    "flavio": 69740,
+    "lula_pct": 48.54,
+    "flavio_pct": 36.46,
+    "abstencao_pct": 21.19
+   },
+   {
+    "uf": "AP",
+    "regiao": "Norte",
+    "secoes": 798,
+    "aptos": 253680,
+    "votantes": 199500,
+    "validos": 191520,
+    "lula": 74595,
+    "flavio": 88197,
+    "lula_pct": 38.95,
+    "flavio_pct": 46.05,
+    "abstencao_pct": 21.36
+   },
+   {
+    "uf": "BA",
+    "regiao": "Nordeste",
+    "secoes": 797,
+    "aptos": 253021,
+    "votantes": 199250,
+    "validos": 191280,
+    "lula": 85556,
+    "flavio": 77032,
+    "lula_pct": 44.73,
+    "flavio_pct": 40.27,
+    "abstencao_pct": 21.25
+   },
+   {
+    "uf": "GO",
+    "regiao": "Centro-Oeste",
+    "secoes": 798,
+    "aptos": 254897,
+    "votantes": 199500,
+    "validos": 191520,
+    "lula": 64764,
+    "flavio": 98028,
+    "lula_pct": 33.82,
+    "flavio_pct": 51.18,
+    "abstencao_pct": 21.73
+   },
+   {
+    "uf": "MA",
+    "regiao": "Nordeste",
+    "secoes": 798,
+    "aptos": 254156,
+    "votantes": 199500,
+    "validos": 191520,
+    "lula": 79456,
+    "flavio": 83336,
+    "lula_pct": 41.49,
+    "flavio_pct": 43.51,
+    "abstencao_pct": 21.5
+   },
+   {
+    "uf": "PI",
+    "regiao": "Nordeste",
+    "secoes": 795,
+    "aptos": 253699,
+    "votantes": 198750,
+    "validos": 190800,
+    "lula": 57335,
+    "flavio": 104845,
+    "lula_pct": 30.05,
+    "flavio_pct": 54.95,
+    "abstencao_pct": 21.66
+   },
+   {
+    "uf": "SC",
+    "regiao": "Sul",
+    "secoes": 797,
+    "aptos": 253159,
+    "votantes": 199250,
+    "validos": 191280,
+    "lula": 70502,
+    "flavio": 92086,
+    "lula_pct": 36.86,
+    "flavio_pct": 48.14,
+    "abstencao_pct": 21.29
+   },
+   {
+    "uf": "SP",
+    "regiao": "Sudeste",
+    "secoes": 798,
+    "aptos": 253397,
+    "votantes": 199500,
+    "validos": 191520,
+    "lula": 52139,
+    "flavio": 110653,
+    "lula_pct": 27.22,
+    "flavio_pct": 57.78,
+    "abstencao_pct": 21.27
+   }
+  ],
+  "voto_por_pais_modelo": {
+   "fonte": "tabela de cidades do exterior (fixture)",
+   "paises_na_tabela": 7,
+   "paises_com_secao": 5,
+   "secoes": 87,
+   "votantes": 20140,
+   "sem_pais": {
+    "secoes": 0,
+    "votantes": 0
+   },
+   "paises": [
+    {
+     "pais": "US",
+     "pais_nome": "Estados Unidos",
+     "continente": "América do Norte",
+     "total": {
+      "secoes": 40,
+      "aptos": 30000,
+      "votantes": 9000,
+      "validos": 8800,
+      "lula": 3000,
+      "flavio": 5400,
+      "lula_pct": 34.09,
+      "flavio_pct": 61.36,
+      "abstencao_pct": 70.0
+     },
+     "modelos": [
+      {
+       "modelo": "UE2013",
+       "secoes": 40,
+       "aptos": 30000,
+       "votantes": 9000,
+       "validos": 8800,
+       "lula": 3000,
+       "flavio": 5400,
+       "lula_pct": 34.09,
+       "flavio_pct": 61.36,
+       "abstencao_pct": 70.0,
+       "secoes_cedula": 0
+      }
+     ],
+     "cidades": [
+      {
+       "mun_tse": "29416",
+       "nome": "BOSTON",
+       "secoes": 25,
+       "votantes": 6000,
+       "modelos": {
+        "UE2013": 25
+       }
+      },
+      {
+       "mun_tse": "30112",
+       "nome": "MIAMI",
+       "secoes": 15,
+       "votantes": 3000,
+       "modelos": {
+        "UE2013": 15
+       }
+      }
+     ]
+    },
+    {
+     "pais": "JP",
+     "pais_nome": "Japão",
+     "continente": "Ásia",
+     "total": {
+      "secoes": 32,
+      "aptos": 24000,
+      "votantes": 8000,
+      "validos": 7850,
+      "lula": 2600,
+      "flavio": 4800,
+      "lula_pct": 33.12,
+      "flavio_pct": 61.15,
+      "abstencao_pct": 66.67
+     },
+     "modelos": [
+      {
+       "modelo": "UE2013",
+       "secoes": 20,
+       "aptos": 15000,
+       "votantes": 5000,
+       "validos": 4900,
+       "lula": 1500,
+       "flavio": 3200,
+       "lula_pct": 30.61,
+       "flavio_pct": 65.31,
+       "abstencao_pct": 66.67,
+       "secoes_cedula": 0
+      },
+      {
+       "modelo": "UE2015",
+       "secoes": 12,
+       "aptos": 9000,
+       "votantes": 3000,
+       "validos": 2950,
+       "lula": 1100,
+       "flavio": 1600,
+       "lula_pct": 37.29,
+       "flavio_pct": 54.24,
+       "abstencao_pct": 66.67,
+       "secoes_cedula": 0
+      }
+     ],
+     "cidades": [
+      {
+       "mun_tse": "30627",
+       "nome": "TÓQUIO",
+       "secoes": 20,
+       "votantes": 5000,
+       "modelos": {
+        "UE2013": 12,
+        "UE2015": 8
+       }
+      },
+      {
+       "mun_tse": "30198",
+       "nome": "NAGÓIA",
+       "secoes": 12,
+       "votantes": 3000,
+       "modelos": {
+        "UE2013": 8,
+        "UE2015": 4
+       }
+      }
+     ]
+    },
+    {
+     "pais": "AR",
+     "pais_nome": "Argentina",
+     "continente": "América do Sul",
+     "total": {
+      "secoes": 13,
+      "aptos": 9620,
+      "votantes": 2930,
+      "validos": 2869,
+      "lula": 1315,
+      "flavio": 1262,
+      "lula_pct": 45.83,
+      "flavio_pct": 43.99,
+      "abstencao_pct": 69.54
+     },
+     "modelos": [
+      {
+       "modelo": "UE2013",
+       "secoes": 10,
+       "aptos": 8000,
+       "votantes": 2500,
+       "validos": 2450,
+       "lula": 1200,
+       "flavio": 1000,
+       "lula_pct": 48.98,
+       "flavio_pct": 40.82,
+       "abstencao_pct": 68.75,
+       "secoes_cedula": 0
+      },
+      {
+       "modelo": "UE2015",
+       "secoes": 2,
+       "aptos": 1500,
+       "votantes": 400,
+       "validos": 390,
+       "lula": 100,
+       "flavio": 250,
+       "lula_pct": 25.64,
+       "flavio_pct": 64.1,
+       "abstencao_pct": 73.33,
+       "secoes_cedula": 0
+      },
+      {
+       "modelo": "sem modelo",
+       "secoes": 1,
+       "aptos": 120,
+       "votantes": 30,
+       "validos": 29,
+       "lula": 15,
+       "flavio": 12,
+       "lula_pct": 51.72,
+       "flavio_pct": 41.38,
+       "abstencao_pct": 75.0,
+       "secoes_cedula": 1
+      }
+     ],
+     "cidades": [
+      {
+       "mun_tse": "29360",
+       "nome": "BUENOS AIRES",
+       "secoes": 11,
+       "votantes": 2700,
+       "modelos": {
+        "UE2013": 10,
+        "UE2015": 1
+       }
+      },
+      {
+       "mun_tse": "29530",
+       "nome": "CÓRDOBA",
+       "secoes": 1,
+       "votantes": 200,
+       "modelos": {
+        "UE2015": 1
+       }
+      },
+      {
+       "mun_tse": "99999",
+       "nome": "PUERTO IGUAZÚ",
+       "secoes": 1,
+       "votantes": 30,
+       "modelos": {
+        "sem modelo": 1
+       }
+      }
+     ]
+    },
+    {
+     "pais": "NP",
+     "pais_nome": "Nepal",
+     "continente": "Ásia",
+     "total": {
+      "secoes": 1,
+      "aptos": 300,
+      "votantes": 120,
+      "validos": 118,
+      "lula": 70,
+      "flavio": 40,
+      "lula_pct": 59.32,
+      "flavio_pct": 33.9,
+      "abstencao_pct": 60.0
+     },
+     "modelos": [
+      {
+       "modelo": "UE2013",
+       "secoes": 1,
+       "aptos": 300,
+       "votantes": 120,
+       "validos": 118,
+       "lula": 70,
+       "flavio": 40,
+       "lula_pct": 59.32,
+       "flavio_pct": 33.9,
+       "abstencao_pct": 60.0,
+       "secoes_cedula": 0
+      }
+     ],
+     "cidades": [
+      {
+       "mun_tse": "29173",
+       "nome": "KATMANDU",
+       "secoes": 1,
+       "votantes": 120,
+       "modelos": {
+        "UE2013": 1
+       }
+      }
+     ]
+    },
+    {
+     "pais": "RU",
+     "pais_nome": "Rússia",
+     "continente": "Europa",
+     "total": {
+      "secoes": 1,
+      "aptos": 400,
+      "votantes": 90,
+      "validos": 88,
+      "lula": 40,
+      "flavio": 44,
+      "lula_pct": 45.45,
+      "flavio_pct": 50.0,
+      "abstencao_pct": 77.5
+     },
+     "modelos": [
+      {
+       "modelo": "sem modelo",
+       "secoes": 1,
+       "aptos": 400,
+       "votantes": 90,
+       "validos": 88,
+       "lula": 40,
+       "flavio": 44,
+       "lula_pct": 45.45,
+       "flavio_pct": 50.0,
+       "abstencao_pct": 77.5,
+       "secoes_cedula": 1
+      }
+     ],
+     "cidades": [
+      {
+       "mun_tse": "30333",
+       "nome": "MOSCOU",
+       "secoes": 1,
+       "votantes": 90,
+       "modelos": {
+        "sem modelo": 1
+       }
+      }
+     ]
+    }
+   ]
+  }
  },
  "outras": {
   "comparecimento": {

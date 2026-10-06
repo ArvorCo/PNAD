@@ -488,6 +488,128 @@ def test_texto_voto_por_modelo_sinais_e_frase_responsavel():
     assert "—" not in h
 
 
+SIMPLES = ["voto_modelo_uf_simples", "voto_modelo_exterior"]
+
+
+@pytest.mark.parametrize("nome", SIMPLES)
+def test_voto_modelo_simples_sobre_a_fixture(nome):
+    h = FIGURAS[nome]({"secoes": _fixture()})
+    assert re.match(ABERTURA.format(nome=nome), h)
+    assert h.count("<svg") == 2 and h.count('class="fig-estreita"') == 1
+    assert nome in NOMES
+    assert "—" not in h
+    rows = _tips(h)["_rows"]
+    chaves = re.findall(r'data-k="(r\d+)"', h)
+    # cada barra tem ficha, e a mesma chave serve à versão larga e à empilhada
+    assert {int(k[1:]) for k in chaves} == set(range(len(rows["linhas"])))
+    assert all(chaves.count(k) == 2 for k in set(chaves))
+    assert "Diferença bruta não é efeito da máquina" in rows["nota"]
+
+
+def test_voto_modelo_simples_texto_branco_passa_aa():
+    from apuracao_2026.pagina_fig_base import contraste
+
+    assert contraste(C.FLAVIO, "#ffffff") >= 4.5
+    assert contraste(C.LULA, "#ffffff") >= 4.5
+
+
+def test_voto_modelo_uf_simples_lugares_fixos_e_total():
+    from apuracao_2026.pagina_fig_urna_voto_b import MINIMO_SECOES, linhas_uf
+
+    S = _fixture()
+    U = S["urna"]
+    modelos, linhas = linhas_uf(U)
+    assert modelos == [m for m in U["modelos"] if m != "sem modelo"]
+    assert [x.id for x in linhas] == ["AC", "AP", "BA", "MA", "PI", "GO", "SP", "SC"]
+    assert all(len(x.celulas) == len(modelos) for x in linhas)
+    pequenas = [
+        x
+        for x in U["voto_por_uf_modelo"]
+        if x["secoes"] < MINIMO_SECOES and x["modelo"] in modelos
+    ]
+    assert pequenas
+    vazios_com_numero = [v for x in linhas for v in x.vazios if v.startswith("só ")]
+    assert len(vazios_com_numero) == len(pequenas)
+    h = FIGURAS["voto_modelo_uf_simples"]({"secoes": S})
+    rows = _tips(h)["_rows"]
+    cheias = sum(c is not None for x in linhas for c in x.celulas)
+    assert len(rows["linhas"]) == cheias + len(linhas)
+    assert any(r[0] == "Acre: UF inteira" for r in rows["linhas"])
+    assert 'fill="#ffffff" font-weight="600">F ' in h
+    assert 'text-anchor="end" font-weight="600">L ' in h
+    assert "a última barra é a UF inteira" in h
+    assert "Comparação bruta, modelo misturado com geografia" in h
+    # o total da UF vem do JSON, não da soma das barras exibidas
+    ac = next(x for x in linhas if x.id == "AC")
+    tot = next(x for x in U["voto_por_uf_total"] if x["uf"] == "AC")
+    assert ac.total is tot
+
+
+def test_voto_modelo_exterior_paises_outros_e_papel():
+    from apuracao_2026.pagina_fig_urna_voto_b import linhas_exterior
+
+    S = _fixture()
+    modelos, linhas, R = linhas_exterior(S["urna"])
+    assert modelos == ["UE2013", "UE2015", "sem modelo"]
+    # continentes do de mais votantes ao de menos; a linha dos demais no fim
+    assert [x.id for x in linhas] == ["US", "JP", "AR", "outros"]
+    outros = linhas[-1]
+    assert outros.total["votantes"] == 210 and outros.rotulo == "outros países"
+    assert outros.celulas[2] is None and outros.vazios[2] == "só 90 votantes"
+    assert R["grandes"] == 3 and R["pequenos"] == 2
+    assert R["papel_secoes"] == R["papel_cedula"] == 2
+    h = FIGURAS["voto_modelo_exterior"]({"secoes": S})
+    assert ">papel<" in h and ">país inteiro<" in h
+    assert "No exterior a UE2013 predomina" in h
+    assert "são todas de votação em cédula" in h
+    linhas_tips = _tips(h)["_rows"]
+    jp = next(r for r in linhas_tips["linhas"] if r[0] == "Japão: UE2013")
+    assert "Tóquio (12)" in " ".join(jp)
+
+
+def test_voto_modelo_sem_chave_fica_pendente():
+    S = _fixture()
+    del S["urna"]["voto_por_uf_total"]
+    assert 'class="pendente"' in FIGURAS["voto_modelo_uf_simples"]({"secoes": S})
+    S = _fixture()
+    S["urna"]["voto_por_pais_modelo"] = None
+    assert 'class="pendente"' in FIGURAS["voto_modelo_exterior"]({"secoes": S})
+
+
+def test_barra_omite_rotulo_que_nao_cabe():
+    from apuracao_2026.pagina_fig_urna_voto_b import barra
+
+    larga = barra(0, 0, 200, 22, {"flavio_pct": 47.2, "lula_pct": 45.4})
+    assert ">F 47<" in larga and ">L 45<" in larga
+    estreita = barra(0, 0, 200, 22, {"flavio_pct": 2.0, "lula_pct": 90.0})
+    assert ">F 2<" not in estreita and ">2<" not in estreita and ">L 90<" in estreita
+
+
+def test_texto_voto_modelo_simples_e_exterior_na_ordem():
+    from apuracao_2026 import pagina_texto_c as T
+
+    S = _fixture()
+    h = T.urna_voto_simples(S) + T.urna_voto_exterior(S)
+    assert h.count("Diferença bruta não é efeito da máquina") == 2
+    assert "A maior diferença a favor dele" in h and "—" not in h
+    assert "No exterior, 5 países tiveram seção com voto" in h
+    bloco = T.bloco(S, lambda nome: f"[{nome}]")
+    ordem = [
+        "modelo_urna_uf",
+        "voto_modelo_uf_simples",
+        "voto_modelo_exterior",
+        "voto_por_modelo_nacional",
+        "voto_por_modelo_uf",
+        "urna_reguas",
+        "modelo_urna_zona",
+    ]
+    pos = [bloco.index(f"[{n}]") for n in ordem]
+    assert pos == sorted(pos)
+    # o parágrafo vem antes da figura que ele apresenta
+    assert bloco.index("A figura seguinte põe Flávio e Lula") < pos[1]
+    assert bloco.index("No exterior, 5 países") < pos[2]
+
+
 def test_clusters_secoes_caixa_falha_e_barras_do_eleitorado():
     S = _fixture()
     h = FIGURAS["clusters_secoes"]({"secoes": S})

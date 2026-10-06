@@ -34,6 +34,7 @@ from . import (
     pagina_fig_terceira_via,
     pagina_fig_terceira_via_b,
     pagina_fig_urna_voto,
+    pagina_fig_urna_voto_b,
 )
 from .pagina_fig_base import FIGURAS
 from .pagina_figuras_prim import (
@@ -83,6 +84,7 @@ MODULOS_CATALOGO = (
     pagina_fig_terceira_via,
     pagina_fig_terceira_via_b,
     pagina_fig_urna_voto,
+    pagina_fig_urna_voto_b,
 )
 
 __all__ = [
