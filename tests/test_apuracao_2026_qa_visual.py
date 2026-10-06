@@ -25,6 +25,7 @@ from apuracao_2026.pagina_interativo import interativo_html
 
 ROOT = Path(__file__).resolve().parents[1]
 FIXTURE_SECOES = ROOT / "tests/fixtures/apuracao_2026/secoes_fixture.json"
+FIXTURE_FISCAIS = ROOT / "tests/fixtures/apuracao_2026/fiscais_fixture.json"
 
 spec = importlib.util.spec_from_file_location(
     "apuracao_build_qa", ROOT / "scripts/apuracao-2026-build.py"
@@ -326,3 +327,37 @@ def test_eixo_da_noite_cortado_as_22h(dados, nome):
 def test_barra_100_comeca_no_zero(dados):
     h = FIGURAS["transferencia_cenarios"](dados)
     assert ">0%</text>" in h and ">100%</text>" in h and ">40%</text>" not in h
+
+
+@pytest.mark.parametrize(
+    "nome",
+    [
+        "fiscais_criterios",
+        "fiscais_por_uf",
+        "fiscais_municipios",
+        "fiscais_locais",
+        "fiscais_secoes_amostra",
+        "fiscais_protege_vigia",
+        "fiscais_risco",
+        "fiscais_mapa_uf",
+        "fiscais_mapa_navegavel",
+    ],
+)
+def test_fiscais_texto_na_viewbox_e_sem_noscript_orfao(nome):
+    F = json.loads(FIXTURE_FISCAIS.read_text(encoding="utf-8"))
+    h = FIGURAS[nome]({"fiscais": F})
+    assert h.count("<noscript") == h.count("</noscript>") <= 1
+    for svg in _svgs(h):
+        vw, vh = (
+            float(v)
+            for v in re.search(r'viewBox="0 0 ([\d.]+) ([\d.]+)"', svg).groups()
+        )
+        for tx in _textos(svg):
+            x0, y0, x1, y1 = _caixa(tx)
+            assert x0 >= -2 and x1 <= vw + 2 and y0 >= -2 and y1 <= vh + 2, (nome, tx)
+    if nome.startswith("fiscais_mapa"):
+        assert re.search(
+            r"<(circle|path)[^>]*(stroke-linecap=\"round\"|class=\"hit\")", h
+        )
+    if nome in ("fiscais_locais", "fiscais_municipios"):
+        assert "<table data-ordena" in h

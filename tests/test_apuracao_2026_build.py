@@ -154,3 +154,63 @@ def test_remissoes_de_capitulo_batem_com_a_numeracao(pagina):
     assert achados
     for ident, n in achados:
         assert numero[ident] == int(n), (ident, n)
+
+
+FIXTURE_FISCAIS = ROOT / "tests/fixtures/apuracao_2026/fiscais_fixture.json"
+
+
+@pytest.fixture(scope="module")
+def pagina_fiscais(tmp_path_factory):
+    pasta = tmp_path_factory.mktemp("fiscais")
+    for origem in C.DADOS.glob("*.json"):
+        shutil.copy(origem, pasta / origem.name)
+    if not (pasta / "fiscais.json").exists():
+        shutil.copy(FIXTURE_FISCAIS, pasta / "fiscais.json")
+    saida = pasta / "fiscais.html"
+    _, estado = build.construir(pasta, saida)
+    html = saida.read_text(encoding="utf-8")
+    ini = html.index('<section id="fiscais"')
+    return html, html[ini : html.index("</section>", ini)], estado
+
+
+def test_capitulo_13_fiscais(pagina_fiscais):
+    from apuracao_2026.pagina_texto_fiscais import H3
+
+    html, cap, estado = pagina_fiscais
+    assert estado["fiscais"] is True
+    assert '<p class="kicker">13 / FISCAIS</p>' in cap
+    assert '<p class="kicker">14 / 2º TURNO</p>' in html
+    for h3 in H3:
+        assert f"<h3>{h3}</h3>" in cap, h3
+    for nome in ("fiscais_mapa_navegavel", "fiscais_criterios", "fiscais_locais"):
+        assert f'id="fig-{nome}"' in cap
+    assert "Atipicidade" in cap and "não é irregularidade" in cap
+    assert "—" not in cap and "fraude" not in cap.lower()
+    assert cap.count('class="limites"') == 1
+    # o script do mapa navegável vai uma vez só, no fim da página
+    assert html.count("function inicia(fig)") == 1
+
+
+def test_capitulo_13_downloads(pagina_fiscais):
+    _, cap, _ = pagina_fiscais
+    for cam in (
+        "assets/fiscais_2026.xlsx",
+        "assets/fiscais_2026.csv",
+        "assets/fiscais_2026_por_local.csv",
+    ):
+        # abaixo da abertura e de novo junto da tabela de locais
+        assert cap.count(f'href="{cam}" download') == 2, cam
+    assert "Um fiscal por local com três ou mais seções sinalizadas cobre" in cap
+
+
+@pytest.mark.parametrize(
+    "arquivo",
+    ["fiscais_2026.csv", "fiscais_2026_por_local.csv", "fiscais_2026.xlsx"],
+)
+def test_exportaveis_publicados(arquivo):
+    if not (C.DADOS / "fiscais.json").exists():
+        pytest.skip("fiscais.json ainda não gerado")
+    caminho = ROOT / "docs/assets" / arquivo
+    if arquivo.endswith(".xlsx") and not caminho.exists():
+        pytest.skip("xlsx ainda não gerado")
+    assert caminho.exists(), caminho

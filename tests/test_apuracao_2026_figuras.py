@@ -15,6 +15,18 @@ from apuracao_2026.pagina_interativo import interativo_html
 ROOT = Path(__file__).resolve().parents[1]
 CATALOGO = ROOT / "analysis/apuracao_2026/CATALOGO_FIGURAS.md"
 FIXTURE_SECOES = ROOT / "tests/fixtures/apuracao_2026/secoes_fixture.json"
+FIXTURE_FISCAIS = ROOT / "tests/fixtures/apuracao_2026/fiscais_fixture.json"
+FISCAIS = [
+    "fiscais_mapa_navegavel",
+    "fiscais_mapa_uf",
+    "fiscais_criterios",
+    "fiscais_por_uf",
+    "fiscais_municipios",
+    "fiscais_locais",
+    "fiscais_secoes_amostra",
+    "fiscais_protege_vigia",
+    "fiscais_risco",
+]
 SECOES = [
     "secoes_90",
     "secoes_excesso",
@@ -46,7 +58,13 @@ def dados():
     tudo["agregador"] = json.loads(agregador.read_text(encoding="utf-8"))
     if not tudo.get("secoes"):
         tudo["secoes"] = json.loads(FIXTURE_SECOES.read_text(encoding="utf-8"))
+    if not tudo.get("fiscais"):
+        tudo["fiscais"] = json.loads(FIXTURE_FISCAIS.read_text(encoding="utf-8"))
     return tudo
+
+
+def _sem_risco(dados) -> bool:
+    return not any("risco" in s for s in dados["fiscais"]["secoes"])
 
 
 @pytest.fixture(scope="module")
@@ -70,7 +88,9 @@ def test_catalogo_inteiro_registrado():
 
 
 @pytest.mark.parametrize("nome", NOMES)
-def test_contrato_da_figura(html, nome):
+def test_contrato_da_figura(html, dados, nome):
+    if nome == "fiscais_risco" and _sem_risco(dados):
+        pytest.skip("fiscais.json sem o bloco risco (contrato 1.1)")
     h = html[nome]
     assert re.match(ABERTURA.format(nome=nome), h)
     assert "pendente" not in h[:80]
@@ -180,8 +200,13 @@ def test_camada_interativa_uma_vez(tmp_path):
     assert pagina.count('<noscript class="fig-src">') >= len(ADIADAS_ESPERADAS)
     assert "—" not in pagina
     tem_secoes = (C.DADOS / "secoes.json").exists()
+    tem_fiscais = (C.DADOS / "fiscais.json").exists()
     for nome in NOMES:
         if nome in SECOES and not tem_secoes:
+            continue
+        if nome in FISCAIS and not tem_fiscais:
+            continue
+        if nome == "fiscais_risco" and 'id="fig-fiscais_risco"' not in pagina:
             continue
         assert f'id="fig-{nome}"' in pagina, nome
 
@@ -483,3 +508,107 @@ def test_clusters_secoes_caixa_falha_e_barras_do_eleitorado():
     assert "terceiros (fora do modelo)" in h
     del S["clusters"]["variantes"]
     assert "O que não deu certo" not in FIGURAS["clusters_secoes"]({"secoes": S})
+
+
+# ------------------------------------------------------------------ capítulo 13: fiscais
+
+
+def _fiscais() -> dict:
+    return json.loads(FIXTURE_FISCAIS.read_text(encoding="utf-8"))
+
+
+def _d_fiscais(F: dict | None = None) -> dict:
+    return {"fiscais": F or _fiscais()}
+
+
+@pytest.mark.parametrize("nome", FISCAIS)
+def test_fiscais_sobre_a_fixture(nome):
+    assert nome in NOMES
+    h = FIGURAS[nome](_d_fiscais())
+    assert re.match(ABERTURA.format(nome=nome), h)
+    assert "pendente" not in h[:80]
+    assert 1 <= h.count("<svg") <= 1 + h.count('class="fig-estreita"')
+    assert "—" not in h and "fraude" not in h.lower()
+    _tips(h)
+    if "<noscript" in h:
+        assert h.count("<noscript") == h.count("</noscript>") == 1
+
+
+def test_fiscais_mapa_navegavel_pontos_malha_e_links():
+    F = _fiscais()
+    h = FIGURAS["fiscais_mapa_navegavel"](_d_fiscais(F))
+    assert 'class="fig fz-svg"' in h and 'data-near="1"' in h
+    assert "noscript" not in h  # o mapa navegável nunca é adiado
+    rows = _tips(h)["_rows"]
+    com_coord = [p for p in F["mapa"]["pontos"] if p[0] is not None]
+    assert len(rows["linhas"]) == len(rows["xy"]) == len(com_coord)
+    dados_fz = json.loads(
+        re.search(
+            r'<script type="application/json" class="fz-dados">(.*?)</script>', h
+        ).group(1)
+    )
+    assert len(dados_fz["pontos"]) == len(com_coord)
+    for pt in dados_fz["pontos"]:
+        assert pt[2][0].startswith("https://www.openstreetmap.org/")
+        assert pt[2][1].startswith("https://www.google.com/maps")
+    ufs = {x["uf"] for x in F["por_local"] if x.get("lat") is not None}
+    malhas = set(re.findall(r'class="fz-mun" data-uf="([A-Z]{2})"', h))
+    assert malhas == ufs - {"ZZ"}
+    for uf in ufs:
+        assert f"<span>{C.NOME_UF[uf]}</span>" in h
+    assert 'data-fz="mais"' in h and 'data-fz="menos"' in h and 'data-fz="brasil"' in h
+    assert 'data-alt="risco"' in h and 'data-filtro="alto"' in h
+    assert 'vector-effect="non-scaling-stroke"' in h
+
+
+def test_fiscais_sem_risco_degrada():
+    F = _fiscais()
+    for s in F["secoes"]:
+        s.pop("risco", None)
+    for x in F["por_local"]:
+        x.pop("risco", None)
+    d = _d_fiscais(F)
+    assert 'class="pendente"' in FIGURAS["fiscais_risco"](d)
+    mapa = FIGURAS["fiscais_mapa_navegavel"](d)
+    assert 'data-alt="risco"' not in mapa and "data-filtro" not in mapa
+    for nome in ("fiscais_locais", "fiscais_municipios", "fiscais_secoes_amostra"):
+        h = FIGURAS[nome](d)
+        assert "pendente" not in h[:80]
+        assert ">Risco<" not in h and "Contexto do território" not in h
+
+
+def test_fiscais_tabelas_ordenaveis_e_downloads():
+    F = _fiscais()
+    h = FIGURAS["fiscais_locais"](_d_fiscais(F))
+    tab = h[
+        h.index("<table data-ordena") : h.index(
+            "</table>", h.index("<table data-ordena")
+        )
+    ]
+    n3 = sum(1 for x in F["por_local"] if x["secoes"] >= 3)
+    assert tab.count("<tr>") == n3 + 1
+    assert 'class="num"' in tab and "data-sortable" in tab
+    for cam in (
+        "assets/fiscais_2026.xlsx",
+        "assets/fiscais_2026.csv",
+        "assets/fiscais_2026_por_local.csv",
+    ):
+        assert f'href="{cam}" download' in h
+    for e in F["meta"]["exportaveis"]:
+        assert e["sha256"] in h
+    m = FIGURAS["fiscais_municipios"](_d_fiscais(F))
+    tm = m[
+        m.index("<table data-ordena") : m.index(
+            "</table>", m.index("<table data-ordena")
+        )
+    ]
+    assert tm.count("<tr>") == min(100, len(F["por_municipio"])) + 1
+
+
+def test_fiscais_cartoes_das_secoes_altas():
+    F = _fiscais()
+    h = FIGURAS["fiscais_secoes_amostra"](_d_fiscais(F))
+    altas = [s for s in F["secoes"] if s["nivel"] == "alta"]
+    assert h.count('<article class="fs-card">') == min(40, len(altas))
+    assert "O que o fiscal confere:" in h and "Contexto do território:" in h
+    assert "openstreetmap.org" in h and "google.com/maps" in h
