@@ -266,8 +266,8 @@ def fig_voto_util() -> str:
                 yb += 20
             usados_a.append(ya)
             usados_b.append(yb)
-            o.append(t(xa - 14, ya, f"{nome} {num(a, 1)}", 15, cor, 700, "end", MONO))
-            o.append(t(xb + 14, yb, num(b, 1), 15, cor, 700, "start", MONO))
+            o.append(t(xa - 14, ya, f"{nome} {num(a, 1)}", 15, _texto(cor), 700, "end", MONO))
+            o.append(t(xb + 14, yb, num(b, 1), 15, _texto(cor), 700, "start", MONO))
         return "".join(o)
 
     out.append(
@@ -513,6 +513,11 @@ def fig_grupos() -> str:
         )
     )
     return svg("".join(out), "Padrão de zeros por grupo da mistura gaussiana")
+
+
+def _texto(cor: str) -> str:
+    """Variante escura para texto pequeno sobre o papel."""
+    return {OUTROS: "#0b6650", "#3d8a74": "#2c6b5a"}.get(cor, cor)
 
 
 def _int(v: float) -> str:

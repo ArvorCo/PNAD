@@ -656,7 +656,7 @@ def fig_camara() -> str:
                 y + 50,
                 num(c["por_campo"][k]),
                 26,
-                CAMPO[k] if k != "centro" else INK,
+                INK if k in ("centro", "centro-esquerda") else CAMPO[k],
                 800,
                 "start",
                 MONO,

@@ -508,7 +508,7 @@ def fig_reguas() -> str:
             circ(sx(g["saldo"]), yy, 8, cor, f' stroke="{PAPER}" stroke-width="2"')
         )
         out.append(
-            t(sx(max(nx, hi)) + 10, y + 16, sinal(nx), 14, OUTROS, 700, "start", MONO)
+            t(sx(max(nx, hi)) + 10, y + 16, sinal(nx), 14, "#0b6650", 700, "start", MONO)
         )
         out.append(
             t(

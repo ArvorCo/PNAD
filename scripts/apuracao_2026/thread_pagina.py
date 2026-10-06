@@ -7,7 +7,7 @@ from .thread_base import DOSSIE, OG, SLUG, URL, esc
 TOM = {
     "flavio": "#1457aa",
     "lula": "#b02f21",
-    "outros": "#0f7f5f",
+    "outros": "#0b6650",
 }
 
 CSS = """
@@ -72,8 +72,8 @@ footer h2{font-family:var(--display);font-size:1.6rem;margin:0 0 10px}
   .c-metric{text-align:left;max-width:none;margin-top:12px}
   .c-metric b{white-space:normal}
   .c-metric span{font-size:.9rem}
-  .c-viz{padding:14px 10px 8px}
-  .c-viz svg{height:auto}
+  .c-viz{padding:14px 10px 8px;overflow-x:auto;justify-content:flex-start}
+  .c-viz svg{height:auto;min-width:680px}
   .c-foot{flex-direction:column;gap:4px;padding:10px 16px;font-size:.7rem}
   .copy{padding:16px 15px;font-size:.95rem}
 }
@@ -119,7 +119,7 @@ def render_card(i: int, total: int, post: dict) -> str:
       <h2>{esc(post["titulo_f"])}</h2>
       <div class="c-metric"><b style="font-size:{_tamanho_metrica(post["metrica_f"])}cqw">{esc(post["metrica_f"])}</b><span>{esc(post["metrica_rot_f"])}</span></div>
     </div>
-    <div class="c-viz">{post["svg"]}</div>
+    <div class="c-viz" tabindex="0" role="region" aria-label="Gráfico do card {i}">{post["svg"]}</div>
     <footer class="c-foot"><span>Fonte: {esc(post["fonte_f"])}</span><b>brasil.arvor.co</b></footer>
   </article>
   <div class="copy" data-copy="{esc(corpo)}"><span class="cc">{len(corpo)} caracteres</span>{esc(corpo)}</div>
