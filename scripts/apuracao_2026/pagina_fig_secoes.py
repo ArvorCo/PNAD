@@ -49,7 +49,9 @@ from .pagina_fig_base import (
 from .pagina_fig_mapas import MH, MW, paths_uf
 
 OURO = "#7d5b00"
-CLUSTER_COR = ["#1457aa", "#b02f21", "#7d5b00", "#0f7f5f", "#6b4a92"]
+# grupos em ordem do mais lulista ao menos: o primeiro na cor de Lula, o último na
+# de Flávio, os do meio em cores neutras ao voto
+CLUSTER_COR = ["#b02f21", "#7d5b00", "#0f7f5f", "#6b4a92", "#1457aa"]
 EXTENSO = {2: "dois", 3: "três", 4: "quatro", 5: "cinco", 6: "seis"}
 NOME = {"lula": "Lula", "flavio": "Flávio"}
 COR = {"lula": LULA, "flavio": FLAVIO}

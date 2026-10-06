@@ -251,70 +251,65 @@ def _nome_parte(S: dict, chave: str) -> str:
     return escape(nomes.get(chave, chave))
 
 
+def _var(C: dict, chave: str) -> dict:
+    return (C.get("variantes") or {}).get(chave) or {}
+
+
 def clusters_falha(S: dict) -> str:
-    """A tentativa com 15 partes e por que foi abandonada (antes da figura nova)."""
+    """As três tentativas, em três passos curtos (antes da figura nova)."""
     C = S["clusters"]
-    q = (C.get("variantes") or {}).get("quinze_partes")
-    if not q:
+    q, c5 = _var(C, "quinze_partes"), _var(C, "cinco_partes_clr")
+    if not q or not c5:
         return ""
-    deg = q.get("degrau_log") or {}
-    aj = q.get("ajuste") or {}
-    ari = aj.get("ari_outras_sementes") or [None, None]
-    nuv = [
-        _nome_parte(S, s["feature"])
-        for s in (q.get("nuvens") or {}).get("separacao") or []
-        if (s.get("acerto_balanceado_pct") or 0) >= 90
-    ]
-    frase_nuv = (
-        " Na projeção em duas dimensões, as nuvens que saltavam aos olhos eram seções com e sem voto em "
-        + " e em ".join(nuv)
-        + "."
-        if nuv
-        else ""
-    )
-    frase_ari = (
-        f" E a divisão mudava com a semente do algoritmo: o índice de Rand ajustado entre a partição escolhida e as das outras "
-        f"{aj.get('sementes', 0) - 1} sementes ia de {num(ari[0], 2)} a {num(ari[1], 2)}."
-        if ari[0] is not None
-        else ""
+    med = c5.get("mediana_votos_por_secao") or {}
+    art = [g for g in c5.get("grupos") or [] if g.get("artefato")]
+    eixo = c5.get("eixo_1") or {}
+    feature = str(eixo.get("feature") or "")
+    eixo_nome = {"brancos": "o voto branco", "nulos": "o voto nulo"}.get(
+        feature, feature
     )
     return p(
-        f"A primeira tentativa usou as {len(q['features'])} partes de cada seção: as 12 candidaturas, brancos, nulos e "
-        f"abstenção. Não deu certo. {num(q['zeros_substituidos_pct'], 1)}% das células da matriz eram zero, porque a "
-        "maioria das seções não dá voto nenhum às candidaturas nanicas, e o zero precisa virar 0,0001 antes do logaritmo. "
-        f"Na seção mediana, um voto fica a {num(deg.get('mediana') or 0, 1)} unidades de log desse zero, e a mistura usou "
-        "o degrau para separar as seções: os grupos saíram de quem tem ou não tem voto nas nanicas, não de lugar nem de "
-        f"perfil de voto (V de Cramér entre grupo e região de {num(q['cramer_v_regiao'], 2)}, perto de nenhuma "
-        f"associação).{frase_nuv}{frase_ari} Por isso refizemos a mistura só com as cinco partes que interessam.",
+        "Pedimos grupos à mistura gaussiana três vezes. "
+        f"A primeira usou as {len(q['features'])} partes de cada seção em log-razão: "
+        f"{num(q['zeros_substituidos_pct'], 1)}% das células eram zero, e os grupos saíram de quem tem ou não tem "
+        f"voto nas candidaturas nanicas (V de Cramér com a região de {num(q['cramer_v_regiao'], 2)}). "
+        "A segunda usou só Lula, Flávio, brancos, nulos e abstenção, ainda em log-razão: com mediana de "
+        f"{num(med.get('brancos') or 0, 0)} brancos e {num(med.get('nulos') or 0, 0)} nulos por seção, dobrar os "
+        f"brancos pesava tanto quanto dobrar o voto em Lula; o primeiro eixo virou {escape(eixo_nome)} e "
+        f"{grupos_extenso(len(art))} dos cinco grupos foram zero ou empate de brancos e nulos (V de "
+        f"{num(c5['cramer_v_regiao'], 2)}). A terceira, a publicada, usa as mesmas cinco variáveis como "
+        "proporções do eleitorado, sem log, como no pedido original: aí quatro brancos contra oito são um ponto "
+        "do eleitorado e não mandam em nada.",
         "inferencia",
     )
 
 
-def _sem_voto(S: dict, chave: str) -> str:
-    return {"brancos": "sem voto branco", "nulos": "sem voto nulo"}.get(
-        chave, f"sem voto em {_nome_parte(S, chave)}"
-    )
-
-
 def clusters_a(S: dict) -> str:
-    """O que entrou no modelo novo, o que ele separou e se o EM convergiu."""
+    """O que entrou no modelo publicado, o que ele separou e se o EM convergiu."""
     C = S["clusters"]
     comps = C["componentes"]
-    zp = C.get("zeros_por_parte") or {}
-    zeros = lista(
+    pad = C.get("padronizacao") or {}
+    nomes = {
+        "lula": "Lula",
+        "flavio": "Flávio",
+        "brancos": "brancos",
+        "nulos": "nulos",
+        "abstencao": "abstenção",
+    }
+    dps = lista(
         [
-            f"{num(z['pct_secoes'], 2)}% das seções {_sem_voto(S, k)}"
-            for k, z in zp.items()
-            if (z.get("pct_secoes") or 0) >= 0.1
+            f"{nomes.get(k, k)} {num(v['dp_pct'], 1)}"
+            for k, v in pad.items()
+            if v.get("dp_pct") is not None
         ]
     )
     h = p(
-        "Agora cada seção entra como cinco partes do eleitorado apto: Lula, Flávio, brancos, nulos e abstenção, "
-        "renormalizadas para somar 1. O voto nas outras dez candidaturas fica fora das partes: é exatamente o que falta "
-        "para o eleitorado inteiro e aparece no painel, ao lado de cada grupo. "
-        f"{num(C['zeros_substituidos_pct'], 2)}% das células ainda são zero"
-        + (f" ({zeros})" if zeros else "")
-        + f", e o zero continua virando 0,0001. A mistura de {C['k']} gaussianas separou "
+        "Cada seção entra como cinco proporções do eleitorado apto: votos de Lula, de Flávio, brancos, nulos e "
+        "abstenções, cada um dividido pelos aptos. O voto nas outras dez candidaturas fica implícito, como o que "
+        "falta para 100%, e aparece no painel ao lado de cada grupo. Sem log, o zero fica como zero. Antes da "
+        "mistura, cada proporção é padronizada: menos a média entre seções, dividida pelo desvio-padrão entre "
+        f"seções ({dps}, em pontos do eleitorado). A mistura de {C['k']} gaussianas, com covariância completa, "
+        "separou "
         + lista([f"{inteiro(c['secoes'])} (grupo {c['id'] + 1})" for c in comps])
         + " seções.",
         "verificado",
@@ -326,13 +321,19 @@ def clusters_a(S: dict) -> str:
 
 
 def clusters_leitura(S: dict) -> str:
-    """Geografia, o achado contrário (grupos que são artefato da contagem), os grupos
-    que são perfil de voto e por que as partes pequenas mandam na projeção."""
+    """Geografia, o que os grupos acrescentam ao mapa (achado contrário quando
+    não acrescentam) e o que cada eixo da projeção opõe."""
     C = S["clusters"]
     L = C.get("leitura") or {}
     h = p(escape(L["geografia"]), "inferencia") if L.get("geografia") else ""
-    if L.get("artefatos"):
-        h += nota("contrario", escape(L["artefatos"]))
+    for chave in ("artefatos", "mapa"):
+        x = L.get(chave)
+        if not x:
+            continue
+        contrario = (chave == "artefatos" and "Nenhum grupo" not in x) or (
+            chave == "mapa" and "não acrescenta" in x
+        )
+        h += nota("contrario", escape(x)) if contrario else p(escape(x), "inferencia")
     resto = [L.get("perfis"), L.get("geometria"), C.get("leitura_projecao")]
     if any(resto):
         h += p(" ".join(escape(x) for x in resto if x), "inferencia")
@@ -353,19 +354,12 @@ def escolha_k(C: dict) -> str:
         if melhor["k"] == k
         else f"o BIC preferiria k = {melhor['k']} ({menos(melhor['bic'], 0)} contra {menos(atual['bic'], 0) if atual else 's/d'})"
     )
-    mv = (C.get("variantes") or {}).get("meio_voto")
-    ari = (C.get("sensibilidade") or {}).get("ari_principal_vs_meio_voto")
-    sens = (
-        f" Trocar o zero por meio voto, e não por 0,0001, muda a partição (índice de Rand ajustado de {num(ari, 2)} contra a "
-        f"principal) e leva o V de Cramér com a região a {num(mv['cramer_v_regiao'], 2)}."
-        if mv and ari is not None
-        else ""
-    )
     return p(
-        f"O número de grupos, k = {k}, e a escolha das cinco partes são do autor ({escape(ek.get('data') or '')}); "
-        f"{concorda}. Deixar a terceira via fora das partes é decisão de leitura, não de método: a pergunta é como as "
-        "seções se dividem entre os dois finalistas, o voto que não escolhe ninguém e quem não foi votar."
-        + sens,
+        f"O número de grupos, k = {k}, e a escolha das cinco variáveis são do autor ({escape(ek.get('data') or '')}); "
+        f"{concorda}. Deixar a terceira via implícita é decisão de leitura, não de método: a pergunta é como as "
+        "seções se dividem entre os dois finalistas, o voto que não escolhe ninguém e quem não foi votar. Trocar a "
+        "log-razão por proporções cruas também é escolha nossa, depois de duas tentativas que mediram a contagem e "
+        "não o eleitorado.",
         "juizo",
     )
 

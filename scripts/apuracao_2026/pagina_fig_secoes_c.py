@@ -187,56 +187,65 @@ def barra_eleitorado(c: dict) -> str:
 
 
 def caixa_falha(C: dict, nomes: dict) -> str:
-    """'O que não deu certo': a versão de 15 partes, em números do JSON."""
-    q = (C.get("variantes") or {}).get("quinze_partes")
-    if not q:
+    """'O que não deu certo': as duas tentativas em log-razão, em números do JSON."""
+    var = C.get("variantes") or {}
+    q, c5 = var.get("quinze_partes"), var.get("cinco_partes_clr")
+    if not q and not c5:
         return ""
-    aj = q.get("ajuste") or {}
-    deg = q.get("degrau_log") or {}
-    ari = aj.get("ari_outras_sementes") or [None, None]
-    nuv = [
-        s
-        for s in (q.get("nuvens") or {}).get("separacao") or []
-        if (s.get("acerto_balanceado_pct") or 0) >= 90
-    ]
-    frase_nuv = (
-        "As nuvens da projeção eram seções com e sem voto em "
-        + " e em ".join(escape(nomes.get(s["feature"], s["feature"])) for s in nuv)
-        + "."
-        if nuv
-        else ""
-    )
-    estab = (
-        f" A partição mudava com a semente (índice de Rand ajustado de {num(ari[0], 2)} a {num(ari[1], 2)})."
-        if ari[0] is not None
-        else ""
+    paras = []
+    if q:
+        nuv = [
+            s
+            for s in (q.get("nuvens") or {}).get("separacao") or []
+            if (s.get("acerto_balanceado_pct") or 0) >= 90
+        ]
+        frase_nuv = (
+            " As nuvens da projeção eram seções com e sem voto em "
+            + " e em ".join(escape(nomes.get(s["feature"], s["feature"])) for s in nuv)
+            + "."
+            if nuv
+            else ""
+        )
+        paras.append(
+            f"<p><b>1. {len(q.get('features') or [])} partes em log-razão.</b> "
+            f"{num(q['zeros_substituidos_pct'], 1)}% das células eram zero, e o degrau de 0,0001 para um voto separou "
+            f"as seções por quem tinha ou não voto em candidatura nanica. V de Cramér com a região: "
+            f"{num(q['cramer_v_regiao'], 2)}.{frase_nuv}</p>"
+        )
+    if c5:
+        med = c5.get("mediana_votos_por_secao") or {}
+        art = [g for g in c5.get("grupos") or [] if g.get("artefato")]
+        quais = ", ".join(escape(g["artefato"]) for g in art)
+        conv = c5.get("convergencia") or {}
+        paras.append(
+            "<p><b>2. Cinco partes em log-razão.</b> Com mediana de "
+            f"{num(med.get('brancos') or 0, 0)} brancos e {num(med.get('nulos') or 0, 0)} nulos por seção, o log "
+            f"deu a eles o mesmo peso de Lula e Flávio: {grupos_extenso(len(art))} dos cinco grupos foram "
+            f"artefatos ({quais}). V de Cramér: {num(c5['cramer_v_regiao'], 2)}; "
+            f"{conv.get('no_maximo', 's/d')} de {conv.get('total', 's/d')} partidas no máximo.</p>"
+        )
+    paras.append(
+        "<p><b>3. Proporções do eleitorado, sem log</b>, a versão publicada: "
+        f"V de Cramér {num(C['cramer_v_regiao'], 2)}.{_ainda(C)}</p>"
     )
     return (
-        '<div class="cl-falha"><h4>O que não deu certo</h4>'
-        f"<p>A primeira versão usava {len(q.get('features') or [])} partes: as 12 candidaturas, brancos, nulos e "
-        f"abstenção. {num(q['zeros_substituidos_pct'], 1)}% das células eram zero, e o degrau de 0,0001 para "
-        f"um voto ({num(deg.get('mediana') or 0, 1)} unidades de log) separou as seções por quem tinha ou não "
-        f"voto em candidatura nanica. V de Cramér com a região: {num(q['cramer_v_regiao'], 2)}.{estab} {frase_nuv}</p>"
-        f"<p>Por isso a mistura foi refeita com as cinco partes que interessam. "
-        f"V de Cramér agora: {num(C['cramer_v_regiao'], 2)}.{_ainda(C)}</p></div>"
+        '<div class="cl-falha"><h4>O que não deu certo</h4>' + "".join(paras) + "</div>"
     )
 
 
 def _ainda(C: dict) -> str:
-    """Quais grupos do modelo novo ainda são artefato da contagem inteira."""
+    """Quais grupos do modelo publicado ainda são artefato da contagem inteira."""
     art = [c for c in C["componentes"] if c.get("artefato")]
     if not art:
-        return " Nenhum grupo novo é artefato da contagem."
+        return " Nenhum grupo é artefato da contagem."
     itens = [f"o {c['id'] + 1} ({escape(c['artefato'])})" for c in art]
     lista_ = ", ".join(itens[:-1]) + " e " + itens[-1] if len(itens) > 1 else itens[0]
     quantos = (
-        "um grupo novo é artefato"
+        "um grupo ainda é artefato"
         if len(art) == 1
-        else f"{grupos_extenso(len(art))} grupos novos são artefatos"
+        else f"{grupos_extenso(len(art))} grupos ainda são artefatos"
     )
-    return (
-        f" Ainda assim, {quantos} da contagem inteira, não perfil de seção: {lista_}."
-    )
+    return f" Ainda assim, {quantos} da contagem inteira: {lista_}."
 
 
 def _painel_clusters(S: dict) -> str:
