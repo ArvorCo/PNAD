@@ -363,3 +363,32 @@ def test_secoes_tamanho_tipo_altura_por_aba_e_margem():
     aviso = E["tipo_local"].get("aviso") or ""
     if aviso:
         assert legenda.count(aviso[:40]) == 1
+
+
+def test_clusters_secoes_elipse_do_proprio_grupo():
+    S = _fixture()
+    h = FIGURAS["clusters_secoes"]({"secoes": S})
+    el = re.search(r"<ellipse [^>]*>", h).group(0)
+    assert 'stroke="#5f6773"' in el and 'stroke-dasharray="7 5"' in el
+    assert 'fill-opacity="0.06"' in el and "#7d5b00" not in el
+    ma = S["clusters"]["mais_anomalo"]["id"]
+    assert f"Grupo {ma + 1}, o mais atípico" in h
+    # sem `pca.elipses`, a elipse sai da amostra do próprio grupo; com o campo,
+    # do centro e da covariância gravados
+    S["clusters"]["pca"]["elipses"] = [
+        {"cluster": ma, "x": 0.0, "y": 0.0, "cov": [[0.01, 0.0], [0.0, 0.01]]}
+    ]
+    h2 = FIGURAS["clusters_secoes"]({"secoes": S})
+    rx = float(re.search(r'<ellipse [^>]*rx="([0-9.]+)"', h2).group(1))
+    assert rx < float(re.search(r'<ellipse [^>]*rx="([0-9.]+)"', h).group(1))
+
+
+def test_elipse_cov_e_topo():
+    from apuracao_2026.pagina_fig_secoes import elipse_cov, topo_elipse
+
+    cx, cy, rx, ry, ang = elipse_cov(10, 20, 4.0, 1.0, 0.0)
+    assert (rx, ry, ang) == (4.0, 2.0, 0.0)
+    assert topo_elipse(cx, cy, rx, ry, ang) == (10, 18.0)
+    # girada 90 graus, o topo fica a um semieixo maior acima do centro
+    x, y = topo_elipse(0, 0, 4.0, 2.0, 90.0)
+    assert abs(x) < 1e-9 and abs(y + 4.0) < 1e-9
