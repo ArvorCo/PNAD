@@ -115,6 +115,8 @@ def achados(d: Mapping[str, Any]) -> dict[str, list[str]]:
             f"{_p(_resumo(d, 'lula', 90).get('pct_das_secoes'), 2)}% no total)."
         )
     inferido.extend(cl["interpretacao"][:3])
+    if cl.get("leitura_projecao"):
+        inferido.append(cl["leitura_projecao"])
     inferido.extend(ur.get("interpretacao", []))
     juizo = [
         "Seção com 90% para um candidato é, na esmagadora maioria, lugar que sempre "
@@ -306,21 +308,33 @@ def memorando(d: Mapping[str, Any]) -> str:
     w("")
 
     # ---------------- B
-    w("## B. Mistura gaussiana (k = 4)")
+    w(f"## B. Mistura gaussiana (k = {cl['k']})")
     w("")
     for f in cl["interpretacao"]:
         w(f"- {f}")
+    for chave in ("leitura_projecao", "estabilidade"):
+        if cl.get(chave):
+            w(f"- {cl[chave]}")
     w("")
+    ek = cl.get("escolha_k") or {}
+    if ek:
+        w(
+            f"Escolha de k (juízo editorial): k = {ek['k']}, {ek['motivo']} "
+            f"({ek['data']}; antes, k = {ek['anterior']}). O BIC prefere k = "
+            f"{ek['bic_prefere']}."
+        )
+        w("")
     w(
         f"Método: {cl['transformacao_detalhe']}. Covariância completa, "
-        f"{cl['ajuste']['n_init']} inicializações, semente "
-        f"{cl['ajuste']['random_state']}, ajuste sobre {_n(cl['ajuste']['secoes_ajuste'])} "
-        "seções (o país inteiro, sem amostra)."
+        f"{cl['ajuste']['n_init']} inicializações por semente, "
+        f"{len(cl['ajuste'].get('sementes') or [])} sementes, fica a de maior "
+        f"log-verossimilhança (semente {cl['ajuste']['random_state']}), ajuste sobre "
+        f"{_n(cl['ajuste']['secoes_ajuste'])} seções (o país inteiro, sem amostra)."
     )
     w("")
     w(
         "BIC (menor é melhor; com os degraus de zeros, a comparação entre k é "
-        "instável e serve só de contraste):"
+        "instável e serve só de contraste; cada k com o melhor de todas as sementes):"
     )
     w("")
     for b in cl["bic"]:
@@ -333,7 +347,7 @@ def memorando(d: Mapping[str, Any]) -> str:
     w("|---|---|---|---|---|---|")
     for c in cl["componentes"]:
         w(
-            f"| {c['id']} | {c['rotulo']} | {_n(c['secoes'])} | "
+            f"| {c['id'] + 1} | {c['rotulo']} | {_n(c['secoes'])} | "
             f"{_p(c['aptos_medio'], 0)} | {_p(c['loglik_media'], 2)} | "
             f"{_p(c['dispersao_logdet'], 1)} |"
         )
@@ -345,28 +359,28 @@ def memorando(d: Mapping[str, Any]) -> str:
     w("|---|---|---|---|---|---|")
     for c in dens["componentes"]:
         w(
-            f"| {c['id']} | {c['rotulo']} | {_n(c['secoes'])} | "
+            f"| {c['id'] + 1} | {c['rotulo']} | {_n(c['secoes'])} | "
             f"{_p(c['aptos_medio'], 0)} | {_p(c['loglik_media'], 2)} | "
             f"{_p(c['dispersao_logdet'], 1)} |"
         )
     w("")
     w(
-        f"Grupo mais anômalo na versão pedida: {cl['mais_anomalo']['id']}. Critério: "
-        f"{cl['mais_anomalo']['criterio']}"
+        f"Grupo mais anômalo na versão pedida: {cl['mais_anomalo']['id'] + 1}. "
+        f"Critério: {cl['mais_anomalo']['criterio']}"
     )
     w("")
     for s in cl["mais_anomalo"]["amostras"][:20]:
         w("- " + _linha_secao(s, None))
     w("")
-    w(f"Grupo mais anômalo na versão densa: {dens['mais_anomalo']['id']}.")
+    w(f"Grupo mais anômalo na versão densa: {dens['mais_anomalo']['id'] + 1}.")
     w("")
     for s in dens["mais_anomalo"]["amostras"][:10]:
         w("- " + _linha_secao(s, None))
     w("")
     sen = cl["sensibilidade"]
     w(
-        "Estabilidade (índice de Rand ajustado contra a versão pedida): outra "
-        f"semente {_p(sen['ari_principal_vs_outra_semente'], 3)}; nanicas somadas "
+        "Estabilidade (índice de Rand ajustado contra a versão pedida): segunda "
+        f"melhor semente {_p(sen.get('ari_principal_vs_outra_semente'), 3)}; nanicas somadas "
         f"{_p(sen['ari_principal_vs_nanicos_somados'], 3)}; versão densa "
         f"{_p(sen['ari_principal_vs_densa'], 3)}."
     )

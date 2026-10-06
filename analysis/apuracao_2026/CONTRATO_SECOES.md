@@ -66,7 +66,7 @@ exterior fica em hora local e `abertura_brasilia` é `null`. `recebido_tse` é o
 | `cobertura` | objeto | ver 1 |
 | `candidatos` | lista de `{numero, chave, nome, cor}` | os 12 da lista do TSE; `chave` = `lula`, `flavio` ou `n<numero>`; `cor` hex ou `null` |
 | `extremos` | objeto | pergunta A (seções acima de 90%), ver 2 |
-| `clusters` | objeto | pergunta B (mistura gaussiana k = 4), ver 3 |
+| `clusters` | objeto | pergunta B (mistura gaussiana k = 3), ver 3 |
 | `urna` | objeto | pergunta C (modelo de urna), ver 4 |
 | `outras` | objeto | pergunta D (outras anomalias de seção), ver 5 |
 | `achados` | `{verificado, inferido, juizo, hipotese, contrario}` | cada um lista de str |
@@ -119,24 +119,30 @@ arquivo de zona; o motivo diz se o arquivo de zona congelou incompleto), `tipo_a
 
 | chave | tipo | conteúdo |
 |---|---|---|
-| `k` | int | 4 |
+| `k` | int | 3 (escolha do autor desde 05/10/2026; antes 4) |
+| `escolha_k` | objeto | `{k, anterior, data, motivo, bic_prefere}`: o k é juízo editorial, o BIC fica ao lado |
 | `features` | lista str | chaves das 15 componentes: 12 candidatos, `brancos`, `nulos`, `abstencao` |
 | `base` | str | "votos de cada componente / aptos da seção (eleição federal)" |
 | `transformacao` | str | "clr" (log-razão centrada); zeros substituídos por 0,0001 antes do log |
 | `zero` | float | 0.0001 |
-| `ajuste` | objeto | `{secoes_ajuste, secoes_atribuidas, amostra_estratificada: bool, covariancia: "full", n_init: 10, random_state: 20261005, convergiu: bool, iteracoes, loglik_media}` |
-| `bic` | lista | `{k, bic, loglik_media}` para k = 3, 4, 5 |
-| `componentes` | lista de Componente | ordem do `id` (0 a 3) |
+| `ajuste` | objeto | `{secoes_ajuste, secoes_atribuidas, amostra_estratificada: bool, covariancia: "full", n_init: 10, random_state, sementes: [{semente, loglik_media, convergiu, iteracoes, cramer_v_regiao, ari_com_escolhida}], inicializacoes, sementes_no_maximo, convergiu: bool, iteracoes, loglik_media}`; `random_state` é a semente escolhida (a de maior log-verossimilhança entre 8 sementes de 10 inicializações) |
+| `bic` | lista | `{k, bic, loglik_media, loglik_sementes}` para k = 3, 4, 5, cada um com o melhor ajuste das mesmas sementes |
+| `componentes` | lista de Componente | ordem do `id` (0 a k − 1, do mais lulista ao menos); no texto e nas figuras o grupo aparece como `id + 1` |
+| `menos_votadas` | lista str | candidaturas fora Lula e Flávio, da menos para a mais votada (base dos padrões de zeros) |
+| `degrau_log` | objeto | `{aptos_mediana, mediana, p10, p90}`: distância, em unidades de log, entre zero (0,0001) e um voto na seção |
 | `mais_anomalo` | objeto | `{id, criterio, amostras: [SecaoRef + {loglik, mahalanobis}]}` (20 amostras) |
 | `menos_provaveis` | lista | as 50 seções de menor log-verossimilhança: `SecaoRef + {cluster, loglik, mahalanobis}` |
 | `cluster_regiao` | lista | `{cluster, regiao, secoes, pct_do_cluster, pct_da_regiao}` |
 | `cluster_uf` | lista | `{cluster, uf, secoes, pct_do_cluster}` |
-| `pca` | objeto | figura `clusters_secoes`: `{variancia_explicada: [f, f], cargas: [{feature, pc1, pc2}], centros: [{cluster, x, y}], colunas: ["x", "y", "cluster", "top200", "uf"], pontos: [[x, y, cluster, 0/1, "UF"]], n_pontos}` (amostra estratificada por cluster de até 8 mil, mais as 200 menos prováveis com `top200 = 1`) |
+| `pca` | objeto | figura `clusters_secoes`: `{variancia_explicada: [f, f], cargas: [{feature, pc1, pc2}], separacao: [{componente, feature, carga, zeros_pct, acerto_balanceado_pct, corte}], centros: [{cluster, x, y}], elipses: [{cluster, x, y, cov: [[f, f], [f, f]]}], colunas: ["x", "y", "cluster", "top200", "uf"], pontos: [[x, y, cluster, 0/1, "UF"]], n_pontos}` (amostra estratificada por cluster de até 8 mil, mais as 200 menos prováveis com `top200 = 1`); `separacao` mede, para a parte de maior carga em cada componente, o melhor corte no eixo entre seções com e sem voto nela |
+| `leitura_projecao` | str | compara as nuvens visíveis na projeção com a divisão da mistura |
+| `estabilidade` | str | quanto a log-verossimilhança e a partição mudam entre sementes, e o V de Cramér em todas |
 | `interpretacao` | lista str | primeira frase diz se os clusters são geografia |
 
 `Componente`:
 ```json
-{"id": 0, "rotulo": "Lula alto, Nordeste", "secoes": 0, "pct_secoes": 0.0, "aptos": 0,
+{"id": 0, "rotulo": "sem voto nas cinco candidaturas menos votadas; Lula 50% dos válidos; Nordeste 40% das seções",
+ "secoes": 0, "pct_secoes": 0.0, "aptos": 0,
  "aptos_medio": 0.0, "votantes_medio": 0.0,
  "centro_pct_eleitorado": {"lula": 0.0, "flavio": 0.0, "n70": 0.0, "brancos": 0.0, "nulos": 0.0, "abstencao": 0.0},
  "centro_pct_validos": {"lula": 0.0, "flavio": 0.0, "outros": 0.0},
@@ -150,6 +156,14 @@ O centro em `% do eleitorado` é a média das frações observadas das seções 
 destransformação do centro em CLR, que distorce componentes raros); `centro_pct_validos` é a soma
 dos votos do componente dividida pelos válidos do componente.
 
+`padrao_zeros` (lista, em cada Componente): o padrão de zeros que define o grupo, gerado dos
+números. Item: `{tipo: "sem"|"com"|"parcial_sem"|"parcial_com", conjunto: "menos_votadas"|null, m,
+partes: [chaves], pct_grupo, outro_grupo, pct_outro, pct_por_grupo: [f]}`. Um padrão vale quando
+cobre ao menos 95% das seções do grupo e difere em ao menos 30 pontos de algum outro grupo; testa
+nenhum voto nas m candidaturas menos votadas (maior m), algum voto nelas (menor m) e cada parte
+sozinha; `parcial_*` entra só quando outro grupo ficaria sem distinção. `rotulo` começa por esse
+padrão.
+
 ## 4. `urna` (pergunta C)
 
 | chave | tipo | conteúdo |
@@ -160,8 +174,8 @@ dos votos do componente dividida pelos válidos do componente.
 | `bruto` | lista | `{modelo, secoes, votantes, validos, flavio_pct, lula_pct, abstencao_pct, brancos_pct, nulos_pct}` (soma de votos / soma da base) |
 | `dentro_zona` | Estimador | figura `modelo_urna_zona` |
 | `dentro_local` | Estimador | mesmo prédio |
-| `registro` | objeto | caso Registro (SP), ver abaixo |
-| `interpretacao` | lista str | primeira frase diz se o modelo move o voto dentro da zona |
+| `reguas` | objeto | `{itens: [{estimador, metrica, regua, unidade, unidades, estimativa, ic95, bruto}], max_abs_pp, positivas, negativas, limiar_pp, leitura}`: as quatro réguas nacionais da urna mais nova contra a mais velha para Flávio (zona, prédio, linha de base da seção em 2022, troca de urna entre as eleições); `leitura` sai do tamanho máximo e de o sinal mudar entre elas |
+| `interpretacao` | lista str | primeira frase diz se o modelo move o voto dentro da zona; a última é `reguas.leitura` |
 
 `Estimador`:
 ```json
@@ -177,17 +191,6 @@ média, ponderada pelos votantes da unidade (zona ou local), das diferenças den
 controle, no mesmo subconjunto de seções. Para `dentro_local`, `minimo_secoes_por_modelo` = 1.
 Bases: Flávio e Lula em % dos válidos; abstenção em % dos aptos; brancos e nulos em % do
 comparecimento.
-
-`registro`:
-```json
-{"municipio": "REGISTRO", "uf": "SP", "mun_tse": "69531", "ibge": "3542602",
- "disponivel_2026": true,
- "zonas_2026": [{"zona": 0, "secoes": 0, "modelos": [{"modelo": "UE2020", "secoes": 0, "votantes": 0,
-                "flavio_pct": 0.0, "lula_pct": 0.0, "abstencao_pct": 0.0, "brancos_pct": 0.0, "nulos_pct": 0.0}]}],
- "dentro_zona_2026": {"pares": [...]},
- "ano_2022": {"disponivel": false, "fonte": "...", "motivo": "...", "zonas": [...mesmo formato, sem flavio/lula quando só há totais...]},
- "leitura": "..."}
-```
 
 ## 5. `outras` (pergunta D)
 
@@ -240,3 +243,22 @@ Toda mudança de chave já publicada fica registrada aqui, com data e motivo.
     `igual_100_por_tamanho`.
   - `cobertura.confere_nacional` (só sem `--parcial`): soma de todos os boletins
     contra o arquivo nacional do TSE.
+- 05/10/2026, k = 3 no lugar de k = 4 (pedido do autor, que lê três grupos na projeção
+  em dois componentes principais): `clusters.k` passa a 3, as variantes também usam k = 3,
+  e `clusters.escolha_k` registra a escolha, a data e o k que o BIC prefere. A tabela `bic`
+  continua com k = 3, 4 e 5.
+- 05/10/2026, ajuste por várias sementes: a semente única (20261005, 10 inicializações)
+  parava em máximos locais muito diferentes (com k = 3, log-verossimilhança média de −11,50
+  numa semente e +5,26 em outra). Cada k passa a ser ajustado com 8 sementes (20261005 a
+  20261012), fica o de maior log-verossimilhança; `ajuste.random_state` é a semente escolhida
+  e `ajuste.sementes` traz todas. `sensibilidade.ari_principal_vs_outra_semente` passa a
+  comparar com a segunda melhor semente (`outra_semente_criterio`).
+- 05/10/2026, rótulos: `componentes[].rotulo` começa pelo padrão de zeros que define o grupo
+  (`componentes[].padrao_zeros`); acréscimos `menos_votadas`, `degrau_log`,
+  `pca.separacao`, `pca.elipses` (centro e covariância de todas as seções de cada grupo no
+  plano, para a elipse da figura), `leitura_projecao`, `estabilidade`. Texto e figuras numeram os grupos
+  como `id + 1`.
+- 05/10/2026, remoção: `urna.registro` (caso Registro, SP) sai do JSON, da figura
+  `modelo_urna_zona`, do texto do capítulo 12 e do memorando, a pedido do autor. Ficam os
+  quatro estimadores nacionais e o bloco de 2022; acréscimo `urna.reguas`, que junta as
+  quatro réguas e escreve a leitura.

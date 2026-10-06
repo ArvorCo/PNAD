@@ -4,7 +4,7 @@ Lê `secoes.json` (contrato em `analysis/apuracao_2026/CONTRATO_SECOES.md`):
 `secoes_90` (histograma e mapa dos locais com seção de 90% ou mais),
 `secoes_excesso` (a seção contra a própria zona), `secoes_tamanho_tipo`
 (tamanho, tipo de local e modelo de urna) e `clusters_secoes` (mistura
-gaussiana de quatro grupos em projeção PCA). Nenhum número vem digitado: tudo
+gaussiana, k grupos, em projeção PCA). Nenhum número vem digitado: tudo
 sai do JSON, e cobertura parcial aparece na legenda.
 """
 
@@ -50,7 +50,9 @@ from .pagina_fig_base import (
 from .pagina_fig_mapas import MH, MW, paths_uf
 
 OURO = "#7d5b00"
-CLUSTER_COR = ["#1457aa", "#b02f21", "#0f7f5f", "#7d5b00"]
+CLUSTER_COR = ["#1457aa", "#b02f21", "#7d5b00"]
+CINZA_ELIPSE = "#5f6773"
+EXTENSO = {2: "dois", 3: "três", 4: "quatro", 5: "cinco", 6: "seis"}
 NOME = {"lula": "Lula", "flavio": "Flávio"}
 COR = {"lula": LULA, "flavio": FLAVIO}
 UF_REGIAO = {
@@ -84,6 +86,16 @@ def nota_cobertura(S: dict) -> str:
 
 def regiao_da_uf(uf: str | None) -> str:
     return UF_REGIAO.get(uf or "", "Exterior")
+
+
+def larg_texto(s: str, size: float, negrito: bool = False) -> float:
+    """Largura estimada do texto em px (Archivo; por cima, para reservar margem)."""
+    return len(s) * size * (0.6 if negrito else 0.55)
+
+
+def grupos_extenso(k: int) -> str:
+    """'três' para k = 3; acima do mapa, o número."""
+    return EXTENSO.get(k, str(k))
 
 
 def rotulo_cluster(S: dict, k: int) -> str:
@@ -594,6 +606,21 @@ def secoes_tamanho_tipo(d, **_op) -> str:
 # ------------------------------------------------------------------ 4 clusters_secoes
 
 
+def elipse_cov(
+    mx: float, my: float, sxx: float, syy: float, sxy: float
+) -> tuple[float, float, float, float, float]:
+    """Centro, semieixos (2 desvios) e ângulo em graus a partir da covariância."""
+    tr, det = sxx + syy, sxx * syy - sxy * sxy
+    disc = math.sqrt(max(tr * tr / 4 - det, 0))
+    l1, l2 = tr / 2 + disc, max(tr / 2 - disc, 0)
+    ang = (
+        math.degrees(math.atan2(l1 - sxx, sxy))
+        if sxy
+        else (0.0 if sxx >= syy else 90.0)
+    )
+    return mx, my, 2 * math.sqrt(l1), 2 * math.sqrt(l2), ang
+
+
 def _elipse(
     pts: list[tuple[float, float]],
 ) -> tuple[float, float, float, float, float] | None:
@@ -606,15 +633,38 @@ def _elipse(
     sxx = sum((p[0] - mx) ** 2 for p in pts) / n
     syy = sum((p[1] - my) ** 2 for p in pts) / n
     sxy = sum((p[0] - mx) * (p[1] - my) for p in pts) / n
-    tr, det = sxx + syy, sxx * syy - sxy * sxy
-    disc = math.sqrt(max(tr * tr / 4 - det, 0))
-    l1, l2 = tr / 2 + disc, max(tr / 2 - disc, 0)
-    ang = (
-        math.degrees(math.atan2(l1 - sxx, sxy))
-        if sxy
-        else (0.0 if sxx >= syy else 90.0)
+    return elipse_cov(mx, my, sxx, syy, sxy)
+
+
+def topo_elipse(
+    cx: float, cy: float, rx: float, ry: float, ang: float
+) -> tuple[float, float]:
+    """Ponto mais alto da borda da elipse girada (coordenadas de tela)."""
+    a = math.radians(ang)
+    h = math.hypot(rx * math.sin(a), ry * math.cos(a))
+    if h == 0:
+        return cx, cy
+    return cx + math.sin(a) * math.cos(a) * (ry * ry - rx * rx) / h, cy - h
+
+
+def _elipse_grupo(P: dict, k: int, X, Y, pontos: list[dict]):
+    """Elipse do grupo pelo centro e pela covariância de todas as seções dele,
+    projetadas no plano (`pca.elipses`); sem esse campo, pela amostra da figura."""
+    e = next((e for e in P.get("elipses") or [] if e["cluster"] == k), None)
+    if e is None:
+        return _elipse(
+            [
+                (X(p["x"]), Y(p["y"]))
+                for p in pontos
+                if p["cluster"] == k and not p.get("top200")
+            ]
+        )
+    ax = X(1.0) - X(0.0)
+    ay = Y(0.0) - Y(1.0)
+    (cxx, cxy), (_, cyy) = e["cov"]
+    return elipse_cov(
+        X(e["x"]), Y(e["y"]), ax * ax * cxx, ay * ay * cyy, -ax * ay * cxy
     )
-    return mx, my, 2 * math.sqrt(l1), 2 * math.sqrt(l2), ang
 
 
 def _larg_chip(texto: str, size: float = 13) -> float:
@@ -664,7 +714,7 @@ def _painel_clusters(S: dict) -> str:
         reg = c["regioes"][0] if c.get("regioes") else None
         marca = ' <em class="cl-anom">mais atípico</em>' if c["id"] == ma else ""
         itens.append(
-            f'<li><span class="sw" style="background:{CLUSTER_COR[c["id"] % 4]}"></span>'
+            f'<li><span class="sw" style="background:{CLUSTER_COR[c["id"] % len(CLUSTER_COR)]}"></span>'
             f"<b>Grupo {c['id'] + 1}: {escape(c['rotulo'])}</b>{marca}"
             f"<span>{inteiro(c['secoes'])} seções ({num(c['pct_secoes'], 1)}%)</span>"
             f"<span>Centro: Lula {num(cv['lula'], 1)}%, Flávio {num(cv['flavio'], 1)}%, outros {num(cv['outros'], 1)}% dos válidos</span>"
@@ -677,7 +727,10 @@ def _painel_clusters(S: dict) -> str:
             )
             + "</li>"
         )
-    return f'<div class="cl-painel"><h4>Os quatro grupos</h4><ol>{"".join(itens)}</ol></div>'
+    return (
+        f'<div class="cl-painel"><h4>Os {grupos_extenso(C["k"])} grupos</h4>'
+        f'<ol>{"".join(itens)}</ol></div>'
+    )
 
 
 def _tabela_anomalo(S: dict) -> str:
@@ -743,9 +796,9 @@ def clusters_secoes(d, **_op) -> str:
         svg_abre(
             w,
             h,
-            "Quatro grupos de seções na projeção em dois componentes principais",
+            f"{grupos_extenso(C['k']).capitalize()} grupos de seções na projeção em dois componentes principais",
             "Cada ponto é uma seção da amostra; cor pelo grupo da mistura gaussiana; as 200 seções menos prováveis "
-            "têm contorno preto; o grupo mais atípico tem a nuvem marcada em dourado.",
+            "têm contorno preto; a elipse cinza tracejada marca o grupo mais atípico (centro e covariância, dois desvios).",
             ' data-near="1"',
         )
     ]
@@ -780,14 +833,17 @@ def clusters_secoes(d, **_op) -> str:
         )
     )
     ma = C["mais_anomalo"]["id"]
-    nuvem = [(X(p["x"]), Y(p["y"])) for p in pontos if p["cluster"] == ma]
-    el = _elipse(nuvem)
+    el = _elipse_grupo(P, ma, X, Y, pontos)
+    elipse_svg = ""
     if el:
         cx, cy, rx, ry, ang = el
-        out.append(
+        # por cima dos pontos, em cinza tracejado e quase sem preenchimento: não se
+        # confunde com nenhuma das três cores de grupo
+        elipse_svg = (
             f'<ellipse cx="{cx:.1f}" cy="{cy:.1f}" rx="{rx:.1f}" ry="{max(ry, 6):.1f}" '
-            f'transform="rotate({ang:.1f} {cx:.1f} {cy:.1f})" fill="#f2e3b8" fill-opacity="0.45" '
-            f'stroke="{OURO}" stroke-width="2.5" stroke-dasharray="7 5"/>'
+            f'transform="rotate({ang:.1f} {cx:.1f} {cy:.1f})" fill="{CINZA_ELIPSE}" '
+            f'fill-opacity="0.06" stroke="{CINZA_ELIPSE}" stroke-width="2.2" '
+            'stroke-dasharray="7 5" pointer-events="none"/>'
         )
     grupos: dict[tuple[int, str], list[str]] = {}
     casados = _casa_menos_provaveis(C, pontos)
@@ -819,25 +875,24 @@ def clusters_secoes(d, **_op) -> str:
         xy.append([round(x), round(y), raio])
     for (k, reg), segs in sorted(grupos.items()):
         out.append(
-            f'<path d="{"".join(segs)}" stroke="{CLUSTER_COR[k % 4]}" data-as="regiao>{COR_REGIAO.get(reg, MUTED)}" '
+            f'<path d="{"".join(segs)}" stroke="{CLUSTER_COR[k % len(CLUSTER_COR)]}" data-as="regiao>{COR_REGIAO.get(reg, MUTED)}" '
             'stroke-width="4" stroke-linecap="round" stroke-opacity="0.5" fill="none"/>'
         )
     for x, y, k, reg in top:
         out.append(
-            f'<circle cx="{x:.1f}" cy="{y:.1f}" r="4.5" fill="{CLUSTER_COR[k % 4]}" '
+            f'<circle cx="{x:.1f}" cy="{y:.1f}" r="4.5" fill="{CLUSTER_COR[k % len(CLUSTER_COR)]}" '
             f'data-af="regiao>{COR_REGIAO.get(reg, MUTED)}" stroke="{INK}" stroke-width="1.3"/>'
         )
+    out.append(elipse_svg)
     caixas: list[tuple[float, float, float, float]] = []
     if el:
         ecx, ecy, erx, ery, eang = el
-        a = math.radians(eang)
-        meia_alt = math.hypot(erx * math.sin(a), max(ery, 6) * math.cos(a))
-        rot_el = "grupo mais atípico"
+        rot_el = f"Grupo {ma + 1}, o mais atípico"
         larg_el = _larg_chip(rot_el)
-        topo_el = ecy - meia_alt
-        # acima da elipse; se não couber no quadro, dentro dela, junto à borda superior
-        y_el = topo_el - 8 if topo_el - 8 - 21 >= y0 else topo_el + 28
-        x_el = min(max(ecx - larg_el / 2, x0 + 4), x1 - larg_el - 4)
+        # sobre a borda, no ponto mais alto da elipse; preso ao quadro do gráfico
+        bx_el, by_el = topo_elipse(ecx, ecy, erx, max(ery, 6), eang)
+        y_el = min(max(by_el + 5, y0 + 17), y1 - 6)
+        x_el = min(max(bx_el - larg_el / 2, x0 + 4), x1 - larg_el - 4)
         caixas.append((x_el, y_el - 15, larg_el, 21))
         rot_el_svg = f'<g pointer-events="none">{chip(x_el, y_el, rot_el, 13)}</g>'
     else:
@@ -892,7 +947,7 @@ def clusters_secoes(d, **_op) -> str:
         '<div data-alt-show="cluster">'
         + legenda_html(
             [
-                (rotulo_cluster(S, c["id"]), CLUSTER_COR[c["id"] % 4])
+                (rotulo_cluster(S, c["id"]), CLUSTER_COR[c["id"] % len(CLUSTER_COR)])
                 for c in C["componentes"]
             ],
             "Grupo da mistura gaussiana",
@@ -910,7 +965,7 @@ def clusters_secoes(d, **_op) -> str:
         f"Projeção das {inteiro(P.get('n_pontos', len(pontos)))} seções da amostra nos dois primeiros componentes "
         f"principais das {len(C['features'])} variáveis ({escape(C['transformacao'])} sobre {escape(C['base'])}). "
         f"Mistura gaussiana com k = {C['k']}, covariância completa, {aj.get('n_init')} inicializações. Contorno preto: as 200 "
-        "seções menos prováveis sob o modelo. O botão troca a cor do grupo pela região, para ver se grupo é geografia. "
+        "seções menos prováveis sob o modelo. Elipse cinza tracejada: centro e covariância do grupo mais atípico, a dois desvios. O botão troca a cor do grupo pela região, para ver se grupo é geografia. "
         f"{nota_cobertura(S)} Fonte: secoes.json."
     )
     apos = _painel_clusters(S) + leg_cl + leg_rg + _tabela_anomalo(S)
@@ -930,6 +985,8 @@ __all__ = [
     "CLUSTER_COR",
     "OURO",
     "UF_REGIAO",
+    "grupos_extenso",
+    "larg_texto",
     "local_ref",
     "nota_cobertura",
     "regiao_da_uf",

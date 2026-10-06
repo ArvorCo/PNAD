@@ -11,6 +11,7 @@ import pandas as pd
 import pytest
 from apuracao_2026 import secoes_base as sb
 from apuracao_2026 import secoes_clusters as sc
+from apuracao_2026 import secoes_clusters_leitura as sl
 from apuracao_2026 import secoes_texto as st
 from apuracao_2026 import secoes_urna as su
 
@@ -91,6 +92,134 @@ def test_ordem_estavel_do_mais_lulista_ao_menos():
     lula = np.array([10.0, 12.0, 80.0, 82.0, 50.0, 52.0])
     mapa = sc.ordem_estavel(rot, lula, 3)
     assert list(mapa[rot]) == [2, 2, 0, 0, 1, 1]
+
+
+def test_ajustar_melhor_fica_com_a_maior_verossimilhanca():
+    rng = np.random.default_rng(7)
+    centros = [np.array([0.6, 0.2, 0.1, 0.1]), np.array([0.2, 0.6, 0.1, 0.1])]
+    fr = np.vstack([rng.dirichlet(200 * c, size=200) for c in centros])
+    _, x = sc.coordenadas(fr)
+    aj = sc.ajustar_melhor(x, 2, sementes=(1, 2, 3), n_init=1)
+    lls = [r["loglik_media"] for r in aj.log]
+    assert [r["semente"] for r in aj.log] == [1, 2, 3]
+    assert aj.gm.score(x) == pytest.approx(max(lls), abs=1e-4)
+    assert aj.semente in (1, 2, 3) and aj.semente_segundo in (1, 2, 3)
+    assert aj.semente != aj.semente_segundo
+    assert len(aj.todos) == 3
+
+
+def test_k_principal_e_tres_com_bic_de_tres_a_cinco():
+    assert sc.K == 3
+    assert sc.K_TABELA == (3, 4, 5)
+    assert sc.ESCOLHA_K["k"] == 3 and sc.ESCOLHA_K["anterior"] == 4
+    assert len(sc.SEMENTES) == sc.N_SEMENTES == 8
+
+
+def test_separacao_acha_o_corte():
+    score = np.array([-3.0, -2.5, -2.0, 1.0, 1.5, 2.0])
+    zero = np.array([True, True, True, False, False, False])
+    acerto, corte = sc.separacao(score, zero)
+    assert acerto == pytest.approx(100.0)
+    assert -2.0 <= corte < 1.0
+    # o lado não importa: zeros à direita dão o mesmo acerto
+    assert sc.separacao(-score, zero)[0] == pytest.approx(100.0)
+    assert sc.separacao(score, np.zeros(6, dtype=bool)) is None
+
+
+def _grupos_de_zeros():
+    """Três grupos: sem voto em a e b; voto em a; voto em b (partes a, b, c)."""
+    zero = np.array(
+        [[True, True, False]] * 40
+        + [[False, True, False]] * 30
+        + [[True, False, False]] * 30
+    )
+    rot = np.array([0] * 40 + [1] * 30 + [2] * 30)
+    return zero, rot
+
+
+def test_padroes_zeros_pelos_numeros():
+    zero, rot = _grupos_de_zeros()
+    chaves = ["a", "b", "c"]
+    # a é a menos votada, b a seguinte
+    pads = sl.padroes_zeros(zero, rot, 3, chaves, [0, 1, 2])
+    g0 = pads[0][0]
+    assert g0["tipo"] == "sem" and g0["conjunto"] == "menos_votadas"
+    assert g0["m"] == 2 and g0["pct_grupo"] == 100.0 and g0["pct_outro"] == 0.0
+    nomes = {"a": "Ana", "b": "Bia", "c": "Caio"}
+    assert sl.descrever_padrao(pads[0], nomes).startswith(
+        "sem voto nas duas candidaturas menos votadas"
+    )
+    assert sl.descrever_padrao(pads[1], nomes) == "sem voto em Bia e com voto em Ana"
+    assert sl.descrever_padrao(pads[2], nomes) == "sem voto em Ana e com voto em Bia"
+    # nenhuma parte cobre o grupo inteiro: nenhum padrão
+    vazio = sl.padroes_zeros(
+        np.zeros((10, 3), dtype=bool), np.array([0, 1] * 5), 2, chaves, [0, 1, 2]
+    )
+    assert vazio == [[], []]
+
+
+def test_descrever_padrao_junta_nomes_e_partes():
+    itens = [
+        {
+            "tipo": "sem",
+            "conjunto": None,
+            "m": None,
+            "partes": ["n30"],
+            "pct_grupo": 100.0,
+        },
+        {
+            "tipo": "sem",
+            "conjunto": None,
+            "m": None,
+            "partes": ["n80"],
+            "pct_grupo": 100.0,
+        },
+        {
+            "tipo": "com",
+            "conjunto": None,
+            "m": None,
+            "partes": ["brancos"],
+            "pct_grupo": 99.0,
+        },
+        {
+            "tipo": "parcial_com",
+            "conjunto": None,
+            "m": None,
+            "partes": ["n55"],
+            "pct_grupo": 69.4,
+        },
+    ]
+    nomes = {"n30": "Romeu Zema", "n80": "Samara", "n55": "Ronaldo Caiado"}
+    assert sl.descrever_padrao(itens, nomes) == (
+        "sem voto em Romeu Zema e em Samara, com voto branco e com voto em "
+        "Ronaldo Caiado em 69% das seções"
+    )
+
+
+def test_rotulo_sem_padrao_usa_abstencao():
+    c = {
+        "centro_pct_validos": {"lula": 62.0, "flavio": 30.0},
+        "centro_pct_eleitorado": {"abstencao": 21.4},
+        "regioes": [{"regiao": "Nordeste", "pct_do_cluster": 50.2}],
+        "padrao_zeros": [],
+    }
+    assert (
+        sl.rotulo(c, {})
+        == "Lula 62% dos válidos, abstenção 21%, Nordeste 50% das seções"
+    )
+    c["padrao_zeros"] = [
+        {
+            "tipo": "sem",
+            "conjunto": "menos_votadas",
+            "m": 5,
+            "partes": [],
+            "pct_grupo": 100.0,
+        }
+    ]
+    assert sl.rotulo(c, {}) == (
+        "sem voto nas cinco candidaturas menos votadas; Lula 62% dos válidos; "
+        "Nordeste 50% das seções"
+    )
 
 
 def test_cramer_associacao_perfeita_e_nula():
@@ -504,7 +633,14 @@ def test_json_figuras(dados):
     assert pca["colunas"] == ["x", "y", "cluster", "top200", "uf"]
     assert all(len(p) == 5 for p in pca["pontos"])
     assert sum(p[3] for p in pca["pontos"]) == 200
-    assert len(dados["clusters"]["componentes"]) == 4
+    assert dados["clusters"]["k"] == 3
+    assert len(dados["clusters"]["componentes"]) == dados["clusters"]["k"]
+    assert [b["k"] for b in dados["clusters"]["bic"]] == [3, 4, 5]
+    assert dados["clusters"]["escolha_k"]["k"] == 3
+    assert len(dados["clusters"]["ajuste"]["sementes"]) == 8
+    assert "registro" not in dados["urna"]
+    assert len(dados["urna"]["reguas"]["itens"]) == 4
+    assert dados["urna"]["interpretacao"][-1] == dados["urna"]["reguas"]["leitura"]
     for est in ("dentro_zona", "dentro_local"):
         for p in dados["urna"][est]["pares"]:
             lo, hi = p["flavio_pp"]["ic95"]
@@ -519,3 +655,9 @@ def test_json_sem_travessao(dados):
 
 def test_memorando_sem_travessao(dados):
     assert st.PROIBIDO not in st.memorando(dados)
+
+
+def test_memorando_sem_registro_e_com_k(dados):
+    m = st.memorando(dados)
+    assert "Registro (SP)" not in m
+    assert f"## B. Mistura gaussiana (k = {dados['clusters']['k']})" in m

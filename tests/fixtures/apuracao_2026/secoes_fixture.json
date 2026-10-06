@@ -2173,7 +2173,7 @@
   }
  },
  "clusters": {
-  "k": 4,
+  "k": 3,
   "features": [
    "lula",
    "flavio",
@@ -2216,7 +2216,7 @@
   "componentes": [
    {
     "id": 0,
-    "rotulo": "Lula alto, Nordeste",
+    "rotulo": "sem voto nas cinco candidaturas menos votadas; Lula 62% dos válidos; Nordeste 50% das seções",
     "secoes": 1000,
     "pct_secoes": 10.0,
     "aptos": 300000,
@@ -2285,9 +2285,9 @@
    },
    {
     "id": 1,
-    "rotulo": "Flávio alto, Sul e Centro-Oeste",
-    "secoes": 2000,
-    "pct_secoes": 20.0,
+    "rotulo": "com voto em ao menos uma das cinco candidaturas menos votadas e sem voto em Samara; Flávio 51% dos válidos; Sudeste 60% das seções",
+    "secoes": 5000,
+    "pct_secoes": 50.0,
     "aptos": 600000,
     "aptos_medio": 300.0,
     "votantes_medio": 240.0,
@@ -2354,76 +2354,7 @@
    },
    {
     "id": 2,
-    "rotulo": "Disputa equilibrada, Sudeste",
-    "secoes": 3000,
-    "pct_secoes": 30.0,
-    "aptos": 900000,
-    "aptos_medio": 300.0,
-    "votantes_medio": 240.0,
-    "centro_pct_eleitorado": {
-     "lula": 30.0,
-     "flavio": 36.0,
-     "n70": 2.0,
-     "brancos": 1.5,
-     "nulos": 2.5,
-     "abstencao": 18.0
-    },
-    "centro_pct_validos": {
-     "lula": 40.0,
-     "flavio": 53.0,
-     "outros": 7.0
-    },
-    "peso": 0.3,
-    "dispersao_logdet": -14.0,
-    "dispersao_traco": 6.0,
-    "loglik_media": 9.0,
-    "loglik_p05": -1.0,
-    "mahalanobis_mediana": 4.1,
-    "ufs_top": [
-     {
-      "uf": "SP",
-      "secoes": 300,
-      "pct_do_cluster": 30.0
-     },
-     {
-      "uf": "BA",
-      "secoes": 250,
-      "pct_do_cluster": 25.0
-     },
-     {
-      "uf": "AP",
-      "secoes": 200,
-      "pct_do_cluster": 20.0
-     }
-    ],
-    "regioes": [
-     {
-      "regiao": "Norte",
-      "pct_do_cluster": 55.0
-     },
-     {
-      "regiao": "Centro-Oeste",
-      "pct_do_cluster": 30.0
-     },
-     {
-      "regiao": "Sudeste",
-      "pct_do_cluster": 15.0
-     }
-    ],
-    "modelo_urna": [
-     {
-      "modelo": "UE2020",
-      "pct_do_cluster": 60.0
-     },
-     {
-      "modelo": "UE2015",
-      "pct_do_cluster": 40.0
-     }
-    ]
-   },
-   {
-    "id": 3,
-    "rotulo": "Abstenção alta, Norte e exterior",
+    "rotulo": "com voto em Samara em 69% das seções; Lula 48% dos válidos; Norte 40% das seções",
     "secoes": 4000,
     "pct_secoes": 40.0,
     "aptos": 1200000,
@@ -2492,7 +2423,7 @@
    }
   ],
   "mais_anomalo": {
-   "id": 3,
+   "id": 2,
    "criterio": "menor log-verossimilhança média e maior dispersão",
    "amostras": [
     {
@@ -3371,7 +3302,7 @@
     "encerramento_brasilia": "2026-10-04 17:04:12",
     "recebido_tse": "2026-10-04 18:55:55",
     "explicacao": "seção rural de povoado (inferido pelo nome do local)",
-    "cluster": 2,
+    "cluster": 1,
     "loglik": -48.0,
     "mahalanobis": 12.0
    },
@@ -3410,7 +3341,7 @@
     "encerramento_brasilia": "2026-10-04 17:04:12",
     "recebido_tse": "2026-10-04 18:55:55",
     "explicacao": "seção rural de povoado (inferido pelo nome do local)",
-    "cluster": 3,
+    "cluster": 2,
     "loglik": -47.0,
     "mahalanobis": 12.0
    },
@@ -3527,7 +3458,7 @@
     "encerramento_brasilia": "2026-10-04 17:04:12",
     "recebido_tse": "2026-10-04 18:55:55",
     "explicacao": "seção rural de povoado (inferido pelo nome do local)",
-    "cluster": 2,
+    "cluster": 1,
     "loglik": -44.0,
     "mahalanobis": 12.0
    },
@@ -3566,7 +3497,7 @@
     "encerramento_brasilia": "2026-10-04 17:04:12",
     "recebido_tse": "2026-10-04 18:55:55",
     "explicacao": "seção rural de povoado (inferido pelo nome do local)",
-    "cluster": 3,
+    "cluster": 2,
     "loglik": -43.0,
     "mahalanobis": 12.0
    },
@@ -3683,7 +3614,7 @@
     "encerramento_brasilia": "2026-10-04 17:04:12",
     "recebido_tse": "2026-10-04 18:55:55",
     "explicacao": "seção rural de povoado (inferido pelo nome do local)",
-    "cluster": 2,
+    "cluster": 1,
     "loglik": -40.0,
     "mahalanobis": 12.0
    },
@@ -3722,7 +3653,7 @@
     "encerramento_brasilia": "2026-10-04 17:04:12",
     "recebido_tse": "2026-10-04 18:55:55",
     "explicacao": "seção rural de povoado (inferido pelo nome do local)",
-    "cluster": 3,
+    "cluster": 2,
     "loglik": -39.0,
     "mahalanobis": 12.0
    },
@@ -3839,7 +3770,7 @@
     "encerramento_brasilia": "2026-10-04 17:04:12",
     "recebido_tse": "2026-10-04 18:55:55",
     "explicacao": "seção rural de povoado (inferido pelo nome do local)",
-    "cluster": 2,
+    "cluster": 1,
     "loglik": -36.0,
     "mahalanobis": 12.0
    },
@@ -3878,7 +3809,7 @@
     "encerramento_brasilia": "2026-10-04 17:04:12",
     "recebido_tse": "2026-10-04 18:55:55",
     "explicacao": "seção rural de povoado (inferido pelo nome do local)",
-    "cluster": 3,
+    "cluster": 2,
     "loglik": -35.0,
     "mahalanobis": 12.0
    },
@@ -3995,7 +3926,7 @@
     "encerramento_brasilia": "2026-10-04 17:04:12",
     "recebido_tse": "2026-10-04 18:55:55",
     "explicacao": "seção rural de povoado (inferido pelo nome do local)",
-    "cluster": 2,
+    "cluster": 1,
     "loglik": -32.0,
     "mahalanobis": 12.0
    },
@@ -4034,7 +3965,7 @@
     "encerramento_brasilia": "2026-10-04 17:04:12",
     "recebido_tse": "2026-10-04 18:55:55",
     "explicacao": "seção rural de povoado (inferido pelo nome do local)",
-    "cluster": 3,
+    "cluster": 2,
     "loglik": -31.0,
     "mahalanobis": 12.0
    },
@@ -4151,7 +4082,7 @@
     "encerramento_brasilia": "2026-10-04 17:04:12",
     "recebido_tse": "2026-10-04 18:55:55",
     "explicacao": "seção rural de povoado (inferido pelo nome do local)",
-    "cluster": 2,
+    "cluster": 1,
     "loglik": -28.0,
     "mahalanobis": 12.0
    },
@@ -4190,7 +4121,7 @@
     "encerramento_brasilia": "2026-10-04 17:04:12",
     "recebido_tse": "2026-10-04 18:55:55",
     "explicacao": "seção rural de povoado (inferido pelo nome do local)",
-    "cluster": 3,
+    "cluster": 2,
     "loglik": -27.0,
     "mahalanobis": 12.0
    },
@@ -4307,7 +4238,7 @@
     "encerramento_brasilia": "2026-10-04 17:04:12",
     "recebido_tse": "2026-10-04 18:55:55",
     "explicacao": "seção rural de povoado (inferido pelo nome do local)",
-    "cluster": 2,
+    "cluster": 1,
     "loglik": -24.0,
     "mahalanobis": 12.0
    },
@@ -4346,7 +4277,7 @@
     "encerramento_brasilia": "2026-10-04 17:04:12",
     "recebido_tse": "2026-10-04 18:55:55",
     "explicacao": "seção rural de povoado (inferido pelo nome do local)",
-    "cluster": 3,
+    "cluster": 2,
     "loglik": -23.0,
     "mahalanobis": 12.0
    },
@@ -4463,7 +4394,7 @@
     "encerramento_brasilia": "2026-10-04 17:04:12",
     "recebido_tse": "2026-10-04 18:55:55",
     "explicacao": "seção rural de povoado (inferido pelo nome do local)",
-    "cluster": 2,
+    "cluster": 1,
     "loglik": -20.0,
     "mahalanobis": 12.0
    },
@@ -4502,7 +4433,7 @@
     "encerramento_brasilia": "2026-10-04 17:04:12",
     "recebido_tse": "2026-10-04 18:55:55",
     "explicacao": "seção rural de povoado (inferido pelo nome do local)",
-    "cluster": 3,
+    "cluster": 2,
     "loglik": -19.0,
     "mahalanobis": 12.0
    },
@@ -4619,7 +4550,7 @@
     "encerramento_brasilia": "2026-10-04 17:04:12",
     "recebido_tse": "2026-10-04 18:55:55",
     "explicacao": "seção rural de povoado (inferido pelo nome do local)",
-    "cluster": 2,
+    "cluster": 1,
     "loglik": -16.0,
     "mahalanobis": 12.0
    },
@@ -4658,7 +4589,7 @@
     "encerramento_brasilia": "2026-10-04 17:04:12",
     "recebido_tse": "2026-10-04 18:55:55",
     "explicacao": "seção rural de povoado (inferido pelo nome do local)",
-    "cluster": 3,
+    "cluster": 2,
     "loglik": -15.0,
     "mahalanobis": 12.0
    },
@@ -4775,7 +4706,7 @@
     "encerramento_brasilia": "2026-10-04 17:04:12",
     "recebido_tse": "2026-10-04 18:55:55",
     "explicacao": "seção rural de povoado (inferido pelo nome do local)",
-    "cluster": 2,
+    "cluster": 1,
     "loglik": -12.0,
     "mahalanobis": 12.0
    },
@@ -4814,7 +4745,7 @@
     "encerramento_brasilia": "2026-10-04 17:04:12",
     "recebido_tse": "2026-10-04 18:55:55",
     "explicacao": "seção rural de povoado (inferido pelo nome do local)",
-    "cluster": 3,
+    "cluster": 2,
     "loglik": -11.0,
     "mahalanobis": 12.0
    },
@@ -4931,7 +4862,7 @@
     "encerramento_brasilia": "2026-10-04 17:04:12",
     "recebido_tse": "2026-10-04 18:55:55",
     "explicacao": "seção rural de povoado (inferido pelo nome do local)",
-    "cluster": 2,
+    "cluster": 1,
     "loglik": -8.0,
     "mahalanobis": 12.0
    },
@@ -4970,7 +4901,7 @@
     "encerramento_brasilia": "2026-10-04 17:04:12",
     "recebido_tse": "2026-10-04 18:55:55",
     "explicacao": "seção rural de povoado (inferido pelo nome do local)",
-    "cluster": 3,
+    "cluster": 2,
     "loglik": -7.0,
     "mahalanobis": 12.0
    },
@@ -5087,7 +5018,7 @@
     "encerramento_brasilia": "2026-10-04 17:04:12",
     "recebido_tse": "2026-10-04 18:55:55",
     "explicacao": "seção rural de povoado (inferido pelo nome do local)",
-    "cluster": 2,
+    "cluster": 1,
     "loglik": -4.0,
     "mahalanobis": 12.0
    },
@@ -5126,7 +5057,7 @@
     "encerramento_brasilia": "2026-10-04 17:04:12",
     "recebido_tse": "2026-10-04 18:55:55",
     "explicacao": "seção rural de povoado (inferido pelo nome do local)",
-    "cluster": 3,
+    "cluster": 2,
     "loglik": -3.0,
     "mahalanobis": 12.0
    },
@@ -5212,143 +5143,108 @@
   "cluster_regiao": [
    {
     "cluster": 0,
-    "regiao": "Norte",
-    "secoes": 22,
-    "pct_do_cluster": 2.26,
-    "pct_da_regiao": 0.57
+    "regiao": "Centro-Oeste",
+    "secoes": 522,
+    "pct_do_cluster": 52.3,
+    "pct_da_regiao": 27.13
    },
    {
     "cluster": 0,
     "regiao": "Nordeste",
     "secoes": 15,
-    "pct_do_cluster": 1.53,
-    "pct_da_regiao": 0.38
+    "pct_do_cluster": 1.5,
+    "pct_da_regiao": 1.12
    },
    {
     "cluster": 0,
-    "regiao": "Centro-Oeste",
-    "secoes": 522,
-    "pct_do_cluster": 52.27,
-    "pct_da_regiao": 13.07
+    "regiao": "Norte",
+    "secoes": 22,
+    "pct_do_cluster": 2.2,
+    "pct_da_regiao": 0.61
    },
    {
     "cluster": 0,
     "regiao": "Sudeste",
     "secoes": 178,
-    "pct_do_cluster": 17.82,
-    "pct_da_regiao": 4.46
+    "pct_do_cluster": 17.84,
+    "pct_da_regiao": 9.6
    },
    {
     "cluster": 0,
     "regiao": "Sul",
     "secoes": 261,
-    "pct_do_cluster": 26.11,
-    "pct_da_regiao": 6.53
-   },
-   {
-    "cluster": 1,
-    "regiao": "Norte",
-    "secoes": 270,
-    "pct_do_cluster": 13.54,
-    "pct_da_regiao": 3.38
-   },
-   {
-    "cluster": 1,
-    "regiao": "Nordeste",
-    "secoes": 353,
-    "pct_do_cluster": 17.67,
-    "pct_da_regiao": 4.42
+    "pct_do_cluster": 26.15,
+    "pct_da_regiao": 20.58
    },
    {
     "cluster": 1,
     "regiao": "Centro-Oeste",
-    "secoes": 231,
-    "pct_do_cluster": 11.57,
-    "pct_da_regiao": 2.89
+    "secoes": 593,
+    "pct_do_cluster": 11.87,
+    "pct_da_regiao": 30.82
+   },
+   {
+    "cluster": 1,
+    "regiao": "Nordeste",
+    "secoes": 953,
+    "pct_do_cluster": 19.08,
+    "pct_da_regiao": 71.33
+   },
+   {
+    "cluster": 1,
+    "regiao": "Norte",
+    "secoes": 1014,
+    "pct_do_cluster": 20.3,
+    "pct_da_regiao": 28.1
    },
    {
     "cluster": 1,
     "regiao": "Sudeste",
-    "secoes": 730,
-    "pct_do_cluster": 36.52,
-    "pct_da_regiao": 9.13
+    "secoes": 1438,
+    "pct_do_cluster": 28.79,
+    "pct_da_regiao": 77.56
    },
    {
     "cluster": 1,
     "regiao": "Sul",
-    "secoes": 414,
-    "pct_do_cluster": 20.7,
-    "pct_da_regiao": 5.18
-   },
-   {
-    "cluster": 2,
-    "regiao": "Norte",
-    "secoes": 744,
-    "pct_do_cluster": 24.83,
-    "pct_da_regiao": 6.21
-   },
-   {
-    "cluster": 2,
-    "regiao": "Nordeste",
-    "secoes": 600,
-    "pct_do_cluster": 20.01,
-    "pct_da_regiao": 5.0
+    "secoes": 997,
+    "pct_do_cluster": 19.96,
+    "pct_da_regiao": 78.63
    },
    {
     "cluster": 2,
     "regiao": "Centro-Oeste",
-    "secoes": 362,
-    "pct_do_cluster": 12.08,
-    "pct_da_regiao": 3.02
+    "secoes": 809,
+    "pct_do_cluster": 20.24,
+    "pct_da_regiao": 42.05
    },
    {
     "cluster": 2,
-    "regiao": "Sudeste",
-    "secoes": 708,
-    "pct_do_cluster": 23.63,
-    "pct_da_regiao": 5.91
-   },
-   {
-    "cluster": 2,
-    "regiao": "Sul",
-    "secoes": 583,
-    "pct_do_cluster": 19.46,
-    "pct_da_regiao": 4.87
-   },
-   {
-    "cluster": 3,
-    "regiao": "Norte",
-    "secoes": 2573,
-    "pct_do_cluster": 64.34,
-    "pct_da_regiao": 16.08
-   },
-   {
-    "cluster": 3,
     "regiao": "Nordeste",
     "secoes": 368,
     "pct_do_cluster": 9.2,
-    "pct_da_regiao": 2.3
+    "pct_da_regiao": 27.54
    },
    {
-    "cluster": 3,
-    "regiao": "Centro-Oeste",
-    "secoes": 809,
-    "pct_do_cluster": 20.23,
-    "pct_da_regiao": 5.06
+    "cluster": 2,
+    "regiao": "Norte",
+    "secoes": 2573,
+    "pct_do_cluster": 64.36,
+    "pct_da_regiao": 71.29
    },
    {
-    "cluster": 3,
+    "cluster": 2,
     "regiao": "Sudeste",
     "secoes": 238,
-    "pct_do_cluster": 5.96,
-    "pct_da_regiao": 1.49
+    "pct_do_cluster": 5.95,
+    "pct_da_regiao": 12.84
    },
    {
-    "cluster": 3,
+    "cluster": 2,
     "regiao": "Sul",
     "secoes": 10,
-    "pct_do_cluster": 0.27,
-    "pct_da_regiao": 0.07
+    "pct_do_cluster": 0.25,
+    "pct_da_regiao": 0.79
    }
   ],
   "cluster_uf": [
@@ -5356,193 +5252,169 @@
     "cluster": 0,
     "uf": "AC",
     "secoes": 100,
-    "pct_do_cluster": 12.5
+    "pct_do_cluster": 12.5,
+    "pct_da_uf": 25.0
    },
    {
     "cluster": 0,
     "uf": "AP",
     "secoes": 100,
-    "pct_do_cluster": 12.5
-   },
-   {
-    "cluster": 0,
-    "uf": "MA",
-    "secoes": 100,
-    "pct_do_cluster": 12.5
+    "pct_do_cluster": 12.5,
+    "pct_da_uf": 25.0
    },
    {
     "cluster": 0,
     "uf": "BA",
     "secoes": 100,
-    "pct_do_cluster": 12.5
-   },
-   {
-    "cluster": 0,
-    "uf": "SP",
-    "secoes": 100,
-    "pct_do_cluster": 12.5
-   },
-   {
-    "cluster": 0,
-    "uf": "SC",
-    "secoes": 100,
-    "pct_do_cluster": 12.5
+    "pct_do_cluster": 12.5,
+    "pct_da_uf": 25.0
    },
    {
     "cluster": 0,
     "uf": "GO",
     "secoes": 100,
-    "pct_do_cluster": 12.5
+    "pct_do_cluster": 12.5,
+    "pct_da_uf": 25.0
+   },
+   {
+    "cluster": 0,
+    "uf": "MA",
+    "secoes": 100,
+    "pct_do_cluster": 12.5,
+    "pct_da_uf": 25.0
    },
    {
     "cluster": 0,
     "uf": "PI",
     "secoes": 100,
-    "pct_do_cluster": 12.5
+    "pct_do_cluster": 12.5,
+    "pct_da_uf": 25.0
+   },
+   {
+    "cluster": 0,
+    "uf": "SC",
+    "secoes": 100,
+    "pct_do_cluster": 12.5,
+    "pct_da_uf": 25.0
+   },
+   {
+    "cluster": 0,
+    "uf": "SP",
+    "secoes": 100,
+    "pct_do_cluster": 12.5,
+    "pct_da_uf": 25.0
    },
    {
     "cluster": 1,
     "uf": "AC",
-    "secoes": 100,
-    "pct_do_cluster": 12.5
+    "secoes": 200,
+    "pct_do_cluster": 12.5,
+    "pct_da_uf": 50.0
    },
    {
     "cluster": 1,
     "uf": "AP",
-    "secoes": 100,
-    "pct_do_cluster": 12.5
-   },
-   {
-    "cluster": 1,
-    "uf": "MA",
-    "secoes": 100,
-    "pct_do_cluster": 12.5
+    "secoes": 200,
+    "pct_do_cluster": 12.5,
+    "pct_da_uf": 50.0
    },
    {
     "cluster": 1,
     "uf": "BA",
-    "secoes": 100,
-    "pct_do_cluster": 12.5
-   },
-   {
-    "cluster": 1,
-    "uf": "SP",
-    "secoes": 100,
-    "pct_do_cluster": 12.5
-   },
-   {
-    "cluster": 1,
-    "uf": "SC",
-    "secoes": 100,
-    "pct_do_cluster": 12.5
+    "secoes": 200,
+    "pct_do_cluster": 12.5,
+    "pct_da_uf": 50.0
    },
    {
     "cluster": 1,
     "uf": "GO",
-    "secoes": 100,
-    "pct_do_cluster": 12.5
+    "secoes": 200,
+    "pct_do_cluster": 12.5,
+    "pct_da_uf": 50.0
+   },
+   {
+    "cluster": 1,
+    "uf": "MA",
+    "secoes": 200,
+    "pct_do_cluster": 12.5,
+    "pct_da_uf": 50.0
    },
    {
     "cluster": 1,
     "uf": "PI",
-    "secoes": 100,
-    "pct_do_cluster": 12.5
+    "secoes": 200,
+    "pct_do_cluster": 12.5,
+    "pct_da_uf": 50.0
+   },
+   {
+    "cluster": 1,
+    "uf": "SC",
+    "secoes": 200,
+    "pct_do_cluster": 12.5,
+    "pct_da_uf": 50.0
+   },
+   {
+    "cluster": 1,
+    "uf": "SP",
+    "secoes": 200,
+    "pct_do_cluster": 12.5,
+    "pct_da_uf": 50.0
    },
    {
     "cluster": 2,
     "uf": "AC",
     "secoes": 100,
-    "pct_do_cluster": 12.5
+    "pct_do_cluster": 12.5,
+    "pct_da_uf": 25.0
    },
    {
     "cluster": 2,
     "uf": "AP",
     "secoes": 100,
-    "pct_do_cluster": 12.5
-   },
-   {
-    "cluster": 2,
-    "uf": "MA",
-    "secoes": 100,
-    "pct_do_cluster": 12.5
+    "pct_do_cluster": 12.5,
+    "pct_da_uf": 25.0
    },
    {
     "cluster": 2,
     "uf": "BA",
     "secoes": 100,
-    "pct_do_cluster": 12.5
-   },
-   {
-    "cluster": 2,
-    "uf": "SP",
-    "secoes": 100,
-    "pct_do_cluster": 12.5
-   },
-   {
-    "cluster": 2,
-    "uf": "SC",
-    "secoes": 100,
-    "pct_do_cluster": 12.5
+    "pct_do_cluster": 12.5,
+    "pct_da_uf": 25.0
    },
    {
     "cluster": 2,
     "uf": "GO",
     "secoes": 100,
-    "pct_do_cluster": 12.5
+    "pct_do_cluster": 12.5,
+    "pct_da_uf": 25.0
    },
    {
     "cluster": 2,
-    "uf": "PI",
-    "secoes": 100,
-    "pct_do_cluster": 12.5
-   },
-   {
-    "cluster": 3,
-    "uf": "AC",
-    "secoes": 100,
-    "pct_do_cluster": 12.5
-   },
-   {
-    "cluster": 3,
-    "uf": "AP",
-    "secoes": 100,
-    "pct_do_cluster": 12.5
-   },
-   {
-    "cluster": 3,
     "uf": "MA",
     "secoes": 100,
-    "pct_do_cluster": 12.5
+    "pct_do_cluster": 12.5,
+    "pct_da_uf": 25.0
    },
    {
-    "cluster": 3,
-    "uf": "BA",
-    "secoes": 100,
-    "pct_do_cluster": 12.5
-   },
-   {
-    "cluster": 3,
-    "uf": "SP",
-    "secoes": 100,
-    "pct_do_cluster": 12.5
-   },
-   {
-    "cluster": 3,
-    "uf": "SC",
-    "secoes": 100,
-    "pct_do_cluster": 12.5
-   },
-   {
-    "cluster": 3,
-    "uf": "GO",
-    "secoes": 100,
-    "pct_do_cluster": 12.5
-   },
-   {
-    "cluster": 3,
+    "cluster": 2,
     "uf": "PI",
     "secoes": 100,
-    "pct_do_cluster": 12.5
+    "pct_do_cluster": 12.5,
+    "pct_da_uf": 25.0
+   },
+   {
+    "cluster": 2,
+    "uf": "SC",
+    "secoes": 100,
+    "pct_do_cluster": 12.5,
+    "pct_da_uf": 25.0
+   },
+   {
+    "cluster": 2,
+    "uf": "SP",
+    "secoes": 100,
+    "pct_do_cluster": 12.5,
+    "pct_da_uf": 25.0
    }
   ],
   "pca": {
@@ -5570,23 +5442,18 @@
    "centros": [
     {
      "cluster": 0,
-     "x": -2.0,
-     "y": 1.0
+     "x": -1.859,
+     "y": 0.922
     },
     {
      "cluster": 1,
-     "x": 2.0,
-     "y": 1.2
+     "x": 1.22,
+     "y": -0.068
     },
     {
      "cluster": 2,
-     "x": 0.5,
-     "y": -1.5
-    },
-    {
-     "cluster": 3,
      "x": -0.5,
-     "y": -0.4
+     "y": -0.341
     }
    ],
    "colunas": [
@@ -5600,21 +5467,21 @@
     [
      0.869,
      -1.41,
-     2,
+     1,
      0,
      "SP"
     ],
     [
      0.071,
      -0.389,
-     3,
+     2,
      0,
      "SC"
     ],
     [
      0.554,
      -0.202,
-     2,
+     1,
      0,
      "SP"
     ],
@@ -5663,7 +5530,7 @@
     [
      0.372,
      -2.074,
-     2,
+     1,
      0,
      "SP"
     ],
@@ -5705,7 +5572,7 @@
     [
      1.572,
      -1.481,
-     2,
+     1,
      0,
      "AP"
     ],
@@ -5719,21 +5586,21 @@
     [
      0.596,
      -0.663,
-     2,
+     1,
      0,
      "BA"
     ],
     [
      -1.089,
      -0.381,
-     3,
+     2,
      0,
      "PI"
     ],
     [
      0.588,
      -2.189,
-     2,
+     1,
      0,
      "BA"
     ],
@@ -5761,7 +5628,7 @@
     [
      -0.156,
      -1.377,
-     2,
+     1,
      0,
      "AP"
     ],
@@ -5782,7 +5649,7 @@
     [
      -0.513,
      -0.773,
-     2,
+     1,
      0,
      "BA"
     ],
@@ -5796,7 +5663,7 @@
     [
      1.248,
      -0.814,
-     2,
+     1,
      0,
      "SP"
     ],
@@ -5810,21 +5677,21 @@
     [
      -0.45,
      -0.393,
-     3,
+     2,
      0,
      "PI"
     ],
     [
      -1.301,
      0.051,
-     3,
+     2,
      0,
      "GO"
     ],
     [
      0.283,
      -1.322,
-     2,
+     1,
      0,
      "SC"
     ],
@@ -5845,7 +5712,7 @@
     [
      0.496,
      -1.317,
-     2,
+     1,
      0,
      "GO"
     ],
@@ -5908,14 +5775,14 @@
     [
      0.465,
      -0.681,
-     2,
+     1,
      0,
      "SP"
     ],
     [
      -0.783,
      -0.751,
-     3,
+     2,
      0,
      "GO"
     ],
@@ -5929,14 +5796,14 @@
     [
      -1.126,
      -0.571,
-     3,
+     2,
      0,
      "SC"
     ],
     [
      -1.179,
      -0.123,
-     3,
+     2,
      0,
      "BA"
     ],
@@ -5971,7 +5838,7 @@
     [
      -0.77,
      0.89,
-     3,
+     2,
      0,
      "MA"
     ],
@@ -5985,7 +5852,7 @@
     [
      -0.889,
      -0.822,
-     3,
+     2,
      0,
      "SP"
     ],
@@ -5999,14 +5866,14 @@
     [
      0.098,
      -0.399,
-     3,
+     2,
      0,
      "PI"
     ],
     [
      -0.497,
      -0.16,
-     3,
+     2,
      0,
      "MA"
     ],
@@ -6048,7 +5915,7 @@
     [
      -0.572,
      0.482,
-     3,
+     2,
      0,
      "AC"
     ],
@@ -6062,7 +5929,7 @@
     [
      -0.266,
      -2.318,
-     2,
+     1,
      0,
      "PI"
     ],
@@ -6076,7 +5943,7 @@
     [
      0.871,
      -1.388,
-     2,
+     1,
      0,
      "GO"
     ],
@@ -6097,7 +5964,7 @@
     [
      0.336,
      -1.803,
-     2,
+     1,
      0,
      "SP"
     ],
@@ -6146,7 +6013,7 @@
     [
      -1.4,
      -0.155,
-     3,
+     2,
      0,
      "SC"
     ],
@@ -6174,14 +6041,14 @@
     [
      0.23,
      -1.415,
-     2,
+     1,
      0,
      "AP"
     ],
     [
      1.048,
      -1.246,
-     2,
+     1,
      0,
      "AP"
     ],
@@ -6195,21 +6062,21 @@
     [
      0.299,
      0.009,
-     3,
+     2,
      0,
      "BA"
     ],
     [
      -0.13,
      -1.64,
-     2,
+     1,
      0,
      "SC"
     ],
     [
      0.446,
      -2.065,
-     2,
+     1,
      0,
      "GO"
     ],
@@ -6223,35 +6090,35 @@
     [
      -0.289,
      -0.361,
-     3,
+     2,
      0,
      "AC"
     ],
     [
      0.573,
      -1.331,
-     2,
+     1,
      0,
      "SC"
     ],
     [
      0.289,
      -0.255,
-     2,
+     1,
      0,
      "AC"
     ],
     [
      0.479,
      -2.265,
-     2,
+     1,
      0,
      "SP"
     ],
     [
      1.507,
      -1.48,
-     2,
+     1,
      0,
      "AP"
     ],
@@ -6265,7 +6132,7 @@
     [
      -0.171,
      -1.472,
-     3,
+     2,
      0,
      "PI"
     ],
@@ -6286,7 +6153,7 @@
     [
      -1.177,
      0.266,
-     3,
+     2,
      0,
      "AP"
     ],
@@ -6314,14 +6181,14 @@
     [
      0.209,
      -1.741,
-     2,
+     1,
      0,
      "GO"
     ],
     [
      1.101,
      -0.497,
-     3,
+     2,
      0,
      "MA"
     ],
@@ -6342,21 +6209,21 @@
     [
      -0.186,
      -0.914,
-     2,
+     1,
      0,
      "BA"
     ],
     [
      -0.493,
      -0.025,
-     3,
+     2,
      0,
      "MA"
     ],
     [
      1.089,
      -1.937,
-     2,
+     1,
      0,
      "SC"
     ],
@@ -6384,7 +6251,7 @@
     [
      0.984,
      -1.395,
-     2,
+     1,
      0,
      "AP"
     ],
@@ -6405,7 +6272,7 @@
     [
      0.639,
      -2.23,
-     2,
+     1,
      0,
      "AC"
     ],
@@ -6447,14 +6314,14 @@
     [
      -0.707,
      -0.454,
-     3,
+     2,
      0,
      "AP"
     ],
     [
      -0.679,
      -0.648,
-     3,
+     2,
      0,
      "AP"
     ],
@@ -6468,14 +6335,14 @@
     [
      0.331,
      -1.42,
-     2,
+     1,
      0,
      "SC"
     ],
     [
      -1.538,
      0.101,
-     3,
+     2,
      0,
      "SC"
     ],
@@ -6489,14 +6356,14 @@
     [
      0.013,
      -0.704,
-     3,
+     2,
      0,
      "AP"
     ],
     [
      -1.005,
      -0.624,
-     3,
+     2,
      0,
      "MA"
     ],
@@ -6531,14 +6398,14 @@
     [
      1.505,
      -0.645,
-     2,
+     1,
      0,
      "PI"
     ],
     [
      1.793,
      -1.124,
-     2,
+     1,
      0,
      "GO"
     ],
@@ -6559,7 +6426,7 @@
     [
      -0.328,
      -0.08,
-     3,
+     2,
      0,
      "GO"
     ],
@@ -6580,21 +6447,21 @@
     [
      1.1,
      -1.044,
-     2,
+     1,
      0,
      "SP"
     ],
     [
      -0.662,
      -0.046,
-     3,
+     2,
      0,
      "GO"
     ],
     [
      -0.109,
      -1.324,
-     2,
+     1,
      0,
      "AC"
     ],
@@ -6608,7 +6475,7 @@
     [
      -0.411,
      -1.267,
-     3,
+     2,
      0,
      "PI"
     ],
@@ -6692,7 +6559,7 @@
     [
      0.222,
      -1.261,
-     2,
+     1,
      0,
      "GO"
     ],
@@ -6706,7 +6573,7 @@
     [
      0.014,
      0.365,
-     3,
+     2,
      0,
      "AP"
     ],
@@ -6727,14 +6594,14 @@
     [
      0.331,
      0.019,
-     2,
+     1,
      0,
      "MA"
     ],
     [
      0.38,
      -1.32,
-     2,
+     1,
      0,
      "BA"
     ],
@@ -6748,7 +6615,7 @@
     [
      -0.075,
      -0.291,
-     2,
+     1,
      0,
      "SC"
     ],
@@ -6762,7 +6629,7 @@
     [
      -0.996,
      -0.165,
-     3,
+     2,
      0,
      "AC"
     ],
@@ -6790,7 +6657,7 @@
     [
      0.156,
      -1.679,
-     2,
+     1,
      0,
      "PI"
     ],
@@ -6811,7 +6678,7 @@
     [
      0.116,
      -1.274,
-     2,
+     1,
      0,
      "AC"
     ],
@@ -6825,7 +6692,7 @@
     [
      -1.081,
      -0.761,
-     3,
+     2,
      0,
      "PI"
     ],
@@ -6867,14 +6734,14 @@
     [
      -0.515,
      -0.455,
-     3,
+     2,
      0,
      "GO"
     ],
     [
      0.266,
      -0.046,
-     3,
+     2,
      0,
      "MA"
     ],
@@ -6902,7 +6769,7 @@
     [
      0.11,
      -0.398,
-     2,
+     1,
      0,
      "BA"
     ],
@@ -6923,28 +6790,28 @@
     [
      0.712,
      -1.037,
-     2,
+     1,
      0,
      "BA"
     ],
     [
      0.208,
      -0.787,
-     3,
+     2,
      0,
      "PI"
     ],
     [
      -0.004,
      -1.054,
-     3,
+     2,
      0,
      "AC"
     ],
     [
      -0.079,
      -0.5,
-     3,
+     2,
      0,
      "SP"
     ],
@@ -6965,7 +6832,7 @@
     [
      1.423,
      -1.61,
-     2,
+     1,
      0,
      "AC"
     ],
@@ -6993,7 +6860,7 @@
     [
      -0.182,
      -0.188,
-     3,
+     2,
      0,
      "AP"
     ],
@@ -7007,35 +6874,35 @@
     [
      0.183,
      -1.462,
-     2,
+     1,
      0,
      "BA"
     ],
     [
      0.235,
      -1.024,
-     2,
+     1,
      0,
      "AC"
     ],
     [
      0.479,
      -1.093,
-     2,
+     1,
      0,
      "SC"
     ],
     [
      0.598,
      -2.174,
-     2,
+     1,
      0,
      "PI"
     ],
     [
      0.389,
      -1.585,
-     2,
+     1,
      0,
      "GO"
     ],
@@ -7049,7 +6916,7 @@
     [
      -0.71,
      -0.996,
-     3,
+     2,
      0,
      "BA"
     ],
@@ -7077,7 +6944,7 @@
     [
      -1.759,
      -1.09,
-     3,
+     2,
      0,
      "SP"
     ],
@@ -7091,21 +6958,21 @@
     [
      0.216,
      0.62,
-     3,
+     2,
      0,
      "AP"
     ],
     [
      -0.281,
      -1.151,
-     3,
+     2,
      0,
      "AP"
     ],
     [
      0.126,
      -1.101,
-     2,
+     1,
      0,
      "GO"
     ],
@@ -7126,7 +6993,7 @@
     [
      0.342,
      -0.478,
-     3,
+     2,
      0,
      "PI"
     ],
@@ -7140,14 +7007,14 @@
     [
      -0.135,
      -1.798,
-     2,
+     1,
      0,
      "PI"
     ],
     [
      0.812,
      -1.03,
-     2,
+     1,
      0,
      "SP"
     ],
@@ -7189,21 +7056,21 @@
     [
      -0.302,
      -0.17,
-     3,
+     2,
      0,
      "SP"
     ],
     [
      0.136,
      -1.369,
-     2,
+     1,
      0,
      "AP"
     ],
     [
      0.661,
      -1.023,
-     2,
+     1,
      0,
      "AC"
     ],
@@ -7217,7 +7084,7 @@
     [
      0.177,
      -1.437,
-     2,
+     1,
      0,
      "GO"
     ],
@@ -7231,7 +7098,7 @@
     [
      0.005,
      -1.011,
-     3,
+     2,
      0,
      "BA"
     ],
@@ -7245,7 +7112,7 @@
     [
      0.311,
      -1.664,
-     2,
+     1,
      0,
      "GO"
     ],
@@ -7259,21 +7126,21 @@
     [
      0.903,
      -1.966,
-     2,
+     1,
      0,
      "AC"
     ],
     [
      -1.377,
      -0.484,
-     3,
+     2,
      0,
      "MA"
     ],
     [
      0.605,
      -1.988,
-     2,
+     1,
      0,
      "PI"
     ],
@@ -7301,7 +7168,7 @@
     [
      -0.733,
      -0.851,
-     2,
+     1,
      0,
      "BA"
     ],
@@ -7315,35 +7182,35 @@
     [
      0.203,
      -1.79,
-     2,
+     1,
      0,
      "GO"
     ],
     [
      -0.28,
      -0.325,
-     3,
+     2,
      0,
      "GO"
     ],
     [
      0.247,
      -1.616,
-     2,
+     1,
      0,
      "SP"
     ],
     [
      0.183,
      -0.625,
-     3,
+     2,
      0,
      "BA"
     ],
     [
      -0.85,
      -0.329,
-     3,
+     2,
      0,
      "AP"
     ],
@@ -7364,42 +7231,42 @@
     [
      0.513,
      -0.42,
-     3,
+     2,
      0,
      "MA"
     ],
     [
      -1.216,
      0.371,
-     3,
+     2,
      0,
      "SP"
     ],
     [
      -1.155,
      -1.717,
-     3,
+     2,
      0,
      "MA"
     ],
     [
      0.46,
      -0.386,
-     3,
+     2,
      0,
      "SP"
     ],
     [
      0.516,
      -1.076,
-     2,
+     1,
      0,
      "PI"
     ],
     [
      -1.27,
      -0.091,
-     3,
+     2,
      0,
      "SC"
     ],
@@ -7420,7 +7287,7 @@
     [
      0.43,
      -1.565,
-     2,
+     1,
      0,
      "AC"
     ],
@@ -7441,7 +7308,7 @@
     [
      -0.697,
      -0.163,
-     3,
+     2,
      0,
      "GO"
     ],
@@ -7455,35 +7322,35 @@
     [
      0.799,
      -0.773,
-     2,
+     1,
      0,
      "AP"
     ],
     [
      -0.642,
      -0.619,
-     3,
+     2,
      0,
      "AP"
     ],
     [
      -0.482,
      -1.044,
-     2,
+     1,
      0,
      "PI"
     ],
     [
      -1.146,
      -0.602,
-     3,
+     2,
      0,
      "MA"
     ],
     [
      -0.492,
      -0.1,
-     3,
+     2,
      0,
      "AC"
     ],
@@ -7497,7 +7364,7 @@
     [
      0.813,
      -1.908,
-     2,
+     1,
      0,
      "GO"
     ],
@@ -7532,35 +7399,35 @@
     [
      1.23,
      -1.09,
-     2,
+     1,
      0,
      "SC"
     ],
     [
      -0.364,
      -1.025,
-     3,
+     2,
      0,
      "BA"
     ],
     [
      -0.077,
      -1.293,
-     2,
+     1,
      0,
      "AC"
     ],
     [
      0.2,
      -0.596,
-     2,
+     1,
      0,
      "GO"
     ],
     [
      0.022,
      -1.509,
-     2,
+     1,
      0,
      "SC"
     ],
@@ -7602,7 +7469,7 @@
     [
      -1.126,
      -0.87,
-     3,
+     2,
      0,
      "AP"
     ],
@@ -7637,28 +7504,28 @@
     [
      0.563,
      -1.379,
-     2,
+     1,
      0,
      "AC"
     ],
     [
      -1.221,
      -0.666,
-     3,
+     2,
      0,
      "AC"
     ],
     [
      -0.655,
      -0.458,
-     3,
+     2,
      0,
      "AP"
     ],
     [
      -1.696,
      -0.91,
-     3,
+     2,
      0,
      "PI"
     ],
@@ -7672,21 +7539,21 @@
     [
      -0.406,
      -1.026,
-     3,
+     2,
      0,
      "AP"
     ],
     [
      -0.419,
      -0.121,
-     3,
+     2,
      0,
      "AC"
     ],
     [
      0.41,
      -0.377,
-     3,
+     2,
      0,
      "AP"
     ],
@@ -7721,7 +7588,7 @@
     [
      -1.111,
      -1.319,
-     3,
+     2,
      0,
      "AC"
     ],
@@ -7735,42 +7602,42 @@
     [
      -0.863,
      0.35,
-     3,
+     2,
      0,
      "MA"
     ],
     [
      -0.905,
      -0.676,
-     3,
+     2,
      0,
      "PI"
     ],
     [
      -0.649,
      -0.651,
-     3,
+     2,
      0,
      "AP"
     ],
     [
      0.844,
      -1.585,
-     2,
+     1,
      0,
      "GO"
     ],
     [
      -1.294,
      0.178,
-     3,
+     2,
      0,
      "SP"
     ],
     [
      0.444,
      -1.329,
-     2,
+     1,
      0,
      "SC"
     ],
@@ -7784,63 +7651,63 @@
     [
      -0.054,
      -0.456,
-     3,
+     2,
      0,
      "GO"
     ],
     [
      -1.525,
      -1.035,
-     3,
+     2,
      0,
      "PI"
     ],
     [
      0.301,
      -1.908,
-     2,
+     1,
      0,
      "SP"
     ],
     [
      0.243,
      0.54,
-     3,
+     2,
      0,
      "AC"
     ],
     [
      1.048,
      -2.292,
-     2,
+     1,
      0,
      "MA"
     ],
     [
      1.559,
      -1.638,
-     2,
+     1,
      0,
      "PI"
     ],
     [
      -0.23,
      -1.634,
-     2,
+     1,
      0,
      "PI"
     ],
     [
      -0.194,
      0.393,
-     3,
+     2,
      0,
      "BA"
     ],
     [
      -0.207,
      -1.968,
-     2,
+     1,
      0,
      "PI"
     ],
@@ -7854,7 +7721,7 @@
     [
      -0.749,
      -0.346,
-     3,
+     2,
      0,
      "SC"
     ],
@@ -7868,7 +7735,7 @@
     [
      -0.292,
      -1.402,
-     2,
+     1,
      0,
      "BA"
     ],
@@ -7882,7 +7749,7 @@
     [
      0.001,
      -1.722,
-     2,
+     1,
      0,
      "MA"
     ],
@@ -7931,42 +7798,42 @@
     [
      0.803,
      -1.878,
-     2,
+     1,
      0,
      "MA"
     ],
     [
      -0.332,
      -0.319,
-     3,
+     2,
      0,
      "SC"
     ],
     [
      -1.656,
      -0.32,
-     3,
+     2,
      0,
      "AP"
     ],
     [
      0.329,
      -0.768,
-     3,
+     2,
      0,
      "AP"
     ],
     [
      0.317,
      -1.169,
-     2,
+     1,
      0,
      "AP"
     ],
     [
      -0.02,
      0.488,
-     3,
+     2,
      0,
      "SC"
     ],
@@ -7980,7 +7847,7 @@
     [
      0.696,
      -1.563,
-     2,
+     1,
      0,
      "AC"
     ],
@@ -8029,7 +7896,7 @@
     [
      -0.581,
      -0.722,
-     3,
+     2,
      0,
      "AC"
     ],
@@ -8057,7 +7924,7 @@
     [
      0.803,
      -2.011,
-     2,
+     1,
      0,
      "SC"
     ],
@@ -8071,28 +7938,28 @@
     [
      -0.817,
      -0.492,
-     3,
+     2,
      0,
      "MA"
     ],
     [
      0.107,
      -1.315,
-     2,
+     1,
      0,
      "AC"
     ],
     [
      0.046,
      -1.681,
-     2,
+     1,
      0,
      "MA"
     ],
     [
      -0.024,
      -1.475,
-     2,
+     1,
      0,
      "PI"
     ],
@@ -8106,14 +7973,14 @@
     [
      -0.346,
      -0.617,
-     3,
+     2,
      0,
      "BA"
     ],
     [
      0.075,
      -1.339,
-     2,
+     1,
      0,
      "BA"
     ],
@@ -8141,7 +8008,7 @@
     [
      0.634,
      -0.389,
-     3,
+     2,
      0,
      "SP"
     ],
@@ -8183,7 +8050,7 @@
     [
      0.565,
      -1.324,
-     2,
+     1,
      0,
      "GO"
     ],
@@ -8197,7 +8064,7 @@
     [
      0.019,
      -0.124,
-     3,
+     2,
      0,
      "PI"
     ],
@@ -8211,14 +8078,14 @@
     [
      1.409,
      -1.322,
-     2,
+     1,
      0,
      "AC"
     ],
     [
      -0.147,
      -1.567,
-     2,
+     1,
      0,
      "AP"
     ],
@@ -8232,7 +8099,7 @@
     [
      -1.638,
      -0.893,
-     3,
+     2,
      0,
      "SP"
     ],
@@ -8267,7 +8134,7 @@
     [
      1.307,
      -1.425,
-     2,
+     1,
      0,
      "PI"
     ],
@@ -8288,7 +8155,7 @@
     [
      0.735,
      -1.338,
-     2,
+     1,
      0,
      "MA"
     ],
@@ -8302,42 +8169,42 @@
     [
      0.075,
      0.403,
-     3,
+     2,
      0,
      "GO"
     ],
     [
      -1.168,
      -0.789,
-     3,
+     2,
      0,
      "AC"
     ],
     [
      -0.307,
      -0.43,
-     3,
+     2,
      0,
      "SC"
     ],
     [
      -0.43,
      -0.942,
-     2,
+     1,
      0,
      "GO"
     ],
     [
      0.963,
      -2.39,
-     2,
+     1,
      0,
      "AC"
     ],
     [
      -1.001,
      -1.637,
-     2,
+     1,
      0,
      "SC"
     ],
@@ -8351,14 +8218,14 @@
     [
      0.799,
      -1.296,
-     2,
+     1,
      0,
      "SC"
     ],
     [
      -0.228,
      0.308,
-     3,
+     2,
      0,
      "BA"
     ],
@@ -8393,56 +8260,56 @@
     [
      -0.486,
      -0.259,
-     3,
+     2,
      0,
      "AP"
     ],
     [
      0.291,
      -1.253,
-     2,
+     1,
      0,
      "AC"
     ],
     [
      1.191,
      -1.162,
-     2,
+     1,
      0,
      "MA"
     ],
     [
      -0.273,
      -0.214,
-     3,
+     2,
      0,
      "SP"
     ],
     [
      -0.925,
      -0.587,
-     3,
+     2,
      0,
      "AP"
     ],
     [
      0.94,
      -2.08,
-     2,
+     1,
      0,
      "BA"
     ],
     [
      -0.215,
      0.35,
-     3,
+     2,
      0,
      "PI"
     ],
     [
      -0.012,
      -1.866,
-     2,
+     1,
      0,
      "SP"
     ],
@@ -8456,14 +8323,14 @@
     [
      0.058,
      -0.365,
-     3,
+     2,
      0,
      "BA"
     ],
     [
      -0.154,
      -1.703,
-     2,
+     1,
      0,
      "SP"
     ],
@@ -8484,7 +8351,7 @@
     [
      -0.216,
      -0.803,
-     3,
+     2,
      0,
      "AP"
     ],
@@ -8498,70 +8365,70 @@
     [
      -0.791,
      -0.002,
-     3,
+     2,
      0,
      "BA"
     ],
     [
      0.813,
      -2.044,
-     2,
+     1,
      0,
      "PI"
     ],
     [
      0.705,
      -2.266,
-     2,
+     1,
      0,
      "MA"
     ],
     [
      -0.462,
      -0.434,
-     3,
+     2,
      0,
      "AP"
     ],
     [
      -2.01,
      0.545,
-     3,
+     2,
      0,
      "MA"
     ],
     [
      -0.215,
      -0.727,
-     3,
+     2,
      0,
      "AP"
     ],
     [
      0.05,
      -1.017,
-     3,
+     2,
      0,
      "SP"
     ],
     [
      0.341,
      -1.02,
-     2,
+     1,
      0,
      "GO"
     ],
     [
      1.492,
      -1.465,
-     2,
+     1,
      0,
      "PI"
     ],
     [
      -0.859,
      -0.29,
-     3,
+     2,
      0,
      "SP"
     ],
@@ -8582,7 +8449,7 @@
     [
      0.679,
      -0.994,
-     2,
+     1,
      0,
      "AC"
     ],
@@ -8596,21 +8463,21 @@
     [
      1.407,
      -1.914,
-     2,
+     1,
      0,
      "GO"
     ],
     [
      -0.934,
      -0.099,
-     3,
+     2,
      0,
      "SC"
     ],
     [
      0.354,
      -0.642,
-     3,
+     2,
      0,
      "BA"
     ],
@@ -8631,7 +8498,7 @@
     [
      0.143,
      -2.273,
-     2,
+     1,
      0,
      "AP"
     ],
@@ -8645,14 +8512,14 @@
     [
      0.211,
      -1.519,
-     2,
+     1,
      0,
      "SP"
     ],
     [
      1.283,
      -2.874,
-     2,
+     1,
      0,
      "GO"
     ],
@@ -8673,21 +8540,21 @@
     [
      -0.267,
      -1.8,
-     2,
+     1,
      0,
      "AC"
     ],
     [
      -0.455,
      -0.397,
-     3,
+     2,
      0,
      "AC"
     ],
     [
      0.281,
      -1.363,
-     2,
+     1,
      0,
      "AC"
     ],
@@ -8722,7 +8589,7 @@
     [
      -1.325,
      -0.991,
-     3,
+     2,
      0,
      "AC"
     ],
@@ -8750,7 +8617,7 @@
     [
      0.801,
      -0.847,
-     2,
+     1,
      0,
      "AC"
     ],
@@ -8764,7 +8631,7 @@
     [
      -0.083,
      -0.276,
-     3,
+     2,
      0,
      "BA"
     ],
@@ -8778,14 +8645,14 @@
     [
      1.704,
      -1.461,
-     2,
+     1,
      0,
      "PI"
     ],
     [
      0.102,
      -1.313,
-     2,
+     1,
      0,
      "PI"
     ],
@@ -8799,7 +8666,7 @@
     [
      -0.945,
      0.551,
-     3,
+     2,
      0,
      "PI"
     ],
@@ -8820,35 +8687,35 @@
     [
      -0.775,
      -0.493,
-     3,
+     2,
      0,
      "GO"
     ],
     [
      0.319,
      -1.395,
-     2,
+     1,
      0,
      "AP"
     ],
     [
      -0.244,
      -0.813,
-     3,
+     2,
      0,
      "BA"
     ],
     [
      -0.323,
      -0.019,
-     3,
+     2,
      0,
      "BA"
     ],
     [
      0.365,
      -0.239,
-     3,
+     2,
      0,
      "SC"
     ],
@@ -8862,21 +8729,21 @@
     [
      -0.514,
      -1.745,
-     2,
+     1,
      0,
      "PI"
     ],
     [
      0.06,
      -1.174,
-     3,
+     2,
      0,
      "MA"
     ],
     [
      -0.079,
      -0.861,
-     2,
+     1,
      0,
      "GO"
     ],
@@ -8897,14 +8764,14 @@
     [
      -0.99,
      -0.65,
-     3,
+     2,
      0,
      "BA"
     ],
     [
      -0.823,
      -0.617,
-     3,
+     2,
      0,
      "AP"
     ],
@@ -8953,28 +8820,28 @@
     [
      1.169,
      -0.934,
-     2,
+     1,
      0,
      "SP"
     ],
     [
      -0.579,
      -0.876,
-     2,
+     1,
      0,
      "MA"
     ],
     [
      0.756,
      -1.072,
-     2,
+     1,
      0,
      "SC"
     ],
     [
      0.424,
      -0.277,
-     3,
+     2,
      0,
      "PI"
     ],
@@ -9009,21 +8876,21 @@
     [
      -0.482,
      -2.366,
-     2,
+     1,
      0,
      "BA"
     ],
     [
      -0.596,
      -0.775,
-     3,
+     2,
      0,
      "GO"
     ],
     [
      0.769,
      -1.596,
-     2,
+     1,
      0,
      "SP"
     ],
@@ -9051,21 +8918,21 @@
     [
      -0.704,
      -0.87,
-     3,
+     2,
      0,
      "BA"
     ],
     [
      -0.048,
      -1.579,
-     2,
+     1,
      0,
      "GO"
     ],
     [
      0.333,
      -0.726,
-     3,
+     2,
      0,
      "PI"
     ],
@@ -9079,7 +8946,7 @@
     [
      -0.487,
      -0.549,
-     3,
+     2,
      0,
      "SP"
     ],
@@ -9093,14 +8960,14 @@
     [
      0.5,
      -1.325,
-     2,
+     1,
      0,
      "SC"
     ],
     [
      0.158,
      -1.323,
-     2,
+     1,
      0,
      "SP"
     ],
@@ -9135,7 +9002,7 @@
     [
      0.293,
      -1.682,
-     2,
+     1,
      0,
      "GO"
     ],
@@ -9149,7 +9016,7 @@
     [
      -0.356,
      -0.615,
-     3,
+     2,
      0,
      "SP"
     ],
@@ -9163,21 +9030,21 @@
     [
      0.403,
      -1.272,
-     2,
+     1,
      0,
      "SP"
     ],
     [
      -0.154,
      -0.469,
-     3,
+     2,
      0,
      "PI"
     ],
     [
      -0.95,
      -0.574,
-     3,
+     2,
      0,
      "AP"
     ],
@@ -9226,7 +9093,7 @@
     [
      -0.232,
      -0.755,
-     3,
+     2,
      0,
      "MA"
     ],
@@ -9240,21 +9107,21 @@
     [
      -0.129,
      -1.004,
-     2,
+     1,
      0,
      "SC"
     ],
     [
      0.54,
      -1.231,
-     2,
+     1,
      0,
      "SC"
     ],
     [
      0.512,
      -1.355,
-     2,
+     1,
      0,
      "GO"
     ],
@@ -9282,14 +9149,14 @@
     [
      -0.355,
      -0.324,
-     3,
+     2,
      0,
      "PI"
     ],
     [
      -0.151,
      0.346,
-     3,
+     2,
      0,
      "AC"
     ],
@@ -9310,7 +9177,7 @@
     [
      0.574,
      -1.474,
-     2,
+     1,
      0,
      "MA"
     ],
@@ -9331,35 +9198,35 @@
     [
      0.792,
      -0.596,
-     3,
+     2,
      0,
      "MA"
     ],
     [
      0.311,
      -0.565,
-     3,
+     2,
      0,
      "AC"
     ],
     [
      0.11,
      -1.766,
-     2,
+     1,
      0,
      "GO"
     ],
     [
      -0.36,
      -1.413,
-     2,
+     1,
      0,
      "SP"
     ],
     [
      -0.335,
      -1.635,
-     2,
+     1,
      0,
      "BA"
     ],
@@ -9380,14 +9247,14 @@
     [
      -0.26,
      -1.621,
-     2,
+     1,
      0,
      "GO"
     ],
     [
      0.785,
      -1.292,
-     2,
+     1,
      0,
      "BA"
     ],
@@ -9443,7 +9310,7 @@
     [
      0.534,
      -1.67,
-     2,
+     1,
      0,
      "BA"
     ],
@@ -9457,7 +9324,7 @@
     [
      -0.79,
      0.346,
-     3,
+     2,
      0,
      "GO"
     ],
@@ -9471,7 +9338,7 @@
     [
      0.989,
      -0.78,
-     2,
+     1,
      0,
      "SC"
     ],
@@ -9485,7 +9352,7 @@
     [
      0.468,
      -1.647,
-     2,
+     1,
      0,
      "SC"
     ],
@@ -9506,7 +9373,7 @@
     [
      0.728,
      -0.99,
-     2,
+     1,
      0,
      "PI"
     ],
@@ -9520,21 +9387,21 @@
     [
      0.802,
      -0.916,
-     2,
+     1,
      0,
      "SP"
     ],
     [
      -0.088,
      -0.971,
-     3,
+     2,
      0,
      "SP"
     ],
     [
      0.595,
      -1.526,
-     2,
+     1,
      0,
      "SC"
     ],
@@ -9555,21 +9422,21 @@
     [
      0.403,
      -0.556,
-     3,
+     2,
      0,
      "PI"
     ],
     [
      -0.303,
      0.848,
-     3,
+     2,
      0,
      "AP"
     ],
     [
      0.3,
      -1.193,
-     2,
+     1,
      0,
      "MA"
     ],
@@ -9583,14 +9450,14 @@
     [
      -0.026,
      -1.731,
-     2,
+     1,
      0,
      "SC"
     ],
     [
      1.289,
      -1.475,
-     2,
+     1,
      0,
      "SC"
     ],
@@ -9611,7 +9478,7 @@
     [
      2.204,
      -0.901,
-     2,
+     1,
      0,
      "SC"
     ],
@@ -9632,7 +9499,7 @@
     [
      0.777,
      -2.357,
-     2,
+     1,
      0,
      "BA"
     ],
@@ -9646,35 +9513,35 @@
     [
      -0.351,
      -1.54,
-     2,
+     1,
      0,
      "SC"
     ],
     [
      -0.974,
      0.273,
-     3,
+     2,
      0,
      "SC"
     ],
     [
      -1.771,
      -0.425,
-     3,
+     2,
      0,
      "BA"
     ],
     [
      0.737,
      -1.225,
-     2,
+     1,
      0,
      "PI"
     ],
     [
      -1.233,
      -0.182,
-     3,
+     2,
      0,
      "SP"
     ],
@@ -9688,7 +9555,7 @@
     [
      0.389,
      -2.126,
-     2,
+     1,
      0,
      "SC"
     ],
@@ -9709,14 +9576,14 @@
     [
      1.403,
      -1.641,
-     2,
+     1,
      0,
      "AP"
     ],
     [
      -0.657,
      -0.119,
-     3,
+     2,
      0,
      "SP"
     ],
@@ -9737,7 +9604,7 @@
     [
      1.07,
      -2.045,
-     2,
+     1,
      0,
      "BA"
     ],
@@ -9765,7 +9632,7 @@
     [
      0.867,
      -1.661,
-     2,
+     1,
      0,
      "SC"
     ],
@@ -9793,7 +9660,7 @@
     [
      -0.53,
      0.157,
-     3,
+     2,
      0,
      "AC"
     ],
@@ -9849,7 +9716,7 @@
     [
      -1.109,
      0.178,
-     2,
+     1,
      1,
      "SP"
     ],
@@ -9863,7 +9730,7 @@
     [
      -2.795,
      0.773,
-     2,
+     1,
      1,
      "GO"
     ],
@@ -9884,7 +9751,7 @@
     [
      3.518,
      -0.806,
-     2,
+     1,
      1,
      "MA"
     ],
@@ -9905,14 +9772,14 @@
     [
      -2.295,
      2.474,
-     3,
+     2,
      1,
      "GO"
     ],
     [
      -2.303,
      1.739,
-     3,
+     2,
      1,
      "AC"
     ],
@@ -9926,14 +9793,14 @@
     [
      -3.52,
      0.385,
-     2,
+     1,
      1,
      "GO"
     ],
     [
      3.56,
      0.763,
-     3,
+     2,
      1,
      "BA"
     ]
@@ -9941,9 +9808,16 @@
    "n_pontos": 620
   },
   "interpretacao": [
-   "Os grupos seguem a geografia: três dos quatro têm mais da metade das seções numa só região.",
+   "Os grupos seguem a geografia: dois dos três têm mais da metade das seções numa só região.",
    "O grupo mais atípico reúne seções pequenas com abstenção alta."
-  ]
+  ],
+  "escolha_k": {
+   "k": 3,
+   "anterior": 4,
+   "data": "05/10/2026",
+   "motivo": "escolha do autor pela leitura visual da projeção em dois componentes principais",
+   "bic_prefere": 5
+  }
  },
  "urna": {
   "modelos": [
@@ -10626,101 +10500,6 @@
      }
     }
    ]
-  },
-  "registro": {
-   "municipio": "REGISTRO",
-   "uf": "SP",
-   "mun_tse": "69531",
-   "ibge": "3542602",
-   "disponivel_2026": true,
-   "zonas_2026": [
-    {
-     "zona": 135,
-     "secoes": 90,
-     "modelos": [
-      {
-       "modelo": "UE2020",
-       "secoes": 50,
-       "votantes": 9000,
-       "flavio_pct": 55.1,
-       "lula_pct": 35.2,
-       "abstencao_pct": 21.0,
-       "brancos_pct": 2.1,
-       "nulos_pct": 3.2
-      },
-      {
-       "modelo": "UE2022",
-       "secoes": 40,
-       "votantes": 7000,
-       "flavio_pct": 54.8,
-       "lula_pct": 35.9,
-       "abstencao_pct": 20.5,
-       "brancos_pct": 2.0,
-       "nulos_pct": 3.0
-      }
-     ]
-    }
-   ],
-   "dentro_zona_2026": {
-    "pares": [
-     {
-      "a": "UE2020",
-      "b": "UE2022",
-      "unidades": 179,
-      "secoes_a": 1114,
-      "secoes_b": 2882,
-      "votantes_a": 622228,
-      "votantes_b": 777913,
-      "flavio_pp": {
-       "estimativa": -0.49,
-       "ic95": [
-        -0.99,
-        0.01
-       ],
-       "bruto": -0.77
-      },
-      "lula_pp": {
-       "estimativa": 0.27,
-       "ic95": [
-        -0.23,
-        0.77
-       ],
-       "bruto": -0.29
-      },
-      "abstencao_pp": {
-       "estimativa": 0.21,
-       "ic95": [
-        -0.29,
-        0.71
-       ],
-       "bruto": -2.88
-      },
-      "brancos_pp": {
-       "estimativa": 0.39,
-       "ic95": [
-        -0.11,
-        0.89
-       ],
-       "bruto": -2.63
-      },
-      "nulos_pp": {
-       "estimativa": 0.51,
-       "ic95": [
-        0.01,
-        1.01
-       ],
-       "bruto": 4.48
-      }
-     }
-    ]
-   },
-   "ano_2022": {
-    "disponivel": false,
-    "fonte": "detalhe_votacao_secao_2022.zip",
-    "motivo": "o arquivo de 2022 traz só totais por seção, sem o modelo da urna",
-    "zonas": []
-   },
-   "leitura": "Em Registro, as duas gerações de urna votaram igual dentro da zona."
   },
   "interpretacao": [
    "Dentro da mesma zona, o modelo de urna não move o voto: as diferenças ficam abaixo de meio ponto.",

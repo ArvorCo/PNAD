@@ -14,7 +14,7 @@ from html import escape
 
 from .pagina_comum import NOME_UF, inteiro, milhoes, num, p, rotulo, sinal
 from .pagina_fig_base import nome_bonito
-from .pagina_fig_secoes import local_ref
+from .pagina_fig_secoes import grupos_extenso, local_ref
 from .pagina_texto import lista
 
 
@@ -303,12 +303,14 @@ def extremos_contrario(S: dict) -> str:
 # ------------------------------------------------------------------ clusters
 
 
-ANALOGIA = (
-    '<aside class="analogy"><b>Em linguagem de casa</b>Pense em quatro sacos de feijão despejados no mesmo chão. '
-    "A mistura gaussiana procura os quatro montes que melhor explicam como os grãos se espalharam e diz, para cada grão, "
-    "de que saco ele mais provavelmente caiu. Grão longe de todos os montes é a seção pouco provável: não é grão estragado, "
-    "é grão que pede um olhar.</aside>"
-)
+def analogia(k: int) -> str:
+    n = grupos_extenso(k)
+    return (
+        f'<aside class="analogy"><b>Em linguagem de casa</b>Pense em {n} sacos de feijão despejados no mesmo chão. '
+        f"A mistura gaussiana procura os {n} montes que melhor explicam como os grãos se espalharam e diz, para cada grão, "
+        "de que saco ele mais provavelmente caiu. Grão longe de todos os montes é a seção pouco provável: não é grão estragado, "
+        "é grão que pede um olhar.</aside>"
+    )
 
 
 def clusters_a(S: dict) -> str:
@@ -327,16 +329,36 @@ def clusters_a(S: dict) -> str:
         "verificado",
     )
     h += p(f"<strong>Grupo é geografia?</strong> {escape(interp)}", "inferencia")
-    bic = sorted(C.get("bic") or [], key=lambda b: b["k"])
-    if bic:
-        melhor = min(bic, key=lambda b: b["bic"])
-        h += p(
-            "O número de grupos foi pedido do autor: k = 4. Pelo critério BIC (menor é melhor), "
-            + lista([f"k = {b['k']} dá {num(b['bic'], 0)}" for b in bic])
-            + f"; entre os três, o BIC prefere k = {melhor['k']}.",
-            "juizo",
-        )
+    proj = C.get("leitura_projecao")
+    if proj:
+        h += p(escape(proj), "inferencia")
+    if C.get("estabilidade"):
+        h += p(escape(C["estabilidade"]), "verificado")
+    h += escolha_k(C)
     return h
+
+
+def escolha_k(C: dict) -> str:
+    """Juízo editorial: k escolhido pelo autor, com o BIC ao lado."""
+    bic = sorted(C.get("bic") or [], key=lambda b: b["k"])
+    if not bic:
+        return ""
+    ek = C.get("escolha_k") or {}
+    melhor = min(bic, key=lambda b: b["bic"])
+    k = C["k"]
+    motivo = ek.get("motivo") or "escolha do autor"
+    concorda = (
+        f"o BIC também prefere k = {k}"
+        if melhor["k"] == k
+        else f"entre os {grupos_extenso(len(bic))}, o BIC prefere k = {melhor['k']}"
+    )
+    return p(
+        f"O número de grupos, k = {k}, é {escape(motivo)}. Pelo critério BIC (menor é melhor), "
+        + lista([f"k = {b['k']} dá {num(b['bic'], 0)}" for b in bic])
+        + f"; {concorda}. Com tantos zeros, o BIC premia componente que se encaixa num padrão exato de zeros "
+        "e serve de contraste, não de árbitro.",
+        "juizo",
+    )
 
 
 def clusters_b(S: dict) -> str:
@@ -357,7 +379,7 @@ def clusters_b(S: dict) -> str:
     )
     h = p(
         f"O grupo mais atípico é o {ma['id'] + 1} ({escape(comp['rotulo'])}). Critério: {escape(ma['criterio'].rstrip('.'))}. A log-verossimilhança média "
-        f"dele é {num(comp['loglik_media'], 1)}, contra {num(ll_out, 1)} nos outros três, e a distância de Mahalanobis mediana, "
+        f"dele é {num(comp['loglik_media'], 1)}, contra {num(ll_out, 1)} nos outros {grupos_extenso(len(outros))}, e a distância de Mahalanobis mediana, "
         f"{num(comp['mahalanobis_mediana'], 1)}. Nas {len(ma['amostras'])} amostras da tabela, as explicações mais frequentes são {comuns}.",
         "inferencia",
     )
@@ -662,7 +684,9 @@ def bloco(S: dict, fig: Callable[[str], str]) -> str:
     h += fig("secoes_excesso") + extremos_excesso(S)
     h += fig("secoes_tamanho_tipo") + extremos_perfil(S) + extremos_cruzamento(S)
     h += extremos_2022(S) + extremos_amostras(S) + extremos_contrario(S)
-    h += "<h3>Quatro grupos de seções</h3>" + ANALOGIA + fig("clusters_secoes")
+    k = S["clusters"]["k"]
+    h += f"<h3>{grupos_extenso(k).capitalize()} grupos de seções</h3>" + analogia(k)
+    h += fig("clusters_secoes")
     h += clusters_a(S) + fig("clusters_regiao") + clusters_b(S)
     h += "<h3>Modelo de urna</h3>" + fig("modelo_urna_uf") + urna_a(S)
     h += fig("modelo_urna_zona") + urna_b(S)
