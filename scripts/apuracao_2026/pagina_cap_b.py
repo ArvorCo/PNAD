@@ -5,7 +5,7 @@ from __future__ import annotations
 from . import pagina_comparacao as CMP
 from . import pagina_texto_b as T
 from . import pagina_texto_senado_flavio as TSF
-from .pagina_comum import Capitulo, Dados, checar, secao
+from .pagina_comum import Capitulo, Dados, checar, limites, secao
 from .pagina_texto import fig
 
 # ------------------------------------------------------------------ 06
@@ -34,6 +34,12 @@ def r_camara(d: Dados, cap: Capitulo) -> str:
     h += T.camara_b(C) + CMP.camara(d) + fig("camara_partidos", d)
     h += T.camara_c(C) + fig("votos_x_cadeiras", d)
     h += T.camara_d(C) + fig("camara_por_uf", d)
+    h += limites(
+        [
+            "Votos de partido somam nominais e legenda; campo é classificação editorial da casa.",
+            "Nas UFs provisórias, a lista sai do quociente da casa até o TSE fechar.",
+        ]
+    )
     h += "</section>"
     return h
 
@@ -107,6 +113,11 @@ def r_governadores(d: Dados, cap: Capitulo) -> str:
     h += T.governadores_a(G) + fig("vao_estadual", d)
     h += T.governadores_b(G) + fig("governadores_mapa", d)
     h += T.governadores_c(G) + CMP.governadores(d)
-    h += T.governadores_datafolha(d.get("estrategia_2t.json"))
+    h += limites(
+        [
+            "Vão estadual é teto endereçável: mesma urna, cargos diferentes, não diz quem votou em quem.",
+            "Campo é classificação editorial da casa (tucano é centro-esquerda); exceções por candidatura declaradas.",
+        ]
+    )
     h += "</section>"
     return h

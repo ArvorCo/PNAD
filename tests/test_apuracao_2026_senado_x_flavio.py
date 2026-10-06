@@ -291,10 +291,10 @@ def test_texto_do_capitulo(dados, monkeypatch, tmp_path):
     ):
         assert f'id="fig-{nome}"' in h
     assert h.index('id="fig-senado_pl_x_flavio_uf"') < h.index(
-        "Somados, os nomes do PL"
+        "Na base de votos do Senado, os nomes do PL"
     )
     assert "Não é transferência" in h and "Não é previsão" in h and "Dois votos" in h
-    assert "achado contrário" in h
+    assert "Achado contrário" in h
     assert "—" not in h
 
 

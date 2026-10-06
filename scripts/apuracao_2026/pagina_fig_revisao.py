@@ -366,23 +366,21 @@ def _falha_svg(faixas: list[dict], extra: dict, keys: list[str], largura: float)
                     meio,
                     y0 + altura / 2 + 5,
                     f["rot"],
-                    fs - 2,
+                    13,
                     sobre(f["cor"]),
                     "middle",
                     "700",
                 )
             )
         elif f["rot"] and not estreita:
-            corpo.append(t(meio, y0 - 6, f["rot"], fs - 2, INK, "middle", "700"))
+            corpo.append(t(meio, y0 - 6, f["rot"], 13, INK, "middle", "700"))
         out.append(hit("".join(corpo), k))
     yb = topo + 3 * passo + passo / 2 + (14 if estreita else 0)
     for pct_, mm in sorted(extra["marcos"].items(), key=lambda kv: kv[1]):
         if ini <= mm <= fim:
             out.append(ln(X(mm), yb - 14, X(mm), yb + 14, FLAVIO, 3))
-            out.append(t(X(mm), yb - 20, f"{pct_}%", fs - 2, FLAVIO, "middle", "700"))
-            out.append(
-                t(X(mm), yb + 30, rot_hora(mm), fs - 3, MUTED, "middle", mono=True)
-            )
+            out.append(t(X(mm), yb - 20, f"{pct_}%", 13, FLAVIO, "middle", "700"))
+            out.append(t(X(mm), yb + 30, rot_hora(mm), 13, MUTED, "middle", mono=True))
     out.append("</svg>")
     return "".join(out)
 
@@ -468,7 +466,7 @@ def _intervalo_svg(
         out.append(
             ln(X(xv), topo - 26, X(xv), base, GOLD, 2, ' stroke-dasharray="6 4"')
         )
-        out.append(t(X(xv) + 6, topo - 28, rot, fs - 2, GOLD, "start", "700"))
+        out.append(t(X(xv) + 6, topo - 28, rot, 13, GOLD, "start", "700"))
     for i, x in enumerate(linhas):
         y = topo + i * passo + passo / 2 + (12 if estreita else 0)
         corpo = [area(0, y - passo / 2, largura, passo)]

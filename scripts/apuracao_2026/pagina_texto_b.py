@@ -120,9 +120,10 @@ def senado_c(S: dict) -> str:
                 f"{d['uf']}: {nome_proprio(seg['nome'])} ({escape(seg['partido'])}) sobre {nome_proprio(ter['nome'])} "
                 f"({escape(ter['partido'])}) por {num(d['margem_2a_vaga_pp'], 2)} ponto ({inteiro(d['margem_2a_vaga_votos'])} votos)"
             )
+    n_prov = S.get("n_ufs_provisorio") or 0
     nota = (
-        f" {S['n_ufs_provisorio']} UFs seguem provisórias até a marca do TSE."
-        if S.get("n_ufs_provisorio")
+        f" {n_prov} {'UF segue provisória' if n_prov == 1 else 'UFs seguem provisórias'} até a marca do TSE."
+        if n_prov
         else ""
     )
     return p(
@@ -198,10 +199,10 @@ def governadores_b(G: dict) -> str:
         )
 
     texto = p(
-        f"O vão compara, na mesma urna, a candidatura ao governo com o finalista presidencial do lado dela, nas "
-        f"{V.get('n_ufs', len({v['uf'] for v in vao}))} UFs. Maiores positivos, entre as candidaturas com lado definido: "
+        "O vão compara, na mesma urna, a candidatura ao governo com o finalista presidencial do lado dela. Maiores "
+        "positivos: "
         + lista([f(v) for v in pos])
-        + ". Negativos mais fundos: "
+        + "; negativos mais fundos: "
         + lista([f(v) for v in neg])
         + ". É <strong>teto endereçável, nunca transferência certa</strong>.",
         "inferencia",
@@ -216,8 +217,7 @@ def governadores_b(G: dict) -> str:
         return f"{c['uf']} {nome_proprio(c['governador'])} {sinal(c[chave], 1)}"
 
     partes = [
-        "O centro não tem finalista. Cada candidatura do centro entra contra o finalista que a coligação "
-        "registrada no TSE apoiou, numa tabela declarada no script: "
+        "O centro entra contra o finalista que a coligação apoiou: "
         + lista(
             [
                 fc(
@@ -232,14 +232,14 @@ def governadores_b(G: dict) -> str:
     ]
     if sem:
         partes.append(
-            " Sem PT nem PL na coligação e sem alinhamento declarado, "
+            " Sem apoio declarado, "
             + lista(
                 [
                     f"{fc(c, 'vao_flavio_pp')} contra Flávio ({sinal(c['vao_lula_pp'], 1)} contra Lula)"
                     for c in sem
                 ]
             )
-            + " entram contra Flávio, marcados como sem apoio declarado."
+            + "."
         )
     excecoes = [
         v
@@ -249,8 +249,8 @@ def governadores_b(G: dict) -> str:
     for v in excecoes:
         partes.append(
             f" {nome_proprio(v['governador'])} ({escape(v['partido'])}-{v['uf'].upper()}) é de "
-            f"{ROTULO_CAMPO.get(v['campo'], v['campo']).lower()}, mas a coligação registrada tem o PT e não tem o PL: "
-            f"entra contra Lula, {sinal(v['vao_lula_pp'], 1)}; contra Flávio seria {sinal(v['vao_flavio_pp'], 1)}."
+            f"{ROTULO_CAMPO.get(v['campo'], v['campo']).lower()} com o PT na coligação: {sinal(v['vao_lula_pp'], 1)} contra "
+            f"Lula, {sinal(v['vao_flavio_pp'], 1)} contra Flávio."
         )
     return texto + p("".join(partes), "inferencia")
 
@@ -262,7 +262,7 @@ def governadores_c(G: dict) -> str:
         " Mais perto de 50%: "
         + lista(
             [
-                f"{x['uf']}, {nome_proprio(x['lider']['nome'])} {pct(x['lider']['pct'])} "
+                f"{nome_proprio(x['lider']['nome'])} ({x['uf']}) {pct(x['lider']['pct'])} "
                 f"({'eleito' if x['decisao'] == 'eleito' else '2º turno'})"
                 for x in perto
             ]
