@@ -22,9 +22,12 @@ Atípico não é irregularidade. Uso:
 
 ``--so-urna`` recarrega o JSON existente e refaz só o bloco ``urna`` (e os
 achados e o memorando que dependem dele), sem refazer a mistura gaussiana.
-``--so-clusters`` faz o mesmo com o bloco ``clusters`` (a mistura gaussiana de
-cinco partes e o registro da versão de 15 partes), sem ler os dados de 2022 nem
-refazer os extremos e o modelo de urna. ``--so-textos`` não lê banco nenhum:
+``--so-clusters`` faz o mesmo com o bloco ``clusters`` (a mistura gaussiana das
+cinco proporções do eleitorado e os registros das duas tentativas em log-razão),
+sem ler os dados de 2022 nem
+refazer os extremos e o modelo de urna; os registros das tentativas em
+log-razão são reaproveitados do JSON gravado, a menos que se peça
+``--refazer-tentativas`` (o ajuste é determinístico e devolve os mesmos números). ``--so-textos`` não lê banco nenhum:
 refaz só os rótulos e as frases do bloco ``clusters`` a partir dos números já
 gravados (revisão editorial), e os achados e o memorando.
 """
@@ -122,6 +125,11 @@ def main(argv: list[str] | None = None) -> int:
         help="refaz só o bloco clusters sobre o JSON existente",
     )
     ap.add_argument(
+        "--refazer-tentativas",
+        action="store_true",
+        help="com --so-clusters, refaz também as tentativas em log-razão",
+    )
+    ap.add_argument(
         "--so-textos",
         action="store_true",
         help="refaz só rótulos e frases do bloco clusters, sem ler os bancos",
@@ -152,7 +160,8 @@ def main(argv: list[str] | None = None) -> int:
 
     if a.so_clusters:
         dados = json.loads(a.saida_json.read_text(encoding="utf-8"))
-        dados["clusters"] = secoes_clusters.clusters(base)
+        anterior = None if a.refazer_tentativas else dados.get("clusters")
+        dados["clusters"] = secoes_clusters.clusters(base, anterior)
         dados["limites"] = secoes_texto.LIMITES
         dados["gerado_em"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
         return grava(dados, a, cob)

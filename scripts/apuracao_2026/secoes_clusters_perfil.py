@@ -241,6 +241,7 @@ def resumo_grupos(comps: Sequence[Mapping[str, Any]]) -> list[dict[str, Any]]:
                 "regiao": r0.get("regiao"),
                 "regiao_pct": r0.get("pct_do_cluster"),
                 "centro_pct_validos": c["centro_pct_validos"],
+                **({"artefato": c["artefato"]} if "artefato" in c else {}),
             }
         )
     return out
@@ -323,30 +324,59 @@ def artefatos(c: Mapping[str, Any]) -> list[Mapping[str, Any]]:
     return [cc for cc in c["componentes"] if cc.get("artefato")]
 
 
+TENTATIVAS = (  # (chave em `variantes`, nome curto)
+    ("quinze_partes", "as 15 partes em log-razão"),
+    ("cinco_partes_clr", "as cinco partes em log-razão"),
+)
+
+
+def cru(c: Mapping[str, Any]) -> bool:
+    """O bloco é o das proporções padronizadas, sem log?"""
+    return "padronizacao" in c
+
+
+def _nome_espaco(c: Mapping[str, Any]) -> str:
+    return (
+        "as cinco proporções do eleitorado, sem log"
+        if cru(c)
+        else "as cinco partes em log-razão"
+    )
+
+
+def _antes(c: Mapping[str, Any]) -> str:
+    var = c.get("variantes") or {}
+    itens = [
+        f"{num(var[ch]['cramer_v_regiao'], 2)} com {nome}"
+        for ch, nome in TENTATIVAS
+        if (var.get(ch) or {}).get("cramer_v_regiao") is not None
+    ]
+    return f", contra {juntar(itens)}" if itens else ""
+
+
 def _geografia(c: Mapping[str, Any]) -> str:
     k = c["k"]
     v, vu = c["cramer_v_regiao"] or 0.0, c["cramer_v_uf"] or 0.0
-    q = (c.get("variantes") or {}).get("quinze_partes") or {}
-    v15 = q.get("cramer_v_regiao")
-    antes = (
-        f", contra {num(v15, 2)} com as {len(q.get('features') or [])} partes"
-        if v15 is not None
-        else ""
-    )
+    antes = _antes(c)
+    abre = f"Com {_nome_espaco(c)}"
     if v >= LIMIAR_GEOGRAFIA:
         return (
-            f"Com as cinco partes, os {extenso(k)} grupos acompanham a geografia: V de "
-            f"Cramér entre grupo e região de {num(v, 2)}{antes}, e de {num(vu, 2)} com a UF."
+            f"{abre}, os {extenso(k)} grupos acompanham a geografia: V de Cramér entre "
+            f"grupo e região de {num(v, 2)}{antes}, e de {num(vu, 2)} com a UF."
         )
-    if v15 is not None and v > v15 + 0.02:
+    anteriores = [
+        (c.get("variantes") or {}).get(ch, {}).get("cramer_v_regiao")
+        for ch, _ in TENTATIVAS
+    ]
+    melhor = max((x for x in anteriores if x is not None), default=None)
+    if melhor is not None and v > melhor + 0.02:
         return (
-            f"Com as cinco partes, a associação entre grupo e região sobe pouco (V de "
-            f"Cramér de {num(v, 2)}{antes}; {num(vu, 2)} com a UF) e fica abaixo de "
+            f"{abre}, a associação entre grupo e região sobe pouco (V de Cramér de "
+            f"{num(v, 2)}{antes}; {num(vu, 2)} com a UF) e fica abaixo de "
             f"{num(LIMIAR_GEOGRAFIA, 1)}: cada grupo ainda mistura regiões."
         )
     return (
-        f"Com as cinco partes, a associação entre grupo e região não melhora (V de "
-        f"Cramér de {num(v, 2)}{antes}; {num(vu, 2)} com a UF)."
+        f"{abre}, a associação entre grupo e região não melhora (V de Cramér de "
+        f"{num(v, 2)}{antes}; {num(vu, 2)} com a UF)."
     )
 
 
@@ -378,14 +408,14 @@ def _artefatos(c: Mapping[str, Any], nomes: Mapping[str, str]) -> str:
             for e in emp
         ]
     )
-    zeros = f"{num(c['zeros_substituidos_pct'], 2)}% das células são zero" + (
-        f" ({sem})" if sem else ""
-    )
+    pct_zero = c.get("zeros_substituidos_pct", c.get("zeros_celulas_pct")) or 0.0
+    zeros = f"{num(pct_zero, 2)}% das células são zero" + (f" ({sem})" if sem else "")
     art = artefatos(c)
     if not art:
+        troca = ", sem troca por número nenhum" if cru(c) else ""
         return (
-            f"Nenhum grupo é artefato da contagem inteira: {zeros}, e nenhum padrão de "
-            "zeros ou de empate cobre 95% das seções de um grupo."
+            f"Nenhum grupo é artefato da contagem inteira: {zeros}{troca}, e nenhum "
+            "padrão de zeros ou de empate cobre 95% das seções de um grupo."
         )
     defs = juntar(
         [
@@ -400,8 +430,9 @@ def _artefatos(c: Mapping[str, Any], nomes: Mapping[str, str]) -> str:
             if med.get(p) is not None
         ]
     )
+    abre = "Mesmo sem log" if cru(c) else "Cinco partes em log-razão não bastaram"
     texto = (
-        f"Cinco partes não bastaram: {extenso(len(art))} dos {extenso(k)} grupos "
+        f"{abre}: {extenso(len(art))} dos {extenso(k)} grupos "
         f"{'é artefato' if len(art) == 1 else 'são artefatos'} da contagem inteira, não "
         f"perfil de seção: {defs}."
     )
@@ -421,10 +452,16 @@ def _artefatos(c: Mapping[str, Any], nomes: Mapping[str, str]) -> str:
         )
         + (["o empate vira uma razão exata de 1"] if tem_emp else [])
     )
-    if pequenas and mecanismo:
+    if pequenas and mecanismo and not cru(c):
         texto += (
             f" Brancos e nulos são poucos votos por seção (mediana de {pequenas}); no "
             f"logaritmo, {mecanismo}, e a mistura gasta um componente em cada padrão."
+        )
+    elif pequenas and (tem_zero or tem_emp):
+        texto += (
+            f" Brancos e nulos são poucos votos por seção (mediana de {pequenas}); "
+            "seção com zero ou com empate fica exatamente sobre um plano, e a mistura "
+            "encaixa ali um componente de variância quase nula."
         )
     texto += f" {zeros[0].upper()}{zeros[1:]}" + (
         f", e {frase_emp}." if frase_emp else "."
@@ -475,7 +512,7 @@ def _geometria(c: Mapping[str, Any], nomes: Mapping[str, str]) -> str | None:
     """Por que as partes pequenas mandam no espaço das log-razões."""
     cargas = (c.get("pca") or {}).get("cargas") or []
     med = c.get("mediana_votos_por_secao") or {}
-    if not cargas or not med.get("lula"):
+    if cru(c) or not cargas or not med.get("lula"):
         return None
     top = max(cargas, key=lambda x: abs(x["pc1"]))
     if top["feature"] not in ("brancos", "nulos") or not med.get(top["feature"]):
@@ -491,11 +528,112 @@ def _geometria(c: Mapping[str, Any], nomes: Mapping[str, str]) -> str | None:
     )
 
 
+GANHO_MINIMO = 5.0  # pontos de R² que o grupo acrescenta à zona
+
+
+def _mapa(c: Mapping[str, Any], nomes: Mapping[str, str]) -> str | None:
+    """O que os grupos acrescentam ao que a zona eleitoral (o mapa) já explica."""
+    e = c.get("explicacao_variancia") or {}
+    if not e:
+        return None
+    ordem = [k for k in ("lula", "flavio", "abstencao", "brancos", "nulos") if k in e]
+
+    def ganho(k: str) -> float:
+        return (e[k]["zona_mais_grupo"] or 0.0) - (e[k]["zona"] or 0.0)
+
+    itens = [
+        f"{_nome(k, nomes)}, {num(e[k]['grupo'] or 0, 0)}% pelo grupo e "
+        f"{num(e[k]['zona'] or 0, 0)}% pela zona, que o grupo eleva a "
+        f"{num(e[k]['zona_mais_grupo'] or 0, 0)}%"
+        for k in ordem
+    ]
+    texto = (
+        "Quanto da variação entre seções cada um explica (R²): "
+        + "; ".join(itens)
+        + "."
+    )
+    finalistas = [k for k in ("lula", "flavio") if k in e]
+    outras = [k for k in ordem if k not in finalistas]
+    acrescenta = [k for k in outras if ganho(k) >= GANHO_MINIMO]
+    ganhos = juntar(
+        [
+            (
+                f"{num(ganho(k), 0)} {'ponto' if round(ganho(k)) < 2 else 'pontos'} "
+                f"ao R² de {_nome(k, nomes)}"
+                if n == 0
+                else f"{num(ganho(k), 0)} ao de {_nome(k, nomes)}"
+            )
+            for n, k in enumerate(finalistas)
+        ]
+    )
+    if finalistas and all(ganho(k) < GANHO_MINIMO for k in finalistas):
+        texto += (
+            " Na disputa entre os finalistas, a mistura não acrescenta ao mapa por "
+            f"zona: sabendo a zona, o grupo soma {ganhos}."
+        )
+    elif finalistas:
+        texto += (
+            f" Na disputa entre os finalistas, sabendo a zona, o grupo soma {ganhos}."
+        )
+    if acrescenta:
+        texto += (
+            " O que a mistura acrescenta está em "
+            + juntar(
+                [f"{_nome(k, nomes)} (+{num(ganho(k), 0)} pontos)" for k in acrescenta]
+            )
+            + ", que variam dentro da zona."
+        )
+    elif outras:
+        texto += (
+            f" Em {juntar([_nome(k, nomes) for k in outras])}, também soma menos de "
+            f"{num(GANHO_MINIMO, 0)} pontos."
+        )
+    return texto
+
+
+def diagnostico_log(r: Mapping[str, Any]) -> str:
+    """Por que as cinco partes em log-razão não serviram, dos agregados do registro
+    (`variantes.cinco_partes_clr`)."""
+    art = [g for g in r.get("grupos") or [] if g.get("artefato")]
+    eixo = r.get("eixo_1") or {}
+    med = r.get("mediana_votos_por_secao") or {}
+    conv = r.get("convergencia") or {}
+    texto = (
+        "Com as cinco partes em log-razão, brancos e nulos dominaram pela escala do "
+        f"log: com mediana de {num(med.get('brancos') or 0, 0)} brancos e "
+        f"{num(med.get('nulos') or 0, 0)} nulos por seção, dobrar os brancos pesa tanto "
+        "quanto dobrar o voto em Lula."
+    )
+    if eixo.get("feature"):
+        texto += (
+            f" O primeiro eixo da projeção era o {VOTO.get(eixo['feature'], eixo['feature'])} "
+            f"(carga {sinal(abs(eixo['carga']))}, "
+            f"{num(100 * (eixo.get('variancia_explicada') or 0), 1)}% da variância), não "
+            "a disputa entre os finalistas."
+        )
+    if art:
+        defs = "; ".join(
+            f"{g['artefato']}, com {num(g['secoes'], 0)} seções" for g in art
+        )
+        texto += (
+            f" {extenso(len(art)).capitalize()} dos {extenso(len(r['grupos']))} grupos "
+            f"eram artefatos da contagem: {defs}."
+        )
+    texto += f" V de Cramér entre grupo e região: {num(r['cramer_v_regiao'] or 0, 2)}."
+    if conv:
+        texto += (
+            f" Só {conv['no_maximo']} de {conv['total']} partidas chegaram ao mesmo "
+            "máximo."
+        )
+    return texto
+
+
 def leitura(c: Mapping[str, Any], nomes: Mapping[str, str]) -> dict[str, str | None]:
     """As frases de leitura com nome, para o texto da página escolher cada uma."""
     return {
         "geografia": _geografia(c),
         "artefatos": _artefatos(c, nomes),
+        "mapa": _mapa(c, nomes),
         "perfis": _perfis(c),
         "geometria": _geometria(c, nomes),
     }

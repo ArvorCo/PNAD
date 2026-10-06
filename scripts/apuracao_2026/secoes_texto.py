@@ -117,10 +117,12 @@ def achados(d: Mapping[str, Any]) -> dict[str, list[str]]:
             f"({_p(ald['lula_90_pct_do_tipo'])}% do tipo, contra "
             f"{_p(_resumo(d, 'lula', 90).get('pct_das_secoes'), 2)}% no total)."
         )
-    q = (cl.get("variantes") or {}).get("quinze_partes") or {}
-    if q.get("diagnostico"):
-        inferido.append(q["diagnostico"])
-    inferido.extend(cl["interpretacao"][:2])
+    for chave in ("quinze_partes", "cinco_partes_clr"):
+        diag = ((cl.get("variantes") or {}).get(chave) or {}).get("diagnostico")
+        if diag:
+            inferido.append(diag)
+    leit = cl.get("leitura") or {}
+    inferido.extend(x for x in (leit.get("geografia"), leit.get("mapa")) if x)
     if cl.get("leitura_projecao"):
         inferido.append(cl["leitura_projecao"])
     inferido.extend(ur.get("interpretacao", []))
@@ -146,7 +148,12 @@ def achados(d: Mapping[str, Any]) -> dict[str, list[str]]:
             f"{_n(c22['lula']['secoes_90_2026_casadas'])} seções casadas de Lula já "
             "estavam acima de 90% em 2022."
         )
-    contrario.append(cl["interpretacao"][1])
+    mapa = leit.get("mapa") or ""
+    art = leit.get("artefatos") or ""
+    if "não acrescenta" in mapa:
+        contrario.append(mapa)
+    elif art and not art.startswith("Nenhum grupo"):
+        contrario.append(art)
     if ur.get("interpretacao"):
         contrario.append(ur["interpretacao"][0])
     return {
@@ -170,10 +177,10 @@ LIMITES = [
     "renumerada ou local trocado fica de fora.",
     "Seções pequenas inflam percentuais: 100% de 30 válidos não é o mesmo que "
     "100% de 300. Por isso os cortes por tamanho e o corte de 100 votantes.",
-    "A mistura gaussiana usa só Lula, Flávio, brancos, nulos e abstenção, em "
-    "composição fechada: o voto em terceiros fica fora das partes, e o zero continua "
-    "trocado por 0,0001. A versão com as 15 partes foi abandonada porque separava as "
-    "seções pelo padrão de zeros das candidaturas nanicas.",
+    "A mistura gaussiana usa as proporções do eleitorado de Lula, Flávio, brancos, "
+    "nulos e abstenção, padronizadas e sem log; o voto em terceiros fica implícito. As "
+    "duas tentativas em log-razão foram abandonadas: com 15 partes, os grupos eram o "
+    "padrão de zeros das nanicas; com cinco, o zero e o empate de brancos e nulos.",
     "Benford e último dígito são curiosidade metodológica, não teste de fraude.",
 ]
 
@@ -551,7 +558,7 @@ def _tabela_grupos(comps: Sequence[Mapping[str, Any]], w: Any) -> None:
 
 
 def _memorando_clusters(cl: Mapping[str, Any], w: Any) -> None:
-    w(f"## B. Mistura gaussiana (k = {cl['k']}), cinco partes")
+    w(f"## B. Mistura gaussiana (k = {cl['k']}), cinco proporções do eleitorado")
     w("")
     for f in cl["interpretacao"]:
         w(f"- {f}")
@@ -564,20 +571,23 @@ def _memorando_clusters(cl: Mapping[str, Any], w: Any) -> None:
         w(
             f"Escolha de k (juízo editorial): k = {ek['k']}, {ek['motivo']} "
             f"({ek['data']}; antes de 06/10, k = {ek['anterior']}). O BIC prefere k = "
-            f"{ek['bic_prefere']}. A escolha das cinco partes também é do autor."
+            f"{ek['bic_prefere']}. A escolha das cinco variáveis também é do autor."
         )
         w("")
-    w(f"Partes: {cl['base']}. Método: {cl['transformacao_detalhe']}.")
+    w(f"Variáveis: {cl['base']}. Método: {cl['transformacao_detalhe']}.")
     w("")
+    pad = cl.get("padronizacao") or {}
+    if pad:
+        w("| parte | média % | desvio-padrão % |")
+        w("|---|---|---|")
+        for k, v in pad.items():
+            w(f"| {k} | {_p(v['media_pct'], 2)} | {_p(v['dp_pct'], 2)} |")
+        w("")
+    zeros = cl.get("zeros_celulas_pct", cl.get("zeros_substituidos_pct"))
     w(
-        f"Zeros: {_p(cl['zeros_substituidos_pct'], 2)}% das células; "
+        f"Zeros: {_p(zeros, 2)}% das células, sem troca; "
         f"{_n(cl.get('secoes_com_zero'))} seções com ao menos uma parte zerada."
     )
-    w("")
-    w("| parte | seções com zero | % das seções |")
-    w("|---|---|---|")
-    for k, z in (cl.get("zeros_por_parte") or {}).items():
-        w(f"| {k} | {_n(z['secoes'])} | {_p(z['pct_secoes'], 2)} |")
     w("")
     aj = cl["ajuste"]
     dg = aj.get("diagnostico_convergencia") or {}
@@ -587,7 +597,8 @@ def _memorando_clusters(cl: Mapping[str, Any], w: Any) -> None:
         w(dg["frase"])
         w("")
         w(
-            "| semente | inicialização | log-veross. média | convergiu | iterações | ARI com a escolhida | V de Cramér (região) |"
+            "| semente | inicialização | log-veross. média (amostra) | convergiu | "
+            "iterações | ARI com a melhor | V de Cramér (região) |"
         )
         w("|---|---|---|---|---|---|---|")
         for a in dg.get("ajustes") or []:
@@ -597,10 +608,7 @@ def _memorando_clusters(cl: Mapping[str, Any], w: Any) -> None:
                 f"{_p(a.get('ari_com_escolhida'), 3)} | {_p(a.get('cramer_v_regiao'), 3)} |"
             )
         w("")
-    w(
-        "BIC (menor é melhor; cada k com o melhor ajuste das mesmas sementes, "
-        "inicialização kmeans; k = 5 com as duas inicializações):"
-    )
+    w("BIC na base inteira (menor é melhor):")
     w("")
     for b in cl["bic"]:
         w(
@@ -614,6 +622,18 @@ def _memorando_clusters(cl: Mapping[str, Any], w: Any) -> None:
         f"grupo e UF: {_p(cl['cramer_v_uf'], 3)}."
     )
     w("")
+    ex = cl.get("explicacao_variancia") or {}
+    if ex:
+        w("R² (%) entre seções:")
+        w("")
+        w("| parte | região | zona | grupo | zona + grupo |")
+        w("|---|---|---|---|---|")
+        for k, v in ex.items():
+            w(
+                f"| {k} | {_p(v['regiao'])} | {_p(v['zona'])} | {_p(v['grupo'])} | "
+                f"{_p(v['zona_mais_grupo'])} |"
+            )
+        w("")
     w(
         f"Grupo mais anômalo: {cl['mais_anomalo']['id'] + 1}. "
         f"Critério: {cl['mais_anomalo']['criterio']}"
@@ -623,44 +643,38 @@ def _memorando_clusters(cl: Mapping[str, Any], w: Any) -> None:
         w("- " + _linha_secao(s, None))
     w("")
     var = cl.get("variantes") or {}
-    q = var.get("quinze_partes")
-    if q:
-        w("### O que não deu certo: a versão de 15 partes")
+    for chave, titulo in (
+        ("quinze_partes", "O que não deu certo (1): 15 partes em log-razão"),
+        ("cinco_partes_clr", "O que não deu certo (2): cinco partes em log-razão"),
+    ):
+        r = var.get(chave)
+        if not r:
+            continue
+        w(f"### {titulo}")
         w("")
         w(
-            f"{q['descricao'].capitalize()}; abandonada em {q['abandonada_em']}: {q['motivo']}."
+            f"{r['descricao'].capitalize()}; abandonada em {r['abandonada_em']}: {r['motivo']}."
         )
         w("")
-        for chave in ("diagnostico", "leitura_projecao", "estabilidade"):
-            if q.get(chave):
-                w(f"- {q[chave]}")
+        for x in (
+            r.get("diagnostico"),
+            r.get("leitura_projecao"),
+            r.get("estabilidade"),
+        ):
+            if x:
+                w(f"- {x}")
+        conv = (r.get("convergencia") or {}).get("frase")
+        if conv:
+            w(f"- {conv}")
         w("")
         w("| grupo | rótulo | seções |")
         w("|---|---|---|")
-        for g in q["grupos"]:
+        for g in r["grupos"]:
             w(f"| {g['id'] + 1} | {g['rotulo']} | {_n(g['secoes'])} |")
         w("")
-        for b in q.get("bic") or []:
+        for b in r.get("bic") or []:
             w(
-                f"- k = {b['k']}: BIC {_p(b['bic'], 1)}, log-verossimilhança média {_p(b['loglik_media'], 4)}"
+                f"- k = {b['k']}: BIC {_p(b['bic'], 1)}, log-verossimilhança média "
+                f"{_p(b['loglik_media'], 4)}"
             )
         w("")
-    mv = var.get("meio_voto")
-    if mv:
-        w(f"### Sensibilidade: {mv['descricao']}")
-        w("")
-        w(
-            f"V de Cramér entre grupo e região {_p(mv['cramer_v_regiao'], 3)}; "
-            f"entre grupo e UF {_p(mv['cramer_v_uf'], 3)}."
-        )
-        w("")
-        for g in mv["grupos"]:
-            w(f"- Grupo {g['id'] + 1}: {g['rotulo']}; {_n(g['secoes'])} seções.")
-        w("")
-    sen = cl.get("sensibilidade") or {}
-    w(
-        "Índice de Rand ajustado contra a partição principal: versão de 15 partes "
-        f"{_p(sen.get('ari_principal_vs_quinze_partes'), 3)}; zero trocado por meio voto "
-        f"{_p(sen.get('ari_principal_vs_meio_voto'), 3)}."
-    )
-    w("")
