@@ -42,13 +42,17 @@ from .pagina_fig_fiscais import (
     ROT_CAMADA,
     _empilhada,
     _legenda_niveis,
+    acesso_txt,
+    camada_desconhecida,
     camadas,
     corta,
     criterios_txt,
     fiscais,
+    fonte_risco_html,
     links,
     lugar,
     nivel_txt,
+    risco_nivel,
     risco_txt,
     tem_risco,
 )
@@ -87,9 +91,12 @@ def _card(s: dict, F: dict) -> str:
     expl = s.get("explicacao_provavel") or "nenhuma explicação comum no cadastro"
     terr = ""
     if isinstance(s.get("risco"), dict):
+        ac = acesso_txt(s)
         terr = (
-            f'<p class="fs-terr"><b>Contexto do território:</b> {escape(risco_txt(s))}. '
-            "Fonte: meta.fontes_risco. Contexto para o fiscal planejar, não indício.</p>"
+            f'<p class="fs-terr"><b>Contexto do território:</b> {escape(risco_txt(s))}.'
+            + (f" Acesso: {escape(ac)}." if ac else "")
+            + " Fonte: meta.fontes_risco. Contexto para o fiscal planejar, não indício; "
+            "validar com a PM e o TRE local.</p>"
         )
     return (
         f'<article class="fs-card"><p class="fs-card-k"><span class="fs-chip fs-nivel-{s["nivel"]}">'
@@ -376,10 +383,13 @@ def fiscais_risco(d, **_op) -> str:
         raise KeyError("secoes[].risco (contrato 1.1)")
     cont = {c: Counter() for c, _, _ in CAMADAS}
     sem_base = Counter()
+    desc = Counter()
     for s in F["secoes"]:
-        if not isinstance(s.get("risco"), dict):
+        for c, _, _ in CAMADAS:
+            if camada_desconhecida(s, c):
+                desc[c] += 1
+        if not risco_nivel(s):
             sem_base[s["nivel"]] += 1
-            continue
         for c in camadas(s):
             cont[c][s["nivel"]] += 1
     linhas = sorted(cont.items(), key=lambda kv: -sum(kv[1].values()))
@@ -411,7 +421,12 @@ def fiscais_risco(d, **_op) -> str:
                 rot,
                 "",
                 [("Seções", inteiro(sum(cnt.values())))]
-                + [(nivel_txt(n), inteiro(cnt.get(n, 0))) for n in NIVEIS],
+                + [(nivel_txt(n), inteiro(cnt.get(n, 0))) for n in NIVEIS]
+                + (
+                    [("Seções sem base nesta camada", inteiro(desc[c]))]
+                    if c != "sem_base"
+                    else []
+                ),
                 "Risco é contexto para o fiscal se proteger e planejar, não indício.",
             )
         )
@@ -434,11 +449,7 @@ def fiscais_risco(d, **_op) -> str:
             )
         )
     out.append("</svg>")
-    cob = "".join(
-        f"<li><b>{escape(f.get('base', ''))}</b>: cobertura {escape(str(f.get('cobertura', 's/d')))}, "
-        f"{escape(str(f.get('data', 's/d')))}</li>"
-        for f in fontes
-    )
+    cob = "".join(f"<li>{fonte_risco_html(f, len(F['secoes']))}</li>" for f in fontes)
     apos = _legenda_niveis() + (
         f'<div class="fig-leg"><b class="leg-tit">Cobertura de cada base</b><ul class="fs-cob">{cob}</ul></div>'
         if cob

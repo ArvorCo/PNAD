@@ -72,6 +72,11 @@ def _pontos(F: dict) -> list[dict]:
     return out
 
 
+def risco_ponto(p: dict) -> str:
+    """Nível de risco do local: a coluna `risco` do mapa (1.1) ou o bloco do local."""
+    return p.get("risco") or risco_nivel(p["l"])
+
+
 def _linha_ficha(p: dict) -> list:
     x = p["l"]
     return [
@@ -136,17 +141,17 @@ def fiscais_mapa_navegavel(d, **_op) -> str:
             f'vector-effect="non-scaling-stroke"><title>{NOME_UF.get(uf, uf)}</title></path>'
         )
     out.append('<g class="fz-mun-g" display="none" transform="scale(0.1)"></g>')
-    grupos = [risco_nivel(p["l"]) for p in pts]
+    grupos = [risco_ponto(p) for p in pts]
     for aba, chave, cor in (
         ("sinal", lambda p: p["nivel"], COR_NIVEL),
-        ("risco", lambda p: risco_nivel(p["l"]), COR_RISCO),
+        ("risco", lambda p: risco_ponto(p), COR_RISCO),
     ):
         if aba == "risco" and not risco:
             continue
         oculto = "" if aba == "sinal" else ' display="none"'
         out.append(f'<g data-alt-show="{aba}"{oculto}>')
         lotes = _lotes(
-            pts, xy, lambda p, c=chave: (c(p), risco_nivel(p["l"]), raio(p["n_secoes"]))
+            pts, xy, lambda p, c=chave: (c(p), risco_ponto(p), raio(p["n_secoes"]))
         )
         ordem = (
             sorted(lotes, key=lambda k: (-NIVEIS.index(k[0]), -k[2]))

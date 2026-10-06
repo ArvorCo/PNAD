@@ -44,26 +44,54 @@ COR_NIVEL = {"alta": "#7a3500", "media": "#c27a1d", "baixa": "#a3a294"}
 RISCOS = ("alto", "medio", "baixo")
 ROT_RISCO = {"alto": "Alto", "medio": "Médio", "baixo": "Baixo", "": "Sem base"}
 COR_RISCO = {"alto": "#5b2a86", "medio": "#9a7cc0", "baixo": "#cfc6dd", "": "#d8d4c8"}
-# camada de risco: (código, rótulo curto, teste sobre o bloco `risco`)
+# camada de risco (contrato 1.1, seção 11): (código, rótulo curto, leitura do bloco
+# `risco`). A leitura devolve True, False ou None; None é base que não cobre o
+# local (desconhecido), nunca ausência de risco.
+
+
+def _sub(x: dict, chave: str, campo: str):
+    v = x.get(chave)
+    return v.get(campo) if isinstance(v, dict) else None
+
+
+def _rural(x: dict):
+    v = x.get("rural_urbano")
+    return None if v is None else str(v).lower().startswith("rural")
+
+
+def _crime(x: dict):
+    st = _sub(x, "crime_organizado", "status")
+    return None if st is None else st == "mapeamento público"
+
+
+def _homicidios(x: dict):
+    q = _sub(x, "homicidios_municipio", "quintil")
+    return None if q is None else q == 5
+
+
+def _fronteira(x: dict):
+    f = x.get("fronteira_ou_garimpo")
+    if not isinstance(f, dict) or (
+        f.get("fronteira") is None and f.get("cidade_gemea") is None
+    ):
+        return None
+    return bool(f.get("fronteira") or f.get("cidade_gemea"))
+
+
 CAMADAS = (
     ("terra_indigena", "terra indígena", lambda x: x.get("terra_indigena")),
     ("quilombo", "quilombo", lambda x: x.get("quilombo")),
-    ("favela", "favela ou comunidade", lambda x: x.get("favela")),
-    ("prisional", "unidade prisional", lambda x: x.get("unidade_prisional")),
-    ("rural", "zona rural", lambda x: x.get("rural_urbano") == "rural"),
-    ("fronteira", "fronteira", lambda x: x.get("fronteira")),
-    ("garimpo", "garimpo", lambda x: x.get("garimpo")),
+    ("favela", "favela ou comunidade", lambda x: x.get("favela_comunidade")),
     (
-        "crime",
-        "crime organizado em mapeamento público",
-        lambda x: bool(x.get("crime_organizado"))
-        and not str(x.get("crime_organizado")).lower().startswith("sem"),
+        "prisional",
+        "unidade prisional ou socioeducativa",
+        lambda x: x.get("unidade_prisional_ou_socioeducativa"),
     ),
-    (
-        "homicidios",
-        "homicídios no quintil mais alto",
-        lambda x: x.get("homicidios_quintil") == 5,
-    ),
+    ("rural", "zona rural", _rural),
+    ("fronteira", "faixa de fronteira", _fronteira),
+    ("garimpo", "garimpo", lambda x: _sub(x, "fronteira_ou_garimpo", "garimpo")),
+    ("crime", "crime organizado em mapeamento público", _crime),
+    ("homicidios", "homicídios no quintil mais alto", _homicidios),
 )
 ROT_CAMADA = {c: rot for c, rot, _ in CAMADAS}
 NUMC = ' class="num"'
@@ -88,7 +116,73 @@ def camadas(x: dict) -> list[str]:
     rr = x.get("risco")
     if not isinstance(rr, dict):
         return []
-    return [c for c, _, teste in CAMADAS if teste(rr)]
+    return [c for c, _, leitura in CAMADAS if leitura(rr) is True]
+
+
+def camada_desconhecida(x: dict, codigo: str) -> bool:
+    """A base da camada não cobre o item (ou o item não tem bloco `risco`)."""
+    rr = x.get("risco")
+    if not isinstance(rr, dict):
+        return True
+    leitura = next(f for c, _, f in CAMADAS if c == codigo)
+    return leitura(rr) is None
+
+
+def fonte_risco_html(f: dict, total_secoes: int) -> str:
+    """Base de risco: nome, órgão, data do download, situação e cobertura."""
+    nome = escape(f.get("nome") or f.get("base") or f.get("chave") or "base")
+    if f.get("url"):
+        nome = f'<a href="{escape(f["url"])}">{nome}</a>'
+    org = f" ({escape(f['orgao'])})" if f.get("orgao") else ""
+    data = f.get("baixado_em") or f.get("data")
+    h = nome + org + (f", baixada em {escape(str(data)[:10])}" if data else "")
+    st = f.get("status")
+    if st == "falhou":
+        return (
+            h
+            + f"; não baixada ({escape(f.get('motivo') or 'sem motivo')}): campo desconhecido em todas as seções"
+        )
+    if st == "proxy":
+        h += "; proxy declarado" + (
+            f" ({escape(f['regra'])})" if f.get("regra") else ""
+        )
+    cs = f.get("cobertura_secoes")
+    if cs is not None:
+        h += f"; cobre {inteiro(cs)} seções ({num(100 * cs / (total_secoes or 1), 1)}%)"
+        if f.get("cobertura_locais") is not None:
+            h += f" e {inteiro(f['cobertura_locais'])} locais"
+    elif f.get("cobertura"):
+        h += f"; cobertura {escape(str(f['cobertura']))}"
+    if f.get("sha256"):
+        h += f'<br><span class="hash">SHA-256 {escape(f["sha256"])}</span>'
+    return h
+
+
+def acesso_txt(x: dict) -> str:
+    """'sede a 12 km (18 min) por estrada; aeroporto X a 85 km' quando há o dado."""
+    a = (
+        (x.get("risco") or {}).get("acesso")
+        if isinstance(x.get("risco"), dict)
+        else None
+    )
+    if not isinstance(a, dict):
+        return ""
+    partes = []
+    if a.get("sede_km_estrada") is not None:
+        partes.append(
+            f"sede a {num(a['sede_km_estrada'], 0)} km por estrada"
+            + (
+                f" ({num(a['sede_min'], 0)} min)"
+                if a.get("sede_min") is not None
+                else ""
+            )
+        )
+    elif a.get("sede_km_reta") is not None:
+        partes.append(f"sede a {num(a['sede_km_reta'], 0)} km em linha reta")
+    km = a.get("aeroporto_km_estrada") or a.get("aeroporto_km_reta")
+    if a.get("aeroporto") and km is not None:
+        partes.append(f"aeroporto {a['aeroporto']} a {num(km, 0)} km")
+    return "; ".join(partes)
 
 
 def tem_risco(F: dict) -> bool:
@@ -101,6 +195,8 @@ def risco_txt(x: dict) -> str:
     if not n:
         return "sem base"
     cam = [ROT_CAMADA[c] for c in camadas(x)]
+    if not cam:
+        cam = list((x.get("risco") or {}).get("motivos_risco") or [])
     return ROT_RISCO.get(n, n) + (": " + ", ".join(cam) if cam else "")
 
 

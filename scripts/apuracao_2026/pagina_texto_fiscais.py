@@ -19,6 +19,7 @@ from .pagina_fig_fiscais import (
     ROT_NIVEL,
     bloco_download,
     criterios_txt,
+    fonte_risco_html,
     tem_risco,
 )
 from .pagina_texto import lista
@@ -273,6 +274,16 @@ def territorio(F: dict, fig: Callable[[str], str], d_aviso) -> str:
         f"{inteiro(len(alto))} ficam em território de risco alto para o fiscal.",
         "verificado",
     )
+    regra = F["meta"].get("risco_regra") or {}
+    if regra.get("cortes"):
+        pts_ = ", ".join(
+            f"{escape(k)} {v}" for k, v in (regra.get("pontos") or {}).items()
+        )
+        h += p(
+            f"O nível de risco soma pontos por camada ({pts_}); risco alto com {regra['cortes'].get('alto')} pontos ou "
+            f"mais, médio com {regra['cortes'].get('medio')}. A regra é escolha da casa, não medição.",
+            "juizo",
+        )
     h += caixa(
         "io",
         "Risco não é indício",
@@ -425,14 +436,7 @@ def fontes(F: dict) -> str:
         for f in M.get("fontes", [])
     )
     risco = "".join(
-        f'<li><a href="{escape(f.get("url", ""))}">{escape(f.get("base", ""))}</a>, {escape(str(f.get("data", "s/d")))}; '
-        f"cobertura {escape(str(f.get('cobertura', 's/d')))}"
-        + (
-            f'<br><span class="hash">SHA-256 {escape(f["sha256"])}</span>'
-            if f.get("sha256")
-            else ""
-        )
-        + "</li>"
+        f"<li>{fonte_risco_html(f, len(F['secoes']))}</li>"
         for f in M.get("fontes_risco", [])
     )
     lei = "".join(

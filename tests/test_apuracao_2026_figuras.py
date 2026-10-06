@@ -612,3 +612,21 @@ def test_fiscais_cartoes_das_secoes_altas():
     assert h.count('<article class="fs-card">') == min(40, len(altas))
     assert "O que o fiscal confere:" in h and "Contexto do território:" in h
     assert "openstreetmap.org" in h and "google.com/maps" in h
+
+
+def test_fiscais_risco_desconhecido_nao_e_zero():
+    from apuracao_2026.pagina_fig_fiscais import camada_desconhecida, camadas
+
+    s = {"risco": {"fronteira_ou_garimpo": {"fronteira": False, "garimpo": None}}}
+    assert "garimpo" not in camadas(s) and camada_desconhecida(s, "garimpo")
+    assert not camada_desconhecida(s, "fronteira")
+    assert camada_desconhecida({}, "quilombo")
+    s["risco"]["crime_organizado"] = {"status": "mapeamento público"}
+    assert "crime" in camadas(s)
+    F = _fiscais()
+    h = FIGURAS["fiscais_risco"](_d_fiscais(F))
+    assert "sem base de risco (desconhecido)" in h
+    assert "não baixada (download recusado)" in h
+    assert "Seções sem base nesta camada" in h
+    cards = FIGURAS["fiscais_secoes_amostra"](_d_fiscais(F))
+    assert "Acesso: sede a" in cards and "validar com a PM e o TRE local" in cards
