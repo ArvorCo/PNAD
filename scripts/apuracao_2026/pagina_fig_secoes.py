@@ -553,7 +553,7 @@ def _grupo_barras(
             continue
         out.append(ln(X(m), 44, X(m), y + 2, cor, 1.6, ' stroke-dasharray="5 4"'))
         out.append(
-            f'<g pointer-events="none">{chip(X(m) + 4, y + 22 + (18 if cor == FLAVIO else 0), f"{nome} no total: {pct(m, 1)}", 13)}</g>'
+            f'<g pointer-events="none">{chip(X(m) + 4, y + 22 + (24 if cor == FLAVIO else 0), f"{nome} no total: {pct(m, 1)}", 13)}</g>'
         )
     return "".join(out)
 

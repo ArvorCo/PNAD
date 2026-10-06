@@ -568,7 +568,7 @@ def _painel_recebimento(OD: dict, px: float, py: float, tips: Tips) -> str:
         t(
             px,
             py + 36,
-            "barras: seções (eixo à esquerda); linha: Lula, % dos válidos (à direita)",
+            "barras: seções; linha: Lula (% dos válidos)",
             13,
             MUTED,
         ),
