@@ -109,7 +109,7 @@ def r_falha(d: Dados, cap: Capitulo) -> str:
     h += T.falha_correcao() + fig("latencia_hora", d)
     h += TNR.estados_lentos(d)
     h += TA.bloco(d)
-    h += TX.bloco()
+    h += TX.bloco() + fig("janela_parada_uf", d)
     h += limites(
         [
             "A latência inclui o intervalo de sondagem do coletor: é teto da demora de publicação, não medida dela.",

@@ -55,7 +55,7 @@ opacity:0;transition:opacity .12s ease}
 .fig-tip .tip-head b{font-weight:800}
 .fig-tip .tip-head span{font:11px/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#b9c6bd}
 .fig-tip .tip-tab{width:100%;min-width:0;border-collapse:collapse;margin:2px 0 6px;font:12.5px/1.45 var(--mono)}
-.fig-tip .tip-tab th,.fig-tip .tip-tab td{padding:2px 0;border:0;text-align:right;font-weight:500;white-space:nowrap;font-size:12.5px;font-family:var(--mono)}
+.fig-tip .tip-tab th,.fig-tip .tip-tab td{padding:2px 0;border:0;text-align:right;font-weight:500;white-space:nowrap;font-size:12.5px;font-family:var(--mono)}.fig-tip .tip-tab td{white-space:normal;overflow-wrap:anywhere;max-width:210px;padding-left:10px}
 .fig-tip .tip-tab th{text-align:left;color:#b9c6bd;padding-right:14px;white-space:normal}
 .fig-tip .tip-tab td{color:#fffdf8}
 .fig-tip .tip-nota{font-size:12px;color:#b9c6bd}
