@@ -10,6 +10,7 @@ from html import escape
 from . import pagina_cap_a as A
 from . import pagina_cap_b as B
 from . import pagina_cap_c as C
+from . import pagina_fig_fiscais_nav as NAV
 from .pagina_comum import (
     ROOT,
     SLUG,
@@ -192,7 +193,7 @@ def head(d: Dados) -> str:
         f'<meta name="twitter:title" content="{TITULO}">'
         f'<meta name="twitter:description" content="{escape(desc)}">'
         f'<meta name="twitter:image" content="{img}">'
-        f"{FONTES}<style>{CSS}</style></head>"
+        f"{FONTES}<style>{CSS}{NAV.CSS}</style></head>"
     )
 
 
@@ -319,6 +320,6 @@ def pagina(d: Dados) -> tuple[str, dict]:
         + '<footer class="wrap">Arvor · dossiê da apuração do 1º turno de 2026 · '
         '<a href="index.html">Biblioteca</a> · <a href="predicao_2026_1T_presidente.html">Previsão</a> · '
         '<a href="reponderacao_pnad.html">Agregador</a></footer>'
-        + f"<script>{JS}</script>{interativo_html()}</body></html>"
+        + f"<script>{JS}</script>{interativo_html()}<script>{NAV.js()}</script></body></html>"
     )
     return h.replace("<section ", "\n<section "), estado

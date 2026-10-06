@@ -7,12 +7,14 @@ from html import escape
 from . import pagina_texto_b as T
 from . import pagina_texto_c as TC
 from . import pagina_texto_fechamento as TF
+from . import pagina_texto_fiscais as TFI
 from . import pagina_texto_reguas as PR
 from . import pagina_texto_terceira_via as TV
 from .pagina_comum import (
     Capitulo,
     Dados,
     checar,
+    inteiro,
     limites,
     nota,
     num,
@@ -179,11 +181,16 @@ def r_anomalias(d: Dados, cap: Capitulo) -> str:
 
 def r_fiscais(d: Dados, cap: Capitulo) -> str:
     """Onde colocar fiscal no 2º turno (`fiscais.json`, contrato em CONTRATO_FISCAIS.md)."""
+    F = d.get("fiscais.json")
+    checar(d, "fiscais.json", TFI.CHAVES)
+    total = F["resumo"]["secoes_sinalizadas"]
     h = secao(
         cap,
         "Onde colocar fiscal.<br><em>Prioridade, não acusação.</em>",
-        "Atipicidade não é irregularidade: a lista diz onde conferir primeiro.",
+        f"{inteiro(total)} seções atípicas, com endereço, para o PL pôr fiscal de partido no 2º turno. "
+        "Atipicidade não é irregularidade; a lista diz onde conferir primeiro.",
     )
+    h += TFI.capitulo(F, lambda nome: fig(nome, d), d.aviso)
     return h + "</section>"
 
 
