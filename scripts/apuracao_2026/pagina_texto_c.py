@@ -8,6 +8,7 @@ hipótese ou juízo editorial vem com o selo correspondente.
 
 from __future__ import annotations
 
+import re
 from collections import Counter
 from collections.abc import Callable
 from html import escape
@@ -354,11 +355,24 @@ def escolha_k(C: dict) -> str:
     )
     return p(
         f"O número de grupos, k = {k}, é {escape(motivo)}. Pelo critério BIC (menor é melhor), "
-        + lista([f"k = {b['k']} dá {num(b['bic'], 0)}" for b in bic])
+        + lista([f"k = {b['k']} dá {menos(b['bic'], 0)}" for b in bic])
         + f"; {concorda}. Com tantos zeros, o BIC premia componente que se encaixa num padrão exato de zeros "
         "e serve de contraste, não de árbitro.",
         "juizo",
     )
+
+
+def menos(x: float | None, casas: int = 1) -> str:
+    """Número com o menos tipográfico, sem sinal de mais."""
+    if x is None:
+        return "s/d"
+    return ("−" if round(x, casas) < 0 else "") + num(abs(x), casas)
+
+
+def explicacao_principal(a: dict) -> str:
+    """A primeira parte da explicação declarada, sem números entre parênteses."""
+    e = (a.get("explicacao") or "sem explicação declarada").split(";")[0]
+    return re.sub(r"\s*\([^)]*\)", "", e).strip() or "sem explicação declarada"
 
 
 def clusters_b(S: dict) -> str:
@@ -369,25 +383,20 @@ def clusters_b(S: dict) -> str:
         return ""
     outros = [c for c in C["componentes"] if c["id"] != ma["id"]]
     ll_out = sum(c["loglik_media"] for c in outros) / len(outros) if outros else None
-    expl = Counter(
-        a.get("explicacao") or "sem explicação declarada" for a in ma["amostras"]
-    )
-    comuns = "; ".join(f"{escape(e)}: {n}" for e, n in expl.most_common(3))
-    mp = Counter(
-        a.get("explicacao") or "sem explicação declarada"
-        for a in C.get("menos_provaveis") or []
-    )
+    expl = Counter(explicacao_principal(a) for a in ma["amostras"])
+    comuns = lista([f"{escape(e)} ({inteiro(n)})" for e, n in expl.most_common(3)])
+    mp = Counter(explicacao_principal(a) for a in C.get("menos_provaveis") or [])
     h = p(
         f"O grupo mais atípico é o {ma['id'] + 1} ({escape(comp['rotulo'])}). Critério: {escape(ma['criterio'].rstrip('.'))}. A log-verossimilhança média "
-        f"dele é {num(comp['loglik_media'], 1)}, contra {num(ll_out, 1)} nos outros {grupos_extenso(len(outros))}, e a distância de Mahalanobis mediana, "
-        f"{num(comp['mahalanobis_mediana'], 1)}. Nas {len(ma['amostras'])} amostras da tabela, as explicações mais frequentes são {comuns}.",
+        f"dele é {menos(comp['loglik_media'], 1)}, contra {menos(ll_out, 1)} nos outros {grupos_extenso(len(outros))}, e a distância de Mahalanobis mediana, "
+        f"{num(comp['mahalanobis_mediana'], 1)}. Nas {len(ma['amostras'])} amostras da tabela, pela primeira parte da explicação declarada, as mais frequentes são {comuns}.",
         "inferencia",
     )
     if mp:
         e, n = mp.most_common(1)[0]
         h += p(
-            f"Entre as {len(C['menos_provaveis'])} seções menos prováveis do país inteiro, a explicação mais comum é "
-            f"{escape(e)}, em {n}. A explicação é regra declarada pelo nome do local, não verificação.",
+            f"Entre as {len(C['menos_provaveis'])} seções menos prováveis do país inteiro, pela primeira parte da explicação declarada, a mais comum é "
+            f"{escape(e)}, em {inteiro(n)}. A explicação é regra declarada pelo nome do local, não verificação.",
             "inferencia",
         )
     return h
@@ -522,12 +531,13 @@ def _reguas(U: dict) -> str:
     itens = rg.get("itens") or []
     if not itens:
         return ""
-    desc = lista(
-        [
-            f"{escape(i['regua'])}, {pts(i['estimativa'], 2)} (intervalo de {sinal(i['ic95'][0], 2)} a "
-            f"{sinal(i['ic95'][1], 2)}; {inteiro(i['unidades'])} {escape(i['unidade'])})"
-            for i in itens
-        ]
+    partes = [
+        f"{escape(i['regua'])}, {pts(i['estimativa'], 2)} (intervalo de {sinal(i['ic95'][0], 2)} a "
+        f"{sinal(i['ic95'][1], 2)}; {inteiro(i['unidades'])} {escape(i['unidade'])})"
+        for i in itens
+    ]
+    desc = (
+        "; ".join(partes[:-1]) + "; e " + partes[-1] if len(partes) > 1 else partes[0]
     )
     h = p(
         (
