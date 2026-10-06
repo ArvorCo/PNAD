@@ -9,13 +9,16 @@ class="tips">` e legenda. O SVG é desenhado inteiro em Python; o JavaScript de
 continua completa quando o script não roda.
 
 Carregamento sob demanda: figura cujo corpo (controles, SVG, tabelas e fichas)
-passa de `ADIAR_ACIMA` bytes sai da página dentro de `<noscript class="fig-src">`.
-Com script ligado o navegador trata esse bloco como texto cru, sem montar DOM nem
-pintar nada; `pagina_interativo` lê o texto e o materializa quando a figura se
-aproxima da janela, quando a âncora do capítulo é aberta, quando um `<details>`
-que a contém abre ou antes de imprimir. Sem script, o próprio navegador parseia o
-`<noscript>` e a figura aparece inteira. Uma cópia só serve aos dois casos, e a
-página continua funcionando aberta do disco, sem rede.
+passa de `ADIAR_ACIMA` bytes tem o desenho e as fichas dentro de
+`<noscript class="fig-src">`; controles, legenda HTML e tabelas ficam fora, porque
+são leves. Com script ligado o navegador trata esse bloco como texto cru, sem
+montar DOM nem pintar nada; `pagina_interativo` lê o texto e o materializa quando
+a figura se aproxima da janela, quando a âncora do capítulo é aberta, quando um
+`<details>` que a contém abre ou antes de imprimir. A espera ocupa a caixa exata
+do gráfico (mesma classe, mesma largura mínima, razão do viewBox), então a página
+não salta quando ele chega. Sem script, o próprio navegador parseia o `<noscript>`
+e a figura aparece inteira. Uma cópia só serve aos dois casos, e a página continua
+funcionando aberta do disco, sem rede.
 """
 
 from __future__ import annotations
@@ -270,15 +273,23 @@ def figura_html(
     dim: bool = True,
     apos: str = "",
     adiar: bool | None = None,
+    foco: tuple[float, ...] | None = None,
 ) -> str:
     """`modo`: 'scroll' (rolagem interna abaixo de `minw`), 'fit' (até 760 px) ou 'full'.
 
     `adiar`: None decide pelo tamanho do corpo (`ADIAR_ACIMA`); True e False forçam.
+    `foco`: faixa (x0, x1[, zero]) em unidades do viewBox que a rolagem interna
+    mostra ao abrir quando a figura é mais larga que a tela: o zero do eixo e a
+    maior barra. Se a faixa não cabe, a rolagem para no zero (o terceiro valor,
+    ou x0), com a barra do lado em que ela cresce. Sem `foco`, abre no começo.
     """
     cls = {"scroll": "chart-scroll", "fit": "chart-fit", "full": "chart-full"}[modo]
     estilo = f' style="--minw:{minw}px"' if modo == "scroll" else ""
+    if foco is not None and modo == "scroll":
+        estilo += ' data-foco="' + " ".join(f"{v:.0f}" for v in foco) + '"'
     dimattr = " data-dim" if dim else ""
-    corpo = f'{controles}<div class="{cls}" tabindex="0"{estilo}>{svg}</div>{apos}{tips.script()}'
+    grafico = f'<div class="{cls}" tabindex="0"{estilo}>{svg}</div>'
+    corpo = f"{controles}{grafico}{apos}{tips.script()}"
     rodape = (
         f'<figcaption>{legenda} <span class="dica">ficha ao passar o ponteiro ou tocar</span>'
         "</figcaption></figure>"
@@ -292,13 +303,34 @@ def figura_html(
         )
     if "</noscript" in corpo.lower():
         raise ValueError(f"figura {nome}: corpo contém o fechamento do noscript")
+    # Só o desenho e as fichas ficam crus no <noscript>: controles e o que vem
+    # depois do gráfico (legenda HTML, tabelas) são leves e já ocupam o lugar
+    # certo. A espera tem a caixa exata do gráfico: mesma classe, mesma largura
+    # mínima e a razão do viewBox, então a página não salta quando ele chega.
     vb = re.search(r'viewBox="0 0 ([\d.]+) ([\d.]+)"', svg)
     razao = f"{float(vb.group(1)):.0f}/{float(vb.group(2)):.0f}" if vb else "11/6"
     return (
         f'<figure class="reveal fig-i fig-adiada" id="fig-{nome}" data-fig="{nome}"{dimattr} data-adiada>'
-        f'<div class="fig-espera" style="--ar:{razao}" aria-hidden="true">figura carregada ao chegar aqui</div>'
-        f'<noscript class="fig-src">{corpo}</noscript>{rodape}'
+        f"{controles}"
+        f'<div class="{cls} fig-espera-c"{estilo} aria-hidden="true">'
+        f'<div class="fig-espera" style="--ar:{razao}">figura carregada ao chegar aqui</div></div>'
+        f'<noscript class="fig-src">{grafico}{tips.script()}</noscript>{apos}{rodape}'
     )
+
+
+def larga_estreita(larga: str, estreita: str) -> str:
+    """Duas versões do desenho: a larga acima de 720 px, a empilhada abaixo (só CSS).
+
+    Use com `figura_html(..., modo="full")`. As duas compartilham as chaves das
+    fichas (`data-k`), então uma `Tips` serve às duas.
+    """
+    return f'<div class="fig-larga">{larga}</div><div class="fig-estreita">{estreita}</div>'
+
+
+HALO = (
+    f' paint-order="stroke" stroke="{PAPER}" stroke-width="4" stroke-linejoin="round"'
+)
+"""Atributos de texto com contorno da cor do papel: linha de referência passa por trás."""
 
 
 def legenda_html(itens: list[tuple[str, str]], titulo: str = "") -> str:
@@ -347,6 +379,141 @@ def chip(x: float, y: float, s: str, size: float = 13, anchor: str = "start") ->
         f'rx="3" fill="#ffffff" stroke="{MUTED}" stroke-width="0.6"/>'
         + t(x0 + 5, y + 1, s, size, INK, weight="600")
     )
+
+
+def _chip_caixa(
+    x: float, y: float, s: str, size: float
+) -> tuple[float, float, float, float]:
+    """Caixa (x0, y0, x1, y1) de `chip(x, y, s, size)` com âncora à esquerda."""
+    w = 0.53 * size * len(s) + 12
+    return (x, y - size - 2, x + w, y + 6)
+
+
+def rotulos_com_fio(
+    pontos: list[tuple[float, float, float, str]],
+    limites: tuple[float, float, float, float],
+    size: float = 13,
+    contorno: str = INK,
+) -> str:
+    """Rótulo de bolha fora do raio, com fio até a borda e contorno por cima.
+
+    `pontos`: (x, y, raio, texto), na ordem de prioridade. Cada rótulo procura,
+    em anéis crescentes, a primeira posição que não cruza outro rótulo nem outra
+    bolha rotulada e que cabe em `limites` (x0, y0, x1, y1). O contorno da bolha
+    rotulada é desenhado por último, então ela aparece mesmo sob a nuvem.
+    """
+    caixas: list[tuple[float, float, float, float]] = []
+    out: list[str] = []
+    lx0, ly0, lx1, ly1 = limites
+
+    def cruza(a, b) -> bool:
+        return a[0] < b[2] and b[0] < a[2] and a[1] < b[3] and b[1] < a[3]
+
+    def toca_bolha(c, px, py, pr) -> bool:
+        nx, ny = min(max(px, c[0]), c[2]), min(max(py, c[1]), c[3])
+        return (nx - px) ** 2 + (ny - py) ** 2 < (pr + 3) ** 2
+
+    for x, y, raio, s in pontos:
+        w = 0.53 * size * len(s) + 12
+        escolhido = None
+        for dist in (raio + 16, raio + 34, raio + 60, raio + 96):
+            for ang in (-40, 40, -140, 140, -90, 90, 0, 180):
+                a = math.radians(ang)
+                ex, ey = x + dist * math.cos(a), y + dist * math.sin(a)
+                cx = ex if math.cos(a) >= -0.01 else ex - w
+                if abs(math.cos(a)) < 0.1:
+                    cx = ex - w / 2
+                if abs(math.sin(a)) < 0.1:
+                    cy = ey + size / 2 - 2
+                elif math.sin(a) > 0:
+                    cy = ey + size + 2
+                else:
+                    cy = ey - 6
+                cx0 = _chip_caixa(cx, cy, s, size)
+                if cx0[0] < lx0 or cx0[2] > lx1 or cx0[1] < ly0 or cx0[3] > ly1:
+                    continue
+                if any(cruza(cx0, c) for c in caixas):
+                    continue
+                if any(toca_bolha(cx0, px, py, pr) for px, py, pr, _ in pontos):
+                    continue
+                escolhido = (cx, cy, cx0, a)
+                break
+            if escolhido:
+                break
+        if escolhido is None:
+            continue
+        cx, cy, caixa, a = escolhido
+        caixas.append(caixa)
+        bx, by = x + raio * math.cos(a), y + raio * math.sin(a)
+        nx = min(max(bx, caixa[0]), caixa[2])
+        ny = min(max(by, caixa[1]), caixa[3])
+        out.append(
+            f'<g pointer-events="none">'
+            f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{raio:.1f}" fill="none" stroke="{contorno}" stroke-width="1.6"/>'
+            f'<line x1="{bx:.1f}" y1="{by:.1f}" x2="{nx:.1f}" y2="{ny:.1f}" stroke="{contorno}" stroke-width="1"/>'
+            f"{chip(cx, cy, s, size)}</g>"
+        )
+    return "".join(out)
+
+
+def posiciona_siglas(
+    pontos: list[tuple[float, float, str]],
+    limites: tuple[float, float, float, float],
+    raio: float = 7,
+    size: float = 13,
+) -> list[tuple[float, float, float, float, bool]]:
+    """Caixa de cada sigla sem cruzar outra sigla nem outro ponto.
+
+    `pontos`: (x, y, texto). Devolve, na mesma ordem, (x0, y0, w, h, fio): a
+    caixa do rótulo e se ele precisa de fio até o ponto. Tenta primeiro ao lado
+    do ponto; depois sobe ou desce em degraus de uma linha, dos dois lados.
+    """
+    h = size + 4
+    caixas: list[tuple[float, float, float, float]] = []
+    res: list[tuple[float, float, float, float, bool]] = []
+    lx0, ly0, lx1, ly1 = limites
+
+    def livre(c) -> bool:
+        if c[0] < lx0 or c[1] < ly0 or c[0] + c[2] > lx1 or c[1] + c[3] > ly1:
+            return False
+        for o in caixas:
+            if (
+                c[0] < o[0] + o[2]
+                and o[0] < c[0] + c[2]
+                and c[1] < o[1] + o[3]
+                and o[1] < c[1] + c[3]
+            ):
+                return False
+        for px, py, _ in pontos:
+            nx, ny = min(max(px, c[0]), c[0] + c[2]), min(max(py, c[1]), c[1] + c[3])
+            if (nx - px) ** 2 + (ny - py) ** 2 < (raio + 1.5) ** 2:
+                return False
+        return True
+
+    ordem = sorted(range(len(pontos)), key=lambda i: (pontos[i][0], pontos[i][1]))
+    saida: dict[int, tuple[float, float, float, float, bool]] = {}
+    for i in ordem:
+        x, y, s = pontos[i]
+        w = 0.62 * size * len(s) + 6
+        escolhido = None
+        for passo in range(9):
+            for sinal in ((0,) if passo == 0 else (-1, 1)):
+                dy = sinal * passo * (h + 1)
+                for dx in (raio + 3, -(raio + 3) - w):
+                    c = (x + dx, y - h / 2 + dy, w, h)
+                    if livre(c):
+                        escolhido = (*c, passo > 0)
+                        break
+                if escolhido:
+                    break
+            if escolhido:
+                break
+        if escolhido is None:
+            escolhido = (x + raio + 3, y - h / 2, w, h, False)
+        caixas.append(escolhido[:4])
+        saida[i] = escolhido
+    res = [saida[i] for i in range(len(pontos))]
+    return res
 
 
 def r(x, y, w, h, fill, extra: str = "") -> str:

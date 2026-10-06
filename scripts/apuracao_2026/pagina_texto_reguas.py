@@ -12,7 +12,6 @@ from html import escape
 
 from .pagina_comum import NOME_UF, inteiro, num, p, tabela
 from .pagina_fig_base import nome_bonito
-from .pagina_fig_terceira_via_b import ORDENA_JS
 
 CLASSES = ("venceu_folga", "venceu_apertado", "perdeu_apertado", "perdeu_folga")
 SITUACAO = {
@@ -274,7 +273,6 @@ def _tabela_100(R: dict) -> str:
         "com o teto ao lado e a posição em cada régua. Robusto: entre os 100 primeiros pela pesquisa e pela urna. "
         "Clique no cabeçalho para ordenar.</caption>"
         f"<thead><tr>{th}</tr></thead><tbody>{''.join(corpo)}</tbody></table></div>"
-        + ORDENA_JS
     )
 
 

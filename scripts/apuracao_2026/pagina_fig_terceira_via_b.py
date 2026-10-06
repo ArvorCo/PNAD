@@ -80,20 +80,6 @@ ROT_TETO = {
     "palanque": "teto vem sobretudo da direita local acima de Flávio",
 }
 
-ORDENA_JS = (
-    "<script>(function(){document.querySelectorAll('table[data-ordena]').forEach(function(tb){"
-    "if(tb.getAttribute('data-ok'))return;tb.setAttribute('data-ok','1');"
-    "var ths=tb.querySelectorAll('thead th');"
-    "ths.forEach(function(th,j){var b=document.createElement('button');b.type='button';b.className='ord';"
-    "b.textContent=th.textContent;th.textContent='';th.appendChild(b);"
-    "b.addEventListener('click',function(){var asc=th.getAttribute('aria-sort')!=='ascending';"
-    "ths.forEach(function(x){x.removeAttribute('aria-sort');});th.setAttribute('aria-sort',asc?'ascending':'descending');"
-    "var corpo=tb.tBodies[0],ls=Array.prototype.slice.call(corpo.rows);"
-    "ls.sort(function(a,c){var x=a.cells[j].getAttribute('data-v'),y=c.cells[j].getAttribute('data-v');"
-    "var nx=parseFloat(x),ny=parseFloat(y);var d=(!isNaN(nx)&&!isNaN(ny))?nx-ny:String(x).localeCompare(String(y),'pt-BR');"
-    "return asc?d:-d;});ls.forEach(function(l){corpo.appendChild(l);});});});});})();</script>"
-)
-
 
 def _composicao(x: dict) -> list[tuple[str, int]]:
     return [(g, x[g]) for g in GRUPOS]
@@ -202,7 +188,6 @@ def _tabela_100(top: list[dict]) -> str:
         '<div class="table-scroll tv-tab" tabindex="0"><table data-ordena="1">'
         "<caption>Os 100 municípios prioritários pelo índice da casa. Clique no cabeçalho para ordenar.</caption>"
         f"<thead><tr>{th}</tr></thead><tbody>{''.join(corpo)}</tbody></table></div>"
-        + ORDENA_JS
     )
 
 
