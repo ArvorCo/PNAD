@@ -66,7 +66,10 @@ CAMPOS_CASO = (
     "resultado",
     "resumo",
     "fontes",
+    "rotulo_curto",
 )
+ROTULO_MAX = 22
+"""Rótulo curto de cada caso na linha do tempo: até 22 caracteres."""
 CAMPOS_FONTE = ("id", "url", "titulo", "veiculo", "data", "como_conferido")
 
 
@@ -162,6 +165,10 @@ def validar(J: dict, criterios: set[str] | None = None) -> list[str]:
         for campo in CAMPOS_CASO:
             if campo not in k or k[campo] in (None, "", []):
                 erros.append(f"caso {k.get('id')}: sem {campo}")
+        if len(str(k.get("rotulo_curto") or "")) > ROTULO_MAX:
+            erros.append(
+                f"caso {k.get('id')}: rotulo_curto com mais de {ROTULO_MAX} caracteres"
+            )
         if k.get("cenario") not in cens:
             erros.append(f"caso {k.get('id')}: cenário {k.get('cenario')} ausente")
         for f in [
@@ -193,6 +200,7 @@ __all__ = [
     "COR_SINAL",
     "CURTO_SINAL",
     "FAMILIAS",
+    "ROTULO_MAX",
     "ROT_FAMILIA",
     "ROT_SINAL",
     "SINAIS",

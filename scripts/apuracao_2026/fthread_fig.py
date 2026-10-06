@@ -246,64 +246,47 @@ def fig_cenarios(familias: tuple[str, ...]) -> str:
 
 
 def fig_casos() -> str:
-    """Linha do tempo dos casos documentados, eixo só com os anos que têm caso."""
+    """Linha do tempo vertical em duas colunas: ano, marcador e rótulo curto de cada caso."""
     J = cenarios()
     casos = FC.casos_ordenados(J)
     cens = FC.por_id(J["cenarios"])
-    anos = sorted({c["ano"] for c in casos})
-    x0, x1, base = 40, W - 40, 120
-    passo = (x1 - x0) / max(len(anos) - 1, 1)
-    pos = {a: x0 + i * passo for i, a in enumerate(anos)}
-    por_ano: dict[int, list[dict]] = {}
-    for c in casos:
-        por_ano.setdefault(c["ano"], []).append(c)
-    pilha = max(len(v) for v in por_ano.values())
-    passo_y = min(44, (H - base - 110) / max(pilha, 1))
-    raio = min(15, passo_y / 2 - 2)
+    meio = (len(casos) + 1) // 2
+    colunas = [casos[:meio], casos[meio:]]
+    topo, base = 70, H - 82
+    passo = (base - topo) / max(meio - 1, 1)
     out = [
         t(
             0,
             26,
-            f"{num(len(casos))} casos documentados, um marcador por caso",
+            f"{num(len(casos))} casos documentados, do mais antigo ao mais recente",
             19,
             INK,
             700,
-        ),
-        ln(x0 - 20, base, x1 + 20, base, INK, 2),
-    ]
-    for a in anos:
-        out.append(ln(pos[a], base - 7, pos[a], base + 7, INK, 2))
-        out.append(
-            t(
-                pos[a],
-                base - 16,
-                a,
-                16 if len(anos) < 14 else 13,
-                INK,
-                700,
-                "middle",
-                MONO,
-            )
         )
-    for a, lista in por_ano.items():
-        for j, c in enumerate(lista):
-            cor = FC.COR_FAMILIA[cens[c["cenario"]]["familia"]]
+    ]
+    for k, col in enumerate(colunas):
+        x0 = k * 510
+        xa = x0 + 74
+        if col:
             out.append(
-                circ(
-                    pos[a],
-                    base + 34 + j * passo_y,
-                    raio,
-                    cor,
-                    f' stroke="{WHITE}" stroke-width="2"',
-                )
+                ln(xa, topo - 16, xa, topo + passo * (len(col) - 1) + 16, INK, 2)
             )
-    y = H - 30
+        ano_ant = None
+        for i, c in enumerate(col):
+            y = topo + i * passo
+            cor = FC.COR_FAMILIA[cens[c["cenario"]]["familia"]]
+            if c["ano"] != ano_ant:
+                out.append(t(xa - 18, y + 6, c["ano"], 17, INK, 700, "end", MONO))
+                ano_ant = c["ano"]
+            out.append(circ(xa, y, 9, cor, f' stroke="{WHITE}" stroke-width="2"'))
+            out.append(t(xa + 20, y + 6, c["rotulo_curto"], 18, cor, 700))
+    y = H - 12
     x = 0
     for f in FC.FAMILIAS:
         out.append(circ(x + 9, y - 6, 9, FC.COR_FAMILIA[f]))
         out.append(t(x + 26, y, FC.ROT_FAMILIA[f], 16, INK, 600))
         x += 46 + 8.4 * len(FC.ROT_FAMILIA[f])
-    out.append(ln(0, y - 34, W, y - 34, GRID))
+    out.append(ln(0, y - 30, W, y - 30, GRID))
     return svg("".join(out), "Linha do tempo dos casos documentados")
 
 

@@ -119,6 +119,11 @@ def verificar(posts: list[dict]) -> list[str]:
     for titulo, sub in KIT:
         if digitos_soltos(titulo + " " + sub):
             erros.append(f"kit: algarismo digitado em {titulo!r}")
+    for c in cenarios()["casos"]:
+        if not 0 < len(c.get("rotulo_curto") or "") <= FC.ROTULO_MAX:
+            erros.append(
+                f"caso {c['id']}: rotulo_curto ausente ou acima de {FC.ROTULO_MAX}"
+            )
     cen = [p for p in posts if p["tag"].startswith("Os cenários")]
     for p in cen:
         if "hipótese de risco" not in p["corpo"].lower():

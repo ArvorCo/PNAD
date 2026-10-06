@@ -2,6 +2,7 @@
 
 import copy
 import json
+from html import escape
 from pathlib import Path
 
 import pytest
@@ -126,3 +127,14 @@ def test_bloco_de_texto(J, F):
     assert h.rstrip().endswith("</aside>")
     assert "—" not in h
     assert avisos == []
+
+
+def test_rotulo_curto_de_cada_caso(J, F):
+    for c in J["casos"]:
+        assert 0 < len(c["rotulo_curto"]) <= FC.ROTULO_MAX, c["id"]
+    ruim = copy.deepcopy(J)
+    ruim["casos"][0]["rotulo_curto"] = "x" * (FC.ROTULO_MAX + 1)
+    assert any("rotulo_curto" in e for e in FC.validar(ruim))
+    fig = figura_catalogo("fiscais_casos", {"fiscais": F})
+    for c in J["casos"]:
+        assert escape(c["rotulo_curto"]) in fig, c["id"]

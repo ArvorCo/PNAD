@@ -100,3 +100,11 @@ def test_pagina_publicada_em_dia(html):
     if not PAGINA.exists():
         pytest.skip("página ainda não gerada")
     assert PAGINA.read_text(encoding="utf-8") == html
+
+
+def test_card_dos_casos_tem_rotulo_curto(posts):
+    from apuracao_2026.fthread_base import cenarios
+
+    svg = next(p["svg"] for p in posts if p["tag"] == "O que já aconteceu")
+    for c in cenarios()["casos"]:
+        assert c["rotulo_curto"] in svg.replace("&#x27;", "'"), c["id"]

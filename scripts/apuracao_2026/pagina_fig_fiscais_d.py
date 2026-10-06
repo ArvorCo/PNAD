@@ -191,14 +191,6 @@ def fiscais_cenarios(d, **_op) -> str:
 # ------------------------------------------------------------------ linha do tempo dos casos
 
 
-def _x_ano(anos: list[int], x0: float, x1: float):
-    """Escala por ano com eixo quebrado: anos sem caso não ocupam espaço."""
-    unicos = sorted(set(anos))
-    passo = (x1 - x0) / max(len(unicos) - 1, 1)
-    pos = {a: x0 + i * passo for i, a in enumerate(unicos)}
-    return pos, unicos
-
-
 @registra("fiscais_casos")
 def fiscais_casos(d, **_op) -> str:
     J = _json()
@@ -208,43 +200,48 @@ def fiscais_casos(d, **_op) -> str:
     cens = FC.por_id(J["cenarios"])
     fontes = FC.por_id(J["fontes"])
     tips = Tips()
-    w, x0, x1, base = 1100, 60, 1050, 120
-    pos, anos = _x_ano([c["ano"] for c in casos], x0, x1)
-    por_ano: dict[int, list[dict]] = {}
-    for c in casos:
-        por_ano.setdefault(c["ano"], []).append(c)
-    pilha = max(len(v) for v in por_ano.values())
-    raio, passo_y = 11, 30
-    h = base + pilha * passo_y + 70
+    meio = (len(casos) + 1) // 2
+    colunas = [casos[:meio], casos[meio:]]
+    w, topo, passo = 1100, 62, 34
+    h = topo + passo * (meio - 1) + 76
+    anos = sorted({c["ano"] for c in casos})
     out = [
         svg_abre(
             w,
             h,
             "Linha do tempo dos casos brasileiros documentados de manipulação do voto",
-            "Um marcador por caso, empilhado no ano, com a cor de onde o cenário acontece. Os anos sem caso foram "
-            "suprimidos do eixo. Cada caso tem data, instância, resultado e fonte na ficha e na tabela abaixo.",
+            "Duas colunas, do caso mais antigo ao mais recente: o ano, um marcador com a cor de onde o cenário "
+            "acontece e o rótulo curto do caso. Cada caso tem data, instância, resultado e fonte na ficha e na "
+            "tabela abaixo.",
         ),
         t(
             0,
             22,
-            "Casos documentados por ano, cor pela família do cenário",
+            "Casos documentados, do mais antigo ao mais recente, cor pela família do cenário",
             14,
             MUTED,
             weight="700",
         ),
-        ln(x0 - 20, base, x1 + 20, base, INK, 1.5),
     ]
-    for a in anos:
-        x = pos[a]
-        out.append(ln(x, base - 6, x, base + 6, INK, 1.5))
-        out.append(t(x, base - 14, a, 14, INK, "middle", weight="700", mono=True))
-    for a, lista in por_ano.items():
-        for j, c in enumerate(lista):
-            x, y = pos[a], base + 30 + j * passo_y
+    raio = 9
+    for k, col in enumerate(colunas):
+        xa = k * 560 + 70
+        if col:
+            out.append(
+                ln(xa, topo - 14, xa, topo + passo * (len(col) - 1) + 14, INK, 1.5)
+            )
+        ano_ant = None
+        for i, c in enumerate(col):
+            y = topo + i * passo
             cen = cens[c["cenario"]]
             cor = FC.COR_FAMILIA[cen["familia"]]
+            if c["ano"] != ano_ant:
+                out.append(
+                    t(xa - 16, y + 5, c["ano"], 14, INK, "end", weight="700", mono=True)
+                )
+                ano_ant = c["ano"]
             fts = [fontes[f] for f in c["fontes"]]
-            k = tips.add(
+            k_ = tips.add(
                 ficha(
                     c["titulo"],
                     f"fato em {c['ano']}, ato em {FC.data_br(c['data'])} · {c['local']}",
@@ -263,12 +260,14 @@ def fiscais_casos(d, **_op) -> str:
                 )
             )
             corpo = (
-                f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{raio}" fill="{cor}" stroke="{PAPER}" stroke-width="2"/>'
-                + area(x - raio - 4, y - raio - 4, 2 * raio + 8, 2 * raio + 8)
+                f'<circle cx="{xa:.1f}" cy="{y:.1f}" r="{raio}" fill="{cor}" stroke="{PAPER}" stroke-width="2"/>'
+                + t(xa + 18, y + 5, c["rotulo_curto"], 15, cor, weight="700")
+                + area(xa - raio - 4, y - passo / 2, 420, passo)
             )
-            out.append(hit(corpo, k, foco=True))
-    ly = h - 26
-    lx = x0 - 20
+            out.append(hit(corpo, k_, foco=True))
+    ly = h - 14
+    lx = 0
+    out.append(ln(0, ly - 24, w, ly - 24, GRADE))
     for f in FC.FAMILIAS:
         out.append(
             f'<circle cx="{lx + 7}" cy="{ly - 5}" r="7" fill="{FC.COR_FAMILIA[f]}"/>'
@@ -297,8 +296,8 @@ def fiscais_casos(d, **_op) -> str:
         f"<tbody>{''.join(linhas)}</tbody></table></div>"
     )
     legenda = (
-        f"{len(casos)} casos de {anos[0]} a {anos[-1]}, todos com fonte lida e data. O eixo pula os anos sem caso. "
-        "O marcador fica no ano do fato; a data abaixo do ano, na tabela, é a do ato documentado (decisão, operação, "
+        f"{len(casos)} casos de {anos[0]} a {anos[-1]}, todos com fonte lida e data, com o rótulo curto ao lado do marcador. "
+        "O ano é o do fato; a data abaixo do ano, na tabela, é a do ato documentado (decisão, operação, "
         "relatório). Investigação, denúncia e condenação são coisas diferentes, e a coluna de resultado diz qual é qual. "
         "Fonte: fontes_fiscais.json."
     )
