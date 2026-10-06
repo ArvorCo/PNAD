@@ -9,6 +9,7 @@ from __future__ import annotations
 from . import pagina_comparacao as CMP
 from . import pagina_texto as T
 from . import pagina_texto_arquitetura as TA
+from . import pagina_texto_extrato as TX
 from . import pagina_texto_noite_regioes as TNR
 from .pagina_comum import (
     Capitulo,
@@ -108,6 +109,7 @@ def r_falha(d: Dados, cap: Capitulo) -> str:
     h += T.falha_correcao() + fig("latencia_hora", d)
     h += TNR.estados_lentos(d)
     h += TA.bloco(d)
+    h += TX.bloco()
     h += limites(
         [
             "A latência inclui o intervalo de sondagem do coletor: é teto da demora de publicação, não medida dela.",

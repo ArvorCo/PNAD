@@ -24,6 +24,8 @@ from .pagina_comum import (
 from .pagina_css import CSS, FONTES, JS, JS_HEAD
 from .pagina_interativo import interativo_html
 
+REPO = "https://github.com/ArvorCo/PNAD"
+
 TITULO = "Apuração do 1º turno de 2026"
 DESCRICAO = (
     "O resultado, a noite minuto a minuto, a falha do TSE com três camadas de fonte, Câmara, Senado, "
@@ -249,14 +251,20 @@ def r_fontes(d: Dados, cap: Capitulo) -> str:
         f = d.fontes.get(nome)
         if f:
             linhas.append(
-                f"<li><code>{nome}</code> · {escape(f.gerado_em or 's/d')}"
+                f'<li><a href="{REPO}/blob/main/analysis/apuracao_2026/dados/{nome}"><code>{nome}</code></a> · {escape(f.gerado_em or "s/d")}'
                 f'<br><span class="hash">SHA-256 {f.sha256}</span></li>'
             )
         else:
             linhas.append(f"<li><code>{nome}</code> · ainda não disponível</li>")
     h += (
+        f'<p class="io">Tudo o que esta página usa está no repositório público <a href="{REPO}">{REPO.removeprefix("https://")}</a>: '
+        f'os dados em <a href="{REPO}/tree/main/analysis/apuracao_2026/dados">analysis/apuracao_2026/dados/</a>, '
+        f'os memorandos de método em <a href="{REPO}/tree/main/analysis/apuracao_2026">analysis/apuracao_2026/</a>, '
+        f'os extratos sob demanda em <a href="{REPO}/tree/main/analysis/apuracao_2026/extratos">extratos/</a>, '
+        f'os scripts em <a href="{REPO}/tree/main/scripts">scripts/</a> e o coletor em <a href="{REPO}/tree/main/apuracao">apuracao/</a>. '
+        "Os arquivos brutos do TSE, versão a versão com SHA-256, estão no banco do coletor (9,4 GB), que não cabe no GitHub e é enviado a pedido.</p>"
         "<h3>Dados</h3><p>Em <code>analysis/apuracao_2026/dados/</code>; memorandos de método em "
-        '<code>analysis/apuracao_2026/*.md</code>.</p><ol class="fontes">'
+        '<code>analysis/apuracao_2026/*.md</code>. Clique no nome para baixar.</p><ol class="fontes">'
         + "".join(linhas)
         + "</ol>"
     )
