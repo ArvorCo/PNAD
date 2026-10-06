@@ -246,38 +246,101 @@ def extremos_amostras(S: dict) -> str:
 # ------------------------------------------------------------------ clusters
 
 
+def _nome_parte(S: dict, chave: str) -> str:
+    nomes = {c["chave"]: c["nome"] for c in S.get("candidatos") or []}
+    return escape(nomes.get(chave, chave))
+
+
+def clusters_falha(S: dict) -> str:
+    """A tentativa com 15 partes e por que foi abandonada (antes da figura nova)."""
+    C = S["clusters"]
+    q = (C.get("variantes") or {}).get("quinze_partes")
+    if not q:
+        return ""
+    deg = q.get("degrau_log") or {}
+    aj = q.get("ajuste") or {}
+    ari = aj.get("ari_outras_sementes") or [None, None]
+    nuv = [
+        _nome_parte(S, s["feature"])
+        for s in (q.get("nuvens") or {}).get("separacao") or []
+        if (s.get("acerto_balanceado_pct") or 0) >= 90
+    ]
+    frase_nuv = (
+        " Na projeção em duas dimensões, as nuvens que saltavam aos olhos eram seções com e sem voto em "
+        + " e em ".join(nuv)
+        + "."
+        if nuv
+        else ""
+    )
+    frase_ari = (
+        f" E a divisão mudava com a semente do algoritmo: o índice de Rand ajustado entre a partição escolhida e as das outras "
+        f"{aj.get('sementes', 0) - 1} sementes ia de {num(ari[0], 2)} a {num(ari[1], 2)}."
+        if ari[0] is not None
+        else ""
+    )
+    return p(
+        f"A primeira tentativa usou as {len(q['features'])} partes de cada seção: as 12 candidaturas, brancos, nulos e "
+        f"abstenção. Não deu certo. {num(q['zeros_substituidos_pct'], 1)}% das células da matriz eram zero, porque a "
+        "maioria das seções não dá voto nenhum às candidaturas nanicas, e o zero precisa virar 0,0001 antes do logaritmo. "
+        f"Na seção mediana, um voto fica a {num(deg.get('mediana') or 0, 1)} unidades de log desse zero, e a mistura usou "
+        "o degrau para separar as seções: os grupos saíram de quem tem ou não tem voto nas nanicas, não de lugar nem de "
+        f"perfil de voto (V de Cramér entre grupo e região de {num(q['cramer_v_regiao'], 2)}, perto de nenhuma "
+        f"associação).{frase_nuv}{frase_ari} Por isso refizemos a mistura só com as cinco partes que interessam.",
+        "inferencia",
+    )
+
+
+def _sem_voto(S: dict, chave: str) -> str:
+    return {"brancos": "sem voto branco", "nulos": "sem voto nulo"}.get(
+        chave, f"sem voto em {_nome_parte(S, chave)}"
+    )
+
+
 def clusters_a(S: dict) -> str:
+    """O que entrou no modelo novo, o que ele separou e se o EM convergiu."""
     C = S["clusters"]
     comps = C["componentes"]
-    proj = _frases(C.get("leitura_projecao") or "")
+    zp = C.get("zeros_por_parte") or {}
+    zeros = lista(
+        [
+            f"{num(z['pct_secoes'], 2)}% das seções {_sem_voto(S, k)}"
+            for k, z in zp.items()
+            if (z.get("pct_secoes") or 0) >= 0.1
+        ]
+    )
     h = p(
-        f"Cada seção entrou como {len(C['features'])} proporções do eleitorado apto (candidatos, brancos, nulos e "
-        f"abstenção), em log-razão centrada. A mistura de {C['k']} gaussianas separou "
+        "Agora cada seção entra como cinco partes do eleitorado apto: Lula, Flávio, brancos, nulos e abstenção, "
+        "renormalizadas para somar 1. O voto nas outras dez candidaturas fica fora das partes: é exatamente o que falta "
+        "para o eleitorado inteiro e aparece no painel, ao lado de cada grupo. "
+        f"{num(C['zeros_substituidos_pct'], 2)}% das células ainda são zero"
+        + (f" ({zeros})" if zeros else "")
+        + f", e o zero continua virando 0,0001. A mistura de {C['k']} gaussianas separou "
         + lista([f"{inteiro(c['secoes'])} (grupo {c['id'] + 1})" for c in comps])
         + " seções.",
         "verificado",
     )
-    h += p(
-        f"Os grupos não são geografia (V de Cramér entre grupo e região de {num(C['cramer_v_regiao'], 2)}): separam as "
-        "seções pelo padrão de zeros, como mostra a figura seguinte. " + _nuvens(proj),
-        "inferencia",
-    )
-    return h + escolha_k(C)
+    dg = (C.get("ajuste") or {}).get("diagnostico_convergencia")
+    if dg:
+        h += p(escape(dg["frase"]), "verificado")
+    return h
 
 
-def _nuvens(proj: list[str]) -> str:
-    """A frase das nuvens da projeção, com os nomes das partes no lugar de "nessas partes"."""
-    if len(proj) < 2:
-        return ""
-    nomes = re.findall(r"carga em ([^()]+?) \(", proj[0])
-    frase = proj[1]
-    if len(nomes) == 2:
-        frase = frase.replace("nessas partes", f"em {nomes[0]} e em {nomes[1]}")
-    return frase
+def clusters_leitura(S: dict) -> str:
+    """Geografia, o achado contrário (grupos que são artefato da contagem), os grupos
+    que são perfil de voto e por que as partes pequenas mandam na projeção."""
+    C = S["clusters"]
+    L = C.get("leitura") or {}
+    h = p(escape(L["geografia"]), "inferencia") if L.get("geografia") else ""
+    if L.get("artefatos"):
+        h += nota("contrario", escape(L["artefatos"]))
+    resto = [L.get("perfis"), L.get("geometria"), C.get("leitura_projecao")]
+    if any(resto):
+        h += p(" ".join(escape(x) for x in resto if x), "inferencia")
+    return h
 
 
 def escolha_k(C: dict) -> str:
-    """Juízo editorial: k escolhido pelo autor, com o BIC e a estabilidade ao lado."""
+    """Juízo editorial: k e as cinco partes são escolha do autor, com o BIC ao lado."""
     bic = sorted(C.get("bic") or [], key=lambda b: b["k"])
     if not bic:
         return ""
@@ -285,21 +348,24 @@ def escolha_k(C: dict) -> str:
     melhor = min(bic, key=lambda b: b["bic"])
     atual = next((b for b in bic if b["k"] == C["k"]), None)
     k = C["k"]
-    motivo = ek.get("motivo") or "escolha do autor"
     concorda = (
-        f"e o BIC também prefere k = {k}"
+        f"o BIC também prefere k = {k}"
         if melhor["k"] == k
-        else f"o BIC prefere k = {melhor['k']} ({menos(melhor['bic'], 0)} contra {menos(atual['bic'], 0) if atual else 's/d'})"
+        else f"o BIC preferiria k = {melhor['k']} ({menos(melhor['bic'], 0)} contra {menos(atual['bic'], 0) if atual else 's/d'})"
     )
-    estab = [
-        x
-        for x in _frases(C.get("estabilidade") or "")
-        if x.startswith("O que não muda")
-    ]
+    mv = (C.get("variantes") or {}).get("meio_voto")
+    ari = (C.get("sensibilidade") or {}).get("ari_principal_vs_meio_voto")
+    sens = (
+        f" Trocar o zero por meio voto, e não por 0,0001, muda a partição (índice de Rand ajustado de {num(ari, 2)} contra a "
+        f"principal) e leva o V de Cramér com a região a {num(mv['cramer_v_regiao'], 2)}."
+        if mv and ari is not None
+        else ""
+    )
     return p(
-        f"O número de grupos, k = {k}, é {escape(motivo)}; {concorda}. Com tantos zeros, o BIC premia componente que "
-        "se encaixa num padrão exato de zeros e serve de contraste, não de árbitro. "
-        + " ".join(estab),
+        f"O número de grupos, k = {k}, e a escolha das cinco partes são do autor ({escape(ek.get('data') or '')}); "
+        f"{concorda}. Deixar a terceira via fora das partes é decisão de leitura, não de método: a pergunta é como as "
+        "seções se dividem entre os dois finalistas, o voto que não escolhe ninguém e quem não foi votar."
+        + sens,
         "juizo",
     )
 
@@ -333,7 +399,8 @@ def clusters_b(S: dict) -> str:
         e, n = mp.most_common(1)[0]
         frase_mp = f" No país, {escape(e)} explica {inteiro(n)} das {len(C['menos_provaveis'])} menos prováveis."
     return p(
-        f"O grupo mais atípico é o {ma['id'] + 1}: log-verossimilhança média {menos(comp['loglik_media'], 1)}, contra "
+        f"O grupo mais atípico é o {ma['id'] + 1} ({escape(comp['rotulo'])}): log-verossimilhança média "
+        f"{menos(comp['loglik_media'], 1)}, contra "
         f"{menos(ll_out, 1)} nos outros, e Mahalanobis mediana {num(comp['mahalanobis_mediana'], 1)}. Nas "
         f"{len(ma['amostras'])} amostras menos prováveis dele, as explicações mais frequentes pelo cadastro são {comuns}."
         + frase_mp,
@@ -349,8 +416,8 @@ POUCAS = 30
 
 def _fora_do_zero(x: dict) -> bool:
     for c in ("flavio_pp", "lula_pp"):
-        ic = (x.get(c) or {}).get("ic95") or [None, None]
-        if ic[0] is not None and ic[1] is not None and (ic[0] > 0 or ic[1] < 0):
+        lo, hi = (x.get(c) or {}).get("ic95") or [None, None]
+        if lo is not None and hi is not None and (lo > 0 or hi < 0):
             return True
     return False
 
@@ -638,7 +705,9 @@ def bloco(S: dict, fig: Callable[[str], str]) -> str:
     h += extremos_2022(S) + extremos_amostras(S)
     k = S["clusters"]["k"]
     h += f"<h3>{grupos_extenso(k).capitalize()} grupos de seções</h3>"
-    h += fig("clusters_secoes") + clusters_a(S) + fig("clusters_regiao") + clusters_b(S)
+    h += clusters_falha(S) + fig("clusters_secoes") + clusters_a(S)
+    h += clusters_leitura(S) + fig("clusters_regiao") + clusters_b(S)
+    h += escolha_k(S["clusters"])
     h += "<h3>Modelo de urna</h3>" + fig("modelo_urna_uf") + urna_a(S)
     h += fig("voto_por_modelo_nacional") + urna_voto_nacional(S)
     h += fig("voto_por_modelo_uf") + urna_voto_uf(S)

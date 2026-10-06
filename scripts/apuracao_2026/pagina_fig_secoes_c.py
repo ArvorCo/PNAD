@@ -4,7 +4,9 @@ Dispersão da amostra de seções nos dois primeiros componentes principais, com
 cor do grupo da mistura gaussiana (ou da região), os centros rotulados, as 200
 seções menos prováveis com contorno e a elipse do grupo mais atípico pelo centro
 e pela covariância de todas as seções dele (`pca.elipses`, dois desvios). Ao
-lado, o painel dos grupos; abaixo, a tabela das 20 amostras do grupo mais
+lado, o painel dos grupos, com a barra do eleitorado de cada um (Lula, Flávio,
+terceiros, brancos, nulos e abstenção) e a caixa "O que não deu certo", com os
+números da versão de 15 partes; abaixo, a tabela das 20 amostras do grupo mais
 atípico. Tudo sai de `secoes.json`.
 """
 
@@ -13,7 +15,7 @@ from __future__ import annotations
 import math
 from html import escape
 
-from .pagina_comum import inteiro, num, tabela
+from .pagina_comum import CINZA, FLAVIO, LULA, OUTROS, inteiro, num, tabela
 from .pagina_fig_base import (
     COR_REGIAO,
     GRADE,
@@ -44,6 +46,28 @@ from .pagina_fig_secoes import (
 )
 
 CINZA_ELIPSE = "#5f6773"
+PARTES_BARRA = [  # (chave no centro, nome, cor)
+    ("lula", "Lula", LULA),
+    ("flavio", "Flávio", FLAVIO),
+    ("terceiros", "terceiros (fora do modelo)", OUTROS),
+    ("brancos", "brancos", "#d9d2bf"),
+    ("nulos", "nulos", CINZA),
+    ("abstencao", "abstenção", "#c9a43a"),
+]
+ESTILO_PAINEL = (
+    "<style>#fig-clusters_secoes .cl-barra{display:flex;height:12px;margin:5px 0 3px;"
+    "border:1px solid var(--line)}"
+    "#fig-clusters_secoes .cl-barra>span{display:block;height:100%}"
+    "#fig-clusters_secoes .cl-leg{list-style:none;display:flex;flex-wrap:wrap;gap:2px 12px;"
+    "padding:0;margin:0 0 10px;font:12.5px/1.5 var(--sans)}"
+    "#fig-clusters_secoes .cl-leg li{margin:0;padding:0;border:0;font:inherit}"
+    "#fig-clusters_secoes .cl-leg i{display:inline-block;width:10px;height:10px;"
+    "margin-right:5px;vertical-align:-1px;border:1px solid #9a9c94}"
+    "#fig-clusters_secoes .cl-falha{margin:6px 0 0;padding:10px 12px;"
+    "border-left:4px solid var(--gold);background:#efe8d4;font:13.5px/1.5 var(--sans)}"
+    "#fig-clusters_secoes .cl-falha h4{margin:0 0 4px}"
+    "#fig-clusters_secoes .cl-falha p{margin:0 0 6px;font:inherit}</style>"
+)
 
 
 def elipse_cov(
@@ -142,23 +166,104 @@ def _casa_menos_provaveis(C: dict, pontos: list[dict]) -> dict[int, dict]:
     return out
 
 
+def centro_eleitorado(c: dict) -> dict:
+    """Centro do grupo em % do eleitorado, com os terceiros (o que falta)."""
+    out = dict(c.get("centro_pct_eleitorado") or {})
+    if c.get("terceiros_pct_eleitorado") is not None:
+        out["terceiros"] = c["terceiros_pct_eleitorado"]
+    return out
+
+
+def barra_eleitorado(c: dict) -> str:
+    """Barra de 100% do eleitorado do grupo, em segmentos `display:block`."""
+    ce = centro_eleitorado(c)
+    segs = "".join(
+        f'<span title="{escape(nome)} {num(ce[k], 1)}%" '
+        f'style="flex:{ce[k]:.3f} 1 0;background:{cor}"></span>'
+        for k, nome, cor in PARTES_BARRA
+        if ce.get(k)
+    )
+    return f'<div class="cl-barra" role="img" aria-label="Eleitorado do grupo">{segs}</div>'
+
+
+def caixa_falha(C: dict, nomes: dict) -> str:
+    """'O que não deu certo': a versão de 15 partes, em números do JSON."""
+    q = (C.get("variantes") or {}).get("quinze_partes")
+    if not q:
+        return ""
+    aj = q.get("ajuste") or {}
+    deg = q.get("degrau_log") or {}
+    ari = aj.get("ari_outras_sementes") or [None, None]
+    nuv = [
+        s
+        for s in (q.get("nuvens") or {}).get("separacao") or []
+        if (s.get("acerto_balanceado_pct") or 0) >= 90
+    ]
+    frase_nuv = (
+        "As nuvens da projeção eram seções com e sem voto em "
+        + " e em ".join(escape(nomes.get(s["feature"], s["feature"])) for s in nuv)
+        + "."
+        if nuv
+        else ""
+    )
+    estab = (
+        f" A partição mudava com a semente (índice de Rand ajustado de {num(ari[0], 2)} a {num(ari[1], 2)})."
+        if ari[0] is not None
+        else ""
+    )
+    return (
+        '<div class="cl-falha"><h4>O que não deu certo</h4>'
+        f"<p>A primeira versão usava {len(q.get('features') or [])} partes: as 12 candidaturas, brancos, nulos e "
+        f"abstenção. {num(q['zeros_substituidos_pct'], 1)}% das células eram zero, e o degrau de 0,0001 para "
+        f"um voto ({num(deg.get('mediana') or 0, 1)} unidades de log) separou as seções por quem tinha ou não "
+        f"voto em candidatura nanica. V de Cramér com a região: {num(q['cramer_v_regiao'], 2)}.{estab} {frase_nuv}</p>"
+        f"<p>Por isso a mistura foi refeita com as cinco partes que interessam. "
+        f"V de Cramér agora: {num(C['cramer_v_regiao'], 2)}.{_ainda(C)}</p></div>"
+    )
+
+
+def _ainda(C: dict) -> str:
+    """Quais grupos do modelo novo ainda são artefato da contagem inteira."""
+    art = [c for c in C["componentes"] if c.get("artefato")]
+    if not art:
+        return " Nenhum grupo novo é artefato da contagem."
+    itens = [f"o {c['id'] + 1} ({escape(c['artefato'])})" for c in art]
+    lista_ = ", ".join(itens[:-1]) + " e " + itens[-1] if len(itens) > 1 else itens[0]
+    quantos = (
+        "um grupo novo é artefato"
+        if len(art) == 1
+        else f"{grupos_extenso(len(art))} grupos novos são artefatos"
+    )
+    return (
+        f" Ainda assim, {quantos} da contagem inteira, não perfil de seção: {lista_}."
+    )
+
+
 def _painel_clusters(S: dict) -> str:
     C = S["clusters"]
+    nomes = {c["chave"]: c["nome"] for c in S.get("candidatos") or []}
     ma = C["mais_anomalo"]["id"]
     itens = []
     for c in C["componentes"]:
-        cv, ce = c["centro_pct_validos"], c["centro_pct_eleitorado"]
+        cv = c["centro_pct_validos"]
+        ce = centro_eleitorado(c)
         ufs = ", ".join(
             f"{u['uf']} {num(u['pct_do_cluster'], 1)}%" for u in c["ufs_top"][:3]
         )
         reg = c["regioes"][0] if c.get("regioes") else None
         marca = ' <em class="cl-anom">mais atípico</em>' if c["id"] == ma else ""
+        eleit = ", ".join(
+            f"{nome.split(' (')[0]} {num(ce[k], 1)}%"
+            for k, nome, _ in PARTES_BARRA
+            if ce.get(k) is not None
+        )
         itens.append(
             f'<li><span class="sw" style="background:{CLUSTER_COR[c["id"] % len(CLUSTER_COR)]}"></span>'
             f"<b>Grupo {c['id'] + 1}: {escape(c['rotulo'])}</b>{marca}"
             f"<span>{inteiro(c['secoes'])} seções ({num(c['pct_secoes'], 1)}%)</span>"
-            f"<span>Centro: Lula {num(cv['lula'], 1)}%, Flávio {num(cv['flavio'], 1)}%, outros {num(cv['outros'], 1)}% dos válidos</span>"
-            f"<span>Abstenção média {num(ce['abstencao'], 1)}% dos aptos</span>"
+            + barra_eleitorado(c)
+            + f"<span>Eleitorado: {escape(eleit)}</span>"
+            f"<span>Válidos: Lula {num(cv['lula'], 1)}%, Flávio {num(cv['flavio'], 1)}%, outros {num(cv['outros'], 1)}%</span>"
             f"<span>UFs: {escape(ufs)}</span>"
             + (
                 f"<span>Região dominante: {escape(reg['regiao'])} ({num(reg['pct_do_cluster'], 1)}%)</span>"
@@ -167,9 +272,14 @@ def _painel_clusters(S: dict) -> str:
             )
             + "</li>"
         )
+    leg = "".join(
+        f'<li><i style="background:{cor}"></i>{escape(nome)}</li>'
+        for _, nome, cor in PARTES_BARRA
+    )
     return (
-        f'<div class="cl-painel"><h4>Os {grupos_extenso(C["k"])} grupos</h4>'
-        f'<ol>{"".join(itens)}</ol></div>'
+        f'<div class="cl-painel">{ESTILO_PAINEL}<h4>Os {grupos_extenso(C["k"])} grupos</h4>'
+        f'<ul class="cl-leg" aria-label="Partes da barra do eleitorado">{leg}</ul>'
+        f'<ol>{"".join(itens)}</ol>{caixa_falha(C, nomes)}</div>'
     )
 
 
@@ -232,6 +342,7 @@ def clusters_secoes(d, **_op) -> str:
     X = escala(lox, hix, x0, x1)
     Y = escala(loy, hiy, y1, y0)
     ve = P.get("variancia_explicada") or [None, None]
+    ve_txt = ["s/d" if v is None else num(100 * v, 1) for v in ve[:2]]
     out = [
         svg_abre(
             w,
@@ -252,7 +363,7 @@ def clusters_secoes(d, **_op) -> str:
         t(
             (x0 + x1) / 2,
             h - 22,
-            f"Componente principal 1 ({num(100 * ve[0], 1) if ve[0] is not None else 's/d'}% da variância)",
+            f"Componente principal 1 ({ve_txt[0]}% da variância)",
             14,
             INK,
             "middle",
@@ -264,7 +375,7 @@ def clusters_secoes(d, **_op) -> str:
         t(
             20,
             yy,
-            f"Componente 2 ({num(100 * ve[1], 1) if ve[1] is not None else 's/d'}%)",
+            f"Componente 2 ({ve_txt[1]}%)",
             14,
             INK,
             "middle",
@@ -401,10 +512,16 @@ def clusters_secoes(d, **_op) -> str:
         + "</div>"
     )
     aj = C["ajuste"]
+    dg = aj.get("diagnostico_convergencia") or {}
+    busca = (
+        f"{dg['sementes']} sementes, {len(dg.get('inits') or [])} inicializações e {aj.get('n_init')} partidas internas cada"
+        if dg
+        else f"{aj.get('n_init')} inicializações"
+    )
     legenda = (
-        f"Projeção das {inteiro(P.get('n_pontos', len(pontos)))} seções da amostra nos dois primeiros componentes "
-        f"principais das {len(C['features'])} variáveis ({escape(C['transformacao'])} sobre {escape(C['base'])}). "
-        f"Mistura gaussiana com k = {C['k']}, covariância completa, {aj.get('n_init')} inicializações. Contorno preto: as 200 "
+        f"Projeção das {inteiro(P.get('n_pontos', len(pontos)))} seções da amostra: "
+        f"{escape(P.get('base') or 'dois primeiros componentes principais')}. Partes: {escape(C['base'])}. "
+        f"Mistura gaussiana com k = {C['k']}, covariância completa, {busca}. Contorno preto: as 200 "
         "seções menos prováveis sob o modelo. Elipse cinza tracejada: centro e covariância do grupo mais atípico, a dois desvios. O botão troca a cor do grupo pela região, para ver se grupo é geografia. "
         f"{nota_cobertura(S)} Fonte: secoes.json."
     )
