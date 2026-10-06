@@ -294,6 +294,7 @@ def _celula(x: Mapping[str, Any], secoes: int) -> dict[str, Any]:
     """Somas de uma célula e as parcelas (mesma regra de `voto_por_uf_modelo`)."""
     return {
         "secoes": int(secoes),
+        "aptos": int(x["aptos"]),
         "votantes": int(x["votantes"]),
         "validos": int(x["validos"]),
         "lula": int(x[f"v{LULA}"]),
@@ -355,7 +356,9 @@ def voto_por_pais_modelo(
             g.groupby("mun")[["votantes"]]
             .sum()
             .join(g.groupby("mun").size().rename("n"))
+            .sort_values("votantes", ascending=False, kind="mergesort")
         )
+        cid_mod = g.groupby(["mun", "_m"]).size()
         paises.append(
             {
                 "pais": str(p),
@@ -369,8 +372,12 @@ def voto_por_pais_modelo(
                         "nome": str(cidades[str(m)].get("nm") or m),
                         "secoes": int(c["n"]),
                         "votantes": int(c["votantes"]),
+                        "modelos": {
+                            str(mm): int(cid_mod[(m, mm)])
+                            for mm in sorted(cid_mod[m].index, key=lambda x: ordem[x])
+                        },
                     }
-                    for m, c in cid.sort_values("votantes", ascending=False).iterrows()
+                    for m, c in cid.iterrows()
                 ],
             }
         )

@@ -1174,6 +1174,8 @@ def test_voto_por_pais_modelo_liga_cidade_a_pais_sem_adivinhar():
     assert sem["secoes_cedula"] == 1 and sem["lula_pct"] == 50.0
     assert [c["nome"] for c in us["cidades"]] == ["BOSTON", "MIAMI"]
     assert us["cidades"][1]["secoes"] == 2
+    assert us["cidades"][1]["modelos"] == {"UE2015": 1, "sem modelo": 1}
+    assert us["total"]["aptos"] == 530
 
 
 def test_voto_por_pais_modelo_sem_tabela_e_sem_exterior():
