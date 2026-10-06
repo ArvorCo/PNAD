@@ -262,3 +262,4 @@ Toda mudança de chave já publicada fica registrada aqui, com data e motivo.
   `modelo_urna_zona`, do texto do capítulo 12 e do memorando, a pedido do autor. Ficam os
   quatro estimadores nacionais e o bloco de 2022; acréscimo `urna.reguas`, que junta as
   quatro réguas e escreve a leitura.
+- 06/10/2026: `clusters.k` passa de 3 para 5 (escolha do autor; coincide com o k preferido pelo BIC); `componentes`, `mais_anomalo`, `cluster_regiao`, `cluster_uf` e `pca` seguem o mesmo esquema com cinco grupos; paleta da figura com cinco cores.
