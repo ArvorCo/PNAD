@@ -1,20 +1,19 @@
 {
   "meta": {
-    "gerado_em": "2026-10-05T06:59:03Z",
+    "gerado_em": "2026-10-06T04:49:50Z",
     "banco": "apuracao/data/apuracao.sqlite",
-    "versao_nacional_snapshot_id": 513491,
-    "versao_nacional_gerada_em": "2026-10-05T05:59:31.000Z",
-    "final_json_gerado_em": "2026-10-05T06:29:53.765Z",
+    "versao_nacional_snapshot_id": 531568,
+    "versao_nacional_gerada_em": "2026-10-05T15:51:47.000Z",
+    "final_json_gerado_em": "2026-10-06T04:48:42.262Z",
     "script": "scripts/apuracao-2026-dados.py",
     "regra_de_versao": "versão vigente de cada arquivo = última gerada pelo TSE (gerado_em), não a última sem a marca regressivo do coletor",
-    "arquivo": "governadores.json",
-    "vao_estadual_regerado_em": "2026-10-05T18:28:48Z"
+    "arquivo": "governadores.json"
   },
   "fonte": "apuracao/data/boletins/final.json (governadores e fatos)",
   "n_eleitos_1t": 20,
   "n_segundo_turno": 7,
-  "n_tse": 25,
-  "n_provisorio": 2,
+  "n_tse": 27,
+  "n_provisorio": 0,
   "eleitos_1t_por_campo": {
     "esquerda": 3,
     "centro-esquerda": 0,
@@ -71,24 +70,24 @@
     },
     {
       "uf": "AL",
-      "fonte": "provisorio",
-      "pst": 99.94,
+      "fonte": "tse",
+      "pst": 100,
       "decisao": "eleito",
       "candidatos": [
         {
           "nome": "JHC",
           "partido": "PSDB",
           "campo": "centro-direita",
-          "votos": 891857,
+          "votos": 892484,
           "pct": 52.2,
-          "st": null
+          "st": "Eleito"
         }
       ],
       "terceiro": null
     },
     {
       "uf": "AM",
-      "fonte": "provisorio",
+      "fonte": "tse",
       "pst": 100,
       "decisao": "segundo_turno",
       "candidatos": [
@@ -98,7 +97,7 @@
           "campo": "centro",
           "votos": 841846,
           "pct": 40.63,
-          "st": null
+          "st": "2º turno"
         },
         {
           "nome": "PROFESSORA MARIA DO CARMO",
@@ -106,7 +105,7 @@
           "campo": "direita",
           "votos": 507335,
           "pct": 24.49,
-          "st": null
+          "st": "2º turno"
         }
       ],
       "terceiro": {
@@ -115,7 +114,7 @@
         "campo": "centro-direita",
         "votos": 453896,
         "pct": 21.91,
-        "st": null
+        "st": "Não eleito"
       }
     },
     {
@@ -1962,7 +1961,7 @@
         "campo": "direita",
         "votos": 507335,
         "pct": 24.49,
-        "st": null
+        "st": "2º turno"
       },
       "terceiro": {
         "nome": "ROBERTO CIDADE",
@@ -1970,7 +1969,7 @@
         "campo": "centro-direita",
         "votos": 453896,
         "pct": 21.91,
-        "st": null
+        "st": "Não eleito"
       },
       "margem_pp": 2.58
     },
@@ -2024,6 +2023,22 @@
       "secoes_na_ultima_versao": 7101,
       "secoes_total": 7101,
       "ultima_versao_gerada_brt": "2026-10-04 22:54:50"
+    },
+    {
+      "cargo": "deputado_federal",
+      "uf": "AM",
+      "secoes_no_boletim": 8157,
+      "secoes_na_ultima_versao": 8157,
+      "secoes_total": 8157,
+      "ultima_versao_gerada_brt": "2026-10-05 06:08:17"
+    },
+    {
+      "cargo": "deputado_estadual",
+      "uf": "AM",
+      "secoes_no_boletim": 8157,
+      "secoes_na_ultima_versao": 8157,
+      "secoes_total": 8157,
+      "ultima_versao_gerada_brt": "2026-10-05 06:08:17"
     }
   ]
 }

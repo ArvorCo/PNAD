@@ -1,17 +1,17 @@
 {
   "meta": {
-    "gerado_em": "2026-10-05T06:59:03Z",
+    "gerado_em": "2026-10-06T04:49:50Z",
     "banco": "apuracao/data/apuracao.sqlite",
-    "versao_nacional_snapshot_id": 513491,
-    "versao_nacional_gerada_em": "2026-10-05T05:59:31.000Z",
-    "final_json_gerado_em": "2026-10-05T06:29:53.765Z",
+    "versao_nacional_snapshot_id": 531568,
+    "versao_nacional_gerada_em": "2026-10-05T15:51:47.000Z",
+    "final_json_gerado_em": "2026-10-06T04:48:42.262Z",
     "script": "scripts/apuracao-2026-dados.py",
     "regra_de_versao": "versão vigente de cada arquivo = última gerada pelo TSE (gerado_em), não a última sem a marca regressivo do coletor",
     "arquivo": "senado.json"
   },
   "fonte": "apuracao/data/boletins/final.json (senado) e apuracao/public/senadores_2022.json",
-  "n_ufs_tse": 26,
-  "n_ufs_provisorio": 1,
+  "n_ufs_tse": 27,
+  "n_ufs_provisorio": 0,
   "eleitos_2026": [
     {
       "uf": "AC",
@@ -60,24 +60,24 @@
     {
       "uf": "AM",
       "vaga": 1,
-      "fonte": "provisorio",
+      "fonte": "tse",
       "nome": "EDUARDO BRAGA",
       "partido": "MDB",
       "campo": "centro",
       "votos": 1240471,
       "pct": 32.29,
-      "st": null
+      "st": "Eleito"
     },
     {
       "uf": "AM",
       "vaga": 2,
-      "fonte": "provisorio",
+      "fonte": "tse",
       "nome": "PLINIO VALÉRIO",
       "partido": "PSDB",
       "campo": "centro-esquerda",
       "votos": 948793,
       "pct": 24.7,
-      "st": null
+      "st": "Eleito"
     },
     {
       "uf": "AP",
@@ -661,14 +661,14 @@
     },
     {
       "uf": "AM",
-      "fonte": "provisorio",
+      "fonte": "tse",
       "terceiro": {
         "nome": "CAPITÃO ALBERTO NETO",
         "partido": "PL",
         "campo": "direita",
         "votos": 909155,
         "pct": 23.66,
-        "st": null
+        "st": "Não eleito"
       },
       "margem_2a_vaga_pp": 1.03,
       "margem_2a_vaga_votos": 39638
@@ -1345,6 +1345,22 @@
       "secoes_na_ultima_versao": 7101,
       "secoes_total": 7101,
       "ultima_versao_gerada_brt": "2026-10-04 22:54:50"
+    },
+    {
+      "cargo": "deputado_federal",
+      "uf": "AM",
+      "secoes_no_boletim": 8157,
+      "secoes_na_ultima_versao": 8157,
+      "secoes_total": 8157,
+      "ultima_versao_gerada_brt": "2026-10-05 06:08:17"
+    },
+    {
+      "cargo": "deputado_estadual",
+      "uf": "AM",
+      "secoes_no_boletim": 8157,
+      "secoes_na_ultima_versao": 8157,
+      "secoes_total": 8157,
+      "ultima_versao_gerada_brt": "2026-10-05 06:08:17"
     }
   ]
 }

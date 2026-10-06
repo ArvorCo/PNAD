@@ -1,10 +1,10 @@
 {
   "meta": {
-    "gerado_em": "2026-10-05T06:59:03Z",
+    "gerado_em": "2026-10-06T04:49:50Z",
     "banco": "apuracao/data/apuracao.sqlite",
-    "versao_nacional_snapshot_id": 513491,
-    "versao_nacional_gerada_em": "2026-10-05T05:59:31.000Z",
-    "final_json_gerado_em": "2026-10-05T06:29:53.765Z",
+    "versao_nacional_snapshot_id": 531568,
+    "versao_nacional_gerada_em": "2026-10-05T15:51:47.000Z",
+    "final_json_gerado_em": "2026-10-06T04:48:42.262Z",
     "script": "scripts/apuracao-2026-dados.py",
     "regra_de_versao": "versão vigente de cada arquivo = última gerada pelo TSE (gerado_em), não a última sem a marca regressivo do coletor",
     "arquivo": "camara.json"
@@ -12,13 +12,9 @@
   "fonte": "apuracao/data/boletins/final.json (camara) e apuracao.sqlite (voto_partido)",
   "vagas_total": 513,
   "eleitos_total": 513,
-  "n_ufs_tse": 24,
-  "n_ufs_provisorio": 3,
-  "ufs_provisorias": [
-    "AM",
-    "MG",
-    "SP"
-  ],
+  "n_ufs_tse": 27,
+  "n_ufs_provisorio": 0,
+  "ufs_provisorias": [],
   "por_campo": {
     "esquerda": 124,
     "centro-esquerda": 13,
@@ -94,6 +90,12 @@
       "diferencas": []
     },
     {
+      "uf": "AM",
+      "partidos_iguais": true,
+      "mesmos_nomes": true,
+      "diferencas": []
+    },
+    {
       "uf": "AP",
       "partidos_iguais": true,
       "mesmos_nomes": true,
@@ -131,6 +133,12 @@
     },
     {
       "uf": "MA",
+      "partidos_iguais": true,
+      "mesmos_nomes": true,
+      "diferencas": []
+    },
+    {
+      "uf": "MG",
       "partidos_iguais": true,
       "mesmos_nomes": true,
       "diferencas": []
@@ -215,6 +223,12 @@
     },
     {
       "uf": "SE",
+      "partidos_iguais": true,
+      "mesmos_nomes": true,
+      "diferencas": []
+    },
+    {
+      "uf": "SP",
       "partidos_iguais": true,
       "mesmos_nomes": true,
       "diferencas": []
@@ -405,7 +419,7 @@
       "votos": 3119318,
       "pct_na_uf": 27.1949,
       "eleito": true,
-      "situacao_tse": null
+      "situacao_tse": "Eleito por QP"
     },
     {
       "uf": "SP",
@@ -415,7 +429,7 @@
       "votos": 3038438,
       "pct_na_uf": 12.818,
       "eleito": true,
-      "situacao_tse": null
+      "situacao_tse": "Eleito por QP"
     },
     {
       "uf": "SP",
@@ -425,7 +439,7 @@
       "votos": 1596472,
       "pct_na_uf": 6.7349,
       "eleito": true,
-      "situacao_tse": null
+      "situacao_tse": "Eleito por QP"
     },
     {
       "uf": "CE",
@@ -445,7 +459,7 @@
       "votos": 583107,
       "pct_na_uf": 2.4599,
       "eleito": true,
-      "situacao_tse": null
+      "situacao_tse": "Eleito por QP"
     },
     {
       "uf": "SC",
@@ -465,7 +479,7 @@
       "votos": 524219,
       "pct_na_uf": 4.5703,
       "eleito": true,
-      "situacao_tse": null
+      "situacao_tse": "Eleito por QP"
     },
     {
       "uf": "SP",
@@ -475,7 +489,7 @@
       "votos": 520071,
       "pct_na_uf": 2.194,
       "eleito": true,
-      "situacao_tse": null
+      "situacao_tse": "Eleito por QP"
     },
     {
       "uf": "SP",
@@ -485,7 +499,7 @@
       "votos": 476383,
       "pct_na_uf": 2.0097,
       "eleito": true,
-      "situacao_tse": null
+      "situacao_tse": "Eleito por QP"
     },
     {
       "uf": "PR",
@@ -535,7 +549,7 @@
       "votos": 379312,
       "pct_na_uf": 1.6002,
       "eleito": true,
-      "situacao_tse": null
+      "situacao_tse": "Eleito por QP"
     },
     {
       "uf": "SP",
@@ -545,7 +559,7 @@
       "votos": 333401,
       "pct_na_uf": 1.4065,
       "eleito": true,
-      "situacao_tse": null
+      "situacao_tse": "Eleito por QP"
     },
     {
       "uf": "PA",
@@ -565,7 +579,7 @@
       "votos": 303271,
       "pct_na_uf": 1.2794,
       "eleito": true,
-      "situacao_tse": null
+      "situacao_tse": "Eleito por QP"
     },
     {
       "uf": "RS",
@@ -585,7 +599,7 @@
       "votos": 275450,
       "pct_na_uf": 1.162,
       "eleito": true,
-      "situacao_tse": null
+      "situacao_tse": "Eleito por QP"
     },
     {
       "uf": "PA",
@@ -605,7 +619,7 @@
       "votos": 269996,
       "pct_na_uf": 1.139,
       "eleito": true,
-      "situacao_tse": null
+      "situacao_tse": "Eleito por QP"
     },
     {
       "uf": "PR",
@@ -655,7 +669,7 @@
       "votos": 261325,
       "pct_na_uf": 1.1024,
       "eleito": true,
-      "situacao_tse": null
+      "situacao_tse": "Eleito por QP"
     },
     {
       "uf": "CE",
@@ -675,7 +689,7 @@
       "votos": 253778,
       "pct_na_uf": 1.0706,
       "eleito": true,
-      "situacao_tse": null
+      "situacao_tse": "Eleito por QP"
     },
     {
       "uf": "PE",
@@ -1128,7 +1142,7 @@
     },
     {
       "uf": "AM",
-      "fonte": "provisorio",
+      "fonte": "tse",
       "vagas": 8,
       "secoes": 8157,
       "por_campo": {
@@ -1292,8 +1306,8 @@
           "partido": "PL",
           "campo": "direita",
           "votos": 212948,
-          "pct": 10.04,
-          "st": null
+          "pct": 10.05,
+          "st": "Eleito por QP"
         },
         {
           "nome": "SIDNEY LEITE",
@@ -1301,7 +1315,7 @@
           "campo": "centro",
           "votos": 138498,
           "pct": 6.53,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "ADAIL FILHO",
@@ -1309,15 +1323,15 @@
           "campo": "centro",
           "votos": 137148,
           "pct": 6.47,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "FAUSTO JR",
           "partido": "UNIÃO",
           "campo": "centro-direita",
           "votos": 122197,
-          "pct": 5.76,
-          "st": null
+          "pct": 5.77,
+          "st": "Eleito por QP"
         },
         {
           "nome": "AMOM MANDEL",
@@ -1325,7 +1339,7 @@
           "campo": "direita",
           "votos": 119480,
           "pct": 5.64,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "SAULLO VIANNA",
@@ -1333,7 +1347,7 @@
           "campo": "centro",
           "votos": 91726,
           "pct": 4.33,
-          "st": null
+          "st": "Eleito por média"
         },
         {
           "nome": "JOANA DARC",
@@ -1341,7 +1355,7 @@
           "campo": "centro-direita",
           "votos": 85461,
           "pct": 4.03,
-          "st": null
+          "st": "Eleito por média"
         },
         {
           "nome": "ALFREDO NASCIMENTO",
@@ -1349,7 +1363,7 @@
           "campo": "direita",
           "votos": 59271,
           "pct": 2.8,
-          "st": null
+          "st": "Eleito por média"
         }
       ]
     },
@@ -3526,7 +3540,7 @@
     },
     {
       "uf": "MG",
-      "fonte": "provisorio",
+      "fonte": "tse",
       "vagas": 53,
       "secoes": 52062,
       "por_campo": {
@@ -3725,7 +3739,7 @@
           "campo": "direita",
           "votos": 3119318,
           "pct": 27.19,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "ANA ELISA",
@@ -3733,7 +3747,7 @@
           "campo": "esquerda",
           "votos": 524219,
           "pct": 4.57,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "DUDA SALABERT",
@@ -3741,7 +3755,7 @@
           "campo": "esquerda",
           "votos": 229535,
           "pct": 2,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "REGINALDO LOPES",
@@ -3749,7 +3763,7 @@
           "campo": "esquerda",
           "votos": 215192,
           "pct": 1.88,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "ROGÉRIO CORREIA",
@@ -3757,7 +3771,7 @@
           "campo": "esquerda",
           "votos": 185912,
           "pct": 1.62,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "PINHEIRINHO",
@@ -3765,7 +3779,7 @@
           "campo": "centro-direita",
           "votos": 151981,
           "pct": 1.33,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "ZÉ VITOR",
@@ -3773,7 +3787,7 @@
           "campo": "direita",
           "votos": 145006,
           "pct": 1.26,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "ANA PIMENTEL",
@@ -3781,7 +3795,7 @@
           "campo": "esquerda",
           "votos": 144496,
           "pct": 1.26,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "GLEIDE ANDRADE",
@@ -3789,7 +3803,7 @@
           "campo": "esquerda",
           "votos": 130253,
           "pct": 1.14,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "WELITON PRADO",
@@ -3797,7 +3811,7 @@
           "campo": "centro",
           "votos": 129366,
           "pct": 1.13,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "PAULO GUEDES",
@@ -3805,7 +3819,7 @@
           "campo": "esquerda",
           "votos": 126974,
           "pct": 1.11,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "GLEIDSON AZEVEDO",
@@ -3813,7 +3827,7 @@
           "campo": "direita",
           "votos": 126248,
           "pct": 1.1,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "PEDRO ROUSSEFF",
@@ -3821,7 +3835,7 @@
           "campo": "esquerda",
           "votos": 118567,
           "pct": 1.03,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "BRUNO FARIAS",
@@ -3829,7 +3843,7 @@
           "campo": "direita",
           "votos": 113379,
           "pct": 0.99,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "MIGUEL ÂNGELO",
@@ -3837,7 +3851,7 @@
           "campo": "esquerda",
           "votos": 110124,
           "pct": 0.96,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "DIEGO ANDRADE",
@@ -3845,7 +3859,7 @@
           "campo": "centro",
           "votos": 109445,
           "pct": 0.95,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "DANDARA",
@@ -3853,7 +3867,7 @@
           "campo": "esquerda",
           "votos": 108193,
           "pct": 0.94,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "LOHANNA",
@@ -3861,7 +3875,7 @@
           "campo": "esquerda",
           "votos": 108182,
           "pct": 0.94,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "RODRIGO DE CASTRO",
@@ -3869,7 +3883,7 @@
           "campo": "centro-direita",
           "votos": 105371,
           "pct": 0.92,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "DELEGADO MARCELO FREITAS",
@@ -3877,7 +3891,7 @@
           "campo": "centro-direita",
           "votos": 104010,
           "pct": 0.91,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "FRED COSTA",
@@ -3885,7 +3899,7 @@
           "campo": "centro-direita",
           "votos": 100082,
           "pct": 0.87,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "BELLA GONÇALVES",
@@ -3893,7 +3907,7 @@
           "campo": "esquerda",
           "votos": 98750,
           "pct": 0.86,
-          "st": null
+          "st": "Eleito por média"
         },
         {
           "nome": "GILBERTO ABRAMO",
@@ -3901,7 +3915,7 @@
           "campo": "direita",
           "votos": 96046,
           "pct": 0.84,
-          "st": null
+          "st": "Eleito por média"
         },
         {
           "nome": "EMIDINHO MADEIRA",
@@ -3909,7 +3923,7 @@
           "campo": "direita",
           "votos": 94812,
           "pct": 0.83,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "NEWTON CARDOSO JR",
@@ -3917,7 +3931,7 @@
           "campo": "centro",
           "votos": 93759,
           "pct": 0.82,
-          "st": null
+          "st": "Eleito por média"
         },
         {
           "nome": "DIMAS FABIANO",
@@ -3925,7 +3939,7 @@
           "campo": "centro-direita",
           "votos": 90827,
           "pct": 0.79,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "PADRE JOÃO",
@@ -3933,7 +3947,7 @@
           "campo": "esquerda",
           "votos": 86923,
           "pct": 0.76,
-          "st": null
+          "st": "Eleito por média"
         },
         {
           "nome": "LUIS TIBÉ",
@@ -3941,7 +3955,7 @@
           "campo": "centro",
           "votos": 86740,
           "pct": 0.76,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "RAFAEL SIMÕES",
@@ -3949,7 +3963,7 @@
           "campo": "centro-direita",
           "votos": 86131,
           "pct": 0.75,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "SAMUEL VIANA",
@@ -3957,7 +3971,7 @@
           "campo": "centro-direita",
           "votos": 84879,
           "pct": 0.74,
-          "st": null
+          "st": "Eleito por média"
         },
         {
           "nome": "EROS BIONDINI",
@@ -3965,7 +3979,7 @@
           "campo": "direita",
           "votos": 81650,
           "pct": 0.71,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "VINICIUS DINIZ",
@@ -3973,7 +3987,7 @@
           "campo": "direita",
           "votos": 80567,
           "pct": 0.7,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "LEONARDO MONTEIRO",
@@ -3981,7 +3995,7 @@
           "campo": "esquerda",
           "votos": 78841,
           "pct": 0.69,
-          "st": null
+          "st": "Eleito por média"
         },
         {
           "nome": "ANDRÉ JANONES",
@@ -3989,7 +4003,7 @@
           "campo": "esquerda",
           "votos": 78780,
           "pct": 0.69,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "NELY AQUINO",
@@ -3997,7 +4011,7 @@
           "campo": "centro-direita",
           "votos": 70921,
           "pct": 0.62,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "IGOR SANTOS",
@@ -4005,7 +4019,7 @@
           "campo": "direita",
           "votos": 70572,
           "pct": 0.62,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "PAULO ABI-ACKEL",
@@ -4013,7 +4027,7 @@
           "campo": "centro-esquerda",
           "votos": 68795,
           "pct": 0.6,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "DR. MARCOS VINICIUS",
@@ -4021,7 +4035,7 @@
           "campo": "direita",
           "votos": 67371,
           "pct": 0.59,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "GREYCE ELIAS",
@@ -4029,7 +4043,7 @@
           "campo": "direita",
           "votos": 66395,
           "pct": 0.58,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "LAFAYETTE ANDRADA",
@@ -4037,7 +4051,7 @@
           "campo": "direita",
           "votos": 61773,
           "pct": 0.54,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "DR. FREDERICO",
@@ -4045,7 +4059,7 @@
           "campo": "direita",
           "votos": 60625,
           "pct": 0.53,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "CAPOREZZO",
@@ -4053,7 +4067,7 @@
           "campo": "direita",
           "votos": 57878,
           "pct": 0.5,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "ROSANGELA REIS",
@@ -4061,7 +4075,7 @@
           "campo": "direita",
           "votos": 57063,
           "pct": 0.5,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "MARCELO ÁLVARO ANTÔNIO",
@@ -4069,7 +4083,7 @@
           "campo": "direita",
           "votos": 56958,
           "pct": 0.5,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "DUARTE JÚNIOR",
@@ -4077,7 +4091,7 @@
           "campo": "esquerda",
           "votos": 46479,
           "pct": 0.41,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "FABINHO RAMALHO",
@@ -4085,7 +4099,7 @@
           "campo": "direita",
           "votos": 43908,
           "pct": 0.38,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "THIAGO GANEM",
@@ -4093,7 +4107,7 @@
           "campo": "direita",
           "votos": 42718,
           "pct": 0.37,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "DELEGADA IONE",
@@ -4101,7 +4115,7 @@
           "campo": "direita",
           "votos": 39275,
           "pct": 0.34,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "RODRIGO TAVARES",
@@ -4109,7 +4123,7 @@
           "campo": "direita",
           "votos": 37534,
           "pct": 0.33,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "LINCOLN PORTELA",
@@ -4117,7 +4131,7 @@
           "campo": "direita",
           "votos": 37162,
           "pct": 0.32,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "SUBTENETE GONZAGA",
@@ -4125,7 +4139,7 @@
           "campo": "direita",
           "votos": 35958,
           "pct": 0.31,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "JUNIO AMARAL",
@@ -4133,7 +4147,7 @@
           "campo": "direita",
           "votos": 33762,
           "pct": 0.29,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "SARGENTO MELLO-CASAL",
@@ -4141,7 +4155,7 @@
           "campo": "direita",
           "votos": 25090,
           "pct": 0.22,
-          "st": null
+          "st": "Eleito por QP"
         }
       ]
     },
@@ -8418,7 +8432,7 @@
     },
     {
       "uf": "SP",
-      "fonte": "provisorio",
+      "fonte": "tse",
       "vagas": 70,
       "secoes": 103656,
       "por_campo": {
@@ -8616,7 +8630,7 @@
           "campo": "direita",
           "votos": 3038438,
           "pct": 12.82,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "ERIKA HILTON",
@@ -8624,7 +8638,7 @@
           "campo": "esquerda",
           "votos": 1596472,
           "pct": 6.73,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "SÂMIA BOMFIM",
@@ -8632,7 +8646,7 @@
           "campo": "esquerda",
           "votos": 583107,
           "pct": 2.46,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "KIM KATAGUIRI",
@@ -8640,7 +8654,7 @@
           "campo": "direita",
           "votos": 520071,
           "pct": 2.19,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "TABATA AMARAL",
@@ -8648,7 +8662,7 @@
           "campo": "esquerda",
           "votos": 476383,
           "pct": 2.01,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "RENATO BOLSONARO",
@@ -8656,7 +8670,7 @@
           "campo": "direita",
           "votos": 379312,
           "pct": 1.6,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "SARGENTO NANTES",
@@ -8664,7 +8678,7 @@
           "campo": "centro-direita",
           "votos": 333401,
           "pct": 1.41,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "DELEGADO PALUMBO",
@@ -8672,7 +8686,7 @@
           "campo": "centro-direita",
           "votos": 303271,
           "pct": 1.28,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "GUILHERME CORTEZ",
@@ -8680,7 +8694,7 @@
           "campo": "esquerda",
           "votos": 275450,
           "pct": 1.16,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "MAURICIO NEVES",
@@ -8688,7 +8702,7 @@
           "campo": "centro-direita",
           "votos": 269996,
           "pct": 1.14,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "MARCIO ALVINO",
@@ -8696,7 +8710,7 @@
           "campo": "direita",
           "votos": 261325,
           "pct": 1.1,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "PROFESSORA LUCIENE CAVALCANTE",
@@ -8704,7 +8718,7 @@
           "campo": "esquerda",
           "votos": 253778,
           "pct": 1.07,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "ANA CAROLINA OLIVEIRA",
@@ -8712,7 +8726,7 @@
           "campo": "centro-direita",
           "votos": 246741,
           "pct": 1.04,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "BALEIA ROSSI",
@@ -8720,7 +8734,7 @@
           "campo": "centro",
           "votos": 239124,
           "pct": 1.01,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "LUNA ZARATTINI",
@@ -8728,7 +8742,7 @@
           "campo": "esquerda",
           "votos": 233733,
           "pct": 0.99,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "MARINA HELENA",
@@ -8736,7 +8750,7 @@
           "campo": "direita",
           "votos": 230866,
           "pct": 0.97,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "DELEGADO BRUNO LIMA",
@@ -8744,7 +8758,7 @@
           "campo": "centro-direita",
           "votos": 217952,
           "pct": 0.92,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "ROSANA VALLE",
@@ -8752,7 +8766,7 @@
           "campo": "direita",
           "votos": 213752,
           "pct": 0.9,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "RENATA ABREU",
@@ -8760,7 +8774,7 @@
           "campo": "centro-direita",
           "votos": 199100,
           "pct": 0.84,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "MARCOS PEREIRA",
@@ -8768,7 +8782,7 @@
           "campo": "direita",
           "votos": 196681,
           "pct": 0.83,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "LUIZ PHILIPPE DE O E BRAGANÇA",
@@ -8776,7 +8790,7 @@
           "campo": "direita",
           "votos": 187743,
           "pct": 0.79,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "GUILHERME PIAI",
@@ -8784,7 +8798,7 @@
           "campo": "direita",
           "votos": 182328,
           "pct": 0.77,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "IGOR SOARES",
@@ -8792,7 +8806,7 @@
           "campo": "centro",
           "votos": 181820,
           "pct": 0.77,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "PAULO ALEXANDRE BARBOSA",
@@ -8800,7 +8814,7 @@
           "campo": "centro",
           "votos": 168207,
           "pct": 0.71,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "FELIPE BECARI",
@@ -8808,7 +8822,7 @@
           "campo": "centro-direita",
           "votos": 162957,
           "pct": 0.69,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "THIAGO SURFISTA",
@@ -8816,7 +8830,7 @@
           "campo": "direita",
           "votos": 161971,
           "pct": 0.68,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "ALENCAR SANTANA",
@@ -8824,7 +8838,7 @@
           "campo": "esquerda",
           "votos": 160264,
           "pct": 0.68,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "CAPITÃO AUGUSTO",
@@ -8832,7 +8846,7 @@
           "campo": "direita",
           "votos": 153745,
           "pct": 0.65,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "JILMAR TATTO",
@@ -8840,7 +8854,7 @@
           "campo": "esquerda",
           "votos": 152984,
           "pct": 0.65,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "CELSO RUSSOMANNO",
@@ -8848,7 +8862,7 @@
           "campo": "direita",
           "votos": 138827,
           "pct": 0.59,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "THIAGO DOS REIS",
@@ -8856,7 +8870,7 @@
           "campo": "esquerda",
           "votos": 137240,
           "pct": 0.58,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "PAULO SERRA",
@@ -8864,7 +8878,7 @@
           "campo": "centro-esquerda",
           "votos": 132866,
           "pct": 0.56,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "SIDNEY CRUZ",
@@ -8872,7 +8886,7 @@
           "campo": "centro",
           "votos": 130951,
           "pct": 0.55,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "JOÃO CURY",
@@ -8880,7 +8894,7 @@
           "campo": "centro",
           "votos": 130915,
           "pct": 0.55,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "LUIZ FERNANDO MACHADO",
@@ -8888,7 +8902,7 @@
           "campo": "direita",
           "votos": 129004,
           "pct": 0.54,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "ARLINDO CHINAGLIA",
@@ -8896,7 +8910,7 @@
           "campo": "esquerda",
           "votos": 124121,
           "pct": 0.52,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "PASTOR MARCO FELICIANO",
@@ -8904,7 +8918,7 @@
           "campo": "direita",
           "votos": 122119,
           "pct": 0.52,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "NEY SANTOS",
@@ -8912,7 +8926,7 @@
           "campo": "direita",
           "votos": 118566,
           "pct": 0.5,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "CARLOS ZARATTINI",
@@ -8920,7 +8934,7 @@
           "campo": "esquerda",
           "votos": 117608,
           "pct": 0.5,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "EDINHO SILVA",
@@ -8928,7 +8942,7 @@
           "campo": "esquerda",
           "votos": 115341,
           "pct": 0.49,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "NILTO TATTO",
@@ -8936,7 +8950,7 @@
           "campo": "esquerda",
           "votos": 114560,
           "pct": 0.48,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "NATÁLIA BOULOS",
@@ -8944,7 +8958,7 @@
           "campo": "esquerda",
           "votos": 114552,
           "pct": 0.48,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "KIKO CELEGUIM",
@@ -8952,7 +8966,7 @@
           "campo": "esquerda",
           "votos": 113158,
           "pct": 0.48,
-          "st": null
+          "st": "Eleito por média"
         },
         {
           "nome": "MOTTA",
@@ -8960,7 +8974,7 @@
           "campo": "direita",
           "votos": 112854,
           "pct": 0.48,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "JULIANA CARDOSO",
@@ -8968,7 +8982,7 @@
           "campo": "esquerda",
           "votos": 111904,
           "pct": 0.47,
-          "st": null
+          "st": "Eleito por média"
         },
         {
           "nome": "JOAO PAULO CUNHA",
@@ -8976,7 +8990,7 @@
           "campo": "esquerda",
           "votos": 109548,
           "pct": 0.46,
-          "st": null
+          "st": "Eleito por média"
         },
         {
           "nome": "RODRIGO GAMBALE",
@@ -8984,7 +8998,7 @@
           "campo": "centro-direita",
           "votos": 106901,
           "pct": 0.45,
-          "st": null
+          "st": "Eleito por média"
         },
         {
           "nome": "DRA. SANDRA TADEU",
@@ -8992,7 +9006,7 @@
           "campo": "direita",
           "votos": 106471,
           "pct": 0.45,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "ENRICO MISASI",
@@ -9000,7 +9014,7 @@
           "campo": "centro",
           "votos": 106225,
           "pct": 0.45,
-          "st": null
+          "st": "Eleito por média"
         },
         {
           "nome": "CORONEL TELHADA",
@@ -9008,7 +9022,7 @@
           "campo": "centro-direita",
           "votos": 104513,
           "pct": 0.44,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "PAULO FREIRE",
@@ -9016,7 +9030,7 @@
           "campo": "direita",
           "votos": 99388,
           "pct": 0.42,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "MARCOS NEVES",
@@ -9024,7 +9038,7 @@
           "campo": "centro",
           "votos": 98359,
           "pct": 0.41,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "JONAS DONIZETTE",
@@ -9032,7 +9046,7 @@
           "campo": "esquerda",
           "votos": 97335,
           "pct": 0.41,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "MIGUEL LOMBARDI",
@@ -9040,7 +9054,7 @@
           "campo": "direita",
           "votos": 96333,
           "pct": 0.41,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "SAULO PEDROSO",
@@ -9048,7 +9062,7 @@
           "campo": "centro",
           "votos": 95096,
           "pct": 0.4,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "ALTAIR MORAES",
@@ -9056,7 +9070,7 @@
           "campo": "direita",
           "votos": 94770,
           "pct": 0.4,
-          "st": null
+          "st": "Eleito por média"
         },
         {
           "nome": "JEFFERSON CAMPOS",
@@ -9064,7 +9078,7 @@
           "campo": "direita",
           "votos": 92286,
           "pct": 0.39,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "CARLOS SAMPAIO",
@@ -9072,7 +9086,7 @@
           "campo": "centro",
           "votos": 91902,
           "pct": 0.39,
-          "st": null
+          "st": "Eleito por média"
         },
         {
           "nome": "MARIA ROSAS",
@@ -9080,7 +9094,7 @@
           "campo": "direita",
           "votos": 91690,
           "pct": 0.39,
-          "st": null
+          "st": "Eleito por média"
         },
         {
           "nome": "MARIO FRIAS",
@@ -9088,7 +9102,7 @@
           "campo": "direita",
           "votos": 91403,
           "pct": 0.39,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "DELEGADO PAULO BILYNSKYJ",
@@ -9096,7 +9110,7 @@
           "campo": "direita",
           "votos": 90363,
           "pct": 0.38,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "CARLOS BEZERRA JR.",
@@ -9104,7 +9118,7 @@
           "campo": "centro",
           "votos": 89414,
           "pct": 0.38,
-          "st": null
+          "st": "Eleito por média"
         },
         {
           "nome": "SIRLANGE MANGA",
@@ -9112,7 +9126,7 @@
           "campo": "centro-direita",
           "votos": 87820,
           "pct": 0.37,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "MILTON LEITE FILHO",
@@ -9120,7 +9134,7 @@
           "campo": "centro-direita",
           "votos": 71631,
           "pct": 0.3,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "ADRIANA VENTURA",
@@ -9128,7 +9142,7 @@
           "campo": "direita",
           "votos": 69083,
           "pct": 0.29,
-          "st": null
+          "st": "Eleito por média"
         },
         {
           "nome": "EDUARDO CURY",
@@ -9136,7 +9150,7 @@
           "campo": "direita",
           "votos": 66860,
           "pct": 0.28,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "WESLEY CEZAR LELINHO",
@@ -9144,7 +9158,7 @@
           "campo": "direita",
           "votos": 66673,
           "pct": 0.28,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "GIL DINIZ",
@@ -9152,7 +9166,7 @@
           "campo": "direita",
           "votos": 63398,
           "pct": 0.27,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "EDINHO ARAUJO",
@@ -9160,7 +9174,7 @@
           "campo": "centro-direita",
           "votos": 54443,
           "pct": 0.23,
-          "st": null
+          "st": "Eleito por QP"
         },
         {
           "nome": "SÔNIA GUAJAJARA",
@@ -9168,7 +9182,7 @@
           "campo": "esquerda",
           "votos": 54207,
           "pct": 0.23,
-          "st": null
+          "st": "Eleito por QP"
         }
       ]
     },
@@ -9397,6 +9411,22 @@
       "secoes_na_ultima_versao": 7101,
       "secoes_total": 7101,
       "ultima_versao_gerada_brt": "2026-10-04 22:54:50"
+    },
+    {
+      "cargo": "deputado_federal",
+      "uf": "AM",
+      "secoes_no_boletim": 8157,
+      "secoes_na_ultima_versao": 8157,
+      "secoes_total": 8157,
+      "ultima_versao_gerada_brt": "2026-10-05 06:08:17"
+    },
+    {
+      "cargo": "deputado_estadual",
+      "uf": "AM",
+      "secoes_no_boletim": 8157,
+      "secoes_na_ultima_versao": 8157,
+      "secoes_total": 8157,
+      "ultima_versao_gerada_brt": "2026-10-05 06:08:17"
     }
   ]
 }

@@ -194,7 +194,13 @@ def hemiciclo_camara(d, **_op) -> str:
     legenda_ = (
         f"As {n} cadeiras, da esquerda para a direita por campo e partido. O bloco direita e centro-direita soma "
         f"{b['direita + centro-direita']}: passa da maioria absoluta (257) e fica abaixo dos três quintos (308) de emenda "
-        f"constitucional. Em {prov} a distribuição é provisória, pelo quociente. Fonte: camara.json."
+        "constitucional. "
+        + (
+            f"Em {prov} a distribuição é provisória, pelo quociente. "
+            if prov
+            else "Lista fechada pelo TSE nas 27 UFs. "
+        )
+        + "Fonte: camara.json."
     )
     return figura_html(
         "hemiciclo_camara",
@@ -523,7 +529,12 @@ def camara_por_uf(d, **_op) -> str:
     out.append("</svg>")
     legenda_ = (
         "Cadeiras por campo em cada UF, ordenadas pela parcela da direita e centro-direita; a linha marca metade das vagas. "
-        f"Asterisco: distribuição provisória pelo quociente ({', '.join(C['ufs_provisorias'])}). Fonte: camara.json."
+        + (
+            f"Asterisco: distribuição provisória pelo quociente ({', '.join(C['ufs_provisorias'])}). "
+            if C["ufs_provisorias"]
+            else "Eleitos conforme o TSE nas 27 UFs. "
+        )
+        + "Fonte: camara.json."
     )
     return figura_html("camara_por_uf", "".join(out), legenda_, tips, minw=760)
 

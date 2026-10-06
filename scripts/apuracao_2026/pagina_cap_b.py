@@ -37,8 +37,12 @@ def r_camara(d: Dados, cap: Capitulo) -> str:
     h += limites(
         [
             "Votos de partido somam nominais e legenda; campo é classificação editorial da casa.",
-            "Nas UFs provisórias, a lista sai do quociente da casa até o TSE fechar.",
         ]
+        + (
+            ["Nas UFs provisórias, a lista sai do quociente da casa até o TSE fechar."]
+            if C.get("ufs_provisorias")
+            else []
+        )
     )
     h += "</section>"
     return h

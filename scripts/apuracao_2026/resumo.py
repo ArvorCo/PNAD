@@ -479,17 +479,27 @@ def escrever(produtos: dict[str, dict[str, Any]], meta: dict[str, Any]) -> str:
     gov_ok = sum(
         1 for x in inc if x["secoes_governador"][0] == x["secoes_governador"][1]
     )
-    add(
-        f"**14. {len(inc)} arquivos municipais e {zon['n_incompletas']} de zona de presidente "
-        "congelaram incompletos.** Pararam em versões geradas entre "
-        f"{hm(min(x['gerado_em_brt'] for x in inc))} e {hm(max(x['gerado_em_brt'] for x in inc))} "
-        f"de 04/10, com {n(sum(x['secoes_total'] - x['secoes'] for x in inc))} seções a menos nos "
-        "municípios; o andamento (-ab) da UF já os dava completos e as leituras seguintes "
-        f"receberam 304 até {hm(ultima)} de 05/10. O arquivo de governador dos mesmos "
-        f"municípios está completo em {gov_ok} de {len(inc)}. A soma dos municípios fica "
-        f"{n(abs(dmun['secoes']))} seções e {n(abs(dmun['validos']))} válidos abaixo do nacional "
-        f"(Flávio {sv(dmun['flavio'])}, Lula {sv(dmun['lula'])})."
-    )
+    if not inc:
+        add(
+            f"**14. Nenhum arquivo municipal de presidente está congelado incompleto na versão vigente; "
+            f"{zon['n_incompletas']} arquivos de zona continuam incompletos.** Os municipais que "
+            "congelaram na noite foram regerados pelo TSE depois, e o banco guarda as duas versões. A soma "
+            f"dos municípios fica {n(abs(dmun['secoes']))} seções e {n(abs(dmun['validos']))} válidos "
+            f"{'abaixo' if dmun['validos'] < 0 else 'acima'} do nacional "
+            f"(Flávio {sv(dmun['flavio'])}, Lula {sv(dmun['lula'])})."
+        )
+    else:
+        add(
+            f"**14. {len(inc)} arquivos municipais e {zon['n_incompletas']} de zona de presidente "
+            "congelaram incompletos.** Pararam em versões geradas entre "
+            f"{hm(min(x['gerado_em_brt'] for x in inc))} e {hm(max(x['gerado_em_brt'] for x in inc))} "
+            f"de 04/10, com {n(sum(x['secoes_total'] - x['secoes'] for x in inc))} seções a menos nos "
+            "municípios; o andamento (-ab) da UF já os dava completos e as leituras seguintes "
+            f"receberam 304 até {hm(ultima)} de 05/10. O arquivo de governador dos mesmos "
+            f"municípios está completo em {gov_ok} de {len(inc)}. A soma dos municípios fica "
+            f"{n(abs(dmun['secoes']))} seções e {n(abs(dmun['validos']))} válidos abaixo do nacional "
+            f"(Flávio {sv(dmun['flavio'])}, Lula {sv(dmun['lula'])})."
+        )
     add(
         "Fonte: presidente.json (conferencia.municipios_incompletos, com secoes_governador, "
         "conferencia.soma_municipios_menos_nacional); zonas.json (n_incompletas)."

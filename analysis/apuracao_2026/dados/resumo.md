@@ -1,18 +1,18 @@
 # Apuração do 1º turno de 2026: os 15 achados mais fortes dos dados
 
-Gerado por `scripts/apuracao-2026-dados.py` em 2026-10-05T06:59:03Z (UTC). Versão nacional de presidente: snapshot 513491, gerada pelo TSE às 2026-10-05 02:59:31 (Brasília). Boletim `final.json` de 2026-10-05T06:29:53.765Z. Cada número sai de um arquivo em `analysis/apuracao_2026/dados/`, com o campo entre parênteses. Os 15 achados são fatos verificados no banco e nos arquivos do TSE; as inferências ficam numa seção própria, rotuladas.
+Gerado por `scripts/apuracao-2026-dados.py` em 2026-10-06T04:49:50Z (UTC). Versão nacional de presidente: snapshot 531568, gerada pelo TSE às 2026-10-05 12:51:47 (Brasília). Boletim `final.json` de 2026-10-06T04:48:42.262Z. Cada número sai de um arquivo em `analysis/apuracao_2026/dados/`, com o campo entre parênteses. Os 15 achados são fatos verificados no banco e nos arquivos do TSE; as inferências ficam numa seção própria, rotuladas.
 
 Regra de versão usada em tudo: a versão vigente de cada arquivo é a última gerada pelo TSE (`gerado_em`). A marca `regressivo` do coletor não serve para isso (achado 13).
 
 ## Fatos verificados
 
-**1. Resultado final com 100% das seções.** A última versão do arquivo nacional, gerada às 02:59:31 de 05/10 com 499.248 de 499.248 seções, dá Flávio Bolsonaro 56.104.503 votos (47,03% dos válidos) e Lula 53.879.538 (45,16%): diferença de 2.224.965 votos, 1,87 ponto. Comparecimento 78,92%, brancos 1,84% e nulos 2,93% do comparecimento. Flávio venceu em 15 UFs e Lula em 12. Flávio esteve à frente em todas as 330 versões novas com seções, da primeira (17:21:47, 1,23% das seções) à última.
+**1. Resultado final com 100% das seções.** A última versão do arquivo nacional, gerada às 12:51:47 de 05/10 com 499.248 de 499.248 seções, dá Flávio Bolsonaro 56.104.503 votos (47,03% dos válidos) e Lula 53.879.538 (45,16%): diferença de 2.224.965 votos, 1,87 ponto. Comparecimento 78,92%, brancos 1,84% e nulos 2,93% do comparecimento. Flávio venceu em 15 UFs e Lula em 12. Flávio esteve à frente em todas as 331 versões novas com seções, da primeira (17:21:47, 1,23% das seções) à última.
 Fonte: presidente.json (nacional.votos, nacional.pct, nacional.diferenca_votos, nacional.pct_comparecimento); linha_do_tempo.json (nacional.versoes, colunas flavio e lula).
 
 **2. Contra o 1º turno de 2022, a margem virou 7,10 pontos.** Flávio fez +3,83 pontos e +5.032.158 votos sobre Bolsonaro (43,20% em 2022); Lula ficou 3,27 pontos e 3.379.966 votos abaixo do próprio resultado de 2022 (48,43%). A margem da direita foi de −5,23 para +1,87. Contra o 2º turno de 2022, Flávio ainda está 2,07 pontos abaixo de Bolsonaro (49,10%), que é outra disputa.
 Fonte: presidente.json (nacional.comparacao, nacional.r2022).
 
-**3. Flávio cresceu sobre Bolsonaro em 26 de 27 UFs e em 5.468 de 5.559 municípios.** A exceção estadual é DF (−0,34 ponto, −781 votos). Lula aumentou a própria fatia em 2 UFs (AP +0,04, DF +1,26) e em 102 municípios.
+**3. Flávio cresceu sobre Bolsonaro em 26 de 27 UFs e em 5.479 de 5.570 municípios.** A exceção estadual é DF (−0,34 ponto, −781 votos). Lula aumentou a própria fatia em 2 UFs (AP +0,04, DF +1,26) e em 102 municípios.
 Fonte: presidente.json (ufs[].comparacao.flavio_vs_bolsonaro_1t, ufs[].comparacao.lula_vs_lula_1t; municipios, colunas swing_flavio_pp e swing_lula_pp, só municípios com arquivo completo e com 2022).
 
 **4. A perda de Lula é do Centro-Sul.** Dos −3.379.966 votos que Lula perdeu contra 2022, −3.135.837 (92,8%) vieram do Centro-Sul, −258.555 (7,6%) do Nordeste e −4.028 do Norte. Maiores perdas por UF: SP −984.619, MG −613.635, RS −511.913, PR −308.895. Entre as capitais, São Paulo −224.163 e Salvador −78.370.
@@ -21,7 +21,7 @@ Fonte: presidente.json (regioes.*.comparacao.lula_vs_lula_1t, regioes.*.contribu
 **5. O ganho de Flávio é nacional, e um terço veio do Nordeste.** Centro-Sul +2.785.951 (55,4%), Nordeste +1.611.579 (32,0%), Norte +613.276 (12,2%). No Nordeste Flávio fez 30,85%, acima de Bolsonaro no 1º turno (26,97%) e também no 2º turno de 2022 (30,66%).
 Fonte: presidente.json (regioes.Nordeste, regioes.Norte, regioes.Centro-Sul: r2026.pct, r2022.t1.pct, r2022.t2.pct, comparacao.flavio_vs_bolsonaro_1t).
 
-**6. Flávio cresceu mais onde Lula era mais forte.** Nos 1.478 municípios em que Lula teve 70 a 100% no 1º turno de 2022, Flávio subiu +4,74 pontos sobre Bolsonaro e Lula caiu −4,15; nos 489 em que Lula teve 0 a 30%, +3,31 e −3,16. Na faixa mais lulista, Flávio somou +899.751 votos e Lula −69.834. O movimento é quase uniforme no país, com leve ganho extra nos redutos petistas.
+**6. Flávio cresceu mais onde Lula era mais forte.** Nos 1.483 municípios em que Lula teve 70 a 100% no 1º turno de 2022, Flávio subiu +4,74 pontos sobre Bolsonaro e Lula caiu −4,15; nos 489 em que Lula teve 0 a 30%, +3,31 e −3,16. Na faixa mais lulista, Flávio somou +901.798 votos e Lula −70.449. O movimento é quase uniforme no país, com leve ganho extra nos redutos petistas.
 Fonte: presidente.json (por_faixa_lula_2022; somas de votos por faixa, não médias).
 
 **7. O comparecimento subiu no Norte e no Nordeste e caiu no Sul e no Sudeste.** Variação contra o 1º turno de 2022, em pontos: Norte +1,51; Nordeste +1,14; Centro-Oeste −0,37; Sudeste −0,75; Sul −1,12; Brasil −0,14 (78,92% contra 79,05%). Maiores altas: RO +2,94, MA +2,47, PA +2,12; maiores quedas: MS −1,78, RS −1,57, DF −1,37. Nos municípios mais lulistas de 2022 a alta foi de +2,11 pontos, e mesmo assim Lula perdeu fatia ali.
@@ -42,13 +42,13 @@ Fonte: linha_do_tempo.json (pausa_geral.lacunas, travamentos.ufs, travamentos.to
 **12. A hora de totalização do TSE está no relógio local.** Contra a hora de geração (Brasília), a totalização impressa fica, na mediana, −121 min no AC, −61 no AM, −61 no MT, MS, RO e RR, e chega a +59,5 min em PE (Fernando de Noronha). No exterior, Wellington imprime 05/10/2026 09:19:47 num arquivo gerado às 17:21:13 de 04/10, e o andamento nacional (-ab) exibiu 05/10/2026 09:19:47 como última totalização durante toda a noite. 36 cidades do exterior aparecem totalizadas em 05/10 em arquivos gerados em 04/10.
 Fonte: linha_do_tempo.json (fuso_da_totalizacao.por_uf, divergencia_soma_ufs.andamento_br_totalizacao_impressa_na_janela); exterior.json (hora_local).
 
-**13. A marca de cópia antiga do coletor errou em 90,7% dos casos.** Dos 8.662 eventos `idg_regressivo`, 7.857 eram versões mais novas que tudo o que o mesmo arquivo já tinha publicado; só 761 eram cópias antigas e 44 repetiam a mesma geração. O contador `idg` do TSE não cresce dentro do arquivo. Em presidente, 36 arquivos municipais e 30 de zona tinham a versão final marcada (136 e 100 seções a mais nela). A hora de 100% das UFs muda: BA 00:40:21, não 01:56:58; MG 00:46:47, não 01:57:04; PA 23:55:38, não 00:11:39 (o AM fechou às 02:59:27).
+**13. A marca de cópia antiga do coletor errou em 90,7% dos casos.** Dos 8.668 eventos `idg_regressivo`, 7.862 eram versões mais novas que tudo o que o mesmo arquivo já tinha publicado; só 762 eram cópias antigas e 44 repetiam a mesma geração. O contador `idg` do TSE não cresce dentro do arquivo. Em presidente, 0 arquivos municipais e 0 de zona tinham a versão final marcada (0 e 0 seções a mais nela). A hora de 100% das UFs muda: BA 00:40:21, não 01:56:58; MG 00:46:47, não 01:57:04; PA 23:55:38, não 00:11:39 (o AM fechou às 02:59:27).
 Fonte: linha_do_tempo.json (idg_regressivo.total_por_classe, idg_regressivo.presidente_versao_vigente_marcada_regressiva, conclusao_ufs).
 
-**14. 11 arquivos municipais e 12 de zona de presidente congelaram incompletos.** Pararam em versões geradas entre 20:54:32 e 21:01:44 de 04/10, com 42 seções a menos nos municípios; o andamento (-ab) da UF já os dava completos e as leituras seguintes receberam 304 até 03:38:14 de 05/10. O arquivo de governador dos mesmos municípios está completo em 11 de 11. A soma dos municípios fica 42 seções e 9.152 válidos abaixo do nacional (Flávio −2.836, Lula −5.865).
+**14. Nenhum arquivo municipal de presidente está congelado incompleto na versão vigente; 0 arquivos de zona continuam incompletos.** Os municipais que congelaram na noite foram regerados pelo TSE depois, e o banco guarda as duas versões. A soma dos municípios fica 0 seções e 0 válidos acima do nacional (Flávio +0, Lula +0).
 Fonte: presidente.json (conferencia.municipios_incompletos, com secoes_governador, conferencia.soma_municipios_menos_nacional); zonas.json (n_incompletas).
 
-**15. Depois da meia-noite chegaram 15 seções, em 6 municípios, com 3.562 válidos: Lula 87,14%, Flávio 11,23%.** Cajari (MA) 6 seções, Lula 89,91%; Barreirinha (AM) 3 seções, Lula 93,78%; Tabatinga (AM) 2 seções, Lula 96,11%; São João das Missões (MG) 2 seções, Lula 82,45%; Jutaí (AM) 1 seção, Lula 51,26%; Casa Nova (BA) 1 seção, Lula 89,46%. O andamento (-ab) confirma as mesmas 15 seções; o arquivo nacional foi de 499.233 para 499.248.
+**15. Depois da meia-noite chegaram 57 seções, em 17 municípios, com 12.714 válidos: Lula 70,54%, Flávio 25,45%.** Botumirim (MG) 9 seções, Lula 70,61%; Curral de Dentro (MG) 7 seções, Lula 56,98%; Cajari (MA) 6 seções, Lula 89,91%; Joaíma (MG) 6 seções, Lula 74,36%; Senador Modestino Gonçalves (MG) 5 seções, Lula 60,50%; Belo Campo (BA) 4 seções, Lula 83,28%; Rosário da Limeira (MG) 4 seções, Lula 53,82%; Barreirinha (AM) 3 seções, Lula 93,78%; Bom Jesus do Galho (MG) 3 seções, Lula 50,97%; Tabatinga (AM) 2 seções, Lula 96,11%; São João das Missões (MG) 2 seções, Lula 82,45%; Jutaí (AM) 1 seção, Lula 51,26%; Casa Nova (BA) 1 seção, Lula 89,46%; Conceição do Coité (BA) 1 seção, Lula 53,59%; Itaeté (BA) 1 seção, Lula 68,90%; Ijaci (MG) 1 seção, Lula 38,40%; Santo Antônio do Amparo (MG) 1 seção, Lula 60,71%. O andamento (-ab) confirma as mesmas 15 seções; o arquivo nacional foi de 499.233 para 499.248.
 Fonte: linha_do_tempo.json (secoes_tardias).
 
 ## Inferências (rotuladas, não são medição)
@@ -56,7 +56,7 @@ Fonte: linha_do_tempo.json (secoes_tardias).
 - **Inferência.** No Nordeste, o ganho líquido de Flávio (+1.611.579) foi 6,2 vezes a perda líquida de Lula (−258.555), com os válidos da região subindo 1.122.739 e os terceiros caindo de 6,27% para 5,37%. O saldo é compatível com voto novo e com eleitor de terceira via, mais do que com troca direta de Lula por Flávio. Dado agregado não identifica quem trocou de voto.
 - **Inferência.** No Centro-Sul, Lula perdeu mais (−3.135.837) do que Flávio ganhou (+2.785.951), com o comparecimento caindo 0,78 ponto. Parte do voto de Lula em 2022 parece ter ido para a abstenção ou para outras candidaturas, não só para Flávio.
 - **Inferência.** As paradas foram de publicação, não de contagem: entre 19:14 e 19:32 os arquivos de UF e o andamento (-ab) avançaram enquanto o arquivo nacional ficou parado (achado 10), e durante a pausa total o andamento ainda publicou versão nova (achado 11). A causa da pausa não aparece nos dados; só o TSE pode explicá-la.
-- **Inferência.** As seções tardias vêm de municípios remotos e de voto petista, padrão compatível com logística de transmissão, e não mudam nada: 3.562 válidos contra uma diferença de 2.224.965 votos.
+- **Inferência.** As seções tardias vêm de municípios remotos e de voto petista, padrão compatível com logística de transmissão, e não mudam nada: 12.714 válidos contra uma diferença de 2.224.965 votos.
 
 ## Outros cargos, para referência
 
@@ -66,11 +66,11 @@ Fonte: linha_do_tempo.json (secoes_tardias).
 ## Correções e atualizações ao BRIEF.md que os dados impõem
 
 - Placar: o BRIEF usa a leitura das 23:43 (499.226 seções). O final, com 499.248 seções, é Flávio 56.104.503 contra Lula 53.879.538, diferença de 2.224.965.
-- Cópias antigas: o banco tem 8.662 eventos `idg_regressivo`, não 515, e só 761 são cópias antigas (achado 13).
+- Cópias antigas: o banco tem 8.668 eventos `idg_regressivo`, não 515, e só 762 são cópias antigas (achado 13).
 - "Arquivos de UF parados enquanto os municipais seguiam": nenhum arquivo de nenhum nível foi gerado entre 19:32:47 e 20:01:55; as leituras com corpo novo naquele intervalo eram de versões anteriores (achado 11).
 - Hora de 100% das UFs: BA 00:40:21; MG 00:46:47; PA 23:55:38 (achado 13).
-- Seções tardias no AM: Barreirinha 3, Tabatinga 2, Jutaí 1; no total, 15 seções depois da meia-noite (achado 15).
-- Câmara no `final.json` regerado: 3 UFs provisórias (AM, MG, SP), PSD 43 e Republicanos 41 cadeiras.
+- Seções tardias no AM: Barreirinha 3, Tabatinga 2, Jutaí 1; no total, 57 seções depois da meia-noite (achado 15).
+- Câmara no `final.json` regerado: 0 UFs provisórias (), PSD 43 e Republicanos 41 cadeiras.
 
 ## Limites
 

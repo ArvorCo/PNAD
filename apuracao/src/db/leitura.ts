@@ -206,9 +206,12 @@ export function candidatosDoSnapshot(db: Database, snapshotId: number): Candidat
 export function ultimoSnapshotComCandidatos(db: Database, arquivoId: number, at?: string): number | null {
   const row = db
     .query<{ id: number }, [number, string]>(
-      `SELECT s.id FROM snapshot s WHERE s.arquivo_id = ? AND s.regressivo = 0 AND s.capturado_em <= ?
+      // Versão vigente = a mais nova pela hora de geração do TSE, não a última não marcada como
+      // regressiva: a marca comparou contadores entre níveis e sinalizou versões legítimas
+      // (a final do AM para deputados, por exemplo). Cópia velha do CDN tem gerado_em menor.
+      `SELECT s.id FROM snapshot s WHERE s.arquivo_id = ? AND s.capturado_em <= ?
          AND EXISTS (SELECT 1 FROM voto_candidato vc WHERE vc.snapshot_id = s.id)
-       ORDER BY s.id DESC LIMIT 1`,
+       ORDER BY s.gerado_em DESC, s.id DESC LIMIT 1`,
     )
     .get(arquivoId, at ?? "9999");
   return row ? row.id : null;
