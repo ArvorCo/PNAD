@@ -29,7 +29,7 @@ from collections.abc import Iterable, Mapping, Sequence
 GRUPO_POR_NUMERO = {14: "renan", 30: "zema", 70: "cury", 55: "caiado"}
 GRUPOS = ("renan", "zema", "cury", "caiado", "outros")
 # Candidaturas menores de direita (DC e Democrata), somadas a Zema no movimento 8
-# do capítulo 13; ficam dentro de "outros" na decomposição.
+# do capítulo 14; ficam dentro de "outros" na decomposição.
 DIREITA_MENOR = (27, 35)
 NUM_FLAVIO = 22
 NUM_LULA = 13
@@ -91,7 +91,7 @@ def destinos(
 ) -> dict[str, float]:
     """Votos esperados para Flávio, para Lula e fora (branco, nulo, indeciso).
 
-    Só a parte medida de cada linha (hipótese "só o medido" do capítulo 13):
+    Só a parte medida de cada linha (hipótese "só o medido" do capítulo 14):
     a parcela que não escolheu nenhum dos dois fica fora do voto válido.
     ``linhas`` já normalizadas (``flavio``, ``lula``, ``fora`` somam 1).
     """

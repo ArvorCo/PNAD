@@ -1,4 +1,4 @@
-"""Figuras do capítulo 13: pesquisa contra urna, duas réguas para o mesmo estoque.
+"""Figuras do capítulo 14: pesquisa contra urna, duas réguas para o mesmo estoque.
 
 Dados em `analysis/apuracao_2026/dados/terceira_via.json → reguas`
 (`scripts/apuracao-2026-terceira-via.py`). Duas figuras:

@@ -1,7 +1,7 @@
 # QA visual do dossiê da apuração do 1º turno (05/10/2026)
 
 Página: `docs/apuracao_1o_turno_2026.html` servida em `http://localhost:4175` (Playwright/Chromium, `device_scale_factor` 1).
-Larguras: 1440, 1024 e 390 px. 69 `<figure>`: 63 figuras de dados com `data-fig` e 6 prints da galeria do capítulo 14 (dentro de `<details>` fechado, sem defeito).
+Larguras: 1440, 1024 e 390 px. 69 `<figure>`: 63 figuras de dados com `data-fig` e 6 prints da galeria do capítulo 15 (dentro de `<details>` fechado, sem defeito).
 Capturas por elemento (3 larguras e cada estado `data-alt` em 1440): `/private/tmp/claude-501/-Users-leonardodias-arvor-PNAD/3ce2ab50-1f54-441f-be09-acf59c1e5268/scratchpad/qa-visual/<nome>-<largura>[-alt-<chave>].png`. Não ficaram em `analysis/apuracao_2026/qa-visual/` porque o `.gitignore` só cobre `analysis/apuracao_2026/qa-*.png`, não a subpasta.
 Scripts de medição: `qa_visual.py`, `alt2.py`, `sortp.py`, `ovl_any.js` na mesma pasta temporária.
 

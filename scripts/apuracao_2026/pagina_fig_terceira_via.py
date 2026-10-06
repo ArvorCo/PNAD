@@ -1,4 +1,4 @@
-"""Figuras do capítulo 13: onde está o voto da terceira via e o nulo de 2022.
+"""Figuras do capítulo 14: onde está o voto da terceira via e o nulo de 2022.
 
 Dados em `analysis/apuracao_2026/dados/terceira_via.json`
 (`scripts/apuracao-2026-terceira-via.py`). Três figuras aqui:

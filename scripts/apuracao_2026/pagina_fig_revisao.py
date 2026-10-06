@@ -8,7 +8,7 @@
   `lentidao_ufs.json`);
 - `urna_reguas` (cap. 12): a urna mais nova contra a mais velha pelas quatro réguas,
   com intervalo de 95% e a diferença bruta (`secoes.json → urna.reguas`);
-- `terceira_via_reguas_totais` (cap. 13): saldo da terceira via para Flávio pelas
+- `terceira_via_reguas_totais` (cap. 14): saldo da terceira via para Flávio pelas
   réguas da pesquisa e da urna de 2022, contra a diferença do 1º turno
   (`terceira_via.json → reguas.totais.brasil`).
 
@@ -589,7 +589,7 @@ def urna_reguas(d, **_op) -> str:
     )
 
 
-# ------------------------------------------------------------------ cap. 13
+# ------------------------------------------------------------------ cap. 14
 
 
 @registra("terceira_via_reguas_totais")

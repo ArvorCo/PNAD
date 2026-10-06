@@ -29,7 +29,7 @@ REPO = "https://github.com/ArvorCo/PNAD"
 TITULO = "Apuração do 1º turno de 2026"
 DESCRICAO = (
     "O resultado, a noite minuto a minuto, a falha do TSE com três camadas de fonte, Câmara, Senado, "
-    "assembleias, governadores, pesquisas contra a urna, voto útil, anomalias por zona e por seção e o caminho do 2º turno."
+    "assembleias, governadores, pesquisas contra a urna, voto útil, anomalias por zona e por seção, onde colocar fiscal e o caminho do 2º turno."
 )
 
 SCRIPTS = [
@@ -69,6 +69,7 @@ JSONS = [
     "senado_x_flavio.json",
     "arquitetura.json",
     "terceira_via.json",
+    "fiscais.json",
 ]
 
 
@@ -133,6 +134,13 @@ def capitulos() -> list[Capitulo]:
             "Anomalias por zona",
             ("anomalias.json",),
             C.r_anomalias,
+        ),
+        (
+            "fiscais",
+            "Fiscais",
+            "Onde colocar fiscal",
+            ("fiscais.json",),
+            C.r_fiscais,
         ),
         (
             "segundo-turno",

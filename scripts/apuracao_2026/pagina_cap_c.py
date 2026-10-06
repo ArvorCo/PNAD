@@ -1,4 +1,4 @@
-"""Capítulos 10 a 14 do dossiê da apuração: pesquisas, voto útil, anomalias, 2º turno, auditoria."""
+"""Capítulos 10 a 15 do dossiê da apuração: pesquisas, voto útil, anomalias, fiscais, 2º turno, auditoria."""
 
 from __future__ import annotations
 
@@ -177,6 +177,19 @@ def r_anomalias(d: Dados, cap: Capitulo) -> str:
 # ------------------------------------------------------------------ 13
 
 
+def r_fiscais(d: Dados, cap: Capitulo) -> str:
+    """Onde colocar fiscal no 2º turno (`fiscais.json`, contrato em CONTRATO_FISCAIS.md)."""
+    h = secao(
+        cap,
+        "Onde colocar fiscal.<br><em>Prioridade, não acusação.</em>",
+        "Atipicidade não é irregularidade: a lista diz onde conferir primeiro.",
+    )
+    return h + "</section>"
+
+
+# ------------------------------------------------------------------ 14
+
+
 def _tabela_movimentos(E: dict, TVJ: dict | None) -> str:
     mov = sorted(E["movimentos"], key=lambda m: m.get("ordem", 99))
     urna = PR.movimentos_urna(TVJ["reguas"]) if TVJ and "reguas" in TVJ else {}
@@ -247,7 +260,7 @@ def r_segundo_turno(d: Dados, cap: Capitulo) -> str:
     h += fig("movimentos_2t", d) + _tabela_movimentos(E, TVJ)
     if TVJ is None:
         d.aviso(
-            "terceira_via.json ausente: capítulo 13 sem o voto da terceira via por cidade"
+            "terceira_via.json ausente: capítulo 14 sem o voto da terceira via por cidade"
         )
     else:
         checar(d, "terceira_via.json", TV.CHAVES)
@@ -259,7 +272,7 @@ def r_segundo_turno(d: Dados, cap: Capitulo) -> str:
     return h + "</section>"
 
 
-# ------------------------------------------------------------------ 14
+# ------------------------------------------------------------------ 15
 
 GALERIA = [
     (

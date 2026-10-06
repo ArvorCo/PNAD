@@ -1,4 +1,4 @@
-"""Figuras do capítulo 13: os municípios prioritários e o teto endereçável por UF.
+"""Figuras do capítulo 14: os municípios prioritários e o teto endereçável por UF.
 
 Dados em `analysis/apuracao_2026/dados/terceira_via.json`. Duas figuras:
 

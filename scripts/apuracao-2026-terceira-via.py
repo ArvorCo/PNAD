@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Onde está o voto da terceira via, cidade por cidade (capítulo 13 do dossiê da apuração).
+"""Onde está o voto da terceira via, cidade por cidade (capítulo 14 do dossiê da apuração).
 
 Lê o banco da apuração (somente leitura; versão vigente = última gerada pelo
 TSE), os arquivos de 2022 do TSE e os JSON da casa, e grava:

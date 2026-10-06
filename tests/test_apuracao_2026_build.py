@@ -26,9 +26,10 @@ def pagina(tmp_path_factory):
     return saida.read_text(encoding="utf-8"), estado
 
 
-def test_quinze_capitulos_com_id(pagina):
+def test_dezesseis_capitulos_com_id(pagina):
     html, estado = pagina
-    assert len(IDS) == 15
+    assert len(IDS) == 16
+    assert IDS.index("fiscais") == 12 and IDS.index("segundo-turno") == 13
     for ident in IDS:
         assert f'id="{ident}"' in html
         assert f'href="#{ident}"' in html

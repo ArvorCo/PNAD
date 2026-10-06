@@ -1,6 +1,6 @@
 # Onde está o voto da terceira via, cidade por cidade
 
-Bloco do capítulo 13 do dossiê da apuração do 1º turno de 2026. Pedido de 05/10/2026: onde está o voto de terceira via para a militância da direita trabalhar no 2º turno, com inteligência local, e como evitar que ele vire nulo. A casa tem lado; o método não: cada número tem regra e fonte, e o achado que contraria a tese sai com o mesmo peso.
+Bloco do capítulo 14 do dossiê da apuração do 1º turno de 2026. Pedido de 05/10/2026: onde está o voto de terceira via para a militância da direita trabalhar no 2º turno, com inteligência local, e como evitar que ele vire nulo. A casa tem lado; o método não: cada número tem regra e fonte, e o achado que contraria a tese sai com o mesmo peso.
 
 Reprodução: `python3 scripts/apuracao-2026-terceira-via.py`, que grava `analysis/apuracao_2026/dados/terceira_via.json`. Banco da apuração, versão vigente de cada arquivo pela hora de geração do TSE; o arquivo municipal mais novo foi gerado em 2026-10-05T15:53:07.000Z. A soma dos 5.757 arquivos municipais (5.571 municípios e 186 cidades do exterior) bate com o arquivo nacional candidatura a candidatura: sim. Onze arquivos municipais que congelaram incompletos na noite foram regerados pelo TSE e entram completos aqui.
 

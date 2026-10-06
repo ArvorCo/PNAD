@@ -24,7 +24,7 @@ VERSOES = {
     "urna": "saldo_urna",
     "combinacao": "piso",
 }
-# Candidaturas por movimento do capítulo 13 (estrategia_2t.json → movimentos).
+# Candidaturas por movimento do capítulo 14 (estrategia_2t.json → movimentos).
 MOVIMENTO_COLUNAS = {
     "renan": ("renan",),
     "cury": ("cury",),
@@ -208,7 +208,7 @@ def totais(brasil: list[dict], ic: list[float | None]) -> dict[str, Any]:
 
 
 def movimentos(brasil: list[dict], estrategia: dict) -> list[dict]:
-    """Os dez movimentos do capítulo 13 com o número de cada régua."""
+    """Os dez movimentos do capítulo 14 com o número de cada régua."""
     saida = []
     for mv in sorted(estrategia["movimentos"], key=lambda x: x.get("ordem", 99)):
         linha = {
