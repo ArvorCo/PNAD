@@ -45,6 +45,7 @@ from .pagina_fig_base import (
     pp,
     r,
     registra,
+    rotulos_com_fio,
     svg_abre,
     t,
     tabela_linhas,
@@ -210,20 +211,17 @@ def terceira_via_mapa(d, **_op) -> str:
             f'<path data-g="{gi}" d="{"".join(segs)}" stroke="{COR_CLASSE[classe]}" '
             f'stroke-width="{2 * raio}" stroke-linecap="round" stroke-opacity="0.72" fill="none"/>'
         )
-    rotulados = sorted(mun, key=lambda m: -m["estoque"])[:8]
-    usados: list[tuple[float, float]] = []
-    rot = []
-    for m in rotulados:
+    # rótulo fora da bolha, com fio, e o contorno da bolha rotulada por cima
+    pontos = []
+    for m in sorted(mun, key=lambda m: -m["estoque"])[:8]:
         c = cen.get(str(m["ibge"]))
         if c is None:
             continue
         x, y = proj(*c)
-        if any(abs(x - a) < 90 and abs(y - b) < 20 for a, b in usados):
-            continue
-        usados.append((x, y))
-        rot.append(chip(x + 10, y - 8, nome_bonito(m["nome"]), 13))
-    out.append(f'<g pointer-events="none">{"".join(rot)}</g>')
+        raio = max(0.8, round(k * math.sqrt(m["estoque"]) * 2) / 2)
+        pontos.append((x, y, raio, nome_bonito(m["nome"]), COR_CLASSE[m["classe"]]))
     ref_y = MH - 70
+    out.append(rotulos_com_fio(pontos, (4, 4, MW - 4, ref_y - 50)))
     out.append(t(14, ref_y - 30, "Votos de terceira via", 13.5, INK, weight="700"))
     cx = 24
     for v in (10_000, 100_000, 500_000):

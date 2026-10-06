@@ -390,14 +390,15 @@ def _chip_caixa(
 
 
 def rotulos_com_fio(
-    pontos: list[tuple[float, float, float, str]],
+    pontos: list[tuple],
     limites: tuple[float, float, float, float],
     size: float = 13,
     contorno: str = INK,
 ) -> str:
     """Rótulo de bolha fora do raio, com fio até a borda e contorno por cima.
 
-    `pontos`: (x, y, raio, texto), na ordem de prioridade. Cada rótulo procura,
+    `pontos`: (x, y, raio, texto[, cor]), na ordem de prioridade. Com `cor`, a
+    bolha rotulada é redesenhada cheia por cima da nuvem. Cada rótulo procura,
     em anéis crescentes, a primeira posição que não cruza outro rótulo nem outra
     bolha rotulada e que cabe em `limites` (x0, y0, x1, y1). O contorno da bolha
     rotulada é desenhado por último, então ela aparece mesmo sob a nuvem.
@@ -413,7 +414,7 @@ def rotulos_com_fio(
         nx, ny = min(max(px, c[0]), c[2]), min(max(py, c[1]), c[3])
         return (nx - px) ** 2 + (ny - py) ** 2 < (pr + 3) ** 2
 
-    for x, y, raio, s in pontos:
+    for x, y, raio, s, *cor in pontos:
         w = 0.53 * size * len(s) + 12
         escolhido = None
         for dist in (raio + 16, raio + 34, raio + 60, raio + 96):
@@ -434,7 +435,7 @@ def rotulos_com_fio(
                     continue
                 if any(cruza(cx0, c) for c in caixas):
                     continue
-                if any(toca_bolha(cx0, px, py, pr) for px, py, pr, _ in pontos):
+                if any(toca_bolha(cx0, p[0], p[1], p[2]) for p in pontos):
                     continue
                 escolhido = (cx, cy, cx0, a)
                 break
@@ -447,9 +448,11 @@ def rotulos_com_fio(
         bx, by = x + raio * math.cos(a), y + raio * math.sin(a)
         nx = min(max(bx, caixa[0]), caixa[2])
         ny = min(max(by, caixa[1]), caixa[3])
+        cheio = cor[0] if cor else "none"
         out.append(
             f'<g pointer-events="none">'
-            f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{raio:.1f}" fill="none" stroke="{contorno}" stroke-width="1.6"/>'
+            f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{raio:.1f}" fill="{cheio}" fill-opacity="0.9" '
+            f'stroke="{contorno}" stroke-width="1.6"/>'
             f'<line x1="{bx:.1f}" y1="{by:.1f}" x2="{nx:.1f}" y2="{ny:.1f}" stroke="{contorno}" stroke-width="1"/>'
             f"{chip(cx, cy, s, size)}</g>"
         )

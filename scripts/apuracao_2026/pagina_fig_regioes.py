@@ -365,6 +365,7 @@ def dispersao_municipios(d, **_op) -> str:
                 Y(m["pct_flavio"]),
                 raio,
                 nome_bonito(m["nome"]),
+                COR_REGIAO.get(m["regiao"], COR_REGIAO["Exterior"]),
             )
         )
     out.append(
