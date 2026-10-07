@@ -37,3 +37,43 @@
 <summary>Agent "Pesquisa G6: esquerda e base de Lula" finished</summary>
 <note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another me...
 
+### Prompt 5
+
+<task-notification>
+<task-id>ad7741bfd4f75b00b</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Pesquisa G2: direita com mandato até 2031" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it anot...
+
+### Prompt 6
+
+<task-notification>
+<task-id>aba25f8d4ce693dda</task-id>
+<tool-use-id>toolu_014ykYDBbaxvt3LxZyL44Fxr</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Pesquisa G3: direita eleita em 2026" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another mes...
+
+### Prompt 7
+
+<task-notification>
+<task-id>a110736109af6ac0e</task-id>
+<tool-use-id>toolu_018ATsYRbB3883oqS7iTwq3S</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Pesquisa G4: pivôs do centrão" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message...
+
+### Prompt 8
+
+<task-notification>
+<task-id>a381a622a84e3eadc</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Pesquisa G5: centro e MDB/PSD" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message a...
+
