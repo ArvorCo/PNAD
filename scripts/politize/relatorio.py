@@ -146,6 +146,23 @@ def estatisticas(resultados: Sequence[ResultadoUF]) -> dict[str, Any]:
     }
     for x in locais:
         st["arquetipo_aptos"][x.m["arquetipo"]] += x.c["aptos"]
+    grandes = [x for x in locais if x.c["aptos"] >= 300 and x.m["indice"] is not None]
+    st["arquetipo_indice"] = {}
+    for cod in arquetipos.CODIGOS:
+        xs = [x.m["indice"] for x in grandes if x.m["arquetipo"] == cod]
+        st["arquetipo_indice"][cod] = (
+            len(xs),
+            sum(xs) / len(xs) if xs else None,
+            100.0 * sum(1 for v in xs if v == 100) / len(xs) if xs else None,
+        )
+    st["com_teto"] = {
+        k: sum(
+            1
+            for x in locais
+            if x.m.get(f"{k}_bruto") is not None and x.m[f"{k}_bruto"] > x.m[k]
+        )
+        for k in ("c_perfil", "c_reencontro")
+    }
     por_regiao: dict[str, list[Local]] = {}
     for x in locais:
         por_regiao.setdefault(fontes.UFS[x.cad.uf][1], []).append(x)
@@ -333,7 +350,17 @@ def escrever(
     add(
         f"Teto do potencial: {_n(parametros['teto_potencial'])} votos por 100 aptos. "
         f"p99 observado do potencial: {_n(parametros['p99_potencial'], 2)}. Locais com "
-        f"índice 100 (saturados): {_n(st['saturados'])}."
+        f"índice 100 (saturados): {_n(st['saturados'])} "
+        f"({_pct(st['saturados'], st['n_locais'], 2)})."
+    )
+    add("")
+    tc = parametros["teto_componente"]
+    add(
+        f"Teto por componente, antes da soma: c_perfil {_n(tc['c_perfil'])} e "
+        f"c_reencontro {_n(tc['c_reencontro'])} votos por 100 aptos. Locais em que o "
+        f"teto cortou: c_perfil {_n(st['com_teto']['c_perfil'])}, c_reencontro "
+        f"{_n(st['com_teto']['c_reencontro'])}. O valor sem teto fica em "
+        "`c_perfil_bruto` e `c_reencontro_bruto`."
     )
     add("")
     add(
@@ -388,6 +415,17 @@ def escrever(
             f"{_n(st['arquetipo_secoes'][cod])} | {_n(st['secundario'][cod])} |"
         )
     add(f"| sem secundário | | | | | {_n(st['secundario'][None])} |")
+    add("")
+    add("Índice por arquétipo, locais com 300 aptos ou mais:")
+    add("")
+    add("| arquétipo | locais | índice médio | % com índice 100 |")
+    add("|---|---:|---:|---:|")
+    for cod in arquetipos.CODIGOS:
+        n, media, cem = st["arquetipo_indice"][cod]
+        add(
+            f"| {arquetipos.NOMES[cod]} | {_n(n)} | {_n(media, 1)} | "
+            f"{_n(cem, 2)}{'%' if cem is not None else ''} |"
+        )
     add("")
     add("## Conta do 2º turno")
     add("")

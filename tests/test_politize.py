@@ -44,7 +44,8 @@ COLUNAS_CONTRATO_MUNICIPIO = [
 ]  # fmt: skip
 ACRESCIDAS = [
     "em_aberto", "bna", "viravel", "cury", "renan", "caiado", "zema",
-    "outros_nominais", "coord_fonte", "percentil", "percentil_uf",
+    "outros_nominais", "coord_fonte", "percentil", "percentil_uf", "c_perfil_bruto",
+    "c_reencontro_bruto",
 ]  # fmt: skip
 
 
@@ -143,6 +144,13 @@ def test_componentes_indice_e_teto():
     assert negativo["c_reencontro"] is None
     assert negativo["potencial"] == pytest.approx(20.0)
     assert mt.componentes(m, None)["c_perfil"] is None
+    # Teto por componente: 12 de reencontro e 30 de perfil viram 8 e 8 no potencial.
+    alto = mt.componentes({**m, "reencontro_a": 12.0}, 40.0)
+    assert alto["c_reencontro"] == 8.0 and alto["c_reencontro_bruto"] == 12.0
+    assert alto["c_perfil"] == 8.0 and alto["c_perfil_bruto"] == pytest.approx(30.0)
+    assert alto["potencial"] == pytest.approx(10.0 + 10.0 + 8.0 + 8.0)
+    assert mt.limitar(None, 8.0) is None
+    assert mt.limitar(3.0, None) == 3.0
 
 
 def test_conta_2t():

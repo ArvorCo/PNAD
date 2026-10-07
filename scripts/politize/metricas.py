@@ -23,6 +23,9 @@ COEF_LULA_2T = (1 - SEM_ESCOLHA) * (1 - FLAVIO_ENTRE_ESCOLHEM)
 TAXA_CONVERSAO = 0.35
 PESO_AUSENTES = 0.5
 TETO_POTENCIAL = 40.0
+# Teto por componente, aplicado antes da soma do potencial (cerca do p80 de c_perfil):
+# sem ele, o vão de renda de um bairro rico que vota Lula saturava o índice sozinho.
+TETO_COMPONENTE = {"c_perfil": 8.0, "c_reencontro": 8.0}
 
 CONTADORES = (
     "aptos",
@@ -210,36 +213,54 @@ def deslocamento(
 
 
 def componentes(
-    m: Mapping[str, float | None], vao_perfil_pp: float | None
+    m: Mapping[str, float | None],
+    vao_perfil_pp: float | None,
+    teto: Mapping[str, float] = TETO_COMPONENTE,
 ) -> dict[str, float | None]:
     """Componentes do potencial, em votos por 100 aptos.
 
-    Componente sem dado (2022 sem casamento, local sem perfil de renda) entra como
-    zero no potencial e fica ``None`` no campo.
+    ``c_perfil`` e ``c_reencontro`` entram no potencial limitados ao teto declarado; o
+    valor sem teto fica em ``c_perfil_bruto`` e ``c_reencontro_bruto``. Componente sem
+    dado (2022 sem casamento, local sem perfil de renda) entra como zero no potencial
+    e fica ``None`` no campo.
     """
     if m.get("terceira_a") is None:
-        return {
-            "c_terceira": None,
-            "c_ausentes": None,
-            "c_reencontro": None,
-            "c_perfil": None,
-            "potencial": None,
-        }
+        return dict.fromkeys(
+            (
+                "c_terceira",
+                "c_ausentes",
+                "c_reencontro",
+                "c_perfil",
+                "c_reencontro_bruto",
+                "c_perfil_bruto",
+                "potencial",
+            )
+        )
     c_terceira = m["terceira_a"] + m["bn_a"]
     c_ausentes = PESO_AUSENTES * m["abst_a"]
-    c_reencontro = m.get("reencontro_a")
+    reencontro_bruto = m.get("reencontro_a")
     if vao_perfil_pp is None or not m.get("aptos"):
-        c_perfil = None
+        perfil_bruto = None
     else:
-        c_perfil = max(0.0, vao_perfil_pp) * m["validos"] / m["aptos"]
+        perfil_bruto = max(0.0, vao_perfil_pp) * m["validos"] / m["aptos"]
+    c_reencontro = limitar(reencontro_bruto, teto.get("c_reencontro"))
+    c_perfil = limitar(perfil_bruto, teto.get("c_perfil"))
     potencial = c_terceira + c_ausentes + (c_reencontro or 0.0) + (c_perfil or 0.0)
     return {
         "c_terceira": c_terceira,
         "c_ausentes": c_ausentes,
         "c_reencontro": c_reencontro,
         "c_perfil": c_perfil,
+        "c_reencontro_bruto": reencontro_bruto,
+        "c_perfil_bruto": perfil_bruto,
         "potencial": potencial,
     }
+
+
+def limitar(valor: float | None, teto: float | None) -> float | None:
+    if valor is None or teto is None:
+        return valor
+    return min(valor, teto)
 
 
 def indice(potencial: float | None, teto: float = TETO_POTENCIAL) -> int | None:

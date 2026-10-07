@@ -5,6 +5,7 @@
 
 import { carta, losango, CORES } from './carta.js';
 import { desenharCard } from './card.js';
+import { montarMapa } from './mapa.js';
 
 /* ------------------------------------------------------------------ configuração */
 
@@ -1217,7 +1218,7 @@ function blocoRaio(local, raio1km) {
 
 function renderVizinhanca(local, aoRedor, pool, r, raio1km = []) {
   const geo = r.origem === 'geo';
-  const item = (l, d, atual) => {
+  const item = (l, d, atual, n = 0) => {
     const a = arqInfo(l.arquetipo);
     return h('li', {}, h('button', {
       type: 'button',
@@ -1226,7 +1227,7 @@ function renderVizinhanca(local, aoRedor, pool, r, raio1km = []) {
       'aria-label': `${caixa(l.nome)}, ${caixa(l.bairro) || l._mun}, arquétipo ${a.nome}, índice ${l.indice ?? SD}${d !== null ? `, a ${distTxt(d)}${geo ? ' de você' : ''}` : ''}${atual ? ', boletim aberto' : ''}`,
     },
     losango(l.indice, a.cor.fill, 44),
-    h('span', {}, h('span', { class: 'nome' }, caixa(l.nome)), h('span', { class: 'sub' }, `${a.nome} · ${caixa(l.bairro) || l._mun}`)),
+    h('span', {}, h('span', { class: 'nome' }, n ? h('span', { class: 'nlista' }, `${n}.`) : null, caixa(l.nome)), h('span', { class: 'sub' }, `${a.nome} · ${caixa(l.bairro) || l._mun}`)),
     h('span', { class: 'dist' }, atual ? (geo && d !== null ? distTxt(d) : 'aberto') : distTxt(d))));
   };
   const dLocal = geo ? haversine(r.ref, local) : null;
@@ -1234,7 +1235,7 @@ function renderVizinhanca(local, aoRedor, pool, r, raio1km = []) {
     h('p', { class: 'kicker' }, 'Ao redor'),
     h('h3', {}, geo ? 'Locais de votação perto de você' : 'Os locais de votação mais próximos'),
     h('p', { class: 'ajuda', style: 'margin:0 0 10px' }, 'Os sete mais próximos, do maior para o menor índice de conversa.'),
-    h('ol', {}, item(local, dLocal, true), aoRedor.map((x) => item(x.l, x.d, false))),
+    h('ol', {}, item(local, dLocal, true), aoRedor.map((x, i) => item(x.l, x.d, false, i + 1))),
     h('p', { class: 'ajuda' }, geo ? 'Distância em linha reta a partir da localização do aparelho.' : 'Distância em linha reta a partir do local do boletim. Toque num local para abrir o boletim dele.'));
   const mapa = h('div', { class: 'mapa-box' }, h('p', { class: 'kicker' }, 'Mapa da vizinhança'), h('div', { id: 'viz-map', class: 'mapa-alvo' }, h('p', { class: 'ajuda' }, 'Desenhando o mapa...')));
   return h('section', { class: 'vizinhanca', 'aria-label': 'Vizinhança do local' }, mapa, h('div', {}, blocoRaio(local, raio1km), lista));
@@ -1288,199 +1289,113 @@ function trocarLocal(l) {
   executar('Abrindo o boletim do local', async () => ({ local: l, pool: r.pool || [], ref: r.origem === 'geo' ? r.ref : null, origem: r.origem === 'geo' ? 'geo' : 'link' }), 'Abrir o local');
 }
 
+function linksExternos(l) {
+  if (num(l.lat) === null || num(l.lon) === null) return [];
+  const la = l.lat;
+  const lo = l.lon;
+  return [
+    [`https://www.openstreetmap.org/?mlat=${la}&mlon=${lo}#map=17/${la}/${lo}`, 'Abrir no OpenStreetMap'],
+    [`https://www.google.com/maps?q=${la},${lo}`, 'Abrir no Google Maps'],
+  ];
+}
+
 async function desenharMapa(box, local, aoRedor, pool, r) {
   const alvo = box.querySelector('#viz-map');
-  const NS = 'http://www.w3.org/2000/svg';
-  const s = (tag, attrs = {}) => {
-    const n = document.createElementNS(NS, tag);
-    for (const [k, v] of Object.entries(attrs)) if (v !== null && v !== undefined) n.setAttribute(k, String(v));
-    return n;
-  };
   const comCoord = (l) => num(l.lat) !== null && num(l.lon) !== null;
   if (!comCoord(local)) {
     alvo.replaceChildren(h('p', { class: 'ajuda' }, 'Este local não tem coordenada no cadastro do TSE. Sem mapa; a lista ao lado segue por município.'));
     return;
   }
+  const posicao = new Map([[local.local_id, 0], ...aoRedor.map((x, i) => [x.l.local_id, i + 1])]);
+  const porId = new Map(pool.map((l) => [l.local_id, l]));
+  porId.set(local.local_id, local);
+  const links = linksExternos(local);
+
   if (local._uf === 'ZZ') {
-    await desenharMundo(alvo, local, s);
+    const cidadePos = new Map([[local._munChave, 0]]);
+    const cidadeLocal = new Map();
+    aoRedor.forEach((x, i) => {
+      if (!cidadePos.has(x.l._munChave)) {
+        cidadePos.set(x.l._munChave, i + 1);
+        cidadeLocal.set(x.l._munChave, x.l);
+      }
+    });
+    const cidades = E.muns.filter((m) => m.uf === 'ZZ' && comCoord(m));
+    const usados = new Set();
+    const pontos = cidades.map((m) => {
+      const fl = (num(m.flavio_v) || 0) >= (num(m.lula_v) || 0);
+      usados.add(fl);
+      const n = cidadePos.has(m.chave) ? cidadePos.get(m.chave) : null;
+      return {
+        id: m.chave, lat: m.lat, lon: m.lon, cor: fl ? '#1f5f9e' : '#c8412f', peso: m.aptos || 0, nome: m.nome, perto: n,
+        aria: `${n ? `${n}. ` : ''}${m.nome}: ${f0(m.aptos)} aptos, Flávio ${f1(m.flavio_v)}%, Lula ${f1(m.lula_v)}%`,
+      };
+    });
+    montarMapa(alvo, {
+      modo: 'mundo',
+      centro: { lat: local.lat, lon: local.lon },
+      pontos,
+      geo: buscarJSON(`${BASE}geo/ZZ.geojson`).catch(() => null),
+      titulo: `Mapa do mundo com as ${cidades.length} cidades onde brasileiros votam no exterior; destaque em ${local._mun}. Azul: Flávio à frente; vermelho: Lula à frente; tamanho pelos aptos.`,
+      aoEscolher: (id) => {
+        if (cidadeLocal.has(id)) {
+          trocarLocal(cidadeLocal.get(id));
+          return;
+        }
+        const m = E.porChave.get(id);
+        if (m) executar(`Abrindo ${m.nome}`, () => porCidade(m, ''), `Locais de ${m.nome}`);
+      },
+      legenda: h('ul', { class: 'mapa-leg' }, h('li', {}, h('i', { style: 'background:#1f5f9e' }), 'Flávio à frente'), h('li', {}, h('i', { style: 'background:#c8412f' }), 'Lula à frente')),
+      nota: h('p', { class: 'ajuda' }, `${cidades.length} cidades com seção no exterior. Os números são a posição na lista ao lado; toque numa cidade para abrir o boletim dela. Use + e −, a roda do mouse ou o gesto de pinça para aproximar.`),
+      links,
+    });
     return;
   }
-  const lat0 = local.lat;
-  const kx = Math.cos((lat0 * Math.PI) / 180);
-  const X = (lon) => lon * kx;
-  const Y = (lat) => -lat;
 
-  const perto = [local, ...aoRedor.map((x) => x.l)].filter(comCoord);
-  const pts = perto.map((l) => [X(l.lon), Y(l.lat)]);
-  if (r.ref) pts.push([X(r.ref.lon), Y(r.ref.lat)]);
-  // Quadro centrado no local do boletim, com os oito mais próximos (e você, se for o caso) dentro.
-  const cx = X(local.lon);
-  const cy = Y(local.lat);
-  const alcance = Math.max(...pts.map(([px, py]) => Math.max(Math.abs(px - cx), Math.abs(py - cy))), 0.003);
-  const lado = Math.min(alcance * 2 * 1.18, 1.2);
-  const x0 = cx - lado / 2;
-  const y0 = cy - lado / 2;
-  const x1 = x0 + lado;
-  const y1 = y0 + lado;
-
-  const kmLado = lado * 111.2;
-  const svg = s('svg', { viewBox: `${x0} ${y0} ${lado} ${lado}`, class: 'mapa-svg', role: 'group', 'aria-labelledby': 'mapa-t', preserveAspectRatio: 'xMidYMid meet' });
-  const titulo = s('title', { id: 'mapa-t' });
-  titulo.textContent = `Mapa dos locais de votação perto de ${caixa(local.nome)}, quadro de cerca de ${nf1.format(kmLado)} km de lado. Cor pelo arquétipo, tamanho pelos aptos.`;
-  svg.append(titulo);
-
-  // contornos
-  try {
-    const geo = await buscarJSON(`${BASE}geo/${local._uf}.geojson`);
-    const g = s('g');
-    for (const f of geo.features || []) {
-      const cod = String((f.properties && (f.properties.codarea ?? f.properties.CD_MUN)) || '');
-      const geom = f.geometry;
-      if (!geom) continue;
-      const polys = geom.type === 'Polygon' ? [geom.coordinates] : geom.type === 'MultiPolygon' ? geom.coordinates : [];
-      let d = '';
-      let bx0 = Infinity;
-      let bx1 = -Infinity;
-      let by0 = Infinity;
-      let by1 = -Infinity;
-      for (const poly of polys) {
-        for (const anel of poly) {
-          let seg = '';
-          for (let i = 0; i < anel.length; i += 1) {
-            const px = X(anel[i][0]);
-            const py = Y(anel[i][1]);
-            if (px < bx0) bx0 = px;
-            if (px > bx1) bx1 = px;
-            if (py < by0) by0 = py;
-            if (py > by1) by1 = py;
-            seg += `${i ? 'L' : 'M'}${px.toFixed(5)} ${py.toFixed(5)}`;
-          }
-          d += `${seg}Z`;
-        }
-      }
-      const toca = bx1 >= x0 - lado && bx0 <= x1 + lado && by1 >= y0 - lado && by0 <= y1 + lado;
-      if (!toca || !d) continue;
-      g.append(s('path', { d, class: cod === local._ibge ? 'mun' : 'mun outro', 'fill-rule': 'evenodd' }));
-    }
-    // o município do boletim por cima
-    const principal = [...g.querySelectorAll('path.mun:not(.outro)')];
-    principal.forEach((p) => g.append(p));
-    svg.append(g);
-  } catch {
-    // Sem malha, o mapa mostra só os pontos.
-  }
-
-  // anéis de distância a partir do local do boletim (sem mapa de ruas: nenhum tile externo)
-  const gAneis = s('g', { class: 'aneis' });
-  const gRotAneis = s('g', { class: 'aneis-rot' });
-  const kmGrau = 111.2;
-  for (const km of [0.5, 1, 2, 5, 10, 20]) {
-    const rr = km / kmGrau;
-    if (rr > lado * 0.47 || rr < lado * 0.06) continue;
-    gAneis.append(s('circle', { cx: X(local.lon).toFixed(5), cy: Y(local.lat).toFixed(5), r: rr.toFixed(5), class: 'raio' }));
-    const tx0 = s('text', { x: X(local.lon).toFixed(5), y: (Y(local.lat) - rr - lado * 0.008).toFixed(5), 'text-anchor': 'middle', 'font-size': (lado * 0.042).toFixed(5), 'stroke-width': (lado * 0.009).toFixed(5), class: 'raio-t' });
-    tx0.textContent = km < 1 ? `${nf0.format(km * 1000)} m` : `${nf0.format(km)} km`;
-    gRotAneis.append(tx0);
-  }
-  svg.append(gAneis);
-
-  const ids = new Set(perto.map((l) => l.local_id));
-  const visiveis = pool.filter((l) => comCoord(l) && X(l.lon) >= x0 - lado * 0.05 && X(l.lon) <= x1 + lado * 0.05 && Y(l.lat) >= y0 - lado * 0.05 && Y(l.lat) <= y1 + lado * 0.05);
-  const maxAptos = Math.max(1, ...visiveis.map((l) => l.aptos || 0));
-  const raio = (l) => lado * (0.011 + 0.017 * Math.sqrt((l.aptos || 0) / maxAptos));
-  const gPts = s('g');
   const usados = new Map();
-  const ordem = visiveis.sort((a, b) => (ids.has(a.local_id) ? 1 : 0) - (ids.has(b.local_id) ? 1 : 0));
-  for (const l of ordem) {
+  const pontos = pool.filter(comCoord).map((l) => {
     const a = arqInfo(l.arquetipo);
     usados.set(l.arquetipo, a);
-    const perto1 = ids.has(l.local_id);
-    const c = s('circle', { cx: X(l.lon).toFixed(5), cy: Y(l.lat).toFixed(5), r: raio(l).toFixed(5), fill: a.cor.fill, class: `pt${perto1 ? ' perto' : ''}` });
-    const t = s('title');
-    t.textContent = `${caixa(l.nome)}: ${a.nome}, índice ${l.indice ?? SD}`;
-    c.append(t);
-    if (l.local_id !== local.local_id) {
-      c.addEventListener('click', () => trocarLocal(l));
-      if (perto1) {
-        c.setAttribute('tabindex', '0');
-        c.setAttribute('role', 'button');
-        c.setAttribute('aria-label', `Abrir boletim de ${caixa(l.nome)}, ${a.nome}, índice ${l.indice ?? SD}`);
-        c.addEventListener('keydown', (ev) => {
-          if (ev.key === 'Enter' || ev.key === ' ') {
-            ev.preventDefault();
-            trocarLocal(l);
-          }
-        });
-      }
-    }
-    gPts.append(c);
+    const n = posicao.has(l.local_id) ? posicao.get(l.local_id) : null;
+    return {
+      id: l.local_id, lat: l.lat, lon: l.lon, cor: a.cor.fill, peso: l.aptos || 0, nome: caixa(l.nome), perto: n,
+      aria: `${n ? `${n}. ` : ''}${caixa(l.nome)}, ${a.nome}, índice ${l.indice ?? SD}`,
+    };
+  });
+  if (!posicao.has(local.local_id) || !pontos.some((p) => p.id === local.local_id)) {
+    const a = arqInfo(local.arquetipo);
+    pontos.push({ id: local.local_id, lat: local.lat, lon: local.lon, cor: a.cor.fill, peso: local.aptos || 0, nome: caixa(local.nome), perto: 0, aria: caixa(local.nome) });
   }
-  // destaque do local escolhido
-  const sel = s('circle', { cx: X(local.lon).toFixed(5), cy: Y(local.lat).toFixed(5), r: (raio(local) * 1.9).toFixed(5), class: 'sel' });
-  gPts.append(sel);
-  const cSel = gPts.querySelector(`circle.pt[cx="${X(local.lon).toFixed(5)}"][cy="${Y(local.lat).toFixed(5)}"]`);
-  if (cSel) gPts.append(cSel);
-  if (r.ref) {
-    const v = s('circle', { cx: X(r.ref.lon).toFixed(5), cy: Y(r.ref.lat).toFixed(5), r: (lado * 0.012).toFixed(5), class: 'voce' });
-    const t = s('title');
-    t.textContent = 'Você (a coordenada não sai do aparelho)';
-    v.append(t);
-    gPts.append(v);
+  const grupos = new Map();
+  for (const l of pool) {
+    if (l._munChave !== local._munChave || !comCoord(l) || !l.bairro) continue;
+    const g = grupos.get(l.bairro) || { nome: caixa(l.bairro), lat: 0, lon: 0, ids: [] };
+    g.lat += l.lat;
+    g.lon += l.lon;
+    g.ids.push(l.local_id);
+    grupos.set(l.bairro, g);
   }
-  svg.append(gPts, gRotAneis);
-
-  const leg = h('ul', { class: 'mapa-leg' },
-    ORDEM_ARQ.filter((k) => usados.has(k)).map((k) => h('li', {}, h('i', { style: `background:${usados.get(k).cor.fill}` }), usados.get(k).nome)),
-    r.ref ? h('li', {}, h('i', { style: 'background:#c8412f' }), 'Você') : null);
-  alvo.replaceChildren(svg, leg, h('p', { class: 'ajuda' }, `Quadro de cerca de ${nf1.format(kmLado)} km de lado. O círculo com contorno preto é o local do boletim; os oito locais mais próximos têm borda escura e abrem com toque ou teclado.`));
-}
-
-// Exterior: planisfério (geo/ZZ.geojson) com um ponto por cidade de votação, do indice.json.
-async function desenharMundo(alvo, local, s) {
-  const X = (lon) => lon;
-  const Y = (lat) => -lat;
-  const [x0, y0, larg, alt] = [-170, -78, 350, 140];
-  const svg = s('svg', { viewBox: `${x0} ${y0} ${larg} ${alt}`, class: 'mapa-svg mundo', role: 'group', 'aria-labelledby': 'mapa-t', preserveAspectRatio: 'xMidYMid meet' });
-  const titulo = s('title', { id: 'mapa-t' });
-  titulo.textContent = `Mapa do mundo com as cidades onde brasileiros votam no exterior; destaque em ${local._mun}. Azul: Flávio à frente; vermelho: Lula à frente; tamanho pelos aptos.`;
-  svg.append(titulo);
-  try {
-    const geo = await buscarJSON(`${BASE}geo/ZZ.geojson`);
-    const g = s('g');
-    for (const f of geo.features || []) {
-      const geom = f.geometry;
-      if (!geom) continue;
-      const polys = geom.type === 'Polygon' ? [geom.coordinates] : geom.type === 'MultiPolygon' ? geom.coordinates : [];
-      let d = '';
-      for (const poly of polys) for (const anel of poly) d += `${anel.map((c, i) => `${i ? 'L' : 'M'}${X(c[0]).toFixed(2)} ${Y(c[1]).toFixed(2)}`).join('')}Z`;
-      if (d) g.append(s('path', { d, class: 'mun outro' }));
-    }
-    svg.append(g);
-  } catch {
-    // Sem planisfério, ficam só os pontos.
-  }
-  const cidades = E.muns.filter((m) => m.uf === 'ZZ' && num(m.lat) !== null && num(m.lon) !== null);
-  const maxA = Math.max(1, ...cidades.map((m) => m.aptos || 0));
-  const gp = s('g');
-  for (const m of cidades.sort((a, b) => (b.aptos || 0) - (a.aptos || 0))) {
-    const atual = m.chave === local._munChave;
-    const flavioFrente = (num(m.flavio_v) || 0) >= (num(m.lula_v) || 0);
-    const c = s('circle', {
-      cx: X(m.lon).toFixed(2), cy: Y(m.lat).toFixed(2), r: (0.9 + 3.2 * Math.sqrt((m.aptos || 0) / maxA)).toFixed(2),
-      fill: flavioFrente ? '#1f5f9e' : '#c8412f', class: 'pt', 'fill-opacity': 0.85,
-    });
-    const t = s('title');
-    t.textContent = `${m.nome}: ${f0(m.aptos)} aptos, Flávio ${f1(m.flavio_v)}%, Lula ${f1(m.lula_v)}%`;
-    c.append(t);
-    if (!atual) c.addEventListener('click', () => executar(`Abrindo ${m.nome}`, () => porCidade(m, ''), `Locais de ${m.nome}`));
-    gp.append(c);
-  }
-  const eu = cidades.find((m) => m.chave === local._munChave) || local;
-  gp.append(s('circle', { cx: X(eu.lon).toFixed(2), cy: Y(eu.lat).toFixed(2), r: 6, class: 'sel' }));
-  svg.append(gp);
-  alvo.replaceChildren(svg,
-    h('ul', { class: 'mapa-leg' }, h('li', {}, h('i', { style: 'background:#1f5f9e' }), 'Flávio à frente'), h('li', {}, h('i', { style: 'background:#c8412f' }), 'Lula à frente')),
-    h('p', { class: 'ajuda' }, `${cidades.length} cidades com seção no exterior. O círculo preto marca ${local._mun}. Toque numa cidade para abrir o boletim dela; a lista ao lado traz as mais próximas.`));
+  const bairros = [...grupos.values()].filter((g) => g.ids.length >= 2).map((g) => ({ ...g, lat: g.lat / g.ids.length, lon: g.lon / g.ids.length }))
+    .sort((a, b) => b.ids.length - a.ids.length);
+  montarMapa(alvo, {
+    modo: 'local',
+    centro: { lat: local.lat, lon: local.lon },
+    pontos,
+    bairros,
+    voce: r.origem === 'geo' ? r.ref : null,
+    geo: buscarJSON(`${BASE}geo/${local._uf}.geojson`).catch(() => null),
+    ibge: local._ibge,
+    titulo: `Mapa dos locais de votação perto de ${caixa(local.nome)}, com anéis de 500 metros e 1 quilômetro. Cor pelo arquétipo; os números são a posição na lista ao lado.`,
+    aoEscolher: (id) => {
+      const l = porId.get(id);
+      if (l) trocarLocal(l);
+    },
+    legenda: h('ul', { class: 'mapa-leg' },
+      ORDEM_ARQ.filter((k) => usados.has(k)).map((k) => h('li', {}, h('i', { style: `background:${usados.get(k).cor.fill}` }), usados.get(k).nome)),
+      r.origem === 'geo' ? h('li', {}, h('i', { style: 'background:#c8412f' }), 'Você') : null),
+    nota: h('p', { class: 'ajuda' }, 'Todos os locais de votação da cidade aparecem como pontos pequenos; os sete mais próximos têm borda e nome (ou o número da lista, quando o nome não cabe). Arraste para mover; use + e −, a roda do mouse ou o gesto de pinça para aproximar. "Ver ruas" baixa o mapa de ruas do OpenStreetMap só quando você pede.'),
+    links,
+  });
 }
 
 /* ------------------------------------------------------------------ compartilhar */

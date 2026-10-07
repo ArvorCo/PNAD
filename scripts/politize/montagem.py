@@ -95,6 +95,8 @@ COLUNAS_LOCAL = (
     "coord_fonte",
     "percentil",
     "percentil_uf",
+    "c_perfil_bruto",
+    "c_reencontro_bruto",
 )
 APTOS_MIN_SECAO = 30
 SECAO_SEMPRE = {
@@ -172,6 +174,8 @@ UMA_CASA = {
     "c_ausentes",
     "c_reencontro",
     "c_perfil",
+    "c_reencontro_bruto",
+    "c_perfil_bruto",
     "potencial",
 }
 PERFIL_SHARES = (
@@ -241,6 +245,8 @@ COLUNAS_SECAO = (
     "coord_fonte",
     "percentil",
     "percentil_uf",
+    "c_perfil_bruto",
+    "c_reencontro_bruto",
 )
 
 
@@ -622,7 +628,14 @@ def totais(locais: Iterable[Local], tabela: TabelaRenda | None) -> dict[str, Any
             m["renda_mediana_brl"] = renda["mediana_brl"]
     for chave in ("esperado_flavio_v", "esperado_lula_v", "vao_perfil_pp"):
         m[chave] = mt.media_ponderada((x.m.get(chave), m_validos(x)) for x in locais)
-    for chave in ("c_terceira", "c_ausentes", "c_reencontro", "c_perfil"):
+    for chave in (
+        "c_terceira",
+        "c_ausentes",
+        "c_reencontro",
+        "c_perfil",
+        "c_reencontro_bruto",
+        "c_perfil_bruto",
+    ):
         soma = sum((x.m.get(chave) or 0.0) * x.c["aptos"] for x in locais)
         m[chave] = soma / aptos if aptos else None
     if m["c_terceira"] is not None:

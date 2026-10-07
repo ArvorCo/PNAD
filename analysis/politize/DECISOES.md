@@ -40,11 +40,14 @@ as fontes não têm ou tinha consequência que vale ver antes de publicar. Os n�
 
 ## Perfil do eleitorado
 
-11. **Só o Acre tem perfil por seção.** O download das demais UFs devolve HTTP 429 desde 17:30 (ver
-    `data/raw/tse_eleitorado/perfil_eleitor_secao/download.log`); as outras 26 UFs e o exterior usam o
-    perfil por zona. Na zona, os shares da zona são aplicados aos aptos de cada local e de cada seção
-    (pseudo-contagem), e `perfil_fonte = "zona"`. Quando os arquivos chegarem, basta rodar o build de novo:
-    o motor usa o arquivo por seção de toda UF que estiver íntegra.
+11. **Perfil por seção em 8 UFs, por zona nas demais.** No build das 19:09 havia arquivo por seção para AC,
+    AL, AP, BA, CE, DF, ES e GO (chegaram entre 18:40 e 18:42); o download das outras UFs segue com HTTP 429
+    (ver `data/raw/tse_eleitorado/perfil_eleitor_secao/download.log`), e elas e o exterior usam o perfil por
+    zona. Na zona, os shares da zona são aplicados aos aptos de cada local e de cada seção
+    (pseudo-contagem), e `perfil_fonte = "zona"`. Dentro das UFs com arquivo por seção, 70 locais sem
+    nenhuma seção no perfil de julho caem na zona; o município que mistura as duas fontes tem
+    `perfil_fonte = "misto"` (46 municípios), valor que o contrato não previa. Quando os arquivos
+    chegarem, basta rodar o build de novo: o motor usa o arquivo por seção de toda UF que estiver íntegra.
 12. Categorias "NÃO INFORMADO" e idade "Inválida" saem do denominador de cada dimensão. Quem tem 15 anos no
     cadastro de julho completa 16 até a eleição e entra em `a16_24`.
 13. O perfil é de julho de 2026; a seção é ligada ao local pelo cadastro de outubro. Seção do perfil que
@@ -88,10 +91,9 @@ as fontes não têm ou tinha consequência que vale ver antes de publicar. Os n�
 
 23. **Componente sem dado entra como zero no potencial e fica `null` no campo**: `c_reencontro` sem 2022
     casado; `c_perfil` no exterior (sem PNAD), onde o índice usa só os outros três componentes.
-24. **O teto de 40 é menor que o observado no topo**: com a recentragem por UF, p99 do potencial = 44,78 e
-    p95 = 36,70; 2.593 locais (2,8%) ficam com índice 100 (eram 5.719 com o deslocamento nacional).
-    Mantido como o contrato pede; o p99 está em `indice.json.parametros`. A coluna `percentil` (item 41)
-    não satura.
+24. **Teto do potencial (40) e saturação.** Com a recentragem por UF e sem teto por componente, p99 do
+    potencial era 44,78 e 2.593 locais (2,8%) tinham índice 100; com o teto por componente (item 42), p99 =
+    35,12 e 228 locais (0,24%). Mantido o 40 do contrato; o p99 está em `indice.json.parametros`.
 25. **Efeito regional, antes e depois.** Com o deslocamento nacional, `c_perfil` médio era 10,70 no
     Nordeste e 0,90 no Sul, 3.842 dos 5.719 locais saturados eram nordestinos e o índice médio do arquétipo
     `muro` era 86,2, o maior de todos. Com a recentragem por UF, o vão médio de cada região é zero,
@@ -161,6 +163,17 @@ as fontes não têm ou tinha consequência que vale ver antes de publicar. Os n�
     tem o componente de renda e não é comparável ao do país) e `percentil_uf` entre os locais do
     exterior. Em `--uf`, os dois percentis se referem ao escopo processado; só o build nacional produz o
     percentil do país.
+42. **Teto por componente** (pedido do coordenador depois do caso Bela Vista, SP, e registrado no
+    contrato): `c_perfil` e `c_reencontro` entram no potencial limitados a 8 votos por 100 aptos, antes da
+    soma, no local e na seção; o valor sem teto fica em `c_perfil_bruto` e `c_reencontro_bruto` (fim das
+    listas, nas duas camadas; na seção, só os brutos, porque a camada não publica os componentes). O teto
+    cortou `c_perfil` em 22.551 locais e `c_reencontro` em 185. Arquétipos não mudam. Índice por
+    arquétipo nos locais com 300 aptos ou mais, mesmos dados, sem e com teto (média; % com 100): Muro
+    63,1 e 3,99% para 56,2 e 0,06%; Pêndulo 62,0 e 0,57% para 61,3 e 0,30%; Terreno fértil 63,1 e 1,46%
+    para 61,6 e 0,22%; Abaixo do perfil 66,9 e 1,42% para 61,4 e 0%; Dormindo 68,3 e 1,09% para 65,8 e
+    0,44%; Reencontro (99 locais) 78,5 e 18,18% para 76,3 e 13,13%; Fortaleza, Na frente e Atrás não
+    mudam (47,7; 46,0; 42,3). No país, locais com índice 100 caem de 2,72% para 0,24%. Os três locais Muro
+    da Bela Vista (SP) saem de 100 para 76, 76 e 69.
 
 ## Aplicativo (registro do agente do app; não muda o contrato)
 
@@ -237,3 +250,18 @@ A16. **Percentil**: "Esta vizinhança tem mais voto em disputa que X% dos locais
     Preposição com artigo por estado (`deUF`/`emUF`: "do Rio de Janeiro", "da Bahia", "de São Paulo").
 A17. **Peso dos arquivos**: `mun/SP/71072.json` tem 979 KB (279 KB com gzip, que o GitHub Pages aplica);
     `indice.json` 692 KB (206 KB gzip); `geo/SP.geojson` 310 KB (68 KB gzip). Abaixo do limite de 1,5 MB.
+A18. **Mapa refeito (feedback de 07/10, Bela Vista)** em `docs/assets/politize/mapa.js` (arquivo novo dentro
+    de `docs/assets/politize/`, para o `app.js` não crescer mais). Web Mercator em pixels do zoom 18 relativos
+    ao local do boletim, a mesma projeção dos tiles. Sempre: todos os locais carregados (município e vizinhos)
+    como pontos discretos pela cor do arquétipo; os sete do "ao redor" com borda e nome curto (28 caracteres,
+    fundo branco), ou só o número da lista quando o nome colide (a lista agora é numerada); nomes de bairro
+    em versalete no centroide, só com dois ou mais locais no quadro; anéis de 500 m e 1 km (o quadro inicial
+    sempre cabe o de 1 km; rótulo do anel some quando o anel fica pequeno na tela); barra de escala, norte,
+    contorno dos municípios que cruzam a área; zoom e arrasto (botões +, −, Centrar, roda, pinça, duplo
+    clique, teclado), no padrão do mapa dos fiscais. Rótulos evitam a área dos botões.
+A19. **Ruas sob demanda**: botão "Ver ruas" baixa tiles HOT da OSM France (`{a,b,c}.tile.openstreetmap.fr/hot`)
+    só depois do clique, com a atribuição visível; zoom do tile pelo tamanho do quadro na tela e pela
+    densidade de pixels (16 no quadro de Bela Vista), no máximo 72 tiles por vez; preferência em localStorage;
+    sem rede ou em `file://`, o botão avisa e o mapa segue sem ruas. Sem o clique, nenhuma requisição a terceiros.
+A20. **Links externos** "Abrir no OpenStreetMap" e "Abrir no Google Maps" sob o mapa (mesmas URLs dos fiscais).
+    No exterior, planisfério com zoom e arrasto, rótulo das cidades do "ao redor" e os mesmos links.

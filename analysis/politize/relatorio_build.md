@@ -1,6 +1,6 @@
 # Politize sua vizinhança: relatório do build
 
-Gerado em 2026-10-07T21:11:21+00:00 por `python3 scripts/politize-build.py `. Tempo total: 118,9 s.
+Gerado em 2026-10-07T22:21:04+00:00 por `python3 scripts/politize-build.py `. Tempo total: 102,6 s.
 
 Escopo: nacional (27 UFs e exterior). Contrato: `analysis/politize/CONTRATO.md`. Decisões e desvios: `analysis/politize/DECISOES.md`.
 
@@ -24,14 +24,14 @@ Método: deslocamento aditivo por UF: esperado = bruto + (urna da UF − média 
 | UF | válidos | bruto Flávio | urna Flávio | desloc. Flávio | recentrado Flávio | bruto Lula | urna Lula | desloc. Lula | recentrado Lula | confere |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|
 | AC | 469.066 | 40,51 | 64,56 | 24,04 | 64,555 | 48,89 | 28,73 | -20,16 | 28,732 | ok |
-| AL | 1.818.856 | 39,87 | 40,45 | 0,58 | 40,449 | 49,66 | 54,73 | 5,07 | 54,730 | ok |
+| AL | 1.818.856 | 39,89 | 40,45 | 0,56 | 40,449 | 49,64 | 54,73 | 5,09 | 54,730 | ok |
 | AM | 2.170.763 | 42,23 | 45,00 | 2,76 | 44,996 | 46,90 | 48,23 | 1,33 | 48,232 | ok |
-| AP | 464.858 | 42,96 | 45,67 | 2,71 | 45,665 | 46,02 | 45,71 | -0,30 | 45,714 | ok |
-| BA | 8.560.291 | 40,58 | 28,53 | -12,04 | 28,534 | 48,84 | 66,17 | 17,34 | 66,175 | ok |
-| CE | 5.617.814 | 40,08 | 31,27 | -8,80 | 31,273 | 49,42 | 63,29 | 13,87 | 63,286 | ok |
-| DF | 1.772.808 | 45,89 | 51,31 | 5,42 | 51,309 | 42,45 | 38,11 | -4,33 | 38,111 | ok |
-| ES | 2.251.078 | 43,44 | 54,78 | 11,35 | 54,782 | 45,48 | 37,76 | -7,72 | 37,761 | ok |
-| GO | 3.827.823 | 44,26 | 53,60 | 9,35 | 53,605 | 44,52 | 31,06 | -13,46 | 31,059 | ok |
+| AP | 464.858 | 42,97 | 45,67 | 2,70 | 45,665 | 46,00 | 45,71 | -0,28 | 45,714 | ok |
+| BA | 8.560.291 | 40,61 | 28,53 | -12,08 | 28,534 | 48,80 | 66,17 | 17,38 | 66,175 | ok |
+| CE | 5.617.814 | 40,10 | 31,27 | -8,82 | 31,273 | 49,39 | 63,29 | 13,89 | 63,286 | ok |
+| DF | 1.772.808 | 45,90 | 51,31 | 5,41 | 51,309 | 42,43 | 38,11 | -4,32 | 38,111 | ok |
+| ES | 2.251.078 | 43,45 | 54,78 | 11,33 | 54,782 | 45,46 | 37,76 | -7,70 | 37,761 | ok |
+| GO | 3.827.823 | 44,27 | 53,60 | 9,34 | 53,605 | 44,51 | 31,06 | -13,45 | 31,059 | ok |
 | MA | 4.010.439 | 39,90 | 30,90 | -9,00 | 30,895 | 49,64 | 63,99 | 14,35 | 63,991 | ok |
 | MG | 11.974.357 | 44,18 | 48,24 | 4,06 | 48,242 | 44,60 | 43,33 | -1,28 | 43,328 | ok |
 | MS | 1.490.278 | 44,92 | 58,60 | 13,68 | 58,603 | 43,72 | 34,68 | -9,04 | 34,682 | ok |
@@ -44,7 +44,7 @@ Método: deslocamento aditivo por UF: esperado = bruto + (urna da UF − média 
 | RJ | 9.369.700 | 42,93 | 53,01 | 10,08 | 53,010 | 46,05 | 39,41 | -6,64 | 39,415 | ok |
 | RN | 2.071.898 | 41,14 | 34,77 | -6,36 | 34,775 | 48,18 | 59,75 | 11,57 | 59,750 | ok |
 | RO | 968.059 | 43,37 | 67,45 | 24,08 | 67,453 | 45,55 | 25,89 | -19,65 | 25,894 | ok |
-| RR | 325.545 | 42,85 | 71,06 | 28,21 | 71,057 | 46,16 | 22,86 | -23,30 | 22,860 | ok |
+| RR | 325.545 | 42,86 | 71,06 | 28,20 | 71,057 | 46,15 | 22,86 | -23,29 | 22,860 | ok |
 | RS | 6.423.046 | 45,01 | 55,64 | 10,63 | 55,640 | 43,61 | 35,73 | -7,89 | 35,727 | ok |
 | SC | 4.500.897 | 46,54 | 66,65 | 20,11 | 66,654 | 41,79 | 25,04 | -16,74 | 25,043 | ok |
 | SE | 1.364.196 | 40,47 | 30,63 | -9,84 | 30,629 | 48,95 | 62,75 | 13,80 | 62,749 | ok |
@@ -52,7 +52,7 @@ Método: deslocamento aditivo por UF: esperado = bruto + (urna da UF − média 
 | TO | 930.447 | 43,20 | 50,44 | 7,24 | 50,440 | 45,74 | 43,42 | -2,32 | 43,421 | ok |
 
 Conferência por UF (média do esperado recentrado = urna da UF, tolerância 0,05 pp): 27 de 27 ok.
-Média nacional do esperado recentrado: 47,0377 (Lula 45,1562), contra a urna dos locais no Brasil 47,0377 (diferença -0,0000 pp) e a urna nacional com exterior 47,0278 (diferença 0,0098 pp; tolerância 0,05 pp: ok). Vão médio ponderado por válidos nos locais: -0,0000 pp; nas seções: 0,0000 pp (o deslocamento é calculado sobre os locais e aplicado igual às seções).
+Média nacional do esperado recentrado: 47,0377 (Lula 45,1562), contra a urna dos locais no Brasil 47,0377 (diferença -0,0000 pp) e a urna nacional com exterior 47,0278 (diferença 0,0098 pp; tolerância 0,05 pp: ok). Vão médio ponderado por válidos nos locais: -0,0000 pp; nas seções: 0,0004 pp (o deslocamento é calculado sobre os locais e aplicado igual às seções).
 
 Voto por faixa de renda nas pesquisas (válidos, média simples das duas casas):
 
@@ -76,14 +76,14 @@ Perfil do eleitorado por UF (fonte; locais por seção, por zona, sem perfil):
 | UF | arquivo por seção | locais por seção | locais por zona | sem perfil |
 |---|---|---:|---:|---:|
 | AC | ok | 660 | 0 | 0 |
-| AL | arquivo por seção ausente | 0 | 1.075 | 0 |
+| AL | ok | 1.071 | 4 | 0 |
 | AM | arquivo por seção ausente | 0 | 1.619 | 0 |
-| AP | arquivo por seção ausente | 0 | 370 | 0 |
-| BA | arquivo por seção ausente | 0 | 9.198 | 0 |
-| CE | arquivo por seção ausente | 0 | 6.703 | 0 |
-| DF | arquivo por seção ausente | 0 | 622 | 0 |
-| ES | arquivo por seção ausente | 0 | 1.765 | 0 |
-| GO | arquivo por seção ausente | 0 | 2.476 | 0 |
+| AP | ok | 368 | 2 | 0 |
+| BA | ok | 9.179 | 19 | 0 |
+| CE | ok | 6.692 | 11 | 0 |
+| DF | ok | 614 | 8 | 0 |
+| ES | ok | 1.749 | 16 | 0 |
+| GO | ok | 2.466 | 10 | 0 |
 | MA | arquivo por seção ausente | 0 | 5.779 | 0 |
 | MG | arquivo por seção ausente | 0 | 10.073 | 0 |
 | MS | arquivo por seção ausente | 0 | 1.021 | 0 |
@@ -96,7 +96,7 @@ Perfil do eleitorado por UF (fonte; locais por seção, por zona, sem perfil):
 | RJ | arquivo por seção ausente | 0 | 5.046 | 0 |
 | RN | arquivo por seção ausente | 0 | 1.565 | 0 |
 | RO | arquivo por seção ausente | 0 | 671 | 0 |
-| RR | arquivo por seção ausente | 0 | 355 | 0 |
+| RR | ok | 353 | 2 | 0 |
 | RS | arquivo por seção ausente | 0 | 7.774 | 0 |
 | SC | arquivo por seção ausente | 0 | 3.450 | 0 |
 | SE | arquivo por seção ausente | 0 | 1.207 | 0 |
@@ -106,19 +106,21 @@ Perfil do eleitorado por UF (fonte; locais por seção, por zona, sem perfil):
 
 ## Índice de conversa
 
-Teto do potencial: 40 votos por 100 aptos. p99 observado do potencial: 44,78. Locais com índice 100 (saturados): 2.593.
+Teto do potencial: 40 votos por 100 aptos. p99 observado do potencial: 35,12. Locais com índice 100 (saturados): 228 (0,24%).
+
+Teto por componente, antes da soma: c_perfil 8 e c_reencontro 8 votos por 100 aptos. Locais em que o teto cortou: c_perfil 22.551, c_reencontro 185. O valor sem teto fica em `c_perfil_bruto` e `c_reencontro_bruto`.
 
 | ponto da distribuição | índice (locais) | índice (seções com 30 aptos ou mais) | potencial (locais) | coluna `percentil` (locais do Brasil) |
 |---|---:|---:|---:|---:|
-| p1 | 29,0 | 31,0 | 11,63 | 0,0 |
-| p5 | 37,0 | 37,0 | 14,70 | 4,6 |
-| p10 | 40,0 | 41,0 | 16,09 | 9,2 |
-| p25 | 46,0 | 47,0 | 18,52 | 25,0 |
-| p50 | 55,0 | 56,0 | 22,08 | 50,0 |
-| p75 | 68,0 | 69,0 | 27,22 | 75,0 |
-| p90 | 82,0 | 83,0 | 32,96 | 89,8 |
-| p95 | 92,0 | 91,0 | 36,70 | 94,4 |
-| p99 | 100,0 | 100,0 | 44,78 | 98,1 |
+| p1 | 29,0 | 31,0 | 11,56 | 0,0 |
+| p5 | 36,0 | 37,0 | 14,59 | 4,0 |
+| p10 | 40,0 | 40,0 | 15,97 | 9,2 |
+| p25 | 46,0 | 47,0 | 18,30 | 25,0 |
+| p50 | 53,0 | 55,0 | 21,40 | 50,0 |
+| p75 | 63,0 | 66,0 | 25,11 | 75,0 |
+| p90 | 73,0 | 77,0 | 29,05 | 89,8 |
+| p95 | 78,0 | 82,0 | 31,36 | 94,4 |
+| p99 | 88,0 | 92,0 | 35,12 | 98,1 |
 
 A coluna `percentil` é a posição do potencial do local entre os locais do Brasil com boletim (0 a 100, arredondada para baixo; 100 = maior potencial do país); a da seção usa as seções com 30 aptos ou mais; `percentil_uf` repete a conta dentro da UF. O exterior só tem `percentil_uf`.
 
@@ -128,12 +130,12 @@ Por região (médias ponderadas: índice e componentes por aptos, vão por váli
 
 | região | locais | Flávio (% válidos) | índice médio | vão do perfil (pp) | c_perfil | c_ausentes | índice 100 |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| Centro-Oeste | 5.620 | 56,5 | 61,4 | -0,00 | 2,55 | 10,85 | 335 |
-| Exterior | 171 | 43,5 | 91,5 | sem dado | sem dado | 31,35 | 50 |
-| Nordeste | 34.121 | 30,9 | 52,0 | 0,00 | 3,19 | 9,20 | 46 |
-| Norte | 10.380 | 49,2 | 53,7 | 0,00 | 4,05 | 9,72 | 683 |
-| Sudeste | 27.956 | 51,4 | 63,0 | -0,00 | 3,00 | 11,35 | 1.028 |
-| Sul | 16.016 | 60,1 | 57,3 | 0,00 | 3,05 | 10,23 | 451 |
+| Centro-Oeste | 5.620 | 56,5 | 60,4 | -0,00 | 2,05 | 10,85 | 92 |
+| Exterior | 171 | 43,5 | 91,4 | sem dado | sem dado | 31,35 | 49 |
+| Nordeste | 34.121 | 30,9 | 50,5 | -0,00 | 2,59 | 9,20 | 6 |
+| Norte | 10.380 | 49,2 | 50,0 | 0,00 | 2,51 | 9,72 | 4 |
+| Sudeste | 27.956 | 51,4 | 61,6 | -0,00 | 2,41 | 11,35 | 49 |
+| Sul | 16.016 | 60,1 | 55,6 | 0,00 | 2,34 | 10,23 | 28 |
 
 ## Arquétipos
 
@@ -145,10 +147,24 @@ Por região (médias ponderadas: índice e componentes por aptos, vão por váli
 | Reencontro (`reencontro`) | 198 | 0,2% | 0,1% | 3.019 | 355 |
 | Terreno fértil (`fertil`) | 22.892 | 24,3% | 35,8% | 158.851 | 17.551 |
 | Dormindo (`dormindo`) | 1.136 | 1,2% | 1,1% | 8.874 | 3.872 |
-| Abaixo do perfil (`abaixo_do_perfil`) | 3.543 | 3,8% | 2,8% | 15.606 | 25.025 |
-| Na frente (`frente`) | 4.541 | 4,8% | 5,2% | 27.838 | 0 |
-| Atrás (`atras`) | 6.289 | 6,7% | 6,4% | 30.363 | 0 |
-| sem secundário | | | | | 47.461 |
+| Abaixo do perfil (`abaixo_do_perfil`) | 3.546 | 3,8% | 2,8% | 15.615 | 24.957 |
+| Na frente (`frente`) | 4.538 | 4,8% | 5,1% | 27.825 | 0 |
+| Atrás (`atras`) | 6.289 | 6,7% | 6,4% | 30.367 | 0 |
+| sem secundário | | | | | 47.529 |
+
+Índice por arquétipo, locais com 300 aptos ou mais:
+
+| arquétipo | locais | índice médio | % com índice 100 |
+|---|---:|---:|---:|
+| Fortaleza | 15.796 | 47,7 | 0,05% |
+| Muro | 19.576 | 56,2 | 0,06% |
+| Pêndulo | 8.112 | 61,3 | 0,30% |
+| Reencontro | 99 | 76,3 | 13,13% |
+| Terreno fértil | 20.993 | 61,6 | 0,22% |
+| Dormindo | 918 | 65,8 | 0,44% |
+| Abaixo do perfil | 2.826 | 61,4 | 0,00% |
+| Na frente | 3.998 | 46,0 | 0,00% |
+| Atrás | 5.690 | 42,3 | 0,00% |
 
 ## Conta do 2º turno
 
@@ -162,4 +178,4 @@ Preços de 2026-07 (fator IPCA 1,00811 sobre 2026-04); salário mínimo de 2026:
 
 ## Tempos por UF (s)
 
-AC 0,2, AL 0,5, AM 0,8, AP 0,2, BA 3,3, CE 2,6, DF 0,8, ES 1,1, GO 2,2, MA 2,0, MG 5,4, MS 0,8, MT 0,8, PA 2,3, PB 1,1, PE 2,5, PI 1,4, PR 2,8, RJ 6,3, RN 2,2, RO 0,8, RR 0,3, RS 3,2, SC 1,8, SE 0,6, SP 16,0, TO 0,5, ZZ 0,1
+AC 0,1, AL 0,5, AM 0,7, AP 0,2, BA 3,1, CE 2,1, DF 0,8, ES 1,1, GO 1,3, MA 1,7, MG 4,9, MS 0,6, MT 0,7, PA 2,1, PB 0,8, PE 1,7, PI 0,8, PR 2,7, RJ 4,1, RN 0,6, RO 0,4, RR 1,2, RS 2,8, SC 1,4, SE 0,5, SP 15,7, TO 0,4, ZZ 0,1

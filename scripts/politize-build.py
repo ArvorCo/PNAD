@@ -277,6 +277,11 @@ def main(argv: list[str] | None = None) -> int:
             "regra": "brancos, nulos e abstenção não viram voto",
         },
         "teto_potencial": mt.TETO_POTENCIAL,
+        "teto_componente": mt.TETO_COMPONENTE,
+        "teto_componente_nota": (
+            "aplicado antes da soma do potencial, nas duas camadas; c_terceira e "
+            "c_ausentes sem teto; valor sem teto em c_perfil_bruto e c_reencontro_bruto"
+        ),
         "p99_potencial": None if p99 is None else round(p99, 2),
         "peso_ausentes": mt.PESO_AUSENTES,
         "aptos_min_secao": montagem.APTOS_MIN_SECAO,

@@ -125,11 +125,21 @@ zema, outros_nominais, nulos, brancos}`, `locais_viraveis_flavio`, `aptos_locais
 ```
 c_terceira  = terceira_a + bn_a                    (votou e não escolheu os dois)
 c_ausentes  = 0.5 × abst_a                         (não foi; metade do peso, porque abstenção converte mal)
-c_reencontro = reencontro_a                        (saiu do campo entre 2022 e 2026)
-c_perfil    = max(0, vao_perfil_pp) × validos / aptos
+c_reencontro_bruto = reencontro_a                  (saiu do campo entre 2022 e 2026)
+c_perfil_bruto     = max(0, vao_perfil_pp) × validos / aptos
+c_reencontro = min(c_reencontro_bruto, 8)         (teto por componente, antes da soma)
+c_perfil     = min(c_perfil_bruto, 8)             (teto por componente, antes da soma)
 potencial   = c_terceira + c_ausentes + c_reencontro + c_perfil
 indice      = round(100 × min(1, potencial / 40))  (40 por 100 aptos = teto prático observado; registrar o p99 real no indice.json)
 ```
+
+Teto por componente (decisão de 07/10/2026, depois do caso Bela Vista, SP: locais "Muro" com índice 100
+porque o vão de renda de bairro rico que vota Lula saturava o índice sozinho): `c_perfil` e `c_reencontro`
+entram no potencial limitados a 8 votos por 100 aptos (cerca do p80 de `c_perfil`), nas duas camadas (local
+e seção); `c_terceira` e `c_ausentes` não têm teto. Os tetos ficam em
+`indice.json.parametros.teto_componente = {"c_perfil": 8, "c_reencontro": 8}` e o valor sem teto em
+`c_perfil_bruto` e `c_reencontro_bruto`, no fim das listas de colunas. Arquétipos não mudam: as regras usam
+`vao_perfil_pp` e `reencontro_a`, não os componentes.
 
 Conta do 2º turno na vizinhança (`conta_2t`): a terceira via (nominais fora dos dois) fica 30% sem
 escolha (cruzamento agregado da Nexus de 21/09, p. 79: 40,4 Flávio, 28,4 Lula, 31 sem escolha) e o resto
