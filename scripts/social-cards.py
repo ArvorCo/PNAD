@@ -68,6 +68,20 @@ CARDS: list[dict] = [
     importlib.import_module("social-card-senado").card(ROOT),
     importlib.import_module("social-card-governador").card(ROOT),
     {
+        "slug": "senado_2027",
+        "eyebrow": "Senado de 2027 diante do STF · 81 fichas",
+        "title": "Os 49 votos de uma PEC existem.",
+        "title_em": "Os 54 de um impeachment, ainda não.",
+        "lede": "Exposição judicial documentada e disposição de contrapeso de cada um dos 81 senadores de 2027, com uma régua só e a fonte ao lado. <b>Quem tem processo de opinião vota contra o STF; o freio, se existir, está no centrão com caso patrimonial.</b>",
+        "stats": [
+            ("57,8", "votos esperados para uma PEC, com 91% de chance de 49"),
+            ("47,2", "votos esperados para o impeachment, 19% de chance de 54"),
+            ("59 de 81", "têm algum registro judicial localizado; 22, nenhum"),
+        ],
+        "foot": "régua declarada sobre fatos verificados, cenário condicional, não previsão",
+        "accent": "red",
+    },
+    {
         "slug": "mapa_do_voto_util",
         "eyebrow": "Mapa do voto útil · 1º turno de 2026",
         "title": "O voto útil já começou.",

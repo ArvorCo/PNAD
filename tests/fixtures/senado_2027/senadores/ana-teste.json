@@ -1,0 +1,136 @@
+{
+ "slug": "ana-teste",
+ "nome": "Ana Teste",
+ "partido": "PL",
+ "uf": "GO",
+ "mandato": "eleito_2026",
+ "bloco": "DB",
+ "bloco_justificativa": "Classificação fictícia para teste.",
+ "alinhado_governo_lula": false,
+ "votacao_2026": {
+  "votos": 100000,
+  "fonte": "https://example.org/tse/ana-teste"
+ },
+ "casos": [
+  {
+   "id": "ana-1",
+   "titulo": "Caso fictício ana-1",
+   "tipo": "opiniao",
+   "estagio": "reu",
+   "foro": "STF",
+   "relator": "Flávio Dino",
+   "data_fato": "2024-02-01",
+   "data_ultima_decisao": "2026-04-28",
+   "resumo": "Caso inventado para teste do motor; não descreve pessoa real.",
+   "defesa": "Manifestação da defesa não localizada nesta pesquisa",
+   "fontes": [
+    {
+     "url": "https://example.org/ficticio/ana-1",
+     "veiculo": "Veículo fictício example.org",
+     "data": "2026-04-28",
+     "titulo": "Matéria fictícia ana-1",
+     "acesso": "pagina"
+    },
+    {
+     "url": "https://example.com/ficticio/ana-1-b",
+     "veiculo": "Veículo fictício example.com",
+     "data": "2026-04-28",
+     "titulo": "Matéria fictícia ana-1-b",
+     "acesso": "pagina"
+    }
+   ],
+   "confianca": "alta",
+   "nos_relatorios": {
+    "claude": false,
+    "gemini": false,
+    "chatgpt": false,
+    "perplexity": false
+   }
+  }
+ ],
+ "sinais_contrapeso": [
+  {
+   "tipo": "declaracao_pro_impeachment",
+   "alvo": "Moraes",
+   "data": "2026-10-05",
+   "resumo": "Sinal fictício do tipo declaracao_pro_impeachment.",
+   "fontes": [
+    {
+     "url": "https://example.org/ficticio/declaracao_pro_impeachment",
+     "veiculo": "Veículo fictício example.org",
+     "data": "2026-10-05",
+     "titulo": "Matéria fictícia declaracao_pro_impeachment",
+     "acesso": "pagina"
+    }
+   ]
+  },
+  {
+   "tipo": "declaracao_pro_impeachment",
+   "alvo": "Moraes",
+   "data": "2026-09-01",
+   "resumo": "Sinal fictício do tipo declaracao_pro_impeachment.",
+   "fontes": [
+    {
+     "url": "https://example.org/ficticio/declaracao_pro_impeachment",
+     "veiculo": "Veículo fictício example.org",
+     "data": "2026-09-01",
+     "titulo": "Matéria fictícia declaracao_pro_impeachment",
+     "acesso": "pagina"
+    }
+   ]
+  },
+  {
+   "tipo": "assinatura_pedido_impeachment",
+   "alvo": "Moraes",
+   "data": "2025-03-01",
+   "resumo": "Sinal fictício do tipo assinatura_pedido_impeachment.",
+   "fontes": [
+    {
+     "url": "https://example.org/ficticio/assinatura_pedido_impeachment",
+     "veiculo": "Veículo fictício example.org",
+     "data": "2025-03-01",
+     "titulo": "Matéria fictícia assinatura_pedido_impeachment",
+     "acesso": "pagina"
+    }
+   ]
+  },
+  {
+   "tipo": "cpi_contra_ministros",
+   "alvo": "STF",
+   "data": "2024-05-01",
+   "resumo": "Sinal fictício do tipo cpi_contra_ministros.",
+   "fontes": [
+    {
+     "url": "https://example.org/ficticio/cpi_contra_ministros",
+     "veiculo": "Veículo fictício example.org",
+     "data": "2024-05-01",
+     "titulo": "Matéria fictícia cpi_contra_ministros",
+     "acesso": "pagina"
+    }
+   ]
+  },
+  {
+   "tipo": "voto_pec8_sim",
+   "alvo": "PEC 8/2021",
+   "data": "2023-11-22",
+   "resumo": "Sinal fictício do tipo voto_pec8_sim.",
+   "fontes": [
+    {
+     "url": "https://example.org/ficticio/voto_pec8_sim",
+     "veiculo": "Veículo fictício example.org",
+     "data": "2023-11-22",
+     "titulo": "Matéria fictícia voto_pec8_sim",
+     "acesso": "pagina"
+    }
+   ]
+  }
+ ],
+ "nota_editorial": "Ficha fictícia usada só nos testes do motor.",
+ "scores_anteriores": {
+  "claude": null,
+  "gemini": null,
+  "chatgpt": null,
+  "perplexity": null
+ },
+ "verificado_em": "2026-10-07"
+}

@@ -1,0 +1,860 @@
+{
+ "referencia": "2026-10-07",
+ "nota": "Elenco projetado para 01/02/2027. Bloco é classificação editorial declarada (DB direita bolsonarista, D direita, CD centro-direita, C centro e centrão, CE centro-esquerda, E esquerda). Tucano nunca entra como direita por decisão da casa; Plínio Valério recebe D por comportamento observado, justificado no JSON próprio.",
+ "cadeiras": [
+  {
+   "slug": "marcio-bittar",
+   "cadeira": "AC-1",
+   "nome": "Marcio Bittar",
+   "partido": "PL",
+   "uf": "AC",
+   "mandato": "reeleito_2026",
+   "bloco": "DB",
+   "contingencia": null
+  },
+  {
+   "slug": "mara-rocha",
+   "cadeira": "AC-2",
+   "nome": "Mara Rocha",
+   "partido": "Republicanos",
+   "uf": "AC",
+   "mandato": "eleito_2026",
+   "bloco": "D",
+   "contingencia": null
+  },
+  {
+   "slug": "alan-rick",
+   "cadeira": "AC-3",
+   "nome": "Alan Rick",
+   "partido": "Republicanos",
+   "uf": "AC",
+   "mandato": "ate_2031",
+   "bloco": "D",
+   "contingencia": {
+    "tipo": "segundo_turno_governo",
+    "substituto": {
+     "nome": "Gemil Júnior",
+     "partido": "União"
+    },
+    "nota": "Disputa o governo do Acre em 25/10/2026; se vencer, assume Gemil Salim de Abreu Júnior. A API do Senado registra União (filiação de 2022); o JOTA escreve PSD."
+   }
+  },
+  {
+   "slug": "arthur-lira",
+   "cadeira": "AL-1",
+   "nome": "Arthur Lira",
+   "partido": "PP",
+   "uf": "AL",
+   "mandato": "eleito_2026",
+   "bloco": "C",
+   "contingencia": null
+  },
+  {
+   "slug": "marina-jhc",
+   "cadeira": "AL-2",
+   "nome": "Marina JHC",
+   "partido": "PSDB",
+   "uf": "AL",
+   "mandato": "eleito_2026",
+   "bloco": "CD",
+   "contingencia": null
+  },
+  {
+   "slug": "renan-filho",
+   "cadeira": "AL-3",
+   "nome": "Renan Filho",
+   "partido": "MDB",
+   "uf": "AL",
+   "mandato": "ate_2031",
+   "bloco": "C",
+   "contingencia": null
+  },
+  {
+   "slug": "plinio-valerio",
+   "cadeira": "AM-1",
+   "nome": "Plínio Valério",
+   "partido": "PSDB",
+   "uf": "AM",
+   "mandato": "reeleito_2026",
+   "bloco": "D",
+   "contingencia": null
+  },
+  {
+   "slug": "eduardo-braga",
+   "cadeira": "AM-2",
+   "nome": "Eduardo Braga",
+   "partido": "MDB",
+   "uf": "AM",
+   "mandato": "reeleito_2026",
+   "bloco": "C",
+   "contingencia": null
+  },
+  {
+   "slug": "omar-aziz",
+   "cadeira": "AM-3",
+   "nome": "Omar Aziz",
+   "partido": "PSD",
+   "uf": "AM",
+   "mandato": "ate_2031",
+   "bloco": "C",
+   "contingencia": {
+    "tipo": "segundo_turno_governo",
+    "substituto": {
+     "nome": "Cheila Moreira",
+     "partido": "PT"
+    },
+    "nota": "Disputa o governo do Amazonas em 25/10/2026."
+   }
+  },
+  {
+   "slug": "lucas-barreto",
+   "cadeira": "AP-1",
+   "nome": "Lucas Barreto",
+   "partido": "PSD",
+   "uf": "AP",
+   "mandato": "reeleito_2026",
+   "bloco": "C",
+   "contingencia": null
+  },
+  {
+   "slug": "rayssa-furlan",
+   "cadeira": "AP-2",
+   "nome": "Rayssa Furlan",
+   "partido": "Podemos",
+   "uf": "AP",
+   "mandato": "eleito_2026",
+   "bloco": "CD",
+   "contingencia": null
+  },
+  {
+   "slug": "davi-alcolumbre",
+   "cadeira": "AP-3",
+   "nome": "Davi Alcolumbre",
+   "partido": "União",
+   "uf": "AP",
+   "mandato": "ate_2031",
+   "bloco": "C",
+   "contingencia": null
+  },
+  {
+   "slug": "rui-costa",
+   "cadeira": "BA-1",
+   "nome": "Rui Costa",
+   "partido": "PT",
+   "uf": "BA",
+   "mandato": "eleito_2026",
+   "bloco": "E",
+   "contingencia": null
+  },
+  {
+   "slug": "jaques-wagner",
+   "cadeira": "BA-2",
+   "nome": "Jaques Wagner",
+   "partido": "PT",
+   "uf": "BA",
+   "mandato": "reeleito_2026",
+   "bloco": "CE",
+   "contingencia": null
+  },
+  {
+   "slug": "otto-alencar",
+   "cadeira": "BA-3",
+   "nome": "Otto Alencar",
+   "partido": "PSD",
+   "uf": "BA",
+   "mandato": "ate_2031",
+   "bloco": "C",
+   "contingencia": null
+  },
+  {
+   "slug": "cid-gomes",
+   "cadeira": "CE-1",
+   "nome": "Cid Gomes",
+   "partido": "PSB",
+   "uf": "CE",
+   "mandato": "reeleito_2026",
+   "bloco": "C",
+   "contingencia": null
+  },
+  {
+   "slug": "luizianne-lins",
+   "cadeira": "CE-2",
+   "nome": "Luizianne Lins",
+   "partido": "Rede",
+   "uf": "CE",
+   "mandato": "eleito_2026",
+   "bloco": "E",
+   "contingencia": null
+  },
+  {
+   "slug": "camilo-santana",
+   "cadeira": "CE-3",
+   "nome": "Camilo Santana",
+   "partido": "PT",
+   "uf": "CE",
+   "mandato": "ate_2031",
+   "bloco": "E",
+   "contingencia": null
+  },
+  {
+   "slug": "michelle-bolsonaro",
+   "cadeira": "DF-1",
+   "nome": "Michelle Bolsonaro",
+   "partido": "PL",
+   "uf": "DF",
+   "mandato": "eleito_2026",
+   "bloco": "DB",
+   "contingencia": null
+  },
+  {
+   "slug": "bia-kicis",
+   "cadeira": "DF-2",
+   "nome": "Bia Kicis",
+   "partido": "PL",
+   "uf": "DF",
+   "mandato": "eleito_2026",
+   "bloco": "DB",
+   "contingencia": null
+  },
+  {
+   "slug": "damares-alves",
+   "cadeira": "DF-3",
+   "nome": "Damares Alves",
+   "partido": "Republicanos",
+   "uf": "DF",
+   "mandato": "ate_2031",
+   "bloco": "DB",
+   "contingencia": null
+  },
+  {
+   "slug": "evair-de-melo",
+   "cadeira": "ES-1",
+   "nome": "Evair de Melo",
+   "partido": "Republicanos",
+   "uf": "ES",
+   "mandato": "eleito_2026",
+   "bloco": "D",
+   "contingencia": null
+  },
+  {
+   "slug": "renato-casagrande",
+   "cadeira": "ES-2",
+   "nome": "Renato Casagrande",
+   "partido": "PSB",
+   "uf": "ES",
+   "mandato": "eleito_2026",
+   "bloco": "CE",
+   "contingencia": null
+  },
+  {
+   "slug": "magno-malta",
+   "cadeira": "ES-3",
+   "nome": "Magno Malta",
+   "partido": "PL",
+   "uf": "ES",
+   "mandato": "ate_2031",
+   "bloco": "DB",
+   "contingencia": null
+  },
+  {
+   "slug": "gustavo-gayer",
+   "cadeira": "GO-1",
+   "nome": "Gustavo Gayer",
+   "partido": "PL",
+   "uf": "GO",
+   "mandato": "eleito_2026",
+   "bloco": "DB",
+   "contingencia": null
+  },
+  {
+   "slug": "gracinha-caiado",
+   "cadeira": "GO-2",
+   "nome": "Gracinha Caiado",
+   "partido": "União",
+   "uf": "GO",
+   "mandato": "eleito_2026",
+   "bloco": "CD",
+   "contingencia": null
+  },
+  {
+   "slug": "wilder-morais",
+   "cadeira": "GO-3",
+   "nome": "Wilder Morais",
+   "partido": "PL",
+   "uf": "GO",
+   "mandato": "ate_2031",
+   "bloco": "D",
+   "contingencia": null
+  },
+  {
+   "slug": "lahesio-bonfim",
+   "cadeira": "MA-1",
+   "nome": "Lahesio Bonfim",
+   "partido": "Novo",
+   "uf": "MA",
+   "mandato": "eleito_2026",
+   "bloco": "D",
+   "contingencia": null
+  },
+  {
+   "slug": "andre-fufuca",
+   "cadeira": "MA-2",
+   "nome": "André Fufuca",
+   "partido": "PP",
+   "uf": "MA",
+   "mandato": "eleito_2026",
+   "bloco": "C",
+   "contingencia": null
+  },
+  {
+   "slug": "ana-paula-lobato",
+   "cadeira": "MA-3",
+   "nome": "Ana Paula Lobato",
+   "partido": "PSB",
+   "uf": "MA",
+   "mandato": "ate_2031",
+   "bloco": "CE",
+   "contingencia": null
+  },
+  {
+   "slug": "domingos-savio",
+   "cadeira": "MG-1",
+   "nome": "Domingos Sávio",
+   "partido": "PL",
+   "uf": "MG",
+   "mandato": "eleito_2026",
+   "bloco": "DB",
+   "contingencia": null
+  },
+  {
+   "slug": "marilia-campos",
+   "cadeira": "MG-2",
+   "nome": "Marília Campos",
+   "partido": "PT",
+   "uf": "MG",
+   "mandato": "eleito_2026",
+   "bloco": "E",
+   "contingencia": null
+  },
+  {
+   "slug": "alex-diniz",
+   "cadeira": "MG-3",
+   "nome": "Alex Diniz",
+   "partido": "PL",
+   "uf": "MG",
+   "mandato": "suplente_ate_2031",
+   "bloco": "D",
+   "contingencia": {
+    "tipo": "suplente",
+    "substituto": null,
+    "nota": "Assume a cadeira de Cleitinho, eleito governador de MG."
+   }
+  },
+  {
+   "slug": "reinaldo-azambuja",
+   "cadeira": "MS-1",
+   "nome": "Reinaldo Azambuja",
+   "partido": "PL",
+   "uf": "MS",
+   "mandato": "eleito_2026",
+   "bloco": "D",
+   "contingencia": null
+  },
+  {
+   "slug": "capitao-contar",
+   "cadeira": "MS-2",
+   "nome": "Capitão Contar",
+   "partido": "PL",
+   "uf": "MS",
+   "mandato": "eleito_2026",
+   "bloco": "DB",
+   "contingencia": null
+  },
+  {
+   "slug": "tereza-cristina",
+   "cadeira": "MS-3",
+   "nome": "Tereza Cristina",
+   "partido": "PP",
+   "uf": "MS",
+   "mandato": "ate_2031",
+   "bloco": "D",
+   "contingencia": null
+  },
+  {
+   "slug": "ze-medeiros",
+   "cadeira": "MT-1",
+   "nome": "Zé Medeiros",
+   "partido": "PL",
+   "uf": "MT",
+   "mandato": "eleito_2026",
+   "bloco": "DB",
+   "contingencia": null
+  },
+  {
+   "slug": "mauro-mendes",
+   "cadeira": "MT-2",
+   "nome": "Mauro Mendes",
+   "partido": "União",
+   "uf": "MT",
+   "mandato": "eleito_2026",
+   "bloco": "CD",
+   "contingencia": null
+  },
+  {
+   "slug": "wellington-fagundes",
+   "cadeira": "MT-3",
+   "nome": "Wellington Fagundes",
+   "partido": "PL",
+   "uf": "MT",
+   "mandato": "ate_2031",
+   "bloco": "CD",
+   "contingencia": null
+  },
+  {
+   "slug": "chicao",
+   "cadeira": "PA-1",
+   "nome": "Chicão",
+   "partido": "União",
+   "uf": "PA",
+   "mandato": "eleito_2026",
+   "bloco": "C",
+   "contingencia": null
+  },
+  {
+   "slug": "helder-barbalho",
+   "cadeira": "PA-2",
+   "nome": "Helder Barbalho",
+   "partido": "MDB",
+   "uf": "PA",
+   "mandato": "eleito_2026",
+   "bloco": "C",
+   "contingencia": null
+  },
+  {
+   "slug": "beto-faro",
+   "cadeira": "PA-3",
+   "nome": "Beto Faro",
+   "partido": "PT",
+   "uf": "PA",
+   "mandato": "ate_2031",
+   "bloco": "E",
+   "contingencia": {
+    "tipo": "cassacao_pendente",
+    "substituto": null,
+    "nota": "TRE-PA cassou o mandato em 20/05/2025 por compra de votos em 2022; o TSE anulou o julgamento em 19/02/2026 e mandou refazer; novo julgamento pendente."
+   }
+  },
+  {
+   "slug": "joao-azevedo",
+   "cadeira": "PB-1",
+   "nome": "João Azevêdo",
+   "partido": "PSB",
+   "uf": "PB",
+   "mandato": "eleito_2026",
+   "bloco": "CE",
+   "contingencia": null
+  },
+  {
+   "slug": "veneziano-vital-do-rego",
+   "cadeira": "PB-2",
+   "nome": "Veneziano Vital do Rêgo",
+   "partido": "MDB",
+   "uf": "PB",
+   "mandato": "reeleito_2026",
+   "bloco": "C",
+   "contingencia": null
+  },
+  {
+   "slug": "efraim-filho",
+   "cadeira": "PB-3",
+   "nome": "Efraim Filho",
+   "partido": "PL",
+   "uf": "PB",
+   "mandato": "ate_2031",
+   "bloco": "D",
+   "contingencia": null
+  },
+  {
+   "slug": "marilia-arraes",
+   "cadeira": "PE-1",
+   "nome": "Marília Arraes",
+   "partido": "PDT",
+   "uf": "PE",
+   "mandato": "eleito_2026",
+   "bloco": "CE",
+   "contingencia": null
+  },
+  {
+   "slug": "humberto-costa",
+   "cadeira": "PE-2",
+   "nome": "Humberto Costa",
+   "partido": "PT",
+   "uf": "PE",
+   "mandato": "reeleito_2026",
+   "bloco": "E",
+   "contingencia": null
+  },
+  {
+   "slug": "teresa-leitao",
+   "cadeira": "PE-3",
+   "nome": "Teresa Leitão",
+   "partido": "PT",
+   "uf": "PE",
+   "mandato": "ate_2031",
+   "bloco": "E",
+   "contingencia": null
+  },
+  {
+   "slug": "julio-cesar",
+   "cadeira": "PI-1",
+   "nome": "Júlio César",
+   "partido": "PSD",
+   "uf": "PI",
+   "mandato": "eleito_2026",
+   "bloco": "CE",
+   "contingencia": null
+  },
+  {
+   "slug": "marcelo-castro",
+   "cadeira": "PI-2",
+   "nome": "Marcelo Castro",
+   "partido": "MDB",
+   "uf": "PI",
+   "mandato": "reeleito_2026",
+   "bloco": "C",
+   "contingencia": null
+  },
+  {
+   "slug": "wellington-dias",
+   "cadeira": "PI-3",
+   "nome": "Wellington Dias",
+   "partido": "PT",
+   "uf": "PI",
+   "mandato": "ate_2031",
+   "bloco": "E",
+   "contingencia": {
+    "tipo": "ministerio",
+    "substituto": {
+     "nome": "Jussara Lima",
+     "partido": "PSD"
+    },
+    "nota": "Titular é ministro de Lula; Jussara Lima exerce o mandato. Em governo Flávio o titular volta em 01/01/2027."
+   }
+  },
+  {
+   "slug": "filipe-barros",
+   "cadeira": "PR-1",
+   "nome": "Filipe Barros",
+   "partido": "PL",
+   "uf": "PR",
+   "mandato": "eleito_2026",
+   "bloco": "DB",
+   "contingencia": null
+  },
+  {
+   "slug": "deltan-dallagnol",
+   "cadeira": "PR-2",
+   "nome": "Deltan Dallagnol",
+   "partido": "Novo",
+   "uf": "PR",
+   "mandato": "eleito_2026",
+   "bloco": "D",
+   "contingencia": {
+    "tipo": "sub_judice",
+    "substituto": null,
+    "nota": "Registro indeferido pelo relator no TSE em 03/10 (votos anulados) e suspenso pelo presidente do TSE em 04/10; votos contados como válidos; plenário do TSE julga em 08/10/2026, depois da data de corte. Se o registro cair, nova eleição no PR."
+   }
+  },
+  {
+   "slug": "luis-felipe-cunha",
+   "cadeira": "PR-3",
+   "nome": "Luis Felipe Cunha",
+   "partido": "União",
+   "uf": "PR",
+   "mandato": "suplente_ate_2031",
+   "bloco": "CD",
+   "contingencia": {
+    "tipo": "suplente",
+    "substituto": null,
+    "nota": "Assume a cadeira de Sergio Moro, eleito governador do PR."
+   }
+  },
+  {
+   "slug": "carlos-portinho",
+   "cadeira": "RJ-1",
+   "nome": "Carlos Portinho",
+   "partido": "PL",
+   "uf": "RJ",
+   "mandato": "reeleito_2026",
+   "bloco": "DB",
+   "contingencia": null
+  },
+  {
+   "slug": "carlos-jordy",
+   "cadeira": "RJ-2",
+   "nome": "Carlos Jordy",
+   "partido": "PL",
+   "uf": "RJ",
+   "mandato": "eleito_2026",
+   "bloco": "DB",
+   "contingencia": null
+  },
+  {
+   "slug": "romario",
+   "cadeira": "RJ-3",
+   "nome": "Romário",
+   "partido": "Sem partido",
+   "uf": "RJ",
+   "mandato": "ate_2031",
+   "bloco": "C",
+   "contingencia": null
+  },
+  {
+   "slug": "styvenson-valentim",
+   "cadeira": "RN-1",
+   "nome": "Styvenson Valentim",
+   "partido": "Podemos",
+   "uf": "RN",
+   "mandato": "reeleito_2026",
+   "bloco": "D",
+   "contingencia": null
+  },
+  {
+   "slug": "samanda-de-lula",
+   "cadeira": "RN-2",
+   "nome": "Samanda de Lula",
+   "partido": "PT",
+   "uf": "RN",
+   "mandato": "eleito_2026",
+   "bloco": "E",
+   "contingencia": null
+  },
+  {
+   "slug": "rogerio-marinho",
+   "cadeira": "RN-3",
+   "nome": "Rogério Marinho",
+   "partido": "PL",
+   "uf": "RN",
+   "mandato": "ate_2031",
+   "bloco": "DB",
+   "contingencia": null
+  },
+  {
+   "slug": "fernando-maximo",
+   "cadeira": "RO-1",
+   "nome": "Fernando Máximo",
+   "partido": "PL",
+   "uf": "RO",
+   "mandato": "eleito_2026",
+   "bloco": "DB",
+   "contingencia": null
+  },
+  {
+   "slug": "bruno-scheid",
+   "cadeira": "RO-2",
+   "nome": "Bruno Scheid",
+   "partido": "PL",
+   "uf": "RO",
+   "mandato": "eleito_2026",
+   "bloco": "DB",
+   "contingencia": null
+  },
+  {
+   "slug": "jaime-bagattoli",
+   "cadeira": "RO-3",
+   "nome": "Jaime Bagattoli",
+   "partido": "PL",
+   "uf": "RO",
+   "mandato": "ate_2031",
+   "bloco": "DB",
+   "contingencia": null
+  },
+  {
+   "slug": "nicoletti",
+   "cadeira": "RR-1",
+   "nome": "Nicoletti",
+   "partido": "PL",
+   "uf": "RR",
+   "mandato": "eleito_2026",
+   "bloco": "DB",
+   "contingencia": null
+  },
+  {
+   "slug": "teresa-surita",
+   "cadeira": "RR-2",
+   "nome": "Teresa Surita",
+   "partido": "MDB",
+   "uf": "RR",
+   "mandato": "eleito_2026",
+   "bloco": "CD",
+   "contingencia": null
+  },
+  {
+   "slug": "dr-hiran",
+   "cadeira": "RR-3",
+   "nome": "Dr. Hiran",
+   "partido": "PP",
+   "uf": "RR",
+   "mandato": "ate_2031",
+   "bloco": "D",
+   "contingencia": null
+  },
+  {
+   "slug": "sanderson",
+   "cadeira": "RS-1",
+   "nome": "Sanderson",
+   "partido": "PL",
+   "uf": "RS",
+   "mandato": "eleito_2026",
+   "bloco": "DB",
+   "contingencia": null
+  },
+  {
+   "slug": "marcel-van-hattem",
+   "cadeira": "RS-2",
+   "nome": "Marcel van Hattem",
+   "partido": "Novo",
+   "uf": "RS",
+   "mandato": "eleito_2026",
+   "bloco": "D",
+   "contingencia": null
+  },
+  {
+   "slug": "hamilton-mourao",
+   "cadeira": "RS-3",
+   "nome": "Hamilton Mourão",
+   "partido": "Republicanos",
+   "uf": "RS",
+   "mandato": "ate_2031",
+   "bloco": "D",
+   "contingencia": null
+  },
+  {
+   "slug": "carlos-bolsonaro",
+   "cadeira": "SC-1",
+   "nome": "Carlos Bolsonaro",
+   "partido": "PL",
+   "uf": "SC",
+   "mandato": "eleito_2026",
+   "bloco": "DB",
+   "contingencia": null
+  },
+  {
+   "slug": "carol-de-toni",
+   "cadeira": "SC-2",
+   "nome": "Carol de Toni",
+   "partido": "PL",
+   "uf": "SC",
+   "mandato": "eleito_2026",
+   "bloco": "DB",
+   "contingencia": null
+  },
+  {
+   "slug": "jorge-seif",
+   "cadeira": "SC-3",
+   "nome": "Jorge Seif",
+   "partido": "PL",
+   "uf": "SC",
+   "mandato": "ate_2031",
+   "bloco": "DB",
+   "contingencia": null
+  },
+  {
+   "slug": "alessandro-vieira",
+   "cadeira": "SE-1",
+   "nome": "Alessandro Vieira",
+   "partido": "MDB",
+   "uf": "SE",
+   "mandato": "reeleito_2026",
+   "bloco": "C",
+   "contingencia": null
+  },
+  {
+   "slug": "rogerio-carvalho",
+   "cadeira": "SE-2",
+   "nome": "Rogério Carvalho",
+   "partido": "PT",
+   "uf": "SE",
+   "mandato": "reeleito_2026",
+   "bloco": "E",
+   "contingencia": null
+  },
+  {
+   "slug": "laercio-oliveira",
+   "cadeira": "SE-3",
+   "nome": "Laércio Oliveira",
+   "partido": "PP",
+   "uf": "SE",
+   "mandato": "ate_2031",
+   "bloco": "CD",
+   "contingencia": null
+  },
+  {
+   "slug": "guilherme-derrite",
+   "cadeira": "SP-1",
+   "nome": "Guilherme Derrite",
+   "partido": "PP",
+   "uf": "SP",
+   "mandato": "eleito_2026",
+   "bloco": "D",
+   "contingencia": null
+  },
+  {
+   "slug": "andre-do-prado",
+   "cadeira": "SP-2",
+   "nome": "André do Prado",
+   "partido": "PL",
+   "uf": "SP",
+   "mandato": "eleito_2026",
+   "bloco": "D",
+   "contingencia": null
+  },
+  {
+   "slug": "marcos-pontes",
+   "cadeira": "SP-3",
+   "nome": "Marcos Pontes",
+   "partido": "PL",
+   "uf": "SP",
+   "mandato": "ate_2031",
+   "bloco": "D",
+   "contingencia": null
+  },
+  {
+   "slug": "eduardo-gomes",
+   "cadeira": "TO-1",
+   "nome": "Eduardo Gomes",
+   "partido": "PL",
+   "uf": "TO",
+   "mandato": "reeleito_2026",
+   "bloco": "D",
+   "contingencia": null
+  },
+  {
+   "slug": "alexandre-guimaraes",
+   "cadeira": "TO-2",
+   "nome": "Alexandre Guimarães",
+   "partido": "MDB",
+   "uf": "TO",
+   "mandato": "eleito_2026",
+   "bloco": "CD",
+   "contingencia": null
+  },
+  {
+   "slug": "professora-dorinha",
+   "cadeira": "TO-3",
+   "nome": "Professora Dorinha",
+   "partido": "União",
+   "uf": "TO",
+   "mandato": "ate_2031",
+   "bloco": "CD",
+   "contingencia": {
+    "tipo": "segundo_turno_governo",
+    "substituto": {
+     "nome": "Professora Lu",
+     "partido": "União"
+    },
+    "nota": "Disputa o governo do Tocantins em 25/10/2026."
+   }
+  }
+ ]
+}

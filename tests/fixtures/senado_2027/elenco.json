@@ -1,0 +1,118 @@
+{
+ "referencia": "2026-10-07",
+ "nota": "Elenco fictício de nove cadeiras para os testes do motor do Senado 2027.",
+ "cadeiras": [
+  {
+   "slug": "ana-teste",
+   "cadeira": "GO-1",
+   "nome": "Ana Teste",
+   "partido": "PL",
+   "uf": "GO",
+   "mandato": "eleito_2026",
+   "bloco": "DB",
+   "contingencia": null
+  },
+  {
+   "slug": "bruno-exemplo",
+   "cadeira": "GO-2",
+   "nome": "Bruno Exemplo",
+   "partido": "Republicanos",
+   "uf": "GO",
+   "mandato": "reeleito_2026",
+   "bloco": "D",
+   "contingencia": null
+  },
+  {
+   "slug": "carla-modelo",
+   "cadeira": "GO-3",
+   "nome": "Carla Modelo",
+   "partido": "MDB",
+   "uf": "GO",
+   "mandato": "ate_2031",
+   "bloco": "C",
+   "contingencia": {
+    "tipo": "segundo_turno_governo",
+    "substituto": {
+     "nome": "Diego Suplente",
+     "partido": "PT"
+    },
+    "nota": "Disputa o governo no 2º turno (fictício)."
+   }
+  },
+  {
+   "slug": "daniel-ficticio",
+   "cadeira": "PR-1",
+   "nome": "Daniel Fictício",
+   "partido": "Novo",
+   "uf": "PR",
+   "mandato": "eleito_2026",
+   "bloco": "D",
+   "contingencia": {
+    "tipo": "sub_judice",
+    "substituto": null,
+    "nota": "Registro sub judice (fictício)."
+   }
+  },
+  {
+   "slug": "elisa-amostra",
+   "cadeira": "PR-2",
+   "nome": "Elisa Amostra",
+   "partido": "PSDB",
+   "uf": "PR",
+   "mandato": "eleito_2026",
+   "bloco": "CE",
+   "contingencia": null
+  },
+  {
+   "slug": "fabio-suplente",
+   "cadeira": "PR-3",
+   "nome": "Fábio Suplente",
+   "partido": "União",
+   "uf": "PR",
+   "mandato": "suplente_ate_2031",
+   "bloco": "CD",
+   "contingencia": {
+    "tipo": "suplente",
+    "substituto": null,
+    "nota": "Assume a cadeira de titular eleito governador (fictício)."
+   }
+  },
+  {
+   "slug": "gabriela-caso",
+   "cadeira": "CE-1",
+   "nome": "Gabriela Caso",
+   "partido": "PT",
+   "uf": "CE",
+   "mandato": "eleito_2026",
+   "bloco": "E",
+   "contingencia": null
+  },
+  {
+   "slug": "henrique-dado",
+   "cadeira": "CE-2",
+   "nome": "Henrique Dado",
+   "partido": "PSD",
+   "uf": "CE",
+   "mandato": "reeleito_2026",
+   "bloco": "C",
+   "contingencia": null
+  },
+  {
+   "slug": "iara-ministra",
+   "cadeira": "CE-3",
+   "nome": "Iara Ministra",
+   "partido": "PT",
+   "uf": "CE",
+   "mandato": "ate_2031",
+   "bloco": "E",
+   "contingencia": {
+    "tipo": "ministerio",
+    "substituto": {
+     "nome": "João Exercício",
+     "partido": "PT"
+    },
+    "nota": "Titular é ministra; o suplente exerce o mandato (fictício)."
+   }
+  }
+ ]
+}

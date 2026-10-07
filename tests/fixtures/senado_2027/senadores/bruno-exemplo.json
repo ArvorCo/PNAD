@@ -1,0 +1,112 @@
+{
+ "slug": "bruno-exemplo",
+ "nome": "Bruno Exemplo",
+ "partido": "Republicanos",
+ "uf": "GO",
+ "mandato": "reeleito_2026",
+ "bloco": "D",
+ "bloco_justificativa": "Classificação fictícia para teste.",
+ "alinhado_governo_lula": false,
+ "votacao_2026": {
+  "votos": 100000,
+  "fonte": "https://example.org/tse/bruno-exemplo"
+ },
+ "casos": [
+  {
+   "id": "bruno-1",
+   "titulo": "Caso fictício bruno-1",
+   "tipo": "patrimonial",
+   "estagio": "investigado",
+   "foro": "STF",
+   "relator": "Alexandre de Moraes",
+   "data_fato": "2024-10-25",
+   "data_ultima_decisao": "2025-06-10",
+   "resumo": "Caso inventado para teste do motor; não descreve pessoa real.",
+   "defesa": "Manifestação da defesa não localizada nesta pesquisa",
+   "fontes": [
+    {
+     "url": "https://example.org/ficticio/bruno-1",
+     "veiculo": "Veículo fictício example.org",
+     "data": "2025-06-10",
+     "titulo": "Matéria fictícia bruno-1",
+     "acesso": "pagina"
+    }
+   ],
+   "confianca": "media",
+   "nos_relatorios": {
+    "claude": false,
+    "gemini": false,
+    "chatgpt": false,
+    "perplexity": false
+   }
+  },
+  {
+   "id": "bruno-2",
+   "titulo": "Caso fictício bruno-2",
+   "tipo": "eleitoral",
+   "estagio": "eleitoral_pendente",
+   "foro": "TSE",
+   "relator": "Relatora Fictícia",
+   "data_fato": "2022-10",
+   "data_ultima_decisao": "2024-11-01",
+   "resumo": "Caso inventado para teste do motor; não descreve pessoa real.",
+   "defesa": "Manifestação da defesa não localizada nesta pesquisa",
+   "fontes": [
+    {
+     "url": "https://example.org/ficticio/bruno-2",
+     "veiculo": "Veículo fictício example.org",
+     "data": "2024-11-01",
+     "titulo": "Matéria fictícia bruno-2",
+     "acesso": "pagina"
+    }
+   ],
+   "confianca": "media",
+   "nos_relatorios": {
+    "claude": false,
+    "gemini": false,
+    "chatgpt": false,
+    "perplexity": false
+   }
+  }
+ ],
+ "sinais_contrapeso": [
+  {
+   "tipo": "voto_pec8_nao",
+   "alvo": "PEC 8/2021",
+   "data": "2023-11-22",
+   "resumo": "Sinal fictício do tipo voto_pec8_nao.",
+   "fontes": [
+    {
+     "url": "https://example.org/ficticio/voto_pec8_nao",
+     "veiculo": "Veículo fictício example.org",
+     "data": "2023-11-22",
+     "titulo": "Matéria fictícia voto_pec8_nao",
+     "acesso": "pagina"
+    }
+   ]
+  },
+  {
+   "tipo": "acao_judicial_contra_ministro",
+   "alvo": "Moraes",
+   "data": "2025-08-01",
+   "resumo": "Sinal fictício do tipo acao_judicial_contra_ministro.",
+   "fontes": [
+    {
+     "url": "https://example.org/ficticio/acao_judicial_contra_ministro",
+     "veiculo": "Veículo fictício example.org",
+     "data": "2025-08-01",
+     "titulo": "Matéria fictícia acao_judicial_contra_ministro",
+     "acesso": "pagina"
+    }
+   ]
+  }
+ ],
+ "nota_editorial": "Ficha fictícia usada só nos testes do motor.",
+ "scores_anteriores": {
+  "claude": null,
+  "gemini": null,
+  "chatgpt": null,
+  "perplexity": null
+ },
+ "verificado_em": "2026-10-07"
+}

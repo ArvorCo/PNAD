@@ -1,0 +1,108 @@
+/* O Senado de 2027 diante do STF. Carrega depois dos CSS da casa.
+   Cores de campo: esquerda #b02f21, centro-esquerda #d9775f, centro #8a7a3a,
+   centro-direita #4f7fc2, direita #1457aa, teal #0c7a72.
+   Cor nunca carrega texto pequeno: o texto fica em tinta sobre fundo claro. */
+:root {
+  --sn27-paper: #f4f0e6;
+  --sn27-card: #fffdf8;
+  --sn27-ink: #192e2b;
+  --sn27-muted: #535b54;
+  --sn27-line: #c7c9bb;
+  --sn27-esq: #b02f21;
+  --sn27-cesq: #d9775f;
+  --sn27-cen: #8a7a3a;
+  --sn27-cdir: #4f7fc2;
+  --sn27-dir: #1457aa;
+  --sn27-teal: #0c7a72;
+  --sn27-gold: #7d5b00;
+  --sn27-red: #b02f21
+}
+#conteudo { font-size: 18px }
+.lead { font-size: 21px }
+.sn27-meta { font-size: 15px; line-height: 1.5; color: var(--sn27-muted) }
+
+/* Hero: três cartões */
+.sn27-hero-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin: 34px 0 10px }
+.sn27-hero-card { min-width: 0; padding: 18px 20px 16px; border: 1px solid #3b5a56; border-top: 6px solid #e6d98f; background: #1b3a37; color: #fffdf8 }
+.sn27-hero-card-lula { border-top-color: #fffdf8 }
+.sn27-hero-t { margin: 0; font: 600 20px/1.3 var(--serif); color: #fffdf8 }
+.sn27-hero-t small { font: 500 14px/1.5 var(--mono); letter-spacing: .4px; text-transform: uppercase; color: #cfd6cf }
+.sn27-hero-n { display: block; margin: 10px 0 6px; font: 500 clamp(52px, 6vw, 88px)/1 var(--mono); letter-spacing: -3px; color: #e6d98f; overflow-wrap: anywhere }
+.sn27-hero-card-lula .sn27-hero-n { color: #fffdf8 }
+.sn27-hero-p { margin: 0; font-size: 17px; line-height: 1.45; color: #e8ece6 }
+@media (max-width: 899px) {
+  .sn27-hero-cards { grid-template-columns: minmax(0, 1fr); gap: 12px }
+  .sn27-hero-n { font-size: 56px; letter-spacing: -2px }
+}
+
+/* Medidores K e C: div em bloco, nunca span inline com width */
+.sn27-meter { display: grid; grid-template-columns: 1.4em minmax(0, 1fr) 2.8em; gap: 8px; align-items: center; font: 600 13px/1.2 var(--mono); color: var(--sn27-ink) }
+.sn27-meter-track { display: block; height: 10px; background: #e4e1d3; border-radius: 2px; overflow: hidden }
+.sn27-meter-fill { display: block; height: 100%; background: var(--sn27-ink); min-width: 0 }
+.sn27-meter-k .sn27-meter-fill { background: var(--sn27-gold) }
+.sn27-meter-c .sn27-meter-fill { background: var(--sn27-teal) }
+.sn27-meter-v { text-align: right }
+
+/* Fichas dos 81 */
+.sn27-fichas { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 20px; align-items: start; margin-top: 16px }
+.sn27-ficha { min-width: 0; margin: 0; border: 1px solid var(--sn27-line); background: var(--sn27-card) }
+.sn27-ficha > summary { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 4px 12px; align-items: center; padding: 10px 14px; cursor: pointer; min-width: 0 }
+.sn27-ficha > summary.sn27-sem-foto { grid-template-columns: minmax(0, 1fr) }
+.sn27-foto { display: block; width: 56px; height: 56px; flex: none; border: 3px solid var(--c, #8a8f98); border-radius: 50%; object-fit: cover; background: #e4e1d3 }
+.sn27-ficha-id { min-width: 0; display: grid; gap: 2px }
+.sn27-ficha-id b { font: 700 18px/1.25 var(--serif); overflow-wrap: anywhere }
+.sn27-ficha-id small { font-size: 14px; color: var(--sn27-muted); overflow-wrap: anywhere }
+.sn27-ficha-meters { grid-column: 1 / -1; display: grid; gap: 4px }
+.sn27-ficha-corpo { min-width: 0; padding: 4px 14px 16px; font-size: 17px; line-height: 1.55 }
+.sn27-ficha-corpo h4 { margin: 16px 0 6px; font: 600 12px/1.6 var(--mono); letter-spacing: .9px; text-transform: uppercase }
+.sn27-ficha-corpo ul { margin: 0; padding-left: 18px; display: grid; gap: 8px }
+.sn27-ficha-corpo li { overflow-wrap: anywhere }
+.sn27-caso { margin: 0 0 12px; padding: 10px 12px; border-left: 4px solid var(--sn27-ink); background: #f8f6ee }
+.sn27-caso p { margin: 4px 0 0; font-size: 16px }
+.sn27-defesa { font-size: 16px; color: var(--sn27-muted) }
+@media (max-width: 899px) { .sn27-fichas { grid-template-columns: minmax(0, 1fr) } }
+
+/* Selos de estágio processual: texto em tinta sobre fundo claro (AA) */
+.sn27-chip {
+  display: inline-block; padding: 2px 10px; border-radius: 999px; white-space: nowrap;
+  font: 600 12px/1.7 var(--mono); letter-spacing: .4px; text-transform: uppercase; vertical-align: middle;
+  border: 1px solid #535b54; color: var(--sn27-ink); background: var(--sn27-card)
+}
+.sn27-chip-condenacao { border-color: #8a2418; background: #f6d9d3 }
+.sn27-chip-reu { border-color: #8a2418; background: #fbe9e5 }
+.sn27-chip-denuncia_oferecida, .sn27-chip-indiciado { border-color: #b4851a; background: #f7e7b8 }
+.sn27-chip-investigado, .sn27-chip-alvo_de_busca { border-color: #b4851a; background: #fbf4de }
+.sn27-chip-eleitoral_pendente, .sn27-chip-representacao { border-color: #2f5f9e; background: #e4ecf8 }
+.sn27-chip-citado, .sn27-chip-testemunha, .sn27-chip-acusacao_sem_procedimento { border-color: #6b7078; background: #eceeef }
+.sn27-chip-arquivado, .sn27-chip-absolvido_ou_trancado { border-color: #345b47; background: #eef3de }
+
+/* Ranking */
+#ranking .table-scroll, .sn27-ranking.table-scroll { max-height: min(72vh, 680px); overflow: auto }
+.sn27-ranking table { width: 100%; font-size: 16px }
+.sn27-ranking td.num, .sn27-ranking th.num { text-align: right; font-family: var(--mono) }
+.sn27-ranking td:first-child { min-width: 11em }
+
+/* Figuras SVG */
+.sn27-fig { margin: 22px 0; min-width: 0 }
+.sn27-fig svg { display: block; width: 100%; height: auto }
+.sn27-fig figcaption { margin-top: 8px; font-size: 15px; line-height: 1.5; color: var(--sn27-muted); max-width: 70ch }
+.sn27-fig-wide { overflow-x: auto }
+.sn27-fig-wide svg { min-width: 680px }
+.sn27-fig-hemi svg { min-width: 0 }
+.sn27-fig text { font-family: var(--mono) }
+
+/* Caixas de leitura */
+.sn27-caixa, .hyp, .contraprova { max-width: 76ch; margin: 18px 0; padding: 14px 18px; font-size: 17px; line-height: 1.6 }
+.hyp { border-left: 4px solid var(--sn27-teal); background: #eef3de }
+.hyp .iffail { display: block; margin-top: 12px; padding-top: 10px; border-top: 1px dashed #9aa98d; font: 600 12px/1.6 var(--mono); letter-spacing: .8px; text-transform: uppercase; color: #8f2a1d }
+.contraprova { border: 1px solid #8a2418; border-left: 6px solid var(--sn27-red); background: #fbe9e5; color: var(--sn27-ink) }
+.contraprova > strong:first-child { display: block; font: 600 12px/1.6 var(--mono); letter-spacing: .8px; text-transform: uppercase; color: #7a1f14 }
+
+/* Parâmetros em caixa fechada */
+.gv-tec { margin: 18px 0 0; border: 1px dashed #8a8f98; padding: 8px 14px; background: var(--sn27-card) }
+.gv-tec > summary { cursor: pointer; font: 600 14px/1.8 var(--mono); letter-spacing: .4px; text-transform: uppercase }
+.gv-tec p, .gv-tec li { font-size: 15px; line-height: 1.55 }
+
+/* Pivôs e listas curtas */
+.sn27-pivos { list-style: none; margin: 16px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px }
+.sn27-pivos li { min-width: 0; padding: 12px 14px; background: var(--sn27-card); border: 1px solid var(--sn27-line); overflow-wrap: anywhere }

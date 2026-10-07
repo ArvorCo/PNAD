@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+<!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-ZPYEE8P9YC"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ZPYEE8P9YC');</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>O Senado de 2027 diante do STF | Arvor</title>
+  <meta name="description" content="Quantos dos {{N_SENADORES}} senadores de 2027 votariam uma PEC contra o STF (49 votos) ou um impeachment de ministro (54 votos)? Exposição judicial de cada senador, contrapeso medido por sinais públicos, simulação e limites declarados.">
+  <link rel="canonical" href="https://brasil.arvor.co/senado_2027.html">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#142d2b">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Arvor Intelligence">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:title" content="O Senado de 2027 diante do STF">
+  <meta property="og:description" content="Os 49 votos de uma PEC existem no papel. Os 54 de um impeachment, ainda não. Esperado em governo Flávio: {{ESPERADO_PEC_FLAVIO}} para a PEC e {{ESPERADO_IMP_FLAVIO}} para o impeachment. Referência {{DATE}}.">
+  <meta property="og:url" content="https://brasil.arvor.co/senado_2027.html">
+  <meta property="og:image" content="https://brasil.arvor.co/img/og/senado_2027.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://brasil.arvor.co/img/og/senado_2027.png">
+  <link rel="stylesheet" href="assets/predicao_2026.css">
+  <link rel="stylesheet" href="assets/predicao_2026-responsive.css">
+  <link rel="stylesheet" href="assets/predicao_2026_ux.css">
+  <link rel="stylesheet" href="assets/senado_2027.css">
+  <script src="assets/predicao_2026_ui.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<div class="read-progress" aria-hidden="true"><div class="read-progress-bar"></div></div>
+<header class="masthead" id="topo"><div class="wrap brand-row"><a href="index.html" class="brand">ARVOR <span>Intelligence</span></a><a href="predicao_senado.html">Quem senta no Senado em 2027 ↗</a></div></header>
+<main id="conteudo" tabindex="-1">
+<section class="hero">
+  <div class="wrap"><div class="hero-top"><span class="eyebrow">Laboratório eleitoral / Senado</span><span class="edition">Corte: {{DATE}}<br>2º turno: 25/10/2026<br>Posse: 01/02/2027</span></div>
+  <div class="hero-title"><h1>O Senado de 2027<br><em>diante do STF</em></h1><div class="hero-intro"><span class="status">Análise experimental</span><p>Os 49 votos de uma PEC existem no papel. Os 54 de um impeachment, ainda não. A conta vem de {{N_SENADORES}} senadores, de {{N_COM_CASO}} com algum procedimento localizado e de sinais públicos de cada voto. Referência de {{DATE}}.</p></div></div>
+  <div class="sn27-hero-cards" aria-label="Placar esperado de votos">{{HERO}}</div>
+  <div class="hero-links"><a class="button light" href="#origem">De onde veio a pergunta ↓</a><a href="#conta">A conta dos 49 e dos 54</a><a href="#fichas">As fichas dos {{N_SENADORES}}</a><a href="#limites">Limites</a></div>
+  </div>
+</section>
+<nav class="chapter-nav" aria-label="Capítulos"><div class="wrap"><a href="#aviso">Aviso</a><a href="#origem">Origem</a><a href="#regua">A régua</a><a href="#mapa">O mapa</a><a href="#tipos">Dois tipos</a><a href="#conta">A conta</a><a href="#teste">Teste PEC 8</a><a href="#recomendacoes">Recomendações</a><a href="#fichas">Fichas</a><a href="#anexo">Anexo</a></div></nav>
+
+<section class="chapter wrap" id="aviso">
+  <header class="chapter-head"><span class="chapter-number">00</span><div><p class="eyebrow">Antes de ler</p><h2>Presunção de inocência.</h2></div></header>
+  <p class="lead">Esta página mede quanto procedimento judicial pesa sobre cada senador e quanto contrapeso ao STF cada um já mostrou em público. Investigado não é culpado, e nada localizado não é certidão negativa.</p>
+  {{AVISO}}
+</section>
+
+<section class="chapter wrap" id="origem">
+  <header class="chapter-head"><span class="chapter-number">01</span><div><p class="eyebrow">De onde veio a pergunta</p><h2>Um post, quatro contagens.</h2></div></header>
+  <p class="lead">Um post de Andreza Matais dizia que há muitos investigados no Supremo entre os senadores eleitos e que ninguém mexeria em quem pode "picar". A página trata o post como origem da pergunta, não como tese, e testa a tese com {{N_SENADORES}} fichas.</p>
+  {{ORIGEM}}
+</section>
+
+<section class="chapter wrap" id="regua">
+  <header class="chapter-head"><span class="chapter-number">02</span><div><p class="eyebrow">Duas medidas, nunca misturadas</p><h2>A régua: K e C.</h2></div></header>
+  <p class="lead">K mede o procedimento judicial documentado. C mede o contrapeso: quanto o senador já se opôs ao STF em voto, assinatura ou fala. Nenhum dos dois é culpa, e nenhum é previsão de voto.</p>
+  {{REGUA}}
+  <div class="prose">{{COMO_LEMOS}}</div>
+</section>
+
+<section class="chapter wrap" id="mapa">
+  <header class="chapter-head"><span class="chapter-number">03</span><div><p class="eyebrow">Os {{N_SENADORES}} em uma figura</p><h2>O mapa dos {{N_SENADORES}}.</h2></div></header>
+  <p class="lead">Dos {{N_SENADORES}} senadores, {{N_COM_CASO}} têm algum procedimento localizado. O K médio é {{K_MEDIA}} e a mediana é {{K_MEDIANA}}: a maioria tem pouco, e poucos têm muito.</p>
+  {{MAPA_81}}
+  <h3 id="hemiciclo-titulo">O hemiciclo por faixa de contrapeso</h3>
+  <p>Cada ponto é uma cadeira, pintada pela faixa de C. A meta dos 54 aparece como linha.</p>
+  {{HEMICICLO}}
+  <h3 id="ranking-titulo">Ranking</h3>
+  <p>Clique no cabeçalho para ordenar. A tabela mostra o procedimento mais grave de cada senador e os dois números da régua.</p>
+  {{RANKING}}
+</section>
+
+<section class="chapter wrap" id="tipos">
+  <header class="chapter-head"><span class="chapter-number">04</span><div><p class="eyebrow">A hipótese do post, separada por tipo</p><h2>Dois tipos de exposição.</h2></div></header>
+  <p class="lead">Processo por opinião e por 8 de janeiro tende a radicalizar quem responde. Processo patrimonial é onde a hipótese do post pode valer. A página mostra os dois lados com o mesmo destaque.</p>
+  {{TIPOS}}
+</section>
+
+<section class="chapter wrap" id="conta">
+  <header class="chapter-head"><span class="chapter-number">05</span><div><p class="eyebrow">Simulação, cenário Flávio e cenário Lula</p><h2>A conta dos 49 e dos 54.</h2></div></header>
+  <p class="lead">Em governo Flávio, o esperado é {{ESPERADO_PEC_FLAVIO}} votos para a PEC e {{ESPERADO_IMP_FLAVIO}} para o impeachment. A chance de passar de 49 é {{P49_FLAVIO}}; a de passar de 54 é {{P54_FLAVIO}}. Em governo Lula, o esperado é {{ESPERADO_PEC_LULA}} e {{ESPERADO_IMP_LULA}}, com chances de {{P49_LULA}} e {{P54_LULA}}.</p>
+  {{CONTA}}
+  <h3 id="pivos-titulo">Quem decide: {{N_PIVOS}} senadores pivô</h3>
+  <p>Pivô é o senador cuja troca de voto mais muda a chance de chegar a 54. Os nomes: {{PIVOS_NOMES}}.</p>
+  {{PIVOS}}
+  <details class="gv-tec"><summary>Parâmetros da simulação</summary>
+    <p>20.000 sorteios. Cada senador vota sim com probabilidade igual ao seu C, sob um choque comum por bloco (correlação 0,35) e um choque nacional (0,15), para que a variância não seja a de 81 moedas independentes. A régua completa e as bases por bloco estão no JSON da página.</p>
+  </details>
+</section>
+
+<section class="chapter wrap" id="teste">
+  <header class="chapter-head"><span class="chapter-number">06</span><div><p class="eyebrow">O que os 36 que já estavam lá fizeram</p><h2>Teste empírico: PEC 8/2021.</h2></div></header>
+  <p class="lead">Dos {{N_PEC8_PRESENTES}} senadores de 2027 que já votaram a PEC 8/2021, {{N_PEC8_SIM}} votaram sim e {{N_PEC8_NAO}} votaram não. Se a hipótese do post valesse, os mais expostos votariam diferente dos demais.</p>
+  {{TESTE_PEC8}}
+</section>
+
+<section class="chapter wrap" id="recomendacoes">
+  <header class="chapter-head"><span class="chapter-number">07</span><div><p class="eyebrow">Juízo editorial, rotulado</p><h2>Recomendações.</h2></div></header>
+  <p class="lead">Quem cortejar, com que pauta e o que exigir de transparência. Tudo nesta seção é juízo editorial da casa. O achado que contraria a tese vem com o mesmo destaque.</p>
+  {{RECOMENDACOES}}
+</section>
+
+<section class="chapter wrap" id="fichas">
+  <header class="chapter-head"><span class="chapter-number">08</span><div><p class="eyebrow">Uma por senador</p><h2>Fichas dos {{N_SENADORES}}.</h2></div></header>
+  <p class="lead">Cada ficha traz os casos com o estágio processual exato do documento de origem, a defesa quando localizada, os sinais de contrapeso e as fontes. Confiança: {{N_ALTA}} fichas altas, {{N_MEDIA}} médias e {{N_BAIXA}} baixas.</p>
+  {{FICHAS}}
+</section>
+
+<section class="chapter wrap" id="anexo">
+  <header class="chapter-head"><span class="chapter-number">09</span><div><p class="eyebrow">O que ficou de fora do placar</p><h2>Anexo.</h2></div></header>
+  <p class="lead">Arquivamentos, absolvições e pendências eleitorais pesam pouco na régua e aparecem aqui por inteiro. Depois, a arbitragem entre os quatro relatórios de origem, os limites e as fontes.</p>
+  {{ANEXO}}
+  <h3 id="arbitragem-titulo">Arbitragem entre os quatro relatórios</h3>
+  {{ARBITRAGEM}}
+  <h3 id="limites">Limites</h3>
+  <div class="prose">{{LIMITES}}</div>
+  <h3 id="fontes">Fontes</h3>
+  <div class="downloads"><a href="assets/senado_2027.json">Modelo e fichas · JSON</a><a href="assets/senado_2027.csv">Um senador por linha · CSV</a><a href="predicao_senado.html">Predição do Senado</a><a href="predicao_governador.html">Predição de governador</a></div>
+  {{FONTES}}
+  <p class="version">Gerado em <code>{{DATE}}</code>.</p>
+</section>
+</main>
+<footer class="wrap footer"><a class="brand" href="index.html">ARVOR <span>Intelligence</span></a><p>Análise experimental, código e dados auditáveis. Referência {{DATE}}. <a href="predicao_senado.html">Predição do Senado</a> · <a href="predicao_governador.html">Predição de governador</a> · <a href="index.html">Biblioteca</a></p></footer>
+<a class="to-top" href="#topo" hidden aria-label="Voltar ao topo da página"><span aria-hidden="true">↑</span><span class="to-top-label">Topo</span></a>
+</body>
+</html>
