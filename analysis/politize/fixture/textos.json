@@ -1,0 +1,46 @@
+{
+ "versao": "1.0",
+ "fixture": true,
+ "arquetipos": {
+  "fortaleza": {"nome": "Fortaleza", "signo": "Rocha", "lema": "Aqui o voto já mora. Falta não deixar ninguém em casa.", "leitura": "Em {nome}, Flávio fez {flavio_v}% dos válidos no 1º turno. O risco não é perder voto, é perder eleitor para a abstenção, que foi de {abst_a}% dos aptos. {conversas} conversa|conversas para lembrar do dia 25 seguram a vizinhança.", "o_que_fazer": ["Lembrar a data e o local de votação.", "Combinar a ida em grupo com a família.", "Levar quem tem dificuldade de locomoção."], "o_que_nao_fazer": ["Dar a eleição como ganha.", "Gastar energia discutindo com quem já decidiu."], "cor": "verde"},
+  "muro": {"nome": "Muro", "signo": "Pedra", "lema": "Terreno difícil. Cada conversa vale ouro.", "leitura": "Em {nome}, Lula fez {lula_v}% dos válidos. Não é lugar de virar a maioria, é lugar de achar quem votou em outro nome: {terceira_v}% dos válidos foram para a terceira via.", "o_que_fazer": ["Procurar quem votou na terceira via.", "Ouvir antes de falar."], "o_que_nao_fazer": ["Provocar.", "Generalizar sobre o bairro."], "cor": "azul"},
+  "pendulo": {"nome": "Pêndulo", "signo": "Balança", "lema": "Aqui a eleição se decide no detalhe.", "leitura": "Em {nome}, a diferença entre Flávio ({flavio_v}%) e Lula ({lula_v}%) ficou dentro de seis pontos. O índice de conversa é {indice} de 100.", "o_que_fazer": ["Conversar com vizinhos indecisos.", "Falar do tema que dói no estado: {problema_uf}.", "Combinar a ida no dia 25."], "o_que_nao_fazer": ["Discutir em grupo de mensagens.", "Tratar o outro lado como inimigo."], "cor": "amarelo"},
+  "reencontro": {"nome": "Reencontro", "signo": "Retorno", "lema": "Quem já esteve junto pode voltar.", "leitura": "Em {nome}, cerca de {reencontro_a} em cada 100 aptos votaram em Bolsonaro em 2022 e não em Flávio em 2026, no saldo agregado.", "o_que_fazer": ["Lembrar o que uniu em 2022.", "Perguntar o que mudou."], "o_que_nao_fazer": ["Cobrar o voto do 1º turno."], "cor": "verde"},
+  "fertil": {"nome": "Terreno fértil", "signo": "Semente", "lema": "Muita gente ainda sem lado no 2º turno.", "leitura": "Em {nome}, {terceira_v}% dos válidos foram para a terceira via.", "o_que_fazer": ["Conversar com quem votou em outro nome."], "o_que_nao_fazer": ["Atacar o candidato de quem votou em outro nome."], "cor": "amarelo"},
+  "dormindo": {"nome": "Dormindo", "signo": "Lua", "lema": "O voto que falta está em casa.", "leitura": "Em {nome}, {abst_a}% dos aptos não votaram no 1º turno.", "o_que_fazer": ["Lembrar a data."], "o_que_nao_fazer": ["Constranger quem faltou."], "cor": "azul"},
+  "abaixo_do_perfil": {"nome": "Abaixo do perfil", "signo": "Espelho", "lema": "O perfil da vizinhança sugere mais do que a urna mostrou.", "leitura": "Em {nome}, Flávio ficou {vao_perfil_pp} pontos abaixo do que o perfil de renda sugere. É estimativa, não medição.", "o_que_fazer": ["Ouvir o que pesa no bairro."], "o_que_nao_fazer": ["Presumir o voto de alguém pela renda."], "cor": "amarelo"},
+  "frente": {"nome": "Na frente", "signo": "Estrada", "lema": "Na frente, sem folga para descansar.", "leitura": "Em {nome}, Flávio fez {flavio_v}% contra {lula_v}% de Lula.", "o_que_fazer": ["Garantir o comparecimento."], "o_que_nao_fazer": ["Relaxar."], "cor": "verde"},
+  "atras": {"nome": "Atrás", "signo": "Subida", "lema": "Atrás, com caminho para encurtar.", "leitura": "Em {nome}, Lula fez {lula_v}% contra {flavio_v}% de Flávio.", "o_que_fazer": ["Conversar com quem votou em outro nome."], "o_que_nao_fazer": ["Desanimar."], "cor": "azul"}
+ },
+ "componentes": {
+  "c_terceira": {"rotulo": "Terceira via e branco/nulo", "explicacao": "Votos por 100 aptos de quem foi votar e não escolheu nem Flávio nem Lula."},
+  "c_ausentes": {"rotulo": "Ausentes", "explicacao": "Metade da abstenção por 100 aptos, porque quem não foi votar converte menos."},
+  "c_reencontro": {"rotulo": "Reencontro", "explicacao": "Saldo de quem votou em Bolsonaro em 2022 e não em Flávio em 2026, por 100 aptos."},
+  "c_perfil": {"rotulo": "Perfil", "explicacao": "Quanto Flávio ficou abaixo do que o perfil de renda estimado sugere, por 100 aptos. Estimativa."}
+ },
+ "perfil": {
+  "escolaridade": {"fund_inc": {"rotulo": "fundamental incompleto", "como_conversar": "Exemplo concreto, conversa curta, sem jargão."}, "fund_med": {"rotulo": "fundamental completo", "como_conversar": "Falar de trabalho e preço do mercado."}, "med_sup_inc": {"rotulo": "médio completo", "como_conversar": "Falar de emprego e oportunidade."}, "superior": {"rotulo": "superior completo", "como_conversar": "Trazer número e fonte."}},
+  "idade": {"a16_24": {"rotulo": "16 a 24 anos", "como_conversar": "Conversa direta, no celular também."}, "a25_34": {"rotulo": "25 a 34 anos", "como_conversar": "Falar de emprego."}, "a35_44": {"rotulo": "35 a 44 anos", "como_conversar": "Falar da família."}, "a45_59": {"rotulo": "45 a 59 anos", "como_conversar": "Falar de segurança."}, "a60": {"rotulo": "60 anos ou mais", "como_conversar": "Visita com calma."}},
+  "renda": {"ate2": {"rotulo": "até 2 salários mínimos", "como_conversar": "Preço da comida e do gás."}, "de2a5": {"rotulo": "de 2 a 5 salários mínimos", "como_conversar": "Imposto e emprego."}, "mais5": {"rotulo": "mais de 5 salários mínimos", "como_conversar": "Segurança jurídica."}}
+ },
+ "temas": {
+  "Saúde": {"abertura": "Como está o atendimento no posto daqui?", "pergunta": "O que precisaria mudar para você confiar no atendimento?", "cuidado": "Não prometer o que é do governo estadual ou municipal."},
+  "Violência": {"abertura": "Você se sente seguro voltando para casa à noite?", "pergunta": "O que mudou no bairro nos últimos anos?", "cuidado": "Não citar caso de vizinho sem permissão."},
+  "Corrupção": {"abertura": "O que você espera de quem governa?", "pergunta": "Que tipo de controle faria diferença?", "cuidado": "Não acusar ninguém sem documento."},
+  "default": {"abertura": "O que mais pesa no seu dia a dia?", "pergunta": "O que você gostaria que mudasse?", "cuidado": "Ouvir antes de falar."}
+ },
+ "conta_2t": {"virar": "Para Flávio passar Lula em {nome}, faltam {faltam} voto|votos. Pela hipótese declarada, isso dá {conversas} conversa|conversas.", "segurar": "Flávio já passa Lula em {nome} na projeção. Para segurar, {conversas} conversa|conversas sobre ir votar no dia 25.", "regra_transferencia": "Hipótese: 30% da terceira via fica sem escolha; entre quem escolhe, 61% vai para Flávio e 39% para Lula. Brancos, nulos e abstenção não viram voto. Uma em cada três conversas convence."},
+ "pagina": {
+  "hero_titulo": "Politize sua vizinhança",
+  "hero_em": "o mapa astral do seu local de votação",
+  "hero_deck": "TEXTO PROVISÓRIO DA FIXTURE. Digite o CEP, escolha a cidade ou use a localização e veja onde o voto ainda está em disputa perto de você.",
+  "como_funciona": ["Você informa CEP, cidade ou localização.", "O app acha o local de votação mais próximo.", "O boletim mostra o voto do 1º turno, o perfil e o índice de conversa.", "Você conversa com vizinhos antes do dia 25."],
+  "metodo": ["Texto provisório de método.", "Cada número vem do boletim de urna do TSE."],
+  "limites": ["O voto é secreto: toda leitura é agregada por seção e local de votação.", "Renda é estimativa pela PNAD."],
+  "privacidade": ["A localização não sai do aparelho.", "Nenhum rastreador."],
+  "regras_tse": ["No dia da eleição é proibida a propaganda de boca de urna."],
+  "fontes": ["Boletins de urna do TSE, 1º turno de 2026."],
+  "card_rodape": "o voto é secreto: leitura agregada por seção, TSE"
+ },
+ "frases_compartilhar": ["Meu local de votação é {arquetipo}: índice de conversa {indice} de 100. Faltam {conversas} conversa|conversas. Veja o seu.", "Em {nome}, o índice de conversa é {indice}. Veja o boletim da sua vizinhança."]
+}

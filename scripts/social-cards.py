@@ -60,6 +60,7 @@ def _agregador_counts() -> tuple[str, str]:
 _ONDAS, _INSTITUTOS = _agregador_counts()
 
 CARDS: list[dict] = [
+    importlib.import_module("social-card-politize").card(ROOT),
     importlib.import_module("social-card-apuracao").card(ROOT),
     importlib.import_module("social-card-apuracao").card_thread(ROOT),
     importlib.import_module("social-card-apuracao").card_fiscais_thread(ROOT),

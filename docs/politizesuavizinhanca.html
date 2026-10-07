@@ -1,0 +1,253 @@
+<!doctype html>
+<!--
+  Politize sua vizinhança. Página ESCRITA À MÃO, não gerada por script.
+  Edite este arquivo, docs/assets/politize/app.js, app.css, carta.js e card.js diretamente.
+  Todo número exibido vem dos JSON em docs/assets/politize/dados/ (gerados por scripts/politize-build.py)
+  e todo texto editorial vem de docs/assets/politize/textos.json. Nenhum número é digitado à mão aqui.
+  Contrato: analysis/politize/CONTRATO.md.
+-->
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-ZPYEE8P9YC"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ZPYEE8P9YC');</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Politize sua vizinhança: o boletim do seu local de votação | Arvor</title>
+<meta name="description" content="Digite UF, zona e seção do seu título, ou o CEP, a cidade e o bairro, ou use a localização e receba o boletim do seu local de votação no 1º turno: voto, perfil do eleitorado, tema do estado e a conta do 2º turno. Leitura agregada por seção, TSE.">
+<link rel="canonical" href="https://brasil.arvor.co/politizesuavizinhanca.html">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0d2238">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Arvor Intelligence">
+<meta property="og:title" content="Politize sua vizinhança">
+<meta property="og:description" content="O boletim do seu local de votação: onde o voto ainda está em disputa, com quem conversar e sobre o quê, até 24 de outubro.">
+<meta property="og:url" content="https://brasil.arvor.co/politizesuavizinhanca.html">
+<meta property="og:image" content="https://brasil.arvor.co/img/og/politizesuavizinhanca.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@leonardodias">
+<meta name="twitter:title" content="Politize sua vizinhança">
+<meta name="twitter:description" content="O boletim do seu local de votação: onde o voto ainda está em disputa, com quem conversar e sobre o quê.">
+<meta name="twitter:image" content="https://brasil.arvor.co/img/og/politizesuavizinhanca.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,500;1,9..144,700&amp;family=IBM+Plex+Mono:wght@400;500;700&amp;family=IBM+Plex+Sans+Condensed:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/politize/app.css">
+<script>document.documentElement.classList.add('js')</script>
+<script type="module" src="assets/politize/app.js"></script>
+</head>
+<body>
+<a class="skip" href="#busca">Pular para a busca</a>
+
+<header class="hero">
+  <svg class="hero-ceu" aria-hidden="true" focusable="false" viewBox="0 0 1200 520" preserveAspectRatio="xMidYMid slice"><g id="estrelas"></g></svg>
+  <div class="hero-losango" aria-hidden="true"></div>
+  <div class="wrap hero-in">
+    <div class="brand"><a href="index.html"><img src="img/arvor_logo.png" alt="" width="26" height="26">Arvor Intelligence · Utilidade pública</a></div>
+    <p class="eyebrow" id="hero-eyebrow">Boletim da vizinhança · 2º turno</p>
+    <h1><span id="hero-titulo">Politize sua vizinhança</span><em id="hero-em"></em></h1>
+    <p class="deck" id="hero-deck"></p>
+    <div class="hero-manchete" id="hero-manchete"></div>
+    <dl class="hero-stats" id="hero-stats" aria-live="off"></dl>
+  </div>
+</header>
+
+<main id="conteudo">
+  <section id="busca" class="busca" aria-labelledby="busca-titulo">
+    <div class="wrap">
+      <div class="painel">
+        <h2 id="busca-titulo" class="painel-titulo">Onde você vota?</h2>
+        <div class="abas" role="tablist" aria-label="Como encontrar o local de votação">
+          <button type="button" role="tab" id="aba-titulo" aria-controls="p-titulo" aria-selected="true">Título de eleitor</button>
+          <button type="button" role="tab" id="aba-cep" aria-controls="p-cep" aria-selected="false" tabindex="-1">CEP</button>
+          <button type="button" role="tab" id="aba-cidade" aria-controls="p-cidade" aria-selected="false" tabindex="-1">Cidade e bairro</button>
+          <button type="button" role="tab" id="aba-geo" aria-controls="p-geo" aria-selected="false" tabindex="-1">Localização</button>
+        </div>
+
+        <div role="tabpanel" id="p-titulo" aria-labelledby="aba-titulo" class="aba-painel">
+          <form id="form-secao" class="grade-secao" novalidate>
+            <div class="campo-uf">
+              <label for="s-uf" class="rot">UF</label>
+              <select id="s-uf" aria-describedby="titulo-ajuda">
+                  <option value="">Estado</option>
+                  <option value="AC">AC · Acre</option>
+                  <option value="AL">AL · Alagoas</option>
+                  <option value="AP">AP · Amapá</option>
+                  <option value="AM">AM · Amazonas</option>
+                  <option value="BA">BA · Bahia</option>
+                  <option value="CE">CE · Ceará</option>
+                  <option value="DF">DF · Distrito Federal</option>
+                  <option value="ES">ES · Espírito Santo</option>
+                  <option value="GO">GO · Goiás</option>
+                  <option value="MA">MA · Maranhão</option>
+                  <option value="MT">MT · Mato Grosso</option>
+                  <option value="MS">MS · Mato Grosso do Sul</option>
+                  <option value="MG">MG · Minas Gerais</option>
+                  <option value="PA">PA · Pará</option>
+                  <option value="PB">PB · Paraíba</option>
+                  <option value="PR">PR · Paraná</option>
+                  <option value="PE">PE · Pernambuco</option>
+                  <option value="PI">PI · Piauí</option>
+                  <option value="RJ">RJ · Rio de Janeiro</option>
+                  <option value="RN">RN · Rio Grande do Norte</option>
+                  <option value="RS">RS · Rio Grande do Sul</option>
+                  <option value="RO">RO · Rondônia</option>
+                  <option value="RR">RR · Roraima</option>
+                  <option value="SC">SC · Santa Catarina</option>
+                  <option value="SP">SP · São Paulo</option>
+                  <option value="SE">SE · Sergipe</option>
+                  <option value="TO">TO · Tocantins</option>
+                  <option value="ZZ">ZZ · Exterior</option>
+              </select>
+            </div>
+            <div>
+              <label for="s-zona" class="rot">Zona</label>
+              <input id="s-zona" type="text" inputmode="numeric" autocomplete="off" maxlength="4" placeholder="000" aria-describedby="titulo-ajuda">
+            </div>
+            <div>
+              <label for="s-secao" class="rot">Seção</label>
+              <input id="s-secao" type="text" inputmode="numeric" autocomplete="off" maxlength="4" placeholder="0000" aria-describedby="titulo-ajuda">
+            </div>
+            <button type="submit" class="btn btn-prim">Ver boletim</button>
+          </form>
+          <p id="titulo-ajuda" class="ajuda dica-titulo"><b>Está no seu título de eleitor e no e-Título.</b> A zona e a seção ficam na frente do título, ao lado do município. Os números não saem do seu aparelho.</p>
+        </div>
+
+        <div role="tabpanel" id="p-cep" aria-labelledby="aba-cep" class="aba-painel" hidden>
+          <form id="form-cep" class="linha-busca" novalidate>
+            <label for="cep" class="rot">CEP</label>
+            <input id="cep" name="cep" type="text" inputmode="numeric" autocomplete="postal-code" placeholder="00000-000" maxlength="9" aria-describedby="cep-ajuda">
+            <button type="submit" class="btn btn-prim">Ver boletim</button>
+          </form>
+          <p id="cep-ajuda" class="ajuda">A busca aproxima pelo CEP dos locais de votação, não pelo seu endereço. Se o seu CEP não for de um local de votação, mostramos os locais com CEP mais parecido.</p>
+        </div>
+
+        <div role="tabpanel" id="p-cidade" aria-labelledby="aba-cidade" class="aba-painel" hidden>
+          <form id="form-cidade" class="grade-cidade" novalidate>
+            <div class="combo">
+              <label for="cidade" class="rot">Cidade</label>
+              <input id="cidade" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="cidade-lista" autocomplete="off" spellcheck="false" placeholder="Comece a digitar" aria-describedby="cidade-ajuda">
+              <ul id="cidade-lista" role="listbox" aria-label="Cidades encontradas" hidden></ul>
+            </div>
+            <div class="campo-bairro">
+              <label for="bairro" class="rot">Bairro</label>
+              <select id="bairro" disabled><option value="">Escolha a cidade primeiro</option></select>
+            </div>
+            <button type="submit" class="btn btn-prim" id="btn-cidade" disabled>Ver boletim</button>
+          </form>
+          <p id="cidade-ajuda" class="ajuda">Digite o nome sem se preocupar com acento. Use as setas para escolher e Enter para confirmar. O bairro é o do cadastro de locais de votação do TSE.</p>
+        </div>
+
+        <div role="tabpanel" id="p-geo" aria-labelledby="aba-geo" class="aba-painel" hidden>
+          <button type="button" class="btn btn-prim btn-geo" id="btn-geo">
+            <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="20" height="20"><circle cx="12" cy="12" r="4" fill="currentColor"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="12" cy="12" r="7.5" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>
+            Usar minha localização
+          </button>
+          <p class="ajuda">A coordenada fica no seu aparelho. O navegador a usa para medir a distância até os locais de votação, e ela não é enviada a ninguém nem gravada no link.</p>
+        </div>
+      </div>
+      <div id="avisos" class="avisos" role="status"></div>
+    </div>
+  </section>
+
+  <section id="resultado" class="resultado" aria-live="polite" aria-busy="false">
+    <div class="wrap" id="resultado-in"></div>
+  </section>
+
+  <section id="conversas" class="fixa conversas" aria-labelledby="t-conversas">
+    <div class="wrap">
+      <p class="kicker">Conversas</p>
+      <h2 id="t-conversas">Conversas por origem do voto</h2>
+      <p class="lead-c" id="conversas-intro"></p>
+      <p class="ajuda" id="conversas-local" aria-live="polite"></p>
+      <div class="lista-origens" id="lista-conversas"></div>
+    </div>
+  </section>
+
+  <section id="propostas" class="fixa propostas" aria-labelledby="t-propostas" hidden>
+    <div class="wrap">
+      <p class="kicker">Propostas</p>
+      <h2 id="t-propostas">O que Flávio propõe, tema por tema</h2>
+      <p class="ajuda">Trechos do programa de governo registrado, com a página ao lado. Abra o tema para ler as citações.</p>
+      <div class="lista-origens" id="lista-propostas"></div>
+      <p class="ajuda" id="propostas-ausentes"></p>
+      <p class="fonte-mini" id="propostas-fonte"></p>
+    </div>
+  </section>
+
+  <section id="como-funciona" class="fixa" aria-labelledby="t-como">
+    <div class="wrap">
+      <p class="kicker">Em quatro passos</p>
+      <h2 id="t-como">Como funciona</h2>
+      <ol class="passos" id="passos"></ol>
+    </div>
+  </section>
+
+  <section id="metodo" class="fixa escuro" aria-labelledby="t-metodo">
+    <div class="wrap duas">
+      <div>
+        <p class="kicker">Método</p>
+        <h2 id="t-metodo">De onde vem cada número</h2>
+        <ul class="lista-texto" id="lista-metodo"></ul>
+        <div id="em-aberto" class="parametros"></div>
+        <div id="parametros" class="parametros"></div>
+      </div>
+      <div>
+        <p class="kicker">Limites</p>
+        <h2 id="t-limites">O que o boletim não diz</h2>
+        <ul class="lista-texto" id="lista-limites"></ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="privacidade" class="fixa" aria-labelledby="t-priv">
+    <div class="wrap duas">
+      <div>
+        <p class="kicker">Privacidade</p>
+        <h2 id="t-priv">Nada sai do seu aparelho</h2>
+        <ul class="lista-texto" id="lista-privacidade"></ul>
+      </div>
+      <div class="tse">
+        <p class="kicker">Regras do TSE</p>
+        <h2 id="t-tse">Converse antes. No dia, silêncio.</h2>
+        <ul class="lista-texto" id="lista-tse"></ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="fontes" class="fixa" aria-labelledby="t-fontes">
+    <div class="wrap">
+      <p class="kicker">Fontes</p>
+      <h2 id="t-fontes">Arquivos usados, com tamanho e impressão digital</h2>
+      <ul class="lista-texto" id="lista-fontes-texto"></ul>
+      <div class="tabela-rolagem" tabindex="0" role="region" aria-label="Arquivos de origem dos dados">
+        <table class="tabela-fontes">
+          <thead><tr><th scope="col">Fonte</th><th scope="col">Arquivo</th><th scope="col" class="num">Tamanho</th><th scope="col">SHA-256</th></tr></thead>
+          <tbody id="fontes-corpo"></tbody>
+        </table>
+      </div>
+      <p class="ajuda" id="gerado-em"></p>
+    </div>
+  </section>
+</main>
+
+<footer class="rodape">
+  <div class="wrap">
+    <p><strong>Arvor Intelligence</strong> · Leitura agregada dos boletins de urna do TSE por seção e local de votação. O voto é secreto: nenhum número descreve uma pessoa. A página declara o lado: é escrita para quem quer eleger Flávio Bolsonaro no 2º turno.</p>
+    <p><a href="index.html">Biblioteca</a> · <a href="mapa_do_voto_util.html">Mapa do voto útil</a> · <a href="#busca">Voltar à busca</a></p>
+  </div>
+</footer>
+
+<script>
+// Módulos ES não rodam a partir de file://. Este aviso, em script clássico, aparece mesmo assim.
+if (location.protocol === 'file:') {
+  var av = document.getElementById('avisos');
+  av.innerHTML = '<div class="aviso erro"><strong>Aberta como arquivo local</strong>Esta página lê arquivos de dados e precisa ser aberta por um endereço da web, não direto do disco. Use https://brasil.arvor.co/politizesuavizinhanca.html, ou rode <code>python3 -m http.server 4173 --directory docs</code> e abra http://localhost:4173/politizesuavizinhanca.html.</div>';
+  document.querySelectorAll('.painel button, .painel input, .painel select').forEach(function (b) { b.disabled = true; });
+}
+</script>
+<noscript><div class="sem-js wrap"><p><strong>Esta página precisa de JavaScript</strong> para ler os arquivos de dados e montar o boletim. Nenhum dado é enviado a servidor; tudo roda no seu navegador.</p></div></noscript>
+</body>
+</html>
