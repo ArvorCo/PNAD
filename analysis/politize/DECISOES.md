@@ -265,3 +265,9 @@ A19. **Ruas sob demanda**: botão "Ver ruas" baixa tiles HOT da OSM France (`{a,
     sem rede ou em `file://`, o botão avisa e o mapa segue sem ruas. Sem o clique, nenhuma requisição a terceiros.
 A20. **Links externos** "Abrir no OpenStreetMap" e "Abrir no Google Maps" sob o mapa (mesmas URLs dos fiscais).
     No exterior, planisfério com zoom e arrasto, rótulo das cidades do "ao redor" e os mesmos links.
+A21. **Limpar / Nova busca** (feedback de usuário, 07/10): botão secundário "Limpar" ao lado de "Ver boletim"
+    nas quatro abas e "Nova busca" no topo do resultado. Zera os campos de todas as abas, tira seção, boletim,
+    raio, ao redor, por bairro e card, remove o hash com `history.replaceState` sem recarregar, devolve
+    Conversas à ordem fixa e fecha o tema de Propostas aberto pelo problema do estado (sem rede: tudo já está
+    em cache), rola até o formulário e põe o foco no primeiro campo da aba. Escape dentro do formulário limpa;
+    no campo de cidade com a lista aberta, o primeiro Escape só fecha a lista.

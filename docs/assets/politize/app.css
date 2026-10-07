@@ -104,6 +104,13 @@ select:disabled{background:var(--paper2);color:var(--muted)}
 .btn-sec{background:#fff;color:var(--azul);border-color:var(--azul)}
 .btn-sec:hover{background:var(--azul);color:#fff}
 .btn-geo{width:100%}
+.acoes-form{display:flex;gap:10px;flex-wrap:wrap}
+.acoes-form .btn{flex:1 1 auto;min-height:48px}
+.acoes-form .btn-limpar{flex:0 0 auto}
+.acoes-geo{margin-top:10px}
+.grade-secao .acoes-form,.grade-cidade .acoes-form{grid-column:1/-1}
+.nova-busca{display:flex;justify-content:flex-end;margin:0 0 12px}
+.nova-busca .btn{min-height:44px}
 .ajuda{font-size:.94rem;color:var(--muted);margin:12px 0 0;max-width:70ch}
 .combo{position:relative}
 #cidade-lista{position:absolute;left:0;right:0;top:100%;margin:6px 0 0;padding:6px;list-style:none;background:#fff;border:2px solid var(--azul2);border-radius:12px;box-shadow:0 14px 36px rgb(13 34 56 / 22%);z-index:30;max-height:min(360px,60vh);overflow-y:auto}
@@ -388,9 +395,10 @@ p{max-width:72ch}
 @media (min-width:640px){
   .abas{grid-template-columns:repeat(4,minmax(0,1fr))}
   .grade-secao{grid-template-columns:minmax(0,1.6fr) minmax(0,1fr) minmax(0,1fr) auto;align-items:end}
-  .grade-secao .campo-uf,.grade-secao .btn{grid-column:auto}
+  .grade-secao .campo-uf,.grade-secao .acoes-form{grid-column:auto}
+  .acoes-form{flex-wrap:nowrap}
   .painel{padding:26px 26px 22px}
-  .linha-busca{grid-template-columns:minmax(0,260px) auto;align-items:end}
+  .linha-busca{grid-template-columns:minmax(0,260px) auto;align-items:end;justify-content:start}
   .linha-busca .rot{grid-column:1/-1;margin-bottom:-4px}
   .hero-stats{grid-template-columns:repeat(3,minmax(0,1fr))}
   .hero-manchete{grid-template-columns:1fr 1fr;gap:28px}
@@ -407,6 +415,7 @@ p{max-width:72ch}
   .hero{padding-bottom:124px}
   .hero-losango{right:-330px;top:-40px;width:640px;height:640px}
   .grade-cidade{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) auto;align-items:end}
+  .grade-cidade .acoes-form{grid-column:auto}
   .bol-topo{grid-template-columns:minmax(0,420px) minmax(0,1fr);gap:34px;align-items:center;padding:22px 30px 18px 36px}
   .bol-cab{padding:24px 30px 8px 36px}
   .bol-blocos{grid-template-columns:1fr 1fr}

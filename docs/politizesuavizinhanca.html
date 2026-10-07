@@ -110,7 +110,7 @@
               <label for="s-secao" class="rot">Seção</label>
               <input id="s-secao" type="text" inputmode="numeric" autocomplete="off" maxlength="4" placeholder="0000" aria-describedby="titulo-ajuda">
             </div>
-            <button type="submit" class="btn btn-prim">Ver boletim</button>
+            <div class="acoes-form"><button type="submit" class="btn btn-prim">Ver boletim</button><button type="button" class="btn btn-sec btn-limpar" data-limpar>Limpar</button></div>
           </form>
           <p id="titulo-ajuda" class="ajuda dica-titulo"><b>Está no seu título de eleitor e no e-Título.</b> A zona e a seção ficam na frente do título, ao lado do município. Os números não saem do seu aparelho.</p>
         </div>
@@ -119,7 +119,7 @@
           <form id="form-cep" class="linha-busca" novalidate>
             <label for="cep" class="rot">CEP</label>
             <input id="cep" name="cep" type="text" inputmode="numeric" autocomplete="postal-code" placeholder="00000-000" maxlength="9" aria-describedby="cep-ajuda">
-            <button type="submit" class="btn btn-prim">Ver boletim</button>
+            <div class="acoes-form"><button type="submit" class="btn btn-prim">Ver boletim</button><button type="button" class="btn btn-sec btn-limpar" data-limpar>Limpar</button></div>
           </form>
           <p id="cep-ajuda" class="ajuda">A busca aproxima pelo CEP dos locais de votação, não pelo seu endereço. Se o seu CEP não for de um local de votação, mostramos os locais com CEP mais parecido.</p>
         </div>
@@ -135,7 +135,7 @@
               <label for="bairro" class="rot">Bairro</label>
               <select id="bairro" disabled><option value="">Escolha a cidade primeiro</option></select>
             </div>
-            <button type="submit" class="btn btn-prim" id="btn-cidade" disabled>Ver boletim</button>
+            <div class="acoes-form"><button type="submit" class="btn btn-prim" id="btn-cidade" disabled>Ver boletim</button><button type="button" class="btn btn-sec btn-limpar" data-limpar>Limpar</button></div>
           </form>
           <p id="cidade-ajuda" class="ajuda">Digite o nome sem se preocupar com acento. Use as setas para escolher e Enter para confirmar. O bairro é o do cadastro de locais de votação do TSE.</p>
         </div>
@@ -145,6 +145,7 @@
             <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="20" height="20"><circle cx="12" cy="12" r="4" fill="currentColor"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="12" cy="12" r="7.5" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>
             Usar minha localização
           </button>
+          <div class="acoes-form acoes-geo"><button type="button" class="btn btn-sec btn-limpar" data-limpar>Limpar</button></div>
           <p class="ajuda">A coordenada fica no seu aparelho. O navegador a usa para medir a distância até os locais de votação, e ela não é enviada a ninguém nem gravada no link.</p>
         </div>
       </div>

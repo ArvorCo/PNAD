@@ -888,8 +888,9 @@ async function mostrar(r) {
   const viz = renderVizinhanca(local, aoRedor, pool, r, raio1km);
   const comp = renderCompartilhar(local, info, vars);
   const secBox = r.secao ? renderSecao(r, local) : null;
+  const nova = h('div', { class: 'nova-busca' }, h('button', { type: 'button', class: 'btn btn-sec', onclick: () => limpar() }, 'Nova busca'));
   const bairros = renderBairros(local, pool);
-  alvo.replaceChildren(...[secBox, boletim, viz, bairros, comp].filter(Boolean));
+  alvo.replaceChildren(...[nova, secBox, boletim, viz, bairros, comp].filter(Boolean));
   $('#resultado').setAttribute('aria-busy', 'false');
   document.title = `${caixa(local.nome)} · Politize sua vizinhança`;
 
@@ -1753,6 +1754,55 @@ function configurarGeo() {
   });
 }
 
+const TITULO_ORIGINAL = document.title;
+
+// Limpar: zera todos os campos, tira o resultado e o hash, sem recarregar e sem rede.
+function limpar() {
+  E.pedido += 1;
+  E.atual = null;
+  E.varsAtual = null;
+  E.cidade = null;
+  for (const id of ['#s-zona', '#s-secao', '#cep', '#cidade']) {
+    const c = $(id);
+    c.value = '';
+    c.removeAttribute('aria-invalid');
+  }
+  $('#s-uf').removeAttribute('aria-invalid');
+  if ($('#s-uf').options.length > 2) $('#s-uf').selectedIndex = 0;
+  const lista = $('#cidade-lista');
+  lista.hidden = true;
+  lista.replaceChildren();
+  $('#cidade').setAttribute('aria-expanded', 'false');
+  $('#cidade').removeAttribute('aria-activedescendant');
+  const sel = $('#bairro');
+  sel.replaceChildren(h('option', { value: '' }, 'Escolha a cidade primeiro'));
+  sel.disabled = true;
+  $('#btn-cidade').disabled = true;
+  try {
+    history.replaceState(null, '', `${location.pathname}${location.search}`);
+  } catch {
+    // sem history, o hash fica; o resultado sai mesmo assim
+  }
+  document.title = TITULO_ORIGINAL;
+  if (E.indice) estadoVazio();
+  renderConversas(null);
+  renderPropostas(null);
+  const painel = document.querySelector('.aba-painel:not([hidden])');
+  const primeiro = painel && painel.querySelector('select:not([disabled]), input:not([disabled]), button:not([disabled])');
+  $('#busca').scrollIntoView({ block: 'start' });
+  if (primeiro) primeiro.focus({ preventScroll: true });
+}
+
+function configurarLimpar() {
+  for (const b of document.querySelectorAll('[data-limpar]')) b.addEventListener('click', () => limpar());
+  $('.painel').addEventListener('keydown', (ev) => {
+    if (ev.key === 'Escape' && !ev.defaultPrevented) {
+      ev.preventDefault();
+      limpar();
+    }
+  });
+}
+
 function abrirHash() {
   const ms = /(?:^#|&)s=([^&]+)/.exec(location.hash);
   if (ms) {
@@ -1789,6 +1839,7 @@ async function iniciar() {
   estrelas();
   configurarAbas();
   configurarSecao();
+  configurarLimpar();
   configurarCep();
   configurarCidade();
   configurarGeo();
