@@ -15,6 +15,7 @@ from pathlib import Path
 
 from apuracao_2026.pagina_comum import DADOS, ROOT, SLUG, Dados
 from apuracao_2026.pagina_view import pagina
+from ga_tag import injetar
 
 
 def construir(dados: Path = DADOS, saida: Path | None = None) -> tuple[Path, dict]:
@@ -23,7 +24,7 @@ def construir(dados: Path = DADOS, saida: Path | None = None) -> tuple[Path, dic
     if "—" in html:
         raise SystemExit("travessão no HTML gerado")
     saida = saida or ROOT / "docs" / f"{SLUG}.html"
-    saida.write_text(html + "\n", encoding="utf-8")
+    saida.write_text(injetar(html) + "\n", encoding="utf-8")
     return saida, estado
 
 
