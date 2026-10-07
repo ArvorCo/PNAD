@@ -1,0 +1,783 @@
+@"REDACTED.md" @"/Users/leonardodias/Downloads/Pesquisa aprofundada Li num artigo da Andreza Mata.pdf" @"/Users/leonardodias/Downloads/Dados Senadores Brasileiros 2027.md" @"/Users/leonardodias/Downloads/deep-research-report.md"
+/goal  vamos criar a página docs/senado_2027.html que vai se basear na pesquisa abaixo para montar gráficos e textos explicativos sobre essa situação do senado, mostrando o kompromat score e o contrapeso score de cada um, mas também recomendações sobre alianças e melhorias. Não precisamos ficar falandod a questão do post do x da ANdreza Matais, mas podemos citá-lo no texto como a origem dessa investigação, já que foi a partir daí que chegaremos nisso. A ideia é fazer uma página rica em gráficos, explicações, links para as matérias onde houver, explicações técnicas e outras coisas mais. Seja criativo nisso, use subagentes opus e sonnet para otimizar o trabalho e procure fazer investigações adicionais também para ver se não deixamos faltar nada nessa investigação.
+
+Em anexo estou te enviando o relatório do Claude, o 1o, e relatórios do Gemini, ChatGPT e Perplexity em Deep research que foram construídos a partir do relatório do Claude buscando complementações. Pode ser que você encontre nos relatórios adicionais informações complementares e scores diferentes. Você vai precisar fazer uma arbitragem ou cálculos que resolvam eventuais conflitos, tendo em mente que o arquivo que veio do Claude (final do nome "markdown.md") foi o primeiro e os outros foram criados usando esse primeiro como referÊncia e buscando maiores informações. Importante que vc verifique se precisa complementar algo para ter mais certeza das coisas também, o que pode tornar o trabalho especialmente mais difícil, por isso, use subagents opus e sonnet para te ajudar na criação dessa página.
+
+---
+
+<task-notification>
+<task-id>a7480fc42fdd93a87</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Template, CSS e prosa fixa da página" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>Os quatro arquivos pedidos estão prontos e os testes novos passam. O portão de lint do repositório continua vermelho, mas só por `tests/test_politize.py`, que já estava modificado antes da minha tarefa.
+
+- **Lint:** `ruff check scripts tests` acusa 3 achados (SIM300 e C416) e `black --check` pede para reformatar o mesmo arquivo. Não toquei nele.
+- **Teste:** `pytest -q tests/test_senado_2027_fixo.py` passa com 3 testes.
+- **Travessão:** `grep -c "—"` devolve 0 no template, no CSS e no `fixo.py`.
+
+Arquivos criados:
+- `/Users/leonardodias/arvor/PNAD/docs/senado_2027.template.html`
+- `/Users/leonardodias/arvor/PNAD/docs/assets/senado_2027.css`
+- `/Users/leonardodias/arvor/PNAD/scripts/senado_2027/pagina/__init__.py`
+- `/Users/leonardodias/arvor/PNAD/scripts/senado_2027/pagina/fixo.py` (`aula_estagios`, `aula_rito`, `o_que_nao_e`, `como_ler_ficha`, `checklist_leitor`)
+- `/Users/leonardodias/arvor/PNAD/tests/test_senado_2027_fixo.py`
+
+**Placeholders de bloco no template** (cada um devolve HTML pronto):
+`HERO`, `AVISO`, `ORIGEM`, `REGUA`, `COMO_LEMOS`, `MAPA_81`, `HEMICICLO`, `RANKING`, `TIPOS`, `CONTA`, `PIVOS`, `TESTE_PEC8`, `RECOMENDACOES`, `FICHAS`, `ANEXO`, `ARBITRAGEM`, `LIMITES`, `FONTES`.
+
+**Placeholders de valor no template:**
+- `DATE`, `N_SENADORES`, `N_COM_CASO`, `K_MEDIA`, `K_MEDIANA`
+- `ESPERADO_PEC_FLAVIO`, `ESPERADO_IMP_FLAVIO`, `ESPERADO_PEC_LULA`, `ESPERADO_IMP_LULA`
+- `P49_FLAVIO`, `P54_FLAVIO`, `P49_LULA`, `P54_LULA`
+- `N_ALTA`, `N_MEDIA`, `N_BAIXA`, `N_PIVOS`, `PIVOS_NOMES`
+- `N_PEC8_PRESENTES`, `N_PEC8_SIM`, `N_PEC8_NAO`
+
+Os 18 de bloco e os 22 de valor da seção 6 do contrato aparecem todos.
+
+**Decisões de layout que o contrato não fixava:**
+- **Hero:** o template põe só o contorno, `&lt;div class="sn27-hero-cards"&gt;{{HERO}}&lt;/div&gt;`. O view precisa devolver três `&lt;article class="sn27-hero-card"&gt;`. O CSS espera `.sn27-hero-t` (título, com `&lt;small&gt;` para o cenário), `.sn27-hero-n` (número grande) e `.sn27-hero-p` (frase). O terceiro cartão leva também `.sn27-hero-card-lula`.
+- **Onde as aulas de `fixo.py` entram:** o contrato não diz em qual placeholder cada função aparece. Sugiro `aula_estagios` e `como_ler_ficha` em `ORIGEM` e `REGUA`; `aula_rito` em `CONTA`; `o_que_nao_e` em `REGUA`; `checklist_leitor` em `LIMITES`.
+- **Posição de `{{COMO_LEMOS}}`:** fica dentro do capítulo 02, em `&lt;div class="prose"&gt;`, logo depois de `{{REGUA}}`.
+- **Capítulo 09:** `ANEXO`, `ARBITRAGEM`, `LIMITES` e `FONTES` ficam no mesmo capítulo, em `&lt;h3&gt;` com ids `arbitragem-titulo`, `limites` e `fontes`. Os ids dos capítulos são `aviso`, `origem`, `regua`, `mapa`, `tipos`, `conta`, `teste`, `recomendacoes`, `fichas` e `anexo`.
+- **Alvos do JS e do CSS:** o ranking deve vir em `&lt;div class="table-scroll sn27-ranking"&gt;` com a coluna numérica em `class="num"`. A figura `HEMICICLO` usa `figure.sn27-fig.sn27-fig-hemi`. As figuras largas usam `figure.sn27-fig.sn27-fig-wide`.
+- **Fichas:** o view deve usar `details.sn27-ficha`, com `summary` contendo `img.sn27-foto` (opcional; sem foto, `summary.sn27-sem-foto`), `.sn27-ficha-id` e `.sn27-ficha-meters`. Cada medidor é `div.sn27-meter.sn27-meter-k` ou `-c`, com `.sn27-meter-track`, `.sn27-meter-fill` em `div` de largura inline e `.sn27-meter-v`. O corpo usa `.sn27-ficha-corpo` e `.sn27-caso`.
+- **Selos de estágio:** `.sn27-chip` mais `.sn27-chip-&lt;estagio&gt;`, com o nome do estágio exatamente como no contrato.
+- **Outras caixas:** `.hyp` com `.iffail`, `.contraprova` e `.analogy` (esta última vem do CSS da casa).
+- **Folhas e script:** o template carrega `predicao_2026.css`, `-responsive`, `_ux` e depois `senado_2027.css`, mais `predicao_2026_ui.js`. Não carrega `predicao_senado.css` nem `predicao_governador.css`; o CSS novo traz o que precisa, com prefixo `sn27-`, exceto `.gv-tec`, que redefini.
+- **Nota na `fixo.py`:** o que a lei diz e o que a liminar de Gilmar Mendes exige estão em `aula_rito`, em linguagem de aula. Descrevi a liminar como monocrática e passível de revisão pelo plenário, e disse que a lei exige maioria simples na admissão, sem mencionar a base legal. Vale conferir esses dois pontos jurídicos antes de publicar.</result>
+<usage><subagent_tokens>173268</subagent_tokens><tool_uses>13</tool_uses><duration_ms>220295</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a61fe82f4cb9baa9a</task-id>
+<tool-use-id>toolu_01P6Hf8NjkjFZkhe6eCZBjAp</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Pesquisa G1: bolsonaristas com casos" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>Gravei os 12 JSON. Todos abrem como JSON válido e nenhum tem travessão. O trabalho trouxe três frentes que os quatro relatórios não tinham: a denúncia da PGR contra Van Hattem, a suspensão da ação de Vanderlan contra Gayer e a reabertura da rachadinha de Carlos Bolsonaro.
+
+## 1. Arquivos gravados
+Em `/Users/leonardodias/arvor/PNAD/analysis/senado_2027/senadores/`:
+gustavo-gayer.json, carlos-jordy.json, carlos-bolsonaro.json, bia-kicis.json, filipe-barros.json, marcel-van-hattem.json, michelle-bolsonaro.json, ze-medeiros.json, sanderson.json, nicoletti.json, fernando-maximo.json, bruno-scheid.json.
+
+A votação de 2026 dos 12 vem do Hub Político e ainda precisa ser conferida no TSE.
+
+## 2. Conflitos entre relatórios e como resolvi
+- **Gayer, cota parlamentar.** Claude e Gemini diziam "indiciado em 2025 (CNN)". O Congresso em Foco de 12/12/2025 confirma o indiciamento em dezembro de 2025, por associação criminosa, falsidade ideológica, falsificação e peculato-desvio, com relator Moraes. A operação, chamada Discalculia, foi em 25/10/2024. Não localizei decisão da PGR.
+- **Gayer, queixa de Vanderlan.** Claude dizia "maioria formada, data não verificada". O Migalhas de 31/10/2024 (Pet 10.972) e o SBT de 30/10/2025 confirmam que ele virou réu e que a Câmara suspendeu a ação em 15/10/2025, por 268 a 167. Moraes suspendeu o processo em seguida.
+- **Gayer e José Nelto.** O Gemini tratou a rejeição como revés de Gayer. É uma queixa dele contra Nelto (Pet 11.573), rejeitada em 28/04/2026 por empate. Não é caso contra Gayer e ficou fora do JSON.
+- **Jordy, "Rent a Car/Galho Fraco".** Só o Gemini citava a operação, e ela existe. É a mesma investigação da PET 14.918 que o ChatGPT trazia. A nota do STF de 19/12/2025 confirma a PET 14.918, relator Dino, com Jordy entre os investigados. Uma nova fase, Galho Fraco 2, saiu em 01/07/2026, sem Jordy como alvo.
+- **Jordy, Lesa Pátria.** Claude registrava só a busca de 2024. Não achei arquivamento nem denúncia. O Tempo ainda o listava como investigado em setembro de 2024. Gravei como `alvo_de_busca`, com confiança média.
+- **Carlos Bolsonaro.** Claude e Gemini diziam que o caso seguia com Moraes; o ChatGPT dizia que tinha sido remetido. A Gazeta do Povo de 20/07/2026 e o SBT de 19/06/2026 confirmam o ChatGPT: o caso foi para o TRF1, para distribuição a uma vara federal do DF. Gravei o foro como `primeira_instancia`.
+- **Van Hattem.** Os quatro relatórios diziam "investigado". O Antagonista de 28/04/2026, com Poder360 e O Liberal nos resultados de busca, confirma que a PGR já apresentou denúncia. Estágio gravado: `denuncia_oferecida`.
+- **Nicoletti.** O pedido atribuía ao Perplexity a frase "emendas Pix sem ser investigado". Quem diz isso é o ChatGPT (03, linha 183). O O Liberal de 03/07/2026 confirma: Operação Acesso Negado, com os autores das emendas fora da lista de alvos. Gravei como `citado`.
+- **Michelle.** O ChatGPT falava em pedidos de investigação sem especificar. Encontrei a representação de Lindbergh à PGR sobre o Pátria Voluntária, de 15/10/2025, e gravei como `representacao`.
+
+## 3. Fatos novos que nenhum relatório trazia
+- **Gayer:** denúncia da PGR por racismo e injúria pelo podcast Três Irmãos, de novembro de 2023, relatora Cármen Lúcia. Não achei decisão sobre o recebimento.
+- **Gayer:** em 2025, Moraes negou visitas dele a Jair Bolsonaro citando a PET 12.042/DF, que é sigilosa. As fontes divergem sobre se é o mesmo procedimento da cota.
+- **Carlos Bolsonaro:** o MPRJ reabriu em 25/02/2026 a investigação da rachadinha do tempo de vereador (SBT). É um caso patrimonial ativo.
+- **Van Hattem:** o inquérito é o Inq 4.978. A PF o indiciou, e em 28/04/2026 veio a denúncia da PGR. Em 06/10/2026 ele prometeu no X pedir o impeachment de Gilmar a partir de 01/02/2027.
+- **Kicis:** inquérito por racismo, a PET 9.198 aberta por Lewandowski em 2021, sem desfecho localizado. Também uma representação do grupo Prerrogativas à PGR, de 20/05/2025.
+- **Filipe Barros:**
+  - Responde também ao Inq 4.878, sobre vazamento de inquérito sigiloso. Segundo ele, a PGR pediu o arquivamento.
+  - Em 24/07/2025, uma petição contra ele foi juntada ao inquérito de Eduardo Bolsonaro, o que não o torna automaticamente investigado.
+  - Foi relator da PEC 8/2021 na CCJ da Câmara em 2024.
+- **Zé Medeiros:** em 23/09/2026 (O Liberal/Estadão), confirmou ter procurado Gilmar Mendes para saber se havia operação contra ele. Áudios vazados mostram que só aceitaria atacar Moraes, não outros ministros. Gravei como sinal `defesa_do_stf`, com a ressalva escrita no resumo, porque o contrato não tem tipo exato para isso. **Sugiro que o orquestrador crie um tipo próprio ou reclassifique.**
+- **Assinaturas de 2024:** Jordy, Kicis e Barros estão entre os 153 deputados que assinaram o pedido de impeachment de Moraes em setembro de 2024 (O Tempo).
+- **Outras assinaturas e representações:** Nicoletti assinou o pedido pós-Master, segundo a Gazeta. Sanderson acionou o CNJ contra Moraes. Isso é representação administrativa, mas gravei como `acao_judicial_contra_ministro` por falta de tipo melhor; convém revisar.
+- **Listas de impeachment:** os 12 estão na lista de 49 do Metrópoles (05/10/2026) e na matéria da Gazeta do Povo. Gayer, Michelle e Máximo aparecem na Gazeta sem declaração própria.
+
+## 4. O que ficou sem verificação
+- **Gayer, cota:** se a PGR já decidiu sobre o indiciamento.
+- **Gayer, racismo:** se a denúncia foi recebida.
+- **Gayer, Pet 10.972:** gravei como `reu`, mas a ação está suspensa e o contrato não tem estágio "suspenso". O motor vai pontuar isso como réu ativo.
+- **Jordy, Lesa Pátria:** estágio atual desconhecido.
+- **Kicis:** estágio atual do Inq 4.781 e da PET 9.198. Também os temas "8 de janeiro" e "Abin" pedidos no briefing.
+- **Barros:**
+  - Estágio atual do Inq 4.781 e do Inq 4.878.
+  - O pedido de Lindbergh à PF contra ele não foi aberto.
+  - CPMI e atos de 2022 não verificados.
+- **Carlos Bolsonaro:** defesa não localizada nas duas frentes. Também não verifiquei se o caso volta ao STF depois da diplomação.
+- **Van Hattem:** se a 1ª Turma recebeu a denúncia.
+- **Michelle, joias:** só por resumo de busca, confiança baixa.
+- **Sanderson:** data da representação ao CNJ não confirmada.
+- **PEC 8/2021:** nenhum dos 12 era senador em 22/11/2023, então nenhum tem voto nominal.
+- **Coluna de Bela Megale:** li só a reprodução na Política Livre, não o original do O Globo. Ela cita Jordy como alvo de investigação, não como "dialogável".
+
+## 5. Fontes que bloquearam ou falharam
+- **STF (noticias.stf.jus.br):** o WebFetch devolveu 403, mas `curl` com user-agent comum leu a página. As notas oficiais de Gayer e da PET 14.918 foram lidas assim.
+- **Agência Brasil:** página desativada pela legislação eleitoral.
+- **maisgoias.com.br:** bloqueio Cloudflare.
+- **gazetamt.com.br:** 404.
+- **Correio da Manhã:** só em PDF, extraído com `pdftotext`.
+- **Buscador:** várias páginas vêm com a data de acesso (2026) no cabeçalho em vez da data da matéria; conferi uma a uma. A busca por "Galho Fraco" sem filtro de domínio só devolveu lixo; com filtro de domínio funcionou.
+- **Pasta temporária:** o scratchpad é compartilhado com outros agentes, e um script meu foi sobrescrito. Passei a usar uma subpasta própria, `scratchpad/ag_gayer12/`.</result>
+<usage><subagent_tokens>293042</subagent_tokens><tool_uses>74</tool_uses><duration_ms>716252</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a25dcfa668e2ae788</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Pesquisa G6: esquerda e base de Lula" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>Os 19 arquivos JSON estão gravados e validados: todos abrem como JSON válido e nenhum contém travessão. Apareceram cinco casos que nenhum dos quatro relatórios trazia, e três contingências do elenco estão superadas.
+
+Em quatro arquivos (ana-paula-lobato, wellington-dias, camilo-santana, lourdinha-pereira) acrescentei um campo `situacao_mandato` que o contrato não prevê. Ele guarda a prova de quem ocupa a cadeira hoje; o motor pode ignorá-lo ou adotá-lo.
+
+## 1. Arquivos gravados
+Todos em `/Users/leonardodias/arvor/PNAD/analysis/senado_2027/senadores/`:
+renato-casagrande, joao-azevedo, julio-cesar, ana-paula-lobato, wellington-dias, marilia-arraes, rui-costa, jaques-wagner, luizianne-lins, marilia-campos, samanda-de-lula, camilo-santana, humberto-costa, rogerio-carvalho, beto-faro, teresa-leitao, lourdinha-pereira, jussara-lima, augusta-brito (cada um `.json`).
+
+## 2. Conflitos entre relatórios e como resolvi
+- **Lourdinha e a PEC 8.** O seu pedido dizia que Jussara Lima e Lourdinha votaram "não". A lista da CNN (22/11/2023) confirma o "não" de Jussara. Lourdinha não era senadora em 2023. Ana Paula Lobato, titular da cadeira, faltou à votação.
+- **Camilo e a PEC 8.** O "não" foi da suplente Augusta Brito, que ocupava a cadeira. Mesmo caso de Wellington Dias, cuja cadeira votou "não" por Jussara Lima.
+- **Licença de Ana Paula Lobato.** O ChatGPT dizia "licenciada até novembro". O Senado mostra outra coisa: os dois pedidos de licença (REQ 298 e 299) foram deferidos em 04/08/2026, e o 299 foi retirado em 06/10/2026 (REQ 344). Em 07/10 o perfil oficial mostra Ana Paula em exercício e Lourdinha fora de exercício.
+- **Camilo Santana.** O elenco o trata como ministro, com Augusta Brito na cadeira. Ele deixou o MEC em abril de 2026 e o Senado o mostra titular em exercício, líder do bloco do PT. A contingência do elenco está superada.
+- **Wellington Dias.** Confirmado ministro: o Senado o lista "fora de exercício" por cargo de ministro, com Jussara Lima em exercício. Foi exonerado em 28/04/2026 só para votar a indicação de Messias ao STF e foi renomeado em seguida.
+- **Data do sigilo de Wagner.** O Claude dizia "sigilo retirado em 11/09". A CNN e o Metrópoles mostram que o inquérito de Wagner teve o sigilo retirado em 30/07/2026. Em 11/09 Mendonça liberou outros 18 processos do caso Master, entre eles o de Wagner. Registrei as duas datas.
+- **Rogério Carvalho.** O ChatGPT lhe dava K 55, como investigado. As fontes (Folhapress e Agência Brasil, 07/08/2026) mostram só a remessa do relatório do TCU à PF por Dino. Não há inquérito formal contra ele. Registrei o estágio `citado`.
+- **Partido de Luizianne Lins.** Confirmado Rede pela Agência Senado (04/10/2026).
+- **Partido de Ana Paula Lobato.** O Senado registra PSB. A Wikipédia e parte da imprensa ainda dizem PDT. Fiquei com PSB.
+
+## 3. Fatos novos que nenhum relatório trazia
+- **Rui Costa** é investigado no inquérito dos respiradores do Consórcio Nordeste. O caso está no STJ, relator Og Fernandes, que o devolveu à PF em 30/01/2026; em junho a PGR pediu a volta ao STF. Não há denúncia.
+- **Beto Faro** teve o mandato cassado pelo TRE-PA em 20/05/2025 por compra de votos na eleição de 2022. O TSE, relator Mendonça, anulou a decisão em 19/02/2026 e mandou refazer o julgamento, ainda pendente. A cadeira pode mudar de ocupante.
+- **Teresa Leitão** responde desde 2022 a uma ação do PL que pede a cassação por abuso de poder econômico (sob segredo de Justiça). As contas de campanha foram desaprovadas, com devolução de R$ 450 mil. É líder do governo no Senado desde 25/06/2026.
+- **Casos arquivados:**
+  - Casagrande: pedido da PF arquivado por Moraes em março de 2026.
+  - João Azevêdo: Operação Calvário, arquivada pelo MPPB em 13/01/2026.
+  - Humberto Costa: inquérito da Lava Jato arquivado pela 2ª Turma do STF em 23/02/2021.
+  - Wagner: Cartão Vermelho, arquivado em fevereiro de 2025, e "quadrilhão do PT", arquivado em 2019.
+- **Wagner, outros pontos:** o Novo o representou no Conselho de Ética em 31/07/2026. A defesa pediu a anulação das provas, e ele deixou a liderança do governo.
+- **Declarações contra impeachment com fonte:** Luizianne (Diário do Nordeste, 16/09/2026) e Marília Arraes ("só em último caso", Folha de Pernambuco, 21/05/2026).
+- **Casos antigos de baixa confiança:**
+  - Luizianne: AP 997 e Inq 4311.
+  - Wellington Dias: Inq 3196 e 3363, de 2012, e a busca da Operação Topique em 2020.
+  - Beto Faro: Inq 4294, de 2017.
+  - Augusta Brito: processo de contas no TCU.
+  - Ana Paula Lobato: suspeita de candidatura laranja em 2014.
+
+## 4. O que ficou sem verificação
+- **Desfechos de casos antigos não localizados.** Gravei-os como "investigado" ou "denúncia oferecida" com confiança baixa:
+  - Wellington Dias: Inq 3196 e 3363.
+  - Luizianne: AP 997.
+  - Beto Faro: Inq 4294.
+
+  Esses registros podem inflar o K. O orquestrador decide se o motor os pesa.
+- Outros pontos em aberto:
+  - Teresa Leitão: andamento da ação de cassação, que está sob segredo.
+  - Beto Faro: data do novo julgamento no TRE-PA.
+  - João Azevêdo: andamento da parte eleitoral da Calvário, e o arquivamento só foi lido pelo resumo do buscador.
+  - Wellington Dias: data da renomeação em maio, a conferir no DOU.
+- **Coluna de Bela Megale ("dialogáveis") e lista do Metrópoles:** não localizei a coluna; a lista não foi checada nome a nome para estes senadores.
+- **Votação nominal de 2026:** só Rui Costa, Marília Campos e Jaques Wagner, pelo Hub Político via relatório Claude, sem conferência no TSE. Os demais ficaram null.
+- **Cenário de governo Lula:** com Camilo reassumido e Ana Paula de volta, Augusta Brito e Lourdinha só entram se houver nova licença. O elenco precisa ser revisto.
+
+## 5. Fontes que bloquearam ou falharam
+- O portal processual do STF devolveu 403 na consulta automatizada, então não deu para checar os números de inquérito.
+- O site de notícias do STF não apareceu nas buscas sobre a 9ª fase da Compliance Zero; usei Poder360, CNN e Metrópoles.
+- Alguns textos foram lidos só pelo resumo do buscador e estão marcados `trecho_de_busca`: Jornal da Paraíba, Congresso em Foco de 2021, Movimento Econômico e Migalhas.
+- A Agência Senado da votação da PEC 8 só apareceu reproduzida pelo site Lex, também como `trecho_de_busca`.</result>
+<usage><subagent_tokens>284159</subagent_tokens><tool_uses>72</tool_uses><duration_ms>729238</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>ad7741bfd4f75b00b</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Pesquisa G2: direita com mandato até 2031" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>Os 13 JSON estão gravados e validados: UTF-8, indentação de 1 espaço, nenhum travessão. Dos 13 senadores, 3 não têm nenhum caso localizado nem nos relatórios nem nesta pesquisa: Bagattoli, Tereza Cristina e Portinho. Em nenhum dos 13 a exposição judicial trouxe moderação visível: todos votaram sim na PEC 8 e estão na lista dos 49 do Metrópoles.
+
+## 1. Arquivos gravados
+Todos em `/Users/leonardodias/arvor/PNAD/analysis/senado_2027/senadores/`:
+- `damares-alves.json`, `magno-malta.json`, `rogerio-marinho.json`, `jaime-bagattoli.json`, `jorge-seif.json`
+- `wilder-morais.json`, `tereza-cristina.json`, `efraim-filho.json`, `hamilton-mourao.json`
+- `dr-hiran.json`, `marcos-pontes.json`, `marcio-bittar.json`, `carlos-portinho.json`
+
+## 2. Conflitos entre relatórios e como resolvi
+- **Todos os 13:** Claude e Gemini davam "nada encontrado". O ChatGPT dava K de 55 para Damares, 25 para Magno, 15 para Efraim, 8 para Marinho e 5 para Mourão e Hiran. A CNN (22/11/2023) confirma "sim" na PEC 8 para os 13, nos dois turnos. A lista do Metrópoles (05/10/2026) inclui os 13: Bittar e Portinho entre os eleitos de 2026, os outros 11 entre os senadores em exercício.
+- **Damares:** Claude e Gemini davam K 0; ChatGPT e Perplexity citavam o caso Marajó. O Poder360 (14/08/2025) confirma que ela é investigada, com a relatora Cármen Lúcia aguardando parecer da PGR. Nenhuma decisão posterior foi localizada.
+- **Magno, agressão à técnica de enfermagem:** a Perplexity dizia que o caso foi "encaminhado ao STF por foro". A Bahia Notícias (02/09/2026) mostra que o MPDFT o denunciou por vias de fato no 2º Juizado Especial Criminal do DF, ou seja, na primeira instância.
+- **Magno, queixa de Barroso:** o "3 votos" do Migalhas virou recebimento da queixa por maioria em 23/09/2022, e Magno é réu na Pet 10.409, com relator Moraes. O mérito não foi localizado.
+- **Marinho:** o "réu por desvio" (Crusoé), a remessa à primeira instância de 2018 e a ação suspensa por Toffoli são o mesmo caso de peculato. Ele segue réu, com a ação suspensa por liminar desde 20/05/2022. A "sentença anulada" (agosto de 2023) é outro processo: improbidade, na esfera cível. As sanções políticas caíram por prescrição, mas o ressarcimento dos salários foi mantido.
+- **Marinho, frase "não é vingança" (ChatGPT):** ela não aparece no Correio Braziliense de 07/10/2026.
+- **Efraim:** o ChatGPT falava em suplente, boleto e mensagens. Nenhuma fonte confirma. O fato provado (O Povo, 31/07/2026) são três emendas dele achadas no celular de Vorcaro, num inquérito sobre Jaques Wagner. Gravei como `citado`.
+- **Wilder:** a manchete "PF investiga" (Opinião Brasília, 27/08/2025) descreve uma emenda dele entre as que Dino mandou verificar por falta de plano de trabalho. Não há inquérito nominal contra ele. Gravei como `citado`, com confiança baixa.
+- **Bittar:** a Perplexity sugeria "inquérito das fake news". A Wikinotícias, que cita nota do STF de 21/05/2021, mostra que o caso é o INQ 4.846, sobre cota parlamentar e a empresa Atos Dois. A matéria da CNN trata só da opinião de Bittar sobre o inquérito das fake news.
+- **Hiran, emendas Pix:** O Liberal (03/07/2026) confirma que "ministros e políticos não são alvos". Gravei como `citado`, como pedia o ChatGPT.
+- **Seif:** gravei como `absolvido_ou_trancado` no TSE, com base na Agência Brasil (12/02/2026, unanimidade, relator Floriano de Azevedo Marques).
+
+## 3. Fatos novos que nenhum dos quatro relatórios trazia
+- **Dr. Hiran:** como deputado, estava entre os investigados do INQ 4.846, junto com Bittar e Romário.
+- **INQ 4.846:** segundo o Terra Brasil Notícias, foi arquivado por Rosa Weber em agosto de 2022. A matéria cita só Romário, então para Bittar e Hiran gravei `arquivado` como inferência, com confiança baixa.
+- **Seif:** há uma notícia de fato no STF por possível apologia a crime, pelo post sobre o PM que jogou um homem de uma ponte. Chegou ao STF em 21/01/2025, sob sigilo e sem relator (IstoÉ).
+- **Magno:** queixa-crime de Carlos Lupi no STF (relator Fux), com parecer favorável de Gonet em agosto de 2025. A apuração sobre as falas a respeito de Vini Jr. foi arquivada por Nunes Marques. Segundo o ConJur, o indiciamento da PF no caso Sanguessuga foi anulado no STF.
+- **Damares:** foi autora do pedido de impeachment de Moraes com 41 assinaturas (02 e 03/09/2026). A Gazeta diz que Moraes "não foi formalmente incluído como investigado" na Pet 16.662.
+- **Wilder:** declarou ter assinado esse pedido.
+- **Dr. Hiran:** diz ter assinado "todos" os pedidos de impeachment de Moraes (Folha BV, 08/09/2026).
+- **Marinho:** o projeto com prazos é o PRS 54/2026, de 18/09/2026: 30 dias úteis para o presidente do Senado decidir e abertura obrigatória com 49 assinaturas.
+- **Pontes e Magno:** assinaram os mandados de segurança pela CPI do Master. A Perplexity já citava Pontes; Magno é novo.
+- **Pontes:** a apuração do Ministério Público Militar de 2006 foi encerrada por prescrição (Rosa Weber, 2018).
+- **Votos de 2026:** Bittar teve 223.972, tirado de `analysis/apuracao_2026/dados/senado.json`. Os 4.264.932 de Portinho foram confirmados pela Agência Senado.
+
+## 4. O que ficou sem verificação
+- **Damares:** se a PGR já se manifestou depois de 14/08/2025. O número Pet 14.271 vem só do nome do PDF.
+- **Magno:** o mérito ou a prescrição da Pet 10.409, o recebimento da queixa de Lupi, a data do arquivamento do caso Vini Jr. e o desfecho formal do caso Sanguessuga.
+- **Marinho:** o julgamento do habeas corpus de Toffoli e o recurso da improbidade. A data de 20/05/2022 é a da reportagem.
+- **Bittar e Hiran:** se o arquivamento do INQ 4.846 abrangeu os dois.
+- **Seif:** o destino da notícia de fato sobre apologia.
+- **Pontes:** a reportagem do Intercept só foi lida pelo resumo da busca.
+- **Bela Megale, "dialogável":** a coluna não foi localizada. Nenhum dos 13 recebeu esse sinal.
+- **Gazeta do Povo:** a posição de cada senador está numa infografia que não pode ser lida como texto. Só o placar agregado foi lido: 40 a favor, 4 contra.
+- **Pedido de impeachment de Moraes com 41 assinaturas:** a lista de signatários está em imagem. Não conferi se os outros 12 assinaram.
+- **Tereza Cristina:** gravei um sinal `cpi_contra_ministros` baseado em apoio declarado à CPI do Master, não em assinatura conferida. Vale revisar, porque esse tipo soma +8 no motor.
+- **Rogério Marinho:** gravei a improbidade como `condenacao` com foro de primeira instância, deixando claro no texto que é cível e não criminal. Isso pesa 60 em K e aciona o redutor patrimonial; o orquestrador pode querer revisar.
+- **Datas parciais:** algumas datas de fato e de fontes são parciais (por exemplo, "2022-06", "2006"). O mesmo acontece nos JSON de outros agentes. Todas as datas da última decisão estão completas ou nulas.
+- **Dr. Hiran e Nicoletti divergem:** o JSON de Nicoletti, de outro agente, atribui a Operação Acesso Negado ao STF com relator Flávio Dino. O meu usa foro PF e relator nulo, porque não confirmei quem autorizou os mandados. Vale harmonizar os dois arquivos.
+
+## 5. Fontes que bloquearam ou falharam
+- **HTTP 403:** noticias.stf.jus.br, Migalhas (uma das URLs), bnews.com.br, revistaoeste.com e intercept.com.br.
+- **Erro de SSL:** tribunadoplanalto.com.br.
+- **G1:** não tentei abrir; os links entraram como `relatorio_anterior`.
+- **Gazeta do Povo:** a página do levantamento abre, mas a infografia por senador não sai como texto.
+- **Votos 2026:** nenhuma busca na web trouxe o total de Bittar; usei o banco local da apuração.</result>
+<usage><subagent_tokens>306773</subagent_tokens><tool_uses>86</tool_uses><duration_ms>874627</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>aba25f8d4ce693dda</task-id>
+<tool-use-id>toolu_014ykYDBbaxvt3LxZyL44Fxr</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Pesquisa G3: direita eleita em 2026" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>Os 13 JSON estão gravados e validados. Todos passam no `json.load` e nenhum tem travessão. A pesquisa terminou antes do previsto: o limite de buscas da sessão (200 WebSearch, compartilhado entre todos os agentes) esgotou no fim da rodada. Por isso ficaram pendentes as contas de campanha de 2022 do Contar e a ação popular da Carol de Toni (item 4).
+
+## 1. Arquivos gravados
+Todos em `/Users/leonardodias/arvor/PNAD/analysis/senado_2027/senadores/`: `plinio-valerio.json`, `styvenson-valentim.json`, `carol-de-toni.json`, `domingos-savio.json`, `capitao-contar.json`, `reinaldo-azambuja.json`, `deltan-dallagnol.json`, `guilherme-derrite.json`, `andre-do-prado.json`, `mara-rocha.json`, `evair-de-melo.json`, `lahesio-bonfim.json`, `alan-rick.json`.
+
+As votações de 2026 foram conferidas no endpoint do TSE (`resultados.tse.jus.br/oficial/ele2026/6259/dados/&lt;uf&gt;/&lt;uf&gt;-c0005-e006259-u.json`). Derrite tem 13.273.880 votos e André do Prado 12.703.089, os mesmos números do Hub Político. Derrite é o mais votado do país.
+
+## 2. Conflitos entre relatórios e como resolvi
+- **Azambuja:** Claude e Gemini diziam "nada encontrado" (K=0); o ChatGPT dava K=35 e falava em "trancamento com bloqueio mantido". O Investiga MS (08/09/2026) e o Correio do Estado (02/06/2026) confirmam a versão do ChatGPT:
+  - Toffoli trancou a ação penal em outubro de 2025.
+  - Gallotti, do STJ, seguiu o entendimento.
+  - A parte dos corréus foi extinta na Justiça Eleitoral em 18/06/2026, com trânsito em julgado.
+  - O bloqueio de R$ 277,5 mi foi mantido pela 6ª Turma do STJ em junho de 2026. Em 26/08/2026 houve liberação parcial, só para três pessoas.
+  - Estágio gravado: `absolvido_ou_trancado`.
+  - Os veículos citam números diferentes: Pet 14.448 em uma matéria, Rcl 43.007 em outra. Os dois estão no resumo.
+- **Styvenson:** Claude, Gemini e ChatGPT diziam "nada encontrado"; só o Perplexity trazia o inquérito sobre Joice Hasselmann. O Congresso em Foco (20/01/2022) confirma o Perplexity: a PF via elementos para indiciá-lo e a PGR pediu arquivamento por imunidade. O desfecho no STF não foi localizado. Gravei como `investigado`, com o pedido de arquivamento explicado no resumo.
+- **Lahesio:** Claude dizia "nada encontrado"; o Perplexity trazia a ação penal. Atual7 (2022) e Direito e Ordem (2025 e 2026) confirmam: ele é réu desde 17/06/2022.
+  - As fontes divergem na vara: a de 2022 fala da 4ª Vara de Balsas, a de julho de 2026 da 5ª Vara.
+  - Em novembro de 2025 o processo foi noticiado como remetido ao TJMA.
+  - Gravei `primeira_instancia`, com as duas versões no resumo.
+- **Plínio:** os três relatórios com nota davam "nada encontrado"; o Metrópoles não o lista. A Gazeta (05/10) e a assinatura do pedido de Damares de 2026 confirmam a posição pró-impeachment. Achei um arquivamento da PGR em 2025 (fala sobre Marina Silva) que nenhum relatório trazia.
+- **Deltan:** o Claude tratava o caso só como eleitoral; o ChatGPT dava K=35. A CNN (07/10) confirma que é eleitoral e que o plenário do TSE julga em 08/10/2026 às 10h. Há também conflito entre veículos: a Gazeta diz que o Ministério Público Eleitoral foi a favor da candidatura no TRE, e a CNN diz que o MP recorreu. Os dois registros estão na defesa.
+- **Suplente de Alan Rick:** o Claude dizia União; o ChatGPT e o elenco diziam PSD. Não consegui resolver: o perfil do Senado e os dados abertos confirmam Gemil Salim de Abreu Júnior, mas sem partido.
+- **Partido de Styvenson:** O Povo e a lista de 2025 o grafam como PSDB; o TSE 2026 e a CNN 2023 dizem Podemos. Mantive Podemos.
+
+## 3. Fatos novos que nenhum relatório trazia
+- **Pedido de impeachment de Moraes protocolado por Damares em 02/09/2026:** Plínio, Styvenson e Alan Rick estão entre os signatários. A lista sai da tabela Datawrapper da matéria do Congresso em Foco.
+- **CPI do Master contra Moraes e Toffoli (09/03/2026, 29 assinaturas):** Plínio, Styvenson e Alan Rick assinaram.
+- **Lista da oposição de 07/08/2025 (Bahia Notícias):** Plínio, Styvenson e Alan Rick registraram apoio à abertura do impeachment de Moraes.
+- **Alan Rick:** teve os perfis bloqueados por Moraes em inquérito sobre atos antidemocráticos. Moraes os devolveu em 19/01/2023, a pedido de Pacheco. No 1º turno para governador, Mailza ficou com 49,76% e Alan Rick com 32,27% (só trecho de busca do Times Brasil).
+- **Plínio:** a PGR (Gonet) arquivou o pedido de investigação pela fala de "enforcar" Marina Silva; a notícia é de 17/06/2025. Há também representação de deputadas ao Conselho de Ética (20/03/2025), sem desfecho localizado.
+- **Derrite:** três frentes, nenhuma com denúncia conhecida.
+  - Representação ao MP-SP sobre a casa em Porto Feliz: o PGJ pediu explicações em 21/07/2025.
+  - Sete inquéritos que somam 16 mortes da época da PM (piauí, 2024): "nunca denunciado", estágio atual desconhecido.
+  - Representação do Condepe ao MP-SP por improbidade (2024).
+- **André do Prado:** nenhum inquérito localizado.
+  - O TCE-SP julgou irregulares contratos de Guararema (2005 a 2008).
+  - Salles o acusou de acobertar o caso de um ex-assessor. O TRE-SP multou Salles por montagem. Gravei as duas coisas como `acusacao_sem_procedimento`, com a defesa.
+- **Domingos Sávio:** queixa-crime do filho de Lula no STF (2015), com desfecho não localizado. Ele chamou Moraes de "criminoso" (Itatiaia, 23/04/2025).
+- **Carol de Toni:** pedido de investigação à PGR feito por Túlio Gadêlha (30/09/2023), sem andamento conhecido.
+- **Deltan:**
+  - Apuração do MPF sobre o fundo da Lava Jato e as diárias, remetida à PGR em 06/12/2023, sem andamento conhecido.
+  - Notícia-crime contra Moraes à PGR (05/06/2024).
+- **Contar** (A Crítica, 08/09/2026) e **Evair** (A Gazeta ES, 14/09/2026) declararam voto pelo impeachment ou afastamento de Moraes. Em 07/10 Lahesio disse a Dino "estou indo atrás de vocês"; ligar a frase a impeachment é interpretação do Poder360, e está dito assim no JSON.
+- **Styvenson:** em 24/06/2026 relatou que André Mendonça o chamou, junto com Plínio, para conversar no STF sobre o caso Master. Ele não é investigado, e por isso não gravei como caso.
+- **Styvenson:** o Agora RN (2023) diz que ele teria votado em Dino no escrutínio secreto. Não gravei como sinal.
+- **Discordâncias com as listas da imprensa:**
+  - A Gazeta não atribui defesa explícita de impeachment a Carol de Toni, Azambuja, Mara Rocha e Contar, embora o Metrópoles os liste. Gravei sinais `sem_posicao_localizada` ao lado da lista onde isso pesa.
+  - Plínio não está na lista do Metrópoles, mas a Gazeta o inclui.
+
+## 4. O que ficou sem verificação
+- **Styvenson:** desfecho da Pet 9.841 no STF.
+- **Domingos Sávio:** desfecho da queixa-crime de 2015. Gravei `denuncia_oferecida`, o último estágio provado. **O motor vai pesar demais esse caso** (cerca de 45 pontos); recomendo conferir a Pet no portal do STF ou rebaixá-lo se for confirmado o arquivamento.
+- **Alan Rick:** usei `investigado` para o bloqueio de redes, mas a fonte não diz se houve investigação formal. Confiança média.
+- **Lahesio:** foro atual (TJMA ou Balsas), número do processo e defesa sobre o mérito.
+- **Derrite:** estágio dos sete inquéritos sobre mortes e da representação ao MP-SP.
+- **Deltan:** estágio da apuração do MPF de 2023 e data da notícia-crime contra Toffoli. O resultado do julgamento de 08/10 ainda não existe.
+- **Contar:** pendência de contas de campanha de 2022 (R$ 444 mil) não verificada, por falta de busca.
+- **Carol de Toni:** ação popular sobre cota parlamentar, extinta após ressarcimento, vista só em resumo de busca e sem URL. Ficou fora.
+- **Plínio:** ligação com a operação contra Adail Pinheiro e Adail Filho (Dinastia do Lago) não localizada. Nada foi gravado.
+- **Evair:** o dossiê da Século Diário (403) e do De Olho nos Ruralistas não tem procedimento conhecido. Não entrou como caso.
+- **Alan Rick:** partido de Gemil Júnior.
+
+## 5. Fontes que bloquearam ou falharam
+- Século Diário e Portal N10 devolveram 403.
+- A tabela de signatários do Congresso em Foco está num iframe Datawrapper e foi lida pelo `dataset.csv`.
+- A rota de candidaturas do DivulgaCandContas não devolveu JSON.
+- O G1 MS (trancamento do caso Azambuja) não foi aberto; usei Investiga MS e Correio do Estado.
+- A busca do JOTA não trouxe os nomes por senador.
+- O limite de buscas da sessão esgotou antes da verificação das contas do Contar.</result>
+<usage><subagent_tokens>323832</subagent_tokens><tool_uses>94</tool_uses><duration_ms>869152</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a110736109af6ac0e</task-id>
+<tool-use-id>toolu_018ATsYRbB3883oqS7iTwq3S</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Pesquisa G4: pivôs do centrão" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>Os 13 JSON estão gravados e validados (JSON válido, UTF-8, indentação 1, nenhum travessão). Um aviso antes: o limite de 200 buscas da sessão, compartilhado entre os agentes, acabou durante o trabalho no Luis Felipe Cunha. O desfecho do processo eleitoral da chapa de Moro ficou sem fonte e está marcado com confiança baixa.
+
+Para o grupo dos pivôs, o que pesa mais: Otto declarou voto contra o impeachment de Moraes, Laércio deu a assinatura que completou o pedido de agosto de 2025, Lira não é investigado formalmente segundo o Metrópoles, Braga não tem caso ativo e o processo de Wellington já não está no STF.
+
+## 1. Arquivos gravados
+Em `/Users/leonardodias/arvor/PNAD/analysis/senado_2027/senadores/`:
+- `mauro-mendes.json`
+- `arthur-lira.json`
+- `andre-fufuca.json`
+- `eduardo-braga.json`
+- `eduardo-gomes.json`
+- `davi-alcolumbre.json`
+- `otto-alencar.json`
+- `alessandro-vieira.json`
+- `wellington-fagundes.json`
+- `laercio-oliveira.json`
+- `professora-dorinha.json`
+- `alex-diniz.json`
+- `luis-felipe-cunha.json`
+
+O gerador está em `.../scratchpad/grava_grupo.py`, fora do repositório.
+
+## 2. Conflitos entre relatórios e como resolvi
+- **Lira, Lava Jato:** Claude dizia "denúncia rejeitada em 2022". O Poder360 confirma em 06/06/2023: a 1ª Turma rejeitou o Inq 3.515 (caso CBTU, relator Mendonça). Foi a quarta denúncia rejeitada; as outras foram os Inq 3.994, 3.989 e 4.631.
+- **Lira, emendas:** ChatGPT (K=80) e Gemini o tratavam como alvo do inquérito. Bahia Notícias, citando o Metrópoles em 08/02/2026, diz que ele "não figura como investigado" na Pet 14.949. Gravei como `citado`.
+- **Lira, lista dos 49:** confirmado que ele não está na lista do Metrópoles (05/10).
+- **Braga:** Claude dizia "desfecho não confirmado" e Gemini "aguardando a PGR". O Poder360 confirma que Fachin arquivou o inquérito em 28/10/2024, a pedido de Gonet. É o mesmo caso Hypermarcas do indiciamento de 2024.
+- **Mauro Mendes:** Claude dizia "relator e estágio não confirmados". Poder360 e Gazeta do Povo, ambos de 06/08/2026, confirmam que ele é alvo da Operação Heritage. Os mandados são de Dino (25 buscas, bloqueio de até R$ 316 milhões). Não há denúncia. O número do procedimento não foi publicado.
+- **Eduardo Gomes:** Claude dava K=0. ChatGPT e Perplexity estão corretos: a PF pediu ao STF a investigação em 10/02/2025 (Poder360 e O Liberal).
+- **Eduardo Gomes, relator:** a peça `PET-13.388.pdf` do Poder360 é da Operação Overclean (relator Nunes Marques) e não trata de Gomes. O relator do caso dele segue não confirmado.
+- **Alessandro Vieira:** Claude e Gemini davam K=0. ChatGPT e Perplexity estão corretos: há a representação de Gilmar (Agência Brasil, 15/04/2026) e o envio da PGR ao Ministério Público Eleitoral de Sergipe (Gazeta do Povo, 20/07/2026).
+- **Política Livre (06/10):** a reprodução da coluna de O Globo grafa "Mauro Mendes (PL-MT)", mas o partido correto é o União. A matéria não nomeia Bela Megale, só "a coluna".
+- **Fufuca:** Claude dizia "tribunal não confirmado". O inquérito é da Justiça Eleitoral do Maranhão (70ª Zona), não do STF.
+
+## 3. Fatos novos que nenhum relatório trazia
+- **Otto Alencar:**
+  - Em 03/09/2024 disse: "Se chegar a ser colocado em votação o impeachment do ministro Alexandre de Moraes, eu voto contra", e que orientaria o PSD a votar contra (Bahia Notícias).
+  - Votou contra o relatório de Vieira na CPI do Crime Organizado, rejeitado por 6 a 4 em 14/04/2026.
+  - Disse "Até que se prove o contrário, confio no trabalho dele" sobre Moraes (CNN, 25/12/2025).
+- **Laércio Oliveira:** deu a adesão que completou as 41 assinaturas do pedido de impeachment de Moraes em 07/08/2025.
+- **Alessandro Vieira:**
+  - É o primeiro signatário do pedido de impeachment de Moraes de setembro de 2026.
+  - Pediu o impeachment de Nunes Marques em 24/09/2026.
+  - Zanin negou a liminar do pedido para instalar a CPI do Master em 22/09/2026.
+  - O placar de 6 a 4 da CPI teve nomes (Otto votou contra).
+- **Wellington Fagundes:**
+  - A relatora do recebimento da denúncia em 2018 foi Rosa Weber.
+  - O TRE-MT mandou retirar, em 12/09/2026, o vídeo do ex-prefeito por falta de prova mínima e de investigação.
+- **Alcolumbre:**
+  - Um aliado indicado por ele (Jocildo Lemos) é alvo da Operação Zona Cinzenta, sobre a previdência do Amapá e o Banco Master. A PF não atribui participação ao senador.
+  - Moraes alegou, em 03/09/2026, que Mendonça direcionava investigações contra Alcolumbre. Não há procedimento formal localizado contra ele.
+  - A frase "Todo mundo esqueceu que pediram R$ 130 milhões..." é dele (Poder360).
+- **Mauro Mendes:** três filhos são cotistas do fundo GS Heritage FIP, citado pela PF (Metrópoles). Defesa: "vai ser provado que é mentira" (Gazeta Digital, 31/08/2026).
+- **Lira:** segundo a Gazeta do Povo de 05/10, disse em agosto de 2026 que não entraria em conflito com o STF. Gravei como `declaracao_contra_impeachment`, com essa ressalva no resumo.
+- **Fufuca:** "Eu tô com Lula" (Poder360, 06/10/2025). Marquei `alinhado_governo_lula: true`.
+- **Alex Diniz:** empresas dele foram alvo da Operação Ambiente 186 do Ministério Público mineiro (02/12/2025), sem que ele fosse investigado. Gravei como `citado`.
+- **Luis Felipe Cunha:** Moro disse que não há posição definida do suplente sobre impeachment (Portal Tela, 24/03/2026). O contrato de R$ 1 milhão de Cunha com o União Brasil foi questionado na ação eleitoral contra a chapa de Moro.
+- **Dorinha e Eduardo Gomes:** não assinaram a CPI do Master contra Toffoli e Moraes (Jornal Primeira Página, 11/03/2026). Ficou só na nota editorial; não há tipo de sinal para isso.
+
+## 4. Ficou sem verificação
+- **Lira:** resultado da acareação com José Rocha.
+- **Fufuca:** estágio atual do inquérito da compra de votos (última notícia: prorrogação em dezembro de 2023).
+- **Eduardo Gomes:** relator e estágio do pedido da PF de 2025.
+- **Wellington:** se a ação foi de fato remetida à Justiça Federal de Mato Grosso (só pelo G1 2019, `relatorio_anterior`) e se houve sentença ou prescrição.
+- **Luis Felipe Cunha:** desfecho da ação eleitoral contra a chapa de Moro. A rejeição da cassação pelo TRE-PR e pelo TSE em 2024 não foi reaberta em fonte; confiança baixa e data a conferir.
+- **Mauro Mendes:** número do procedimento e o dado da "mineradora dos filhos, R$ 14 milhões" (Novidades MT, só `relatorio_anterior`).
+- **Alcolumbre:** a representação de Carlos Viana no Conselho de Ética não foi gravada como caso, por não ser procedimento judicial.
+- **Alex Diniz:** a acusação no triplo homicídio de Lábrea contra o filho não foi gravada. O filho não foi denunciado, e o suspeito disse depois ter sido pressionado a apontar um mandante.
+- **Votação de 2026:** `votacao_2026` ficou null em todos os 13.
+- **Datas aproximadas:** algumas `data_fato` são aproximações e vêm declaradas no resumo (Mauro e Lira em 2024-01-01; a de Lira na Gazeta em 2026-08-01).
+- **Ação da família de Moraes contra Vieira:** é ação cível e foi registrada como `representacao`, que é o estágio mais próximo. Isso pesa 10 pontos de K na régua e pode ser revisto.
+
+## 5. Fontes que bloquearam ou falharam
+- Bloquearam o WebFetch: Estadão (Fausto Macedo), tnonline (UOL) e noticias.stf.jus.br (403). Essas fontes entraram como `trecho_de_busca` ou foram trocadas pela Agência Brasil.
+- G1 e Folha não foram tentados; os links do G1 vieram dos relatórios.
+- O JOTA abriu sem data nem placar.
+- O PDF da Pet 13.388 só pôde ser lido extraindo o texto localmente.</result>
+<usage><subagent_tokens>347778</subagent_tokens><tool_uses>97</tool_uses><duration_ms>853145</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a381a622a84e3eadc</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Pesquisa G5: centro e MDB/PSD" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>Gravei os 14 JSON e todos passam no `json.load`. Nenhum campo tem travessão. A pesquisa ficou incompleta num ponto: o limite de buscas da sessão (200 WebSearch, divididas com os outros agentes) acabou no meio do Romário. Os casos de Romário e Marcelo Castro foram fechados só com fetches e com o que os relatórios já traziam.
+
+**1. Arquivos gravados** (em `/Users/leonardodias/arvor/PNAD/analysis/senado_2027/senadores/`)
+gracinha-caiado.json, teresa-surita.json, alexandre-guimaraes.json, lucas-barreto.json, marina-jhc.json, rayssa-furlan.json, chicao.json, cid-gomes.json, omar-aziz.json, helder-barbalho.json, renan-filho.json, veneziano-vital-do-rego.json, romario.json, marcelo-castro.json.
+
+Dois desvios do esquema:
+- `votacao_2026` traz uma chave a mais, `percentual`. A Agência Senado só publicou percentual para GO, TO e PA, então `votos` ficou `null` nesses estados.
+- Para os mandatos até 2031 (Omar, Renan Filho, Romário), `votacao_2026` é `null`.
+
+O gerador está em `REDACTED.py`.
+
+**2. Conflitos entre fontes e como resolvi**
+- **Lucas Barreto:** o Metrópoles (05/10) o põe nominalmente entre os pró-impeachment. A Gazeta (05/10) diz, sem nomear ninguém, que os eleitos do AP "não se posicionaram ou declararam que são contrários". Prevaleceu a citação nominal do Metrópoles, gravada como `declaracao_pro_impeachment`. O resumo registra que não achei declaração direta dele. Achei, como reforço, o discurso de 20/08/2025 no Senado contra as cautelares de Moraes a Marcos do Val. A CNN confirma o "sim" na PEC 8.
+- **Alexandre Guimarães:** o Metrópoles o lista como pró; a Gazeta diz que "não comentou". A Folha do Girassol (14/09/2026) confirma o Metrópoles: ele chama a atuação de Moraes de "ditadura da toga" e cobra que o impeachment seja pautado.
+- **Gracinha Caiado:** na manchete de O Globo de 04/10, "bolsonarista" qualifica Gustavo Gayer, não ela. Mantive o bloco CD. A Gazeta confirma que ela agora apoia o impeachment de Moraes.
+- **Rayssa Furlan:** a sua instrução diz que ela é ex-mulher de Dr. Furlan. As fontes dizem o contrário: é a mulher dele (Agência Senado, Seles Nafes, 04/10/2026). A "ex" do título do Seles Nafes é outra mulher. A Agência Brasil fala em "ex-esposa e atual companheira", sem nomes.
+- **Renan Filho:** o Claude dizia "desfecho não localizado" e o Gemini, "Lava Jato pendente". A CartaCapital (03/10/2024) mostra que o arquivamento de Fachin cobre Renan Calheiros e Helder, mas não Renan Filho: para ele e para o marqueteiro Carlos Gehres, Fachin deu cinco dias à PGR. Gravei como `investigado` com confiança média.
+- **Romário:** Claude e Gemini diziam "nada encontrado". O Perplexity tinha os arquivamentos, que confirmei: o Inq 4846 (verba de gabinete) e a queixa por injúria (Fux, 29/01/2025). Achei também uma investigação ativa no STF; está no item 3.
+- **Marcelo Castro:** o Perplexity dizia que tudo foi "extinto". O Brasilianista (10/08/2026) informa que, em 2020, uma parte da apuração de caixa dois sobre doações da J&amp;F foi enviada ao TRE-PI, sem desfecho conhecido. Gravei como `investigado` com confiança baixa.
+- **Cid Gomes:** todos os relatórios davam só "ausente na PEC 8". Há declaração nova; está no item 3.
+
+**3. Fatos novos que nenhum dos quatro relatórios trazia**
+- **Rayssa Furlan:** segundo o Seles Nafes, um relatório da PF ao STF cita a RCFS Médicos, empresa sob responsabilidade dela, como possível destinatária de depósitos que podem passar de R$ 3 milhões. Ela teve sigilos quebrados e foi alvo de mandados em 04/03/2026. O relator é Flávio Dino. Não há denúncia e não achei manifestação da defesa. Gravei como `alvo_de_busca`, no STF, tipo patrimonial.
+- **Teresa Surita:** os relatórios só traziam o caso STJ/TRF1. Achei mais três processos:
+  - Condenação cível em primeira instância por improbidade, em abril de 2019 (TJRR, processo 0806652-61.2017.8.23.0010): licitação dirigida a empresa ligada a um irmão de Romero Jucá. O resultado do recurso não foi localizado.
+  - Ação de ressarcimento de R$ 99,4 mil por publicidade de 2003, com recursos negados no TJRR em 2019.
+  - Absolvição no TRE-RR em 2024.
+
+  O STJ (AREsp 977.486, 2020) devolveu ao TRF1 a ação de improbidade do MPF. Gravei os dois casos cíveis do TJRR como `condenacao`, a única opção da tabela de estágios. Com isso o K dela vai sair alto por processos que não são penais. Talvez o motor precise de um estágio próprio para condenação cível.
+- **Romário:** segundo o Portal de Prefeitura (27/05/2024, citando o UOL), há inquérito sigiloso no STF, relator Nunes Marques, sobre desvio em projetos esportivos da Prefeitura do Rio. O gabinete chama as alegações de "infundadas". A confiança é baixa: só uma fonte, e o limite de buscas impediu a segunda.
+- **Cid Gomes:** foi alvo de busca e teve sigilos quebrados na Operação Colosseum (Arena Castelão, 32ª Vara Federal do Ceará, dezembro de 2021). Em 14/09/2026 disse que o STF "precisa ser refundado" e que defenderá o impeachment se a Corte não resolver os escândalos (Diário do Nordeste). Em 03/09 tinha chamado de "tese bolsonarista" o discurso de frear o STF, segundo trecho de busca do O Povo.
+- **Omar Aziz:** era investigado em primeira instância no caso Maus Caminhos/Vertex, com bens bloqueados e passaporte retido (CNN, 16/04/2021). O inquérito do STF foi arquivado ou remetido em 2018. Em setembro de 2024 se opôs ao impeachment de Moraes (Revista Oeste, só trecho).
+- **Renan Filho:**
+  - Condenação cível de R$ 50 mil por ofensas a JHC e Marina Candia, que é a hoje senadora eleita Marina JHC (TNH1, 07/08/2025).
+  - Deixou o Ministério dos Transportes em 01/04/2026, disputou o governo de Alagoas e perdeu para JHC.
+- **Helder Barbalho:** os inquéritos do STJ (Inq 1362, sobre respiradores, e o das organizações sociais) foram arquivados pelo plenário a pedido da PGR. A decisão é sigilosa desde outubro de 2023 e foi divulgada em janeiro de 2024. A PF chegou a indiciá-lo no caso dos respiradores (título de A Gazeta, só trecho).
+- **Veneziano:** o ConJur (29/08/2018) registra 28 de 29 procedimentos arquivados no STF, entre eles a AP 912, trancada pela 1ª Turma. O Inq 4229 foi para a primeira instância, sem desfecho localizado.
+- **Alexandre Guimarães:** não assinou o pedido de impeachment de Moraes dos 153 deputados em 2024 (Congresso em Foco).
+- **Marina JHC:** o marido, JHC, saiu do PL para o PSDB em março de 2026 por briga com Arthur Lira. Isso entra na justificativa do bloco CD.
+
+**4. O que ficou sem verificação**
+- Romário: estágio atual do inquérito dos projetos esportivos; data e número do arquivamento do caso ambiental por Moraes.
+- Teresa Surita: recursos no TJRR e situação atual no TRF1 (a consulta processual do TRF1 devolveu 403).
+- Renan Filho: resposta da PGR ao prazo de Fachin; data em que reassumiu a cadeira, que é inferência a partir da saída do ministério.
+- Omar Aziz: situação atual da investigação em primeira instância; um pedido de explicações de Toffoli por suposta calúnia, só visto em título.
+- Cid Gomes: desfecho da Operação Colosseum.
+- Veneziano: desfecho do Inq 4229.
+- Marcelo Castro: desfecho no TRE-PI. A frase dele à Agência Senado sobre a PEC 8 continua só no relatório Claude, sem URL.
+- Rayssa Furlan: nenhuma manifestação da defesa localizada.
+- Chicão: só pude fazer três buscas, sem nada encontrado.
+- `alinhado_governo_lula = true` só para Helder, Renan Filho e Cid (PSB, da base do governo). Cid é o mais discutível.
+
+**5. Fontes que bloquearam ou falharam**
+- Bloquearam o WebFetch: Estadão, Veja e o portal da Revista Oeste.
+- Devolveram 403: Mais Goiás, O Jornalismo, Jornal Opção, Diário do Poder, consulta processual do TRF1 e noticias.stf.jus.br.
+- ConJur devolveu 404 numa URL curta.
+- Não tentei G1 e O Globo, que a regra da casa dá como bloqueados; ficaram como `relatorio_anterior`.
+- O Terra que diz trazer "como votou cada senador" não tem a lista no corpo; para a PEC 8 vale a lista da CNN, conferida em página.</result>
+<usage><subagent_tokens>331251</subagent_tokens><tool_uses>103</tool_uses><duration_ms>891997</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a89827591f66fea90</task-id>
+<tool-use-id>toolu_01KURf1G3c2AtzFssoKM7KaZ</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Pesquisa G7: composição, votos e rito" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>Gravei os dois arquivos: `contexto.json` (JSON válido, com 73 fontes, cada uma com URL, veículo, data e `acesso`) e `contexto.md`. Nenhum dos dois tem travessão. Os 54 eleitos conferem com o elenco, mas duas contingências do elenco estão desatualizadas, e o pedido de trabalho tinha três premissas erradas.
+
+**O que diverge do elenco**
+- **Camilo Santana (CE):** o elenco diz que ele é ministro e que Augusta Brito exerce o mandato. Ele está de volta ao Senado desde 02/04/2026. Augusta Brito exerceu até essa data.
+- **Ana Paula Lobato (MA):** o elenco diz que Lourdinha Pereira exerce o mandato. Lourdinha exerceu de 05/08 a 06/10/2026; Ana Paula Lobato reassumiu em 06/10.
+- **Gemil Junior, suplente de Alan Rick (AC):** a API do Senado registra União (filiação de 2022); o JOTA escreve PSD. O elenco grava PSD. Não confirmado.
+- **Professora Lu, suplente de Dorinha (TO):** partido não confirmado. O arquivo de candidatos de 2022 do TSE devolveu HTTP 429.
+- **Bancadas:** o elenco dá PT 10 e PSD 4 porque põe Wellington Dias na cadeira do PI, como manda o contrato. Folha, Poder360 e Agência Brasil contam Jussara Lima (PSD), que exerce hoje. Com essa troca, o elenco bate com a Folha em todos os partidos. A Agência Brasil dá Republicanos 6 e União 5 porque não trocou os suplentes de Cleitinho e Moro por inteiro.
+
+**O que confirmei**
+- **Os 54 eleitos:** batem nome a nome e partido a partido com a lista da Agência Senado e com a totalização do TSE. Os votos de cada um estão em `composicao.eleitos_2026`. Vêm dos arquivos do TSE que o coletor local guardou em `apuracao/data/apuracao.sqlite`, não de página do TSE aberta agora; conferem com as matérias estaduais da Agência Senado.
+- **As 27 cadeiras até 2031:** conferem com a lista de senadores em exercício da API do Senado.
+- **Suplentes confirmados:** Alex Diniz (PL) no lugar de Cleitinho; Luis Felipe Cunha (União) no lugar de Moro; Cheila Moreira (PT) como suplente de Omar Aziz.
+- **Wellington Dias:** afastado como ministro; Jussara Lima exerce desde 06/05/2026. Nenhum outro titular de cadeira até 2031 está licenciado ou é ministro.
+- **Deltan:** o relator do TSE indeferiu o registro em 03/10 e anulou os votos; o presidente do TSE suspendeu a decisão em 04/10. Os votos foram contados como válidos e o plenário julga em 08/10, depois da data de corte.
+- **PEC 8/2021:** o painel oficial do Senado dá 52 a 18 nos dois turnos, com os mesmos votos individuais. Dos 81 de 2027, 36 estavam lá: 25 sim, 6 não (inclusive Romário), 3 ausentes e 2 presentes sem voto (Cid Gomes e Omar Aziz). Jaques Wagner e Otto Alencar votaram sim. A lista da CNN omite Oriovisto. Na Câmara, a PEC aguarda criação de comissão especial; o último andamento é de 04/12/2025.
+
+**Premissas do pedido que estavam erradas**
+- **Não existe "nova lei do impeachment de 2025".** A liminar de Gilmar Mendes (ADPFs 1.259 e 1.260) suspendeu trechos da Lei 1.079/1950 em 03/12/2025. Em 10/12 ele recuou só na exclusividade da PGR e manteve os dois terços; 12/12 é a nota da Rádio Senado sobre o recuo. O projeto de lei nova é o PL 1.388/2023, parado na CCJ. Não achei referendo do plenário do STF.
+- **A Folha não diz 51.** O título atual da matéria é "49, 5 abaixo do mínimo" (35 eleitos e 14 em mandato); só o endereço guarda o "51" da primeira versão, que o NC News reproduziu.
+- **O JOTA diz 48 na manchete e 47 no texto.** A planilha embutida traz os 54 eleitos e 17 senadores atuais, com Mourão marcado como "pode apoiar, a depender do contexto".
+
+**Listas de declarados**
+Metrópoles, Gazeta e JOTA têm 25 eleitos em comum; somadas, chegam a 35. As diferenças de critério estão nome a nome em `listas_declarados._comparacao_eleitos`.
+
+**Outros achados**
+- **Proposta de Marinho:** é o PRS 54/2026, de 18/09. Usa três quintos (49) para recurso ou recebimento automático da denúncia. Não foi votado.
+- **Pedidos de impeachment de Alcolumbre:** em 2020 ele arquivou 59 pedidos segundo a CNN (57 contra ministros, 2 contra Aras) e 38 segundo a Bahia Notícias. O estoque atual é 109 pela conta dele (01/09/2026) e 134 desde 2021 pela Bahia Notícias.
+- **Pedido contra Moraes de 04/09/2026:** assinado por 20 senadores, 8 deles no Senado de 2027. Marinho não assinou para "não abrir brecha" a nulidade.
+- **CPI do Master:** 29 assinaturas, 15 de quem estará no Senado em 2027. Não foi instalada; Zanin negou liminar a Vieira em 22/09.
+- **CPI do Crime Organizado:** o relatório de Vieira caiu por 6 a 4 em 14/04/2026, com os nomes de cada voto gravados.
+- **Folha, 07/10:** o centrão passa a defender o impeachment de ao menos um ministro.
+- **Lahesio Bonfim** disse a Dino "estou indo atrás de você".
+
+**O que não consegui abrir**
+- **Buscas:** o limite de buscas da sessão acabou no meio do trabalho. Depois disso, usei só endereços já conhecidos dos relatórios de origem e índices dos próprios sites.
+- **X e O Globo:** o post de Andreza Matais e a coluna de Bela Megale foram lidos por trecho de busca ou por reproduções (Política Livre, Brasil 247).
+- **Matérias não abertas:** O Tempo de 06/10, G1 de 10/12/2025 e o texto da Terra/Estadão sobre as "traições" na PEC 8.
+- **Listas nominais completas:** a do Ranking dos Políticos (54) e a da Folha (49) não aparecem nos textos lidos.
+- **Precedentes:** MS 30672 só pelo resumo de busca; ADPF 378 não reaberta.
+- **STF Notícias:** bloqueou o acesso direto, com HTTP 202 e 403.
+
+O script que gera o JSON está no scratchpad, fora do repositório: `REDACTED.py`.
+
+Arquivos gravados:
+- `/Users/leonardodias/arvor/PNAD/analysis/senado_2027/contexto.json`
+- `/Users/leonardodias/arvor/PNAD/analysis/senado_2027/contexto.md`</result>
+<usage><subagent_tokens>456318</subagent_tokens><tool_uses>99</tool_uses><duration_ms>1068156</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a11b9bc0b31d93aa8</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Motor de scores e simulação" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>O motor está pronto, com 51 testes verdes, lint zero e pyright zero. Na base real ele ainda recusa gravar: há 4 erros de esquema nos JSON de outros agentes, listados no fim. Por isso não existe `docs/assets/senado_2027.json`. A suíte completa tem 1933 testes verdes e 1 falha que não é desta tarefa: `tests/test_sitemap.py` acusa `docs/sitemap.xml` desatualizado. Não criei nem alterei nada em `docs/`.
+
+**Antes de publicar, uma decisão é sua: como ler o 0,35 e o 0,15 da simulação.** Interpretei os dois como correlação entre os votos dos senadores, conforme o contrato ("correlação intrabloco 0,35"). Isso dá choques de desvio 0,87 (nacional) e 1,01 (bloco) no logit, e os votos esperados continuam sendo a soma dos C. A outra leitura possível é tratar 0,15 e 0,35 como o próprio desvio dos choques no logit, como sugere o texto da tarefa. A diferença é grande. Numa cópia provisória da base real, com os 4 erros corrigidos só nessa cópia, P(≥54) do impeachment no cenário Flávio sai:
+
+| Leitura | P(≥54) |
+|---|---|
+| Correlação (implementada) | 15,5% |
+| Desvio no logit | 1,6% |
+| Senadores independentes | 0,5% |
+
+Nesse mesmo rascunho, com a leitura implementada:
+- **Cenário Flávio:** o impeachment tem 46,4 votos esperados e a PEC tem 57,1, com P(≥49) de 88,8%.
+- **Cenário Lula:** o impeachment tem 41,8 votos esperados e P(≥54) de 3,0%.
+
+Esses números são só para conferir o motor, não para publicação. Os JSON ainda estão sendo escritos.
+
+**Dois conflitos que mudam o cenário Lula:** o elenco põe suplente em exercício em CE-3 e MA-3, mas os próprios JSON (`situacao_mandato`, citando o portal do Senado em 07/10) dizem que Camilo Santana e Ana Paula Lobato voltaram ao exercício. Augusta Brito e Lourdinha Pereira estão fora. Só PI (Jussara Lima) confere. O motor segue o elenco, então o elenco precisa ser revisto.
+
+## Como rodar
+```
+python3 scripts/senado-2027-motor.py --somente-validar
+python3 scripts/senado-2027-motor.py [--semente N] [--sorteios N] [--saida caminho.json] [--pasta dir]
+pytest -q tests/test_senado_2027_motor.py
+```
+O CSV sai com o mesmo nome do JSON. Acrescentei `--pasta`, para rodar sobre a fixture. Com qualquer erro de esquema o script lista tudo e termina com código 1, sem gravar nada.
+
+## Decisões onde o contrato deixava espaço
+1. **Cenário Lula:** "blocos D" foi lido como só D; DB não muda. O desconto entra depois dos ajustes e do redutor, e o limite de 2 a 97 vem por último.
+2. **Ajustes de C:**
+   - Assinatura de pedido e CPI contra ministros valem uma linha só (+8/+4).
+   - `voto_pec8_ausente`, `projeto_ou_pec_contra_stf` e `defesa_do_stf` não mexem em C. Estão listados em `REGUA` para a página imprimir.
+   - "Sem posição" vale quando o tipo aparece ou quando não há nenhum sinal com posição.
+3. **Redutor patrimonial:** conta como ativo o caso de condenação, réu, denúncia oferecida, indiciado, investigado ou alvo de busca.
+4. **Parcela de cada caso em K:** o maior caso pesa 1 e os demais 0,3, reescalados quando o teto de 100 corta. Se dois casos empatam no maior, cada um pesa (1 + 0,3 × (empatados − 1)) / empatados. Assim a parte patrimonial não depende da ordem dos casos.
+5. **Arredondamento:** cada linha da ficha é arredondada a uma casa (meio para cima) antes da soma, para a conta fechar na página.
+6. **Relator alvo (+5):** vale o nome completo contido no campo, ou o campo igual ao sobrenome. Juiz homônimo de outra instância não entra. Um caso limítrofe recebe +5: "Alexandre de Moraes (até a remessa)".
+7. **Recência (+10):** ano da última decisão igual ou maior que 2025; data nula vale 0.
+8. **Confiança:**
+   - Sinal observado é voto sim ou não na PEC 8, assinatura, CPI, ação judicial ou projeto/PEC contra o STF.
+   - Alta com dois ou mais observados, e isso vale até para suplente.
+   - Baixa para quem tem mandato começando por `suplente` ou não tem sinal com posição.
+   - O resto é média.
+   - A incerteza é só descritiva e não entra na simulação, porque ruído independente sobre a probabilidade de um voto não muda o resultado esperado dele.
+9. **Datas:** AAAA e AAAA-MM são aceitas com aviso, para não forçar dia inventado; datas inválidas são erro. `verificado_em` exige data completa.
+10. **Contingência:** aceitei o tipo `suplente`, que o elenco usa e o contrato não lista.
+11. **Suplente sem JSON:** recebe bloco pelo partido (`PARTIDO_CAMPO`, nunca DB), com `origem: "partido"` e aviso.
+12. **Elenco × JSON:** UF, bloco ou mandato diferentes são erro; partido ou nome diferentes são aviso.
+13. **Pivôs:** calculados para impeachment (54) e PEC (49), na variante base de cada cenário, com C de 20 a 85.
+14. **Arbitragem:** não há arquivo de origem definido. O JSON de saída repassa `contexto.json` quando ele existir.
+15. **Uma casa decimal:** ficam fora as constantes da régua e os parâmetros da simulação (0,35, 0,15, 0,87, 1,01). Fatos copiados dos JSON ficam como vieram (por exemplo, `percentual: 22.76`).
+16. **CSV:** li "81 colunas" como 81 linhas, uma por cadeira, com 24 colunas.
+
+## Erros de esquema nos JSON reais (4)
+- `augusta-brito.json`, `jussara-lima.json`, `lourdinha-pereira.json`: `mandato = "suplente_em_exercicio"`, fora do enum. A correção é trocar o valor por `suplente_ate_2031` ou ampliar o enum.
+- `marcio-bittar.json`: `votacao_2026.fonte` é um caminho do repositório, não URL.
+
+## Avisos (86)
+- **Datas parciais:** 54 datas parciais em 21 arquivos; Magno Malta tem 11 e Rogério Marinho tem 8.
+- **Campo `percentual` fora do contrato:** 11 arquivos o põem em `votacao_2026`.
+- **Campo `situacao_mandato` fora do contrato:** 4 arquivos.
+- **`votacao_2026` nula para eleitos de 2026:** Alessandro Vieira, André Fufuca, Arthur Lira, Eduardo Braga, Eduardo Gomes e Mauro Mendes.
+- **Sinal com data nula:** 7 sinais.
+- **Confiança alta sem sustentação:** `eduardo-braga.json` casos[0] não tem fonte oficial lida nem dois veículos lidos.
+- **Suplentes de 2º turno sem JSON:** Gemil Júnior (bloco C pelo partido), Cheila Moreira (E) e Professora Lu (CD).
+
+## Arquivos criados
+- /Users/leonardodias/arvor/PNAD/scripts/senado_2027/__init__.py
+- /Users/leonardodias/arvor/PNAD/scripts/senado_2027/base.py
+- /Users/leonardodias/arvor/PNAD/scripts/senado_2027/scores.py
+- /Users/leonardodias/arvor/PNAD/scripts/senado_2027/simulacao.py
+- /Users/leonardodias/arvor/PNAD/scripts/senado_2027/saida.py
+- /Users/leonardodias/arvor/PNAD/scripts/senado-2027-motor.py
+- /Users/leonardodias/arvor/PNAD/tests/test_senado_2027_motor.py
+- /Users/leonardodias/arvor/PNAD/tests/fixtures/senado_2027/: elenco fictício de 9 cadeiras em GO, PR e CE, com 9 titulares e 1 suplente com JSON, cobrindo todos os estágios, tipos, foros, blocos, mandatos e sinais.</result>
+<usage><subagent_tokens>321004</subagent_tokens><tool_uses>51</tool_uses><duration_ms>1729827</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>aa13817f849bae7c1</task-id>
+<tool-use-id>toolu_011nHAwgM36d7vV5vmE7VWVe</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "View, texto e build da página Senado 2027" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>The page now builds and every check passes. `figuras.py` was in place by the end, so `python3 scripts/senado-2027-build.py` ran against the real JSON and wrote `docs/senado_2027.html` (1022 KB). The page has 0 em dashes, all placeholders are replaced, `pytest` gives 12 passed (page and `fixo` tests), and `ruff check scripts tests` plus `black --check scripts tests` are clean across the whole repo.
+
+**Files**
+- `/Users/leonardodias/arvor/PNAD/scripts/senado_2027/pagina/view.py`: all 15 chapter blocks you listed, plus two short helpers (`pivos_frase`, `tipos_frase`) for the sentences that sit next to the figures.
+- `/Users/leonardodias/arvor/PNAD/scripts/senado_2027/pagina/texto.py`: `values()`, `frase_hero`, `frase_pivos`, `frase_tipos`, `pivos_necessarios` and `chances()`.
+- `/Users/leonardodias/arvor/PNAD/scripts/senado-2027-build.py`: built on the pattern of `senado-2026-build.py`; the figure and placeholder wiring is as you specified.
+- `/Users/leonardodias/arvor/PNAD/tests/test_senado_2027_pagina.py`: covers what you asked; if `figuras.py` is missing it uses an empty stub.
+
+**Decisions to review**
+- **Template value placeholders:** the template and the contract (section 6) have 21, not 22. `values()` returns the 21 plus one extra, `N_PEC8_AUSENTES` (5: three absent and two present without voting). The template does not use it. The test checks for these 22 names.
+- **PEC 8 numbers:** the opening sentence of chapter 06 uses the 36 from `contexto.pec8` (25 yes, 6 no). The motor's table has 39 rows, and the page says why: Camilo Santana, Wellington Dias and the substitute Jussara Lima are included.
+- **Probability in words below 50%:** `_chances` from the governor page returns "cara ou coroa" for anything below 0.55, which would describe a 19% chance as a coin flip. `chances()` uses `_chances` from 50% up and a mirror image below it ("1 chance em 4", "quase nenhuma chance").
+- **Alliance list in recommendations:** it is limited to pivots with C between 35 and 80. With that filter, the 54-vote target does not close: the in-band pivots add only 5,8 expected votes against 6,8 missing. The page says so, and names the pivots outside the band:
+  - those below 35 "need a change of position";
+  - those above 80 "only need to be kept".
+- **The "200 buscas esgotaram" limit:** that number is not in the JSON. The page says the search budget ran out and backs it with counts from the data: of 232 case sources, 73 were read only as search snippets and 34 come from earlier reports.
+- **Counter-finding box:** the line "os bolsonaristas mais expostos estão entre os votos mais prováveis" only appears when their C is above the Senate median (73 today). Otherwise the box just lists the names with K and C.
+- **Fichas:** they follow the titular holder, and the possible substitute is shown inside the same ficha. ISO dates inside text fields are converted to dd/mm/aaaa, and partial dates show as mm/aaaa.
+
+**Template:** I made no changes.
+
+**Things to know**
+- I accidentally ran `black` on the whole `scripts/senado_2027/pagina/` folder, which includes the other agent's `figuras.py`. Black only changes formatting, but if that agent was saving at the same moment, their copy may differ from what is on disk.
+- `view.py` came out at about 1,540 lines, above the project's 1,000-line split rule. I left it as one file because you limited me to these files. Moving the fichas, annex, arbitration and sources into their own module would bring it back under the limit.
+- The links to the four source reports point to `github.com/ArvorCo/PNAD/blob/main/analysis/senado_2027/relatorios_origem/`. That folder is not committed yet, so those links will 404 until it is.
+- I did not run `render-audit.py` or `contrast-audit.py`.</result>
+<usage><subagent_tokens>331587</subagent_tokens><tool_uses>51</tool_uses><duration_ms>658903</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>afe395135591d2b6f</task-id>
+<tool-use-id>toolu_01VVtE645PAWMPTHvGGfkmGH</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Figuras SVG da página Senado 2027" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>I've written `scripts/senado_2027/pagina/figuras.py` and its test. Lint is clean (`ruff check scripts tests`, `black --check scripts tests`) and `pytest -q tests/test_senado_2027_figuras.py` gives 7 passed. There's no em-dash in either file. I didn't touch any other file in the package.
+
+**Functions (exact names for `view.py` and the build):**
+- `dispersao_k_c(data, cenario="flavio", alvo="C_imp")`
+- `hemiciclo_c(data, alvo="C_imp", cenario="flavio")`, which also takes `C_pec`
+- `distribuicao_votos(data, cenario)`
+- `tipos_de_caso(data, cenario="flavio")`
+- `curva_k(data)`
+- `dispersao_relatorios(data)`
+- `teste_pec8(data)`
+- `pivos(data, cenario="flavio", alvo="C_imp")`
+- `placar_cenarios(data)`
+- `todas(data)` returns 13 entries: the nine above plus the Lula dispersion, the PEC hemicycle, the Lula distribution and the PEC pivots.
+- Helpers the build can reuse: `ocupantes(data, cenario)` picks titular or substitute from `elenco[].ocupante[cenario]` and matches `simulacao...ocupantes`; `tipo_dominante(pessoa)`.
+
+**Design decisions:**
+- **Who appears:** every figure reads the occupant for the scenario, not always the titular. In the Lula scenario Jussara Lima (PSD) takes the place of Wellington Dias (PT), so the centro and esquerda counts change (16 and 9 instead of 15 and 10).
+- **Dispersion:** the quadrant names and their counts sit in a band above C = 100 and below C = 0, so they never cover a point. Points that land on the same spot are pushed apart in a short spiral. The label resolver tries eight spots around each point, then spots further out with a connecting line, and checks against points, other labels and the reference lines. 44 names are written in the Flávio scenario.
+- **Hemicycle:** the 49 and 54 seats are counted from the right (most favourable). Each marker says which C the 49th and 54th vote has (49 and 29 in the Flávio scenario). The centre shows the expected votes. The legend is HTML so it stays readable on a phone, and the SVG has an inline `min-width:560px` inside `.sn27-fig-wide`, so it scrolls sideways instead of shrinking.
+- **Distribution:** there are two embedded SVGs, a wide one and a stacked one. A small scoped `&lt;style&gt;` inside the figure swaps them at 719 px. I had to use the selector `.sn27-fig svg.…`, because the house rule `.sn27-fig svg{display:block}` otherwise wins. A selector like `.sn27-dist-*` on its own doesn't override it if this ever moves into the CSS file.
+- **Case types:** five groups instead of four, because patrimonial is split into "ativo" and "citado ou encerrado". Each group is compared with colleagues in the same bloc who have K = 0, and there's a bar showing which blocs each group comes from.
+- **IA reports:** for the first 12 senators, Perplexity is `null` and Claude matches Gemini wherever both are present. That's why Claude's circle is drawn larger, so it still shows around Gemini's square.
+- **PEC 8:** the data has 39 senators, not 36: 25 sim, 7 não, 7 ausentes, one of them a substitute. I used the data.
+- **Pivots:** all 29 for the impeachment vote, sorted by how much the chance goes up.
+- **Placar:** the 5th to 95th percentile range is drawn as a hatched pattern. Its id is `sn27-hachura-placar`, so the build shouldn't reuse that id elsewhere on the page.
+
+**What I changed after the screenshots:**
+- In the dispersion, the bloc legend was cut off at the right edge and some labels touched each other; both fixed.
+- The hemicycle threshold labels sat on top of seats; moved outside the arc.
+- Tick labels "80" and "81" overlapped in the histogram; fixed.
+- Columns ran into each other in the case-type and pivot figures, and the top-10 list in `curva_k` was cut off; fixed.
+- Both distribution versions showed at once; fixed with the selector above.
+
+Checked at 1000 px and 390 px: the page never scrolls sideways, and the only zero-width SVGs are the two hidden distribution versions.
+
+**One finding for the case-type text.** The rule itself subtracts 0.25 × the active patrimonial K from C. For the "patrimonial ativo" group that averages 10.6 points (before the floor of 2), more than the whole 9.8-point gap to their bloc colleagues. The caption says so, and says the real test with observed votes is PEC 8. In that test, none of the 7 "não" votes had an active patrimonial case: 4 came from the left and 3 from the centre (Fisher p = 0.65).
+
+To regenerate the test page: `python3 scripts/senado_2027/pagina/figuras.py &lt;dir&gt;` writes each figure plus an `index.html` that loads `predicao_2026.css` and `senado_2027.css`.
+
+Files are in `REDACTED`:
+- `index.html`
+- `shot_1000_&lt;figura&gt;.png`
+- `shot_390_&lt;figura&gt;.png`
+- `shot.py` (in the parent `scratchpad/` folder): the Playwright capture script
+
+Files are in `/Users/leonardodias/arvor/PNAD`:
+- `scripts/senado_2027/pagina/figuras.py`
+- `tests/test_senado_2027_figuras.py`</result>
+<usage><subagent_tokens>269208</subagent_tokens><tool_uses>56</tool_uses><duration_ms>713727</duration_ms></usage>
+</task-notification>
+
+---
+
+[Image: original 358x4007, displayed at 179x2000. Multiply coordinates by 2.00 to map to original image.]
+
+---
+
+[Image: original 1180x4977, displayed at 474x2000. Multiply coordinates by 2.49 to map to original image.]
+
+---
+
+<task-notification>
+<task-id>a3d419ce97f85213c</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Dividir figuras.py em módulos" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>`figuras.py` agora tem 512 linhas, e nenhum arquivo do pacote passa de 1.000. O HTML gerado ficou byte a byte igual ao de antes (`cmp` idêntico, 1022 KB), `ruff check scripts tests` e `black --check scripts tests` passam, e os 70 testes passam.
+
+| Arquivo | Antes | Depois |
+|---|---|---|
+| `figuras.py` | 1450 | 512 |
+| `figuras_base.py` (novo) | n/a | 180 |
+| `figuras_mapa.py` (novo) | n/a | 517 |
+| `figuras_conta.py` (novo) | n/a | 342 |
+
+- **`figuras_base.py`:** paleta, constantes, `esc`, `fmt`, `pct`, `largura`, `txt`, `svg`, `figura`, `ocupantes`, `valor_c`, `valor_k`, `tipo_dominante`, `sim` e `sigla`. Pus `ocupantes` e `tipo_dominante` aqui, em vez de em `figuras.py`, porque as três partes usam essas funções e assim não há importação circular.
+- **`figuras_mapa.py`:** `dispersao_k_c`, `curva_k`, `dispersao_relatorios`, o resolvedor de rótulos (`resolver_rotulos`, `_caixa`, `_sobrepoe`), `_espalhar`, `RELATORIOS` e `_marcador`.
+- **`figuras_conta.py`:** `distribuicao_votos` com `_painel_hist`, `pivos` e `placar_cenarios`.
+- **`figuras.py`:** `hemiciclo_c`, `tipos_de_caso`, `teste_pec8`, `todas` e o bloco de execução direta. Reexporta com `import X as X` as funções movidas, mais `resolver_rotulos` e `_sobrepoe`, porque `tests/test_senado_2027_figuras.py` usa `figuras.resolver_rotulos` e `figuras._sobrepoe`.
+
+`senado-2027-build.py`, `view.py` e os testes ficaram sem alteração.
+
+`git status` mostra `AGENTS.md` modificado, e ele não constava no status inicial da sessão. Não toquei nele. O `ruff --fix` e o `black` rodaram em `scripts` e `tests` inteiros, mas só os arquivos de figuras mudaram.
+
+Todos os arquivos estão em `/Users/leonardodias/arvor/PNAD/scripts/senado_2027/pagina/`.</result>
+<usage><subagent_tokens>143093</subagent_tokens><tool_uses>8</tool_uses><duration_ms>182534</duration_ms></usage>
+</task-notification>
