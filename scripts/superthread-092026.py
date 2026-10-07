@@ -25,6 +25,8 @@ import html
 import json
 from pathlib import Path
 
+from ga_tag import injetar
+
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / "docs/assets"
 OUTPUT = ROOT / "docs/superthread_092026.html"
@@ -1292,7 +1294,7 @@ def main() -> None:
     for card in cards:
         n = len("\n\n".join(card["copy"]))
         assert 1700 <= n <= 2300, (card["tag"], n)
-    OUTPUT.write_text(page)
+    OUTPUT.write_text(injetar(page))
     print("Gerado:", OUTPUT, total, "cards")
     for index, card in enumerate(cards, 1):
         print(

@@ -8,6 +8,8 @@ import json
 from html import escape
 from pathlib import Path
 
+from ga_tag import injetar
+
 ROOT = Path(__file__).resolve().parents[1]
 D = json.loads((ROOT / "docs/assets/nexus_btg_140926_data.json").read_text())
 spec = importlib.util.spec_from_file_location(
@@ -640,5 +642,5 @@ html = (
     + "".join(sections)
     + """</main><footer class="wrap"><a href="index.html">Arvor Intelligence</a><p>Leitura de pesquisa, com evidência e limite explícitos. Atualização: 14/09/2026.</p></footer></body></html>"""
 )
-(ROOT / "docs/nexus_btg_140926.html").write_text(html)
+(ROOT / "docs/nexus_btg_140926.html").write_text(injetar(html))
 print("Dossiê gerado: 12 capítulos, 4 figuras, 32 páginas de anexo.")

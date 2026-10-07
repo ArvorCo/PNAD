@@ -16,6 +16,7 @@ import json
 import sys
 from pathlib import Path
 
+from ga_tag import injetar
 from predicao_2026.base import module
 from senado_2026.pagina import alertas, hemiciclo, texto, view
 
@@ -74,7 +75,7 @@ def main() -> int:
     args = ap.parse_args()
     data = carregar(args.input)
     html = render(data, TEMPLATE.read_text(encoding="utf-8"))
-    args.output.write_text(html, encoding="utf-8")
+    args.output.write_text(injetar(html), encoding="utf-8")
     print(f"{args.output} ({len(html) / 1024:.0f} KB)")
     return 0
 

@@ -11,6 +11,8 @@ import math
 from html import escape as esc
 from pathlib import Path
 
+from ga_tag import injetar
+
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "docs"
 ASSETS = OUT / "assets"
@@ -2322,7 +2324,9 @@ def build():
     )
     assert "—" not in html and "–" not in html
     (OUT / "sp_092026.html").write_text(
-        html.replace("<section ", "\n<section ").replace("<article", "\n<article")
+        injetar(html)
+        .replace("<section ", "\n<section ")
+        .replace("<article", "\n<article")
         + "\n"
     )
     (ASSETS / "sp_092026_noticias.json").write_text(

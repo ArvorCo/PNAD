@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from ga_tag import injetar
+
 from .fthread_base import CAPITULO, DOSSIE, OG, SLUG, URL
 from .thread_base import esc
 from .thread_pagina import CSS, JS, render_card
@@ -18,7 +20,7 @@ def pagina(posts: list[dict], pngs: list[str], v: dict) -> str:
         f"{v['n_locais']} locais de votação, os cenários clássicos de manipulação do voto, os casos "
         "documentados no Brasil e o kit do fiscal. Atipicidade não é irregularidade."
     )
-    return f"""<!doctype html>
+    return injetar(f"""<!doctype html>
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
@@ -72,7 +74,7 @@ def pagina(posts: list[dict], pngs: list[str], v: dict) -> str:
 <script>{JS}</script>
 </body>
 </html>
-"""
+""")
 
 
 __all__ = ["SLUG", "pagina"]

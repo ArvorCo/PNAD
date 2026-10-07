@@ -42,6 +42,9 @@ import unicodedata
 from dataclasses import dataclass, field
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
+from ga_tag import injetar
+
 try:
     import markdown
 except ModuleNotFoundError:  # pragma: no cover - guidance beats a traceback
@@ -777,7 +780,7 @@ def main(argv: list[str] | None = None) -> int:
         if args.check:
             print(f"  STALE      {target.name}")
             continue
-        target.write_text(page, encoding="utf-8")
+        target.write_text(injetar(page), encoding="utf-8")
         words = count_words(page)
         print(f"  wrote      {target.name}  ({words:,} words on page)")
 

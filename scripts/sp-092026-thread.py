@@ -16,6 +16,8 @@ import json
 import textwrap
 from pathlib import Path
 
+from ga_tag import injetar
+
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / "docs/assets"
 OUTPUT = ROOT / "docs/sp_092026_thread.html"
@@ -1206,7 +1208,7 @@ def main() -> None:
     for c in cards:
         n = len("\n\n".join(c["copy"]))
         assert 900 <= n <= 1500, (c["tag"], n)
-    OUTPUT.write_text(page)
+    OUTPUT.write_text(injetar(page))
     print(OUTPUT, total, "cards")
 
 

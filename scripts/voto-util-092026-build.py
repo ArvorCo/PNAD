@@ -19,6 +19,8 @@ import importlib.util
 import sys
 from pathlib import Path
 
+from ga_tag import injetar
+
 ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
 SAIDA = DOCS / "mapa_do_voto_util.html"
@@ -331,7 +333,7 @@ def main() -> None:
 """
     if "—" in pagina:
         raise SystemExit("travessão proibido na página")
-    SAIDA.write_text(pagina, encoding="utf-8")
+    SAIDA.write_text(injetar(pagina), encoding="utf-8")
     print("Gerado:", SAIDA, f"{len(pagina) / 1024:.0f} KB", len(SECOES), "capítulos")
 
 

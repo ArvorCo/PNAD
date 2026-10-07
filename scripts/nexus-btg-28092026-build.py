@@ -8,6 +8,8 @@ import importlib.util
 import json
 from pathlib import Path
 
+from ga_tag import injetar
+
 ROOT = Path(__file__).resolve().parents[1]
 D = json.loads((ROOT / "docs/assets/nexus_btg_28092026_data.json").read_text())
 R = D["reweight"]
@@ -504,7 +506,7 @@ html = (
 )
 # 3 associations x 3 target levels x 3 scores x 2 regional models = 54 per ballot.
 assert "—" not in html
-(ROOT / "docs/nexus_btg_28092026.html").write_text(html + "\n")
+(ROOT / "docs/nexus_btg_28092026.html").write_text(injetar(html) + "\n")
 
 with (ROOT / "docs/assets/nexus_btg_28092026_cenarios.csv").open("w") as f:
     w = csv.writer(f, lineterminator="\n")

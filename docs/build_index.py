@@ -25,6 +25,9 @@ from pathlib import Path
 from string import Template
 from typing import Any
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
+from ga_tag import injetar
+
 ROOT = Path(__file__).resolve().parent.parent
 DOCS = Path(__file__).resolve().parent
 TEMPLATE = DOCS / "index.template.html"
@@ -127,7 +130,7 @@ def main() -> int:
     )
 
     out = Path(args.output)
-    out.write_text(html, encoding="utf-8")
+    out.write_text(injetar(html), encoding="utf-8")
     kb = out.stat().st_size / 1024
     print(f"[build] wrote {out} ({kb:.1f} KB)", file=sys.stderr)
     return 0

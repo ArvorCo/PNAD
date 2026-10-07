@@ -12,6 +12,7 @@ import sys
 from datetime import date, datetime
 from zoneinfo import ZoneInfo
 
+from ga_tag import injetar
 from predicao_2026.base import ELECTION, WINDOW_START, national, read, state_polls
 from predicao_2026.consolidacao import consolidation
 from predicao_2026.erro_2022 import SENS_INVERTED, SENS_REPEAT
@@ -328,7 +329,7 @@ def build(
     template = (ROOT / "docs/predicao_2026_1T_presidente.template.html").read_text(
         encoding="utf-8"
     )
-    PAGE.write_text(render(payload, template), encoding="utf-8")
+    PAGE.write_text(injetar(render(payload, template)), encoding="utf-8")
     print(
         json.dumps(
             {

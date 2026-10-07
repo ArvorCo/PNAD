@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from ga_tag import injetar
+
 from .thread_base import DOSSIE, OG, SLUG, URL, esc
 
 TOM = {
@@ -138,7 +140,7 @@ def pagina(posts: list[dict], pngs: list[str], v: dict) -> str:
         f"{v['f_pct']} contra {v['l_pct']}, a noite minuto a minuto, as paradas do TSE, "
         "pesquisas contra urna, a auditoria por zona e por seção e o caminho do 2º turno."
     )
-    return f"""<!doctype html>
+    return injetar(f"""<!doctype html>
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
@@ -190,7 +192,7 @@ def pagina(posts: list[dict], pngs: list[str], v: dict) -> str:
 <script>{JS}</script>
 </body>
 </html>
-"""
+""")
 
 
 __all__ = ["CSS", "JS", "SLUG", "TOM", "pagina", "render_card"]

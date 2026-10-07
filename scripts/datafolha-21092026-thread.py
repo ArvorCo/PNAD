@@ -26,6 +26,8 @@ import re
 import sys
 from pathlib import Path
 
+from ga_tag import injetar
+
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / "docs/assets"
 OUTPUT = ROOT / "docs/datafolha_21092026_thread.html"
@@ -1184,7 +1186,7 @@ def main() -> None:
 </html>
 """
     check(cards, page)
-    OUTPUT.write_text(page, encoding="utf-8")
+    OUTPUT.write_text(injetar(page), encoding="utf-8")
     print(
         json.dumps(
             {

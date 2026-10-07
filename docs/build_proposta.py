@@ -35,6 +35,9 @@ import unicodedata
 from html.parser import HTMLParser
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
+from ga_tag import injetar
+
 DOCS = Path(__file__).resolve().parent
 SOURCE = DOCS / "nexus_btg_0726.html"
 DEFAULT_OUTPUT = DOCS / "proposta.html"
@@ -446,7 +449,7 @@ def build(output: Path) -> int:
     page = page.replace("<!--PROJETO-LEI-->", rendered["projeto-lei"])
     page, rewritten = rewrite_internal_links(page)
 
-    output.write_text(page, encoding="utf-8")
+    output.write_text(injetar(page), encoding="utf-8")
 
     print(f"proposta gerada: {output}")
     for section_id, raw_len, out_len in sizes:

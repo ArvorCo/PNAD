@@ -14,6 +14,8 @@ from __future__ import annotations
 from html import escape
 from pathlib import Path
 
+from ga_tag import injetar
+
 ROOT = Path(__file__).resolve().parents[1]
 SAIDA = ROOT / "docs/mg_082026_thread.html"
 
@@ -189,6 +191,6 @@ function cp(button){{
 
 if "—" in HTML:
     raise SystemExit("travessão encontrado na página da thread")
-SAIDA.write_text(HTML, encoding="utf-8")
+SAIDA.write_text(injetar(HTML), encoding="utf-8")
 print(f"gravado {SAIDA}")
 print(f"post 1: {len(POST1)} caracteres | post 2: {len(POST2)} caracteres")

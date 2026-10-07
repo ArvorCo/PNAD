@@ -8,6 +8,8 @@ from html import escape
 from pathlib import Path
 from types import SimpleNamespace
 
+from ga_tag import injetar
+
 ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
 D = json.loads((DOCS / "assets/quaest_140926_data.json").read_text())
@@ -282,7 +284,8 @@ def main():
     )
     assert "—" not in html
     (DOCS / "quaest_14092026.html").write_text(
-        html.replace("<section", "\n<section")
+        injetar(html)
+        .replace("<section", "\n<section")
         .replace("<details", "\n<details")
         .replace("<p>", "\n<p>")
         + "\n"

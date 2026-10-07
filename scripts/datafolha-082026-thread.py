@@ -22,6 +22,8 @@ import html
 import json
 from pathlib import Path
 
+from ga_tag import injetar
+
 ROOT = Path(__file__).resolve().parents[1]
 ANALYSIS = ROOT / "analysis" / "datafolha_082026"
 OUTPUT = ROOT / "docs" / "datafolha_082026_thread.html"
@@ -2034,7 +2036,7 @@ def main() -> None:
 </body>
 </html>
 """
-    OUTPUT.write_text(page, encoding="utf-8")
+    OUTPUT.write_text(injetar(page), encoding="utf-8")
     print(f"OK: {OUTPUT.relative_to(ROOT)}  ({total} posts, {len(page)} bytes)")
     for index, card in enumerate(cards, start=1):
         size = len("\n\n".join(card["copy"]))

@@ -17,6 +17,8 @@ import json
 import re
 from pathlib import Path
 
+from ga_tag import injetar
+
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "docs/threads/quaest_globo_140826_thread.md"
 STRATEGY = ROOT / "docs/assets/quaest_globo_140826_estrategia.json"
@@ -1008,7 +1010,7 @@ def main() -> None:
     posts = parse_posts(SOURCE.read_text())
     page = build(posts)
     summary = check(page, posts)
-    args.output.write_text(page)
+    args.output.write_text(injetar(page))
     summary["output"] = str(args.output.relative_to(ROOT))
     print(json.dumps(summary, ensure_ascii=False, indent=2))
 

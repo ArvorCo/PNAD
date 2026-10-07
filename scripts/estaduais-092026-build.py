@@ -19,6 +19,8 @@ import json
 import sys
 from pathlib import Path
 
+from ga_tag import injetar
+
 ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
 D = json.loads((DOCS / "assets/estaduais_092026_data.json").read_text())
@@ -591,7 +593,7 @@ def main() -> None:
 </html>
 """
     assert "—" not in page, "travessão proibido"
-    (DOCS / "estaduais_092026.html").write_text(page)
+    (DOCS / "estaduais_092026.html").write_text(injetar(page))
     print("Gerado:", DOCS / "estaduais_092026.html", len(SECTIONS), "capítulos")
 
 

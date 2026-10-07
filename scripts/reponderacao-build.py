@@ -9,6 +9,7 @@ import importlib
 import json
 from html import escape as esc
 
+from ga_tag import injetar
 from reponderacao_vista.charts import (
     gap_svg,
     instituto_svg,
@@ -835,7 +836,9 @@ def build(*, update_home: bool = True) -> None:
     SHEET.write_text(CSS, encoding="utf-8")
     TIP_SHEET.write_text(TIP_CSS, encoding="utf-8")
     TIP_SCRIPT.write_text(TIP_JS, encoding="utf-8")
-    PAGE.write_text(html.replace("<section ", "\n<section ") + "\n", encoding="utf-8")
+    PAGE.write_text(
+        injetar(html).replace("<section ", "\n<section ") + "\n", encoding="utf-8"
+    )
     write_csv()
     groups_view.write_group_csv(ASSETS / "reponderacao_grupos_1t.csv", D)
     importlib.import_module("reponderacao-janela-view").write_csv(

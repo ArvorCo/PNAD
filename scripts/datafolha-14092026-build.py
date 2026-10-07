@@ -6,6 +6,8 @@ import json
 from html import escape
 from pathlib import Path
 
+from ga_tag import injetar
+
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / "docs/assets"
 SLUG = "datafolha_14092026"
@@ -454,7 +456,7 @@ def main():
         html += f'<figure><a href="fontes/{SLUG}.pdf#page={p}"><img src="img/{SLUG}/p{p}.png" loading="lazy" alt="Página {p} original do relatório com tabelas por renda"></a><figcaption>Relatório, página {p}.</figcaption></figure>'
     html += "</details><details><summary>Reproduzir a auditoria no repositório</summary><pre><code>python3 scripts/datafolha-14092026-fontes.py\npython3 scripts/datafolha-14092026-extract.py\npython3 scripts/datafolha-14092026-territorio.py\npython3 scripts/datafolha-14092026-audit.py\npython3 scripts/datafolha-14092026-build.py</code></pre><p>O relatório fornecido pelo usuário é preservado antes da extração. O primeiro comando baixa os dois anexos públicos, sem substituir o relatório. Históricos usam os registros arquivados no projeto e o motor comum de reponderação.</p></details>"
     html += f'<p class="hash">SHA-256 do relatório: {D["provenance"]["report_sha256"]}</p></section></main><footer class="wrap"><a href="index.html">Arvor / Brasil</a><p>Dossiê de 14 de setembro de 2026 · Dados publicados, hipóteses declaradas e reprodução aberta.</p></footer></body></html>'
-    (ROOT / f"docs/{SLUG}.html").write_text(html + "\n")
+    (ROOT / f"docs/{SLUG}.html").write_text(injetar(html) + "\n")
     print(f"Wrote docs/{SLUG}.html ({len(html):,} characters)")
 
 

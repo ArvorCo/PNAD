@@ -7,6 +7,8 @@ from html import escape
 from pathlib import Path
 from types import ModuleType
 
+from ga_tag import injetar
+
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / "docs/assets"
 SLUG = "datafolha_21092026"
@@ -398,7 +400,7 @@ python3 scripts/social-cards.py --only datafolha_21092026</pre><p class="hash">S
 <script type="application/json" id="southeast-data">{json.dumps({"weight": G["weights"]["ES"], "known": G["known_contribution"]})}</script></body></html>"""
     assert "—" not in h
     (ROOT / "docs" / f"{SLUG}.html").write_text(
-        h.replace("<section ", "\n<section ") + "\n"
+        injetar(h).replace("<section ", "\n<section ") + "\n"
     )
     print(SLUG, len(h), "characters")
 
