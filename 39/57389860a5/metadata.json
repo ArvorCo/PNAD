@@ -3,8 +3,10 @@
   "checkpoint_id": "3957389860a5",
   "strategy": "manual-commit",
   "branch": "main",
-  "checkpoints_count": 1,
+  "checkpoints_count": 2,
   "files_touched": [
+    "analysis/politize/qa/conversas_1280.png",
+    "analysis/politize/qa/propostas_1280.png",
     "data/originals/programa_governo_flavio_2026/fonte.json",
     "data/originals/programa_governo_flavio_2026/plano-flavio.pdf"
   ],
@@ -15,13 +17,20 @@
       "context": "/39/57389860a5/0/context.md",
       "content_hash": "/39/57389860a5/0/content_hash.txt",
       "prompt": "/39/57389860a5/0/prompt.txt"
+    },
+    {
+      "metadata": "/39/57389860a5/1/metadata.json",
+      "transcript": "/39/57389860a5/1/full.jsonl",
+      "context": "/39/57389860a5/1/context.md",
+      "content_hash": "/39/57389860a5/1/content_hash.txt",
+      "prompt": "/39/57389860a5/1/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 2,
-    "cache_creation_tokens": 4126,
-    "cache_read_tokens": 348899,
-    "output_tokens": 444,
-    "api_call_count": 1
+    "input_tokens": 236,
+    "cache_creation_tokens": 27552,
+    "cache_read_tokens": 4347411,
+    "output_tokens": 7886,
+    "api_call_count": 11
   }
 }
