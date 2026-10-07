@@ -15,7 +15,7 @@ MIN_POSTS, MAX_POSTS = 5, 7
 CAMPOS_TEXTO = ("tag", "titulo", "metrica", "metrica_rot", "fonte")
 # Ordem de preferência dos casos no post 5: cobre as famílias e os marcos.
 FAMILIAS_P = (("mesa", "cadastro"), ("entorno",), ("territorio",))
-TETO_PARAGRAFO = 760
+TETO_PARAGRAFO = 540
 
 
 def _frase_caso(c: dict, J: dict) -> str:
@@ -57,6 +57,25 @@ def paragrafos_casos(J: dict) -> list[str]:
     return out
 
 
+def paragrafo_apuracao(J: dict) -> str:
+    """Os registros de 2026 numa frase cada, com tipo, estágio, natureza e versão."""
+    itens = FC.apuracao_ordenada(J)
+    if not itens:
+        return "Nenhum registro de 2026 com fonte conferida."
+    partes = []
+    for x in itens:
+        extra = f"; {x['versao_curta']}" if x.get("versao_curta") else ""
+        partes.append(
+            f"{x['rotulo_curto']} ({x['tipo_fato']}, {x['estagio']}, {x['natureza']}{extra})"
+        )
+    return (
+        "Em apuração nesta eleição, e por isso fora da contagem acima: "
+        + "; ".join(partes)
+        + ". É alegação ou fato em apuração, sem conclusão. Nada disso é fraude provada, e nenhum registro "
+        "atribui intenção ou lado a ninguém."
+    )
+
+
 def v_casos() -> dict:
     J = cenarios()
     cs = FC.casos_ordenados(J)
@@ -68,6 +87,7 @@ def v_casos() -> dict:
         "casos_p1": p1,
         "casos_p2": p2,
         "casos_p3": p3,
+        "apuracao_p": paragrafo_apuracao(J),
     }
 
 
@@ -131,6 +151,8 @@ def verificar(posts: list[dict]) -> list[str]:
     for p in posts:
         if p["tag"] == "O que já aconteceu" and not p["corpo"].startswith("Verificado"):
             erros.append("post dos casos sem o rótulo verificado")
+        if p["tag"] == "O que já aconteceu" and FC.ROT_APURACAO not in p["corpo"]:
+            erros.append("post dos casos sem o rótulo alegação ou fato em apuração")
     if "validar com a PM e o TRE local" not in posts[-1]["corpo"]:
         erros.append("kit sem a frase validar com a PM e o TRE local")
     return erros

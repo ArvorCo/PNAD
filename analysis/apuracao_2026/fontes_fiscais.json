@@ -5,7 +5,7 @@
  "regras": [
   "Cenário é hipótese de risco: um tipo de coisa que a fiscalização existe para impedir, nunca descrição da eleição de 2026.",
   "Caso é passado verificado: data, instância, resultado e ao menos uma fonte lida, com o texto bruto e o SHA-256 em data/originals/apuracao_2026/fiscais/ quando o arquivo foi salvo.",
-  "Nenhum caso de 2026 entra; os itens de 2026 encontrados ficam em fora_por_regra.",
+  "Nenhum caso de 2026 entra em casos; os itens de 2026 com fonte ficam em em_apuracao, rotulados alegação ou fato em apuração, sem conclusão nem atribuição de intenção ou lado.",
   "Investigação, denúncia, condenação e absolvição são registradas como tais."
  ],
  "cenarios": [
@@ -1032,6 +1032,17 @@
    "bytes": 239873
   },
   {
+   "id": "abr_pf_1t_2026",
+   "url": "https://agenciabrasil.ebc.com.br/politica/noticia/2026-10/policia-federal-apreende-r-28-milhoes-no-primeiro-turno-das-eleicoes",
+   "titulo": "Polícia Federal apreende R$ 2,8 milhões no primeiro turno das eleições",
+   "veiculo": "Agência Brasil",
+   "data": "2026-10-05",
+   "como_conferido": "curl, texto bruto lido no arquivo salvo",
+   "arquivo": "data/originals/apuracao_2026/fiscais/abr_pf_28mi_1t_2026.html",
+   "sha256": "36b6d1811251808e648a79a5e46926f9d97bc20e3193c97ba6cf57ac688542b1",
+   "bytes": 97902
+  },
+  {
    "id": "agazeta_operacao_solon",
    "url": "https://www.agazeta.com.br/brasil/pf-investiga-acao-de-milicias-nas-eleicoes-do-rio-1120",
    "titulo": "PF investiga ação de milícias nas eleições do Rio",
@@ -1099,6 +1110,17 @@
    "bytes": 169720
   },
   {
+   "id": "atarde_mesaria_salvador_2026",
+   "url": "https://atarde.com.br/salvador/mesaria-e-presa-por-votar-no-lugar-de-policial-militar-em-salvador-1404594",
+   "titulo": "Mesária é presa por votar no lugar de policial militar em Salvador",
+   "veiculo": "A Tarde",
+   "data": "2026-10-05",
+   "como_conferido": "curl, texto bruto lido no arquivo salvo",
+   "arquivo": "data/originals/apuracao_2026/fiscais/atarde_mesaria_salvador_2026.html",
+   "sha256": "c812a7a74a74578d3409017de7cae775d1988630eece5d17ac72c49c4b9dc23c",
+   "bytes": 51385
+  },
+  {
    "id": "atarde_mj_final_1t_2024",
    "url": "https://atarde.com.br/eleicoes/ministerio-da-justica-registrou-3-mil-crimes-eleitorais-no-1-turno-1291099",
    "titulo": "Ministério da Justiça registrou 3 mil crimes eleitorais no 1º turno",
@@ -1108,6 +1130,17 @@
    "arquivo": "data/originals/apuracao_2026/fiscais/atarde_mj_3mil_2024.html",
    "sha256": "0ac134097bb0e6bfa7f0ac5ebfb9e1b05a25284b9beb8e71550f25d5135afc1e",
    "bytes": 52223
+  },
+  {
+   "id": "bahiaeconomica_907_2026",
+   "url": "https://bahiaeconomica.com.br/wp/2026/10/05/eleicoes-2026-registram-907-crimes-eleitorais-no-pais-e-apreensao-de-r-626-mil/",
+   "titulo": "Eleições 2026 registram 907 crimes eleitorais no país e apreensão de R$ 626 mil",
+   "veiculo": "Bahia Econômica",
+   "data": "2026-10-05",
+   "como_conferido": "curl, texto bruto lido no arquivo salvo",
+   "arquivo": "data/originals/apuracao_2026/fiscais/bahiaeconomica_907_2026.html",
+   "sha256": "b75433edeea0c9d6d93c85bbe6a4965d6c12bdf94d94f87179ed965e7b3f5d09",
+   "bytes": 88602
   },
   {
    "id": "brasildefato_milicia",
@@ -1244,6 +1277,17 @@
    "bytes": 144545
   },
   {
+   "id": "correio_mesaria_salvador_2026",
+   "url": "https://www.correio24horas.com.br/bahia/mesaria-e-presa-sob-suspeita-de-votar-no-lugar-de-policial-militar-em-salvador-1026",
+   "titulo": "Mesária é presa sob suspeita de votar no lugar de policial militar em Salvador",
+   "veiculo": "Correio",
+   "data": "2026-10-05",
+   "como_conferido": "curl; arquivo salvo, corpo não extraído pelo parser (conteúdo dinâmico); usado só como fonte corroborante do título",
+   "arquivo": "data/originals/apuracao_2026/fiscais/correio_mesaria_salvador_2026.html",
+   "sha256": "79aa7cc4e337341ed259af38e09c42c2823931dccd6a03320ce2cfe3621dccd0",
+   "bytes": 703361
+  },
+  {
    "id": "diariodonordeste_faccoes_2024",
    "url": "https://diariodonordeste.verdesmares.com.br/pontopoder/ameacas-pedagios-e-prisoes-o-que-se-sabe-sobre-a-interferencia-de-faccoes-nas-eleicoes-de-2024-1.3784247",
    "titulo": "Ameaças, 'pedágios' e prisões: o que se sabe sobre a interferência de facções nas eleições de 2024",
@@ -1319,6 +1363,17 @@
    "arquivo": "data/originals/apuracao_2026/fiscais/a_folhavitoria_moraes_arquiva_blitzes.html",
    "sha256": "963cb4ee5b3be0381aacea741c214841bd475ef56e2cd954ead160a3ba593101",
    "bytes": 367459
+  },
+  {
+   "id": "gp_urnas_1t_2026",
+   "url": "https://www.gazetadopovo.com.br/eleicoes/2026/urnas-substituidas-1861-equipamentos-foram-trocados-1-turno/",
+   "titulo": "Urnas substituídas chegam a 1.904 no primeiro turno; nenhuma seção teve voto em papel",
+   "veiculo": "Gazeta do Povo",
+   "data": "2026-10-05",
+   "como_conferido": "curl, texto bruto lido no arquivo salvo",
+   "arquivo": "data/originals/apuracao_2026/fiscais/gp_urnas_1t_2026.html",
+   "sha256": "9a6cbdb4904287b1e293e8eef48e7704c53dcd48e5b158993c788eb2803eab8b",
+   "bytes": 280715
   },
   {
    "id": "jovempan_relatorio_prf",
@@ -1479,6 +1534,17 @@
    "bytes": 67823
   },
   {
+   "id": "opovo_trerj_66_locais",
+   "url": "https://www.opovo.com.br/noticias/politica/2026/08/05/tre-rj-altera-66-locais-de-votacao-por-questoes-de-seguranca.html",
+   "titulo": "TRE-RJ altera 66 locais de votação por questões de segurança",
+   "veiculo": "O Povo",
+   "data": "2026-08-05",
+   "como_conferido": "curl + leitura do texto extraído",
+   "arquivo": "data/originals/apuracao_2026/fiscais/a_opovo_trerj_66_locais_2026.html",
+   "sha256": "ca6c6e1092a0b0752b0a3de5bcf1cb62213f39ad756660a180249dfccdc4fcbd",
+   "bytes": 95096
+  },
+  {
    "id": "p360_urnas_2t_2024",
    "url": "https://www.poder360.com.br/poder-eleicoes/171-urnas-eletronicas-foram-substituidas-no-2o-turno-diz-tse/",
    "titulo": "171 urnas eletrônicas foram substituídas no 2º turno, diz TSE",
@@ -1488,6 +1554,17 @@
    "arquivo": "data/originals/apuracao_2026/fiscais/p360_urnas_2t_2024.html",
    "sha256": "6a10f3066d15dd32f169ebb1a91f828591d23a42dea714410326116d05aa51ef",
    "bytes": 253988
+  },
+  {
+   "id": "pf_eleitor_de_papel_go",
+   "url": "https://www.gov.br/pf/pt-br/assuntos/noticias/2026/07/pf-combate-esquema-de-fraude-em-transferencias-de-domicilio-eleitoral-em-goias",
+   "titulo": "PF combate esquema de fraude em transferências de domicílio eleitoral em Goiás",
+   "veiculo": "Polícia Federal",
+   "data": "2026-07-30",
+   "como_conferido": "curl + leitura do texto extraído",
+   "arquivo": "data/originals/apuracao_2026/fiscais/a_pf_goias_domicilio_2026.html",
+   "sha256": "79df132c453686fabaf6f460ebecd53fe6e2f80cac29b86f1efc43a0a273142a",
+   "bytes": 112928
   },
   {
    "id": "pf_mendazes_pe",
@@ -1624,6 +1701,28 @@
    "bytes": 144136
   },
   {
+   "id": "senado_balanco_1t_2026",
+   "url": "https://www12.senado.leg.br/noticias/materias/2026/10/04/tse-destaca-normalidade-no-1o-turno-e-reducao-das-denuncias-de-desinformacao",
+   "titulo": "TSE destaca normalidade no 1º turno e redução das denúncias de desinformação",
+   "veiculo": "Agência Senado",
+   "data": "2026-10-04",
+   "como_conferido": "curl, texto bruto lido no arquivo salvo",
+   "arquivo": "data/originals/apuracao_2026/fiscais/senado_tse_balanco_2026.html",
+   "sha256": "a8da53e381d9d4cc6c597e856a95807fb5c7542b3f852ec0976df5e5c381b65c",
+   "bytes": 53221
+  },
+  {
+   "id": "spacemoney_mj_1t_2026",
+   "url": "https://www.spacemoney.com.br/politica/crimes-eleitorais-primeiro-turno",
+   "titulo": "Balanço do Ministério da Justiça aponta cinco crimes eleitorais em flagrante no primeiro turno (cita g1)",
+   "veiculo": "SpaceMoney",
+   "data": "2026-10-04",
+   "como_conferido": "curl, texto bruto lido no arquivo salvo; texto de segunda mão, atribui o balanço ao g1",
+   "arquivo": "data/originals/apuracao_2026/fiscais/spacemoney_5crimes_2026.html",
+   "sha256": "e19c46358aa69041412de3917d0ef923988ca8382bafc7f60d82d5d102ebf8c7",
+   "bytes": 390336
+  },
+  {
    "id": "tresc_ac_29296",
    "url": "https://ejesc.tre-sc.jus.br/site/fileadmin/arquivos/legjurisp/acordaos/2014/29296_.pdf",
    "titulo": "TRE-SC, Acórdão n. 29.296, Recurso Criminal n. 210-07.2012.6.24.0082 (Anchieta)",
@@ -1758,6 +1857,145 @@
    "nota": "Informativo do TRE-PB citado pelo buscador, bloqueado ao curl. Não usado."
   }
  ],
+ "em_apuracao": [
+  {
+   "id": "mesaria_salvador_2026",
+   "data": "2026-10-04",
+   "titulo": "Mesária levada à PF sob suspeita de votar no lugar de um eleitor",
+   "rotulo_curto": "Mesária em Salvador",
+   "local": "BA / Salvador",
+   "orgao": "Polícia Federal (segundo a imprensa)",
+   "cenario": "pianista",
+   "tipo_fato": "prisão em flagrante",
+   "natureza": "relato de imprensa",
+   "estagio": "investigação",
+   "resumo": "Segundo A Tarde, com o mesmo fato no título da matéria do Correio, uma mesária foi presa em flagrante e levada à sede da PF sob suspeita de ter votado no lugar de um policial militar habilitado para voto em trânsito, que não conseguiu votar.",
+   "versao": "Ela disse que o eleitor anterior havia deixado um voto em aberto e que, ao sanar a pendência, acabou votando no lugar do policial.",
+   "versao_curta": "ela diz que finalizava um voto deixado em aberto",
+   "fontes": [
+    "atarde_mesaria_salvador_2026",
+    "correio_mesaria_salvador_2026"
+   ],
+   "ano": 2026,
+   "rotulo": "alegação ou fato em apuração"
+  },
+  {
+   "id": "pm_bahia_1t_2026",
+   "data": "2026-10-04",
+   "titulo": "PM da Bahia registra 147 ocorrências eleitorais no 1º turno",
+   "rotulo_curto": "PM-BA: 17 flagrantes",
+   "local": "BA",
+   "orgao": "Polícia Militar da Bahia (segundo a imprensa)",
+   "cenario": "boca_urna",
+   "tipo_fato": "balanço oficial",
+   "natureza": "relato de imprensa",
+   "estagio": "investigação",
+   "resumo": "Segundo A Tarde, a PM baiana registrou 147 ocorrências ligadas a crimes e irregularidades eleitorais, com 17 presos em flagrante e 21 termos circunstanciados.",
+   "versao": "",
+   "fontes": [
+    "atarde_mesaria_salvador_2026"
+   ],
+   "ano": 2026,
+   "rotulo": "alegação ou fato em apuração"
+  },
+  {
+   "id": "onibus_rr_am_2026",
+   "data": "2026-10-04",
+   "titulo": "Dois ônibus com eleitores encaminhados à PF em Roraima e no Amazonas",
+   "rotulo_curto": "Ônibus em RR e AM",
+   "local": "RR e AM",
+   "orgao": "Ministério da Justiça (balanço relatado pela imprensa)",
+   "cenario": "transporte",
+   "tipo_fato": "encaminhamento à PF",
+   "natureza": "relato de imprensa",
+   "estagio": "investigação",
+   "resumo": "Segundo a SpaceMoney, que cita o g1 e o balanço apresentado pelo Ministério da Justiça, dois ônibus foram encaminhados à PF, um em Roraima com 49 eleitores e outro no Amazonas com 26, sob suspeita de transporte irregular de eleitores.",
+   "versao": "",
+   "fontes": [
+    "spacemoney_mj_1t_2026"
+   ],
+   "ano": 2026,
+   "rotulo": "alegação ou fato em apuração"
+  },
+  {
+   "id": "mj_1t_2026",
+   "data": "2026-10-04",
+   "titulo": "Balanço das polícias no 1º turno de 2026",
+   "rotulo_curto": "MJ: 311 bocas de urna",
+   "local": "Nacional",
+   "orgao": "MJSP, TSE e PF",
+   "cenario": "boca_urna",
+   "tipo_fato": "balanço oficial",
+   "natureza": "fato oficial",
+   "estagio": "investigação",
+   "resumo": "Pelo balanço do MJSP apresentado pelo TSE, relatado pela Bahia Econômica, foram 907 registros de crime eleitoral no dia, 311 deles de boca de urna e 272 de propaganda irregular. A PF, pela Agência Brasil, instaurou 49 inquéritos, lavrou 100 termos circunstanciados e conduziu 204 pessoas.",
+   "versao": "",
+   "fontes": [
+    "abr_pf_1t_2026",
+    "bahiaeconomica_907_2026"
+   ],
+   "ano": 2026,
+   "rotulo": "alegação ou fato em apuração"
+  },
+  {
+   "id": "urnas_1t_2026",
+   "data": "2026-10-04",
+   "titulo": "Urnas substituídas no 1º turno de 2026",
+   "rotulo_curto": "1.861 urnas trocadas",
+   "local": "Nacional",
+   "orgao": "TSE",
+   "cenario": "contingencia",
+   "tipo_fato": "balanço oficial",
+   "natureza": "fato oficial",
+   "estagio": "balanço, sem procedimento aberto",
+   "resumo": "Pelo TSE, segundo a Agência Senado, 1.861 das 499.248 urnas foram substituídas, mais em SP, RJ, PR e MG; a Gazeta do Povo relata balanço posterior de 1.904. Nenhuma seção votou em cédula. Substituir urna é procedimento previsto.",
+   "versao": "",
+   "fontes": [
+    "senado_balanco_1t_2026",
+    "gp_urnas_1t_2026"
+   ],
+   "ano": 2026,
+   "rotulo": "alegação ou fato em apuração"
+  },
+  {
+   "id": "trerj_66_locais_2026",
+   "data": "2026-08-05",
+   "titulo": "TRE-RJ muda 66 locais de votação por segurança",
+   "rotulo_curto": "RJ troca 66 locais",
+   "local": "RJ / 20 municípios",
+   "orgao": "TRE-RJ (segundo a imprensa)",
+   "cenario": "medo",
+   "tipo_fato": "decisão administrativa",
+   "natureza": "relato de imprensa",
+   "estagio": "medida preventiva",
+   "resumo": "Segundo O Povo, o presidente do TRE-RJ alterou 66 locais de votação, cerca de 188 mil eleitores em 20 municípios, para afastá-los de áreas de tráfico ou milícia, e o tribunal aprovou pedido de Força Federal, então pendente no TSE.",
+   "versao": "",
+   "fontes": [
+    "opovo_trerj_66_locais"
+   ],
+   "ano": 2026,
+   "rotulo": "alegação ou fato em apuração"
+  },
+  {
+   "id": "eleitor_de_papel_go_2026",
+   "data": "2026-07-29",
+   "titulo": "Operação Eleitor de Papel: comprovantes de residência para transferir títulos em Novo Gama",
+   "rotulo_curto": "Op. Eleitor de Papel",
+   "local": "GO / Novo Gama",
+   "orgao": "Polícia Federal",
+   "cenario": "cadastro",
+   "tipo_fato": "operação policial",
+   "natureza": "fato oficial",
+   "estagio": "investigação",
+   "resumo": "A PF cumpriu dois mandados de busca e apreensão e medidas cautelares para apurar o fornecimento de comprovantes de residência ideologicamente falsos usados em transferências de título para Novo Gama.",
+   "versao": "",
+   "fontes": [
+    "pf_eleitor_de_papel_go"
+   ],
+   "ano": 2026,
+   "rotulo": "alegação ou fato em apuração"
+  }
+ ],
  "fora_por_regra": [
   {
    "id": "tipologia_fraude_urna_lona",
@@ -1766,30 +2004,6 @@
   {
    "id": "voto_preso_provisorio",
    "motivo": "informação de procedimento, não caso; vira referência do cenário de seções especiais"
-  },
-  {
-   "id": "trerj_66_locais_2026",
-   "motivo": "medida preventiva para a eleição de 2026; nada desta eleição entra como caso"
-  },
-  {
-   "id": "eleitor_de_papel_go_2026",
-   "motivo": "transferências para a eleição de 2026; fora pela mesma regra"
-  },
-  {
-   "id": "mesaria_salvador_2026",
-   "motivo": "flagrante no 1º turno de 2026; fora pela mesma regra"
-  },
-  {
-   "id": "onibus_rr_am_2026",
-   "motivo": "flagrante no 1º turno de 2026; fora pela mesma regra"
-  },
-  {
-   "id": "mj_1t_2026",
-   "motivo": "balanço do 1º turno de 2026; fora pela mesma regra"
-  },
-  {
-   "id": "urnas_1t_2026",
-   "motivo": "balanço do 1º turno de 2026; fora pela mesma regra"
   }
  ]
 }

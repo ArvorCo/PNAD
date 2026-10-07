@@ -249,16 +249,17 @@ def fig_casos() -> str:
     """Linha do tempo vertical em duas colunas: ano, marcador e rótulo curto de cada caso."""
     J = cenarios()
     casos = FC.casos_ordenados(J)
+    linha = FC.linha_do_tempo(J)
     cens = FC.por_id(J["cenarios"])
-    meio = (len(casos) + 1) // 2
-    colunas = [casos[:meio], casos[meio:]]
+    meio = (len(linha) + 1) // 2
+    colunas = [linha[:meio], linha[meio:]]
     topo, base = 70, H - 82
     passo = (base - topo) / max(meio - 1, 1)
     out = [
         t(
             0,
             26,
-            f"{num(len(casos))} casos documentados, do mais antigo ao mais recente",
+            f"{num(len(casos))} casos documentados e {num(len(linha) - len(casos))} registros de 2026 em apuração",
             19,
             INK,
             700,
@@ -274,18 +275,29 @@ def fig_casos() -> str:
         ano_ant = None
         for i, c in enumerate(col):
             y = topo + i * passo
-            cor = FC.COR_FAMILIA[cens[c["cenario"]]["familia"]]
+            cor = (
+                FC.COR_APURACAO
+                if c["em_apuracao"]
+                else FC.COR_FAMILIA[cens[c["cenario"]]["familia"]]
+            )
             if c["ano"] != ano_ant:
-                out.append(t(xa - 18, y + 6, c["ano"], 17, INK, 700, "end", MONO))
+                out.append(t(xa - 18, y + 6, c["ano"], 16, INK, 700, "end", MONO))
                 ano_ant = c["ano"]
-            out.append(circ(xa, y, 9, cor, f' stroke="{WHITE}" stroke-width="2"'))
-            out.append(t(xa + 20, y + 6, c["rotulo_curto"], 18, cor, 700))
+            if c["em_apuracao"]:
+                out.append(circ(xa, y, 7, WHITE, f' stroke="{cor}" stroke-width="3"'))
+            else:
+                out.append(circ(xa, y, 8, cor, f' stroke="{WHITE}" stroke-width="2"'))
+            out.append(t(xa + 20, y + 6, c["rotulo_curto"], 17, cor, 700))
     y = H - 12
     x = 0
     for f in FC.FAMILIAS:
         out.append(circ(x + 9, y - 6, 9, FC.COR_FAMILIA[f]))
         out.append(t(x + 26, y, FC.ROT_FAMILIA[f], 16, INK, 600))
         x += 46 + 8.4 * len(FC.ROT_FAMILIA[f])
+    out.append(
+        circ(x + 9, y - 6, 7, WHITE, f' stroke="{FC.COR_APURACAO}" stroke-width="3"')
+    )
+    out.append(t(x + 26, y, "Em apuração", 16, INK, 600))
     out.append(ln(0, y - 30, W, y - 30, GRID))
     return svg("".join(out), "Linha do tempo dos casos documentados")
 

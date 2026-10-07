@@ -14,10 +14,14 @@ from collections.abc import Callable
 from html import escape
 
 from . import fiscais_cenarios as FC
-from .pagina_comum import caixa, inteiro, nota, p
+from .pagina_comum import caixa, inteiro, nota, p, rotulo
 from .pagina_texto import lista
 
-H3 = ["Os cenários que o fiscal existe para impedir", "O que já aconteceu"]
+H3 = [
+    "Os cenários que o fiscal existe para impedir",
+    "O que já aconteceu",
+    "Em apuração nesta eleição",
+]
 
 
 def _link(f: dict) -> str:
@@ -167,6 +171,41 @@ def casos(J: dict, fig: Callable[[str], str]) -> str:
     return h
 
 
+def em_apuracao(J: dict) -> str:
+    itens = FC.apuracao_ordenada(J)
+    if not itens:
+        return ""
+    cens = FC.por_id(J["cenarios"])
+    h = "<h3>Em apuração nesta eleição</h3>"
+    oficiais = [x for x in itens if x["natureza"] == "fato oficial"]
+    h += p(
+        f"{inteiro(len(itens))} registros de 2026 com fonte conferida, separados dos casos documentados porque nenhum "
+        f"tem conclusão. {inteiro(len(oficiais))} são fato oficial (operação, balanço ou ato de órgão público) e "
+        f"{inteiro(len(itens) - len(oficiais))} são relato de imprensa sobre ato de órgão público. Cada item diz o que o "
+        "fato é e em que estágio está; nenhum é fraude provada, e nenhum atribui intenção ou lado a ninguém. "
+        "Onde há versão do acusado ou do órgão, ela vem na mesma frase.",
+        "apuracao",
+    )
+    for nat in ("fato oficial", "relato de imprensa"):
+        grupo = [x for x in itens if x["natureza"] == nat]
+        if not grupo:
+            continue
+        lis = "".join(
+            f"<li><strong>{escape(FC.data_br(x['data']))}, {escape(x['titulo'])}</strong> ({escape(x['local'])}; "
+            f"{escape(x['orgao'])}). {rotulo('apuracao')} {escape(x['tipo_fato']).capitalize()}, "
+            f"estágio {escape(x['estagio'])}; cenário {escape(cens[x['cenario']]['nome'].lower())}. "
+            f"{escape(x['resumo'])}"
+            + (f" {escape(x['versao'])}" if x.get("versao") else "")
+            + " "
+            + " ".join(_link(FC.fonte(J, f)) for f in x["fontes"])
+            + "</li>"
+            for x in grupo
+        )
+        titulo = "Fato oficial" if nat == "fato oficial" else "Relato de imprensa"
+        h += f'<p><strong>{titulo}.</strong></p><ul class="fs-casos-lista">{lis}</ul>'
+    return h
+
+
 def fontes(J: dict) -> str:
     lis = "".join(
         f"<li>{_link(f)}: {escape(f['titulo'])}. {escape(f['como_conferido'])}"
@@ -190,7 +229,8 @@ def responsavel(F: dict) -> str:
     rot = F.get("rotulos") or {}
     return nota(
         "juizo",
-        "Nenhum cenário desta seção é atribuído à eleição de 2026, e nenhum caso listado é desta eleição. Os casos "
+        "Nenhum cenário desta seção é atribuído à eleição de 2026, e nenhum caso documentado é desta eleição; os "
+        "registros de 2026 são alegação ou fato em apuração, sem conclusão. Os casos "
         "mostram que esses mecanismos existiram e que a Justiça Eleitoral os puniu quando houve prova; os cenários "
         "dizem o que o fiscal procura. "
         + escape(
@@ -208,7 +248,13 @@ def bloco(F: dict, fig: Callable[[str], str], d_aviso) -> str:
     erros = FC.validar(J, {c["id"] for c in F["criterios"]})
     if erros:
         raise ValueError("fontes_fiscais.json: " + "; ".join(erros[:5]))
-    return cenarios(F, J, fig) + casos(J, fig) + fontes(J) + responsavel(F)
+    return (
+        cenarios(F, J, fig)
+        + casos(J, fig)
+        + em_apuracao(J)
+        + fontes(J)
+        + responsavel(F)
+    )
 
 
-__all__ = ["H3", "bloco", "casos", "cenarios", "fontes", "responsavel"]
+__all__ = ["H3", "bloco", "casos", "cenarios", "em_apuracao", "fontes", "responsavel"]

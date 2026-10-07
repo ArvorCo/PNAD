@@ -338,6 +338,7 @@ SELOS = {
     "hipotese": "Hipótese",
     "juizo": "Juízo editorial",
     "relato": "Relato da imprensa",
+    "apuracao": "Alegação ou fato em apuração",
     "contrario": "Achado contrário",
 }
 CAIXA_DO_SELO = {"juizo": "juizo", "hipotese": "hyp", "contrario": "hyp"}

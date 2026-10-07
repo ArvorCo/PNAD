@@ -55,7 +55,7 @@ strong{font-weight:700}
 .selo{display:inline-block;font:700 11px/1 var(--sans);letter-spacing:.06em;text-transform:uppercase;
 padding:5px 7px 4px;border-radius:3px;color:#fff;vertical-align:2px;margin-right:4px}
 .selo-verificado{background:var(--teal)}.selo-inferencia{background:var(--blue)}
-.selo-hipotese{background:var(--gold)}.selo-juizo{background:var(--ink)}.selo-relato{background:var(--muted)}
+.selo-hipotese{background:var(--gold)}.selo-juizo{background:var(--ink)}.selo-relato{background:var(--muted)}.selo-apuracao{background:#5f6773}
 figure{margin:34px 0;border:1px solid var(--line);padding:16px;background:var(--paper)}
 .chart-scroll{overflow-x:auto}
 .chart-scroll svg{display:block;width:100%;min-width:760px;height:auto}

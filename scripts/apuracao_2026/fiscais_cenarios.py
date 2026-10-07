@@ -70,6 +70,42 @@ CAMPOS_CASO = (
 )
 ROTULO_MAX = 22
 """Rótulo curto de cada caso na linha do tempo: até 22 caracteres."""
+ROT_APURACAO = "alegação ou fato em apuração"
+"""Rótulo obrigatório de todo item de 2026: nunca fraude provada, nunca intenção ou lado."""
+COR_APURACAO = "#5f6773"
+TIPOS_FATO = (
+    "prisão em flagrante",
+    "encaminhamento à PF",
+    "operação policial",
+    "balanço oficial",
+    "decisão administrativa",
+    "decisão judicial",
+)
+ESTAGIOS = (
+    "investigação",
+    "denúncia",
+    "condenação",
+    "arquivamento",
+    "medida preventiva",
+    "balanço, sem procedimento aberto",
+)
+NATUREZAS = ("fato oficial", "relato de imprensa")
+CAMPOS_APURACAO = (
+    "id",
+    "data",
+    "titulo",
+    "rotulo_curto",
+    "local",
+    "orgao",
+    "cenario",
+    "tipo_fato",
+    "natureza",
+    "estagio",
+    "resumo",
+    "fontes",
+    "rotulo",
+)
+PALAVRAS_VEDADAS_APURACAO = ("fraude", "fraudou", "criminoso", "culpad")
 CAMPOS_FONTE = ("id", "url", "titulo", "veiculo", "data", "como_conferido")
 
 
@@ -99,6 +135,52 @@ def cenario(J: dict, ident: str) -> dict:
 
 def casos_ordenados(J: dict) -> list[dict]:
     return sorted(J["casos"], key=lambda c: (int(c["ano"]), c["data"], c["id"]))
+
+
+def apuracao_ordenada(J: dict) -> list[dict]:
+    return sorted(J.get("em_apuracao") or [], key=lambda x: (x["data"], x["id"]))
+
+
+def linha_do_tempo(J: dict) -> list[dict]:
+    """Casos documentados e itens em apuração, em ordem, com a marca `em_apuracao`."""
+    itens = [dict(c, em_apuracao=False) for c in casos_ordenados(J)]
+    itens += [dict(x, em_apuracao=True) for x in apuracao_ordenada(J)]
+    return sorted(itens, key=lambda c: (int(c["ano"]), c["data"], c["id"]))
+
+
+def validar_apuracao(J: dict) -> list[str]:
+    erros: list[str] = []
+    fontes = por_id(J.get("fontes") or [])
+    cens = por_id(J.get("cenarios") or [])
+    for x in J.get("em_apuracao") or []:
+        ident = x.get("id")
+        for campo in CAMPOS_APURACAO:
+            if campo not in x or x[campo] in (None, "", []):
+                erros.append(f"em apuração {ident}: sem {campo}")
+        if x.get("rotulo") != ROT_APURACAO:
+            erros.append(f"em apuração {ident}: rótulo diferente de {ROT_APURACAO!r}")
+        if x.get("tipo_fato") not in TIPOS_FATO:
+            erros.append(f"em apuração {ident}: tipo_fato {x.get('tipo_fato')}")
+        if x.get("estagio") not in ESTAGIOS:
+            erros.append(f"em apuração {ident}: estagio {x.get('estagio')}")
+        if x.get("natureza") not in NATUREZAS:
+            erros.append(f"em apuração {ident}: natureza {x.get('natureza')}")
+        if x.get("cenario") not in cens:
+            erros.append(f"em apuração {ident}: cenário {x.get('cenario')} ausente")
+        if len(str(x.get("rotulo_curto") or "")) > ROTULO_MAX:
+            erros.append(
+                f"em apuração {ident}: rotulo_curto com mais de {ROTULO_MAX} caracteres"
+            )
+        for f in x.get("fontes", []):
+            if f not in fontes:
+                erros.append(f"em apuração {ident}: fonte {f} ausente")
+        texto = " ".join(
+            str(x.get(k) or "") for k in ("titulo", "resumo", "versao", "rotulo_curto")
+        ).lower()
+        for p in PALAVRAS_VEDADAS_APURACAO:
+            if p in texto:
+                erros.append(f"em apuração {ident}: palavra vedada {p!r}")
+    return erros
 
 
 def casos_do_cenario(J: dict, ident: str) -> list[dict]:
@@ -188,6 +270,7 @@ def validar(J: dict, criterios: set[str] | None = None) -> list[str]:
         for f in c.get("fontes", []):
             if f not in fontes:
                 erros.append(f"cenário {c.get('id')}: fonte {f} ausente")
+    erros += validar_apuracao(J)
     texto = json.dumps(J, ensure_ascii=False)
     if "—" in texto:
         erros.append("travessão no JSON")

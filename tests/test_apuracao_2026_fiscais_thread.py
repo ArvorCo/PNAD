@@ -108,3 +108,14 @@ def test_card_dos_casos_tem_rotulo_curto(posts):
     svg = next(p["svg"] for p in posts if p["tag"] == "O que já aconteceu")
     for c in cenarios()["casos"]:
         assert c["rotulo_curto"] in svg.replace("&#x27;", "'"), c["id"]
+
+
+def test_post_dos_casos_traz_os_registros_em_apuracao(posts):
+    from apuracao_2026.fiscais_cenarios import ROT_APURACAO
+    from apuracao_2026.fthread_base import cenarios
+
+    p = next(p for p in posts if p["tag"] == "O que já aconteceu")
+    assert ROT_APURACAO in p["corpo"]
+    for x in cenarios()["em_apuracao"]:
+        assert x["rotulo_curto"] in p["corpo"], x["id"]
+        assert x["rotulo_curto"] in p["svg"].replace("&#x27;", "'"), x["id"]

@@ -138,3 +138,34 @@ def test_rotulo_curto_de_cada_caso(J, F):
     fig = figura_catalogo("fiscais_casos", {"fiscais": F})
     for c in J["casos"]:
         assert escape(c["rotulo_curto"]) in fig, c["id"]
+
+
+def test_em_apuracao_com_rotulo_obrigatorio(J):
+    itens = J.get("em_apuracao") or []
+    assert itens, "sem registros em apuração"
+    for x in itens:
+        assert x["rotulo"] == FC.ROT_APURACAO, x["id"]
+        assert x["tipo_fato"] in FC.TIPOS_FATO and x["estagio"] in FC.ESTAGIOS
+        assert x["natureza"] in FC.NATUREZAS
+        assert 0 < len(x["rotulo_curto"]) <= FC.ROTULO_MAX
+        assert "fraude" not in (x["titulo"] + x["resumo"]).lower()
+    ruim = copy.deepcopy(J)
+    ruim["em_apuracao"][0]["rotulo"] = "verificado"
+    ruim["em_apuracao"][1]["resumo"] += " Houve fraude."
+    ruim["em_apuracao"][2]["estagio"] = "culpa"
+    erros = FC.validar(ruim)
+    assert any("rótulo" in e for e in erros)
+    assert any("palavra vedada" in e for e in erros)
+    assert any("estagio" in e for e in erros)
+
+
+def test_em_apuracao_no_texto_e_na_figura(J, F):
+    h = TFB.bloco(F, lambda nome: figura_catalogo(nome, {"fiscais": F}), print)
+    ini = h.index("<h3>Em apuração nesta eleição</h3>")
+    trecho = h[ini : h.index("<details>", ini)]
+    assert trecho.count("selo-apuracao") == len(J["em_apuracao"]) + 1
+    assert "Fato oficial." in trecho and "Relato de imprensa." in trecho
+    fig = figura_catalogo("fiscais_casos", {"fiscais": F})
+    for x in J["em_apuracao"]:
+        assert escape(x["rotulo_curto"]) in fig, x["id"]
+    assert "Em apuração, 2026" in fig

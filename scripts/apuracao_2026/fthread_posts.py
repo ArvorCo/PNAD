@@ -123,11 +123,12 @@ POSTS: list[dict] = [
         "fig": G.fig_casos,
         "fonte": "fontes_fiscais.json, casos com instância, resultado e fonte lida",
         "texto": [
-            "Verificado, com fonte. Os cenários dos dois posts anteriores não são teoria. O dossiê reúne {n_casos} casos brasileiros documentados, de {ano_ini} a {ano_fim}, cada um com data, instância, resultado e uma fonte lida pela casa. Nenhum é desta eleição.",
+            "Verificado, com fonte. Os cenários dos dois posts anteriores não são teoria. O dossiê reúne {n_casos} casos brasileiros documentados, de {ano_ini} a {ano_fim}, cada um com data, instância, resultado e uma fonte lida pela casa. Nenhum caso documentado é desta eleição.",
             "{casos_p1}",
             "{casos_p2}",
             "{casos_p3}",
-            "Investigação, denúncia e condenação são coisas diferentes, e cada caso diz em que ponto parou. Os casos mostram que esses mecanismos existiram e que a Justiça Eleitoral os puniu quando houve prova. A lista completa, com o link de cada fonte, está no capítulo dos fiscais do dossiê em brasil.arvor.co.",
+            "{apuracao_p}",
+            "Investigação, denúncia e condenação são coisas diferentes, e cada item diz em que ponto parou. A lista completa, com o link de cada fonte, está no capítulo dos fiscais do dossiê em brasil.arvor.co.",
         ],
     },
     {

@@ -200,8 +200,9 @@ def fiscais_casos(d, **_op) -> str:
     cens = FC.por_id(J["cenarios"])
     fontes = FC.por_id(J["fontes"])
     tips = Tips()
-    meio = (len(casos) + 1) // 2
-    colunas = [casos[:meio], casos[meio:]]
+    linha = FC.linha_do_tempo(J)
+    meio = (len(linha) + 1) // 2
+    colunas = [linha[:meio], linha[meio:]]
     w, topo, passo = 1100, 62, 34
     h = topo + passo * (meio - 1) + 76
     anos = sorted({c["ano"] for c in casos})
@@ -212,7 +213,8 @@ def fiscais_casos(d, **_op) -> str:
             "Linha do tempo dos casos brasileiros documentados de manipulação do voto",
             "Duas colunas, do caso mais antigo ao mais recente: o ano, um marcador com a cor de onde o cenário "
             "acontece e o rótulo curto do caso. Cada caso tem data, instância, resultado e fonte na ficha e na "
-            "tabela abaixo.",
+            "tabela abaixo. Os registros de 2026 têm marcador vazado cinza: alegação ou fato em apuração, sem "
+            "conclusão.",
         ),
         t(
             0,
@@ -241,26 +243,48 @@ def fiscais_casos(d, **_op) -> str:
                 )
                 ano_ant = c["ano"]
             fts = [fontes[f] for f in c["fontes"]]
-            k_ = tips.add(
-                ficha(
-                    c["titulo"],
-                    f"fato em {c['ano']}, ato em {FC.data_br(c['data'])} · {c['local']}",
-                    [
-                        ("Cenário", cen["nome"]),
-                        ("Instância", c["instancia"]),
-                        ("Resultado", c["resultado"]),
-                        (
-                            "Fonte",
-                            "; ".join(
-                                f"{f['veiculo']}, {FC.data_br(f['data'])}" for f in fts
-                            ),
-                        ),
-                    ],
-                    f"Verificado. {c['resumo']}",
-                )
+            fonte_txt = "; ".join(
+                f"{f['veiculo']}, {FC.data_br(f['data'])}" for f in fts
             )
+            if c["em_apuracao"]:
+                cor = FC.COR_APURACAO
+                k_ = tips.add(
+                    ficha(
+                        c["titulo"],
+                        f"{FC.data_br(c['data'])} · {c['local']} · {c['orgao']}",
+                        [
+                            ("Natureza", FC.ROT_APURACAO),
+                            ("O que é", c["tipo_fato"]),
+                            ("Estágio", c["estagio"]),
+                            ("Fonte", f"{c['natureza']}: {fonte_txt}"),
+                        ],
+                        f"{c['resumo']} {c.get('versao') or ''}".strip(),
+                    )
+                )
+                marca = (
+                    f'<circle cx="{xa:.1f}" cy="{y:.1f}" r="{raio - 1}" fill="{PAPER}" '
+                    f'stroke="{cor}" stroke-width="3"/>'
+                )
+            else:
+                k_ = tips.add(
+                    ficha(
+                        c["titulo"],
+                        f"fato em {c['ano']}, ato em {FC.data_br(c['data'])} · {c['local']}",
+                        [
+                            ("Cenário", cen["nome"]),
+                            ("Instância", c["instancia"]),
+                            ("Resultado", c["resultado"]),
+                            ("Fonte", fonte_txt),
+                        ],
+                        f"Verificado. {c['resumo']}",
+                    )
+                )
+                marca = (
+                    f'<circle cx="{xa:.1f}" cy="{y:.1f}" r="{raio}" fill="{cor}" '
+                    f'stroke="{PAPER}" stroke-width="2"/>'
+                )
             corpo = (
-                f'<circle cx="{xa:.1f}" cy="{y:.1f}" r="{raio}" fill="{cor}" stroke="{PAPER}" stroke-width="2"/>'
+                marca
                 + t(xa + 18, y + 5, c["rotulo_curto"], 15, cor, weight="700")
                 + area(xa - raio - 4, y - passo / 2, 420, passo)
             )
@@ -274,6 +298,10 @@ def fiscais_casos(d, **_op) -> str:
         )
         out.append(t(lx + 20, ly, FC.ROT_FAMILIA[f], 13.5, INK))
         lx += 34 + 7.2 * len(FC.ROT_FAMILIA[f])
+    out.append(
+        f'<circle cx="{lx + 7}" cy="{ly - 5}" r="6" fill="{PAPER}" stroke="{FC.COR_APURACAO}" stroke-width="3"/>'
+    )
+    out.append(t(lx + 20, ly, "Em apuração, 2026", 13.5, INK))
     out.append("</svg>")
     linhas = []
     for c in casos:
@@ -297,6 +325,8 @@ def fiscais_casos(d, **_op) -> str:
     )
     legenda = (
         f"{len(casos)} casos de {anos[0]} a {anos[-1]}, todos com fonte lida e data, com o rótulo curto ao lado do marcador. "
+        f"Os {len(linha) - len(casos)} marcadores vazados cinza são registros de 2026, alegação ou fato em apuração, "
+        "sem conclusão; ficam fora da tabela e aparecem no bloco Em apuração nesta eleição. "
         "O ano é o do fato; a data abaixo do ano, na tabela, é a do ato documentado (decisão, operação, "
         "relatório). Investigação, denúncia e condenação são coisas diferentes, e a coluna de resultado diz qual é qual. "
         "Fonte: fontes_fiscais.json."
