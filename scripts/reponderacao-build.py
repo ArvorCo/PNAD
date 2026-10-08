@@ -12,7 +12,6 @@ from html import escape as esc
 from ga_tag import injetar
 from reponderacao_vista.charts import (
     gap_svg,
-    instituto_svg,
     renda_svg,
     serie_svg,
     slope_svg,
@@ -47,7 +46,6 @@ from reponderacao_vista.context import (
     groups_view,
     longo,
     periodo,
-    plural,
     rotulo,
     sinal,
 )
@@ -230,7 +228,9 @@ def cartao(pesquisa: dict) -> str:
             )
 
     return (
-        f'<article class="poll reveal" id="pesquisa-{esc(pesquisa["id"], quote=True)}">'
+        f'<article class="poll reveal" id="pesquisa-{esc(pesquisa["id"], quote=True)}" '
+        f'data-research-house="{esc(pesquisa["instituto"], quote=True)}" data-research-release="{pesquisa["divulgacao"]}" '
+        f'data-research-turns="{",".join(pesquisa["turnos"])}">'
         f'<header class="poll-head"><div><h3>{esc(pesquisa["instituto"])}, '
         f"campo de {esc(periodo(pesquisa['campo']))}</h3>"
         f'<p class="note">{esc(pesquisa["registro_tse"])} · contratante {esc(pesquisa["contratante"])} · '
@@ -255,12 +255,22 @@ def cartao(pesquisa: dict) -> str:
         f"{slope_svg(pesquisa) if pesquisa['turnos'] else '<p>Sem cenário elegível nesta onda. O primeiro turno com Marçal permanece apenas no arquivo histórico.</p>'}</div>"
         f'<p class="note">Ponto vazado é o publicado pelo instituto. Ponto cheio é a '
         f"reponderação Arvor, que é inferência.</p></div></div>"
+        + '<p class="note">Os cenários e as demais opções abaixo usam o total de entrevistados.'
+        + (
+            " A comparação do 1º turno com a urna, em votos válidos, está nos detalhes da ficha."
+            if t1
+            else ""
+        )
+        + "</p>"
         + tabela(
             ["Turno", "Cenário da PNAD", "Lula", "Flávio", "Diferença", "Uso"],
             cenarios,
             cls="scenarios",
         )
         + extras
+        + importlib.import_module("reponderacao_vista.urna_view").poll_table(
+            pesquisa, tabela, CENARIOS
+        )
         + "</article>"
     )
 
@@ -354,7 +364,7 @@ def ch_primeiro_turno() -> str:
                     sinal(ajustado(t)[chave] - t["publicado"][chave], 1),
                 ]
             )
-    corpo = (
+    historico = (
         groups_view.scenario_summary(D, tabela)
         + figura(
             "primeiro-turno-chart",
@@ -370,7 +380,6 @@ def ch_primeiro_turno() -> str:
             "No celular, deslize o gráfico para ver as datas recentes e os grupos.",
         )
         + importlib.import_module("reponderacao-janela-view").summary(D, "1t", tabela)
-        + placar("1t")
         + groups_view.group_summary(D, tabela, br)
         + importlib.import_module("reponderacao-nao-escolha-view").summary(
             D, "1t", tabela, br
@@ -387,9 +396,13 @@ def ch_primeiro_turno() -> str:
     return capitulo(
         2,
         "primeiro-turno",
-        "O 1º turno",
-        "A mesma conta aplicada à primeira volta, com todas as candidaturas medidas.",
-        corpo,
+        "O 1º turno contra a urna",
+        "O resultado oficial, o erro das últimas ondas e o efeito da renda, sob o mesmo denominador.",
+        importlib.import_module("reponderacao_vista.urna_view").section(tabela)
+        + '<details class="urna-details"><summary>Explorar o histórico do 1º turno sobre o total de entrevistados</summary>'
+        + '<p class="note">Arquivo histórico em percentuais sobre o total; estes números não são comparados diretamente com os votos válidos da urna. As séries mostram as preferências nas datas das pesquisas. <a href="apuracao_1o_turno_2026.html#pesquisas">Comparação final e metodologia do erro</a>.</p>'
+        + historico
+        + "</details>",
     )
 
 
@@ -442,76 +455,13 @@ def ch_manchete() -> str:
     )
 
 
-def _painel_instituto(nome: str, turno: str) -> str:
-    if nome == "Palver":
-        palver_view = importlib.import_module("reponderacao-palver-view")
-        historico = palver_view.history_polls()
-        return (
-            f'<article class="panel reveal" data-instituto="Palver" data-turno="{turno}">'
-            f"<h3>Palver <small>{TURNOS[turno]}</small></h3>"
-            f'<div class="fig">{instituto_svg(nome, turno, historico)}</div>'
-            f'<p class="note"><b>{palver_view.history_count()}.</b> A onda 2 original (v1) foi substituída '
-            "pela revisada (v2). Todos os pontos estão visíveis; a v1 fica fora das médias. "
-            + (
-                "Os dois cenários de 07/09 incluem Marçal e também ficam fora da média do 1º turno. "
-                if turno == "1t"
-                else ""
-            )
-            + "Vazado é publicado, cheio é reponderado. "
-            '<a href="#palver-pesos">Fontes, valores e critérios</a>.</p></article>'
-        )
-    ondas = sum(1 for p in PESQUISAS if p["instituto"] == nome and turno in p["turnos"])
-    total = sum(1 for p in PESQUISAS if p["instituto"] == nome)
-    if turno == "2t" and ondas < total:
-        cobertura = f"{ondas} de {total} ondas cruzam o 2º turno por renda"
-    elif turno == "1t" and not any(
-        "2t" in p["turnos"] for p in PESQUISAS if p["instituto"] == nome
-    ):
-        cobertura = f"{plural(ondas, 'onda', 'ondas')}; o instituto não cruza o 2º turno por renda"
-    else:
-        cobertura = plural(ondas, "onda auditada", "ondas auditadas")
-    ultimas = [p for p in PESQUISAS if p["instituto"] == nome and turno in p["turnos"]]
-    resumo = ""
-    if ultimas:
-        onda = ultimas[-1]
-        resultado = onda["turnos"][turno]
-        pub, adj = resultado["publicado"], ajustado(resultado)
-        resumo = (
-            f'<p class="note"><b>Última onda · campo até {curto(onda["campo"]["fim"])}'
-            f' · divulgação {curto(onda["divulgacao"])}.</b><br>'
-            f'Lula × Flávio: publicado <b>{br(pub["lula"], 0)} × {br(pub["flavio"], 0)}</b>; '
-            f'reponderado <b>{br(adj["lula"], 2)} × {br(adj["flavio"], 2)}</b> (%).</p>'
-        )
-    return (
-        f'<article class="panel reveal"><h3>{esc(nome)} <small>{TURNOS[turno]}</small></h3>'
-        f'<div class="fig">{instituto_svg(nome, turno)}</div>{resumo}'
-        f'<p class="note">{cobertura}. Vazado é publicado, cheio é reponderado.</p></article>'
-    )
-
-
 def ch_institutos() -> str:
-    so_1t = [
-        nome
-        for nome in INSTITUTOS
-        if not any(p["instituto"] == nome and "2t" in p["turnos"] for p in PESQUISAS)
-    ]
-    paineis = "".join(
-        _painel_instituto(nome, turno)
-        for nome in INSTITUTOS
-        for turno in ("2t", "1t")
-        if any(p["instituto"] == nome and turno in p["turnos"] for p in PESQUISAS)
-    )
     return capitulo(
         4,
         "institutos",
         "Instituto por instituto",
-        "O mesmo desenho repetido em painéis pequenos, para comparar a distância entre a "
-        "publicação e a régua dentro de cada casa.",
-        f'<div class="grid-3">{paineis}</div>'
-        '<p class="note">Cada instituto recebe um painel por turno que cruza por renda: '
-        f"quem só publica o 1º turno por faixa de renda ({esc(', '.join(so_1t))}) "
-        "aparece só com ele. Painéis com uma só onda mostram os pontos sem linha: com uma "
-        "medida não há série. A escala vertical é própria de cada painel.</p>",
+        "Dois turnos, duas leituras: acompanhar a corrida atual e conferir o histórico contra a urna.",
+        importlib.import_module("reponderacao_vista.institutos").body(),
     )
 
 
@@ -522,7 +472,10 @@ def ch_pesquisas() -> str:
         "Pesquisa por pesquisa",
         "Cada onda com a ficha do documento, a composição de renda, o efeito da troca e a "
         "prova de que a leitura do relatório está certa.",
-        "".join(cartao(p) for p in RECENTES),
+        '<div class="research-controls" hidden><label>Turno<select id="research-turn"><option value="all">Todos os turnos</option><option value="2t">2º turno</option><option value="1t">1º turno</option></select></label>'
+        '<label>Ondas<select id="research-waves"><option value="latest">Última de cada casa por turno</option><option value="all">Todas as ondas do arquivo</option></select></label></div>'
+        '<p id="research-state" class="note" aria-live="polite">Arquivo completo, da onda mais recente à mais antiga.</p>'
+        + "".join(cartao(p) for p in RECENTES),
     )
 
 
@@ -687,10 +640,11 @@ def toc() -> str:
         ("projecao-validos", "Projeção de válidos"),
         ("atualizacao", "Atualização"),
         ("segundo-turno", "2º turno"),
-        ("primeiro-turno", "1º turno"),
+        ("primeiro-turno", "1º turno × urna"),
         ("palver-pesos", "Palver e pesos"),
         ("manchete", "Manchete"),
-        ("institutos", "Institutos"),
+        ("institutos-2t", "Institutos · 2º turno"),
+        ("institutos-1t", "Institutos · 1º turno"),
         ("comparar-metodos", "Comparar métodos"),
         ("pesquisas", "Pesquisas"),
         ("metodo", "Método"),
@@ -737,7 +691,7 @@ def build_html() -> str:
         "<span>Agregador de pesquisas</span></header>"
         '<main id="conteudo">'
         + hero()
-        + '<div class="wrap"><p class="note">Da intenção à urna: <a href="predicao_2026_1T_presidente.html">previsão experimental do 1º turno</a>, condicionada a este agregador, com comparecimento do TSE, incerteza e simulador de voto útil.</p></div>'
+        + '<div class="wrap"><p class="note"><b>1º turno encerrado; 2º turno em andamento.</b> <a href="apuracao_1o_turno_2026.html#pesquisas">Apuração e auditoria completa das pesquisas</a> · <a href="predicao_2026_1T_presidente.html">Arquivo da previsão experimental do 1º turno</a>.</p></div>'
         + toc()
         + corpo
         + '</main><footer class="wrap footer"><b>ARVOR Intelligence</b>'
@@ -747,7 +701,7 @@ def build_html() -> str:
         " · uso livre com crédito e link</span></footer>"
         + bloco_tips()
         + f"<script>{SCRIPT}</script>"
-        '<script src="assets/reponderacao_tip.js" defer></script><script src="assets/reponderacao_metodologias.js" defer></script><script src="assets/reponderacao_validos.js" defer></script></body></html>'
+        '<script src="assets/reponderacao_tip.js" defer></script><script src="assets/reponderacao_metodologias.js" defer></script><script src="assets/reponderacao_validos.js" defer></script><script src="assets/reponderacao_pesquisas.js" defer></script></body></html>'
     )
 
 

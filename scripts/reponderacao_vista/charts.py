@@ -497,6 +497,10 @@ def gap_svg(ident: str, turno: str) -> str:
 
 
 def instituto_svg(nome: str, turno: str, historico: list[dict] | None = None) -> str:
+    if turno == "1t" and historico is None:
+        from reponderacao_vista.urna_charts import instituto_svg as validos_svg
+
+        return validos_svg(nome)
     polls = (
         historico
         if historico is not None

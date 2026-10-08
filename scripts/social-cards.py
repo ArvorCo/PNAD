@@ -143,13 +143,13 @@ CARDS: list[dict] = [
         "eyebrow": "Agregador Arvor · pesquisas sob a régua do IBGE",
         "title": "A corrida",
         "title_em": "sob a régua oficial.",
-        "lede": "Toda pesquisa nacional reponderada pela distribuição de renda da <b>PNAD Contínua anual de 2025</b>. Uma margem trocada, o resto como o instituto ponderou.",
+        "lede": "<b>2º turno sob a renda da PNAD.</b> Primeiro turno confrontado com a urna: placares e erros das últimas ondas, publicados e reponderados, em votos válidos.",
         "stats": [
             (_ONDAS, "ondas desde maio de 2026"),
             (_INSTITUTOS, "institutos na mesma régua"),
             ("1", "margem trocada: a renda"),
         ],
-        "foot": "sensibilidade sob régua comum, não resultado de eleição",
+        "foot": "uma margem de renda · comparação com a urna em votos válidos",
         "accent": "blue",
     },
     {

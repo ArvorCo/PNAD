@@ -107,6 +107,7 @@ def ficha_onda(pesquisa: dict, turno: str) -> str:
         f"<span>{esc(TURNOS[turno])}</span></p>",
         f'<p class="tip-doc">campo {esc(periodo(pesquisa["campo"]))} · '
         f"n = {br(pesquisa['n'], 0)} · {esc(pesquisa.get('registro_tse') or 'sem registro')}</p>",
+        '<p class="tip-nota">Percentuais sobre o total de entrevistados.</p>',
         "".join(linhas),
         f'<p class="tip-nota">Margem de 95% da diferença publicada: ±{br(t.get("margem_diferenca_95", 0.0), 1)}.',
     ]
@@ -143,6 +144,36 @@ def ficha_onda(pesquisa: dict, turno: str) -> str:
         corpo.append(
             '<p class="tip-nota">Cenário com Marçal, fora da média do primeiro turno.</p>'
         )
+    if turno == "1t":
+        from reponderacao_vista.urna_dados import URNA, comparison
+
+        comp = comparison(pesquisa)
+        if comp:
+            body = "".join(
+                f'<tr><th scope="row">{name}</th>'
+                + "".join(f"<td>{br(values[k], 2)}</td>" for k in PAR)
+                + f"<td>{sinal(gap(values), 2)}</td></tr>"
+                for name, values in (
+                    ("publ. / válidos", comp["publicado"]["validos"]),
+                    ("PNAD / válidos", comp["pnad"]["validos"]),
+                    ("urna / válidos", URNA),
+                )
+            )
+            partial = ", ".join(rotulo(k) for k in comp["sem_cruzamento"])
+            corpo.append(
+                '<p class="tip-nota"><b>1º turno em votos válidos</b></p>'
+                '<table class="tip-tab"><thead><tr><th></th><th>Lula</th><th>Flávio</th><th>L−F</th></tr></thead>'
+                f"<tbody>{body}</tbody></table>"
+                '<p class="tip-nota">Erro L−F: publicado '
+                f'{sinal(comp["publicado"]["diferenca_lula_menos_flavio"]["erro"], 2)} pp; PNAD '
+                f'{sinal(comp["pnad"]["diferenca_lula_menos_flavio"]["erro"], 2)} pp. '
+                "Ondas históricas incluem mudanças até a eleição; só a última onda elegível entra no balanço final.</p>"
+                + (
+                    f'<p class="tip-nota">Sem cruzamento de renda, mantido publicado: {esc(partial)}.</p>'
+                    if partial
+                    else ""
+                )
+            )
     return "".join(corpo)
 
 

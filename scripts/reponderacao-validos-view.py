@@ -11,11 +11,26 @@ def fmt(value):
     return f"{value:.1f}".replace(".", ",")
 
 
-def bars(values, labels):
+def signed(value):
+    return ("+" if value > 0 else "−" if value < 0 else "") + fmt(abs(value))
+
+
+def bars(values, labels, urna=None):
     return "".join(
-        f'<div class="vf-row" data-candidate="{k}"><span>{escape(labels[k])}</span>'
-        f'<span class="vf-track"><span class="vf-bar vf-{k}" style="width:{v:.6f}%"></span></span>'
-        f"<b>{fmt(v)}%</b></div>"
+        f'<div class="vf-row{ " vf-row-audit" if urna else ""}" data-candidate="{k}"><span>{escape(labels[k])}</span>'
+        f'<span class="vf-track"><span class="vf-bar vf-{k}" style="width:{v:.6f}%"></span>'
+        + (
+            f'<span class="vf-urna-tick" style="left:{urna[k]:.6f}%" title="Urna: {fmt(urna[k])}%"></span>'
+            if urna
+            else ""
+        )
+        + f'</span><b class="vf-value">{fmt(v)}%</b>'
+        + (
+            f'<span class="vf-urna-value">{fmt(urna[k])}%</span><span class="vf-error">{signed(v - urna[k])}</span>'
+            if urna
+            else ""
+        )
+        + "</div>"
         for k, v in values.items()
     )
 
@@ -32,22 +47,39 @@ def card(data, ballot):
     scenario = block["scenarios"]["central"]
     values = scenario["aggregate"]["modelo"]
     turn = "Primeiro" if ballot == "1t" else "Segundo"
+    urna = block.get("urna")
+    reference = block["reference"]
     houses = ", ".join(p["instituto"] for p in scenario["polls"])
+    title = "1º turno: projeção × urna" if urna else f"{turn} turno, votos válidos"
+    columns = (
+        '<div class="vf-columns" aria-hidden="true"><span>Candidatura</span><span>Projeção</span><span>Urna</span><span>Erro / pp</span></div>'
+        if urna
+        else ""
+    )
+    gap_error = (
+        f'<p class="vf-gap-error">Urna: {gap(urna)}. Erro L−F: <b>{signed(scenario["erros"]["modelo"]["diferenca_lula_flavio_pp"])} pp</b>.</p>'
+        if urna
+        else ""
+    )
+    precision = (
+        'Janela fechada em 04/10; parâmetros de comparecimento da Nexus de 28/09. Sem recalibrar pela urna. <a href="#primeiro-turno">Erros dos institutos</a> · <a href="apuracao_1o_turno_2026.html#pesquisas">Apuração completa</a>.'
+        if urna
+        else "Projeção condicional, sem intervalo preditivo validado."
+    )
+    aria = "; ".join(
+        f"{data['labels'][k]} {fmt(v)}%"
+        + (f"; urna {fmt(urna[k])}%; erro {signed(v - urna[k])} pontos" if urna else "")
+        for k, v in values.items()
+    )
     return (
-        f'<article class="vf-card" data-ballot="{ballot}"><p class="kicker">{turn} turno · {block["n_houses"]} institutos</p>'
-        f"<h3>{turn} turno, votos válidos</h3>"
-        '<p class="vf-mode-label">PNAD + comparecimento</p>'
-        '<div class="vf-bars" role="img" aria-label="'
-        + escape(
-            "; ".join(f"{data['labels'][k]} {fmt(v)}%" for k, v in values.items()),
-            quote=True,
-        )
-        + '">'
-        + bars(values, data["labels"])
-        + "</div>"
+        f'<article class="vf-card" data-ballot="{ballot}"><p class="kicker">{turn} turno · {block["n_houses"]} institutos · {reference}</p>'
+        f'<h3>{title}</h3><p class="vf-mode-label">PNAD + comparecimento</p>{columns}'
+        f'<div class="vf-bars" role="img" aria-label="{escape(aria, quote=True)}">'
+        f'{bars(values, data["labels"], urna)}</div>'
         f'<p class="vf-gap">{gap(values)}</p>'
+        f"{gap_error}"
         f'<p class="vf-coverage">{escape(houses)}. Peso igual por instituto.</p>'
-        '<p class="vf-precision">Projeção condicional, sem intervalo preditivo validado.</p></article>'
+        f'<p class="vf-precision">{precision}</p></article>'
     )
 
 
@@ -61,8 +93,17 @@ def section_html(source, table):
                 f'<td data-mode="{m}">{fmt(p[m]["lula"])} × {fmt(p[m]["flavio"])}</td>'
                 for m in MODEL.MODES
             )
+            extra = ""
+            if "urna" in block:
+                u = block["urna"]
+                diff = (p["modelo"]["lula"] - p["modelo"]["flavio"]) - (
+                    u["lula"] - u["flavio"]
+                )
+                extra = f'<td>{fmt(u["lula"])} × {fmt(u["flavio"])}</td><td data-poll-error>{signed(diff)}</td>'
+            else:
+                extra = '<td colspan="2">2º turno em andamento</td>'
             rows.append(
-                f'<tr data-poll="{p["id"]}" data-ballot="{ballot}"><th scope="row">{escape(p["instituto"])} · {ballot}</th><td>{escape(p["divulgacao"])}</td>{values}</tr>'
+                f'<tr data-poll="{p["id"]}" data-ballot="{ballot}"><th scope="row">{escape(p["instituto"])} · {ballot}</th><td>{escape(p["divulgacao"])}</td>{values}{extra}</tr>'
             )
             if p["negative_mass_removed"]:
                 corrections.append(
@@ -118,7 +159,7 @@ def section_html(source, table):
         + escape(data["reference"])
         + "</p>"
         "<h2>Da pesquisa<br><em>à urna.</em></h2>"
-        '<p class="lead">Dois turnos, todos os votos válidos. O modelo combina a renda da PNAD com propensões de comparecimento estimadas a partir da Nexus de 28/09. Os indecisos que comparecem são distribuídos proporcionalmente entre os candidatos.</p>'
+        '<p class="lead">O primeiro turno já tem resultado: confrontamos a projeção com a urna. O segundo segue em andamento. Os três modos usam as mesmas casas em cada turno; o modelo de comparecimento mantém as propensões estimadas a partir da Nexus de 28/09.</p>'
         '<div class="vf-controls" hidden><div role="group" aria-label="Modelo dos votos válidos">'
         + buttons
         + "</div>"
@@ -131,11 +172,11 @@ def section_html(source, table):
         '<p class="note"><b>Fora desta projeção:</b> '
         + escape(coverage_short)
         + '. Os motivos estão nos detalhes abaixo e na <a href="#atualizacao">cobertura documental</a>. Os gráficos históricos preservam sua cobertura original; compare o efeito do modelo pelos três botões acima.</p>'
-        '<aside class="vf-caution"><b>O efeito de comparecimento é pequeno no cenário central.</b> Isso é resultado da informação disponível. A projeção não permite afirmar que a liderança está identificada. O teste de presença relativa de Flávio mostra o que acontece quando a associação entre candidato e comparecimento difere da hipótese central.</aside>'
-        '<details><summary>Conferir os placares e as pesquisas usadas</summary><div class="table-scroll" tabindex="0"><table id="vf-polls"><thead><tr><th>Instituto e turno</th><th>Divulgação</th><th>Publicado / válidos</th><th>PNAD / válidos</th><th>PNAD + comparecimento</th></tr></thead><tbody>'
+        '<aside class="vf-caution"><b>Primeiro turno encerrado; segundo turno ainda é hipótese.</b> A comparação com a urna usa votos válidos, com todas as candidaturas no denominador. Os cenários de comparecimento são sensibilidades com parâmetros anteriores à eleição; alterná-los depois do resultado não valida uma previsão. No segundo turno, ainda não há resultado para medir o erro.</aside>'
+        '<details><summary>Conferir os placares e as pesquisas usadas</summary><div class="table-scroll" tabindex="0"><table id="vf-polls"><thead><tr><th>Instituto e turno</th><th>Divulgação</th><th>Publicado / válidos</th><th>PNAD / válidos</th><th>PNAD + comparecimento</th><th>Urna / válidos</th><th>Erro do modo selecionado L−F / pp</th></tr></thead><tbody>'
         + "".join(rows)
         + "</tbody></table></div>"
-        "<p>Todos os pares são Lula × Flávio. A última coluna acompanha a hipótese escolhida. Janela: divulgação nos sete dias até a referência, última onda de cada instituto e turno.</p>"
+        "<p>Todos os pares são Lula × Flávio. Erro = diferença do modo selecionado menos a da urna. Janela: divulgação nos sete dias até a referência, última onda de cada instituto e turno. No primeiro turno, a referência fica fechada em 04/10; no segundo, acompanha a atualização. O traço preto nas barras do primeiro turno marca o resultado oficial.</p>"
         "<p><b>Cobertura diferente dos gráficos históricos:</b> "
         + escape(coverage_note)
         + " Não substituímos a onda incompatível por uma anterior. Não misturamos a média de candidatos de cinco casas com a não escolha de outro conjunto.</p>"

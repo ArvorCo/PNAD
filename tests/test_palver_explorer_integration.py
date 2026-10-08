@@ -52,7 +52,13 @@ def test_institute_panels_show_every_version_in_both_turns():
     waves = [p for p in data["pesquisas"] if p["instituto"] == "Palver"]
     for panel in panels:
         assert f"{len(waves)} ondas · {len(waves) + 1} versões" in panel.get_text()
-        svg = panel.find("svg")
+        # The 1T panel starts with compatible valid votes. Original versions
+        # remain in its documentary details, in total shares.
+        svg = (
+            panel.select_one("details svg")
+            if panel["data-turno"] == "1t"
+            else panel.find("svg")
+        )
         # Every version is plotted; with more than six the axis labels every other one.
         assert len(svg.select("g.hit")) == 2 * (len(waves) + 1)
         svg_text = svg.get_text()

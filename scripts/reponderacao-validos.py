@@ -7,11 +7,13 @@ import json
 from datetime import date
 from pathlib import Path
 
+from reponderacao_vista.urna_dados import ELECTION, OFFICIAL, SOURCE, URNA, grouped_urna
+
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / "docs/assets"
 WINDOW = importlib.import_module("reponderacao-janela")
 SCENARIO = "pessoas16_efetivo"
-NONCHOICE = {"branco_nulo", "indecisos", "nao_sabe", "nenhum", "nao_vai_votar"}
+NONCHOICE = {"branco_nulo", "indecisos", "nao_sabe", "nenhum", "nao_vai_votar", "ns_nr"}
 KEYS = ["lula", "flavio", "cury", "caiado", "renan_santos", "zema", "demais"]
 LABELS = dict(
     zip(
@@ -217,17 +219,20 @@ def build(data, nexus):
         "ballots": {},
     }
     for ballot in ["1t", "2t"]:
+        reference = min(asof, ELECTION) if ballot == "1t" else asof
         latest = WINDOW.select(
             [
                 p
                 for p in data["pesquisas"] + data.get("nao_reponderaveis", [])
                 if ballot in p.get("publicado", {})
             ],
-            date.fromisoformat(asof),
+            date.fromisoformat(reference),
         )
         rows, excluded = [], []
         for poll in latest:
             try:
+                if poll["campo"]["fim"] > reference:
+                    raise ValueError("Campo posterior à referência")
                 rows.append(prepare(poll, ballot))
             except ValueError as exc:
                 excluded.append(
@@ -242,12 +247,31 @@ def build(data, nexus):
                 "No complete candidate vector in current window: " + ballot
             )
         result["ballots"][ballot] = {
+            "reference": reference,
             "n_houses": len(rows),
             "excluded": excluded,
             "scenarios": {s: evaluate(rows, nexus, ballot, s) for s in SCENARIOS},
         }
+        if ballot == "1t" and asof >= ELECTION:
+            block = result["ballots"][ballot]
+            block["urna"] = grouped_urna(
+                block["scenarios"]["central"]["aggregate"]["modelo"]
+            )
+            block["urna_full"] = URNA
+            for scenario in block["scenarios"].values():
+                scenario["erros"] = {
+                    mode: {
+                        "por_candidato_pp": {
+                            k: v - block["urna"][k] for k, v in values.items()
+                        },
+                        "diferenca_lula_flavio_pp": (values["lula"] - values["flavio"])
+                        - (URNA["lula"] - URNA["flavio"]),
+                    }
+                    for mode, values in scenario["aggregate"].items()
+                }
     result["method"] = {
-        "version": 2,
+        "version": 3,
+        "first_round_cutoff": ELECTION,
         "candidate_partition": "Only candidates individually identified in every eligible poll are shown separately; the remainder is pooled, never imputed as zero. The same partition is retained in leave-one-house-out checks.",
         "grouped_turnout": "An Others category pools Nexus candidate attendance rates, weighted by the Nexus PNAD population candidate mass, for candidates not separately reported in that poll.",
         "income_scenario": SCENARIO,
@@ -276,6 +300,10 @@ def write(data):
         "reponderacao_pnad.json": hashlib.sha256(
             (ASSETS / "reponderacao_pnad.json").read_bytes()
         ).hexdigest(),
+        str(SOURCE.relative_to(ROOT)): hashlib.sha256(SOURCE.read_bytes()).hexdigest(),
+        str(OFFICIAL.relative_to(ROOT)): hashlib.sha256(
+            OFFICIAL.read_bytes()
+        ).hexdigest(),
     }
     (ASSETS / "reponderacao_validos.json").write_text(
         json.dumps(result, ensure_ascii=False, indent=2) + "\n"
@@ -292,6 +320,9 @@ def write(data):
                 "validos",
                 "institutos",
                 "ondas",
+                "urna_validos",
+                "erro_pp",
+                "erro_diferenca_lula_flavio_pp",
             ]
         )
         for b, block in result["ballots"].items():
@@ -300,7 +331,7 @@ def write(data):
                     for k, v in values.items():
                         writer.writerow(
                             [
-                                result["reference"],
+                                block["reference"],
                                 b,
                                 s,
                                 mode,
@@ -308,6 +339,14 @@ def write(data):
                                 v,
                                 block["n_houses"],
                                 ";".join(p["id"] for p in scenario["polls"]),
+                                block.get("urna", {}).get(k, ""),
+                                scenario.get("erros", {})
+                                .get(mode, {})
+                                .get("por_candidato_pp", {})
+                                .get(k, ""),
+                                scenario.get("erros", {})
+                                .get(mode, {})
+                                .get("diferenca_lula_flavio_pp", ""),
                             ]
                         )
     return result
