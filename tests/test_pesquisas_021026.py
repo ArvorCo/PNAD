@@ -14,7 +14,11 @@ sys.path.insert(0, str(ROOT / "scripts"))
 BASE = ROOT / "analysis/reponderacao"
 AUDIT = json.loads((BASE / "atualizacao_20261002/auditoria.json").read_text())
 DATA = json.loads((ROOT / "docs/assets/reponderacao_pnad.json").read_text())
-MODEL = json.loads((ROOT / "docs/assets/reponderacao_validos.json").read_text())
+# Reproduz esta rodada em sua data; a janela atual não deve ficar presa a outubro/03.
+MODEL = importlib.import_module("reponderacao-validos").build(
+    {**DATA, "referencia": "2026-10-03"},
+    json.loads((ROOT / "docs/assets/nexus_btg_28092026_data.json").read_text()),
+)
 
 
 def raw(ident):

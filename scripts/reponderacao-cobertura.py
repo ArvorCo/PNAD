@@ -59,6 +59,10 @@ def coverage_html(data, table):
         for turn in ["1t", "2t"]:
             result = turns.get(turn)
             original = pub.get(turn, (result or {}).get("publicado", {}))
+            published_score = score(original)
+            valid = (p.get("publicado_validos") or {}).get(turn)
+            if not original and valid:
+                published_score = score(valid) + " (válidos)"
             adjusted = (
                 score(result["cenarios"][scenario]["ajustado"])
                 if result
@@ -69,7 +73,7 @@ def coverage_html(data, table):
                 and (p.get("selecao_1t") or {}).get("status") == "excluido_com_marcal"
             ):
                 adjusted = "Excluído: cenário com Marçal"
-            cells += [score(original), adjusted]
+            cells += [published_score, adjusted]
         rows.append(cells)
         if p.get("fonte", {}).get("nota") and any(
             p["fonte"].get(key) == latest for key in ("atualizado_em", "conferido_em")
@@ -107,7 +111,7 @@ def coverage_html(data, table):
         for extra in p.get("fonte", {}).get("complementos", []):
             notes.append(
                 f'<p class="note"><a href="{escape(extra["url"], quote=True)}">'
-                f"{escape(extra['rotulo'])}</a>: fonte complementar ao PDF.</p>"
+                f"{escape(extra['rotulo'])}</a>: fonte complementar à ficha.</p>"
             )
     day = "/".join(reversed(latest.split("-")))
     audit = f"reponderacao_{latest.replace('-', '')}.json"
@@ -119,12 +123,21 @@ def coverage_html(data, table):
     )
     audit_file = Path(__file__).resolve().parents[1] / "docs/assets" / audit
     pending_html = ""
+    scan_html = ""
     if audit_file.exists():
+        inventory = json.loads(audit_file.read_text())
         pending = [
             p
-            for p in json.loads(audit_file.read_text()).get("varredura", [])
+            for p in inventory.get("varredura", [])
             if p.get("pendente")
         ]
+        scan_html = "".join(
+            f'<p class="note"><b>{escape(p["status"])}.</b> '
+            f'{escape(p["conclusao"])} '
+            f'<a href="{escape(p["fontes"][0], quote=True)}">Agenda consultada</a>.</p>'
+            for p in inventory.get("varredura", [])
+            if p.get("resumo")
+        )
         if pending:
             pending_html = "<h3>Pendências desta conferência</h3>" + "".join(
                 f'<p class="note"><b>{escape(p["instituto"])}.</b> '
@@ -138,7 +151,8 @@ def coverage_html(data, table):
         "<h2>O que entrou nesta atualização</h2>"
         "<p>Todos os placares abaixo estão na ordem <b>Lula × Flávio</b>, em %. "
         "O ajuste troca apenas a distribuição de renda pela PNAD. "
-        "Sem voto por faixa e perfil de renda da mesma onda, o resultado permanece apenas como publicação do instituto.</p>"
+        "Quando o perfil atual falta, a ficha declara a hipótese usada e o ajuste fica condicionado à confirmação. "
+        "Sem cruzamento utilizável, o resultado permanece apenas como publicação do instituto; votos válidos são identificados.</p>"
         + table(
             [
                 "Instituto e fonte",
@@ -152,6 +166,7 @@ def coverage_html(data, table):
         )
         + "".join(notes)
         + audit_link
+        + scan_html
         + pending_html
         + '<p class="note">As médias publicada e reponderada usam o mesmo conjunto de pesquisas com cruzamento '
         "de renda em cada turno, usando somente cenários sem Marçal no 1º turno. Os placares sem ajuste desta tabela não entram em nenhuma das duas médias. "

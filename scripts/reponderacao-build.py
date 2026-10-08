@@ -183,7 +183,9 @@ def cartao(pesquisa: dict) -> str:
         else ""
     )
     perfil_verbo = (
-        "O registro prevê"
+        "O perfil assumido tem"
+        if renda.get("perfil_tipo") == "hipotese_onda_anterior"
+        else "O registro prevê"
         if renda.get("perfil_tipo") == "cota_registrada"
         else (
             "A calibração tem como alvo"

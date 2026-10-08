@@ -338,7 +338,11 @@ def test_datafolha_eve_wave_from_g1_panel_replaces_october_1(output):
     assert poll["renda"]["perfil_tipo"] == "hipotese_onda_anterior"
     for turno in ("1t", "2t"):
         assert poll["turnos"][turno]["residuo_max"] < 1.5
-        ondas = output["agregador"]["ultimo"][turno]["cobertura_movel"]["ondas"]
+        ondas = next(
+            row["ondas"]
+            for row in output["agregador"]["cobertura_movel"][turno]
+            if row["data"] == "2026-10-03"
+        )
         assert "datafolha_2026-10-03" in ondas
         assert "datafolha_2026-10-01" not in ondas
     ajustado = poll["turnos"]["2t"]["cenarios"][SCENARIO]["ajustado"]

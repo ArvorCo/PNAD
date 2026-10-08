@@ -1,0 +1,152 @@
+{
+  "id": "datafolha_2026-10-08",
+  "instituto": "Datafolha",
+  "contratante": "Folha de S.Paulo e TV Globo",
+  "registro_tse": "BR-02949/2026",
+  "n": 2520,
+  "campo": {
+    "inicio": "2026-10-06",
+    "fim": "2026-10-08"
+  },
+  "divulgacao": "2026-10-08",
+  "metodo": "presencial, pontos de fluxo",
+  "renda": {
+    "unidade": "salarios_minimos",
+    "ano_referencia": 2026,
+    "mes_precos": "202610",
+    "faixas": [
+      {
+        "rotulo": "Até 2 SM (até R$ 3.242)",
+        "max": 2
+      },
+      {
+        "rotulo": "De 2 a 5 SM (R$ 3.242 a 8.105)",
+        "max": 5
+      },
+      {
+        "rotulo": "Mais de 5 SM (acima de R$ 8.105)",
+        "max": null
+      }
+    ],
+    "bases": [
+      1209,
+      856,
+      344
+    ],
+    "perfil_tipo": "hipotese_onda_anterior",
+    "nota": "Fonte parcial: o G1 publica os votos por renda desta onda, mas não as bases de renda. A reponderação assume explicitamente o perfil ponderado da onda de 01/10 (1.209/856/344, PDF de 02/10, pp. 45 e 53), condicionado à confirmação da íntegra atual. O controle por sexo também assume as bases anteriores (1.215/1.291). Os controles de recomposição não comprovam que o perfil se manteve. O registro PesqEle devolveu HTTP 403 nesta consulta. Há divergência de datas: o texto metodológico do painel diz 6–7/10; a notícia de divulgação e a agenda do registro informam 6–8/10, período usado nesta ficha."
+  },
+  "publicado": {
+    "2t": {
+      "flavio": 49,
+      "lula": 45,
+      "branco_nulo": 5,
+      "indecisos": 1
+    }
+  },
+  "publicado_validos": {
+    "2t": {
+      "flavio": 52,
+      "lula": 48
+    }
+  },
+  "cruzamentos": {
+    "2t": {
+      "opcoes": [
+        "lula",
+        "flavio",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          52,
+          41,
+          5,
+          2
+        ],
+        [
+          38,
+          56,
+          5,
+          1
+        ],
+        [
+          39,
+          55,
+          5,
+          1
+        ]
+      ],
+      "nota": "API pública do painel pós-1º turno: paginaId=216, ESTIMULADA-PRE-001, divulgação 08/10. Usam-se votos totais por renda; os válidos arredondados ficam preservados à parte."
+    }
+  },
+  "controles": {
+    "2t": {
+      "renda": {
+        "recomposto": {
+          "lula": 45.169,
+          "flavio": 48.329,
+          "branco_nulo": 5.0,
+          "indecisos": 1.502
+        },
+        "residuo": {
+          "lula": 0.169,
+          "flavio": -0.671,
+          "branco_nulo": 0.0,
+          "indecisos": 0.502
+        },
+        "residuo_max_abs": 0.671
+      },
+      "sexo": {
+        "recomposto": {
+          "lula": 45.636,
+          "flavio": 48.364,
+          "branco_nulo": 4.485,
+          "indecisos": 1.03
+        },
+        "residuo": {
+          "lula": 0.636,
+          "flavio": -0.636,
+          "branco_nulo": -0.515,
+          "indecisos": 0.03
+        },
+        "residuo_max_abs": 0.636
+      }
+    }
+  },
+  "fonte": {
+    "arquivo": "data/originals/datafolha_102026_08/g1_ESTIMULADA-PRE-001.json",
+    "url": "https://g1.globo.com/politica/eleicoes/2026/pesquisa-eleitoral/presidente-br-2-turno-datafolha/",
+    "bytes": 22558,
+    "sha256": "75cc9ea59701de06c55b795f00d29e43a9f131543db323b8248fdd5f599a5689",
+    "capturado_em": "2026-10-08T22:38:32+00:00",
+    "tipo": "painel_contratante",
+    "rotulo": "Painel do G1: votos por renda",
+    "paginas": {
+      "2t_renda": "API 216, ESTIMULADA-PRE-001, estratos renda"
+    },
+    "conferido_em": "2026-10-08",
+    "status": "Painel atual arquivado; íntegra em PDF pendente.",
+    "nota": "Fonte parcial: o G1 publica os votos por renda desta onda, mas não as bases de renda. A reponderação assume explicitamente o perfil ponderado da onda de 01/10 (1.209/856/344, PDF de 02/10, pp. 45 e 53), condicionado à confirmação da íntegra atual. O controle por sexo também assume as bases anteriores (1.215/1.291). Os controles de recomposição não comprovam que o perfil se manteve. O registro PesqEle devolveu HTTP 403 nesta consulta. Há divergência de datas: o texto metodológico do painel diz 6–7/10; a notícia de divulgação e a agenda do registro informam 6–8/10, período usado nesta ficha.",
+    "complementos": [
+      {
+        "arquivo": "data/originals/datafolha_102026_08/g1_VTSVALIDOS-PRE-001.json",
+        "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/216/?tipo_pergunta=VTSVALIDOS-PRE-001&instituto=Datafolha",
+        "bytes": 15754,
+        "sha256": "42eb7831fdc5d4b99bb720c50d03904afe36c907edc0990d1c2310caf56fe15d",
+        "capturado_em": "2026-10-08T22:38:32+00:00",
+        "rotulo": "API: votos válidos publicados"
+      },
+      {
+        "arquivo": "data/originals/datafolha_102026_08/materia_exame.html",
+        "url": "https://exame.com/brasil/pesquisa-datafolha-2o-turno-flavio-bolsonaro-tem-52-e-lula-48-dos-votos-validos/",
+        "bytes": 51010,
+        "sha256": "8ae0d11a32153efaed820b3c8cadc69d95113e94bc9852c2902483d0272ca72f",
+        "capturado_em": "2026-10-08T22:38:32+00:00",
+        "rotulo": "Divulgação e ficha técnica"
+      }
+    ]
+  },
+  "notas": "Fonte parcial: o G1 publica os votos por renda desta onda, mas não as bases de renda. A reponderação assume explicitamente o perfil ponderado da onda de 01/10 (1.209/856/344, PDF de 02/10, pp. 45 e 53), condicionado à confirmação da íntegra atual. O controle por sexo também assume as bases anteriores (1.215/1.291). Os controles de recomposição não comprovam que o perfil se manteve. O registro PesqEle devolveu HTTP 403 nesta consulta. Há divergência de datas: o texto metodológico do painel diz 6–7/10; a notícia de divulgação e a agenda do registro informam 6–8/10, período usado nesta ficha."
+}

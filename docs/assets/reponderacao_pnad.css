@@ -95,6 +95,8 @@ border-radius:3px;margin:0 0 8px;border:1px solid currentColor}
 .proof.warn{color:var(--gold);background:#7d5b0012}
 .poll{border-top:3px solid var(--ink);padding-top:22px;margin:0 0 56px}
 .poll-head{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:start}
+.poll-head>div{min-width:0}
+.poll-head .note{overflow-wrap:anywhere}
 .poll-head h3{font-family:Georgia,serif;font-size:29px;font-weight:400;letter-spacing:-.02em}
 .proofs{display:flex;flex-direction:column;align-items:flex-end;gap:2px}
 .panel{border-top:2px solid var(--ink);padding-top:16px;min-width:0}

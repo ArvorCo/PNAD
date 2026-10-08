@@ -1,0 +1,968 @@
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="pt-BR"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="pt-BR"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="pt-BR"> <![endif]-->
+<!--[if IE 9]>    <html class="no-js lt-ie10" lang="pt-BR"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="pt-BR"> <!--<![endif]-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name='viewport' content='width=device-width, initial-scale=1, user-scalable=yes' />
+    <link rel="profile" href="http://gmpg.org/xfn/11" />
+    <link rel="pingback" href="https://jornaldiretriz.com.br/xmlrpc.php" />
+    <meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+			<script type="text/javascript">
+			  var jnews_ajax_url = '/?ajax-request=jnews'
+			</script>
+			<script type="text/javascript">;window.jnews=window.jnews||{},window.jnews.library=window.jnews.library||{},window.jnews.library=function(){"use strict";var e=this;e.win=window,e.doc=document,e.noop=function(){},e.globalBody=e.doc.getElementsByTagName("body")[0],e.globalBody=e.globalBody?e.globalBody:e.doc,e.win.jnewsDataStorage=e.win.jnewsDataStorage||{_storage:new WeakMap,put:function(e,t,n){this._storage.has(e)||this._storage.set(e,new Map),this._storage.get(e).set(t,n)},get:function(e,t){return this._storage.get(e).get(t)},has:function(e,t){return this._storage.has(e)&&this._storage.get(e).has(t)},remove:function(e,t){var n=this._storage.get(e).delete(t);return 0===!this._storage.get(e).size&&this._storage.delete(e),n}},e.windowWidth=function(){return e.win.innerWidth||e.docEl.clientWidth||e.globalBody.clientWidth},e.windowHeight=function(){return e.win.innerHeight||e.docEl.clientHeight||e.globalBody.clientHeight},e.requestAnimationFrame=e.win.requestAnimationFrame||e.win.webkitRequestAnimationFrame||e.win.mozRequestAnimationFrame||e.win.msRequestAnimationFrame||window.oRequestAnimationFrame||function(e){return setTimeout(e,1e3/60)},e.cancelAnimationFrame=e.win.cancelAnimationFrame||e.win.webkitCancelAnimationFrame||e.win.webkitCancelRequestAnimationFrame||e.win.mozCancelAnimationFrame||e.win.msCancelRequestAnimationFrame||e.win.oCancelRequestAnimationFrame||function(e){clearTimeout(e)},e.classListSupport="classList"in document.createElement("_"),e.hasClass=e.classListSupport?function(e,t){return e.classList.contains(t)}:function(e,t){return e.className.indexOf(t)>=0},e.addClass=e.classListSupport?function(t,n){e.hasClass(t,n)||t.classList.add(n)}:function(t,n){e.hasClass(t,n)||(t.className+=" "+n)},e.removeClass=e.classListSupport?function(t,n){e.hasClass(t,n)&&t.classList.remove(n)}:function(t,n){e.hasClass(t,n)&&(t.className=t.className.replace(n,""))},e.objKeys=function(e){var t=[];for(var n in e)Object.prototype.hasOwnProperty.call(e,n)&&t.push(n);return t},e.isObjectSame=function(e,t){var n=!0;return JSON.stringify(e)!==JSON.stringify(t)&&(n=!1),n},e.extend=function(){for(var e,t,n,o=arguments[0]||{},i=1,a=arguments.length;i<a;i++)if(null!==(e=arguments[i]))for(t in e)o!==(n=e[t])&&void 0!==n&&(o[t]=n);return o},e.dataStorage=e.win.jnewsDataStorage,e.isVisible=function(e){return 0!==e.offsetWidth&&0!==e.offsetHeight||e.getBoundingClientRect().length},e.getHeight=function(e){return e.offsetHeight||e.clientHeight||e.getBoundingClientRect().height},e.getWidth=function(e){return e.offsetWidth||e.clientWidth||e.getBoundingClientRect().width},e.supportsPassive=!1;try{var t=Object.defineProperty({},"passive",{get:function(){e.supportsPassive=!0}});"createEvent"in e.doc?e.win.addEventListener("test",null,t):"fireEvent"in e.doc&&e.win.attachEvent("test",null)}catch(e){}e.passiveOption=!!e.supportsPassive&&{passive:!0},e.setStorage=function(e,t){e="jnews-"+e;var n={expired:Math.floor(((new Date).getTime()+432e5)/1e3)};t=Object.assign(n,t);localStorage.setItem(e,JSON.stringify(t))},e.getStorage=function(e){e="jnews-"+e;var t=localStorage.getItem(e);return null!==t&&0<t.length?JSON.parse(localStorage.getItem(e)):{}},e.expiredStorage=function(){var t,n="jnews-";for(var o in localStorage)o.indexOf(n)>-1&&"undefined"!==(t=e.getStorage(o.replace(n,""))).expired&&t.expired<Math.floor((new Date).getTime()/1e3)&&localStorage.removeItem(o)},e.addEvents=function(t,n,o){for(var i in n){var a=["touchstart","touchmove"].indexOf(i)>=0&&!o&&e.passiveOption;"createEvent"in e.doc?t.addEventListener(i,n[i],a):"fireEvent"in e.doc&&t.attachEvent("on"+i,n[i])}},e.removeEvents=function(t,n){for(var o in n)"createEvent"in e.doc?t.removeEventListener(o,n[o]):"fireEvent"in e.doc&&t.detachEvent("on"+o,n[o])},e.triggerEvents=function(t,n,o){var i;o=o||{detail:null};return"createEvent"in e.doc?(!(i=e.doc.createEvent("CustomEvent")||new CustomEvent(n)).initCustomEvent||i.initCustomEvent(n,!0,!1,o),void t.dispatchEvent(i)):"fireEvent"in e.doc?((i=e.doc.createEventObject()).eventType=n,void t.fireEvent("on"+i.eventType,i)):void 0},e.getParents=function(t,n){void 0===n&&(n=e.doc);for(var o=[],i=t.parentNode,a=!1;!a;)if(i){var r=i;r.querySelectorAll(n).length?a=!0:(o.push(r),i=r.parentNode)}else o=[],a=!0;return o},e.forEach=function(e,t,n){for(var o=0,i=e.length;o<i;o++)t.call(n,e[o],o)},e.getText=function(e){return e.innerText||e.textContent},e.setText=function(e,t){var n="object"==typeof t?t.innerText||t.textContent:t;e.innerText&&(e.innerText=n),e.textContent&&(e.textContent=n)},e.httpBuildQuery=function(t){return e.objKeys(t).reduce(function t(n){var o=arguments.length>1&&void 0!==arguments[1]?arguments[1]:null;return function(i,a){var r=n[a];a=encodeURIComponent(a);var s=o?"".concat(o,"[").concat(a,"]"):a;return null==r||"function"==typeof r?(i.push("".concat(s,"=")),i):["number","boolean","string"].includes(typeof r)?(i.push("".concat(s,"=").concat(encodeURIComponent(r))),i):(i.push(e.objKeys(r).reduce(t(r,s),[]).join("&")),i)}}(t),[]).join("&")},e.get=function(t,n,o,i){return o="function"==typeof o?o:e.noop,e.ajax("GET",t,n,o,i)},e.post=function(t,n,o,i){return o="function"==typeof o?o:e.noop,e.ajax("POST",t,n,o,i)},e.ajax=function(t,n,o,i,a){var r=new XMLHttpRequest,s=n,c=e.httpBuildQuery(o);if(t=-1!=["GET","POST"].indexOf(t)?t:"GET",r.open(t,s+("GET"==t?"?"+c:""),!0),"POST"==t&&r.setRequestHeader("Content-type","application/x-www-form-urlencoded"),r.setRequestHeader("X-Requested-With","XMLHttpRequest"),r.onreadystatechange=function(){4===r.readyState&&200<=r.status&&300>r.status&&"function"==typeof i&&i.call(void 0,r.response)},void 0!==a&&!a){return{xhr:r,send:function(){r.send("POST"==t?c:null)}}}return r.send("POST"==t?c:null),{xhr:r}},e.scrollTo=function(t,n,o){function i(e,t,n){this.start=this.position(),this.change=e-this.start,this.currentTime=0,this.increment=20,this.duration=void 0===n?500:n,this.callback=t,this.finish=!1,this.animateScroll()}return Math.easeInOutQuad=function(e,t,n,o){return(e/=o/2)<1?n/2*e*e+t:-n/2*(--e*(e-2)-1)+t},i.prototype.stop=function(){this.finish=!0},i.prototype.move=function(t){e.doc.documentElement.scrollTop=t,e.globalBody.parentNode.scrollTop=t,e.globalBody.scrollTop=t},i.prototype.position=function(){return e.doc.documentElement.scrollTop||e.globalBody.parentNode.scrollTop||e.globalBody.scrollTop},i.prototype.animateScroll=function(){this.currentTime+=this.increment;var t=Math.easeInOutQuad(this.currentTime,this.start,this.change,this.duration);this.move(t),this.currentTime<this.duration&&!this.finish?e.requestAnimationFrame.call(e.win,this.animateScroll.bind(this)):this.callback&&"function"==typeof this.callback&&this.callback()},new i(t,n,o)},e.unwrap=function(t){var n,o=t;e.forEach(t,function(e,t){n?n+=e:n=e}),o.replaceWith(n)},e.performance={start:function(e){performance.mark(e+"Start")},stop:function(e){performance.mark(e+"End"),performance.measure(e,e+"Start",e+"End")}},e.fps=function(){var t=0,n=0,o=0;!function(){var i=t=0,a=0,r=0,s=document.getElementById("fpsTable"),c=function(t){void 0===document.getElementsByTagName("body")[0]?e.requestAnimationFrame.call(e.win,function(){c(t)}):document.getElementsByTagName("body")[0].appendChild(t)};null===s&&((s=document.createElement("div")).style.position="fixed",s.style.top="120px",s.style.left="10px",s.style.width="100px",s.style.height="20px",s.style.border="1px solid black",s.style.fontSize="11px",s.style.zIndex="100000",s.style.backgroundColor="white",s.id="fpsTable",c(s));var l=function(){o++,n=Date.now(),(a=(o/(r=(n-t)/1e3)).toPrecision(2))!=i&&(i=a,s.innerHTML=i+"fps"),1<r&&(t=n,o=0),e.requestAnimationFrame.call(e.win,l)};l()}()},e.instr=function(e,t){for(var n=0;n<t.length;n++)if(-1!==e.toLowerCase().indexOf(t[n].toLowerCase()))return!0},e.winLoad=function(t,n){function o(o){if("complete"===e.doc.readyState||"interactive"===e.doc.readyState)return!o||n?setTimeout(t,n||1):t(o),1}o()||e.addEvents(e.win,{load:o})},e.docReady=function(t,n){function o(o){if("complete"===e.doc.readyState||"interactive"===e.doc.readyState)return!o||n?setTimeout(t,n||1):t(o),1}o()||e.addEvents(e.doc,{DOMContentLoaded:o})},e.fireOnce=function(){e.docReady(function(){e.assets=e.assets||[],e.assets.length&&(e.boot(),e.load_assets())},50)},e.boot=function(){e.length&&e.doc.querySelectorAll("style[media]").forEach(function(e){"not all"==e.getAttribute("media")&&e.removeAttribute("media")})},e.create_js=function(t,n){var o=e.doc.createElement("script");switch(o.setAttribute("src",t),n){case"defer":o.setAttribute("defer",!0);break;case"async":o.setAttribute("async",!0);break;case"deferasync":o.setAttribute("defer",!0),o.setAttribute("async",!0)}e.globalBody.appendChild(o)},e.load_assets=function(){"object"==typeof e.assets&&e.forEach(e.assets.slice(0),function(t,n){var o="";t.defer&&(o+="defer"),t.async&&(o+="async"),e.create_js(t.url,o);var i=e.assets.indexOf(t);i>-1&&e.assets.splice(i,1)}),e.assets=jnewsoption.au_scripts=window.jnewsads=[]},e.setCookie=function(e,t,n){var o="";if(n){var i=new Date;i.setTime(i.getTime()+24*n*60*60*1e3),o="; expires="+i.toUTCString()}document.cookie=e+"="+(t||"")+o+"; path=/"},e.getCookie=function(e){for(var t=e+"=",n=document.cookie.split(";"),o=0;o<n.length;o++){for(var i=n[o];" "==i.charAt(0);)i=i.substring(1,i.length);if(0==i.indexOf(t))return i.substring(t.length,i.length)}return null},e.eraseCookie=function(e){document.cookie=e+"=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;"},e.docReady(function(){e.globalBody=e.globalBody==e.doc?e.doc.getElementsByTagName("body")[0]:e.globalBody,e.globalBody=e.globalBody?e.globalBody:e.doc}),e.winLoad(function(){e.winLoad(function(){var t=!1;if(void 0!==window.jnewsadmin)if(void 0!==window.file_version_checker){var n=e.objKeys(window.file_version_checker);n.length?n.forEach(function(e){t||"10.0.4"===window.file_version_checker[e]||(t=!0)}):t=!0}else t=!0;t&&(window.jnewsHelper.getMessage(),window.jnewsHelper.getNotice())},2500)})},window.jnews.library=new window.jnews.library;</script>
+	<!-- This site is optimized with the Yoast SEO plugin v28.5 - https://yoast.com/product/yoast-seo-wordpress/ -->
+	<title>Flávio tem 51,56% e Lula 48,44% no segundo turno, aponta Veritá - Jornal Diretriz</title>
+	<link rel="canonical" href="https://jornaldiretriz.com.br/flavio-tem-5156-e-lula-4844-no-segundo-turno-aponta-verita/" />
+	<meta property="og:locale" content="pt_BR" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="Flávio tem 51,56% e Lula 48,44% no segundo turno, aponta Veritá - Jornal Diretriz" />
+	<meta property="og:description" content="O Instituto Veritá divulgou, nesta segunda-feira (5), os primeiros números de intenção de voto para o segundo turno da eleição presidencial. No cenário de votos válidos, o senador Flávio Bolsonaro (PL) aparece com 51,56%, contra 48,44% do presidente Lula (PT), uma diferença de 3,12 pontos percentuais. Você também pode gostar Janja rebate Kátia Abreu e [&hellip;]" />
+	<meta property="og:url" content="https://jornaldiretriz.com.br/flavio-tem-5156-e-lula-4844-no-segundo-turno-aponta-verita/" />
+	<meta property="og:site_name" content="Jornal Diretriz" />
+	<meta property="article:publisher" content="https://www.facebook.com/jornaldiretrizoficial" />
+	<meta property="article:published_time" content="2026-10-06T15:51:19+00:00" />
+	<meta property="article:modified_time" content="2026-10-06T15:52:22+00:00" />
+	<meta property="og:image" content="https://jornaldiretriz.com.br/wp-content/uploads/2026/08/WhatsApp-Image-2026-08-24-at-19.37.22.jpeg" />
+	<meta property="og:image:width" content="1144" />
+	<meta property="og:image:height" content="709" />
+	<meta property="og:image:type" content="image/jpeg" />
+	<meta name="author" content="Henrique Speck" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:creator" content="@henriquemspeck" />
+	<meta name="twitter:site" content="@diretrizoficial" />
+	<meta name="twitter:label1" content="Escrito por" />
+	<meta name="twitter:data1" content="Henrique Speck" />
+	<meta name="twitter:label2" content="Est. tempo de leitura" />
+	<meta name="twitter:data2" content="2 minutos" />
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https:\/\/schema.org","@graph":[{"@type":"Article","@id":"https:\/\/jornaldiretriz.com.br\/flavio-tem-5156-e-lula-4844-no-segundo-turno-aponta-verita\/#article","isPartOf":{"@id":"https:\/\/jornaldiretriz.com.br\/flavio-tem-5156-e-lula-4844-no-segundo-turno-aponta-verita\/"},"author":{"name":"Henrique Speck","@id":"https:\/\/jornaldiretriz.com.br\/#\/schema\/person\/cba690d3e5168cbdb2640c36910e50df"},"headline":"Flávio tem 51,56% e Lula 48,44% no segundo turno, aponta Veritá","datePublished":"2026-10-06T15:51:19+00:00","dateModified":"2026-10-06T15:52:22+00:00","mainEntityOfPage":{"@id":"https:\/\/jornaldiretriz.com.br\/flavio-tem-5156-e-lula-4844-no-segundo-turno-aponta-verita\/"},"wordCount":262,"commentCount":0,"publisher":{"@id":"https:\/\/jornaldiretriz.com.br\/#organization"},"image":{"@id":"https:\/\/jornaldiretriz.com.br\/flavio-tem-5156-e-lula-4844-no-segundo-turno-aponta-verita\/#primaryimage"},"thumbnailUrl":"https:\/\/jornaldiretriz.com.br\/wp-content\/uploads\/2026\/08\/WhatsApp-Image-2026-08-24-at-19.37.22.jpeg","keywords":["Flávio","lula","Pesquisa","segundo turno"],"articleSection":["Política"],"inLanguage":"pt-BR","potentialAction":[{"@type":"CommentAction","name":"Comment","target":["https:\/\/jornaldiretriz.com.br\/flavio-tem-5156-e-lula-4844-no-segundo-turno-aponta-verita\/#respond"]}]},{"@type":"WebPage","@id":"https:\/\/jornaldiretriz.com.br\/flavio-tem-5156-e-lula-4844-no-segundo-turno-aponta-verita\/","url":"https:\/\/jornaldiretriz.com.br\/flavio-tem-5156-e-lula-4844-no-segundo-turno-aponta-verita\/","name":"Flávio tem 51,56% e Lula 48,44% no segundo turno, aponta Veritá - Jornal Diretriz","isPartOf":{"@id":"https:\/\/jornaldiretriz.com.br\/#website"},"primaryImageOfPage":{"@id":"https:\/\/jornaldiretriz.com.br\/flavio-tem-5156-e-lula-4844-no-segundo-turno-aponta-verita\/#primaryimage"},"image":{"@id":"https:\/\/jornaldiretriz.com.br\/flavio-tem-5156-e-lula-4844-no-segundo-turno-aponta-verita\/#primaryimage"},"thumbnailUrl":"https:\/\/jornaldiretriz.com.br\/wp-content\/uploads\/2026\/08\/WhatsApp-Image-2026-08-24-at-19.37.22.jpeg","datePublished":"2026-10-06T15:51:19+00:00","dateModified":"2026-10-06T15:52:22+00:00","breadcrumb":{"@id":"https:\/\/jornaldiretriz.com.br\/flavio-tem-5156-e-lula-4844-no-segundo-turno-aponta-verita\/#breadcrumb"},"inLanguage":"pt-BR","potentialAction":[{"@type":"ReadAction","target":["https:\/\/jornaldiretriz.com.br\/flavio-tem-5156-e-lula-4844-no-segundo-turno-aponta-verita\/"]}]},{"@type":"ImageObject","inLanguage":"pt-BR","@id":"https:\/\/jornaldiretriz.com.br\/flavio-tem-5156-e-lula-4844-no-segundo-turno-aponta-verita\/#primaryimage","url":"https:\/\/jornaldiretriz.com.br\/wp-content\/uploads\/2026\/08\/WhatsApp-Image-2026-08-24-at-19.37.22.jpeg","contentUrl":"https:\/\/jornaldiretriz.com.br\/wp-content\/uploads\/2026\/08\/WhatsApp-Image-2026-08-24-at-19.37.22.jpeg","width":1144,"height":709,"caption":"Lula e Flávio Bolsonaro pesquisa"},{"@type":"BreadcrumbList","@id":"https:\/\/jornaldiretriz.com.br\/flavio-tem-5156-e-lula-4844-no-segundo-turno-aponta-verita\/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Início","item":"https:\/\/jornaldiretriz.com.br\/"},{"@type":"ListItem","position":2,"name":"Flávio tem 51,56% e Lula 48,44% no segundo turno, aponta Veritá"}]},{"@type":"WebSite","@id":"https:\/\/jornaldiretriz.com.br\/#website","url":"https:\/\/jornaldiretriz.com.br\/","name":"Diretriz","description":"Informação com direção","publisher":{"@id":"https:\/\/jornaldiretriz.com.br\/#organization"},"potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https:\/\/jornaldiretriz.com.br\/?s={search_term_string}"},"query-input":{"@type":"PropertyValueSpecification","valueRequired":true,"valueName":"search_term_string"}}],"inLanguage":"pt-BR"},{"@type":"Organization","@id":"https:\/\/jornaldiretriz.com.br\/#organization","name":"Diretriz","url":"https:\/\/jornaldiretriz.com.br\/","logo":{"@type":"ImageObject","inLanguage":"pt-BR","@id":"https:\/\/jornaldiretriz.com.br\/#\/schema\/logo\/image\/","url":"https:\/\/jornaldiretriz.com.br\/wp-content\/uploads\/2026\/04\/Logo-icone_3.png","contentUrl":"https:\/\/jornaldiretriz.com.br\/wp-content\/uploads\/2026\/04\/Logo-icone_3.png","width":2000,"height":445,"caption":"Diretriz"},"image":{"@id":"https:\/\/jornaldiretriz.com.br\/#\/schema\/logo\/image\/"},"sameAs":["https:\/\/www.facebook.com\/jornaldiretrizoficial","https:\/\/x.com\/diretrizoficial","https:\/\/www.instagram.com\/jornaldiretriz"]},{"@type":"Person","@id":"https:\/\/jornaldiretriz.com.br\/#\/schema\/person\/cba690d3e5168cbdb2640c36910e50df","name":"Henrique Speck","image":{"@type":"ImageObject","inLanguage":"pt-BR","@id":"https:\/\/jornaldiretriz.com.br\/wp-content\/uploads\/2026\/08\/WhatsApp-Image-2026-08-31-at-23.36.11-96x96.png","url":"https:\/\/jornaldiretriz.com.br\/wp-content\/uploads\/2026\/08\/WhatsApp-Image-2026-08-31-at-23.36.11-96x96.png","contentUrl":"https:\/\/jornaldiretriz.com.br\/wp-content\/uploads\/2026\/08\/WhatsApp-Image-2026-08-31-at-23.36.11-96x96.png","caption":"Henrique Speck"},"description":"Jornalista (MTB15353\/PR) e Editor-Chefe do Diretriz. Vencedor do Prêmio FIEP de Jornalismo 2026.","sameAs":["http:\/\/jornaldiretriz.com.br","https:\/\/instagram.com\/henriquemspeck","https:\/\/x.com\/henriquemspeck"],"url":"https:\/\/jornaldiretriz.com.br\/author\/henrique-speck\/"}]}</script>
+	<!-- / Yoast SEO plugin. -->
+
+
+<link rel='dns-prefetch' href='//cdn-reach.hostinger.com' />
+<link rel='dns-prefetch' href='//www.googletagmanager.com' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel='preconnect' href='https://fonts.gstatic.com' />
+<link rel="alternate" type="application/rss+xml" title="Feed para Jornal Diretriz &raquo;" href="https://jornaldiretriz.com.br/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Feed de comentários para Jornal Diretriz &raquo;" href="https://jornaldiretriz.com.br/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Feed de comentários para Jornal Diretriz &raquo; Flávio tem 51,56% e Lula 48,44% no segundo turno, aponta Veritá" href="https://jornaldiretriz.com.br/flavio-tem-5156-e-lula-4844-no-segundo-turno-aponta-verita/feed/" />
+<link rel="alternate" title="oEmbed (JSON)" type="application/json+oembed" href="https://jornaldiretriz.com.br/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fjornaldiretriz.com.br%2Fflavio-tem-5156-e-lula-4844-no-segundo-turno-aponta-verita%2F" />
+<link rel="alternate" title="oEmbed (XML)" type="text/xml+oembed" href="https://jornaldiretriz.com.br/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fjornaldiretriz.com.br%2Fflavio-tem-5156-e-lula-4844-no-segundo-turno-aponta-verita%2F&#038;format=xml" />
+<style id="wp-img-auto-sizes-contain-inline-css">
+img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
+/*# sourceURL=wp-img-auto-sizes-contain-inline-css */
+</style>
+
+<style id="wp-emoji-styles-inline-css">
+
+	img.wp-smiley, img.emoji {
+		display: inline !important;
+		border: none !important;
+		box-shadow: none !important;
+		height: 1em !important;
+		width: 1em !important;
+		margin: 0 0.07em !important;
+		vertical-align: -0.1em !important;
+		background: none !important;
+		padding: 0 !important;
+	}
+/*# sourceURL=wp-emoji-styles-inline-css */
+</style>
+<style id="wp-block-library-inline-css">
+:root{--wp-block-synced-color:#7a00df;--wp-block-synced-color--rgb:122,0,223;--wp-bound-block-color:var(--wp-block-synced-color);--wp-editor-canvas-background:#ddd;--wp-admin-theme-color:#007cba;--wp-admin-theme-color--rgb:0,124,186;--wp-admin-theme-color-darker-10:#006ba1;--wp-admin-theme-color-darker-10--rgb:0,107,160.5;--wp-admin-theme-color-darker-20:#005a87;--wp-admin-theme-color-darker-20--rgb:0,90,135;--wp-admin-border-width-focus:2px}@media (min-resolution:192dpi){:root{--wp-admin-border-width-focus:1.5px}}.wp-element-button{cursor:pointer}:root .has-very-light-gray-background-color{background-color:#eee}:root .has-very-dark-gray-background-color{background-color:#313131}:root .has-very-light-gray-color{color:#eee}:root .has-very-dark-gray-color{color:#313131}:root .has-vivid-green-cyan-to-vivid-cyan-blue-gradient-background{background:linear-gradient(135deg,#00d084,#0693e3)}:root .has-purple-crush-gradient-background{background:linear-gradient(135deg,#34e2e4,#4721fb 50%,#ab1dfe)}:root .has-hazy-dawn-gradient-background{background:linear-gradient(135deg,#faaca8,#dad0ec)}:root .has-subdued-olive-gradient-background{background:linear-gradient(135deg,#fafae1,#67a671)}:root .has-atomic-cream-gradient-background{background:linear-gradient(135deg,#fdd79a,#004a59)}:root .has-nightshade-gradient-background{background:linear-gradient(135deg,#330968,#31cdcf)}:root .has-midnight-gradient-background{background:linear-gradient(135deg,#020381,#2874fc)}:root{--wp--preset--font-size--normal:16px;--wp--preset--font-size--huge:42px}.has-regular-font-size{font-size:1em}.has-larger-font-size{font-size:2.625em}.has-normal-font-size{font-size:var(--wp--preset--font-size--normal)}.has-huge-font-size{font-size:var(--wp--preset--font-size--huge)}:root .has-text-align-center{text-align:center}:root .has-text-align-left{text-align:left}:root .has-text-align-right{text-align:right}.has-fit-text{white-space:nowrap!important}#end-resizable-editor-section{display:none}.aligncenter{clear:both}.items-justified-left{justify-content:flex-start}.items-justified-center{justify-content:center}.items-justified-right{justify-content:flex-end}.items-justified-space-between{justify-content:space-between}.screen-reader-text{word-wrap:normal!important;border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px}.screen-reader-text:focus{background-color:#ddd;clip-path:none;color:#444;display:block;font-size:1em;height:auto;left:5px;line-height:normal;padding:15px 23px 14px;text-decoration:none;top:5px;width:auto;z-index:100000}html :where(.has-border-color){border-style:solid}html :where([style*=border-color]){border-style:solid}html :where([style*=border-top-color]){border-top-style:solid}html :where([style*=border-right-color]){border-right-style:solid}html :where([style*=border-bottom-color]){border-bottom-style:solid}html :where([style*=border-left-color]){border-left-style:solid}html :where([style*=border-width]){border-style:solid}html :where([style*=border-top-width]){border-top-style:solid}html :where([style*=border-right-width]){border-right-style:solid}html :where([style*=border-bottom-width]){border-bottom-style:solid}html :where([style*=border-left-width]){border-left-style:solid}html :where(img[class*=wp-image-]){height:auto;max-width:100%}:where(figure){margin:0 0 1em}html :where(.is-position-sticky){--wp-admin--admin-bar--position-offset:var(--wp-admin--admin-bar--height,0px)}@media screen and (max-width:600px){html :where(.is-position-sticky){--wp-admin--admin-bar--position-offset:0px}}
+
+/*# sourceURL=/wp-includes/css/dist/block-library/common.min.css */
+</style>
+<style id="classic-theme-styles-inline-css">
+/*! This file is auto-generated */
+.wp-block-button__link{color:#fff;background-color:#32373c;border-radius:9999px;box-shadow:none;text-decoration:none;padding:calc(.667em + 2px) calc(1.333em + 2px);font-size:1.125em}.wp-block-file__button{background:#32373c;color:#fff;text-decoration:none}
+/*# sourceURL=/wp-includes/css/classic-themes.min.css */
+</style>
+
+<link rel='stylesheet' id='mpp_gutenberg-css' href='https://jornaldiretriz.com.br/wp-content/plugins/profile-builder/add-ons-free/user-profile-picture/dist/blocks.style.build.css?ver=2.6.0' media='all' />
+<style id="global-styles-inline-css">
+:root{--wp--preset--aspect-ratio--square: 1;--wp--preset--aspect-ratio--4-3: 4/3;--wp--preset--aspect-ratio--3-4: 3/4;--wp--preset--aspect-ratio--3-2: 3/2;--wp--preset--aspect-ratio--2-3: 2/3;--wp--preset--aspect-ratio--16-9: 16/9;--wp--preset--aspect-ratio--9-16: 9/16;--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgb(6,147,227) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgb(252,185,0) 0%,rgb(255,105,0) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgb(255,105,0) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;--wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);--wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);--wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);--wp--preset--shadow--outlined: 6px 6px 0px -3px rgb(255, 255, 255), 6px 6px rgb(0, 0, 0);--wp--preset--shadow--crisp: 6px 6px 0px rgb(0, 0, 0);}:where(body) { margin: 0; }:where(.is-layout-flex){gap: 0.5em;}:where(.is-layout-grid){gap: 0.5em;}body .is-layout-flex{display: flex;}.is-layout-flex{flex-wrap: wrap;align-items: center;}.is-layout-flex > :is(*, div){margin: 0;}body .is-layout-grid{display: grid;}.is-layout-grid > :is(*, div){margin: 0;}body{padding-top: 0px;padding-right: 0px;padding-bottom: 0px;padding-left: 0px;}:root :where(.wp-element-button, .wp-block-button__link){background-color: #32373c;border-width: 0;color: #fff;font-family: inherit;font-size: inherit;font-style: inherit;font-weight: inherit;letter-spacing: inherit;line-height: inherit;padding-top: calc(0.667em + 2px);padding-right: calc(1.333em + 2px);padding-bottom: calc(0.667em + 2px);padding-left: calc(1.333em + 2px);text-decoration: none;text-transform: inherit;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+/*# sourceURL=global-styles-inline-css */
+</style>
+
+<link rel='stylesheet' id='uag-style-3614-css' href='https://jornaldiretriz.com.br/wp-content/uploads/uag-plugin/assets/4000/uag-css-3614.css?ver=1791429858' media='all' />
+<link rel='stylesheet' id='js_composer_front-css' href='https://jornaldiretriz.com.br/wp-content/plugins/js_composer/assets/css/js_composer.min.css?ver=8.7.3' media='all' />
+<link rel='stylesheet' id='jeg_customizer_font-css' href='//fonts.googleapis.com/css?family=Heebo%3Aregular%2C500%2C600%7COswald%3Aregular%2C500%2C500%2C600%2C600%2C500%7CRoboto%3Areguler&#038;display=swap&#038;ver=1.3.2' media='all' />
+<link rel='stylesheet' id='font-awesome-css' href='https://jornaldiretriz.com.br/wp-content/themes/jnews/assets/fonts/font-awesome/font-awesome.min.css?ver=12.0.12' media='all' />
+<link rel='stylesheet' id='jnews-frontend-css' href='https://jornaldiretriz.com.br/wp-content/themes/jnews/assets/dist/frontend.min.css?ver=12.0.12' media='all' />
+<link rel='stylesheet' id='jnews-js-composer-css' href='https://jornaldiretriz.com.br/wp-content/themes/jnews/assets/css/js-composer-frontend.css?ver=12.0.12' media='all' />
+<link rel='stylesheet' id='jnews-style-css' href='https://jornaldiretriz.com.br/wp-content/themes/jnews/style.css?ver=12.0.12' media='all' />
+<link rel='stylesheet' id='jnews-darkmode-css' href='https://jornaldiretriz.com.br/wp-content/themes/jnews/assets/css/darkmode.css?ver=12.0.12' media='all' />
+<link rel='stylesheet' id='jnews-scheme-css' href='https://jornaldiretriz.com.br/wp-content/uploads/jnews/scheme.css?ver=1788404084' media='all' />
+<link rel='stylesheet' id='wp-block-paragraph-css' href='https://jornaldiretriz.com.br/wp-includes/blocks/paragraph/style.min.css?ver=7.0.7' media='all' />
+<link rel='stylesheet' id='jnews-paywall-css' href='https://jornaldiretriz.com.br/wp-content/plugins/jnews-paywall/assets/css/jpw-frontend.css?ver=12.0.5' media='all' />
+<link rel='stylesheet' id='jnews-select-share-css' href='https://jornaldiretriz.com.br/wp-content/plugins/jnews-social-share/assets/css/plugin.css' media='all' />
+<link rel='stylesheet' id='jnews-weather-style-css' href='https://jornaldiretriz.com.br/wp-content/plugins/jnews-weather/assets/css/plugin.css?ver=12.0.1' media='all' />
+<link rel='stylesheet' id='wppb_stylesheet-css' href='https://jornaldiretriz.com.br/wp-content/plugins/profile-builder/assets/css/style-front-end.css?ver=4.0.3' media='all' />
+<script id="jquery-core-js" src="https://jornaldiretriz.com.br/wp-includes/js/jquery/jquery.min.js?ver=3.7.1"></script>
+<script id="jquery-migrate-js" src="https://jornaldiretriz.com.br/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1"></script>
+
+<!-- Snippet da tag do Google (gtag.js) adicionado pelo Site Kit -->
+<!-- Snippet do Google Analytics adicionado pelo Site Kit -->
+<script id="google_gtagjs-js" src="https://www.googletagmanager.com/gtag/js?id=GT-WBK8FV7W" async></script>
+<script id="google_gtagjs-js-after">
+window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}
+gtag("set","linker",{"domains":["jornaldiretriz.com.br"]});
+gtag("js", new Date());
+gtag("set", "developer_id.dZTNiMT", true);
+gtag("config", "GT-WBK8FV7W", {"googlesitekit_post_author":"Henrique Speck","googlesitekit_post_date":"20261006"});
+ window._googlesitekit = window._googlesitekit || {}; window._googlesitekit.throttledEvents = []; window._googlesitekit.gtagEvent = (name, data) => { var key = JSON.stringify( { name, data } ); if ( !! window._googlesitekit.throttledEvents[ key ] ) { return; } window._googlesitekit.throttledEvents[ key ] = true; setTimeout( () => { delete window._googlesitekit.throttledEvents[ key ]; }, 5 ); gtag( "event", name, { ...data, event_source: "site-kit" } ); }; 
+//# sourceURL=google_gtagjs-js-after
+</script>
+<script></script><link rel="https://api.w.org/" href="https://jornaldiretriz.com.br/wp-json/" /><link rel="alternate" title="JSON" type="application/json" href="https://jornaldiretriz.com.br/wp-json/wp/v2/posts/3614" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://jornaldiretriz.com.br/xmlrpc.php?rsd" />
+<meta name="generator" content="WordPress 7.0.7" />
+<link rel='shortlink' href='https://jornaldiretriz.com.br/?p=3614' />
+<meta name="generator" content="Site Kit by Google 1.187.0" /><meta name="generator" content="Powered by WPBakery Page Builder - drag and drop page builder for WordPress."/>
+<meta name="redi-version" content="1.3.0" /><script type='application/ld+json'>{"@context":"http:\/\/schema.org","@type":"Organization","@id":"https:\/\/jornaldiretriz.com.br\/#organization","url":"https:\/\/jornaldiretriz.com.br\/","name":"","logo":{"@type":"ImageObject","url":""},"sameAs":["https:\/\/twitter.com\/diretrizoficial","https:\/\/www.instagram.com\/jornaldiretriz","https:\/\/www.youtube.com\/jornaldiretriz"]}</script>
+<script type='application/ld+json'>{"@context":"http:\/\/schema.org","@type":"WebSite","@id":"https:\/\/jornaldiretriz.com.br\/#website","url":"https:\/\/jornaldiretriz.com.br\/","name":"","potentialAction":{"@type":"SearchAction","target":"https:\/\/jornaldiretriz.com.br\/?s={search_term_string}","query-input":"required name=search_term_string"}}</script>
+<style id="uagb-style-conditional-extension">@media (min-width: 1025px){body .uag-hide-desktop.uagb-google-map__wrap,body .uag-hide-desktop{display:none !important}}@media (min-width: 768px) and (max-width: 1024px){body .uag-hide-tab.uagb-google-map__wrap,body .uag-hide-tab{display:none !important}}@media (max-width: 767px){body .uag-hide-mob.uagb-google-map__wrap,body .uag-hide-mob{display:none !important}}</style><link rel="icon" href="https://jornaldiretriz.com.br/wp-content/uploads/2026/04/cropped-Logo-icone_3-32x32.png" sizes="32x32" />
+<link rel="icon" href="https://jornaldiretriz.com.br/wp-content/uploads/2026/04/cropped-Logo-icone_3-192x192.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://jornaldiretriz.com.br/wp-content/uploads/2026/04/cropped-Logo-icone_3-180x180.png" />
+<meta name="msapplication-TileImage" content="https://jornaldiretriz.com.br/wp-content/uploads/2026/04/cropped-Logo-icone_3-270x270.png" />
+<style id="jeg_dynamic_css" type="text/css" data-type="jeg_custom-css">.jeg_container, .jeg_content, .jeg_boxed .jeg_main .jeg_container, .jeg_autoload_separator { background-color : #ffffff; } body { --j-body-color : #2e3d26; --j-accent-color : #2e3d26; --j-alt-color : #0a0a0a; --j-heading-color : #2e3d26; --j-entry-color : #0a0a0a; } body,.jeg_newsfeed_list .tns-outer .tns-controls button,.jeg_filter_button,.owl-carousel .owl-nav div,.jeg_readmore,.jeg_hero_style_7 .jeg_post_meta a,.widget_calendar thead th,.widget_calendar tfoot a,.jeg_socialcounter a,.entry-header .jeg_meta_like a,.entry-header .jeg_meta_comment a,.entry-header .jeg_meta_donation a,.entry-header .jeg_meta_bookmark a,.entry-content tbody tr:hover,.entry-content th,.jeg_splitpost_nav li:hover a,#breadcrumbs a,.jeg_author_socials a:hover,.jeg_footer_content a,.jeg_footer_bottom a,.jeg_cartcontent,.woocommerce .woocommerce-breadcrumb a { color : #2e3d26; } a, .jeg_menu_style_5>li>a:hover, .jeg_menu_style_5>li.sfHover>a, .jeg_menu_style_5>li.current-menu-item>a, .jeg_menu_style_5>li.current-menu-ancestor>a, .jeg_navbar .jeg_menu:not(.jeg_main_menu)>li>a:hover, .jeg_midbar .jeg_menu:not(.jeg_main_menu)>li>a:hover, .jeg_side_tabs li.active, .jeg_block_heading_5 strong, .jeg_block_heading_6 strong, .jeg_block_heading_7 strong, .jeg_block_heading_8 strong, .jeg_subcat_list li a:hover, .jeg_subcat_list li button:hover, .jeg_pl_lg_7 .jeg_thumb .jeg_post_category a, .jeg_pl_xs_2:before, .jeg_pl_xs_4 .jeg_postblock_content:before, .jeg_postblock .jeg_post_title a:hover, .jeg_hero_style_6 .jeg_post_title a:hover, .jeg_sidefeed .jeg_pl_xs_3 .jeg_post_title a:hover, .widget_jnews_popular .jeg_post_title a:hover, .jeg_meta_author a, .widget_archive li a:hover, .widget_pages li a:hover, .widget_meta li a:hover, .widget_recent_entries li a:hover, .widget_rss li a:hover, .widget_rss cite, .widget_categories li a:hover, .widget_categories li.current-cat>a, #breadcrumbs a:hover, .jeg_share_count .counts, .commentlist .bypostauthor>.comment-body>.comment-author>.fn, span.required, .jeg_review_title, .bestprice .price, .authorlink a:hover, .jeg_vertical_playlist .jeg_video_playlist_play_icon, .jeg_vertical_playlist .jeg_video_playlist_item.active .jeg_video_playlist_thumbnail:before, .jeg_horizontal_playlist .jeg_video_playlist_play, .woocommerce li.product .pricegroup .button, .widget_display_forums li a:hover, .widget_display_topics li:before, .widget_display_replies li:before, .widget_display_views li:before, .bbp-breadcrumb a:hover, .jeg_mobile_menu li.sfHover>a, .jeg_mobile_menu li a:hover, .split-template-6 .pagenum, .jeg_mobile_menu_style_5>li>a:hover, .jeg_mobile_menu_style_5>li.sfHover>a, .jeg_mobile_menu_style_5>li.current-menu-item>a, .jeg_mobile_menu_style_5>li.current-menu-ancestor>a, .jeg_mobile_menu.jeg_menu_dropdown li.open > div > a ,.jeg_menu_dropdown.language-swicher .sub-menu li a:hover { color : #2e3d26; } .jeg_menu_style_1>li>a:before, .jeg_menu_style_2>li>a:before, .jeg_menu_style_3>li>a:before, .jeg_side_toggle, .jeg_slide_caption .jeg_post_category a, .jeg_slider_type_1_wrapper .tns-controls button.tns-next, .jeg_block_heading_1 .jeg_block_title span, .jeg_block_heading_2 .jeg_block_title span, .jeg_block_heading_3, .jeg_block_heading_4 .jeg_block_title span, .jeg_block_heading_6:after, .jeg_pl_lg_box .jeg_post_category a, .jeg_pl_md_box .jeg_post_category a, .jeg_readmore:hover, .jeg_thumb .jeg_post_category a, .jeg_block_loadmore a:hover, .jeg_postblock.alt .jeg_block_loadmore a:hover, .jeg_block_loadmore a.active, .jeg_postblock_carousel_2 .jeg_post_category a, .jeg_heroblock .jeg_post_category a, .jeg_pagenav_1 .page_number.active, .jeg_pagenav_1 .page_number.active:hover, input[type="submit"], .btn, .button, .widget_tag_cloud a:hover, .popularpost_item:hover .jeg_post_title a:before, .jeg_splitpost_4 .page_nav, .jeg_splitpost_5 .page_nav, .jeg_post_via a:hover, .jeg_post_source a:hover, .jeg_post_tags a:hover, .comment-reply-title small a:before, .comment-reply-title small a:after, .jeg_storelist .productlink, .authorlink li.active a:before, .jeg_footer.dark .socials_widget:not(.nobg) a:hover .fa,.jeg_footer.dark .socials_widget:not(.nobg) a:hover > span.jeg-icon, div.jeg_breakingnews_title, .jeg_overlay_slider_bottom_wrapper .tns-controls button, .jeg_overlay_slider_bottom_wrapper .tns-controls button:hover, .jeg_vertical_playlist .jeg_video_playlist_current, .woocommerce span.onsale, .woocommerce #respond input#submit:hover, .woocommerce a.button:hover, .woocommerce button.button:hover, .woocommerce input.button:hover, .woocommerce #respond input#submit.alt, .woocommerce a.button.alt, .woocommerce button.button.alt, .woocommerce input.button.alt, .jeg_popup_post .caption, .jeg_footer.dark input[type="submit"], .jeg_footer.dark .btn, .jeg_footer.dark .button, .footer_widget.widget_tag_cloud a:hover, .jeg_inner_content .content-inner .jeg_post_category a:hover, #buddypress .standard-form button, #buddypress a.button, #buddypress input[type="submit"], #buddypress input[type="button"], #buddypress input[type="reset"], #buddypress ul.button-nav li a, #buddypress .generic-button a, #buddypress .generic-button button, #buddypress .comment-reply-link, #buddypress a.bp-title-button, #buddypress.buddypress-wrap .members-list li .user-update .activity-read-more a, div#buddypress .standard-form button:hover, div#buddypress a.button:hover, div#buddypress input[type="submit"]:hover, div#buddypress input[type="button"]:hover, div#buddypress input[type="reset"]:hover, div#buddypress ul.button-nav li a:hover, div#buddypress .generic-button a:hover, div#buddypress .generic-button button:hover, div#buddypress .comment-reply-link:hover, div#buddypress a.bp-title-button:hover, div#buddypress.buddypress-wrap .members-list li .user-update .activity-read-more a:hover, #buddypress #item-nav .item-list-tabs ul li a:before, .jeg_inner_content .jeg_meta_container .follow-wrapper a { background-color : #2e3d26; } .jeg_block_heading_7 .jeg_block_title span, .jeg_readmore:hover, .jeg_block_loadmore a:hover, .jeg_block_loadmore a.active, .jeg_pagenav_1 .page_number.active, .jeg_pagenav_1 .page_number.active:hover, .jeg_pagenav_3 .page_number:hover, .jeg_prevnext_post a:hover h3, .jeg_overlay_slider .jeg_post_category, .jeg_sidefeed .jeg_post.active, .jeg_vertical_playlist.jeg_vertical_playlist .jeg_video_playlist_item.active .jeg_video_playlist_thumbnail img, .jeg_horizontal_playlist .jeg_video_playlist_item.active { border-color : #2e3d26; } .jeg_tabpost_nav li.active, .woocommerce div.product .woocommerce-tabs ul.tabs li.active, .jeg_mobile_menu_style_1>li.current-menu-item a, .jeg_mobile_menu_style_1>li.current-menu-ancestor a, .jeg_mobile_menu_style_2>li.current-menu-item::after, .jeg_mobile_menu_style_2>li.current-menu-ancestor::after, .jeg_mobile_menu_style_3>li.current-menu-item::before, .jeg_mobile_menu_style_3>li.current-menu-ancestor::before { border-bottom-color : #2e3d26; } .jeg_post_share .jeg-icon svg { fill : #2e3d26; } .jeg_post_meta .fa, .jeg_post_meta .jpwt-icon, .entry-header .jeg_post_meta .fa, .jeg_review_stars, .jeg_price_review_list { color : #0a0a0a; } .jeg_share_button.share-float.share-monocrhome a { background-color : #0a0a0a; } h1,h2,h3,h4,h5,h6,.jeg_post_title a,.entry-header .jeg_post_title,.jeg_hero_style_7 .jeg_post_title a,.jeg_block_title,.jeg_splitpost_bar .current_title,.jeg_video_playlist_title,.gallery-caption,.jeg_push_notification_button>a.button { color : #2e3d26; } .split-template-9 .pagenum, .split-template-10 .pagenum, .split-template-11 .pagenum, .split-template-12 .pagenum, .split-template-13 .pagenum, .split-template-15 .pagenum, .split-template-18 .pagenum, .split-template-20 .pagenum, .split-template-19 .current_title span, .split-template-20 .current_title span { background-color : #2e3d26; } .entry-content .content-inner p, .entry-content .intro-text { color : #0a0a0a; } .jeg_topbar .jeg_nav_row, .jeg_topbar .jeg_search_no_expand .jeg_search_input { line-height : 36px; } .jeg_topbar .jeg_nav_row, .jeg_topbar .jeg_nav_icon { height : 36px; } .jeg_topbar .jeg_logo_img { max-height : 36px; } .jeg_topbar, .jeg_topbar.dark { border-top-width : 0px; } .jeg_midbar { height : 72px; } .jeg_midbar .jeg_logo_img { max-height : 72px; } .jeg_midbar, .jeg_midbar.dark { border-bottom-width : 0px; } .jeg_header .jeg_bottombar.jeg_navbar,.jeg_bottombar .jeg_nav_icon { height : 56px; } .jeg_header .jeg_bottombar.jeg_navbar, .jeg_header .jeg_bottombar .jeg_main_menu:not(.jeg_menu_style_1) > li > a, .jeg_header .jeg_bottombar .jeg_menu_style_1 > li, .jeg_header .jeg_bottombar .jeg_menu:not(.jeg_main_menu) > li > a { line-height : 56px; } .jeg_bottombar .jeg_logo_img { max-height : 56px; } .jeg_header .jeg_bottombar, .jeg_header .jeg_bottombar.jeg_navbar_dark, .jeg_bottombar.jeg_navbar_boxed .jeg_nav_row, .jeg_bottombar.jeg_navbar_dark.jeg_navbar_boxed .jeg_nav_row { border-top-width : 0px; border-bottom-width : 1px; } .jeg_stickybar.jeg_navbar,.jeg_navbar .jeg_nav_icon { height : 66px; } .jeg_stickybar.jeg_navbar, .jeg_stickybar .jeg_main_menu:not(.jeg_menu_style_1) > li > a, .jeg_stickybar .jeg_menu_style_1 > li, .jeg_stickybar .jeg_menu:not(.jeg_main_menu) > li > a { line-height : 66px; } .jeg_header_sticky .jeg_navbar_wrapper:not(.jeg_navbar_boxed), .jeg_header_sticky .jeg_navbar_boxed .jeg_nav_row { background : #ffffff; } .jeg_stickybar, .jeg_stickybar.dark { border-bottom-width : 0px; } .jeg_mobile_midbar, .jeg_mobile_midbar.dark { background : #161616; } .jeg_navbar_mobile_menu { border-top-color : #161616; } .jeg_header .socials_widget > a > i.fa:before { color : #000000; } .jeg_header .socials_widget.nobg > a > i > span.jeg-icon svg { fill : #000000; } .jeg_header .socials_widget.nobg > a > span.jeg-icon svg { fill : #000000; } .jeg_header .socials_widget > a > span.jeg-icon svg { fill : #000000; } .jeg_header .socials_widget > a > i > span.jeg-icon svg { fill : #000000; } .jeg_top_date { color : #ffffff; } .jeg_button_1 .btn { background : #dd3333; } .jeg_lang_dropdown_wrapper .jeg_lang_btn i, .jeg_lang_dropdown_wrapper .jeg_lang_dropdown a ,.jeg_lang_btn span , .jeg_lang_switcher a, .jeg_lang_switcher span, .jeg_lang_dropdown_wrapper .jeg_lang_btn::after { color : #ffffff; } .jeg_header .jeg_midbar.jeg_lang_expanded .jeg_lang_dropdown_wrapper .jeg_lang_btn { border-color : #ffffff; } .jeg_lang_switcher , .jeg_lang_switcher { background : #ffffff; } .jeg_nav_account, .jeg_navbar .jeg_nav_account .jeg_menu > li > a, .jeg_midbar .jeg_nav_account .jeg_menu > li > a { color : #2b2b2b; } .jeg_header .jeg_search_wrapper.search_icon .jeg_search_toggle { color : #1b2228; } .jeg_nav_search { width : 70%; } .jeg_header .jeg_search_no_expand .jeg_search_form .jeg_search_input { border-color : #eaeaea; } .jeg_header .jeg_menu.jeg_main_menu > li > a { color : #000000; } .jnews .jeg_header .jeg_menu.jeg_top_menu > li > a { color : #ffffff; } .jnews .jeg_header .jeg_menu.jeg_top_menu > li a:hover { color : #cccccc; } .jeg_footer_content,.jeg_footer.dark .jeg_footer_content { background-color : #2e3d26; color : #ababab; } .jeg_footer .jeg_footer_heading h3,.jeg_footer.dark .jeg_footer_heading h3,.jeg_footer .widget h2,.jeg_footer .footer_dark .widget h2 { color : #ffffff; } .jeg_footer .jeg_footer_content a, .jeg_footer.dark .jeg_footer_content a { color : #a9afb3; } .jeg_footer_secondary,.jeg_footer.dark .jeg_footer_secondary,.jeg_footer_bottom,.jeg_footer.dark .jeg_footer_bottom,.jeg_footer_sidecontent .jeg_footer_primary { color : #ababab; } .jeg_footer_bottom a,.jeg_footer.dark .jeg_footer_bottom a,.jeg_footer_secondary a,.jeg_footer.dark .jeg_footer_secondary a,.jeg_footer_sidecontent .jeg_footer_primary a,.jeg_footer_sidecontent.dark .jeg_footer_primary a { color : #ffffff; } .jeg_menu_footer a:hover,.jeg_footer.dark .jeg_menu_footer a:hover,.jeg_footer_sidecontent .jeg_footer_primary .col-md-7 .jeg_menu_footer a:hover { color : #ffffff; } body,input,textarea,select,.chosen-container-single .chosen-single,.btn,.button { font-family: Heebo,Helvetica,Arial,sans-serif; } .jeg_header, .jeg_mobile_wrapper { font-family: Oswald,Helvetica,Arial,sans-serif; } h3.jeg_block_title, .jeg_footer .jeg_footer_heading h3, .jeg_footer .widget h2, .jeg_tabpost_nav li { font-family: Oswald,Helvetica,Arial,sans-serif; } .jeg_post_title, .entry-header .jeg_post_title, .jeg_single_tpl_2 .entry-header .jeg_post_title, .jeg_single_tpl_3 .entry-header .jeg_post_title, .jeg_single_tpl_6 .entry-header .jeg_post_title, .jeg_content .jeg_custom_title_wrapper .jeg_post_title { font-family: Oswald,Helvetica,Arial,sans-serif; } .jeg_post_excerpt p, .content-inner p { font-family: Roboto,Helvetica,Arial,sans-serif; } .jeg_thumb .jeg_post_category a,.jeg_pl_lg_box .jeg_post_category a,.jeg_pl_md_box .jeg_post_category a,.jeg_postblock_carousel_2 .jeg_post_category a,.jeg_heroblock .jeg_post_category a,.jeg_slide_caption .jeg_post_category a { background-color : #003017; color : #ffffff; } .jeg_overlay_slider .jeg_post_category,.jeg_thumb .jeg_post_category a,.jeg_pl_lg_box .jeg_post_category a,.jeg_pl_md_box .jeg_post_category a,.jeg_postblock_carousel_2 .jeg_post_category a,.jeg_heroblock .jeg_post_category a,.jeg_slide_caption .jeg_post_category a { border-color : #003017; } </style><style type="text/css">
+					.no_thumbnail .jeg_thumb,
+					.thumbnail-container.no_thumbnail {
+					    display: none !important;
+					}
+					.jeg_search_result .jeg_pl_xs_3.no_thumbnail .jeg_postblock_content,
+					.jeg_sidefeed .jeg_pl_xs_3.no_thumbnail .jeg_postblock_content,
+					.jeg_pl_sm.no_thumbnail .jeg_postblock_content {
+					    margin-left: 0;
+					}
+					.jeg_postblock_11 .no_thumbnail .jeg_postblock_content,
+					.jeg_postblock_12 .no_thumbnail .jeg_postblock_content,
+					.jeg_postblock_12.jeg_col_3o3 .no_thumbnail .jeg_postblock_content  {
+					    margin-top: 0;
+					}
+					.jeg_postblock_15 .jeg_pl_md_box.no_thumbnail .jeg_postblock_content,
+					.jeg_postblock_19 .jeg_pl_md_box.no_thumbnail .jeg_postblock_content,
+					.jeg_postblock_24 .jeg_pl_md_box.no_thumbnail .jeg_postblock_content,
+					.jeg_sidefeed .jeg_pl_md_box .jeg_postblock_content {
+					    position: relative;
+					}
+					.jeg_postblock_carousel_2 .no_thumbnail .jeg_post_title a,
+					.jeg_postblock_carousel_2 .no_thumbnail .jeg_post_title a:hover,
+					.jeg_postblock_carousel_2 .no_thumbnail .jeg_post_meta .fa {
+					    color: #212121 !important;
+					} 
+					.jnews-dark-mode .jeg_postblock_carousel_2 .no_thumbnail .jeg_post_title a,
+					.jnews-dark-mode .jeg_postblock_carousel_2 .no_thumbnail .jeg_post_title a:hover,
+					.jnews-dark-mode .jeg_postblock_carousel_2 .no_thumbnail .jeg_post_meta .fa {
+					    color: #fff !important;
+					} 
+				</style><style id="wp-custom-css">
+/* AJUSTE GERAL DA MANCHETE PRINCIPAL */
+.jeg_hero_style_1 .jeg_post_title a, 
+.jeg_postblock_16 .jeg_post_title a {
+    font-size: 38px !important;
+    line-height: 1.1 !important;
+    font-weight: 800 !important;
+}
+
+/* Garante que o conteúdo dos comentários nunca apareça */
+.jeg_tabpost_content .jeg_tabpost_pane:nth-child(2) {
+    display: none !important;
+}
+
+/* Trocar o texto do botão Read More por Leia Mais */
+.jeg_readmore {
+    font-size: 0 !important;
+}
+
+.jeg_readmore:before {
+    content: "Leia mais";
+    font-size: 11px;
+    display: inline-block;
+}
+
+/* 1. MANCHETE PRINCIPAL: Forçando pelo ID único */
+[data-unique*="jnews_module_2155_3"] .jeg_post_title a {
+    font-size: 34px !important;
+    line-height: 1.1 !important;
+    font-weight: 800 !important;
+}
+
+/* 2. BLOCO DE BAIXO: Usando a classe do módulo de lista */
+.jeg_postblock_23 .jeg_post_title a,
+.jeg_postblock_21 .jeg_post_title a,
+.jeg_postblock_25 .jeg_post_title a {
+    font-size: 21px !important;
+    line-height: 1.2 !important;
+    font-weight: 700 !important;
+}
+
+/* 3. LATERAL: Sidebar padrão */
+.jeg_sidebar .jeg_post_title a {
+    font-size: 21px !important;
+}
+
+/* Remove a data e o ícone de comentário dos blocos secundários e lateral */
+.jeg_postblock_23 .jeg_post_meta,
+.jeg_postblock_5 .jeg_post_meta,
+.jeg_postblock_side .jeg_post_meta,
+.jeg_sidebar .jeg_post_meta {
+    display: none !important;
+}
+</style>
+<noscript><style> .wpb_animate_when_almost_visible { opacity: 1; }</style></noscript></head>
+<body class="wp-singular post-template-default single single-post postid-3614 single-format-standard wp-custom-logo wp-embed-responsive wp-theme-jnews jeg_toggle_light jeg_single_tpl_1 jeg_single_fullwidth jnews jsc_normal wpb-js-composer js-comp-ver-8.7.3 vc_responsive">
+
+    
+    
+    <div class="jeg_ad jeg_ad_top jnews_header_top_ads">
+        <div class='ads-wrapper  '></div>    </div>
+
+    <!-- The Main Wrapper
+    ============================================= -->
+    <div class="jeg_viewport">
+
+        
+        <div class="jeg_header_wrapper">
+            <div class="jeg_header_instagram_wrapper">
+    </div>
+
+<!-- HEADER -->
+<div class="jeg_header full">
+    <div class="jeg_midbar jeg_container jeg_navbar_wrapper normal">
+    <div class="container">
+        <div class="jeg_nav_row">
+            
+                <div class="jeg_nav_col jeg_nav_left jeg_nav_grow">
+                    <div class="item_wrap jeg_nav_alignleft">
+                                            </div>
+                </div>
+
+                
+                <div class="jeg_nav_col jeg_nav_center jeg_nav_normal">
+                    <div class="item_wrap jeg_nav_aligncenter">
+                        <div class="jeg_nav_item jeg_logo jeg_desktop_logo">
+			<div class="site-title">
+			<a href="https://jornaldiretriz.com.br/" aria-label="Visit Homepage" style="padding: 15px 0px 0px 0px;">
+				<img class='jeg_logo_img' src="https://jornaldiretriz.com.br/wp-content/uploads/2026/04/Logo-icone_3.png" srcset="https://jornaldiretriz.com.br/wp-content/uploads/2026/04/Logo-icone_3.png 1x, https://jornaldiretriz.com.br/wp-content/uploads/2026/04/Logo-icone_3.png 2x" alt="Jornal Diretriz"data-light-src="https://jornaldiretriz.com.br/wp-content/uploads/2026/04/Logo-icone_3.png" data-light-srcset="https://jornaldiretriz.com.br/wp-content/uploads/2026/04/Logo-icone_3.png 1x, https://jornaldiretriz.com.br/wp-content/uploads/2026/04/Logo-icone_3.png 2x" data-dark-src="https://jornaldiretriz.com.br/wp-content/uploads/2026/04/Logo-icone_1.png" data-dark-srcset="https://jornaldiretriz.com.br/wp-content/uploads/2026/04/Logo-icone_1.png 1x, https://jornaldiretriz.com.br/wp-content/uploads/2026/04/Logo-icone_1.png 2x"width="2000" height="445">			</a>
+		</div>
+	</div>
+                    </div>
+                </div>
+
+                
+                <div class="jeg_nav_col jeg_nav_right jeg_nav_grow">
+                    <div class="item_wrap jeg_nav_alignright">
+                                            </div>
+                </div>
+
+                        </div>
+    </div>
+</div><div class="jeg_bottombar jeg_navbar jeg_container jeg_navbar_wrapper  jeg_navbar_normal">
+    <div class="container">
+        <div class="jeg_nav_row">
+            
+                <div class="jeg_nav_col jeg_nav_left jeg_nav_grow">
+                    <div class="item_wrap jeg_nav_alignleft">
+                        <div class="jeg_nav_item jeg_dark_mode">
+                    <label class="dark_mode_switch">
+                        <input aria-label="Dark mode toogle" type="checkbox" class="jeg_dark_mode_toggle" >
+                        <span class="slider round"></span>
+                    </label>
+                 </div>			<div
+				class="jeg_nav_item socials_widget jeg_social_icon_block nobg">
+				<a href="https://twitter.com/diretrizoficial" target='_blank' rel='external noopener nofollow'  aria-label="Find us on Twitter" class="jeg_twitter"><i class="fa fa-twitter"><span class="jeg-icon icon-twitter"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg></span></i> </a><a href="https://www.instagram.com/jornaldiretriz" target='_blank' rel='external noopener nofollow'  aria-label="Find us on Instagram" class="jeg_instagram"><i class="fa fa-instagram"></i> </a><a href="https://www.youtube.com/jornaldiretriz" target='_blank' rel='external noopener nofollow'  aria-label="Find us on Youtube" class="jeg_youtube"><i class="fa fa-youtube-play"></i> </a>			</div>
+			                    </div>
+                </div>
+
+                
+                <div class="jeg_nav_col jeg_nav_center jeg_nav_normal">
+                    <div class="item_wrap jeg_nav_aligncenter">
+                        <div class="jeg_nav_item jeg_main_menu_wrapper">
+<div class="jeg_mainmenu_wrap"><ul class="jeg_menu jeg_main_menu jeg_menu_style_2" data-animation="none"><li id="menu-item-2912" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-2912 bgnav" data-item-row="default" ><a href="https://jornaldiretriz.com.br/">Início</a></li>
+<li id="menu-item-2990" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2990 bgnav" data-item-row="default" ><a href="https://jornaldiretriz.com.br/category/parana/">Paraná</a></li>
+<li id="menu-item-3235" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-3235 bgnav" data-item-row="default" ><a href="https://jornaldiretriz.com.br/category/politica/">Política</a></li>
+<li id="menu-item-1982" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1982 bgnav" data-item-row="default" ><a href="https://jornaldiretriz.com.br/category/esporte/">Esporte</a></li>
+<li id="menu-item-2913" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2913 bgnav" data-item-row="default" ><a href="https://jornaldiretriz.com.br/category/mundo/">Mundo</a></li>
+<li id="menu-item-1983" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1983 bgnav" data-item-row="default" ><a href="https://jornaldiretriz.com.br/category/colunas/">Colunas</a></li>
+</ul></div></div>
+                    </div>
+                </div>
+
+                
+                <div class="jeg_nav_col jeg_nav_right jeg_nav_grow">
+                    <div class="item_wrap jeg_nav_alignright">
+                        <!-- Search Icon -->
+<div class="jeg_nav_item jeg_search_wrapper search_icon jeg_search_popup_expand">
+    <a href="#" class="jeg_search_toggle" aria-label="Search Button"><i class="fa fa-search"></i></a>
+    <form action="https://jornaldiretriz.com.br/" method="get" class="jeg_search_form" target="_top">
+    <input name="s" class="jeg_search_input" placeholder="Procure" type="text" value="" autocomplete="off">
+	<button aria-label="Search Button" type="submit" class="jeg_search_button btn"><i class="fa fa-search"></i></button>
+</form>
+<!-- jeg_search_hide with_result no_result -->
+<div class="jeg_search_result jeg_search_hide with_result">
+    <div class="search-result-wrapper">
+    </div>
+    <div class="search-link search-noresult">
+        Sem resultados    </div>
+    <div class="search-link search-all-button">
+        <i class="fa fa-search"></i> Veja todos os resultados    </div>
+</div></div>                    </div>
+                </div>
+
+                        </div>
+    </div>
+</div></div><!-- /.jeg_header -->        </div>
+
+        <div class="jeg_header_sticky">
+            <div class="sticky_blankspace"></div>
+<div class="jeg_header full">
+    <div class="jeg_container">
+        <div data-mode="scroll" class="jeg_stickybar jeg_navbar jeg_navbar_wrapper  jeg_navbar_shadow jeg_navbar_dark">
+            <div class="container">
+    <div class="jeg_nav_row">
+        
+            <div class="jeg_nav_col jeg_nav_left jeg_nav_grow">
+                <div class="item_wrap jeg_nav_alignleft">
+                    <div class="jeg_nav_item jeg_logo">
+    <div class="site-title">
+		<a href="https://jornaldiretriz.com.br/" aria-label="Visit Homepage">
+    	    <img class='jeg_logo_img' src="https://jornaldiretriz.com.br/wp-content/uploads/2026/04/Logo-icone_3.png" srcset="https://jornaldiretriz.com.br/wp-content/uploads/2026/04/Logo-icone_3.png 1x, https://jornaldiretriz.com.br/wp-content/uploads/2026/04/Logo-icone_3.png 2x" alt="Jornal Diretriz"data-light-src="https://jornaldiretriz.com.br/wp-content/uploads/2026/04/Logo-icone_3.png" data-light-srcset="https://jornaldiretriz.com.br/wp-content/uploads/2026/04/Logo-icone_3.png 1x, https://jornaldiretriz.com.br/wp-content/uploads/2026/04/Logo-icone_3.png 2x" data-dark-src="https://jornaldiretriz.com.br/wp-content/uploads/2026/04/Logo-icone_1.png" data-dark-srcset="https://jornaldiretriz.com.br/wp-content/uploads/2026/04/Logo-icone_1.png 1x, https://jornaldiretriz.com.br/wp-content/uploads/2026/04/Logo-icone_3.png 2x"width="2000" height="445">    	</a>
+    </div>
+</div>                </div>
+            </div>
+
+            
+            <div class="jeg_nav_col jeg_nav_center jeg_nav_normal">
+                <div class="item_wrap jeg_nav_aligncenter">
+                    <div class="jeg_nav_item jeg_main_menu_wrapper">
+<div class="jeg_mainmenu_wrap"><ul class="jeg_menu jeg_main_menu jeg_menu_style_2" data-animation="none"><li id="menu-item-2912" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-2912 bgnav" data-item-row="default" ><a href="https://jornaldiretriz.com.br/">Início</a></li>
+<li id="menu-item-2990" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2990 bgnav" data-item-row="default" ><a href="https://jornaldiretriz.com.br/category/parana/">Paraná</a></li>
+<li id="menu-item-3235" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-3235 bgnav" data-item-row="default" ><a href="https://jornaldiretriz.com.br/category/politica/">Política</a></li>
+<li id="menu-item-1982" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1982 bgnav" data-item-row="default" ><a href="https://jornaldiretriz.com.br/category/esporte/">Esporte</a></li>
+<li id="menu-item-2913" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2913 bgnav" data-item-row="default" ><a href="https://jornaldiretriz.com.br/category/mundo/">Mundo</a></li>
+<li id="menu-item-1983" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1983 bgnav" data-item-row="default" ><a href="https://jornaldiretriz.com.br/category/colunas/">Colunas</a></li>
+</ul></div></div>
+                </div>
+            </div>
+
+            
+            <div class="jeg_nav_col jeg_nav_right jeg_nav_grow">
+                <div class="item_wrap jeg_nav_alignright">
+                    <!-- Search Icon -->
+<div class="jeg_nav_item jeg_search_wrapper search_icon jeg_search_popup_expand">
+    <a href="#" class="jeg_search_toggle" aria-label="Search Button"><i class="fa fa-search"></i></a>
+    <form action="https://jornaldiretriz.com.br/" method="get" class="jeg_search_form" target="_top">
+    <input name="s" class="jeg_search_input" placeholder="Procure" type="text" value="" autocomplete="off">
+	<button aria-label="Search Button" type="submit" class="jeg_search_button btn"><i class="fa fa-search"></i></button>
+</form>
+<!-- jeg_search_hide with_result no_result -->
+<div class="jeg_search_result jeg_search_hide with_result">
+    <div class="search-result-wrapper">
+    </div>
+    <div class="search-link search-noresult">
+        Sem resultados    </div>
+    <div class="search-link search-all-button">
+        <i class="fa fa-search"></i> Veja todos os resultados    </div>
+</div></div>                </div>
+            </div>
+
+                </div>
+</div>        </div>
+    </div>
+</div>
+        </div>
+
+        <div class="jeg_navbar_mobile_wrapper">
+            <div class="jeg_navbar_mobile" data-mode="scroll">
+    <div class="jeg_mobile_bottombar jeg_mobile_midbar jeg_container dark">
+    <div class="container">
+        <div class="jeg_nav_row">
+            
+                <div class="jeg_nav_col jeg_nav_left jeg_nav_normal">
+                    <div class="item_wrap jeg_nav_alignleft">
+                        <div class="jeg_nav_item">
+    <a href="#" aria-label="Show Menu" class="toggle_btn jeg_mobile_toggle"><i class="fa fa-bars"></i></a>
+</div>                    </div>
+                </div>
+
+                
+                <div class="jeg_nav_col jeg_nav_center jeg_nav_grow">
+                    <div class="item_wrap jeg_nav_aligncenter">
+                        <div class="jeg_nav_item jeg_mobile_logo">
+			<div class="site-title">
+			<a href="https://jornaldiretriz.com.br/" aria-label="Visit Homepage">
+				<img class='jeg_logo_img' src="https://jornaldiretriz.com.br/wp-content/uploads/2026/04/Logo-icone_1.png" srcset="https://jornaldiretriz.com.br/wp-content/uploads/2026/04/Logo-icone_1.png 1x, https://jornaldiretriz.com.br/wp-content/uploads/2026/04/Logo-icone_1.png 2x" alt="Jornal Diretriz"data-light-src="https://jornaldiretriz.com.br/wp-content/uploads/2026/04/Logo-icone_1.png" data-light-srcset="https://jornaldiretriz.com.br/wp-content/uploads/2026/04/Logo-icone_1.png 1x, https://jornaldiretriz.com.br/wp-content/uploads/2026/04/Logo-icone_1.png 2x" data-dark-src="https://jornaldiretriz.com.br/wp-content/uploads/2026/04/Logo-icone_1.png" data-dark-srcset="https://jornaldiretriz.com.br/wp-content/uploads/2026/04/Logo-icone_1.png 1x, https://jornaldiretriz.com.br/wp-content/uploads/2026/04/Logo-icone_1.png 2x"width="2000" height="445">			</a>
+		</div>
+	</div>                    </div>
+                </div>
+
+                
+                <div class="jeg_nav_col jeg_nav_right jeg_nav_normal">
+                    <div class="item_wrap jeg_nav_alignright">
+                        <div class="jeg_nav_item jeg_search_wrapper jeg_search_popup_expand">
+    <a href="#" aria-label="Search Button" class="jeg_search_toggle"><i class="fa fa-search"></i></a>
+	<form action="https://jornaldiretriz.com.br/" method="get" class="jeg_search_form" target="_top">
+    <input name="s" class="jeg_search_input" placeholder="Procure" type="text" value="" autocomplete="off">
+	<button aria-label="Search Button" type="submit" class="jeg_search_button btn"><i class="fa fa-search"></i></button>
+</form>
+<!-- jeg_search_hide with_result no_result -->
+<div class="jeg_search_result jeg_search_hide with_result">
+    <div class="search-result-wrapper">
+    </div>
+    <div class="search-link search-noresult">
+        Sem resultados    </div>
+    <div class="search-link search-all-button">
+        <i class="fa fa-search"></i> Veja todos os resultados    </div>
+</div></div>                    </div>
+                </div>
+
+                        </div>
+    </div>
+</div></div>
+<div class="sticky_blankspace" style="height: 60px;"></div>        </div>
+
+        <div class="jeg_ad jeg_ad_top jnews_header_bottom_ads">
+            <div class='ads-wrapper  '></div>        </div>
+
+            <div class="post-wrapper">
+
+        <div class="post-wrap" >
+
+            
+            <div class="jeg_main jeg_sidebar_none">
+                <div class="jeg_container">
+                    <div class="jeg_content jeg_singlepage">
+
+	<div class="container">
+
+		<div class="jeg_ad jeg_article jnews_article_top_ads">
+			<div class='ads-wrapper  '></div>		</div>
+
+		<div class="row">
+			<div class="jeg_main_content col-md-12">
+				<div class="jeg_inner_content">
+					
+													<div class="jeg_breadcrumbs jeg_breadcrumb_container">
+								<div id="breadcrumbs"><span class="">
+                <a href="https://jornaldiretriz.com.br">Início</a>
+            </span><i class="fa fa-angle-right"></i><span class="breadcrumb_last_link">
+                <a href="https://jornaldiretriz.com.br/category/politica/">Política</a>
+            </span></div>							</div>
+						
+						<div class="entry-header">
+							
+							<h1 class="jeg_post_title">Flávio tem 51,56% e Lula 48,44% no segundo turno, aponta Veritá</h1>
+
+															<h2 class="jeg_post_subtitle">Levantamento nacional do Instituto Veritá, com 40.500 entrevistados, mostra Flávio Bolsonaro com 51,56% dos votos válidos contra 48,44% de Lula; diferença passou de 1,8 para 3,1 pontos percentuais em relação ao primeiro turno</h2>
+							
+							<div class="jeg_meta_container"><div class="jeg_post_meta jeg_post_meta_1">
+
+	<div class="meta_left">
+									<div class="jeg_meta_author">
+					<img width="80" height="80" src="https://jornaldiretriz.com.br/wp-content/uploads/2026/08/WhatsApp-Image-2026-08-31-at-23.36.11-96x96.png" class="avatar avatar-80 photo" alt="Henrique Speck" decoding="async" srcset="https://jornaldiretriz.com.br/wp-content/uploads/2026/08/WhatsApp-Image-2026-08-31-at-23.36.11-96x96.png 96w, https://jornaldiretriz.com.br/wp-content/uploads/2026/08/WhatsApp-Image-2026-08-31-at-23.36.11-150x150.png 150w, https://jornaldiretriz.com.br/wp-content/uploads/2026/08/WhatsApp-Image-2026-08-31-at-23.36.11-24x24.png 24w, https://jornaldiretriz.com.br/wp-content/uploads/2026/08/WhatsApp-Image-2026-08-31-at-23.36.11-48x48.png 48w, https://jornaldiretriz.com.br/wp-content/uploads/2026/08/WhatsApp-Image-2026-08-31-at-23.36.11-300x300.png 300w, https://jornaldiretriz.com.br/wp-content/uploads/2026/08/WhatsApp-Image-2026-08-31-at-23.36.11-75x75.png 75w, https://jornaldiretriz.com.br/wp-content/uploads/2026/08/WhatsApp-Image-2026-08-31-at-23.36.11-350x350.png 350w" sizes="(max-width: 80px) 100vw, 80px" />					<span class="meta_text">Por</span>
+					<a href="https://jornaldiretriz.com.br/author/henrique-speck/">Henrique Speck</a>				</div>
+					
+					<div class="jeg_meta_date">
+				<a href="https://jornaldiretriz.com.br/flavio-tem-5156-e-lula-4844-no-segundo-turno-aponta-verita/">06/10/2026</a>
+			</div>
+		
+					<div class="jeg_meta_category">
+				<span><span class="meta_text">in</span>
+					<a href="https://jornaldiretriz.com.br/category/politica/" rel="category tag">Política</a>				</span>
+			</div>
+		
+			</div>
+
+	<div class="meta_right">
+							<div class="jeg_meta_comment"><a href="https://jornaldiretriz.com.br/flavio-tem-5156-e-lula-4844-no-segundo-turno-aponta-verita/#respond"><i
+						class="fa fa-comment-o"></i> 0</a></div>
+			</div>
+</div>
+</div>
+						</div>
+
+						<div  class="jeg_featured featured_image "><a href="https://jornaldiretriz.com.br/wp-content/uploads/2026/08/WhatsApp-Image-2026-08-24-at-19.37.22.jpeg"><div class="thumbnail-container animate-lazy" style="padding-bottom:50%"><img width="1140" height="570" src="https://jornaldiretriz.com.br/wp-content/themes/jnews/assets/img/jeg-empty.png" class="attachment-jnews-1140x570 size-jnews-1140x570 lazyload wp-post-image" alt="Lula e Flávio Bolsonaro pesquisa" decoding="async" fetchpriority="high" sizes="(max-width: 1140px) 100vw, 1140px" data-src="https://jornaldiretriz.com.br/wp-content/uploads/2026/08/WhatsApp-Image-2026-08-24-at-19.37.22-1140x570.jpeg" data-srcset="https://jornaldiretriz.com.br/wp-content/uploads/2026/08/WhatsApp-Image-2026-08-24-at-19.37.22-1140x570.jpeg 1140w, https://jornaldiretriz.com.br/wp-content/uploads/2026/08/WhatsApp-Image-2026-08-24-at-19.37.22-360x180.jpeg 360w, https://jornaldiretriz.com.br/wp-content/uploads/2026/08/WhatsApp-Image-2026-08-24-at-19.37.22-750x375.jpeg 750w" data-sizes="auto" data-expand="700" /></div></a></div>
+						<div class="jeg_share_top_container"></div>
+						<div class="jeg_ad jeg_article jnews_content_top_ads "><div class='ads-wrapper  '></div></div>
+						<div class="entry-content with-share">
+							<div class="jeg_share_button share-float jeg_sticky_share clearfix share-monocrhome">
+								<div class="jeg_share_float_container"><div class="jeg_sharelist">
+                <a href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fjornaldiretriz.com.br%2Fflavio-tem-5156-e-lula-4844-no-segundo-turno-aponta-verita%2F" rel='nofollow' aria-label='Share on Facebook' class="jeg_btn-facebook expanded"><i class="fa fa-facebook-official"></i><span>Share on Facebook</span></a><a href="https://twitter.com/intent/tweet?text=Fl%C3%A1vio%20tem%2051%2C56%25%20e%20Lula%2048%2C44%25%20no%20segundo%20turno%2C%20aponta%20Verit%C3%A1%20via%20%40twitter.com%2Fdiretrizoficial&url=https%3A%2F%2Fjornaldiretriz.com.br%2Fflavio-tem-5156-e-lula-4844-no-segundo-turno-aponta-verita%2F" rel='nofollow' aria-label='Share on Twitter' class="jeg_btn-twitter expanded"><i class="fa fa-twitter"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg></i><span>Share on Twitter</span></a>
+                <div class="share-secondary">
+                    <a href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fjornaldiretriz.com.br%2Fflavio-tem-5156-e-lula-4844-no-segundo-turno-aponta-verita%2F&title=Fl%C3%A1vio%20tem%2051%2C56%25%20e%20Lula%2048%2C44%25%20no%20segundo%20turno%2C%20aponta%20Verit%C3%A1" rel='nofollow' aria-label='Share on Linkedin' class="jeg_btn-linkedin "><i class="fa fa-linkedin"></i></a><a href="https://www.pinterest.com/pin/create/bookmarklet/?pinFave=1&url=https%3A%2F%2Fjornaldiretriz.com.br%2Fflavio-tem-5156-e-lula-4844-no-segundo-turno-aponta-verita%2F&media=https://jornaldiretriz.com.br/wp-content/uploads/2026/08/WhatsApp-Image-2026-08-24-at-19.37.22.jpeg&description=Fl%C3%A1vio%20tem%2051%2C56%25%20e%20Lula%2048%2C44%25%20no%20segundo%20turno%2C%20aponta%20Verit%C3%A1" rel='nofollow' aria-label='Share on Pinterest' class="jeg_btn-pinterest "><i class="fa fa-pinterest"></i></a>
+                </div>
+                <a href="#" class="jeg_btn-toggle" aria-label="Share on another social media platform"><i class="fa fa-share"></i></a>
+            </div></div>							</div>
+
+							<div class="content-inner ">
+								
+<p class="wp-block-paragraph">O Instituto Veritá divulgou, nesta segunda-feira (5), os primeiros números de intenção de voto para o segundo turno da eleição presidencial. No cenário de votos válidos, o senador Flávio Bolsonaro (PL) aparece com 51,56%, contra 48,44% do presidente Lula (PT), uma diferença de 3,12 pontos percentuais.</p><div class='jnews_inline_related_post_wrapper right half'>
+                        <div class='jnews_inline_related_post'>
+                <div  class="jeg_postblock_29 jeg_postblock jeg_module_hook jeg_pagination_disable jeg_col_1o3 jnews_module_3614_1_6ac78bc5d47a0   " data-unique="jnews_module_3614_1_6ac78bc5d47a0">
+					<div class="jeg_block_heading jeg_block_heading_1 jeg_subcat_right">
+                     <h3 class="jeg_block_title"><span>Você também pode gostar</span></h3>
+                     
+                 </div>
+					<div class="jeg_block_container">
+                    
+                    <div class="jeg_posts ">
+                    <div class="jeg_postsmall jeg_load_more_flag">
+                        <article class="jeg_post jeg_pl_xs format-standard">
+                    <div class="jeg_postblock_content">
+                        <h3 class="jeg_post_title">
+                            <a href="https://jornaldiretriz.com.br/janja-rebate-katia-abreu-e-diz-que-seguira-na-campanha-apos-pedido-de-menos-janja/">Janja rebate Kátia Abreu e diz que seguirá na campanha após pedido de &#8220;menos Janja&#8221;</a>
+                        </h3>
+                        
+                    </div>
+                </article><article class="jeg_post jeg_pl_xs format-standard">
+                    <div class="jeg_postblock_content">
+                        <h3 class="jeg_post_title">
+                            <a href="https://jornaldiretriz.com.br/bia-kicis-quer-elevar-teto-do-mei-para-r-140-mil/">Bia Kicis quer elevar teto do MEI para R$ 140 mil</a>
+                        </h3>
+                        
+                    </div>
+                </article><article class="jeg_post jeg_pl_xs format-standard">
+                    <div class="jeg_postblock_content">
+                        <h3 class="jeg_post_title">
+                            <a href="https://jornaldiretriz.com.br/governadores-eleitos-do-pl-no-sul-articulam-fundo-constitucional-e-ferrovias/">Governadores eleitos do PL no Sul articulam fundo constitucional e ferrovias</a>
+                        </h3>
+                        
+                    </div>
+                </article>
+                    </div>
+                </div>
+                    <div class='module-overlay'>
+				    <div class='preloader_type preloader_dot'>
+				        <div class="module-preloader jeg_preloader dot">
+				            <span></span><span></span><span></span>
+				        </div>
+				        <div class="module-preloader jeg_preloader circle">
+				            <div class="jnews_preloader_circle_outer">
+				                <div class="jnews_preloader_circle_inner"></div>
+				            </div>
+				        </div>
+				        <div class="module-preloader jeg_preloader square">
+				            <div class="jeg_square">
+				                <div class="jeg_square_inner"></div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+                </div>
+                <div class="jeg_block_navigation">
+                    <div class='navigation_overlay'><div class='module-preloader jeg_preloader'><span></span><span></span><span></span></div></div>
+                    
+                    
+                </div>
+					
+					<script>var jnews_module_3614_1_6ac78bc5d47a0 = {"header_icon":"","first_title":"Voc\u00ea tamb\u00e9m pode gostar","second_title":"","url":"","header_type":"heading_1","header_background":"","header_secondary_background":"","header_text_color":"","header_line_color":"","header_accent_color":"","header_filter_category":"","header_filter_author":"","header_filter_tag":"","header_filter_text":"All","sticky_post":false,"sticky_post_filter":false,"post_type":"post","content_type":"all","sponsor":false,"number_post":"3","post_offset":0,"unique_content":"disable","include_post":"","included_only":false,"exclude_post":3614,"include_category":"27","exclude_category":"","include_author":"","include_tag":"","exclude_tag":"","exclude_visited_post":false,"sort_by":"latest","show_date":"","date_format":"default","date_format_custom":"Y\/m\/d","pagination_mode":"disable","pagination_nextprev_showtext":"","pagination_number_post":"3","pagination_scroll_limit":0,"ads_type":"disable","ads_position":1,"ads_random":"","ads_image":"","ads_image_tablet":"","ads_image_phone":"","ads_image_link":"","ads_image_alt":"","ads_image_new_tab":"","google_publisher_id":"","google_slot_id":"","google_desktop":"auto","google_tab":"auto","google_phone":"auto","content":"","ads_bottom_text":"","show_border":"","el_id":"","el_class":"","scheme":"","column_width":"auto","title_color":"","accent_color":"","alt_color":"","excerpt_color":"","css":"","paged":1,"column_class":"jeg_col_1o3","class":"jnews_block_29"};</script>
+				</div>
+            </div>
+                    </div>
+
+
+
+<p class="wp-block-paragraph"><strong>Como a disputa evoluiu</strong></p>
+
+
+
+<p class="wp-block-paragraph">Segundo o instituto, a distância entre os dois candidatos cresceu em relação ao primeiro turno. Nos votos válidos de 4 de outubro, Flávio teve 47,04% e Lula, 45,16%, uma diferença de 1,8 ponto percentual. Considerando a migração dos eleitores que votaram em outros candidatos no primeiro turno, 7,80% dos votos válidos, o Veritá estima que Flávio absorveu 4,52 pontos percentuais desse eleitorado, enquanto Lula ficou com 3,28 pontos, ampliando a vantagem do candidato do PL para os atuais 3,12 pontos.<br></p>
+
+
+
+<blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="https://www.instagram.com/p/DeIWbh7Cdz0/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:540px; min-width:326px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);"><div style="padding:16px;"> <a href="https://www.instagram.com/p/DeIWbh7Cdz0/?utm_source=ig_embed&amp;utm_campaign=loading" style=" background:#FFFFFF; line-height:0; padding:0 0; text-align:center; text-decoration:none; width:100%;" target="_blank"> <div style=" display: flex; flex-direction: row; align-items: center;"> <div style="background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 40px; margin-right: 14px; width: 40px;"></div> <div style="display: flex; flex-direction: column; flex-grow: 1; justify-content: center;"> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 100px;"></div> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 60px;"></div></div></div><div style="padding: 19% 0;"></div> <div style="display:block; height:50px; margin:0 auto 12px; width:50px;"><svg width="50px" height="50px" viewBox="0 0 60 60" version="1.1" xmlns="https://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g transform="translate(-511.000000, -20.000000)" fill="#000000"><g><path d="M556.869,30.41 C554.814,30.41 553.148,32.076 553.148,34.131 C553.148,36.186 554.814,37.852 556.869,37.852 C558.924,37.852 560.59,36.186 560.59,34.131 C560.59,32.076 558.924,30.41 556.869,30.41 M541,60.657 C535.114,60.657 530.342,55.887 530.342,50 C530.342,44.114 535.114,39.342 541,39.342 C546.887,39.342 551.658,44.114 551.658,50 C551.658,55.887 546.887,60.657 541,60.657 M541,33.886 C532.1,33.886 524.886,41.1 524.886,50 C524.886,58.899 532.1,66.113 541,66.113 C549.9,66.113 557.115,58.899 557.115,50 C557.115,41.1 549.9,33.886 541,33.886 M565.378,62.101 C565.244,65.022 564.756,66.606 564.346,67.663 C563.803,69.06 563.154,70.057 562.106,71.106 C561.058,72.155 560.06,72.803 558.662,73.347 C557.607,73.757 556.021,74.244 553.102,74.378 C549.944,74.521 548.997,74.552 541,74.552 C533.003,74.552 532.056,74.521 528.898,74.378 C525.979,74.244 524.393,73.757 523.338,73.347 C521.94,72.803 520.942,72.155 519.894,71.106 C518.846,70.057 518.197,69.06 517.654,67.663 C517.244,66.606 516.755,65.022 516.623,62.101 C516.479,58.943 516.448,57.996 516.448,50 C516.448,42.003 516.479,41.056 516.623,37.899 C516.755,34.978 517.244,33.391 517.654,32.338 C518.197,30.938 518.846,29.942 519.894,28.894 C520.942,27.846 521.94,27.196 523.338,26.654 C524.393,26.244 525.979,25.756 528.898,25.623 C532.057,25.479 533.004,25.448 541,25.448 C548.997,25.448 549.943,25.479 553.102,25.623 C556.021,25.756 557.607,26.244 558.662,26.654 C560.06,27.196 561.058,27.846 562.106,28.894 C563.154,29.942 563.803,30.938 564.346,32.338 C564.756,33.391 565.244,34.978 565.378,37.899 C565.522,41.056 565.552,42.003 565.552,50 C565.552,57.996 565.522,58.943 565.378,62.101 M570.82,37.631 C570.674,34.438 570.167,32.258 569.425,30.349 C568.659,28.377 567.633,26.702 565.965,25.035 C564.297,23.368 562.623,22.342 560.652,21.575 C558.743,20.834 556.562,20.326 553.369,20.18 C550.169,20.033 549.148,20 541,20 C532.853,20 531.831,20.033 528.631,20.18 C525.438,20.326 523.257,20.834 521.349,21.575 C519.376,22.342 517.703,23.368 516.035,25.035 C514.368,26.702 513.342,28.377 512.574,30.349 C511.834,32.258 511.326,34.438 511.181,37.631 C511.035,40.831 511,41.851 511,50 C511,58.147 511.035,59.17 511.181,62.369 C511.326,65.562 511.834,67.743 512.574,69.651 C513.342,71.625 514.368,73.296 516.035,74.965 C517.703,76.634 519.376,77.658 521.349,78.425 C523.257,79.167 525.438,79.673 528.631,79.82 C531.831,79.965 532.853,80.001 541,80.001 C549.148,80.001 550.169,79.965 553.369,79.82 C556.562,79.673 558.743,79.167 560.652,78.425 C562.623,77.658 564.297,76.634 565.965,74.965 C567.633,73.296 568.659,71.625 569.425,69.651 C570.167,67.743 570.674,65.562 570.82,62.369 C570.966,59.17 571,58.147 571,50 C571,41.851 570.966,40.831 570.82,37.631"></path></g></g></g></svg></div><div style="padding-top: 8px;"> <div style=" color:#3897f0; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:550; line-height:18px;">Ver esse post no Instagram</div></div><div style="padding: 12.5% 0;"></div> <div style="display: flex; flex-direction: row; margin-bottom: 14px; align-items: center;"><div> <div style="background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(0px) translateY(7px);"></div> <div style="background-color: #F4F4F4; height: 12.5px; transform: rotate(-45deg) translateX(3px) translateY(1px); width: 12.5px; flex-grow: 0; margin-right: 14px; margin-left: 2px;"></div> <div style="background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(9px) translateY(-18px);"></div></div><div style="margin-left: 8px;"> <div style=" background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 20px; width: 20px;"></div> <div style=" width: 0; height: 0; border-top: 2px solid transparent; border-left: 6px solid #f4f4f4; border-bottom: 2px solid transparent; transform: translateX(16px) translateY(-4px) rotate(30deg)"></div></div><div style="margin-left: auto;"> <div style=" width: 0px; border-top: 8px solid #F4F4F4; border-right: 8px solid transparent; transform: translateY(16px);"></div> <div style=" background-color: #F4F4F4; flex-grow: 0; height: 12px; width: 16px; transform: translateY(-4px);"></div> <div style=" width: 0; height: 0; border-top: 8px solid #F4F4F4; border-left: 8px solid transparent; transform: translateY(-4px) translateX(8px);"></div></div></div> <div style="display: flex; flex-direction: column; flex-grow: 1; justify-content: center; margin-bottom: 24px;"> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 224px;"></div> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 144px;"></div></div></a><p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;"><a href="https://www.instagram.com/p/DeIWbh7Cdz0/?utm_source=ig_embed&amp;utm_campaign=loading" style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none;" target="_blank">Um post compartilhado por Instituto Veritá (@institutoverita)</a></p></div></blockquote>
+<script async src="//www.instagram.com/embed.js"></script>
+
+
+
+<p class="wp-block-paragraph"><strong>A metodologia</strong></p>
+
+
+
+<p class="wp-block-paragraph">O levantamento ouviu 40.500 eleitores nas 27 unidades da Federação, entre os dias 26 de setembro e 2 de outubro. O instituto trabalha com nível de confiança de 95% e margens de erro que variam entre 2,0 e 3,5 pontos percentuais, a depender do recorte analisado. A pesquisa tem registros no TSE sob diferentes protocolos estaduais e nacional.</p>
+
+
+
+<p class="wp-block-paragraph"><strong>O histórico do instituto nesta eleição</strong></p>
+
+
+
+<p class="wp-block-paragraph">O Veritá já havia sido a pesquisa que mais se aproximou do resultado real do primeiro turno entre os grandes institutos, ao apontar Flávio à frente de Lula na reta final da campanha, enquanto a maioria dos concorrentes indicava o cenário oposto.</p>
+								
+								
+																	<div class="jeg_post_tags"></div>
+															</div>
+
+
+						</div>
+						<div class="jeg_share_bottom_container"></div>
+						
+						<div class="jeg_ad jeg_article jnews_content_bottom_ads "><div class='ads-wrapper  '></div></div><div class="jnews_prev_next_container"></div><div class="jnews_author_box_container ">
+	<div class="jeg_authorbox">
+		<div class="jeg_author_image">
+			<img width="80" height="80" src="https://jornaldiretriz.com.br/wp-content/uploads/2026/08/WhatsApp-Image-2026-08-31-at-23.36.11-96x96.png" class="avatar avatar-80 photo" alt="Henrique Speck" decoding="async" loading="lazy" srcset="https://jornaldiretriz.com.br/wp-content/uploads/2026/08/WhatsApp-Image-2026-08-31-at-23.36.11-96x96.png 96w, https://jornaldiretriz.com.br/wp-content/uploads/2026/08/WhatsApp-Image-2026-08-31-at-23.36.11-150x150.png 150w, https://jornaldiretriz.com.br/wp-content/uploads/2026/08/WhatsApp-Image-2026-08-31-at-23.36.11-24x24.png 24w, https://jornaldiretriz.com.br/wp-content/uploads/2026/08/WhatsApp-Image-2026-08-31-at-23.36.11-48x48.png 48w, https://jornaldiretriz.com.br/wp-content/uploads/2026/08/WhatsApp-Image-2026-08-31-at-23.36.11-300x300.png 300w, https://jornaldiretriz.com.br/wp-content/uploads/2026/08/WhatsApp-Image-2026-08-31-at-23.36.11-75x75.png 75w, https://jornaldiretriz.com.br/wp-content/uploads/2026/08/WhatsApp-Image-2026-08-31-at-23.36.11-350x350.png 350w" sizes="auto, (max-width: 80px) 100vw, 80px" />		</div>
+		<div class="jeg_author_content">
+			<h3 class="jeg_author_name">
+				<a href="https://jornaldiretriz.com.br/author/henrique-speck/">
+					Henrique Speck				</a>
+			</h3>
+			<p class="jeg_author_desc">
+				Jornalista (MTB15353/PR) e Editor-Chefe do Diretriz. Vencedor do Prêmio FIEP de Jornalismo 2026.			</p>
+
+							<div class="jeg_author_socials">
+												<a target="_blank" href="http://jornaldiretriz.com.br" class="url"><i class="fa fa-globe"></i></a>
+														<a target="_blank" href="http://henriquemspeck" class="twitter"><i class="fa fa-twitter jeg-icon icon-twitter"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg></i></a>
+														<a target="_blank" href="https://instagram.com/henriquemspeck" class="instagram"><i class="fa fa-instagram"></i></a>
+											</div>
+			
+		</div>
+	</div>
+</div><div class="jnews_related_post_container"><div  class="jeg_postblock_9 jeg_postblock jeg_module_hook jeg_pagination_disable jeg_col_3o3 jnews_module_3614_2_6ac78bc5d615f   " data-unique="jnews_module_3614_2_6ac78bc5d615f">
+					<div class="jeg_block_heading jeg_block_heading_1 jeg_subcat_right">
+                     <h3 class="jeg_block_title"><span>Recomendados para você</span></h3>
+                     
+                 </div>
+					<div class="jeg_block_container">
+                    
+                    <div class="jeg_posts_wrap"><div class="jeg_posts jeg_load_more_flag"><article class="jeg_post jeg_pl_md_1 format-standard">
+                    <div class="jeg_thumb">
+                        
+                        <a href="https://jornaldiretriz.com.br/janja-rebate-katia-abreu-e-diz-que-seguira-na-campanha-apos-pedido-de-menos-janja/" aria-label="Read article: Janja rebate Kátia Abreu e diz que seguirá na campanha após pedido de &#8220;menos Janja&#8221;"><div class="thumbnail-container animate-lazy  size-500 "><img width="360" height="180" src="https://jornaldiretriz.com.br/wp-content/themes/jnews/assets/img/jeg-empty.png" class="attachment-jnews-360x180 size-jnews-360x180 lazyload wp-post-image" alt="janja katia abreu" decoding="async" loading="lazy" data-src="https://jornaldiretriz.com.br/wp-content/uploads/2026/10/Janja-e-Katia-Abreu-360x180.jpg" data-srcset="" data-sizes="auto" data-expand="700" /></div></a>
+                        <div class="jeg_post_category">
+                            <span><a href="https://jornaldiretriz.com.br/category/politica/" class="category-politica">Política</a></span>
+                        </div>
+                    </div>
+                    <div class="jeg_postblock_content">
+                        <h3 class="jeg_post_title">
+                            <a href="https://jornaldiretriz.com.br/janja-rebate-katia-abreu-e-diz-que-seguira-na-campanha-apos-pedido-de-menos-janja/">Janja rebate Kátia Abreu e diz que seguirá na campanha após pedido de &#8220;menos Janja&#8221;</a>
+                        </h3>
+                        <div class="jeg_post_meta"><div class="jeg_meta_date"><a href="https://jornaldiretriz.com.br/janja-rebate-katia-abreu-e-diz-que-seguira-na-campanha-apos-pedido-de-menos-janja/" ><i class="fa fa-clock-o"></i> 08/10/2026</a></div></div>
+                    </div>
+                </article><article class="jeg_post jeg_pl_md_1 format-standard">
+                    <div class="jeg_thumb">
+                        
+                        <a href="https://jornaldiretriz.com.br/bia-kicis-quer-elevar-teto-do-mei-para-r-140-mil/" aria-label="Read article: Bia Kicis quer elevar teto do MEI para R$ 140 mil"><div class="thumbnail-container animate-lazy  size-500 "><img width="360" height="180" src="https://jornaldiretriz.com.br/wp-content/themes/jnews/assets/img/jeg-empty.png" class="attachment-jnews-360x180 size-jnews-360x180 lazyload wp-post-image" alt="bia kicis mei" decoding="async" loading="lazy" data-src="https://jornaldiretriz.com.br/wp-content/uploads/2026/10/39a8593e-b440-470d-8dd9-f29d071a9fbc-360x180.jpeg" data-srcset="" data-sizes="auto" data-expand="700" /></div></a>
+                        <div class="jeg_post_category">
+                            <span><a href="https://jornaldiretriz.com.br/category/politica/" class="category-politica">Política</a></span>
+                        </div>
+                    </div>
+                    <div class="jeg_postblock_content">
+                        <h3 class="jeg_post_title">
+                            <a href="https://jornaldiretriz.com.br/bia-kicis-quer-elevar-teto-do-mei-para-r-140-mil/">Bia Kicis quer elevar teto do MEI para R$ 140 mil</a>
+                        </h3>
+                        <div class="jeg_post_meta"><div class="jeg_meta_date"><a href="https://jornaldiretriz.com.br/bia-kicis-quer-elevar-teto-do-mei-para-r-140-mil/" ><i class="fa fa-clock-o"></i> 07/10/2026</a></div></div>
+                    </div>
+                </article><article class="jeg_post jeg_pl_md_1 format-standard">
+                    <div class="jeg_thumb">
+                        
+                        <a href="https://jornaldiretriz.com.br/governadores-eleitos-do-pl-no-sul-articulam-fundo-constitucional-e-ferrovias/" aria-label="Read article: Governadores eleitos do PL no Sul articulam fundo constitucional e ferrovias"><div class="thumbnail-container animate-lazy  size-500 "><img width="360" height="180" src="https://jornaldiretriz.com.br/wp-content/themes/jnews/assets/img/jeg-empty.png" class="attachment-jnews-360x180 size-jnews-360x180 lazyload wp-post-image" alt="Montagem com fotos de Sergio Moro, Jorginho Mello e Luciano Zucco PL Sul" decoding="async" loading="lazy" sizes="auto, (max-width: 360px) 100vw, 360px" data-src="https://jornaldiretriz.com.br/wp-content/uploads/2026/10/Design-sem-nome-12-360x180.png" data-srcset="https://jornaldiretriz.com.br/wp-content/uploads/2026/10/Design-sem-nome-12-360x180.png 360w, https://jornaldiretriz.com.br/wp-content/uploads/2026/10/Design-sem-nome-12-750x375.png 750w, https://jornaldiretriz.com.br/wp-content/uploads/2026/10/Design-sem-nome-12-1140x570.png 1140w" data-sizes="auto" data-expand="700" /></div></a>
+                        <div class="jeg_post_category">
+                            <span><a href="https://jornaldiretriz.com.br/category/politica/" class="category-politica">Política</a></span>
+                        </div>
+                    </div>
+                    <div class="jeg_postblock_content">
+                        <h3 class="jeg_post_title">
+                            <a href="https://jornaldiretriz.com.br/governadores-eleitos-do-pl-no-sul-articulam-fundo-constitucional-e-ferrovias/">Governadores eleitos do PL no Sul articulam fundo constitucional e ferrovias</a>
+                        </h3>
+                        <div class="jeg_post_meta"><div class="jeg_meta_date"><a href="https://jornaldiretriz.com.br/governadores-eleitos-do-pl-no-sul-articulam-fundo-constitucional-e-ferrovias/" ><i class="fa fa-clock-o"></i> 07/10/2026</a></div></div>
+                    </div>
+                </article><article class="jeg_post jeg_pl_md_1 format-standard">
+                    <div class="jeg_thumb">
+                        
+                        <a href="https://jornaldiretriz.com.br/romeu-zema-declara-apoio-a-flavio-bolsonaro-no-segundo-turno/" aria-label="Read article: Romeu Zema declara apoio a Flávio Bolsonaro no segundo turno"><div class="thumbnail-container animate-lazy  size-500 "><img width="360" height="180" src="https://jornaldiretriz.com.br/wp-content/themes/jnews/assets/img/jeg-empty.png" class="attachment-jnews-360x180 size-jnews-360x180 lazyload wp-post-image" alt="Caso eleito, Zema promete privatizar Petrobras e Banco do Brasil" decoding="async" loading="lazy" sizes="auto, (max-width: 360px) 100vw, 360px" data-src="https://jornaldiretriz.com.br/wp-content/uploads/2026/04/zema-br-blogpost-1-360x180.jpg" data-srcset="https://jornaldiretriz.com.br/wp-content/uploads/2026/04/zema-br-blogpost-1-360x180.jpg 360w, https://jornaldiretriz.com.br/wp-content/uploads/2026/04/zema-br-blogpost-1-750x375.jpg 750w, https://jornaldiretriz.com.br/wp-content/uploads/2026/04/zema-br-blogpost-1-1140x570.jpg 1140w" data-sizes="auto" data-expand="700" /></div></a>
+                        <div class="jeg_post_category">
+                            <span><a href="https://jornaldiretriz.com.br/category/politica/" class="category-politica">Política</a></span>
+                        </div>
+                    </div>
+                    <div class="jeg_postblock_content">
+                        <h3 class="jeg_post_title">
+                            <a href="https://jornaldiretriz.com.br/romeu-zema-declara-apoio-a-flavio-bolsonaro-no-segundo-turno/">Romeu Zema declara apoio a Flávio Bolsonaro no segundo turno</a>
+                        </h3>
+                        <div class="jeg_post_meta"><div class="jeg_meta_date"><a href="https://jornaldiretriz.com.br/romeu-zema-declara-apoio-a-flavio-bolsonaro-no-segundo-turno/" ><i class="fa fa-clock-o"></i> 05/10/2026</a></div></div>
+                    </div>
+                </article><article class="jeg_post jeg_pl_md_1 format-standard">
+                    <div class="jeg_thumb">
+                        
+                        <a href="https://jornaldiretriz.com.br/com-28-cadeiras-pl-tem-a-maior-bancada-de-um-partido-na-historia-do-senado/" aria-label="Read article: Com 28 cadeiras, PL tem a maior bancada de um partido na história do Senado"><div class="thumbnail-container animate-lazy  size-500 "><img width="360" height="180" src="https://jornaldiretriz.com.br/wp-content/themes/jnews/assets/img/jeg-empty.png" class="attachment-jnews-360x180 size-jnews-360x180 lazyload wp-post-image" alt="Com 28 cadeiras, PL tem a maior bancada de um partido na história do Senado" decoding="async" loading="lazy" sizes="auto, (max-width: 360px) 100vw, 360px" data-src="https://jornaldiretriz.com.br/wp-content/uploads/2026/10/senador-360x180.jpg" data-srcset="https://jornaldiretriz.com.br/wp-content/uploads/2026/10/senador-360x180.jpg 360w, https://jornaldiretriz.com.br/wp-content/uploads/2026/10/senador-750x375.jpg 750w" data-sizes="auto" data-expand="700" /></div></a>
+                        <div class="jeg_post_category">
+                            <span><a href="https://jornaldiretriz.com.br/category/politica/" class="category-politica">Política</a></span>
+                        </div>
+                    </div>
+                    <div class="jeg_postblock_content">
+                        <h3 class="jeg_post_title">
+                            <a href="https://jornaldiretriz.com.br/com-28-cadeiras-pl-tem-a-maior-bancada-de-um-partido-na-historia-do-senado/">Com 28 cadeiras, PL tem a maior bancada de um partido na história do Senado</a>
+                        </h3>
+                        <div class="jeg_post_meta"><div class="jeg_meta_date"><a href="https://jornaldiretriz.com.br/com-28-cadeiras-pl-tem-a-maior-bancada-de-um-partido-na-historia-do-senado/" ><i class="fa fa-clock-o"></i> 04/10/2026</a></div></div>
+                    </div>
+                </article><article class="jeg_post jeg_pl_md_1 format-standard">
+                    <div class="jeg_thumb">
+                        
+                        <a href="https://jornaldiretriz.com.br/ciro-nogueira-soraya-thronicke-aecio-neves-renan-calheiros-e-marina-silva-sao-derrotados-nas-urnas/" aria-label="Read article: Ciro Nogueira, Soraya Thronicke, Aécio Neves, Renan Calheiros e Marina Silva são derrotados nas urnas"><div class="thumbnail-container animate-lazy  size-500 "><img width="360" height="180" src="https://jornaldiretriz.com.br/wp-content/themes/jnews/assets/img/jeg-empty.png" class="attachment-jnews-360x180 size-jnews-360x180 lazyload wp-post-image" alt="Ciro Nogueira, Soraya Thronicke, Aécio Neves, Renan Calheiros e Marina Silva são derrotados nas urnas" decoding="async" loading="lazy" sizes="auto, (max-width: 360px) 100vw, 360px" data-src="https://jornaldiretriz.com.br/wp-content/uploads/2026/10/Design-sem-nome-17-360x180.png" data-srcset="https://jornaldiretriz.com.br/wp-content/uploads/2026/10/Design-sem-nome-17-360x180.png 360w, https://jornaldiretriz.com.br/wp-content/uploads/2026/10/Design-sem-nome-17-750x375.png 750w, https://jornaldiretriz.com.br/wp-content/uploads/2026/10/Design-sem-nome-17-1140x570.png 1140w" data-sizes="auto" data-expand="700" /></div></a>
+                        <div class="jeg_post_category">
+                            <span><a href="https://jornaldiretriz.com.br/category/politica/" class="category-politica">Política</a></span>
+                        </div>
+                    </div>
+                    <div class="jeg_postblock_content">
+                        <h3 class="jeg_post_title">
+                            <a href="https://jornaldiretriz.com.br/ciro-nogueira-soraya-thronicke-aecio-neves-renan-calheiros-e-marina-silva-sao-derrotados-nas-urnas/">Ciro Nogueira, Soraya Thronicke, Aécio Neves, Renan Calheiros e Marina Silva são derrotados nas urnas</a>
+                        </h3>
+                        <div class="jeg_post_meta"><div class="jeg_meta_date"><a href="https://jornaldiretriz.com.br/ciro-nogueira-soraya-thronicke-aecio-neves-renan-calheiros-e-marina-silva-sao-derrotados-nas-urnas/" ><i class="fa fa-clock-o"></i> 04/10/2026</a></div></div>
+                    </div>
+                </article></div></div>
+                    <div class='module-overlay'>
+				    <div class='preloader_type preloader_dot'>
+				        <div class="module-preloader jeg_preloader dot">
+				            <span></span><span></span><span></span>
+				        </div>
+				        <div class="module-preloader jeg_preloader circle">
+				            <div class="jnews_preloader_circle_outer">
+				                <div class="jnews_preloader_circle_inner"></div>
+				            </div>
+				        </div>
+				        <div class="module-preloader jeg_preloader square">
+				            <div class="jeg_square">
+				                <div class="jeg_square_inner"></div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+                </div>
+                <div class="jeg_block_navigation">
+                    <div class='navigation_overlay'><div class='module-preloader jeg_preloader'><span></span><span></span><span></span></div></div>
+                    
+                    
+                </div>
+					
+					<script>var jnews_module_3614_2_6ac78bc5d615f = {"header_icon":"","first_title":"Recomendados para voc\u00ea","second_title":"","url":"","header_type":"heading_1","header_background":"","header_secondary_background":"","header_text_color":"","header_line_color":"","header_accent_color":"","header_filter_category":"","header_filter_author":"","header_filter_tag":"","header_filter_text":"All","sticky_post":false,"sticky_post_filter":false,"post_type":"post","content_type":"all","sponsor":false,"number_post":"6","post_offset":0,"unique_content":"disable","include_post":"","included_only":false,"exclude_post":3614,"include_category":"27","exclude_category":"","include_author":"","include_tag":"","exclude_tag":"","exclude_visited_post":false,"sort_by":"latest","date_format":"default","date_format_custom":"Y\/m\/d","force_normal_image_load":"","main_custom_image_size":"default","pagination_mode":"disable","pagination_nextprev_showtext":"","pagination_number_post":"6","pagination_scroll_limit":"3","boxed":"","boxed_shadow":"","el_id":"","el_class":"","scheme":"","column_width":"auto","title_color":"","accent_color":"","alt_color":"","excerpt_color":"","css":"","excerpt_length":"28","paged":1,"column_class":"jeg_col_3o3","class":"jnews_block_9"};</script>
+				</div></div><div class="jnews_popup_post_container"></div><div class="jnews_comment_container">	<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Deixe um comentário <small><a rel="nofollow" id="cancel-comment-reply-link" href="/flavio-tem-5156-e-lula-4844-no-segundo-turno-aponta-verita/#respond" style="display:none;">Cancelar resposta</a></small></h3><form action="https://jornaldiretriz.com.br/wp-comments-post.php" method="post" id="commentform" class="comment-form"><p class="comment-notes"><span id="email-notes">O seu endereço de e-mail não será publicado.</span> <span class="required-field-message">Campos obrigatórios são marcados com <span class="required">*</span></span></p><p class="comment-form-comment"><label for="comment">Comentário <span class="required">*</span></label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" required="required"></textarea></p><p class="comment-form-author"><label for="author">Nome <span class="required">*</span></label> <input id="author" name="author" type="text" value="" size="30" maxlength="245" autocomplete="name" required="required" /></p>
+<p class="comment-form-email"><label for="email">E-mail <span class="required">*</span></label> <input id="email" name="email" type="text" value="" size="30" maxlength="100" aria-describedby="email-notes" autocomplete="email" required="required" /></p>
+<p class="comment-form-url"><label for="url">Site</label> <input id="url" name="url" type="text" value="" size="30" maxlength="200" autocomplete="url" /></p>
+<p class="comment-form-cookies-consent"><input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes" /> <label for="wp-comment-cookies-consent">Salvar meus dados neste navegador para a próxima vez que eu comentar.</label></p>
+
+<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Publicar comentário" /> <input type='hidden' name='comment_post_ID' value='3614' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none !important;" class="akismet-fields-container" data-prefix="ak_"><label>&#916;<textarea name="ak_hp_textarea" cols="45" rows="8" maxlength="100"></textarea></label><input type="hidden" id="ak_js_1" name="ak_js" value="65"/><script>
+document.getElementById( "ak_js_1" ).setAttribute( "value", ( new Date() ).getTime() );
+</script>
+</p></form>	</div><!-- #respond -->
+	</div>
+									</div>
+			</div>
+					</div>
+
+		<div class="jeg_ad jeg_article jnews_article_bottom_ads">
+			<div class='ads-wrapper  '></div>		</div>
+
+	</div>
+</div>
+                </div>
+            </div>
+
+            <div id="post-body-class" class="wp-singular post-template-default single single-post postid-3614 single-format-standard wp-custom-logo wp-embed-responsive wp-theme-jnews jeg_toggle_light jeg_single_tpl_1 jeg_single_fullwidth jnews jsc_normal wpb-js-composer js-comp-ver-8.7.3 vc_responsive"></div>
+
+            
+        </div>
+
+        <div class="post-ajax-overlay">
+    <div class="preloader_type preloader_dot">
+        <div class="newsfeed_preloader jeg_preloader dot">
+            <span></span><span></span><span></span>
+        </div>
+        <div class="newsfeed_preloader jeg_preloader circle">
+            <div class="jnews_preloader_circle_outer">
+                <div class="jnews_preloader_circle_inner"></div>
+            </div>
+        </div>
+        <div class="newsfeed_preloader jeg_preloader square">
+            <div class="jeg_square"><div class="jeg_square_inner"></div></div>
+        </div>
+    </div>
+</div>
+    </div>
+		<div class="footer-holder" id="footer" data-id="footer">
+			<div class="jeg_footer jeg_footer_6 dark">
+    <div class="jeg_footer_container jeg_container">
+
+        <div class="jeg_footer_content">
+            <div class="container">
+                <div class="jeg_footer_primary clearfix">
+                    <div class="footer_widget widget_jnews_about" id="jnews_about-1">        <div class="jeg_about ">
+			                <a class="footer_logo" href="https://jornaldiretriz.com.br/">
+                    <img class='lazyload'
+                         src="https://jornaldiretriz.com.br/wp-content/themes/jnews/assets/img/jeg-empty.png" data-src="https://jornaldiretriz.com.br/wp-content/uploads/2026/04/Logo-icone_3.png"  data-srcset="https://jornaldiretriz.com.br/wp-content/uploads/2026/04/Logo-icone_3.png 1x, https://jornaldiretriz.com.br/wp-content/uploads/2026/04/Logo-icone_1.png 2x" alt="Jornal Diretriz"  data-light-src="https://jornaldiretriz.com.br/wp-content/uploads/2026/04/Logo-icone_3.png"  data-light-srcset="https://jornaldiretriz.com.br/wp-content/uploads/2026/04/Logo-icone_3.png 1x, https://jornaldiretriz.com.br/wp-content/uploads/2026/04/Logo-icone_1.png 2x"  data-dark-src="https://jornaldiretriz.com.br/wp-content/uploads/2026/04/Logo-icone_1.png"  data-dark-srcset="https://jornaldiretriz.com.br/wp-content/uploads/2026/04/Logo-icone_1.png 1x, https://jornaldiretriz.com.br/wp-content/uploads/2026/04/Logo-icone_1.png 2x"                         data-pin-no-hover="true">
+                </a>
+									            <p>Onde a notícia encontra o seu rumo. Transparência e seriedade na cobertura jornalística</p>
+
+			        </div>
+		</div>                </div>
+            </div>
+        </div>
+
+                            <div class="jeg_footer_instagram_wrapper jeg_container">
+                                            </div>
+                                    <div class="jeg_footer_tiktok_wrapper jeg_container">
+                                            </div>
+                
+        
+        <div class="jeg_footer_bottom">
+            <div class="container">
+
+                <!-- secondary footer right -->
+                <div class="footer_right">
+
+                    
+                    <ul class="jeg_menu_footer"><li id="menu-item-2427" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2427"><a href="https://jornaldiretriz.com.br/sobre-nos/">Sobre nós</a></li>
+</ul>
+                    			<div class="jeg_social_icon_block socials_widget nobg">
+				<a href="https://twitter.com/diretrizoficial" target='_blank' rel='external noopener nofollow'  aria-label="Find us on Twitter" class="jeg_twitter"><i class="fa fa-twitter"><span class="jeg-icon icon-twitter"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg></span></i> </a><a href="https://www.instagram.com/jornaldiretriz" target='_blank' rel='external noopener nofollow'  aria-label="Find us on Instagram" class="jeg_instagram"><i class="fa fa-instagram"></i> </a><a href="https://www.youtube.com/jornaldiretriz" target='_blank' rel='external noopener nofollow'  aria-label="Find us on Youtube" class="jeg_youtube"><i class="fa fa-youtube-play"></i> </a>			</div>
+			
+                </div>
+
+                <!-- secondary footer left -->
+                
+                
+                                    <p class="copyright"> © 2026  - Diretriz - Todos os direitos reservados </p>
+                
+            </div>
+        </div>
+
+        
+    </div>
+</div><!-- /.footer -->		</div>
+					<div class="jscroll-to-top desktop">
+				<a href="#back-to-top" class="jscroll-to-top_link"><i class="fa fa-angle-up"></i></a>
+			</div>
+			</div>
+
+	<script type="text/javascript">var jfla = ["view_counter"]</script><script type="speculationrules">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":["/wp-*.php","/wp-admin/*","/wp-content/uploads/*","/wp-content/*","/wp-content/plugins/*","/wp-content/themes/jnews/*","/*\\?(.+)"]}},{"not":{"selector_matches":"a[rel~=\"nofollow\"]"}},{"not":{"selector_matches":".no-prefetch, .no-prefetch a"}}]},"eagerness":"conservative"}]}
+</script>
+<div id="selectShareContainer">
+                        <div class="selectShare-inner">
+                            <div class="select_share jeg_share_button">              
+                                <button class="select-share-button jeg_btn-facebook" data-url="http://www.facebook.com/sharer.php?u=[url]&quote=[selected_text]" data-post-url="https%3A%2F%2Fjornaldiretriz.com.br%2Fflavio-tem-5156-e-lula-4844-no-segundo-turno-aponta-verita%2F" data-image-url="" data-title="Fl%C3%A1vio%20tem%2051%2C56%25%20e%20Lula%2048%2C44%25%20no%20segundo%20turno%2C%20aponta%20Verit%C3%A1" ><i class="fa fa-facebook-official"></i></a><button class="select-share-button jeg_btn-twitter" data-url="https://twitter.com/intent/tweet?text=[selected_text]&url=[url]" data-post-url="https%3A%2F%2Fjornaldiretriz.com.br%2Fflavio-tem-5156-e-lula-4844-no-segundo-turno-aponta-verita%2F" data-image-url="" data-title="Fl%C3%A1vio%20tem%2051%2C56%25%20e%20Lula%2048%2C44%25%20no%20segundo%20turno%2C%20aponta%20Verit%C3%A1%20via%20%40twitter.com%2Fdiretrizoficial" ><i class="fa fa-twitter"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg></i></a>
+                            </div>
+                            <div class="selectShare-arrowClip">
+                                <div class="selectShare-arrow"></div>      
+                            </div> 
+                        </div>      
+                      </div><style type="text/css"> 
+         /* Hide reCAPTCHA V3 badge */
+        .grecaptcha-badge {
+        
+            visibility: hidden !important;
+        
+        }
+    </style><!-- Mobile Navigation
+    ============================================= -->
+<div id="jeg_off_canvas" class="normal">
+    <a href="#" class="jeg_menu_close"><i class="jegicon-cross"></i></a>
+    <div class="jeg_bg_overlay"></div>
+    <div class="jeg_mobile_wrapper">
+        <div class="nav_wrap">
+    <div class="item_main">
+        <!-- Search Form -->
+<div class="jeg_aside_item jeg_search_wrapper jeg_search_no_expand round">
+    <a href="#" aria-label="Search Button" class="jeg_search_toggle"><i class="fa fa-search"></i></a>
+    <form action="https://jornaldiretriz.com.br/" method="get" class="jeg_search_form" target="_top">
+    <input name="s" class="jeg_search_input" placeholder="Procure" type="text" value="" autocomplete="off">
+	<button aria-label="Search Button" type="submit" class="jeg_search_button btn"><i class="fa fa-search"></i></button>
+</form>
+<!-- jeg_search_hide with_result no_result -->
+<div class="jeg_search_result jeg_search_hide with_result">
+    <div class="search-result-wrapper">
+    </div>
+    <div class="search-link search-noresult">
+        Sem resultados    </div>
+    <div class="search-link search-all-button">
+        <i class="fa fa-search"></i> Veja todos os resultados    </div>
+</div></div><div class="jeg_aside_item">
+    <ul class="jeg_mobile_menu sf-js-hover"><li id="menu-item-2165" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-2165"><a href="https://jornaldiretriz.com.br/">Início</a></li>
+<li id="menu-item-2192" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-2192"><a href="https://jornaldiretriz.com.br/category/politica/">Política</a></li>
+<li id="menu-item-2194" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2194"><a href="https://jornaldiretriz.com.br/category/esporte/">Esporte</a></li>
+<li id="menu-item-2196" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2196"><a href="https://jornaldiretriz.com.br/category/parana/">Paraná</a></li>
+<li id="menu-item-2195" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2195"><a href="https://jornaldiretriz.com.br/category/colunas/">Colunas</a></li>
+<li id="menu-item-2193" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2193"><a href="https://jornaldiretriz.com.br/category/sobrenos/">Sobre nós</a></li>
+</ul></div>    </div>
+    <div class="item_bottom">
+        <div class="jeg_aside_item socials_widget nobg">
+    <a href="https://twitter.com/diretrizoficial" target='_blank' rel='external noopener nofollow'  aria-label="Find us on Twitter" class="jeg_twitter"><i class="fa fa-twitter"><span class="jeg-icon icon-twitter"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg></span></i> </a><a href="https://www.instagram.com/jornaldiretriz" target='_blank' rel='external noopener nofollow'  aria-label="Find us on Instagram" class="jeg_instagram"><i class="fa fa-instagram"></i> </a><a href="https://www.youtube.com/jornaldiretriz" target='_blank' rel='external noopener nofollow'  aria-label="Find us on Youtube" class="jeg_youtube"><i class="fa fa-youtube-play"></i> </a></div><div class="jeg_aside_item jeg_aside_copyright">
+	<p>© 2026  - Diretriz - Todos os direitos reservados</p>
+</div>    </div>
+</div>    </div>
+</div><div class="jeg_read_progress_wrapper"></div>
+	<div id="jpw_unlock_popup" class="jeg_popup mfp-with-anim mfp-hide">
+		<div class="jpw_popup">
+			<h5>Not enough quota to unlock this post</h5>
+
+			
+			<span class="unlock-remaining">
+				Unlock left : <strong>0</strong>
+			</span>
+
+			<button type="button" class="btn yes jpw_unlock_redirect" data-redirect="1">
+				<span>Buy Quotas</span>
+				<i class="fa fa-spinner fa-pulse" style="display: none;"></i>
+			</button>
+
+					</div>
+	</div>
+
+		<div id="jpw_cancel_subs_popup" class="jeg_popup mfp-with-anim mfp-hide">
+		<div class="jpw_popup">
+			<h5>Are you sure want to cancel subscription?</h5>
+
+			<button type="button" class="btn yes">
+				<span>Yes</span>
+				<i class="fa fa-spinner fa-pulse" style="display: none;"></i>
+			</button>
+
+			<button type="button" class="btn no">
+				No			</button>
+		</div>
+	</div>
+	<script id="mpp_gutenberg_tabs-js" src="https://jornaldiretriz.com.br/wp-content/plugins/profile-builder/add-ons-free/user-profile-picture/js/mpp-frontend.js?ver=2.6.0"></script>
+<script id="jnews-paywall-js" src="https://jornaldiretriz.com.br/wp-content/plugins/jnews-paywall/assets/js/frontend.js?ver=12.0.5"></script>
+<script data-wp-strategy="defer" defer id="hostinger-reach-embed-js" src="https://cdn-reach.hostinger.com/js/embed.js"></script>
+<script async data-wp-strategy="async" fetchpriority="low" id="comment-reply-js" src="https://jornaldiretriz.com.br/wp-includes/js/comment-reply.min.js?ver=7.0.7"></script>
+<script id="hoverIntent-js" src="https://jornaldiretriz.com.br/wp-includes/js/hoverIntent.min.js?ver=1.10.2"></script>
+<script id="imagesloaded-js" src="https://jornaldiretriz.com.br/wp-includes/js/imagesloaded.min.js?ver=5.0.0"></script>
+<script id="jnews-frontend-js-extra">
+var jnewsoption = {"login_reload":"https://jornaldiretriz.com.br/flavio-tem-5156-e-lula-4844-no-segundo-turno-aponta-verita","popup_script":"magnific","single_gallery":"","ismobile":"","isie":"","sidefeed_ajax":"","language":"pt_BR","module_prefix":"jnews_module_ajax_","live_search":"1","postid":"3614","isblog":"1","admin_bar":"0","follow_video":"","follow_position":"top_right","rtl":"0","gif":"","lang":{"invalid_recaptcha":"Invalid Recaptcha!","empty_username":"Please enter your username!","empty_email":"Please enter your email!","empty_password":"Please enter your password!"},"recaptcha":"0","site_slug":"/","site_domain":"jornaldiretriz.com.br","zoom_button":"0","dm_cookie_time":"0","custom_login":"","paywall_login":"Login to purchase or access your purchased package","paywall_register":"Register to purchase or access your purchased package"};
+//# sourceURL=jnews-frontend-js-extra
+</script>
+<script id="jnews-frontend-js" src="https://jornaldiretriz.com.br/wp-content/themes/jnews/assets/dist/frontend.min.js?ver=12.0.12"></script>
+<script id="googlesitekit-events-provider-content-events-js-before">
+window._googlesitekit = window._googlesitekit || {};
+window._googlesitekit.contentEvents = {"postID":3614,"isSinglePost":true,"hasVimeoEmbed":false};
+//# sourceURL=googlesitekit-events-provider-content-events-js-before
+</script>
+<script id="googlesitekit-events-provider-content-events-js" src="https://jornaldiretriz.com.br/wp-content/plugins/google-site-kit/dist/assets/js/googlesitekit-events-provider-content-events-bb83c1a0aedefa5d25d1.js" defer></script>
+<script id="googlesitekit-events-provider-wpforms-js" src="https://jornaldiretriz.com.br/wp-content/plugins/google-site-kit/dist/assets/js/googlesitekit-events-provider-wpforms-fdbd42f50702ca1e0c36.js" defer></script>
+<script id="jnews-select-share-js-extra">
+var jnews_select_share = {"is_customize_preview":""};
+//# sourceURL=jnews-select-share-js-extra
+</script>
+<script id="jnews-select-share-js" src="https://jornaldiretriz.com.br/wp-content/plugins/jnews-social-share/assets/js/plugin.js"></script>
+<script id="jnews-weather-js" src="https://jornaldiretriz.com.br/wp-content/plugins/jnews-weather/assets/js/plugin.js?ver=12.0.1"></script>
+<script id="wp-emoji-settings" type="application/json">
+{"baseUrl":"https://s.w.org/images/core/emoji/17.0.2/72x72/","ext":".png","svgUrl":"https://s.w.org/images/core/emoji/17.0.2/svg/","svgExt":".svg","source":{"concatemoji":"https://jornaldiretriz.com.br/wp-includes/js/wp-emoji-release.min.js?ver=7.0.7"}}
+</script>
+<script type="module">
+/*! This file is auto-generated */
+var e="script#wp-emoji-settings",t=document.querySelector(e);if(!(t instanceof HTMLScriptElement))throw new Error("Element missing: "+e);const r=JSON.parse(t.text),s=(window._wpemojiSettings=r,"wpEmojiSettingsSupports"),o=["flag","emoji"];function i(e){try{var t={supportTests:e,timestamp:(new Date).valueOf()};sessionStorage.setItem(s,JSON.stringify(t))}catch(e){}}function c(e,t,n){e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(t,0,0);t=new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data);e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(n,0,0);const r=new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data);return t.every((e,t)=>e===r[t])}function p(e,t){e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(t,0,0);var n=e.getImageData(16,16,1,1);for(let e=0;e<n.data.length;e++)if(0!==n.data[e])return!1;return!0}function u(e,t,n,r){switch(t){case"flag":return n(e,"\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f","\ud83c\udff3\ufe0f\u200b\u26a7\ufe0f")?!1:!n(e,"\ud83c\udde8\ud83c\uddf6","\ud83c\udde8\u200b\ud83c\uddf6")&&!n(e,"\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f","\ud83c\udff4\u200b\udb40\udc67\u200b\udb40\udc62\u200b\udb40\udc65\u200b\udb40\udc6e\u200b\udb40\udc67\u200b\udb40\udc7f");case"emoji":return!r(e,"\ud83e\u1fac8")}return!1}function f(e,t,n,r){let a;const s=(a="undefined"!=typeof WorkerGlobalScope&&self instanceof WorkerGlobalScope?new OffscreenCanvas(300,150):document.createElement("canvas")).getContext("2d",{willReadFrequently:!0}),o=(s.textBaseline="top",s.font="600 32px Arial",{});return e.forEach(e=>{o[e]=t(s,e,n,r)}),o}function a(e){var t=document.createElement("script");t.src=e,t.defer=!0,document.head.appendChild(t)}r.supports={everything:!0,everythingExceptFlag:!0},new Promise(t=>{let n=function(){try{var e=JSON.parse(sessionStorage.getItem(s));if("object"==typeof e&&"number"==typeof e.timestamp&&(new Date).valueOf()<e.timestamp+604800&&"object"==typeof e.supportTests)return e.supportTests}catch(e){}return null}();if(!n){if("undefined"!=typeof Worker&&"undefined"!=typeof OffscreenCanvas&&"undefined"!=typeof URL&&URL.createObjectURL&&"undefined"!=typeof Blob)try{var e="postMessage("+f.toString()+"("+[JSON.stringify(o),u.toString(),c.toString(),p.toString()].join(",")+"));",r=new Blob([e],{type:"text/javascript"});const a=new Worker(URL.createObjectURL(r),{name:"wpTestEmojiSupports"});return void(a.onmessage=e=>{i(n=e.data),a.terminate(),t(n)})}catch(e){}i(n=f(o,u,c,p))}t(n)}).then(e=>{for(const n in e)r.supports[n]=e[n],r.supports.everything=r.supports.everything&&r.supports[n],"flag"!==n&&(r.supports.everythingExceptFlag=r.supports.everythingExceptFlag&&r.supports[n]);var t;r.supports.everythingExceptFlag=r.supports.everythingExceptFlag&&!r.supports.flag,r.supports.everything||((t=r.source||{}).concatemoji?a(t.concatemoji):t.wpemoji&&t.twemoji&&(a(t.twemoji),a(t.wpemoji)))});
+//# sourceURL=https://jornaldiretriz.com.br/wp-includes/js/wp-emoji-loader.min.js
+</script>
+<script></script><script type="module">;/*! instant.page v5.1.1 - (C) 2019-2020 Alexandre Dieulot - https://instant.page/license */
+let t,e;const n=new Set,o=document.createElement("link"),i=o.relList&&o.relList.supports&&o.relList.supports("prefetch")&&window.IntersectionObserver&&"isIntersecting"in IntersectionObserverEntry.prototype,s="instantAllowQueryString"in document.body.dataset,a="instantAllowExternalLinks"in document.body.dataset,r="instantWhitelist"in document.body.dataset,c="instantMousedownShortcut"in document.body.dataset,d=1111;let l=65,u=!1,f=!1,m=!1;if("instantIntensity"in document.body.dataset){const t=document.body.dataset.instantIntensity;if("mousedown"==t.substr(0,9))u=!0,"mousedown-only"==t&&(f=!0);else if("viewport"==t.substr(0,8))navigator.connection&&(navigator.connection.saveData||navigator.connection.effectiveType&&navigator.connection.effectiveType.includes("2g"))||("viewport"==t?document.documentElement.clientWidth*document.documentElement.clientHeight<45e4&&(m=!0):"viewport-all"==t&&(m=!0));else{const e=parseInt(t);isNaN(e)||(l=e)}}if(i){const n={capture:!0,passive:!0};if(f||document.addEventListener("touchstart",function(t){e=performance.now();const n=t.target.closest("a");h(n)&&v(n.href)},n),u?c||document.addEventListener("mousedown",function(t){const e=t.target.closest("a");h(e)&&v(e.href)},n):document.addEventListener("mouseover",function(n){if(performance.now()-e<d)return;if(!("closest"in n.target))return;const o=n.target.closest("a");h(o)&&(o.addEventListener("mouseout",p,{passive:!0}),t=setTimeout(()=>{v(o.href),t=void 0},l))},n),c&&document.addEventListener("mousedown",function(t){if(performance.now()-e<d)return;const n=t.target.closest("a");if(t.which>1||t.metaKey||t.ctrlKey)return;if(!n)return;n.addEventListener("click",function(t){1337!=t.detail&&t.preventDefault()},{capture:!0,passive:!1,once:!0});const o=new MouseEvent("click",{view:window,bubbles:!0,cancelable:!1,detail:1337});n.dispatchEvent(o)},n),m){let t;(t=window.requestIdleCallback?t=>{requestIdleCallback(t,{timeout:1500})}:t=>{t()})(()=>{const t=new IntersectionObserver(e=>{e.forEach(e=>{if(e.isIntersecting){const n=e.target;t.unobserve(n),v(n.href)}})});document.querySelectorAll("a").forEach(e=>{h(e)&&t.observe(e)})})}}function p(e){e.relatedTarget&&e.target.closest("a")==e.relatedTarget.closest("a")||t&&(clearTimeout(t),t=void 0)}function h(t){if(t&&t.href&&(!r||"instant"in t.dataset)&&(a||t.origin==location.origin||"instant"in t.dataset)&&["http:","https:"].includes(t.protocol)&&("http:"!=t.protocol||"https:"!=location.protocol)&&(s||!t.search||"instant"in t.dataset)&&!(t.hash&&t.pathname+t.search==location.pathname+location.search||"noInstant"in t.dataset))return!0}function v(t){if(n.has(t))return;const e=document.createElement("link");e.rel="prefetch",e.href=t,document.head.appendChild(e),n.add(t)}</script><div class="jeg_ad jnews_mobile_sticky_ads "></div><script type='application/ld+json'>{"@context":"http:\/\/schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/jornaldiretriz.com.br\/flavio-tem-5156-e-lula-4844-no-segundo-turno-aponta-verita\/"},"dateCreated":"2026-10-06 12:51:19-03:00","datePublished":"2026-10-06 12:51:19-03:00","dateModified":"2026-10-06 15:52:22-03:00","url":"https:\/\/jornaldiretriz.com.br\/flavio-tem-5156-e-lula-4844-no-segundo-turno-aponta-verita\/","headline":"Fl\u00e1vio tem 51,56% e Lula 48,44% no segundo turno, aponta Verit\u00e1","name":"Fl\u00e1vio tem 51,56% e Lula 48,44% no segundo turno, aponta Verit\u00e1","articleBody":"<!-- wp:paragraph -->\n<p>O Instituto Verit\u00e1 divulgou, nesta segunda-feira (5), os primeiros n\u00fameros de inten\u00e7\u00e3o de voto para o segundo turno da elei\u00e7\u00e3o presidencial. No cen\u00e1rio de votos v\u00e1lidos, o senador Fl\u00e1vio Bolsonaro (PL) aparece com 51,56%, contra 48,44% do presidente Lula (PT), uma diferen\u00e7a de 3,12 pontos percentuais.<\/p>\n<!-- \/wp:paragraph -->\n\n<!-- wp:paragraph -->\n<p><strong>Como a disputa evoluiu<\/strong><\/p>\n<!-- \/wp:paragraph -->\n\n<!-- wp:paragraph -->\n<p>Segundo o instituto, a dist\u00e2ncia entre os dois candidatos cresceu em rela\u00e7\u00e3o ao primeiro turno. Nos votos v\u00e1lidos de 4 de outubro, Fl\u00e1vio teve 47,04% e Lula, 45,16%, uma diferen\u00e7a de 1,8 ponto percentual. Considerando a migra\u00e7\u00e3o dos eleitores que votaram em outros candidatos no primeiro turno, 7,80% dos votos v\u00e1lidos, o Verit\u00e1 estima que Fl\u00e1vio absorveu 4,52 pontos percentuais desse eleitorado, enquanto Lula ficou com 3,28 pontos, ampliando a vantagem do candidato do PL para os atuais 3,12 pontos.<br><\/p>\n<!-- \/wp:paragraph -->\n\n<!-- wp:html -->\n<blockquote class=\"instagram-media\" data-instgrm-captioned data-instgrm-permalink=\"https:\/\/www.instagram.com\/p\/DeIWbh7Cdz0\/?utm_source=ig_embed&amp;utm_campaign=loading\" data-instgrm-version=\"14\" style=\" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:540px; min-width:326px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);\"><div style=\"padding:16px;\"> <a href=\"https:\/\/www.instagram.com\/p\/DeIWbh7Cdz0\/?utm_source=ig_embed&amp;utm_campaign=loading\" style=\" background:#FFFFFF; line-height:0; padding:0 0; text-align:center; text-decoration:none; width:100%;\" target=\"_blank\"> <div style=\" display: flex; flex-direction: row; align-items: center;\"> <div style=\"background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 40px; margin-right: 14px; width: 40px;\"><\/div> <div style=\"display: flex; flex-direction: column; flex-grow: 1; justify-content: center;\"> <div style=\" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 100px;\"><\/div> <div style=\" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 60px;\"><\/div><\/div><\/div><div style=\"padding: 19% 0;\"><\/div> <div style=\"display:block; height:50px; margin:0 auto 12px; width:50px;\"><svg width=\"50px\" height=\"50px\" viewBox=\"0 0 60 60\" version=\"1.1\" xmlns=\"https:\/\/www.w3.org\/2000\/svg\" xmlns:xlink=\"https:\/\/www.w3.org\/1999\/xlink\"><g stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\"><g transform=\"translate(-511.000000, -20.000000)\" fill=\"#000000\"><g><path d=\"M556.869,30.41 C554.814,30.41 553.148,32.076 553.148,34.131 C553.148,36.186 554.814,37.852 556.869,37.852 C558.924,37.852 560.59,36.186 560.59,34.131 C560.59,32.076 558.924,30.41 556.869,30.41 M541,60.657 C535.114,60.657 530.342,55.887 530.342,50 C530.342,44.114 535.114,39.342 541,39.342 C546.887,39.342 551.658,44.114 551.658,50 C551.658,55.887 546.887,60.657 541,60.657 M541,33.886 C532.1,33.886 524.886,41.1 524.886,50 C524.886,58.899 532.1,66.113 541,66.113 C549.9,66.113 557.115,58.899 557.115,50 C557.115,41.1 549.9,33.886 541,33.886 M565.378,62.101 C565.244,65.022 564.756,66.606 564.346,67.663 C563.803,69.06 563.154,70.057 562.106,71.106 C561.058,72.155 560.06,72.803 558.662,73.347 C557.607,73.757 556.021,74.244 553.102,74.378 C549.944,74.521 548.997,74.552 541,74.552 C533.003,74.552 532.056,74.521 528.898,74.378 C525.979,74.244 524.393,73.757 523.338,73.347 C521.94,72.803 520.942,72.155 519.894,71.106 C518.846,70.057 518.197,69.06 517.654,67.663 C517.244,66.606 516.755,65.022 516.623,62.101 C516.479,58.943 516.448,57.996 516.448,50 C516.448,42.003 516.479,41.056 516.623,37.899 C516.755,34.978 517.244,33.391 517.654,32.338 C518.197,30.938 518.846,29.942 519.894,28.894 C520.942,27.846 521.94,27.196 523.338,26.654 C524.393,26.244 525.979,25.756 528.898,25.623 C532.057,25.479 533.004,25.448 541,25.448 C548.997,25.448 549.943,25.479 553.102,25.623 C556.021,25.756 557.607,26.244 558.662,26.654 C560.06,27.196 561.058,27.846 562.106,28.894 C563.154,29.942 563.803,30.938 564.346,32.338 C564.756,33.391 565.244,34.978 565.378,37.899 C565.522,41.056 565.552,42.003 565.552,50 C565.552,57.996 565.522,58.943 565.378,62.101 M570.82,37.631 C570.674,34.438 570.167,32.258 569.425,30.349 C568.659,28.377 567.633,26.702 565.965,25.035 C564.297,23.368 562.623,22.342 560.652,21.575 C558.743,20.834 556.562,20.326 553.369,20.18 C550.169,20.033 549.148,20 541,20 C532.853,20 531.831,20.033 528.631,20.18 C525.438,20.326 523.257,20.834 521.349,21.575 C519.376,22.342 517.703,23.368 516.035,25.035 C514.368,26.702 513.342,28.377 512.574,30.349 C511.834,32.258 511.326,34.438 511.181,37.631 C511.035,40.831 511,41.851 511,50 C511,58.147 511.035,59.17 511.181,62.369 C511.326,65.562 511.834,67.743 512.574,69.651 C513.342,71.625 514.368,73.296 516.035,74.965 C517.703,76.634 519.376,77.658 521.349,78.425 C523.257,79.167 525.438,79.673 528.631,79.82 C531.831,79.965 532.853,80.001 541,80.001 C549.148,80.001 550.169,79.965 553.369,79.82 C556.562,79.673 558.743,79.167 560.652,78.425 C562.623,77.658 564.297,76.634 565.965,74.965 C567.633,73.296 568.659,71.625 569.425,69.651 C570.167,67.743 570.674,65.562 570.82,62.369 C570.966,59.17 571,58.147 571,50 C571,41.851 570.966,40.831 570.82,37.631\"><\/path><\/g><\/g><\/g><\/svg><\/div><div style=\"padding-top: 8px;\"> <div style=\" color:#3897f0; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:550; line-height:18px;\">Ver esse post no Instagram<\/div><\/div><div style=\"padding: 12.5% 0;\"><\/div> <div style=\"display: flex; flex-direction: row; margin-bottom: 14px; align-items: center;\"><div> <div style=\"background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(0px) translateY(7px);\"><\/div> <div style=\"background-color: #F4F4F4; height: 12.5px; transform: rotate(-45deg) translateX(3px) translateY(1px); width: 12.5px; flex-grow: 0; margin-right: 14px; margin-left: 2px;\"><\/div> <div style=\"background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(9px) translateY(-18px);\"><\/div><\/div><div style=\"margin-left: 8px;\"> <div style=\" background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 20px; width: 20px;\"><\/div> <div style=\" width: 0; height: 0; border-top: 2px solid transparent; border-left: 6px solid #f4f4f4; border-bottom: 2px solid transparent; transform: translateX(16px) translateY(-4px) rotate(30deg)\"><\/div><\/div><div style=\"margin-left: auto;\"> <div style=\" width: 0px; border-top: 8px solid #F4F4F4; border-right: 8px solid transparent; transform: translateY(16px);\"><\/div> <div style=\" background-color: #F4F4F4; flex-grow: 0; height: 12px; width: 16px; transform: translateY(-4px);\"><\/div> <div style=\" width: 0; height: 0; border-top: 8px solid #F4F4F4; border-left: 8px solid transparent; transform: translateY(-4px) translateX(8px);\"><\/div><\/div><\/div> <div style=\"display: flex; flex-direction: column; flex-grow: 1; justify-content: center; margin-bottom: 24px;\"> <div style=\" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 224px;\"><\/div> <div style=\" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 144px;\"><\/div><\/div><\/a><p style=\" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;\"><a href=\"https:\/\/www.instagram.com\/p\/DeIWbh7Cdz0\/?utm_source=ig_embed&amp;utm_campaign=loading\" style=\" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none;\" target=\"_blank\">Um post compartilhado por Instituto Verit\u00e1 (@institutoverita)<\/a><\/p><\/div><\/blockquote>\n<script async src=\"\/\/www.instagram.com\/embed.js\"><\/script>\n<!-- \/wp:html -->\n\n<!-- wp:paragraph -->\n<p><strong>A metodologia<\/strong><\/p>\n<!-- \/wp:paragraph -->\n\n<!-- wp:paragraph -->\n<p>O levantamento ouviu 40.500 eleitores nas 27 unidades da Federa\u00e7\u00e3o, entre os dias 26 de setembro e 2 de outubro. O instituto trabalha com n\u00edvel de confian\u00e7a de 95% e margens de erro que variam entre 2,0 e 3,5 pontos percentuais, a depender do recorte analisado. A pesquisa tem registros no TSE sob diferentes protocolos estaduais e nacional.<\/p>\n<!-- \/wp:paragraph -->\n\n<!-- wp:paragraph -->\n<p><strong>O hist\u00f3rico do instituto nesta elei\u00e7\u00e3o<\/strong><\/p>\n<!-- \/wp:paragraph -->\n\n<!-- wp:paragraph -->\n<p>O Verit\u00e1 j\u00e1 havia sido a pesquisa que mais se aproximou do resultado real do primeiro turno entre os grandes institutos, ao apontar Fl\u00e1vio \u00e0 frente de Lula na reta final da campanha, enquanto a maioria dos concorrentes indicava o cen\u00e1rio oposto.<\/p>\n<!-- \/wp:paragraph -->","author":{"@type":"Person","name":"Henrique Speck","url":"https:\/\/jornaldiretriz.com.br\/author\/henrique-speck\/","sameAs":["http:\/\/jornaldiretriz.com.br","henriquemspeck","https:\/\/instagram.com\/henriquemspeck"]},"articleSection":["Pol\u00edtica"],"image":{"@type":"ImageObject","url":"https:\/\/jornaldiretriz.com.br\/wp-content\/uploads\/2026\/08\/WhatsApp-Image-2026-08-24-at-19.37.22.jpeg","width":1144,"height":709},"publisher":{"@type":"Organization","name":"","url":"https:\/\/jornaldiretriz.com.br","logo":{"@type":"ImageObject","url":""},"sameAs":["https:\/\/twitter.com\/diretrizoficial","https:\/\/www.instagram.com\/jornaldiretriz","https:\/\/www.youtube.com\/jornaldiretriz"]}}</script>
+<script type='application/ld+json'>{"@context":"http:\/\/schema.org","@type":"hentry","entry-title":"Fl\u00e1vio tem 51,56% e Lula 48,44% no segundo turno, aponta Verit\u00e1","published":"2026-10-06 12:51:19","updated":"2026-10-06 15:52:22"}</script>
+<script type='application/ld+json'>{"@context":"http:\/\/schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"In\u00edcio","item":"https:\/\/jornaldiretriz.com.br"},{"@type":"ListItem","position":2,"name":"Pol\u00edtica","item":"https:\/\/jornaldiretriz.com.br\/category\/politica\/"}]}</script>
+<script type="text/javascript">;!function(){"use strict";window.jnews=window.jnews||{},window.jnews.first_load=window.jnews.first_load||{},window.jnews.first_load=function(){var e=this,t=jnews.library,n="object"==typeof jnews&&"object"==typeof jnews.library;e.data=null,e.run_ajax=!0,e.run_loginregister=!0,e.clear=function(){e.run_ajax=!0,e.run_loginregister=!0,e.data=null},e.init=function(){n&&(t.globalBody.querySelectorAll(".jeg_popup_account").length&&jnews.loginregister&&(e.run_loginregister=!1,""===jnewsoption.custom_login&&(jnews.loginregister.init(),jnews.loginregister.hook_form())),jfla.length&&e.run_ajax&&(e.run_ajax=!1,e.do_ajax({action:"jnews_first_load_action",jnews_id:jnewsoption.postid,load_action:jfla})))},e.update_counter=function(){if(n){var o={total_view:t.globalBody.querySelectorAll(".jeg_share_stats .jeg_views_count .counts"),total_share:t.globalBody.querySelectorAll(".jeg_share_stats .jeg_share_count .counts"),total_comment:t.globalBody.querySelectorAll(".jeg_meta_comment a span")};t.forEach(Object.entries(e.data.counter),function([e,n]){o[e].length&&t.forEach(o[e],function(e,o){t.setText(e,n)})})}},e.do_ajax=function(o){if(n){var a=new XMLHttpRequest;a.onreadystatechange=function(){XMLHttpRequest.DONE===a.readyState&&200==a.status&&(e.data=JSON.parse(a.responseText),e.data.counter&&"object"==typeof e.data.counter&&e.update_counter())},a.open("POST",jnews_ajax_url,!0),a.setRequestHeader("Content-Type","application/x-www-form-urlencoded; charset=UTF-8"),a.send(t.httpBuildQuery(o))}}},window.jnews.first_load=new window.jnews.first_load,jnews.first_load.init()}();</script></body>
+</html>
+
+
+<!-- Page cached by LiteSpeed Cache 7.9.1 on 2026-10-08 09:25:41 -->

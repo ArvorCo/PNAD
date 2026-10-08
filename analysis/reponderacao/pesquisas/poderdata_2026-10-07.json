@@ -1,0 +1,149 @@
+{
+  "id": "poderdata_2026-10-07",
+  "instituto": "PoderData",
+  "contratante": "Poder360",
+  "registro_tse": "BR-08134/2026",
+  "n": 3000,
+  "campo": {
+    "inicio": "2026-10-05",
+    "fim": "2026-10-07"
+  },
+  "divulgacao": "2026-10-08",
+  "metodo": "telefônico (IVR/URA, discagem aleatória para celular e fixo)",
+  "renda": {
+    "unidade": "salarios_minimos",
+    "ano_referencia": 2026,
+    "mes_precos": "202610",
+    "faixas": [
+      {
+        "rotulo": "Até 2 SM (até R$ 3.242)",
+        "max": 2
+      },
+      {
+        "rotulo": "De 2 a 5 SM (R$ 3.242 a 8.105)",
+        "max": 5
+      },
+      {
+        "rotulo": "Mais de 5 SM (acima de R$ 8.105)",
+        "max": null
+      }
+    ],
+    "amostra_pct": [
+      46,
+      33,
+      21
+    ],
+    "perfil_tipo": "perfil_publicado",
+    "nota": "Perfil desta onda na p. 4: 46/33/21. A primeira faixa inclui pessoas sem rendimentos. Cruzamentos sobre votos totais na p. 9, inclusive branco/nulo e não sabe."
+  },
+  "publicado": {
+    "2t": {
+      "lula": 44,
+      "flavio": 49,
+      "branco_nulo": 5,
+      "indecisos": 2
+    }
+  },
+  "publicado_validos": {
+    "2t": {
+      "lula": 47,
+      "flavio": 53
+    }
+  },
+  "cruzamentos": {
+    "2t": {
+      "opcoes": [
+        "lula",
+        "flavio",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          48,
+          42,
+          7,
+          3
+        ],
+        [
+          39,
+          57,
+          3,
+          2
+        ],
+        [
+          43,
+          55,
+          2,
+          1
+        ]
+      ],
+      "nota": "P. 9, votos totais por renda. P. 7 fornece controle independente por sexo. Conferência visual das pp. 4, 7 e 9 contra a camada de texto."
+    }
+  },
+  "controles": {
+    "2t": {
+      "renda": {
+        "recomposto": {
+          "lula": 43.98,
+          "flavio": 49.68,
+          "branco_nulo": 4.63,
+          "indecisos": 2.25
+        },
+        "residuo": {
+          "lula": -0.02,
+          "flavio": 0.68,
+          "branco_nulo": -0.37,
+          "indecisos": 0.25
+        },
+        "residuo_max_abs": 0.68
+      },
+      "sexo": {
+        "recomposto": {
+          "lula": 43.89,
+          "flavio": 49.05,
+          "branco_nulo": 5.06,
+          "indecisos": 2.0
+        },
+        "residuo": {
+          "lula": -0.11,
+          "flavio": 0.05,
+          "branco_nulo": 0.06,
+          "indecisos": 0.0
+        },
+        "residuo_max_abs": 0.11
+      }
+    }
+  },
+  "fonte": {
+    "arquivo": "data/originals/poderdata_102026_08/relatorio.pdf",
+    "url": "https://static.poder360.com.br/uploads/2026/10/Relatorio-PoderData-Eleitoral-8out26-final.pdf",
+    "bytes": 1355838,
+    "sha256": "76d820c8267a1f465aabb8d50a766b47023783d942e4ea6a6686392a6107153a",
+    "capturado_em": "2026-10-08T22:38:32+00:00",
+    "pdf": "data/originals/poderdata_102026_08/relatorio.pdf",
+    "tipo": "relatorio",
+    "rotulo": "PoderData: relatório completo",
+    "paginas": {
+      "metodologia": 2,
+      "perfil_renda": 4,
+      "2t_topline": 6,
+      "sexo": 7,
+      "2t_renda": 9
+    },
+    "total_paginas": 39,
+    "conferido_em": "2026-10-08",
+    "status": "Íntegra atual arquivada e conferida.",
+    "nota": "Primeira onda PoderData com campo inteiramente após o 1º turno. Entram votos totais 44 × 49, não os válidos arredondados 47 × 53. A média móvel de sete dias ainda inclui outras casas com campo anterior à eleição; não é uma média exclusiva do pós-1º turno.",
+    "complementos": [
+      {
+        "arquivo": "data/originals/poderdata_102026_08/materia.html",
+        "url": "https://www.poder360.com.br/poderdata/pesquisa-poderdata-aya-leia-os-resultados-de-lula-e-flavio-no-2o-turno/",
+        "bytes": 271490,
+        "sha256": "1766999ca2d5e55ca3af9057515f108de8c5a3c969bb52a8dfa7024b4fdf8135",
+        "capturado_em": "2026-10-08T22:38:32+00:00",
+        "rotulo": "Divulgação oficial no Poder360"
+      }
+    ]
+  }
+}

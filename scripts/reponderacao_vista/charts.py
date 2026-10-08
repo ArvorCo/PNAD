@@ -600,7 +600,9 @@ def ficha_faixa(pesquisa: dict, indice: int) -> str:
     """Ficha de uma faixa de renda: o que o instituto tinha e o que a PNAD mede."""
     renda = pesquisa["renda"]
     perfil = (
-        "cota registrada"
+        "composição assumida"
+        if renda.get("perfil_tipo") == "hipotese_onda_anterior"
+        else "cota registrada"
         if renda.get("perfil_tipo") == "cota_registrada"
         else (
             "meta de calibração"
@@ -641,7 +643,7 @@ def ficha_faixa(pesquisa: dict, indice: int) -> str:
     lado = "acima" if delta >= 0 else "abaixo"
     linhas.append(
         f'<p class="tip-nota">A {perfil} está {br(abs(delta), 1)} pontos {lado} da '
-        "régua oficial nesta faixa. A reponderação corrige exatamente isso, "
+        "régua oficial nesta faixa. A reponderação troca essa composição, "
         "mantendo o voto medido dentro dela.</p>"
     )
     return "".join(linhas)
@@ -650,7 +652,9 @@ def ficha_faixa(pesquisa: dict, indice: int) -> str:
 def renda_svg(pesquisa: dict) -> str:
     renda = pesquisa["renda"]
     perfil = (
-        "cota registrada"
+        "composição assumida"
+        if renda.get("perfil_tipo") == "hipotese_onda_anterior"
+        else "cota registrada"
         if renda.get("perfil_tipo") == "cota_registrada"
         else (
             "meta de calibração"
@@ -679,6 +683,7 @@ def renda_svg(pesquisa: dict) -> str:
         {
             "cota registrada": "COTA REGISTRADA",
             "meta de calibração": "META DE CALIBRAÇÃO",
+            "composição assumida": "PERFIL ASSUMIDO",
         }.get(perfil, "AMOSTRA DO INSTITUTO"),
         size=10.5,
         fill=INK,
