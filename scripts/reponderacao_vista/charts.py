@@ -602,12 +602,14 @@ def ficha_faixa(pesquisa: dict, indice: int) -> str:
     perfil = (
         "composição assumida"
         if renda.get("perfil_tipo") == "hipotese_onda_anterior"
-        else "cota registrada"
-        if renda.get("perfil_tipo") == "cota_registrada"
         else (
-            "meta de calibração"
-            if renda.get("perfil_tipo") == "alvo_de_calibracao"
-            else "amostra"
+            "cota registrada"
+            if renda.get("perfil_tipo") == "cota_registrada"
+            else (
+                "meta de calibração"
+                if renda.get("perfil_tipo") == "alvo_de_calibracao"
+                else "amostra"
+            )
         )
     )
     faixa = renda["faixas"][indice]
@@ -654,12 +656,14 @@ def renda_svg(pesquisa: dict) -> str:
     perfil = (
         "composição assumida"
         if renda.get("perfil_tipo") == "hipotese_onda_anterior"
-        else "cota registrada"
-        if renda.get("perfil_tipo") == "cota_registrada"
         else (
-            "meta de calibração"
-            if renda.get("perfil_tipo") == "alvo_de_calibracao"
-            else "amostra"
+            "cota registrada"
+            if renda.get("perfil_tipo") == "cota_registrada"
+            else (
+                "meta de calibração"
+                if renda.get("perfil_tipo") == "alvo_de_calibracao"
+                else "amostra"
+            )
         )
     )
     faixas = renda["faixas"]

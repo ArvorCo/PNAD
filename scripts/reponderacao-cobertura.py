@@ -126,11 +126,7 @@ def coverage_html(data, table):
     scan_html = ""
     if audit_file.exists():
         inventory = json.loads(audit_file.read_text())
-        pending = [
-            p
-            for p in inventory.get("varredura", [])
-            if p.get("pendente")
-        ]
+        pending = [p for p in inventory.get("varredura", []) if p.get("pendente")]
         scan_html = "".join(
             f'<p class="note"><b>{escape(p["status"])}.</b> '
             f'{escape(p["conclusao"])} '

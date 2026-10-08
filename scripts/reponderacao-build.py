@@ -185,12 +185,14 @@ def cartao(pesquisa: dict) -> str:
     perfil_verbo = (
         "O perfil assumido tem"
         if renda.get("perfil_tipo") == "hipotese_onda_anterior"
-        else "O registro prevê"
-        if renda.get("perfil_tipo") == "cota_registrada"
         else (
-            "A calibração tem como alvo"
-            if renda.get("perfil_tipo") == "alvo_de_calibracao"
-            else "A amostra declara"
+            "O registro prevê"
+            if renda.get("perfil_tipo") == "cota_registrada"
+            else (
+                "A calibração tem como alvo"
+                if renda.get("perfil_tipo") == "alvo_de_calibracao"
+                else "A amostra declara"
+            )
         )
     )
 
