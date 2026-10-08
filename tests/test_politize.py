@@ -401,7 +401,7 @@ def test_contrato_de_colunas():
         )
 
 
-def test_fragmentos_do_acre_somam_o_banco():
+def _totais_fragmentos_acre():
     _exige(DADOS / "mun/AC")
     flavio = lula = aptos = 0
     for arq in (DADOS / "mun/AC").glob("*.json"):
@@ -421,6 +421,19 @@ def test_fragmentos_do_acre_somam_o_banco():
         for linha in d["secoes"]["linhas"]:
             assert linha[i_a] < 30 or linha[i_f] is not None
             secoes_f += linha[i_f] or 0
+    return flavio, lula, aptos, secoes_f
+
+
+def test_fragmentos_do_acre_fecham_contagens():
+    flavio, lula, aptos, secoes_f = _totais_fragmentos_acre()
+    assert flavio + lula <= aptos
+    assert secoes_f <= flavio
+
+
+def test_fragmentos_do_acre_somam_o_banco():
+    if not fontes.DB_SECOES.is_file():
+        pytest.skip("integração exige o banco local completo de seções do TSE")
+    flavio, lula, aptos, secoes_f = _totais_fragmentos_acre()
     con = sqlite3.connect(f"file:{fontes.DB_SECOES}?mode=ro", uri=True)
     try:
         banco = dict(

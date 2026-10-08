@@ -1,7 +1,13 @@
 node_modules/
 /data/
 public/dist/
-public/geo/
+public/geo/*
+!public/geo/*.geojson
+!public/geo/index.json
+!public/geo/README.md
+!public/geo/mun/
+public/geo/mun/*
+!public/geo/mun/*.geojson
 public/fonts/
 public/fotos/
 qa/

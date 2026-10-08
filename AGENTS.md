@@ -145,6 +145,8 @@
 - Tests in `tests/`, names `test_*.py`.
 - Cover parsing, type conversion, schema checks, and CLI behavior.
 - Run `pytest -q` before merging.
+- CI precisa de `fetch-depth: 0` para conferir as datas do sitemap. As malhas compactas de `apuracao/public/geo/` e `data/originals/ibge_malhas/br_uf/br_uf_minima.geojson` são dependências versionadas da renderização, não caches descartáveis.
+- Comparações com `apuracao/data/secoes_2026.sqlite` exigem o banco local pesado e são condicionais; os contratos dos fragmentos públicos continuam testados sem ele. A exportação Excel exige `openpyxl` em `requirements.txt`.
 
 ## Commit & PR Guidelines
 - Commit style: imperative + scoped (example: `add brasil pipeline-run sqlite refresh`).
