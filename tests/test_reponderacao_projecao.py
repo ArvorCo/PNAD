@@ -176,7 +176,7 @@ process.stdout.write(JSON.stringify({result:m.evaluate(data,p),mc:m.simulate(dat
     )
 
 
-def test_snapshot_encoding_and_sources_are_exact_reproducible_and_compact():
+def test_snapshot_sources_and_draws_are_exact_with_portable_summaries():
     assert json.loads(P.encode(DATA)) == DATA
     assert len(P.encode(DATA).splitlines()) < 1000
     for path, digest in DATA["projection"]["shared_sources"].items():
@@ -185,7 +185,17 @@ def test_snapshot_encoding_and_sources_are_exact_reproducible_and_compact():
         DATA["projection"]["adapter_sha256"]
         == hashlib.sha256(Path(P.__file__).read_bytes()).hexdigest()
     )
-    assert DATA["projection"]["uncertainty"] == M.simulate(DATA)
+    frozen = DATA["projection"]["uncertainty"]
+    computed = M.simulate(DATA)
+    assert frozen.keys() == computed.keys()
+    for key in ("runs", "share_flavio_ahead"):
+        assert frozen[key] == computed[key]
+    for key in ("flavio", "lula", "gap"):
+        assert frozen[key] == pytest.approx(computed[key], abs=1e-10, rel=0)
+    assert frozen["totals"].keys() == computed["totals"].keys()
+    for key, values in computed["totals"].items():
+        # sum(float) mudou no Python 3.12; tolerância < um milionésimo de eleitor.
+        assert frozen["totals"][key] == pytest.approx(values, abs=1e-6, rel=0)
     assert (
         P.build(RAW, M.preferences)["mc"]["draws"] == DATA["projection"]["mc"]["draws"]
     )
