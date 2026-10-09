@@ -37,6 +37,30 @@
         "fonte_conferencia": "data/originals/vox_102026_09/registro-conferencia.txt",
         "modo": "Consulta visual no navegador; exportação do questionário indisponível nesta sessão."
       }
+    },
+    {
+      "arquivo": "data/originals/atlas_102026_09/relatorio.pdf",
+      "url": "https://cdn1.atlasintel.org/pesquisa_atlas_bloomberg__nacional_261009_3da0d6d3d6d32fe1.pdf",
+      "sha256": "f730a1c0aec0f00e1be083e8aff4f53e1ee3fdd5294cdcd8a1ff4ee699801eb9",
+      "bytes": 2133605,
+      "pdf": "data/originals/atlas_102026_09/relatorio.pdf",
+      "tipo": "relatorio",
+      "rotulo": "Atlas/Bloomberg: íntegra de 09/10",
+      "pagina_instituto": "https://atlasintel.org/poll/brazil-national-2026-10-09",
+      "total_paginas": 20,
+      "conferido_em": "2026-10-09",
+      "paginas": {
+        "perfil_renda": 5,
+        "2t_topline": 7,
+        "2t_validos": 8,
+        "2t_renda": 9,
+        "2t_serie": 10
+      },
+      "status": "Íntegra arquivada e conferida; voto por renda disponível.",
+      "rotulos_opcoes": {
+        "branco_nulo": "Branco/nulo/não sei (agregado)"
+      },
+      "nota": "Íntegra de 20 páginas; perfil desta onda na p. 5 e voto por renda na p. 9. Campo 03–08/10 atravessa o 1º turno: sensibilidade por renda disponível no acervo e na série descritiva, excluída da central pós-04/10. Não há recorte publicado que isole as entrevistas após a votação. Os 3,2% agregam branco, nulo e não sei; não é possível separar brancos/nulos de indecisos."
     }
   ],
   "vox": {
@@ -78,5 +102,182 @@
       "modo": "Consulta visual no navegador; exportação do questionário indisponível nesta sessão."
     }
   },
-  "varredura": []
+  "varredura": [
+    {
+      "instituto": "Agenda nacional",
+      "status": "Divulgações de 09/10 conferidas",
+      "resumo": true,
+      "conclusao": "Atlas e Vox são as duas pesquisas nacionais da agenda consultada. As três entradas Igape tratam de governos em GO/DF. Agenda é previsão de divulgação, não prova de publicação; as duas nacionais foram conferidas em suas íntegras.",
+      "fontes": [
+        "https://www.opovo.com.br/noticias/politica/eleicoes/2026/10/09/pesquisas-para-o-2-turno-veja-quais-sao-publicadas-nesta-sexta-09-10.html"
+      ]
+    },
+    {
+      "instituto": "AtlasIntel",
+      "status": "Incorporada com voto por renda",
+      "conclusao": "BR-03663/2026, 5.026 entrevistas, campo 03–08/10; placar total 51,1 Flávio × 45,7 Lula, válidos publicados 52,8 × 47,2. Perfil e cruzamento próprios desta onda; campo misto, fora da central pós-1º turno.",
+      "fontes": [
+        "https://atlasintel.org/poll/brazil-national-2026-10-09",
+        "https://cdn1.atlasintel.org/pesquisa_atlas_bloomberg__nacional_261009_3da0d6d3d6d32fe1.pdf"
+      ]
+    },
+    {
+      "instituto": "Vox Brasil",
+      "status": "Já incorporada em 09/10, sem duplicação",
+      "conclusao": "BR-09623/2026, campo 05–07/10, sem voto por renda nas 16 páginas. Registro e questionário conferidos; não há ajuste identificável.",
+      "fontes": [
+        "https://static.poder360.com.br/uploads/2026/10/pesquisa-vox-brasil-9out2026.pdf"
+      ]
+    },
+    {
+      "instituto": "Datafolha e PoderData",
+      "status": "Divulgação de 08/10, já incorporada",
+      "conclusao": "As notícias de 09/10 repercutem as ondas de 08/10; não constituem novas entrevistas. O ajuste Datafolha permanece condicionado ao perfil de renda da onda anterior, explicitado na ficha; não localizamos nesta consulta a íntegra nova no portal oficial.",
+      "fontes": [
+        "https://datafolha.folha.uol.com.br/",
+        "https://www.poder360.com.br/poderdata/flavio-tem-53-contra-47-de-lula-no-2o-turno-diz-pesquisa-poderdata-aya/"
+      ]
+    },
+    {
+      "instituto": "GERP, Palver e Quaest",
+      "status": "Sem nova onda nacional localizada",
+      "conclusao": "Catálogo GERP mantém 03/10 como último nacional; Explorer Palver mantém a onda 06 de 03/10; consulta de posts Quaest desde 08/10 retorna vazia. Estes resultados delimitam a varredura, não garantem ausência de publicação em outro canal.",
+      "fontes": [
+        "https://gerp.com.br/relatorios/manifest.json",
+        "https://www.palver.com.br/survey/explore",
+        "https://quaest.com.br/wp-json/wp/v2/posts?after=2026-10-08T00:00:00&per_page=20"
+      ]
+    }
+  ],
+  "conferido_utc": "2026-10-09T21:58:58.981788+00:00",
+  "controles": {
+    "atlas_2026-10-08": {
+      "2t": {
+        "renda": {
+          "pesos": [
+            19.4,
+            12.2,
+            26.3,
+            26.1,
+            16.1
+          ],
+          "linhas": [
+            [
+              39.9,
+              55.0,
+              5.1
+            ],
+            [
+              45.3,
+              52.8,
+              1.9
+            ],
+            [
+              57.0,
+              40.6,
+              2.4
+            ],
+            [
+              56.5,
+              39.9,
+              3.6
+            ],
+            [
+              50.3,
+              47.1,
+              2.6
+            ]
+          ],
+          "recomposto": {
+            "flavio": 51.0519,
+            "lula": 45.7407,
+            "branco_nulo": 3.2074
+          },
+          "residuo": {
+            "flavio": -0.0481,
+            "lula": 0.0407,
+            "branco_nulo": 0.0074
+          },
+          "residuo_max_abs": 0.0481
+        },
+        "sexo": {
+          "pesos": [
+            46.8,
+            53.2
+          ],
+          "linhas": [
+            [
+              57.7,
+              36.9,
+              5.4
+            ],
+            [
+              45.2,
+              53.6,
+              1.3
+            ]
+          ],
+          "recomposto": {
+            "flavio": 51.05,
+            "lula": 45.7844,
+            "branco_nulo": 3.2188
+          },
+          "residuo": {
+            "flavio": -0.05,
+            "lula": 0.0844,
+            "branco_nulo": 0.0188
+          },
+          "residuo_max_abs": 0.0844
+        },
+        "regiao": {
+          "pesos": [
+            41.7,
+            29.5,
+            14.9,
+            6.9,
+            7.0
+          ],
+          "linhas": [
+            [
+              54.4,
+              42.9,
+              2.7
+            ],
+            [
+              36.2,
+              57.6,
+              6.3
+            ],
+            [
+              64.5,
+              34.3,
+              1.2
+            ],
+            [
+              65.7,
+              33.6,
+              0.7
+            ],
+            [
+              51.1,
+              48.5,
+              0.3
+            ]
+          ],
+          "recomposto": {
+            "flavio": 51.0846,
+            "lula": 45.7054,
+            "branco_nulo": 3.2325
+          },
+          "residuo": {
+            "flavio": -0.0154,
+            "lula": 0.0054,
+            "branco_nulo": 0.0325
+          },
+          "residuo_max_abs": 0.0325
+        }
+      }
+    }
+  },
+  "regra": "Novas divulgações nacionais de 09/10: Atlas e Vox. Atlas tem cruzamento desta onda, mas campo misto 03–08/10; Vox não tem voto por renda. Ambas aparecem no relatório; nenhuma altera a central de campo inteiramente posterior ao 1º turno. Datafolha e PoderData de 08/10 já estavam incorporadas, sem duplicação."
 }

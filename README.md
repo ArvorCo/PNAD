@@ -528,6 +528,14 @@ The wave therefore receives no income adjustment. Evidence is archived in
 `data/originals/vox_102026_09/` and the public registry transcription in
 `docs/fontes/vox_09102026/`.
 
+Atlas/Bloomberg, released on 9 October (`BR-03663/2026`), supplies this wave's
+income profile and runoff crosstab. Reproduce the transcription and three
+independent recomposition checks with `python3 scripts/pesquisas-091026-renda.py`.
+Its 3–8 October field spans the first round: the income sensitivity enters
+the descriptive series and poll dossier, while the central excludes it.
+Sources and the day's national-poll scan are archived in
+`data/originals/atlas_102026_09/` and `data/originals/reponderacao_20261009/`.
+
 ## Project status
 
 Production-useful for:

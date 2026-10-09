@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-10-09T03:57:07",
+ "gerado_em": "2026-10-09T19:07:54",
  "referencia": "2026-10-09",
  "benchmark": {
   "source": "data/outputs/base_anual_visita1_labeled_npv.csv",
@@ -23789,6 +23789,162 @@
    "arquivo": "analysis/reponderacao/pesquisas/poderdata_2026-10-07.json"
   },
   {
+   "id": "atlas_2026-10-08",
+   "instituto": "AtlasIntel",
+   "contratante": "Bloomberg",
+   "registro_tse": "BR-03663/2026",
+   "campo": {
+    "inicio": "2026-10-03",
+    "fim": "2026-10-08"
+   },
+   "divulgacao": "2026-10-09",
+   "n": 5026,
+   "metodo": "online (recrutamento digital aleatório, Atlas RDR)",
+   "fonte": {
+    "arquivo": "data/originals/atlas_102026_09/relatorio.pdf",
+    "url": "https://cdn1.atlasintel.org/pesquisa_atlas_bloomberg__nacional_261009_3da0d6d3d6d32fe1.pdf",
+    "sha256": "f730a1c0aec0f00e1be083e8aff4f53e1ee3fdd5294cdcd8a1ff4ee699801eb9",
+    "bytes": 2133605,
+    "pdf": "data/originals/atlas_102026_09/relatorio.pdf",
+    "tipo": "relatorio",
+    "rotulo": "Atlas/Bloomberg: íntegra de 09/10",
+    "pagina_instituto": "https://atlasintel.org/poll/brazil-national-2026-10-09",
+    "total_paginas": 20,
+    "conferido_em": "2026-10-09",
+    "paginas": {
+     "perfil_renda": 5,
+     "2t_topline": 7,
+     "2t_validos": 8,
+     "2t_renda": 9,
+     "2t_serie": 10
+    },
+    "status": "Íntegra arquivada e conferida; voto por renda disponível.",
+    "rotulos_opcoes": {
+     "branco_nulo": "Branco/nulo/não sei (agregado)"
+    },
+    "nota": "Íntegra de 20 páginas; perfil desta onda na p. 5 e voto por renda na p. 9. Campo 03–08/10 atravessa o 1º turno: sensibilidade por renda disponível no acervo e na série descritiva, excluída da central pós-04/10. Não há recorte publicado que isole as entrevistas após a votação. Os 3,2% agregam branco, nulo e não sei; não é possível separar brancos/nulos de indecisos."
+   },
+   "publicado": {
+    "2t": {
+     "flavio": 51.1,
+     "lula": 45.7,
+     "branco_nulo": 3.2
+    }
+   },
+   "renda": {
+    "unidade": "reais_nominais",
+    "faixas": [
+     "R$0 a R$2.000",
+     "R$2.000 a R$3.000",
+     "R$3.000 a R$5.000",
+     "R$5.000 a R$10.000",
+     "Acima de R$10.000"
+    ],
+    "cortes_brl_202604": [
+     1983.9,
+     2975.85,
+     4959.75,
+     9919.51,
+     null
+    ],
+    "amostra_pct": [
+     19.381,
+     12.188,
+     26.274,
+     26.074,
+     16.084
+    ],
+    "pnad_pct": {
+     "pessoas16_efetivo": [
+      16.903,
+      10.913,
+      25.958,
+      27.361,
+      18.865
+     ],
+     "pessoas16_habitual": [
+      16.256,
+      11.099,
+      26.883,
+      27.748,
+      18.013
+     ],
+     "domicilios_efetivo": [
+      22.771,
+      12.095,
+      25.45,
+      23.69,
+      15.993
+     ]
+    },
+    "nota": "Renda familiar desta onda, p. 5, soma arredondada 100,1%, normalizada. Não reutiliza o perfil da rodada anterior. Cortes nominais de 10/2026; o motor limita a deflação ao último índice da série arquivada (07/2026), sem extrapolar a inflação dos meses seguintes.",
+    "perfil_tipo": "perfil_publicado"
+   },
+   "desvio_ate_primeira_faixa": 2.477,
+   "turnos": {
+    "2t": {
+     "opcoes": [
+      "flavio",
+      "lula",
+      "branco_nulo"
+     ],
+     "publicado": {
+      "flavio": 51.1,
+      "lula": 45.7,
+      "branco_nulo": 3.2
+     },
+     "recomposto": {
+      "flavio": 51.052,
+      "lula": 45.741,
+      "branco_nulo": 3.207
+     },
+     "residuo_max": 0.048,
+     "cenarios": {
+      "pessoas16_efetivo": {
+       "contrafactual": {
+        "flavio": 51.432,
+        "lula": 45.4,
+        "branco_nulo": 3.168
+       },
+       "ajustado": {
+        "flavio": 51.48,
+        "lula": 45.36,
+        "branco_nulo": 3.16
+       }
+      },
+      "pessoas16_habitual": {
+       "contrafactual": {
+        "flavio": 51.576,
+        "lula": 45.272,
+        "branco_nulo": 3.152
+       },
+       "ajustado": {
+        "flavio": 51.624,
+        "lula": 45.231,
+        "branco_nulo": 3.145
+       }
+      },
+      "domicilios_efetivo": {
+       "contrafactual": {
+        "flavio": 50.501,
+        "lula": 46.228,
+        "branco_nulo": 3.271
+       },
+       "ajustado": {
+        "flavio": 50.549,
+        "lula": 46.188,
+        "branco_nulo": 3.263
+       }
+      }
+     },
+     "gap_publicado": -5.399999999999999,
+     "gap_ajustado": -6.119999999999997,
+     "margem_diferenca_95": 2.716
+    }
+   },
+   "arquivo": "analysis/reponderacao/pesquisas/atlas_2026-10-08.json"
+  },
+  {
    "id": "datafolha_2026-10-08",
    "instituto": "Datafolha",
    "contratante": "Folha de S.Paulo e TV Globo",
@@ -29484,8 +29640,9 @@
     },
     {
      "data": "2026-10-09",
-     "n_institutos": 6,
+     "n_institutos": 7,
      "ondas": [
+      "atlas_2026-10-08",
       "datafolha_2026-10-08",
       "gerp_2026-10-02",
       "mda_2026-10-02",
@@ -29494,6 +29651,7 @@
       "quaest_2026-10-03"
      ],
      "institutos": [
+      "AtlasIntel",
       "Datafolha",
       "Gerp",
       "MDA",
@@ -37543,6 +37701,11 @@
       "id": "poderdata_2026-10-02",
       "instituto": "PoderData",
       "motivo": "Não há separação completa de indecisos e branco/nulo/não vai votar por renda."
+     },
+     {
+      "id": "atlas_2026-10-08",
+      "instituto": "AtlasIntel",
+      "motivo": "Não há separação completa de indecisos e branco/nulo/não vai votar por renda."
      }
     ],
     "serie": {
@@ -42407,7 +42570,7 @@
       44.81,
       45.12,
       44.45,
-      44.45
+      44.63
      ],
      "flavio": [
       null,
@@ -42568,7 +42731,7 @@
       45.65,
       46.26,
       47.26,
-      47.26
+      47.81
      ],
      "indecisos": [
       null,
@@ -43053,7 +43216,7 @@
       44.04,
       44.31,
       43.72,
-      43.72
+      43.96
      ],
      "flavio": [
       null,
@@ -43214,7 +43377,7 @@
       46.64,
       47.26,
       48.21,
-      48.21
+      48.68
      ],
      "indecisos": [
       null,
@@ -45482,6 +45645,7 @@
   "ultimo": {
    "2t": {
     "institutos": [
+     "AtlasIntel",
      "Datafolha",
      "Gerp",
      "Indexa/Broadcast",
@@ -45494,28 +45658,29 @@
     ],
     "media_simples": {
      "publicado": {
-      "lula": 44.31,
-      "flavio": 46.45
+      "lula": 44.45,
+      "flavio": 46.92
      },
      "ajustado": {
-      "lula": 43.67,
-      "flavio": 47.26
+      "lula": 43.83,
+      "flavio": 47.68
      }
     },
     "kernel": {
      "publicado": {
-      "lula": 44.45,
-      "flavio": 47.26
+      "lula": 44.63,
+      "flavio": 47.81
      },
      "ajustado": {
-      "lula": 43.72,
-      "flavio": 48.21
+      "lula": 43.96,
+      "flavio": 48.68
      }
     },
     "cobertura_movel": {
      "data": "2026-10-09",
-     "n_institutos": 6,
+     "n_institutos": 7,
      "ondas": [
+      "atlas_2026-10-08",
       "datafolha_2026-10-08",
       "gerp_2026-10-02",
       "mda_2026-10-02",
@@ -45524,6 +45689,7 @@
       "quaest_2026-10-03"
      ],
      "institutos": [
+      "AtlasIntel",
       "Datafolha",
       "Gerp",
       "MDA",

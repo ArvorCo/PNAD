@@ -2,6 +2,7 @@
 
 import importlib
 import json
+from datetime import date
 from pathlib import Path
 
 import pytest
@@ -9,6 +10,9 @@ from bs4 import BeautifulSoup
 
 ROOT = Path(__file__).resolve().parents[1]
 POLL_DIR = ROOT / "analysis/reponderacao/pesquisas"
+BUILDER = importlib.import_module("reponderacao-build")
+COVERAGE = importlib.import_module("reponderacao-cobertura")
+ENGINE = importlib.import_module("reponderacao-pnad")
 
 
 def read(path):
@@ -86,11 +90,15 @@ def test_new_results_stay_in_bounds_and_recompose(output):
                 assert all(0 <= v <= 100 for v in scenario["ajustado"].values())
 
 
-def test_latest_comparable_mean_includes_gerp_and_poderdata(output):
+def test_september_comparable_mean_includes_gerp_and_poderdata(output):
+    """A falta de renda Atlas em setembro não exclui uma onda futura com renda."""
+    reference = date(2026, 9, 17)
+    polls = [p for p in output["pesquisas"] if p["divulgacao"] <= reference.isoformat()]
+    historical = ENGINE.aggregate(polls, reference)["ultimo"]["2t"]
     latest = {}
-    for p in sorted(output["pesquisas"], key=lambda p: p["campo"]["fim"]):
-        if "2t" in p["turnos"]:
-            latest[p["instituto"]] = p
+    for poll in sorted(polls, key=lambda p: p["campo"]["fim"]):
+        if "2t" in poll["turnos"]:
+            latest[poll["instituto"]] = poll
     assert latest["Gerp"]["campo"]["fim"] >= "2026-09-16"
     assert latest["PoderData"]["campo"]["fim"] >= "2026-09-16"
     assert not ({"AtlasIntel", "Futura"} & latest.keys())
@@ -98,15 +106,11 @@ def test_latest_comparable_mean_includes_gerp_and_poderdata(output):
         p["turnos"]["2t"]["cenarios"]["pessoas16_efetivo"]["ajustado"]["flavio"]
         for p in latest.values()
     ) / len(latest)
-    assert output["agregador"]["ultimo"]["2t"]["media_simples"]["ajustado"][
-        "flavio"
-    ] == round(avg, 2)
+    assert historical["media_simples"]["ajustado"]["flavio"] == round(avg, 2)
 
 
-def test_page_shows_all_four_sources_without_fake_adjustments(output, monkeypatch):
+def test_page_shows_all_four_sources_without_fake_adjustments(output):
     """Exercita a cobertura histórica sem exigir que 17/09 seja sempre a última onda."""
-    monkeypatch.syspath_prepend(str(ROOT / "scripts"))
-    builder = importlib.import_module("reponderacao-build")
     historical = {
         **output,
         **{
@@ -123,7 +127,7 @@ def test_page_shows_all_four_sources_without_fake_adjustments(output, monkeypatc
         },
     }
     html = BeautifulSoup(
-        builder.coverage_html(historical, builder.tabela), "html.parser"
+        COVERAGE.coverage_html(historical, BUILDER.tabela), "html.parser"
     )
     section = html.find(id="atualizacao")
     text = section.get_text(" ", strip=True)

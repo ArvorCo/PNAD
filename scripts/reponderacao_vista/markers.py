@@ -126,7 +126,10 @@ def ficha_onda(pesquisa: dict, turno: str) -> str:
             f'<p class="tip-nota"><b>{esc(pesquisa["fonte"].get("status", ""))}</b> {esc(pesquisa["fonte"]["nota"])}</p>'
         )
     if extras:
-        itens = ", ".join(f"{esc(rotulo(c))} {br(pub[c], 1)}" for c in extras[:6])
+        labels = pesquisa.get("fonte", {}).get("rotulos_opcoes", {})
+        itens = ", ".join(
+            f"{esc(labels.get(c, rotulo(c)))} {br(pub[c], 1)}" for c in extras[:6]
+        )
         corpo.append(f'<p class="tip-nota">Também na cédula: {itens}.</p>')
     if turno == "1t" and pesquisa.get("selecao_1t"):
         corpo.append(

@@ -108,7 +108,11 @@ def current_coverage(ns):
             continue
         status = "Com renda" if "2t" in p.get("turnos", {}) else "Sem voto por renda"
         if p["campo"]["inicio"] <= "2026-10-04":
-            status += " · campo anterior ao 2º turno"
+            status += (
+                " · campo atravessa o 1º turno; fora da central"
+                if p["campo"]["fim"] > "2026-10-04"
+                else " · campo anterior ao 2º turno"
+            )
         source = p.get("fonte") or {}
         url = source.get("url")
         details = (
@@ -236,9 +240,9 @@ def archive_html(ns):
         "Da pesquisa<br><em>à urna.</em>", "A projeção<br><em>contra a urna.</em>"
     )
     soup = BeautifulSoup(projection, "html.parser")
-    soup.select_one(
-        ".lead"
-    ).string = "Arquivo do 1º turno, fechado em 04/10: projeções, resultado oficial e erros. Alternar hipóteses após a urna não valida uma previsão."
+    soup.select_one(".lead").string = (
+        "Arquivo do 1º turno, fechado em 04/10: projeções, resultado oficial e erros. Alternar hipóteses após a urna não valida uma previsão."
+    )
     intro = (
         '<section class="hero"><div class="wrap"><p class="eyebrow">Arquivo · 1º turno de 2026</p><h1>A conta de ontem.<br><em>A urna de hoje.</em></h1><p>Séries, hipóteses, versões, candidaturas e documentação preservadas. O resultado permite medir o erro, sem reescrever o passado.</p>'
         + f'<p><a href="{CURRENT}">← Voltar ao simulador do 2º turno</a> · <a href="{LOG}">Histórico de alterações</a></p></div></section>'
