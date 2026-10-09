@@ -1,0 +1,28 @@
+{
+  "name": "fiscais-video",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Vídeo animado da fiscalização do 2º turno de 2026 (16:9 e 9:16), Arvor Intelligence",
+  "scripts": {
+    "studio": "remotion studio",
+    "render:wide": "remotion render FiscaisWide out/fiscais_16x9.mp4",
+    "render:vertical": "remotion render FiscaisVertical out/fiscais_9x16.mp4",
+    "render": "npm run render:wide && npm run render:vertical",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.436",
+    "@remotion/google-fonts": "4.0.436",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "remotion": "4.0.436"
+  },
+  "devDependencies": {
+    "@remotion/eslint-config-flat": "4.0.436",
+    "@types/react": "19.1.0",
+    "@types/react-dom": "19.1.0",
+    "eslint": "9.30.0",
+    "typescript": "5.8.3"
+  }
+}
