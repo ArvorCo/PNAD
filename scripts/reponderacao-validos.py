@@ -235,6 +235,8 @@ def build(data, nexus):
             try:
                 if poll["campo"]["fim"] > reference:
                     raise ValueError("Campo posterior à referência")
+                if ballot == "2t" and asof > ELECTION and poll["campo"]["inicio"] <= ELECTION:
+                    raise ValueError("Campo anterior ao encerramento do 1º turno; apenas histórico")
                 rows.append(prepare(poll, ballot))
             except ValueError as exc:
                 excluded.append(

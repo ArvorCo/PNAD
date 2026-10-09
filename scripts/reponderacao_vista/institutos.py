@@ -40,7 +40,7 @@ def _painel_instituto(nome: str, turno: str) -> str:
                 else ""
             )
             + "Vazado é publicado, cheio é reponderado. "
-            '<a href="#palver-pesos">Fontes, valores e critérios</a>.</p>'
+            '<a href="reponderacao_pnad_1o_turno_2026.html#palver-pesos">Fontes, valores e critérios</a>.</p>'
             + ("</details>" if turno == "1t" else "")
             + "</article>"
         )
@@ -67,9 +67,9 @@ def _painel_instituto(nome: str, turno: str) -> str:
         pub, adj = resultado["publicado"], ajustado(resultado)
         resumo = (
             f'<p class="note"><b>Última onda · campo até {curto(onda["campo"]["fim"])}'
-            f' · divulgação {curto(onda["divulgacao"])}.</b><br>'
-            f'Lula × Flávio: publicado <b>{br(pub["lula"], 0)} × {br(pub["flavio"], 0)}</b>; '
-            f'reponderado <b>{br(adj["lula"], 2)} × {br(adj["flavio"], 2)}</b> (%).</p>'
+            f" · divulgação {curto(onda['divulgacao'])}.</b><br>"
+            f"Flávio × Lula: publicado <b>{br(pub['flavio'], 0)} × {br(pub['lula'], 0)}</b>; "
+            f"reponderado <b>{br(adj['flavio'], 2)} × {br(adj['lula'], 2)}</b> (%).</p>"
         )
     return (
         f'<article class="panel reveal" data-instituto="{esc(nome)}" data-turno="{turno}"><h3>{esc(nome)} <small>{TURNOS[turno]}</small></h3>'
@@ -84,9 +84,9 @@ def _painel_instituto(nome: str, turno: str) -> str:
     )
 
 
-def body():
+def body(turns=("2t", "1t")):
     groups = []
-    for turn in ("2t", "1t"):
+    for turn in turns:
         names = [
             name
             for name in INSTITUTOS
@@ -107,7 +107,9 @@ def body():
             f'<div id="institutos-{turn}" class="instituto-group"><header><p class="kicker">{len(names)} institutos com renda</p><h3>{title}</h3><p class="note">{description}</p></header><div class="grid-3">{panels}</div></div>'
         )
     return (
-        '<nav class="instituto-turnos" aria-label="Institutos por turno"><a href="#institutos-2t">2º turno · em andamento</a><a href="#institutos-1t">1º turno · comparar com a urna</a></nav>'
+        '<nav class="instituto-turnos" aria-label="Institutos por turno">'
+        + "".join(f'<a href="#institutos-{turn}">{TURNOS[turn]}</a>' for turn in turns)
+        + "</nav>"
         + "".join(groups)
         + '<p class="note">Uma só onda produz pontos, sem linha. A escala vertical é própria de cada painel; a comparação entre casas está no gráfico de erros do primeiro turno.</p>'
     )

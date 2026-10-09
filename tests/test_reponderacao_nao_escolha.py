@@ -86,10 +86,13 @@ def test_empty_series_stays_missing_and_does_not_extrapolate_backwards():
 
 
 def test_both_charts_have_distinct_lines_and_auditable_coverage():
-    html = BeautifulSoup(
-        (ROOT / "docs/reponderacao_pnad.html").read_text(), "html.parser"
-    )
     for turn, slug, count in [("1t", "primeiro", 6), ("2t", "segundo", 4)]:
+        filename = (
+            "reponderacao_pnad_1o_turno_2026.html"
+            if turn == "1t"
+            else "reponderacao_pnad.html"
+        )
+        html = BeautifulSoup((ROOT / "docs" / filename).read_text(), "html.parser")
         chart = html.find(id=f"{slug}-turno-chart")
         assert len(chart.select("g[data-serie]")) == count
         for key, color in [("indecisos", "#8350a0"), ("branco_nulo", "#28705f")]:

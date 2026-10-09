@@ -111,10 +111,13 @@ def test_every_daily_candidate_mean_matches_eligible_institutes():
 def test_method_and_daily_coverage_are_visible():
     from bs4 import BeautifulSoup
 
-    html = BeautifulSoup(
-        (ROOT / "docs/reponderacao_pnad.html").read_text(), "html.parser"
-    )
     for turn in ("1t", "2t"):
+        filename = (
+            "reponderacao_pnad_1o_turno_2026.html"
+            if turn == "1t"
+            else "reponderacao_pnad.html"
+        )
+        html = BeautifulSoup((ROOT / "docs" / filename).read_text(), "html.parser")
         text = html.find(id=f"janela-{turn}").get_text(" ", strip=True)
         assert "dia observado e seis dias anteriores" in text
         assert "Sem média" in text

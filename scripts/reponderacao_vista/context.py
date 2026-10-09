@@ -117,7 +117,7 @@ CENARIOS = BENCH["cenarios"]
 PESQUISAS = sorted(D["pesquisas"], key=lambda p: p["campo"]["fim"])
 RECENTES = list(reversed(PESQUISAS))
 INSTITUTOS = list(D["institutos"])
-PAR = ("lula", "flavio")
+PAR = ("flavio", "lula")
 COR = {"lula": RED, "flavio": BLUE}
 COR_TXT = {"lula": RED_TXT, "flavio": BLUE_TXT}
 
@@ -187,4 +187,4 @@ def ajustado(turno: dict) -> dict:
 
 
 def gap(valores: dict) -> float:
-    return valores["lula"] - valores["flavio"]
+    return valores["flavio"] - valores["lula"]

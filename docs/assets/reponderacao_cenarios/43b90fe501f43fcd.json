@@ -1,0 +1,228 @@
+{
+  "schema": 1,
+  "reference": "2026-10-09",
+  "polls": [
+    {
+      "id": "datafolha_2026-10-08",
+      "instituto": "Datafolha",
+      "campo": {
+        "inicio": "2026-10-06",
+        "fim": "2026-10-08"
+      },
+      "divulgacao": "2026-10-08",
+      "published": {
+        "flavio": 49.0,
+        "lula": 45.0,
+        "indecisos": 1.0,
+        "branco_nulo": 5.0
+      },
+      "pnad": {
+        "flavio": 51.137,
+        "lula": 43.013000000000005,
+        "indecisos": 0.85,
+        "branco_nulo": 5.0
+      },
+      "nonchoice_fallback": [],
+      "perfil_tipo": "hipotese_onda_anterior"
+    },
+    {
+      "id": "poderdata_2026-10-07",
+      "instituto": "PoderData",
+      "campo": {
+        "inicio": "2026-10-05",
+        "fim": "2026-10-07"
+      },
+      "divulgacao": "2026-10-08",
+      "published": {
+        "flavio": 49.0,
+        "lula": 44.0,
+        "indecisos": 2.0,
+        "branco_nulo": 5.0
+      },
+      "pnad": {
+        "flavio": 50.47648539577255,
+        "lula": 43.16238462460542,
+        "indecisos": 1.8440084708514803,
+        "branco_nulo": 4.517121508770527
+      },
+      "nonchoice_fallback": [],
+      "perfil_tipo": "perfil_publicado"
+    }
+  ],
+  "engine": "f5cd41aaa45b947d",
+  "excluded": [
+    {
+      "id": "atlas_2026-10-02",
+      "instituto": "AtlasIntel",
+      "reason": "Campo anterior ao encerramento do 1º turno; apenas histórico"
+    },
+    {
+      "id": "futura_2026-10-03",
+      "instituto": "Futura",
+      "reason": "Campo anterior ao encerramento do 1º turno; apenas histórico"
+    },
+    {
+      "id": "gerp_2026-10-02",
+      "instituto": "Gerp",
+      "reason": "Campo anterior ao encerramento do 1º turno; apenas histórico"
+    },
+    {
+      "id": "mda_2026-10-02",
+      "instituto": "MDA",
+      "reason": "Campo anterior ao encerramento do 1º turno; apenas histórico"
+    },
+    {
+      "id": "palver_2026-10-03",
+      "instituto": "Palver",
+      "reason": "Campo anterior ao encerramento do 1º turno; apenas histórico"
+    },
+    {
+      "id": "quaest_2026-10-03",
+      "instituto": "Quaest",
+      "reason": "Campo anterior ao encerramento do 1º turno; apenas histórico"
+    },
+    {
+      "id": "vox_brasil_2026-10-07",
+      "instituto": "Vox Brasil",
+      "reason": "Perfil de renda publicado (p. 6), mas nenhum cruzamento de voto por renda nas 16 páginas. Sem ajuste identificável; preservamos só o placar publicado."
+    }
+  ],
+  "defaults": {
+    "modo": "modelo",
+    "idade": "central",
+    "presenca_relativa": 5.0,
+    "comparecimento": 79.57830228837078,
+    "branco_nulo_pp": 0.0,
+    "nulo_diferencial_pp": 0.0,
+    "indecisos_validos": 100.0,
+    "indecisos_flavio": null,
+    "vies_pp": 0.0
+  },
+  "rates": {
+    "central": {
+      "lula": 0.7962213991300896,
+      "flavio": 0.7963802451702287,
+      "branco_nulo": 0.7900143357317341,
+      "indecisos": 0.7956567268770486
+    },
+    "idosos60": {
+      "lula": 0.7872698477571027,
+      "flavio": 0.8037215950422713,
+      "branco_nulo": 0.8041782630818565,
+      "indecisos": 0.7668431042379629
+    },
+    "idosos80": {
+      "lula": 0.7963740920624234,
+      "flavio": 0.7962543662268092,
+      "branco_nulo": 0.789776845092711,
+      "indecisos": 0.796143955755799
+    }
+  },
+  "limits": {
+    "presenca_relativa": [
+      -30,
+      30
+    ],
+    "comparecimento": [
+      40,
+      95
+    ],
+    "branco_nulo_pp": [
+      -10,
+      20
+    ],
+    "nulo_diferencial_pp": [
+      -20,
+      20
+    ],
+    "indecisos_validos": [
+      0,
+      100
+    ],
+    "indecisos_flavio": [
+      0,
+      100
+    ],
+    "vies_pp": [
+      -10,
+      10
+    ]
+  },
+  "method": {
+    "selection": "Última onda por casa, divulgada na janela de sete dias; no pós-1º turno, apenas campo iniciado depois de 04/10.",
+    "central": "PNAD + propensão Nexus + presença relativa de Flávio +5%, escolha declarada após o 1º turno, não parâmetro aprendido.",
+    "attendance": "Comparecimento nacional ancorado no cenário histórico Nexus; escala comum preserva a razão das taxas enquanto nenhuma atinge o teto de 100%.",
+    "undecided": "Proporcionais aos candidatos que comparecem; dados de não escolha sem renda conservam o publicado, com indicação na ficha.",
+    "aggregation": "Normalizar válidos dentro de cada pesquisa, depois média de peso igual; a contabilidade por 100 eleitores usa a massa válida média e esse mesmo placar.",
+    "limits": "Sensibilidade condicional, sem probabilidade de vitória ou intervalo preditivo validado. Nenhum voto ou preferência territorial é imputado."
+  },
+  "central": {
+    "flavio": 55.32369660388843,
+    "lula": 44.67630339611157,
+    "validos": 75.91317089538695,
+    "branco_nulo": 3.6651313929838203,
+    "comparecimento": 79.57830228837078,
+    "abstencao": 20.42169771162922,
+    "diferenca_flavio_lula": 10.647393207776858,
+    "por_100_eleitores": {
+      "flavio": 41.997972348555216,
+      "lula": 33.915198546831746,
+      "branco_nulo": 3.6651313929838203,
+      "abstencao": 20.42169771162922
+    },
+    "taxas": {
+      "flavio": 0.8152521839813374,
+      "lula": 0.7762757845175424,
+      "indecisos": 0.7757252574949032,
+      "branco_nulo": 0.7702242101509493
+    },
+    "polls": [
+      {
+        "id": "datafolha_2026-10-08",
+        "instituto": "Datafolha",
+        "divulgacao": "2026-10-08",
+        "flavio": 55.527208142323616,
+        "lula": 44.472791857676384,
+        "validos": 75.72774671150586,
+        "branco_nulo": 3.8505555768649207,
+        "comparecimento": 79.57830228837078,
+        "abstencao": 20.42169771162922,
+        "taxas": {
+          "flavio": 0.815132477584787,
+          "lula": 0.77616180116525,
+          "indecisos": 0.7756113549784643,
+          "branco_nulo": 0.7701111153729842
+        }
+      },
+      {
+        "id": "poderdata_2026-10-07",
+        "instituto": "PoderData",
+        "divulgacao": "2026-10-08",
+        "flavio": 55.12018506545324,
+        "lula": 44.87981493454676,
+        "validos": 76.09859507926805,
+        "branco_nulo": 3.4797072091027204,
+        "comparecimento": 79.57830228837078,
+        "abstencao": 20.42169771162922,
+        "taxas": {
+          "flavio": 0.8153718903778877,
+          "lula": 0.7763897678698348,
+          "indecisos": 0.7758391600113421,
+          "branco_nulo": 0.7703373049289145
+        }
+      }
+    ],
+    "parametros": {
+      "modo": "modelo",
+      "idade": "central",
+      "presenca_relativa": 5.0,
+      "comparecimento": 79.57830228837078,
+      "branco_nulo_pp": 0.0,
+      "nulo_diferencial_pp": 0.0,
+      "indecisos_validos": 100.0,
+      "indecisos_flavio": null,
+      "vies_pp": 0.0
+    }
+  },
+  "version": "43b90fe501f43fcd"
+}

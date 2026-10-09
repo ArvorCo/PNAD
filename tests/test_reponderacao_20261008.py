@@ -97,7 +97,7 @@ def test_poderdata_uses_current_profile_and_total_vote_tables(output):
 
 def test_latest_waves_replace_old_ones_only_in_the_measured_ballot(output):
     latest = output["agregador"]["ultimo"]
-    assert output["referencia"] == "2026-10-08"
+    assert output["referencia"] >= "2026-10-08"
     second = latest["2t"]["cobertura_movel"]["ondas"]
     first = latest["1t"]["cobertura_movel"]["ondas"]
     assert {"datafolha_2026-10-08", "poderdata_2026-10-07"} <= set(second)
@@ -126,7 +126,10 @@ def test_page_exposes_hypothesis_valid_vote_label_and_search_limits():
     assert "O perfil assumido tem" in card.get_text(" ", strip=True)
     assert "PERFIL ASSUMIDO" in card.get_text(" ", strip=True)
     assert "não comprovam" in card.get_text(" ", strip=True)
-    update = page.find(id="atualizacao").get_text(" ", strip=True)
+    log = BeautifulSoup(
+        (ROOT / "docs/reponderacao_pnad_log.html").read_text(), "html.parser"
+    )
+    update = log.get_text(" ", strip=True)
     assert "48,4 × 51,6 (válidos)" in update
     assert "Não foi localizada outra nova onda nacional" in update
     assert "anterior ao 1º turno" in update

@@ -52,7 +52,7 @@ def test_quaest_other_group_matches_original_topline_without_double_counting():
 
 
 def test_latest_quaest_enters_both_forecasts_at_its_actual_release():
-    result = M.build(DATA, NEXUS)
+    result = M.build({**DATA, "referencia": "2026-10-04"}, NEXUS)
     for ballot in ["1t", "2t"]:
         polls = result["ballots"][ballot]["scenarios"]["central"]["polls"]
         p = next(p for p in polls if p["instituto"] == "Quaest")

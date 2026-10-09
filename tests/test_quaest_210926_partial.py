@@ -56,13 +56,16 @@ def test_quaest_source_archive_and_visible_qualifications():
         path = ROOT / "docs/fontes/quaest_21092026" / item["arquivo"]
         assert hashlib.sha256(path.read_bytes()).hexdigest() == item["sha256"]
     html = BeautifulSoup(
-        (ROOT / "docs/reponderacao_pnad.html").read_text(), "html.parser"
+        (ROOT / "docs/reponderacao_pnad_1o_turno_2026.html").read_text(), "html.parser"
     )
     text = html.find(id="pesquisa-quaest_2026-09-20").get_text(" ", strip=True)
     assert "Perfil final confirmado" in text
     assert "COTA REGISTRADA" not in text
     assert "0,94" in text
-    assert "2º turno" in text
+    second = BeautifulSoup(
+        (ROOT / "docs/reponderacao_pnad.html").read_text(), "html.parser"
+    )
+    assert "2º turno" in second.find(id="pesquisa-quaest_2026-09-20").get_text()
     # The latest update moves forward; the wave retains its documentary history.
     poll = json.loads(
         (ROOT / "analysis/reponderacao/pesquisas/quaest_2026-09-20.json").read_text()

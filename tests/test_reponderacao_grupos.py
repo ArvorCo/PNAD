@@ -194,7 +194,7 @@ def test_every_second_round_is_preserved_and_first_round_selection_is_enforced()
 
 def test_page_has_gray_and_black_lines_and_explicit_coverage():
     html = BeautifulSoup(
-        (ROOT / "docs/reponderacao_pnad.html").read_text(), "html.parser"
+        (ROOT / "docs/reponderacao_pnad_1o_turno_2026.html").read_text(), "html.parser"
     )
     chart = html.find(id="primeiro-turno-chart")
     assert len(chart.select("g[data-serie]")) == 6

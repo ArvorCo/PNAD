@@ -490,6 +490,8 @@ def build(today: date | None = None) -> dict[str, Any]:
                     "fonte",
                     "publicado",
                     "publicado_validos",
+                    "perfil_economico_publicado",
+                    "comparecimento_publicado",
                     "motivo",
                     "selecao_1t",
                 )

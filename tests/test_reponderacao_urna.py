@@ -98,18 +98,22 @@ def test_projection_error_uses_same_partition_and_signed_gap_in_every_scenario()
 
 
 def test_institutes_have_separate_turns_and_first_round_tables_link_full_audit():
-    soup = BeautifulSoup(
+    current = BeautifulSoup(
         (ROOT / "docs/reponderacao_pnad.html").read_text(), "html.parser"
     )
+    archive = BeautifulSoup(
+        (ROOT / "docs/reponderacao_pnad_1o_turno_2026.html").read_text(), "html.parser"
+    )
     for turn in ("1t", "2t"):
+        soup = archive if turn == "1t" else current
         group = soup.select_one(f"#institutos-{turn}")
         assert group is not None
         assert all(
             panel["data-turno"] == turn for panel in group.select("article.panel")
         )
-    assert soup.select_one('#projecao-validos [data-ballot="1t"] .vf-error')
-    assert not soup.select_one('#projecao-validos [data-ballot="2t"] .vf-error')
-    assert soup.select_one(
+    assert archive.select_one('#projecao-validos [data-ballot="1t"] .vf-error')
+    assert not current.select_one('#projecao-validos [data-ballot="2t"] .vf-error')
+    assert archive.select_one(
         '#pesquisa-mda_2026-10-02 .poll-urna a[href="apuracao_1o_turno_2026.html#pesquisas"]'
     )
-    assert not soup.select_one("#pesquisa-datafolha_2026-10-08 .poll-urna")
+    assert not current.select_one("#pesquisa-datafolha_2026-10-08 .poll-urna")

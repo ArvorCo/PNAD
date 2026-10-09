@@ -80,7 +80,7 @@ def test_skip_home_preserves_home_and_its_chart(tmp_path, monkeypatch):
     builder.build(update_home=False)
     assert builder.INDEX.read_bytes() == b"home deliberately frozen"
     assert builder.HOME_SVG.read_bytes() == b"chart deliberately frozen"
-    html = builder.PAGE.read_text()
+    html = (tmp_path / "reponderacao_pnad_1o_turno_2026.html").read_text()
     assert 'id="palver-pesos"' in html
     assert "palver_2026-09-18" in html
     assert "perfil ponderado recuperado" in html

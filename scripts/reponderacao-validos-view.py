@@ -88,8 +88,9 @@ def card(data, ballot):
     )
 
 
-def section_html(source, table):
+def section_html(source, table, ballots=("1t", "2t")):
     data = MODEL.write(source)
+    data["ballots"] = {b: data["ballots"][b] for b in ballots}
     defaults = data["display_defaults"]
     rows, excluded, corrections = [], [], []
     for ballot, block in data["ballots"].items():
@@ -143,7 +144,7 @@ def section_html(source, table):
     )
     negative_note = "; ".join(corrections) or "Nenhuma massa negativa nesta janela."
     rate_rows = []
-    for ballot in ["1t", "2t"]:
+    for ballot in data["ballots"]:
         rates = data["ballots"][ballot]["scenarios"]["central"]["rates"]
         rate_rows.extend(
             [
@@ -175,7 +176,7 @@ def section_html(source, table):
         + "</select></label></div>"
         f'<p id="vf-state" aria-live="polite">{escape(data["modes"][defaults["mode"]])}: {escape(data["scenario_labels"][defaults["scenario"]])}.</p>'
         '<p class="note">A exibição inicial usa Flávio +5%, escolha feita após o resultado do primeiro turno. O fator multiplica sua propensão de comparecimento por 1,05; é uma hipótese do modelo, não uma taxa por candidato medida na urna. O cenário central permanece disponível no seletor.</p>'
-        '<div class="vf-grid">' + card(data, "1t") + card(data, "2t") + "</div>"
+        '<div class="vf-grid">' + ''.join(card(data, b) for b in ballots) + "</div>"
         '<p class="note"><b>Mesmas casas nos três modos, dentro de cada turno.</b> Normalizamos cada pesquisa antes de calcular a média. Demais candidatos também contam no denominador do primeiro turno; Lula e Flávio não são reescalados sozinhos para 100%. Só aparecem individualmente os nomes identificados em todas as casas; os demais são agrupados, pois a Quaest reúne os candidatos menores no cruzamento de renda. Ausência de detalhamento não vira voto zero. Diferenças de arredondamento podem fazer os rótulos somarem 99,9% ou 100,1%. A diferença entre os líderes usa os valores antes de arredondar.</p>'
         '<p class="note"><b>Fora desta projeção:</b> '
         + escape(coverage_short)

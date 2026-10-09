@@ -46,7 +46,12 @@ def test_institute_panels_show_every_version_in_both_turns():
     soup = BeautifulSoup(
         (ROOT / "docs/reponderacao_pnad.html").read_text(), "html.parser"
     )
-    panels = soup.select('#institutos [data-instituto="Palver"]')
+    archive = BeautifulSoup(
+        (ROOT / "docs/reponderacao_pnad_1o_turno_2026.html").read_text(), "html.parser"
+    )
+    panels = soup.select('#institutos [data-instituto="Palver"]') + archive.select(
+        '#institutos [data-instituto="Palver"]'
+    )
     assert len(panels) == 2
     data = json.loads((ASSETS / "reponderacao_pnad.json").read_text())
     waves = [p for p in data["pesquisas"] if p["instituto"] == "Palver"]
@@ -66,6 +71,6 @@ def test_institute_panels_show_every_version_in_both_turns():
             assert label in svg_text
         assert "fora das médias" in panel.get_text()
     assert "com Marçal" in panels[1].get_text()
-    chapter = soup.select_one("#palver-pesos").get_text()
+    chapter = archive.select_one("#palver-pesos").get_text()
     assert "revisada só entra como placar publicado" not in chapter
     assert "não há diagnóstico público da aderência" not in chapter

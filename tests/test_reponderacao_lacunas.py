@@ -27,11 +27,14 @@ def test_bridges_only_internal_gaps_and_leave_values_untouched():
 
 def test_each_dotted_connector_matches_a_missing_interval_in_data():
     data = json.loads((ROOT / "docs/assets/reponderacao_pnad.json").read_text())
-    html = BeautifulSoup(
-        (ROOT / "docs/reponderacao_pnad.html").read_text(), "html.parser"
-    )
     dates = data["agregador"]["serie"]["datas"]
     for turn, slug in [("1t", "primeiro"), ("2t", "segundo")]:
+        filename = (
+            "reponderacao_pnad_1o_turno_2026.html"
+            if turn == "1t"
+            else "reponderacao_pnad.html"
+        )
+        html = BeautifulSoup((ROOT / "docs" / filename).read_text(), "html.parser")
         chart = html.find(id=f"{slug}-turno-chart")
         count = 0
         for kind in ["publicado", "ajustado"]:

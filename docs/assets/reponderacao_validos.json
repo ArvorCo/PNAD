@@ -1,5 +1,5 @@
 {
-  "reference": "2026-10-08",
+  "reference": "2026-10-09",
   "labels": {
     "lula": "Lula",
     "flavio": "Flávio",
@@ -5152,39 +5152,59 @@
       }
     },
     "2t": {
-      "reference": "2026-10-08",
-      "n_houses": 6,
+      "reference": "2026-10-09",
+      "n_houses": 2,
       "excluded": [
         {
           "id": "atlas_2026-10-02",
           "instituto": "AtlasIntel",
-          "reason": "Sem cruzamento de renda deste turno na última onda"
+          "reason": "Campo anterior ao encerramento do 1º turno; apenas histórico"
         },
         {
           "id": "futura_2026-10-03",
           "instituto": "Futura",
-          "reason": "A íntegra de 10 páginas (painel com \"Filtro Mestre: Sem cruzamento\") publica o perfil de renda (p. 3), mas nenhum voto por renda nem por qualquer outro recorte. Sem esse cruzamento não há reponderação; participa da central da previsão com o placar publicado."
+          "reason": "Campo anterior ao encerramento do 1º turno; apenas histórico"
         },
         {
-          "id": "vox_brasil_2026-10-01",
+          "id": "gerp_2026-10-02",
+          "instituto": "Gerp",
+          "reason": "Campo anterior ao encerramento do 1º turno; apenas histórico"
+        },
+        {
+          "id": "mda_2026-10-02",
+          "instituto": "MDA",
+          "reason": "Campo anterior ao encerramento do 1º turno; apenas histórico"
+        },
+        {
+          "id": "palver_2026-10-03",
+          "instituto": "Palver",
+          "reason": "Campo anterior ao encerramento do 1º turno; apenas histórico"
+        },
+        {
+          "id": "quaest_2026-10-03",
+          "instituto": "Quaest",
+          "reason": "Campo anterior ao encerramento do 1º turno; apenas histórico"
+        },
+        {
+          "id": "vox_brasil_2026-10-07",
           "instituto": "Vox Brasil",
-          "reason": "Íntegra de 14 páginas: perfil econômico da p. 6 é 83,9/12,4/2,8/0,9%, mas não há voto por renda. Sem esse cruzamento não há reponderação nem propensão de comparecimento por candidato."
+          "reason": "Perfil de renda publicado (p. 6), mas nenhum cruzamento de voto por renda nas 16 páginas. Sem ajuste identificável; preservamos só o placar publicado."
         }
       ],
       "scenarios": {
         "central": {
           "aggregate": {
             "publicado": {
-              "lula": 48.49118961866424,
-              "flavio": 51.50881038133577
+              "lula": 47.59208419126058,
+              "flavio": 52.40791580873942
             },
             "pnad": {
-              "lula": 47.60843929533845,
-              "flavio": 52.391560704661536
+              "lula": 45.89006241033917,
+              "flavio": 54.10993758966082
             },
             "modelo": {
-              "lula": 47.603473066760095,
-              "flavio": 52.3965269332399
+              "lula": 45.88510923116246,
+              "flavio": 54.114890768837526
             }
           },
           "polls": [
@@ -5255,196 +5275,6 @@
               "allocated_undecided": {
                 "flavio": 0.3673661721518745,
                 "lula": 0.3089420456936166
-              },
-              "rates": {
-                "flavio": 0.7963802451702287,
-                "lula": 0.7962213991300896
-              },
-              "others_template_candidates": [],
-              "proxy_candidates": []
-            },
-            {
-              "id": "gerp_2026-10-02",
-              "instituto": "Gerp",
-              "divulgacao": "2026-10-03",
-              "campo": {
-                "inicio": "2026-09-30",
-                "fim": "2026-10-02"
-              },
-              "published": {
-                "flavio": 49.0,
-                "lula": 44.0
-              },
-              "adjusted": {
-                "flavio": 50.843,
-                "lula": 42.529
-              },
-              "negative_mass_removed": {},
-              "undecided": 0.716,
-              "undecided_known": true,
-              "source": {
-                "tipo": "relatorio",
-                "rotulo": "Relatório Gerp, Presidência 2026, medição de 02/10",
-                "pdf": "data/originals/gerp_102026_03/relatorio.pdf",
-                "url": "https://gerp.com.br/relatorios/20261003%20Relat%C3%B3rio%20Presid%C3%AAncia%202026%20-%20DIVULGA%C3%87%C3%83O.pdf",
-                "paginas": {
-                  "metodologia": 7,
-                  "perfil_renda": 8,
-                  "1t": 13,
-                  "1t_validos": 16,
-                  "1t_renda": 15,
-                  "2t": 22,
-                  "2t_validos": 25,
-                  "2t_renda": 24
-                },
-                "sha256": "500c4a7b8261a209ce62fdf49b68d63e018d44f789a8ce487f81c74522023961",
-                "bytes": 873722,
-                "total_paginas": 54,
-                "status": "Relatório completo arquivado e conferido.",
-                "conferido_em": "2026-10-03",
-                "nota": "Manifesto público da Gerp lista o relatório com data de 03/10/2026; o creationDate do PDF é 02/10/2026 19:57. A p. 7 declara cotas de sexo, idade, renda e região por UF e ponderação também por escolaridade. Na p. 13, Zema, Edmilson Costa, Rui Costa Pimenta, Leonardo Avalanche, Hertz Dias, Wilson Grassi e Clariana Barão têm 0% no total; a p. 15 exibe 8 de 15 categorias e omite essas sete. Não se inventam células por renda para nomes omitidos."
-              },
-              "publicado": {
-                "flavio": 52.68817204301075,
-                "lula": 47.31182795698925
-              },
-              "pnad": {
-                "flavio": 54.45208413657198,
-                "lula": 45.54791586342801
-              },
-              "modelo": {
-                "flavio": 54.457031552106315,
-                "lula": 45.542968447893685
-              },
-              "allocated_undecided": {
-                "flavio": 0.3102363809181537,
-                "lula": 0.259453835525813
-              },
-              "rates": {
-                "flavio": 0.7963802451702287,
-                "lula": 0.7962213991300896
-              },
-              "others_template_candidates": [],
-              "proxy_candidates": []
-            },
-            {
-              "id": "mda_2026-10-02",
-              "instituto": "MDA",
-              "divulgacao": "2026-10-03",
-              "campo": {
-                "inicio": "2026-09-30",
-                "fim": "2026-10-02"
-              },
-              "published": {
-                "flavio": 43.1,
-                "lula": 47.3
-              },
-              "adjusted": {
-                "flavio": 44.063,
-                "lula": 46.414
-              },
-              "negative_mass_removed": {},
-              "undecided": 1.853,
-              "undecided_known": true,
-              "source": {
-                "tipo": "relatorio",
-                "rotulo": "Relatório CNT/MDA, 171ª rodada",
-                "pdf": "data/originals/mda_102026_03/relatorio.pdf",
-                "url": "https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2026/10/Relatorio-Pesquisa-CNT-de-Opiniao-R171-OUTUBRO26.pdf",
-                "paginas": {
-                  "metodologia": 2,
-                  "perfil_renda": 34,
-                  "1t": 6,
-                  "1t_validos": 9,
-                  "1t_renda": 7,
-                  "2t": 12,
-                  "2t_renda": 13
-                },
-                "status": "Relatório completo conferido.",
-                "nota": "Campo em três dias (30/09: 38%, 01/10: 42%, 02/10: 20%, p. 2). Diferente da 170ª rodada, a p. 2 declara ponderação para controle de escolaridade e renda familiar; a composição da p. 34 continua rotulada como distribuição das entrevistas, com 0,4% de renda NS/NR. PDF gerado em 03/10/2026 09:32 (creationDate), divulgado no mesmo dia, véspera do 1º turno.",
-                "sha256": "894f25412ca96d4644f2c1e9121b110cd1a4e7aabe3e62295e3e47c1cc3a4841",
-                "bytes": 3795866,
-                "total_paginas": 51
-              },
-              "publicado": {
-                "flavio": 47.676991150442475,
-                "lula": 52.32300884955752
-              },
-              "pnad": {
-                "flavio": 48.70077478254142,
-                "lula": 51.299225217458584
-              },
-              "modelo": {
-                "flavio": 48.70575842676103,
-                "lula": 51.29424157323897
-              },
-              "allocated_undecided": {
-                "flavio": 0.7180942820330639,
-                "lula": 0.7562576328701073
-              },
-              "rates": {
-                "flavio": 0.7963802451702287,
-                "lula": 0.7962213991300896
-              },
-              "others_template_candidates": [],
-              "proxy_candidates": []
-            },
-            {
-              "id": "palver_2026-10-03",
-              "instituto": "Palver",
-              "divulgacao": "2026-10-03",
-              "campo": {
-                "inicio": "2026-09-30",
-                "fim": "2026-10-03"
-              },
-              "published": {
-                "flavio": 49.478969554650995,
-                "lula": 44.3928502112778
-              },
-              "adjusted": {
-                "flavio": 49.364,
-                "lula": 44.435
-              },
-              "negative_mass_removed": {},
-              "undecided": 0.525,
-              "undecided_known": true,
-              "source": {
-                "tipo": "explorer",
-                "pdf": "data/originals/palver_102026_03/relatorio.pdf",
-                "url": "https://www.palver.com.br/survey/explore?wave=06_pesquisa_2026_10_03&question=lula_flavio&breakdown=inc_std",
-                "paginas": {
-                  "metodologia": "16–18",
-                  "amostra": 20,
-                  "1t_topline": 29,
-                  "1t_renda": 30,
-                  "2t_topline": 34,
-                  "2t_renda": 35
-                },
-                "sha256": "fb11e3174f8828310323509468a8fef72dbb2f2077d015c1dff6400c663c53fc",
-                "bytes": 13396987,
-                "total_paginas": 75,
-                "conferido_em": "2026-10-03",
-                "status": "Relatório completo arquivado e conferido.",
-                "url_pdf": "https://www.palver.com.br/api/surveys/voting-intention-2026-october-w6/report",
-                "onda_explorer": "06_pesquisa_2026_10_03",
-                "snapshot": "analysis/reponderacao/palver_explorer_20261003",
-                "nota": "Onda 6, única versão no catálogo do Explorer em 03/10/2026. PDF e tabelas exatas do Explorer arquivados. Datas do campo e registro conforme p. 20 do PDF."
-              },
-              "publicado": {
-                "flavio": 52.7090767794081,
-                "lula": 47.29092322059191
-              },
-              "pnad": {
-                "flavio": 52.62742673162826,
-                "lula": 47.37257326837173
-              },
-              "modelo": {
-                "flavio": 52.63239993321932,
-                "lula": 47.36760006678068
-              },
-              "allocated_undecided": {
-                "flavio": 0.21985594605738265,
-                "lula": 0.1978638355530679
               },
               "rates": {
                 "flavio": 0.7963802451702287,
@@ -5525,141 +5355,21 @@
               },
               "others_template_candidates": [],
               "proxy_candidates": []
-            },
-            {
-              "id": "quaest_2026-10-03",
-              "instituto": "Quaest",
-              "divulgacao": "2026-10-03",
-              "campo": {
-                "inicio": "2026-10-02",
-                "fim": "2026-10-03"
-              },
-              "published": {
-                "flavio": 44.0,
-                "lula": 42.0
-              },
-              "adjusted": {
-                "flavio": 43.327,
-                "lula": 42.726
-              },
-              "negative_mass_removed": {},
-              "undecided": 0.987,
-              "undecided_known": true,
-              "source": {
-                "tipo": "painel_contratante",
-                "rotulo": "Painel do G1 (API) e matérias do G1",
-                "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/100/?tipo_pergunta=ESTIMULADA-PRE-003&instituto=Quaest",
-                "arquivo": "data/originals/quaest_102026_03/g1_estimulada_1t.json",
-                "sha256": "2b90add1fc5be55d4546dd1ec041648b36bdbc2b838e81fc1ec16e4d722cb014",
-                "bytes": 187806,
-                "paginas": {
-                  "1t_topline": "API ESTIMULADA-PRE-003, total",
-                  "1t_renda": "API ESTIMULADA-PRE-003, estratos de renda",
-                  "2t_topline": "API SEGTURNO-PRE-001, total",
-                  "2t_renda": "API SEGTURNO-PRE-001, estratos de renda",
-                  "perfil_renda": "não publicado; hipótese da onda de 27/09"
-                },
-                "conferido_em": "2026-10-03",
-                "status": "Íntegra em PDF não publicada até a consulta de 2026-10-03T22:34:38Z: a lista de mídia da Quaest (wp-json/wp/v2/media, PDFs mais recentes) tinha como último relatório presidencial nacional https://quaest.com.br/wp-content/uploads/2026/09/QUAEST+6+PRESIDENCIAL+28+09.pdf.",
-                "nota": "O painel do G1 reproduz célula a célula o PDF da onda de 27/09. Os valores vêm arredondados ao inteiro e sem bases; o perfil de renda é o da onda anterior, como hipótese explícita. Registro, campo, n e margem lidos das matérias do G1.",
-                "complementos": [
-                  {
-                    "rotulo": "G1: Segundo Turno - Cenário 1 (Lula × Flávio)",
-                    "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/100/?tipo_pergunta=SEGTURNO-PRE-001&instituto=Quaest",
-                    "arquivo": "data/originals/quaest_102026_03/g1_segundo_turno.json",
-                    "sha256": "ec9a1015e65a17d6943b354eb10debc3f8863a6cbf9fe0a68f4e2c9be5b2321f"
-                  },
-                  {
-                    "rotulo": "G1: Aprovação do governo",
-                    "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/100/?tipo_pergunta=APROVACAO-PRE-001&instituto=Quaest",
-                    "arquivo": "data/originals/quaest_102026_03/g1_aprovacao.json",
-                    "sha256": "0c6cedaf4ac25c8828a5cfaa3f9e0e346fe4c75dad9546ea4f69ab5a67f5ee65"
-                  },
-                  {
-                    "rotulo": "G1: matéria (1t)",
-                    "url": "https://g1.globo.com/politica/eleicoes/2026/pesquisa-eleitoral/noticia/2026/10/03/quaest-presidente-3-outubro.ghtml",
-                    "arquivo": "data/originals/quaest_102026_03/materia_1t.html",
-                    "sha256": "f6104a5c48d0d25e2822103e9b9b21d999b4032cf67989103c9d217d99031afe"
-                  },
-                  {
-                    "rotulo": "G1: matéria (2t)",
-                    "url": "https://g1.globo.com/politica/eleicoes/2026/pesquisa-eleitoral/noticia/2026/10/03/quaest-2o-turno-flavio-bolsonaro-44percent-lula-42percent.ghtml",
-                    "arquivo": "data/originals/quaest_102026_03/materia_2t.html",
-                    "sha256": "ed8d600adafb4a8db33da26fe3ab87fe0491828ce22f2c57a1d101a17541f5a2"
-                  },
-                  {
-                    "rotulo": "G1: matéria (aprovacao)",
-                    "url": "https://g1.globo.com/politica/eleicoes/2026/pesquisa-eleitoral/noticia/2026/10/03/quaest-desaprovacao-aprovacao-3-outubro.ghtml",
-                    "arquivo": "data/originals/quaest_102026_03/materia_aprovacao.html",
-                    "sha256": "43a2d9aaacea954dd89da68fe2390f2b3bea89d146dce67740bd01c3bd4c4423"
-                  }
-                ]
-              },
-              "publicado": {
-                "flavio": 51.16279069767442,
-                "lula": 48.83720930232558
-              },
-              "pnad": {
-                "flavio": 50.34920339790594,
-                "lula": 49.65079660209406
-              },
-              "modelo": {
-                "flavio": 50.354190149677684,
-                "lula": 49.645809850322316
-              },
-              "allocated_undecided": {
-                "flavio": 0.3954380966748959,
-                "lula": 0.3898750927527512
-              },
-              "rates": {
-                "flavio": 0.7963802451702287,
-                "lula": 0.7962213991300896
-              },
-              "others_template_candidates": [],
-              "proxy_candidates": []
             }
           ],
           "leave_one_out": [
             {
               "without": "Datafolha",
               "valid": {
-                "lula": 47.98803603061625,
-                "flavio": 52.011963969383736
-              }
-            },
-            {
-              "without": "Gerp",
-              "valid": {
-                "lula": 48.015573990533376,
-                "flavio": 51.98442600946662
-              }
-            },
-            {
-              "without": "MDA",
-              "valid": {
-                "lula": 46.865319365464316,
-                "flavio": 53.13468063453568
-              }
-            },
-            {
-              "without": "Palver",
-              "valid": {
-                "lula": 47.65064766675597,
-                "flavio": 52.34935233324402
+                "lula": 46.089560214845626,
+                "flavio": 53.91043978515436
               }
             },
             {
               "without": "PoderData",
               "valid": {
-                "lula": 47.90625563714299,
-                "flavio": 52.09374436285701
-              }
-            },
-            {
-              "without": "Quaest",
-              "valid": {
-                "lula": 47.19500571004765,
-                "flavio": 52.80499428995235
+                "lula": 45.6806582474793,
+                "flavio": 54.3193417525207
               }
             }
           ],
@@ -5673,16 +5383,16 @@
         "idosos60": {
           "aggregate": {
             "publicado": {
-              "lula": 48.49118961866424,
-              "flavio": 51.50881038133577
+              "lula": 47.59208419126058,
+              "flavio": 52.40791580873942
             },
             "pnad": {
-              "lula": 47.60843929533845,
-              "flavio": 52.391560704661536
+              "lula": 45.89006241033917,
+              "flavio": 54.10993758966082
             },
             "modelo": {
-              "lula": 47.093815774777,
-              "flavio": 52.906184225222994
+              "lula": 45.376972375936745,
+              "flavio": 54.623027624063255
             }
           },
           "polls": [
@@ -5753,196 +5463,6 @@
               "allocated_undecided": {
                 "flavio": 0.35737224510222143,
                 "lula": 0.294444393500047
-              },
-              "rates": {
-                "flavio": 0.8037215950422713,
-                "lula": 0.7872698477571027
-              },
-              "others_template_candidates": [],
-              "proxy_candidates": []
-            },
-            {
-              "id": "gerp_2026-10-02",
-              "instituto": "Gerp",
-              "divulgacao": "2026-10-03",
-              "campo": {
-                "inicio": "2026-09-30",
-                "fim": "2026-10-02"
-              },
-              "published": {
-                "flavio": 49.0,
-                "lula": 44.0
-              },
-              "adjusted": {
-                "flavio": 50.843,
-                "lula": 42.529
-              },
-              "negative_mass_removed": {},
-              "undecided": 0.716,
-              "undecided_known": true,
-              "source": {
-                "tipo": "relatorio",
-                "rotulo": "Relatório Gerp, Presidência 2026, medição de 02/10",
-                "pdf": "data/originals/gerp_102026_03/relatorio.pdf",
-                "url": "https://gerp.com.br/relatorios/20261003%20Relat%C3%B3rio%20Presid%C3%AAncia%202026%20-%20DIVULGA%C3%87%C3%83O.pdf",
-                "paginas": {
-                  "metodologia": 7,
-                  "perfil_renda": 8,
-                  "1t": 13,
-                  "1t_validos": 16,
-                  "1t_renda": 15,
-                  "2t": 22,
-                  "2t_validos": 25,
-                  "2t_renda": 24
-                },
-                "sha256": "500c4a7b8261a209ce62fdf49b68d63e018d44f789a8ce487f81c74522023961",
-                "bytes": 873722,
-                "total_paginas": 54,
-                "status": "Relatório completo arquivado e conferido.",
-                "conferido_em": "2026-10-03",
-                "nota": "Manifesto público da Gerp lista o relatório com data de 03/10/2026; o creationDate do PDF é 02/10/2026 19:57. A p. 7 declara cotas de sexo, idade, renda e região por UF e ponderação também por escolaridade. Na p. 13, Zema, Edmilson Costa, Rui Costa Pimenta, Leonardo Avalanche, Hertz Dias, Wilson Grassi e Clariana Barão têm 0% no total; a p. 15 exibe 8 de 15 categorias e omite essas sete. Não se inventam células por renda para nomes omitidos."
-              },
-              "publicado": {
-                "flavio": 52.68817204301075,
-                "lula": 47.31182795698925
-              },
-              "pnad": {
-                "flavio": 54.45208413657198,
-                "lula": 45.54791586342801
-              },
-              "modelo": {
-                "flavio": 54.964541230467354,
-                "lula": 45.035458769532646
-              },
-              "allocated_undecided": {
-                "flavio": 0.30178812464853955,
-                "lula": 0.2472715379858419
-              },
-              "rates": {
-                "flavio": 0.8037215950422713,
-                "lula": 0.7872698477571027
-              },
-              "others_template_candidates": [],
-              "proxy_candidates": []
-            },
-            {
-              "id": "mda_2026-10-02",
-              "instituto": "MDA",
-              "divulgacao": "2026-10-03",
-              "campo": {
-                "inicio": "2026-09-30",
-                "fim": "2026-10-02"
-              },
-              "published": {
-                "flavio": 43.1,
-                "lula": 47.3
-              },
-              "adjusted": {
-                "flavio": 44.063,
-                "lula": 46.414
-              },
-              "negative_mass_removed": {},
-              "undecided": 1.853,
-              "undecided_known": true,
-              "source": {
-                "tipo": "relatorio",
-                "rotulo": "Relatório CNT/MDA, 171ª rodada",
-                "pdf": "data/originals/mda_102026_03/relatorio.pdf",
-                "url": "https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2026/10/Relatorio-Pesquisa-CNT-de-Opiniao-R171-OUTUBRO26.pdf",
-                "paginas": {
-                  "metodologia": 2,
-                  "perfil_renda": 34,
-                  "1t": 6,
-                  "1t_validos": 9,
-                  "1t_renda": 7,
-                  "2t": 12,
-                  "2t_renda": 13
-                },
-                "status": "Relatório completo conferido.",
-                "nota": "Campo em três dias (30/09: 38%, 01/10: 42%, 02/10: 20%, p. 2). Diferente da 170ª rodada, a p. 2 declara ponderação para controle de escolaridade e renda familiar; a composição da p. 34 continua rotulada como distribuição das entrevistas, com 0,4% de renda NS/NR. PDF gerado em 03/10/2026 09:32 (creationDate), divulgado no mesmo dia, véspera do 1º turno.",
-                "sha256": "894f25412ca96d4644f2c1e9121b110cd1a4e7aabe3e62295e3e47c1cc3a4841",
-                "bytes": 3795866,
-                "total_paginas": 51
-              },
-              "publicado": {
-                "flavio": 47.676991150442475,
-                "lula": 52.32300884955752
-              },
-              "pnad": {
-                "flavio": 48.70077478254142,
-                "lula": 51.299225217458584
-              },
-              "modelo": {
-                "flavio": 49.21759270528707,
-                "lula": 50.782407294712925
-              },
-              "allocated_undecided": {
-                "flavio": 0.6993624392521752,
-                "lula": 0.7215978329007701
-              },
-              "rates": {
-                "flavio": 0.8037215950422713,
-                "lula": 0.7872698477571027
-              },
-              "others_template_candidates": [],
-              "proxy_candidates": []
-            },
-            {
-              "id": "palver_2026-10-03",
-              "instituto": "Palver",
-              "divulgacao": "2026-10-03",
-              "campo": {
-                "inicio": "2026-09-30",
-                "fim": "2026-10-03"
-              },
-              "published": {
-                "flavio": 49.478969554650995,
-                "lula": 44.3928502112778
-              },
-              "adjusted": {
-                "flavio": 49.364,
-                "lula": 44.435
-              },
-              "negative_mass_removed": {},
-              "undecided": 0.525,
-              "undecided_known": true,
-              "source": {
-                "tipo": "explorer",
-                "pdf": "data/originals/palver_102026_03/relatorio.pdf",
-                "url": "https://www.palver.com.br/survey/explore?wave=06_pesquisa_2026_10_03&question=lula_flavio&breakdown=inc_std",
-                "paginas": {
-                  "metodologia": "16–18",
-                  "amostra": 20,
-                  "1t_topline": 29,
-                  "1t_renda": 30,
-                  "2t_topline": 34,
-                  "2t_renda": 35
-                },
-                "sha256": "fb11e3174f8828310323509468a8fef72dbb2f2077d015c1dff6400c663c53fc",
-                "bytes": 13396987,
-                "total_paginas": 75,
-                "conferido_em": "2026-10-03",
-                "status": "Relatório completo arquivado e conferido.",
-                "url_pdf": "https://www.palver.com.br/api/surveys/voting-intention-2026-october-w6/report",
-                "onda_explorer": "06_pesquisa_2026_10_03",
-                "snapshot": "analysis/reponderacao/palver_explorer_20261003",
-                "nota": "Onda 6, única versão no catálogo do Explorer em 03/10/2026. PDF e tabelas exatas do Explorer arquivados. Datas do campo e registro conforme p. 20 do PDF."
-              },
-              "publicado": {
-                "flavio": 52.7090767794081,
-                "lula": 47.29092322059191
-              },
-              "pnad": {
-                "flavio": 52.62742673162826,
-                "lula": 47.37257326837173
-              },
-              "modelo": {
-                "flavio": 53.142747172370505,
-                "lula": 46.8572528276295
-              },
-              "allocated_undecided": {
-                "flavio": 0.21394878334931758,
-                "lula": 0.18864384637561296
               },
               "rates": {
                 "flavio": 0.8037215950422713,
@@ -6023,141 +5543,21 @@
               },
               "others_template_candidates": [],
               "proxy_candidates": []
-            },
-            {
-              "id": "quaest_2026-10-03",
-              "instituto": "Quaest",
-              "divulgacao": "2026-10-03",
-              "campo": {
-                "inicio": "2026-10-02",
-                "fim": "2026-10-03"
-              },
-              "published": {
-                "flavio": 44.0,
-                "lula": 42.0
-              },
-              "adjusted": {
-                "flavio": 43.327,
-                "lula": 42.726
-              },
-              "negative_mass_removed": {},
-              "undecided": 0.987,
-              "undecided_known": true,
-              "source": {
-                "tipo": "painel_contratante",
-                "rotulo": "Painel do G1 (API) e matérias do G1",
-                "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/100/?tipo_pergunta=ESTIMULADA-PRE-003&instituto=Quaest",
-                "arquivo": "data/originals/quaest_102026_03/g1_estimulada_1t.json",
-                "sha256": "2b90add1fc5be55d4546dd1ec041648b36bdbc2b838e81fc1ec16e4d722cb014",
-                "bytes": 187806,
-                "paginas": {
-                  "1t_topline": "API ESTIMULADA-PRE-003, total",
-                  "1t_renda": "API ESTIMULADA-PRE-003, estratos de renda",
-                  "2t_topline": "API SEGTURNO-PRE-001, total",
-                  "2t_renda": "API SEGTURNO-PRE-001, estratos de renda",
-                  "perfil_renda": "não publicado; hipótese da onda de 27/09"
-                },
-                "conferido_em": "2026-10-03",
-                "status": "Íntegra em PDF não publicada até a consulta de 2026-10-03T22:34:38Z: a lista de mídia da Quaest (wp-json/wp/v2/media, PDFs mais recentes) tinha como último relatório presidencial nacional https://quaest.com.br/wp-content/uploads/2026/09/QUAEST+6+PRESIDENCIAL+28+09.pdf.",
-                "nota": "O painel do G1 reproduz célula a célula o PDF da onda de 27/09. Os valores vêm arredondados ao inteiro e sem bases; o perfil de renda é o da onda anterior, como hipótese explícita. Registro, campo, n e margem lidos das matérias do G1.",
-                "complementos": [
-                  {
-                    "rotulo": "G1: Segundo Turno - Cenário 1 (Lula × Flávio)",
-                    "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/100/?tipo_pergunta=SEGTURNO-PRE-001&instituto=Quaest",
-                    "arquivo": "data/originals/quaest_102026_03/g1_segundo_turno.json",
-                    "sha256": "ec9a1015e65a17d6943b354eb10debc3f8863a6cbf9fe0a68f4e2c9be5b2321f"
-                  },
-                  {
-                    "rotulo": "G1: Aprovação do governo",
-                    "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/100/?tipo_pergunta=APROVACAO-PRE-001&instituto=Quaest",
-                    "arquivo": "data/originals/quaest_102026_03/g1_aprovacao.json",
-                    "sha256": "0c6cedaf4ac25c8828a5cfaa3f9e0e346fe4c75dad9546ea4f69ab5a67f5ee65"
-                  },
-                  {
-                    "rotulo": "G1: matéria (1t)",
-                    "url": "https://g1.globo.com/politica/eleicoes/2026/pesquisa-eleitoral/noticia/2026/10/03/quaest-presidente-3-outubro.ghtml",
-                    "arquivo": "data/originals/quaest_102026_03/materia_1t.html",
-                    "sha256": "f6104a5c48d0d25e2822103e9b9b21d999b4032cf67989103c9d217d99031afe"
-                  },
-                  {
-                    "rotulo": "G1: matéria (2t)",
-                    "url": "https://g1.globo.com/politica/eleicoes/2026/pesquisa-eleitoral/noticia/2026/10/03/quaest-2o-turno-flavio-bolsonaro-44percent-lula-42percent.ghtml",
-                    "arquivo": "data/originals/quaest_102026_03/materia_2t.html",
-                    "sha256": "ed8d600adafb4a8db33da26fe3ab87fe0491828ce22f2c57a1d101a17541f5a2"
-                  },
-                  {
-                    "rotulo": "G1: matéria (aprovacao)",
-                    "url": "https://g1.globo.com/politica/eleicoes/2026/pesquisa-eleitoral/noticia/2026/10/03/quaest-desaprovacao-aprovacao-3-outubro.ghtml",
-                    "arquivo": "data/originals/quaest_102026_03/materia_aprovacao.html",
-                    "sha256": "43a2d9aaacea954dd89da68fe2390f2b3bea89d146dce67740bd01c3bd4c4423"
-                  }
-                ]
-              },
-              "publicado": {
-                "flavio": 51.16279069767442,
-                "lula": 48.83720930232558
-              },
-              "pnad": {
-                "flavio": 50.34920339790594,
-                "lula": 49.65079660209406
-              },
-              "modelo": {
-                "flavio": 50.86616899508655,
-                "lula": 49.13383100491344
-              },
-              "allocated_undecided": {
-                "flavio": 0.38499288110757485,
-                "lula": 0.37188126277529443
-              },
-              "rates": {
-                "flavio": 0.8037215950422713,
-                "lula": 0.7872698477571027
-              },
-              "others_template_candidates": [],
-              "proxy_candidates": []
             }
           ],
           "leave_one_out": [
             {
               "without": "Datafolha",
               "valid": {
-                "lula": 47.4780015328914,
-                "flavio": 52.52199846710861
-              }
-            },
-            {
-              "without": "Gerp",
-              "valid": {
-                "lula": 47.50548717582588,
-                "flavio": 52.49451282417412
-              }
-            },
-            {
-              "without": "MDA",
-              "valid": {
-                "lula": 46.35609747078982,
-                "flavio": 53.64390252921019
-              }
-            },
-            {
-              "without": "Palver",
-              "valid": {
-                "lula": 47.1411283642065,
-                "flavio": 52.85887163579349
+                "lula": 45.58105776766845,
+                "flavio": 54.418942232331545
               }
             },
             {
               "without": "PoderData",
               "valid": {
-                "lula": 47.39636737619871,
-                "flavio": 52.60363262380129
-              }
-            },
-            {
-              "without": "Quaest",
-              "valid": {
-                "lula": 46.68581272874972,
-                "flavio": 53.31418727125028
+                "lula": 45.17288698420505,
+                "flavio": 54.82711301579496
               }
             }
           ],
@@ -6171,16 +5571,16 @@
         "idosos80": {
           "aggregate": {
             "publicado": {
-              "lula": 48.49118961866424,
-              "flavio": 51.50881038133577
+              "lula": 47.59208419126058,
+              "flavio": 52.40791580873942
             },
             "pnad": {
-              "lula": 47.60843929533845,
-              "flavio": 52.391560704661536
+              "lula": 45.89006241033917,
+              "flavio": 54.10993758966082
             },
             "modelo": {
-              "lula": 47.61218242180544,
-              "flavio": 52.387817578194564
+              "lula": 45.89379572378545,
+              "flavio": 54.10620427621455
             }
           },
           "polls": [
@@ -6251,196 +5651,6 @@
               "allocated_undecided": {
                 "flavio": 0.36753238909729874,
                 "lula": 0.3091899732951305
-              },
-              "rates": {
-                "flavio": 0.7962543662268092,
-                "lula": 0.7963740920624234
-              },
-              "others_template_candidates": [],
-              "proxy_candidates": []
-            },
-            {
-              "id": "gerp_2026-10-02",
-              "instituto": "Gerp",
-              "divulgacao": "2026-10-03",
-              "campo": {
-                "inicio": "2026-09-30",
-                "fim": "2026-10-02"
-              },
-              "published": {
-                "flavio": 49.0,
-                "lula": 44.0
-              },
-              "adjusted": {
-                "flavio": 50.843,
-                "lula": 42.529
-              },
-              "negative_mass_removed": {},
-              "undecided": 0.716,
-              "undecided_known": true,
-              "source": {
-                "tipo": "relatorio",
-                "rotulo": "Relatório Gerp, Presidência 2026, medição de 02/10",
-                "pdf": "data/originals/gerp_102026_03/relatorio.pdf",
-                "url": "https://gerp.com.br/relatorios/20261003%20Relat%C3%B3rio%20Presid%C3%AAncia%202026%20-%20DIVULGA%C3%87%C3%83O.pdf",
-                "paginas": {
-                  "metodologia": 7,
-                  "perfil_renda": 8,
-                  "1t": 13,
-                  "1t_validos": 16,
-                  "1t_renda": 15,
-                  "2t": 22,
-                  "2t_validos": 25,
-                  "2t_renda": 24
-                },
-                "sha256": "500c4a7b8261a209ce62fdf49b68d63e018d44f789a8ce487f81c74522023961",
-                "bytes": 873722,
-                "total_paginas": 54,
-                "status": "Relatório completo arquivado e conferido.",
-                "conferido_em": "2026-10-03",
-                "nota": "Manifesto público da Gerp lista o relatório com data de 03/10/2026; o creationDate do PDF é 02/10/2026 19:57. A p. 7 declara cotas de sexo, idade, renda e região por UF e ponderação também por escolaridade. Na p. 13, Zema, Edmilson Costa, Rui Costa Pimenta, Leonardo Avalanche, Hertz Dias, Wilson Grassi e Clariana Barão têm 0% no total; a p. 15 exibe 8 de 15 categorias e omite essas sete. Não se inventam células por renda para nomes omitidos."
-              },
-              "publicado": {
-                "flavio": 52.68817204301075,
-                "lula": 47.31182795698925
-              },
-              "pnad": {
-                "flavio": 54.45208413657198,
-                "lula": 45.54791586342801
-              },
-              "modelo": {
-                "flavio": 54.44835516283689,
-                "lula": 45.5516448371631
-              },
-              "allocated_undecided": {
-                "flavio": 0.3103768986643615,
-                "lula": 0.2596621736567905
-              },
-              "rates": {
-                "flavio": 0.7962543662268092,
-                "lula": 0.7963740920624234
-              },
-              "others_template_candidates": [],
-              "proxy_candidates": []
-            },
-            {
-              "id": "mda_2026-10-02",
-              "instituto": "MDA",
-              "divulgacao": "2026-10-03",
-              "campo": {
-                "inicio": "2026-09-30",
-                "fim": "2026-10-02"
-              },
-              "published": {
-                "flavio": 43.1,
-                "lula": 47.3
-              },
-              "adjusted": {
-                "flavio": 44.063,
-                "lula": 46.414
-              },
-              "negative_mass_removed": {},
-              "undecided": 1.853,
-              "undecided_known": true,
-              "source": {
-                "tipo": "relatorio",
-                "rotulo": "Relatório CNT/MDA, 171ª rodada",
-                "pdf": "data/originals/mda_102026_03/relatorio.pdf",
-                "url": "https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2026/10/Relatorio-Pesquisa-CNT-de-Opiniao-R171-OUTUBRO26.pdf",
-                "paginas": {
-                  "metodologia": 2,
-                  "perfil_renda": 34,
-                  "1t": 6,
-                  "1t_validos": 9,
-                  "1t_renda": 7,
-                  "2t": 12,
-                  "2t_renda": 13
-                },
-                "status": "Relatório completo conferido.",
-                "nota": "Campo em três dias (30/09: 38%, 01/10: 42%, 02/10: 20%, p. 2). Diferente da 170ª rodada, a p. 2 declara ponderação para controle de escolaridade e renda familiar; a composição da p. 34 continua rotulada como distribuição das entrevistas, com 0,4% de renda NS/NR. PDF gerado em 03/10/2026 09:32 (creationDate), divulgado no mesmo dia, véspera do 1º turno.",
-                "sha256": "894f25412ca96d4644f2c1e9121b110cd1a4e7aabe3e62295e3e47c1cc3a4841",
-                "bytes": 3795866,
-                "total_paginas": 51
-              },
-              "publicado": {
-                "flavio": 47.676991150442475,
-                "lula": 52.32300884955752
-              },
-              "pnad": {
-                "flavio": 48.70077478254142,
-                "lula": 51.299225217458584
-              },
-              "modelo": {
-                "flavio": 48.69701857804007,
-                "lula": 51.30298142195993
-              },
-              "allocated_undecided": {
-                "flavio": 0.7184050796884643,
-                "lula": 0.7568496703270311
-              },
-              "rates": {
-                "flavio": 0.7962543662268092,
-                "lula": 0.7963740920624234
-              },
-              "others_template_candidates": [],
-              "proxy_candidates": []
-            },
-            {
-              "id": "palver_2026-10-03",
-              "instituto": "Palver",
-              "divulgacao": "2026-10-03",
-              "campo": {
-                "inicio": "2026-09-30",
-                "fim": "2026-10-03"
-              },
-              "published": {
-                "flavio": 49.478969554650995,
-                "lula": 44.3928502112778
-              },
-              "adjusted": {
-                "flavio": 49.364,
-                "lula": 44.435
-              },
-              "negative_mass_removed": {},
-              "undecided": 0.525,
-              "undecided_known": true,
-              "source": {
-                "tipo": "explorer",
-                "pdf": "data/originals/palver_102026_03/relatorio.pdf",
-                "url": "https://www.palver.com.br/survey/explore?wave=06_pesquisa_2026_10_03&question=lula_flavio&breakdown=inc_std",
-                "paginas": {
-                  "metodologia": "16–18",
-                  "amostra": 20,
-                  "1t_topline": 29,
-                  "1t_renda": 30,
-                  "2t_topline": 34,
-                  "2t_renda": 35
-                },
-                "sha256": "fb11e3174f8828310323509468a8fef72dbb2f2077d015c1dff6400c663c53fc",
-                "bytes": 13396987,
-                "total_paginas": 75,
-                "conferido_em": "2026-10-03",
-                "status": "Relatório completo arquivado e conferido.",
-                "url_pdf": "https://www.palver.com.br/api/surveys/voting-intention-2026-october-w6/report",
-                "onda_explorer": "06_pesquisa_2026_10_03",
-                "snapshot": "analysis/reponderacao/palver_explorer_20261003",
-                "nota": "Onda 6, única versão no catálogo do Explorer em 03/10/2026. PDF e tabelas exatas do Explorer arquivados. Datas do campo e registro conforme p. 20 do PDF."
-              },
-              "publicado": {
-                "flavio": 52.7090767794081,
-                "lula": 47.29092322059191
-              },
-              "pnad": {
-                "flavio": 52.62742673162826,
-                "lula": 47.37257326837173
-              },
-              "modelo": {
-                "flavio": 52.6236783463131,
-                "lula": 47.37632165368691
-              },
-              "allocated_undecided": {
-                "flavio": 0.21995412308653609,
-                "lula": 0.19802145368525845
               },
               "rates": {
                 "flavio": 0.7962543662268092,
@@ -6521,141 +5731,21 @@
               },
               "others_template_candidates": [],
               "proxy_candidates": []
-            },
-            {
-              "id": "quaest_2026-10-03",
-              "instituto": "Quaest",
-              "divulgacao": "2026-10-03",
-              "campo": {
-                "inicio": "2026-10-02",
-                "fim": "2026-10-03"
-              },
-              "published": {
-                "flavio": 44.0,
-                "lula": 42.0
-              },
-              "adjusted": {
-                "flavio": 43.327,
-                "lula": 42.726
-              },
-              "negative_mass_removed": {},
-              "undecided": 0.987,
-              "undecided_known": true,
-              "source": {
-                "tipo": "painel_contratante",
-                "rotulo": "Painel do G1 (API) e matérias do G1",
-                "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/100/?tipo_pergunta=ESTIMULADA-PRE-003&instituto=Quaest",
-                "arquivo": "data/originals/quaest_102026_03/g1_estimulada_1t.json",
-                "sha256": "2b90add1fc5be55d4546dd1ec041648b36bdbc2b838e81fc1ec16e4d722cb014",
-                "bytes": 187806,
-                "paginas": {
-                  "1t_topline": "API ESTIMULADA-PRE-003, total",
-                  "1t_renda": "API ESTIMULADA-PRE-003, estratos de renda",
-                  "2t_topline": "API SEGTURNO-PRE-001, total",
-                  "2t_renda": "API SEGTURNO-PRE-001, estratos de renda",
-                  "perfil_renda": "não publicado; hipótese da onda de 27/09"
-                },
-                "conferido_em": "2026-10-03",
-                "status": "Íntegra em PDF não publicada até a consulta de 2026-10-03T22:34:38Z: a lista de mídia da Quaest (wp-json/wp/v2/media, PDFs mais recentes) tinha como último relatório presidencial nacional https://quaest.com.br/wp-content/uploads/2026/09/QUAEST+6+PRESIDENCIAL+28+09.pdf.",
-                "nota": "O painel do G1 reproduz célula a célula o PDF da onda de 27/09. Os valores vêm arredondados ao inteiro e sem bases; o perfil de renda é o da onda anterior, como hipótese explícita. Registro, campo, n e margem lidos das matérias do G1.",
-                "complementos": [
-                  {
-                    "rotulo": "G1: Segundo Turno - Cenário 1 (Lula × Flávio)",
-                    "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/100/?tipo_pergunta=SEGTURNO-PRE-001&instituto=Quaest",
-                    "arquivo": "data/originals/quaest_102026_03/g1_segundo_turno.json",
-                    "sha256": "ec9a1015e65a17d6943b354eb10debc3f8863a6cbf9fe0a68f4e2c9be5b2321f"
-                  },
-                  {
-                    "rotulo": "G1: Aprovação do governo",
-                    "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/100/?tipo_pergunta=APROVACAO-PRE-001&instituto=Quaest",
-                    "arquivo": "data/originals/quaest_102026_03/g1_aprovacao.json",
-                    "sha256": "0c6cedaf4ac25c8828a5cfaa3f9e0e346fe4c75dad9546ea4f69ab5a67f5ee65"
-                  },
-                  {
-                    "rotulo": "G1: matéria (1t)",
-                    "url": "https://g1.globo.com/politica/eleicoes/2026/pesquisa-eleitoral/noticia/2026/10/03/quaest-presidente-3-outubro.ghtml",
-                    "arquivo": "data/originals/quaest_102026_03/materia_1t.html",
-                    "sha256": "f6104a5c48d0d25e2822103e9b9b21d999b4032cf67989103c9d217d99031afe"
-                  },
-                  {
-                    "rotulo": "G1: matéria (2t)",
-                    "url": "https://g1.globo.com/politica/eleicoes/2026/pesquisa-eleitoral/noticia/2026/10/03/quaest-2o-turno-flavio-bolsonaro-44percent-lula-42percent.ghtml",
-                    "arquivo": "data/originals/quaest_102026_03/materia_2t.html",
-                    "sha256": "ed8d600adafb4a8db33da26fe3ab87fe0491828ce22f2c57a1d101a17541f5a2"
-                  },
-                  {
-                    "rotulo": "G1: matéria (aprovacao)",
-                    "url": "https://g1.globo.com/politica/eleicoes/2026/pesquisa-eleitoral/noticia/2026/10/03/quaest-desaprovacao-aprovacao-3-outubro.ghtml",
-                    "arquivo": "data/originals/quaest_102026_03/materia_aprovacao.html",
-                    "sha256": "43a2d9aaacea954dd89da68fe2390f2b3bea89d146dce67740bd01c3bd4c4423"
-                  }
-                ]
-              },
-              "publicado": {
-                "flavio": 51.16279069767442,
-                "lula": 48.83720930232558
-              },
-              "pnad": {
-                "flavio": 50.34920339790594,
-                "lula": 49.65079660209406
-              },
-              "modelo": {
-                "flavio": 50.34544482954822,
-                "lula": 49.65455517045178
-              },
-              "allocated_undecided": {
-                "flavio": 0.39561152720070397,
-                "lula": 0.39018255713026967
-              },
-              "rates": {
-                "flavio": 0.7962543662268092,
-                "lula": 0.7963740920624234
-              },
-              "others_template_candidates": [],
-              "proxy_candidates": []
             }
           ],
           "leave_one_out": [
             {
               "without": "Datafolha",
               "valid": {
-                "lula": 47.99675113415895,
-                "flavio": 52.003248865841044
-              }
-            },
-            {
-              "without": "Gerp",
-              "valid": {
-                "lula": 48.0242899387339,
-                "flavio": 51.97571006126609
-              }
-            },
-            {
-              "without": "MDA",
-              "valid": {
-                "lula": 46.874022621774536,
-                "flavio": 53.12597737822546
-              }
-            },
-            {
-              "without": "Palver",
-              "valid": {
-                "lula": 47.65935457542914,
-                "flavio": 52.340645424570845
+                "lula": 46.09825258753303,
+                "flavio": 53.90174741246697
               }
             },
             {
               "without": "PoderData",
               "valid": {
-                "lula": 47.914968388659915,
-                "flavio": 52.085031611340085
-              }
-            },
-            {
-              "without": "Quaest",
-              "valid": {
-                "lula": 47.20370787207617,
-                "flavio": 52.796292127923834
+                "lula": 45.68933886003787,
+                "flavio": 54.31066113996213
               }
             }
           ],
@@ -6669,16 +5759,16 @@
         "flavio95": {
           "aggregate": {
             "publicado": {
-              "lula": 48.49118961866424,
-              "flavio": 51.50881038133577
+              "lula": 47.59208419126058,
+              "flavio": 52.40791580873942
             },
             "pnad": {
-              "lula": 47.60843929533845,
-              "flavio": 52.391560704661536
+              "lula": 45.89006241033917,
+              "flavio": 54.10993758966082
             },
             "modelo": {
-              "lula": 48.88174714108587,
-              "flavio": 51.11825285891413
+              "lula": 47.16114845495879,
+              "flavio": 52.83885154504121
             }
           },
           "polls": [
@@ -6749,196 +5839,6 @@
               "allocated_undecided": {
                 "flavio": 0.35874115525065803,
                 "lula": 0.317567062594833
-              },
-              "rates": {
-                "flavio": 0.7565612329117172,
-                "lula": 0.7962213991300896
-              },
-              "others_template_candidates": [],
-              "proxy_candidates": []
-            },
-            {
-              "id": "gerp_2026-10-02",
-              "instituto": "Gerp",
-              "divulgacao": "2026-10-03",
-              "campo": {
-                "inicio": "2026-09-30",
-                "fim": "2026-10-02"
-              },
-              "published": {
-                "flavio": 49.0,
-                "lula": 44.0
-              },
-              "adjusted": {
-                "flavio": 50.843,
-                "lula": 42.529
-              },
-              "negative_mass_removed": {},
-              "undecided": 0.716,
-              "undecided_known": true,
-              "source": {
-                "tipo": "relatorio",
-                "rotulo": "Relatório Gerp, Presidência 2026, medição de 02/10",
-                "pdf": "data/originals/gerp_102026_03/relatorio.pdf",
-                "url": "https://gerp.com.br/relatorios/20261003%20Relat%C3%B3rio%20Presid%C3%AAncia%202026%20-%20DIVULGA%C3%87%C3%83O.pdf",
-                "paginas": {
-                  "metodologia": 7,
-                  "perfil_renda": 8,
-                  "1t": 13,
-                  "1t_validos": 16,
-                  "1t_renda": 15,
-                  "2t": 22,
-                  "2t_validos": 25,
-                  "2t_renda": 24
-                },
-                "sha256": "500c4a7b8261a209ce62fdf49b68d63e018d44f789a8ce487f81c74522023961",
-                "bytes": 873722,
-                "total_paginas": 54,
-                "status": "Relatório completo arquivado e conferido.",
-                "conferido_em": "2026-10-03",
-                "nota": "Manifesto público da Gerp lista o relatório com data de 03/10/2026; o creationDate do PDF é 02/10/2026 19:57. A p. 7 declara cotas de sexo, idade, renda e região por UF e ponderação também por escolaridade. Na p. 13, Zema, Edmilson Costa, Rui Costa Pimenta, Leonardo Avalanche, Hertz Dias, Wilson Grassi e Clariana Barão têm 0% no total; a p. 15 exibe 8 de 15 categorias e omite essas sete. Não se inventam células por renda para nomes omitidos."
-              },
-              "publicado": {
-                "flavio": 52.68817204301075,
-                "lula": 47.31182795698925
-              },
-              "pnad": {
-                "flavio": 54.45208413657198,
-                "lula": 45.54791586342801
-              },
-              "modelo": {
-                "flavio": 53.182253811411066,
-                "lula": 46.81774618858895
-              },
-              "allocated_undecided": {
-                "flavio": 0.30297409684800747,
-                "lula": 0.2667161195959593
-              },
-              "rates": {
-                "flavio": 0.7565612329117172,
-                "lula": 0.7962213991300896
-              },
-              "others_template_candidates": [],
-              "proxy_candidates": []
-            },
-            {
-              "id": "mda_2026-10-02",
-              "instituto": "MDA",
-              "divulgacao": "2026-10-03",
-              "campo": {
-                "inicio": "2026-09-30",
-                "fim": "2026-10-02"
-              },
-              "published": {
-                "flavio": 43.1,
-                "lula": 47.3
-              },
-              "adjusted": {
-                "flavio": 44.063,
-                "lula": 46.414
-              },
-              "negative_mass_removed": {},
-              "undecided": 1.853,
-              "undecided_known": true,
-              "source": {
-                "tipo": "relatorio",
-                "rotulo": "Relatório CNT/MDA, 171ª rodada",
-                "pdf": "data/originals/mda_102026_03/relatorio.pdf",
-                "url": "https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2026/10/Relatorio-Pesquisa-CNT-de-Opiniao-R171-OUTUBRO26.pdf",
-                "paginas": {
-                  "metodologia": 2,
-                  "perfil_renda": 34,
-                  "1t": 6,
-                  "1t_validos": 9,
-                  "1t_renda": 7,
-                  "2t": 12,
-                  "2t_renda": 13
-                },
-                "status": "Relatório completo conferido.",
-                "nota": "Campo em três dias (30/09: 38%, 01/10: 42%, 02/10: 20%, p. 2). Diferente da 170ª rodada, a p. 2 declara ponderação para controle de escolaridade e renda familiar; a composição da p. 34 continua rotulada como distribuição das entrevistas, com 0,4% de renda NS/NR. PDF gerado em 03/10/2026 09:32 (creationDate), divulgado no mesmo dia, véspera do 1º turno.",
-                "sha256": "894f25412ca96d4644f2c1e9121b110cd1a4e7aabe3e62295e3e47c1cc3a4841",
-                "bytes": 3795866,
-                "total_paginas": 51
-              },
-              "publicado": {
-                "flavio": 47.676991150442475,
-                "lula": 52.32300884955752
-              },
-              "pnad": {
-                "flavio": 48.70077478254142,
-                "lula": 51.299225217458584
-              },
-              "modelo": {
-                "flavio": 47.42541593124082,
-                "lula": 52.57458406875919
-              },
-              "allocated_undecided": {
-                "flavio": 0.6992175279330425,
-                "lula": 0.7751343869701285
-              },
-              "rates": {
-                "flavio": 0.7565612329117172,
-                "lula": 0.7962213991300896
-              },
-              "others_template_candidates": [],
-              "proxy_candidates": []
-            },
-            {
-              "id": "palver_2026-10-03",
-              "instituto": "Palver",
-              "divulgacao": "2026-10-03",
-              "campo": {
-                "inicio": "2026-09-30",
-                "fim": "2026-10-03"
-              },
-              "published": {
-                "flavio": 49.478969554650995,
-                "lula": 44.3928502112778
-              },
-              "adjusted": {
-                "flavio": 49.364,
-                "lula": 44.435
-              },
-              "negative_mass_removed": {},
-              "undecided": 0.525,
-              "undecided_known": true,
-              "source": {
-                "tipo": "explorer",
-                "pdf": "data/originals/palver_102026_03/relatorio.pdf",
-                "url": "https://www.palver.com.br/survey/explore?wave=06_pesquisa_2026_10_03&question=lula_flavio&breakdown=inc_std",
-                "paginas": {
-                  "metodologia": "16–18",
-                  "amostra": 20,
-                  "1t_topline": 29,
-                  "1t_renda": 30,
-                  "2t_topline": 34,
-                  "2t_renda": 35
-                },
-                "sha256": "fb11e3174f8828310323509468a8fef72dbb2f2077d015c1dff6400c663c53fc",
-                "bytes": 13396987,
-                "total_paginas": 75,
-                "conferido_em": "2026-10-03",
-                "status": "Relatório completo arquivado e conferido.",
-                "url_pdf": "https://www.palver.com.br/api/surveys/voting-intention-2026-october-w6/report",
-                "onda_explorer": "06_pesquisa_2026_10_03",
-                "snapshot": "analysis/reponderacao/palver_explorer_20261003",
-                "nota": "Onda 6, única versão no catálogo do Explorer em 03/10/2026. PDF e tabelas exatas do Explorer arquivados. Datas do campo e registro conforme p. 20 do PDF."
-              },
-              "publicado": {
-                "flavio": 52.7090767794081,
-                "lula": 47.29092322059191
-              },
-              "pnad": {
-                "flavio": 52.62742673162826,
-                "lula": 47.37257326837173
-              },
-              "modelo": {
-                "flavio": 51.352174016702016,
-                "lula": 48.64782598329799
-              },
-              "allocated_undecided": {
-                "flavio": 0.2145081891547862,
-                "lula": 0.2032115924556644
               },
               "rates": {
                 "flavio": 0.7565612329117172,
@@ -7019,141 +5919,21 @@
               },
               "others_template_candidates": [],
               "proxy_candidates": []
-            },
-            {
-              "id": "quaest_2026-10-03",
-              "instituto": "Quaest",
-              "divulgacao": "2026-10-03",
-              "campo": {
-                "inicio": "2026-10-02",
-                "fim": "2026-10-03"
-              },
-              "published": {
-                "flavio": 44.0,
-                "lula": 42.0
-              },
-              "adjusted": {
-                "flavio": 43.327,
-                "lula": 42.726
-              },
-              "negative_mass_removed": {},
-              "undecided": 0.987,
-              "undecided_known": true,
-              "source": {
-                "tipo": "painel_contratante",
-                "rotulo": "Painel do G1 (API) e matérias do G1",
-                "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/100/?tipo_pergunta=ESTIMULADA-PRE-003&instituto=Quaest",
-                "arquivo": "data/originals/quaest_102026_03/g1_estimulada_1t.json",
-                "sha256": "2b90add1fc5be55d4546dd1ec041648b36bdbc2b838e81fc1ec16e4d722cb014",
-                "bytes": 187806,
-                "paginas": {
-                  "1t_topline": "API ESTIMULADA-PRE-003, total",
-                  "1t_renda": "API ESTIMULADA-PRE-003, estratos de renda",
-                  "2t_topline": "API SEGTURNO-PRE-001, total",
-                  "2t_renda": "API SEGTURNO-PRE-001, estratos de renda",
-                  "perfil_renda": "não publicado; hipótese da onda de 27/09"
-                },
-                "conferido_em": "2026-10-03",
-                "status": "Íntegra em PDF não publicada até a consulta de 2026-10-03T22:34:38Z: a lista de mídia da Quaest (wp-json/wp/v2/media, PDFs mais recentes) tinha como último relatório presidencial nacional https://quaest.com.br/wp-content/uploads/2026/09/QUAEST+6+PRESIDENCIAL+28+09.pdf.",
-                "nota": "O painel do G1 reproduz célula a célula o PDF da onda de 27/09. Os valores vêm arredondados ao inteiro e sem bases; o perfil de renda é o da onda anterior, como hipótese explícita. Registro, campo, n e margem lidos das matérias do G1.",
-                "complementos": [
-                  {
-                    "rotulo": "G1: Segundo Turno - Cenário 1 (Lula × Flávio)",
-                    "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/100/?tipo_pergunta=SEGTURNO-PRE-001&instituto=Quaest",
-                    "arquivo": "data/originals/quaest_102026_03/g1_segundo_turno.json",
-                    "sha256": "ec9a1015e65a17d6943b354eb10debc3f8863a6cbf9fe0a68f4e2c9be5b2321f"
-                  },
-                  {
-                    "rotulo": "G1: Aprovação do governo",
-                    "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/100/?tipo_pergunta=APROVACAO-PRE-001&instituto=Quaest",
-                    "arquivo": "data/originals/quaest_102026_03/g1_aprovacao.json",
-                    "sha256": "0c6cedaf4ac25c8828a5cfaa3f9e0e346fe4c75dad9546ea4f69ab5a67f5ee65"
-                  },
-                  {
-                    "rotulo": "G1: matéria (1t)",
-                    "url": "https://g1.globo.com/politica/eleicoes/2026/pesquisa-eleitoral/noticia/2026/10/03/quaest-presidente-3-outubro.ghtml",
-                    "arquivo": "data/originals/quaest_102026_03/materia_1t.html",
-                    "sha256": "f6104a5c48d0d25e2822103e9b9b21d999b4032cf67989103c9d217d99031afe"
-                  },
-                  {
-                    "rotulo": "G1: matéria (2t)",
-                    "url": "https://g1.globo.com/politica/eleicoes/2026/pesquisa-eleitoral/noticia/2026/10/03/quaest-2o-turno-flavio-bolsonaro-44percent-lula-42percent.ghtml",
-                    "arquivo": "data/originals/quaest_102026_03/materia_2t.html",
-                    "sha256": "ed8d600adafb4a8db33da26fe3ab87fe0491828ce22f2c57a1d101a17541f5a2"
-                  },
-                  {
-                    "rotulo": "G1: matéria (aprovacao)",
-                    "url": "https://g1.globo.com/politica/eleicoes/2026/pesquisa-eleitoral/noticia/2026/10/03/quaest-desaprovacao-aprovacao-3-outubro.ghtml",
-                    "arquivo": "data/originals/quaest_102026_03/materia_aprovacao.html",
-                    "sha256": "43a2d9aaacea954dd89da68fe2390f2b3bea89d146dce67740bd01c3bd4c4423"
-                  }
-                ]
-              },
-              "publicado": {
-                "flavio": 51.16279069767442,
-                "lula": 48.83720930232558
-              },
-              "pnad": {
-                "flavio": 50.34920339790594,
-                "lula": 49.65079660209406
-              },
-              "modelo": {
-                "flavio": 49.0719703040485,
-                "lula": 50.928029695951516
-              },
-              "allocated_undecided": {
-                "flavio": 0.385368655109711,
-                "lula": 0.39994453431793586
-              },
-              "rates": {
-                "flavio": 0.7565612329117172,
-                "lula": 0.7962213991300896
-              },
-              "others_template_candidates": [],
-              "proxy_candidates": []
             }
           ],
           "leave_one_out": [
             {
               "without": "Datafolha",
               "valid": {
-                "lula": 49.26690319872702,
-                "flavio": 50.73309680127299
-              }
-            },
-            {
-              "without": "Gerp",
-              "valid": {
-                "lula": 49.29454733158526,
-                "flavio": 50.70545266841476
-              }
-            },
-            {
-              "without": "MDA",
-              "valid": {
-                "lula": 48.14317975555121,
-                "flavio": 51.8568202444488
-              }
-            },
-            {
-              "without": "Palver",
-              "valid": {
-                "lula": 48.92853137264345,
-                "flavio": 51.071468627356566
+                "lula": 47.36633005703746,
+                "flavio": 52.63366994296253
               }
             },
             {
               "without": "PoderData",
               "valid": {
-                "lula": 49.18483055789555,
-                "flavio": 50.815169442104455
-              }
-            },
-            {
-              "without": "Quaest",
-              "valid": {
-                "lula": 48.472490630112745,
-                "flavio": 51.52750936988726
+                "lula": 46.95596685288012,
+                "flavio": 53.04403314711989
               }
             }
           ],
@@ -7167,16 +5947,16 @@
         "flavio105": {
           "aggregate": {
             "publicado": {
-              "lula": 48.49118961866424,
-              "flavio": 51.50881038133577
+              "lula": 47.59208419126058,
+              "flavio": 52.40791580873942
             },
             "pnad": {
-              "lula": 47.60843929533845,
-              "flavio": 52.391560704661536
+              "lula": 45.89006241033917,
+              "flavio": 54.10993758966082
             },
             "modelo": {
-              "lula": 46.39045864113256,
-              "flavio": 53.60954135886744
+              "lula": 44.676303396111564,
+              "flavio": 55.323696603888436
             }
           },
           "polls": [
@@ -7247,196 +6027,6 @@
               "allocated_undecided": {
                 "flavio": 0.37553507180670537,
                 "lula": 0.30077314603878585
-              },
-              "rates": {
-                "flavio": 0.8361992574287401,
-                "lula": 0.7962213991300896
-              },
-              "others_template_candidates": [],
-              "proxy_candidates": []
-            },
-            {
-              "id": "gerp_2026-10-02",
-              "instituto": "Gerp",
-              "divulgacao": "2026-10-03",
-              "campo": {
-                "inicio": "2026-09-30",
-                "fim": "2026-10-02"
-              },
-              "published": {
-                "flavio": 49.0,
-                "lula": 44.0
-              },
-              "adjusted": {
-                "flavio": 50.843,
-                "lula": 42.529
-              },
-              "negative_mass_removed": {},
-              "undecided": 0.716,
-              "undecided_known": true,
-              "source": {
-                "tipo": "relatorio",
-                "rotulo": "Relatório Gerp, Presidência 2026, medição de 02/10",
-                "pdf": "data/originals/gerp_102026_03/relatorio.pdf",
-                "url": "https://gerp.com.br/relatorios/20261003%20Relat%C3%B3rio%20Presid%C3%AAncia%202026%20-%20DIVULGA%C3%87%C3%83O.pdf",
-                "paginas": {
-                  "metodologia": 7,
-                  "perfil_renda": 8,
-                  "1t": 13,
-                  "1t_validos": 16,
-                  "1t_renda": 15,
-                  "2t": 22,
-                  "2t_validos": 25,
-                  "2t_renda": 24
-                },
-                "sha256": "500c4a7b8261a209ce62fdf49b68d63e018d44f789a8ce487f81c74522023961",
-                "bytes": 873722,
-                "total_paginas": 54,
-                "status": "Relatório completo arquivado e conferido.",
-                "conferido_em": "2026-10-03",
-                "nota": "Manifesto público da Gerp lista o relatório com data de 03/10/2026; o creationDate do PDF é 02/10/2026 19:57. A p. 7 declara cotas de sexo, idade, renda e região por UF e ponderação também por escolaridade. Na p. 13, Zema, Edmilson Costa, Rui Costa Pimenta, Leonardo Avalanche, Hertz Dias, Wilson Grassi e Clariana Barão têm 0% no total; a p. 15 exibe 8 de 15 categorias e omite essas sete. Não se inventam células por renda para nomes omitidos."
-              },
-              "publicado": {
-                "flavio": 52.68817204301075,
-                "lula": 47.31182795698925
-              },
-              "pnad": {
-                "flavio": 54.45208413657198,
-                "lula": 45.54791586342801
-              },
-              "modelo": {
-                "flavio": 55.66422879773078,
-                "lula": 44.335771202269214
-              },
-              "allocated_undecided": {
-                "flavio": 0.31711366551965736,
-                "lula": 0.25257655092430936
-              },
-              "rates": {
-                "flavio": 0.8361992574287401,
-                "lula": 0.7962213991300896
-              },
-              "others_template_candidates": [],
-              "proxy_candidates": []
-            },
-            {
-              "id": "mda_2026-10-02",
-              "instituto": "MDA",
-              "divulgacao": "2026-10-03",
-              "campo": {
-                "inicio": "2026-09-30",
-                "fim": "2026-10-02"
-              },
-              "published": {
-                "flavio": 43.1,
-                "lula": 47.3
-              },
-              "adjusted": {
-                "flavio": 44.063,
-                "lula": 46.414
-              },
-              "negative_mass_removed": {},
-              "undecided": 1.853,
-              "undecided_known": true,
-              "source": {
-                "tipo": "relatorio",
-                "rotulo": "Relatório CNT/MDA, 171ª rodada",
-                "pdf": "data/originals/mda_102026_03/relatorio.pdf",
-                "url": "https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2026/10/Relatorio-Pesquisa-CNT-de-Opiniao-R171-OUTUBRO26.pdf",
-                "paginas": {
-                  "metodologia": 2,
-                  "perfil_renda": 34,
-                  "1t": 6,
-                  "1t_validos": 9,
-                  "1t_renda": 7,
-                  "2t": 12,
-                  "2t_renda": 13
-                },
-                "status": "Relatório completo conferido.",
-                "nota": "Campo em três dias (30/09: 38%, 01/10: 42%, 02/10: 20%, p. 2). Diferente da 170ª rodada, a p. 2 declara ponderação para controle de escolaridade e renda familiar; a composição da p. 34 continua rotulada como distribuição das entrevistas, com 0,4% de renda NS/NR. PDF gerado em 03/10/2026 09:32 (creationDate), divulgado no mesmo dia, véspera do 1º turno.",
-                "sha256": "894f25412ca96d4644f2c1e9121b110cd1a4e7aabe3e62295e3e47c1cc3a4841",
-                "bytes": 3795866,
-                "total_paginas": 51
-              },
-              "publicado": {
-                "flavio": 47.676991150442475,
-                "lula": 52.32300884955752
-              },
-              "pnad": {
-                "flavio": 48.70077478254142,
-                "lula": 51.299225217458584
-              },
-              "modelo": {
-                "flavio": 49.92522341263026,
-                "lula": 50.07477658736973
-              },
-              "allocated_undecided": {
-                "flavio": 0.7360734874038003,
-                "lula": 0.7382784274993703
-              },
-              "rates": {
-                "flavio": 0.8361992574287401,
-                "lula": 0.7962213991300896
-              },
-              "others_template_candidates": [],
-              "proxy_candidates": []
-            },
-            {
-              "id": "palver_2026-10-03",
-              "instituto": "Palver",
-              "divulgacao": "2026-10-03",
-              "campo": {
-                "inicio": "2026-09-30",
-                "fim": "2026-10-03"
-              },
-              "published": {
-                "flavio": 49.478969554650995,
-                "lula": 44.3928502112778
-              },
-              "adjusted": {
-                "flavio": 49.364,
-                "lula": 44.435
-              },
-              "negative_mass_removed": {},
-              "undecided": 0.525,
-              "undecided_known": true,
-              "source": {
-                "tipo": "explorer",
-                "pdf": "data/originals/palver_102026_03/relatorio.pdf",
-                "url": "https://www.palver.com.br/survey/explore?wave=06_pesquisa_2026_10_03&question=lula_flavio&breakdown=inc_std",
-                "paginas": {
-                  "metodologia": "16–18",
-                  "amostra": 20,
-                  "1t_topline": 29,
-                  "1t_renda": 30,
-                  "2t_topline": 34,
-                  "2t_renda": 35
-                },
-                "sha256": "fb11e3174f8828310323509468a8fef72dbb2f2077d015c1dff6400c663c53fc",
-                "bytes": 13396987,
-                "total_paginas": 75,
-                "conferido_em": "2026-10-03",
-                "status": "Relatório completo arquivado e conferido.",
-                "url_pdf": "https://www.palver.com.br/api/surveys/voting-intention-2026-october-w6/report",
-                "onda_explorer": "06_pesquisa_2026_10_03",
-                "snapshot": "analysis/reponderacao/palver_explorer_20261003",
-                "nota": "Onda 6, única versão no catálogo do Explorer em 03/10/2026. PDF e tabelas exatas do Explorer arquivados. Datas do campo e registro conforme p. 20 do PDF."
-              },
-              "publicado": {
-                "flavio": 52.7090767794081,
-                "lula": 47.29092322059191
-              },
-              "pnad": {
-                "flavio": 52.62742673162826,
-                "lula": 47.37257326837173
-              },
-              "modelo": {
-                "flavio": 53.84697224079505,
-                "lula": 46.15302775920497
-              },
-              "allocated_undecided": {
-                "flavio": 0.22492945484808896,
-                "lula": 0.19279032676236155
               },
               "rates": {
                 "flavio": 0.8361992574287401,
@@ -7517,141 +6107,21 @@
               },
               "others_template_candidates": [],
               "proxy_candidates": []
-            },
-            {
-              "id": "quaest_2026-10-03",
-              "instituto": "Quaest",
-              "divulgacao": "2026-10-03",
-              "campo": {
-                "inicio": "2026-10-02",
-                "fim": "2026-10-03"
-              },
-              "published": {
-                "flavio": 44.0,
-                "lula": 42.0
-              },
-              "adjusted": {
-                "flavio": 43.327,
-                "lula": 42.726
-              },
-              "negative_mass_removed": {},
-              "undecided": 0.987,
-              "undecided_known": true,
-              "source": {
-                "tipo": "painel_contratante",
-                "rotulo": "Painel do G1 (API) e matérias do G1",
-                "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/100/?tipo_pergunta=ESTIMULADA-PRE-003&instituto=Quaest",
-                "arquivo": "data/originals/quaest_102026_03/g1_estimulada_1t.json",
-                "sha256": "2b90add1fc5be55d4546dd1ec041648b36bdbc2b838e81fc1ec16e4d722cb014",
-                "bytes": 187806,
-                "paginas": {
-                  "1t_topline": "API ESTIMULADA-PRE-003, total",
-                  "1t_renda": "API ESTIMULADA-PRE-003, estratos de renda",
-                  "2t_topline": "API SEGTURNO-PRE-001, total",
-                  "2t_renda": "API SEGTURNO-PRE-001, estratos de renda",
-                  "perfil_renda": "não publicado; hipótese da onda de 27/09"
-                },
-                "conferido_em": "2026-10-03",
-                "status": "Íntegra em PDF não publicada até a consulta de 2026-10-03T22:34:38Z: a lista de mídia da Quaest (wp-json/wp/v2/media, PDFs mais recentes) tinha como último relatório presidencial nacional https://quaest.com.br/wp-content/uploads/2026/09/QUAEST+6+PRESIDENCIAL+28+09.pdf.",
-                "nota": "O painel do G1 reproduz célula a célula o PDF da onda de 27/09. Os valores vêm arredondados ao inteiro e sem bases; o perfil de renda é o da onda anterior, como hipótese explícita. Registro, campo, n e margem lidos das matérias do G1.",
-                "complementos": [
-                  {
-                    "rotulo": "G1: Segundo Turno - Cenário 1 (Lula × Flávio)",
-                    "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/100/?tipo_pergunta=SEGTURNO-PRE-001&instituto=Quaest",
-                    "arquivo": "data/originals/quaest_102026_03/g1_segundo_turno.json",
-                    "sha256": "ec9a1015e65a17d6943b354eb10debc3f8863a6cbf9fe0a68f4e2c9be5b2321f"
-                  },
-                  {
-                    "rotulo": "G1: Aprovação do governo",
-                    "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/100/?tipo_pergunta=APROVACAO-PRE-001&instituto=Quaest",
-                    "arquivo": "data/originals/quaest_102026_03/g1_aprovacao.json",
-                    "sha256": "0c6cedaf4ac25c8828a5cfaa3f9e0e346fe4c75dad9546ea4f69ab5a67f5ee65"
-                  },
-                  {
-                    "rotulo": "G1: matéria (1t)",
-                    "url": "https://g1.globo.com/politica/eleicoes/2026/pesquisa-eleitoral/noticia/2026/10/03/quaest-presidente-3-outubro.ghtml",
-                    "arquivo": "data/originals/quaest_102026_03/materia_1t.html",
-                    "sha256": "f6104a5c48d0d25e2822103e9b9b21d999b4032cf67989103c9d217d99031afe"
-                  },
-                  {
-                    "rotulo": "G1: matéria (2t)",
-                    "url": "https://g1.globo.com/politica/eleicoes/2026/pesquisa-eleitoral/noticia/2026/10/03/quaest-2o-turno-flavio-bolsonaro-44percent-lula-42percent.ghtml",
-                    "arquivo": "data/originals/quaest_102026_03/materia_2t.html",
-                    "sha256": "ed8d600adafb4a8db33da26fe3ab87fe0491828ce22f2c57a1d101a17541f5a2"
-                  },
-                  {
-                    "rotulo": "G1: matéria (aprovacao)",
-                    "url": "https://g1.globo.com/politica/eleicoes/2026/pesquisa-eleitoral/noticia/2026/10/03/quaest-desaprovacao-aprovacao-3-outubro.ghtml",
-                    "arquivo": "data/originals/quaest_102026_03/materia_aprovacao.html",
-                    "sha256": "43a2d9aaacea954dd89da68fe2390f2b3bea89d146dce67740bd01c3bd4c4423"
-                  }
-                ]
-              },
-              "publicado": {
-                "flavio": 51.16279069767442,
-                "lula": 48.83720930232558
-              },
-              "pnad": {
-                "flavio": 50.34920339790594,
-                "lula": 49.65079660209406
-              },
-              "modelo": {
-                "flavio": 51.57343049427169,
-                "lula": 48.426569505728295
-              },
-              "allocated_undecided": {
-                "flavio": 0.40501295191181574,
-                "lula": 0.38030023751583125
-              },
-              "rates": {
-                "flavio": 0.8361992574287401,
-                "lula": 0.7962213991300896
-              },
-              "others_template_candidates": [],
-              "proxy_candidates": []
             }
           ],
           "leave_one_out": [
             {
               "without": "Datafolha",
               "valid": {
-                "lula": 46.77399199782379,
-                "flavio": 53.22600800217621
-              }
-            },
-            {
-              "without": "Gerp",
-              "valid": {
-                "lula": 46.80139612890523,
-                "flavio": 53.19860387109477
-              }
-            },
-            {
-              "without": "MDA",
-              "valid": {
-                "lula": 45.65359505188512,
-                "flavio": 54.34640494811488
-              }
-            },
-            {
-              "without": "Palver",
-              "valid": {
-                "lula": 46.43794481751807,
-                "flavio": 53.56205518248193
+                "lula": 44.87981493454675,
+                "flavio": 55.12018506545325
               }
             },
             {
               "without": "PoderData",
               "valid": {
-                "lula": 46.69258738244972,
-                "flavio": 53.30741261755029
-              }
-            },
-            {
-              "without": "Quaest",
-              "valid": {
-                "lula": 45.983236468213406,
-                "flavio": 54.016763531786594
+                "lula": 44.472791857676384,
+                "flavio": 55.52720814232362
               }
             }
           ],
@@ -7688,7 +6158,7 @@
   },
   "sources_sha256": {
     "nexus_btg_28092026_data.json": "99313b48fee54545d99de437946cc52cfce49be36c7587c41909cf9f192cc181",
-    "reponderacao_pnad.json": "03333bd8b669f1d6983f196814ae8fbed8872086bd148fb958c85bdf9aa99f5b",
+    "reponderacao_pnad.json": "f461655d423c3d89f5446c9c377e4693d42d93c99f2c7fcad62f393ccb107790",
     "analysis/apuracao_2026/dados/pesquisas_vs_urna.json": "0f4391d21352041fc6fbf994472d65738ebfe8e04a93ba61e96c0be16a22c7c4",
     "analysis/apuracao_2026/dados/presidente.json": "0bb01ddb79108500a55987b5be1fc437f38ef5f88509ec846a00df8dd7853788"
   }

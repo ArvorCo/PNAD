@@ -368,7 +368,7 @@ def gap_svg(ident: str, turno: str) -> str:
         largura,
         altura,
         aria=(
-            f"Diferença Lula menos Flávio no {TURNOS[turno]}, publicada e "
+            f"Diferença Flávio menos Lula no {TURNOS[turno]}, publicada e "
             "reponderada, com a margem de 95% da diferença."
         ),
     )
@@ -379,13 +379,13 @@ def gap_svg(ident: str, turno: str) -> str:
     cv.text(
         meio - 18,
         26,
-        "◀ Flávio à frente",
+        "◀ Lula à frente",
         size=12.5,
-        fill=BLUE_TXT,
+        fill=RED_TXT,
         weight=700,
         anchor="end",
     )
-    cv.text(meio + 18, 26, "Lula à frente ▶", size=12.5, fill=RED_TXT, weight=700)
+    cv.text(meio + 18, 26, "Flávio à frente ▶", size=12.5, fill=BLUE_TXT, weight=700)
     for marca in range(-limite, limite + 1, 2):
         x = px(marca)
         cv.line(x, 40, x, altura - 46, stroke=LINE, width=1)
@@ -442,14 +442,14 @@ def gap_svg(ident: str, turno: str) -> str:
 
         barra = 11 if apertado else 13
         for nome, valor, altura_barra, deslocamento in (
-            ("publicado", t["gap_publicado"], barra, 6 if apertado else 9),
-            ("reponderado", t["gap_ajustado"], barra, 25 if apertado else 33),
+            ("publicado", -t["gap_publicado"], barra, 6 if apertado else 9),
+            ("reponderado", -t["gap_ajustado"], barra, 25 if apertado else 33),
         ):
-            cor = RED if valor >= 0 else BLUE
+            cor = BLUE if valor >= 0 else RED
             fill = (
                 cor
                 if nome == "publicado"
-                else (hatch_red if valor >= 0 else hatch_blue)
+                else (hatch_blue if valor >= 0 else hatch_red)
             )
             x0, x1 = sorted((px(0), px(valor)))
             cv.rect(
@@ -477,7 +477,7 @@ def gap_svg(ident: str, turno: str) -> str:
                 y + deslocamento + altura_barra - 2,
                 sinal(valor, 1),
                 size=12 if apertado else 13,
-                fill=RED_TXT if valor >= 0 else BLUE_TXT,
+                fill=BLUE_TXT if valor >= 0 else RED_TXT,
                 weight=700,
                 anchor=ancora,
                 family=MONO,
@@ -485,7 +485,7 @@ def gap_svg(ident: str, turno: str) -> str:
 
         margem = t["margem_diferenca_95"]
         ym = y + (6 if apertado else 9) + barra / 2
-        a, b = px(t["gap_publicado"] - margem), px(t["gap_publicado"] + margem)
+        a, b = px(-t["gap_publicado"] - margem), px(-t["gap_publicado"] + margem)
         cv.line(a, ym, b, ym, stroke=INK, width=1.4)
         cv.line(a, ym - 6, a, ym + 6, stroke=INK, width=1.4)
         cv.line(b, ym - 6, b, ym + 6, stroke=INK, width=1.4)
@@ -592,7 +592,7 @@ def instituto_svg(nome: str, turno: str, historico: list[dict] | None = None) ->
     cv.text(
         esq,
         altura - 12,
-        f"{sinal(ultimo['gap_publicado'], 1)} publicado · {sinal(ultimo['gap_ajustado'], 1)} reponderado",
+        f"{sinal(-ultimo['gap_publicado'], 1)} publicado · {sinal(-ultimo['gap_ajustado'], 1)} reponderado",
         size=12,
         fill=MUTED,
         family=MONO,
@@ -846,7 +846,7 @@ def slope_svg(pesquisa: dict) -> str:
         cv.text(
             (x0 + x1) / 2,
             base_y + 32,
-            f"diferença {sinal(t['gap_publicado'], 1)} para {sinal(t['gap_ajustado'], 1)}",
+            f"diferença {sinal(-t['gap_publicado'], 1)} para {sinal(-t['gap_ajustado'], 1)}",
             size=12.5,
             fill=MUTED,
             anchor="middle",

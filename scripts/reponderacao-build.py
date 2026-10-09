@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Gera a página de reponderação; --skip-home preserva a capa e seus assets."""
+"""Gera as três páginas de reponderação; --skip-home preserva a capa e seus assets."""
 
 from __future__ import annotations
 
@@ -7,6 +7,7 @@ import argparse
 import csv
 import importlib
 import json
+from copy import deepcopy
 from html import escape as esc
 
 from ga_tag import injetar
@@ -24,7 +25,6 @@ from reponderacao_vista.context import (
     CENARIOS,
     HOME_SVG,
     INDEX,
-    INSTITUTOS,
     MESES,
     METODO,
     PAGE,
@@ -39,7 +39,6 @@ from reponderacao_vista.context import (
     TURNOS,
     D,
     ajustado,
-    coverage_html,
     curto,
     frase,
     gap,
@@ -55,7 +54,6 @@ from reponderacao_vista.markers import (
 )
 from reponderacao_vista.style import (
     CSS,
-    SCRIPT,
     TIP_CSS,
     TIP_JS,
 )
@@ -119,8 +117,8 @@ def placar(turno: str) -> str:
             blocos.append(
                 f"<div>{selo(marca, 'publicado' if tipo == 'publicado' else 'reponderado')}"
                 f"<span>{esc(nome)}</span>"
-                f'<b><em class="lula">{br(v["lula"], 1)}</em> × '
-                f'<em class="flavio">{br(v["flavio"], 1)}</em></b>'
+                f'<b><em class="flavio">{br(v["flavio"], 1)}</em> × '
+                f'<em class="lula">{br(v["lula"], 1)}</em></b>'
                 f"<small>diferença {sinal(gap(v), 1)} ponto"
                 f"{'s' if abs(round(gap(v), 1)) != 1 else ''}</small></div>"
             )
@@ -146,8 +144,13 @@ def chip_prova(pesquisa: dict) -> str:
     return "".join(partes)
 
 
-def paginas_fonte(fonte: dict) -> str:
+def paginas_fonte(fonte: dict, turno: str | None = None) -> str:
     itens = fonte.get("paginas") or {}
+    if turno:
+        other = "1t" if turno == "2t" else "2t"
+        itens = {
+            key: value for key, value in itens.items() if not key.startswith(other)
+        }
     if not itens:
         return fonte.get("localizador", "páginas não declaradas")
     return ", ".join(
@@ -157,7 +160,36 @@ def paginas_fonte(fonte: dict) -> str:
     )
 
 
-def cartao(pesquisa: dict) -> str:
+def cartao(pesquisa: dict, turno: str | None = None) -> str:
+    if turno:
+        pesquisa = deepcopy(pesquisa)
+        pesquisa["turnos"] = {turno: pesquisa["turnos"][turno]}
+        other = "1t" if turno == "2t" else "2t"
+        pesquisa["fonte"]["paginas"] = {
+            k: v
+            for k, v in pesquisa["fonte"].get("paginas", {}).items()
+            if not k.startswith(other)
+        }
+        if turno == "2t":
+            source = pesquisa["fonte"]
+            complements = [
+                item
+                for item in source.get("complementos", [])
+                if "1º turno" not in item["rotulo"] and "(1t)" not in item["rotulo"]
+            ]
+            if "1º turno" in source.get("rotulo", ""):
+                second = next(
+                    (
+                        item
+                        for item in complements
+                        if "2º turno" in item["rotulo"] or "(2t)" in item["rotulo"]
+                    ),
+                    None,
+                )
+                if second:
+                    source.update(url=second["url"], rotulo=second["rotulo"])
+                    complements.remove(second)
+            source["complementos"] = complements
     renda = pesquisa["renda"]
     alvo = renda["pnad_pct"][CEN]
     desvio = pesquisa["desvio_ate_primeira_faixa"]
@@ -202,8 +234,8 @@ def cartao(pesquisa: dict) -> str:
                 [
                     esc(TURNOS[turno]),
                     esc(rotulo_cenario),
-                    br(valores["lula"], 1),
                     br(valores["flavio"], 1),
+                    br(valores["lula"], 1),
                     sinal(gap(valores), 1),
                     "principal" if nome == CEN else "robustez",
                 ]
@@ -236,7 +268,7 @@ def cartao(pesquisa: dict) -> str:
         f'<p class="note">{esc(pesquisa["registro_tse"])} · contratante {esc(pesquisa["contratante"])} · '
         f"n = {br(pesquisa['n'], 0)} · {esc(pesquisa['metodo'])} · divulgação em "
         f"{esc(longo(pesquisa['divulgacao']))}{link_dossie}{link_pdf}</p>{aviso_fonte}"
-        f"{groups_view.selection_note(pesquisa)}"
+        f"{groups_view.selection_note(pesquisa) if turno != '2t' else ''}"
         f'<p class="note">Fonte: <code>{esc(pesquisa["fonte"].get("arquivo") or pesquisa["fonte"].get("pdf") or "sem arquivo arquivado")}</code>, '
         f"{esc(paginas_fonte(pesquisa['fonte']))}.</p></div>"
         f'<div class="proofs">{chip_prova(pesquisa)}</div></header>'
@@ -263,7 +295,7 @@ def cartao(pesquisa: dict) -> str:
         )
         + "</p>"
         + tabela(
-            ["Turno", "Cenário da PNAD", "Lula", "Flávio", "Diferença", "Uso"],
+            ["Turno", "Cenário da PNAD", "Flávio", "Lula", "Flávio − Lula", "Uso"],
             cenarios,
             cls="scenarios",
         )
@@ -296,19 +328,19 @@ def ch_segundo_turno() -> str:
         + importlib.import_module("reponderacao-nao-escolha-view").summary(
             D, "2t", tabela, br
         )
-        + '<p class="plain reveal">Publicado, a média Arvor marca Lula '
-        + br(kernel["publicado"]["lula"], 1)
-        + " e Flávio "
+        + '<p class="plain reveal">Publicado, a média Arvor marca Flávio '
         + br(kernel["publicado"]["flavio"], 1)
-        + ". Sob a régua oficial de renda, marca Lula "
-        + br(kernel["ajustado"]["lula"], 1)
-        + " e Flávio "
+        + " e Lula "
+        + br(kernel["publicado"]["lula"], 1)
+        + ". Sob a régua oficial de renda, marca Flávio "
         + br(kernel["ajustado"]["flavio"], 1)
+        + " e Lula "
+        + br(kernel["ajustado"]["lula"], 1)
         + ". A diferença sai de "
         + sinal(gap(kernel["publicado"]), 1)
         + " para "
         + sinal(gap(kernel["ajustado"]), 1)
-        + " ponto para Lula.</p>"
+        + " ponto na diferença Flávio − Lula.</p>"
     )
     parciais = [
         p
@@ -411,7 +443,8 @@ def ch_manchete() -> str:
     viradas = sum(
         1
         for p in polls
-        if p["turnos"]["2t"]["gap_publicado"] > 0 >= p["turnos"]["2t"]["gap_ajustado"]
+        if p["turnos"]["2t"]["gap_publicado"] != 0
+        and p["turnos"]["2t"]["gap_publicado"] * p["turnos"]["2t"]["gap_ajustado"] <= 0
     )
     dentro = sum(
         1
@@ -455,27 +488,37 @@ def ch_manchete() -> str:
     )
 
 
-def ch_institutos() -> str:
+def ch_institutos(turno: str | None = None) -> str:
     return capitulo(
         4,
         "institutos",
         "Instituto por instituto",
-        "Dois turnos, duas leituras: acompanhar a corrida atual e conferir o histórico contra a urna.",
-        importlib.import_module("reponderacao_vista.institutos").body(),
+        "Publicado e PNAD, com ficha e fonte de cada onda.",
+        importlib.import_module("reponderacao_vista.institutos").body(
+            (turno,) if turno else ("2t", "1t")
+        ),
     )
 
 
-def ch_pesquisas() -> str:
+def ch_pesquisas(turno: str | None = None) -> str:
     return capitulo(
         5,
         "pesquisas",
         "Pesquisa por pesquisa",
         "Cada onda com a ficha do documento, a composição de renda, o efeito da troca e a "
         "prova de que a leitura do relatório está certa.",
-        '<div class="research-controls" hidden><label>Turno<select id="research-turn"><option value="all">Todos os turnos</option><option value="2t">2º turno</option><option value="1t">1º turno</option></select></label>'
+        '<div class="research-controls" hidden><label>Turno<select id="research-turn">'
+        + (
+            f'<option value="{turno}">{TURNOS[turno]}</option>'
+            if turno
+            else '<option value="all">Todos os turnos</option><option value="2t">2º turno</option><option value="1t">1º turno</option>'
+        )
+        + "</select></label>"
         '<label>Ondas<select id="research-waves"><option value="latest">Última de cada casa por turno</option><option value="all">Todas as ondas do arquivo</option></select></label></div>'
         '<p id="research-state" class="note" aria-live="polite">Arquivo completo, da onda mais recente à mais antiga.</p>'
-        + "".join(cartao(p) for p in RECENTES),
+        + "".join(
+            cartao(p, turno) for p in RECENTES if not turno or turno in p["turnos"]
+        ),
     )
 
 
@@ -527,7 +570,7 @@ def ch_metodo() -> str:
     )
 
 
-def ch_fontes() -> str:
+def ch_fontes(turno: str | None = None) -> str:
     linhas = [
         [
             esc(p["instituto"]),
@@ -535,9 +578,10 @@ def ch_fontes() -> str:
             esc(p["registro_tse"]),
             br(p["n"], 0),
             f"<code>{esc(p['fonte'].get('arquivo') or p['fonte'].get('pdf') or 'sem arquivo arquivado')}</code>",
-            esc(paginas_fonte(p["fonte"])),
+            esc(paginas_fonte(p["fonte"], turno)),
         ]
         for p in RECENTES
+        if not turno or turno in p["turnos"]
     ]
     return capitulo(
         7,
@@ -564,99 +608,6 @@ def ch_fontes() -> str:
     )
 
 
-def head() -> str:
-    ultimo = AGG["ultimo"]["2t"]["kernel"]
-    titulo = "Agregador Arvor: a corrida sob a régua oficial de renda"
-    descricao = (
-        f"Toda pesquisa nacional reponderada pela distribuição de renda da PNAD Contínua "
-        f"anual de 2025 do IBGE. Publicada, a média marca Lula {br(ultimo['publicado']['lula'], 1)} "
-        f"e Flávio {br(ultimo['publicado']['flavio'], 1)} no 2º turno. Sob a régua oficial, "
-        f"Lula {br(ultimo['ajustado']['lula'], 1)} e Flávio {br(ultimo['ajustado']['flavio'], 1)}."
-    )
-    og = "https://brasil.arvor.co/img/og/reponderacao_pnad.png"
-    alt_card = (
-        f"Agregador Arvor: {len(PESQUISAS)} ondas de {len(INSTITUTOS)} institutos "
-        "reponderadas pela renda da PNAD, com uma margem trocada e o resto como "
-        "o instituto ponderou."
-    )
-    return (
-        '<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">'
-        '<meta name="viewport" content="width=device-width, initial-scale=1">'
-        "<script>document.documentElement.classList.add('js')</script>"
-        f"<title>{esc(titulo)} · Arvor</title>"
-        f'<meta name="description" content="{esc(descricao, quote=True)}">'
-        '<link rel="canonical" href="https://brasil.arvor.co/reponderacao_pnad.html">'
-        '<link rel="icon" href="favicon.ico" sizes="any">'
-        '<link rel="icon" href="img/favicon.svg" type="image/svg+xml">'
-        '<link rel="apple-touch-icon" href="img/favicon-180.png">'
-        '<meta name="theme-color" content="#192e2b">'
-        '<meta property="og:type" content="article">'
-        '<meta property="og:locale" content="pt_BR">'
-        '<meta property="og:site_name" content="Arvor Intelligence">'
-        f'<meta property="og:title" content="{esc(titulo, quote=True)}">'
-        f'<meta property="og:description" content="{esc(descricao, quote=True)}">'
-        '<meta property="og:url" content="https://brasil.arvor.co/reponderacao_pnad.html">'
-        f'<meta property="og:image" content="{og}">'
-        f'<meta property="og:image:alt" content="{esc(alt_card, quote=True)}">'
-        '<meta property="og:image:width" content="1200">'
-        '<meta property="og:image:height" content="630">'
-        '<meta name="twitter:card" content="summary_large_image">'
-        f'<meta name="twitter:image" content="{og}">'
-        f'<meta name="twitter:image:alt" content="{esc(alt_card, quote=True)}">'
-        f'<meta name="twitter:title" content="{esc(titulo, quote=True)}">'
-        f'<meta name="twitter:description" content="{esc(descricao, quote=True)}">'
-        '<link rel="stylesheet" href="assets/reponderacao_pnad.css"><link rel="stylesheet" href="assets/reponderacao_tip.css"><link rel="stylesheet" href="assets/reponderacao_metodologias.css">'
-        '<link rel="stylesheet" href="assets/reponderacao_validos.css"></head>'
-    )
-
-
-def hero() -> str:
-    ultimo = AGG["ultimo"]["2t"]["kernel"]
-    dif_pub, dif_adj = gap(ultimo["publicado"]), gap(ultimo["ajustado"])
-    ondas = len(PESQUISAS)
-    return (
-        '<section class="hero"><div class="wrap">'
-        f'<p class="eyebrow">Agregador Arvor · atualizado em {esc(longo(D["referencia"]))} · '
-        "sensibilidade sob régua comum</p>"
-        "<h1>A corrida sob<br>a régua <em>oficial.</em></h1>"
-        '<div class="hero-bottom">'
-        "<p>Todo instituto declara uma distribuição de renda para a amostra. O IBGE mede "
-        "outra. Este agregador troca só essa margem, mantém tudo o que o instituto ponderou "
-        "e mostra o placar dos dois jeitos, onda por onda.</p>"
-        f"<div><strong>{ondas}</strong><span>ondas auditadas<br>com cruzamento de renda</span></div>"
-        f"<div><strong>{sinal(dif_pub, 1)}</strong><span>diferença publicada<br>"
-        "na média Arvor do 2º turno</span></div>"
-        f"<div><strong>{sinal(dif_adj, 1)}</strong><span>diferença reponderada<br>"
-        "pela renda da PNAD</span></div></div>"
-        f'<p class="note">Régua: {esc(BENCH["benchmark"])}, pessoas de {BENCH["min_age"]} anos '
-        f"ou mais, preços de {MESES[int(BENCH['price_month'][4:]) - 1]}. de "
-        f"{BENCH['price_month'][:4]}. Diferença positiva favorece Lula. A reponderação é "
-        "inferência declarada, não resultado de eleição.</p></div></section>"
-    )
-
-
-def toc() -> str:
-    itens = [
-        ("projecao-validos", "Projeção de válidos"),
-        ("atualizacao", "Atualização"),
-        ("segundo-turno", "2º turno"),
-        ("primeiro-turno", "1º turno × urna"),
-        ("palver-pesos", "Palver e pesos"),
-        ("manchete", "Manchete"),
-        ("institutos-2t", "Institutos · 2º turno"),
-        ("institutos-1t", "Institutos · 1º turno"),
-        ("comparar-metodos", "Comparar métodos"),
-        ("pesquisas", "Pesquisas"),
-        ("metodo", "Método"),
-        ("fontes", "Fontes"),
-    ]
-    return (
-        '<nav class="toc" aria-label="Seções">'
-        + "".join(f'<a href="#{i}">{esc(t)}</a>' for i, t in itens)
-        + "</nav>"
-    )
-
-
 def bloco_tips(chaves: list[str] | None = None) -> str:
     """Fichas dos alvos embutidas na própria página, sem depender de rede."""
     dados = TIPS if chaves is None else {k: TIPS[k] for k in chaves if k in TIPS}
@@ -668,58 +619,25 @@ def bloco_tips(chaves: list[str] | None = None) -> str:
 
 
 def build_html() -> str:
-    corpo = "".join(
-        [
-            importlib.import_module("reponderacao-validos-view").section_html(
-                D, tabela
-            ),
-            coverage_html(D, tabela),
-            ch_segundo_turno(),
-            ch_primeiro_turno(),
-            importlib.import_module("reponderacao-palver-view").audit_html(D, tabela),
-            ch_manchete(),
-            ch_institutos(),
-            importlib.import_module("reponderacao-metodos").section_html(),
-            ch_pesquisas(),
-            ch_metodo(),
-            ch_fontes(),
-        ]
-    )
-    return (
-        head() + '<body><a class="skip" href="#conteudo">Pular para o conteúdo</a>'
-        '<header class="masthead"><a href="index.html">ARVOR <span>Intelligence</span></a>'
-        "<span>Agregador de pesquisas</span></header>"
-        '<main id="conteudo">'
-        + hero()
-        + '<div class="wrap"><p class="note"><b>1º turno encerrado; 2º turno em andamento.</b> <a href="apuracao_1o_turno_2026.html#pesquisas">Apuração e auditoria completa das pesquisas</a> · <a href="predicao_2026_1T_presidente.html">Arquivo da previsão experimental do 1º turno</a>.</p></div>'
-        + toc()
-        + corpo
-        + '</main><footer class="wrap footer"><b>ARVOR Intelligence</b>'
-        f"<span>Agregador de pesquisas reponderadas · referência de "
-        f"{esc(longo(D['referencia']))}</span>"
-        '<span><a href="index.html">Biblioteca</a> · <a href="pnad.html">A PNAD por dentro</a>'
-        " · uso livre com crédito e link</span></footer>"
-        + bloco_tips()
-        + f"<script>{SCRIPT}</script>"
-        '<script src="assets/reponderacao_tip.js" defer></script><script src="assets/reponderacao_metodologias.js" defer></script><script src="assets/reponderacao_validos.js" defer></script><script src="assets/reponderacao_pesquisas.js" defer></script></body></html>'
-    )
+    return importlib.import_module("reponderacao-paginas").current_html(globals())
 
 
 def placar_home() -> str:
     """Placar compacto da capa, com a mesma convenção de fato e inferência."""
-    kernel = AGG["ultimo"]["2t"]["kernel"]
-    pub, adj = kernel["publicado"], kernel["ajustado"]
+    central = json.loads((ASSETS / "reponderacao_simulador.json").read_text())[
+        "central"
+    ]
     celulas = [
         (
-            f"{br(pub['lula'], 1)} × {br(pub['flavio'], 1)}",
-            "Média Arvor publicada, Lula × Flávio, 2º turno",
+            f"{br(central['flavio'], 1)} × {br(central['lula'], 1)}",
+            "Central condicional · Flávio × Lula / válidos",
         ),
         (
-            f"{br(adj['lula'], 1)} × {br(adj['flavio'], 1)}",
-            "A mesma média sob a renda medida pela PNAD",
+            sinal(central["diferenca_flavio_lula"], 1),
+            "Diferença Flávio − Lula / pp dos válidos",
         ),
-        (sinal(gap(pub), 1), "Diferença publicada, em pontos"),
-        (sinal(gap(adj), 1), "Diferença sob a régua oficial"),
+        (br(central["abstencao"], 1) + "%", "Abstenção / eleitorado"),
+        ("+5%", "Hipótese de presença relativa de Flávio"),
     ]
     return "".join(
         f"<div><b>{esc(valor)}</b><span>{esc(texto)}</span></div>"
@@ -797,6 +715,7 @@ def build(*, update_home: bool = True) -> None:
     PAGE.write_text(
         injetar(html).replace("<section ", "\n<section ") + "\n", encoding="utf-8"
     )
+    importlib.import_module("reponderacao-paginas").write_companions(globals())
     write_csv()
     groups_view.write_group_csv(ASSETS / "reponderacao_grupos_1t.csv", D)
     importlib.import_module("reponderacao-janela-view").write_csv(

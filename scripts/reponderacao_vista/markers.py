@@ -89,7 +89,7 @@ def ficha_onda(pesquisa: dict, turno: str) -> str:
     linhas = [
         '<table class="tip-tab"><thead><tr><th></th>'
         + "".join(f"<th>{esc(rotulo(c))}</th>" for c in PAR)
-        + "<th>dif.</th></tr></thead><tbody>"
+        + "<th>F−L</th></tr></thead><tbody>"
     ]
     for nome, fonte, cls in (
         ("publicado", pub, "pub"),
@@ -162,7 +162,7 @@ def ficha_onda(pesquisa: dict, turno: str) -> str:
             partial = ", ".join(rotulo(k) for k in comp["sem_cruzamento"])
             corpo.append(
                 '<p class="tip-nota"><b>1º turno em votos válidos</b></p>'
-                '<table class="tip-tab"><thead><tr><th></th><th>Lula</th><th>Flávio</th><th>L−F</th></tr></thead>'
+                '<table class="tip-tab"><thead><tr><th></th><th>Flávio</th><th>Lula</th><th>F−L</th></tr></thead>'
                 f"<tbody>{body}</tbody></table>"
                 '<p class="tip-nota">Erro L−F: publicado '
                 f'{sinal(comp["publicado"]["diferenca_lula_menos_flavio"]["erro"], 2)} pp; PNAD '

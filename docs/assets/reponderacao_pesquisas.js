@@ -22,7 +22,7 @@
   function revealLinkedWave() {
     const target = document.getElementById(location.hash.slice(1));
     if (!target || !target.matches('#pesquisas article.poll') || !target.hidden) return;
-    turn.value = 'all';
+    turn.value = [...turn.options].some(o => o.value === 'all') ? 'all' : target.dataset.researchTurns.split(',')[0];
     waves.value = 'all';
     render();
     target.scrollIntoView();

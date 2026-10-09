@@ -491,6 +491,43 @@ quadrature to the common error. `analysis/predicao_2026/avaliacao_ml.md` explain
 why supervised machine learning cannot be trained on this archive: there is
 one reference election and no archived 2018 or 2022 polls.
 
+## Income reweighting and runoff scenarios
+
+The public report has three routes: `docs/reponderacao_pnad.html` for the runoff
+simulator, `docs/reponderacao_pnad_1o_turno_2026.html` for the first-round archive
+and comparison with the ballot, and `docs/reponderacao_pnad_log.html` for wave
+incorporations and documentary revisions. Generate all three together:
+
+```bash
+python3 scripts/reponderacao-pnad.py calcular --hoje 2026-10-09
+python3 scripts/reponderacao-build.py
+python3 scripts/social-cards.py --only reponderacao_pnad reponderacao_pnad_1o_turno_2026 reponderacao_pnad_log
+python3 scripts/sitemap-build.py
+```
+
+The runoff central uses only fields beginning after 4 October, within a
+seven-day release window and with one eligible wave per house. It is a
+conditional scenario: income reweighting, the historical Nexus propensity
+template and an explicit +5% relative-presence assumption for Flávio, selected
+after the first round. The simulator exposes attendance, invalid votes,
+undecided allocation and a common-error sensitivity; it does not estimate
+winning probabilities. Displayed differences use **Flávio minus Lula**;
+legacy JSON/CSV `gap_*` fields retain their documented Lula-minus-Flávio sign.
+
+Shared `#sim=` links retain parameters and the immutable data version.
+`docs/assets/reponderacao_cenarios/` keeps both each dataset and its calculation
+engine; retain published snapshots so old links remain reproducible. PNG cards
+include the scenario assumptions. `analysis/reponderacao/log.json` preserves
+historical incorporation dates; subsequent builds append new waves and record
+source-hash changes without replacing those dates.
+
+Vox Brasil, released on 9 October (`BR-09623/2026`), is recorded with its
+published result. Its income target and questionnaire are insufficient to
+identify the income concept, and the public report lacks vote-by-income cells.
+The wave therefore receives no income adjustment. Evidence is archived in
+`data/originals/vox_102026_09/` and the public registry transcription in
+`docs/fontes/vox_09102026/`.
+
 ## Project status
 
 Production-useful for:

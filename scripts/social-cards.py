@@ -138,20 +138,7 @@ CARDS: list[dict] = [
         "foot": "sensibilidade de renda, não previsão eleitoral",
         "accent": "lime",
     },
-    {
-        "slug": "reponderacao_pnad",
-        "eyebrow": "Agregador Arvor · pesquisas sob a régua do IBGE",
-        "title": "A corrida",
-        "title_em": "sob a régua oficial.",
-        "lede": "<b>2º turno sob a renda da PNAD.</b> Primeiro turno confrontado com a urna: placares e erros das últimas ondas, publicados e reponderados, em votos válidos.",
-        "stats": [
-            (_ONDAS, "ondas desde maio de 2026"),
-            (_INSTITUTOS, "institutos na mesma régua"),
-            ("1", "margem trocada: a renda"),
-        ],
-        "foot": "uma margem de renda · comparação com a urna em votos válidos",
-        "accent": "blue",
-    },
+    *importlib.import_module("social-card-reponderacao").cards(ROOT),
     {
         "slug": "sp_092026",
         "eyebrow": "Atlas estadual 02 · São Paulo · setembro de 2026",
