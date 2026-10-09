@@ -121,4 +121,7 @@ def test_method_and_daily_coverage_are_visible():
         text = html.find(id=f"janela-{turn}").get_text(" ", strip=True)
         assert "dia observado e seis dias anteriores" in text
         assert "Sem média" in text
-    assert "meia-vida" not in html.get_text()
+        # A série descritiva mantém peso igual; recência pertence apenas à
+        # nova Central Projeção, não à regra do gráfico histórico.
+        assert "meia-vida" not in html.find(id=f"janela-{turn}").get_text()
+    assert "meia-vida 3 dias" in html.find(id="modelo-projecao").get_text()

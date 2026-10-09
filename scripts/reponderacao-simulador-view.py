@@ -5,9 +5,10 @@ import json
 from html import escape as esc
 
 COUNT = importlib.import_module("reponderacao-contagem")
+PROJECTION = importlib.import_module("reponderacao-projecao-view")
 
 PRESETS = [
-    ("central", "Central Arvor", {}),
+    ("central", "Central selecionada", {}),
     ("igual", "Presença relativa neutra", {"presenca_relativa": 0}),
     ("fmenos", "Flávio −5%", {"presenca_relativa": -5}),
     ("fmais", "Flávio +10%", {"presenca_relativa": 10}),
@@ -72,8 +73,9 @@ def section_html(data, table):
         "<h1>O voto conta.<br><em>A presença decide.</em></h1></div>"
         "<p>As pesquisas sob a renda do IBGE, com o comparecimento que você quer testar. "
         "Mova as hipóteses. Compare os votos válidos. Compartilhe seu cenário.</p></header>"
-        '<div class="rs-app"><div class="rs-result">'
-        '<div class="rs-result-top"><span id="rs-label">Central Arvor</span>'
+        + PROJECTION.central_cards(data)
+        + '<div class="rs-app"><div class="rs-result">'
+        '<div class="rs-result-top"><span id="rs-label">Central Média Arvor</span>'
         f'<span id="rs-reference">{esc(data["reference"])}</span></div>'
         '<p class="rs-unit">Votos válidos · projeção condicional</p>'
         '<div class="rs-score" aria-live="polite" aria-atomic="true">'
@@ -99,6 +101,7 @@ def section_html(data, table):
         '<p class="rs-count-base">Base: <span id="rs-count-eleitorado">'
         f'{fmt(counts["eleitorado"] / 1e6)} milhões de eleitores · TSE 2026 · Brasil, sem exterior</span>. '
         "Totais condicionais, arredondados a 0,1 milhão.</p></div>"
+        '<div id="rs-uncertainty" class="rs-uncertainty" hidden aria-live="polite"><p class="rs-unit">Monte Carlo · faixa central de 90% dos sorteios</p><div id="rs-mc-ranges"></div><p id="rs-mc-frequency"></p><p class="rs-mc-note">Faixa condicional às hipóteses; cobertura contra a urna não validada. Não é chance de vitória medida.</p></div>'
         '<div id="rs-response" class="rs-response"><p>Como a presença relativa muda o placar</p>'
         '<svg id="rs-curve" viewBox="0 0 480 155" role="img" aria-label="Sensibilidade à presença relativa de Flávio, mantendo as outras hipóteses"></svg>'
         '<p id="rs-threshold">O gráfico de sensibilidade aparece com o simulador.</p></div>'
@@ -174,12 +177,13 @@ def section_html(data, table):
             " pp",
             "Cenário livre: desloca a diferença nos válidos, sem adicionar votos. Zero na central; não é correção estimada do erro das pesquisas.",
         )
-        + '</details><button type="button" id="rs-reset" class="rs-reset">Restaurar central Arvor</button>'
+        + '</details><button type="button" id="rs-reset" class="rs-reset">Restaurar central selecionada</button>'
         '<p id="rs-warning" role="status"></p></div></div>'
         '<noscript><p class="note">Placar central disponível sem JavaScript. Ative JavaScript para criar e compartilhar cenários.</p></noscript>'
-        '<p class="rs-central-note"><b>Central da casa:</b> PNAD + propensão Nexus + presença relativa de Flávio +5%. '
+        '<p class="rs-central-note"><b>Hipótese compartilhada:</b> as duas centrais usam propensão Nexus + presença relativa de Flávio +5%. '
         "A escolha de +5% foi feita após o 1º turno; é hipótese declarada, sem taxa por candidato medida na urna. "
-        "<b>Não há probabilidade de vitória ou intervalo preditivo validado.</b></p>"
+        '<span id="rs-base-explanation">Média com peso igual nas casas que permitem sensibilidade de renda.</span> '
+        "<b>Não há probabilidade de vitória ou intervalo preditivo validado contra a urna.</b></p>"
         '<div class="rs-balance"><h3>Para cada 100 eleitores</h3><div class="rs-mass-bar" aria-hidden="true">'
         + balance
         + '</div><div class="rs-mass-labels">'
@@ -192,8 +196,8 @@ def section_html(data, table):
                 ("abstencao", "Ausentes"),
             ]
         )
-        + '</div><p class="note">Eleitorado = válidos + brancos/nulos + abstenção. Percentuais válidos são calculados em cada pesquisa antes da média; as parcelas são cenários por 100 eleitores, não totais medidos.</p></div>'
-        '<details class="rs-evidence" id="projecao-validos"><summary>De onde vem a central e quais pesquisas entram</summary>'
+        + '</div><p class="note">Eleitorado = válidos + brancos/nulos + abstenção. A Média normaliza válidos por pesquisa antes de agregar; a Projeção normaliza a âncora ponderada. As parcelas são cenários por 100 eleitores, não totais medidos.</p></div>'
+        '<details class="rs-evidence" id="projecao-validos"><summary>De onde vem a Central Média Arvor e quais pesquisas entram</summary>'
         f"<p>{esc(data['method']['selection'])} {len(data['polls'])} casas com cruzamento elegível. "
         "As comparações usam as mesmas casas. Não reaproveitamos uma onda antiga de uma casa cuja última divulgação é incompleta.</p>"
         + table(
@@ -225,5 +229,6 @@ def section_html(data, table):
         '<a href="reponderacao_pnad_log.html">Histórico documental</a>.</p>'
         "<p>O link registra os parâmetros e a versão dos dados. A imagem leva data, hipóteses e identificação do cenário. "
         "Cada alteração em relação à central é uma sensibilidade escolhida pelo leitor.</p></details>"
-        f'<script id="rs-data" type="application/json">{encoded}</script></div></section>'
+        + PROJECTION.evidence(data, table)
+        + f'<script id="rs-data" type="application/json">{encoded}</script></div></section>'
     )

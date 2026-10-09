@@ -8,6 +8,7 @@ def cards(root):
     data = json.loads((assets / "reponderacao_simulador.json").read_text())
     history = json.loads((root / "analysis/reponderacao/log.json").read_text())
     central = data["central"]
+    projection = data["central_projection"]
 
     def fmt(number):
         return f"{number:.1f}".replace(".", ",")
@@ -18,11 +19,17 @@ def cards(root):
             "eyebrow": "Arvor · 2º turno · votos válidos",
             "title": "O voto conta.",
             "title_em": "A presença decide.",
-            "lede": "<b>A central da casa, com hipóteses abertas.</b> Simule presença relativa, abstenção, brancos/nulos e indecisos. Compartilhe o link ou a imagem do seu cenário.",
+            "lede": "<b>Duas centrais, hipóteses abertas.</b> Compare a média com a projeção por recência e Monte Carlo. Simule presença relativa e brancos/nulos; compartilhe seu cenário.",
             "stats": [
-                (fmt(central["flavio"]) + "%", "Flávio / válidos"),
-                (fmt(central["lula"]) + "%", "Lula / válidos"),
-                (str(len(data["polls"])), "casas com campo após o 1º turno"),
+                (
+                    fmt(central["flavio"]) + " × " + fmt(central["lula"]),
+                    "Média / Flávio × Lula / válidos",
+                ),
+                (
+                    fmt(projection["flavio"]) + " × " + fmt(projection["lula"]),
+                    "Projeção / Flávio × Lula / válidos",
+                ),
+                ("+5%", "hipótese de presença relativa F"),
             ],
             "foot": f"{data['reference']} · central condicional · presença relativa F +5%",
             "accent": "blue",

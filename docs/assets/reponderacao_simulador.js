@@ -6,7 +6,7 @@
   let M=window.Reponderacao2T;
   const current=JSON.parse(document.querySelector('#rs-data').textContent);
   const engines=new Map([[current.engine,M]]);
-  let data=current, p={...data.defaults}, result=data.central, loading=false, loadId=0;
+  let data=current, p={...data.defaults}, result=data.central, loading=false, loadId=0, mcId=0, mcTimer;
   const $=id=>document.getElementById('rs-'+id);
   const fmt=n=>n.toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1});
   const signed=n=>(n>0?'+':n<0?'−':'')+fmt(Math.abs(n));
@@ -14,6 +14,9 @@
   const electorate=()=>data.electorate || current.electorate;
   const counts=()=>window.ReponderacaoContagem.counts(result,electorate());
   const equal=(a,b)=>Object.keys(data.defaults).every(k=>a[k]===b[k]);
+  const centre=()=>p.centro || 'media';
+  const centreNames={media:'Central Média Arvor',projecao:'Central Projeção Arvor'};
+  const centralParams=()=>({...data.defaults,...(data.projection?{centro:centre()}:{})});
   const presets=current.presets;
   const names={publicado:'Publicado',pnad:'PNAD',modelo:'PNAD + comparecimento'};
   const ageNames={central:'idade central',idosos60:'presença 60+: 60%',idosos80:'presença 60+: 80%'};
@@ -27,8 +30,37 @@
   }
   mobile.addEventListener('change',positionPrimary);positionPrimary();
   function label() {
-    const preset=presets.find(x=>equal(p,{...data.defaults,...x.parametros}));
-    return preset?.nome || 'Meu cenário';
+    if(equal(p,centralParams())) return centreNames[centre()];
+    const preset=presets.find(x=>equal(p,{...centralParams(),...x.parametros}));
+    return `${preset?.nome || 'Meu cenário'} · ${centre()==='projecao'?'Projeção':'Média'}`;
+  }
+  function simulations() {
+    clearTimeout(mcTimer);const id=++mcId;
+    const visible=centre()==='projecao' && Boolean(data.projection) && typeof M.simulate==='function';
+    $('uncertainty').hidden=!visible;
+    if(!visible) return;
+    $('mc-ranges').textContent='Calculando os 2.000 sorteios desta versão…';$('mc-frequency').textContent='';
+    const chosen=data, params={...p}, engine=M;
+    mcTimer=setTimeout(()=>{
+      if(id!==mcId) return;
+      const u=engine.simulate(chosen,params);
+      $('mc-ranges').textContent=`Flávio ${fmt(u.flavio.p05)}–${fmt(u.flavio.p95)}% · Lula ${fmt(u.lula.p05)}–${fmt(u.lula.p95)}%`;
+      $('mc-frequency').textContent=`Flávio à frente em ${fmt(100*u.share_flavio_ahead)}% dos ${u.runs.toLocaleString('pt-BR')} sorteios nestas hipóteses. Diferença F−L: ${signed(u.gap.p05)} a ${signed(u.gap.p95)} pp.`;
+      window.reponderacaoCenario.monte_carlo=u;
+      document.dispatchEvent(new CustomEvent('reponderacao:cenario',{detail:window.reponderacaoCenario}));
+    },80);
+  }
+  function centralCards() {
+    for(const button of root.querySelectorAll('[data-rs-central]')) {
+      const key=button.dataset.rsCentral, available=key==='media' || Boolean(data.projection);
+      button.disabled=!available;button.setAttribute('aria-pressed',String(key===centre()));
+      button.closest('article').classList.toggle('is-active',key===centre());
+      const value=key==='media'?data.central:data.central_projection;
+      $('central-score-'+key).textContent=available?`${fmt(value.flavio)}% × ${fmt(value.lula)}%`:'Sem modelo nesta versão';
+    }
+    $('base-explanation').textContent=centre()==='media'
+      ? 'Média: peso igual entre casas com cruzamento de renda elegível. Monte Carlo não participa desta central.'
+      : `Projeção: recência em ${data.projection.selected.length} casas; resultado publicado quando falta renda. ${data.projection.trend.pnad.status}`;
   }
   function curve() {
     const points=[];
@@ -64,8 +96,8 @@
     $('label').textContent=label();$('reference').textContent=data.reference;
     $('gap').textContent=signed(result.diferenca_flavio_lula)+' pp';
     $('count-gap').textContent=signed(totals.diferenca_flavio_lula/1e6)+' milhões de votos';
-    const central=M.evaluate(data);
-    $('versus').textContent=equal(p,data.defaults)?'Positivo favorece Flávio; negativo favorece Lula.':`${signed(result.diferenca_flavio_lula-central.diferenca_flavio_lula)} pp em relação à central da versão ${data.reference}.`;
+    const central=M.evaluate(data,centralParams());
+    $('versus').textContent=equal(p,centralParams())?'Positivo favorece Flávio; negativo favorece Lula.':`${signed(result.diferenca_flavio_lula-central.diferenca_flavio_lula)} pp em relação à ${centreNames[centre()]} desta versão.`;
     $('absent').textContent=fmt(result.abstencao)+'%';
     $('invalid').textContent=fmt(100*result.branco_nulo/result.comparecimento)+'%';
     $('attendance').textContent=fmt(result.comparecimento)+'%';
@@ -79,13 +111,14 @@
       $('mass-'+k).textContent=fmt(v);
       const el=root.querySelector(`[data-mass="${k}"]`);el.style.width=v+'%';el.title=`${k}: ${fmt(v)} por 100 eleitores`;
     }
-    root.querySelectorAll('[data-rs-preset]').forEach(b=>b.setAttribute('aria-pressed',String(equal(p,{...data.defaults,...presets.find(x=>x.id===b.dataset.rsPreset).parametros}))));
+    root.querySelectorAll('[data-rs-preset]').forEach(b=>b.setAttribute('aria-pressed',String(equal(p,{...centralParams(),...presets.find(x=>x.id===b.dataset.rsPreset).parametros}))));
     const saturated=Object.values(result.taxas).some(q=>q>=1-1e-9);
     $('warning').textContent=[data!==current?`Dados arquivados de ${data.reference}; “Restaurar” volta à versão atual.`:'',saturated?'Uma taxa atingiu 100%; o teto físico limita a razão de presença.':'',p.modo!=='modelo'?'Base sem propensão Nexus; a presença relativa continua sendo sua hipótese livre.':''].filter(Boolean).join(' ');
-    curve();
+    centralCards();curve();
     if(updateHash) history.replaceState(null,'',M.encode(data,p));
     window.reponderacaoCenario={result,params:p,version:data.version,totais:totals,base_eleitorado:electorate()};
     document.dispatchEvent(new CustomEvent('reponderacao:cenario',{detail:window.reponderacaoCenario}));
+    simulations();
   }
   async function engineFor(chosen) {
     if(!/^[a-f0-9]{16}$/.test(chosen.engine)) throw Error('Motor do cenário não identificado.');
@@ -103,7 +136,7 @@
   async function fromHash() {
     const id=++loadId;
     const version=location.hash.match(/(?:#sim=|;)v:([a-f0-9]{16})(?:;|$)/)?.[1];
-    loading=true;
+    loading=true;clearTimeout(mcTimer);++mcId;
     try {
       let chosen=current;
       if(version && version!==current.version) {
@@ -129,9 +162,12 @@
     render(true);
   });
   root.querySelectorAll('[data-rs-preset]').forEach(el=>el.addEventListener('click',()=>{
-    if(loading) return;p={...data.defaults,...presets.find(x=>x.id===el.dataset.rsPreset).parametros};render(true);
+    if(loading) return;p={...centralParams(),...presets.find(x=>x.id===el.dataset.rsPreset).parametros};render(true);
   }));
-  $('reset').addEventListener('click',()=>{++loadId;loading=false;M=engines.get(current.engine);data=current;p={...current.defaults};render(true);$('share-state').textContent='';});
+  root.querySelectorAll('[data-rs-central]').forEach(el=>el.addEventListener('click',()=>{
+    if(loading || el.disabled) return;p={...p,centro:el.dataset.rsCentral};render(true);
+  }));
+  $('reset').addEventListener('click',()=>{const key=data===current?centre():'media';++loadId;loading=false;M=engines.get(current.engine);data=current;p={...current.defaults,centro:key};render(true);$('share-state').textContent='';});
   function shareUrl(){return new URL('reponderacao_pnad.html',location.href).href+M.encode(data,p);}
   $('copy').addEventListener('click',async()=>{
     try{await navigator.clipboard.writeText(shareUrl());$('share-state').textContent='Link copiado: parâmetros e versão dos dados preservados.';}
@@ -144,7 +180,9 @@
     const text=(t,x,y,font,color)=>{ctx.font=font;ctx.fillStyle=color;ctx.fillText(t,x,y);};
     text('ARVOR / ELEIÇÕES 2026 / 2º TURNO',55,52,'17px sans-serif','#d9ef96');
     text(label()+' · '+data.reference,55,96,'24px Georgia','#f4f0e7');
-    text('Votos válidos · cenário condicional',55,136,'18px sans-serif','#c5d2cb');
+    const u=centre()==='projecao'?M.simulate(data,p):null;
+    const subtitle=u?`Válidos · 90% dos sorteios: F ${fmt(u.flavio.p05)}–${fmt(u.flavio.p95)}% / L ${fmt(u.lula.p05)}–${fmt(u.lula.p95)}%`:'Votos válidos · cenário condicional';
+    text(subtitle,55,136,'18px sans-serif','#c5d2cb');
     text('FLÁVIO BOLSONARO',55,178,'20px sans-serif','#a9cbff');text('LULA',650,178,'20px sans-serif','#f7b0aa');
     text(fmt(result.flavio)+'%',50,265,'90px Georgia','#a9cbff');text(fmt(result.lula)+'%',645,265,'90px Georgia','#f7b0aa');
     text(millions(totals.flavio)+' milhões de votos',55,299,'22px sans-serif','#a9cbff');text(millions(totals.lula)+' milhões de votos',650,299,'22px sans-serif','#f7b0aa');
@@ -169,10 +207,10 @@
   });
   if(navigator.share) {
     $('share').hidden=false;$('share').addEventListener('click',async()=>{
-      try{const blob=await imageBlob();const file=new File([blob],`arvor-2turno-${data.reference}.png`,{type:'image/png'});const totals=counts();const payload={title:'Meu cenário do 2º turno · Arvor',text:`Flávio ${fmt(result.flavio)}% (${millions(totals.flavio)} mi) × Lula ${fmt(result.lula)}% (${millions(totals.lula)} mi). Votos válidos, cenário condicional.`,url:shareUrl()};if(navigator.canShare?.({files:[file]}))payload.files=[file];await navigator.share(payload);}
+      try{const blob=await imageBlob();const file=new File([blob],`arvor-2turno-${data.reference}.png`,{type:'image/png'});const totals=counts();const payload={title:'Meu cenário do 2º turno · Arvor',text:`${label()}: Flávio ${fmt(result.flavio)}% (${millions(totals.flavio)} mi) × Lula ${fmt(result.lula)}% (${millions(totals.lula)} mi). Votos válidos, cenário condicional.`,url:shareUrl()};if(navigator.canShare?.({files:[file]}))payload.files=[file];await navigator.share(payload);}
       catch(e){if(e.name!=='AbortError')$('share-state').textContent='Use “Copiar link” ou “Baixar imagem” para compartilhar.';}
     });
   }
   root.querySelector('.rs-controls').hidden=false;root.querySelector('.rs-share').hidden=false;
-  window.addEventListener('hashchange',fromHash);render();fromHash();
+  window.addEventListener('hashchange',()=>{if(!location.hash || location.hash.startsWith('#sim=')) fromHash();});render();fromHash();
 })();

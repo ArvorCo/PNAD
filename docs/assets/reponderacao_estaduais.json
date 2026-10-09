@@ -1,0 +1,61 @@
+{
+  "reference": "2026-10-09",
+  "selected": [
+    {
+      "id": "datafolha_DF_2026-10-07",
+      "instituto": "Datafolha",
+      "uf": "DF",
+      "registro_tse": "BR-09856/2026",
+      "registro_tse_estadual": "DF-03365/2026",
+      "campo": {
+        "inicio": "2026-10-06",
+        "fim": "2026-10-07"
+      },
+      "divulgacao": "2026-10-09",
+      "divulgacao_hora_brt": "18:16",
+      "n": 910,
+      "margem_pp": 3,
+      "contratante": "TV Globo e Folha de S.Paulo",
+      "publicado": {
+        "flavio": 49,
+        "lula": 43,
+        "branco_nulo": 6,
+        "indecisos": 2
+      },
+      "validos_publicados": {
+        "flavio": 54,
+        "lula": 46
+      },
+      "source": {
+        "url": "https://www1.folha.uol.com.br/poder/2026/10/datafolha-no-distrito-federal-flavio-tem-54-e-lula-46-em-votos-validos-no-2o-turno.shtml",
+        "status": 200,
+        "arquivo": "data/originals/reponderacao_estaduais_20261009/datafolha_DF_presidente_20261009.html",
+        "sha256": "e430ef8dddfe3a3638892f033c4673aec9a51ebad9d5b70282e9654d3ed9084f"
+      },
+      "income_available": false,
+      "notes": [
+        "Sem cruzamento de voto por renda na matéria: conservar publicado, sem imputar PNAD.",
+        "Os válidos divulgados (54 × 46) não são a divisão literal dos inteiros 49 e 43 (53,26 × 46,74); compatíveis com arredondamento independente dos totais. Preservamos as duas métricas, sem substituir a fonte.",
+        "Usar no diagnóstico estadual; uma UF não representa o país e não é somada à média nacional como mais uma casa."
+      ],
+      "source_record": "analysis/reponderacao/estaduais/datafolha_DF_20261009.json",
+      "source_record_sha256": "b39a79cbb3e9deafc5a047dd1edcb545face94472c19e05cf5296dbb5fc4b818",
+      "electorate": 2258320,
+      "validos_normalizados": {
+        "flavio": 53.26086956521739,
+        "lula": 46.73913043478261
+      }
+    }
+  ],
+  "covered_ufs": [
+    "DF"
+  ],
+  "covered_electorate": 2258320,
+  "electorate": 157828968,
+  "coverage_pct": 1.4308653402587033,
+  "use": "Diagnóstico por UF; não altera a central nacional nesta versão.",
+  "reason": "A âncora atual adapta os componentes nacionais do motor. A camada territorial precisa de cobertura atual e calibração por eleitorado, comparecimento e efeitos de casa. Somar uma estadual à média nacional ou transportar o voto do 1º turno sem modelo de transferência daria precisão artificial.",
+  "source_electorate": "analysis/apuracao_2026/dados/presidente.json",
+  "source_electorate_sha256": "0bb01ddb79108500a55987b5be1fc437f38ef5f88509ec846a00df8dd7853788",
+  "adapter_sha256": "db6c622c8bd0c835fcc41c57cdcc58b2d3784e6a79c27cbbaefd11faf7e9744d"
+}

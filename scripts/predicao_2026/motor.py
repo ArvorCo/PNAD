@@ -477,23 +477,8 @@ def projection_sd(national, base):
     return float(national.get("incerteza_projecao_pp", {}).get(base, 0.0))
 
 
-def simulate(
-    states, national, params=None, *, runs=6000, seed=20261003, common_sd_pp=2.0
-):
-    """Distribuição preditiva condicional. Parâmetros de erro não calibrados em 2026."""
-    if runs < 100 or common_sd_pp < 0:
-        raise ValueError("Simulação requer ao menos 100 sorteios e erro não negativo")
-    p = {**DEFAULTS, **(params or {})}
-    unsupported = [k for k in DEFAULTS if k not in SIMULATED and p[k] != DEFAULTS[k]]
-    if unsupported:
-        raise ValueError(f"Simulação Python não reproduz: {', '.join(unsupported)}")
-    base = p["base"]
-    f = p["indecisos_flavio"]
-    if f is not None and not 0 <= f <= 1:
-        raise ValueError("Destino dos indecisos fora de [0,1]")
-    if not 0 <= p["indecisos_validos"] <= 1:
-        raise ValueError("indecisos_validos precisa estar em [0,1]")
-    rng = np.random.default_rng(seed)
+def target_draws(national, base, runs, rng, common_sd_pp=2.0):
+    """Núcleo nacional compartilhado pelos dois turnos; sem sorteios territoriais."""
     ps, kind, shift = bootstrap_design(national, base)
     # Bootstrap Bayesiano por casa + multinomial com n/deff, uma onda por casa.
     sample = np.stack(
@@ -521,6 +506,29 @@ def simulate(
     )
     targets[:, 0] -= transfer
     targets[:, 1] += transfer
+    return targets, extra_sd, total_sd, shift
+
+
+def simulate(
+    states, national, params=None, *, runs=6000, seed=20261003, common_sd_pp=2.0
+):
+    """Distribuição preditiva condicional. Parâmetros de erro não calibrados em 2026."""
+    if runs < 100 or common_sd_pp < 0:
+        raise ValueError("Simulação requer ao menos 100 sorteios e erro não negativo")
+    p = {**DEFAULTS, **(params or {})}
+    unsupported = [k for k in DEFAULTS if k not in SIMULATED and p[k] != DEFAULTS[k]]
+    if unsupported:
+        raise ValueError(f"Simulação Python não reproduz: {', '.join(unsupported)}")
+    base = p["base"]
+    f = p["indecisos_flavio"]
+    if f is not None and not 0 <= f <= 1:
+        raise ValueError("Destino dos indecisos fora de [0,1]")
+    if not 0 <= p["indecisos_validos"] <= 1:
+        raise ValueError("indecisos_validos precisa estar em [0,1]")
+    rng = np.random.default_rng(seed)
+    targets, extra_sd, total_sd, shift = target_draws(
+        national, base, runs, rng, common_sd_pp
+    )
     domestic = [s for s in states if s["uf"] != "ZZ"]
     weights = normalize([s["eleitorado"] for s in domestic])
     q = np.stack(

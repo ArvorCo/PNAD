@@ -578,8 +578,14 @@ def fe_regression(
     # Erro-padrão pelo método delta com a covariância conjunta das inclinações.
     cov_lf = _joint_slope_cov(X, w, resid, inv, dof)
     gain = lo + fl
-    grad = np.array([-fl / gain**2, lo / gain**2])
-    share_se = float(np.sqrt(max(grad @ cov_lf @ grad, 0)))
+    # No 2º turno binário, os dois ganhos somam zero: não há migração da
+    # terceira via a dividir. A inclinação e sua covariância seguem válidas.
+    if abs(gain) > 1e-10:
+        grad = np.array([-fl / gain**2, lo / gain**2])
+        share_se = float(np.sqrt(max(grad @ cov_lf @ grad, 0)))
+        fraction = fl / gain
+    else:
+        share_se, fraction = None, None
     return {
         "janela_dias": days,
         "regra_janela": rule,
@@ -588,7 +594,7 @@ def fe_regression(
         "graus_liberdade": dof,
         "quadratica": quadratic,
         "categorias": out,
-        "fracao_flavio_do_ganho": fl / gain if gain else None,
+        "fracao_flavio_do_ganho": fraction,
         "fracao_flavio_dp": share_se,
         "cov_inclinacao_lula_flavio": cov_lf.tolist(),
         "nota": "Válidos = Lula + Flávio + demais. Tendência centrada no ponto médio da janela; peso min(n, 2000) por onda e variância residual estimada, que inclui o erro não amostral.",

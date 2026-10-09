@@ -13,6 +13,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 MODEL = importlib.import_module("reponderacao-validos")
 COUNT = importlib.import_module("reponderacao-contagem")
+PROJECTION = importlib.import_module("reponderacao-projecao")
 KEYS = ("flavio", "lula", "indecisos", "branco_nulo")
 LIMITS = {
     "presenca_relativa": (-30, 30),
@@ -27,6 +28,10 @@ LIMITS = {
 
 def parameters(data, params=None):
     p = {**data["defaults"], **(params or {})}
+    if p.get("centro", "media") not in ("media", "projecao"):
+        raise ValueError("Central inválida")
+    if p.get("centro") == "projecao" and "projection" not in data:
+        raise ValueError("Projeção não disponível nesta versão")
     if p["modo"] not in ("publicado", "pnad", "modelo"):
         raise ValueError("Modo inválido")
     if p["idade"] not in data["rates"]:
@@ -106,7 +111,18 @@ def poll_result(row, data, p):
 
 def evaluate(data, params=None):
     p = parameters(data, params)
-    polls = [poll_result(row, data, p) for row in data["polls"]]
+    rows = data["polls"]
+    if p.get("centro") == "projecao":
+        rows = [
+            {
+                "id": "ancora_projecao",
+                "instituto": "Âncora algorítmica (não é pesquisa)",
+                "divulgacao": data["reference"],
+                "published": data["projection"]["anchors"]["published"],
+                "pnad": data["projection"]["anchors"]["pnad"],
+            }
+        ]
+    polls = [poll_result(row, data, p) for row in rows]
     if not polls:
         raise ValueError("Nenhuma pesquisa elegível no 2º turno")
     out = {
@@ -131,6 +147,60 @@ def evaluate(data, params=None):
     out["polls"] = polls
     out["parametros"] = p
     return out
+
+
+def simulate(data, params=None):
+    """Reaplica TODOS os controles aos mesmos sorteios nacionais versionados."""
+    import numpy as np
+
+    p = parameters(data, {**(params or {}), "centro": "projecao"})
+    kind = "published" if p["modo"] == "publicado" else "pnad"
+    draws = data["projection"]["mc"]["draws"][kind]
+    samples = []
+    for draw in draws:
+        mass = dict(zip(KEYS, draw, strict=True))
+        row = {
+            "id": "sorteio",
+            "instituto": "Monte Carlo",
+            "divulgacao": data["reference"],
+            "published": mass,
+            "pnad": mass,
+        }
+        result = poll_result(row, data, p)
+        result["por_100_eleitores"] = {
+            "flavio": result["validos"] * result["flavio"] / 100,
+            "lula": result["validos"] * result["lula"] / 100,
+            "branco_nulo": result["branco_nulo"],
+            "abstencao": result["abstencao"],
+        }
+        samples.append(result)
+
+    def quantiles(values):
+        return dict(
+            zip(
+                ("p05", "p50", "p95"),
+                np.quantile(values, [0.05, 0.5, 0.95]).tolist(),
+                strict=True,
+            )
+        )
+
+    return {
+        "runs": len(samples),
+        "flavio": quantiles([s["flavio"] for s in samples]),
+        "lula": quantiles([s["lula"] for s in samples]),
+        "gap": quantiles([s["flavio"] - s["lula"] for s in samples]),
+        "share_flavio_ahead": sum(s["flavio"] > s["lula"] for s in samples)
+        / len(samples),
+        "totals": {
+            k: quantiles(
+                [
+                    s["por_100_eleitores"][k] * data["electorate"]["total"] / 100
+                    for s in samples
+                ]
+            )
+            for k in ("flavio", "lula", "branco_nulo", "abstencao")
+        },
+    }
 
 
 def preferences(values, fallback):
@@ -174,12 +244,14 @@ def build(data, forecast, nexus):
         "schema": 1,
         "reference": data["referencia"],
         "electorate": COUNT.electorate(),
+        "projection": PROJECTION.build(data, preferences),
         "polls": rows,
         "engine": hashlib.sha256(
             (ROOT / "docs/assets/reponderacao_simulador_motor.js").read_bytes()
         ).hexdigest()[:16],
         "excluded": block["excluded"],
         "defaults": {
+            "centro": "media",
             "modo": "modelo",
             "idade": "central",
             "presenca_relativa": 5.0,
@@ -197,14 +269,16 @@ def build(data, forecast, nexus):
         "limits": LIMITS,
         "method": {
             "selection": "Última onda por casa, divulgada na janela de sete dias; no pós-1º turno, apenas campo iniciado depois de 04/10.",
-            "central": "PNAD + propensão Nexus + presença relativa de Flávio +5%, escolha declarada após o 1º turno, não parâmetro aprendido.",
+            "central": "Central Média Arvor: peso igual entre casas com cruzamento de renda. Central Projeção Arvor: recência, inclinação encolhida e Monte Carlo, PNAD onde disponível e publicado onde falta. Ambas partem de propensão Nexus + presença relativa de Flávio +5%, escolha declarada após o 1º turno, não parâmetro aprendido.",
             "attendance": "Comparecimento nacional ancorado no cenário histórico Nexus; escala comum preserva a razão das taxas enquanto nenhuma atinge o teto de 100%.",
             "undecided": "Proporcionais aos candidatos que comparecem; dados de não escolha sem renda conservam o publicado, com indicação na ficha.",
-            "aggregation": "Normalizar válidos dentro de cada pesquisa, depois média de peso igual; a contabilidade por 100 eleitores usa a massa válida média e esse mesmo placar.",
+            "aggregation": "Média: normalizar válidos dentro de cada pesquisa, depois peso igual; contabilidade por 100 eleitores usa a massa válida média e esse placar. Projeção: agregar vetores completos por recência e inclinação, aplicar os controles à âncora e só então normalizar válidos.",
             "limits": "Sensibilidade condicional, sem probabilidade de vitória ou intervalo preditivo validado. Nenhum voto ou preferência territorial é imputado.",
         },
     }
     out["central"] = evaluate(out)
+    out["central_projection"] = evaluate(out, {"centro": "projecao"})
+    out["projection"]["uncertainty"] = simulate(out)
     out["version"] = hashlib.sha256(
         json.dumps(out, sort_keys=True).encode()
     ).hexdigest()[:16]
@@ -221,10 +295,13 @@ def write(data, forecast):
     if frozen_engine.exists() and frozen_engine.read_bytes() != engine.read_bytes():
         raise ValueError("Motor arquivado com conteúdo diferente")
     frozen_engine.write_bytes(engine.read_bytes())
-    encoded = json.dumps(result, ensure_ascii=False, indent=2) + "\n"
+    encoded = PROJECTION.encode(result)
     snapshot = folder / f"{result['version']}.json"
     if snapshot.exists() and snapshot.read_text() != encoded:
         raise ValueError("Snapshot de cenário já existe com conteúdo diferente")
     snapshot.write_text(encoded)
     (ROOT / "docs/assets/reponderacao_simulador.json").write_text(encoded)
+    (ROOT / "docs/assets/reponderacao_estaduais.json").write_text(
+        json.dumps(result["projection"]["states"], ensure_ascii=False, indent=2) + "\n"
+    )
     return result

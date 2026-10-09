@@ -304,14 +304,16 @@ def national(today, half_life=NATIONAL_HALF_LIFE, window_start=WINDOW_START):
     }
 
 
-def sloped_central(selected, polls, today, days=28):
+def sloped_central(selected, polls, today, days=28, *, election=ELECTION):
     """Central inclusiva deslocada pela inclinação encolhida de `days` dias,
     da data efetiva da central (ponto médio ponderado) até a eleição."""
     w = weights(selected)
     base_vector = np.average([p["previsao_vetor"] for p in selected], axis=0, weights=w)
     start = float(w @ [midpoint(p["campo"]) for p in selected])
-    slopes, fitted = tendencia.shrunk_slopes(polls, today, days)
-    horizon = ELECTION.toordinal() - start
+    slopes, fitted = (
+        tendencia.shrunk_slopes(polls, today, days) if polls else (np.zeros(3), None)
+    )
+    horizon = max(0.0, election.toordinal() - start)
     vector = tendencia.shift_valid(base_vector, slopes, horizon)
     valid = 100 * vector[:3] / vector[:3].sum()
     # Incerteza da extrapolação na diferença F−L: horizonte × dp(β_F − β_L),
@@ -332,9 +334,11 @@ def sloped_central(selected, polls, today, days=28):
         "inclinacoes_encolhidas_validos_pp_dia": dict(
             zip(GROUPS[:3], slopes.tolist(), strict=True)
         ),
-        "inclinacoes_brutas_validos_pp_dia": {
-            k: fitted["categorias"][k]["inclinacao_pp_dia"] for k in GROUPS[:3]
-        },
+        "inclinacoes_brutas_validos_pp_dia": (
+            {k: fitted["categorias"][k]["inclinacao_pp_dia"] for k in GROUPS[:3]}
+            if fitted is not None
+            else {}
+        ),
         "vetor": vector.tolist(),
         "validos_pct": dict(zip(GROUPS[:3], valid.tolist(), strict=True)),
         "margem_flavio_lula_validos_pp": float(valid[1] - valid[0]),

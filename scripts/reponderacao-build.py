@@ -624,17 +624,16 @@ def build_html() -> str:
 
 def placar_home() -> str:
     """Placar compacto da capa, com a mesma convenção de fato e inferência."""
-    central = json.loads((ASSETS / "reponderacao_simulador.json").read_text())[
-        "central"
-    ]
+    simulation = json.loads((ASSETS / "reponderacao_simulador.json").read_text())
+    central, projection = simulation["central"], simulation["central_projection"]
     celulas = [
         (
             f"{br(central['flavio'], 1)} × {br(central['lula'], 1)}",
-            "Central condicional · Flávio × Lula / válidos",
+            "Central Média Arvor · Flávio × Lula / válidos",
         ),
         (
-            sinal(central["diferenca_flavio_lula"], 1),
-            "Diferença Flávio − Lula / pp dos válidos",
+            f"{br(projection['flavio'], 1)} × {br(projection['lula'], 1)}",
+            "Central Projeção Arvor · Flávio × Lula / válidos",
         ),
         (br(central["abstencao"], 1) + "%", "Abstenção / eleitorado"),
         ("+5%", "Hipótese de presença relativa de Flávio"),

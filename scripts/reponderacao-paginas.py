@@ -204,7 +204,7 @@ def current_html(ns):
             (".ledger", "Médias sobre o total de entrevistados"),
         ],
     )
-    description = f"Central do 2º turno: Flávio {ns['br'](simulation['central']['flavio'], 1)} × Lula {ns['br'](simulation['central']['lula'], 1)} nos válidos. Simule abstenção relativa, brancos/nulos e indecisos."
+    description = f"Duas centrais do 2º turno: Média Arvor {ns['br'](simulation['central']['flavio'], 1)} × {ns['br'](simulation['central']['lula'], 1)}; Projeção Arvor {ns['br'](simulation['central_projection']['flavio'], 1)} × {ns['br'](simulation['central_projection']['lula'], 1)}. Flávio × Lula nos válidos; simule abstenção e brancos/nulos."
     return frame(
         ns,
         "2º turno: votos válidos e cenários de comparecimento",
@@ -223,6 +223,7 @@ def current_html(ns):
         ],
         [
             ("#simulador", "Simulador"),
+            ("#modelo-projecao", "Projeção"),
             ("#cobertura-atual", "Cobertura"),
             ("#segundo-turno", "Séries"),
             ("#institutos-2t", "Institutos"),

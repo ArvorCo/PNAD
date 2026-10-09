@@ -3,6 +3,22 @@
 .rs-intro h1{font:400 clamp(38px,4.2vw,61px)/1.02 Georgia,serif;letter-spacing:-.05em;margin:10px 0 0}
 .rs-intro h1 em{font-style:normal;color:var(--green)}
 .rs-intro>p{font-size:16px;line-height:1.6;max-width:430px;margin-bottom:3px}
+.rs-centrals{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:0 0 24px}
+.rs-central-card{border:1px solid var(--line);padding:18px 22px;background:var(--panel);min-width:0}
+.rs-central-card.is-active,.rs-central-card:has(button[aria-pressed=true]){border-color:var(--green);box-shadow:inset 0 3px var(--green);background:#28705f08}
+.rs-central-card>button{display:block;width:100%;padding:0;border:0;background:none;text-align:left;cursor:pointer;color:var(--ink)}
+.rs-central-card>button:focus-visible{outline:2px solid var(--green);outline-offset:5px}
+.rs-central-card>button:disabled{cursor:default;opacity:.55}
+.rs-central-card>button:disabled b{white-space:normal;font-size:16px}
+.rs-central-card>button span{display:block;font:400 22px/1.25 Georgia,serif}.rs-central-card b{display:block;font:400 30px/1.2 Georgia,serif;font-variant-numeric:tabular-nums;margin:9px 0 4px;color:var(--green)}
+.rs-central-card small{display:block;font:10px/1.5 Avenir,sans-serif;color:var(--muted)}
+.rs-central-card p{font-size:12px;line-height:1.6;margin:13px 0 0;color:var(--muted)}
+.rs-central-card summary{font-size:11px;font-weight:600;cursor:pointer;padding:12px 0 3px;min-height:42px;list-style:none}.rs-central-card summary::-webkit-details-marker{display:none}
+.rs-central-card summary span{display:inline-grid;place-items:center;width:20px;height:20px;border:1px solid var(--green);border-radius:50%;margin-right:5px;color:var(--green)}
+.rs-central-card details[open] summary span{background:var(--green);color:var(--paper)}
+.rs-uncertainty{border:1px solid #91a69d;padding:13px 15px;margin:20px 0;background:#ffffff06}
+.rs-uncertainty .rs-unit{margin:0 0 8px;color:#d9ef96;opacity:1}.rs-uncertainty>div{font:400 17px/1.5 Georgia,serif;color:#f4f0e7}
+.rs-uncertainty p{font-size:10px;line-height:1.65;color:#c5d2cb;margin:7px 0 0}
 .rs-app{display:grid;grid-template-columns:1.06fr 1fr;border:1px solid var(--ink);background:var(--panel)}
 .rs-app button,.rs-app select{font:inherit;color:inherit}
 .rs-app button{cursor:pointer;min-height:42px}
@@ -60,6 +76,7 @@
 @media(max-width:800px){.rs-intro{grid-template-columns:1fr;gap:16px}.rs-intro h1{font-size:44px}.rs-intro>p{font-size:14px;max-width:560px}.rs-app{grid-template-columns:1fr}.rs-controls{padding:25px}.rs-result{padding:25px}.rs-score strong{font-size:64px}.rs-archives{grid-template-columns:1fr;gap:20px}.rs-mass-labels{gap:12px}.rs-section{padding-top:24px}}
 @media(max-width:480px){.rs-section .wrap{padding:0 19px}.rs-intro h1{font-size:39px}.rs-result,.rs-controls{padding:21px}.rs-score strong{font-size:55px}.rs-score{grid-template-columns:1.15fr 1fr;gap:12px}.rs-score span{font-size:11px}.rs-result-top{font-size:9px}.rs-account span{font-size:10px}.rs-gap b{font-size:25px}.rs-share button{padding:7px 10px}.rs-control label{font-size:12px}.rs-primary label{font-size:14px}.rs-mass-labels{display:grid;grid-template-columns:1fr 1fr}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media(max-width:480px){.rs-centrals{gap:9px;margin-bottom:18px}.rs-central-card{padding:15px 12px}.rs-central-card>button span{font-size:17px;min-height:43px}.rs-central-card b{font-size:20px;white-space:nowrap}.rs-central-card p{font-size:10px;line-height:1.55}.rs-central-card small{font-size:9px}.rs-central-card summary{font-size:10px}.rs-central-card summary span{width:18px;height:18px}.rs-uncertainty>div{font-size:15px}}
 @media(max-width:480px){.rs-score .rs-vote-count{font-size:10px}.rs-account{gap:16px 12px}.rs-account b{font-size:26px}.rs-account small{font-size:10px}.rs-account b small{font-size:10px}}
 .rs-vox-income{max-width:650px;margin:20px 0}.rs-vox-income>div{display:flex;height:15px;background:#eee}.rs-vox-income span{background:#28705f}.rs-vox-income span:nth-child(2){background:#ddb649}.rs-vox-income span:nth-child(3){background:#6a98d1}.rs-vox-income span:nth-child(4){background:#192e2b}.rs-vox-income p{font-size:13px;margin-top:8px}
 @media(max-width:800px){.rs-result .rs-primary{border-top:1px solid #ffffff25;padding-top:20px}.rs-result .rs-primary label{color:#f4f0e7}.rs-result .rs-primary output{color:#d9ef96}.rs-result .rs-primary p{color:#c5d2cb}.rs-result .rs-rates{color:#c5d2cb;background:#ffffff08}.masthead{gap:16px}.masthead>span{font-size:9px;text-align:right;max-width:180px}}
