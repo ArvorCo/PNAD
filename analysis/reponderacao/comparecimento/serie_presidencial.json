@@ -1,0 +1,88 @@
+{
+  "scope": "Brasil e exterior",
+  "years": [
+    {
+      "year": 2002,
+      "turnout_1_pct": 82.2566097923117,
+      "turnout_2_pct": 79.53231048682835,
+      "source": {
+        "url": "https://static.poder360.com.br/2021/08/2003_tse_relatorio_eleicoes_2002-2.pdf",
+        "note": "Relatório das Eleições 2002, TSE, p. 26; país incluindo exterior. Eleitorado 115.254.113; comparecimento 94.804.126 e 91.664.259. Cópia do documento primário hospedada pelo Poder360.",
+        "accessed": "2026-10-09",
+        "sha256": "f18ea3e4f02bcbb04bb28649dea0820ead03e100aa1d736153a36938c5b165b6"
+      },
+      "counts": {
+        "electorate_1": 115254113,
+        "electorate_2": 115254113,
+        "attendance_1": 94804126,
+        "attendance_2": 91664259
+      }
+    },
+    {
+      "year": 2006,
+      "turnout_1_pct": 83.25,
+      "turnout_2_pct": 81.01,
+      "source": {
+        "url": "https://www.camara.leg.br/noticias/143620-abstencoes-sobem-no-2o-turno-e-se-igualam-a-indice-de-1998/",
+        "note": "Agência Câmara, 01/11/2010: abstenção nacional 16,75% e 18,99%. Percentuais publicados arredondados; não inventamos totais exatos.",
+        "accessed": "2026-10-09"
+      }
+    },
+    {
+      "year": 2010,
+      "turnout_1_pct": 81.88,
+      "turnout_2_pct": 78.5,
+      "source": {
+        "url": "https://www.camara.leg.br/noticias/143620-abstencoes-sobem-no-2o-turno-e-se-igualam-a-indice-de-1998/",
+        "note": "Agência Câmara, 01/11/2010: abstenção nacional 18,12% e 21,50%. Percentuais publicados arredondados.",
+        "accessed": "2026-10-09"
+      }
+    },
+    {
+      "year": 2014,
+      "turnout_1_pct": 80.61,
+      "turnout_2_pct": 78.89809882712365,
+      "source": {
+        "url": "https://www.tse.jus.br/comunicacao/noticias/2014/Dezembro/plenario-do-tse-proclama-resultado-definitivo-do-segundo-turno-da-eleicao-presidencial",
+        "note": "Resultado definitivo do TSE: eleitorado 142.822.046, comparecimento 112.683.879. Primeiro turno: 80,61% publicado pelo TSE em 06/10; dado arredondado, não geramos decimais fictícios.",
+        "accessed": "2026-10-09"
+      },
+      "first_source": {
+        "url": "https://www.tse.jus.br/comunicacao/noticias/2014/Outubro/tse-divulga-dados-gerais-sobre-primeiro-turno-das-eleicoes-2014",
+        "note": "Comparecimento 115.122.883 (80,61%), abstenção 27.698.475 (19,39%).",
+        "accessed": "2026-10-09"
+      }
+    },
+    {
+      "year": 2018,
+      "turnout_1_pct": 79.67388902151127,
+      "turnout_2_pct": 78.70230650158098,
+      "source": {
+        "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/detalhe_votacao_secao/detalhe_votacao_secao_2018.zip",
+        "path": "data/raw/tse_resultados/detalhe_votacao_secao_2018.zip",
+        "sha256": "de35b08db427ee0c3089d88317e6166ea5dea33630f5b1dabdccf3304de48f70",
+        "member": "detalhe_votacao_secao_2018_BR.csv",
+        "generated_dates": [
+          "15/02/2024"
+        ],
+        "note": "CSV presidencial BR, somado uma vez por seção e turno, Brasil e exterior; denominador QT_APTOS, não apenas votos válidos."
+      }
+    },
+    {
+      "year": 2022,
+      "turnout_1_pct": 79.05350026468801,
+      "turnout_2_pct": 79.41809558337242,
+      "source": {
+        "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/detalhe_votacao_secao/detalhe_votacao_secao_2022.zip",
+        "path": "data/raw/tse_resultados/detalhe_votacao_secao_2022.zip",
+        "sha256": "ad22c50b9e6d9dfb096a2170680a190f1734895ba89d8977b95fd63ca02c03da",
+        "member": "detalhe_votacao_secao_2022_BR.csv",
+        "generated_dates": [
+          "15/02/2024"
+        ],
+        "note": "CSV presidencial BR, somado uma vez por seção e turno, Brasil e exterior; denominador QT_APTOS, não apenas votos válidos."
+      }
+    }
+  ],
+  "limits": "Seis eleições presidenciais com segundo turno desde 2002. 1989 fica fora da era integral de urna eletrônica; 1994 e 1998 não tiveram segundo turno. Eleições municipais têm universo diferente entre turnos e não entram. 2006, 2010 e o primeiro turno de 2014 usam percentuais publicados arredondados. O alvo de 2026 exclui exterior; a diferença de escopo é uma hipótese de transporte testada em 2018 e 2022, não identidade exata para toda a série."
+}

@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 MODEL = importlib.import_module("reponderacao-validos")
 COUNT = importlib.import_module("reponderacao-contagem")
 PROJECTION = importlib.import_module("reponderacao-projecao")
+TURNOUT = importlib.import_module("reponderacao-comparecimento")
 KEYS = ("flavio", "lula", "indecisos", "branco_nulo")
 LIMITS = {
     "presenca_relativa": (-30, 30),
@@ -217,6 +218,7 @@ def preferences(values, fallback):
 
 
 def build(data, forecast, nexus):
+    turnout = TURNOUT.build()
     block = forecast["ballots"]["2t"]
     eligible = block["scenarios"]["central"]["polls"]
     raw = {p["id"]: p for p in data["pesquisas"]}
@@ -244,6 +246,7 @@ def build(data, forecast, nexus):
         "schema": 1,
         "reference": data["referencia"],
         "electorate": COUNT.electorate(),
+        "turnout_model": turnout,
         "projection": PROJECTION.build(data, preferences),
         "polls": rows,
         "engine": hashlib.sha256(
@@ -255,7 +258,7 @@ def build(data, forecast, nexus):
             "modo": "modelo",
             "idade": "central",
             "presenca_relativa": 5.0,
-            "comparecimento": nexus["turnout"]["central"]["2t"]["target_turnout"],
+            "comparecimento": turnout["central_turnout_pct"],
             "branco_nulo_pp": 0.0,
             "nulo_diferencial_pp": 0.0,
             "indecisos_validos": 100.0,
@@ -270,7 +273,7 @@ def build(data, forecast, nexus):
         "method": {
             "selection": "Última onda por casa, divulgada na janela de sete dias; no pós-1º turno, apenas campo iniciado depois de 04/10.",
             "central": "Central Média Arvor: peso igual entre casas com cruzamento de renda. Central Projeção Arvor: recência, inclinação encolhida e Monte Carlo, PNAD onde disponível e publicado onde falta. Ambas partem de propensão Nexus + presença relativa de Flávio +5%, escolha declarada após o 1º turno, não parâmetro aprendido.",
-            "attendance": "Comparecimento nacional ancorado no cenário histórico Nexus; escala comum preserva a razão das taxas enquanto nenhuma atinge o teto de 100%.",
+            "attendance": "Apuração do 1º turno de 2026, Brasil sem exterior, como referência central: sem mudança automática entre turnos. Retrospectiva exploratória e cenários presidenciais 2002–2022 disponíveis; taxas relativas Nexus recalibradas ao total escolhido, sem inferir voto dos ausentes.",
             "undecided": "Proporcionais aos candidatos que comparecem; dados de não escolha sem renda conservam o publicado, com indicação na ficha.",
             "aggregation": "Média: normalizar válidos dentro de cada pesquisa, depois peso igual; contabilidade por 100 eleitores usa a massa válida média e esse placar. Projeção: agregar vetores completos por recência e inclinação, aplicar os controles à âncora e só então normalizar válidos.",
             "limits": "Sensibilidade condicional, sem probabilidade de vitória ou intervalo preditivo validado. Nenhum voto ou preferência territorial é imputado.",
@@ -303,5 +306,8 @@ def write(data, forecast):
     (ROOT / "docs/assets/reponderacao_simulador.json").write_text(encoded)
     (ROOT / "docs/assets/reponderacao_estaduais.json").write_text(
         json.dumps(result["projection"]["states"], ensure_ascii=False, indent=2) + "\n"
+    )
+    (ROOT / "docs/assets/reponderacao_comparecimento.json").write_text(
+        json.dumps(result["turnout_model"], ensure_ascii=False, indent=2) + "\n"
     )
     return result

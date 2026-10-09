@@ -6,6 +6,7 @@ from html import escape as esc
 
 COUNT = importlib.import_module("reponderacao-contagem")
 PROJECTION = importlib.import_module("reponderacao-projecao-view")
+TURNOUT = importlib.import_module("reponderacao-comparecimento-view")
 
 PRESETS = [
     ("central", "Central selecionada", {}),
@@ -101,7 +102,8 @@ def section_html(data, table):
         '<p class="rs-count-base">Base: <span id="rs-count-eleitorado">'
         f'{fmt(counts["eleitorado"] / 1e6)} milhões de eleitores · TSE 2026 · Brasil, sem exterior</span>. '
         "Totais condicionais, arredondados a 0,1 milhão.</p></div>"
-        '<div id="rs-uncertainty" class="rs-uncertainty" hidden aria-live="polite"><p class="rs-unit">Monte Carlo · faixa central de 90% dos sorteios</p><div id="rs-mc-ranges"></div><p id="rs-mc-frequency"></p><p class="rs-mc-note">Faixa condicional às hipóteses; cobertura contra a urna não validada. Não é chance de vitória medida.</p></div>'
+        + TURNOUT.readout(data)
+        + '<div id="rs-uncertainty" class="rs-uncertainty" hidden aria-live="polite"><p class="rs-unit">Monte Carlo · faixa central de 90% dos sorteios</p><div id="rs-mc-ranges"></div><p id="rs-mc-frequency"></p><p class="rs-mc-note">Comparecimento fixado no cenário escolhido. Faixa condicional às hipóteses; cobertura contra a urna não validada. Não é chance de vitória medida.</p></div>'
         '<div id="rs-response" class="rs-response"><p>Como a presença relativa muda o placar</p>'
         '<svg id="rs-curve" viewBox="0 0 480 155" role="img" aria-label="Sensibilidade à presença relativa de Flávio, mantendo as outras hipóteses"></svg>'
         '<p id="rs-threshold">O gráfico de sensibilidade aparece com o simulador.</p></div>'
@@ -131,8 +133,9 @@ def section_html(data, table):
             95,
             0.5,
             "%",
-            "A ausência uniforme reduz o volume de votos; o placar muda se uma taxa encostar no teto de 100%.",
+            "Central: comparecimento observado em 2026, sem mudança automática entre turnos. A ausência uniforme reduz o volume; os válidos só mudam se uma taxa atingir 100%.",
         )
+        + TURNOUT.controls(data)
         + slider(
             data,
             "branco_nulo_pp",
@@ -213,7 +216,7 @@ def section_html(data, table):
         + exclusions
         + "</ul>"
         "<p>Taxas por candidato são transportadas da tabela sintética de renda × idade × região da Nexus de 28/09. "
-        "São inferências ecológicas; a pergunta de presença antecede o 1º turno. A taxa nacional central vem da âncora histórica, não da intenção agregada Vox. "
+        "São inferências ecológicas; a pergunta de presença antecede o 1º turno. A taxa nacional central vem da apuração de 2026 e da comparação de regras históricas entre turnos, não da intenção agregada Vox. "
         "Não há cruzamentos atuais suficientes para opções territoriais por UF neste simulador.</p>"
         "<p>Ajustamos uma margem de renda, conservamos o restante dos pesos do instituto e normalizamos cada vetor completo. "
         "Não escolha sem cruzamento de renda conserva a parcela publicada; o tamanho desconhecido não muda os válidos quando a alocação de indecisos é proporcional. "
@@ -230,5 +233,6 @@ def section_html(data, table):
         "<p>O link registra os parâmetros e a versão dos dados. A imagem leva data, hipóteses e identificação do cenário. "
         "Cada alteração em relação à central é uma sensibilidade escolhida pelo leitor.</p></details>"
         + PROJECTION.evidence(data, table)
+        + TURNOUT.evidence(data, table)
         + f'<script id="rs-data" type="application/json">{encoded}</script></div></section>'
     )

@@ -84,6 +84,25 @@
     }
     $('idade').disabled=p.modo!=='modelo';
   }
+  function turnout() {
+    const t=data.turnout_model;
+    $('turnout-readout').hidden=!t;$('turnout-options').hidden=!t;
+    if(!t) return;
+    const baseline=t.first_round,delta=p.comparecimento-baseline.turnout_pct;
+    const precise=n=>n.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+    const direction=delta>0?'+':delta<0?'−':'';
+    $('turnout-readout').textContent=`1º turno observado: ${precise(baseline.turnout_pct)}% compareceram. Neste cenário: ${direction}${precise(Math.abs(delta))} pp e ${signed(electorate().total*delta/100/1e6)} milhão de mudança no comparecimento. Abstenção: ${precise(100-p.comparecimento)}%.`;
+    const choices=root.querySelector('.rs-turnout-choices'),fragment=document.createDocumentFragment();
+    for(const row of t.scenarios) {
+      const button=document.createElement('button');button.type='button';button.dataset.rsTurnout=row.id;
+      button.setAttribute('aria-pressed',String(Math.abs(p.comparecimento-row.turnout_pct)<1e-8));
+      for(const [tag,txt] of [['span',row.name],['b',precise(row.turnout_pct)+'%'],['small',(row.delta_turnout_pp>0?'+':row.delta_turnout_pp<0?'−':'')+precise(Math.abs(row.delta_turnout_pp))+' pp vs. 1º turno']]) {
+        const el=document.createElement(tag);el.textContent=txt;button.append(el);
+      }
+      fragment.append(button);
+    }
+    choices.replaceChildren(fragment);
+  }
   function render(updateHash=false) {
     result=M.evaluate(data,p);
     const totals=counts();
@@ -114,7 +133,7 @@
     root.querySelectorAll('[data-rs-preset]').forEach(b=>b.setAttribute('aria-pressed',String(equal(p,{...centralParams(),...presets.find(x=>x.id===b.dataset.rsPreset).parametros}))));
     const saturated=Object.values(result.taxas).some(q=>q>=1-1e-9);
     $('warning').textContent=[data!==current?`Dados arquivados de ${data.reference}; “Restaurar” volta à versão atual.`:'',saturated?'Uma taxa atingiu 100%; o teto físico limita a razão de presença.':'',p.modo!=='modelo'?'Base sem propensão Nexus; a presença relativa continua sendo sua hipótese livre.':''].filter(Boolean).join(' ');
-    centralCards();curve();
+    centralCards();curve();turnout();
     if(updateHash) history.replaceState(null,'',M.encode(data,p));
     window.reponderacaoCenario={result,params:p,version:data.version,totais:totals,base_eleitorado:electorate()};
     document.dispatchEvent(new CustomEvent('reponderacao:cenario',{detail:window.reponderacaoCenario}));
@@ -167,6 +186,12 @@
   root.querySelectorAll('[data-rs-central]').forEach(el=>el.addEventListener('click',()=>{
     if(loading || el.disabled) return;p={...p,centro:el.dataset.rsCentral};render(true);
   }));
+  root.addEventListener('click',event=>{
+    const button=event.target.closest('[data-rs-turnout]');
+    if(!button || loading || !data.turnout_model) return;
+    const scenario=data.turnout_model.scenarios.find(r=>r.id===button.dataset.rsTurnout);
+    if(!scenario) return;p={...p,comparecimento:scenario.turnout_pct};render(true);
+  });
   $('reset').addEventListener('click',()=>{const key=data===current?centre():'media';++loadId;loading=false;M=engines.get(current.engine);data=current;p={...current.defaults,centro:key};render(true);$('share-state').textContent='';});
   function shareUrl(){return new URL('reponderacao_pnad.html',location.href).href+M.encode(data,p);}
   $('copy').addEventListener('click',async()=>{

@@ -74,6 +74,9 @@ def test_mean_preserves_published_snapshot_for_all_controls():
         {"idade": "idosos60", "presenca_relativa": -20, "branco_nulo_pp": 15},
         {"comparecimento": 95, "indecisos_flavio": 75, "vies_pp": 10},
     ):
+        # Mesmos parâmetros explícitos; a referência de comparecimento atual
+        # agora vem da urna de 2026, e não da antiga âncora Nexus.
+        params = {"comparecimento": old["defaults"]["comparecimento"], **params}
         left, right = M.evaluate(DATA, params), M.evaluate(old, params)
         for key in ("flavio", "lula", "validos", "branco_nulo", "abstencao"):
             assert left[key] == right[key]

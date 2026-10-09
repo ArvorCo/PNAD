@@ -208,6 +208,8 @@ def encode(data):
     clone["projection"]["uncertainty"] = "__UNCERTAINTY__"
     clone["projection"]["states"] = "__STATES__"
     clone["central_projection"] = "__CENTRAL_PROJECTION__"
+    if "turnout_model" in clone:
+        clone["turnout_model"] = "__TURNOUT__"
     fields = []
     for key, rows in draws.items():
         blocks = [
@@ -241,6 +243,9 @@ def encode(data):
         .replace(
             '"__CENTRAL_PROJECTION__"',
             json.dumps(data["central_projection"], ensure_ascii=False),
+        )
+        .replace(
+            '"__TURNOUT__"', json.dumps(data.get("turnout_model"), ensure_ascii=False)
         )
         + "\n"
     )

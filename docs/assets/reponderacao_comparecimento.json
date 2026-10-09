@@ -1,0 +1,646 @@
+{
+  "reference": "2026-10-09",
+  "first_round": {
+    "electorate": 157828968,
+    "attendance": 124934069,
+    "absence": 32894899,
+    "turnout_pct": 79.15788247440102,
+    "absence_pct": 20.84211752559898,
+    "scope": "Brasil, sem exterior",
+    "source": "analysis/apuracao_2026/dados/presidente.json",
+    "source_sha256": "0bb01ddb79108500a55987b5be1fc437f38ef5f88509ec846a00df8dd7853788",
+    "source_snapshot": 531568
+  },
+  "central_turnout_pct": 79.15788247440102,
+  "central_delta_pp": 0.0,
+  "scenarios": [
+    {
+      "id": "central",
+      "name": "Central · repetir o 1º turno",
+      "delta_turnout_pp": 0.0,
+      "turnout_pct": 79.15788247440102,
+      "absence_pct": 20.84211752559898,
+      "attendance": 124934069.0,
+      "absence": 32894899.000000004,
+      "delta_attendance": 0.0
+    },
+    {
+      "id": "media_3",
+      "name": "Média recente · 2014–2022",
+      "delta_turnout_pp": -0.7729627913740794,
+      "turnout_pct": 78.38491968302694,
+      "absence_pct": 21.61508031697306,
+      "attendance": 123714109.80335027,
+      "absence": 34114858.19664971,
+      "delta_attendance": -1219959.1966497025
+    },
+    {
+      "id": "media_todas",
+      "name": "Média histórica · 2002–2022",
+      "delta_turnout_pp": -1.777197946600931,
+      "turnout_pct": 77.38068452780008,
+      "absence_pct": 22.61931547219991,
+      "attendance": 122129135.82156254,
+      "absence": 35699832.17843745,
+      "delta_attendance": -2804933.17843744
+    },
+    {
+      "id": "ano_2002",
+      "name": "Como em 2002",
+      "delta_turnout_pp": -2.724299305483356,
+      "turnout_pct": 76.43358316891766,
+      "absence_pct": 23.566416831082336,
+      "attendance": 120634335.52092445,
+      "absence": 37194632.47907556,
+      "delta_attendance": -4299733.479075548
+    },
+    {
+      "id": "ano_2006",
+      "name": "Como em 2006",
+      "delta_turnout_pp": -2.239999999999995,
+      "turnout_pct": 76.91788247440103,
+      "absence_pct": 23.082117525598974,
+      "attendance": 121398700.11680001,
+      "absence": 36430267.8832,
+      "delta_attendance": -3535368.883199992
+    },
+    {
+      "id": "ano_2010",
+      "name": "Como em 2010",
+      "delta_turnout_pp": -3.3799999999999955,
+      "turnout_pct": 75.77788247440103,
+      "absence_pct": 24.222117525598975,
+      "attendance": 119599449.88159999,
+      "absence": 38229518.1184,
+      "delta_attendance": -5334619.118399993
+    },
+    {
+      "id": "ano_2014",
+      "name": "Como em 2014",
+      "delta_turnout_pp": -1.7119011728763525,
+      "turnout_pct": 77.44598130152467,
+      "absence_pct": 22.554018698475332,
+      "attendance": 122232193.04566935,
+      "absence": 35596774.95433065,
+      "delta_attendance": -2701875.9543306427
+    },
+    {
+      "id": "ano_2018",
+      "name": "Como em 2018",
+      "delta_turnout_pp": -0.9715825199302941,
+      "turnout_pct": 78.18629995447073,
+      "absence_pct": 21.813700045529274,
+      "attendance": 123400630.3355256,
+      "absence": 34428337.66447438,
+      "delta_attendance": -1533438.6644743776
+    },
+    {
+      "id": "ano_2022",
+      "name": "Como em 2022",
+      "delta_turnout_pp": 0.3645953186844082,
+      "turnout_pct": 79.52247779308543,
+      "absence_pct": 20.47752220691457,
+      "attendance": 125509506.02885592,
+      "absence": 32319461.971144095,
+      "delta_attendance": 575437.0288559126
+    }
+  ],
+  "history": [
+    {
+      "year": 2002,
+      "turnout_1_pct": 82.2566097923117,
+      "turnout_2_pct": 79.53231048682835,
+      "source": {
+        "url": "https://static.poder360.com.br/2021/08/2003_tse_relatorio_eleicoes_2002-2.pdf",
+        "note": "Relatório das Eleições 2002, TSE, p. 26; país incluindo exterior. Eleitorado 115.254.113; comparecimento 94.804.126 e 91.664.259. Cópia do documento primário hospedada pelo Poder360.",
+        "accessed": "2026-10-09",
+        "sha256": "f18ea3e4f02bcbb04bb28649dea0820ead03e100aa1d736153a36938c5b165b6"
+      },
+      "counts": {
+        "electorate_1": 115254113,
+        "electorate_2": 115254113,
+        "attendance_1": 94804126,
+        "attendance_2": 91664259
+      },
+      "delta_turnout_pp": -2.724299305483356,
+      "delta_absence_pp": 2.724299305483356
+    },
+    {
+      "year": 2006,
+      "turnout_1_pct": 83.25,
+      "turnout_2_pct": 81.01,
+      "source": {
+        "url": "https://www.camara.leg.br/noticias/143620-abstencoes-sobem-no-2o-turno-e-se-igualam-a-indice-de-1998/",
+        "note": "Agência Câmara, 01/11/2010: abstenção nacional 16,75% e 18,99%. Percentuais publicados arredondados; não inventamos totais exatos.",
+        "accessed": "2026-10-09"
+      },
+      "delta_turnout_pp": -2.239999999999995,
+      "delta_absence_pp": 2.239999999999995
+    },
+    {
+      "year": 2010,
+      "turnout_1_pct": 81.88,
+      "turnout_2_pct": 78.5,
+      "source": {
+        "url": "https://www.camara.leg.br/noticias/143620-abstencoes-sobem-no-2o-turno-e-se-igualam-a-indice-de-1998/",
+        "note": "Agência Câmara, 01/11/2010: abstenção nacional 18,12% e 21,50%. Percentuais publicados arredondados.",
+        "accessed": "2026-10-09"
+      },
+      "delta_turnout_pp": -3.3799999999999955,
+      "delta_absence_pp": 3.3799999999999955
+    },
+    {
+      "year": 2014,
+      "turnout_1_pct": 80.61,
+      "turnout_2_pct": 78.89809882712365,
+      "source": {
+        "url": "https://www.tse.jus.br/comunicacao/noticias/2014/Dezembro/plenario-do-tse-proclama-resultado-definitivo-do-segundo-turno-da-eleicao-presidencial",
+        "note": "Resultado definitivo do TSE: eleitorado 142.822.046, comparecimento 112.683.879. Primeiro turno: 80,61% publicado pelo TSE em 06/10; dado arredondado, não geramos decimais fictícios.",
+        "accessed": "2026-10-09"
+      },
+      "first_source": {
+        "url": "https://www.tse.jus.br/comunicacao/noticias/2014/Outubro/tse-divulga-dados-gerais-sobre-primeiro-turno-das-eleicoes-2014",
+        "note": "Comparecimento 115.122.883 (80,61%), abstenção 27.698.475 (19,39%).",
+        "accessed": "2026-10-09"
+      },
+      "delta_turnout_pp": -1.7119011728763525,
+      "delta_absence_pp": 1.7119011728763525
+    },
+    {
+      "year": 2018,
+      "turnout_1_pct": 79.67388902151127,
+      "turnout_2_pct": 78.70230650158098,
+      "source": {
+        "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/detalhe_votacao_secao/detalhe_votacao_secao_2018.zip",
+        "path": "data/raw/tse_resultados/detalhe_votacao_secao_2018.zip",
+        "sha256": "de35b08db427ee0c3089d88317e6166ea5dea33630f5b1dabdccf3304de48f70",
+        "member": "detalhe_votacao_secao_2018_BR.csv",
+        "generated_dates": [
+          "15/02/2024"
+        ],
+        "note": "CSV presidencial BR, somado uma vez por seção e turno, Brasil e exterior; denominador QT_APTOS, não apenas votos válidos."
+      },
+      "delta_turnout_pp": -0.9715825199302941,
+      "delta_absence_pp": 0.9715825199302941
+    },
+    {
+      "year": 2022,
+      "turnout_1_pct": 79.05350026468801,
+      "turnout_2_pct": 79.41809558337242,
+      "source": {
+        "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/detalhe_votacao_secao/detalhe_votacao_secao_2022.zip",
+        "path": "data/raw/tse_resultados/detalhe_votacao_secao_2022.zip",
+        "sha256": "ad22c50b9e6d9dfb096a2170680a190f1734895ba89d8977b95fd63ca02c03da",
+        "member": "detalhe_votacao_secao_2022_BR.csv",
+        "generated_dates": [
+          "15/02/2024"
+        ],
+        "note": "CSV presidencial BR, somado uma vez por seção e turno, Brasil e exterior; denominador QT_APTOS, não apenas votos válidos."
+      },
+      "delta_turnout_pp": 0.3645953186844082,
+      "delta_absence_pp": -0.3645953186844082
+    }
+  ],
+  "history_sha256": "3be50cff54d0afb7a8b4b3a26581029de709e49b69195c3ea24bb1c3f853edd3",
+  "retrospective": [
+    {
+      "id": "sem_mudanca",
+      "name": "Repetir o 1º turno",
+      "mae_pp": 1.0160263371636848,
+      "bias_pp": 0.7729627913740794,
+      "cases": [
+        {
+          "year": 2014,
+          "training_years": [
+            2002,
+            2006,
+            2010
+          ],
+          "prediction_delta_pp": 0.0,
+          "actual_delta_pp": -1.7119011728763525,
+          "error_pp": 1.7119011728763525
+        },
+        {
+          "year": 2018,
+          "training_years": [
+            2002,
+            2006,
+            2010,
+            2014
+          ],
+          "prediction_delta_pp": 0.0,
+          "actual_delta_pp": -0.9715825199302941,
+          "error_pp": 0.9715825199302941
+        },
+        {
+          "year": 2022,
+          "training_years": [
+            2002,
+            2006,
+            2010,
+            2014,
+            2018
+          ],
+          "prediction_delta_pp": 0.0,
+          "actual_delta_pp": 0.3645953186844082,
+          "error_pp": -0.3645953186844082
+        }
+      ]
+    },
+    {
+      "id": "ultima",
+      "name": "Repetir a última variação",
+      "mae_pp": 1.2481984395614678,
+      "bias_pp": -1.2481984395614678,
+      "cases": [
+        {
+          "year": 2014,
+          "training_years": [
+            2002,
+            2006,
+            2010
+          ],
+          "prediction_delta_pp": -3.3799999999999955,
+          "actual_delta_pp": -1.7119011728763525,
+          "error_pp": -1.668098827123643
+        },
+        {
+          "year": 2018,
+          "training_years": [
+            2002,
+            2006,
+            2010,
+            2014
+          ],
+          "prediction_delta_pp": -1.7119011728763525,
+          "actual_delta_pp": -0.9715825199302941,
+          "error_pp": -0.7403186529460584
+        },
+        {
+          "year": 2022,
+          "training_years": [
+            2002,
+            2006,
+            2010,
+            2014,
+            2018
+          ],
+          "prediction_delta_pp": -0.9715825199302941,
+          "actual_delta_pp": 0.3645953186844082,
+          "error_pp": -1.3361778386147023
+        }
+      ]
+    },
+    {
+      "id": "media_3",
+      "name": "Média das últimas três variações",
+      "mae_pp": 1.6425576720888462,
+      "bias_pp": -1.6425576720888462,
+      "cases": [
+        {
+          "year": 2014,
+          "training_years": [
+            2002,
+            2006,
+            2010
+          ],
+          "prediction_delta_pp": -2.781433101827782,
+          "actual_delta_pp": -1.7119011728763525,
+          "error_pp": -1.0695319289514296
+        },
+        {
+          "year": 2018,
+          "training_years": [
+            2002,
+            2006,
+            2010,
+            2014
+          ],
+          "prediction_delta_pp": -2.4439670576254477,
+          "actual_delta_pp": -0.9715825199302941,
+          "error_pp": -1.4723845376951537
+        },
+        {
+          "year": 2022,
+          "training_years": [
+            2002,
+            2006,
+            2010,
+            2014,
+            2018
+          ],
+          "prediction_delta_pp": -2.0211612309355473,
+          "actual_delta_pp": 0.3645953186844082,
+          "error_pp": -2.3857565496199555
+        }
+      ]
+    },
+    {
+      "id": "media_todas",
+      "name": "Média de todas as variações anteriores",
+      "mae_pp": 1.7273838156511556,
+      "bias_pp": -1.7273838156511556,
+      "cases": [
+        {
+          "year": 2014,
+          "training_years": [
+            2002,
+            2006,
+            2010
+          ],
+          "prediction_delta_pp": -2.781433101827782,
+          "actual_delta_pp": -1.7119011728763525,
+          "error_pp": -1.0695319289514296
+        },
+        {
+          "year": 2018,
+          "training_years": [
+            2002,
+            2006,
+            2010,
+            2014
+          ],
+          "prediction_delta_pp": -2.5140501195899247,
+          "actual_delta_pp": -0.9715825199302941,
+          "error_pp": -1.5424675996596307
+        },
+        {
+          "year": 2022,
+          "training_years": [
+            2002,
+            2006,
+            2010,
+            2014,
+            2018
+          ],
+          "prediction_delta_pp": -2.2055565996579984,
+          "actual_delta_pp": 0.3645953186844082,
+          "error_pp": -2.5701519183424066
+        }
+      ]
+    }
+  ],
+  "retrospective_minimum_2": [
+    {
+      "id": "sem_mudanca",
+      "name": "Repetir o 1º turno",
+      "mae_pp": 1.6070197528727626,
+      "bias_pp": 1.4247220935305585,
+      "cases": [
+        {
+          "year": 2010,
+          "training_years": [
+            2002,
+            2006
+          ],
+          "prediction_delta_pp": 0.0,
+          "actual_delta_pp": -3.3799999999999955,
+          "error_pp": 3.3799999999999955
+        },
+        {
+          "year": 2014,
+          "training_years": [
+            2002,
+            2006,
+            2010
+          ],
+          "prediction_delta_pp": 0.0,
+          "actual_delta_pp": -1.7119011728763525,
+          "error_pp": 1.7119011728763525
+        },
+        {
+          "year": 2018,
+          "training_years": [
+            2002,
+            2006,
+            2010,
+            2014
+          ],
+          "prediction_delta_pp": 0.0,
+          "actual_delta_pp": -0.9715825199302941,
+          "error_pp": 0.9715825199302941
+        },
+        {
+          "year": 2022,
+          "training_years": [
+            2002,
+            2006,
+            2010,
+            2014,
+            2018
+          ],
+          "prediction_delta_pp": 0.0,
+          "actual_delta_pp": 0.3645953186844082,
+          "error_pp": -0.3645953186844082
+        }
+      ]
+    },
+    {
+      "id": "ultima",
+      "name": "Repetir a última variação",
+      "mae_pp": 1.221148829671101,
+      "bias_pp": -0.6511488296711008,
+      "cases": [
+        {
+          "year": 2010,
+          "training_years": [
+            2002,
+            2006
+          ],
+          "prediction_delta_pp": -2.239999999999995,
+          "actual_delta_pp": -3.3799999999999955,
+          "error_pp": 1.1400000000000006
+        },
+        {
+          "year": 2014,
+          "training_years": [
+            2002,
+            2006,
+            2010
+          ],
+          "prediction_delta_pp": -3.3799999999999955,
+          "actual_delta_pp": -1.7119011728763525,
+          "error_pp": -1.668098827123643
+        },
+        {
+          "year": 2018,
+          "training_years": [
+            2002,
+            2006,
+            2010,
+            2014
+          ],
+          "prediction_delta_pp": -1.7119011728763525,
+          "actual_delta_pp": -0.9715825199302941,
+          "error_pp": -0.7403186529460584
+        },
+        {
+          "year": 2022,
+          "training_years": [
+            2002,
+            2006,
+            2010,
+            2014,
+            2018
+          ],
+          "prediction_delta_pp": -0.9715825199302941,
+          "actual_delta_pp": 0.3645953186844082,
+          "error_pp": -1.3361778386147023
+        }
+      ]
+    },
+    {
+      "id": "media_3",
+      "name": "Média das últimas três variações",
+      "mae_pp": 1.4563808408812147,
+      "bias_pp": -1.0074556672520547,
+      "cases": [
+        {
+          "year": 2010,
+          "training_years": [
+            2002,
+            2006
+          ],
+          "prediction_delta_pp": -2.4821496527416755,
+          "actual_delta_pp": -3.3799999999999955,
+          "error_pp": 0.8978503472583199
+        },
+        {
+          "year": 2014,
+          "training_years": [
+            2002,
+            2006,
+            2010
+          ],
+          "prediction_delta_pp": -2.781433101827782,
+          "actual_delta_pp": -1.7119011728763525,
+          "error_pp": -1.0695319289514296
+        },
+        {
+          "year": 2018,
+          "training_years": [
+            2002,
+            2006,
+            2010,
+            2014
+          ],
+          "prediction_delta_pp": -2.4439670576254477,
+          "actual_delta_pp": -0.9715825199302941,
+          "error_pp": -1.4723845376951537
+        },
+        {
+          "year": 2022,
+          "training_years": [
+            2002,
+            2006,
+            2010,
+            2014,
+            2018
+          ],
+          "prediction_delta_pp": -2.0211612309355473,
+          "actual_delta_pp": 0.3645953186844082,
+          "error_pp": -2.3857565496199555
+        }
+      ]
+    },
+    {
+      "id": "media_todas",
+      "name": "Média de todas as variações anteriores",
+      "mae_pp": 1.5200004485529468,
+      "bias_pp": -1.0710752749237868,
+      "cases": [
+        {
+          "year": 2010,
+          "training_years": [
+            2002,
+            2006
+          ],
+          "prediction_delta_pp": -2.4821496527416755,
+          "actual_delta_pp": -3.3799999999999955,
+          "error_pp": 0.8978503472583199
+        },
+        {
+          "year": 2014,
+          "training_years": [
+            2002,
+            2006,
+            2010
+          ],
+          "prediction_delta_pp": -2.781433101827782,
+          "actual_delta_pp": -1.7119011728763525,
+          "error_pp": -1.0695319289514296
+        },
+        {
+          "year": 2018,
+          "training_years": [
+            2002,
+            2006,
+            2010,
+            2014
+          ],
+          "prediction_delta_pp": -2.5140501195899247,
+          "actual_delta_pp": -0.9715825199302941,
+          "error_pp": -1.5424675996596307
+        },
+        {
+          "year": 2022,
+          "training_years": [
+            2002,
+            2006,
+            2010,
+            2014,
+            2018
+          ],
+          "prediction_delta_pp": -2.2055565996579984,
+          "actual_delta_pp": 0.3645953186844082,
+          "error_pp": -2.5701519183424066
+        }
+      ]
+    }
+  ],
+  "scope_checks": [
+    {
+      "year": 2018,
+      "deltas_pp": {
+        "Brasil": -0.9738002067552145,
+        "Brasil e exterior": -0.9715825199302941
+      },
+      "scope_difference_pp": -0.0022176868249204063,
+      "unreconciled_electors": {
+        "Brasil": {
+          "1": 0,
+          "2": 0
+        },
+        "Brasil e exterior": {
+          "1": 470,
+          "2": 470
+        }
+      }
+    },
+    {
+      "year": 2022,
+      "deltas_pp": {
+        "Brasil": 0.3624103235761993,
+        "Brasil e exterior": 0.3645953186844082
+      },
+      "scope_difference_pp": -0.002184995108208909,
+      "unreconciled_electors": {
+        "Brasil": {
+          "2": 84,
+          "1": 84
+        },
+        "Brasil e exterior": {
+          "2": 657,
+          "1": 657
+        }
+      }
+    }
+  ],
+  "observed_delta_range_pp": [
+    -3.3799999999999955,
+    0.3645953186844082
+  ],
+  "method": "Comparecimento do 1º turno de 2026 nas 27 UFs como ponto de partida. Central sem mudança entre turnos: menor MAE nas três retrospectivas recentes (2014, 2018 e 2022), sempre com três ou mais eleições anteriores. Médias e analogias históricas ficam como alternativas explícitas, sem ajuste das preferências dos ausentes.",
+  "limits": "Apenas seis eleições; comparação exploratória, sem teste independente da escolha. Com início em 2010 (duas eleições anteriores), a última variação vence: a seleção não é robusta ao corte. A central é referência conservadora, não prova de abstenção constante. O envelope histórico não é intervalo de confiança nem previsão com cobertura validada. A faixa Monte Carlo de votos segue condicional ao comparecimento escolhido; não incorpora automaticamente estes cenários.",
+  "scope_note": "Seis eleições presidenciais com segundo turno desde 2002. 1989 fica fora da era integral de urna eletrônica; 1994 e 1998 não tiveram segundo turno. Eleições municipais têm universo diferente entre turnos e não entram. 2006, 2010 e o primeiro turno de 2014 usam percentuais publicados arredondados. O alvo de 2026 exclui exterior; a diferença de escopo é uma hipótese de transporte testada em 2018 e 2022, não identidade exata para toda a série. Aptos com comparecimento e ausência ambos zero permanecem como resíduo documental, sem recodificá-los como abstenção; a situação de instalação não está informada em todas as linhas de 2018. Em 2026, as 27 UFs fecham exatamente; o exterior é excluído."
+}
