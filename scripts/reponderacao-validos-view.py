@@ -44,8 +44,13 @@ def gap(values):
 
 def card(data, ballot):
     block = data["ballots"][ballot]
-    scenario = block["scenarios"]["central"]
-    values = scenario["aggregate"]["modelo"]
+    defaults = data["display_defaults"]
+    mode = defaults["mode"]
+    scenario = block["scenarios"][defaults["scenario"]]
+    values = scenario["aggregate"][mode]
+    mode_label = (
+        data["modes"][mode] + ": " + data["scenario_labels"][defaults["scenario"]]
+    )
     turn = "Primeiro" if ballot == "1t" else "Segundo"
     urna = block.get("urna")
     reference = block["reference"]
@@ -57,7 +62,7 @@ def card(data, ballot):
         else ""
     )
     gap_error = (
-        f'<p class="vf-gap-error">Urna: {gap(urna)}. Erro L−F: <b>{signed(scenario["erros"]["modelo"]["diferenca_lula_flavio_pp"])} pp</b>.</p>'
+        f'<p class="vf-gap-error">Urna: {gap(urna)}. Erro L−F: <b>{signed(scenario["erros"][mode]["diferenca_lula_flavio_pp"])} pp</b>.</p>'
         if urna
         else ""
     )
@@ -73,7 +78,7 @@ def card(data, ballot):
     )
     return (
         f'<article class="vf-card" data-ballot="{ballot}"><p class="kicker">{turn} turno · {block["n_houses"]} institutos · {reference}</p>'
-        f'<h3>{title}</h3><p class="vf-mode-label">PNAD + comparecimento</p>{columns}'
+        f'<h3>{title}</h3><p class="vf-mode-label">{escape(mode_label)}</p>{columns}'
         f'<div class="vf-bars" role="img" aria-label="{escape(aria, quote=True)}">'
         f'{bars(values, data["labels"], urna)}</div>'
         f'<p class="vf-gap">{gap(values)}</p>'
@@ -85,9 +90,10 @@ def card(data, ballot):
 
 def section_html(source, table):
     data = MODEL.write(source)
+    defaults = data["display_defaults"]
     rows, excluded, corrections = [], [], []
     for ballot, block in data["ballots"].items():
-        s = block["scenarios"]["central"]
+        s = block["scenarios"][defaults["scenario"]]
         for p in s["polls"]:
             values = "".join(
                 f'<td data-mode="{m}">{fmt(p[m]["lula"])} × {fmt(p[m]["flavio"])}</td>'
@@ -96,7 +102,7 @@ def section_html(source, table):
             extra = ""
             if "urna" in block:
                 u = block["urna"]
-                diff = (p["modelo"]["lula"] - p["modelo"]["flavio"]) - (
+                diff = (p[defaults["mode"]]["lula"] - p[defaults["mode"]]["flavio"]) - (
                     u["lula"] - u["flavio"]
                 )
                 extra = f'<td>{fmt(u["lula"])} × {fmt(u["flavio"])}</td><td data-poll-error>{signed(diff)}</td>'
@@ -117,10 +123,11 @@ def section_html(source, table):
             f'{p["instituto"]}, {ballot}: {p["reason"]}.' for p in block["excluded"]
         ]
     age_options = "".join(
-        f'<option value="{k}">{escape(v)}</option>' for k, v in MODEL.SCENARIOS.items()
+        f'<option value="{k}"{ " selected" if k == defaults["scenario"] else ""}>{escape(v)}</option>'
+        for k, v in MODEL.SCENARIOS.items()
     )
     buttons = "".join(
-        f'<button type="button" data-vf-mode="{k}" aria-pressed="{str(k == "modelo").lower()}">{escape(v)}</button>'
+        f'<button type="button" data-vf-mode="{k}" aria-pressed="{str(k == defaults["mode"]).lower()}">{escape(v)}</button>'
         for k, v in MODEL.MODES.items()
     )
     coverage_note = " ".join(excluded) or "Nenhuma exclusão adicional na janela atual."
@@ -166,7 +173,8 @@ def section_html(source, table):
         '<label>Hipótese de comparecimento<select id="vf-scenario">'
         + age_options
         + "</select></label></div>"
-        '<p id="vf-state" aria-live="polite">Modelo central. Preferências declaradas mantidas até a eleição; sem antecipar voto útil ou mudanças na última semana.</p>'
+        f'<p id="vf-state" aria-live="polite">{escape(data["modes"][defaults["mode"]])}: {escape(data["scenario_labels"][defaults["scenario"]])}.</p>'
+        '<p class="note">A exibição inicial usa Flávio +5%, escolha feita após o resultado do primeiro turno. O fator multiplica sua propensão de comparecimento por 1,05; é uma hipótese do modelo, não uma taxa por candidato medida na urna. O cenário central permanece disponível no seletor.</p>'
         '<div class="vf-grid">' + card(data, "1t") + card(data, "2t") + "</div>"
         '<p class="note"><b>Mesmas casas nos três modos, dentro de cada turno.</b> Normalizamos cada pesquisa antes de calcular a média. Demais candidatos também contam no denominador do primeiro turno; Lula e Flávio não são reescalados sozinhos para 100%. Só aparecem individualmente os nomes identificados em todas as casas; os demais são agrupados, pois a Quaest reúne os candidatos menores no cruzamento de renda. Ausência de detalhamento não vira voto zero. Diferenças de arredondamento podem fazer os rótulos somarem 99,9% ou 100,1%. A diferença entre os líderes usa os valores antes de arredondar.</p>'
         '<p class="note"><b>Fora desta projeção:</b> '
@@ -196,7 +204,10 @@ def section_html(source, table):
         + "% e "
         + fmt(data["method"]["turnout_anchor"]["2t"])
         + "% de comparecimento por turno. Elas usam o TSE de 2022 com a composição regional de 2026. Não são previsão observada da abstenção de 2026, e o transporte das propensões não impõe esse mesmo total em cada instituto.</p>"
-        + table(["Turno", "Eleitorado", "Comparecimento inferido na Nexus"], rate_rows)
+        + table(
+            ["Turno", "Eleitorado", "Comparecimento inferido na Nexus · central"],
+            rate_rows,
+        )
         + "<p>Os testes de 60+ fixam sua presença em 60% ou 80%, mantendo a âncora nacional dentro da Nexus. O teste de presença relativa multiplica apenas q de Flávio por 0,95 ou 1,05. São ±5% relativos, não ±5 pontos percentuais, e não são estimativas observadas. Esse teste altera a associação com o candidato além do que as margens demográficas identificam.</p>"
         "<p>O segundo turno reutiliza a pergunta de presença do primeiro, com outra âncora histórica. Não há validação fora da amostra, microdados individuais ou modelo do erro comum entre institutos. Por isso não calculamos chance de vitória nem um intervalo preditivo artificialmente estreito.</p></details>"
         "<details><summary>Dependência de cada instituto e dados para reprodução</summary>"

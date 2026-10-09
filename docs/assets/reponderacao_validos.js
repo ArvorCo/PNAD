@@ -4,8 +4,9 @@
   const data = JSON.parse(root.querySelector('#vf-data').textContent);
   const fmt = n => n.toLocaleString('pt-BR', {minimumFractionDigits: 1, maximumFractionDigits: 1});
   const signed = n => `${n > 0 ? '+' : n < 0 ? '−' : ''}${fmt(Math.abs(n))}`;
-  let mode = 'modelo';
+  let mode = data.display_defaults.mode;
   const select = root.querySelector('#vf-scenario');
+  select.value = data.display_defaults.scenario;
   function render() {
     const key = select.value;
     root.querySelectorAll('[data-vf-mode]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.vfMode === mode)));
@@ -14,7 +15,7 @@
       const scenario = block.scenarios[key];
       const values = scenario.aggregate[mode];
       const card = root.querySelector(`article[data-ballot="${ballot}"]`);
-      card.querySelector('.vf-mode-label').textContent = data.modes[mode];
+      card.querySelector('.vf-mode-label').textContent = data.modes[mode] + (mode === 'modelo' ? `: ${data.scenario_labels[key]}` : '');
       for (const [k, v] of Object.entries(values)) {
         const row = card.querySelector(`[data-candidate="${k}"]`);
         row.querySelector('.vf-bar').style.width = `${v}%`;

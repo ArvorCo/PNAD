@@ -42,6 +42,7 @@ SCENARIOS = {
     "flavio95": "Presença relativa de Flávio: −5%",
     "flavio105": "Presença relativa de Flávio: +5%",
 }
+DISPLAY_DEFAULTS = {"mode": "modelo", "scenario": "flavio105"}
 
 
 def normalize(values):
@@ -216,6 +217,7 @@ def build(data, nexus):
         "labels": LABELS,
         "modes": MODES,
         "scenario_labels": SCENARIOS,
+        "display_defaults": DISPLAY_DEFAULTS,
         "ballots": {},
     }
     for ballot in ["1t", "2t"]:
