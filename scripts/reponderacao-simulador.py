@@ -12,6 +12,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 MODEL = importlib.import_module("reponderacao-validos")
+COUNT = importlib.import_module("reponderacao-contagem")
 KEYS = ("flavio", "lula", "indecisos", "branco_nulo")
 LIMITS = {
     "presenca_relativa": (-30, 30),
@@ -172,6 +173,7 @@ def build(data, forecast, nexus):
     out = {
         "schema": 1,
         "reference": data["referencia"],
+        "electorate": COUNT.electorate(),
         "polls": rows,
         "engine": hashlib.sha256(
             (ROOT / "docs/assets/reponderacao_simulador_motor.js").read_bytes()

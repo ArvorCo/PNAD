@@ -14,15 +14,19 @@
 .rs-score span{display:block;font-size:13px}
 .rs-score strong{display:block;font:400 clamp(48px,5.2vw,78px)/1.18 Georgia,serif;letter-spacing:-.06em;font-variant-numeric:tabular-nums;white-space:nowrap}
 .rs-score small{font:400 23px Georgia,serif;margin-left:3px}
+.rs-score .rs-vote-count{font-size:12px;line-height:1.5;font-variant-numeric:tabular-nums}
 .rs-score .rs-flavio{color:#a9cbff}.rs-score .rs-lula{color:#f7b0aa}
 .rs-duel{height:13px;display:flex;position:relative;margin:15px 0 17px;background:#ffffff15}
 #rs-bar-flavio{background:#a9cbff}#rs-bar-lula{background:#e5938c}
 .rs-duel i{position:absolute;left:50%;top:-5px;bottom:-5px;border-left:2px solid #142d2a}
 .rs-gap{font-size:12px;display:flex;align-items:center;justify-content:space-between;margin:0}
 .rs-gap b{font:400 29px Georgia,serif;color:#d9ef96;letter-spacing:-.02em}
+.rs-gap-volume{color:#d9ef96;font-size:13px;text-align:right;margin:3px 0 0;font-variant-numeric:tabular-nums}
 #rs-versus{font-size:10px;opacity:.78;margin:6px 0 20px;min-height:16px}
 .rs-account{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #ffffff30;border-bottom:1px solid #ffffff30;padding:16px 0;gap:22px}
-.rs-account span,.rs-account small{display:block;font-size:11px;color:#c5d2cb}.rs-account b{font:400 31px Georgia,serif;color:#fff}
+.rs-account>div>span,.rs-account small{display:block;font-size:11px;color:#c5d2cb}.rs-account b{display:block;font:400 31px Georgia,serif;color:#fff;white-space:nowrap}.rs-account small span{display:inline}
+.rs-account b small{display:inline;font:400 11px Avenir,sans-serif;color:#c5d2cb}
+.rs-count-base{grid-column:1/-1;font-size:10px;line-height:1.6;color:#c5d2cb;margin:0}
 .rs-response{margin:20px 0 0}.rs-response>p:first-child{font-size:11px;margin-bottom:0}.rs-response svg{width:100%;display:block}
 #rs-threshold{font-size:11px;color:#c5d2cb;min-height:36px;margin:3px 0 14px}
 .rs-share{display:flex;gap:8px;flex-wrap:wrap}.rs-share button{border:1px solid #91a69d;background:transparent;color:#fff;padding:7px 14px;font-size:11px}
@@ -56,5 +60,6 @@
 @media(max-width:800px){.rs-intro{grid-template-columns:1fr;gap:16px}.rs-intro h1{font-size:44px}.rs-intro>p{font-size:14px;max-width:560px}.rs-app{grid-template-columns:1fr}.rs-controls{padding:25px}.rs-result{padding:25px}.rs-score strong{font-size:64px}.rs-archives{grid-template-columns:1fr;gap:20px}.rs-mass-labels{gap:12px}.rs-section{padding-top:24px}}
 @media(max-width:480px){.rs-section .wrap{padding:0 19px}.rs-intro h1{font-size:39px}.rs-result,.rs-controls{padding:21px}.rs-score strong{font-size:55px}.rs-score{grid-template-columns:1.15fr 1fr;gap:12px}.rs-score span{font-size:11px}.rs-result-top{font-size:9px}.rs-account span{font-size:10px}.rs-gap b{font-size:25px}.rs-share button{padding:7px 10px}.rs-control label{font-size:12px}.rs-primary label{font-size:14px}.rs-mass-labels{display:grid;grid-template-columns:1fr 1fr}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media(max-width:480px){.rs-score .rs-vote-count{font-size:10px}.rs-account{gap:16px 12px}.rs-account b{font-size:26px}.rs-account small{font-size:10px}.rs-account b small{font-size:10px}}
 .rs-vox-income{max-width:650px;margin:20px 0}.rs-vox-income>div{display:flex;height:15px;background:#eee}.rs-vox-income span{background:#28705f}.rs-vox-income span:nth-child(2){background:#ddb649}.rs-vox-income span:nth-child(3){background:#6a98d1}.rs-vox-income span:nth-child(4){background:#192e2b}.rs-vox-income p{font-size:13px;margin-top:8px}
 @media(max-width:800px){.rs-result .rs-primary{border-top:1px solid #ffffff25;padding-top:20px}.rs-result .rs-primary label{color:#f4f0e7}.rs-result .rs-primary output{color:#d9ef96}.rs-result .rs-primary p{color:#c5d2cb}.rs-result .rs-rates{color:#c5d2cb;background:#ffffff08}.masthead{gap:16px}.masthead>span{font-size:9px;text-align:right;max-width:180px}}

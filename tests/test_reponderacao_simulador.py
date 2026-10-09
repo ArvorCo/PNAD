@@ -12,6 +12,7 @@ from bs4 import BeautifulSoup
 
 ROOT = Path(__file__).resolve().parents[1]
 M = importlib.import_module("reponderacao-simulador")
+C = importlib.import_module("reponderacao-contagem")
 DATA = json.loads((ROOT / "docs/assets/reponderacao_simulador.json").read_text())
 
 
@@ -44,6 +45,38 @@ def test_physical_mass_conservation_under_stress(params):
         ] == pytest.approx(100)
         assert all(0 <= q <= 1 for q in poll["taxas"].values())
     assert all(v >= 0 for v in result["por_100_eleitores"].values())
+    totals = C.counts(result, DATA["electorate"])
+    assert totals["flavio"] + totals["lula"] == pytest.approx(totals["validos"])
+    assert totals["validos"] + totals["branco_nulo"] == pytest.approx(
+        totals["comparecimento"]
+    )
+    assert totals["comparecimento"] + totals["abstencao"] == pytest.approx(
+        totals["eleitorado"]
+    )
+    assert totals["diferenca_flavio_lula"] == pytest.approx(
+        totals["validos"] * result["diferenca_flavio_lula"] / 100
+    )
+
+
+def test_counts_freeze_the_official_domestic_electorate_and_source():
+    base = DATA["electorate"]
+    assert base == C.electorate()
+    assert base["total"] == 157_828_968
+    assert base["excluded_exterior"] == 916_534
+    assert base["total"] + base["excluded_exterior"] == 158_745_502
+    official = ROOT / base["source"]
+    assert base["source_sha256"] == hashlib.sha256(official.read_bytes()).hexdigest()
+    # A baixa presença reduz os votos em números absolutos, sem alterar o placar.
+    central = C.counts(M.evaluate(DATA), base)
+    low = C.counts(M.evaluate(DATA, {"comparecimento": 60}), base)
+    assert low["comparecimento"] == pytest.approx(base["total"] * 0.6)
+    assert low["flavio"] < central["flavio"]
+    assert abs(low["diferenca_flavio_lula"]) < abs(central["diferenca_flavio_lula"])
+    invalid = C.counts(M.evaluate(DATA, {"branco_nulo_pp": 3}), base)
+    transferred = base["total"] * DATA["defaults"]["comparecimento"] / 100 * 0.03
+    assert invalid["branco_nulo"] - central["branco_nulo"] == pytest.approx(transferred)
+    assert central["validos"] - invalid["validos"] == pytest.approx(transferred)
+    assert invalid["abstencao"] == central["abstencao"]
 
 
 def test_relative_presence_and_asymmetric_invalid_votes_have_correct_sign():
@@ -114,8 +147,9 @@ def test_javascript_parity_and_link_roundtrip_with_all_controls():
     ]
     script = """
 const fs=require('fs'),m=require('./docs/assets/reponderacao_simulador_motor.js');
+const count=require('./docs/assets/reponderacao_contagem.js');
 const {data,cases}=JSON.parse(fs.readFileSync(0,'utf8'));
-process.stdout.write(JSON.stringify(cases.map(p=>({result:m.evaluate(data,p),decoded:m.decode(data,m.encode(data,p)),threshold:m.breakEven(data,p)}))));
+process.stdout.write(JSON.stringify(cases.map(p=>({result:m.evaluate(data,p),totals:count.counts(m.evaluate(data,p),data.electorate),decoded:m.decode(data,m.encode(data,p)),threshold:m.breakEven(data,p)}))));
 """
     output = subprocess.check_output(
         [node, "-e", script],
@@ -135,6 +169,7 @@ process.stdout.write(JSON.stringify(cases.map(p=>({result:m.evaluate(data,p),dec
         ):
             assert actual["result"][k] == pytest.approx(expected[k], abs=1e-10)
         assert actual["decoded"] == expected["parametros"]
+        assert actual["totals"] == pytest.approx(C.counts(expected, DATA["electorate"]))
         if actual["threshold"] is not None:
             assert M.evaluate(
                 DATA, {**params, "presenca_relativa": actual["threshold"]}
@@ -164,6 +199,19 @@ def test_public_routes_preserve_first_round_and_log_separately():
     assert log.select_one("#atualizacao") and log.select_one("#ondas")
     assert "83,89" in page.select_one("#vox-renda").get_text()
     assert DATA["defaults"]["presenca_relativa"] == 5
+    counts = C.counts(DATA["central"], DATA["electorate"])
+    for k in (
+        "flavio",
+        "lula",
+        "validos",
+        "branco_nulo",
+        "abstencao",
+        "comparecimento",
+    ):
+        assert (
+            f"{counts[k] / 1e6:.1f}".replace(".", ",")
+            in page.select_one(f"#rs-count-{k}").get_text()
+        )
     snapshot = ROOT / f"docs/assets/reponderacao_cenarios/{DATA['version']}.json"
     assert json.loads(snapshot.read_text()) == DATA
 

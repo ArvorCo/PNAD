@@ -2,7 +2,7 @@
 (() => {
   'use strict';
   const root=document.querySelector('#simulador');
-  if (!root || !window.Reponderacao2T) return;
+  if (!root || !window.Reponderacao2T || !window.ReponderacaoContagem) return;
   let M=window.Reponderacao2T;
   const current=JSON.parse(document.querySelector('#rs-data').textContent);
   const engines=new Map([[current.engine,M]]);
@@ -10,6 +10,9 @@
   const $=id=>document.getElementById('rs-'+id);
   const fmt=n=>n.toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1});
   const signed=n=>(n>0?'+':n<0?'−':'')+fmt(Math.abs(n));
+  const millions=n=>fmt(n/1e6);
+  const electorate=()=>data.electorate || current.electorate;
+  const counts=()=>window.ReponderacaoContagem.counts(result,electorate());
   const equal=(a,b)=>Object.keys(data.defaults).every(k=>a[k]===b[k]);
   const presets=current.presets;
   const names={publicado:'Publicado',pnad:'PNAD',modelo:'PNAD + comparecimento'};
@@ -51,17 +54,26 @@
   }
   function render(updateHash=false) {
     result=M.evaluate(data,p);
+    const totals=counts();
     controls();
     for (const k of ['flavio','lula']) {
       $(k).replaceChildren(document.createTextNode(fmt(result[k])),Object.assign(document.createElement('small'),{textContent:'%'}));
       $('bar-'+k).style.width=result[k]+'%';
+      $('count-'+k).textContent=millions(totals[k])+' milhões de votos';
     }
     $('label').textContent=label();$('reference').textContent=data.reference;
     $('gap').textContent=signed(result.diferenca_flavio_lula)+' pp';
+    $('count-gap').textContent=signed(totals.diferenca_flavio_lula/1e6)+' milhões de votos';
     const central=M.evaluate(data);
     $('versus').textContent=equal(p,data.defaults)?'Positivo favorece Flávio; negativo favorece Lula.':`${signed(result.diferenca_flavio_lula-central.diferenca_flavio_lula)} pp em relação à central da versão ${data.reference}.`;
     $('absent').textContent=fmt(result.abstencao)+'%';
     $('invalid').textContent=fmt(100*result.branco_nulo/result.comparecimento)+'%';
+    $('attendance').textContent=fmt(result.comparecimento)+'%';
+    for(const k of ['abstencao','branco_nulo','validos','comparecimento']) {
+      $('count-'+k).replaceChildren(document.createTextNode(millions(totals[k])+' '),Object.assign(document.createElement('small'),{textContent:'milhões'}));
+      $('count-'+k).title=totals[k].toLocaleString('pt-BR',{maximumFractionDigits:0})+' no cenário, antes de arredondar em milhões';
+    }
+    $('count-eleitorado').textContent=`${millions(totals.eleitorado)} milhões de eleitores · TSE 2026 · ${electorate().scope}${data.electorate?'':' · base atual aplicada a esta versão antiga'}`;
     $('rates').textContent=`Presença efetiva no cenário: Flávio ${fmt(100*result.taxas.flavio)}% · Lula ${fmt(100*result.taxas.lula)}%.`;
     for(const [k,v] of Object.entries(result.por_100_eleitores)) {
       $('mass-'+k).textContent=fmt(v);
@@ -72,7 +84,7 @@
     $('warning').textContent=[data!==current?`Dados arquivados de ${data.reference}; “Restaurar” volta à versão atual.`:'',saturated?'Uma taxa atingiu 100%; o teto físico limita a razão de presença.':'',p.modo!=='modelo'?'Base sem propensão Nexus; a presença relativa continua sendo sua hipótese livre.':''].filter(Boolean).join(' ');
     curve();
     if(updateHash) history.replaceState(null,'',M.encode(data,p));
-    window.reponderacaoCenario={result,params:p,version:data.version};
+    window.reponderacaoCenario={result,params:p,version:data.version,totais:totals,base_eleitorado:electorate()};
     document.dispatchEvent(new CustomEvent('reponderacao:cenario',{detail:window.reponderacaoCenario}));
   }
   async function engineFor(chosen) {
@@ -126,20 +138,27 @@
     catch{const input=document.createElement('input');input.value=shareUrl();input.setAttribute('aria-label','Link do cenário');$('share-state').replaceChildren(input);input.select();}
   });
   function imageBlob() {
+    const totals=counts();
     const canvas=document.createElement('canvas');canvas.width=1200;canvas.height=630;
     const ctx=canvas.getContext('2d');ctx.fillStyle='#142d2a';ctx.fillRect(0,0,1200,630);
     const text=(t,x,y,font,color)=>{ctx.font=font;ctx.fillStyle=color;ctx.fillText(t,x,y);};
     text('ARVOR / ELEIÇÕES 2026 / 2º TURNO',55,52,'17px sans-serif','#d9ef96');
     text(label()+' · '+data.reference,55,96,'24px Georgia','#f4f0e7');
     text('Votos válidos · cenário condicional',55,136,'18px sans-serif','#c5d2cb');
-    text('FLÁVIO BOLSONARO',55,201,'20px sans-serif','#a9cbff');text('LULA',650,201,'20px sans-serif','#f7b0aa');
-    text(fmt(result.flavio)+'%',50,302,'96px Georgia','#a9cbff');text(fmt(result.lula)+'%',645,302,'96px Georgia','#f7b0aa');
-    ctx.fillStyle='#a9cbff';ctx.fillRect(55,329,1090*result.flavio/100,16);ctx.fillStyle='#e5938c';ctx.fillRect(55+1090*result.flavio/100,329,1090*result.lula/100,16);
-    text('Flávio − Lula: '+signed(result.diferenca_flavio_lula)+' pp',55,390,'29px Georgia','#d9ef96');
-    text(`Presença relativa F: ${signed(p.presenca_relativa)}% · abstenção: ${fmt(result.abstencao)}% · B/N: ${fmt(100*result.branco_nulo/result.comparecimento)}% dos votantes`,55,430,'19px sans-serif','#f4f0e7');
-    text(`${names[p.modo]} · ${ageNames[p.idade]} · Δ B/N: ${signed(p.branco_nulo_pp)} pp · saída desigual: ${signed(p.nulo_diferencial_pp)}%`,55,465,'16px sans-serif','#c5d2cb');
-    text(`Indecisos válidos: ${fmt(p.indecisos_validos)}% · para F: ${p.indecisos_flavio===null?'proporcional':fmt(p.indecisos_flavio)+'%'} · erro comum F−L: ${signed(p.vies_pp)} pp`,55,493,'16px sans-serif','#c5d2cb');
-    text('Hipóteses declaradas. Sem intervalo preditivo validado ou probabilidade de vitória.',55,553,'16px sans-serif','#c5d2cb');
+    text('FLÁVIO BOLSONARO',55,178,'20px sans-serif','#a9cbff');text('LULA',650,178,'20px sans-serif','#f7b0aa');
+    text(fmt(result.flavio)+'%',50,265,'90px Georgia','#a9cbff');text(fmt(result.lula)+'%',645,265,'90px Georgia','#f7b0aa');
+    text(millions(totals.flavio)+' milhões de votos',55,299,'22px sans-serif','#a9cbff');text(millions(totals.lula)+' milhões de votos',650,299,'22px sans-serif','#f7b0aa');
+    ctx.fillStyle='#a9cbff';ctx.fillRect(55,319,1090*result.flavio/100,13);ctx.fillStyle='#e5938c';ctx.fillRect(55+1090*result.flavio/100,319,1090*result.lula/100,13);
+    text('Flávio − Lula: '+signed(result.diferenca_flavio_lula)+' pp',55,369,'27px Georgia','#d9ef96');
+    text(signed(totals.diferenca_flavio_lula/1e6)+' milhões de votos',650,369,'24px Georgia','#d9ef96');
+    for(const [k,name,x] of [['validos','VÁLIDOS',55],['branco_nulo','BRANCOS/NULOS',435],['abstencao','ABSTENÇÕES',815]]) {
+      text(name,x,403,'13px sans-serif','#c5d2cb');text(millions(totals[k])+' milhões',x,432,'25px Georgia','#f4f0e7');
+    }
+    text(`Compareceriam: ${millions(totals.comparecimento)} mi · base TSE: ${millions(totals.eleitorado)} mi (${electorate().scope}${data.electorate?'':'; base atual'}) · arredondados`,55,457,'15px sans-serif','#c5d2cb');
+    text(`Presença relativa F: ${signed(p.presenca_relativa)}% · abstenção: ${fmt(result.abstencao)}% · B/N: ${fmt(100*result.branco_nulo/result.comparecimento)}% dos votantes`,55,486,'17px sans-serif','#f4f0e7');
+    text(`${names[p.modo]} · ${ageNames[p.idade]} · Δ B/N: ${signed(p.branco_nulo_pp)} pp · saída desigual: ${signed(p.nulo_diferencial_pp)}%`,55,511,'15px sans-serif','#c5d2cb');
+    text(`Indecisos válidos: ${fmt(p.indecisos_validos)}% · para F: ${p.indecisos_flavio===null?'proporcional':fmt(p.indecisos_flavio)+'%'} · erro comum F−L: ${signed(p.vies_pp)} pp`,55,536,'15px sans-serif','#c5d2cb');
+    text('Hipóteses declaradas. Sem intervalo preditivo validado ou probabilidade de vitória.',55,566,'15px sans-serif','#c5d2cb');
     text('brasil.arvor.co/reponderacao_pnad.html',55,593,'17px sans-serif','#f4f0e7');
     text('dados '+data.version,880,593,'13px monospace','#c5d2cb');
     return new Promise(resolve=>canvas.toBlob(resolve,'image/png'));
@@ -150,7 +169,7 @@
   });
   if(navigator.share) {
     $('share').hidden=false;$('share').addEventListener('click',async()=>{
-      try{const blob=await imageBlob();const file=new File([blob],`arvor-2turno-${data.reference}.png`,{type:'image/png'});const payload={title:'Meu cenário do 2º turno · Arvor',text:`Flávio ${fmt(result.flavio)}% × Lula ${fmt(result.lula)}% dos válidos. Cenário condicional.`,url:shareUrl()};if(navigator.canShare?.({files:[file]}))payload.files=[file];await navigator.share(payload);}
+      try{const blob=await imageBlob();const file=new File([blob],`arvor-2turno-${data.reference}.png`,{type:'image/png'});const totals=counts();const payload={title:'Meu cenário do 2º turno · Arvor',text:`Flávio ${fmt(result.flavio)}% (${millions(totals.flavio)} mi) × Lula ${fmt(result.lula)}% (${millions(totals.lula)} mi). Votos válidos, cenário condicional.`,url:shareUrl()};if(navigator.canShare?.({files:[file]}))payload.files=[file];await navigator.share(payload);}
       catch(e){if(e.name!=='AbortError')$('share-state').textContent='Use “Copiar link” ou “Baixar imagem” para compartilhar.';}
     });
   }

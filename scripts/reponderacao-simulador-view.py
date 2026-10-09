@@ -1,7 +1,10 @@
 """Primeira tela do 2º turno: placar estático, controles e evidência recolhida."""
 
+import importlib
 import json
 from html import escape as esc
+
+COUNT = importlib.import_module("reponderacao-contagem")
 
 PRESETS = [
     ("central", "Central Arvor", {}),
@@ -34,6 +37,8 @@ def slider(data, key, label, low, high, step, suffix, help_text, cls=""):
 
 def section_html(data, table):
     c = data["central"]
+    counts = COUNT.counts(c, data["electorate"])
+    electorate_label = f"{counts['eleitorado']:,}".replace(",", ".")
     presets = "".join(
         f'<button type="button" data-rs-preset="{k}" aria-pressed="{str(k == "central").lower()}">{name}</button>'
         for k, name, _ in PRESETS
@@ -72,15 +77,28 @@ def section_html(data, table):
         f'<span id="rs-reference">{esc(data["reference"])}</span></div>'
         '<p class="rs-unit">Votos válidos · projeção condicional</p>'
         '<div class="rs-score" aria-live="polite" aria-atomic="true">'
-        f'<div class="rs-flavio"><span>Flávio Bolsonaro</span><strong id="rs-flavio">{fmt(c["flavio"])}<small>%</small></strong></div>'
-        f'<div class="rs-lula"><span>Lula</span><strong id="rs-lula">{fmt(c["lula"])}<small>%</small></strong></div></div>'
+        f'<div class="rs-flavio"><span>Flávio Bolsonaro</span><strong id="rs-flavio">{fmt(c["flavio"])}<small>%</small></strong>'
+        f'<span class="rs-vote-count" id="rs-count-flavio">{fmt(counts["flavio"] / 1e6)} milhões de votos</span></div>'
+        f'<div class="rs-lula"><span>Lula</span><strong id="rs-lula">{fmt(c["lula"])}<small>%</small></strong>'
+        f'<span class="rs-vote-count" id="rs-count-lula">{fmt(counts["lula"] / 1e6)} milhões de votos</span></div></div>'
         '<div class="rs-duel" aria-hidden="true">'
         f'<span id="rs-bar-flavio" style="width:{c["flavio"]}%"></span><span id="rs-bar-lula" style="width:{c["lula"]}%"></span><i></i></div>'
         f'<p class="rs-gap">Flávio − Lula <b id="rs-gap">{signed(c["diferenca_flavio_lula"])} pp</b></p>'
+        f'<p class="rs-gap-volume" id="rs-count-gap">{signed(counts["diferenca_flavio_lula"] / 1e6)} milhões de votos</p>'
         '<p id="rs-versus">Positivo favorece Flávio; negativo favorece Lula.</p>'
-        '<div class="rs-account"><div><span>Abstenção</span>'
-        f'<b id="rs-absent">{fmt(c["abstencao"])}%</b><small>do eleitorado</small></div><div><span>Brancos e nulos</span>'
-        f'<b id="rs-invalid">{fmt(100 * c["branco_nulo"] / c["comparecimento"])}%</b><small>de quem comparece</small></div></div>'
+        '<div class="rs-account" aria-live="polite" aria-atomic="true"><div><span>Abstenção</span>'
+        f'<b id="rs-count-abstencao">{fmt(counts["abstencao"] / 1e6)} <small>milhões</small></b>'
+        f'<small><span id="rs-absent">{fmt(c["abstencao"])}%</span> do eleitorado</small></div><div><span>Brancos e nulos</span>'
+        f'<b id="rs-count-branco_nulo">{fmt(counts["branco_nulo"] / 1e6)} <small>milhões</small></b>'
+        f'<small><span id="rs-invalid">{fmt(100 * c["branco_nulo"] / c["comparecimento"])}%</span> de quem comparece</small></div>'
+        "<div><span>Total de votos válidos</span>"
+        f'<b id="rs-count-validos">{fmt(counts["validos"] / 1e6)} <small>milhões</small></b>'
+        "<small>Flávio + Lula</small></div><div><span>Compareceriam</span>"
+        f'<b id="rs-count-comparecimento">{fmt(counts["comparecimento"] / 1e6)} <small>milhões</small></b>'
+        f'<small><span id="rs-attendance">{fmt(c["comparecimento"])}%</span> do eleitorado</small></div>'
+        '<p class="rs-count-base">Base: <span id="rs-count-eleitorado">'
+        f'{fmt(counts["eleitorado"] / 1e6)} milhões de eleitores · TSE 2026 · Brasil, sem exterior</span>. '
+        "Totais condicionais, arredondados a 0,1 milhão.</p></div>"
         '<div id="rs-response" class="rs-response"><p>Como a presença relativa muda o placar</p>'
         '<svg id="rs-curve" viewBox="0 0 480 155" role="img" aria-label="Sensibilidade à presença relativa de Flávio, mantendo as outras hipóteses"></svg>'
         '<p id="rs-threshold">O gráfico de sensibilidade aparece com o simulador.</p></div>'
@@ -196,6 +214,11 @@ def section_html(data, table):
         "<p>Ajustamos uma margem de renda, conservamos o restante dos pesos do instituto e normalizamos cada vetor completo. "
         "Não escolha sem cruzamento de renda conserva a parcela publicada; o tamanho desconhecido não muda os válidos quando a alocação de indecisos é proporcional. "
         "A média usa peso igual por casa. Piso de branco/nulo: zero; teto de presença: 100%; votos válidos nunca negativos.</p>"
+        f"<p>Contagem absoluta: {electorate_label} eleitores aptos nas 27 UFs "
+        f'(<a href="{esc(data["electorate"]["source_page"])}">apuração presidencial TSE 2026</a>), '
+        "excluindo o exterior. A base fica congelada na versão do cenário; não estimamos mudanças de aptidão entre turnos. "
+        "Multiplicamos essa base pelas parcelas por 100 eleitores; a diferença em votos usa o total de válidos, não o eleitorado inteiro. "
+        "Brancos e nulos são agregados: o modelo não estima a separação entre eles. O arredondamento exibido pode diferir em 0,1 milhão na soma.</p>"
         '<p><a href="assets/reponderacao_simulador.json">Motor, hipóteses e parcelas (JSON)</a> · '
         '<a href="assets/reponderacao_validos.csv">Modos e sensibilidades anteriores (CSV)</a> · '
         '<a href="nexus_btg_28092026.html#modelo">Construção e limites da Nexus</a> · '
