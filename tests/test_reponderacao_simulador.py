@@ -6,6 +6,7 @@ import json
 import shutil
 import subprocess
 from pathlib import Path
+from urllib.parse import parse_qs, urlsplit
 
 import pytest
 from bs4 import BeautifulSoup
@@ -214,6 +215,16 @@ def test_public_routes_preserve_first_round_and_log_separately():
         )
     snapshot = ROOT / f"docs/assets/reponderacao_cenarios/{DATA['version']}.json"
     assert json.loads(snapshot.read_text()) == DATA
+
+
+def test_public_simulator_assets_expire_cached_controller_and_styles():
+    page = BeautifulSoup(
+        (ROOT / "docs/reponderacao_pnad.html").read_text(), "html.parser"
+    )
+    for node in page.select('script[src^="assets/"], link[href^="assets/"]'):
+        url = urlsplit(node.get("src") or node["href"])
+        content = (ROOT / "docs" / url.path).read_bytes()
+        assert parse_qs(url.query)["v"] == [hashlib.sha256(content).hexdigest()[:12]]
 
 
 def test_vox_evidence_distinguishes_registered_targets_and_unknown_income_concept():

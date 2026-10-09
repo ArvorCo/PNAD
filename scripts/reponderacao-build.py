@@ -706,12 +706,12 @@ def write_csv() -> None:
 
 
 def build(*, update_home: bool = True) -> None:
-    html = build_html()
-    if "—" in html:
-        raise SystemExit("travessão encontrado no HTML gerado")
     SHEET.write_text(CSS, encoding="utf-8")
     TIP_SHEET.write_text(TIP_CSS, encoding="utf-8")
     TIP_SCRIPT.write_text(TIP_JS, encoding="utf-8")
+    html = build_html()
+    if "—" in html:
+        raise SystemExit("travessão encontrado no HTML gerado")
     PAGE.write_text(
         injetar(html).replace("<section ", "\n<section ") + "\n", encoding="utf-8"
     )

@@ -1,5 +1,6 @@
 """Rotas públicas do agregador: segundo turno, acervo e diário documental."""
 
+import hashlib
 import importlib
 import json
 from html import escape as esc
@@ -13,6 +14,12 @@ ROOT = Path(__file__).resolve().parents[1]
 ARCHIVE = "reponderacao_pnad_1o_turno_2026.html"
 LOG = "reponderacao_pnad_log.html"
 CURRENT = "reponderacao_pnad.html"
+
+
+def asset(name, extension):
+    path = f"assets/{name}.{extension}"
+    version = hashlib.sha256((ROOT / "docs" / path).read_bytes()).hexdigest()[:12]
+    return f"{path}?v={version}"
 
 
 def head(title, slug, description):
@@ -31,7 +38,7 @@ def head(title, slug, description):
         '<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">'
         f'<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{card}">'
         + "".join(
-            f'<link rel="stylesheet" href="assets/{s}.css">'
+            f'<link rel="stylesheet" href="{asset(s, "css")}">'
             for s in [
                 "reponderacao_pnad",
                 "reponderacao_tip",
@@ -69,7 +76,7 @@ def frame(ns, title, slug, description, content, toc, scripts=()):
         )
         + f"<script>{SCRIPT}</script>"
         + "".join(
-            f'<script src="assets/{s}.js" defer></script>'
+            f'<script src="{asset(s, "js")}" defer></script>'
             for s in ["reponderacao_tip", "reponderacao_pesquisas", *scripts]
         )
         + "</body></html>"
