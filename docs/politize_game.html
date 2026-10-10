@@ -48,8 +48,13 @@
 <a class="skip" href="#conteudo">Pular para o jogo</a>
 
 <header class="topo" id="topo">
-  <a class="topo-voltar" href="politizesuavizinhanca.html"><span aria-hidden="true">&larr;</span> <span id="topo-voltar-txt">Politize sua vizinhança</span></a>
+  <a class="topo-voltar" href="politizesuavizinhanca.html"><span aria-hidden="true">&larr;</span> <span>Voltar</span><span class="topo-voltar-txt" id="topo-voltar-txt">&nbsp;ao Politize sua vizinhança</span></a>
   <div class="topo-acoes">
+    <div class="escala" role="group" aria-labelledby="escala-rot" id="escala">
+      <span class="sr" id="escala-rot">Tamanho da letra</span>
+      <button type="button" class="topo-btn escala-btn" id="btn-menor" aria-label="Diminuir a letra">A&minus;</button>
+      <button type="button" class="topo-btn escala-btn" id="btn-maior" aria-label="Aumentar a letra" aria-pressed="false">A+</button>
+    </div>
     <button type="button" class="topo-btn" id="btn-caderno" aria-controls="lateral" aria-expanded="false" hidden><span id="btn-caderno-txt">Caderno</span> <b id="btn-caderno-n">0</b></button>
     <button type="button" class="topo-btn" id="btn-ajuda" aria-controls="ajuda" aria-haspopup="dialog">Ajuda</button>
   </div>
@@ -78,28 +83,33 @@
     <section class="tela palco" id="tela-palco" aria-label="Conversa" hidden>
       <div class="hud">
         <p class="hud-dia" id="hud-dia"></p>
-        <p class="hud-cenario" id="hud-cenario"></p>
+        <ol class="dias" id="hud-dias"></ol>
         <p class="hud-placar" id="hud-placar"></p>
+      </div>
+      <div class="status">
+        <div class="confianca" id="confianca">
+          <span class="confianca-rot" id="confianca-rot">Confiança</span>
+          <div class="confianca-trilho" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-labelledby="confianca-rot" id="confianca-trilho"><div class="confianca-barra" id="confianca-barra"></div></div>
+          <span class="confianca-valor" id="confianca-valor"></span>
+          <span class="confianca-chips" id="confianca-chips" aria-hidden="true"></span>
+        </div>
+        <ol class="trilha" id="trilha" aria-label="Fases da conversa"></ol>
       </div>
       <div class="cena" id="cena">
         <div class="cena-fundo" id="cena-fundo" aria-hidden="true"></div>
-        <div class="npc-avatar" id="npc-avatar" aria-hidden="true"></div>
-        <div class="eu-avatar" id="eu-avatar" aria-hidden="true"></div>
+        <p class="cena-nome" id="hud-cenario"></p>
         <p class="publico-selo" id="publico-selo" hidden></p>
-      </div>
-      <div class="confianca" id="confianca">
-        <span class="confianca-rot" id="confianca-rot">Confiança</span>
-        <div class="confianca-trilho" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-labelledby="confianca-rot" id="confianca-trilho"><div class="confianca-barra" id="confianca-barra"></div></div>
-        <span class="confianca-valor" id="confianca-valor"></span>
+        <div class="npc-avatar" id="npc-avatar" aria-hidden="true"></div>
       </div>
       <div class="painel-baixo" id="painel-baixo">
-        <div class="fala" id="fala" aria-live="polite">
-          <p class="fala-nome" id="fala-nome"></p>
-          <p class="fala-texto" id="fala-texto"></p>
+        <div class="conversa" id="conversa" role="log" aria-live="polite" aria-relevant="additions" aria-label="Conversa"></div>
+        <div class="fase-barra" id="fase-barra">
+          <p class="fase-rot" id="fase-rot"></p>
+          <button type="button" class="btn-dica" id="btn-dica" aria-controls="dica" aria-expanded="false">Pedir uma dica</button>
         </div>
-        <div class="reacao" id="reacao" hidden></div>
-        <p class="fase-rot" id="fase-rot"></p>
+        <div class="dica" id="dica" hidden></div>
         <div class="opcoes" id="opcoes" role="group" aria-labelledby="fase-rot"></div>
+        <div class="reacao" id="reacao" hidden></div>
       </div>
     </section>
 
@@ -110,7 +120,8 @@
       <p class="fim-frase" id="fim-grau-frase"></p>
       <p class="fim-resumo" id="fim-resumo"></p>
       <p class="fim-erros" id="fim-erros"></p>
-      <dl class="placar placar-fim" id="fim-placar"></dl>
+      <dl class="placar-fim" id="fim-placar"></dl>
+      <p class="fim-dicas-n" id="fim-dicas-n"></p>
       <p class="fim-recorde" id="fim-recorde" hidden></p>
       <div class="fim-acoes">
         <button type="button" class="btn btn-prim" id="btn-compartilhar">Compartilhar</button>

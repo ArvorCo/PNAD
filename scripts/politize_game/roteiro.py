@@ -390,6 +390,26 @@ def _varrer_textos(obj: Any, caminho: str, erros: list[str]) -> None:
             _varrer_textos(v, f"{caminho}[{i}]", erros)
 
 
+def apoio_por_origem(textos: dict) -> dict[str, Any]:
+    """Textos do Politize que o jogo mostra como dica: um jeito de conversar e o cuidado."""
+    apoio: dict[str, Any] = {}
+    for origem, bloco in textos["conversas_por_origem"].items():
+        apoio[origem] = {
+            "rotulo": bloco["rotulo"],
+            "como_funciona": bloco["como_funciona"],
+            "um_jeito_de_conversar": bloco["um_jeito_de_conversar"],
+            "cuidado": bloco["cuidado"],
+        }
+    muro = textos["arquetipos"]["muro"]
+    apoio["lula"] = {
+        "rotulo": "Quem votou em Lula",
+        "como_funciona": muro["lema"],
+        "um_jeito_de_conversar": muro["o_que_fazer"],
+        "cuidado": textos["temas"]["default"]["cuidado"],
+    }
+    return apoio
+
+
 def montar(base: Path = ROTEIRO, apoio: Path = APOIO) -> dict[str, Any]:
     """Lê, valida e devolve o payload. Levanta RoteiroInvalido com todas as falhas."""
     textos, propostas = carregar_apoio(apoio)
@@ -431,6 +451,7 @@ def montar(base: Path = ROTEIRO, apoio: Path = APOIO) -> dict[str, Any]:
         "npcs": npcs,
         "interface": interface,
         "fontes": {k: LEIS[k] for k in LEIS},
+        "apoio": apoio_por_origem(textos),
     }
     _varrer_textos(payload, "roteiro", erros)
     if erros:

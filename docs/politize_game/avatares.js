@@ -166,37 +166,124 @@
     return [b, P(chapeu ? LADOS : f, c)];
   }
 
-  // rosto: sobrancelhas, olhos, nariz e boca por expressao
-  function rosto(ex, pele, sob, fem) {
-    var o = "", ol = "#1f1a17", nz = dk(pele, 0.28);
-    var eyeRy = ex === "fechado" ? 3.6 : ex === "aberto" ? 5.6 : 5;
-    o += E(86, 92, 4.4, eyeRy, ol) + E(114, 92, 4.4, eyeRy, ol);
-    if (ex !== "fechado") o += C(87.6, 90, 1.4, "#ffffff") + C(115.6, 90, 1.4, "#ffffff");
-    if (fem) o += S("M80 88L77 85M120 88L123 85", ol, 1.8);
-    if (ex === "fechado") {
-      o += S("M76 77L94 84M124 77L106 84", sob, 4.4);
-    } else if (ex === "aberto") {
-      o += S("M76 78Q85 68 95 75M105 75Q115 68 124 78", sob, 4);
-    } else {
-      o += S("M77 79Q86 75 95 79M105 79Q114 75 123 79", sob, 4);
-    }
+  // nivel de confianca: numero 0 a 100 ou nome antigo
+  var NIVEIS = { fechado: 15, neutro: 50, aberto: 85 };
+  function nv(x) {
+    if (x == null || typeof x === "boolean") return 50;
+    if (typeof x === "string") x = NIVEIS[x] != null ? NIVEIS[x] : parseFloat(x);
+    x = +x;
+    return isFinite(x) ? Math.max(0, Math.min(100, x)) : 50;
+  }
+  // quadros-chave em 0, 25, 50, 75 e 100
+  function kf(n, a) {
+    var p = n / 25, i = Math.min(3, Math.floor(p));
+    return a[i] + (a[i + 1] - a[i]) * (p - i);
+  }
+  function sm(a, b, n) {
+    var t = Math.max(0, Math.min(1, (n - a) / (b - a)));
+    return t * t * (3 - 2 * t);
+  }
+  function r2(x) { return Math.round(x * 100) / 100; }
+
+  // geometria do rosto por nivel: parte -> atributos (usada por svg e ajustar)
+  function geom(n) {
+    var g = {};
+    var yo = r2(kf(n, [77.5, 78.6, 79, 78.4, 77])), yi = r2(kf(n, [85.5, 82.4, 79, 76.4, 74.2]));
+    var yc = r2(kf(n, [81.6, 78.6, 75, 70.8, 67.2])), xi = r2(kf(n, [96.5, 95.8, 95, 95, 95]));
+    var sw = r2(kf(n, [5, 4.5, 4, 4, 4]));
+    g.sobrancelha_e = { d: "M76 " + yo + "Q85.5 " + yc + " " + xi + " " + yi, "stroke-width": sw };
+    g.sobrancelha_d = { d: "M124 " + yo + "Q114.5 " + yc + " " + r2(200 - xi) + " " + yi, "stroke-width": sw };
+    var ry = r2(kf(n, [4, 4.6, 5, 5.4, 5.8])), topo = 92 - ry;
+    g.olho_e = { ry: ry };
+    g.olho_d = { ry: ry };
+    var br = { opacity: r2(sm(6, 30, n)), r: r2(kf(n, [1.3, 1.4, 1.45, 1.6, 1.8])) };
+    g.brilho_e = br;
+    g.brilho_d = br;
+    // palpebra superior: cobre parte do olho e inclina para dentro quando fecha
+    var c = kf(n, [0.42, 0.2, 0, 0, 0]), inc = 2.2 * (1 - sm(0, 35, n));
+    var yb = topo + 2 * ry * c - 0.7, ye = r2(yb - inc / 2), yd = r2(yb + inc / 2), ym = r2(yb + 0.8);
+    g.palpebra_e = { d: "M79 82L93 82L93 " + yd + "Q86 " + ym + " 79 " + ye + "Z" };
+    g.palpebra_d = { d: "M121 82L107 82L107 " + yd + "Q114 " + ym + " 121 " + ye + "Z" };
+    var cop = r2(1 - sm(28, 46, n));
+    g.cilio_e = { d: "M80.5 " + ye + "Q86 " + ym + " 91.5 " + yd, opacity: cop };
+    g.cilio_d = { d: "M119.5 " + ye + "Q114 " + ym + " 108.5 " + yd, opacity: cop };
+    g.cilios = { d: "M80.5 " + r2(topo + 2.4) + "L77 " + r2(topo - 0.8) + "M119.5 " + r2(topo + 2.4) + "L123 " + r2(topo - 0.8) };
+    // boca: cantos, controle de cima e de baixo
+    var xl = r2(kf(n, [89, 90, 91, 89, 86.5])), yk = r2(kf(n, [118.5, 117.2, 115.6, 113.6, 112]));
+    var yu = r2(kf(n, [111.4, 113.6, 116, 116.6, 113.6])), yl = r2(kf(n, [111.4, 113.6, 116.3, 120.8, 129.5]));
+    var xr = r2(200 - xl);
+    g.boca = {
+      d: "M" + xl + " " + yk + "Q100 " + yu + " " + xr + " " + yk + "Q100 " + yl + " " + xl + " " + yk + "Z",
+      "stroke-width": r2(kf(n, [3.4, 3.3, 3.2, 2.6, 2.1]))
+    };
+    var th = Math.max(0.5, Math.min(5.5, (yl - yu) * 0.42)), ya = r2(yk + 0.5), yt = r2(yk + 1.8);
+    g.dentes = {
+      d: "M" + r2(xl + 2) + " " + ya + "Q100 " + r2(yu + 1.4) + " " + r2(xr - 2) + " " + ya + "L" + r2(xr - 3.5) + " " + yt +
+        "Q100 " + r2(yu + 1.4 + th) + " " + r2(xl + 3.5) + " " + yt + "Z",
+      opacity: r2(sm(66, 80, n))
+    };
+    var bo = r2(0.55 * sm(63, 98, n));
+    g.bochecha_e = { opacity: bo };
+    g.bochecha_d = { opacity: bo };
+    g.cabeca = { transform: "translate(0 " + r2(kf(n, [2.6, 1.2, 0, -0.8, -1.6])) + ") rotate(" + r2(kf(n, [3, 1.5, 0, -1.6, -3])) + " 100 128)" };
+    // bracos sobem de baixo ao cruzar; somem acima de 24
+    var bd = r2(44 * sm(6, 24, n));
+    g.bracos = { transform: "translate(0 " + bd + ")", opacity: bd >= 43.9 ? 0 : 1 };
+    return g;
+  }
+
+  // atributos de uma parte, com data-parte
+  function at(g, k, extra, fora) {
+    var s = ' data-parte="' + k + '"', a = g[k];
+    for (var key in a) if (key !== "d" && key !== fora) s += " " + key + '="' + esc(a[key]) + '"';
+    return s + (extra || "");
+  }
+
+  function rosto(g, pele, sob, fem) {
+    var o = "", ol = "#1f1a17", nz = dk(pele, 0.28), lb = fem ? "#b3473f" : dk(pele, 0.45);
+    [["e", 86], ["d", 114]].forEach(function (q) {
+      var k = q[0], x = q[1];
+      o += '<g class="pz-olho pz-olho-' + k + '"><g class="pz-pisca">' +
+        '<ellipse cx="' + x + '" cy="92" rx="4.4" fill="' + ol + '"' + at(g, "olho_" + k) + "/>" +
+        '<circle class="pz-brilho" cx="' + (x + 1.6) + '" cy="90" fill="#ffffff"' + at(g, "brilho_" + k) + "/>" +
+        P(g["palpebra_" + k].d, pele, at(g, "palpebra_" + k)) +
+        S(g["cilio_" + k].d, ol, 1.6, at(g, "cilio_" + k));
+      if (fem && k === "d") o += S(g.cilios.d, ol, 1.8, at(g, "cilios"));
+      o += "</g></g>";
+    });
+    o += '<g class="pz-sob pz-sob-e">' + S(g.sobrancelha_e.d, sob, g.sobrancelha_e["stroke-width"], at(g, "sobrancelha_e", "", "stroke-width")) + "</g>" +
+      '<g class="pz-sob pz-sob-d">' + S(g.sobrancelha_d.d, sob, g.sobrancelha_d["stroke-width"], at(g, "sobrancelha_d", "", "stroke-width")) + "</g>";
     o += S("M100 96Q96 106 101 107", nz, 2.2);
-    var lb = fem ? "#b3473f" : dk(pele, 0.45);
-    if (ex === "fechado") {
-      o += S("M89 118Q100 111 111 118", lb, 3.4);
-    } else if (ex === "aberto") {
-      o += P("M86 112Q100 130 114 112Z", "#6b2420") + P("M88 112.6L112 112.6L110 116.5L90 116.5Z", "#ffffff") +
-        S("M86 112Q100 130 114 112Z", lb, 2) +
-        E(76, 108, 6.5, 3.6, "#e8796b", ' opacity=".4"') + E(124, 108, 6.5, 3.6, "#e8796b", ' opacity=".4"');
-    } else {
-      o += S("M91 115Q100 118 109 115", lb, 3.2);
-    }
+    o += E(76, 108, 6.5, 3.6, "#e8796b", at(g, "bochecha_e")) + E(124, 108, 6.5, 3.6, "#e8796b", at(g, "bochecha_d"));
+    o += '<g class="pz-boca">' +
+      '<path d="' + g.boca.d + '" fill="#6b2420" stroke="' + lb + '" stroke-linejoin="round" stroke-linecap="round"' + at(g, "boca") + "/>" +
+      P(g.dentes.d, "#ffffff", at(g, "dentes")) + "</g>" +
+      E(100, 118, 5, 6.5, "#6b2420", ' class="pz-bocao" opacity="0" stroke="' + lb + '" stroke-width="2"');
     return o;
   }
 
-  function svg(visual, expressao) {
+  // bracos cruzados (so quando as maos estao livres)
+  function bracos(manga, pele, g) {
+    var d = dk(manga, 0.3);
+    return '<g' + at(g, "bracos") + ">" +
+      S("M40 192Q96 172 146 176", d, 23) + S("M40 192Q96 172 146 176", dk(manga, 0.06), 19) +
+      E(149, 175, 8, 8.5, pele) + S("M144 170Q150 167 155 171", dk(pele, 0.25), 1.4) +
+      S("M162 200Q104 198 56 182", d, 23) + S("M162 200Q104 198 56 182", manga, 19) +
+      E(52, 181, 8, 8.5, pele) + S("M46 177Q51 173 57 176", dk(pele, 0.25), 1.4) + "</g>";
+  }
+
+  function hash(v) {
+    var s = Object.keys(v).sort().map(function (k) { return k + ":" + v[k]; }).join("|"), h = 2166136261;
+    for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
+    return h >>> 0;
+  }
+
+  var MAOS = ["biblia", "celular", "caneca", "espeto", "megafone"];
+
+  function svg(visual, nivel) {
+    injetarEstilo();
     var v = visual && typeof visual === "object" ? visual : {};
-    var ex = ["fechado", "neutro", "aberto"].indexOf(expressao) >= 0 ? expressao : "neutro";
+    var n = nv(nivel), g = geom(n);
     var pele = hx(v.pele, "#d9a77c");
     var cab = hx(v.cabelo, "#3a2a20");
     var cor = hx(v.roupa, "#3f6f9a");
@@ -212,10 +299,14 @@
     var sob = dk(cab, lum(cab) > 0.6 ? 0.35 : 0.2);
     var hair = cabelo(est, cab, chapeu, fem);
     var r = roupa(tipo, cor, pele, v);
+    var CAB = '<g class="pz-cab"><g' + at(g, "cabeca") + ">";
     var o = [];
+    var h = hash(v);
 
-    // 1. fundo: cabelo de tras, capuz, fone no pescoco (parte de tras)
-    o.push(hair[0], r[0]);
+    // 1. fundo: cabelo de tras (gira com a cabeca), capuz, fone no pescoco
+    o.push('<g class="pz-tudo"><g class="pz-resp">');
+    if (hair[0]) o.push(CAB + hair[0] + "</g></g>");
+    o.push(r[0]);
     if (ac === "fone") o.push(S("M78 142C80 128 120 128 122 142", "#23262b", 5));
     // 2. pescoco e roupa
     o.push(fem ? R(90, 108, 20, 52, 6, pdk) : R(87, 108, 26, 52, 6, pdk));
@@ -237,6 +328,7 @@
       o.push(E(78, 148, 10, 12, "#23262b") + E(122, 148, 10, 12, "#23262b") + E(78, 148, 5, 7, fc) + E(122, 148, 5, 7, fc));
     }
     // 4. cabeca
+    o.push(CAB);
     o.push(E(64, 94, 7, 10, pdk) + E(136, 94, 7, 10, pdk));
     o.push(P(fem ? "M65 86C65 56 80 46 100 46C120 46 135 56 135 86C135 110 120 128 100 128C80 128 65 110 65 86Z"
       : "M63 86C63 55 80 45 100 45C120 45 137 55 137 86C137 112 124 131 100 131C76 131 63 112 63 86Z", pele));
@@ -248,7 +340,7 @@
         P("M86 108Q100 100 114 108L112 113Q100 108 88 113Z", bc));
     }
     // 6. rosto
-    o.push(rosto(ex, pele, sob, fem));
+    o.push(rosto(g, pele, sob, fem));
     // 7. cabelo da frente
     o.push(hair[1]);
     // 8. cabeca: chapeus, oculos, headset
@@ -274,6 +366,7 @@
         R(52, 82, 15, 28, 7, hs) + R(133, 82, 15, 28, 7, hs) + R(55, 88, 4, 16, 2, hl) + R(141, 88, 4, 16, 2, hl) +
         S("M60 108C62 124 74 127 86 122", hs, 3.5) + C(89, 121, 4.5, hs));
     }
+    o.push("</g></g>");
     // 9. objetos nas maos e ao lado do ombro
     if (ac === "biblia") {
       o.push('<g transform="rotate(-8 130 178)">' + R(110, 160, 40, 34, 3, "#2b1d14") + R(146, 162, 3, 30, 1, "#efe6cf") +
@@ -296,8 +389,116 @@
         P("M65 164L41 110L7 138L55 172Z", "#ece6d4", ' stroke="#3a3d42" stroke-width="2.4" stroke-linejoin="round"') + P("M47 124L44 117L13 142L19 146Z", "#c8412f") +
         E(24, 124, 22, 7, "#6b6f76", ' transform="rotate(-39 24 124)" stroke="#ece6d4" stroke-width="2"') + E(60, 176, 10, 9, pele));
     }
-    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-hidden="true">' + o.join("") + "</svg>";
+    // 10. bracos cruzados nos niveis baixos
+    if (MAOS.indexOf(ac) < 0) o.push(bracos(tipo === "regata" || tipo === "vestido" ? pele : tipo === "colete" ? "#f1efe8" : cor, pele, g));
+    o.push("</g></g>");
+    var estilo = "--pz-ciclo:" + (3 + (h % 301) / 100) + "s;--pz-atraso:-" + ((h >>> 9) % 600) / 100 +
+      "s;--pz-resp:-" + ((h >>> 18) % 400) / 100 + "s";
+    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-hidden="true" class="pz-av' +
+      (n < 30 ? " pz-impaciente" : "") + '" data-pz-nivel="' + Math.round(n) + '" style="' + estilo + '">' + o.join("") + "</svg>";
   }
 
-  w.POLITIZE_AVATARES = { svg: svg, EXPRESSOES: ["fechado", "neutro", "aberto"], CABELOS: CABELOS, ACESSORIOS: ACESS, ROUPAS: ROUPAS };
+  // aceita o svg ou um conteiner que o tenha
+  function raiz(el) {
+    if (!el || !el.querySelector) return null;
+    return String(el.tagName).toLowerCase() === "svg" ? el : el.querySelector("svg.pz-av");
+  }
+
+  // muda a expressao no lugar; barata o bastante para requestAnimationFrame
+  function ajustar(el, nivel) {
+    var s = raiz(el);
+    if (!s) return;
+    var n = nv(nivel), c = s.__pz, g = geom(n), k, i, a, L;
+    if (!c) {
+      c = s.__pz = {};
+      L = s.querySelectorAll("[data-parte]");
+      for (i = 0; i < L.length; i++) { k = L[i].getAttribute("data-parte"); (c[k] = c[k] || []).push(L[i]); }
+    }
+    for (k in g) {
+      L = c[k];
+      if (!L) continue;
+      for (i = 0; i < L.length; i++) for (a in g[k]) L[i].setAttribute(a, g[k][a]);
+    }
+    s.setAttribute("data-pz-nivel", Math.round(n));
+    if (s.classList) s.classList.toggle("pz-impaciente", n < 30);
+  }
+
+  var TIPOS = ["melhor", "ok", "erro", "grave"];
+  // reacao transitoria de ~900 ms; nao altera o nivel
+  function reagir(el, tipo) {
+    var s = raiz(el);
+    if (!s || !s.classList || TIPOS.indexOf(tipo) < 0) return;
+    injetarEstilo();
+    TIPOS.forEach(function (t) { s.classList.remove("reage-" + t); });
+    if (s.__pzFim) { s.removeEventListener("animationend", s.__pzFim); clearTimeout(s.__pzT); }
+    void s.getBoundingClientRect();
+    s.classList.add("reage-" + tipo);
+    var fim = s.__pzFim = function (e) {
+      if (e && e.animationName && e.animationName.indexOf("pz-r-") !== 0) return;
+      s.classList.remove("reage-" + tipo);
+      s.removeEventListener("animationend", fim);
+      clearTimeout(s.__pzT);
+      s.__pzFim = null;
+    };
+    s.addEventListener("animationend", fim);
+    s.__pzT = setTimeout(fim, 1200);
+  }
+
+  function vida(el) { var s = raiz(el); if (s && s.classList) { injetarEstilo(); s.classList.add("pz-vida"); } }
+  function parar(el) { var s = raiz(el); if (s && s.classList) s.classList.remove("pz-vida"); }
+
+  var CSS = [
+    ".pz-av g{transform-box:view-box}",
+    ".pz-av .pz-tudo,.pz-av .pz-resp{transform-origin:100px 200px}",
+    ".pz-av .pz-cab{transform-origin:100px 130px}",
+    ".pz-av .pz-olho-e{transform-origin:86px 92px}.pz-av .pz-olho-d{transform-origin:114px 92px}",
+    ".pz-av .pz-olho-e .pz-pisca{transform-origin:86px 92px}.pz-av .pz-olho-d .pz-pisca{transform-origin:114px 92px}",
+    ".pz-av .pz-sob-e{transform-origin:85px 80px}.pz-av .pz-sob-d{transform-origin:115px 80px}",
+    ".pz-av .pz-boca{transform-origin:100px 116px}",
+    ".pz-av .pz-brilho,.pz-av .pz-bocao{transform-box:fill-box;transform-origin:center}",
+    ".pz-av.pz-vida .pz-resp{animation:pz-resp 4s ease-in-out var(--pz-resp,0s) infinite}",
+    ".pz-av.pz-vida .pz-pisca{animation:pz-pisca var(--pz-ciclo,4.5s) linear var(--pz-atraso,0s) infinite}",
+    ".pz-impaciente.pz-vida .pz-cab{animation:pz-impac 2.4s ease-in-out infinite}",
+    ".pz-av.reage-melhor .pz-cab{animation:pz-r-melhor .9s ease-in-out}",
+    ".pz-av.reage-melhor .pz-brilho{animation:pz-brilha .9s ease-in-out}",
+    ".pz-av.reage-melhor .pz-sob{animation:pz-ergue .9s ease-in-out}",
+    ".pz-av.reage-ok .pz-cab{animation:pz-r-ok .9s ease-in-out}",
+    ".pz-av.reage-erro .pz-cab{animation:pz-r-erro .9s ease-in-out}",
+    ".pz-av.reage-erro .pz-sob-e{animation:pz-franze-e .9s ease-in-out}",
+    ".pz-av.reage-erro .pz-sob-d{animation:pz-franze-d .9s ease-in-out}",
+    ".pz-av.reage-grave .pz-tudo{animation:pz-r-grave .9s ease-out}",
+    ".pz-av.reage-grave .pz-olho{animation:pz-arregala .9s ease-out}",
+    ".pz-av.reage-grave .pz-sob{animation:pz-ergue .9s ease-out}",
+    ".pz-av.reage-grave .pz-boca{animation:pz-some .9s ease-out}",
+    ".pz-av.reage-grave .pz-bocao{animation:pz-mostra .9s ease-out}",
+    "@keyframes pz-resp{50%{transform:scale(1.004,1.0095)}}",
+    "@keyframes pz-pisca{0%,3%,100%{transform:none}1.5%{transform:scaleY(.08)}}",
+    "@keyframes pz-impac{0%,55%,100%{transform:none}12%{transform:rotate(1.8deg)}26%{transform:rotate(-1.6deg)}40%{transform:rotate(1deg)}}",
+    "@keyframes pz-r-melhor{0%,100%{transform:none}22%{transform:translateY(3.5px) rotate(-1deg)}45%{transform:translateY(-1.5px)}68%{transform:translateY(2.5px)}86%{transform:translateY(-.5px)}}",
+    "@keyframes pz-brilha{0%,100%{transform:none}30%,70%{transform:scale(1.7);opacity:1}}",
+    "@keyframes pz-ergue{0%,100%{transform:none}25%,70%{transform:translateY(-3px)}}",
+    "@keyframes pz-r-ok{0%,100%{transform:none}35%,65%{transform:rotate(-4deg) translateX(-1px)}}",
+    "@keyframes pz-r-erro{0%,100%{transform:none}12%{transform:translateX(-2px) rotate(-5deg)}30%{transform:translateX(2px) rotate(5deg)}48%{transform:translateX(-1.5px) rotate(-4deg)}66%{transform:translateX(1px) rotate(3deg)}84%{transform:rotate(-1deg)}}",
+    "@keyframes pz-franze-e{0%,100%{transform:none}18%,80%{transform:translate(1.5px,2.5px) rotate(9deg)}}",
+    "@keyframes pz-franze-d{0%,100%{transform:none}18%,80%{transform:translate(-1.5px,2.5px) rotate(-9deg)}}",
+    "@keyframes pz-r-grave{0%,100%{transform:none}14%{transform:translateY(-3px) scale(.955)}70%{transform:translateY(-2px) scale(.965)}}",
+    "@keyframes pz-arregala{0%,100%{transform:none}12%,72%{transform:scale(1.3)}}",
+    "@keyframes pz-some{0%,100%{opacity:1}10%,76%{opacity:0}}",
+    "@keyframes pz-mostra{0%,100%{opacity:0;transform:scale(.6)}12%,74%{opacity:1;transform:none}}",
+    "@media (prefers-reduced-motion:reduce){.pz-av,.pz-av *{animation:none!important}}"
+  ].join("\n");
+
+  function injetarEstilo() {
+    if (typeof document === "undefined" || !document.head || document.getElementById("politize-avatar-css")) return;
+    var st = document.createElement("style");
+    st.id = "politize-avatar-css";
+    st.textContent = CSS;
+    document.head.appendChild(st);
+  }
+
+  w.POLITIZE_AVATARES = {
+    svg: svg, ajustar: ajustar, reagir: reagir, vida: vida, parar: parar, injetarEstilo: injetarEstilo,
+    nivel: nv, NIVEIS: NIVEIS, REACOES: TIPOS,
+    EXPRESSOES: ["fechado", "neutro", "aberto"], CABELOS: CABELOS, ACESSORIOS: ACESS, ROUPAS: ROUPAS
+  };
 })(window);
