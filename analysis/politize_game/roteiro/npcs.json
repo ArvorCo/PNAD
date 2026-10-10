@@ -1,0 +1,2016 @@
+{
+  "versao": "1.0",
+  "npcs": [
+    {
+      "id": "petista_ideologico",
+      "nome": "Valdir, o Estrela Vermelha",
+      "idade": 52,
+      "genero": "M",
+      "campo": "esquerda_ideologica",
+      "origem": "lula",
+      "tags": ["esquerda", "boomer", "zap"],
+      "dificuldade": 3,
+      "confianca_inicial": 20,
+      "desfechos": {"alto": "nulo", "medio": "sem_mudanca", "baixo": "lula"},
+      "limiares": {"alto": 80, "medio": 50},
+      "bio": "Valdir milita desde a primeira eleição e tem uma camiseta vermelha para cada ano de campanha. Fala em 'projeto' com a solenidade de quem fala de time de futebol.",
+      "visual": {
+        "pele": "#c68e64",
+        "cabelo": "#8a8580",
+        "estilo_cabelo": "curto",
+        "acessorio": "bone",
+        "roupa": "#c8412f",
+        "roupa_tipo": "camiseta",
+        "barba": true,
+        "detalhe": "camiseta vermelha com estrela no peito, boné vermelho e barba grisalha bem cuidada"
+      },
+      "cenarios": ["churrasco", "bar", "whatsapp_familia", "rede_x"],
+      "tema": "Economia",
+      "queixa": "Olha, eu já sei o que você vai dizer. O projeto está reconstruindo o país, e quem fala em 'alternância' quer é o golpe de volta com outro nome.",
+      "escuta": [
+        {
+          "texto": "Reconstruindo como? Me conta o que você viu melhorar perto de você.",
+          "tipo": "melhor",
+          "efeito": 15,
+          "tags": ["pergunta", "escuta"],
+          "reacao": "Ah, agora quer saber? Bom, começa que o meu sobrinho arrumou emprego, e isso ninguém me tira."
+        },
+        {
+          "texto": "Dá pra ver que você acredita nesse projeto faz muito tempo.",
+          "tipo": "ok",
+          "efeito": 5,
+          "tags": ["respeito"],
+          "reacao": "Desde a primeira eleição, camarada. Tenho até a camiseta."
+        },
+        {
+          "texto": "Golpe? Para com isso, você só repete o que o partido manda.",
+          "tipo": "erro",
+          "efeito": -12,
+          "tags": ["desqualifica"],
+          "reacao": "Pronto, chegou o papagaio da direita me chamando de papagaio.",
+          "licao": "Você chamou a pessoa de repetidora do partido; debate para vencer fecha a porta antes de abrir.",
+          "fonte": "textos.arquetipos.muro.o_que_nao_fazer[0]"
+        },
+        {
+          "texto": "Tá, tá, mas e o preço da gasolina?",
+          "tipo": "erro",
+          "efeito": -9,
+          "tags": ["interrompe"],
+          "reacao": "Nem me deixou terminar a frase. Típico.",
+          "licao": "Você cortou a primeira frase dele; quem não é ouvido não escuta.",
+          "fonte": "textos.arquetipos.muro.o_que_fazer[0]"
+        }
+      ],
+      "objecoes": [
+        {
+          "fala": "Esse papo de voto útil é coisa de quem quer o Brasil de volta pros ricos. Eu tenho lado, viu? Não sou isentão.",
+          "opcoes": [
+            {
+              "texto": "Eu também tenho lado, e não vou fingir que não. Só queria entender o que faria você confiar em quem governa, seja quem for.",
+              "tipo": "melhor",
+              "efeito": 15,
+              "tags": ["respeito", "pergunta"],
+              "reacao": "Hm. Pelo menos você assume que é do outro time, isso eu respeito."
+            },
+            {
+              "texto": "Ter lado é legítimo. A alternância também é um jeito de cobrar quem está no poder.",
+              "tipo": "ok",
+              "efeito": 4,
+              "tags": ["alternancia"],
+              "reacao": "Alternância é palavra bonita pra golpe de gravata. Mas tá, continua."
+            },
+            {
+              "texto": "Seu voto é desperdício, o país cansou do PT.",
+              "tipo": "erro",
+              "efeito": -12,
+              "tags": ["desqualifica"],
+              "reacao": "Desperdício é o seu tempo tentando me convencer.",
+              "licao": "Você chamou o voto dele de desperdício; isso só faz a pessoa defender a escolha com mais força.",
+              "fonte": "textos.arquetipos.fertil.o_que_nao_fazer[1]"
+            },
+            {
+              "texto": "Recebi um áudio de um primo de um delegado contando uma coisa cabeluda do Lula. Vou te encaminhar agora.",
+              "tipo": "grave",
+              "efeito": -30,
+              "tags": ["boato", "mentira"],
+              "reacao": "Áudio de primo de delegado. Vou printar e mandar no grupo da família como exemplo do que vocês fazem.",
+              "licao": "Você encaminhou boato sem fonte: perde a conversa, perde a credibilidade e ainda ajuda a espalhar mentira.",
+              "fonte": "textos.arquetipos.pendulo.o_que_nao_fazer[1]"
+            }
+          ]
+        },
+        {
+          "fala": "E o Flávio vai fazer o quê, privatizar até o ar? O projeto de vocês é de poder, não de país.",
+          "opcoes": [
+            {
+              "texto": "O plano dele propõe acabar com a reeleição para presidente e diz que 'o nosso projeto é de país, não de poder'. Você toparia fim da reeleição valendo para qualquer um?",
+              "tipo": "melhor",
+              "efeito": 13,
+              "tags": ["programa", "pergunta"],
+              "reacao": "Roubaram minha frase, que cara de pau. Mas fim da reeleição valendo pra todo mundo, isso eu até discuto.",
+              "fonte": "propostas.liberdade-instituicoes.66"
+            },
+            {
+              "texto": "Não sei responder sobre tudo. Posso te mostrar o plano e você tira as suas conclusões.",
+              "tipo": "ok",
+              "efeito": 5,
+              "tags": ["respeito"],
+              "reacao": "Manda. Vou ler com caneta vermelha, claro."
+            },
+            {
+              "texto": "Privatizar é ótimo, o Estado é um elefante e vocês não entendem nada de economia.",
+              "tipo": "erro",
+              "efeito": -12,
+              "tags": ["desqualifica", "sermao"],
+              "reacao": "Pronto, virou aula de economia de cursinho de internet.",
+              "licao": "Você deu uma aula que ninguém pediu; desqualificar a opinião de quem pensa diferente encerra a conversa.",
+              "fonte": "textos.temas.Economia.cuidado"
+            },
+            {
+              "texto": "Você vai ver quando o Brasil virar uma Venezuela.",
+              "tipo": "erro",
+              "efeito": -10,
+              "tags": ["medo"],
+              "reacao": "Faz vinte anos que eu escuto essa. Ainda estou esperando.",
+              "licao": "Medo não convence quem já tem lado; só mostra que faltou argumento.",
+              "fonte": "textos.arquetipos.pendulo.o_que_nao_fazer[1]"
+            }
+          ]
+        }
+      ],
+      "fecho": [
+        {
+          "texto": "Valeu por conversar sem a gente brigar. Você não precisa mudar nada, eu só queria entender.",
+          "tipo": "melhor",
+          "efeito": 15,
+          "tags": ["respeito"],
+          "reacao": "No seu candidato eu não voto nem amarrado. Mas foi a conversa mais decente que eu tive nessa eleição."
+        },
+        {
+          "texto": "Se um dia mudar de ideia, sabe onde me achar.",
+          "tipo": "ok",
+          "efeito": 4,
+          "tags": ["respeito"],
+          "reacao": "Sei. No churrasco, comendo a picanha que eu trouxe."
+        },
+        {
+          "texto": "Pensa bem, hein? Dia 25 eu vou te cobrar.",
+          "tipo": "erro",
+          "efeito": -10,
+          "tags": ["pressao"],
+          "reacao": "Cobrar? Agora você virou fiscal do meu voto?",
+          "licao": "Cobrar o voto de alguém transforma conversa em fiscalização, e ninguém gosta de fiscal.",
+          "fonte": "textos.arquetipos.fortaleza.o_que_nao_fazer[1]"
+        }
+      ],
+      "desfecho_texto": {
+        "flavio": "Não espalha, mas vou de 22. A camiseta vermelha eu não tiro.",
+        "nulo": "Não voto no Flávio, mas também não vou mais fazer campanha. Esse ano eu fico quieto e anulo, que já está de bom tamanho.",
+        "lula": "13 confirma, e agora com mais vontade. Obrigado pela motivação.",
+        "sem_mudanca": "Continuo onde sempre estive. Mas pode voltar no churrasco, que a gente conversa."
+      }
+    },
+    {
+      "id": "lulista_gratidao",
+      "nome": "Zé, o Lula Me Deu",
+      "idade": 67,
+      "genero": "M",
+      "campo": "lulista_pragmatico",
+      "origem": "lula",
+      "tags": ["boomer", "fund_inc", "nordeste", "trabalhador"],
+      "dificuldade": 2,
+      "confianca_inicial": 32,
+      "desfechos": {"alto": "flavio", "medio": "nulo", "baixo": "lula"},
+      "limiares": {"alto": 70, "medio": 45},
+      "bio": "Seu Zé tem barraca na feira há mais de trinta anos e uma foto com o Lula emoldurada ao lado da balança. Desconfia de quem fala difícil e de freguês que pede desconto em banana.",
+      "visual": {
+        "pele": "#8d5a3b",
+        "cabelo": "#d9d4cc",
+        "estilo_cabelo": "calvo",
+        "acessorio": "chapeu",
+        "roupa": "#6f8f4e",
+        "roupa_tipo": "camisa",
+        "barba": false,
+        "detalhe": "chapéu de palha, avental de feirante e lápis atrás da orelha"
+      },
+      "cenarios": ["mercado", "padaria", "fila_do_banco", "whatsapp_familia"],
+      "tema": "Economia",
+      "queixa": "O Lula me deu, viu? Antes dele eu não tinha nada, hoje a barraca é minha. Agora, que a feira tá mais vazia, isso tá: o povo leva meio quilo onde levava um.",
+      "escuta": [
+        {
+          "texto": "E o que o senhor acha que esvaziou a feira? O senhor vê isso todo dia, conhece melhor que eu.",
+          "tipo": "melhor",
+          "efeito": 15,
+          "tags": ["pergunta", "escuta"],
+          "reacao": "É o preço. O freguês faz a conta de cabeça e leva a metade, e o aluguel da banca subiu também."
+        },
+        {
+          "texto": "Mais de trinta anos de feira não é pouca coisa, seu Zé.",
+          "tipo": "ok",
+          "efeito": 5,
+          "tags": ["respeito"],
+          "reacao": "Comecei com um caixote de laranja e uma balança emprestada."
+        },
+        {
+          "texto": "O Lula não deu nada, quem pagou foi o senhor, com imposto.",
+          "tipo": "erro",
+          "efeito": -12,
+          "tags": ["desqualifica", "sermao"],
+          "reacao": "Então agora você sabe da minha vida melhor que eu?",
+          "licao": "Você corrigiu a história de vida dele; brigar com a gratidão de alguém só faz a pessoa se agarrar mais nela.",
+          "fonte": "textos.arquetipos.muro.o_que_nao_fazer[0]"
+        },
+        {
+          "texto": "Seu Zé, o PIB per capita e a Selic explicam isso, olha só o gráfico.",
+          "tipo": "erro",
+          "efeito": -9,
+          "tags": ["sermao"],
+          "reacao": "Gráfico eu não como. Vai levar tomate ou não vai?",
+          "licao": "Você trocou a experiência dele por sigla; com quem vive o preço todo dia, exemplo vale mais que número.",
+          "fonte": "textos.perfil.escolaridade.fund_inc.como_conversar"
+        }
+      ],
+      "objecoes": [
+        {
+          "fala": "Esse Flávio é filho de gente importante, nunca carregou caixa de tomate. O que é que ele sabe de feira?",
+          "opcoes": [
+            {
+              "texto": "No plano dele tem a promessa de 'reduzir impostos sobre energia elétrica e combustíveis'. Conta de luz mais barata ajudava a banca do senhor?",
+              "tipo": "melhor",
+              "efeito": 14,
+              "tags": ["programa", "pergunta"],
+              "reacao": "Ajudava, a geladeira das verduras come metade do lucro. Mas promessa eu já ouvi muita.",
+              "fonte": "propostas.custo-de-vida.31"
+            },
+            {
+              "texto": "Ninguém sabe tudo de feira. O senhor sabe, e é por isso que eu queria ouvir.",
+              "tipo": "ok",
+              "efeito": 5,
+              "tags": ["escuta"],
+              "reacao": "Isso é verdade. Ninguém escolhe abacaxi que nem eu."
+            },
+            {
+              "texto": "Pelo menos ele não é ladrão igual à turma do Lula.",
+              "tipo": "erro",
+              "efeito": -12,
+              "tags": ["desqualifica"],
+              "reacao": "Na minha barraca ninguém fala assim de quem me ajudou.",
+              "licao": "Você soltou acusação sem documento contra quem ele admira; é o jeito mais rápido de ele fechar a porta.",
+              "fonte": "textos.temas.Corrupção.cuidado"
+            },
+            {
+              "texto": "Seu Zé, se o senhor fechar com o 22, eu arrumo umas cestas e um freguês grande pra banca.",
+              "tipo": "grave",
+              "efeito": -30,
+              "tags": ["favor"],
+              "reacao": "Na minha banca ninguém compra voto, nem com tomate. Passe bem.",
+              "licao": "Você ofereceu vantagem em troca de voto: isso é corrupção eleitoral, crime do Código Eleitoral, art. 299.",
+              "fonte": "lei.art299"
+            }
+          ]
+        },
+        {
+          "fala": "E se ele ganhar e cortar o benefício do meu neto? Todo mundo na feira fala isso.",
+          "opcoes": [
+            {
+              "texto": "No plano, quem recebe benefício tem 'prioridade nos programas de primeiro emprego' e, se o emprego não der certo, 'retorno imediato e sem fila ao benefício'. Quer que eu leia essa parte com o senhor?",
+              "tipo": "melhor",
+              "efeito": 14,
+              "tags": ["programa", "pergunta"],
+              "reacao": "Prioridade pro meu neto no emprego? Lê de novo, devagar, que essa eu quero entender.",
+              "fonte": "propostas.emprego.43"
+            },
+            {
+              "texto": "Não sei tudo o que ele vai fazer, seu Zé. Posso procurar no plano e trazer escrito pro senhor.",
+              "tipo": "ok",
+              "efeito": 5,
+              "tags": ["respeito"],
+              "reacao": "Traz. Mas letra grande, que meus óculos ficaram em casa."
+            },
+            {
+              "texto": "Benefício é esmola, seu neto tinha é que trabalhar.",
+              "tipo": "erro",
+              "efeito": -14,
+              "tags": ["desqualifica", "sermao"],
+              "reacao": "Meu neto trabalha desde os quinze. Some da minha banca.",
+              "licao": "Você desqualificou a família dele por receber benefício; quem tem renda apertada ouve isso como desprezo.",
+              "fonte": "textos.temas.Economia.cuidado"
+            },
+            {
+              "texto": "Isso é fake, quem fala isso na feira é burro.",
+              "tipo": "erro",
+              "efeito": -10,
+              "tags": ["desqualifica"],
+              "reacao": "Burro é quem chama freguês de burro.",
+              "licao": "Chamar de burro quem repetiu o que ouviu não desmente nada, só ofende.",
+              "fonte": "textos.arquetipos.frente.o_que_nao_fazer[1]"
+            }
+          ]
+        }
+      ],
+      "fecho": [
+        {
+          "texto": "Valeu pela prosa, seu Zé. O voto é do senhor, e no dia 25 o senhor decide com calma.",
+          "tipo": "melhor",
+          "efeito": 15,
+          "tags": ["respeito"],
+          "reacao": "Gostei de você. Volta sábado, que a laranja tá doce."
+        },
+        {
+          "texto": "Pensa com carinho, seu Zé.",
+          "tipo": "ok",
+          "efeito": 4,
+          "tags": ["respeito"],
+          "reacao": "Carinho eu tenho é pela minha balança, mas vou pensar."
+        },
+        {
+          "texto": "Então tá combinado: 22 no dia 25, o senhor me prometeu.",
+          "tipo": "erro",
+          "efeito": -10,
+          "tags": ["pressao"],
+          "reacao": "Prometi? Eu não prometi nada.",
+          "licao": "Você arrancou uma promessa que ele não fez; pressão transforma simpatia em desconfiança.",
+          "fonte": "textos.arquetipos.pendulo.o_que_nao_fazer[0]"
+        }
+      ],
+      "desfecho_texto": {
+        "flavio": "Pela primeira vez na vida eu vou de outro. Mas a foto com o Lula fica na banca, que é lembrança.",
+        "nulo": "Desse jeito eu não voto em nenhum dos dois. Vou lá, aperto nulo e volto pra banca.",
+        "lula": "Quem me deu foi ele. É 13 até o fim.",
+        "sem_mudanca": "Vou pensar mais um pouco. Até lá, leva uma laranja."
+      }
+    },
+    {
+      "id": "universitario_humanas",
+      "nome": "Caio, o Desconstruído do DCE",
+      "idade": 22,
+      "genero": "M",
+      "campo": "esquerda_ideologica",
+      "origem": "lula",
+      "tags": ["jovem", "universitario", "esquerda", "genz"],
+      "dificuldade": 3,
+      "confianca_inicial": 22,
+      "desfechos": {"alto": "nulo", "medio": "sem_mudanca", "baixo": "lula"},
+      "limiares": {"alto": 80, "medio": 50},
+      "bio": "Caio está no oitavo período de Ciências Sociais há três anos e tem uma playlist chamada 'resistência'. Chama tudo de fascismo, inclusive o bandejão quando acaba o feijão.",
+      "visual": {
+        "pele": "#c99a74",
+        "cabelo": "#3b2a1e",
+        "estilo_cabelo": "coque",
+        "acessorio": "oculos",
+        "roupa": "#5b6b3a",
+        "roupa_tipo": "camiseta",
+        "barba": true,
+        "detalhe": "óculos redondos, camiseta com estampa do Che, ecobag de pano e cheiro de incenso de patchouli"
+      },
+      "cenarios": ["show", "bar", "rede_x", "praia"],
+      "tema": "Educação",
+      "queixa": "Cara, o problema é estrutural. A educação pública vem sendo sucateada há décadas e agora querem enfiar a lógica de mercado. Isso tem nome, e o nome é fascismo.",
+      "escuta": [
+        {
+          "texto": "Se você pudesse mudar uma coisa na sua faculdade, qual seria? Pergunto sério.",
+          "tipo": "melhor",
+          "efeito": 15,
+          "tags": ["pergunta", "escuta"],
+          "reacao": "Assistência estudantil. Tem gente que larga o curso porque não paga o ônibus, e isso ninguém pauta."
+        },
+        {
+          "texto": "Educação pública é um assunto que importa pra mim também.",
+          "tipo": "ok",
+          "efeito": 5,
+          "tags": ["respeito"],
+          "reacao": "Hm. Primeira vez que alguém do seu lado concorda comigo em alguma coisa."
+        },
+        {
+          "texto": "Fascismo é você chamar todo mundo de fascista, isso sim.",
+          "tipo": "erro",
+          "efeito": -12,
+          "tags": ["desqualifica"],
+          "reacao": "Clássico. Inverteu o discurso e achou que lacrou.",
+          "licao": "Você devolveu o rótulo em vez de perguntar; troca de xingamento não é conversa.",
+          "fonte": "textos.arquetipos.muro.o_que_nao_fazer[0]"
+        },
+        {
+          "texto": "Vai trabalhar, rapaz, faculdade pública é paga com o meu imposto.",
+          "tipo": "erro",
+          "efeito": -13,
+          "tags": ["desqualifica", "sermao"],
+          "reacao": "Eu trabalho, tá, sou bolsista e dou aula de reforço. Mas valeu pelo estereótipo.",
+          "licao": "Você atacou o estudante em vez de ouvir o que ele quer para a escola; briga não abre conversa.",
+          "fonte": "textos.temas.Educação.cuidado"
+        }
+      ],
+      "objecoes": [
+        {
+          "fala": "Voto útil é chantagem do sistema, mano. Eu voto por pauta, não por medo.",
+          "opcoes": [
+            {
+              "texto": "Faz sentido votar por pauta. Qual é a pauta de que você não abre mão?",
+              "tipo": "melhor",
+              "efeito": 15,
+              "tags": ["pergunta", "respeito"],
+              "reacao": "Permanência estudantil. Pelo menos você perguntou, em vez de mandar figurinha de 'vai pra Cuba'."
+            },
+            {
+              "texto": "Ninguém precisa votar por medo. Mas o 2º turno tem só dois nomes, e branco e nulo não vão para ninguém.",
+              "tipo": "ok",
+              "efeito": 5,
+              "tags": ["voto_util"],
+              "reacao": "Eu sei como funciona segundo turno, tá? Fiz Ciência Política I."
+            },
+            {
+              "texto": "Pauta? Isso é coisa de quem nunca pagou um boleto.",
+              "tipo": "erro",
+              "efeito": -11,
+              "tags": ["desqualifica"],
+              "reacao": "Boleto eu pago, e ainda pago o seu desdém de graça.",
+              "licao": "Você zombou da causa dele; desqualificar a escolha da pessoa só endurece o voto.",
+              "fonte": "textos.arquetipos.fertil.o_que_nao_fazer[0]"
+            },
+            {
+              "texto": "Dia 25 eu vou ficar na porta da faculdade entregando santinho do 22. Cola comigo, vai ser épico.",
+              "tipo": "grave",
+              "efeito": -30,
+              "tags": ["boca_de_urna"],
+              "reacao": "Boca de urna? Valeu, acabei de ganhar um print pra thread: bolsonarista confessa crime eleitoral em 3, 2, 1.",
+              "licao": "Você chamou alguém para boca de urna: propaganda e arregimentação de eleitor no dia da votação são proibidas pela Lei 9.504/1997, art. 39, § 5º.",
+              "fonte": "lei.9504.39"
+            }
+          ]
+        },
+        {
+          "fala": "E o Flávio quer o quê com a educação? Privatizar tudo e botar voucher, né? Já li a thread.",
+          "opcoes": [
+            {
+              "texto": "O plano propõe um financiamento em que 'o estudante só começa a pagar quando estiver empregado e ganhando'. Você leria esse trecho pra criticar com base no texto?",
+              "tipo": "melhor",
+              "efeito": 13,
+              "tags": ["programa", "pergunta"],
+              "reacao": "Empréstimo contingente à renda tem paper sério, na real. Não vou elogiar, mas vou ler pra criticar direito.",
+              "fonte": "propostas.educacao.37"
+            },
+            {
+              "texto": "Tem voucher no plano, sim, só onde falta vaga na rede pública. Dá pra discordar com o texto na mão.",
+              "tipo": "ok",
+              "efeito": 5,
+              "tags": ["programa"],
+              "reacao": "Só onde falta vaga? A thread não falava isso, vou conferir.",
+              "fonte": "propostas.educacao.36"
+            },
+            {
+              "texto": "Thread de esquerdista não vale nada, você só lê a sua bolha.",
+              "tipo": "erro",
+              "efeito": -10,
+              "tags": ["desqualifica"],
+              "reacao": "Disse a pessoa que se informa por áudio de tio.",
+              "licao": "Você desqualificou a fonte dele sem mostrar a sua; discussão em rede vira briga de torcida.",
+              "fonte": "textos.arquetipos.atras.o_que_nao_fazer[1]"
+            },
+            {
+              "texto": "Universidade pública é antro de doutrinação, todo mundo sabe.",
+              "tipo": "erro",
+              "efeito": -13,
+              "tags": ["desqualifica"],
+              "reacao": "Todo mundo quem? O seu grupo de zap?",
+              "licao": "Você atacou por atacado o lugar onde ele estuda; criticar escola e rede fecha a conversa.",
+              "fonte": "textos.temas.Educação.cuidado"
+            }
+          ]
+        }
+      ],
+      "fecho": [
+        {
+          "texto": "Valeu pela conversa. Não espero que você mude de voto, foi bom discordar sem gritaria.",
+          "tipo": "melhor",
+          "efeito": 15,
+          "tags": ["respeito"],
+          "reacao": "Tá, foi de boa. Não conta pro coletivo que eu disse isso."
+        },
+        {
+          "texto": "Se quiser, te mando o plano pra você criticar com a página certa.",
+          "tipo": "ok",
+          "efeito": 5,
+          "tags": ["respeito"],
+          "reacao": "Manda. Vou fazer fichamento."
+        },
+        {
+          "texto": "Um dia você cresce e vira de direita, todo mundo vira.",
+          "tipo": "erro",
+          "efeito": -10,
+          "tags": ["desqualifica"],
+          "reacao": "E um dia você aprende a conversar. Quem sabe.",
+          "licao": "Você tratou a convicção dele como fase; ninguém muda de ideia sendo chamado de imaturo.",
+          "fonte": "textos.arquetipos.muro.o_que_nao_fazer[0]"
+        }
+      ],
+      "desfecho_texto": {
+        "flavio": "Isso nunca aconteceu, e se aconteceu eu nego na assembleia.",
+        "nulo": "Não voto no Flávio, mas também não vou mais fazer campanha. Vou anular e escrever uma thread sobre a crise da democracia representativa.",
+        "lula": "Agora é virar voto. Vou panfletar no bandejão até o dia 24.",
+        "sem_mudanca": "Sigo no meu lugar. Mas admito que você não é o robô que eu imaginava."
+      }
+    },
+    {
+      "id": "feminista_militante",
+      "nome": "Bia, a Lacradora do Coletivo",
+      "idade": 29,
+      "genero": "F",
+      "campo": "esquerda_ideologica",
+      "origem": "lula",
+      "tags": ["mulher", "superior", "esquerda", "jovem"],
+      "dificuldade": 3,
+      "confianca_inicial": 20,
+      "desfechos": {"alto": "nulo", "medio": "sem_mudanca", "baixo": "lula"},
+      "limiares": {"alto": 80, "medio": 50},
+      "bio": "Bia tem um coletivo, três perfis e uma frase pronta para cada situação. Sabe de cor como votou cada deputado em cada pauta dela, e manda o print se você duvidar.",
+      "visual": {
+        "pele": "#a86b4a",
+        "cabelo": "#7a1f3d",
+        "estilo_cabelo": "franja",
+        "acessorio": "oculos",
+        "roupa": "#6b4a92",
+        "roupa_tipo": "camiseta",
+        "barba": false,
+        "detalhe": "cabelo cor de vinho, bottons no peito e sacola de pano com frase de protesto"
+      },
+      "cenarios": ["rede_x", "bar", "show", "shopping"],
+      "tema": "Violência",
+      "queixa": "Toda semana tem uma mulher morta no noticiário, e ainda vem gente do seu lado dizer que é mimimi. Eu não vou desenhar de novo pra ninguém.",
+      "escuta": [
+        {
+          "texto": "Dá pra entender o cansaço. O que mais te preocupa na sua cidade quando o assunto é a segurança das mulheres?",
+          "tipo": "melhor",
+          "efeito": 15,
+          "tags": ["pergunta", "escuta"],
+          "reacao": "Medida protetiva que não protege. A mulher denuncia e o cara passa na porta dela no dia seguinte."
+        },
+        {
+          "texto": "Esse assunto me preocupa também, de verdade.",
+          "tipo": "ok",
+          "efeito": 4,
+          "tags": ["respeito"],
+          "reacao": "Preocupar é fácil. Quero ver fazer alguma coisa."
+        },
+        {
+          "texto": "Mimimi não, mas vocês exageram um pouco, né?",
+          "tipo": "erro",
+          "efeito": -13,
+          "tags": ["desqualifica"],
+          "reacao": "Pronto, perdi a paciência e você perdeu a conversa.",
+          "licao": "Você minimizou a preocupação dela logo na primeira frase; nunca diga que o problema de alguém é pequeno.",
+          "fonte": "textos.temas.Outros.cuidado"
+        },
+        {
+          "texto": "Tá, mas e os homens que também morrem?",
+          "tipo": "erro",
+          "efeito": -10,
+          "tags": ["interrompe"],
+          "reacao": "Mudou de assunto antes de eu terminar. Anotado.",
+          "licao": "Você trocou de assunto antes de ouvir; escutar primeiro é o que abre a conversa.",
+          "fonte": "textos.arquetipos.muro.o_que_fazer[0]"
+        }
+      ],
+      "objecoes": [
+        {
+          "fala": "E vocês vêm me falar de família como se família fosse só a de vocês. A minha também conta, tá?",
+          "opcoes": [
+            {
+              "texto": "Família é coisa de todo mundo, e cada uma é de um jeito. O que você acha que o próximo governo devia fazer primeiro pelas mulheres?",
+              "tipo": "melhor",
+              "efeito": 14,
+              "tags": ["pergunta", "respeito"],
+              "reacao": "Proteção de verdade e creche, que sem creche a mulher não trabalha. Anota aí."
+            },
+            {
+              "texto": "A gente discorda em muita coisa, mas eu quero ouvir a sua.",
+              "tipo": "ok",
+              "efeito": 5,
+              "tags": ["respeito"],
+              "reacao": "Tá, cinco minutos. Estou cronometrando."
+            },
+            {
+              "texto": "Feminismo hoje é só lacração de internet.",
+              "tipo": "erro",
+              "efeito": -12,
+              "tags": ["desqualifica"],
+              "reacao": "E você é só comentário de portal de notícia.",
+              "licao": "Você ridicularizou a causa dela; desqualificar a escolha da pessoa só a convence de que não vale conversar.",
+              "fonte": "textos.arquetipos.fertil.o_que_nao_fazer[0]"
+            },
+            {
+              "texto": "Vou te mandar um vídeo cortado que acaba com essa sua turma. Vê aí, sem o começo e sem o fim.",
+              "tipo": "grave",
+              "efeito": -30,
+              "tags": ["boato", "mentira"],
+              "reacao": "Vídeo cortado. Obrigada pelo conteúdo, vai abrir a minha live de hoje.",
+              "licao": "Você ofereceu vídeo cortado como prova: boato destrói a sua credibilidade e espalha mentira.",
+              "fonte": "textos.arquetipos.pendulo.o_que_nao_fazer[1]"
+            }
+          ]
+        },
+        {
+          "fala": "E o que o Flávio tem pra mulher, além de discurso? Me mostra uma coisa concreta.",
+          "opcoes": [
+            {
+              "texto": "Tem uma no plano: os agressores de mulheres com medida protetiva 'serão monitorados pelas autoridades com o uso de tornozeleiras eletrônicas'. Você acha que isso ajudaria na sua cidade?",
+              "tipo": "melhor",
+              "efeito": 14,
+              "tags": ["programa", "pergunta"],
+              "reacao": "Tornozeleira em agressor é o que a gente pede há anos. Não vou dar o braço a torcer, mas isso eu não vou criticar.",
+              "fonte": "propostas.mulheres.14"
+            },
+            {
+              "texto": "O plano tem uma Central da Mulher, com acolhimento, orientação jurídica e vaga de emprego no mesmo lugar. Te mando a página.",
+              "tipo": "ok",
+              "efeito": 6,
+              "tags": ["programa"],
+              "reacao": "Manda. Vou ler procurando o defeito, já aviso.",
+              "fonte": "propostas.mulheres.17"
+            },
+            {
+              "texto": "Mulher não precisa de política especial, precisa de mérito.",
+              "tipo": "erro",
+              "efeito": -12,
+              "tags": ["sermao", "desqualifica"],
+              "reacao": "Ela pediu uma coisa concreta e você entregou um coach.",
+              "licao": "Você deu sermão em vez de responder o que ela pediu; não diga que o problema da pessoa é pequeno.",
+              "fonte": "textos.temas.Outros.cuidado"
+            },
+            {
+              "texto": "Se o Lula ganhar, quem vai sofrer são as mulheres, você vai ver.",
+              "tipo": "erro",
+              "efeito": -10,
+              "tags": ["medo"],
+              "reacao": "Ah, agora você se preocupa com mulher. Que conveniente.",
+              "licao": "Medo não convence, e com quem já está alerta soa como ameaça.",
+              "fonte": "textos.temas.Violência.cuidado"
+            }
+          ]
+        }
+      ],
+      "fecho": [
+        {
+          "texto": "Valeu por explicar com paciência, mesmo cansada. A decisão é sua, e eu respeito.",
+          "tipo": "melhor",
+          "efeito": 15,
+          "tags": ["respeito"],
+          "reacao": "Paciência eu não tive. Mas você ouviu, e isso é raro."
+        },
+        {
+          "texto": "Vou ler mais sobre medida protetiva. Você me mostrou que é importante.",
+          "tipo": "ok",
+          "efeito": 6,
+          "tags": ["escuta"],
+          "reacao": "Lê. Depois me conta, que eu vou cobrar."
+        },
+        {
+          "texto": "No fundo você sabe que eu tenho razão.",
+          "tipo": "erro",
+          "efeito": -9,
+          "tags": ["pressao"],
+          "reacao": "No fundo eu sei que você não ouviu nada.",
+          "licao": "Você terminou querendo vencer; quem sai derrotado de uma conversa não muda de voto.",
+          "fonte": "textos.arquetipos.muro.o_que_nao_fazer[0]"
+        }
+      ],
+      "desfecho_texto": {
+        "flavio": "Não me olha assim. Vou votar nele pela tornozeleira, e só.",
+        "nulo": "Não voto no Flávio, mas também não vou mais fazer campanha. A tornozeleira ficou na minha cabeça, e pra mim isso já é muito.",
+        "lula": "Agora eu faço live todo dia até o 24.",
+        "sem_mudanca": "Continuo onde estava. Mas hoje não bloqueei ninguém, e isso é novidade."
+      }
+    },
+    {
+      "id": "militante_ong",
+      "nome": "Gabriel, o Crachá Sustentável",
+      "idade": 34,
+      "genero": "M",
+      "campo": "esquerda_ideologica",
+      "origem": "lula",
+      "tags": ["superior", "esquerda", "classe_media"],
+      "dificuldade": 3,
+      "confianca_inicial": 22,
+      "desfechos": {"alto": "nulo", "medio": "sem_mudanca", "baixo": "lula"},
+      "limiares": {"alto": 80, "medio": 50},
+      "bio": "Gabriel trabalha numa ONG de clima, vai a três seminários por semana e diz 'território' a cada duas frases. O crachá fica no pescoço até no chope.",
+      "visual": {
+        "pele": "#e0b48f",
+        "cabelo": "#6b4a2b",
+        "estilo_cabelo": "curto",
+        "acessorio": "crachá",
+        "roupa": "#2f6b4f",
+        "roupa_tipo": "jaqueta",
+        "barba": true,
+        "detalhe": "colete verde de ONG cheio de bottons, crachá de seminário e garrafinha reutilizável"
+      },
+      "cenarios": ["shopping", "praia", "rede_x", "show"],
+      "tema": "Enchentes",
+      "queixa": "A última enchente arrastou o bairro onde a gente atua. Família perdeu tudo e o poder público chegou depois da imprensa. E vocês ainda tratam meio ambiente como entrave.",
+      "escuta": [
+        {
+          "texto": "Como foi pra quem mora lá? Me conta o que vocês viram no território.",
+          "tipo": "melhor",
+          "efeito": 15,
+          "tags": ["pergunta", "escuta"],
+          "reacao": "Você disse território, gostei. Foi colchão no telhado, escola virando abrigo e ninguém sabendo quem coordenava."
+        },
+        {
+          "texto": "Sinto muito pelo bairro. Deve ter sido muito difícil.",
+          "tipo": "ok",
+          "efeito": 5,
+          "tags": ["respeito"],
+          "reacao": "Foi. E ainda é, pra quem não voltou pra casa."
+        },
+        {
+          "texto": "Enchente sempre teve, é natureza, não adianta culpar governo.",
+          "tipo": "erro",
+          "efeito": -11,
+          "tags": ["desqualifica"],
+          "reacao": "Fala isso pra família que dormiu no ginásio.",
+          "licao": "Você tratou a dor do bairro como coisa pequena; com quem esteve lá, escute antes de opinar.",
+          "fonte": "textos.temas.Enchentes.cuidado"
+        },
+        {
+          "texto": "Vocês de ONG vivem de verba pública e não resolvem nada.",
+          "tipo": "erro",
+          "efeito": -13,
+          "tags": ["desqualifica"],
+          "reacao": "Nossa prestação de contas é pública. A sua opinião, pelo visto, também.",
+          "licao": "Você atacou o trabalho dele antes de ouvir; falar mal de quem pensa diferente encerra a conversa.",
+          "fonte": "textos.arquetipos.frente.o_que_nao_fazer[1]"
+        }
+      ],
+      "objecoes": [
+        {
+          "fala": "O seu candidato é do agro. Pra mim, agro e preservação não cabem na mesma frase.",
+          "opcoes": [
+            {
+              "texto": "O plano diz que 'o produtor que preserva a vegetação nativa e recupera áreas degradadas' deve ser tratado como parceiro, com pagamento por serviço ambiental. Isso funcionaria no seu território?",
+              "tipo": "melhor",
+              "efeito": 14,
+              "tags": ["programa", "pergunta"],
+              "reacao": "Pagamento por serviço ambiental a gente defende há uma década. Não acredito que estou concordando com o plano de vocês.",
+              "fonte": "propostas.enchentes-clima.55"
+            },
+            {
+              "texto": "Tem gente no agro que preserva e gente que não. Dá pra cobrar dos dois.",
+              "tipo": "ok",
+              "efeito": 5,
+              "tags": ["respeito"],
+              "reacao": "Tá, isso é razoável. Raro, mas razoável."
+            },
+            {
+              "texto": "Ambientalista é tudo contra o progresso.",
+              "tipo": "erro",
+              "efeito": -12,
+              "tags": ["desqualifica"],
+              "reacao": "E você é tudo a favor de qualquer coisa com motor.",
+              "licao": "Você jogou todo mundo no mesmo saco; rótulo não convence quem dedica a vida a uma causa.",
+              "fonte": "textos.arquetipos.muro.o_que_nao_fazer[1]"
+            },
+            {
+              "texto": "Se o seu pessoal fechar com o 22, depois da eleição a gente arruma verba pro projeto de vocês.",
+              "tipo": "grave",
+              "efeito": -30,
+              "tags": ["favor"],
+              "reacao": "Você ofereceu verba por voto pra quem cuida do compliance da ONG. Vai parar no relatório anual.",
+              "licao": "Você prometeu vantagem em troca de voto: é corrupção eleitoral, crime do Código Eleitoral, art. 299.",
+              "fonte": "lei.art299"
+            }
+          ]
+        },
+        {
+          "fala": "Prevenção de desastre não dá voto, por isso ninguém faz. Por que agora seria diferente?",
+          "opcoes": [
+            {
+              "texto": "Não vou prometer obra. O plano fala em 'reservatórios de controle de cheias, diques, canais e obras de drenagem' e em reforçar o alerta da Defesa Civil, e dá pra cobrar com o texto na mão.",
+              "tipo": "melhor",
+              "efeito": 13,
+              "tags": ["programa", "respeito"],
+              "reacao": "Você não prometeu nada, isso já é mais honesto que muito palanque. Vou guardar o texto pra cobrar.",
+              "fonte": "propostas.enchentes-clima.52"
+            },
+            {
+              "texto": "Quem cobra prevenção o ano inteiro, como você, é quem faz ficar diferente.",
+              "tipo": "ok",
+              "efeito": 5,
+              "tags": ["respeito"],
+              "reacao": "Bonito. Coloca isso num edital que eu assino."
+            },
+            {
+              "texto": "Com o Flávio vai ter obra em tudo quanto é lugar, pode confiar.",
+              "tipo": "erro",
+              "efeito": -10,
+              "tags": ["mentira"],
+              "reacao": "Pode confiar é a frase que todo prefeito diz antes da próxima chuva.",
+              "licao": "Você prometeu obra que ninguém garante; obras e alertas dependem de município, estado e União.",
+              "fonte": "textos.temas.Enchentes.cuidado"
+            },
+            {
+              "texto": "Vocês usam a tragédia pra fazer política.",
+              "tipo": "erro",
+              "efeito": -12,
+              "tags": ["desqualifica"],
+              "reacao": "Quem está fazendo política com ela agora é você.",
+              "licao": "Você acusou de oportunismo quem esteve no bairro; debate para vencer não abre porta nenhuma.",
+              "fonte": "textos.arquetipos.muro.o_que_nao_fazer[0]"
+            }
+          ]
+        }
+      ],
+      "fecho": [
+        {
+          "texto": "Valeu por me contar do bairro. Não vou pedir o seu voto, só queria entender o que vocês viveram.",
+          "tipo": "melhor",
+          "efeito": 15,
+          "tags": ["respeito"],
+          "reacao": "Você não pediu voto. Isso é tão estranho que eu vou pensar a respeito."
+        },
+        {
+          "texto": "Me passa o contato da ONG, quero conhecer o trabalho de perto.",
+          "tipo": "ok",
+          "efeito": 5,
+          "tags": ["escuta"],
+          "reacao": "Passo. Tem mutirão no sábado, traz luva."
+        },
+        {
+          "texto": "Então tá: dia 25 é 22, faz isso pelo planeta.",
+          "tipo": "erro",
+          "efeito": -9,
+          "tags": ["pressao"],
+          "reacao": "Pelo planeta? Você estragou uma conversa boa em cinco palavras.",
+          "licao": "Você empurrou o voto depois de uma boa conversa; insistir apaga o que a escuta construiu.",
+          "fonte": "textos.arquetipos.pendulo.o_que_nao_fazer[0]"
+        }
+      ],
+      "desfecho_texto": {
+        "flavio": "O pagamento por serviço ambiental pesou. Não comenta no grupo da ONG.",
+        "nulo": "Não voto no Flávio, mas também não vou mais fazer campanha. Vou anular e passar o domingo plantando muda, que é mais útil.",
+        "lula": "Agora é campanha no território, de porta em porta, até o dia 24.",
+        "sem_mudanca": "Fico onde estou. Mas hoje o crachá não teve argumento contra você."
+      }
+    },
+    {
+      "id": "professora_sindicalizada",
+      "nome": "Cida, a Professora da Greve",
+      "idade": 54,
+      "genero": "F",
+      "campo": "esquerda_ideologica",
+      "origem": "lula",
+      "tags": ["servidor", "sindicato", "mulher", "superior"],
+      "dificuldade": 3,
+      "confianca_inicial": 25,
+      "desfechos": {"alto": "nulo", "medio": "sem_mudanca", "baixo": "lula"},
+      "limiares": {"alto": 80, "medio": 50},
+      "bio": "Professora há vinte e oito anos, Cida corrige prova no ônibus e redação no grupo da família. Guarda o apito da última greve na bolsa, por precaução.",
+      "visual": {
+        "pele": "#6b4330",
+        "cabelo": "#9a9a9a",
+        "estilo_cabelo": "curto",
+        "acessorio": "oculos",
+        "roupa": "#b23a48",
+        "roupa_tipo": "camisa",
+        "barba": false,
+        "detalhe": "óculos na correntinha, pilha de cadernos debaixo do braço e caneta vermelha no bolso"
+      },
+      "cenarios": ["whatsapp_familia", "padaria", "fila_do_banco", "mercado"],
+      "tema": "Educação",
+      "queixa": "Vinte e oito anos de sala de aula. Turma de quarenta, sala sem ventilador, e ainda tem quem chame professor de doutrinador. Eu voto em quem respeita a gente.",
+      "escuta": [
+        {
+          "texto": "Se a senhora pudesse mudar uma coisa na escola onde dá aula, qual seria?",
+          "tipo": "melhor",
+          "efeito": 15,
+          "tags": ["pergunta", "escuta"],
+          "reacao": "Turma menor. Com quarenta alunos eu não alfabetizo, eu faço chamada."
+        },
+        {
+          "texto": "Vinte e oito anos de sala é muita coisa, professora.",
+          "tipo": "ok",
+          "efeito": 5,
+          "tags": ["respeito"],
+          "reacao": "E com caneta vermelha, que a azul não tem moral."
+        },
+        {
+          "texto": "Mas a senhora tem que admitir que tem muito professor doutrinando por aí.",
+          "tipo": "erro",
+          "efeito": -13,
+          "tags": ["desqualifica"],
+          "reacao": "Pronto. Zero na redação, e sem direito a recuperação.",
+          "licao": "Você criticou a categoria dela na primeira frase; criticar professor e escola fecha qualquer porta.",
+          "fonte": "textos.temas.Educação.cuidado"
+        }
+      ],
+      "objecoes": [
+        {
+          "fala": "O pessoal de vocês trata professor como inimigo. Querem escola sem professor e chamam isso de liberdade.",
+          "opcoes": [
+            {
+              "texto": "Tem uma coisa no plano em que talvez a gente concorde: 'Apoiamos a escola em tempo integral, para que a criança tenha mais tempo de aprendizado'. A senhora acha que ajudaria seus alunos?",
+              "tipo": "melhor",
+              "efeito": 14,
+              "tags": ["programa", "pergunta"],
+              "reacao": "Ajudaria, se vier com merenda e professor, senão vira depósito de criança. Mas a ideia é boa.",
+              "fonte": "propostas.educacao.35"
+            },
+            {
+              "texto": "Eu não vejo professor como inimigo. Minha melhor lembrança de escola é de uma professora.",
+              "tipo": "ok",
+              "efeito": 6,
+              "tags": ["respeito"],
+              "reacao": "Todo mundo tem uma. Pena que só lembram na eleição."
+            },
+            {
+              "texto": "A senhora é sindicalizada, então eu já sei o seu voto.",
+              "tipo": "erro",
+              "efeito": -11,
+              "tags": ["desqualifica"],
+              "reacao": "Sabe nada. Você nem sabe o meu nome do meio.",
+              "licao": "Você presumiu o voto dela pela profissão; ninguém gosta de ser resumido a um crachá.",
+              "fonte": "textos.arquetipos.abaixo_do_perfil.o_que_nao_fazer[0]"
+            },
+            {
+              "texto": "Se continuar assim, eu vou filmar a sua aula e postar pra todo mundo ver.",
+              "tipo": "grave",
+              "efeito": -30,
+              "tags": ["pressao"],
+              "reacao": "Pode filmar. Vai sair eu ensinando fração e você passando vergonha.",
+              "licao": "Você ameaçou expor uma professora por opinião; isso é intimidação, e nenhuma conversa sobrevive a ela.",
+              "fonte": "textos.temas.Educação.cuidado"
+            }
+          ]
+        },
+        {
+          "fala": "E o tal do voucher? Tirar dinheiro da escola pública e dar pra particular. Isso é desmonte.",
+          "opcoes": [
+            {
+              "texto": "O plano fala de voucher 'onde faltar vaga na rede pública'. Na sua cidade falta vaga?",
+              "tipo": "melhor",
+              "efeito": 13,
+              "tags": ["programa", "pergunta"],
+              "reacao": "Creche falta, fundamental não. Tá bom, eu preciso ler isso direito.",
+              "fonte": "propostas.educacao.36"
+            },
+            {
+              "texto": "A senhora conhece a rede por dentro. Posso não ter razão nisso.",
+              "tipo": "ok",
+              "efeito": 5,
+              "tags": ["respeito"],
+              "reacao": "Pelo menos admite. Já é meio ponto."
+            },
+            {
+              "texto": "A escola pública falhou, a senhora sabe disso melhor que eu.",
+              "tipo": "erro",
+              "efeito": -12,
+              "tags": ["desqualifica"],
+              "reacao": "Falhou quem nunca pisou numa sala com quarenta alunos.",
+              "licao": "Você disse a uma professora que o trabalho dela falhou; debate para vencer não convence ninguém.",
+              "fonte": "textos.arquetipos.muro.o_que_nao_fazer[0]"
+            },
+            {
+              "texto": "Professor reclama de barriga cheia, tem férias duas vezes por ano.",
+              "tipo": "erro",
+              "efeito": -14,
+              "tags": ["desqualifica", "sermao"],
+              "reacao": "Férias que eu passo corrigindo prova. Quer trocar?",
+              "licao": "Você tratou o problema dela como pequeno; isso é sermão, não conversa.",
+              "fonte": "textos.temas.Outros.cuidado"
+            }
+          ]
+        }
+      ],
+      "fecho": [
+        {
+          "texto": "Agradeço, professora. A senhora decide o seu voto, e eu aprendi mais aqui do que esperava.",
+          "tipo": "melhor",
+          "efeito": 15,
+          "tags": ["respeito"],
+          "reacao": "Nota oito. Perdeu dois pontos por chegar com adesivo de candidato."
+        },
+        {
+          "texto": "Posso mandar o plano pra senhora corrigir com caneta vermelha?",
+          "tipo": "ok",
+          "efeito": 5,
+          "tags": ["respeito"],
+          "reacao": "Pode. Vai voltar todo riscado."
+        },
+        {
+          "texto": "Pensa nos seus alunos, professora, eles merecem coisa melhor que o Lula.",
+          "tipo": "erro",
+          "efeito": -10,
+          "tags": ["pressao"],
+          "reacao": "Não usa os meus alunos de palanque.",
+          "licao": "Você usou os alunos dela como argumento; insistir no fim desfaz a conversa.",
+          "fonte": "textos.arquetipos.pendulo.o_que_nao_fazer[0]"
+        }
+      ],
+      "desfecho_texto": {
+        "flavio": "Tempo integral e menos papo. Vou de 22, mas o apito continua na bolsa.",
+        "nulo": "Não voto no Flávio, mas também não vou mais fazer campanha no grupo da família. Vou anular e corrigir redação em paz.",
+        "lula": "Até o dia 24 eu viro cabo eleitoral no grupo da família.",
+        "sem_mudanca": "Continuo com o meu voto. Mas você passou de ano, na recuperação."
+      }
+    },
+    {
+      "id": "lulista_pragmatico",
+      "nome": "Neném, o Pedreiro do Aumento",
+      "idade": 45,
+      "genero": "M",
+      "campo": "lulista_pragmatico",
+      "origem": "lula",
+      "tags": ["trabalhador", "periferia", "autonomo", "pai"],
+      "dificuldade": 2,
+      "confianca_inicial": 34,
+      "desfechos": {"alto": "flavio", "medio": "nulo", "baixo": "lula"},
+      "limiares": {"alto": 68, "medio": 42},
+      "bio": "Neném levanta parede de segunda a sábado e só não trabalha no domingo por causa do futebol. Vota em quem 'deu aumento' e pergunta o preço do gás antes de ouvir qualquer discurso.",
+      "visual": {
+        "pele": "#4a2e20",
+        "cabelo": "#1a1a1a",
+        "estilo_cabelo": "curto",
+        "acessorio": "bone",
+        "roupa": "#8a8f99",
+        "roupa_tipo": "regata",
+        "barba": true,
+        "detalhe": "respingos de cimento na regata, boné desbotado e lápis de carpinteiro atrás da orelha"
+      },
+      "cenarios": ["bar", "churrasco", "padaria", "fila_do_banco"],
+      "tema": "Economia",
+      "queixa": "Olha, eu não ligo pra briga de político. O Lula deu aumento, isso eu senti. Agora, o gás de cozinha tá pela hora da morte e o material de obra também.",
+      "escuta": [
+        {
+          "texto": "E o que mais pesou no seu bolso esse ano, Neném? O gás, a obra, o mercado?",
+          "tipo": "melhor",
+          "efeito": 15,
+          "tags": ["pergunta", "escuta"],
+          "reacao": "O gás. A patroa faz feijão no sábado pra semana toda, pra economizar botijão."
+        },
+        {
+          "texto": "Trabalho pesado o seu, todo dia debaixo de sol.",
+          "tipo": "ok",
+          "efeito": 5,
+          "tags": ["respeito"],
+          "reacao": "Sol, chuva e cliente atrasando pagamento."
+        },
+        {
+          "texto": "O aumento foi pouco, você que não fez a conta direito.",
+          "tipo": "erro",
+          "efeito": -11,
+          "tags": ["desqualifica"],
+          "reacao": "Faço conta de traço de concreto de cabeça. A do meu salário eu sei fazer.",
+          "licao": "Você disse que ele não sabe a conta do próprio salário; não desqualifique a opinião de quem vive outro orçamento.",
+          "fonte": "textos.temas.Economia.cuidado"
+        },
+        {
+          "texto": "Vamos falar do que importa: liberdade e combate ao comunismo.",
+          "tipo": "erro",
+          "efeito": -9,
+          "tags": ["sermao"],
+          "reacao": "Comunismo não aumenta o preço do botijão. Ou aumenta?",
+          "licao": "Você trocou o gás dele pelo seu tema preferido; não force a conversa para o assunto que você prefere.",
+          "fonte": "textos.temas.Outros.cuidado"
+        }
+      ],
+      "objecoes": [
+        {
+          "fala": "Mas o Flávio vai tirar direito de trabalhador, todo mundo fala. Sem carteira, sem nada.",
+          "opcoes": [
+            {
+              "texto": "O plano diz o contrário: 'reduzir gradualmente o custo do trabalho, sem retirar direitos, para que mais brasileiros tenham carteira assinada'. Você confia mais em promessa escrita ou de boca?",
+              "tipo": "melhor",
+              "efeito": 14,
+              "tags": ["programa", "pergunta"],
+              "reacao": "Escrita, que dá pra cobrar. Carteira assinada pra pedreiro eu quero ver.",
+              "fonte": "propostas.emprego.43"
+            },
+            {
+              "texto": "Ninguém quer perder direito. Eu também não quero.",
+              "tipo": "ok",
+              "efeito": 5,
+              "tags": ["respeito"],
+              "reacao": "Pois é. Pelo menos nisso a gente é igual."
+            },
+            {
+              "texto": "Direito trabalhista atrapalha, quem é bom não precisa de CLT.",
+              "tipo": "erro",
+              "efeito": -12,
+              "tags": ["sermao", "desqualifica"],
+              "reacao": "Fala isso quando cair do andaime sem seguro.",
+              "licao": "Você desprezou a segurança dele; não desqualifique a opinião de quem tem renda diferente da sua.",
+              "fonte": "textos.temas.Economia.cuidado"
+            },
+            {
+              "texto": "Faz o seguinte: dia 25 eu passo de carro, levo você e a patroa pra votar e depois tem churrasco lá em casa. É só apertar 22.",
+              "tipo": "grave",
+              "efeito": -30,
+              "tags": ["carona", "favor"],
+              "reacao": "Churrasco por voto? Meu voto vale mais que uma picanha, e eu vou de ônibus, obrigado.",
+              "licao": "Você ofereceu transporte e churrasco em troca de voto: o transporte de eleitor no dia é regulado pela Lei 6.091/1974, e vantagem por voto é crime do Código Eleitoral, art. 299.",
+              "fonte": "lei.6091"
+            }
+          ]
+        },
+        {
+          "fala": "Antes também tava ruim. Por que eu vou trocar o que eu conheço pelo que eu não conheço?",
+          "opcoes": [
+            {
+              "texto": "Pergunta justa. O 2º turno tem só dois nomes, e trocar de vez em quando é um jeito de cobrar quem está lá: o que você precisaria ver pra arriscar?",
+              "tipo": "melhor",
+              "efeito": 14,
+              "tags": ["alternancia", "pergunta"],
+              "reacao": "Gás mais barato e obra andando. Se me mostrarem isso, eu penso."
+            },
+            {
+              "texto": "O plano fala em 'reduzir impostos sobre energia elétrica e combustíveis'. Não sei se o gás cai amanhã, mas está escrito.",
+              "tipo": "ok",
+              "efeito": 6,
+              "tags": ["programa"],
+              "reacao": "Pelo menos você não jurou que cai. Gostei disso.",
+              "fonte": "propostas.custo-de-vida.31"
+            },
+            {
+              "texto": "Se o Lula ganhar de novo, o Brasil quebra e falta até cimento.",
+              "tipo": "erro",
+              "efeito": -11,
+              "tags": ["medo"],
+              "reacao": "Cimento falta quando cliente não paga. Isso eu conheço.",
+              "licao": "Você vendeu medo no lugar de argumento; quem já está apertado desconfia de quem assusta.",
+              "fonte": "textos.arquetipos.pendulo.o_que_nao_fazer[1]"
+            },
+            {
+              "texto": "Quem votou no Lula tem culpa do gás caro.",
+              "tipo": "erro",
+              "efeito": -12,
+              "tags": ["desqualifica"],
+              "reacao": "Então a culpa é minha? Valeu, vou embora.",
+              "licao": "Você culpou o voto passado dele; cobrar explicação por voto passado fecha a conversa.",
+              "fonte": "textos.arquetipos.reencontro.o_que_nao_fazer[0]"
+            }
+          ]
+        }
+      ],
+      "fecho": [
+        {
+          "texto": "Valeu pela prosa, Neném. Pensa no que pesa no seu bolso e decide do seu jeito no dia 25.",
+          "tipo": "melhor",
+          "efeito": 15,
+          "tags": ["respeito"],
+          "reacao": "Você foi a primeira pessoa que perguntou do gás antes de falar de político. Vou pensar."
+        },
+        {
+          "texto": "Se quiser, te mando a página do plano sobre carteira assinada.",
+          "tipo": "ok",
+          "efeito": 5,
+          "tags": ["respeito"],
+          "reacao": "Manda no zap, que eu leio no intervalo do almoço."
+        },
+        {
+          "texto": "Fechou então, 22 e sem desculpa!",
+          "tipo": "erro",
+          "efeito": -10,
+          "tags": ["pressao"],
+          "reacao": "Fechou o quê? Eu não fechei nada.",
+          "licao": "Você fechou um acordo que ele não fez; insistir depois de uma boa conversa estraga tudo.",
+          "fonte": "textos.arquetipos.pendulo.o_que_nao_fazer[0]"
+        }
+      ],
+      "desfecho_texto": {
+        "flavio": "Vou arriscar no 22. Se o gás não baixar, daqui a quatro anos eu troco de novo, que é assim que funciona.",
+        "nulo": "Tá difícil escolher. Vou lá e anulo, que pelo menos não me arrependo.",
+        "lula": "O que eu conheço é o aumento. Vou de 13.",
+        "sem_mudanca": "Ainda não sei. Domingo, depois do jogo, eu decido."
+      }
+    },
+    {
+      "id": "aposentada_inss",
+      "nome": "Lurdes, a Rainha da Fila do INSS",
+      "idade": 71,
+      "genero": "F",
+      "campo": "lulista_pragmatico",
+      "origem": "lula",
+      "tags": ["aposentado", "boomer", "catolico", "zap"],
+      "dificuldade": 2,
+      "confianca_inicial": 33,
+      "desfechos": {"alto": "flavio", "medio": "nulo", "baixo": "lula"},
+      "limiares": {"alto": 68, "medio": 42},
+      "bio": "Dona Lurdes tem a senha da fila decorada e quinze grupos de família no celular. Sabe o preço do remédio de pressão em cada farmácia da cidade.",
+      "visual": {
+        "pele": "#d6a77a",
+        "cabelo": "#e8e4dc",
+        "estilo_cabelo": "curto",
+        "acessorio": "oculos",
+        "roupa": "#7a9cc6",
+        "roupa_tipo": "vestido",
+        "barba": false,
+        "detalhe": "cabelo de permanente, bolsa grande com pasta de documentos do INSS e terço no pulso"
+      },
+      "cenarios": ["fila_do_banco", "padaria", "saida_do_culto", "whatsapp_familia"],
+      "tema": "Saúde",
+      "queixa": "Fiquei meses esperando a perícia. E o remédio de pressão, quando tem no posto, tem; quando não tem, sai do meu bolso. Aposentado é o primeiro a sentir tudo.",
+      "escuta": [
+        {
+          "texto": "Quando foi a última vez que a senhora precisou do posto, e como foi?",
+          "tipo": "melhor",
+          "efeito": 15,
+          "tags": ["pergunta", "escuta"],
+          "reacao": "Mês passado. Cheguei às seis e fui atendida às onze, mas a enfermeira é um anjo."
+        },
+        {
+          "texto": "A senhora tem toda razão de reclamar.",
+          "tipo": "ok",
+          "efeito": 5,
+          "tags": ["respeito"],
+          "reacao": "Tenho, sim. E reclamo em quinze grupos."
+        },
+        {
+          "texto": "Mas a senhora não tem plano de saúde? Devia ter feito um.",
+          "tipo": "erro",
+          "efeito": -12,
+          "tags": ["desqualifica"],
+          "reacao": "Com que dinheiro? Com o da sua mesada?",
+          "licao": "Você tratou a fila dela como culpa dela; quem vive o problema todo dia sabe mais do que você.",
+          "fonte": "textos.temas.Saúde.cuidado"
+        }
+      ],
+      "objecoes": [
+        {
+          "fala": "O Lula pelo menos olha pro pobre. E esse Flávio vai mexer na minha aposentadoria, tá todo mundo dizendo no grupo.",
+          "opcoes": [
+            {
+              "texto": "No plano tem uma frase que a senhora ia gostar: a gestão do INSS vai ser 'medida por uma coisa só: quanto tempo o aposentado espera para receber'. Faz sentido pra senhora?",
+              "tipo": "melhor",
+              "efeito": 14,
+              "tags": ["programa", "pergunta"],
+              "reacao": "Se medissem isso eu ganhava medalha. Lê de novo, que eu esqueci os óculos de perto.",
+              "fonte": "propostas.idosos.26"
+            },
+            {
+              "texto": "No grupo se fala muita coisa, Dona Lurdes. Posso trazer o plano escrito pra senhora ler?",
+              "tipo": "ok",
+              "efeito": 6,
+              "tags": ["respeito"],
+              "reacao": "Traz impresso, que no celular a letra some."
+            },
+            {
+              "texto": "Grupo de zap é tudo fake, a senhora acredita em qualquer coisa.",
+              "tipo": "erro",
+              "efeito": -12,
+              "tags": ["desqualifica"],
+              "reacao": "Qualquer coisa não. Eu acreditei em você até agora.",
+              "licao": "Você tratou a senhora como ingênua; debate para vencer só ofende quem tem toda uma vida de eleições.",
+              "fonte": "textos.arquetipos.muro.o_que_nao_fazer[0]"
+            },
+            {
+              "texto": "Dona Lurdes, conheço um rapaz no INSS que adianta o processo da senhora. É só votar certo.",
+              "tipo": "grave",
+              "efeito": -30,
+              "tags": ["favor"],
+              "reacao": "Então é assim que vocês fazem? Vou contar pra paróquia inteira, e o padre vai saber.",
+              "licao": "Você ofereceu favor em troca de voto: é corrupção eleitoral, crime do Código Eleitoral, art. 299.",
+              "fonte": "lei.art299"
+            }
+          ]
+        },
+        {
+          "fala": "E o consignado? Tiraram dinheiro da minha conta que eu nunca autorizei. Quem vai me proteger disso?",
+          "opcoes": [
+            {
+              "texto": "Isso aconteceu com a senhora, como foi pra resolver? O plano promete 'dupla checagem que impede que tirem do benefício o que não foi autorizado'.",
+              "tipo": "melhor",
+              "efeito": 14,
+              "tags": ["programa", "escuta"],
+              "reacao": "Foi um inferno, três idas ao banco. Dupla checagem devia existir desde sempre.",
+              "fonte": "propostas.idosos.73"
+            },
+            {
+              "texto": "Que absurdo, Dona Lurdes. Ninguém merece passar por isso.",
+              "tipo": "ok",
+              "efeito": 5,
+              "tags": ["respeito"],
+              "reacao": "Não merece mesmo. E ainda me trataram como se eu tivesse esquecido."
+            },
+            {
+              "texto": "Isso é culpa do Lula, foi no governo dele que roubaram os aposentados.",
+              "tipo": "erro",
+              "efeito": -12,
+              "tags": ["desqualifica"],
+              "reacao": "Você viu isso onde? No mesmo grupo que você disse que é tudo fake?",
+              "licao": "Você soltou acusação sem documento; não cite caso nem acusação sem fonte.",
+              "fonte": "textos.temas.Corrupção.cuidado"
+            },
+            {
+              "texto": "A senhora devia ter mais cuidado com o banco, né?",
+              "tipo": "erro",
+              "efeito": -10,
+              "tags": ["desqualifica"],
+              "reacao": "Agora a culpa é minha? Que beleza.",
+              "licao": "Você culpou quem foi lesada; quem vive o problema sabe mais do que você.",
+              "fonte": "textos.temas.Saúde.cuidado"
+            }
+          ]
+        }
+      ],
+      "fecho": [
+        {
+          "texto": "Agradeço a conversa, Dona Lurdes. O voto é da senhora, e ninguém melhor pra decidir.",
+          "tipo": "melhor",
+          "efeito": 15,
+          "tags": ["respeito"],
+          "reacao": "Que educação. Minha neta vai gostar de saber que ainda tem gente assim."
+        },
+        {
+          "texto": "Quer conferir comigo, no site oficial, onde fica a sua seção no dia 25?",
+          "tipo": "ok",
+          "efeito": 6,
+          "tags": ["comparecimento"],
+          "reacao": "Quero, que mudaram minha escola de lugar e ninguém me avisa nada."
+        },
+        {
+          "texto": "A senhora vai votar no 22, né? Promete pra mim.",
+          "tipo": "erro",
+          "efeito": -10,
+          "tags": ["pressao"],
+          "reacao": "Promessa eu faço pra santo, não pra candidato.",
+          "licao": "Você cobrou promessa de voto; pressionar é o que faz a pessoa se fechar.",
+          "fonte": "textos.arquetipos.fortaleza.o_que_nao_fazer[1]"
+        }
+      ],
+      "desfecho_texto": {
+        "flavio": "Fila medida no relógio me ganhou. Vou de 22, e não conta pra minha comadre.",
+        "nulo": "Estou entre um e outro. Vou anular e rezar pelos dois.",
+        "lula": "Eu fico com quem eu conheço. É 13.",
+        "sem_mudanca": "Vou pensar no terço hoje à noite."
+      }
+    },
+    {
+      "id": "sindicalista_cut",
+      "nome": "Jairo, o Megafone",
+      "idade": 58,
+      "genero": "M",
+      "campo": "esquerda_ideologica",
+      "origem": "lula",
+      "tags": ["sindicato", "trabalhador", "esquerda", "boomer"],
+      "dificuldade": 3,
+      "confianca_inicial": 18,
+      "desfechos": {"alto": "nulo", "medio": "sem_mudanca", "baixo": "lula"},
+      "limiares": {"alto": 80, "medio": 50},
+      "bio": "Jairo não fala, discursa. Leva o megafone até a festa de aniversário e chama o garçom de 'trabalhador do setor de serviços'.",
+      "visual": {
+        "pele": "#b07a52",
+        "cabelo": "#5a5a5a",
+        "estilo_cabelo": "calvo",
+        "acessorio": "bone",
+        "roupa": "#c8412f",
+        "roupa_tipo": "camiseta",
+        "barba": true,
+        "detalhe": "megafone pendurado no ombro, adesivo do sindicato na camiseta e boné vermelho"
+      },
+      "cenarios": ["bar", "churrasco", "padaria", "whatsapp_familia"],
+      "tema": "Economia",
+      "queixa": "Camarada, a classe trabalhadora sabe quem esteve do lado dela. Terceirização, aplicativo espremendo motoboy, e do outro lado só vem retirada de direito.",
+      "escuta": [
+        {
+          "texto": "Na sua categoria, o que mais preocupa o pessoal hoje?",
+          "tipo": "melhor",
+          "efeito": 15,
+          "tags": ["pergunta", "escuta"],
+          "reacao": "Rotatividade. E quem passou dos cinquenta e foi demitido não volta mais pro mercado."
+        },
+        {
+          "texto": "Muita gente tem medo de perder direito, e é um medo legítimo.",
+          "tipo": "ok",
+          "efeito": 5,
+          "tags": ["respeito"],
+          "reacao": "Legítimo e histórico, camarada. Histórico."
+        },
+        {
+          "texto": "Sindicato só serve pra cobrar contribuição.",
+          "tipo": "erro",
+          "efeito": -13,
+          "tags": ["desqualifica"],
+          "reacao": "E você só serve pra repetir manchete. Viu como é fácil?",
+          "licao": "Você atacou a vida inteira dele numa frase; com quem tem lado, debate para vencer não leva a nada.",
+          "fonte": "textos.arquetipos.muro.o_que_nao_fazer[0]"
+        },
+        {
+          "texto": "Desce desse palanque, ninguém aguenta mais discurso.",
+          "tipo": "erro",
+          "efeito": -10,
+          "tags": ["interrompe", "desqualifica"],
+          "reacao": "Interrompeu a assembleia. Questão de ordem!",
+          "licao": "Você cortou a fala dele; escutar antes de falar é o que abre a conversa.",
+          "fonte": "textos.arquetipos.muro.o_que_fazer[0]"
+        }
+      ],
+      "objecoes": [
+        {
+          "fala": "Esse negociado sobre o legislado de vocês é patrão negociando com faca no pescoço do trabalhador.",
+          "opcoes": [
+            {
+              "texto": "Você falou de quem passou dos cinquenta. O plano propõe 'um contrato mais atrativo para a contratação de pessoas com 50 anos ou mais desempregadas há pelo menos 12 meses': isso ajudaria na sua categoria?",
+              "tipo": "melhor",
+              "efeito": 14,
+              "tags": ["programa", "pergunta"],
+              "reacao": "Ajudaria. Não vou falar isso no megafone, mas ajudaria.",
+              "fonte": "propostas.emprego.44"
+            },
+            {
+              "texto": "Tem gente que teme isso e gente que quer jornada flexível. Dá pra discordar sem brigar.",
+              "tipo": "ok",
+              "efeito": 4,
+              "tags": ["respeito"],
+              "reacao": "Sem brigar? Isso não é assembleia, então."
+            },
+            {
+              "texto": "Vocês sindicalistas é que exploram o trabalhador.",
+              "tipo": "erro",
+              "efeito": -12,
+              "tags": ["desqualifica"],
+              "reacao": "Pronto, virou ataque. Agora eu ligo o megafone.",
+              "licao": "Você devolveu acusação em vez de perguntar; quem é tratado como inimigo cava trincheira.",
+              "fonte": "textos.arquetipos.muro.o_que_nao_fazer[1]"
+            },
+            {
+              "texto": "Dia 25 a gente faz um buzinaço com carro de som na porta da escola, pra mostrar força. Topa?",
+              "tipo": "grave",
+              "efeito": -30,
+              "tags": ["boca_de_urna"],
+              "reacao": "Carro de som no dia da eleição? Até eu sei que isso é crime eleitoral, e vou te denunciar com o maior prazer.",
+              "licao": "Carro de som, carreata e arregimentação de eleitor no dia da votação são proibidos pela Lei 9.504/1997, art. 39, § 5º.",
+              "fonte": "lei.9504.39"
+            }
+          ]
+        },
+        {
+          "fala": "E o motoboy de aplicativo? Vocês acham bonito o cara trabalhar catorze horas sem nenhum direito.",
+          "opcoes": [
+            {
+              "texto": "Não acho bonito. O plano diz que trabalhador de aplicativo 'será protegido' e ainda alfineta dirigente sindical, eu sei: que proteção você acha que falta?",
+              "tipo": "melhor",
+              "efeito": 13,
+              "tags": ["programa", "pergunta"],
+              "reacao": "Alfineta, típico. Mas previdência e seguro de acidente pro motoboy, isso eu quero ver escrito.",
+              "fonte": "propostas.emprego.45"
+            },
+            {
+              "texto": "Catorze horas é muito. Concordo que alguma coisa precisa mudar.",
+              "tipo": "ok",
+              "efeito": 5,
+              "tags": ["respeito"],
+              "reacao": "Concordou comigo? Vou anotar a data."
+            },
+            {
+              "texto": "Motoboy trabalha de aplicativo porque quer, ninguém obriga.",
+              "tipo": "erro",
+              "efeito": -11,
+              "tags": ["desqualifica"],
+              "reacao": "Quer porque não tem outra. Vai perguntar pra eles.",
+              "licao": "Você desqualificou a realidade de quem vive outro orçamento; isso encerra a conversa.",
+              "fonte": "textos.temas.Economia.cuidado"
+            },
+            {
+              "texto": "Com o Flávio vai sobrar emprego pra todo mundo, pode escrever.",
+              "tipo": "erro",
+              "efeito": -9,
+              "tags": ["mentira"],
+              "reacao": "Escrevi. Em 2030 eu te cobro com juros.",
+              "licao": "Você prometeu o que nenhum governo garante; promessa sem base vira cobrança contra você.",
+              "fonte": "textos.temas.Economia.cuidado"
+            }
+          ]
+        }
+      ],
+      "fecho": [
+        {
+          "texto": "Valeu pela conversa, Jairo. Você tem o seu lado e eu tenho o meu, e a decisão é sua.",
+          "tipo": "melhor",
+          "efeito": 15,
+          "tags": ["respeito"],
+          "reacao": "Pelo menos você não fugiu do debate. Isso a gente reconhece na assembleia."
+        },
+        {
+          "texto": "Se quiser, a gente continua essa conversa sem megafone.",
+          "tipo": "ok",
+          "efeito": 5,
+          "tags": ["respeito"],
+          "reacao": "Sem megafone eu fico rouco de timidez."
+        },
+        {
+          "texto": "Larga esse sindicato e vem pro lado certo da história.",
+          "tipo": "erro",
+          "efeito": -10,
+          "tags": ["pressao", "desqualifica"],
+          "reacao": "Lado certo da história? Você roubou o meu bordão.",
+          "licao": "Você pediu que ele abandonasse uma vida inteira; esperar conversão de uma vez é o jeito mais rápido de perder.",
+          "fonte": "textos.arquetipos.atras.o_que_nao_fazer[0]"
+        }
+      ],
+      "desfecho_texto": {
+        "flavio": "Isso fica entre nós. Na assembleia eu nego até o fim.",
+        "nulo": "Não voto no Flávio, mas também não vou mais fazer campanha. Esse ano o megafone fica em casa e eu anulo.",
+        "lula": "Agora é megafone ligado até o dia 24, camarada.",
+        "sem_mudanca": "Sigo na luta, como sempre. Mas foi um bom debate."
+      }
+    },
+    {
+      "id": "isentao_cury",
+      "nome": "Rodrigo, o Isentão do Cury",
+      "idade": 38,
+      "genero": "M",
+      "campo": "terceira_via",
+      "origem": "cury",
+      "tags": ["classe_media", "autoajuda", "superior", "pai"],
+      "dificuldade": 1,
+      "confianca_inicial": 44,
+      "desfechos": {"alto": "flavio", "medio": "sem_mudanca", "baixo": "lula"},
+      "limiares": {"alto": 65, "medio": 35},
+      "bio": "Rodrigo lê um livro de autoajuda por mês, medita no trânsito e responde briga de grupo com 'respira, gente'. Votou no Cury porque 'o Brasil precisa curar as emoções'.",
+      "visual": {
+        "pele": "#e3b48e",
+        "cabelo": "#4a3324",
+        "estilo_cabelo": "curto",
+        "acessorio": "celular",
+        "roupa": "#9cc3b5",
+        "roupa_tipo": "polo",
+        "barba": true,
+        "detalhe": "barba bem aparada, livro de inteligência emocional debaixo do braço e garrafa de chá"
+      },
+      "cenarios": ["padaria", "shopping", "academia", "rede_x"],
+      "tema": "Saúde",
+      "queixa": "Cara, votei no Cury porque cansei dessa polarização tóxica. Ansiedade virou epidemia, e político só sabe gritar.",
+      "escuta": [
+        {
+          "texto": "O que te fez escolher o Cury? Quero entender de verdade.",
+          "tipo": "melhor",
+          "efeito": 15,
+          "tags": ["pergunta", "escuta"],
+          "reacao": "Ele falava de família e de cuidar da mente, e meu filho tem TDAH. Ninguém fala disso em debate."
+        },
+        {
+          "texto": "Também cansei de gritaria.",
+          "tipo": "ok",
+          "efeito": 5,
+          "tags": ["respeito"],
+          "reacao": "Né? Respira comigo: inspira, expira."
+        },
+        {
+          "texto": "O Cury nunca ia ganhar, você jogou o voto fora.",
+          "tipo": "erro",
+          "efeito": -12,
+          "tags": ["desqualifica"],
+          "reacao": "Jogar fora é energia negativa. Vou me proteger de você.",
+          "licao": "Você chamou o voto dele de desperdício; respeite a busca por um nome de fora da política.",
+          "fonte": "textos.conversas_por_origem.cury.cuidado"
+        },
+        {
+          "texto": "Autoajuda não governa país, campeão.",
+          "tipo": "erro",
+          "efeito": -11,
+          "tags": ["desqualifica"],
+          "reacao": "E grosseria também não. Empate técnico.",
+          "licao": "Você zombou do candidato que ele escolheu; desqualificar a escolha fecha a porta.",
+          "fonte": "textos.arquetipos.fertil.o_que_nao_fazer[0]"
+        }
+      ],
+      "objecoes": [
+        {
+          "fala": "Agora tenho que escolher entre dois extremos. Os dois lados me dão gatilho, sinceramente.",
+          "opcoes": [
+            {
+              "texto": "O que você espera de quem governar nos próximos quatro anos? Talvez dê pra ver qual dos dois chega mais perto disso.",
+              "tipo": "melhor",
+              "efeito": 15,
+              "tags": ["pergunta", "voto_util"],
+              "reacao": "Menos ódio e mais cuidado com saúde mental. Se um dos dois falar disso sem gritar, já ganha pontos comigo."
+            },
+            {
+              "texto": "No 2º turno só sobram dois, e branco e nulo não vão para ninguém. Não é o ideal, mas é o que tem.",
+              "tipo": "ok",
+              "efeito": 5,
+              "tags": ["voto_util"],
+              "reacao": "Racional, mas meio frio. Meu terapeuta diria que você está evitando o sentimento."
+            },
+            {
+              "texto": "Se você anular e o Lula ganhar, a culpa vai ser sua.",
+              "tipo": "erro",
+              "efeito": -13,
+              "tags": ["pressao", "medo"],
+              "reacao": "Culpa? Acabei de sentir o gatilho que eu falei.",
+              "licao": "Você jogou a culpa nele; medo e pressão afastam quem fugiu justamente da briga.",
+              "fonte": "textos.arquetipos.pendulo.o_que_nao_fazer[1]"
+            },
+            {
+              "texto": "Me falaram que, se o Lula ganhar, vão confiscar a poupança de todo mundo. Encaminha pros seus grupos.",
+              "tipo": "grave",
+              "efeito": -30,
+              "tags": ["boato", "medo"],
+              "reacao": "Isso me deu crise de ansiedade e de vergonha alheia ao mesmo tempo. Tchau.",
+              "licao": "Você espalhou boato com medo: além de mentira, destrói sua credibilidade com quem queria fugir da gritaria.",
+              "fonte": "textos.arquetipos.pendulo.o_que_nao_fazer[1]"
+            }
+          ]
+        },
+        {
+          "fala": "Mas o Flávio é agressivo demais, né? Não consigo votar em quem só fala de guerra.",
+          "opcoes": [
+            {
+              "texto": "O tom incomoda, entendo. Tem uma parte do plano sobre 'a atenção à depressão e à ansiedade' e o apoio às crianças com TDAH, como o seu filho.",
+              "tipo": "melhor",
+              "efeito": 15,
+              "tags": ["programa", "escuta"],
+              "reacao": "TDAH está no plano, sério? Isso mexe comigo, deixa eu ler com calma.",
+              "fonte": "propostas.saude.39"
+            },
+            {
+              "texto": "O tom da campanha é duro dos dois lados. Dá pra olhar as propostas além do tom.",
+              "tipo": "ok",
+              "efeito": 5,
+              "tags": ["respeito"],
+              "reacao": "Separar a mensagem do mensageiro. Isso é bem de livro."
+            },
+            {
+              "texto": "Agressivo nada, você que é sensível demais.",
+              "tipo": "erro",
+              "efeito": -12,
+              "tags": ["desqualifica"],
+              "reacao": "Sensível, sim, e com orgulho. Validação zero aqui.",
+              "licao": "Você fez caricatura do tom de cuidado que levou o eleitorado de Cury até ele; respeite sem caricatura.",
+              "fonte": "textos.conversas_por_origem.cury.cuidado"
+            },
+            {
+              "texto": "Votando no Flávio, o Cury ganha um ministério, já está tudo acertado.",
+              "tipo": "erro",
+              "efeito": -14,
+              "tags": ["mentira"],
+              "reacao": "Acertado onde? Me mostra o documento.",
+              "licao": "Você inventou uma aliança que não existe em documento; quando ele descobrir, você perde tudo.",
+              "fonte": "textos.conversas_por_origem.cury.cuidado"
+            }
+          ]
+        }
+      ],
+      "fecho": [
+        {
+          "texto": "Valeu, Rodrigo. Pensa com calma, e qualquer que seja a decisão, foi bom conversar.",
+          "tipo": "melhor",
+          "efeito": 15,
+          "tags": ["respeito"],
+          "reacao": "Gratidão, sério. Primeira conversa de política em que não precisei respirar fundo."
+        },
+        {
+          "texto": "Te mando a página do plano sobre saúde mental.",
+          "tipo": "ok",
+          "efeito": 5,
+          "tags": ["respeito"],
+          "reacao": "Manda. Leio depois da meditação."
+        },
+        {
+          "texto": "Vai lá e vota 22, sem mimimi, tá?",
+          "tipo": "erro",
+          "efeito": -10,
+          "tags": ["pressao"],
+          "reacao": "Mimimi? Desfez toda a vibe boa.",
+          "licao": "Você fechou com pressão uma conversa que ia bem; agradeça, qualquer que seja a resposta.",
+          "fonte": "textos.conversas_por_origem.cury.um_jeito_de_conversar[4]"
+        }
+      ],
+      "desfecho_texto": {
+        "flavio": "Meditei e decidi: vou de 22. Pela saúde mental do meu filho, não pelo grito.",
+        "nulo": "Não consigo escolher. Vou anular e meditar.",
+        "lula": "Depois dessa conversa, prefiro o 13. Pelo menos de lá ninguém me mandou boato hoje.",
+        "sem_mudanca": "Ainda estou processando. Vou levar isso pra terapia."
+      }
+    },
+    {
+      "id": "faria_limer_zema",
+      "nome": "Pedro Henrique, o Coletinho da Faria Lima",
+      "idade": 31,
+      "genero": "M",
+      "campo": "terceira_via",
+      "origem": "zema",
+      "tags": ["rico", "liberal", "superior"],
+      "dificuldade": 2,
+      "confianca_inicial": 38,
+      "desfechos": {"alto": "flavio", "medio": "sem_mudanca", "baixo": "lula"},
+      "limiares": {"alto": 65, "medio": 35},
+      "bio": "Pedro Henrique diz 'fazer sentido' e 'endereçar' em toda frase, tem planilha até para o churrasco e um coletinho para cada estação. Votou no Zema porque 'o Brasil precisa de choque de gestão, não de salvador'.",
+      "visual": {
+        "pele": "#f0c9a8",
+        "cabelo": "#c9a35a",
+        "estilo_cabelo": "curto",
+        "acessorio": "coletinho",
+        "roupa": "#1f3a5f",
+        "roupa_tipo": "camisa",
+        "barba": false,
+        "detalhe": "coletinho acolchoado azul-marinho sobre camisa social, relógio inteligente e café gelado na mão"
+      },
+      "cenarios": ["academia", "shopping", "bar", "rede_x", "uber"],
+      "tema": "Economia",
+      "queixa": "Minha leitura é simples: o Estado brasileiro é ineficiente, a dívida não para de crescer e a Selic segue lá em cima travando investimento. O Zema era o único com agenda de gestão de verdade.",
+      "escuta": [
+        {
+          "texto": "O que você procurava no Zema que não viu nos outros?",
+          "tipo": "melhor",
+          "efeito": 15,
+          "tags": ["pergunta", "escuta"],
+          "reacao": "Gestão: meta, indicador, entrega. Eficiência sem populismo, sabe?"
+        },
+        {
+          "texto": "Dívida e juros preocupam muita gente, faz sentido.",
+          "tipo": "ok",
+          "efeito": 5,
+          "tags": ["respeito"],
+          "reacao": "Faz total sentido. Literalmente faz sentido."
+        },
+        {
+          "texto": "O Zema era de partido pequeno, voto perdido desde o começo.",
+          "tipo": "erro",
+          "efeito": -11,
+          "tags": ["desqualifica"],
+          "reacao": "Perdido é o custo de oportunidade desta conversa.",
+          "licao": "Você tratou a escolha liberal como desperdício; isso só faz ele defender o voto com mais convicção.",
+          "fonte": "textos.conversas_por_origem.zema.cuidado"
+        },
+        {
+          "texto": "Você é da Faria Lima, nunca pegou um ônibus, nem sabe o que é Brasil.",
+          "tipo": "erro",
+          "efeito": -12,
+          "tags": ["desqualifica"],
+          "reacao": "Peguei um em 2019, foi uma experiência imersiva. Mas ok, entendi o recado.",
+          "licao": "Você fez rótulo sobre quem tem mais renda; não desqualifique a opinião de quem tem renda diferente da sua.",
+          "fonte": "textos.temas.Economia.cuidado"
+        }
+      ],
+      "objecoes": [
+        {
+          "fala": "O Flávio fala muito de segurança, mas cadê a agenda fiscal? Sem âncora fiscal crível não tem crescimento sustentável.",
+          "opcoes": [
+            {
+              "texto": "Tem agenda fiscal no plano: 'entregando superávits primários' e com 'uma regra clara de controle de gastos discricionários dos três Poderes'. Isso endereça a sua preocupação?",
+              "tipo": "melhor",
+              "efeito": 15,
+              "tags": ["programa", "pergunta"],
+              "reacao": "Usou 'endereça', gostei. Superávit com regra para os três Poderes, ok, vou abrir a planilha.",
+              "fonte": "propostas.economia-impostos.71"
+            },
+            {
+              "texto": "Faz sentido querer número antes de voto. Posso te mandar o capítulo de economia do plano.",
+              "tipo": "ok",
+              "efeito": 5,
+              "tags": ["respeito"],
+              "reacao": "Manda em PDF, com sumário clicável de preferência."
+            },
+            {
+              "texto": "Agenda fiscal é papo de banqueiro, o povo quer é segurança.",
+              "tipo": "erro",
+              "efeito": -11,
+              "tags": ["desqualifica"],
+              "reacao": "Segurança sem orçamento é só slide bonito.",
+              "licao": "Você desprezou a prioridade dele; com quem gosta de dado, combine pergunta aberta e respeito.",
+              "fonte": "textos.perfil.escolaridade.superior.como_conversar"
+            },
+            {
+              "texto": "Se você votar 22, eu indico você pra um cargo no ministério, tenho contato.",
+              "tipo": "grave",
+              "efeito": -30,
+              "tags": ["favor"],
+              "reacao": "Cargo por voto é risco de compliance nível vermelho. Saindo da call.",
+              "licao": "Você prometeu cargo em troca de voto: oferecer ou prometer vantagem, inclusive emprego, para obter voto é crime do Código Eleitoral, art. 299.",
+              "fonte": "lei.art299"
+            }
+          ]
+        },
+        {
+          "fala": "Meu medo é populismo dos dois lados. Promessa de gasto sem dizer de onde vem o dinheiro.",
+          "opcoes": [
+            {
+              "texto": "Tem um compromisso que talvez te interesse: 'o corte de no mínimo 10 ministérios' e o combate aos supersalários. Você acha suficiente ou quer ver mais?",
+              "tipo": "melhor",
+              "efeito": 14,
+              "tags": ["programa", "pergunta"],
+              "reacao": "Cortar dez ministérios é sinal, não é ajuste. Mas sinal conta pro mercado, quero ver o resto.",
+              "fonte": "propostas.economia-impostos.69"
+            },
+            {
+              "texto": "O 2º turno tem só dois nomes. Comparar os dois planos lado a lado é a escolha mais racional.",
+              "tipo": "ok",
+              "efeito": 6,
+              "tags": ["voto_util"],
+              "reacao": "Comparativo lado a lado. Agora você falou a minha língua."
+            },
+            {
+              "texto": "Liberal que não vota no Flávio está fazendo o jogo do PT.",
+              "tipo": "erro",
+              "efeito": -12,
+              "tags": ["desqualifica", "pressao"],
+              "reacao": "Eu não faço jogo de ninguém, eu faço análise.",
+              "licao": "Você tratou a escolha liberal como falta de convicção; é exatamente o que não se faz.",
+              "fonte": "textos.conversas_por_origem.zema.cuidado"
+            },
+            {
+              "texto": "Confia: com o Flávio a Bolsa dobra no primeiro mês.",
+              "tipo": "erro",
+              "efeito": -10,
+              "tags": ["mentira"],
+              "reacao": "Dobra com base em qual modelo? Me manda a premissa.",
+              "licao": "Você inventou número que não sabe explicar; evite estatística sem base, ainda mais com quem vive de planilha.",
+              "fonte": "textos.temas.Economia.cuidado"
+            }
+          ]
+        }
+      ],
+      "fecho": [
+        {
+          "texto": "Valeu pela conversa. A decisão é sua, e se quiser comparar os planos, é só chamar.",
+          "tipo": "melhor",
+          "efeito": 15,
+          "tags": ["respeito"],
+          "reacao": "Top. Vou montar um comparativo e te mando, talvez com gráfico."
+        },
+        {
+          "texto": "Se precisar, te passo o PDF do plano com as páginas marcadas.",
+          "tipo": "ok",
+          "efeito": 5,
+          "tags": ["respeito"],
+          "reacao": "Páginas marcadas é o meu tipo de gentileza."
+        },
+        {
+          "texto": "Fechou? 22, bora, sem pensar demais.",
+          "tipo": "erro",
+          "efeito": -9,
+          "tags": ["pressao"],
+          "reacao": "Sem pensar demais é exatamente como eu não decido nada.",
+          "licao": "Você empurrou o voto em vez de agradecer e deixar a decisão com ele; quem gosta de análise detesta pressa.",
+          "fonte": "textos.conversas_por_origem.zema.um_jeito_de_conversar[4]"
+        }
+      ],
+      "desfecho_texto": {
+        "flavio": "Rodei os números e o cenário-base é 22. Não é paixão, é alocação.",
+        "nulo": "Os dois reprovaram no meu teste de estresse. Anulo.",
+        "lula": "Depois da sua pressão, o 13 virou o menor risco. Paradoxal, mas faz sentido.",
+        "sem_mudanca": "Ainda estou modelando. Te dou um retorno até sexta."
+      }
+    },
+    {
+      "id": "coronel_caiado",
+      "nome": "Antônio, o Coronel da Porteira",
+      "idade": 63,
+      "genero": "M",
+      "campo": "terceira_via",
+      "origem": "caiado",
+      "tags": ["agro", "interior", "boomer", "direita"],
+      "dificuldade": 2,
+      "confianca_inicial": 36,
+      "desfechos": {"alto": "flavio", "medio": "sem_mudanca", "baixo": "lula"},
+      "limiares": {"alto": 65, "medio": 35},
+      "bio": "Seu Antônio cria gado, conta causo de onça e só fecha negócio no aperto de mão. Votou no Caiado porque 'homem de palavra não troca de lado' e chama o resto da política de 'gente de cidade'.",
+      "visual": {
+        "pele": "#b5835a",
+        "cabelo": "#cfcfcf",
+        "estilo_cabelo": "curto",
+        "acessorio": "chapeu",
+        "roupa": "#8b5a2b",
+        "roupa_tipo": "camisa",
+        "barba": true,
+        "detalhe": "chapéu de couro, camisa xadrez, fivela grande no cinto, bigode farto e um cavalo amarrado ao fundo"
+      },
+      "cenarios": ["churrasco", "bar", "whatsapp_familia", "fila_do_banco"],
+      "tema": "Violência",
+      "queixa": "Na minha região roubaram trator, defensivo e até gado da vizinhança. Porteira fechada não segura mais ninguém. O Caiado entendia disso, é homem de palavra.",
+      "escuta": [
+        {
+          "texto": "O que mudou na região nos últimos anos quando o assunto é segurança?",
+          "tipo": "melhor",
+          "efeito": 15,
+          "tags": ["pergunta", "escuta"],
+          "reacao": "Mudou tudo. Antes a gente dormia de janela aberta, hoje tem vizinho com câmera no curral."
+        },
+        {
+          "texto": "Homem de palavra faz falta, concordo.",
+          "tipo": "ok",
+          "efeito": 5,
+          "tags": ["respeito"],
+          "reacao": "Faz. Palavra hoje vale menos que nota de três reais."
+        },
+        {
+          "texto": "O Caiado já era, esquece ele e vem de Flávio.",
+          "tipo": "erro",
+          "efeito": -12,
+          "tags": ["desqualifica", "pressao"],
+          "reacao": "Esquecer? Eu não esqueço nem boi que fugiu em 1998.",
+          "licao": "Você desqualificou o candidato dele antes de ouvir; ninguém troca de lado sendo empurrado.",
+          "fonte": "textos.arquetipos.fertil.o_que_nao_fazer[0]"
+        }
+      ],
+      "objecoes": [
+        {
+          "fala": "Votei no Caiado porque ele é gestor e firme. O Flávio é da capital, nunca tirou leite de vaca.",
+          "opcoes": [
+            {
+              "texto": "Tem coisa no plano que é do seu mundo: 'ampliar o Seguro Rural' e a 'regularização e titulação do pequeno proprietário rural'. Isso faz diferença na região?",
+              "tipo": "melhor",
+              "efeito": 15,
+              "tags": ["programa", "pergunta"],
+              "reacao": "Seguro rural faz, a geada levou meia lavoura do vizinho. E título de terra tem gente esperando faz uma década.",
+              "fonte": "propostas.campo.54"
+            },
+            {
+              "texto": "Gestão é importante mesmo, seu Antônio.",
+              "tipo": "ok",
+              "efeito": 5,
+              "tags": ["respeito"],
+              "reacao": "É o que eu digo pro meu capataz todo santo dia."
+            },
+            {
+              "texto": "Votar no Caiado foi desperdício, ele nunca teve chance.",
+              "tipo": "erro",
+              "efeito": -12,
+              "tags": ["desqualifica"],
+              "reacao": "Desperdício é conversa de quem nunca plantou nada.",
+              "licao": "Você tratou a escolha de centro-direita como desperdício; é o atalho para ele fechar a porteira.",
+              "fonte": "textos.conversas_por_origem.caiado.cuidado"
+            },
+            {
+              "texto": "No dia 25 o caminhão da fazenda leva o pessoal todo pra votar, com almoço depois. O senhor ajeita isso pro 22?",
+              "tipo": "grave",
+              "efeito": -30,
+              "tags": ["carona", "favor"],
+              "reacao": "Caminhão com almoço é coisa do tempo do meu avô, e eu sou coronel só de apelido. Aqui não.",
+              "licao": "Você propôs levar eleitor de caminhão com almoço: o transporte de eleitor no dia é regulado pela Lei 6.091/1974, e vantagem em troca de voto é crime do Código Eleitoral, art. 299.",
+              "fonte": "lei.6091"
+            }
+          ]
+        },
+        {
+          "fala": "E quem garante que esse rapaz cumpre o que promete? Promessa de político é chuva no sertão: todo mundo fala, pouca gente vê.",
+          "opcoes": [
+            {
+              "texto": "Ninguém garante, e eu não vou jurar nada. O 2º turno tem só dois nomes, e trocar quem está lá também é um jeito de cobrar: o senhor quer ler o plano e cobrar depois?",
+              "tipo": "melhor",
+              "efeito": 14,
+              "tags": ["voto_util", "alternancia", "respeito"],
+              "reacao": "Gostei que você não jurou nada, quem jura muito mente muito. Me manda o papel."
+            },
+            {
+              "texto": "No plano tem 'segurança jurídica sólida' para a propriedade, 'porque ninguém planta e investe no que teme perder'. Pelo menos está escrito.",
+              "tipo": "ok",
+              "efeito": 6,
+              "tags": ["programa"],
+              "reacao": "Escrito é melhor que falado. Mas papel aceita tudo, viu?",
+              "fonte": "propostas.campo.54"
+            },
+            {
+              "texto": "Com o Flávio acaba a violência no campo, pode confiar.",
+              "tipo": "erro",
+              "efeito": -11,
+              "tags": ["mentira"],
+              "reacao": "Acaba? Nem o delegado da cidade acredita nisso.",
+              "licao": "Você prometeu acabar com a violência; segurança é responsabilidade dividida entre município, estado e União.",
+              "fonte": "textos.temas.Violência.cuidado"
+            },
+            {
+              "texto": "Se o Lula ganhar, vão invadir a sua fazenda, o senhor vai ver.",
+              "tipo": "erro",
+              "efeito": -12,
+              "tags": ["medo"],
+              "reacao": "Medo eu tenho é de onça, rapaz. De conversa fiada, não.",
+              "licao": "Você usou medo para convencer; quem já se preocupa com segurança precisa ser ouvido, não assustado.",
+              "fonte": "textos.temas.Violência.cuidado"
+            }
+          ]
+        }
+      ],
+      "fecho": [
+        {
+          "texto": "Valeu pela prosa, seu Antônio. O voto é do senhor, decide no seu tempo.",
+          "tipo": "melhor",
+          "efeito": 15,
+          "tags": ["respeito"],
+          "reacao": "Gostei de você. Fala pouco e escuta muito, que nem bom vaqueiro."
+        },
+        {
+          "texto": "Quando o senhor vier pra cidade, a gente toma um café e continua.",
+          "tipo": "ok",
+          "efeito": 5,
+          "tags": ["respeito"],
+          "reacao": "Café passado no coador, que de máquina eu não tomo."
+        },
+        {
+          "texto": "Então o senhor me dá a sua palavra que é 22?",
+          "tipo": "erro",
+          "efeito": -10,
+          "tags": ["pressao"],
+          "reacao": "Palavra eu dou em negócio de gado. Voto é segredo meu.",
+          "licao": "Você cobrou palavra sobre o voto; o voto é secreto, e homem de palavra não gosta de ser posto contra a parede.",
+          "fonte": "lei.voto_secreto"
+        }
+      ],
+      "desfecho_texto": {
+        "flavio": "Dei a palavra pra mim mesmo: vou de 22. Seguro rural e porteira fechada.",
+        "nulo": "Nenhum dos dois me convence. Anulo e volto pro curral.",
+        "lula": "Depois dessa conversa, quero distância de vocês. Vai ser 13, por teimosia.",
+        "sem_mudanca": "Vou pensar no lombo do cavalo. Cavalo ajuda a pensar."
+      }
+    }
+  ]
+}

@@ -433,3 +433,11 @@ p{max-width:72ch}
   .hero-ceu,.hero-losango,.busca,.compartilhar,.skip{display:none}
   .hero{background:#fff;color:#000;padding-bottom:20px}
 }
+
+/* chamada para o jogo da conversa (docs/politize_game.html) */
+.chamada-jogo{margin:34px 0 0;padding:24px 22px;border-radius:var(--raio);background:var(--azul);color:#f4f2ea;border-left:6px solid var(--amarelo)}
+.chamada-jogo .kicker{color:var(--amarelo2)}
+.chamada-jogo h3{font-family:var(--display);font-weight:900;font-size:clamp(1.5rem,5vw,2.1rem);line-height:1.05;letter-spacing:-.02em;margin:6px 0 10px}
+.chamada-jogo p{color:#dfe5ea;max-width:62ch;margin:0 0 16px}
+.chamada-jogo .btn{width:100%}
+@media (min-width:720px){.chamada-jogo .btn{width:auto}}

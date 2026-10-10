@@ -1,0 +1,950 @@
+{
+ "versao": "1.0",
+ "cenarios": [
+  {
+   "id": "whatsapp_familia",
+   "nome": "Grupo da família",
+   "hora": "noite",
+   "publico": 2,
+   "descricao": "O grupo Família Unida apita pela 38ª vez: bom dia com girassol, foto do almoço de domingo e um áudio de sete minutos que ninguém ouviu.",
+   "ambiente": {
+    "paleta": [
+     "#0b7a3b",
+     "#e9f3e4",
+     "#151812"
+    ],
+    "props": [
+     "celular",
+     "bolha"
+    ]
+   },
+   "abordagem": [
+    {
+     "texto": "Chama no privado, não no grupo: \"Oi, sumiu! Como você tá? Vi que ficou quieto no grupo esses dias.\"",
+     "tipo": "melhor",
+     "efeito": 15,
+     "tags": [
+      "pergunta",
+      "respeito"
+     ],
+     "reacao": "{nome} responde em dois minutos, com espanto: \"Opa! Tô na correria, mas tô bem. E você?\""
+    },
+    {
+     "texto": "Responde a foto do almoço com um elogio e pergunta quando vai ter o próximo.",
+     "tipo": "ok",
+     "efeito": 5,
+     "tags": [
+      "respeito"
+     ],
+     "reacao": "{nome} manda um \"kkkk\" e um coração. É pouco, mas é um começo."
+    },
+    {
+     "texto": "Encaminha no grupo o áudio de um \"amigo de um amigo que trabalha lá dentro\" com a bomba da semana.",
+     "tipo": "erro",
+     "efeito": -12,
+     "tags": [
+      "boato"
+     ],
+     "reacao": "{nome} responde só \"fonte?\" e some do grupo por dois dias.",
+     "licao": "Áudio sem origem é corrente, não informação: depois dele, quem pensa diferente para de te levar a sério.",
+     "fonte": "textos.arquetipos.pendulo.o_que_nao_fazer[1]"
+    },
+    {
+     "texto": "Posta no grupo: \"Quem votou em outro nome no 1º turno jogou o voto fora, viu?\"",
+     "tipo": "erro",
+     "efeito": -10,
+     "tags": [
+      "desqualifica",
+      "pressao"
+     ],
+     "reacao": "{nome} silencia o grupo por oito horas. Talvez por oito anos.",
+     "licao": "Constranger alguém na frente da família inteira fecha a porta antes de você bater.",
+     "fonte": "textos.arquetipos.atras.o_que_nao_fazer[1]"
+    }
+   ],
+   "npcs_sugeridos": [
+    "irmao_indeciso",
+    "bolsonarista_magoado",
+    "abstencionista_ressaca",
+    "branquista",
+    "aposentada_inss",
+    "professora_sindicalizada"
+   ]
+  },
+  {
+   "id": "padaria",
+   "nome": "Padaria",
+   "hora": "manhã",
+   "publico": 1,
+   "descricao": "Cheiro de pão saindo às seis e meia, a máquina de café chiando e a fila do pão na chapa andando devagar.",
+   "ambiente": {
+    "paleta": [
+     "#f2c230",
+     "#f7f5ee",
+     "#7d5b00"
+    ],
+    "props": [
+     "pao",
+     "vitrine",
+     "cafe"
+    ]
+   },
+   "abordagem": [
+    {
+     "texto": "Pergunta se o pão de queijo daqui ainda é o melhor do bairro e como anda o movimento.",
+     "tipo": "melhor",
+     "efeito": 14,
+     "tags": [
+      "pergunta"
+     ],
+     "reacao": "{nome} ri: \"Já foi melhor, e mais barato.\" A conversa começa sozinha."
+    },
+    {
+     "texto": "Comenta que o café está forte hoje e deseja bom dia.",
+     "tipo": "ok",
+     "efeito": 4,
+     "tags": [
+      "respeito"
+     ],
+     "reacao": "{nome} acena com a cabeça. Educado, mas ainda de guarda."
+    },
+    {
+     "texto": "Entre um gole e outro, solta: \"Esse preço do pão é culpa do Lula, né? Vota 22 que barateia.\"",
+     "tipo": "erro",
+     "efeito": -10,
+     "tags": [
+      "pressao"
+     ],
+     "reacao": "{nome} paga o pão e sai sem esperar o troco do assunto.",
+     "licao": "Abrir pelo candidato e prometer que o preço cai porque um nome ganhou queima a conversa e a sua credibilidade.",
+     "fonte": "textos.temas.Economia.cuidado"
+    },
+    {
+     "texto": "Oferece pagar o café da semana inteira se a pessoa prometer votar no seu candidato.",
+     "tipo": "grave",
+     "efeito": -30,
+     "tags": [
+      "favor"
+     ],
+     "reacao": "{nome} fica sério: \"Isso aí é compra de voto.\" A padaria inteira ouviu.",
+     "licao": "Oferecer qualquer vantagem em troca de voto é corrupção eleitoral, mesmo que seja um pingado.",
+     "fonte": "lei.art299"
+    }
+   ],
+   "npcs_sugeridos": [
+    "aposentada_inss",
+    "lulista_gratidao",
+    "isentao_cury",
+    "concursado_cury",
+    "nulista_protesto"
+   ]
+  },
+  {
+   "id": "mercado",
+   "nome": "Mercado",
+   "hora": "tarde",
+   "publico": 1,
+   "descricao": "Carrinho de roda torta, o bip do caixa sem parar e alguém conferindo o preço do óleo pela terceira vez.",
+   "ambiente": {
+    "paleta": [
+     "#c8412f",
+     "#f7f5ee",
+     "#0b7a3b"
+    ],
+    "props": [
+     "carrinho",
+     "gondola",
+     "caixa"
+    ]
+   },
+   "abordagem": [
+    {
+     "texto": "Na fila do caixa, pergunta: \"O que mais apertou o seu orçamento nos últimos meses?\"",
+     "tipo": "melhor",
+     "efeito": 15,
+     "tags": [
+      "pergunta"
+     ],
+     "reacao": "{nome} suspira e aponta o carrinho: \"Tudo. Mas o café, nem te conto.\""
+    },
+    {
+     "texto": "Ajuda a pegar um produto na prateleira alta e comenta a promoção do dia.",
+     "tipo": "ok",
+     "efeito": 6,
+     "tags": [
+      "respeito"
+     ],
+     "reacao": "{nome} agradece. Gentileza rende ponto, mas ainda não rende conversa."
+    },
+    {
+     "texto": "Olha o carrinho da pessoa e diz: \"Com uma compra dessas, nem devia reclamar de governo.\"",
+     "tipo": "erro",
+     "efeito": -12,
+     "tags": [
+      "desqualifica"
+     ],
+     "reacao": "{nome} vira o carrinho para o outro lado e muda de fila.",
+     "licao": "Julgar o carrinho e a renda dos outros é o jeito mais rápido de virar o chato do corredor.",
+     "fonte": "textos.temas.Economia.cuidado"
+    },
+    {
+     "texto": "Oferece passar as compras no seu cartão se a pessoa votar no seu candidato.",
+     "tipo": "grave",
+     "efeito": -30,
+     "tags": [
+      "favor"
+     ],
+     "reacao": "{nome} recua: \"Tá doido? Isso dá cadeia.\" O segurança olhou.",
+     "licao": "Pagar compra em troca de voto é corrupção eleitoral, e ainda com câmera no caixa.",
+     "fonte": "lei.art299"
+    }
+   ],
+   "npcs_sugeridos": [
+    "dona_de_casa_ne",
+    "lulista_gratidao",
+    "aposentada_inss",
+    "empresario_zema",
+    "branquista"
+   ]
+  },
+  {
+   "id": "bar",
+   "nome": "Bar da esquina",
+   "hora": "noite",
+   "publico": 1,
+   "descricao": "Mesa de plástico na calçada, cerveja suando no copo americano e o jogo passando na TV sem som.",
+   "ambiente": {
+    "paleta": [
+     "#0d2238",
+     "#f2c230",
+     "#c8412f"
+    ],
+    "props": [
+     "cerveja",
+     "mesa",
+     "cadeira"
+    ]
+   },
+   "abordagem": [
+    {
+     "texto": "Pergunta o que a pessoa achou do jogo e, no intervalo, como anda a semana no trabalho.",
+     "tipo": "melhor",
+     "efeito": 14,
+     "tags": [
+      "pergunta",
+      "escuta"
+     ],
+     "reacao": "{nome} puxa a cadeira: \"Senta aí. A semana foi pior que esse zagueiro.\""
+    },
+    {
+     "texto": "Faz um brinde à saúde de todo mundo da mesa.",
+     "tipo": "ok",
+     "efeito": 5,
+     "tags": [
+      "respeito"
+     ],
+     "reacao": "{nome} brinda. Clima bom, mas ninguém falou nada de sério ainda."
+    },
+    {
+     "texto": "Bate na mesa e anuncia: \"Quem vota no Lula aqui paga a conta!\"",
+     "tipo": "erro",
+     "efeito": -12,
+     "tags": [
+      "desqualifica",
+      "pressao"
+     ],
+     "reacao": "{nome} cruza os braços. A mesa inteira ficou em silêncio, e não foi por causa do jogo.",
+     "licao": "Piada que diminui o outro na frente da mesa vira briga, nunca conversa.",
+     "fonte": "textos.arquetipos.muro.o_que_nao_fazer[1]"
+    },
+    {
+     "texto": "Promete pagar a rodada de todo mundo no dia 25 para quem votar 22.",
+     "tipo": "grave",
+     "efeito": -30,
+     "tags": [
+      "favor"
+     ],
+     "reacao": "{nome} empurra o copo de volta: \"Comprar voto com cerveja? Tô fora.\"",
+     "licao": "Rodada, churrasco ou qualquer agrado em troca de voto é corrupção eleitoral.",
+     "fonte": "lei.art299"
+    }
+   ],
+   "npcs_sugeridos": [
+    "lulista_pragmatico",
+    "sindicalista_cut",
+    "abstencionista_ressaca",
+    "bolsonarista_magoado",
+    "nulista_protesto",
+    "petista_ideologico"
+   ]
+  },
+  {
+   "id": "shopping",
+   "nome": "Shopping",
+   "hora": "tarde",
+   "publico": 1,
+   "descricao": "Ar-condicionado no talo, saxofone na música ambiente e a praça de alimentação cheirando a fritura e perfume de loja.",
+   "ambiente": {
+    "paleta": [
+     "#1f5f9e",
+     "#f7f5ee",
+     "#d5d2c6"
+    ],
+    "props": [
+     "escada_rolante",
+     "vitrine_loja",
+     "sacola"
+    ]
+   },
+   "abordagem": [
+    {
+     "texto": "Pergunta o que trouxe a pessoa ao shopping hoje e se o movimento das lojas melhorou.",
+     "tipo": "melhor",
+     "efeito": 13,
+     "tags": [
+      "pergunta"
+     ],
+     "reacao": "{nome} levanta as sacolas: \"Vim só trocar um presente. Saí com três.\""
+    },
+    {
+     "texto": "Na fila do café, elogia a escolha e reclama junto do preço do estacionamento.",
+     "tipo": "ok",
+     "efeito": 5,
+     "tags": [
+      "respeito"
+     ],
+     "reacao": "{nome} concorda: \"Estacionamento aqui é assalto.\" Primeiro ponto em comum."
+    },
+    {
+     "texto": "Para a pessoa no pé da escada rolante com um discurso de três minutos sobre o 2º turno.",
+     "tipo": "erro",
+     "efeito": -11,
+     "tags": [
+      "sermao",
+      "pressao"
+     ],
+     "reacao": "{nome} finge atender o celular e sobe a escada correndo.",
+     "licao": "Ninguém pediu palestra entre um andar e outro: pressionar quem não quer falar só cria fuga.",
+     "fonte": "textos.arquetipos.dormindo.o_que_nao_fazer[1]"
+    }
+   ],
+   "npcs_sugeridos": [
+    "faria_limer_zema",
+    "isentao_cury",
+    "tiktoker_antissistema",
+    "concursado_cury",
+    "feminista_militante"
+   ]
+  },
+  {
+   "id": "praia",
+   "nome": "Praia",
+   "hora": "tarde",
+   "publico": 1,
+   "descricao": "Sol de meio-dia, vendedor de mate gritando na areia e um guarda-sol que voa a cada rajada de vento.",
+   "ambiente": {
+    "paleta": [
+     "#f2c230",
+     "#1f5f9e",
+     "#f7f5ee"
+    ],
+    "props": [
+     "areia",
+     "guarda_sol",
+     "onda"
+    ]
+   },
+   "abordagem": [
+    {
+     "texto": "Segura o guarda-sol que voou e pergunta se a pessoa é daqui ou veio de longe.",
+     "tipo": "melhor",
+     "efeito": 14,
+     "tags": [
+      "pergunta",
+      "respeito"
+     ],
+     "reacao": "{nome} agradece rindo: \"Esse guarda-sol já tentou fugir três vezes hoje.\""
+    },
+    {
+     "texto": "Comenta que a água está boa e pergunta se a maré vai subir.",
+     "tipo": "ok",
+     "efeito": 4,
+     "tags": [
+      "respeito"
+     ],
+     "reacao": "{nome} dá de ombros: \"Sei lá, só vim pegar sol.\""
+    },
+    {
+     "texto": "Estica a bandeira do seu candidato ao lado da canga dos outros e liga a caixinha de som com jingle.",
+     "tipo": "erro",
+     "efeito": -12,
+     "tags": [
+      "pressao"
+     ],
+     "reacao": "{nome} recolhe a canga e muda de lugar na areia. E talvez de voto.",
+     "licao": "Invadir o descanso dos outros com propaganda é cobrar quem prefere não falar de política.",
+     "fonte": "textos.arquetipos.fortaleza.o_que_nao_fazer[1]"
+    }
+   ],
+   "npcs_sugeridos": [
+    "universitario_humanas",
+    "abstencionista_ressaca",
+    "tiktoker_antissistema",
+    "militante_ong",
+    "branquista",
+    "petista_ideologico"
+   ]
+  },
+  {
+   "id": "show",
+   "nome": "Show",
+   "hora": "noite",
+   "publico": 1,
+   "descricao": "Grave batendo no peito, luz roxa no palco e a fila do banheiro maior que a do bar.",
+   "ambiente": {
+    "paleta": [
+     "#3b2f5c",
+     "#f2c230",
+     "#151812"
+    ],
+    "props": [
+     "palco",
+     "luz"
+    ]
+   },
+   "abordagem": [
+    {
+     "texto": "No intervalo entre as bandas, pergunta qual música a pessoa veio ver e desde quando curte.",
+     "tipo": "melhor",
+     "efeito": 14,
+     "tags": [
+      "pergunta"
+     ],
+     "reacao": "{nome} abre um sorriso: \"Desde os quinze! Vi esse show em todas as turnês.\""
+    },
+    {
+     "texto": "Elogia a camiseta da banda.",
+     "tipo": "ok",
+     "efeito": 5,
+     "tags": [
+      "respeito"
+     ],
+     "reacao": "{nome} olha a própria camiseta: \"Valeu. Comprei no primeiro show deles.\""
+    },
+    {
+     "texto": "Grita no ouvido da pessoa, por cima do som: \"Já sabe em quem vai votar no dia 25?\"",
+     "tipo": "erro",
+     "efeito": -10,
+     "tags": [
+      "interrompe",
+      "pressao"
+     ],
+     "reacao": "{nome} aponta para o palco e vira as costas. A banda ganhou.",
+     "licao": "Chegar já perguntando o voto, no meio da música, é pesquisa chata, não conversa.",
+     "fonte": "textos.conversas_por_origem.renan.um_jeito_de_conversar[2]"
+    },
+    {
+     "texto": "Zoa o visual da pessoa: \"Com esse estilo, aposto que vota no Lula.\"",
+     "tipo": "erro",
+     "efeito": -11,
+     "tags": [
+      "desqualifica"
+     ],
+     "reacao": "{nome} responde sem sorrir: \"Aposta errada e ainda perdeu a educação.\"",
+     "licao": "Presumir o voto pela aparência é preconceito com trilha sonora.",
+     "fonte": "textos.arquetipos.abaixo_do_perfil.o_que_nao_fazer[0]"
+    }
+   ],
+   "npcs_sugeridos": [
+    "universitario_humanas",
+    "feminista_militante",
+    "gamer_apolitico",
+    "tiktoker_antissistema",
+    "militante_ong"
+   ]
+  },
+  {
+   "id": "game_online",
+   "nome": "Chat de voz do jogo",
+   "hora": "madrugada",
+   "publico": 1,
+   "descricao": "Chat de voz às duas da manhã, ventoinha do PC chiando e alguém mastigando salgadinho com o microfone aberto.",
+   "ambiente": {
+    "paleta": [
+     "#151812",
+     "#3b2f5c",
+     "#0b7a3b"
+    ],
+    "props": [
+     "monitor",
+     "teclado",
+     "celular"
+    ]
+   },
+   "abordagem": [
+    {
+     "texto": "Depois da partida, pergunta como a pessoa começou no jogo e o que faz fora dele.",
+     "tipo": "melhor",
+     "efeito": 14,
+     "tags": [
+      "pergunta"
+     ],
+     "reacao": "{nome} destrava o microfone: \"Comecei num PC de lan house. Hoje trabalho de dia e jogo de madrugada.\""
+    },
+    {
+     "texto": "Elogia a jogada e chama para mais uma partida.",
+     "tipo": "ok",
+     "efeito": 5,
+     "tags": [
+      "respeito"
+     ],
+     "reacao": "{nome} manda um \"gg\" no chat. Respeito de time conquistado."
+    },
+    {
+     "texto": "No meio do round decisivo, abre o microfone para falar de eleição.",
+     "tipo": "erro",
+     "efeito": -12,
+     "tags": [
+      "interrompe"
+     ],
+     "reacao": "{nome} perde a jogada e te silencia no chat. Literalmente.",
+     "licao": "Interromper a partida para falar de política é perder o round e a conversa de uma vez.",
+     "fonte": "textos.conversas_por_origem.renan.um_jeito_de_conversar[0]"
+    },
+    {
+     "texto": "Manda no chat o print de uma pesquisa que você mesmo editou.",
+     "tipo": "erro",
+     "efeito": -13,
+     "tags": [
+      "mentira"
+     ],
+     "reacao": "{nome} dá zoom no print: \"Mano, a fonte tá torta. Isso é montagem.\"",
+     "licao": "Número inventado é descoberto em trinta segundos e leva junto toda a sua credibilidade.",
+     "fonte": "textos.temas.Economia.cuidado"
+    }
+   ],
+   "npcs_sugeridos": [
+    "gamer_apolitico",
+    "mbl_perdido",
+    "motorista_app_renan",
+    "tiktoker_antissistema",
+    "universitario_humanas"
+   ]
+  },
+  {
+   "id": "churrasco",
+   "nome": "Churrasco de domingo",
+   "hora": "tarde",
+   "publico": 1,
+   "descricao": "Fumaça de picanha, pagode no Bluetooth e um tio virando a linguiça com a convicção de quem governa o país.",
+   "ambiente": {
+    "paleta": [
+     "#c8412f",
+     "#f2c230",
+     "#0b7a3b"
+    ],
+    "props": [
+     "churrasqueira",
+     "espeto",
+     "cerveja",
+     "cadeira"
+    ]
+   },
+   "abordagem": [
+    {
+     "texto": "Ajuda com o carvão e pergunta como anda a família e o trabalho.",
+     "tipo": "melhor",
+     "efeito": 14,
+     "tags": [
+      "pergunta"
+     ],
+     "reacao": "{nome} passa a pinça: \"Segura aqui. Família bem, trabalho que é o problema.\""
+    },
+    {
+     "texto": "Elogia o ponto da carne e pede a receita do vinagrete.",
+     "tipo": "ok",
+     "efeito": 5,
+     "tags": [
+      "respeito"
+     ],
+     "reacao": "{nome} estufa o peito: \"Segredo de família. Mas eu conto.\""
+    },
+    {
+     "texto": "Pega o espeto como microfone e faz um comício sobre o 2º turno para a roda inteira.",
+     "tipo": "erro",
+     "efeito": -11,
+     "tags": [
+      "sermao"
+     ],
+     "reacao": "{nome} aumenta o volume do pagode até você parar.",
+     "licao": "Ninguém vai a churrasco para ouvir palanque: conversa boa é de dois, não para vencer a roda.",
+     "fonte": "textos.arquetipos.muro.o_que_nao_fazer[0]"
+    },
+    {
+     "texto": "Convoca a roda para uma carreata saindo daqui no domingo da eleição, com buzinaço na porta da escola.",
+     "tipo": "grave",
+     "efeito": -30,
+     "tags": [
+      "boca_de_urna"
+     ],
+     "reacao": "{nome} larga o espeto: \"No dia da eleição? Isso dá problema com a Justiça Eleitoral.\"",
+     "licao": "Carreata e arregimentação de eleitor no dia da votação são proibidas pela lei eleitoral.",
+     "fonte": "lei.9504.39"
+    }
+   ],
+   "npcs_sugeridos": [
+    "coronel_caiado",
+    "bolsonarista_magoado",
+    "lulista_pragmatico",
+    "empresario_zema",
+    "irmao_indeciso",
+    "sindicalista_cut"
+   ]
+  },
+  {
+   "id": "uber",
+   "nome": "Corrida de app",
+   "hora": "noite",
+   "publico": 1,
+   "descricao": "Ar-condicionado no dois, rádio baixinho, cheiro de aromatizador de pinho e o GPS recalculando a rota.",
+   "ambiente": {
+    "paleta": [
+     "#151812",
+     "#1f5f9e",
+     "#f2c230"
+    ],
+    "props": [
+     "carro",
+     "retrovisor",
+     "celular"
+    ]
+   },
+   "abordagem": [
+    {
+     "texto": "Pergunta como está sendo o dia e o que mais tem travado o trânsito da cidade.",
+     "tipo": "melhor",
+     "efeito": 14,
+     "tags": [
+      "pergunta"
+     ],
+     "reacao": "{nome} solta o ar: \"Dia longo. E a avenida principal tá em obra faz um ano.\""
+    },
+    {
+     "texto": "Pergunta se pode abaixar um pouco o ar e agradece.",
+     "tipo": "ok",
+     "efeito": 4,
+     "tags": [
+      "respeito"
+     ],
+     "reacao": "{nome} ajusta o ar: \"Claro. Tá bom assim?\""
+    },
+    {
+     "texto": "Passa a corrida inteira mostrando vídeo de político no celular, com o volume no máximo.",
+     "tipo": "erro",
+     "efeito": -11,
+     "tags": [
+      "pressao",
+      "sermao"
+     ],
+     "reacao": "{nome} aumenta o rádio e responde só com \"aham\" até o destino.",
+     "licao": "Plateia presa não é plateia convencida: ninguém gosta de virar refém de propaganda.",
+     "fonte": "textos.arquetipos.dormindo.o_que_nao_fazer[1]"
+    },
+    {
+     "texto": "Oferece corrida de graça no dia 25 para levar até a seção quem votar 22.",
+     "tipo": "grave",
+     "efeito": -30,
+     "tags": [
+      "carona",
+      "favor"
+     ],
+     "reacao": "{nome} olha pelo retrovisor: \"Carona por voto? Isso é crime.\"",
+     "licao": "O transporte de eleitor no dia é regulado por lei, e carona em troca de voto é corrupção eleitoral.",
+     "fonte": "lei.6091"
+    }
+   ],
+   "npcs_sugeridos": [
+    "motorista_app_renan",
+    "lulista_pragmatico",
+    "faria_limer_zema",
+    "professora_sindicalizada"
+   ]
+  },
+  {
+   "id": "saida_do_culto",
+   "nome": "Saída do culto",
+   "hora": "manhã",
+   "publico": 1,
+   "descricao": "Fim do culto de domingo, o coral ainda ecoando lá dentro e o pastor cumprimentando todo mundo na porta.",
+   "ambiente": {
+    "paleta": [
+     "#f7f5ee",
+     "#7d5b00",
+     "#1f5f9e"
+    ],
+    "props": [
+     "banco_igreja",
+     "porta",
+     "luz"
+    ]
+   },
+   "abordagem": [
+    {
+     "texto": "Pergunta como foi a semana e se a pessoa participa de algum ministério da igreja.",
+     "tipo": "melhor",
+     "efeito": 14,
+     "tags": [
+      "pergunta"
+     ],
+     "reacao": "{nome} se anima: \"Ajudo no louvor e na ação social. Semana puxada, mas abençoada.\""
+    },
+    {
+     "texto": "Elogia o louvor de hoje e deseja um bom domingo.",
+     "tipo": "ok",
+     "efeito": 5,
+     "tags": [
+      "respeito"
+     ],
+     "reacao": "{nome} sorri: \"Amém. Bom domingo para você também.\""
+    },
+    {
+     "texto": "Diz que quem não votar no seu candidato está do lado errado de Deus.",
+     "tipo": "erro",
+     "efeito": -14,
+     "tags": [
+      "medo"
+     ],
+     "reacao": "{nome} aperta a bíblia: \"Quem julga minha fé não é você.\"",
+     "licao": "Usar a fé como ameaça fere a pessoa no que ela tem de mais sagrado e encerra a conversa.",
+     "fonte": "textos.arquetipos.pendulo.o_que_nao_fazer[1]"
+    },
+    {
+     "texto": "Distribui santinho na porta da igreja no domingo da eleição e pede voto para cada um que sai.",
+     "tipo": "grave",
+     "efeito": -30,
+     "tags": [
+      "boca_de_urna"
+     ],
+     "reacao": "{nome} devolve o santinho: \"Hoje é dia de votar, não de pedir voto.\"",
+     "licao": "No dia da votação, distribuir material e pedir voto é boca de urna, proibida pela lei eleitoral.",
+     "fonte": "lei.9504.39"
+    }
+   ],
+   "npcs_sugeridos": [
+    "irmao_indeciso",
+    "dona_de_casa_ne",
+    "lulista_gratidao",
+    "bolsonarista_magoado",
+    "coronel_caiado"
+   ]
+  },
+  {
+   "id": "academia",
+   "nome": "Academia",
+   "hora": "manhã",
+   "publico": 1,
+   "descricao": "Anilha batendo no chão, funk acelerado na caixa de som e um espelho que já ouviu todas as confissões do bairro.",
+   "ambiente": {
+    "paleta": [
+     "#151812",
+     "#f2c230",
+     "#535b54"
+    ],
+    "props": [
+     "halter",
+     "esteira"
+    ]
+   },
+   "abordagem": [
+    {
+     "texto": "Pede uma dica de exercício e pergunta há quanto tempo a pessoa treina.",
+     "tipo": "melhor",
+     "efeito": 14,
+     "tags": [
+      "pergunta"
+     ],
+     "reacao": "{nome} larga o halter: \"Faz cinco anos. Vem cá que eu te mostro o jeito certo.\""
+    },
+    {
+     "texto": "Pergunta se a pessoa ainda vai usar o aparelho e espera a vez.",
+     "tipo": "ok",
+     "efeito": 5,
+     "tags": [
+      "respeito"
+     ],
+     "reacao": "{nome} levanta dois dedos: \"Mais duas séries e é seu.\""
+    },
+    {
+     "texto": "Interrompe a série da pessoa para falar do 2º turno.",
+     "tipo": "erro",
+     "efeito": -11,
+     "tags": [
+      "interrompe"
+     ],
+     "reacao": "{nome} tira um fone, escuta três segundos e põe o fone de volta.",
+     "licao": "Ninguém escuta argumento na décima repetição: espere a pausa e comece perguntando.",
+     "fonte": "textos.conversas_por_origem.renan.um_jeito_de_conversar[0]"
+    },
+    {
+     "texto": "Comenta alto que quem não vota no seu candidato \"é frango na política e na vida\".",
+     "tipo": "erro",
+     "efeito": -10,
+     "tags": [
+      "desqualifica"
+     ],
+     "reacao": "{nome} encara você pelo espelho e muda de aparelho.",
+     "licao": "Zoar o voto alheio na frente do espelho rende risada de um e inimizade de outro.",
+     "fonte": "textos.arquetipos.frente.o_que_nao_fazer[1]"
+    }
+   ],
+   "npcs_sugeridos": [
+    "mbl_perdido",
+    "faria_limer_zema",
+    "concursado_cury",
+    "feminista_militante",
+    "lulista_pragmatico"
+   ]
+  },
+  {
+   "id": "fila_do_banco",
+   "nome": "Fila do banco",
+   "hora": "manhã",
+   "publico": 1,
+   "descricao": "Senha 147 no painel, ventilador de teto girando devagar e a máquina de café quebrada desde a última Copa.",
+   "ambiente": {
+    "paleta": [
+     "#d5d2c6",
+     "#0d2238",
+     "#f2c230"
+    ],
+    "props": [
+     "fila",
+     "caixa",
+     "cadeira"
+    ]
+   },
+   "abordagem": [
+    {
+     "texto": "Pergunta se a pessoa também está esperando há muito tempo e o que costuma atrasar o atendimento.",
+     "tipo": "melhor",
+     "efeito": 13,
+     "tags": [
+      "pergunta",
+      "escuta"
+     ],
+     "reacao": "{nome} mostra a senha: \"Uma hora e dez. E só tem um caixa funcionando.\""
+    },
+    {
+     "texto": "Cede a cadeira e comenta o calor.",
+     "tipo": "ok",
+     "efeito": 5,
+     "tags": [
+      "respeito"
+     ],
+     "reacao": "{nome} senta com alívio: \"Deus te abençoe. Esse calor tá demais.\""
+    },
+    {
+     "texto": "Diz, alto, que a fila está assim por culpa de quem votou no Lula.",
+     "tipo": "erro",
+     "efeito": -10,
+     "tags": [
+      "desqualifica"
+     ],
+     "reacao": "{nome} olha para o painel e finge que você não existe.",
+     "licao": "Culpar a pessoa da fila pela fila não converte ninguém, só azeda a espera.",
+     "fonte": "textos.arquetipos.frente.o_que_nao_fazer[1]"
+    },
+    {
+     "texto": "Oferece resolver a pendência da pessoa com \"um conhecido lá dentro\" em troca do voto.",
+     "tipo": "grave",
+     "efeito": -30,
+     "tags": [
+      "favor"
+     ],
+     "reacao": "{nome} se afasta: \"Favor em troca de voto? Não, valeu.\"",
+     "licao": "Prometer favor ou facilidade em troca de voto é corrupção eleitoral.",
+     "fonte": "lei.art299"
+    }
+   ],
+   "npcs_sugeridos": [
+    "aposentada_inss",
+    "sindicalista_cut",
+    "petista_ideologico",
+    "empresario_zema",
+    "dona_de_casa_ne",
+    "nulista_protesto"
+   ]
+  },
+  {
+   "id": "rede_x",
+   "nome": "Thread no X",
+   "hora": "noite",
+   "publico": 3,
+   "descricao": "Thread pública pegando fogo, contador de visualizações subindo e uma resposta citada mais lida que o post original.",
+   "ambiente": {
+    "paleta": [
+     "#151812",
+     "#f7f5ee",
+     "#1f5f9e"
+    ],
+    "props": [
+     "logo_x",
+     "celular",
+     "bolha"
+    ]
+   },
+   "abordagem": [
+    {
+     "texto": "Responde com uma pergunta sincera: \"O que fez você chegar a essa conclusão? Quero entender.\"",
+     "tipo": "melhor",
+     "efeito": 15,
+     "tags": [
+      "pergunta",
+      "escuta"
+     ],
+     "reacao": "{nome} demora, mas responde sem ironia: \"Ninguém nunca me perguntou isso aqui. Vou explicar.\""
+    },
+    {
+     "texto": "Curte a parte do post com que você concorda e diz o que achou dela.",
+     "tipo": "ok",
+     "efeito": 5,
+     "tags": [
+      "respeito"
+     ],
+     "reacao": "{nome} responde com um \"pois é\". Na internet, isso é quase abraço."
+    },
+    {
+     "texto": "Faz um quote com print do perfil da pessoa e legenda irônica para os seus seguidores.",
+     "tipo": "erro",
+     "efeito": -13,
+     "tags": [
+      "desqualifica"
+     ],
+     "reacao": "{nome} bloqueia você e posta o print do print. Agora são duas bolhas em guerra.",
+     "licao": "Expor alguém para a sua bolha rende curtida e transforma a pessoa em adversária com plateia.",
+     "fonte": "textos.arquetipos.muro.o_que_nao_fazer[0]"
+    },
+    {
+     "texto": "Xinga a pessoa em público e chama os seus seguidores para cair em cima dela.",
+     "tipo": "grave",
+     "efeito": -30,
+     "tags": [
+      "desqualifica",
+      "pressao"
+     ],
+     "reacao": "{nome} trava a conta e guarda os prints. Milhares viram, e ninguém mudou de voto.",
+     "licao": "Xingamento e ataque em bando viram assédio, com print guardado para sempre.",
+     "fonte": "textos.arquetipos.atras.o_que_nao_fazer[1]"
+    }
+   ],
+   "npcs_sugeridos": [
+    "tiktoker_antissistema",
+    "bolsonarista_magoado",
+    "gamer_apolitico",
+    "nulista_protesto",
+    "dona_de_casa_ne",
+    "petista_ideologico"
+   ]
+  }
+ ]
+}

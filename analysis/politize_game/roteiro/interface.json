@@ -1,0 +1,88 @@
+{
+  "versao": "1.0",
+  "titulo": "Politize: o jogo da conversa",
+  "subtitulo": "Oito dias, oito conversas, zero boato.",
+  "deck": "Você tem até 24 de outubro para conversar com gente que votou em outro nome, anulou, faltou ou vota em Lula. Quem escuta converte; quem encaminha corrente, interrompe ou oferece favor perde a conversa e, às vezes, o voto.",
+  "tutorial": [
+    "Escolha um personagem. Cada um tem um trunfo, gente com quem já começa com mais confiança, e uma fraqueza, o tipo de erro que custa o dobro.",
+    "Em cada dia você encontra alguém num lugar diferente. Puxe assunto, escute a queixa, responda às duas objeções e encerre a conversa.",
+    "A confiança decide o desfecho: voto em Flávio, voto nulo, nada muda ou voto em Lula. Todo erro vira lição no caderno, com a fonte."
+  ],
+  "rotulos": {
+    "confianca": "Confiança",
+    "dia": "Dia",
+    "placar": "Placar",
+    "flavio": "Flávio",
+    "nulo": "Nulo",
+    "lula": "Lula",
+    "sem_mudanca": "Sem mudança",
+    "caderno": "Caderno de lições",
+    "escolher_personagem": "Quem é você nessa conversa?",
+    "comecar": "Começar",
+    "proxima": "Próxima conversa",
+    "jogar_de_novo": "Jogar de novo",
+    "compartilhar": "Compartilhar",
+    "copiar": "Copiar texto",
+    "copiado": "Copiado",
+    "voltar": "Voltar",
+    "saldo": "Saldo",
+    "recorde": "Recorde",
+    "licoes": "Lições",
+    "fonte": "Fonte",
+    "graves": "Erros graves"
+  },
+  "fases": {
+    "abordagem": "Puxe assunto",
+    "escuta": "Escute primeiro",
+    "objecao": "Responda sem brigar",
+    "fecho": "Deixe a decisão com a pessoa"
+  },
+  "graus": [
+    {
+      "min_saldo": -99,
+      "nome": "Cabo eleitoral do adversário",
+      "frase": "Você converteu mais gente para Lula do que muito militante de estrela no peito. Confira o caderno antes de abrir a boca de novo."
+    },
+    {
+      "min_saldo": 0,
+      "nome": "Tio do grupo silenciado",
+      "frase": "Ninguém mudou de lado, e metade da família arquivou a conversa com você. Menos encaminhar, mais perguntar."
+    },
+    {
+      "min_saldo": 2,
+      "nome": "Cabo eleitoral de boteco",
+      "frase": "Converteu alguns entre um brinde e outro. Tem talento, falta ouvir mais do que falar."
+    },
+    {
+      "min_saldo": 4,
+      "nome": "Conversador de calçada",
+      "frase": "Gente que não votaria em Flávio agora pensa no assunto. Você já sabe que pergunta abre mais porta que discurso."
+    },
+    {
+      "min_saldo": 6,
+      "nome": "Mestre da escuta",
+      "frase": "Sem um erro grave e com saldo de quem sabe ouvir. Você não ganhou discussão nenhuma, e foi exatamente por isso que ganhou voto."
+    }
+  ],
+  "compartilhar": [
+    "Fiz {flavio} votos para Flávio, {nulo} nulos e deixei escapar {lula} para Lula no Politize. Meu grau: {grau}. Consegue conversar melhor?",
+    "Oito dias, oito conversas: {flavio} para Flávio, {nulo} nulos, {lula} para Lula. Fui de {grau}. Teste a sua escuta no Politize.",
+    "No Politize, o jogo da conversa, terminei como {grau}: Flávio {flavio}, nulo {nulo}, Lula {lula}. Quem escuta converte, quem grita perde."
+  ],
+  "aviso": "Este jogo tem lado declarado: foi feito para quem quer eleger Flávio Bolsonaro no 2º turno de 25 de outubro. É ficção com perfis caricatos, não pessoas reais, e o voto de cada um é secreto. Converse até o dia 24 com quem você já conhece; no dia 25 a lei proíbe propaganda, arregimentação de eleitor e boca de urna (Lei 9.504/1997, art. 39, § 5º), então respeite o silêncio e vá votar.",
+  "dicas_gerais": [
+    "Escute o motivo antes de falar o que você pensa.",
+    "Pergunte o que a pessoa espera dos próximos quatro anos antes de falar de candidato.",
+    "Não desqualifique o candidato que a pessoa escolheu nem chame o voto dela de desperdício.",
+    "Não use medo nem boato para pesar na balança.",
+    "Diga com calma por que o voto útil conta no 2º turno e deixe a decisão com a pessoa.",
+    "Nunca ofereça carona, comida, dinheiro ou favor em troca de voto: é crime de corrupção eleitoral."
+  ],
+  "rodape": "Politize: o jogo da conversa · brasil.arvor.co · Ficção com perfis, não pessoas. O voto é secreto.",
+  "fim": {
+    "titulo": "Chegou o dia 24 de outubro",
+    "resumo": "Em oito dias de conversa: {flavio} para Flávio, {nulo} nulos, {lula} para Lula e {sem_mudanca} sem mudança.",
+    "sem_erros": "Nenhum erro grave na rodada. Nenhum favor, nenhum boato, nenhuma boca de urna: é assim que se conversa de verdade.",
+    "com_erros": "Teve erro grave na rodada. Abra o caderno: cada lição traz a fonte, e na próxima conversa ninguém precisa sair batendo a porta."
+  }
+}

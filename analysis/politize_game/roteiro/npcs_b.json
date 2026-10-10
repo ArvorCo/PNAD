@@ -1,0 +1,2591 @@
+{
+  "versao": "1.0",
+  "npcs": [
+    {
+      "id": "mbl_perdido",
+      "nome": "Lucas, o liberal sem bússola",
+      "idade": 27,
+      "genero": "M",
+      "campo": "terceira_via",
+      "origem": "renan",
+      "tags": [
+        "jovem",
+        "liberal",
+        "antissistema",
+        "universitario"
+      ],
+      "dificuldade": 2,
+      "confianca_inicial": 35,
+      "desfechos": {
+        "alto": "flavio",
+        "medio": "sem_mudanca",
+        "baixo": "lula"
+      },
+      "limiares": {
+        "alto": 65,
+        "medio": 35
+      },
+      "bio": "Já passou por três manifestações, dois grupos de estudo de economia e um racha de movimento. Votou em Renan no 1º turno e agora procura o centro liberal, que ninguém sabe onde fica.",
+      "visual": {
+        "pele": "#e0b48f",
+        "cabelo": "#3b2a1e",
+        "estilo_cabelo": "franja",
+        "acessorio": "oculos",
+        "roupa": "#1d3557",
+        "roupa_tipo": "camisa",
+        "barba": true,
+        "detalhe": "barba rala, manga dobrada e adesivo descascado de movimento no notebook"
+      },
+      "cenarios": [
+        "rede_x",
+        "bar",
+        "academia",
+        "padaria"
+      ],
+      "tema": "Corrupção",
+      "queixa": "Eu votei no Renan porque cansei de escolher o menos pior. Agora me pedem pra escolher o menos pior de novo. O centro liberal foi traído por todo mundo, cara.",
+      "escuta": [
+        {
+          "texto": "O que te fez escolher o Renan? Quero entender o que você procurava.",
+          "tipo": "melhor",
+          "efeito": 15,
+          "tags": [
+            "pergunta",
+            "escuta"
+          ],
+          "reacao": "Renovação. Alguém que não devesse favor a ninguém. Ninguém nunca me pergunta isso, só me mandam print."
+        },
+        {
+          "texto": "Faz sentido estar frustrado. Muita gente votou assim.",
+          "tipo": "ok",
+          "efeito": 5,
+          "tags": [
+            "respeito"
+          ],
+          "reacao": "Pelo menos você não me chamou de isentão. Já é um avanço."
+        },
+        {
+          "texto": "Renan era aventura, né? Voto jogado fora.",
+          "tipo": "erro",
+          "efeito": -10,
+          "tags": [
+            "desqualifica"
+          ],
+          "reacao": "Jogado fora é o voto de quem escolhe os mesmos há trinta anos. Próximo assunto.",
+          "licao": "Você tratou a vontade de renovar como ingenuidade, e ele fechou a porta.",
+          "fonte": "textos.conversas_por_origem.renan.cuidado"
+        },
+        {
+          "texto": "Tá, mas e o Flávio? Deixa eu te mandar um vídeo dele.",
+          "tipo": "erro",
+          "efeito": -8,
+          "tags": [
+            "interrompe"
+          ],
+          "reacao": "Vídeo eu tenho no grupo, cento e quarenta por dia. Queria era conversa.",
+          "licao": "Você falou de candidato antes de achar o que vocês querem em comum.",
+          "fonte": "textos.conversas_por_origem.renan.um_jeito_de_conversar[2]"
+        }
+      ],
+      "objecoes": [
+        {
+          "fala": "Liberal de verdade não vota em sobrenome. Votar no Flávio é aceitar que a direita virou herança de família.",
+          "opcoes": [
+            {
+              "texto": "Entendo a desconfiança. Uma coisa que talvez te interesse: o plano dele propõe o fim da reeleição para presidente. Isso conversa com o que você procurava?",
+              "tipo": "melhor",
+              "efeito": 15,
+              "tags": [
+                "programa",
+                "pergunta"
+              ],
+              "reacao": "Fim da reeleição eu assino embaixo. Vou ler a página inteira, não o print.",
+              "fonte": "propostas.liberdade-instituicoes.66"
+            },
+            {
+              "texto": "No 2º turno não tem nome perfeito, tem dois. A pergunta é qual chega mais perto do que você quer.",
+              "tipo": "ok",
+              "efeito": 5,
+              "tags": [
+                "voto_util"
+              ],
+              "reacao": "Odeio que isso faça sentido."
+            },
+            {
+              "texto": "Liberal que não vota no Flávio está ajudando o Lula, simples assim.",
+              "tipo": "erro",
+              "efeito": -10,
+              "tags": [
+                "pressao",
+                "desqualifica"
+              ],
+              "reacao": "Simples assim é argumento de grupo de zap. Eu esperava mais.",
+              "licao": "Você trocou a pergunta por cobrança, e cobrança faz a pessoa se fechar.",
+              "fonte": "textos.arquetipos.fortaleza.o_que_nao_fazer[1]"
+            },
+            {
+              "texto": "Fecha com o Flávio que eu te arrumo uma vaga de assessor quando ele ganhar. Tenho contato.",
+              "tipo": "grave",
+              "efeito": -30,
+              "tags": [
+                "favor"
+              ],
+              "reacao": "Você acabou de me oferecer exatamente o que eu votei para acabar. Tchau.",
+              "licao": "Prometer cargo em troca de voto é corrupção eleitoral, crime pelo Código Eleitoral, art. 299.",
+              "fonte": "lei.art299"
+            }
+          ]
+        },
+        {
+          "fala": "E se eu anular? Pelo menos fico com a consciência limpa e posso dizer que avisei.",
+          "opcoes": [
+            {
+              "texto": "A decisão é sua. Só lembro que no 2º turno nulo não vai para ninguém: a escolha fica com quem votar. Você prefere decidir ou deixar os outros decidirem?",
+              "tipo": "melhor",
+              "efeito": 16,
+              "tags": [
+                "voto_util",
+                "respeito"
+              ],
+              "reacao": "Colocado assim, anular parece terceirizar a decisão. Me deixa pensar."
+            },
+            {
+              "texto": "Alternância de poder também é um princípio liberal, não acha?",
+              "tipo": "ok",
+              "efeito": 5,
+              "tags": [
+                "alternancia"
+              ],
+              "reacao": "Acho. Só queria que a alternância não tivesse sobrenome."
+            },
+            {
+              "texto": "Anular é coisa de mimado. Democracia dá trabalho.",
+              "tipo": "erro",
+              "efeito": -12,
+              "tags": [
+                "sermao"
+              ],
+              "reacao": "Mimado é quem precisa que eu concorde para dormir em paz.",
+              "licao": "Sermão de dever cívico só deixa a pessoa mais certa de que está sendo cobrada.",
+              "fonte": "textos.arquetipos.dormindo.o_que_nao_fazer[0]"
+            },
+            {
+              "texto": "Se você anular e o Lula ganhar, a culpa do que vier é sua.",
+              "tipo": "erro",
+              "efeito": -10,
+              "tags": [
+                "medo"
+              ],
+              "reacao": "Culpa coletiva agora? Isso eu esperava do outro lado.",
+              "licao": "Você usou medo para pesar na balança, e medo afasta mais do que convence.",
+              "fonte": "textos.arquetipos.pendulo.o_que_nao_fazer[1]"
+            }
+          ]
+        }
+      ],
+      "fecho": [
+        {
+          "texto": "Valeu pela conversa. Você decide no dia 25, e se quiser ler o plano junto, me chama.",
+          "tipo": "melhor",
+          "efeito": 14,
+          "tags": [
+            "respeito"
+          ],
+          "reacao": "Fechado. Foi a primeira conversa em que ninguém tentou me ganhar no grito."
+        },
+        {
+          "texto": "Pensa no voto útil com calma. Dois nomes, um país.",
+          "tipo": "ok",
+          "efeito": 5,
+          "tags": [
+            "voto_util"
+          ],
+          "reacao": "Slogan ruim, argumento razoável."
+        },
+        {
+          "texto": "Me promete agora que vai votar no Flávio? Quero ouvir.",
+          "tipo": "erro",
+          "efeito": -10,
+          "tags": [
+            "pressao"
+          ],
+          "reacao": "Promessa sob pressão não vale nem em grupo de estudo.",
+          "licao": "Insistir depois de uma conversa boa transforma acordo em cobrança.",
+          "fonte": "textos.arquetipos.pendulo.o_que_nao_fazer[0]"
+        }
+      ],
+      "desfecho_texto": {
+        "flavio": "Li a página do fim da reeleição. Não é amor, é cálculo: dia 25 eu voto 22.",
+        "nulo": "Vou anular e postar um textão explicando. Ninguém vai ler.",
+        "lula": "Sabe o que mais? Já que é pra ser contra sobrenome, vou de 13 só de birra.",
+        "sem_mudanca": "Ainda tô procurando o centro liberal. Se achar, te aviso."
+      }
+    },
+    {
+      "id": "tiktoker_antissistema",
+      "nome": "Bianca, a antissistema do For You",
+      "idade": 21,
+      "genero": "F",
+      "campo": "terceira_via",
+      "origem": "renan",
+      "tags": [
+        "genz",
+        "antissistema",
+        "mulher",
+        "app"
+      ],
+      "dificuldade": 2,
+      "confianca_inicial": 33,
+      "desfechos": {
+        "alto": "flavio",
+        "medio": "sem_mudanca",
+        "baixo": "lula"
+      },
+      "limiares": {
+        "alto": 65,
+        "medio": 35
+      },
+      "bio": "Tem 300 mil seguidores, um ring light na bolsa e opinião formada sobre o sistema em vídeos de quinze segundos. Votou em Renan porque ele era o único que não parecia cringe.",
+      "visual": {
+        "pele": "#8d5a3b",
+        "cabelo": "#1a1a1a",
+        "estilo_cabelo": "rabo",
+        "acessorio": "celular",
+        "roupa": "#ff5fa2",
+        "roupa_tipo": "jaqueta",
+        "barba": false,
+        "detalhe": "ring light pendurado na bolsa, unhas com estrelinhas e celular sempre filmando"
+      },
+      "cenarios": [
+        "show",
+        "praia",
+        "rede_x",
+        "shopping"
+      ],
+      "tema": "Corrupção",
+      "queixa": "Gente, o sistema é o sistema. Os dois do 2º turno são o sistema. Eu votei no Renan porque ele falava a nossa língua, e agora querem que eu escolha entre dois boomers. Muito cringe.",
+      "escuta": [
+        {
+          "texto": "Quero entender de verdade: o que é o sistema pra você?",
+          "tipo": "melhor",
+          "efeito": 16,
+          "tags": [
+            "pergunta",
+            "escuta"
+          ],
+          "reacao": "É quando quem manda nunca paga a conta e quem paga nunca manda. Nossa, isso daria um vídeo."
+        },
+        {
+          "texto": "Faz sentido querer alguém que fale a sua língua.",
+          "tipo": "ok",
+          "efeito": 5,
+          "tags": [
+            "respeito"
+          ],
+          "reacao": "Né? Pelo menos alguém entendeu sem eu precisar colocar legenda."
+        },
+        {
+          "texto": "Isso é papo de influencer. Você só votou no Renan porque viralizou.",
+          "tipo": "erro",
+          "efeito": -10,
+          "tags": [
+            "desqualifica"
+          ],
+          "reacao": "E você vota em quem viralizou em 2018. Pelo menos o meu viral é atual.",
+          "licao": "Você tratou a vontade de renovar como modinha, e quem busca renovação ouve isso como desprezo.",
+          "fonte": "textos.conversas_por_origem.renan.cuidado"
+        }
+      ],
+      "objecoes": [
+        {
+          "fala": "Se eu postar que vou votar no Flávio, perco metade dos seguidores. Se postar Lula, perco a outra metade. O algoritmo não perdoa.",
+          "opcoes": [
+            {
+              "texto": "O voto é secreto. Você não precisa postar nada: só escolher o que acha melhor para os próximos quatro anos.",
+              "tipo": "melhor",
+              "efeito": 15,
+              "tags": [
+                "respeito"
+              ],
+              "reacao": "Espera. Eu posso votar sem fazer conteúdo disso? Que conceito revolucionário."
+            },
+            {
+              "texto": "O que os seus seguidores mais reclamam? Talvez seja isso que importa no 2º turno.",
+              "tipo": "ok",
+              "efeito": 6,
+              "tags": [
+                "pergunta"
+              ],
+              "reacao": "Aluguel, primeiro emprego e gente que filma o show inteiro. Nessa ordem."
+            },
+            {
+              "texto": "Influencer tem obrigação de se posicionar. Silêncio é cumplicidade.",
+              "tipo": "erro",
+              "efeito": -10,
+              "tags": [
+                "pressao"
+              ],
+              "reacao": "Obrigação eu tenho com o boleto. Próximo.",
+              "licao": "Cobrar posição pública de quem prefere não falar só empurra a pessoa para longe.",
+              "fonte": "textos.arquetipos.fortaleza.o_que_nao_fazer[1]"
+            },
+            {
+              "texto": "No dia 25 faz uma live na fila da sua seção pedindo voto pro 22. Engajamento garantido.",
+              "tipo": "grave",
+              "efeito": -30,
+              "tags": [
+                "boca_de_urna"
+              ],
+              "reacao": "Você quer que eu seja presa ao vivo? Isso não é engajamento, é ficha.",
+              "licao": "Pedir voto no dia da eleição, na fila ou numa live, é boca de urna, proibida pela Lei 9.504/1997, art. 39, § 5º.",
+              "fonte": "lei.9504.39"
+            }
+          ]
+        },
+        {
+          "fala": "Tá, mas o que muda na minha vida? Política é tudo igual, só muda o filtro.",
+          "opcoes": [
+            {
+              "texto": "Uma coisa concreta: o plano dele propõe acabar com qualquer estrutura estatal que vigie ou puna o que as pessoas dizem. Para quem vive de internet, isso pesa?",
+              "tipo": "melhor",
+              "efeito": 15,
+              "tags": [
+                "programa",
+                "pergunta"
+              ],
+              "reacao": "Opa. Liberdade de postar é o meu ganha-pão. Isso tá escrito mesmo? Manda a página.",
+              "fonte": "propostas.liberdade-instituicoes.66"
+            },
+            {
+              "texto": "Quando o mesmo grupo fica muito tempo, trocar também é um jeito de cobrar.",
+              "tipo": "ok",
+              "efeito": 5,
+              "tags": [
+                "alternancia"
+              ],
+              "reacao": "Alternância. Parece nome de banda indie, mas faz sentido."
+            },
+            {
+              "texto": "Vi num vídeo que, se o Lula ganhar, vão desligar o TikTok no Brasil.",
+              "tipo": "erro",
+              "efeito": -12,
+              "tags": [
+                "boato"
+              ],
+              "reacao": "Amor, eu faço vídeo. Eu sei quando um vídeo é fake. Esse é.",
+              "licao": "Você repassou boato, e quem vive de internet reconhece um de longe.",
+              "fonte": "textos.arquetipos.pendulo.o_que_nao_fazer[1]"
+            },
+            {
+              "texto": "Você nem entende de política, só de dancinha.",
+              "tipo": "erro",
+              "efeito": -8,
+              "tags": [
+                "desqualifica"
+              ],
+              "reacao": "A dancinha paga o meu aluguel. E a sua opinião, paga o quê?",
+              "licao": "Debater para vencer, diminuindo a pessoa, encerra a conversa antes do argumento.",
+              "fonte": "textos.arquetipos.muro.o_que_nao_fazer[0]"
+            }
+          ]
+        }
+      ],
+      "fecho": [
+        {
+          "texto": "Valeu por conversar sem filtro. A decisão é sua, e o voto é secreto.",
+          "tipo": "melhor",
+          "efeito": 14,
+          "tags": [
+            "respeito"
+          ],
+          "reacao": "Essa foi a conversa menos cringe da minha semana."
+        },
+        {
+          "texto": "Pensa que no 2º turno nulo não vai para ninguém.",
+          "tipo": "ok",
+          "efeito": 5,
+          "tags": [
+            "voto_util"
+          ],
+          "reacao": "Tá, vou pensar. Mas sem textão."
+        },
+        {
+          "texto": "Grava um story agora dizendo que fechou com o Flávio?",
+          "tipo": "erro",
+          "efeito": -10,
+          "tags": [
+            "pressao"
+          ],
+          "reacao": "Agora você virou o sistema.",
+          "licao": "Pedir prova pública de voto é pressão, e o voto é secreto.",
+          "fonte": "lei.voto_secreto"
+        }
+      ],
+      "desfecho_texto": {
+        "flavio": "Não vou postar nada. Mas no dia 25, na cabine, sem câmera, é 22.",
+        "nulo": "Vou anular e fazer um vídeo explicando por que anulei. Vai flopar.",
+        "lula": "O seu jeito de convencer foi tão cringe que fui pro outro lado só de raiva.",
+        "sem_mudanca": "Continuo antissistema. Me segue que eu posto quando decidir."
+      }
+    },
+    {
+      "id": "bolsonarista_magoado",
+      "nome": "Valdir, o viúvo do capitão",
+      "idade": 61,
+      "genero": "M",
+      "campo": "direita_desgarrada",
+      "origem": "bolsonaro_2022",
+      "tags": [
+        "boomer",
+        "direita",
+        "zap",
+        "homem"
+      ],
+      "dificuldade": 2,
+      "confianca_inicial": 38,
+      "desfechos": {
+        "alto": "flavio",
+        "medio": "sem_mudanca",
+        "baixo": "lula"
+      },
+      "limiares": {
+        "alto": 65,
+        "medio": 35
+      },
+      "bio": "Teve bandeira na janela, adesivo no carro e foto com o capitão no perfil. Em 2026 votou em outro nome, porque sem o pai na urna diz que não é a mesma coisa.",
+      "visual": {
+        "pele": "#d9a37a",
+        "cabelo": "#b8b8b8",
+        "estilo_cabelo": "calvo",
+        "acessorio": "bone",
+        "roupa": "#f2c230",
+        "roupa_tipo": "camiseta",
+        "barba": true,
+        "detalhe": "camisa amarela desbotada de 2018 e bigode grisalho bem aparado"
+      },
+      "cenarios": [
+        "churrasco",
+        "whatsapp_familia",
+        "bar",
+        "padaria"
+      ],
+      "tema": "Violência",
+      "queixa": "Em 2022 eu estava na rua de verde e amarelo todo domingo. Depois ninguém ligou pra gente. Sem o pai não é a mesma coisa, e o filho nem lembrou que eu existo.",
+      "escuta": [
+        {
+          "texto": "O que mudou de 2022 pra cá, pra você? Quero ouvir.",
+          "tipo": "melhor",
+          "efeito": 16,
+          "tags": [
+            "pergunta",
+            "escuta"
+          ],
+          "reacao": "Mudou que eu me senti usado. Depois virei piada. Ninguém tinha me perguntado isso até hoje."
+        },
+        {
+          "texto": "Você tem todo direito de estar chateado.",
+          "tipo": "ok",
+          "efeito": 5,
+          "tags": [
+            "respeito"
+          ],
+          "reacao": "Chateado é pouco. Mas obrigado por não me chamar de traidor."
+        },
+        {
+          "texto": "Votou em outro no 1º turno? Isso é traição com o capitão.",
+          "tipo": "erro",
+          "efeito": -12,
+          "tags": [
+            "desqualifica",
+            "pressao"
+          ],
+          "reacao": "Traição foi me deixarem de lado. Eu fiquei, quem sumiu foram eles.",
+          "licao": "Tratar mudança de voto como traição é o jeito mais rápido de perder quem já esteve do seu lado.",
+          "fonte": "textos.conversas_por_origem.bolsonaro_2022.cuidado"
+        },
+        {
+          "texto": "Mas e aí, vai de 22 ou não vai?",
+          "tipo": "erro",
+          "efeito": -8,
+          "tags": [
+            "interrompe"
+          ],
+          "reacao": "Calma. Nem o garçom do bar me apressa assim.",
+          "licao": "Você pulou direto para o voto sem escutar o que pesou na escolha dele.",
+          "fonte": "textos.conversas_por_origem.bolsonaro_2022.um_jeito_de_conversar[1]"
+        }
+      ],
+      "objecoes": [
+        {
+          "fala": "O Flávio não é o pai. O pai falava a minha língua. O filho fala com assessor.",
+          "opcoes": [
+            {
+              "texto": "Ninguém é igual a ninguém. Segurança sempre foi a sua bandeira, né? O plano dele abre justamente com guerra ao crime organizado.",
+              "tipo": "melhor",
+              "efeito": 15,
+              "tags": [
+                "pergunta",
+                "programa"
+              ],
+              "reacao": "Guerra ao crime organizado tá escrito? Então pelo menos a pauta é a mesma.",
+              "fonte": "propostas.seguranca.13"
+            },
+            {
+              "texto": "O 2º turno não é sobre ele ser igual ao pai. É sobre trocar quem está aí.",
+              "tipo": "ok",
+              "efeito": 6,
+              "tags": [
+                "alternancia"
+              ],
+              "reacao": "Isso eu entendo. Trocar eu quero."
+            },
+            {
+              "texto": "Para de mimimi. Bolsonaro é Bolsonaro, vota e pronto.",
+              "tipo": "erro",
+              "efeito": -10,
+              "tags": [
+                "desqualifica"
+              ],
+              "reacao": "Mimimi? Eu gastei meu décimo terceiro em bandeira. Respeita.",
+              "licao": "Você cobrou lealdade em vez de ouvir a mágoa, e o Politize manda ouvir a queixa sem defender nem atacar.",
+              "fonte": "textos.arquetipos.reencontro.o_que_fazer[1]"
+            },
+            {
+              "texto": "Se você fechar com o 22, eu pago a cerveja e o churrasco do grupo até o dia da eleição.",
+              "tipo": "grave",
+              "efeito": -30,
+              "tags": [
+                "favor"
+              ],
+              "reacao": "Churrasco por voto? Isso é coisa que a gente acusava os outros de fazer. Tô fora.",
+              "licao": "Oferecer comida ou bebida em troca de voto é corrupção eleitoral, crime pelo Código Eleitoral, art. 299.",
+              "fonte": "lei.art299"
+            }
+          ]
+        },
+        {
+          "fala": "Eu votei diferente no 1º turno pra mandar um recado. Se eu voltar agora, parece que engoli tudo calado.",
+          "opcoes": [
+            {
+              "texto": "Recado dado. Agora a escolha é entre dois, e ficar de fora deixa a decisão com os outros. Votar não apaga o recado, só decide quem governa.",
+              "tipo": "melhor",
+              "efeito": 16,
+              "tags": [
+                "voto_util",
+                "respeito"
+              ],
+              "reacao": "Visto assim, voltar não é engolir. É decidir."
+            },
+            {
+              "texto": "Ninguém precisa saber em quem você vota. O voto é secreto.",
+              "tipo": "ok",
+              "efeito": 5,
+              "tags": [
+                "respeito"
+              ],
+              "reacao": "Verdade. Minha cunhada vai morrer de curiosidade."
+            },
+            {
+              "texto": "Recado é coisa de quem não tem compromisso com o país.",
+              "tipo": "erro",
+              "efeito": -10,
+              "tags": [
+                "sermao"
+              ],
+              "reacao": "Compromisso eu tive em 2022. Agora eu tenho é ressentimento.",
+              "licao": "Cobrar explicação por voto passado faz a pessoa defender o voto antigo em vez de pensar no próximo.",
+              "fonte": "textos.arquetipos.reencontro.o_que_nao_fazer[0]"
+            },
+            {
+              "texto": "Tão dizendo no zap que vão cancelar a eleição se o Flávio perder. Tem que votar.",
+              "tipo": "erro",
+              "efeito": -12,
+              "tags": [
+                "boato"
+              ],
+              "reacao": "Rapaz, eu já repassei muita coisa assim e me arrependi. Não me pega mais.",
+              "licao": "Boato com urgência fabricada desacredita quem repassa, inclusive com quem já acreditou antes.",
+              "fonte": "textos.arquetipos.pendulo.o_que_nao_fazer[1]"
+            }
+          ]
+        }
+      ],
+      "fecho": [
+        {
+          "texto": "Valeu por me contar o que sentiu. A decisão é sua, e o voto é secreto.",
+          "tipo": "melhor",
+          "efeito": 14,
+          "tags": [
+            "respeito"
+          ],
+          "reacao": "Fazia tempo que alguém do lado de cá não me escutava. Valeu mesmo."
+        },
+        {
+          "texto": "Pensa no dia 25 como a chance de trocar quem está aí.",
+          "tipo": "ok",
+          "efeito": 5,
+          "tags": [
+            "alternancia"
+          ],
+          "reacao": "Trocar eu quero. Vou pensar no resto."
+        },
+        {
+          "texto": "Vou te adicionar em mais três grupos pra você voltar a ficar animado.",
+          "tipo": "erro",
+          "efeito": -10,
+          "tags": [
+            "pressao"
+          ],
+          "reacao": "Eu saí de doze grupos por um motivo, viu?",
+          "licao": "Despejar grupo e mensagem em quem se afastou é pressão, e pressão afasta.",
+          "fonte": "textos.arquetipos.atras.o_que_nao_fazer[1]"
+        }
+      ],
+      "desfecho_texto": {
+        "flavio": "Não é o pai, mas é o que tem contra o que está aí. Dia 25 eu volto pro 22, sem bandeira na janela.",
+        "nulo": "Vou anular. Quem me deixou de lado que se vire.",
+        "lula": "Fiquei tão bravo com o jeito de vocês que, por birra, vou de 13. Não conta pra ninguém.",
+        "sem_mudanca": "Ainda tô magoado. Me pergunta de novo semana que vem."
+      }
+    },
+    {
+      "id": "irmao_indeciso",
+      "nome": "Wesley, o irmão do deixa disso",
+      "idade": 44,
+      "genero": "M",
+      "campo": "terceira_via",
+      "origem": "cury",
+      "tags": [
+        "evangelico",
+        "cristao",
+        "pai",
+        "classe_media"
+      ],
+      "dificuldade": 1,
+      "confianca_inicial": 45,
+      "desfechos": {
+        "alto": "flavio",
+        "medio": "sem_mudanca",
+        "baixo": "lula"
+      },
+      "limiares": {
+        "alto": 65,
+        "medio": 35
+      },
+      "bio": "Diácono, pai de três e moderador informal do grupo da família, onde apaga discussão antes de virar briga. Votou em Augusto Cury porque gostou do tom de paz.",
+      "visual": {
+        "pele": "#c68c5f",
+        "cabelo": "#2a1d14",
+        "estilo_cabelo": "curto",
+        "acessorio": "bibilia",
+        "roupa": "#ffffff",
+        "roupa_tipo": "social",
+        "barba": false,
+        "detalhe": "camisa social branca abotoada até o pescoço e Bíblia de capa de couro debaixo do braço"
+      },
+      "cenarios": [
+        "saida_do_culto",
+        "whatsapp_familia",
+        "padaria"
+      ],
+      "tema": "Educação",
+      "queixa": "Olha, eu votei no Cury porque ele falava de família, de emoção, de cuidar da mente. Agora todo mundo no grupo da família só briga. Eu não gosto de briga, gosto de paz em casa.",
+      "escuta": [
+        {
+          "texto": "O que você mais gostou no Cury? Quero entender o que pesou pra você.",
+          "tipo": "melhor",
+          "efeito": 15,
+          "tags": [
+            "pergunta",
+            "escuta"
+          ],
+          "reacao": "O cuidado. Ele falava de ansiedade, de filho, de casamento. Parecia gente."
+        },
+        {
+          "texto": "Paz em casa vale mais que qualquer eleição.",
+          "tipo": "ok",
+          "efeito": 6,
+          "tags": [
+            "respeito"
+          ],
+          "reacao": "Amém. Mas não fuja da pergunta, eu sei que você quer falar do 2º turno."
+        },
+        {
+          "texto": "Cury é escritor de autoajuda, não presidente.",
+          "tipo": "erro",
+          "efeito": -10,
+          "tags": [
+            "desqualifica"
+          ],
+          "reacao": "Autoajuda ajudou muita gente aqui na igreja. Inclusive a mim.",
+          "licao": "Você desqualificou o candidato que ele escolheu, e ele ouviu isso como crítica a ele mesmo.",
+          "fonte": "textos.arquetipos.fertil.o_que_nao_fazer[0]"
+        },
+        {
+          "texto": "Tá, mas o grupo da família tem que fechar com o 22.",
+          "tipo": "erro",
+          "efeito": -8,
+          "tags": [
+            "interrompe",
+            "pressao"
+          ],
+          "reacao": "Lá vem. Era isso que eu queria evitar.",
+          "licao": "Você levou a briga para o grupo da família justo com quem pediu paz.",
+          "fonte": "textos.arquetipos.atras.o_que_nao_fazer[1]"
+        }
+      ],
+      "objecoes": [
+        {
+          "fala": "Não sei se política é coisa de igreja. Os dois lados usam o nome de Deus quando convém.",
+          "opcoes": [
+            {
+              "texto": "Concordo que fé não é palanque. Mas o plano dele coloca entre os valores a família e a liberdade religiosa, por escrito. Vale você ler e decidir.",
+              "tipo": "melhor",
+              "efeito": 15,
+              "tags": [
+                "programa",
+                "respeito"
+              ],
+              "reacao": "Por escrito é diferente de discurso. Vou ler com calma, sem ninguém do lado.",
+              "fonte": "propostas.liberdade-instituicoes.9"
+            },
+            {
+              "texto": "O que você espera de quem governar nos próximos quatro anos?",
+              "tipo": "ok",
+              "efeito": 5,
+              "tags": [
+                "pergunta"
+              ],
+              "reacao": "Que deixe a família em paz e cuide da escola dos meus filhos. É pedir muito?"
+            },
+            {
+              "texto": "Crente de verdade vota no Flávio. Quem não vota está do outro lado.",
+              "tipo": "erro",
+              "efeito": -12,
+              "tags": [
+                "pressao"
+              ],
+              "reacao": "Quem decide se sou crente de verdade é Deus, não o grupo do zap.",
+              "licao": "Usar a fé de alguém como cobrança transforma convicção em culpa.",
+              "fonte": "textos.arquetipos.fortaleza.o_que_nao_fazer[1]"
+            },
+            {
+              "texto": "Se a igreja fechar com o 22, a gente consegue a reforma do templo depois da eleição.",
+              "tipo": "grave",
+              "efeito": -30,
+              "tags": [
+                "favor"
+              ],
+              "reacao": "Reforma por voto? Isso não é de Deus. Vou até orar por você.",
+              "licao": "Prometer vantagem a um grupo em troca de voto é corrupção eleitoral, crime pelo Código Eleitoral, art. 299.",
+              "fonte": "lei.art299"
+            }
+          ]
+        },
+        {
+          "fala": "Meu cunhado é Lula, minha sogra é Flávio. Se eu escolher um lado, o almoço de domingo acaba.",
+          "opcoes": [
+            {
+              "texto": "Ninguém precisa saber seu voto, ele é secreto. Mas no 2º turno são só dois nomes, e não votar deixa a decisão com o cunhado e a sogra.",
+              "tipo": "melhor",
+              "efeito": 16,
+              "tags": [
+                "respeito",
+                "voto_util"
+              ],
+              "reacao": "Deixar a sogra decidir por mim? Não dá. Nem em eleição."
+            },
+            {
+              "texto": "Dá pra votar e manter o almoço. A eleição acaba no dia 25, a família fica.",
+              "tipo": "ok",
+              "efeito": 5,
+              "tags": [
+                "respeito"
+              ],
+              "reacao": "Isso eu vou falar no grupo. Sem citar seu nome."
+            },
+            {
+              "texto": "Ficar em cima do muro é covardia.",
+              "tipo": "erro",
+              "efeito": -10,
+              "tags": [
+                "sermao"
+              ],
+              "reacao": "Covardia é discutir no grupo e sumir quando a tia chora.",
+              "licao": "Sermão vira briga, e briga é justamente o que ele mais evita.",
+              "fonte": "textos.arquetipos.dormindo.o_que_nao_fazer[0]"
+            },
+            {
+              "texto": "Se o Lula ganhar, vão fechar as igrejas. Tá todo mundo falando.",
+              "tipo": "erro",
+              "efeito": -10,
+              "tags": [
+                "boato",
+                "medo"
+              ],
+              "reacao": "Todo mundo quem? Ouvi isso em 2022 e a minha igreja abriu todo domingo.",
+              "licao": "Medo e boato pesam na balança errado e queimam a confiança de quem você quer convencer.",
+              "fonte": "textos.arquetipos.pendulo.o_que_nao_fazer[1]"
+            }
+          ]
+        }
+      ],
+      "fecho": [
+        {
+          "texto": "Agradeço a conversa. Seja qual for a sua escolha, a paz na família continua.",
+          "tipo": "melhor",
+          "efeito": 14,
+          "tags": [
+            "respeito"
+          ],
+          "reacao": "Que conversa abençoada. Vou orar e decidir."
+        },
+        {
+          "texto": "Só pensa que no 2º turno o seu voto pesa mais.",
+          "tipo": "ok",
+          "efeito": 5,
+          "tags": [
+            "voto_util"
+          ],
+          "reacao": "Vou pensar. Sem pressa."
+        },
+        {
+          "texto": "Me manda print quando votar, pra eu postar no grupo.",
+          "tipo": "erro",
+          "efeito": -10,
+          "tags": [
+            "pressao"
+          ],
+          "reacao": "Print de voto? O voto é secreto. Até no grupo.",
+          "licao": "Pedir prova de voto desrespeita o voto secreto e expõe a pessoa.",
+          "fonte": "lei.voto_secreto"
+        }
+      ],
+      "desfecho_texto": {
+        "flavio": "Li a parte da família e da liberdade religiosa. Vou de 22, em silêncio, e o almoço continua.",
+        "nulo": "Vou anular pra não brigar com ninguém. Deus sabe o que faz.",
+        "lula": "Tanta pressão me cansou. O cunhado pelo menos não me cobra. Vou com ele.",
+        "sem_mudanca": "Ainda estou orando sobre isso. Me procura depois do culto."
+      }
+    },
+    {
+      "id": "abstencionista_ressaca",
+      "nome": "Diego, o domingo de ressaca",
+      "idade": 29,
+      "genero": "M",
+      "campo": "nao_votou",
+      "origem": "abstencao",
+      "tags": [
+        "jovem",
+        "trabalhador",
+        "homem"
+      ],
+      "dificuldade": 1,
+      "confianca_inicial": 42,
+      "desfechos": {
+        "alto": "flavio",
+        "medio": "sem_mudanca",
+        "baixo": "lula"
+      },
+      "limiares": {
+        "alto": 65,
+        "medio": 35
+      },
+      "bio": "No domingo do 1º turno acordou às quatro da tarde, com o título no bolso da calça de sábado. Jura que ia votar, mas que não muda nada mesmo.",
+      "visual": {
+        "pele": "#a86b45",
+        "cabelo": "#111111",
+        "estilo_cabelo": "boné",
+        "acessorio": "oculos",
+        "roupa": "#2e7d32",
+        "roupa_tipo": "regata",
+        "barba": true,
+        "detalhe": "óculos escuros às nove da manhã e copo de água de coco na mão"
+      },
+      "cenarios": [
+        "bar",
+        "padaria",
+        "praia",
+        "churrasco"
+      ],
+      "tema": "Economia",
+      "queixa": "Pô, eu ia votar. Juro. Mas teve o aniversário do primo no sábado e no domingo eu só lembrei às quatro da tarde. E sinceramente, votando ou não, não muda nada.",
+      "escuta": [
+        {
+          "texto": "E como foi o domingo? O que atrapalhou de ir?",
+          "tipo": "melhor",
+          "efeito": 16,
+          "tags": [
+            "pergunta",
+            "escuta"
+          ],
+          "reacao": "Ressaca, preguiça e a seção do outro lado da cidade, porque eu nunca mudei o endereço. Pior combinação."
+        },
+        {
+          "texto": "Acontece. Todo mundo já perdeu um compromisso assim.",
+          "tipo": "ok",
+          "efeito": 5,
+          "tags": [
+            "respeito"
+          ],
+          "reacao": "Né? Pelo menos não veio sermão."
+        },
+        {
+          "texto": "Faltar à eleição é falta de respeito com quem lutou pelo voto.",
+          "tipo": "erro",
+          "efeito": -12,
+          "tags": [
+            "sermao"
+          ],
+          "reacao": "Pronto, virou aula de educação moral e cívica. Me passa o gelo.",
+          "licao": "Sermão de dever cívico faz quem faltou se defender em vez de pensar no dia 25.",
+          "fonte": "textos.conversas_por_origem.abstencao.cuidado"
+        }
+      ],
+      "objecoes": [
+        {
+          "fala": "Nem sei se ainda posso votar. Faltei, devo ter multa, devo ter sido cancelado, sei lá.",
+          "opcoes": [
+            {
+              "texto": "Pode sim. Quem faltou no 1º turno pode votar no dia 25 e justificar a falta pelo e-Título. Quer conferir agora onde é a sua seção?",
+              "tipo": "melhor",
+              "efeito": 17,
+              "tags": [
+                "comparecimento",
+                "pergunta"
+              ],
+              "reacao": "Sério? Pelo celular? Abre aí, vai, antes que eu esqueça.",
+              "fonte": "textos.conversas_por_origem.abstencao.como_funciona"
+            },
+            {
+              "texto": "Você sabe onde fica a sua seção hoje? Dá pra olhar no site oficial.",
+              "tipo": "ok",
+              "efeito": 5,
+              "tags": [
+                "pergunta"
+              ],
+              "reacao": "Acho que é na escola do bairro antigo. Ou era."
+            },
+            {
+              "texto": "Fica tranquilo, falta não dá nada, ninguém confere.",
+              "tipo": "erro",
+              "efeito": -10,
+              "tags": [
+                "mentira"
+              ],
+              "reacao": "Ah, é? Então nem preciso ir no 2º turno também, né?",
+              "licao": "Você deu informação que não sabe; quando não souber, diga que não sabe.",
+              "fonte": "textos.temas.Outros.cuidado"
+            },
+            {
+              "texto": "Fechou: no dia 25 eu passo na sua casa, te levo de carro até a seção e a gente já vota no 22.",
+              "tipo": "grave",
+              "efeito": -30,
+              "tags": [
+                "carona"
+              ],
+              "reacao": "Carona com voto combinado? Até eu, de ressaca, sei que isso dá problema. Passo.",
+              "licao": "Levar eleitor de carro no dia em troca do voto é proibido: o transporte de eleitores é regulado pela Lei 6.091/1974, e a vantagem por voto é crime pelo art. 299 do Código Eleitoral.",
+              "fonte": "lei.6091"
+            }
+          ]
+        },
+        {
+          "fala": "Mesmo se eu for, um voto meu não muda nada. É tudo decidido lá em cima.",
+          "opcoes": [
+            {
+              "texto": "No 2º turno só tem dois nomes. Quem não vota deixa a decisão para os outros, e numa seção a diferença às vezes é de poucos votos.",
+              "tipo": "melhor",
+              "efeito": 15,
+              "tags": [
+                "voto_util"
+              ],
+              "reacao": "Deixar os outros decidirem a minha vida. Falando assim parece o meu chefe."
+            },
+            {
+              "texto": "O que mais pesa no seu mês hoje?",
+              "tipo": "ok",
+              "efeito": 5,
+              "tags": [
+                "pergunta"
+              ],
+              "reacao": "Aluguel e gasolina. E o preço da cerveja, mas isso não é pauta, né?"
+            },
+            {
+              "texto": "Com essa mentalidade, você merece o governo que vier.",
+              "tipo": "erro",
+              "efeito": -10,
+              "tags": [
+                "desqualifica"
+              ],
+              "reacao": "Eu mereço é uma rede e um ventilador.",
+              "licao": "Culpar quem faltou confirma a ideia de que política é briga, e ele fica em casa de novo.",
+              "fonte": "textos.arquetipos.dormindo.o_que_nao_fazer[1]"
+            },
+            {
+              "texto": "Vou te mandar mensagem todo dia até o dia 25 pra lembrar.",
+              "tipo": "erro",
+              "efeito": -8,
+              "tags": [
+                "pressao"
+              ],
+              "reacao": "Vou te silenciar com todo o carinho.",
+              "licao": "Lembrete diário vira cobrança, e cobrança afasta quem prefere não falar de política.",
+              "fonte": "textos.arquetipos.fortaleza.o_que_nao_fazer[1]"
+            }
+          ]
+        }
+      ],
+      "fecho": [
+        {
+          "texto": "A decisão é sua. Se quiser, a gente confere a seção juntos antes do dia 25.",
+          "tipo": "melhor",
+          "efeito": 14,
+          "tags": [
+            "respeito"
+          ],
+          "reacao": "Fechado. Dessa vez eu durmo cedo no sábado. Talvez."
+        },
+        {
+          "texto": "Só não esquece: dia 25. E a falta do 1º turno dá pra justificar pelo e-Título.",
+          "tipo": "ok",
+          "efeito": 6,
+          "tags": [
+            "comparecimento"
+          ],
+          "reacao": "Anotado no celular. Com alarme.",
+          "fonte": "textos.conversas_por_origem.abstencao.como_funciona"
+        },
+        {
+          "texto": "Se você faltar de novo, nem fala mais comigo.",
+          "tipo": "erro",
+          "efeito": -10,
+          "tags": [
+            "pressao"
+          ],
+          "reacao": "Nossa. Agora eu falto só pra ver.",
+          "licao": "Ameaçar a amizade transforma conversa em chantagem, e quem não quer votar não deve ser forçado.",
+          "fonte": "textos.conversas_por_origem.abstencao.cuidado"
+        }
+      ],
+      "desfecho_texto": {
+        "flavio": "Conferi a seção, coloquei alarme e no dia 25 voto 22. Sóbrio.",
+        "nulo": "Fui, mas na hora deu branco e anulei. Pelo menos fui.",
+        "lula": "Fui votar e apertei 13. Aquela conversa me irritou.",
+        "sem_mudanca": "Vou ver se acordo. Não prometo nada."
+      }
+    },
+    {
+      "id": "nulista_protesto",
+      "nome": "Marcelo, o são todos iguais",
+      "idade": 47,
+      "genero": "M",
+      "campo": "nulo_branco",
+      "origem": "nulos",
+      "tags": [
+        "antissistema",
+        "classe_media",
+        "superior",
+        "homem"
+      ],
+      "dificuldade": 2,
+      "confianca_inicial": 32,
+      "desfechos": {
+        "alto": "flavio",
+        "medio": "sem_mudanca",
+        "baixo": "nulo"
+      },
+      "limiares": {
+        "alto": 65,
+        "medio": 35
+      },
+      "bio": "Anula desde 2010 e tem uma planilha para provar que todos os políticos são iguais. Digita um número inexistente na urna com a solenidade de quem assina manifesto.",
+      "visual": {
+        "pele": "#e6c3a0",
+        "cabelo": "#5a4632",
+        "estilo_cabelo": "curto",
+        "acessorio": "oculos",
+        "roupa": "#6b6b6b",
+        "roupa_tipo": "camisa",
+        "barba": true,
+        "detalhe": "barba grisalha por fazer, camisa xadrez e caneca de café sempre na mão"
+      },
+      "cenarios": [
+        "bar",
+        "rede_x",
+        "fila_do_banco",
+        "padaria"
+      ],
+      "tema": "Corrupção",
+      "queixa": "Anulei no 1º turno e anulo no 2º. São todos iguais. Muda o partido, muda a cor da gravata, e a conta chega sempre pro mesmo: eu.",
+      "escuta": [
+        {
+          "texto": "Anular foi protesto, né? O que mudaria o seu jeito de ver a eleição?",
+          "tipo": "melhor",
+          "efeito": 15,
+          "tags": [
+            "pergunta",
+            "escuta"
+          ],
+          "reacao": "Ninguém pergunta isso, só me xingam. Mudaria ver alguém cortando na própria carne antes de cortar na minha."
+        },
+        {
+          "texto": "Protesto é legítimo. Entendo o cansaço.",
+          "tipo": "ok",
+          "efeito": 5,
+          "tags": [
+            "respeito"
+          ],
+          "reacao": "Pelo menos não me chamou de alienado. Já é diferente."
+        },
+        {
+          "texto": "Voto nulo é coisa de quem não quer pensar.",
+          "tipo": "erro",
+          "efeito": -12,
+          "tags": [
+            "desqualifica"
+          ],
+          "reacao": "Eu penso tanto que tenho planilha. E você, tem o quê? Um adesivo?",
+          "licao": "Você tratou o protesto como bobagem, e protesto desprezado vira convicção.",
+          "fonte": "textos.conversas_por_origem.nulos.cuidado"
+        },
+        {
+          "texto": "Tá, mas no 2º turno você tem que escolher.",
+          "tipo": "erro",
+          "efeito": -8,
+          "tags": [
+            "interrompe"
+          ],
+          "reacao": "Tenho que? Anota aí na lista de coisas que eu não tenho.",
+          "licao": "Você pulou a parte de escutar a razão do voto nulo.",
+          "fonte": "textos.conversas_por_origem.nulos.um_jeito_de_conversar[1]"
+        }
+      ],
+      "objecoes": [
+        {
+          "fala": "Se eu escolher um, valido o sistema. Nulo é o único voto que ninguém consegue usar.",
+          "opcoes": [
+            {
+              "texto": "A escolha é sua. Só uma conta: no 2º turno nulo não vai para ninguém, e quem votar decide por você. O protesto fica, mas a decisão sai da sua mão.",
+              "tipo": "melhor",
+              "efeito": 16,
+              "tags": [
+                "voto_util",
+                "respeito"
+              ],
+              "reacao": "Terceirizar a decisão justo para quem eu critico. Nunca tinha olhado assim."
+            },
+            {
+              "texto": "Alternância de poder também é protesto. Trocar quem está aí manda recado.",
+              "tipo": "ok",
+              "efeito": 5,
+              "tags": [
+                "alternancia"
+              ],
+              "reacao": "Recado com carimbo. Interessante. Continua."
+            },
+            {
+              "texto": "Isso é desculpa de quem tem medo de errar.",
+              "tipo": "erro",
+              "efeito": -10,
+              "tags": [
+                "desqualifica"
+              ],
+              "reacao": "Medo eu tenho é de gente que tem certeza de tudo.",
+              "licao": "Chamar o voto dele de desperdício só confirma que ninguém respeita a escolha.",
+              "fonte": "textos.arquetipos.fertil.o_que_nao_fazer[1]"
+            },
+            {
+              "texto": "Se você votar no Flávio, eu resolvo aquela sua pendência na prefeitura. Tenho um conhecido lá.",
+              "tipo": "grave",
+              "efeito": -30,
+              "tags": [
+                "favor"
+              ],
+              "reacao": "Você acabou de provar a minha planilha inteira. Obrigado pela atualização.",
+              "licao": "Oferecer favor em troca de voto é corrupção eleitoral, crime pelo Código Eleitoral, art. 299.",
+              "fonte": "lei.art299"
+            }
+          ]
+        },
+        {
+          "fala": "E corrupção? Não dá pra votar em ninguém de consciência tranquila.",
+          "opcoes": [
+            {
+              "texto": "Não vou dizer que um lado é limpo. Mas o plano dele propõe mais transparência e rastreio das emendas parlamentares. Dá para cobrar depois, por escrito.",
+              "tipo": "melhor",
+              "efeito": 15,
+              "tags": [
+                "programa",
+                "respeito"
+              ],
+              "reacao": "Rastreio de emenda é mensurável. Vou anotar na planilha, na coluna de cobranças.",
+              "fonte": "propostas.corrupcao.69"
+            },
+            {
+              "texto": "O que faria você confiar mais em quem governa?",
+              "tipo": "ok",
+              "efeito": 5,
+              "tags": [
+                "pergunta"
+              ],
+              "reacao": "Prestar contas sem eu precisar pedir. Utopia, eu sei."
+            },
+            {
+              "texto": "Do nosso lado é todo mundo honesto. O problema é só o outro.",
+              "tipo": "erro",
+              "efeito": -12,
+              "tags": [
+                "desqualifica"
+              ],
+              "reacao": "Ah, a teoria do time limpo. Já ouvi dos dois lados, com a mesma cara.",
+              "licao": "Dizer que um lado é limpo e o outro não é exatamente o que afasta quem desconfia de política.",
+              "fonte": "textos.temas.Corrupção.cuidado"
+            },
+            {
+              "texto": "Tem um áudio rodando que prova que o outro lado vai fraudar tudo.",
+              "tipo": "erro",
+              "efeito": -10,
+              "tags": [
+                "boato"
+              ],
+              "reacao": "Manda o áudio. Vai pra pasta 'provas de que são todos iguais'.",
+              "licao": "Áudio sem fonte é boato, e boato é o combustível de quem acha que todos mentem.",
+              "fonte": "textos.arquetipos.pendulo.o_que_nao_fazer[1]"
+            }
+          ]
+        }
+      ],
+      "fecho": [
+        {
+          "texto": "Valeu pela conversa. O voto é seu, e se quiser discutir a planilha outro dia, topo.",
+          "tipo": "melhor",
+          "efeito": 14,
+          "tags": [
+            "respeito"
+          ],
+          "reacao": "Primeira vez em anos que alguém discorda de mim sem me xingar. Vou pensar."
+        },
+        {
+          "texto": "Pensa que no 2º turno a escolha é entre dois, não entre todos.",
+          "tipo": "ok",
+          "efeito": 5,
+          "tags": [
+            "voto_util"
+          ],
+          "reacao": "Entre dois. Ainda são iguais, mas um pouco menos iguais."
+        },
+        {
+          "texto": "Promete que dessa vez não anula?",
+          "tipo": "erro",
+          "efeito": -10,
+          "tags": [
+            "pressao"
+          ],
+          "reacao": "Promessa de eleitor é igual promessa de político. Anulo.",
+          "licao": "Insistir depois de uma conversa boa joga fora o que você construiu.",
+          "fonte": "textos.arquetipos.pendulo.o_que_nao_fazer[0]"
+        }
+      ],
+      "desfecho_texto": {
+        "flavio": "Não mudei de opinião sobre os políticos. Mudei sobre deixar os outros decidirem. Dia 25, pela primeira vez desde 2010, 22.",
+        "nulo": "Nulo de novo, com solenidade. A planilha agradece.",
+        "lula": "Contra todas as minhas planilhas, apertei 13. Não sei explicar.",
+        "sem_mudanca": "Continuo anulando, mas agora com uma dúvida. Isso é novo."
+      }
+    },
+    {
+      "id": "branquista",
+      "nome": "Sílvia, a tecla branca",
+      "idade": 36,
+      "genero": "F",
+      "campo": "nulo_branco",
+      "origem": "brancos",
+      "tags": [
+        "mulher",
+        "classe_media",
+        "superior",
+        "trabalhador"
+      ],
+      "dificuldade": 1,
+      "confianca_inicial": 44,
+      "desfechos": {
+        "alto": "flavio",
+        "medio": "sem_mudanca",
+        "baixo": "nulo"
+      },
+      "limiares": {
+        "alto": 65,
+        "medio": 35
+      },
+      "bio": "Apertou BRANCO no 1º turno com a convicção de quem devolve prato frio no restaurante. Diz que ninguém a representa e carrega uma lista do que gostaria de ver.",
+      "visual": {
+        "pele": "#f0c9a8",
+        "cabelo": "#7b4a2a",
+        "estilo_cabelo": "longo",
+        "acessorio": "fone",
+        "roupa": "#9ad1d4",
+        "roupa_tipo": "vestido",
+        "barba": false,
+        "detalhe": "bolsa de pano cheia de papéis e fone de ouvido no pescoço"
+      },
+      "cenarios": [
+        "fila_do_banco",
+        "mercado",
+        "padaria",
+        "academia"
+      ],
+      "tema": "Infraestrutura",
+      "queixa": "Eu votei em branco porque ninguém me representa. Eu pego dois ônibus pra trabalhar e ninguém fala disso. Falam de tudo, menos da minha vida.",
+      "escuta": [
+        {
+          "texto": "O que você não encontrou nos candidatos do 1º turno?",
+          "tipo": "melhor",
+          "efeito": 16,
+          "tags": [
+            "pergunta",
+            "escuta"
+          ],
+          "reacao": "Alguém que falasse de transporte, de tempo. Eu perco três horas por dia no ônibus. Três horas!"
+        },
+        {
+          "texto": "Faz sentido não se sentir representada.",
+          "tipo": "ok",
+          "efeito": 5,
+          "tags": [
+            "respeito"
+          ],
+          "reacao": "Pois é. E ainda me olham como se eu tivesse errado a tecla."
+        },
+        {
+          "texto": "Voto em branco é voto perdido, né? Errou feio.",
+          "tipo": "erro",
+          "efeito": -12,
+          "tags": [
+            "desqualifica"
+          ],
+          "reacao": "Perdido é o tempo que eu passo no ônibus. Meu voto eu sei onde está.",
+          "licao": "Você chamou o voto em branco de erro, e quem escolheu branco se sentiu de novo sem ser ouvida.",
+          "fonte": "textos.conversas_por_origem.brancos.cuidado"
+        },
+        {
+          "texto": "Deixa eu te mostrar o santinho do Flávio.",
+          "tipo": "erro",
+          "efeito": -8,
+          "tags": [
+            "interrompe"
+          ],
+          "reacao": "Santinho na primeira frase? Nem vendedor de plano de saúde é tão rápido.",
+          "licao": "Você tentou convencer na primeira conversa, antes de escutar.",
+          "fonte": "textos.conversas_por_origem.brancos.um_jeito_de_conversar[1]"
+        }
+      ],
+      "objecoes": [
+        {
+          "fala": "Se eu votar num dos dois, vou estar dizendo que concordo com tudo dele. E eu não concordo com tudo de ninguém.",
+          "opcoes": [
+            {
+              "texto": "Ninguém concorda com tudo. Sobre o que dói em você: o plano dele fala em transporte coletivo como base da mobilidade, para diminuir o tempo de viagem do trabalhador. Isso conversa com a sua lista?",
+              "tipo": "melhor",
+              "efeito": 15,
+              "tags": [
+                "programa",
+                "pergunta"
+              ],
+              "reacao": "Tempo de viagem do trabalhador. Finalmente alguém escreveu isso. Vou ler inteiro, não só o título.",
+              "fonte": "propostas.infraestrutura.51"
+            },
+            {
+              "texto": "Votar não é assinar embaixo de tudo. É escolher qual dos dois chega mais perto.",
+              "tipo": "ok",
+              "efeito": 5,
+              "tags": [
+                "voto_util"
+              ],
+              "reacao": "Mais perto. Isso eu consigo fazer sem crise existencial."
+            },
+            {
+              "texto": "Branco é omissão. Você está deixando o país na mão.",
+              "tipo": "erro",
+              "efeito": -10,
+              "tags": [
+                "sermao"
+              ],
+              "reacao": "Na mão eu fico todo dia no ponto de ônibus, obrigada.",
+              "licao": "Sermão de dever cívico não representa ninguém, e era representação que ela pedia.",
+              "fonte": "textos.arquetipos.dormindo.o_que_nao_fazer[0]"
+            },
+            {
+              "texto": "Vota no Flávio que eu consigo pra você um cartão de passagem do mês inteiro.",
+              "tipo": "grave",
+              "efeito": -30,
+              "tags": [
+                "favor"
+              ],
+              "reacao": "Você quer comprar o meu voto com passagem? Agora eu voto em branco com raiva.",
+              "licao": "Oferecer vantagem em troca de voto é corrupção eleitoral, crime pelo Código Eleitoral, art. 299.",
+              "fonte": "lei.art299"
+            }
+          ]
+        },
+        {
+          "fala": "Branco não vai para o mais votado? Alguém me disse que o branco ajuda quem está ganhando.",
+          "opcoes": [
+            {
+              "texto": "No 2º turno, branco e nulo não vão para ninguém. A decisão fica com quem escolheu um dos dois. Se você quer que a sua lista conte, ela só conta escolhendo.",
+              "tipo": "melhor",
+              "efeito": 16,
+              "tags": [
+                "voto_util"
+              ],
+              "reacao": "Então meu branco não ajuda ninguém, nem a mim. Quanta indignação jogada fora."
+            },
+            {
+              "texto": "O que você quer ver mudar no seu bairro?",
+              "tipo": "ok",
+              "efeito": 5,
+              "tags": [
+                "pergunta"
+              ],
+              "reacao": "Ônibus no horário e uma calçada onde eu não torça o pé."
+            },
+            {
+              "texto": "É, o branco vai pro Lula. Por isso você tem que mudar.",
+              "tipo": "erro",
+              "efeito": -10,
+              "tags": [
+                "mentira"
+              ],
+              "reacao": "Vai pro Lula? Eu li o contrário. Agora não confio em mais nada do que você disse.",
+              "licao": "Você confirmou uma informação falsa para ganhar a discussão: branco e nulo não vão para ninguém.",
+              "fonte": "textos.conversas_por_origem.brancos.como_funciona"
+            },
+            {
+              "texto": "Ninguém te representa porque você não acompanha política.",
+              "tipo": "erro",
+              "efeito": -8,
+              "tags": [
+                "desqualifica"
+              ],
+              "reacao": "Eu acompanho. É por isso que voto em branco.",
+              "licao": "Presumir que ela não acompanha é desrespeito, e respeito vale mais que referência.",
+              "fonte": "textos.perfil.escolaridade.superior.como_conversar"
+            }
+          ]
+        }
+      ],
+      "fecho": [
+        {
+          "texto": "Valeu por me contar. A decisão é sua, e eu respeito qualquer que seja.",
+          "tipo": "melhor",
+          "efeito": 14,
+          "tags": [
+            "respeito"
+          ],
+          "reacao": "Foi a primeira pessoa de campanha que me ouviu falar do ônibus até o fim."
+        },
+        {
+          "texto": "Pensa que no dia 25 o seu voto conta mais do que no 1º turno.",
+          "tipo": "ok",
+          "efeito": 5,
+          "tags": [
+            "voto_util"
+          ],
+          "reacao": "Vou pensar no ônibus. Tempo pra isso eu tenho."
+        },
+        {
+          "texto": "Se votar em branco de novo, depois não reclama do governo.",
+          "tipo": "erro",
+          "efeito": -10,
+          "tags": [
+            "pressao"
+          ],
+          "reacao": "Reclamar é a única coisa que ninguém me tira. Nem você.",
+          "licao": "Cobrar silêncio de quem não escolheu é pressão, e ela tem direito de reclamar de qualquer jeito.",
+          "fonte": "textos.arquetipos.fortaleza.o_que_nao_fazer[1]"
+        }
+      ],
+      "desfecho_texto": {
+        "flavio": "Li a parte do transporte coletivo. Não concordo com tudo, mas dia 25 eu escolho, e escolho 22.",
+        "nulo": "Branco de novo, e agora com mais convicção.",
+        "lula": "Na dúvida, fui com o outro. Não me pergunte por quê.",
+        "sem_mudanca": "Ainda não decidi se escolho ou se aperto branco. Vou pensar no ônibus."
+      }
+    },
+    {
+      "id": "empresario_zema",
+      "nome": "Roberto, o manda a proposta por e-mail",
+      "idade": 52,
+      "genero": "M",
+      "campo": "terceira_via",
+      "origem": "zema",
+      "tags": [
+        "empreendedor",
+        "liberal",
+        "interior",
+        "classe_media"
+      ],
+      "dificuldade": 1,
+      "confianca_inicial": 44,
+      "desfechos": {
+        "alto": "flavio",
+        "medio": "sem_mudanca",
+        "baixo": "lula"
+      },
+      "limiares": {
+        "alto": 65,
+        "medio": 35
+      },
+      "bio": "Dono de três lojas de material de construção no interior, lê planilha no café da manhã. Votou em Zema porque gestão enxuta é o único romance que ele admite.",
+      "visual": {
+        "pele": "#e8b896",
+        "cabelo": "#8a8a8a",
+        "estilo_cabelo": "curto",
+        "acessorio": "celular",
+        "roupa": "#2b4a6f",
+        "roupa_tipo": "polo",
+        "barba": false,
+        "detalhe": "polo com o logo bordado da própria loja e calculadora no bolso da camisa"
+      },
+      "cenarios": [
+        "padaria",
+        "churrasco",
+        "academia",
+        "fila_do_banco"
+      ],
+      "tema": "Economia",
+      "queixa": "Eu pago imposto até pra respirar. Votei no Zema porque ele entende de gestão. Agora estou esperando propostas concretas antes de decidir, não slogan.",
+      "escuta": [
+        {
+          "texto": "O que fez você escolher o Zema? E o que espera de quem governar nos próximos quatro anos?",
+          "tipo": "melhor",
+          "efeito": 15,
+          "tags": [
+            "pergunta",
+            "escuta"
+          ],
+          "reacao": "Gestão enxuta e menos imposto. Quero que o governo me atrapalhe menos. Só isso, e já é muito."
+        },
+        {
+          "texto": "Faz sentido querer proposta antes de decidir.",
+          "tipo": "ok",
+          "efeito": 5,
+          "tags": [
+            "respeito"
+          ],
+          "reacao": "Finalmente alguém que entende que eleição não é torcida."
+        },
+        {
+          "texto": "Zema? Liberal de vitrine. Votou nele porque não tinha convicção.",
+          "tipo": "erro",
+          "efeito": -10,
+          "tags": [
+            "desqualifica"
+          ],
+          "reacao": "Convicção eu tenho de sobra. O que me falta é paciência para isso.",
+          "licao": "Você tratou a escolha liberal como falta de convicção, e ele desligou na hora.",
+          "fonte": "textos.conversas_por_origem.zema.cuidado"
+        }
+      ],
+      "objecoes": [
+        {
+          "fala": "Me mostra o que muda no imposto. Discurso eu ouço desde 1989.",
+          "opcoes": [
+            {
+              "texto": "Por escrito: o plano propõe revisar a reforma tributária, reduzir o IVA e acabar com imposto sobre imposto. Quer ver a página?",
+              "tipo": "melhor",
+              "efeito": 16,
+              "tags": [
+                "programa"
+              ],
+              "reacao": "Não cumulatividade e IVA menor. Isso eu entendo. Manda o PDF, vou ler de caneta na mão.",
+              "fonte": "propostas.economia-impostos.30"
+            },
+            {
+              "texto": "O que mais pesa no seu negócio hoje: imposto, burocracia ou juros?",
+              "tipo": "ok",
+              "efeito": 5,
+              "tags": [
+                "pergunta"
+              ],
+              "reacao": "Os três, em rodízio. A burocracia ganha por pouco."
+            },
+            {
+              "texto": "Com o Flávio o imposto cai pela metade no primeiro ano.",
+              "tipo": "erro",
+              "efeito": -10,
+              "tags": [
+                "mentira"
+              ],
+              "reacao": "Pela metade? Me mostra a conta ou não me vende sonho.",
+              "licao": "Você prometeu número que não está em documento nenhum, e quem lê planilha percebe na hora.",
+              "fonte": "textos.temas.Economia.cuidado"
+            },
+            {
+              "texto": "Fecha com o 22 e convence seus funcionários também. Quem votar certo ganha bônus, quem não votar, você sabe.",
+              "tipo": "grave",
+              "efeito": -30,
+              "tags": [
+                "favor",
+                "ameaca"
+              ],
+              "reacao": "Comprar voto de funcionário? Eu sou liberal, não sou maluco. Sai da minha loja.",
+              "licao": "Prometer bônus ou ameaçar funcionário por causa do voto é corrupção eleitoral, crime pelo Código Eleitoral, art. 299.",
+              "fonte": "lei.art299"
+            }
+          ]
+        },
+        {
+          "fala": "E se eu esperar o último debate pra decidir? Não tenho pressa, tenho critério.",
+          "opcoes": [
+            {
+              "texto": "Esperar é direito seu. Só lembro que no 2º turno são dois nomes, e quem fica de fora deixa a decisão com os outros. Compara os dois planos com o mesmo critério.",
+              "tipo": "melhor",
+              "efeito": 15,
+              "tags": [
+                "respeito",
+                "voto_util"
+              ],
+              "reacao": "Mesmo critério para os dois. Isso é auditoria. Gostei."
+            },
+            {
+              "texto": "Alternância também é boa gestão: troca a diretoria quando o resultado não vem.",
+              "tipo": "ok",
+              "efeito": 5,
+              "tags": [
+                "alternancia"
+              ],
+              "reacao": "Analogia de conselho de administração. Você sabe falar comigo."
+            },
+            {
+              "texto": "Critério demais é covardia. Empresário tem que ter lado.",
+              "tipo": "erro",
+              "efeito": -10,
+              "tags": [
+                "pressao"
+              ],
+              "reacao": "Lado eu tenho: o do meu caixa.",
+              "licao": "Pressionar quem quer comparar propostas só faz a pessoa adiar mais.",
+              "fonte": "textos.arquetipos.fortaleza.o_que_nao_fazer[1]"
+            },
+            {
+              "texto": "Se você não decidir logo, o país quebra e a sua loja junto.",
+              "tipo": "erro",
+              "efeito": -12,
+              "tags": [
+                "medo"
+              ],
+              "reacao": "Vendedor que diz 'última unidade' eu dispenso há trinta anos.",
+              "licao": "Usar medo para apressar a decisão soa como venda forçada, e ele conhece todas.",
+              "fonte": "textos.arquetipos.pendulo.o_que_nao_fazer[1]"
+            }
+          ]
+        }
+      ],
+      "fecho": [
+        {
+          "texto": "Agradeço o tempo. Lê os dois planos e decide com o seu critério.",
+          "tipo": "melhor",
+          "efeito": 14,
+          "tags": [
+            "respeito"
+          ],
+          "reacao": "Agradeço eu. Conversa objetiva, sem slogan. Raridade."
+        },
+        {
+          "texto": "Se quiser, te mando a página do plano sobre cortar ministérios e supersalários.",
+          "tipo": "ok",
+          "efeito": 6,
+          "tags": [
+            "programa"
+          ],
+          "reacao": "Corte de ministério é música. Manda.",
+          "fonte": "propostas.economia-impostos.69"
+        },
+        {
+          "texto": "Até amanhã quero a sua resposta, combinado?",
+          "tipo": "erro",
+          "efeito": -10,
+          "tags": [
+            "pressao"
+          ],
+          "reacao": "Prazo quem dá aqui sou eu.",
+          "licao": "Prazo imposto transforma conversa em negociação, e ele não negocia sob pressão.",
+          "fonte": "textos.arquetipos.pendulo.o_que_nao_fazer[0]"
+        }
+      ],
+      "desfecho_texto": {
+        "flavio": "Li a revisão da reforma tributária e o corte de ministérios. Não é o Zema, mas é o que mais se aproxima. Dia 25, 22.",
+        "nulo": "Nenhum dos dois passou na minha auditoria. Anulo.",
+        "lula": "Com esse atendimento, fiquei com o concorrente. Nem eu acredito.",
+        "sem_mudanca": "Ainda estou esperando propostas. Mandem por e-mail."
+      }
+    },
+    {
+      "id": "motorista_app_renan",
+      "nome": "Jefferson, o cinco estrelas",
+      "idade": 33,
+      "genero": "M",
+      "campo": "terceira_via",
+      "origem": "renan",
+      "tags": [
+        "app",
+        "autonomo",
+        "trabalhador",
+        "periferia"
+      ],
+      "dificuldade": 1,
+      "confianca_inicial": 45,
+      "desfechos": {
+        "alto": "flavio",
+        "medio": "sem_mudanca",
+        "baixo": "lula"
+      },
+      "limiares": {
+        "alto": 65,
+        "medio": 35
+      },
+      "bio": "Roda doze horas por dia, tem pote de bala no console e defende a nota 4,98 como título de campeonato. Votou em Renan porque ninguém mais falava com quem trabalha por conta.",
+      "visual": {
+        "pele": "#7a4a2b",
+        "cabelo": "#0f0f0f",
+        "estilo_cabelo": "curto",
+        "acessorio": "celular",
+        "roupa": "#263238",
+        "roupa_tipo": "camiseta",
+        "barba": true,
+        "detalhe": "suporte de celular no painel, pote de balas no console e garrafa de água no banco"
+      },
+      "cenarios": [
+        "uber",
+        "padaria",
+        "bar"
+      ],
+      "tema": "Economia",
+      "queixa": "A gasolina come metade do que eu faço. E ainda vem gente querendo me enfiar CLT, sindicato, regra. Eu quero trabalhar em paz. Votei no Renan porque ele parecia entender isso.",
+      "escuta": [
+        {
+          "texto": "Como está o mês com a gasolina? O que mais pesa pra você hoje?",
+          "tipo": "melhor",
+          "efeito": 16,
+          "tags": [
+            "pergunta",
+            "escuta"
+          ],
+          "reacao": "Pesa tudo, chefe. Gasolina, manutenção, a taxa do aplicativo. Mas ninguém pergunta, só reclamam do ar."
+        },
+        {
+          "texto": "Doze horas no trânsito não é pra qualquer um.",
+          "tipo": "ok",
+          "efeito": 5,
+          "tags": [
+            "respeito"
+          ],
+          "reacao": "Né? Uma nota boa no final já ajuda."
+        },
+        {
+          "texto": "Mas já pensou em arrumar um emprego de verdade, com carteira?",
+          "tipo": "erro",
+          "efeito": -10,
+          "tags": [
+            "desqualifica"
+          ],
+          "reacao": "Emprego de verdade é esse aqui, que paga o meu aluguel. Quer descer aqui mesmo?",
+          "licao": "Você presumiu o que ele quer pela profissão e ainda desqualificou o trabalho dele.",
+          "fonte": "textos.arquetipos.abaixo_do_perfil.o_que_nao_fazer[0]"
+        },
+        {
+          "texto": "O Renan nunca ia ganhar, você sabia disso.",
+          "tipo": "erro",
+          "efeito": -8,
+          "tags": [
+            "desqualifica"
+          ],
+          "reacao": "Sabia. Votei mesmo assim. Liberdade, sabe?",
+          "licao": "Chamar o voto dele de desperdício deixa a conversa mais curta que a corrida.",
+          "fonte": "textos.arquetipos.fertil.o_que_nao_fazer[1]"
+        }
+      ],
+      "objecoes": [
+        {
+          "fala": "Todo político promete proteger o motorista e depois vem com regra que só serve pra sindicalista. Quem garante que esse vai ser diferente?",
+          "opcoes": [
+            {
+              "texto": "Ninguém garante, mas dá para cobrar o que está escrito: o plano dele promete manter o trabalho por aplicativo e proteger esse trabalhador sem dirigente sindical na frente.",
+              "tipo": "melhor",
+              "efeito": 16,
+              "tags": [
+                "programa"
+              ],
+              "reacao": "Tá escrito isso? Então dá pra cobrar. Vou printar e colar no painel.",
+              "fonte": "propostas.emprego.45"
+            },
+            {
+              "texto": "O que mudaria a sua vida de motorista, de verdade?",
+              "tipo": "ok",
+              "efeito": 5,
+              "tags": [
+                "pergunta"
+              ],
+              "reacao": "Combustível mais barato e ninguém me obrigando a virar CLT."
+            },
+            {
+              "texto": "Com o Flávio a gasolina vai pra três reais, pode escrever.",
+              "tipo": "erro",
+              "efeito": -12,
+              "tags": [
+                "mentira"
+              ],
+              "reacao": "Três reais? Nem meu avô pagou isso. Vou te dar três estrelas.",
+              "licao": "Prometer preço que nenhum documento garante queima a credibilidade com quem abastece todo dia.",
+              "fonte": "textos.temas.Economia.cuidado"
+            },
+            {
+              "texto": "Vota no 22 que eu pago um tanque de gasolina pra você no fim do mês.",
+              "tipo": "grave",
+              "efeito": -30,
+              "tags": [
+                "favor"
+              ],
+              "reacao": "Tanque por voto? Vou encerrar a corrida aqui e ainda te reporto no app.",
+              "licao": "Dar ou oferecer dinheiro ou bem em troca de voto é corrupção eleitoral, crime pelo Código Eleitoral, art. 299.",
+              "fonte": "lei.art299"
+            }
+          ]
+        },
+        {
+          "fala": "No fim, tanto faz. Quem paga a conta somos nós. Eu ia anular.",
+          "opcoes": [
+            {
+              "texto": "A decisão é sua. Só lembro que nulo não vai pra ninguém no 2º turno: quem votar decide por quem ficou de fora. Vale comparar o que os dois planos dizem do seu trabalho.",
+              "tipo": "melhor",
+              "efeito": 15,
+              "tags": [
+                "voto_util",
+                "respeito"
+              ],
+              "reacao": "Comparar os dois. Justo. Igual eu comparo aplicativo antes de aceitar corrida."
+            },
+            {
+              "texto": "O plano dele fala em reduzir impostos sobre energia elétrica e combustíveis. Vale conferir.",
+              "tipo": "ok",
+              "efeito": 6,
+              "tags": [
+                "programa"
+              ],
+              "reacao": "Reduzir imposto do combustível. Anotado. Mas promessa eu já ouvi muita.",
+              "fonte": "propostas.custo-de-vida.31"
+            },
+            {
+              "texto": "Anular é falta de compromisso com a sua classe.",
+              "tipo": "erro",
+              "efeito": -10,
+              "tags": [
+                "sermao"
+              ],
+              "reacao": "A minha classe é a dos que acordam às cinco. Compromisso eu tenho.",
+              "licao": "Sermão vira palestra, e ele está dirigindo, não assistindo aula.",
+              "fonte": "textos.arquetipos.dormindo.o_que_nao_fazer[0]"
+            },
+            {
+              "texto": "Quem votou no Renan tinha que pedir desculpa agora.",
+              "tipo": "erro",
+              "efeito": -10,
+              "tags": [
+                "desqualifica"
+              ],
+              "reacao": "Desculpa pede quem atrasa a corrida. Eu votei em quem eu quis.",
+              "licao": "Cobrar arrependimento de quem buscou renovação é tratar a escolha como ingenuidade.",
+              "fonte": "textos.conversas_por_origem.renan.cuidado"
+            }
+          ]
+        }
+      ],
+      "fecho": [
+        {
+          "texto": "Valeu pela corrida e pela conversa. A decisão é sua.",
+          "tipo": "melhor",
+          "efeito": 14,
+          "tags": [
+            "respeito"
+          ],
+          "reacao": "Cinco estrelas pra você também. Vou pensar no dia 25."
+        },
+        {
+          "texto": "Pensa que no 2º turno o seu voto pesa mais.",
+          "tipo": "ok",
+          "efeito": 5,
+          "tags": [
+            "voto_util"
+          ],
+          "reacao": "Vou pensar no próximo engarrafamento. Tempo eu tenho."
+        },
+        {
+          "texto": "Cola um adesivo do 22 no carro pra mim?",
+          "tipo": "erro",
+          "efeito": -10,
+          "tags": [
+            "pressao"
+          ],
+          "reacao": "Adesivo em carro de aplicativo? Quer que eu perca passageiro? Uma estrela.",
+          "licao": "Pedir propaganda no ganha-pão de quem não quer falar de política é pressão.",
+          "fonte": "textos.arquetipos.fortaleza.o_que_nao_fazer[1]"
+        }
+      ],
+      "desfecho_texto": {
+        "flavio": "Printei a página do aplicativo e colei no painel. Dia 25 eu desligo o app uma hora e voto 22.",
+        "nulo": "Vou anular e voltar pra pista. Tempo é dinheiro.",
+        "lula": "Você me tratou como passageiro chato. Fui pro outro lado.",
+        "sem_mudanca": "Ainda não sei. Vou decidir no farol vermelho."
+      }
+    },
+    {
+      "id": "dona_de_casa_ne",
+      "nome": "Dona Socorro, a que confere o preço",
+      "idade": 54,
+      "genero": "F",
+      "campo": "lulista_pragmatico",
+      "origem": "lula",
+      "tags": [
+        "nordeste",
+        "mae",
+        "mulher",
+        "catolico"
+      ],
+      "dificuldade": 2,
+      "confianca_inicial": 35,
+      "desfechos": {
+        "alto": "flavio",
+        "medio": "nulo",
+        "baixo": "lula"
+      },
+      "limiares": {
+        "alto": 70,
+        "medio": 40
+      },
+      "bio": "Sabe de cabeça o preço do feijão em três mercados do bairro e criou quatro filhos fazendo o dinheiro render. Votou em Lula, mas diz que o Flávio não a desagrada.",
+      "visual": {
+        "pele": "#9c6644",
+        "cabelo": "#2b1b12",
+        "estilo_cabelo": "coque",
+        "acessorio": "oculos",
+        "roupa": "#e76f51",
+        "roupa_tipo": "vestido",
+        "barba": false,
+        "detalhe": "sacola de feira reutilizável e caderninho de preços na bolsa"
+      },
+      "cenarios": [
+        "mercado",
+        "fila_do_banco",
+        "whatsapp_familia"
+      ],
+      "tema": "Economia",
+      "queixa": "Ô, meu bem, o feijão subiu de novo, e eu faço conta de tudo. Votei no Lula porque ele ajudou os pobres, isso ninguém me tira. Mas o Flávio não me desagrada, não. Só quero saber quem vai encher o meu carrinho.",
+      "escuta": [
+        {
+          "texto": "O que mais apertou o orçamento da senhora nos últimos meses?",
+          "tipo": "melhor",
+          "efeito": 16,
+          "tags": [
+            "pergunta",
+            "escuta"
+          ],
+          "reacao": "Feijão, carne e o gás. A carne eu já troquei por ovo faz tempo. Mas a gente se vira, sempre se virou."
+        },
+        {
+          "texto": "A senhora faz conta melhor que muito economista.",
+          "tipo": "ok",
+          "efeito": 5,
+          "tags": [
+            "respeito"
+          ],
+          "reacao": "Faço mesmo. Economista não cria quatro filhos com um salário."
+        },
+        {
+          "texto": "Quem vota no Lula é porque recebe benefício, né?",
+          "tipo": "erro",
+          "efeito": -12,
+          "tags": [
+            "desqualifica"
+          ],
+          "reacao": "Eu voto em quem eu acho certo, meu bem. E conta eu sei fazer sozinha.",
+          "licao": "Você presumiu o voto dela pela renda, e ela ouviu isso como desrespeito.",
+          "fonte": "textos.arquetipos.abaixo_do_perfil.o_que_nao_fazer[0]"
+        },
+        {
+          "texto": "O Lula é ladrão, a senhora sabe disso.",
+          "tipo": "erro",
+          "efeito": -8,
+          "tags": [
+            "desqualifica",
+            "interrompe"
+          ],
+          "reacao": "Olhe, eu vim comprar feijão, não brigar. Com licença.",
+          "licao": "Você atacou a escolha dela antes de ouvir e acusou sem documento.",
+          "fonte": "textos.temas.Corrupção.cuidado"
+        }
+      ],
+      "objecoes": [
+        {
+          "fala": "Lula ajudou muita gente aqui. Tenho medo de trocar e perder o pouco que a gente conquistou.",
+          "opcoes": [
+            {
+              "texto": "Esse medo é justo. O plano dele garante a volta imediata e sem fila ao benefício depois do seguro-desemprego, para ninguém ter medo de tentar um emprego. A senhora quer ver a página?",
+              "tipo": "melhor",
+              "efeito": 16,
+              "tags": [
+                "programa",
+                "respeito"
+              ],
+              "reacao": "Voltar sem fila? Isso importa pro meu menino, que tem medo de largar o benefício e se dar mal. Deixe eu ver.",
+              "fonte": "propostas.emprego.43"
+            },
+            {
+              "texto": "O que a senhora tem medo de perder? Quero entender.",
+              "tipo": "ok",
+              "efeito": 5,
+              "tags": [
+                "pergunta"
+              ],
+              "reacao": "A comida na mesa e o posto de saúde funcionando. O resto a gente aguenta."
+            },
+            {
+              "texto": "Se o Lula ganhar de novo, o Brasil vira uma Venezuela.",
+              "tipo": "erro",
+              "efeito": -10,
+              "tags": [
+                "medo"
+              ],
+              "reacao": "Medo eu tenho é do preço do gás. Esse eu vejo todo mês.",
+              "licao": "Usar medo com quem já tem medo de perder só reforça o voto que ela tem.",
+              "fonte": "textos.arquetipos.pendulo.o_que_nao_fazer[1]"
+            },
+            {
+              "texto": "Vota no Flávio que eu deixo uma cesta básica na sua porta toda semana até a eleição.",
+              "tipo": "grave",
+              "efeito": -30,
+              "tags": [
+                "favor"
+              ],
+              "reacao": "Cesta por voto? Meu voto não se vende, meu bem. Nem por feijão, que tá caro.",
+              "licao": "Oferecer comida em troca de voto é corrupção eleitoral, crime pelo Código Eleitoral, art. 299.",
+              "fonte": "lei.art299"
+            }
+          ]
+        },
+        {
+          "fala": "Eu gosto de um e não desgosto do outro. Mas mudar de lado assim, depois de tanto tempo, parece ingratidão.",
+          "opcoes": [
+            {
+              "texto": "Gratidão não tem prazo de validade, e ninguém precisa esquecer o passado. Alternância é só um jeito de cobrar mudança no que está apertando hoje. A decisão é da senhora.",
+              "tipo": "melhor",
+              "efeito": 15,
+              "tags": [
+                "alternancia",
+                "respeito"
+              ],
+              "reacao": "Cobrar mudança sem esquecer quem ajudou. Assim eu entendo. Deixe eu pensar com calma."
+            },
+            {
+              "texto": "Sobre o carrinho: o plano dele fala em frete menor e seguro para quem planta, para o preço da comida ficar estável.",
+              "tipo": "ok",
+              "efeito": 6,
+              "tags": [
+                "programa"
+              ],
+              "reacao": "Preço estável eu quero. Estável e baixinho, de preferência.",
+              "fonte": "propostas.custo-de-vida.31"
+            },
+            {
+              "texto": "Com o Flávio o feijão cai pela metade, pode confiar.",
+              "tipo": "erro",
+              "efeito": -12,
+              "tags": [
+                "mentira"
+              ],
+              "reacao": "Pela metade? Eu confiro preço há trinta anos, meu bem. Isso não existe.",
+              "licao": "Você prometeu que o preço cai porque um nome ganhou, e ela confere preço melhor que ninguém.",
+              "fonte": "textos.temas.Economia.cuidado"
+            },
+            {
+              "texto": "A senhora não entende, vou explicar bem devagar.",
+              "tipo": "erro",
+              "efeito": -10,
+              "tags": [
+                "desqualifica"
+              ],
+              "reacao": "Devagar? Eu faço a conta do mês de cabeça, na fila do caixa. Explique rápido que eu acompanho.",
+              "licao": "Você presumiu que ela não acompanha o assunto, e ela acompanha o preço de tudo.",
+              "fonte": "textos.perfil.escolaridade.fund_inc.como_conversar"
+            }
+          ]
+        }
+      ],
+      "fecho": [
+        {
+          "texto": "Agradeço a conversa, dona Socorro. A decisão é da senhora, e o voto é secreto.",
+          "tipo": "melhor",
+          "efeito": 14,
+          "tags": [
+            "respeito"
+          ],
+          "reacao": "Gostei de você. Escutou mais do que falou. Vou pensar no dia 25."
+        },
+        {
+          "texto": "Se alguém da sua casa faltou no 1º turno, pode votar no dia 25 e justificar a falta pelo e-Título.",
+          "tipo": "ok",
+          "efeito": 6,
+          "tags": [
+            "comparecimento"
+          ],
+          "reacao": "Meu marido faltou! Vou mostrar pra ele hoje mesmo.",
+          "fonte": "textos.conversas_por_origem.abstencao.como_funciona"
+        },
+        {
+          "texto": "Então já posso contar o voto da senhora pro Flávio?",
+          "tipo": "erro",
+          "efeito": -10,
+          "tags": [
+            "pressao"
+          ],
+          "reacao": "Contar voto é coisa de mesário, meu bem. O meu é segredo.",
+          "licao": "Cobrar resposta na hora transforma uma conversa boa em pressão.",
+          "fonte": "textos.arquetipos.pendulo.o_que_nao_fazer[0]"
+        }
+      ],
+      "desfecho_texto": {
+        "flavio": "Ninguém me tira o que o Lula fez, mas agora é hora de cobrar mudança. Dia 25 eu vou de 22, e não conto pra ninguém da feira.",
+        "nulo": "Fiquei dividida. Vou anular e deixar nas mãos de Deus.",
+        "lula": "Fico com o Lula. Pelo menos ninguém do lado de lá me tratou como boba.",
+        "sem_mudanca": "Ainda estou pensando. Primeiro o feijão, depois a eleição."
+      }
+    },
+    {
+      "id": "gamer_apolitico",
+      "nome": "Kauã, o AFK da democracia",
+      "idade": 19,
+      "genero": "M",
+      "campo": "nao_votou",
+      "origem": "abstencao",
+      "tags": [
+        "gamer",
+        "genz",
+        "nerd",
+        "jovem"
+      ],
+      "dificuldade": 2,
+      "confianca_inicial": 36,
+      "desfechos": {
+        "alto": "flavio",
+        "medio": "sem_mudanca",
+        "baixo": "nulo"
+      },
+      "limiares": {
+        "alto": 65,
+        "medio": 35
+      },
+      "bio": "Primeira eleição da vida e passou o domingo inteiro numa partida ranqueada. Acha política cringe, mas sabe de cor as notas de atualização de três jogos.",
+      "visual": {
+        "pele": "#d4a373",
+        "cabelo": "#3a2a20",
+        "estilo_cabelo": "franja",
+        "acessorio": "headset",
+        "roupa": "#3c096c",
+        "roupa_tipo": "moletom",
+        "barba": false,
+        "detalhe": "moletom com capuz, olheiras de madrugada e lata de energético na mão"
+      },
+      "cenarios": [
+        "game_online",
+        "shopping"
+      ],
+      "tema": "Educação",
+      "queixa": "Política é cringe demais. Era a minha primeira eleição e eu tava numa ranqueada valendo subir de elo. Não ia sair por causa de dois tiozões discutindo na TV.",
+      "escuta": [
+        {
+          "texto": "E como foi o domingo? Subiu de elo pelo menos?",
+          "tipo": "melhor",
+          "efeito": 16,
+          "tags": [
+            "pergunta",
+            "escuta"
+          ],
+          "reacao": "Caí, na real. Perdi a eleição e a ranqueada no mesmo dia. Ninguém pergunta do jogo, só do voto."
+        },
+        {
+          "texto": "Relaxa, muita gente da primeira eleição também faltou.",
+          "tipo": "ok",
+          "efeito": 5,
+          "tags": [
+            "respeito"
+          ],
+          "reacao": "Viu? Não sou só eu. Somos um clã."
+        },
+        {
+          "texto": "Seus avós lutaram pelo direito de votar e você jogando videogame.",
+          "tipo": "erro",
+          "efeito": -12,
+          "tags": [
+            "sermao"
+          ],
+          "reacao": "Ok, boomer. Vou voltar pra fila da partida.",
+          "licao": "Sermão de dever cívico é o jeito mais rápido de mandar alguém de volta para o jogo.",
+          "fonte": "textos.conversas_por_origem.abstencao.cuidado"
+        }
+      ],
+      "objecoes": [
+        {
+          "fala": "Nem sei direito do meu título. Votar dá muito trabalho, tem fila, é tipo missão secundária chata.",
+          "opcoes": [
+            {
+              "texto": "Quem faltou no 1º turno pode votar no dia 25 e justificar a falta pelo e-Título. Quer ver agora no celular onde fica a sua seção?",
+              "tipo": "melhor",
+              "efeito": 17,
+              "tags": [
+                "comparecimento",
+                "pergunta"
+              ],
+              "reacao": "Tem app? Então é tipo missão diária. Abre aí.",
+              "fonte": "textos.conversas_por_origem.abstencao.como_funciona"
+            },
+            {
+              "texto": "Sabe onde fica a sua seção? É rapidinho conferir no site oficial.",
+              "tipo": "ok",
+              "efeito": 5,
+              "tags": [
+                "pergunta"
+              ],
+              "reacao": "Acho que é na escola onde eu estudei. Que cringe voltar lá."
+            },
+            {
+              "texto": "Nem precisa de título, chega lá com qualquer documento e vota onde quiser.",
+              "tipo": "erro",
+              "efeito": -10,
+              "tags": [
+                "mentira"
+              ],
+              "reacao": "Onde quiser? Então vou votar aqui no shopping.",
+              "licao": "Você inventou regra; quando não souber responder, diga que não sabe.",
+              "fonte": "textos.temas.Outros.cuidado"
+            },
+            {
+              "texto": "No dia 25 eu passo aí, te levo de carro, pago o lanche e você vota no 22. Combinado?",
+              "tipo": "grave",
+              "efeito": -30,
+              "tags": [
+                "carona",
+                "favor"
+              ],
+              "reacao": "Isso tem cara de golpe de jogo grátis. Sempre tem pegadinha. Tô fora.",
+              "licao": "Carona e lanche em troca de voto são proibidos: o transporte de eleitores no dia é regulado pela Lei 6.091/1974, e oferecer vantagem por voto é crime pelo art. 299 do Código Eleitoral.",
+              "fonte": "lei.6091"
+            }
+          ]
+        },
+        {
+          "fala": "Tanto faz quem ganha. Nenhum dos dois sabe o que é um jogo, nem o que eu quero da vida.",
+          "opcoes": [
+            {
+              "texto": "E o que você quer da vida? Se for estudar ou trabalhar com tecnologia, o plano dele fala em levar robótica, computadores e internet às escolas e ensinar economia digital e inteligência artificial.",
+              "tipo": "melhor",
+              "efeito": 15,
+              "tags": [
+                "pergunta",
+                "programa"
+              ],
+              "reacao": "Robótica e IA na escola? Isso eu queria ter tido. Manda o link, sem textão.",
+              "fonte": "propostas.educacao.35"
+            },
+            {
+              "texto": "Pensa assim: se você não escolhe, os outros escolhem por você. Tipo deixar o time escolher o seu boneco.",
+              "tipo": "ok",
+              "efeito": 5,
+              "tags": [
+                "voto_util"
+              ],
+              "reacao": "Ninguém escolhe o meu boneco. Hm. Ponto pra você."
+            },
+            {
+              "texto": "Vão proibir videogame se o Lula ganhar, sério.",
+              "tipo": "erro",
+              "efeito": -10,
+              "tags": [
+                "boato"
+              ],
+              "reacao": "Fonte: vozes da sua cabeça. Report.",
+              "licao": "Boato pega mal com quem passa o dia na internet, e ele percebe o fake no primeiro segundo.",
+              "fonte": "textos.arquetipos.pendulo.o_que_nao_fazer[1]"
+            },
+            {
+              "texto": "Você é muito novo pra entender política.",
+              "tipo": "erro",
+              "efeito": -8,
+              "tags": [
+                "desqualifica"
+              ],
+              "reacao": "Novo pra entender, mas velho o bastante pra pagar a conta. Saquei.",
+              "licao": "Você tratou como pequena a opinião dele, e quem já acha política distante se afasta mais.",
+              "fonte": "textos.temas.Outros.cuidado"
+            }
+          ]
+        }
+      ],
+      "fecho": [
+        {
+          "texto": "Valeu pelo papo. A decisão é sua, e se quiser conferir a seção depois, me chama.",
+          "tipo": "melhor",
+          "efeito": 14,
+          "tags": [
+            "respeito"
+          ],
+          "reacao": "GG. Foi a conversa menos cringe sobre política que eu já tive."
+        },
+        {
+          "texto": "Dia 25 é domingo. Marca no calendário antes da ranqueada.",
+          "tipo": "ok",
+          "efeito": 5,
+          "tags": [
+            "comparecimento"
+          ],
+          "reacao": "Vou pôr alarme. Se não tiver torneio."
+        },
+        {
+          "texto": "Se você não for votar, vou te expulsar do clã.",
+          "tipo": "erro",
+          "efeito": -10,
+          "tags": [
+            "pressao"
+          ],
+          "reacao": "Pode expulsar. Tenho outro clã e outra eleição pra faltar.",
+          "licao": "Chantagem afasta, e quem não quer votar não deve ser forçado.",
+          "fonte": "textos.conversas_por_origem.abstencao.cuidado"
+        }
+      ],
+      "desfecho_texto": {
+        "flavio": "Conferi a seção no app. Dia 25 de manhã eu voto 22 e volto pra ranqueada.",
+        "nulo": "Fui lá e anulei. Pelo menos completei a missão.",
+        "lula": "Fui votar só pra contrariar e apertei 13.",
+        "sem_mudanca": "Vou ver se não tem torneio no dia. Talvez."
+      }
+    },
+    {
+      "id": "concursado_cury",
+      "nome": "Patrícia, a estável do Cury",
+      "idade": 41,
+      "genero": "F",
+      "campo": "terceira_via",
+      "origem": "cury",
+      "tags": [
+        "servidor",
+        "autoajuda",
+        "classe_media",
+        "superior"
+      ],
+      "dificuldade": 1,
+      "confianca_inicial": 43,
+      "desfechos": {
+        "alto": "flavio",
+        "medio": "sem_mudanca",
+        "baixo": "lula"
+      },
+      "limiares": {
+        "alto": 65,
+        "medio": 35
+      },
+      "bio": "Passou no concurso depois de quatro anos de cursinho e defende a estabilidade e a meditação guiada com o mesmo fervor. Votou em Augusto Cury porque ele falava de saúde emocional.",
+      "visual": {
+        "pele": "#f1c27d",
+        "cabelo": "#4a2c1a",
+        "estilo_cabelo": "rabo",
+        "acessorio": "crachá",
+        "roupa": "#6d597a",
+        "roupa_tipo": "social",
+        "barba": false,
+        "detalhe": "crachá do órgão no pescoço e garrafinha de chá na bolsa"
+      },
+      "cenarios": [
+        "fila_do_banco",
+        "academia",
+        "padaria",
+        "whatsapp_familia"
+      ],
+      "tema": "Saúde",
+      "queixa": "Eu votei no Cury porque alguém precisa falar de saúde mental. Metade do meu setor está de licença por ansiedade. E agora todo mundo fala em cortar, cortar, cortar, e eu só penso na minha estabilidade.",
+      "escuta": [
+        {
+          "texto": "O que fez você escolher o Cury? E o que espera de quem governar?",
+          "tipo": "melhor",
+          "efeito": 15,
+          "tags": [
+            "pergunta",
+            "escuta"
+          ],
+          "reacao": "Cuidado com as pessoas. Ninguém fala da mente de quem trabalha. Quero um governo que não trate servidor como inimigo."
+        },
+        {
+          "texto": "Saúde mental é assunto sério mesmo.",
+          "tipo": "ok",
+          "efeito": 5,
+          "tags": [
+            "respeito"
+          ],
+          "reacao": "Obrigada. Você não imagina quanta gente ri quando eu falo disso."
+        },
+        {
+          "texto": "Votar no Cury é meio autoajuda demais, né?",
+          "tipo": "erro",
+          "efeito": -10,
+          "tags": [
+            "desqualifica"
+          ],
+          "reacao": "Autoajuda me ajudou a passar no concurso. E a aguentar conversas como esta.",
+          "licao": "Você fez caricatura do tom de cuidado que levou ela ao Cury, e ela fechou a guarda.",
+          "fonte": "textos.conversas_por_origem.cury.cuidado"
+        },
+        {
+          "texto": "Servidor sempre reclama de barriga cheia.",
+          "tipo": "erro",
+          "efeito": -8,
+          "tags": [
+            "desqualifica"
+          ],
+          "reacao": "Barriga cheia de boleto, isso sim.",
+          "licao": "Você desqualificou a pessoa pela profissão antes de ouvir.",
+          "fonte": "textos.arquetipos.abaixo_do_perfil.o_que_nao_fazer[0]"
+        }
+      ],
+      "objecoes": [
+        {
+          "fala": "Ouço falar em cortar ministérios e supersalários e fico com medo. Quem garante que o corte não chega em mim?",
+          "opcoes": [
+            {
+              "texto": "Entendo o receio, e quem responde é o texto, não eu. Sobre o que te levou ao Cury: o plano dele promete ampliar a atenção à saúde mental, inclusive à depressão e à ansiedade.",
+              "tipo": "melhor",
+              "efeito": 16,
+              "tags": [
+                "programa",
+                "respeito"
+              ],
+              "reacao": "Depressão e ansiedade por escrito? Isso o Cury ia gostar de ler. Eu também.",
+              "fonte": "propostas.saude.39"
+            },
+            {
+              "texto": "O que te daria mais tranquilidade sobre isso?",
+              "tipo": "ok",
+              "efeito": 5,
+              "tags": [
+                "pergunta"
+              ],
+              "reacao": "Saber que o corte é de penduricalho, não de quem trabalha. Mas eu vou ler, não vou acreditar em ninguém."
+            },
+            {
+              "texto": "Servidor estável tem mais é que perder privilégio mesmo.",
+              "tipo": "erro",
+              "efeito": -12,
+              "tags": [
+                "desqualifica"
+              ],
+              "reacao": "Privilégio é nunca ter estudado quatro anos pra uma prova. Quase encerrei a conversa.",
+              "licao": "Você atacou a pessoa em vez de responder ao medo dela, e debater para vencer encerra a conversa.",
+              "fonte": "textos.arquetipos.muro.o_que_nao_fazer[0]"
+            },
+            {
+              "texto": "Vota no 22 que eu falo com um conhecido e garanto uma função comissionada pra você.",
+              "tipo": "grave",
+              "efeito": -30,
+              "tags": [
+                "favor"
+              ],
+              "reacao": "Função por voto? Eu passei em concurso justamente para não depender disso. Tchau.",
+              "licao": "Prometer cargo em troca de voto é corrupção eleitoral, crime pelo Código Eleitoral, art. 299.",
+              "fonte": "lei.art299"
+            }
+          ]
+        },
+        {
+          "fala": "No fundo eu queria não ter que escolher. Esse 2º turno me dá crise de ansiedade.",
+          "opcoes": [
+            {
+              "texto": "Faz sentido sentir isso. Sem pressão: no 2º turno são dois nomes, e não escolher deixa a decisão com os outros. Você pode decidir no seu tempo, até o dia 25.",
+              "tipo": "melhor",
+              "efeito": 15,
+              "tags": [
+                "voto_util",
+                "respeito"
+              ],
+              "reacao": "No meu tempo. Respira, Patrícia. Tá, isso ajuda."
+            },
+            {
+              "texto": "Alternância de poder também é um jeito saudável de cobrar mudança.",
+              "tipo": "ok",
+              "efeito": 5,
+              "tags": [
+                "alternancia"
+              ],
+              "reacao": "Saudável. Você falou a palavra mágica."
+            },
+            {
+              "texto": "Ansiedade vai ser se o outro ganhar, aí sim você vai ver.",
+              "tipo": "erro",
+              "efeito": -10,
+              "tags": [
+                "medo"
+              ],
+              "reacao": "Você acabou de aumentar a minha frequência cardíaca. Parabéns.",
+              "licao": "Usar o medo de quem já está ansiosa é o contrário de conversar.",
+              "fonte": "textos.arquetipos.pendulo.o_que_nao_fazer[1]"
+            },
+            {
+              "texto": "Adulto tem que tomar decisão, não fugir.",
+              "tipo": "erro",
+              "efeito": -8,
+              "tags": [
+                "sermao"
+              ],
+              "reacao": "Adulto também tem direito de pensar antes. Inclusive concursado.",
+              "licao": "Sermão sobre maturidade soa como cobrança, e ela pediu calma.",
+              "fonte": "textos.arquetipos.dormindo.o_que_nao_fazer[0]"
+            }
+          ]
+        }
+      ],
+      "fecho": [
+        {
+          "texto": "Agradeço a conversa. A decisão é sua, no seu tempo.",
+          "tipo": "melhor",
+          "efeito": 14,
+          "tags": [
+            "respeito"
+          ],
+          "reacao": "Que conversa leve. Vou meditar e decidir."
+        },
+        {
+          "texto": "Só lembra que no 2º turno o seu voto pesa mais.",
+          "tipo": "ok",
+          "efeito": 5,
+          "tags": [
+            "voto_util"
+          ],
+          "reacao": "Anotado no meu diário de gratidão."
+        },
+        {
+          "texto": "Me responde até sexta, que eu preciso fechar a planilha de votos do setor.",
+          "tipo": "erro",
+          "efeito": -10,
+          "tags": [
+            "pressao"
+          ],
+          "reacao": "Planilha de voto do setor? Meu voto é secreto, inclusive para o RH.",
+          "licao": "Fazer lista de voto de colega é pressão e desrespeita o voto secreto.",
+          "fonte": "lei.voto_secreto"
+        }
+      ],
+      "desfecho_texto": {
+        "flavio": "Li a parte da saúde mental. Não é o Cury, mas dia 25 eu voto 22, respirando fundo.",
+        "nulo": "Não consegui escolher. Vou anular e fazer uma meditação depois.",
+        "lula": "A conversa me deixou tão ansiosa que fui pro lado que não me cobrou nada.",
+        "sem_mudanca": "Ainda estou processando. Me pergunta depois do feriado."
+      }
+    }
+  ]
+}

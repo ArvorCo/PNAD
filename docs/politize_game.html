@@ -1,0 +1,155 @@
+<!doctype html>
+<!--
+  Politize: o jogo da conversa. Página ESCRITA À MÃO, não gerada por script.
+  Motor em politize_game/app.js; dados em politize_game/dados.js (gerado por scripts/politize-game-build.py).
+  Contrato: analysis/politize_game/CONTRATO.md.
+-->
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-ZPYEE8P9YC"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ZPYEE8P9YC');</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Politize: o jogo da conversa | Arvor</title>
+<meta name="description" content="Um jogo de conversa política: escolha um personagem, encontre eleitores na padaria, no bar, no grupo da família e no X, e descubra que escutar converte mais do que discutir.">
+<link rel="canonical" href="https://brasil.arvor.co/politize_game.html">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0d2238">
+<link rel="manifest" href="politize_game/manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Politize">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Arvor Intelligence">
+<meta property="og:title" content="Politize: o jogo da conversa">
+<meta property="og:description" content="Oito dias, oito conversas. Escute antes de responder e veja quantos votos você converte.">
+<meta property="og:url" content="https://brasil.arvor.co/politize_game.html">
+<meta property="og:image" content="https://brasil.arvor.co/img/og/politize_game.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@leonardodias">
+<meta name="twitter:title" content="Politize: o jogo da conversa">
+<meta name="twitter:description" content="Oito dias, oito conversas. Escute antes de responder e veja quantos votos você converte.">
+<meta name="twitter:image" content="https://brasil.arvor.co/img/og/politize_game.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,500;1,9..144,700&amp;family=IBM+Plex+Mono:wght@400;500;700&amp;family=IBM+Plex+Sans+Condensed:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="politize_game/app.css">
+<script>document.documentElement.classList.add('js')</script>
+<script defer src="politize_game/dados.js"></script>
+<script defer src="politize_game/avatares.js"></script>
+<script defer src="politize_game/cenas.js"></script>
+<script defer src="politize_game/app.js"></script>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o jogo</a>
+
+<header class="topo" id="topo">
+  <a class="topo-voltar" href="politizesuavizinhanca.html"><span aria-hidden="true">&larr;</span> <span id="topo-voltar-txt">Politize sua vizinhança</span></a>
+  <div class="topo-acoes">
+    <button type="button" class="topo-btn" id="btn-caderno" aria-controls="lateral" aria-expanded="false" hidden><span id="btn-caderno-txt">Caderno</span> <b id="btn-caderno-n">0</b></button>
+    <button type="button" class="topo-btn" id="btn-ajuda" aria-controls="ajuda" aria-haspopup="dialog">Ajuda</button>
+  </div>
+</header>
+
+<div class="jogo" id="conteudo">
+  <main class="coluna" id="app">
+
+    <!-- Tela 1: abertura e escolha de personagem -->
+    <section class="tela tela-menu" id="tela-menu" aria-labelledby="menu-titulo">
+      <div class="menu-capa">
+        <p class="eyebrow">Arvor · Politize</p>
+        <h1 id="menu-titulo">Politize: o jogo da conversa</h1>
+        <p class="menu-sub" id="menu-subtitulo"></p>
+        <p class="menu-deck" id="menu-deck" hidden></p>
+        <ol class="menu-tutorial" id="menu-tutorial"></ol>
+        <p class="menu-recorde" id="menu-recorde" hidden></p>
+      </div>
+      <p class="aviso-semente" id="menu-semente" hidden></p>
+      <h2 class="menu-h2" id="menu-escolha">Escolha seu personagem</h2>
+      <ul class="personagens" id="menu-personagens"></ul>
+      <noscript><p class="noscript">Este jogo precisa de JavaScript ligado no navegador. Sem ele, conheça o <a href="politizesuavizinhanca.html">Politize sua vizinhança</a>, que mostra o boletim do seu local de votação.</p></noscript>
+    </section>
+
+    <!-- Tela 2: palco da conversa -->
+    <section class="tela palco" id="tela-palco" aria-label="Conversa" hidden>
+      <div class="hud">
+        <p class="hud-dia" id="hud-dia"></p>
+        <p class="hud-cenario" id="hud-cenario"></p>
+        <p class="hud-placar" id="hud-placar"></p>
+      </div>
+      <div class="cena" id="cena">
+        <div class="cena-fundo" id="cena-fundo" aria-hidden="true"></div>
+        <div class="npc-avatar" id="npc-avatar" aria-hidden="true"></div>
+        <div class="eu-avatar" id="eu-avatar" aria-hidden="true"></div>
+        <p class="publico-selo" id="publico-selo" hidden></p>
+      </div>
+      <div class="confianca" id="confianca">
+        <span class="confianca-rot" id="confianca-rot">Confiança</span>
+        <div class="confianca-trilho" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-labelledby="confianca-rot" id="confianca-trilho"><div class="confianca-barra" id="confianca-barra"></div></div>
+        <span class="confianca-valor" id="confianca-valor"></span>
+      </div>
+      <div class="painel-baixo" id="painel-baixo">
+        <div class="fala" id="fala" aria-live="polite">
+          <p class="fala-nome" id="fala-nome"></p>
+          <p class="fala-texto" id="fala-texto"></p>
+        </div>
+        <div class="reacao" id="reacao" hidden></div>
+        <p class="fase-rot" id="fase-rot"></p>
+        <div class="opcoes" id="opcoes" role="group" aria-labelledby="fase-rot"></div>
+      </div>
+    </section>
+
+    <!-- Tela 3: fim da rodada -->
+    <section class="tela tela-fim" id="tela-fim" aria-labelledby="fim-grau-nome" hidden>
+      <p class="eyebrow" id="fim-kicker">Resultado</p>
+      <h1 class="fim-grau" id="fim-grau-nome"></h1>
+      <p class="fim-frase" id="fim-grau-frase"></p>
+      <p class="fim-resumo" id="fim-resumo"></p>
+      <p class="fim-erros" id="fim-erros"></p>
+      <dl class="placar placar-fim" id="fim-placar"></dl>
+      <p class="fim-recorde" id="fim-recorde" hidden></p>
+      <div class="fim-acoes">
+        <button type="button" class="btn btn-prim" id="btn-compartilhar">Compartilhar</button>
+        <button type="button" class="btn btn-sec" id="btn-de-novo">Jogar de novo</button>
+        <button type="button" class="btn btn-sec" id="btn-trocar">Trocar de personagem</button>
+      </div>
+      <p class="fim-status" id="fim-status" role="status"></p>
+      <h2 class="menu-h2" id="fim-licoes-tit">Lições da rodada</h2>
+      <ol class="licoes" id="fim-licoes"></ol>
+      <ul class="dicas" id="fim-dicas"></ul>
+      <p class="fim-semente" id="fim-semente"></p>
+    </section>
+  </main>
+
+  <!-- Coluna lateral: placar e caderno (painel deslizante no celular) -->
+  <aside class="lateral" id="lateral" aria-labelledby="lateral-tit" hidden>
+    <div class="lateral-cab">
+      <h2 id="lateral-tit">Placar</h2>
+      <button type="button" class="topo-btn lateral-fechar" id="lateral-fechar">Fechar</button>
+    </div>
+    <dl class="placar" id="placar"></dl>
+    <h2 id="caderno-tit">Caderno</h2>
+    <ol class="licoes" id="caderno-lista"></ol>
+    <p class="caderno-vazio" id="caderno-vazio"></p>
+  </aside>
+</div>
+
+<div class="sobreposicao" id="ajuda" role="dialog" aria-modal="true" aria-labelledby="ajuda-tit" hidden>
+  <div class="caixa">
+    <h2 id="ajuda-tit">Ajuda</h2>
+    <div id="ajuda-texto"></div>
+    <ol class="menu-tutorial" id="ajuda-tutorial"></ol>
+    <button type="button" class="btn btn-prim" id="ajuda-fechar">Fechar</button>
+  </div>
+</div>
+
+<footer class="rodape" id="rodape">
+  <p id="rodape-texto">Arvor Intelligence.</p>
+  <p><a href="politizesuavizinhanca.html">Voltar ao Politize sua vizinhança</a> · <a href="index.html">brasil.arvor.co</a></p>
+</footer>
+</body>
+</html>
