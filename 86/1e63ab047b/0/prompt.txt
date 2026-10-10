@@ -1,0 +1,303 @@
+A session-scoped Stop hook is now active with condition: "sua meta é me ajudar a pensar num game que ajude as pessaos a convencer outras pessoas de 3a via, ideológicas petistas, lulistas não ideológicos e outras pessoas que se podem encontrar na sua vizinhança ou nas redes sociais em diversos cenários. A pessoa escolheria o personagem, que poderia ser o Gen Z Chad Alpha, o Boomer tio do churras ou tia do zap, a mãe ou o pai cristão, ou o 40+ chad cristão, ou o nerd gamer, ou a jovem mulher nerd antifeminista (pense em outros personagens) em que eles interagem numa conversa no whatsapp, na padaria, no mercado, no bar, no shopping, na praia, no show de música, no game do computador (invente outros cenários se for preciso) e a pessoa encontra a outra e tem escolhas para tentar puxar assunto, para ouvir a pessoa e dar uma resposta (e aí tem respostas certas ou erradas) e no final a pessoa conerte um voto pro Flávio, converte pro Lula (quando erra), converte pro nulo (se a pessoa que ela encontra é super petista) etc...  e os personagens que ela encontra variam bastante, vai ter o isentão do cury, o liberal faria limer de coletinho do Zema, o coronel em cima do cavalo do Caiado, o jovem MBL perdidones, e o Lulista ideológico e o petista semianalfabeto e o universitário que não toma banho e fuma maconha, e a mulher feminista, o homem gay militante do Soros (pense em outros perfis que podem ser encontrados). O conteúdo virá do @docs/politizesuavizinhanca.html na forma de perguntas e respostas que o usuário deverá usar para interagir. O jogo deve ser jogado com a tela do celular na vertical e também no computador com uma tela mais ampla, mas funcionar nos dois ambientes de forma responsiva. A ideia é que o usuário vai acumulando votos virados pro Flávio, pro nulo ou pro Lula quando a pessoa erra as alternativas e comete os erros previstos na tela do politize. Faça um trabalho QI 1000 pra faezrmos esse joguinho e vamos colcoar na pasta /politize_game/ e o arquivo fica na raiz como politize_game.html e vai ser linkado do politizesuavizinhanca. Faça isso com as melhores práticas de games de forma genial. Se precisar de assets, é só usar o navegador na página do chatgpt.com e pedir as imagens para ser criadas. Use subagentes com opus para otimizarmos o custo com tokens. Faça da forma mais inteligente e eficiente para funcionar em qualquer browser, android, ios e web. capricha nisso daí e me pergunte qualquer dúvida ou sugestão que vc tiver.". Briefly acknowledge the goal, then immediately start (or continue) working toward it — treat the condition itself as your directive and do not pause to ask the user what to do. The hook will block stopping until the condition holds. It auto-clears once the condition is met — do not tell the user to run `/goal clear` after success; that's only for clearing a goal early.
+
+---
+
+<task-notification>
+<task-id>a095cfbe40c1d51ca</task-id>
+<tool-use-id>toolu_01Y1Y3ah59J831iqeiM9mb8N</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Roteiro: personagens, cenários, interface" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>Os três arquivos estão prontos em `/Users/leonardodias/arvor/PNAD/analysis/politize_game/roteiro/`: `personagens.json`, `cenarios.json` e `interface.json`. Os dois comandos que você pediu passaram: os três carregam como JSON válido e o `grep` deu 0 travessão em cada um.
+
+Também rodei uma checagem minha. As 19 `fonte` existem de fato em `textos.json` ou estão na lista `lei.*`. Os efeitos estão dentro das faixas, e as tags e props saem só das listas permitidas. Cada cenário tem exatamente uma opção melhor, uma ok e pelo menos um erro. Não há emoji nem hashtag. As frases de compartilhar e o resumo do fim trazem todos os marcadores exigidos.
+
+Nenhuma proposta do plano foi citada nos cenários, então `propostas.json` não aparece como fonte. As lições usam só os `cuidado` e `o_que_nao_fazer` do Politize e as quatro chaves de lei.
+
+**Tags de NPC usadas nos trunfos (23):** academia, agro, aposentado, app, autonomo, boomer, classe_media, cristao, empreendedor, evangelico, gamer, genz, interior, jovem, mae, mulher, nerd, pai, periferia, superior, trabalhador, universitario, zap.
+
+**Fraquezas:**
+
+| Personagem | Fraqueza |
+|---|---|
+| chad_genz | interrompe |
+| tio_churras | desqualifica |
+| tia_zap | boato |
+| mae_crista | sermao |
+| chad_40_cristao | medo |
+| nerd_gamer | mentira |
+| nerd_antifeminista | sermao |
+| empreendedora_mei | favor |
+| motoboy_app | pressao |
+| agro_jovem | favor |
+
+**Cenários com opção grave (8):**
+- **padaria, mercado, bar, fila_do_banco:** favor por voto, com fonte `lei.art299`.
+- **uber:** carona no dia 25, com fonte `lei.6091`.
+- **churrasco:** carreata no dia da eleição, com fonte `lei.9504.39`.
+- **saida_do_culto:** santinho na porta no dia da eleição, com fonte `lei.9504.39`.
+- **rede_x:** xingar em público e chamar os seguidores para atacar, com fonte `textos.arquetipos.atras.o_que_nao_fazer[1]`.
+
+**NPCs sugeridos:** os 24 do roster aparecem em pelo menos 2 cenários. `whatsapp_familia` e `rede_x` têm um NPC de cada campo, mas o campo de cada NPC eu deduzi do roster, porque `npcs.json` ainda não existe. A divisão que assumi:
+- `whatsapp_familia`: irmao_indeciso (terceira via), bolsonarista_magoado (direita desgarrada), abstencionista_ressaca (não votou), branquista (nulo ou branco), aposentada_inss (lulista pragmática) e professora_sindicalizada (esquerda ideológica).
+- `rede_x`: tiktoker_antissistema, bolsonarista_magoado, gamer_apolitico, nulista_protesto, dona_de_casa_ne e petista_ideologico, nos mesmos seis campos.
+
+Se quem escrever os NPCs puser outro campo em algum deles, essa cobertura precisa ser conferida de novo.
+
+**Quatro pontos para quem escreve o motor e a arte:**
+- **"bibilia":** usei exatamente essa grafia do contrato no acessório da mae_crista, embora pareça um erro de digitação de "biblia". A arte precisa usar a mesma string.
+- **Origem `lula`:** não existe em `textos.conversas_por_origem`. Quem fizer os NPCs de origem `lula` (como dona_de_casa_ne) não pode usar a chave `textos.conversas_por_origem.lula.*` como fonte, ou o build falha.
+- **Nome da nerd_antifeminista:** o nome de tela ficou "Nerd Antilacração", para a caricatura recair sobre o estilo de debate. O id continua o do contrato.
+- **Grau máximo:** a exigência de zero erros graves não está gravada nos dados. O objeto de grau ficou só com `{min_saldo, nome, frase}`, como você pediu, então o motor precisa checar os graves. Também acrescentei um campo `"versao"` no topo de `interface.json`, fora das chaves que você listou.</result>
+<usage><subagent_tokens>219306</subagent_tokens><tool_uses>12</tool_uses><duration_ms>405516</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>ab23fc845b09e7e8c</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Roteiro: 12 NPCs (esquerda e três da terceira via)" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>Escrevi `/Users/leonardodias/arvor/PNAD/analysis/politize_game/roteiro/npcs.json` com os 12 NPCs, nos ids e na ordem pedidos.
+
+**Verificação**
+- O `json.load` passa e o `grep` de travessão devolve 0.
+- Rodei a validação de NPCs de `scripts/politize_game/roteiro.py` só sobre este arquivo e ela não acusou nenhum erro. Ela confere faixas de efeito, `licao` e `fonte` em toda opção de erro ou grave, se cada `fonte` existe de fato nos dois arquivos de apoio, se conduta ilegal cita lei e se a tag programa traz fonte de propostas.
+- Um script meu conferiu os valores de visual contra as listas do contrato e o limite de frases (opção e reação com até 2, fala do NPC com até 3).
+- O build completo (`politize-game-build.py`) ainda falha, porque `npcs_b.json` não existe. Esse arquivo é a outra metade do roster e ficou fora desta tarefa.
+
+**Configuração**
+- A esquerda ideológica (petista, universitário, feminista, ONG, professora e sindicalista) começa com confiança entre 18 e 25, dificuldade 3 e limiares 80/50. O melhor desfecho é o nulo, e todo `desfecho_texto.nulo` traz "Não voto no Flávio, mas também não vou mais fazer campanha".
+- Seu Zé, Neném e Dona Lurdes têm dificuldade 2 e confiança entre 32 e 34. Seu Zé usa limiares 70/45; os outros dois, 68/42.
+- Na terceira via, Cury tem dificuldade 1 e confiança 44; Zema e Caiado têm dificuldade 2, com 38 e 36. Os três usam limiares 65/35.
+- Não existe a chave `textos.conversas_por_origem.lula`. Por isso, as lições dos NPCs de origem Lula citam temas, arquétipos e `perfil.escolaridade.fund_inc`.
+- As falas do jogador não presumem gênero: troquei "obrigado" por "valeu" ou "agradeço", e os NPCs não chamam o jogador de "meu filho" nem de "rapaz".
+
+**Opções grave e fontes de propostas por NPC**
+
+| NPC | Graves | Conduta / fonte | Fontes de propostas |
+|---|---|---|---|
+| petista_ideologico | 1 | boato (`pendulo.o_que_nao_fazer[1]`) | liberdade-instituicoes.66 |
+| lulista_gratidao | 1 | favor (`lei.art299`) | custo-de-vida.31, emprego.43 |
+| universitario_humanas | 1 | boca de urna (`lei.9504.39`) | educacao.37, educacao.36 |
+| feminista_militante | 1 | boato/vídeo cortado (`pendulo[1]`) | mulheres.14, mulheres.17 |
+| militante_ong | 1 | favor (`lei.art299`) | enchentes-clima.55, enchentes-clima.52 |
+| professora_sindicalizada | 1 | intimidação, tag pressao (`temas.Educação.cuidado`) | educacao.35, educacao.36 |
+| lulista_pragmatico | 1 | carona + favor (`lei.6091`) | emprego.43, custo-de-vida.31 |
+| aposentada_inss | 1 | favor no INSS (`lei.art299`) | idosos.26, idosos.73 |
+| sindicalista_cut | 1 | buzinaço com carro de som no dia (`lei.9504.39`) | emprego.44, emprego.45 |
+| isentao_cury | 1 | boato com medo (`pendulo[1]`) | saude.39 |
+| faria_limer_zema | 1 | cargo por voto (`lei.art299`) | economia-impostos.71, economia-impostos.69 |
+| coronel_caiado | 1 | caminhão com almoço (`lei.6091`) | campo.54 |
+
+No total são 12 opções grave, e 8 delas são conduta ilegal com lei citada, acima do mínimo de 4. Não usei a tag `ameaca` porque nenhuma das leis disponíveis cobre ameaça. A ameaça da professora entrou como grave com tag `pressao`, citando o cuidado do tema Educação.
+
+Toda citação do plano reproduz trecho literal de `propostas.json`. Há duas exceções:
+- **Sindicalista:** a opção cita "será protegido", mas o plano diz "serão protegidos". Na mesma opção, a crítica do plano aos dirigentes sindicais virou paráfrase ("ainda alfineta dirigente sindical"), porque o original escreve "a frente" sem crase.
+- **Faria limer:** a citação de economia-impostos.71 corta o fim do trecho "dos três Poderes da União".
+
+Vale corrigir esses dois pontos antes de publicar se a regra for citação sempre literal.</result>
+<usage><subagent_tokens>278925</subagent_tokens><tool_uses>13</tool_uses><duration_ms>789426</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>ae438d3eef00e4c5b</task-id>
+<tool-use-id>toolu_015W4zfDKfYZohmGbZW7tLU4</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Arte: avatares e cenas em SVG" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>I wrote both art files. On the proof page there were no console errors from them, the faces stay readable at 96 px, the three expressions are clearly different, and all 14 real scenes from `roteiro/cenarios.json` render with a test avatar in the centre.
+
+**Files**
+- `/Users/leonardodias/arvor/PNAD/docs/politize_game/avatares.js`: 17.3 KB.
+- `/Users/leonardodias/arvor/PNAD/docs/politize_game/cenas.js`: 15.1 KB.
+- Together that is 32.3 KB, under the contract's 60 KB. Both are classic IIFEs with no dependencies. They are deterministic, contain no `&lt;text&gt;`, no em dash and no emoji, and comments are in pt-BR.
+- Proof page: `REDACTED.html`, generated by `gen.py` in the same folder. It shows 16 avatars (your 12 plus braids with cap, white hair with mug, NGO activist with badge, and an empty `{}`), each in all three expressions, and the 14 scenes. The embedded browser won't open a `file://` page, so the proof loads the scripts from `http://localhost:4173/politize_game/`. To view it, serve the scratchpad folder over HTTP.
+
+**Contract mismatch:** `genero` sits on the NPC, not inside `visual`. The integrator should pass `Object.assign({genero: npc.genero}, npc.visual)`.
+
+**Robustness checks:** an invalid hex falls back to a default. Unknown or missing values get defaults, and inputs like `"x"`, `null` or `{}` don't throw. An injected `"&gt;&lt;script&gt;` never reaches the output. Accents are stripped from input values (`boné`, `crachá`), and the contract's typo `bibilia` maps to `biblia`.
+
+**API**
+- `POLITIZE_AVATARES.svg(visual, expressao)` returns a string with viewBox 0 0 200 200 and a transparent background. It also exposes `EXPRESSOES`, plus `CABELOS`, `ACESSORIOS` and `ROUPAS`. An invalid expression becomes `neutro`.
+- `POLITIZE_CENAS.svg(cenario)` returns a string with viewBox 0 0 640 360 and `preserveAspectRatio="xMidYMid slice"`. It also exposes `PROPS`.
+
+**Values accepted by `avatares.js`**
+- **`estilo_cabelo`:** curto, calvo, coque, franja, longo, rabo, bone, sem, grisalho, moicano, colorido, trancas, careca_barba, cabelo_branco. Unknown means curto.
+  - With `genero` "F", curto is fuller and covers the ears.
+  - `bone` also draws the cap.
+  - `careca_barba` forces a beard.
+  - `grisalho` blends the hair colour toward grey, with white temples.
+  - `cabelo_branco` is a white cloud of curls.
+  - `colorido` is a bob with a lighter streak.
+- **`acessorio`:** oculos, bone, cordao, headset, biblia, espeto, celular, coletinho, chapeu, fone, cracha, megafone, caneca, nenhum. Unknown means nenhum.
+- **`roupa_tipo`:** polo, regata, camisa, camiseta, vestido, moletom, social, uniforme, jaqueta, colete. Unknown means camiseta.
+- **`barba`:** only `true` draws it. The colour is the hair darkened by 25%, or 10% for light hair.
+- **Extra optional fields:**
+  - `cor_acessorio` (hex) recolours the cap, hat, vest, chain, badge, headphones, mug or the headset light.
+  - `gravata` (hex, or `false` for no tie) is used by the `social` outfit.
+
+**Layer order in the avatar**
+1. Back hair (longo, trancas, rabo, coque bun, colorido), the moletom hood, and the back band of the `fone`.
+2. Neck (narrower when F), then the outfit, then a side outline of the torso so light clothes show against light panels.
+3. Items worn over the outfit: coletinho (two quilted panels with a gap in the middle), cordao (gold U with pendant), cracha (lanyard and white badge), fone (headphones resting around the neck).
+4. Ears and head (pointier chin when F), plus a shadow from the brim when wearing `chapeu`.
+5. Beard and moustache.
+6. Face: eyes, brows, nose, mouth.
+   - **fechado:** brows angled down toward the middle, narrowed eyes, mouth curved down.
+   - **neutro:** flat brows, light mouth curve.
+   - **aberto:** raised arched brows, bigger eyes with a highlight, open smile with teeth, blush.
+   - F adds lashes and lip colour.
+7. Front hair. Under a cap or hat only the sides are drawn.
+8. Headwear and face items:
+   - bone: dome, brim and front patch.
+   - chapeu: wide colonel's brim, dented crown, dark band.
+   - oculos: two round frames, bridge and temples.
+   - headset: band, two cups with a light, and a microphone arm to the mouth.
+9. Hand-held and side items:
+   - biblia: tilted dark book with a gold cross, held by two hands.
+   - celular: tilted phone with a lit screen, plus a hand.
+   - caneca: mug with handle and steam, on the left.
+   - espeto: skewer of meat beside the right shoulder.
+   - megafone: outlined horn beside the left shoulder.
+
+**Scenes (`cenas.js`)**
+- The palette is read in order as `[céu/parede, chão, destaque]`. An empty or invalid palette falls back to defaults.
+- **Ambient props** (not placed in a slot): areia, onda, luz, palco, fila, bolha, carro, retrovisor.
+  - areia pulls the floor toward a sand colour, which matters because the praia palette has a blue floor.
+  - onda adds the sea and a sun.
+  - luz draws light beams in front of everything.
+  - palco adds a stage and a rig of lights.
+  - fila draws silhouettes at the back.
+  - bolha draws two speech bubbles near the top.
+  - carro draws the car windows with city lights, a dashboard and a steering wheel.
+  - retrovisor hangs a mirror at the top centre.
+- **Placed props**, in list order:
+  - Slots: x = 100, 540, 196, 446, 30 and 610. The first two are scaled 1.15, which keeps x 230 to 410 clear for the avatar.
+  - Values: pao, vitrine, cafe, cerveja, mesa, guarda_sol, carrinho, gondola, esteira, halter, caixa, celular, teclado, monitor, banco_igreja, porta, churrasqueira, espeto, sacola, escada_rolante, vitrine_loja, cadeira, logo_x.
+  - Wall props (porta, celular, logo_x, escada_rolante, vitrine_loja) stand on the floor line; the rest sit lower on the floor. Inside the car, props shrink to 0.6.
+  - logo_x is a rounded square with an X. It switches to light on dark walls, as do the gym equipment colours.
+- Indoor scenes get a lower wall panel. Every scene gets a light edge vignette.
+
+**For the integrator**
+- An SVG returned as a string expands to fill its container, so set `width` and `height` in CSS.
+- The avatar uses no `id` or `defs`, so many can sit inline on one page without clashing.</result>
+<usage><subagent_tokens>233055</subagent_tokens><tool_uses>47</tool_uses><duration_ms>691168</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a9d6a556aeaaf5c7b</task-id>
+<tool-use-id>toolu_017ctXHSCjC8muCJRTPSNg7Q</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Motor do jogo: HTML, CSS e JS" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>O jogo está pronto e foi testado de ponta a ponta, sem nenhum erro no console. Rodei uma rodada completa no celular (375x812) e no desktop (1280x860), tanto com o fixture quanto com o roteiro real de `analysis/politize_game/roteiro/`. Também joguei uma rodada inteira abrindo de `file://` no Playwright headless (360x740). O navegador embutido não consegue mexer em página `file://`, por isso usei o Playwright para esse caso.
+
+**Resultados dos testes**
+- **Rodada:** com os dados reais saem 8 conversas, sem página rolando de lado.
+- **Toque:** botões de opção com 54 px de altura e texto com 17 px.
+- **Funções:** o atalho de teclado 1 a 4 funciona, assim como o caderno abrindo por cima do palco no celular e a ajuda fechando com Esc.
+- **Lições e "Compartilhar":** o card de lição aparece em erro e em grave, e o grave encerra a conversa. O "Compartilhar" copiou o texto para a área de transferência, porque o navegador de teste não tem `navigator.share`. Isso escreveu na sua área de transferência durante o teste.
+- **Semente:** a mesma `#s=` reproduz exatamente a mesma rodada, inclusive a ordem das opções. Uma semente diferente gera outra rodada.
+- **Verificações da casa:** `contrast-audit.py` deu 0 reprovações na tela de abertura, `ga_tag --check` e `test_ga_tag` passaram, e nenhum arquivo tem travessão ou `console.log`.
+- **Servidor:** a porta 4173 já estava ocupada por um servidor que não é meu (PID 92941), então usei esse e não o derrubei. O meu nem chegou a subir, logo não ficou nada para encerrar.
+
+**Arquivos (todos novos)**
+- `/Users/leonardodias/arvor/PNAD/docs/politize_game.html`
+- `/Users/leonardodias/arvor/PNAD/docs/politize_game/app.js`
+- `/Users/leonardodias/arvor/PNAD/docs/politize_game/app.css`
+- `/Users/leonardodias/arvor/PNAD/docs/politize_game/manifest.webmanifest`
+- `/Users/leonardodias/arvor/PNAD/docs/politize_game/dados.js`: fixture com 2 personagens, 3 cenários e 4 NPCs (um com grave), mais o `interface.json` real copiado. O build vai sobrescrever.
+- `avatares.js` e `cenas.js` já existiam quando fui testar; usei os dois sem alterar nada.
+
+**Estado do jogo** (`estado` no app.js)
+```
+{ personagem, semente, rodada:[{npc, cenario}], indice,
+  conversa:{npc, cenario, fase:0..4, confianca, trunfo, encerradaPorGrave, resultado},
+  placar:{flavio, nulo, lula, sem_mudanca}, graves,
+  licoes:[{tipo, npc, cenario, disse, licao, fonte}],
+  historico:[{npc, cenario, resultado, publico, confianca}] }
+```
+- As fases são `abordagem`, `escuta`, `objecao1`, `objecao2` e `fecho`.
+- O `localStorage` usa a chave `politize_game_v1` e guarda `{recorde:{saldo, grau, personagem}, jogados:[ids]}`.
+
+**Ids e classes principais**
+- **Telas:** `#tela-menu`, `#tela-palco`, `#tela-fim`. Na barra do topo ficam `.topo`, `#btn-caderno`, `#btn-ajuda`.
+- **Abertura:** `#menu-titulo`, `#menu-subtitulo`, `#menu-deck`, `#menu-tutorial`, `#menu-recorde`, `#menu-semente`, `#menu-personagens` (lista com `button.personagem`).
+- **Palco:**
+  - Cabeçalho e cena: `#hud-dia`, `#hud-cenario`, `#hud-placar`, `#cena`, `#cena-fundo`, `#npc-avatar`, `#eu-avatar`, `#publico-selo`.
+  - Confiança: `#confianca[data-nivel]`, `#confianca-trilho` (role meter), `#confianca-barra`, `#confianca-valor`.
+  - Painel de baixo: `#painel-baixo`, `#fala` (aria-live), `#fala-nome`, `#fala-texto`, `#reacao`, `#fase-rot`, `#opcoes` (`button.opcao[data-n]`).
+  - Dentro da reação: `.tipo-selo`, `.delta`, `.licao-card`, `.desfecho`.
+- **Coluna lateral:** `#lateral`, `#placar`, `#caderno-lista`, `#caderno-vazio`.
+- **Ajuda:** `#ajuda`, `#ajuda-texto`.
+- **Fim:** `#fim-kicker`, `#fim-grau-nome`, `#fim-grau-frase`, `#fim-resumo`, `#fim-erros`, `#fim-placar`, `#fim-recorde`, `#btn-compartilhar`, `#btn-de-novo`, `#btn-trocar`, `#fim-status`, `#fim-licoes`, `#fim-dicas`, `#fim-semente`.
+
+**Pontos do contrato que precisei interpretar**
+1. **NPCs insuficientes:** com menos de 8 NPCs a rodada tem menos conversas, sem repetir ninguém. O roteiro real hoje não tem NPC de `nao_votou`/`nulo_branco`; essas vagas são completadas com os outros grupos.
+2. **Cenários:** se só sobrar `rede_x` e ela já tiver saído na rodada, o motor sorteia entre todos os outros cenários.
+3. **Abordagem:** abre como narração (descrição do cenário mais a bio do NPC). O fecho abre com uma frase de reserva do motor ("Hora de encerrar a conversa."). As opções aparecem embaralhadas de forma estável pela semente, a conversa e a fase.
+4. **Graus:** segui o seu aviso. Uso `min_saldo` (também aceito `saldo_min`) e vence o grau de maior mínimo que o saldo alcança. O grau mais alto exige zero graves na rodada.
+5. **Schema real do `interface.json`:** o motor lê `fases`, `fim.{titulo, resumo, sem_erros, com_erros}`, `deck` e `dicas_gerais`. Quando `compartilhar` é uma lista, a variante é escolhida pela semente. Os rótulos que o roteiro não traz usam reserva interna do motor, como `continuar`, `ver_resultado`, `trocar`, `melhor`/`ok`/`erro`/`grave` e `encerrada`. Vale o roteiro acrescentar esses rótulos ao `interface.json`.
+6. **Avatares:** chamo `svg(Object.assign({genero}, visual), expressao)`, como você indicou.
+7. **Link de volta:** o link do topo continua dizendo "Politize sua vizinhança" em vez de `rotulos.voltar` ("Voltar"), porque nomeia o destino.
+8. **Link compartilhado:** `#s=&lt;semente&gt;` abre a tela de abertura com um aviso de "rodada compartilhada" e o jogador ainda escolhe o personagem. A semente reproduz o sorteio, não o personagem.
+9. **`start_url` do manifesto:** pus `../politize_game.html` com `scope` `../`. O valor pedido, `politize_game.html`, seria lido a partir da pasta do manifesto e apontaria para `docs/politize_game/politize_game.html`, que não existe.
+10. **Imagem social:** `og:image` aponta para `img/og/politize_game.png`, que ainda não existe. Falta acrescentar o card ao manifesto de `scripts/social-cards.py`.</result>
+<usage><subagent_tokens>258446</subagent_tokens><tool_uses>69</tool_uses><duration_ms>995462</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a868e9530e2a86b30</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>REDACTED.output</output-file>
+<status>completed</status>
+<summary>Agent "Roteiro: 12 NPCs (terceira via, faltosos, desgarrados)" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>Pronto: o arquivo `/Users/leonardodias/arvor/PNAD/analysis/politize_game/roteiro/npcs_b.json` tem os 12 NPCs na ordem, com os ids e as origens pedidos. Não criei nenhum outro arquivo no repositório; o gerador ficou só no scratchpad.
+
+**Validação**
+- O `json.load` passa, e o `grep` de travessão devolve 0.
+- Rodei o `validar_npcs` do próprio build (`scripts/politize_game/roteiro.py`) sobre o arquivo e não deu nenhum erro. Ele confere faixas de efeito, tags, todas as chaves `fonte`, exige `licao`, lei nas condutas ilegais e `propostas.*` em toda opção com tag `programa`.
+- Não rodei `politize-game-build.py --check`: o `npcs.json` (lote A) ainda não existe na pasta, e o build lê os dois arquivos juntos.
+
+**Opções grave e propostas por NPC**
+
+| NPC | Grave (tags) | Fontes de propostas |
+|---|---|---|
+| mbl_perdido | 1 (favor: cargo de assessor) | liberdade-instituicoes.66 |
+| tiktoker_antissistema | 1 (boca_de_urna: live na fila, lei.9504.39) | liberdade-instituicoes.66 |
+| bolsonarista_magoado | 1 (favor: churrasco e cerveja) | seguranca.13 |
+| irmao_indeciso | 1 (favor: reforma do templo) | liberdade-instituicoes.9 |
+| abstencionista_ressaca | 1 (carona, lei.6091) | nenhuma; usa `abstencao.como_funciona` (e-Título) |
+| nulista_protesto | 1 (favor: pendência na prefeitura) | corrupcao.69 |
+| branquista | 1 (favor: cartão de passagem) | infraestrutura.51 |
+| empresario_zema | 1 (favor + ameaca: bônus a funcionário) | economia-impostos.30, economia-impostos.69 |
+| motorista_app_renan | 1 (favor: tanque de gasolina) | emprego.45, custo-de-vida.31 |
+| dona_de_casa_ne | 1 (favor: cesta básica) | emprego.43, custo-de-vida.31; mais e-Título no fecho |
+| gamer_apolitico | 1 (carona + favor: carro e lanche, lei.6091) | educacao.35; mais e-Título |
+| concursado_cury | 1 (favor: função comissionada) | saude.39 |
+
+São 12 graves, todas com tag de conduta ilegal e fonte de lei; o mínimo pedido era 5. Três tipos aparecem: 10 favor, 2 carona e 1 boca de urna, sendo que o grave do empresário soma ameaça e o do gamer soma favor.
+
+**Escolhas que você pode querer rever**
+- **Repetição da tag favor:** 10 das 12 graves usam favor. Se quiser mais variedade, dá para trocar alguma por boca de urna ou ameaça.
+- **Ameaça citando o art. 299:** o pedido restringia a fonte a `lei.art299`, `lei.6091` ou `lei.9504.39`, e nenhuma delas cobre ameaça. Por isso a única ameaça (a do empresário) vem junto com a promessa de bônus, que o art. 299 cobre.
+- **Fonte em opções que não são erro:** as opções do e-Título levam `fonte` mesmo quando são `melhor` ou `ok`, como você pediu. O contrato só prevê `fonte` em erro, grave ou `programa`, mas o validador aceita.
+- **NPC sem gênero do jogador:** a primeira versão tinha falas do NPC dirigidas ao jogador com "meu filho", "irmão" e "amigo". Troquei por formas neutras ("meu bem", "viu?", "chefe").
+- **Afirmações sobre o Flávio:** nenhuma opção afirma fato não documentado sobre ele. A opção errada do nulista virou "do nosso lado é todo mundo honesto", em vez de dizer que ele não tem problema nenhum.
+- **Desfechos:** segui a regra pedida à letra, então até o bolsonarista magoado vai para Lula quando é mal tratado. Nulista e branquista ficam em `medio = sem_mudanca`, que para eles quer dizer continuar anulando ou votando em branco.</result>
+<usage><subagent_tokens>257660</subagent_tokens><tool_uses>12</tool_uses><duration_ms>1639595</duration_ms></usage>
+</task-notification>
