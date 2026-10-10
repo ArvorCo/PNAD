@@ -21,12 +21,14 @@
   const names={publicado:'Publicado',pnad:'PNAD',modelo:'PNAD + comparecimento'};
   const ageNames={central:'idade central',idosos60:'presença 60+: 60%',idosos80:'presença 60+: 80%'};
   const mobile=matchMedia('(max-width:800px)');
-  const primary=root.querySelector('.rs-primary'), rates=$('rates');
+  const primary=root.querySelector('.rs-primary'), rates=$('rates'), undecidedPanel=root.querySelector('.rs-undecided');
   const primaryHome=document.createComment('presença relativa');
+  const undecidedHome=document.createComment('transferência de indecisos');
+  undecidedPanel.before(undecidedHome);
   primary.before(primaryHome);
   function positionPrimary() {
-    if(mobile.matches) root.querySelector('.rs-account').after(primary,rates);
-    else primaryHome.after(primary,rates);
+    if(mobile.matches) root.querySelector('.rs-account').after(primary,rates,undecidedPanel);
+    else {primaryHome.after(primary,rates);undecidedHome.after(undecidedPanel);}
   }
   mobile.addEventListener('change',positionPrimary);positionPrimary();
   function label() {
@@ -83,6 +85,7 @@
   function controls() {
     for (const el of root.querySelectorAll('[data-param]')) {
       const k=el.dataset.param;
+      if(k==='indecisos_flavio') continue;
       if (el.tagName==='SELECT' && ![...el.options].some(o=>o.value===String(p[k]===null?'p':p[k]))) {
         const o=new Option(`${fmt(p[k])}% para Flávio`,String(p[k]));el.add(o);
       }
@@ -90,6 +93,25 @@
       if ($('out-'+k)) $('out-'+k).textContent=`${['presenca_relativa','branco_nulo_pp','nulo_diferencial_pp','vies_pp'].includes(k)?signed(p[k]):fmt(p[k])}${['branco_nulo_pp','vies_pp'].includes(k)?' pp':'%'}`;
     }
     $('idade').disabled=p.modo!=='modelo';
+  }
+  function undecided() {
+    const engine=typeof M.undecided==='function'?M:engines.get(current.engine);
+    const u=engine.undecided({...data,electorate:electorate()},p);
+    const precise=n=>n.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+    const change=n=>(n>0?'+':n<0?'−':'')+precise(Math.abs(n));
+    $('undecided-pool').textContent=`${fmt(u.survey_pct)}% na base ${p.modo==='publicado'?'publicada':'PNAD'} · ${fmt(u.present_voters_pct)}% dos votantes neste cenário · ${precise(u.present_total/1e6)} milhões de indecisos presentes.`;
+    $('out-indecisos_flavio').textContent=`Flávio ${fmt(u.chosen_flavio_pct)}% · Lula ${fmt(100-u.chosen_flavio_pct)}%`;
+    $('indecisos_flavio').value=u.chosen_flavio_pct;
+    if(document.activeElement!==$('indecisos_flavio-number')) $('indecisos_flavio-number').value=u.chosen_flavio_pct.toFixed(1);
+    $('undecided-proportional').setAttribute('aria-pressed',String(p.indecisos_flavio===null));
+    const rule=u.policy==='central_proportion'?'a proporção Flávio/Lula da central, antes da conversão':'a proporção de cada pesquisa, regra deste link arquivado';
+    $('undecided-rule').textContent=p.indecisos_flavio===null?`Automático: acompanha ${rule}. Arraste para criar outra divisão.`:`Divisão livre: ${fmt(u.chosen_flavio_pct)}% para Flávio, ${fmt(100-u.chosen_flavio_pct)}% para Lula. Proporção automática desta base: ${fmt(u.proportional_flavio_pct)}% / ${fmt(100-u.proportional_flavio_pct)}%.`;
+    for(const [key,value] of [['flavio',u.to_flavio],['lula',u.to_lula],['invalid',u.to_invalid]]) {
+      root.querySelector(`[data-undecided-part="${key}"]`).style.width=(u.present_total?100*value/u.present_total:0)+'%';
+      $('undecided-to-'+key).textContent=precise(value/1e6);
+    }
+    $('undecided-impact').textContent=`Efeito nos válidos de Flávio: ${change(u.impact_flavio_pp)} pp · ${change(u.impact_flavio_votes/1e6)} milhão de votos vs. divisão automática, com os demais controles iguais.`;
+    return u;
   }
   function turnout() {
     const t=data.turnout_model;
@@ -140,9 +162,9 @@
     root.querySelectorAll('[data-rs-preset]').forEach(b=>b.setAttribute('aria-pressed',String(equal(p,{...centralParams(),...presets.find(x=>x.id===b.dataset.rsPreset).parametros}))));
     const saturated=Object.values(result.taxas).some(q=>q>=1-1e-9);
     $('warning').textContent=[data!==current?`Dados arquivados de ${data.reference}; “Restaurar” volta à versão atual.`:'',saturated?'Uma taxa atingiu 100%; o teto físico limita a razão de presença.':'',p.modo!=='modelo'?'Base sem propensão Nexus; a presença relativa continua sendo sua hipótese livre.':''].filter(Boolean).join(' ');
-    centralCards();curve();turnout();
+    centralCards();curve();turnout();const undecidedResult=undecided();
     if(updateHash) history.replaceState(null,'',M.encode(data,p));
-    window.reponderacaoCenario={result,params:p,version:data.version,totais:totals,base_eleitorado:electorate()};
+    window.reponderacaoCenario={result,params:p,version:data.version,totais:totals,base_eleitorado:electorate(),indecisos:undecidedResult};
     document.dispatchEvent(new CustomEvent('reponderacao:cenario',{detail:window.reponderacaoCenario}));
     simulations();
   }
@@ -183,10 +205,14 @@
   }
   for(const el of root.querySelectorAll('[data-param]')) el.addEventListener('input',()=>{
     if(loading) return;
+    if(el.type==='number' && (el.value==='' || !el.validity.valid)) return;
     const k=el.dataset.param;
     p[k]=['modo','idade'].includes(k)?el.value:el.value==='p'?null:Number(el.value);
     render(true);
   });
+  $('undecided-proportional').addEventListener('click',()=>{if(!loading){p.indecisos_flavio=null;render(true);}});
+  $('indecisos_flavio-number').addEventListener('blur',()=>{$('indecisos_flavio-number').value=window.reponderacaoCenario.indecisos.chosen_flavio_pct.toFixed(1);});
+  root.querySelectorAll('[data-rs-undecided-share]').forEach(el=>el.addEventListener('click',()=>{if(!loading){p.indecisos_flavio=Number(el.dataset.rsUndecidedShare);render(true);}}));
   root.querySelectorAll('[data-rs-preset]').forEach(el=>el.addEventListener('click',()=>{
     if(loading) return;p={...centralParams(),...presets.find(x=>x.id===el.dataset.rsPreset).parametros};render(true);
   }));
@@ -226,8 +252,9 @@
     }
     text(`Compareceriam: ${millions(totals.comparecimento)} mi · base TSE: ${millions(totals.eleitorado)} mi (${electorate().scope}${data.electorate?'':'; base atual'}) · arredondados`,55,457,'15px sans-serif','#c5d2cb');
     text(`Presença relativa F: ${signed(p.presenca_relativa)}% · abstenção: ${fmt(result.abstencao)}% · B/N: ${fmt(100*result.branco_nulo/result.comparecimento)}% dos votantes`,55,486,'17px sans-serif','#f4f0e7');
-    text(`${names[p.modo]} · ${ageNames[p.idade]} · Δ B/N: ${signed(p.branco_nulo_pp)} pp · saída desigual: ${signed(p.nulo_diferencial_pp)}%`,55,511,'15px sans-serif','#c5d2cb');
-    text(`Indecisos válidos: ${fmt(p.indecisos_validos)}% · para F: ${p.indecisos_flavio===null?'proporcional':fmt(p.indecisos_flavio)+'%'} · erro comum F−L: ${signed(p.vies_pp)} pp`,55,536,'15px sans-serif','#c5d2cb');
+    text(`${names[p.modo]} · ${ageNames[p.idade]} · Δ B/N: ${signed(p.branco_nulo_pp)} pp · saída desigual: ${signed(p.nulo_diferencial_pp)}% · erro F−L: ${signed(p.vies_pp)} pp`,55,511,'15px sans-serif','#c5d2cb');
+    const allocation=window.reponderacaoCenario.indecisos;
+    text(`Indecisos: ${fmt(allocation.survey_pct)}% na base · ${fmt(p.indecisos_validos)}% escolhem · divisão F ${fmt(allocation.chosen_flavio_pct)}% / L ${fmt(100-allocation.chosen_flavio_pct)}%`,55,536,'15px sans-serif','#c5d2cb');
     text('Hipóteses declaradas. Sem intervalo preditivo validado ou probabilidade de vitória.',55,566,'15px sans-serif','#c5d2cb');
     text('brasil.arvor.co/reponderacao_pnad.html',55,593,'17px sans-serif','#f4f0e7');
     text('dados '+data.version,880,593,'13px monospace','#c5d2cb');

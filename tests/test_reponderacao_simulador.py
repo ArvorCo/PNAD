@@ -97,7 +97,6 @@ def test_uniform_nonchoice_changes_volume_not_valid_shares():
     for params in (
         {"comparecimento": 60},
         {"branco_nulo_pp": 3},
-        {"indecisos_validos": 0},
     ):
         result = M.evaluate(DATA, params)
         assert result["flavio"] == pytest.approx(central["flavio"])
@@ -112,9 +111,9 @@ def test_only_post_first_round_fields_enter_central_and_no_vox_imputation():
     previous = forecast["ballots"]["2t"]["scenarios"]["flavio105"]["aggregate"][
         "modelo"
     ]
-    assert M.evaluate(DATA, {"presenca_relativa": 5})["flavio"] == pytest.approx(
-        previous["flavio"]
-    )
+    assert M.evaluate(
+        {**DATA, "undecided_policy": "per_poll"}, {"presenca_relativa": 5}
+    )["flavio"] == pytest.approx(previous["flavio"])
 
 
 @pytest.mark.parametrize(

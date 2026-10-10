@@ -176,7 +176,7 @@ def build(data, preferences):
             "common_sd_pp": 2.0,
             "draws": draws,
         },
-        "undecided": "Proporcionais: não há rejeição comparável pós-04/10 incorporada; não transportamos a disponibilidade medida antes do 1º turno.",
+        "undecided": "Divisão proporcional à razão F/L da âncora entre os presentes, antes da conversão; editável no simulador. Não há rejeição comparável pós-04/10 incorporada; não transportamos a disponibilidade medida antes do 1º turno.",
         "states": importlib.import_module("reponderacao-estaduais").build(today),
         "shared_sources": {
             path: hashlib.sha256((ROOT / path).read_bytes()).hexdigest()

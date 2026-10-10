@@ -81,10 +81,12 @@ def test_mean_preserves_published_snapshot_for_all_controls():
             "presenca_relativa": old["defaults"]["presenca_relativa"],
             **params,
         }
-        left, right = M.evaluate(DATA, params), M.evaluate(old, params)
+        left, right = M.evaluate(
+            {**DATA, "undecided_policy": "per_poll"}, params
+        ), M.evaluate(old, params)
         for key in ("flavio", "lula", "validos", "branco_nulo", "abstencao"):
             assert left[key] == right[key]
-    assert DATA["central"]["flavio"] == pytest.approx(55.03942877126153)
+    assert DATA["central"]["flavio"] == pytest.approx(55.04046343780422)
     assert DATA["central_projection"]["flavio"] == pytest.approx(53.61609206185117)
 
 

@@ -52,7 +52,9 @@ def test_atlas_mixed_field_has_sensitivity_but_cannot_enter_post_first_round_cen
     assert any(p["id"] == "vox_brasil_2026-10-07" for p in sim["excluded"])
     previous = read("docs/assets/reponderacao_cenarios/43b90fe501f43fcd.json")
     # A exclusão do campo misto é comparada com as hipóteses antigas explícitas.
-    same_parameters = SIM.evaluate(sim, previous["defaults"])
+    same_parameters = SIM.evaluate(
+        {**sim, "undecided_policy": "per_poll"}, previous["defaults"]
+    )
     assert same_parameters["flavio"] == pytest.approx(previous["central"]["flavio"])
 
 

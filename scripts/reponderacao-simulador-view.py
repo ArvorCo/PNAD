@@ -8,6 +8,7 @@ COUNT = importlib.import_module("reponderacao-contagem")
 PROJECTION = importlib.import_module("reponderacao-projecao-view")
 TURNOUT = importlib.import_module("reponderacao-comparecimento-view")
 PRESENCE = importlib.import_module("reponderacao-presenca-view")
+UNDECIDED = importlib.import_module("reponderacao-indecisos-view")
 
 PRESETS = [
     ("central", "Central selecionada", {}),
@@ -128,6 +129,7 @@ def section_html(data, table):
         )
         + '<p id="rs-rates" class="rs-rates"></p>'
         + PRESENCE.note(data)
+        + UNDECIDED.controls(data, slider)
         + slider(
             data,
             "comparecimento",
@@ -149,7 +151,7 @@ def section_html(data, table):
             " pp",
             "Pontos entre os votantes. A saída comum é proporcional; o piso é zero. Use a saída desigual abaixo para mudar a disputa.",
         )
-        + '<details class="rs-advanced"><summary>Mais hipóteses: indecisos, idade e saídas desiguais</summary>'
+        + '<details class="rs-advanced"><summary>Mais hipóteses: base, idade e saídas desiguais</summary>'
         '<label for="rs-modo">Base do cenário<select id="rs-modo" data-param="modo"><option value="modelo">PNAD + comparecimento</option><option value="pnad">PNAD, sem propensão Nexus</option><option value="publicado">Publicado, sem propensão Nexus</option></select></label>'
         '<label for="rs-idade">Hipótese de idade na Nexus<select id="rs-idade" data-param="idade"><option value="central">Central histórica</option><option value="idosos60">Presença de 60+ em 60%</option><option value="idosos80">Presença de 60+ em 80%</option></select></label>'
         + slider(
@@ -162,17 +164,6 @@ def section_html(data, table):
             "%",
             "Positivo: percentual dos votos válidos potenciais de Flávio que vira branco/nulo. Negativo: saída equivalente de Lula. Preserva o comparecimento.",
         )
-        + slider(
-            data,
-            "indecisos_validos",
-            "Indecisos que escolhem candidato",
-            0,
-            100,
-            5,
-            "%",
-            "O restante vira branco/nulo entre os votantes. Não vira abstenção.",
-        )
-        + '<label for="rs-indecisos_flavio">Destino dos indecisos que escolhem<select id="rs-indecisos_flavio" data-param="indecisos_flavio"><option value="p">Proporcional aos que comparecem</option><option value="0">Todos para Lula</option><option value="25">25% para Flávio</option><option value="50">Metade para cada um</option><option value="75">75% para Flávio</option><option value="100">Todos para Flávio</option></select></label>'
         + slider(
             data,
             "vies_pp",
@@ -221,7 +212,7 @@ def section_html(data, table):
         "São inferências ecológicas; a pergunta de presença antecede o 1º turno. A taxa nacional central vem da apuração de 2026 e da comparação de regras históricas entre turnos, não da intenção agregada Vox. "
         "Não há cruzamentos atuais suficientes para opções territoriais por UF neste simulador.</p>"
         "<p>Ajustamos uma margem de renda, conservamos o restante dos pesos do instituto e normalizamos cada vetor completo. "
-        "Não escolha sem cruzamento de renda conserva a parcela publicada; o tamanho desconhecido não muda os válidos quando a alocação de indecisos é proporcional. "
+        "Não escolha sem cruzamento de renda conserva a parcela publicada; a transferência de indecisos tem régua própria e hipótese de destino explícita. "
         "A média usa peso igual por casa. Piso de branco/nulo: zero; teto de presença: 100%; votos válidos nunca negativos.</p>"
         f"<p>Contagem absoluta: {electorate_label} eleitores aptos nas 27 UFs "
         f'(<a href="{esc(data["electorate"]["source_page"])}">apuração presidencial TSE 2026</a>), '
@@ -237,5 +228,6 @@ def section_html(data, table):
         + PROJECTION.evidence(data, table)
         + TURNOUT.evidence(data, table)
         + PRESENCE.evidence(data, table)
+        + UNDECIDED.evidence(data, table)
         + f'<script id="rs-data" type="application/json">{encoded}</script></div></section>'
     )

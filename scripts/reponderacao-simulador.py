@@ -61,7 +61,7 @@ def calibrate(masses, rates, target):
     return {k: min(1, (low + high) / 2 * rates[k]) for k in KEYS}
 
 
-def poll_result(row, data, p):
+def attendance(row, data, p):
     masses = row["published" if p["modo"] == "publicado" else "pnad"]
     rates = (
         dict(data["rates"][p["idade"]])
@@ -71,6 +71,11 @@ def poll_result(row, data, p):
     rates["flavio"] *= 1 + p["presenca_relativa"] / 100
     rates = calibrate(masses, rates, p["comparecimento"])
     attending = {k: masses[k] * rates[k] for k in KEYS}
+    return attending, rates
+
+
+def poll_result(row, data, p):
+    attending, rates = attendance(row, data, p)
     f, lula_mass, u, b = (attending[k] for k in KEYS)
     uf = (
         f / (f + lula_mass)
@@ -111,8 +116,7 @@ def poll_result(row, data, p):
     }
 
 
-def evaluate(data, params=None):
-    p = parameters(data, params)
+def scenario_rows(data, p):
     rows = data["polls"]
     if p.get("centro") == "projecao":
         rows = [
@@ -124,7 +128,29 @@ def evaluate(data, params=None):
                 "pnad": data["projection"]["anchors"]["pnad"],
             }
         ]
-    polls = [poll_result(row, data, p) for row in rows]
+    return rows
+
+
+def allocation_parameters(data, p):
+    """A divisão automática acompanha a média antes de converter indecisos."""
+    if (
+        p["indecisos_flavio"] is not None
+        or data.get("undecided_policy") != "central_proportion"
+    ):
+        return p
+    shares = []
+    for row in scenario_rows(data, p):
+        masses, _ = attendance(row, data, p)
+        shares.append(masses["flavio"] / (masses["flavio"] + masses["lula"]))
+    if not shares:
+        raise ValueError("Nenhuma pesquisa elegível no 2º turno")
+    return {**p, "indecisos_flavio": 100 * sum(shares) / len(shares)}
+
+
+def evaluate(data, params=None):
+    p = parameters(data, params)
+    effective = allocation_parameters(data, p)
+    polls = [poll_result(row, data, effective) for row in scenario_rows(data, p)]
     if not polls:
         raise ValueError("Nenhuma pesquisa elegível no 2º turno")
     out = {
@@ -151,11 +177,72 @@ def evaluate(data, params=None):
     return out
 
 
+def undecided(data, params=None):
+    """Pool e transferências iniciais; impacto final contra a divisão automática."""
+    p = parameters(data, params)
+    effective = allocation_parameters(data, p)
+    reference = allocation_parameters(data, {**p, "indecisos_flavio": None})
+    pool = transferred_f = transferred_l = invalid = reference_f = survey = 0.0
+    rows = scenario_rows(data, p)
+    for row in rows:
+        mass, _ = attendance(row, data, p)
+        u = mass["indecisos"]
+        local = mass["flavio"] / (mass["flavio"] + mass["lula"])
+        share = (
+            local
+            if effective["indecisos_flavio"] is None
+            else effective["indecisos_flavio"] / 100
+        )
+        ref = (
+            local
+            if reference["indecisos_flavio"] is None
+            else reference["indecisos_flavio"] / 100
+        )
+        converted = u * p["indecisos_validos"] / 100
+        pool += u
+        transferred_f += converted * share
+        transferred_l += converted * (1 - share)
+        invalid += u - converted
+        reference_f += u * ref
+        survey += row["published" if p["modo"] == "publicado" else "pnad"]["indecisos"]
+    chosen = evaluate(data, p)
+    baseline = evaluate(data, {**p, "indecisos_flavio": None})
+    total = (data.get("electorate") or COUNT.electorate())["total"]
+    return {
+        "survey_pct": survey / len(rows),
+        "present_electorate_pct": pool / len(rows),
+        "present_voters_pct": 100 * pool / len(rows) / p["comparecimento"],
+        "proportional_flavio_pct": (
+            reference["indecisos_flavio"]
+            if reference["indecisos_flavio"] is not None
+            else (100 * reference_f / pool if pool else 50)
+        ),
+        "chosen_flavio_pct": (
+            effective["indecisos_flavio"]
+            if effective["indecisos_flavio"] is not None
+            else (100 * reference_f / pool if pool else 50)
+        ),
+        "to_flavio": total / 100 * transferred_f / len(rows),
+        "to_lula": total / 100 * transferred_l / len(rows),
+        "to_invalid": total / 100 * invalid / len(rows),
+        "present_total": total / 100 * pool / len(rows),
+        "impact_flavio_pp": chosen["flavio"] - baseline["flavio"],
+        "impact_flavio_votes": total
+        / 100
+        * (
+            chosen["por_100_eleitores"]["flavio"]
+            - baseline["por_100_eleitores"]["flavio"]
+        ),
+        "policy": data.get("undecided_policy", "per_poll"),
+    }
+
+
 def simulate(data, params=None):
     """Reaplica TODOS os controles aos mesmos sorteios nacionais versionados."""
     import numpy as np
 
     p = parameters(data, {**(params or {}), "centro": "projecao"})
+    effective = allocation_parameters(data, p)
     kind = "published" if p["modo"] == "publicado" else "pnad"
     draws = data["projection"]["mc"]["draws"][kind]
     samples = []
@@ -168,7 +255,7 @@ def simulate(data, params=None):
             "published": mass,
             "pnad": mass,
         }
-        result = poll_result(row, data, p)
+        result = poll_result(row, data, effective)
         result["por_100_eleitores"] = {
             "flavio": result["validos"] * result["flavio"] / 100,
             "lula": result["validos"] * result["lula"] / 100,
@@ -250,6 +337,7 @@ def build(data, forecast, nexus):
         "electorate": COUNT.electorate(),
         "turnout_model": turnout,
         "presence_model": presence,
+        "undecided_policy": "central_proportion",
         "projection": PROJECTION.build(data, preferences),
         "polls": rows,
         "engine": hashlib.sha256(
@@ -277,7 +365,7 @@ def build(data, forecast, nexus):
             "selection": "Última onda por casa, divulgada na janela de sete dias; no pós-1º turno, apenas campo iniciado depois de 04/10.",
             "central": "Central Média Arvor: peso igual entre casas com cruzamento de renda. Central Projeção Arvor: recência, inclinação encolhida e Monte Carlo, PNAD onde disponível e publicado onde falta. Ambas partem de propensão Nexus + ajuste relativo de Flávio +3,8%, resíduo equivalente do 1º turno transportado como hipótese, sem presença por candidato identificada.",
             "attendance": "Apuração do 1º turno de 2026, Brasil sem exterior, como referência central: sem mudança automática entre turnos. Retrospectiva exploratória e cenários presidenciais 2002–2022 disponíveis; taxas relativas Nexus recalibradas ao total escolhido, sem inferir voto dos ausentes.",
-            "undecided": "Proporcionais aos candidatos que comparecem; dados de não escolha sem renda conservam o publicado, com indicação na ficha.",
+            "undecided": "Divisão automática na proporção média F/L dos candidatos presentes antes da conversão e das saídas extras; mesma proporção aplicada aos indecisos de cada pesquisa ou âncora. No Monte Carlo, proporção fixada na âncora do cenário. Divisão livre de 0 a 100% para Flávio; o complemento vai para Lula. A parcela que não escolhe vira branco/nulo, sem alterar a abstenção. Transferência inicial e impacto final são métricas distintas. Destino é hipótese, não transição individual medida; dados de não escolha sem renda conservam o publicado.",
             "aggregation": "Média: normalizar válidos dentro de cada pesquisa, depois peso igual; contabilidade por 100 eleitores usa a massa válida média e esse placar. Projeção: agregar vetores completos por recência e inclinação, aplicar os controles à âncora e só então normalizar válidos.",
             "limits": "Sensibilidade condicional, sem probabilidade de vitória ou intervalo preditivo validado. Nenhum voto ou preferência territorial é imputado.",
         },

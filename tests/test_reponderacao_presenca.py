@@ -75,7 +75,10 @@ def test_rounding_and_old_five_percent_scenario_preserve_all_other_parameters():
     )
     assert archived["defaults"]["presenca_relativa"] == 5
     for centre in ("media", "projecao"):
-        actual = M.evaluate(DATA, {"centro": centre, "presenca_relativa": 5})
+        actual = M.evaluate(
+            {**DATA, "undecided_policy": "per_poll"},
+            {"centro": centre, "presenca_relativa": 5},
+        )
         previous = M.evaluate(archived, {"centro": centre})
         for k in ("flavio", "lula", "validos", "branco_nulo", "abstencao"):
             assert actual[k] == pytest.approx(previous[k], abs=1e-9, rel=0)
