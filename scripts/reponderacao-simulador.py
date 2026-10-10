@@ -15,6 +15,7 @@ MODEL = importlib.import_module("reponderacao-validos")
 COUNT = importlib.import_module("reponderacao-contagem")
 PROJECTION = importlib.import_module("reponderacao-projecao")
 TURNOUT = importlib.import_module("reponderacao-comparecimento")
+PRESENCE = importlib.import_module("reponderacao-presenca")
 KEYS = ("flavio", "lula", "indecisos", "branco_nulo")
 LIMITS = {
     "presenca_relativa": (-30, 30),
@@ -219,6 +220,7 @@ def preferences(values, fallback):
 
 def build(data, forecast, nexus):
     turnout = TURNOUT.build()
+    presence = PRESENCE.build(forecast, nexus)
     block = forecast["ballots"]["2t"]
     eligible = block["scenarios"]["central"]["polls"]
     raw = {p["id"]: p for p in data["pesquisas"]}
@@ -247,6 +249,7 @@ def build(data, forecast, nexus):
         "reference": data["referencia"],
         "electorate": COUNT.electorate(),
         "turnout_model": turnout,
+        "presence_model": presence,
         "projection": PROJECTION.build(data, preferences),
         "polls": rows,
         "engine": hashlib.sha256(
@@ -257,7 +260,7 @@ def build(data, forecast, nexus):
             "centro": "media",
             "modo": "modelo",
             "idade": "central",
-            "presenca_relativa": 5.0,
+            "presenca_relativa": presence["central_extra_pct"],
             "comparecimento": turnout["central_turnout_pct"],
             "branco_nulo_pp": 0.0,
             "nulo_diferencial_pp": 0.0,
@@ -272,7 +275,7 @@ def build(data, forecast, nexus):
         "limits": LIMITS,
         "method": {
             "selection": "Última onda por casa, divulgada na janela de sete dias; no pós-1º turno, apenas campo iniciado depois de 04/10.",
-            "central": "Central Média Arvor: peso igual entre casas com cruzamento de renda. Central Projeção Arvor: recência, inclinação encolhida e Monte Carlo, PNAD onde disponível e publicado onde falta. Ambas partem de propensão Nexus + presença relativa de Flávio +5%, escolha declarada após o 1º turno, não parâmetro aprendido.",
+            "central": "Central Média Arvor: peso igual entre casas com cruzamento de renda. Central Projeção Arvor: recência, inclinação encolhida e Monte Carlo, PNAD onde disponível e publicado onde falta. Ambas partem de propensão Nexus + ajuste relativo de Flávio +3,8%, resíduo equivalente do 1º turno transportado como hipótese, sem presença por candidato identificada.",
             "attendance": "Apuração do 1º turno de 2026, Brasil sem exterior, como referência central: sem mudança automática entre turnos. Retrospectiva exploratória e cenários presidenciais 2002–2022 disponíveis; taxas relativas Nexus recalibradas ao total escolhido, sem inferir voto dos ausentes.",
             "undecided": "Proporcionais aos candidatos que comparecem; dados de não escolha sem renda conservam o publicado, com indicação na ficha.",
             "aggregation": "Média: normalizar válidos dentro de cada pesquisa, depois peso igual; contabilidade por 100 eleitores usa a massa válida média e esse placar. Projeção: agregar vetores completos por recência e inclinação, aplicar os controles à âncora e só então normalizar válidos.",
@@ -309,5 +312,8 @@ def write(data, forecast):
     )
     (ROOT / "docs/assets/reponderacao_comparecimento.json").write_text(
         json.dumps(result["turnout_model"], ensure_ascii=False, indent=2) + "\n"
+    )
+    (ROOT / "docs/assets/reponderacao_presenca.json").write_text(
+        json.dumps(result["presence_model"], ensure_ascii=False, indent=2) + "\n"
     )
     return result

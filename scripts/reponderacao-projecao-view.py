@@ -58,7 +58,7 @@ def evidence(data, table):
         f'<p><b>Indecisos:</b> {esc(p["undecided"])}</p>'
         f'<p>Central Projeção: Flávio {fmt(data["central_projection"]["flavio"])}% × Lula {fmt(data["central_projection"]["lula"])}%. Faixa central de 90% dos {p["mc"]["runs"]} sorteios: Flávio {fmt(u["flavio"]["p05"])}–{fmt(u["flavio"]["p95"])}%; Lula {fmt(u["lula"]["p05"])}–{fmt(u["lula"]["p95"])}%. Estes limites não são um intervalo com cobertura validada contra a urna.</p>'
         "<p>O tamanho amostral é limitado a 2.000 por casa e dividido pelo efeito de desenho assumido de 1,5. Erro comum: desvio de 2 pp na diferença F−L; são parâmetros herdados, não estimados para o 2º turno. Os sorteios e a semente ficam na versão do link e são reaplicados aos controles; não há sorteio novo a cada movimento.</p>"
-        "<p><b>Por que difere da Média?</b> Mudam os pesos e a cobertura: a Vox entra pelo placar publicado nesta central. A diferença não é atribuível só ao algoritmo. A hipótese de presença relativa +5% é compartilhada.</p>"
+        "<p><b>Por que difere da Média?</b> Mudam os pesos e a cobertura: a Vox entra pelo placar publicado nesta central. A diferença não é atribuível só ao algoritmo. A hipótese relativa transportada do 1º turno é compartilhada.</p>"
         f'<p>{esc(p["limits"])}</p><p><a href="predicao_2026_1T_presidente.html">Consultar a predição original do 1º turno</a> · <a href="assets/reponderacao_simulador.json">Dados e sorteios das duas centrais</a>.</p></details>'
         + states_evidence(p["states"], table)
     )

@@ -636,7 +636,10 @@ def placar_home() -> str:
             "Central Projeção Arvor · Flávio × Lula / válidos",
         ),
         (br(central["abstencao"], 1) + "%", "Abstenção / eleitorado"),
-        ("+5%", "Hipótese de presença relativa de Flávio"),
+        (
+            "+" + br(simulation["defaults"]["presenca_relativa"], 1) + "%",
+            "Ajuste relativo de Flávio · hipótese do 1º turno",
+        ),
     ]
     return "".join(
         f"<div><b>{esc(valor)}</b><span>{esc(texto)}</span></div>"

@@ -189,7 +189,7 @@ def build(data, preferences):
         },
         "adapter_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         "method": "Última onda por casa na semana, peso pelo ponto médio do campo (meia-vida 3 dias); PNAD onde existe e publicado onde falta; âncora projetada a 25/10 por inclinação de 28 dias encolhida, estimada só após 04/10 quando identificável. Monte Carlo: bootstrap bayesiano por casa, Dirichlet com n efetivo e choque comum Student t (dp 2 pp), mais incerteza da inclinação em quadratura.",
-        "limits": "Adaptação nacional do motor do 1º turno, sem ML supervisionado ou informação nova criada pelo Monte Carlo. Não transfere validação contra pesquisas nem preferências territoriais do 1º turno. Pesos PNAD são sensibilidade de uma margem; propensões Nexus e presença relativa +5% continuam hipóteses. Os intervalos são condicionais, sem cobertura validada contra a urna; com tendência indisponível supõem estabilidade até 25/10.",
+        "limits": "Adaptação nacional do motor do 1º turno, sem ML supervisionado ou informação nova criada pelo Monte Carlo. Não transfere validação contra pesquisas nem preferências territoriais do 1º turno. Pesos PNAD são sensibilidade de uma margem; propensões Nexus e transporte do resíduo relativo do 1º turno continuam hipóteses. Os intervalos são condicionais, sem cobertura validada contra a urna; com tendência indisponível supõem estabilidade até 25/10.",
     }
 
 
@@ -210,6 +210,8 @@ def encode(data):
     clone["central_projection"] = "__CENTRAL_PROJECTION__"
     if "turnout_model" in clone:
         clone["turnout_model"] = "__TURNOUT__"
+    if "presence_model" in clone:
+        clone["presence_model"] = "__PRESENCE__"
     fields = []
     for key, rows in draws.items():
         blocks = [
@@ -246,6 +248,9 @@ def encode(data):
         )
         .replace(
             '"__TURNOUT__"', json.dumps(data.get("turnout_model"), ensure_ascii=False)
+        )
+        .replace(
+            '"__PRESENCE__"', json.dumps(data.get("presence_model"), ensure_ascii=False)
         )
         + "\n"
     )

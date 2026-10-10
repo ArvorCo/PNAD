@@ -112,7 +112,9 @@ def test_only_post_first_round_fields_enter_central_and_no_vox_imputation():
     previous = forecast["ballots"]["2t"]["scenarios"]["flavio105"]["aggregate"][
         "modelo"
     ]
-    assert DATA["central"]["flavio"] == pytest.approx(previous["flavio"])
+    assert M.evaluate(DATA, {"presenca_relativa": 5})["flavio"] == pytest.approx(
+        previous["flavio"]
+    )
 
 
 @pytest.mark.parametrize(
@@ -199,7 +201,7 @@ def test_public_routes_preserve_first_round_and_log_separately():
     )
     assert log.select_one("#atualizacao") and log.select_one("#ondas")
     assert "83,89" in page.select_one("#vox-renda").get_text()
-    assert DATA["defaults"]["presenca_relativa"] == 5
+    assert DATA["defaults"]["presenca_relativa"] == 3.8
     counts = C.counts(DATA["central"], DATA["electorate"])
     for k in (
         "flavio",

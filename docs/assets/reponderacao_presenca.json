@@ -1,0 +1,342 @@
+{
+  "reference": "2026-10-09",
+  "adapter_sha256": "60e267ca2176281ec1313c595948bf8a506e3ef7eed138b32f690542e428ef76",
+  "scope": "Brasil, sem exterior, na previsão e na urna",
+  "central_extra_pct": 3.8,
+  "central": {
+    "predicted_valid_pct": {
+      "flavio": 45.26716598307138,
+      "lula": 45.120645128600216
+    },
+    "observed_valid_pct": {
+      "flavio": 47.03761218404258,
+      "lula": 45.15608426218308
+    },
+    "multiplier": 1.0382955367321345,
+    "equivalent_extra_pct": 3.8295536732134483,
+    "flavio_vs_all_others_pct": 7.384683242224632,
+    "after_multiplier_valid_pct": {
+      "flavio": 46.19980866463161,
+      "lula": 44.35179330094866
+    }
+  },
+  "forecast_generated_at": "2026-10-04T01:22:40-03:00",
+  "forecast_model_hash": "ae5671a1311e962442049c5d387fd4e20436f8053112e8ebfa8975a69b66a7e6",
+  "forecast_published_commit": "1688f007",
+  "observed_votes": {
+    "flavio": 55960603,
+    "lula": 53722151,
+    "validos": 118969906
+  },
+  "predicted_votes": {
+    "flavio": 54116051.386426955,
+    "lula": 53940888.44177277,
+    "validos": 119548132.09792016
+  },
+  "alternatives": [
+    {
+      "name": "Média PNAD + propensões Nexus",
+      "predicted_valid_pct": {
+        "flavio": 43.98609522265203,
+        "lula": 44.06236363676993
+      },
+      "observed_valid_pct": {
+        "flavio": 47.03761218404258,
+        "lula": 45.15608426218308
+      },
+      "multiplier": 1.0434733759002206,
+      "equivalent_extra_pct": 4.34733759002206,
+      "flavio_vs_all_others_pct": 13.098839510028792,
+      "after_multiplier_valid_pct": {
+        "flavio": 45.03710884695365,
+        "lula": 43.235602055243746
+      }
+    },
+    {
+      "name": "Média PNAD sem propensões",
+      "predicted_valid_pct": {
+        "flavio": 43.927533567936614,
+        "lula": 44.017153445308715
+      },
+      "observed_valid_pct": {
+        "flavio": 47.03761218404258,
+        "lula": 45.15608426218308
+      },
+      "multiplier": 1.0437923911630185,
+      "equivalent_extra_pct": 4.379239116301847,
+      "flavio_vs_all_others_pct": 13.36801705032431,
+      "after_multiplier_valid_pct": {
+        "flavio": 44.9858364833932,
+        "lula": 43.18638061177
+      }
+    },
+    {
+      "name": "Recência sem tendência (central anterior)",
+      "predicted_valid_pct": {
+        "flavio": 44.43374275375182,
+        "lula": 44.62993959945848
+      },
+      "observed_valid_pct": {
+        "flavio": 47.03761218404258,
+        "lula": 45.15608426218308
+      },
+      "multiplier": 1.0462666807126835,
+      "equivalent_extra_pct": 4.626668071268347,
+      "flavio_vs_all_others_pct": 11.064677228435361,
+      "after_multiplier_valid_pct": {
+        "flavio": 45.55306384128079,
+        "lula": 43.73091859274508
+      }
+    },
+    {
+      "name": "Indecisos proporcionais às candidaturas",
+      "predicted_valid_pct": {
+        "flavio": 45.12241530983352,
+        "lula": 44.986970655669474
+      },
+      "observed_valid_pct": {
+        "flavio": 47.03761218404258,
+        "lula": 45.15608426218308
+      },
+      "multiplier": 1.0385404186380938,
+      "equivalent_extra_pct": 3.8540418638093765,
+      "flavio_vs_all_others_pct": 8.014077328695702,
+      "after_multiplier_valid_pct": {
+        "flavio": 46.060444025050565,
+        "lula": 44.21800331638338
+      }
+    },
+    {
+      "name": "Somente casas com reponderação PNAD",
+      "predicted_valid_pct": {
+        "flavio": 44.63285285308952,
+        "lula": 45.07610299062596
+      },
+      "observed_valid_pct": {
+        "flavio": 47.03761218404258,
+        "lula": 45.15608426218308
+      },
+      "multiplier": 1.052012034068681,
+      "equivalent_extra_pct": 5.2012034068680935,
+      "flavio_vs_all_others_pct": 10.173008664718086,
+      "after_multiplier_valid_pct": {
+        "flavio": 45.88900997608014,
+        "lula": 44.05342671478152
+      }
+    },
+    {
+      "name": "Publicadas, mesmas casas",
+      "predicted_valid_pct": {
+        "flavio": 43.86506029123193,
+        "lula": 46.018249547957765
+      },
+      "observed_valid_pct": {
+        "flavio": 47.03761218404258,
+        "lula": 45.15608426218308
+      },
+      "multiplier": 1.0927991702555813,
+      "equivalent_extra_pct": 9.279917025558127,
+      "flavio_vs_all_others_pct": 13.655966627577754,
+      "after_multiplier_valid_pct": {
+        "flavio": 46.06073426429622,
+        "lula": 44.218281945914605
+      }
+    },
+    {
+      "name": "Sem seleção de eleitor provável",
+      "predicted_valid_pct": {
+        "flavio": 45.28694351768597,
+        "lula": 44.70812522549837
+      },
+      "observed_valid_pct": {
+        "flavio": 47.03761218404258,
+        "lula": 45.15608426218308
+      },
+      "multiplier": 1.0283535237291148,
+      "equivalent_extra_pct": 2.8353523729114816,
+      "flavio_vs_all_others_pct": 7.299000462569638,
+      "after_multiplier_valid_pct": {
+        "flavio": 45.980576909724135,
+        "lula": 44.14133092546043
+      }
+    }
+  ],
+  "houses": [
+    {
+      "id": "datafolha_2026-10-03",
+      "instituto": "Datafolha",
+      "campo": {
+        "inicio": "2026-10-02",
+        "fim": "2026-10-03"
+      },
+      "predicted_valid_pct": {
+        "flavio": 45.8254751406512,
+        "lula": 42.87238085098908
+      },
+      "observed_valid_pct": {
+        "flavio": 47.03761218404258,
+        "lula": 45.15608426218308
+      },
+      "multiplier": 0.9745398840367945,
+      "equivalent_extra_pct": -2.546011596320552,
+      "flavio_vs_all_others_pct": 4.994329482250981,
+      "after_multiplier_valid_pct": {
+        "flavio": 45.185947580685834,
+        "lula": 43.37848716547405
+      }
+    },
+    {
+      "id": "gerp_2026-10-02",
+      "instituto": "Gerp",
+      "campo": {
+        "inicio": "2026-09-30",
+        "fim": "2026-10-02"
+      },
+      "predicted_valid_pct": {
+        "flavio": 47.125935366904116,
+        "lula": 42.03900681744293
+      },
+      "observed_valid_pct": {
+        "flavio": 47.03761218404258,
+        "lula": 45.15608426218308
+      },
+      "multiplier": 0.9292262209002308,
+      "equivalent_extra_pct": -7.0773779099769225,
+      "flavio_vs_all_others_pct": -0.35387279051068976,
+      "after_multiplier_valid_pct": {
+        "flavio": 45.30158994076771,
+        "lula": 43.48950377353875
+      }
+    },
+    {
+      "id": "indexa_2026-09-29",
+      "instituto": "Indexa/Broadcast",
+      "campo": {
+        "inicio": "2026-09-27",
+        "fim": "2026-09-29"
+      },
+      "predicted_valid_pct": {
+        "flavio": 40.82151509657109,
+        "lula": 45.12786367528699
+      },
+      "observed_valid_pct": {
+        "flavio": 47.03761218404258,
+        "lula": 45.15608426218308
+      },
+      "multiplier": 1.1515548997359963,
+      "equivalent_extra_pct": 15.155489973599634,
+      "flavio_vs_all_others_pct": 28.751540053647105,
+      "after_multiplier_valid_pct": {
+        "flavio": 44.26940044873661,
+        "lula": 42.498602375433585
+      }
+    },
+    {
+      "id": "nexus_2026-09-27",
+      "instituto": "Nexus",
+      "campo": {
+        "inicio": "2026-09-25",
+        "fim": "2026-09-27"
+      },
+      "predicted_valid_pct": {
+        "flavio": 39.2569626845044,
+        "lula": 43.945642424442916
+      },
+      "observed_valid_pct": {
+        "flavio": 47.03761218404258,
+        "lula": 45.15608426218308
+      },
+      "multiplier": 1.1660793776449254,
+      "equivalent_extra_pct": 16.60793776449254,
+      "flavio_vs_all_others_pct": 37.42239681142583,
+      "after_multiplier_valid_pct": {
+        "flavio": 42.974871036228265,
+        "lula": 41.255854784370015
+      }
+    },
+    {
+      "id": "palver_2026-10-03",
+      "instituto": "Palver",
+      "campo": {
+        "inicio": "2026-09-30",
+        "fim": "2026-10-03"
+      },
+      "predicted_valid_pct": {
+        "flavio": 46.56447856875384,
+        "lula": 43.29363792816523
+      },
+      "observed_valid_pct": {
+        "flavio": 47.03761218404258,
+        "lula": 45.15608426218308
+      },
+      "multiplier": 0.9684971097879382,
+      "equivalent_extra_pct": -3.1502890212061763,
+      "flavio_vs_all_others_pct": 1.9184986760121037,
+      "after_multiplier_valid_pct": {
+        "flavio": 45.76895487736517,
+        "lula": 43.938173879827524
+      }
+    },
+    {
+      "id": "poderdata_2026-10-02",
+      "instituto": "PoderData",
+      "campo": {
+        "inicio": "2026-09-30",
+        "fim": "2026-10-02"
+      },
+      "predicted_valid_pct": {
+        "flavio": 45.26784522618164,
+        "lula": 44.301809082404674
+      },
+      "observed_valid_pct": {
+        "flavio": 47.03761218404258,
+        "lula": 45.15608426218308
+      },
+      "multiplier": 1.0194375613134647,
+      "equivalent_extra_pct": 1.9437561313464746,
+      "flavio_vs_all_others_pct": 7.381739296330814,
+      "after_multiplier_valid_pct": {
+        "flavio": 45.745231048552775,
+        "lula": 43.91539901598701
+      }
+    },
+    {
+      "id": "quaest_2026-10-03",
+      "instituto": "Quaest",
+      "campo": {
+        "inicio": "2026-10-02",
+        "fim": "2026-10-03"
+      },
+      "predicted_valid_pct": {
+        "flavio": 43.04045447499789,
+        "lula": 46.85620467865771
+      },
+      "observed_valid_pct": {
+        "flavio": 47.03761218404258,
+        "lula": 45.15608426218308
+      },
+      "multiplier": 1.13401618234828,
+      "equivalent_extra_pct": 13.401618234827994,
+      "flavio_vs_all_others_pct": 17.53504473632843,
+      "after_multiplier_valid_pct": {
+        "flavio": 46.14677189333509,
+        "lula": 44.30087802692733
+      }
+    }
+  ],
+  "house_range_pct": [
+    -7.0773779099769225,
+    16.60793776449254
+  ],
+  "nexus_2t_base_ratio": 1.0001994998380006,
+  "nexus_1t_base_ratio": 1.0003065671902185,
+  "sources_sha256": {
+    "docs/assets/predicao_2026_1T_presidente.json": "b0e9261020a48b16e3103ec8e4f77bc93ee69b5245e1bea82dd9382997d6bacc",
+    "analysis/apuracao_2026/dados/presidente.json": "0bb01ddb79108500a55987b5be1fc437f38ef5f88509ec846a00df8dd7853788",
+    "first_round_mean": "5cc4357bad2da2969eb63111ca30063ed0838617c5d17eeb54751fd04e04d3fd"
+  },
+  "formula": "100 × [(votos F / votos L na urna) / (votos F / votos L na predição) − 1]",
+  "decision": "Referência compartilhada: resíduo equivalente da predição publicada antes da eleição, arredondado a uma casa decimal. O transporte de +3,8% ao 2T é hipótese explícita, não taxa de presença medida ou estimador validado.",
+  "limits": "O resíduo mistura comparecimento, erro de pesquisa, voto útil, indecisos e escolhas finais. Não identifica a presença dos que preferiam cada candidato. Ajustar F/L não recompõe todas as candidaturas. Casas e âncoras dão números diferentes; sua faixa não é IC. As pesquisas pós-urna podem já absorver parte do erro anterior, portanto o transporte pode repetir esse ajuste. Zero permanece alternativa. A incerteza deste transporte não entra automaticamente no Monte Carlo.",
+  "method_source": "https://gking.harvard.edu/publication/ecological-regression-with-partial-identification/"
+}

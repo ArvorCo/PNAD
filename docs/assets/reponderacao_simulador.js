@@ -51,6 +51,13 @@
     },80);
   }
   function centralCards() {
+    const extra=signed(data.defaults.presenca_relativa)+'%';
+    $('relative-explanation').textContent=data.presence_model
+      ? `as duas centrais usam propensão Nexus + ajuste relativo de Flávio ${extra}, referência residual do 1º turno transportada como hipótese. Não é presença medida por candidato.`
+      : `esta versão arquivada usa propensão Nexus + presença relativa de Flávio ${extra}, hipótese declarada sem taxa por candidato medida na urna.`;
+    $('presence-origin').textContent=data.presence_model
+      ? `Referência desta versão: ${extra} extra, a partir do resíduo do 1º turno. `
+      : `Referência arquivada: ${extra} extra. A conta abaixo documenta a revisão atual; restaure para usar os novos dados. `;
     for(const button of root.querySelectorAll('[data-rs-central]')) {
       const key=button.dataset.rsCentral, available=key==='media' || Boolean(data.projection);
       button.disabled=!available;button.setAttribute('aria-pressed',String(key===centre()));

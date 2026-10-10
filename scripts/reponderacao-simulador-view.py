@@ -7,11 +7,13 @@ from html import escape as esc
 COUNT = importlib.import_module("reponderacao-contagem")
 PROJECTION = importlib.import_module("reponderacao-projecao-view")
 TURNOUT = importlib.import_module("reponderacao-comparecimento-view")
+PRESENCE = importlib.import_module("reponderacao-presenca-view")
 
 PRESETS = [
     ("central", "Central selecionada", {}),
-    ("igual", "Presença relativa neutra", {"presenca_relativa": 0}),
+    ("igual", "Sem ajuste extra · 0%", {"presenca_relativa": 0}),
     ("fmenos", "Flávio −5%", {"presenca_relativa": -5}),
+    ("fcinco", "Hipótese anterior +5%", {"presenca_relativa": 5}),
     ("fmais", "Flávio +10%", {"presenca_relativa": 10}),
     ("bn", "Brancos/nulos +3 pp", {"branco_nulo_pp": 3}),
     ("u", "Indecisos não escolhem", {"indecisos_validos": 0}),
@@ -119,12 +121,13 @@ def section_html(data, table):
             "Presença relativa de Flávio",
             -30,
             30,
-            0.5,
+            0.1,
             "%",
-            "Multiplica a taxa de presença de Flávio; a de Lula é a referência. +5% é relativo, não +5 pontos. O total é recalibrado.",
+            "Multiplica a taxa de presença de Flávio; a de Lula é a referência. +3,8% é relativo, não +3,8 pontos. O total é recalibrado.",
             "rs-primary",
         )
         + '<p id="rs-rates" class="rs-rates"></p>'
+        + PRESENCE.note(data)
         + slider(
             data,
             "comparecimento",
@@ -183,8 +186,7 @@ def section_html(data, table):
         + '</details><button type="button" id="rs-reset" class="rs-reset">Restaurar central selecionada</button>'
         '<p id="rs-warning" role="status"></p></div></div>'
         '<noscript><p class="note">Placar central disponível sem JavaScript. Ative JavaScript para criar e compartilhar cenários.</p></noscript>'
-        '<p class="rs-central-note"><b>Hipótese compartilhada:</b> as duas centrais usam propensão Nexus + presença relativa de Flávio +5%. '
-        "A escolha de +5% foi feita após o 1º turno; é hipótese declarada, sem taxa por candidato medida na urna. "
+        '<p class="rs-central-note"><b>Hipótese compartilhada:</b> <span id="rs-relative-explanation">as duas centrais usam propensão Nexus + ajuste relativo de Flávio +3,8%, referência residual do 1º turno transportada como hipótese. Não é presença medida por candidato.</span> '
         '<span id="rs-base-explanation">Média com peso igual nas casas que permitem sensibilidade de renda.</span> '
         "<b>Não há probabilidade de vitória ou intervalo preditivo validado contra a urna.</b></p>"
         '<div class="rs-balance"><h3>Para cada 100 eleitores</h3><div class="rs-mass-bar" aria-hidden="true">'
@@ -234,5 +236,6 @@ def section_html(data, table):
         "Cada alteração em relação à central é uma sensibilidade escolhida pelo leitor.</p></details>"
         + PROJECTION.evidence(data, table)
         + TURNOUT.evidence(data, table)
+        + PRESENCE.evidence(data, table)
         + f'<script id="rs-data" type="application/json">{encoded}</script></div></section>'
     )

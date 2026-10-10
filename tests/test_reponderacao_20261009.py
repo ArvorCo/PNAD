@@ -10,6 +10,7 @@ from bs4 import BeautifulSoup
 
 ROOT = Path(__file__).resolve().parents[1]
 M = importlib.import_module("pesquisas-091026-renda")
+SIM = importlib.import_module("reponderacao-simulador")
 
 
 def read(relative):
@@ -50,7 +51,9 @@ def test_atlas_mixed_field_has_sensitivity_but_cannot_enter_post_first_round_cen
     assert "atravessa o 1º turno" in excluded["reason"]
     assert any(p["id"] == "vox_brasil_2026-10-07" for p in sim["excluded"])
     previous = read("docs/assets/reponderacao_cenarios/43b90fe501f43fcd.json")
-    assert sim["central"]["flavio"] == pytest.approx(previous["central"]["flavio"])
+    # A exclusão do campo misto é comparada com as hipóteses antigas explícitas.
+    same_parameters = SIM.evaluate(sim, previous["defaults"])
+    assert same_parameters["flavio"] == pytest.approx(previous["central"]["flavio"])
 
 
 def test_new_wave_is_linked_and_journal_records_one_incorporation():

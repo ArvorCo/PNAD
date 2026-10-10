@@ -9,6 +9,7 @@ def cards(root):
     history = json.loads((root / "analysis/reponderacao/log.json").read_text())
     central = data["central"]
     projection = data["central_projection"]
+    relative = f"+{data['defaults']['presenca_relativa']:.1f}%".replace(".", ",")
 
     def fmt(number):
         return f"{number:.1f}".replace(".", ",")
@@ -29,9 +30,9 @@ def cards(root):
                     fmt(projection["flavio"]) + " × " + fmt(projection["lula"]),
                     "Projeção / Flávio × Lula / válidos",
                 ),
-                ("+5%", "hipótese de presença relativa F"),
+                (relative, "ajuste relativo F / hipótese do 1º turno"),
             ],
-            "foot": f"{data['reference']} · central condicional · presença relativa F +5%",
+            "foot": f"{data['reference']} · central condicional · ajuste relativo F {relative}",
             "accent": "blue",
         },
         {
