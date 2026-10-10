@@ -22,7 +22,7 @@ def asset(name, extension):
     return f"{path}?v={version}"
 
 
-def head(title, slug, description):
+def head(title, slug, description, styles=()):
     card = f"https://brasil.arvor.co/img/og/{slug}.png"
     url = f"https://brasil.arvor.co/{slug}.html"
     return (
@@ -45,15 +45,16 @@ def head(title, slug, description):
                 "reponderacao_metodologias",
                 "reponderacao_validos",
                 "reponderacao_simulador",
+                *styles,
             ]
         )
         + "</head>"
     )
 
 
-def frame(ns, title, slug, description, content, toc, scripts=()):
+def frame(ns, title, slug, description, content, toc, scripts=(), styles=()):
     return (
-        head(title, slug, description)
+        head(title, slug, description, styles)
         + '<body><a class="skip" href="#conteudo">Pular para o conteúdo</a><header class="masthead">'
         '<a href="index.html">ARVOR <span>Intelligence</span></a><span>Pesquisas · renda · comparecimento</span></header>'
         '<main id="conteudo">'
@@ -263,6 +264,9 @@ def archive_html(ns):
         "Acervo completo de ondas, projeções, candidaturas, metodologia e erros do primeiro turno.",
         [
             intro,
+            importlib.import_module("reponderacao_vista.urna_serie_view").section(
+                ns["D"]
+            ),
             str(soup),
             ns["ch_primeiro_turno"](),
             importlib.import_module("reponderacao-palver-view").audit_html(
@@ -278,6 +282,7 @@ def archive_html(ns):
             ns["ch_fontes"]("1t"),
         ],
         [
+            ("#agregador-urna", "Média × urna"),
             ("#projecao-validos", "Projeção × urna"),
             ("#primeiro-turno", "Séries e erros"),
             ("#institutos-1t", "Institutos"),
@@ -288,6 +293,7 @@ def archive_html(ns):
             (LOG, "Histórico"),
         ],
         ["reponderacao_metodologias", "reponderacao_validos"],
+        styles=["reponderacao_urna_serie"],
     )
 
 

@@ -1,0 +1,30 @@
+.us-section h2 em{font-style:normal;color:var(--green)}
+.us-summary{display:grid;grid-template-columns:1fr 1.25fr 1fr;gap:26px;margin:32px 0}
+.us-summary>div{border-top:2px solid var(--green);padding-top:16px;min-width:0}
+.us-summary span,.us-summary small{display:block;font-size:12px;color:var(--muted)}
+.us-summary strong{display:block;font:36px/1.25 Georgia,serif;margin:8px 0}
+.us-summary strong small{display:inline;font:14px/1.4 "Avenir Next",sans-serif}
+.us-candidates{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin:20px 0}
+.us-candidate{padding:24px;background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--us-color);min-width:0}
+.us-candidate h3{color:var(--us-color);font-size:18px;margin:0 0 14px}
+.us-score{font:52px/1.1 Georgia,serif;color:var(--us-color);font-variant-numeric:tabular-nums;margin:0}
+.us-score span{font-size:25px}
+.us-score-label{font-size:12px;color:var(--muted);margin:8px 0 24px}
+.us-comparison+.us-comparison{margin-top:20px}
+.us-comparison>div:first-child{display:flex;justify-content:space-between;gap:10px;font-size:13px}
+.us-comparison b{font-variant-numeric:tabular-nums;white-space:nowrap}
+.us-comparison small{font-size:12px;color:var(--muted)}
+.us-comparison small strong{color:var(--ink);font-weight:600;white-space:nowrap}
+.us-bar{height:7px;background:#192e2b0b;position:relative;margin:9px 0}
+.us-bar i{display:block;height:100%;background:var(--us-color);opacity:.55}
+.us-bar em{position:absolute;top:-3px;width:2px;height:13px;background:var(--ink)}
+.us-houses{columns:2;font-size:13px;padding-left:18px}
+.us-houses li{break-inside:avoid;margin-bottom:9px}
+@media(max-width:760px){
+ .us-summary{grid-template-columns:1fr;gap:16px}
+ .us-summary strong{font-size:30px}
+ .us-candidates{grid-template-columns:1fr;gap:16px}
+ .us-candidate{padding:22px}
+ .us-timeline svg{min-width:980px}
+ .us-houses{columns:1}
+}
