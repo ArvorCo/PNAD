@@ -8,6 +8,7 @@ def fmt(number):
 
 
 def central_cards(data):
+    states = data["projection"]["states"]
     values = [
         (
             "media",
@@ -20,8 +21,10 @@ def central_cards(data):
             "projecao",
             "Central Projeção Arvor",
             data["central_projection"],
-            "Prioriza pesquisas recentes e simula incerteza. Usa também publicados sem renda.",
-            "Adapta o motor nacional da predição do primeiro turno. Recência significa dar mais peso ao campo recente. Tendência é a mudança ao longo do tempo dentro da mesma casa; reduzimos a inclinação quando ela é incerta, para evitar extrapolar ruído. PNAD onde há cruzamento; publicado onde falta, identificado como tal. Monte Carlo faz 2.000 contas variando amostras, pesos das casas e um erro que pode atingir todas juntas. A faixa mostra como o resultado muda nessas hipóteses; não mede a chance real de vitória. Não é machine learning supervisionado. As partes territoriais e a validação do primeiro turno não são transferidas.",
+            'Nacionais na central; <a href="#estados-projecao">estaduais no diagnóstico</a>. Recência e simulações de incerteza.',
+            "A predição original do 1º turno combinava pesquisas nacionais e estaduais, com calibração nacional e ponderação por eleitorado. Nesta versão do 2º turno, o placar central usa pesquisas nacionais. "
+            f'As estaduais pós-urna cobrem {fmt(states["coverage_pct"])}% do eleitorado e entram no <a href="#estados-projecao">diagnóstico territorial</a>; ainda não alteram o placar central. '
+            "Recência significa dar mais peso ao campo recente. Tendência é a mudança ao longo do tempo dentro da mesma casa; reduzimos a inclinação quando ela é incerta, para evitar extrapolar ruído. PNAD onde há cruzamento; publicado onde falta, identificado como tal. Monte Carlo faz 2.000 contas variando amostras, pesos das casas e um erro que pode atingir todas juntas. A faixa mostra como o resultado muda nessas hipóteses; não mede a chance real de vitória. Não é machine learning supervisionado. As partes territoriais e a validação do primeiro turno não são transferidas.",
         ),
     ]
     return (
@@ -53,6 +56,7 @@ def evidence(data, table):
     return (
         '<details class="rs-evidence" id="modelo-projecao"><summary>Motor da Projeção Arvor: dados, pesos, tendência e simulações</summary>'
         f'<p>{esc(p["method"])}</p>'
+        '<p><b>Nacionais e estaduais:</b> as pesquisas nacionais abaixo alimentam o placar central do 2º turno. As estaduais pós-urna permitem conferir o quadro por UF no <a href="#estados-projecao">diagnóstico territorial</a>, sem alterar esta central. A predição original do 1º turno combinava as duas camadas com calibração nacional e ponderação por eleitorado.</p>'
         + table(["Instituto", "Campo", "Peso por recência", "Base usada"], rows)
         + f'<p><b>Tendência atual:</b> {esc(p["trend"]["pnad"]["status"])} Horizonte: {fmt(p["trend"]["pnad"]["horizonte_dias"])} dias desde o campo efetivo até <a href="{esc(p["election_source"])}">25/10/2026</a>.</p>'
         f'<p><b>Indecisos:</b> {esc(p["undecided"])}</p>'
@@ -84,7 +88,7 @@ def states_evidence(data, table):
                 f'<p>{esc(row["instituto"])} {esc(row["uf"])} declara {fmt(v["flavio"])}% × {fmt(v["lula"])}% nos válidos. Normalizar os totais inteiros dá {fmt(q["flavio"])}% × {fmt(q["lula"])}%; arredondamentos independentes podem produzir valores diferentes. Preservamos as duas métricas. {"Sem voto por renda disponível, não há sensibilidade PNAD nesta onda." if not row["income_available"] else ""}</p>'
             )
     return (
-        '<details class="rs-evidence" id="estados-projecao"><summary>Estaduais atualizadas: cobertura e uso na predição</summary>'
+        '<details class="rs-evidence" id="estados-projecao"><summary>Pesquisas estaduais: diagnóstico territorial</summary>'
         f'<p>Conferência em {esc(data["reference"])}: {len(data["covered_ufs"])} UF com campo pós-04/10 incorporada ao diagnóstico, cobrindo {fmt(data["coverage_pct"])}% do eleitorado brasileiro. {esc(data["use"])}</p>'
         + table(
             [
