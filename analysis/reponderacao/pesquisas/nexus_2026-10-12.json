@@ -1,0 +1,232 @@
+{
+  "id": "nexus_2026-10-12",
+  "instituto": "Nexus",
+  "registro_tse": "BR-07997/2026",
+  "contratante": "Banco BTG Pactual",
+  "campo": {
+    "inicio": "2026-10-10",
+    "fim": "2026-10-12"
+  },
+  "divulgacao": "2026-10-13",
+  "n": 2002,
+  "metodo": "telefônico CATI; cotas de sexo, idade, escolaridade, tipo de telefonia e DDD",
+  "publicado": {
+    "2t": {
+      "flavio": 48,
+      "lula": 45,
+      "branco_nulo": 5,
+      "indecisos": 2
+    }
+  },
+  "fonte": {
+    "arquivo": "data/originals/nexus_102026_13/relatorio.pdf",
+    "url": "https://www.nexus.fsb.com.br/wp-content/uploads/2026/10/BTG-Nexus-Eleicoes-2026-Rodada-17-13.out_.2026.pdf",
+    "bytes": 2249898,
+    "sha256": "122e3f2052c72c3da04f6bd556cf592f2c341cdda90b462632a6a63dbda1c6a7",
+    "capturado_em": "2026-10-13T17:57:45+00:00",
+    "pdf": "data/originals/nexus_102026_13/relatorio.pdf",
+    "tipo": "relatorio",
+    "rotulo": "Relatório completo conferido",
+    "paginas": {
+      "metodologia": 4,
+      "perfil_renda": 99,
+      "2t_topline": 21,
+      "2t_validos": 23,
+      "sexo": 40,
+      "2t_renda": 41,
+      "comparecimento": 15
+    },
+    "total_paginas": 102,
+    "conferido_em": "2026-10-13",
+    "status": "Íntegra arquivada e conferida visualmente.",
+    "nota": "17ª rodada: campo 10–12/10, 2.002 entrevistas, divulgação 13/10. Perfil atual p. 99: renda familiar 19/18/40/23. Voto por renda p. 41; sexo p. 40. Não transporta preferências ou rejeição de setembro. P. 15 declara 89% de presença decidida e 6% provável: declaração de intenção (95%), não previsão calibrada de comparecimento. Não substitui automaticamente a referência oficial de 79,16% do primeiro turno."
+  },
+  "publicado_validos": {
+    "2t": {
+      "flavio": 52,
+      "lula": 48
+    }
+  },
+  "comparecimento_publicado": {
+    "pagina": 15,
+    "categorias": [
+      "decidiu comparecer",
+      "provavelmente comparecerá",
+      "provavelmente não comparecerá",
+      "decidiu não comparecer",
+      "NS/NR"
+    ],
+    "pct": [
+      89,
+      6,
+      1,
+      3,
+      1
+    ],
+    "uso": "Declaração, não âncora de comparecimento nem taxa observada por candidato."
+  },
+  "renda": {
+    "unidade": "salarios_minimos",
+    "ano_referencia": 2026,
+    "mes_precos": "202610",
+    "faixas": [
+      {
+        "rotulo": "0 a 1 SM",
+        "max": 1
+      },
+      {
+        "rotulo": "1 a 2 SM",
+        "max": 2
+      },
+      {
+        "rotulo": "2 a 5 SM",
+        "max": 5
+      },
+      {
+        "rotulo": "Mais de 5 SM",
+        "max": null
+      }
+    ],
+    "amostra_pct": [
+      19,
+      18,
+      40,
+      23
+    ],
+    "perfil_tipo": "perfil_ponderado",
+    "nota": "17ª rodada: campo 10–12/10, 2.002 entrevistas, divulgação 13/10. Perfil atual p. 99: renda familiar 19/18/40/23. Voto por renda p. 41; sexo p. 40. Não transporta preferências ou rejeição de setembro. P. 15 declara 89% de presença decidida e 6% provável: declaração de intenção (95%), não previsão calibrada de comparecimento. Não substitui automaticamente a referência oficial de 79,16% do primeiro turno."
+  },
+  "cruzamentos": {
+    "2t": {
+      "opcoes": [
+        "flavio",
+        "lula",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          32,
+          58,
+          3,
+          7
+        ],
+        [
+          47,
+          44,
+          5,
+          4
+        ],
+        [
+          50,
+          43,
+          7,
+          1
+        ],
+        [
+          57,
+          40,
+          2,
+          0
+        ]
+      ],
+      "nota": "17ª rodada: campo 10–12/10, 2.002 entrevistas, divulgação 13/10. Perfil atual p. 99: renda familiar 19/18/40/23. Voto por renda p. 41; sexo p. 40. Não transporta preferências ou rejeição de setembro. P. 15 declara 89% de presença decidida e 6% provável: declaração de intenção (95%), não previsão calibrada de comparecimento. Não substitui automaticamente a referência oficial de 79,16% do primeiro turno."
+    }
+  },
+  "controles": {
+    "2t": {
+      "renda": {
+        "pesos": [
+          19,
+          18,
+          40,
+          23
+        ],
+        "linhas": [
+          [
+            32,
+            58,
+            3,
+            7
+          ],
+          [
+            47,
+            44,
+            5,
+            4
+          ],
+          [
+            50,
+            43,
+            7,
+            1
+          ],
+          [
+            57,
+            40,
+            2,
+            0
+          ]
+        ],
+        "opcoes": [
+          "flavio",
+          "lula",
+          "branco_nulo",
+          "indecisos"
+        ],
+        "recomposto": {
+          "flavio": 47.65,
+          "lula": 45.34,
+          "branco_nulo": 4.73,
+          "indecisos": 2.45
+        },
+        "residuo": {
+          "flavio": -0.3500000000000014,
+          "lula": 0.3400000000000034,
+          "branco_nulo": -0.2699999999999996,
+          "indecisos": 0.4500000000000002
+        },
+        "residuo_max_abs": 0.4500000000000002
+      },
+      "sexo": {
+        "pesos": [
+          47,
+          53
+        ],
+        "linhas": [
+          [
+            57,
+            36,
+            5,
+            1
+          ],
+          [
+            39,
+            54,
+            4,
+            3
+          ]
+        ],
+        "opcoes": [
+          "flavio",
+          "lula",
+          "branco_nulo",
+          "indecisos"
+        ],
+        "recomposto": {
+          "flavio": 47.46,
+          "lula": 45.54,
+          "branco_nulo": 4.47,
+          "indecisos": 2.06
+        },
+        "residuo": {
+          "flavio": -0.5399999999999991,
+          "lula": 0.5399999999999991,
+          "branco_nulo": -0.5300000000000002,
+          "indecisos": 0.06000000000000005
+        },
+        "residuo_max_abs": 0.5399999999999991
+      }
+    }
+  }
+}

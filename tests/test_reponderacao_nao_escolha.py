@@ -23,7 +23,12 @@ OUTPUT = json.loads((ROOT / "docs/assets/reponderacao_pnad.json").read_text())
 def test_average_reproduces_time_weights_and_same_cohort(turn):
     group = OUTPUT["agregador"]["nao_escolha"][turn]
     polls = {p["id"]: p for p in OUTPUT["pesquisas"]}
-    selected_ids = set(group["cobertura_movel"][-1]["ondas"])
+    idx = (
+        OUTPUT["agregador"]["serie"]["datas"].index("2026-10-04")
+        if turn == "1t"
+        else len(group["cobertura_movel"]) - 1
+    )
+    selected_ids = set(group["cobertura_movel"][idx]["ondas"])
     for kind in ["publicado", "ajustado"]:
         for key in MODULE.LABELS:
             values = []
@@ -40,10 +45,10 @@ def test_average_reproduces_time_weights_and_same_cohort(turn):
                 if row["id"] in selected_ids:
                     values.append(row[kind][key])
             expected = sum(values) / len(values)
-            assert group["ultimo"][kind][key] == pytest.approx(expected, abs=0.005)
+            assert group["serie"][kind][key][idx] == pytest.approx(expected, abs=0.005)
             assert (
-                OUTPUT["agregador"]["serie"][turn][kind][key][-1]
-                == group["ultimo"][kind][key]
+                OUTPUT["agregador"]["serie"][turn][kind][key][idx]
+                == group["serie"][kind][key][idx]
             )
 
 

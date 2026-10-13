@@ -1,0 +1,194 @@
+{
+  "id": "poderdata_2026-10-12",
+  "instituto": "PoderData",
+  "registro_tse": "BR-01209/2026",
+  "contratante": "Poder360, recursos próprios; divulgação com Aya Bancah",
+  "campo": {
+    "inicio": "2026-10-10",
+    "fim": "2026-10-12"
+  },
+  "divulgacao": "2026-10-13",
+  "n": 3000,
+  "metodo": "telefônico automatizado, URA/IVR, celulares e fixos; 686 municípios nas 27 UFs",
+  "publicado": {
+    "2t": {
+      "flavio": 48,
+      "lula": 46,
+      "branco_nulo": 5,
+      "indecisos": 2
+    }
+  },
+  "fonte": {
+    "arquivo": "data/originals/poderdata_102026_13/relatorio.pdf",
+    "url": "https://static.poder360.com.br/uploads/2026/10/Relatorio-PoderData-Eleitoral-12out26-1.pdf",
+    "bytes": 869560,
+    "sha256": "0f4e4418d633cbcf30f6364b48a728b67267a18ba649f81b5ef1879048c15ffa",
+    "capturado_em": "2026-10-13T17:58:24+00:00",
+    "pdf": "data/originals/poderdata_102026_13/relatorio.pdf",
+    "tipo": "relatorio",
+    "rotulo": "Relatório completo conferido",
+    "paginas": {
+      "metodologia": 2,
+      "perfil_renda": 4,
+      "2t_topline": 6,
+      "sexo": 7,
+      "2t_renda": 9
+    },
+    "total_paginas": 27,
+    "conferido_em": "2026-10-13",
+    "status": "Íntegra arquivada e conferida visualmente.",
+    "nota": "Íntegra correta: campo 10–12/10, registro BR-01209/2026, 27 páginas. O índice de PDFs na matéria de 13/10 ainda apontava para 05–07/10; a íntegra atual foi localizada na síntese do próprio Poder360. Perfil desta onda na p. 4: 46/33/21; não é emprestado da anterior. Total 48/46/5/2 (101 por arredondamento), renda p. 9 e controle independente por sexo p. 7."
+  },
+  "publicado_validos": {
+    "2t": {
+      "flavio": 51,
+      "lula": 49
+    }
+  },
+  "renda": {
+    "unidade": "salarios_minimos",
+    "ano_referencia": 2026,
+    "mes_precos": "202610",
+    "faixas": [
+      {
+        "rotulo": "0 a 2 SM",
+        "max": 2
+      },
+      {
+        "rotulo": "2 a 5 SM",
+        "max": 5
+      },
+      {
+        "rotulo": "Mais de 5 SM",
+        "max": null
+      }
+    ],
+    "amostra_pct": [
+      46,
+      33,
+      21
+    ],
+    "perfil_tipo": "perfil_ponderado",
+    "nota": "Íntegra correta: campo 10–12/10, registro BR-01209/2026, 27 páginas. O índice de PDFs na matéria de 13/10 ainda apontava para 05–07/10; a íntegra atual foi localizada na síntese do próprio Poder360. Perfil desta onda na p. 4: 46/33/21; não é emprestado da anterior. Total 48/46/5/2 (101 por arredondamento), renda p. 9 e controle independente por sexo p. 7."
+  },
+  "cruzamentos": {
+    "2t": {
+      "opcoes": [
+        "flavio",
+        "lula",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          43,
+          48,
+          6,
+          2
+        ],
+        [
+          53,
+          43,
+          3,
+          2
+        ],
+        [
+          51,
+          44,
+          4,
+          1
+        ]
+      ],
+      "nota": "Íntegra correta: campo 10–12/10, registro BR-01209/2026, 27 páginas. O índice de PDFs na matéria de 13/10 ainda apontava para 05–07/10; a íntegra atual foi localizada na síntese do próprio Poder360. Perfil desta onda na p. 4: 46/33/21; não é emprestado da anterior. Total 48/46/5/2 (101 por arredondamento), renda p. 9 e controle independente por sexo p. 7."
+    }
+  },
+  "controles": {
+    "2t": {
+      "renda": {
+        "pesos": [
+          46,
+          33,
+          21
+        ],
+        "linhas": [
+          [
+            43,
+            48,
+            6,
+            2
+          ],
+          [
+            53,
+            43,
+            3,
+            2
+          ],
+          [
+            51,
+            44,
+            4,
+            1
+          ]
+        ],
+        "opcoes": [
+          "flavio",
+          "lula",
+          "branco_nulo",
+          "indecisos"
+        ],
+        "recomposto": {
+          "flavio": 47.98,
+          "lula": 45.51,
+          "branco_nulo": 4.59,
+          "indecisos": 1.79
+        },
+        "residuo": {
+          "flavio": -0.020000000000003126,
+          "lula": -0.490000000000002,
+          "branco_nulo": -0.41000000000000014,
+          "indecisos": -0.20999999999999996
+        },
+        "residuo_max_abs": 0.490000000000002
+      },
+      "sexo": {
+        "pesos": [
+          47,
+          53
+        ],
+        "linhas": [
+          [
+            57,
+            38,
+            4,
+            1
+          ],
+          [
+            39,
+            53,
+            6,
+            3
+          ]
+        ],
+        "opcoes": [
+          "flavio",
+          "lula",
+          "branco_nulo",
+          "indecisos"
+        ],
+        "recomposto": {
+          "flavio": 47.46,
+          "lula": 45.95,
+          "branco_nulo": 5.06,
+          "indecisos": 2.06
+        },
+        "residuo": {
+          "flavio": -0.5399999999999991,
+          "lula": -0.04999999999999716,
+          "branco_nulo": 0.05999999999999961,
+          "indecisos": 0.06000000000000005
+        },
+        "residuo_max_abs": 0.5399999999999991
+      }
+    }
+  }
+}

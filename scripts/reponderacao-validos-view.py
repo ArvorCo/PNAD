@@ -89,7 +89,9 @@ def card(data, ballot):
 
 
 def section_html(source, table, ballots=("1t", "2t")):
-    data = MODEL.write(source)
+    # Renderizar o arquivo histórico não deve sobrescrever os dados do 2º turno.
+    nexus = json.loads((MODEL.ASSETS / "nexus_btg_28092026_data.json").read_text())
+    data = MODEL.build(source, nexus)
     data["ballots"] = {b: data["ballots"][b] for b in ballots}
     defaults = data["display_defaults"]
     rows, excluded, corrections = [], [], []

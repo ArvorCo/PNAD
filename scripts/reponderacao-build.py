@@ -366,8 +366,9 @@ def ch_segundo_turno() -> str:
     )
 
 
-def ch_primeiro_turno() -> str:
-    polls = [p for p in PESQUISAS if "1t" in p["turnos"]]
+def ch_primeiro_turno(data=None) -> str:
+    data = data or D
+    polls = [p for p in data["pesquisas"] if "1t" in p["turnos"]]
     if not polls:
         return capitulo(
             2,
@@ -397,12 +398,12 @@ def ch_primeiro_turno() -> str:
                 ]
             )
     historico = (
-        groups_view.scenario_summary(D, tabela)
+        groups_view.scenario_summary(data, tabela)
         + figura(
             "primeiro-turno-chart",
             "Série do 1º turno",
             "Lula, Flávio, demais candidaturas, indecisos e branco/nulo/não vai votar.",
-            serie_svg("s1t", "1t"),
+            serie_svg("s1t", "1t", data=data),
             "Lula e Flávio usam os cenários sem Marçal com cruzamento de renda. "
             "Os grupos usam apenas ondas que permitem separar as candidaturas por renda, "
             "com cobertura e datas informadas abaixo. Cinza: centro-direita; preto: esquerda + nanicos. "
@@ -411,10 +412,12 @@ def ch_primeiro_turno() -> str:
             "Pontilhado conecta lacunas apenas visualmente, sem entrar na média. "
             "No celular, deslize o gráfico para ver as datas recentes e os grupos.",
         )
-        + importlib.import_module("reponderacao-janela-view").summary(D, "1t", tabela)
-        + groups_view.group_summary(D, tabela, br)
+        + importlib.import_module("reponderacao-janela-view").summary(
+            data, "1t", tabela
+        )
+        + groups_view.group_summary(data, tabela, br)
         + importlib.import_module("reponderacao-nao-escolha-view").summary(
-            D, "1t", tabela, br
+            data, "1t", tabela, br
         )
         + '<h3 class="reveal">As demais candidaturas sob a mesma troca</h3>'
         + tabela(
@@ -570,7 +573,7 @@ def ch_metodo() -> str:
     )
 
 
-def ch_fontes(turno: str | None = None) -> str:
+def ch_fontes(turno: str | None = None, reference: str | None = None) -> str:
     linhas = [
         [
             esc(p["instituto"]),
@@ -604,7 +607,7 @@ def ch_fontes(turno: str | None = None) -> str:
         f"<code>{esc(BENCH['source'])}</code>. Preços de "
         f"{MESES[int(BENCH['price_month'][4:]) - 1]}. de {BENCH['price_month'][:4]}. "
         f"Conta gerada em {esc(longo(D['gerado_em'][:10]))}, referência de "
-        f"{esc(longo(D['referencia']))}.</p>",
+        f"{esc(longo(reference or D['referencia']))}.</p>",
     )
 
 

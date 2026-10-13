@@ -1,0 +1,195 @@
+{
+  "id": "ipespe_2026-10-08",
+  "instituto": "Ipespe",
+  "registro_tse": "BR-00933/2026",
+  "contratante": "IPESPE/ABRAPEL, recursos próprios",
+  "campo": {
+    "inicio": "2026-10-06",
+    "fim": "2026-10-08"
+  },
+  "divulgacao": "2026-10-10",
+  "n": 1500,
+  "metodo": "telefônico CATI/IPESPE; cotas de sexo, idade e localidade; controle de instrução, renda e recall do 1º turno",
+  "publicado": {
+    "2t": {
+      "flavio": 49,
+      "lula": 44,
+      "branco_nulo": 5,
+      "indecisos": 3
+    }
+  },
+  "fonte": {
+    "arquivo": "data/originals/ipespe_102026_10/relatorio.pdf",
+    "url": "https://static.poder360.com.br/uploads/2026/10/pesquisa-ipespe-abrapel-10out2026.pdf",
+    "bytes": 2175740,
+    "sha256": "e5f7e32a4947b80dd8ad5b1c60b20a4910fef47ffd48c29b3b534300b8e39450",
+    "capturado_em": "2026-10-13T17:58:24+00:00",
+    "pdf": "data/originals/ipespe_102026_10/relatorio.pdf",
+    "tipo": "relatorio",
+    "rotulo": "Relatório completo conferido",
+    "paginas": {
+      "metodologia": 33,
+      "perfil_renda": 34,
+      "2t_topline": 5,
+      "2t_validos": 5,
+      "2t_renda": 6,
+      "sexo": 6
+    },
+    "total_paginas": 35,
+    "conferido_em": "2026-10-13",
+    "status": "Íntegra arquivada e conferida visualmente.",
+    "nota": "Primeira rodada do tracking Ipespe/ABRAPEL, 06–08/10, publicada 10/10; íntegra de 35 páginas. A metodologia p. 33 declara CATI, diferente do recrutamento digital citado por parte da imprensa. A p. 5 informa 49/44/5/3, soma 101 por arredondamento: os indecisos são 3%, não 1%. Perfil de renda familiar da própria onda na p. 34: 41/39/20. Cruzamentos p. 6. Válidos divulgados 52,7/47,3 preservados separadamente da normalização dos totais arredondados."
+  },
+  "publicado_validos": {
+    "2t": {
+      "flavio": 52.7,
+      "lula": 47.3
+    }
+  },
+  "renda": {
+    "unidade": "salarios_minimos",
+    "ano_referencia": 2026,
+    "mes_precos": "202610",
+    "faixas": [
+      {
+        "rotulo": "0 a 2 SM",
+        "max": 2
+      },
+      {
+        "rotulo": "2 a 5 SM",
+        "max": 5
+      },
+      {
+        "rotulo": "Mais de 5 SM",
+        "max": null
+      }
+    ],
+    "amostra_pct": [
+      41,
+      39,
+      20
+    ],
+    "perfil_tipo": "perfil_ponderado",
+    "nota": "Primeira rodada do tracking Ipespe/ABRAPEL, 06–08/10, publicada 10/10; íntegra de 35 páginas. A metodologia p. 33 declara CATI, diferente do recrutamento digital citado por parte da imprensa. A p. 5 informa 49/44/5/3, soma 101 por arredondamento: os indecisos são 3%, não 1%. Perfil de renda familiar da própria onda na p. 34: 41/39/20. Cruzamentos p. 6. Válidos divulgados 52,7/47,3 preservados separadamente da normalização dos totais arredondados."
+  },
+  "cruzamentos": {
+    "2t": {
+      "opcoes": [
+        "flavio",
+        "lula",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          40,
+          51,
+          6,
+          3
+        ],
+        [
+          55,
+          37,
+          5,
+          3
+        ],
+        [
+          54,
+          42,
+          3,
+          1
+        ]
+      ],
+      "nota": "Primeira rodada do tracking Ipespe/ABRAPEL, 06–08/10, publicada 10/10; íntegra de 35 páginas. A metodologia p. 33 declara CATI, diferente do recrutamento digital citado por parte da imprensa. A p. 5 informa 49/44/5/3, soma 101 por arredondamento: os indecisos são 3%, não 1%. Perfil de renda familiar da própria onda na p. 34: 41/39/20. Cruzamentos p. 6. Válidos divulgados 52,7/47,3 preservados separadamente da normalização dos totais arredondados."
+    }
+  },
+  "controles": {
+    "2t": {
+      "renda": {
+        "pesos": [
+          41,
+          39,
+          20
+        ],
+        "linhas": [
+          [
+            40,
+            51,
+            6,
+            3
+          ],
+          [
+            55,
+            37,
+            5,
+            3
+          ],
+          [
+            54,
+            42,
+            3,
+            1
+          ]
+        ],
+        "opcoes": [
+          "flavio",
+          "lula",
+          "branco_nulo",
+          "indecisos"
+        ],
+        "recomposto": {
+          "flavio": 48.65,
+          "lula": 43.74,
+          "branco_nulo": 5.01,
+          "indecisos": 2.6
+        },
+        "residuo": {
+          "flavio": -0.3500000000000014,
+          "lula": -0.259999999999998,
+          "branco_nulo": 0.009999999999999787,
+          "indecisos": -0.3999999999999999
+        },
+        "residuo_max_abs": 0.3999999999999999
+      },
+      "sexo": {
+        "pesos": [
+          47,
+          53
+        ],
+        "linhas": [
+          [
+            53,
+            38,
+            6,
+            3
+          ],
+          [
+            44,
+            49,
+            4,
+            3
+          ]
+        ],
+        "opcoes": [
+          "flavio",
+          "lula",
+          "branco_nulo",
+          "indecisos"
+        ],
+        "recomposto": {
+          "flavio": 48.23,
+          "lula": 43.83,
+          "branco_nulo": 4.94,
+          "indecisos": 3.0
+        },
+        "residuo": {
+          "flavio": -0.7700000000000031,
+          "lula": -0.1700000000000017,
+          "branco_nulo": -0.05999999999999961,
+          "indecisos": 0.0
+        },
+        "residuo_max_abs": 0.7700000000000031
+      }
+    }
+  }
+}

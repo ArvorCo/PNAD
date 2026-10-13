@@ -45,6 +45,11 @@ def test_inclusive_projection_uses_latest_post_first_round_and_never_imputes_inc
         "Datafolha",
         "PoderData",
         "Vox Brasil",
+        "Gerp",
+        "Nexus",
+        "Ipespe",
+        "Futura",
+        "DataTrends",
     }
     assert all(p["campo"]["inicio"] > "2026-10-04" for p in selected)
     assert sum(p["weight"] for p in selected) == pytest.approx(1)
@@ -65,6 +70,9 @@ def test_inclusive_projection_uses_latest_post_first_round_and_never_imputes_inc
 
 
 def test_mean_preserves_published_snapshot_for_all_controls():
+    published_09 = json.loads(
+        (ROOT / "docs/assets/reponderacao_cenarios/a55474752ad0103a.json").read_text()
+    )
     old = json.loads(
         (ROOT / "docs/assets/reponderacao_cenarios/010e789ca6361ba3.json").read_text()
     )
@@ -82,12 +90,14 @@ def test_mean_preserves_published_snapshot_for_all_controls():
             **params,
         }
         left, right = M.evaluate(
-            {**DATA, "undecided_policy": "per_poll"}, params
+            {**published_09, "undecided_policy": "per_poll"}, params
         ), M.evaluate(old, params)
         for key in ("flavio", "lula", "validos", "branco_nulo", "abstencao"):
             assert left[key] == right[key]
-    assert DATA["central"]["flavio"] == pytest.approx(55.04046343780422)
-    assert DATA["central_projection"]["flavio"] == pytest.approx(53.61609206185117)
+    assert published_09["central"]["flavio"] == pytest.approx(55.04046343780422)
+    assert published_09["central_projection"]["flavio"] == pytest.approx(
+        53.61609206185117
+    )
 
 
 def test_projection_does_not_learn_trend_from_house_level_differences():
@@ -266,8 +276,11 @@ def test_explanations_work_without_javascript_and_distinguish_validation():
         "media",
         "projecao",
     ]
-    assert "55,0% × 45,0%" in cards[0].get_text()
-    assert "53,6% × 46,4%" in cards[1].get_text()
+    for card, result in zip(
+        cards, [DATA["central"], DATA["central_projection"]], strict=True
+    ):
+        score = f'{result["flavio"]:.1f}% × {result["lula"]:.1f}%'.replace(".", ",")
+        assert score in card.get_text()
     assert all(c.select_one("details > summary").has_attr("aria-label") for c in cards)
     assert (
         "machine learning supervisionado" in cards[1].select_one("details").get_text()

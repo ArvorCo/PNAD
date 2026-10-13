@@ -1,0 +1,101 @@
+{
+  "id": "datatrends_2026-10-09",
+  "instituto": "DataTrends",
+  "registro_tse": "BR-03576/2026",
+  "contratante": "DataTrends, recursos próprios",
+  "campo": {
+    "inicio": "2026-10-07",
+    "fim": "2026-10-09"
+  },
+  "divulgacao": "2026-10-11",
+  "n": 2000,
+  "metodo": "telefônico automatizado URA/DTMF; ponderação por UF, gênero, idade, escolaridade e renda",
+  "publicado": {
+    "2t": {
+      "flavio": 50,
+      "lula": 44,
+      "branco_nulo": 5,
+      "indecisos": 1
+    }
+  },
+  "fonte": {
+    "arquivo": "data/originals/datatrends_102026_11/relatorio.pdf",
+    "url": "https://static.poder360.com.br/uploads/2026/10/pesquisa-datatrends-nacional-11out2026.pdf",
+    "bytes": 1542805,
+    "sha256": "88ea6e76d8b43790222c9fa41a3eb807a477f2936777f1e265bd64854baa8273",
+    "capturado_em": "2026-10-13T17:58:24+00:00",
+    "pdf": "data/originals/datatrends_102026_11/relatorio.pdf",
+    "tipo": "relatorio",
+    "rotulo": "Relatório completo conferido",
+    "paginas": {
+      "metodologia": 2,
+      "perfil_renda": 3,
+      "perfil_rotulo": 7,
+      "2t_topline": 12,
+      "2t_validos": 13,
+      "2t_renda": 25
+    },
+    "total_paginas": 31,
+    "conferido_em": "2026-10-13",
+    "status": "Íntegra arquivada e conferida visualmente.",
+    "nota": "Íntegra localizada: 31 páginas, campo 07–09/10 e publicação 11/10. P. 25 abre voto por renda; p. 3 declara pesos 46,7/34,6/18,7. Contudo a p. 7 rotula renda domiciliar per capita, e a p. 4 diz renda domiciliar total: universos diferentes, sem reconciliação verificável. Não trocar essa margem por renda familiar da PNAD até esclarecer a variável. Placar publicado da p. 12, 50/44/5/1, entra sem ajuste na Projeção. P. 4 informa NS/NR 2%, em vez de 1% na p. 12; preservadas as duas versões, com preferência pelo gráfico principal. Válidos 53,1/46,9 da p. 13 não são usados para inventar não escolha."
+  },
+  "ignorar": true,
+  "motivo": "Cruzamento disponível, mas a definição de renda conflita (per capita versus total). Publicado sem ajuste na Projeção.",
+  "cruzamentos": {},
+  "publicado_validos": {
+    "2t": {
+      "flavio": 53.1,
+      "lula": 46.9
+    }
+  },
+  "perfil_economico_publicado": {
+    "pagina": 3,
+    "pct": [
+      46.7,
+      34.6,
+      18.7
+    ],
+    "rotulo_p7": "Renda domiciliar per capita",
+    "rotulo_p4": "Renda domiciliar total"
+  },
+  "cruzamentos_documentais": {
+    "pagina": 25,
+    "opcoes": [
+      "flavio",
+      "lula",
+      "branco_nulo",
+      "indecisos"
+    ],
+    "linhas": [
+      [
+        47.8,
+        47.3,
+        3.7,
+        1.2
+      ],
+      [
+        51.2,
+        42.2,
+        5.3,
+        1.3
+      ],
+      [
+        50.9,
+        37.4,
+        8.6,
+        3.1
+      ]
+    ],
+    "uso": "Documental, sem calibração enquanto a variável de renda não for reconciliada."
+  },
+  "publicado_alternativo": {
+    "pagina": 4,
+    "2t": {
+      "flavio": 50,
+      "lula": 44,
+      "branco_nulo": 5,
+      "indecisos": 2
+    }
+  }
+}

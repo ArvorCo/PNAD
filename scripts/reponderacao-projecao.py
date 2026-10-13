@@ -208,6 +208,7 @@ def encode(data):
     clone["projection"]["uncertainty"] = "__UNCERTAINTY__"
     clone["projection"]["states"] = "__STATES__"
     clone["central_projection"] = "__CENTRAL_PROJECTION__"
+    clone["central"] = "__CENTRAL__"
     if "turnout_model" in clone:
         clone["turnout_model"] = "__TURNOUT__"
     if "presence_model" in clone:
@@ -235,6 +236,7 @@ def encode(data):
         .replace('"__DRAWS__"', compact)
         .replace('"__SELECTED__"', selected)
         .replace('"__POLLS__"', json.dumps(data["polls"], ensure_ascii=False))
+        .replace('"__CENTRAL__"', json.dumps(data["central"], ensure_ascii=False))
         .replace(
             '"__STATES__"', json.dumps(data["projection"]["states"], ensure_ascii=False)
         )

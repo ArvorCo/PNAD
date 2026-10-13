@@ -6,7 +6,7 @@
   "n": 2520,
   "campo": {
     "inicio": "2026-10-06",
-    "fim": "2026-10-08"
+    "fim": "2026-10-07"
   },
   "divulgacao": "2026-10-08",
   "metodo": "presencial, pontos de fluxo",
@@ -29,12 +29,13 @@
       }
     ],
     "bases": [
-      1209,
-      856,
-      344
+      1187,
+      874,
+      337
     ],
-    "perfil_tipo": "hipotese_onda_anterior",
-    "nota": "Fonte parcial: o G1 publica os votos por renda desta onda, mas não as bases de renda. A reponderação assume explicitamente o perfil ponderado da onda de 01/10 (1.209/856/344, PDF de 02/10, pp. 45 e 53), condicionado à confirmação da íntegra atual. O controle por sexo também assume as bases anteriores (1.215/1.291). Os controles de recomposição não comprovam que o perfil se manteve. O registro PesqEle devolveu HTTP 403 nesta consulta. Há divergência de datas: o texto metodológico do painel diz 6–7/10; a notícia de divulgação e a agenda do registro informam 6–8/10, período usado nesta ficha."
+    "perfil_tipo": "perfil_ponderado",
+    "nota": "Relatório de 34 páginas recebido do usuário em 13/10, preservado sem alterações. Pp. 2 e 19–21: campo 06–07/10 (corrige 06–08/10 da notícia), 2.520 entrevistas, registro BR-02949/2026. P. 26 (p. 8 do anexo): bases ponderadas atuais de renda 1.187/874/337, total 2.398 declarantes; sem renda, 122/2.520. Não reutiliza mais 1.209/856/344 da onda anterior. Ajuste limitado a 2.398/2.520 da base, restante preservado no topline. P. 23 publica o perfil; sexo e região atuais conferem o placar. O id legado e a divulgação de 08/10 são preservados: é revisão documental, não uma nova onda.",
+    "parcela_ajustada_pct": 95.15873015873017
   },
   "publicado": {
     "2t": {
@@ -78,73 +79,179 @@
           1
         ]
       ],
-      "nota": "API pública do painel pós-1º turno: paginaId=216, ESTIMULADA-PRE-001, divulgação 08/10. Usam-se votos totais por renda; os válidos arredondados ficam preservados à parte."
+      "nota": "Relatório de 34 páginas recebido do usuário em 13/10, preservado sem alterações. Pp. 2 e 19–21: campo 06–07/10 (corrige 06–08/10 da notícia), 2.520 entrevistas, registro BR-02949/2026. P. 26 (p. 8 do anexo): bases ponderadas atuais de renda 1.187/874/337, total 2.398 declarantes; sem renda, 122/2.520. Não reutiliza mais 1.209/856/344 da onda anterior. Ajuste limitado a 2.398/2.520 da base, restante preservado no topline. P. 23 publica o perfil; sexo e região atuais conferem o placar. O id legado e a divulgação de 08/10 são preservados: é revisão documental, não uma nova onda."
     }
   },
   "controles": {
     "2t": {
       "renda": {
+        "pesos": [
+          1187,
+          874,
+          337
+        ],
+        "linhas": [
+          [
+            52,
+            41,
+            5,
+            2
+          ],
+          [
+            38,
+            56,
+            5,
+            1
+          ],
+          [
+            39,
+            55,
+            5,
+            1
+          ]
+        ],
+        "opcoes": [
+          "lula",
+          "flavio",
+          "branco_nulo",
+          "indecisos"
+        ],
         "recomposto": {
-          "lula": 45.169,
-          "flavio": 48.329,
+          "lula": 45.07047539616347,
+          "flavio": 48.434528773978315,
           "branco_nulo": 5.0,
-          "indecisos": 1.502
+          "indecisos": 1.494995829858215
         },
         "residuo": {
-          "lula": 0.169,
-          "flavio": -0.671,
+          "lula": 0.07047539616346654,
+          "flavio": -0.5654712260216854,
           "branco_nulo": 0.0,
-          "indecisos": 0.502
+          "indecisos": 0.4949958298582151
         },
-        "residuo_max_abs": 0.671
+        "residuo_max_abs": 0.5654712260216854
       },
       "sexo": {
+        "pesos": [
+          1210,
+          1310
+        ],
+        "linhas": [
+          [
+            41,
+            53,
+            5,
+            0
+          ],
+          [
+            50,
+            44,
+            4,
+            2
+          ]
+        ],
+        "opcoes": [
+          "lula",
+          "flavio",
+          "branco_nulo",
+          "indecisos"
+        ],
         "recomposto": {
-          "lula": 45.636,
-          "flavio": 48.364,
-          "branco_nulo": 4.485,
-          "indecisos": 1.03
+          "lula": 45.67857142857143,
+          "flavio": 48.32142857142857,
+          "branco_nulo": 4.48015873015873,
+          "indecisos": 1.0396825396825398
         },
         "residuo": {
-          "lula": 0.636,
-          "flavio": -0.636,
-          "branco_nulo": -0.515,
-          "indecisos": 0.03
+          "lula": 0.6785714285714306,
+          "flavio": -0.6785714285714306,
+          "branco_nulo": -0.5198412698412698,
+          "indecisos": 0.039682539682539764
         },
-        "residuo_max_abs": 0.636
+        "residuo_max_abs": 0.6785714285714306
+      },
+      "regiao": {
+        "pesos": [
+          1069,
+          384,
+          669,
+          398
+        ],
+        "linhas": [
+          [
+            42,
+            50,
+            6,
+            1
+          ],
+          [
+            35,
+            58,
+            5,
+            2
+          ],
+          [
+            61,
+            35,
+            4,
+            1
+          ],
+          [
+            37,
+            58,
+            3,
+            2
+          ]
+        ],
+        "opcoes": [
+          "lula",
+          "flavio",
+          "branco_nulo",
+          "indecisos"
+        ],
+        "recomposto": {
+          "lula": 45.18769841269841,
+          "flavio": 48.50039682539683,
+          "branco_nulo": 4.8428571428571425,
+          "indecisos": 1.3103174603174603
+        },
+        "residuo": {
+          "lula": 0.1876984126984098,
+          "flavio": -0.4996031746031733,
+          "branco_nulo": -0.15714285714285747,
+          "indecisos": 0.3103174603174603
+        },
+        "residuo_max_abs": 0.4996031746031733
       }
     }
   },
   "fonte": {
-    "arquivo": "data/originals/datafolha_102026_08/g1_ESTIMULADA-PRE-001.json",
-    "url": "https://g1.globo.com/politica/eleicoes/2026/pesquisa-eleitoral/presidente-br-2-turno-datafolha/",
-    "bytes": 22558,
-    "sha256": "75cc9ea59701de06c55b795f00d29e43a9f131543db323b8248fdd5f599a5689",
-    "capturado_em": "2026-10-08T22:38:32+00:00",
-    "tipo": "painel_contratante",
-    "rotulo": "Painel do G1: votos por renda",
+    "arquivo": "data/originals/datafolha_102026_13/relatorio.pdf",
+    "url": "https://brasil.arvor.co/fontes/datafolha_2t_08102026_integra.pdf",
+    "bytes": 1398825,
+    "sha256": "9b95078c8f04e961b48719c166a303b354c4366eb59b633642ef0fc0de7aafcb",
+    "capturado_em": "2026-10-13T18:07:55+00:00",
+    "pdf": "data/originals/datafolha_102026_13/relatorio.pdf",
+    "tipo": "relatorio",
+    "rotulo": "Relatório completo conferido",
     "paginas": {
-      "2t_renda": "API 216, ESTIMULADA-PRE-001, estratos renda"
+      "metodologia": 2,
+      "perfil_renda": 23,
+      "2t_topline": 26,
+      "2t_renda": 26,
+      "sexo": 26,
+      "regiao": 26,
+      "2t_validos": 27
     },
-    "conferido_em": "2026-10-08",
-    "status": "Painel atual arquivado; íntegra em PDF pendente.",
-    "nota": "Fonte parcial: o G1 publica os votos por renda desta onda, mas não as bases de renda. A reponderação assume explicitamente o perfil ponderado da onda de 01/10 (1.209/856/344, PDF de 02/10, pp. 45 e 53), condicionado à confirmação da íntegra atual. O controle por sexo também assume as bases anteriores (1.215/1.291). Os controles de recomposição não comprovam que o perfil se manteve. O registro PesqEle devolveu HTTP 403 nesta consulta. Há divergência de datas: o texto metodológico do painel diz 6–7/10; a notícia de divulgação e a agenda do registro informam 6–8/10, período usado nesta ficha.",
+    "total_paginas": 34,
+    "conferido_em": "2026-10-13",
+    "status": "Íntegra arquivada e conferida visualmente.",
+    "nota": "Relatório de 34 páginas recebido do usuário em 13/10, preservado sem alterações. Pp. 2 e 19–21: campo 06–07/10 (corrige 06–08/10 da notícia), 2.520 entrevistas, registro BR-02949/2026. P. 26 (p. 8 do anexo): bases ponderadas atuais de renda 1.187/874/337, total 2.398 declarantes; sem renda, 122/2.520. Não reutiliza mais 1.209/856/344 da onda anterior. Ajuste limitado a 2.398/2.520 da base, restante preservado no topline. P. 23 publica o perfil; sexo e região atuais conferem o placar. O id legado e a divulgação de 08/10 são preservados: é revisão documental, não uma nova onda.",
+    "relatorio_completo": "2026-10-13",
+    "proveniencia": "Arquivo fornecido pelo usuário; URL é cópia pública preservada, não origem do download.",
     "complementos": [
       {
-        "arquivo": "data/originals/datafolha_102026_08/g1_VTSVALIDOS-PRE-001.json",
-        "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/216/?tipo_pergunta=VTSVALIDOS-PRE-001&instituto=Datafolha",
-        "bytes": 15754,
-        "sha256": "42eb7831fdc5d4b99bb720c50d03904afe36c907edc0990d1c2310caf56fe15d",
-        "capturado_em": "2026-10-08T22:38:32+00:00",
-        "rotulo": "API: votos válidos publicados"
-      },
-      {
-        "arquivo": "data/originals/datafolha_102026_08/materia_exame.html",
-        "url": "https://exame.com/brasil/pesquisa-datafolha-2o-turno-flavio-bolsonaro-tem-52-e-lula-48-dos-votos-validos/",
-        "bytes": 51010,
-        "sha256": "8ae0d11a32153efaed820b3c8cadc69d95113e94bc9852c2902483d0272ca72f",
-        "capturado_em": "2026-10-08T22:38:32+00:00",
-        "rotulo": "Divulgação e ficha técnica"
+        "url": "https://g1.globo.com/politica/eleicoes/2026/pesquisa-eleitoral/presidente-br-2-turno-datafolha/",
+        "rotulo": "Painel da divulgação inicial, preservado"
       }
     ]
   },

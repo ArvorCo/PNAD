@@ -243,8 +243,11 @@ def current_html(ns):
 
 
 def archive_html(ns):
+    closed = importlib.import_module("reponderacao-arquivo").close(
+        ns["D"], "2026-10-04"
+    )
     projection = importlib.import_module("reponderacao-validos-view").section_html(
-        ns["D"], ns["tabela"], ("1t",)
+        closed, ns["tabela"], ("1t",)
     )
     projection = projection.replace(
         "Da pesquisa<br><em>à urna.</em>", "A projeção<br><em>contra a urna.</em>"
@@ -268,7 +271,7 @@ def archive_html(ns):
                 ns["D"]
             ),
             str(soup),
-            ns["ch_primeiro_turno"](),
+            ns["ch_primeiro_turno"](closed),
             importlib.import_module("reponderacao-palver-view").audit_html(
                 ns["D"], ns["tabela"]
             ),
@@ -279,7 +282,7 @@ def archive_html(ns):
             ),
             ns["ch_pesquisas"]("1t"),
             ns["ch_metodo"](),
-            ns["ch_fontes"]("1t"),
+            ns["ch_fontes"]("1t", "2026-10-04"),
         ],
         [
             ("#agregador-urna", "Média × urna"),

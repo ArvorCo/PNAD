@@ -186,7 +186,10 @@ def reweight_table(
     published: dict[str, float],
     source: list[float],
     targets: dict[str, list[float]],
+    adjustable_fraction: float = 1.0,
 ) -> dict[str, Any]:
+    if not 0 < adjustable_fraction <= 1:
+        raise ValueError("A parcela ajustável precisa estar entre zero e um")
     options = table["opcoes"]
     rows = [[float(v) for v in row] for row in table["linhas"]]
     if len(rows) != len(source):
@@ -197,7 +200,14 @@ def reweight_table(
     scenarios: dict[str, Any] = {}
     for name, target in targets.items():
         counter = dict(zip(options, compose(rows, target), strict=False))
-        adjusted = {k: pub[k] + counter[k] - reproduced[k] for k in options}
+        adjusted = {
+            k: (
+                pub[k] + counter[k] - reproduced[k]
+                if adjustable_fraction == 1
+                else pub[k] + adjustable_fraction * (counter[k] - reproduced[k])
+            )
+            for k in options
+        }
         scenarios[name] = {
             "contrafactual": {k: round(v, 3) for k, v in counter.items()},
             "ajustado": {k: round(v, 3) for k, v in adjusted.items()},
@@ -265,7 +275,10 @@ def process_poll(
         published = poll.get("publicado", {}).get(turno)
         if not table or not published:
             continue
-        result = reweight_table(table, published, source, targets)
+        fraction = poll["renda"].get("parcela_ajustada_pct", 100) / 100
+        result = reweight_table(table, published, source, targets, fraction)
+        if fraction != 1:
+            result["parcela_ajustada_pct"] = poll["renda"]["parcela_ajustada_pct"]
         main = result["cenarios"][MAIN_SERIES]["ajustado"]
         result["gap_publicado"] = gap(result["publicado"])
         result["gap_ajustado"] = gap(main)
@@ -464,13 +477,14 @@ def build(today: date | None = None) -> dict[str, Any]:
             },
         },
         "metodo": {
-            "formula": "ajustado = publicado + (contrafactual PNAD - recomposto pelas bases do instituto)",
+            "formula": "ajustado = publicado + q × (contrafactual PNAD - recomposto pelas bases do instituto); q = parcela ajustável declarada, ou 1 na regra legada",
             "margem_unica": "só a renda é trocada; sexo, idade, região e escolaridade ficam como o instituto ponderou",
             "limites": [
                 "Sem microdados, pesos individuais, estratos, PSU nem efeito de desenho público.",
                 "Renda familiar declarada ao entrevistador não é o rendimento domiciliar medido pela PNADC.",
                 "Trocar uma margem não identifica interações com escolaridade, região, idade ou religião.",
                 "Quem não declara renda fica fora da conta e entra pelo topline publicado.",
+                "Nas novas fichas com não resposta quantificada, q limita a troca à parcela com renda conhecida; a massa restante conserva o publicado. Fichas históricas sem q mantêm sua regra arquivada.",
                 "É sensibilidade sob régua comum, não o resultado real da eleição.",
             ],
         },

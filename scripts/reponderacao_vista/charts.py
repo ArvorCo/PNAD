@@ -65,11 +65,13 @@ def caminho(pontos: list[tuple[float, float]]) -> str:
     return "M" + "L".join(f"{x:.1f} {y:.1f}" for x, y in pontos)
 
 
-def serie_svg(ident: str, turno: str, compacta: bool = False) -> str:
-    serie = AGG["serie"]
+def serie_svg(ident: str, turno: str, compacta: bool = False, data=None) -> str:
+    serie = (data["agregador"] if data else AGG)["serie"]
     datas = [dia(t) for t in serie["datas"]]
     pub, adj = serie[turno]["publicado"], serie[turno]["ajustado"]
-    polls = [p for p in PESQUISAS if turno in p["turnos"]]
+    polls = [
+        p for p in (data["pesquisas"] if data else PESQUISAS) if turno in p["turnos"]
+    ]
 
     chaves = (*PAR, *groups_view.GROUP_LABELS) if turno == "1t" else PAR
     if not compacta:

@@ -80,7 +80,8 @@ def test_engine_output_residual_and_adjustment():
 
 def test_final_atlas_replaces_previous_wave_in_window():
     data = load(OUTPUT)
-    last = data["agregador"]["ultimo"]["1t"]["cobertura_movel"]
+    idx = data["agregador"]["serie"]["datas"].index("2026-10-04")
+    last = data["agregador"]["cobertura_movel"]["1t"][idx]
     assert "atlas_2026-10-02" in last["ondas"]
     assert "atlas_2026-09-28" not in last["ondas"]
     forecast = load(PREDICAO)

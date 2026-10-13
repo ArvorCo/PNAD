@@ -1,5 +1,5 @@
 {
-  "reference": "2026-10-09",
+  "reference": "2026-10-13",
   "labels": {
     "lula": "Lula",
     "flavio": "Flávio",
@@ -5152,8 +5152,8 @@
       }
     },
     "2t": {
-      "reference": "2026-10-09",
-      "n_houses": 2,
+      "reference": "2026-10-13",
+      "n_houses": 5,
       "excluded": [
         {
           "id": "atlas_2026-10-08",
@@ -5161,29 +5161,14 @@
           "reason": "Campo atravessa o 1º turno; apenas histórico, fora da central"
         },
         {
-          "id": "futura_2026-10-03",
+          "id": "datatrends_2026-10-09",
+          "instituto": "DataTrends",
+          "reason": "Cruzamento disponível, mas a definição de renda conflita (per capita versus total). Publicado sem ajuste na Projeção."
+        },
+        {
+          "id": "futura_2026-10-10",
           "instituto": "Futura",
-          "reason": "Campo anterior ao encerramento do 1º turno; apenas histórico, fora da central"
-        },
-        {
-          "id": "gerp_2026-10-02",
-          "instituto": "Gerp",
-          "reason": "Campo anterior ao encerramento do 1º turno; apenas histórico, fora da central"
-        },
-        {
-          "id": "mda_2026-10-02",
-          "instituto": "MDA",
-          "reason": "Campo anterior ao encerramento do 1º turno; apenas histórico, fora da central"
-        },
-        {
-          "id": "palver_2026-10-03",
-          "instituto": "Palver",
-          "reason": "Campo anterior ao encerramento do 1º turno; apenas histórico, fora da central"
-        },
-        {
-          "id": "quaest_2026-10-03",
-          "instituto": "Quaest",
-          "reason": "Campo anterior ao encerramento do 1º turno; apenas histórico, fora da central"
+          "reason": "Perfil de renda publicado, sem cruzamento de voto por renda. Sem ajuste identificável."
         },
         {
           "id": "vox_brasil_2026-10-07",
@@ -5195,16 +5180,16 @@
         "central": {
           "aggregate": {
             "publicado": {
-              "lula": 47.59208419126058,
-              "flavio": 52.40791580873942
+              "lula": 47.57365202234975,
+              "flavio": 52.42634797765025
             },
             "pnad": {
-              "lula": 45.89006241033917,
-              "flavio": 54.10993758966082
+              "lula": 46.262834145603414,
+              "flavio": 53.737165854396586
             },
             "modelo": {
-              "lula": 45.88510923116246,
-              "flavio": 54.114890768837526
+              "lula": 46.257880499625024,
+              "flavio": 53.742119500374976
             }
           },
           "polls": [
@@ -5214,49 +5199,47 @@
               "divulgacao": "2026-10-08",
               "campo": {
                 "inicio": "2026-10-06",
-                "fim": "2026-10-08"
+                "fim": "2026-10-07"
               },
               "published": {
                 "flavio": 49.0,
                 "lula": 45.0
               },
               "adjusted": {
-                "flavio": 51.137,
-                "lula": 43.013
+                "flavio": 50.934,
+                "lula": 43.203
               },
               "negative_mass_removed": {},
-              "undecided": 0.85,
+              "undecided": 0.864,
               "undecided_known": true,
               "source": {
-                "arquivo": "data/originals/datafolha_102026_08/g1_ESTIMULADA-PRE-001.json",
-                "url": "https://g1.globo.com/politica/eleicoes/2026/pesquisa-eleitoral/presidente-br-2-turno-datafolha/",
-                "bytes": 22558,
-                "sha256": "75cc9ea59701de06c55b795f00d29e43a9f131543db323b8248fdd5f599a5689",
-                "capturado_em": "2026-10-08T22:38:32+00:00",
-                "tipo": "painel_contratante",
-                "rotulo": "Painel do G1: votos por renda",
+                "arquivo": "data/originals/datafolha_102026_13/relatorio.pdf",
+                "url": "https://brasil.arvor.co/fontes/datafolha_2t_08102026_integra.pdf",
+                "bytes": 1398825,
+                "sha256": "9b95078c8f04e961b48719c166a303b354c4366eb59b633642ef0fc0de7aafcb",
+                "capturado_em": "2026-10-13T18:07:55+00:00",
+                "pdf": "data/originals/datafolha_102026_13/relatorio.pdf",
+                "tipo": "relatorio",
+                "rotulo": "Relatório completo conferido",
                 "paginas": {
-                  "2t_renda": "API 216, ESTIMULADA-PRE-001, estratos renda"
+                  "metodologia": 2,
+                  "perfil_renda": 23,
+                  "2t_topline": 26,
+                  "2t_renda": 26,
+                  "sexo": 26,
+                  "regiao": 26,
+                  "2t_validos": 27
                 },
-                "conferido_em": "2026-10-08",
-                "status": "Painel atual arquivado; íntegra em PDF pendente.",
-                "nota": "Fonte parcial: o G1 publica os votos por renda desta onda, mas não as bases de renda. A reponderação assume explicitamente o perfil ponderado da onda de 01/10 (1.209/856/344, PDF de 02/10, pp. 45 e 53), condicionado à confirmação da íntegra atual. O controle por sexo também assume as bases anteriores (1.215/1.291). Os controles de recomposição não comprovam que o perfil se manteve. O registro PesqEle devolveu HTTP 403 nesta consulta. Há divergência de datas: o texto metodológico do painel diz 6–7/10; a notícia de divulgação e a agenda do registro informam 6–8/10, período usado nesta ficha.",
+                "total_paginas": 34,
+                "conferido_em": "2026-10-13",
+                "status": "Íntegra arquivada e conferida visualmente.",
+                "nota": "Relatório de 34 páginas recebido do usuário em 13/10, preservado sem alterações. Pp. 2 e 19–21: campo 06–07/10 (corrige 06–08/10 da notícia), 2.520 entrevistas, registro BR-02949/2026. P. 26 (p. 8 do anexo): bases ponderadas atuais de renda 1.187/874/337, total 2.398 declarantes; sem renda, 122/2.520. Não reutiliza mais 1.209/856/344 da onda anterior. Ajuste limitado a 2.398/2.520 da base, restante preservado no topline. P. 23 publica o perfil; sexo e região atuais conferem o placar. O id legado e a divulgação de 08/10 são preservados: é revisão documental, não uma nova onda.",
+                "relatorio_completo": "2026-10-13",
+                "proveniencia": "Arquivo fornecido pelo usuário; URL é cópia pública preservada, não origem do download.",
                 "complementos": [
                   {
-                    "arquivo": "data/originals/datafolha_102026_08/g1_VTSVALIDOS-PRE-001.json",
-                    "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/216/?tipo_pergunta=VTSVALIDOS-PRE-001&instituto=Datafolha",
-                    "bytes": 15754,
-                    "sha256": "42eb7831fdc5d4b99bb720c50d03904afe36c907edc0990d1c2310caf56fe15d",
-                    "capturado_em": "2026-10-08T22:38:32+00:00",
-                    "rotulo": "API: votos válidos publicados"
-                  },
-                  {
-                    "arquivo": "data/originals/datafolha_102026_08/materia_exame.html",
-                    "url": "https://exame.com/brasil/pesquisa-datafolha-2o-turno-flavio-bolsonaro-tem-52-e-lula-48-dos-votos-validos/",
-                    "bytes": 51010,
-                    "sha256": "8ae0d11a32153efaed820b3c8cadc69d95113e94bc9852c2902483d0272ca72f",
-                    "capturado_em": "2026-10-08T22:38:32+00:00",
-                    "rotulo": "Divulgação e ficha técnica"
+                    "url": "https://g1.globo.com/politica/eleicoes/2026/pesquisa-eleitoral/presidente-br-2-turno-datafolha/",
+                    "rotulo": "Painel da divulgação inicial, preservado"
                   }
                 ]
               },
@@ -5265,16 +5248,16 @@
                 "lula": 47.87234042553192
               },
               "pnad": {
-                "flavio": 54.31439192777482,
-                "lula": 45.68560807222517
+                "flavio": 54.10624940246662,
+                "lula": 45.89375059753338
               },
               "modelo": {
-                "flavio": 54.3193417525207,
-                "lula": 45.6806582474793
+                "flavio": 54.111202725511056,
+                "lula": 45.888797274488944
               },
               "allocated_undecided": {
-                "flavio": 0.3673661721518745,
-                "lula": 0.3089420456936166
+                "flavio": 0.37198606275037915,
+                "lula": 0.31546134927139075
               },
               "rates": {
                 "flavio": 0.7963802451702287,
@@ -5284,33 +5267,226 @@
               "proxy_candidates": []
             },
             {
-              "id": "poderdata_2026-10-07",
-              "instituto": "PoderData",
-              "divulgacao": "2026-10-08",
+              "id": "gerp_2026-10-12",
+              "instituto": "Gerp",
+              "divulgacao": "2026-10-13",
               "campo": {
-                "inicio": "2026-10-05",
-                "fim": "2026-10-07"
+                "inicio": "2026-10-08",
+                "fim": "2026-10-12"
+              },
+              "published": {
+                "flavio": 53.0,
+                "lula": 44.0
+              },
+              "adjusted": {
+                "flavio": 54.976,
+                "lula": 42.017
+              },
+              "negative_mass_removed": {},
+              "undecided": 3.017,
+              "undecided_known": true,
+              "source": {
+                "arquivo": "data/originals/gerp_102026_13/relatorio.pdf",
+                "url": "https://gerp.com.br/relatorios/20261012%20Relat%C3%B3rio%20Presid%C3%AAncia%202026%202%C2%BA%20Turno%20-%20DIVULGA%C3%87%C3%83O.pdf",
+                "bytes": 869727,
+                "sha256": "42a17309fd91ea440e9a5f37efb9390e28506035518a02f2631a2ab1f4937da5",
+                "capturado_em": "2026-10-13T17:57:45+00:00",
+                "pdf": "data/originals/gerp_102026_13/relatorio.pdf",
+                "tipo": "relatorio",
+                "rotulo": "Relatório completo conferido",
+                "paginas": {
+                  "metodologia": 7,
+                  "perfil_renda": 8,
+                  "2t_topline": 14,
+                  "2t_renda": 16,
+                  "sexo": 16,
+                  "2t_validos": 21
+                },
+                "total_paginas": 57,
+                "conferido_em": "2026-10-13",
+                "status": "Íntegra arquivada e conferida visualmente.",
+                "nota": "Campo em 08, 09 e 12/10, não uma coleta contínua: p. 7. Publicação oficial 13/10 no manifesto; a divulgação na TMC começou na noite de 12/10. P. 8: percentuais ponderados de renda 20/20/28/12/5/2 e recusa 14, soma arredondada 101. As bases de campo da p. 16 não são pesos. O ajuste troca renda somente entre declarantes: 87/101 do total; o restante permanece no placar publicado, sem voto por renda imputado. Topline 53/44/1/3 soma 101 por arredondamento."
+              },
+              "publicado": {
+                "flavio": 54.63917525773196,
+                "lula": 45.36082474226804
+              },
+              "pnad": {
+                "flavio": 56.68037899642243,
+                "lula": 43.31962100357759
+              },
+              "modelo": {
+                "flavio": 56.68527690681267,
+                "lula": 43.31472309318733
+              },
+              "allocated_undecided": {
+                "flavio": 1.3607280002943967,
+                "lula": 1.0397683446936592
+              },
+              "rates": {
+                "flavio": 0.7963802451702287,
+                "lula": 0.7962213991300896
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": []
+            },
+            {
+              "id": "ipespe_2026-10-08",
+              "instituto": "Ipespe",
+              "divulgacao": "2026-10-10",
+              "campo": {
+                "inicio": "2026-10-06",
+                "fim": "2026-10-08"
               },
               "published": {
                 "flavio": 49.0,
                 "lula": 44.0
               },
               "adjusted": {
-                "flavio": 50.531,
-                "lula": 43.209
+                "flavio": 49.816,
+                "lula": 43.464
               },
               "negative_mass_removed": {},
-              "undecided": 1.846,
+              "undecided": 2.889,
               "undecided_known": true,
               "source": {
-                "arquivo": "data/originals/poderdata_102026_08/relatorio.pdf",
-                "url": "https://static.poder360.com.br/uploads/2026/10/Relatorio-PoderData-Eleitoral-8out26-final.pdf",
-                "bytes": 1355838,
-                "sha256": "76d820c8267a1f465aabb8d50a766b47023783d942e4ea6a6686392a6107153a",
-                "capturado_em": "2026-10-08T22:38:32+00:00",
-                "pdf": "data/originals/poderdata_102026_08/relatorio.pdf",
+                "arquivo": "data/originals/ipespe_102026_10/relatorio.pdf",
+                "url": "https://static.poder360.com.br/uploads/2026/10/pesquisa-ipespe-abrapel-10out2026.pdf",
+                "bytes": 2175740,
+                "sha256": "e5f7e32a4947b80dd8ad5b1c60b20a4910fef47ffd48c29b3b534300b8e39450",
+                "capturado_em": "2026-10-13T17:58:24+00:00",
+                "pdf": "data/originals/ipespe_102026_10/relatorio.pdf",
                 "tipo": "relatorio",
-                "rotulo": "PoderData: relatório completo",
+                "rotulo": "Relatório completo conferido",
+                "paginas": {
+                  "metodologia": 33,
+                  "perfil_renda": 34,
+                  "2t_topline": 5,
+                  "2t_validos": 5,
+                  "2t_renda": 6,
+                  "sexo": 6
+                },
+                "total_paginas": 35,
+                "conferido_em": "2026-10-13",
+                "status": "Íntegra arquivada e conferida visualmente.",
+                "nota": "Primeira rodada do tracking Ipespe/ABRAPEL, 06–08/10, publicada 10/10; íntegra de 35 páginas. A metodologia p. 33 declara CATI, diferente do recrutamento digital citado por parte da imprensa. A p. 5 informa 49/44/5/3, soma 101 por arredondamento: os indecisos são 3%, não 1%. Perfil de renda familiar da própria onda na p. 34: 41/39/20. Cruzamentos p. 6. Válidos divulgados 52,7/47,3 preservados separadamente da normalização dos totais arredondados."
+              },
+              "publicado": {
+                "flavio": 52.68817204301075,
+                "lula": 47.31182795698925
+              },
+              "pnad": {
+                "flavio": 53.40480274442539,
+                "lula": 46.59519725557461
+              },
+              "modelo": {
+                "flavio": 53.40976658413426,
+                "lula": 46.59023341586573
+              },
+              "allocated_undecided": {
+                "flavio": 1.2277048194373874,
+                "lula": 1.0709474645104056
+              },
+              "rates": {
+                "flavio": 0.7963802451702287,
+                "lula": 0.7962213991300896
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": []
+            },
+            {
+              "id": "nexus_2026-10-12",
+              "instituto": "Nexus",
+              "divulgacao": "2026-10-13",
+              "campo": {
+                "inicio": "2026-10-10",
+                "fim": "2026-10-12"
+              },
+              "published": {
+                "flavio": 48.0,
+                "lula": 45.0
+              },
+              "adjusted": {
+                "flavio": 49.067,
+                "lula": 44.127
+              },
+              "negative_mass_removed": {},
+              "undecided": 1.753,
+              "undecided_known": true,
+              "source": {
+                "arquivo": "data/originals/nexus_102026_13/relatorio.pdf",
+                "url": "https://www.nexus.fsb.com.br/wp-content/uploads/2026/10/BTG-Nexus-Eleicoes-2026-Rodada-17-13.out_.2026.pdf",
+                "bytes": 2249898,
+                "sha256": "122e3f2052c72c3da04f6bd556cf592f2c341cdda90b462632a6a63dbda1c6a7",
+                "capturado_em": "2026-10-13T17:57:45+00:00",
+                "pdf": "data/originals/nexus_102026_13/relatorio.pdf",
+                "tipo": "relatorio",
+                "rotulo": "Relatório completo conferido",
+                "paginas": {
+                  "metodologia": 4,
+                  "perfil_renda": 99,
+                  "2t_topline": 21,
+                  "2t_validos": 23,
+                  "sexo": 40,
+                  "2t_renda": 41,
+                  "comparecimento": 15
+                },
+                "total_paginas": 102,
+                "conferido_em": "2026-10-13",
+                "status": "Íntegra arquivada e conferida visualmente.",
+                "nota": "17ª rodada: campo 10–12/10, 2.002 entrevistas, divulgação 13/10. Perfil atual p. 99: renda familiar 19/18/40/23. Voto por renda p. 41; sexo p. 40. Não transporta preferências ou rejeição de setembro. P. 15 declara 89% de presença decidida e 6% provável: declaração de intenção (95%), não previsão calibrada de comparecimento. Não substitui automaticamente a referência oficial de 79,16% do primeiro turno."
+              },
+              "publicado": {
+                "flavio": 51.61290322580645,
+                "lula": 48.38709677419355
+              },
+              "pnad": {
+                "flavio": 52.65038521793248,
+                "lula": 47.34961478206751
+              },
+              "modelo": {
+                "flavio": 52.65535817758606,
+                "lula": 47.34464182241394
+              },
+              "allocated_undecided": {
+                "flavio": 0.7344296916502467,
+                "lula": 0.6603565505652195
+              },
+              "rates": {
+                "flavio": 0.7963802451702287,
+                "lula": 0.7962213991300896
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": []
+            },
+            {
+              "id": "poderdata_2026-10-12",
+              "instituto": "PoderData",
+              "divulgacao": "2026-10-13",
+              "campo": {
+                "inicio": "2026-10-10",
+                "fim": "2026-10-12"
+              },
+              "published": {
+                "flavio": 48.0,
+                "lula": 46.0
+              },
+              "adjusted": {
+                "flavio": 48.99,
+                "lula": 45.505
+              },
+              "negative_mass_removed": {},
+              "undecided": 1.954,
+              "undecided_known": true,
+              "source": {
+                "arquivo": "data/originals/poderdata_102026_13/relatorio.pdf",
+                "url": "https://static.poder360.com.br/uploads/2026/10/Relatorio-PoderData-Eleitoral-12out26-1.pdf",
+                "bytes": 869560,
+                "sha256": "0f4e4418d633cbcf30f6364b48a728b67267a18ba649f81b5ef1879048c15ffa",
+                "capturado_em": "2026-10-13T17:58:24+00:00",
+                "pdf": "data/originals/poderdata_102026_13/relatorio.pdf",
+                "tipo": "relatorio",
+                "rotulo": "Relatório completo conferido",
                 "paginas": {
                   "metodologia": 2,
                   "perfil_renda": 4,
@@ -5318,36 +5494,26 @@
                   "sexo": 7,
                   "2t_renda": 9
                 },
-                "total_paginas": 39,
-                "conferido_em": "2026-10-08",
-                "status": "Íntegra atual arquivada e conferida.",
-                "nota": "Primeira onda PoderData com campo inteiramente após o 1º turno. Entram votos totais 44 × 49, não os válidos arredondados 47 × 53. A média móvel de sete dias ainda inclui outras casas com campo anterior à eleição; não é uma média exclusiva do pós-1º turno.",
-                "complementos": [
-                  {
-                    "arquivo": "data/originals/poderdata_102026_08/materia.html",
-                    "url": "https://www.poder360.com.br/poderdata/pesquisa-poderdata-aya-leia-os-resultados-de-lula-e-flavio-no-2o-turno/",
-                    "bytes": 271490,
-                    "sha256": "1766999ca2d5e55ca3af9057515f108de8c5a3c969bb52a8dfa7024b4fdf8135",
-                    "capturado_em": "2026-10-08T22:38:32+00:00",
-                    "rotulo": "Divulgação oficial no Poder360"
-                  }
-                ]
+                "total_paginas": 27,
+                "conferido_em": "2026-10-13",
+                "status": "Íntegra arquivada e conferida visualmente.",
+                "nota": "Íntegra correta: campo 10–12/10, registro BR-01209/2026, 27 páginas. O índice de PDFs na matéria de 13/10 ainda apontava para 05–07/10; a íntegra atual foi localizada na síntese do próprio Poder360. Perfil desta onda na p. 4: 46/33/21; não é emprestado da anterior. Total 48/46/5/2 (101 por arredondamento), renda p. 9 e controle independente por sexo p. 7."
               },
               "publicado": {
-                "flavio": 52.68817204301075,
-                "lula": 47.31182795698925
+                "flavio": 51.06382978723404,
+                "lula": 48.93617021276596
               },
               "pnad": {
-                "flavio": 53.90548325154682,
-                "lula": 46.09451674845317
+                "flavio": 51.84401291073601,
+                "lula": 48.15598708926398
               },
               "modelo": {
-                "flavio": 53.91043978515436,
-                "lula": 46.089560214845626
+                "flavio": 51.84899310783081,
+                "lula": 48.15100689216919
               },
               "allocated_undecided": {
-                "flavio": 0.7918270070206671,
-                "lula": 0.6769553107943642
+                "flavio": 0.8061031628928444,
+                "lula": 0.7486100814249085
               },
               "rates": {
                 "flavio": 0.7963802451702287,
@@ -5361,15 +5527,36 @@
             {
               "without": "Datafolha",
               "valid": {
-                "lula": 46.089560214845626,
-                "flavio": 53.91043978515436
+                "lula": 46.35015130590905,
+                "flavio": 53.64984869409095
+              }
+            },
+            {
+              "without": "Gerp",
+              "valid": {
+                "lula": 46.99366985123445,
+                "flavio": 53.00633014876555
+              }
+            },
+            {
+              "without": "Ipespe",
+              "valid": {
+                "lula": 46.17479227056485,
+                "flavio": 53.82520772943515
+              }
+            },
+            {
+              "without": "Nexus",
+              "valid": {
+                "lula": 45.9861901689278,
+                "flavio": 54.0138098310722
               }
             },
             {
               "without": "PoderData",
               "valid": {
-                "lula": 45.6806582474793,
-                "flavio": 54.3193417525207
+                "lula": 45.784598901488984,
+                "flavio": 54.215401098511016
               }
             }
           ],
@@ -5383,16 +5570,16 @@
         "idosos60": {
           "aggregate": {
             "publicado": {
-              "lula": 47.59208419126058,
-              "flavio": 52.40791580873942
+              "lula": 47.57365202234975,
+              "flavio": 52.42634797765025
             },
             "pnad": {
-              "lula": 45.89006241033917,
-              "flavio": 54.10993758966082
+              "lula": 46.262834145603414,
+              "flavio": 53.737165854396586
             },
             "modelo": {
-              "lula": 45.376972375936745,
-              "flavio": 54.623027624063255
+              "lula": 45.749655552528885,
+              "flavio": 54.25034444747111
             }
           },
           "polls": [
@@ -5402,49 +5589,47 @@
               "divulgacao": "2026-10-08",
               "campo": {
                 "inicio": "2026-10-06",
-                "fim": "2026-10-08"
+                "fim": "2026-10-07"
               },
               "published": {
                 "flavio": 49.0,
                 "lula": 45.0
               },
               "adjusted": {
-                "flavio": 51.137,
-                "lula": 43.013
+                "flavio": 50.934,
+                "lula": 43.203
               },
               "negative_mass_removed": {},
-              "undecided": 0.85,
+              "undecided": 0.864,
               "undecided_known": true,
               "source": {
-                "arquivo": "data/originals/datafolha_102026_08/g1_ESTIMULADA-PRE-001.json",
-                "url": "https://g1.globo.com/politica/eleicoes/2026/pesquisa-eleitoral/presidente-br-2-turno-datafolha/",
-                "bytes": 22558,
-                "sha256": "75cc9ea59701de06c55b795f00d29e43a9f131543db323b8248fdd5f599a5689",
-                "capturado_em": "2026-10-08T22:38:32+00:00",
-                "tipo": "painel_contratante",
-                "rotulo": "Painel do G1: votos por renda",
+                "arquivo": "data/originals/datafolha_102026_13/relatorio.pdf",
+                "url": "https://brasil.arvor.co/fontes/datafolha_2t_08102026_integra.pdf",
+                "bytes": 1398825,
+                "sha256": "9b95078c8f04e961b48719c166a303b354c4366eb59b633642ef0fc0de7aafcb",
+                "capturado_em": "2026-10-13T18:07:55+00:00",
+                "pdf": "data/originals/datafolha_102026_13/relatorio.pdf",
+                "tipo": "relatorio",
+                "rotulo": "Relatório completo conferido",
                 "paginas": {
-                  "2t_renda": "API 216, ESTIMULADA-PRE-001, estratos renda"
+                  "metodologia": 2,
+                  "perfil_renda": 23,
+                  "2t_topline": 26,
+                  "2t_renda": 26,
+                  "sexo": 26,
+                  "regiao": 26,
+                  "2t_validos": 27
                 },
-                "conferido_em": "2026-10-08",
-                "status": "Painel atual arquivado; íntegra em PDF pendente.",
-                "nota": "Fonte parcial: o G1 publica os votos por renda desta onda, mas não as bases de renda. A reponderação assume explicitamente o perfil ponderado da onda de 01/10 (1.209/856/344, PDF de 02/10, pp. 45 e 53), condicionado à confirmação da íntegra atual. O controle por sexo também assume as bases anteriores (1.215/1.291). Os controles de recomposição não comprovam que o perfil se manteve. O registro PesqEle devolveu HTTP 403 nesta consulta. Há divergência de datas: o texto metodológico do painel diz 6–7/10; a notícia de divulgação e a agenda do registro informam 6–8/10, período usado nesta ficha.",
+                "total_paginas": 34,
+                "conferido_em": "2026-10-13",
+                "status": "Íntegra arquivada e conferida visualmente.",
+                "nota": "Relatório de 34 páginas recebido do usuário em 13/10, preservado sem alterações. Pp. 2 e 19–21: campo 06–07/10 (corrige 06–08/10 da notícia), 2.520 entrevistas, registro BR-02949/2026. P. 26 (p. 8 do anexo): bases ponderadas atuais de renda 1.187/874/337, total 2.398 declarantes; sem renda, 122/2.520. Não reutiliza mais 1.209/856/344 da onda anterior. Ajuste limitado a 2.398/2.520 da base, restante preservado no topline. P. 23 publica o perfil; sexo e região atuais conferem o placar. O id legado e a divulgação de 08/10 são preservados: é revisão documental, não uma nova onda.",
+                "relatorio_completo": "2026-10-13",
+                "proveniencia": "Arquivo fornecido pelo usuário; URL é cópia pública preservada, não origem do download.",
                 "complementos": [
                   {
-                    "arquivo": "data/originals/datafolha_102026_08/g1_VTSVALIDOS-PRE-001.json",
-                    "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/216/?tipo_pergunta=VTSVALIDOS-PRE-001&instituto=Datafolha",
-                    "bytes": 15754,
-                    "sha256": "42eb7831fdc5d4b99bb720c50d03904afe36c907edc0990d1c2310caf56fe15d",
-                    "capturado_em": "2026-10-08T22:38:32+00:00",
-                    "rotulo": "API: votos válidos publicados"
-                  },
-                  {
-                    "arquivo": "data/originals/datafolha_102026_08/materia_exame.html",
-                    "url": "https://exame.com/brasil/pesquisa-datafolha-2o-turno-flavio-bolsonaro-tem-52-e-lula-48-dos-votos-validos/",
-                    "bytes": 51010,
-                    "sha256": "8ae0d11a32153efaed820b3c8cadc69d95113e94bc9852c2902483d0272ca72f",
-                    "capturado_em": "2026-10-08T22:38:32+00:00",
-                    "rotulo": "Divulgação e ficha técnica"
+                    "url": "https://g1.globo.com/politica/eleicoes/2026/pesquisa-eleitoral/presidente-br-2-turno-datafolha/",
+                    "rotulo": "Painel da divulgação inicial, preservado"
                   }
                 ]
               },
@@ -5453,16 +5638,16 @@
                 "lula": 47.87234042553192
               },
               "pnad": {
-                "flavio": 54.31439192777482,
-                "lula": 45.68560807222517
+                "flavio": 54.10624940246662,
+                "lula": 45.89375059753338
               },
               "modelo": {
-                "flavio": 54.82711301579496,
-                "lula": 45.17288698420505
+                "flavio": 54.61935471166525,
+                "lula": 45.38064528833474
               },
               "allocated_undecided": {
-                "flavio": 0.35737224510222143,
-                "lula": 0.294444393500047
+                "flavio": 0.3618818684804257,
+                "lula": 0.3006705735811742
               },
               "rates": {
                 "flavio": 0.8037215950422713,
@@ -5472,33 +5657,226 @@
               "proxy_candidates": []
             },
             {
-              "id": "poderdata_2026-10-07",
-              "instituto": "PoderData",
-              "divulgacao": "2026-10-08",
+              "id": "gerp_2026-10-12",
+              "instituto": "Gerp",
+              "divulgacao": "2026-10-13",
               "campo": {
-                "inicio": "2026-10-05",
-                "fim": "2026-10-07"
+                "inicio": "2026-10-08",
+                "fim": "2026-10-12"
+              },
+              "published": {
+                "flavio": 53.0,
+                "lula": 44.0
+              },
+              "adjusted": {
+                "flavio": 54.976,
+                "lula": 42.017
+              },
+              "negative_mass_removed": {},
+              "undecided": 3.017,
+              "undecided_known": true,
+              "source": {
+                "arquivo": "data/originals/gerp_102026_13/relatorio.pdf",
+                "url": "https://gerp.com.br/relatorios/20261012%20Relat%C3%B3rio%20Presid%C3%AAncia%202026%202%C2%BA%20Turno%20-%20DIVULGA%C3%87%C3%83O.pdf",
+                "bytes": 869727,
+                "sha256": "42a17309fd91ea440e9a5f37efb9390e28506035518a02f2631a2ab1f4937da5",
+                "capturado_em": "2026-10-13T17:57:45+00:00",
+                "pdf": "data/originals/gerp_102026_13/relatorio.pdf",
+                "tipo": "relatorio",
+                "rotulo": "Relatório completo conferido",
+                "paginas": {
+                  "metodologia": 7,
+                  "perfil_renda": 8,
+                  "2t_topline": 14,
+                  "2t_renda": 16,
+                  "sexo": 16,
+                  "2t_validos": 21
+                },
+                "total_paginas": 57,
+                "conferido_em": "2026-10-13",
+                "status": "Íntegra arquivada e conferida visualmente.",
+                "nota": "Campo em 08, 09 e 12/10, não uma coleta contínua: p. 7. Publicação oficial 13/10 no manifesto; a divulgação na TMC começou na noite de 12/10. P. 8: percentuais ponderados de renda 20/20/28/12/5/2 e recusa 14, soma arredondada 101. As bases de campo da p. 16 não são pesos. O ajuste troca renda somente entre declarantes: 87/101 do total; o restante permanece no placar publicado, sem voto por renda imputado. Topline 53/44/1/3 soma 101 por arredondamento."
+              },
+              "publicado": {
+                "flavio": 54.63917525773196,
+                "lula": 45.36082474226804
+              },
+              "pnad": {
+                "flavio": 56.68037899642243,
+                "lula": 43.31962100357759
+              },
+              "modelo": {
+                "flavio": 57.187477090276616,
+                "lula": 42.81252290972338
+              },
+              "allocated_undecided": {
+                "flavio": 1.323069823480779,
+                "lula": 0.9904958220051548
+              },
+              "rates": {
+                "flavio": 0.8037215950422713,
+                "lula": 0.7872698477571027
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": []
+            },
+            {
+              "id": "ipespe_2026-10-08",
+              "instituto": "Ipespe",
+              "divulgacao": "2026-10-10",
+              "campo": {
+                "inicio": "2026-10-06",
+                "fim": "2026-10-08"
               },
               "published": {
                 "flavio": 49.0,
                 "lula": 44.0
               },
               "adjusted": {
-                "flavio": 50.531,
-                "lula": 43.209
+                "flavio": 49.816,
+                "lula": 43.464
               },
               "negative_mass_removed": {},
-              "undecided": 1.846,
+              "undecided": 2.889,
               "undecided_known": true,
               "source": {
-                "arquivo": "data/originals/poderdata_102026_08/relatorio.pdf",
-                "url": "https://static.poder360.com.br/uploads/2026/10/Relatorio-PoderData-Eleitoral-8out26-final.pdf",
-                "bytes": 1355838,
-                "sha256": "76d820c8267a1f465aabb8d50a766b47023783d942e4ea6a6686392a6107153a",
-                "capturado_em": "2026-10-08T22:38:32+00:00",
-                "pdf": "data/originals/poderdata_102026_08/relatorio.pdf",
+                "arquivo": "data/originals/ipespe_102026_10/relatorio.pdf",
+                "url": "https://static.poder360.com.br/uploads/2026/10/pesquisa-ipespe-abrapel-10out2026.pdf",
+                "bytes": 2175740,
+                "sha256": "e5f7e32a4947b80dd8ad5b1c60b20a4910fef47ffd48c29b3b534300b8e39450",
+                "capturado_em": "2026-10-13T17:58:24+00:00",
+                "pdf": "data/originals/ipespe_102026_10/relatorio.pdf",
                 "tipo": "relatorio",
-                "rotulo": "PoderData: relatório completo",
+                "rotulo": "Relatório completo conferido",
+                "paginas": {
+                  "metodologia": 33,
+                  "perfil_renda": 34,
+                  "2t_topline": 5,
+                  "2t_validos": 5,
+                  "2t_renda": 6,
+                  "sexo": 6
+                },
+                "total_paginas": 35,
+                "conferido_em": "2026-10-13",
+                "status": "Íntegra arquivada e conferida visualmente.",
+                "nota": "Primeira rodada do tracking Ipespe/ABRAPEL, 06–08/10, publicada 10/10; íntegra de 35 páginas. A metodologia p. 33 declara CATI, diferente do recrutamento digital citado por parte da imprensa. A p. 5 informa 49/44/5/3, soma 101 por arredondamento: os indecisos são 3%, não 1%. Perfil de renda familiar da própria onda na p. 34: 41/39/20. Cruzamentos p. 6. Válidos divulgados 52,7/47,3 preservados separadamente da normalização dos totais arredondados."
+              },
+              "publicado": {
+                "flavio": 52.68817204301075,
+                "lula": 47.31182795698925
+              },
+              "pnad": {
+                "flavio": 53.40480274442539,
+                "lula": 46.59519725557461
+              },
+              "modelo": {
+                "flavio": 53.919071275530925,
+                "lula": 46.08092872446906
+              },
+              "allocated_undecided": {
+                "flavio": 1.194528350362726,
+                "lula": 1.0208813777807484
+              },
+              "rates": {
+                "flavio": 0.8037215950422713,
+                "lula": 0.7872698477571027
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": []
+            },
+            {
+              "id": "nexus_2026-10-12",
+              "instituto": "Nexus",
+              "divulgacao": "2026-10-13",
+              "campo": {
+                "inicio": "2026-10-10",
+                "fim": "2026-10-12"
+              },
+              "published": {
+                "flavio": 48.0,
+                "lula": 45.0
+              },
+              "adjusted": {
+                "flavio": 49.067,
+                "lula": 44.127
+              },
+              "negative_mass_removed": {},
+              "undecided": 1.753,
+              "undecided_known": true,
+              "source": {
+                "arquivo": "data/originals/nexus_102026_13/relatorio.pdf",
+                "url": "https://www.nexus.fsb.com.br/wp-content/uploads/2026/10/BTG-Nexus-Eleicoes-2026-Rodada-17-13.out_.2026.pdf",
+                "bytes": 2249898,
+                "sha256": "122e3f2052c72c3da04f6bd556cf592f2c341cdda90b462632a6a63dbda1c6a7",
+                "capturado_em": "2026-10-13T17:57:45+00:00",
+                "pdf": "data/originals/nexus_102026_13/relatorio.pdf",
+                "tipo": "relatorio",
+                "rotulo": "Relatório completo conferido",
+                "paginas": {
+                  "metodologia": 4,
+                  "perfil_renda": 99,
+                  "2t_topline": 21,
+                  "2t_validos": 23,
+                  "sexo": 40,
+                  "2t_renda": 41,
+                  "comparecimento": 15
+                },
+                "total_paginas": 102,
+                "conferido_em": "2026-10-13",
+                "status": "Íntegra arquivada e conferida visualmente.",
+                "nota": "17ª rodada: campo 10–12/10, 2.002 entrevistas, divulgação 13/10. Perfil atual p. 99: renda familiar 19/18/40/23. Voto por renda p. 41; sexo p. 40. Não transporta preferências ou rejeição de setembro. P. 15 declara 89% de presença decidida e 6% provável: declaração de intenção (95%), não previsão calibrada de comparecimento. Não substitui automaticamente a referência oficial de 79,16% do primeiro turno."
+              },
+              "publicado": {
+                "flavio": 51.61290322580645,
+                "lula": 48.38709677419355
+              },
+              "pnad": {
+                "flavio": 52.65038521793248,
+                "lula": 47.34961478206751
+              },
+              "modelo": {
+                "flavio": 53.16567816752509,
+                "lula": 46.8343218324749
+              },
+              "allocated_undecided": {
+                "flavio": 0.7146934314963221,
+                "lula": 0.6295825302328268
+              },
+              "rates": {
+                "flavio": 0.8037215950422713,
+                "lula": 0.7872698477571027
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": []
+            },
+            {
+              "id": "poderdata_2026-10-12",
+              "instituto": "PoderData",
+              "divulgacao": "2026-10-13",
+              "campo": {
+                "inicio": "2026-10-10",
+                "fim": "2026-10-12"
+              },
+              "published": {
+                "flavio": 48.0,
+                "lula": 46.0
+              },
+              "adjusted": {
+                "flavio": 48.99,
+                "lula": 45.505
+              },
+              "negative_mass_removed": {},
+              "undecided": 1.954,
+              "undecided_known": true,
+              "source": {
+                "arquivo": "data/originals/poderdata_102026_13/relatorio.pdf",
+                "url": "https://static.poder360.com.br/uploads/2026/10/Relatorio-PoderData-Eleitoral-12out26-1.pdf",
+                "bytes": 869560,
+                "sha256": "0f4e4418d633cbcf30f6364b48a728b67267a18ba649f81b5ef1879048c15ffa",
+                "capturado_em": "2026-10-13T17:58:24+00:00",
+                "pdf": "data/originals/poderdata_102026_13/relatorio.pdf",
+                "tipo": "relatorio",
+                "rotulo": "Relatório completo conferido",
                 "paginas": {
                   "metodologia": 2,
                   "perfil_renda": 4,
@@ -5506,36 +5884,26 @@
                   "sexo": 7,
                   "2t_renda": 9
                 },
-                "total_paginas": 39,
-                "conferido_em": "2026-10-08",
-                "status": "Íntegra atual arquivada e conferida.",
-                "nota": "Primeira onda PoderData com campo inteiramente após o 1º turno. Entram votos totais 44 × 49, não os válidos arredondados 47 × 53. A média móvel de sete dias ainda inclui outras casas com campo anterior à eleição; não é uma média exclusiva do pós-1º turno.",
-                "complementos": [
-                  {
-                    "arquivo": "data/originals/poderdata_102026_08/materia.html",
-                    "url": "https://www.poder360.com.br/poderdata/pesquisa-poderdata-aya-leia-os-resultados-de-lula-e-flavio-no-2o-turno/",
-                    "bytes": 271490,
-                    "sha256": "1766999ca2d5e55ca3af9057515f108de8c5a3c969bb52a8dfa7024b4fdf8135",
-                    "capturado_em": "2026-10-08T22:38:32+00:00",
-                    "rotulo": "Divulgação oficial no Poder360"
-                  }
-                ]
+                "total_paginas": 27,
+                "conferido_em": "2026-10-13",
+                "status": "Íntegra arquivada e conferida visualmente.",
+                "nota": "Íntegra correta: campo 10–12/10, registro BR-01209/2026, 27 páginas. O índice de PDFs na matéria de 13/10 ainda apontava para 05–07/10; a íntegra atual foi localizada na síntese do próprio Poder360. Perfil desta onda na p. 4: 46/33/21; não é emprestado da anterior. Total 48/46/5/2 (101 por arredondamento), renda p. 9 e controle independente por sexo p. 7."
               },
               "publicado": {
-                "flavio": 52.68817204301075,
-                "lula": 47.31182795698925
+                "flavio": 51.06382978723404,
+                "lula": 48.93617021276596
               },
               "pnad": {
-                "flavio": 53.90548325154682,
-                "lula": 46.09451674845317
+                "flavio": 51.84401291073601,
+                "lula": 48.15598708926398
               },
               "modelo": {
-                "flavio": 54.418942232331545,
-                "lula": 45.58105776766845
+                "flavio": 52.36014099235764,
+                "lula": 47.63985900764234
               },
               "allocated_undecided": {
-                "flavio": 0.7703503943059373,
-                "lula": 0.6452419761173422
+                "flavio": 0.7845703351321572,
+                "lula": 0.7138410905488223
               },
               "rates": {
                 "flavio": 0.8037215950422713,
@@ -5549,15 +5917,36 @@
             {
               "without": "Datafolha",
               "valid": {
-                "lula": 45.58105776766845,
-                "flavio": 54.418942232331545
+                "lula": 45.84190811857742,
+                "flavio": 54.158091881422564
+              }
+            },
+            {
+              "without": "Gerp",
+              "valid": {
+                "lula": 46.48393871323026,
+                "flavio": 53.51606128676973
+              }
+            },
+            {
+              "without": "Ipespe",
+              "valid": {
+                "lula": 45.66683725954384,
+                "flavio": 54.333162740456146
+              }
+            },
+            {
+              "without": "Nexus",
+              "valid": {
+                "lula": 45.47848898254238,
+                "flavio": 54.52151101745761
               }
             },
             {
               "without": "PoderData",
               "valid": {
-                "lula": 45.17288698420505,
-                "flavio": 54.82711301579496
+                "lula": 45.27710468875052,
+                "flavio": 54.722895311249474
               }
             }
           ],
@@ -5571,16 +5960,16 @@
         "idosos80": {
           "aggregate": {
             "publicado": {
-              "lula": 47.59208419126058,
-              "flavio": 52.40791580873942
+              "lula": 47.57365202234975,
+              "flavio": 52.42634797765025
             },
             "pnad": {
-              "lula": 45.89006241033917,
-              "flavio": 54.10993758966082
+              "lula": 46.262834145603414,
+              "flavio": 53.737165854396586
             },
             "modelo": {
-              "lula": 45.89379572378545,
-              "flavio": 54.10620427621455
+              "lula": 46.26656780589475,
+              "flavio": 53.73343219410524
             }
           },
           "polls": [
@@ -5590,49 +5979,47 @@
               "divulgacao": "2026-10-08",
               "campo": {
                 "inicio": "2026-10-06",
-                "fim": "2026-10-08"
+                "fim": "2026-10-07"
               },
               "published": {
                 "flavio": 49.0,
                 "lula": 45.0
               },
               "adjusted": {
-                "flavio": 51.137,
-                "lula": 43.013
+                "flavio": 50.934,
+                "lula": 43.203
               },
               "negative_mass_removed": {},
-              "undecided": 0.85,
+              "undecided": 0.864,
               "undecided_known": true,
               "source": {
-                "arquivo": "data/originals/datafolha_102026_08/g1_ESTIMULADA-PRE-001.json",
-                "url": "https://g1.globo.com/politica/eleicoes/2026/pesquisa-eleitoral/presidente-br-2-turno-datafolha/",
-                "bytes": 22558,
-                "sha256": "75cc9ea59701de06c55b795f00d29e43a9f131543db323b8248fdd5f599a5689",
-                "capturado_em": "2026-10-08T22:38:32+00:00",
-                "tipo": "painel_contratante",
-                "rotulo": "Painel do G1: votos por renda",
+                "arquivo": "data/originals/datafolha_102026_13/relatorio.pdf",
+                "url": "https://brasil.arvor.co/fontes/datafolha_2t_08102026_integra.pdf",
+                "bytes": 1398825,
+                "sha256": "9b95078c8f04e961b48719c166a303b354c4366eb59b633642ef0fc0de7aafcb",
+                "capturado_em": "2026-10-13T18:07:55+00:00",
+                "pdf": "data/originals/datafolha_102026_13/relatorio.pdf",
+                "tipo": "relatorio",
+                "rotulo": "Relatório completo conferido",
                 "paginas": {
-                  "2t_renda": "API 216, ESTIMULADA-PRE-001, estratos renda"
+                  "metodologia": 2,
+                  "perfil_renda": 23,
+                  "2t_topline": 26,
+                  "2t_renda": 26,
+                  "sexo": 26,
+                  "regiao": 26,
+                  "2t_validos": 27
                 },
-                "conferido_em": "2026-10-08",
-                "status": "Painel atual arquivado; íntegra em PDF pendente.",
-                "nota": "Fonte parcial: o G1 publica os votos por renda desta onda, mas não as bases de renda. A reponderação assume explicitamente o perfil ponderado da onda de 01/10 (1.209/856/344, PDF de 02/10, pp. 45 e 53), condicionado à confirmação da íntegra atual. O controle por sexo também assume as bases anteriores (1.215/1.291). Os controles de recomposição não comprovam que o perfil se manteve. O registro PesqEle devolveu HTTP 403 nesta consulta. Há divergência de datas: o texto metodológico do painel diz 6–7/10; a notícia de divulgação e a agenda do registro informam 6–8/10, período usado nesta ficha.",
+                "total_paginas": 34,
+                "conferido_em": "2026-10-13",
+                "status": "Íntegra arquivada e conferida visualmente.",
+                "nota": "Relatório de 34 páginas recebido do usuário em 13/10, preservado sem alterações. Pp. 2 e 19–21: campo 06–07/10 (corrige 06–08/10 da notícia), 2.520 entrevistas, registro BR-02949/2026. P. 26 (p. 8 do anexo): bases ponderadas atuais de renda 1.187/874/337, total 2.398 declarantes; sem renda, 122/2.520. Não reutiliza mais 1.209/856/344 da onda anterior. Ajuste limitado a 2.398/2.520 da base, restante preservado no topline. P. 23 publica o perfil; sexo e região atuais conferem o placar. O id legado e a divulgação de 08/10 são preservados: é revisão documental, não uma nova onda.",
+                "relatorio_completo": "2026-10-13",
+                "proveniencia": "Arquivo fornecido pelo usuário; URL é cópia pública preservada, não origem do download.",
                 "complementos": [
                   {
-                    "arquivo": "data/originals/datafolha_102026_08/g1_VTSVALIDOS-PRE-001.json",
-                    "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/216/?tipo_pergunta=VTSVALIDOS-PRE-001&instituto=Datafolha",
-                    "bytes": 15754,
-                    "sha256": "42eb7831fdc5d4b99bb720c50d03904afe36c907edc0990d1c2310caf56fe15d",
-                    "capturado_em": "2026-10-08T22:38:32+00:00",
-                    "rotulo": "API: votos válidos publicados"
-                  },
-                  {
-                    "arquivo": "data/originals/datafolha_102026_08/materia_exame.html",
-                    "url": "https://exame.com/brasil/pesquisa-datafolha-2o-turno-flavio-bolsonaro-tem-52-e-lula-48-dos-votos-validos/",
-                    "bytes": 51010,
-                    "sha256": "8ae0d11a32153efaed820b3c8cadc69d95113e94bc9852c2902483d0272ca72f",
-                    "capturado_em": "2026-10-08T22:38:32+00:00",
-                    "rotulo": "Divulgação e ficha técnica"
+                    "url": "https://g1.globo.com/politica/eleicoes/2026/pesquisa-eleitoral/presidente-br-2-turno-datafolha/",
+                    "rotulo": "Painel da divulgação inicial, preservado"
                   }
                 ]
               },
@@ -5641,16 +6028,16 @@
                 "lula": 47.87234042553192
               },
               "pnad": {
-                "flavio": 54.31439192777482,
-                "lula": 45.68560807222517
+                "flavio": 54.10624940246662,
+                "lula": 45.89375059753338
               },
               "modelo": {
-                "flavio": 54.31066113996213,
-                "lula": 45.68933886003787
+                "flavio": 54.10251598063061,
+                "lula": 45.89748401936939
               },
               "allocated_undecided": {
-                "flavio": 0.36753238909729874,
-                "lula": 0.3091899732951305
+                "flavio": 0.37215409901034746,
+                "lula": 0.3157142787626628
               },
               "rates": {
                 "flavio": 0.7962543662268092,
@@ -5660,33 +6047,226 @@
               "proxy_candidates": []
             },
             {
-              "id": "poderdata_2026-10-07",
-              "instituto": "PoderData",
-              "divulgacao": "2026-10-08",
+              "id": "gerp_2026-10-12",
+              "instituto": "Gerp",
+              "divulgacao": "2026-10-13",
               "campo": {
-                "inicio": "2026-10-05",
-                "fim": "2026-10-07"
+                "inicio": "2026-10-08",
+                "fim": "2026-10-12"
+              },
+              "published": {
+                "flavio": 53.0,
+                "lula": 44.0
+              },
+              "adjusted": {
+                "flavio": 54.976,
+                "lula": 42.017
+              },
+              "negative_mass_removed": {},
+              "undecided": 3.017,
+              "undecided_known": true,
+              "source": {
+                "arquivo": "data/originals/gerp_102026_13/relatorio.pdf",
+                "url": "https://gerp.com.br/relatorios/20261012%20Relat%C3%B3rio%20Presid%C3%AAncia%202026%202%C2%BA%20Turno%20-%20DIVULGA%C3%87%C3%83O.pdf",
+                "bytes": 869727,
+                "sha256": "42a17309fd91ea440e9a5f37efb9390e28506035518a02f2631a2ab1f4937da5",
+                "capturado_em": "2026-10-13T17:57:45+00:00",
+                "pdf": "data/originals/gerp_102026_13/relatorio.pdf",
+                "tipo": "relatorio",
+                "rotulo": "Relatório completo conferido",
+                "paginas": {
+                  "metodologia": 7,
+                  "perfil_renda": 8,
+                  "2t_topline": 14,
+                  "2t_renda": 16,
+                  "sexo": 16,
+                  "2t_validos": 21
+                },
+                "total_paginas": 57,
+                "conferido_em": "2026-10-13",
+                "status": "Íntegra arquivada e conferida visualmente.",
+                "nota": "Campo em 08, 09 e 12/10, não uma coleta contínua: p. 7. Publicação oficial 13/10 no manifesto; a divulgação na TMC começou na noite de 12/10. P. 8: percentuais ponderados de renda 20/20/28/12/5/2 e recusa 14, soma arredondada 101. As bases de campo da p. 16 não são pesos. O ajuste troca renda somente entre declarantes: 87/101 do total; o restante permanece no placar publicado, sem voto por renda imputado. Topline 53/44/1/3 soma 101 por arredondamento."
+              },
+              "publicado": {
+                "flavio": 54.63917525773196,
+                "lula": 45.36082474226804
+              },
+              "pnad": {
+                "flavio": 56.68037899642243,
+                "lula": 43.31962100357759
+              },
+              "modelo": {
+                "flavio": 56.67668730700412,
+                "lula": 43.32331269299587
+              },
+              "allocated_undecided": {
+                "flavio": 1.361354937297377,
+                "lula": 1.0406113772178687
+              },
+              "rates": {
+                "flavio": 0.7962543662268092,
+                "lula": 0.7963740920624234
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": []
+            },
+            {
+              "id": "ipespe_2026-10-08",
+              "instituto": "Ipespe",
+              "divulgacao": "2026-10-10",
+              "campo": {
+                "inicio": "2026-10-06",
+                "fim": "2026-10-08"
               },
               "published": {
                 "flavio": 49.0,
                 "lula": 44.0
               },
               "adjusted": {
-                "flavio": 50.531,
-                "lula": 43.209
+                "flavio": 49.816,
+                "lula": 43.464
               },
               "negative_mass_removed": {},
-              "undecided": 1.846,
+              "undecided": 2.889,
               "undecided_known": true,
               "source": {
-                "arquivo": "data/originals/poderdata_102026_08/relatorio.pdf",
-                "url": "https://static.poder360.com.br/uploads/2026/10/Relatorio-PoderData-Eleitoral-8out26-final.pdf",
-                "bytes": 1355838,
-                "sha256": "76d820c8267a1f465aabb8d50a766b47023783d942e4ea6a6686392a6107153a",
-                "capturado_em": "2026-10-08T22:38:32+00:00",
-                "pdf": "data/originals/poderdata_102026_08/relatorio.pdf",
+                "arquivo": "data/originals/ipespe_102026_10/relatorio.pdf",
+                "url": "https://static.poder360.com.br/uploads/2026/10/pesquisa-ipespe-abrapel-10out2026.pdf",
+                "bytes": 2175740,
+                "sha256": "e5f7e32a4947b80dd8ad5b1c60b20a4910fef47ffd48c29b3b534300b8e39450",
+                "capturado_em": "2026-10-13T17:58:24+00:00",
+                "pdf": "data/originals/ipespe_102026_10/relatorio.pdf",
                 "tipo": "relatorio",
-                "rotulo": "PoderData: relatório completo",
+                "rotulo": "Relatório completo conferido",
+                "paginas": {
+                  "metodologia": 33,
+                  "perfil_renda": 34,
+                  "2t_topline": 5,
+                  "2t_validos": 5,
+                  "2t_renda": 6,
+                  "sexo": 6
+                },
+                "total_paginas": 35,
+                "conferido_em": "2026-10-13",
+                "status": "Íntegra arquivada e conferida visualmente.",
+                "nota": "Primeira rodada do tracking Ipespe/ABRAPEL, 06–08/10, publicada 10/10; íntegra de 35 páginas. A metodologia p. 33 declara CATI, diferente do recrutamento digital citado por parte da imprensa. A p. 5 informa 49/44/5/3, soma 101 por arredondamento: os indecisos são 3%, não 1%. Perfil de renda familiar da própria onda na p. 34: 41/39/20. Cruzamentos p. 6. Válidos divulgados 52,7/47,3 preservados separadamente da normalização dos totais arredondados."
+              },
+              "publicado": {
+                "flavio": 52.68817204301075,
+                "lula": 47.31182795698925
+              },
+              "pnad": {
+                "flavio": 53.40480274442539,
+                "lula": 46.59519725557461
+              },
+              "modelo": {
+                "flavio": 53.40106140514305,
+                "lula": 46.598938594856946
+              },
+              "allocated_undecided": {
+                "flavio": 1.228256393241267,
+                "lula": 1.0718034949372361
+              },
+              "rates": {
+                "flavio": 0.7962543662268092,
+                "lula": 0.7963740920624234
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": []
+            },
+            {
+              "id": "nexus_2026-10-12",
+              "instituto": "Nexus",
+              "divulgacao": "2026-10-13",
+              "campo": {
+                "inicio": "2026-10-10",
+                "fim": "2026-10-12"
+              },
+              "published": {
+                "flavio": 48.0,
+                "lula": 45.0
+              },
+              "adjusted": {
+                "flavio": 49.067,
+                "lula": 44.127
+              },
+              "negative_mass_removed": {},
+              "undecided": 1.753,
+              "undecided_known": true,
+              "source": {
+                "arquivo": "data/originals/nexus_102026_13/relatorio.pdf",
+                "url": "https://www.nexus.fsb.com.br/wp-content/uploads/2026/10/BTG-Nexus-Eleicoes-2026-Rodada-17-13.out_.2026.pdf",
+                "bytes": 2249898,
+                "sha256": "122e3f2052c72c3da04f6bd556cf592f2c341cdda90b462632a6a63dbda1c6a7",
+                "capturado_em": "2026-10-13T17:57:45+00:00",
+                "pdf": "data/originals/nexus_102026_13/relatorio.pdf",
+                "tipo": "relatorio",
+                "rotulo": "Relatório completo conferido",
+                "paginas": {
+                  "metodologia": 4,
+                  "perfil_renda": 99,
+                  "2t_topline": 21,
+                  "2t_validos": 23,
+                  "sexo": 40,
+                  "2t_renda": 41,
+                  "comparecimento": 15
+                },
+                "total_paginas": 102,
+                "conferido_em": "2026-10-13",
+                "status": "Íntegra arquivada e conferida visualmente.",
+                "nota": "17ª rodada: campo 10–12/10, 2.002 entrevistas, divulgação 13/10. Perfil atual p. 99: renda familiar 19/18/40/23. Voto por renda p. 41; sexo p. 40. Não transporta preferências ou rejeição de setembro. P. 15 declara 89% de presença decidida e 6% provável: declaração de intenção (95%), não previsão calibrada de comparecimento. Não substitui automaticamente a referência oficial de 79,16% do primeiro turno."
+              },
+              "publicado": {
+                "flavio": 51.61290322580645,
+                "lula": 48.38709677419355
+              },
+              "pnad": {
+                "flavio": 52.65038521793248,
+                "lula": 47.34961478206751
+              },
+              "modelo": {
+                "flavio": 52.64663701466859,
+                "lula": 47.35336298533141
+              },
+              "allocated_undecided": {
+                "flavio": 0.7347577114322165,
+                "lula": 0.660882643007699
+              },
+              "rates": {
+                "flavio": 0.7962543662268092,
+                "lula": 0.7963740920624234
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": []
+            },
+            {
+              "id": "poderdata_2026-10-12",
+              "instituto": "PoderData",
+              "divulgacao": "2026-10-13",
+              "campo": {
+                "inicio": "2026-10-10",
+                "fim": "2026-10-12"
+              },
+              "published": {
+                "flavio": 48.0,
+                "lula": 46.0
+              },
+              "adjusted": {
+                "flavio": 48.99,
+                "lula": 45.505
+              },
+              "negative_mass_removed": {},
+              "undecided": 1.954,
+              "undecided_known": true,
+              "source": {
+                "arquivo": "data/originals/poderdata_102026_13/relatorio.pdf",
+                "url": "https://static.poder360.com.br/uploads/2026/10/Relatorio-PoderData-Eleitoral-12out26-1.pdf",
+                "bytes": 869560,
+                "sha256": "0f4e4418d633cbcf30f6364b48a728b67267a18ba649f81b5ef1879048c15ffa",
+                "capturado_em": "2026-10-13T17:58:24+00:00",
+                "pdf": "data/originals/poderdata_102026_13/relatorio.pdf",
+                "tipo": "relatorio",
+                "rotulo": "Relatório completo conferido",
                 "paginas": {
                   "metodologia": 2,
                   "perfil_renda": 4,
@@ -5694,36 +6274,26 @@
                   "sexo": 7,
                   "2t_renda": 9
                 },
-                "total_paginas": 39,
-                "conferido_em": "2026-10-08",
-                "status": "Íntegra atual arquivada e conferida.",
-                "nota": "Primeira onda PoderData com campo inteiramente após o 1º turno. Entram votos totais 44 × 49, não os válidos arredondados 47 × 53. A média móvel de sete dias ainda inclui outras casas com campo anterior à eleição; não é uma média exclusiva do pós-1º turno.",
-                "complementos": [
-                  {
-                    "arquivo": "data/originals/poderdata_102026_08/materia.html",
-                    "url": "https://www.poder360.com.br/poderdata/pesquisa-poderdata-aya-leia-os-resultados-de-lula-e-flavio-no-2o-turno/",
-                    "bytes": 271490,
-                    "sha256": "1766999ca2d5e55ca3af9057515f108de8c5a3c969bb52a8dfa7024b4fdf8135",
-                    "capturado_em": "2026-10-08T22:38:32+00:00",
-                    "rotulo": "Divulgação oficial no Poder360"
-                  }
-                ]
+                "total_paginas": 27,
+                "conferido_em": "2026-10-13",
+                "status": "Íntegra arquivada e conferida visualmente.",
+                "nota": "Íntegra correta: campo 10–12/10, registro BR-01209/2026, 27 páginas. O índice de PDFs na matéria de 13/10 ainda apontava para 05–07/10; a íntegra atual foi localizada na síntese do próprio Poder360. Perfil desta onda na p. 4: 46/33/21; não é emprestado da anterior. Total 48/46/5/2 (101 por arredondamento), renda p. 9 e controle independente por sexo p. 7."
               },
               "publicado": {
-                "flavio": 52.68817204301075,
-                "lula": 47.31182795698925
+                "flavio": 51.06382978723404,
+                "lula": 48.93617021276596
               },
               "pnad": {
-                "flavio": 53.90548325154682,
-                "lula": 46.09451674845317
+                "flavio": 51.84401291073601,
+                "lula": 48.15598708926398
               },
               "modelo": {
-                "flavio": 53.90174741246697,
-                "lula": 46.09825258753303
+                "flavio": 51.840259263079844,
+                "lula": 48.15974073692016
               },
               "allocated_undecided": {
-                "flavio": 0.7921841405152757,
-                "lula": 0.6774976018099294
+                "flavio": 0.806460919366819,
+                "lula": 0.7492043701800122
               },
               "rates": {
                 "flavio": 0.7962543662268092,
@@ -5737,15 +6307,36 @@
             {
               "without": "Datafolha",
               "valid": {
-                "lula": 46.09825258753303,
-                "flavio": 53.90174741246697
+                "lula": 46.3588387525261,
+                "flavio": 53.6411612474739
+              }
+            },
+            {
+              "without": "Gerp",
+              "valid": {
+                "lula": 47.002381584119476,
+                "flavio": 52.997618415880524
+              }
+            },
+            {
+              "without": "Ipespe",
+              "valid": {
+                "lula": 46.18347510865421,
+                "flavio": 53.81652489134579
+              }
+            },
+            {
+              "without": "Nexus",
+              "valid": {
+                "lula": 45.99486901103559,
+                "flavio": 54.00513098896441
               }
             },
             {
               "without": "PoderData",
               "valid": {
-                "lula": 45.68933886003787,
-                "flavio": 54.31066113996213
+                "lula": 45.793274573138405,
+                "flavio": 54.206725426861595
               }
             }
           ],
@@ -5759,16 +6350,16 @@
         "flavio95": {
           "aggregate": {
             "publicado": {
-              "lula": 47.59208419126058,
-              "flavio": 52.40791580873942
+              "lula": 47.57365202234975,
+              "flavio": 52.42634797765025
             },
             "pnad": {
-              "lula": 45.89006241033917,
-              "flavio": 54.10993758966082
+              "lula": 46.262834145603414,
+              "flavio": 53.737165854396586
             },
             "modelo": {
-              "lula": 47.16114845495879,
-              "flavio": 52.83885154504121
+              "lula": 47.533791197567226,
+              "flavio": 52.46620880243277
             }
           },
           "polls": [
@@ -5778,49 +6369,47 @@
               "divulgacao": "2026-10-08",
               "campo": {
                 "inicio": "2026-10-06",
-                "fim": "2026-10-08"
+                "fim": "2026-10-07"
               },
               "published": {
                 "flavio": 49.0,
                 "lula": 45.0
               },
               "adjusted": {
-                "flavio": 51.137,
-                "lula": 43.013
+                "flavio": 50.934,
+                "lula": 43.203
               },
               "negative_mass_removed": {},
-              "undecided": 0.85,
+              "undecided": 0.864,
               "undecided_known": true,
               "source": {
-                "arquivo": "data/originals/datafolha_102026_08/g1_ESTIMULADA-PRE-001.json",
-                "url": "https://g1.globo.com/politica/eleicoes/2026/pesquisa-eleitoral/presidente-br-2-turno-datafolha/",
-                "bytes": 22558,
-                "sha256": "75cc9ea59701de06c55b795f00d29e43a9f131543db323b8248fdd5f599a5689",
-                "capturado_em": "2026-10-08T22:38:32+00:00",
-                "tipo": "painel_contratante",
-                "rotulo": "Painel do G1: votos por renda",
+                "arquivo": "data/originals/datafolha_102026_13/relatorio.pdf",
+                "url": "https://brasil.arvor.co/fontes/datafolha_2t_08102026_integra.pdf",
+                "bytes": 1398825,
+                "sha256": "9b95078c8f04e961b48719c166a303b354c4366eb59b633642ef0fc0de7aafcb",
+                "capturado_em": "2026-10-13T18:07:55+00:00",
+                "pdf": "data/originals/datafolha_102026_13/relatorio.pdf",
+                "tipo": "relatorio",
+                "rotulo": "Relatório completo conferido",
                 "paginas": {
-                  "2t_renda": "API 216, ESTIMULADA-PRE-001, estratos renda"
+                  "metodologia": 2,
+                  "perfil_renda": 23,
+                  "2t_topline": 26,
+                  "2t_renda": 26,
+                  "sexo": 26,
+                  "regiao": 26,
+                  "2t_validos": 27
                 },
-                "conferido_em": "2026-10-08",
-                "status": "Painel atual arquivado; íntegra em PDF pendente.",
-                "nota": "Fonte parcial: o G1 publica os votos por renda desta onda, mas não as bases de renda. A reponderação assume explicitamente o perfil ponderado da onda de 01/10 (1.209/856/344, PDF de 02/10, pp. 45 e 53), condicionado à confirmação da íntegra atual. O controle por sexo também assume as bases anteriores (1.215/1.291). Os controles de recomposição não comprovam que o perfil se manteve. O registro PesqEle devolveu HTTP 403 nesta consulta. Há divergência de datas: o texto metodológico do painel diz 6–7/10; a notícia de divulgação e a agenda do registro informam 6–8/10, período usado nesta ficha.",
+                "total_paginas": 34,
+                "conferido_em": "2026-10-13",
+                "status": "Íntegra arquivada e conferida visualmente.",
+                "nota": "Relatório de 34 páginas recebido do usuário em 13/10, preservado sem alterações. Pp. 2 e 19–21: campo 06–07/10 (corrige 06–08/10 da notícia), 2.520 entrevistas, registro BR-02949/2026. P. 26 (p. 8 do anexo): bases ponderadas atuais de renda 1.187/874/337, total 2.398 declarantes; sem renda, 122/2.520. Não reutiliza mais 1.209/856/344 da onda anterior. Ajuste limitado a 2.398/2.520 da base, restante preservado no topline. P. 23 publica o perfil; sexo e região atuais conferem o placar. O id legado e a divulgação de 08/10 são preservados: é revisão documental, não uma nova onda.",
+                "relatorio_completo": "2026-10-13",
+                "proveniencia": "Arquivo fornecido pelo usuário; URL é cópia pública preservada, não origem do download.",
                 "complementos": [
                   {
-                    "arquivo": "data/originals/datafolha_102026_08/g1_VTSVALIDOS-PRE-001.json",
-                    "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/216/?tipo_pergunta=VTSVALIDOS-PRE-001&instituto=Datafolha",
-                    "bytes": 15754,
-                    "sha256": "42eb7831fdc5d4b99bb720c50d03904afe36c907edc0990d1c2310caf56fe15d",
-                    "capturado_em": "2026-10-08T22:38:32+00:00",
-                    "rotulo": "API: votos válidos publicados"
-                  },
-                  {
-                    "arquivo": "data/originals/datafolha_102026_08/materia_exame.html",
-                    "url": "https://exame.com/brasil/pesquisa-datafolha-2o-turno-flavio-bolsonaro-tem-52-e-lula-48-dos-votos-validos/",
-                    "bytes": 51010,
-                    "sha256": "8ae0d11a32153efaed820b3c8cadc69d95113e94bc9852c2902483d0272ca72f",
-                    "capturado_em": "2026-10-08T22:38:32+00:00",
-                    "rotulo": "Divulgação e ficha técnica"
+                    "url": "https://g1.globo.com/politica/eleicoes/2026/pesquisa-eleitoral/presidente-br-2-turno-datafolha/",
+                    "rotulo": "Painel da divulgação inicial, preservado"
                   }
                 ]
               },
@@ -5829,16 +6418,16 @@
                 "lula": 47.87234042553192
               },
               "pnad": {
-                "flavio": 54.31439192777482,
-                "lula": 45.68560807222517
+                "flavio": 54.10624940246662,
+                "lula": 45.89375059753338
               },
               "modelo": {
-                "flavio": 53.04403314711989,
-                "lula": 46.95596685288012
+                "flavio": 52.835128771219466,
+                "lula": 47.16487122878053
               },
               "allocated_undecided": {
-                "flavio": 0.35874115525065803,
-                "lula": 0.317567062594833
+                "flavio": 0.3632137253761178,
+                "lula": 0.32423368664565216
               },
               "rates": {
                 "flavio": 0.7565612329117172,
@@ -5848,33 +6437,226 @@
               "proxy_candidates": []
             },
             {
-              "id": "poderdata_2026-10-07",
-              "instituto": "PoderData",
-              "divulgacao": "2026-10-08",
+              "id": "gerp_2026-10-12",
+              "instituto": "Gerp",
+              "divulgacao": "2026-10-13",
               "campo": {
-                "inicio": "2026-10-05",
-                "fim": "2026-10-07"
+                "inicio": "2026-10-08",
+                "fim": "2026-10-12"
+              },
+              "published": {
+                "flavio": 53.0,
+                "lula": 44.0
+              },
+              "adjusted": {
+                "flavio": 54.976,
+                "lula": 42.017
+              },
+              "negative_mass_removed": {},
+              "undecided": 3.017,
+              "undecided_known": true,
+              "source": {
+                "arquivo": "data/originals/gerp_102026_13/relatorio.pdf",
+                "url": "https://gerp.com.br/relatorios/20261012%20Relat%C3%B3rio%20Presid%C3%AAncia%202026%202%C2%BA%20Turno%20-%20DIVULGA%C3%87%C3%83O.pdf",
+                "bytes": 869727,
+                "sha256": "42a17309fd91ea440e9a5f37efb9390e28506035518a02f2631a2ab1f4937da5",
+                "capturado_em": "2026-10-13T17:57:45+00:00",
+                "pdf": "data/originals/gerp_102026_13/relatorio.pdf",
+                "tipo": "relatorio",
+                "rotulo": "Relatório completo conferido",
+                "paginas": {
+                  "metodologia": 7,
+                  "perfil_renda": 8,
+                  "2t_topline": 14,
+                  "2t_renda": 16,
+                  "sexo": 16,
+                  "2t_validos": 21
+                },
+                "total_paginas": 57,
+                "conferido_em": "2026-10-13",
+                "status": "Íntegra arquivada e conferida visualmente.",
+                "nota": "Campo em 08, 09 e 12/10, não uma coleta contínua: p. 7. Publicação oficial 13/10 no manifesto; a divulgação na TMC começou na noite de 12/10. P. 8: percentuais ponderados de renda 20/20/28/12/5/2 e recusa 14, soma arredondada 101. As bases de campo da p. 16 não são pesos. O ajuste troca renda somente entre declarantes: 87/101 do total; o restante permanece no placar publicado, sem voto por renda imputado. Topline 53/44/1/3 soma 101 por arredondamento."
+              },
+              "publicado": {
+                "flavio": 54.63917525773196,
+                "lula": 45.36082474226804
+              },
+              "pnad": {
+                "flavio": 56.68037899642243,
+                "lula": 43.31962100357759
+              },
+              "modelo": {
+                "flavio": 55.42181348346603,
+                "lula": 44.57818651653397
+              },
+              "allocated_undecided": {
+                "flavio": 1.3303986069966993,
+                "lula": 1.070097737991356
+              },
+              "rates": {
+                "flavio": 0.7565612329117172,
+                "lula": 0.7962213991300896
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": []
+            },
+            {
+              "id": "ipespe_2026-10-08",
+              "instituto": "Ipespe",
+              "divulgacao": "2026-10-10",
+              "campo": {
+                "inicio": "2026-10-06",
+                "fim": "2026-10-08"
               },
               "published": {
                 "flavio": 49.0,
                 "lula": 44.0
               },
               "adjusted": {
-                "flavio": 50.531,
-                "lula": 43.209
+                "flavio": 49.816,
+                "lula": 43.464
               },
               "negative_mass_removed": {},
-              "undecided": 1.846,
+              "undecided": 2.889,
               "undecided_known": true,
               "source": {
-                "arquivo": "data/originals/poderdata_102026_08/relatorio.pdf",
-                "url": "https://static.poder360.com.br/uploads/2026/10/Relatorio-PoderData-Eleitoral-8out26-final.pdf",
-                "bytes": 1355838,
-                "sha256": "76d820c8267a1f465aabb8d50a766b47023783d942e4ea6a6686392a6107153a",
-                "capturado_em": "2026-10-08T22:38:32+00:00",
-                "pdf": "data/originals/poderdata_102026_08/relatorio.pdf",
+                "arquivo": "data/originals/ipespe_102026_10/relatorio.pdf",
+                "url": "https://static.poder360.com.br/uploads/2026/10/pesquisa-ipespe-abrapel-10out2026.pdf",
+                "bytes": 2175740,
+                "sha256": "e5f7e32a4947b80dd8ad5b1c60b20a4910fef47ffd48c29b3b534300b8e39450",
+                "capturado_em": "2026-10-13T17:58:24+00:00",
+                "pdf": "data/originals/ipespe_102026_10/relatorio.pdf",
                 "tipo": "relatorio",
-                "rotulo": "PoderData: relatório completo",
+                "rotulo": "Relatório completo conferido",
+                "paginas": {
+                  "metodologia": 33,
+                  "perfil_renda": 34,
+                  "2t_topline": 5,
+                  "2t_validos": 5,
+                  "2t_renda": 6,
+                  "sexo": 6
+                },
+                "total_paginas": 35,
+                "conferido_em": "2026-10-13",
+                "status": "Íntegra arquivada e conferida visualmente.",
+                "nota": "Primeira rodada do tracking Ipespe/ABRAPEL, 06–08/10, publicada 10/10; íntegra de 35 páginas. A metodologia p. 33 declara CATI, diferente do recrutamento digital citado por parte da imprensa. A p. 5 informa 49/44/5/3, soma 101 por arredondamento: os indecisos são 3%, não 1%. Perfil de renda familiar da própria onda na p. 34: 41/39/20. Cruzamentos p. 6. Válidos divulgados 52,7/47,3 preservados separadamente da normalização dos totais arredondados."
+              },
+              "publicado": {
+                "flavio": 52.68817204301075,
+                "lula": 47.31182795698925
+              },
+              "pnad": {
+                "flavio": 53.40480274442539,
+                "lula": 46.59519725557461
+              },
+              "modelo": {
+                "flavio": 52.13144233842225,
+                "lula": 47.86855766157775
+              },
+              "allocated_undecided": {
+                "flavio": 1.1983205899670697,
+                "lula": 1.1003316939807233
+              },
+              "rates": {
+                "flavio": 0.7565612329117172,
+                "lula": 0.7962213991300896
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": []
+            },
+            {
+              "id": "nexus_2026-10-12",
+              "instituto": "Nexus",
+              "divulgacao": "2026-10-13",
+              "campo": {
+                "inicio": "2026-10-10",
+                "fim": "2026-10-12"
+              },
+              "published": {
+                "flavio": 48.0,
+                "lula": 45.0
+              },
+              "adjusted": {
+                "flavio": 49.067,
+                "lula": 44.127
+              },
+              "negative_mass_removed": {},
+              "undecided": 1.753,
+              "undecided_known": true,
+              "source": {
+                "arquivo": "data/originals/nexus_102026_13/relatorio.pdf",
+                "url": "https://www.nexus.fsb.com.br/wp-content/uploads/2026/10/BTG-Nexus-Eleicoes-2026-Rodada-17-13.out_.2026.pdf",
+                "bytes": 2249898,
+                "sha256": "122e3f2052c72c3da04f6bd556cf592f2c341cdda90b462632a6a63dbda1c6a7",
+                "capturado_em": "2026-10-13T17:57:45+00:00",
+                "pdf": "data/originals/nexus_102026_13/relatorio.pdf",
+                "tipo": "relatorio",
+                "rotulo": "Relatório completo conferido",
+                "paginas": {
+                  "metodologia": 4,
+                  "perfil_renda": 99,
+                  "2t_topline": 21,
+                  "2t_validos": 23,
+                  "sexo": 40,
+                  "2t_renda": 41,
+                  "comparecimento": 15
+                },
+                "total_paginas": 102,
+                "conferido_em": "2026-10-13",
+                "status": "Íntegra arquivada e conferida visualmente.",
+                "nota": "17ª rodada: campo 10–12/10, 2.002 entrevistas, divulgação 13/10. Perfil atual p. 99: renda familiar 19/18/40/23. Voto por renda p. 41; sexo p. 40. Não transporta preferências ou rejeição de setembro. P. 15 declara 89% de presença decidida e 6% provável: declaração de intenção (95%), não previsão calibrada de comparecimento. Não substitui automaticamente a referência oficial de 79,16% do primeiro turno."
+              },
+              "publicado": {
+                "flavio": 51.61290322580645,
+                "lula": 48.38709677419355
+              },
+              "pnad": {
+                "flavio": 52.65038521793248,
+                "lula": 47.34961478206751
+              },
+              "modelo": {
+                "flavio": 51.37517950792042,
+                "lula": 48.62482049207958
+              },
+              "allocated_undecided": {
+                "flavio": 0.7165739356899732,
+                "lula": 0.6782123065254925
+              },
+              "rates": {
+                "flavio": 0.7565612329117172,
+                "lula": 0.7962213991300896
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": []
+            },
+            {
+              "id": "poderdata_2026-10-12",
+              "instituto": "PoderData",
+              "divulgacao": "2026-10-13",
+              "campo": {
+                "inicio": "2026-10-10",
+                "fim": "2026-10-12"
+              },
+              "published": {
+                "flavio": 48.0,
+                "lula": 46.0
+              },
+              "adjusted": {
+                "flavio": 48.99,
+                "lula": 45.505
+              },
+              "negative_mass_removed": {},
+              "undecided": 1.954,
+              "undecided_known": true,
+              "source": {
+                "arquivo": "data/originals/poderdata_102026_13/relatorio.pdf",
+                "url": "https://static.poder360.com.br/uploads/2026/10/Relatorio-PoderData-Eleitoral-12out26-1.pdf",
+                "bytes": 869560,
+                "sha256": "0f4e4418d633cbcf30f6364b48a728b67267a18ba649f81b5ef1879048c15ffa",
+                "capturado_em": "2026-10-13T17:58:24+00:00",
+                "pdf": "data/originals/poderdata_102026_13/relatorio.pdf",
+                "tipo": "relatorio",
+                "rotulo": "Relatório completo conferido",
                 "paginas": {
                   "metodologia": 2,
                   "perfil_renda": 4,
@@ -5882,36 +6664,26 @@
                   "sexo": 7,
                   "2t_renda": 9
                 },
-                "total_paginas": 39,
-                "conferido_em": "2026-10-08",
-                "status": "Íntegra atual arquivada e conferida.",
-                "nota": "Primeira onda PoderData com campo inteiramente após o 1º turno. Entram votos totais 44 × 49, não os válidos arredondados 47 × 53. A média móvel de sete dias ainda inclui outras casas com campo anterior à eleição; não é uma média exclusiva do pós-1º turno.",
-                "complementos": [
-                  {
-                    "arquivo": "data/originals/poderdata_102026_08/materia.html",
-                    "url": "https://www.poder360.com.br/poderdata/pesquisa-poderdata-aya-leia-os-resultados-de-lula-e-flavio-no-2o-turno/",
-                    "bytes": 271490,
-                    "sha256": "1766999ca2d5e55ca3af9057515f108de8c5a3c969bb52a8dfa7024b4fdf8135",
-                    "capturado_em": "2026-10-08T22:38:32+00:00",
-                    "rotulo": "Divulgação oficial no Poder360"
-                  }
-                ]
+                "total_paginas": 27,
+                "conferido_em": "2026-10-13",
+                "status": "Íntegra arquivada e conferida visualmente.",
+                "nota": "Íntegra correta: campo 10–12/10, registro BR-01209/2026, 27 páginas. O índice de PDFs na matéria de 13/10 ainda apontava para 05–07/10; a íntegra atual foi localizada na síntese do próprio Poder360. Perfil desta onda na p. 4: 46/33/21; não é emprestado da anterior. Total 48/46/5/2 (101 por arredondamento), renda p. 9 e controle independente por sexo p. 7."
               },
               "publicado": {
-                "flavio": 52.68817204301075,
-                "lula": 47.31182795698925
+                "flavio": 51.06382978723404,
+                "lula": 48.93617021276596
               },
               "pnad": {
-                "flavio": 53.90548325154682,
-                "lula": 46.09451674845317
+                "flavio": 51.84401291073601,
+                "lula": 48.15598708926398
               },
               "modelo": {
-                "flavio": 52.63366994296253,
-                "lula": 47.36633005703746
+                "flavio": 50.567479911135685,
+                "lula": 49.4325200888643
               },
               "allocated_undecided": {
-                "flavio": 0.7730740373393588,
-                "lula": 0.6957082804756728
+                "flavio": 0.7861793074961456,
+                "lula": 0.7685339368216073
               },
               "rates": {
                 "flavio": 0.7565612329117172,
@@ -5925,15 +6697,36 @@
             {
               "without": "Datafolha",
               "valid": {
-                "lula": 47.36633005703746,
-                "flavio": 52.63366994296253
+                "lula": 47.6260211897639,
+                "flavio": 52.373978810236096
+              }
+            },
+            {
+              "without": "Gerp",
+              "valid": {
+                "lula": 48.27269236782554,
+                "flavio": 51.72730763217445
+              }
+            },
+            {
+              "without": "Ipespe",
+              "valid": {
+                "lula": 47.450099581564594,
+                "flavio": 52.5499004184354
+              }
+            },
+            {
+              "without": "Nexus",
+              "valid": {
+                "lula": 47.26103387393914,
+                "flavio": 52.73896612606085
               }
             },
             {
               "without": "PoderData",
               "valid": {
-                "lula": 46.95596685288012,
-                "flavio": 53.04403314711989
+                "lula": 47.05910897474296,
+                "flavio": 52.94089102525704
               }
             }
           ],
@@ -5947,16 +6740,16 @@
         "flavio105": {
           "aggregate": {
             "publicado": {
-              "lula": 47.59208419126058,
-              "flavio": 52.40791580873942
+              "lula": 47.57365202234975,
+              "flavio": 52.42634797765025
             },
             "pnad": {
-              "lula": 45.89006241033917,
-              "flavio": 54.10993758966082
+              "lula": 46.262834145603414,
+              "flavio": 53.737165854396586
             },
             "modelo": {
-              "lula": 44.676303396111564,
-              "flavio": 55.323696603888436
+              "lula": 45.04873402693276,
+              "flavio": 54.95126597306724
             }
           },
           "polls": [
@@ -5966,49 +6759,47 @@
               "divulgacao": "2026-10-08",
               "campo": {
                 "inicio": "2026-10-06",
-                "fim": "2026-10-08"
+                "fim": "2026-10-07"
               },
               "published": {
                 "flavio": 49.0,
                 "lula": 45.0
               },
               "adjusted": {
-                "flavio": 51.137,
-                "lula": 43.013
+                "flavio": 50.934,
+                "lula": 43.203
               },
               "negative_mass_removed": {},
-              "undecided": 0.85,
+              "undecided": 0.864,
               "undecided_known": true,
               "source": {
-                "arquivo": "data/originals/datafolha_102026_08/g1_ESTIMULADA-PRE-001.json",
-                "url": "https://g1.globo.com/politica/eleicoes/2026/pesquisa-eleitoral/presidente-br-2-turno-datafolha/",
-                "bytes": 22558,
-                "sha256": "75cc9ea59701de06c55b795f00d29e43a9f131543db323b8248fdd5f599a5689",
-                "capturado_em": "2026-10-08T22:38:32+00:00",
-                "tipo": "painel_contratante",
-                "rotulo": "Painel do G1: votos por renda",
+                "arquivo": "data/originals/datafolha_102026_13/relatorio.pdf",
+                "url": "https://brasil.arvor.co/fontes/datafolha_2t_08102026_integra.pdf",
+                "bytes": 1398825,
+                "sha256": "9b95078c8f04e961b48719c166a303b354c4366eb59b633642ef0fc0de7aafcb",
+                "capturado_em": "2026-10-13T18:07:55+00:00",
+                "pdf": "data/originals/datafolha_102026_13/relatorio.pdf",
+                "tipo": "relatorio",
+                "rotulo": "Relatório completo conferido",
                 "paginas": {
-                  "2t_renda": "API 216, ESTIMULADA-PRE-001, estratos renda"
+                  "metodologia": 2,
+                  "perfil_renda": 23,
+                  "2t_topline": 26,
+                  "2t_renda": 26,
+                  "sexo": 26,
+                  "regiao": 26,
+                  "2t_validos": 27
                 },
-                "conferido_em": "2026-10-08",
-                "status": "Painel atual arquivado; íntegra em PDF pendente.",
-                "nota": "Fonte parcial: o G1 publica os votos por renda desta onda, mas não as bases de renda. A reponderação assume explicitamente o perfil ponderado da onda de 01/10 (1.209/856/344, PDF de 02/10, pp. 45 e 53), condicionado à confirmação da íntegra atual. O controle por sexo também assume as bases anteriores (1.215/1.291). Os controles de recomposição não comprovam que o perfil se manteve. O registro PesqEle devolveu HTTP 403 nesta consulta. Há divergência de datas: o texto metodológico do painel diz 6–7/10; a notícia de divulgação e a agenda do registro informam 6–8/10, período usado nesta ficha.",
+                "total_paginas": 34,
+                "conferido_em": "2026-10-13",
+                "status": "Íntegra arquivada e conferida visualmente.",
+                "nota": "Relatório de 34 páginas recebido do usuário em 13/10, preservado sem alterações. Pp. 2 e 19–21: campo 06–07/10 (corrige 06–08/10 da notícia), 2.520 entrevistas, registro BR-02949/2026. P. 26 (p. 8 do anexo): bases ponderadas atuais de renda 1.187/874/337, total 2.398 declarantes; sem renda, 122/2.520. Não reutiliza mais 1.209/856/344 da onda anterior. Ajuste limitado a 2.398/2.520 da base, restante preservado no topline. P. 23 publica o perfil; sexo e região atuais conferem o placar. O id legado e a divulgação de 08/10 são preservados: é revisão documental, não uma nova onda.",
+                "relatorio_completo": "2026-10-13",
+                "proveniencia": "Arquivo fornecido pelo usuário; URL é cópia pública preservada, não origem do download.",
                 "complementos": [
                   {
-                    "arquivo": "data/originals/datafolha_102026_08/g1_VTSVALIDOS-PRE-001.json",
-                    "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/216/?tipo_pergunta=VTSVALIDOS-PRE-001&instituto=Datafolha",
-                    "bytes": 15754,
-                    "sha256": "42eb7831fdc5d4b99bb720c50d03904afe36c907edc0990d1c2310caf56fe15d",
-                    "capturado_em": "2026-10-08T22:38:32+00:00",
-                    "rotulo": "API: votos válidos publicados"
-                  },
-                  {
-                    "arquivo": "data/originals/datafolha_102026_08/materia_exame.html",
-                    "url": "https://exame.com/brasil/pesquisa-datafolha-2o-turno-flavio-bolsonaro-tem-52-e-lula-48-dos-votos-validos/",
-                    "bytes": 51010,
-                    "sha256": "8ae0d11a32153efaed820b3c8cadc69d95113e94bc9852c2902483d0272ca72f",
-                    "capturado_em": "2026-10-08T22:38:32+00:00",
-                    "rotulo": "Divulgação e ficha técnica"
+                    "url": "https://g1.globo.com/politica/eleicoes/2026/pesquisa-eleitoral/presidente-br-2-turno-datafolha/",
+                    "rotulo": "Painel da divulgação inicial, preservado"
                   }
                 ]
               },
@@ -6017,16 +6808,16 @@
                 "lula": 47.87234042553192
               },
               "pnad": {
-                "flavio": 54.31439192777482,
-                "lula": 45.68560807222517
+                "flavio": 54.10624940246662,
+                "lula": 45.89375059753338
               },
               "modelo": {
-                "flavio": 55.52720814232362,
-                "lula": 44.472791857676384
+                "flavio": 55.32004575643121,
+                "lula": 44.679954243568794
               },
               "allocated_undecided": {
-                "flavio": 0.37553507180670537,
-                "lula": 0.30077314603878585
+                "flavio": 0.3802962228818453,
+                "lula": 0.3071511891399246
               },
               "rates": {
                 "flavio": 0.8361992574287401,
@@ -6036,33 +6827,226 @@
               "proxy_candidates": []
             },
             {
-              "id": "poderdata_2026-10-07",
-              "instituto": "PoderData",
-              "divulgacao": "2026-10-08",
+              "id": "gerp_2026-10-12",
+              "instituto": "Gerp",
+              "divulgacao": "2026-10-13",
               "campo": {
-                "inicio": "2026-10-05",
-                "fim": "2026-10-07"
+                "inicio": "2026-10-08",
+                "fim": "2026-10-12"
+              },
+              "published": {
+                "flavio": 53.0,
+                "lula": 44.0
+              },
+              "adjusted": {
+                "flavio": 54.976,
+                "lula": 42.017
+              },
+              "negative_mass_removed": {},
+              "undecided": 3.017,
+              "undecided_known": true,
+              "source": {
+                "arquivo": "data/originals/gerp_102026_13/relatorio.pdf",
+                "url": "https://gerp.com.br/relatorios/20261012%20Relat%C3%B3rio%20Presid%C3%AAncia%202026%202%C2%BA%20Turno%20-%20DIVULGA%C3%87%C3%83O.pdf",
+                "bytes": 869727,
+                "sha256": "42a17309fd91ea440e9a5f37efb9390e28506035518a02f2631a2ab1f4937da5",
+                "capturado_em": "2026-10-13T17:57:45+00:00",
+                "pdf": "data/originals/gerp_102026_13/relatorio.pdf",
+                "tipo": "relatorio",
+                "rotulo": "Relatório completo conferido",
+                "paginas": {
+                  "metodologia": 7,
+                  "perfil_renda": 8,
+                  "2t_topline": 14,
+                  "2t_renda": 16,
+                  "sexo": 16,
+                  "2t_validos": 21
+                },
+                "total_paginas": 57,
+                "conferido_em": "2026-10-13",
+                "status": "Íntegra arquivada e conferida visualmente.",
+                "nota": "Campo em 08, 09 e 12/10, não uma coleta contínua: p. 7. Publicação oficial 13/10 no manifesto; a divulgação na TMC começou na noite de 12/10. P. 8: percentuais ponderados de renda 20/20/28/12/5/2 e recusa 14, soma arredondada 101. As bases de campo da p. 16 não são pesos. O ajuste troca renda somente entre declarantes: 87/101 do total; o restante permanece no placar publicado, sem voto por renda imputado. Topline 53/44/1/3 soma 101 por arredondamento."
+              },
+              "publicado": {
+                "flavio": 54.63917525773196,
+                "lula": 45.36082474226804
+              },
+              "pnad": {
+                "flavio": 56.68037899642243,
+                "lula": 43.31962100357759
+              },
+              "modelo": {
+                "flavio": 57.879094502654034,
+                "lula": 42.12090549734595
+              },
+              "allocated_undecided": {
+                "flavio": 1.3893855480483928,
+                "lula": 1.0111107969396624
+              },
+              "rates": {
+                "flavio": 0.8361992574287401,
+                "lula": 0.7962213991300896
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": []
+            },
+            {
+              "id": "ipespe_2026-10-08",
+              "instituto": "Ipespe",
+              "divulgacao": "2026-10-10",
+              "campo": {
+                "inicio": "2026-10-06",
+                "fim": "2026-10-08"
               },
               "published": {
                 "flavio": 49.0,
                 "lula": 44.0
               },
               "adjusted": {
-                "flavio": 50.531,
-                "lula": 43.209
+                "flavio": 49.816,
+                "lula": 43.464
               },
               "negative_mass_removed": {},
-              "undecided": 1.846,
+              "undecided": 2.889,
               "undecided_known": true,
               "source": {
-                "arquivo": "data/originals/poderdata_102026_08/relatorio.pdf",
-                "url": "https://static.poder360.com.br/uploads/2026/10/Relatorio-PoderData-Eleitoral-8out26-final.pdf",
-                "bytes": 1355838,
-                "sha256": "76d820c8267a1f465aabb8d50a766b47023783d942e4ea6a6686392a6107153a",
-                "capturado_em": "2026-10-08T22:38:32+00:00",
-                "pdf": "data/originals/poderdata_102026_08/relatorio.pdf",
+                "arquivo": "data/originals/ipespe_102026_10/relatorio.pdf",
+                "url": "https://static.poder360.com.br/uploads/2026/10/pesquisa-ipespe-abrapel-10out2026.pdf",
+                "bytes": 2175740,
+                "sha256": "e5f7e32a4947b80dd8ad5b1c60b20a4910fef47ffd48c29b3b534300b8e39450",
+                "capturado_em": "2026-10-13T17:58:24+00:00",
+                "pdf": "data/originals/ipespe_102026_10/relatorio.pdf",
                 "tipo": "relatorio",
-                "rotulo": "PoderData: relatório completo",
+                "rotulo": "Relatório completo conferido",
+                "paginas": {
+                  "metodologia": 33,
+                  "perfil_renda": 34,
+                  "2t_topline": 5,
+                  "2t_validos": 5,
+                  "2t_renda": 6,
+                  "sexo": 6
+                },
+                "total_paginas": 35,
+                "conferido_em": "2026-10-13",
+                "status": "Íntegra arquivada e conferida visualmente.",
+                "nota": "Primeira rodada do tracking Ipespe/ABRAPEL, 06–08/10, publicada 10/10; íntegra de 35 páginas. A metodologia p. 33 declara CATI, diferente do recrutamento digital citado por parte da imprensa. A p. 5 informa 49/44/5/3, soma 101 por arredondamento: os indecisos são 3%, não 1%. Perfil de renda familiar da própria onda na p. 34: 41/39/20. Cruzamentos p. 6. Válidos divulgados 52,7/47,3 preservados separadamente da normalização dos totais arredondados."
+              },
+              "publicado": {
+                "flavio": 52.68817204301075,
+                "lula": 47.31182795698925
+              },
+              "pnad": {
+                "flavio": 53.40480274442539,
+                "lula": 46.59519725557461
+              },
+              "modelo": {
+                "flavio": 54.621591682239824,
+                "lula": 45.378408317760176
+              },
+              "allocated_undecided": {
+                "flavio": 1.2555604647324436,
+                "lula": 1.0430918192153498
+              },
+              "rates": {
+                "flavio": 0.8361992574287401,
+                "lula": 0.7962213991300896
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": []
+            },
+            {
+              "id": "nexus_2026-10-12",
+              "instituto": "Nexus",
+              "divulgacao": "2026-10-13",
+              "campo": {
+                "inicio": "2026-10-10",
+                "fim": "2026-10-12"
+              },
+              "published": {
+                "flavio": 48.0,
+                "lula": 45.0
+              },
+              "adjusted": {
+                "flavio": 49.067,
+                "lula": 44.127
+              },
+              "negative_mass_removed": {},
+              "undecided": 1.753,
+              "undecided_known": true,
+              "source": {
+                "arquivo": "data/originals/nexus_102026_13/relatorio.pdf",
+                "url": "https://www.nexus.fsb.com.br/wp-content/uploads/2026/10/BTG-Nexus-Eleicoes-2026-Rodada-17-13.out_.2026.pdf",
+                "bytes": 2249898,
+                "sha256": "122e3f2052c72c3da04f6bd556cf592f2c341cdda90b462632a6a63dbda1c6a7",
+                "capturado_em": "2026-10-13T17:57:45+00:00",
+                "pdf": "data/originals/nexus_102026_13/relatorio.pdf",
+                "tipo": "relatorio",
+                "rotulo": "Relatório completo conferido",
+                "paginas": {
+                  "metodologia": 4,
+                  "perfil_renda": 99,
+                  "2t_topline": 21,
+                  "2t_validos": 23,
+                  "sexo": 40,
+                  "2t_renda": 41,
+                  "comparecimento": 15
+                },
+                "total_paginas": 102,
+                "conferido_em": "2026-10-13",
+                "status": "Íntegra arquivada e conferida visualmente.",
+                "nota": "17ª rodada: campo 10–12/10, 2.002 entrevistas, divulgação 13/10. Perfil atual p. 99: renda familiar 19/18/40/23. Voto por renda p. 41; sexo p. 40. Não transporta preferências ou rejeição de setembro. P. 15 declara 89% de presença decidida e 6% provável: declaração de intenção (95%), não previsão calibrada de comparecimento. Não substitui automaticamente a referência oficial de 79,16% do primeiro turno."
+              },
+              "publicado": {
+                "flavio": 51.61290322580645,
+                "lula": 48.38709677419355
+              },
+              "pnad": {
+                "flavio": 52.65038521793248,
+                "lula": 47.34961478206751
+              },
+              "modelo": {
+                "flavio": 53.8698577588319,
+                "lula": 46.13014224116809
+              },
+              "allocated_undecided": {
+                "flavio": 0.7513693647212283,
+                "lula": 0.6434168774942378
+              },
+              "rates": {
+                "flavio": 0.8361992574287401,
+                "lula": 0.7962213991300896
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": []
+            },
+            {
+              "id": "poderdata_2026-10-12",
+              "instituto": "PoderData",
+              "divulgacao": "2026-10-13",
+              "campo": {
+                "inicio": "2026-10-10",
+                "fim": "2026-10-12"
+              },
+              "published": {
+                "flavio": 48.0,
+                "lula": 46.0
+              },
+              "adjusted": {
+                "flavio": 48.99,
+                "lula": 45.505
+              },
+              "negative_mass_removed": {},
+              "undecided": 1.954,
+              "undecided_known": true,
+              "source": {
+                "arquivo": "data/originals/poderdata_102026_13/relatorio.pdf",
+                "url": "https://static.poder360.com.br/uploads/2026/10/Relatorio-PoderData-Eleitoral-12out26-1.pdf",
+                "bytes": 869560,
+                "sha256": "0f4e4418d633cbcf30f6364b48a728b67267a18ba649f81b5ef1879048c15ffa",
+                "capturado_em": "2026-10-13T17:58:24+00:00",
+                "pdf": "data/originals/poderdata_102026_13/relatorio.pdf",
+                "tipo": "relatorio",
+                "rotulo": "Relatório completo conferido",
                 "paginas": {
                   "metodologia": 2,
                   "perfil_renda": 4,
@@ -6070,36 +7054,26 @@
                   "sexo": 7,
                   "2t_renda": 9
                 },
-                "total_paginas": 39,
-                "conferido_em": "2026-10-08",
-                "status": "Íntegra atual arquivada e conferida.",
-                "nota": "Primeira onda PoderData com campo inteiramente após o 1º turno. Entram votos totais 44 × 49, não os válidos arredondados 47 × 53. A média móvel de sete dias ainda inclui outras casas com campo anterior à eleição; não é uma média exclusiva do pós-1º turno.",
-                "complementos": [
-                  {
-                    "arquivo": "data/originals/poderdata_102026_08/materia.html",
-                    "url": "https://www.poder360.com.br/poderdata/pesquisa-poderdata-aya-leia-os-resultados-de-lula-e-flavio-no-2o-turno/",
-                    "bytes": 271490,
-                    "sha256": "1766999ca2d5e55ca3af9057515f108de8c5a3c969bb52a8dfa7024b4fdf8135",
-                    "capturado_em": "2026-10-08T22:38:32+00:00",
-                    "rotulo": "Divulgação oficial no Poder360"
-                  }
-                ]
+                "total_paginas": 27,
+                "conferido_em": "2026-10-13",
+                "status": "Íntegra arquivada e conferida visualmente.",
+                "nota": "Íntegra correta: campo 10–12/10, registro BR-01209/2026, 27 páginas. O índice de PDFs na matéria de 13/10 ainda apontava para 05–07/10; a íntegra atual foi localizada na síntese do próprio Poder360. Perfil desta onda na p. 4: 46/33/21; não é emprestado da anterior. Total 48/46/5/2 (101 por arredondamento), renda p. 9 e controle independente por sexo p. 7."
               },
               "publicado": {
-                "flavio": 52.68817204301075,
-                "lula": 47.31182795698925
+                "flavio": 51.06382978723404,
+                "lula": 48.93617021276596
               },
               "pnad": {
-                "flavio": 53.90548325154682,
-                "lula": 46.09451674845317
+                "flavio": 51.84401291073601,
+                "lula": 48.15598708926398
               },
               "modelo": {
-                "flavio": 55.12018506545325,
-                "lula": 44.87981493454675
+                "flavio": 53.0657401651792,
+                "lula": 46.934259834820814
               },
               "allocated_undecided": {
-                "flavio": 0.8095955317882992,
-                "lula": 0.6591867860267325
+                "flavio": 0.8250200905432864,
+                "lula": 0.7296931537744666
               },
               "rates": {
                 "flavio": 0.8361992574287401,
@@ -6113,15 +7087,36 @@
             {
               "without": "Datafolha",
               "valid": {
-                "lula": 44.87981493454675,
-                "flavio": 55.12018506545325
+                "lula": 45.14092897277375,
+                "flavio": 54.859071027226236
+              }
+            },
+            {
+              "without": "Gerp",
+              "valid": {
+                "lula": 45.780691159329464,
+                "flavio": 54.219308840670536
+              }
+            },
+            {
+              "without": "Ipespe",
+              "valid": {
+                "lula": 44.96631545422591,
+                "flavio": 55.033684545774086
+              }
+            },
+            {
+              "without": "Nexus",
+              "valid": {
+                "lula": 44.77838197337393,
+                "flavio": 55.22161802662607
               }
             },
             {
               "without": "PoderData",
               "valid": {
-                "lula": 44.472791857676384,
-                "flavio": 55.52720814232362
+                "lula": 44.577352574960756,
+                "flavio": 55.422647425039244
               }
             }
           ],
@@ -6158,7 +7153,7 @@
   },
   "sources_sha256": {
     "nexus_btg_28092026_data.json": "99313b48fee54545d99de437946cc52cfce49be36c7587c41909cf9f192cc181",
-    "reponderacao_pnad.json": "21ae5078ff6a044fa33cfc4bf239bfcb3f99652e9766b72880ec3d14d23d0a9c",
+    "reponderacao_pnad.json": "295f579bc39e9ab21a5518e18cabb33d438b2ecef058871d6eac88d998cccaf5",
     "analysis/apuracao_2026/dados/pesquisas_vs_urna.json": "0f4391d21352041fc6fbf994472d65738ebfe8e04a93ba61e96c0be16a22c7c4",
     "analysis/apuracao_2026/dados/presidente.json": "0bb01ddb79108500a55987b5be1fc437f38ef5f88509ec846a00df8dd7853788"
   }

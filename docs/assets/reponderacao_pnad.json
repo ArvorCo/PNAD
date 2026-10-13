@@ -1,6 +1,6 @@
 {
- "gerado_em": "2026-10-09T19:07:54",
- "referencia": "2026-10-09",
+ "gerado_em": "2026-10-13T15:34:20",
+ "referencia": "2026-10-13",
  "benchmark": {
   "source": "data/outputs/base_anual_visita1_labeled_npv.csv",
   "rows_read": 408364,
@@ -23,13 +23,14 @@
   }
  },
  "metodo": {
-  "formula": "ajustado = publicado + (contrafactual PNAD - recomposto pelas bases do instituto)",
+  "formula": "ajustado = publicado + q × (contrafactual PNAD - recomposto pelas bases do instituto); q = parcela ajustável declarada, ou 1 na regra legada",
   "margem_unica": "só a renda é trocada; sexo, idade, região e escolaridade ficam como o instituto ponderou",
   "limites": [
    "Sem microdados, pesos individuais, estratos, PSU nem efeito de desenho público.",
    "Renda familiar declarada ao entrevistador não é o rendimento domiciliar medido pela PNADC.",
    "Trocar uma margem não identifica interações com escolaridade, região, idade ou religião.",
    "Quem não declara renda fica fora da conta e entra pelo topline publicado.",
+   "Nas novas fichas com não resposta quantificada, q limita a troca à parcela com renda conhecida; a massa restante conserva o publicado. Fichas históricas sem q mantêm sua regra arquivada.",
    "É sensibilidade sob régua comum, não o resultado real da eleição."
   ]
  },
@@ -38,6 +39,7 @@
   "Datafolha",
   "Gerp",
   "Indexa/Broadcast",
+  "Ipespe",
   "MDA",
   "Nexus",
   "Palver",
@@ -23628,6 +23630,168 @@
    "arquivo": "analysis/reponderacao/pesquisas/quaest_2026-10-03.json"
   },
   {
+   "id": "datafolha_2026-10-08",
+   "instituto": "Datafolha",
+   "contratante": "Folha de S.Paulo e TV Globo",
+   "registro_tse": "BR-02949/2026",
+   "campo": {
+    "inicio": "2026-10-06",
+    "fim": "2026-10-07"
+   },
+   "divulgacao": "2026-10-08",
+   "n": 2520,
+   "metodo": "presencial, pontos de fluxo",
+   "fonte": {
+    "arquivo": "data/originals/datafolha_102026_13/relatorio.pdf",
+    "url": "https://brasil.arvor.co/fontes/datafolha_2t_08102026_integra.pdf",
+    "bytes": 1398825,
+    "sha256": "9b95078c8f04e961b48719c166a303b354c4366eb59b633642ef0fc0de7aafcb",
+    "capturado_em": "2026-10-13T18:07:55+00:00",
+    "pdf": "data/originals/datafolha_102026_13/relatorio.pdf",
+    "tipo": "relatorio",
+    "rotulo": "Relatório completo conferido",
+    "paginas": {
+     "metodologia": 2,
+     "perfil_renda": 23,
+     "2t_topline": 26,
+     "2t_renda": 26,
+     "sexo": 26,
+     "regiao": 26,
+     "2t_validos": 27
+    },
+    "total_paginas": 34,
+    "conferido_em": "2026-10-13",
+    "status": "Íntegra arquivada e conferida visualmente.",
+    "nota": "Relatório de 34 páginas recebido do usuário em 13/10, preservado sem alterações. Pp. 2 e 19–21: campo 06–07/10 (corrige 06–08/10 da notícia), 2.520 entrevistas, registro BR-02949/2026. P. 26 (p. 8 do anexo): bases ponderadas atuais de renda 1.187/874/337, total 2.398 declarantes; sem renda, 122/2.520. Não reutiliza mais 1.209/856/344 da onda anterior. Ajuste limitado a 2.398/2.520 da base, restante preservado no topline. P. 23 publica o perfil; sexo e região atuais conferem o placar. O id legado e a divulgação de 08/10 são preservados: é revisão documental, não uma nova onda.",
+    "relatorio_completo": "2026-10-13",
+    "proveniencia": "Arquivo fornecido pelo usuário; URL é cópia pública preservada, não origem do download.",
+    "complementos": [
+     {
+      "url": "https://g1.globo.com/politica/eleicoes/2026/pesquisa-eleitoral/presidente-br-2-turno-datafolha/",
+      "rotulo": "Painel da divulgação inicial, preservado"
+     }
+    ]
+   },
+   "publicado": {
+    "2t": {
+     "flavio": 49,
+     "lula": 45,
+     "branco_nulo": 5,
+     "indecisos": 1
+    }
+   },
+   "renda": {
+    "unidade": "salarios_minimos",
+    "faixas": [
+     "Até 2 SM (até R$ 3.242)",
+     "De 2 a 5 SM (R$ 3.242 a 8.105)",
+     "Mais de 5 SM (acima de R$ 8.105)"
+    ],
+    "cortes_brl_202604": [
+     3215.9,
+     8039.76,
+     null
+    ],
+    "amostra_pct": [
+     49.5,
+     36.447,
+     14.053
+    ],
+    "pnad_pct": {
+     "pessoas16_efetivo": [
+      35.187,
+      39.259,
+      25.554
+     ],
+     "pessoas16_habitual": [
+      34.864,
+      40.402,
+      24.734
+     ],
+     "domicilios_efetivo": [
+      42.672,
+      35.771,
+      21.557
+     ]
+    },
+    "nota": "Relatório de 34 páginas recebido do usuário em 13/10, preservado sem alterações. Pp. 2 e 19–21: campo 06–07/10 (corrige 06–08/10 da notícia), 2.520 entrevistas, registro BR-02949/2026. P. 26 (p. 8 do anexo): bases ponderadas atuais de renda 1.187/874/337, total 2.398 declarantes; sem renda, 122/2.520. Não reutiliza mais 1.209/856/344 da onda anterior. Ajuste limitado a 2.398/2.520 da base, restante preservado no topline. P. 23 publica o perfil; sexo e região atuais conferem o placar. O id legado e a divulgação de 08/10 são preservados: é revisão documental, não uma nova onda.",
+    "perfil_tipo": "perfil_ponderado"
+   },
+   "desvio_ate_primeira_faixa": 14.313,
+   "turnos": {
+    "2t": {
+     "opcoes": [
+      "lula",
+      "flavio",
+      "branco_nulo",
+      "indecisos"
+     ],
+     "publicado": {
+      "lula": 45.0,
+      "flavio": 49.0,
+      "branco_nulo": 5.0,
+      "indecisos": 1.0
+     },
+     "recomposto": {
+      "lula": 45.07,
+      "flavio": 48.435,
+      "branco_nulo": 5.0,
+      "indecisos": 1.495
+     },
+     "residuo_max": 0.565,
+     "cenarios": {
+      "pessoas16_efetivo": {
+       "contrafactual": {
+        "lula": 43.182,
+        "flavio": 50.466,
+        "branco_nulo": 5.0,
+        "indecisos": 1.352
+       },
+       "ajustado": {
+        "lula": 43.203,
+        "flavio": 50.934,
+        "branco_nulo": 5.0,
+        "indecisos": 0.864
+       }
+      },
+      "pessoas16_habitual": {
+       "contrafactual": {
+        "lula": 43.128,
+        "flavio": 50.523,
+        "branco_nulo": 5.0,
+        "indecisos": 1.349
+       },
+       "ajustado": {
+        "lula": 43.152,
+        "flavio": 50.987,
+        "branco_nulo": 5.0,
+        "indecisos": 0.861
+       }
+      },
+      "domicilios_efetivo": {
+       "contrafactual": {
+        "lula": 44.19,
+        "flavio": 49.384,
+        "branco_nulo": 5.0,
+        "indecisos": 1.427
+       },
+       "ajustado": {
+        "lula": 44.162,
+        "flavio": 49.903,
+        "branco_nulo": 5.0,
+        "indecisos": 0.935
+       }
+      }
+     },
+     "parcela_ajustada_pct": 95.15873015873017,
+     "gap_publicado": -4.0,
+     "gap_ajustado": -7.7309999999999945,
+     "margem_diferenca_95": 3.782
+    }
+   },
+   "arquivo": "analysis/reponderacao/pesquisas/datafolha_2026-10-08.json"
+  },
+  {
    "id": "poderdata_2026-10-07",
    "instituto": "PoderData",
    "contratante": "Poder360",
@@ -23945,64 +24109,53 @@
    "arquivo": "analysis/reponderacao/pesquisas/atlas_2026-10-08.json"
   },
   {
-   "id": "datafolha_2026-10-08",
-   "instituto": "Datafolha",
-   "contratante": "Folha de S.Paulo e TV Globo",
-   "registro_tse": "BR-02949/2026",
+   "id": "ipespe_2026-10-08",
+   "instituto": "Ipespe",
+   "contratante": "IPESPE/ABRAPEL, recursos próprios",
+   "registro_tse": "BR-00933/2026",
    "campo": {
     "inicio": "2026-10-06",
     "fim": "2026-10-08"
    },
-   "divulgacao": "2026-10-08",
-   "n": 2520,
-   "metodo": "presencial, pontos de fluxo",
+   "divulgacao": "2026-10-10",
+   "n": 1500,
+   "metodo": "telefônico CATI/IPESPE; cotas de sexo, idade e localidade; controle de instrução, renda e recall do 1º turno",
    "fonte": {
-    "arquivo": "data/originals/datafolha_102026_08/g1_ESTIMULADA-PRE-001.json",
-    "url": "https://g1.globo.com/politica/eleicoes/2026/pesquisa-eleitoral/presidente-br-2-turno-datafolha/",
-    "bytes": 22558,
-    "sha256": "75cc9ea59701de06c55b795f00d29e43a9f131543db323b8248fdd5f599a5689",
-    "capturado_em": "2026-10-08T22:38:32+00:00",
-    "tipo": "painel_contratante",
-    "rotulo": "Painel do G1: votos por renda",
+    "arquivo": "data/originals/ipespe_102026_10/relatorio.pdf",
+    "url": "https://static.poder360.com.br/uploads/2026/10/pesquisa-ipespe-abrapel-10out2026.pdf",
+    "bytes": 2175740,
+    "sha256": "e5f7e32a4947b80dd8ad5b1c60b20a4910fef47ffd48c29b3b534300b8e39450",
+    "capturado_em": "2026-10-13T17:58:24+00:00",
+    "pdf": "data/originals/ipespe_102026_10/relatorio.pdf",
+    "tipo": "relatorio",
+    "rotulo": "Relatório completo conferido",
     "paginas": {
-     "2t_renda": "API 216, ESTIMULADA-PRE-001, estratos renda"
+     "metodologia": 33,
+     "perfil_renda": 34,
+     "2t_topline": 5,
+     "2t_validos": 5,
+     "2t_renda": 6,
+     "sexo": 6
     },
-    "conferido_em": "2026-10-08",
-    "status": "Painel atual arquivado; íntegra em PDF pendente.",
-    "nota": "Fonte parcial: o G1 publica os votos por renda desta onda, mas não as bases de renda. A reponderação assume explicitamente o perfil ponderado da onda de 01/10 (1.209/856/344, PDF de 02/10, pp. 45 e 53), condicionado à confirmação da íntegra atual. O controle por sexo também assume as bases anteriores (1.215/1.291). Os controles de recomposição não comprovam que o perfil se manteve. O registro PesqEle devolveu HTTP 403 nesta consulta. Há divergência de datas: o texto metodológico do painel diz 6–7/10; a notícia de divulgação e a agenda do registro informam 6–8/10, período usado nesta ficha.",
-    "complementos": [
-     {
-      "arquivo": "data/originals/datafolha_102026_08/g1_VTSVALIDOS-PRE-001.json",
-      "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/216/?tipo_pergunta=VTSVALIDOS-PRE-001&instituto=Datafolha",
-      "bytes": 15754,
-      "sha256": "42eb7831fdc5d4b99bb720c50d03904afe36c907edc0990d1c2310caf56fe15d",
-      "capturado_em": "2026-10-08T22:38:32+00:00",
-      "rotulo": "API: votos válidos publicados"
-     },
-     {
-      "arquivo": "data/originals/datafolha_102026_08/materia_exame.html",
-      "url": "https://exame.com/brasil/pesquisa-datafolha-2o-turno-flavio-bolsonaro-tem-52-e-lula-48-dos-votos-validos/",
-      "bytes": 51010,
-      "sha256": "8ae0d11a32153efaed820b3c8cadc69d95113e94bc9852c2902483d0272ca72f",
-      "capturado_em": "2026-10-08T22:38:32+00:00",
-      "rotulo": "Divulgação e ficha técnica"
-     }
-    ]
+    "total_paginas": 35,
+    "conferido_em": "2026-10-13",
+    "status": "Íntegra arquivada e conferida visualmente.",
+    "nota": "Primeira rodada do tracking Ipespe/ABRAPEL, 06–08/10, publicada 10/10; íntegra de 35 páginas. A metodologia p. 33 declara CATI, diferente do recrutamento digital citado por parte da imprensa. A p. 5 informa 49/44/5/3, soma 101 por arredondamento: os indecisos são 3%, não 1%. Perfil de renda familiar da própria onda na p. 34: 41/39/20. Cruzamentos p. 6. Válidos divulgados 52,7/47,3 preservados separadamente da normalização dos totais arredondados."
    },
    "publicado": {
     "2t": {
      "flavio": 49,
-     "lula": 45,
+     "lula": 44,
      "branco_nulo": 5,
-     "indecisos": 1
+     "indecisos": 3
     }
    },
    "renda": {
     "unidade": "salarios_minimos",
     "faixas": [
-     "Até 2 SM (até R$ 3.242)",
-     "De 2 a 5 SM (R$ 3.242 a 8.105)",
-     "Mais de 5 SM (acima de R$ 8.105)"
+     "0 a 2 SM",
+     "2 a 5 SM",
+     "Mais de 5 SM"
     ],
     "cortes_brl_202604": [
      3215.9,
@@ -24010,9 +24163,9 @@
      null
     ],
     "amostra_pct": [
-     50.187,
-     35.533,
-     14.28
+     41.0,
+     39.0,
+     20.0
     ],
     "pnad_pct": {
      "pessoas16_efetivo": [
@@ -24031,81 +24184,562 @@
       21.557
      ]
     },
-    "nota": "Fonte parcial: o G1 publica os votos por renda desta onda, mas não as bases de renda. A reponderação assume explicitamente o perfil ponderado da onda de 01/10 (1.209/856/344, PDF de 02/10, pp. 45 e 53), condicionado à confirmação da íntegra atual. O controle por sexo também assume as bases anteriores (1.215/1.291). Os controles de recomposição não comprovam que o perfil se manteve. O registro PesqEle devolveu HTTP 403 nesta consulta. Há divergência de datas: o texto metodológico do painel diz 6–7/10; a notícia de divulgação e a agenda do registro informam 6–8/10, período usado nesta ficha.",
-    "perfil_tipo": "hipotese_onda_anterior"
+    "nota": "Primeira rodada do tracking Ipespe/ABRAPEL, 06–08/10, publicada 10/10; íntegra de 35 páginas. A metodologia p. 33 declara CATI, diferente do recrutamento digital citado por parte da imprensa. A p. 5 informa 49/44/5/3, soma 101 por arredondamento: os indecisos são 3%, não 1%. Perfil de renda familiar da própria onda na p. 34: 41/39/20. Cruzamentos p. 6. Válidos divulgados 52,7/47,3 preservados separadamente da normalização dos totais arredondados.",
+    "perfil_tipo": "perfil_ponderado"
    },
-   "desvio_ate_primeira_faixa": 15.0,
+   "desvio_ate_primeira_faixa": 5.813,
    "turnos": {
     "2t": {
      "opcoes": [
-      "lula",
       "flavio",
+      "lula",
       "branco_nulo",
       "indecisos"
      ],
      "publicado": {
-      "lula": 45.0,
       "flavio": 49.0,
+      "lula": 44.0,
       "branco_nulo": 5.0,
-      "indecisos": 1.0
+      "indecisos": 3.0
      },
      "recomposto": {
-      "lula": 45.169,
-      "flavio": 48.329,
-      "branco_nulo": 5.0,
-      "indecisos": 1.502
+      "flavio": 48.65,
+      "lula": 43.74,
+      "branco_nulo": 5.01,
+      "indecisos": 2.6
      },
-     "residuo_max": 0.671,
+     "residuo_max": 0.35,
      "cenarios": {
       "pessoas16_efetivo": {
        "contrafactual": {
-        "lula": 43.182,
-        "flavio": 50.466,
-        "branco_nulo": 5.0,
-        "indecisos": 1.352
+        "flavio": 49.466,
+        "lula": 43.204,
+        "branco_nulo": 4.841,
+        "indecisos": 2.489
        },
        "ajustado": {
-        "lula": 43.013,
-        "flavio": 51.137,
-        "branco_nulo": 5.0,
-        "indecisos": 0.85
+        "flavio": 49.816,
+        "lula": 43.464,
+        "branco_nulo": 4.831,
+        "indecisos": 2.889
        }
       },
       "pessoas16_habitual": {
        "contrafactual": {
-        "lula": 43.128,
-        "flavio": 50.523,
-        "branco_nulo": 5.0,
-        "indecisos": 1.349
+        "flavio": 49.523,
+        "lula": 43.118,
+        "branco_nulo": 4.854,
+        "indecisos": 2.505
        },
        "ajustado": {
-        "lula": 42.959,
-        "flavio": 51.194,
-        "branco_nulo": 5.0,
-        "indecisos": 0.847
+        "flavio": 49.873,
+        "lula": 43.378,
+        "branco_nulo": 4.844,
+        "indecisos": 2.905
        }
       },
       "domicilios_efetivo": {
        "contrafactual": {
-        "lula": 44.19,
-        "flavio": 49.384,
-        "branco_nulo": 5.0,
-        "indecisos": 1.427
+        "flavio": 48.384,
+        "lula": 44.052,
+        "branco_nulo": 4.996,
+        "indecisos": 2.569
        },
        "ajustado": {
-        "lula": 44.021,
-        "flavio": 50.054,
-        "branco_nulo": 5.0,
-        "indecisos": 0.925
+        "flavio": 48.734,
+        "lula": 44.312,
+        "branco_nulo": 4.986,
+        "indecisos": 2.969
        }
       }
      },
-     "gap_publicado": -4.0,
-     "gap_ajustado": -8.124000000000002,
-     "margem_diferenca_95": 3.782
+     "gap_publicado": -5.0,
+     "gap_ajustado": -6.352000000000004,
+     "margem_diferenca_95": 4.874
     }
    },
-   "arquivo": "analysis/reponderacao/pesquisas/datafolha_2026-10-08.json"
+   "arquivo": "analysis/reponderacao/pesquisas/ipespe_2026-10-08.json"
+  },
+  {
+   "id": "gerp_2026-10-12",
+   "instituto": "Gerp",
+   "contratante": "Gerp, recursos próprios",
+   "registro_tse": "BR-07877/2026",
+   "campo": {
+    "inicio": "2026-10-08",
+    "fim": "2026-10-12"
+   },
+   "divulgacao": "2026-10-13",
+   "n": 2400,
+   "metodo": "telefônico, CATI/GerpCati; ponderação por sexo, idade, escolaridade, renda familiar e região",
+   "fonte": {
+    "arquivo": "data/originals/gerp_102026_13/relatorio.pdf",
+    "url": "https://gerp.com.br/relatorios/20261012%20Relat%C3%B3rio%20Presid%C3%AAncia%202026%202%C2%BA%20Turno%20-%20DIVULGA%C3%87%C3%83O.pdf",
+    "bytes": 869727,
+    "sha256": "42a17309fd91ea440e9a5f37efb9390e28506035518a02f2631a2ab1f4937da5",
+    "capturado_em": "2026-10-13T17:57:45+00:00",
+    "pdf": "data/originals/gerp_102026_13/relatorio.pdf",
+    "tipo": "relatorio",
+    "rotulo": "Relatório completo conferido",
+    "paginas": {
+     "metodologia": 7,
+     "perfil_renda": 8,
+     "2t_topline": 14,
+     "2t_renda": 16,
+     "sexo": 16,
+     "2t_validos": 21
+    },
+    "total_paginas": 57,
+    "conferido_em": "2026-10-13",
+    "status": "Íntegra arquivada e conferida visualmente.",
+    "nota": "Campo em 08, 09 e 12/10, não uma coleta contínua: p. 7. Publicação oficial 13/10 no manifesto; a divulgação na TMC começou na noite de 12/10. P. 8: percentuais ponderados de renda 20/20/28/12/5/2 e recusa 14, soma arredondada 101. As bases de campo da p. 16 não são pesos. O ajuste troca renda somente entre declarantes: 87/101 do total; o restante permanece no placar publicado, sem voto por renda imputado. Topline 53/44/1/3 soma 101 por arredondamento."
+   },
+   "publicado": {
+    "2t": {
+     "flavio": 53,
+     "lula": 44,
+     "branco_nulo": 1,
+     "indecisos": 3
+    }
+   },
+   "renda": {
+    "unidade": "salarios_minimos",
+    "faixas": [
+     "0 a 1 SM",
+     "1 a 2 SM",
+     "2 a 5 SM",
+     "5 a 10 SM",
+     "10 a 20 SM",
+     "Mais de 20 SM"
+    ],
+    "cortes_brl_202604": [
+     1607.95,
+     3215.9,
+     8039.76,
+     16079.52,
+     32159.05,
+     null
+    ],
+    "amostra_pct": [
+     22.989,
+     22.989,
+     32.184,
+     13.793,
+     5.747,
+     2.299
+    ],
+    "pnad_pct": {
+     "pessoas16_efetivo": [
+      13.441,
+      21.746,
+      39.259,
+      17.027,
+      6.273,
+      2.254
+     ],
+     "pessoas16_habitual": [
+      12.747,
+      22.117,
+      40.402,
+      16.696,
+      5.993,
+      2.045
+     ],
+     "domicilios_efetivo": [
+      18.625,
+      24.046,
+      35.771,
+      14.328,
+      5.317,
+      1.913
+     ]
+    },
+    "nota": "Campo em 08, 09 e 12/10, não uma coleta contínua: p. 7. Publicação oficial 13/10 no manifesto; a divulgação na TMC começou na noite de 12/10. P. 8: percentuais ponderados de renda 20/20/28/12/5/2 e recusa 14, soma arredondada 101. As bases de campo da p. 16 não são pesos. O ajuste troca renda somente entre declarantes: 87/101 do total; o restante permanece no placar publicado, sem voto por renda imputado. Topline 53/44/1/3 soma 101 por arredondamento.",
+    "perfil_tipo": "perfil_ponderado"
+   },
+   "desvio_ate_primeira_faixa": 9.548,
+   "turnos": {
+    "2t": {
+     "opcoes": [
+      "flavio",
+      "lula",
+      "branco_nulo",
+      "indecisos"
+     ],
+     "publicado": {
+      "flavio": 53.0,
+      "lula": 44.0,
+      "branco_nulo": 1.0,
+      "indecisos": 3.0
+     },
+     "recomposto": {
+      "flavio": 53.08,
+      "lula": 43.161,
+      "branco_nulo": 1.23,
+      "indecisos": 2.552
+     },
+     "residuo_max": 0.839,
+     "cenarios": {
+      "pessoas16_efetivo": {
+       "contrafactual": {
+        "flavio": 55.374,
+        "lula": 40.859,
+        "branco_nulo": 1.217,
+        "indecisos": 2.571
+       },
+       "ajustado": {
+        "flavio": 54.976,
+        "lula": 42.017,
+        "branco_nulo": 0.989,
+        "indecisos": 3.017
+       }
+      },
+      "pessoas16_habitual": {
+       "contrafactual": {
+        "flavio": 55.549,
+        "lula": 40.69,
+        "branco_nulo": 1.221,
+        "indecisos": 2.56
+       },
+       "ajustado": {
+        "flavio": 55.127,
+        "lula": 41.871,
+        "branco_nulo": 0.992,
+        "indecisos": 3.007
+       }
+      },
+      "domicilios_efetivo": {
+       "contrafactual": {
+        "flavio": 54.076,
+        "lula": 42.162,
+        "branco_nulo": 1.24,
+        "indecisos": 2.54
+       },
+       "ajustado": {
+        "flavio": 53.858,
+        "lula": 43.14,
+        "branco_nulo": 1.009,
+        "indecisos": 2.99
+       }
+      }
+     },
+     "parcela_ajustada_pct": 86.13861386138613,
+     "gap_publicado": -9.0,
+     "gap_ajustado": -12.958999999999996,
+     "margem_diferenca_95": 3.924
+    }
+   },
+   "arquivo": "analysis/reponderacao/pesquisas/gerp_2026-10-12.json"
+  },
+  {
+   "id": "nexus_2026-10-12",
+   "instituto": "Nexus",
+   "contratante": "Banco BTG Pactual",
+   "registro_tse": "BR-07997/2026",
+   "campo": {
+    "inicio": "2026-10-10",
+    "fim": "2026-10-12"
+   },
+   "divulgacao": "2026-10-13",
+   "n": 2002,
+   "metodo": "telefônico CATI; cotas de sexo, idade, escolaridade, tipo de telefonia e DDD",
+   "fonte": {
+    "arquivo": "data/originals/nexus_102026_13/relatorio.pdf",
+    "url": "https://www.nexus.fsb.com.br/wp-content/uploads/2026/10/BTG-Nexus-Eleicoes-2026-Rodada-17-13.out_.2026.pdf",
+    "bytes": 2249898,
+    "sha256": "122e3f2052c72c3da04f6bd556cf592f2c341cdda90b462632a6a63dbda1c6a7",
+    "capturado_em": "2026-10-13T17:57:45+00:00",
+    "pdf": "data/originals/nexus_102026_13/relatorio.pdf",
+    "tipo": "relatorio",
+    "rotulo": "Relatório completo conferido",
+    "paginas": {
+     "metodologia": 4,
+     "perfil_renda": 99,
+     "2t_topline": 21,
+     "2t_validos": 23,
+     "sexo": 40,
+     "2t_renda": 41,
+     "comparecimento": 15
+    },
+    "total_paginas": 102,
+    "conferido_em": "2026-10-13",
+    "status": "Íntegra arquivada e conferida visualmente.",
+    "nota": "17ª rodada: campo 10–12/10, 2.002 entrevistas, divulgação 13/10. Perfil atual p. 99: renda familiar 19/18/40/23. Voto por renda p. 41; sexo p. 40. Não transporta preferências ou rejeição de setembro. P. 15 declara 89% de presença decidida e 6% provável: declaração de intenção (95%), não previsão calibrada de comparecimento. Não substitui automaticamente a referência oficial de 79,16% do primeiro turno."
+   },
+   "publicado": {
+    "2t": {
+     "flavio": 48,
+     "lula": 45,
+     "branco_nulo": 5,
+     "indecisos": 2
+    }
+   },
+   "renda": {
+    "unidade": "salarios_minimos",
+    "faixas": [
+     "0 a 1 SM",
+     "1 a 2 SM",
+     "2 a 5 SM",
+     "Mais de 5 SM"
+    ],
+    "cortes_brl_202604": [
+     1607.95,
+     3215.9,
+     8039.76,
+     null
+    ],
+    "amostra_pct": [
+     19.0,
+     18.0,
+     40.0,
+     23.0
+    ],
+    "pnad_pct": {
+     "pessoas16_efetivo": [
+      13.441,
+      21.746,
+      39.259,
+      25.554
+     ],
+     "pessoas16_habitual": [
+      12.747,
+      22.117,
+      40.402,
+      24.734
+     ],
+     "domicilios_efetivo": [
+      18.625,
+      24.046,
+      35.771,
+      21.557
+     ]
+    },
+    "nota": "17ª rodada: campo 10–12/10, 2.002 entrevistas, divulgação 13/10. Perfil atual p. 99: renda familiar 19/18/40/23. Voto por renda p. 41; sexo p. 40. Não transporta preferências ou rejeição de setembro. P. 15 declara 89% de presença decidida e 6% provável: declaração de intenção (95%), não previsão calibrada de comparecimento. Não substitui automaticamente a referência oficial de 79,16% do primeiro turno.",
+    "perfil_tipo": "perfil_ponderado"
+   },
+   "desvio_ate_primeira_faixa": 5.559,
+   "turnos": {
+    "2t": {
+     "opcoes": [
+      "flavio",
+      "lula",
+      "branco_nulo",
+      "indecisos"
+     ],
+     "publicado": {
+      "flavio": 48.0,
+      "lula": 45.0,
+      "branco_nulo": 5.0,
+      "indecisos": 2.0
+     },
+     "recomposto": {
+      "flavio": 47.65,
+      "lula": 45.34,
+      "branco_nulo": 4.73,
+      "indecisos": 2.45
+     },
+     "residuo_max": 0.35,
+     "cenarios": {
+      "pessoas16_efetivo": {
+       "contrafactual": {
+        "flavio": 48.717,
+        "lula": 44.467,
+        "branco_nulo": 4.75,
+        "indecisos": 2.203
+       },
+       "ajustado": {
+        "flavio": 49.067,
+        "lula": 44.127,
+        "branco_nulo": 5.02,
+        "indecisos": 1.753
+       }
+      },
+      "pessoas16_habitual": {
+       "contrafactual": {
+        "flavio": 48.773,
+        "lula": 44.391,
+        "branco_nulo": 4.811,
+        "indecisos": 2.181
+       },
+       "ajustado": {
+        "flavio": 49.123,
+        "lula": 44.051,
+        "branco_nulo": 5.081,
+        "indecisos": 1.731
+       }
+      },
+      "domicilios_efetivo": {
+       "contrafactual": {
+        "flavio": 47.435,
+        "lula": 45.388,
+        "branco_nulo": 4.696,
+        "indecisos": 2.623
+       },
+       "ajustado": {
+        "flavio": 47.785,
+        "lula": 45.048,
+        "branco_nulo": 4.966,
+        "indecisos": 2.173
+       }
+      }
+     },
+     "gap_publicado": -3.0,
+     "gap_ajustado": -4.939999999999998,
+     "margem_diferenca_95": 4.222
+    }
+   },
+   "arquivo": "analysis/reponderacao/pesquisas/nexus_2026-10-12.json"
+  },
+  {
+   "id": "poderdata_2026-10-12",
+   "instituto": "PoderData",
+   "contratante": "Poder360, recursos próprios; divulgação com Aya Bancah",
+   "registro_tse": "BR-01209/2026",
+   "campo": {
+    "inicio": "2026-10-10",
+    "fim": "2026-10-12"
+   },
+   "divulgacao": "2026-10-13",
+   "n": 3000,
+   "metodo": "telefônico automatizado, URA/IVR, celulares e fixos; 686 municípios nas 27 UFs",
+   "fonte": {
+    "arquivo": "data/originals/poderdata_102026_13/relatorio.pdf",
+    "url": "https://static.poder360.com.br/uploads/2026/10/Relatorio-PoderData-Eleitoral-12out26-1.pdf",
+    "bytes": 869560,
+    "sha256": "0f4e4418d633cbcf30f6364b48a728b67267a18ba649f81b5ef1879048c15ffa",
+    "capturado_em": "2026-10-13T17:58:24+00:00",
+    "pdf": "data/originals/poderdata_102026_13/relatorio.pdf",
+    "tipo": "relatorio",
+    "rotulo": "Relatório completo conferido",
+    "paginas": {
+     "metodologia": 2,
+     "perfil_renda": 4,
+     "2t_topline": 6,
+     "sexo": 7,
+     "2t_renda": 9
+    },
+    "total_paginas": 27,
+    "conferido_em": "2026-10-13",
+    "status": "Íntegra arquivada e conferida visualmente.",
+    "nota": "Íntegra correta: campo 10–12/10, registro BR-01209/2026, 27 páginas. O índice de PDFs na matéria de 13/10 ainda apontava para 05–07/10; a íntegra atual foi localizada na síntese do próprio Poder360. Perfil desta onda na p. 4: 46/33/21; não é emprestado da anterior. Total 48/46/5/2 (101 por arredondamento), renda p. 9 e controle independente por sexo p. 7."
+   },
+   "publicado": {
+    "2t": {
+     "flavio": 48,
+     "lula": 46,
+     "branco_nulo": 5,
+     "indecisos": 2
+    }
+   },
+   "renda": {
+    "unidade": "salarios_minimos",
+    "faixas": [
+     "0 a 2 SM",
+     "2 a 5 SM",
+     "Mais de 5 SM"
+    ],
+    "cortes_brl_202604": [
+     3215.9,
+     8039.76,
+     null
+    ],
+    "amostra_pct": [
+     46.0,
+     33.0,
+     21.0
+    ],
+    "pnad_pct": {
+     "pessoas16_efetivo": [
+      35.187,
+      39.259,
+      25.554
+     ],
+     "pessoas16_habitual": [
+      34.864,
+      40.402,
+      24.734
+     ],
+     "domicilios_efetivo": [
+      42.672,
+      35.771,
+      21.557
+     ]
+    },
+    "nota": "Íntegra correta: campo 10–12/10, registro BR-01209/2026, 27 páginas. O índice de PDFs na matéria de 13/10 ainda apontava para 05–07/10; a íntegra atual foi localizada na síntese do próprio Poder360. Perfil desta onda na p. 4: 46/33/21; não é emprestado da anterior. Total 48/46/5/2 (101 por arredondamento), renda p. 9 e controle independente por sexo p. 7.",
+    "perfil_tipo": "perfil_ponderado"
+   },
+   "desvio_ate_primeira_faixa": 10.813,
+   "turnos": {
+    "2t": {
+     "opcoes": [
+      "flavio",
+      "lula",
+      "branco_nulo",
+      "indecisos"
+     ],
+     "publicado": {
+      "flavio": 48.0,
+      "lula": 46.0,
+      "branco_nulo": 5.0,
+      "indecisos": 2.0
+     },
+     "recomposto": {
+      "flavio": 47.98,
+      "lula": 45.51,
+      "branco_nulo": 4.59,
+      "indecisos": 1.79
+     },
+     "residuo_max": 0.49,
+     "cenarios": {
+      "pessoas16_efetivo": {
+       "contrafactual": {
+        "flavio": 48.97,
+        "lula": 45.015,
+        "branco_nulo": 4.311,
+        "indecisos": 1.744
+       },
+       "ajustado": {
+        "flavio": 48.99,
+        "lula": 45.505,
+        "branco_nulo": 4.721,
+        "indecisos": 1.954
+       }
+      },
+      "pessoas16_habitual": {
+       "contrafactual": {
+        "flavio": 49.019,
+        "lula": 44.991,
+        "branco_nulo": 4.293,
+        "indecisos": 1.753
+       },
+       "ajustado": {
+        "flavio": 49.039,
+        "lula": 45.481,
+        "branco_nulo": 4.703,
+        "indecisos": 1.963
+       }
+      },
+      "domicilios_efetivo": {
+       "contrafactual": {
+        "flavio": 48.302,
+        "lula": 45.349,
+        "branco_nulo": 4.496,
+        "indecisos": 1.784
+       },
+       "ajustado": {
+        "flavio": 48.322,
+        "lula": 45.839,
+        "branco_nulo": 4.906,
+        "indecisos": 1.994
+       }
+      }
+     },
+     "gap_publicado": -2.0,
+     "gap_ajustado": -3.4849999999999994,
+     "margem_diferenca_95": 3.469
+    }
+   },
+   "arquivo": "analysis/reponderacao/pesquisas/poderdata_2026-10-12.json"
   }
  ],
  "nao_reponderaveis": [
@@ -25462,6 +26096,129 @@
     "nao_opinou": 2.6
    },
    "motivo": "Perfil de renda publicado (p. 6), mas nenhum cruzamento de voto por renda nas 16 páginas. Sem ajuste identificável; preservamos só o placar publicado.",
+   "selecao_1t": null
+  },
+  {
+   "id": "datatrends_2026-10-09",
+   "instituto": "DataTrends",
+   "contratante": "DataTrends, recursos próprios",
+   "registro_tse": "BR-03576/2026",
+   "campo": {
+    "inicio": "2026-10-07",
+    "fim": "2026-10-09"
+   },
+   "divulgacao": "2026-10-11",
+   "n": 2000,
+   "fonte": {
+    "arquivo": "data/originals/datatrends_102026_11/relatorio.pdf",
+    "url": "https://static.poder360.com.br/uploads/2026/10/pesquisa-datatrends-nacional-11out2026.pdf",
+    "bytes": 1542805,
+    "sha256": "88ea6e76d8b43790222c9fa41a3eb807a477f2936777f1e265bd64854baa8273",
+    "capturado_em": "2026-10-13T17:58:24+00:00",
+    "pdf": "data/originals/datatrends_102026_11/relatorio.pdf",
+    "tipo": "relatorio",
+    "rotulo": "Relatório completo conferido",
+    "paginas": {
+     "metodologia": 2,
+     "perfil_renda": 3,
+     "perfil_rotulo": 7,
+     "2t_topline": 12,
+     "2t_validos": 13,
+     "2t_renda": 25
+    },
+    "total_paginas": 31,
+    "conferido_em": "2026-10-13",
+    "status": "Íntegra arquivada e conferida visualmente.",
+    "nota": "Íntegra localizada: 31 páginas, campo 07–09/10 e publicação 11/10. P. 25 abre voto por renda; p. 3 declara pesos 46,7/34,6/18,7. Contudo a p. 7 rotula renda domiciliar per capita, e a p. 4 diz renda domiciliar total: universos diferentes, sem reconciliação verificável. Não trocar essa margem por renda familiar da PNAD até esclarecer a variável. Placar publicado da p. 12, 50/44/5/1, entra sem ajuste na Projeção. P. 4 informa NS/NR 2%, em vez de 1% na p. 12; preservadas as duas versões, com preferência pelo gráfico principal. Válidos 53,1/46,9 da p. 13 não são usados para inventar não escolha."
+   },
+   "publicado": {
+    "2t": {
+     "flavio": 50,
+     "lula": 44,
+     "branco_nulo": 5,
+     "indecisos": 1
+    }
+   },
+   "publicado_validos": {
+    "2t": {
+     "flavio": 53.1,
+     "lula": 46.9
+    }
+   },
+   "perfil_economico_publicado": {
+    "pagina": 3,
+    "pct": [
+     46.7,
+     34.6,
+     18.7
+    ],
+    "rotulo_p7": "Renda domiciliar per capita",
+    "rotulo_p4": "Renda domiciliar total"
+   },
+   "comparecimento_publicado": null,
+   "motivo": "Cruzamento disponível, mas a definição de renda conflita (per capita versus total). Publicado sem ajuste na Projeção.",
+   "selecao_1t": null
+  },
+  {
+   "id": "futura_2026-10-10",
+   "instituto": "Futura",
+   "contratante": "Futura/100% Cidades",
+   "registro_tse": "BR-00650/2026",
+   "campo": {
+    "inicio": "2026-10-07",
+    "fim": "2026-10-10"
+   },
+   "divulgacao": "2026-10-13",
+   "n": 2000,
+   "fonte": {
+    "arquivo": "data/originals/futura_102026_13/relatorio.pdf",
+    "url": "https://static.poder360.com.br/uploads/2026/10/Pesquisa-Futura-presidente.pdf",
+    "bytes": 1657905,
+    "sha256": "c612de90ca566c240c7dc25f375b40232924899b150732620e9966e22cebc63c",
+    "capturado_em": "2026-10-13T18:00:26+00:00",
+    "pdf": "data/originals/futura_102026_13/relatorio.pdf",
+    "tipo": "relatorio",
+    "rotulo": "Relatório completo conferido",
+    "paginas": {
+     "metodologia": 4,
+     "perfil_renda": 7,
+     "2t_topline": 10,
+     "2t_validos": 12,
+     "sexo": 11
+    },
+    "total_paginas": 18,
+    "conferido_em": "2026-10-13",
+    "status": "Íntegra arquivada e conferida visualmente.",
+    "nota": "Íntegra de 18 páginas publicada 13/10, campo 07–10/10. P. 7 fornece renda familiar 26,9/21,8/24,1/10/6, NS/NR 11,3%; p. 11 abre voto apenas por sexo, região e idade. Não há voto por renda nas 18 páginas: perfil sozinho não permite reponderar. Entram totais 50/46,6/1,7/1,7 na Projeção; sem renda imputada e fora da Central Média."
+   },
+   "publicado": {
+    "2t": {
+     "flavio": 50,
+     "lula": 46.6,
+     "branco_nulo": 1.7,
+     "indecisos": 1.7
+    }
+   },
+   "publicado_validos": {
+    "2t": {
+     "flavio": 51.8,
+     "lula": 48.2
+    }
+   },
+   "perfil_economico_publicado": {
+    "pagina": 7,
+    "unidade": "renda familiar em salários mínimos",
+    "pct": [
+     26.9,
+     21.8,
+     24.1,
+     10,
+     6
+    ],
+    "ns_nr_pct": 11.3
+   },
+   "comparecimento_publicado": null,
+   "motivo": "Perfil de renda publicado, sem cruzamento de voto por renda. Sem ajuste identificável.",
    "selecao_1t": null
   }
  ],
@@ -27699,6 +28456,30 @@
       "PoderData",
       "Quaest"
      ]
+    },
+    {
+     "data": "2026-10-10",
+     "n_institutos": 0,
+     "ondas": [],
+     "institutos": []
+    },
+    {
+     "data": "2026-10-11",
+     "n_institutos": 0,
+     "ondas": [],
+     "institutos": []
+    },
+    {
+     "data": "2026-10-12",
+     "n_institutos": 0,
+     "ondas": [],
+     "institutos": []
+    },
+    {
+     "data": "2026-10-13",
+     "n_institutos": 0,
+     "ondas": [],
+     "institutos": []
     }
    ],
    "2t": [
@@ -29658,6 +30439,74 @@
       "Palver",
       "PoderData",
       "Quaest"
+     ]
+    },
+    {
+     "data": "2026-10-10",
+     "n_institutos": 4,
+     "ondas": [
+      "atlas_2026-10-08",
+      "datafolha_2026-10-08",
+      "ipespe_2026-10-08",
+      "poderdata_2026-10-07"
+     ],
+     "institutos": [
+      "AtlasIntel",
+      "Datafolha",
+      "Ipespe",
+      "PoderData"
+     ]
+    },
+    {
+     "data": "2026-10-11",
+     "n_institutos": 4,
+     "ondas": [
+      "atlas_2026-10-08",
+      "datafolha_2026-10-08",
+      "ipespe_2026-10-08",
+      "poderdata_2026-10-07"
+     ],
+     "institutos": [
+      "AtlasIntel",
+      "Datafolha",
+      "Ipespe",
+      "PoderData"
+     ]
+    },
+    {
+     "data": "2026-10-12",
+     "n_institutos": 4,
+     "ondas": [
+      "atlas_2026-10-08",
+      "datafolha_2026-10-08",
+      "ipespe_2026-10-08",
+      "poderdata_2026-10-07"
+     ],
+     "institutos": [
+      "AtlasIntel",
+      "Datafolha",
+      "Ipespe",
+      "PoderData"
+     ]
+    },
+    {
+     "data": "2026-10-13",
+     "n_institutos": 6,
+     "ondas": [
+      "atlas_2026-10-08",
+      "datafolha_2026-10-08",
+      "gerp_2026-10-12",
+      "ipespe_2026-10-08",
+      "nexus_2026-10-12",
+      "poderdata_2026-10-12"
+     ],
+     "institutos": [
+      "AtlasIntel",
+      "Datafolha",
+      "Gerp",
+      "Ipespe",
+      "Nexus",
+      "PoderData"
      ]
     }
    ]
@@ -31882,6 +32731,30 @@
        "Palver",
        "Quaest"
       ]
+     },
+     {
+      "data": "2026-10-10",
+      "n_institutos": 0,
+      "ondas": [],
+      "institutos": []
+     },
+     {
+      "data": "2026-10-11",
+      "n_institutos": 0,
+      "ondas": [],
+      "institutos": []
+     },
+     {
+      "data": "2026-10-12",
+      "n_institutos": 0,
+      "ondas": [],
+      "institutos": []
+     },
+     {
+      "data": "2026-10-13",
+      "n_institutos": 0,
+      "ondas": [],
+      "institutos": []
      }
     ],
     "rotulos": {
@@ -33858,7 +34731,11 @@
        2.9,
        2.32,
        2.2,
-       2.2
+       2.2,
+       null,
+       null,
+       null,
+       null
       ],
       "branco_nulo": [
        null,
@@ -34019,7 +34896,11 @@
        4.22,
        3.68,
        3.79,
-       3.79
+       3.79,
+       null,
+       null,
+       null,
+       null
       ]
      },
      "ajustado": {
@@ -34182,7 +35063,11 @@
        2.7,
        2.13,
        2.0,
-       2.0
+       2.0,
+       null,
+       null,
+       null,
+       null
       ],
       "branco_nulo": [
        null,
@@ -34343,19 +35228,23 @@
        4.12,
        3.59,
        3.74,
-       3.74
+       3.74,
+       null,
+       null,
+       null,
+       null
       ]
      }
     },
     "regra": "Mesma média móvel retrospectiva de 7 dias dos candidatos: divulgações de D-6 a D, última onda elegível de cada instituto e peso igual entre casas. As duas linhas usam as mesmas ondas com ambas as categorias publicadas e cruzadas por renda; os pesos são idênticos antes e depois do ajuste. Não há preenchimento por zero nem por complemento de 100%. Branco/nulo inclui não vai votar quando essa resposta está agregada pelo instituto; parcelas separadas são somadas antes da média. Indecisos inclui não sabe conforme a codificação da fonte. Os rótulos e a oferta dessas respostas variam entre institutos. Não vai votar é declaração de intenção, não estimativa de abstenção. A cobertura difere da dos candidatos; as linhas não formam uma partição que some 100%.",
     "ultimo": {
      "publicado": {
-      "indecisos": 2.2,
-      "branco_nulo": 3.79
+      "indecisos": null,
+      "branco_nulo": null
      },
      "ajustado": {
-      "indecisos": 2.0,
-      "branco_nulo": 3.74
+      "indecisos": null,
+      "branco_nulo": null
      }
     }
    },
@@ -36278,6 +37167,66 @@
        "PoderData",
        "Quaest"
       ]
+     },
+     {
+      "data": "2026-10-10",
+      "n_institutos": 3,
+      "ondas": [
+       "datafolha_2026-10-08",
+       "ipespe_2026-10-08",
+       "poderdata_2026-10-07"
+      ],
+      "institutos": [
+       "Datafolha",
+       "Ipespe",
+       "PoderData"
+      ]
+     },
+     {
+      "data": "2026-10-11",
+      "n_institutos": 3,
+      "ondas": [
+       "datafolha_2026-10-08",
+       "ipespe_2026-10-08",
+       "poderdata_2026-10-07"
+      ],
+      "institutos": [
+       "Datafolha",
+       "Ipespe",
+       "PoderData"
+      ]
+     },
+     {
+      "data": "2026-10-12",
+      "n_institutos": 3,
+      "ondas": [
+       "datafolha_2026-10-08",
+       "ipespe_2026-10-08",
+       "poderdata_2026-10-07"
+      ],
+      "institutos": [
+       "Datafolha",
+       "Ipespe",
+       "PoderData"
+      ]
+     },
+     {
+      "data": "2026-10-13",
+      "n_institutos": 5,
+      "ondas": [
+       "datafolha_2026-10-08",
+       "gerp_2026-10-12",
+       "ipespe_2026-10-08",
+       "nexus_2026-10-12",
+       "poderdata_2026-10-12"
+      ],
+      "institutos": [
+       "Datafolha",
+       "Gerp",
+       "Ipespe",
+       "Nexus",
+       "PoderData"
+      ]
      }
     ],
     "rotulos": {
@@ -37636,6 +38585,31 @@
       }
      },
      {
+      "id": "datafolha_2026-10-08",
+      "instituto": "Datafolha",
+      "campo": {
+       "inicio": "2026-10-06",
+       "fim": "2026-10-07"
+      },
+      "divulgacao": "2026-10-08",
+      "componentes": {
+       "indecisos": [
+        "indecisos"
+       ],
+       "branco_nulo": [
+        "branco_nulo"
+       ]
+      },
+      "publicado": {
+       "indecisos": 1.0,
+       "branco_nulo": 5.0
+      },
+      "ajustado": {
+       "indecisos": 0.864,
+       "branco_nulo": 5.0
+      }
+     },
+     {
       "id": "poderdata_2026-10-07",
       "instituto": "PoderData",
       "campo": {
@@ -37661,13 +38635,13 @@
       }
      },
      {
-      "id": "datafolha_2026-10-08",
-      "instituto": "Datafolha",
+      "id": "ipespe_2026-10-08",
+      "instituto": "Ipespe",
       "campo": {
        "inicio": "2026-10-06",
        "fim": "2026-10-08"
       },
-      "divulgacao": "2026-10-08",
+      "divulgacao": "2026-10-10",
       "componentes": {
        "indecisos": [
         "indecisos"
@@ -37677,12 +38651,87 @@
        ]
       },
       "publicado": {
-       "indecisos": 1.0,
+       "indecisos": 3.0,
        "branco_nulo": 5.0
       },
       "ajustado": {
-       "indecisos": 0.85,
+       "indecisos": 2.889,
+       "branco_nulo": 4.831
+      }
+     },
+     {
+      "id": "gerp_2026-10-12",
+      "instituto": "Gerp",
+      "campo": {
+       "inicio": "2026-10-08",
+       "fim": "2026-10-12"
+      },
+      "divulgacao": "2026-10-13",
+      "componentes": {
+       "indecisos": [
+        "indecisos"
+       ],
+       "branco_nulo": [
+        "branco_nulo"
+       ]
+      },
+      "publicado": {
+       "indecisos": 3.0,
+       "branco_nulo": 1.0
+      },
+      "ajustado": {
+       "indecisos": 3.017,
+       "branco_nulo": 0.989
+      }
+     },
+     {
+      "id": "nexus_2026-10-12",
+      "instituto": "Nexus",
+      "campo": {
+       "inicio": "2026-10-10",
+       "fim": "2026-10-12"
+      },
+      "divulgacao": "2026-10-13",
+      "componentes": {
+       "indecisos": [
+        "indecisos"
+       ],
+       "branco_nulo": [
+        "branco_nulo"
+       ]
+      },
+      "publicado": {
+       "indecisos": 2.0,
        "branco_nulo": 5.0
+      },
+      "ajustado": {
+       "indecisos": 1.753,
+       "branco_nulo": 5.02
+      }
+     },
+     {
+      "id": "poderdata_2026-10-12",
+      "instituto": "PoderData",
+      "campo": {
+       "inicio": "2026-10-10",
+       "fim": "2026-10-12"
+      },
+      "divulgacao": "2026-10-13",
+      "componentes": {
+       "indecisos": [
+        "indecisos"
+       ],
+       "branco_nulo": [
+        "branco_nulo"
+       ]
+      },
+      "publicado": {
+       "indecisos": 2.0,
+       "branco_nulo": 5.0
+      },
+      "ajustado": {
+       "indecisos": 1.954,
+       "branco_nulo": 4.721
       }
      }
     ],
@@ -37869,7 +38918,11 @@
        1.74,
        1.29,
        1.24,
-       1.24
+       1.24,
+       2.0,
+       2.0,
+       2.0,
+       2.2
       ],
       "branco_nulo": [
        null,
@@ -38030,7 +39083,11 @@
        8.2,
        7.64,
        7.03,
-       7.03
+       7.03,
+       5.0,
+       5.0,
+       5.0,
+       4.2
       ]
      },
      "ajustado": {
@@ -38193,7 +39250,11 @@
        1.64,
        1.19,
        1.13,
-       1.13
+       1.13,
+       1.87,
+       1.87,
+       1.87,
+       2.1
       ],
       "branco_nulo": [
        null,
@@ -38354,19 +39415,23 @@
        8.12,
        7.61,
        6.95,
-       6.95
+       6.95,
+       4.78,
+       4.78,
+       4.78,
+       4.11
       ]
      }
     },
     "regra": "Mesma média móvel retrospectiva de 7 dias dos candidatos: divulgações de D-6 a D, última onda elegível de cada instituto e peso igual entre casas. As duas linhas usam as mesmas ondas com ambas as categorias publicadas e cruzadas por renda; os pesos são idênticos antes e depois do ajuste. Não há preenchimento por zero nem por complemento de 100%. Branco/nulo inclui não vai votar quando essa resposta está agregada pelo instituto; parcelas separadas são somadas antes da média. Indecisos inclui não sabe conforme a codificação da fonte. Os rótulos e a oferta dessas respostas variam entre institutos. Não vai votar é declaração de intenção, não estimativa de abstenção. A cobertura difere da dos candidatos; as linhas não formam uma partição que some 100%.",
     "ultimo": {
      "publicado": {
-      "indecisos": 1.24,
-      "branco_nulo": 7.03
+      "indecisos": 2.2,
+      "branco_nulo": 4.2
      },
      "ajustado": {
-      "indecisos": 1.13,
-      "branco_nulo": 6.95
+      "indecisos": 2.1,
+      "branco_nulo": 4.11
      }
     }
    }
@@ -40074,6 +41139,30 @@
       "Datafolha",
       "Quaest"
      ]
+    },
+    {
+     "data": "2026-10-10",
+     "n_institutos": 0,
+     "ondas": [],
+     "institutos": []
+    },
+    {
+     "data": "2026-10-11",
+     "n_institutos": 0,
+     "ondas": [],
+     "institutos": []
+    },
+    {
+     "data": "2026-10-12",
+     "n_institutos": 0,
+     "ondas": [],
+     "institutos": []
+    },
+    {
+     "data": "2026-10-13",
+     "n_institutos": 0,
+     "ondas": [],
+     "institutos": []
     }
    ],
    "rotulos": {
@@ -41726,7 +42815,11 @@
       9.5,
       9.5,
       9.5,
-      9.5
+      9.5,
+      null,
+      null,
+      null,
+      null
      ],
      "outros_esquerda_nanicos": [
       null,
@@ -41887,7 +42980,11 @@
       0.0,
       0.0,
       0.0,
-      0.0
+      0.0,
+      null,
+      null,
+      null,
+      null
      ]
     },
     "ajustado": {
@@ -42050,7 +43147,11 @@
       9.67,
       9.67,
       9.67,
-      9.67
+      9.67,
+      null,
+      null,
+      null,
+      null
      ],
      "outros_esquerda_nanicos": [
       null,
@@ -42211,19 +43312,23 @@
       -0.05,
       -0.05,
       -0.05,
-      -0.05
+      -0.05,
+      null,
+      null,
+      null,
+      null
      ]
     }
    },
    "ultimo": {
     "kernel": {
      "publicado": {
-      "outros_centro_direita": 9.5,
-      "outros_esquerda_nanicos": 0.0
+      "outros_centro_direita": null,
+      "outros_esquerda_nanicos": null
      },
      "ajustado": {
-      "outros_centro_direita": 9.67,
-      "outros_esquerda_nanicos": -0.05
+      "outros_centro_direita": null,
+      "outros_esquerda_nanicos": null
      }
     },
     "media_simples": {
@@ -42407,7 +43512,11 @@
     "2026-10-06",
     "2026-10-07",
     "2026-10-08",
-    "2026-10-09"
+    "2026-10-09",
+    "2026-10-10",
+    "2026-10-11",
+    "2026-10-12",
+    "2026-10-13"
    ],
    "2t": {
     "publicado": {
@@ -42570,7 +43679,11 @@
       44.81,
       45.12,
       44.45,
-      44.63
+      44.63,
+      44.67,
+      44.67,
+      44.67,
+      44.95
      ],
      "flavio": [
       null,
@@ -42731,7 +43844,11 @@
       45.65,
       46.26,
       47.26,
-      47.81
+      47.81,
+      49.52,
+      49.52,
+      49.52,
+      49.68
      ],
      "indecisos": [
       null,
@@ -42892,7 +44009,11 @@
       1.74,
       1.29,
       1.24,
-      1.24
+      1.24,
+      2.0,
+      2.0,
+      2.0,
+      2.2
      ],
      "branco_nulo": [
       null,
@@ -43053,7 +44174,11 @@
       8.2,
       7.64,
       7.03,
-      7.03
+      7.03,
+      5.0,
+      5.0,
+      5.0,
+      4.2
      ]
     },
     "ajustado": {
@@ -43215,8 +44340,12 @@
       44.04,
       44.04,
       44.31,
-      43.72,
-      43.96
+      43.75,
+      43.98,
+      43.81,
+      43.81,
+      43.81,
+      43.95
      ],
      "flavio": [
       null,
@@ -43376,8 +44505,12 @@
       46.64,
       46.64,
       47.26,
-      48.21,
-      48.68
+      48.18,
+      48.65,
+      50.69,
+      50.69,
+      50.69,
+      50.88
      ],
      "indecisos": [
       null,
@@ -43538,7 +44671,11 @@
       1.64,
       1.19,
       1.13,
-      1.13
+      1.13,
+      1.87,
+      1.87,
+      1.87,
+      2.1
      ],
      "branco_nulo": [
       null,
@@ -43699,7 +44836,11 @@
       8.12,
       7.61,
       6.95,
-      6.95
+      6.95,
+      4.78,
+      4.78,
+      4.78,
+      4.11
      ]
     }
    },
@@ -43864,7 +45005,11 @@
       42.2,
       42.6,
       42.54,
-      42.54
+      42.54,
+      null,
+      null,
+      null,
+      null
      ],
      "flavio": [
       null,
@@ -44025,7 +45170,11 @@
       40.37,
       41.17,
       41.48,
-      41.48
+      41.48,
+      null,
+      null,
+      null,
+      null
      ],
      "outros_centro_direita": [
       null,
@@ -44186,7 +45335,11 @@
       9.5,
       9.5,
       9.5,
-      9.5
+      9.5,
+      null,
+      null,
+      null,
+      null
      ],
      "outros_esquerda_nanicos": [
       null,
@@ -44347,7 +45500,11 @@
       0.0,
       0.0,
       0.0,
-      0.0
+      0.0,
+      null,
+      null,
+      null,
+      null
      ],
      "indecisos": [
       null,
@@ -44508,7 +45665,11 @@
       2.9,
       2.32,
       2.2,
-      2.2
+      2.2,
+      null,
+      null,
+      null,
+      null
      ],
      "branco_nulo": [
       null,
@@ -44669,7 +45830,11 @@
       4.22,
       3.68,
       3.79,
-      3.79
+      3.79,
+      null,
+      null,
+      null,
+      null
      ]
     },
     "ajustado": {
@@ -44832,7 +45997,11 @@
       41.36,
       41.72,
       41.91,
-      41.91
+      41.91,
+      null,
+      null,
+      null,
+      null
      ],
      "flavio": [
       null,
@@ -44993,7 +46162,11 @@
       41.35,
       42.16,
       42.25,
-      42.25
+      42.25,
+      null,
+      null,
+      null,
+      null
      ],
      "outros_centro_direita": [
       null,
@@ -45154,7 +46327,11 @@
       9.67,
       9.67,
       9.67,
-      9.67
+      9.67,
+      null,
+      null,
+      null,
+      null
      ],
      "outros_esquerda_nanicos": [
       null,
@@ -45315,7 +46492,11 @@
       -0.05,
       -0.05,
       -0.05,
-      -0.05
+      -0.05,
+      null,
+      null,
+      null,
+      null
      ],
      "indecisos": [
       null,
@@ -45476,7 +46657,11 @@
       2.7,
       2.13,
       2.0,
-      2.0
+      2.0,
+      null,
+      null,
+      null,
+      null
      ],
      "branco_nulo": [
       null,
@@ -45637,7 +46822,11 @@
       4.12,
       3.59,
       3.74,
-      3.74
+      3.74,
+      null,
+      null,
+      null,
+      null
      ]
     }
    }
@@ -45649,6 +46838,7 @@
      "Datafolha",
      "Gerp",
      "Indexa/Broadcast",
+     "Ipespe",
      "MDA",
      "Nexus",
      "Palver",
@@ -45658,44 +46848,42 @@
     ],
     "media_simples": {
      "publicado": {
-      "lula": 44.45,
-      "flavio": 46.92
+      "lula": 44.5,
+      "flavio": 47.74
      },
      "ajustado": {
       "lula": 43.83,
-      "flavio": 47.68
+      "flavio": 48.53
      }
     },
     "kernel": {
      "publicado": {
-      "lula": 44.63,
-      "flavio": 47.81
+      "lula": 44.95,
+      "flavio": 49.68
      },
      "ajustado": {
-      "lula": 43.96,
-      "flavio": 48.68
+      "lula": 43.95,
+      "flavio": 50.88
      }
     },
     "cobertura_movel": {
-     "data": "2026-10-09",
-     "n_institutos": 7,
+     "data": "2026-10-13",
+     "n_institutos": 6,
      "ondas": [
       "atlas_2026-10-08",
       "datafolha_2026-10-08",
-      "gerp_2026-10-02",
-      "mda_2026-10-02",
-      "palver_2026-10-03",
-      "poderdata_2026-10-07",
-      "quaest_2026-10-03"
+      "gerp_2026-10-12",
+      "ipespe_2026-10-08",
+      "nexus_2026-10-12",
+      "poderdata_2026-10-12"
      ],
      "institutos": [
       "AtlasIntel",
       "Datafolha",
       "Gerp",
-      "MDA",
-      "Palver",
-      "PoderData",
-      "Quaest"
+      "Ipespe",
+      "Nexus",
+      "PoderData"
      ]
     }
    },
@@ -45724,35 +46912,19 @@
     },
     "kernel": {
      "publicado": {
-      "lula": 42.54,
-      "flavio": 41.48
+      "lula": null,
+      "flavio": null
      },
      "ajustado": {
-      "lula": 41.91,
-      "flavio": 42.25
+      "lula": null,
+      "flavio": null
      }
     },
     "cobertura_movel": {
-     "data": "2026-10-09",
-     "n_institutos": 7,
-     "ondas": [
-      "atlas_2026-10-02",
-      "datafolha_2026-10-03",
-      "gerp_2026-10-02",
-      "mda_2026-10-02",
-      "palver_2026-10-03",
-      "poderdata_2026-10-02",
-      "quaest_2026-10-03"
-     ],
-     "institutos": [
-      "AtlasIntel",
-      "Datafolha",
-      "Gerp",
-      "MDA",
-      "Palver",
-      "PoderData",
-      "Quaest"
-     ]
+     "data": "2026-10-13",
+     "n_institutos": 0,
+     "ondas": [],
+     "institutos": []
     }
    }
   }

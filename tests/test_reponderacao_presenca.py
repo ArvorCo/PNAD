@@ -74,15 +74,18 @@ def test_rounding_and_old_five_percent_scenario_preserve_all_other_parameters():
         (ROOT / "docs/assets/reponderacao_cenarios/0e0f4566cb2fd88a.json").read_text()
     )
     assert archived["defaults"]["presenca_relativa"] == 5
+    published_09 = json.loads(
+        (ROOT / "docs/assets/reponderacao_cenarios/a55474752ad0103a.json").read_text()
+    )
     for centre in ("media", "projecao"):
         actual = M.evaluate(
-            {**DATA, "undecided_policy": "per_poll"},
+            {**published_09, "undecided_policy": "per_poll"},
             {"centro": centre, "presenca_relativa": 5},
         )
         previous = M.evaluate(archived, {"centro": centre})
         for k in ("flavio", "lula", "validos", "branco_nulo", "abstencao"):
             assert actual[k] == pytest.approx(previous[k], abs=1e-9, rel=0)
-        central = M.evaluate(DATA, {"centro": centre})
+        central = M.evaluate(published_09, {"centro": centre})
         assert central["flavio"] < actual["flavio"]
         assert central["comparecimento"] == actual["comparecimento"]
         assert sum(central["por_100_eleitores"].values()) == pytest.approx(100)

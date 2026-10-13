@@ -254,7 +254,7 @@ def test_latest_wave_mean_uses_new_mda_wave(output):
     for p in sorted(polls, key=lambda p: p["campo"]["fim"]):
         latest[p["instituto"]] = p
     assert latest["MDA"]["id"] == "mda_2026-10-02"
-    assert latest["Gerp"]["id"] == "gerp_2026-10-02"
+    assert latest["Gerp"]["id"] == "gerp_2026-10-12"
     mean = sum(
         p["turnos"]["2t"]["cenarios"][SCENARIO]["ajustado"]["lula"]
         for p in latest.values()
@@ -272,7 +272,8 @@ def test_new_gerp_wave_replaces_september_wave_in_window(output):
     assert poll["turnos"]["1t"]["residuo_max"] < 0.5
     assert poll["turnos"]["2t"]["residuo_max"] < 0.5
     for turno in ("1t", "2t"):
-        ondas = output["agregador"]["ultimo"][turno]["cobertura_movel"]["ondas"]
+        idx = output["agregador"]["serie"]["datas"].index("2026-10-04")
+        ondas = output["agregador"]["cobertura_movel"][turno][idx]["ondas"]
         assert "gerp_2026-10-02" in ondas
         assert "gerp_2026-09-28" not in ondas
 
@@ -292,7 +293,8 @@ def test_palver_wave6_replaces_wave5_in_window(output):
         assert poll["turnos"][turno]["residuo_max"] < 1e-6
         pdf = raw["recomposicao"][turno]["pdf_inteiros_renda"]["residuo_vs_pdf_pp"]
         assert max(abs(v) for v in pdf.values()) < 1.5
-        ondas = output["agregador"]["ultimo"][turno]["cobertura_movel"]["ondas"]
+        idx = output["agregador"]["serie"]["datas"].index("2026-10-04")
+        ondas = output["agregador"]["cobertura_movel"][turno][idx]["ondas"]
         assert "palver_2026-10-03" in ondas
         assert "palver_2026-09-27" not in ondas
     ajustado = poll["turnos"]["2t"]["cenarios"][SCENARIO]["ajustado"]
@@ -412,7 +414,8 @@ def test_quaest_eve_wave_from_g1_panel_replaces_september_27(output):
     assert poll["renda"]["perfil_tipo"] == "hipotese_onda_anterior"
     for turno in ("1t", "2t"):
         assert poll["turnos"][turno]["residuo_max"] < 0.5
-        ondas = output["agregador"]["ultimo"][turno]["cobertura_movel"]["ondas"]
+        idx = output["agregador"]["serie"]["datas"].index("2026-10-04")
+        ondas = output["agregador"]["cobertura_movel"][turno][idx]["ondas"]
         assert "quaest_2026-10-03" in ondas
         assert "quaest_2026-09-27" not in ondas
     first = poll["turnos"]["1t"]["cenarios"][SCENARIO]["ajustado"]
