@@ -283,6 +283,22 @@ h3 { font-family: var(--sans); font-weight: 700; font-size: 1.16rem; line-height
 .scoreline span { display: block; margin-top: 7px; font-family: var(--sans); font-size: .72rem; line-height: 1.32; color: var(--muted); }
 
 /* =========================================================
+   NOVOS RELATÓRIOS
+   ========================================================= */
+.latest-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px; margin-top: 30px; }
+.latest-card { min-width: 0; display: flex; flex-direction: column; border: 2px solid var(--ink); background: var(--paper-white); box-shadow: 6px 6px 0 rgba(16, 16, 20, .12); }
+.latest-image { display: block; border-bottom: 2px solid var(--ink); background: var(--ink); }
+.latest-image img { display: block; width: 100%; height: auto; }
+.latest-body { flex: 1; display: flex; flex-direction: column; padding: clamp(18px, 2.2vw, 28px); }
+.latest-date { margin: 0 0 14px; font: 700 .72rem var(--mono); color: var(--accent); }
+.latest-body h3 { font: 900 clamp(1.8rem, 2.5vw, 2.5rem)/1.05 var(--display); letter-spacing: -.025em; }
+.latest-body h3 em { display: block; font-weight: 600; color: var(--accent); }
+.latest-body .featured-meta { margin: 18px 0 0; }
+.latest-body > p:not(.latest-date) { margin: 18px 0 0; font-size: 1.05rem; line-height: 1.5; }
+#dossies-segundo-turno { scroll-margin-top: 64px; }
+@media (max-width: 760px) { .latest-grid { grid-template-columns: 1fr; } }
+
+/* =========================================================
    TAGS DE LINK (tipo de peça)
    ========================================================= */
 .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; padding-top: 22px; }
@@ -451,7 +467,7 @@ footer a { color: #ffc178; }
 @media (max-width: 1040px) {
   .masthead-grid { grid-template-columns: 1fr; gap: 36px; }
   .masthead h1 { max-width: 16ch; }
-  .featured { grid-template-columns: 1fr; }
+  .featured { grid-template-columns: minmax(0, 1fr); }
   /* empilhado, a placa preenche o painel e a tarja cobriria o cabeçalho do
      próprio card: abre-se uma faixa em cima só para ela. */
   .featured-media { border-right: 0; border-bottom: 2px solid var(--ink); padding: 54px 16px 18px; }
@@ -482,6 +498,7 @@ footer a { color: #ffc178; }
   .sec-head { flex-direction: column; gap: 6px; align-items: flex-start; }
   .ledger-row b { font-size: 2rem; }
   .featured-body, .ficha { padding: 18px; }
+  .chip { max-width: 100%; white-space: normal; }
   .featured-media { padding: 48px 12px 14px; }
   .scoreline { grid-template-columns: 1fr; }
   .scoreline div { display: flex; align-items: baseline; gap: 12px; }
