@@ -466,7 +466,7 @@
         h('td', { class: 'num' }, h('a', { href: 'politizesuavizinhanca.html#s=' + encodeURIComponent(r.uf + '-' + r.zona + '-' + r.secao), title: 'Todos os motivos desta seção no Politize' }, String(r.secao))),
         h('td', {}, caixa(r.local), h('small', {}, caixa(r.endereco))), h('td', {}, caixa(r.bairro)), h('td', { class: 'num' }, cepFmt(r.cep)),
         h('td', { class: 'num' }, r.pontuacao === null || r.pontuacao === undefined ? '' : String(r.pontuacao)),
-        h('td', {}, r.critNomes.join('; ')),
+        h('td', {}, criteriosDaLinha(r)),
         h('td', {}, r.risco ? NOME_RISCO[r.risco] || r.risco : 'sem base'),
         h('td', { class: 'num' }, km(r.dist)),
         h('td', {}, coordOk(r)
@@ -475,6 +475,15 @@
     }));
     if (!pag.length) $('#tabela tbody').replaceChildren(h('tr', {}, h('td', { colspan: String(COLS_LISTA.length) }, 'Nenhuma seção com esses filtros.')));
     desenharPaginas(paginas);
+  }
+
+  function criteriosDaLinha(r) {
+    var nomes = r.critNomes.slice();
+    var escolhido = S.filtro.log.startsWith('historico:') ? S.meta.criterios[S.filtro.log.slice(10)] : S.meta.logs.criterios[S.filtro.log];
+    if (escolhido && nomes.indexOf(escolhido.nome) >= 0) nomes = [escolhido.nome].concat(nomes.filter(function (n) { return n !== escolhido.nome; }));
+    return h('div', {class:'criterios-linha'}, h('span', {}, nomes[0] || ''), nomes.length > 1 ?
+      h('details', {}, h('summary', {}, 'Mais ' + (nomes.length-1) + (nomes.length === 2 ? ' critério' : ' critérios')),
+        h('ul', {}, nomes.slice(1).map(function (n) { return h('li', {}, n); }))) : null);
   }
 
   function desenharPaginas(total) {
@@ -698,6 +707,13 @@
   }
 
   function ligar() {
+    if (typeof ResizeObserver !== 'undefined') {
+      var altura = new ResizeObserver(function () {
+        document.documentElement.style.setProperty('--altura-topo', ($('.topo').offsetHeight + $('.visao-geral').offsetHeight) + 'px');
+        if (S.mapa) S.mapa.invalidateSize({pan:false});
+      });
+      altura.observe($('.topo')); altura.observe($('.visao-geral'));
+    }
     $('#f-busca').addEventListener('submit', function (ev) { ev.preventDefault(); aplicarBusca(true); });
     window.addEventListener('hashchange', function () { location.reload(); });
     $('#b-limpar').addEventListener('click', limpar);

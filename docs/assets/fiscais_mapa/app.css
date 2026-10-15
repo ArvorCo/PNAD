@@ -139,3 +139,7 @@ select:disabled{background:#efece2;color:var(--muted)}
 #atalhos-logs{display:flex;gap:6px;flex-wrap:wrap}#atalhos-logs button{background:#fff;border:1px solid #81959d;color:var(--azul);padding:8px 10px;font:inherit;cursor:pointer;text-align:left;border-radius:4px;min-height:44px}#atalhos-logs button b{margin-left:10px;font-family:var(--mono)}#atalhos-logs button[aria-pressed=true]{background:var(--azul);color:white}
 .criterio-ativo{padding:12px;margin-top:12px;background:#edf4f7;border-left:3px solid var(--azul2);font-size:14px}.criterio-ativo p{margin:8px 0}.recorte-ativo{font-size:15px;font-weight:600;margin:0;border-top:2px solid var(--azul2);padding-top:10px}
 @media(max-width:700px){.visao-geral{display:block;padding:16px}.visao-geral h2{font-size:26px}.visao-geral .atalhos{margin-top:10px}}
+
+/* A ocorrência selecionada aparece primeiro; as demais continuam disponíveis. */
+.tabela td:nth-child(6){min-width:180px}.tabela td:nth-child(10){min-width:260px;max-width:340px}.criterios-linha details{margin-top:7px}.criterios-linha summary{cursor:pointer;color:var(--azul2);font-size:13px}.criterios-linha ul{margin:8px 0 0;padding-left:17px}.criterios-linha li+li{margin-top:7px}
+@media(min-width:980px){.app{height:max(480px,calc(100dvh - var(--altura-topo,70px)))}}
