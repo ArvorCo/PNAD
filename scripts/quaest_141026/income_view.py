@@ -2,6 +2,8 @@
 
 from dossies_2t_2026.view import callout, details, fmt, note, section, signed, table
 
+from .charts import income_charts
+
 
 def render(d):
     income = d["identificacao_renda"]
@@ -11,36 +13,40 @@ def render(d):
     adjusted = income["reponderacao_pontual"]
     controls = income["controles"]
     return section(
-        4,
+        1,
         "renda",
         "A renda reduz a distância.<br><em>Sob uma hipótese explícita.</em>",
         "O painel salvo pelo usuário trouxe os cruzamentos atuais. Os pesos finais continuam pendentes.",
-        table(
-            [
-                "Renda domiciliar",
-                "Flávio",
-                "Lula",
-                "BN/não vota",
-                "Indecisos",
-                "Cota TSE / PNAD",
-            ],
-            [
+        income_charts(d)
+        + details(
+            "Conferir votos por renda e pesos usados",
+            table(
                 [
-                    band["rotulo"],
-                    f'{r["flavio"]}%',
-                    f'{r["lula"]}%',
-                    f'{r["branco_nulo"]}%',
-                    f'{r["indecisos"]}%',
-                    f"{fmt(w,0)}% / {fmt(q,2)}%",
-                ]
-                for band, r, w, q in zip(
-                    poll["renda"]["faixas"],
-                    rows,
-                    income["pesos_registro_pct"],
-                    income["pnad_pct"],
-                    strict=True,
-                )
-            ],
+                    "Renda domiciliar",
+                    "Flávio",
+                    "Lula",
+                    "BN/não vota",
+                    "Indecisos",
+                    "Cota TSE / PNAD",
+                ],
+                [
+                    [
+                        band["rotulo"],
+                        f'{r["flavio"]}%',
+                        f'{r["lula"]}%',
+                        f'{r["branco_nulo"]}%',
+                        f'{r["indecisos"]}%',
+                        f"{fmt(w,0)}% / {fmt(q,2)}%",
+                    ]
+                    for band, r, w, q in zip(
+                        poll["renda"]["faixas"],
+                        rows,
+                        income["pesos_registro_pct"],
+                        income["pnad_pct"],
+                        strict=True,
+                    )
+                ],
+            ),
         )
         + f'<p>Usando as cotas atuais 31/42/27 como pesos, o cruzamento recompõe <b>{fmt(income["recomposto"]["flavio"],2)}% de Flávio e {fmt(income["recomposto"]["lula"],2)}% de Lula</b>, contra 46% e 44% publicados. O controle por sexo recompõe {fmt(controls["sexo"]["recomposto"]["flavio"],2)}% e {fmt(controls["sexo"]["recomposto"]["lula"],2)}%. Idade e escolaridade também conferem a menos de 0,3 pp por candidato. São verificações da leitura, não confirmação dos pesos finais.</p>'
         + callout(

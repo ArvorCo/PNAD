@@ -530,6 +530,15 @@ from these archived sources. All 100 observed cells in the saved HTML agree with
 the API; the previously unrendered Lulista stratum is available there without
 replacing the nulls in the saved DOM evidence. Rejection is kept separate from
 vote shares and does not change the simulator's undecided allocation.
+The visual dossier uses `quaest_141026/charts.py`, `chapters.py` and
+`explorer.py`, with local CSS/JS in `docs/assets/quaest_14102026.*`. Its nine
+chapters include income sensitivity, a 12-wave history, segment comparisons and
+an explorer with five questions × eight dimensions. Shared links preserve
+`?pergunta=rejeicao&recorte=Renda#painel`; all 130 strata remain available without
+JavaScript. Rejection uses independent 0–100% bars, never a stacked distribution.
+For presentation-only changes, rebuild the dossier and its social card
+(`python3 scripts/social-cards.py --only quaest_14102026`), update the manual home
+and check the sitemap. Do not rebuild the central models or their snapshots.
 The historical income decomposition stops at 28 September and preserves its
 recomposition residual. Recreate its four source-page PNGs from the local PDFs
 with `python3 scripts/quaest-141026-build.py --render-history-sources`; the normal

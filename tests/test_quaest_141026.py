@@ -133,9 +133,9 @@ def test_page_is_reproducible_sources_are_hashed_and_limits_are_visible(audit):
     assert (ROOT / f"docs/{SLUG}.html").read_text() == html
     page = BeautifulSoup(html, "html.parser")
     assert page.select_one("html")["lang"] == "pt-BR"
-    assert len(page.select("main section.chapter")) == 7
-    assert len(page.select("#painel details")) == 5
-    assert len(page.select("#painel details tbody tr")) == 130
+    assert len(page.select("main section.chapter")) == 9
+    assert len(page.select("#q-painel-raw details")) == 5
+    assert len(page.select("#q-painel-raw details tbody tr")) == 130
     assert page.select_one('a[href="assets/quaest_14102026_painel/recortes.csv"]')
     assert page.select_one('meta[property="og:image"]')["content"].endswith(
         f"/{SLUG}.png"

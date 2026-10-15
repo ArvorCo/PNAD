@@ -15,6 +15,8 @@ from dossies_2t_2026.view import (
 from ga_tag import injetar
 
 from .audit import SLUG
+from .chapters import opinions, segments
+from .charts import historical_income_chart, timeline, uncertainty
 from .income_view import render as income_section
 from .panel_view import panel_section
 
@@ -51,6 +53,7 @@ def income_history(h):
         "<p>Entre as divulgações de 15/07 e 28/09, a diferença publicada F−L passou de −8 para zero. "
         "O perfil de renda publicado era o mesmo nas duas pontas: 31% / 42% / 27%. "
         "Fixando essa margem, a mudança aparece nas preferências dentro das faixas.</p>"
+        + historical_income_chart(h)
         + table(
             [
                 "Faixa",
@@ -89,10 +92,10 @@ def render(d):
     prev = d["serie"][-2]
     now = d["serie"][-1]
     projected = delta["proporcao_anterior_aplicada_a_massa_atual"]
-    blocks = []
+    blocks = [income_section(d)]
     blocks.append(
         section(
-            1,
+            2,
             "mudanca",
             "Dois pontos para cada lado.<br><em>O mesmo intervalo entre eles.</em>",
             "A primeira onda depois da urna não inaugura a vantagem numérica de Flávio no segundo turno.",
@@ -152,20 +155,24 @@ def render(d):
         )
     blocks.append(
         section(
-            2,
+            3,
             "serie",
             "A mudança de sinal<br><em>aconteceu antes de outubro.</em>",
             "Duelo Lula × Flávio em todas as ondas do acervo, sempre com o mesmo denominador.",
-            table(
-                [
-                    "Divulgação",
-                    "Campo",
-                    "Flávio / total",
-                    "Lula / total",
-                    "F−L / total",
-                    "Flávio / F+L",
-                ],
-                rows,
+            timeline(d)
+            + details(
+                "Conferir as doze ondas e os denominadores",
+                table(
+                    [
+                        "Divulgação",
+                        "Campo",
+                        "Flávio / total",
+                        "Lula / total",
+                        "F−L / total",
+                        "Flávio / F+L",
+                    ],
+                    rows,
+                ),
             )
             + "<p>Em julho, a Quaest media Lula 45% e Flávio 37%. Em 14/09 já divulgava Flávio 42% e Lula 40% no cenário de segundo turno; em 03/10, 44% a 42%. A série oscilou, inclusive com empate em 28/09. <b>Não há uma primeira passagem para Flávio à frente depois da eleição.</b> A impressão de virada nasce, em parte, de comparar o primeiro turno de 03/10 (Lula 40 × Flávio 38) com o segundo turno de 14/10 (Flávio 46 × Lula 44). São perguntas diferentes.</p>"
             + f'<p>Na mesma pergunta de segundo turno, a diferença entre os dois, normalizada por F+L, passa de <b>{fmt(prev["gap_binario_pp"],2)} para {fmt(now["gap_binario_pp"],2)} pp</b>. A variação é de {fmt(delta["mudanca_gap_binario_pp"],2)} pp. São renormalizações nossas, não números de eleitor provável divulgados pela Quaest.</p>'
@@ -183,7 +190,7 @@ def render(d):
     )
     blocks.append(
         section(
-            3,
+            7,
             "campo",
             "Três dias de feriadão.<br><em>Mais a terça-feira.</em>",
             "A coleta domiciliar ocorreu de 10 a 13 de outubro. A publicação foi em 14/10.",
@@ -204,15 +211,17 @@ def render(d):
             ),
         )
     )
-    blocks.append(income_section(d))
+    field_block = blocks.pop()
+    blocks.extend([segments(), opinions()])
     lo, hi = a["intervalo_gap_95_pp"]
     blocks.append(
         section(
-            5,
+            6,
             "incerteza",
             "Vantagem numérica.<br><em>Liderança não identificada.</em>",
             "Uma diferença de dois pontos precisa da incerteza da diferença entre os candidatos.",
-            f'<p>Como referência sob amostragem aleatória simples, n = {sample_size} e os totais de 46% e 44% dão margem de <b>{fmt(a["margem_gap_95_pp"],2)} pp para F−L</b>, com intervalo aproximado de 95% de {fmt(lo,2)} a +{fmt(hi,2)} pp. Ele contém zero. Essa referência não incorpora o desenho por conglomerados, as cotas, os pesos ou o erro de seleção.</p>'
+            uncertainty(d)
+            + f'<p>Como referência sob amostragem aleatória simples, n = {sample_size} e os totais de 46% e 44% dão margem de <b>{fmt(a["margem_gap_95_pp"],2)} pp para F−L</b>, com intervalo aproximado de 95% de {fmt(lo,2)} a +{fmt(hi,2)} pp. Ele contém zero. Essa referência não incorpora o desenho por conglomerados, as cotas, os pesos ou o erro de seleção.</p>'
             + f'<p>A diferença publicada mudou {fmt(a["mudanca_gap_total_pp"],0)} pp desde 03/10. Sob duas amostras AAS independentes, a margem da mudança seria {fmt(a["margem_mudanca_independente_aas_95_pp"],2)} pp. Não identifica estabilidade perfeita, tampouco uma nova abertura da distância. Os percentuais também são arredondados.</p>'
             + callout(
                 "Uma frase fiel à evidência",
@@ -223,10 +232,11 @@ def render(d):
             ),
         )
     )
+    blocks.append(field_block)
     blocks.append(panel_section(d))
     blocks.append(
         section(
-            7,
+            9,
             "fontes",
             "O que está conferido.<br><em>O que continua aberto.</em>",
             "Atualizado em 15/10/2026 com o HTML salvo e cinco perguntas da API do painel. A íntegra e os pesos finais poderão mudar o diagnóstico.",
@@ -283,20 +293,23 @@ def render(d):
             + "<p><b>Juízo editorial:</b> a novidade sólida desta publicação é a redução da não escolha com quase a mesma divisão entre finalistas. A fragilidade investigável é a disponibilidade dentro das cotas durante o feriadão. A primeira é mensurável agora; a segunda precisa de evidência antes de virar acusação ou ajuste de votos.</p>",
         )
     )
-    title = "Quaest 14/10: a distância permanece | Arvor"
+    title = "Quaest 14/10: voto, renda e segmentos em gráficos | Arvor"
     summary = "Flávio 46%, Lula 44%: série, renda e cinco perguntas do G1 com 130 recortes. Sensibilidade PNAD com cotas atuais; bases e pesos finais pendentes."
     nav = "".join(
         f'<a href="#{x}">{label}</a>'
         for x, label in [
+            ("renda", "Renda"),
             ("mudanca", "O que mudou"),
             ("serie", "Evolução"),
-            ("campo", "Feriadão"),
-            ("renda", "Renda"),
+            ("segmentos", "Segmentos"),
+            ("perguntas", "Voto e governo"),
             ("incerteza", "Incerteza"),
-            ("painel", "Painel G1"),
+            ("campo", "Feriadão"),
+            ("painel", "Explorador"),
             ("fontes", "Fontes"),
         ]
     )
+    adjusted = d["identificacao_renda"]["reponderacao_pontual"]
     html = f"""<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1"><title>{title}</title>
 <meta name="description" content="{summary}"><link rel="canonical" href="https://brasil.arvor.co/{SLUG}.html">
@@ -304,5 +317,5 @@ def render(d):
 <meta property="og:image" content="https://brasil.arvor.co/img/og/{SLUG}.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://brasil.arvor.co/img/og/{SLUG}.png">
 <link rel="stylesheet" href="assets/dossies_2t_2026.css"><link rel="stylesheet" href="assets/{SLUG}.css"></head>
 <body><a class="skip" href="#conteudo">Pular para o conteúdo</a><header class="masthead"><a href="index.html">ARVOR / Intelligence</a><span>Auditoria de pesquisa · 2º turno</span></header>
-<main id="conteudo"><section class="hero"><div><p class="eyebrow">Quaest · 14 outubro 2026 · Dossiê preliminar</p><h1>Duas escolhas crescem.<br><em>A distância permanece.</em></h1><p class="deck">O novo placar não traz uma virada depois da urna. Flávio e Lula ganham dois pontos cada; a não escolha perde quatro. Por renda, Flávio avança até 2 SM e Lula acima desse corte. O feriadão abre uma pergunta sobre disponibilidade, ainda sem evidência de efeito.</p><div class="hero-meta"><span>Campo: 10–13/10</span><span>{sample_size} entrevistas</span><span>BR-08729/2026</span><span>Conferido em 15/10</span></div></div><aside class="hero-result"><p class="eyebrow">Publicado / total de entrevistados</p><div class="score">46 <span>×</span> 44</div><p>Flávio Bolsonaro × Lula</p><p>Branco/nulo/não vai votar: 9%<br>Indecisos: 1%</p><p class="q-status">Íntegra pendente no TSE<br>Sensibilidade PNAD com cotas atuais</p></aside></section><nav class="chapter-nav" aria-label="Capítulos">{nav}</nav>{''.join(blocks)}</main><footer><a href="index.html">Arvor / Biblioteca</a><p>Publicados, contas derivadas e hipóteses identificados. A análise não mede probabilidade de vitória.</p><a href="reponderacao_pnad.html">Centrais e simulador</a></footer></body></html>"""
+<main id="conteudo"><section class="hero"><div><p class="eyebrow">Quaest · 14 outubro 2026 · Dossiê preliminar</p><h1>Dois pontos no placar.<br><em>Menos de um sob a PNAD.</em></h1><p class="deck">Flávio tem 46% e Lula 44%. Usando as cotas planejadas de renda como hipótese para os pesos, a sensibilidade PNAD reduz a diferença a 0,87 ponto. Veja o que muda no total, o que separa os grupos e o que a pesquisa ainda não permite concluir.</p><div class="hero-meta"><span>Campo: 10–13/10</span><span>{sample_size} entrevistas</span><span>BR-08729/2026</span><span>Conferido em 15/10</span></div></div><aside class="hero-result"><p class="eyebrow">Publicado / total de entrevistados</p><div class="q-result-block"><strong>46% × 44%</strong><small>Flávio Bolsonaro × Lula · publicado</small></div><div class="q-result-block"><span>Sensibilidade PNAD / total</span><strong>{fmt(adjusted["flavio"],2)}% × {fmt(adjusted["lula"],2)}%</strong><small>Condicional às cotas 31/42/27 como pesos</small></div><p class="q-status">Íntegra pendente no TSE<br>Sensibilidade PNAD com cotas atuais</p></aside></section><nav class="chapter-nav" aria-label="Capítulos">{nav}</nav><section class="reading q-reading" aria-label="Guia de leitura"><p class="eyebrow">Três caminhos para ler a pesquisa</p><div><article><a href="#renda"><span>01 / Composição</span><h3>O peso da renda</h3><p>Publicado e sensibilidade lado a lado. A hipótese e os limites acompanham a conta.</p></a></article><article><a href="#segmentos"><span>02 / Contrastes</span><h3>O total esconde diferenças</h3><p>Região, sexo, idade e religião ajudam a ler o placar sem inventar fluxos de voto.</p></a></article><article><a href="#painel"><span>03 / Exploração</span><h3>Cinco perguntas, 130 recortes</h3><p>Troque pergunta e grupo, confira os valores e compartilhe a comparação.</p></a></article></div></section>{''.join(blocks)}</main><footer><a href="index.html">Arvor / Biblioteca</a><p>Publicados, contas derivadas e hipóteses identificados. A análise não mede probabilidade de vitória.</p><a href="reponderacao_pnad.html">Centrais e simulador</a></footer><script defer src="assets/quaest_14102026.js"></script></body></html>"""
     return injetar(html.replace("<section ", "\n<section ")) + "\n"
