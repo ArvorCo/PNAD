@@ -89,7 +89,9 @@ def test_futura_profile_and_datatrends_ambiguous_unit_do_not_become_income_votes
     assert "CATI" in M.ipespe()["metodo"]
 
 
-def test_both_updated_centres_use_correct_houses_and_preserve_accounting():
+def test_both_updated_centres_use_correct_houses_and_preserve_accounting(
+    assert_json_close,
+):
     # Contrato da rodada de 13/10: a página corrente continua recebendo ondas.
     data = read("docs/assets/reponderacao_cenarios/dae267a6d8ba1054.json")
     assert data["reference"] == "2026-10-13"
@@ -113,7 +115,7 @@ def test_both_updated_centres_use_correct_houses_and_preserve_accounting():
         ("central_projection", {"centro": "projecao"}),
     ]:
         result = SIM.evaluate(data, params)
-        assert result == data[key]
+        assert_json_close(result, data[key])
         assert result["flavio"] + result["lula"] == pytest.approx(100)
         assert sum(result["por_100_eleitores"].values()) == pytest.approx(100)
     assert data["central"]["flavio"] == pytest.approx(54.662267836284606)

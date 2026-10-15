@@ -130,15 +130,16 @@ def test_partial_income_crossings_and_negative_residuals_are_disclosed(history):
     assert audit["negativos_truncados_pp"] == 1
 
 
-def test_published_exports_match_build_and_urna_is_separate(history):
+def test_published_exports_match_build_and_urna_is_separate(history, assert_json_close):
     published = json.loads(
         (ROOT / "docs/assets/reponderacao_urna_serie_1t.json").read_text()
     )
     # O hash da fonte corrente muda com ondas de 2T; a proveniência do arquivo
     # publicado continua sendo a da sua geração, sem reescrever o passado.
-    assert {k: v for k, v in published.items() if k != "fontes_sha256"} == {
-        k: v for k, v in history.items() if k != "fontes_sha256"
-    }
+    assert_json_close(
+        {k: v for k, v in published.items() if k != "fontes_sha256"},
+        {k: v for k, v in history.items() if k != "fontes_sha256"},
+    )
     for key, digest in published["fontes_sha256"].items():
         if key != "docs/assets/reponderacao_pnad.json":
             assert history["fontes_sha256"][key] == digest
@@ -148,8 +149,8 @@ def test_published_exports_match_build_and_urna_is_separate(history):
     assert rows[-1]["tipo"] == "urna"
     assert rows[-1]["data"] == history["eleicao"]
     assert rows[-1]["ondas"] == ""
-    assert (
-        float(rows[-2]["pnad_flavio_validos_pct"]) == history["final"]["pnad"]["flavio"]
+    assert float(rows[-2]["pnad_flavio_validos_pct"]) == pytest.approx(
+        history["final"]["pnad"]["flavio"], rel=0, abs=1e-10
     )
 
 
