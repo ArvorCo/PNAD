@@ -61,7 +61,7 @@
 <div class="app">
 
 <header class="topo">
-  <img src="img/arvor_logo.png" alt="Arvor" width="28" height="28">
+  <a class="marca" href="https://arvor.co" target="_blank" rel="noopener" aria-label="Arvor, site da empresa (abre em nova aba)"><span class="logo-chip"><img src="img/arvor_logo.png" alt="" width="28" height="28"></span><span class="marca-nome">Arvor</span></a>
   <h1>Totalização paralela</h1>
   <button type="button" class="chip-pend" id="chip-pendentes" hidden>0 na fila</button>
   <button type="button" class="btn-info" id="btn-info" aria-label="Sobre esta conta: o que é, como funciona, regras do dia e privacidade" aria-haspopup="dialog">i</button>
@@ -113,6 +113,7 @@
 
   <section class="estado" id="tela-enviado" aria-label="Resultado do envio" hidden>
     <div class="conteudo resultado-cheio" id="resultado" aria-live="polite"></div>
+    <p class="assinatura"><img src="img/arvor_logo.png" alt="" width="20" height="20">Conta independente da <a href="https://arvor.co" target="_blank" rel="noopener">Arvor</a></p>
     <div class="barra uma">
       <button type="button" class="btn btn-prim" id="btn-outro">Ler outro boletim</button>
     </div>
@@ -128,6 +129,12 @@
     <button type="button" class="btn-fechar" id="btn-fechar-ficha" aria-label="Fechar">×</button>
   </div>
   <div class="ficha-corpo">
+
+    <section id="marca" class="marca-bloco">
+      <img src="img/arvor_logo_text.png" alt="Arvor" width="112" height="112">
+      <p><b>Arvor Intelligence.</b> Ciência de dados e inteligência artificial a serviço do cidadão. A totalização paralela é uma iniciativa da Arvor, com lado declarado e código aberto.</p>
+      <p class="marca-links"><a class="btn btn-sec" href="https://arvor.co" target="_blank" rel="noopener">Conheça a Arvor</a><a class="btn btn-sec" href="index.html">Biblioteca brasil.arvor.co</a></p>
+    </section>
 
     <section id="sobre">
       <p class="kicker">O que é</p>
@@ -186,7 +193,7 @@
         <a class="btn btn-prim" href="totalizacao_painel.html">Ver o painel público</a>
         <a class="btn btn-sec" href="https://github.com/ArvorCo/PNAD/tree/main/totalizacao" target="_blank" rel="noopener">Código-fonte no GitHub</a>
       </div>
-      <p class="rodape-ficha"><b>Arvor Intelligence</b> · <a href="index.html">Biblioteca</a> · <a href="politizesuavizinhanca.html">Politize sua vizinhança</a> · <a href="fiscais_mapa.html">Mapa de fiscais</a></p>
+      <p class="rodape-ficha"><b><a href="https://arvor.co" target="_blank" rel="noopener">Arvor Intelligence</a></b> · <a href="https://arvor.co" target="_blank" rel="noopener">arvor.co</a> · <a href="index.html">Biblioteca</a> · <a href="politizesuavizinhanca.html">Politize sua vizinhança</a> · <a href="fiscais_mapa.html">Mapa de fiscais</a></p>
     </section>
 
   </div>

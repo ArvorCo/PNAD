@@ -29,7 +29,13 @@ code{font-family:var(--mono);font-size:.88em;background:var(--paper2);padding:1p
 .hero{color:#f4f2ea;background:radial-gradient(120% 90% at 85% 0%,#1c3d63 0%,var(--azul) 55%,#0a1a2b 100%);padding:0 0 34px}
 .brand{padding:22px 0 0;font-family:var(--mono);font-size:.74rem;letter-spacing:.13em;text-transform:uppercase;color:#c3ccd5}
 .brand a{display:flex;align-items:center;gap:10px;color:inherit;text-decoration:none;min-height:44px}
-.brand img{width:26px;height:26px;border-radius:4px}
+.brand{display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px}
+.brand .logo-chip{display:grid;place-items:center;width:34px;height:34px;border-radius:8px;background:#fff}
+.brand img{width:26px;height:26px;display:block}
+.brand a:hover{text-decoration:underline}
+.brand .brand-sec{font-weight:400;letter-spacing:.1em}
+.rodape-marca{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.rodape-marca img{width:22px;height:22px;background:#fff;border-radius:5px;padding:1px}
 .eyebrow{font-family:var(--mono);font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;color:var(--amarelo2);margin:24px 0 0}
 .hero h1{font-family:var(--display);font-weight:900;font-size:clamp(2.1rem,8vw,3.8rem);line-height:1;letter-spacing:-.02em;margin:10px 0 0;max-width:18ch;overflow-wrap:break-word}
 .cobertura{font-family:var(--display);font-weight:500;font-size:clamp(1.25rem,4.4vw,1.8rem);line-height:1.3;margin:20px 0 0;max-width:34ch;color:#fff}

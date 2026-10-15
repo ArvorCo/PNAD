@@ -83,6 +83,7 @@ CARDS: list[dict] = [
         ],
         "foot": "soma dos BUs recebidos, não projeção; conta transmissão e totalização, não o interior da urna",
         "accent": "red",
+        "logo": True,
     },
     {
         "slug": "totalizacao_painel",
@@ -97,6 +98,7 @@ CARDS: list[dict] = [
         ],
         "foot": "rótulo fixo: soma dos BUs recebidos, não projeção",
         "accent": "red",
+        "logo": True,
     },
     {
         "slug": "senado_2027",
@@ -869,6 +871,8 @@ TEMPLATE = """<!doctype html>
   .foot b{{color:{accent}}}
   .right{{position:relative;z-index:1;height:630px;border-left:1px solid rgba(255,255,255,.16);overflow:hidden}}
   .right img{{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.18) brightness(.7)}}
+  .right.logo{{background:#fff;display:grid;place-items:center}}
+  .right.logo img{{width:72%;height:auto;object-fit:contain;filter:none}}
   .right::after{{content:"";position:absolute;inset:0;background:{accent};opacity:.2;mix-blend-mode:color}}
   .duo{{display:grid;grid-template-rows:315px 315px}}
   .duo figure{{position:relative;height:315px;overflow:hidden}}
@@ -910,7 +914,7 @@ DUO_PANEL = """
 
 def render_card(card: dict) -> str:
     accent = ACCENTS[card.get("accent", "lime")]
-    has_panel = bool(card.get("photo") or card.get("duo"))
+    has_panel = bool(card.get("photo") or card.get("duo") or card.get("logo"))
     stats = "".join(
         f'<div class="s{i}"><b>{escape(value)}</b><span>{escape(label)}</span></div>'
         for i, (value, label) in enumerate(card.get("stats", []))
@@ -922,6 +926,8 @@ def render_card(card: dict) -> str:
         right = (
             f'\n    <div class="right"><img src="../../{card["photo"]}" alt=""></div>'
         )
+    elif card.get("logo"):
+        right = '\n    <div class="right logo"><img src="../../img/arvor_logo_text.png" alt="Arvor"></div>'
     else:
         right = ""
     title = escape(card["title"])

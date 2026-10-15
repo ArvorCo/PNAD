@@ -42,7 +42,19 @@ a{color:var(--azul-txt)}
 
 /* ---------- cabeçalho fixo ---------- */
 .topo{display:flex;align-items:center;gap:10px;padding:calc(8px + var(--safe-t)) calc(12px + var(--safe-r)) 8px calc(12px + var(--safe-l));min-height:calc(56px + var(--safe-t));background:var(--azul);color:#fff;flex:none}
-.topo img{width:28px;height:28px;border-radius:6px;flex:none}
+.topo .marca{display:flex;align-items:center;gap:8px;color:#fff;text-decoration:none;flex:none;min-height:44px}
+.topo .logo-chip{display:grid;place-items:center;width:36px;height:36px;border-radius:9px;background:#fff;flex:none}
+.topo .logo-chip img{width:28px;height:28px;display:block}
+.topo .marca-nome{font-family:var(--display);font-weight:900;font-size:1.05rem;letter-spacing:.02em}
+.topo .marca:hover .marca-nome{text-decoration:underline}
+.assinatura{display:flex;align-items:center;justify-content:center;gap:8px;margin:0;padding:0 16px 10px;font-family:var(--mono);font-size:.82rem;color:var(--muted);flex:none}
+.assinatura img{width:20px;height:20px;background:#fff;border-radius:5px;padding:1px}
+.assinatura a{color:inherit;font-weight:700}
+.marca-bloco{display:grid;justify-items:center;text-align:center;gap:10px;padding:8px 0 18px;border-bottom:1px solid var(--line);margin:0 0 18px}
+.marca-bloco img{width:112px;height:112px;background:#fff;border-radius:18px;padding:6px}
+.marca-bloco p{margin:0;max-width:36ch}
+.marca-links{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.marca-links .btn{min-height:48px;padding:0 16px;font-size:1rem}
 .topo h1{font-family:var(--display);font-weight:700;font-size:clamp(.95rem,4.4vw,1.15rem);line-height:1.1;margin:0;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .chip-pend{font-family:var(--mono);font-size:.8rem;letter-spacing:.04em;border:0;border-radius:999px;min-height:36px;padding:6px 10px;background:var(--amarelo);color:#151812;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
 .chip-pend.off{background:var(--lula);color:#fff}
