@@ -124,3 +124,10 @@ select:disabled{background:#efece2;color:var(--muted)}
   body.modo-lista .palco,body.modo-lista .lista{height:auto;overflow:visible}
   body.modo-lista .controles{position:sticky;top:0;align-self:start;max-height:100vh}
 }
+
+/* Registros de log: camada operacional independente da prioridade histórica. */
+.nv-logs .pt, .pino-logs, .grupo-logs { background: #216577; }
+.grupo-logs { color: #fff; border-color: #164653; }
+.n-logs { color: #164653; background: #e1f0f2; }
+.ficha-nivel.n-logs { color: #164653; }
+#cobertura-logs { padding: 0 4px; }

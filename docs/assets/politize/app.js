@@ -6,7 +6,8 @@
 import { carta, losango, CORES } from './carta.js';
 import { desenharCard } from './card.js';
 import { montarMapa } from './mapa.js';
-import { blocoFiscal, resumoFiscal } from './fiscal.js';
+import { blocoFiscal, resumoFiscal } from './fiscal.js?v=20261015-logs';
+import { buscarComplemento, mostrarComplemento } from './complementos.js?v=20261015-1';
 
 /* ------------------------------------------------------------------ configuração */
 
@@ -783,6 +784,8 @@ async function porSecao(uf, zona, secao) {
     agregada = Boolean(sec);
   }
   if (!sec) {
+    const complemento = await buscarComplemento(buscarJSON, uf, zona, secao);
+    if (complemento) return { complemento, uf, zona, secaoDigitada: secao, origem: 'secao' };
     throw erroUsuario(`A seção ${secao} não está na zona ${zona} ${deUF(uf)} nos dados. Confira os números no título ou no e-Título. Seções criadas depois do 1º turno não têm boletim.`);
   }
   const base = await porLocalId(sec.local_id);
@@ -863,6 +866,8 @@ async function porPosicao(pos) {
 
 async function mostrar(r) {
   E.atual = r;
+  if (r.complemento) return mostrarComplemento({ h, buscar: buscarJSON, r,
+    alvo: alvoResultado(), limpar, vigente: () => E.atual === r });
   const { local, pool } = r;
   const centro = r.ref || (num(local.lat) !== null ? local : null);
   let ord = ordenar(pool.filter((l) => l.local_id !== local.local_id), centro);

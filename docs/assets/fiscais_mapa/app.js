@@ -1,6 +1,6 @@
 // Mapa de fiscais: aplicativo estático escrito à mão, sem build.
-// Lê assets/fiscais_mapa/dados.json (seções sinalizadas do capítulo 13) e, sob demanda,
-// cep/<2>.json, zonas.json e municipios.json, gerados por scripts/fiscais-mapa-build.py.
+// Abre o índice e o histórico; carrega por UF ou o acervo completo conforme o filtro.
+// CEP, zonas e municípios vêm sob demanda, gerados por scripts/fiscais-mapa-build.py.
 // Distância em linha reta pela fórmula inversa de Vincenty no elipsoide WGS84.
 (function () {
   'use strict';
@@ -8,9 +8,9 @@
   var BASE = 'assets/fiscais_mapa/';
   var RAIOS = [1, 2, 5, 10, 15, 20, 30, 50];
   var RAIO_PADRAO = 10;
-  var NIVEIS = ['alta', 'media', 'baixa'];
-  var NOME_NIVEL = { alta: 'Alta', media: 'Média', baixa: 'Baixa' };
-  var PESO_NIVEL = { alta: 3, media: 2, baixa: 1 };
+  var NIVEIS = ['alta', 'media', 'baixa', 'logs'];
+  var NOME_NIVEL = { alta: 'Alta', media: 'Média', baixa: 'Baixa', logs: 'Registro de log' };
+  var PESO_NIVEL = { alta: 3, media: 2, baixa: 1, logs: 0 };
   var NOME_RISCO = { alto: 'alto', medio: 'médio', baixo: 'baixo' };
   var UFS = { AC: 'Acre', AL: 'Alagoas', AP: 'Amapá', AM: 'Amazonas', BA: 'Bahia', CE: 'Ceará', DF: 'Distrito Federal', ES: 'Espírito Santo', GO: 'Goiás', MA: 'Maranhão', MT: 'Mato Grosso', MS: 'Mato Grosso do Sul', MG: 'Minas Gerais', PA: 'Pará', PB: 'Paraíba', PR: 'Paraná', PE: 'Pernambuco', PI: 'Piauí', RJ: 'Rio de Janeiro', RN: 'Rio Grande do Norte', RS: 'Rio Grande do Sul', RO: 'Rondônia', RR: 'Roraima', SC: 'Santa Catarina', SP: 'São Paulo', SE: 'Sergipe', TO: 'Tocantins', ZZ: 'Exterior' };
   var COLS_LISTA = [
@@ -21,11 +21,12 @@
 
   var S = {
     dados: null, linhas: [], locais: new Map(), criterios: {},
-    filtro: { uf: '', mun: '', zona: '', cep: '', texto: '', niveis: new Set(NIVEIS) },
+    filtro: { uf: '', mun: '', zona: '', cep: '', texto: '', ambito: 'brasil', camada: 'originais', log: '', niveis: new Set(NIVEIS) },
     raio: RAIO_PADRAO, modo: 'mapa', centro: null,
     ordem: { col: 'nivel', dir: 1 }, pagina: 1, porPagina: 50, buscaLista: '',
     mapa: null, cluster: null, circulo: null, alvo: null, marcadores: new Map(),
-    cache: new Map(), zonas: null, municipios: null,
+    cache: new Map(), zonas: null, municipios: null, meta: null, recorte: '', requisicao: 0,
+    desenho: 0, loteMapa: null,
   };
 
   var $ = function (s, r) { return (r || document).querySelector(s); };
@@ -124,20 +125,26 @@
 
   function preparar(d) {
     S.dados = d;
+    S.locais.clear(); S.marcadores.clear();
+    limparMarcadores();
     S.criterios = d.criterios || {};
     var cols = d.colunas;
     S.linhas = d.linhas.map(function (ln, i) {
       var r = { i: i };
       cols.forEach(function (c, j) { r[c] = ln[j]; });
+      r.originais = r.originais !== false;
       r.crit = String(r.criterios || '').split('');
       r.critNomes = r.crit.map(function (c) { return (S.criterios[c] && S.criterios[c].nome) || c; });
+      r.logs = r.logs || [];
+      r.logNomes = r.logs.map(function (c) { return (d.logs.criterios[c] || {}).nome || c; });
+      r.critNomes = r.critNomes.concat(r.logNomes);
       r.busca = norm([r.local, r.endereco, r.bairro, r.municipio, r.uf, r.cep, r.explicacao, r.critNomes.join(' '), 'zona ' + r.zona, 'secao ' + r.secao].join(' '));
       return r;
     });
     S.linhas.forEach(function (r) {
       var l = S.locais.get(r.local_id);
       if (!l) {
-        l = { id: r.local_id, uf: r.uf, municipio: r.municipio, zona: r.zona, local: r.local, endereco: r.endereco, bairro: r.bairro, cep: r.cep, lat: r.lat, lon: r.lon, secoes: [], nivel: 'baixa', risco: r.risco };
+        l = { id: r.local_id, uf: r.uf, municipio: r.municipio, zona: r.zona, local: r.local, endereco: r.endereco, bairro: r.bairro, cep: r.cep, lat: r.lat, lon: r.lon, coord_fonte: r.coord_fonte, secoes: [], nivel: 'logs', risco: r.risco };
         S.locais.set(r.local_id, l);
       }
       l.secoes.push(r);
@@ -145,8 +152,26 @@
     });
   }
 
+  async function carregarRecorte(seq) {
+    var f = S.filtro;
+    var uf = f.uf || (f.ambito === 'exterior' ? 'ZZ' : '');
+    var arquivo = f.camada === 'originais' && !f.log ? 'originais.json' : uf && S.meta.partes[uf] ? S.meta.partes[uf].arquivo : 'dados.json';
+    if (S.recorte === arquivo) return true;
+    setStatus('Carregando ' + (uf ? UFS[uf] : f.camada === 'originais' ? 'os critérios históricos' : 'os registros do país inteiro') + '…');
+    var d = await buscar(BASE + arquivo);
+    if (seq !== S.requisicao) return false;
+    preparar(Object.assign({}, S.meta, d));
+    S.recorte = arquivo;
+    return true;
+  }
+
   function passaFiltro(r) {
     var f = S.filtro;
+    if (f.ambito === 'brasil' && r.uf === 'ZZ') return false;
+    if (f.ambito === 'exterior' && r.uf !== 'ZZ') return false;
+    if (f.camada === 'originais' && !r.originais) return false;
+    if (f.camada === 'logs' && !r.logs.length) return false;
+    if (f.log && r.logs.indexOf(f.log) < 0) return false;
     if (!f.niveis.has(r.nivel)) return false;
     if (f.uf && r.uf !== f.uf) return false;
     if (f.mun && r.municipio !== f.mun) return false;
@@ -194,6 +219,7 @@
   }
 
   async function centroZona(uf, zona) {
+    if (uf === 'ZZ') return null; // A zona 1 abrange cidades em todo o mundo.
     if (!S.zonas) S.zonas = await buscar(BASE + 'zonas.json');
     var z = S.zonas[uf] && S.zonas[uf][String(Number(zona))];
     return z ? { lat: z[0], lon: z[1], rotulo: 'zona ' + Number(zona) + ' ' + (uf === 'ZZ' ? 'do exterior' : '(' + uf + ')'), precisao: 'centro dos ' + z[2] + ' locais de votação da zona' } : null;
@@ -210,31 +236,41 @@
   }
 
   async function aplicarBusca(rolar) {
+    if (!S.meta) { setStatus('Carregando o índice de busca…'); return; }
+    var seq = ++S.requisicao;
     var f = S.filtro;
     f.uf = $('#f-uf').value;
+    f.ambito = $('#f-ambito').value;
+    f.camada = $('#f-camada').value;
+    f.log = $('#f-log').value;
     f.mun = $('#f-mun').value;
     f.texto = $('#f-texto').value.trim();
     var zonaTxt = so($('#f-zona').value);
-    var cep = so($('#q-cep').value);
+    var cep = f.uf === 'ZZ' ? '' : so($('#q-cep').value);
     if (zonaTxt && !f.uf) { setStatus('Escolha a UF para buscar a zona: o número da zona se repete entre os estados.', true); $('#f-uf').focus(); return; }
     if (cep && cep.length !== 8) { setStatus('O CEP precisa de 8 dígitos.', true); $('#q-cep').focus(); return; }
     f.zona = zonaTxt ? String(Number(zonaTxt)) : '';
     f.cep = cep;
     var centro = null;
     try {
+      if (!await carregarRecorte(seq)) return;
       if (cep) {
         centro = await geocodificarCep(cep);
+        if (seq !== S.requisicao) return;
         if (!centro) { setStatus('Nenhum local de votação tem CEP parecido com ' + cepFmt(cep) + '. Tente a zona ou o município.', true); return; }
-      } else if (f.zona) {
-        centro = await centroZona(f.uf, f.zona);
-        if (!centro) { setStatus('A zona ' + f.zona + ' não aparece ' + (f.uf === 'ZZ' ? 'no exterior' : 'em ' + (UFS[f.uf] || f.uf)) + ' nos dados. Confira o número no título de eleitor.', true); return; }
       } else if (f.mun) {
         centro = await centroMunicipio(f.uf, f.mun);
+      } else if (f.zona && f.uf !== 'ZZ') {
+        centro = await centroZona(f.uf, f.zona);
+        if (seq !== S.requisicao) return;
+        if (!centro) { setStatus('A zona ' + f.zona + ' não aparece ' + (f.uf === 'ZZ' ? 'no exterior' : 'em ' + (UFS[f.uf] || f.uf)) + ' nos dados. Confira o número no título de eleitor.', true); return; }
       }
     } catch (e) {
+      if (seq !== S.requisicao) return;
       setStatus('Não foi possível carregar o índice de busca agora. Tente de novo.', true);
       return;
     }
+    if (seq !== S.requisicao) return;
     S.centro = centro;
     S.pagina = 1;
     atualizar(true);
@@ -244,23 +280,24 @@
   /* ------------------------------------------------------------ mapa */
 
   function iniciarMapa() {
-    if (typeof L === 'undefined') {
+    if (typeof L === 'undefined' || typeof L.markerClusterGroup !== 'function') {
       $('#mapa').replaceChildren(h('p', { class: 'aviso' }, 'A biblioteca do mapa não carregou. A lista continua disponível em "Ver em lista".'));
       return;
     }
-    S.mapa = L.map('mapa', { zoomControl: true, preferCanvas: true, minZoom: 3, worldCopyJump: true }).setView([-14.5, -52], 4);
+    S.mapa = L.map('mapa', { zoomControl: true, preferCanvas: true, minZoom: 1, worldCopyJump: true }).setView([-14.5, -52], 4);
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: '© colaboradores do <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     }).addTo(S.mapa);
     L.control.scale({ imperial: false }).addTo(S.mapa);
     S.cluster = L.markerClusterGroup({
-      chunkedLoading: true,
+      // Os lotes são controlados abaixo para cancelar filtros já ultrapassados.
+      chunkedLoading: false,
       showCoverageOnHover: false,
       spiderfyOnMaxZoom: true,
       maxClusterRadius: 50,
       iconCreateFunction: function (c) {
-        var pior = 'baixa';
+        var pior = 'logs';
         c.getAllChildMarkers().forEach(function (m) { if (PESO_NIVEL[m.options.nivel] > PESO_NIVEL[pior]) pior = m.options.nivel; });
         var n = c.getChildCount();
         var tam = n < 10 ? 34 : n < 100 ? 40 : n < 1000 ? 46 : 54;
@@ -268,17 +305,45 @@
       },
     });
     S.mapa.addLayer(S.cluster);
-    S.locais.forEach(function (l) {
-      if (!coordOk(l)) return;
-      var m = L.marker([l.lat, l.lon], {
-        nivel: l.nivel,
-        icon: L.divIcon({ className: 'pino pino-' + l.nivel, iconSize: [18, 18], html: '' }),
-        title: caixa(l.local) + ', ' + NOME_NIVEL[l.nivel],
+  }
+
+  function limparMarcadores() {
+    S.desenho++;
+    clearTimeout(S.loteMapa); S.loteMapa = null;
+    if (S.cluster) S.cluster.clearLayers();
+    $('#mapa').setAttribute('aria-busy', 'false');
+  }
+
+  function adicionarMarcadores(lista) {
+    limparMarcadores();
+    var desenho = S.desenho, offset = 0;
+    $('#mapa').setAttribute('aria-busy', String(lista.length > 0));
+    function lote() {
+      if (desenho !== S.desenho) return;
+      S.cluster.addLayers(lista.slice(offset, offset + 1000));
+      offset += 1000;
+      if (offset < lista.length) S.loteMapa = setTimeout(lote, 16);
+      else { S.loteMapa = null; $('#mapa').setAttribute('aria-busy', 'false'); }
+    }
+    if (lista.length) S.loteMapa = setTimeout(lote, 0);
+  }
+
+  function marcador(l, nivel) {
+    var m = S.marcadores.get(l.id);
+    if (!m) {
+      m = L.marker([l.lat, l.lon], {
+        nivel: nivel,
+        icon: L.divIcon({ className: 'pino pino-' + nivel, iconSize: [18, 18], html: '' }),
+        title: caixa(l.local),
         keyboard: true,
       });
       m.bindPopup(function () { return ficha(l); }, { maxWidth: 360, minWidth: 260, autoPanPadding: [24, 24] });
       S.marcadores.set(l.id, m);
-    });
+    } else if (m.options.nivel !== nivel) {
+      m.options.nivel = nivel;
+      m.setIcon(L.divIcon({ className: 'pino pino-' + nivel, iconSize: [18, 18], html: '' }));
+    }
+    return m;
   }
 
   function ficha(l) {
@@ -291,15 +356,17 @@
     var gmaps = 'https://www.google.com/maps/search/?api=1&query=' + l.lat + ',' + l.lon;
     var osm = 'https://www.openstreetmap.org/?mlat=' + l.lat + '&mlon=' + l.lon + '#map=17/' + l.lat + '/' + l.lon;
     return h('div', { class: 'ficha' },
-      h('p', { class: 'ficha-nivel n-' + l.nivel }, 'Prioridade ' + NOME_NIVEL[l.nivel].toLowerCase()),
+      h('p', { class: 'ficha-nivel n-' + l.nivel }, l.nivel === 'logs' ? 'Registro operacional no log' : 'Prioridade histórica ' + NOME_NIVEL[l.nivel].toLowerCase()),
       h('h3', {}, caixa(l.local)),
       h('p', { class: 'ficha-end' }, [caixa(l.endereco), caixa(l.bairro), caixa(l.municipio) + '/' + l.uf, l.cep ? 'CEP ' + cepFmt(l.cep) : ''].filter(Boolean).join(' · ')),
       h('p', { class: 'ficha-meta' }, 'Zona ' + l.zona + (dist !== null ? ' · ' + km(dist) + ' em linha reta de ' + S.centro.rotulo : '')),
+      l.coord_fonte === 'cidade' ? h('p', { class: 'ficha-meta' }, 'Ponto aproximado da cidade, não coordenada do prédio. Confira o endereço antes de se deslocar.') : null,
       h('ul', { class: 'ficha-secoes' }, todas.map(function (r) {
         return h('li', {},
           h('b', {}, 'Seção ' + r.secao), ' ',
           h('span', { class: 'chip n-' + r.nivel }, NOME_NIVEL[r.nivel]), ' ',
           r.critNomes.join('; '),
+          r.tempo_voto != null ? h('small', {}, 'Mediana da votação: ' + nf1.format(r.tempo_voto) + ' s. Veja denominador e referência na ficha da seção.') : null,
           r.explicacao ? h('small', {}, 'Explicação provável: ' + r.explicacao) : null,
           h('a', { class: 'ficha-pol', href: 'politizesuavizinhanca.html#s=' + encodeURIComponent(r.uf + '-' + r.zona + '-' + r.secao) }, 'Todos os motivos desta seção'));
       })),
@@ -314,11 +381,14 @@
   function desenharMapa(rs, enquadrar) {
     if (!S.mapa) return { locais: 0 };
     var noRaio = rs.filter(function (r) { return coordOk(r) && (!S.centro || r.dist <= S.raio); });
-    var ids = new Set(noRaio.map(function (r) { return r.local_id; }));
+    var ids = new Map();
+    noRaio.forEach(function (r) {
+      var n = ids.get(r.local_id);
+      if (!n || PESO_NIVEL[r.nivel] > PESO_NIVEL[n]) ids.set(r.local_id, r.nivel);
+    });
     var lista = [];
-    ids.forEach(function (id) { var m = S.marcadores.get(id); if (m) lista.push(m); });
-    S.cluster.clearLayers();
-    S.cluster.addLayers(lista);
+    ids.forEach(function (nivel, id) { lista.push(marcador(S.locais.get(id), nivel)); });
+    adicionarMarcadores(lista);
     if (S.circulo) { S.mapa.removeLayer(S.circulo); S.circulo = null; }
     if (S.alvo) { S.mapa.removeLayer(S.alvo); S.alvo = null; }
     if (S.centro) {
@@ -426,7 +496,7 @@
 
   function exportarCsv() {
     var rs = S.listaAtual || [];
-    var cab = ['nivel', 'uf', 'municipio', 'zona', 'secao', 'local', 'endereco', 'bairro', 'cep', 'lat', 'lon', 'distancia_km_linha_reta', 'pontuacao', 'criterios', 'explicacao_provavel', 'risco_territorio', 'aptos', 'flavio_pct', 'lula_pct', 'google_maps'];
+    var cab = ['nivel', 'uf', 'municipio', 'zona', 'secao', 'local', 'endereco', 'bairro', 'cep', 'lat', 'lon', 'distancia_km_linha_reta', 'pontuacao', 'criterios', 'explicacao_provavel', 'risco_territorio', 'aptos', 'flavio_pct', 'lula_pct', 'google_maps', 'criterios_historicos', 'diagnosticos_log', 'mediana_votacao_s', 'coordenada_fonte', 'ficha_secao'];
     var dec = function (v, c) { return v === null || v === undefined || v === '' ? '' : (typeof v === 'number' ? v.toFixed(c).replace('.', ',') : String(v)); };
     var esc = function (v) { var s = v === null || v === undefined ? '' : String(v); return /[";\n\r]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
     var linhas = [cab.join(';')];
@@ -436,6 +506,8 @@
         coordOk(r) ? dec(r.lat, 5) : '', coordOk(r) ? dec(r.lon, 5) : '', r.dist === null || r.dist === undefined ? '' : dec(r.dist, 2),
         r.pontuacao, r.critNomes.join(' | '), r.explicacao, r.risco || '', r.aptos, dec(r.flavio_pct, 2), dec(r.lula_pct, 2),
         coordOk(r) ? 'https://www.google.com/maps/search/?api=1&query=' + r.lat + ',' + r.lon : '',
+        r.crit.join('|'), r.logs.join('|'), dec(r.tempo_voto, 1), r.coord_fonte,
+        'https://brasil.arvor.co/politizesuavizinhanca.html#s=' + r.uf + '-' + r.zona + '-' + r.secao,
       ].map(esc).join(';'));
     });
     var blob = new Blob(['﻿' + linhas.join('\r\n')], { type: 'text/csv;charset=utf-8' });
@@ -472,6 +544,7 @@
 
   function trocarModo(m) {
     S.modo = m;
+    if (m === 'lista') limparMarcadores();
     $('#m-mapa').setAttribute('aria-pressed', String(m === 'mapa'));
     $('#m-lista').setAttribute('aria-pressed', String(m === 'lista'));
     $('#mapa').hidden = m !== 'mapa';
@@ -496,17 +569,18 @@
 
   function montarUfs() {
     var sel = $('#f-uf');
-    var presentes = new Set(S.linhas.map(function (r) { return r.uf; }));
+    var presentes = new Set(Object.keys(S.meta.partes));
     Object.keys(UFS).forEach(function (u) {
       sel.appendChild(h('option', { value: u }, u + ' · ' + UFS[u] + (presentes.has(u) ? '' : ' (sem seção sinalizada)')));
     });
   }
 
   function montarMunicipios() {
+    if (!S.meta) return;
     var uf = $('#f-uf').value;
     var sel = $('#f-mun');
     if (!uf) { sel.replaceChildren(h('option', { value: '' }, 'Escolha a UF primeiro')); sel.disabled = true; return; }
-    var nomes = Array.from(new Set(S.linhas.filter(function (r) { return r.uf === uf; }).map(function (r) { return r.municipio; })))
+    var nomes = ((S.meta.partes[uf] || {}).municipios || []).slice()
       .sort(new Intl.Collator('pt-BR').compare);
     sel.replaceChildren.apply(sel, [h('option', { value: '' }, 'Todos (' + nomes.length + ' com seção sinalizada)')].concat(nomes.map(function (n) { return h('option', { value: n }, caixa(n)); })));
     sel.disabled = false;
@@ -514,7 +588,7 @@
 
   function contarNiveis() {
     NIVEIS.forEach(function (n) {
-      var c = S.linhas.filter(function (r) { return r.nivel === n; }).length;
+      var c = S.meta.niveis[n] || 0;
       $('#n-' + n).textContent = nf0.format(c);
     });
   }
@@ -526,7 +600,10 @@
     if (f.zona) p.push('zona=' + f.zona);
     if (f.cep) p.push('cep=' + f.cep);
     if (f.texto) p.push('q=' + encodeURIComponent(f.texto));
-    if (f.niveis.size < 3) p.push('nivel=' + Array.from(f.niveis).join(','));
+    if (f.niveis.size < NIVEIS.length) p.push('nivel=' + Array.from(f.niveis).join(','));
+    if (f.ambito !== 'brasil') p.push('ambito=' + f.ambito);
+    if (f.camada !== 'originais') p.push('camada=' + f.camada);
+    if (f.log) p.push('log=' + encodeURIComponent(f.log));
     if (S.raio !== RAIO_PADRAO) p.push('raio=' + S.raio);
     if (S.modo === 'lista') p.push('modo=lista');
     try { history.replaceState(null, '', location.pathname + location.search + (p.length ? '#' + p.join('&') : '')); } catch (e) { /* navegador embutido */ }
@@ -534,14 +611,22 @@
 
   function lerHash() {
     var q = new URLSearchParams(location.hash.slice(1));
-    if (q.get('uf') && UFS[q.get('uf')]) { $('#f-uf').value = q.get('uf'); montarMunicipios(); }
+    $('#f-ambito').value = ['brasil', 'exterior', 'todos'].indexOf(q.get('ambito')) >= 0 ? q.get('ambito') : q.get('uf') === 'ZZ' ? 'exterior' : 'brasil';
+    S.filtro.ambito = $('#f-ambito').value;
+    if (['todas', 'originais', 'logs'].indexOf(q.get('camada')) >= 0) $('#f-camada').value = q.get('camada');
+    if (q.get('log')) $('#f-log').value = q.get('log');
+    S.filtro.camada = $('#f-camada').value;
+    S.filtro.log = $('#f-log').value;
+    if (q.get('uf') && UFS[q.get('uf')]) $('#f-uf').value = q.get('uf');
+    else if (S.filtro.ambito === 'exterior') $('#f-uf').value = 'ZZ';
+    montarMunicipios();
     if (q.get('mun')) $('#f-mun').value = q.get('mun');
     if (q.get('zona')) $('#f-zona').value = so(q.get('zona'));
     if (q.get('cep')) $('#q-cep').value = cepFmt(q.get('cep'));
     if (q.get('q')) $('#f-texto').value = q.get('q');
-    if (q.get('nivel')) {
+    if (q.has('nivel')) {
       var ns = q.get('nivel').split(',').filter(function (n) { return NIVEIS.indexOf(n) >= 0; });
-      if (ns.length) {
+      if (ns.length || q.get('nivel') === '') {
         S.filtro.niveis = new Set(ns);
         document.querySelectorAll('.niveis input').forEach(function (i) { i.checked = S.filtro.niveis.has(i.value); });
       }
@@ -555,18 +640,32 @@
   function limpar() {
     ['#q-cep', '#f-zona', '#f-texto', '#l-busca'].forEach(function (s) { $(s).value = ''; });
     $('#f-uf').value = '';
+    $('#f-ambito').value = 'brasil'; $('#f-camada').value = 'originais'; $('#f-log').value = '';
+    $('#q-cep').disabled = false;
     montarMunicipios();
-    S.filtro = { uf: '', mun: '', zona: '', cep: '', texto: '', niveis: new Set(NIVEIS) };
+    S.filtro = { uf: '', mun: '', zona: '', cep: '', texto: '', ambito: 'brasil', camada: 'originais', log: '', niveis: new Set(NIVEIS) };
     document.querySelectorAll('.niveis input').forEach(function (i) { i.checked = true; });
     S.centro = null; S.buscaLista = ''; S.pagina = 1;
-    atualizar(true);
+    aplicarBusca();
   }
 
   function ligar() {
     $('#f-busca').addEventListener('submit', function (ev) { ev.preventDefault(); aplicarBusca(true); });
     window.addEventListener('hashchange', function () { location.reload(); });
     $('#b-limpar').addEventListener('click', limpar);
-    $('#f-uf').addEventListener('change', function () { montarMunicipios(); aplicarBusca(); });
+    $('#f-uf').addEventListener('change', function () {
+      if ($('#f-uf').value === 'ZZ') $('#f-ambito').value = 'exterior';
+      else if ($('#f-ambito').value === 'exterior') $('#f-ambito').value = 'brasil';
+      $('#q-cep').value = ''; $('#q-cep').disabled = $('#f-uf').value === 'ZZ';
+      $('#f-zona').value = ''; montarMunicipios(); aplicarBusca();
+    });
+    $('#f-ambito').addEventListener('change', function () {
+      $('#f-uf').value = this.value === 'exterior' ? 'ZZ' : '';
+      $('#q-cep').value = ''; $('#q-cep').disabled = this.value === 'exterior';
+      $('#f-zona').value = ''; montarMunicipios(); aplicarBusca();
+    });
+    $('#f-camada').addEventListener('change', function () { if (this.value === 'originais') $('#f-log').value = ''; aplicarBusca(); });
+    $('#f-log').addEventListener('change', function () { if (this.value) $('#f-camada').value = 'logs'; aplicarBusca(); });
     $('#f-mun').addEventListener('change', aplicarBusca);
     $('#q-cep').addEventListener('input', function (ev) {
       var d = so(ev.target.value).slice(0, 8);
@@ -598,18 +697,24 @@
     ligar();
     var d;
     try {
-      d = await buscar(BASE + 'dados.json');
+      d = await buscar(BASE + 'indice.json');
     } catch (e) {
       setStatus('Não foi possível carregar as seções sinalizadas. Recarregue a página.', true);
       return;
     }
-    preparar(d);
+    S.meta = d;
+    if (d.logs) {
+      Object.keys(d.logs.criterios).forEach(function (k) { $('#f-log').appendChild(h('option', { value: k }, d.logs.criterios[k].nome)); });
+      var c = d.logs.cobertura;
+      $('#cobertura-logs').textContent = 'Logs lidos: ' + nf0.format(c.lidos) + ' de ' + nf0.format(c.catalogadas) + ' seções catalogadas. Sem log analisado não significa ausência de ocorrência. Data e método no relatório dos logs.';
+    }
     montarUfs();
     contarNiveis();
     iniciarMapa();
     var modo = lerHash();
     S.filtro.uf = $('#f-uf').value;
-    if (so($('#f-zona').value) || so($('#q-cep').value) || $('#f-mun').value || $('#f-texto').value) await aplicarBusca();
+    $('#q-cep').disabled = S.filtro.uf === 'ZZ';
+    await aplicarBusca();
     trocarModo(modo);
   }
 

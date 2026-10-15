@@ -27,6 +27,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from apuracao_logs.mapa import integrar, publicar_recortes
+
 ROOT = Path(__file__).resolve().parents[1]
 FISCAIS = ROOT / "analysis/apuracao_2026/dados/fiscais.json"
 POLITIZE = ROOT / "docs/assets/politize/dados"
@@ -201,7 +203,15 @@ def indices_politize() -> (
 
 def main() -> None:
     obj, invalidas = dados_fiscais()
+    obj = integrar(obj)
+    # A validação vale igualmente para as linhas acrescentadas pelos logs.
+    cols = {k: i for i, k in enumerate(obj["colunas"])}
+    for row in obj["linhas"]:
+        if not coord_valida(row[cols["uf"]], row[cols["lat"]], row[cols["lon"]]):
+            row[cols["lat"]] = row[cols["lon"]] = None
+    obj["resumo"]["sem_coordenada"] = sum(r[cols["lat"]] is None for r in obj["linhas"])
     tam = _json(SAIDA / "dados.json", obj)
+    publicar_recortes(obj, SAIDA)
     ceps, zonas, municipios = indices_politize()
     for velho in (SAIDA / "cep").glob("*.json"):
         velho.unlink()

@@ -514,3 +514,14 @@ p{max-width:72ch}
 @media (min-width:720px){.btn-fiscal{width:auto}.fis-medidor li{font-size:.72rem}}
 @media (min-width:900px){.fis-corpo{grid-template-columns:1fr 1fr}.fis-corpo>.fis-motivos,.fis-corpo>.fis-predio,.fis-corpo>details{grid-column:1/-1}}
 @media print{.fis-cta,.fiscalize .acao-fiscal{display:none}}
+
+/* A operação da urna é apresentada sem modificar a escala histórica. */
+.fis-logs { border-top: 4px solid #216577; padding-top: 20px; margin: 0 0 28px; }
+.log-metricas { display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 18px; }
+.log-metricas > div { min-width: 0; padding: 16px; background: #edf4f4; border: 1px solid #bdced1; }
+.log-metricas dt { font-size: .9rem; color: #364e54; }
+.log-metricas dd { margin: 4px 0 8px; font-size: 1.5rem; font-weight: 700; color: #164653; }
+.log-metricas small { display: block; color: #364e54; line-height: 1.5; }
+.log-ocorrencias { padding-left: 20px; }
+.log-ocorrencias li { margin-bottom: 22px; }
+.log-hash { overflow-wrap: anywhere; font-size: .85rem; }

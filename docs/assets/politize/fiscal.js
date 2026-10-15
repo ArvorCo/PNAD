@@ -3,6 +3,8 @@
 // scripts/politize-fiscal.py (contrato em analysis/politize/CONTRATO.md, seção Fiscalização).
 // Não calcula nada: só ordena e formata o que o build gravou.
 
+import { blocoLogs } from './logs.js?v=20261015-7';
+
 const ORDEM = ['padrao', 'reforcada', 'alta', 'maxima'];
 const PESO_NIVEL = { maxima: 3, alta: 2, reforcada: 1, padrao: 0 };
 const NOME_C13 = { alta: 'alto', media: 'médio', baixa: 'baixo' };
@@ -162,6 +164,7 @@ export async function blocoFiscal(ctx) {
   const linha = secao ? linhas.find((x) => Number(x.secao) === Number(secao.secao)) || null : null;
   const niv = regras.niveis || {};
   const c = { ...ctx, uf, zona, regras };
+  const logs = await blocoLogs({ h, buscar, uf, zona, secao, local });
 
   let nivel;
   let pontos = null;
@@ -195,6 +198,7 @@ export async function blocoFiscal(ctx) {
         medidor(h, nivel, regras)),
       blocoCta(h, regras)),
     h('div', { class: 'fis-corpo' },
+      logs,
       h('div', { class: 'fis-motivos' },
         h('h3', {}, linha ? 'Por que esta seção pede atenção' : 'Por que este local pede atenção'),
         listaSinais.length

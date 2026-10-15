@@ -65,6 +65,23 @@ and a specific UF row in the PNADC, it does not belong in public debate.
 
 `brasil ibge-sync` · `brasil pipeline-run` · `brasil pipeline-run-anual` · `brasil query` · `brasil renda-por-faixa-sm` · `brasil dashboard`
 
+### Voting-machine logs · 2026 first round
+
+The [log report](https://brasil.arvor.co/logs_urnas_2026.html) adds 18 operational
+diagnostics to the 12 historical fiscal criteria: voting and identification
+durations, biometric categories, suspensions, restarts, technical events and
+document reconciliation. Each section retains its official source URL and SHA-256.
+Missing records and excluded comparisons remain explicit; these diagnostics do
+not estimate fraud probabilities or change the historical scores.
+
+The [fiscal map](https://brasil.arvor.co/fiscais_mapa.html#camada=logs) supports
+Brazil and overseas sections, individual diagnostic filters, lists and CSV.
+[Politize](https://brasil.arvor.co/politizesuavizinhanca.html) shows the log analysis
+alongside each section. See the [reproduction contract](analysis/apuracao_2026/logs_urnas/CONTRATO.md)
+for collection, supplementary BUs, parser rules, rebuild commands and browser QA.
+Reproduction requires the historical local election database; raw logs stay in
+the ignored local SQLite archive, while section aggregates are versioned.
+
 ---
 
 ## Highlights

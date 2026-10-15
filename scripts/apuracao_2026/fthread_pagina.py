@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from apuracao_logs.view import bloco
 from ga_tag import injetar
 
 from .fthread_base import CAPITULO, DOSSIE, OG, SLUG, URL
@@ -63,6 +64,7 @@ def pagina(posts: list[dict], pngs: list[str], v: dict) -> str:
 <nav class="rail" aria-label="Posts"><div class="wrap"><b>Posts</b>{rail}</div></nav>
 <main class="wrap">{cards}</main>
 <footer class="wrap">
+  {bloco()}
   <h2>Baixar a lista</h2>
   <p><a href="assets/fiscais_2026.xlsx">Planilha Excel</a> ({esc(v["xlsx_tam"])}), <a href="assets/fiscais_2026.csv">CSV por seção</a> e <a href="assets/fiscais_2026_por_local.csv">CSV por local</a>. O capítulo completo, com mapa navegável, critérios e fontes, está em <a href="{CAPITULO}">{DOSSIE}.html#fiscais</a>.</p>
   <h2>Imagens para anexar</h2>

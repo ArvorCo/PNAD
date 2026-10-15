@@ -216,7 +216,15 @@ def test_mapa_dados_cobrem_o_capitulo_13():
     fis = ROOT / "analysis/apuracao_2026/dados/fiscais.json"
     if fis.exists():
         f = json.loads(fis.read_text(encoding="utf-8"))
-        assert len(d["linhas"]) == len(f["secoes"])
+        cols = d["colunas"]
+        antigas = [dict(zip(cols, ln, strict=True)) for ln in d["linhas"]]
+        antigas = [r for r in antigas if r.get("originais", True)]
+        assert len(antigas) == len(f["secoes"])
+        fonte = {(s["uf"], int(s["zona"]), int(s["secao"])): s for s in f["secoes"]}
+        for r in antigas:
+            s = fonte[(r["uf"], r["zona"], r["secao"])]
+            assert r["nivel"] == s["nivel"]
+            assert r["pontuacao"] == s["pontuacao"]
     cols = d["colunas"]
     ilat, ilon, iuf = cols.index("lat"), cols.index("lon"), cols.index("uf")
     for ln in d["linhas"]:
@@ -248,5 +256,7 @@ def test_politize_liga_fiscal():
     js = (ROOT / "docs/assets/politize/fiscal.js").read_text(encoding="utf-8")
     app = (ROOT / "docs/assets/politize/app.js").read_text(encoding="utf-8")
     assert 'id="fiscalize"' in html and "https://fiscaisdopl.com.br" in html
-    assert "import { blocoFiscal, resumoFiscal } from './fiscal.js';" in app
+    assert re.search(
+        r"import \{ blocoFiscal, resumoFiscal \} from '\./fiscal\.js(?:\?[^']+)?';", app
+    )
     assert TRAVESSAO not in js

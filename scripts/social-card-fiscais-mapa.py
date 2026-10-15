@@ -5,7 +5,6 @@ texto neutro, sem número.
 """
 
 import json
-from collections import Counter
 
 
 def _int(x):
@@ -17,27 +16,28 @@ def card(root):
     stats = [("CEP", "zona ou município: o mapa centra onde você está")]
     if caminho.exists():
         d = json.loads(caminho.read_text(encoding="utf-8"))
-        i = d["colunas"].index("nivel")
-        n = Counter(ln[i] for ln in d["linhas"])
         stats = [
             (
-                _int(len(d["linhas"])),
-                "seções sinalizadas no 1º turno, no mapa e em lista",
+                _int(d["resumo"].get("secoes_originais", len(d["linhas"]))),
+                "seções nos critérios históricos preservados",
             ),
-            (_int(n["alta"] + n["media"]), "em prioridade alta ou média"),
-            ("1 a 50 km", "de raio em linha reta, com exportação em CSV"),
+            (
+                f'+{len(d.get("logs", {}).get("criterios", {}))}',
+                "diagnósticos operacionais dos logs, em camada própria",
+            ),
+            ("Brasil e exterior", "filtros por território, cidade, zona e ocorrência"),
         ]
     return {
         "slug": "fiscais_mapa",
         "eyebrow": "Mapa de fiscais · 2º turno, 25 de outubro",
-        "title": "Onde colocar fiscal",
-        "title_em": "perto de você.",
+        "title": "Mapa de fiscais.",
+        "title_em": "Agora com os logs.",
         "lede": (
-            "Busque por CEP, zona eleitoral ou município e veja as seções sinalizadas pelo "
-            "capítulo 13 do dossiê da apuração, com a ficha de cada local e o que conferir. "
-            "<b>Atipicidade não é irregularidade: é prioridade de fiscalização.</b>"
+            "Consulte tempos, biometria, reinícios e registros técnicos por seção, "
+            "com fonte, cobertura e limites. Mapa, lista e exportação em CSV. "
+            "<b>Ocorrência operacional não é prova de irregularidade.</b>"
         ),
         "stats": stats,
-        "foot": "boletins de urna por seção (TSE) · capítulo 13 do dossiê da apuração · seja fiscal em fiscaisdopl.com.br",
+        "foot": "boletins e logs oficiais (TSE) · critérios históricos preservados · brasil.arvor.co",
         "accent": "amber",
     }

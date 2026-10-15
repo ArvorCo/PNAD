@@ -5,3 +5,7 @@ PNADC_*.txt filter=lfs diff=lfs merge=lfs -text
 # Capturas HTTP preservam os bytes usados nos hashes de proveniência.
 data/originals/reponderacao_estaduais_20261009/*.html -text -whitespace
 data/originals/*_102026_*/*.html -text -whitespace
+# Respostas e BUs suplementares dos logs preservam os bytes dos SHA-256.
+data/originals/tse_logs_2026/** -text -whitespace
+# Caminhos vetoriais preservam a formatação gerada pelo Matplotlib.
+docs/assets/logs_urnas_2026/*.svg -whitespace

@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from html import escape
 
+from apuracao_logs.view import bloco as bloco_logs
+
 from . import pagina_texto_b as T
 from . import pagina_texto_c as TC
 from . import pagina_texto_fechamento as TF
@@ -196,6 +198,7 @@ def r_fiscais(d: Dados, cap: Capitulo) -> str:
         return fig(nome, d)
 
     h += TFI.capitulo(F, figura, d.aviso, TFB.bloco(F, figura, d.aviso))
+    h += bloco_logs()
     return h + "</section>"
 
 
