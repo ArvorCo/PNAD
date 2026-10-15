@@ -19,7 +19,7 @@ from pathlib import Path
 import pandas as pd
 
 from .coleta import DESTINO, ORIGEM, ROOT, url
-from .complementos import LACUNAS, enderecos
+from .complementos import LACUNAS, enderecos, registros_sa
 from .complementos import carregar as carregar_complementos
 from .conferencias import conferir
 from .criterios import CRITERIOS, MIN_PARES, avaliar, campos
@@ -230,6 +230,7 @@ def montar() -> dict:
     bus.update(complementos)
     situacoes = Counter()
     indisponiveis = defaultdict(list)
+    arquivos_sa = registros_sa()
     for key, cat in catalogo.items():
         cod = situacao(
             cat, downloads.get(key), processados.get(key), key in bus, tipos_bu.get(key)
@@ -238,7 +239,7 @@ def montar() -> dict:
         if cod != "lido":
             uf, mun, z, s = key
             indisponiveis[(uf.upper(), z)].append(
-                {"mun": mun, "secao": s, "motivo": cod}
+                {"mun": mun, "secao": s, "motivo": cod, "logsa": arquivos_sa.get(key)}
             )
     if not linhas:
         raise ValueError("Nenhum log válido processado nesta versão")

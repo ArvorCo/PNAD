@@ -19,6 +19,33 @@ LACUNAS = ROOT / "analysis/apuracao_2026/logs_urnas/lacunas.json"
 SPEC = ROOT / "apuracao/scripts/secoes/bu.asn1"
 
 
+def registros_sa() -> dict:
+    """Endereços do logSA na evidência preservada; não são ciclos do VOTA."""
+    if not LACUNAS.exists():
+        return {}
+    resultado = {}
+    for r in json.loads(LACUNAS.read_text())["linhas"]:
+        if r.get("tipo_arquivo_bu") not in (3, 4, 5, 6):
+            continue
+        raw = (ROOT / r["arquivo"]).read_bytes()
+        assert hashlib.sha256(raw).hexdigest() == r["sha256"]
+        for h in json.loads(raw).get("hashes", []):
+            if h["hash"] != r["hash_anterior"]:
+                continue
+            arquivos = [a["nm"] for a in h["arq"] if a.get("tp") == "logsa"]
+            assert len(arquivos) <= 1
+            if arquivos:
+                uf, mun, z, s = r["uf"].lower(), r["mun"], r["zona"], r["secao"]
+                assert arquivos[0] == f"o03220{uf}{mun}{z:04d}{s:04d}-logsa.jez"
+                resultado[(uf, mun, z, s)] = {
+                    "url": f"{BASE}/{uf}/{mun}/{z:04d}/{s:04d}/{h['hash']}/{arquivos[0]}",
+                    "metadados_url": r["url"],
+                    "metadados_sha256": r["sha256"],
+                    "analisado": False,
+                }
+    return resultado
+
+
 def ler_bu(raw: bytes, chave: tuple, leitor) -> dict:
     env = leitor.decode("EntidadeEnvelopeGenerico", raw)
     bu = leitor.decode("EntidadeBoletimUrna", env["conteudo"])

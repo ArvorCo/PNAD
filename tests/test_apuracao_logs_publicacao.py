@@ -2,11 +2,12 @@
 
 import csv
 import gzip
+import hashlib
 import json
 import sqlite3
 from collections import Counter
 
-from apuracao_logs import mapa, publicacao
+from apuracao_logs import complementos, mapa, publicacao
 from apuracao_logs.coleta import SCHEMA
 from apuracao_logs.mapa import publicar_recortes
 from apuracao_logs.parser import VERSAO
@@ -20,6 +21,49 @@ def test_quantil_pondera_ciclos_sem_expandir_microdados():
     assert d["p90_s"] == 50
     assert duracoes(Counter())["mediana_s"] is None
     assert duracoes(Counter({9: 100_000_000}))["mediana_s"] == 9
+
+
+def test_logsa_tem_fonte_propria_sem_fingir_ciclos_analisados(tmp_path, monkeypatch):
+    raw = json.dumps(
+        {
+            "hashes": [
+                {
+                    "hash": "h",
+                    "arq": [
+                        {"nm": "o03220mg4123800390168-logsa.jez", "tp": "logsa"},
+                    ],
+                }
+            ]
+        }
+    ).encode()
+    (tmp_path / "aux.json").write_bytes(raw)
+    lacunas = tmp_path / "lacunas.json"
+    lacunas.write_text(
+        json.dumps(
+            {
+                "linhas": [
+                    {
+                        "uf": "MG",
+                        "mun": "41238",
+                        "zona": 39,
+                        "secao": 168,
+                        "tipo_arquivo_bu": 4,
+                        "arquivo": "aux.json",
+                        "url": "https://example.test/aux.json",
+                        "sha256": hashlib.sha256(raw).hexdigest(),
+                        "hash_anterior": "h",
+                    }
+                ]
+            }
+        )
+    )
+    monkeypatch.setattr(complementos, "ROOT", tmp_path)
+    monkeypatch.setattr(complementos, "LACUNAS", lacunas)
+    fontes = complementos.registros_sa()
+    fonte = fontes[("mg", "41238", 39, 168)]
+    assert fonte["url"].endswith("/h/o03220mg4123800390168-logsa.jez")
+    assert not fonte["analisado"] and "sha256" not in fonte
+    assert fonte["metadados_sha256"] == hashlib.sha256(raw).hexdigest()
 
 
 def test_estados_de_ausencia_nao_se_confundem():

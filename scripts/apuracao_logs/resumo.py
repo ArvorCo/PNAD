@@ -8,7 +8,7 @@ SITUACOES = {
     "lido": "Log lido e vinculado ao BU",
     "sem_nome": "Catálogo anterior sem nome de log",
     "nao_instalada": "Seção marcada como não instalada no catálogo oficial",
-    "apuracao_sem_log": "BU do sistema de apuração sem log no hash arquivado",
+    "apuracao_sem_log": "BU do sistema de apuração sem log VOTA no hash arquivado",
     "sem_hash_transmissao": "Catálogo sem hash de transmissão",
     "download_pendente": "Download ainda pendente",
     "erro": "Falha de download após tentativas",

@@ -27,7 +27,10 @@ votos de candidatos, preferências políticas ou características individuais.
 - A reconsulta de 15/10 dos 92 metadados sem nome de log está em `lacunas.json`,
   com as respostas originais em `data/originals/tse_logs_2026/lacunas/`. As 20
   seções antes `aux_404` agora oferecem BU e log; 41 continuam não instaladas e
-  31 têm boletins do sistema de apuração sem log listado no hash arquivado.
+  31 têm boletins do sistema de apuração sem log VOTA no hash arquivado.
+  Esses 31 metadados listam arquivos `logSA`, de outra categoria e não processados
+  pelo leitor de ciclos do VOTA. A ficha oferece seus endereços oficiais, sem
+  apresentar contagens ou tempos não calculados. Não são ausência de todo registro.
   Os 20 BUs recuperados ficam em `complementos.json` e
   `data/originals/tse_logs_2026/complementos/`, com URL, SHA-256 e identidade
   validada pelo ASN.1. Complementam apenas chaves antes sem hash/log, nunca

@@ -37,9 +37,9 @@ export async function blocoLogs({ h, buscar, uf, zona, secao, local }) {
   if (!secao) return h('section', { class: 'fis-logs' }, cab, h('p', {}, 'Escolha uma seção deste local para consultar seus tempos e ocorrências.'), nota);
   let indice, dados;
   try {
-    indice = await buscar(`${BASE}indice.json`);
+    indice = await buscar(`${BASE}indice.json?v=20261015-sa`);
     if (!indice || !(indice.zonas[uf] || []).includes(zona)) return h('section', { class: 'fis-logs' }, cab, h('p', {}, 'Esta zona ainda não tem logs analisados nesta publicação. Ausência de análise não significa ausência de ocorrência.'), nota);
-    dados = await buscarZona(`${BASE}zona/${uf}/${zona}.json.gz`);
+    dados = await buscarZona(`${BASE}zona/${uf}/${zona}.json.gz?v=20261015-sa`);
   } catch (erro) {
     return h('section', { class: 'fis-logs' }, cab, h('p', {}, erro.message === 'navegador-sem-gzip' ? 'Este navegador não abre os dados compactados. Use uma versão atual ou consulte a planilha.' : 'Não foi possível carregar a análise do log agora. Tente novamente.', ' ', h('a', { href: `${BASE}secoes.csv.gz` }, 'Baixar a planilha de seções')), nota);
   }
@@ -49,7 +49,8 @@ export async function blocoLogs({ h, buscar, uf, zona, secao, local }) {
   if (!row) {
     const ausencia = (dados.indisponiveis || []).find((r) => r.secao === Number(secao.secao) && r.mun === mun);
     const motivo = ausencia && indice.situacoes[ausencia.motivo];
-    return h('section', { class: 'fis-logs' }, cab, h('p', {}, motivo ? `${motivo.nome}. A seção não recebeu zero ocorrências.` : 'Não há log analisado para esta seção no pacote publicado. O registro pode estar ausente, pendente de leitura ou exigir conferência.'), nota);
+    return h('section', { class: 'fis-logs' }, cab, h('p', {}, motivo ? `${motivo.nome}. A seção não recebeu zero ocorrências.` : 'Não há log analisado para esta seção no pacote publicado. O registro pode estar ausente, pendente de leitura ou exigir conferência.'),
+      ausencia && ausencia.logsa ? h('p', {}, 'Os metadados oficiais listam um ', h('a', { href: ausencia.logsa.url, target: '_blank', rel: 'noopener' }, 'registro do sistema de apuração (logSA)'), '. É um arquivo de outra categoria, não incluído neste leitor de ciclos do VOTA. Portanto, a ausência do log de votação não significa ausência de todo registro.') : null, nota);
   }
   const metrica = (nome, valor, detalhe) => h('div', {}, h('dt', {}, nome), h('dd', {}, valor), h('small', {}, detalhe));
   const bioIndisponivel = row.biometria_status === 'ausente_bu' ? 'não consta no BU' : 'não reconciliada';

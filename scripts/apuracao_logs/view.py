@@ -85,7 +85,7 @@ def pagina(d):
         lacunas = (
             f'<p>Reconsultamos os metadados das {inteiro(consulta["secoes"])} seções sem nome de log no catálogo antigo. '
             f'{inteiro(estados.get("Nao instalada", 0))} estavam marcadas como não instaladas; '
-            f'{inteiro(estados.get("Totalizada", 0) + estados.get("Recebida", 0))} tinham boletins do sistema de apuração, sem log listado no hash arquivado. '
+            f'{inteiro(estados.get("Totalizada", 0) + estados.get("Recebida", 0))} tinham boletins do sistema de apuração, sem log de votação (VOTA) no hash arquivado. Os metadados desses casos listam logSA, uma categoria distinta, não processada neste leitor; o endereço está na ficha da seção. '
             f'As {inteiro(estados.get("aux_404", 0))} que antes retornavam 404 agora têm BU e log: '
             f'{inteiro(d["complementos"]["lidos"])} já estão incluídas nesta análise, com BU suplementar e fonte na ficha. '
             'O banco histórico foi preservado. <a href="assets/logs_urnas_2026/lacunas.json">Respostas, endereços e hashes da reconsulta</a>.</p>'
@@ -232,7 +232,7 @@ def pagina(d):
 <p>As contagens se sobrepõem. Um único reinício pode gerar mais de um diagnóstico. Os registros não aumentam automaticamente a pontuação histórica e não servem para estimar probabilidade de fraude. ALERTA costuma incluir digitação inválida ou pergunta do sistema ao mesário; ele não é tratado como ERRO.</p>
 <div class="regras">{regras}</div></section>
 <section id="cobertura"><h2>A cobertura faz parte do resultado</h2>
-<p>Catálogo: {inteiro(c["catalogadas"])} seções principais; {inteiro(c["com_log_no_catalogo"])} com nome de log no catálogo utilizado, incluindo complementos documentados. Recuperados: {inteiro(d["coleta"].get("ok", 0))}; com SHA-256 igual ao da coleta anterior: {inteiro(d["coleta"].get("hash_anterior_confere", 0))}. Lidos e vinculados a um BU: {inteiro(c["lidos"])}. Elegíveis para comparação de tempo: {inteiro(c["tempo_elegivel"])}.</p>{lacunas}
+<p>Catálogo: {inteiro(c["catalogadas"])} seções principais; {inteiro(c["com_log_no_catalogo"])} com nome de log de votação (VOTA) no catálogo utilizado, incluindo complementos documentados. Recuperados: {inteiro(d["coleta"].get("ok", 0))}; com SHA-256 igual ao da coleta anterior: {inteiro(d["coleta"].get("hash_anterior_confere", 0))}. Lidos e vinculados a um BU: {inteiro(c["lidos"])}. Elegíveis para comparação de tempo: {inteiro(c["tempo_elegivel"])}.</p>{lacunas}
 <p>Uma seção sem análise não recebe zero ocorrências. Ausência de publicação, falha de download, formato não reconhecido e falta de BU são limitações distintas. O quadro mostra o estágio desta publicação, em {escape(data_publicacao)}.</p>
 {situacoes}
 {tabela_uf}</section>

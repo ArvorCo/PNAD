@@ -226,6 +226,11 @@ def executar(base: str):
                 indice["situacoes"][row["motivo"]]["nome"]
                 in p.locator(".fis-logs").inner_text()
             )
+            if row.get("logsa"):
+                assert p.locator('.fis-logs a[href$="-logsa.jez"]').count() == 1
+                assert (
+                    "arquivo de outra categoria" in p.locator(".fis-logs").inner_text()
+                )
             resultados["ausencia_explicita"] = f'{uf}-{zona}-{row["secao"]}'
         browser.close()
     assert not erros, erros
