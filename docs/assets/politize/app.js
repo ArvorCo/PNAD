@@ -6,6 +6,7 @@
 import { carta, losango, CORES } from './carta.js';
 import { desenharCard } from './card.js';
 import { montarMapa } from './mapa.js';
+import { blocoFiscal, resumoFiscal } from './fiscal.js';
 
 /* ------------------------------------------------------------------ configuração */
 
@@ -869,6 +870,14 @@ async function mostrar(r) {
   const aoRedor = ord.slice(0, N_AO_REDOR).sort((a, b) => (num(b.l.indice) ?? -1) - (num(a.l.indice) ?? -1) || (a.d ?? Infinity) - (b.d ?? Infinity));
   const raio1km = num(local.lat) !== null ? ordenar(pool, local).filter((x) => x.d !== null && x.d <= 1000).map((x) => x.l) : [];
 
+  // O bloco de fiscalização carrega em paralelo e entra junto com o boletim, sem pular o layout.
+  const fiscalP = Promise.race([
+    blocoFiscal({ h, buscar: buscarJSON, base: BASE, local, secao: r.secao || null }),
+    new Promise((ok) => setTimeout(() => ok(undefined), 6000)),
+  ]).catch((e) => {
+    console.warn('fiscal', e);
+    return undefined;
+  });
   const ufDados = await buscarJSON(`${BASE}uf/${local._uf}.json`).catch(() => null);
   const pt0 = problemaTopo(ufDados);
   const temaAberto = await renderPropostas(pt0 ? pt0.nome : null);
@@ -890,7 +899,10 @@ async function mostrar(r) {
   const secBox = r.secao ? renderSecao(r, local) : null;
   const nova = h('div', { class: 'nova-busca' }, h('button', { type: 'button', class: 'btn btn-sec', onclick: () => limpar() }, 'Nova busca'));
   const bairros = renderBairros(local, pool);
-  alvo.replaceChildren(...[nova, secBox, boletim, viz, bairros, comp].filter(Boolean));
+  const fisEl = await fiscalP;
+  if (E.atual !== r) return;
+  const fisBox = fisEl === null ? null : h('div', { class: 'fiscal-slot' }, fisEl || blocoFiscalReserva());
+  alvo.replaceChildren(...[nova, secBox, fisBox, boletim, viz, bairros, comp].filter(Boolean));
   $('#resultado').setAttribute('aria-busy', 'false');
   document.title = `${caixa(local.nome)} · Politize sua vizinhança`;
 
@@ -903,6 +915,30 @@ async function mostrar(r) {
     console.warn('mapa', e);
   });
   desenharCardDo(comp, local, info, vars).catch((e) => console.warn('card', e));
+}
+
+// Sem o arquivo da zona (rede ou versão antiga dos dados), o convite continua.
+function blocoFiscalReserva() {
+  return h('aside', { class: 'fiscal entra n-padrao' },
+    h('header', { class: 'fis-cab' },
+      h('p', { class: 'kicker' }, 'Fiscalização · 2º turno, 25 de outubro'),
+      h('h2', {}, 'Toda seção precisa de fiscal'),
+      h('p', { class: 'fis-sub' }, 'Não conseguimos carregar os motivos desta seção agora. O convite vale do mesmo jeito: sem fiscal, ninguém do nosso lado confere a zerésima, a identificação dos eleitores e o boletim impresso.'),
+      h('div', { class: 'fis-cta' }, h('a', { class: 'btn btn-fiscal', href: 'https://fiscaisdopl.com.br', target: '_blank', rel: 'noopener' }, 'Quero ser fiscal · fiscaisdopl.com.br'))));
+}
+
+async function renderFiscalFixo() {
+  const alvo = $('#fiscalize-numeros');
+  if (!alvo) return;
+  const r = await resumoFiscal(buscarJSON, BASE).catch(() => null);
+  if (!r || !r.total) return;
+  const itens = [
+    [r.maxima, 'seções em prioridade máxima'],
+    [r.alta, 'seções em prioridade alta'],
+    [r.reforcada, 'seções com ao menos um motivo a mais'],
+    [r.total, 'seções no país, todas precisando de fiscal'],
+  ].filter(([v]) => num(v) !== null);
+  alvo.replaceChildren(...itens.map(([v, t]) => h('div', {}, h('dt', {}, t), h('dd', {}, f0(v)))));
 }
 
 function hashDo(r) {
@@ -1878,6 +1914,7 @@ async function iniciar() {
     aviso(`${str(E.indice.aviso, 'Dados de teste.')} Pasta de dados: ${BASE}.`, 'Modo de desenvolvimento');
   }
   renderConversas(null);
+  renderFiscalFixo().catch((e) => console.warn('fiscal fixo', e));
   const alvoProp = $('#conversas');
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver((ents) => {

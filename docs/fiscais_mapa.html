@@ -1,0 +1,132 @@
+<!doctype html>
+<!--
+  Mapa de fiscais. Página ESCRITA À MÃO, não gerada por script.
+  Dados: docs/assets/fiscais_mapa/ (gerados por scripts/fiscais-mapa-build.py a partir do
+  capítulo 13 do dossiê da apuração, analysis/apuracao_2026/dados/fiscais.json).
+  Aplicativo: docs/assets/fiscais_mapa/app.js e app.css.
+-->
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-ZPYEE8P9YC"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ZPYEE8P9YC');</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mapa de fiscais: seções sinalizadas no 1º turno | Arvor</title>
+<meta name="description" content="As 13.045 seções sinalizadas no capítulo 13 do dossiê da apuração, no mapa e em lista: busca por CEP, zona, município ou local, raio de 1 a 50 km em linha reta, agrupamento de marcadores, ficha de cada local e exportação em CSV.">
+<link rel="canonical" href="https://brasil.arvor.co/fiscais_mapa.html">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#151812">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Arvor Intelligence">
+<meta property="og:title" content="Mapa de fiscais">
+<meta property="og:description" content="Onde colocar fiscal no 2º turno: as seções sinalizadas no 1º turno, por CEP, zona ou município, no mapa ou em lista com CSV.">
+<meta property="og:url" content="https://brasil.arvor.co/fiscais_mapa.html">
+<meta property="og:image" content="https://brasil.arvor.co/img/og/fiscais_mapa.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@leonardodias">
+<meta name="twitter:title" content="Mapa de fiscais">
+<meta name="twitter:description" content="Onde colocar fiscal no 2º turno: as seções sinalizadas no 1º turno, por CEP, zona ou município, no mapa ou em lista com CSV.">
+<meta name="twitter:image" content="https://brasil.arvor.co/img/og/fiscais_mapa.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&amp;family=IBM+Plex+Sans+Condensed:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" integrity="sha384-c6Rcwz4e4CITMbu/NBmnNS8yN2sC3cUElMEMfP3vqqKFp7GOYaaBBCqmaWBjmkjb" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.css" integrity="sha384-pmjIAcz2bAn0xukfxADbZIb3t8oRT9Sv0rvO+BR5Csr6Dhqq+nZs59P0pPKQJkEV" crossorigin="anonymous">
+<link rel="stylesheet" href="assets/fiscais_mapa/app.css">
+<script>document.documentElement.classList.add('js')</script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" integrity="sha384-NElt3Op+9NBMCYaef5HxeJmU4Xeard/Lku8ek6hoPTvYkQPh3zLIrJP7KiRocsxO" crossorigin="anonymous"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.js" integrity="sha384-eXVCORTRlv4FUUgS/xmOyr66XBVraen8ATNLMESp92FKXLAMiKkerixTiBvXriZr" crossorigin="anonymous"></script>
+<script defer src="assets/fiscais_mapa/app.js"></script>
+</head>
+<body>
+<a class="skip" href="#controles">Pular para a busca</a>
+<header class="topo">
+  <div class="topo-in">
+    <a class="marca" href="index.html"><img src="img/arvor_logo.png" alt="" width="24" height="24">Arvor Intelligence</a>
+    <div class="topo-t">
+      <h1>Mapa de fiscais</h1>
+      <p>Seções sinalizadas no 1º turno de 2026, pela classificação original do <a href="apuracao_1o_turno_2026.html#fiscais">capítulo 13 do dossiê da apuração</a>.</p>
+    </div>
+    <a class="btn-fiscal" href="https://fiscaisdopl.com.br" target="_blank" rel="noopener">Seja fiscal · fiscaisdopl.com.br</a>
+  </div>
+</header>
+
+<main class="app">
+  <aside id="controles" class="controles" aria-label="Busca, filtros e distância">
+    <form id="f-busca" class="bloco" novalidate>
+      <h2>Buscar</h2>
+      <label for="q-cep" class="rot">CEP</label>
+      <input id="q-cep" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="9" placeholder="00000-000">
+      <div class="duas-col">
+        <div>
+          <label for="f-uf" class="rot">UF</label>
+          <select id="f-uf"><option value="">Todas</option></select>
+        </div>
+        <div>
+          <label for="f-zona" class="rot">Zona eleitoral</label>
+          <input id="f-zona" type="text" inputmode="numeric" maxlength="4" placeholder="000" autocomplete="off">
+        </div>
+      </div>
+      <label for="f-mun" class="rot">Município</label>
+      <select id="f-mun" disabled><option value="">Escolha a UF primeiro</option></select>
+      <label for="f-texto" class="rot">Nome do local, endereço ou bairro</label>
+      <input id="f-texto" type="search" autocomplete="off" placeholder="Ex.: escola, rua, bairro">
+      <div class="acoes">
+        <button type="submit" class="btn btn-prim">Buscar</button>
+        <button type="button" class="btn btn-sec" id="b-limpar">Limpar</button>
+      </div>
+      <p class="ajuda" id="ajuda-busca">O CEP centra o mapa no local de votação com o mesmo CEP (ou o mais parecido): é aproximação pelo CEP dos locais, não pelo seu endereço. A zona exige a UF.</p>
+    </form>
+
+    <fieldset class="bloco niveis">
+      <legend>Classificação original</legend>
+      <label class="nv nv-alta"><input type="checkbox" value="alta" checked><span class="pt"></span>Alta <small id="n-alta"></small></label>
+      <label class="nv nv-media"><input type="checkbox" value="media" checked><span class="pt"></span>Média <small id="n-media"></small></label>
+      <label class="nv nv-baixa"><input type="checkbox" value="baixa" checked><span class="pt"></span>Baixa <small id="n-baixa"></small></label>
+    </fieldset>
+
+    <fieldset class="bloco distancia" id="bloco-raio">
+      <legend>Distância do ponto buscado</legend>
+      <div class="raios" role="radiogroup" aria-label="Raio em quilômetros" id="raios"></div>
+      <p class="ajuda">Distância em linha reta, calculada pela fórmula geodésica de Vincenty no elipsoide WGS84 a partir da latitude e da longitude de cada local. Não é distância por estrada. Vale só no mapa; a lista ignora o raio.</p>
+    </fieldset>
+
+    <div class="bloco modo" role="group" aria-label="Modo de exibição">
+      <button type="button" class="btn-modo" id="m-mapa" aria-pressed="true">Mapa</button>
+      <button type="button" class="btn-modo" id="m-lista" aria-pressed="false">Ver em lista</button>
+    </div>
+
+    <p class="status" id="status" role="status" aria-live="polite">Carregando as seções sinalizadas.</p>
+  </aside>
+
+  <section class="palco" aria-label="Resultado">
+    <div id="mapa" class="mapa" role="region" aria-label="Mapa dos locais de votação sinalizados"></div>
+    <div id="lista" class="lista" hidden>
+      <div class="lista-topo">
+        <label for="l-busca" class="rot">Pesquisar na lista</label>
+        <input id="l-busca" type="search" autocomplete="off" placeholder="Qualquer texto: local, bairro, critério, explicação">
+        <div class="lista-acoes">
+          <label for="l-por-pag" class="rot rot-inline">Por página</label>
+          <select id="l-por-pag"><option>25</option><option selected>50</option><option>100</option><option>250</option></select>
+          <button type="button" class="btn btn-sec" id="l-csv">Exportar CSV</button>
+        </div>
+      </div>
+      <p class="ajuda" id="l-resumo"></p>
+      <div class="tabela-rolagem" tabindex="0" role="region" aria-label="Seções sinalizadas">
+        <table class="tabela" id="tabela"><thead></thead><tbody></tbody></table>
+      </div>
+      <nav class="paginas" id="paginas" aria-label="Páginas da lista"></nav>
+    </div>
+  </section>
+</main>
+
+<footer class="rodape">
+  <p><strong>Atipicidade estatística não é irregularidade.</strong> A lista é de prioridade de fiscalização, não de acusação. O que resolve cada item é a ata da mesa, o log da urna e a presença do fiscal. Toda seção precisa de fiscal: para ver os motivos de qualquer seção do país, use o <a href="politizesuavizinhanca.html">Politize sua vizinhança</a>.</p>
+  <p>Fonte: boletins de urna do TSE por seção e capítulo 13 do <a href="apuracao_1o_turno_2026.html#fiscais">dossiê da apuração do 1º turno</a>, com a planilha completa em <a href="assets/fiscais_2026.xlsx">Excel</a> e <a href="assets/fiscais_2026.csv">CSV</a>. Mapa: © colaboradores do <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>. Coordenada ausente ou inválida não vira ponto no mapa; a linha aparece na lista.</p>
+</footer>
+<noscript><p class="sem-js">Esta página precisa de JavaScript para o mapa e a lista. A planilha completa está em <a href="assets/fiscais_2026.csv">CSV</a> e <a href="assets/fiscais_2026.xlsx">Excel</a>.</p></noscript>
+</body>
+</html>

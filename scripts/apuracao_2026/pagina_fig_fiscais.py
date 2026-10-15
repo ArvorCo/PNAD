@@ -707,7 +707,12 @@ def bloco_download(F: dict, frase: str = "") -> str:
         f'<ul class="fs-downs">{"".join(itens)}</ul>'
         + (f"<p>{frase}</p>" if frase else "")
         + "<p>Os CSV usam ponto e vírgula e vírgula decimal e abrem direto no Excel em português; "
-        "o Excel traz as abas Leia-me, Seções, Locais, Municípios, UFs e Critérios.</p></aside>"
+        "o Excel traz as abas Leia-me, Seções, Locais, Municípios, UFs e Critérios.</p>"
+        '<p class="fs-tela"><a href="fiscais_mapa.html">Abrir o mapa de fiscais em tela '
+        "cheia</a>: busca por CEP, zona ou município, raio de 1 a 50 km em linha reta, "
+        "marcadores agrupados, ficha de cada local e lista com filtros e CSV. Para os motivos "
+        'de qualquer seção do país, sinalizada ou não, use o <a href="politizesuavizinhanca.html">'
+        "Politize sua vizinhança</a>.</p></aside>"
     )
 
 

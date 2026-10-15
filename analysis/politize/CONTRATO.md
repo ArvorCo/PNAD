@@ -307,6 +307,51 @@ diz isso na ficha.
 Seções muito pequenas (menos de 30 aptos, comuns no exterior e em aldeias): a camada da seção não mostra os
 votos; o app mostra só o local e explica que a seção é pequena demais para leitura própria.
 
+## Fiscalização: "Sua seção precisa de fiscal" (15/10/2026)
+
+Pedido do Leonardo: toda seção precisa de fiscal, e o boletim de qualquer seção buscada aponta os riscos
+que os números dela e do local de votação dão, com convite a ser fiscal em `https://fiscaisdopl.com.br`.
+Camada separada do build principal, para não regravar os 218 MB do Politize:
+`python3 scripts/politize-fiscal.py` (cerca de 45 s, Brasil e exterior; `--uf AC` para amostra), módulos
+`scripts/politize/fiscal.py` (regras, funções puras) e `fiscal_textos.py` (textos dos critérios). Lê os
+fragmentos `zona/` e `mun/` já publicados, a tabela `bu` do banco de boletins, `fiscais.json` e
+`anomalias.json` do dossiê da apuração e `data/outputs/fiscais_risco_{locais.csv.gz,municipios.csv}`.
+
+Arquivos, em `docs/assets/politize/dados/fiscal/`:
+
+- `regras.json`: rótulos (as três frases do capítulo 13), níveis com contagem nacional, critérios
+  (`nome`, `porque`, `conferir`, `regra`, `fonte`, `peso`, `secoes`), critérios do capítulo 13, pesos,
+  regra do território, `sempre` (o que todo fiscal faz), `legal`, `cta`, evidências e fontes com SHA-256.
+- `<UF>/<zona>.json` (2.641 arquivos, cerca de 58 MB): `sinais_zona`, `locais` (por `local_id`:
+  `secoes`, `aptos`, `sinais`, `territorio {nivel, pontos, motivos}`, `c13 {nivel, secoes}`, `niveis`) e
+  `secoes {colunas: [secao, local_id, pontos, nivel, sinais, c13], linhas}`. `sinais` = lista de
+  `[código, detalhe]` com o detalhe já escrito em pt-BR; `c13` = `[nível, critérios, explicação provável]`.
+
+Critérios (pontos em `fiscal.PESOS`): capítulo 13 da seção (alta 6, média 4, baixa 2); do boletim de
+urna, para todas as seções: liberados pelo ano de nascimento sem a digital (20% ou 12% com z 3 contra as
+outras seções da zona; 3), urna trocada ou votos recuperados (3), comparecimento 3 desvios acima da zona
+com abstenção de até 5% (3), primeiro voto 30 min depois das 8h de Brasília (2), sem digital cadastrada
+35% ou mais (1), último voto 60 min depois das 17h (1), urna UE2013 (1; 8,7% delas trocadas no 1º turno
+contra 0,4% das demais), 400 aptos ou mais (1), 20 em trânsito ou mais (1), disputa de até 5 pontos na
+seção ou no local (1), 60 anos ou mais em 45% ou sem fundamental completo em 60%, com perfil próprio da
+seção (1); do local: seções sinalizadas no capítulo 13 (alta 2, média ou baixa 1; não conta se a própria
+seção já foi sinalizada), 15 seções ou mais (1); da zona: entre as 50 mais atípicas (1), arquivo parado
+6 horas ou mais (1); território pela regra do capítulo 13, com distância à sede em linha reta (alto 2,
+médio 1). Níveis: prioridade máxima 6 ou mais, alta 4 ou 5, atenção reforçada 1 a 3, atenção padrão 0.
+Horário do boletim convertido para Brasília por `apuracao_2026.secoes_base.fusos_por_municipio`; exterior
+sem conversão, sem critério de horário.
+
+Distribuição em 15/10/2026: máxima 3.455 seções (0,7%), alta 20.899 (4,2%), reforçada 305.486 (61,2%),
+padrão 169.347 (33,9%). Pontos e cortes são juízo editorial por regra declarada, não medição de
+irregularidade; o texto público repete as três frases do capítulo 13 e nunca usa "fraude".
+
+App: `docs/assets/politize/fiscal.js` (módulo ES) monta o bloco entre "Sua seção" e o boletim, em
+paralelo com o resto e com tempo-limite de 6 s (sem o arquivo, entra o convite de reserva). Seção fixa
+`#fiscalize` no HTML, com o botão para fiscaisdopl.com.br e os números nacionais de `regras.json`.
+Testes em `tests/test_politize_fiscal.py`. Rodar de novo quando o banco de boletins, o capítulo 13 ou os
+fragmentos do Politize mudarem. O mapa de fiscais em tela cheia (`docs/fiscais_mapa.html`,
+`scripts/fiscais-mapa-build.py`) mostra só as seções do capítulo 13, pela classificação original.
+
 ## Fora do escopo desta versão
 
 Deputados e Senado; voto em trânsito (locais do tipo "Voto em trânsito" entram na lista por município, sem

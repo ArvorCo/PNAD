@@ -441,3 +441,76 @@ p{max-width:72ch}
 .chamada-jogo p{color:#dfe5ea;max-width:62ch;margin:0 0 16px}
 .chamada-jogo .btn{width:100%}
 @media (min-width:720px){.chamada-jogo .btn{width:auto}}
+
+/* ---------- fiscalização: "Sua seção precisa de fiscal" (fiscal.js) ---------- */
+:root{--n-maxima:#8f1d0f;--n-alta:#9a4a00;--n-reforcada:#f2c230;--n-padrao:#1f5f9e}
+.fiscal-slot:empty{display:none}
+.fiscal{background:var(--card);border:1px solid var(--line);border-radius:var(--raio);margin:0 0 18px;position:relative;overflow:hidden;--n-cor:var(--n-padrao)}
+.fiscal::before{content:"";position:absolute;left:0;top:0;bottom:0;width:8px;background:var(--n-cor)}
+.fiscal.n-maxima{--n-cor:var(--n-maxima)}
+.fiscal.n-alta{--n-cor:var(--n-alta)}
+.fiscal.n-reforcada{--n-cor:var(--n-reforcada)}
+.fis-cab{padding:20px 18px 18px 26px;background:var(--paper);border-bottom:1px dashed var(--line)}
+.fis-cab h2{margin:6px 0 6px;max-width:none;overflow-wrap:anywhere}
+.fis-sub{margin:0;font-size:1.04rem;color:var(--ink2)}
+.fis-nivel{display:grid;gap:10px;margin:14px 0 0}
+.fis-selo{display:inline-flex;align-items:baseline;flex-wrap:wrap;gap:4px 12px;margin:0;font-family:var(--display);font-weight:900;font-size:clamp(1.7rem,6vw,2.4rem);line-height:1.05;color:var(--ink)}
+.fis-selo small{font-family:var(--mono);font-weight:500;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.fis-medidor{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;max-width:620px}
+.fis-medidor li{display:block;min-width:0;overflow-wrap:anywhere;border-radius:6px;padding:7px 3px;font-family:var(--mono);font-size:.6rem;letter-spacing:0;text-transform:uppercase;line-height:1.2;text-align:center;background:var(--paper2);color:var(--muted);border:2px solid transparent}
+.fis-medidor li.atual{color:#fff;font-weight:700}
+.fis-medidor li.n-maxima.atual{background:var(--n-maxima)}
+.fis-medidor li.n-alta.atual{background:var(--n-alta)}
+.fis-medidor li.n-reforcada.atual{background:var(--n-reforcada);color:var(--ink)}
+.fis-medidor li.n-padrao.atual{background:var(--n-padrao)}
+.fis-cta{margin:16px 0 0;display:grid;gap:6px}
+.fis-cta-t{margin:0;font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ouro-txt)}
+.btn-fiscal{background:var(--amarelo2);color:var(--ink);border-color:var(--ink);width:100%;font-size:1.08rem}
+.btn-fiscal:hover{background:var(--ink);color:var(--amarelo2)}
+.fis-nota{font-size:.9rem;color:var(--muted);margin:8px 0 0}
+.fis-corpo{display:grid;grid-template-columns:1fr;gap:0}
+.fis-corpo>*{padding:18px 18px 18px 26px;border-bottom:1px dashed var(--line);min-width:0;margin:0}
+.fis-corpo>*:last-child{border-bottom:0}
+.fis-sinais{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.fis-sinal{border:1px solid var(--line);border-left:5px solid var(--n-padrao);border-radius:0 10px 10px 0;padding:10px 12px;background:#fff}
+.fis-sinal.g-c13{border-left-color:var(--n-maxima)}
+.fis-sinal.g-secao{border-left-color:var(--n-alta)}
+.fis-sinal.g-territorio{border-left-color:var(--lula)}
+.fis-sinal.g-zona{border-left-color:var(--azul)}
+.fis-sinal b{display:block;font-size:1.05rem;line-height:1.25}
+.fis-sinal p{margin:4px 0 0;font-size:.95rem}
+.fis-tag{font-family:var(--mono);font-size:.66rem!important;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 2px!important}
+.fis-det{font-weight:600;color:var(--ink)}
+.fis-porque{color:var(--ink2)}
+.fis-conf{background:var(--paper);border-radius:8px;padding:6px 8px}
+.fis-conf strong{display:block;font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--verde-txt)}
+.fis-lista{margin:6px 0 0;padding-left:20px;font-size:.96rem}
+.fis-lista li{margin:3px 0}
+.fis-chips{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.fis-chip{display:inline-flex;flex-direction:column;align-items:flex-start;min-height:44px;justify-content:center;padding:5px 10px;border-radius:8px;text-decoration:none;font-weight:700;font-size:.95rem;line-height:1.15;border:2px solid transparent;color:#fff;background:var(--n-padrao)}
+.fis-chip small{font-family:var(--mono);font-weight:400;font-size:.64rem;letter-spacing:.06em;text-transform:uppercase}
+.fis-chip.n-maxima{background:var(--n-maxima)}
+.fis-chip.n-alta{background:var(--n-alta)}
+.fis-chip.n-reforcada{background:var(--n-reforcada);color:var(--ink)}
+.fis-chip:hover{filter:brightness(1.12);color:#fff}
+.fis-chip.n-reforcada:hover{color:var(--ink)}
+.fis-chip.atual{border-color:var(--ink);outline:2px solid var(--amarelo2);outline-offset:1px}
+.fis-sempre ol{margin:6px 0 0;padding-left:22px}
+.fis-sempre li{margin:6px 0}
+.fis-metodo summary{cursor:pointer;font-weight:700;min-height:44px;display:flex;align-items:center}
+.fis-metodo p{font-size:.95rem}
+.fis-tab td{font-size:.88rem}
+.fis-tab td.num,.fis-tab th.num{text-align:right;white-space:nowrap}
+.fiscalize{background:#fff8dc}
+.fiscalize .acao-fiscal{margin:18px 0 0}
+.fiscal-numeros{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:0;align-content:start}
+.fiscal-numeros:empty{display:none}
+.fiscal-numeros>div{display:flex;flex-direction:column-reverse;gap:4px;border-top:4px solid var(--n-padrao);padding-top:8px}
+.fiscal-numeros>div:nth-child(1){border-top-color:var(--n-maxima)}
+.fiscal-numeros>div:nth-child(2){border-top-color:var(--n-alta)}
+.fiscal-numeros>div:nth-child(3){border-top-color:var(--n-reforcada)}
+.fiscal-numeros dt{font-size:.92rem;color:var(--ink2)}
+.fiscal-numeros dd{margin:0;font-family:var(--display);font-weight:900;font-size:clamp(1.6rem,5vw,2.3rem);line-height:1}
+@media (min-width:720px){.btn-fiscal{width:auto}.fis-medidor li{font-size:.72rem}}
+@media (min-width:900px){.fis-corpo{grid-template-columns:1fr 1fr}.fis-corpo>.fis-motivos,.fis-corpo>.fis-predio,.fis-corpo>details{grid-column:1/-1}}
+@media print{.fis-cta,.fiscalize .acao-fiscal{display:none}}
