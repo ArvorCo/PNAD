@@ -1,0 +1,41 @@
+A session-scoped Stop hook is now active with condition: "na nossa página @docs/politizesuavizinhanca.html precisamos integrar informações de risco da seção que está sendo pesquisada para falar se a seção precisaria de fiscais adotando os critérios que usamos em @docs/apuracao_1o_turno_2026.html  na parte de fiscais, mas indo além, porque na verdade toda seção precisa de fiscais, mas é necessário apontar os riscos de cada seção pesquisada e tudo o mais para estimular as pessoas a serem fiscais indicando o site fiscaisdopl.com.br em qualquer seção buscada, mas apontando mais riscos que indicam necessidade de fiscalização a partir dos números da seção e do local de votação, além de integrar as que já encontramos com alertas e gerar mais critérios que podem também recomendar fiscalização dessas seções. Capriche". Briefly acknowledge the goal, then immediately start (or continue) working toward it — treat the condition itself as your directive and do not pause to ask the user what to do. The hook will block stopping until the condition holds. It auto-clears once the condition is met — do not tell the user to run `/goal clear` after success; that's only for clearing a goal early.
+
+---
+
+<pasted_content id="49ff">
+recebi eesse feedback de usuárias com ideais que podemos incrementar:
+Funcionalidades:
+Pesquisa por CEP ou zona eleitoral.
+Centralização do mapa na localização pesquisada.
+Zoom automático para os resultados.
+Controle manual de zoom.
+Marcadores coloridos conforme classificação original.
+Agrupamento de marcadores quando houver muitos locais próximos.
+Ficha informativa ao clicar no marcador.
+Link para abrir a localização no Google Maps.
+Atualização automática ao modificar filtros ou distância.
+DISTÂNCIA
+Criar controle com as opções:
+1 km | 2 km | 5 km | 10 km | 15 km | 20 km | 30 km | 50 km
+Valor inicial: 10 km.
+O usuário poderá ampliar ou reduzir a distância sem repetir a pesquisa.
+Utilizar as coordenadas lat e lon existentes na planilha e calcular a distância real em linha reta por fórmula geodésica apropriada.
+Não confundir distância em linha reta com distância por estrada.
+Caso as coordenadas estejam ausentes ou inválidas, não inventar uma posição no mapa.
+MODO LISTA
+Ao selecionar VER EM LISTA:
+Desativar completamente o limite de distância.
+Não utilizar o raio selecionado no mapa para restringir os resultados.
+Exibir todos os registros correspondentes aos filtros escolhidos.
+Permitir pesquisa por UF, município, zona eleitoral, CEP e nome do local.
+Permitir ordenação, paginação e pesquisa textual.
+Permitir exportar os resultados filtrados em CSV.
+Exibir também registros sem coordenadas válidas.
+O usuário poderá consultar uma zona eleitoral inteira, um município inteiro ou todos os registros de uma UF, sem restrição de proximidade.
+Ao retornar ao mapa, restaurar o último raio selecionado.
+</pasted_content id="49ff">
+
+---
+
+Stop hook feedback:
+[na nossa página @docs/politizesuavizinhanca.html precisamos integrar informações de risco da seção que está sendo pesquisada para falar se a seção precisaria de fiscais adotando os critérios que usamos em @docs/apuracao_1o_turno_2026.html  na parte de fiscais, mas indo além, porque na verdade toda seção precisa de fiscais, mas é necessário apontar os riscos de cada seção pesquisada e tudo o mais para estimular as pessoas a serem fiscais indicando o site fiscaisdopl.com.br em qualquer seção buscada, mas apontando mais riscos que indicam necessidade de fiscalização a partir dos números da seção e do local de votação, além de integrar as que já encontramos com alertas e gerar mais critérios que podem também recomendar fiscalização dessas seções. Capriche]: A integração foi implementada e publicada (commit 6e4cf5b7), mas o CI e o GitHub Pages ainda estavam em andamento e a publicação não foi verificada no ar. Além disso, a condição pede um resultado no site, e a verificação final em produção não aconteceu, então não há evidência suficiente no transcript de que a página publicada atenda a todos os requisitos.
