@@ -25,6 +25,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Instalar dependencias
+        run: python3 -m pip install -q "asn1tools>=0.169.0"
+      - name: Conferir BUs aceitos com o BU publicado pelo TSE
+        run: python3 scripts/totalizacao-conferir-tse.py
       - name: Exportar agregados e CSV
         run: python3 scripts/totalizacao-exportar.py
       - name: Commitar snapshot se houver mudanca

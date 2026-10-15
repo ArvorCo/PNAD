@@ -48,6 +48,16 @@ Segredos: `MODO` (`teste` aceita FASE S/T; `oficial` exige o perfil do 2º turno
 (sal do hash de IP para o limite de taxa) e `TURNSTILE_SECRET` (opcional; sem ele, só o limite por
 IP). A chave `SUPABASE_SERVICE_ROLE_KEY` é injetada pela plataforma.
 
+## Conferência com o TSE
+
+`python3 scripts/totalizacao-conferir-tse.py` compara cada BU aceito (fase O) com o `-bu.dat` ou
+`-busa.dat` que o TSE publica para a seção (pleito do próprio BU), decodificado com
+`apuracao/scripts/secoes/bu.asn1`, voto a voto: nominais por número, legenda por partido,
+brancos, nulos, comparecimento e aptos. Grava `conferencia_tse.json` e `.csv` em
+`docs/assets/totalizacao_dados/`; o painel mostra o bloco "Conferência com o TSE". Retomável:
+seções já iguais ou divergentes com o mesmo hash não são refeitas (`--refazer` força). Roda no
+workflow antes da exportação. Igualdade comprova transmissão e soma, nunca o interior da urna.
+
 ## Antes de 25/10
 
 1. `supabase secrets set MODO=oficial`.

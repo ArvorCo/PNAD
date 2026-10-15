@@ -17,7 +17,7 @@
     cobUf: 'v_cobertura_uf', conf: 'v_conflito', est: 'v_estatisticas'
   };
 
-  var D = { br: [], uf: [], resumo: [], cobUf: [], conf: [], est: {}, manifest: null };
+  var D = { br: [], uf: [], resumo: [], cobUf: [], conf: [], est: {}, manifest: null, tse: null };
   var meta = { gerado: null, origem: 'estático' };
   var ordem = { cob: { col: 'pct', dir: -1 }, conf: { col: 'uf', dir: 1 } };
 
@@ -335,6 +335,55 @@
     box.appendChild(t);
   }
 
+  function renderTse() {
+    var f = $('tse-ficha'), box = $('tse-corpo');
+    f.textContent = ''; box.textContent = '';
+    function item(rot, valor, cls) {
+      var d = el('div'); d.appendChild(el('dt', '', rot));
+      d.appendChild(el('dd', cls || '', valor)); f.appendChild(d);
+    }
+    var t = D.tse, r = t && t.resumo;
+    if (!r) {
+      item('Estado', 'Conferência ainda não gerada.');
+      box.appendChild(vazio('Nenhuma seção conferida ainda.'));
+      return;
+    }
+    var oficiais = num(r.aceitos) - num(r.fora_do_oficial);
+    item('BUs aceitos na fase oficial', nf(oficiais));
+    item('Com BU publicado pelo TSE', nf(r.conferidos));
+    item('Batem', nf(r.iguais), num(r.iguais) ? 'ok' : '');
+    item('Divergem', nf(r.divergentes), num(r.divergentes) ? 'quebra' : 'ok');
+    item('TSE ainda não publicou', nf(r.nao_publicados));
+    if (num(r.erros)) item('Erros de consulta', nf(r.erros), 'quebra');
+    item('Conferido em', hora(t.gerado_em));
+    var linhasDiv = [];
+    (t.secoes || []).forEach(function (s) {
+      if (s.situacao !== 'divergente') return;
+      (s.diferencas || []).forEach(function (d) {
+        linhasDiv.push({ uf: uf(s.uf), muni: num(s.muni), zona: num(s.zona), secao: num(s.secao), campo: d.campo,
+          cargo: d.cargo === null || d.cargo === undefined ? '' : String(d.cargo), chave: d.chave === null || d.chave === undefined ? '' : String(d.chave),
+          qr: d.qr === null || d.qr === undefined ? '' : String(d.qr), tse: d.tse === null || d.tse === undefined ? '' : String(d.tse) });
+      });
+    });
+    if (!num(r.conferidos)) { box.appendChild(vazio('Nenhuma seção conferida ainda: o TSE publica o BU da seção depois de totalizá-la.')); return; }
+    if (!linhasDiv.length) { box.appendChild(vazio('Nenhuma divergência: todos os BUs conferidos batem com o publicado.')); return; }
+    var cols = [{ id: 'uf', rot: 'UF' }, { id: 'muni', rot: 'Município', num: true }, { id: 'zona', rot: 'Zona', num: true }, { id: 'secao', rot: 'Seção', num: true },
+      { id: 'campo', rot: 'Campo' }, { id: 'cargo', rot: 'Cargo' }, { id: 'chave', rot: 'Número' }, { id: 'qr', rot: 'QR impresso' }, { id: 'tse', rot: 'TSE' }];
+    var tab = el('table');
+    var thead = el('thead'), trh = el('tr');
+    cols.forEach(function (c) { trh.appendChild(el('th', c.num ? 'num' : '', c.rot)); });
+    thead.appendChild(trh); tab.appendChild(thead);
+    var tb = el('tbody');
+    linhasDiv.forEach(function (l) {
+      var tr = el('tr');
+      celula(tr, l.uf, 'uf'); celula(tr, String(l.muni), 'num'); celula(tr, String(l.zona), 'num'); celula(tr, String(l.secao), 'num');
+      celula(tr, l.campo); celula(tr, l.cargo); celula(tr, l.chave); celula(tr, l.qr, 'num'); celula(tr, l.tse, 'num');
+      tb.appendChild(tr);
+    });
+    tab.appendChild(tb);
+    box.appendChild(tab);
+  }
+
   function renderIntegridade() {
     var f = $('int-ficha');
     f.textContent = '';
@@ -372,7 +421,7 @@
   }
 
   function renderTudo() {
-    renderHero(); renderPlacar(); renderCobertura(); renderPorUf(); renderConflitos(); renderIntegridade();
+    renderHero(); renderPlacar(); renderCobertura(); renderPorUf(); renderTse(); renderConflitos(); renderIntegridade();
   }
 
   /* ---------- carga ---------- */
@@ -406,6 +455,10 @@
       return buscar(DADOS + 'candidatos_2t.json', { cache: 'no-cache' }).then(function (j) {
         CANDS = j && Array.isArray(j.candidatos) ? j.candidatos : [];
       }, function () { CANDS = []; });
+    }).then(function () {
+      return buscar(DADOS + 'conferencia_tse.json', { cache: 'no-cache' }).then(function (j) {
+        D.tse = j && j.resumo ? j : null;
+      }, function () { D.tse = null; });
     });
   }
 
