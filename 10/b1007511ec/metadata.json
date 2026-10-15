@@ -3,7 +3,7 @@
   "checkpoint_id": "10b1007511ec",
   "strategy": "manual-commit",
   "branch": "main",
-  "checkpoints_count": 1,
+  "checkpoints_count": 3,
   "files_touched": [
     "docs/assets/fiscais_mapa/app.js",
     "docs/assets/politize/fiscal.js",
@@ -12,7 +12,11 @@
     "scripts/politize-fiscal.py",
     "scripts/politize/fiscal.py",
     "scripts/politize/fiscal_textos.py",
-    "tests/test_politize_fiscal.py"
+    "tests/test_politize_fiscal.py",
+    "tests/test_totalizacao_segredos.py",
+    "totalizacao/README.md",
+    "totalizacao/src/qrbu/ecdsa.ts",
+    "totalizacao/tests/fixtures/intermediarios_ecpy.json"
   ],
   "sessions": [
     {
@@ -21,13 +25,20 @@
       "context": "/10/b1007511ec/0/context.md",
       "content_hash": "/10/b1007511ec/0/content_hash.txt",
       "prompt": "/10/b1007511ec/0/prompt.txt"
+    },
+    {
+      "metadata": "/10/b1007511ec/1/metadata.json",
+      "transcript": "/10/b1007511ec/1/full.jsonl",
+      "context": "/10/b1007511ec/1/context.md",
+      "content_hash": "/10/b1007511ec/1/content_hash.txt",
+      "prompt": "/10/b1007511ec/1/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 252,
-    "cache_creation_tokens": 437716,
-    "cache_read_tokens": 45676388,
-    "output_tokens": 162037,
-    "api_call_count": 125
+    "input_tokens": 3064,
+    "cache_creation_tokens": 910475,
+    "cache_read_tokens": 84694655,
+    "output_tokens": 337351,
+    "api_call_count": 225
   }
 }
