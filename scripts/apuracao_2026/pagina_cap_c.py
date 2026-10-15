@@ -188,7 +188,7 @@ def r_fiscais(d: Dados, cap: Capitulo) -> str:
     h = secao(
         cap,
         "Onde colocar fiscal.<br><em>Prioridade, não acusação.</em>",
-        "30 critérios para conferir: 12 do histórico e 18 dos logs de votação. "
+        "37 critérios para conferir: 12 do histórico e 25 dos logs de votação. "
         "Brasil e exterior na mesma consulta, com contagens, regras e fontes por seção.",
     )
 

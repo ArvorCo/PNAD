@@ -11,6 +11,14 @@ from .parser import VERSAO, analisar, textos_zip
 from .processamento import reconciliar
 
 CASOS = [
+    (
+        "sp",
+        "70718",
+        273,
+        214,
+        "inspecoes_sem_reinicio",
+        "Santos: inspeções e retomadas, sem reinício localizado",
+    ),
     ("am", "98353", 56, 19, "assinatura", "Erro seguido de verificação bem-sucedida"),
     (
         "go",
@@ -82,7 +90,26 @@ def conferir():
             and campos[0][:10] == "04/10/2026"
             and campos[4] == "O voto do eleitor foi computado"
         )
-        if tipo == "assinatura":
+        if tipo == "inspecoes_sem_reinicio":
+            assert r["contagem_confere"] and r["biometria_confere"]
+            assert r["contagens"].get("erros", 0) == 0
+            assert r["contagens"]["reinicios_durante_votacao"] == 0
+            assert r["contagens"].get("reinicios_sistema_em_votacao", 0) == 0
+            assert r["inspecoes"]["n"] == 7 and r["inspecoes"]["max"] == 41
+            assert r["contagens"]["computados"] == 275
+            assert r["contagens"]["retomadas_inatividade"] == 9
+            assert r["contagens"]["habilitacoes_canceladas"] == 1
+            assert r["processo_observado"]["processo"]["p50"] == 73
+            assert r["processo_observado"]["cadencia"]["p50"] == 97
+            assert r["tempo_voto"]["p50"] == 52
+            assert r["tipos_habilitacao_computados"] == {
+                "biometrica": 215,
+                "biografica": 32,
+                "sem_biometria": 28,
+            }
+            leitura = "O arquivo de Santos, zona 273, seção 214, registra uma partida do sistema antes da abertura e nenhuma nova partida durante a votação. Não há ERRO/FATAL. Há sete inspeções de 14 a 41 segundos, nove retomadas da digitação após inatividade e um cancelamento de habilitação às 10:43:10. Os 275 cômputos e as categorias 215 biométricas, 32 biográficas e 28 sem biometria fecham com o BU. A mediana é 73 s do identificador ao cômputo, 52 s após a habilitação e 97 s entre cômputos."
+            limite = "Um relato de problema seguido de reinício motivou esta revisão. O arquivo consultado não confirma o reinício e não permite descartar uma ocorrência fora do registro. Inspeção pode convocar fiscais e é procedimento previsto; sem horário aproximado e ata não é possível identificar qual episódio foi observado. A busca anterior omitia inspeções e retomadas por não serem ERRO/FATAL."
+        elif tipo == "assinatura":
             assert r["contagens"]["falhas_assinatura_com_sucesso_posterior"] > 0
             leitura = "A verificação de /dsk/fe/estatico/infomidia.vsc registrou ERRO às 06:56:39 e SUCESSO às 07:00:19. As três categorias de habilitação e o comparecimento fecham com o BU. O sucesso posterior faz parte do registro e não deve ser omitido."
             limite = "São mensagens do próprio sistema, sem validação criptográfica independente nesta análise."
@@ -133,6 +160,18 @@ def conferir():
                     else None
                 ),
                 "versao_parser": VERSAO,
+                **(
+                    {
+                        "ocorrencias": r["ocorrencias_operacionais"],
+                        "processo": {
+                            k: v
+                            for k, v in r["processo_observado"].items()
+                            if not k.startswith("histograma")
+                        },
+                    }
+                    if tipo == "inspecoes_sem_reinicio"
+                    else {}
+                ),
             }
         )
     raw.close()

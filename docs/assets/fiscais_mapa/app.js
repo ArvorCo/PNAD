@@ -72,6 +72,7 @@
   function km(v) { return v === null || v === undefined ? '' : (v < 10 ? nf1.format(v) : nf0.format(v)) + ' km'; }
 
   function buscar(url) {
+    if (url.indexOf(BASE) === 0) url += (url.indexOf("?") < 0 ? "?" : "&") + "v=20261015-processo11";
     if (S.cache.has(url)) return S.cache.get(url);
     var p = fetch(url, { credentials: 'same-origin' }).then(function (r) {
       if (!r.ok) { var e = new Error('HTTP ' + r.status); e.status = r.status; throw e; }
@@ -366,7 +367,7 @@
           h('b', {}, 'Seção ' + r.secao), ' ',
           h('span', { class: 'chip n-' + r.nivel }, NOME_NIVEL[r.nivel]), ' ',
           r.critNomes.join('; '),
-          r.tempo_voto != null ? h('small', {}, 'Mediana da votação: ' + nf1.format(r.tempo_voto) + ' s. Veja denominador e referência na ficha da seção.') : null,
+          r.processo_mediana != null ? h('small', {}, 'Processo observado: mediana ' + nf1.format(r.processo_mediana) + ' s. Cadência: ' + (r.cadencia_mediana == null ? 'indisponível' : nf1.format(r.cadencia_mediana) + ' s') + '. Bases e referências na ficha da seção.') : null,
           r.explicacao ? h('small', {}, 'Explicação provável: ' + r.explicacao) : null,
           h('a', { class: 'ficha-pol', href: 'politizesuavizinhanca.html#s=' + encodeURIComponent(r.uf + '-' + r.zona + '-' + r.secao) }, 'Todos os motivos desta seção'));
       })),
@@ -505,7 +506,7 @@
 
   function exportarCsv() {
     var rs = S.listaAtual || [];
-    var cab = ['nivel', 'uf', 'municipio', 'zona', 'secao', 'local', 'endereco', 'bairro', 'cep', 'lat', 'lon', 'distancia_km_linha_reta', 'pontuacao', 'criterios', 'explicacao_provavel', 'risco_territorio', 'aptos', 'flavio_pct', 'lula_pct', 'google_maps', 'criterios_historicos', 'diagnosticos_log', 'mediana_votacao_s', 'coordenada_fonte', 'ficha_secao'];
+    var cab = ['nivel', 'uf', 'municipio', 'zona', 'secao', 'local', 'endereco', 'bairro', 'cep', 'lat', 'lon', 'distancia_km_linha_reta', 'pontuacao', 'criterios', 'explicacao_provavel', 'risco_territorio', 'aptos', 'flavio_pct', 'lula_pct', 'google_maps', 'criterios_historicos', 'diagnosticos_log', 'mediana_votacao_s', 'coordenada_fonte', 'processo_mediana_s', 'cadencia_mediana_s', 'ficha_secao'];
     var dec = function (v, c) { return v === null || v === undefined || v === '' ? '' : (typeof v === 'number' ? v.toFixed(c).replace('.', ',') : String(v)); };
     var esc = function (v) { var s = v === null || v === undefined ? '' : String(v); return /[";\n\r]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
     var linhas = [cab.join(';')];
@@ -515,7 +516,7 @@
         coordOk(r) ? dec(r.lat, 5) : '', coordOk(r) ? dec(r.lon, 5) : '', r.dist === null || r.dist === undefined ? '' : dec(r.dist, 2),
         r.pontuacao, r.critNomes.join(' | '), r.explicacao, r.risco || '', r.aptos, dec(r.flavio_pct, 2), dec(r.lula_pct, 2),
         coordOk(r) ? 'https://www.google.com/maps/search/?api=1&query=' + r.lat + ',' + r.lon : '',
-        r.crit.join('|'), r.logs.join('|'), dec(r.tempo_voto, 1), r.coord_fonte,
+        r.crit.join('|'), r.logs.join('|'), dec(r.tempo_voto, 1), r.coord_fonte, dec(r.processo_mediana, 1), dec(r.cadencia_mediana, 1),
         'https://brasil.arvor.co/politizesuavizinhanca.html#s=' + r.uf + '-' + r.zona + '-' + r.secao,
       ].map(esc).join(';'));
     });
@@ -613,8 +614,8 @@
       $('#f-log').appendChild(opcoes);
     });
     $('#resumo-acervo').textContent = nf0.format(d.resumo.secoes) + ' seções na consulta combinada · Brasil e exterior';
-    var curtos = {tempo_lento:'Votação lenta', sem_biometria_alta:'Sem biometria alta', biografica_alta:'Biográfica alta', erro_tecnico:'Erros técnicos', contagem_divergente:'Contagem log ≠ BU'};
-    ['tempo_lento','sem_biometria_alta','biografica_alta','erro_tecnico','contagem_divergente'].forEach(function (k) {
+    var curtos = {processo_rapido:'Processo rápido', cadencia_rapida:'Cadência rápida', rajada_rapida:'Trecho rápido', tempo_lento:'Votação lenta', sem_biometria_alta:'Sem biometria alta', biografica_alta:'Biográfica alta', erro_tecnico:'Erros técnicos', contagem_divergente:'Contagem log ≠ BU'};
+    ['processo_rapido','cadencia_rapida','rajada_rapida','sem_biometria_alta','erro_tecnico'].forEach(function (k) {
       var r = d.logs.criterios[k];
       $('#atalhos-logs').appendChild(h('button', {type:'button', 'data-log':k, title:r.nome, onclick:function () {
         $('#f-log').value = k;
@@ -628,12 +629,15 @@
     var f = S.filtro;
     var antiga = f.log.startsWith('historico:');
     var r = antiga ? S.meta.criterios[f.log.slice(10)] : (S.meta.logs.criterios[f.log] || null);
-    var nome = r ? r.nome : f.camada === 'todas' ? 'Todos os 30 critérios' : f.camada === 'logs' ? '18 critérios dos logs' : '12 critérios históricos';
+    var nLogs = Object.keys(S.meta.logs.criterios).length;
+    var nHistoricos = Object.keys(S.meta.criterios).length;
+    var todos = 'Todos os ' + (nLogs + nHistoricos) + ' critérios';
+    var nome = r ? r.nome : f.camada === 'todas' ? todos : f.camada === 'logs' ? nLogs + ' critérios dos logs' : nHistoricos + ' critérios históricos';
     var exterior = rs.filter(function (linha) { return linha.uf === 'ZZ'; }).length;
     $('#recorte-ativo').textContent = nome + ' · ' + nf0.format(rs.length) + ' seções nos filtros, ' + nf0.format(exterior) + ' no exterior' + (S.modo === 'mapa' && S.centro ? ' (antes do raio)' : '');
     $('#criterio-ativo').hidden = !r;
     if (r) $('#criterio-ativo').replaceChildren(h('strong', {}, nome), h('p', {}, r.regra || r.mede), h('p', {}, 'Conferir: ' + r.conferir), h('a', {href:antiga ? 'apuracao_1o_turno_2026.html#fiscais' : 'logs_urnas_2026.html#' + f.log}, 'Ler regra e limites'));
-    $('#f-log option[value=""]').textContent = f.camada === 'todas' ? 'Todos os 30 critérios' : f.camada === 'logs' ? 'Todos os 18 diagnósticos dos logs' : 'Todos os 12 históricos';
+    $('#f-log option[value=""]').textContent = f.camada === 'todas' ? todos : f.camada === 'logs' ? 'Todos os ' + nLogs + ' diagnósticos dos logs' : 'Todos os ' + nHistoricos + ' históricos';
     document.querySelectorAll('#atalhos-logs button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.log === f.log)); });
   }
 

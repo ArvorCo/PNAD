@@ -95,6 +95,8 @@ def integrar(obj: dict) -> dict:
         antigos[chave]["tempo_voto"] = (
             log["voto_mediana"] if log["elegivel_tempo"] else None
         )
+        for campo in ("processo_mediana", "cadencia_mediana"):
+            antigos[chave][campo] = log.get(campo) if log["elegivel_tempo"] else None
     # O capítulo histórico não tinha coordenadas do exterior. O Politize tem
     # centros de cidade, explicitamente aproximados, e nunca endereço inventado.
     for row in linhas:
@@ -116,7 +118,15 @@ def integrar(obj: dict) -> dict:
         if local:
             row["lat"], row["lon"] = local.get("lat"), local.get("lon")
             row["coord_fonte"] = local.get("coord_fonte")
-    colunas = [*obj["colunas"], "originais", "logs", "tempo_voto", "coord_fonte"]
+    colunas = [
+        *obj["colunas"],
+        "originais",
+        "logs",
+        "tempo_voto",
+        "coord_fonte",
+        "processo_mediana",
+        "cadencia_mediana",
+    ]
     obj["colunas"] = colunas
     obj["linhas"] = [[r.get(c) for c in colunas] for r in linhas]
     obj["logs"] = {

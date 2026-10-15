@@ -13,7 +13,10 @@ import zipfile
 from collections import Counter, defaultdict
 from itertools import pairwise
 
-VERSAO = "9"
+from .cronologia import preparacao_anterior
+from .processo import resumir
+
+VERSAO = "11"
 DIAS = {"04/10/2026": 0, "05/10/2026": 86400}
 MAX_DESCOMPRIMIDO = 80_000_000
 RE_MESARIO = re.compile(r"^Mesário \d+ habilitou o eleitor$")
@@ -126,6 +129,7 @@ def analisar(raw: bytes, identidade: dict | None = None) -> dict:
     for nome, texto in arquivos:
         local = []
         anterior = {}
+        historico = preparacao_anterior(nome, texto)
         for linha in texto.splitlines():
             a = linha.split("\t")
             if len(a) != 6:
@@ -153,6 +157,9 @@ def analisar(raw: bytes, identidade: dict | None = None) -> dict:
                             or ordem > anteriores[urna][campo][0]
                         ):
                             anteriores[urna][campo] = (ordem, valor)
+                continue
+            if historico:
+                cont["eventos_preparacao_excluidos"] += 1
                 continue
             try:
                 t = segundos(data)
@@ -222,10 +229,16 @@ def analisar(raw: bytes, identidade: dict | None = None) -> dict:
     reinicios_em_voto = 0
     assinaturas = defaultdict(list)
     horarios_erros = []
+    sessoes, ordens = Counter(), Counter()
+    inspecoes = {}
+    duracoes_inspecao = []
+    ocorrencias = []
 
     def vazio():
         return {
             "ident": None,
+            "identificacoes": 0,
+            "cancelamento": False,
             "hab": None,
             "tipo": "desconhecida",
             "tentativas": 0,
@@ -275,13 +288,26 @@ def analisar(raw: bytes, identidade: dict | None = None) -> dict:
             cont["ajustes_relogio"] += 1
         if "operando" in baixa and "bateria interna" in baixa:
             cont["eventos_bateria"] += 1
+        if app == "LOGD" and msg.startswith("Urna ligada em "):
+            cont["partidas_sistema"] += 1
+            if urna in ultimo_por_urna and urna not in encerradas:
+                cont["reinicios_sistema_em_votacao"] += 1
+                ocorrencias.append({"tipo": "reinicio_sistema", "segundo": t})
+            sessoes[urna] += 1
+            if estados.get(urna, {}).get("hab") is not None:
+                cont["ciclos_interrompidos"] += 1
+            estados[urna] = vazio()
+            inspecoes.pop(urna, None)
         if app != "VOTA":
             continue
         st = estados.setdefault(urna, vazio())
         if msg.startswith("Iniciando aplicação"):
             inicios.append(t)
+            sessoes[urna] += 1
+            inspecoes.pop(urna, None)
             if urna in ultimo_por_urna and urna not in encerradas:
                 reinicios_em_voto += 1
+                ocorrencias.append({"tipo": "reinicio_vota", "segundo": t})
             if st["hab"] is not None:
                 cont["ciclos_interrompidos"] += 1
             estados[urna] = st = vazio()
@@ -297,6 +323,7 @@ def analisar(raw: bytes, identidade: dict | None = None) -> dict:
         elif msg == "Identificador do eleitor digitado pelo mesário":
             if st["hab"] is None:
                 st["ident"] = t
+                st["identificacoes"] += 1
                 st["tipo"] = "desconhecida"
                 st["manual"] = False
                 st["tentativas"] = 0
@@ -340,16 +367,38 @@ def analisar(raw: bytes, identidade: dict | None = None) -> dict:
             cont["computados"] += 1
             computados.append(t)
             ultimo_por_urna[urna] = t
+            ordens[urna] += 1
             if st["hab"] is None:
                 cont["computados_sem_habilitacao"] += 1
             else:
-                ciclos.append({**st, "fim": t})
+                ciclos.append(
+                    {
+                        **st,
+                        "fim": t,
+                        "urna": urna,
+                        "sessao": sessoes[urna],
+                        "ordem": ordens[urna],
+                    }
+                )
             estados[urna] = vazio()
         elif "cancelada" in baixa and "habilitação" in baixa:
             cont["habilitacoes_canceladas"] += 1
+            st["cancelamento"] = True
+            ocorrencias.append({"tipo": "cancelamento_habilitacao", "segundo": t})
             # Há logs reais em que o pedido de cancelamento cruza com a captura
             # ainda em andamento e o eleitor é habilitado logo depois. O ciclo só
             # termina quando o VOTA volta a aguardar outro identificador.
+        elif msg == "Inspeção da urna iniciada":
+            cont["inspecoes_iniciadas"] += 1
+            inspecoes[urna] = t
+        elif msg == "Inspeção da urna terminada":
+            cont["inspecoes_terminadas"] += 1
+            inicio = inspecoes.pop(urna, None)
+            if inicio is not None and t >= inicio:
+                duracoes_inspecao.append(t - inicio)
+                ocorrencias.append({"tipo": "inspecao", "segundo": inicio, "fim_s": t})
+        elif msg == "Eleitor voltou a digitar enquanto estava sendo suspenso":
+            cont["retomadas_inatividade"] += 1
         elif msg == "O eleitor identificado já votou":
             cont["identificacao_ja_votou"] += 1
         elif msg.startswith("Eleitor sem atividade por"):
@@ -391,6 +440,7 @@ def analisar(raw: bytes, identidade: dict | None = None) -> dict:
         if ciclos and computados and not invalidar
         else None
     )
+    processo = resumir(ciclos, invalidar, distribuicao)
     grupos = {}
     for n in sorted({c["cargos"] for c in completos}):
         g = [c for c in completos if c["cargos"] == n]
@@ -409,6 +459,9 @@ def analisar(raw: bytes, identidade: dict | None = None) -> dict:
     hist = Counter(duracoes)
     return {
         "versao_parser": VERSAO,
+        "processo_observado": processo,
+        "inspecoes": distribuicao([] if invalidar else duracoes_inspecao),
+        "ocorrencias_operacionais": ocorrencias,
         "contagens": dict(cont),
         "membros": membros,
         "urnas": len(permitidas),

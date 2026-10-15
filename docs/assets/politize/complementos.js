@@ -1,5 +1,5 @@
 // Seções recuperadas após o catálogo histórico: consulta operacional própria.
-import { blocoLogs } from './logs.js?v=20261015-9';
+import { blocoLogs } from './logs.js?v=20261015-processo11';
 
 export async function buscarComplemento(buscar, uf, zona, secao) {
   const dados = await buscar('assets/logs_urnas_2026/complementos.json');

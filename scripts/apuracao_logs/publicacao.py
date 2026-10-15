@@ -22,9 +22,12 @@ from .coleta import DESTINO, ORIGEM, ROOT, url
 from .complementos import LACUNAS, enderecos, registros_sa
 from .complementos import carregar as carregar_complementos
 from .conferencias import conferir
-from .criterios import CRITERIOS, MIN_PARES, avaliar, campos
+from .criterios import CRITERIOS, MIN_PARES, avaliar, campos, referencias
+from .csv_processo import exportar as exportar_processos
 from .parser import VERSAO
 from .processamento import METRICAS
+from .processo import TIPOS
+from .regras_processo import avaliar_processo
 from .resumo import SITUACOES, duracoes, situacao
 
 PUBLICO = ROOT / "docs/assets/logs_urnas_2026"
@@ -87,6 +90,45 @@ COLUNAS = [
     "escala_sem_biometria",
 ]
 
+COLUNAS += [
+    "processo_media",
+    "processo_mediana",
+    "processo_p90",
+    "n_processo",
+    "processo_excluidos",
+    "cadencia_mediana",
+    "cadencia_media",
+    "n_cadencia",
+    "rajada10_s",
+    "janelas10",
+    "processo_tipos",
+    "referencias_processo",
+    "referencia_cadencia",
+    "escala_cadencia",
+    "pares_cadencia",
+    "referencia_rajada",
+    "escala_rajada",
+    "pares_rajada",
+    "faixa_volume",
+    "inspecoes",
+    "inspecao_max",
+    "retomadas_inatividade",
+    "cancelamentos_habilitacao",
+    "reinicios_sistema",
+    "ocorrencias_operacionais",
+    "processo_elegivel",
+    "cadencia_elegivel",
+    "retomadas_taxa",
+    "cancelamentos_taxa",
+    "referencia_retomadas",
+    "referencia_cancelamentos",
+    "escala_retomadas",
+    "escala_cancelamentos",
+    "pares_retomadas",
+    "pares_cancelamentos",
+    "preparacao_excluida",
+]
+
 
 def gravar(path: Path, obj):
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -126,6 +168,7 @@ def montar() -> dict:
     con = sqlite3.connect(f"file:{METRICAS}?mode=ro", uri=True)
     linhas, resumos = [], []
     hist = defaultdict(Counter)
+    hist_processo, hist_cadencia = defaultdict(Counter), defaultdict(Counter)
     cargos = defaultdict(lambda: defaultdict(Counter))
     bio = defaultdict(Counter)
     operacao = Counter()
@@ -167,6 +210,14 @@ def montar() -> dict:
             **campos(r),
         }
         cobertura[uf]["tempo_elegivel"] += row["elegivel_tempo"]
+        row["processo_elegivel"] = bool(
+            row["elegivel_tempo"] and row["n_processo"] >= max(30, 0.9 * row["n_tempo"])
+        )
+        row["cadencia_elegivel"] = bool(
+            row["elegivel_tempo"] and row["n_cadencia"] >= 30
+        )
+        cobertura[uf]["processo_elegivel"] += row["processo_elegivel"]
+        cobertura[uf]["cadencia_elegivel"] += row["cadencia_elegivel"]
         row["url"] = url(catalogo[(uf, mun, z, s)])
         suplemento = complementos.get((uf, mun, z, s))
         row["bu_suplementar"] = suplemento["fonte_bu"] if suplemento else None
@@ -190,6 +241,11 @@ def montar() -> dict:
                 cargos[pais][numero].update(
                     {"ciclos": dist["n"], "soma_s": dist["n"] * dist["media"]}
                 )
+        p = r.get("processo_observado", {})
+        if row["elegivel_tempo"] and row["n_processo"] >= max(30, 0.9 * row["n_tempo"]):
+            hist_processo[pais].update(dict(p.get("histograma_processo", [])))
+        if row["elegivel_tempo"] and row["n_cadencia"] >= 30:
+            hist_cadencia[pais].update(dict(p.get("histograma_cadencia", [])))
         # Guardar só campos necessários às regras, sem histogramas por seção.
         resumos.append(
             {
@@ -201,6 +257,7 @@ def montar() -> dict:
                     "biometria_confere",
                     "zeresima_antes",
                     "intervalo_computados",
+                    "inspecoes",
                 )
             }
         )
@@ -252,6 +309,10 @@ def montar() -> dict:
         row["sinais"] = sinais[i]
         for campo, nome, pares in (
             ("voto_mediana", "voto", "pares_tempo"),
+            ("cadencia_mediana", "cadencia", "pares_cadencia"),
+            ("rajada10_s", "rajada", "pares_rajada"),
+            ("retomadas_taxa", "retomadas", "pares_retomadas"),
+            ("cancelamentos_taxa", "cancelamentos", "pares_cancelamentos"),
             ("habilitacao_mediana", "habilitacao", "pares_habilitacao"),
             ("biografica_pct", "biografica", "pares_biometria"),
             ("sem_biometria_pct", "sem_biometria", "pares_sem_biometria"),
@@ -260,6 +321,17 @@ def montar() -> dict:
             row[f"referencia_{nome}"] = nulo(mediana)
             row[f"escala_{nome}"] = nulo(escala) if pd.notna(mediana) else None
             row[pares] = int(quantidade)
+        row["referencias_processo"] = {
+            t: {
+                k: nulo(v)
+                for k, v in zip(
+                    ("mediana", "escala", "pares"),
+                    valores_refs[f"processo_{t}"][i],
+                    strict=True,
+                )
+            }
+            for t in TIPOS
+        }
         cobertura[row["uf"].lower()]["sinalizadas"] += bool(sinais[i])
     sens = {}
     for corte in (3, 4, 5):
@@ -325,6 +397,10 @@ def montar() -> dict:
             ).sum()
         ),
     }
+    denominadores.update(avaliar_processo(df, referencias, 4)[2])
+    denominadores["inspecao_prolongada"] = sum(
+        r["tempos_validos"] and r["inspecoes"]["n"] > 0 for r in resumos
+    )
     criterios = {
         k: {**v, "secoes": contagem[k], "avaliaveis": denominadores.get(k, len(linhas))}
         for k, v in CRITERIOS.items()
@@ -345,6 +421,8 @@ def montar() -> dict:
     }
     indice = {
         "versao_parser": VERSAO,
+        "processo": {p: duracoes(h) for p, h in hist_processo.items()},
+        "cadencia": {p: duracoes(h) for p, h in hist_cadencia.items()},
         "formato_zonas": "json.gz",
         "gerado_em": datetime.now(timezone.utc).isoformat(),
         "cobertura": dict(totais),
@@ -381,7 +459,9 @@ def montar() -> dict:
             "pares_minimos": MIN_PARES,
             "referencia_tempo": "UF × modelo × número de confirmações de cargo no ciclo",
             "referencia_biometria": "UF × município × zona × modelo",
-            "escala": "1,4826 × mediana dos desvios absolutos em torno da mediana; piso 3 segundos ou 1 ponto percentual",
+            "referencia_processo": "UF × modelo × cargos × tipo de habilitação, ≥30 processos por tipo e ≥90% de cobertura de início inequívoco",
+            "referencia_rajada": "Mínimo de 10 intervalos comparado a mínimos por UF × modelo × cargos × faixa de 100 intervalos (500+ juntos)",
+            "escala": "1,4826 × mediana dos desvios absolutos em torno da mediana; piso 3 segundos, 1 ponto percentual na biometria ou 1 evento por 100 cômputos nas retomadas e cancelamentos",
             "cortes": "4 escalas na principal; sensibilidades com 3 e 5. A seção participa da referência empírica.",
             "limite": "Diagnósticos exploratórios e correlacionados. Não são testes de fraude, não identificam eleitores e não somam pontos aos 12 critérios históricos.",
         },
@@ -401,7 +481,17 @@ def montar() -> dict:
         gzip.GzipFile(filename="", mode="wb", fileobj=out, mtime=0) as gz,
         io.TextIOWrapper(gz, encoding="utf-8", newline="") as f,
     ):
-        w = csv.DictWriter(f, fieldnames=["uf", "zona", *COLUNAS])
+        compactas = [
+            k
+            for k in COLUNAS
+            if k
+            not in (
+                "processo_tipos",
+                "referencias_processo",
+                "ocorrencias_operacionais",
+            )
+        ]
+        w = csv.DictWriter(f, fieldnames=["uf", "zona", *compactas])
         w.writeheader()
         for row in linhas:
             w.writerow(
@@ -409,15 +499,17 @@ def montar() -> dict:
                     k: (
                         "|".join(row[k])
                         if isinstance(row.get(k), list)
+                        and all(isinstance(x, str) for x in row[k])
                         else (
                             json.dumps(row[k], ensure_ascii=False, sort_keys=True)
-                            if isinstance(row.get(k), dict)
+                            if isinstance(row.get(k), (dict, list))
                             else nulo(row.get(k))
                         )
                     )
                     for k in w.fieldnames
                 }
             )
+    exportar_processos(linhas, PUBLICO / "processos_por_tipo.csv.gz")
     # Arquivo compacto privado para o build do mapa, só linhas sinalizadas.
     gravar(
         ANALISE / "sinalizadas.json",

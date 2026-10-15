@@ -83,7 +83,9 @@ def padroes_e_catalogo(browser, base, mapa, col, erros):
     assert p.locator("#f-ambito").input_value() == "todos"
     assert p.locator("#f-camada").input_value() == "todas"
     assert p.locator("#f-uf").input_value() == ""
-    assert p.locator("#f-log option").count() == 31
+    assert p.locator("#f-log option").count() == 1 + len(mapa["criterios"]) + len(
+        mapa["logs"]["criterios"]
+    )
     p.locator("#m-lista").click()
     pronto(p)
     total = len(mapa["linhas"])
@@ -143,7 +145,7 @@ def padroes_e_catalogo(browser, base, mapa, col, erros):
     return {
         "total_unico_csv": total,
         "exterior_csv": exterior,
-        "criterios_conferidos": 30,
+        "criterios_conferidos": len(mapa["criterios"]) + len(mapa["logs"]["criterios"]),
     }
 
 
@@ -151,8 +153,8 @@ def exploracao_relatorio(browser, base, erros):
     p = browser.new_page(viewport={"width": 1300, "height": 900})
     p.on("pageerror", lambda err: erros.append(str(err)))
     p.goto(base + "/logs_urnas_2026.html", wait_until="networkidle")
-    assert p.locator(".tempos .tempo").count() == 2
-    assert p.locator("figure").count() == 4
+    assert p.locator(".tempos .tempo").count() == 6
+    assert p.locator("figure").count() == 5
     p.locator('.filtros-criterios button[data-grupo="biometria"]').click()
     assert p.locator(".regra:visible").count() == 2
     p.locator("#busca-criterio").fill("sem biometria")
@@ -167,7 +169,7 @@ def exploracao_relatorio(browser, base, erros):
         p = browser.new_page(viewport={"width": largura, "height": 900})
         p.on("pageerror", lambda err: erros.append(str(err)))
         p.goto(base + "/apuracao_1o_turno_2026.html#fiscais", wait_until="networkidle")
-        assert p.locator("#fiscais .logs-fiscais .regra").count() == 18
+        assert p.locator("#fiscais .logs-fiscais .regra").count() == 25
         assert p.locator("#fiscais .logs-fiscais").evaluate(
             "e => Boolean(e.compareDocumentPosition(document.querySelector('#fiscais-historico')) & Node.DOCUMENT_POSITION_FOLLOWING)"
         )
@@ -178,7 +180,7 @@ def exploracao_relatorio(browser, base, erros):
     contexto = browser.new_context(java_script_enabled=False)
     p = contexto.new_page()
     p.goto(base + "/logs_urnas_2026.html", wait_until="networkidle")
-    assert p.locator(".regra:visible").count() == 18
+    assert p.locator(".regra:visible").count() == 25
     assert not p.locator(".filtros-criterios").is_visible()
     contexto.close()
     return "gráficos; busca; grupos; âncoras; casos raros; dossiê desktop/móvel; leitura sem JS"
@@ -194,7 +196,7 @@ def executar(base: str):
     resultados, erros, pedidos = {}, [], []
     with sync_playwright() as play:
         browser = play.chromium.launch(headless=True)
-        resultados["todas_e_30_criterios"] = padroes_e_catalogo(
+        resultados["todas_e_37_criterios"] = padroes_e_catalogo(
             browser, base, mapa, col, erros
         )
         resultados["relatorio_e_dossie"] = exploracao_relatorio(browser, base, erros)
@@ -214,7 +216,7 @@ def executar(base: str):
         ufs = page.locator("#tabela tbody tr td:nth-child(2)").all_text_contents()
         assert ufs and set(ufs) == {"ZZ"}
         assert any("fiscais_mapa/uf/ZZ.json" in p for p in pedidos)
-        assert not any(p.endswith("fiscais_mapa/dados.json") for p in pedidos)
+        assert not any("fiscais_mapa/dados.json" in p for p in pedidos)
         with page.expect_download() as download:
             page.locator("#l-csv").click()
         download.value.save_as(QA / "exterior.csv")
@@ -263,18 +265,24 @@ def executar(base: str):
             p = browser.new_page(viewport={"width": largura, "height": 900})
             p.on("pageerror", lambda err: erros.append(str(err)))
             p.goto(base + "/logs_urnas_2026.html", wait_until="networkidle")
-            assert p.locator(".regra").count() == 18
-            assert p.locator(".distribuicao img").evaluate(
-                "e => e.complete && e.naturalWidth > 0"
+            assert p.locator(".regra").count() == 25
+            assert p.locator(".distribuicao img").evaluate_all(
+                "imgs => imgs.length === 2 && imgs.every(e => e.complete && e.naturalWidth > 0)"
             )
             assert p.evaluate("document.documentElement.scrollWidth <= innerWidth + 1")
             p.screenshot(path=str(QA / f"relatorio-{largura}.png"))
             if largura == 390:
-                p.locator(".distribuicao").screenshot(
+                p.locator(".distribuicao").first.screenshot(
                     path=str(QA / "figura-mobile.png")
                 )
+                p.get_by_text(
+                    "Ver a distribuição dos intervalos entre cômputos", exact=True
+                ).click()
+                p.locator(".distribuicao").nth(1).screenshot(
+                    path=str(QA / "cadencia-mobile.png")
+                )
             resultados[f"relatorio_{largura}"] = (
-                "sem transbordamento; 18 regras; figura carregada"
+                "sem transbordamento; 25 regras; figura carregada"
             )
             p.close()
 
@@ -288,6 +296,28 @@ def executar(base: str):
         assert p.evaluate("document.documentElement.scrollWidth <= innerWidth + 1")
         p.locator(".fis-logs").screenshot(path=str(QA / "politize-log-mobile.png"))
         resultados["politize_mobile"] = "fixture real: BU 256, mediana 54 s"
+        p.goto(
+            base + "/politizesuavizinhanca.html#s=SP-273-214", wait_until="networkidle"
+        )
+        p.locator(".fis-logs").wait_for()
+        texto = p.locator(".fis-logs").inner_text()
+        for esperado in (
+            "275 comparecimentos",
+            "73 s",
+            "97 s",
+            "7 inspeções",
+            "9 retomadas",
+            "1 cancelamentos",
+        ):
+            assert esperado in texto, esperado
+        p.get_by_text("Horários operacionais registrados", exact=True).click()
+        assert "09:09:26" in p.locator(".fis-logs").inner_text()
+        assert "10:43:10" in p.locator(".fis-logs").inner_text()
+        assert p.evaluate("document.documentElement.scrollWidth <= innerWidth + 1")
+        p.locator(".fis-logs").screenshot(path=str(QA / "santos-processo-mobile.png"))
+        resultados["santos"] = (
+            "Processo 73 s; cadência 97 s; inspeções e cancelamento visíveis"
+        )
         for chave in ("MG-319-58", "MG-319-240"):
             p.goto(
                 base + f"/politizesuavizinhanca.html#s={chave}",

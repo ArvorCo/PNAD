@@ -11,6 +11,7 @@ from zoneinfo import ZoneInfo
 from ga_tag import injetar
 
 from . import painel
+from .caso_santos import painel as caso_santos
 from .coleta import ROOT
 from .publicacao import PUBLICO
 
@@ -32,16 +33,17 @@ def bloco(indice=None):
         return ""
     d = indice or json.loads(path.read_text())
     c = d["cobertura"]
+    n = len(d["criterios"])
     return f"""{INICIO}<div class="logs-fiscais" id="logs-urnas">
 <link rel="stylesheet" href="assets/logs_fiscais_2026.css?v=2">
-<p class="logs-kicker">Ampliação da fiscalização · 12 históricos + 18 dos logs</p>
-<h3>Agora são 30 critérios de consulta.</h3>
-<p>Os logs entram aqui com tempo de votação, identificação, interrupções e conferência dos arquivos.
-<b>{inteiro(c["sinalizadas"])} seções</b> têm ao menos um dos 18 diagnósticos operacionais.
+<p class="logs-kicker">Ampliação da fiscalização · 12 históricos + {n} dos logs</p>
+<h3>Agora são {12+n} critérios de consulta.</h3>
+<p>Os logs entram aqui com processo do mesário ao cômputo, cadência, identificação, interrupções e conferência dos arquivos.
+<b>{inteiro(c["sinalizadas"])} seções</b> têm ao menos um dos {n} diagnósticos operacionais.
 O mapa reúne as duas camadas, inclui o exterior e conta cada seção uma vez.</p>
 <div class="logs-destaques">
 <div><b>{inteiro(c["lidos"])}</b><span>logs de votação analisados</span></div>
-<div><b>{numero(d["tempos"]["brasil"]["media_s"])} s</b><span>tempo médio no Brasil</span></div>
+<div><b>{numero(d["processo"]["brasil"]["media_s"])} s</b><span>processo observado médio no Brasil</span></div>
 <div><b>{inteiro(d["criterios"]["contagem_divergente"]["secoes"])}</b><span>contagens ainda não reconciliadas com o BU</span></div>
 </div>
 <p class="logs-acoes"><a href="fiscais_mapa.html">Abrir todas as seções no mapa →</a>
@@ -49,7 +51,7 @@ O mapa reúne as duas camadas, inclui o exterior e conta cada seção uma vez.</
 <p><b>O que muda na conferência:</b> votação lenta pede exame dos ciclos e da ata; taxa sem biometria alta pede comparação com o cadastro local;
 reinício pede verificação da continuidade; discrepância com o BU pede conferência de todos os fragmentos.
 Registro de bateria, sozinho, é uso de um recurso de continuidade.</p>
-<h4>Os 18 critérios novos, com resultado e filtro direto</h4>
+<h4>Os {n} critérios dos logs, com resultado e filtro direto</h4>
 <p class="logs-legenda">Cada barra mostra a parcela das seções avaliáveis, em escala de 0 a {painel.teto_percentual(d)}%. As contagens se sobrepõem. Abra “Regra e conferência” para ver o corte e a providência correspondente.</p>
 {painel.catalogo(d, compacto=True)}
 <p class="logs-nota">A pontuação alta/média/baixa continua sendo a dos 12 critérios históricos. Os diagnósticos operacionais são consultáveis separadamente e não viram pontos de suspeita: bateria, recuperação e ausência de um fragmento têm significados diferentes.
@@ -167,15 +169,19 @@ def pagina(d):
         [
             "Escalas robustas",
             "Seções com algum diagnóstico",
-            "Votação lenta",
-            "Habilitação biográfica alta",
+            "Processo rápido",
+            "Cadência rápida",
+            "Trecho rápido",
+            "Retomadas acima da referência",
         ],
         [
             [
                 k,
                 inteiro(v["secoes"]),
-                inteiro(v["criterios"].get("tempo_lento", 0)),
-                inteiro(v["criterios"].get("biografica_alta", 0)),
+                inteiro(v["criterios"].get("processo_rapido", 0)),
+                inteiro(v["criterios"].get("cadencia_rapida", 0)),
+                inteiro(v["criterios"].get("rajada_rapida", 0)),
+                inteiro(v["criterios"].get("retomadas_inatividade", 0)),
             ]
             for k, v in d["sensibilidade"].items()
         ],
@@ -195,31 +201,36 @@ def pagina(d):
 <meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://brasil.arvor.co/logs_urnas_2026.html">
 <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/logs_urnas_2026.css?v=2">
+<link rel="stylesheet" href="assets/logs_urnas_2026.css?v=3">
 <script defer src="assets/logs_urnas_2026.js?v=2"></script>
 </head><body>
 <header><nav class="nav-topo"><a href="index.html">ARVOR / DADOS ABERTOS</a><a href="fiscais_mapa.html">Mapa de fiscais ↗</a><a href="politizesuavizinhanca.html">Minha seção ↗</a></nav>
 <div class="hero"><div><p class="etiqueta">Primeiro turno de 2026 · Logs oficiais das urnas</p>
 <h1>O que aconteceu<br><em>durante a votação.</em></h1>
-<p class="abertura">Quanto tempo se levou para votar, como os eleitores foram habilitados e quais ocorrências ficaram registradas. A leitura de quase meio milhão de logs, em gráficos e critérios verificáveis.</p>
-<a class="botao" href="#criterios">Explorar os 18 diagnósticos ↓</a></div>
+<p class="abertura">Quanto dura o processo do mesário ao cômputo, como varia a cadência entre atendimentos e quais ocorrências ficaram registradas. A leitura de quase meio milhão de logs, em gráficos e critérios verificáveis.</p>
+<a class="botao" href="#criterios">Explorar os {n} diagnósticos ↓</a></div>
 <aside class="hero-base"><span>Base analisada</span><strong>{inteiro(c["lidos"])}</strong><span>logs de votação ligados ao boletim da seção</span>
 <div class="hero-cobertura"><i style="width:{pct:.6f}%"></i></div><p><b>{f'{pct:.3f}'.replace('.', ',')}%</b> das {inteiro(c["catalogadas"])} seções catalogadas</p>
 <p class="base">Leitura de {escape(data_publicacao)}. <a href="#cobertura">Entenda as {inteiro(c["catalogadas"]-c["lidos"])} seções restantes →</a></p></aside></div>
-<div class="manchetes"><a href="#leitura"><b>{numero(d["tempos"]["brasil"]["media_s"])} s</b><span>tempo médio de votação no Brasil</span></a>
+<div class="manchetes"><a href="#leitura"><b>{numero(d["processo"]["brasil"]["media_s"])} s</b><span>média do processo observado no Brasil</span></a>
 <a href="#criterios"><b>{inteiro(c["sinalizadas"])}</b><span>seções com algum diagnóstico operacional</span></a>
 <a href="#achados"><b>{inteiro(c["lidos"]-c["contagem_confere"])}</b><span>contagens ainda não reconciliadas com o BU</span></a></div>
 </header>
 <nav class="nav-capitulos" aria-label="Neste relatório"><a href="#leitura">01 · Tempos</a><a href="#biometria">02 · Biometria</a><a href="#criterios">03 · Critérios</a><a href="#achados">04 · Conferências</a><a href="#cobertura">05 · Cobertura</a><a href="#fontes">Fontes</a></nav>
 <main>
-<section id="leitura"><p class="etiqueta">01 / Ritmo da votação</p><h2>No Brasil, metade dos ciclos<br>durou até {numero(d["tempos"]["brasil"]["mediana_s"], 0)} segundos.</h2>
-<p class="lead">O relógio começa quando o eleitor é habilitado e termina no evento de voto computado. Mede a operação na urna; o tempo na fila fica fora dessa conta.</p>
-{painel.tempos(d)}
+<section id="leitura"><p class="etiqueta">01 / Ritmo da votação</p><h2>Do identificador ao cômputo.<br>Metade dos processos durou até {numero(d["processo"]["brasil"]["mediana_s"], 0)} segundos.</h2>
+<p class="lead">A medida principal começa na digitação concluída do identificador pelo mesário e termina no voto computado. Inclui a identificação eletrônica e a votação. Conferência de documentos, fila e digitação anterior ao registro não têm início cronometrável neste log.</p>
+<div class="fluxo-processo" aria-label="Etapas medidas"><div><b>01</b><strong>Identificador digitado</strong><span>Primeiro marco do processo observado</span></div><div><b>02</b><strong>Eleitor habilitado</strong><span>Fim da identificação eletrônica</span></div><div><b>03</b><strong>Voto computado</strong><span>Fim do processo observado</span></div></div>
+{painel.tempos(d, "processo")}
 <p class="legenda-reguas">Régua comum em segundos: ● metade dos ciclos (mediana) · | média · ○ 90% dos ciclos (percentil 90).</p>
 <p class="nota">Brasil e exterior são descritos separadamente: o número de cargos difere. Nas regras de atipicidade, a comparação é com a mesma UF, modelo de urna e quantidade de confirmações de cargo.</p>
-<figure class="distribuicao"><div class="fig-titulo"><h3>Como os tempos se distribuem</h3><a href="assets/logs_urnas_2026/tempos.png">Baixar gráfico ↗</a></div><picture><source media="(max-width:700px)" srcset="assets/logs_urnas_2026/tempos-mobile.svg"><img src="assets/logs_urnas_2026/tempos.svg" width="1040" height="700" alt="Distribuição dos tempos de votação, em faixas de dez segundos, separada entre Brasil e exterior."></picture><figcaption>Parcela dos ciclos elegíveis em cada faixa de dez segundos. A última barra reúne todos os ciclos de 180 segundos ou mais. As duas distribuições usam a mesma escala vertical.</figcaption></figure>
-<div class="conclusao"><b>{inteiro(d["criterios"]["tempo_rapido"]["secoes"])} rápidas · {inteiro(d["criterios"]["tempo_lento"]["secoes"])} lentas</b><p>São as seções que ultrapassaram a regra de duração, comparadas a referências equivalentes. O corte exige uma diferença grande e pelo menos 30 ciclos completos. {painel.mapa_link('tempo_lento', 'Consultar as seções lentas')}</p></div>
-<details class="metodo"><summary>Como separamos habilitação, votação e intervalo</summary><div class="passos"><article><h3>Habilitação</h3><p>Do identificador digitado pelo mesário à liberação do eleitor. É a etapa eletrônica observável, sem toda a conferência documental.</p></article><article><h3>Votação</h3><p>Da habilitação ao voto computado. Ciclos parcialmente suspensos ficam fora da duração de voto completo.</p></article><article><h3>Intervalo</h3><p>Entre dois cômputos consecutivos. Inclui ociosidade, identificação e votação. Não identifica fila nem paralisação.</p></article></div>
+<figure class="distribuicao"><div class="fig-titulo"><h3>Como os tempos se distribuem</h3><a href="assets/logs_urnas_2026/processo.png">Baixar gráfico ↗</a></div><picture><source media="(max-width:700px)" srcset="assets/logs_urnas_2026/processo-mobile.svg"><img src="assets/logs_urnas_2026/processo.svg" width="1040" height="700" alt="Distribuição dos tempos do processo observado, em faixas de dez segundos, separada entre Brasil e exterior."></picture><figcaption>Parcela dos processos elegíveis em cada faixa de dez segundos. A última barra reúne todos os processos de 300 segundos ou mais. As duas distribuições usam a mesma escala vertical.</figcaption></figure>
+<div class="conclusao"><b>Três leituras de rapidez, com bases distintas.</b><p>{inteiro(d["criterios"]["processo_rapido"]["secoes"])} seções no processo por tipo; {inteiro(d["criterios"]["cadencia_rapida"]["secoes"])} na cadência; {inteiro(d["criterios"]["rajada_rapida"]["secoes"])} em trechos de dez intervalos. Contagens se sobrepõem. {painel.mapa_link('processo_rapido', 'Conferir o processo rápido')}</p></div>
+<h3>Cadência: o que cabe entre dois cômputos</h3><p>A cadência inclui o processo seguinte, a transição entre pessoas e eventuais esperas. Não é duração individual. Comparamos apenas cômputos consecutivos completos da mesma urna e sessão, sem atravessar reinícios ou ciclos não reconstruídos.</p>
+{painel.tempos(d, "cadencia")}
+<details class="metodo"><summary>Ver a distribuição dos intervalos entre cômputos</summary><figure class="distribuicao"><picture><source media="(max-width:700px)" srcset="assets/logs_urnas_2026/cadencia-mobile.svg"><img src="assets/logs_urnas_2026/cadencia.svg" width="1040" height="700" alt="Distribuição dos intervalos entre cômputos consecutivos, em faixas de dez segundos, separada entre Brasil e exterior."></picture><figcaption>Mesma escala para Brasil e exterior. A última barra reúne intervalos de 300 segundos ou mais, que podem conter espera e ociosidade. <a href="assets/logs_urnas_2026/cadencia.png">Baixar gráfico</a>.</figcaption></figure></details>
+<details class="metodo"><summary>Etapa após habilitação: a medida anterior continua disponível</summary><p>É uma parte do processo, insuficiente sozinha para medir o atendimento do mesário. Não se somam medianas das etapas para obter a mediana do processo: cada duração completa é reconstruída diretamente.</p>{painel.tempos(d)}<p>{painel.mapa_link('tempo_rapido', 'Consultar a regra anterior de votação rápida')}</p></details>
+<details class="metodo"><summary>Como separamos habilitação, votação e intervalo</summary><div class="passos"><article><h3>Habilitação</h3><p>Do identificador digitado pelo mesário à liberação do eleitor. É a etapa eletrônica observável, sem toda a conferência documental.</p></article><article><h3>Votação</h3><p>Da habilitação ao voto computado. Ciclos parcialmente suspensos ficam fora da duração de voto completo.</p></article><article><h3>Cadência</h3><p>Entre dois cômputos consecutivos da mesma urna e sessão. Inclui ociosidade, identificação e votação. Não identifica fila nem paralisação.</p></article></div>
 {tempos_cargos}<p>Relógio inconsistente, modelos mistos ou divergentes e ciclos incompletos impedem a comparação correspondente. Os valores descrevem os ciclos completos elegíveis nas seções lidas. Não há associação entre horário, identidade pessoal e opção de voto.</p></details></section>
 <section id="biometria"><p class="etiqueta">02 / Identificação do eleitor</p><h2>Três formas de habilitar.<br>Duas taxas diferentes para comparar.</h2>
 <p class="lead">A habilitação biográfica e a categoria “sem biometria” são contagens distintas do BU. Misturá-las produziria uma taxa enganosa.</p>
@@ -230,21 +241,23 @@ def pagina(d):
 <details class="metodo"><summary>Referência local, denominadores e cobertura da biometria</summary>
 <p>A referência é a mediana de seções da mesma UF, município, zona e modelo, com pelo menos 30 seções elegíveis e denominador de 50 pessoas por seção. O corte exige quatro escalas robustas e excesso de pelo menos 10 pontos percentuais. Cadastro, idade e qualidade das digitais não são controlados individualmente.</p>{tabela_bio}
 <p>A decomposição acima só inclui as seções em que as três categorias e o comparecimento fecharam entre log e BU. {inteiro(c["biometria_ausente_bu"])} BUs não trazem os campos de biometria: seus valores são desconhecidos, nunca zero.</p></details></section>
-<section id="criterios"><p class="etiqueta">03 / Doze critérios históricos + dezoito dos logs</p><h2>O que procurar.<br>Quantas seções aparecem.</h2>
+<section id="criterios"><p class="etiqueta">03 / 12 critérios históricos + {n} dos logs</p><h2>O que procurar.<br>Quantas seções aparecem.</h2>
 <p class="lead">Escolha um grupo, veja a frequência e abra a regra. Cada diagnóstico leva diretamente às seções correspondentes no mapa.</p>
 <div class="conclusao"><b>O registro mais frequente é operação com bateria.</b><p>{inteiro(d["criterios"]["bateria"]["secoes"])} seções registraram esse recurso de continuidade. Isso ajuda a explicar o volume de registros operacionais; não mede defeitos nem gravidade. As contagens se sobrepõem e não se somam à pontuação histórica.</p></div>
 {painel.navegacao_criterios(d)}
 <p class="legenda-reguas">Barras em escala comum de 0 a {painel.teto_percentual(d)}% das seções avaliáveis em cada regra. Ocorrências raras continuam legíveis pelo número; barra curta não significa pouca importância.</p>
 {painel.catalogo(d)}
 <p class="sem-resultados" hidden>Nenhum diagnóstico corresponde à busca. Limpe o texto ou escolha outro grupo.</p>
-<p class="nota">Essas 18 regras são triagem exploratória. Não estimam probabilidade de fraude. ALERTA não é contado como ERRO: pode ser uma pergunta do sistema ou digitação inválida.</p>
-<details class="metodo" id="sensibilidade"><summary>Quanto muda quando o corte fica mais ou menos exigente?</summary><p>O corte principal usa a mediana de referência mais ou menos quatro escalas robustas e uma diferença mínima. As alternativas usam três e cinco. Escala robusta: 1,4826 vezes a mediana dos desvios absolutos, com piso de três segundos ou um ponto percentual. A própria seção participa da referência.</p>{sensibilidade}<p>As colunas usam a mesma cobertura. São sensibilidades de triagem, sem nível de significância nem confirmações independentes.</p></details></section>
+<p class="nota">Essas {n} regras são triagem exploratória. Não estimam probabilidade de fraude. ALERTA não é contado como ERRO: pode ser uma pergunta do sistema ou digitação inválida.</p>
+<details class="metodo"><summary>Como a nova triagem de rapidez evita misturar processos diferentes</summary><p>O processo observado exige início inequívoco em pelo menos 90% dos ciclos completos, com no mínimo 30 processos. Cada tipo de habilitação é comparado separadamente (biométrica, biográfica ou sem biometria), com ≥30 processos por tipo e ≥30 seções da mesma UF, modelo e cargos. Categorias não reconciliadas com o BU não alimentam essa comparação.</p><p>A cadência usa ≥30 intervalos. O trecho rápido procura dez intervalos consecutivos (onze cômputos) e compara seu mínimo com mínimos de pares também agrupados por volume: 0–99, 100–199, 200–299, 300–399, 400–499 e 500+ intervalos. Também exige menos da metade da mediana da própria seção. Identificação repetida ou cancelada não recebe início presumido. Uma tentativa encerrada e outra iniciada depois não são atribuídas à mesma pessoa; a cadência preserva o tempo entre cômputos que pode conter essas tentativas. Essas proteções reduzem artefatos; não controlam idade, acessibilidade, movimento ou toda diferença de operação.</p></details>
+<details class="metodo" id="sensibilidade"><summary>Quanto muda quando o corte fica mais ou menos exigente?</summary><p>O corte principal usa a mediana de referência mais ou menos quatro escalas robustas e uma diferença mínima. As alternativas usam três e cinco. Escala robusta: 1,4826 vezes a mediana dos desvios absolutos, com piso de três segundos, um ponto percentual na biometria ou um evento por 100 cômputos nas retomadas e cancelamentos. A própria seção participa da referência.</p>{sensibilidade}<p>As colunas usam a mesma cobertura. São sensibilidades de triagem, sem nível de significância nem confirmações independentes.</p></details></section>
 <section id="achados"><p class="etiqueta">04 / Conferência dos registros</p><h2>Erro registrado não conta<br>a história inteira.</h2>
 <p class="lead">Em {inteiro(c["contagem_confere"])} seções, a contagem reproduz o comparecimento do BU. Restam {inteiro(c["lidos"]-c["contagem_confere"])} discrepâncias documentais ou de reconstrução para conferir. Elas não demonstram alteração de votos.</p>
+{caso_santos(d)}
 {painel.assinatura(d)}
 <p>Os {inteiro(op.get("falhas_assinatura_declaradas", 0))} eventos estão em {inteiro(d["criterios"]["assinatura"]["secoes"])} seções. SUCESSO posterior significa que o software registrou recuperação para o mesmo arquivo e urna. Esta análise lê as mensagens; não substitui a validação criptográfica independente.</p>
 <details class="metodo"><summary>Erros dentro e fora da janela observada de votação</summary><p>Há {inteiro(op.get("erros", 0))} eventos ERRO/FATAL no dia. Nas {inteiro(op.get("secoes_janela_classificavel", 0))} seções com janela delimitável, {inteiro(op.get("erros_na_janela_votacao", 0))} ocorreram entre a primeira habilitação e o último cômputo e {inteiro(op.get("erros_fora_da_janela", 0))} fora desse intervalo. Um evento não equivale a uma seção ou a uma falha sem recuperação.</p></details>
-<h3>Seis casos, lidos no arquivo original</h3><p>Exemplos escolhidos para mostrar situações distintas, sem ranking de gravidade. Cada ficha liga a interpretação ao original e ao hash arquivado.</p>{casos}</section>
+<h3>Casos lidos no arquivo original</h3><p>Exemplos escolhidos para mostrar situações distintas, sem ranking de gravidade. Cada ficha liga a interpretação ao original e ao hash arquivado.</p>{casos}</section>
 <section id="cobertura"><p class="etiqueta">05 / Cobertura e limites</p><h2>O que entrou na análise.<br>O que ficou de fora.</h2>
 {painel.cobertura(d)}
 <p class="nota">Cada linha representa uma condição própria, não etapas cumulativas. Uma seção pode servir para contagem e ficar fora da comparação de tempos ou de biometria.</p>
@@ -252,9 +265,9 @@ def pagina(d):
 <details class="metodo"><summary>Recuperação de arquivos, situações e cobertura por UF</summary>{lacunas}
 <p>Recuperados: {inteiro(d["coleta"].get("ok", 0))}; SHA-256 igual ao da coleta anterior: {inteiro(d["coleta"].get("hash_anterior_confere", 0))}. Sem hash anterior, a comparação fica desconhecida. Publicação em {escape(data_publicacao)}.</p>{situacoes}{tabela_uf}</details></section>
 <section id="fontes"><h2>Do original à conferência</h2>
-<ol><li>O arquivo de cada seção vem do mesmo endereço e hash de transmissão associado ao BU arquivado. Seu SHA-256 é comparado ao preservado na coleta anterior quando ele existe. A ausência de hash anterior fica explícita; não é uma comparação aprovada.</li><li>O leitor abre o ZIP e os arquivos aninhados de contingência sem extrair em disco. Lê Latin-1, retém os dias 4 e 5 de outubro, confere seção e fase oficial e remove apenas linhas integralmente duplicadas entre arquivos.</li><li>Recuos de relógio são medidos antes de ordenar os fragmentos e invalidam as durações. Ciclos incompletos e categorias desconhecidas ficam explícitos.</li><li>A contagem de cômputos e as três formas de habilitação são comparadas ao BU. Um hash conferido prova identidade dos bytes arquivados; não substitui a validação criptográfica da assinatura eleitoral.</li></ol>
+<ol><li>O arquivo de cada seção vem do mesmo endereço e hash de transmissão associado ao BU arquivado. Seu SHA-256 é comparado ao preservado na coleta anterior quando ele existe. A ausência de hash anterior fica explícita; não é uma comparação aprovada.</li><li>O leitor abre o ZIP e os arquivos aninhados de contingência sem extrair em disco. Lê Latin-1, retém os dias 4 e 5 de outubro, confere seção e fase oficial e remove apenas linhas integralmente duplicadas entre arquivos. Fragmentos arquivados antes da eleição, com ajuste explícito e último registro também anterior, são separados mesmo quando o relógio adiantado carimbou 04/10; a regra não exclui fragmentos com cômputos datados da eleição.</li><li>Recuos de relógio são medidos antes de ordenar os fragmentos e invalidam as durações. Ciclos incompletos e categorias desconhecidas ficam explícitos.</li><li>A contagem de cômputos e as três formas de habilitação são comparadas ao BU. Um hash conferido prova identidade dos bytes arquivados; não substitui a validação criptográfica da assinatura eleitoral.</li></ol>
 <p><a href="https://www.tse.jus.br/eleicoes/eleicoes-2026">TSE: documentos técnicos das Eleições 2026</a> · <a href="https://dadosabertos.tse.jus.br/dataset/resultados-2026-arquivos-transmitidos-para-totalizacao">TSE: arquivos transmitidos para totalização</a>. O link do arquivo original e o SHA-256 de cada seção estão na ficha do Politize e no CSV.</p>
-<p><a href="assets/logs_urnas_2026/secoes.csv.gz">Baixar todas as seções analisadas, CSV comprimido</a> · <a href="assets/logs_urnas_2026/indice.json">Resumo, regras e cobertura em JSON</a> · <a href="https://github.com/ArvorCo/PNAD/tree/main/scripts/apuracao_logs">Código do leitor e das regras</a>.</p>
+<p><a href="assets/logs_urnas_2026/secoes.csv.gz">Baixar todas as seções analisadas, CSV comprimido</a> · <a href="assets/logs_urnas_2026/processos_por_tipo.csv.gz">Processos por tipo e referências, CSV comprimido</a> · <a href="assets/logs_urnas_2026/indice.json">Resumo, regras e cobertura em JSON</a> · <a href="https://github.com/ArvorCo/PNAD/tree/main/scripts/apuracao_logs">Código do leitor e das regras</a>.</p>
 <details><summary>Reproduzir</summary><pre>python3 scripts/apuracao-2026-logs-coletar.py
 python3 scripts/apuracao-2026-logs-lacunas.py
 python3 scripts/apuracao-2026-logs-lacunas.py --preparar-bus
@@ -282,7 +295,7 @@ def atualizar_paginas(d):
             cap = texto[ini:fim]
             cap = re.sub(
                 r'(<p class="lead">).*?(</p>)',
-                r"\g<1>30 critérios para conferir: 12 do histórico e 18 dos logs de votação. "
+                rf"\g<1>{12+len(d['criterios'])} critérios para conferir: 12 do histórico e {len(d['criterios'])} dos logs de votação. "
                 r"Brasil e exterior na mesma consulta, com contagens, regras e fontes por seção.\g<2>",
                 cap,
                 count=1,

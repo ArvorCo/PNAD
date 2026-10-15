@@ -86,7 +86,7 @@ def test_diagnosticos_nos_dois_sentidos_e_sensibilidade():
     flags, _ = avaliar(df, [r] * len(df))
     assert "tempo_rapido" in flags[-2]
     assert "tempo_lento" in flags[-1]
-    assert len(CRITERIOS) == 18
+    assert len(CRITERIOS) == 25
     amplo, _ = avaliar(df, [r] * len(df), 3)
     estrito, _ = avaliar(df, [r] * len(df), 5)
     assert all(set(b) <= set(a) for a, b in zip(amplo, estrito, strict=True))
@@ -126,3 +126,73 @@ def test_identidade_excluida_e_diagnostico_sem_alterar_contagem_conciliada():
     assert "identidade_nao_confirmada" in flags[0]
     assert "contagem_divergente" not in flags[0]
     assert row["identificadores_excluidos"] == 1
+
+
+def test_processo_rapido_respeita_tipo_cobertura_e_minimo():
+    r, row = amostra()
+    row.update(
+        n_processo=100,
+        n_tempo=100,
+        n_processo_biometrica=70,
+        n_processo_biografica=30,
+        processo_biometrica=80.0,
+        processo_biografica=140.0,
+        n_cadencia=99,
+        cadencia_mediana=110.0,
+        rajada10_s=75.0,
+        faixa_volume="0",
+    )
+    base = [row] * 40
+    df = pd.DataFrame(
+        [
+            *base,
+            {**row, "processo_biometrica": 25.0},
+            {**row, "processo_biometrica": 25.0, "n_processo_biometrica": 29},
+            {**row, "processo_biometrica": 25.0, "n_processo": 89},
+            {**row, "processo_biografica": 80.0},
+            {**row, "cadencia_mediana": 35.0, "rajada10_s": 20.0},
+            {**row, "rajada10_s": 20.0},
+        ]
+    )
+    flags, refs = avaliar(df, [r] * len(df))
+    assert "processo_rapido" in flags[-6]
+    assert "processo_rapido" not in flags[-5]
+    assert "processo_rapido" not in flags[-4]
+    assert "processo_rapido" not in flags[-3]  # 80 não é menos de metade de 140
+    assert "cadencia_rapida" in flags[-2]
+    assert "rajada_rapida" not in flags[-2]  # não é metade da mediana própria
+    assert "rajada_rapida" in flags[-1]
+    assert refs["processo_biografica"].ref.iloc[-1] == 140
+
+
+def test_retomadas_comuns_nao_disparam_so_por_repeticao():
+    r, row = amostra()
+    row.update(
+        comparecimento=275,
+        retomadas_inatividade=9,
+        retomadas_taxa=100 * 9 / 275,
+        cancelamentos_habilitacao=1,
+        cancelamentos_taxa=100 / 275,
+    )
+    df = pd.DataFrame(
+        [row] * 40
+        + [
+            {**row, "retomadas_inatividade": 35, "retomadas_taxa": 100 * 35 / 275},
+            {
+                **row,
+                "cancelamentos_habilitacao": 20,
+                "cancelamentos_taxa": 100 * 20 / 275,
+            },
+            {
+                **row,
+                "retomadas_inatividade": 35,
+                "retomadas_taxa": 100 * 35 / 275,
+                "comparecimento": 49,
+            },
+        ]
+    )
+    flags, _ = avaliar(df, [r] * len(df))
+    assert "retomadas_inatividade" not in flags[0]
+    assert "retomadas_inatividade" in flags[-3]
+    assert "cancelamentos_habilitacao" in flags[-2]
+    assert "retomadas_inatividade" not in flags[-1]

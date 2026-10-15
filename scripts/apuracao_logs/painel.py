@@ -6,7 +6,10 @@ from html import escape
 from math import ceil
 
 GRUPOS = {
-    "tempo": ("Tempo e intervalos", "Quanto dura a votação e onde há pausas."),
+    "tempo": (
+        "Tempo e intervalos",
+        "Processo do mesário ao cômputo, cadência e pausas.",
+    ),
     "biometria": (
         "Identificação e biometria",
         "Taxas comparadas com seções da mesma zona e modelo.",
@@ -89,7 +92,7 @@ def catalogo(d, compacto=False):
 
 
 def navegacao_criterios(d):
-    botoes = '<button type="button" data-grupo="todos" aria-pressed="true">Todos · 18</button>'
+    botoes = f'<button type="button" data-grupo="todos" aria-pressed="true">Todos · {len(d["criterios"])}</button>'
     for g, (nome, _) in GRUPOS.items():
         n = sum(grupo(r) == g for r in d["criterios"].values())
         botoes += f'<button type="button" data-grupo="{g}" aria-pressed="false">{nome} · {n}</button>'
@@ -97,14 +100,17 @@ def navegacao_criterios(d):
         f'<div class="filtros-criterios" hidden><div role="group" aria-label="Grupo de diagnóstico">{botoes}</div>'
         '<label for="busca-criterio">Buscar diagnóstico</label>'
         '<input id="busca-criterio" type="search" placeholder="Ex.: reinício, biometria, relógio">'
-        '<p id="resultado-criterios" role="status">18 diagnósticos</p></div>'
+        f'<p id="resultado-criterios" role="status">{len(d["criterios"])} diagnósticos</p></div>'
     )
 
 
-def tempos(d):
+def tempos(d, chave="tempos"):
+    valores = d.get(chave, {})
+    if not valores:
+        return "<p>Sem base elegível para esta medida.</p>"
     html = []
-    teto = max(r["p90_s"] for r in d["tempos"].values()) * 1.2
-    for pais, r in d["tempos"].items():
+    teto = max(max(r["p90_s"], r["media_s"]) for r in valores.values()) * 1.2
+    for pais, r in valores.items():
         marcadores = "".join(
             f'<span class="ponto {k}" style="left:{100*r[k]/teto:.3f}%" '
             f'title="{nome}: {numero(r[k])} segundos"></span>'
@@ -121,7 +127,7 @@ def tempos(d):
             f"<small>{numero(teto, 0)} s</small></div>"
             f'<dl class="quantis"><div><dt>Metade durou até</dt><dd>{numero(r["mediana_s"], 0)} s</dd></div>'
             f'<div><dt>90% duraram até</dt><dd>{numero(r["p90_s"], 0)} s</dd></div></dl>'
-            f'<p class="base">{inteiro(r["ciclos"])} ciclos completos elegíveis.</p></article>'
+            f'<p class="base">{inteiro(r["ciclos"])} {"intervalos elegíveis" if chave == "cadencia" else "processos elegíveis" if chave == "processo" else "ciclos completos elegíveis"}.</p></article>'
         )
     return '<div class="tempos">' + "".join(html) + "</div>"
 
@@ -161,7 +167,9 @@ def cobertura(d):
         ("lidos", "Log lido e ligado ao BU"),
         ("contagem_confere", "Comparecimento reconciliado"),
         ("biometria_confere", "Categorias de identificação reconciliadas"),
-        ("tempo_elegivel", "Tempo elegível para comparação"),
+        ("tempo_elegivel", "Etapa de votação elegível"),
+        ("processo_elegivel", "Processo com início e cobertura suficientes"),
+        ("cadencia_elegivel", "Cadência com intervalos suficientes"),
     ):
         pct = 100 * c[key] / c["catalogadas"]
         linhas.append(

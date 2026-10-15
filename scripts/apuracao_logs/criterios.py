@@ -9,6 +9,8 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
+from .regras_processo import avaliar_processo, campos_processo
+
 MIN_PARES = 30
 DESVIOS_ROBUSTOS = 4
 
@@ -24,6 +26,55 @@ def criterio(nome, grupo, regra, limite, conferir):
 
 
 CRITERIOS = {
+    "processo_rapido": criterio(
+        "Processo observado mais rápido entre pares do mesmo tipo",
+        "tempo",
+        "Mediana da digitação concluída do identificador ao cômputo abaixo da referência menos 4 escalas robustas e menor que metade dela, em ao menos um tipo de habilitação. Mesma UF, modelo, cargos e tipo; ≥30 processos por tipo e ≥90% dos ciclos completos com início inequívoco.",
+        "É o trecho eletrônico observado, sem fila, conferência em papel, digitação anterior ao registro ou ligação presumida entre tentativas canceladas. Três tipos são examinados: seleção exploratória, sem significância confirmatória ou prova de automatização.",
+        "Conferir cobertura, tipo biométrico/biográfico/sem biometria, referência e ata. Não somar medianas das etapas nem vincular horários a pessoas.",
+    ),
+    "cadencia_rapida": criterio(
+        "Cadência entre cômputos mais rápida que os pares",
+        "tempo",
+        "Mediana dos intervalos consecutivos abaixo da referência menos 4 escalas robustas e menor que metade dela; ≥30 intervalos entre ciclos completos da mesma urna, sessão e cargos. Referência da mesma UF, modelo e cargos.",
+        "Inclui transição, espera, mesário e votação. A mistura dos tipos de identificação e o movimento da seção ainda afetam a comparação; não é tempo individual de atendimento.",
+        "Ler junto ao processo observado por tipo e aos registros de interrupção. Intervalos não atravessam reinícios nem ciclos parciais ou não reconstruídos.",
+    ),
+    "rajada_rapida": criterio(
+        "Trecho de dez intervalos excepcionalmente rápido",
+        "tempo",
+        "Menor média móvel de 10 intervalos (11 cômputos) abaixo da referência menos 4 escalas robustas, de metade da referência e de metade da mediana da própria seção. ≥30 intervalos; pares por UF, modelo, cargos e faixas de 100 intervalos (500+ agrupados).",
+        "A referência compara mínimos de janelas, não o mínimo com uma média nacional. Janelas sobrepostas e seleção entre muitas seções exigem conferência; o limiar é exploratório.",
+        "Conferir continuidade, tamanho da base, tipos de identificação, relógio e ata. O agregado público não expõe a sequência dos eleitores.",
+    ),
+    "reinicio_sistema": criterio(
+        "Sistema ligado novamente durante a votação",
+        "operacao",
+        "Mensagem LOGD de urna ligada após cômputo e antes do encerramento na mesma urna, mesmo sem nova partida do VOTA reconhecida.",
+        "Reinício de sistema e de aplicativo podem registrar o mesmo episódio e não somam evidências independentes. Não identifica a causa física.",
+        "Conferir os registros de partida, recuperação e ata. Uma ocorrência relatada pode não aparecer como ERRO/FATAL.",
+    ),
+    "inspecao_prolongada": criterio(
+        "Janela de inspeção de cinco minutos ou mais",
+        "operacao",
+        "Ao menos um par de início e término de inspeção, na mesma urna e sessão, dura ≥300 segundos; relógio válido.",
+        "A janela pode incluir espera pela confirmação no terminal; não cronometra trabalho físico de inspeção. É procedimento também rotineiro. Cinco minutos é corte de triagem, não duração ilegal ou defeito.",
+        "Conferir motivo e ata; inspeção não é sinônimo de reinicialização. Todas as inspeções aparecem na consulta da seção, inclusive as breves.",
+    ),
+    "retomadas_inatividade": criterio(
+        "Retomadas após inatividade acima da referência",
+        "operacao",
+        "Retornos à digitação durante tentativa de suspensão: ≥3 eventos e taxa por 100 cômputos acima da referência mais 4 escalas robustas e excesso ≥5 eventos por 100. ≥50 cômputos e seções elegíveis de mesma UF, modelo e cargos.",
+        "Conta eventos, não pessoas nem votos suspensos. O mesmo atendimento pode gerar vários avisos; dificuldade de uso é explicação possível.",
+        "Conferir acessibilidade, avisos de inatividade, apoio prestado e ata. Não confundir retorno da digitação com reinício da urna.",
+    ),
+    "cancelamentos_habilitacao": criterio(
+        "Cancelamentos de habilitação acima da referência",
+        "operacao",
+        "Cancelamentos de habilitação: ≥3 eventos e taxa por 100 cômputos acima da referência mais 4 escalas robustas e excesso ≥5 eventos por 100. ≥50 cômputos e seções elegíveis de mesma UF, modelo e cargos.",
+        "Pode ser correção ou desistência antes de votar. Pedido de cancelamento pode cruzar com captura ainda em andamento; não implica voto cancelado.",
+        "Conferir a sequência de habilitação e a ata. Tentativas ambíguas não recebem duração completa presumida.",
+    ),
     "tempo_rapido": criterio(
         "Votação mais rápida que a referência",
         "tempo",
@@ -174,6 +225,7 @@ def campos(r: dict) -> dict:
     if tempo.get("n", 0) < 30 and "menos_de_30_ciclos" not in motivos_tempo:
         motivos_tempo.append("menos_de_30_ciclos_mesmos_cargos")
     return {
+        **campos_processo(r, principal),
         "modelo": " + ".join(modelos) if len(modelos) > 1 else modelo or "desconhecido",
         "modelo_comparavel": modelo_comparavel,
         "cargos": principal,
@@ -226,6 +278,7 @@ def campos(r: dict) -> dict:
         "mensagens_criticas_alteradas": c.get("mensagens_criticas_alteradas", 0),
         "linhas_invalidas": c.get("linhas_invalidas", 0),
         "identificadores_excluidos": c.get("urnas_excluidas", 0),
+        "preparacao_excluida": c.get("eventos_preparacao_excluidos", 0),
     }
 
 
@@ -246,7 +299,8 @@ def avaliar(
     df: pd.DataFrame, resumos: list[dict], desvios: float = DESVIOS_ROBUSTOS
 ) -> tuple[list[list[str]], dict]:
     flags = {k: np.zeros(len(df), dtype=bool) for k in CRITERIOS}
-    refs = {}
+    novos, refs, _ = avaliar_processo(df, referencias, desvios)
+    flags.update(novos)
     # Exterior fica em seu próprio estrato; tempos também separam quantidade de cargos.
     for campo in ("voto_mediana", "habilitacao_mediana"):
         elegivel = df.elegivel_tempo & (
@@ -300,11 +354,15 @@ def avaliar(
         )
         for cod, campo in (
             ("reinicios", "reinicios_durante_votacao"),
+            ("reinicio_sistema", "reinicios_sistema_em_votacao"),
             ("bateria", "eventos_bateria"),
             ("erro_tecnico", "erros"),
             ("assinatura", "falhas_assinatura_declaradas"),
         ):
             flags[cod][i] = c.get(campo, 0) > 0
+        flags["inspecao_prolongada"][i] = (
+            r["tempos_validos"] and (r.get("inspecoes", {}).get("max") or 0) >= 300
+        )
         flags["relogio"][i] = not r["tempos_validos"]
         flags["ciclos_incompletos"][i] = any(
             c.get(k, 0)

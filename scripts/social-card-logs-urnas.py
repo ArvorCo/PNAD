@@ -36,8 +36,8 @@ header,footer{{display:flex;align-items:center;justify-content:space-between;gap
 .stats{{display:flex;gap:38px;border-top:1px solid #182e34;padding-top:18px}}.stats b{{display:block;font:500 39px 'IBM Plex Mono',monospace}}.stats span{{display:block;font-size:15px;margin-top:5px;color:#485d62}}footer{{font-size:15px;color:#485d62}}footer strong{{color:#216577}}
 </style></head><body><div class="card">
 <header><span class="brand"><img src="../../img/arvor_logo.png" alt="">Arvor Intelligence</span><span>{status}</span></header>
-<div class="middle"><div><h1>O ritmo da votação.<br><em>O registro das urnas.</em></h1><p class="intro">Tempos, biometria e ocorrências nos logs oficiais. Brasil e exterior, com cobertura e limites explícitos.</p></div>
-<div class="sequence"><p><b>01</b>Habilitação<small>Do identificador à liberação</small></p><p><b>02</b>Votação<small>Da liberação ao cômputo</small></p><p><b>03</b>Conferência<small>Logs e boletins de urna</small></p></div></div>
+<div class="middle"><div><h1>O ritmo da votação.<br><em>O registro das urnas.</em></h1><p class="intro">Processo do mesário ao cômputo, cadência e ocorrências. Brasil e exterior, com cobertura e limites explícitos.</p></div>
+<div class="sequence"><p><b>01</b>Processo completo<small>Do identificador ao cômputo</small></p><p><b>02</b>Cadência<small>Intervalos e trechos rápidos</small></p><p><b>03</b>Conferência<small>Ocorrências, logs e boletins</small></p></div></div>
 <div class="stats"><div><b>{br(c["lidos"])}</b><span>logs lidos</span></div><div><b>{br(c["contagem_confere"])}</b><span>contagens reconciliadas com o BU</span></div><div><b>+{n}</b><span>diagnósticos operacionais</span></div></div>
 <footer><span>Diagnóstico não é prova de irregularidade.</span><strong>brasil.arvor.co</strong></footer>
 </div></body></html>"""

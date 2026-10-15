@@ -1,15 +1,28 @@
 """Publicação visual: critérios visíveis, taxas raras e atualização sem duplicação."""
 
+import hashlib
 import json
 from pathlib import Path
 
 from apuracao_logs import painel, view
+from apuracao_logs.parser import VERSAO
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
 def indice():
     return json.loads((ROOT / "docs/assets/logs_urnas_2026/indice.json").read_text())
+
+
+def test_publicacao_identifica_o_codigo_exato_que_produziu_os_dados():
+    d = indice()
+    assert d["versao_parser"] == VERSAO
+    arquivos = ROOT / "scripts/apuracao_logs"
+    atual = {
+        p.name: hashlib.sha256(p.read_bytes()).hexdigest()
+        for p in arquivos.glob("*.py")
+    }
+    assert d["integridade_codigo"] == atual
 
 
 def test_escala_comum_nao_arredonda_ocorrencia_rara_para_zero():
@@ -53,7 +66,7 @@ def test_publicar_move_criterios_para_abertura_e_e_idempotente(tmp_path, monkeyp
     html = principal.read_text()
     assert html.count(view.INICIO) == 1
     assert html.index(view.INICIO) < html.index("Histórico preservado")
-    assert html.count('class="regra"') == 18
+    assert html.count('class="regra"') == len(d["criterios"])
     assert '<section id="anterior">preservar</section>' in html
     assert '<section id="seguinte">preservar também</section>' in html
     assert thread.read_text().index(view.INICIO) < thread.read_text().index(

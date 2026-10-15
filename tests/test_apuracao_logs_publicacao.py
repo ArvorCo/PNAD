@@ -149,6 +149,14 @@ def test_build_publico_fecha_cobertura_e_preserva_null(tmp_path, monkeypatch):
     with gzip.open(tmp_path / "publico/secoes.csv.gz", "rt") as f:
         csv_rows = list(csv.DictReader(f))
     assert len(csv_rows) == 1 and csv_rows[0]["hash_anterior_confere"] == ""
+    with gzip.open(tmp_path / "publico/processos_por_tipo.csv.gz", "rt") as f:
+        tipos = list(csv.DictReader(f))
+    assert len(tipos) == 3 and all(r["elegivel"] == "False" for r in tipos)
+    assert {r["tipo"] for r in tipos} == {"biometrica", "biografica", "sem_biometria"}
+    assert (
+        "processo_tipos" not in csv_rows[0]
+    )  # tabela longa separada, sem JSON numa célula
+    assert row["processo_tipos"]["biometrica"]["n"] == 1
 
 
 def test_recortes_mantem_historico_e_exterior_separados(tmp_path):
