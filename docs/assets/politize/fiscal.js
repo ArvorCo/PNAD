@@ -3,7 +3,7 @@
 // scripts/politize-fiscal.py (contrato em analysis/politize/CONTRATO.md, seção Fiscalização).
 // Não calcula nada: só ordena e formata o que o build gravou.
 
-import { blocoLogs } from './logs.js?v=20261015-8';
+import { blocoLogs } from './logs.js?v=20261015-9';
 
 const ORDEM = ['padrao', 'reforcada', 'alta', 'maxima'];
 const PESO_NIVEL = { maxima: 3, alta: 2, reforcada: 1, padrao: 0 };

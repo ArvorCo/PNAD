@@ -62,10 +62,9 @@ def pagina(posts: list[dict], pngs: list[str], v: dict) -> str:
   <div class="howto"><b>Como usar.</b> Cada card é a imagem do post, um quadrado de 1080 por 1080 pixels; os PNGs estão listados no fim da página. Embaixo de cada card está o texto do post, para X premium, com o botão de copiar. Nenhum número foi digitado à mão: todos saem de fiscais.json e de fontes_fiscais.json, e o gerador recusa texto com algarismo solto, travessão, hashtag ou emoji. Cenário é hipótese de risco; caso é passado documentado; nada disso é atribuído à eleição de 2026.</div>
 </header>
 <nav class="rail" aria-label="Posts"><div class="wrap"><b>Posts</b>{rail}</div></nav>
-<main class="wrap">{cards}</main>
+<main class="wrap">{bloco()}{cards}</main>
 <footer class="wrap">
-  {bloco()}
-  <h2>Baixar a lista</h2>
+  <h2>Baixar a lista histórica (12 critérios)</h2>
   <p><a href="assets/fiscais_2026.xlsx">Planilha Excel</a> ({esc(v["xlsx_tam"])}), <a href="assets/fiscais_2026.csv">CSV por seção</a> e <a href="assets/fiscais_2026_por_local.csv">CSV por local</a>. O capítulo completo, com mapa navegável, critérios e fontes, está em <a href="{CAPITULO}">{DOSSIE}.html#fiscais</a>.</p>
   <h2>Imagens para anexar</h2>
   <p>Os {total} cards em PNG, 1080 por 1080 pixels, na ordem dos posts:</p>

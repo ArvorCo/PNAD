@@ -33,7 +33,7 @@ const QUALIDADE = {
 export async function blocoLogs({ h, buscar, uf, zona, secao, local }) {
   const cab = h('h3', {}, 'O que o log desta seção registra');
   const nota = h('p', { class: 'fis-nota' }, 'Os agregados exibidos não expõem identificadores de eleitores ou opções de voto e não acrescentam pontos à classificação histórica. ',
-    h('a', { href: 'logs_urnas_2026.html' }, 'Cobertura, regras e limites'));
+    h('a', { href: 'logs_urnas_2026.html' }, 'Relatório visual, gráficos e 18 critérios'));
   if (!secao) return h('section', { class: 'fis-logs' }, cab, h('p', {}, 'Escolha uma seção deste local para consultar seus tempos e ocorrências.'), nota);
   let indice, dados;
   try {
@@ -57,7 +57,7 @@ export async function blocoLogs({ h, buscar, uf, zona, secao, local }) {
   const taxa = (v) => !row.elegivel_bio ? bioIndisponivel : v == null ? 'sem denominador' : `${numero(v)}%`;
   const motivos = (row.sinais || []).map((cod) => {
     const c = indice.criterios[cod];
-    return h('li', {}, h('strong', {}, c.nome), h('p', {}, c.regra), h('p', { class: 'fis-nota' }, c.limite), h('p', {}, h('b', {}, 'Conferir: '), c.conferir));
+    return h('li', {}, h('strong', {}, c.nome), h('p', {}, c.regra), h('p', { class: 'fis-nota' }, c.limite), h('p', {}, h('b', {}, 'Conferir: '), c.conferir), h('p', {}, h('a', {href: `logs_urnas_2026.html#${cod}`}, 'Ver regra e frequência no relatório'), ' · ', h('a', {href: `fiscais_mapa.html#ambito=todos&camada=logs&log=${cod}`}, 'Outras seções com este diagnóstico')));
   });
   return h('section', { class: 'fis-logs', 'aria-label': 'Análise do log da seção' }, cab,
     h('p', {}, `${numero(row.comparecimento, 0)} comparecimentos no BU; ${numero(row.computados, 0)} eventos computados e ${numero(row.ciclos_reconstruidos, 0)} ciclos reconstruídos no log. Tempos da mesma seção, em segundos; o relógio da urna não informa tempo de fila.`),

@@ -683,7 +683,7 @@ def tamanho(b: int | None) -> str:
 
 
 DOWNLOADS = (
-    ("assets/fiscais_2026.xlsx", "Baixar Excel (lista completa)"),
+    ("assets/fiscais_2026.xlsx", "Baixar Excel (12 critérios históricos)"),
     ("assets/fiscais_2026.csv", "CSV por seção"),
     ("assets/fiscais_2026_por_local.csv", "CSV por local"),
 )
@@ -703,7 +703,7 @@ def bloco_download(F: dict, frase: str = "") -> str:
             f'<span class="fs-det">{det}{f"<br>SHA-256 <code>{sha}</code>" if sha else ""}</span></li>'
         )
     return (
-        '<aside class="io fs-down"><b>Baixe a lista</b>'
+        '<aside class="io fs-down"><b>Baixe a lista histórica</b>'
         f'<ul class="fs-downs">{"".join(itens)}</ul>'
         + (f"<p>{frase}</p>" if frase else "")
         + "<p>Os CSV usam ponto e vírgula e vírgula decimal e abrem direto no Excel em português; "

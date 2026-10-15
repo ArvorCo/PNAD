@@ -17,7 +17,6 @@ from .pagina_comum import (
     Capitulo,
     Dados,
     checar,
-    inteiro,
     limites,
     nota,
     num,
@@ -186,19 +185,19 @@ def r_fiscais(d: Dados, cap: Capitulo) -> str:
     """Onde colocar fiscal no 2º turno (`fiscais.json`, contrato em CONTRATO_FISCAIS.md)."""
     F = d.get("fiscais.json")
     checar(d, "fiscais.json", TFI.CHAVES)
-    total = F["resumo"]["secoes_sinalizadas"]
     h = secao(
         cap,
         "Onde colocar fiscal.<br><em>Prioridade, não acusação.</em>",
-        f"{inteiro(total)} seções atípicas, com endereço, para o PL pôr fiscal de partido no 2º turno. "
-        "Atipicidade não é irregularidade; a lista diz onde conferir primeiro.",
+        "30 critérios para conferir: 12 do histórico e 18 dos logs de votação. "
+        "Brasil e exterior na mesma consulta, com contagens, regras e fontes por seção.",
     )
 
     def figura(nome: str) -> str:
         return fig(nome, d)
 
-    h += TFI.capitulo(F, figura, d.aviso, TFB.bloco(F, figura, d.aviso))
     h += bloco_logs()
+    h += '<h3 id="fiscais-historico">O núcleo histórico: 12 critérios</h3>'
+    h += TFI.capitulo(F, figura, d.aviso, TFB.bloco(F, figura, d.aviso))
     return h + "</section>"
 
 

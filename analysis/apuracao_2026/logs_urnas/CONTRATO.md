@@ -147,8 +147,8 @@ da versão atual do leitor permanecem distinguíveis na ficha da seção.
   ao local identificado no ASN.1. Endereços vêm apenas do cadastro existente.
   A ficha operacional funciona mesmo sem endereço, pontuação ou perfil histórico;
   as seções sinalizadas entram na lista do mapa mesmo sem coordenada.
-- Mapa: índice leve, histórico e recortes por UF; acervo completo só quando
-  solicitado. Exterior usa cidades aproximadas do Politize, nunca um endereço
+- Mapa: índice leve, histórico e recortes por UF; a abertura padrão usa o
+  acervo completo, e links com UF carregam apenas o recorte correspondente. Exterior usa cidades aproximadas do Politize, nunca um endereço
   inventado de consulado. Zona 1 não é um centro geográfico mundial.
   Desenho em lotes canceláveis: mudar a UF ou os filtros interrompe os lotes do
   recorte anterior. A regressão de concorrência é exercitada no teste de navegador.
@@ -188,3 +188,32 @@ Os JSONs de zona usam gzip determinístico (mtime zero), descompactado no navega
 com `DecompressionStream`. Isso mantém o site abaixo do limite publicado de 1 GB
 do GitHub Pages. O leitor reconhece também respostas já descompactadas pelo servidor.
 Navegadores sem essa API mostram a limitação e o CSV, sem quebrar o restante da ficha.
+
+## Consulta e apresentação (revisão de 15/10)
+
+A entrada padrão do mapa usa **todos os territórios e todas as camadas**. A opção
+“Todas” da UF limpa o recorte geográfico, inclusive depois de Exterior, e inclui
+ZZ. “Limpar” restaura o mesmo conjunto. Links com filtro explícito continuam
+respeitados. O seletor reúne os 12 critérios históricos e os 18 dos logs; cada
+opção mostra sua contagem e abre a regra correspondente. CSV e lista incluem
+seções sem coordenada, e a consulta combinada não duplica uma seção presente nas
+duas camadas. Os números do recorte informam separadamente o exterior.
+
+O relatório é gerado por `view.py`, com componentes de `painel.py`: distribuição
+e quantis de duração, composição das habilitações, frequência dos critérios,
+recuperação após mensagens de falha e cobertura. Taxas de ocorrência usam o
+número avaliável específico de cada regra. As barras dos diagnósticos usam uma
+mesma escala linear, com teto arredondado acima da maior taxa; não se impõe
+largura mínima para ocorrências raras, cujas taxas continuam publicadas sem
+arredondamento a zero. As regras e fontes permanecem acessíveis sem JavaScript.
+
+O capítulo de fiscais e a thread recebem os 18 critérios **antes** das tabelas
+históricas. A atualização é idempotente e preserva os outros capítulos. As
+planilhas antigas são rotuladas como históricas; a consulta combinada tem sua
+própria exportação no mapa. O Politize liga cada ocorrência à regra do relatório
+e à consulta nacional do mesmo diagnóstico. Nenhuma dessas mudanças recalcula
+pontuação política nem transforma uma ocorrência operacional em acusação.
+
+A regressão de navegador confere abertura sem fragmento, Exterior → Todas,
+Limpar, recarga, contagem dos 30 filtros, CSV com ZZ, busca do relatório,
+âncoras, leitura sem JS, celular e a posição dos critérios no dossiê.

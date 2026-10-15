@@ -71,6 +71,119 @@ def lista_sem_biblioteca(browser, base, erros):
     return True
 
 
+def padroes_e_catalogo(browser, base, mapa, col, erros):
+    """Regressão do relato: todas as camadas e exterior, inclusive após limpar."""
+    p = browser.new_page(
+        viewport={"width": 1400, "height": 1000}, accept_downloads=True
+    )
+    p.set_default_timeout(60_000)
+    p.on("pageerror", lambda err: erros.append(str(err)))
+    p.goto(base + "/fiscais_mapa.html", wait_until="networkidle")
+    pronto(p)
+    assert p.locator("#f-ambito").input_value() == "todos"
+    assert p.locator("#f-camada").input_value() == "todas"
+    assert p.locator("#f-uf").input_value() == ""
+    assert p.locator("#f-log option").count() == 31
+    p.locator("#m-lista").click()
+    pronto(p)
+    total = len(mapa["linhas"])
+    exterior = sum(r[col["uf"]] == "ZZ" for r in mapa["linhas"])
+
+    def conferir_total(n, zz):
+        alvo = (
+            f"{n:,}".replace(",", ".")
+            + " seções nos filtros, "
+            + f"{zz:,}".replace(",", ".")
+            + " no exterior"
+        )
+        p.wait_for_function(
+            "s => document.querySelector('#recorte-ativo').textContent.includes(s)",
+            arg=alvo,
+        )
+
+    conferir_total(total, exterior)
+    with p.expect_download() as download:
+        p.locator("#l-csv").click()
+    caminho = QA / "todas.csv"
+    download.value.save_as(caminho)
+    chaves, zz = set(), 0
+    with caminho.open(encoding="utf-8-sig") as f:
+        for r in csv.DictReader(f, delimiter=";"):
+            chave = (r["uf"], int(r["zona"]), int(r["secao"]))
+            assert chave not in chaves
+            chaves.add(chave)
+            zz += r["uf"] == "ZZ"
+    assert len(chaves) == total and zz == exterior
+    caminho.unlink()  # exportação completa validada, sem reter cópia pesada de QA
+    p.locator("#f-uf").select_option("ZZ")
+    conferir_total(exterior, exterior)
+    p.locator("#f-uf").select_option("")
+    conferir_total(total, exterior)
+    assert p.locator("#f-ambito").input_value() == "todos"
+    p.locator("#f-ambito").select_option("brasil")
+    conferir_total(total - exterior, 0)
+    p.locator("#b-limpar").click()
+    conferir_total(total, exterior)
+    p.reload(wait_until="networkidle")
+    conferir_total(total, exterior)
+    for origem, regras in (
+        ("historico:", mapa["criterios"]),
+        ("", mapa["logs"]["criterios"]),
+    ):
+        for k, r in regras.items():
+            p.locator("#f-log").select_option(origem + k)
+            pronto(p)
+            assert p.locator("#criterio-ativo strong").inner_text() == r["nome"]
+            esperado = str(f'{r["secoes"]:,}'.replace(",", ".")) + " seções nos filtros"
+            assert esperado in p.locator("#recorte-ativo").inner_text()
+    p.locator("#f-log").select_option("")
+    conferir_total(total, exterior)
+    p.screenshot(path=str(QA / "mapa-todas-lista.png"))
+    p.close()
+    return {
+        "total_unico_csv": total,
+        "exterior_csv": exterior,
+        "criterios_conferidos": 30,
+    }
+
+
+def exploracao_relatorio(browser, base, erros):
+    p = browser.new_page(viewport={"width": 1300, "height": 900})
+    p.on("pageerror", lambda err: erros.append(str(err)))
+    p.goto(base + "/logs_urnas_2026.html", wait_until="networkidle")
+    assert p.locator(".tempos .tempo").count() == 2
+    assert p.locator("figure").count() == 4
+    p.locator('.filtros-criterios button[data-grupo="biometria"]').click()
+    assert p.locator(".regra:visible").count() == 2
+    p.locator("#busca-criterio").fill("sem biometria")
+    assert p.locator(".regra:visible").count() == 1
+    p.locator("#busca-criterio").fill("zzzzzzz")
+    assert p.locator(".sem-resultados").is_visible()
+    p.goto(base + "/logs_urnas_2026.html#texto_malformado", wait_until="networkidle")
+    assert p.locator("#texto_malformado details").get_attribute("open") is not None
+    assert "0,0004%" in p.locator("#texto_malformado").inner_text()
+    p.close()
+    for largura in (1300, 390):
+        p = browser.new_page(viewport={"width": largura, "height": 900})
+        p.on("pageerror", lambda err: erros.append(str(err)))
+        p.goto(base + "/apuracao_1o_turno_2026.html#fiscais", wait_until="networkidle")
+        assert p.locator("#fiscais .logs-fiscais .regra").count() == 18
+        assert p.locator("#fiscais .logs-fiscais").evaluate(
+            "e => Boolean(e.compareDocumentPosition(document.querySelector('#fiscais-historico')) & Node.DOCUMENT_POSITION_FOLLOWING)"
+        )
+        assert p.evaluate("document.documentElement.scrollWidth <= innerWidth+1")
+        p.locator("#fiscais").scroll_into_view_if_needed()
+        p.screenshot(path=str(QA / f"dossie-logs-{largura}.png"))
+        p.close()
+    contexto = browser.new_context(java_script_enabled=False)
+    p = contexto.new_page()
+    p.goto(base + "/logs_urnas_2026.html", wait_until="networkidle")
+    assert p.locator(".regra:visible").count() == 18
+    assert not p.locator(".filtros-criterios").is_visible()
+    contexto.close()
+    return "gráficos; busca; grupos; âncoras; casos raros; dossiê desktop/móvel; leitura sem JS"
+
+
 def executar(base: str):
     QA.mkdir(parents=True, exist_ok=True)
     mapa = json.loads((ROOT / "docs/assets/fiscais_mapa/dados.json").read_text())
@@ -81,6 +194,10 @@ def executar(base: str):
     resultados, erros, pedidos = {}, [], []
     with sync_playwright() as play:
         browser = play.chromium.launch(headless=True)
+        resultados["todas_e_30_criterios"] = padroes_e_catalogo(
+            browser, base, mapa, col, erros
+        )
+        resultados["relatorio_e_dossie"] = exploracao_relatorio(browser, base, erros)
         page = browser.new_page(
             viewport={"width": 1300, "height": 900}, accept_downloads=True
         )
@@ -122,7 +239,7 @@ def executar(base: str):
         resultados["filtros_vazios_persistem"] = True
         page.locator("#b-limpar").click()
         pronto(page)
-        assert page.locator("#f-camada").input_value() == "originais"
+        assert page.locator("#f-camada").input_value() == "todas"
         page.locator("#f-uf").select_option(uf_exemplo)
         page.locator("#f-log").select_option("tempo_lento")
         pronto(page)

@@ -131,3 +131,11 @@ select:disabled{background:#efece2;color:var(--muted)}
 .n-logs { color: #164653; background: #e1f0f2; }
 .ficha-nivel.n-logs { color: #164653; }
 #cobertura-logs { padding: 0 4px; }
+
+/* A camada operacional aparece antes dos filtros e tem descrição própria. */
+.visao-geral{padding:18px 24px;border-bottom:1px solid var(--line);display:flex;gap:28px;align-items:start;justify-content:space-between;background:#e7eef1}
+.visao-geral h2{font:500 29px/1.15 var(--display);margin:3px 0 8px}.visao-geral p{margin:4px 0;font-size:15px}.visao-geral .kicker{font:11px var(--mono);text-transform:uppercase;letter-spacing:.1em}
+#resumo-acervo{font-weight:600}.atalhos{max-width:620px;flex:1}.atalhos summary{min-height:44px;cursor:pointer;font-weight:600;padding:10px 0}
+#atalhos-logs{display:flex;gap:6px;flex-wrap:wrap}#atalhos-logs button{background:#fff;border:1px solid #81959d;color:var(--azul);padding:8px 10px;font:inherit;cursor:pointer;text-align:left;border-radius:4px;min-height:44px}#atalhos-logs button b{margin-left:10px;font-family:var(--mono)}#atalhos-logs button[aria-pressed=true]{background:var(--azul);color:white}
+.criterio-ativo{padding:12px;margin-top:12px;background:#edf4f7;border-left:3px solid var(--azul2);font-size:14px}.criterio-ativo p{margin:8px 0}.recorte-ativo{font-size:15px;font-weight:600;margin:0;border-top:2px solid var(--azul2);padding-top:10px}
+@media(max-width:700px){.visao-geral{display:block;padding:16px}.visao-geral h2{font-size:26px}.visao-geral .atalhos{margin-top:10px}}

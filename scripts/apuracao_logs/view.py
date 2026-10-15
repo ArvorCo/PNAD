@@ -10,6 +10,7 @@ from zoneinfo import ZoneInfo
 
 from ga_tag import injetar
 
+from . import painel
 from .coleta import ROOT
 from .publicacao import PUBLICO
 
@@ -21,8 +22,8 @@ def inteiro(v):
     return f"{v:,}".replace(",", ".")
 
 
-def numero(v):
-    return f"{v:.1f}".replace(".", ",") if v is not None else "não disponível"
+def numero(v, casas=1):
+    return f"{v:.{casas}f}".replace(".", ",") if v is not None else "não disponível"
 
 
 def bloco(indice=None):
@@ -30,23 +31,33 @@ def bloco(indice=None):
     if indice is None and not path.exists():
         return ""
     d = indice or json.loads(path.read_text())
-    n = len(d["criterios"])
     c = d["cobertura"]
-    return (
-        f'{INICIO}<aside class="callout logs-resumo" id="logs-urnas">'
-        f"<h3>Os logs acrescentam {n} diagnósticos operacionais</h3>"
-        f'<p>Esta camada leu <strong>{inteiro(c["lidos"])} logs</strong> de '
-        f'{inteiro(c["catalogadas"])} seções catalogadas. Em {inteiro(c["contagem_confere"])} '
-        "a contagem dos ciclos reproduziu o comparecimento no BU. "
-        "Tempos, biometria, suspensões, reinícios e conferência documental aparecem por seção.</p>"
-        "<p>Os 12 critérios históricos continuam identificados. Os novos diagnósticos não somam pontos "
-        "automaticamente: operação com bateria, por exemplo, pode ser funcionamento normal. "
-        "Ausência de log analisado não significa ausência de ocorrência.</p>"
-        '<p><a href="logs_urnas_2026.html">Ler resultados, cobertura e método dos logs</a> · '
-        '<a href="fiscais_mapa.html#camada=logs">Filtrar registros no mapa</a> · '
-        '<a href="fiscais_mapa.html#uf=ZZ&amp;ambito=exterior&amp;camada=todas">Ver exterior</a></p>'
-        f"</aside>{FIM}"
-    )
+    return f"""{INICIO}<div class="logs-fiscais" id="logs-urnas">
+<link rel="stylesheet" href="assets/logs_fiscais_2026.css?v=2">
+<p class="logs-kicker">Ampliação da fiscalização · 12 históricos + 18 dos logs</p>
+<h3>Agora são 30 critérios de consulta.</h3>
+<p>Os logs entram aqui com tempo de votação, identificação, interrupções e conferência dos arquivos.
+<b>{inteiro(c["sinalizadas"])} seções</b> têm ao menos um dos 18 diagnósticos operacionais.
+O mapa reúne as duas camadas, inclui o exterior e conta cada seção uma vez.</p>
+<div class="logs-destaques">
+<div><b>{inteiro(c["lidos"])}</b><span>logs de votação analisados</span></div>
+<div><b>{numero(d["tempos"]["brasil"]["media_s"])} s</b><span>tempo médio no Brasil</span></div>
+<div><b>{inteiro(d["criterios"]["contagem_divergente"]["secoes"])}</b><span>contagens ainda não reconciliadas com o BU</span></div>
+</div>
+<p class="logs-acoes"><a href="fiscais_mapa.html">Abrir todas as seções no mapa →</a>
+<a href="logs_urnas_2026.html">Relatório visual dos logs →</a></p>
+<p><b>O que muda na conferência:</b> votação lenta pede exame dos ciclos e da ata; taxa sem biometria alta pede comparação com o cadastro local;
+reinício pede verificação da continuidade; discrepância com o BU pede conferência de todos os fragmentos.
+Registro de bateria, sozinho, é uso de um recurso de continuidade.</p>
+<h4>Os 18 critérios novos, com resultado e filtro direto</h4>
+<p class="logs-legenda">Cada barra mostra a parcela das seções avaliáveis, em escala de 0 a {painel.teto_percentual(d)}%. As contagens se sobrepõem. Abra “Regra e conferência” para ver o corte e a providência correspondente.</p>
+{painel.catalogo(d, compacto=True)}
+<p class="logs-nota">A pontuação alta/média/baixa continua sendo a dos 12 critérios históricos. Os diagnósticos operacionais são consultáveis separadamente e não viram pontos de suspeita: bateria, recuperação e ausência de um fragmento têm significados diferentes.
+Os 20 BUs antes indisponíveis foram recuperados e estão nas fichas suplementares; as tabelas e planilhas históricas abaixo preservam o recorte original.</p>
+<p><a href="fiscais_mapa.html#modo=lista">Exportar a consulta combinada em CSV</a> ·
+<a href="logs_urnas_2026.html#cobertura">Cobertura e lacunas</a> ·
+<a href="politizesuavizinhanca.html">Consultar o log da minha seção</a></p>
+</div>{FIM}"""
 
 
 def tabela(cab, linhas):
@@ -120,21 +131,6 @@ def pagina(d):
             for u, r in d["por_uf"].items()
         ],
     )
-    regras = "".join(
-        f'<article class="regra" id="{k}"><p class="etiqueta">{escape(v["grupo"])} · '
-        f'{inteiro(v["secoes"])} seções / {inteiro(v["avaliaveis"])} avaliáveis</p>'
-        f'<h3>{i:02d}. {escape(v["nome"])}</h3><p>{escape(v["regra"])}</p>'
-        f'<p class="limite">{escape(v["limite"])}</p><p><b>Conferir:</b> {escape(v["conferir"])}</p>'
-        f'<a href="fiscais_mapa.html#camada=logs&amp;log={k}">Ver no mapa</a></article>'
-        for i, (k, v) in enumerate(d["criterios"].items(), 1)
-    )
-    tempos = "".join(
-        f'<div class="tempo"><h3>{"Brasil" if pais == "brasil" else "Exterior"}</h3>'
-        f'<p class="grande">{numero(r["media_s"])} <small>segundos</small></p>'
-        f'<p>Média de {inteiro(r["ciclos"])} ciclos completos elegíveis, ponderada pelo número de ciclos, '
-        f'nas seções lidas. Mediana: {numero(r["mediana_s"])} s; cerca de 90% dos ciclos duraram até {numero(r["p90_s"])} s.</p></div>'
-        for pais, r in d["tempos"].items()
-    )
     tempos_cargos = tabela(
         ["Território", "Confirmações de cargo", "Ciclos", "Média (segundos)"],
         [
@@ -199,46 +195,62 @@ def pagina(d):
 <meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://brasil.arvor.co/logs_urnas_2026.html">
 <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/logs_urnas_2026.css">
+<link rel="stylesheet" href="assets/logs_urnas_2026.css?v=2">
+<script defer src="assets/logs_urnas_2026.js?v=2"></script>
 </head><body>
-<header><nav><a href="index.html">Arvor · Biblioteca</a><a href="fiscais_mapa.html#camada=logs">Mapa de fiscais</a><a href="politizesuavizinhanca.html">Consultar minha seção</a></nav>
-<p class="etiqueta">Primeiro turno · 4 de outubro de 2026 · Auditoria da operação</p>
-<h1>O ritmo da votação.<br><em>O registro de cada urna.</em></h1>
-<p class="abertura">Os logs permitem medir o tempo entre habilitação e voto computado, distinguir formas de identificação e localizar interrupções. Esta análise acrescenta {n} diagnósticos aos 12 critérios históricos. Cada registro vem com uma regra e com o que falta conferir.</p>
-<div class="numeros"><div><b>{inteiro(c["lidos"])}</b><span>logs lidos</span></div><div><b>{f'{pct:.3f}'.replace('.', ',')}%</b><span>das seções catalogadas</span></div><div><b>{inteiro(c["contagem_confere"])}</b><span>contagens conciliadas com o BU</span></div></div>
-</header><main>
-<section id="achados"><h2>O que aparece nos registros</h2>
-<p>Em <b>{inteiro(c["lidos"] - c["contagem_confere"])} seções</b>, a contagem dos eventos ou a reconstrução dos ciclos ainda não reproduz o comparecimento do BU. São casos para conferir arquivos e contingências; a diferença não identifica alteração de votos.</p>
-<p>A regra de duração sinalizou <b>{inteiro(d["criterios"]["tempo_rapido"]["secoes"])} seções mais rápidas</b> e <b>{inteiro(d["criterios"]["tempo_lento"]["secoes"])} mais lentas</b> que a referência comparável. A regra de habilitação biográfica sinalizou {inteiro(d["criterios"]["biografica_alta"]["secoes"])}. Cada uma usa seu próprio conjunto elegível e limite mínimo de diferença.</p>
-<p>O sistema registrou <b>{inteiro(op.get("falhas_assinatura_declaradas", 0))} eventos de falha na verificação de assinatura</b>: {inteiro(op.get("falhas_assinatura_com_sucesso_posterior", 0))} seguidos de SUCESSO para o mesmo arquivo e urna, {inteiro(op.get("falhas_assinatura_sem_sucesso_localizado", 0))} sem sucesso posterior localizado e {inteiro(op.get("falhas_assinatura_ordem_incerta", 0))} com ordem temporal incerta. O sucesso posterior também é evidência e aparece na ficha, junto do erro.</p>
-<p>Há {inteiro(op.get("erros", 0))} eventos ERRO/FATAL no dia. Nas {inteiro(op.get("secoes_janela_classificavel", 0))} seções cuja janela pôde ser delimitada, {inteiro(op.get("erros_na_janela_votacao", 0))} ficaram entre a primeira habilitação reconstruída e o último cômputo, e {inteiro(op.get("erros_fora_da_janela", 0))} fora dela. Um evento não equivale a uma seção nem a uma falha sem recuperação.</p>
-<h3>Arquivos conferidos em detalhe</h3><p>Exemplos escolhidos para mostrar situações distintas. Não são amostra representativa nem lista dos casos mais graves.</p>{casos}
-</section>
-<section id="leitura"><h2>O que se pode medir</h2>
-<div class="passos"><article><b>01</b><h3>Habilitação</h3><p>Do identificador digitado pelo mesário até a liberação do eleitor. Inclui as etapas eletrônicas observadas; não inclui toda a conferência documental.</p></article><article><b>02</b><h3>Votação</h3><p>Da habilitação ao evento de voto computado. Ciclos suspensos parcialmente ficam fora da duração de um voto completo.</p></article><article><b>03</b><h3>Intervalo</h3><p>Entre dois cômputos consecutivos. Mistura ociosidade, identificação e votação. Um intervalo longo não demonstra fila ou paralisação.</p></article></div>
-<p class="nota">Os logs não revelam a escolha do eleitor. Nenhuma opção de voto ou identificação pessoal é reconstruída nesta análise. Os tempos são agregados por seção.</p>
-<div class="tempos">{tempos}</div>
-<figure class="distribuicao"><a href="assets/logs_urnas_2026/tempos.svg"><picture><source media="(max-width:700px)" srcset="assets/logs_urnas_2026/tempos-mobile.svg"><img src="assets/logs_urnas_2026/tempos.svg" width="1040" height="700" alt="Distribuição dos tempos de votação em intervalos de dez segundos, separada entre Brasil e exterior."></picture></a><figcaption>Cada barra reúne dez segundos. A última reúne todos os ciclos de 180 segundos ou mais. O eixo vertical mostra a parcela dos ciclos elegíveis de cada território; as quantidades de cargos diferem. <a href="assets/logs_urnas_2026/tempos.png">Baixar a figura em PNG</a>.</figcaption></figure>
-{tempos_cargos}
-<p>Seções com modelos mistos, indeterminados ou divergentes entre log e BU ficam fora da comparação de tempos e das referências de biometria. A comparação entre seções usa o mesmo número de confirmações de cargo no ciclo, a mesma UF e o mesmo modelo de urna. No exterior há apenas a eleição presidencial; suas seções não são comparadas com seções brasileiras de seis confirmações. A média acima descreve somente o conjunto já lido; enquanto a coleta estiver incompleta, não é estimativa representativa do país.</p>
-</section>
-<section id="biometria"><h2>“Sem biometria” não é uma categoria única</h2>
-<p><b>Reconhecimento biométrico</b> é a habilitação registrada como biométrica. <b>Habilitação biográfica</b> é o procedimento de dado pessoal depois da tentativa de reconhecimento, seguido da liberação. <b>Sem biometria</b> é a terceira contagem do BU. As três contagens precisam reproduzir o boletim antes de uma seção entrar na comparação.</p>
-<p>A taxa biográfica divide biográficas por biométricas mais biográficas. A taxa sem biometria divide a terceira categoria pelo comparecimento. Compará-las como se fossem o mesmo percentual troca o denominador e pode criar um falso diagnóstico.</p>
-<p>A referência é a mediana das seções da mesma zona, município e modelo, com pelo menos 30 seções elegíveis e denominador de 50 pessoas em cada uma. Sem esse suporte, a referência fica ausente. Idade, qualidade das digitais e cobertura cadastral continuam sem controle individual.</p>
-{tabela_bio}<p>Os totais acima incluem somente seções cujas três categorias e comparecimento fecharam entre log e BU. Não incluem BUs sem esses campos e não estimam as categorias ausentes.</p>
-</section>
-<section id="criterios"><h2>{n} diagnósticos. Nenhum é prova isolada.</h2>
-<p>As contagens se sobrepõem. Um único reinício pode gerar mais de um diagnóstico. Os registros não aumentam automaticamente a pontuação histórica e não servem para estimar probabilidade de fraude. ALERTA costuma incluir digitação inválida ou pergunta do sistema ao mesário; ele não é tratado como ERRO.</p>
-<div class="regras">{regras}</div></section>
-<section id="cobertura"><h2>A cobertura faz parte do resultado</h2>
-<p>Catálogo: {inteiro(c["catalogadas"])} seções principais; {inteiro(c["com_log_no_catalogo"])} com nome de log de votação (VOTA) no catálogo utilizado, incluindo complementos documentados. Recuperados: {inteiro(d["coleta"].get("ok", 0))}; com SHA-256 igual ao da coleta anterior: {inteiro(d["coleta"].get("hash_anterior_confere", 0))}. Lidos e vinculados a um BU: {inteiro(c["lidos"])}. Elegíveis para comparação de tempo: {inteiro(c["tempo_elegivel"])}.</p>{lacunas}
-<p>Uma seção sem análise não recebe zero ocorrências. Ausência de publicação, falha de download, formato não reconhecido e falta de BU são limitações distintas. O quadro mostra o estágio desta publicação, em {escape(data_publicacao)}.</p>
-{situacoes}
-{tabela_uf}</section>
-<section id="sensibilidade"><h2>O resultado depende do corte</h2>
-<p>Referência: mediana empírica. Escala robusta: 1,4826 vezes a mediana dos desvios absolutos, com piso de 3 segundos para tempos e de 1 ponto percentual para taxas. A regra principal usa 4 escalas, acompanhada de diferença mínima. As alternativas usam 3 e 5, mantendo os demais requisitos. A própria seção participa da referência. Isso é triagem exploratória, não teste com nível de significância.</p>
-{sensibilidade}<p>As colunas comparam critérios sobre a mesma cobertura. Não são milhares de confirmações independentes: sem revisão documental, a multiplicidade e a correlação produzem falsos positivos.</p></section>
+<header><nav class="nav-topo"><a href="index.html">ARVOR / DADOS ABERTOS</a><a href="fiscais_mapa.html">Mapa de fiscais ↗</a><a href="politizesuavizinhanca.html">Minha seção ↗</a></nav>
+<div class="hero"><div><p class="etiqueta">Primeiro turno de 2026 · Logs oficiais das urnas</p>
+<h1>O que aconteceu<br><em>durante a votação.</em></h1>
+<p class="abertura">Quanto tempo se levou para votar, como os eleitores foram habilitados e quais ocorrências ficaram registradas. A leitura de quase meio milhão de logs, em gráficos e critérios verificáveis.</p>
+<a class="botao" href="#criterios">Explorar os 18 diagnósticos ↓</a></div>
+<aside class="hero-base"><span>Base analisada</span><strong>{inteiro(c["lidos"])}</strong><span>logs de votação ligados ao boletim da seção</span>
+<div class="hero-cobertura"><i style="width:{pct:.6f}%"></i></div><p><b>{f'{pct:.3f}'.replace('.', ',')}%</b> das {inteiro(c["catalogadas"])} seções catalogadas</p>
+<p class="base">Leitura de {escape(data_publicacao)}. <a href="#cobertura">Entenda as {inteiro(c["catalogadas"]-c["lidos"])} seções restantes →</a></p></aside></div>
+<div class="manchetes"><a href="#leitura"><b>{numero(d["tempos"]["brasil"]["media_s"])} s</b><span>tempo médio de votação no Brasil</span></a>
+<a href="#criterios"><b>{inteiro(c["sinalizadas"])}</b><span>seções com algum diagnóstico operacional</span></a>
+<a href="#achados"><b>{inteiro(c["lidos"]-c["contagem_confere"])}</b><span>contagens ainda não reconciliadas com o BU</span></a></div>
+</header>
+<nav class="nav-capitulos" aria-label="Neste relatório"><a href="#leitura">01 · Tempos</a><a href="#biometria">02 · Biometria</a><a href="#criterios">03 · Critérios</a><a href="#achados">04 · Conferências</a><a href="#cobertura">05 · Cobertura</a><a href="#fontes">Fontes</a></nav>
+<main>
+<section id="leitura"><p class="etiqueta">01 / Ritmo da votação</p><h2>No Brasil, metade dos ciclos<br>durou até {numero(d["tempos"]["brasil"]["mediana_s"], 0)} segundos.</h2>
+<p class="lead">O relógio começa quando o eleitor é habilitado e termina no evento de voto computado. Mede a operação na urna; o tempo na fila fica fora dessa conta.</p>
+{painel.tempos(d)}
+<p class="legenda-reguas">Régua comum em segundos: ● metade dos ciclos (mediana) · | média · ○ 90% dos ciclos (percentil 90).</p>
+<p class="nota">Brasil e exterior são descritos separadamente: o número de cargos difere. Nas regras de atipicidade, a comparação é com a mesma UF, modelo de urna e quantidade de confirmações de cargo.</p>
+<figure class="distribuicao"><div class="fig-titulo"><h3>Como os tempos se distribuem</h3><a href="assets/logs_urnas_2026/tempos.png">Baixar gráfico ↗</a></div><picture><source media="(max-width:700px)" srcset="assets/logs_urnas_2026/tempos-mobile.svg"><img src="assets/logs_urnas_2026/tempos.svg" width="1040" height="700" alt="Distribuição dos tempos de votação, em faixas de dez segundos, separada entre Brasil e exterior."></picture><figcaption>Parcela dos ciclos elegíveis em cada faixa de dez segundos. A última barra reúne todos os ciclos de 180 segundos ou mais. As duas distribuições usam a mesma escala vertical.</figcaption></figure>
+<div class="conclusao"><b>{inteiro(d["criterios"]["tempo_rapido"]["secoes"])} rápidas · {inteiro(d["criterios"]["tempo_lento"]["secoes"])} lentas</b><p>São as seções que ultrapassaram a regra de duração, comparadas a referências equivalentes. O corte exige uma diferença grande e pelo menos 30 ciclos completos. {painel.mapa_link('tempo_lento', 'Consultar as seções lentas')}</p></div>
+<details class="metodo"><summary>Como separamos habilitação, votação e intervalo</summary><div class="passos"><article><h3>Habilitação</h3><p>Do identificador digitado pelo mesário à liberação do eleitor. É a etapa eletrônica observável, sem toda a conferência documental.</p></article><article><h3>Votação</h3><p>Da habilitação ao voto computado. Ciclos parcialmente suspensos ficam fora da duração de voto completo.</p></article><article><h3>Intervalo</h3><p>Entre dois cômputos consecutivos. Inclui ociosidade, identificação e votação. Não identifica fila nem paralisação.</p></article></div>
+{tempos_cargos}<p>Relógio inconsistente, modelos mistos ou divergentes e ciclos incompletos impedem a comparação correspondente. Os valores descrevem os ciclos completos elegíveis nas seções lidas. Não há associação entre horário, identidade pessoal e opção de voto.</p></details></section>
+<section id="biometria"><p class="etiqueta">02 / Identificação do eleitor</p><h2>Três formas de habilitar.<br>Duas taxas diferentes para comparar.</h2>
+<p class="lead">A habilitação biográfica e a categoria “sem biometria” são contagens distintas do BU. Misturá-las produziria uma taxa enganosa.</p>
+{painel.biometria(d)}
+<div class="dois-achados"><article><span>Habilitação biográfica acima da referência</span><b>{inteiro(d["criterios"]["biografica_alta"]["secoes"])}</b><p>seções. A taxa divide biográficas por <strong>biométricas + biográficas</strong>.</p>{painel.mapa_link('biografica_alta')}</article>
+<article><span>Sem biometria acima da referência</span><b>{inteiro(d["criterios"]["sem_biometria_alta"]["secoes"])}</b><p>seções. A taxa divide a categoria sem biometria pelo <strong>comparecimento</strong>.</p>{painel.mapa_link('sem_biometria_alta')}</article></div>
+<p class="nota">Os percentuais do gráfico usam todos os presentes nas seções reconciliadas; as regras acima usam seus próprios denominadores. Procedimento sem reconhecimento biométrico não identifica, por si só, voto irregular.</p>
+<details class="metodo"><summary>Referência local, denominadores e cobertura da biometria</summary>
+<p>A referência é a mediana de seções da mesma UF, município, zona e modelo, com pelo menos 30 seções elegíveis e denominador de 50 pessoas por seção. O corte exige quatro escalas robustas e excesso de pelo menos 10 pontos percentuais. Cadastro, idade e qualidade das digitais não são controlados individualmente.</p>{tabela_bio}
+<p>A decomposição acima só inclui as seções em que as três categorias e o comparecimento fecharam entre log e BU. {inteiro(c["biometria_ausente_bu"])} BUs não trazem os campos de biometria: seus valores são desconhecidos, nunca zero.</p></details></section>
+<section id="criterios"><p class="etiqueta">03 / Doze critérios históricos + dezoito dos logs</p><h2>O que procurar.<br>Quantas seções aparecem.</h2>
+<p class="lead">Escolha um grupo, veja a frequência e abra a regra. Cada diagnóstico leva diretamente às seções correspondentes no mapa.</p>
+<div class="conclusao"><b>O registro mais frequente é operação com bateria.</b><p>{inteiro(d["criterios"]["bateria"]["secoes"])} seções registraram esse recurso de continuidade. Isso ajuda a explicar o volume de registros operacionais; não mede defeitos nem gravidade. As contagens se sobrepõem e não se somam à pontuação histórica.</p></div>
+{painel.navegacao_criterios(d)}
+<p class="legenda-reguas">Barras em escala comum de 0 a {painel.teto_percentual(d)}% das seções avaliáveis em cada regra. Ocorrências raras continuam legíveis pelo número; barra curta não significa pouca importância.</p>
+{painel.catalogo(d)}
+<p class="sem-resultados" hidden>Nenhum diagnóstico corresponde à busca. Limpe o texto ou escolha outro grupo.</p>
+<p class="nota">Essas 18 regras são triagem exploratória. Não estimam probabilidade de fraude. ALERTA não é contado como ERRO: pode ser uma pergunta do sistema ou digitação inválida.</p>
+<details class="metodo" id="sensibilidade"><summary>Quanto muda quando o corte fica mais ou menos exigente?</summary><p>O corte principal usa a mediana de referência mais ou menos quatro escalas robustas e uma diferença mínima. As alternativas usam três e cinco. Escala robusta: 1,4826 vezes a mediana dos desvios absolutos, com piso de três segundos ou um ponto percentual. A própria seção participa da referência.</p>{sensibilidade}<p>As colunas usam a mesma cobertura. São sensibilidades de triagem, sem nível de significância nem confirmações independentes.</p></details></section>
+<section id="achados"><p class="etiqueta">04 / Conferência dos registros</p><h2>Erro registrado não conta<br>a história inteira.</h2>
+<p class="lead">Em {inteiro(c["contagem_confere"])} seções, a contagem reproduz o comparecimento do BU. Restam {inteiro(c["lidos"]-c["contagem_confere"])} discrepâncias documentais ou de reconstrução para conferir. Elas não demonstram alteração de votos.</p>
+{painel.assinatura(d)}
+<p>Os {inteiro(op.get("falhas_assinatura_declaradas", 0))} eventos estão em {inteiro(d["criterios"]["assinatura"]["secoes"])} seções. SUCESSO posterior significa que o software registrou recuperação para o mesmo arquivo e urna. Esta análise lê as mensagens; não substitui a validação criptográfica independente.</p>
+<details class="metodo"><summary>Erros dentro e fora da janela observada de votação</summary><p>Há {inteiro(op.get("erros", 0))} eventos ERRO/FATAL no dia. Nas {inteiro(op.get("secoes_janela_classificavel", 0))} seções com janela delimitável, {inteiro(op.get("erros_na_janela_votacao", 0))} ocorreram entre a primeira habilitação e o último cômputo e {inteiro(op.get("erros_fora_da_janela", 0))} fora desse intervalo. Um evento não equivale a uma seção ou a uma falha sem recuperação.</p></details>
+<h3>Seis casos, lidos no arquivo original</h3><p>Exemplos escolhidos para mostrar situações distintas, sem ranking de gravidade. Cada ficha liga a interpretação ao original e ao hash arquivado.</p>{casos}</section>
+<section id="cobertura"><p class="etiqueta">05 / Cobertura e limites</p><h2>O que entrou na análise.<br>O que ficou de fora.</h2>
+{painel.cobertura(d)}
+<p class="nota">Cada linha representa uma condição própria, não etapas cumulativas. Uma seção pode servir para contagem e ficar fora da comparação de tempos ou de biometria.</p>
+<div class="conclusao"><b>As {inteiro(c["catalogadas"]-c["lidos"])} seções sem log de votação analisado</b><p>{inteiro(d["situacoes"]["nao_instalada"]["secoes"])} não instaladas e {inteiro(d["situacoes"]["apuracao_sem_log"]["secoes"])} com boletim do sistema de apuração. Estas últimas têm registros logSA, de outra categoria, que não passam por este leitor de ciclos VOTA. Os links estão nas fichas. Ausência de análise não significa zero ocorrências.</p></div>
+<details class="metodo"><summary>Recuperação de arquivos, situações e cobertura por UF</summary>{lacunas}
+<p>Recuperados: {inteiro(d["coleta"].get("ok", 0))}; SHA-256 igual ao da coleta anterior: {inteiro(d["coleta"].get("hash_anterior_confere", 0))}. Sem hash anterior, a comparação fica desconhecida. Publicação em {escape(data_publicacao)}.</p>{situacoes}{tabela_uf}</details></section>
 <section id="fontes"><h2>Do original à conferência</h2>
 <ol><li>O arquivo de cada seção vem do mesmo endereço e hash de transmissão associado ao BU arquivado. Seu SHA-256 é comparado ao preservado na coleta anterior quando ele existe. A ausência de hash anterior fica explícita; não é uma comparação aprovada.</li><li>O leitor abre o ZIP e os arquivos aninhados de contingência sem extrair em disco. Lê Latin-1, retém os dias 4 e 5 de outubro, confere seção e fase oficial e remove apenas linhas integralmente duplicadas entre arquivos.</li><li>Recuos de relógio são medidos antes de ordenar os fragmentos e invalidam as durações. Ciclos incompletos e categorias desconhecidas ficam explícitos.</li><li>A contagem de cômputos e as três formas de habilitação são comparadas ao BU. Um hash conferido prova identidade dos bytes arquivados; não substitui a validação criptográfica da assinatura eleitoral.</li></ol>
 <p><a href="https://www.tse.jus.br/eleicoes/eleicoes-2026">TSE: documentos técnicos das Eleições 2026</a> · <a href="https://dadosabertos.tse.jus.br/dataset/resultados-2026-arquivos-transmitidos-para-totalizacao">TSE: arquivos transmitidos para totalização</a>. O link do arquivo original e o SHA-256 de cada seção estão na ficha do Politize e no CSV.</p>
@@ -258,25 +270,47 @@ python3 scripts/fiscais-mapa-build.py</pre><p>Requer o banco histórico local <c
 def atualizar_paginas(d):
     PAGINA.write_text(pagina(d), encoding="utf-8")
     novo = bloco(d)
-    for nome, ancora in (
-        ("apuracao_1o_turno_2026.html", 'id="fiscais"'),
-        ("fiscais_thread.html", '<footer class="wrap">'),
-    ):
+    for nome in ("apuracao_1o_turno_2026.html", "fiscais_thread.html"):
         path = ROOT / "docs" / nome
         texto = path.read_text(encoding="utf-8")
-        if INICIO in texto:
-            texto = re.sub(
-                re.escape(INICIO) + r".*?" + re.escape(FIM),
-                lambda _: novo,
-                texto,
+        texto = re.sub(
+            re.escape(INICIO) + r".*?" + re.escape(FIM), "", texto, flags=re.DOTALL
+        )
+        if nome.startswith("apuracao"):
+            ini = texto.index('id="fiscais"')
+            fim = texto.index("</section>", ini)
+            cap = texto[ini:fim]
+            cap = re.sub(
+                r'(<p class="lead">).*?(</p>)',
+                r"\g<1>30 critérios para conferir: 12 do histórico e 18 dos logs de votação. "
+                r"Brasil e exterior na mesma consulta, com contagens, regras e fontes por seção.\g<2>",
+                cap,
+                count=1,
                 flags=re.DOTALL,
             )
-        elif nome.startswith("apuracao"):
-            ini = texto.index(ancora)
-            fim = texto.index("</section>", ini)
-            texto = texto[:fim] + novo + texto[fim:]
+            pos = cap.index("</div>") + len("</div>")
+            historico = (
+                '<h3 id="fiscais-historico">O núcleo histórico: 12 critérios</h3>'
+            )
+            cap = cap.replace(historico, "")
+            cap = cap[:pos] + novo + historico + cap[pos:]
+            cap = cap.replace(
+                "<h3>Os critérios</h3>",
+                "<h3>Como funcionam os 12 critérios históricos</h3>",
+            )
+            cap = cap.replace(
+                "Baixar Excel (lista completa)",
+                "Baixar Excel (12 critérios históricos)",
+            )
+            cap = cap.replace("<b>Baixe a lista</b>", "<b>Baixe a lista histórica</b>")
+            texto = texto[:ini] + cap + texto[fim:]
         else:
-            texto = texto.replace(ancora, ancora + "\n  " + novo, 1)
-        if nome == "fiscais_thread.html":
-            texto = texto.replace(ancora + INICIO, ancora + "\n  " + INICIO)
+            texto = texto.replace(
+                '<main class="wrap">', '<main class="wrap">' + novo, 1
+            )
+            texto = texto.replace(
+                "<h2>Baixar a lista</h2>",
+                "<h2>Baixar a lista histórica (12 critérios)</h2>",
+            )
+        texto = texto.replace('<footer class="wrap">\n  \n', '<footer class="wrap">\n')
         path.write_text(texto, encoding="utf-8")

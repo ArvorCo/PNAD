@@ -35,11 +35,11 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&amp;family=IBM+Plex+Sans+Condensed:wght@400;600;700&amp;display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" integrity="sha384-c6Rcwz4e4CITMbu/NBmnNS8yN2sC3cUElMEMfP3vqqKFp7GOYaaBBCqmaWBjmkjb" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.css" integrity="sha384-pmjIAcz2bAn0xukfxADbZIb3t8oRT9Sv0rvO+BR5Csr6Dhqq+nZs59P0pPKQJkEV" crossorigin="anonymous">
-<link rel="stylesheet" href="assets/fiscais_mapa/app.css?v=20261015-logs">
+<link rel="stylesheet" href="assets/fiscais_mapa/app.css?v=20261015-revisao2">
 <script>document.documentElement.classList.add('js')</script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" integrity="sha384-NElt3Op+9NBMCYaef5HxeJmU4Xeard/Lku8ek6hoPTvYkQPh3zLIrJP7KiRocsxO" crossorigin="anonymous"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.js" integrity="sha384-eXVCORTRlv4FUUgS/xmOyr66XBVraen8ATNLMESp92FKXLAMiKkerixTiBvXriZr" crossorigin="anonymous"></script>
-<script defer src="assets/fiscais_mapa/app.js?v=20261015-logs"></script>
+<script defer src="assets/fiscais_mapa/app.js?v=20261015-revisao2"></script>
 </head>
 <body>
 <a class="skip" href="#controles">Pular para a busca</a>
@@ -54,12 +54,19 @@
   </div>
 </header>
 
+<section class="visao-geral" aria-label="Critérios disponíveis">
+  <div><p class="kicker">Fiscalização · primeiro turno de 2026</p><h2>30 critérios na mesma consulta</h2>
+  <p>12 históricos + <strong>18 diagnósticos dos logs</strong>. O mapa abre com todas as camadas, Brasil e exterior.</p>
+  <p id="resumo-acervo">Carregando o acervo combinado…</p></div>
+  <details class="atalhos" open><summary>Explorar os novos diagnósticos</summary><div id="atalhos-logs"></div>
+  <p>Contagens de todo o acervo, com sobreposição. Todos os 30 critérios estão no seletor abaixo. <a href="logs_urnas_2026.html#criterios">Ver gráficos e todas as regras</a>.</p></details>
+</section>
 <main class="app">
   <aside id="controles" class="controles" aria-label="Busca, filtros e distância">
     <form id="f-busca" class="bloco" novalidate>
       <h2>Buscar</h2>
       <label for="f-ambito" class="rot">Território</label>
-      <select id="f-ambito"><option value="brasil">Brasil</option><option value="exterior">Exterior</option><option value="todos">Brasil e exterior</option></select>
+      <select id="f-ambito"><option value="todos">Todos · Brasil e exterior</option><option value="brasil">Somente Brasil</option><option value="exterior">Somente exterior</option></select>
       <label for="q-cep" class="rot">CEP</label>
       <input id="q-cep" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="9" placeholder="00000-000">
       <div class="duas-col">
@@ -77,9 +84,10 @@
       <label for="f-texto" class="rot">Nome do local, endereço ou bairro</label>
       <input id="f-texto" type="search" autocomplete="off" placeholder="Ex.: escola, rua, bairro">
       <label for="f-camada" class="rot">Camada</label>
-      <select id="f-camada"><option value="originais">12 critérios históricos</option><option value="logs">Com registro nos logs</option><option value="todas">Histórico e logs</option></select>
-      <label for="f-log" class="rot">Diagnóstico do log</label>
-      <select id="f-log"><option value="">Todos os diagnósticos</option></select>
+      <select id="f-camada"><option value="todas">Todas · histórico e logs</option><option value="originais">12 critérios históricos</option><option value="logs">18 diagnósticos dos logs</option></select>
+      <label for="f-log" class="rot">Critério · histórico ou log</label>
+      <select id="f-log"><option value="">Todos os 30 critérios</option></select>
+      <div id="criterio-ativo" class="criterio-ativo" hidden></div>
       <div class="acoes">
         <button type="submit" class="btn btn-prim">Buscar</button>
         <button type="button" class="btn btn-sec" id="b-limpar">Limpar</button>
@@ -93,7 +101,7 @@
       <label class="nv nv-media"><input type="checkbox" value="media" checked><span class="pt"></span>Média <small id="n-media"></small></label>
       <label class="nv nv-baixa"><input type="checkbox" value="baixa" checked><span class="pt"></span>Baixa <small id="n-baixa"></small></label>
       <label class="nv nv-logs"><input type="checkbox" value="logs" checked><span class="pt"></span>Só registro de log <small id="n-logs"></small></label>
-      <p class="ajuda">Contagens de todo o acervo. Azul identifica registro operacional, sem nota de suspeita. Os logs não alteram a pontuação histórica. Escolha a camada de logs ou um diagnóstico para consultá-los.</p>
+      <p class="ajuda">Contagens de todo o acervo. Azul identifica registro operacional, sem nota de suspeita. Os logs não alteram a pontuação histórica. Todos já aparecem na abertura. O seletor de critério permite ver uma ocorrência por vez.</p>
     </fieldset>
 
     <fieldset class="bloco distancia" id="bloco-raio">
@@ -107,6 +115,7 @@
       <button type="button" class="btn-modo" id="m-lista" aria-pressed="false">Ver em lista</button>
     </div>
 
+    <p class="recorte-ativo" id="recorte-ativo" aria-live="polite"></p>
     <p class="status" id="status" role="status" aria-live="polite">Carregando as seções sinalizadas.</p>
     <p class="ajuda" id="cobertura-logs"></p>
   </aside>
@@ -134,7 +143,7 @@
 
 <footer class="rodape">
   <p><strong>Atipicidade estatística não é irregularidade.</strong> A lista é de prioridade de fiscalização, não de acusação. O que resolve cada item é a ata da mesa, o log da urna e a presença do fiscal. Toda seção precisa de fiscal: para ver os motivos de qualquer seção do país, use o <a href="politizesuavizinhanca.html">Politize sua vizinhança</a>.</p>
-  <p>Fonte: boletins de urna do TSE por seção e capítulo 13 do <a href="apuracao_1o_turno_2026.html#fiscais">dossiê da apuração do 1º turno</a>, com a planilha completa em <a href="assets/fiscais_2026.xlsx">Excel</a> e <a href="assets/fiscais_2026.csv">CSV</a>. Mapa: © colaboradores do <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>. Coordenada ausente ou inválida não vira ponto no mapa; a linha aparece na lista.</p>
+  <p>Fonte: boletins de urna do TSE por seção e capítulo 13 do <a href="apuracao_1o_turno_2026.html#fiscais">dossiê da apuração do 1º turno</a>, com a planilha histórica (12 critérios) em <a href="assets/fiscais_2026.xlsx">Excel</a> e <a href="assets/fiscais_2026.csv">CSV</a>. Mapa: © colaboradores do <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>. Coordenada ausente ou inválida não vira ponto no mapa; a linha aparece na lista.</p>
 </footer>
 <noscript><p class="sem-js">Esta página precisa de JavaScript para o mapa e a lista. A planilha completa está em <a href="assets/fiscais_2026.csv">CSV</a> e <a href="assets/fiscais_2026.xlsx">Excel</a>.</p></noscript>
 </body>

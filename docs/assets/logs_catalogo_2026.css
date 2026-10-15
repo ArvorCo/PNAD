@@ -1,0 +1,28 @@
+/* Componentes compartilhados entre o relatório e o capítulo de fiscais. */
+.catalogo-regras{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px 36px;margin:28px 0}
+.catalogo-regras .grupo-regras{min-width:0}
+.catalogo-regras h3{font:600 24px/1.2 'IBM Plex Sans',Arial,sans-serif;margin:0 0 8px;letter-spacing:-.02em;color:#182e34}
+.catalogo-regras h3>span{display:inline-block;font:14px 'IBM Plex Mono',monospace;border:1px solid #829c9e;padding:3px 8px;vertical-align:middle;border-radius:3px}
+.catalogo-regras .grupo-descricao{font:15px/1.5 'IBM Plex Sans',Arial,sans-serif;color:#485d62;margin:0 0 20px}
+.catalogo-regras .regra{border-top:1px solid #b7c4c4;padding:17px 0 16px;scroll-margin-top:90px}
+.catalogo-regras .regra-topo{display:flex;align-items:start;justify-content:space-between;gap:16px}
+.catalogo-regras h4{font:600 17px/1.35 'IBM Plex Sans',Arial,sans-serif;margin:0;max-width:32ch;color:#182e34}
+.catalogo-regras .contagem{font:500 20px/1.3 'IBM Plex Mono',monospace;white-space:nowrap;color:#182e34;text-align:right}
+.catalogo-regras .contagem small{display:block;font:12px 'IBM Plex Sans',Arial,sans-serif;color:#485d62}
+.catalogo-regras .barra-regra{height:6px;background:#dae2e2;border-radius:2px;margin:14px 0 8px;overflow:hidden}
+.catalogo-regras .barra-regra i{display:block;height:100%;background:#216577}
+.catalogo-regras [data-grupo=biometria] .barra-regra i{background:#855719}
+.catalogo-regras [data-grupo=operacao] .barra-regra i{background:#466e54}
+.catalogo-regras [data-grupo=conferencia] .barra-regra i{background:#805550}
+.catalogo-regras .regra-base{display:flex;justify-content:space-between;gap:12px;font:13px/1.5 'IBM Plex Sans',Arial,sans-serif;color:#485d62}
+.catalogo-regras a{color:#12576a;text-underline-offset:3px}
+.catalogo-regras details{margin:12px 0 0;font:15px/1.55 'IBM Plex Sans',Arial,sans-serif;border:0;padding:0;background:transparent}
+.catalogo-regras summary{font-size:14px;cursor:pointer;min-height:28px;font-weight:500;color:#12576a}
+.catalogo-regras details p{font:15px/1.55 'IBM Plex Sans',Arial,sans-serif;max-width:none;color:#182e34;margin:12px 0}
+.catalogo-regras details .limite{color:#485d62;border-left:2px solid #829c9e;padding-left:12px}
+.catalogo-regras [hidden]{display:none!important}
+@media(max-width:700px){.catalogo-regras{grid-template-columns:1fr;gap:26px}.catalogo-regras h3{font-size:22px}.catalogo-regras h4{font-size:16px}.catalogo-regras .contagem{font-size:19px}.catalogo-regras .regra-base{font-size:12px}}
+
+.catalogo-regras .eixo-regras{display:flex;justify-content:space-between;font:11px/1.5 "IBM Plex Mono",monospace;color:#485d62;margin:0 0 8px}
+
+.catalogo-regras.filtrado{display:block;max-width:780px;margin-left:auto;margin-right:auto}.catalogo-regras.filtrado .grupo-regras{margin-bottom:30px}

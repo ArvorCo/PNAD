@@ -45,7 +45,7 @@ CHAVES = [
 ]
 H3 = [
     "Como ler a lista",
-    "Os critérios",
+    "Como funcionam os 12 critérios históricos",
     "O achado contrário",
     "O mapa",
     "Por UF",
@@ -163,7 +163,7 @@ def como_ler(F: dict) -> str:
 
 
 def criterios(F: dict, fig: Callable[[str], str]) -> str:
-    h = "<h3>Os critérios</h3>" + fig("fiscais_criterios")
+    h = "<h3>Como funcionam os 12 critérios históricos</h3>" + fig("fiscais_criterios")
     crit = sorted(F["criterios"], key=lambda c: -c["secoes"])
     top = crit[:3]
     h += p(

@@ -1,5 +1,5 @@
 // Mapa de fiscais: aplicativo estático escrito à mão, sem build.
-// Abre o índice e o histórico; carrega por UF ou o acervo completo conforme o filtro.
+// Abre o índice e todas as camadas; carrega por UF ou o acervo completo conforme o filtro.
 // CEP, zonas e municípios vêm sob demanda, gerados por scripts/fiscais-mapa-build.py.
 // Distância em linha reta pela fórmula inversa de Vincenty no elipsoide WGS84.
 (function () {
@@ -21,7 +21,7 @@
 
   var S = {
     dados: null, linhas: [], locais: new Map(), criterios: {},
-    filtro: { uf: '', mun: '', zona: '', cep: '', texto: '', ambito: 'brasil', camada: 'originais', log: '', niveis: new Set(NIVEIS) },
+    filtro: { uf: '', mun: '', zona: '', cep: '', texto: '', ambito: 'todos', camada: 'todas', log: '', niveis: new Set(NIVEIS) },
     raio: RAIO_PADRAO, modo: 'mapa', centro: null,
     ordem: { col: 'nivel', dir: 1 }, pagina: 1, porPagina: 50, buscaLista: '',
     mapa: null, cluster: null, circulo: null, alvo: null, marcadores: new Map(),
@@ -155,7 +155,7 @@
   async function carregarRecorte(seq) {
     var f = S.filtro;
     var uf = f.uf || (f.ambito === 'exterior' ? 'ZZ' : '');
-    var arquivo = f.camada === 'originais' && !f.log ? 'originais.json' : uf && S.meta.partes[uf] ? S.meta.partes[uf].arquivo : 'dados.json';
+    var arquivo = f.camada === 'originais' ? 'originais.json' : uf && S.meta.partes[uf] ? S.meta.partes[uf].arquivo : 'dados.json';
     if (S.recorte === arquivo) return true;
     setStatus('Carregando ' + (uf ? UFS[uf] : f.camada === 'originais' ? 'os critérios históricos' : 'os registros do país inteiro') + '…');
     var d = await buscar(BASE + arquivo);
@@ -171,7 +171,7 @@
     if (f.ambito === 'exterior' && r.uf !== 'ZZ') return false;
     if (f.camada === 'originais' && !r.originais) return false;
     if (f.camada === 'logs' && !r.logs.length) return false;
-    if (f.log && r.logs.indexOf(f.log) < 0) return false;
+    if (f.log && (f.log.startsWith('historico:') ? r.crit.indexOf(f.log.slice(10)) < 0 : r.logs.indexOf(f.log) < 0)) return false;
     if (!f.niveis.has(r.nivel)) return false;
     if (f.uf && r.uf !== f.uf) return false;
     if (f.mun && r.municipio !== f.mun) return false;
@@ -539,6 +539,7 @@
       desenharLista(rs);
       setStatus(nf0.format(rs.length) + ' seções nos filtros. Na lista não há limite de distância.');
     }
+    atualizarCriterio(rs);
     gravarHash();
   }
 
@@ -586,6 +587,47 @@
     sel.disabled = false;
   }
 
+  function montarCriterios(d) {
+    var nomes = {tempo:'Tempo e intervalos', biometria:'Identificação e biometria', operacao:'Funcionamento da urna', integridade:'Assinatura', qualidade:'Conferência dos arquivos'};
+    var historicos = h('optgroup', {label:'12 critérios históricos'});
+    Object.keys(d.criterios).forEach(function (k) {
+      var r = d.criterios[k];
+      historicos.appendChild(h('option', {value:'historico:' + k}, k.toUpperCase() + ' · ' + r.nome + ' · ' + nf0.format(r.secoes)));
+    });
+    $('#f-log').appendChild(historicos);
+    Object.keys(nomes).forEach(function (grupo) {
+      var opcoes = h('optgroup', {label:'Logs · ' + nomes[grupo]});
+      Object.keys(d.logs.criterios).forEach(function (k) {
+        var r = d.logs.criterios[k];
+        if (r.grupo === grupo) opcoes.appendChild(h('option', {value:k}, r.nome + ' · ' + nf0.format(r.secoes)));
+      });
+      $('#f-log').appendChild(opcoes);
+    });
+    $('#resumo-acervo').textContent = nf0.format(d.resumo.secoes) + ' seções na consulta combinada · Brasil e exterior';
+    var curtos = {tempo_lento:'Votação lenta', sem_biometria_alta:'Sem biometria alta', biografica_alta:'Biográfica alta', erro_tecnico:'Erros técnicos', contagem_divergente:'Contagem log ≠ BU'};
+    ['tempo_lento','sem_biometria_alta','biografica_alta','erro_tecnico','contagem_divergente'].forEach(function (k) {
+      var r = d.logs.criterios[k];
+      $('#atalhos-logs').appendChild(h('button', {type:'button', 'data-log':k, title:r.nome, onclick:function () {
+        $('#f-log').value = k;
+        $('#f-camada').value = 'logs';
+        aplicarBusca();
+      }}, curtos[k], h('b', {}, nf0.format(r.secoes))));
+    });
+  }
+
+  function atualizarCriterio(rs) {
+    var f = S.filtro;
+    var antiga = f.log.startsWith('historico:');
+    var r = antiga ? S.meta.criterios[f.log.slice(10)] : (S.meta.logs.criterios[f.log] || null);
+    var nome = r ? r.nome : f.camada === 'todas' ? 'Todos os 30 critérios' : f.camada === 'logs' ? '18 critérios dos logs' : '12 critérios históricos';
+    var exterior = rs.filter(function (linha) { return linha.uf === 'ZZ'; }).length;
+    $('#recorte-ativo').textContent = nome + ' · ' + nf0.format(rs.length) + ' seções nos filtros, ' + nf0.format(exterior) + ' no exterior' + (S.modo === 'mapa' && S.centro ? ' (antes do raio)' : '');
+    $('#criterio-ativo').hidden = !r;
+    if (r) $('#criterio-ativo').replaceChildren(h('strong', {}, nome), h('p', {}, r.regra || r.mede), h('p', {}, 'Conferir: ' + r.conferir), h('a', {href:antiga ? 'apuracao_1o_turno_2026.html#fiscais' : 'logs_urnas_2026.html#' + f.log}, 'Ler regra e limites'));
+    $('#f-log option[value=""]').textContent = f.camada === 'todas' ? 'Todos os 30 critérios' : f.camada === 'logs' ? 'Todos os 18 diagnósticos dos logs' : 'Todos os 12 históricos';
+    document.querySelectorAll('#atalhos-logs button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.log === f.log)); });
+  }
+
   function contarNiveis() {
     NIVEIS.forEach(function (n) {
       var c = S.meta.niveis[n] || 0;
@@ -601,8 +643,8 @@
     if (f.cep) p.push('cep=' + f.cep);
     if (f.texto) p.push('q=' + encodeURIComponent(f.texto));
     if (f.niveis.size < NIVEIS.length) p.push('nivel=' + Array.from(f.niveis).join(','));
-    if (f.ambito !== 'brasil') p.push('ambito=' + f.ambito);
-    if (f.camada !== 'originais') p.push('camada=' + f.camada);
+    if (f.ambito !== 'todos') p.push('ambito=' + f.ambito);
+    if (f.camada !== 'todas') p.push('camada=' + f.camada);
     if (f.log) p.push('log=' + encodeURIComponent(f.log));
     if (S.raio !== RAIO_PADRAO) p.push('raio=' + S.raio);
     if (S.modo === 'lista') p.push('modo=lista');
@@ -611,14 +653,20 @@
 
   function lerHash() {
     var q = new URLSearchParams(location.hash.slice(1));
-    $('#f-ambito').value = ['brasil', 'exterior', 'todos'].indexOf(q.get('ambito')) >= 0 ? q.get('ambito') : q.get('uf') === 'ZZ' ? 'exterior' : 'brasil';
+    $('#f-ambito').value = ['brasil', 'exterior', 'todos'].indexOf(q.get('ambito')) >= 0 ? q.get('ambito') : q.get('uf') === 'ZZ' ? 'exterior' : 'todos';
     S.filtro.ambito = $('#f-ambito').value;
     if (['todas', 'originais', 'logs'].indexOf(q.get('camada')) >= 0) $('#f-camada').value = q.get('camada');
-    if (q.get('log')) $('#f-log').value = q.get('log');
+    if (q.get('log')) {
+      $('#f-log').value = q.get('log');
+      if ($('#f-log').value) $('#f-camada').value = q.get('log').startsWith('historico:') ? 'originais' : 'logs';
+    }
     S.filtro.camada = $('#f-camada').value;
     S.filtro.log = $('#f-log').value;
     if (q.get('uf') && UFS[q.get('uf')]) $('#f-uf').value = q.get('uf');
     else if (S.filtro.ambito === 'exterior') $('#f-uf').value = 'ZZ';
+    if ($('#f-uf').value === 'ZZ') $('#f-ambito').value = 'exterior';
+    else if ($('#f-uf').value && $('#f-ambito').value === 'exterior') $('#f-ambito').value = 'brasil';
+    S.filtro.ambito = $('#f-ambito').value;
     montarMunicipios();
     if (q.get('mun')) $('#f-mun').value = q.get('mun');
     if (q.get('zona')) $('#f-zona').value = so(q.get('zona'));
@@ -640,10 +688,10 @@
   function limpar() {
     ['#q-cep', '#f-zona', '#f-texto', '#l-busca'].forEach(function (s) { $(s).value = ''; });
     $('#f-uf').value = '';
-    $('#f-ambito').value = 'brasil'; $('#f-camada').value = 'originais'; $('#f-log').value = '';
+    $('#f-ambito').value = 'todos'; $('#f-camada').value = 'todas'; $('#f-log').value = '';
     $('#q-cep').disabled = false;
     montarMunicipios();
-    S.filtro = { uf: '', mun: '', zona: '', cep: '', texto: '', ambito: 'brasil', camada: 'originais', log: '', niveis: new Set(NIVEIS) };
+    S.filtro = { uf: '', mun: '', zona: '', cep: '', texto: '', ambito: 'todos', camada: 'todas', log: '', niveis: new Set(NIVEIS) };
     document.querySelectorAll('.niveis input').forEach(function (i) { i.checked = true; });
     S.centro = null; S.buscaLista = ''; S.pagina = 1;
     aplicarBusca();
@@ -655,7 +703,7 @@
     $('#b-limpar').addEventListener('click', limpar);
     $('#f-uf').addEventListener('change', function () {
       if ($('#f-uf').value === 'ZZ') $('#f-ambito').value = 'exterior';
-      else if ($('#f-ambito').value === 'exterior') $('#f-ambito').value = 'brasil';
+      else $('#f-ambito').value = $('#f-uf').value ? 'brasil' : 'todos';
       $('#q-cep').value = ''; $('#q-cep').disabled = $('#f-uf').value === 'ZZ';
       $('#f-zona').value = ''; montarMunicipios(); aplicarBusca();
     });
@@ -664,8 +712,8 @@
       $('#q-cep').value = ''; $('#q-cep').disabled = this.value === 'exterior';
       $('#f-zona').value = ''; montarMunicipios(); aplicarBusca();
     });
-    $('#f-camada').addEventListener('change', function () { if (this.value === 'originais') $('#f-log').value = ''; aplicarBusca(); });
-    $('#f-log').addEventListener('change', function () { if (this.value) $('#f-camada').value = 'logs'; aplicarBusca(); });
+    $('#f-camada').addEventListener('change', function () { $('#f-log').value = ''; aplicarBusca(); });
+    $('#f-log').addEventListener('change', function () { $('#f-camada').value = this.value ? (this.value.startsWith('historico:') ? 'originais' : 'logs') : 'todas'; aplicarBusca(); });
     $('#f-mun').addEventListener('change', aplicarBusca);
     $('#q-cep').addEventListener('input', function (ev) {
       var d = so(ev.target.value).slice(0, 8);
@@ -704,7 +752,7 @@
     }
     S.meta = d;
     if (d.logs) {
-      Object.keys(d.logs.criterios).forEach(function (k) { $('#f-log').appendChild(h('option', { value: k }, d.logs.criterios[k].nome)); });
+      montarCriterios(d);
       var c = d.logs.cobertura;
       $('#cobertura-logs').textContent = 'Logs lidos: ' + nf0.format(c.lidos) + ' de ' + nf0.format(c.catalogadas) + ' seções catalogadas. Sem log analisado não significa ausência de ocorrência. Data e método no relatório dos logs.';
     }
