@@ -1,4 +1,4 @@
-"""Card da leitura preliminar; valores derivados da auditoria corrente."""
+"""Card da íntegra auditada; valores derivados da auditoria corrente."""
 
 import json
 
@@ -10,10 +10,10 @@ def card(root):
     gap = f'{income["gap_ajustado_pp"]:.2f}'.replace(".", ",")
     return {
         "slug": "quaest_14102026",
-        "eyebrow": "Quaest · 14/10/2026 · dossiê preliminar",
-        "title": "Dois pontos no placar.",
-        "title_em": "Menos de um sob a PNAD.",
-        "lede": "<b>Voto, renda e segmentos em gráficos.</b> Série de 12 ondas e explorador de cinco perguntas. A sensibilidade PNAD usa as cotas planejadas como hipótese de pesos finais.",
+        "eyebrow": "Quaest · 14/10/2026 · íntegra auditada",
+        "title": "Voto declarado.",
+        "title_em": "Presença sem modelo publicado.",
+        "lede": "<b>152 páginas, 23 temas.</b> Transferências, memória do voto, renda, propostas e interesse. Os 9% misturam brancos, nulos e quem não vai votar.",
         "stats": [
             (
                 f'{pub["flavio"]} × {pub["lula"]}',
@@ -23,8 +23,8 @@ def card(root):
                 f"{gap} pp",
                 "diferença F−L na sensibilidade condicional",
             ),
-            ("130", "recortes em cinco perguntas do painel G1"),
+            ("23", "temas com análise e páginas originais"),
         ],
-        "foot": "Cruzamentos atuais conferidos · cotas registradas como hipótese de pesos",
+        "foot": "Íntegra arquivada · transferências e eleitor provável sob auditoria",
         "accent": "blue",
     }

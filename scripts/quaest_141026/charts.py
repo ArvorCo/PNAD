@@ -136,7 +136,7 @@ def income_charts(data):
     income = data["identificacao_renda"]
     labels = [r["rotulo"] for r in data["pesquisa"]["renda"]["faixas"]]
     profile = pairs(
-        "O peso de cada faixa: cotas previstas × régua PNAD",
+        "O peso de cada faixa: perfil publicado × régua PNAD",
         dict(
             zip(
                 labels,
@@ -144,16 +144,16 @@ def income_charts(data):
                 strict=True,
             )
         ),
-        labels=("Cota TSE", "PNAD"),
+        labels=("Perfil", "PNAD"),
         digits=2,
-        source="Fontes: cotas previstas no registro TSE (31/42/27) e PNADC anual 2025, pessoas 16+. Cotas planejadas são hipótese para os pesos finais, ainda não conferidos.",
+        source="Fontes: perfil Quaest, p. 147 (31/42/27), e PNADC anual 2025, pessoas 16+. Etapa antes/depois dos pesos não indicada no perfil; seu uso como margem dos cruzamentos continua hipótese.",
     )
     adj = income["reponderacao_pontual"]
     comparison = pairs(
         "Como muda o placar sob essa hipótese",
         {"Publicado": (46, 44), "Sensibilidade PNAD": (adj["flavio"], adj["lula"])},
         digits=2,
-        source="Percentuais sobre o total. Ajustado = publicado + diferença entre recomposições PNAD e cotas. Sensibilidade a uma margem; não é resultado corrigido nem previsão.",
+        source="Percentuais sobre o total. Ajustado = publicado + diferença entre recomposições PNAD e perfil. Sensibilidade a uma margem; não é resultado corrigido nem previsão.",
     )
     change = gaps(
         "03/10 → 14/10: movimentos opostos dentro das faixas",

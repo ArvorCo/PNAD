@@ -45,7 +45,7 @@ def test_conditional_income_uses_current_crosses_preserves_topline_and_closes_ch
     poll = json.loads((folder / "quaest_2026-10-13.json").read_text())
     before = json.loads((folder / "quaest_2026-10-03.json").read_text())
     data = income_build(poll, before)
-    assert poll["renda"]["perfil_tipo"] == "cota_registrada"
+    assert poll["renda"]["perfil_tipo"] == "perfil_publicado"
     assert data["recomposto"]["flavio"] == 46.05
     assert data["recomposto"]["lula"] == 44.18
     assert data["reponderacao_pontual"]["flavio"] == 45.398

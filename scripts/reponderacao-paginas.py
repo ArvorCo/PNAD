@@ -117,6 +117,11 @@ def current_coverage(ns):
         status = "Com renda" if "2t" in p.get("turnos", {}) else "Sem ajuste de renda"
         if p.get("renda", {}).get("perfil_tipo") == "cota_registrada":
             status += " · cotas registradas, ajuste provisório"
+        elif (
+            p["id"] == "quaest_2026-10-13"
+            and p.get("renda", {}).get("perfil_tipo") == "perfil_publicado"
+        ):
+            status += " · perfil publicado, etapa da ponderação não informada"
         if p["campo"]["inicio"] <= "2026-10-04":
             status += (
                 " · campo atravessa o 1º turno; fora da central"
@@ -175,10 +180,10 @@ def current_coverage(ns):
     if quaest and "2t" in quaest.get("turnos", {}):
         adjusted = quaest["turnos"]["2t"]["cenarios"]["pessoas16_efetivo"]["ajustado"]
         quaest_note = (
-            '<aside class="callout" id="quaest-1410"><h3>Quaest de 14/10: renda atual recebida, sensibilidade provisória</h3>'
-            f'<p>Publicado: 46 × 44. Sob as cotas atuais como pesos, PNAD: <b>{ns["br"](adjusted["flavio"], 2)} × {ns["br"](adjusted["lula"], 2)}</b> / total. '
-            "Cruzamentos atuais extraídos do painel salvo pelo usuário; renda, sexo, idade e escolaridade recompõem os totais. "
-            "<b>31/42/27 são cotas registradas, não pesos finais verificados.</b> A hipótese entra na Média e na Projeção e pode mudar com a íntegra. "
+            '<aside class="callout" id="quaest-1410"><h3>Quaest de 14/10: íntegra recebida, perfil de renda publicado</h3>'
+            f'<p>Publicado: 46 × 44. Usando o perfil publicado como margem, PNAD: <b>{ns["br"](adjusted["flavio"], 2)} × {ns["br"](adjusted["lula"], 2)}</b> / total. '
+            "A íntegra de 152 páginas confirma os cruzamentos da p. 24 e publica o perfil de renda na p. 147. "
+            "<b>31/42/27 agora têm evidência no perfil da amostra; a etapa da ponderação não é informada.</b> A conta permanece uma sensibilidade condicional na Média e na Projeção, sem alteração numérica por esta revisão documental. Não se localizou regra publicada de eleitor provável; o grupo misto de brancos/nulos/ausentes não identifica abstenção. "
             '<a href="quaest_14102026.html#renda">Ler os cruzamentos, os resíduos e os limites</a>.</p></aside>'
         )
     elif quaest:

@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-10-15T18:59:52",
+ "gerado_em": "2026-10-15T19:35:48",
  "referencia": "2026-10-15",
  "benchmark": {
   "source": "data/outputs/base_anual_visita1_labeled_npv.csv",
@@ -24903,14 +24903,14 @@
    },
    "divulgacao": "2026-10-14",
    "n": 2154,
-   "metodo": "presencial domiciliar; sorteio PPT de municípios e setores, cotas no estágio final; eventual rake/MrP previsto no registro",
+   "metodo": "presencial domiciliar; PPT em 124 municípios e setores; cotas no estágio final; pós-estratificação declarada como MrP ou rake, sem especificação operacional",
    "fonte": {
-    "tipo": "painel_contratante_salvo_pelo_usuario",
-    "rotulo": "G1: painel salvo pelo usuário, cruzamentos extraídos do DOM; registro TSE conferido",
-    "url": "https://especiaisg1.globo/politica/eleicoes/2026/pesquisas-eleitorais/presidente/2-turno/Quaest/internal/",
-    "arquivo": "data/originals/quaest_102026_14/g1-painel-salvo.html.gz",
+    "tipo": "relatorio_recebido_usuario",
+    "rotulo": "Quaest: íntegra de 14/10 recebida do usuário, pp. 18, 24 e 147; conferida com G1 e registro TSE",
+    "url": "https://brasil.arvor.co/fontes/quaest_14102026.pdf",
+    "arquivo": "data/originals/quaest_102026_14/Quaest_14102026.pdf",
     "conferido_em": "2026-10-15",
-    "status": "Totais e 25 recortes completos extraídos do arquivo salvo. Cotas atuais conferidas no TSE; sensibilidade provisória, perfil final não verificado.",
+    "status": "Íntegra de 152 páginas arquivada. Perfil 31/42/27 publicado; etapa da ponderação, bases e regra de eleitor provável não explicitadas.",
     "registro_transcricao": "docs/fontes/quaest_14102026_registro.txt",
     "complementos": [
      {
@@ -24926,8 +24926,8 @@
       "url": "https://pesqele-divulgacao.tse.jus.br/app/pesquisa/listar.xhtml"
      }
     ],
-    "sha256": "7a2c5ba5a3d093fffbcfb3773fde5fa25f47477b1d585c3fcf70bb8e25e41f3f",
-    "nota": "Hipótese provisória: cotas de renda 31/42/27 do registro atual BR-08729/2026 usadas como pesos. Perfil final, bases após rake/MrP e não resposta à renda não publicados no arquivo salvo. A conta assume cobertura integral dessas faixas. A boa recomposição não comprova os pesos. Nenhum voto por renda de onda anterior foi transportado."
+    "sha256": "112fd4b9b104d288394f27d98da77ec1bc2636cce144bb718f8986caf90c7592",
+    "nota": "A íntegra recebida em 15/10 publica o perfil de renda 31/42/27 na p. 147 e os votos por renda na p. 24. O perfil agora tem evidência no relatório, além das cotas registradas. A página não explicita antes/depois da ponderação; usar 31/42/27 como margem dos cruzamentos continua hipótese, com cobertura integral assumida. Bases ponderadas, não resposta à renda e pesos individuais não foram divulgados. A sensibilidade permanece 45,398 × 44,531; não é voto corrigido."
    },
    "dossie": "quaest_14102026.html",
    "publicado": {
@@ -24972,8 +24972,8 @@
       21.557
      ]
     },
-    "nota": "Hipótese provisória: cotas de renda 31/42/27 do registro atual BR-08729/2026 usadas como pesos. Perfil final, bases após rake/MrP e não resposta à renda não publicados no arquivo salvo. A conta assume cobertura integral dessas faixas. A boa recomposição não comprova os pesos. Nenhum voto por renda de onda anterior foi transportado.",
-    "perfil_tipo": "cota_registrada"
+    "nota": "A íntegra recebida em 15/10 publica o perfil de renda 31/42/27 na p. 147 e os votos por renda na p. 24. O perfil agora tem evidência no relatório, além das cotas registradas. A página não explicita antes/depois da ponderação; usar 31/42/27 como margem dos cruzamentos continua hipótese, com cobertura integral assumida. Bases ponderadas, não resposta à renda e pesos individuais não foram divulgados. A sensibilidade permanece 45,398 × 44,531; não é voto corrigido.",
+    "perfil_tipo": "perfil_publicado"
    },
    "desvio_ate_primeira_faixa": -4.187,
    "turnos": {

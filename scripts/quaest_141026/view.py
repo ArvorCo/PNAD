@@ -1,4 +1,4 @@
-"""Dossiê preliminar: evidência separada de aritmética e hipótese de campo."""
+"""Íntegra conferida: evidência separada de aritmética e hipótese de campo."""
 
 from html import escape as esc
 
@@ -18,6 +18,10 @@ from .audit import SLUG
 from .chapters import opinions, segments
 from .charts import historical_income_chart, timeline, uncertainty
 from .income_view import render as income_section
+from .integra.data import build as full_report
+from .integra.gallery import render as gallery
+from .integra.sources import render as sources_section
+from .integra.view import complete_reading, likely_voter, transfers
 from .panel_view import panel_section
 
 
@@ -87,20 +91,21 @@ def render(d):
     a = d["aas"]
     delta = d["decomposicao"]
     reg = link("fontes/quaest_14102026_registro.txt", "conferência do registro TSE")
-    source = link(p["fonte"]["url"], "G1: painel Quaest, 14/10")
+    source = link(p["fonte"]["url"], "Quaest: íntegra de 14/10")
     asset = f"assets/{SLUG}_data.json"
     prev = d["serie"][-2]
     now = d["serie"][-1]
     projected = delta["proporcao_anterior_aplicada_a_massa_atual"]
-    blocks = [income_section(d)]
+    full = full_report()
+    blocks = [transfers(full), likely_voter(full), income_section(d)]
     blocks.append(
         section(
-            2,
+            4,
             "mudanca",
             "Dois pontos para cada lado.<br><em>O mesmo intervalo entre eles.</em>",
             "A primeira onda depois da urna não inaugura a vantagem numérica de Flávio no segundo turno.",
             stacks(
-                "O mesmo duelo, antes e depois da eleição",
+                "O mesmo duelo, com mudança de formulação após a eleição",
                 {
                     "03/10 · antes da urna": [
                         prev["publicado"][k]
@@ -155,7 +160,7 @@ def render(d):
         )
     blocks.append(
         section(
-            3,
+            5,
             "serie",
             "A mudança de sinal<br><em>aconteceu antes de outubro.</em>",
             "Duelo Lula × Flávio em todas as ondas do acervo, sempre com o mesmo denominador.",
@@ -174,8 +179,8 @@ def render(d):
                     rows,
                 ),
             )
-            + "<p>Em julho, a Quaest media Lula 45% e Flávio 37%. Em 14/09 já divulgava Flávio 42% e Lula 40% no cenário de segundo turno; em 03/10, 44% a 42%. A série oscilou, inclusive com empate em 28/09. <b>Não há uma primeira passagem para Flávio à frente depois da eleição.</b> A impressão de virada nasce, em parte, de comparar o primeiro turno de 03/10 (Lula 40 × Flávio 38) com o segundo turno de 14/10 (Flávio 46 × Lula 44). São perguntas diferentes.</p>"
-            + f'<p>Na mesma pergunta de segundo turno, a diferença entre os dois, normalizada por F+L, passa de <b>{fmt(prev["gap_binario_pp"],2)} para {fmt(now["gap_binario_pp"],2)} pp</b>. A variação é de {fmt(delta["mudanca_gap_binario_pp"],2)} pp. São renormalizações nossas, não números de eleitor provável divulgados pela Quaest.</p>'
+            + "<p>Em julho, a Quaest media Lula 45% e Flávio 37%. Em 14/09 já divulgava Flávio 42% e Lula 40% no cenário de segundo turno; em 03/10, 44% a 42%. A série oscilou, inclusive com empate em 28/09. <b>Não há uma primeira passagem para Flávio à frente depois da eleição.</b> A impressão de virada nasce, em parte, de comparar o primeiro turno de 03/10 (Lula 40 × Flávio 38) com o segundo turno de 14/10 (Flávio 46 × Lula 44). São perguntas diferentes. A p. 17 da íntegra também informa que o cenário de segundo turno deixou de ser hipotético após 03/10; a comparação mantém os candidatos, mas não uma formulação literalmente idêntica.</p>"
+            + f'<p>No mesmo duelo de segundo turno, a diferença entre os dois, normalizada por F+L, passa de <b>{fmt(prev["gap_binario_pp"],2)} para {fmt(now["gap_binario_pp"],2)} pp</b>. A variação é de {fmt(delta["mudanca_gap_binario_pp"],2)} pp. São renormalizações nossas, não números de eleitor provável divulgados pela Quaest.</p>'
             + income_history(d["evolucao_renda_historica"])
             + details(
                 "A comparação possível com a urna de 04/10",
@@ -190,7 +195,7 @@ def render(d):
     )
     blocks.append(
         section(
-            7,
+            10,
             "campo",
             "Três dias de feriadão.<br><em>Mais a terça-feira.</em>",
             "A coleta domiciliar ocorreu de 10 a 13 de outubro. A publicação foi em 14/10.",
@@ -212,11 +217,11 @@ def render(d):
         )
     )
     field_block = blocks.pop()
-    blocks.extend([segments(), opinions()])
+    blocks.extend([segments(), opinions(), complete_reading(full)])
     lo, hi = a["intervalo_gap_95_pp"]
     blocks.append(
         section(
-            6,
+            9,
             "incerteza",
             "Vantagem numérica.<br><em>Liderança não identificada.</em>",
             "Uma diferença de dois pontos precisa da incerteza da diferença entre os candidatos.",
@@ -234,78 +239,24 @@ def render(d):
     )
     blocks.append(field_block)
     blocks.append(panel_section(d))
-    blocks.append(
-        section(
-            9,
-            "fontes",
-            "O que está conferido.<br><em>O que continua aberto.</em>",
-            "Atualizado em 15/10/2026 com o HTML salvo e cinco perguntas da API do painel. A íntegra e os pesos finais poderão mudar o diagnóstico.",
-            "<ul>"
-            + "".join(f"<li>{esc(x)}</li>" for x in d["pendencias"])
-            + "</ul>"
-            + table(
-                ["Documento", "Conferência"],
-                [
-                    [
-                        source,
-                        "Voto por renda, controles por sexo, idade e escolaridade; arquivo salvo pelo usuário e preservado com SHA-256.",
-                    ],
-                    [
-                        link(p["fonte"]["complementos"][0]["url"], "SBT News, 14/10"),
-                        "Conferência independente de 46/44/9/1, n, campo e registro.",
-                    ],
-                    [
-                        reg,
-                        "Campos relevantes transcritos; não é HTML original. Mensagem do TSE: relatório não fornecido.",
-                    ],
-                    [
-                        "Questionário TSE, QUEST_NACIONAL_2T_R01_V14",
-                        "27 páginas vistas no visualizador; salvamento não concluído. Só a primeira página foi lida; sem auditoria integral.",
-                    ],
-                    [
-                        link(
-                            p["fonte"]["complementos"][1]["url"], "G1: painel indicado"
-                        ),
-                        "HTML salvo: total e 25 recortes completos extraídos dos rótulos SVG. Extração local preservada, inclusive o recorte sem rótulos.",
-                    ],
-                    [
-                        link(
-                            d["painel_g1"]["resumo"],
-                            "G1: cinco perguntas e fontes da API",
-                        ),
-                        "Cinco perguntas com 26 recortes cada, extraídas da API pública consumida pelo painel. Todos os 100 valores presentes nos recortes do HTML coincidem. Bases ausentes não foram imputadas.",
-                    ],
-                    [
-                        "Anexo territorial TSE",
-                        "Em 15/10, cerca de 01h12 BRT, o TSE informou: Pesquisa não possui arquivo de bairros/municípios. Prazo exibido: 15/10, ainda não encerrado. Não permite inferir irregularidade.",
-                    ],
-                    [
-                        link(asset, "Dados e contas da auditoria"),
-                        "Série, denominadores, AAS, recomposição e sensibilidade provisória por renda.",
-                    ],
-                ],
-            )
-            + note(
-                'Cópias de trabalho ficam no acervo do projeto. <a href="assets/'
-                + SLUG
-                + '_sources.json">Manifesto de hashes</a>. O catálogo público de mídia da Quaest consultado nesta rodada tinha relatório do DF em 13/10 como arquivo mais recente; a ausência nesse recorte não prova inexistência em toda a internet.'
-            )
-            + "<p><b>Juízo editorial:</b> a novidade sólida desta publicação é a redução da não escolha com quase a mesma divisão entre finalistas. A fragilidade investigável é a disponibilidade dentro das cotas durante o feriadão. A primeira é mensurável agora; a segunda precisa de evidência antes de virar acusação ou ajuste de votos.</p>",
-        )
-    )
-    title = "Quaest 14/10: voto, renda e segmentos em gráficos | Arvor"
-    summary = "Flávio 46%, Lula 44%: série, renda e cinco perguntas do G1 com 130 recortes. Sensibilidade PNAD com cotas atuais; bases e pesos finais pendentes."
+    blocks.extend([gallery(full), sources_section(d)])
+    title = "Quaest 14/10: íntegra, transferência e eleitor provável | Arvor"
+    summary = "152 páginas e 23 temas da Quaest: transferências, renda, propostas e limites do eleitor provável. Abstenção não é separada de branco/nulo; fontes e contas abertas."
     nav = "".join(
         f'<a href="#{x}">{label}</a>'
         for x, label in [
+            ("transferencia", "Transferências"),
+            ("comparecimento", "Eleitor provável"),
             ("renda", "Renda"),
             ("mudanca", "O que mudou"),
             ("serie", "Evolução"),
             ("segmentos", "Segmentos"),
             ("perguntas", "Voto e governo"),
+            ("integra", "23 temas"),
             ("incerteza", "Incerteza"),
             ("campo", "Feriadão"),
             ("painel", "Explorador"),
+            ("documentos", "152 páginas"),
             ("fontes", "Fontes"),
         ]
     )
@@ -317,5 +268,5 @@ def render(d):
 <meta property="og:image" content="https://brasil.arvor.co/img/og/{SLUG}.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://brasil.arvor.co/img/og/{SLUG}.png">
 <link rel="stylesheet" href="assets/dossies_2t_2026.css"><link rel="stylesheet" href="assets/{SLUG}.css"></head>
 <body><a class="skip" href="#conteudo">Pular para o conteúdo</a><header class="masthead"><a href="index.html">ARVOR / Intelligence</a><span>Auditoria de pesquisa · 2º turno</span></header>
-<main id="conteudo"><section class="hero"><div><p class="eyebrow">Quaest · 14 outubro 2026 · Dossiê preliminar</p><h1>Dois pontos no placar.<br><em>Menos de um sob a PNAD.</em></h1><p class="deck">Flávio tem 46% e Lula 44%. Usando as cotas planejadas de renda como hipótese para os pesos, a sensibilidade PNAD reduz a diferença a 0,87 ponto. Veja o que muda no total, o que separa os grupos e o que a pesquisa ainda não permite concluir.</p><div class="hero-meta"><span>Campo: 10–13/10</span><span>{sample_size} entrevistas</span><span>BR-08729/2026</span><span>Conferido em 15/10</span></div></div><aside class="hero-result"><p class="eyebrow">Publicado / total de entrevistados</p><div class="q-result-block"><strong>46% × 44%</strong><small>Flávio Bolsonaro × Lula · publicado</small></div><div class="q-result-block"><span>Sensibilidade PNAD / total</span><strong>{fmt(adjusted["flavio"],2)}% × {fmt(adjusted["lula"],2)}%</strong><small>Condicional às cotas 31/42/27 como pesos</small></div><p class="q-status">Íntegra pendente no TSE<br>Sensibilidade PNAD com cotas atuais</p></aside></section><nav class="chapter-nav" aria-label="Capítulos">{nav}</nav><section class="reading q-reading" aria-label="Guia de leitura"><p class="eyebrow">Três caminhos para ler a pesquisa</p><div><article><a href="#renda"><span>01 / Composição</span><h3>O peso da renda</h3><p>Publicado e sensibilidade lado a lado. A hipótese e os limites acompanham a conta.</p></a></article><article><a href="#segmentos"><span>02 / Contrastes</span><h3>O total esconde diferenças</h3><p>Região, sexo, idade e religião ajudam a ler o placar sem inventar fluxos de voto.</p></a></article><article><a href="#painel"><span>03 / Exploração</span><h3>Cinco perguntas, 130 recortes</h3><p>Troque pergunta e grupo, confira os valores e compartilhe a comparação.</p></a></article></div></section>{''.join(blocks)}</main><footer><a href="index.html">Arvor / Biblioteca</a><p>Publicados, contas derivadas e hipóteses identificados. A análise não mede probabilidade de vitória.</p><a href="reponderacao_pnad.html">Centrais e simulador</a></footer><script defer src="assets/quaest_14102026.js"></script></body></html>"""
+<main id="conteudo"><section class="hero"><div><p class="eyebrow">Quaest · 14 outubro 2026 · Íntegra conferida</p><h1>Voto declarado.<br><em>Presença sem modelo publicado.</em></h1><p class="deck">A íntegra confirma 46% a 44% e abre 23 temas. Mas o grupo de transferência mistura branco, nulo e ausência; o relatório não publica uma regra de eleitor provável. Auditamos o que os dados permitem dizer sobre presença, renda e escolhas.</p><div class="hero-meta"><span>Campo: 10–13/10</span><span>{sample_size} entrevistas</span><span>BR-08729/2026</span><span>Conferido em 15/10</span></div></div><aside class="hero-result"><p class="eyebrow">Publicado / total de entrevistados</p><div class="q-result-block"><strong>46% × 44%</strong><small>Flávio Bolsonaro × Lula · publicado</small></div><div class="q-result-block"><span>Sensibilidade PNAD / total</span><strong>{fmt(adjusted["flavio"],2)}% × {fmt(adjusted["lula"],2)}%</strong><small>Perfil 31/42/27 publicado; etapa dos pesos não informada</small></div><p class="q-status">152 páginas arquivadas · 23 temas<br>Contas, fontes e limites por pergunta</p></aside></section><nav class="chapter-nav" aria-label="Capítulos">{nav}</nav><section class="reading q-reading" aria-label="Guia de leitura"><p class="eyebrow">Três caminhos para ler a pesquisa</p><div><article><a href="#transferencia"><span>01 / Transferência</span><h3>Quem está no grupo misto?</h3><p>Branco, nulo e ausência juntos não identificam o voto dos abstencionistas.</p></a></article><article><a href="#comparecimento"><span>02 / Comparecimento</span><h3>Interesse não é presença</h3><p>O que um filtro mudaria — e por que isso não valida um eleitor provável.</p></a></article><article><a href="#integra"><span>03 / Íntegra</span><h3>23 temas, 152 páginas</h3><p>Leitura completa por tema, perguntas, recortes e acesso às imagens originais.</p></a></article></div></section>{''.join(blocks)}</main><footer><a href="index.html">Arvor / Biblioteca</a><p>Publicados, contas derivadas e hipóteses identificados. A análise não mede probabilidade de vitória.</p><a href="reponderacao_pnad.html">Centrais e simulador</a></footer><script defer src="assets/quaest_14102026.js"></script><script defer src="assets/quaest_14102026_integra.js"></script></body></html>"""
     return injetar(html.replace("<section ", "\n<section ")) + "\n"

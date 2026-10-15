@@ -1,4 +1,4 @@
-"""Série comparável, incerteza e sensibilidade condicional às cotas atuais."""
+"""Série comparável, incerteza e sensibilidade ao perfil publicado."""
 
 from __future__ import annotations
 
@@ -91,7 +91,7 @@ def build():
     pair_f = 100 * result["flavio"] / (result["flavio"] + result["lula"])
     return {
         "slug": SLUG,
-        "status": "preliminar",
+        "status": "integra_conferida",
         "conferido_em": "2026-10-15",
         "pesquisa": poll,
         "serie": series,
@@ -127,11 +127,11 @@ def build():
         "identificacao_renda": income_build(poll, old),
         "painel_g1": g1_reference(),
         "pendencias": [
-            "Bases dos cruzamentos atuais; voto por renda já obtido no painel salvo.",
-            "Perfil final de renda antes/depois dos pesos e não resposta.",
+            "Bases brutas e ponderadas de cada pergunta e cruzamento; votos e perfil de renda agora conferidos na íntegra.",
+            "Etapa antes/depois da ponderação do perfil publicado, pesos individuais, tamanho efetivo e não resposta à renda.",
             "Salvar o PDF do questionário; anexo territorial não disponível na reconsulta de 15/10 às 01h12 BRT, ainda dentro do prazo mostrado.",
             "Entrevistas, contatos, ausências, recusas e revisitas por dia/horário e estrato.",
-            "Pesos individuais, tamanho efetivo e eventual calibração pelo voto lembrado de 04/10.",
+            "Implementação do MrP ou rake, eventual calibração pelo voto lembrado e regra de eleitor provável, se houver.",
         ],
     }
 
@@ -142,6 +142,7 @@ def write():
     folder.mkdir(exist_ok=True)
     sources = [p for p in SOURCE.iterdir() if p.is_file() and p.name != "fonte.json"]
     sources += [ROOT / "docs/fontes/quaest_14102026_registro.txt", POLL]
+    sources += sorted((ROOT / "analysis/quaest_141026/integra").rglob("*.json"))
     sources += sorted(p for p in G1_PUBLIC.iterdir() if p.is_file())
     sources += [
         HISTORY_MANIFEST,

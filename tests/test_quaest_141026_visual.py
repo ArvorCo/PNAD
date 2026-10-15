@@ -55,18 +55,22 @@ def test_published_page_has_all_chapters_charts_and_local_explorer_data():
     page = BeautifulSoup(Path("docs/quaest_14102026.html").read_text(), "html.parser")
     chapters = page.select("section.chapter")
     assert [s["id"] for s in chapters] == [
+        "transferencia",
+        "comparecimento",
         "renda",
         "mudanca",
         "serie",
         "segmentos",
         "perguntas",
+        "integra",
         "incerteza",
         "campo",
         "painel",
+        "documentos",
         "fontes",
     ]
     assert [s.select_one(".section-number").get_text() for s in chapters] == [
-        f"{n:02}" for n in range(1, 10)
+        f"{n:02}" for n in range(1, 14)
     ]
     assert len(page.select("figure.chart")) >= 15
     assert json.loads(page.select_one("#q-explorer-data").string) == payload()

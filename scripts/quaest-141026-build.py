@@ -7,6 +7,8 @@ from pathlib import Path
 from quaest_141026.audit import ROOT, SLUG, write
 from quaest_141026.g1 import write as write_g1
 from quaest_141026.history import write_sources
+from quaest_141026.integra.data import write as write_integra
+from quaest_141026.integra.provenance import update_poll
 from quaest_141026.panel import ingest, integrate
 from quaest_141026.view import render
 
@@ -27,6 +29,8 @@ if __name__ == "__main__":
         integrate(ingest(args.import_panel))
     if args.render_history_sources:
         write_sources()
+    update_poll()
+    write_integra()
     write_g1()
     data = write()
     output = ROOT / "docs" / (SLUG + ".html")

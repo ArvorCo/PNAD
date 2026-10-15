@@ -527,7 +527,7 @@ An existing first-round archive and its series stay unchanged. Use
 `python3 scripts/reponderacao-build.py --refresh-archive` only for an explicit
 revision of that closed publication.
 
-The preliminary Quaest dossier of 14 October is generated with
+The Quaest dossier of 14 October is generated with
 `python3 scripts/quaest-141026-build.py`. The user's complete saved G1 page
 supplies this wave's income crosstabs; import its rendered iframe with
 `python3 scripts/quaest-141026-build.py --import-panel caminho/saved_resource.html`.
@@ -535,8 +535,9 @@ The importer parses local SVG labels without executing JavaScript or contacting
 G1. It archives the exact original compressed, exports 25 complete strata and the
 total, and preserves the unrendered Lulista stratum as null. Income, sex, age and
 schooling checks use this wave's registered quotas. The income mean and inclusive
-projection now include the conditional sensitivity: 31/42/27 are planned targets
-assumed as weights, not verified final weights. Sources and limits are recorded
+projection include the conditional sensitivity. The full PDF supplied on 15 October
+publishes 31/42/27 on page 147, matching the registered targets. It does not identify
+whether this profile is before or after weighting. Sources and limits are recorded
 in `analysis/quaest_141026/` and the dossier.
 The archived public G1 API additionally supplies five questions (stimulated and
 spontaneous voting intention, approval, evaluation and rejection), each with
@@ -548,14 +549,24 @@ the API; the previously unrendered Lulista stratum is available there without
 replacing the nulls in the saved DOM evidence. Rejection is kept separate from
 vote shares and does not change the simulator's undecided allocation.
 The visual dossier uses `quaest_141026/charts.py`, `chapters.py` and
-`explorer.py`, with local CSS/JS in `docs/assets/quaest_14102026.*`. Its nine
-chapters include income sensitivity, a 12-wave history, segment comparisons and
+`explorer.py`, with local CSS/JS in `docs/assets/quaest_14102026.*`. Its thirteen
+chapters include transfers, attendance, income sensitivity, a 12-wave history and
 an explorer with five questions × eight dimensions. Shared links preserve
 `?pergunta=rejeicao&recorte=Renda#painel`; all 130 strata remain available without
 JavaScript. Rejection uses independent 0–100% bars, never a stacked distribution.
 For presentation-only changes, rebuild the dossier and its social card
 (`python3 scripts/social-cards.py --only quaest_14102026`), update the manual home
 and check the sitemap. Do not rebuild the central models or their snapshots.
+The complete 152-page PDF is preserved unchanged in
+`data/originals/quaest_102026_14/Quaest_14102026.pdf` and `docs/fontes/`, via LFS.
+`quaest_141026/integra/` exports 23 thematic readings, source questions, selected
+crosstabs and an indexed reader (`?pagina=19#documentos`). Recreate the 152 WebP
+pages with `python3 scripts/quaest-141026-integra.py --render-pages`; ordinary builds
+use archived renderings. Provenance, scope and limits: `analysis/quaest_141026/integra/CONTRATO.md`.
+The mixed BN/absent group is not an identified abstainer sample; the 9% response
+is not a turnout forecast, and no published likely-voter rule was located.
+Neither the illustrative interest filter nor transfer scenarios enter the central models.
+
 The historical income decomposition stops at 28 September and preserves its
 recomposition residual. Recreate its four source-page PNGs from the local PDFs
 with `python3 scripts/quaest-141026-build.py --render-history-sources`; the normal

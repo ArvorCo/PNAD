@@ -1,4 +1,4 @@
-"""Sensibilidade às cotas atuais, sem confundi-las com pesos finais observados."""
+"""Sensibilidade ao perfil publicado, com etapa de ponderação não identificada."""
 
 import importlib
 import json
@@ -42,7 +42,7 @@ def build(poll, old):
         old["publicado"]["2t"]["flavio"] - old["publicado"]["2t"]["lula"]
     )
     return {
-        "tipo": "sensibilidade_condicional_cotas_registradas",
+        "tipo": "sensibilidade_perfil_publicado_etapa_nao_informada",
         "hipotese": poll["renda"]["nota"],
         "pesos_registro_pct": weights,
         "pnad_pct": processed["renda"]["pnad_pct"][PNAD.MAIN_SERIES],
@@ -60,5 +60,5 @@ def build(poll, old):
         "mudanca_gap_recomposto_pp": reconstructed_change,
         "mudanca_gap_publicado_pp": published_change,
         "mudanca_residuo_pp": published_change - reconstructed_change,
-        "limite": "Cotas atuais assumidas como pesos, sem perfil final ou bases publicadas. A evolução compara amostras independentes, não migração individual nem efeito do feriado; não se testou a significância das mudanças por faixa. Em 03/10, 31/42/27 era hipótese da onda anterior. Sem prova de mudança da composição nem de pesos finais iguais.",
+        "limite": "Perfil 31/42/27 publicado na p. 147, sem indicar antes/depois da ponderação e sem bases. Sua aplicação como margem dos cruzamentos continua hipótese. A evolução compara amostras independentes, não migração individual nem efeito do feriado; não se testou a significância das mudanças por faixa. Em 03/10, 31/42/27 era hipótese da onda anterior. Sem prova de mudança da composição nem de pesos finais iguais.",
     }

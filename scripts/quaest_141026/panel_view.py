@@ -46,7 +46,7 @@ def panel_section(data):
             )
         )
     return section(
-        8,
+        11,
         "painel",
         "Cinco perguntas.<br><em>130 recortes conferidos.</em>",
         "Oito dimensões: renda, sexo, idade, escolaridade, região, cor, religião e identificação política.",
@@ -55,7 +55,7 @@ def panel_section(data):
         + '<p><a href="assets/quaest_14102026_painel/recortes.csv">Baixar todos os dados em CSV</a> · <a href="assets/quaest_14102026_painel/index.json">JSON, fontes e hashes</a>.</p>'
         + "<p>Espontânea e estimulada são perguntas distintas; a diferença entre elas não mede transferência individual. Rejeição admite rejeitar ambos: 54% e 53% não precisam somar 100%, não são votos e não alteram automaticamente o destino dos indecisos. Aprovação e avaliação do governo também medem coisas diferentes.</p>"
         + note(
-            "As margens abaixo são as informadas pelo G1 para os recortes, não margens calculadas por nós para diferenças entre candidatos. O painel não traz bases nem a formulação integral das perguntas; não deduzimos tamanho de amostra das margens. Os recortes se sobrepõem e não devem ser somados."
+            "As margens abaixo são as informadas pelo G1 para os recortes, não margens calculadas por nós para diferenças entre candidatos. O painel não traz bases; as formulações agora podem ser conferidas na íntegra. Não deduzimos tamanho de amostra das margens. Os recortes se sobrepõem e não devem ser somados."
         )
         + "<p>Conferência independente: os 100 valores dos 25 recortes completos no HTML salvo coincidem com a API. O recorte lulista não tinha rótulos no arquivo salvo; na API há Flávio 2%, Lula 97%, indecisos 0% e branco/nulo/não vai votar 1%. O arquivo original permanece intacto, com as ausências registradas.</p>"
         + '<div id="q-painel-raw">'

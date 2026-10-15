@@ -21,7 +21,7 @@ def segments():
         for name, values in candidate_pairs(question, "Região").items()
     }
     return section(
-        4,
+        6,
         "segmentos",
         "O total aproxima.<br><em>Os grupos separam.</em>",
         "O 46 × 44 reúne diferenças amplas por região, sexo, religião e identificação política.",
@@ -84,7 +84,7 @@ def opinions():
             + "</div>"
         )
     return section(
-        5,
+        7,
         "perguntas",
         "Voto, rejeição e governo.<br><em>Medidas diferentes.</em>",
         "A leitura melhora quando as perguntas conversam sem virarem a mesma coisa.",
@@ -102,7 +102,7 @@ def opinions():
         + gov
         + "</div>"
         + note(
-            "Fonte: Quaest / G1, 14/10. Aprovação: 45% aprovam, 48% desaprovam e 7% não sabem/não respondem. Avaliação: 34% positiva, 24% regular, 40% negativa e 2% NS/NR. Os rótulos e universos seguem o painel; a formulação integral permanece pendente."
+            "Fonte: Quaest / G1, 14/10. Aprovação: 45% aprovam, 48% desaprovam e 7% não sabem/não respondem. Avaliação: 34% positiva, 24% regular, 40% negativa e 2% NS/NR. Os rótulos e universos seguem o painel; as formulações constam nas pp. 73 e 83 da íntegra."
         )
         + "<p>A diferença entre aprovação e intenção de voto não mede “votos a conquistar”. Sem cruzar as duas respostas na mesma entrevista, não sabemos quantos aprovam e votam em Flávio ou desaprovam e votam em Lula.</p>",
     )

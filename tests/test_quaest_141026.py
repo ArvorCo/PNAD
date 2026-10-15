@@ -26,7 +26,7 @@ def audit():
     return build()
 
 
-def test_same_question_precedes_election_and_proportional_change_reproduces_rounding(
+def test_same_duel_precedes_election_and_proportional_change_reproduces_rounding(
     audit,
 ):
     old, new = audit["serie"][-2:]
@@ -95,16 +95,19 @@ def test_historical_page_evidence_has_original_and_rendered_hashes(audit):
             assert sha256(path) == original["sha256"]
 
 
-def test_registered_quotas_remain_a_conditional_assumption_after_crosses_arrive(audit):
+def test_published_profile_has_unidentified_weighting_stage(audit):
     raw = audit["pesquisa"]
     assert not raw.get("ignorar")
-    assert raw["renda"]["perfil_tipo"] == "cota_registrada"
-    assert raw["perfil_economico_publicado"]["tipo"] == "cotas_previstas_registro_tse"
+    assert raw["renda"]["perfil_tipo"] == "perfil_publicado"
+    assert (
+        raw["perfil_economico_publicado"]["tipo"]
+        == "perfil_amostra_publicado_etapa_nao_explicitada"
+    )
     result = audit["identificacao_renda"]
-    assert result["tipo"] == "sensibilidade_condicional_cotas_registradas"
+    assert result["tipo"] == "sensibilidade_perfil_publicado_etapa_nao_informada"
     assert result["reponderacao_pontual"]["flavio"] == 45.398
     assert result["reponderacao_pontual"]["lula"] == 44.531
-    assert "perfil final" in result["hipotese"].lower()
+    assert "ponderação" in result["hipotese"].lower()
 
 
 def test_conditional_poll_enters_both_centers_once_without_previous_wave(audit):
@@ -133,7 +136,7 @@ def test_page_is_reproducible_sources_are_hashed_and_limits_are_visible(audit):
     assert (ROOT / f"docs/{SLUG}.html").read_text() == html
     page = BeautifulSoup(html, "html.parser")
     assert page.select_one("html")["lang"] == "pt-BR"
-    assert len(page.select("main section.chapter")) == 9
+    assert len(page.select("main section.chapter")) == 13
     assert len(page.select("#q-painel-raw details")) == 5
     assert len(page.select("#q-painel-raw details tbody tr")) == 130
     assert page.select_one('a[href="assets/quaest_14102026_painel/recortes.csv"]')
@@ -142,7 +145,7 @@ def test_page_is_reproducible_sources_are_hashed_and_limits_are_visible(audit):
     )
     assert len(page.select('script[src*="googletagmanager.com/gtag/js"]')) == 1
     assert "não significa que 75%" in page.get_text(" ", strip=True)
-    assert "não os pesos finais" in page.get_text(" ", strip=True)
+    assert "etapa da ponderação" in page.get_text(" ", strip=True)
     assert "Não é resultado corrigido nem previsão" in page.get_text(" ", strip=True)
     manifest = read(f"docs/assets/{SLUG}_sources.json")
     for item in manifest["arquivos"]:
