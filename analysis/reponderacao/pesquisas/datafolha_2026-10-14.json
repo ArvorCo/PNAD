@@ -1,0 +1,79 @@
+{
+  "id": "datafolha_2026-10-14",
+  "instituto": "Datafolha",
+  "registro_tse": "BR-00466/2026",
+  "campo": {
+    "inicio": "2026-10-13",
+    "fim": "2026-10-14"
+  },
+  "divulgacao": "2026-10-15",
+  "n": 2520,
+  "metodo": "presencial, pontos de fluxo",
+  "publicado": {
+    "2t": {
+      "flavio": 47,
+      "lula": 45,
+      "branco_nulo": 6,
+      "indecisos": 2
+    }
+  },
+  "fonte": {
+    "arquivo": "data/originals/datafolha_102026_15/folha.html",
+    "url": "https://www1.folha.uol.com.br/poder/2026/10/datafolha-flavio-bolsonaro-tem-51-e-lula-49-dos-votos-validos-um-empate-tecnico.shtml",
+    "bytes": 389409,
+    "sha256": "f8fced92af277ce47857bdd2d7646428af2c19da32b484943d2a6c956bc15b57",
+    "capturado_em": "2026-10-15T21:51:33.954406+00:00",
+    "tipo": "materia_contratante",
+    "rotulo": "Folha: divulgação de 15/10",
+    "paginas": {},
+    "conferido_em": "2026-10-15",
+    "nota": "Folha, 15/10 às 18h30: 47/45/6/2 nos totais e 51/49 nos válidos. Campo efetivo 13–14/10, 2.520 entrevistas em 153 municípios, BR-00466/2026. A agenda prévia previa 13–15/10; prevalece o campo informado na divulgação. O painel e a API do G1 consultados ainda devolvem a onda de 08/10, BR-02949/2026, 49/45/5/1. Esses cruzamentos não são da nova pesquisa. A matéria atual informa renda até 2 SM (47% da amostra, Flávio 38 e Lula 53) e de 2 a 5 SM (37%, Flávio 55 e Lula 40), mas falta a faixa superior e a cobertura completa de renda. Entra pelo publicado na Projeção, sem ajuste PNAD."
+  },
+  "contratante": "Folha de S.Paulo e TV Globo",
+  "publicado_validos": {
+    "2t": {
+      "flavio": 51,
+      "lula": 49
+    }
+  },
+  "ignorar": true,
+  "motivo": "Nova onda de 15/10 confirmada. Sem ajuste PNAD: cruzamentos e perfil atuais incompletos; o G1 consultado ainda mostrava 08/10. A onda anterior não substitui os dados novos.",
+  "cruzamentos": {},
+  "cruzamentos_documentais": {
+    "opcoes": [
+      "flavio",
+      "lula"
+    ],
+    "faixas": [
+      "Até 2 SM",
+      "De 2 a 5 SM",
+      "Mais de 5 SM"
+    ],
+    "linhas": [
+      [
+        38,
+        53
+      ],
+      [
+        55,
+        40
+      ],
+      [
+        null,
+        null
+      ]
+    ],
+    "perfil_pct_sobre_total": [
+      47,
+      37,
+      null
+    ],
+    "nota": "Trechos da matéria atual; não completar por resíduo ou por onda anterior."
+  },
+  "conferencia_painel": {
+    "onda_devolvida": "2026-10-08",
+    "onda_solicitada": "2026-10-15",
+    "usado_na_onda_nova": false,
+    "arquivo": "data/originals/datafolha_102026_15/g1-estimulada.json"
+  }
+}

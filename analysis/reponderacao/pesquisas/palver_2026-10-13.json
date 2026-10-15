@@ -1,0 +1,197 @@
+{
+  "id": "palver_2026-10-13",
+  "instituto": "Palver",
+  "registro_tse": "BR-08028/2026",
+  "campo": {
+    "inicio": "2026-10-10",
+    "fim": "2026-10-13"
+  },
+  "divulgacao": "2026-10-15",
+  "n": 5000,
+  "metodo": "online, recrutamento por anúncios em redes sociais, amostra não probabilística; raking v3",
+  "publicado": {
+    "2t": {
+      "flavio": 50,
+      "lula": 49,
+      "branco_nulo": 1,
+      "indecisos": 0
+    }
+  },
+  "fonte": {
+    "arquivo": "data/originals/palver_102026_15/relatorio.pdf",
+    "url": "https://www.palver.com.br/api/surveys/voting-intention-2026-october-w7/report",
+    "bytes": 40583119,
+    "sha256": "bc5b3c942027a5ed5e0b6870f0963ce7f7637d9ada3a3b7439312404aa901860",
+    "capturado_em": "2026-10-15T21:51:33.680229+00:00",
+    "tipo": "relatorio",
+    "rotulo": "Palver: relatório completo da onda 7",
+    "paginas": {
+      "metodologia": "12–18",
+      "perfil_renda": 20,
+      "2t_topline": 23,
+      "2t_renda": 24,
+      "sexo": 24
+    },
+    "conferido_em": "2026-10-15",
+    "nota": "Onda 7: PDF de 107 páginas, perfil ponderado na p. 20, totais na p. 23 e renda/sexo na p. 24, conferidos visualmente. Usam-se 36/41/23 do perfil final arredondado, não as contagens brutas 1.872/2.103/1.025 nem as metas 36,36/41,01/22,63 da p. 16. Votos e perfis arredondados ao inteiro; indecisos 0% é publicação arredondada, não prova de ausência absoluta. O explorador consultado ainda terminava na onda 6. Método v3: PNADC 2025, 1ª entrevista, e voto declarado no 1º turno de 2026 por região nos pesos, além de voto de 2022 e filiação partidária. A mudança de calibração impede interpretar a diferença ante a onda 6 como evolução pura do voto. Ficha técnica pp. 14, 16 e 20 confirma BR-08028/2026 e campo 10–13/10; o release contém códigos divergentes (BR-00198 e BR-09028), preservados no arquivo.",
+    "pdf": "data/originals/palver_102026_15/relatorio.pdf",
+    "total_paginas": 107,
+    "status": "Íntegra atual conferida; perfil ponderado e cruzamentos arredondados."
+  },
+  "contratante": "Palver (iniciativa própria)",
+  "renda": {
+    "unidade": "salarios_minimos",
+    "ano_referencia": 2026,
+    "mes_precos": "202610",
+    "faixas": [
+      {
+        "rotulo": "0 a 2 SM",
+        "max": 2
+      },
+      {
+        "rotulo": "2 a 5 SM",
+        "max": 5
+      },
+      {
+        "rotulo": "Mais de 5 SM",
+        "max": null
+      }
+    ],
+    "amostra_pct": [
+      36,
+      41,
+      23
+    ],
+    "perfil_tipo": "perfil_ponderado",
+    "nota": "Onda 7: PDF de 107 páginas, perfil ponderado na p. 20, totais na p. 23 e renda/sexo na p. 24, conferidos visualmente. Usam-se 36/41/23 do perfil final arredondado, não as contagens brutas 1.872/2.103/1.025 nem as metas 36,36/41,01/22,63 da p. 16. Votos e perfis arredondados ao inteiro; indecisos 0% é publicação arredondada, não prova de ausência absoluta. O explorador consultado ainda terminava na onda 6. Método v3: PNADC 2025, 1ª entrevista, e voto declarado no 1º turno de 2026 por região nos pesos, além de voto de 2022 e filiação partidária. A mudança de calibração impede interpretar a diferença ante a onda 6 como evolução pura do voto. Ficha técnica pp. 14, 16 e 20 confirma BR-08028/2026 e campo 10–13/10; o release contém códigos divergentes (BR-00198 e BR-09028), preservados no arquivo."
+  },
+  "cruzamentos": {
+    "2t": {
+      "opcoes": [
+        "flavio",
+        "lula",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          48,
+          51,
+          1,
+          0
+        ],
+        [
+          52,
+          48,
+          0,
+          0
+        ],
+        [
+          52,
+          48,
+          1,
+          0
+        ]
+      ],
+      "nota": "Onda 7: PDF de 107 páginas, perfil ponderado na p. 20, totais na p. 23 e renda/sexo na p. 24, conferidos visualmente. Usam-se 36/41/23 do perfil final arredondado, não as contagens brutas 1.872/2.103/1.025 nem as metas 36,36/41,01/22,63 da p. 16. Votos e perfis arredondados ao inteiro; indecisos 0% é publicação arredondada, não prova de ausência absoluta. O explorador consultado ainda terminava na onda 6. Método v3: PNADC 2025, 1ª entrevista, e voto declarado no 1º turno de 2026 por região nos pesos, além de voto de 2022 e filiação partidária. A mudança de calibração impede interpretar a diferença ante a onda 6 como evolução pura do voto. Ficha técnica pp. 14, 16 e 20 confirma BR-08028/2026 e campo 10–13/10; o release contém códigos divergentes (BR-00198 e BR-09028), preservados no arquivo."
+    }
+  },
+  "controles": {
+    "2t": {
+      "renda": {
+        "pesos": [
+          36,
+          41,
+          23
+        ],
+        "linhas": [
+          [
+            48,
+            51,
+            1,
+            0
+          ],
+          [
+            52,
+            48,
+            0,
+            0
+          ],
+          [
+            52,
+            48,
+            1,
+            0
+          ]
+        ],
+        "opcoes": [
+          "flavio",
+          "lula",
+          "branco_nulo",
+          "indecisos"
+        ],
+        "recomposto": {
+          "flavio": 50.56,
+          "lula": 49.08,
+          "branco_nulo": 0.59,
+          "indecisos": 0.0
+        },
+        "residuo": {
+          "flavio": 0.5600000000000023,
+          "lula": 0.0799999999999983,
+          "branco_nulo": -0.41000000000000003,
+          "indecisos": 0.0
+        },
+        "residuo_max_abs": 0.5600000000000023
+      },
+      "sexo": {
+        "pesos": [
+          48,
+          52
+        ],
+        "linhas": [
+          [
+            60,
+            39,
+            1,
+            0
+          ],
+          [
+            41,
+            58,
+            0,
+            0
+          ]
+        ],
+        "opcoes": [
+          "flavio",
+          "lula",
+          "branco_nulo",
+          "indecisos"
+        ],
+        "recomposto": {
+          "flavio": 50.12,
+          "lula": 48.88,
+          "branco_nulo": 0.48,
+          "indecisos": 0.0
+        },
+        "residuo": {
+          "flavio": 0.11999999999999744,
+          "lula": -0.11999999999999744,
+          "branco_nulo": -0.52,
+          "indecisos": 0.0
+        },
+        "residuo_max_abs": 0.52
+      }
+    }
+  },
+  "metodologia_onda": {
+    "versao": "v3",
+    "pnad": "PNADC 2025, 1ª entrevista",
+    "voto_1t_2026_por_regiao": true,
+    "comparavel_onda_anterior": false,
+    "n_efetivo": 1783,
+    "efeito_pesos": 2.8,
+    "margem_publicada_pp": 2.3
+  }
+}

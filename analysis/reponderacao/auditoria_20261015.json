@@ -1,0 +1,453 @@
+{
+  "data": "2026-10-15",
+  "pesquisas": [
+    {
+      "id": "datafolha_2026-10-14",
+      "instituto": "Datafolha",
+      "registro_tse": "BR-00466/2026",
+      "campo": {
+        "inicio": "2026-10-13",
+        "fim": "2026-10-14"
+      },
+      "divulgacao": "2026-10-15",
+      "n": 2520,
+      "metodo": "presencial, pontos de fluxo",
+      "publicado": {
+        "2t": {
+          "flavio": 47,
+          "lula": 45,
+          "branco_nulo": 6,
+          "indecisos": 2
+        }
+      },
+      "fonte": {
+        "arquivo": "data/originals/datafolha_102026_15/folha.html",
+        "url": "https://www1.folha.uol.com.br/poder/2026/10/datafolha-flavio-bolsonaro-tem-51-e-lula-49-dos-votos-validos-um-empate-tecnico.shtml",
+        "bytes": 389409,
+        "sha256": "f8fced92af277ce47857bdd2d7646428af2c19da32b484943d2a6c956bc15b57",
+        "capturado_em": "2026-10-15T21:51:33.954406+00:00",
+        "tipo": "materia_contratante",
+        "rotulo": "Folha: divulgação de 15/10",
+        "paginas": {},
+        "conferido_em": "2026-10-15",
+        "nota": "Folha, 15/10 às 18h30: 47/45/6/2 nos totais e 51/49 nos válidos. Campo efetivo 13–14/10, 2.520 entrevistas em 153 municípios, BR-00466/2026. A agenda prévia previa 13–15/10; prevalece o campo informado na divulgação. O painel e a API do G1 consultados ainda devolvem a onda de 08/10, BR-02949/2026, 49/45/5/1. Esses cruzamentos não são da nova pesquisa. A matéria atual informa renda até 2 SM (47% da amostra, Flávio 38 e Lula 53) e de 2 a 5 SM (37%, Flávio 55 e Lula 40), mas falta a faixa superior e a cobertura completa de renda. Entra pelo publicado na Projeção, sem ajuste PNAD."
+      },
+      "contratante": "Folha de S.Paulo e TV Globo",
+      "publicado_validos": {
+        "2t": {
+          "flavio": 51,
+          "lula": 49
+        }
+      },
+      "ignorar": true,
+      "motivo": "Nova onda de 15/10 confirmada. Sem ajuste PNAD: cruzamentos e perfil atuais incompletos; o G1 consultado ainda mostrava 08/10. A onda anterior não substitui os dados novos.",
+      "cruzamentos": {},
+      "cruzamentos_documentais": {
+        "opcoes": [
+          "flavio",
+          "lula"
+        ],
+        "faixas": [
+          "Até 2 SM",
+          "De 2 a 5 SM",
+          "Mais de 5 SM"
+        ],
+        "linhas": [
+          [
+            38,
+            53
+          ],
+          [
+            55,
+            40
+          ],
+          [
+            null,
+            null
+          ]
+        ],
+        "perfil_pct_sobre_total": [
+          47,
+          37,
+          null
+        ],
+        "nota": "Trechos da matéria atual; não completar por resíduo ou por onda anterior."
+      },
+      "conferencia_painel": {
+        "onda_devolvida": "2026-10-08",
+        "onda_solicitada": "2026-10-15",
+        "usado_na_onda_nova": false,
+        "arquivo": "data/originals/datafolha_102026_15/g1-estimulada.json"
+      }
+    },
+    {
+      "id": "palver_2026-10-13",
+      "instituto": "Palver",
+      "registro_tse": "BR-08028/2026",
+      "campo": {
+        "inicio": "2026-10-10",
+        "fim": "2026-10-13"
+      },
+      "divulgacao": "2026-10-15",
+      "n": 5000,
+      "metodo": "online, recrutamento por anúncios em redes sociais, amostra não probabilística; raking v3",
+      "publicado": {
+        "2t": {
+          "flavio": 50,
+          "lula": 49,
+          "branco_nulo": 1,
+          "indecisos": 0
+        }
+      },
+      "fonte": {
+        "arquivo": "data/originals/palver_102026_15/relatorio.pdf",
+        "url": "https://www.palver.com.br/api/surveys/voting-intention-2026-october-w7/report",
+        "bytes": 40583119,
+        "sha256": "bc5b3c942027a5ed5e0b6870f0963ce7f7637d9ada3a3b7439312404aa901860",
+        "capturado_em": "2026-10-15T21:51:33.680229+00:00",
+        "tipo": "relatorio",
+        "rotulo": "Palver: relatório completo da onda 7",
+        "paginas": {
+          "metodologia": "12–18",
+          "perfil_renda": 20,
+          "2t_topline": 23,
+          "2t_renda": 24,
+          "sexo": 24
+        },
+        "conferido_em": "2026-10-15",
+        "nota": "Onda 7: PDF de 107 páginas, perfil ponderado na p. 20, totais na p. 23 e renda/sexo na p. 24, conferidos visualmente. Usam-se 36/41/23 do perfil final arredondado, não as contagens brutas 1.872/2.103/1.025 nem as metas 36,36/41,01/22,63 da p. 16. Votos e perfis arredondados ao inteiro; indecisos 0% é publicação arredondada, não prova de ausência absoluta. O explorador consultado ainda terminava na onda 6. Método v3: PNADC 2025, 1ª entrevista, e voto declarado no 1º turno de 2026 por região nos pesos, além de voto de 2022 e filiação partidária. A mudança de calibração impede interpretar a diferença ante a onda 6 como evolução pura do voto. Ficha técnica pp. 14, 16 e 20 confirma BR-08028/2026 e campo 10–13/10; o release contém códigos divergentes (BR-00198 e BR-09028), preservados no arquivo.",
+        "pdf": "data/originals/palver_102026_15/relatorio.pdf",
+        "total_paginas": 107,
+        "status": "Íntegra atual conferida; perfil ponderado e cruzamentos arredondados."
+      },
+      "contratante": "Palver (iniciativa própria)",
+      "renda": {
+        "unidade": "salarios_minimos",
+        "ano_referencia": 2026,
+        "mes_precos": "202610",
+        "faixas": [
+          {
+            "rotulo": "0 a 2 SM",
+            "max": 2
+          },
+          {
+            "rotulo": "2 a 5 SM",
+            "max": 5
+          },
+          {
+            "rotulo": "Mais de 5 SM",
+            "max": null
+          }
+        ],
+        "amostra_pct": [
+          36,
+          41,
+          23
+        ],
+        "perfil_tipo": "perfil_ponderado",
+        "nota": "Onda 7: PDF de 107 páginas, perfil ponderado na p. 20, totais na p. 23 e renda/sexo na p. 24, conferidos visualmente. Usam-se 36/41/23 do perfil final arredondado, não as contagens brutas 1.872/2.103/1.025 nem as metas 36,36/41,01/22,63 da p. 16. Votos e perfis arredondados ao inteiro; indecisos 0% é publicação arredondada, não prova de ausência absoluta. O explorador consultado ainda terminava na onda 6. Método v3: PNADC 2025, 1ª entrevista, e voto declarado no 1º turno de 2026 por região nos pesos, além de voto de 2022 e filiação partidária. A mudança de calibração impede interpretar a diferença ante a onda 6 como evolução pura do voto. Ficha técnica pp. 14, 16 e 20 confirma BR-08028/2026 e campo 10–13/10; o release contém códigos divergentes (BR-00198 e BR-09028), preservados no arquivo."
+      },
+      "cruzamentos": {
+        "2t": {
+          "opcoes": [
+            "flavio",
+            "lula",
+            "branco_nulo",
+            "indecisos"
+          ],
+          "linhas": [
+            [
+              48,
+              51,
+              1,
+              0
+            ],
+            [
+              52,
+              48,
+              0,
+              0
+            ],
+            [
+              52,
+              48,
+              1,
+              0
+            ]
+          ],
+          "nota": "Onda 7: PDF de 107 páginas, perfil ponderado na p. 20, totais na p. 23 e renda/sexo na p. 24, conferidos visualmente. Usam-se 36/41/23 do perfil final arredondado, não as contagens brutas 1.872/2.103/1.025 nem as metas 36,36/41,01/22,63 da p. 16. Votos e perfis arredondados ao inteiro; indecisos 0% é publicação arredondada, não prova de ausência absoluta. O explorador consultado ainda terminava na onda 6. Método v3: PNADC 2025, 1ª entrevista, e voto declarado no 1º turno de 2026 por região nos pesos, além de voto de 2022 e filiação partidária. A mudança de calibração impede interpretar a diferença ante a onda 6 como evolução pura do voto. Ficha técnica pp. 14, 16 e 20 confirma BR-08028/2026 e campo 10–13/10; o release contém códigos divergentes (BR-00198 e BR-09028), preservados no arquivo."
+        }
+      },
+      "controles": {
+        "2t": {
+          "renda": {
+            "pesos": [
+              36,
+              41,
+              23
+            ],
+            "linhas": [
+              [
+                48,
+                51,
+                1,
+                0
+              ],
+              [
+                52,
+                48,
+                0,
+                0
+              ],
+              [
+                52,
+                48,
+                1,
+                0
+              ]
+            ],
+            "opcoes": [
+              "flavio",
+              "lula",
+              "branco_nulo",
+              "indecisos"
+            ],
+            "recomposto": {
+              "flavio": 50.56,
+              "lula": 49.08,
+              "branco_nulo": 0.59,
+              "indecisos": 0.0
+            },
+            "residuo": {
+              "flavio": 0.5600000000000023,
+              "lula": 0.0799999999999983,
+              "branco_nulo": -0.41000000000000003,
+              "indecisos": 0.0
+            },
+            "residuo_max_abs": 0.5600000000000023
+          },
+          "sexo": {
+            "pesos": [
+              48,
+              52
+            ],
+            "linhas": [
+              [
+                60,
+                39,
+                1,
+                0
+              ],
+              [
+                41,
+                58,
+                0,
+                0
+              ]
+            ],
+            "opcoes": [
+              "flavio",
+              "lula",
+              "branco_nulo",
+              "indecisos"
+            ],
+            "recomposto": {
+              "flavio": 50.12,
+              "lula": 48.88,
+              "branco_nulo": 0.48,
+              "indecisos": 0.0
+            },
+            "residuo": {
+              "flavio": 0.11999999999999744,
+              "lula": -0.11999999999999744,
+              "branco_nulo": -0.52,
+              "indecisos": 0.0
+            },
+            "residuo_max_abs": 0.52
+          }
+        }
+      },
+      "metodologia_onda": {
+        "versao": "v3",
+        "pnad": "PNADC 2025, 1ª entrevista",
+        "voto_1t_2026_por_regiao": true,
+        "comparavel_onda_anterior": false,
+        "n_efetivo": 1783,
+        "efeito_pesos": 2.8,
+        "margem_publicada_pp": 2.3
+      }
+    },
+    {
+      "id": "indexa_2026-10-14",
+      "instituto": "Indexa/Broadcast",
+      "registro_tse": "BR-04629/2026",
+      "campo": {
+        "inicio": "2026-10-13",
+        "fim": "2026-10-14"
+      },
+      "divulgacao": "2026-10-15",
+      "n": 2000,
+      "metodo": "entrevistas individuais por telefone",
+      "publicado": {
+        "2t": {
+          "flavio": 44,
+          "lula": 42,
+          "branco_nulo": 4,
+          "indecisos": 2,
+          "nao_vai_votar": 8
+        }
+      },
+      "fonte": {
+        "arquivo": "data/originals/indexa_102026_15/broadcast.html",
+        "url": "https://www.broadcast.com.br/news/indexa-broadcast-flavio-bolsonaro-tem-44-e-lula-42-em-empate-tecnico/",
+        "bytes": 810316,
+        "sha256": "7d2f134f29f55c5892a744bef1077b1d07cbd31cdd3196c963a7e40cc0821d0a",
+        "capturado_em": "2026-10-15T21:51:33.960599+00:00",
+        "tipo": "materia_contratante",
+        "rotulo": "Indexa/Broadcast: divulgação do contratante",
+        "paginas": {},
+        "conferido_em": "2026-10-15",
+        "nota": "Divulgação do contratante Broadcast em 15/10: Flávio 44, Lula 42, branco/nulo 4, não iria votar 8 e indecisos 2; válidos publicados 51/49. As três faixas de renda têm votos dos candidatos, mas o perfil ponderado, as bases e a não resposta por faixa não foram localizados. Sem pesos verificados, não há reponderação identificável. Entra na Projeção pelo publicado. Os 8% que dizem não votar ficam separados na transcrição; no motor integram a não escolha, sem substituir o parâmetro de comparecimento nem produzir previsão de abstenção."
+      },
+      "contratante": "Agência Estado (Broadcast)",
+      "publicado_validos": {
+        "2t": {
+          "flavio": 51,
+          "lula": 49
+        }
+      },
+      "ignorar": true,
+      "motivo": "Voto por renda publicado, mas perfil ponderado e bases atuais não localizados. Sem ajuste PNAD; publicado preservado na Projeção.",
+      "cruzamentos": {},
+      "cruzamentos_documentais": {
+        "opcoes": [
+          "flavio",
+          "lula"
+        ],
+        "faixas": [
+          "Até 2 SM",
+          "De 2 a 5 SM",
+          "Mais de 5 SM"
+        ],
+        "linhas": [
+          [
+            36.2,
+            45.8
+          ],
+          [
+            44.5,
+            41.7
+          ],
+          [
+            49.7,
+            38.9
+          ]
+        ],
+        "perfil_pct": null,
+        "nota": "Publicado pelo Broadcast; sem pesos, não resolver perfil por inversão de toplines arredondados."
+      }
+    }
+  ],
+  "fontes": {
+    "datafolha_102026_15": [
+      {
+        "arquivo": "data/originals/datafolha_102026_15/folha.html",
+        "url": "https://www1.folha.uol.com.br/poder/2026/10/datafolha-flavio-bolsonaro-tem-51-e-lula-49-dos-votos-validos-um-empate-tecnico.shtml",
+        "bytes": 389409,
+        "sha256": "f8fced92af277ce47857bdd2d7646428af2c19da32b484943d2a6c956bc15b57",
+        "capturado_em": "2026-10-15T21:51:33.954406+00:00"
+      },
+      {
+        "arquivo": "data/originals/datafolha_102026_15/g1-painel.html",
+        "url": "https://especiaisg1.globo/politica/eleicoes/2026/pesquisas-eleitorais/presidente/2-turno/Datafolha/internal/",
+        "bytes": 141287,
+        "sha256": "aa499c98fa96552d9127c2b57fc24a2174225ec26aa453568f5f581ca325cd6f",
+        "capturado_em": "2026-10-15T21:51:33.956484+00:00"
+      },
+      {
+        "arquivo": "data/originals/datafolha_102026_15/g1-estimulada.json",
+        "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/216/?tipo_pergunta=ESTIMULADA-PRE-001&instituto=Datafolha",
+        "bytes": 22558,
+        "sha256": "3cc78ee12b809b9bc31120f1b000a0b51edb9281be3629329d1143e7bb8b399b",
+        "capturado_em": "2026-10-15T21:51:33.958092+00:00"
+      }
+    ],
+    "palver_102026_15": [
+      {
+        "arquivo": "data/originals/palver_102026_15/relatorio.pdf",
+        "url": "https://www.palver.com.br/api/surveys/voting-intention-2026-october-w7/report",
+        "bytes": 40583119,
+        "sha256": "bc5b3c942027a5ed5e0b6870f0963ce7f7637d9ada3a3b7439312404aa901860",
+        "capturado_em": "2026-10-15T21:51:33.680229+00:00"
+      },
+      {
+        "arquivo": "data/originals/palver_102026_15/release.pdf",
+        "url": "https://www.palver.com.br/api/surveys/voting-intention-2026-october-w7/press-release",
+        "bytes": 667170,
+        "sha256": "a26c170883b1c087f8e3ad0c56a2d7626e8169891be3761eabf0a7e6d39cfae7",
+        "capturado_em": "2026-10-15T21:51:33.940796+00:00"
+      },
+      {
+        "arquivo": "data/originals/palver_102026_15/explorador.html",
+        "url": "https://www.palver.com.br/survey/explore",
+        "bytes": 106160,
+        "sha256": "900eae71bfaf4f8e16b02e32569bde42a2a56e33f1eeee98e6b2cd0590dd715b",
+        "capturado_em": "2026-10-15T21:51:33.947458+00:00"
+      }
+    ],
+    "indexa_102026_15": [
+      {
+        "arquivo": "data/originals/indexa_102026_15/broadcast.html",
+        "url": "https://www.broadcast.com.br/news/indexa-broadcast-flavio-bolsonaro-tem-44-e-lula-42-em-empate-tecnico/",
+        "bytes": 810316,
+        "sha256": "7d2f134f29f55c5892a744bef1077b1d07cbd31cdd3196c963a7e40cc0821d0a",
+        "capturado_em": "2026-10-15T21:51:33.960599+00:00"
+      },
+      {
+        "arquivo": "data/originals/indexa_102026_15/poder360.html",
+        "url": "https://www.poder360.com.br/poder-eleicoes-2026/flavio-tem-51-e-lula-49-no-2o-turno-mostra-indexa-broadcast/",
+        "bytes": 273310,
+        "sha256": "958c0d9d369fcbc3c7672cda4a9f2649ddf5075ebf6ba4d18f1a01d21fce223f",
+        "capturado_em": "2026-10-15T21:51:33.964404+00:00"
+      }
+    ],
+    "atlas_102026_15_conferencia": [
+      {
+        "arquivo": "data/originals/atlas_102026_15_conferencia/catalogo.html",
+        "url": "https://www.atlasintel.org/polls/exclusive-polls",
+        "bytes": 337687,
+        "sha256": "4a4a6b928e0f16c7af3153738008cddb404f7aac186aefdec003f55ded945bed",
+        "capturado_em": "2026-10-15T21:51:33.967030+00:00"
+      }
+    ]
+  },
+  "varredura": [
+    {
+      "instituto": "AtlasIntel",
+      "status": "Nenhuma nova onda nacional localizada em 15/10",
+      "conclusao": "A aba Exclusive Polls do instituto continua com divulgação nacional de 09/10, campo 03–08/10, n = 5.026. Mantida a onda existente, sem duplicação. Notícias de agenda apontam próxima divulgação em 19/10; agenda não é resultado.",
+      "fontes": [
+        "https://www.atlasintel.org/polls/exclusive-polls"
+      ],
+      "resumo": true
+    },
+    {
+      "instituto": "Datafolha",
+      "status": "Publicado incorporado; renda atual incompleta",
+      "conclusao": "Conferir a íntegra ou a atualização do G1. A resposta arquivada da API é de 08/10 e não serve para reponderar a onda de 15/10.",
+      "fontes": [
+        "https://especiaisg1.globo/politica/eleicoes/2026/pesquisas-eleitorais/presidente/2-turno/Datafolha/internal/"
+      ],
+      "pendente": true
+    },
+    {
+      "instituto": "Indexa/Broadcast",
+      "status": "Publicado incorporado; pesos de renda ausentes",
+      "conclusao": "O contratante publica o voto por renda, mas não os pesos de composição. Sem ajuste PNAD até localizar o perfil atual.",
+      "fontes": [
+        "https://www.broadcast.com.br/news/indexa-broadcast-flavio-bolsonaro-tem-44-e-lula-42-em-empate-tecnico/"
+      ],
+      "pendente": true
+    }
+  ]
+}

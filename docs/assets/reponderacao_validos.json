@@ -5153,7 +5153,7 @@
     },
     "2t": {
       "reference": "2026-10-15",
-      "n_houses": 5,
+      "n_houses": 6,
       "excluded": [
         {
           "id": "atlas_2026-10-08",
@@ -5166,9 +5166,19 @@
           "reason": "Cruzamento disponível, mas a definição de renda conflita (per capita versus total). Publicado sem ajuste na Projeção."
         },
         {
+          "id": "datafolha_2026-10-14",
+          "instituto": "Datafolha",
+          "reason": "Nova onda de 15/10 confirmada. Sem ajuste PNAD: cruzamentos e perfil atuais incompletos; o G1 consultado ainda mostrava 08/10. A onda anterior não substitui os dados novos."
+        },
+        {
           "id": "futura_2026-10-10",
           "instituto": "Futura",
           "reason": "Perfil de renda publicado, sem cruzamento de voto por renda. Sem ajuste identificável."
+        },
+        {
+          "id": "indexa_2026-10-14",
+          "instituto": "Indexa/Broadcast",
+          "reason": "Voto por renda publicado, mas perfil ponderado e bases atuais não localizados. Sem ajuste PNAD; publicado preservado na Projeção."
         },
         {
           "id": "vox_brasil_2026-10-07",
@@ -5180,16 +5190,16 @@
         "central": {
           "aggregate": {
             "publicado": {
-              "lula": 47.77696171502113,
-              "flavio": 52.22303828497886
+              "lula": 48.06329301167585,
+              "flavio": 51.93670698832415
             },
             "pnad": {
-              "lula": 46.98767463646714,
-              "flavio": 53.01232536353285
+              "lula": 47.400763887474675,
+              "flavio": 52.599236112525325
             },
             "modelo": {
-              "lula": 46.98271434906319,
-              "flavio": 53.01728565093681
+              "lula": 47.39579924383698,
+              "flavio": 52.60420075616301
             }
           },
           "polls": [
@@ -5387,6 +5397,69 @@
               "proxy_candidates": []
             },
             {
+              "id": "palver_2026-10-13",
+              "instituto": "Palver",
+              "divulgacao": "2026-10-15",
+              "campo": {
+                "inicio": "2026-10-10",
+                "fim": "2026-10-13"
+              },
+              "published": {
+                "flavio": 50.0,
+                "lula": 49.0
+              },
+              "adjusted": {
+                "flavio": 50.033,
+                "lula": 48.976
+              },
+              "negative_mass_removed": {},
+              "undecided": 0,
+              "undecided_known": true,
+              "source": {
+                "arquivo": "data/originals/palver_102026_15/relatorio.pdf",
+                "url": "https://www.palver.com.br/api/surveys/voting-intention-2026-october-w7/report",
+                "bytes": 40583119,
+                "sha256": "bc5b3c942027a5ed5e0b6870f0963ce7f7637d9ada3a3b7439312404aa901860",
+                "capturado_em": "2026-10-15T21:51:33.680229+00:00",
+                "tipo": "relatorio",
+                "rotulo": "Palver: relatório completo da onda 7",
+                "paginas": {
+                  "metodologia": "12–18",
+                  "perfil_renda": 20,
+                  "2t_topline": 23,
+                  "2t_renda": 24,
+                  "sexo": 24
+                },
+                "conferido_em": "2026-10-15",
+                "nota": "Onda 7: PDF de 107 páginas, perfil ponderado na p. 20, totais na p. 23 e renda/sexo na p. 24, conferidos visualmente. Usam-se 36/41/23 do perfil final arredondado, não as contagens brutas 1.872/2.103/1.025 nem as metas 36,36/41,01/22,63 da p. 16. Votos e perfis arredondados ao inteiro; indecisos 0% é publicação arredondada, não prova de ausência absoluta. O explorador consultado ainda terminava na onda 6. Método v3: PNADC 2025, 1ª entrevista, e voto declarado no 1º turno de 2026 por região nos pesos, além de voto de 2022 e filiação partidária. A mudança de calibração impede interpretar a diferença ante a onda 6 como evolução pura do voto. Ficha técnica pp. 14, 16 e 20 confirma BR-08028/2026 e campo 10–13/10; o release contém códigos divergentes (BR-00198 e BR-09028), preservados no arquivo.",
+                "pdf": "data/originals/palver_102026_15/relatorio.pdf",
+                "total_paginas": 107,
+                "status": "Íntegra atual conferida; perfil ponderado e cruzamentos arredondados."
+              },
+              "publicado": {
+                "flavio": 50.505050505050505,
+                "lula": 49.494949494949495
+              },
+              "pnad": {
+                "flavio": 50.533789857487704,
+                "lula": 49.4662101425123
+              },
+              "modelo": {
+                "flavio": 50.538776282294045,
+                "lula": 49.46122371770594
+              },
+              "allocated_undecided": {
+                "flavio": 0.0,
+                "lula": 0.0
+              },
+              "rates": {
+                "flavio": 0.7963802451702287,
+                "lula": 0.7962213991300896
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": []
+            },
+            {
               "id": "poderdata_2026-10-12",
               "instituto": "PoderData",
               "divulgacao": "2026-10-13",
@@ -5521,36 +5594,43 @@
             {
               "without": "Gerp",
               "valid": {
-                "lula": 47.89971216303215,
-                "flavio": 52.10028783696785
+                "lula": 48.21201447396691,
+                "flavio": 51.78798552603308
               }
             },
             {
               "without": "Ipespe",
               "valid": {
-                "lula": 47.080834582362556,
-                "flavio": 52.919165417637444
+                "lula": 47.556912409431234,
+                "flavio": 52.443087590568766
               }
             },
             {
               "without": "Nexus",
               "valid": {
-                "lula": 46.8922324807255,
-                "flavio": 53.1077675192745
+                "lula": 47.40603072812159,
+                "flavio": 52.59396927187841
+              }
+            },
+            {
+              "without": "Palver",
+              "valid": {
+                "lula": 46.98271434906319,
+                "flavio": 53.01728565093681
               }
             },
             {
               "without": "PoderData",
               "valid": {
-                "lula": 46.69064121328669,
-                "flavio": 53.30935878671332
+                "lula": 47.24475771417054,
+                "flavio": 52.75524228582945
               }
             },
             {
               "without": "Quaest",
               "valid": {
-                "lula": 46.35015130590905,
-                "flavio": 53.64984869409095
+                "lula": 46.97236578826843,
+                "flavio": 53.02763421173156
               }
             }
           ],
@@ -5564,16 +5644,16 @@
         "idosos60": {
           "aggregate": {
             "publicado": {
-              "lula": 47.77696171502113,
-              "flavio": 52.22303828497886
+              "lula": 48.06329301167585,
+              "flavio": 51.93670698832415
             },
             "pnad": {
-              "lula": 46.98767463646714,
-              "flavio": 53.01232536353285
+              "lula": 47.400763887474675,
+              "flavio": 52.599236112525325
             },
             "modelo": {
-              "lula": 46.47373139311125,
-              "flavio": 53.52626860688874
+              "lula": 46.886325824633296,
+              "flavio": 53.113674175366704
             }
           },
           "polls": [
@@ -5771,6 +5851,69 @@
               "proxy_candidates": []
             },
             {
+              "id": "palver_2026-10-13",
+              "instituto": "Palver",
+              "divulgacao": "2026-10-15",
+              "campo": {
+                "inicio": "2026-10-10",
+                "fim": "2026-10-13"
+              },
+              "published": {
+                "flavio": 50.0,
+                "lula": 49.0
+              },
+              "adjusted": {
+                "flavio": 50.033,
+                "lula": 48.976
+              },
+              "negative_mass_removed": {},
+              "undecided": 0,
+              "undecided_known": true,
+              "source": {
+                "arquivo": "data/originals/palver_102026_15/relatorio.pdf",
+                "url": "https://www.palver.com.br/api/surveys/voting-intention-2026-october-w7/report",
+                "bytes": 40583119,
+                "sha256": "bc5b3c942027a5ed5e0b6870f0963ce7f7637d9ada3a3b7439312404aa901860",
+                "capturado_em": "2026-10-15T21:51:33.680229+00:00",
+                "tipo": "relatorio",
+                "rotulo": "Palver: relatório completo da onda 7",
+                "paginas": {
+                  "metodologia": "12–18",
+                  "perfil_renda": 20,
+                  "2t_topline": 23,
+                  "2t_renda": 24,
+                  "sexo": 24
+                },
+                "conferido_em": "2026-10-15",
+                "nota": "Onda 7: PDF de 107 páginas, perfil ponderado na p. 20, totais na p. 23 e renda/sexo na p. 24, conferidos visualmente. Usam-se 36/41/23 do perfil final arredondado, não as contagens brutas 1.872/2.103/1.025 nem as metas 36,36/41,01/22,63 da p. 16. Votos e perfis arredondados ao inteiro; indecisos 0% é publicação arredondada, não prova de ausência absoluta. O explorador consultado ainda terminava na onda 6. Método v3: PNADC 2025, 1ª entrevista, e voto declarado no 1º turno de 2026 por região nos pesos, além de voto de 2022 e filiação partidária. A mudança de calibração impede interpretar a diferença ante a onda 6 como evolução pura do voto. Ficha técnica pp. 14, 16 e 20 confirma BR-08028/2026 e campo 10–13/10; o release contém códigos divergentes (BR-00198 e BR-09028), preservados no arquivo.",
+                "pdf": "data/originals/palver_102026_15/relatorio.pdf",
+                "total_paginas": 107,
+                "status": "Íntegra atual conferida; perfil ponderado e cruzamentos arredondados."
+              },
+              "publicado": {
+                "flavio": 50.505050505050505,
+                "lula": 49.494949494949495
+              },
+              "pnad": {
+                "flavio": 50.533789857487704,
+                "lula": 49.4662101425123
+              },
+              "modelo": {
+                "flavio": 51.050702017756485,
+                "lula": 48.94929798224352
+              },
+              "allocated_undecided": {
+                "flavio": 0.0,
+                "lula": 0.0
+              },
+              "rates": {
+                "flavio": 0.8037215950422713,
+                "lula": 0.7872698477571027
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": []
+            },
+            {
               "id": "poderdata_2026-10-12",
               "instituto": "PoderData",
               "divulgacao": "2026-10-13",
@@ -5905,36 +6048,43 @@
             {
               "without": "Gerp",
               "valid": {
-                "lula": 47.38903351395822,
-                "flavio": 52.61096648604177
+                "lula": 47.70108640761528,
+                "flavio": 52.29891359238472
               }
             },
             {
               "without": "Ipespe",
               "valid": {
-                "lula": 46.5719320602718,
-                "flavio": 53.428067939728194
+                "lula": 47.04740524466614,
+                "flavio": 52.95259475533386
               }
             },
             {
               "without": "Nexus",
               "valid": {
-                "lula": 46.38358378327034,
-                "flavio": 53.616416216729654
+                "lula": 46.89672662306498,
+                "flavio": 53.10327337693502
+              }
+            },
+            {
+              "without": "Palver",
+              "valid": {
+                "lula": 46.47373139311125,
+                "flavio": 53.52626860688874
               }
             },
             {
               "without": "PoderData",
               "valid": {
-                "lula": 46.18219948947848,
-                "flavio": 53.817800510521515
+                "lula": 46.735619188031485,
+                "flavio": 53.26438081196851
               }
             },
             {
               "without": "Quaest",
               "valid": {
-                "lula": 45.84190811857742,
-                "flavio": 54.158091881422564
+                "lula": 46.46338609131064,
+                "flavio": 53.536613908689354
               }
             }
           ],
@@ -5948,16 +6098,16 @@
         "idosos80": {
           "aggregate": {
             "publicado": {
-              "lula": 47.77696171502113,
-              "flavio": 52.22303828497886
+              "lula": 48.06329301167585,
+              "flavio": 51.93670698832415
             },
             "pnad": {
-              "lula": 46.98767463646714,
-              "flavio": 53.01232536353285
+              "lula": 47.400763887474675,
+              "flavio": 52.599236112525325
             },
             "modelo": {
-              "lula": 46.99141329300777,
-              "flavio": 53.00858670699223
+              "lula": 47.404505821983065,
+              "flavio": 52.59549417801693
             }
           },
           "polls": [
@@ -6155,6 +6305,69 @@
               "proxy_candidates": []
             },
             {
+              "id": "palver_2026-10-13",
+              "instituto": "Palver",
+              "divulgacao": "2026-10-15",
+              "campo": {
+                "inicio": "2026-10-10",
+                "fim": "2026-10-13"
+              },
+              "published": {
+                "flavio": 50.0,
+                "lula": 49.0
+              },
+              "adjusted": {
+                "flavio": 50.033,
+                "lula": 48.976
+              },
+              "negative_mass_removed": {},
+              "undecided": 0,
+              "undecided_known": true,
+              "source": {
+                "arquivo": "data/originals/palver_102026_15/relatorio.pdf",
+                "url": "https://www.palver.com.br/api/surveys/voting-intention-2026-october-w7/report",
+                "bytes": 40583119,
+                "sha256": "bc5b3c942027a5ed5e0b6870f0963ce7f7637d9ada3a3b7439312404aa901860",
+                "capturado_em": "2026-10-15T21:51:33.680229+00:00",
+                "tipo": "relatorio",
+                "rotulo": "Palver: relatório completo da onda 7",
+                "paginas": {
+                  "metodologia": "12–18",
+                  "perfil_renda": 20,
+                  "2t_topline": 23,
+                  "2t_renda": 24,
+                  "sexo": 24
+                },
+                "conferido_em": "2026-10-15",
+                "nota": "Onda 7: PDF de 107 páginas, perfil ponderado na p. 20, totais na p. 23 e renda/sexo na p. 24, conferidos visualmente. Usam-se 36/41/23 do perfil final arredondado, não as contagens brutas 1.872/2.103/1.025 nem as metas 36,36/41,01/22,63 da p. 16. Votos e perfis arredondados ao inteiro; indecisos 0% é publicação arredondada, não prova de ausência absoluta. O explorador consultado ainda terminava na onda 6. Método v3: PNADC 2025, 1ª entrevista, e voto declarado no 1º turno de 2026 por região nos pesos, além de voto de 2022 e filiação partidária. A mudança de calibração impede interpretar a diferença ante a onda 6 como evolução pura do voto. Ficha técnica pp. 14, 16 e 20 confirma BR-08028/2026 e campo 10–13/10; o release contém códigos divergentes (BR-00198 e BR-09028), preservados no arquivo.",
+                "pdf": "data/originals/palver_102026_15/relatorio.pdf",
+                "total_paginas": 107,
+                "status": "Íntegra atual conferida; perfil ponderado e cruzamentos arredondados."
+              },
+              "publicado": {
+                "flavio": 50.505050505050505,
+                "lula": 49.494949494949495
+              },
+              "pnad": {
+                "flavio": 50.533789857487704,
+                "lula": 49.4662101425123
+              },
+              "modelo": {
+                "flavio": 50.530031533140416,
+                "lula": 49.469968466859584
+              },
+              "allocated_undecided": {
+                "flavio": 0.0,
+                "lula": 0.0
+              },
+              "rates": {
+                "flavio": 0.7962543662268092,
+                "lula": 0.7963740920624234
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": []
+            },
+            {
               "id": "poderdata_2026-10-12",
               "instituto": "PoderData",
               "divulgacao": "2026-10-13",
@@ -6289,36 +6502,43 @@
             {
               "without": "Gerp",
               "valid": {
-                "lula": 47.908438443010745,
-                "flavio": 52.09156155698925
+                "lula": 48.22074444778052,
+                "flavio": 51.77925555221948
               }
             },
             {
               "without": "Ipespe",
               "valid": {
-                "lula": 47.089531967545476,
-                "flavio": 52.91046803245452
+                "lula": 47.5656192674083,
+                "flavio": 52.43438073259169
               }
             },
             {
               "without": "Nexus",
               "valid": {
-                "lula": 46.90092586992686,
-                "flavio": 53.099074130073134
+                "lula": 47.41473438931341,
+                "flavio": 52.58526561068659
+              }
+            },
+            {
+              "without": "Palver",
+              "valid": {
+                "lula": 46.99141329300777,
+                "flavio": 53.00858670699223
               }
             },
             {
               "without": "PoderData",
               "valid": {
-                "lula": 46.69933143202967,
-                "flavio": 53.30066856797032
+                "lula": 47.253458838995655,
+                "flavio": 52.746541161004345
               }
             },
             {
               "without": "Quaest",
               "valid": {
-                "lula": 46.3588387525261,
-                "flavio": 53.6411612474739
+                "lula": 46.98106469539279,
+                "flavio": 53.018935304607204
               }
             }
           ],
@@ -6332,16 +6552,16 @@
         "flavio95": {
           "aggregate": {
             "publicado": {
-              "lula": 47.77696171502113,
-              "flavio": 52.22303828497886
+              "lula": 48.06329301167585,
+              "flavio": 51.93670698832415
             },
             "pnad": {
-              "lula": 46.98767463646714,
-              "flavio": 53.01232536353285
+              "lula": 47.400763887474675,
+              "flavio": 52.599236112525325
             },
             "modelo": {
-              "lula": 48.25986023532839,
-              "flavio": 51.74013976467161
+              "lula": 48.673796932785905,
+              "flavio": 51.326203067214095
             }
           },
           "polls": [
@@ -6539,6 +6759,69 @@
               "proxy_candidates": []
             },
             {
+              "id": "palver_2026-10-13",
+              "instituto": "Palver",
+              "divulgacao": "2026-10-15",
+              "campo": {
+                "inicio": "2026-10-10",
+                "fim": "2026-10-13"
+              },
+              "published": {
+                "flavio": 50.0,
+                "lula": 49.0
+              },
+              "adjusted": {
+                "flavio": 50.033,
+                "lula": 48.976
+              },
+              "negative_mass_removed": {},
+              "undecided": 0,
+              "undecided_known": true,
+              "source": {
+                "arquivo": "data/originals/palver_102026_15/relatorio.pdf",
+                "url": "https://www.palver.com.br/api/surveys/voting-intention-2026-october-w7/report",
+                "bytes": 40583119,
+                "sha256": "bc5b3c942027a5ed5e0b6870f0963ce7f7637d9ada3a3b7439312404aa901860",
+                "capturado_em": "2026-10-15T21:51:33.680229+00:00",
+                "tipo": "relatorio",
+                "rotulo": "Palver: relatório completo da onda 7",
+                "paginas": {
+                  "metodologia": "12–18",
+                  "perfil_renda": 20,
+                  "2t_topline": 23,
+                  "2t_renda": 24,
+                  "sexo": 24
+                },
+                "conferido_em": "2026-10-15",
+                "nota": "Onda 7: PDF de 107 páginas, perfil ponderado na p. 20, totais na p. 23 e renda/sexo na p. 24, conferidos visualmente. Usam-se 36/41/23 do perfil final arredondado, não as contagens brutas 1.872/2.103/1.025 nem as metas 36,36/41,01/22,63 da p. 16. Votos e perfis arredondados ao inteiro; indecisos 0% é publicação arredondada, não prova de ausência absoluta. O explorador consultado ainda terminava na onda 6. Método v3: PNADC 2025, 1ª entrevista, e voto declarado no 1º turno de 2026 por região nos pesos, além de voto de 2022 e filiação partidária. A mudança de calibração impede interpretar a diferença ante a onda 6 como evolução pura do voto. Ficha técnica pp. 14, 16 e 20 confirma BR-08028/2026 e campo 10–13/10; o release contém códigos divergentes (BR-00198 e BR-09028), preservados no arquivo.",
+                "pdf": "data/originals/palver_102026_15/relatorio.pdf",
+                "total_paginas": 107,
+                "status": "Íntegra atual conferida; perfil ponderado e cruzamentos arredondados."
+              },
+              "publicado": {
+                "flavio": 50.505050505050505,
+                "lula": 49.494949494949495
+              },
+              "pnad": {
+                "flavio": 50.533789857487704,
+                "lula": 49.4662101425123
+              },
+              "modelo": {
+                "flavio": 49.25651957992652,
+                "lula": 50.74348042007349
+              },
+              "allocated_undecided": {
+                "flavio": 0.0,
+                "lula": 0.0
+              },
+              "rates": {
+                "flavio": 0.7565612329117172,
+                "lula": 0.7962213991300896
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": []
+            },
+            {
               "id": "poderdata_2026-10-12",
               "instituto": "PoderData",
               "divulgacao": "2026-10-13",
@@ -6673,36 +6956,43 @@
             {
               "without": "Gerp",
               "valid": {
-                "lula": 49.180278665027,
-                "flavio": 50.819721334973
+                "lula": 49.49291901603629,
+                "flavio": 50.507080983963704
               }
             },
             {
               "without": "Ipespe",
               "valid": {
-                "lula": 48.35768587876605,
-                "flavio": 51.642314121233944
+                "lula": 48.834844787027535,
+                "flavio": 51.165155212972465
               }
             },
             {
               "without": "Nexus",
               "valid": {
-                "lula": 48.16862017114059,
-                "flavio": 51.831379828859404
+                "lula": 48.68359222092717,
+                "flavio": 51.316407779072826
+              }
+            },
+            {
+              "without": "Palver",
+              "valid": {
+                "lula": 48.25986023532839,
+                "flavio": 51.74013976467161
               }
             },
             {
               "without": "PoderData",
               "valid": {
-                "lula": 47.96669527194441,
-                "flavio": 52.03330472805559
+                "lula": 48.52205230157023,
+                "flavio": 51.47794769842977
               }
             },
             {
               "without": "Quaest",
               "valid": {
-                "lula": 47.6260211897639,
-                "flavio": 52.373978810236096
+                "lula": 48.249513035825814,
+                "flavio": 51.750486964174186
               }
             }
           ],
@@ -6716,16 +7006,16 @@
         "flavio105": {
           "aggregate": {
             "publicado": {
-              "lula": 47.77696171502113,
-              "flavio": 52.22303828497886
+              "lula": 48.06329301167585,
+              "flavio": 51.93670698832415
             },
             "pnad": {
-              "lula": 46.98767463646714,
-              "flavio": 53.01232536353285
+              "lula": 47.400763887474675,
+              "flavio": 52.599236112525325
             },
             "modelo": {
-              "lula": 45.77151511157553,
-              "flavio": 54.228484888424454
+              "lula": 46.183291511395716,
+              "flavio": 53.81670848860427
             }
           },
           "polls": [
@@ -6923,6 +7213,69 @@
               "proxy_candidates": []
             },
             {
+              "id": "palver_2026-10-13",
+              "instituto": "Palver",
+              "divulgacao": "2026-10-15",
+              "campo": {
+                "inicio": "2026-10-10",
+                "fim": "2026-10-13"
+              },
+              "published": {
+                "flavio": 50.0,
+                "lula": 49.0
+              },
+              "adjusted": {
+                "flavio": 50.033,
+                "lula": 48.976
+              },
+              "negative_mass_removed": {},
+              "undecided": 0,
+              "undecided_known": true,
+              "source": {
+                "arquivo": "data/originals/palver_102026_15/relatorio.pdf",
+                "url": "https://www.palver.com.br/api/surveys/voting-intention-2026-october-w7/report",
+                "bytes": 40583119,
+                "sha256": "bc5b3c942027a5ed5e0b6870f0963ce7f7637d9ada3a3b7439312404aa901860",
+                "capturado_em": "2026-10-15T21:51:33.680229+00:00",
+                "tipo": "relatorio",
+                "rotulo": "Palver: relatório completo da onda 7",
+                "paginas": {
+                  "metodologia": "12–18",
+                  "perfil_renda": 20,
+                  "2t_topline": 23,
+                  "2t_renda": 24,
+                  "sexo": 24
+                },
+                "conferido_em": "2026-10-15",
+                "nota": "Onda 7: PDF de 107 páginas, perfil ponderado na p. 20, totais na p. 23 e renda/sexo na p. 24, conferidos visualmente. Usam-se 36/41/23 do perfil final arredondado, não as contagens brutas 1.872/2.103/1.025 nem as metas 36,36/41,01/22,63 da p. 16. Votos e perfis arredondados ao inteiro; indecisos 0% é publicação arredondada, não prova de ausência absoluta. O explorador consultado ainda terminava na onda 6. Método v3: PNADC 2025, 1ª entrevista, e voto declarado no 1º turno de 2026 por região nos pesos, além de voto de 2022 e filiação partidária. A mudança de calibração impede interpretar a diferença ante a onda 6 como evolução pura do voto. Ficha técnica pp. 14, 16 e 20 confirma BR-08028/2026 e campo 10–13/10; o release contém códigos divergentes (BR-00198 e BR-09028), preservados no arquivo.",
+                "pdf": "data/originals/palver_102026_15/relatorio.pdf",
+                "total_paginas": 107,
+                "status": "Íntegra atual conferida; perfil ponderado e cruzamentos arredondados."
+              },
+              "publicado": {
+                "flavio": 50.505050505050505,
+                "lula": 49.494949494949495
+              },
+              "pnad": {
+                "flavio": 50.533789857487704,
+                "lula": 49.4662101425123
+              },
+              "modelo": {
+                "flavio": 51.75782648950336,
+                "lula": 48.24217351049665
+              },
+              "allocated_undecided": {
+                "flavio": 0.0,
+                "lula": 0.0
+              },
+              "rates": {
+                "flavio": 0.8361992574287401,
+                "lula": 0.7962213991300896
+              },
+              "others_template_candidates": [],
+              "proxy_candidates": []
+            },
+            {
               "id": "poderdata_2026-10-12",
               "instituto": "PoderData",
               "divulgacao": "2026-10-13",
@@ -7057,36 +7410,43 @@
             {
               "without": "Gerp",
               "valid": {
-                "lula": 46.684167515132934,
-                "flavio": 53.315832484867066
+                "lula": 46.995768714205674,
+                "flavio": 53.00423128579432
               }
             },
             {
               "without": "Ipespe",
               "valid": {
-                "lula": 45.869791810029376,
-                "flavio": 54.13020818997062
+                "lula": 46.34426815012283,
+                "flavio": 53.65573184987716
               }
             },
             {
               "without": "Nexus",
               "valid": {
-                "lula": 45.681858329177395,
-                "flavio": 54.3181416708226
+                "lula": 46.19392136544125,
+                "flavio": 53.806078634558745
+              }
+            },
+            {
+              "without": "Palver",
+              "valid": {
+                "lula": 45.77151511157553,
+                "flavio": 54.228484888424454
               }
             },
             {
               "without": "PoderData",
               "valid": {
-                "lula": 45.48082893076421,
-                "flavio": 54.519171069235774
+                "lula": 46.0330978467107,
+                "flavio": 53.96690215328929
               }
             },
             {
               "without": "Quaest",
               "valid": {
-                "lula": 45.14092897277375,
-                "flavio": 54.859071027226236
+                "lula": 45.76117788031833,
+                "flavio": 54.238822119681664
               }
             }
           ],
@@ -7123,7 +7483,7 @@
   },
   "sources_sha256": {
     "nexus_btg_28092026_data.json": "99313b48fee54545d99de437946cc52cfce49be36c7587c41909cf9f192cc181",
-    "reponderacao_pnad.json": "b75da8098e38c4ed0d884a78e55d5bba117afb53346150a1e575f11cc91992c7",
+    "reponderacao_pnad.json": "22071890375ec302d2c04348253f5742df93c4f0836e48b3c3cfb2dfdd302bda",
     "analysis/apuracao_2026/dados/pesquisas_vs_urna.json": "0f4391d21352041fc6fbf994472d65738ebfe8e04a93ba61e96c0be16a22c7c4",
     "analysis/apuracao_2026/dados/presidente.json": "0bb01ddb79108500a55987b5be1fc437f38ef5f88509ec846a00df8dd7853788"
   }

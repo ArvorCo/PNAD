@@ -9,10 +9,14 @@ AUDIT = ROOT / "docs/assets/reponderacao_20260921.json"
 HISTORY = ROOT / "docs/assets/palver_explorer_historico.json"
 
 
-def history_polls():
+def history_polls(data=None):
     polls = json.loads(HISTORY.read_text())["pesquisas"]
     known = {p["id"] for p in polls}
-    current = json.loads((ROOT / "docs/assets/reponderacao_pnad.json").read_text())
+    current = (
+        data
+        if data is not None
+        else json.loads((ROOT / "docs/assets/reponderacao_pnad.json").read_text())
+    )
     for poll in current["pesquisas"]:
         if poll["instituto"] != "Palver" or poll["id"] in known:
             continue
@@ -27,11 +31,14 @@ def history_polls():
                 "primeiro_turno_com_marcal": False,
             }
         )
+    reference = current.get("referencia")
+    if reference:
+        polls = [p for p in polls if p["divulgacao"] <= reference]
     return sorted(polls, key=lambda p: (p["campo"]["fim"], p["id"]))
 
 
-def history_count():
-    polls = history_polls()
+def history_count(data=None):
+    polls = history_polls(data)
     waves = len({(p["campo"]["inicio"], p["campo"]["fim"]) for p in polls})
     return f"{waves} ondas · {len(polls)} versões"
 
@@ -50,12 +57,15 @@ def audit_html(data, table):
     url = "https://www.palver.com/api/surveys/voting-intention-2026-september-w3/report"
     github = audit["palver"]["github"]
     score_rows = []
-    for wave in history_polls():
+    for wave in history_polls(data):
         cells = [
             f'<a href="{escape(wave["fonte"]["url"], quote=True)}">{escape(wave["rotulo_historico"])}</a>'
         ]
         for turn in ["1t", "2t"]:
-            result = wave["turnos"][turn]
+            result = wave["turnos"].get(turn)
+            if result is None:
+                cells.extend(["—", "—"])
+                continue
             for values in [
                 result["publicado"],
                 result["cenarios"]["pessoas16_efetivo"]["ajustado"],
@@ -67,7 +77,7 @@ def audit_html(data, table):
             else (
                 "Só 2º turno (1º com Marçal)"
                 if wave["primeiro_turno_com_marcal"]
-                else "1º e 2º turnos"
+                else ("1º e 2º turnos" if "1t" in wave["turnos"] else "Só 2º turno")
             )
         )
         score_rows.append(cells)
@@ -85,7 +95,7 @@ def audit_html(data, table):
     return (
         '<section id="palver-pesos" class="chapter"><div class="wrap">'
         '<p class="eyebrow">Palver · auditoria de calibração · 24/09/2026</p>'
-        f"<h2>{history_count()}.</h2>"
+        f"<h2>{history_count(data)}.</h2>"
         '<p>O <a href="https://www.palver.com.br/survey/explore">Explorer da Palver</a> '
         "disponibiliza percentuais sem arredondamento, contagens por célula e tamanho efetivo. "
         "Este arquivo compara agosto, setembro original, setembro revisada e as ondas 3 e 4. "

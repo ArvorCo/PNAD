@@ -159,6 +159,12 @@
 - Campo 10–13/10, n = 2.154, BR-08729/2026, publicado Flávio 46 × Lula 44. Cruzamentos atuais por renda conferidos no HTML salvo e na API arquivada. Cotas registradas 31/42/27 são hipótese de pesos, não perfil final: sensibilidade PNAD 45,398 × 44,531, incluída nas duas centrais com essa condição explícita.
 - Após rever a ficha, regenerar dossiê, `reponderacao-pnad.py calcular --hoje AAAA-MM-DD`, `reponderacao-build.py`, cards Quaest/centrais/hub e sitemap. Atualizar textos e metadados da home à mão; preservar snapshots publicados e o arquivo do 1º turno. Renderização histórica não pode persistir dados; `--refresh-archive` é somente para revisão explícita do arquivo.
 
+## Rodada nacional de 15/10/2026
+- `python3 scripts/pesquisas-151026-renda.py`, `reponderacao-pnad.py calcular --hoje 2026-10-15` e `reponderacao-build.py` integram Datafolha, Palver e Indexa. Fontes arquivadas com hashes em `data/originals/*_102026_15/`; inventário em `analysis/reponderacao/auditoria_20261015.json`. Preservar arquivo do 1º turno e snapshots publicados.
+- Datafolha, BR-00466/2026: Folha de 15/10 informa campo efetivo 13–14/10, 47/45/6/2 e válidos 51/49. G1 consultado ainda devolvia 08/10; não reutilizar seus cruzamentos como atuais. A matéria só informa duas faixas de renda. Entra pelo publicado na Projeção até obter cruzamento completo e perfil atual.
+- Palver onda 7: PDF pp. 20/23/24, perfil final ponderado arredondado 36/41/23, voto F/L por renda 48/51, 52/48, 52/48; 50/49/1/0 no total. Zero de indecisos é arredondado. Método v3 usa PNADC 2025 visita 1 e voto declarado no 1T/2026 por região, quebrando comparação direta com onda 6. Relatório confirma BR-08028/2026, campo 10–13/10; release tem códigos errados. Explorador ainda terminava na onda 6.
+- Indexa/Broadcast: campo 13–14/10, BR-04629/2026, 44/42/4/2 e `nao_vai_votar=8`. Voto por renda existe, perfil ponderado não localizado: sem ajuste PNAD. Guardar não votantes separados na ficha; motor agrega em não escolha, sem substituir comparecimento. Atlas conferida no catálogo oficial: última nacional continua 09/10, sem nova onda duplicada.
+
 ## Coding Style & Naming
 - Prefer Python (PEP 8, 4 spaces).
 - Script naming: `kebab-case` (new files), keep existing names for compatibility.

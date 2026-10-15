@@ -20,7 +20,17 @@ from svgkit import br
 def _painel_instituto(nome: str, turno: str) -> str:
     if nome == "Palver":
         palver_view = importlib.import_module("reponderacao-palver-view")
-        historico = palver_view.history_polls()
+        contexto = {"pesquisas": PESQUISAS}
+        if turno == "1t":
+            contexto["referencia"] = "2026-10-04"
+        historico = palver_view.history_polls(contexto)
+        nota_v3 = (
+            "A onda de 15/10 muda a calibração para PNAD 2025 e inclui voto declarado "
+            "no 1º turno de 2026; a variação também reflete essa mudança de método. "
+            '<a href="#rodada-1510">Conferência da onda 7</a>. '
+            if turno == "2t" and any(p["id"] == "palver_2026-10-13" for p in historico)
+            else ""
+        )
         return (
             f'<article class="panel reveal" data-instituto="Palver" data-turno="{turno}">'
             f"<h3>Palver <small>{TURNOS[turno]}</small></h3>"
@@ -32,13 +42,14 @@ def _painel_instituto(nome: str, turno: str) -> str:
                 if turno == "1t"
                 else ""
             )
-            + f'<p class="note"><b>{palver_view.history_count()}.</b> A onda 2 original (v1) foi substituída '
+            + f'<p class="note"><b>{palver_view.history_count(contexto)}.</b> A onda 2 original (v1) foi substituída '
             "pela revisada (v2). Todos os pontos estão visíveis; a v1 fica fora das médias. "
             + (
                 "Os dois cenários de 07/09 incluem Marçal e também ficam fora da média do 1º turno. "
                 if turno == "1t"
                 else ""
             )
+            + nota_v3
             + "Vazado é publicado, cheio é reponderado. "
             '<a href="reponderacao_pnad_1o_turno_2026.html#palver-pesos">Fontes, valores e critérios</a>.</p>'
             + ("</details>" if turno == "1t" else "")
@@ -66,7 +77,7 @@ def _painel_instituto(nome: str, turno: str) -> str:
         resultado = onda["turnos"][turno]
         pub, adj = resultado["publicado"], ajustado(resultado)
         resumo = (
-            f'<p class="note"><b>Última onda · campo até {curto(onda["campo"]["fim"])}'
+            f'<p class="note"><b>Última onda com renda · campo até {curto(onda["campo"]["fim"])}'
             f" · divulgação {curto(onda['divulgacao'])}.</b><br>"
             f"Flávio × Lula: publicado <b>{br(pub['flavio'], 0)} × {br(pub['lula'], 0)}</b>; "
             f"reponderado <b>{br(adj['flavio'], 2)} × {br(adj['lula'], 2)}</b> (%).</p>"

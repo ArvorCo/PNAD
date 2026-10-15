@@ -114,7 +114,7 @@ def current_coverage(ns):
         )
         if not all(k in pub for k in ("flavio", "lula")):
             continue
-        status = "Com renda" if "2t" in p.get("turnos", {}) else "Sem voto por renda"
+        status = "Com renda" if "2t" in p.get("turnos", {}) else "Sem ajuste de renda"
         if p.get("renda", {}).get("perfil_tipo") == "cota_registrada":
             status += " · cotas registradas, ajuste provisório"
         if p["campo"]["inicio"] <= "2026-10-04":
@@ -189,10 +189,37 @@ def current_coverage(ns):
             "Entra pelo publicado na Projeção; fora da Média por renda. "
             '<a href="quaest_14102026.html">Ler o dossiê preliminar, a série e as pendências</a>.</p></aside>'
         )
+    update_note = ""
+    if all(
+        latest.get(house, {}).get("id") == ident
+        for house, ident in {
+            "Palver": "palver_2026-10-13",
+            "Datafolha": "datafolha_2026-10-14",
+            "Indexa/Broadcast": "indexa_2026-10-14",
+        }.items()
+    ):
+        update_note = (
+            '<aside class="callout" id="rodada-1510"><h3>15/10: Datafolha, Palver e Indexa</h3>'
+            "<p><b>Datafolha: 47 × 45.</b> A nova onda entra pelo publicado na Projeção. "
+            "O painel do G1 consultado ainda devolvia 08/10; os cruzamentos antigos não "
+            "foram usados na pesquisa nova. Faltam renda completa e perfil atual para o ajuste.</p>"
+            "<p><b>Palver: 50 × 49.</b> Perfil ponderado e voto por renda conferidos no PDF "
+            "atual; entra nas duas centrais. O método v3 passa a usar PNAD 2025 e voto "
+            "declarado no primeiro turno de 2026. A diferença ante a onda anterior "
+            "mistura mudança de método e de preferência.</p>"
+            "<p><b>Indexa/Broadcast: 44 × 42.</b> Entra pelo publicado na Projeção. "
+            "Há voto por renda, mas faltam os pesos dos grupos. Os 8% que dizem não votar "
+            "são resposta da pesquisa, não previsão de abstenção.</p>"
+            '<p class="note">Totais na ordem Flávio × Lula. Na <a href="https://www.atlasintel.org/polls/exclusive-polls">AtlasIntel</a>, '
+            "a última nacional localizada continua sendo 09/10; não há nova onda incorporada. "
+            '<a href="reponderacao_pnad_log.html#atualizacao">Conferir fontes e pendências</a> · '
+            '<a href="assets/reponderacao_20261015.json">Inventário de 15/10</a>.</p></aside>'
+        )
     return (
         '<section id="cobertura-atual" class="rs-documentary"><div class="wrap"><p class="eyebrow">Cobertura da disputa</p>'
         '<h2>O que entra na conta.</h2><p class="note">A Média exige cruzamento de renda e campo posterior a 04/10. '
         "A Projeção inclui também o publicado das casas sem renda conferida, com cobertura e pesos explícitos. Placar na ordem Flávio × Lula.</p>"
+        + update_note
         + quaest_note
         + vox_note
         + '<details class="rs-wave-summary"><summary>Última publicação de cada instituto e limites de inclusão</summary>'
@@ -299,7 +326,7 @@ def archive_html(ns):
             str(soup),
             ns["ch_primeiro_turno"](closed),
             importlib.import_module("reponderacao-palver-view").audit_html(
-                ns["D"], ns["tabela"]
+                closed, ns["tabela"]
             ),
             ns["ch_institutos"]("1t"),
             importlib.import_module("reponderacao-metodos").section_html(),

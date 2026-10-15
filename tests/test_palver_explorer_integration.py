@@ -54,8 +54,14 @@ def test_institute_panels_show_every_version_in_both_turns():
     )
     assert len(panels) == 2
     data = json.loads((ASSETS / "reponderacao_pnad.json").read_text())
-    waves = [p for p in data["pesquisas"] if p["instituto"] == "Palver"]
     for panel in panels:
+        turn = panel["data-turno"]
+        waves = [
+            p
+            for p in data["pesquisas"]
+            if p["instituto"] == "Palver"
+            and (turn == "2t" or p["divulgacao"] <= "2026-10-04")
+        ]
         assert f"{len(waves)} ondas · {len(waves) + 1} versões" in panel.get_text()
         # The 1T panel starts with compatible valid votes. Original versions
         # remain in its documentary details, in total shares.
@@ -66,9 +72,9 @@ def test_institute_panels_show_every_version_in_both_turns():
         )
         # Every version is plotted; with more than six the axis labels every other one.
         assert len(svg.select("g.hit")) == 2 * (len(waves) + 1)
-        svg_text = svg.get_text()
-        for label in ["09/08", "07/09 v2", "23/09", "03/10"]:
-            assert label in svg_text
+        # Axis labels are thinned as the series grows; inspect the actual points.
+        keys = {point["data-k"] for point in svg.select("g.hit")}
+        assert {f"{wave['id']}|{turn}" for wave in waves} <= keys
         assert "fora das médias" in panel.get_text()
     assert "com Marçal" in panels[1].get_text()
     chapter = archive.select_one("#palver-pesos").get_text()
