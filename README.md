@@ -563,6 +563,12 @@ The complete 152-page PDF is preserved unchanged in
 crosstabs and an indexed reader (`?pagina=19#documentos`). Recreate the 152 WebP
 pages with `python3 scripts/quaest-141026-integra.py --render-pages`; ordinary builds
 use archived renderings. Provenance, scope and limits: `analysis/quaest_141026/integra/CONTRATO.md`.
+The aggregation critique (`#agregacao`) links TSE, International IDEA,
+ESOMAR/WAPOR 2026, AAPOR and Pew. Its source registry and fictitious mixture
+counterexample live in `integra/referencias.json`; rendering is in
+`quaest_141026/integra/references.py`. Archived reference PDFs have SHA-256
+and local public copies. Keep professional disclosure rules distinct from
+Arvor recommendations; the combined category does not identify abstainers.
 The mixed BN/absent group is not an identified abstainer sample; the 9% response
 is not a turnout forecast, and no published likely-voter rule was located.
 Neither the illustrative interest filter nor transfer scenarios enter the central models.

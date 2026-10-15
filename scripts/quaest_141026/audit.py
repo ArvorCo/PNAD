@@ -141,6 +141,7 @@ def write():
     folder = ROOT / "analysis/quaest_141026"
     folder.mkdir(exist_ok=True)
     sources = [p for p in SOURCE.iterdir() if p.is_file() and p.name != "fonte.json"]
+    sources += sorted((SOURCE / "referencias").glob("*.pdf"))
     sources += [ROOT / "docs/fontes/quaest_14102026_registro.txt", POLL]
     sources += sorted((ROOT / "analysis/quaest_141026/integra").rglob("*.json"))
     sources += sorted(p for p in G1_PUBLIC.iterdir() if p.is_file())

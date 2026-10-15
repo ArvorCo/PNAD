@@ -1,0 +1,123 @@
+{
+  "consulta": "2026-10-15",
+  "fontes": [
+    {
+      "id": "tse",
+      "rotulo": "TSE · Informações técnicas sobre a divulgação de resultados (2024)",
+      "url": "https://www.tse.jus.br/eleicoes/informacoes-tecnicas-sobre-a-divulgacao-de-resultados-2024",
+      "natureza": "definição operacional oficial",
+      "localizador": "Perguntas frequentes 1–3: eleitores, comparecimento, abstenção e votos",
+      "uso": "Distingue ausência, comparecimento e categorias de voto; alerta para eleitores de urnas não instaladas ou não apuradas.",
+      "limite": "Documentação de resultados de 2024, usada para conceitos, não para números de 2026 ou regras de pesquisas."
+    },
+    {
+      "id": "idea",
+      "rotulo": "International IDEA · Voter Turnout Database Codebook (2018)",
+      "url": "https://www.idea.int/sites/default/files/publications/voter-turnout-database-codebook.pdf",
+      "natureza": "definição estatística internacional",
+      "localizador": "Páginas 9–10: Voter turnout, Total vote e Invalid votes",
+      "uso": "Comparecimento inclui brancos e inválidos; percentuais de presença e de votos inválidos usam denominadores diferentes.",
+      "limite": "O código de variáveis não regula a apresentação de pesquisas eleitorais. DOI 10.31752/idea.2018.69; © 2018 International IDEA; CC BY-NC-SA 3.0.",
+      "arquivo": "data/originals/quaest_102026_14/referencias/idea_comparecimento_2018.pdf",
+      "sha256": "c2d9ba2b6b03d0f668e54dc66bec7a0c4ed27c5b4f97390be0af7d68d69b6d5f",
+      "bytes": 849994,
+      "arquivo_publico": "fontes/quaest_14102026/referencias/idea_comparecimento_2018.pdf"
+    },
+    {
+      "id": "esomar_wapor",
+      "rotulo": "ESOMAR/WAPOR · Guideline on Opinion Polls and Published Surveys (agosto de 2026)",
+      "url": "https://wapor.org/wp-content/uploads/2026.-ESOMAR-WAPOR-guide.pdf",
+      "natureza": "norma profissional de divulgação",
+      "localizador": "§6.5, pp. 12–13; §7.1(9), p. 16",
+      "uso": "Requer divulgar os que dizem que não votarão, documentar redistribuições e explicitar o universo e as variáveis de eleitor provável.",
+      "limite": "Não é lei brasileira nem parecer sobre a Quaest; não prescreve três linhas chamadas branco, nulo e abstenção. © 2026 Esomar and WAPOR.",
+      "arquivo": "data/originals/quaest_102026_14/referencias/esomar_wapor_2026.pdf",
+      "sha256": "fe7c2ca8f69e5c17b7441f5f510727ba1f67e270ccffd6a25ee34bbda6ee9cff",
+      "bytes": 4136308,
+      "arquivo_publico": "fontes/quaest_14102026/referencias/esomar_wapor_2026.pdf"
+    },
+    {
+      "id": "aapor",
+      "rotulo": "AAPOR · Disclosure Standards (texto identificado como abril de 2021)",
+      "url": "https://aapor.org/standards-and-ethics/disclosure-standards/",
+      "natureza": "norma profissional de transparência",
+      "localizador": "§III.A; §III.B.6; FAQ sobre métodos proprietários",
+      "uso": "Formulação, opções, universo e ponderação; bases não ponderadas dos subgrupos sob solicitação.",
+      "limite": "A página consultada identifica a edição de 2021; não se infere descumprimento de pedido não realizado. A FAQ admite descrição geral de métodos proprietários, sem exigir revelar algoritmo integral."
+    },
+    {
+      "id": "pew",
+      "rotulo": "Keeter e Igielnik · Can Likely Voter Models Be Improved? (Pew, 2016)",
+      "url": "https://www.pewresearch.org/methods/2016/01/07/can-likely-voter-models-be-improved/",
+      "natureza": "evidência empírica com presença validada",
+      "localizador": "Introdução e desenho: eleições legislativas dos EUA de 2014",
+      "uso": "Compara intenção de comparecer e modelos de eleitor provável com presença registrada.",
+      "limite": "Estudo de uma eleição americana; não valida modelo, taxa de abstenção ou direção de viés no Brasil."
+    }
+  ],
+  "exemplo_agregacao": {
+    "tipo": "contraprova fictícia, não estimativa",
+    "denominador": "100 pessoas hipotéticas do grupo misto em cada exemplo; 50 ausentes e 50 brancos/nulos",
+    "ordem_respostas": [
+      "Flávio",
+      "Lula",
+      "Indecisos",
+      "Branco/nulo/não votar"
+    ],
+    "total_por_resposta": [
+      38,
+      43,
+      2,
+      17
+    ],
+    "cenarios": [
+      {
+        "nome": "Exemplo A",
+        "grupos": [
+          {
+            "grupo": "Ausentes",
+            "pessoas_por_resposta": [
+              28,
+              15,
+              1,
+              6
+            ]
+          },
+          {
+            "grupo": "Brancos/nulos",
+            "pessoas_por_resposta": [
+              10,
+              28,
+              1,
+              11
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "Exemplo B",
+        "grupos": [
+          {
+            "grupo": "Ausentes",
+            "pessoas_por_resposta": [
+              10,
+              28,
+              1,
+              11
+            ]
+          },
+          {
+            "grupo": "Brancos/nulos",
+            "pessoas_por_resposta": [
+              28,
+              15,
+              1,
+              6
+            ]
+          }
+        ]
+      }
+    ],
+    "limite": "A composição 50/50 é inventada. Não usar o perfil oficial da urna como se fosse composição identificada dos 22% na amostra. Não aplicar o exemplo às centrais."
+  }
+}

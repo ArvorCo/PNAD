@@ -88,6 +88,34 @@ probabilidade de vitória ou série de pergunta literalmente constante.
 
 ## Outros limites editoriais
 
+### Agregação de brancos, nulos e ausentes
+
+Referências em `referencias.json`, consultadas em 15/10/2026. PDFs IDEA e
+ESOMAR/WAPOR arquivados sem alteração em `data/originals/quaest_102026_14/referencias/`,
+com SHA-256 e cópia pública. Páginas 9–10 do IDEA e 12–13/16 do guia de 2026
+conferidas em texto e renderização. TSE distingue presença/ausência e votos;
+IDEA inclui inválidos no comparecimento e explicita denominadores.
+
+O guia ESOMAR/WAPOR **de agosto de 2026**, §6.5(6), p. 13, exige publicar
+o percentual que declara não votar e documentar redistribuições de respostas;
+§7.1(9), p. 16, repete a divulgação daquele percentual. A linha mista não o
+identifica. Não atribuir ao guia exigência literal de três linhas nem tratá-lo
+como lei ou parecer sobre a Quaest. Separar branco de nulo é recomendação Arvor.
+AAPOR é citada na versão de abril de 2021 identificada na página consultada;
+bases de subgrupos são informação mediante solicitação, não obrigatoriamente
+impressa em cada lâmina. Sua FAQ admite descrição geral de métodos proprietários.
+Pew (2016, eleição americana de 2014) sustenta distinguir intenção e presença,
+sem transportar taxas, vieses partidários ou validação para o Brasil.
+
+A p. 19 pergunta primeiro se compareceu e depois a escolha. A perda demonstrada
+é de identificação **na publicação**, não prova de falta de coleta. O exemplo
+fictício tem 100 pessoas, 50 ausentes e 50 brancos/nulos em cada cenário. Ambos
+reproduzem 38/43/2/17 com preferências opostas entre ausentes. Não representa
+composição da amostra, urna, provável presença ou cenário para as centrais.
+Os testes fecham cada linha e coluna e conferem as cópias dos documentos.
+
+### Demais temas
+
 - Potencial pergunta “poderia votar”, mas legenda usa “votaria”; não é intenção
   efetiva nem teto validado. Rejeição é independente, não partição de 100%.
 - Medo compara Lula à família Bolsonaro; motivos têm bases condicionais distintas.

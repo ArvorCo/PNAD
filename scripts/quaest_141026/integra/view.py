@@ -5,6 +5,7 @@ from html import escape as esc
 from dossies_2t_2026.view import callout, details, fmt, note, section, table
 
 from ..charts import frame, pairs
+from .references import aggregation, turnout_reference
 
 COLORS = ["#386ba6", "#a74247", "#b09a5b", "#818b78", "#9a9c96", "#53695f"]
 
@@ -77,6 +78,7 @@ def transfers(data):
         + f'<p>Tomando os números arredondados literalmente, 22% × 43% = <b>{fmt(tr["contribuicoes_total_pp"]["lula"],2)} pontos do total</b> em intenção de Lula; 22% × 38% = <b>{fmt(tr["contribuicoes_total_pp"]["flavio"],2)}</b> em Flávio. O saldo deste grupo é {fmt(tr["vantagem_lula_total_pp"],2)} ponto a favor de Lula no total. Os 81% que declaram um dos dois nomes não têm comparecimento futuro observado.</p>'
         + "<h3>A matriz que o relatório não entrega</h3>"
         + "<p>A página 19 mostra antigos eleitores de três candidatos, “outros” e o grupo misto. Faltam as linhas de quem lembra voto em Lula ou Flávio, além do NS/NR sobre o passado. Não é possível conferir retenção, trocas entre finalistas e fechamento do novo placar com essa matriz parcial. As bases de cada linha também não são publicadas.</p>"
+        + aggregation()
         + "<h3>Uma checagem que contraria a acusação fácil</h3>"
         + pairs(
             "Memória do voto × urna: mesmo denominador, o eleitorado",
@@ -127,6 +129,7 @@ def likely_voter(data):
             "O número junta branco, nulo e “não vai votar”. Não separa os que vão comparecer e invalidar o voto dos que pretendem faltar. Mesmo quem escolhe um candidato pode se abster. Portanto, nem 9% de ausência nem 91% de presença são estimativas publicadas de comparecimento.",
         )
         + "<p>A abstenção efetiva do primeiro turno foi 20,84% no Brasil, sem exterior. Isso torna indefensável transportar as respostas de intenção diretamente para volumes de votos sem uma hipótese de presença. Mas não demonstra que uma futura abstenção menor seja matematicamente impossível. A crítica verificável é a <b>ausência de uma ponte publicada entre intenção e voto efetivo</b>.</p>"
+        + turnout_reference()
         + distribution(
             "Interesse declarado: a medida que existe no relatório",
             ["Muito", "Pouco", "Nada", "NS/NR"],

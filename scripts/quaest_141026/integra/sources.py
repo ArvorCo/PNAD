@@ -4,6 +4,8 @@ from html import escape as esc
 
 from dossies_2t_2026.view import callout, note, section, table
 
+from .references import bibliography
+
 
 def render(data):
     return section(
@@ -48,6 +50,7 @@ def render(data):
                 ],
             ],
         )
+        + bibliography()
         + "<ul>"
         + "".join("<li>" + esc(item) + "</li>" for item in data["pendencias"])
         + "</ul>"

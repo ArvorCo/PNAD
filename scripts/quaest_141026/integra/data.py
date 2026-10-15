@@ -142,6 +142,7 @@ def build():
 def write():
     data = build()
     PUBLIC.mkdir(parents=True, exist_ok=True)
+    (PUBLIC / "referencias.json").write_bytes((DATA / "referencias.json").read_bytes())
     for theme in data["temas"]:
         (PUBLIC / (theme["id"] + ".json")).write_text(
             json.dumps(theme, ensure_ascii=False, indent=2) + "\n"
