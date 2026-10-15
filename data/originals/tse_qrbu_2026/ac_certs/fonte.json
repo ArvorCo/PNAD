@@ -1,0 +1,37 @@
+{
+  "acesso": "2026-10-15",
+  "situacao": "dpc.acue2020.tse.jus.br (fonte oficial) devolve 403 para qualquer cliente desde pelo menos 15/10/2026; o Wayback tem so a pagina indice de 23/12/2022 (dpc_wayback_20221223.html), sem os .crt.",
+  "procedencia": "PEM copiados do codigo-fonte de dois repositorios independentes (doccaz/urnas-br, docv2/python/lib/mr_util.py, comentario 'obtidos em dpc.acue2020.tse.jus.br'; fernandysson/resultados-eleicoes-2026, tse_bu/lib/mr_util.py). As duas copias de cada AC sao byte a byte identicas.",
+  "prova_de_autenticidade": "Cada AC valida a assinatura (ECDSA P-521 com SHA-512 do tbsCertificate para AC URNA; Ed521 sobre o tbsCertificate cru para AC UE2020/UE2022) dos certificados das urnas publicados pelo TSE nos exemplos oficiais de 2026 (modelos 2013, 2015, 2020, 2022) e do certificado de hardware da urna UEAO02468149 embutido no arquivo oficial o03220ac0100700090001-vota.vsc do 1o turno. Controle negativo (um byte da assinatura alterado) falha. Uma AC forjada nao produziria essas assinaturas.",
+  "observacao": "AC URNA (emissora dos certificados das urnas 2013/2015) expirou em 18/07/2026; os certificados das urnas emitidos por ela continuam validos ate 2027/2030. A verificacao usa a assinatura, nao a validade da AC.",
+  "arquivos": [
+    {
+      "arquivo": "ac_urna.pem",
+      "sha256": "5ccf7c696458bd643d773e9b5b0385ad209bac2b5b5ee657a5f00c5a1e15e271"
+    },
+    {
+      "arquivo": "ac_ue2020.pem",
+      "sha256": "90fa46d45d93015290631416ce8cfacf78b3d69d37bb3d493c9c537a9b901454"
+    },
+    {
+      "arquivo": "ac_ue2022.pem",
+      "sha256": "ff1d8f27a3d3a3cc24b5dd42515e4975f69628660d814b18091e62a9a1394e29"
+    },
+    {
+      "arquivo": "dpc_wayback_20221223.html",
+      "sha256": "d22c253268e1d3f900af1be0087f6a5adb9e62db77ad69a74ab99e44ff5bea4f"
+    },
+    {
+      "arquivo": "github/fernandysson_mr_util.py",
+      "sha256": "1d9202425868ca82d1df9233a55446d8456e1dbae7d5651bf356df19a9fcbffb"
+    },
+    {
+      "arquivo": "github/doccaz_mr_util.py",
+      "sha256": "d5acc90ca21da7fb2f19f3ec8a5a4572ddb3ad9b7944f4e8f8acffa34f86f8fc"
+    },
+    {
+      "arquivo": "github/fernandysson_verifica_qrcode.py",
+      "sha256": "a32eb222fc4b9dd09436bf7dcc61609bc67465a9f463bf819a28114192145ee9"
+    }
+  ]
+}

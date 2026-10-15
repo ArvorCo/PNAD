@@ -1,0 +1,47 @@
+name: Totalizacao paralela (exportacao publica)
+
+# Le as views publicas do Supabase com a chave publicavel (nenhum segredo), grava os agregados e
+# o CSV de reproducao em docs/assets/totalizacao_dados/ e publica no Pages. Cada commit fixa um
+# snapshot auditavel da cadeia de hashes no historico do git.
+on:
+  schedule:
+    # A cada 10 minutos nos dias do 2o turno e seguintes (UTC); fora disso, so manual.
+    - cron: '*/10 * 25-28 10 *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: totalizacao-exportacao
+  cancel-in-progress: false
+
+jobs:
+  exportar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Exportar agregados e CSV
+        run: python3 scripts/totalizacao-exportar.py
+      - name: Commitar snapshot se houver mudanca
+        id: commit
+        run: |
+          git config user.name "totalizacao-bot"
+          git config user.email "totalizacao-bot@users.noreply.github.com"
+          git add docs/assets/totalizacao_dados
+          if git diff --cached --quiet; then
+            echo "mudou=false" >> "$GITHUB_OUTPUT"
+          else
+            git commit -m "totalizacao: snapshot $(date -u +%Y-%m-%dT%H:%MZ)"
+            git push
+            echo "mudou=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Publicar no Pages
+        if: steps.commit.outputs.mudou == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --ref main

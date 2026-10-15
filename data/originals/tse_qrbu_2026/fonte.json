@@ -1,0 +1,24 @@
+{
+  "acesso": "2026-10-15",
+  "nota": "Baixados com curl e cabecalhos de navegador; a Akamai do TSE recusa curl sem eles (403). Pasta de dados nao confiaveis: nao executar nada daqui.",
+  "arquivos": [
+    {
+      "arquivo": "manual-do-qr-code-no-boletim-de-urna.pdf",
+      "url": "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/arquivos/manual-do-qr-code-no-boletim-de-urna/@@display-file/file/manual-do-qr-code-no-boletim-de-urna.pdf",
+      "sha256": "ffded7303cdb883b11a4640b547afecaf486afc5dcdb6ca532f168c981461790",
+      "descricao": "QR Code no Boletim de Urna: manual para criacao de aplicativo de leitura, TSE 2026 (37 p., PDF criado em 27/08/2026). Formato VRQR 6.0, hash SHA-512 encadeado, assinatura ECDSA P-521 (UE2013/2015) ou EdDSA Ed521 (UE2020/2022) com certificado da urna nos QR QRCE."
+    },
+    {
+      "arquivo": "exemplos-de-boletins-de-urna-com-qr-code.zip",
+      "url": "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/arquivos/exemplos-de-boletins-de-urna-com-qr-code",
+      "sha256": "8b1e28fdaff1d589b26836c27727715df8de71efaf0b0bf0cda49c0380a47bc9",
+      "descricao": "Exemplos oficiais de BU com QR Code (1o turno por modelo de urna, RED, SA; 2o turno presidente, governador, consulta, prefeito). PDF + imgbu.dat (ASN.1)."
+    },
+    {
+      "arquivo": "s99999br-av.js",
+      "url": "https://qrcodenobu.tse.jus.br/json-bu/s99999br-av.js",
+      "sha256": "d8c0ba7c6fa0e695b33fdc4804946f6c64a7a99855edd582da1884e38d34595b",
+      "descricao": "Chave publica Ed25519 (SPKI hex) que assina os arquivos de complemento de dados (nomes de candidatos, cargos, eleicoes). Nao assina o QR do BU."
+    }
+  ]
+}

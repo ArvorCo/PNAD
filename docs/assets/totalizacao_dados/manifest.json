@@ -1,0 +1,64 @@
+{
+ "gerado_em": "2026-10-15T09:09:53+00:00",
+ "cadeia": {
+  "bus": 2,
+  "cadeia_integra": true,
+  "quebras": [],
+  "ultimo_elo": "0bfe7297a321b46ae6e897852af576bad2931bafbfb095031bc9340096975e7b"
+ },
+ "arquivos": {
+  "bus.csv": {
+   "sha256": "a2be235cbd682aafc5fedde0afb4cd5d5b1f8e35815c052c2983dacbd3b3a8c1",
+   "bytes": 6433
+  },
+  "candidatos_2t.json": {
+   "sha256": "4f0ca2bcd5087e6ca2bbc521a85c5a185f531594c9b4d5cda874fb6eb103b7bf",
+   "bytes": 2624
+  },
+  "cargos.csv": {
+   "sha256": "59d6ed02753c5f3e3369cdb65febedab52323f17506aaf91b5a36ec56cd1b38d",
+   "bytes": 196
+  },
+  "cobertura_muni.json": {
+   "sha256": "67483827a3fcded1b999291295292e0f202ef1f61406523f858eab63a9466c78",
+   "bytes": 785820
+  },
+  "cobertura_uf.json": {
+   "sha256": "0a339406ec08569435b7e8bdef9c59a7f0279589833c366998e243d8d23182d1",
+   "bytes": 4344
+  },
+  "conflitos.json": {
+   "sha256": "66fa475b30d3d2c5120789e88925aed33fe2acd2049ea3cc980c8a80339766a6",
+   "bytes": 99
+  },
+  "envios.csv": {
+   "sha256": "e6468900c574b20c03cc2eaa4734e1546297e360bffbf7bec6223024ca0ac315",
+   "bytes": 503
+  },
+  "estatisticas.json": {
+   "sha256": "a514b20bf5f83db3168315729b2c4f75ef8389429f9c386857b07b863eb5a53c",
+   "bytes": 335
+  },
+  "resumo_cargo_uf.json": {
+   "sha256": "66fa475b30d3d2c5120789e88925aed33fe2acd2049ea3cc980c8a80339766a6",
+   "bytes": 99
+  },
+  "totais_br.json": {
+   "sha256": "66fa475b30d3d2c5120789e88925aed33fe2acd2049ea3cc980c8a80339766a6",
+   "bytes": 99
+  },
+  "totais_muni.json": {
+   "sha256": "66fa475b30d3d2c5120789e88925aed33fe2acd2049ea3cc980c8a80339766a6",
+   "bytes": 99
+  },
+  "totais_uf.json": {
+   "sha256": "66fa475b30d3d2c5120789e88925aed33fe2acd2049ea3cc980c8a80339766a6",
+   "bytes": 99
+  },
+  "votos.csv": {
+   "sha256": "15ac91229e0823d983b6ff43aaa4b908c2bf4eea27cbb2f5496bb60f134bdc3e",
+   "bytes": 321
+  }
+ },
+ "como_reproduzir": "Some votos.csv por candidato dentro dos BUs de bus.csv cuja secao tem um unico hash_final e fase O; reverifique cada BU com totalizacao/ (lerBoletim) a partir de conteudo, assi e cert_hex."
+}

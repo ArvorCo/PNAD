@@ -1,0 +1,138 @@
+<!doctype html>
+<!--
+  Painel da totalização paralela por QR do BU. Página ESCRITA À MÃO, não gerada por script.
+  Edite este arquivo, assets/totalizacao_painel/painel.js e painel.css diretamente.
+  Todo número vem dos JSON de assets/totalizacao_dados/ (scripts/totalizacao-exportar.py)
+  ou, no botão "Atualizar agora", das views públicas do PostgREST. Nenhum número é digitado aqui.
+-->
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-ZPYEE8P9YC"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ZPYEE8P9YC');</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Totalização paralela do 2º turno: painel do BU | Arvor</title>
+<meta name="description" content="Soma dos boletins de urna recebidos por QR code no 2º turno: cobertura por UF, placar em votos nominais, seções em conflito e cadeia de hashes. Soma dos BUs recebidos, não projeção.">
+<link rel="canonical" href="https://brasil.arvor.co/totalizacao_painel.html">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0d2238">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Arvor Intelligence">
+<meta property="og:title" content="Totalização paralela do 2º turno">
+<meta property="og:description" content="Soma dos BUs recebidos por QR code, seção por seção, com cobertura, conflitos e hashes públicos. Não é projeção.">
+<meta property="og:url" content="https://brasil.arvor.co/totalizacao_painel.html">
+<meta property="og:image" content="https://brasil.arvor.co/img/og/totalizacao_painel.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@leonardodias">
+<meta name="twitter:title" content="Totalização paralela do 2º turno">
+<meta name="twitter:description" content="Soma dos BUs recebidos por QR code, com cobertura, conflitos e hashes públicos. Não é projeção.">
+<meta name="twitter:image" content="https://brasil.arvor.co/img/og/totalizacao_painel.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,500&amp;family=IBM+Plex+Mono:wght@400;500;700&amp;family=IBM+Plex+Sans+Condensed:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/totalizacao_painel/painel.css">
+<script>document.documentElement.classList.add('js')</script>
+<script defer src="assets/totalizacao_painel/painel.js"></script>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="brand"><a href="index.html"><img src="img/arvor_logo.png" alt="" width="26" height="26">Arvor Intelligence · Utilidade pública</a></div>
+    <p class="eyebrow">Painel · 2º turno de 25/10/2026</p>
+    <h1>Totalização paralela do 2º turno</h1>
+    <p class="cobertura" id="cobertura"><span class="semjs">Recebemos o BU de algumas seções. Os números pedem JavaScript.</span></p>
+    <p class="meta" id="meta" aria-live="polite"></p>
+  </div>
+</header>
+
+<main id="conteudo" class="wrap">
+  <noscript><p class="aviso erro"><strong>JavaScript desligado</strong>Os números deste painel pedem JavaScript. Os arquivos de dados continuam abertos na seção Integridade, no fim da página.</p></noscript>
+  <div id="avisos" class="avisos" role="status"></div>
+
+  <section id="placar" aria-labelledby="t-placar">
+    <h2 id="t-placar">Placar em votos nominais</h2>
+    <div id="placar-corpo"><p class="vazio semjs">O placar pede JavaScript.</p></div>
+  </section>
+
+  <section id="limites" aria-labelledby="t-limites">
+    <div class="caixa">
+      <h2 id="t-limites">O que esta conta prova e o que não prova</h2>
+      <div class="duas">
+        <div>
+          <h3>Prova</h3>
+          <p>Prova transmissão e soma. Cada voto vem de um BU impresso na seção, lido por QR code, publicado com hash e somado aqui. Quem quiser confere os três degraus: o BU impresso, o BU publicado e a totalização.</p>
+        </div>
+        <div>
+          <h3>Não prova</h3>
+          <p>Não prova o que ocorre dentro da urna. A amostra de seções é a de quem enviou, não é aleatória. O total parcial pende para onde há fiscais, e não para o país inteiro.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="cobertura-uf" aria-labelledby="t-cob">
+    <h2 id="t-cob">Cobertura por UF</h2>
+    <p class="nota">Clique no cabeçalho para ordenar. As seções em conflito ficam fora da conta.</p>
+    <div id="cob-corpo" class="rola" tabindex="0" role="region" aria-label="Tabela de cobertura por UF"><p class="vazio semjs">A tabela pede JavaScript.</p></div>
+  </section>
+
+  <section id="por-uf" aria-labelledby="t-uf">
+    <h2 id="t-uf">Placar por UF</h2>
+    <h3>Presidente</h3>
+    <div id="uf-pres" class="rola" tabindex="0" role="region" aria-label="Presidente por UF"><p class="vazio semjs">A tabela pede JavaScript.</p></div>
+    <div id="uf-gov-bloco" hidden>
+      <h3>Governador</h3>
+      <p class="nota">Estados com 2º turno para governador. Cada UF mostra os candidatos por número.</p>
+      <div id="uf-gov" class="rola" tabindex="0" role="region" aria-label="Governador por UF"></div>
+    </div>
+  </section>
+
+  <section id="conflitos" aria-labelledby="t-conf">
+    <h2 id="t-conf">Seções em conflito</h2>
+    <p>Conflito é a seção com dois ou mais BUs diferentes. Essas seções ficam fora dos totais até a revisão. Nenhuma versão vence por ordem de chegada.</p>
+    <div id="conf-corpo" class="rola" tabindex="0" role="region" aria-label="Seções em conflito"><p class="vazio semjs">A tabela pede JavaScript.</p></div>
+  </section>
+
+  <section id="integridade" aria-labelledby="t-int">
+    <h2 id="t-int">Integridade</h2>
+    <dl class="ficha" id="int-ficha"><div><dt>Estado</dt><dd>Pede JavaScript.</dd></div></dl>
+    <h3>Arquivos de dados</h3>
+    <p class="nota">Cada arquivo tem o SHA-256 ao lado. Baixe e confira com <code>shasum -a 256 arquivo</code>.</p>
+    <div id="int-arquivos" class="rola" tabindex="0" role="region" aria-label="Arquivos e hashes">
+      <ul class="arquivos">
+        <li><a href="assets/totalizacao_dados/manifest.json">manifest.json</a></li>
+        <li><a href="assets/totalizacao_dados/totais_br.json">totais_br.json</a></li>
+        <li><a href="assets/totalizacao_dados/totais_uf.json">totais_uf.json</a></li>
+        <li><a href="assets/totalizacao_dados/totais_muni.json">totais_muni.json</a></li>
+        <li><a href="assets/totalizacao_dados/resumo_cargo_uf.json">resumo_cargo_uf.json</a></li>
+        <li><a href="assets/totalizacao_dados/cobertura_uf.json">cobertura_uf.json</a></li>
+        <li><a href="assets/totalizacao_dados/cobertura_muni.json">cobertura_muni.json</a></li>
+        <li><a href="assets/totalizacao_dados/conflitos.json">conflitos.json</a></li>
+        <li><a href="assets/totalizacao_dados/estatisticas.json">estatisticas.json</a></li>
+        <li><a href="assets/totalizacao_dados/votos.csv">votos.csv</a></li>
+        <li><a href="assets/totalizacao_dados/bus.csv">bus.csv</a></li>
+        <li><a href="assets/totalizacao_dados/envios.csv">envios.csv</a></li>
+        <li><a href="assets/totalizacao_dados/cargos.csv">cargos.csv</a></li>
+      </ul>
+    </div>
+    <div class="caixa refaca">
+      <h3>Refaça a conta</h3>
+      <p>Baixe <code>votos.csv</code>. Fique com as seções que têm um só hash. Some os votos por candidato. O resultado bate com o placar desta página. O código que gera os arquivos está em <a href="https://github.com/ArvorCo/PNAD/tree/main/totalizacao">github.com/ArvorCo/PNAD, pasta totalizacao/</a>.</p>
+    </div>
+  </section>
+
+  <section id="envio" aria-labelledby="t-envio">
+    <h2 id="t-envio">Participe</h2>
+    <p><a class="botao" href="totalizacao.html">Envie o BU da sua seção</a></p>
+    <p class="nota">Cada BU a mais reduz o viés da amostra. Uma seção sem BU pesa zero na conta.</p>
+  </section>
+</main>
+
+<footer class="rodape"><div class="wrap"><p><a href="index.html">Arvor Intelligence</a> · Fonte: BUs enviados pelo público, TSE (aptos por seção). Soma dos BUs recebidos, não projeção.</p></div></footer>
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!doctype html>
+<!--
+  Totalização paralela. Página ESCRITA À MÃO, não gerada por script.
+  Aplicativo de uma tela em três estados (ler, conferir, enviado):
+  docs/assets/totalizacao/app.js, app.css, config.js e manifest.webmanifest;
+  service worker em docs/totalizacao-sw.js (na raiz para cobrir esta página).
+  Nenhuma imagem sai do aparelho: só o texto dos QR codes do boletim de urna.
+-->
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-ZPYEE8P9YC"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ZPYEE8P9YC');</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Totalização paralela: envie o BU da sua seção | Arvor</title>
+<meta name="description" content="Leia os QR codes do boletim de urna impresso na sua seção e envie para a conta independente da Arvor no 2º turno de 25 de outubro de 2026. Sem login, sem CPF: só o texto dos QR sai do aparelho.">
+<link rel="canonical" href="https://brasil.arvor.co/totalizacao.html">
+<link rel="manifest" href="assets/totalizacao/manifest.webmanifest">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="img/favicon-180.png">
+<meta name="theme-color" content="#0d2238">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Totalização">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Arvor Intelligence">
+<meta property="og:title" content="Totalização paralela: envie o BU da sua seção">
+<meta property="og:description" content="Leia os QR codes do boletim de urna da sua seção e envie para a conta independente. Só o texto dos QR sai do aparelho.">
+<meta property="og:url" content="https://brasil.arvor.co/totalizacao.html">
+<meta property="og:image" content="https://brasil.arvor.co/img/og/totalizacao.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@leonardodias">
+<meta name="twitter:title" content="Totalização paralela: envie o BU da sua seção">
+<meta name="twitter:description" content="Leia os QR codes do boletim de urna da sua seção e envie para a conta independente. Só o texto dos QR sai do aparelho.">
+<meta name="twitter:image" content="https://brasil.arvor.co/img/og/totalizacao.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,700&amp;family=IBM+Plex+Mono:wght@400;700&amp;family=IBM+Plex+Sans+Condensed:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/totalizacao/app.css">
+<script>document.documentElement.classList.add('js')</script>
+<!-- zxing-wasm 3.1.5 (cdn.jsdelivr.net), carregado só quando o navegador não tem BarcodeDetector.
+     O mapa de importação fixa a integridade dos dois módulos ES; o binário .wasm é conferido
+     por SHA-384 em app.js antes de ser instanciado. -->
+<script type="importmap">
+{
+  "integrity": {
+    "https://cdn.jsdelivr.net/npm/zxing-wasm@3.1.5/dist/es/reader/index.js": "sha384-bi8BTdm/BT/rFqISGX/kJlDlD2GnLUDzpJou3tLYpAk5z+PC/IHTJw1rvF05UncP",
+    "https://cdn.jsdelivr.net/npm/zxing-wasm@3.1.5/dist/es/share.js": "sha384-qoYT9Eqp7f/nQBXz+fl4wtzeqRB7Npt+UnD2v5hmR8X/twP2liwCvFfKlbuiR/Cm"
+  }
+}
+</script>
+<script src="assets/totalizacao/config.js"></script>
+<script type="module" src="assets/totalizacao/app.js"></script>
+</head>
+<body>
+<a class="skip" href="#tela-ler">Pular para o leitor</a>
+<div class="app">
+
+<header class="topo">
+  <img src="img/arvor_logo.png" alt="Arvor" width="28" height="28">
+  <h1>Totalização paralela</h1>
+  <button type="button" class="chip-pend" id="chip-pendentes" hidden>0 na fila</button>
+  <button type="button" class="btn-info" id="btn-info" aria-label="Sobre esta conta: o que é, como funciona, regras do dia e privacidade" aria-haspopup="dialog">i</button>
+</header>
+
+<main class="tela" id="tela">
+
+  <section class="estado" id="tela-ler" aria-label="Ler os QR codes do boletim">
+    <div class="visor" id="camera-caixa">
+      <video id="video" playsinline muted autoplay hidden></video>
+      <div class="mira" aria-hidden="true" hidden></div>
+      <ul class="pastilhas" id="partes" aria-label="Partes do boletim" aria-live="polite">
+        <li class="pastilha falta">BU<b>?</b></li><li class="pastilha falta">Cert<b>1/2</b></li><li class="pastilha falta">Cert<b>2/2</b></li>
+      </ul>
+      <div class="pre-camera" id="pre-camera">
+        <div class="icone" id="pre-icone" aria-hidden="true"><svg viewBox="0 0 24 24" width="40" height="40"><path d="M4 7h3l2-2h6l2 2h3v12H4z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="13" r="3.5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div>
+        <button type="button" class="btn btn-prim" id="btn-camera" disabled>Abrir câmera</button>
+        <p id="pre-texto">Aponte para os QR do fim do boletim, um por vez, até o quadro.</p>
+        <p class="sem-js-aviso"><b>O leitor precisa de JavaScript.</b> Sem ele, esta página só mostra as instruções.</p>
+        <noscript><p><b>JavaScript está desligado.</b> Ligue-o para ler os QR e enviar o boletim.</p></noscript>
+      </div>
+      <button type="button" class="btn-icone btn-recomecar" id="btn-recomecar" aria-label="Recomeçar a leitura" title="Recomeçar"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.3-5.7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 4v5h5" fill="none" stroke="currentColor" stroke-width="2"/></svg></button>
+      <button type="button" class="btn-icone btn-lanterna" id="btn-lanterna" aria-pressed="false" aria-label="Lanterna" title="Lanterna" hidden><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M8 3h8v4l-2 3v11H10V10L8 7z" fill="none" stroke="currentColor" stroke-width="2"/></svg></button>
+      <button type="button" class="btn-icone btn-parar" id="btn-parar" aria-label="Fechar a câmera" title="Fechar a câmera" hidden><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.4"/></svg></button>
+      <p class="visor-status" id="leitor-status" aria-live="polite">Nenhum QR lido ainda.</p>
+    </div>
+    <input type="file" id="arquivo" class="visually-hidden" accept="image/*" multiple tabindex="-1" aria-hidden="true">
+    <div class="barra">
+      <button type="button" class="btn btn-sec" id="btn-foto" disabled>Escolher foto</button>
+      <button type="button" class="btn btn-prim" id="btn-conferir" disabled>Conferir</button>
+    </div>
+  </section>
+
+  <section class="estado" id="tela-conferir" aria-label="Conferir com o papel" hidden>
+    <div class="conteudo">
+      <div class="cartao" id="cartao"></div>
+      <p class="linha-aviso"><b>Confira com o papel.</b> Se algo não bater, volte e leia de novo.</p>
+      <details class="texto">
+        <summary>Ver o texto lido dos QR</summary>
+        <pre id="texto-lido">Nenhum QR lido.</pre>
+      </details>
+      <div id="turnstile"></div>
+    </div>
+    <div class="barra">
+      <button type="button" class="btn btn-sec" id="btn-voltar">Voltar</button>
+      <button type="button" class="btn btn-prim" id="btn-enviar" disabled>Enviar</button>
+    </div>
+  </section>
+
+  <section class="estado" id="tela-enviado" aria-label="Resultado do envio" hidden>
+    <div class="conteudo resultado-cheio" id="resultado" aria-live="polite"></div>
+    <div class="barra uma">
+      <button type="button" class="btn btn-prim" id="btn-outro">Ler outro boletim</button>
+    </div>
+  </section>
+
+</main>
+<p class="toast" id="toast" role="status" aria-live="polite"></p>
+
+<dialog class="ficha" id="ficha" open aria-labelledby="ficha-titulo">
+  <div class="ficha-topo">
+    <span class="alca" aria-hidden="true"></span>
+    <h2 id="ficha-titulo">Sobre esta conta</h2>
+    <button type="button" class="btn-fechar" id="btn-fechar-ficha" aria-label="Fechar">×</button>
+  </div>
+  <div class="ficha-corpo">
+
+    <section id="sobre">
+      <p class="kicker">O que é</p>
+      <p><b>Iniciativa da Arvor, com lado declarado.</b> Uma conta independente da totalização oficial, feita a partir dos boletins de urna impressos e afixados em cada seção. O voto é secreto: o boletim só traz os totais da seção, nunca o voto de uma pessoa. Você lê os QR codes do papel, confere e envia.</p>
+    </section>
+
+    <section id="envios">
+      <p class="kicker">Envios deste aparelho</p>
+      <p class="rede" id="rede">Com conexão</p>
+      <p id="fila-status">Nenhum boletim aguardando envio.</p>
+      <button type="button" class="btn btn-sec" id="btn-reenviar" disabled>Reenviar pendentes</button>
+      <ul class="fila-lista" id="fila-lista" aria-label="Boletins aguardando envio"></ul>
+      <h3>Concluídos</h3>
+      <ul class="historico" id="historico" aria-label="Envios concluídos"><li class="fila-vazia">Nenhum envio concluído neste aparelho.</li></ul>
+      <p class="rodape-ficha">Sem rede, o boletim lido fica guardado e sai sozinho quando a conexão volta, em tentativas de 20 segundos a 10 minutos.</p>
+    </section>
+
+    <section id="como-funciona">
+      <p class="kicker">Como funciona</p>
+      <ol class="passos">
+        <li>Depois das 17h, a urna imprime o boletim e uma via fica afixada na seção. Aponte a câmera para os QR codes do fim do boletim, um por vez, ou escolha uma foto da galeria.</li>
+        <li>O aplicativo lê cada QR no próprio aparelho e mostra UF, zona, seção, comparecimento e os totais por cargo para você conferir com o papel.</li>
+        <li>Você envia. Só o texto dos QR sai do aparelho, com um identificador aleatório deste navegador e a versão do aplicativo. Sem rede, o envio espera na fila.</li>
+        <li>O servidor confere a assinatura digital da urna, que vem no próprio QR, descarta cópias, marca divergências entre envios da mesma seção e soma seção por seção. O painel público mostra a conta.</li>
+      </ol>
+      <div class="prova">
+        <div class="sim"><h4>O que o sistema prova</h4><p>Que o boletim impresso na seção chegou íntegro à nossa soma e que a soma de todos os boletins bate, ou não, com a totalização oficial. É uma conferência da transmissão e da soma.</p></div>
+        <div class="nao"><h4>O que não prova</h4><p>Nada do que acontece dentro da urna antes da impressão. O boletim é a saída da urna; a conta começa nele. Divergência entre dois envios da mesma seção vai para revisão humana, não para a soma.</p></div>
+      </div>
+    </section>
+
+    <section id="regras">
+      <p class="kicker">Regras do dia</p>
+      <ul class="lista-texto">
+        <li>Fotografar o boletim afixado na seção é direito. O boletim é documento público, e a Lei 9.504/1997, art. 68, obriga a mesa a entregar cópia aos fiscais que a pedirem logo após a emissão.</li>
+        <li>Fiscal de partido pode pedir a via impressa à mesa. Quem não é fiscal lê a via afixada.</li>
+        <li>Boca de urna é proibida. A Lei 9.504/1997, art. 39, § 5º, veda no dia da eleição o uso de alto-falantes, a aglomeração com material de campanha e a abordagem a eleitores para pedir voto. Leia o boletim depois do fechamento e saia.</li>
+        <li>Não aborde eleitores, não discuta com a mesa e não filme pessoas. Se a cópia ou a foto for negada, anote o horário, a zona e a seção e informe o fiscal do partido.</li>
+      </ul>
+    </section>
+
+    <section id="privacidade">
+      <p class="kicker">Privacidade</p>
+      <ul class="lista-texto">
+        <li>Sem login, sem CPF, sem telefone, sem nome.</li>
+        <li>Nenhuma foto sai do aparelho. A imagem é decodificada no navegador e descartada em seguida; o aplicativo não guarda imagem nenhuma.</li>
+        <li>O que vai ao servidor é o texto dos QR, que já é público no papel, mais um identificador aleatório deste navegador, usado só para separar envios repetidos.</li>
+        <li>O Google Analytics conta visitas à página, como em todo o site brasil.arvor.co. Ele não recebe o conteúdo do boletim.</li>
+      </ul>
+    </section>
+
+    <section id="transparencia">
+      <p class="kicker">Transparência</p>
+      <p>O painel mostra quantas seções chegaram, por estado, e a comparação com a totalização oficial. O código do aplicativo e do servidor está no repositório da Arvor.</p>
+      <div class="links">
+        <a class="btn btn-prim" href="totalizacao_painel.html">Ver o painel público</a>
+        <a class="btn btn-sec" href="https://github.com/ArvorCo/PNAD/tree/main/totalizacao" target="_blank" rel="noopener">Código-fonte no GitHub</a>
+      </div>
+      <p class="rodape-ficha"><b>Arvor Intelligence</b> · <a href="index.html">Biblioteca</a> · <a href="politizesuavizinhanca.html">Politize sua vizinhança</a> · <a href="fiscais_mapa.html">Mapa de fiscais</a></p>
+    </section>
+
+  </div>
+</dialog>
+
+</div>
+</body>
+</html>
