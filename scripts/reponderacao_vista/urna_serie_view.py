@@ -19,7 +19,7 @@ from reponderacao_vista.context import (
     sinal,
 )
 from reponderacao_vista.gaps import draw_bridges
-from reponderacao_vista.urna_serie import KEYS, MODES, write
+from reponderacao_vista.urna_serie import KEYS, MODES, build
 from svgkit import Canvas, br
 
 LABELS = {"flavio": "Flávio", "lula": "Lula", "demais": "Demais candidaturas"}
@@ -185,7 +185,7 @@ def candidate_card(key, data):
 
 
 def section(data):
-    history = write(data)
+    history = build(data)
     final, urn = history["final"], history["urna"]["validos"]
     gaps = {mode: final[mode]["flavio"] - final[mode]["lula"] for mode in MODES}
     urn_gap = urn["flavio"] - urn["lula"]

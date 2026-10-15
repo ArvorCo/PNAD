@@ -131,10 +131,17 @@ def test_partial_income_crossings_and_negative_residuals_are_disclosed(history):
 
 
 def test_published_exports_match_build_and_urna_is_separate(history):
-    assert (
-        json.loads((ROOT / "docs/assets/reponderacao_urna_serie_1t.json").read_text())
-        == history
+    published = json.loads(
+        (ROOT / "docs/assets/reponderacao_urna_serie_1t.json").read_text()
     )
+    # O hash da fonte corrente muda com ondas de 2T; a proveniência do arquivo
+    # publicado continua sendo a da sua geração, sem reescrever o passado.
+    assert {k: v for k, v in published.items() if k != "fontes_sha256"} == {
+        k: v for k, v in history.items() if k != "fontes_sha256"
+    }
+    for key, digest in published["fontes_sha256"].items():
+        if key != "docs/assets/reponderacao_pnad.json":
+            assert history["fontes_sha256"][key] == digest
     with (ROOT / "docs/assets/reponderacao_urna_serie_1t.csv").open() as handle:
         rows = list(csv.DictReader(handle))
     assert len(rows) == len(history["serie"]) + 1

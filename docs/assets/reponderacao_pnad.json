@@ -1,6 +1,6 @@
 {
- "gerado_em": "2026-10-13T15:34:20",
- "referencia": "2026-10-13",
+ "gerado_em": "2026-10-15T14:06:44",
+ "referencia": "2026-10-15",
  "benchmark": {
   "source": "data/outputs/base_anual_visita1_labeled_npv.csv",
   "rows_read": 408364,
@@ -24740,6 +24740,162 @@
     }
    },
    "arquivo": "analysis/reponderacao/pesquisas/poderdata_2026-10-12.json"
+  },
+  {
+   "id": "quaest_2026-10-13",
+   "instituto": "Quaest",
+   "contratante": "Editora Globo S/A e Globo Comunicação e Participações S/A",
+   "registro_tse": "BR-08729/2026",
+   "campo": {
+    "inicio": "2026-10-10",
+    "fim": "2026-10-13"
+   },
+   "divulgacao": "2026-10-14",
+   "n": 2154,
+   "metodo": "presencial domiciliar; sorteio PPT de municípios e setores, cotas no estágio final; eventual rake/MrP previsto no registro",
+   "fonte": {
+    "tipo": "painel_contratante_salvo_pelo_usuario",
+    "rotulo": "G1: painel salvo pelo usuário, cruzamentos extraídos do DOM; registro TSE conferido",
+    "url": "https://especiaisg1.globo/politica/eleicoes/2026/pesquisas-eleitorais/presidente/2-turno/Quaest/internal/",
+    "arquivo": "data/originals/quaest_102026_14/g1-painel-salvo.html.gz",
+    "conferido_em": "2026-10-15",
+    "status": "Totais e 25 recortes completos extraídos do arquivo salvo. Cotas atuais conferidas no TSE; sensibilidade provisória, perfil final não verificado.",
+    "registro_transcricao": "docs/fontes/quaest_14102026_registro.txt",
+    "complementos": [
+     {
+      "rotulo": "SBT News: totais e ficha técnica",
+      "url": "https://sbtnews.sbt.com.br/noticia/eleicoes/quaest-flavio-bolsonaro-tem-46-e-lula-44-no-2-turno"
+     },
+     {
+      "rotulo": "G1: página externa; painel recebido em arquivo local",
+      "url": "https://g1.globo.com/politica/eleicoes/2026/pesquisa-eleitoral/presidente-br-2-turno-quaest/"
+     },
+     {
+      "rotulo": "PesqEle: consultar BR-08729/2026",
+      "url": "https://pesqele-divulgacao.tse.jus.br/app/pesquisa/listar.xhtml"
+     }
+    ],
+    "sha256": "7a2c5ba5a3d093fffbcfb3773fde5fa25f47477b1d585c3fcf70bb8e25e41f3f",
+    "nota": "Hipótese provisória: cotas de renda 31/42/27 do registro atual BR-08729/2026 usadas como pesos. Perfil final, bases após rake/MrP e não resposta à renda não publicados no arquivo salvo. A conta assume cobertura integral dessas faixas. A boa recomposição não comprova os pesos. Nenhum voto por renda de onda anterior foi transportado."
+   },
+   "dossie": "quaest_14102026.html",
+   "publicado": {
+    "2t": {
+     "flavio": 46,
+     "lula": 44,
+     "branco_nulo": 9,
+     "indecisos": 1
+    }
+   },
+   "renda": {
+    "unidade": "salarios_minimos",
+    "faixas": [
+     "Até 2 SM",
+     "Mais de 2 a 5 SM",
+     "Mais de 5 SM"
+    ],
+    "cortes_brl_202604": [
+     3215.9,
+     8039.76,
+     null
+    ],
+    "amostra_pct": [
+     31.0,
+     42.0,
+     27.0
+    ],
+    "pnad_pct": {
+     "pessoas16_efetivo": [
+      35.187,
+      39.259,
+      25.554
+     ],
+     "pessoas16_habitual": [
+      34.864,
+      40.402,
+      24.734
+     ],
+     "domicilios_efetivo": [
+      42.672,
+      35.771,
+      21.557
+     ]
+    },
+    "nota": "Hipótese provisória: cotas de renda 31/42/27 do registro atual BR-08729/2026 usadas como pesos. Perfil final, bases após rake/MrP e não resposta à renda não publicados no arquivo salvo. A conta assume cobertura integral dessas faixas. A boa recomposição não comprova os pesos. Nenhum voto por renda de onda anterior foi transportado.",
+    "perfil_tipo": "cota_registrada"
+   },
+   "desvio_ate_primeira_faixa": -4.187,
+   "turnos": {
+    "2t": {
+     "opcoes": [
+      "flavio",
+      "lula",
+      "indecisos",
+      "branco_nulo"
+     ],
+     "publicado": {
+      "flavio": 46.0,
+      "lula": 44.0,
+      "indecisos": 1.0,
+      "branco_nulo": 9.0
+     },
+     "recomposto": {
+      "flavio": 46.05,
+      "lula": 44.18,
+      "indecisos": 0.73,
+      "branco_nulo": 9.04
+     },
+     "residuo_max": 0.18,
+     "cenarios": {
+      "pessoas16_efetivo": {
+       "contrafactual": {
+        "flavio": 45.448,
+        "lula": 44.711,
+        "indecisos": 0.744,
+        "branco_nulo": 9.096
+       },
+       "ajustado": {
+        "flavio": 45.398,
+        "lula": 44.531,
+        "indecisos": 1.014,
+        "branco_nulo": 9.056
+       }
+      },
+      "pessoas16_habitual": {
+       "contrafactual": {
+        "flavio": 45.457,
+        "lula": 44.689,
+        "indecisos": 0.753,
+        "branco_nulo": 9.101
+       },
+       "ajustado": {
+        "flavio": 45.407,
+        "lula": 44.509,
+        "indecisos": 1.023,
+        "branco_nulo": 9.061
+       }
+      },
+      "domicilios_efetivo": {
+       "contrafactual": {
+        "flavio": 44.315,
+        "lula": 45.689,
+        "indecisos": 0.784,
+        "branco_nulo": 9.211
+       },
+       "ajustado": {
+        "flavio": 44.265,
+        "lula": 45.509,
+        "indecisos": 1.054,
+        "branco_nulo": 9.171
+       }
+      }
+     },
+     "gap_publicado": -2.0,
+     "gap_ajustado": -0.8670000000000044,
+     "margem_diferenca_95": 4.006
+    }
+   },
+   "arquivo": "analysis/reponderacao/pesquisas/quaest_2026-10-13.json"
   }
  ],
  "nao_reponderaveis": [
@@ -24754,6 +24910,8 @@
    },
    "divulgacao": "2026-05-11",
    "n": 2000,
+   "dossie": null,
+   "metodo": "telefônico, CATI em 870 cidades",
    "fonte": {
     "pdf": "data/originals/apex_futura_052026_08/Relatorio.pdf",
     "url": null,
@@ -24799,6 +24957,8 @@
    },
    "divulgacao": "2026-05-14",
    "n": 2100,
+   "dossie": null,
+   "metodo": "presencial domiciliar, questionário estruturado",
    "fonte": {
     "pdf": "data/originals/vox_brasil_052026_12/Relatorio.pdf",
     "url": "https://static.poder360.com.br/uploads/2026/05/RELATORIO-VOX-BRASIL-NACIONAL-ELEICOES-2026-1.pdf",
@@ -24844,6 +25004,8 @@
    },
    "divulgacao": "2026-05-20",
    "n": 2100,
+   "dossie": null,
+   "metodo": "presencial domiciliar, questionário estruturado",
    "fonte": {
     "pdf": "data/originals/vox_brasil_052026_19/Relatorio.pdf",
     "url": "https://static.poder360.com.br/uploads/2026/05/relatorio-vox-brasil-20mai2026.pdf",
@@ -24889,6 +25051,8 @@
    },
    "divulgacao": "2026-05-22",
    "n": 2000,
+   "dossie": null,
+   "metodo": "telefônico, CATI em 878 cidades",
    "fonte": {
     "pdf": "data/originals/apex_futura_052026_20/Relatorio.pdf",
     "url": null,
@@ -24934,6 +25098,8 @@
    },
    "divulgacao": "2026-06-05",
    "n": 2100,
+   "dossie": null,
+   "metodo": "presencial domiciliar, questionário estruturado",
    "fonte": {
     "pdf": "data/originals/vox_brasil_062026_06/Relatorio.pdf",
     "url": "https://static.poder360.com.br/uploads/2026/06/pesquisa-vox-brasil-5jun2026.pdf",
@@ -24981,6 +25147,8 @@
    },
    "divulgacao": "2026-06-16",
    "n": 2000,
+   "dossie": null,
+   "metodo": "telefônico, CATI em 861 cidades",
    "fonte": {
     "pdf": "data/originals/apex_futura_062026_12/Relatorio.pdf",
     "url": null,
@@ -25026,6 +25194,8 @@
    },
    "divulgacao": "2026-07-14",
    "n": 2000,
+   "dossie": null,
+   "metodo": "telefônico, CATI em 697 cidades",
    "fonte": {
     "pdf": "data/originals/apex_futura_072026_11/Relatorio.pdf",
     "url": null,
@@ -25071,6 +25241,8 @@
    },
    "divulgacao": "2026-07-31",
    "n": 2100,
+   "dossie": null,
+   "metodo": "presencial domiciliar, questionário estruturado",
    "fonte": {
     "pdf": "data/originals/vox_brasil_072026_28/Relatorio.pdf",
     "url": "https://static.poder360.com.br/uploads/2026/07/RELATORIO-VOX-BRASIL-NACIONAL-5-31-07-2026.pdf",
@@ -25119,6 +25291,8 @@
    },
    "divulgacao": "2026-08-11",
    "n": 2000,
+   "dossie": null,
+   "metodo": "telefônico, CATI em 690 cidades",
    "fonte": {
     "pdf": "data/originals/apex_futura_082026_07/Relatorio.pdf",
     "url": null,
@@ -25165,6 +25339,8 @@
    },
    "divulgacao": "2026-08-29",
    "n": 2100,
+   "dossie": null,
+   "metodo": "presencial domiciliar, questionário estruturado",
    "fonte": {
     "pdf": "data/originals/vox_brasil_082026/Relatorio.pdf",
     "url": null,
@@ -25213,6 +25389,8 @@
    },
    "divulgacao": "2026-09-01",
    "n": 2000,
+   "dossie": null,
+   "metodo": "telefônico, CATI em 677 cidades",
    "fonte": {
     "pdf": "data/originals/apex_futura_092026/Relatorio.pdf",
     "url": null,
@@ -25263,6 +25441,8 @@
    },
    "divulgacao": "2026-09-08",
    "n": 1500,
+   "dossie": null,
+   "metodo": "telefônico, RDD com PPT e questionário estruturado",
    "fonte": {
     "pdf": "data/originals/meio_ideia_092026/Relatorio.pdf",
     "url": null,
@@ -25313,6 +25493,8 @@
    },
    "divulgacao": "2026-09-09",
    "n": 5000,
+   "dossie": null,
+   "metodo": "online, amostra não probabilística recrutada por anúncios em redes sociais, calibrada por raking",
    "fonte": {
     "pdf": "data/originals/palver_092026/Relatorio.pdf",
     "url": null,
@@ -25358,6 +25540,8 @@
    },
    "divulgacao": "2026-09-17",
    "n": 2000,
+   "dossie": null,
+   "metodo": "telefônico, CATI, abrangência nacional",
    "fonte": {
     "tipo": "relatorio",
     "pdf": "data/originals/futura_092026_17/relatorio.pdf",
@@ -25418,6 +25602,8 @@
    },
    "divulgacao": "2026-09-24",
    "n": 40500,
+   "dossie": null,
+   "metodo": "telefônico, URA com reconhecimento de voz e transcrição de áudio",
    "fonte": {
     "tipo": "relatorio",
     "pdf": "data/originals/verita_092026_24/relatorio.pdf",
@@ -25473,6 +25659,8 @@
    },
    "divulgacao": null,
    "n": 2000,
+   "dossie": null,
+   "metodo": null,
    "fonte": {
     "tipo": "materia_em_pdf",
     "pdf": "data/originals/american_092026_24/relatorio.pdf",
@@ -25502,6 +25690,8 @@
    },
    "divulgacao": "2026-09-24",
    "n": 2700,
+   "dossie": null,
+   "metodo": "presencial, conglomerados em dois estágios",
    "fonte": {
     "tipo": "materia",
     "arquivo": "data/originals/alfa_092026_24/divulgacao_1t.html",
@@ -25552,6 +25742,8 @@
    },
    "divulgacao": "2026-09-24",
    "n": 2000,
+   "dossie": null,
+   "metodo": "telefônico, CATI, abrangência nacional",
    "fonte": {
     "tipo": "relatorio",
     "pdf": "data/originals/futura_092026_24/relatorio.pdf",
@@ -25610,6 +25802,8 @@
    },
    "divulgacao": "2026-09-30",
    "n": 2000,
+   "dossie": null,
+   "metodo": "telefônico, RDD com PPT e questionário estruturado",
    "fonte": {
     "tipo": "relatorio",
     "pdf": "data/originals/meio_ideia_092026_30/relatorio.pdf",
@@ -25678,6 +25872,8 @@
    },
    "divulgacao": "2026-09-29",
    "n": 2100,
+   "dossie": null,
+   "metodo": "presencial domiciliar",
    "fonte": {
     "tipo": "relatorio",
     "pdf": "data/originals/vox_092026_29/relatorio.pdf",
@@ -25737,6 +25933,8 @@
    },
    "divulgacao": "2026-09-30",
    "n": 2000,
+   "dossie": null,
+   "metodo": "telefônico CATI",
    "fonte": {
     "tipo": "relatorio",
     "pdf": "data/originals/futura_092026_30/relatorio.pdf",
@@ -25805,6 +26003,8 @@
    },
    "divulgacao": "2026-10-02",
    "n": 2100,
+   "dossie": null,
+   "metodo": "presencial domiciliar",
    "fonte": {
     "tipo": "relatorio",
     "pdf": "data/originals/vox_102026_02/relatorio.pdf",
@@ -25877,6 +26077,8 @@
    },
    "divulgacao": "2026-10-05",
    "n": 40500,
+   "dossie": null,
+   "metodo": null,
    "fonte": {
     "arquivo": "data/originals/verita_102026_05/materia.html",
     "url": "https://jornaldiretriz.com.br/flavio-tem-5156-e-lula-4844-no-segundo-turno-aponta-verita/",
@@ -25929,6 +26131,8 @@
    },
    "divulgacao": "2026-10-03",
    "n": 2000,
+   "dossie": null,
+   "metodo": "telefônico CATI",
    "fonte": {
     "tipo": "relatorio",
     "pdf": "data/originals/futura_102026_03/relatorio.pdf",
@@ -26025,6 +26229,8 @@
    },
    "divulgacao": "2026-10-09",
    "n": 2100,
+   "dossie": null,
+   "metodo": "presencial domiciliar",
    "fonte": {
     "pdf": "data/originals/vox_102026_09/relatorio.pdf",
     "url": "https://static.poder360.com.br/uploads/2026/10/pesquisa-vox-brasil-9out2026.pdf",
@@ -26109,6 +26315,8 @@
    },
    "divulgacao": "2026-10-11",
    "n": 2000,
+   "dossie": null,
+   "metodo": "telefônico automatizado URA/DTMF; ponderação por UF, gênero, idade, escolaridade e renda",
    "fonte": {
     "arquivo": "data/originals/datatrends_102026_11/relatorio.pdf",
     "url": "https://static.poder360.com.br/uploads/2026/10/pesquisa-datatrends-nacional-11out2026.pdf",
@@ -26170,6 +26378,8 @@
    },
    "divulgacao": "2026-10-13",
    "n": 2000,
+   "dossie": null,
+   "metodo": "telefônico CATI, eleitores de 16 anos ou mais",
    "fonte": {
     "arquivo": "data/originals/futura_102026_13/relatorio.pdf",
     "url": "https://static.poder360.com.br/uploads/2026/10/Pesquisa-Futura-presidente.pdf",
@@ -28480,6 +28690,18 @@
      "n_institutos": 0,
      "ondas": [],
      "institutos": []
+    },
+    {
+     "data": "2026-10-14",
+     "n_institutos": 0,
+     "ondas": [],
+     "institutos": []
+    },
+    {
+     "data": "2026-10-15",
+     "n_institutos": 0,
+     "ondas": [],
+     "institutos": []
     }
    ],
    "2t": [
@@ -30507,6 +30729,48 @@
       "Ipespe",
       "Nexus",
       "PoderData"
+     ]
+    },
+    {
+     "data": "2026-10-14",
+     "n_institutos": 7,
+     "ondas": [
+      "atlas_2026-10-08",
+      "datafolha_2026-10-08",
+      "gerp_2026-10-12",
+      "ipespe_2026-10-08",
+      "nexus_2026-10-12",
+      "poderdata_2026-10-12",
+      "quaest_2026-10-13"
+     ],
+     "institutos": [
+      "AtlasIntel",
+      "Datafolha",
+      "Gerp",
+      "Ipespe",
+      "Nexus",
+      "PoderData",
+      "Quaest"
+     ]
+    },
+    {
+     "data": "2026-10-15",
+     "n_institutos": 6,
+     "ondas": [
+      "atlas_2026-10-08",
+      "gerp_2026-10-12",
+      "ipespe_2026-10-08",
+      "nexus_2026-10-12",
+      "poderdata_2026-10-12",
+      "quaest_2026-10-13"
+     ],
+     "institutos": [
+      "AtlasIntel",
+      "Gerp",
+      "Ipespe",
+      "Nexus",
+      "PoderData",
+      "Quaest"
      ]
     }
    ]
@@ -32755,6 +33019,18 @@
       "n_institutos": 0,
       "ondas": [],
       "institutos": []
+     },
+     {
+      "data": "2026-10-14",
+      "n_institutos": 0,
+      "ondas": [],
+      "institutos": []
+     },
+     {
+      "data": "2026-10-15",
+      "n_institutos": 0,
+      "ondas": [],
+      "institutos": []
      }
     ],
     "rotulos": {
@@ -34735,6 +35011,8 @@
        null,
        null,
        null,
+       null,
+       null,
        null
       ],
       "branco_nulo": [
@@ -34897,6 +35175,8 @@
        3.68,
        3.79,
        3.79,
+       null,
+       null,
        null,
        null,
        null,
@@ -35067,6 +35347,8 @@
        null,
        null,
        null,
+       null,
+       null,
        null
       ],
       "branco_nulo": [
@@ -35229,6 +35511,8 @@
        3.59,
        3.74,
        3.74,
+       null,
+       null,
        null,
        null,
        null,
@@ -37227,6 +37511,44 @@
        "Nexus",
        "PoderData"
       ]
+     },
+     {
+      "data": "2026-10-14",
+      "n_institutos": 6,
+      "ondas": [
+       "datafolha_2026-10-08",
+       "gerp_2026-10-12",
+       "ipespe_2026-10-08",
+       "nexus_2026-10-12",
+       "poderdata_2026-10-12",
+       "quaest_2026-10-13"
+      ],
+      "institutos": [
+       "Datafolha",
+       "Gerp",
+       "Ipespe",
+       "Nexus",
+       "PoderData",
+       "Quaest"
+      ]
+     },
+     {
+      "data": "2026-10-15",
+      "n_institutos": 5,
+      "ondas": [
+       "gerp_2026-10-12",
+       "ipespe_2026-10-08",
+       "nexus_2026-10-12",
+       "poderdata_2026-10-12",
+       "quaest_2026-10-13"
+      ],
+      "institutos": [
+       "Gerp",
+       "Ipespe",
+       "Nexus",
+       "PoderData",
+       "Quaest"
+      ]
      }
     ],
     "rotulos": {
@@ -38733,6 +39055,31 @@
        "indecisos": 1.954,
        "branco_nulo": 4.721
       }
+     },
+     {
+      "id": "quaest_2026-10-13",
+      "instituto": "Quaest",
+      "campo": {
+       "inicio": "2026-10-10",
+       "fim": "2026-10-13"
+      },
+      "divulgacao": "2026-10-14",
+      "componentes": {
+       "indecisos": [
+        "indecisos"
+       ],
+       "branco_nulo": [
+        "branco_nulo"
+       ]
+      },
+      "publicado": {
+       "indecisos": 1.0,
+       "branco_nulo": 9.0
+      },
+      "ajustado": {
+       "indecisos": 1.014,
+       "branco_nulo": 9.056
+      }
      }
     ],
     "excluidas": [
@@ -38922,6 +39269,8 @@
        2.0,
        2.0,
        2.0,
+       2.2,
+       2.0,
        2.2
       ],
       "branco_nulo": [
@@ -39087,7 +39436,9 @@
        5.0,
        5.0,
        5.0,
-       4.2
+       4.2,
+       5.0,
+       5.0
       ]
      },
      "ajustado": {
@@ -39254,7 +39605,9 @@
        1.87,
        1.87,
        1.87,
-       2.1
+       2.1,
+       1.92,
+       2.13
       ],
       "branco_nulo": [
        null,
@@ -39419,7 +39772,9 @@
        4.78,
        4.78,
        4.78,
-       4.11
+       4.11,
+       4.94,
+       4.92
       ]
      }
     },
@@ -39427,11 +39782,11 @@
     "ultimo": {
      "publicado": {
       "indecisos": 2.2,
-      "branco_nulo": 4.2
+      "branco_nulo": 5.0
      },
      "ajustado": {
-      "indecisos": 2.1,
-      "branco_nulo": 4.11
+      "indecisos": 2.13,
+      "branco_nulo": 4.92
      }
     }
    }
@@ -41163,6 +41518,18 @@
      "n_institutos": 0,
      "ondas": [],
      "institutos": []
+    },
+    {
+     "data": "2026-10-14",
+     "n_institutos": 0,
+     "ondas": [],
+     "institutos": []
+    },
+    {
+     "data": "2026-10-15",
+     "n_institutos": 0,
+     "ondas": [],
+     "institutos": []
     }
    ],
    "rotulos": {
@@ -42819,6 +43186,8 @@
       null,
       null,
       null,
+      null,
+      null,
       null
      ],
      "outros_esquerda_nanicos": [
@@ -42981,6 +43350,8 @@
       0.0,
       0.0,
       0.0,
+      null,
+      null,
       null,
       null,
       null,
@@ -43151,6 +43522,8 @@
       null,
       null,
       null,
+      null,
+      null,
       null
      ],
      "outros_esquerda_nanicos": [
@@ -43313,6 +43686,8 @@
       -0.05,
       -0.05,
       -0.05,
+      null,
+      null,
       null,
       null,
       null,
@@ -43516,7 +43891,9 @@
     "2026-10-10",
     "2026-10-11",
     "2026-10-12",
-    "2026-10-13"
+    "2026-10-13",
+    "2026-10-14",
+    "2026-10-15"
    ],
    "2t": {
     "publicado": {
@@ -43683,7 +44060,9 @@
       44.67,
       44.67,
       44.67,
-      44.95
+      44.95,
+      44.81,
+      44.78
      ],
      "flavio": [
       null,
@@ -43848,7 +44227,9 @@
       49.52,
       49.52,
       49.52,
-      49.68
+      49.68,
+      49.16,
+      49.18
      ],
      "indecisos": [
       null,
@@ -44012,6 +44393,8 @@
       1.24,
       2.0,
       2.0,
+      2.0,
+      2.2,
       2.0,
       2.2
      ],
@@ -44178,7 +44561,9 @@
       5.0,
       5.0,
       5.0,
-      4.2
+      4.2,
+      5.0,
+      5.0
      ]
     },
     "ajustado": {
@@ -44345,7 +44730,9 @@
       43.81,
       43.81,
       43.81,
-      43.95
+      43.95,
+      44.03,
+      44.17
      ],
      "flavio": [
       null,
@@ -44510,7 +44897,9 @@
       50.69,
       50.69,
       50.69,
-      50.88
+      50.88,
+      50.09,
+      49.95
      ],
      "indecisos": [
       null,
@@ -44675,7 +45064,9 @@
       1.87,
       1.87,
       1.87,
-      2.1
+      2.1,
+      1.92,
+      2.13
      ],
      "branco_nulo": [
       null,
@@ -44840,7 +45231,9 @@
       4.78,
       4.78,
       4.78,
-      4.11
+      4.11,
+      4.94,
+      4.92
      ]
     }
    },
@@ -45009,6 +45402,8 @@
       null,
       null,
       null,
+      null,
+      null,
       null
      ],
      "flavio": [
@@ -45171,6 +45566,8 @@
       41.17,
       41.48,
       41.48,
+      null,
+      null,
       null,
       null,
       null,
@@ -45339,6 +45736,8 @@
       null,
       null,
       null,
+      null,
+      null,
       null
      ],
      "outros_esquerda_nanicos": [
@@ -45501,6 +45900,8 @@
       0.0,
       0.0,
       0.0,
+      null,
+      null,
       null,
       null,
       null,
@@ -45669,6 +46070,8 @@
       null,
       null,
       null,
+      null,
+      null,
       null
      ],
      "branco_nulo": [
@@ -45831,6 +46234,8 @@
       3.68,
       3.79,
       3.79,
+      null,
+      null,
       null,
       null,
       null,
@@ -46001,6 +46406,8 @@
       null,
       null,
       null,
+      null,
+      null,
       null
      ],
      "flavio": [
@@ -46163,6 +46570,8 @@
       42.16,
       42.25,
       42.25,
+      null,
+      null,
       null,
       null,
       null,
@@ -46331,6 +46740,8 @@
       null,
       null,
       null,
+      null,
+      null,
       null
      ],
      "outros_esquerda_nanicos": [
@@ -46493,6 +46904,8 @@
       -0.05,
       -0.05,
       -0.05,
+      null,
+      null,
       null,
       null,
       null,
@@ -46661,6 +47074,8 @@
       null,
       null,
       null,
+      null,
+      null,
       null
      ],
      "branco_nulo": [
@@ -46826,6 +47241,8 @@
       null,
       null,
       null,
+      null,
+      null,
       null
      ]
     }
@@ -46848,42 +47265,42 @@
     ],
     "media_simples": {
      "publicado": {
-      "lula": 44.5,
-      "flavio": 47.74
+      "lula": 44.68,
+      "flavio": 47.93
      },
      "ajustado": {
-      "lula": 43.83,
-      "flavio": 48.53
+      "lula": 44.0,
+      "flavio": 48.72
      }
     },
     "kernel": {
      "publicado": {
-      "lula": 44.95,
-      "flavio": 49.68
+      "lula": 44.78,
+      "flavio": 49.18
      },
      "ajustado": {
-      "lula": 43.95,
-      "flavio": 50.88
+      "lula": 44.17,
+      "flavio": 49.95
      }
     },
     "cobertura_movel": {
-     "data": "2026-10-13",
+     "data": "2026-10-15",
      "n_institutos": 6,
      "ondas": [
       "atlas_2026-10-08",
-      "datafolha_2026-10-08",
       "gerp_2026-10-12",
       "ipespe_2026-10-08",
       "nexus_2026-10-12",
-      "poderdata_2026-10-12"
+      "poderdata_2026-10-12",
+      "quaest_2026-10-13"
      ],
      "institutos": [
       "AtlasIntel",
-      "Datafolha",
       "Gerp",
       "Ipespe",
       "Nexus",
-      "PoderData"
+      "PoderData",
+      "Quaest"
      ]
     }
    },
@@ -46921,7 +47338,7 @@
      }
     },
     "cobertura_movel": {
-     "data": "2026-10-13",
+     "data": "2026-10-15",
      "n_institutos": 0,
      "ondas": [],
      "institutos": []

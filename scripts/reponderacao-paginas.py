@@ -115,6 +115,8 @@ def current_coverage(ns):
         if not all(k in pub for k in ("flavio", "lula")):
             continue
         status = "Com renda" if "2t" in p.get("turnos", {}) else "Sem voto por renda"
+        if p.get("renda", {}).get("perfil_tipo") == "cota_registrada":
+            status += " · cotas registradas, ajuste provisório"
         if p["campo"]["inicio"] <= "2026-10-04":
             status += (
                 " · campo atravessa o 1º turno; fora da central"
@@ -130,6 +132,10 @@ def current_coverage(ns):
         )
         if url:
             details += f'<a href="{esc(url, quote=True)}">Fonte publicada</a>'
+        if p.get("dossie"):
+            details += (
+                f' · <a href="{esc(p["dossie"], quote=True)}">Dossiê e limites</a>'
+            )
         cards.append(
             f'<article id="cobertura-{esc(p["id"])}"><h3>{esc(p["instituto"])} <small>· {esc(p["divulgacao"])}</small></h3>'
             f"<p><strong>Flávio {ns['br'](pub['flavio'], 1)} × Lula {ns['br'](pub['lula'], 1)}</strong> / {'válidos publicados' if valid_only else 'total de entrevistados'} · {esc(status)}. "
@@ -164,10 +170,30 @@ def current_coverage(ns):
             )
             + "</aside>"
         )
+    quaest = next((p for p in latest.values() if p["id"] == "quaest_2026-10-13"), None)
+    quaest_note = ""
+    if quaest and "2t" in quaest.get("turnos", {}):
+        adjusted = quaest["turnos"]["2t"]["cenarios"]["pessoas16_efetivo"]["ajustado"]
+        quaest_note = (
+            '<aside class="callout" id="quaest-1410"><h3>Quaest de 14/10: renda atual recebida, sensibilidade provisória</h3>'
+            f'<p>Publicado: 46 × 44. Sob as cotas atuais como pesos, PNAD: <b>{ns["br"](adjusted["flavio"], 2)} × {ns["br"](adjusted["lula"], 2)}</b> / total. '
+            "Cruzamentos atuais extraídos do painel salvo pelo usuário; renda, sexo, idade e escolaridade recompõem os totais. "
+            "<b>31/42/27 são cotas registradas, não pesos finais verificados.</b> A hipótese entra na Média e na Projeção e pode mudar com a íntegra. "
+            '<a href="quaest_14102026.html#renda">Ler os cruzamentos, os resíduos e os limites</a>.</p></aside>'
+        )
+    elif quaest:
+        quaest_note = (
+            '<aside class="callout" id="quaest-1410"><h3>Quaest de 14/10: 46 × 44, sem ajuste de renda nesta rodada</h3>'
+            "<p>Campo domiciliar de 10 a 13/10, incluindo o feriadão. Os dois candidatos ganharam dois pontos desde 03/10; a diferença ficou em dois. "
+            "Cotas previstas 31/42/27 conferidas no TSE; cruzamento atual e perfil final ainda não obtidos nesta auditoria. "
+            "Entra pelo publicado na Projeção; fora da Média por renda. "
+            '<a href="quaest_14102026.html">Ler o dossiê preliminar, a série e as pendências</a>.</p></aside>'
+        )
     return (
         '<section id="cobertura-atual" class="rs-documentary"><div class="wrap"><p class="eyebrow">Cobertura da disputa</p>'
-        '<h2>O que entra na conta.</h2><p class="note">A central exige cruzamento de renda e campo posterior a 04/10. '
-        "As outras publicações ficam identificadas aqui. Placar na ordem Flávio × Lula.</p>"
+        '<h2>O que entra na conta.</h2><p class="note">A Média exige cruzamento de renda e campo posterior a 04/10. '
+        "A Projeção inclui também o publicado das casas sem renda conferida, com cobertura e pesos explícitos. Placar na ordem Flávio × Lula.</p>"
+        + quaest_note
         + vox_note
         + '<details class="rs-wave-summary"><summary>Última publicação de cada instituto e limites de inclusão</summary>'
         + "".join(cards)
@@ -415,9 +441,16 @@ def log_html(ns):
     )
 
 
-def write_companions(ns):
+def write_companions(ns, *, refresh_archive=False):
     destination = ns["PAGE"].parent
-    for name, html in [(ARCHIVE, archive_html(ns)), (LOG, log_html(ns))]:
+    outputs = [(LOG, log_html(ns))]
+    if refresh_archive or not (destination / ARCHIVE).exists():
+        # Renderizar o arquivo em testes ou leituras também deve ser puro.
+        importlib.import_module("reponderacao_vista.urna_serie").write(
+            ns["D"], assets=ns.get("ASSETS", destination / "assets")
+        )
+        outputs.append((ARCHIVE, archive_html(ns)))
+    for name, html in outputs:
         (destination / name).write_text(
             injetar(html).replace("<section ", "\n<section ") + "\n"
         )

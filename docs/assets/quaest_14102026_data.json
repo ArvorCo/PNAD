@@ -1,0 +1,838 @@
+{
+  "slug": "quaest_14102026",
+  "status": "preliminar",
+  "conferido_em": "2026-10-15",
+  "pesquisa": {
+    "id": "quaest_2026-10-13",
+    "instituto": "Quaest",
+    "registro_tse": "BR-08729/2026",
+    "contratante": "Editora Globo S/A e Globo Comunicação e Participações S/A",
+    "campo": {
+      "inicio": "2026-10-10",
+      "fim": "2026-10-13"
+    },
+    "divulgacao": "2026-10-14",
+    "n": 2154,
+    "metodo": "presencial domiciliar; sorteio PPT de municípios e setores, cotas no estágio final; eventual rake/MrP previsto no registro",
+    "publicado": {
+      "2t": {
+        "flavio": 46,
+        "lula": 44,
+        "branco_nulo": 9,
+        "indecisos": 1
+      }
+    },
+    "cruzamentos": {
+      "2t": {
+        "opcoes": [
+          "flavio",
+          "lula",
+          "indecisos",
+          "branco_nulo"
+        ],
+        "linhas": [
+          [
+            36,
+            53,
+            1,
+            10
+          ],
+          [
+            49,
+            41,
+            1,
+            9
+          ],
+          [
+            53,
+            39,
+            0,
+            8
+          ]
+        ],
+        "nota": "Rótulos SVG do painel G1 salvo pelo usuário. Valores inteiros, sem bases; 0 é arredondado no painel. Extração local, sem acesso remoto à API."
+      }
+    },
+    "dossie": "quaest_14102026.html",
+    "perfil_economico_publicado": {
+      "tipo": "cotas_previstas_registro_tse",
+      "unidade": "renda domiciliar total em salários mínimos",
+      "faixas": [
+        "Até 2 SM",
+        "Mais de 2 a 5 SM",
+        "Mais de 5 SM"
+      ],
+      "pct": [
+        31,
+        42,
+        27
+      ],
+      "fonte_declarada": "PNADc Anual 2025, 1a visita (IBGE)",
+      "nota": "Não equivale ao perfil final da amostra; admite calibração posterior. Nenhum cruzamento de onda anterior foi transportado."
+    },
+    "fonte": {
+      "tipo": "painel_contratante_salvo_pelo_usuario",
+      "rotulo": "G1: painel salvo pelo usuário, cruzamentos extraídos do DOM; registro TSE conferido",
+      "url": "https://especiaisg1.globo/politica/eleicoes/2026/pesquisas-eleitorais/presidente/2-turno/Quaest/internal/",
+      "arquivo": "data/originals/quaest_102026_14/g1-painel-salvo.html.gz",
+      "conferido_em": "2026-10-15",
+      "status": "Totais e 25 recortes completos extraídos do arquivo salvo. Cotas atuais conferidas no TSE; sensibilidade provisória, perfil final não verificado.",
+      "registro_transcricao": "docs/fontes/quaest_14102026_registro.txt",
+      "complementos": [
+        {
+          "rotulo": "SBT News: totais e ficha técnica",
+          "url": "https://sbtnews.sbt.com.br/noticia/eleicoes/quaest-flavio-bolsonaro-tem-46-e-lula-44-no-2-turno"
+        },
+        {
+          "rotulo": "G1: página externa; painel recebido em arquivo local",
+          "url": "https://g1.globo.com/politica/eleicoes/2026/pesquisa-eleitoral/presidente-br-2-turno-quaest/"
+        },
+        {
+          "rotulo": "PesqEle: consultar BR-08729/2026",
+          "url": "https://pesqele-divulgacao.tse.jus.br/app/pesquisa/listar.xhtml"
+        }
+      ],
+      "sha256": "7a2c5ba5a3d093fffbcfb3773fde5fa25f47477b1d585c3fcf70bb8e25e41f3f",
+      "nota": "Hipótese provisória: cotas de renda 31/42/27 do registro atual BR-08729/2026 usadas como pesos. Perfil final, bases após rake/MrP e não resposta à renda não publicados no arquivo salvo. A conta assume cobertura integral dessas faixas. A boa recomposição não comprova os pesos. Nenhum voto por renda de onda anterior foi transportado."
+    },
+    "renda": {
+      "unidade": "salarios_minimos",
+      "ano_referencia": 2026,
+      "faixas": [
+        {
+          "rotulo": "Até 2 SM",
+          "max": 2
+        },
+        {
+          "rotulo": "Mais de 2 a 5 SM",
+          "max": 5
+        },
+        {
+          "rotulo": "Mais de 5 SM",
+          "max": null
+        }
+      ],
+      "amostra_pct": [
+        31,
+        42,
+        27
+      ],
+      "mes_precos": "202610",
+      "perfil_tipo": "cota_registrada",
+      "nota": "Hipótese provisória: cotas de renda 31/42/27 do registro atual BR-08729/2026 usadas como pesos. Perfil final, bases após rake/MrP e não resposta à renda não publicados no arquivo salvo. A conta assume cobertura integral dessas faixas. A boa recomposição não comprova os pesos. Nenhum voto por renda de onda anterior foi transportado."
+    },
+    "controles_arquivo": "data/originals/quaest_102026_14/g1-controles.json"
+  },
+  "serie": [
+    {
+      "id": "quaest_2026-05-11",
+      "campo": {
+        "inicio": "2026-05-08",
+        "fim": "2026-05-11"
+      },
+      "divulgacao": "2026-05-13",
+      "n": 2004,
+      "publicado": {
+        "lula": 42,
+        "flavio": 41,
+        "branco_nulo": 14,
+        "indecisos": 3
+      },
+      "gap_total_pp": -1,
+      "gap_binario_pp": -1.2048192771084338,
+      "flavio_binario_pct": 49.397590361445786,
+      "arquivo": "analysis/reponderacao/pesquisas/quaest_2026-05-11.json",
+      "fonte": {
+        "url": "https://quaest.com.br/wp-content/uploads/2026/05/GENIALQUAESTMAIO26.pdf"
+      }
+    },
+    {
+      "id": "quaest_2026-06-08",
+      "campo": {
+        "inicio": "2026-06-05",
+        "fim": "2026-06-08"
+      },
+      "divulgacao": "2026-06-10",
+      "n": 2004,
+      "publicado": {
+        "lula": 44,
+        "flavio": 38,
+        "branco_nulo": 14,
+        "indecisos": 4
+      },
+      "gap_total_pp": -6,
+      "gap_binario_pp": -7.317073170731708,
+      "flavio_binario_pct": 46.34146341463415,
+      "arquivo": "analysis/reponderacao/pesquisas/quaest_2026-06-08.json",
+      "fonte": {
+        "url": null
+      }
+    },
+    {
+      "id": "quaest_2026-07-13",
+      "campo": {
+        "inicio": "2026-07-10",
+        "fim": "2026-07-13"
+      },
+      "divulgacao": "2026-07-15",
+      "n": 2004,
+      "publicado": {
+        "lula": 45,
+        "flavio": 37,
+        "branco_nulo": 14,
+        "indecisos": 4
+      },
+      "gap_total_pp": -8,
+      "gap_binario_pp": -9.75609756097561,
+      "flavio_binario_pct": 45.1219512195122,
+      "arquivo": "analysis/reponderacao/pesquisas/quaest_2026-07-13.json",
+      "fonte": {
+        "url": null
+      }
+    },
+    {
+      "id": "quaest_2026-08-03",
+      "campo": {
+        "inicio": "2026-07-31",
+        "fim": "2026-08-03"
+      },
+      "divulgacao": "2026-08-05",
+      "n": 2004,
+      "publicado": {
+        "lula": 44,
+        "flavio": 39,
+        "branco_nulo": 13,
+        "indecisos": 4
+      },
+      "gap_total_pp": -5,
+      "gap_binario_pp": -6.024096385542169,
+      "flavio_binario_pct": 46.98795180722892,
+      "arquivo": "analysis/reponderacao/pesquisas/quaest_2026-08-03.json",
+      "fonte": {
+        "url": null
+      }
+    },
+    {
+      "id": "quaest_2026-08-13",
+      "campo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-08-13"
+      },
+      "divulgacao": "2026-08-14",
+      "n": 2004,
+      "publicado": {
+        "lula": 43,
+        "flavio": 40,
+        "branco_nulo": 13,
+        "indecisos": 4
+      },
+      "gap_total_pp": -3,
+      "gap_binario_pp": -3.6144578313253013,
+      "flavio_binario_pct": 48.19277108433735,
+      "arquivo": "analysis/reponderacao/pesquisas/quaest_2026-08-13.json",
+      "fonte": {
+        "url": null
+      }
+    },
+    {
+      "id": "quaest_2026-09-01",
+      "campo": {
+        "inicio": "2026-08-30",
+        "fim": "2026-09-01"
+      },
+      "divulgacao": "2026-09-02",
+      "n": 2004,
+      "publicado": {
+        "lula": 42,
+        "flavio": 41,
+        "branco_nulo": 13,
+        "indecisos": 4
+      },
+      "gap_total_pp": -1,
+      "gap_binario_pp": -1.2048192771084338,
+      "flavio_binario_pct": 49.397590361445786,
+      "arquivo": "analysis/reponderacao/pesquisas/quaest_2026-09-01.json",
+      "fonte": {
+        "url": "https://quaest.com.br/wp-content/uploads/2026/09/QUAEST2PRESIDENCIAL0209.pdf"
+      }
+    },
+    {
+      "id": "quaest_2026-09-06",
+      "campo": {
+        "inicio": "2026-09-03",
+        "fim": "2026-09-06"
+      },
+      "divulgacao": "2026-09-07",
+      "n": 2004,
+      "publicado": {
+        "lula": 41,
+        "flavio": 41,
+        "branco_nulo": 13,
+        "indecisos": 5
+      },
+      "gap_total_pp": 0,
+      "gap_binario_pp": 0.0,
+      "flavio_binario_pct": 50.0,
+      "arquivo": "analysis/reponderacao/pesquisas/quaest_2026-09-06.json",
+      "fonte": {
+        "url": "https://quaest.com.br/wp-content/uploads/2026/09/QUAEST3PRESIDENCIAL0709.pdf"
+      }
+    },
+    {
+      "id": "quaest_2026-09-13",
+      "campo": {
+        "inicio": "2026-09-10",
+        "fim": "2026-09-13"
+      },
+      "divulgacao": "2026-09-14",
+      "n": 2004,
+      "publicado": {
+        "lula": 40,
+        "flavio": 42,
+        "branco_nulo": 13,
+        "indecisos": 5
+      },
+      "gap_total_pp": 2,
+      "gap_binario_pp": 2.4390243902439024,
+      "flavio_binario_pct": 51.21951219512195,
+      "arquivo": "analysis/reponderacao/pesquisas/quaest_2026-09-13.json",
+      "fonte": {
+        "rotulo": "Relatório completo (205 páginas)",
+        "url": "https://quaest.com.br/wp-content/uploads/2026/09/QUAEST4PRESIDENCIAL1409.pdf"
+      }
+    },
+    {
+      "id": "quaest_2026-09-20",
+      "campo": {
+        "inicio": "2026-09-17",
+        "fim": "2026-09-20"
+      },
+      "divulgacao": "2026-09-21",
+      "n": 2004,
+      "publicado": {
+        "lula": 41,
+        "flavio": 42,
+        "branco_nulo": 14,
+        "indecisos": 3
+      },
+      "gap_total_pp": 1,
+      "gap_binario_pp": 1.2048192771084338,
+      "flavio_binario_pct": 50.602409638554214,
+      "arquivo": "analysis/reponderacao/pesquisas/quaest_2026-09-20.json",
+      "fonte": {
+        "url": "https://quaest.com.br/wp-content/uploads/2026/09/QUAEST5PRESIDENCIAL2109.pdf"
+      }
+    },
+    {
+      "id": "quaest_2026-09-27",
+      "campo": {
+        "inicio": "2026-09-24",
+        "fim": "2026-09-27"
+      },
+      "divulgacao": "2026-09-28",
+      "n": 2004,
+      "publicado": {
+        "lula": 42,
+        "flavio": 42,
+        "branco_nulo": 13,
+        "indecisos": 3
+      },
+      "gap_total_pp": 0,
+      "gap_binario_pp": 0.0,
+      "flavio_binario_pct": 50.0,
+      "arquivo": "analysis/reponderacao/pesquisas/quaest_2026-09-27.json",
+      "fonte": {
+        "url": "https://quaest.com.br/relatorios/pesquisa-de-intencao-de-voto-para-presidente-rodada-6-28-09-2026/"
+      }
+    },
+    {
+      "id": "quaest_2026-10-03",
+      "campo": {
+        "inicio": "2026-10-02",
+        "fim": "2026-10-03"
+      },
+      "divulgacao": "2026-10-03",
+      "n": 3702,
+      "publicado": {
+        "lula": 42,
+        "flavio": 44,
+        "indecisos": 1,
+        "branco_nulo": 13
+      },
+      "gap_total_pp": 2,
+      "gap_binario_pp": 2.3255813953488373,
+      "flavio_binario_pct": 51.16279069767442,
+      "arquivo": "analysis/reponderacao/pesquisas/quaest_2026-10-03.json",
+      "fonte": {
+        "rotulo": "Painel do G1 (API) e matérias do G1",
+        "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/100/?tipo_pergunta=ESTIMULADA-PRE-003&instituto=Quaest",
+        "arquivo": "data/originals/quaest_102026_03/g1_estimulada_1t.json"
+      }
+    },
+    {
+      "id": "quaest_2026-10-13",
+      "campo": {
+        "inicio": "2026-10-10",
+        "fim": "2026-10-13"
+      },
+      "divulgacao": "2026-10-14",
+      "n": 2154,
+      "publicado": {
+        "flavio": 46,
+        "lula": 44,
+        "branco_nulo": 9,
+        "indecisos": 1
+      },
+      "gap_total_pp": 2,
+      "gap_binario_pp": 2.2222222222222223,
+      "flavio_binario_pct": 51.111111111111114,
+      "arquivo": "analysis/reponderacao/pesquisas/quaest_2026-10-13.json",
+      "fonte": {
+        "rotulo": "G1: painel salvo pelo usuário, cruzamentos extraídos do DOM; registro TSE conferido",
+        "url": "https://especiaisg1.globo/politica/eleicoes/2026/pesquisas-eleitorais/presidente/2-turno/Quaest/internal/",
+        "arquivo": "data/originals/quaest_102026_14/g1-painel-salvo.html.gz"
+      }
+    }
+  ],
+  "evolucao_renda_historica": {
+    "inicio": {
+      "id": "quaest_2026-07-13",
+      "divulgacao": "2026-07-15",
+      "publicado": {
+        "lula": 45,
+        "flavio": 37,
+        "branco_nulo": 14,
+        "indecisos": 4
+      },
+      "recomposto": {
+        "lula": 45.6,
+        "flavio": 36.86,
+        "branco_nulo": 14.12,
+        "indecisos": 3.42
+      },
+      "gap_publicado_pp": -8,
+      "gap_recomposto_pp": -8.740000000000002,
+      "residuo_gap_pp": 0.740000000000002
+    },
+    "fim": {
+      "id": "quaest_2026-09-27",
+      "divulgacao": "2026-09-28",
+      "publicado": {
+        "lula": 42,
+        "flavio": 42,
+        "branco_nulo": 13,
+        "indecisos": 3
+      },
+      "recomposto": {
+        "lula": 42.61,
+        "flavio": 41.51,
+        "branco_nulo": 12.53,
+        "indecisos": 3.35
+      },
+      "gap_publicado_pp": 0,
+      "gap_recomposto_pp": -1.1000000000000014,
+      "residuo_gap_pp": 1.1000000000000014
+    },
+    "faixas": [
+      {
+        "faixa": "Até 2 SM",
+        "peso_pct": 31,
+        "julho": {
+          "lula": 54,
+          "flavio": 29,
+          "branco_nulo": 14,
+          "indecisos": 3
+        },
+        "setembro": {
+          "lula": 55,
+          "flavio": 29,
+          "branco_nulo": 11,
+          "indecisos": 5
+        },
+        "mudanca_gap_na_faixa_pp": -1,
+        "contribuicao_gap_pp": -0.31
+      },
+      {
+        "faixa": "Mais de 2 a 5 SM",
+        "peso_pct": 42,
+        "julho": {
+          "lula": 43,
+          "flavio": 40,
+          "branco_nulo": 13,
+          "indecisos": 4
+        },
+        "setembro": {
+          "lula": 39,
+          "flavio": 44,
+          "branco_nulo": 14,
+          "indecisos": 3
+        },
+        "mudanca_gap_na_faixa_pp": 8,
+        "contribuicao_gap_pp": 3.36
+      },
+      {
+        "faixa": "Mais de 5 SM",
+        "peso_pct": 27,
+        "julho": {
+          "lula": 40,
+          "flavio": 41,
+          "branco_nulo": 16,
+          "indecisos": 3
+        },
+        "setembro": {
+          "lula": 34,
+          "flavio": 52,
+          "branco_nulo": 12,
+          "indecisos": 2
+        },
+        "mudanca_gap_na_faixa_pp": 17,
+        "contribuicao_gap_pp": 4.59
+      }
+    ],
+    "mudanca_gap_publicado_pp": 8,
+    "mudanca_gap_recomposto_pp": 7.64,
+    "mudanca_residuo_pp": 0.35999999999999943,
+    "fontes": {
+      "conferido_em": "2026-10-15",
+      "originais": [
+        {
+          "arquivo": "data/pesquisas/quaest/2026-08-14/relatorio.pdf",
+          "bytes": 52904713,
+          "sha256": "6cf7e4b4eb1da3ad5854168dc8770cb1afb1ed3e2cca112bbbd9f7fb70fb96e0"
+        },
+        {
+          "arquivo": "data/pesquisas/quaest/2026-07/Quaest_072026.pdf",
+          "bytes": 15444170,
+          "sha256": "1385d3fd9033763569a542e0b5e7711f6f61f5aa3009e0825c9772a1ceff0e31"
+        },
+        {
+          "arquivo": "data/originals/quaest_092026_29/relatorio.pdf",
+          "bytes": 83425558,
+          "sha256": "30431a6d83a2b1bd3ddb0276d1b4673897876ed195096d1b8e4ff12b3ad0f57b"
+        }
+      ],
+      "paginas": [
+        {
+          "original": "data/pesquisas/quaest/2026-08-14/relatorio.pdf",
+          "pagina_fisica": 36,
+          "arquivo": "docs/fontes/quaest_14102026/julho-voto-p36.png",
+          "rotulo": "Coluna Jul, série reproduzida no relatório de 14/08",
+          "sha256": "6ae4bb55bfde4596c98f8541aee07e4650d4c6bddd6ae0054dcb07e009605718"
+        },
+        {
+          "original": "data/pesquisas/quaest/2026-07/Quaest_072026.pdf",
+          "pagina_fisica": 114,
+          "arquivo": "docs/fontes/quaest_14102026/julho-perfil-p114.png",
+          "rotulo": "Perfil de renda de julho",
+          "sha256": "39f045e9fe22dfc9559f791370f731e8cb9366427597a0852471f7333ce74da2"
+        },
+        {
+          "original": "data/originals/quaest_092026_29/relatorio.pdf",
+          "pagina_fisica": 37,
+          "arquivo": "docs/fontes/quaest_14102026/setembro-voto-p37.png",
+          "rotulo": "Coluna 28 Set, série do relatório de 28/09",
+          "sha256": "38fde40f93ce63724c63bd523afec5ab738ea33a50bf283c32359512b35ddb1a"
+        },
+        {
+          "original": "data/originals/quaest_092026_29/relatorio.pdf",
+          "pagina_fisica": 204,
+          "arquivo": "docs/fontes/quaest_14102026/setembro-perfil-p204.png",
+          "rotulo": "Perfil de renda de setembro",
+          "sha256": "5ded94d688b0df8cb64e6e8b49a925f37335be0fe016c4092eb43ceca952f278"
+        }
+      ],
+      "nota": "Páginas integrais renderizadas; originais preservados, sem edição."
+    },
+    "limite": "Contabilidade de margens publicadas em amostras diferentes, não migração individual, efeito causal da renda ou voto por renda de 14/10. Para em 28/09; em 03/10 o perfil final ainda não havia sido conferido."
+  },
+  "aas": {
+    "variancia_pp2": 4.176415970287836,
+    "margem_gap_95_pp": 4.005437550124833,
+    "intervalo_gap_95_pp": [
+      -2.0054375501248316,
+      6.005437550124835
+    ],
+    "mudanca_gap_total_pp": 0,
+    "margem_mudanca_independente_aas_95_pp": 4.996333825123029
+  },
+  "decomposicao": {
+    "variacoes_total_pp": {
+      "flavio": 2,
+      "lula": 2,
+      "branco_nulo": -4,
+      "indecisos": 0
+    },
+    "proporcao_anterior_aplicada_a_massa_atual": {
+      "flavio": 46.04651162790697,
+      "lula": 43.95348837209303
+    },
+    "residuo_proporcional_pp": {
+      "flavio": -0.046511627906973274,
+      "lula": 0.046511627906973274
+    },
+    "mudanca_gap_binario_pp": -0.10335917312661502
+  },
+  "urna_1t": {
+    "universo": "Brasil sem exterior; válidos oficiais do 1º turno",
+    "validos": {
+      "flavio": 47.037612,
+      "lula": 45.156084
+    },
+    "flavio_entre_finalistas_pct": 51.020421179339635,
+    "nota": "Renormalização entre finalistas, não resultado observado de 2º turno nem destino da terceira via."
+  },
+  "campo": [
+    {
+      "data": "2026-10-10",
+      "weekday": 5,
+      "tipo": "sábado",
+      "entrevistas": null
+    },
+    {
+      "data": "2026-10-11",
+      "weekday": 6,
+      "tipo": "domingo",
+      "entrevistas": null
+    },
+    {
+      "data": "2026-10-12",
+      "weekday": 0,
+      "tipo": "feriado nacional, segunda",
+      "entrevistas": null
+    },
+    {
+      "data": "2026-10-13",
+      "weekday": 1,
+      "tipo": "terça-feira",
+      "entrevistas": null
+    }
+  ],
+  "identificacao_renda": {
+    "tipo": "sensibilidade_condicional_cotas_registradas",
+    "hipotese": "Hipótese provisória: cotas de renda 31/42/27 do registro atual BR-08729/2026 usadas como pesos. Perfil final, bases após rake/MrP e não resposta à renda não publicados no arquivo salvo. A conta assume cobertura integral dessas faixas. A boa recomposição não comprova os pesos. Nenhum voto por renda de onda anterior foi transportado.",
+    "pesos_registro_pct": [
+      31,
+      42,
+      27
+    ],
+    "pnad_pct": [
+      35.187,
+      39.259,
+      25.554
+    ],
+    "recomposto": {
+      "flavio": 46.05,
+      "lula": 44.18,
+      "indecisos": 0.73,
+      "branco_nulo": 9.04
+    },
+    "reponderacao_pontual": {
+      "flavio": 45.398,
+      "lula": 44.531,
+      "indecisos": 1.014,
+      "branco_nulo": 9.056
+    },
+    "gap_publicado_pp": 2,
+    "gap_ajustado_pp": 0.8670000000000044,
+    "flavio_binario_pct": 50.48204694814798,
+    "delta_ajuste_pp": {
+      "flavio": -0.6019999999999968,
+      "lula": 0.5309999999999988,
+      "indecisos": 0.014000000000000012,
+      "branco_nulo": 0.05599999999999916
+    },
+    "cenarios": {
+      "pessoas16_efetivo": {
+        "flavio": 45.398,
+        "lula": 44.531,
+        "indecisos": 1.014,
+        "branco_nulo": 9.056
+      },
+      "pessoas16_habitual": {
+        "flavio": 45.407,
+        "lula": 44.509,
+        "indecisos": 1.023,
+        "branco_nulo": 9.061
+      },
+      "domicilios_efetivo": {
+        "flavio": 44.265,
+        "lula": 45.509,
+        "indecisos": 1.054,
+        "branco_nulo": 9.171
+      }
+    },
+    "controles": {
+      "renda": {
+        "pesos_cotas_previstas_pct": [
+          31,
+          42,
+          27
+        ],
+        "ordem": [
+          "Até 2 sm",
+          "Mais de 2 a 5 sm",
+          "Mais de 5 sm"
+        ],
+        "recomposto": {
+          "flavio": 46.05,
+          "lula": 44.18,
+          "indecisos": 0.73,
+          "branco_nulo": 9.04
+        },
+        "residuo_recomposto_menos_publicado": {
+          "flavio": 0.05,
+          "lula": 0.18,
+          "indecisos": -0.27,
+          "branco_nulo": 0.04
+        }
+      },
+      "sexo": {
+        "pesos_cotas_previstas_pct": [
+          53,
+          47
+        ],
+        "ordem": [
+          "Feminino",
+          "Masculino"
+        ],
+        "recomposto": {
+          "flavio": 46.23,
+          "lula": 44.3,
+          "indecisos": 0.53,
+          "branco_nulo": 8.94
+        },
+        "residuo_recomposto_menos_publicado": {
+          "flavio": 0.23,
+          "lula": 0.3,
+          "indecisos": -0.47,
+          "branco_nulo": -0.06
+        }
+      },
+      "idade": {
+        "pesos_cotas_previstas_pct": [
+          31,
+          45,
+          24
+        ],
+        "ordem": [
+          "16 a 34 anos",
+          "35 a 59 anos",
+          "60 anos ou mais"
+        ],
+        "recomposto": {
+          "flavio": 45.77,
+          "lula": 44.06,
+          "indecisos": 1.0,
+          "branco_nulo": 9.17
+        },
+        "residuo_recomposto_menos_publicado": {
+          "flavio": -0.23,
+          "lula": 0.06,
+          "indecisos": 0.0,
+          "branco_nulo": 0.17
+        }
+      },
+      "escolaridade": {
+        "pesos_cotas_previstas_pct": [
+          42,
+          39,
+          19
+        ],
+        "ordem": [
+          "Fundamental",
+          "Médio",
+          "Superior"
+        ],
+        "recomposto": {
+          "flavio": 45.8,
+          "lula": 44.23,
+          "indecisos": 1.19,
+          "branco_nulo": 8.78
+        },
+        "residuo_recomposto_menos_publicado": {
+          "flavio": -0.2,
+          "lula": 0.23,
+          "indecisos": 0.19,
+          "branco_nulo": -0.22
+        }
+      }
+    },
+    "evolucao_0310": [
+      {
+        "faixa": "Até 2 SM",
+        "antes": {
+          "lula": 54,
+          "flavio": 33,
+          "indecisos": 1,
+          "branco_nulo": 12
+        },
+        "agora": {
+          "flavio": 36,
+          "lula": 53,
+          "indecisos": 1,
+          "branco_nulo": 10
+        },
+        "mudanca_gap_pp": 4,
+        "contribuicao_condicional_pp": 1.24
+      },
+      {
+        "faixa": "Mais de 2 a 5 SM",
+        "antes": {
+          "lula": 37,
+          "flavio": 47,
+          "indecisos": 2,
+          "branco_nulo": 14
+        },
+        "agora": {
+          "flavio": 49,
+          "lula": 41,
+          "indecisos": 1,
+          "branco_nulo": 9
+        },
+        "mudanca_gap_pp": -2,
+        "contribuicao_condicional_pp": -0.84
+      },
+      {
+        "faixa": "Mais de 5 SM",
+        "antes": {
+          "lula": 36,
+          "flavio": 53,
+          "indecisos": 0,
+          "branco_nulo": 11
+        },
+        "agora": {
+          "flavio": 53,
+          "lula": 39,
+          "indecisos": 0,
+          "branco_nulo": 8
+        },
+        "mudanca_gap_pp": -3,
+        "contribuicao_condicional_pp": -0.81
+      }
+    ],
+    "mudanca_gap_recomposto_pp": -0.41000000000000003,
+    "mudanca_gap_publicado_pp": 0,
+    "mudanca_residuo_pp": 0.41000000000000003,
+    "limite": "Cotas atuais assumidas como pesos, sem perfil final ou bases publicadas. A evolução compara amostras independentes, não migração individual nem efeito do feriado; não se testou a significância das mudanças por faixa. Em 03/10, 31/42/27 era hipótese da onda anterior. Sem prova de mudança da composição nem de pesos finais iguais."
+  },
+  "painel_g1": {
+    "resumo": "assets/quaest_14102026_painel/index.json",
+    "csv": "assets/quaest_14102026_painel/recortes.csv",
+    "perguntas": 5,
+    "recortes_por_pergunta": 26,
+    "fontes_sha256": {
+      "estimulada": "1f4d0a30d6c8bb9f03a71fdf9ebbb70fd2dd616e0f6609c0df4877b57849140c",
+      "espontanea": "3aabd0f742dc60c3b960ccf873fe47e47be477b03be0a785575f04cc94ff49c9",
+      "aprovacao": "156de012ddc63c44d08ef4bf63cf8bbd533f86dc16dad9fae91e60a105a60a1c",
+      "avaliacao": "1edeb692f678329fdd2235a0a8678723ff757591c154eace7fcafe28b121d5a8",
+      "rejeicao": "88c4b57bd646b9d2b6e04c36ab4d748bd4ad653346861c62c44bc8ef173d51af"
+    }
+  },
+  "pendencias": [
+    "Bases dos cruzamentos atuais; voto por renda já obtido no painel salvo.",
+    "Perfil final de renda antes/depois dos pesos e não resposta.",
+    "Salvar o PDF do questionário; anexo territorial não disponível na reconsulta de 15/10 às 01h12 BRT, ainda dentro do prazo mostrado.",
+    "Entrevistas, contatos, ausências, recusas e revisitas por dia/horário e estrato.",
+    "Pesos individuais, tamanho efetivo e eventual calibração pelo voto lembrado de 04/10."
+  ]
+}

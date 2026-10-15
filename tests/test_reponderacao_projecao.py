@@ -39,7 +39,8 @@ def source(house, day, flavio, *, income=False):
 
 
 def test_inclusive_projection_uses_latest_post_first_round_and_never_imputes_income():
-    projection = DATA["projection"]
+    # Data explícita: a chegada de ondas futuras não muda este contrato.
+    projection = P.build({**RAW, "referencia": "2026-10-13"}, M.preferences)
     selected = projection["selected"]
     assert {p["instituto"] for p in selected} == {
         "Datafolha",

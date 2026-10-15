@@ -154,6 +154,11 @@
 - PesqEle de ambas conferido e transcrito em `docs/fontes/*_13102026_registro.txt` e `datafolha_08102026_registro.txt`. Calibração pelo voto do 1º turno não está declarada no registro/relatório consultados; não afirmar ausência de ajustes internos. Datafolha mantém alvo de renda 49/47/4 e fator previsto 1, PNADC-A 2024; Nexus mantém perfil 19/18/40/23 e referência PNADC anual 2025.
 - CSS/JS compartilhados em `docs/assets/dossies_2t_2026.*`; explorador identifica universo, base e página ao mudar a pergunta. Gráficos móveis são HTML legível; tabelas e fontes funcionam sem JS. Cards gerados pelo manifesto via `social-card-dossies-2t.py`. Validação em `tests/test_dossies_2t_2026.py` e Playwright. Cada fonte e rótulo são conferidos antes de promover um diagnóstico.
 
+## Quaest nacional de 14/10/2026
+- `python3 scripts/quaest-141026-build.py` gera o dossiê preliminar e os dados do painel G1 a partir das fontes locais em `data/originals/quaest_102026_14/`; módulos em `scripts/quaest_141026/`. Cinco perguntas, 26 recortes por pergunta; bases ausentes continuam null. Rejeição não é voto nem partição de 100%.
+- Campo 10–13/10, n = 2.154, BR-08729/2026, publicado Flávio 46 × Lula 44. Cruzamentos atuais por renda conferidos no HTML salvo e na API arquivada. Cotas registradas 31/42/27 são hipótese de pesos, não perfil final: sensibilidade PNAD 45,398 × 44,531, incluída nas duas centrais com essa condição explícita.
+- Após rever a ficha, regenerar dossiê, `reponderacao-pnad.py calcular --hoje AAAA-MM-DD`, `reponderacao-build.py`, cards Quaest/centrais/hub e sitemap. Atualizar textos e metadados da home à mão; preservar snapshots publicados e o arquivo do 1º turno. Renderização histórica não pode persistir dados; `--refresh-archive` é somente para revisão explícita do arquivo.
+
 ## Coding Style & Naming
 - Prefer Python (PEP 8, 4 spaces).
 - Script naming: `kebab-case` (new files), keep existing names for compatibility.

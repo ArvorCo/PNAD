@@ -141,9 +141,10 @@ def build(data):
     }
 
 
-def write(data):
+def write(data, *, assets=None):
     result = build(data)
-    assets = ROOT / "docs/assets"
+    assets = Path(assets) if assets is not None else ROOT / "docs/assets"
+    assets.mkdir(parents=True, exist_ok=True)
     lines = []
     for key, value in result.items():
         encoded = json.dumps(value, ensure_ascii=False)

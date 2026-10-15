@@ -496,19 +496,49 @@ one reference election and no archived 2018 or 2022 polls.
 The public report has three routes: `docs/reponderacao_pnad.html` for the runoff
 simulator, `docs/reponderacao_pnad_1o_turno_2026.html` for the first-round archive
 and comparison with the ballot, and `docs/reponderacao_pnad_log.html` for wave
-incorporations and documentary revisions. Generate all three together:
+incorporations and documentary revisions. Update the current page and log:
 
 ```bash
-python3 scripts/reponderacao-pnad.py calcular --hoje 2026-10-09
+python3 scripts/quaest-141026-build.py
+python3 scripts/reponderacao-pnad.py calcular --hoje 2026-10-15
 python3 scripts/reponderacao-build.py
-python3 scripts/social-cards.py --only reponderacao_pnad reponderacao_pnad_1o_turno_2026 reponderacao_pnad_log
+python3 scripts/social-cards.py --only quaest_14102026 reponderacao_pnad reponderacao_pnad_log hub
 python3 scripts/sitemap-build.py
 ```
+
+An existing first-round archive and its series stay unchanged. Use
+`python3 scripts/reponderacao-build.py --refresh-archive` only for an explicit
+revision of that closed publication.
+
+The preliminary Quaest dossier of 14 October is generated with
+`python3 scripts/quaest-141026-build.py`. The user's complete saved G1 page
+supplies this wave's income crosstabs; import its rendered iframe with
+`python3 scripts/quaest-141026-build.py --import-panel caminho/saved_resource.html`.
+The importer parses local SVG labels without executing JavaScript or contacting
+G1. It archives the exact original compressed, exports 25 complete strata and the
+total, and preserves the unrendered Lulista stratum as null. Income, sex, age and
+schooling checks use this wave's registered quotas. The income mean and inclusive
+projection now include the conditional sensitivity: 31/42/27 are planned targets
+assumed as weights, not verified final weights. Sources and limits are recorded
+in `analysis/quaest_141026/` and the dossier.
+The archived public G1 API additionally supplies five questions (stimulated and
+spontaneous voting intention, approval, evaluation and rejection), each with
+26 strata. `quaest_141026/g1.py` validates dates, response completeness and
+conditional quota recomposition, then exports one JSON per question and a CSV
+under `docs/assets/quaest_14102026_painel/`. The normal dossier build runs offline
+from these archived sources. All 100 observed cells in the saved HTML agree with
+the API; the previously unrendered Lulista stratum is available there without
+replacing the nulls in the saved DOM evidence. Rejection is kept separate from
+vote shares and does not change the simulator's undecided allocation.
+The historical income decomposition stops at 28 September and preserves its
+recomposition residual. Recreate its four source-page PNGs from the local PDFs
+with `python3 scripts/quaest-141026-build.py --render-history-sources`; the normal
+build uses the saved source manifest and does not require rendering those PDFs.
 
 The runoff central uses only fields beginning after 4 October, within a
 seven-day release window and with one eligible wave per house. It is a
 conditional scenario: income reweighting, the historical Nexus propensity
-template and an explicit +5% relative-presence assumption for Flávio, selected
+template and an explicit +3.8% relative-presence assumption for Flávio, selected
 after the first round. The simulator exposes attendance, invalid votes,
 undecided allocation and a common-error sensitivity; it does not estimate
 winning probabilities. Displayed differences use **Flávio minus Lula**;

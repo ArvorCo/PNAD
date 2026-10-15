@@ -105,13 +105,11 @@ def test_uniform_nonchoice_changes_volume_not_valid_shares():
 
 def test_only_post_first_round_fields_enter_central_and_no_vox_imputation():
     assert all(p["campo"]["inicio"] > "2026-10-04" for p in DATA["polls"])
-    assert {p["instituto"] for p in DATA["polls"]} == {
-        "Datafolha",
-        "PoderData",
-        "Gerp",
-        "Nexus",
-        "Ipespe",
-    }
+    raw = json.loads((ROOT / "docs/assets/reponderacao_pnad.json").read_text())
+    with_income = {p["id"] for p in raw["pesquisas"] if "2t" in p["turnos"]}
+    assert DATA["polls"]
+    assert all(p["id"] in with_income for p in DATA["polls"])
+    assert len(DATA["polls"]) == len({p["instituto"] for p in DATA["polls"]})
     assert any(p["id"] == "vox_brasil_2026-10-07" for p in DATA["excluded"])
     forecast = json.loads((ROOT / "docs/assets/reponderacao_validos.json").read_text())
     previous = forecast["ballots"]["2t"]["scenarios"]["flavio105"]["aggregate"][

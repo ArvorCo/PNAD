@@ -1,0 +1,121 @@
+{
+  "id": "quaest_2026-10-13",
+  "instituto": "Quaest",
+  "registro_tse": "BR-08729/2026",
+  "contratante": "Editora Globo S/A e Globo Comunicação e Participações S/A",
+  "campo": {
+    "inicio": "2026-10-10",
+    "fim": "2026-10-13"
+  },
+  "divulgacao": "2026-10-14",
+  "n": 2154,
+  "metodo": "presencial domiciliar; sorteio PPT de municípios e setores, cotas no estágio final; eventual rake/MrP previsto no registro",
+  "publicado": {
+    "2t": {
+      "flavio": 46,
+      "lula": 44,
+      "branco_nulo": 9,
+      "indecisos": 1
+    }
+  },
+  "cruzamentos": {
+    "2t": {
+      "opcoes": [
+        "flavio",
+        "lula",
+        "indecisos",
+        "branco_nulo"
+      ],
+      "linhas": [
+        [
+          36,
+          53,
+          1,
+          10
+        ],
+        [
+          49,
+          41,
+          1,
+          9
+        ],
+        [
+          53,
+          39,
+          0,
+          8
+        ]
+      ],
+      "nota": "Rótulos SVG do painel G1 salvo pelo usuário. Valores inteiros, sem bases; 0 é arredondado no painel. Extração local, sem acesso remoto à API."
+    }
+  },
+  "dossie": "quaest_14102026.html",
+  "perfil_economico_publicado": {
+    "tipo": "cotas_previstas_registro_tse",
+    "unidade": "renda domiciliar total em salários mínimos",
+    "faixas": [
+      "Até 2 SM",
+      "Mais de 2 a 5 SM",
+      "Mais de 5 SM"
+    ],
+    "pct": [
+      31,
+      42,
+      27
+    ],
+    "fonte_declarada": "PNADc Anual 2025, 1a visita (IBGE)",
+    "nota": "Não equivale ao perfil final da amostra; admite calibração posterior. Nenhum cruzamento de onda anterior foi transportado."
+  },
+  "fonte": {
+    "tipo": "painel_contratante_salvo_pelo_usuario",
+    "rotulo": "G1: painel salvo pelo usuário, cruzamentos extraídos do DOM; registro TSE conferido",
+    "url": "https://especiaisg1.globo/politica/eleicoes/2026/pesquisas-eleitorais/presidente/2-turno/Quaest/internal/",
+    "arquivo": "data/originals/quaest_102026_14/g1-painel-salvo.html.gz",
+    "conferido_em": "2026-10-15",
+    "status": "Totais e 25 recortes completos extraídos do arquivo salvo. Cotas atuais conferidas no TSE; sensibilidade provisória, perfil final não verificado.",
+    "registro_transcricao": "docs/fontes/quaest_14102026_registro.txt",
+    "complementos": [
+      {
+        "rotulo": "SBT News: totais e ficha técnica",
+        "url": "https://sbtnews.sbt.com.br/noticia/eleicoes/quaest-flavio-bolsonaro-tem-46-e-lula-44-no-2-turno"
+      },
+      {
+        "rotulo": "G1: página externa; painel recebido em arquivo local",
+        "url": "https://g1.globo.com/politica/eleicoes/2026/pesquisa-eleitoral/presidente-br-2-turno-quaest/"
+      },
+      {
+        "rotulo": "PesqEle: consultar BR-08729/2026",
+        "url": "https://pesqele-divulgacao.tse.jus.br/app/pesquisa/listar.xhtml"
+      }
+    ],
+    "sha256": "7a2c5ba5a3d093fffbcfb3773fde5fa25f47477b1d585c3fcf70bb8e25e41f3f",
+    "nota": "Hipótese provisória: cotas de renda 31/42/27 do registro atual BR-08729/2026 usadas como pesos. Perfil final, bases após rake/MrP e não resposta à renda não publicados no arquivo salvo. A conta assume cobertura integral dessas faixas. A boa recomposição não comprova os pesos. Nenhum voto por renda de onda anterior foi transportado."
+  },
+  "renda": {
+    "unidade": "salarios_minimos",
+    "ano_referencia": 2026,
+    "faixas": [
+      {
+        "rotulo": "Até 2 SM",
+        "max": 2
+      },
+      {
+        "rotulo": "Mais de 2 a 5 SM",
+        "max": 5
+      },
+      {
+        "rotulo": "Mais de 5 SM",
+        "max": null
+      }
+    ],
+    "amostra_pct": [
+      31,
+      42,
+      27
+    ],
+    "mes_precos": "202610",
+    "perfil_tipo": "cota_registrada",
+    "nota": "Hipótese provisória: cotas de renda 31/42/27 do registro atual BR-08729/2026 usadas como pesos. Perfil final, bases após rake/MrP e não resposta à renda não publicados no arquivo salvo. A conta assume cobertura integral dessas faixas. A boa recomposição não comprova os pesos. Nenhum voto por renda de onda anterior foi transportado."
+  },
+  "controles_arquivo": "data/originals/quaest_102026_14/g1-controles.json"
+}

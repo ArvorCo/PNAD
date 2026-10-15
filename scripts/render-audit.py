@@ -28,6 +28,11 @@ SONDA = """
   const px = el => el.getBoundingClientRect();
 
   for (const el of document.querySelectorAll('[style*="width"],[style*="height"]')) {
+    // A versão móvel de um gráfico fica oculta no desktop (e vice-versa).
+    // Não cobrar área dos descendentes de uma alternativa oculta por CSS.
+    let oculto = el.parentElement;
+    while (oculto && getComputedStyle(oculto).display !== 'none') oculto = oculto.parentElement;
+    if (oculto) continue;
     const cs = getComputedStyle(el);
     const caixa = px(el);
     const pede = el.style.width || el.style.height;

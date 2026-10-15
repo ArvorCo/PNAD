@@ -59,6 +59,8 @@ def test_state_surveys_never_enter_national_averages():
 
 
 def test_skip_home_preserves_home_and_its_chart(tmp_path, monkeypatch):
+    published_history = ROOT / "docs/assets/reponderacao_urna_serie_1t.json"
+    history_before = published_history.read_bytes()
     spec = importlib.util.spec_from_file_location(
         "reponderacao_build_test", ROOT / "scripts/reponderacao-build.py"
     )
@@ -78,6 +80,8 @@ def test_skip_home_preserves_home_and_its_chart(tmp_path, monkeypatch):
     builder.INDEX.write_bytes(b"home deliberately frozen")
     builder.HOME_SVG.write_bytes(b"chart deliberately frozen")
     builder.build(update_home=False)
+    assert published_history.read_bytes() == history_before
+    assert (tmp_path / "reponderacao_urna_serie_1t.json").exists()
     assert builder.INDEX.read_bytes() == b"home deliberately frozen"
     assert builder.HOME_SVG.read_bytes() == b"chart deliberately frozen"
     html = (tmp_path / "reponderacao_pnad_1o_turno_2026.html").read_text()

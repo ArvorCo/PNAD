@@ -710,7 +710,7 @@ def write_csv() -> None:
         escritor.writerows(linhas)
 
 
-def build(*, update_home: bool = True) -> None:
+def build(*, update_home: bool = True, refresh_archive: bool = False) -> None:
     SHEET.write_text(CSS, encoding="utf-8")
     TIP_SHEET.write_text(TIP_CSS, encoding="utf-8")
     TIP_SCRIPT.write_text(TIP_JS, encoding="utf-8")
@@ -720,7 +720,9 @@ def build(*, update_home: bool = True) -> None:
     PAGE.write_text(
         injetar(html).replace("<section ", "\n<section ") + "\n", encoding="utf-8"
     )
-    importlib.import_module("reponderacao-paginas").write_companions(globals())
+    importlib.import_module("reponderacao-paginas").write_companions(
+        globals(), refresh_archive=refresh_archive
+    )
     write_csv()
     groups_view.write_group_csv(ASSETS / "reponderacao_grupos_1t.csv", D)
     importlib.import_module("reponderacao-janela-view").write_csv(
@@ -756,9 +758,14 @@ def build(*, update_home: bool = True) -> None:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
+        "--refresh-archive",
+        action="store_true",
+        help="Regenera explicitamente a página e a série fechadas do 1º turno.",
+    )
+    parser.add_argument(
         "--skip-home",
         action="store_true",
         help="Não atualiza index.html nem o SVG da capa.",
     )
     args = parser.parse_args()
-    build(update_home=not args.skip_home)
+    build(update_home=not args.skip_home, refresh_archive=args.refresh_archive)

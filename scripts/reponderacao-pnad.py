@@ -501,6 +501,8 @@ def build(today: date | None = None) -> dict[str, Any]:
                     "campo",
                     "divulgacao",
                     "n",
+                    "dossie",
+                    "metodo",
                     "fonte",
                     "publicado",
                     "publicado_validos",

@@ -60,6 +60,7 @@ def _agregador_counts() -> tuple[str, str]:
 _ONDAS, _INSTITUTOS = _agregador_counts()
 
 CARDS: list[dict] = [
+    importlib.import_module("social-card-quaest-141026").card(ROOT),
     *importlib.import_module("social-card-dossies-2t").cards(ROOT),
     importlib.import_module("social-card-politize").card(ROOT),
     importlib.import_module("social-card-politize-game").card(ROOT),
@@ -191,9 +192,9 @@ CARDS: list[dict] = [
         "eyebrow": "Arvor Intelligence · acervo aberto",
         "title": "Toda pesquisa",
         "title_em": "deixa rastro",
-        "lede": "Quinze auditorias e um atlas estadual recalculados contra a fonte oficial: <b>TSE</b> para o eleitorado, <b>IBGE/PNAD</b> para renda e escolaridade.",
+        "lede": "<b>Quaest, BTG/Nexus e Datafolha no segundo turno.</b> Cruzamentos, sensibilidade por renda e centrais atualizadas. A régua é pública: TSE e IBGE/PNAD.",
         "stats": [
-            ("16", "dossiês"),
+            ("3", "novos dossiês do 2º turno"),
             ("4", "institutos"),
             ("853", "municípios no atlas"),
         ],

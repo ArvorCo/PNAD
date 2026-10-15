@@ -90,7 +90,8 @@ def test_futura_profile_and_datatrends_ambiguous_unit_do_not_become_income_votes
 
 
 def test_both_updated_centres_use_correct_houses_and_preserve_accounting():
-    data = read("docs/assets/reponderacao_simulador.json")
+    # Contrato da rodada de 13/10: a página corrente continua recebendo ondas.
+    data = read("docs/assets/reponderacao_cenarios/dae267a6d8ba1054.json")
     assert data["reference"] == "2026-10-13"
     assert {p["instituto"] for p in data["polls"]} == {
         "Datafolha",
@@ -175,6 +176,9 @@ def test_rendering_first_round_does_not_overwrite_current_second_round_data():
         ROOT / "docs/assets/reponderacao_validos.csv",
     ]
     before = [p.read_bytes() for p in assets]
+    reference = read("docs/assets/reponderacao_validos.json")["ballots"]["2t"][
+        "reference"
+    ]
     closed = ARCHIVE.close(read("docs/assets/reponderacao_pnad.json"), "2026-10-04")
     html = importlib.import_module("reponderacao-validos-view").section_html(
         closed, lambda headers, rows: "", ("1t",)
@@ -183,7 +187,7 @@ def test_rendering_first_round_does_not_overwrite_current_second_round_data():
     assert [p.read_bytes() for p in assets] == before
     assert (
         read("docs/assets/reponderacao_validos.json")["ballots"]["2t"]["reference"]
-        == "2026-10-13"
+        == reference
     )
 
 
@@ -197,9 +201,16 @@ def test_current_cards_evidence_and_diary_disclose_revisions_without_duplication
     df = page.select_one("#pesquisa-datafolha_2026-10-08").get_text(" ", strip=True)
     assert "PERFIL ASSUMIDO" not in df and "1.187/874/337" in df
     card = page.select_one('.rs-central-card[data-central-card="media"]')
-    assert "DataTrends, Futura, Vox Brasil" in card.get_text()
+    assert all(
+        name in card.get_text() for name in ["DataTrends", "Futura", "Vox Brasil"]
+    )
     projection = page.select_one('.rs-central-card[data-central-card="projecao"]')
-    assert "Futura" in projection.get_text() and "11,4%" in projection.get_text()
+    current = read("docs/assets/reponderacao_simulador.json")
+    futura = next(
+        p for p in current["projection"]["selected"] if p["instituto"] == "Futura"
+    )
+    weight = f'{100 * futura["weight"]:.1f}%'.replace(".", ",")
+    assert "Futura" in projection.get_text() and weight in projection.get_text()
     evidence = page.select_one("#modelo-projecao").get_text(" ", strip=True)
     assert "+0,24 pp" in evidence and "2,29 e 2,53" in evidence
     assert page.select_one(

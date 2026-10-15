@@ -1,0 +1,268 @@
+{
+ "pagina": {
+  "url": "https://especiaisg1.globo/politica/eleicoes/2026/pesquisas-eleitorais/presidente/2-turno/Quaest/internal/",
+  "arquivo": "data/originals/quaest_102026_14/g1_painel.html",
+  "sha256": "21b876a27bc54357daf2ce0e9d841257d3eddf4a0e7c73030c2163a568d81cd9",
+  "bytes": 141057
+ },
+ "conferido_em": "2026-10-15",
+ "origem": "API pública consumida pelo painel do G1; extração arquivada em 15/10/2026.",
+ "csv": "assets/quaest_14102026_painel/recortes.csv",
+ "perguntas": {
+  "estimulada": {
+   "codigo": "ESTIMULADA-PRE-201",
+   "rotulo": "Intenção estimulada",
+   "fonte": {
+    "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/216/?tipo_pergunta=ESTIMULADA-PRE-201&instituto=Quaest",
+    "arquivo": "data/originals/quaest_102026_14/g1_estimulada.json",
+    "sha256": "1f4d0a30d6c8bb9f03a71fdf9ebbb70fd2dd616e0f6609c0df4877b57849140c",
+    "bytes": 23572
+   },
+   "total": {
+    "id": "total-total-ESTIMULADA-PRE-201",
+    "dimensao": "Total",
+    "recorte": "Total",
+    "valores_pct": {
+     "Flávio Bolsonaro": 46.0,
+     "Lula": 44.0,
+     "Indecisos": 1.0,
+     "Branco/Nulo/Não Vai Votar": 9.0
+    },
+    "margem_publicada_pp": 2,
+    "base": null
+   },
+   "recortes": 26,
+   "dimensoes": {
+    "Cor": 3,
+    "Renda": 3,
+    "Idade": 3,
+    "Escolaridade": 3,
+    "Identificação política": 5,
+    "Região": 5,
+    "Sexo": 2,
+    "Religião": 2
+   },
+   "dados": "assets/quaest_14102026_painel/estimulada.json"
+  },
+  "espontanea": {
+   "codigo": "ESPONTANEA-PRE-201",
+   "rotulo": "Intenção espontânea",
+   "fonte": {
+    "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/216/?tipo_pergunta=ESPONTANEA-PRE-201&instituto=Quaest",
+    "arquivo": "data/originals/quaest_102026_14/g1_espontanea.json",
+    "sha256": "3aabd0f742dc60c3b960ccf873fe47e47be477b03be0a785575f04cc94ff49c9",
+    "bytes": 26681
+   },
+   "total": {
+    "id": "total-total-ESPONTANEA-PRE-201",
+    "dimensao": "Total",
+    "recorte": "Total",
+    "valores_pct": {
+     "Flávio Bolsonaro": 43.0,
+     "Lula": 42.0,
+     "Outros": 0.0,
+     "Indecisos": 7.0,
+     "Branco/Nulo/Não Vai Votar": 8.0
+    },
+    "margem_publicada_pp": 2,
+    "base": null
+   },
+   "recortes": 26,
+   "dimensoes": {
+    "Cor": 3,
+    "Renda": 3,
+    "Idade": 3,
+    "Escolaridade": 3,
+    "Identificação política": 5,
+    "Região": 5,
+    "Sexo": 2,
+    "Religião": 2
+   },
+   "dados": "assets/quaest_14102026_painel/espontanea.json"
+  },
+  "aprovacao": {
+   "codigo": "APROVACAO-PRE-001",
+   "rotulo": "Aprovação do governo",
+   "fonte": {
+    "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/216/?tipo_pergunta=APROVACAO-PRE-001&instituto=Quaest",
+    "arquivo": "data/originals/quaest_102026_14/g1_aprovacao.json",
+    "sha256": "156de012ddc63c44d08ef4bf63cf8bbd533f86dc16dad9fae91e60a105a60a1c",
+    "bytes": 18815
+   },
+   "total": {
+    "id": "total-total-APROVACAO-PRE-001",
+    "dimensao": "Total",
+    "recorte": "Total",
+    "valores_pct": {
+     "Aprova": 45.0,
+     "Desaprova": 48.0,
+     "Não Sabe / Não Respondeu": 7.0
+    },
+    "margem_publicada_pp": 2,
+    "base": null
+   },
+   "recortes": 26,
+   "dimensoes": {
+    "Cor": 3,
+    "Renda": 3,
+    "Idade": 3,
+    "Escolaridade": 3,
+    "Identificação política": 5,
+    "Região": 5,
+    "Sexo": 2,
+    "Religião": 2
+   },
+   "dados": "assets/quaest_14102026_painel/aprovacao.json"
+  },
+  "avaliacao": {
+   "codigo": "AVALIACAO-PRE-001",
+   "rotulo": "Avaliação do governo",
+   "fonte": {
+    "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/216/?tipo_pergunta=AVALIACAO-PRE-001&instituto=Quaest",
+    "arquivo": "data/originals/quaest_102026_14/g1_avaliacao.json",
+    "sha256": "1edeb692f678329fdd2235a0a8678723ff757591c154eace7fcafe28b121d5a8",
+    "bytes": 22138
+   },
+   "total": {
+    "id": "total-total-AVALIACAO-PRE-001",
+    "dimensao": "Total",
+    "recorte": "Total",
+    "valores_pct": {
+     "Positivo": 34.0,
+     "Regular": 24.0,
+     "Negativo": 40.0,
+     "Não Sabe / Não Respondeu": 2.0
+    },
+    "margem_publicada_pp": 2,
+    "base": null
+   },
+   "recortes": 26,
+   "dimensoes": {
+    "Cor": 3,
+    "Renda": 3,
+    "Idade": 3,
+    "Escolaridade": 3,
+    "Identificação política": 5,
+    "Região": 5,
+    "Sexo": 2,
+    "Religião": 2
+   },
+   "dados": "assets/quaest_14102026_painel/avaliacao.json"
+  },
+  "rejeicao": {
+   "codigo": "CONVOTA-PRE2",
+   "rotulo": "Rejeição",
+   "fonte": {
+    "url": "https://especiaisg1.globo/api/pesquisas-eleitorais/graficos/216/?tipo_pergunta=CONVOTA-PRE2&instituto=Quaest",
+    "arquivo": "data/originals/quaest_102026_14/g1_rejeicao.json",
+    "sha256": "88c4b57bd646b9d2b6e04c36ab4d748bd4ad653346861c62c44bc8ef173d51af",
+    "bytes": 16060
+   },
+   "total": {
+    "id": "total-total-CONVOTA-PRE2",
+    "dimensao": "Total",
+    "recorte": "Total",
+    "valores_pct": {
+     "Flávio Bolsonaro": 54.0,
+     "Lula": 53.0
+    },
+    "margem_publicada_pp": 2,
+    "base": null
+   },
+   "recortes": 26,
+   "dimensoes": {
+    "Cor": 3,
+    "Renda": 3,
+    "Idade": 3,
+    "Escolaridade": 3,
+    "Identificação política": 5,
+    "Região": 5,
+    "Sexo": 2,
+    "Religião": 2
+   },
+   "dados": "assets/quaest_14102026_painel/rejeicao.json"
+  }
+ },
+ "controles_estimulada": {
+  "Renda": {
+   "cotas_previstas_pct": {
+    "Até 2 sm": 31,
+    "Mais de 2 a 5 sm": 42,
+    "Mais de 5 sm": 27
+   },
+   "recomposto": {
+    "flavio": 46.05,
+    "lula": 44.18,
+    "branco_nulo": 9.04,
+    "indecisos": 0.73
+   },
+   "residuo": {
+    "flavio": 0.05,
+    "lula": 0.18,
+    "branco_nulo": 0.04,
+    "indecisos": -0.27
+   },
+   "residuo_max_abs": 0.27
+  },
+  "Sexo": {
+   "cotas_previstas_pct": {
+    "Masculino": 47,
+    "Feminino": 53
+   },
+   "recomposto": {
+    "flavio": 46.23,
+    "lula": 44.3,
+    "branco_nulo": 8.94,
+    "indecisos": 0.53
+   },
+   "residuo": {
+    "flavio": 0.23,
+    "lula": 0.3,
+    "branco_nulo": -0.06,
+    "indecisos": -0.47
+   },
+   "residuo_max_abs": 0.47
+  },
+  "Idade": {
+   "cotas_previstas_pct": {
+    "16 a 34 anos": 31,
+    "35 a 59 anos": 45,
+    "60 anos ou mais": 24
+   },
+   "recomposto": {
+    "flavio": 45.77,
+    "lula": 44.06,
+    "branco_nulo": 9.17,
+    "indecisos": 1.0
+   },
+   "residuo": {
+    "flavio": -0.23,
+    "lula": 0.06,
+    "branco_nulo": 0.17,
+    "indecisos": 0.0
+   },
+   "residuo_max_abs": 0.23
+  },
+  "Escolaridade": {
+   "cotas_previstas_pct": {
+    "Fundamental": 42,
+    "Médio": 39,
+    "Superior": 19
+   },
+   "recomposto": {
+    "flavio": 45.8,
+    "lula": 44.23,
+    "branco_nulo": 8.78,
+    "indecisos": 1.19
+   },
+   "residuo": {
+    "flavio": -0.2,
+    "lula": 0.23,
+    "branco_nulo": -0.22,
+    "indecisos": 0.19
+   },
+   "residuo_max_abs": 0.23
+  }
+ },
+ "limites": "Bases e perfil final não publicados; margens dos recortes são as informadas pelo painel, não margens da diferença. Rejeição não é distribuição exaustiva de votos."
+}
