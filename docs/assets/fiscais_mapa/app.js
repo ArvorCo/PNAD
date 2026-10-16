@@ -1,7 +1,8 @@
 // Mapa de fiscais: aplicativo estático escrito à mão, sem build.
 // Lê o formato 2 de scripts/fiscais-mapa-build.py: locais numa tabela, seções noutra.
-// Abre com o destaque nacional (capítulo 13 e logs com atenção 2 ou 3); carrega a UF
-// escolhida sob demanda; CEP, zonas e municípios vêm de índices separados.
+// Abre com o país inteiro e todos os níveis; carrega a UF escolhida sob demanda, e o
+// destaque nacional (capítulo 13 e logs com atenção 2 ou 3) quando os níveis de rotina e
+// de um sinal estão desligados. CEP, zonas e municípios vêm de índices separados.
 // Distância em linha reta pela fórmula inversa de Vincenty no elipsoide WGS84.
 (function () {
   'use strict';
@@ -13,7 +14,8 @@
   const RAIO_PADRAO = 10;
   // Chaves de nível na ordem de prioridade: histórico do capítulo 13 primeiro, depois a atenção dos logs.
   const NIVEIS = ['alta', 'media', 'baixa', 'log3', 'log2', 'log1', 'log0'];
-  const PADRAO_NIVEIS = ['alta', 'media', 'baixa', 'log3', 'log2'];
+  // Abertura com todos os níveis, inclusive os registros de rotina: o mapa não esconde sinal nenhum.
+  const PADRAO_NIVEIS = NIVEIS.slice();
   const PESO = { alta: 7, media: 6, baixa: 5, log3: 4, log2: 3, log1: 2, log0: 1 };
   const NOME_NIVEL = { alta: 'Prioridade alta', media: 'Prioridade média', baixa: 'Prioridade baixa', log3: 'Conferir o arquivo', log2: 'Sinais combinados', log1: 'Um sinal no log', log0: 'Registro de rotina' };
   const NOME_RISCO = { alto: 'alto', medio: 'médio', baixo: 'baixo' };
@@ -183,7 +185,7 @@
     if (arquivo === null) { preparar({ locais: [], secoes: [] }); S.recorte = ''; return true; }
     if (S.recorte === arquivo) return true;
     const f = S.filtro;
-    setStatus(arquivo === 'dados.json' ? 'Carregando o país inteiro, inclusive os registros de rotina (arquivo grande)…' : 'Carregando ' + (f.uf ? UFS[f.uf] : arquivo === 'originais.json' ? 'as seções do capítulo 13' : 'o destaque nacional') + '…');
+    setStatus(arquivo === 'dados.json' ? 'Carregando o país inteiro, todos os sinais (arquivo grande; escolha o estado para ir mais rápido)…' : 'Carregando ' + (f.uf ? UFS[f.uf] : arquivo === 'originais.json' ? 'as seções do capítulo 13' : 'o destaque nacional') + '…');
     const d = await buscar(BASE + arquivo);
     if (seq !== S.requisicao) return false;
     preparar(d);

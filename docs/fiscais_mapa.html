@@ -36,11 +36,11 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&amp;family=IBM+Plex+Sans+Condensed:wght@400;600;700&amp;display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" integrity="sha384-c6Rcwz4e4CITMbu/NBmnNS8yN2sC3cUElMEMfP3vqqKFp7GOYaaBBCqmaWBjmkjb" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.css" integrity="sha384-pmjIAcz2bAn0xukfxADbZIb3t8oRT9Sv0rvO+BR5Csr6Dhqq+nZs59P0pPKQJkEV" crossorigin="anonymous">
-<link rel="stylesheet" href="assets/fiscais_mapa/app.css?v=20261016-mapa2i">
+<link rel="stylesheet" href="assets/fiscais_mapa/app.css?v=20261016-mapa2j">
 <script>document.documentElement.classList.add('js')</script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" integrity="sha384-NElt3Op+9NBMCYaef5HxeJmU4Xeard/Lku8ek6hoPTvYkQPh3zLIrJP7KiRocsxO" crossorigin="anonymous"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.js" integrity="sha384-eXVCORTRlv4FUUgS/xmOyr66XBVraen8ATNLMESp92FKXLAMiKkerixTiBvXriZr" crossorigin="anonymous"></script>
-<script defer src="assets/fiscais_mapa/app.js?v=20261016-mapa2i"></script>
+<script defer src="assets/fiscais_mapa/app.js?v=20261016-mapa2j"></script>
 </head>
 <body>
 <a class="skip" href="#controles">Pular para a busca</a>
@@ -65,7 +65,7 @@
     <dl class="intro-num" aria-label="Números do acervo">
       <div><dd id="n-cap13">…</dd><dt>seções sinalizadas pelos critérios históricos (capítulo 13 do dossiê)</dt></div>
       <div><dd id="n-log-forte">…</dd><dt>seções com sinais combinados no log, ou com arquivo a conferir</dt></div>
-      <div><dd id="n-rotina">…</dd><dt>seções só com registro de rotina no log (bateria ou inspeção), fora da abertura do mapa</dt></div>
+      <div><dd id="n-rotina">…</dd><dt>seções só com registro de rotina no log (bateria em algum momento ou inspeção longa)</dt></div>
     </dl>
     <details class="como-ler">
       <summary>Como ler as cores e o que elas não dizem</summary>
@@ -73,12 +73,12 @@
         <li><span class="pt pt-alta"></span><span><b>Prioridade alta, média ou baixa</b>: nível do capítulo 13, pela soma dos 12 critérios históricos.<small>Quente: vem do boletim de urna. A lista é de prioridade de fiscalização, não de acusação.</small></span></li>
         <li><span class="pt pt-log3"></span><span><b>Conferir o arquivo</b>: o log não fecha com o boletim, tem relógio inconsistente, falha de assinatura ou trecho não reconhecido; ou três tipos de sinal juntos.<small>Pede conferência formal à Justiça Eleitoral; não é prova de alteração de voto.</small></span></li>
         <li><span class="pt pt-log2"></span><span><b>Sinais combinados</b>: dois tipos diferentes de ocorrência no mesmo log, fora a rotina.</span></li>
-        <li><span class="pt pt-log1"></span><span><b>Um sinal no log</b>: um tipo de ocorrência além da rotina. Desligado na abertura; ligue na caixa ao lado.</span></li>
-        <li><span class="pt pt-log0"></span><span><b>Registro de rotina</b>: só bateria em algum momento do dia, ou inspeção longa. Um quarto das urnas do país registra bateria, boa parte antes da zerésima; é informação, não suspeita. A passagem para a bateria durante a votação, junto com outras urnas do município ou só nesta urna, conta como sinal de energia.</span></li>
+        <li><span class="pt pt-log1"></span><span><b>Um sinal no log</b>: um tipo de ocorrência além da rotina.</span></li>
+        <li><span class="pt pt-log0"></span><span><b>Registro de rotina</b> (ponto vazado): só bateria em algum momento do dia, ou inspeção longa. Um quarto das urnas do país registra bateria, boa parte antes da zerésima; é informação, não suspeita. A passagem para a bateria durante a votação, junto com outras urnas do município ou só nesta urna, conta como sinal de energia.</span></li>
       </ul>
       <p id="sem-ocorrencia"></p>
       <p id="cobertura-logs"></p>
-      <p class="ajuda">Os sinais do log não mudam a pontuação histórica. Uma seção pode ter os dois: aparece com a cor do mais forte e a ficha mostra tudo. Os números das seções aparecem escritos no mapa quando você aproxima até o quarteirão.</p>
+      <p class="ajuda">O mapa abre com todos os níveis ligados; desligue na caixa "O que mostrar" o que não quiser ver. Os sinais do log não mudam a pontuação histórica. Uma seção pode ter os dois: aparece com a cor do mais forte e a ficha mostra tudo. Os números das seções aparecem escritos no mapa quando você aproxima até o quarteirão.</p>
     </details>
   </div>
 </section>
@@ -89,7 +89,7 @@
     <form class="bloco" id="f-busca" autocomplete="off">
       <h2>Onde você vai fiscalizar?</h2>
       <label for="f-uf" class="rot">Estado</label>
-      <select id="f-uf"><option value="">Brasil inteiro e exterior (só o destaque)</option></select>
+      <select id="f-uf"><option value="">Brasil inteiro e exterior</option></select>
       <label for="f-mun" class="rot">Cidade</label>
       <select id="f-mun" disabled><option value="">Escolha o estado primeiro</option></select>
       <div class="duas-col">
