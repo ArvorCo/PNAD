@@ -159,25 +159,104 @@ def test_build_publico_fecha_cobertura_e_preserva_null(tmp_path, monkeypatch):
     assert row["processo_tipos"]["biometrica"]["n"] == 1
 
 
-def test_recortes_mantem_historico_e_exterior_separados(tmp_path):
+def test_recortes_mantem_historico_e_exterior_separados(tmp_path, monkeypatch):
+    monkeypatch.setattr(mapa, "POLITIZE", tmp_path / "politize")
     obj = {
-        "colunas": ["uf", "municipio", "nivel", "originais"],
-        "linhas": [
-            ["SP", "São Paulo", "alta", True],
-            ["SP", "São Paulo", "logs", False],
-            ["ZZ", "Lisboa", "logs", False],
+        "colunas": [
+            "uf",
+            "mun",
+            "municipio",
+            "zona",
+            "secao",
+            "local_id",
+            "nivel",
+            "originais",
+            "atencao",
+            "logs",
         ],
+        "linhas": [
+            [
+                "SP",
+                "71072",
+                "São Paulo",
+                1,
+                1,
+                "SP-71072-1-1015",
+                "alta",
+                True,
+                None,
+                [],
+            ],
+            [
+                "SP",
+                "71072",
+                "São Paulo",
+                1,
+                2,
+                "SP-71072-1-1015",
+                "logs",
+                False,
+                2,
+                ["suspensoes", "sem_biometria_alta"],
+            ],
+            [
+                "SP",
+                "71072",
+                "São Paulo",
+                1,
+                3,
+                "SP-71072-1-1023",
+                "logs",
+                False,
+                0,
+                ["bateria"],
+            ],
+            [
+                "ZZ",
+                "99999",
+                "Lisboa",
+                1,
+                4,
+                "ZZ-99999-1-1001",
+                "logs",
+                False,
+                1,
+                ["reinicios"],
+            ],
+        ],
+        "resumo": {"secoes": 4},
     }
-    publicar_recortes(obj, tmp_path)
+    meta = publicar_recortes(obj, tmp_path)
     ind = json.loads((tmp_path / "indice.json").read_text())
-    assert "linhas" not in ind and ind["niveis"] == {"alta": 1, "logs": 2}
-    assert ind["partes"]["ZZ"]["municipios"] == ["Lisboa"]
-    assert json.loads((tmp_path / "originais.json").read_text())["linhas"] == [
-        obj["linhas"][0]
-    ]
-    assert json.loads((tmp_path / "uf/ZZ.json").read_text())["linhas"] == [
-        obj["linhas"][2]
-    ]
+    assert ind == meta and ind["formato"] == 2
+    assert "linhas" not in ind and ind["niveis"] == {"alta": 1, "logs": 3}
+    assert ind["partes"]["ZZ"]["municipios"] == [["99999", "Lisboa"]]
+    assert ind["partes"]["SP"] == {
+        "arquivo": "uf/SP.json",
+        "secoes": 3,
+        "locais": 2,
+        "municipios": [["71072", "São Paulo"]],
+    }
+    cols_l, cols_s = ind["colunas_locais"], ind["colunas_secoes"]
+
+    def secoes(nome):
+        d = json.loads((tmp_path / nome).read_text())
+        locais = [dict(zip(cols_l, ln, strict=True)) for ln in d["locais"]]
+        out = []
+        for ln in d["secoes"]:
+            r = dict(zip(cols_s, ln, strict=True))
+            r["local_id"] = locais[r["li"]]["id"]
+            out.append(r)
+        return out
+
+    assert [r["secao"] for r in secoes("originais.json")] == [1]
+    # O destaque nacional leva o histórico e os logs com atenção 2 ou mais, nunca a rotina.
+    assert [r["secao"] for r in secoes("destaque.json")] == [1, 2]
+    sp = secoes("uf/SP.json")
+    assert [r["secao"] for r in sp] == [1, 2, 3]
+    assert sp[0]["local_id"] == sp[1]["local_id"] == "SP-71072-1-1015"
+    assert sp[2]["local_id"] == "SP-71072-1-1023" and sp[2]["atencao"] == 0
+    assert [r["secao"] for r in secoes("uf/ZZ.json")] == [4]
 
 
 def test_mapa_inclui_suplemento_sem_inventar_coordenada_ou_pontos(

@@ -1,8 +1,9 @@
 <!doctype html>
 <!--
   Mapa de fiscais. Página ESCRITA À MÃO, não gerada por script.
-  Dados: docs/assets/fiscais_mapa/ (gerados por scripts/fiscais-mapa-build.py a partir do
-  capítulo 13 do dossiê da apuração, analysis/apuracao_2026/dados/fiscais.json).
+  Dados: docs/assets/fiscais_mapa/ (formato 2, gerados por scripts/fiscais-mapa-build.py a partir do
+  capítulo 13 do dossiê da apuração, analysis/apuracao_2026/dados/fiscais.json, dos sinais dos logs,
+  analysis/apuracao_2026/logs_urnas/sinalizadas.json, e dos fragmentos do Politize).
   Aplicativo: docs/assets/fiscais_mapa/app.js e app.css.
 -->
 <html lang="pt-BR">
@@ -10,8 +11,8 @@
 <meta charset="utf-8">
 <!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-ZPYEE8P9YC"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ZPYEE8P9YC');</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Mapa de fiscais: seções sinalizadas no 1º turno | Arvor</title>
-<meta name="description" content="Critérios históricos e 25 diagnósticos dos logs das urnas: tempos, biometria e ocorrências. Filtros de Brasil e exterior, seção, cidade e registro; mapa, lista e CSV com origem dos dados.">
+<title>Mapa de fiscais: onde vale a pena estar no 2º turno | Arvor</title>
+<meta name="description" content="Prédios de votação com seções que pedem fiscal atento no 2º turno de 2026: critérios históricos do boletim e sinais dos logs das urnas, com o resultado de cada seção, mapa, lista e CSV.">
 <link rel="canonical" href="https://brasil.arvor.co/fiscais_mapa.html">
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
@@ -20,7 +21,7 @@
 <meta property="og:locale" content="pt_BR">
 <meta property="og:site_name" content="Arvor Intelligence">
 <meta property="og:title" content="Mapa de fiscais">
-<meta property="og:description" content="Critérios históricos e 25 diagnósticos dos logs: tempos, biometria e ocorrências por seção. Brasil e exterior, com mapa, lista e CSV.">
+<meta property="og:description" content="Onde vale a pena ter fiscal no 2º turno, prédio por prédio: critérios históricos do boletim e sinais dos logs das urnas, com o resultado de cada seção.">
 <meta property="og:url" content="https://brasil.arvor.co/fiscais_mapa.html">
 <meta property="og:image" content="https://brasil.arvor.co/img/og/fiscais_mapa.png">
 <meta property="og:image:width" content="1200">
@@ -28,18 +29,18 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@leonardodias">
 <meta name="twitter:title" content="Mapa de fiscais">
-<meta name="twitter:description" content="Critérios históricos e 25 diagnósticos dos logs: tempos, biometria e ocorrências por seção. Brasil e exterior, com mapa, lista e CSV.">
+<meta name="twitter:description" content="Onde vale a pena ter fiscal no 2º turno, prédio por prédio: critérios históricos do boletim e sinais dos logs das urnas, com o resultado de cada seção.">
 <meta name="twitter:image" content="https://brasil.arvor.co/img/og/fiscais_mapa.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&amp;family=IBM+Plex+Sans+Condensed:wght@400;600;700&amp;display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" integrity="sha384-c6Rcwz4e4CITMbu/NBmnNS8yN2sC3cUElMEMfP3vqqKFp7GOYaaBBCqmaWBjmkjb" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.css" integrity="sha384-pmjIAcz2bAn0xukfxADbZIb3t8oRT9Sv0rvO+BR5Csr6Dhqq+nZs59P0pPKQJkEV" crossorigin="anonymous">
-<link rel="stylesheet" href="assets/fiscais_mapa/app.css?v=20261015-processo11">
+<link rel="stylesheet" href="assets/fiscais_mapa/app.css?v=20261016-mapa2g">
 <script>document.documentElement.classList.add('js')</script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" integrity="sha384-NElt3Op+9NBMCYaef5HxeJmU4Xeard/Lku8ek6hoPTvYkQPh3zLIrJP7KiRocsxO" crossorigin="anonymous"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.js" integrity="sha384-eXVCORTRlv4FUUgS/xmOyr66XBVraen8ATNLMESp92FKXLAMiKkerixTiBvXriZr" crossorigin="anonymous"></script>
-<script defer src="assets/fiscais_mapa/app.js?v=20261015-processo11"></script>
+<script defer src="assets/fiscais_mapa/app.js?v=20261016-mapa2g"></script>
 </head>
 <body>
 <a class="skip" href="#controles">Pular para a busca</a>
@@ -48,88 +49,100 @@
     <a class="marca" href="index.html"><img src="img/arvor_logo.png" alt="" width="24" height="24">Arvor Intelligence</a>
     <div class="topo-t">
       <h1>Mapa de fiscais</h1>
-      <p>Critérios históricos e registros dos logs do 1º turno de 2026. <a href="apuracao_1o_turno_2026.html#fiscais">Dossiê</a> · <a href="logs_urnas_2026.html">Método, cobertura e limites dos logs</a>.</p>
+      <p>Onde vale a pena ter fiscal no 2º turno, prédio por prédio. <a href="politizesuavizinhanca.html">Minha seção</a> · <a href="apuracao_1o_turno_2026.html#fiscais">Método dos critérios</a> · <a href="logs_urnas_2026.html">Método dos logs</a>.</p>
     </div>
     <a class="btn-fiscal" href="https://fiscaisdopl.com.br" target="_blank" rel="noopener">Seja fiscal · fiscaisdopl.com.br</a>
   </div>
 </header>
 
-<section class="visao-geral" aria-label="Critérios disponíveis">
-  <div><p class="kicker">Fiscalização · primeiro turno de 2026</p><h2>37 critérios na mesma consulta</h2>
-  <p>12 históricos + <strong>25 diagnósticos dos logs</strong>. O mapa abre com todas as camadas, Brasil e exterior.</p>
-  <p id="resumo-acervo">Carregando o acervo combinado…</p><p>O mapa reúne seções que acionaram critérios. <a href="politizesuavizinhanca.html">Consultar qualquer seção, inclusive sem alerta →</a></p></div>
-  <details class="atalhos" open><summary>Explorar os novos diagnósticos</summary><div id="atalhos-logs"></div>
-  <p>Contagens de todo o acervo, com sobreposição. Todos os 37 critérios estão no seletor abaixo. <a href="logs_urnas_2026.html#criterios">Ver gráficos e todas as regras</a>.</p></details>
+<section class="intro" aria-label="O que o mapa mostra">
+  <div class="intro-in">
+    <div class="intro-txt">
+      <p class="kicker">2º turno · 25 de outubro de 2026</p>
+      <h2>Cada ponto é um prédio de votação com ao menos uma seção que pede fiscal atento</h2>
+      <p>Duas fontes, lidas no 1º turno: os <strong>critérios históricos</strong> comparam o boletim de cada seção com as vizinhas da zona; os <strong>sinais do log da urna</strong> contam o que a urna fez durante o dia. Atipicidade não é irregularidade: o mapa diz onde vale a pena estar, não acusa ninguém.</p>
+    </div>
+    <dl class="intro-num" aria-label="Números do acervo">
+      <div><dd id="n-cap13">…</dd><dt>seções sinalizadas pelos critérios históricos (capítulo 13 do dossiê)</dt></div>
+      <div><dd id="n-log-forte">…</dd><dt>seções com sinais combinados no log, ou com arquivo a conferir</dt></div>
+      <div><dd id="n-rotina">…</dd><dt>seções só com registro de rotina no log (bateria ou inspeção), fora da abertura do mapa</dt></div>
+    </dl>
+    <details class="como-ler">
+      <summary>Como ler as cores e o que elas não dizem</summary>
+      <ul class="legenda">
+        <li><span class="pt pt-alta"></span><span><b>Prioridade alta, média ou baixa</b>: nível do capítulo 13, pela soma dos 12 critérios históricos.<small>Quente: vem do boletim de urna. A lista é de prioridade de fiscalização, não de acusação.</small></span></li>
+        <li><span class="pt pt-log3"></span><span><b>Conferir o arquivo</b>: o log não fecha com o boletim, tem relógio inconsistente, falha de assinatura ou trecho não reconhecido; ou três tipos de sinal juntos.<small>Pede conferência formal à Justiça Eleitoral; não é prova de alteração de voto.</small></span></li>
+        <li><span class="pt pt-log2"></span><span><b>Sinais combinados</b>: dois tipos diferentes de ocorrência no mesmo log, fora a rotina.</span></li>
+        <li><span class="pt pt-log1"></span><span><b>Um sinal no log</b>: um tipo de ocorrência além da rotina. Desligado na abertura; ligue na caixa ao lado.</span></li>
+        <li><span class="pt pt-log0"></span><span><b>Registro de rotina</b>: só bateria ou inspeção longa. Um quarto das urnas do país registra bateria; é informação, não suspeita.</span></li>
+      </ul>
+      <p id="sem-ocorrencia"></p>
+      <p id="cobertura-logs"></p>
+      <p class="ajuda">Os sinais do log não mudam a pontuação histórica. Uma seção pode ter os dois: aparece com a cor do mais forte e a ficha mostra tudo. Os números das seções aparecem escritos no mapa quando você aproxima até o quarteirão.</p>
+    </details>
+  </div>
 </section>
+
 <main class="app">
-  <aside id="controles" class="controles" aria-label="Busca, filtros e distância">
-    <form id="f-busca" class="bloco" novalidate>
-      <h2>Buscar</h2>
-      <label for="f-ambito" class="rot">Território</label>
-      <select id="f-ambito"><option value="todos">Todos · Brasil e exterior</option><option value="brasil">Somente Brasil</option><option value="exterior">Somente exterior</option></select>
-      <label for="q-cep" class="rot">CEP</label>
-      <input id="q-cep" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="9" placeholder="00000-000">
+  <button type="button" class="filtros-toggle" id="filtros-toggle" aria-expanded="false" aria-controls="controles">Buscar e filtrar</button>
+  <aside class="controles" id="controles" aria-label="Busca e filtros">
+    <form class="bloco" id="f-busca" autocomplete="off">
+      <h2>Onde você vai fiscalizar?</h2>
+      <label for="f-uf" class="rot">Estado</label>
+      <select id="f-uf"><option value="">Brasil inteiro e exterior (só o destaque)</option></select>
+      <label for="f-mun" class="rot">Cidade</label>
+      <select id="f-mun" disabled><option value="">Escolha o estado primeiro</option></select>
       <div class="duas-col">
-        <div>
-          <label for="f-uf" class="rot">UF ou exterior</label>
-          <select id="f-uf"><option value="">Todas</option></select>
-        </div>
-        <div>
-          <label for="f-zona" class="rot">Zona eleitoral</label>
-          <input id="f-zona" type="text" inputmode="numeric" maxlength="4" placeholder="000" autocomplete="off">
-        </div>
+        <div><label for="q-cep" class="rot">CEP</label><input id="q-cep" type="text" inputmode="numeric" maxlength="9" placeholder="00000-000"></div>
+        <div><label for="f-zona" class="rot">Zona eleitoral</label><input id="f-zona" type="text" inputmode="numeric" maxlength="4" placeholder="000"></div>
       </div>
-      <label for="f-mun" class="rot">Município ou cidade no exterior</label>
-      <select id="f-mun" disabled><option value="">Escolha a UF primeiro</option></select>
-      <label for="f-texto" class="rot">Nome do local, endereço ou bairro</label>
-      <input id="f-texto" type="search" autocomplete="off" placeholder="Ex.: escola, rua, bairro">
-      <label for="f-camada" class="rot">Camada</label>
-      <select id="f-camada"><option value="todas">Todas · histórico e logs</option><option value="originais">12 critérios históricos</option><option value="logs">25 diagnósticos dos logs</option></select>
-      <label for="f-log" class="rot">Critério · histórico ou log</label>
-      <select id="f-log"><option value="">Todos os 37 critérios</option></select>
-      <div id="criterio-ativo" class="criterio-ativo" hidden></div>
+      <label for="f-texto" class="rot">Escola, rua ou bairro</label>
+      <input id="f-texto" type="search" placeholder="Qualquer palavra do nome ou do endereço">
       <div class="acoes">
         <button type="submit" class="btn btn-prim">Buscar</button>
         <button type="button" class="btn btn-sec" id="b-limpar">Limpar</button>
       </div>
-      <p class="ajuda" id="ajuda-busca">O CEP centra o mapa no local de votação com o mesmo CEP (ou o mais parecido): é aproximação pelo CEP dos locais, não pelo seu endereço. A zona exige a UF.</p>
+      <button type="button" class="btn btn-sec btn-geo" id="b-geo">Usar minha localização</button>
+      <p class="ajuda" id="ajuda-busca">O CEP centra o mapa no local de votação com o mesmo CEP. A zona está no título de eleitor e pede o estado. A localização não sai do seu aparelho.</p>
     </form>
 
-    <fieldset class="bloco niveis">
-      <legend>Classificação original</legend>
-      <label class="nv nv-alta"><input type="checkbox" value="alta" checked><span class="pt"></span>Alta <small id="n-alta"></small></label>
-      <label class="nv nv-media"><input type="checkbox" value="media" checked><span class="pt"></span>Média <small id="n-media"></small></label>
-      <label class="nv nv-baixa"><input type="checkbox" value="baixa" checked><span class="pt"></span>Baixa <small id="n-baixa"></small></label>
-      <label class="nv nv-logs"><input type="checkbox" value="logs" checked><span class="pt"></span>Só registro de log <small id="n-logs"></small></label>
-      <p class="ajuda">Contagens de todo o acervo. Azul identifica registro operacional, sem nota de suspeita. Os logs não alteram a pontuação histórica. Todos já aparecem na abertura. O seletor de critério permite ver uma ocorrência por vez.</p>
-    </fieldset>
+    <section class="bloco" aria-label="O que mostrar">
+      <h2>O que mostrar</h2>
+      <div id="niveis"></div>
+      <p class="ajuda" id="niveis-aviso" hidden>Com um critério escolhido abaixo, as caixas acima não filtram: o mapa mostra toda seção com aquele critério.</p>
+      <label for="f-log" class="rot">Um critério só</label>
+      <select id="f-log"><option value="">Todos os critérios</option></select>
+      <label for="f-camada" class="rot">Fonte</label>
+      <select id="f-camada"><option value="todas">Boletim e log</option><option value="originais">Só critérios do boletim (capítulo 13)</option><option value="logs">Só sinais do log</option></select>
+      <div id="criterio-ativo" class="criterio-ativo" hidden></div>
+    </section>
 
-    <fieldset class="bloco distancia" id="bloco-raio">
-      <legend>Distância do ponto buscado</legend>
+    <section class="bloco" id="bloco-raio" aria-label="Distância">
+      <h2>Até que distância?</h2>
       <div class="raios" role="radiogroup" aria-label="Raio em quilômetros" id="raios"></div>
-      <p class="ajuda">Distância em linha reta, calculada pela fórmula geodésica de Vincenty no elipsoide WGS84 a partir da latitude e da longitude de cada local. Não é distância por estrada. Vale só no mapa; a lista ignora o raio.</p>
-    </fieldset>
+      <p class="ajuda">Linha reta a partir do CEP, da zona ou da sua localização. Sem busca, o mapa mostra tudo; na lista dá para desligar o raio.</p>
+    </section>
 
-    <div class="bloco modo" role="group" aria-label="Modo de exibição">
+    <div class="modo" role="group" aria-label="Modo de exibição">
       <button type="button" class="btn-modo" id="m-mapa" aria-pressed="true">Mapa</button>
       <button type="button" class="btn-modo" id="m-lista" aria-pressed="false">Ver em lista</button>
     </div>
 
-    <p class="recorte-ativo" id="recorte-ativo" aria-live="polite"></p>
-    <p class="status" id="status" role="status" aria-live="polite">Carregando as seções sinalizadas.</p>
-    <p class="ajuda" id="cobertura-logs"></p>
+    <p class="recorte-ativo" id="recorte-ativo"></p>
+    <p class="status" id="status" role="status">Carregando o mapa.</p>
   </aside>
 
-  <section class="palco" aria-label="Resultado">
-    <div id="mapa" class="mapa" role="region" aria-label="Mapa dos locais de votação sinalizados"></div>
+  <section class="palco" id="palco" aria-label="Resultado">
+    <div id="mapa" class="mapa" role="region" aria-label="Mapa dos prédios de votação sinalizados"></div>
     <div id="lista" class="lista" hidden>
       <div class="lista-topo">
         <label for="l-busca" class="rot">Pesquisar na lista</label>
-        <input id="l-busca" type="search" autocomplete="off" placeholder="Qualquer texto: local, bairro, critério, explicação">
+        <input id="l-busca" type="search" autocomplete="off" placeholder="Qualquer texto: escola, bairro, motivo">
         <div class="lista-acoes">
           <label for="l-por-pag" class="rot rot-inline">Por página</label>
           <select id="l-por-pag"><option>25</option><option selected>50</option><option>100</option><option>250</option></select>
           <button type="button" class="btn btn-sec" id="l-csv">Exportar CSV</button>
+          <label class="l-raio" id="l-raio-caixa" hidden><input type="checkbox" id="l-raio" checked><span id="l-raio-txt">Só até o raio escolhido</span></label>
         </div>
       </div>
       <p class="ajuda" id="l-resumo"></p>
@@ -142,8 +155,8 @@
 </main>
 
 <footer class="rodape">
-  <p><strong>Atipicidade estatística não é irregularidade.</strong> A lista é de prioridade de fiscalização, não de acusação. O que resolve cada item é a ata da mesa, o log da urna e a presença do fiscal. Toda seção precisa de fiscal: para ver os motivos de qualquer seção do país, use o <a href="politizesuavizinhanca.html">Politize sua vizinhança</a>.</p>
-  <p>Fonte: boletins de urna do TSE por seção e capítulo 13 do <a href="apuracao_1o_turno_2026.html#fiscais">dossiê da apuração do 1º turno</a>, com a planilha histórica (12 critérios) em <a href="assets/fiscais_2026.xlsx">Excel</a> e <a href="assets/fiscais_2026.csv">CSV</a>. Mapa: © colaboradores do <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>. Coordenada ausente ou inválida não vira ponto no mapa; a linha aparece na lista.</p>
+  <p><strong>Atipicidade estatística não é irregularidade.</strong> A lista é de prioridade de fiscalização, não de acusação. O que resolve cada item é a ata da mesa, o log da urna e a presença do fiscal. Toda seção precisa de fiscal: para ver os motivos de qualquer seção do país, inclusive sem sinal, use o <a href="politizesuavizinhanca.html">Politize sua vizinhança</a>.</p>
+  <p>Fontes: boletins de urna do TSE por seção e capítulo 13 do <a href="apuracao_1o_turno_2026.html#fiscais">dossiê da apuração do 1º turno</a> (planilha histórica em <a href="assets/fiscais_2026.xlsx">Excel</a> e <a href="assets/fiscais_2026.csv">CSV</a>); logs das urnas publicados pelo TSE, lidos pelo <a href="logs_urnas_2026.html">processo descrito aqui</a>. Resultado por seção: votos válidos do 1º turno; seções com menos de 30 eleitores não mostram voto. Distância em linha reta (fórmula de Vincenty, WGS84), não por estrada. Mapa: © colaboradores do <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>. Coordenada ausente ou inválida não vira ponto no mapa; a linha aparece na lista.</p>
 </footer>
 <noscript><p class="sem-js">Esta página precisa de JavaScript para o mapa e a lista. A planilha completa está em <a href="assets/fiscais_2026.csv">CSV</a> e <a href="assets/fiscais_2026.xlsx">Excel</a>.</p></noscript>
 </body>

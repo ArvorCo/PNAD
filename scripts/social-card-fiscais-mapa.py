@@ -16,26 +16,31 @@ def card(root):
     stats = [("CEP", "zona ou município: o mapa centra onde você está")]
     if caminho.exists():
         d = json.loads(caminho.read_text(encoding="utf-8"))
+        atencao = d["resumo"].get("atencao", {})
+        fortes = int(atencao.get("3", 0)) + int(atencao.get("2", 0))
         stats = [
             (
-                _int(d["resumo"].get("secoes_originais", len(d["linhas"]))),
-                "seções nos critérios históricos preservados",
+                _int(d["resumo"].get("secoes_originais", len(d["secoes"]))),
+                "seções pelos critérios históricos do boletim",
             ),
             (
-                f'+{len(d.get("logs", {}).get("criterios", {}))}',
-                "diagnósticos operacionais dos logs, em camada própria",
+                _int(fortes),
+                "seções com sinais combinados ou arquivo a conferir no log",
             ),
-            ("Brasil e exterior", "filtros por território, cidade, zona e ocorrência"),
+            (
+                "Resultado por seção",
+                "votaram, Flávio × Lula e o número da seção no mapa",
+            ),
         ]
     return {
         "slug": "fiscais_mapa",
         "eyebrow": "Mapa de fiscais · 2º turno, 25 de outubro",
         "title": "Mapa de fiscais.",
-        "title_em": "Agora com os logs.",
+        "title_em": "Onde vale a pena estar.",
         "lede": (
-            "Consulte tempos, biometria, reinícios e registros técnicos por seção, "
-            "com fonte, cobertura e limites. Mapa, lista e exportação em CSV. "
-            "<b>Ocorrência operacional não é prova de irregularidade.</b>"
+            "Prédio por prédio: critérios do boletim, sinais do log da urna em cinco "
+            "famílias e o resultado de cada seção. Mapa, lista e CSV. "
+            "<b>Atipicidade não é irregularidade.</b>"
         ),
         "stats": stats,
         "foot": "boletins e logs oficiais (TSE) · critérios históricos preservados · brasil.arvor.co",

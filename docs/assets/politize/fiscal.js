@@ -116,7 +116,8 @@ function blocoPredio(h, ctx, linhasLocal, local, atual) {
     h('p', {}, `${plural(total, 'seção', 'seções')} no local de votação. ${resumo}.`),
     h('ul', { class: 'fis-chips', 'aria-label': 'Seções do local, da que tem mais motivos para a que tem menos' }, chips),
     ordem.length > LIMITE_CHIPS ? h('p', { class: 'fis-nota' }, `E mais ${ordem.length - LIMITE_CHIPS} seções com menos motivos.`) : null,
-    h('p', { class: 'fis-nota' }, 'Um fiscal pode cobrir várias seções do mesmo prédio (Lei 9.504/1997, art. 65, § 1º). Com poucos fiscais, comece pelas seções do topo da lista.'));
+    h('p', { class: 'fis-nota' }, 'Um fiscal pode cobrir várias seções do mesmo prédio (Lei 9.504/1997, art. 65, § 1º). Com poucos fiscais, comece pelas seções do topo da lista.'),
+    h('p', { class: 'fis-mapa' }, h('a', { href: `fiscais_mapa.html#uf=${encodeURIComponent(uf)}&l=${encodeURIComponent(ctx.local.local_id)}${atual ? `&s=${atual}` : ''}` }, 'Ver este prédio e os vizinhos no mapa de fiscais'), ' (prédios sinalizados num raio de até 50 km, com o resultado de cada seção).'));
 }
 
 function blocoCta(h, regras) {

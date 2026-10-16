@@ -6,7 +6,7 @@
 import { carta, losango, CORES } from './carta.js';
 import { desenharCard } from './card.js';
 import { montarMapa } from './mapa.js';
-import { blocoFiscal, resumoFiscal } from './fiscal.js?v=20261015-processo11';
+import { blocoFiscal, resumoFiscal } from './fiscal.js?v=20261016-mapa2';
 import { buscarComplemento, mostrarComplemento } from './complementos.js?v=20261015-processo11';
 
 /* ------------------------------------------------------------------ configuração */

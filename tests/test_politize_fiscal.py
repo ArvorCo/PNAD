@@ -213,29 +213,48 @@ def test_um_arquivo_por_zona_e_pontos_coerentes():
 )
 def test_mapa_dados_cobrem_o_capitulo_13():
     d = json.loads((MAPA / "dados.json").read_text(encoding="utf-8"))
+    assert d["formato"] == 2
+    locais = [dict(zip(d["colunas_locais"], ln, strict=True)) for ln in d["locais"]]
+    secoes = []
+    for ln in d["secoes"]:
+        r = dict(zip(d["colunas_secoes"], ln, strict=True))
+        r["local"] = locais[r["li"]]
+        secoes.append(r)
+    antigas = [r for r in secoes if r["nivel"] != "logs"]
     fis = ROOT / "analysis/apuracao_2026/dados/fiscais.json"
     if fis.exists():
         f = json.loads(fis.read_text(encoding="utf-8"))
-        cols = d["colunas"]
-        antigas = [dict(zip(cols, ln, strict=True)) for ln in d["linhas"]]
-        antigas = [r for r in antigas if r.get("originais", True)]
         assert len(antigas) == len(f["secoes"])
         fonte = {(s["uf"], int(s["zona"]), int(s["secao"])): s for s in f["secoes"]}
         for r in antigas:
-            s = fonte[(r["uf"], r["zona"], r["secao"])]
+            s = fonte[(r["local"]["uf"], r["local"]["zona"], r["secao"])]
             assert r["nivel"] == s["nivel"]
             assert r["pontuacao"] == s["pontuacao"]
-    cols = d["colunas"]
-    ilat, ilon, iuf = cols.index("lat"), cols.index("lon"), cols.index("uf")
-    for ln in d["linhas"]:
-        if ln[ilat] is None:
-            assert ln[ilon] is None
+    # Nome de município vem do cadastro: nunca duas grafias para o mesmo código.
+    nomes = {}
+    for loc in locais:
+        nomes.setdefault((loc["uf"], loc["mun"]), set()).add(loc["municipio"])
+    assert all(len(v) == 1 for v in nomes.values())
+    for loc in locais:
+        if loc["lat"] is None:
+            assert loc["lon"] is None
             continue
-        if ln[iuf] != "ZZ":
-            assert -34 <= ln[ilat] <= 5.5 and -74.5 <= ln[ilon] <= -28.5
-    assert d["resumo"]["sem_coordenada"] == sum(
-        1 for ln in d["linhas"] if ln[ilat] is None
-    )
+        if loc["uf"] != "ZZ":
+            assert -34 <= loc["lat"] <= 5.5 and -74.5 <= loc["lon"] <= -28.5
+    sem = sum(1 for r in secoes if r["local"]["lat"] is None)
+    assert d["resumo"]["sem_coordenada"] == sem
+    # Toda seção de log tem nível de atenção; seção pequena não mostra voto.
+    for r in secoes:
+        if r["logs"]:
+            assert r["atencao"] in (0, 1, 2, 3)
+        else:
+            assert r["atencao"] is None
+        if r["aptos"] is not None and r["aptos"] < 30:
+            assert r["flavio_pct"] is None and r["lula_pct"] is None
+    # Diagnósticos sem nenhuma seção ficam declarados, fora do seletor.
+    for k in d["logs"]["sem_ocorrencia"]:
+        assert d["logs"]["criterios"][k]["secoes"] == 0
+        assert not any(k in r["logs"] for r in secoes)
 
 
 def test_pagina_do_mapa_contrato():
@@ -245,8 +264,16 @@ def test_pagina_do_mapa_contrato():
     for src in re.findall(r'<script[^>]+src="(https://[^"]+)"', html):
         assert "cdnjs.cloudflare.com" in src or "googletagmanager.com" in src
     assert html.count('integrity="sha384-') == 4
-    assert "var RAIOS = [1, 2, 5, 10, 15, 20, 30, 50];" in js
-    assert "var RAIO_PADRAO = 10;" in js
+    assert "const RAIOS = [1, 2, 5, 10, 15, 20, 30, 50];" in js
+    assert "const RAIO_PADRAO = 10;" in js
+    assert "location.reload()" not in js
+    assert "cep=" not in js.split("function gravarHash")[1].split("function lerHash")[0]
+    # Jargão fica no comentário do código e no rodapé do método, nunca em texto da interface.
+    interface = "\n".join(
+        ln for ln in js.splitlines() if not ln.strip().startswith("//")
+    )
+    for termo in ("Vincenty", "WGS84", "escalas robustas", "cômputos"):
+        assert termo not in interface
     assert "fiscaisdopl.com.br" in html
     assert 'og:image" content="https://brasil.arvor.co/img/og/fiscais_mapa.png"' in html
 

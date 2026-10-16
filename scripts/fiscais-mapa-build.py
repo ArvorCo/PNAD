@@ -3,14 +3,20 @@
 
 Lê, só para leitura, o capítulo 13 do dossiê da apuração
 (``analysis/apuracao_2026/dados/fiscais.json``: as 13.045 seções sinalizadas, com a
-classificação original por nível) e os fragmentos do Politize
-(``docs/assets/politize/dados``: coordenada e CEP de todos os locais de votação, para
-centrar a busca por CEP, zona ou município mesmo onde não há seção sinalizada).
+classificação original por nível), os sinais dos logs das urnas
+(``analysis/apuracao_2026/logs_urnas/sinalizadas.json``) e os fragmentos do Politize
+(``docs/assets/politize/dados``: coordenada, CEP e nome de cada local e município, e o
+resultado da urna por seção, para que toda seção do mapa mostre quantos votaram e o
+placar do 1º turno).
 
-Grava em ``docs/assets/fiscais_mapa/``:
+Grava em ``docs/assets/fiscais_mapa/`` no formato 2, normalizado (``locais`` numa tabela,
+``secoes`` noutra, a seção apontando o local por ``li``):
 
-- ``dados.json``: as seções sinalizadas (uma linha por seção, como a planilha
-  ``docs/assets/fiscais_2026.csv``), os critérios, os rótulos e o risco por local;
+- ``indice.json``: critérios, famílias e níveis de atenção dos logs, partes por UF e
+  contagens;
+- ``dados.json``: o acervo completo; ``uf/<UF>.json``: só a UF; ``originais.json``: só o
+  capítulo 13; ``destaque.json``: capítulo 13 mais logs com atenção 2 ou 3 (abertura
+  nacional);
 - ``cep/<2 dígitos>.json``: CEP de local de votação (8 e 5 dígitos) para coordenada;
 - ``zonas.json``: centro de cada zona eleitoral (média dos locais);
 - ``municipios.json``: centro de cada município (índice do Politize).
@@ -27,7 +33,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from apuracao_logs.mapa import integrar, publicar_recortes
+from apuracao_logs.mapa import integrar, normalizar, publicar_recortes, tabela
 
 ROOT = Path(__file__).resolve().parents[1]
 FISCAIS = ROOT / "analysis/apuracao_2026/dados/fiscais.json"
@@ -81,11 +87,6 @@ def _json(caminho: Path, obj: Any) -> int:
     txt = json.dumps(obj, ensure_ascii=False, separators=(",", ":"))
     caminho.write_text(txt, encoding="utf-8")
     return len(txt.encode("utf-8"))
-
-
-def tabela(obj: dict[str, Any]) -> list[dict[str, Any]]:
-    cols = obj["colunas"]
-    return [dict(zip(cols, ln, strict=True)) for ln in obj["linhas"]]
 
 
 def dados_fiscais() -> tuple[dict[str, Any], int]:
@@ -210,8 +211,10 @@ def main() -> None:
         if not coord_valida(row[cols["uf"]], row[cols["lat"]], row[cols["lon"]]):
             row[cols["lat"]] = row[cols["lon"]] = None
     obj["resumo"]["sem_coordenada"] = sum(r[cols["lat"]] is None for r in obj["linhas"])
-    tam = _json(SAIDA / "dados.json", obj)
-    publicar_recortes(obj, SAIDA)
+    meta = publicar_recortes(obj, SAIDA)
+    completo = {k: v for k, v in meta.items() if k != "partes"}
+    completo.update(normalizar(obj, tabela(obj)))
+    tam = _json(SAIDA / "dados.json", completo)
     ceps, zonas, municipios = indices_politize()
     for velho in (SAIDA / "cep").glob("*.json"):
         velho.unlink()
@@ -221,6 +224,8 @@ def main() -> None:
     print(
         f"dados.json {tam / 1e6:.2f} MB, {obj['resumo']['secoes']} seções, "
         f"{obj['resumo']['sem_coordenada']} sem coordenada ({invalidas} inválidas); "
+        f"destaque {meta['recortes']['destaque']['secoes']} seções; "
+        f"atenção {obj['resumo'].get('atencao')}; "
         f"cep {len(ceps)} arquivos {tam_cep / 1e6:.2f} MB; zonas {sum(map(len, zonas.values()))}; "
         f"municípios {len(municipios)}"
     )
