@@ -36,11 +36,11 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&amp;family=IBM+Plex+Sans+Condensed:wght@400;600;700&amp;display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" integrity="sha384-c6Rcwz4e4CITMbu/NBmnNS8yN2sC3cUElMEMfP3vqqKFp7GOYaaBBCqmaWBjmkjb" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.css" integrity="sha384-pmjIAcz2bAn0xukfxADbZIb3t8oRT9Sv0rvO+BR5Csr6Dhqq+nZs59P0pPKQJkEV" crossorigin="anonymous">
-<link rel="stylesheet" href="assets/fiscais_mapa/app.css?v=20261016-mapa2g">
+<link rel="stylesheet" href="assets/fiscais_mapa/app.css?v=20261016-mapa2i">
 <script>document.documentElement.classList.add('js')</script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" integrity="sha384-NElt3Op+9NBMCYaef5HxeJmU4Xeard/Lku8ek6hoPTvYkQPh3zLIrJP7KiRocsxO" crossorigin="anonymous"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.js" integrity="sha384-eXVCORTRlv4FUUgS/xmOyr66XBVraen8ATNLMESp92FKXLAMiKkerixTiBvXriZr" crossorigin="anonymous"></script>
-<script defer src="assets/fiscais_mapa/app.js?v=20261016-mapa2g"></script>
+<script defer src="assets/fiscais_mapa/app.js?v=20261016-mapa2i"></script>
 </head>
 <body>
 <a class="skip" href="#controles">Pular para a busca</a>
@@ -134,6 +134,10 @@
 
   <section class="palco" id="palco" aria-label="Resultado">
     <div id="mapa" class="mapa" role="region" aria-label="Mapa dos prédios de votação sinalizados"></div>
+    <div id="painel" class="painel" role="dialog" aria-label="Ficha do prédio de votação" hidden>
+      <button type="button" class="painel-fechar" id="painel-fechar">Fechar ficha</button>
+      <div class="painel-corpo" id="painel-corpo"></div>
+    </div>
     <div id="lista" class="lista" hidden>
       <div class="lista-topo">
         <label for="l-busca" class="rot">Pesquisar na lista</label>

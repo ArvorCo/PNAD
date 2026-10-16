@@ -116,7 +116,12 @@ select:disabled{background:#efece2;color:var(--muted)}
 .mapa:not(.com-rotulos) .rotulo-secoes{display:none}
 
 /* ---------- ficha do prédio ---------- */
-.leaflet-popup-content{margin:12px 14px;font-size:.95rem;line-height:1.45;max-height:min(62vh,560px);overflow-y:auto;overscroll-behavior:contain}
+.leaflet-popup-content{margin:12px 14px;font-size:.95rem;line-height:1.45;max-height:min(50vh,520px);overflow-y:auto;overscroll-behavior:contain}
+/* painel fixo do celular: a ficha fica fora do mapa, com rolagem própria */
+.painel{position:fixed;left:0;right:0;bottom:0;z-index:1100;background:var(--card);border-top:3px solid var(--ink);border-radius:14px 14px 0 0;box-shadow:0 -6px 24px rgb(0 0 0 / 25%);max-height:62vh;display:flex;flex-direction:column;padding-bottom:env(safe-area-inset-bottom)}
+.painel-fechar{align-self:flex-end;min-height:44px;margin:6px 10px 0;border:2px solid var(--ink);border-radius:8px;background:#fff;color:var(--ink);font:inherit;font-weight:700;padding:6px 14px;cursor:pointer}
+.painel-corpo{overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:4px 14px 16px;font-size:.95rem;line-height:1.45}
+body.painel-aberto .leaflet-bottom{display:none}
 .leaflet-container a.leaflet-popup-close-button{width:44px;height:44px;font-size:26px;line-height:44px;padding:0;top:0;right:0}
 .popup-ficha .leaflet-popup-content-wrapper{border-radius:12px}
 .ficha h3{font-family:var(--display);font-size:1.15rem;line-height:1.2;margin:4px 0 4px}

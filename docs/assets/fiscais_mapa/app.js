@@ -324,6 +324,7 @@
 
   function limparMarcadores() {
     S.desenho++;
+    if ($('#painel') && !$('#painel').hidden && !S.abrir) fecharPainel();
     clearTimeout(S.loteMapa); S.loteMapa = null;
     if (S.cluster) S.cluster.clearLayers();
     $('#mapa').setAttribute('aria-busy', 'false');
@@ -357,10 +358,16 @@
     const classe = 'pino pino-' + nivel + (n >= 3 ? ' pino-varias' : '');
     if (!m) {
       m = L.marker([l.lat, l.lon], { nivel, uf: l.uf, icon: L.divIcon({ className: classe, iconSize: [18, 18], html: '' }), title: caixa(l.local), keyboard: true });
-      m.bindPopup(() => ficha(l), { maxWidth: 380, minWidth: 280, autoPanPadding: [24, 24], className: 'popup-ficha' });
       m.bindTooltip(() => rotuloSecoes(l), { permanent: true, direction: 'bottom', offset: [0, 8], className: 'rotulo-secoes', interactive: false });
-      m.on('popupopen', () => { S.aberto = l.id; carregarResultado(l, m); gravarHash(); });
-      m.on('popupclose', () => { if (S.aberto === l.id) { S.aberto = null; S.filtro.secaoAlvo = ''; gravarHash(); } });
+      if (telaPequena()) {
+        // No celular a ficha é um painel fixo fora do mapa: um popup maior que o mapa empurra o pino
+        // para fora da área visível, o agrupador remove o marcador e o popup fecha sozinho.
+        m.on('click', (ev) => { L.DomEvent.stop(ev); abrirPainel(l, m); });
+      } else {
+        m.bindPopup(() => ficha(l), { maxWidth: 380, minWidth: 280, autoPanPadding: [24, 24], className: 'popup-ficha' });
+        m.on('popupopen', () => { if (S.alvoLocal !== l.id) S.filtro.secaoAlvo = ''; S.aberto = l.id; carregarResultado(l, m.getPopup().getElement()); gravarHash(); });
+        m.on('popupclose', () => { if (S.aberto === l.id) { S.aberto = null; S.filtro.secaoAlvo = ''; gravarHash(); } });
+      }
       S.marcadores.set(l.id, m);
     } else {
       m.options.nivel = nivel;
@@ -387,11 +394,42 @@
 
   function abrirPendente() {
     if (!S.abrir) return;
-    const m = S.marcadores.get(S.abrir);
+    const id = S.abrir;
+    const m = S.marcadores.get(id);
     S.abrir = '';
     if (!m) { setStatus('O prédio pedido não está no mapa com os filtros atuais. Marque mais níveis ou use "Limpar".', true); return; }
-    if (m._icon) m.openPopup();
-    else S.cluster.zoomToShowLayer(m, () => m.openPopup());
+    const abrir = () => (telaPequena() ? abrirPainel(S.locaisPorId.get(id), m) : m.openPopup());
+    if (m._icon) abrir();
+    else S.cluster.zoomToShowLayer(m, abrir);
+  }
+
+  const telaPequena = () => window.matchMedia('(max-width: 979px)').matches;
+
+  // Painel fixo do celular: a ficha do prédio, rolável, sem mexer no enquadramento do mapa.
+  function abrirPainel(l, m) {
+    const painel = $('#painel');
+    const corpo = $('#painel-corpo');
+    if (S.alvoLocal !== l.id) S.filtro.secaoAlvo = '';
+    corpo.replaceChildren(ficha(l));
+    painel.hidden = false;
+    document.body.classList.add('painel-aberto');
+    S.aberto = l.id;
+    carregarResultado(l, corpo);
+    gravarHash();
+    if (m && S.mapa) S.mapa.panTo(m.getLatLng(), { animate: false });
+    corpo.scrollTop = 0;
+    const alvo = corpo.querySelector('#sec-atual');
+    if (alvo) alvo.scrollIntoView({ block: 'nearest' });
+    $('#painel-fechar').focus({ preventScroll: true });
+  }
+
+  function fecharPainel() {
+    const painel = $('#painel');
+    if (painel.hidden) return;
+    painel.hidden = true;
+    document.body.classList.remove('painel-aberto');
+    S.aberto = null; S.filtro.secaoAlvo = '';
+    gravarHash();
   }
 
   /* ------------------------------------------------------------ ficha do local */
@@ -471,8 +509,7 @@
   }
 
   // As demais seções do prédio (sem sinal no mapa) vêm do Politize, para o fiscal ver o prédio inteiro.
-  async function carregarResultado(l, m) {
-    const el = m.getPopup() && m.getPopup().getElement();
+  async function carregarResultado(l, el) {
     const caixaExtra = el && el.querySelector('.ficha-extra');
     if (!caixaExtra || !l.mun) return;
     buscar(POLITIZE + 'fiscal/' + l.uf + '/' + Number(l.zona) + '.json').then((f) => {
@@ -868,7 +905,8 @@
     const r = Number(q.get('raio'));
     S.raio = RAIOS.indexOf(r) >= 0 ? r : RAIO_PADRAO;
     S.abrir = q.get('l') || '';
-    f.secaoAlvo = q.get('s') || '';
+    S.alvoLocal = S.abrir;
+    f.secaoAlvo = S.abrir ? q.get('s') || '' : '';
     montarRaios();
     montarNiveis();
     return q.get('modo') === 'lista' ? 'lista' : 'mapa';
@@ -937,6 +975,8 @@
     $('#l-busca').addEventListener('input', () => { clearTimeout(tl); tl = setTimeout(() => { S.buscaLista = $('#l-busca').value; S.pagina = 1; atualizar(false); }, 200); });
     $('#l-por-pag').addEventListener('change', () => { S.porPagina = Number($('#l-por-pag').value) || 50; S.pagina = 1; atualizar(false); });
     $('#l-csv').addEventListener('click', exportarCsv);
+    $('#painel-fechar').addEventListener('click', fecharPainel);
+    document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape') fecharPainel(); });
     $('#l-raio').addEventListener('change', () => { S.listaRaio = $('#l-raio').checked; S.pagina = 1; atualizar(false); });
     const filtros = $('#filtros-toggle');
     if (filtros) filtros.addEventListener('click', () => {
