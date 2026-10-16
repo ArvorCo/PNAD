@@ -16,7 +16,7 @@ from itertools import pairwise
 from .cronologia import preparacao_anterior
 from .processo import resumir
 
-VERSAO = "11"
+VERSAO = "12"
 DIAS = {"04/10/2026": 0, "05/10/2026": 86400}
 MAX_DESCOMPRIMIDO = 80_000_000
 RE_MESARIO = re.compile(r"^Mesário \d+ habilitou o eleitor$")
@@ -114,6 +114,34 @@ def distribuicao(valores: list[int]) -> dict:
         "p90": q(0.9),
         "max": max(v),
     }
+
+
+def fases_da_bateria(
+    instantes: list[int], zeresimas: list[int], computados: list[int]
+) -> tuple[dict[str, int], list[int]]:
+    """Quando a urna passou para a bateria: antes da zerésima, entre a zerésima e o
+    primeiro voto, durante a votação (do primeiro ao último cômputo) ou depois.
+
+    Devolve as contagens por fase e os instantes da fase de votação, que a publicação
+    cruza entre seções do mesmo município. Sem zerésima, tudo antes do primeiro voto
+    conta como pré-votação; sem cômputo, tudo conta como pré-zerésima ou pré-votação.
+    """
+    fases = Counter()
+    votacao = []
+    zer = min(zeresimas) if zeresimas else None
+    primeiro = min(computados) if computados else None
+    ultimo = max(computados) if computados else None
+    for t in instantes:
+        if zer is not None and t < zer:
+            fases["pre_zeresima"] += 1
+        elif primeiro is None or t < primeiro:
+            fases["pre_votacao"] += 1
+        elif t <= ultimo:
+            fases["votacao"] += 1
+            votacao.append(t)
+        else:
+            fases["pos_votacao"] += 1
+    return dict(fases), sorted(votacao)
 
 
 def analisar(raw: bytes, identidade: dict | None = None) -> dict:
@@ -233,6 +261,7 @@ def analisar(raw: bytes, identidade: dict | None = None) -> dict:
     inspecoes = {}
     duracoes_inspecao = []
     ocorrencias = []
+    bateria_t = []
 
     def vazio():
         return {
@@ -288,6 +317,7 @@ def analisar(raw: bytes, identidade: dict | None = None) -> dict:
             cont["ajustes_relogio"] += 1
         if "operando" in baixa and "bateria interna" in baixa:
             cont["eventos_bateria"] += 1
+            bateria_t.append(t)
         if app == "LOGD" and msg.startswith("Urna ligada em "):
             cont["partidas_sistema"] += 1
             if urna in ultimo_por_urna and urna not in encerradas:
@@ -441,6 +471,7 @@ def analisar(raw: bytes, identidade: dict | None = None) -> dict:
         else None
     )
     processo = resumir(ciclos, invalidar, distribuicao)
+    fases_bateria, bateria_votacao = fases_da_bateria(bateria_t, zerésimas, computados)
     grupos = {}
     for n in sorted({c["cargos"] for c in completos}):
         g = [c for c in completos if c["cargos"] == n]
@@ -462,6 +493,8 @@ def analisar(raw: bytes, identidade: dict | None = None) -> dict:
         "processo_observado": processo,
         "inspecoes": distribuicao([] if invalidar else duracoes_inspecao),
         "ocorrencias_operacionais": ocorrencias,
+        "bateria_fases": fases_bateria,
+        "bateria_votacao_segundos": bateria_votacao,
         "contagens": dict(cont),
         "membros": membros,
         "urnas": len(permitidas),

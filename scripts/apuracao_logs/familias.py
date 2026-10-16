@@ -14,7 +14,9 @@ Regra do nível de atenção (``atencao``):
   confirmada) ou diagnósticos de três famílias diferentes;
 - 2: diagnósticos de duas famílias diferentes, fora os de rotina;
 - 1: um ou mais diagnósticos de uma só família, fora os de rotina;
-- 0: só registros de rotina (operação com bateria, inspeção de cinco minutos ou mais).
+- 0: só registros de rotina (operação com bateria em qualquer momento, inspeção de
+  cinco minutos ou mais). A passagem para a bateria durante a votação, simultânea no
+  município ou isolada, é sinal da família de energia e sobe ao nível 1.
 
 As famílias seguem a co-ocorrência medida nos 499.176 logs (memorando de 16/10/2026):
 ciclo não reconstruído acompanha reinício em 96% dos casos e fica em energia; retomadas
@@ -35,6 +37,8 @@ FAMILIAS: dict[str, dict] = {
         "conferir": "Pergunte à mesa a hora e o motivo; confira na ata se a contagem continuou de onde parou.",
         "criterios": [
             "bateria",
+            "bateria_votacao_local",
+            "bateria_votacao_isolada",
             "reinicio_sistema",
             "reinicios",
             "erro_tecnico",
@@ -134,7 +138,9 @@ NOME_CURTO: dict[str, str] = {
     "sem_biometria_alta": "Muitos eleitores sem digital cadastrada",
     "suspensoes": "Votação suspensa várias vezes",
     "reinicios": "Aplicativo de votação reiniciado",
-    "bateria": "Funcionou na bateria",
+    "bateria": "Funcionou na bateria em algum momento",
+    "bateria_votacao_local": "Bateria durante a votação, junto com outras urnas do município",
+    "bateria_votacao_isolada": "Bateria durante a votação, só nesta urna",
     "erro_tecnico": "Erro técnico registrado",
     "assinatura": "Falha de assinatura declarada",
     "relogio": "Relógio inconsistente",

@@ -228,3 +228,27 @@ def test_texto_alterado_e_sinalizado_sem_corrigir_evento():
     assert r["contagens"]["mensagens_criticas_alteradas"] == 1
     assert r["contagens"]["computados_sem_habilitacao"] == 1
     assert r["ciclos"] == 0
+
+
+def test_bateria_classifica_fase_pela_zeresima_e_pelos_computos():
+    ev = [
+        ("07:30:00", "Urna operando na bateria interna"),
+        ("07:40:00", "Gerando relatório [ZERÉSIMA] [TÉRMINO]"),
+        ("07:50:00", "Urna operando na bateria interna"),
+        *ciclo(),
+        ("08:00:21", "Urna operando na bateria interna"),
+        ("09:00:00", "Urna operando na bateria interna"),
+        ("09:00:00", "Carga da [ALIMENTAÇÃO BATERIA INTERNA]: [PLENA]"),
+    ]
+    r = analisar(pacote(ev))
+    assert r["contagens"]["eventos_bateria"] == 4
+    assert r["bateria_fases"] == {
+        "pre_zeresima": 1,
+        "pre_votacao": 1,
+        "votacao": 1,
+        "pos_votacao": 1,
+    }
+    assert r["bateria_votacao_segundos"] == [8 * 3600 + 21]
+    sem = analisar(pacote([("07:30:00", "Urna operando na bateria interna")]))
+    assert sem["bateria_fases"] == {"pre_votacao": 1}
+    assert sem["bateria_votacao_segundos"] == []

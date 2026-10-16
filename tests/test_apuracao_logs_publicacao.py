@@ -11,6 +11,7 @@ from apuracao_logs import complementos, mapa, publicacao
 from apuracao_logs.coleta import SCHEMA
 from apuracao_logs.mapa import publicar_recortes
 from apuracao_logs.parser import VERSAO
+from apuracao_logs.publicacao import simultaneidade_bateria
 from apuracao_logs.resumo import duracoes, situacao
 from test_apuracao_logs_criterios import registro
 
@@ -309,3 +310,27 @@ def test_mapa_inclui_suplemento_sem_inventar_coordenada_ou_pontos(
     assert row["secao"] == 58 and row["logs"] == ["reinicios"]
     assert row["lat"] is None and row["lon"] is None and row["pontuacao"] is None
     assert row["nivel"] == "logs" and not row["originais"]
+
+
+def test_simultaneidade_conta_outras_secoes_do_municipio_em_60_segundos():
+    def linha(uf, mun, instantes):
+        return {
+            "uf": uf,
+            "mun": mun,
+            "bateria_votacao": len(instantes),
+            "_bateria_votacao_s": instantes,
+        }
+
+    linhas = [
+        linha("SP", "71072", [36000, 50000]),
+        linha("SP", "71072", [36030]),
+        linha("SP", "71072", [36059]),
+        linha("SP", "71072", [36061]),  # 61 s depois do primeiro: fora da janela dele
+        linha("SP", "71072", [50000, 50000]),
+        linha("SP", "71072", []),
+        linha("SP", "99999", [36000]),  # outro município nunca conta
+        linha("RJ", "71072", [36000]),  # mesmo código em outra UF nunca conta
+    ]
+    simultaneidade_bateria(linhas)
+    assert [r["bateria_simultaneas"] for r in linhas] == [2, 3, 3, 2, 1, None, 0, 0]
+    assert all("_bateria_votacao_s" not in r for r in linhas)

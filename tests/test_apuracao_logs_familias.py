@@ -25,6 +25,8 @@ def test_toda_regra_tem_familia_e_nome_curto():
 def test_atencao_e_ordenacao_declarada():
     assert atencao([]) == 0
     assert atencao(["bateria"]) == 0
+    assert atencao(["bateria", "bateria_votacao_local"]) == 1
+    assert atencao(["bateria", "bateria_votacao_isolada", "suspensoes"]) == 2
     assert atencao(["bateria", "inspecao_prolongada"]) == 0
     assert atencao(["reinicios"]) == 1
     assert atencao(["reinicios", "reinicio_sistema", "bateria"]) == 1

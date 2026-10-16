@@ -131,6 +131,20 @@ CRITERIOS = {
         "A bateria é um recurso de continuidade. O registro não mede duração da falta de energia nem prova defeito.",
         "Conferir fornecimento de energia e eventuais interrupções de atendimento na ata.",
     ),
+    "bateria_votacao_local": criterio(
+        "Passagem para bateria durante a votação, junto com outras urnas do município",
+        "operacao",
+        "Ao menos uma mensagem de operação com bateria interna entre o primeiro e o último cômputo, com cinco ou mais outras seções do mesmo município registrando o mesmo a até 60 segundos; relógio válido.",
+        "A coincidência de horário entre urnas é a assinatura de um evento de fornecimento compartilhado (prédio ou rede), não de defeito de uma urna. O log não mede a duração da falta de energia. A janela de 60 segundos e o mínimo de cinco seções são cortes declarados.",
+        "Conferir na ata a falta de energia do local, a hora e se o atendimento parou; a bateria é recurso de continuidade previsto.",
+    ),
+    "bateria_votacao_isolada": criterio(
+        "Passagem para bateria durante a votação, só nesta urna",
+        "operacao",
+        "Ao menos uma mensagem de operação com bateria interna entre o primeiro e o último cômputo, sem nenhuma outra seção do mesmo município registrando o mesmo a até 60 segundos; relógio válido.",
+        "Passagem isolada aponta para a tomada, o cabo ou a fonte daquela urna, ou para um prédio com uma só seção; o log não distingue. Seções com uma a quatro outras coincidentes ficam só no registro geral de bateria.",
+        "Conferir na ata a hora, a tomada e o cabo da urna, e se houve interrupção do atendimento.",
+    ),
     "erro_tecnico": criterio(
         "Erro técnico registrado no dia",
         "operacao",
@@ -204,6 +218,14 @@ CRITERIOS = {
 }
 
 
+FASES_BATERIA = ("votacao", "pre_votacao", "pre_zeresima", "pos_votacao")
+
+
+def fase_principal(fases: dict) -> str | None:
+    """Fase mais relevante da passagem para a bateria, na ordem declarada."""
+    return next((f for f in FASES_BATERIA if fases.get(f)), None)
+
+
 def campos(r: dict) -> dict:
     c, bu = r["contagens"], r["bu"]
     cargos = r["tempo_por_cargos"]
@@ -265,6 +287,10 @@ def campos(r: dict) -> dict:
         "computados": c.get("computados", 0),
         "ciclos_reconstruidos": r["ciclos"],
         "motivos_tempo": motivos_tempo,
+        "bateria_eventos": c.get("eventos_bateria", 0),
+        "bateria_fase": fase_principal(r.get("bateria_fases") or {}),
+        "bateria_votacao": (r.get("bateria_fases") or {}).get("votacao", 0),
+        "bateria_simultaneas": None,
         "erros_categoria": r["erros_categoria"],
         "erros_na_janela_votacao": c.get("erros_na_janela_votacao"),
         "assinatura_sucesso_posterior": c.get(
@@ -360,6 +386,12 @@ def avaliar(
             ("assinatura", "falhas_assinatura_declaradas"),
         ):
             flags[cod][i] = c.get(campo, 0) > 0
+        simultaneas = df.bateria_simultaneas.iat[i]
+        em_votacao = r["tempos_validos"] and df.bateria_votacao.iat[i] > 0
+        flags["bateria_votacao_local"][i] = bool(
+            em_votacao and simultaneas is not None and simultaneas >= 5
+        )
+        flags["bateria_votacao_isolada"][i] = bool(em_votacao and simultaneas == 0)
         flags["inspecao_prolongada"][i] = (
             r["tempos_validos"] and (r.get("inspecoes", {}).get("max") or 0) >= 300
         )

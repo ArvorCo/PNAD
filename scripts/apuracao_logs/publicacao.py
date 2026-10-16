@@ -6,6 +6,7 @@ mantém sua cobertura própria e não soma pontos aos 12 critérios históricos.
 
 from __future__ import annotations
 
+import bisect
 import csv
 import gzip
 import hashlib
@@ -127,7 +128,12 @@ COLUNAS += [
     "pares_retomadas",
     "pares_cancelamentos",
     "preparacao_excluida",
+    "bateria_eventos",
+    "bateria_fase",
+    "bateria_votacao",
+    "bateria_simultaneas",
 ]
+JANELA_BATERIA_S = 60
 
 
 def gravar(path: Path, obj):
@@ -145,6 +151,29 @@ def nulo(x):
     if isinstance(x, (list, dict, str)):
         return x
     return None if x is None or pd.isna(x) else x.item() if hasattr(x, "item") else x
+
+
+def simultaneidade_bateria(linhas: list[dict], janela: int = JANELA_BATERIA_S):
+    """Para cada seção com bateria durante a votação, quantas outras seções do mesmo
+    município registraram o mesmo a até ``janela`` segundos de algum dos seus instantes
+    (máximo entre os instantes). Grava ``bateria_simultaneas`` e remove os instantes
+    da linha, que não são publicados."""
+    por_mun = defaultdict(list)
+    for i, row in enumerate(linhas):
+        for t in row.pop("_bateria_votacao_s", None) or []:
+            por_mun[(row["uf"], row["mun"])].append((t, i))
+    maximo = defaultdict(int)
+    for eventos in por_mun.values():
+        eventos.sort()
+        tempos = [t for t, _ in eventos]
+        for t, i in eventos:
+            a = bisect.bisect_left(tempos, t - janela)
+            b = bisect.bisect_right(tempos, t + janela)
+            outras = {j for _, j in eventos[a:b] if j != i}
+            maximo[i] = max(maximo[i], len(outras))
+    for i, row in enumerate(linhas):
+        row["bateria_simultaneas"] = maximo[i] if row["bateria_votacao"] else None
+    return linhas
 
 
 def montar() -> dict:
@@ -218,6 +247,7 @@ def montar() -> dict:
         )
         cobertura[uf]["processo_elegivel"] += row["processo_elegivel"]
         cobertura[uf]["cadencia_elegivel"] += row["cadencia_elegivel"]
+        row["_bateria_votacao_s"] = r.get("bateria_votacao_segundos") or []
         row["url"] = url(catalogo[(uf, mun, z, s)])
         suplemento = complementos.get((uf, mun, z, s))
         row["bu_suplementar"] = suplemento["fonte_bu"] if suplemento else None
@@ -300,6 +330,7 @@ def montar() -> dict:
             )
     if not linhas:
         raise ValueError("Nenhum log válido processado nesta versão")
+    simultaneidade_bateria(linhas)
     df = pd.DataFrame(linhas)
     sinais, refs = avaliar(df, resumos)
     valores_refs = {
@@ -398,6 +429,11 @@ def montar() -> dict:
         ),
     }
     denominadores.update(avaliar_processo(df, referencias, 4)[2])
+    em_votacao = sum(
+        r["tempos_validos"] and r["contagens"].get("computados", 0) > 0 for r in resumos
+    )
+    denominadores["bateria_votacao_local"] = em_votacao
+    denominadores["bateria_votacao_isolada"] = em_votacao
     denominadores["inspecao_prolongada"] = sum(
         r["tempos_validos"] and r["inspecoes"]["n"] > 0 for r in resumos
     )

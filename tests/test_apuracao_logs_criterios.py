@@ -86,7 +86,7 @@ def test_diagnosticos_nos_dois_sentidos_e_sensibilidade():
     flags, _ = avaliar(df, [r] * len(df))
     assert "tempo_rapido" in flags[-2]
     assert "tempo_lento" in flags[-1]
-    assert len(CRITERIOS) == 25
+    assert len(CRITERIOS) == 27
     amplo, _ = avaliar(df, [r] * len(df), 3)
     estrito, _ = avaliar(df, [r] * len(df), 5)
     assert all(set(b) <= set(a) for a, b in zip(amplo, estrito, strict=True))
@@ -196,3 +196,27 @@ def test_retomadas_comuns_nao_disparam_so_por_repeticao():
     assert "retomadas_inatividade" in flags[-3]
     assert "cancelamentos_habilitacao" in flags[-2]
     assert "retomadas_inatividade" not in flags[-1]
+
+
+def test_bateria_durante_a_votacao_distingue_local_de_isolada():
+    r, row = amostra()
+    r["tempos_validos"] = True
+    base = {**row, "bateria_votacao": 0, "bateria_simultaneas": None}
+    df = pd.DataFrame(
+        [base] * 30
+        + [
+            {**row, "bateria_votacao": 2, "bateria_simultaneas": 7},
+            {**row, "bateria_votacao": 1, "bateria_simultaneas": 0},
+            {**row, "bateria_votacao": 1, "bateria_simultaneas": 3},
+            {**row, "bateria_votacao": 3, "bateria_simultaneas": 9},
+        ]
+    )
+    resumos = [r] * (len(df) - 1) + [{**r, "tempos_validos": False}]
+    flags, _ = avaliar(df, resumos)
+    assert "bateria_votacao_local" not in flags[0]
+    assert "bateria_votacao_local" in flags[-4]
+    assert "bateria_votacao_isolada" in flags[-3]
+    # Uma a quatro coincidentes fica só no registro geral de bateria.
+    assert not {"bateria_votacao_local", "bateria_votacao_isolada"} & set(flags[-2])
+    # Relógio inconsistente invalida a fase.
+    assert "bateria_votacao_local" not in flags[-1]
