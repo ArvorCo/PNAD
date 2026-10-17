@@ -274,10 +274,36 @@ def current_coverage(ns):
             '<a href="reponderacao_pnad_log.html#atualizacao">Fontes e pendências</a> · '
             '<a href="assets/reponderacao_20261016.json">Inventário de 16/10, com páginas e SHA-256</a>.</p></aside>'
         )
+    verita_note = ""
+    verita = latest.get("Veritá", {})
+    if verita.get("id") == "verita_2026-10-16" and verita.get("turnos", {}).get("2t"):
+        adj = verita["turnos"]["2t"]["cenarios"]["pessoas16_efetivo"]["ajustado"]
+        verita_note = (
+            '<aside class="callout" id="rodada-1710"><h3>17/10: Veritá com renda nas duas centrais</h3>'
+            "<p><b>Publicado: 49,7 × 47,7 no total; 51,1 × 48,9 nos válidos.</b> "
+            f'Sensibilidade PNAD: <b>{ns["br"](adj["flavio"], 2)} × '
+            f'{ns["br"](adj["lula"], 2)}</b> no total. Campo 12–16/10, '
+            "15.554 entrevistas por URA, BR-01107/2026. O perfil de renda "
+            "42,7/38,6/18,7 e os cruzamentos atuais foram conferidos no relatório. "
+            "A etapa do perfil antes/depois da ponderação não é informada: "
+            "o ajuste é condicional à margem publicada. Na passagem de 16 para 17/10, "
+            "a Ipespe de 10/10 sai da janela de sete dias das duas centrais. "
+            "A mudança dos agregados combina essa saída com a entrada da Veritá.</p>"
+            "<p><b>Os 2,6% rotulados «ausente» são o subtotal de branco/nulo "
+            "(1,5%) e NS/NR (1,1%).</b> Não são abstenção e não se somam novamente "
+            "à cédula. Usamos os percentuais publicados; as frequências dos "
+            "candidatos diferem em uma unidade do subtotal impresso. "
+            "A numeração impressa salta: o placar está na página 9 do PDF "
+            "(impressa 13), e o voto por renda na 10 (impressa 14).</p>"
+            '<p class="note"><a href="fontes/verita_17102026.pdf">Relatório fornecido, 13 páginas</a> · '
+            '<a href="assets/reponderacao_20261017.json">Inventário e SHA-256</a> · '
+            '<a href="#pesquisa-verita_2026-10-16">Cálculo e controles</a>.</p></aside>'
+        )
     return (
         '<section id="cobertura-atual" class="rs-documentary"><div class="wrap"><p class="eyebrow">Cobertura da disputa</p>'
         '<h2>O que entra na conta.</h2><p class="note">A Média exige cruzamento de renda e campo posterior a 04/10. '
         "A Projeção inclui também o publicado das casas sem renda conferida, com cobertura e pesos explícitos. Placar na ordem Flávio × Lula.</p>"
+        + verita_note
         + today_note
         + update_note
         + quaest_note

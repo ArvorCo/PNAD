@@ -174,6 +174,11 @@
 - Revisão Datafolha 15/10: `datafolha-151026-renda.py` integra a íntegra oficial publicada em 16/10, arquivada em `data/originals/datafolha_102026_15_integra/`; chamada também por `pesquisas-161026-renda.py`. P. 30 (anexo p. 8) tem bases ponderadas 1.172/918/335, voto F/L/BN/I 38/53/6/2, 55/40/4/1, 59/34/6/1. Ajuste limitado a 2.425/2.520; 95 sem renda conservam o publicado. Entra nas duas centrais, mantém id/campo/divulgação. Não duplicar onda nem reescrever inventário inicial de 15/10. A comparação temporal Datafolha agora usa PNAD nas duas ondas, removendo a troca ajustado→publicado.
 - As novas ondas ativaram a tendência pelo critério já existente do motor. A Projeção extrapola inclinação pós-urna até 25/10 e pode absorver mudanças metodológicas; explicitar a distinção da Média. Contratos históricos dos testes usam data explícita ou snapshot congelado: Vox e Datafolha DF de 09/10 saem naturalmente da janela em 16/10.
 
+## Veritá de 17/10/2026
+- `python3 scripts/verita-171026-renda.py`, `reponderacao-pnad.py calcular --hoje 2026-10-17` e `reponderacao-build.py` integram a onda BR-01107/2026, campo 12–16/10, n = 15.554. Relatório fornecido em Downloads, preservado com SHA-256 em `data/originals/verita_102026_17/` e cópia pública em `docs/fontes/verita_17102026.pdf`.
+- Arquivo de 13 páginas com saltos na numeração impressa: perfil p. 4; topline p. 9 (impressa 13); renda e sexo p. 10 (impressa 14). Totais F/L/BN/NS: 49,7/47,7/1,5/1,1; válidos publicados 51,1/48,9 separados. “Ausente” 2,6% é subtotal BN + NS, não abstenção. Frequências dos candidatos somam 15.151 contra subtotal 15.152; preservar percentuais publicados, sem extrair falsa precisão das contagens.
+- Perfil 42,7/38,6/18,7; frequências 6.635/6.010/2.909, sem não resposta publicada. `perfil_tipo=perfil_publicado`: estágio antes/depois da ponderação não explicitado. Cruzamentos totais por renda 43,3/53,4/1,6/1,7; 55,4/43/1,2/0,4; 52,8/44,4/1,6/1,2. Recompor por renda e sexo; não confundir voto lembrado ou expectativa de vitória com intenção atual. Entram as duas centrais sob essa hipótese de perfil; preservar snapshots anteriores e arquivo do primeiro turno.
+
 ## Coding Style & Naming
 - Prefer Python (PEP 8, 4 spaces).
 - Script naming: `kebab-case` (new files), keep existing names for compatibility.
