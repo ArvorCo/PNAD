@@ -181,7 +181,7 @@ process.stdout.write(JSON.stringify({result:m.evaluate(data,p),mc:m.simulate(dat
         assert actual["result"][k] == pytest.approx(expected[k], abs=1e-10)
     assert sum(expected["por_100_eleitores"].values()) == pytest.approx(100)
     mc = M.simulate(DATA, params)
-    assert actual["mc"]["runs"] == mc["runs"] == 2000
+    assert actual["mc"]["runs"] == mc["runs"] == P.RUNS == 20_000
     assert actual["mc"]["share_flavio_ahead"] == mc["share_flavio_ahead"]
     for k in ("flavio", "lula", "gap"):
         assert actual["mc"][k] == pytest.approx(mc[k], abs=1e-10)
@@ -196,6 +196,10 @@ process.stdout.write(JSON.stringify({result:m.evaluate(data,p),mc:m.simulate(dat
 def test_snapshot_sources_and_draws_are_exact_with_portable_summaries():
     assert json.loads(P.encode(DATA)) == DATA
     assert len(P.encode(DATA).splitlines()) < 1000
+    assert DATA["projection"]["mc"]["n_cap"] == 2000
+    assert all(
+        len(rows) == P.RUNS for rows in DATA["projection"]["mc"]["draws"].values()
+    )
     for path, digest in DATA["projection"]["shared_sources"].items():
         assert hashlib.sha256((ROOT / path).read_bytes()).hexdigest() == digest
     assert (
@@ -216,6 +220,25 @@ def test_snapshot_sources_and_draws_are_exact_with_portable_summaries():
     assert (
         P.build(RAW, M.preferences)["mc"]["draws"] == DATA["projection"]["mc"]["draws"]
     )
+
+
+def test_more_draws_preserve_previous_link_and_deterministic_centers():
+    previous = json.loads(
+        (ROOT / "docs/assets/reponderacao_cenarios/b1a3a422ac5f34e5.json").read_text()
+    )
+    expanded = json.loads(
+        (ROOT / "docs/assets/reponderacao_cenarios/13506caffaab364e.json").read_text()
+    )
+    assert previous["projection"]["mc"]["runs"] == 2000
+    assert all(
+        len(rows) == 2000 for rows in previous["projection"]["mc"]["draws"].values()
+    )
+    assert previous["version"] != expanded["version"]
+    assert expanded["projection"]["mc"]["runs"] == 20_000
+    # As mesmas entradas e hipóteses conservam o placar, independentemente de N.
+    for key in ("central", "central_projection"):
+        assert expanded[key] == previous[key]
+    assert expanded["projection"]["anchors"] == previous["projection"]["anchors"]
 
 
 def test_invalid_central_or_projection_in_an_old_snapshot_fails_explicitly():
@@ -244,7 +267,7 @@ process.stdout.write(JSON.stringify(cases.map(p=>{try{m.evaluate(data,p);return 
 
 
 def test_state_update_is_documented_by_field_date_and_never_added_as_national_house():
-    s = DATA["projection"]["states"]
+    s = importlib.import_module("reponderacao-estaduais").build(date(2026, 10, 13))
     assert s["covered_ufs"] == ["DF"]
     assert s["covered_electorate"] == 2_258_320
     assert s["electorate"] == DATA["electorate"]["total"]
@@ -286,7 +309,12 @@ def test_explanations_work_without_javascript_and_distinguish_validation():
     assert (
         "machine learning supervisionado" in cards[1].select_one("details").get_text()
     )
-    assert "insuficiente" in page.select_one("#modelo-projecao").get_text()
+    runs = f'{DATA["projection"]["mc"]["runs"]:,}'.replace(",", ".")
+    assert f"Monte Carlo faz {runs} contas" in cards[1].get_text()
+    assert (
+        DATA["projection"]["trend"]["pnad"]["status"]
+        in page.select_one("#modelo-projecao").get_text()
+    )
     assert (
         "não é chance de vitória medida"
         in page.select_one("#rs-uncertainty").get_text().lower()

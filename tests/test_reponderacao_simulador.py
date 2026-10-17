@@ -110,7 +110,12 @@ def test_only_post_first_round_fields_enter_central_and_no_vox_imputation():
     assert DATA["polls"]
     assert all(p["id"] in with_income for p in DATA["polls"])
     assert len(DATA["polls"]) == len({p["instituto"] for p in DATA["polls"]})
-    assert any(p["id"] == "vox_brasil_2026-10-07" for p in DATA["excluded"])
+    # Vox nunca ganha renda imputada; após sete dias sai também da janela.
+    assert not any(p["id"] == "vox_brasil_2026-10-07" for p in DATA["polls"])
+    frozen = json.loads(
+        (ROOT / "docs/assets/reponderacao_cenarios/dae267a6d8ba1054.json").read_text()
+    )
+    assert any(p["id"] == "vox_brasil_2026-10-07" for p in frozen["excluded"])
     forecast = json.loads((ROOT / "docs/assets/reponderacao_validos.json").read_text())
     previous = forecast["ballots"]["2t"]["scenarios"]["flavio105"]["aggregate"][
         "modelo"

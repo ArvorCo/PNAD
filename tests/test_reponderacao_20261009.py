@@ -47,12 +47,13 @@ def test_atlas_mixed_field_has_sensitivity_but_cannot_enter_post_first_round_cen
     assert set(result["ajustado"]) == {"flavio", "lula", "branco_nulo"}
     sim = read("docs/assets/reponderacao_simulador.json")
     assert all(p["id"] != poll["id"] for p in sim["polls"])
-    excluded = next(p for p in sim["excluded"] if p["id"] == poll["id"])
+    # O motivo histórico permanece no snapshot; a janela atual pode já ter expirado.
+    published_09 = read("docs/assets/reponderacao_cenarios/a55474752ad0103a.json")
+    excluded = next(p for p in published_09["excluded"] if p["id"] == poll["id"])
     assert "atravessa o 1º turno" in excluded["reason"]
-    assert any(p["id"] == "vox_brasil_2026-10-07" for p in sim["excluded"])
+    assert any(p["id"] == "vox_brasil_2026-10-07" for p in published_09["excluded"])
     previous = read("docs/assets/reponderacao_cenarios/43b90fe501f43fcd.json")
     # A exclusão do campo misto é comparada com as hipóteses antigas explícitas.
-    published_09 = read("docs/assets/reponderacao_cenarios/a55474752ad0103a.json")
     same_parameters = SIM.evaluate(
         {**published_09, "undecided_policy": "per_poll"}, previous["defaults"]
     )

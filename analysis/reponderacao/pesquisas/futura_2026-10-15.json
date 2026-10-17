@@ -1,0 +1,134 @@
+{
+  "id": "futura_2026-10-15",
+  "instituto": "Futura",
+  "registro_tse": "BR-03764/2026",
+  "contratante": "Futura, recursos próprios",
+  "campo": {
+    "inicio": "2026-10-14",
+    "fim": "2026-10-15"
+  },
+  "divulgacao": "2026-10-16",
+  "n": 2000,
+  "metodo": "telefônico CATI, eleitores de 16 anos ou mais",
+  "publicado": {
+    "2t": {
+      "flavio": 49,
+      "lula": 47.5,
+      "branco_nulo": 1.5,
+      "indecisos": 2.1
+    }
+  },
+  "fonte": {
+    "arquivo": "data/originals/futura_102026_16/relatorio.pdf",
+    "url": "https://static.poder360.com.br/uploads/2026/10/Relatorio_BR_Out_2_V2_ComTexto_Final.pdf",
+    "sha256": "09f16b98e676778918a28da4e246410eee2f530058cc8dd54a56f7c12bfcd2fe",
+    "bytes": 1551204,
+    "pdf": "data/originals/futura_102026_16/relatorio.pdf",
+    "tipo": "relatorio",
+    "rotulo": "Relatório completo conferido",
+    "paginas": {
+      "metodologia": "4–5",
+      "perfil_renda": 7,
+      "2t_topline": 10,
+      "sexo": 11,
+      "2t_validos": 12
+    },
+    "total_paginas": 18,
+    "conferido_em": "2026-10-16",
+    "status": "Íntegra arquivada e conferida visualmente.",
+    "nota": "Íntegra atual de 18 páginas, BR-03764/2026. Ficha técnica p. 4 informa campo 14–15/10; capa p. 1 diz 13–15/10, divergência preservada. Adotado 14–15/10, confirmado pela divulgação. Estimulada p. 10: 49/47,5/1,5/2,1, soma 100,1 por arredondamento; válidos p. 12: 50,8/49,2. Há perfil de renda p. 7, mas o cruzamento p. 11 contém somente sexo, região e idade: não há voto por renda. Entra pelo publicado somente na Projeção. P. 5 declara substituição da referência de escolaridade TSE pela PNAD Contínua/IBGE, mas a mesma nota já constava na p. 5 do relatório de 13/10. Não é evidência de nova mudança de escolaridade entre essas duas ondas.",
+    "complementos": [
+      {
+        "arquivo": "data/originals/futura_102026_13/relatorio.pdf",
+        "url": "https://static.poder360.com.br/uploads/2026/10/Pesquisa-Futura-presidente.pdf",
+        "bytes": 1657905,
+        "sha256": "c612de90ca566c240c7dc25f375b40232924899b150732620e9966e22cebc63c",
+        "capturado_em": "2026-10-13T18:00:26+00:00",
+        "rotulo": "Futura de 13/10: mesma nota de escolaridade na p. 5"
+      }
+    ]
+  },
+  "publicado_validos": {
+    "2t": {
+      "flavio": 50.8,
+      "lula": 49.2
+    }
+  },
+  "ignorar": true,
+  "motivo": "Íntegra atual sem voto por renda; perfil sozinho não permite ajuste PNAD. Publicado na Projeção. Nota de escolaridade PNAD já presente em 13/10.",
+  "cruzamentos": {},
+  "perfil_economico_publicado": {
+    "unidade": "renda familiar em salários mínimos",
+    "faixas": [
+      "Até 1",
+      "1 a 2",
+      "2 a 5",
+      "5 a 10",
+      "Mais de 10"
+    ],
+    "pct": [
+      27.3,
+      22.1,
+      23.7,
+      10,
+      6.3
+    ],
+    "ns_nr": 10.6,
+    "pagina": 7
+  },
+  "metodologia_onda": {
+    "escolaridade_anterior": "TSE",
+    "escolaridade_atual": "PNAD Contínua/IBGE",
+    "nota_ja_presente_em": "2026-10-13",
+    "nova_mudanca_escolaridade_identificada": false,
+    "pagina": 5
+  },
+  "divergencia_campo": {
+    "capa": "13–15/10",
+    "ficha_tecnica": "14–15/10",
+    "criterio": "Ficha técnica p. 4 e divulgação concordantes"
+  },
+  "controles": {
+    "2t": {
+      "sexo": {
+        "pesos": [
+          47.2,
+          52.9
+        ],
+        "linhas": [
+          [
+            57.5,
+            39.9,
+            1.1,
+            1.4
+          ],
+          [
+            40.8,
+            54.7,
+            1.8,
+            2.7
+          ]
+        ],
+        "opcoes": [
+          "flavio",
+          "lula",
+          "branco_nulo",
+          "indecisos"
+        ],
+        "recomposto": {
+          "flavio": 48.674525474525474,
+          "lula": 47.72137862137862,
+          "branco_nulo": 1.4699300699300701,
+          "indecisos": 2.0870129870129874
+        },
+        "residuo": {
+          "flavio": -0.32547452547452593,
+          "lula": 0.2213786213786193,
+          "branco_nulo": -0.030069930069929862,
+          "indecisos": -0.012987012987012658
+        },
+        "residuo_max_abs": 0.32547452547452593
+      }
+    }
+  }
+}

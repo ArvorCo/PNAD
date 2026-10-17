@@ -1,0 +1,197 @@
+{
+  "id": "poderdata_2026-10-15",
+  "instituto": "PoderData",
+  "registro_tse": "BR-04258/2026",
+  "contratante": "Poder360, recursos próprios; divulgação com Aya Bancah",
+  "campo": {
+    "inicio": "2026-10-13",
+    "fim": "2026-10-15"
+  },
+  "divulgacao": "2026-10-16",
+  "n": 3000,
+  "metodo": "telefônico automatizado IVR; discador aleatório, 644 municípios nas 27 UFs",
+  "publicado": {
+    "2t": {
+      "flavio": 47,
+      "lula": 47,
+      "branco_nulo": 4,
+      "indecisos": 2
+    }
+  },
+  "fonte": {
+    "arquivo": "data/originals/poderdata_102026_16/relatorio.pdf",
+    "url": "https://static.poder360.com.br/uploads/2026/10/Relatorio-PoderData-Eleitoral-15out26.pdf",
+    "bytes": 926817,
+    "sha256": "61804db6a0c000a4fe06a5d001dc956f0c16d63f78d38df33393794c4ef3fc92",
+    "pdf": "data/originals/poderdata_102026_16/relatorio.pdf",
+    "tipo": "relatorio",
+    "rotulo": "Relatório completo conferido",
+    "paginas": {
+      "metodologia": 2,
+      "perfil_renda": 4,
+      "2t_topline": 6,
+      "sexo": 7,
+      "2t_renda": 9
+    },
+    "total_paginas": 33,
+    "conferido_em": "2026-10-16",
+    "status": "Íntegra arquivada e conferida visualmente.",
+    "nota": "Íntegra atual de 33 páginas: campo 13–15/10, BR-04258/2026, 3.000 entrevistas em 644 municípios. Perfil da própria onda p. 4: 46/33/21. Topline 47/47/4/2, renda p. 9, sexo p. 7. A p. 2 declara ponderação por sexo, idade, instrução, renda, resultado do 1º turno e região. Renda e resultado do 1º turno não constavam da lista da ficha de 13/10; isso documenta mudança na declaração, sem identificar quando cada ajuste interno começou. O perfil publicado não explicita sua etapa antes/depois dos pesos: a troca dessa margem é sensibilidade condicional. O índice da matéria-resumo ainda apontava para 12/10; esta íntegra foi localizada no catálogo de relatórios do PoderData e conferida pelo campo e registro, sem reutilizar a onda anterior."
+  },
+  "publicado_validos": {
+    "2t": {
+      "flavio": 50,
+      "lula": 50
+    }
+  },
+  "renda": {
+    "unidade": "salarios_minimos",
+    "ano_referencia": 2026,
+    "mes_precos": "202610",
+    "faixas": [
+      {
+        "rotulo": "0 a 2 SM",
+        "max": 2
+      },
+      {
+        "rotulo": "2 a 5 SM",
+        "max": 5
+      },
+      {
+        "rotulo": "Mais de 5 SM",
+        "max": null
+      }
+    ],
+    "amostra_pct": [
+      46,
+      33,
+      21
+    ],
+    "perfil_tipo": "perfil_publicado",
+    "nota": "Íntegra atual de 33 páginas: campo 13–15/10, BR-04258/2026, 3.000 entrevistas em 644 municípios. Perfil da própria onda p. 4: 46/33/21. Topline 47/47/4/2, renda p. 9, sexo p. 7. A p. 2 declara ponderação por sexo, idade, instrução, renda, resultado do 1º turno e região. Renda e resultado do 1º turno não constavam da lista da ficha de 13/10; isso documenta mudança na declaração, sem identificar quando cada ajuste interno começou. O perfil publicado não explicita sua etapa antes/depois dos pesos: a troca dessa margem é sensibilidade condicional. O índice da matéria-resumo ainda apontava para 12/10; esta íntegra foi localizada no catálogo de relatórios do PoderData e conferida pelo campo e registro, sem reutilizar a onda anterior."
+  },
+  "cruzamentos": {
+    "2t": {
+      "opcoes": [
+        "flavio",
+        "lula",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          40,
+          52,
+          5,
+          2
+        ],
+        [
+          53,
+          42,
+          4,
+          1
+        ],
+        [
+          53,
+          44,
+          3,
+          1
+        ]
+      ],
+      "nota": "Íntegra atual de 33 páginas: campo 13–15/10, BR-04258/2026, 3.000 entrevistas em 644 municípios. Perfil da própria onda p. 4: 46/33/21. Topline 47/47/4/2, renda p. 9, sexo p. 7. A p. 2 declara ponderação por sexo, idade, instrução, renda, resultado do 1º turno e região. Renda e resultado do 1º turno não constavam da lista da ficha de 13/10; isso documenta mudança na declaração, sem identificar quando cada ajuste interno começou. O perfil publicado não explicita sua etapa antes/depois dos pesos: a troca dessa margem é sensibilidade condicional. O índice da matéria-resumo ainda apontava para 12/10; esta íntegra foi localizada no catálogo de relatórios do PoderData e conferida pelo campo e registro, sem reutilizar a onda anterior."
+    }
+  },
+  "controles": {
+    "2t": {
+      "renda": {
+        "pesos": [
+          46,
+          33,
+          21
+        ],
+        "linhas": [
+          [
+            40,
+            52,
+            5,
+            2
+          ],
+          [
+            53,
+            42,
+            4,
+            1
+          ],
+          [
+            53,
+            44,
+            3,
+            1
+          ]
+        ],
+        "opcoes": [
+          "flavio",
+          "lula",
+          "branco_nulo",
+          "indecisos"
+        ],
+        "recomposto": {
+          "flavio": 47.02,
+          "lula": 47.02,
+          "branco_nulo": 4.25,
+          "indecisos": 1.46
+        },
+        "residuo": {
+          "flavio": 0.020000000000003126,
+          "lula": 0.020000000000003126,
+          "branco_nulo": 0.25,
+          "indecisos": -0.54
+        },
+        "residuo_max_abs": 0.54
+      },
+      "sexo": {
+        "pesos": [
+          47,
+          53
+        ],
+        "linhas": [
+          [
+            56,
+            39,
+            5,
+            1
+          ],
+          [
+            39,
+            55,
+            4,
+            3
+          ]
+        ],
+        "opcoes": [
+          "flavio",
+          "lula",
+          "branco_nulo",
+          "indecisos"
+        ],
+        "recomposto": {
+          "flavio": 46.99,
+          "lula": 47.48,
+          "branco_nulo": 4.47,
+          "indecisos": 2.06
+        },
+        "residuo": {
+          "flavio": -0.00999999999999801,
+          "lula": 0.4799999999999969,
+          "branco_nulo": 0.46999999999999975,
+          "indecisos": 0.06000000000000005
+        },
+        "residuo_max_abs": 0.4799999999999969
+      }
+    }
+  },
+  "metodologia_onda": {
+    "ponderacao_voto_1t_2026": true,
+    "pagina": 2
+  }
+}

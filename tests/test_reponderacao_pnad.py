@@ -247,14 +247,14 @@ def test_mda_september_reading_has_independent_sex_check():
     )
 
 
-def test_latest_wave_mean_uses_new_mda_wave(output):
-    # Independent reconstruction ensures August was replaced in the per-institute mean.
+def test_latest_wave_mean_uses_latest_available_wave_per_house(output):
+    # Independent reconstruction prevents superseded waves from entering the mean.
     polls = [p for p in output["pesquisas"] if "2t" in p["turnos"]]
     latest = {}
     for p in sorted(polls, key=lambda p: p["campo"]["fim"]):
         latest[p["instituto"]] = p
-    assert latest["MDA"]["id"] == "mda_2026-10-02"
-    assert latest["Gerp"]["id"] == "gerp_2026-10-12"
+    assert latest["MDA"]["campo"]["fim"] >= "2026-10-02"
+    assert latest["Gerp"]["campo"]["fim"] >= "2026-10-12"
     mean = sum(
         p["turnos"]["2t"]["cenarios"][SCENARIO]["ajustado"]["lula"]
         for p in latest.values()

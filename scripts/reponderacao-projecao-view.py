@@ -22,6 +22,7 @@ def futura_inclusion(data):
 
 def central_cards(data):
     states = data["projection"]["states"]
+    runs = f'{data["projection"]["mc"]["runs"]:,}'.replace(",", ".")
     unadjusted = ", ".join(
         p["instituto"]
         for p in data["projection"]["selected"]
@@ -47,7 +48,7 @@ def central_cards(data):
             'Nacionais na central; <a href="#estados-projecao">estaduais no diagnóstico</a>. Recência e simulações de incerteza.',
             "A predição original do 1º turno combinava pesquisas nacionais e estaduais, com calibração nacional e ponderação por eleitorado. Nesta versão do 2º turno, o placar central usa pesquisas nacionais. "
             f'As estaduais pós-urna cobrem {fmt(states["coverage_pct"])}% do eleitorado e entram no <a href="#estados-projecao">diagnóstico territorial</a>; ainda não alteram o placar central. '
-            "Recência significa dar mais peso ao campo recente. Tendência é a mudança ao longo do tempo dentro da mesma casa; reduzimos a inclinação quando ela é incerta, para evitar extrapolar ruído. PNAD onde há cruzamento; publicado onde falta, identificado como tal. Monte Carlo faz 2.000 contas variando amostras, pesos das casas e um erro que pode atingir todas juntas. A faixa mostra como o resultado muda nessas hipóteses; não mede a chance real de vitória. Não é machine learning supervisionado. As partes territoriais e a validação do primeiro turno não são transferidas."
+            f"Recência significa dar mais peso ao campo recente. Tendência é a mudança ao longo do tempo dentro da mesma casa; reduzimos a inclinação quando ela é incerta, para evitar extrapolar ruído. PNAD onde há cruzamento; publicado onde falta, identificado como tal. Monte Carlo faz {runs} contas variando amostras, pesos das casas e um erro que pode atingir todas juntas. A faixa mostra como o resultado muda nessas hipóteses; não mede a chance real de vitória. Não é machine learning supervisionado. As partes territoriais e a validação do primeiro turno não são transferidas."
             + futura_inclusion(data),
         ),
     ]

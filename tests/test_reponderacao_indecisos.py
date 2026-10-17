@@ -165,8 +165,14 @@ def test_transfer_controls_are_prominent_and_evidence_keeps_source_coverage():
         control = page.select_one(f"#rs-{key}")
         assert not control.find_parent("details", class_="rs-advanced")
         assert control["type"] == "range"
-    evidence = page.select_one("#indecisos-fontes").get_text()
-    assert "Vox Brasil" in evidence and "9,7%" in evidence
+    evidence = page.select_one("#indecisos-fontes")
+    rows = evidence.select("tbody tr")
+    selected = DATA["projection"]["selected"]
+    assert len(rows) == len(selected)
+    for row, poll in zip(rows, selected, strict=True):
+        cells = [cell.get_text() for cell in row.select("td")]
+        assert cells[0] == poll["instituto"]
+        assert cells[2] == f'{poll["published"]["indecisos"]:.1f}%'.replace(".", ",")
     assert (
         "não migração medida" in page.select_one("#transferencia-indecisos").get_text()
     )

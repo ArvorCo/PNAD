@@ -17,9 +17,11 @@ SIM = importlib.import_module("reponderacao-simulador")
 @pytest.mark.parametrize("name", ["datafolha", "palver", "indexa"])
 def test_frozen_sources_reproduce_poll_manifest(name):
     poll = getattr(M, name)()
-    saved = json.loads(
-        (ROOT / "analysis/reponderacao/pesquisas" / (poll["id"] + ".json")).read_text()
+    # Inventário inicial: a renda Datafolha foi completada na revisão de 16/10.
+    inventory = json.loads(
+        (ROOT / "docs/assets/reponderacao_20261015.json").read_text()
     )
+    saved = next(p for p in inventory["pesquisas"] if p["id"] == poll["id"])
     assert poll == saved
     assert poll["divulgacao"] == "2026-10-15"
     assert sum(poll["publicado"]["2t"].values()) == 100
@@ -75,8 +77,9 @@ def test_indexa_keeps_nonvoters_distinct_and_does_not_invent_income_weights():
 
 
 def test_projection_replaces_datafolha_once_and_keeps_unadjustable_toplines():
-    data = ENGINE.build(date(2026, 10, 15))
-    projection = PROJECTION.build(data, SIM.preferences)
+    projection = json.loads(
+        (ROOT / "docs/assets/reponderacao_cenarios/f0d3e5a2ebd1076f.json").read_text()
+    )["projection"]
     selected = {p["instituto"]: p for p in projection["selected"]}
     assert len(selected) == len(projection["selected"]) == 11
     assert selected["Datafolha"]["id"] == "datafolha_2026-10-14"

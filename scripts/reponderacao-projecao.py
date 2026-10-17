@@ -19,7 +19,7 @@ ROOT = Path(__file__).resolve().parents[1]
 FIRST_ROUND = "2026-10-04"
 ELECTION = date(2026, 10, 25)
 KEYS = ("flavio", "lula", "indecisos", "branco_nulo")
-RUNS, SEED = 2000, 20261009
+RUNS, SEED = 20_000, 20261009
 
 
 def four(vector):
@@ -215,9 +215,10 @@ def encode(data):
         clone["presence_model"] = "__PRESENCE__"
     fields = []
     for key, rows in draws.items():
+        block_size = max(25, (len(rows) + 79) // 80)
         blocks = [
-            json.dumps(rows[i : i + 25], separators=(",", ":"))[1:-1]
-            for i in range(0, len(rows), 25)
+            json.dumps(rows[i : i + block_size], separators=(",", ":"))[1:-1]
+            for i in range(0, len(rows), block_size)
         ]
         fields.append(
             f'      "{key}": [\n        ' + ",\n        ".join(blocks) + "\n      ]"

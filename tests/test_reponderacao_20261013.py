@@ -3,6 +3,7 @@
 import hashlib
 import importlib
 import json
+from datetime import date
 from pathlib import Path
 
 import pytest
@@ -124,7 +125,7 @@ def test_both_updated_centres_use_correct_houses_and_preserve_accounting(
 
 
 def test_states_cover_only_df_without_counting_each_house_as_extra_electorate():
-    states = read("docs/assets/reponderacao_estaduais.json")
+    states = importlib.import_module("reponderacao-estaduais").build(date(2026, 10, 13))
     assert states["covered_ufs"] == ["DF"] and len(states["selected"]) == 2
     assert states["coverage_pct"] == pytest.approx(1.4308653402587033)
     assert states["covered_electorate"] == states["selected"][0]["electorate"]
@@ -203,11 +204,10 @@ def test_current_cards_evidence_and_diary_disclose_revisions_without_duplication
     df = page.select_one("#pesquisa-datafolha_2026-10-08").get_text(" ", strip=True)
     assert "PERFIL ASSUMIDO" not in df and "1.187/874/337" in df
     card = page.select_one('.rs-central-card[data-central-card="media"]')
-    assert all(
-        name in card.get_text() for name in ["DataTrends", "Futura", "Vox Brasil"]
-    )
-    projection = page.select_one('.rs-central-card[data-central-card="projecao"]')
     current = read("docs/assets/reponderacao_simulador.json")
+    assert current["excluded"]
+    assert all(p["instituto"] in card.get_text() for p in current["excluded"])
+    projection = page.select_one('.rs-central-card[data-central-card="projecao"]')
     futura = next(
         p for p in current["projection"]["selected"] if p["instituto"] == "Futura"
     )

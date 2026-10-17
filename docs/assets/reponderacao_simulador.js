@@ -41,7 +41,7 @@
     const visible=centre()==='projecao' && Boolean(data.projection) && typeof M.simulate==='function';
     $('uncertainty').hidden=!visible;
     if(!visible) return;
-    $('mc-ranges').textContent='Calculando os 2.000 sorteios desta versão…';$('mc-frequency').textContent='';
+    $('mc-ranges').textContent=`Calculando os ${data.projection.mc.runs.toLocaleString('pt-BR')} sorteios desta versão…`;$('mc-frequency').textContent='';
     const chosen=data, params={...p}, engine=M;
     mcTimer=setTimeout(()=>{
       if(id!==mcId) return;

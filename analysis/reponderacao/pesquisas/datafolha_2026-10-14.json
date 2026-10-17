@@ -18,62 +18,263 @@
     }
   },
   "fonte": {
-    "arquivo": "data/originals/datafolha_102026_15/folha.html",
-    "url": "https://www1.folha.uol.com.br/poder/2026/10/datafolha-flavio-bolsonaro-tem-51-e-lula-49-dos-votos-validos-um-empate-tecnico.shtml",
-    "bytes": 389409,
-    "sha256": "f8fced92af277ce47857bdd2d7646428af2c19da32b484943d2a6c956bc15b57",
-    "capturado_em": "2026-10-15T21:51:33.954406+00:00",
-    "tipo": "materia_contratante",
-    "rotulo": "Folha: divulgação de 15/10",
-    "paginas": {},
-    "conferido_em": "2026-10-15",
-    "nota": "Folha, 15/10 às 18h30: 47/45/6/2 nos totais e 51/49 nos válidos. Campo efetivo 13–14/10, 2.520 entrevistas em 153 municípios, BR-00466/2026. A agenda prévia previa 13–15/10; prevalece o campo informado na divulgação. O painel e a API do G1 consultados ainda devolvem a onda de 08/10, BR-02949/2026, 49/45/5/1. Esses cruzamentos não são da nova pesquisa. A matéria atual informa renda até 2 SM (47% da amostra, Flávio 38 e Lula 53) e de 2 a 5 SM (37%, Flávio 55 e Lula 40), mas falta a faixa superior e a cobertura completa de renda. Entra pelo publicado na Projeção, sem ajuste PNAD."
+    "arquivo": "data/originals/datafolha_102026_15_integra/relatorio.pdf",
+    "url": "https://media.folha.uol.com.br/datafolha/2026/10/16/2sq1uhzy7x0w7caugz-gotqrxffgtdsqnx7qkfqfhs0.pdf",
+    "bytes": 1459345,
+    "sha256": "b86d9106bbdb9deb074f03e57522365ff9d5a7222f16ff0c8f7b36480cdd9b81",
+    "pdf": "data/originals/datafolha_102026_15_integra/relatorio.pdf",
+    "tipo": "relatorio",
+    "rotulo": "Relatório completo conferido",
+    "paginas": {
+      "metodologia": [
+        2,
+        25
+      ],
+      "perfil_renda": 27,
+      "2t_topline": 8,
+      "2t_renda": 30,
+      "sexo": 30,
+      "regiao": 30,
+      "2t_validos": 9
+    },
+    "total_paginas": 42,
+    "conferido_em": "2026-10-16",
+    "status": "Íntegra arquivada e conferida visualmente.",
+    "nota": "Íntegra oficial de 42 páginas, publicada pelo Datafolha em 16/10. Campo 13–14/10, 2.520 entrevistas em 153 municípios, BR-00466/2026. P. 25 (anexo p. 3) declara que as bases dos recortes são ponderadas. P. 30 (anexo p. 8): renda até 2 SM, mais de 2 a 5 SM e mais de 5 SM, bases 1.172/918/335; F/L/BN/indecisos: 38/53/6/2, 55/40/4/1, 59/34/6/1. Ajuste limitado a 2.425/2.520 da amostra; 95 sem renda conservam o topline, sem preferência imputada. Sexo e região recompostos como controles independentes, com arredondamentos preservados. Não são usados os cruzamentos antigos da API G1. Revisão documental da onda de 15/10, não uma nova pesquisa. As duas ondas Datafolha pós-urna agora têm PNAD na tendência; a troca entre ajustado e publicado deixa de contaminar essa comparação.",
+    "publicado_em": "2026-10-16",
+    "complementos": [
+      {
+        "arquivo": "data/originals/datafolha_102026_15_integra/datafolha.html",
+        "url": "https://datafolha.folha.uol.com.br/eleicoes/2026/10/flavio-bolsonaro-pl-tem-47-e-tem-empate-tecnico-com-lula-pt-que-aparece-com-45.shtml",
+        "bytes": 121904,
+        "sha256": "3d4d36e9d07c7b342e6c507125f0d6cf02304603c5fbe6975b7d749a7a71ea43",
+        "rotulo": "Datafolha: divulgação oficial com link para a íntegra"
+      },
+      {
+        "arquivo": "data/originals/datafolha_102026_15/folha.html",
+        "url": "https://www1.folha.uol.com.br/poder/2026/10/datafolha-flavio-bolsonaro-tem-51-e-lula-49-dos-votos-validos-um-empate-tecnico.shtml",
+        "sha256": "f8fced92af277ce47857bdd2d7646428af2c19da32b484943d2a6c956bc15b57",
+        "rotulo": "Folha: divulgação de 15/10"
+      }
+    ]
   },
-  "contratante": "Folha de S.Paulo e TV Globo",
+  "contratante": "Folha de S.Paulo (ficha técnica da íntegra)",
   "publicado_validos": {
     "2t": {
       "flavio": 51,
       "lula": 49
     }
   },
-  "ignorar": true,
-  "motivo": "Nova onda de 15/10 confirmada. Sem ajuste PNAD: cruzamentos e perfil atuais incompletos; o G1 consultado ainda mostrava 08/10. A onda anterior não substitui os dados novos.",
-  "cruzamentos": {},
-  "cruzamentos_documentais": {
-    "opcoes": [
-      "flavio",
-      "lula"
-    ],
-    "faixas": [
-      "Até 2 SM",
-      "De 2 a 5 SM",
-      "Mais de 5 SM"
-    ],
-    "linhas": [
-      [
-        38,
-        53
+  "cruzamentos": {
+    "2t": {
+      "opcoes": [
+        "flavio",
+        "lula",
+        "branco_nulo",
+        "indecisos"
       ],
-      [
-        55,
-        40
+      "linhas": [
+        [
+          38,
+          53,
+          6,
+          2
+        ],
+        [
+          55,
+          40,
+          4,
+          1
+        ],
+        [
+          59,
+          34,
+          6,
+          1
+        ]
       ],
-      [
-        null,
-        null
-      ]
-    ],
-    "perfil_pct_sobre_total": [
-      47,
-      37,
-      null
-    ],
-    "nota": "Trechos da matéria atual; não completar por resíduo ou por onda anterior."
+      "nota": "Íntegra oficial de 42 páginas, publicada pelo Datafolha em 16/10. Campo 13–14/10, 2.520 entrevistas em 153 municípios, BR-00466/2026. P. 25 (anexo p. 3) declara que as bases dos recortes são ponderadas. P. 30 (anexo p. 8): renda até 2 SM, mais de 2 a 5 SM e mais de 5 SM, bases 1.172/918/335; F/L/BN/indecisos: 38/53/6/2, 55/40/4/1, 59/34/6/1. Ajuste limitado a 2.425/2.520 da amostra; 95 sem renda conservam o topline, sem preferência imputada. Sexo e região recompostos como controles independentes, com arredondamentos preservados. Não são usados os cruzamentos antigos da API G1. Revisão documental da onda de 15/10, não uma nova pesquisa. As duas ondas Datafolha pós-urna agora têm PNAD na tendência; a troca entre ajustado e publicado deixa de contaminar essa comparação."
+    }
   },
   "conferencia_painel": {
     "onda_devolvida": "2026-10-08",
     "onda_solicitada": "2026-10-15",
     "usado_na_onda_nova": false,
     "arquivo": "data/originals/datafolha_102026_15/g1-estimulada.json"
+  },
+  "renda": {
+    "unidade": "salarios_minimos",
+    "ano_referencia": 2026,
+    "mes_precos": "202610",
+    "faixas": [
+      {
+        "rotulo": "0 a 2 SM",
+        "max": 2
+      },
+      {
+        "rotulo": "2 a 5 SM",
+        "max": 5
+      },
+      {
+        "rotulo": "Mais de 5 SM",
+        "max": null
+      }
+    ],
+    "amostra_pct": [
+      1172,
+      918,
+      335
+    ],
+    "perfil_tipo": "perfil_ponderado",
+    "nota": "Íntegra oficial de 42 páginas, publicada pelo Datafolha em 16/10. Campo 13–14/10, 2.520 entrevistas em 153 municípios, BR-00466/2026. P. 25 (anexo p. 3) declara que as bases dos recortes são ponderadas. P. 30 (anexo p. 8): renda até 2 SM, mais de 2 a 5 SM e mais de 5 SM, bases 1.172/918/335; F/L/BN/indecisos: 38/53/6/2, 55/40/4/1, 59/34/6/1. Ajuste limitado a 2.425/2.520 da amostra; 95 sem renda conservam o topline, sem preferência imputada. Sexo e região recompostos como controles independentes, com arredondamentos preservados. Não são usados os cruzamentos antigos da API G1. Revisão documental da onda de 15/10, não uma nova pesquisa. As duas ondas Datafolha pós-urna agora têm PNAD na tendência; a troca entre ajustado e publicado deixa de contaminar essa comparação.",
+    "parcela_ajustada_pct": 96.23015873015873,
+    "bases": [
+      1172,
+      918,
+      335
+    ],
+    "nao_publicada_n": 95
+  },
+  "controles": {
+    "2t": {
+      "renda": {
+        "pesos": [
+          1172,
+          918,
+          335
+        ],
+        "linhas": [
+          [
+            38,
+            53,
+            6,
+            2
+          ],
+          [
+            55,
+            40,
+            4,
+            1
+          ],
+          [
+            59,
+            34,
+            6,
+            1
+          ]
+        ],
+        "opcoes": [
+          "flavio",
+          "lula",
+          "branco_nulo",
+          "indecisos"
+        ],
+        "recomposto": {
+          "flavio": 47.336494845360825,
+          "lula": 45.454020618556704,
+          "branco_nulo": 5.242886597938145,
+          "indecisos": 1.483298969072165
+        },
+        "residuo": {
+          "flavio": 0.33649484536082497,
+          "lula": 0.4540206185567044,
+          "branco_nulo": -0.7571134020618553,
+          "indecisos": -0.516701030927835
+        },
+        "residuo_max_abs": 0.7571134020618553
+      },
+      "sexo": {
+        "pesos": [
+          1242,
+          1278
+        ],
+        "linhas": [
+          [
+            53,
+            41,
+            5,
+            0
+          ],
+          [
+            41,
+            49,
+            6,
+            3
+          ]
+        ],
+        "opcoes": [
+          "flavio",
+          "lula",
+          "branco_nulo",
+          "indecisos"
+        ],
+        "recomposto": {
+          "flavio": 46.91428571428571,
+          "lula": 45.05714285714286,
+          "branco_nulo": 5.507142857142857,
+          "indecisos": 1.5214285714285714
+        },
+        "residuo": {
+          "flavio": -0.08571428571428896,
+          "lula": 0.05714285714285694,
+          "branco_nulo": -0.4928571428571429,
+          "indecisos": -0.47857142857142865
+        },
+        "residuo_max_abs": 0.4928571428571429
+      },
+      "regiao": {
+        "pesos": [
+          1061,
+          362,
+          689,
+          407
+        ],
+        "linhas": [
+          [
+            51,
+            41,
+            6,
+            2
+          ],
+          [
+            57,
+            35,
+            6,
+            2
+          ],
+          [
+            32,
+            61,
+            6,
+            2
+          ],
+          [
+            54,
+            40,
+            4,
+            2
+          ]
+        ],
+        "opcoes": [
+          "flavio",
+          "lula",
+          "branco_nulo",
+          "indecisos"
+        ],
+        "recomposto": {
+          "flavio": 47.15005954743946,
+          "lula": 45.446605795950774,
+          "branco_nulo": 5.676855895196507,
+          "indecisos": 2.0
+        },
+        "residuo": {
+          "flavio": 0.15005954743946148,
+          "lula": 0.44660579595077365,
+          "branco_nulo": -0.3231441048034931,
+          "indecisos": 0.0
+        },
+        "residuo_max_abs": 0.44660579595077365
+      }
+    }
   }
 }

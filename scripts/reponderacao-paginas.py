@@ -203,12 +203,29 @@ def current_coverage(ns):
             "Indexa/Broadcast": "indexa_2026-10-14",
         }.items()
     ):
+        datafolha = latest["Datafolha"]
+        datafolha_income = datafolha.get("turnos", {}).get("2t", {})
+        datafolha_note = (
+            "<p><b>Datafolha: 47 × 45.</b> A onda entra pelo publicado na Projeção. "
+            "Faltam renda completa e perfil atual para o ajuste.</p>"
+        )
+        if datafolha_income:
+            adj = datafolha_income["cenarios"]["pessoas16_efetivo"]["ajustado"]
+            datafolha_note = (
+                '<p id="datafolha-1510-renda"><b>Datafolha: íntegra oficial obtida; renda incorporada.</b> '
+                f'Publicado 47 × 45; sensibilidade PNAD <b>{ns["br"](adj["flavio"], 2)} × '
+                f'{ns["br"](adj["lula"], 2)}</b> no total. A íntegra publicada em 16/10 confirma '
+                "bases ponderadas de 1.172/918/335 (p. 30, anexo p. 8). O ajuste afeta "
+                "2.425 das 2.520 entrevistas; as 95 sem renda conservam o publicado. "
+                "A onda passa a entrar nas duas centrais. A tendência agora compara "
+                "as duas ondas Datafolha reponderadas, eliminando a troca anterior "
+                "entre PNAD e publicado. Campo 13–14/10, BR-00466/2026; não é nova onda. "
+                f'<a href="{esc(datafolha["fonte"]["url"])}">Íntegra oficial, 42 páginas</a>.</p>'
+            )
         update_note = (
             '<aside class="callout" id="rodada-1510"><h3>15/10: Datafolha, Palver e Indexa</h3>'
-            "<p><b>Datafolha: 47 × 45.</b> A nova onda entra pelo publicado na Projeção. "
-            "O painel do G1 consultado ainda devolvia 08/10; os cruzamentos antigos não "
-            "foram usados na pesquisa nova. Faltam renda completa e perfil atual para o ajuste.</p>"
-            "<p><b>Palver: 50 × 49.</b> Perfil ponderado e voto por renda conferidos no PDF "
+            + datafolha_note
+            + "<p><b>Palver: 50 × 49.</b> Perfil ponderado e voto por renda conferidos no PDF "
             "atual; entra nas duas centrais. O método v3 passa a usar PNAD 2025 e voto "
             "declarado no primeiro turno de 2026. A diferença ante a onda anterior "
             "mistura mudança de método e de preferência.</p>"
@@ -220,10 +237,48 @@ def current_coverage(ns):
             '<a href="reponderacao_pnad_log.html#atualizacao">Conferir fontes e pendências</a> · '
             '<a href="assets/reponderacao_20261015.json">Inventário de 15/10</a>.</p></aside>'
         )
+    today_note = ""
+    if all(
+        latest.get(house, {}).get("id") == ident
+        for house, ident in {
+            "Gerp": "gerp_2026-10-16",
+            "PoderData": "poderdata_2026-10-15",
+            "MDA": "mda_2026-10-15",
+            "Futura": "futura_2026-10-15",
+        }.items()
+    ):
+        today_note = (
+            '<aside class="callout" id="rodada-1610"><h3>16/10: Gerp, PoderData, CNT/MDA e Futura</h3>'
+            "<p><b>Gerp: 50 × 45; PoderData: 47 × 47; CNT/MDA: 46,8 × 45,9.</b> "
+            "As três entram com cruzamentos e perfis atuais de renda, conferidos nas íntegras. "
+            "Gerp limita a troca aos declarantes (96/99 do perfil arredondado); CNT/MDA, a 99%. "
+            "As recusas conservam o publicado. PoderData e CNT/MDA não identificam a etapa "
+            "do perfil antes/depois dos pesos: a sensibilidade depende dessa margem publicada.</p>"
+            "<p><b>Futura: 49 × 47,5.</b> Entra pelo publicado na Projeção; a íntegra traz "
+            "perfil, mas não voto por renda. A ficha informa campo 14–15/10, contra 13–15/10 "
+            "na capa. Adotamos a ficha, também confirmada pela divulgação.</p>"
+            "<p>PoderData e CNT/MDA declaram ponderação pelo voto do primeiro turno. "
+            "Na ficha do PoderData, renda e voto do primeiro turno são acréscimos à lista de 13/10. "
+            "A nota da Futura sobre trocar escolaridade TSE pela PNAD já constava em 13/10; "
+            "ela não comprova nova mudança entre essas duas ondas. "
+            "Diferenças entre ondas podem envolver método e preferência; não demonstram "
+            "sozinhas transferência de votos ou comparecimento futuro.</p>"
+            "<p><b>A Projeção passou a estimar tendência nesta atualização:</b> a série "
+            "pós-primeiro turno atingiu o mínimo de observações exigido pelo motor. "
+            "Ela prolonga até 25/10 a inclinação dentro das casas, reduzida pela incerteza; "
+            "a Média não faz essa extrapolação. Mudanças de ponderação também podem "
+            "entrar nessa inclinação. A divergência entre as centrais exige ler "
+            '<a href="#modelo-projecao">cobertura, pesos e hipóteses</a>, sem tratar '
+            "a tendência como movimento puro do eleitorado ou probabilidade validada de vitória.</p>"
+            '<p class="note">Totais na ordem Flávio × Lula. '
+            '<a href="reponderacao_pnad_log.html#atualizacao">Fontes e pendências</a> · '
+            '<a href="assets/reponderacao_20261016.json">Inventário de 16/10, com páginas e SHA-256</a>.</p></aside>'
+        )
     return (
         '<section id="cobertura-atual" class="rs-documentary"><div class="wrap"><p class="eyebrow">Cobertura da disputa</p>'
         '<h2>O que entra na conta.</h2><p class="note">A Média exige cruzamento de renda e campo posterior a 04/10. '
         "A Projeção inclui também o publicado das casas sem renda conferida, com cobertura e pesos explícitos. Placar na ordem Flávio × Lula.</p>"
+        + today_note
         + update_note
         + quaest_note
         + vox_note
