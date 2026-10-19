@@ -3,8 +3,13 @@
   "checkpoint_id": "db3b04b6cfe7",
   "strategy": "manual-commit",
   "branch": "main",
-  "checkpoints_count": 4,
+  "checkpoints_count": 7,
   "files_touched": [
+    "analysis/mudancas_secoes_2t/clima/inmet_tentativa.txt",
+    "scripts/mudancas-secoes-2t-clima.py",
+    "scripts/mudancas_secoes_2t/cruzamentos.py",
+    "scripts/mudancas_secoes_2t/endereco.py",
+    "scripts/mudancas_secoes_2t/pagina/capitulos_a.py",
     "scripts/video-masterclass-capa.py",
     "video/masterclass/CONTRATO.md",
     "video/masterclass/capa/capa_16x9.html",
@@ -31,13 +36,20 @@
       "context": "/db/3b04b6cfe7/0/context.md",
       "content_hash": "/db/3b04b6cfe7/0/content_hash.txt",
       "prompt": "/db/3b04b6cfe7/0/prompt.txt"
+    },
+    {
+      "metadata": "/db/3b04b6cfe7/1/metadata.json",
+      "transcript": "/db/3b04b6cfe7/1/full.jsonl",
+      "context": "/db/3b04b6cfe7/1/context.md",
+      "content_hash": "/db/3b04b6cfe7/1/content_hash.txt",
+      "prompt": "/db/3b04b6cfe7/1/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 3722,
-    "cache_creation_tokens": 943045,
-    "cache_read_tokens": 78926846,
-    "output_tokens": 118787,
-    "api_call_count": 143
+    "input_tokens": 5358,
+    "cache_creation_tokens": 1363732,
+    "cache_read_tokens": 101639369,
+    "output_tokens": 226150,
+    "api_call_count": 207
   }
 }
