@@ -174,14 +174,26 @@ def test_decomposition_rejects_unreconciled_income_or_topline():
             HISTORY.refine(HISTORY.raw(ident), entries)
 
 
-def test_every_second_round_is_preserved_and_first_round_selection_is_enforced():
+def test_every_second_round_is_preserved_and_first_round_selection_is_enforced(
+    assert_json_close,
+):
     engine = load("reponderacao-pnad")
     selection = load("reponderacao-cenarios")
     bench, ipca = engine.Benchmark(), engine.load_ipca()
     for poll in OUTPUT["pesquisas"]:
         raw = json.loads((ROOT / poll["arquivo"]).read_text())
         original = engine.process_poll(raw, bench, ipca)
-        assert poll["turnos"].get("2t") == original["turnos"].get("2t")
+        saved_2t = copy.deepcopy(poll["turnos"].get("2t"))
+        actual_2t = copy.deepcopy(original["turnos"].get("2t"))
+        if saved_2t is not None and actual_2t is not None:
+            # sum(float) mudou no Python 3.12. Na fronteira x.xxx5, a
+            # apresentação a 3 casas pode variar uma unidade no último dígito.
+            saved_recomposed = saved_2t.pop("recomposto")
+            actual_recomposed = actual_2t.pop("recomposto")
+            assert actual_recomposed == pytest.approx(
+                saved_recomposed, rel=0, abs=0.00100000001
+            )
+        assert_json_close(actual_2t, saved_2t)
         if "1t" in poll["turnos"]:
             assert "marcal" not in poll["turnos"]["1t"]["opcoes"]
             assert (

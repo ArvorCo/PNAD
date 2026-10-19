@@ -13,10 +13,10 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 @pytest.mark.parametrize("name", ["ipespe", "atlas", "futura", "vox", "datatrends"])
-def test_ingestion_matches_archived_sources(name):
+def test_ingestion_matches_archived_sources(name, assert_json_close):
     poll = getattr(M, name)()  # Confere os hashes e tamanhos das fontes.
     saved = ROOT / "analysis/reponderacao/pesquisas" / (poll["id"] + ".json")
-    assert poll == json.loads(saved.read_text())
+    assert_json_close(poll, json.loads(saved.read_text()))
     assert poll["fonte"]["conferido_em"] == "2026-10-19"
     assert poll["campo"]["inicio"] > "2026-10-04"
     assert sum(poll["publicado"]["2t"].values()) == pytest.approx(100, abs=0.11)

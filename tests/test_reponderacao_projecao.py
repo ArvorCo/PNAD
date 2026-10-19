@@ -217,9 +217,16 @@ def test_snapshot_sources_and_draws_are_exact_with_portable_summaries():
     for key, values in computed["totals"].items():
         # sum(float) mudou no Python 3.12; tolerância < um milionésimo de eleitor.
         assert frozen["totals"][key] == pytest.approx(values, abs=1e-6, rel=0)
-    assert (
-        P.build(RAW, M.preferences)["mc"]["draws"] == DATA["projection"]["mc"]["draws"]
-    )
+    regenerated = P.build(RAW, M.preferences)["mc"]["draws"]
+    stored = DATA["projection"]["mc"]["draws"]
+    assert regenerated.keys() == stored.keys()
+    for key in stored:
+        # Os arquivos congelados e seus hashes seguem exatos acima. Regerar
+        # os sorteios em outra combinação Python/NumPy/BLAS pode atravessar
+        # a fronteira de arredondamento na oitava casa publicada.
+        assert np.asarray(regenerated[key]) == pytest.approx(
+            np.asarray(stored[key]), rel=0, abs=1.0001e-8
+        )
 
 
 def test_more_draws_preserve_previous_link_and_deterministic_centers():
