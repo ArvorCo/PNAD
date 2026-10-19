@@ -640,3 +640,18 @@ guided, auditable reading of what the data says.
 <sub>Written, compiled, and maintained by <a href="https://github.com/leonardodias-arvor">Leonardo Dias</a> with support from <a href="https://github.com/ArvorCo">Arvor</a>.<br>
 Data © IBGE / PNADC · Code © <a href="LICENSE">MIT</a> · Prose © <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY-4.0</a></sub>
 </div>
+
+
+### Projeção territorial experimental do segundo turno
+
+`docs/projecao_secoes_2t_2026.html` combina a apuração por seção, seis modelos históricos e pesquisas pós-primeiro turno. O protocolo, as perdas de pareamento e o teste temporal 2018→2022 estão em `analysis/projecao_secoes_2t/`. A seleção experimental favoreceu a regra proporcional local; as matrizes de transferência de 2022 permanecem cenários, não migrações individuais identificadas. As centrais anteriores são preservadas.
+
+```bash
+python3 scripts/projecao-secoes-2t-validar.py
+python3 scripts/projecao-secoes-2t-dados.py --hoje 2026-10-19
+python3 scripts/projecao-secoes-2t-build.py
+python3 scripts/social-cards.py --only projecao_secoes_2t_2026
+pytest -q tests/test_projecao_secoes_2t.py
+```
+
+Requer os ZIPs oficiais de votação por seção e detalhe de 2018/2022 (URLs e hashes no payload), os bancos locais da apuração/cadastro de 2026 e o snapshot corrente das pesquisas. `--refresh` no script de dados reextrai a apuração; os arquivos intermediários ficam em `data/outputs/projecao_secoes_2t/`. O CSV gzip público contém projeção por BU e três resíduos municipais explicitamente identificados; o payload compacto permite leitura e testes sem os bancos pesados. A página é gerada: editar template, módulos e assets, nunca o HTML final.
