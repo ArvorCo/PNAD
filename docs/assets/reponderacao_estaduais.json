@@ -1,56 +1,10 @@
 {
-  "reference": "2026-10-17",
-  "selected": [
-    {
-      "id": "quaest_DF_2026-10-11",
-      "instituto": "Quaest",
-      "uf": "DF",
-      "registro_tse": "BR-06799/2026",
-      "registro_tse_estadual": "DF-08737/2026",
-      "campo": {
-        "inicio": "2026-10-08",
-        "fim": "2026-10-11"
-      },
-      "divulgacao": "2026-10-12",
-      "n": 1104,
-      "margem_pp": 3,
-      "contratante": "TV Globo",
-      "publicado": {
-        "flavio": 50,
-        "lula": 40,
-        "branco_nulo": 6,
-        "indecisos": 4
-      },
-      "source": {
-        "arquivo": "data/originals/quaest_DF_102026_12/materia.html",
-        "url": "https://exame.com/brasil/quaest-no-df-flavio-bolsonaro-lidera-com-50-das-intencoes-de-voto-lula-tem-40/",
-        "bytes": 241146,
-        "sha256": "6c7792063c84d9eba528e57b8f9fd9d2bdeba425b7e7299d023d72c0eb0153b4",
-        "capturado_em": "2026-10-13T18:09:56+00:00",
-        "tipo": "materia",
-        "status": 200
-      },
-      "income_available": false,
-      "notes": [
-        "Fonte de divulgação, sem íntegra e sem voto por renda verificável. Não há PNAD imputada.",
-        "Registro estadual DF-08737/2026 na Exame; registro presidencial BR-06799/2026 na agenda e TMC. Mantidos separadamente.",
-        "Apenas diagnóstico por UF; não soma uma pesquisa estadual como casa nacional."
-      ],
-      "source_record": "analysis/reponderacao/estaduais/quaest_DF_20261012.json",
-      "source_record_sha256": "7d6f7e1d05d7cadfa0adac336e979d504f14ef0c29b9c9b13d02dfced5d10232",
-      "electorate": 2258320,
-      "validos_normalizados": {
-        "flavio": 55.55555555555556,
-        "lula": 44.44444444444444
-      }
-    }
-  ],
-  "covered_ufs": [
-    "DF"
-  ],
-  "covered_electorate": 2258320,
+  "reference": "2026-10-19",
+  "selected": [],
+  "covered_ufs": [],
+  "covered_electorate": 0,
   "electorate": 157828968,
-  "coverage_pct": 1.4308653402587033,
+  "coverage_pct": 0.0,
   "use": "Diagnóstico por UF; não altera a central nacional nesta versão.",
   "reason": "A âncora atual adapta os componentes nacionais do motor. A camada territorial precisa de cobertura atual e calibração por eleitorado, comparecimento e efeitos de casa. Somar uma estadual à média nacional ou transportar o voto do 1º turno sem modelo de transferência daria precisão artificial.",
   "source_electorate": "analysis/apuracao_2026/dados/presidente.json",

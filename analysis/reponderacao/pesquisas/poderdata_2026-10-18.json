@@ -1,0 +1,199 @@
+{
+  "id": "poderdata_2026-10-18",
+  "instituto": "PoderData",
+  "registro_tse": "BR-02586/2026",
+  "contratante": "Poder360, recursos próprios; divulgação com Aya Bancah",
+  "campo": {
+    "inicio": "2026-10-16",
+    "fim": "2026-10-18"
+  },
+  "divulgacao": "2026-10-19",
+  "n": 3000,
+  "metodo": "telefônico automatizado IVR; discador aleatório, 695 municípios nas 27 UFs",
+  "publicado": {
+    "2t": {
+      "flavio": 49,
+      "lula": 46,
+      "branco_nulo": 4,
+      "indecisos": 2
+    }
+  },
+  "fonte": {
+    "arquivo": "data/originals/poderdata_102026_19/relatorio.pdf",
+    "url": "https://static.poder360.com.br/uploads/2026/10/Relatorio-PoderData-Eleitoral-18out26.pdf",
+    "bytes": 827801,
+    "sha256": "49d00ff66ff81342274af5c18ec09ae2ef154ab7316136a648bf1a3cfcaea6b2",
+    "capturado_em": "2026-10-19T19:28:44.540795+00:00",
+    "pdf": "data/originals/poderdata_102026_19/relatorio.pdf",
+    "tipo": "relatorio",
+    "rotulo": "Relatório completo conferido",
+    "paginas": {
+      "metodologia": 2,
+      "perfil_renda": 4,
+      "2t_topline": 6,
+      "sexo": 7,
+      "2t_renda": 9,
+      "2t_validos": 11
+    },
+    "total_paginas": 33,
+    "conferido_em": "2026-10-19",
+    "status": "Íntegra arquivada e conferida visualmente.",
+    "nota": "Íntegra de 33 páginas, campo 16–18/10, divulgação 19/10, BR-02586/2026. 3.000 entrevistas em 695 municípios. Perfil atual p. 4: 46/33/21. Voto por renda p. 9; sexo p. 7. Topline 49/46/4/2 soma 101 por arredondamento; válidos divulgados 52/48 preservados separadamente. Ficha p. 2 mantém ponderação por sexo, idade, instrução, renda, resultado do 1º turno e região. Perfil publicado sem etapa pré/pós-pesos explícita: sensibilidade condicional. Nota do PDF admite não resposta como fonte de diferenças entre totais e cruzamentos, sem quantificar renda ausente."
+  },
+  "publicado_validos": {
+    "2t": {
+      "flavio": 52,
+      "lula": 48
+    }
+  },
+  "renda": {
+    "unidade": "salarios_minimos",
+    "ano_referencia": 2026,
+    "mes_precos": "202610",
+    "faixas": [
+      {
+        "rotulo": "0 a 2 SM",
+        "max": 2
+      },
+      {
+        "rotulo": "2 a 5 SM",
+        "max": 5
+      },
+      {
+        "rotulo": "Mais de 5 SM",
+        "max": null
+      }
+    ],
+    "amostra_pct": [
+      46,
+      33,
+      21
+    ],
+    "perfil_tipo": "perfil_publicado",
+    "nota": "Íntegra de 33 páginas, campo 16–18/10, divulgação 19/10, BR-02586/2026. 3.000 entrevistas em 695 municípios. Perfil atual p. 4: 46/33/21. Voto por renda p. 9; sexo p. 7. Topline 49/46/4/2 soma 101 por arredondamento; válidos divulgados 52/48 preservados separadamente. Ficha p. 2 mantém ponderação por sexo, idade, instrução, renda, resultado do 1º turno e região. Perfil publicado sem etapa pré/pós-pesos explícita: sensibilidade condicional. Nota do PDF admite não resposta como fonte de diferenças entre totais e cruzamentos, sem quantificar renda ausente."
+  },
+  "cruzamentos": {
+    "2t": {
+      "opcoes": [
+        "flavio",
+        "lula",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          42,
+          50,
+          5,
+          3
+        ],
+        [
+          57,
+          40,
+          2,
+          1
+        ],
+        [
+          53,
+          44,
+          2,
+          0
+        ]
+      ],
+      "nota": "Íntegra de 33 páginas, campo 16–18/10, divulgação 19/10, BR-02586/2026. 3.000 entrevistas em 695 municípios. Perfil atual p. 4: 46/33/21. Voto por renda p. 9; sexo p. 7. Topline 49/46/4/2 soma 101 por arredondamento; válidos divulgados 52/48 preservados separadamente. Ficha p. 2 mantém ponderação por sexo, idade, instrução, renda, resultado do 1º turno e região. Perfil publicado sem etapa pré/pós-pesos explícita: sensibilidade condicional. Nota do PDF admite não resposta como fonte de diferenças entre totais e cruzamentos, sem quantificar renda ausente."
+    }
+  },
+  "controles": {
+    "2t": {
+      "renda": {
+        "pesos": [
+          46,
+          33,
+          21
+        ],
+        "linhas": [
+          [
+            42,
+            50,
+            5,
+            3
+          ],
+          [
+            57,
+            40,
+            2,
+            1
+          ],
+          [
+            53,
+            44,
+            2,
+            0
+          ]
+        ],
+        "opcoes": [
+          "flavio",
+          "lula",
+          "branco_nulo",
+          "indecisos"
+        ],
+        "recomposto": {
+          "flavio": 49.26,
+          "lula": 45.44,
+          "branco_nulo": 3.38,
+          "indecisos": 1.71
+        },
+        "residuo": {
+          "flavio": 0.259999999999998,
+          "lula": -0.5600000000000023,
+          "branco_nulo": -0.6200000000000001,
+          "indecisos": -0.29000000000000004
+        },
+        "residuo_max_abs": 0.6200000000000001
+      },
+      "sexo": {
+        "pesos": [
+          47,
+          53
+        ],
+        "linhas": [
+          [
+            57,
+            40,
+            3,
+            1
+          ],
+          [
+            42,
+            51,
+            5,
+            2
+          ]
+        ],
+        "opcoes": [
+          "flavio",
+          "lula",
+          "branco_nulo",
+          "indecisos"
+        ],
+        "recomposto": {
+          "flavio": 49.05,
+          "lula": 45.83,
+          "branco_nulo": 4.06,
+          "indecisos": 1.53
+        },
+        "residuo": {
+          "flavio": 0.04999999999999716,
+          "lula": -0.1700000000000017,
+          "branco_nulo": 0.05999999999999961,
+          "indecisos": -0.47
+        },
+        "residuo_max_abs": 0.47
+      }
+    }
+  },
+  "metodologia_onda": {
+    "ponderacao_voto_1t_2026": true,
+    "pagina": 2
+  }
+}

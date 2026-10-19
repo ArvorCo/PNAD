@@ -17,7 +17,20 @@ ROOT = Path(__file__).resolve().parents[1]
 def test_frozen_source_and_public_copy_reproduce_manifest():
     poll = M.verita()  # Inclui a validação de tamanho e SHA-256 das fontes.
     saved = ROOT / "analysis/reponderacao/pesquisas/verita_2026-10-16.json"
-    assert poll == json.loads(saved.read_text())
+    archived = json.loads(saved.read_text())
+    # As fontes são exatas; somas de floats podem variar no último bit por runtime.
+    actual_controls = poll.pop("controles")
+    archived_controls = archived.pop("controles")
+    assert poll == archived
+    assert actual_controls.keys() == archived_controls.keys()
+    for dimension, actual in actual_controls["2t"].items():
+        expected = archived_controls["2t"][dimension]
+        assert actual.keys() == expected.keys()
+        for key in actual:
+            if key in {"recomposto", "residuo", "residuo_max_abs"}:
+                assert actual[key] == pytest.approx(expected[key], rel=0, abs=1e-12)
+            else:
+                assert actual[key] == expected[key]
     assert (ROOT / poll["fonte"]["arquivo"]).read_bytes() == (
         ROOT / "docs/fontes/verita_17102026.pdf"
     ).read_bytes()

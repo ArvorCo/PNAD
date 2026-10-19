@@ -32,6 +32,19 @@ def cards(root):
             ],
             "blue",
         ),
+        (
+            "nexus_btg_18102026",
+            "BTG/Nexus · 19/10/2026",
+            "Bases firmes.",
+            "Placar apertado.",
+            "<b>A íntegra de 128 páginas.</b> Renda atual, retenção das bases, presença declarada e escala 6x1. Onze perguntas por segmento, com fontes e limites.",
+            [
+                ("46,5 × 45,9", "Flávio × Lula / intenção no total"),
+                ("92,9%", "presença certa ou provável / declarada"),
+                ("66,2%", "aprovam o fim da escala 6x1 / formulação da pesquisa"),
+            ],
+            "amber",
+        ),
     ]:
         data = json.loads((root / "docs/assets" / (slug + "_data.json")).read_text())
         if slug.startswith("datafolha"):

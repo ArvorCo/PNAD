@@ -125,7 +125,17 @@ def stacks(title, rows, options, colors=None):
     accessible = table(
         ["Segmento", *options],
         [
-            [esc(name), *["–" if v is None else fmt(v, 0) + "%" for v in values]]
+            [
+                esc(name),
+                *[
+                    (
+                        "–"
+                        if v is None
+                        else fmt(v, 0 if float(v).is_integer() else 1) + "%"
+                    )
+                    for v in values
+                ],
+            ]
             for name, values in rows.items()
         ],
     )

@@ -66,7 +66,7 @@
       if(q.value==='avaliacao')schemes.avaliacao=data.house==='nexus'?['#28705f','#69a089','#a39153','#ba6b5d','#a74247','#9a9c96']:['#28705f','#a39153','#a74247','#9a9c96'];
       const chart=stacked(rows,opts,`${q.options[q.selectedIndex].textContent} / ${dimension.value}`,schemes[q.value]??colors),info=node('p',table.universe,{class:'note'});
       const bases=names.map(name=>{const r=table.segments[name];return `${name}: ${r.base_ponderada?.toLocaleString('pt-BR')??'base não publicada'}`;});
-      const base=node('p',data.house==='datafolha'?'Bases ponderadas: '+bases.join(' · '):'Perfil de cada grupo publicado na p. 99; bases e tamanho efetivo não informados.',{class:'note'});
+      const base=node('p',data.house==='datafolha'?'Bases ponderadas: '+bases.join(' · '):`Perfil de cada grupo publicado na p. ${data.profile_page??99}; bases e tamanho efetivo não informados.`,{class:'note'});
       const references=node('p','Fonte: ',{class:'refs'});
       const pages=[...new Set(names.map(n=>table.segments[n].page??table.page))];
       pages.forEach(page=>{references.append(node('a','p. '+page,{href:data.pdf+'#page='+page}));references.append(document.createTextNode(' · '));});

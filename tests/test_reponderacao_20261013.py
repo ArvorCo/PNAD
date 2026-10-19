@@ -218,7 +218,17 @@ def test_current_cards_evidence_and_diary_disclose_revisions_without_duplication
     assert page.select_one(
         '#modelo-projecao a[href="apuracao_1o_turno_2026.html#pesquisas"]'
     )
-    assert page.select_one('#estados-projecao a[href*="quaest-no-df"]')
+    # A referência territorial acompanha a janela atual, não a data deste teste.
+    for state in current["projection"]["states"]["selected"]:
+        assert page.select_one(f'#estados-projecao a[href="{state["source"]["url"]}"]')
+    has_quaest_df_source = any(
+        "quaest-no-df" in state["source"]["url"]
+        for state in current["projection"]["states"]["selected"]
+    )
+    assert (
+        bool(page.select_one('#estados-projecao a[href*="quaest-no-df"]'))
+        == has_quaest_df_source
+    )
     history = read("analysis/reponderacao/log.json")
     assert len([w for w in history["waves"] if w["id"] == "datafolha_2026-10-08"]) == 1
     new = [w for w in history["waves"] if w["id"] == "gerp_2026-10-12"]

@@ -299,10 +299,35 @@ def current_coverage(ns):
             '<a href="assets/reponderacao_20261017.json">Inventário e SHA-256</a> · '
             '<a href="#pesquisa-verita_2026-10-16">Cálculo e controles</a>.</p></aside>'
         )
+    october19_note = ""
+    if all(
+        latest.get(house, {}).get("id") == ident
+        for house, ident in {
+            "Nexus": "nexus_2026-10-18",
+            "PoderData": "poderdata_2026-10-18",
+        }.items()
+    ):
+        october19_note = (
+            '<aside class="callout" id="rodada-1910"><h3>19/10: Nexus e PoderData com renda atual</h3>'
+            "<p><b>Nexus: 46,5 × 45,9; PoderData: 49 × 46 no total.</b> "
+            "As duas têm campo de 16 a 18/10 e entram nas duas centrais com os cruzamentos atuais. "
+            "A Nexus passa a publicar uma casa decimal e muda o perfil para 21/16/40/23; "
+            "PoderData mantém 46/33/21. A etapa antes/depois da ponderação não está explícita "
+            "nos perfis publicados: as sensibilidades PNAD são condicionais a essas margens.</p>"
+            "<p>PoderData declara ponderação pelo voto do primeiro turno, como em 16/10. "
+            "Seu placar completo 49/46/4/2 soma 101 por arredondamento; válidos divulgados "
+            "52/48 ficam separados da divisão dos inteiros. Na Nexus, válidos publicados "
+            "50,3/49,7 e presença declarada de 92,9% não substituem as hipóteses de comparecimento "
+            "das centrais. Uma onda por casa, sem duplicação da versão anterior.</p>"
+            '<p class="note"><a href="nexus_btg_18102026.html">Dossiê Nexus e íntegra de 128 páginas</a> · '
+            '<a href="fontes/poderdata_19102026.pdf">PoderData, íntegra de 33 páginas</a> · '
+            '<a href="assets/reponderacao_20261019.json">Inventário, páginas e SHA-256</a>.</p></aside>'
+        )
     return (
         '<section id="cobertura-atual" class="rs-documentary"><div class="wrap"><p class="eyebrow">Cobertura da disputa</p>'
         '<h2>O que entra na conta.</h2><p class="note">A Média exige cruzamento de renda e campo posterior a 04/10. '
         "A Projeção inclui também o publicado das casas sem renda conferida, com cobertura e pesos explícitos. Placar na ordem Flávio × Lula.</p>"
+        + october19_note
         + verita_note
         + today_note
         + update_note

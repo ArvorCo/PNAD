@@ -79,3 +79,54 @@ página física. Interface móvel usa barras HTML legíveis sem depender de text
 SVG reduzido. Sem JavaScript, gráficos, diagnósticos, fontes e tabelas completas
 continuam acessíveis. Contratos em `tests/test_dossies_2t_2026.py` e conferência
 real do navegador em `tmp/dossies_20261013/qa.py` (arquivo de trabalho ignorado).
+
+## 18ª rodada Nexus: campo encerrado em 18/10, divulgação em 19/10
+
+`nexus-btg-191026-build.py` gera `docs/nexus_btg_18102026.html` e seu JSON de
+apoio, a partir de `scripts/nexus_191026/`. O nome solicitado usa o fim do
+campo; todos os rótulos identificam a divulgação de 19/10. Não regerar o dossiê
+anterior para incorporar esta onda.
+
+Fonte oficial: `data/originals/nexus_102026_19/relatorio.pdf`, 128 páginas,
+SHA-256 `f6ee08157b9906a8abd4fca2a7a418b329e8895043019bc871b81f12b1eabb45`.
+Cópia pública idêntica em `docs/fontes/nexus_btg_18102026.pdf`. A URL e a hora
+do download ficam no `fonte.json` local. Registro BR-04499/2026 conforme a ficha
+p. 4; não foi feita nova transcrição independente do PesqEle nesta rodada.
+
+- Extração decimal, onze perguntas, 29 linhas incluindo o total, oito dimensões.
+  As páginas iniciais de cada matriz foram conferidas visualmente (8, 13, 17,
+  42, 52, 63, 78, 89, 91, 104, 111), além do voto por renda p. 43 e perfil p. 125.
+  Recomposição com o perfil desta onda: resíduos abaixo de 0,47 pp. Isso é
+  controle de transcrição, não validação do desenho amostral.
+- Perfil atual 21/16/40/23; antes/depois da ponderação não explícito. Sensibilidade
+  condicional ao perfil publicado, ancorada no total publicado; sem imputação
+  de renda ausente. Rótulos com uma casa decimal preservados nas tabelas HTML.
+- Bases por segmento ausentes continuam `null`. Presença 92,9% declarada não
+  substitui o comparecimento TSE nem as propensões históricas do simulador.
+- Conferência visual das figuras: transferências p. 27, firmeza p. 35, motivação
+  pp. 54–55, cenário da escala 6x1 p. 80, problemas p. 114 e economia pp. 118,
+  120 e 122. A motivação de cada candidatura é condicional; sua parcela no
+  total é 45,9% × 12,0% + 46,5% × 21,0% = 15,273%, compatível com 15,3% divulgado.
+  Duas menções de problemas não formam partição. Presente, governo anterior e
+  próximos seis meses são horizontes separados. Respostas hipotéticas sobre
+  jornada não são convertidas em efeito causal ou votos nas centrais.
+- PoderData de 19/10 também integra a reponderação: fonte oficial de 33 páginas
+  em `data/originals/poderdata_102026_19/`, SHA-256
+  `49d00ff66ff81342274af5c18ec09ae2ef154ab7316136a648bf1a3cfcaea6b2`,
+  BR-02586/2026. Perfil 46/33/21 e renda p. 9, conferidos por sexo p. 7; soma
+  publicada 101 por arredondamento e válidos divulgados 52/48 separados.
+
+```sh
+python3 scripts/pesquisas-191026-renda.py
+python3 scripts/reponderacao-pnad.py calcular --hoje 2026-10-19
+python3 scripts/reponderacao-build.py
+python3 scripts/nexus-btg-191026-build.py
+python3 scripts/social-cards.py --only nexus_btg_18102026 reponderacao_pnad hub
+pytest -q tests/test_nexus_191026.py
+```
+
+O novo dossiê sozinho não recalcula centrais. O explorador recebe a página do
+perfil no payload (`profile_page=125`); páginas antigas mantêm o padrão 99.
+A correção da tabela acessível de barras preserva decimais e mantém os inteiros
+anteriores. Conferência do navegador em 390 e 1021 px, onze opções funcionais,
+sem transbordamento horizontal do documento.

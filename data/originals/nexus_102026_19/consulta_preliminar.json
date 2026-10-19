@@ -1,0 +1,43 @@
+{
+  "consulta": "2026-10-19T08:01:25.042802+00:00",
+  "status": "integra_pendente",
+  "rodada": 18,
+  "registro_tse": "BR-04499/2026",
+  "campo": {
+    "inicio": "2026-10-16",
+    "fim": "2026-10-18"
+  },
+  "divulgacao_catalogo_btg": "2026-10-19",
+  "catalogo_btg_id": "6ad58f965a2606707e77e508",
+  "arquivos": [
+    {
+      "arquivo": "data/originals/nexus_102026_19/catalogo_btg.json",
+      "url": "https://content.btgpactual.com/api/research/public-router/content-hub/analysis/category/ELE?pageNumber=1&pageSize=20&channel=research&locale=pt-br",
+      "bytes": 43303,
+      "sha256": "db8e53b89da4f5d79651358b8eb7db8d5d1bc32f5012be8b8418240362b83c93"
+    },
+    {
+      "arquivo": "data/originals/nexus_102026_19/catalogo_pdf_nexus.json",
+      "url": "https://www.nexus.fsb.com.br/wp-json/wp/v2/media?mime_type=application/pdf&per_page=20",
+      "bytes": 64898,
+      "sha256": "ec300a5425d429240ac664b260786595e63c85f90e908b051b6a466a7fefbd9f"
+    }
+  ],
+  "tentativas": {
+    "detalhe_btg": {
+      "url": "https://content.btgpactual.com/api/research/public-router/content-hub/analysis/6ad58f965a2606707e77e508?locale=pt-br",
+      "http_status": 204,
+      "resultado": "Resposta vazia, sem link PDF. Mesmo resultado na rodada anterior."
+    },
+    "acervo_nexus": "Último PDF eleitoral listado: 17ª rodada, 13/10/2026. Busca de mídia Rodada-18 vazia."
+  },
+  "pagina_solicitada": "docs/nexus_btg_18102026.html",
+  "pendencias": [
+    "Baixar e identificar a íntegra da 18ª rodada.",
+    "Conferir visualmente perfil de renda, voto atual por renda e sexo, metodologia e bases.",
+    "Transcrever com páginas e hashes; recompor os totais.",
+    "Integrar nova onda, atualizar reponderacao_pnad e gerar dossiê, cards e sitemap."
+  ],
+  "integrado_no_agregador": false,
+  "nota": "Confirmação do catálogo não contém resultados nem cruzamentos. Nenhuma preferência, perfil ou propensão da rodada anterior foi transportada. A divulgação oficial do catálogo é 19/10; 18/10 é o fim do campo."
+}
