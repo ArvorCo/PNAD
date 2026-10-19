@@ -1,0 +1,199 @@
+{
+  "id": "vox_brasil_2026-10-17",
+  "instituto": "Vox Brasil",
+  "registro_tse": "BR-04332/2026",
+  "contratante": "Vox Brasil, recursos próprios",
+  "campo": {
+    "inicio": "2026-10-15",
+    "fim": "2026-10-17"
+  },
+  "divulgacao": "2026-10-18",
+  "n": 2100,
+  "metodo": "presencial domiciliar",
+  "publicado": {
+    "2t": {
+      "flavio": 44.6,
+      "lula": 46.4,
+      "branco_nulo": 5,
+      "indecisos": 3.9
+    }
+  },
+  "fonte": {
+    "arquivo": "data/originals/vox_102026_18/relatorio.pdf",
+    "url": "https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2026/10/RELATORIO-VOX-BRASIL-NACIONAL-10-2-TURNO-18-10-2026.pdf",
+    "sha256": "df9445445768fe30e629a68e13f7eadc38430ee3fd71e471eb2f4314fa9d4cac",
+    "bytes": 4317447,
+    "pdf": "data/originals/vox_102026_18/relatorio.pdf",
+    "tipo": "relatorio",
+    "rotulo": "Relatório completo conferido",
+    "paginas": {
+      "metodologia": 2,
+      "perfil_renda": 6,
+      "2t_topline": 13,
+      "2t_validos": 13,
+      "sexo": 15,
+      "2t_renda": 18
+    },
+    "total_paginas": 53,
+    "conferido_em": "2026-10-19",
+    "status": "Íntegra arquivada e conferida visualmente.",
+    "nota": "Íntegra de 53 páginas, campo 15–17/10, publicação 18/10, 2.100 entrevistas. Estimulada p. 13: 44,6/46,4/5/3,9, soma 99,9 por arredondamento; válidos 49/51. Esta onda traz voto por renda na p. 18, ao contrário da íntegra anterior. Perfil econômico p. 6: 84/12,4/2,7/1, soma 100,1. O documento não define renda familiar, individual ou per capita; não é defensável trocar essa régua pela renda familiar PNAD. Cruzamentos preservados como diagnóstico, sem ajuste. Recomposição por sexo e renda reproduz o topline dentro do arredondamento; isso não identifica o conceito de renda nem valida a amostragem. Somente publicado na Projeção."
+  },
+  "publicado_validos": {
+    "2t": {
+      "flavio": 49,
+      "lula": 51
+    }
+  },
+  "ignorar": true,
+  "motivo": "Há voto por renda, mas o conceito do perfil econômico não é definido. Sem ajuste PNAD; somente publicado na Projeção.",
+  "cruzamentos": {},
+  "perfil_economico_publicado": {
+    "pagina": 6,
+    "faixas_sm": [
+      2,
+      5,
+      10,
+      null
+    ],
+    "percentuais": [
+      84,
+      12.4,
+      2.7,
+      1
+    ],
+    "conceito": "não definido"
+  },
+  "cruzamentos_diagnosticos": {
+    "pagina": 18,
+    "opcoes": [
+      "flavio",
+      "lula",
+      "branco_nulo",
+      "indecisos"
+    ],
+    "linhas": [
+      [
+        43.8,
+        46.5,
+        5.6,
+        4.1
+      ],
+      [
+        47.3,
+        47.3,
+        2.3,
+        3.1
+      ],
+      [
+        45.6,
+        50.9,
+        1.8,
+        1.8
+      ],
+      [
+        80,
+        15,
+        5,
+        0
+      ]
+    ],
+    "nota": "Última barra NS/NR ausente; zero aritmético para recomposição, não estimativa precisa de zero."
+  },
+  "controles": {
+    "2t": {
+      "renda": {
+        "pesos": [
+          84,
+          12.4,
+          2.7,
+          1
+        ],
+        "linhas": [
+          [
+            43.8,
+            46.5,
+            5.6,
+            4.1
+          ],
+          [
+            47.3,
+            47.3,
+            2.3,
+            3.1
+          ],
+          [
+            45.6,
+            50.9,
+            1.8,
+            1.8
+          ],
+          [
+            80,
+            15,
+            5,
+            0
+          ]
+        ],
+        "opcoes": [
+          "flavio",
+          "lula",
+          "branco_nulo",
+          "indecisos"
+        ],
+        "recomposto": {
+          "flavio": 44.64375624375624,
+          "lula": 46.403096903096895,
+          "branco_nulo": 5.082717282717282,
+          "indecisos": 3.8731268731268726
+        },
+        "residuo": {
+          "flavio": 0.043756243756241986,
+          "lula": 0.003096903096896142,
+          "branco_nulo": 0.08271728271728218,
+          "indecisos": -0.026873126873127262
+        },
+        "residuo_max_abs": 0.08271728271728218
+      },
+      "sexo": {
+        "pesos": [
+          47,
+          53
+        ],
+        "linhas": [
+          [
+            48.9,
+            47.6,
+            2.4,
+            1.1
+          ],
+          [
+            40.8,
+            45.4,
+            7.4,
+            6.4
+          ]
+        ],
+        "opcoes": [
+          "flavio",
+          "lula",
+          "branco_nulo",
+          "indecisos"
+        ],
+        "recomposto": {
+          "flavio": 44.60699999999999,
+          "lula": 46.434,
+          "branco_nulo": 5.050000000000001,
+          "indecisos": 3.9090000000000003
+        },
+        "residuo": {
+          "flavio": 0.006999999999990791,
+          "lula": 0.03399999999999892,
+          "branco_nulo": 0.05000000000000071,
+          "indecisos": 0.009000000000000341
+        },
+        "residuo_max_abs": 0.05000000000000071
+      }
+    }
+  }
+}

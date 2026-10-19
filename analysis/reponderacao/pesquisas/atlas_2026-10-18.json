@@ -1,0 +1,212 @@
+{
+  "id": "atlas_2026-10-18",
+  "instituto": "AtlasIntel",
+  "registro_tse": "BR-02418/2026",
+  "contratante": "Bloomberg",
+  "campo": {
+    "inicio": "2026-10-13",
+    "fim": "2026-10-18"
+  },
+  "divulgacao": "2026-10-19",
+  "n": 4998,
+  "metodo": "recrutamento digital aleatório Atlas RDR; pós-estratificação",
+  "publicado": {
+    "2t": {
+      "flavio": 49.8,
+      "lula": 47.6,
+      "branco_nulo": 2.6
+    }
+  },
+  "fonte": {
+    "arquivo": "data/originals/atlas_102026_19/relatorio.pdf",
+    "url": "https://cdn1.atlasintel.org/pesquisa_atlas_bloomberg__nacional_261019_1_4df1944681acf96f.pdf",
+    "sha256": "08557d05fbd0ccb40d56937d11bcde76f670fedf3c671827e1494b2213127123",
+    "bytes": 2051532,
+    "pdf": "data/originals/atlas_102026_19/relatorio.pdf",
+    "tipo": "relatorio",
+    "rotulo": "Relatório completo conferido",
+    "paginas": {
+      "metodologia": 4,
+      "perfil_renda": 5,
+      "2t_topline": 7,
+      "2t_validos": 8,
+      "2t_renda": 9,
+      "sexo": 9
+    },
+    "total_paginas": 20,
+    "conferido_em": "2026-10-19",
+    "status": "Íntegra arquivada e conferida visualmente.",
+    "nota": "Íntegra de 20 páginas. Campo 13–18/10 integralmente posterior ao primeiro turno; 4.998 entrevistas efetivas. Perfil familiar atual p. 5: 18/12,2/25,9/26,6/17,2, soma 99,9 por arredondamento; cortes nominais R$ 2/3/5/10 mil. Cruzamentos p. 9. Sensibilidade condicional ao perfil publicado, sem etapa pré/pós-pesos explícita. A p. 4 declara pós-estratificação por comportamento eleitoral anterior sem especificar qual eleição; a existência de recall na p. 9 não prova seu uso como alvo. Branco/nulo/não sei (2,6%) permanece agregado, sem indecisos imputados. Cortes de outubro deflacionados somente até o último IPCA arquivado, sem extrapolação.",
+    "rotulos_opcoes": {
+      "branco_nulo": "Branco/nulo/não sei (agregado)"
+    }
+  },
+  "publicado_validos": {
+    "2t": {
+      "flavio": 51.1,
+      "lula": 48.9
+    }
+  },
+  "renda": {
+    "unidade": "reais_nominais",
+    "mes_precos": "202610",
+    "faixas": [
+      {
+        "rotulo": "R$0 a R$2.000",
+        "max": 2000
+      },
+      {
+        "rotulo": "R$2.000 a R$3.000",
+        "max": 3000
+      },
+      {
+        "rotulo": "R$3.000 a R$5.000",
+        "max": 5000
+      },
+      {
+        "rotulo": "R$5.000 a R$10.000",
+        "max": 10000
+      },
+      {
+        "rotulo": "Acima de R$10.000",
+        "max": null
+      }
+    ],
+    "amostra_pct": [
+      18,
+      12.2,
+      25.9,
+      26.6,
+      17.2
+    ],
+    "perfil_tipo": "perfil_publicado",
+    "nota": "Íntegra de 20 páginas. Campo 13–18/10 integralmente posterior ao primeiro turno; 4.998 entrevistas efetivas. Perfil familiar atual p. 5: 18/12,2/25,9/26,6/17,2, soma 99,9 por arredondamento; cortes nominais R$ 2/3/5/10 mil. Cruzamentos p. 9. Sensibilidade condicional ao perfil publicado, sem etapa pré/pós-pesos explícita. A p. 4 declara pós-estratificação por comportamento eleitoral anterior sem especificar qual eleição; a existência de recall na p. 9 não prova seu uso como alvo. Branco/nulo/não sei (2,6%) permanece agregado, sem indecisos imputados. Cortes de outubro deflacionados somente até o último IPCA arquivado, sem extrapolação."
+  },
+  "cruzamentos": {
+    "2t": {
+      "opcoes": [
+        "flavio",
+        "lula",
+        "branco_nulo"
+      ],
+      "linhas": [
+        [
+          39.7,
+          55.7,
+          4.6
+        ],
+        [
+          57.5,
+          42.4,
+          0.1
+        ],
+        [
+          52.4,
+          45.3,
+          2.2
+        ],
+        [
+          53,
+          44,
+          3
+        ],
+        [
+          46.2,
+          51.7,
+          2.1
+        ]
+      ],
+      "nota": "Íntegra de 20 páginas. Campo 13–18/10 integralmente posterior ao primeiro turno; 4.998 entrevistas efetivas. Perfil familiar atual p. 5: 18/12,2/25,9/26,6/17,2, soma 99,9 por arredondamento; cortes nominais R$ 2/3/5/10 mil. Cruzamentos p. 9. Sensibilidade condicional ao perfil publicado, sem etapa pré/pós-pesos explícita. A p. 4 declara pós-estratificação por comportamento eleitoral anterior sem especificar qual eleição; a existência de recall na p. 9 não prova seu uso como alvo. Branco/nulo/não sei (2,6%) permanece agregado, sem indecisos imputados. Cortes de outubro deflacionados somente até o último IPCA arquivado, sem extrapolação."
+    }
+  },
+  "controles": {
+    "2t": {
+      "renda": {
+        "pesos": [
+          18,
+          12.2,
+          25.9,
+          26.6,
+          17.2
+        ],
+        "linhas": [
+          [
+            39.7,
+            55.7,
+            4.6
+          ],
+          [
+            57.5,
+            42.4,
+            0.1
+          ],
+          [
+            52.4,
+            45.3,
+            2.2
+          ],
+          [
+            53,
+            44,
+            3
+          ],
+          [
+            46.2,
+            51.7,
+            2.1
+          ]
+        ],
+        "opcoes": [
+          "flavio",
+          "lula",
+          "branco_nulo"
+        ],
+        "recomposto": {
+          "flavio": 49.826826826826824,
+          "lula": 47.57547547547547,
+          "branco_nulo": 2.571771771771772
+        },
+        "residuo": {
+          "flavio": 0.026826826826827244,
+          "lula": -0.024524524524530023,
+          "branco_nulo": -0.028228228228228236
+        },
+        "residuo_max_abs": 0.028228228228228236
+      },
+      "sexo": {
+        "pesos": [
+          47.1,
+          52.9
+        ],
+        "linhas": [
+          [
+            61.7,
+            35,
+            3.3
+          ],
+          [
+            39.2,
+            58.9,
+            1.9
+          ]
+        ],
+        "opcoes": [
+          "flavio",
+          "lula",
+          "branco_nulo"
+        ],
+        "recomposto": {
+          "flavio": 49.7975,
+          "lula": 47.6431,
+          "branco_nulo": 2.5594
+        },
+        "residuo": {
+          "flavio": -0.0024999999999977263,
+          "lula": 0.043099999999995475,
+          "branco_nulo": -0.04059999999999997
+        },
+        "residuo_max_abs": 0.043099999999995475
+      }
+    }
+  }
+}

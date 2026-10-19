@@ -1,0 +1,199 @@
+{
+  "id": "ipespe_2026-10-15",
+  "instituto": "Ipespe",
+  "registro_tse": "BR-00223/2026",
+  "contratante": "Ipespe/Abrapel",
+  "campo": {
+    "inicio": "2026-10-13",
+    "fim": "2026-10-15"
+  },
+  "divulgacao": "2026-10-17",
+  "n": 1500,
+  "metodo": "telefônico CATI, eleitores de 16 anos ou mais",
+  "publicado": {
+    "2t": {
+      "flavio": 48,
+      "lula": 46,
+      "branco_nulo": 3,
+      "indecisos": 3
+    }
+  },
+  "fonte": {
+    "arquivo": "data/originals/ipespe_102026_17/relatorio.pdf",
+    "url": "https://static.poder360.com.br/uploads/2026/10/pesquisa-ipespe-17out2026.pdf",
+    "sha256": "7e82a6377a81f20ce3d31d070f73a8edff6e3f8d26a3c4f120ffd4f6938cb7bf",
+    "bytes": 8407503,
+    "pdf": "data/originals/ipespe_102026_17/relatorio.pdf",
+    "tipo": "relatorio",
+    "rotulo": "Relatório completo conferido",
+    "paginas": {
+      "metodologia": 37,
+      "perfil_renda": 38,
+      "2t_topline": 5,
+      "2t_validos": 5,
+      "2t_renda": 6,
+      "sexo": 6,
+      "comparecimento": "12–13"
+    },
+    "total_paginas": 39,
+    "conferido_em": "2026-10-19",
+    "status": "Íntegra arquivada e conferida visualmente.",
+    "nota": "2ª rodada do tracking, divulgada em 17/10; campo 13–15/10, 1.500 entrevistas CATI. Íntegra de 39 páginas. Estimulada 48/46/3/3 na p. 5; válidos publicados 51,2/48,8 preservados separadamente da divisão dos inteiros. Perfil familiar 41/38/22 na p. 38, soma 101 por arredondamento; cruzamentos atuais na p. 6. Etapa do perfil antes/depois dos pesos não explicitada: sensibilidade condicional. Ficha p. 37 declara controle de renda e recall do voto no 1º turno de 2026. Os 89% que declaram máxima chance de comparecer e o placar desse subconjunto (pp. 12–13) não substituem o total da amostra nem a âncora de comparecimento."
+  },
+  "publicado_validos": {
+    "2t": {
+      "flavio": 51.2,
+      "lula": 48.8
+    }
+  },
+  "renda": {
+    "unidade": "salarios_minimos",
+    "ano_referencia": 2026,
+    "mes_precos": "202610",
+    "faixas": [
+      {
+        "rotulo": "0 a 2 SM",
+        "max": 2
+      },
+      {
+        "rotulo": "2 a 5 SM",
+        "max": 5
+      },
+      {
+        "rotulo": "Mais de 5 SM",
+        "max": null
+      }
+    ],
+    "amostra_pct": [
+      41,
+      38,
+      22
+    ],
+    "perfil_tipo": "perfil_publicado",
+    "nota": "2ª rodada do tracking, divulgada em 17/10; campo 13–15/10, 1.500 entrevistas CATI. Íntegra de 39 páginas. Estimulada 48/46/3/3 na p. 5; válidos publicados 51,2/48,8 preservados separadamente da divisão dos inteiros. Perfil familiar 41/38/22 na p. 38, soma 101 por arredondamento; cruzamentos atuais na p. 6. Etapa do perfil antes/depois dos pesos não explicitada: sensibilidade condicional. Ficha p. 37 declara controle de renda e recall do voto no 1º turno de 2026. Os 89% que declaram máxima chance de comparecer e o placar desse subconjunto (pp. 12–13) não substituem o total da amostra nem a âncora de comparecimento."
+  },
+  "cruzamentos": {
+    "2t": {
+      "opcoes": [
+        "flavio",
+        "lula",
+        "branco_nulo",
+        "indecisos"
+      ],
+      "linhas": [
+        [
+          40,
+          54,
+          3,
+          3
+        ],
+        [
+          54,
+          41,
+          3,
+          2
+        ],
+        [
+          54,
+          40,
+          2,
+          4
+        ]
+      ],
+      "nota": "2ª rodada do tracking, divulgada em 17/10; campo 13–15/10, 1.500 entrevistas CATI. Íntegra de 39 páginas. Estimulada 48/46/3/3 na p. 5; válidos publicados 51,2/48,8 preservados separadamente da divisão dos inteiros. Perfil familiar 41/38/22 na p. 38, soma 101 por arredondamento; cruzamentos atuais na p. 6. Etapa do perfil antes/depois dos pesos não explicitada: sensibilidade condicional. Ficha p. 37 declara controle de renda e recall do voto no 1º turno de 2026. Os 89% que declaram máxima chance de comparecer e o placar desse subconjunto (pp. 12–13) não substituem o total da amostra nem a âncora de comparecimento."
+    }
+  },
+  "controles": {
+    "2t": {
+      "renda": {
+        "pesos": [
+          41,
+          38,
+          22
+        ],
+        "linhas": [
+          [
+            40,
+            54,
+            3,
+            3
+          ],
+          [
+            54,
+            41,
+            3,
+            2
+          ],
+          [
+            54,
+            40,
+            2,
+            4
+          ]
+        ],
+        "opcoes": [
+          "flavio",
+          "lula",
+          "branco_nulo",
+          "indecisos"
+        ],
+        "recomposto": {
+          "flavio": 48.31683168316832,
+          "lula": 46.05940594059406,
+          "branco_nulo": 2.782178217821782,
+          "indecisos": 2.8415841584158414
+        },
+        "residuo": {
+          "flavio": 0.3168316831683171,
+          "lula": 0.059405940594061235,
+          "branco_nulo": -0.21782178217821802,
+          "indecisos": -0.15841584158415856
+        },
+        "residuo_max_abs": 0.3168316831683171
+      },
+      "sexo": {
+        "pesos": [
+          47,
+          53
+        ],
+        "linhas": [
+          [
+            53,
+            41,
+            3,
+            3
+          ],
+          [
+            43,
+            51,
+            3,
+            2
+          ]
+        ],
+        "opcoes": [
+          "flavio",
+          "lula",
+          "branco_nulo",
+          "indecisos"
+        ],
+        "recomposto": {
+          "flavio": 47.7,
+          "lula": 46.3,
+          "branco_nulo": 3.0,
+          "indecisos": 2.47
+        },
+        "residuo": {
+          "flavio": -0.29999999999999716,
+          "lula": 0.29999999999999716,
+          "branco_nulo": 0.0,
+          "indecisos": -0.5299999999999998
+        },
+        "residuo_max_abs": 0.5299999999999998
+      }
+    }
+  },
+  "metodologia_onda": {
+    "controle_recall_voto_1t_2026": true,
+    "pagina": 37
+  }
+}

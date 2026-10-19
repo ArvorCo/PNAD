@@ -67,8 +67,16 @@ def test_new_wave_is_linked_and_journal_records_one_incorporation():
     assert page.select_one("#pesquisa-atlas_2026-10-08")
     tips = json.loads(page.select_one("script.tips").string)
     assert "Branco/nulo/não sei (agregado) 3,2" in tips["atlas_2026-10-08|2t"]
-    coverage = page.select_one("#cobertura-atlas_2026-10-08").get_text()
-    assert "campo atravessa o 1º turno; fora da central" in coverage
+    # A ficha histórica fica; o card de cobertura acompanha a última onda.
+    latest = max(
+        (
+            p
+            for p in read("docs/assets/reponderacao_pnad.json")["pesquisas"]
+            if p["instituto"] == "AtlasIntel"
+        ),
+        key=lambda p: (p["divulgacao"], p["campo"]["fim"]),
+    )
+    assert page.select_one(f"#cobertura-{latest['id']}")
     diary = read("analysis/reponderacao/log.json")
     rows = [row for row in diary["waves"] if row["id"] == "atlas_2026-10-08"]
     assert len(rows) == 1 and rows[0]["added"] == "2026-10-09"

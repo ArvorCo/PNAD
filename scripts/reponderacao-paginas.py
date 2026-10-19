@@ -232,8 +232,8 @@ def current_coverage(ns):
             "<p><b>Indexa/Broadcast: 44 × 42.</b> Entra pelo publicado na Projeção. "
             "Há voto por renda, mas faltam os pesos dos grupos. Os 8% que dizem não votar "
             "são resposta da pesquisa, não previsão de abstenção.</p>"
-            '<p class="note">Totais na ordem Flávio × Lula. Na <a href="https://www.atlasintel.org/polls/exclusive-polls">AtlasIntel</a>, '
-            "a última nacional localizada continua sendo 09/10; não há nova onda incorporada. "
+            '<p class="note">Totais na ordem Flávio × Lula. Na conferência de 15/10, a <a href="https://www.atlasintel.org/polls/exclusive-polls">AtlasIntel</a> '
+            "tinha 09/10 como última nacional localizada. "
             '<a href="reponderacao_pnad_log.html#atualizacao">Conferir fontes e pendências</a> · '
             '<a href="assets/reponderacao_20261015.json">Inventário de 15/10</a>.</p></aside>'
         )
@@ -323,10 +323,36 @@ def current_coverage(ns):
             '<a href="fontes/poderdata_19102026.pdf">PoderData, íntegra de 33 páginas</a> · '
             '<a href="assets/reponderacao_20261019.json">Inventário, páginas e SHA-256</a>.</p></aside>'
         )
+    complement_note = ""
+    if latest.get("AtlasIntel", {}).get("id") == "atlas_2026-10-18":
+        complement_note = (
+            '<aside class="callout" id="rodada-1910-complemento"><h3>17–19/10: Ipespe, Atlas, Futura, Vox e DataTrends</h3>'
+            "<p><b>Ipespe de sábado (17/10) e Atlas de segunda (19/10) entram nas duas centrais.</b> "
+            "Usamos os perfis e cruzamentos das próprias ondas. A Ipespe publica 48 × 46 no total "
+            "e 51,2 × 48,8 nos válidos; a Atlas, 49,8 × 47,6 e 51,1 × 48,9. "
+            "Ambas têm perfil publicado sem etapa pré/pós-pesos explícita: o ajuste PNAD é condicional. "
+            "A Atlas agrega branco/nulo/não sei em 2,6%; esse bloco não vira indecisos identificados.</p>"
+            "<p><b>Futura de 19/10 e Vox de domingo (18/10) entram somente pelo publicado na Projeção.</b> "
+            "A Futura registra 48,3 × 47,5, sem voto por renda. A Vox registra 44,6 × 46,4 "
+            "e agora publica cruzamentos, mas não define se a renda é familiar, individual ou per capita. "
+            "Seu perfil econômico de 84/12,4/2,7/1 não recebe ajuste por renda familiar PNAD. "
+            "Os cruzamentos por sexo e renda recompõem o total; isso não resolve a definição da variável.</p>"
+            "<p><b>DataTrends de 19/10: 49 × 46 no total, 51,5 × 48,5 nos válidos.</b> "
+            "Resultado conferido na divulgação de Edmar Lyra, dirigente do instituto; "
+            "entra pelo publicado na Projeção. A íntegra e a renda atual ainda não foram localizadas. "
+            "Paraná BR-09051/2026 "
+            "é estadual, no Tocantins, e não entra como pesquisa nacional.</p>"
+            '<p class="note"><a href="fontes/ipespe_17102026.pdf">Ipespe, 39 páginas</a> · '
+            '<a href="fontes/atlas_19102026.pdf">Atlas, 20 páginas</a> · '
+            '<a href="fontes/futura_19102026.pdf">Futura, 18 páginas</a> · '
+            '<a href="fontes/vox_18102026.pdf">Vox, 53 páginas</a> · '
+            '<a href="assets/reponderacao_20261019_complemento.json">Inventário, controles e SHA-256</a>.</p></aside>'
+        )
     return (
         '<section id="cobertura-atual" class="rs-documentary"><div class="wrap"><p class="eyebrow">Cobertura da disputa</p>'
         '<h2>O que entra na conta.</h2><p class="note">A Média exige cruzamento de renda e campo posterior a 04/10. '
         "A Projeção inclui também o publicado das casas sem renda conferida, com cobertura e pesos explícitos. Placar na ordem Flávio × Lula.</p>"
+        + complement_note
         + october19_note
         + verita_note
         + today_note

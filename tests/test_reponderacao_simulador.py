@@ -208,7 +208,10 @@ def test_public_routes_preserve_first_round_and_log_separately():
         "#institutos-1t"
     )
     assert log.select_one("#atualizacao") and log.select_one("#ondas")
-    assert "83,89" in page.select_one("#vox-renda").get_text()
+    # A cobertura corrente não deve exigir a nota da onda de 09/10.
+    vox_cards = page.select('[id^="cobertura-vox_brasil_"]')
+    assert len(vox_cards) == 1
+    assert "Sem ajuste de renda" in vox_cards[0].get_text()
     assert DATA["defaults"]["presenca_relativa"] == 3.8
     counts = C.counts(DATA["central"], DATA["electorate"])
     for k in (

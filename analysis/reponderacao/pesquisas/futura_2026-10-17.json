@@ -1,0 +1,112 @@
+{
+  "id": "futura_2026-10-17",
+  "instituto": "Futura",
+  "registro_tse": "BR-06715/2026",
+  "contratante": "Futura, recursos próprios",
+  "campo": {
+    "inicio": "2026-10-16",
+    "fim": "2026-10-17"
+  },
+  "divulgacao": "2026-10-19",
+  "n": 2000,
+  "metodo": "telefônico CATI, eleitores de 16 anos ou mais",
+  "publicado": {
+    "2t": {
+      "flavio": 48.3,
+      "lula": 47.5,
+      "branco_nulo": 2.4,
+      "indecisos": 1.9
+    }
+  },
+  "fonte": {
+    "arquivo": "data/originals/futura_102026_19/relatorio.pdf",
+    "url": "https://static.poder360.com.br/uploads/2026/10/pesquisa-futura-eleicao-presidencial-19out2026.pdf",
+    "sha256": "d73076b98fad510b9b0a560cfc4951a490db25fb9e64b1a40b31fbc16a31f4d9",
+    "bytes": 1527694,
+    "pdf": "data/originals/futura_102026_19/relatorio.pdf",
+    "tipo": "relatorio",
+    "rotulo": "Relatório completo conferido",
+    "paginas": {
+      "metodologia": "4–5",
+      "perfil_renda": 7,
+      "2t_topline": 10,
+      "sexo": 11,
+      "2t_validos": 12
+    },
+    "total_paginas": 18,
+    "conferido_em": "2026-10-19",
+    "status": "Íntegra arquivada e conferida visualmente.",
+    "nota": "3ª rodada de outubro, 18 páginas, campo 16–17/10 e divulgação 19/10. Estimulada p. 10: 48,3/47,5/2,4/1,9, soma 100,1 por arredondamento. Válidos publicados 50,4/49,6 na p. 12. Perfil familiar p. 7 existe, mas o cruzamento p. 11 contém somente sexo, região e idade. Sem voto por renda, somente publicado na Projeção. A nota de escolaridade PNAD da p. 5 já constava nas ondas de 13 e 16/10; não identifica nova mudança nesta rodada."
+  },
+  "publicado_validos": {
+    "2t": {
+      "flavio": 50.4,
+      "lula": 49.6
+    }
+  },
+  "ignorar": true,
+  "motivo": "Íntegra atual sem voto por renda; somente publicado na Projeção.",
+  "cruzamentos": {},
+  "perfil_economico_publicado": {
+    "unidade": "renda familiar em salários mínimos",
+    "pagina": 7,
+    "faixas_sm": [
+      1,
+      2,
+      5,
+      10,
+      null
+    ],
+    "pct": [
+      28,
+      22.7,
+      22.7,
+      8.9,
+      5.6
+    ],
+    "ns_nr": 12
+  },
+  "controles": {
+    "2t": {
+      "sexo": {
+        "pesos": [
+          47.2,
+          52.9
+        ],
+        "linhas": [
+          [
+            55.5,
+            39.8,
+            2.5,
+            2.2
+          ],
+          [
+            41.4,
+            54.7,
+            2.3,
+            1.6
+          ]
+        ],
+        "opcoes": [
+          "flavio",
+          "lula",
+          "branco_nulo",
+          "indecisos"
+        ],
+        "recomposto": {
+          "flavio": 48.04855144855145,
+          "lula": 47.67422577422578,
+          "branco_nulo": 2.3943056943056944,
+          "indecisos": 1.8829170829170832
+        },
+        "residuo": {
+          "flavio": -0.25144855144854716,
+          "lula": 0.174225774225782,
+          "branco_nulo": -0.005694305694305513,
+          "indecisos": -0.01708291708291676
+        },
+        "residuo_max_abs": 0.25144855144854716
+      }
+    }
+  }
+}
