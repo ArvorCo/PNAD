@@ -6,8 +6,9 @@
 import { carta, losango, CORES } from './carta.js';
 import { desenharCard } from './card.js';
 import { montarMapa } from './mapa.js';
-import { blocoFiscal, resumoFiscal } from './fiscal.js?v=20261016-mapa2';
-import { buscarComplemento, mostrarComplemento } from './complementos.js?v=20261015-processo11';
+import { blocoFiscal, resumoFiscal } from './fiscal.js?v=20261019-mudancas';
+import { blocoMudancas, resumoMudancas } from './mudancas.js?v=20261019-mudancas';
+import { buscarComplemento, mostrarComplemento } from './complementos.js?v=20261019-mudancas';
 
 /* ------------------------------------------------------------------ configuração */
 
@@ -883,6 +884,13 @@ async function mostrar(r) {
     console.warn('fiscal', e);
     return undefined;
   });
+  const mudancaP = Promise.race([
+    blocoMudancas({ h, buscar: buscarJSON, base: BASE, uf: r.uf || local._uf, zona: r.zona !== undefined ? r.zona : local.zona, secao: r.secaoDigitada ?? null, local }),
+    new Promise((ok) => setTimeout(() => ok(null), 6000)),
+  ]).catch((e) => {
+    console.warn('mudancas', e);
+    return null;
+  });
   const ufDados = await buscarJSON(`${BASE}uf/${local._uf}.json`).catch(() => null);
   const pt0 = problemaTopo(ufDados);
   const temaAberto = await renderPropostas(pt0 ? pt0.nome : null);
@@ -905,9 +913,10 @@ async function mostrar(r) {
   const nova = h('div', { class: 'nova-busca' }, h('button', { type: 'button', class: 'btn btn-sec', onclick: () => limpar() }, 'Nova busca'));
   const bairros = renderBairros(local, pool);
   const fisEl = await fiscalP;
+  const mudEl = await mudancaP;
   if (E.atual !== r) return;
   const fisBox = fisEl === null ? null : h('div', { class: 'fiscal-slot' }, fisEl || blocoFiscalReserva());
-  alvo.replaceChildren(...[nova, secBox, fisBox, boletim, viz, bairros, comp].filter(Boolean));
+  alvo.replaceChildren(...[nova, mudEl, secBox, fisBox, boletim, viz, bairros, comp].filter(Boolean));
   $('#resultado').setAttribute('aria-busy', 'false');
   document.title = `${caixa(local.nome)} · Politize sua vizinhança`;
 
@@ -920,6 +929,18 @@ async function mostrar(r) {
     console.warn('mapa', e);
   });
   desenharCardDo(comp, local, info, vars).catch((e) => console.warn('card', e));
+}
+
+async function renderAvisoMudancas() {
+  const alvo = $('#aviso-mudancas');
+  if (!alvo) return;
+  const r = await resumoMudancas(buscarJSON, BASE);
+  if (!r) return;
+  alvo.replaceChildren(
+    h('b', {}, `${r.secoes.toLocaleString('pt-BR')} seções mudaram de endereço entre os turnos.`),
+    ' Digite a sua e confira. ',
+    h('a', { href: 'mudancas_secoes_abstencoes.html' }, 'Veja o laudo'), '.');
+  alvo.hidden = false;
 }
 
 // Sem o arquivo da zona (rede ou versão antiga dos dados), o convite continua.
@@ -1920,6 +1941,7 @@ async function iniciar() {
   }
   renderConversas(null);
   renderFiscalFixo().catch((e) => console.warn('fiscal fixo', e));
+  renderAvisoMudancas().catch((e) => console.warn('aviso mudancas', e));
   const alvoProp = $('#conversas');
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver((ents) => {

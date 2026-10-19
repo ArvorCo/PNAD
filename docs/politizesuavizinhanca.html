@@ -34,9 +34,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,500;1,9..144,700&amp;family=IBM+Plex+Mono:wght@400;500;700&amp;family=IBM+Plex+Sans+Condensed:wght@400;600;700&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/politize/app.css?v=20261015-logs">
+<link rel="stylesheet" href="assets/politize/app.css?v=20261019-mudancas">
 <script>document.documentElement.classList.add('js')</script>
-<script type="module" src="assets/politize/app.js?v=20261016-mapa2"></script>
+<script type="module" src="assets/politize/app.js?v=20261019-mudancas"></script>
 </head>
 <body>
 <a class="skip" href="#busca">Pular para a busca</a>
@@ -149,6 +149,7 @@
           <p class="ajuda">A coordenada fica no seu aparelho. O navegador a usa para medir a distância até os locais de votação, e ela não é enviada a ninguém nem gravada no link.</p>
         </div>
       </div>
+      <p id="aviso-mudancas" class="aviso-mudancas" hidden></p>
       <div id="avisos" class="avisos" role="status"></div>
     </div>
   </section>
@@ -213,6 +214,9 @@
         <p class="kicker">Método</p>
         <h2 id="t-metodo">De onde vem cada número</h2>
         <ul class="lista-texto" id="lista-metodo"></ul>
+        <ul class="lista-texto" id="lista-metodo-mudancas">
+          <li>O alerta de mudança de endereço compara os arquivos de locais de votação do TSE de 02/10 e de 18/10 e a tabela de seções alteradas do Portal de Estatísticas do TSE. Aparece quando qualquer uma das duas fontes do TSE registra endereço diferente entre os turnos; as duas não batem em toda seção, por isso o alerta manda conferir no e-Título. Os números e o método estão no <a href="mudancas_secoes_abstencoes.html">laudo das seções que mudaram de endereço</a>.</li>
+        </ul>
         <div id="em-aberto" class="parametros"></div>
         <div id="parametros" class="parametros"></div>
       </div>

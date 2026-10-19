@@ -1,0 +1,180 @@
+{
+ "versao": "1.0",
+ "gerado_em": "2026-10-19T07:08:15+00:00",
+ "total_secoes": 1362,
+ "total_eleitores": 387185,
+ "por_fonte": {
+  "ambos": 966,
+  "so_zip": 256,
+  "so_painel": 140
+ },
+ "por_uf": {
+  "AC": {
+   "secoes": 14,
+   "eleitores": 3205,
+   "zonas": 3
+  },
+  "AL": {
+   "secoes": 57,
+   "eleitores": 17016,
+   "zonas": 4
+  },
+  "AM": {
+   "secoes": 50,
+   "eleitores": 16808,
+   "zonas": 7
+  },
+  "AP": {
+   "secoes": 54,
+   "eleitores": 15379,
+   "zonas": 6
+  },
+  "BA": {
+   "secoes": 134,
+   "eleitores": 39337,
+   "zonas": 23
+  },
+  "CE": {
+   "secoes": 14,
+   "eleitores": 3322,
+   "zonas": 5
+  },
+  "ES": {
+   "secoes": 14,
+   "eleitores": 3869,
+   "zonas": 3
+  },
+  "GO": {
+   "secoes": 93,
+   "eleitores": 26328,
+   "zonas": 8
+  },
+  "MA": {
+   "secoes": 50,
+   "eleitores": 12670,
+   "zonas": 11
+  },
+  "MG": {
+   "secoes": 114,
+   "eleitores": 27644,
+   "zonas": 22
+  },
+  "MS": {
+   "secoes": 1,
+   "eleitores": 70,
+   "zonas": 1
+  },
+  "MT": {
+   "secoes": 8,
+   "eleitores": 2832,
+   "zonas": 1
+  },
+  "PA": {
+   "secoes": 36,
+   "eleitores": 11585,
+   "zonas": 5
+  },
+  "PB": {
+   "secoes": 89,
+   "eleitores": 26708,
+   "zonas": 9
+  },
+  "PE": {
+   "secoes": 98,
+   "eleitores": 32069,
+   "zonas": 15
+  },
+  "PI": {
+   "secoes": 118,
+   "eleitores": 23868,
+   "zonas": 17
+  },
+  "PR": {
+   "secoes": 137,
+   "eleitores": 40382,
+   "zonas": 25
+  },
+  "RJ": {
+   "secoes": 21,
+   "eleitores": 7056,
+   "zonas": 3
+  },
+  "RN": {
+   "secoes": 27,
+   "eleitores": 7469,
+   "zonas": 4
+  },
+  "RO": {
+   "secoes": 10,
+   "eleitores": 3080,
+   "zonas": 1
+  },
+  "RS": {
+   "secoes": 32,
+   "eleitores": 8659,
+   "zonas": 10
+  },
+  "SC": {
+   "secoes": 10,
+   "eleitores": 2938,
+   "zonas": 2
+  },
+  "SE": {
+   "secoes": 70,
+   "eleitores": 22241,
+   "zonas": 8
+  },
+  "SP": {
+   "secoes": 56,
+   "eleitores": 18657,
+   "zonas": 4
+  },
+  "TO": {
+   "secoes": 37,
+   "eleitores": 7718,
+   "zonas": 11
+  },
+  "ZZ": {
+   "secoes": 18,
+   "eleitores": 6275,
+   "zonas": 1
+  }
+ },
+ "categorias": {
+  "A": {
+   "nome": "Volta ao local de sempre",
+   "frase": "No 1º turno sua seção votou em um local provisório. No 2º turno ela volta ao local original."
+  },
+  "B": {
+   "nome": "Mudou de local",
+   "frase": "No 2º turno sua seção vota em um local provisório, diferente do original."
+  },
+  "C": {
+   "nome": "Outro local provisório",
+   "frase": "Sua seção já votava fora do local original e no 2º turno vai para outro local provisório."
+  },
+  "X": {
+   "nome": "Mudou de local",
+   "frase": "O número do local de votação da sua seção mudou entre os turnos."
+  },
+  "D": {
+   "nome": "Mesmo número, outro prédio",
+   "frase": "O número do local é o mesmo, mas o nome e o endereço agora são de outro prédio."
+  },
+  "E": {
+   "nome": "Endereço em outra rua",
+   "frase": "O nome do local é o mesmo, mas o endereço passou para outra rua. Pode ser outra entrada do mesmo prédio: confira antes de sair."
+  },
+  "painel": {
+   "nome": "Fontes do TSE divergem",
+   "frase": "O painel do TSE e o arquivo de locais divergem sobre esta seção; confira no e-Título."
+  }
+ },
+ "fontes": {
+  "ambos": "o arquivo de locais do TSE (18/10) e o painel de seções alteradas concordam que a seção mudou",
+  "so_zip": "só o arquivo de locais mostra a mudança",
+  "so_painel": "só o painel do TSE lista a seção; o arquivo de locais diverge"
+ },
+ "nota": "mesmo_predio_1t inclui a própria seção; seção agregada aparece pelo próprio número, com agregada_a apontando a principal onde vota. grau_tre diz como a nota do TRE casou: local (número ou nome do prédio), zona ou só município; no grau município o motivo é da nota, não necessariamente desta seção.",
+ "arquivo": "mudancas/<UF>/<zona>.json"
+}

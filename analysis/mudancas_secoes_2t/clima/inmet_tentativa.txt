@@ -1,0 +1,6 @@
+tentativa em 2026-10-19T06:19:37+00:00 (User-Agent de navegador)
+https://apitempo.inmet.gov.br/estacoes/T -> HTTP 200, 261406 bytes: '[{"CD_OSCAR":null,"DC_NOME":"ACAJUTIBA","FL_CAPITAL":"N","DT_FIM_OPERACAO":null,"CD_SITUACAO":"Operante","TP_ESTACAO":"Automatica","VL_LATITUDE":"-11.65444444","CD_WSI":"0-76-0-2900306000000688","CD_D'
+https://apitempo.inmet.gov.br/estacao/diaria/2026-10-01/2026-10-18/A001 -> erro de rede: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+https://apitempo.inmet.gov.br/estacao/2026-10-04/2026-10-04/A001 -> HTTP 204, 0 bytes: ''
+https://apitempo.inmet.gov.br/estacao/2026-10-04/2026-10-04/A701 -> HTTP 204, 0 bytes: ''
+conclusao: cadastro de estacoes responde, mas a serie diaria nao (404 E_ROUTE_NOT_FOUND) e a serie horaria devolve 204 sem corpo; sem dado de estacao, so Open-Meteo
